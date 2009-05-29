@@ -27,7 +27,7 @@ class WebMailLib extends TikiLib {
 //		}
 		
 //		$query = "delete from `tiki_webmail_messages` where `accountId`=? and `mailId`=? and `user`=?";
-		$query = "delete from `tiki_webmail_messages` where `mailId`=?";
+		$query = "delete from `tiki_webmail_messages` where `mailId`=?";	// FIXME - looks like this deletes other users' messages - $msgid is the index in a single mailbox afaik (jonnyb)
 		$result = $this->query($query, array($msgid));
 	}
 
@@ -260,5 +260,237 @@ class WebMailLib extends TikiLib {
 		$res = $result->fetchRow();
 		return $res;
 	}
+	
+	/**
+	 * @param $user			current user
+	 * @param $accountid	can be 0
+	 * @param $reload		force reload from mail server?
+	 * @return array		of partial message headers
+	 */
+	function refresh_mailbox($user, $accountid, $reload) {
+		global $webmail_account;	// TODO remove global
+		
+		if (!empty($accountid)) {
+			$webmail_account = $this->get_webmail_account($user, $accountid);
+		} else {
+			$webmail_account = $this->get_current_webmail_account($user);
+		}
+		
+		if (empty($webmail_account)) {
+			return Array();
+		}
+		
+		// start getting mail
+		
+		$timeout = -1;
+		if ($webmail_account['autoRefresh'] > 0) {
+			$timeout = time() - $webmail_account['autoRefresh'];
+		}
+		
+		$serialized_params = $webmail_account['accountId'].':'.$webmail_account['user'].':'.$webmail_account['account'];
+		
+		if (isset($_SESSION['webmailinbox'][$serialized_params]) && ((!isset($reload) || !$reload) || (isset($_SESSION['webmailinbox'][$serialized_params]['timestamp']) && $_SESSION['webmailinbox'][$serialized_params]['timestamp'] >  $timeout))) {
+			$webmail_list = $_SESSION['webmailinbox'][$serialized_params]['webmail_list'];
+		
+		} else {	// no cached list or timed out
+
+			require_once('lib/core/lib/Zend/Log.php');
+//			require_once('lib/core/lib/Zend/Log/Writer/Stream.php');
+//			$writer = new Zend_Log_Writer_Stream('/tmp/zend.log');
+			require_once('lib/core/lib/Zend/Log/Writer/Null.php');
+			$writer = new Zend_Log_Writer_Null;						// stub disabling logging - still needs to be faster...
+			$logger = new Zend_Log($writer);
+			$ts = microtime(true);
+			$logger->log('Init mail process '.$ts, Zend_Log::INFO);
+			
+			// get mail the zend way
+			
+			// connecting with Pop3
+			require_once('lib/core/lib/Zend/Mail/Storage/Pop3.php');
+			try {
+				$mail = new Zend_Mail_Storage_Pop3(
+					array('host'     => $webmail_account["pop"],
+			              'user'     => $webmail_account["username"],
+			              'password' => $webmail_account["pass"]));
+			} catch (Exception $e) {
+				// do something better with the error
+				$logger->log('Zend_Mail_Storage_Pop3 failed: '.$e->messsage.' '.(microtime(true)-$ts), Zend_Log::INFO);
+				return Array();
+			}
+			
+			if (empty($mail)) {
+				return Array();
+			}
+			$logger->log('Got mails '.count($mail).' '.(microtime(true)-$ts), Zend_Log::INFO);
+			
+			$webmail_list = array();
+						
+			foreach ($mail as $messageNum => $message) {
+			//for ($messageNum = 1; $messageNum <= count($mail); $messageNum++) {
+			//	$message = $mail[$messageNum];  (no quicker)
+			
+				$logger->log('Start mail process '.$messageNum.' '.(microtime(true)-$ts), Zend_Log::INFO);
+				$headers = $message->getHeaders();		// quicker than the Zend accessors?
+				$wmail = Array();	// Tiki Webmail row
+				
+				$wmail['from'] = $headers['from'];
+				$wmail['to'] = $headers['to'];
+				$wmail['subject'] = decode_subject_utf8($headers['subject']);
+				$wmail['date'] = $headers['date'];
+				$wmail["timestamp"] = strtotime($headers['date']);
+				
+				$mail->noop(); // keep alive
+				$from = preg_split('/[<>]/', $wmail['from'], -1,PREG_SPLIT_NO_EMPTY);
+				$wmail['sender']['name'] = $from[0];
+				$wmail['sender']['email'] = $from[1];
+				if (empty($wmail['sender']['email'])) {
+					$wmail['sender']['email'] = $wmail['sender']['name'];
+				} else if (!strstr($wmail['sender']['email'], '@')) {
+					$e = $wmail['sender']['name'];
+					$wmail['sender']['name'] = $wmail['sender']['email'];
+					$wmail['sender']['email'] =  $wmail['sender']['name'];
+				}
+				$wmail['sender']['name'] = htmlspecialchars($wmail['sender']['name']);
+
+//				$l = $pop3->_cmdList($i);
+//				$wmail['size'] = $l['size'];
+
+				if (!empty($headers['message-id'])) {
+					$wmail['realmsgid'] = ereg_replace('[<>]','', $headers['message-id']);
+				} else {
+					$wmail['realmsgid'] = $wmail['timestamp'].'.'.$wmail['sender']['email'];	// TODO better?
+				}
+				
+				if (empty($wmail['subject'])) {
+					$wmail['subject'] = '[' . tra('No subject'). ']';
+				}
+				$wmail['subject'] = htmlspecialchars($wmail['subject']);
+					
+				$wmail['msgid'] = $messageNum;
+				$webmail_list[] = $wmail;
+//				if ($messageNum > count($mail) - 1) {
+//					$a = 1;	// for debugging
+//				}
+				$mail->noop(); // keep alive
+				
+				$logger->log('End mail process   '.$messageNum.' '.(microtime(true)-$ts), Zend_Log::INFO);
+			}
+				
+			$_SESSION['webmailinbox'][$serialized_params]['webmail_list'] = $webmail_list;
+			$_SESSION['webmailinbox'][$serialized_params]['timestamp'] = time();
+			
+			$mail->close();
+		}		// endif no cached list of timed out
+	
+		return $webmail_list;
+	}
+	
+	/**
+	 * @param $user			current user
+	 * @param $accountid	can be 0
+	 * @param $msgId		message to get
+	 * @return string		the message body
+	 */
+	function get_mail_content($user, $accountid, $msgId) {
+		global $webmail_account;	// TODO remove global and refactor
+		
+		if (!empty($accountid)) {
+			$webmail_account = $this->get_webmail_account($user, $accountid);
+		} else {
+			$webmail_account = $this->get_current_webmail_account($user);
+		}
+		
+		if (empty($webmail_account)) {
+			return '';
+		}
+		
+		// get single mail			
+		// connecting with Pop3
+		require_once('lib/core/lib/Zend/Mail/Storage/Pop3.php');
+		try {
+			$mail = new Zend_Mail_Storage_Pop3(
+				array('host'     => $webmail_account["pop"],
+		              'user'     => $webmail_account["username"],
+		              'password' => $webmail_account["pass"]));
+		} catch (Exception $e) {
+			// do something better with the error
+			return '';
+		}
+		
+		if (empty($mail)) {
+			return '';
+		}
+		
+//		$message = $mail[$msgId];
+//		$cont = $message->getContent();
+//		
+//		$ct = $message->contentType;
+//		if (preg_match('/boundary=[\'"](.*)[\'"]/', $ct, $m) == 1) {
+//			$boundary = $m[1];
+//			include_once('lib/core/lib/Zend/Mime/Message.php');
+//			$zmm = Zend_Mime_Message::createFromMessage($cont, $boundary);
+//		}
+				
+		// output first text/plain part - from http://framework.zend.com/manual/en/zend.mail.read.html
+		$foundPart = null;
+		foreach (new RecursiveIteratorIterator($mail->getMessage($msgId)) as $part) {
+		    try {
+		        if (strtok($part->contentType, ';') == 'text/plain') {
+		            $foundPart = $part;
+		            break;
+		        }
+		    } catch (Zend_Mail_Exception $e) {
+		        // ignore
+		    }
+		}
+		$c = '';
+		if (!empty($foundPart)) {
+			$c = $foundPart->getContent();
+			$enc = $foundPart->contentTransferEncoding;
+			if (!empty($enc)) {
+				$c = $this->decodeBody($c, $enc);
+			}
+//			if ($enc = 'quoted-printable') {
+//				include_once('lib/core/lib/Zend/Mime/Decode.php');
+//				ini_set('iconv.internal_encoding', 'UTF-8');
+//				$c = Zend_Mime_Decode::decodeQuotedPrintable($c);
+//			}
+		} else {
+			$message = $mail[$msgId];
+			$c = $message->getContent();
+			$enc = '';
+		}
+
+//		require_once ("lib/mail/mimelib.php");	// Can't seem to get anything in Zend to do this :(
+//		$c = mime::decodeBody($c, $enc);		// blows up on quoted-printable :(
+		
+		return $c;
+	}
+	
+	// WARNING - copied from mimelib - temp fix
+	function decodeBody($input, $encoding = '7bit') {
+		switch ($encoding) {
+		case '7bit':
+			return $input;
+			break;
+		case 'quoted-printable':
+			$input = preg_replace("/=\r?\n/", '', $input);
+			if (preg_match_all('/=[A-Z0-9]{2}/', $input, $matches)) {
+				$matches = array_unique($matches[0]);
+				foreach ($matches as $value) {
+					$input = str_replace($value, chr(hexdec(substr($value, 1))), $input);
+				}
+			}
+			return $input;
+			break;
+		case 'base64':
+			return base64_decode($input);
+			break;
+		default:
+			return $input;
+		}
+	}
+
+	
 } # class WebMailLib
 $webmaillib = new WebMailLib($dbTiki);

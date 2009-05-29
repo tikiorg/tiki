@@ -133,7 +133,11 @@
 
 {* -------------------- file -------------------- *}
 {elseif $field_value.type eq 'A'}
-	<input type="file" name="{$field_value.ins_id}"{if isset($input_err)} value="{$field_value.value}"{/if} />
+	{if $tiki_p_attach_trackers ne 'y'}
+		{tr}Permission denied{/tr}
+	{else}
+		<input type="file" name="{$field_value.ins_id}"{if isset($input_err)} value="{$field_value.value}"{/if} />
+	{/if}
 	{if !isset($input_err) and $field_value.value ne ''}
 		<br />
 		{$field_value.info.filename}&nbsp;
@@ -384,7 +388,7 @@
 {elseif $field_value.type eq 'q'}
 	<input type="hidden" name="track[{$field_value.fieldId}]" />
 	<input type="hidden" name="{$field_value.ins_id}" value="{$field_field.value|escape}" />
-	{$field_value.value|escape}
+	{include file="tracker_item_field_value.tpl"}
 
 {/if}
 

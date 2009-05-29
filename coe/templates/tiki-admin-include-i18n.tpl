@@ -24,23 +24,11 @@
 
 <form action="tiki-admin.php?page=i18n" method="post">
 <div class="cbox">
-<table class="admin"><tr><td>
 <div style="padding:1em;" align="center"><input type="submit" value="{tr}Change preferences{/tr}" /></div>
 <input type="hidden" name="i18nsetup" />
-{if $prefs.feature_tabs eq 'y' and $prefs.feature_multilingual eq 'y' and $prefs.lang_use_db ne 'y'}
-	{assign var=tabs value='y'}
-{else}
-	{assign var=tabs value='n'}
-{/if}
+{tabset name="admin_i18n"}
+	{tab name="{tr}Internationalization{/tr}"}
 
-{if $tabs eq 'y'}
-	{tabs}{strip}{tr}Internationalization{/tr}|{tr}Babelfish links{/tr}|{tr}Customized String Translation{/tr}{/strip}{/tabs}
-{/if}
-
-<fieldset{if $tabs eq 'y'} id="content1" class="tabcontent" style="clear:both;display:block;"{/if}>
-{if $tabs ne 'y'}
-	<legend>{tr}Internationalization{/tr}</legend>
-{/if}
 <div class="adminoptionbox">
 	<div class="adminoptionlabel"><label for="general-lang">{tr}Default language{/tr}:</label>
 	<select name="language" id="general-lang">
@@ -70,7 +58,7 @@
 	</div>
 </div>
 <div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" name="change_language" id="change_language"{if $prefs.change_language eq 'y'} checked="checked"{/if}></div>
+	<div class="adminoption"><input type="checkbox" name="change_language" id="change_language"{if $prefs.change_language eq 'y'} checked="checked"{/if}/></div>
 	<div class="adminoptionlabel"><label for="change_language">{tr}Users can change site language{/tr}.</label></div>
 </div>
 <div class="adminoptionbox">
@@ -163,13 +151,10 @@
 	</div>
 </div>
 
-</fieldset>
+{/tab}
 
+{tab name="{tr}Babelfish links{/tr}"}
 {*------------------------------- Babelfish ----------------------------- *}
-<fieldset{if $tabs eq 'y'} id="content2" class="tabcontent" style="clear:both;display:none;"{/if}>
-{if $tabs ne 'y'}
-	<legend>{tr}Babelfish links{/tr}</legend>
-{/if}
 <div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" name="feature_babelfish" id="feature_babelfish"
 			{if $prefs.feature_babelfish eq 'y'}checked="checked"{/if}/></div>
@@ -180,13 +165,9 @@
 			{if $prefs.feature_babelfish_logo eq 'y'}checked="checked"{/if}/></div>
 	<div class="adminoptionlabel"><label for="feature_babelfish_logo">Translation logos</label></div>
 </div>
-</fieldset>
-
+{/tab}
+{tab name="{tr}Customized String Translation{/tr}"}
 {*----------------------------------- Custom translation --------------------*}
-<fieldset{if $tabs eq 'y'} id="content3" class="tabcontent" style="clear:both;display:none;"{/if}>
-{if $tabs ne 'y'}
-	<legend>{tr}Customized String Translation{/tr}</legend>
-{/if}
 <div class="adminoptionbox">
 	{if empty($custom_lang)}
 		<select name="custom_lang" id="custom_lang_select">
@@ -221,9 +202,8 @@
 		<input type="submit" name="custom_save" value="{tr}Save{/tr}" />
 	{/if}
 </div>
-</fieldset>
-
+{/tab}
+{/tabset}
 <div style="padding:1em;" align="center"><input type="submit" value="{tr}Change preferences{/tr}" /></div>
-</td></tr></table>
 </div>
 </form>

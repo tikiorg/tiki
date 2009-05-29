@@ -14,8 +14,8 @@
  * The following section is typically for features that act like Tikiwiki
  * sections and add a configuration icon to the sections list
  *}
-{tabs name="{tr}Main Features{/tr}"}
-				<div class="admin">
+{tab name="{tr}Main Features{/tr}"}
+				<div class="admin clearfix">
 {* ---------- Main features ------------ *}
 					<div class="half_width">
 						<span class="checkbox"><input type="checkbox" name="feature_wiki" {if $prefs.feature_wiki eq 'y'}checked="checked"{/if}/></span>
@@ -449,7 +449,7 @@
 {/tab}
 {/tabset}
 
-		<div class="input_submit_container"style="margin-top: 5px; text-align: center">
+		<div class="input_submit_container" style="margin-top: 5px; text-align: center">
 			<input type="submit" name="features" value="{tr}Apply{/tr}" />
 		</div>
 	</form>

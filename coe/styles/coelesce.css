@@ -3,6 +3,7 @@
  * original design by Patrick Allard. Distributed under the LGPL license. 
  * This is a *litecss-based theme, so import lite/lite.css. */
  @import "lite/lite.css"; 
+ @import "layout/layout.css"; 
  
 /***** XHTML Elements ******/
 

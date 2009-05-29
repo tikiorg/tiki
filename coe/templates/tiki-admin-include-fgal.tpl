@@ -11,31 +11,12 @@
 
 <div class="cbox">
 <form action="tiki-admin.php?page=fgal" method="post">
-<table class="admin"><tr><td>
 <div align="center" style="padding:1em"><input type="submit" name="filegalhandlers" value="{tr}Change preferences{/tr}" /></div>
 
-{if $prefs.feature_tabs eq 'y'}
-			{tabs}{strip}
-				{tr}General Settings{/tr}|
-				{tr}Gallery Listing{/tr}|
-				{tr}Search Indexing{/tr}
-			{/strip}{/tabs}
-{/if}
-
-      {cycle name=content values="1,2,3" print=false advance=false reset=true}
-
-    <fieldset{if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>
-      {if $prefs.feature_tabs neq 'y'}
-        <legend class="heading">
-          <a href="#content{cycle name=content assign=focus}{$focus}" onclick="flip('content{$focus}'); return false;">
-            <span>{tr}General Settings{/tr}</span>
-          </a>
-        </legend>
-        <div id="content{$focus}" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_content.$focus) and $smarty.session.tiki_cookie_jar.show_content.$focus neq 'y'}none{else}block{/if};">
-      {/if}
-
+{tabset name="fgal_admin"}
+	{tab name="{tr}General Settings{/tr}"}
 <div class="adminoptionbox">
-	<div class="adminoptionlabel"><label for="ix">{tr}Home Gallery (main gallery){/tr}</label>
+	<div class="adminoptionlabel"><label>{tr}Home Gallery (main gallery){/tr}</label>
 	<select name="home_file_gallery">
               {section name=ix loop=$file_galleries}
                 <option value="{$file_galleries[ix].galleryId|escape}" {if $file_galleries[ix].galleryId eq $prefs.home_file_gallery}selected="selected"{/if}>{$file_galleries[ix].name|truncate:20:"...":true}</option>
@@ -153,19 +134,9 @@
 </div>
 
 </fieldset>
+	{/tab}
 
-     {if $prefs.feature_tabs neq 'y'}</div>{/if}
-    </fieldset>
-
-    <fieldset{if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>
-      {if $prefs.feature_tabs neq 'y'}
-        <legend class="heading">
-          <a href="#content{cycle name=content assign=focus}{$focus}" onclick="flip('content{$focus}'); return false;">
-            <span>{tr}Gallery Listings{/tr}</span>
-          </a>
-        </legend>
-        <div id="content{$focus}" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_content.$focus) and $smarty.session.tiki_cookie_jar.show_content.$focus neq 'y'}none{else}block{/if};">
-      {/if}
+	{tab name="{tr}Gallery Listings{/tr}"}
 
 {remarksbox title="Note"}{tr}Changing these settings will <em>not</em> affect existing file galleries. These changes will apply <em>only</em> to new file galleries{/tr}.{/remarksbox}
 
@@ -190,21 +161,9 @@
 		{include file="fgal_listing_conf.tpl"}
 		</table>
 </div>
+	{/tab}
 
-	      {if $prefs.feature_tabs neq 'y'}</div>{/if}
-    </fieldset>
-	
-	
-    <fieldset{if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>
-      {if $prefs.feature_tabs neq 'y'}
-        <legend class="heading">
-          <a href="#content{cycle name=content assign=focus}{$focus}" onclick="flip('content{$focus}'); return false;">
-            <span>{tr}Search Indexing{/tr}</span>
-          </a>
-        </legend>
-        <div id="content{$focus}" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_content.$focus) and $smarty.session.tiki_cookie_jar.show_content.$focus neq 'y'}none{else}block{/if};">
-      {/if}
-
+	{tab name="{tr}Search Indexing{/tr}"}
 <div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" id="fgal_enable_auto_indexing" name="fgal_enable_auto_indexing" {if $prefs.fgal_enable_auto_indexing eq 'y'}checked="checked"{/if} /></div>
 	<div class="adminoptionlabel"><label for="fgal_enable_auto_indexing">{tr}Automatically index files on upload or change{/tr}.</label></div>
@@ -252,13 +211,11 @@
 	<div class="adminoptionlabel"><div align="center"><input type="submit" name="filegalredosearch" value="{tr}Reindex all files for search{/tr}"/></div></div>
 </div>
 	  
-	      {if $prefs.feature_tabs neq 'y'}</div>{/if}
-    </fieldset>
 </div>
+	{/tab}
+{/tabset}
 
 <div align="center" style="padding:1em"><input type="submit" name="filegalhandlers" value="{tr}Change preferences{/tr}" /></div>
-
-</td></tr></table>
 </form>
 </div>
 

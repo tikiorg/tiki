@@ -23,7 +23,7 @@ function get_default_prefs() {
 	global $cachelib;
 	if( isset($cachelib) && $cachelib->isCached("tiki_default_preferences_cache") ) {
 		$prefs = unserialize( $cachelib->getCached("tiki_default_preferences_cache") );
-		return $prefs;
+		if ( $prefs !== false ) return $prefs;
 	}
 
 	global $tikidate, $tikilib;

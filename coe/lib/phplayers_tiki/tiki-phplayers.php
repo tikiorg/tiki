@@ -39,7 +39,7 @@ class TikiPhplayers extends TikiLib {
 		global $tikilib, $wikilib, $mylevel, $prefs;
 		global $menulib; include_once('lib/menubuilder/menulib.php');
 		$menu_info = $tikilib->get_menu($idMenu);
-		$use_items_icons = $menu_info['use_items_icons'] == 'y';
+		$use_items_icons = ( $prefs['menus_items_icons'] == 'y' ) && ( $menu_info['use_items_icons'] == 'y' );
 
 		$channels = $tikilib->list_menu_options($idMenu, 0, -1, 'position_asc', '','',$mylevel);
 		$channels = $menulib->setSelected($channels, $sectionLevel);

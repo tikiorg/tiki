@@ -12,28 +12,10 @@
 
 <form method="post" action="tiki-admin.php?page=cms">
 <div class="cbox">
-<table class="admin"><tr><td>
 <div style="padding:1em" align="center"><input type="submit" value="{tr}Change preferences{/tr}" /></div>
 
-{if $prefs.feature_tabs eq 'y'}
-			{tabs}{strip}
-				{tr}General Settings{/tr}|
-				{tr}Articles Listing{/tr}
-			{/strip}{/tabs}
-{/if}
-
-{cycle name=content values="1,2" print=false advance=false reset=true}
-
-    <fieldset{if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>
-      {if $prefs.feature_tabs neq 'y'}
-        <legend class="heading">
-          <a href="#content{cycle name=content assign=focus}{$focus}" onclick="flip('content{$focus}'); return false;">
-            <span>{tr}General Settings{/tr}</span>
-          </a>
-        </legend>
-        <div id="content{$focus}" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_content.$focus) and $smarty.session.tiki_cookie_jar.show_content.$focus neq 'y'}none{else}block{/if};">
-      {/if}
-
+{tabset name="admin_cms"}
+	{tab name="{tr}General Settings{/tr}"}
 <input type="hidden" name="cmsprefs" />
 
 <div class="adminoptionbox">
@@ -129,21 +111,8 @@
 	</div>
 </div>
 </fieldset>
-
-
-
-     {if $prefs.feature_tabs neq 'y'}</div>{/if}
-    </fieldset>
-
-    <fieldset{if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>
-      {if $prefs.feature_tabs neq 'y'}
-        <legend class="heading">
-          <a href="#content{cycle name=content assign=focus}{$focus}" onclick="flip('content{$focus}'); return false;">
-            <span>{tr}Articles Listing{/tr}</span>
-          </a>
-        </legend>
-        <div id="content{$focus}" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_content.$focus) and $smarty.session.tiki_cookie_jar.show_content.$focus neq 'y'}none{else}block{/if};">
-      {/if}
+	{/tab}
+	{tab name="{tr}Articles Listing{/tr}"}
 <div class="adminoptionbox">
 {tr}Select which items to display when listing articles{/tr}: 	  
 </div>
@@ -222,13 +191,10 @@
 	<div class="adminoption"></div>
 	<div class="adminoptionlabel"></div>
 </div>
-	  
-     {if $prefs.feature_tabs neq 'y'}</div>{/if}
-    </fieldset>
-
+	{/tab}
+{/tabset}
 <div style="padding:1em" align="center"><input type="submit" value="{tr}Change preferences{/tr}" /></div>
 	
-</td></tr></table>
 </div>
 </form>
 

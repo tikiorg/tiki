@@ -4,31 +4,11 @@
 
 <form action="tiki-admin.php?page=textarea" method="post">
 <div class="cbox">
-<table class="admin"><tr><td>
 <div align="center" style="padding:1em"><input type="submit" name="textareasetup" value="{tr}Change Preferences{/tr}" /></div>
 
-{if $prefs.feature_tabs eq 'y'}
-			{tabs}{strip}
-				{tr}General Settings{/tr}|
-				{tr}Plugins{/tr}|
-				{tr}Plugin Aliases{/tr}
-			{/strip}{/tabs}
-{/if}
-
-      {cycle name=content values="1,2,3" print=false advance=false reset=true}
-
-    <fieldset{if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>
-      {if $prefs.feature_tabs neq 'y'}
-        <legend class="heading">
-          <a href="#content{cycle name=content assign=focus}{$focus}" onclick="flip('content{$focus}'); return false;">
-            <span>{tr}General Settings{/tr}</span>
-          </a>
-        </legend>
-        <div id="content{$focus}" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_content.$focus) and $smarty.session.tiki_cookie_jar.show_content.$focus neq 'y'}none{else}block{/if};">
-      {/if}
-
+	{tabset name="admin_textarea"}
+		{tab name="{tr}General Settings{/tr}"}
 <fieldset><legend>{tr}Features{/tr}{if $prefs.feature_help eq 'y'} {help url="Text+Area"}{/if}</legend>
-
 <div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" id="feature_antibot" name="feature_antibot" {if $prefs.feature_antibot eq 'y'}checked="checked" {/if}/></div>
 	<div class="adminoptionlabel"><label for="feature_antibot">{tr}Anonymous editors must enter anti-bot code (CAPTCHA){/tr}. </label>{if $prefs.feature_help eq 'y'} {help url="Spam+Protection"}{/if}</div>
@@ -64,7 +44,7 @@
 </div>
 
 <div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="feature_dynamic_content" name="feature_dynamic_content" id="feature_dynamic_content" {if $prefs.feature_dynamic_content eq 'y'}checked="checked" {/if}/> </div>
+	<div class="adminoption"><input type="checkbox" id="feature_dynamic_content" name="feature_dynamic_content" {if $prefs.feature_dynamic_content eq 'y'}checked="checked" {/if}/> </div>
 	<div class="adminoptionlabel"><label for="feature_dynamic_content">{tr}Dynamic Content System{/tr} </label>{if $prefs.feature_help eq 'y'} {help url="Dynamic+Content"}{/if}</div>
 </div>
 
@@ -150,26 +130,14 @@
 	<div class="adminoptionlabel"><label for="default_rows_textarea_forumthread">{tr}Forum reply{/tr}: </label><input type="text" name="default_rows_textarea_forumthread" id="default_rows_textarea_forumthread" value="{$prefs.default_rows_textarea_forumthread}" size="4" />{tr}rows{/tr}</div>
 </div>
 </fieldset>
+		{/tab}
 
-
-      {if $prefs.feature_tabs neq 'y'}</div>{/if}
-    </fieldset>
+		{tab name="{tr}Plugins{/tr}"}
 
 	<!-- *** plugins *** -->
-    <fieldset{if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>
-		{if $prefs.feature_tabs neq 'y'}
-			<legend class="heading" id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}">
-				<a href="#content{cycle name=content assign=focus}{$focus}" onclick="flip('content{$focus}'); return false;">
-					<span>{tr}Plugins{/tr}</span>
-				</a>
-		</legend>
-        <div id="content{$focus}" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_content.$focus) and $smarty.session.tiki_cookie_jar.show_content.$focus neq 'y'}none{else}block{/if};">
-		{/if}
-		
 		{remarksbox type="note" title="{tr}About plugins{/tr}"}{tr}Tiki plugins add functionality to wiki pages, articles and blogs etc. You can enable and disable them below.{/tr}
 		{tr}You can approve plugin use at <a href="tiki-plugins.php">tiki-plugins.php</a>.{/tr}		
-		{tr}The edit plugin icon is an easy way for users to edit the parameters of each plugin in wiki pages. It can be disabled for individual plugins below.{/tr} 	
-
+		{tr}The edit plugin icon is an easy way for users to edit the parameters of each plugin in wiki pages. It can be disabled for individual plugins below.{/tr}
 		{/remarksbox}
 
 		<fieldset class="admin">
@@ -206,20 +174,11 @@
 			</fieldset>
 		{/foreach}
 		</fieldset>
-		{if $prefs.feature_tabs neq 'y'}</div>{/if}
-    </fieldset>
+		{/tab}
+
+		{tab name="{tr}Plugin Aliases{/tr}"}
 
 	<!-- *** plugin aliases *** -->
-    <fieldset{if $prefs.feature_tabs eq 'y'} class="tabcontent admin2cols" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>
-		{if $prefs.feature_tabs neq 'y'}
-			<legend class="heading" id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}">
-				<a href="#content{cycle name=content assign=focus}{$focus}" onclick="flip('content{$focus}'); return false;">
-					<span>{tr}Plugin Aliases{/tr}</span>
-				</a>
-			</legend>
-        <div id="content{$focus}" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_content.$focus) and $smarty.session.tiki_cookie_jar.show_content.$focus neq 'y'}none{else}block{/if};">
-		{/if}
-
 		{remarksbox type="note" title="{tr}About plugin aliases{/tr}"}{tr}Tiki plugin aliases allow you to define your own custom configurations of existing plugins.<br />Find out more here: {help url="Plugin+Alias"}{/tr}{/remarksbox}
 		{if $prefs.feature_jquery neq 'y'}
 			{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}This page is designed to work with JQuery {icon _id="arrow_right" href="tiki-admin.php?page=features"}{/tr}{/remarksbox}
@@ -339,7 +298,7 @@ if (window.location.href.indexOf('plugin_alias_new=true') > -1) {
 					<label for="prefs">{tr}Dependencies{/tr}:</label> <input type="text" name="prefs" value="{','|implode:$plugin_admin.description.prefs}"/>
 			</div></div>
 			<div class="adminoptionbox"><div class="adminoptionlabel">
-					<label for="">{tr}Filter{/tr}:</label> <input type="text" name="filter" value="{$plugin_admin.description.filter|default:'xss'|escape}"/>
+					<label for="filter">{tr}Filter{/tr}:</label> <input type="text" id="filter" name="filter" value="{$plugin_admin.description.filter|default:'xss'|escape}"/>
 			</div></div>
 			<div class="adminoptionbox"><div class="adminoptionlabel">
 					<label for="validate">{tr}Validation{/tr}:</label> 
@@ -350,7 +309,7 @@ if (window.location.href.indexOf('plugin_alias_new=true') > -1) {
 					</select>
 			</div></div>
 			<div class="adminoptionbox"><div class="adminoptionlabel">
-					<label for="">{tr}Inline (No Plugin Edit UI){/tr}:</label> <input type="checkbox" name="inline" value="1" {if $plugin_admin.description.inline}checked="checked"{/if}/>
+					<label for="inline">{tr}Inline (No Plugin Edit UI){/tr}:</label> <input type="checkbox" id="inline" name="inline" value="1" {if $plugin_admin.description.inline}checked="checked"{/if}/>
 			</div></div>
 		</fieldset>
 		<fieldset id="pluginalias_simple_args">
@@ -421,7 +380,7 @@ $jq('#pluginalias_simple_new').hide();
 			<div class="adminoptionbox">
 				<div class="adminoptionlabel">
 					<label for="defaultbody">{tr}Default Content{/tr}:</label>
-					<textarea cols="60" rows="12" name="defaultbody">{$plugin_admin.body.default|escape}</textarea>
+					<textarea cols="60" rows="12" id=defaultbody" name="defaultbody">{$plugin_admin.body.default|escape}</textarea>
 				</div>
 				<div class="q1">&nbsp;</div>
 				<div class="q234">
@@ -504,13 +463,9 @@ $jq('#pluginalias_simple_new').hide();
 			{/foreach}
 			{if $plugin_admin}{jq}$jq('#pluginalias_composed_args legend').trigger('click'{{if isset($composed_args)}, true{/if}});{/jq}{/if}
 		</fieldset>
-
-		{if $prefs.feature_tabs neq 'y'}</div>{/if}
-    </fieldset>
-
-
+		{/tab}
+	{/tabset}
 <div align="center" style="padding:1em"><input type="submit" name="textareasetup" value="{tr}Change Preferences{/tr}" /></div>
-</td></tr></table>
 </div>
 </form>
 

@@ -93,7 +93,7 @@ function smarty_function_button($params, &$smarty) {
 		if ( ! empty($params['href']) ) {
 
 			// Handle anchors
-			if (strstr($params['href'], '#'))
+			if ( strpos($params['href'], '#') )
 				list($params['href'], $params['_anchor']) = explode('#', $params['href'], 2);
 
 			// Handle script and URL arguments

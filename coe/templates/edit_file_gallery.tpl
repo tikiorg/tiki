@@ -4,24 +4,13 @@
   <br /><a class="fgallink" href="tiki-objectpermissions.php?objectName={$name|escape:"url"}&amp;objectType=file+gallery&amp;permType=file+galleries&amp;objectId={$galleryId}">{tr}There are individual permissions set for this file gallery{/tr}</a>
   {/if}
   <div>
-    <form class="admin" action="tiki-list_file_gallery.php{if $filegals_manager neq ''}?filegals_manager={$filegals_manager|escape}{/if}" method="post">
+    <form class="admin" action="{$smarty.server.PHP_SELF}?{query}" method="post">
       <input type="hidden" name="galleryId" value="{$galleryId|escape}" />
 
 
-			{if $prefs.feature_tabs eq 'y'}
-       <span style="float:right; margin-bottom: -1em"><input type="submit" value="{tr}Save{/tr}" name="edit" />&nbsp;<input type="checkbox" name="viewitem" checked="checked"/> {tr}View inserted gallery{/tr}</span>
-			<div class="tabs" style="clear: both;">
-				<span id="tab1" class="tabmark tabactive"><a href="javascript:tikitabs(1,3);">{tr}Properties{/tr}</a></span>
-				<span id="tab2" class="tabmark tabinactive"><a href="javascript:tikitabs(2,3);">{tr}Display Properties{/tr}</a></span>
-			</div>
-			{else}
        <div class="input_submit_container" style="text-align: right"><input type="submit" value="{tr}Save{/tr}" name="edit" />&nbsp;<input type="checkbox" name="viewitem" checked="checked"/> {tr}View inserted gallery{/tr}</div>
-			{/if}
-
-			<fieldset {if $prefs.feature_tabs eq 'y'}id="content1"  class="tabcontent" style="clear:both;display:block;"{/if}>
-			{if $prefs.feature_tabs neq 'y'}
-			  <legend class="heading"><a href="#"><span>{tr}Properties{/tr}</span></a></legend>
-				{/if}
+{tabset name="list_file_gallery"}
+  {tab name="{tr}Properties{/tr}"}
       <table class="normal">
         <tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" size="50" name="name" value="{$gal_info.name|escape}" style="width:100%"/><br/><i>{tr}required field for podcasts{/tr}</i></td></tr>
         <tr><td class="formcolor">{tr}Type{/tr}:</td><td class="formcolor">
@@ -83,12 +72,9 @@
      {include file='categorize.tpl'}
 
 				</table>
-				</fieldset>
+	{/tab}
 <!--display -->
-			<fieldset {if $prefs.feature_tabs eq 'y'}id="content2"  class="tabcontent" style="clear:both;display:none;"{/if}>
-			{if $prefs.feature_tabs neq 'y'}
-			  <legend class="heading"><a href="#"><span>{tr}Display Properties{/tr}</span></a></legend>
-				{/if}
+	{tab name="{tr}Display Properties{/tr}"}
 				<table class="normal">
         <tr><td class="formcolor">{tr}Default sort order{/tr}:</td><td class="formcolor">
           <select name="sortorder">
@@ -110,7 +96,8 @@
           </table>
         </td></tr>
       </table>
-     </fieldset>
+	{/tab}
+{/tabset}
 			<input type="submit" value="{tr}Save{/tr}" name="edit" />
     </form>
 	</div>

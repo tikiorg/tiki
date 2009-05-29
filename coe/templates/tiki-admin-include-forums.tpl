@@ -3,29 +3,10 @@
 
 <form method="post" action="tiki-admin.php?page=forums">
 <div class="cbox">
-<table class="admin"><tr><td>
 <div style="padding:1em;" align="center"><input type="submit" value="{tr}Change preferences{/tr}" /></div>
 
-{if $prefs.feature_tabs eq 'y'}
-			{tabs}{strip}
-				{tr}General Settings{/tr}|
-				{tr}Forums Listing{/tr}
-			{/strip}{/tabs}
-{/if}
-
-{cycle name=content values="1,2" print=false advance=false reset=true}
-
-    <fieldset{if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>
-      {if $prefs.feature_tabs neq 'y'}
-        <legend class="heading">
-          <a href="#content{cycle name=content assign=focus}{$focus}" onclick="flip('content{$focus}'); return false;">
-            <span>{tr}General Settings{/tr}</span>
-          </a>
-        </legend>
-        <div id="content{$focus}" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_content.$focus) and $smarty.session.tiki_cookie_jar.show_content.$focus neq 'y'}none{else}block{/if};">
-      {/if}
-
-
+{tabset name="admin_forums"}
+	{tab name="{tr}General Settings{/tr}"}
 <div class="adminoptionbox">
 	<div class="adminoptionlabel"><label for="home_forum">{tr}Home Forum (main forum){/tr}</label>
 	<select name="home_forum" id="home_forum">
@@ -98,7 +79,7 @@
 		{if $prefs.forum_thread_user_settings eq 'y'}checked="checked"{/if} onclick="flip('useconfigurationbar');" /></div>
 	<div class="adminoptionlabel"><label for="forum_thread_user_settings">{tr}Display thread configuration bar{/tr}.</label><br /><em>{tr}Allows users to override the defaults{/tr}.</em></div>
 <div class="adminoptionboxchild" id="useconfigurationbar" style="display:{if $prefs.forum_thread_user_settings eq 'y'}block{else}none{/if};">
-	<div class="adminoption"><input type="checkbox" id="forum_thread_user_settings_keep"name="forum_thread_user_settings_keep"
+	<div class="adminoption"><input type="checkbox" id="forum_thread_user_settings_keep" name="forum_thread_user_settings_keep"
 		{if $prefs.forum_thread_user_settings_keep eq 'y'}checked="checked"{/if} /></div>
 	<div class="adminoptionlabel"><label for="forum_thread_user_settings_keep">{tr}Keep settings for all forums during the user session{/tr}.</label></div>
 </div>
@@ -164,28 +145,10 @@
 
 </div>
 
-
-
-
-
-<div class="adminoptionbox">
-	<div class="adminoption"></div>
-	<div class="adminoptionlabel"><label for=""></label></div>
-</div>
 </fieldset>
+	{/tab}
 
-     {if $prefs.feature_tabs neq 'y'}</div>{/if}
-    </fieldset>
-
-    <fieldset{if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>
-      {if $prefs.feature_tabs neq 'y'}
-        <legend class="heading">
-          <a href="#content{cycle name=content assign=focus}{$focus}" onclick="flip('content{$focus}'); return false;">
-            <span>{tr}Forums Listing{/tr}</span>
-          </a>
-        </legend>
-        <div id="content{$focus}" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_content.$focus) and $smarty.session.tiki_cookie_jar.show_content.$focus neq 'y'}none{else}block{/if};">
-      {/if}
+	{tab name="{tr}Forums Listing{/tr}"}
 <input type="hidden" name="forumlistprefs" />
 <div class="adminoptionbox">
 	<div class="adminoptionlabel"><label for="forums_ordering">{tr}Default ordering{/tr}: </label>
@@ -238,10 +201,8 @@
 </div>
 	</div>
 </div>
-     {if $prefs.feature_tabs neq 'y'}</div>{/if}
-    </fieldset>
-
+	{/tab}
+{/tabset}
 <div style="padding:1em;" align="center"><input type="submit" value="{tr}Change preferences{/tr}" /></div>
-</td></tr></table>
 </div>
 </form>
