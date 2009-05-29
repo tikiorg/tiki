@@ -36,9 +36,8 @@ function smarty_block_tab($params, $content, &$smarty, &$repeat) {
 		$ret = "<fieldset ";
 		if ($prefs['feature_tabs'] == 'y' and $_SESSION["tabbed_$smarty_tabset_name"] == 'y') {
    		$ret .= "id='content".sizeof($smarty_tabset)."' class='tabcontent' style='clear:both;display:block;'";
-		} else {
-			$ret .= ">";
 		}
+		$ret .= ">";
 		if ($prefs['feature_tabs'] != 'y' or $_SESSION["tabbed_$smarty_tabset_name"] == 'n') {
      $ret .= '<legend class="heading"><a href="#"><span>'.$params['name'].'</span></a></legend>';
 		}

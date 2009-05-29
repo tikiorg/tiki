@@ -36,8 +36,10 @@ function smarty_block_tabset($params, $content, &$smarty, &$repeat) {
 			$smarty_tabset_name = "tiki_tabset";
 		}
 		global $smarty_tabset_name, $smarty_tabset;
-		if (isset($_REQUEST['tabbed_'.$smarty_tabset_name])) {
+		if ( !empty($_REQUEST['tabbed_'.$smarty_tabset_name]) ) {
 			$_SESSION["tabbed_$smarty_tabset_name"] = $_REQUEST['tabbed_'.$smarty_tabset_name] ;
+		} else {
+			$_SESSION["tabbed_$smarty_tabset_name"] = 'y';
 		}
 		return;
 	} else {
@@ -50,6 +52,7 @@ function smarty_block_tabset($params, $content, &$smarty, &$repeat) {
 				$button_params['_text'] = tra('No Tab');
 			}
 			$notabs = '<input type="hidden" name="tabbed_'.$smarty_tabset_name.'" value="'.($_SESSION["tabbed_$smarty_tabset_name"] == 'n' ? 'n' : 'y').'"/>';
+			$button_params['_script'] = '#';
 			$button_params['_onclick'] = "tabbed_input = document.getElementsByName('tabbed_$smarty_tabset_name')[0]; tabbed_input.value ='".($_SESSION["tabbed_$smarty_tabset_name"] == 'n' ? 'y' : 'n' )."' ; tabbed_input.form.submit();";
 			$notabs .= smarty_function_button($button_params,$smarty);
 		} else {
