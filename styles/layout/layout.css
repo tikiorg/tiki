@@ -2012,6 +2012,12 @@ div#ajaxLoading {
  
 .tab-menu li.tab-selected a {background: #f8f8ff}
 
+/* CSS Menu */
+
+div.cssmenubox {
+  overflow: visible !important;
+}
+
 /***** New (unsorted) *****/
 
 /* webmail & groupmail */
