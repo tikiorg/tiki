@@ -64,9 +64,9 @@
 
 {if $prefs.feature_search_show_search_box eq 'y'}
 <form id="search-form" class="forms" method="get" action="tiki-searchresults.php">
-    <label class="searchhighlight" for="highlight">{tr}Find{/tr} <input id="fuser" name="highlight" size="14" type="text" accesskey="s" value="{$words}" /></label>
+    <label class="searchhighlight" for="fuser">{tr}Find{/tr} <input id="fuser" name="highlight" size="14" type="text" accesskey="s" value="{$words}" /></label>
 		{if !( $searchStyle eq "menu" )} 
-		<label class="searchboolean" for="boolean">{tr}Advanced search:{/tr}<input type="checkbox" name="boolean"{if $boolean eq 'y'} checked="checked"{/if} /></label>
+		<label class="searchboolean" for="boolean">{tr}Advanced search:{/tr}<input type="checkbox" name="boolean" id="boolean" {if $boolean eq 'y'} checked="checked"{/if} /></label>
 		{add_help show='y' title="{tr}Help{/tr}" id="advanced_search_help"}
 			{$smarty.capture.advanced_search_help}
 		{/add_help}
