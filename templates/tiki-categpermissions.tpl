@@ -22,9 +22,8 @@
 <table class="normal">
 <tr>
 	<th>
-		{if $prefs.javascript_enabled eq 'y'}
-        	<input name="switcher" id="clickall" type="checkbox" title="Select All" onclick="switchCheckboxes(this.form,'checked[]',this.checked)"/>
-      	{/if}
+		{select_all checkbox_names='checked[]'"}
+	</th>
 	<th>{tr}Group{/tr}</th>
 	<th>{tr}Permission{/tr}</th>
 	<th>{tr}Action{/tr}</th>
