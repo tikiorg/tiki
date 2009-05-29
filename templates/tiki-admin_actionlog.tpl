@@ -143,7 +143,9 @@
 			</form>
 		{/if}
 
-		{if $actionlogs}<a href="#Statistics" class="buttom">See Statistics</a>{/if}
+		{if $actionlogs}
+			{button _anchor="Statistics" _text="{tr}See Statistics{/tr}"}
+		{/if}
 
 		<a name="List" />
 		<h2>{tr}List{/tr}
