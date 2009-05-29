@@ -2,23 +2,9 @@
 
 {title help="Action log"}{tr}Action Log{/tr}{/title}
 
-{if $prefs.feature_tabs eq 'y'}
-	{cycle name=tabs values="1,2" print=false advance=false}
-	<div class="tabs">
-		<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};">
-			<a href="javascript:tikitabs({cycle name=tabs},3);">{tr}Report{/tr}</a>
-		</span>
-		<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};">
-			<a href="javascript:tikitabs({cycle name=tabs},3);">{tr}Setting{/tr}</a>
-		</span>
-	</div>
-{/if}
+{tabset name="admin_actionlog"}
 
-{cycle name=content values="1,2" print=false advance=false reset=true}
-
-{* -------------------------------------------------- tab with report --- *}
-<div id="content{cycle name=content assign=focustab}{$focustab}"{if $prefs.feature_tabs eq 'y'} class="tabcontent" style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
-	<a name="Report" />
+{tab name="Report"}
 	<form method="get" action="tiki-admin_actionlog.php#Report">
 		<h2>{tr}Filter{/tr}</h2>
 		{if empty($nbViewedConfs)}
@@ -587,10 +573,11 @@
 		{if $csv}
 			<div class="cbox">{$csv}</div>
 		{/if}
-</div>{* tab *}
+{/tab}
+
 
 {* -------------------------------------------------- tab with setting --- *}
-<div id="content{cycle name=content assign=focustab}{$focustab}"{if $prefs.feature_tabs eq 'y'} class="tabcontent" style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
+{tab name="settings"}
 	<a name="Setting" />
 	<h2>{tr}Setting{/tr}</h2>
 	<form method="post" action="tiki-admin_actionlog.php">
@@ -629,4 +616,6 @@
 		</table>
 		<div class="rbox">{tr}Wiki page actions except viewed will always be recorded but can be not reported{/tr}</div>
 	</form>
-</div>{*tab*}
+
+	{/tab}
+{/tabset}
