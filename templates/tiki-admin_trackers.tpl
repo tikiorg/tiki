@@ -192,13 +192,21 @@ for a tracker and they must be valid in SQL{/tr}</em>
 <tr class="formcolor"><td>{tr}Show status to tracker admin only{/tr}</td><td>
 <input type="checkbox" name="showStatusAdminOnly" {if $showStatusAdminOnly eq 'y'}checked="checked"{/if} /></td></tr>
 
-<tr class="formcolor"><td>{tr}Send copies of all activity in this tracker to this e-mail address{/tr}:<br /><i>{tr}You can add several email addresses by separating them with commas.{/tr}</i></td><td><input type="text" name="outboundEmail" value="{$outboundEmail|escape}" /></td></tr>
+<tr class="formcolor">
+	<td>{tr}Send copies of all activity in this tracker to this e-mail address{/tr}</td>
+	<td>
+		<input type="text" name="outboundEmail" value="{$outboundEmail|escape}" />
+		<br /><i>{tr}You can add several email addresses by separating them with commas.{/tr}</i>
+	</td>
+</tr>
 
-<tr class="formcolor"><td>{tr}Use simplified e-mail format{/tr}
-<br /><i>{tr}The tracker will use the text field named Subject if any as subject and will use the user email or for anonymous the email field if any as sender{/tr}</i>
-</td><td>
-<input type="checkbox" name="simpleEmail" {if $simpleEmail eq 'y'}checked="checked"{/if} />
-</td></tr>
+<tr class="formcolor">
+	<td>{tr}Use simplified e-mail format{/tr}</td>
+	<td>
+		<input type="checkbox" name="simpleEmail" {if $simpleEmail eq 'y'}checked="checked"{/if} />
+		<br /><i>{tr}The tracker will use the text field named Subject if any as subject and will use the user email or for anonymous the email field if any as sender{/tr}</i>
+	</td>
+</tr>
 
 <tr class="formcolor"><td>{tr}New items are created with status{/tr}</td><td>
 <select name="newItemStatus">
@@ -217,11 +225,29 @@ for a tracker and they must be valid in SQL{/tr}</em>
 </select>
 </td></tr>
 
-<tr class="formcolor"><td>{tr}Item creator can modify his items?{/tr}<br /><i>{tr}The tracker needs a user field with the option 1{/tr}</i></td><td><input type="checkbox" name="writerCanModify" {if $writerCanModify eq 'y'}checked="checked"{/if} /></td></tr>
+<tr class="formcolor">
+	<td>{tr}Item creator can modify his items?{/tr}</td>
+	<td>
+		<input type="checkbox" name="writerCanModify" {if $writerCanModify eq 'y'}checked="checked"{/if} />
+		<br /><i>{tr}The tracker needs a user field with the option 1{/tr}</i>
+	</td>
+</tr>
 
-<tr class="formcolor"><td>{tr}Only one item per user or IP{/tr}<br /><i>{tr}The tracker needs a user or IP field with the option 1{/tr}</i></td><td><input type="checkbox" name="oneUserItem" {if $oneUserItem eq 'y'}checked="checked"{/if} /></td></tr>
+<tr class="formcolor">
+	<td>{tr}Only one item per user or IP{/tr}</td>
+	<td>
+		<input type="checkbox" name="oneUserItem" {if $oneUserItem eq 'y'}checked="checked"{/if} />
+		<br /><i>{tr}The tracker needs a user or IP field with the option 1{/tr}</i>
+	</td>
+</tr>
 
-<tr class="formcolor"><td>{tr}Member of the default group of creator can modify items?{/tr}<br /><i>{tr}The tracker needs a group field with the option 1{/tr}</i></td><td><input type="checkbox" name="writerGroupCanModify" {if $writerGroupCanModify eq 'y'}checked="checked"{/if} /></td></tr>
+<tr class="formcolor">
+	<td>{tr}Member of the creator group can modify items?{/tr}</td>
+	<td>
+		<input type="checkbox" name="writerGroupCanModify" {if $writerGroupCanModify eq 'y'}checked="checked"{/if} />
+		<br /><i>{tr}The tracker needs a group field with the option 1{/tr}</i>
+	</td>
+</tr>
 
 <tr class="formcolor">
 	<td>{tr}Show creation date when listing tracker items?{/tr}</td>
