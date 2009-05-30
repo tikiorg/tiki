@@ -1919,7 +1919,7 @@ table.commentinfo {}
 	
 .post .postbody-title .checkbox {float: left}
 
-.post .postbody-title .title {
+.tiki_forums .post .postbody-title .title {
 	color: #29677B;
 	font-weight: bold;
 	font-size: 12px;
