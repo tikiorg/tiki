@@ -773,8 +773,8 @@ a.phplmselected:hover {
 
 #tiki-top .cssmenu_horiz {
 	float: left;
-	margin-left: 11px
-}
+	margin-left: 11px;
+	font: .9em Verdana, Helvetica, Arial, Sans-Serif}
 
 #tiki-top > .cssmenu_horiz > li > a {
 	border-right: 1px solid #aaa;
@@ -795,7 +795,9 @@ div.separatorline {}
 div.option a.linkmenu:hover {}
 a.separator img {}
 /* menu option */
-.option, .optionline {
+.option, .optionline,
+#tiki-center .option,
+#tiki-center .optionline {
 	background: transparent url('../img/icons2/corner-dots.gif') center left no-repeat;
 	padding: 0.2em 0 0.2em 1.6em;
 }
