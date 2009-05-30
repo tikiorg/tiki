@@ -15,27 +15,27 @@
 
 <h2>{$totimg} {tr}available files{/tr} {$dirsize}</h2>
 <form method="post" action="tiki-batch_upload_files.php" name="f">
-<table border="0" class="normal" id="filelist" width="100%">
-<tr>
-<th></th>
-<th><a href="javascript:void(0);">{tr}Filename{/tr}</a></th>
-<th width="80"><a href="javascript:void(0);">{tr}Filesize{/tr}</th>
-<th width="80"><a href="javascript:void(0);">{tr}Filetype{/tr}</a></th></tr>
-{cycle print=false values="even,odd"}
-{foreach key=k item=it from=$filestring}
-<tr class="{cycle}">
-<td><input type="checkbox" name="files[]" value="{$it[0]}" id="box_{$k}" /></td>
-<td><label for="box_{$k}">{$it[0]}</label></td>
-<td>{$it[1]|kbsize}</td>
-<td>{$it[2]}</td></tr>
-{/foreach}
-	<script type="text/javascript">
-	<!--//--><![CDATA[//><!--
-	document.write("<tr><td colspan='4'><input name=\"switcher\" id=\"clickall\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'files[]',this.checked)\"/>");
-	document.write("<label for=\"clickall\">{tr}Select All{/tr}</label></td></tr>");
-	//--><!]]>
-	</script>
-</table>
+	<table border="0" class="normal" id="filelist" width="100%">
+		<tr>
+			<th>
+				{select_all checkbox_names='files[]' label="{tr}Select All{/tr}"}
+			</th>
+			<th><a href="javascript:void(0);">{tr}Filename{/tr}</a></th>
+			<th width="80"><a href="javascript:void(0);">{tr}Filesize{/tr}</a></th>
+			<th width="80"><a href="javascript:void(0);">{tr}Filetype{/tr}</a></th>
+		</tr>
+		{cycle print=false values="even,odd"}
+		{foreach key=k item=it from=$filestring}
+			<tr class="{cycle}">
+				<td>
+					<input type="checkbox" name="files[]" value="{$it[0]}" id="box_{$k}" />
+				</td>
+				<td><label for="box_{$k}">{$it[0]}</label></td>
+				<td>{$it[1]|kbsize}</td>
+				<td>{$it[2]}</td>
+			</tr>
+		{/foreach}
+	</table>
 <br />
 &nbsp;&nbsp;&nbsp;&nbsp; <input type="checkbox" name="removeExt" value="true" id="removeExt" /> {tr}Remove File Extension from Image Name{/tr}<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {tr}eg. from "digicam0001.jpg" then name digicam0001 will be used for the name field{/tr}<br />

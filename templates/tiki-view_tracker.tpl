@@ -111,16 +111,13 @@
 <table class="normal">
 <tr>
 {if $tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y')}
-<th class="auto" style="width:20px;"></th>
+	<th class="auto" style="width:20px;"></th>
 {/if}
+
 {if $tiki_p_admin_trackers eq 'y'}
-<th width="15">
-<script type='text/javascript'>
-<!--//--><![CDATA[//><!--
-document.write("<input name=\"switcher\" id=\"clickall2\" title=\"{tr}Select All{/tr}\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'action[]',this.checked)\"/>");
-//--><!]]>
-</script>
-</th>
+	<th width="15">
+		{select_all checkbox_names='action[]'}
+	</th>
 {/if}
 
 {foreach from=$fields key=ix item=field_value}

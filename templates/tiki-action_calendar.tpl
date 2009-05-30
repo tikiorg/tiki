@@ -23,7 +23,9 @@
 
 <form id="filtercal" method="get" action="{$myurl}" name="f" style="display:none;">
 <div class="caltitle">{tr}Tools Calendars{/tr}</div>
-<div class="caltoggle"><input name="tikiswitch" id="tikiswitch" type="checkbox" onclick="switchCheckboxes(this.form,'tikicals[]',this.checked);" /> <label for="tikiswitch">{tr}Check / Uncheck All{/tr}</label></div>
+	<div class="caltoggle">
+		{select_all checkbox_names='tikicals[]' label="{tr}Check / Uncheck All{/tr}"}
+	</div>
 {foreach from=$tikiItems key=ki item=vi}
 {if $vi.feature eq 'y' and $vi.right eq 'y'}
 <div class="calcheckbox"><input type="checkbox" name="tikicals[]" value="{$ki|escape}" id="tikical_{$ki}" {if in_array($ki,$tikicals)}checked="checked"{/if} />
