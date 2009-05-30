@@ -8,6 +8,11 @@
 		{button href="tiki-video_galleries.php" _text="{tr}List Galleries{/tr}"}
 	{/if}
 	{if $system eq 'n'}
+	
+		{if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
+				{button href="tiki-video_galleries.php?edit_mode=1&amp;galleryId=$galleryId" _text="{tr}Edit Gallery{/tr}"}
+				
+		{/if}
 		
 		{if $tiki_p_upload_images eq 'y'}
 			{if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner) or $public eq 'y'}
@@ -48,8 +53,7 @@
 	<span class="sorttitle">{tr}Sort Videos by{/tr}</span>
     [ <span class="sortoption"><a class="gallink" href="{$galleryId|sefurl:videogallery:with_next}offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></span>
     | <span class="sortoption"><a class="gallink" href="{$galleryId|sefurl:videogallery:with_next}offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Date{/tr}</a></span>
-    | <span class="sortoption"><a class="gallink" href="{$galleryId|sefurl:videogallery:with_next}offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}Views{/tr}</a></span>
-    | <span class="sortoption"><a class="gallink" href="{$galleryId|sefurl:videogallery:with_next}offset={$offset}&amp;sort_mode={if $sort_mode eq 'filesize_desc'}filesize_asc{else}filesize_desc{/if}">{tr}Size{/tr}</a></span> ]
+    | <span class="sortoption"><a class="gallink" href="{$galleryId|sefurl:videogallery:with_next}offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}Views{/tr}</a></span> ]
 
 
   <div class="thumbnails">
@@ -63,7 +67,7 @@
 	  <br />
 	  <small class="caption">
 		{tr}Subgallery{/tr}: 
-			{if $showname=='y' || $showfilename=='y'}{$item.name}<br />{/if}
+			{if $showname=='y'}{$item.name}<br />{/if}
 			{if $showvideoid=='y'}{tr}ID{/tr}: {$item.galleryId}<br />{/if}
 			{if $showcategories=='y'}
 				{tr}Categories{/tr}:
@@ -72,10 +76,10 @@
                 		{/section}
                 		</ul><br />
 			{/if}
-			{if $showtags=='y'}{$item.description}<br />{/if}
+			{if $showdescription=='y'}{$item.description}<br />{/if}
 			{if $showcreated=='y'}{tr}Created{/tr}: {$item.created|tiki_short_date}<br />{/if}
 			{if $showuser=='y'}{tr}User{/tr}: {$item.user|userlink}<br />{/if}
-			{if $showviews=='y'}[{$item.views} {if $item.views == 1}{tr}View{/tr}{else}{tr}Views{/tr}{/if}]<br />{/if}
+			{if $showhits=='y'}[{$item.views} {if $item.views == 1}{tr}View{/tr}{else}{tr}Views{/tr}{/if}]<br />{/if}
                         </small>
 	  </td>
          {if $key%$rowImages eq $rowImages2}
@@ -106,16 +110,18 @@
                         {/section}
                         </ul><br />
                 {/if}
-		{if $showtags=='y'}{$item.description}<br />{/if}
+		{if $showdescription=='y'}{$item.tags}<br />{/if}
 		{if $showcreated=='y'}{tr}Created At{/tr}: {$item.created|tiki_short_date}<br />{/if}
 		{if $showuser=='y'}{tr}User{/tr}: {$item.user|userlink}<br />{/if}
-		{if $showviews=='y'}[{$item.views} {if $item.views == 1}{tr}View{/tr}{else}{tr}Views{/tr}{/if}]{/if}
+		{if $showhits=='y'}[{$item.views} {if $item.views == 1}{tr}View{/tr}{else}{tr}Views{/tr}{/if}]{/if}
 	
 	  <br />
           {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
 	    		
             	<a class="gallink" href="{$galleryId|sefurl:videogallery:with_next}remove={$item.videoId}" title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
             	<a class="gallink" href="tiki-edit_video.php?galleryId={$galleryId}&amp;edit={$item.videoId}" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
+          	<a class="gallink" href="tiki-browse_video.php?galleryId={$galleryId}&amp;sort_mode={$sort_mode}&amp;videoId={$item.videoId}" {if $prefs.gal_image_mouseover neq 'n'}{popup fullhtml="1" text=$over_info.$key|escape:"javascript"|escape:"html"}{/if}>{icon _id='magnifier' alt='{tr}Details{/tr}'}</a>
+          
           {/if}
           <br />
 	</small>

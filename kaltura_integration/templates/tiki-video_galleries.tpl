@@ -6,7 +6,7 @@
 	<div class="navbar">
 		{button href="?edit_mode=1&amp;galleryId=0" _text="{tr}Create New Gallery{/tr}"}
 		{if $galleryId ne 0}
-			{button href="tiki-browse_gallery.php?galleryId=$galleryId" _text="{tr}Browse Gallery{/tr}"}
+			{button href="tiki-browse_video_gallery.php?galleryId=$galleryId" _text="{tr}Browse Gallery{/tr}"}
 		{/if}
 	</div>
 {/if}
@@ -62,7 +62,7 @@
 <tr><td class="formcolor">{tr}Fields to show during browsing the gallery{/tr}:</td>
 <td class="formcolor">
 	<input type="checkbox" name="showname" value="y" {if $showname=='y'}checked="checked"{/if} />{tr}Name{/tr}<br />
-	<input type="checkbox" name="showimageid" value="y" {if $showimageid=='y'}checked="checked"{/if} />{tr}Image ID{/tr}<br />
+	<input type="checkbox" name="showvideoid" value="y" {if $showvideoid=='y'}checked="checked"{/if} />{tr}Video ID{/tr}<br />
 	<input type="checkbox" name="showdescription" value="y" {if $showdescription=='y'}checked="checked"{/if} />{tr}Description{/tr}<br />
 	<input type="checkbox" name="showcreated" value="y" {if $showcreated=='y'}checked="checked"{/if} />{tr}Creation Date{/tr}<br />
 	<input type="checkbox" name="showuser" value="y" {if $showuser=='y'}checked="checked"{/if} />{tr}User{/tr}<br />
@@ -94,9 +94,6 @@
 {tr}You can access the gallery using the following URL{/tr}: <a class="gallink" href="{$url}?galleryId={$galleryId}">{$url}?galleryId={$galleryId}</a>
 </div>
 {/if}
-{/if}
-{if $tiki_p_create_galleries eq 'y' && $galleryId ne 0}
-<div class="navbar"><a href="tiki-video_galleries.php?edit_mode=1&amp;galleryId=0">{tr}Create New Gallery{/tr}</a></div>
 {/if}
 <h2>{tr}Available Galleries{/tr}</h2>
 <div align="center">
@@ -144,7 +141,7 @@
 <th><a href="tiki-video_galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}">{tr}User{/tr}</a></th>
 {/if}
 {if $prefs.gal_list_imgs eq 'y'}
-<th style="text-align:right"><a href="tiki-video_galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'images_desc'}images_asc{else}images_desc{/if}">{tr}Imgs{/tr}</a></th>
+<th style="text-align:right"><a href="tiki-video_galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'videos_desc'}videos_asc{else}videos_desc{/if}">{tr}Videos{/tr}</a></th>
 {/if}
 {if $prefs.gal_list_visits eq 'y'}
 <th style="text-align:right"><a href="tiki-video_galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}Visits{/tr}</a></th>
@@ -178,7 +175,7 @@
   <td class="{cycle advance=false}">{$galleries[changes].user|userlink}</td>
 {/if}
 {if $prefs.gal_list_imgs eq 'y'}
-  <td style="text-align:right;" class="{cycle advance=false}">{$galleries[changes].images}</td>
+  <td style="text-align:right;" class="{cycle advance=false}">{$galleries[changes].videos}</td>
 {/if}
 {if $prefs.gal_list_visits eq 'y'}
   <td style="text-align:right;" class="{cycle advance=false}">{$galleries[changes].hits}</td>
@@ -194,9 +191,6 @@
   {if $tiki_p_admin eq 'y' or $galleries[changes].perms.tiki_p_upload_images eq 'y' }
   {if $tiki_p_admin_galleries eq 'y' or ($user and $galleries[changes].user eq $user) or $galleries[changes].public eq 'y'}
     <a class="gallink" href="tiki-upload_image.php?galleryId={$galleries[changes].galleryId}">{icon _id='upload'}</a>
-  {if ($galleries[changes].geographic eq 'y')}
-    <a class="gallink" href="tiki-video_galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;make_map=1&amp;galleryId={$galleries[changes].galleryId}">{icon _id='wrench' alt='{tr}Make Map{/tr}'}</a>
-  {/if}
   {/if}
   {/if}
   {/if}
