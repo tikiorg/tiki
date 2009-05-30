@@ -1,13 +1,13 @@
 <?php
 
-// $Id: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.58.2.1 2008-03-15 21:11:15 sylvieg Exp $
+// $Id: /cvsroot/tikiwiki/tiki/tiki-vdeo_galleries.php,v 1.58.2.1 2008-03-15 21:11:15 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
-$section = 'galleries';
+$section = 'video_galleries';
 require_once ('tiki-setup.php');
 
 global $videogallib; include_once ("lib/videogals/videogallib.php");
@@ -34,7 +34,7 @@ if (!isset($_REQUEST["galleryId"])) {
 $smarty->assign('galleryId', $_REQUEST["galleryId"]);
 
 $foo = parse_url($_SERVER["REQUEST_URI"]);
-$foo["path"] = str_replace("tiki-galleries", "tiki-browse_gallery", $foo["path"]);
+$foo["path"] = str_replace("tiki-video_galleries", "tiki-browse_video_gallery", $foo["path"]);
 $smarty->assign('url', $tikilib->httpPrefix(). $foo["path"]);
 
 	if (!isset($_REQUEST['maxRows'])) $_REQUEST['maxRows'] = $prefs['maxRowsGalleries'];
@@ -50,7 +50,6 @@ if (isset($_REQUEST['edit']) || isset($_REQUEST['preview']) || $_REQUEST["galler
 	if (!isset($_REQUEST['thumbSizeY'])) $_REQUEST['thumbSizeY'] = 80;
 	if (!isset($_REQUEST['sortorder'])) $_REQUEST['sortorder'] = 'created';
 	if (!isset($_REQUEST['sortdirection'])) $_REQUEST['sortdirection'] = 'desc';
-	if (!isset($_REQUEST['galleryimage'])) $_REQUEST['galleryimage'] = 'first';
 	if (!isset($_REQUEST['parentgallery'])) $_REQUEST['parentgallery'] = -1;
 
 }
@@ -64,23 +63,21 @@ $smarty->assign('maxRows', $_REQUEST['maxRows']);
 $smarty->assign('rowImages', $_REQUEST['rowImages']);
 $smarty->assign('thumbSizeX',$_REQUEST['thumbSizeX']);
 $smarty->assign('thumbSizeY',$_REQUEST['thumbSizeY']);
-$smarty->assign('scaleSize',$_REQUEST['scaleSize']);
-
 $smarty->assign('public', 'n');
 $smarty->assign('edited', 'n');
 $smarty->assign('visible', 'y');
 $smarty->assign('owner', $user);
 $smarty->assign('edit_mode', 'n');
-$options_sortorder=array(tra('id') => 'imageId',
+$options_sortorder=array(tra('id') => 'videoId',
 		tra('Name') => 'name',
 		tra('Creation Date') => 'created',
 		tra('Owner') => 'user',
 		tra('Hits') => 'hits');
 $smarty->assign_by_ref('options_sortorder',$options_sortorder);
-$smarty->assign('sortorder','imageId');
+$smarty->assign('sortorder','videoId');
 $smarty->assign('sortdirection','desc');
 $smarty->assign('showname','y');
-$smarty->assign('showimageid','n');
+$smarty->assign('showvideoid','n');
 $smarty->assign('showcategories','n');
 $smarty->assign('showdescription','n');
 $smarty->assign('showcreated','n');
@@ -106,7 +103,7 @@ if (isset($_REQUEST["edit_mode"]) && $_REQUEST["edit_mode"]) {
 		if ($info = $videogallib->get_gallery_info($_REQUEST["galleryId"])) {
 
 
-		$gallery_images = $videogallib->get_images(0,-1,'name_asc',false,$_REQUEST['galleryId']);
+		//$gallery_videos = $videogallib->get_videos(0,-1,'name_asc',false,$_REQUEST['galleryId']);
 
 		$smarty->assign_by_ref('name', $info["name"]);
 		$smarty->assign_by_ref('description', $info["description"]);
@@ -119,10 +116,9 @@ if (isset($_REQUEST["edit_mode"]) && $_REQUEST["edit_mode"]) {
 		$smarty->assign_by_ref('owner', $info["user"]);
 		$smarty->assign('sortorder',$info['sortorder']);
 		$smarty->assign('sortdirection',$info['sortdirection']);
-		$smarty->assign('galleryimage',$info['galleryimage']);
 		$smarty->assign('parentgallery',$info['parentgallery']);
 		$smarty->assign('showname',$info['showname']);
-		$smarty->assign('showimageid',$info['showimageid']);
+		$smarty->assign('showvideoid',$info['showvideoid']);
 		$smarty->assign('showcategories',$info['showcategories']);;
 		$smarty->assign('showdescription',$info['showdescription']);
 		$smarty->assign('showcreated',$info['showcreated']);
@@ -171,12 +167,11 @@ if (isset($_REQUEST["edit"])) {
 	$smarty->assign_by_ref('rowImages', $_REQUEST["rowImages"]);
 	$smarty->assign_by_ref('thumbSizeX', $_REQUEST["thumbSizeX"]);
 	$smarty->assign_by_ref('thumbSizeY', $_REQUEST["thumbSizeY"]);
-        $smarty->assign('sortorder',$_REQUEST['sortorder']);
+    $smarty->assign('sortorder',$_REQUEST['sortorder']);
 	$smarty->assign('sortdirection',$_REQUEST['sortdirection']);
-	$smarty->assign('galleryimage',$_REQUEST['galleryimage']);
 	$smarty->assign('parentgallery',$_REQUEST['parentgallery']);
 	$smarty->assign('defaultscale',$_REQUEST['defaultscale']);
-	$auxarray=array('showname','showimageid','showdescription','showcreated','showuser','showhits','showxysize','showfilesize','showfilename','showcategories');
+	$auxarray=array('showname','showvideoid','showdescription','showcreated','showuser','showhits','showcategories');
 	foreach($auxarray as $key => $item) {
 		if(!isset($_REQUEST[$item])) {
 			$_REQUEST[$item]='n';
@@ -198,11 +193,13 @@ if (isset($_REQUEST["edit"])) {
 		$public = 'n';
 	}
 
+
+
 	$gid = $videogallib->replace_gallery($_REQUEST["galleryId"], $_REQUEST["name"], $_REQUEST["description"],
 		'', $_REQUEST["owner"], $_REQUEST["maxRows"], $_REQUEST["rowImages"], $_REQUEST["thumbSizeX"], $_REQUEST["thumbSizeY"], $public,
-		$visible,$_REQUEST['sortorder'],$_REQUEST['sortdirection'],$_REQUEST['galleryimage'],$_REQUEST['parentgallery'],
-		$_REQUEST['showname'],$_REQUEST['showimageid'],$_REQUEST['showdescription'],$_REQUEST['showcreated'],
-		$_REQUEST['showuser'],$_REQUEST['showhits'],$_REQUEST['showxysize'],$_REQUEST['showfilesize'],$_REQUEST['showfilename'],$_REQUEST['defaultscale'],$geographic,$_REQUEST['showcategories']);
+		$visible,$_REQUEST['sortorder'],$_REQUEST['sortdirection'],$_REQUEST['parentgallery'],
+		$_REQUEST['showname'],$_REQUEST['showvideoid'],$_REQUEST['showdescription'],$_REQUEST['showcreated'],
+		$_REQUEST['showuser'],$_REQUEST['showhits'],$_REQUEST['showcategories']);
 
 	$smarty->assign('edit_mode', 'n');
 	$smarty->assign('galleryId', '');

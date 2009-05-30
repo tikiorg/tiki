@@ -45,17 +45,17 @@ if (!isset($_REQUEST["galleryId"])) {
 
 $smarty->assign('individual', 'n');
 
-if ($userlib->object_has_one_permission($_REQUEST["galleryId"], 'image gallery')) {
+if ($userlib->object_has_one_permission($_REQUEST["galleryId"], 'video gallery')) {
 	$smarty->assign('individual', 'y');
 
 	if ($tiki_p_admin != 'y') {
-		// Now get all the permissions that are set for this type of permissions 'image gallery'
-		$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'image galleries');
+		// Now get all the permissions that are set for this type of permissions 'video gallery'
+		$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'video galleries');
 
 		foreach ($perms["data"] as $perm) {
 			$permName = $perm["permName"];
 
-			if ($userlib->object_has_permission($user, $_REQUEST["galleryId"], 'image gallery', $permName)) {
+			if ($userlib->object_has_permission($user, $_REQUEST["galleryId"], 'video gallery', $permName)) {
 				$$permName = 'y';
 
 				$smarty->assign("$permName", 'y');
@@ -67,7 +67,7 @@ if ($userlib->object_has_one_permission($_REQUEST["galleryId"], 'image gallery')
 		}
 	}
 } elseif ($tiki_p_admin != 'y' && $prefs['feature_categories'] == 'y') {
-	$perms_array = $categlib->get_object_categories_perms($user, 'image gallery', $_REQUEST['galleryId']);
+	$perms_array = $categlib->get_object_categories_perms($user, 'video gallery', $_REQUEST['galleryId']);
    	if ($perms_array) {
    		$is_categorized = TRUE;
     	foreach ($perms_array as $perm => $value) {
@@ -85,16 +85,16 @@ if ($userlib->object_has_one_permission($_REQUEST["galleryId"], 'image gallery')
 }
 
 if ($tiki_p_admin_galleries == 'y') {
-	$tiki_p_view_image_gallery = 'y';
+	$tiki_p_view_video_gallery = 'y';
 
-	$smarty->assign("tiki_p_view_image_gallery", 'y');
-	$tiki_p_upload_images = 'y';
-	$smarty->assign("tiki_p_upload_images", 'y');
+	$smarty->assign("tiki_p_view_video_gallery", 'y');
+	$tiki_p_upload_videos = 'y';
+	$smarty->assign("tiki_p_upload_videos", 'y');
 	$tiki_p_create_galleries = 'y';
 	$smarty->assign("tiki_p_create_galleries", 'y');
 }
 
-if ($tiki_p_view_image_gallery != 'y') {
+if ($tiki_p_view_video_gallery != 'y') {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied you can not view this section"));
 
@@ -119,7 +119,7 @@ if ($_REQUEST["galleryId"] != 0) {
 	$gal_info["public"] = 'y';
 	$gal_info["description"] = 'System Gallery';
 	$gal_info['showname'] ='y';
-	$gal_info['showimageid'] ='n';
+	$gal_info['showvideoid'] ='n';
 	$gal_info['showcategories'] ='n';
 	$gal_info['showdescription'] ='n';
 	$gal_info['showcreated'] ='n';
@@ -133,7 +133,7 @@ $smarty->assign_by_ref('owner', $gal_info["user"]);
 $smarty->assign_by_ref('public', $gal_info["public"]);
 $smarty->assign_by_ref('galleryId', $_REQUEST["galleryId"]);
 $smarty->assign_by_ref('showname', $gal_info['showname']);
-$smarty->assign_by_ref('showimageid', $gal_info['showimageid']);
+$smarty->assign_by_ref('showvideoid', $gal_info['showvideoid']);
 $smarty->assign_by_ref('showcategories', $gal_info['showcategories']);
 $smarty->assign_by_ref('showdescription', $gal_info['showdescription']);
 $smarty->assign_by_ref('showcreated', $gal_info['showcreated']);
@@ -144,85 +144,43 @@ $smarty->assign_by_ref('showhits', $gal_info['showhits']);
 $videogallib->add_gallery_hit($_REQUEST["galleryId"]);
 
 if (isset($_REQUEST["remove"])) {
-	check_ticket('browse-gallery');
-	// To remove an image the user must be the owner or admin
+	check_ticket('browse-video_gallery');
+	// To remove an video the user must be the owner or admin
 	if (($tiki_p_admin_galleries != 'y') && (!$user || $user != $gal_info["user"])) {
 		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra("Permission denied you cannot remove images from this gallery"));
+		$smarty->assign('msg', tra("Permission denied you cannot remove videos from this gallery"));
 
 		$smarty->display("error.tpl");
 		die;
 	}
 
-  $area = 'delgalimage';
+  $area = 'delgalvideo';
   if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
-		$videogallib->remove_image($_REQUEST["remove"]);
+		$videogallib->remove_video($_REQUEST["remove"]);
 	} else {
 		key_get($area);
 	}
 }
 
-if (isset($_REQUEST["rebuild"])) {
-	check_ticket('browse-gallery');
-	// To rebuild thumbnails the user must be the owner or admin
-	if (($tiki_p_admin_galleries != 'y') && (!$user || $user != $gal_info["user"])) {
-		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra("Permission denied you cannot rebuild thumbnails in this gallery"));
-
-		$smarty->display("error.tpl");
-		die;
-	}
-	$smarty->assign('advice', 'You must clear your browser cache.');//get_strings tra('You must clear your browser cache.');
-
-	$videogallib->rebuild_thumbnails($_REQUEST["rebuild"]);
-}
-
-if (isset($_REQUEST["rotateright"])) {
-	check_ticket('browse-gallery');
-	// To rotate an image the user must be the owner or admin
-	if (($tiki_p_admin_galleries != 'y') && (!$user || $user != $gal_info["user"])) {
-		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra("Permission denied you cannot rotate images in this gallery"));
-
-		$smarty->display("error.tpl");
-		die;
-	}
-
-	$videogallib->rotate_right_image($_REQUEST["rotateright"]);
-}
-
-if (isset($_REQUEST["rotateleft"])) {
-	check_ticket('browse-gallery');
-	// To rotate an image the user must be the owner or admin
-	if (($tiki_p_admin_galleries != 'y') && (!$user || $user != $gal_info["user"])) {
-		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra("Permission denied you cannot rotate images in this gallery"));
-
-		$smarty->display("error.tpl");
-		die;
-	}
-
-	$videogallib->rotate_left_image($_REQUEST["rotateleft"]);
-}
 // Watches
 if($prefs['feature_user_watches'] == 'y') {
     if($user && isset($_REQUEST['watch_event'])) {
-		check_ticket('browse-gallery');
+		check_ticket('browse-video_gallery');
 		if($_REQUEST['watch_action']=='add') {
-	    	$tikilib->add_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object'],'image gallery',$gal_info['name'],'tiki-browse_gallery.php?galleryId='.$_REQUEST['galleryId']);
+	    	$tikilib->add_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object'],'video gallery',$gal_info['name'],'tiki-browse_video_gallery.php?galleryId='.$_REQUEST['galleryId']);
 		} else {
-	    	$tikilib->remove_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object'], 'image gallery');
+	    	$tikilib->remove_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object'], 'video gallery');
 		}
     }
     $smarty->assign('user_watching_gal','n');
-    if($user && $tikilib->user_watches($user,'image_gallery_changed',$_REQUEST['galleryId'], 'image gallery')) {
+    if($user && $tikilib->user_watches($user,'video_gallery_changed',$_REQUEST['galleryId'], 'video gallery')) {
 	$smarty->assign('user_watching_gal','y');
     }
 
-    // Check, if the user is watching this image gallery by a category.
+    // Check, if the user is watching this video gallery by a category.
 	if ($prefs['feature_categories'] == 'y') {
-	    $watching_categories_temp=$categlib->get_watching_categories($_REQUEST['galleryId'],'image gallery',$user);
+	    $watching_categories_temp=$categlib->get_watching_categories($_REQUEST['galleryId'],'video gallery',$user);
 	    $smarty->assign('category_watched','n');
 	 	if (count($watching_categories_temp) > 0) {
 	 		$smarty->assign('category_watched','y');
@@ -248,7 +206,7 @@ if ($_REQUEST["galleryId"] == 0) {
 	$info["description"] = 'System Gallery';
 	$info['sortorder'] = 'created';
 	$info['sortdirection'] = 'desc';
-	$info['galleryimage'] = 'last';
+	$info['galleryvideo'] = 'last';
 	$smarty->assign('system', 'y');
 } else {
 	$info = $videogallib->get_gallery($_REQUEST["galleryId"]);
@@ -274,13 +232,6 @@ $smarty->assign('title', $info["name"]);
 $smarty->assign_by_ref('description', $info["description"]);
 
 
-// Can we rotate images
-if ($videogallib->canrotate) {
-	$smarty->assign('imagerotate', true);
-} else {
-	$smarty->assign('imagerotate', false);
-}
-
 if (!isset($_REQUEST["sort_mode"])) {
 	if(isset($info['sortorder'])) {
 		// default sortorder from gallery settings
@@ -290,6 +241,7 @@ if (!isset($_REQUEST["sort_mode"])) {
 	}
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
+
 }
 
 $smarty->assign_by_ref('sort_mode', $sort_mode);
@@ -316,7 +268,6 @@ $smarty->assign_by_ref('find', $find);
 $subgals = $videogallib->get_subgalleries($offset, $maxImages, $sort_mode, '', $_REQUEST["galleryId"]);
 $remainingImages = $maxImages-count($subgals['data']);
 $newoffset = $offset -$subgals['cant'];
-$images = $videogallib->get_images($newoffset, $remainingImages, $sort_mode, $find, $_REQUEST["galleryId"]);
 $videos = $videogallib->get_videos($newoffset, $remainingImages, $sort_mode, $find, $_REQUEST["galleryId"]);
 
 $conf = kaltura_init_config();
@@ -331,56 +282,54 @@ $res =$cl->start($user, $conf->secret);
 for($i=0;$i<=count($videos['data'])-1;$i++){
 
 	$entry_id=$videos['data'][$i]['entryId'];
-	print $entry_id;
 	$res = $cl->getEntry ( $kuser , $entry_id);
 	$videos['data'][$i]= array_merge($videos['data'][$i],$res['result']['entry']);
 
 }
 
-print_r($videos);
-//get categories for each images
+//print_r($videos);
+//get categories for each videos
 global $objectlib;
 if ($prefs['feature_categories'] == 'y') {
-	$type='image';
+	$type='video';
 	$arr=array();
-	for($i=0;$i<=count($images['data'])-1;$i++){
-		$img_id=$images['data'][$i]['imageId'];
-		$arr= $categlib->get_object_categories($type, $img_id);
+	for($i=0;$i<=count($videos['data'])-1;$i++){
+		$vid_id=$videos['data'][$i]['videoId'];
+		$arr= $categlib->get_object_categories($type, $vid_id);
 		//adding categories to the object
 		for ($k=0; $k<=count($arr)-1; $k++){
-			$images['data'][$i]['categories'][$k]=$categlib->get_category_name($arr[$k]);
+			$videos['data'][$i]['categories'][$k]=$categlib->get_category_name($arr[$k]);
 		}
 	}
 }
-$smarty->assign('num_objects',count($subgals['data'])+count($images['data']));
+$smarty->assign('num_objects',count($subgals['data'])+count($videos['data']));
 $smarty->assign('num_subgals',count($subgals['data']));
-$smarty->assign('num_images',count($images['data']));
+//$smarty->assign('num_videos',count($videos['data']));
 
 $smarty->assign_by_ref('videos', $videos["data"]);
-$smarty->assign_by_ref('images', $images["data"]);
-$smarty->assign('cant', $subgals['cant']+ $images['cant']);
+$smarty->assign('cant', $subgals['cant']+ $videos['cant']);
 $smarty->assign_by_ref('subgals', $subgals['data']);
 
 // Mouseover data
-if ( $prefs['gal_image_mouseover'] != 'n' ) {
-	foreach ( $images['data'] as $k => $v ) {
+if ( $prefs['gal_video_mouseover'] != 'n' ) {
+	foreach ( $videos['data'] as $k => $v ) {
 		$smarty->assign_by_ref('file_info', $v);
 		$over_info[$k] = $smarty->fetch("tiki-file_info_box.tpl");
 	}
 	$smarty->assign_by_ref('over_info', $over_info);
 }
 
-if ($prefs['feature_image_galleries_comments'] == 'y') {
-	$comments_per_page = $prefs['image_galleries_comments_per_page'];
+if ($prefs['feature_video_galleries_comments'] == 'y') {
+	$comments_per_page = $prefs['video_galleries_comments_per_page'];
 
-	$thread_sort_mode = $prefs['image_galleries_comments_default_order'];
+	$thread_sort_mode = $prefs['video_galleries_comments_default_order'];
 	$comments_vars = array(
 		'galleryId',
 		'offset',
 		'sort_mode'
 	);
 
-	$comments_prefix_var = 'image gallery:';
+	$comments_prefix_var = 'video gallery:';
 	$comments_object_var = 'galleryId';
 	include_once ("comments.php");
 }
@@ -388,17 +337,17 @@ if ($prefs['feature_image_galleries_comments'] == 'y') {
 include_once ('tiki-section_options.php');
 
 if ($prefs['feature_theme_control'] == 'y') {
-	$cat_type = 'image gallery';
+	$cat_type = 'video gallery';
 
 	$cat_objid = $_REQUEST["galleryId"];
 	include ('tiki-tc.php');
 }
-ask_ticket('browse-gallery');
+ask_ticket('browse-video_gallery');
 //add a hit
-$statslib->stats_hit($gal_info["name"],"image gallery",$_REQUEST["galleryId"]);
+$statslib->stats_hit($gal_info["name"],"video gallery",$_REQUEST["galleryId"]);
 if ($prefs['feature_actionlog'] == 'y') {
 	include_once('lib/logs/logslib.php');
-	$logslib->add_action('Viewed', $_REQUEST['galleryId'], 'image gallery');
+	$logslib->add_action('Viewed', $_REQUEST['galleryId'], 'video gallery');
 }
 
 // Display the template
