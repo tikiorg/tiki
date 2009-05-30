@@ -188,7 +188,6 @@ $smarty->assign_by_ref('owner', $gal_info["user"]);
 $smarty->assign_by_ref('videoId', $videoId);
 $smarty->assign_by_ref('name', $info["name"]);
 $smarty->assign_by_ref('title', $info["name"]);
-$smarty->assign_by_ref('galleryId', $info["galleryId"]);
 $smarty->assign_by_ref('description', $info["kshow"]["description"]);
 $smarty->assign_by_ref('created', $info["createdAtAsInt"]);
 $smarty->assign_by_ref('hits', $info["views"]);
