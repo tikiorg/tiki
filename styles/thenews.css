@@ -1720,7 +1720,7 @@ div.blogheading {
 }
 
 div.blogtitle {
-	font-size: 1.3em;
+	font-size: 1.8em;
 	font-weight: bold;
 	padding: 3px;
 	margin-top: 10px;
@@ -1805,9 +1805,13 @@ span.posthead span.link {
 
 body.tiki_blogs .post .title {margin-top: 0}
 
-/*div.posthead h3*/
+.tiki_blogs #tiki-center .postbody-title,
+.tiki_blogs #tiki-center .title {
+	padding-left: 0;
+	margin-left: 0}
+
 body.tiki_blogs .post .title h2 {
-	font-size: 1.2em;
+	font-size: 1.7em;
 	margin-top: 0}
  
 /*div.postbody*/
