@@ -3,11 +3,11 @@
 
   {title}{tr}Browsing Video:{/tr}&nbsp;{$name}{/title}
 
-<div id="{$rootid}browse_image">
+<div id="{$rootid}browse_video">
   <div class="navbar">
-		{button href="tiki-browse_gallery.php?galleryId=$galleryId&amp;offset=$offset" _text="{tr}Return to Gallery{/tr}"}
+		{button href="tiki-browse_video_gallery.php?galleryId=$galleryId&amp;offset=$offset" _text="{tr}Return to Gallery{/tr}"}
     {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
-			{button href="tiki-edit_video.php?galleryId=$galleryId&amp;edit=$videoId&amp;sort_mode=$sort_mode" _text="{tr}Edit Image{/tr}"}
+			{button href="tiki-edit_video.php?galleryId=$galleryId&amp;edit=$videoId&amp;sort_mode=$sort_mode" _text="{tr}Edit Video{/tr}"}
     {/if}
 </div>
 
