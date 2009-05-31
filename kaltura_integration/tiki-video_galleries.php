@@ -38,14 +38,14 @@ $foo["path"] = str_replace("tiki-video_galleries", "tiki-browse_video_gallery", 
 $smarty->assign('url', $tikilib->httpPrefix(). $foo["path"]);
 
 	if (!isset($_REQUEST['maxRows'])) $_REQUEST['maxRows'] = $prefs['maxRowsGalleries'];
-	if (!isset($_REQUEST['rowImages'])) $_REQUEST['rowImages'] = $prefs['rowImagesGalleries'];
-	if (!isset($_REQUEST['thumbSizeX'])) $_REQUEST['thumbSizeX'] = $prefs['thumbSizeXGalleries'];
-	if (!isset($_REQUEST['thumbSizeY'])) $_REQUEST['thumbSizeY'] = $prefs['thumbSizeYGalleries'];
+	if (!isset($_REQUEST['rowVideos'])) $_REQUEST['rowVideos'] = $prefs['rowVideosGalleries'];
+	if (!isset($_REQUEST['thumbSizeX'])) $_REQUEST['thumbSizeX'] = $prefs['thumbSizeXVideoGalleries'];
+	if (!isset($_REQUEST['thumbSizeY'])) $_REQUEST['thumbSizeY'] = $prefs['thumbSizeYVideoGalleries'];
 
 if (isset($_REQUEST['edit']) || isset($_REQUEST['preview']) || $_REQUEST["galleryId"] == 0) {
 	if (!isset($_REQUEST['description'])) $_REQUEST['description'] = '';
 	if (!isset($_REQUEST['maxRows'])) $_REQUEST['maxRows'] = 10;
-	if (!isset($_REQUEST['rowImages'])) $_REQUEST['rowImages'] = 6;
+	if (!isset($_REQUEST['rowVideos'])) $_REQUEST['rowVideos'] = 6;
 	if (!isset($_REQUEST['thumbSizeX'])) $_REQUEST['thumbSizeX'] = 80;
 	if (!isset($_REQUEST['thumbSizeY'])) $_REQUEST['thumbSizeY'] = 80;
 	if (!isset($_REQUEST['sortorder'])) $_REQUEST['sortorder'] = 'created';
@@ -60,7 +60,7 @@ if (isset($_REQUEST['edit']) || isset($_REQUEST['preview']) || $_REQUEST["galler
 $smarty->assign('name', '');
 $smarty->assign('description', '');
 $smarty->assign('maxRows', $_REQUEST['maxRows']);
-$smarty->assign('rowImages', $_REQUEST['rowImages']);
+$smarty->assign('rowVideos', $_REQUEST['rowVideos']);
 $smarty->assign('thumbSizeX',$_REQUEST['thumbSizeX']);
 $smarty->assign('thumbSizeY',$_REQUEST['thumbSizeY']);
 $smarty->assign('public', 'n');
@@ -108,7 +108,7 @@ if (isset($_REQUEST["edit_mode"]) && $_REQUEST["edit_mode"]) {
 		$smarty->assign_by_ref('name', $info["name"]);
 		$smarty->assign_by_ref('description', $info["description"]);
 		$smarty->assign_by_ref('maxRows', $info["maxRows"]);
-		$smarty->assign_by_ref('rowImages', $info["rowImages"]);
+		$smarty->assign_by_ref('rowVideos', $info["rowVideos"]);
 		$smarty->assign_by_ref('thumbSizeX', $info["thumbSizeX"]);
 		$smarty->assign_by_ref('thumbSizeY', $info["thumbSizeY"]);
 		$smarty->assign_by_ref('public', $info["public"]);
@@ -164,7 +164,7 @@ if (isset($_REQUEST["edit"])) {
 	$smarty->assign_by_ref('owner', $_REQUEST["owner"]);
 	$smarty->assign_by_ref('description', $_REQUEST["description"]);
 	$smarty->assign_by_ref('maxRows', $_REQUEST["maxRows"]);
-	$smarty->assign_by_ref('rowImages', $_REQUEST["rowImages"]);
+	$smarty->assign_by_ref('rowVideos', $_REQUEST["rowVideos"]);
 	$smarty->assign_by_ref('thumbSizeX', $_REQUEST["thumbSizeX"]);
 	$smarty->assign_by_ref('thumbSizeY', $_REQUEST["thumbSizeY"]);
     $smarty->assign('sortorder',$_REQUEST['sortorder']);
@@ -196,7 +196,7 @@ if (isset($_REQUEST["edit"])) {
 
 
 	$gid = $videogallib->replace_gallery($_REQUEST["galleryId"], $_REQUEST["name"], $_REQUEST["description"],
-		'', $_REQUEST["owner"], $_REQUEST["maxRows"], $_REQUEST["rowImages"], $_REQUEST["thumbSizeX"], $_REQUEST["thumbSizeY"], $public,
+		'', $_REQUEST["owner"], $_REQUEST["maxRows"], $_REQUEST["rowVideos"], $_REQUEST["thumbSizeX"], $_REQUEST["thumbSizeY"], $public,
 		$visible,$_REQUEST['sortorder'],$_REQUEST['sortdirection'],$_REQUEST['parentgallery'],
 		$_REQUEST['showname'],$_REQUEST['showvideoid'],$_REQUEST['showdescription'],$_REQUEST['showcreated'],
 		$_REQUEST['showuser'],$_REQUEST['showhits'],$_REQUEST['showcategories']);
@@ -268,8 +268,8 @@ for ($i = 0; $i < $temp_max; $i++) {
 	}
 
 	// check if has subgalleries (parent of any children)
-	$maxImages = 1;
-	$subgals = $videogallib->get_subgalleries($offset, $maxImages, $sort_mode, '', $galleries["data"][$i]["galleryId"]);
+	$maxVideos = 1;
+	$subgals = $videogallib->get_subgalleries($offset, $maxVideos, $sort_mode, '', $galleries["data"][$i]["galleryId"]);
 	if (count($subgals['data']) > 0) {
 		$galleries["data"][$i]["parentgal"] = 'y';
 	} else {
