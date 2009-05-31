@@ -62,42 +62,36 @@
 {/if}
 
 {if !empty($mail_msg)}
-<div class="wikitext">{$mail_msg}</div>
+	<div class="wikitext">{$mail_msg}</div>
 {/if}
 
-{if count($err_mandatory) > 0}<div class="simplebox highlight">
-{tr}Following mandatory fields are missing{/tr}&nbsp;:<br/>
-	{section name=ix loop=$err_mandatory}
-{$err_mandatory[ix].name}{if !$smarty.section.ix.last},&nbsp;{/if}
-	{/section}
-</div><br />{/if}
-{if count($err_value) > 0}<div class="simplebox highlight">
-{tr}Following fields are incorrect{/tr}&nbsp;:<br/>
-	{section name=ix loop=$err_value}
-{$err_value[ix].name}{if !$smarty.section.ix.last},&nbsp;{/if}
-	{/section}
-</div><br />{/if}
-{if $prefs.feature_tabs eq 'y'}
-{cycle name=tabs values="1,2,3,4" print=false advance=false reset=true}
-<div class="tabs">
+{if count($err_mandatory) > 0}
+	<div class="simplebox highlight">
+		{tr}Following mandatory fields are missing{/tr}&nbsp;:
+		<br/>
+		{section name=ix loop=$err_mandatory}
+			{$err_mandatory[ix].name}
+			{if !$smarty.section.ix.last},&nbsp;{/if}
+		{/section}
+	</div>
+	<br />
+{/if}
+
+{if count($err_value) > 0}
+	<div class="simplebox highlight">
+		{tr}Following fields are incorrect{/tr}&nbsp;:<br/>
+		{section name=ix loop=$err_value}
+			{$err_value[ix].name}{if !$smarty.section.ix.last},&nbsp;{/if}
+		{/section}
+	</div>
+	<br />
+{/if}
+
+{tabset name='tabs_view_tracker'}
+
 {if $tiki_p_view_trackers eq 'y' or ($tracker_info.writerCanModify eq 'y' and $user)}
-<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Tracker Items{/tr}</a></span>
-{/if}
-{if $tiki_p_create_tracker_items eq 'y'}
-<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Insert New Item{/tr}</a></span>
-{/if}
-{if $tiki_p_export_tracker eq 'y'}
-	<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Export Tracker Items{/tr}</a></span>
-{/if}
-
-
-</div>
-{/if}
-
-{cycle name=content values="1,2,3" print=false advance=false reset=true}
+{tab name='{tr}Tracker Items{/tr}'}
 {* -------------------------------------------------- tab with list --- *}
-{if $tiki_p_view_trackers eq 'y' or ($tracker_info.writerCanModify eq 'y' and $user)}
-<div id="content{cycle name=content assign=focustab}{$focustab}"{if $prefs.feature_tabs eq 'y'} class="tabcontent"{/if}>
 
 {if (($tracker_info.showStatus eq 'y' and $tracker_info.showStatusAdminOnly ne 'y') or $tiki_p_admin_trackers eq 'y') or $show_filters eq 'y'}
 {include file="tracker_filter.tpl"}
@@ -244,13 +238,12 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
 </form>
 {pagination_links cant=$item_count step=$maxRecords offset=$offset}{/pagination_links}
 {/if}
-</div>
-{else}<!-- {cycle name=content assign=focustab} -->
+{/tab}
 {/if}
 
-{* --------------------------------------------------------------------------------- tab with edit --- *}
 {if $tiki_p_create_tracker_items eq 'y'}
-<div id="content{cycle name=content assign=focustab}{$focustab}"{if $prefs.feature_tabs eq 'y'} class="tabcontent"{/if}>
+{tab name='{tr}Insert New Item{/tr}'}
+{* --------------------------------------------------------------------------------- tab with edit --- *}
 <form enctype="multipart/form-data" action="tiki-view_tracker.php" method="post">
 <input type="hidden" name="trackerId" value="{$trackerId|escape}" />
 
@@ -523,15 +516,16 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 </tr>
 </table>
 </form>
-</div>
+{/tab}
 {/if}
 
-{* -------------------------------------------------- tab with export --- *}
 {if $tiki_p_export_tracker eq 'y'}
-<div id="content{cycle name=content assign=focustab}{$focustab}"{if $prefs.feature_tabs eq 'y'} class="tabcontent"{/if}>
-{include file=tiki-export_tracker.tpl}
-</div>
+	{tab name='{tr}Export Tracker Items{/tr}'}
+	{* -------------------------------------------------- tab with export --- *}
+		{include file=tiki-export_tracker.tpl}
+	{/tab}
 {/if}
+{/tabset}
 
 
 {foreach from=$fields key=ix item=field_value}

@@ -69,25 +69,11 @@
 </div><br />
 {/if}
 
-{if $prefs.feature_tabs eq 'y'}
-{cycle name=tabs values="1,2,3,4,5" print=false advance=false reset=true}
-<div class="tabs">
-<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}View{/tr}</a></span>
-{if $tracker_info.useComments eq 'y' and ($tiki_p_tracker_view_comments ne 'n' or $tiki_p_comment_tracker_items ne 'n') }
-<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}Comments{/tr}{if $tiki_p_tracker_view_comments ne 'n'} ({$commentCount}){/if}</a></span>
-{/if}
-{if $tracker_info.useAttachments eq 'y'}
-<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}Attachments{/tr} ({$attCount})</a></span>
-{/if}
-{if $tiki_p_modify_tracker_items eq 'y' or $special}
-<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}Edit/Delete{/tr}</a></span>
-{/if}
-</div>
-{/if}
+{tabset name='tabs_view_tracker_item'}
 
-{cycle name=content values="1,2,3,4,5" print=false advance=false reset=true}
+{tab name='{tr}View{/tr}'}
 {* --- tab with view ------------------------------------------------------------------------- *}
-<div id="content{cycle name=content assign=focustab}{$focustab}"{if $prefs.feature_tabs eq 'y'} class="tabcontent" style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
+
 <h2>{tr}View Item{/tr}</h2>
 <table class="normal">
 {if $tracker_info.showStatus eq 'y' and ($tracker_info.showStatusAdminOnly ne 'y' or $tiki_p_admin_trackers eq 'y')}
@@ -136,11 +122,19 @@
 {if $tracker_info.showCreatedView eq 'y'}<tr class="formcolor"><td class="formlabel">{tr}Created{/tr}</td><td colspan="3" class="formcontent">{$info.created|tiki_long_datetime}</td></tr>{/if}
 {if $tracker_info.showLastModifView eq 'y'}<tr class="formcolor"><td class="formlabel">{tr}LastModif{/tr}</td><td colspan="3" class="formcontent">{$info.lastModif|tiki_long_datetime}</td></tr>{/if}
 </table>
-</div>
+{/tab}
 
 {* -------------------------------------------------- tab with comments --- *}
 {if $tracker_info.useComments eq 'y' and ($tiki_p_tracker_view_comments ne 'n' or $tiki_p_comment_tracker_items ne 'n') }
-<div id="content{cycle name=content assign=focustab}{$focustab}"{if $prefs.feature_tabs eq 'y'} class="tabcontent" style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
+
+{if $tiki_p_tracker_view_comments ne 'n'}
+	{assign var=tabcomment_vtrackit value="{tr}Comments{/tr} (`$commentCount`)"}
+{else}
+	{assign var=tabcomment_vtrackit value="{tr}Comments{/tr}}
+{/if} 
+
+{tab name=$tabcomment_vtrackit}
+
 {if $tiki_p_comment_tracker_items eq 'y'}
 <h2>{tr}Add a Comment{/tr}</h2>
 <form action="tiki-view_tracker_item.php" method="post" id="commentform" name="commentform">
@@ -174,19 +168,19 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>&nbsp;&nbsp;
 </div>
 {/section}
 {/if}
-</div>
+{/tab}
 {/if}
 
 {* ---------------------------------------- tab with attachements --- *}
 {if $tracker_info.useAttachments eq 'y'}
-<div id="content{cycle name=content assign=focustab}{$focustab}"{if $prefs.feature_tabs eq 'y'} class="tabcontent" style="display:{if $focustab eq $cookietab}block{else}none{/if};" {/if}>
-{include file=attachments_tracker.tpl}
-</div>
+	{tab name="{tr}Attachments{/tr} (`$attCount`)"}
+		{include file=attachments_tracker.tpl}
+	{/tab}
 {/if}
 
 {* --------------------------------------------------------------- tab with edit --- *}
 {if $tiki_p_modify_tracker_items eq 'y' or $special}
-<div id="content{cycle name=content assign=focustab}{$focustab}"{if $prefs.feature_tabs eq 'y'} class="tabcontent nohighlight" style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
+{tab name='{tr}Edit/Delete{/tr}'}
 <h2>{tr}Edit Item{/tr}</h2>
 <form enctype="multipart/form-data" action="tiki-view_tracker_item.php" method="post">
 {if $special}
@@ -525,8 +519,10 @@ or $cur_field.type eq 'i'}
 <h2>{tr}Special Operations{/tr}</h2>
 {$trkact}
 {/if}
-</div>{*nohighlight - important comment to delimit the zone not to highlight in a search result*}
+{/tab}{*nohighlight - important comment to delimit the zone not to highlight in a search result*}
 {/if}
+
+{/tabset}
 
 <br /><br />
 

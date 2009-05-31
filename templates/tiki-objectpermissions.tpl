@@ -6,16 +6,12 @@
   {button href="$referer" _text="{tr}Back{/tr}"}
 </div>
 
-{if $prefs.feature_tabs eq 'y'}
-  <div class="tabs" style="clear: both;">
-	  <span id="tab1" class="tabmark tabactive"><a href="javascript:tikitabs(1,3);">{tr}View Permissions{/tr}</a></span>
-	  <span id="tab2" class="tabmark tabinactive"><a href="javascript:tikitabs(2,3);">{tr}Edit Permissions{/tr}</a></span>
-  </div>
-{/if}
+{tabset name='tabs_objectpermissions'}
 
-<fieldset {if $prefs.feature_tabs eq 'y'}id="content1"  class="tabcontent" style="clear:both;display:block; margin-left: 0;"{/if}>
+{tab name='{tr}View Permissions{/tr}'}
+
 {if $prefs.feature_tabs neq 'y'}
-	<legend class="heading"><a href="#"><span>{tr}View Permissions{/tr}</span></a></legend>
+	<h2>{tr}View Permissions{/tr}</h2>
 {/if}
 {if $filegals_manager eq ''}
 {remarksbox type="warning" title="{tr}Warning{/tr}"}{tr}These permissions override any global permissions or category permissions affecting this object.{/tr}<br />
@@ -65,12 +61,12 @@
 <tr><td colspan="3">{if empty($page_perms)}{tr}No category permissions; global permissions apply{/tr}{else}{tr}No category permissions; special permissions apply{/tr}{/if}</td></tr>
 {/section}
 </table>
-</fieldset>
+{/tab}
 
+{tab name='{tr}Edit Permissions{/tr}'}
 
-<fieldset {if $prefs.feature_tabs eq 'y'}id="content2"  class="tabcontent" style="clear:both;display:block; margin-left:0;"{/if}>
 {if $prefs.feature_tabs neq 'y'}
-	<legend class="heading"><a href="#"><span>{tr}Edit Permissions{/tr}</span></a></legend>
+	<h2>{tr}Edit Permissions{/tr}</h2>
 {/if}
 <form method="post" action="tiki-objectpermissions.php{if $filegals_manager neq ''}?filegals_manager={$filegals_manager|escape}{/if}">
 {if $filegals_manager eq ''}
@@ -180,7 +176,7 @@
 {/section}
 </table>
 
-{* <a class="trailer" href="#" {popup sticky=true fullhtml="1" hauto=true vauto=true text=$smarty.capture.add_perm|escape:"javascript"|escape:"html"  trigger=onClick} >{tr}Add new Permissions{/tr}</a> *}
 </div>
 </form>
-</fieldset>
+{/tab}
+{/tabset}
