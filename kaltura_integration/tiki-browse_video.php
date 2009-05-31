@@ -10,7 +10,6 @@
 $section = "video_galleries";
 require_once('tiki-setup.php');
 
-include_once ("lib/kaltura/includes.php");
 include_once ("lib/videogals/videogallib.php");
 include_once ('lib/stats/statslib.php');
 
@@ -144,17 +143,6 @@ $smarty->assign('url_base', $foo["path"] .
 $smarty->assign('url_show', $tikilib->httpPrefix(). $foo2);
 
 $info = $videogallib->get_video_info($videoId);
-
-		$conf = kaltura_init_config();
-
-		$kuser = new KalturaSessionUser();
-		$kuser->userId = "123";
-		$cl = new KalturaClient($conf);
-		$kres =$cl->start($user, $conf->secret);
-
-$res= $cl->getEntry ( $kuser , $info[entryId],1);
-
-$info = $res['result']['entry'];
 
 //print_r($info);
 $smarty->assign_by_ref('entryId', $info['id']);

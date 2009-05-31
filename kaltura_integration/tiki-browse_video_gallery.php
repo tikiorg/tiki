@@ -9,8 +9,6 @@
 // Initialization
 $section = 'galleries';
 require_once ('tiki-setup.php');
-
-include_once ("lib/kaltura/includes.php");
 include_once ("lib/videogals/videogallib.php");
 include_once ('lib/stats/statslib.php');
 
@@ -269,23 +267,6 @@ $subgals = $videogallib->get_subgalleries($offset, $maxImages, $sort_mode, '', $
 $remainingImages = $maxImages-count($subgals['data']);
 $newoffset = $offset -$subgals['cant'];
 $videos = $videogallib->get_videos($newoffset, $remainingImages, $sort_mode, $find, $_REQUEST["galleryId"]);
-
-$conf = kaltura_init_config();
-
-$kuser = new KalturaSessionUser();
-$kuser->userId = "123";
-$cl = new KalturaClient($conf);
-
-
-$res =$cl->start($user, $conf->secret);
-
-for($i=0;$i<=count($videos['data'])-1;$i++){
-
-	$entry_id=$videos['data'][$i]['entryId'];
-	$res = $cl->getEntry ( $kuser , $entry_id);
-	$videos['data'][$i]= array_merge($videos['data'][$i],$res['result']['entry']);
-
-}
 
 //print_r($videos);
 //get categories for each videos
