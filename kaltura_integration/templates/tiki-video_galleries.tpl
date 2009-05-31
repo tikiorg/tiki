@@ -1,5 +1,5 @@
 {* $Id: tiki-video_galleries.tpl 17668 2009-03-27 22:39:52Z sylvieg $ *}
-{title help="Image+Galleries" admpage="gal"}{tr}Galleries{/tr}{/title}
+{title help="Video+Galleries" admpage="gal"}{tr}Galleries{/tr}{/title}
 {if $tiki_p_create_galleries eq 'y'}
 
 {if $edit_mode ne 'y' or $galleryId ne 0}
@@ -165,6 +165,7 @@
 {if $prefs.gal_list_description eq 'y'}
   <td class="{cycle advance=false}">{$galleries[changes].description}</td>
 {/if}
+{created}
 {if $prefs.gal_list_created eq 'y'}
   <td class="{cycle advance=false}">{$galleries[changes].created|tiki_short_datetime}</td>
 {/if}
@@ -187,18 +188,18 @@
       <a class="gallink" title="{tr}Edit{/tr}" href="tiki-video_galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;edit_mode=1&amp;galleryId={$galleries[changes].galleryId}">{icon _id='page_edit'}</a>
     {/if}
   {/if}
-  {if $galleries[changes].perms.tiki_p_upload_images eq 'y'}
-  {if $tiki_p_admin eq 'y' or $galleries[changes].perms.tiki_p_upload_images eq 'y' }
+  {if $galleries[changes].perms.tiki_p_upload_videos eq 'y'}
+  {if $tiki_p_admin eq 'y' or $galleries[changes].perms.tiki_p_upload_videos eq 'y' }
   {if $tiki_p_admin_galleries eq 'y' or ($user and $galleries[changes].user eq $user) or $galleries[changes].public eq 'y'}
-    <a class="gallink" href="tiki-upload_image.php?galleryId={$galleries[changes].galleryId}">{icon _id='upload'}</a>
+    <a class="gallink" href="tiki-upload_video.php?galleryId={$galleries[changes].galleryId}">{icon _id='upload'}</a>
   {/if}
   {/if}
   {/if}
-  {if ($tiki_p_admin eq 'y') or  ($galleries[changes].perms.tiki_p_assign_perm_image_gallery eq 'y' )}
+  {if ($tiki_p_admin eq 'y') or  ($galleries[changes].perms.tiki_p_assign_perm_video_gallery eq 'y' )}
     {if $galleries[changes].perms.has_special_perm eq 'y'}
-	<a class="gallink" href="tiki-objectpermissions.php?objectName={$galleries[changes].name|escape:"url"}&amp;objectType=image+gallery&amp;permType=image+galleries&amp;objectId={$galleries[changes].galleryId}">{icon _id='key_active' alt='{tr}Active Perms{/tr}'}</a>
+	<a class="gallink" href="tiki-objectpermissions.php?objectName={$galleries[changes].name|escape:"url"}&amp;objectType=video+gallery&amp;permType=video+galleries&amp;objectId={$galleries[changes].galleryId}">{icon _id='key_active' alt='{tr}Active Perms{/tr}'}</a>
     {else}
-	<a class="gallink" href="tiki-objectpermissions.php?objectName={$galleries[changes].name|escape:"url"}&amp;objectType=image+gallery&amp;permType=image+galleries&amp;objectId={$galleries[changes].galleryId}">{icon _id='key' alt='{tr}Perms{/tr}'}</a>
+	<a class="gallink" href="tiki-objectpermissions.php?objectName={$galleries[changes].name|escape:"url"}&amp;objectType=video+gallery&amp;permType=video+galleries&amp;objectId={$galleries[changes].galleryId}">{icon _id='key' alt='{tr}Perms{/tr}'}</a>
     {/if}
   {/if}
 {if $tiki_p_admin_galleries eq 'y' or ($user and $galleries[changes].user eq $user)}

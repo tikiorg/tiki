@@ -37,8 +37,6 @@
 {/capture}
 {$smarty.capture.buttons}
 
-<div class="showimage">
-
 <object name="kaltura_player" id="kaltura_player" type="application/x-shockwave-flash" allowScriptAccess="always" allowNetworking="all" allowFullScreen="true" height="365" width="400" data="http://www.kaltura.com/index.php/kwidget/wid/_23929/uiconf_id/1000308">
 <param name="allowScriptAccess" value="always" />
 <param name="allowNetworking" value="all" />
@@ -52,8 +50,6 @@
 <a href="http://corp.kaltura.com/solutions/overview">video solutions</a>
 <a href="http://corp.kaltura.com/technology/video_player">free video player</a>
 </object>
-
-</div>
 
 {$smarty.capture.buttons}
   

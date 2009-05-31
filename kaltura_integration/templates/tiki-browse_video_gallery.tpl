@@ -77,7 +77,7 @@
                 		</ul><br />
 			{/if}
 			{if $showdescription=='y'}{$item.description}<br />{/if}
-			{if $showcreated=='y'}{tr}Created{/tr}: {$item.created|tiki_short_date}<br />{/if}
+			{if $showcreated=='y'}{tr}Created{/tr}: {$item.createdAtAsInt|tiki_short_date}<br />{/if}
 			{if $showuser=='y'}{tr}User{/tr}: {$item.user|userlink}<br />{/if}
 			{if $showhits=='y'}[{$item.views} {if $item.views == 1}{tr}View{/tr}{else}{tr}Views{/tr}{/if}]<br />{/if}
                         </small>
@@ -110,8 +110,8 @@
                         {/section}
                         </ul><br />
                 {/if}
-		{if $showdescription=='y'}{$item.tags}<br />{/if}
-		{if $showcreated=='y'}{tr}Created At{/tr}: {$item.created|tiki_short_date}<br />{/if}
+		{if $showdescription=='y'}{$item.description}<br />{/if}
+		{if $showcreated=='y'}{tr}Created{/tr}: {$item.createdAtAsInt|tiki_short_date}<br />{/if}
 		{if $showuser=='y'}{tr}User{/tr}: {$item.user|userlink}<br />{/if}
 		{if $showhits=='y'}[{$item.views} {if $item.views == 1}{tr}View{/tr}{else}{tr}Views{/tr}{/if}]{/if}
 	
