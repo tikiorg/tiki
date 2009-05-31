@@ -14,6 +14,7 @@ if ( isset($_GET['fileId']) && isset($_GET['thumbnail']) && isset($_COOKIE['PHPS
 	session_start();
 
 	if ( isset($_SESSION['allowed'][$_GET['fileId']]) ) {
+		require_once 'tiki-filter-base.php';
 		include('db/tiki-db.php');
 		include('lib/tikidblib.php');
 		$db = new TikiDB($dbTiki);
