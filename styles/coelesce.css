@@ -1566,6 +1566,10 @@ div.articletitle h2 {
 	padding-top: 8px}
 	
 * html div.articletitle h2 {height: 26px}
+
+.wikitext div.articletitle h2 {
+	font-size: 1.55em;
+	padding-top: 10px}
 	
 div.articletitle h2 a:link,
 div.articletitle h2 a:visited {
