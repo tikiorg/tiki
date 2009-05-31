@@ -1149,7 +1149,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'anonCanEdit' => 'n',
 		'cacheimages' => 'n',
 		'cachepages' => 'n',
-		'count_admin_pvs' => 'n',
+		'count_admin_pvs' => 'y',
 		'default_mail_charset' =>'utf-8',
 		'error_reporting_adminonly' => 'y',
 		'error_reporting_level' => 0,
@@ -1390,10 +1390,10 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 
 	//Kaltura Video Galleries
 
-	$prefs['maxRowsGalleries'] = '';
+	$prefs['maxRowsVideoGalleries'] = '';
 	$prefs['rowVideosGalleries'] = '';
 	$prefs['thumbSizeXVideoGalleries'] = '';
-	$prefs['thumbSizeYGalleries'] = '';
+	$prefs['thumbSizeYVideoGalleries'] = '';
 
 	// Special default values
 
