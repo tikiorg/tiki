@@ -16,23 +16,10 @@
 	{/if}
 </div>
 
-{if $prefs.feature_tabs eq 'y'}
-	{cycle name=tabs values="1,2,3,4,5" print=false advance=false reset=true}
-	<div class="tabs">
-		<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $smarty.cookies.tab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},6);">{tr}List{/tr}</a></span>
-		{if $groupname}
-			<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $smarty.cookies.tab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},6);">{tr}Edit group{/tr} <i>{$groupname}</i></a></span>
-			<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $smarty.cookies.tab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},6);">{tr}Members{/tr}</a></span>
-			<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $smarty.cookies.tab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},6);">{tr}Import/Export{/tr}</a></span>
-		{else}
-			<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $smarty.cookies.tab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},6);">{tr}Add a New Group{/tr}</a></span>
-		{/if}
-	</div>
-{/if}
+{tabset name='tabs_admingroups'}
 
-{cycle name=content values="1,2,3,4,5" print=false advance=false reset=true}
-{* ----------------------- tab with list --------------------------------------- *}
-<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
+{tab name='{tr}List{/tr}'}
+	{* ----------------------- tab with list --------------------------------------- *}
 	<h2>{tr}List of existing groups{/tr}</h2>
 
 	{include file='find.tpl' find_show_num_rows='y'}
@@ -95,17 +82,23 @@
 	</table>
 
 	{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
-</div>
+{/tab}
 
+{if $groupname}
+	{assign var=tabaddeditgroup_admgrp value="{tr}Edit group{/tr} <i>`$groupname`</i>"}
+{else}
+	{assign var=tabaddeditgroup_admgrp value='{tr}Add a New Group{/tr}'}
+{/if}
+
+{tab name=$tabaddeditgroup_admgrp}
 {* ----------------------- tab with form --------------------------------------- *}
-<a name="2" ></a>
-<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
+	<a name="2" ></a>
 
 	{if $groupname}
-		<h2>{tr}Edit group{/tr} {$groupname}</h2>
+		<h2>{$tabaddeditgroup_admgrp}</h2>
 		{button href="tiki-assignpermission.php?group=$groupname" _text="{tr}Assign Permissions{/tr}"}
 	{else}
-		<h2>{tr}Add new group{/tr}</h2>
+		<h2>{$tabaddeditgroup_admgrp}</h2>
 	{/if}
 
 	<form action="tiki-admingroups.php" method="post">
@@ -290,12 +283,13 @@
 		{/if}
 		<br /><br />
 	{/if}
-</div>
+{/tab}
 
-{* ----------------------- tab with memberlist --------------------------------------- *}
-<a name="3" ></a>
+
 {if $groupname}
-	<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
+	{tab name='{tr}Members{/tr}'}
+	{* ----------------------- tab with memberlist --------------------------------------- *}
+		<a name="3" ></a>
 		<h2>{tr}Members List{/tr}: {$groupname}</h2>
 		<table class="normal">
 			<tr>
@@ -324,13 +318,13 @@
 				<input type="submit" name="adduser" value="{tr}Add to group{/tr}"/>
 			</p>
 		</form>
-	</div>
+	{/tab}
 {/if}
 
-{* ----------------------- tab with import/export --------------------------------------- *}
-<a name="4" ></a>
 {if $groupname}
-	<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
+	{tab name='{tr}Add a New Group{/tr}'}
+		{* ----------------------- tab with import/export --------------------------------------- *}
+		<a name="4" ></a>
 		<form method="post" action="tiki-admingroups.php" enctype="multipart/form-data">
 			<input type="hidden" name="group" value="{$groupname|escape}" />
 			{if $errors}
@@ -387,5 +381,7 @@
 				</tr>
 			</table>
 		</form>
-	</div>
+	{/tab}
 {/if}
+
+{/tabset}

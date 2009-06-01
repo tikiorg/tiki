@@ -54,31 +54,10 @@
 	{/remarksbox}
 {/if}
 
-{if $prefs.feature_tabs eq 'y'}
-	{cycle name=tabs values="1,2,3,4" print=false advance=false reset=true}
-	<div class="tabs">
-		<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};">
-			<a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Users{/tr}</a>
-		</span>
-		{if $userinfo.userId}
-			<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};">
-				<a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Edit user{/tr} <i>{$userinfo.login}</i></a>
-			</span>
-		{else}
-			<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};">
-				<a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Add a New User{/tr}</a>
-			</span>
-		{/if}
-		<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};">
-			<a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Import/Export{/tr}</a>
-		</span>
-	</div>
-{/if}
+{tabset name='tabs_adminuers'}
 
-{cycle name=content values="1,2,3,4" print=false advance=false reset=true}
 {* ---------------------- tab with list -------------------- *}
-<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
-	
+{tab name='{tr}Users{/tr}'}
 	<h2>{tr}Users{/tr}</h2>
 
 	<form method="get" action="tiki-adminusers.php">
@@ -302,11 +281,18 @@
 	</form>
 
 	{pagination_links cant=$cant step=$numrows offset=$offset}{/pagination_links}
-</div>
+{/tab}
+
 
 {* ---------------------- tab with form -------------------- *}
 <a name="2" ></a>
-<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
+{if $userinfo.userId}
+	{assign var=add_edit_user_tablabel value="{tr}Edit user{/tr} <i>`$userinfo.login`</i>"}
+{else}
+	{assign var=add_edit_user_tablabel value='{tr}Add a New User{/tr}'}
+{/if}
+
+{tab name=$add_edit_user_tablabel}
 	{if $userinfo.userId}
 		<h2>{tr}Edit user{/tr}: {$userinfo.login}</h2>
 		{if $userinfo.login ne 'admin'}
@@ -468,10 +454,10 @@
 			<br />
 		{/if}
 	</form>
-</div>
+{/tab}
 
 {* ---------------------- tab with upload -------------------- *}
-<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
+{tab name='{tr}Import/Export{/tr}'}
 	<h2>{tr}Batch upload (CSV file):{/tr}</h2>
 
 	<form action="tiki-adminusers.php" method="post" enctype="multipart/form-data">
@@ -502,4 +488,6 @@
 		</table>
 	</form>
 	{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}You can export users of a group in <a href="tiki-admingroups.php">admin->groups->a_group</a>{/tr}{/remarksbox}
-</div>
+{/tab}
+
+{/tabset}
