@@ -463,8 +463,6 @@ function wikiplugin_tracker($data, $params) {
 						$mail->setHeader('From', $emailOptions[0]);
 						$mail->send($emailOptions[1]);
 					}
-					if (!empty($target))
-						header('Window-target: _blank');//'.$target);
 					if (empty($url)) {
 						if (!empty($page)) {
 							$url = "tiki-index.php?page=".urlencode($page)."&ok=y&trackit=$trackerId";
@@ -621,7 +619,7 @@ function wikiplugin_tracker($data, $params) {
 			if (!empty($page))
 				$back .= '~np~';
 			$smarty->assign_by_ref('tiki_p_admin_trackers', $perms['tiki_p_admin_trackers']);
-			$back.= '<form enctype="multipart/form-data" method="post"><input type="hidden" name="trackit" value="'.$trackerId.'" />';
+			$back.= '<form enctype="multipart/form-data" method="post"'.($target?' target="'.$target.'"':'').'><input type="hidden" name="trackit" value="'.$trackerId.'" />';
 			if (isset($fields))
 				$back .= '<input type="hidden" name="fields" value="'.$params['fields'].'" />';//if plugin inserted twice with the same trackerId
 			if (!empty($_REQUEST['page']))
