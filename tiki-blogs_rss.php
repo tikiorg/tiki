@@ -39,12 +39,12 @@ if ($output["data"]=="EMPTY") {
 	$title =  (!empty($title_rss_blogs)) ? $title_rss_blogs : tra("Tiki RSS feed for weblogs");
 	$desc =  (!empty($desc_rss_blogs)) ? $desc_rss_blogs : tra("Last posts to weblogs.");
 	$now = date("U");
-	$id = "blogId";
+	$id = "postId";
 	$descId = "data";
 	$dateId = "created";
 	$titleId = "title";
 	$authorId = "user";
-	$readrepl = "tiki-view_blog_post.php?$id=%s&postId=%s";
+	$readrepl = "tiki-view_blog_post.php?postId=%s";
 
         $tmp = $prefs['title_rss_'.$feed];
         if ($tmp<>'') $title = $tmp;
@@ -53,6 +53,7 @@ if ($output["data"]=="EMPTY") {
 	
 	$changes = $bloglib -> list_all_blog_posts(0, $prefs['max_rss_blogs'], $dateId.'_desc', '', $now);
 	$tmp = array();
+	include_once('tiki-sefurl.php');
 	foreach ($changes["data"] as $data)  {
       global $bloglib;
       if($prefs['summary_rss_blogs'] == "y") {
@@ -60,11 +61,12 @@ if ($output["data"]=="EMPTY") {
       } else {
          $data["$descId"] = $tikilib->parse_data($data[$descId], array('print'=>true));
       }
+	  $data['sefurl'] = filter_out_sefurl(sprintf($readrepl, $data['postId'], $data['blogId']), $smarty, 'blogpost', $data['title']);
 		$tmp[] = $data;
 	}
 	$changes["data"] = $tmp;
 	$tmp = null;
-	$output = $rsslib->generate_feed($feed, $uniqueid, '', $changes, $readrepl, 'postId', $id, $title, $titleId, $desc, $descId, $dateId, $authorId);
+	$output = $rsslib->generate_feed($feed, $uniqueid, '', $changes, $readrepl, $id, '', $title, $titleId, $desc, $descId, $dateId, $authorId);
 }
 header("Content-type: ".$output["content-type"]);
 print $output["data"];
