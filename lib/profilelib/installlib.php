@@ -30,7 +30,33 @@ class Tiki_Profile_Installer
 	);
 
 	private $userData = false;
+	
+	private $feedback = array();	// Let users know what's happened
 
+	/**
+	 * @param $feed - (strings append, array replaces) lines of feedback text
+	 * @return none
+	 */
+	function setFeedback( $feed ) {
+		if (is_array( $feed )) {
+			$this->feedback = $feed;
+		} else {
+			$this->feedback[] = $feed;
+		}
+	}
+	
+	/**
+	 * @param $index - (int) index of feedback string to return if present
+	 * @return string or whole array if no index specified 
+	 */
+	function getFeedback( $index ) {
+		if (isset( $index ) && $index < count($this->feedback) ) {
+			return $this->feedback[ $index ];
+		} else {
+			return $this->feedback;
+		}
+	}
+	
 	public static function convertType( $type ) // {{{
 	{
 		if( array_key_exists( $type, self::$typeMap ) )
@@ -146,6 +172,9 @@ class Tiki_Profile_Installer
 		foreach( $profiles as $p )
 			$this->doInstall( $p );
 		
+		if (count($this->getFeedback()) == count($profiles)) {
+			$this->setFeedback(tra('Nothing was installed, check profile for errors'));
+		}
 		$cachelib->empty_full_cache();
 		return true;
 	} // }}}
@@ -188,22 +217,30 @@ class Tiki_Profile_Installer
 
 	private function doInstall( Tiki_Profile $profile ) // {{{
 	{
-		global $tikilib;
+		global $tikilib, $prefs;
 		
+		$this->setFeedback(tra('Installing').': '.$profile->profile);
+
 		$this->installed[$profile->getProfileKey()] = $profile;
 
-		foreach( $profile->getObjects() as $object )
+		foreach( $profile->getObjects() as $object ) {
 			$this->getInstallHandler( $object )->install();
-
+			$this->setFeedback(tra('Installed').': '.$object->getDescription());
+		}
 		$preferences = $profile->getPreferences();
 		$profile->replaceReferences( $preferences, $thus->userData );
-		foreach( $preferences as $pref => $value )
+		foreach( $preferences as $pref => $value ) {
+			if ($prefs[$pref] != $value) {
+				$this->setFeedback(tra('Preference set').': '.$pref.'='.$value);
+			}
 			$tikilib->set_preference( $pref, $value );
-
+		}
 		$permissions = $profile->getPermissions();
 		$profile->replaceReferences( $permissions, $thus->userData );
-		foreach( $permissions as $groupName => $info )
+		foreach( $permissions as $groupName => $info ) {
+			$this->setFeedback(tra('Group changed (or modified)').': '.$groupName);
 			$this->setupGroup( $groupName, $info['general'], $info['permissions'], $info['objects'] );
+		}
 	} // }}}
 
 	private function setupGroup( $groupName, $info, $permissions, $objects ) // {{{
