@@ -2945,7 +2945,7 @@ class TikiLib extends TikiDB {
 	}
 
 	/*shared*/
-	function list_articles($offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_desc', $find = '', $date_min = 0, $date_max = 0, $user=false, $type = '', $topicId = '', $visible_only = 'y', $topic='', $categId='',$creator='',$group='', $lang='') {
+	function list_articles($offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_desc', $find = '', $date_min = 0, $date_max = 0, $user=false, $type = '', $topicId = '', $visible_only = 'y', $topic='', $categId='',$creator='',$group='', $lang='', $min_rating='', $max_rating='') {
 
 		global $userlib, $user;
 
@@ -3058,10 +3058,19 @@ class TikiLib extends TikiDB {
 			$bindvars[] = "%$creator%";
 		}
 
+		if ($min_rating || $max_rating) {
+			$min_rating = isset($min_rating) ? $min_rating : '0.0';
+			$max_rating = isset($max_rating) ? $max_rating : '10.0';
+			$mid2 .= " and (`tiki_articles`.`rating` >= ? and `tiki_articles`.`rating` <= ? )" ;
+			$bindvars[] = $min_rating;
+			$bindvars[] = $max_rating;
+		}
+
 		if ($categId) {
 			global $categlib; require_once('lib/categories/categlib.php');
 			$categlib->getSqlJoin($categId, 'article', '`tiki_articles`.`articleId`', $fromSql, $mid2, $bindvars);
 		}
+		
 		$query = "select `tiki_articles`.*,
 			`tiki_article_types`.`use_ratings`,
 			`tiki_article_types`.`show_pre_publ`,

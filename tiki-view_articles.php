@@ -91,6 +91,9 @@ if ( isset($_REQUEST['date_min']) || isset($_REQUEST['date_max']) ) {
 	$date_max = $tikilib->now;
 }
 
+$min_rating = isset($_REQUEST['min_rating']) ? $_REQUEST['min_rating'] : '';
+$max_rating = isset($_REQUEST['max_rating']) ? $_REQUEST['max_rating'] : '';
+
 if (isset($_REQUEST["find"])) {
 	$find = $_REQUEST["find"];
 } else {
@@ -127,7 +130,7 @@ if (!isset($_REQUEST['lang'])) {
 }
 
 // Get a list of last changes to the Wiki database
-$listpages = $tikilib->list_articles($offset, $prefs['maxArticles'], $sort_mode, $find, $date_min, $date_max, $user, $type, $topic, 'y', $topicName, $categId, '', '', $_REQUEST['lang']);
+$listpages = $tikilib->list_articles($offset, $prefs['maxArticles'], $sort_mode, $find, $date_min, $date_max, $user, $type, $topic, 'y', $topicName, $categId, '', '', $_REQUEST['lang'], $min_rating, $max_rating);
 if ($prefs['feature_multilingual'] == 'y') {
 	include_once("lib/multilingual/multilinguallib.php");
 	$listpages['data'] = $multilinguallib->selectLangList('article', $listpages['data']);
