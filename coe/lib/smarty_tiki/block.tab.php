@@ -34,7 +34,7 @@ function smarty_block_tab($params, $content, &$smarty, &$repeat) {
 		}
 		
 		$ret = "<fieldset ";
-		if ($prefs['feature_tabs'] == 'y' and $_COOKIE["tabbed_$smarty_tabset_name"] == 'y') {
+		if ($prefs['feature_tabs'] == 'y' and $_COOKIE["tabbed_$smarty_tabset_name"] != 'n') {
    		$ret .= "id='content".sizeof($smarty_tabset)."' class='tabcontent' style='clear:both;display:block;'";
 		} else {
 			$ret .= ">";
