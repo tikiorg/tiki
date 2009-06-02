@@ -326,7 +326,8 @@ FCK.DataProcessor =
 						if ( ( stringBuilder.length == len || (stringBuilder.length == len + 1 && !stringBuilder[len].length) ) 
 							 )
 						{
-							stringBuilder.pop();
+							if ( basic0 )
+								stringBuilder.pop();
 							stringBuilder.push( '\n' ) ;
 							return;
 						}
@@ -344,6 +345,12 @@ FCK.DataProcessor =
 								stringBuilder.push( '-=' ) ;
 								this._AppendChildNodes( htmlNode, stringBuilder, prefix ) ;
 								stringBuilder.push( '=-\n' ) ;
+								break;
+							}
+							if (htmlNode.className == 'simplebox' ) {
+								stringBuilder.push( '^' ) ;
+								this._AppendChildNodes( htmlNode, stringBuilder, prefix ) ;
+								stringBuilder.push( '^\n' ) ;
 								break;
 							}
 						case 'ol' :
@@ -369,27 +376,27 @@ FCK.DataProcessor =
 							
 							var parent = htmlNode.parentNode ;
 							var listType = "#" ;
-							
+						if ( parent.nodeName.toLowerCase() == 'ul' ) {
+									listType = "*" ;
+								} else if ( parent.nodeName.toLowerCase() == 'ol' ) {
+									listType = "#" ;
+								}
+	
+							listPrefix = "";
 							while ( parent )
 							{
-								if ( parent.nodeName.toLowerCase() == 'ul' )
-								{
-									listType = "*" ;
+								if ( parent.nodeName.toLowerCase() == 'ul' || parent.nodeName.toLowerCase() == 'ol' ) {
+									listPrefix = listPrefix + listType;
+								} else if ( parent.nodeName.toLowerCase() != 'li' ) {
 									break ;
 								}
-								else if ( parent.nodeName.toLowerCase() == 'ol' )
-								{
-									listType = "#" ;
-									break ;
-								}
-								else if ( parent.nodeName.toLowerCase() != 'li' )
-									break ;
-
 								parent = parent.parentNode ;
 							}
 							
-							stringBuilder.push( listType ) ;
-							this._AppendChildNodes( htmlNode, stringBuilder, prefix + listType ) ;
+							stringBuilder.push( listPrefix ) ;
+							this._inList = true ;
+							this._AppendChildNodes( htmlNode, stringBuilder, prefix) ;
+							this._inList = false ;
 							
 							break ;
 

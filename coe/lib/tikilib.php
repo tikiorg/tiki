@@ -6002,13 +6002,11 @@ class TikiLib extends TikiDB {
 				}
 			}
 			$fck_editor_plugin .= ')}'.$data.'{'.strtoupper($name).'}';
-			//return '<span _fckfakelement="true" _fck_true_content="'.htmlspecialchars($ret,'UTF-8').'">Tiki Plugin '.$name.'</span>';
-			//return '<span _plugin="'.urlencode($fck_editor_plugin).'">Tiki Plugin '.$name.'</span>';
 		}
 
 		if( function_exists( $func_name ) ) {
 			if ($prefs['wysiwyg_htmltowiki'] == 'y' and isset($parseOptions['fck']) and $parseOptions['fck'] == 'y' ) {
-				return '<span _plugin="'.urlencode($fck_editor_plugin).'">'.$func_name( $data, $args, $offset, $parseOptions ).'</span>';
+				return '~np~<span plugin="'.$func_name.'"  _plugin="'.urlencode($fck_editor_plugin).'">~/np~'.$func_name( $data, $args, $offset, $parseOptions ).'</span>';
 			} else {
 				return $func_name( $data, $args, $offset, $parseOptions );
 			}
@@ -6044,7 +6042,7 @@ class TikiLib extends TikiDB {
 			}
 
 			if ($prefs['wysiwyg_htmltowiki'] == 'y' and isset($parseOptions['fck']) and $parseOptions['fck'] == 'y' ) {
-				return '<span _plugin="'.urlencode($fck_editor_plugin).'">'.$this->plugin_execute( $name, $data, $params, $offset, true, $parseOptions ).'</span>';
+				return '~np~<span _plugin="'.urlencode($fck_editor_plugin).'">~/np~'.$this->plugin_execute( $name, $data, $params, $offset, true, $parseOptions ).'</span>';
 			} else {
 				return $this->plugin_execute( $name, $data, $params, $offset, true, $parseOptions );
 			}

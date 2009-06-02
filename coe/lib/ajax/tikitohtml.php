@@ -9,7 +9,6 @@ if ($prefs['feature_ajax'] != 'y' ) {
 	return;
 }
 
-
 $ajaxlib->registerFunction('WikiToHTML');
 
 function WikiToHTML($data) {
@@ -28,7 +27,8 @@ function WikiToHTML($data) {
 
 	$response =  new xajaxResponse('UTF-8');
 
-  $data = preg_replace('/(!!*)[\+\-]/m','$1', $data);   // remove show/hide headings
+  // remove show/hide headings
+  $data = preg_replace('/(!!*)[\+\-]/m','$1', $data);
 	$content = $tikilib->parse_data($data,$options);
 	// remove spans round img's
   $content = preg_replace('/<span class=\"img\">(.*?)<\/span>/im','$1', $content);
@@ -36,7 +36,7 @@ function WikiToHTML($data) {
   $prefs['wiki_edit_section'] = $secedit;
   $prefs['feature_wiki_ext_icon'] = $exticons;
   $prefs['wiki_edit_plugin'] = $editplugin;
-//	file_put_contents('/tmp/fckeditor_wiki.txt', $response->getOutput() );
+	//file_put_contents('/tmp/fckeditor_wiki.txt', $response->getOutput() );
 	
 	return $response;
 }
