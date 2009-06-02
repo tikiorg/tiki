@@ -529,7 +529,6 @@ a.tikihelp:hover {
 	cursor: help;
 	vertical-align: text-top}
 
-#rss {height: 16px}
 #rss img {vertical-align: middle}
 #rss small {font-size: 1em}
 
@@ -2011,12 +2010,6 @@ div#ajaxLoading {
 	border-bottom-color: #f8f8ff}
  
 .tab-menu li.tab-selected a {background: #f8f8ff}
-
-/* CSS Menu */
-
-div.cssmenubox {
-  overflow: visible !important;
-}
 
 /***** New (unsorted) *****/
 

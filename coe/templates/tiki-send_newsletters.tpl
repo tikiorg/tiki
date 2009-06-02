@@ -120,27 +120,10 @@
 		</ul>
 	{/if}
 
-	<br />
-	{* --- tab headers --- *}
-	{if $prefs.feature_tabs eq 'y'}
-		{cycle name=tabs values="1,2,3,4" print=false advance=false reset=true}
-		<div class="tabs">
-			<span id="tab{cycle name=tabs advance=false}" class="tabmark">
-				<a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Edit{/tr}</a>				
-			</span>
-			<span id="tab{cycle name=tabs advance=false}" class="tabmark">
-				<a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Drafts{/tr}&nbsp;({$cant_drafts})</a>
-			</span>
-			<span id="tab{cycle name=tabs advance=false}" class="tabmark">
-				<a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Sent editions{/tr}&nbsp;({$cant_editions})</a>
-			</span>
-		</div>
-	{/if}
+{tabset name='tabs_send_newsletters'}
 
-	{cycle name=content values="1,2,3,4" print=false advance=false reset=true}
+	{tab name='{tr}Edit{/tr}'}
 	{* --- tab with editor --- *}
-	<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
-
 		<h2>{tr}Prepare a newsletter to be sent{/tr}</h2>
 		<form action="tiki-send_newsletters.php" method="post" id='editpageform' enctype='multipart/form-data'>
 			<input type="hidden" name="editionId" value="{$info.editionId}"/>
@@ -262,10 +245,10 @@
 				</tr>
 			</table>
 		</form>
-	</div>
+	{/tab}
 
+	{tab name="{tr}Drafts{/tr}&nbsp;(`$cant_drafts`)"}
 	{* --- tab with drafts --- *}
-	<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 		{assign var=channels value=$drafts}
 		{assign var=view_editions value='n'}
 		{assign var=offset value=$dr_offset}
@@ -284,10 +267,10 @@
 		{assign var=tab value=2}
 		<h2>{tr}Drafts{/tr}&nbsp;({$cant_drafts})</h2>
 		{include file=sent_newsletters.tpl }
-	</div>
+	{/tab}
 
+	{tab name="{tr}Sent editions{/tr}&nbsp;($cant_editions)"}
 	{* --- tab with editions --- *}
-	<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 		{assign var=channels value=$editions}
 		{assign var=view_editions value='y'}
 		{assign var=offset value=$ed_offset}
@@ -306,7 +289,8 @@
 		{assign var=tab value=3}
 		<h2>{tr}Sent editions{/tr}&nbsp;({$cant_editions})</h2>
 		{include file=sent_newsletters.tpl }
-	</div>
+		{/tab}
+	{/tabset}
 {/if}
 
 <script type='text/javascript'>

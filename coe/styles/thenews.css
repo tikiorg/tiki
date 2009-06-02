@@ -773,8 +773,8 @@ a.phplmselected:hover {
 
 #tiki-top .cssmenu_horiz {
 	float: left;
-	margin-left: 11px
-}
+	margin-left: 11px;
+	font: .9em Verdana, Helvetica, Arial, Sans-Serif}
 
 #tiki-top > .cssmenu_horiz > li > a {
 	border-right: 1px solid #aaa;
@@ -795,7 +795,9 @@ div.separatorline {}
 div.option a.linkmenu:hover {}
 a.separator img {}
 /* menu option */
-.option, .optionline {
+.option, .optionline,
+#tiki-center .option,
+#tiki-center .optionline {
 	background: transparent url('../img/icons2/corner-dots.gif') center left no-repeat;
 	padding: 0.2em 0 0.2em 1.6em;
 }
@@ -1718,7 +1720,7 @@ div.blogheading {
 }
 
 div.blogtitle {
-	font-size: 1.3em;
+	font-size: 1.8em;
 	font-weight: bold;
 	padding: 3px;
 	margin-top: 10px;
@@ -1803,9 +1805,13 @@ span.posthead span.link {
 
 body.tiki_blogs .post .title {margin-top: 0}
 
-/*div.posthead h3*/
+.tiki_blogs #tiki-center .postbody-title,
+.tiki_blogs #tiki-center .title {
+	padding-left: 0;
+	margin-left: 0}
+
 body.tiki_blogs .post .title h2 {
-	font-size: 1.2em;
+	font-size: 1.7em;
 	margin-top: 0}
  
 /*div.postbody*/
@@ -1913,7 +1919,7 @@ table.commentinfo {}
 	
 .post .postbody-title .checkbox {float: left}
 
-.post .postbody-title .title {
+.tiki_forums .post .postbody-title .title {
 	color: #29677B;
 	font-weight: bold;
 	font-size: 12px;

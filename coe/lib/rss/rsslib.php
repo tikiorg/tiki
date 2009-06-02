@@ -322,8 +322,9 @@ class RSSLib extends TikiLib {
 		foreach ($changes["data"] as $data)  {
 			$item = new FeedItem(); 
 			$item->title = $data["$titleId"]; 
-			// 2 parameters to replace			
-			if ($urlparam<>'') {
+			if (isset($data['sefurl'])) {
+				$item->link = $this->httpPrefix().dirname($urlarray["path"]).$dirname.$data['sefurl'];
+			} elseif ($urlparam<>'') {			// 2 parameters to replace
 				$item->link = sprintf($read, urlencode($data["$id"]), urlencode($data["$urlparam"]));
 			} else {
 				$item->link = sprintf($read, urlencode($data["$id"]));
@@ -376,7 +377,6 @@ class RSSLib extends TikiLib {
 					} else $item->author = $data["$authorId"];
 				}
 			}
-			 
 			$rss->addItem($item); 
 		} 
 		$data = $rss->createFeed($this->get_rss_version_name($rss_version));

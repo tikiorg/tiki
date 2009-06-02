@@ -6,16 +6,12 @@
   {button href="$referer" _text="{tr}Back{/tr}"}
 </div>
 
-{if $prefs.feature_tabs eq 'y'}
-  <div class="tabs" style="clear: both;">
-	  <span id="tab1" class="tabmark tabactive"><a href="javascript:tikitabs(1,3);">{tr}View Permissions{/tr}</a></span>
-	  <span id="tab2" class="tabmark tabinactive"><a href="javascript:tikitabs(2,3);">{tr}Edit Permissions{/tr}</a></span>
-  </div>
-{/if}
+{tabset name='tabs_objectpermissions'}
 
-<fieldset {if $prefs.feature_tabs eq 'y'}id="content1"  class="tabcontent" style="clear:both;display:block; margin-left: 0;"{/if}>
+{tab name='{tr}View Permissions{/tr}'}
+
 {if $prefs.feature_tabs neq 'y'}
-	<legend class="heading"><a href="#"><span>{tr}View Permissions{/tr}</span></a></legend>
+	<h2>{tr}View Permissions{/tr}</h2>
 {/if}
 {if $filegals_manager eq ''}
 {remarksbox type="warning" title="{tr}Warning{/tr}"}{tr}These permissions override any global permissions or category permissions affecting this object.{/tr}<br />
@@ -65,12 +61,12 @@
 <tr><td colspan="3">{if empty($page_perms)}{tr}No category permissions; global permissions apply{/tr}{else}{tr}No category permissions; special permissions apply{/tr}{/if}</td></tr>
 {/section}
 </table>
-</fieldset>
+{/tab}
 
+{tab name='{tr}Edit Permissions{/tr}'}
 
-<fieldset {if $prefs.feature_tabs eq 'y'}id="content2"  class="tabcontent" style="clear:both;display:block; margin-left:0;"{/if}>
 {if $prefs.feature_tabs neq 'y'}
-	<legend class="heading"><a href="#"><span>{tr}Edit Permissions{/tr}</span></a></legend>
+	<h2>{tr}Edit Permissions{/tr}</h2>
 {/if}
 <form method="post" action="tiki-objectpermissions.php{if $filegals_manager neq ''}?filegals_manager={$filegals_manager|escape}{/if}">
 {if $filegals_manager eq ''}
@@ -81,7 +77,12 @@
 <h2>{tr}Current permissions for this object{/tr}</h2>
 <table class="normal">
 <tr>
-	<th colspan="2">{tr}Permissions{/tr}</th>
+	<th>
+		{if $page_perms}
+			{select_all checkbox_names='checked[]'}
+		{/if}
+	</th>
+	<th>{tr}Permissions{/tr}</th>
 	<th>{tr}Groups{/tr}</th>
 	<th style="width:20px">{tr}Action{/tr}</th>
 </tr>
@@ -101,21 +102,17 @@
 {sectionelse}
 <tr><td colspan="4" class="odd">{if !empty($categ_perms)}{tr}No individual permissions, category permissions apply{/tr}{else}{tr}No individual permissions, category permissions apply{/tr}{/if}</td></tr>
 {/section}
-{if $page_perms}
-<tr>
-	<td colspan="3">
-		<input type="checkbox" id="clickall" title="{tr}Select All{/tr}" onclick="switchCheckboxes(this.form,'checked[]',this.checked)"/>&nbsp;{tr}Select All{/tr}
-	</td>
-</tr>
-{/if}
 </table>
-{if $page_perms}<div>
-{tr}Perform action with checked:{/tr} 
-<input type="image" name="delsel" src='pics/icons/cross.png' alt='{tr}Delete{/tr}' title='{tr}Delete{/tr}' />
-{if isset($inStructure)}
-{tr}and also to all pages of the sub-structure:{/tr} <input name="removestructure" type="checkbox" />
+
+{if $page_perms}
+	<div>
+		{tr}Perform action with checked:{/tr} 
+		<input type="image" name="delsel" src='pics/icons/cross.png' alt='{tr}Delete{/tr}' title='{tr}Delete{/tr}' />
+		{if isset($inStructure)}
+			{tr}and also to all pages of the sub-structure:{/tr} <input name="removestructure" type="checkbox" />
+		{/if}
+	</div>
 {/if}
-</div>{/if}
 
 <br/>
 
@@ -179,7 +176,7 @@
 {/section}
 </table>
 
-{* <a class="trailer" href="#" {popup sticky=true fullhtml="1" hauto=true vauto=true text=$smarty.capture.add_perm|escape:"javascript"|escape:"html"  trigger=onClick} >{tr}Add new Permissions{/tr}</a> *}
 </div>
 </form>
-</fieldset>
+{/tab}
+{/tabset}

@@ -127,7 +127,7 @@ window.onload = timeIt;
 
 </div>
 {/if}
-<form  enctype="multipart/form-data" method="post" action="tiki-editpage.php?page={$page|escape}" id='editpageform' name='editpageform'>
+<form  enctype="multipart/form-data" method="post" action="tiki-editpage.php?page={$page|escape:'url'}" id='editpageform' name='editpageform'>
 
 {if $diff_style}
 <select name="diff_style">

@@ -146,7 +146,7 @@ function tiki_error_handling($errno, $errstr, $errfile, $errline) {
 		case E_COMPILE_WARNING:
 		case E_PARSE:
 		case E_RECOVERABLE_ERROR:
-			if ($prefs['error_reporting_level'] == 2047 or $prefs['error_reporting_level'] == 2039 or ($prefs['error_reporting_level'] == 1 and $tiki_p_admin == 'y')) {
+			if ($prefs['error_reporting_level'] == -1 or $prefs['error_reporting_level'] == 2047 or $prefs['error_reporting_level'] == 2039 or ($prefs['error_reporting_level'] == 1 and $tiki_p_admin == 'y')) {
 				$back = "<div style='padding:4px;border:1px solid #000;background-color:#F66;font-size:10px;'>";
 				$back.= "<b>PHP (".PHP_VERSION.") ERROR (".$err[$errno]."):</b><br />";
 				$back.= "<tt><b>File:</b></tt> $errfile<br />";
@@ -156,12 +156,14 @@ function tiki_error_handling($errno, $errstr, $errfile, $errline) {
 				$phpErrors[] = $back;
 			}
 			break;
+		case E_STRICT:
+			if ($prefs['error_reporting_level'] == '2047')
+				break;
 		case E_NOTICE:
 		case E_USER_NOTICE:
-		case E_STRICT:
 		case E_DEPRECATED:
 		case E_USER_DEPRECATED:
-			if ( $prefs['error_reporting_level'] == '2047' and $tiki_p_admin == 'y' and ! preg_match(THIRD_PARTY_LIBS_PATTERN, $errfile) ) {
+			if ( $prefs['error_reporting_level'] == -1 or $prefs['error_reporting_level'] == '2047' and $tiki_p_admin == 'y' and ! preg_match(THIRD_PARTY_LIBS_PATTERN, $errfile) ) {
 				if ($prefs['smarty_notice_reporting'] != 'y' && strstr($errfile, '.tpl.php'))
 					break;
 				$back = "<div style='padding:4px;border:1px solid #000;background-color:#FF6;font-size:10px;'>";

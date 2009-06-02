@@ -27,7 +27,9 @@
 <p>{tr}Watching Groups:{/tr} {$group_watches|@count}</p>
 <table class="normal">
 	<tr>
-		<th>{tr}Watch{/tr}</th>
+		<th>
+			{select_all checkbox_names='checked[]'}
+		</th>
 		<th style="width:100%">{tr}Groups{/tr}</th>
 	</tr>
 	{cycle values="odd,even" print=false}
@@ -40,6 +42,5 @@
 		{/if}
 	{/foreach}
 </table>
-<label><input type="checkbox" id="clickall" title="{tr}Select All{/tr}" onclick="switchCheckboxes(this.form,'checked[]',this.checked)"/>{tr}Select All{/tr}</label>
 <div><input type="submit" name="assign" value="{tr}Assign{/tr}" /></div>
 </form>

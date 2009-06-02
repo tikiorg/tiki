@@ -7,7 +7,9 @@ $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 
 	// override existing show/hide routines here
 	show = function (foo,f,section) {
-		if ($jq("#" + foo).hasClass("tabcontent")) {
+		if (foo == 'wiki_help' || foo == 'help_sections') {		// exceptions that don't animate reliably
+			$jq("#" + foo).show();
+		} else if ($jq("#" + foo).hasClass("tabcontent")) {
 			showJQ("#" + foo, jqueryTiki.effect_tabs, jqueryTiki.effect_tabs_speed, jqueryTiki.effect_tabs_direction);
 		} else {
 			showJQ("#" + foo, jqueryTiki.effect, jqueryTiki.effect_speed, jqueryTiki.effect_direction);
@@ -16,7 +18,9 @@ $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 	};
 	
 	hide = function (foo,f, section) {
-		if ($jq("#" + foo).hasClass("tabcontent")) {
+		if (foo == 'wiki_help' || foo == 'help_sections') {		// exceptions
+			$jq("#" + foo).hide();
+		} else if ($jq("#" + foo).hasClass("tabcontent")) {
 			hideJQ("#" + foo, jqueryTiki.effect_tabs, jqueryTiki.effect_tabs_speed, jqueryTiki.effect_tabs_direction);
 		} else {
 			hideJQ("#" + foo, jqueryTiki.effect, jqueryTiki.effect_speed, jqueryTiki.effect_direction);

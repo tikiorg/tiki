@@ -176,12 +176,7 @@
 				{/section}
 			{/if}
 		{/section}
-		<script type="text/javascript">
-			<!--//--><![CDATA[//><!--
-				document.write('<tr><td colspan="8"><input type="checkbox" id="clickall" onclick="switchCheckboxes(this.form,\'checked[]\',this.checked)"/>');
-				document.write('<label for="clickall">{tr}Select All{/tr}</label></td></tr>');
-			//--><!]]>
-		</script>
+		{select_all checkbox_names='checked[]' label="{tr}Select All{/tr}"}
 	</table>
 	{tr}Prefix the checked:{/tr}<input type="text" name="prefix" />
 	{tr}Postfix the checked:{/tr}<input type="text" name="postfix" />&nbsp;<input type="submit" value="{tr}OK{/tr}" />

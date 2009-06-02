@@ -1,0 +1,50 @@
+<?php
+/* $Id: block.tabs.php 17175 2009-03-04 20:43:16Z sylvieg $ */
+
+// this script may only be included - so it's better to die if called directly
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  header("location: index.php");
+  exit;
+}
+
+/**
+ * \brief smarty_block_tabs : add tabs to a template
+ *
+ * params: TODO
+ *
+ * usage: 
+ * \code
+ *	{tab}
+ *  tab content
+ *	{/tab}
+ * \endcode
+ *
+ */
+
+function smarty_block_tab($params, $content, &$smarty, &$repeat) {
+	global $prefs, $smarty_tabset_name, $smarty_tabset;
+	
+	if ( $repeat ) {
+		return;
+	} else {
+		if ( isset($params['name']) and !empty($params['name']) ) {
+			$smarty_tabset[] = $params['name'];
+		} else {
+			$smarty_tabset[] = $params['name'] = "tab"+sizeof($smarty_tabset);
+		}
+		
+		$ret = "<fieldset ";
+		if ($prefs['feature_tabs'] == 'y' and $_SESSION["tabbed_$smarty_tabset_name"] == 'y') {
+   		$ret .= "id='content".sizeof($smarty_tabset)."' class='tabcontent' style='clear:both;display:block;'";
+		} else {
+			$ret .= ">";
+		}
+		if ($prefs['feature_tabs'] != 'y' or $_SESSION["tabbed_$smarty_tabset_name"] == 'n') {
+     $ret .= '<legend class="heading"><a href="#"><span>'.$params['name'].'</span></a></legend>';
+		}
+	
+		$ret .= "$content</fieldset>";
+		
+		return $ret;
+	}
+}
