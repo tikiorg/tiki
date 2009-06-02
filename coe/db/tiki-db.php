@@ -96,9 +96,12 @@ if ( $dbversion_tiki == '1.10' ) $dbversion_tiki = '2.0';
 
 if (extension_loaded("pdo") and $api_tiki == 'pdo' ) {
 	require_once('db/tiki-db-pdo.php');
+} elseif ($api_tiki == 'native') {
+	require_once('db/tiki-db-native-mysqli.php');
 } else {
 	require_once('db/tiki-db-adodb.php');
 }
+
 
 // Forget db info so that malicious PHP may not get password etc.
 $host_tiki = NULL;
