@@ -10,24 +10,11 @@
 	{/if}
 </div>
 
-{if $prefs.feature_tabs eq 'y'}
-{cycle name=tabs values="1,2,3,4,5" print=false advance=false reset=true}
-<div class="tabs">
-	<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}Trackers{/tr}</a></span>
-	{if $trackerId}
-		<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}Edit Tracker{/tr} {$name} (#{$trackerId})</a></span>
-		<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}Import/Export{/tr}</a></span>
-	{else}
-		<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}Create Tracker{/tr}</a></span>
-	{/if}
-	<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}Duplicate Tracker{/tr}</a></span>
-</div>
-{/if}
+{tabset name='tabs_admtrackers'}
 
-{cycle name=content values="1,2,3,4" print=false advance=false reset=true}
 {* --- tab with list --- *}
+{tab name='{tr}Trackers{/tr}'}
 <a name="view"></a>
-<div id="content{cycle name=content assign=focustab}{$focustab}"{if $prefs.feature_tabs eq 'y'} class="tabcontent" style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 	<h2>{tr}Trackers{/tr}</h2>
 	{if ($channels) or ($find)}
 		{include file='find.tpl' filters=''}
@@ -83,11 +70,17 @@
 		{/section}
 	</table>
 	{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
-</div>
+{/tab}
 
+{if $trackerId}
+	{assign var='tabeditcreatetrk_admtrk' value="{tr}Edit Tracker{/tr} <i>`$name` (#`$trackerId`)</i>"}
+{else}
+	{assign var='tabeditcreatetrk_admtrk' value='{tr}Create Tracker{/tr}'}
+{/if}
+	
+{tab name=$tabeditcreatetrk_admtrk}
 {* --- tab with form --- *}
 <a name="mod"></a>
-<div id="content{cycle name=content assign=focustab}{$focustab}"{if $prefs.feature_tabs eq 'y'} class="tabcontent" style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 	<h2>{tr}Create/Edit Tracker{/tr}</h2>
 	{if $trackerId}
 		<div class="simplebox">
@@ -492,10 +485,11 @@
 			</tr>
 		</table>
 	</form>
-</div>
+{/tab}
 
+{if $trackerId}
+{tab name='{tr}Import/Export{/tr}'}
 {* --- tab with raw form --- *}
-<div id="content{cycle name=content assign=focustab}{$focustab}"{if $prefs.feature_tabs eq 'y'} class="tabcontent" style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 <h2>{tr}Import/export trackers{/tr}</h2>
 
 	<form action="tiki-admin_trackers.php" method="post">
@@ -574,10 +568,11 @@ categories = {$catsdump}
 			</table>
 		</form>
 	{/if}
-</div>
+{/tab}
+{/if}
 
+{tab name='{tr}Duplicate Tracker{/tr}'}
 {* --- tab with raw form --- *}
-<div id="content{cycle name=content assign=focustab}{$focustab}"{if $prefs.feature_tabs eq 'y'} class="tabcontent" style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 	<h2>{tr}Duplicate Tracker{/tr}</h2>
 
 	<form action="tiki-admin_trackers.php" method="post">
@@ -633,4 +628,6 @@ categories = {$catsdump}
 			</tr>
 		</table>
 	</form>
-</div>
+{/tab}
+
+{/tabset}

@@ -7,20 +7,9 @@
 	{button href="tiki-admin_modules.php?clear_cache=1" _text="{tr}Clear Cache{/tr}"}
 </div>
 
-{if $prefs.feature_tabs eq 'y'}
-	{cycle name=tabs values="1,2,3" print=false advance=false reset=true}
-	<div class="tabs">
-		<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark tabinactive">
-			<a href="#layout" onclick="javascript:tikitabs({cycle name=tabs},3); return false;">{tr}Assign/Edit modules{/tr}</a>
-		</span>
-		<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark tabinactive">
-			<a href="#theme" onclick="javascript:tikitabs({cycle name=tabs},3); return false;">{tr}User Modules{/tr}</a>
-		</span>
-	</div>
-	{cycle name=content values="1,2,3" print=false advance=false reset=true}
-{/if}
+{tabset name='tabs_adminmodules'}
 
-<fieldset {if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>
+{tab name='{tr}Assign/Edit modules{/tr}'}
 	{if $prefs.feature_tabs neq 'y'}
 		<legend class="heading">
 			<span>
@@ -229,9 +218,9 @@
 			</tr>
 		</table>
 	</form>
-</fieldset>
+{/tab}
 
-<fieldset {if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>
+{tab name='{tr}User Modules{/tr}'}
 	{if $prefs.feature_tabs neq 'y'}
 		<legend class="heading">
 			<a href="#usertheme" name="usertheme"><span>{tr}User Modules{/tr}</span></a>
@@ -487,6 +476,7 @@
 			</tr>
 		</table>
 	</form>
-</fieldset>
+{/tab}
 
+{/tabset}
 {/strip}
