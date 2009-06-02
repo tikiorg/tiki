@@ -25,7 +25,7 @@ if ($prefs['feature_webmail'] != 'y') {
 	die;
 }
 
-if ($tiki_p_use_webmail != 'y') {
+if ($tiki_p_use_webmail != 'y' || $tiki_p_use_group_webmail != 'y') {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied to use this feature"));
 
@@ -493,7 +493,7 @@ if (isset($_REQUEST["conmsg"])) {
 		$webmaillib->current_webmail_account($user, $_REQUEST["current"]);
 	}
 
-
+	$smarty->assign('mailCurrentAccount', $tikilib->get_user_preference($user, 'mailCurrentAccount', 0));
 
 	$smarty->assign('accountId', $_REQUEST["accountId"]);
 

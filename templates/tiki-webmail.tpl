@@ -203,7 +203,7 @@
 				{section name=ixp loop=$pubAccounts}
 					<tr>
 						<td class="{cycle advance=false}">	
-							{if $pubAccounts[ixp].current ne 'y'}
+							{if $pubAccounts[ixp].current ne 'y' or $pubAccounts[ixp].accountId ne $mailCurrentAccount}
 								<a href="tiki-webmail.php?locSection=settings&amp;current={$pubAccounts[ixp].accountId}" title="{tr}Click to activate{/tr}">{icon _id='star_grey' alt="{tr}Click to activate{/tr}"}</a>
 							{else}
 								{icon _id='star' alt="{tr}This is the active account.{/tr}"}
@@ -216,11 +216,11 @@
 						<td class="{cycle advance=false}">{$pubAccounts[ixp].pop} ({$pubAccounts[ixp].port})</td>
 						<td class="{cycle advance=false}">{$pubAccounts[ixp].username}</td>
 						<td class="{cycle}">
-							<a href="tiki-webmail.php?locSection=settings&amp;remove={$pubAccounts[ixp].accountId}" class="link" title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
 							{if $tiki_p_admin_group_webmail eq 'y'or $tiki_p_admin eq 'y'}
+								<a href="tiki-webmail.php?locSection=settings&amp;remove={$pubAccounts[ixp].accountId}" class="link" title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
 								<a href="tiki-webmail.php?locSection=settings&amp;accountId={$pubAccounts[ixp].accountId}" class="tablename" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
 							{/if}
-							{if $pubAccounts[ixp].current ne 'y'}
+							{if $pubAccounts[ixp].current ne 'y' or $pubAccounts[ixp].accountId ne $mailCurrentAccount}
 								<a href="tiki-webmail.php?locSection=settings&amp;current={$pubAccounts[ixp].accountId}" title="{tr}Activate{/tr}">{icon _id='accept' alt="{tr}Click to activate{/tr}"}</a>
 							{/if}
 						</td>

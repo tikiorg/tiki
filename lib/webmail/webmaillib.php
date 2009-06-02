@@ -27,7 +27,7 @@ class WebMailLib extends TikiLib {
 //		}
 		
 //		$query = "delete from `tiki_webmail_messages` where `accountId`=? and `mailId`=? and `user`=?";
-		$query = "delete from `tiki_webmail_messages` where `mailId`=?";	// FIXME - looks like this deletes other users' messages - $msgid is the index in a single mailbox afaik (jonnyb)
+		$query = "delete from `tiki_webmail_messages` where `mailId`=?";	// mailId is message-id
 		$result = $this->query($query, array($msgid));
 	}
 
@@ -116,11 +116,19 @@ class WebMailLib extends TikiLib {
 	}
 
 	function current_webmail_account($user, $accountId) {
+		global $tikilib;
+		
 		$query = "update `tiki_user_mail_accounts` set `current`='n' where `user`=?";
 		$result = $this->query($query, array($user));
-
-		$query = "update `tiki_user_mail_accounts` set `current`='y' where `user`=? and `accountId`=?";
-		$result = $this->query($query, array($user,(int)$accountId ));
+		
+		$acc = $this->get_webmail_account($user, $accountId);
+		if ($acc && $acc['flagsPublic'] == 'y') {
+			$tikilib->set_user_preference($user, 'mailCurrentAccount', $accountId);
+		} else {
+			$query = "update `tiki_user_mail_accounts` set `current`='y' where `user`=? and `accountId`=?";
+			$this->query($query, array($user,(int)$accountId ));
+			$tikilib->set_user_preference($user, 'mailCurrentAccount', 0);
+		}
 	}
 
 	function list_webmail_accounts($user, $offset, $maxRecords, $sort_mode, $find) {
@@ -154,11 +162,11 @@ class WebMailLib extends TikiLib {
 		if ($find) {
 			$findesc = '%' . $find . '%';
 
-			$mid = " where `flagsPublic` <> 'n' and `user`=? and (`account` like ?)";
-			$bindvars = array($user, $findesc);
+			$mid = " where `flagsPublic` <> 'n' and (`account` like ?)";
+			$bindvars = array($findesc);
 		} else {
-			$mid = " where `flagsPublic` <> 'n' and `user`=?";
-			$bindvars = array($user);
+			$mid = " where `flagsPublic` <> 'n'";
+			$bindvars = array();
 		}
 
 		$query = "select * from `tiki_user_mail_accounts` $mid order by ".$this->convert_sortmode($sort_mode);
@@ -214,8 +222,10 @@ class WebMailLib extends TikiLib {
 	
 
 	function get_current_webmail_account($user) {
-		$query = "select * from `tiki_user_mail_accounts` where `current`='y' and `user`=?";
-		$result = $this->query($query, array($user));
+		global $tikilib;
+		$pubAc = $tikilib->get_user_preference($user, 'mailCurrentAccount');
+		$query = "select * from `tiki_user_mail_accounts` where (`current`='y' and `user`=?) or (`flagsPublic`='y' and `accountId`=?)";
+		$result = $this->query($query, array($user, $pubAc));
 
 		if (!$result->numRows())
 			return false;
@@ -251,7 +261,7 @@ class WebMailLib extends TikiLib {
 	}
 
 	function get_webmail_account($user, $accountId) {
-		$query = "select * from `tiki_user_mail_accounts` where `accountId`=? and `user`=?";
+		$query = "select * from `tiki_user_mail_accounts` where `accountId`=? and (`user`=? or `flagsPublic`='y')";
 		$result = $this->query($query, array((int)$accountId,$user));
 
 		if (!$result->numRows())
@@ -425,7 +435,7 @@ class WebMailLib extends TikiLib {
 //		$cont = $message->getContent();
 //		
 //		$ct = $message->contentType;
-//		if (preg_match('/boundary=[\'"](.*)[\'"]/', $ct, $m) == 1) {
+//		if (preg_match('/boundary=[\'"]?(.*)[\'"]?/', $ct, $m) == 1) {
 //			$boundary = $m[1];
 //			include_once('lib/core/lib/Zend/Mime/Message.php');
 //			$zmm = Zend_Mime_Message::createFromMessage($cont, $boundary);
@@ -446,6 +456,10 @@ class WebMailLib extends TikiLib {
 		$c = '';
 		if (!empty($foundPart)) {
 			$c = $foundPart->getContent();
+			
+//			require_once('lib/core/lib/Zend/Mime/Part.php');
+//			$mime_part = new Zend_Mime_part($foundPart);
+			
 			$enc = $foundPart->contentTransferEncoding;
 			if (!empty($enc)) {
 				$c = $this->decodeBody($c, $enc);
