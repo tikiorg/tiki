@@ -36,27 +36,24 @@ function smarty_block_tabset($params, $content, &$smarty, &$repeat) {
 			$smarty_tabset_name = "tiki_tabset";
 		}
 		global $smarty_tabset_name, $smarty_tabset;
-		if (isset($_REQUEST['tabbed_'.$smarty_tabset_name])) {
-			$_SESSION["tabbed_$smarty_tabset_name"] = $_REQUEST['tabbed_'.$smarty_tabset_name] ;
-		}
 		return;
 	} else {
 		//closing
 		if ( $prefs['feature_tabs'] == 'y') {
 			require_once $smarty->_get_plugin_filepath('function','button');
-			if (isset($_SESSION["tabbed_$smarty_tabset_name"]) and $_SESSION["tabbed_$smarty_tabset_name"] == 'n') {
+			if (isset($_COOKIE["tabbed_$smarty_tabset_name"]) and $_COOKIE["tabbed_$smarty_tabset_name"] == 'n') {
 				$button_params['_text'] = tra('Tab View');
 			} else {
 				$button_params['_text'] = tra('No Tab');
 			}
-			$notabs = '<input type="hidden" name="tabbed_'.$smarty_tabset_name.'" value="'.($_SESSION["tabbed_$smarty_tabset_name"] == 'n' ? 'n' : 'y').'"/>';
-			$button_params['_onclick'] = "tabbed_input = document.getElementsByName('tabbed_$smarty_tabset_name')[0]; tabbed_input.value ='".($_SESSION["tabbed_$smarty_tabset_name"] == 'n' ? 'y' : 'n' )."' ; tabbed_input.form.submit();";
+			$button_params['_auto_args']='*';
+			$button_params['_onclick'] = "setCookie('tabbed_$smarty_tabset_name','".($_COOKIE["tabbed_$smarty_tabset_name"] == 'n' ? 'y' : 'n' )."') ;";
 			$notabs .= smarty_function_button($button_params,$smarty);
 		} else {
 			return $content;
 		}
 		$ret = "<div class='floatright'>$notabs</div><br class='clear'/>";
-		if ( $_SESSION["tabbed_$smarty_tabset_name"] == 'n' ) {
+		if ( $_COOKIE["tabbed_$smarty_tabset_name"] == 'n' ) {
 			return $ret.$content;
 		}
 		$ret .= '<div class="tabs">

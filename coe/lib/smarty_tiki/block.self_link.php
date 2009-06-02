@@ -80,11 +80,12 @@ function smarty_block_self_link($params, $content, &$smarty, $repeat = false) {
 						$params['_template'] = '';
 					}
 					$ret = smarty_block_ajax_href(
-							array('template' => $params['_template'], 'htmlelement' => $params['_htmlelement']),
+							array('template' => $params['_template'], 'htmlelement' => $params['_htmlelement'], '_onclick' => $params['_onclick']),
 							$ret,
 							$smarty,
 							false
 							);
+							unset($params['_onclick']);
 				} else {
 					$ret = 'href="'.$ret.'"';
 				}

@@ -10,6 +10,11 @@ function smarty_block_ajax_href($params, $content, &$smarty, $repeat) {
     global $prefs, $user;
     if ( $repeat ) return;
 
+		if ( !empty($params['_onclick']) ) {
+			$onclick = $params['_onclick'];
+		} else {
+			$onclick = '';
+    }
     $url = $content;
     $template = $params['template'];
     $htmlelement = $params['htmlelement'];
@@ -20,7 +25,7 @@ function smarty_block_ajax_href($params, $content, &$smarty, $repeat) {
 	return " href=\"$url\" ";
     } else {
 	$max_tikitabs = 50; // Same value as in header.tpl, <body> tag onload's param
-	return " href=\"#main\" onclick=\"$func('$url','$template','$htmlelement',$max_tikitabs,'$last_user');return false;\" ";
+	return " href=\"#main\" onclick=\"$onclick ;$func('$url','$template','$htmlelement',$max_tikitabs,'$last_user');return false;\" ";
     }
 }
 

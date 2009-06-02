@@ -13,6 +13,7 @@ require_once ('tiki-setup.php');
 include_once ('lib/admin/adminlib.php');
 
 $tikifeedback = array();
+$auto_query_args = array('page');
 
 if ($tiki_p_admin != 'y') {
 	$smarty->assign('errortype', 401);
