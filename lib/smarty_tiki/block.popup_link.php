@@ -75,7 +75,3 @@ JS
 		return '<a id="' . $linkId . '"' . $href . '>' . $content . '</a>';
 	}
 }
-
-
-
-?>

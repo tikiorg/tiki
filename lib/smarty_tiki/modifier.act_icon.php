@@ -35,5 +35,3 @@ function smarty_modifier_act_icon($type,$isInter='n')
   $img="<img src='lib/Galaxia/img/icons/$ic' alt='$type' title='$type' />";
   return $img;	
 }
-
-?>

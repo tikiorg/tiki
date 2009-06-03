@@ -125,4 +125,3 @@ function _enlightColor($matches) {
      }
      return '';
  }
-?>

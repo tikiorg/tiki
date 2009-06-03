@@ -18,5 +18,3 @@ function smarty_modifier_username($user, $login_fallback = true, $check_user_sho
 
 	return $return;
 }
-
-?>

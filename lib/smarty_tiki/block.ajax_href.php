@@ -23,7 +23,3 @@ function smarty_block_ajax_href($params, $content, &$smarty, $repeat) {
 	return " href=\"#main\" onclick=\"$func('$url','$template','$htmlelement',$max_tikitabs,'$last_user');return false;\" ";
     }
 }
-
-
-
-?>

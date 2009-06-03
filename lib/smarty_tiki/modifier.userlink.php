@@ -190,5 +190,3 @@ function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set',
         return $ret;
     }
 }
-
-?>

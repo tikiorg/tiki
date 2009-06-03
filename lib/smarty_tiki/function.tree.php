@@ -95,4 +95,3 @@ function smarty_function_tree($params, &$smarty) {
 
 	return $tikiphplayers->mkMenu($structure, '', $params['type'], '', 0, implode('|', $default_expand));
 }
-?>

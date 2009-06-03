@@ -48,7 +48,3 @@ function smarty_function_popup_init($params, &$smarty)
     }
 
 }
-
-
-
-?>

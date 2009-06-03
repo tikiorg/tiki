@@ -16,7 +16,3 @@ function smarty_function_redirect($params, &$smarty) {
 	header("Location: $url");
 	exit;
 }
-
-
-
-?>
