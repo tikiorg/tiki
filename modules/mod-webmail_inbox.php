@@ -58,7 +58,14 @@ function webmail_refresh() {	// called in ajax mode
 	
 	$accountid = isset($module_params['accountid']) ? $module_params['accountid'] : 0;
 	
-	$webmail_list = $webmaillib->refresh_mailbox($user, $accountid, $webmail_reload);
+	try {
+		$webmail_list = $webmaillib->refresh_mailbox($user, $accountid, $webmail_reload);
+	} catch (Exception $e) {
+		$err = $e->getMessage();
+		$smarty->assign('tpl_module_title', tra('Webmail error'));
+		$smarty->assign('error', $err);
+		return;
+	}
 	
 	if (!$webmail_account) {
 		$smarty->assign('tpl_module_title', tra('Webmail error'));
@@ -77,7 +84,7 @@ function webmail_refresh() {	// called in ajax mode
 	
 	$webmail_list_page = Array();
 	
-	for ($i = $webmail_start - 1; $i > 0 && $i > $upperlimit - $numshow; $i--) {
+	for ($i = $webmail_start - 1; $i > -1 && $i > $upperlimit - $numshow; $i--) {
 		$a_mail = $webmail_list[$i];
 		$webmaillib->replace_webmail_message($webmail_account['accountId'], $user, $a_mail['realmsgid']);
 		list($a_mail['isRead'], $a_mail['isFlagged'], $a_mail['isReplied']) = $webmaillib->get_mail_flags($webmail_account['accountId'], $user, $a_mail['realmsgid']);

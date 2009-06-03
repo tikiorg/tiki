@@ -43,13 +43,31 @@ function doPutBackWebmail(messageID) {
 	\$jq('#$divId .webmail_refresh_message').show();
 }
 
+//var refreshWebmailRequest;
+
 function doRefreshWebmail(start, reload) {
 	if (\$jq('.box-webmail_inbox .box-data').css('display') != 'none') {
-		xajax.config.requestURI = 'tiki-webmail_ajax.php';	// tell it where to send the request
-		xajax.config.statusMessages = true;
-		xajax.config.waitCursor = false;
-		xajax_refreshWebmail('$divId', start, reload);
-		showWebmailMessage('".tra('Checking')."...');
+		//if (\$jq('#$divId .webmail_refresh_busy').css('display') == 'none') {
+			xajax.config.requestURI = 'tiki-webmail_ajax.php';	// tell it where to send the request
+			xajax.config.statusMessages = true;
+			xajax.config.waitCursor = false;
+			
+			// can't get callback to work in tiki - try again later :(
+			//cback = xajax.callback.create();
+			//cback.onRequest = function (oRequest) {
+			//	refreshWebmailRequest = oRequest;
+			//}
+			//cback.onComplete = function (oRequest) {
+			//	refreshWebmailRequest = false;
+			//}
+			//xajax.call( 'refreshWebmail', { callback: cback, destDiv: '$divId', inStart: start, inReload: reload } );
+			
+			xajax_refreshWebmail('$divId', start, reload);
+			showWebmailMessage('".tra('Checking')."...');
+		//} else {
+		//	xajax.abortRequest(refreshWebmailRequest);
+		//	showWebmailMessage('".tra('Aborted')."...');
+		//}
 	}
 	if (typeof autoRefresh != 'undefined' && typeof doRefreshWebmail == 'function') {
 		setTimeout('doRefreshWebmail()', autoRefresh);
@@ -138,26 +156,36 @@ function takeGroupMail($destDiv = 'mod-webmail_inbox', $msgId) {
 	$subject	= $m['subject'];
 	$realmsgid	= $m['realmsgid'];
 	
-	$items['data'][0]['fieldId'] = $module_params['fromFId'];
-	$items['data'][0]['type'] = 't';
-	$items['data'][0]['value'] = $from;
-	$items['data'][1]['fieldId'] = $module_params['operatorFId'];
-	$items['data'][1]['type'] = 'u';
-	$items['data'][1]['value'] = $user;
-	$items['data'][2]['fieldId'] = $module_params['subjectFId'];
-	$items['data'][2]['type'] = 't';
-	$items['data'][2]['value'] = $subject;
-	$items['data'][3]['fieldId'] = $module_params['messageFId'];
-	$items['data'][3]['type'] = 't';
-	$items['data'][3]['value'] = $realmsgid;
-	$items['data'][4]['fieldId'] = $module_params['contentFId'];
-	$items['data'][4]['type'] = 'a';
-	$items['data'][4]['value'] = '~pp~'.htmlentities($cont).'~/pp~';	// sigh - no option for non-wiki text :(
-	
-	$trklib->replace_item($module_params['trackerId'], 0, $items);
-	
 	$objResponse = new xajaxResponse();
-	$objResponse->redirect('tiki-view_tracker.php?trackerId='.$module_params['trackerId']);
+	
+	// TODO check if already taken
+	$itemid = $trklib->get_item_id( $module_params['trackerId'], $module_params['messageFId'], $realmsgid);
+	if ($itemid > 0) {
+		$objResponse->script('doRefreshWebmail();alert("Sorry, that mail has been taken by another operator. Refreshing list...");');
+		
+	} else {
+	
+		$items['data'][0]['fieldId'] = $module_params['fromFId'];
+		$items['data'][0]['type'] = 't';
+		$items['data'][0]['value'] = $from;
+		$items['data'][1]['fieldId'] = $module_params['operatorFId'];
+		$items['data'][1]['type'] = 'u';
+		$items['data'][1]['value'] = $user;
+		$items['data'][2]['fieldId'] = $module_params['subjectFId'];
+		$items['data'][2]['type'] = 't';
+		$items['data'][2]['value'] = $subject;
+		$items['data'][3]['fieldId'] = $module_params['messageFId'];
+		$items['data'][3]['type'] = 't';
+		$items['data'][3]['value'] = $realmsgid;
+		$items['data'][4]['fieldId'] = $module_params['contentFId'];
+		$items['data'][4]['type'] = 'a';
+		$items['data'][4]['value'] = '~pp~'.htmlentities($cont).'~/pp~';	// sigh - no option for non-wiki text :(
+		
+		$trklib->replace_item($module_params['trackerId'], 0, $items);
+		
+		$objResponse->redirect('tiki-view_tracker.php?trackerId='.$module_params['trackerId']);
+	}
+	
 	return $objResponse;
 }
 

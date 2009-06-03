@@ -218,6 +218,10 @@ if ($_REQUEST["locSection"] == 'mailbox') {
 
 	$smarty->assign('current', $current);
 	$smarty->assign('autoRefresh',$current['autoRefresh']);
+	$smarty->assign('imap',$current['imap']);
+	$smarty->assign('mbox',$current['mbox']);
+	$smarty->assign('maildir',$current['maildir']);
+	$smarty->assign('usseSSL',$current['usseSSL']);
 	$smarty->assign('flagsPublic',$current['flagsPublic']);
 	$pop3 = new Net_POP3();
 	
@@ -473,12 +477,20 @@ if (isset($_REQUEST["conmsg"])) {
 		
 		if (!isset($_REQUEST["accountId"])) {
 			// Add new account
-			$_REQUEST["accountId"] = $webmaillib->new_webmail_account($user, $_REQUEST["account"], $_REQUEST["pop"], $_REQUEST["port"], $_REQUEST["username"], $_REQUEST["pass"], $_REQUEST["msgs"], $_REQUEST["smtp"], $_REQUEST["useAuth"], $_REQUEST["smtpPort"], $_REQUEST["flagsPublic"], $_REQUEST["autoRefresh"]);
+			$_REQUEST["accountId"] = $webmaillib->new_webmail_account($user,
+					$_REQUEST["account"], $_REQUEST["pop"], $_REQUEST["port"], $_REQUEST["username"],
+					$_REQUEST["pass"], $_REQUEST["msgs"], $_REQUEST["smtp"], $_REQUEST["useAuth"],
+					$_REQUEST["smtpPort"], $_REQUEST["flagsPublic"], $_REQUEST["autoRefresh"],
+					$_REQUEST["imap"], $_REQUEST["mbox"], $_REQUEST["maildir"], $_REQUEST["useSSL"] ? $_REQUEST["useSSL"] : 'n');
 			
 			
 		} else {
 			// Update existing account
-			$webmaillib->replace_webmail_account($_REQUEST["accountId"], $user, $_REQUEST["account"], $_REQUEST["pop"], $_REQUEST["port"], $_REQUEST["username"], $_REQUEST["pass"], $_REQUEST["msgs"], $_REQUEST["smtp"], $_REQUEST["useAuth"], $_REQUEST["smtpPort"], $_REQUEST["flagsPublic"], $_REQUEST["autoRefresh"]);
+			$webmaillib->replace_webmail_account($_REQUEST["accountId"], $user,
+					$_REQUEST["account"], $_REQUEST["pop"], $_REQUEST["port"], $_REQUEST["username"],
+					$_REQUEST["pass"], $_REQUEST["msgs"], $_REQUEST["smtp"], $_REQUEST["useAuth"],
+					$_REQUEST["smtpPort"], $_REQUEST["flagsPublic"], $_REQUEST["autoRefresh"],
+					$_REQUEST["imap"], $_REQUEST["mbox"], $_REQUEST["maildir"], $_REQUEST["useSSL"] ? $_REQUEST["useSSL"] : 'n');
 		}
 		unset($_REQUEST["accountId"]);
 	}
@@ -512,6 +524,10 @@ if (isset($_REQUEST["conmsg"])) {
 		$info["msgs"] = 20;
 		$info["flagsPublic"] = "n";
 		$info["autoRefresh"] = 0;
+		$info['imap'] = '';
+		$info['mbox'] = '';
+		$info['maildir'] = '';
+		$info['useSSL'] = 'n';
 	}
 
 	$smarty->assign('info', $info);

@@ -49,8 +49,35 @@
 				<table class="normal">
 					<tr>
 						<td class="formcolor">{tr}Account name{/tr}</td>
-						<td colspan="3" class="formcolor">
+						<td class="formcolor">
 							<input type="text" name="account" value="{$info.account|escape}" />
+						</td>
+						<td class="formcolor">{tr}Use SSL{/tr}</td>
+						<td class="formcolor">
+							<input type="checkbox" name="useSSL" value="y" {if $info.useSSL eq 'y'}checked="checked"{/if} />
+						</td>
+					</tr>
+					<tr><td class="formcolor" colspan="4"><hr /></td></tr>
+					<tr>
+						<td class="formcolor">{tr}IMAP server{/tr}</td>
+						<td class="formcolor">
+							<input type="text" name="imap" value="{$info.imap|escape}" />
+						</td>
+						<td rowspan="4" class="formcolor" valign="middle">{tr}Port{/tr}</td>
+						<td rowspan="4" class="formcolor" valign="middle">
+							<input type="text" name="port" size="7" value="{$info.port}" />
+						</td>
+					</tr>
+					<tr>
+						<td class="formcolor">{tr}Mbox filepath{/tr}</td>
+						<td class="formcolor">
+							<input type="text" name="mbox" value="{$info.mbox|escape}" />
+						</td>
+					</tr>
+					<tr>
+						<td class="formcolor">{tr}Maildir mail directory{/tr}</td>
+						<td class="formcolor">
+							<input type="text" name="maildir" value="{$info.maildir|escape}" />
 						</td>
 					</tr>
 					<tr>
@@ -58,11 +85,8 @@
 						<td class="formcolor">
 							<input type="text" name="pop" value="{$info.pop|escape}" />
 						</td>
-						<td class="formcolor">{tr}Port{/tr}</td>
-						<td class="formcolor">
-							<input type="text" name="port" size="7" value="{$info.port}" />
-						</td>
 					</tr>
+					<tr><td class="formcolor" colspan="4"><hr /></td></tr>
 					<tr>
 						<td class="formcolor">{tr}SMTP server{/tr}</td>
 						<td class="formcolor">
@@ -80,6 +104,7 @@
 							{tr}No{/tr}<input type="radio" name="useAuth" value="n" {if $info.useAuth eq 'n'}checked="checked"{/if} />
 						</td>
 					</tr>
+					<tr><td class="formcolor" colspan="4"><hr /></td></tr>
 					<tr>
 						<td class="formcolor">{tr}Username{/tr}</td>
 						<td colspan="3" class="formcolor">
@@ -202,8 +227,8 @@
 				{cycle values="odd,even" print=false}
 				{section name=ixp loop=$pubAccounts}
 					<tr>
-						<td class="{cycle advance=false}">	
-							{if $pubAccounts[ixp].current ne 'y' or $pubAccounts[ixp].accountId ne $mailCurrentAccount}
+						<td class="{cycle advance=false}">
+							{if $pubAccounts[ixp].current ne 'y' and $pubAccounts[ixp].accountId ne $mailCurrentAccount}
 								<a href="tiki-webmail.php?locSection=settings&amp;current={$pubAccounts[ixp].accountId}" title="{tr}Click to activate{/tr}">{icon _id='star_grey' alt="{tr}Click to activate{/tr}"}</a>
 							{else}
 								{icon _id='star' alt="{tr}This is the active account.{/tr}"}
@@ -220,7 +245,7 @@
 								<a href="tiki-webmail.php?locSection=settings&amp;remove={$pubAccounts[ixp].accountId}" class="link" title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
 								<a href="tiki-webmail.php?locSection=settings&amp;accountId={$pubAccounts[ixp].accountId}" class="tablename" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
 							{/if}
-							{if $pubAccounts[ixp].current ne 'y' or $pubAccounts[ixp].accountId ne $mailCurrentAccount}
+							{if $pubAccounts[ixp].current ne 'y' and $pubAccounts[ixp].accountId ne $mailCurrentAccount}
 								<a href="tiki-webmail.php?locSection=settings&amp;current={$pubAccounts[ixp].accountId}" title="{tr}Activate{/tr}">{icon _id='accept' alt="{tr}Click to activate{/tr}"}</a>
 							{/if}
 						</td>
