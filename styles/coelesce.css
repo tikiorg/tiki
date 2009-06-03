@@ -437,6 +437,7 @@ input[id="sl-login-pass"] {}
 
 #bannertopright {}
 #siteloginbar input.wikiaction {}
+#siteloginbar { position: relative }
 #sitelocbar {float: left}
 #customcodewith_ad {width: 400px}
 
