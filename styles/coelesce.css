@@ -2366,13 +2366,6 @@ div.multiselect {
 
 div.tabrow {/*height: 24px !important*/}
 .calbuttonon a {color: #295C8E}
-.calHeading,
-.calHeadingOn {
-	background: #c3d3e5;
-	color: #517ea7;
-	font-weight: bold;
-	height: 24px !important}
-	
 .calHeadingOn {background: #ccdceb}
 
 .day,
@@ -2395,15 +2388,15 @@ a.viewthisday:hover { border-bottom: 0 none; }
 .addevent {padding: 0 5px; float: right}
 * html .addevent {padding: 0}
 .calodd, .caleven { border: 1px solid #a9a9a9}
-.calodd {background: #dddfdf}
+.calodd {background: #fbfbfb}
 * html .calodd {padding: 0}
 .caleven {background: #f0f0f0}
 * html .caleven {padding: 0}
-.caldark {background: #c3d3e5}
 * html .caldark {padding: 0}
-.caldark .calfocus {background: #c3d3e5}
+.caldark .calfocus {background: none}
 .daterow {}
 .daterow:hover {}
+.viewmode div {margin-right: 4px}
 
 /*****  Polls  *****/
 
