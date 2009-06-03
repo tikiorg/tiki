@@ -329,6 +329,7 @@ div#sitelogo {
 	white-space: nowrap;
 	overflow: hidden
 }
+div#sitelogo, div#sitelogo * { float: left }
 
 @media all and (min-width:0px) { [id$="sitelogo"] {
 	border: 1px solid transparent;
