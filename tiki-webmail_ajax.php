@@ -151,10 +151,14 @@ function takeGroupMail($destDiv = 'mod-webmail_inbox', $msgId) {
 	$ls = $webmaillib->refresh_mailbox($user, $accountid, false);
 	$cont = $webmaillib->get_mail_content($user, $accountid, $msgId);
 	
+	$acc = $webmaillib->get_webmail_account($user, $accountid);
+	
 	$m = $ls[$msgId - 1];
-	$from		= $m['sender']['email'];
+	$from		= $m['from'];		//$m['sender']['email'];
 	$subject	= $m['subject'];
 	$realmsgid	= $m['realmsgid'];
+	$maildate	= $m['date'];
+	$maildate	= strtotime($maildate);
 	
 	$objResponse = new xajaxResponse();
 	
@@ -180,7 +184,12 @@ function takeGroupMail($destDiv = 'mod-webmail_inbox', $msgId) {
 		$items['data'][4]['fieldId'] = $module_params['contentFId'];
 		$items['data'][4]['type'] = 'a';
 		$items['data'][4]['value'] = '~pp~'.htmlentities($cont).'~/pp~';	// sigh - no option for non-wiki text :(
-		
+		$items['data'][5]['fieldId'] = $module_params['accountFId'];
+		$items['data'][5]['type'] = 't';
+		$items['data'][5]['value'] = $acc['account'];
+		$items['data'][6]['fieldId'] = $module_params['datetimeFId'];
+		$items['data'][6]['type'] = 'f';	// f?
+		$items['data'][6]['value'] = $maildate;
 		$trklib->replace_item($module_params['trackerId'], 0, $items);
 		
 		$objResponse->redirect('tiki-view_tracker.php?trackerId='.$module_params['trackerId']);

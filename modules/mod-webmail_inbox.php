@@ -41,6 +41,7 @@ if (isset($module_params['accountid'])) {
 	$webmail_account = $webmaillib->get_webmail_account($user, $module_params['accountid']);
 } else {
 	$webmail_account = $webmaillib->get_current_webmail_account($user);
+	$_SESSION['webmailinbox'][$module_params['module_id']]['module_params']['accountid'] = $webmail_account['accountId'];
 }
 
 if ($webmail_account && $webmail_account['autoRefresh'] > 0) {
