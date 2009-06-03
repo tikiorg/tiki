@@ -2070,6 +2070,9 @@ class TrackerLib extends TikiLib {
 
 	// Inserts or updates a tracker
 	function replace_tracker($trackerId, $name, $description, $options, $descriptionIsParsed) {
+		if ($trackerId === false && !empty($name)) {	// called from profiles - update not replace
+			$trackerId = $this->getOne('select max(`trackerId`) from `tiki_trackers` where `name`=?',array($name));
+		}
 		if ($trackerId) {
 			$old = $this->getOne('select count(*) from `tiki_trackers` where `trackerId`=?',array((int)$trackerId));
 			if ($old) {
@@ -2145,6 +2148,10 @@ class TrackerLib extends TikiLib {
 			$editableBy = serialize($editableBy);
 		} else {
 			$editableBy = '';
+		}
+		
+		if ($fieldId === false && $trackerId && !empty($name)) {	// called from profiles - update not replace
+			$fieldId = $this->getOne("select max(`fieldId`) from `tiki_tracker_fields` where `trackerId`=? and `name`=?",array((int) $trackerId,$name));
 		}
 
 		if ($fieldId) {
