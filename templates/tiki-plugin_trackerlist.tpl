@@ -60,6 +60,9 @@
 {if $tracker_info.useAttachments eq 'y' and  $tracker_info.showAttachments eq 'y'}
 <th style="width:5%">{tr}atts{/tr}</th>
 {/if}
+{if $showdelete eq 'y' && ($tiki_p_admin_trackers eq 'y' or $perms.tiki_p_modify_tracker_items eq 'y')}
+	<th>{tr}Action{/tr}</th>
+{/if}
 
 </tr>
 {/if}
@@ -131,6 +134,11 @@
 <td  style="text-align:center;"><a href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$items[user].itemId}&amp;show=att" 
 link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" alt="{tr}List Attachments{/tr}" 
 /></a>{$items[user].attachments}</td>
+{/if}
+{if $showdelete eq 'y' && ($tiki_p_admin_trackers eq 'y' or $perms.tiki_p_modify_tracker_items eq 'y')}
+	<td>
+		{self_link delete=`$items[user].itemId`}{icon _id=cross alt='{tr}Remove{/tr}'}{/self_link}
+	</td>
 {/if}
 </tr>
 
