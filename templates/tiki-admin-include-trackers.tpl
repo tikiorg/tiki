@@ -35,32 +35,6 @@
   </div>
 </div>
 
-<div class="cbox">
-  <div class="cbox-title">{tr}Trackers with mirror tables{/tr}</div>
-  <div class="cbox-data">
-    <form action="tiki-admin.php?page=trackers" method="post">
-      <table class="admin">
-        <tr>
-          <td class="form">{tr}Use trackers with mirror tables{/tr}:</td>
-          <td>
-            <input type="checkbox" name="trk_with_mirror_tables" {if $prefs.trk_with_mirror_tables eq 'y'}checked="checked"{/if}/>
-          </td>
-        </tr>
-        
-        <tr>
-          <td class="form">{tr}Values are stored in a dedicated table for each tracker, then you can easily manipulate them outside Tikiwiki{/tr}</td>
-          <td class="form">{tr}WARNING : Old and New trackers cannot coexist. Trackers created with new library will not work with old library and conversely{/tr}.</td>
-        </tr>
-
-        <tr>
-          <td colspan="2" class="input_submit_container">
-            <input type="submit" name="trkMirrorTables" value="{tr}Validate choice{/tr}" />
-          </td>
-        </tr>
-      </table>
-    </form>
-  </div>
-</div>
 
 <div class="cbox">
   <div class="cbox-title">{tr}Tracker attachments{/tr}</div>
@@ -145,3 +119,30 @@
   </div>
 </div>
 
+
+<div class="cbox">
+  <div class="cbox-title">{tr}Trackers with mirror tables{/tr}</div>
+  <div class="cbox-data">
+    <form action="tiki-admin.php?page=trackers" method="post">
+      <table class="admin">
+        <tr>
+          <td class="form">{tr}Use trackers with mirror tables{/tr}:</td>
+          <td>
+            <input type="checkbox" name="trk_with_mirror_tables" {if $prefs.trk_with_mirror_tables eq 'y'}checked="checked"{/if}/>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="form">{tr}Values are stored in a dedicated table for each tracker, then you can easily manipulate them outside Tikiwiki{/tr}</td>
+          <td class="form">{tr}WARNING : Old and New trackers cannot coexist. Trackers created with new library will not work with old library and conversely{/tr}. {tr}Do not use this feature as it is very buggy and unmaintained. It will be pulled out of the code base later on.{/tr}</td>
+        </tr>
+
+        <tr>
+          <td colspan="2" class="input_submit_container">
+            <input type="submit" name="trkMirrorTables" value="{tr}Validate choice{/tr}" />
+          </td>
+        </tr>
+      </table>
+    </form>
+  </div>
+</div>
