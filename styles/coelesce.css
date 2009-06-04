@@ -329,11 +329,6 @@ div#sitelogo {
 	overflow: hidden
 }
 
-@media all and (min-width:0px) { [id$="sitelogo"] {
-	border: 1px solid transparent;
-	position: relative;
-	} }
-
 div#sitead {margin: auto}
 #sitead.floatright {padding-right: 40px}
 #sitead.floatleft {padding-left: 40px}
@@ -455,12 +450,6 @@ input[id="sl-login-pass"] {}
 	display: inline;
 	margin-top: 6px;
 	}
-
-@media all and (min-width:0px) { [id$="sitetitles"] {
-	background: yellow;
-	position: absolute;
-	top: 30px;
-	} }
 
 #sitetitle,
 #sitesubtitle {
