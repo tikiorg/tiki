@@ -6109,11 +6109,12 @@ class TikiLib extends TikiDB {
 
 		// Replace Hotwords
 		if ($prefs['feature_hotwords'] == 'y') {
+			$sep =  " \n\t\r\,\;\(\)\.\:\[\]\{\}\!\?\"";
 			foreach ($words as $word => $url) {
 				// \b is a word boundary, \s is a space char
 				$pregword = preg_replace("/\//","\/",$word);
-				$line = preg_replace("/(=(\"|')[^\"']*[ \n\t\r\,\;'])$pregword([ \n\t\r\,\;][^\"']*(\"|'))/i","$1:::::$word,:::::$3",$line);
-				$line = preg_replace("/([ \n\t\r\,\;']|^)$pregword($|[ \n\t\r\,\;])/i","$1<a class=\"wiki\" href=\"$url\" $hotw_nw>$word</a>$2",$line);
+				$line = preg_replace("/(=(\"|')[^\"']*[$sep'])$pregword([$sep][^\"']*(\"|'))/i","$1:::::$word,:::::$3",$line);
+				$line = preg_replace("/([$sep']|^)$pregword($|[$sep])/i","$1<a class=\"wiki\" href=\"$url\" $hotw_nw>$word</a>$2",$line);
 				$line = preg_replace("/:::::$pregword,:::::/i","$word",$line);
 			}
 		}
