@@ -15,7 +15,7 @@
 
 {* The category path *}
 {if $prefs.feature_breadcrumbs ne 'y'}
-<a class="dirlink" href="tiki-directory_browse.php?parent=0">Top</a>{if $parent > 0} >> {/if}{$path}
+<a class="dirlink" href="tiki-directory_browse.php?parent=0">{tr}Top{/tr}</a>{if $parent > 0} >> {/if}{$path}
 {/if}
 <div class="description">{$parent_info.description|escape}</div>
 <br /><br />
