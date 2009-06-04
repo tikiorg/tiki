@@ -4,10 +4,6 @@
   {include file=tiki-mytiki_bar.tpl}
 {/if}
 
-{if $prefs.feature_ajax ne 'y' && $prefs.feature_mootools ne 'y'}
-	{include file=tiki-mytiki_bar.tpl}
-{/if}
-
 <div class="navbar">
 	{button href="tiki-minical.php#add" _text="{tr}Add{/tr} "}
 	{button href="tiki-minical_prefs.php" _text="{tr}Prefs{/tr}"}
