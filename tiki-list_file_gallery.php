@@ -754,7 +754,7 @@ if (isset($_GET['slideshow'])) {
 	//}
 	die();
 }else {
-        if ( ( isset($_REQUEST["edit_mode"]) &&  ! $_REQUEST["edit_mode"] ) || ! isset($_REQUEST["edit_mode"] ) ){
+	if ( ! isset($_REQUEST["edit_mode"]) && ! isset($_REQUEST["edit"]) ){
         	// Get list of files in the gallery
                 $files = $tikilib->get_files($_REQUEST['offset'], $_REQUEST['maxRecords'], $_REQUEST['sort_mode'], $_REQUEST['find'], $_REQUEST['galleryId'], true, true);
                 $smarty->assign_by_ref('files', $files['data']);
