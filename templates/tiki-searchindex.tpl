@@ -52,28 +52,36 @@
 <br />
 
 {if $words neq '' and !$searchNoResults}
-	{tr}Found{/tr} "{$words}" {tr}in{/tr} {$cant_results} {$where2}
-	<div class="searchresults">
-		<br /><br />
+	<div class="highlight simplebox">
+		{tr}Found{/tr} "{$words}" {tr}in{/tr} {$cant_results} {$where2}
+	</div>
+	<ul class="searchresults">
 		{section name=search loop=$results}
-			<b>{tr}{$results[search].location}{/tr}:&nbsp;<a href="{$results[search].href}&amp;highlight={$words}{$results[search].anchor}" class="wiki">{$results[search].pageName|strip_tags|escape}</a> ({tr}Hits{/tr}: {$results[search].hits})</b>
-			{if $prefs.feature_search_fulltext eq 'y'}
+		<li>
+			{if $prefs.feature_search_show_object_type eq 'y'}
+				<span class="objecttype">{tr}{$results[search].location}{/tr}:</span>
+			{/if}
+			<a href="{$results[search].href}&amp;highlight={$words}{$results[search].anchor}" class="objectname">{$results[search].pageName|strip_tags|escape}</a> 
+			{if $prefs.feature_search_show_visit_count eq 'y'}
+				<span class="itemhits">({tr}Hits{/tr}: {$results[search].hits})</span>
+			{/if}
+			
+			{if $prefs.feature_search_show_pertinence eq 'y' && $prefs.feature_search_fulltext eq 'y'}
+				<span class="itemrelevance">
 				{if $results[search].relevance <= 0}
-					&nbsp;({tr}Simple search{/tr})
+					({tr}Simple search{/tr})
 				{else}
-					&nbsp;({tr}Relevance{/tr}: {$results[search].relevance})
+					({tr}Relevance{/tr}: {$results[search].relevance})
 				{/if}
+				</span>
 			{/if}
-			{if $results[search].type > ''}
-				&nbsp;({$results[search].type})
-			{/if}
-				<br />
+
 			<div class="searchdesc">{$results[search].data|strip_tags|truncate:250:'...'}</div>
 			<div class="searchdate">{tr}Last modification date{/tr}: {$results[search].lastModif|tiki_long_datetime}</div>
-			<br />
+		</li>
 		{sectionelse}
 			{tr}No pages matched the search criteria{/tr}
 		{/section}
-	</div>
+	</ul>
 	{pagination_links cant=$cant_results step=$maxRecords offset=$offset}{/pagination_links} 
 {/if}

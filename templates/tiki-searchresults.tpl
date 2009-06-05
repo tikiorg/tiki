@@ -145,44 +145,43 @@
 {/if}
 
 {if ! $searchNoResults }
-	<div class="searchresults">
-		<br />
-		<br />
+	<ul class="searchresults">
 		{section name=search loop=$results}
 			{strip}
+			<li>
 				{if $prefs.feature_search_show_object_type eq 'y'}
 					{if $results[search].type > ''}
-						<b>{$results[search].type}::</b>
+						<span class="objecttype">{$results[search].type}</span>
 					{/if}
 				{/if}
 				{if !empty($results[search].parentName)}
-					::<a href="{$results[search].parentHref}">{$results[search].parentName|escape}</a>&nbsp;-&gt;
+					<a href="{$results[search].parentHref}" class="parentname">{$results[search].parentName|escape}</a>
 				{/if}
 			{/strip}
-			<a href="{$results[search].href}&amp;highlight={$words}" class="wiki">{$results[search].pageName|strip_tags}</a>
+			<a href="{$results[search].href}&amp;highlight={$words}" class="objectname">{$results[search].pageName|strip_tags}</a>
 			{if $prefs.feature_search_show_visit_count eq 'y'}
-				<b>({tr}Hits{/tr}: {$results[search].hits})</b>
+				<span class="itemhits">({tr}Hits{/tr}: {$results[search].hits})</span>
 			{/if}
 
-			{if $prefs.feature_search_show_pertinence eq 'y'}
-				{if $prefs.feature_search_fulltext eq 'y'}
+			{if $prefs.feature_search_show_pertinence eq 'y' && $prefs.feature_search_fulltext eq 'y'}
+				<span class="itemrelevance">
 					{if $results[search].relevance <= 0}
-						&nbsp;({tr}Simple search{/tr})
+						({tr}Simple search{/tr})
 					{else}
-						&nbsp;({tr}Relevance{/tr}: {$results[search].relevance})
+						({tr}Relevance{/tr}: {$results[search].relevance})
 					{/if}
-				{/if}
+				</span>
 			{/if}
-			<br />
+			
 			<div class="searchdesc">{$results[search].data|strip_tags}</div>
 
 			{if $prefs.feature_search_show_last_modification eq 'y'}
-				<div class="searchdate">{tr}Last modification date{/tr}: {$results[search].lastModif|tiki_long_datetime}</div>
+				<div class="searchdate">{tr}Last modification{/tr}: {$results[search].lastModif|tiki_long_datetime}</div>
 			{/if}
-			<br/>
+			</li>
 		{sectionelse}
 			{tr}No pages matched the search criteria{/tr}
 		{/section}
-	</div>
+	</ul>
 	{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
 {/if}

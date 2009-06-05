@@ -892,7 +892,6 @@ div#edithelpzone {display: none}
 .admlink,
 .forumbutlink {}
 
-div.searchdate {}
 div#debugconsole {}
 
 .mini {
@@ -2357,7 +2356,31 @@ div.multiselect {
 .opaque .box-title {border-bottom: 1px solid #ccdceb}
 .opaque a {text-decoration: none}
 .opaque .iconmenu {display: block}
-.searchresults {display: inline}
+
+.searchresults {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	}
+
+.searchresults li {
+	margin: 10px 0 0;
+}
+
+.searchresults li .objecttype,
+	.searchresults li .parentname ,
+	.searchresults li .objectname 
+ {
+	font-size: 120%;
+	font-weight: bold;
+ }
+
+.searchresults .itemhits,
+	.searchresults .itemrelevance,
+	.searchresults .searchdate {
+	color: gray;
+	font-size: 90%;
+	}
 
 .calnavigation a:hover {background: red}
 #caltable .calfocuson,

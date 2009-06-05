@@ -865,8 +865,6 @@ div#edithelpzone {	display: none;}
 div.imagerank { margin: 10px 5px; }
 .link, .gallink, .bloglink, .fgallink, .trailer,
 .opencomlink, .commentslink, .admlink,.forumbutlink { font-weight: normal; padding: 0; }
-div.searchdate { font-size: .95em;  }
-
 
 /* Pagination for listings */
 .mini {
@@ -2346,9 +2344,31 @@ Caltrack a:visited {color: #00BD02}
 	border-bottom: 1px solid black;
 	padding-bottom: 7px;
 }
+
 .searchresults {
-	display: inline;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	}
+
+.searchresults li {
+	margin: 10px 0 0;
 }
+
+.searchresults li .objecttype,
+	.searchresults li .parentname ,
+	.searchresults li .objectname 
+ {
+	font-size: 120%;
+	font-weight: bold;
+ }
+
+.searchresults .itemhits,
+	.searchresults .itemrelevance,
+	.searchresults .searchdate {
+	color: gray;
+	font-size: 90%;
+	}
 
 #caltable .calfocuson,
 .box-data td.fc a.today,

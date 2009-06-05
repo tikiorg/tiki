@@ -753,8 +753,6 @@ div.imagerank {margin: 10px 5px}
 	font-weight: normal;
 	padding: 0}
 
-div.searchdate {font-size: .95em}
-
 .mini {
 	width: 100%;
 	text-align: center;
@@ -2012,7 +2010,31 @@ div.gallerypath a:hover {}
 	border-bottom: 1px solid #696969}
 
 .opaque .box-title {border-bottom: 1px solid black}
-.searchresults {display: inline}
+
+.searchresults {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	}
+
+.searchresults li {
+	margin: 10px 0 0;
+}
+
+.searchresults li .objecttype,
+	.searchresults li .parentname ,
+	.searchresults li .objectname 
+ {
+	font-size: 120%;
+	font-weight: bold;
+ }
+
+.searchresults .itemhits,
+	.searchresults .itemrelevance,
+	.searchresults .searchdate {
+	color: gray;
+	font-size: .95em;
+	}
 
 #caltable .calfocuson,
 .box-data td.fc a.today,
