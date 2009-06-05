@@ -5312,6 +5312,7 @@ class TikiLib extends TikiDB {
 		$params_string = str_replace('&gt;', '>', $params_string);
 		$params_string = str_replace('&lt;', '<', $params_string);
 		$params_string = str_replace('&quot;', '"', $params_string);
+		$params_string = str_replace('&apos;', "'", $params_string);
 		$params_string = str_replace('&amp;', '&', $params_string);
 
 		$arguments = array();
@@ -5330,10 +5331,10 @@ class TikiLib extends TikiDB {
 			$params_string = substr( $params_string, $pos + 1 );
 			$params_string = ltrim( $params_string );
 
-			if( !empty($params_string) && $params_string{0} == '"' ) {
+			if( !empty($params_string) && ($params_string{0} == '"' || $params_string{0} == "'") ) {
 				$quote = 0;
 				// Parameter between quotes, find closing quote not escaped by a \
-				while( false !== $quote = strpos( $params_string, '"', $quote + 1 ) ) {
+				while( false !== $quote = strpos( $params_string, $params_string{0}, $quote + 1 ) ) {
 					if( $params_string{$quote - 1} != "\\" )
 						break;
 				}
@@ -5341,7 +5342,7 @@ class TikiLib extends TikiDB {
 				// Closing quote found
 				if( $quote !== false ) {
 					$value = substr( $params_string, 1, $quote - 1 );
-					$arguments[$name] = str_replace( '\"', '"', $value );
+					$arguments[$name] = str_replace( array('\"', "\\'"), array('"', "'"), $value );
 
 					$params_string = substr( $params_string, $quote + 1 );
 					continue;
