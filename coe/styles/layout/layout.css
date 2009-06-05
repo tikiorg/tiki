@@ -554,6 +554,21 @@ img.icon {
 .findtable ul {list-style: none}
 .findtable ul li {float: left}
 
+.alphafilter {
+	display: block;
+	margin: 10px 0;
+	text-align:center;
+}
+
+.alphafilter a {
+	font-size: 120%;
+}
+
+.alphafilter .highlight {
+	font-weight: bold;
+	font-size: 130%;
+}
+
 .top_actions {
 	text-align: right;
 	margin-top: 5px}

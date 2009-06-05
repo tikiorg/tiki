@@ -103,16 +103,7 @@
 	</form>
 
 	{if $cant > $numrows or !empty($initial)}
-		<div align="center">
-			{section name=ini loop=$initials}
-				{if $initial and $initials[ini] eq $initial}
-					<span class="button">{$initials[ini]|capitalize}</span> . 
-				{else}
-					<a href="tiki-adminusers.php?initial={$initials[ini]}{if $find}&amp;find={$find|escape:"url"}{/if}{if $numrows}&amp;numrows={$numrows}{/if}{if $sort_mode}&amp;sort_mode={$sort_mode}{/if}" class="prevnext">{$initials[ini]}</a> . 
-				{/if}
-			{/section}
-			<a href="tiki-adminusers.php?initial={if $find}&amp;find={$find|escape:"url"}{/if}{if $numrows}&amp;numrows={$numrows}{/if}{if $sort_mode}&amp;sort_mode={$sort_mode}{/if}" class="prevnext">{tr}All{/tr}</a>
-		</div>
+		{initials_filter_links}
 	{/if}
 
 	<form name="checkform" method="post" action="{$smarty.server.PHP_SELF}{if $group_management_mode ne 'y' and $set_default_groups_mode ne 'y' and $email_mode ne 'y'}#multiple{/if}">

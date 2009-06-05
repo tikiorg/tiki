@@ -1015,6 +1015,23 @@ div.help_section {
 .findtable ul {list-style: none}
 .findtable ul li {float: left}
 
+.alphafilter {
+	display: block;
+	margin: 10px 0;
+	text-align:center;
+}
+
+.alphafilter a {
+	font-size: 120%;
+}
+
+.alphafilter .highlight {
+	background-color: #5a7ea2;
+	color: white;
+	font-weight: bold;
+	font-size: 130%;
+}
+
 ul.categories {
 	margin: 0;
 	padding: 0}
