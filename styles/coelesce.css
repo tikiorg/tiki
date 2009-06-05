@@ -2372,7 +2372,7 @@ div.multiselect {
 #caltable .calfocuson a {text-decoration:none}
 
 div.tabrow {/*height: 24px !important*/}
-.calbuttonon a {color: #295C8E}
+.buttonon a, .calbuttonon a {color: #295C8E !important}
 .calHeadingOn {background: #ccdceb}
 
 .day,

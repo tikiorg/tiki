@@ -57,6 +57,7 @@ input[type=reset],
 input[type=submit],
 span.button input,
 .calbuttonoff,
+.buttonon,
 .calbuttonon {
 	color: #4c4c4c;
 	font-weight: bold;
@@ -1020,6 +1021,7 @@ div.multiselect {
 	border-color: #41cbe7 #223845 #223845 #41cbe7;
 }
 
+.buttonon a,
 .calbuttonon a,
 .calbuttonoff a {
 	color: #fff;

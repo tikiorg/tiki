@@ -2499,7 +2499,7 @@ div.multiselect {
 	
 .calbuttonBox {margin-right: 3px}
 .calbuttonBox a {color: #fff}
-.calbuttonon a {font-weight: bold}
+.buttonon a, .calbuttonon a {font-weight: bold}
 
 #caltable .calfocuson,
 .box-data td.fc a.today,

@@ -2235,6 +2235,7 @@ td.calodd, td.caleven {border: 1px solid #999999}
 .caltoggle {
 	font-size: 90%;
 	background: #3F3F3F}
+.buttonon a,
 .calbuttonon a { text-decoration: underline;}
 
 .calHeadingOn a {

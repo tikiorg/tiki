@@ -96,6 +96,7 @@
 				</div>
 			{/foreach}
 			<div class="calinput">
+				<input type="hidden" name="todate" value="{$focusdate}"/>
 				<input type="submit" name="refresh" value="{tr}Refresh{/tr}"/>
 			</div>
 		</form>

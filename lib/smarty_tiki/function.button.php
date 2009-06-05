@@ -84,9 +84,19 @@ function smarty_function_button($params, &$smarty) {
 			}
 		}
 
-		// Remove params that does not start with a '_', since we don't want them to modify the URL
+		$auto_query_args_orig = $auto_query_args;
+		if ( !empty($params['_auto_args']) ) {
+			if ( $params['_auto_args'] != '*' ) {
+				if ( !isset($auto_query_args) ) $auto_query_args = null;
+				$auto_query_args = explode(',', $params['_auto_args']);
+			}
+		} else {
+			$params['_noauto'] = 'y';
+		}
+
+		// Remove params that does not start with a '_', since we don't want them to modify the URL except when in auto_query_args
 		foreach ( $params as $k => $v ) {
-			if ( $k[0] != '_' && $k != 'href' ) unset($params[$k]);
+			if ( $k[0] != '_' && $k != 'href' && !in_array($k,$auto_query_args) ) unset($params[$k]);
 		}
 
 		$url_args = array();
@@ -106,16 +116,6 @@ function smarty_function_button($params, &$smarty) {
 			}
 
 			unset($params['href']);
-		}
-
-		$auto_query_args_orig = $auto_query_args;
-		if ( !empty($params['_auto_args']) ) {
-			if ( $params['_auto_args'] != '*' ) {
-				if ( !isset($auto_query_args) ) $auto_query_args = null;
-				$auto_query_args = explode(',', $params['_auto_args']);
-			}
-		} else {
-			$params['_noauto'] = 'y';
 		}
 
 		$html = smarty_block_self_link(
