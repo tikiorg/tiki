@@ -47,13 +47,13 @@ function smarty_block_tabset($params, $content, &$smarty, &$repeat) {
 				$button_params['_text'] = tra('No Tab');
 			}
 			$button_params['_auto_args']='*';
-			$button_params['_onclick'] = "setCookie('tabbed_$smarty_tabset_name','".($_COOKIE["tabbed_$smarty_tabset_name"] == 'n' ? 'y' : 'n' )."') ;";
-			$notabs .= smarty_function_button($button_params,$smarty);
+			$button_params['_onclick'] = "setCookie('tabbed_$smarty_tabset_name','".((isset($_COOKIE["tabbed_$smarty_tabset_name"]) && $_COOKIE["tabbed_$smarty_tabset_name"] == 'n') ? 'y' : 'n' )."') ;";
+			$notabs = smarty_function_button($button_params,$smarty);
 		} else {
 			return $content;
 		}
 		$ret = "<div class='floatright'>$notabs</div><br class='clear'/>";
-		if ( $_COOKIE["tabbed_$smarty_tabset_name"] == 'n' ) {
+		if ( isset($_COOKIE["tabbed_$smarty_tabset_name"]) && $_COOKIE["tabbed_$smarty_tabset_name"] == 'n' ) {
 			return $ret.$content;
 		}
 		$ret .= '<div class="tabs">
