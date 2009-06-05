@@ -562,7 +562,7 @@ class TrackerLib extends TikiLib {
 	}
 
 	function getSqlStatus($status, &$mid, &$bindvars, $trackerId) {
-		global $tiki_p_view_trackers_pending,$tiki_p_view_trackers_closed, $user;
+		global $user;
 		if (is_array($status)) {
 			$status = implode('', $status);
 		}
@@ -591,14 +591,31 @@ class TrackerLib extends TikiLib {
 		}
 		return true;
 	}
-	function group_creator_has_perm($trackerId,$perm) {
+	function group_creator_has_perm($trackerId, $perm) {
+		global $prefs;
 		if ($groupCreatorFieldId = $this->get_field_id_from_type($trackerId, 'g', '1%')) {
-			return false;
+			$tracker_info = $this->get_tracker($trackerId);
+			$perms = $this->get_special_group_tracker_perm($tracker_info);
+			return empty($perms[$perm])? false: true;
 		} else {
 			return false;
 		}
 	}
-
+	/* group creator perms can only add perms,they can not take away perm
+	   and they are only used if tiki_p_view_trackers is not set for the tracker and if the tracker ha a group creator field
+	   must always be combined with a filter on the groups
+	*/
+	function get_special_group_tracker_perm($tracker_info) {
+		global $prefs, $userlib;
+		$perms = $userlib->get_object_permissions($tracker_info['trackerId'], 'tracker', $prefs['trackerCreatorGroupName']);
+		foreach ($perms as $perm) {
+			$ret[$perm['permName']] ='y';
+		}
+		if ($tracker_info['writerGroupCanModify'] == 'y') { // old configuration 
+			$ret['tiki_p_modify_tracker_items'] = 'y';
+		}
+		return $ret;
+	}
 	/* to filter filterfield is an array of fieldIds
 	 * and the value of each field is either filtervalue or exactvalue
 	 * ex: filterfield=array('1','2', '3'), filtervalue=array(array('this', '*that'), ''), exactvalue('', array('there', 'those'), 'these')
@@ -606,7 +623,8 @@ class TrackerLib extends TikiLib {
 	 * listfields = array(fieldId=>array('type'=>, 'name'=>...), ...)
 	 */
 	function list_items($trackerId, $offset=0, $maxRecords=-1, $sort_mode ='' , $listfields='', $filterfield = '', $filtervalue = '', $status = '', $initial = '', $exactvalue = '', $filter='') {
-		global $tiki_p_view_trackers_pending, $tiki_p_view_trackers_closed, $tiki_p_admin_trackers, $prefs;
+		//echo '<pre>FILTERFIELD:'; print_r($filterfield); echo '<br />FILTERVALUE:';print_r($filtervalue); echo '<br />EXACTVALUE:'; print_r($exactvalue); echo '<br />STATUS:'; print_r($status); echo '</pre>';
+		global $prefs;
 
 		$cat_table = '';
 		$sort_tables = '';

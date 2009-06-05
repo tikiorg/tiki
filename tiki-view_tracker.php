@@ -103,9 +103,11 @@ if ($tiki_p_create_tracker_items == 'y' && !empty($t['end'])) {
 }
 
 if ($tiki_p_view_trackers != 'y') {
+	$userCreatorFieldId = $trklib->get_field_id_from_type($_REQUEST['trackerId'], 'u', '1%');
+	$groupCreatorFieldId = $trklib->get_field_id_from_type($_REQUEST['trackerId'], 'g', '1%');
 	if ($user && !$my and isset($tracker_info['writerCanModify']) and $tracker_info['writerCanModify'] == 'y') {
 		$my = $user;
-	} elseif ($user && !$ours and isset($tracker_info['writergroupCanModify']) and $tracker_info['writergroupCanModify'] == 'y') {
+	} elseif ($user && !$ours and isset($tracker_info['writerGroupCanModify']) and $tracker_info['writerGroupCanModify'] == 'y') {
 		$ours = $group;
 	} elseif ($tiki_p_create_tracker_items != 'y') {
 		$smarty->assign('errortype', 401);
@@ -711,7 +713,7 @@ if ($my and $writerfield) {
 	$filtervalue = '';
 	$_REQUEST['status'] = 'opc';
 } elseif ($ours and $writergroupfield) {
-	$exactvalue = $ours;
+	$exactvalue = $userlib->get_user_groups($user);
 	$filtervalue = '';
 	$_REQUEST['status'] = 'opc';
 } else {

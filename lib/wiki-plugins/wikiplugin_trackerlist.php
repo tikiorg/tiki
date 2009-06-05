@@ -553,6 +553,7 @@ function wikiplugin_trackerlist($data, $params) {
 					$exactvalue = array_merge(array($exactvalue), $groups);
 				global $group;// awful trick - but the filter garantee that the group is ok
 				$smarty->assign_by_ref('ours', $group);
+				$perms = array_merge($perms, $trklib->get_special_group_tracker_perm($tracker_info));
 			}
 		}
 

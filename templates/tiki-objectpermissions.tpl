@@ -28,12 +28,13 @@
 {section  name=pg loop=$page_perms}
 <tr>
 <td class="{cycle advance=false}" title="{$page_perms[pg].permName}">{$page_perms[pg].permName|escape}<br /><i>{tr}{$page_perms[pg].permDesc|escape}{/tr}</i></td>
-<td class="{cycle advance=false}">{$page_perms[pg].groupName}</td>
+<td class="{cycle advance=false}">{if $page_perms[pg].groupName eq $prefs.trackerCreatorGroupName}<i>{tr}Creator Group{/tr}</i>{assign var=commentCreatorGroup value="y"}{else}{$page_perms[pg].groupName|escape}{/if}</td>
 </tr>
 {sectionelse}
 <tr><td colspan="4" class="odd">{if !empty($categ_perms)}{tr}No individual permissions, category permissions apply{/tr}{else}{tr}No individual permissions, category permissions apply{/tr}{/if}</td></tr>
 {/section}
 </table>
+{if isset($commentCreatorGroup) && $commentCreatorGroup eq 'y'}{remarksbox type="warning" title="{tr}Warning{/tr}"}{tr}Creator group perms apply only if no tiki_p_view_trackers{/tr}{/remarksbox}{/if}
 
 <br/>
 
@@ -96,7 +97,7 @@
 	{$page_perms[pg].permName|escape}<br /><i>{tr}{$page_perms[pg].permDesc|escape}{/tr}</i>
 </td>
 <td class="{cycle advance=false}">
-	{$page_perms[pg].groupName}
+	{if $page_perms[pg].groupName eq $prefs.trackerCreatorGroupName}<i>{tr}Creator Group{/tr}</i>{else}{$page_perms[pg].groupName|escape}{/if}
 </td>
 <td class="{cycle advance=true}"><a class="link" href="tiki-objectpermissions.php?referer={$referer|escape:"url"}&amp;action=remove&amp;objectName={$objectName}&amp;objectId={$objectId}&amp;objectType={$objectType}&amp;permType={$permType}&amp;page={$page|escape:"url"}&amp;perm={$page_perms[pg].permName}&amp;group={$page_perms[pg].groupName}{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}" title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a></td></tr>
 {sectionelse}
@@ -156,6 +157,12 @@
 <tr class="{cycle advance=true}">
   <td class="{cycle advance=false}"><input type="checkbox" name="group[]" value="{$groups[grp].groupName|escape}" {if $groupName eq $groups[grp].groupName }checked{/if}/>&nbsp;{$groups[grp].groupName|escape}</td></tr>
 {/section}
+{if $group_tracker eq 'y'}
+<tr class="{cycle advance=true}"><td><hr /></td></tr>
+<tr class="{cycle advance=true}">
+  <td class="{cycle advance=false}"><input type="checkbox" name="group[]" value="{$prefs.trackerCreatorGroupName}" {if isset($groupName) and $grouName eq $prefs.trackerCreatorGroupName}checked{/if}/>&nbsp;<i>{tr}Creator Group{/tr}</i></td>
+</tr>
+{/if}
 </table></td></tr>
 </table>
 <div class="input_submit_container" style="text-align: center">

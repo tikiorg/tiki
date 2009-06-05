@@ -617,6 +617,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'groupTracker' => 'n',
 		'userTracker' => 'n',
 		'trk_with_mirror_tables' => 'n',
+		'trackerCreatorGroupName' => ' ',
 
 		// user
 		'feature_userlevels' => 'n',

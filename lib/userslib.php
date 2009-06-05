@@ -140,7 +140,7 @@ class UsersLib extends TikiLib {
 		}
     }
 
-    function get_object_permissions($objectId, $objectType) {
+    function get_object_permissions($objectId, $objectType, $group='', $perm='') {
 	$objectId = md5($objectType . strtolower($objectId));
 
 	$query = "select `groupName`, `permName`
@@ -148,6 +148,14 @@ class UsersLib extends TikiLib {
 	    where `objectId` = ? and
 	    `objectType` = ?";
 	$bindvars = array($objectId, $objectType);
+	if (!empty($group)) {
+		$query .= " and `groupName`=?";
+		$bindvars[] = $group;
+	}
+	if (!empty($perm)) {
+		$query .= " and `permName`=?";
+		$bindvars[] = $perm;
+	}
 	$result = $this->query($query, $bindvars);
 	$ret = array();
 
@@ -2365,6 +2373,7 @@ function get_included_groups($group, $recur=true) {
 	}
 
 	function add_group($group, $desc='', $home='', $utracker=0, $gtracker=0, $rufields='', $userChoice='', $defcat=0, $theme='', $ufield='', $gfield='') {
+		$group = trim($group);
 		if ( $this->group_exists($group) ) return false;
 
 		$query = "insert into `users_groups` (`groupName`, `groupDesc`, `groupHome`,`groupDefCat`,`groupTheme`,`usersTrackerId`,`groupTrackerId`, `registrationUsersFieldIds`, `userChoice`, `usersFieldId`, `groupFieldId`) values(?,?,?,?,?,?,?,?,?,?,?)";
