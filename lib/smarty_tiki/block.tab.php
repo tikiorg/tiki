@@ -34,12 +34,12 @@ function smarty_block_tab($params, $content, &$smarty, &$repeat) {
 		}
 		
 		$ret = "<fieldset ";
-		if ($prefs['feature_tabs'] == 'y' and $_COOKIE["tabbed_$smarty_tabset_name"] != 'n') {
+		if ($prefs['feature_tabs'] == 'y' and (!isset($_COOKIE["tabbed_$smarty_tabset_name"]) or $_COOKIE["tabbed_$smarty_tabset_name"] != 'n')) {
    		$ret .= "id='content".sizeof($smarty_tabset)."' class='tabcontent' style='clear:both;display:block;'";
 		} else {
 			$ret .= ">";
 		}
-		if ($prefs['feature_tabs'] != 'y' or $_COOKIE["tabbed_$smarty_tabset_name"] == 'n') {
+		if ($prefs['feature_tabs'] != 'y' or (isset($_COOKIE["tabbed_$smarty_tabset_name"]) and $_COOKIE["tabbed_$smarty_tabset_name"] == 'n')) {
      $ret .= '<legend class="heading"><a href="#"><span>'.$params['name'].'</span></a></legend>';
 		}
 	
