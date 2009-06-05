@@ -73,7 +73,7 @@
 						{if $webmail_list[ix].operator eq $user}
 							<a class="button mod_webmail_action mod_webmail_taken" onclick="doPutBackWebmail({$webmail_list[ix].msgid})" href="#">{$webmail_list[ix].operator}</a>&nbsp;
 						{else}
-							<a class="button mod_webmail_action mod_webmail_taken" href="#">$webmail_list[ix].operator|userlink</a>&nbsp;
+							<span class="button mod_webmail_action mod_webmail_taken">{$webmail_list[ix].operator}</span>&nbsp;
 						{/if}
 					{else}
 						<a class="button mod_webmail_action" onclick="doTakeWebmail({$webmail_list[ix].msgid})" href="#">{tr}TAKE{/tr}</a>&nbsp;

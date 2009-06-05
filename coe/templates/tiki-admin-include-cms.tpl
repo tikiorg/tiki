@@ -170,6 +170,12 @@
 </div>
 
 <div class="adminoptionbox">
+	<div class="adminoption"><input type="checkbox" name="art_list_rating" id="articles-rating"
+              {if $prefs.art_list_rating eq 'y'}checked="checked"{/if} /></div>
+	<div class="adminoptionlabel"><label for="articles-rating">{tr}Rating{/tr}</label></div>
+</div>
+
+<div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" name="art_list_reads" id="articles-reads"
               {if $prefs.art_list_reads eq 'y'}checked="checked"{/if} /></div>
 	<div class="adminoptionlabel"><label for="articles-reads">{tr}Reads{/tr}</label></div>

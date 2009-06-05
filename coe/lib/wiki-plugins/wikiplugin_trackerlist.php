@@ -199,7 +199,13 @@ function wikiplugin_trackerlist_info() {
 				'required' => false,
 				'name' => tra('Silent'),
 				'description' => tra('Show nothing if no items'),
-			),		),
+			),
+			'showdelete' => array(
+				'required' => false,
+				'name' => tra('Delete'),
+				'description' => tra('Show a delete button'),
+			),
+		),
 	);
 }
 
@@ -323,6 +329,11 @@ function wikiplugin_trackerlist($data, $params) {
 			$showitemrank = 'n';
 		}
 		$smarty->assign_by_ref('showitemrank', $showitemrank);
+
+		if (!isset($showdelete)) {
+			$showdelete = 'n';
+		}
+		$smarty->assign_by_ref('showdelete', $showdelete);
 
 		if (!isset($status)) {
 			$status = "o";
@@ -593,6 +604,13 @@ function wikiplugin_trackerlist($data, $params) {
 			$smarty->assign('exportUrl', $exportUrl);
 		}
 
+		if (!empty($_REQUEST['delete'])) {
+			if (($item_info = $trklib->get_item_info($_REQUEST['delete'])) && $trackerId == $item_info['trackerId']) {
+				if ($tiki_p_admin_trackers == 'y' || $perms['tiki_p_modify_tracker_items'] == 'y') {
+					$trklib->remove_tracker_item($_REQUEST['delete']);
+				}
+			}
+		}
 
 		if (count($passfields)) {
 			$items = $trklib->list_items($trackerId, $tr_offset, $max, $tr_sort_mode, $passfields, $filterfield, $filtervalue, $tr_status, $tr_initial, $exactvalue, $filter);

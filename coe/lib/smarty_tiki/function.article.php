@@ -44,5 +44,3 @@ function smarty_function_article($params, &$smarty)
 
 
 }
-
-?>

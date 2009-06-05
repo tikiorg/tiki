@@ -49,4 +49,3 @@ function smarty_block_jq($params, $content, &$smarty) {
 	}
 	return '';
 }
-?>

@@ -329,11 +329,7 @@ div#sitelogo {
 	white-space: nowrap;
 	overflow: hidden
 }
-
-@media all and (min-width:0px) { [id$="sitelogo"] {
-	border: 1px solid transparent;
-	position: relative;
-	} }
+div#sitelogo, div#sitelogo * { float: left }
 
 div#sitead {margin: auto}
 #sitead.floatright {padding-right: 40px}
@@ -346,7 +342,6 @@ div#sitead {margin: auto}
 	position: absolute;
 	right: 30px;
 	bottom: 12px;
-	width: 450px;
 	text-align: right;
 	color: #fff}
 	
@@ -438,6 +433,7 @@ input[id="sl-login-pass"] {}
 
 #bannertopright {}
 #siteloginbar input.wikiaction {}
+#siteloginbar { position: relative }
 #sitelocbar {float: left}
 #customcodewith_ad {width: 400px}
 
@@ -456,12 +452,6 @@ input[id="sl-login-pass"] {}
 	display: inline;
 	margin-top: 6px;
 	}
-
-@media all and (min-width:0px) { [id$="sitetitles"] {
-	background: yellow;
-	position: absolute;
-	top: 30px;
-	} }
 
 #sitetitle,
 #sitesubtitle {
@@ -508,7 +498,9 @@ input[id="sl-login-pass"] {}
 
 #tiki-top {
 	background: url(coelesce/pagebg.jpg) repeat-x;
-	padding-top: 2px}
+	padding-top: 2px;
+	clear: both;
+}
 
 * html #tiki-top { font-size: 11px }
 *:first-child+html #tiki-top {
@@ -647,7 +639,6 @@ div.menuSection div.separator {}
 	color: #fff !important;
 	text-decoration: none} 
 
-* html .horbaritem a {font-size: .8em}
 .mdkverbar {} 
 
 .mdksubmenu {
@@ -698,7 +689,7 @@ div.menuSection div.separator {}
 
 .mdkitem a:active {} 
 
-/* Tree menu (also on Browse Categories */
+/* Tree menu (also on Browse Categories) */
 .treemenudiv {
 	display: block;
 	white-space: nowrap;
@@ -970,7 +961,7 @@ div#tikihelp {
 	padding: 0;
 	margin: 0;
 	border: none;
-	background: transparent;
+	background-color: transparent;
 	z-index: 820;
 	height: 100%;
 }
@@ -2365,13 +2356,6 @@ div.multiselect {
 
 div.tabrow {/*height: 24px !important*/}
 .calbuttonon a {color: #295C8E}
-.calHeading,
-.calHeadingOn {
-	background: #c3d3e5;
-	color: #517ea7;
-	font-weight: bold;
-	height: 24px !important}
-	
 .calHeadingOn {background: #ccdceb}
 
 .day,
@@ -2394,15 +2378,15 @@ a.viewthisday:hover { border-bottom: 0 none; }
 .addevent {padding: 0 5px; float: right}
 * html .addevent {padding: 0}
 .calodd, .caleven { border: 1px solid #a9a9a9}
-.calodd {background: #dddfdf}
+.calodd {background: #fbfbfb}
 * html .calodd {padding: 0}
 .caleven {background: #f0f0f0}
 * html .caleven {padding: 0}
-.caldark {background: #c3d3e5}
 * html .caldark {padding: 0}
-.caldark .calfocus {background: #c3d3e5}
+.caldark .calfocus {background: none}
 .daterow {}
 .daterow:hover {}
+.viewmode div {margin-right: 4px}
 
 /*****  Polls  *****/
 

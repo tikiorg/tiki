@@ -448,8 +448,9 @@ class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler //
 		global $trklib;
 		if( ! $trklib )
 			require_once 'lib/trackers/trackerlib.php';
-
-		return $trklib->replace_tracker( 0, $name, $description, $options );
+		
+		// using false as trackerId stops multiple trackers of same name being created
+		return $trklib->replace_tracker( false, $name, $description, $options, 'y' );
 	} // }}}
 } // }}}
 
@@ -562,7 +563,7 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 
 		return $trklib->replace_tracker_field(
 			$data['tracker'],
-			0,
+			false,
 			$data['name'],
 			$data['type'],
 			$data['link'],

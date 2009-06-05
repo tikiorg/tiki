@@ -27,7 +27,7 @@ class WebMailLib extends TikiLib {
 //		}
 		
 //		$query = "delete from `tiki_webmail_messages` where `accountId`=? and `mailId`=? and `user`=?";
-		$query = "delete from `tiki_webmail_messages` where `mailId`=?";	// FIXME - looks like this deletes other users' messages - $msgid is the index in a single mailbox afaik (jonnyb)
+		$query = "delete from `tiki_webmail_messages` where `mailId`=?";	// mailId is message-id
 		$result = $this->query($query, array($msgid));
 	}
 
@@ -116,11 +116,19 @@ class WebMailLib extends TikiLib {
 	}
 
 	function current_webmail_account($user, $accountId) {
+		global $tikilib;
+		
 		$query = "update `tiki_user_mail_accounts` set `current`='n' where `user`=?";
 		$result = $this->query($query, array($user));
-
-		$query = "update `tiki_user_mail_accounts` set `current`='y' where `user`=? and `accountId`=?";
-		$result = $this->query($query, array($user,(int)$accountId ));
+		
+		$acc = $this->get_webmail_account($user, $accountId);
+		if ($acc && $acc['flagsPublic'] == 'y') {
+			$tikilib->set_user_preference($user, 'mailCurrentAccount', $accountId);
+		} else {
+			$query = "update `tiki_user_mail_accounts` set `current`='y' where `user`=? and `accountId`=?";
+			$this->query($query, array($user,(int)$accountId ));
+			$tikilib->set_user_preference($user, 'mailCurrentAccount', 0);
+		}
 	}
 
 	function list_webmail_accounts($user, $offset, $maxRecords, $sort_mode, $find) {
@@ -154,11 +162,11 @@ class WebMailLib extends TikiLib {
 		if ($find) {
 			$findesc = '%' . $find . '%';
 
-			$mid = " where `flagsPublic` <> 'n' and `user`=? and (`account` like ?)";
-			$bindvars = array($user, $findesc);
+			$mid = " where `flagsPublic` <> 'n' and (`account` like ?)";
+			$bindvars = array($findesc);
 		} else {
-			$mid = " where `flagsPublic` <> 'n' and `user`=?";
-			$bindvars = array($user);
+			$mid = " where `flagsPublic` <> 'n'";
+			$bindvars = array();
 		}
 
 		$query = "select * from `tiki_user_mail_accounts` $mid order by ".$this->convert_sortmode($sort_mode);
@@ -179,30 +187,30 @@ class WebMailLib extends TikiLib {
 
 
 // MatWho 16/09/08 added flagsPublic
-	function replace_webmail_account($accountId, $user, $account, $pop, $port, $username, $pass, $msgs, $smtp, $useAuth, $smtpPort, $flagsPublic, $autoRefresh)
+	function replace_webmail_account($accountId, $user, $account, $pop, $port, $username, $pass, $msgs, $smtp, $useAuth, $smtpPort, $flagsPublic, $autoRefresh, $imap, $mbox, $maildir, $useSSL)
 		{
 		// Check the name
 		if ($accountId) {
-			$query = "update `tiki_user_mail_accounts` set `user`=?, `account`=?, `pop`=?, `port`=?, `smtpPort`=?, `username`=?, `pass`=?, `smtp`=?, `useAuth`=?, `msgs`=?, `flagsPublic`=?, `autoRefresh`=? where `accountId`=? and `user`=?";
-			$bindvars = array($user,$account,$pop,(int)$port,(int)$smtpPort,$username,$pass,$smtp,$useAuth,$msgs,$flagsPublic,(int)$autoRefresh,(int)$accountId, $user);
+			$query = "update `tiki_user_mail_accounts` set `user`=?, `account`=?, `pop`=?, `port`=?, `smtpPort`=?, `username`=?, `pass`=?, `smtp`=?, `useAuth`=?, `msgs`=?, `flagsPublic`=?, `autoRefresh`=? , `imap`=?, `mbox`=?, `maildir`=?, `useSSL`=? where `accountId`=? and `user`=?";
+			$bindvars = array($user,$account,$pop,(int)$port,(int)$smtpPort,$username,$pass,$smtp,$useAuth,$msgs,$flagsPublic,(int)$autoRefresh,$imap,$mbox,$maildir,$useSSL,(int)$accountId, $user);
 			$result = $this->query($query,$bindvars);
 		} else {
 			$query = "delete from `tiki_user_mail_accounts` where `accountId`=? and `user`=?";
 			$bindvars = array((int)$accountId, $user);
 			$result = $this->query($query, $bindvars, -1, -1, false);
 
-			$query = "insert into `tiki_user_mail_accounts`(`user`,`account`,`pop`,`port`,`smtpPort`,`username`,`pass`,`smtp`,`useAuth`,`msgs`,`flagsPublic`,`autoRefresh`) values(?,?,?,?,?,?,?,?,?,?,?,?)";
-			$bindvars = array($user,$account,$pop,$port,$smtpPort,$username,$pass,$smtp,$useAuth,$msgs,$flagsPublic,$autoRefresh);
+			$query = "insert into `tiki_user_mail_accounts`(`user`,`account`,`pop`,`port`,`smtpPort`,`username`,`pass`,`smtp`,`useAuth`,`msgs`,`flagsPublic`,`autoRefresh`, `imap`, `mbox`, `maildir`, `useSSL`) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			$bindvars = array($user,$account,$pop,$port,$smtpPort,$username,$pass,$smtp,$useAuth,$msgs,$flagsPublic,$autoRefresh,$imap,$mbox,$maildir,$useSSL);
 			$result = $this->query($query, $bindvars);
 		}
 		return true;
 	}
 
-	function new_webmail_account($user, $account, $pop, $port, $username, $pass, $msgs, $smtp, $useAuth, $smtpPort, $flagsPublic, $autoRefresh)
+	function new_webmail_account($user, $account, $pop, $port, $username, $pass, $msgs, $smtp, $useAuth, $smtpPort, $flagsPublic, $autoRefresh, $imap, $mbox, $maildir, $useSSL)
 		{
 
-			$query = "insert into `tiki_user_mail_accounts`(`user`,`account`,`pop`,`port`,`smtpPort`,`username`,`pass`,`smtp`,`useAuth`,`msgs`,`flagsPublic`,`autoRefresh`) values(?,?,?,?,?,?,?,?,?,?,?,?)";
-			$bindvars = array($user,$account,$pop,$port,$smtpPort,$username,$pass,$smtp,$useAuth,$msgs,$flagsPublic,$autoRefresh);
+			$query = "insert into `tiki_user_mail_accounts`(`user`,`account`,`pop`,`port`,`smtpPort`,`username`,`pass`,`smtp`,`useAuth`,`msgs`,`flagsPublic`,`autoRefresh`, `imap`, `mbox`, `maildir`, `useSSL`) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			$bindvars = array($user,$account,$pop,$port,$smtpPort,$username,$pass,$smtp,$useAuth,$msgs,$flagsPublic,$autoRefresh,$imap,$mbox,$maildir,$useSSL);
 			$result = $this->query($query, $bindvars);
 
 
@@ -214,8 +222,10 @@ class WebMailLib extends TikiLib {
 	
 
 	function get_current_webmail_account($user) {
-		$query = "select * from `tiki_user_mail_accounts` where `current`='y' and `user`=?";
-		$result = $this->query($query, array($user));
+		global $tikilib;
+		$pubAc = $tikilib->get_user_preference($user, 'mailCurrentAccount');
+		$query = "select * from `tiki_user_mail_accounts` where (`current`='y' and `user`=?) or (`flagsPublic`='y' and `accountId`=?)";
+		$result = $this->query($query, array($user, $pubAc));
 
 		if (!$result->numRows())
 			return false;
@@ -251,7 +261,7 @@ class WebMailLib extends TikiLib {
 	}
 
 	function get_webmail_account($user, $accountId) {
-		$query = "select * from `tiki_user_mail_accounts` where `accountId`=? and `user`=?";
+		$query = "select * from `tiki_user_mail_accounts` where `accountId`=? and (`user`=? or `flagsPublic`='y')";
 		$result = $this->query($query, array((int)$accountId,$user));
 
 		if (!$result->numRows())
@@ -289,7 +299,7 @@ class WebMailLib extends TikiLib {
 		
 		$serialized_params = $webmail_account['accountId'].':'.$webmail_account['user'].':'.$webmail_account['account'];
 		
-		if (isset($_SESSION['webmailinbox'][$serialized_params]) && ((!isset($reload) || !$reload) || (isset($_SESSION['webmailinbox'][$serialized_params]['timestamp']) && $_SESSION['webmailinbox'][$serialized_params]['timestamp'] >  $timeout))) {
+		if (isset($_SESSION['webmailinbox'][$serialized_params]) && ((!isset($reload) || !$reload) && (isset($_SESSION['webmailinbox'][$serialized_params]['timestamp']) && $_SESSION['webmailinbox'][$serialized_params]['timestamp'] >  $timeout))) {
 			$webmail_list = $_SESSION['webmailinbox'][$serialized_params]['webmail_list'];
 		
 		} else {	// no cached list or timed out
@@ -305,21 +315,20 @@ class WebMailLib extends TikiLib {
 			
 			// get mail the zend way
 			
-			// connecting with Pop3
-			require_once('lib/core/lib/Zend/Mail/Storage/Pop3.php');
+
 			try {
-				$mail = new Zend_Mail_Storage_Pop3(
-					array('host'     => $webmail_account["pop"],
-			              'user'     => $webmail_account["username"],
-			              'password' => $webmail_account["pass"]));
+				$mail = $this->get_mail_storage($webmail_account);
 			} catch (Exception $e) {
-				// do something better with the error
-				$logger->log('Zend_Mail_Storage_Pop3 failed: '.$e->messsage.' '.(microtime(true)-$ts), Zend_Log::INFO);
-				return Array();
+					// do something better with the error
+					unset($_SESSION['webmailinbox'][$serialized_params]['webmail_list']);
+					unset($_SESSION['webmailinbox'][$serialized_params]['timestamp']);
+					$logger->log('Zend_Mail_Storage_Pop3 failed: '.$e->messsage.' '.(microtime(true)-$ts), Zend_Log::INFO);
+					throw($e);
+					//return $e->messsage;	// return error string
 			}
 			
-			if (empty($mail)) {
-				return Array();
+			if (!isset($mail)) {
+				return tra('Mailbox uninitialised???');
 			}
 			$logger->log('Got mails '.count($mail).' '.(microtime(true)-$ts), Zend_Log::INFO);
 			
@@ -385,6 +394,49 @@ class WebMailLib extends TikiLib {
 		return $webmail_list;
 	}
 	
+	function get_mail_storage($webmail_account) {
+		if (!empty($webmail_account['imap'])) {
+			
+			// connecting with Imap
+			require_once('lib/core/lib/Zend/Mail/Storage/Imap.php');
+			return new Zend_Mail_Storage_Imap(
+				array('host'     => $webmail_account["imap"],
+		              'user'     => $webmail_account["username"],
+		              'password' => $webmail_account["pass"],
+		              'port' => $webmail_account["port"],
+		              'ssl' => $webmail_account["useSSL"] == 'y' ? 'SSL' : false));
+		}
+			
+		if (!empty($webmail_account['mbox'])) {
+			
+			// connecting with Mbox locally
+			require_once('lib/core/lib/Zend/Mail/Storage/Mbox.php');
+			return new Zend_Mail_Storage_Mbox(
+				array('filename' => $webmail_account["mbox"]));
+		}
+		if (!empty($webmail_account['maildir'])) {
+			
+			// connecting with Maildir locally
+			require_once('lib/core/lib/Zend/Mail/Storage/Maildir.php');
+			return new Zend_Mail_Storage_Maildir(
+				array('dirname' => $webmail_account["mbox"]));
+		}
+		if (!empty($webmail_account['pop'])) {
+			
+			// connecting with Pop3
+			require_once('lib/core/lib/Zend/Mail/Storage/Pop3.php');
+			return new Zend_Mail_Storage_Pop3(
+				array('host'     => $webmail_account["pop"],
+		              'user'     => $webmail_account["username"],
+		              'password' => $webmail_account["pass"],
+		              'port' => $webmail_account["port"],
+		              'ssl' => $webmail_account["useSSL"] == 'y' ? 'SSL' : false));
+		}
+		// not returned yet?
+		require_once 'lib/core/lib/Zend/Mail/Storage/Exception.php';
+		throw new Zend_Mail_Storage_Exception('No server to check');
+	}
+	
 	/**
 	 * @param $user			current user
 	 * @param $accountid	can be 0
@@ -404,14 +456,10 @@ class WebMailLib extends TikiLib {
 			return '';
 		}
 		
-		// get single mail			
+		// get single mail
 		// connecting with Pop3
-		require_once('lib/core/lib/Zend/Mail/Storage/Pop3.php');
 		try {
-			$mail = new Zend_Mail_Storage_Pop3(
-				array('host'     => $webmail_account["pop"],
-		              'user'     => $webmail_account["username"],
-		              'password' => $webmail_account["pass"]));
+			$mail = $this->get_mail_storage($webmail_account);
 		} catch (Exception $e) {
 			// do something better with the error
 			return '';
@@ -425,7 +473,7 @@ class WebMailLib extends TikiLib {
 //		$cont = $message->getContent();
 //		
 //		$ct = $message->contentType;
-//		if (preg_match('/boundary=[\'"](.*)[\'"]/', $ct, $m) == 1) {
+//		if (preg_match('/boundary=[\'"]?(.*)[\'"]?/', $ct, $m) == 1) {
 //			$boundary = $m[1];
 //			include_once('lib/core/lib/Zend/Mime/Message.php');
 //			$zmm = Zend_Mime_Message::createFromMessage($cont, $boundary);
@@ -446,6 +494,10 @@ class WebMailLib extends TikiLib {
 		$c = '';
 		if (!empty($foundPart)) {
 			$c = $foundPart->getContent();
+			
+//			require_once('lib/core/lib/Zend/Mime/Part.php');
+//			$mime_part = new Zend_Mime_part($foundPart);
+			
 			$enc = $foundPart->contentTransferEncoding;
 			if (!empty($enc)) {
 				$c = $this->decodeBody($c, $enc);

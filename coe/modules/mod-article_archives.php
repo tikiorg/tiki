@@ -1,5 +1,5 @@
 <?php
-// $Id$
+// $Id: mod-article_archives.php 18886 2009-05-18 15:19:05Z dex $
 
 // Copyright (c) 2002-2009, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -16,8 +16,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-if (!function_exists('mod_last_articles_help')) {
-	function mod_last_articles_help() {
+if (!function_exists('mod_article_archives_help')) {
+	function mod_article_archives_help() {
 		return "type=Article|Event|...&topicId=1&topic=xx&categId=1&lang=en&showImg=width&showDate=y&showHeading=chars";
 	}
 }
@@ -34,9 +34,11 @@ $urlParams = array(
 	'showImg' => NULL,
 	'showDate' => NULL,
 	'showHeading' => NULL,
-	'nonums' => NULL,
+	'nonums' => 'y',
 	'absurl' => NULL
 );
+$arch_count = 'y';
+$visible_only = 'y';
 
 foreach ( $urlParams as $p => $v ) {
 	if ( isset($$p) ) continue;
@@ -55,9 +57,20 @@ if ( $showHeading != 'n') {
 
 foreach ( $urlParams as $p => $v ) $smarty->assign($p, $$p);
 
-$ranking = $tikilib->list_articles($offset, $module_rows, 'publishDate_desc', '', '', date("U"), '', $type, $topicId, 'y', $topic, $categId, '', '', $lang);
+$ranking = $tikilib->list_articles($offset, $module_rows, 'publishDate_desc', '', '', date("U"), '', $type, $topicId, $visible_only, $topic, $categId, '', '', $lang);
 
+// fileter the month from the data
+foreach ($ranking['data'] as &$rk_data) {
+	$artc_archive[date('F Y', $rk_data['publishDate'])] = array(
+		'title' => date('F Y', $rk_data['publishDate']),
+		'start_month' => mktime(0,0,0,date('m', $rk_data['publishDate']),1,date('Y', $rk_data['publishDate'])),
+		'end_month' => mktime(0,0,0,date('m', $rk_data['publishDate'])+1,0,date('Y', $rk_data['publishDate'])),
+		'item_count' => $artc_archive[date('F Y', $rk_data['publishDate'])]['item_count']+1);
+}
 
-$module_rows = count($ranking['data']);
-$smarty->assign('module_rows', $module_rows);
-$smarty->assign('modLastArticles', $ranking['data']);
+//print_r($artc_archive);
+
+$sort_mode = ''; // may be changed to 'month'
+$smarty->assign('module_sort_mode', $sort_mode);
+$smarty->assign('modArticleArchives', $artc_archive);
+$smarty->assign('arch_count', $arch_count);

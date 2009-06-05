@@ -32,9 +32,9 @@
 	{$userTrackerData}
 
 {elseif $email_valid eq 'n'}
-	{icon _id=error style="vertical-align:middle" align="left"} {tr}Your email could not be validated; make sure you email is correct and click register below.{/tr}
+	<label for="email">{icon _id=error style="vertical-align:middle" align="left"} {tr}Your email could not be validated; make sure you email is correct and click register below.{/tr}</label>
  		<form action="tiki-register.php" method="post">
-			<input type="text" name="email" value="{$smarty.post.email}"/>
+			<input type="text" name="email" id="email" value="{$smarty.post.email}"/>
 			<input type="hidden" name="name" value="{$smarty.post.name}"/>
 			<input type="hidden" name="pass" value="{$smarty.post.pass}"/>
 			<input type="hidden" name="regcode" value="{$smarty.post.regcode}"/>
@@ -51,7 +51,7 @@
 			<table class="form">
 
 				<tr>
-					<td class="formcolor">{if $prefs.login_is_email eq 'y'}{tr}Email{/tr}{else}{tr}Username{/tr}{/if}:</td>
+					<td class="formcolor"><label for="name">{if $prefs.login_is_email eq 'y'}{tr}Email{/tr}{else}{tr}Username{/tr}{/if}:</label></td>
 					<td class="formcolor">
 						<input type="text" name="name" id="name"{if $prefs.feature_ajax eq 'y'} onkeyup="return check_name()"{/if} />
 	{if $prefs.feature_ajax eq'y'}
@@ -69,9 +69,9 @@
 
 	{if $prefs.useRegisterPasscode eq 'y'}
 				<tr>
-					<td class="formcolor">{tr}Passcode to register{/tr}:</td>
+					<td class="formcolor"><label for="passcode">{tr}Passcode to register{/tr}:</label></td>
 					<td class="formcolor">
-						<input type="password" name="passcode" onkeypress="regCapsLock(event)" />
+						<input type="password" name="passcode" id="passcode" onkeypress="regCapsLock(event)" />
 						<em>{tr}Not your password.{/tr} {tr}To request a passcode, {if $prefs.feature_contact eq 'y'}<a href="tiki-contact.php">{/if}
 	contact the sytem administrator{if $prefs.feature_contact eq 'y'}</a>{/if}{/tr}.</em>
 					</td>
@@ -79,7 +79,7 @@
 	{/if}
  
 				<tr>
-					<td class="formcolor">{tr}Password{/tr}:</td>
+					<td class="formcolor"><label for="pass1">{tr}Password{/tr}:</label></td>
 					<td class="formcolor">
 						<div style="float:right;width:150px;margin-left:5px;">
 							<div id="mypassword_text"></div>
@@ -96,7 +96,7 @@
 				</tr>
 
 				<tr>
-					<td class="formcolor" style="vertical-align:top">{tr}Repeat password{/tr}:</td>
+					<td class="formcolor" style="vertical-align:top"><label for="pass2">{tr}Repeat password{/tr}:</label></td>
 					<td class="formcolor">
 						<input id='pass2' type="password" name="passAgain" onkeypress="regCapsLock(event)" 
 	{if $prefs.feature_ajax eq'y'}onkeyup="check_pass()"{/if}/>
@@ -118,7 +118,7 @@
 
 	{if $prefs.login_is_email ne 'y'}
 				<tr>
-					<td class="formcolor">{tr}Email{/tr}:</td>
+					<td class="formcolor"><label for="email">{tr}Email{/tr}:</label></td>
 					<td class="formcolor"><input type="text" id="email" name="email"
 		{if $prefs.validateUsers eq 'y' and $prefs.feature_ajax eq 'y'}onkeyup="return check_mail()"{/if}/>
 		{if $prefs.feature_ajax eq'y'}
@@ -132,8 +132,8 @@
 	{section name=ir loop=$customfields}
 		{if $customfields[ir].show}
 				<tr>
-					<td class="form">{tr}{$customfields[ir].label}{/tr}:</td>
-					<td class="form"><input type="{$customfields[ir].type}" name="{$customfields[ir].prefName}" value="{$customfields[ir].value}" size="{$customfields[ir].size}" /></td>
+					<td class="form"><label for="{$customfields[ir].prefName}">{tr}{$customfields[ir].label}{/tr}:</label></td>
+					<td class="form"><input type="{$customfields[ir].type}" name="{$customfields[ir].prefName}" value="{$customfields[ir].value}" size="{$customfields[ir].size}" id="{$customfields[ir].prefName}" /></td>
 				</tr>
 		{/if}
 	{/section}

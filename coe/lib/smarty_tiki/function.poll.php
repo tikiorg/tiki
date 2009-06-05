@@ -47,7 +47,3 @@ function smarty_function_poll($params, &$smarty) {
 	}
     }
 }
-
-
-
-?>

@@ -68,5 +68,3 @@ function smarty_block_tikimodule($params, $content, &$smarty) {
 	$smarty->assign_by_ref('module_content', $content);
 	return $smarty->fetch('module.tpl');
 }
-
-?>

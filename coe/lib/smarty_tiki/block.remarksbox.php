@@ -55,5 +55,3 @@ function smarty_block_remarksbox($params, $content, &$smarty) {
 	$smarty->assign_by_ref('remarksbox_content', $content);
 	return $smarty->fetch('remarksbox.tpl');
 }
-
-?>

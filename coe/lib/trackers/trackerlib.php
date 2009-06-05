@@ -568,10 +568,10 @@ class TrackerLib extends TikiLib {
 		}
 
 		// Check perms
-		if ( $status && ! $this->user_has_perm_on_object($user, $trackerId, 'tracker', 'tiki_p_view_trackers_pending') ) {
+		if ( $status && ! $this->user_has_perm_on_object($user, $trackerId, 'tracker', 'tiki_p_view_trackers_pending') && ! $this->group_creator_has_perm($trackerId, 'tiki_p_view_trackers_pending') ) {
 			$status = str_replace('p', '', $status);
 		}
-		if ( $status && ! $this->user_has_perm_on_object($user, $trackerId, 'tracker', 'tiki_p_view_trackers_closed') ) {
+		if ( $status && ! $this->user_has_perm_on_object($user, $trackerId, 'tracker', 'tiki_p_view_trackers_closed')  && ! $this->group_creator_has_perm($trackerId, 'tiki_p_view_trackers_closed') ) {
 			$status = str_replace('c', '', $status);
 		}
 
@@ -590,6 +590,13 @@ class TrackerLib extends TikiLib {
 			$bindvars[] = $status;
 		}
 		return true;
+	}
+	function group_creator_has_perm($trackerId,$perm) {
+		if ($groupCreatorFieldId = $this->get_field_id_from_type($trackerId, 'g', '1%')) {
+			return false;
+		} else {
+			return false;
+		}
 	}
 
 	/* to filter filterfield is an array of fieldIds
@@ -2070,6 +2077,9 @@ class TrackerLib extends TikiLib {
 
 	// Inserts or updates a tracker
 	function replace_tracker($trackerId, $name, $description, $options, $descriptionIsParsed) {
+		if ($trackerId === false && !empty($name)) {	// called from profiles - update not replace
+			$trackerId = $this->getOne('select max(`trackerId`) from `tiki_trackers` where `name`=?',array($name));
+		}
 		if ($trackerId) {
 			$old = $this->getOne('select count(*) from `tiki_trackers` where `trackerId`=?',array((int)$trackerId));
 			if ($old) {
@@ -2145,6 +2155,10 @@ class TrackerLib extends TikiLib {
 			$editableBy = serialize($editableBy);
 		} else {
 			$editableBy = '';
+		}
+		
+		if ($fieldId === false && $trackerId && !empty($name)) {	// called from profiles - update not replace
+			$fieldId = $this->getOne("select max(`fieldId`) from `tiki_tracker_fields` where `trackerId`=? and `name`=?",array((int) $trackerId,$name));
 		}
 
 		if ($fieldId) {
@@ -2356,6 +2370,10 @@ class TrackerLib extends TikiLib {
 	}
 
 	function get_field_id_from_type($trackerId, $type, $option=NULL) {
+		static $memo;
+		if (isset($memo[$trackerId][$type][$option])) {
+			return $memo[$trackerId][$type][$option];
+		}
 		$mid = ' `trackerId`=? and `type`=? ';
 		$bindvars = array((int)$trackerId, $type);
 		if (!empty($option)) {
@@ -2366,7 +2384,9 @@ class TrackerLib extends TikiLib {
 			}
 			$bindvars[] = $option;
 		}
-		return $this->getOne("select `fieldId` from `tiki_tracker_fields` where $mid",$bindvars);
+		$fieldId = $this->getOne("select `fieldId` from `tiki_tracker_fields` where $mid",$bindvars);
+		$memo[$trackerId][$type][$option] = $fieldId;
+		return $fieldId;
 	}
 
 /*

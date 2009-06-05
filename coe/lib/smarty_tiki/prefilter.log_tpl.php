@@ -13,4 +13,3 @@ function smarty_prefilter_log_tpl($source, &$smarty) {
 		return $source;
 	return '<!-- TPL: '.$smarty->_current_file.' -->'.$source.'<!-- /TPL: '.$smarty->_current_file.' -->';
 }
-?>
