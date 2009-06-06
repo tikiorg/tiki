@@ -605,14 +605,24 @@ class TrackerLib extends TikiLib {
 	   and they are only used if tiki_p_view_trackers is not set for the tracker and if the tracker ha a group creator field
 	   must always be combined with a filter on the groups
 	*/
-	function get_special_group_tracker_perm($tracker_info) {
-		global $prefs, $userlib;
+	function get_special_group_tracker_perm($tracker_info, $global=false) {
+		global $prefs, $userlib, $smarty;
 		$perms = $userlib->get_object_permissions($tracker_info['trackerId'], 'tracker', $prefs['trackerCreatorGroupName']);
 		foreach ($perms as $perm) {
 			$ret[$perm['permName']] ='y';
+			if ($global) {
+				$p = $perm['permName'];
+				global $$p;
+				$$p = 'y';
+				$smarty->assign("$p", 'y');
+			}
 		}
 		if ($tracker_info['writerGroupCanModify'] == 'y') { // old configuration 
 			$ret['tiki_p_modify_tracker_items'] = 'y';
+			if ($global) {
+				$tiki_p_modify_tracker_items = 'y';
+				$smarty->assign('tiki_p_modify_tracker_items', 'y');
+			}
 		}
 		return $ret;
 	}
