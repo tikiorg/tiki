@@ -1321,7 +1321,7 @@ class TikiLib extends TikiDB {
 		$result = $this->query("select `cookie`  from `tiki_cookies`",array(),1,$bid);
 		if ($res = $result->fetchRow()) {
 			$cookie = str_replace("\n", "", $res['cookie']);
-			return preg_replace('/^(.+?)(\s*--.+)?$/','<i>"$1"</i>$2',$cookie);
+			return preg_replace('/^(.+?)(\s*--.+)?$/','<em>"$1"</em>$2',$cookie);
 		} else {
 			return "";
 		}
@@ -6922,9 +6922,9 @@ class TikiLib extends TikiDB {
 			// Replace monospaced text
 			$line = preg_replace("/(^|\s)-\+(.*?)\+-/", "$1<code>$2</code>", $line);
 			// Replace bold text
-			$line = preg_replace("/__(.*?)__/", "<b>$1</b>", $line);
+			$line = preg_replace("/__(.*?)__/", "<strong>$1</strong>", $line);
 			// Replace italic text
-			$line = preg_replace("/\'\'(.*?)\'\'/", "<i>$1</i>", $line);
+			$line = preg_replace("/\'\'(.*?)\'\'/", "<em>$1</em>", $line);
 			// Replace definition lists
 			$line = preg_replace("/^;([^:]*):([^\/\/].*)/", "<dl><dt>$1</dt><dd>$2</dd></dl>", $line);
 			$line = preg_replace("/^;(<a [^<]*<\/a>):([^\/\/].*)/", "<dl><dt>$1</dt><dd>$2</dd></dl>", $line);
