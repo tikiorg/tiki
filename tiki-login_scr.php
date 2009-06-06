@@ -19,6 +19,6 @@ if ($prefs['useGroupHome'] != 'y' && !isset($_SESSION['loginfrom'])) {
 
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
-
+$smarty->assign('headtitle',tra('Login'));
 $smarty->assign('mid', 'tiki-login.tpl');
 $smarty->display("tiki.tpl");
