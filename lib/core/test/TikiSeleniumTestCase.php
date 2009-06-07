@@ -87,4 +87,3 @@ class TikiSeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase {
         return substr($return,1);
     }
 } 
-?>

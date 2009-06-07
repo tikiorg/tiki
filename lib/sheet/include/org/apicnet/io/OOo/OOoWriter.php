@@ -265,4 +265,3 @@ class OOoWriter extends absOOo {
 		}
 	}
 }
-?>

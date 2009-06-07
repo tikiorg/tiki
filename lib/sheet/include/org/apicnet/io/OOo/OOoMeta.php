@@ -365,7 +365,3 @@ class OOoMeta extends absOOo {
 	}
 
 }
-
-
-
-?>

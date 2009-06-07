@@ -266,4 +266,3 @@ class CZip {
 	
 
 } // end of the 'PHPZip' class
-?>
