@@ -3,7 +3,7 @@
 	{button href="tiki-directory_admin.php" _text="{tr}Admin{/tr}"}
 
 	{if $tiki_p_admin_directory_cats eq 'y'}
-		{button href="tiki-directory_admin_categories.php" _text="{tr}Categories{/tr}"}
+		{button href="tiki-directory_admin_categories.php" _text="{tr}Directory Categories{/tr}"}
 	{/if}
 
 	{if $tiki_p_admin_directory_cats eq 'y'}

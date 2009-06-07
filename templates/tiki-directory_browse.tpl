@@ -31,7 +31,7 @@
 <input type="text" name="words" size="30" />
 <select name="where">
 <option value="all">{tr}in entire directory{/tr}</option>
-<option value="cat">{tr}in current category{/tr}</option>
+<option value="cat">{tr}in current directory category{/tr}</option>
 </select>
 <input type="submit" value="{tr}Search{/tr}" />
 </form>
@@ -39,7 +39,7 @@
 {/if}
 {if count($categs)}
 <br /><br />
-<b>{tr}Subcategories{/tr}</b><br />
+<b>{tr}Directory Subcategories{/tr}</b><br />
 {* The table with the subcategories *}
 <div class="dircategs">
 <table  >
@@ -118,7 +118,7 @@
 				<div class="description">{$items[ix].description}</div>
 				{assign var=fsfs value=1}
 				<span class="dirsitecats">
-					{tr}Categories{/tr}:
+					{tr}Directory Categories{/tr}:
 					{section name=ii loop=$items[ix].cats}
 						{if $fsfs}
 							{assign var=fsfs value=0}{else},&nbsp;
@@ -142,7 +142,7 @@
 
 {if count($related)>0}
 	<div class="dirrelated">
-		{tr}Related categories{/tr}
+		{tr}Related directory categories{/tr}
 		<br /><br />
 		{section name=ix loop=$related}
 			<a class="dirlink" href="tiki-directory_browse.php?parent={$related[ix].relatedTo}">{$related[ix].path}</a>

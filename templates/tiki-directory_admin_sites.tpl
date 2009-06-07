@@ -4,7 +4,7 @@
 
 {include file=tiki-directory_admin_bar.tpl}
 
-<h2>{tr}Parent category{/tr}:</h2>
+<h2>{tr}Parent directory category{/tr}:</h2>
 <form name="path" method="post" action="tiki-directory_admin_sites.php">
 	<select name="parent" onchange="javascript:path.submit();">
 		<option value="0" {if $parent eq 0}selected="selected"{/if}>{tr}All{/tr}</option>
@@ -34,7 +34,7 @@
 			<td class="formcolor"><input type="text" name="url" value="{$info.url|escape}" /></td>
 	  </tr>
 	  <tr>
-		  <td class="formcolor">{tr}Categories{/tr}:</td>
+		  <td class="formcolor">{tr}Directory Categories{/tr}:</td>
 			<td class="formcolor">
 		    <select name="siteCats[]" multiple="multiple" size="4">
 			    {section name=ix loop=$categs}
@@ -42,7 +42,7 @@
 					{/section}
 				</select>
 				{if $categs|@count ge '2'}
-					{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple categories.{/tr}{/remarksbox}
+					{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple directory categories.{/tr}{/remarksbox}
 				{/if}
 			</td>
 		</tr>
@@ -121,7 +121,7 @@
 				<td class="{cycle advance=false}">&nbsp;</td>
 				<td class="{cycle}" colspan="6">
 					<i>
-						{tr}Categories{/tr}:{assign var=fsfs value=1}
+						{tr}Directory Categories{/tr}:{assign var=fsfs value=1}
 						{section name=ii loop=$items[user].cats}
 							{if $fsfs}{assign var=fsfs value=0}{else}, {/if}
 							{$items[user].cats[ii].path}

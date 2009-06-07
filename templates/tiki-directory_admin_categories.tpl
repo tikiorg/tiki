@@ -1,10 +1,10 @@
-{title help="Categories" url="tiki-directory_admin_categories.php?parent=$parent"}{tr}Admin directory categories{/tr}{/title}
+{title help="Directory Categories" url="tiki-directory_admin_categories.php?parent=$parent"}{tr}Admin directory categories{/tr}{/title}
 
 {* Display the title using parent *}
 {include file=tiki-directory_admin_bar.tpl}
 {* Navigation bar to admin, admin related, etc *}
 
-<h2>{tr}Parent category{/tr}:</h2>
+<h2>{tr}Parent directory category{/tr}:</h2>
 {* Display the path adding manually the top category id=0 *}
 <form name="path" method="post" action="tiki-directory_admin_categories.php">
 <select name="parent" onchange="javascript:path.submit();">
@@ -39,9 +39,9 @@
     <td class="formcolor">{tr}Children type{/tr}:</td>
     <td class="formcolor">
        <select name="childrenType">
-         <option value='c' {if $info.childrenType eq 'c'}selected="selected"{/if}>{tr}Most visited sub-categories{/tr}</option>
-         <option value='d' {if $info.childrenType eq 'd'}selected="selected"{/if}>{tr}Category description{/tr}</option>
-         <option value='r' {if $info.childrenType eq 'r'}selected="selected"{/if}>{tr}Random sub-categories{/tr}</option>
+         <option value='c' {if $info.childrenType eq 'c'}selected="selected"{/if}>{tr}Most visited directory sub-categories{/tr}</option>
+         <option value='d' {if $info.childrenType eq 'd'}selected="selected"{/if}>{tr}Directory Category description{/tr}</option>
+         <option value='r' {if $info.childrenType eq 'r'}selected="selected"{/if}>{tr}Random directory sub-categories{/tr}</option>
        </select>
     </td>
   </tr>
@@ -59,11 +59,11 @@
     </td>
   </tr>
   <tr>
-    <td class="formcolor">{tr}Allow sites in this category{/tr}:</td>
+    <td class="formcolor">{tr}Allow sites in this directory category{/tr}:</td>
     <td class="formcolor"><input name="allowSites" type="checkbox" {if $info.allowSites eq 'y'}checked="checked"{/if} /></td>
   </tr>
   <tr>
-    <td class="formcolor">{tr}Show number of sites in this category{/tr}:</td>
+    <td class="formcolor">{tr}Show number of sites in this directory category{/tr}:</td>
     <td class="formcolor"><input name="showCount" type="checkbox" {if $info.showCount eq 'y'}checked="checked"{/if} /></td>
   </tr>
   <tr>
@@ -85,7 +85,7 @@
 </table>
 </form>
 <br />
-<h2>{tr}Subcategories{/tr}</h2>
+<h2>{tr}Directory Subcategories{/tr}</h2>
 
 {* Display the list of categories (items) using pagination *}
 {* Links to edit, remove, browse the categories *}

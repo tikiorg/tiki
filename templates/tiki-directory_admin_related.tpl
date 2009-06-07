@@ -1,10 +1,10 @@
-{title help="Directory" url="tiki-directory_admin_related.php?parent=$parent"}{tr}Admin related categories{/tr}{/title}
+{title help="Directory" url="tiki-directory_admin_related.php?parent=$parent"}{tr}Admin related directory categories{/tr}{/title}
 
 {* Display the title using parent *}
 {include file=tiki-directory_admin_bar.tpl}
 {* Navigation bar to admin, admin related, etc *}
 
-<h2>{tr}Parent category{/tr}:</h2>
+<h2>{tr}Parent directory category{/tr}:</h2>
 {* Display the path adding manually the top category id=0 *}
 <form name="path" method="post" action="tiki-directory_admin_related.php">
 <select name="parent" onchange="javascript:path.submit();">
@@ -15,12 +15,12 @@
 <input type="submit" name="go" value="{tr}Go{/tr}" />
 </form>
 <br />
-<h2>{tr}Add a related category{/tr}</h2>
+<h2>{tr}Add a related directory category{/tr}</h2>
 <form action="tiki-directory_admin_related.php" method="post">
 <input type="hidden" name="parent" value="{$parent|escape}" />
 <table class="normal">
   <tr>
-    <td class="formcolor">{tr}Category{/tr}:</td>
+    <td class="formcolor">{tr}Directory Category{/tr}:</td>
     <td class="formcolor">
     <select name="categId">
     {section name=ix loop=$categs}
@@ -40,7 +40,7 @@
 </table>
 </form>
 <br />
-<h2>{tr}Related categories{/tr}</h2>
+<h2>{tr}Related directory categories{/tr}</h2>
 {* Display the list of categories (items) using pagination *}
 {* Links to edit, remove, browse the categories *}
 <form action="tiki-directory_admin_related.php">
@@ -48,7 +48,7 @@
 <input type="hidden" name="oldcategId" value="{$items[user].relatedTo|escape}" />
 <table class="normal">
   <tr>
-    <th>{tr}Category{/tr}</th>
+    <th>{tr}Directory Category{/tr}</th>
     <th>{tr}Action{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
