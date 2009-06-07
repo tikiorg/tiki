@@ -226,7 +226,7 @@ div#sitead {margin: auto}
 input#text
 input.wikiaction {}
 #sitesearchbar form button {}
-input#fuser,
+
 select[name="where"],
 input[name="search"] {}
 

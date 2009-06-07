@@ -1,8 +1,7 @@
 {* $Id$ *}
 {popup_init src="lib/overlib.js"}
-{if !( $searchNoResults ) }
-	{title admpage="search" help="Search+User"}{tr}Search results{/tr}{/title}
-{/if}
+
+{title admpage="search" help="Search+User"}{tr}Search{/tr}{/title}
 
 {capture name=advanced_search_help}
 	<ul>
@@ -61,9 +60,9 @@
 	{/if}
 
 	{if $prefs.feature_search_show_search_box eq 'y'}
-		<form id="search-form" class="forms" method="get" action="tiki-searchresults.php">
-			<label class="searchhighlight" for="fuser">
-				{tr}Find{/tr} <input id="fuser" name="highlight" size="14" type="text" accesskey="s" value="{$words}" />
+		<form action="tiki-searchresults.php" method="get" id="search-form" class="findtable">
+			<label class="findtitle">
+				{tr}Find{/tr} <input name="highlight" size="14" type="text" accesskey="s" value="{$words}" />
 			</label>
 			{if !( $searchStyle eq "menu" )}
 				<label class="searchboolean" for="boolean">
@@ -133,10 +132,13 @@
 					{if $forumId}<input type="hidden" name="forumId" value="{$forumId}" />{/if}
 				{/if}
 			{/if}
-			<label class="searchsubmit"><input type="submit" class="wikiaction" name="search" value="{tr}Go{/tr}" /></label>
+			<label class="findsubmit">
+				<input type="submit" name="search" value="{tr}Go{/tr}" />
+			</label>
 		</form>
 	{/if}
 </div><!--nohighlight-->
+	{* do not change the comment above, since smarty 'highlight' outputfilter is hardcoded to find exactly this... instead you may experience white pages as results *}
 
 {if $searchStyle ne "menu" and ! $searchNoResults }
 	<div class="highlight simplebox">

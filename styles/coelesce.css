@@ -420,10 +420,8 @@ div#sitead {margin: auto}
 
 .nohighlight .cssmenu li ul {margin: -23px 0 0 6px}
 
-input#fuser,
 select[name="where"] {border: none}
 
-input#fuser,
 select[name="where"],
 input[name="search"] {display: inline}
 	
