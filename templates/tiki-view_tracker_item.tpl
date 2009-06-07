@@ -476,7 +476,7 @@ or $cur_field.type eq 'i'}
 {/if}
 {/section}
 <table class="normal">
-<tr class="formcolor"><td>{$cur_field.name}</td><td><input type="submit" class="submit" name="trck_act" value="{$cur_field.options_array[0]|escape}" /></td><tr>
+<tr class="formcolor"><td>{$cur_field.name}</td><td><input type="submit" name="trck_act" value="{$cur_field.options_array[0]|escape}" /></td><tr>
 </table>
 </form>
 {/capture}
