@@ -6,7 +6,7 @@
 	{icon _id=exclamation style="vertical-align:middle" alt="{tr}Error{/tr}"} {tr}You cannot add sites until Directory Categories are setup.{/tr}
 	<br />
 	{if $tiki_p_admin_directory_cats ne 'y'}
-		{tr}Please contact the Site Administrator{/tr}{else}{tr}<a href="tiki-directory_admin_categories.php">Add a category now</a>.{/tr}
+		{tr}Please contact the Site Administrator{/tr}{else}{tr}<a href="tiki-directory_admin_categories.php">Add a directory category now</a>.{/tr}
 	{/if}
 {else}
 	{if $save eq 'y'}
@@ -63,7 +63,7 @@
 					</td>
 			  </tr>
 			  <tr>
-			    <td class="formcolor">{tr}Categories:{/tr}</td>
+			    <td class="formcolor">{tr}Directory Categories:{/tr}</td>
 			    <td class="formcolor">
 				    <select name="siteCats[]" multiple="multiple" size="4">
 					    {section name=ix loop=$categs}
@@ -71,7 +71,7 @@
 					    {/section}
 				    </select>
 						{if $categs|@count ge '2'}
-							{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple categories.{/tr}{/remarksbox}
+							{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple directory categories.{/tr}{/remarksbox}
 						{/if}
 					</td>
 				</tr>
