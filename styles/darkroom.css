@@ -1857,7 +1857,7 @@ span.commentstitle {
 
 /* Find */
 .subcomment {margin-left: 10px}
-.findtable {padding: 15px 0;}
+#tiki-center .findtable {padding: 15px 0;}
 .findtable ul {list-style: none;padding:0; margin: 0;float: left;}
 .findtable ul li {float: left;}
 

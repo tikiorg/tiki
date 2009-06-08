@@ -352,16 +352,19 @@ div#sitead {margin: auto}
 
 #sitesearchbar {
 	display: block;
-	float: right;
+	float: none;
 	margin: 3px 0 0 0;
 	padding: 0 0 0 15px;
 	height: 33px;
 	min-width: 180px;
 	text-align: left;
 	background: url(coelesce/search_wide.jpg) no-repeat;
-	color: #517ea7;}
+	color: #517ea7;
+	}
 	
-* html #sitesearchbar {width: 180px}
+* html #sitesearchbar {
+	width: 180px;
+}
 
 #sitesearchbar .wrapper {
 	height: 33px;
@@ -382,17 +385,20 @@ div#sitead {margin: auto}
 #sitesearchbar select[name="where"] {}
 #sitesearchbar ul.cssmenu * {
 	width: 40px;
-	/*line-height: 1;
-	float: left*/}
-	
-.nohighlight {
+	}
+
+#sitesearchbar .findtitle input {
+	border: none;
+}
+
+#sitesearchbar .findtable {
 	position: relative !important; /* IE6 craches with this ! :( */
 	/* The two lines below are a hack for IE6 */
 	position: fixed;
 	_margin-top: -18px;
 }
 
-#sitesearchbar .nohighlight ul.cssmenu {
+#sitesearchbar .findtable ul.cssmenu {
 	position: absolute;
 	top: 6px;
 	right: 40px;
@@ -406,9 +412,12 @@ div#sitead {margin: auto}
 .cbox-data .nohighlight {
 	position: static;
 	height: 30px;
-	white-space: nowrap;}
+	white-space: nowrap;
+}
 	
-.cbox-data .nohighlight form {display: inline}
+.cbox-data .nohighlight form {
+	display: inline;
+}
 
 .cbox-data .nohighlight ul.cssmenu {
 	margin-left: 5px;
@@ -418,7 +427,9 @@ div#sitead {margin: auto}
 	background: none;
 	border: none }
 
-.nohighlight .cssmenu li ul {margin: -23px 0 0 6px}
+.nohighlight .cssmenu li ul {
+	margin: -23px 0 0 6px;
+}
 
 select[name="where"] {border: none}
 
