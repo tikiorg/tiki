@@ -454,25 +454,41 @@ name="w_displayed_default" {if $prefs.w_displayed_default eq 'y'} checked="check
 </div>
 
 <div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" onclick="flip('discussforum');" id="feature_wiki_discuss" name="feature_wiki_discuss" {if $prefs.feature_wiki_discuss eq 'y'}checked="checked"{/if} {if $prefs.feature_forums ne 'y'} disabled="disabled"{/if} /></div>
-	<div class="adminoptionlabel"><label for="feature_wiki_discuss">{tr}Discuss pages on forums{/tr}.</label>
-	{if $prefs.feature_forums ne 'y'}<br />{icon _id=information}{tr}Forums are disabled.{/tr} <a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}</a>.{/if}</div>
-<div class="adminoptionboxchild" id="discussforum" style="display:{if ($prefs.feature_wiki_discuss eq 'y') and ($prefs.feature_forums eq 'y')}block{else}none{/if};">
-<div class="adminoptionbox">
-	<div class="adminoptionboxlabel"><label for="wiki_forum_id">{tr}Forum for discussion:{/tr}</label>{if $prefs.feature_forums eq 'y'} <a class="link" href="tiki-assignpermission.php?level=forum" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>{/if}
-	<select id="wiki_forum_id" name="wiki_forum_id"{if $prefs.feature_forums ne 'y' or !$all_forums} disabled="disabled"{/if}>
-{if $all_forums}    {section name=ix loop=$all_forums}
-    <option value="{$all_forums[ix].forumId|escape}" {if $all_forums[ix].forumId eq $prefs.wiki_forum_id}selected="selected"{/if}>{$all_forums[ix].name}</option>
-    {/section}
-{else}    <option value="">{tr}None{/tr}</option>
-{/if}
-    </select>
-	{if ($prefs.feature_forums eq 'y') and !$all_forums}       <div class="adminoptionbox"><a href="tiki-admin_forums.php" title="{tr}Forums{/tr}" class="button">Create a Forum</a></div>
-{/if}
+	<div class="adminoption">
+		<input type="hidden" name="wikidiscussprefs" />
+		<input type="checkbox" onclick="flip('discussforum');" id="feature_wiki_discuss" name="feature_wiki_discuss" {if $prefs.feature_wiki_discuss eq 'y'}checked="checked"{/if} {if $prefs.feature_forums ne 'y'} disabled="disabled"{/if} />
 	</div>
-</div>
-
-</div>	
+	<div class="adminoptionlabel">
+		<label for="feature_wiki_discuss">{tr}Discuss pages on forums{/tr}.</label>
+		{if $prefs.feature_forums ne 'y'}
+			<br />
+			{icon _id=information}{tr}Forums are disabled.{/tr} <a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}</a>.
+		{/if}
+	</div>
+	<div class="adminoptionboxchild" id="discussforum" style="display:{if ($prefs.feature_wiki_discuss eq 'y') and ($prefs.feature_forums eq 'y')}block{else}none{/if};">
+		<div class="adminoptionbox">
+			<div class="adminoptionboxlabel">
+				<label for="wiki_forum_id">{tr}Forum for discussion:{/tr}</label>
+				{if $prefs.feature_forums eq 'y'} 
+					<a class="link" href="tiki-assignpermission.php?level=forum" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
+				{/if}
+				<select id="wiki_forum_id" name="wiki_forum_id"{if $prefs.feature_forums ne 'y' or !$all_forums} disabled="disabled"{/if}>
+					{if $all_forums}
+						{section name=ix loop=$all_forums}
+							<option value="{$all_forums[ix].forumId|escape}" {if $all_forums[ix].forumId eq $prefs.wiki_forum_id}selected="selected"{/if}>{$all_forums[ix].name}</option>
+						{/section}
+					{else}    
+						<option value="">{tr}None{/tr}</option>
+					{/if}
+				</select>
+				{if ($prefs.feature_forums eq 'y') and !$all_forums}
+					<div class="adminoptionbox">
+						<a href="tiki-admin_forums.php" title="{tr}Forums{/tr}" class="button">Create a Forum</a>
+					</div>
+				{/if}
+			</div>
+		</div>
+	</div>	
 </div>
 
 
