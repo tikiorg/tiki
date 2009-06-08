@@ -212,9 +212,7 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
 		}
 
 		if (preg_match('/overlib\(/Umis', $content)) {
-			//array_unshift($js_files, 'lib/overlib.js');	// just for now... (it stops the JS error on rollover but the tooltip doesn't appear - TODO replace with JQuery tips)
-			$js_script[] = file_get_contents('lib/overlib.js');
-			$content = '<div id="overDiv" style="position: absolute; visibility: hidden; z-index:1000;"></div>'.$content;
+			array_unshift($js_files, 'lib/overlib.js');	// just for now... (it stops the JS error on rollover but the tooltip doesn't appear - TODO replace with JQuery tips)
 		}
 
 		// now remove all the js from the source
