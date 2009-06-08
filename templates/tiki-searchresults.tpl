@@ -2,7 +2,7 @@
 {popup_init src="lib/overlib.js"}
 
 {if !( $searchStyle eq "menu" )}
-{title admpage="search" help="Search+User"}{tr}Search{/tr}{/title}
+	{title admpage="search" help="Search+User"}{tr}Search{/tr}{/title}
 {/if}
 
 {capture name=advanced_search_help}
@@ -19,46 +19,13 @@
 {/capture}
 
 <div class="nohighlight">
-	{if !( $searchStyle eq "menu" )}
-		{if $prefs.feature_search_show_object_filter eq 'y'}
-			<div class="navbar">
-				{tr}Search in{/tr}:
-				<br />
-				{button _auto_args='where,highlight,date' href="?where=pages" _text="{tr}Entire Site{/tr}" _selected_class='highlight' _selected="'$where'=='pages'"}
-				{if $prefs.feature_calendar eq 'y'}
-					{button _auto_args='where,highlight,date' href="?where=calendars" _text="{tr}Calendars{/tr}" _selected_class='highlight' _selected="'$where'=='calendars'"}
-				{/if}
-				{if $prefs.feature_wiki eq 'y'}
-					{button _auto_args='where,highlight,date' href="?where=wikis" _text="{tr}Wiki Pages{/tr}" _selected_class='highlight' _selected="'$where'=='wikis'"}
-				{/if}
-				{if $prefs.feature_galleries eq 'y'}
-					{button _auto_args='where,highlight,date' href="?where=galleries" _text="{tr}Galleries{/tr}" _selected_class='highlight' _selected="'$where'=='galleries'"}
-					{button _auto_args='where,highlight,date' href="?where=images" _text="{tr}Images{/tr}" _selected_class='highlight' _selected="'$where'=='images'"}
-				{/if}
-				{if $prefs.feature_file_galleries eq 'y'}
-					{button _auto_args='where,highlight,date' href="?where=files" _text="{tr}Files{/tr}" _selected_class='highlight' _selected="'$where'=='files'"}
-				{/if}
-				{if $prefs.feature_forums eq 'y'}
-					{button _auto_args='where,highlight,date' href="?where=forums" _text="{tr}Forums{/tr}" _selected_class='highlight' _selected="'$where'=='forums'"}
-				{/if}
-				{if $prefs.feature_faqs eq 'y'}
-					{button _auto_args='where,highlight,date' href="?where=faqs" _text="{tr}Faqs{/tr}" _selected_class='highlight' _selected="'$where'=='faqs'"}
-				{/if}
-				{if $prefs.feature_blogs eq 'y'}
-					{button _auto_args='where,highlight,date' href="?where=blogs" _text="{tr}Blogs{/tr}" _selected_class='highlight' _selected="'$where'=='blogs'"}
-					{button _auto_args='where,highlight,date' href="?where=posts" _text="{tr}Blogs Post{/tr}" _selected_class='highlight' _selected="'$where'=='posts'"}
-				{/if}
-				{if $prefs.feature_directory eq 'y'}
-					{button _auto_args='where,highlight,date' href="?where=directory" _text="{tr}Directory{/tr}" _selected_class='highlight' _selected="'$where'=='directory'"}
-				{/if}
-				{if $prefs.feature_articles eq 'y'}
-					{button _auto_args='where,highlight,date' href="?where=articles" _text="{tr}Articles{/tr}" _selected_class='highlight' _selected="'$where'=='articles'"}
-				{/if}
-				{if $prefs.feature_trackers eq 'y'}
-					{button _auto_args='where,highlight,date' href="?where=trackers" _text="{tr}Trackers{/tr}" _selected_class='highlight' _selected="'$where'=='trackers'"}
-				{/if}
-			</div>
-		{/if}
+	{if $searchStyle neq "menu" && $prefs.feature_search_show_object_filter eq 'y'}
+		<div class="navbar">
+			{tr}Search in{/tr}:
+			{foreach item=name key=k from=$where_list}
+				{button _auto_args='where,highlight' href="tiki-searchresults.php?where=$k"  _selected="'$where'=='$k'" _selected_class="highlight" _text="$name"}
+			{/foreach}
+		</div>
 	{/if}
 
 	{if $prefs.feature_search_show_search_box eq 'y'}
@@ -90,42 +57,48 @@
 			{/if}
 
 			{if $prefs.feature_search_show_object_filter eq 'y'}
-				{if ( $searchStyle eq "menu" )}
+				{if $searchStyle eq "menu" }
 					<span class='searchMenu'>
 						{tr}in{/tr}
 						<select name="where">
-							<option value="pages">{tr}Entire Site{/tr}</option>
-							{if $prefs.feature_wiki eq 'y'}
-								<option value="wikis">{tr}Wiki Pages{/tr}</option>
-							{/if}
-							{if $prefs.feature_calendar eq 'y'}
-								<option value="calendars">{tr}Calendar Items{/tr}</option>
-							{/if}
-							{if $prefs.feature_galleries eq 'y'}
-								<option value="galleries">{tr}Galleries{/tr}</option>
-								<option value="images">{tr}Images{/tr}</option>
-							{/if}
-							{if $prefs.feature_file_galleries eq 'y'}
-								<option value="files">{tr}Files{/tr}</option>
-							{/if}
-							{if $prefs.feature_forums eq 'y'}
-								<option value="forums">{tr}Forums{/tr}</option>
-							{/if}
-							{if $prefs.feature_faqs eq 'y'}
-								<option value="faqs">{tr}FAQs{/tr}</option>
-							{/if}
-							{if $prefs.feature_blogs eq 'y'}
-								<option value="blogs">{tr}Blogs{/tr}</option>
-								<option value="posts">{tr}Blog Posts{/tr}</option>
-							{/if}
-							{if $prefs.feature_directory eq 'y'}
-								<option value="directory">{tr}Directory{/tr}</option>
-							{/if}
-							{if $prefs.feature_articles eq 'y'}
-								<option value="articles">{tr}Articles{/tr}</option>
-							{/if}
-							{if $prefs.feature_trackers eq 'y'}
-								<option value="trackers">{tr}Trackers{/tr}</option>
+							{if empty($where_list)} {* Required when file included outside tiki-searchindex.php. eg. error.rpl *}
+								<option value="pages">{tr}Entire Site{/tr}</option>
+								{if $prefs.feature_wiki eq 'y'}
+									<option value="wikis">{tr}Wiki Pages{/tr}</option>
+								{/if}
+								{if $prefs.feature_calendar eq 'y'}
+									<option value="calendars">{tr}Calendar Items{/tr}</option>
+								{/if}
+								{if $prefs.feature_galleries eq 'y'}
+									<option value="galleries">{tr}Galleries{/tr}</option>
+									<option value="images">{tr}Images{/tr}</option>
+								{/if}
+								{if $prefs.feature_file_galleries eq 'y'}
+									<option value="files">{tr}Files{/tr}</option>
+								{/if}
+								{if $prefs.feature_forums eq 'y'}
+									<option value="forums">{tr}Forums{/tr}</option>
+								{/if}
+								{if $prefs.feature_faqs eq 'y'}
+									<option value="faqs">{tr}Faqs{/tr}</option>
+								{/if}
+								{if $prefs.feature_blogs eq 'y'}
+									<option value="blogs">{tr}Blogs{/tr}</option>
+									<option value="posts">{tr}Blog Posts{/tr}</option>
+								{/if}
+								{if $prefs.feature_directory eq 'y'}
+									<option value="directory">{tr}Directory{/tr}</option>
+								{/if}
+								{if $prefs.feature_articles eq 'y'}
+									<option value="articles">{tr}Articles{/tr}</option>
+								{/if}
+								{if $prefs.feature_trackers eq 'y'}
+									<option value="trackers">{tr}Trackers{/tr}</option>
+								{/if}
+							{else}
+								{foreach item=name key=k from=$where_list}
+									<option value="{$k}">{$name}</option>
+								{/foreach}
 							{/if}
 						</select>
 					</span>
@@ -135,33 +108,37 @@
 				{/if}
 			{/if}
 			<label class="findsubmit">
-				<input type="submit" name="search" value="{tr}Go{/tr}" />
+				<input type="submit" name="search" value="{tr}Go{/tr}"/>
 			</label>
+			{if !$searchNoResults}
+				{button _auto_args='highlight' href="tiki-searchindex.php?highlight=" _text="{tr}Clear Filter{/tr}"}
+			{/if}
 		</form>
 	{/if}
 </div><!--nohighlight-->
 	{* do not change the comment above, since smarty 'highlight' outputfilter is hardcoded to find exactly this... instead you may experience white pages as results *}
 
-{if $searchStyle ne "menu" and ! $searchNoResults }
-	<div class="highlight simplebox">
-		 {tr}Found{/tr} "{$words}" {tr}in{/tr} {if $where3}{$where2}: {$where3}{else}{$cant_results} {$where2}{/if}
-	</div>
+{if $searchStyle ne 'menu' and ! $searchNoResults }
+	<div class="nohighlight simplebox">
+		 {tr}Found{/tr} "{$words}" {tr}in{/tr} 
+			{if $where_forum}
+				{tr}{$where}{/tr}: {$where_forum}
+			{else}
+				{$cant} {tr}{$where}{/tr}
+			{/if}
+	</div><!--nohighlight-->
 {/if}
 
 {if ! $searchNoResults }
 	<ul class="searchresults">
 		{section name=search loop=$results}
-			{strip}
-			<li>
-				{if $prefs.feature_search_show_object_type eq 'y'}
-					{if $results[search].type > ''}
-						<span class="objecttype">{$results[search].type}</span>
-					{/if}
-				{/if}
-				{if !empty($results[search].parentName)}
+		<li>
+			{if $prefs.feature_search_show_object_type eq 'y' &&  $results[search].type > ''}
+				<span class="objecttype">{tr}{$results[search].type}{/tr}</span>
+			{/if}
+			{if !empty($results[search].parentName)}
 					<a href="{$results[search].parentHref}" class="parentname">{$results[search].parentName|escape}</a>
 				{/if}
-			{/strip}
 			<a href="{$results[search].href}&amp;highlight={$words}" class="objectname">{$results[search].pageName|strip_tags}</a>
 			{if $prefs.feature_search_show_visit_count eq 'y'}
 				<span class="itemhits">({tr}Hits{/tr}: {$results[search].hits})</span>
@@ -176,13 +153,12 @@
 					{/if}
 				</span>
 			{/if}
-			
-			<div class="searchdesc">{$results[search].data|strip_tags}</div>
 
+			<div class="searchdesc">{$results[search].data|strip_tags|truncate:250:'...'}</div>
 			{if $prefs.feature_search_show_last_modification eq 'y'}
 				<div class="searchdate">{tr}Last modification{/tr}: {$results[search].lastModif|tiki_long_datetime}</div>
 			{/if}
-			</li>
+		</li>
 		{sectionelse}
 			{tr}No pages matched the search criteria{/tr}
 		{/section}
