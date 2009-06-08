@@ -22,7 +22,7 @@ function smarty_block_ajax_href($params, $content, &$smarty, $repeat) {
     $last_user = htmlspecialchars($user);
 
     if ( $prefs['feature_ajax'] != 'y' || $prefs['javascript_enabled'] == 'n' ) {
-	return " href=\"$url\" ";
+	return " href=\"$url\" onclick=\"$onclick\"";
     } else {
 	$max_tikitabs = 50; // Same value as in header.tpl, <body> tag onload's param
 	return " href=\"#main\" onclick=\"$onclick ;$func('$url','$template','$htmlelement',$max_tikitabs,'$last_user');return false;\" ";
