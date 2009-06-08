@@ -1,7 +1,9 @@
 {* $Id$ *}
 {popup_init src="lib/overlib.js"}
 
+{if !( $searchStyle eq "menu" )}
 {title admpage="search" help="Search+User"}{tr}Search{/tr}{/title}
+{/if}
 
 {capture name=advanced_search_help}
 	<ul>

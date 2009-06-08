@@ -1,8 +1,7 @@
 {* $Id$ *}
 
-{title admpage="search" help="Search+User"}{tr}Search{/tr}{/title}
-
 {if !( $searchStyle eq "menu" )}
+{title admpage="search" help="Search+User"}{tr}Search{/tr}{/title}
 	{if $prefs.feature_search_show_object_filter eq 'y'}
 		<div class="nohighlight navbar">
 			<p>{tr}Search in{/tr}:</p>
