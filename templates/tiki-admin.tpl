@@ -1,23 +1,20 @@
 {* $Id$ *}
 {popup_init src="lib/overlib.js"}
+{title help="$helpUrl"}{tr}{$admintitle}{/tr}{/title}
 <div id="pageheader">
 {* bother to display this only when breadcrumbs are on *}
+{*
 {if $prefs.feature_breadcrumbs eq 'y'}
     {breadcrumbs type="trail" loc="page" crumbs=$crumbs}
     {breadcrumbs type="pagetitle" loc="page" crumbs=$crumbs}
 {/if}
+*}
 {if $db_requires_update}
 	{remarksbox type="warning" title="{tr}Database Version Problem{/tr}"}
 	{tr}Your database requires an update to match the current TikiWiki version. Please proceed to <a href="tiki-install.php">the installer</a>. Using Tiki with an incorrect database version usually provoke errors.{/tr}
 	{/remarksbox}
 {/if}
-{**
- * Page Title as h1 goes here
- *}
-    <h1 class="center pagetitle">{breadcrumbs type="pagetitle" loc="page" crumbs=$crumbs}</h1>
-{* description is built always *}
-{breadcrumbs type="desc" loc="page" crumbs=$trail}
-
+{tr}{$description}{/tr}
 </div>
 {* The rest determines which page to include using "page" GET parameter. Default : list-sections
 Add a value in first check when you create a new admin page. *}

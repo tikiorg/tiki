@@ -9,10 +9,12 @@
 {/remarksbox}
 
 <div class="cbox">
+{*
  	<div class="cbox-title">
 		{tr}{$crumbs[$crumb]->description}{/tr}
 		{help crumb=$crumbs[$crumb]}
 	</div>
+*}
 
 	<div class="clearfix cbox-data">
 
