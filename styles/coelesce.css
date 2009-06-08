@@ -2577,6 +2577,7 @@ div.messureadbody {
 /***** Ajax *****/
 
 div#ajaxLoading {
+	z-index: 100000;
 	display: none;
 	position: absolute;
 	top: 50px;
