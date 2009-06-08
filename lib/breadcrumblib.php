@@ -241,7 +241,7 @@ function _breadcrumb_getTitle($crumbs, $loc) {
         	$crumbs[$len-1]->title = substr($crumbs[$len-1]->title, strlen($prefs['wikiapproval_prefix']));            	
 		}
     			if (!empty($prefs['wiki_pagename_strip'])) {
-    				$wiki_strip = '~'. preg_quote($prefs['wiki_pagename_strip']).'[a-zA-Z0-9]*$~';
+    				$wiki_strip = '~'. preg_quote($prefs['wiki_pagename_strip']).'.*$~';
     				$ret .= tra(preg_replace($wiki_strip,'',$crumbs[$len-1]->title)).'</a>';
     			} else {
     				$ret .= htmlentities(tra($crumbs[$len-1]->title), ENT_QUOTES, 'UTF-8').'</a>';

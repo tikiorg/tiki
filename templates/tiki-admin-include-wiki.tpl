@@ -51,7 +51,7 @@
 <div class="adminoptionbox">
 	<div class="adminoptionlabel"><label for="wiki_pagename_strip">{tr}Page name display stripper{/tr}:</label>
 	<input type="text" id="wiki_pagename_strip" name="wiki_pagename_strip" value="{$prefs.wiki_pagename_strip}" size="5" /> <input type="submit" name="setwikiregex" value="{tr}Set{/tr}" />
-	<br /><em>{tr}Enter a character to use as the delimiter when displaying page names. All characters after the delimiter will be stripped when displaying the page name.</em>{/tr}
+	<br /><em>{tr}Enter a character to use as the delimiter when displaying page titles. All characters after the delimiter will be stripped when displaying the page name.</em>{/tr}
 	</div>
 </div>
 
