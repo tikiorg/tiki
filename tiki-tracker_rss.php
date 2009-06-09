@@ -33,6 +33,12 @@ if ($tiki_p_admin_trackers != 'y' && !$tikilib->user_has_perm_on_object($user,$_
 $feed = "tracker";
 $id = "trackerId";
 $uniqueid = "$feed.id=".$_REQUEST["trackerId"];
+if (isset($_REQUEST['sort_mode'])) {
+	$sort_mode = $_REQUEST['sort_mode'];
+	$uniqueid .= $sort_mode;
+} else {
+	$sort_mode = 'created_desc';
+}
 $output = $rsslib->get_from_cache($uniqueid);
 
 if ($output["data"]=="EMPTY") {
@@ -61,7 +67,7 @@ if ($output["data"]=="EMPTY") {
 			continue;
 		$fields[$f['fieldId']] = $f;
 	}
-	$tmp = $trklib->list_items($_REQUEST[$id], 0, $prefs['max_rss_tracker'], $dateId.'_asc', $fields);
+	$tmp = $trklib->list_items($_REQUEST[$id], 0, $prefs['max_rss_tracker'], $sort_mode, $fields);
 	foreach ($tmp["data"] as $data) {
 		$data[$titleId] = tra('Tracker item:').' #'.$data["$urlparam"];
 		$data[$descId] = '';
@@ -83,17 +89,19 @@ if ($output["data"]=="EMPTY") {
 							($field_name_check=="name") ||
 							($field_name_check=="title") ||
 							($field_name_check=="topic")) {
-							$aux_subject = " - ".$data2["value"];
+							$aux_subject = $data2["value"];
 					} elseif ($data2["type"] == 't' && !isset($first_text_field)) {
-						$first_text_field = " - ".$data2["name"].": ".$data2["value"];
+						$first_text_field = $data2["name"].": ".$data2["value"];
 					}
 				}	
 			}
 		}
-		if (!isset($aux_subject) && isset($first_text_field))
-		  $data[$titleId] .= $first_text_field;
+		if (isset($_REQUEST['noId']) && $_REQUEST['noId'] == 'y')
+			$data[$titleId] = empty($aux_subject)? $first_text_field: $aux_subject;
+		elseif (!isset($aux_subject) && isset($first_text_field))
+		  $data[$titleId] .= ' - '.$first_text_field;
 		elseif (isset($aux_subject))
-		  $data[$titleId] .= $aux_subject;
+		  $data[$titleId] .= ' - '.$aux_subject;
 	
 		$data["id"]=$_REQUEST["$id"];
 		$data["field_values"]=null;

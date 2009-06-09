@@ -607,6 +607,7 @@ class TrackerLib extends TikiLib {
 	*/
 	function get_special_group_tracker_perm($tracker_info, $global=false) {
 		global $prefs, $userlib, $smarty;
+		$ret = array();
 		$perms = $userlib->get_object_permissions($tracker_info['trackerId'], 'tracker', $prefs['trackerCreatorGroupName']);
 		foreach ($perms as $perm) {
 			$ret[$perm['permName']] ='y';
