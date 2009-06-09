@@ -1066,8 +1066,6 @@ table.wikiplugin-split .codelisting {width: 95%}
 	padding: 0}
 
 .wikitext .fancylist li {
-	background: transparent url(strasa/list_icon.png) top left no-repeat;
-	color: #f90;
 	font: italic 2em Verdana, Geneva, Arial, Helvetica, sans-serif;
 	line-height: 27px;
 	list-style-position: inside;
@@ -1075,7 +1073,6 @@ table.wikiplugin-split .codelisting {width: 95%}
 	padding: 6px 0 7px 15px}
 
 .wikitext .fancylist li p {
-	color: #000;
 	display: inline;
 	font-size: 50%;
 	font-style: normal;
