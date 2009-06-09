@@ -895,7 +895,9 @@ td.even {
 	border-collapse: collapse}
 
 /* Headings */
-th, td.heading {text-align: center}
+th,
+td.heading,
+tr.diffheader {text-align: center}
 
 form.admin {}
 form.admin fieldset {}
@@ -1137,9 +1139,9 @@ ul.toc * {border: none}
 /* Wiki diff styles */
 .diff td {border: 1px solid #696969}
 .diff div {border-top: 1px solid #696969}
-.diffheader {background: #696969; font-weight: bold}
-.diffadded {background: #ccffcc}
-.diffdeleted {background: #ffcccc}
+.diffbody {color: #000}
+.diffadded {background: #ccffcc; color: #000}
+.diffdeleted {background: #ffcccc; color: #000}
 
 .diffinldel {
 	background: #ffcccc;
