@@ -111,7 +111,6 @@ if ($output["data"]=="EMPTY") {
 	}
 	$tmp=null;
 	if (isset($changes['data'])) {
-		$changes["data"] = array_reverse($changes["data"]);
 		$output = $rsslib->generate_feed($feed, $uniqueid, '', $changes, $readrepl, $urlparam, $id, $title, $titleId, $desc, $descId, $dateId, $authorId);
 	}
 	
