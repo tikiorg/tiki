@@ -799,7 +799,13 @@ if ( isset($dbTiki) && is_object($dbTiki) && isset($_SESSION["install-logged-$mu
 if( isset( $_GET['lockenter'] ) )
 {
 	touch( 'db/lock' );
-	header( 'Location: tiki-index.php' );
+	require('tiki-logout.php');	// logs out then redirects to home page
+	exit;
+}
+
+if( isset( $_GET['nolockenter'] ) )
+{
+	require('tiki-logout.php');	// logs out then redirects to home page
 	exit;
 }
 
