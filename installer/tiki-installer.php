@@ -900,6 +900,8 @@ if ( $_REQUEST['general_settings'] == 'y' ) {
 	$switch_ssl_mode = ( isset($_REQUEST['feature_switch_ssl_mode']) && $_REQUEST['feature_switch_ssl_mode'] == 'on' ) ? 'y' : 'n';
 	$show_stay_in_ssl_mode = ( isset($_REQUEST['feature_show_stay_in_ssl_mode']) && $_REQUEST['feature_show_stay_in_ssl_mode'] == 'on' ) ? 'y' : 'n';
 
+	$dbTiki->Execute("DELETE FROM `tiki_preferences` WHERE `name` IN ('browsertitle', 'sender_email', 'https_login', 'https_port', 'feature_switch_ssl_mode', 'feature_show_stay_in_ssl_mode', 'language')");
+
 	$query = "INSERT INTO `tiki_preferences` (`name`, `value`) VALUES"
 		. " ('browsertitle', '" . $_REQUEST['browsertitle'] . "'),"
 		. " ('sender_email', '" . $_REQUEST['sender_email'] . "'),"
@@ -908,9 +910,9 @@ if ( $_REQUEST['general_settings'] == 'y' ) {
 		. " ('feature_switch_ssl_mode', '$switch_ssl_mode'),"
 		. " ('feature_show_stay_in_ssl_mode', '$show_stay_in_ssl_mode'),"
 		. " ('language', '$language')";
-	$query .= "; UPDATE `users_users` SET `email` = '".$_REQUEST['admin_email']."' WHERE `users_users`.`userId`=1";
 
 	$dbTiki->Execute($query);
+	$dbTiki->Execute("UPDATE `users_users` SET `email` = '".$_REQUEST['admin_email']."' WHERE `users_users`.`userId`=1");
 }
 
 
