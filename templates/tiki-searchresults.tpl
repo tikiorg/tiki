@@ -1,9 +1,5 @@
 {* $Id$ *}
 {popup_init src="lib/overlib.js"}
-{if !( $searchNoResults ) }
-  {title admpage="search" help="Search+User"}{tr}Search results{/tr}{/title}
-{/if}
-
 
 {capture name=advanced_search_help}
 		<ul><li>+ : {tr}A leading plus sign indicates that this word must be present in every object returned.{/tr}</li>
@@ -19,6 +15,7 @@
 
 	<div class="nohighlight">
 		{if !( $searchStyle eq "menu" )} 
+			{title admpage="search" help="Search+User"}{tr}Search results{/tr}{/title}
         	{if $prefs.feature_search_show_object_filter eq 'y'}
 			<div class="navbar">
                 {tr}Search in{/tr}:<br />

@@ -1,10 +1,7 @@
 {* $Id$ *}
 
-{if !( $searchNoResults ) }
-	{title}{if $words neq ''}{tr}Search results{/tr}{else}{tr}Search{/tr}{/if}{/title}
-{/if}
-
 {if !( $searchStyle eq "menu" )}
+	{title}{if $words neq ''}{tr}Search results{/tr}{else}{tr}Search{/tr}{/if}{/title}
 	{if $prefs.feature_search_show_object_filter eq 'y'}
 		<div class="nohighlight navbar">
 			<p>{tr}Search in{/tr}:</p>
