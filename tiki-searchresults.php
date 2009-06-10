@@ -7,6 +7,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$section = 'search';
 require_once ('tiki-setup.php');
 require_once('lib/ajax/ajaxlib.php');
 
