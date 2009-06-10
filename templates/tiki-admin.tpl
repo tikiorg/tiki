@@ -56,6 +56,11 @@ Add a value in first check when you create a new admin page. *}
 		</ul>
 	{/remarksbox}
 {/if}
+{if $pagetop_msg}
+	{remarksbox type="note" title="{tr}Note{/tr}"}
+		{$pagetop_msg}
+	{/remarksbox}
+{/if}
 
 {include file="tiki-admin-include-$include.tpl"}
 
