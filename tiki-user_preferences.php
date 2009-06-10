@@ -29,6 +29,12 @@ if (!$user) {
 	die;
 }
 
+// Make sure user preferences uses https if set 
+if ( ! $https_mode && $https_login == 'required' ) {
+        header('Location: '.$base_url_https.'tiki-user_preferences.php');
+        die;
+}
+
 if (isset($_REQUEST['userId']) || isset($_REQUEST['view_user'])) {
 	if (empty($_REQUEST['view_user']))
 		$userwatch = $tikilib->get_user_login($_REQUEST['userId']);
