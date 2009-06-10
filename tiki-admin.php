@@ -96,11 +96,12 @@ $crumbs[] = new Breadcrumb(tra('Administration'),
 // Default values for AdminHome
 $admintitle = 'Administration';
 $helpUrl = 'Admin+Home';
+$helpDescription = $description = '';
+$url = 'tiki-admin.php';
 
 $adminPage = '';
 if (isset($_REQUEST["page"])) {
 	$adminPage = $_REQUEST["page"];
-	$helpUrl='';
 	if ($adminPage == "features") {
 		$admintitle = "Features"; //get_strings tra("Features")
 		$description = "Enable/disable Tiki features here, but configure them elsewhere"; //get_strings tra("Enable/disable Tiki features here, but configure them elsewhere") TODO FOR EACH DESCRIPTION
@@ -306,6 +307,8 @@ if (isset($_REQUEST["page"])) {
 		$description = 'Search engine friendly url';
 		$helpUrl = "Rewrite+Rules";
 		include_once ('tiki-admin_include_sefurl.php');
+	} else {
+		$helpUrl = '';
 	}
 
 	$url = 'tiki-admin.php'.'?page='.$adminPage;
