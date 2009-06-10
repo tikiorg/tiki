@@ -126,12 +126,10 @@ if (isset($_REQUEST["new_prefs"])) {
         $tikilib->set_preference("tmpDir", $tdir);
     }
     
-    // not needed anymore? -- gongo
-    //$smarty->assign('pagetop_msg', tra("Your settings have been updated. <a href='tiki-admin.php?page=general'>Click here</a> or come back later see the changes. That is a known bug that will be fixed in the next release."));
     $smarty->assign('pagetop_msg', "");
 }
 // Handle Password Change Request
-elseif (isset($_REQUEST["newadminpass"])) {
+if (isset($_REQUEST["newadminpass"])) {
 	check_ticket('admin-inc-general');
     if ($_REQUEST["adminpass"] <> $_REQUEST["again"]) {
         $msg = tra("The passwords do not match");
@@ -139,7 +137,7 @@ elseif (isset($_REQUEST["newadminpass"])) {
     }
 
     // Dont allow blank passwords here
-    if (strlen($_REQUEST["adminpass"]) == 0) {
+    if ( empty($_REQUEST["adminpass"]) ) {
     	$smarty->assign("msg", tra("You cannot have a blank password"));
 	$smarty->display("error.tpl");
 	die;
@@ -155,8 +153,8 @@ elseif (isset($_REQUEST["newadminpass"])) {
         $access->display_error(basename(__FILE__), $text);
     }
 
-    $userlib->change_user_password("admin", $_REQUEST["adminpass"]);
-    $smarty->assign('pagetop_msg', tra("Your admin password has been changed"));
+    $userlib->change_user_password('admin', $_REQUEST['adminpass']);
+    $smarty->assign('pagetop_msg', tra('Your admin password has been changed'));
 }
 
 // Get list of time zones
