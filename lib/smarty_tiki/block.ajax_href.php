@@ -21,7 +21,7 @@ function smarty_block_ajax_href($params, $content, &$smarty, $repeat) {
     $func = isset($params['function']) ? $params['function']: 'window.scrollTo(0,0);loadComponent';	// preserve previous behaviour
     $last_user = htmlspecialchars($user);
 
-    if ( $prefs['feature_ajax'] != 'y' || $prefs['javascript_enabled'] == 'n' ) {
+    if ( $prefs['feature_ajax'] != 'y' || $prefs['javascript_enabled'] == 'n' || empty($template) ) {
 	return " href=\"$url\" onclick=\"$onclick\"";
     } else {
 	$max_tikitabs = 50; // Same value as in header.tpl, <body> tag onload's param
