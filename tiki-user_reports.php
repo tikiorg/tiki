@@ -18,18 +18,18 @@ if ($prefs['feature_daily_report_watches'] != 'y') {
 	die;
 }
 
-include_once ('lib/reports.php');
+include_once ('lib/reportslib.php');
 
 //Enable User Report
 if (isset($_POST['report_preferences']) && $_POST['use_daily_reports']=="true") {
-	$reports->add_user_report($user,$_POST['interval'],$_POST['view'],$_POST['type'], $_POST['always_email']);
+	$reportslib->add_user_report($user,$_POST['interval'],$_POST['view'],$_POST['type'], $_POST['always_email']);
 	header('Location: tiki-user_watches.php');
 	die;
 }
 
 //Enable User Report
 if (isset($_POST['report_preferences']) && $_POST['use_daily_reports']!="true") {
-	$reports->delete_user_report($user);
+	$reportslib->delete_user_report($user);
 	header('Location: tiki-user_watches.php');
 	die;
 }

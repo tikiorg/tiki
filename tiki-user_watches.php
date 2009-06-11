@@ -8,7 +8,7 @@
 
 $section = 'mytiki';
 include_once ('tiki-setup.php');
-include_once ('lib/reports.php');
+include_once ('lib/reportslib.php');
 
 if ($prefs['feature_ajax'] == "y") {
 require_once ('lib/ajax/ajaxlib.php');
@@ -170,7 +170,7 @@ user_watches_ajax();
 $smarty->assign("mootab",'y');
 }
 
-$report_preferences = $reports->get_report_preferences_by_user($user);
+$report_preferences = $reportslib->get_report_preferences_by_user($user);
 if ($report_preferences) {
 	$smarty->assign_by_ref('report_preferences', $report_preferences);
 }

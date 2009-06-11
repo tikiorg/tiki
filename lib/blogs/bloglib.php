@@ -284,13 +284,13 @@ class BlogLib extends TikiLib {
 				$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
 			}
 			
-			include_once ('lib/reports.php');
+			include_once ('lib/reportslib.php');
 			
 			//Reports added by Clemens John <clemens-john@gmx.de> May 19th 2009
 			//Pr�fen ob Reports versendet werden d�rfen
 			if ($prefs['feature_user_watches'] == 'y' && $prefs['feature_daily_report_watches'] == 'y') {
 				//Benutzer die Reports eingeschaltet haben holen
-				$report_users = $reports->getUsersForReport();
+				$report_users = $reportslib->getUsersForReport();
 				
 				//Benutzer die Reports eingeschaltet haben in das Report-Array verschieben.
 				foreach ($nots as $key=>$not) {
@@ -302,7 +302,7 @@ class BlogLib extends TikiLib {
 				//Daten in den Reportcache schaufeln
 				$query = "select `title` from `tiki_blogs` where `blogId`=?";
 				$blogTitle = $this->getOne($query, array((int)$blogId));
-				$reports->add_report_chache_entries($report_nots, 'blog_post', array("blogId"=>$blogId, "blogTitle"=>$blogTitle, "postId"=>$id, "user"=>$user));
+				$reportslib->add_report_chache_entries($report_nots, 'blog_post', array("blogId"=>$blogId, "blogTitle"=>$blogTitle, "postId"=>$id, "user"=>$user));
 			}
 			
 			if (count($nots)) {

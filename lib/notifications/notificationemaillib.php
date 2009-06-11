@@ -9,6 +9,8 @@
   * \param $topicName name of the parent topic
   */
 
+include_once ('lib/reportslib.php');
+
 function sendForumEmailNotification($event, $object, $forum_info, $title, $data, $author, $topicName, $messageId='', $inReplyTo='', $threadId, $parentId, $contributions='', $postId='') {
 	global $tikilib, $prefs, $smarty, $userlib;
 
@@ -102,13 +104,12 @@ function sendForumEmailNotification($event, $object, $forum_info, $title, $data,
 		$nots[] = $not;
 	}
 	
-	include_once ('lib/reports.php');
-	
 	//Reports added by Clemens John <clemens-john@gmx.de> May 19th 2009
-	//Prüfen ob Reports versendet werden dürfen
+	//Prï¿½fen ob Reports versendet werden dï¿½rfen
 	if ($prefs['feature_user_watches'] == 'y' && $prefs['feature_daily_report_watches'] == 'y') {
+		global $reportslib;
 		//Benutzer die Reports eingeschaltet haben holen
-		$report_users = $reports->getUsersForReport();
+		$report_users = $reportslib->getUsersForReport();
 		
 		//Benutzer die Reports eingeschaltet haben in das Report-Array verschieben.
 		foreach ($nots as $key=>$not) {
@@ -118,7 +119,7 @@ function sendForumEmailNotification($event, $object, $forum_info, $title, $data,
 			}
 		}
 		//Daten in den Reportcache schaufeln
-		$reports->add_report_chache_entries($report_nots, $event, array("forumId"=>$forum_info['forumId'], "forumName"=>$forum_info['name'], "topicId"=>$threadId, "threadId"=>$postId, "threadName"=>$topicName, "user"=>$author));
+		$reportslib->add_report_chache_entries($report_nots, $event, array("forumId"=>$forum_info['forumId'], "forumName"=>$forum_info['name'], "topicId"=>$threadId, "threadId"=>$postId, "threadName"=>$topicName, "user"=>$author));
 	}
 
 	if (count($nots)) {
@@ -230,14 +231,13 @@ function sendWikiEmailNotification($event, $pageName, $edit_user, $edit_comment,
 	}
 
 	if ($edit_user=='') $edit_user = tra('Anonymous');
-
-	include_once ('lib/reports.php');
 	
 	//Reports added by Clemens John <clemens-john@gmx.de> May 19th 2009
-	//Prüfen ob Reports versendet werden dürfen
+	//Prï¿½fen ob Reports versendet werden dï¿½rfen
 	if ($prefs['feature_user_watches'] == 'y' && $prefs['feature_daily_report_watches'] == 'y') {
+		global $reportslib;
 		//Benutzer die Reports eingeschaltet haben holen
-		$report_users = $reports->getUsersForReport();
+		$report_users = $reportslib->getUsersForReport();
 		
 		//Benutzer die Reports eingeschaltet haben in das Report-Array verschieben.
 		foreach ($nots as $key=>$not) {
@@ -248,7 +248,7 @@ function sendWikiEmailNotification($event, $pageName, $edit_user, $edit_comment,
 		}
 	
 		//Daten in den Reportcache schaufeln
-		$reports->add_report_chache_entries($report_nots, $event, array("pageName"=>$pageName, "object"=>$pageName, "editUser"=>$edit_user, "editComment"=>$edit_comment, "oldVer"=>$oldver));
+		$reportslib->add_report_chache_entries($report_nots, $event, array("pageName"=>$pageName, "object"=>$pageName, "editUser"=>$edit_user, "editComment"=>$edit_comment, "oldVer"=>$oldver));
 	}
 
 	if (count($nots)) {
@@ -385,13 +385,12 @@ function sendFileGalleryEmailNotification($event, $galleryId, $galleryName, $nam
                 }
         }
         
-        include_once ('lib/reports.php');
-        
     	//Reports added by Clemens John <clemens-john@gmx.de> May 19th 2009
-		//Prüfen ob Reports versendet werden dürfen
+		//Prï¿½fen ob Reports versendet werden dï¿½rfen
 		if ($prefs['feature_user_watches'] == 'y' && $prefs['feature_daily_report_watches'] == 'y') {
+			global $reportslib;
 			//Benutzer die Reports eingeschaltet haben holen
-			$report_users = $reports->getUsersForReport();
+			$report_users = $reportslib->getUsersForReport();
 			
 			//Benutzer die Reports eingeschaltet haben in das Report-Array verschieben.
 			foreach ($nots as $key=>$not) {
@@ -402,7 +401,7 @@ function sendFileGalleryEmailNotification($event, $galleryId, $galleryName, $nam
 			}
 	
 			//Daten in den Reportcache schaufeln
-			$reports->add_report_chache_entries($report_nots, $event, array("name"=>$name, "fileId"=>$fileId, "fileName"=>$filename, "galleryId"=>$galleryId, "galleryName"=>$galleryName, "action"=>$action, "user"=>$user));
+			$reportslib->add_report_chache_entries($report_nots, $event, array("name"=>$name, "fileId"=>$fileId, "fileName"=>$filename, "galleryId"=>$galleryId, "galleryName"=>$galleryName, "action"=>$action, "user"=>$user));
 		}
 
         if (count($nots)) {
@@ -484,13 +483,12 @@ function sendCategoryEmailNotification($values) {
 			}
 		}
 
-		include_once ('lib/reports.php');
-		
 		//Reports added by Clemens John <clemens-john@gmx.de> May 19th 2009
-		//Prüfen ob Reports versendet werden dürfen
+		//Prï¿½fen ob Reports versendet werden dï¿½rfen
 		if ($prefs['feature_user_watches'] == 'y' && $prefs['feature_daily_report_watches'] == 'y') {
+			global $reportslib;
 			//Benutzer die Reports eingeschaltet haben holen
-			$report_users = $reports->getUsersForReport();
+			$report_users = $reportslib->getUsersForReport();
 			
 			//Benutzer die Reports eingeschaltet haben in das Report-Array verschieben.
 			foreach ($nots as $key=>$not) {
@@ -502,7 +500,7 @@ function sendCategoryEmailNotification($values) {
 			
 			//Daten in den Reportcache schaufeln
 			$values['user'] = $user;
-			$reports->add_report_chache_entries($report_nots, $event, $values);
+			$reportslib->add_report_chache_entries($report_nots, $event, $values);
 		}
 
         if (count($nots)) {        		
