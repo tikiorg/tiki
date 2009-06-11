@@ -2257,7 +2257,7 @@ class TikiLib extends TikiDB {
 					// If $user is admin then get ALL galleries, if not only user galleries are shown
 					// If the user is not admin then select it's own galleries or public galleries
 					if ( $tiki_p_admin_file_galleries != 'y' && $my_user != 'admin' && ! $parentId ) {
-						$g_mid = " WHERE (tfg.`user`='$my_user' OR tfg.`public`='y')"; /// FIXME: use bindvars
+						$g_mid = " WHERE (tfg.`user`='$my_user' OR tfg.`visible`='y' OR tfg.`visible`='y')"; /// FIXME: use bindvars
 					}
 
 					$g_query = 'SELECT '.implode(', ', array_values($f2g_corresp)).' FROM '.$g_table.$g_join.$g_mid;
