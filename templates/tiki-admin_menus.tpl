@@ -104,7 +104,11 @@
 	{/if}
 	{tr}To use a menu in a tiki format:{/tr} {literal}{menu id=X}{/literal}<br />
 	{if $prefs.feature_cssmenus eq 'y'}
-		{tr}To use menu in a css/suckerfish format:{/tr} {literal}{menu id=X css=y type=vert|horiz}{/literal}<br />
+		{tr}To use menu in a css/suckerfish format:{/tr}
+		<ul>
+			<li>{literal}{menu id=X css=y type=vert}{/literal}</li>
+ 			<li>{literal}{menu id=X css=y type=horiz}{/literal}</li>
+		</ul>
 	{/if}
 	{tr}To customizing the menu's css id (#id):{/tr} {literal}{menu id=X css_id=custom_name}{/literal}
 {/remarksbox}
