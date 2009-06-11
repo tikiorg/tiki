@@ -91,7 +91,7 @@
 .cssmenu_horiz li li li.sfhover ul,
 .cssmenu_vert li.sfhover ul,
 .cssmenu_vert li li.sfhover ul,
-.cssmenu_vert li li li.sfhover ul {left: auto}
+.cssmenu_vert li li li.sfhover ul {left: 5em; top: -1em}
 
 /* li hover bg color */
 .cssmenu li ul,
