@@ -2706,21 +2706,21 @@ table.default td {
 
 /* css/admin.css overrides */
 
-a.admbox {
+.admbox a, a.admbox {
 	border: 1px solid #708090;
 	background: #dddfdf center no-repeat}
 
-a.admbox:hover,
-a.admbox:focus,
-a.admbox:active {
+.admbox a, a.admbox:hover,
+.admbox a, a.admbox:focus,
+.admbox a, a.admbox:active {
 	background: #f0f0f0 center no-repeat;
 	border: 1px solid #696969}
 
-a.admbox.off {border: 1px solid #a9a9a9}
+.admbox a, a.admbox.off {border: 1px solid #a9a9a9}
 
-a.admbox.off:hover,
-a.admbox.off:focus,
-a.admbox.off:active {border: 1px solid #a9a9a9}
+.admbox a, a.admbox.off:hover,
+.admbox a, a.admbox.off:focus,
+.admbox a, a.admbox.off:active {border: 1px solid #a9a9a9}
 
 /* MiniChat  */
 div.box-minichat {width: 100%}
