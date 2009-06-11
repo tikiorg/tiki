@@ -530,7 +530,7 @@ class TikiLib extends TikiDB {
 		}
 		return $ret;
 	}
-
+	
 	/*shared*/
 	function dir_stats() {
 		$aux = array();

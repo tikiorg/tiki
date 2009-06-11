@@ -121,7 +121,7 @@ class FileGalLib extends TikiLib {
                 $smarty->assign('filename', $filename);
                 $smarty->assign('fdescription', $description);
 
-		$this->notify($galleryId, $name, $filename, $description, 'upload file', $user);
+		$this->notify($galleryId, $name, $filename, $description, 'upload file', $user, $fileId);
 
 		return $fileId;
 	}
@@ -661,7 +661,7 @@ class FileGalLib extends TikiLib {
 		return $contents;
 	}
 
-	function notify ($galleryId, $name, $filename, $description, $action, $user) {
+	function notify ($galleryId, $name, $filename, $description, $action, $user, $fileId=false) {
 		global $prefs;
                 if ($prefs['feature_user_watches'] == 'y') {
                         //  Deal with mail notifications.
@@ -670,7 +670,7 @@ class FileGalLib extends TikiLib {
                         $machine = $this->httpPrefix(). dirname( $foo["path"]);
 			$galleryName = $this->getOne("select `name` from `tiki_file_galleries` where `galleryId`=?",array($galleryId));
 
-                        sendFileGalleryEmailNotification('file_gallery_changed', $galleryId, $galleryName, $name, $filename, $description, $action, $user);
+                        sendFileGalleryEmailNotification('file_gallery_changed', $galleryId, $galleryName, $name, $filename, $description, $action, $user, $fileId);
                 }
 	}
 	/* lock a file */

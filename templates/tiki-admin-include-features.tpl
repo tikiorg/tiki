@@ -378,6 +378,10 @@
 						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Group+Watches" target="tikihelp" class="tikihelp" title="{tr}Group Watches{/tr}">{/if} {tr}Group Watches{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
 					</div>
 					<div class="half_width">
+						<span class="checkbox"><input type="checkbox" name="feature_daily_report_watches" {if $prefs.feature_daily_report_watches eq 'y'}checked="checked"{/if}/></span>
+						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Daily+Reports" target="tikihelp" class="tikihelp" title="{tr}Daily Repors for User Watches{/tr}">{/if} {tr}Daily Reports{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
+					</div>
+					<div class="half_width">
 						<span class="checkbox"><input type="checkbox" name="feature_user_watches_translations"	{if $prefs.feature_user_watches_translations eq 'y'}checked="checked"{/if}/></span>
 						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}User+Watches" target="tikihelp" class="tikihelp" title="{tr}User Watches Translations{/tr}">{/if} {tr}User Watches Translations{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
 					</div>

@@ -68,7 +68,7 @@ class ArtLib extends TikiLib {
 	}
 
 	function remove_article($articleId, $article_data='') {
-		global $smarty, $tikilib, $user;
+		global $smarty, $tikilib, $user, $prefs;
 		
 		if ($articleId) {
 			if (empty($article_data)) $article_data = $this->get_article($articleId);
@@ -96,6 +96,26 @@ class ArtLib extends TikiLib {
 		    if (!isset($_SERVER["SERVER_NAME"])) {
 			    $_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
 		    }
+		    
+    		include_once ('lib/reports.php');
+		    
+		    //Reports added by Clemens John <clemens-john@gmx.de> May 19th 2009
+			//Pr�fen ob Reports versendet werden d�rfen
+			if ($prefs['feature_user_watches'] == 'y' && $prefs['feature_daily_report_watches'] == 'y') {
+				//Benutzer die Reports eingeschaltet haben holen
+				$report_users = $reports->getUsersForReport();
+				
+				//Benutzer die Reports eingeschaltet haben in das Report-Array verschieben.
+				foreach ($nots as $key=>$not) {
+					if (in_array($not['user'], $report_users)) {
+						$report_nots[] = $not['user'];
+						unset($nots[$key]);
+					}
+				}
+				//Daten in den Reportcache schaufeln
+				$reports->add_report_chache_entries($report_nots, 'article_deleted', array("articleId"=>$articleId, "articleTitle"=>$article_data['title'], "authorName"=>$article_data['authorName'], "user"=>$user));
+			}
+		    
 		    if (count($nots) || is_array($emails)) {
 			    include_once("lib/notifications/notificationemaillib.php");
 	
@@ -259,6 +279,7 @@ class ArtLib extends TikiLib {
 				// Clear article image cache because image may just have been changed
 				$this->delete_image_cache("article",$articleId);
 			
+			$event = 'article_edited';
 			$nots = $tikilib->get_event_watches('article_edited', '*');
 			$nots2 = $tikilib->get_event_watches('topic_article_edited', $topicId);
 			$smarty->assign('mail_action', 'Edit');
@@ -285,6 +306,7 @@ class ArtLib extends TikiLib {
 		    }		    
 		    // workaround to "pass" $topicId to get_event_watches
 			$GLOBALS["topicId"] = $topicId;
+			$event = 'article_submitted';
 			$nots = $tikilib->get_event_watches('article_submitted', '*');
 			$nots2 = $tikilib->get_event_watches('topic_article_created', $topicId);
 			$smarty->assign('mail_action', 'New');
@@ -307,6 +329,27 @@ class ArtLib extends TikiLib {
 	    if (!isset($_SERVER["SERVER_NAME"])) {
 		    $_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
 	    }
+	    
+  		include_once ('lib/reports.php');
+	    
+	    global $prefs;
+		//Reports added by Clemens John <clemens-john@gmx.de> May 19th 2009
+		//Pr�fen ob Reports versendet werden d�rfen
+		if ($prefs['feature_user_watches'] == 'y' && $prefs['feature_daily_report_watches'] == 'y') {
+			//Benutzer die Reports eingeschaltet haben holen
+			$report_users = $reports->getUsersForReport();
+			
+			//Benutzer die Reports eingeschaltet haben in das Report-Array verschieben.
+			foreach ($nots as $key=>$not) {
+				if (in_array($not['user'], $report_users)) {
+					$report_nots[] = $not['user'];
+					unset($nots[$key]);
+				}
+			}
+			//Daten in den Reportcache schaufeln
+			$reports->add_report_chache_entries($report_nots, $event, array("articleId"=>$articleId, "articleTitle"=>$title, "authorName"=>$authorName, "user"=>$user));
+		}
+	    
 	    if (count($nots) || is_array($emails)) {
 		    include_once("lib/notifications/notificationemaillib.php");
 

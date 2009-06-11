@@ -1489,6 +1489,13 @@ class CategLib extends ObjectLib {
 	function update_object_categories($categories, $objId, $objType, $desc='', $name='', $href='') {
 		global $prefs, $user;
 		$old_categories = $this->get_object_categories($objType, $objId);
+		
+		//Dirty hack to remove the Slash at the end of the ID (Why is there a slash?! Bug is reportet.)
+		foreach($categories as $key=>$category) {
+			if($category{strlen($category)-1}=="/")
+				$categories[$key]=substr($category, 0, -1);
+		}
+		
 		// need to prevent categories where user has no perm (but is set by other users with perm) to be wiped out
 		if ($prefs['feature_category_reinforce'] == "n") {
 			foreach ($old_categories as $old_cat) {

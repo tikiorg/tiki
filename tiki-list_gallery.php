@@ -140,7 +140,7 @@ if (isset($_REQUEST["remove"])) {
   $area = 'delgallery';
   if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
-		$imagegallib->remove_image($_REQUEST["remove"]);
+		$imagegallib->remove_image($_REQUEST["remove"], $user);
   } else {
     key_get($area);
   }

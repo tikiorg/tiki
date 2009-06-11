@@ -1,6 +1,44 @@
 {* $Id$ *}
 
-{title help="User+Watches"}{tr}User Watches{/tr}{/title}
+{title help="User+Watches"}{tr}User Watches and preferences{/tr}{/title}
+
+<h2>Report Preferences</h2>
+{if $prefs.feature_daily_report_watches eq 'y'}
+
+{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use "reports" to summarise notifications about objects you are watching.{/tr}{/remarksbox}
+
+<form action="tiki-user_reports.php" method="post" id='formi'>
+	<input type="hidden" name="report_preferences" value="true"/>
+	<p><input type="checkbox" name="use_daily_reports" value="true" {if $report_preferences != false}checked{/if}/> Use reports</p>
+
+	<p>
+	Interval in witch you want to get the reports
+	<select name="interval">
+			<option value="daily" {if $report_preferences.interval eq "daily"}selected{/if}>{tr}daily{/tr}</option>
+			<option value="weekly" {if $report_preferences.interval eq "weekly"}selected{/if}>{tr}weekly{/tr}</option>
+			<option value="monthly" {if $report_preferences.interval eq "monthly"}selected{/if}>{tr}monthly{/tr}</option>
+	</select>
+	</p>
+	
+	<div style="float:left; margin-right: 50px;">
+	    <input type="radio" name="view" value="short" {if $report_preferences.view eq "short"}checked{/if}> Short report<br>
+    	<input type="radio" name="view" value="detailed" {if $report_preferences.view eq "detailed" OR $report_preferences eq false}checked{/if}> Detailed report<br>
+	</div>
+	<div style="float:left; margin-right: 50px;">
+	    <input type="radio" name="type" value="html" {if $report_preferences.type eq "html" OR $report_preferences eq false}checked{/if}> HTML-Email<br>
+    	<input type="radio" name="type" value="plain" {if $report_preferences.type eq "plain"}checked{/if}> Plain text<br>
+    </div>
+	<div>
+		<input type="checkbox" name="always_email" value="1" {if $report_preferences.always_email eq 1 OR $report_preferences eq false}checked{/if}/> Send me an email also if nothing happened
+	</div>
+	
+	<p><input type="submit" name="submit" value=" {tr}Apply{/tr} "></p>
+</form>
+{else}
+<p>Reports are disabled, only standard reporting is available</p>
+{/if}
+
+<h2>Sites you are watching</h2>
 
 {if $prefs.feature_ajax ne 'y' && $prefs.feature_mootools ne 'y'}
   {include file=tiki-mytiki_bar.tpl}
