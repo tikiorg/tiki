@@ -69,18 +69,29 @@ if (!empty($_REQUEST['fileId'])) {
 	}
 }
 
-if (isset($_REQUEST['galleryId'][0])) {
-	$gal_info = $tikilib->get_file_gallery((int)$_REQUEST['galleryId'][0]);
-	$tikilib->get_perm_object($_REQUEST['galleryId'][0], 'file gallery', $gal_info, true);
+function check_for_upload_permission_in($galleryId) {
+	global $tikilib, $tiki_p_upload_files, $tiki_p_admin_file_galleries, $smarty;
+	$gal_info = $tikilib->get_file_gallery($galleryId);
+	$tikilib->get_perm_object($galleryId, 'file gallery', $gal_info, true);
+	if ($tiki_p_upload_files != 'y' && $tiki_p_admin_file_galleries != 'y') {
+		$smarty->assign('errortype', 401);
+		$smarty->assign('msg', tra("Permission denied"));
+		$smarty->display('error.tpl');
+		die;
+	}
 }
 
-if (empty($_REQUEST['fileId']) && $tiki_p_upload_files != 'y' && $tiki_p_admin_file_galleries != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied"));
-	$smarty->display('error.tpl');
-	die;
+if(empty($_REQUEST['fileId'])) {
+	if(is_array($_REQUEST['galleryId'])) {
+		foreach($_REQUEST['galleryId'] as $galleryId) {
+			check_for_upload_permission_in($galleryId);
+		}
+	}
+	else if(isset($_REQUEST['galleryId'])) {
+		check_for_upload_permission_in($_REQUEST['galleryId']);
+	}
 }
-if (!empty($_REQUEST['fileId'])) {
+else {
 	if (!empty($fileInfo['lockedby']) && $fileInfo['lockedby'] != $user && $tiki_p_admin_file_galleries != 'y') { // if locked must be the locker
 		$smarty->assign('msg', tra(sprintf('The file is locked by %s', $fileInfo['lockedby'])));
 		$smarty->display('error.tpl');
