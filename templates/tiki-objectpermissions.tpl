@@ -4,6 +4,7 @@
 
 <div class="navbar">
   {button href="$referer" _text="{tr}Back{/tr}"}
+  {button href="tiki-list_object_permissions.php" _text="{tr}Object Permissions List{/tr}"}
 </div>
 
 {tabset name='tabs_objectpermissions'}

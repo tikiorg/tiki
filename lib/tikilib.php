@@ -4341,13 +4341,15 @@ class TikiLib extends TikiDB {
 
 	/* this function will change if we got a table categ<->perm
 	 */
-	function get_perm_from_categPerms($categPerms, $objectType) {
+	function get_perm_from_categPerms($categPerms, $objectType, $global=true) {
 		global $userlib;
 		$ret = array();
-		$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', $this->get_permGroup_from_objectType($objectType));
-		foreach ($perms['data'] as $perm) {
-			global $$perm['permName'];
-			$ret[$perm['permName']] = $$perm['permName'];
+		$perms = $userlib->get_permissions(0, -1, 'permName_asc', '', $this->get_permGroup_from_objectType($objectType));
+		if ($global) {
+			foreach ($perms['data'] as $perm) {
+				global $$perm['permName'];
+				$ret[$perm['permName']] = $$perm['permName'];
+			}
 		}
 		if (empty($categPerms['tiki_p_view_categorized'])) {
 			$categPerms['tiki_p_view_categorized'] = 'n';
