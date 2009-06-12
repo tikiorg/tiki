@@ -18,6 +18,8 @@
 
 <br /><br />
 
+{cycle name="class" values="odd,even" print=false}
+{*
 <table class="normal">
   <tr>
     <th>&nbsp;</th>
@@ -27,7 +29,6 @@
     <th>{tr}Action{/tr}</th>
   </tr>
 
-{cycle values="odd,even" print=false}
 {section name=tag loop=$quicktags}
   <tr>
     <td class="{cycle advance=false}">{icon _id=$quicktags[tag].tagicon}</td>
@@ -49,5 +50,14 @@
   </tr>
 {/section}
 </table>
+*}
+
+{table from=$quicktags _template='tiki-admin_quicktags_content.tpl' _htmlelement='quicktags-content' _sort_arg='sort_mode' cycle="class"}
+{col title="{tr}Label{/tr}"  name='taglabel' sort=y type="link" href="tiki-admin_quicktags.php?tagId=%tagId%&amp;cookietab=2"}Label : %taglabel%{/col}
+{col title="{tr}Insert{/tr}"  name='taginsert' sort=y}{/col}
+{col title="{tr}Icon{/tr}"  name='tagicon' type="icon"}{/col}
+{col title="{tr}Category{/tr}"  name='tagcategory' sort=y}{/col}
+{/table}
+
 
 {pagination_links cant=$cant step=$prefs.maxRecords offset=$offset template='tiki-admin_quicktags_content.tpl' htmlelement='quicktags-content'}{/pagination_links}
