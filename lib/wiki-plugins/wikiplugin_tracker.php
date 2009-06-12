@@ -730,8 +730,8 @@ function wikiplugin_tracker($data, $params) {
 						$flds['data'][$i]['value'] = $trklib->get_join_values($itemId, array_merge(array($f['options_array'][2]), array($f['options_array'][1]), array($finalFields[0])), $f['options_array'][0], $finalFields);
 					} elseif ($f['type'] == 'w') {
 						$refFieldId = $f['options_array'][2];
-						foreach ($flds['data'] as $i=>$f) {
-							if ($f['fieldId'] == $refFieldId) {
+						foreach ($flds['data'] as $i=>$ff) {
+							if ($ff['fieldId'] == $refFieldId) {
 								$refFieldId = $i;
 							}
 						}
