@@ -26,9 +26,7 @@ define( 'LICENSE_FILENAME', 'license.txt' );
 define( 'ERROR_REPORTING_LEVEL', E_ALL | E_STRICT );
 error_reporting( ERROR_REPORTING_LEVEL );
 
-// Exclude some third party libs when displaying warnings from the PHP syntax check, because we can't fix it directly by the way.
-define( 'PHP_WARNINGS_EXLUDE_PATTERN', '#lib/(pear|ajax|adodb)#' );
-
+require_once ROOT . '/lib/setup/third_party.php';
 require_once TOOLS . '/svntools.php';
 
 if ( version_compare(PHP_VERSION, '5.0.0', '<') )
@@ -363,8 +361,9 @@ function check_php_syntax(&$dir, &$error_msg, $hide_php_warnings, $retry = 10) {
 			$fullOutput = trim($fullOutput);
 			$error_msg = ( $fullOutput == '' ) ? "\nPHP Parsing error in '{$entries[$i]}' ($return_var)\n" : "\n$fullOutput";
 			return false;
-		} elseif ( ! $hide_php_warnings && ( $nb_lines = count($output) ) > 1 && ! preg_match(PHP_WARNINGS_EXLUDE_PATTERN, $entries[$i]) ) {
+		} elseif ( ! $hide_php_warnings && ( $nb_lines = count($output) ) > 1 && ! preg_match(THIRD_PARTY_LIBS_PATTERN, $entries[$i]) ) {
 			// Handle PHP warnings / notices (this just displays a yellow warning, it doesn't return false or an error_msg)
+			// and exclude some third party libs when displaying warnings from the PHP syntax check, because we can't fix it directly by the way.
 			echo "\r";
 			foreach ( $output as $k => $line ) {
 				// Remove empty lines and last line (because in case of a simple warning, the last line simply says 'No syntax errors...')

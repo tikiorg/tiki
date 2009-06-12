@@ -10,15 +10,10 @@
 if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== FALSE) {
   header('location: index.php');
   exit;
-	die();
 }
 
-// add a line like the following in db/local.php to use an external smarty installation: $smarty_path='/usr/share/php/smarty/'
-define('TIKI_SMARTY_DIR', 'lib/smarty_tiki/');
-if ( isset($smarty_path) && $smarty_path != '' && file_exists($smarty_path.'Smarty.class.php') ) define('SMARTY_DIR', $smarty_path);
-else define('SMARTY_DIR', 'lib/smarty/libs/');
-
-require_once(SMARTY_DIR.'Smarty.class.php');
+require_once 'lib/setup/third_party.php';
+require_once SMARTY_DIR.'Smarty.class.php';
 
 class Smarty_Tikiwiki extends Smarty {
 	
@@ -238,7 +233,6 @@ class Smarty_Tikiwiki extends Smarty {
 
 $smarty = new Smarty_Tikiwiki($tikidomain);
 $smarty->load_filter('pre', 'tr');
-// $smarty->load_filter('output','trimwhitespace');
+
 include_once('lib/smarty_tiki/resource.wiki.php');
 $smarty->register_resource('wiki', array('smarty_resource_wiki_source', 'smarty_resource_wiki_timestamp', 'smarty_resource_wiki_secure', 'smarty_resource_wiki_trusted'));
-?>
