@@ -386,13 +386,14 @@ div#sitead {margin: auto}
 	
 .nohighlight {}
 
-#sitesearchbar .findtable {
-	position: relative !important; /* IE6 craches with this ! :( */
+/*
+#sitesearchbar .nohighlight {
+	position: relative !important;
 }
+*/
 
-/* The two lines below are a hack for IE6 */
-* html #sitesearchbar .findtable {
-	position: fixed;
+* html #sitesearchbar .nohighlight {
+/*	position: fixed;*/
 	margin-top: -18px;
 }
 
