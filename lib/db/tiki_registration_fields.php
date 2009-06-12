@@ -12,28 +12,15 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 	exit;
 }
 
-class TikiRegistrationFields extends TikiDBTable {
-    var $id=null;
-    var $name=null;
-    var $value=null;
-    var $module=null;
-    var $meta=null;
-    
+class TikiRegistrationFields extends TikiLib {
     function TikiRegistrationFields() {
-        global $tikilib;
-        $this->TikiDBTable('tiki_registration_fields', 'id', $tikilib);
-    }
-
-    function getVisibleFields() {
-        $this->setQuery('SELECT `id`, `field` as `prefName`, `name` as `label`, `type`, `show`, `size` FROM '.$this->_tbl.' WHERE `show`=1;');
-        return $this->loadObjectList();
     }
 
     function getVisibleFields2($user=false) {
         global $tikilib;
 
-        $this->setQuery('SELECT `id`, `field` as `prefName`, `name` as `label`, `type`, `show`, `size` FROM '.$this->_tbl.' WHERE `show`="1";');
-        $result = $this->query();
+		$query = 'SELECT `id`, `field` as `prefName`, `name` as `label`, `type`, `show`, `size` FROM `tiki_registration_fields` WHERE `show`=?';
+        $result = $tikilib->query($query, array(1));
 
         $ret = array();
 
@@ -48,8 +35,8 @@ class TikiRegistrationFields extends TikiDBTable {
 
     function getHiddenFields() {
         global $tikilib;
-        $this->setQuery('SELECT `field` FROM '.$this->_tbl.' WHERE `show`="0";');
-        $result = $this->query();
+		$query = 'SELECT `field` FROM `tiki_registration_fields` WHERE `show`=?';
+		$result = $tikilib->query($query, array(0));
 
         $ret = array();
 
