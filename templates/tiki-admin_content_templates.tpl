@@ -1,6 +1,6 @@
 {title help="Content+Templates"}{tr}Admin templates{/tr}{/title}
 
-{remarksbox type="tip" title="Tip"}Use the Administration page of each enabled feature to allow the use of content templates.{/remarksbox}
+{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use the Administration page of each enabled feature to allow the use of content templates.{/tr}{/remarksbox}
 
 {if $preview eq 'y'}
 	<h2>{tr}Preview{/tr}</h2>
