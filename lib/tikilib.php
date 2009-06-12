@@ -5490,8 +5490,11 @@ class TikiLib extends TikiDB {
 
 							// We store CODE stuff out of the way too, but then process it as a plugin as well.
 							if( preg_match( '/^ *\{CODE\(/', $plugin_start ) ) {
-								$ret = wikiplugin_code($plugin_data, $arguments);
-	
+								$ret = wikiplugin_code(
+									$options['is_html'] ? $plugin_data : TikiLib::htmldecode($plugin_data),
+									$arguments
+								);
+
 								// Pull the np out.
 								preg_match( "/~np~(.*)~\/np~/s", $ret, $stuff );
 	
