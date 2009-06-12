@@ -960,7 +960,6 @@ div.description {display: block}
 	float: right;
 	font-size: small}
 
-.categpath {display: block}
 .wikiactions {white-space: nowrap !important}
 
 .wikiactions .icons,
@@ -1568,9 +1567,12 @@ div.multiselect div.selection:hover {border: 1px solid #80B1E2}
 
 	
 /***** Categories, Tags *****/
+.treetitle {}
+.treenode {}
+span.categpath {display: block}
+a.categpath {display: inline}
 table.tcategpath {}
 td.tdcategpath {}
-.categpath {}
 table.subcats {}
 td.tdsubcat {}
 .categlink {}
