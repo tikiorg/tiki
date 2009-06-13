@@ -25,7 +25,10 @@
  {if $module_params.nonums != 'y'}</ol>{else}</ul>{/if}
 {if $module_params.more eq 'y'}
 	<div class="more">
-		<span class="button2"><a href="tiki-directory_browse.php{if $module_params.categoryId}?parent={$module_params.categoryId}{/if}">{tr}More...{/tr}</a></span>
+		{if $module_params.categoryId}
+			{assign var='thisparent' value='?parent='|cat:$module_params.categoryId}
+		{/if}
+		{button href="tiki-directory_browse.php$thisparent" _text="{tr}More...{/tr}"}
 	</div>
 {/if}
 {/tikimodule}
