@@ -120,18 +120,36 @@ function smarty_function_query($params, &$smarty) {
   if ( is_array($params) && isset($params['_type']) ) {
     global $base_host;
 
+		// Check for anchor used as script
+	if ( !empty($params['_script'][0]) && $params['_script'][0] == '#' ) {
+			if ( empty($params['_anchor']) ) {
+				$params['_anchor'] = $params['_script'];
+			}
+			unset($params['_script']);
+		}
+
     // If specified, use _script argument to determine the php script to link to
     // ... else, use PHP_SELF server var
     if ( isset($params['_script']) && $params['_script'] != '' ) {
       $php_self = $params['_script'];
 
-      // If _script is not an anchor, does not already specifies the directory and if there is one in PHP_SELF server var, use it
-      if ( $php_self[0] != '#' && $php_self != 'javascript:void(0)' && strpos($php_self, '/') === false && $_SERVER['PHP_SELF'][0] == '/' ) {
+      // If _script does not already specifies the directory and if there is one in PHP_SELF server var, use it
+      if ( $php_self != 'javascript:void(0)' && strpos($php_self, '/') === false && $_SERVER['PHP_SELF'][0] == '/' ) {
         $php_self = dirname($_SERVER['PHP_SELF']).'/'.$php_self;
       }
 
-    } else {
+    } elseif ( empty($params['_anchor']) ) {
+
+      // Use current script explicitely, except if there is an anchor which is enough
+      // This also implies that if no anchor, every current URL params will be loosed
+      //
       $php_self = $_SERVER['PHP_SELF'];
+
+    } else {
+
+      // If we just have an anchor, return only this anchor, usual types other than 'anchor' are irrelevant
+      $params['_type'] = 'anchor';
+
     }
 
     switch ( $params['_type'] ) {
@@ -144,9 +162,12 @@ function smarty_function_query($params, &$smarty) {
       case 'relative':
 	$ret = basename($php_self).( $ret == '' ? '' : '?'.$ret );
         break;
-      case 'form_input': case 'arguments': /* default */
+      case 'form_input': case 'arguments': case 'anchor': /* default */
     }
   }
+
+  if ( isset($params['_anchor']) )
+    $ret .= '#' . $params['_anchor'];
 
   return $ret;
 }
