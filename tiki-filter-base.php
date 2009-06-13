@@ -57,11 +57,13 @@ $_SERVER['PHP_SELF'] = str_replace($unallowed_uri_chars, $unallowed_uri_chars_en
 $tikiroot = dirname($_SERVER['PHP_SELF']);
 $tikipath = str_replace('\\','/',dirname($tiki_script_filename));
 $tikipath = dirname($tiki_script_filename);
+$tikiroot_relative = '';
 
 if ($dir_level > 0) {
 	$tikiroot = preg_replace('#(/[^/]+){'.$dir_level.'}$#','',$tikiroot);
 	$tikipath = preg_replace('#(/[^/]+){'.$dir_level.'}$#','',$tikipath);
 	chdir(join('../',array_fill(0,$dir_level+1,'')));
+	$tikiroot_relative = join('../',array_fill(0,$dir_level+1,''));
 }
 
 if ( substr($tikiroot,-1,1) != '/' ) $tikiroot .= '/';
