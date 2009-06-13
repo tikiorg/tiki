@@ -755,13 +755,15 @@ if (isset($_GET['slideshow'])) {
 	// commented out for release 3.0 as it's not ready yet - TODO for 3.1 or 4
 	//	$smarty->display('tiki-file_gallery_slideshow.tpl');
 	//}
-  die();
-} else {
-	// Get list of files in the gallery
-	$files = $tikilib->get_files($_REQUEST['offset'], $_REQUEST['maxRecords'], $_REQUEST['sort_mode'], $_REQUEST['find'], $_REQUEST['galleryId'], true, true);
-	$smarty->assign_by_ref('files', $files['data']);
-	$smarty->assign('cant', $files['cant']);
-	$smarty->assign('mid','tiki-list_file_gallery.tpl');
+	die();
+}else {
+	if ( ! isset($_REQUEST["edit_mode"]) && ! isset($_REQUEST["edit"]) ){
+        	// Get list of files in the gallery
+                $files = $tikilib->get_files($_REQUEST['offset'], $_REQUEST['maxRecords'], $_REQUEST['sort_mode'], $_REQUEST['find'], $_REQUEST['galleryId'], true, true);
+                $smarty->assign_by_ref('files', $files['data']);
+                $smarty->assign('cant', $files['cant']);
+        }
+        $smarty->assign('mid','tiki-list_file_gallery.tpl');
 }
 
 // Browse view
