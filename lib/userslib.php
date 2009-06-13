@@ -1044,7 +1044,7 @@ function get_included_groups($group, $recur=true) {
 			}
 		}
 		$back = array_unique($ret);
-		if (!$recur) {
+		if ($recur) {
 			$this->groupinclude_cache[$engroup] = $back;
 		}
 		return $back;
