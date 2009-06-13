@@ -87,7 +87,7 @@ else {
 			$tree_nodes[] = array(
 				'id' => $c['categId'],
 				'parent' => $c['parentId'],
-				'data' => '<span class="tips" title="'.$c['description'].'"><input type=checkbox name="cat_categories[]" value=' . $c['categId'] . ($c['incat'] == 'y' ? ' checked=checked' : '') . '/> ' . $c['name'] . '</span>'
+				'data' => '<span class="tips" title="'.$c['description'].'"><input type="checkbox" name="cat_categories[]" value="' . $c['categId'] . ($c['incat'] == 'y' ? '" checked="checked"' : '" ') . '/> ' . $c['name'] . '</span>'
 			);
 			if ($c['parentId'] == 0) {
 				$tree_nodes[count($tree_nodes) - 1]['data'] = '<strong>'.$tree_nodes[count($tree_nodes) - 1]['data'].'</strong>';
