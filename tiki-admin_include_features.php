@@ -107,7 +107,6 @@ if (isset($_REQUEST["features"])) {
 		"use_minified_scripts",
 		"feature_print_indexed",
 		"feature_floating_help",
-		'debug_ignore_xdebug',
 	);
 
 	$pref_byref_values = array(
