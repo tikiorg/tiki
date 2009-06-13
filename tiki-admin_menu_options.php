@@ -26,7 +26,7 @@ if (!isset($_REQUEST["menuId"])) {
 	die;
 }
 
-$auto_query_args = array('offset', 'find', 'sort_mode', 'menuId');
+$auto_query_args = array('offset', 'find', 'sort_mode', 'menuId', 'maxRecords');
 
 if (!empty($_REQUEST['import']) && !empty($_FILES['csvfile']['tmp_name'])) {
 	$menulib->import_menu_options();
