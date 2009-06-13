@@ -54,13 +54,10 @@ input#search {
 /* Links in buttons */
 span.button a,
 span.button a:visited,
-span.button2 a,
-span.button2 a:visited,
 button,
 input[type=reset],
 input[type=submit],
 span.button input,
-.submitbutton,
 .calbuttonBox {
 	color: #fff;
 	background: #565656;
@@ -68,24 +65,20 @@ span.button input,
 }
 
 .button a:hover,
-.button2 a:hover,
 button:hover,
 input[type=reset]:hover,
 input[type=submit]:hover,
 .button input:hover,
-.submitbutton:hover,
 .calbuttonBox:hover {
 	background-color: #333333;
 	color: #fff;
 }
 
 .button a:active,	
-.button2 a:active,	
 button:active,
 input[type=reset]:active,
 input[type=submit]:active,
 .button input:active,
-.submitbutton:active,
 span.highlight a:link,
 span.highlight a:visited {
 	border-color: #223845 #41cbe7 #41cbe7 #223845;
