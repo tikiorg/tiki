@@ -109,26 +109,19 @@ function smarty_function_button($params, &$smarty) {
 		}
 
 		$html = smarty_block_self_link(
-				$params,
-				$params['_text'],
-				$smarty,
-				false
-				);
-		if (is_array($auto_query_args)) {
-			foreach ($auto_query_args as $arg) {
-				if (isset($_REQUEST[$arg])) {
-					$params[$arg] = $_REQUEST[$arg];
-				}
-			}
-		}
+			$params,
+			$params['_text'],
+			$smarty,
+			false
+		);
 	} else {
 		$params['_disabled'] = 'y';
 		$html = smarty_block_self_link(
-				$params,
-				$params['_text'],
-				$smarty,
-				false
-				);
+			$params,
+			$params['_text'],
+			$smarty,
+			false
+		);
 	}
 
 	$auto_query_args = $auto_query_args_orig;
