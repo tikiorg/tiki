@@ -673,7 +673,7 @@ CREATE TABLE "tiki_calendar_items" (
   "locationId" numeric(14,0) default NULL NULL,
   "categoryId" numeric(14,0) default NULL NULL,
   "nlId" numeric(12,0) default '0' NOT NULL,
-  "priority" varchar(3) default '1' NOT NULL CHECK ("priority" IN ('1','2','3','4','5','6','7','8','9')),
+  "priority" varchar(4) default '0' CHECK ("priority" IN ('0', '1','2','3','4','5','6','7','8','9')),
   "status" varchar(3) default '0' NOT NULL CHECK ("status" IN ('0','1','2')),
   "url" varchar(255) default NULL NULL,
   "lang" char(16) default 'en' NOT NULL,

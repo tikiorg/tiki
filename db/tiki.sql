@@ -468,7 +468,7 @@ CREATE TABLE tiki_calendar_items (
   locationId int(14) default NULL,
   categoryId int(14) default NULL,
   nlId int(12) NOT NULL default '0',
-  priority enum('1','2','3','4','5','6','7','8','9') NOT NULL default '1',
+  priority enum('0', '1','2','3','4','5','6','7','8','9') default '0',
   status enum('0','1','2') NOT NULL default '0',
   url varchar(255) default NULL,
   lang char(16) NOT NULL default 'en',
