@@ -1717,6 +1717,9 @@ class TrackerLib extends TikiLib {
 			foreach ( $need_reindex as $id ) refresh_index('tracker_items', $id);
 			unset($need_reindex);
 		}
+		$cant_items = $this->getOne("select count(*) from `tiki_tracker_items` where `trackerId`=?",array((int) $trackerId));
+		$query = "update `tiki_trackers` set `items`=?,`lastModif`=?  where `trackerId`=?";
+		$result = $this->query($query,array((int)$cant_items,(int) $this->now,(int) $trackerId));
 		return $total;
 	}
 
