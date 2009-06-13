@@ -15,16 +15,7 @@
 {if $shownbitems eq 'y'}<div class="nbitems">{tr}Items found:{/tr} {$count_item}</div>{/if}
 
 {if $cant_pages > 1 or $tr_initial or $showinitials eq 'y'}
-<div align="center">
-{section name=ini loop=$initials}
-{if $tr_initial and $initials[ini] eq $tr_initial}
-<span class="button2">{$initials[ini]|capitalize}</span> . 
-{else}
-{self_link _class="prevnext" tr_initial=$intials[ini]}{$initials[ini]}{/self_link}
-{/if}
-{/section}
-{self_link _class="prevnext" tr_initial=''}{tr}All{/tr}{/self_link}
-</div>
+	{initials_filter_links _initial='tr_initial'}
 {/if}
 
 {if $checkbox && $items|@count gt 0}<form method="post" action="{$checkbox.action}">{/if}
