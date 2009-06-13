@@ -119,12 +119,12 @@ class TikiAccessLib extends TikiLib {
 
 	// you must call ask_ticket('error') before calling this
 	function display_error($page, $errortitle="", $errortype="", $enableRedirect = true) {
-		global $smarty, $wikilib, $prefs;
+		global $smarty, $wikilib, $prefs, $tikiroot, $userlib, $user;
 		require_once ('tiki-setup.php');
 		include_once('lib/wiki/wikilib.php');
 
 		// Don't redirect when calls are made for web services
-		if ( $enableRedirect && $prefs['feature_redirect_on_error'] == 'y' && ! $this->is_machine_request() && ! $this->is_xajax_request() ) {
+		if ( $enableRedirect && $prefs['feature_redirect_on_error'] == 'y' && ! $this->is_machine_request() && ! $this->is_xajax_request() && $tikiroot.$prefs['tikiIndex'] != $_SERVER['PHP_SELF'] && $page != $userlib->get_user_default_homepage2($user) ) {
 			$this->redirect($prefs['tikiIndex']);
 		}
 
