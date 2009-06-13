@@ -7,6 +7,7 @@
 			<div class="heading input_submit_container" style="text-align: right">
         {if $prefs.feature_tabs eq 'y'}
           {tr}No tabs{/tr}
+          <input type="hidden" name="feature_tabs" value="active" />
           <input type="checkbox" name="tabs"{if $tabs eq 'n'} checked="checked"{/if} onclick="document.features.submit();"/>
         {/if}  
 				<input type="submit" name="features" value="{tr}Apply{/tr}" />
