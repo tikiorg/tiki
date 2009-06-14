@@ -28,6 +28,13 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 	} else {
 		$info = $tikilib->get_user_module($mod_reference['name']);
 		if (!empty($info)) {
+			// test if we have a menu
+			if (strpos($info['data'],'{menu ') === 0 
+					and strpos($info['data'],"css=y")) {
+				$smarty->assign('module_type','cssmenu');
+			} else {
+				$smarty->assign('module_type','module');
+			}
 			$smarty->assign('user_title', tra($info['title']));
 			if (isset($info['parse']) && $info['parse'] == 'y')
 				$info['data'] = $tikilib->parse_data($info['data']);
