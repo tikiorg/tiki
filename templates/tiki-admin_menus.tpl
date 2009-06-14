@@ -110,7 +110,7 @@
  			<li>{literal}{menu id=X css=y type=horiz}{/literal}</li>
 		</ul>
 	{/if}
-	{tr}To customizing the menu's css id (#id):{/tr} {literal}{menu id=X css_id=custom_name}{/literal}
+	{tr}To customize the menu's CSS id (#):{/tr} {literal}{menu id=X css_id=custom_name}{/literal}
 {/remarksbox}
 
 </form>
