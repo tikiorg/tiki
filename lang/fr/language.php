@@ -1371,6 +1371,7 @@ $lang=Array(
 "Edit this Featured Link" => "Modifier ce lien vedette",
 "To use <a target=\"tikihelp\" href=\"http://phplayersmenu.sourceforge.net/\">phplayersmenu</a>, you can use one of the three following syntaxes" => "Pour utiliser <a target=\"tikihelp\" href=\"http://phplayersmenu.sourceforge.net/\">phplayersmenu</a>, vous pouvez utiliser l'une des trois syntaxes suivantes",
 "To customizing the menu's css id (#id)" => "Pour personnaliser l'identifiant css du menu (#id)",
+"To customize the menu's CSS id (#)" => "Pour personnaliser l'identifiant css du menu (#id)",
 "Edit this Menu" => "Modifier ce menu",
 "Edit this assigned module" => "Modifier ce module attribué",
 "Edit this user module" => "Modifier ce module utilisateur",
