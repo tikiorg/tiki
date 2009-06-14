@@ -499,7 +499,7 @@
 
 {if $tikidb_is20}
 		<span class="button"><a href="tiki-install.php?lockenter">{tr}Enter Tiki and Lock Installer{/tr} ({tr}Recommended{/tr})</a></span>
-		<span class="button"><a href="tiki-index.php">{tr}Enter Tiki Without Locking Installer{/tr}</a></span>
+		<span class="button"><a href="tiki-install.php?nolockenter">{tr}Enter Tiki Without Locking Installer{/tr}</a></span>
 {/if}
 
 </div>
