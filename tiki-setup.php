@@ -17,6 +17,7 @@ if (version_compare(PHP_VERSION, '5.0.0', '<')) {
   exit;
 }
 
+require_once 'lib/setup/third_party.php';
 require_once 'tiki-filter-base.php';
 
 // Enable Versioning
