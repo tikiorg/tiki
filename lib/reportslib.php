@@ -1,9 +1,5 @@
 <?php 
 
-include_once ('tikilib.php');
-include_once ('wiki/histlib.php');
-include_once ('imagegals/imagegallib.php');
-
 class reportsLib extends TikiLib{
 	function reportsLib($db) {
 		$this->TikiLib($db);
