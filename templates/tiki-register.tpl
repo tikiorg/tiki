@@ -147,7 +147,7 @@
 					<td class="formcolor">
 		{foreach item=gr from=$listgroups}
 			{if $gr.registrationChoice eq 'y'}
-						<div class="registergroup"><input type="radio" name="chosenGroup" id="gr_{$gr.groupName}" value="{$gr.groupName|escape}" /> <label for="gr_{$gr.groupName}">{if $gr.groupDesc}{tr}{$gr.groupDesc}{/tr}{else}{$gr.groupName}{/if}</label>{/if}</div>
+						<input type="radio" name="chosenGroup" id="gr_{$gr.groupName}" value="{$gr.groupName|escape}" /> <label for="gr_{$gr.groupName}">{if $gr.groupDesc}{tr}{$gr.groupDesc}{/tr}{else}{$gr.groupName}{/if}</label>{/if}
 		{/foreach}
 					</td>
 				</tr>
