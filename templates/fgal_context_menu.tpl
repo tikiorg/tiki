@@ -78,7 +78,7 @@
 		or (!$files[changes].lockedby and (($user and $user eq $files[changes].user) or $files[changes].perms.tiki_p_edit_gallery_file eq 'y')) }
 		{if $files[changes].archiveId == 0}
 
-			{if $files[changes].perms.tiki_p_admin_file_galleries eq 'y' or ($files[changes].lockedby and $files[changes].lockedby eq $user) or $gal_info.lockable ne 'y'}
+			{if $files[changes].perms.tiki_p_admin_file_galleries eq 'y' or !$files[changes].locked or ($files[changes].locked and $files[changes].lockedby eq $user) or $gal_info.lockable ne 'y'}
 			{if $prefs.javascript_enabled eq 'y'}
 				{* if javascript is available on client, add a menu item that will directly open a file selector, automatically upload the file after selection and that replace the current file with the uploaded one *}
 
