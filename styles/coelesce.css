@@ -384,12 +384,7 @@ div#sitead {margin: auto}
 	/*line-height: 1;
 	float: left*/}
 	
-.nohighlight {
-	position: relative !important; /* IE6 craches with this ! :( */
-	/* The two lines below are a hack for IE6 */
-	position: fixed;
-	_margin-top: -18px;
-}
+.nohighlight {position: relative}
 
 #sitesearchbar .nohighlight ul.cssmenu {
 	position: absolute;
