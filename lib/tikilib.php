@@ -6414,9 +6414,9 @@ class TikiLib extends TikiDB {
 		// Handle ~pre~...~/pre~ sections
 		$data = preg_replace(';~pre~(.*?)~/pre~;s', '<pre>$1</pre>', $data);
 
-		// Strike-deleted text --text--
+		// Strike-deleted text --text-- (but not in the context <!--[if IE]><--!>)
 		if (!$simple_wiki) {
-			$data = preg_replace("/--(.+?)--/", "<del>$1</del>", $data);
+			$data = preg_replace("/(?!\<\!)--(.+?)--(?!\>)/", "<del>$1</del>", $data);
 		}
 
 		// Handle comment sections
