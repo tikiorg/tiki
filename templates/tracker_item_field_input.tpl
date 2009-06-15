@@ -81,9 +81,7 @@
 {* -------------------- category -------------------- *}
 {elseif $field_value.type eq 'e'}
 	{if !empty($field_value.options_array[2]) && ($field_value.options_array[2] eq '1' or $field_value.options_array[2] eq 'y')}
-		<script type="text/javascript">
-		{include file='categSelectAll.tpl'}
-		</script>
+		{select_all checkbox_names=`$field_value.ins_id`[] label="{tr}Select All{/tr}"}
 	{/if}
 	{if $field_value.options_array[1] eq 'd' || $field_value.options_array[1] eq 'm'}
 		<select name="{$field_value.ins_id}[]"{if $field_value.options_array[1] eq 'm'} multiple="multiple"{/if}>

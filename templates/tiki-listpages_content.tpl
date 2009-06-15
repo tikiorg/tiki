@@ -25,9 +25,7 @@
 	<tr>
 		{if $checkboxes_on eq 'y' && count($listpages) > 0}
 			<th>
-				{if $prefs.javascript_enabled eq 'y'}
-					<input name="switcher" id="clickall" type="checkbox" title="Select All" onclick="switchCheckboxes(this.form,'checked[]',this.checked)"/>
-				{/if}
+				{select_all checkbox_names='checked[]'}
 			</th>
 			{assign var='cntcol' value='1'}
 		{else}

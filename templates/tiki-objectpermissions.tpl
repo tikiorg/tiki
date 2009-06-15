@@ -81,7 +81,12 @@
 <h2>{tr}Current permissions for this object{/tr}</h2>
 <table class="normal">
 <tr>
-	<th colspan="2">{tr}Permissions{/tr}</th>
+	<th>
+		{if $page_perms}
+			{select_all checkbox_names='checked[]'}
+		{/if}
+	</th>
+	<th>{tr}Permissions{/tr}</th>
 	<th>{tr}Groups{/tr}</th>
 	<th style="width:20px">{tr}Action{/tr}</th>
 </tr>
@@ -101,21 +106,17 @@
 {sectionelse}
 <tr><td colspan="4" class="odd">{if !empty($categ_perms)}{tr}No individual permissions, category permissions apply{/tr}{else}{tr}No individual permissions, category permissions apply{/tr}{/if}</td></tr>
 {/section}
-{if $page_perms}
-<tr>
-	<td colspan="3">
-		<input type="checkbox" id="clickall" title="{tr}Select All{/tr}" onclick="switchCheckboxes(this.form,'checked[]',this.checked)"/>&nbsp;{tr}Select All{/tr}
-	</td>
-</tr>
-{/if}
 </table>
-{if $page_perms}<div>
-{tr}Perform action with checked:{/tr} 
-<input type="image" name="delsel" src='pics/icons/cross.png' alt='{tr}Delete{/tr}' title='{tr}Delete{/tr}' />
-{if isset($inStructure)}
-{tr}and also to all pages of the sub-structure:{/tr} <input name="removestructure" type="checkbox" />
+
+{if $page_perms}
+	<div>
+		{tr}Perform action with checked:{/tr} 
+		<input type="image" name="delsel" src='pics/icons/cross.png' alt='{tr}Delete{/tr}' title='{tr}Delete{/tr}' />
+		{if isset($inStructure)}
+			{tr}and also to all pages of the sub-structure:{/tr} <input name="removestructure" type="checkbox" />
+		{/if}
+	</div>
 {/if}
-</div>{/if}
 
 <br/>
 

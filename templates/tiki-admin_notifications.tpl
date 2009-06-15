@@ -63,13 +63,9 @@
 	<table class="normal">
 		<tr>
 			<th>
-{if $channels}
-<script type="text/javascript">
-<!--//--><![CDATA[//><!--
-document.write("<input name=\"switcher\" title=\"{tr}Select All{/tr}\" id=\"clickall\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'checked[]',this.checked)\"/>");
-//--><!]]>
-</script>
-{/if}
+				{if $channels}
+					{select_all checkbox_names='checked[]'}
+				{/if}
 			</th>
 			<th>{self_link _sort_arg="sort_mode" _sort_field="event"}{tr}Event{/tr}{/self_link}</th>
 			<th>{self_link _sort_arg="sort_mode" _sort_field="object"}{tr}Object{/tr}{/self_link}</th>
@@ -80,10 +76,24 @@ document.write("<input name=\"switcher\" title=\"{tr}Select All{/tr}\" id=\"clic
 		{cycle print=false values="even,odd"}
 		{section name=user loop=$channels}
 			<tr class="{cycle}">
-				<td><input type="checkbox" name="checked[]" value="{$channels[user].watchtype}{$channels[user].watchId|escape}" {if $smarty.request.checked and in_array($channels[user].watchId,$smarty.request.checked)}checked="checked"{/if} /></td>
+				<td>
+					<input type="checkbox" name="checked[]" value="{$channels[user].watchtype}{$channels[user].watchId|escape}" {if $smarty.request.checked and in_array($channels[user].watchId,$smarty.request.checked)}checked="checked"{/if} />
+				</td>
 				<td>{$channels[user].event}</td>
-				<td>{if $channels[user].url}<a href="{$channels[user].url}" title="{$channels[user].title|escape}">{$channels[user].object|escape}</a>{else}{$channels[user].object|escape}{/if}</td>
-				<td>{if $channels[user].watchtype eq 'user'}{$channels[user].email}{else}<em>{tr}Multiple{/tr}</em>{/if}</td>
+				<td>
+					{if $channels[user].url}
+						<a href="{$channels[user].url}" title="{$channels[user].title|escape}">{$channels[user].object|escape}</a>
+					{else}
+						{$channels[user].object|escape}
+					{/if}
+					</td>
+				<td>
+					{if $channels[user].watchtype eq 'user'}
+						{$channels[user].email}
+					{else}
+						<em>{tr}Multiple{/tr}</em>
+					{/if}
+				</td>
 				<td>
 					{if $channels[user].watchtype eq 'group'}
 						{icon _id='group'}

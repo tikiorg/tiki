@@ -500,11 +500,7 @@
 		<tr>
 			<th style="text-align:center">
 				{if $channels}
-					<script type="text/javascript">
-						<!--//--><![CDATA[//><!--
-						document.write('<input title="{tr}Select All{/tr}" type="checkbox" id="clickall" onclick="switchCheckboxes(this.form,\'checked[]\',this.checked)"/>');
-						//--><!]]>
-					</script>
+					{select_all checkbox_names='checked[]'}
 				{/if}
 			</th>
 			<th>

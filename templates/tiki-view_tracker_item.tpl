@@ -339,11 +339,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 
 {elseif $cur_field.type eq 'e'}
 {if !empty($cur_field.options_array[2]) && ($cur_field.options_array[2] eq '1' or $cur_field.options_array[2] eq 'y')}
-<script type="text/javascript">
-<!--//--><![CDATA[//><!--
-document.write('<div class="categSelectAll"><input type="checkbox" id="clickall" onclick="switchCheckboxes(this.form,\'ins_cat_{$cur_field.fieldId}[]\',this.checked)"/>{tr}Select All{/tr}</div>');
-//--><!]]>
-</script>
+	{select_all checkbox_names=ins_cat_`$cur_field.fieldId`[] label="{tr}Select All{/tr}"}
 {/if}
 {assign var=fca value=$cur_field.options_array[0]}
 {if $cur_field.options_array[1] eq 'm' or $cur_field.options_array[1] eq 'd'}
