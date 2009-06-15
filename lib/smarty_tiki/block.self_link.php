@@ -129,7 +129,10 @@ function smarty_block_self_link($params, $content, &$smarty, $repeat = false) {
 				}
 				if ( isset($params['_menu_icon']) ) $icon_params['_menu_icon'] = $params['_menu_icon'];
 				if ( isset($params['_icon_class']) ) $icon_params['class'] = $params['_icon_class'];
-
+				
+				if ( isset($params['_width']) ) $icon_params['width'] = $params['_width'];
+				if ( isset($params['_height']) ) $icon_params['height'] = $params['_height'];
+				
 				$content = smarty_function_icon($icon_params, $smarty);
 			}
 
