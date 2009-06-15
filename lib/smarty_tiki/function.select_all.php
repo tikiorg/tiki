@@ -11,6 +11,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *
  * params:
  *  - checkbox_names: comma separated list of the values of the 'name' HTML attribute of the checkboxes to check/uncheck
+ *	- label: text to display on the right side of the checkbox. If empty, no default text is displayed
  */
 function smarty_function_select_all($params, &$smarty) {
 	global $prefs;
@@ -21,7 +22,9 @@ function smarty_function_select_all($params, &$smarty) {
 	foreach ( $checkbox_names as $cn ) $onclick .= "switchCheckboxes(this.form,'$cn',this.checked);";
 
 	return "<div>\n"
-		.'<input name="switcher" id="clickall" type="checkbox" onclick="'.$onclick.'"/>'."\n"
-		.'<label for="clickall">'.tra('Select All')."</label>\n"
-		."</div>\n";
+		. '<input name="switcher" id="clickall" type="checkbox" onclick="' . $onclick . '"'
+		. ( empty($params['label']) ? ' title="' . tra('Select All') . '"' : '' )
+		.'/>' . "\n"
+		. ( ! empty($params['label']) ? '<label for="clickall">' . $params['label'] . "</label>\n" : '' )
+		. "</div>\n";
 }

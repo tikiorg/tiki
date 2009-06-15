@@ -141,14 +141,7 @@
 			<tr>
 				<th class="auto">
 					{if $users}
-						<script type='text/javascript'>
-							<!--
-								// check / uncheck all.
-								// in the future, we could extend this to happen serverside as well for the convenience of people w/o javascript.
-								// for now those people just have to check every single box
-								document.write("<input name=\"switcher\" title=\"{tr}Select All{/tr}\" id=\"clickall\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'checked[]',this.checked)\"/>");
-								//--> 
-						</script>
+					   {select_all checkbox_names='checked[]'}
 					{/if}
 				</th>
 				<th>{self_link _sort_arg='sort_mode' _sort_field='login'}{tr}User{/tr}{/self_link}</th>
