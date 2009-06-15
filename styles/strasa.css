@@ -227,6 +227,7 @@ ul.jumplinks a:active {
 	width: 6em;
 	z-index: 9}
 
+.fullscreenbutton,
 #fullscreenbutton {
 	position: absolute;
 	top: 2px;
@@ -234,6 +235,7 @@ ul.jumplinks a:active {
 	z-index: 10;
 	font-size: 80%}
 	
+.fullscreenbutton:hover,
 #fullscreenbutton:hover {color: #000000}
 
 /* appears on print page */
@@ -2712,6 +2714,7 @@ div.messureadbody {
 /***** Ajax *****/
 
 div#ajaxLoading {
+	z-index: 10000;
 	display: none;
 	position: absolute;
 	top: 50px;

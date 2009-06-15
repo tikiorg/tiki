@@ -14,8 +14,10 @@
 {if $prefs.feature_community_mouseover eq 'y'}		{popup_init src="lib/overlib.js"}{/if}
 
 {if $prefs.feature_fullscreen eq 'y' and $filegals_manager eq '' and $print_page ne 'y'}
-	{if $smarty.session.fullscreen eq 'y'}	<a href="{$smarty.server.SCRIPT_NAME}{if $fsquery}?{$fsquery|escape}&amp;{else}?{/if}fullscreen=n" class="menulink" id="fullscreenbutton">{icon _id=application_put alt="{tr}Cancel Fullscreen{/tr}"}</a>
-	{else}	<a href="{$smarty.server.SCRIPT_NAME}{if $fsquery}?{$fsquery}&amp;{else}?{/if}fullscreen=y" class="menulink" id="fullscreenbutton">{icon _id=application_get alt="{tr}Fullscreen{/tr}"}</a>
+	{if $smarty.session.fullscreen eq 'n'}
+		{self_link fullscreen="y" _class="fullscreenbutton" _ajax='n' _icon=application_get _title="{tr}Fullscreen{/tr}"}{/self_link}
+	{else}
+		{self_link fullscreen="n" _class="fullscreenbutton" _ajax='n' _icon=application_put _title="{tr}Cancel Fullscreen{/tr}"}{/self_link}
 	{/if}
 {/if}
 
@@ -42,7 +44,7 @@
 {include file="tiki-admin_bar.tpl"}
 
 			{if $prefs.feature_layoutshadows eq 'y'}<div id="middle-shadow">{$prefs.middle_shadow_start}{/if}<div class="clearfix" id="middle">
-				<div class="clearfix {if $prefs.feature_fullscreen != 'n' and $smarty.session.fullscreen != 'n'}fullscreen{/if}{if $prefs.feature_fullscreen != 'y' and $smarty.session.fullscreen !='n'}nofullscreen{/if}" id="c1c2">
+				<div class="clearfix {if $prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}nofullscreen{else}fullscreen{/if}" id="c1c2">
 					<div class="clearfix" id="wrapper">
 						<div id="col1" class="{if $prefs.feature_left_column ne 'n' && $left_modules|@count > 0 && $show_columns.left_modules ne 'n'}marginleft{/if}{if $prefs.feature_right_column ne 'n' && $right_modules|@count > 0 && $show_columns.right_modules ne 'n'} marginright{/if}"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
 

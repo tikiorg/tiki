@@ -410,6 +410,7 @@ ul.jumplinks a:active {
 	width: 6em;
 	z-index: 9}
 
+.fullscreenbutton, 
 #fullscreenbutton {
 	position: absolute;
 	top: 2px;
@@ -1948,6 +1949,7 @@ td.mods_update {
 /***** Ajax, jquery. etc. *****/
 /***** Ajax *****/
 div#ajaxLoading {
+	z-index: 10000;
 	display: none;
 	position: absolute;
 	top: 50px;

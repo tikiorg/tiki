@@ -281,6 +281,7 @@ ul.jumplinks a:focus, ul.jumplinks a:active {
 	padding: 1em;
 }
 
+.fullscreenbutton,
 #fullscreenbutton {
 	position: absolute;
 	top: 2px;
@@ -291,6 +292,7 @@ ul.jumplinks a:focus, ul.jumplinks a:active {
 	border: 1px solid #D3D3D3;
 }
 
+.fullscreenbutton:hover,
 #fullscreenbutton:hover {}
 
 /* #Header */

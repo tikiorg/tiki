@@ -220,6 +220,7 @@ ul.jumplinks a:focus, ul.jumplinks a:active {
 	background: #fff;
 	font-size: 12pt !important}
 
+.fullscreenbutton,
 #fullscreenbutton {
 	position: absolute;
 	top: 2px;
@@ -227,6 +228,7 @@ ul.jumplinks a:focus, ul.jumplinks a:active {
 	font-size:80%;
 	z-index: 10}
 
+.fullscreenbutton:hover,
 #fullscreenbutton:hover {cursor: pointer }
 	
 /*** Type 1 (*litecss-based) layout 

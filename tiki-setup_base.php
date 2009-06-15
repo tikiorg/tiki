@@ -58,6 +58,7 @@ $needed_prefs = array(
 	'language' => 'en',
 	'feature_pear_date' => 'y',
 	'lastUpdatePrefs' => -1,
+	'feature_fullscreen' => 'n',
 	'error_reporting_level' => 0 // needed by initlib
 );
 
@@ -96,6 +97,9 @@ if ( $prefs['sessions_silent'] == 'disabled' or !empty($_COOKIE) ) {
 	unset($session_params);
 	session_start();
 }
+
+// Moved here from tiki-setup.php because smarty use a copy of session
+if ( $prefs['feature_fullscreen'] == 'y' ) require_once('lib/setup/fullscreen.php');
 
 // Smarty needs session since 2.6.25
 require_once("setup_smarty.php"); 
