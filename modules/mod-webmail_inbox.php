@@ -27,6 +27,12 @@ if ($tiki_p_use_webmail != 'y') {
 if ($prefs['feature_ajax'] == 'y') {
 	// this includes what we need for ajax
 	require_once ('tiki-webmail_ajax.php');
+} else  {
+	require_once $smarty->_get_plugin_filepath('function', 'icon');
+	$smarty->assign('tpl_module_title', tra('Webmail error'));
+	$smarty->assign('error', tra('AJAX feature required').'&nbsp;'.
+		'<a href="tiki-admin.php?page=features">'.smarty_function_icon(array('_id'=>'arrow_right'), $smarty)).'</a>';
+	return;
 }
 
 global $webmaillib, $trklib, $headerlib, $user, $webmail_reload, $webmail_start, $smarty, $dbTiki;
