@@ -64,7 +64,7 @@ foreach ($ranking['data'] as &$rk_data) {
 	$artc_archive[date('F Y', $rk_data['publishDate'])] = array(
 		'title' => date('F Y', $rk_data['publishDate']),
 		'start_month' => mktime(0,0,0,date('m', $rk_data['publishDate']),1,date('Y', $rk_data['publishDate'])),
-		'end_month' => mktime(0,0,0,date('m', $rk_data['publishDate'])+1,0,date('Y', $rk_data['publishDate'])),
+		'end_month' => mktime(0,0,-1,date('m', $rk_data['publishDate'])+1,1,date('Y', $rk_data['publishDate'])),
 		'item_count' => $artc_archive[date('F Y', $rk_data['publishDate'])]['item_count']+1);
 }
 
