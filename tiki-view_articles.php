@@ -53,7 +53,7 @@ if (isset($_REQUEST["remove"])) {
 // for the information as the number of
 // days to get in the log 1,3,4,etc
 // it will default to 1 recovering information for today
-if (!isset($_REQUEST["sort_mode"])) {
+if (empty($_REQUEST["sort_mode"])) {
 	$sort_mode = 'publishDate_desc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
