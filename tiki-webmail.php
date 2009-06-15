@@ -33,17 +33,6 @@ if ($tiki_p_use_webmail != 'y' || $tiki_p_use_group_webmail != 'y') {
 	die;
 }
 
-$js = <<< END
-function submit_form(msgname,flg)
-{
-  document.mailb.elements.quickFlag.value= flg;
-  document.mailb.elements.quickFlagMsg.value= msgname;
-  document.mailb.submit();
-}
-END;
-
-$headerlib->add_js($js,0);
-
 require_once ("lib/webmail/net_pop3.php");
 require_once ("lib/mail/mimelib.php");
 include_once ("lib/webmail/class.rc4crypt.php");
@@ -199,6 +188,17 @@ if ($_REQUEST["locSection"] == 'read') {
 
 //   Mailbox
 if ($_REQUEST["locSection"] == 'mailbox') {
+	
+	$js = <<< END
+function submit_form(msgname,flg)
+{
+  document.mailb.elements.quickFlag.value= flg;
+  document.mailb.elements.quickFlagMsg.value= msgname;
+  document.mailb.submit();
+}
+END;
+	$headerlib->add_js($js,0);
+
 	$h = opendir("temp/mail_attachs/");
 
 	while ($file = readdir($h)) {
@@ -460,10 +460,68 @@ if ($_REQUEST["locSection"] == 'mailbox') {
 //   Settings
 if ($_REQUEST["locSection"] == 'settings') {
 
-if (isset($_REQUEST["conmsg"])) {
-	check_ticket('webmail');
+	if ($prefs['feature_jquery']) {
+		$deleteTitle = tra('Delete');
+		$deleteConfirm = tra('Are you sure you want to delete this account?');
+		$js = <<< END
+\$jq('document').ready(function() {
+	// validate edit/add form
+	\$jq('[name=settings]').submit(function() {
+		if (!\$jq('[name=account]').val()) {
+			\$jq('[name=account]').css('background-color', '#fcc').focus();
+			return false;
+		}
+		if (!\$jq('[name=imap]').val() && !\$jq('[name=pop]').val() && !\$jq('[name=mbox]').val() && !\$jq('[name=maildir]').val()) {
+			\$jq('[name=imap]').css('background-color', '#fcc').focus();
+			\$jq('[name=pop]').css('background-color', '#fcc');
+			\$jq('[name=mbox]').css('background-color', '#fcc');
+			\$jq('[name=maildir]').css('background-color', '#fcc');
+			return false;
+		}
+	});
+	// set port for imap
+	\$jq('[name=imap]').change(function() {
+		if (\$jq('[name=imap]').val()) {
+			\$jq('[name=port]').val(\$jq('[name=useSSL]').attr('checked')? '993' : '143');
+		}
+	});
+	// set port for pop
+	\$jq('[name=pop]').change(function() {
+		if (\$jq('[name=pop]').val() && !\$jq('[name=imap]').val()) {
+			\$jq('[name=port]').val(\$jq('[name=useSSL]').attr('checked')? '995' : '110');
+		}
+	});
+	// set ports for ssl
+	\$jq('[name=useSSL]').change(function(v,a) {
+		if (\$jq('[name=useSSL]').attr('checked')) {
+			\$jq('[name=port]').val(\$jq('[name=imap]').val() ? '933' : '995');
+			\$jq('[name=smtpPort]').val('465');
+		} else {
+			\$jq('[name=port]').val(\$jq('[name=imap]').val() ? '143' : '110');
+			\$jq('[name=smtpPort]').val('25');
+		}
+	});
+	// confirm deletes
+	\$jq('a[title=$deleteTitle]').click(function() {
+		return confirm('$deleteConfirm');
+	});
+	// open/close account form
+	\$jq('#addAccountIcon').click(function() {
+		flip(\$jq('#settingsFormDiv').attr('id'));
+	}).css("cursor", "pointer");
+
+END;
+		if (empty($_REQUEST["accountId"]) || $webmaillib->count_webmail_accounts($user) == 0) {
+			$js .= '$jq("#settingsFormDiv").hide();';
+		}
+		$js .= "});";
+		$headerlib->add_js($js);
+	}
+	
+	if (isset($_REQUEST["conmsg"])) {
+		check_ticket('webmail');
  		$smarty->assign('conmsg', $_REQUEST["conmsg"]);
-}
+	}
 	
 	if (isset($_REQUEST["cancel_acc"])) {
 		check_ticket('webmail');
@@ -475,14 +533,17 @@ if (isset($_REQUEST["conmsg"])) {
 	if (isset($_REQUEST["new_acc"])) {
 		check_ticket('webmail');
 		
-		if (!isset($_REQUEST["accountId"])) {
+		if (empty($_REQUEST["accountId"])) {
 			// Add new account
 			$_REQUEST["accountId"] = $webmaillib->new_webmail_account($user,
 					$_REQUEST["account"], $_REQUEST["pop"], $_REQUEST["port"], $_REQUEST["username"],
 					$_REQUEST["pass"], $_REQUEST["msgs"], $_REQUEST["smtp"], $_REQUEST["useAuth"],
 					$_REQUEST["smtpPort"], $_REQUEST["flagsPublic"], $_REQUEST["autoRefresh"],
 					$_REQUEST["imap"], $_REQUEST["mbox"], $_REQUEST["maildir"], $_REQUEST["useSSL"] ? $_REQUEST["useSSL"] : 'n');
-			
+
+			if ($webmaillib->count_webmail_accounts($user) == 1) {	// first account?
+				$webmaillib->current_webmail_account($user, $_REQUEST["accountId"]);
+			}
 			
 		} else {
 			// Update existing account

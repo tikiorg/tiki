@@ -185,7 +185,16 @@ class WebMailLib extends TikiLib {
 		return $retval;
 	}
 
-
+	function count_webmail_accounts($user, $includePublic = true) {
+		$query_cant = 'SELECT COUNT(*) FROM `tiki_user_mail_accounts` WHERE `user`=?';
+		if ($includePublic) {
+			$query_cant .= ' OR `flagsPublic` <> \'n\'';
+		}
+		$bindvars = array($user);
+		$cant = $this->getOne($query_cant,$bindvars);
+		return $cant;
+	}
+	
 // MatWho 16/09/08 added flagsPublic
 	function replace_webmail_account($accountId, $user, $account, $pop, $port, $username, $pass, $msgs, $smtp, $useAuth, $smtpPort, $flagsPublic, $autoRefresh, $imap, $mbox, $maildir, $useSSL)
 		{
@@ -213,8 +222,8 @@ class WebMailLib extends TikiLib {
 			$bindvars = array($user,$account,$pop,$port,$smtpPort,$username,$pass,$smtp,$useAuth,$msgs,$flagsPublic,$autoRefresh,$imap,$mbox,$maildir,$useSSL);
 			$result = $this->query($query, $bindvars);
 
-
-			$accountID = $this->getOne("SELECT `accountID` FROM `tiki_user_mail_accounts` WHERE `user`=$user AND `account`=$account AND `pop`=$pop AND `port`=$port AND `smtpPort`=smtpPort AND `username`=username AND `pass`=$pass AND `smtp`=$smpt AND `useAuth`=$useAuth AND `msgs`=$msg AND `flagsPublic`=$flagesPublic AND `autoRefresh`=$autoRefresh");
+			$query = 'SELECT `accountID` FROM `tiki_user_mail_accounts` WHERE `user`=? AND `account`=? AND `pop`=? AND `port`=? AND `smtpPort`=? AND `username`=? AND `pass`=? AND `smtp`=? AND `useAuth`=? AND `msgs`=? AND `flagsPublic`=? AND `autoRefresh`=?';
+			$accountID = $this->getOne($query, $bindvars);
 
 		return $accountID;
 	}
@@ -273,7 +282,7 @@ class WebMailLib extends TikiLib {
 	
 	/**
 	 * @param $user			current user
-	 * @param $accountid	can be 0
+	 * @param $accountid	can be 0 (uses current account)
 	 * @param $reload		force reload from mail server?
 	 * @return array		of partial message headers
 	 */
@@ -348,7 +357,6 @@ class WebMailLib extends TikiLib {
 				$wmail['date'] = $headers['date'];
 				$wmail["timestamp"] = strtotime($headers['date']);
 				
-				$mail->noop(); // keep alive
 				$from = preg_split('/[<>]/', $wmail['from'], -1,PREG_SPLIT_NO_EMPTY);
 				$wmail['sender']['name'] = $from[0];
 				$wmail['sender']['email'] = $from[1];
@@ -377,10 +385,6 @@ class WebMailLib extends TikiLib {
 					
 				$wmail['msgid'] = $messageNum;
 				$webmail_list[] = $wmail;
-//				if ($messageNum > count($mail) - 1) {
-//					$a = 1;	// for debugging
-//				}
-				$mail->noop(); // keep alive
 				
 				$logger->log('End mail process   '.$messageNum.' '.(microtime(true)-$ts), Zend_Log::INFO);
 			}
@@ -392,7 +396,7 @@ class WebMailLib extends TikiLib {
 		}		// endif no cached list of timed out
 	
 		return $webmail_list;
-	}
+	}	// end refresh_mailbox()
 	
 	function get_mail_storage($webmail_account) {
 		if (!empty($webmail_account['imap'])) {
@@ -435,7 +439,7 @@ class WebMailLib extends TikiLib {
 		// not returned yet?
 		require_once 'lib/core/lib/Zend/Mail/Storage/Exception.php';
 		throw new Zend_Mail_Storage_Exception('No server to check');
-	}
+	}	// end get_mail_storage()
 	
 	/**
 	 * @param $user			current user
@@ -468,17 +472,7 @@ class WebMailLib extends TikiLib {
 		if (empty($mail)) {
 			return '';
 		}
-		
-//		$message = $mail[$msgId];
-//		$cont = $message->getContent();
-//		
-//		$ct = $message->contentType;
-//		if (preg_match('/boundary=[\'"]?(.*)[\'"]?/', $ct, $m) == 1) {
-//			$boundary = $m[1];
-//			include_once('lib/core/lib/Zend/Mime/Message.php');
-//			$zmm = Zend_Mime_Message::createFromMessage($cont, $boundary);
-//		}
-				
+						
 		// output first text/plain part - from http://framework.zend.com/manual/en/zend.mail.read.html
 		$foundPart = null;
 		foreach (new RecursiveIteratorIterator($mail->getMessage($msgId)) as $part) {
@@ -491,58 +485,28 @@ class WebMailLib extends TikiLib {
 		        // ignore
 		    }
 		}
-		$c = '';
-		if (!empty($foundPart)) {
-			$c = $foundPart->getContent();
-			
-//			require_once('lib/core/lib/Zend/Mime/Part.php');
-//			$mime_part = new Zend_Mime_part($foundPart);
-			
-			$enc = $foundPart->contentTransferEncoding;
-			if (!empty($enc)) {
-				$c = $this->decodeBody($c, $enc);
-			}
-//			if ($enc = 'quoted-printable') {
-//				include_once('lib/core/lib/Zend/Mime/Decode.php');
-//				ini_set('iconv.internal_encoding', 'UTF-8');
-//				$c = Zend_Mime_Decode::decodeQuotedPrintable($c);
-//			}
-		} else {
-			$message = $mail[$msgId];
-			$c = $message->getContent();
-			$enc = '';
+		$cont = '';
+		if (empty($foundPart)) {
+			$foundPart = $mail[$msgId];
 		}
-
-//		require_once ("lib/mail/mimelib.php");	// Can't seem to get anything in Zend to do this :(
-//		$c = mime::decodeBody($c, $enc);		// blows up on quoted-printable :(
-		
-		return $c;
-	}
+		$cont = $foundPart->getContent();
+		$enc = $foundPart->contentTransferEncoding;
+		switch ($enc) {
+			case '7bit':
+				$cont = $cont;
+				break;
+			case 'quoted-printable':
+				$cont = quoted_printable_decode($cont);
+				break;
+			case 'base64':
+				$cont = base64_decode($cont);
+				break;
+			default:
+				$cont = $cont;
+		}
+		return $cont;
+	}	// end get_mail_content()
 	
-	// WARNING - copied from mimelib - temp fix
-	function decodeBody($input, $encoding = '7bit') {
-		switch ($encoding) {
-		case '7bit':
-			return $input;
-			break;
-		case 'quoted-printable':
-			$input = preg_replace("/=\r?\n/", '', $input);
-			if (preg_match_all('/=[A-Z0-9]{2}/', $input, $matches)) {
-				$matches = array_unique($matches[0]);
-				foreach ($matches as $value) {
-					$input = str_replace($value, chr(hexdec(substr($value, 1))), $input);
-				}
-			}
-			return $input;
-			break;
-		case 'base64':
-			return base64_decode($input);
-			break;
-		default:
-			return $input;
-		}
-	}
-
 	
 } # class WebMailLib
 $webmaillib = new WebMailLib($dbTiki);
