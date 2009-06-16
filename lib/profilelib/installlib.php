@@ -899,6 +899,8 @@ class Tiki_Profile_InstallHandler_Module extends Tiki_Profile_InstallHandler // 
 
 		$data['groups'] = serialize( $data['groups'] );
 
+		$data = Tiki_Profile::convertYesNo( $data );
+
 		return $this->data = $data;
 	}
 
