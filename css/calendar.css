@@ -102,17 +102,6 @@ div.tabrow {
 	text-decoration: none;
 }
 
-.Cal0:before {
-	content : "? ";
-}
-.Cal1:before {
-	content : "+ ";
-	background : #FFCC77;
-}
-.Cal2:before {
-	content : "X ";
-	background : #EEEEAA;
-}
 .caltitle {
 	font-weight : bold;
 	color : #425262;
