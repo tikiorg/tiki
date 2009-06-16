@@ -239,7 +239,7 @@ END;
 	$smarty->assign('imap',$current['imap']);
 	$smarty->assign('mbox',$current['mbox']);
 	$smarty->assign('maildir',$current['maildir']);
-	$smarty->assign('usseSSL',$current['usseSSL']);
+	$smarty->assign('useSSL',$current['useSSL']);
 	$smarty->assign('flagsPublic',$current['flagsPublic']);
 	$pop3 = new Net_POP3();
 	
@@ -551,7 +551,7 @@ END;
 					$_REQUEST["account"], $_REQUEST["pop"], $_REQUEST["port"], $_REQUEST["username"],
 					$_REQUEST["pass"], $_REQUEST["msgs"], $_REQUEST["smtp"], $_REQUEST["useAuth"],
 					$_REQUEST["smtpPort"], $_REQUEST["flagsPublic"], $_REQUEST["autoRefresh"],
-					$_REQUEST["imap"], $_REQUEST["mbox"], $_REQUEST["maildir"], $_REQUEST["useSSL"] ? $_REQUEST["useSSL"] : 'n');
+					$_REQUEST["imap"], $_REQUEST["mbox"], $_REQUEST["maildir"], isset($_REQUEST["useSSL"]) ? $_REQUEST["useSSL"] : 'n');
 
 			if ($webmaillib->count_webmail_accounts($user) == 1) {	// first account?
 				$webmaillib->current_webmail_account($user, $_REQUEST["accountId"]);
@@ -563,12 +563,12 @@ END;
 					$_REQUEST["account"], $_REQUEST["pop"], $_REQUEST["port"], $_REQUEST["username"],
 					$_REQUEST["pass"], $_REQUEST["msgs"], $_REQUEST["smtp"], $_REQUEST["useAuth"],
 					$_REQUEST["smtpPort"], $_REQUEST["flagsPublic"], $_REQUEST["autoRefresh"],
-					$_REQUEST["imap"], $_REQUEST["mbox"], $_REQUEST["maildir"], $_REQUEST["useSSL"] ? $_REQUEST["useSSL"] : 'n');
+					$_REQUEST["imap"], $_REQUEST["mbox"], $_REQUEST["maildir"], isset($_REQUEST["useSSL"]) ? $_REQUEST["useSSL"] : 'n');
 		}
 		unset($_REQUEST["accountId"]);
 	}
 	
-	if (empty($_REQUEST["accountId"]) || isset($_REQUEST["new_acc"]) || $webmaillib->count_webmail_accounts($user) == 0) {
+	if (empty($_REQUEST["accountId"]) || isset($_REQUEST["new_acc"]) && $webmaillib->count_webmail_accounts($user) > 0) {
 		$headerlib->add_jq_onready('$jq("#settingsFormDiv").hide();');
 	}
 	// The red cross was pressed
@@ -579,7 +579,7 @@ END;
 
 	if (isset($_REQUEST["current"])) {
 		$webmaillib->current_webmail_account($user, $_REQUEST["current"]);
-		$headerlib->add_js('doRefreshWebmail(0, false, true)');
+		$headerlib->add_js('if (typeof doRefreshWebmail == "function") { doRefreshWebmail(0, false, true); }');
 	}
 
 	$smarty->assign('mailCurrentAccount', $tikilib->get_user_preference($user, 'mailCurrentAccount', 0));

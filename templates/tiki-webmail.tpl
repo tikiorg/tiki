@@ -8,26 +8,26 @@
 <table width="100%" border=0>
 	<tr>
 		<td>
-			{self_link _icon='img/webmail/mailbox.gif' locSection='mailbox' _width='48' _height='48'}{tr}Mailbox{/tr}{/self_link}
+			{self_link _icon='img/webmail/mailbox.gif' locSection='mailbox' _width='48' _height='48' _noauto='y'}{tr}Mailbox{/tr}{/self_link}
 			<br />
-			{self_link locSection='mailbox'}{tr}Mailbox{/tr}{/self_link}
+			{self_link locSection='mailbox' _noauto='y'}{tr}Mailbox{/tr}{/self_link}
 		</td>
 		<td>
-			{self_link _icon='img/webmail/compose.gif' locSection='compose' _width='48' _height='48'}{tr}Compose{/tr}{/self_link}
+			{self_link _icon='img/webmail/compose.gif' locSection='compose' _width='48' _height='48' _noauto='y'}{tr}Compose{/tr}{/self_link}
 			<br />
-			{self_link locSection='compose'}{tr}Compose{/tr}{/self_link}
+			{self_link locSection='compose' _noauto='y'}{tr}Compose{/tr}{/self_link}
 		</td>
 		<td>
-			{self_link _icon='img/webmail/contact.gif' locSection='contacts' _width='48' _height='48'}{tr}Contacts{/tr}{/self_link}
+			{self_link _icon='img/webmail/contact.gif' locSection='contacts' _width='48' _height='48' _noauto='y'}{tr}Contacts{/tr}{/self_link}
 			<br />
-			{self_link locSection='contacts'}{tr}Contacts{/tr}{/self_link}
+			{self_link locSection='contacts' _noauto='y'}{tr}Contacts{/tr}{/self_link}
 		</td>
 		<td width="50%">
 		</td>
 		<td>
-			{self_link _icon='img/webmail/settings.gif' locSection='settings' _width='48' _height='48'}{tr}Settings{/tr}{/self_link}
+			{self_link _icon='img/webmail/settings.gif' locSection='settings' _width='48' _height='48' _noauto='y'}{tr}Settings{/tr}{/self_link}
 			<br />
-			{self_link locSection='settings'}{tr}Settings{/tr}{/self_link}
+			{self_link locSection='settings' _noauto='y'}{tr}Settings{/tr}{/self_link}
 		</td>
 	</tr>
 </table>
@@ -192,14 +192,14 @@
 				<tr>
 					<td class="{cycle advance=false}">
 						{if $accounts[ix].current ne 'y' and $accounts[ix].accountId ne $mailCurrentAccount}
-							{self_link _icon='star_grey' locSection='settings' current=$accounts[ix].accountId}{tr}Activate{/tr}{/self_link}
+							{self_link _icon='star_grey' locSection='settings' current=$accounts[ix].accountId _noauto='y'}{tr}Activate{/tr}{/self_link}
 						{else}
 							{icon _id='star' alt="{tr}This is the active account.{/tr}"}
 						{/if}
 					</td>
 					<td class="{cycle advance=false}">
 						{if $accounts[ix].current ne 'y' and $accounts[ix].accountId ne $mailCurrentAccount}
-							{self_link locSection='settings' current=$accounts[ix].accountId}{$accounts[ix].account class='link' _title='{tr}Activate{/tr}'}{/self_link}{* TODO make_title work? *}
+							{self_link locSection='settings' current=$accounts[ix].accountId _noauto='y'}{$accounts[ix].account class='link' _title='{tr}Activate{/tr}'}{/self_link}{* TODO make_title work? *}
 						{else}
 							<strong>{$accounts[ix].account}</strong>
 						{/if}
@@ -217,10 +217,10 @@
 						{$accounts[ix].username}
 					</td>
 					<td class="{cycle}">
-						{self_link _icon='cross' locSection=settings remove=$accounts[ix].accountId}{tr}Delete{/tr}{/self_link}
-						{self_link _icon='page_edit' locSection='settings' accountId=$accounts[ix].accountId}{tr}Edit{/tr}{/self_link}
+						{self_link _icon='cross' locSection=settings remove=$accounts[ix].accountId _noauto='y'}{tr}Delete{/tr}{/self_link}
+						{self_link _icon='page_edit' locSection='settings' accountId=$accounts[ix].accountId _noauto='y'}{tr}Edit{/tr}{/self_link}
 						{if $accounts[ix].current ne 'y' and $accounts[ix].accountId ne $mailCurrentAccount}
-							{self_link _icon='accept' locSection='settings' current=$accounts[ix].accountId}{tr}Activate{/tr}{/self_link}
+							{self_link _icon='accept' locSection='settings' current=$accounts[ix].accountId _noauto='y'}{tr}Activate{/tr}{/self_link}
 						{/if}
 					</td>
 				</tr>
@@ -249,14 +249,14 @@
 					<tr>
 						<td class="{cycle advance=false}">
 							{if $pubAccounts[ixp].current ne 'y' and $pubAccounts[ixp].accountId ne $mailCurrentAccount}
-								{self_link _icon='star_grey' locSection='settings' current=$pubAccounts[ixp].accountId}{tr}Activate{/tr}{/self_link}
+								{self_link _icon='star_grey' locSection='settings' current=$pubAccounts[ixp].accountId _noauto='y'}{tr}Activate{/tr}{/self_link}
 							{else}
 								{icon _id='star' alt="{tr}This is the active account.{/tr}"}
 							{/if}
 						</td>
 						<td class="{cycle advance=false}">
 							{if $pubAccounts[ixp].current ne 'y' and $pubAccounts[ixp].accountId ne $mailCurrentAccount}
-								{self_link locSection='settings' current=$pubAccounts[ixp].accountId}{$pubAccounts[ixp].account class='link' _title='{tr}Activate{/tr}'}{/self_link}{* TODO make self_link _title work when no icon? *}
+								{self_link locSection='settings' current=$pubAccounts[ixp].accountId _noauto='y'}{$pubAccounts[ixp].account class='link' _title='{tr}Activate{/tr}'}{/self_link}{* TODO make self_link _title work when no icon? *}
 							{else}
 								<strong>{$pubAccounts[ixp].account}</strong>
 							{/if}
@@ -271,11 +271,11 @@
 						<td class="{cycle advance=false}">{$pubAccounts[ixp].username}</td>
 						<td class="{cycle}">
 							{if $tiki_p_admin_group_webmail eq 'y'or $tiki_p_admin eq 'y'}
-								{self_link _icon='cross' locSection=settings remove=$pubAccounts[ixp].accountId}{tr}Delete{/tr}{/self_link}
-								{self_link _icon='page_edit' locSection='settings' accountId=$pubAccounts[ixp].accountId}{tr}Edit{/tr}{/self_link}
+								{self_link _icon='cross' locSection=settings remove=$pubAccounts[ixp].accountId _noauto='y'}{tr}Delete{/tr}{/self_link}
+								{self_link _icon='page_edit' locSection='settings' accountId=$pubAccounts[ixp].accountId _noauto='y'}{tr}Edit{/tr}{/self_link}
 							{/if}
 							{if $pubAccounts[ixp].current ne 'y' and $pubAccounts[ixp].accountId ne $mailCurrentAccount}
-								{self_link _icon='accept' locSection='settings' current=$pubAccounts[ixp].accountId}{tr}Activate{/tr}{/self_link}
+								{self_link _icon='accept' locSection='settings' current=$pubAccounts[ixp].accountId _noauto='y'}{tr}Activate{/tr}{/self_link}
 							{/if}
 						</td>
 					</tr>
