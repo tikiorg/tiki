@@ -17,11 +17,11 @@
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}To learn more about the <a class="rbox-link" target="tikihelp" href="http://workflow.tikiwiki.org">Galaxia workflow engine</a>{/tr}{/remarksbox}
 
 </h1>
-{include file=tiki-g-monitor_bar.tpl}
+{include file='tiki-g-monitor_bar.tpl'}
 <h2>{tr}Add or edit a process{/tr} <a class="link" href="tiki-g-admin_processes.php?WHERE={$Where}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;pid=0">{tr}New{/tr}</a>
 </h2>
 {if $pid > 0}
-{include file=tiki-g-proc_bar.tpl}
+{include file='tiki-g-proc_bar.tpl'}
 {/if}
 {if $pid > 0 and count($errors)}
 <div class="wikitext">

@@ -174,7 +174,7 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>&nbsp;&nbsp;
 {* ---------------------------------------- tab with attachements --- *}
 {if $tracker_info.useAttachments eq 'y'}
 	{tab name="{tr}Attachments{/tr} (`$attCount`)"}
-		{include file=attachments_tracker.tpl}
+		{include file='attachments_tracker.tpl'}
 	{/tab}
 {/if}
 
@@ -260,7 +260,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
   <br />
 
   {if $prefs.quicktags_over_textarea neq 'y'}
-    {include file=tiki-edit_help_tool.tpl qtnum=$cur_field.id area_name="area_"|cat:$cur_field.id}
+    {include file='tiki-edit_help_tool.tpl' qtnum=$cur_field.id area_name="area_"|cat:$cur_field.id}
   {/if}
 {/if}
 </td><td colspan="3" class="formcontent" >
@@ -381,7 +381,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 
 {* -------------------- textarea -------------------- *}
 {elseif $cur_field.type eq 'a'}
-{include file=tracker_item_field_input.tpl field_value=$cur_field}
+{include file='tracker_item_field_input.tpl' field_value=$cur_field}
 
 {* --------------------- date ------------------------ *}
 {elseif $cur_field.type eq 'f'}
@@ -433,7 +433,7 @@ or $cur_field.type eq 'i'}
 		{if isset($cur_field.options_array[1]) and $cur_field.options_array[1] ne '' } { assign var=Length value=$cur_field.options_array[1] }{/if}
 		{if isset($cur_field.options_array[2]) and $cur_field.options_array[2] ne '' } { assign var=Height value=$cur_field.options_array[2] }{/if}
 		{if $ModeVideo eq 'y' } { assign var="Height" value=$Height+$prefs.VideoHeight}{/if}
-		{include file=multiplayer.tpl url=$cur_field.value w=$Length h=$Height video=$ModeVideo}
+		{include file='multiplayer.tpl' url=$cur_field.value w=$Length h=$Height video=$ModeVideo}
 	{/if}
 {/if}
 {elseif $cur_field.type eq 'U'}

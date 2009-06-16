@@ -110,8 +110,8 @@
 {/if}
 
 <tr><td class="formcolor">{tr}Owner of the gallery{/tr}:</td><td class="formcolor"><input type="text" name="owner" value="{$owner|escape}"/></td></tr>
-{include file=categorize.tpl}
-{include file=freetag.tpl}
+{include file='categorize.tpl'}
+{include file='freetag.tpl'}
 <tr><td class="formcolor">{tr}Other users can upload images to this gallery{/tr}:</td><td class="formcolor"><input type="checkbox" name="public" {if $public eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" value="{tr}Save{/tr}" name="edit" /></td></tr>
 </table>

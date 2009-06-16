@@ -2,7 +2,7 @@
 {title help="Directory"}{tr}Validate sites{/tr}{/title}
 
 {* Display the title using parent *}
-{include file=tiki-directory_admin_bar.tpl} <br />
+{include file='tiki-directory_admin_bar.tpl'} <br />
 <h2>{tr}Sites{/tr}</h2>
 {* Display the list of categories (items) using pagination *}
 {* Links to edit, remove, browse the categories *}

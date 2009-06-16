@@ -26,7 +26,7 @@
 	<div class="simplebox highlight">{tr}A contribution is mandatory{/tr}</div>
 {/if}
 {if $preview eq 'y'}
-	{include file=tiki-preview_post.tpl}
+	{include file='tiki-preview_post.tpl'}
 {/if}
 
 {if $wysiwyg ne 'y'}
@@ -77,7 +77,7 @@
   <tr>
     <td class="editblogform"><label>{tr}Quicktags{/tr}</label></td>
     <td class="editblogform">
-      {include file=tiki-edit_help_tool.tpl area_name='blogedit'}
+      {include file='tiki-edit_help_tool.tpl' area_name='blogedit'}
     </td>
   </tr>
 {/if}
@@ -92,7 +92,7 @@
 
       {if $prefs.quicktags_over_textarea neq 'y'}
         <br /><br />
-        {include file=tiki-edit_help_tool.tpl area_name="blogedit"}
+        {include file='tiki-edit_help_tool.tpl' area_name="blogedit"}
       {/if}
     </td>
     
@@ -143,7 +143,7 @@
 <tr><td class="editblogform">{tr}Spellcheck{/tr}: </td><td class="editblogform"><input type="checkbox" name="spellcheck" {if $spellcheck eq 'y'}checked="checked"{/if} /></td></tr>
 {/if}
 {if $prefs.feature_freetags eq 'y' and $tiki_p_freetags_tag eq 'y'}
-  {include file=freetag.tpl}
+  {include file='freetag.tpl'}
 {/if}
 {if $prefs.feature_contribution eq 'y'}
 {include file="contribution.tpl"}

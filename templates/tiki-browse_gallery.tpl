@@ -187,9 +187,9 @@
   ||  $tiki_p_edit_comments  == 'y')
 }
   <div id="page-bar">
-  	   {include file=comments_button.tpl}
+  	   {include file='comments_button.tpl'}
   </div>
-  {include file=comments.tpl}
+  {include file='comments.tpl'}
 {/if}
 
 <table class="normal noslideshow">

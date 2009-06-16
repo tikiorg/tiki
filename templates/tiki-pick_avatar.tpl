@@ -10,7 +10,7 @@
 
 
 {if $user eq $userwatch}
-	{include file=tiki-mytiki_bar.tpl}
+	{include file='tiki-mytiki_bar.tpl'}
 {else}
 	<div class="navbar">
 		{assign var=thisuserwatch value=$userwatch|escape}

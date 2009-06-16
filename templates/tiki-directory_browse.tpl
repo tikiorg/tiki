@@ -9,7 +9,7 @@
   {breadcrumbs type="desc" loc="page" crumbs=$crumbs} </div>
   {/if}
 {* The navigation bar *}
-{include file=tiki-directory_bar.tpl}
+{include file='tiki-directory_bar.tpl'}
 
 {* The category path *}
 {if $prefs.feature_breadcrumbs ne 'y'} <a class="dirlink" href="tiki-directory_browse.php?parent=0">{tr}Top{/tr}</a>{if $parent > 0} >> {/if}{$path}
@@ -119,4 +119,4 @@
   {/section} </div>
 {/if}
 
-{include file=tiki-directory_footer.tpl} 
+{include file='tiki-directory_footer.tpl'} 

@@ -1,6 +1,6 @@
 {title url="messu-read.php?msgId=$msgId"}{tr}Read message{/tr}{/title}
 
-{include file=tiki-mytiki_bar.tpl}
+{include file='tiki-mytiki_bar.tpl'}
 {include file="messu-nav.tpl"}
 <br />
 {if $prev}<a class="readlink" href="messu-read_archive.php?offset={$offset}&amp;msgId={$prev}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}">{tr}Prev{/tr}</a>{/if} 

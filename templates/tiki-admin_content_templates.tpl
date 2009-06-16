@@ -71,7 +71,7 @@
 			<tr>
 				<td class="formcolor"><label>{tr}Quicktags{/tr}</label></td>
 				<td class="formcolor">
-					{include file=tiki-edit_help_tool.tpl area_name='editwiki'}
+					{include file='tiki-edit_help_tool.tpl' area_name='editwiki'}
 				</td>
 			</tr>
 		{/if}
@@ -89,7 +89,7 @@
 					<br />
 					<br />
 					{if $prefs.quicktags_over_textarea neq 'y'}
-						{include file=tiki-edit_help_tool.tpl area_name='editwiki'}
+						{include file='tiki-edit_help_tool.tpl' area_name='editwiki'}
 					{/if}  
 				</td>
 				<td class="formcolor">

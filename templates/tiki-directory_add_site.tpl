@@ -1,6 +1,6 @@
 {title url="tiki-directory_add_site.php?parent=$parent"}{tr}Add a new site{/tr}{/title}
 
-{include file=tiki-directory_bar.tpl}
+{include file='tiki-directory_bar.tpl'}
 
 {if $categs[0] eq ''}
 	{icon _id=exclamation style="vertical-align:middle" alt="{tr}Error{/tr}"} {tr}You cannot add sites until Directory Categories are setup.{/tr} <br />

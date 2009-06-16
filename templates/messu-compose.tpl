@@ -1,6 +1,6 @@
 {title help="Inter-User Messages"}{tr}Compose message{/tr}{/title}
 
-{include file=tiki-mytiki_bar.tpl}
+{include file='tiki-mytiki_bar.tpl'}
 {include file="messu-nav.tpl"}
 
 {if $allowMsgs ne 'y'}<br />

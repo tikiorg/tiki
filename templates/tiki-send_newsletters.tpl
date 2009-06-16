@@ -185,12 +185,12 @@
 						{include file="textareasize.tpl" area_name='editwiki' formId='editpageform'}
 						{if $prefs.quicktags_over_textarea neq 'y'}
 							<br /><br />
-							{include file=tiki-edit_help_tool.tpl area_name='data'}
+							{include file='tiki-edit_help_tool.tpl' area_name='data'}
 						{/if}
 					</td>
 					<td class="formcolor">
 						{if $prefs.quicktags_over_textarea eq 'y'}
-							{include file=tiki-edit_help_tool.tpl area_name='data'}
+							{include file='tiki-edit_help_tool.tpl' area_name='data'}
 						{/if}
 						<textarea id='editwiki' name="data" rows="{$rows}" cols="{$cols}">{$info.data|escape}</textarea>
 						<input type="hidden" name="rows" value="{$rows}"/>
@@ -266,7 +266,7 @@
 		{assign var=find_bak value=$ed_find}
 		{assign var=tab value=2}
 		<h2>{tr}Drafts{/tr}&nbsp;({$cant_drafts})</h2>
-		{include file=sent_newsletters.tpl }
+		{include file='sent_newsletters.tpl' }
 	{/tab}
 
 	{tab name="{tr}Sent editions{/tr}&nbsp;($cant_editions)"}
@@ -288,7 +288,7 @@
 		{assign var=find_bak value=$dr_find}
 		{assign var=tab value=3}
 		<h2>{tr}Sent editions{/tr}&nbsp;({$cant_editions})</h2>
-		{include file=sent_newsletters.tpl }
+		{include file='sent_newsletters.tpl' }
 		{/tab}
 	{/tabset}
 {/if}

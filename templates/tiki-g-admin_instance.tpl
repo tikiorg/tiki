@@ -2,7 +2,7 @@
 {*Smarty template*}
 <h1><a class="pagetitle" href="tiki-g-admin_instance.php?iid={$iid}">{tr}Admin instance{/tr}</a>
 </h1>
-{include file=tiki-g-monitor_bar.tpl}
+{include file='tiki-g-monitor_bar.tpl'}
 <h2>{tr}Process:{/tr} {$proc_info.name} {$proc_info.version}<br />
 <form method="POST" action="tiki-g-admin_instance.php?aid={$aid}">
 {tr}Instance{/tr}: <input type="text" name="name" value="{$ins_info.name}" /></h2>

@@ -287,7 +287,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {* --- display quicktags --- *}
   <br />
   {if $prefs.quicktags_over_textarea neq 'y'}
-    {include file=tiki-edit_help_tool.tpl qtnum=$fid area_name=$field_value.ins_id}
+    {include file='tiki-edit_help_tool.tpl' qtnum=$fid area_name=$field_value.ins_id}
   {/if}
 {/if}
 </td><td colspan="3" class="formcontent" >
@@ -381,7 +381,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 
 {* -------------------- page -------------------- *}
 {elseif $field_value.type eq 'k'}
-{include file=tracker_item_field_input.tpl}
+{include file='tracker_item_field_input.tpl'}
 
 {* -------------------- multimedia -------------------- *}
 {elseif $field_value.type eq 'M'}
@@ -411,11 +411,11 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 
 {* -------------------- email -------------------- *}
 {elseif $field_value.type eq 'm'}
-{include file=tracker_item_field_input.tpl}
+{include file='tracker_item_field_input.tpl'}
 
 {* -------------------- textarea -------------------- *}
 {elseif $field_value.type eq 'a'}
-{include file=tracker_item_field_input.tpl}
+{include file='tracker_item_field_input.tpl'}
 
 {* -------------------- date and time -------------------- *}
 {elseif $field_value.type eq 'f'}
@@ -526,7 +526,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {if $tiki_p_export_tracker eq 'y'}
 	{tab name='{tr}Export Tracker Items{/tr}'}
 	{* -------------------------------------------------- tab with export --- *}
-		{include file=tiki-export_tracker.tpl}
+		{include file='tiki-export_tracker.tpl'}
 	{/tab}
 {/if}
 {/tabset}

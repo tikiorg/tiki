@@ -20,5 +20,5 @@
 
 <br />
 
-{include file=tiki-page_bar.tpl}
+{include file='tiki-page_bar.tpl'}
 

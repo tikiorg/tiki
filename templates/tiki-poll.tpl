@@ -23,7 +23,7 @@
 </div>
 {if $prefs.feature_poll_comments and $comments_cant and !isset($module_params)}
   <br />
-{include file=comments_button.tpl}
+{include file='comments_button.tpl'}
 </div>
 {/if}
 </form>

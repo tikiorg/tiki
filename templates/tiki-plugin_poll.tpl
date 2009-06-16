@@ -5,7 +5,7 @@
 </div>
 <div class="poll-data">
 {$menu_info.name}
-{include file=tiki-poll.tpl}
+{include file='tiki-poll.tpl'}
 </div>
 </div>
 ~/np~

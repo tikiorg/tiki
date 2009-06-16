@@ -123,7 +123,7 @@ window.onload = timeIt;
 {/if}
 {if $diff_style}
 <div style="overflow:auto;height:200px;">
-{include file=pagehistory.tpl}
+{include file='pagehistory.tpl'}
 
 </div>
 {/if}
@@ -200,9 +200,9 @@ window.onload = timeIt;
 <tr class="formcolor"><td colspan="2">{tr}Categories will be inherited from the structure top page{/tr}</td></tr>
 {/if}
 {else}
-{include file=categorize.tpl}
+{include file='categorize.tpl'}
 {/if}
-{include file=structures.tpl}
+{include file='structures.tpl'}
 {if $prefs.feature_wiki_templates eq 'y' and $tiki_p_use_content_templates eq 'y' and !$templateId}
   <tr class="formcolor">
     <td>{tr}Apply template{/tr}:</td>
@@ -377,7 +377,7 @@ function searchrep() {
 {/if}
 {/if}
 {if $prefs.feature_freetags eq 'y' and $tiki_p_freetags_tag eq 'y'}
-  {include file=freetag.tpl}
+  {include file='freetag.tpl'}
 {/if}
 {if $prefs.feature_wiki_allowhtml eq 'y' and $tiki_p_use_HTML eq 'y' and $wysiwyg neq 'y'}
 <tr class="formcolor"><td>{tr}Allow HTML{/tr}: </td><td><input type="checkbox" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if}/></td></tr>

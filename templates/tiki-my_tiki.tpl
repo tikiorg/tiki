@@ -3,9 +3,9 @@
 {title help="MyTiki"}{tr}My Tiki{/tr}{/title}
 
 {if $prefs.feature_mootools eq 'y' and $prefs.feature_ajax eq 'y'}
-  {include file=tiki-mytiki_mootabs.tpl}
+  {include file='tiki-mytiki_mootabs.tpl'}
 {else}
-  {include file=tiki-mytiki_bar.tpl}
+  {include file='tiki-mytiki_bar.tpl'}
   <br />
 
   {capture name=my}

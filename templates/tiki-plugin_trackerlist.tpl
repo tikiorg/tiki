@@ -202,7 +202,7 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" alt="{tr}List
 {tr}No records found{/tr}
 {elseif $checkbox}
 <br />
-{if $checkbox.tpl}{include file=$checkbox.tpl}{/if}
+{if $checkbox.tpl}{include file="$checkbox.tpl"}{/if}
 <input type="submit" name="{$checkbox.submit}" value="{tr}{$checkbox.title}{/tr}" /></form>
 {/if}
 {/if}

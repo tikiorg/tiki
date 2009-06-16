@@ -2,7 +2,7 @@
 
 {title help=Webmail admpage=webmail}{tr}Webmail{/tr}{/title}
 
-{* include file=tiki-mytiki_bar.tpl *}
+{* include file='tiki-mytiki_bar.tpl' *}
 <br /><br />
 
 <table width="100%" border=0>

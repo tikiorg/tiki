@@ -2,7 +2,7 @@
 
 {title help="Directory" url="tiki-directory_admin_sites.php?parent=$parent"}{tr}Admin sites{/tr}{/title}
 
-{include file=tiki-directory_admin_bar.tpl}
+{include file='tiki-directory_admin_bar.tpl'}
 <h2>{tr}Parent directory category{/tr}:</h2>
 <form name="path" method="post" action="tiki-directory_admin_sites.php">
   <select name="parent" onchange="javascript:path.submit();">

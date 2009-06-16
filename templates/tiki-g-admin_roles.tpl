@@ -1,6 +1,6 @@
 {*Smarty template*}
 <h1><a class="pagetitle" href="tiki-g-admin_roles.php?pid={$pid}">{tr}Admin process roles{/tr}</a></h1>
-{include file=tiki-g-proc_bar.tpl}
+{include file='tiki-g-proc_bar.tpl'}
 {if count($errors) > 0}
 <div class="wikitext">
 Errors:<br />

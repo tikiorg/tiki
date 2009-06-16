@@ -1,7 +1,7 @@
 {popup_init src="lib/overlib.js"}
 {*Smarty template*}
 <h1>{tr}Activity completed{/tr}</h1>
-{include file=tiki-g-user_bar.tpl}
+{include file='tiki-g-user_bar.tpl'}
 <br /><br />
 <table class="normal">
 <tr>

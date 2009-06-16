@@ -204,18 +204,18 @@
 				</td>
 			</tr>
 		{/if}
-		{include file=categorize.tpl}
+		{include file='categorize.tpl'}
 		<tr class="formcolor">
 			<td>
 				{tr}Heading{/tr}
 				<br />
 				{if $prefs.quicktags_over_textarea neq 'y'}
-					{include file=tiki-edit_help_tool.tpl area_name='heading' qtnum='1'}
+					{include file='tiki-edit_help_tool.tpl' area_name='heading' qtnum='1'}
 				{/if}
 			</td>
 			<td>
 				{if $prefs.quicktags_over_textarea eq 'y'}
-					{include file=tiki-edit_help_tool.tpl area_name='heading' qtnum='1'}
+					{include file='tiki-edit_help_tool.tpl' area_name='heading' qtnum='1'}
 				{/if}
 				<textarea class="wikiedit" name="heading" rows="5" cols="80" id='subheading' wrap="virtual">{$heading|escape}</textarea>
 			</td>
@@ -228,12 +228,12 @@
 				{include file="textareasize.tpl" area_name='body' formId='editpageform'}
 				{if $prefs.quicktags_over_textarea neq 'y'}
 					<br /><br />
-					{include file=tiki-edit_help_tool.tpl area_name='body' qtnum='2'}
+					{include file='tiki-edit_help_tool.tpl' area_name='body' qtnum='2'}
 				{/if}
 			</td>
 			<td>
 				{if $prefs.quicktags_over_textarea eq 'y'}
-					{include file=tiki-edit_help_tool.tpl area_name='body' qtnum='2'}
+					{include file='tiki-edit_help_tool.tpl' area_name='body' qtnum='2'}
 				{/if}
 				<textarea class="wikiedit" id="body" name="body" rows="{$rows}" cols="{$cols}" wrap="virtual">{$body|escape}</textarea>
 				<input type="hidden" name="rows" value="{$rows}" />
@@ -268,7 +268,7 @@
 				</span>
 			</td>
 		</tr>
-		{include file=freetag.tpl}
+		{include file='freetag.tpl'}
 	</table>
 	
 	{if $tiki_p_use_HTML eq 'y'}

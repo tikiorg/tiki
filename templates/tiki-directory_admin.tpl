@@ -2,7 +2,7 @@
 
 {title help="Directory" admpage="directory"}{tr}Directory Administration{/tr}{/title}
 
-{include file=tiki-directory_admin_bar.tpl} <br />
+{include file='tiki-directory_admin_bar.tpl'} <br />
 <h2>{tr}Statistics{/tr}</h2>
 {tr}There are{/tr} {$stats.invalid} {tr}invalid sites{/tr}<br />
 {tr}There are{/tr} {$stats.valid} {tr}valid sites{/tr}<br />

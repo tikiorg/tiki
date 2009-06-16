@@ -1,7 +1,7 @@
 {title help="Directory Categories" url="tiki-directory_admin_categories.php?parent=$parent"}{tr}Admin directory categories{/tr}{/title}
 
 {* Display the title using parent *}
-{include file=tiki-directory_admin_bar.tpl}
+{include file='tiki-directory_admin_bar.tpl'}
 {* Navigation bar to admin, admin related, etc *}
 <h2>{tr}Parent directory category{/tr}:</h2>
 {* Display the path adding manually the top category id=0 *}
@@ -79,7 +79,7 @@
         </select>
       </td>
     </tr>
-    {include file=categorize.tpl}
+    {include file='categorize.tpl'}
     <tr>
       <td class="formcolor">&nbsp;</td>
       <td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" />

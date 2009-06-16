@@ -62,7 +62,7 @@
 		|| $tiki_p_post_comments == 'y'
 		|| $tiki_p_edit_comments == 'y')
 	}
-		{include file=comments_button.tpl}
+		{include file='comments_button.tpl'}
 	{/if}
 </div>
 
@@ -114,5 +114,5 @@
 && $comments_cant != 0)
 || $tiki_p_post_comments == 'y'
 || $tiki_p_edit_comments == 'y')}
-{include file=comments.tpl}
+{include file='comments.tpl'}
 {/if}

@@ -1,7 +1,7 @@
 {title help="User+Tasks"}{tr}Tasks{/tr}{/title}
 
 {if $prefs.feature_ajax ne 'y' && $prefs.feature_mootools ne 'y'}
-  {include file=tiki-mytiki_bar.tpl}
+  {include file='tiki-mytiki_bar.tpl'}
   <br /><br />
 {/if}
 
@@ -105,7 +105,7 @@
 {if $admin_mode}<div align="center"><a class="highlight" >{tr}Admin Mode{/tr}</a></div><br />{/if}
 {* start ************ view  ***************}
 {if (($tiki_view_mode eq 'view') or ($tiki_view_mode eq 'preview'))}
-{include file=tiki-user_tasks_view.tpl}
+{include file='tiki-user_tasks_view.tpl'}
 {/if}
 
 {* end ************ View task ***************}
@@ -113,7 +113,7 @@
 {* start ************ Edit Form ***************}
 
 {if ($show_form)} 
-{include file=tiki-user_tasks_edit.tpl}
+{include file='tiki-user_tasks_edit.tpl'}
 {/if}
 
 {* end ************ Edit Form ***************}
@@ -124,7 +124,7 @@
 
 {* start ************ Task list ***************}
 {if ( not $show_form )} 
-{include file=tiki-user_tasks_list.tpl}
+{include file='tiki-user_tasks_list.tpl'}
 {/if} 
 
 {* end ************ Task list ***************}

@@ -14,7 +14,7 @@
 <img src="img/icons/info.gif" height="16" width="16" alt='{tr}Edit Tpl{/tr}' /></a>{/if}
 
 </h1>
-{include file=tiki-g-user_bar.tpl}
+{include file='tiki-g-user_bar.tpl'}
 <h2>{tr}List of processes{/tr} ({$cant})</h2>
 
 {* FILTERING FORM *}

@@ -1,7 +1,7 @@
 {title}{tr}Search results{/tr}{/title}
 
 {* The navigation bar *}
-{include file=tiki-directory_bar.tpl} <br />
+{include file='tiki-directory_bar.tpl'} <br />
 <br />
 <div align="center">
   <form action="tiki-directory_search.php" method="post">

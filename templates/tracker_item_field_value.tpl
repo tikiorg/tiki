@@ -151,7 +151,7 @@
 		{assign var='Length' value=$prefs.MultimediaDefaultLength}
 	{/if}
 	{if $ModeVideo eq 'y' } { assign var="Height" value=$Height+$prefs.VideoHeight}{/if}
-	{include file=multiplayer.tpl url=$field_value.value w=$Length h=$Height video=$ModeVideo}
+	{include file='multiplayer.tpl' url=$field_value.value w=$Length h=$Height video=$ModeVideo}
 	{/if}
 
 {* -------------------- file -------------------- *}

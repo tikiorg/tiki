@@ -1,6 +1,6 @@
 {*Smarty template*}
 <h1><a class="pagetitle" href="tiki-newsreader_groups.php?serverId={$serverId}">{tr}Select news group{/tr}</a></h1>
-{include file=tiki-mytiki_bar.tpl}
+{include file='tiki-mytiki_bar.tpl'}
 <br /><br />
 [<a class="link" href="tiki-newsreader_servers.php">{tr}Back to servers{/tr}</a>]
 <br /><br />

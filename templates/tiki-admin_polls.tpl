@@ -40,7 +40,7 @@
 	</div>
 </td>
 </tr>
-{include file=categorize.tpl}
+{include file='categorize.tpl'}
 <tr><td class="formcolor">{tr}PublishDate{/tr}:</td><td class="formcolor">
 {html_select_date time=$info.publishDate end_year="+1" field_order=$prefs.display_field_order} {tr}at{/tr} {html_select_time time=$info.publishDate display_seconds=false}
 </td></tr>

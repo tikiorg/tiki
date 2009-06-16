@@ -98,7 +98,7 @@
       </tr>
     {/if}
 
-    {include file=categorize.tpl}
+    {include file='categorize.tpl'}
 
     <tr class="editblogform">
       <td>&nbsp;</td>

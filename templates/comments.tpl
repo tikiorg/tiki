@@ -326,7 +326,7 @@
                   <tr>
 		    <td class="formcolor"><label>{tr}Quicktags{/tr}</label></td>
                     <td class="formcolor">
-                      {include file=tiki-edit_help_tool.tpl area_name='editpost2'}
+                      {include file='tiki-edit_help_tool.tpl' area_name='editpost2'}
                     </td>
                   </tr>
                 {/if}
@@ -338,7 +338,7 @@
 				{include file="textareasize.tpl" area_name='editpost2' formId='editpostform'}
 				<br /><br />
                                 {if $quicktags and $prefs.quicktags_over_textarea neq 'y'}
-				  {include file=tiki-edit_help_tool.tpl area_name='editpost2'}
+				  {include file='tiki-edit_help_tool.tpl' area_name='editpost2'}
                                 {/if}
 			</td>
 			<td class="formcolor">
