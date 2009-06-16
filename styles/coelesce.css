@@ -430,28 +430,6 @@ div#sitead {margin: auto}
 	
 #sitesearchbar ul.cssmenu > li { }
 
-.cbox-data .nohighlight {
-	position: static;
-	height: 30px;
-	white-space: nowrap;
-}
-	
-.cbox-data .nohighlight form {
-	display: inline;
-}
-
-.cbox-data .nohighlight ul.cssmenu {
-	margin-left: 5px;
-	width: 40px}
-	
-.nohighlight ul.cssmenu li ul {
-	background: none;
-	border: none }
-
-.nohighlight .cssmenu li ul {
-	margin: -23px 0 0 6px;
-}
-
 select[name="where"] {border: none}
 
 select[name="where"],
