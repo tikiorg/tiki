@@ -411,7 +411,6 @@ div#sitead {margin: auto}
 }
 
 #sitesearchbar .findtable {
-	position: relative !important; /* IE6 craches with this ! :( */
 }
 
 /* The two lines below are a hack for IE6 */
