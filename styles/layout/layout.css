@@ -1529,7 +1529,6 @@ opaque .box-title,
 div.multiselect {
 	vertical-align: middle;
 	padding: 0;
-	border:1px solid #80B1E2;
 	height: auto;
 	overflow: visible}
 
