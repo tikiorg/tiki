@@ -544,7 +544,8 @@ a.addevent:hover { border-bottom:0px; }
 	line-height: 1em;
 	width: 100%;
 	text-align: center;
-	}
+	padding: 1px;
+}
 
 .viewmode div {display: inline}
 .calbuttonBox {  }
