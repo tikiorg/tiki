@@ -172,7 +172,5 @@ class reportsLib extends TikiLib{
 		}
 	}
 }
-
 global $dbTiki;
 $reportslib = new reportsLib($dbTiki);
-?>

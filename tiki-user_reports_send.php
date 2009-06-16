@@ -36,5 +36,3 @@ foreach ($tikilib->getUsersForSendingReport() as $key => $user) {
 	$tikilib->deleteUsersReportCache($user_data);
 }
 
-
-?>

@@ -33,5 +33,3 @@ if (isset($_POST['report_preferences']) && $_POST['use_daily_reports']!="true") 
 	header('Location: tiki-user_watches.php');
 	die;
 }
-
-?>

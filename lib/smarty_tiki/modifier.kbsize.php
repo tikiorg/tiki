@@ -36,5 +36,3 @@ function smarty_modifier_kbsize($string, $bytes = false, $nb_decimals = 2)
 
   return $string.'&nbsp;'.tra($kb_string);
 }
-
-?>
