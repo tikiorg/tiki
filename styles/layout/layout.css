@@ -217,7 +217,8 @@ div#sitead {margin: auto}
 	display: block;
 	margin: 0}
 	
-#sitesearchbar form {}	
+#sitesearchbar form {}
+#tiki-top #sitesearchbar br {display: none;}
 input#text
 input.wikiaction {}
 #sitesearchbar form button {}
