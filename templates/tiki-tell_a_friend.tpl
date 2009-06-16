@@ -66,7 +66,7 @@
       <td class="formcolor">
         {tr}Your comment{/tr}
         <br /><br />
-        {include file="textareasize.tpl" area_name='comment' formId='tellafriend'}
+        {include file='textareasize.tpl' area_name='comment' formId='tellafriend'}
       </td>
       
       <td class="formcolor">
@@ -74,7 +74,7 @@
       </td>
     </tr>
 	{if $prefs.feature_antibot eq 'y' && $user eq ''}
-		{include file="antibot.tpl" td_style="formcolor"}
+		{include file='antibot.tpl' td_style="formcolor"}
 	{/if}
 
     

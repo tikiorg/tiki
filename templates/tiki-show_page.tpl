@@ -88,7 +88,7 @@
 
 {if !$hide_page_header}
 {if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y' and isset($freetags.data[0]) and $prefs.freetags_show_middle eq 'y'}
-{include file="freetag_list.tpl"}
+{include file='freetag_list.tpl'}
 {/if}
 
 {if $pages > 1 and $prefs.wiki_page_navigation_bar neq 'bottom'}
@@ -164,7 +164,7 @@
 </table>
 </div>
 {/if}
-{if $prefs.feature_wiki_ratings eq 'y'}{include file="poll.tpl"}{/if}
+{if $prefs.feature_wiki_ratings eq 'y'}{include file='poll.tpl'}{/if}
 {/if} {*hide_page_header*}
 
 {if $pageLang eq 'ar' or $pageLang eq 'he'}

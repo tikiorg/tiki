@@ -2,7 +2,7 @@
 {if strlen($heading) > 0}
   {eval var=$heading}
 {else}
-  {include file="blog-heading.tpl"}
+  {include file='blog-heading.tpl'}
 {/if}
 {if $use_find eq 'y'}
 	<div class="blogtools">

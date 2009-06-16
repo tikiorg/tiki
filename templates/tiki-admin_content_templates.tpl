@@ -85,7 +85,7 @@
 					{tr}Edit{/tr}:
 					<br />
 					<br />
-					{include file="textareasize.tpl" area_name='editwiki' formId='editpageform' ToolbarSet='Tiki'}
+					{include file='textareasize.tpl' area_name='editwiki' formId='editpageform' ToolbarSet='Tiki'}
 					<br />
 					<br />
 					{if $prefs.quicktags_over_textarea neq 'y'}

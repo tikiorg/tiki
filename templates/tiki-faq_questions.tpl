@@ -25,7 +25,7 @@
   <tr class="formcolor">
     <td class="formcolor">{tr}Answer{/tr}:
       <br /> 
-      {include file="textareasize.tpl" area_name='faqans' formId='editpageform'}
+      {include file='textareasize.tpl' area_name='faqans' formId='editpageform'}
       {if $prefs.quicktags_over_textarea neq 'y'}
         <br />
         {include file='tiki-edit_help_tool.tpl' area_name="faqans"}

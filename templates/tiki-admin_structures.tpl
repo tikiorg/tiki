@@ -49,7 +49,7 @@
 <br /><br />
 {/if}
 {if $channels or ($find ne '')}
-  {include file="find.tpl" find_show_languages='y' find_show_categories='y' find_show_num_rows='y' }
+  {include file='find.tpl' find_show_languages='y' find_show_categories='y' find_show_num_rows='y' }
 {/if}
 <br />
 <h2>{tr}Structures{/tr}</h2>

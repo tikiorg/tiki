@@ -400,16 +400,16 @@
 <td>{tr}Description{/tr}
 {if $edit}
   <br /><br />
-  {include file="textareasize.tpl" area_name="editwiki" formId="editcalitem"}<br /><br />
+  {include file='textareasize.tpl' area_name="editwiki" formId="editcalitem"}<br /><br />
   {if $prefs.quicktags_over_textarea neq 'y'}
-    {include file="tiki-edit_help_tool.tpl" area_name="save[description]"}
+    {include file='tiki-edit_help_tool.tpl' area_name="save[description]"}
   {/if}
 {/if}
 
 </td><td>
 {if $edit}
   {if $prefs.quicktags_over_textarea eq 'y'}
-    {include file="tiki-edit_help_tool.tpl" area_name="save[description]"}
+    {include file='tiki-edit_help_tool.tpl' area_name="save[description]"}
   {/if}
   <textarea id='editwiki' class="wikiedit" cols="{$cols}" rows="{$rows}" name="save[description]" style="width:98%">{$calitem.description}</textarea>
   <input type="hidden" name="rows" value="{$rows}"/>

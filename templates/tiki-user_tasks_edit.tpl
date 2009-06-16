@@ -117,7 +117,7 @@
     </tr>
     <tr>
       <td class="formcolor">{tr}Description{/tr}<br /><br />
-        {include file="textareasize.tpl" area_name='edittask' formId='editpageform'}<br /><br /> 
+        {include file='textareasize.tpl' area_name='edittask' formId='editpageform'}<br /><br /> 
         {if $quicktags and $prefs.quicktags_over_textarea neq 'y'}
           {include file='tiki-edit_help_tool.tpl' area_name='description'}
         {/if}

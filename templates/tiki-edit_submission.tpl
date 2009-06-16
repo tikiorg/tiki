@@ -1,9 +1,9 @@
 {* Note: if you edit this file, make sure to make corresponding edits on tiki-edit_article.tpl *}
 
 {popup_init src="lib/overlib.js"}
-{include file="tiki-articles-js.tpl"}
+{include file='tiki-articles-js.tpl'}
 {if $preview}
-	{include file="tiki-preview_article.tpl"}
+	{include file='tiki-preview_article.tpl'}
 {/if}
 
 {assign var=area_name value="body"}
@@ -225,7 +225,7 @@
 			<td>
 				{tr}Body{/tr}
 				<br /><br />
-				{include file="textareasize.tpl" area_name='body' formId='editpageform'}
+				{include file='textareasize.tpl' area_name='body' formId='editpageform'}
 				{if $prefs.quicktags_over_textarea neq 'y'}
 					<br /><br />
 					{include file='tiki-edit_help_tool.tpl' area_name='body' qtnum='2'}

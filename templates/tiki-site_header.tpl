@@ -74,14 +74,14 @@
 {/if}
 {if $filegals_manager eq '' and $print_page ne 'y'}
 {if $prefs.feature_site_login eq 'y'}
-	{include file="tiki-site_header_login.tpl"}
+	{include file='tiki-site_header_login.tpl'}
 {/if}
 {/if}
 <!--[if IE]><br style="clear:both; height: 0" /> <![endif]-->
 </div>{*  end div#header-top *}
 {* navbar and search *}
 <div class="clearfix" id="tiki-top">
-	{include file="tiki-top_bar.tpl"}
+	{include file='tiki-top_bar.tpl'}
 <!--[if IE 7]><br style="clear:both; height: 0" /> <![endif]-->
 </div>
 {* topbar custom code *}

@@ -3,7 +3,7 @@
 {if $prefs.feature_ajax ne 'y' && $prefs.feature_mootools ne 'y'}
 {include file='tiki-mytiki_bar.tpl'}
 {/if}
-{include file="messu-nav.tpl"}
+{include file='messu-nav.tpl'}
 {if $prefs.messu_mailbox_size gt '0'}
 <br />
 <table border='0' cellpadding='0' cellspacing='0'>

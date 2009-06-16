@@ -20,7 +20,7 @@
 
 {* -- editable for some groups -- *}
 {elseif !empty($field_value.editableBy) and !in_array($default_group, $field_value.editableBy) and $tiki_p_admin_trackers ne 'y'}
-	{include file="tracker_item_field_value.tpl"}
+	{include file='tracker_item_field_value.tpl'}
 
 {* -------------------- system -------------------- *}
 {elseif $field_value.type eq 's' and ($field_value.name eq "Rating" or $field_value.name eq tra("Rating")) and $tiki_p_tracker_vote_ratings eq 'y'}
@@ -386,7 +386,7 @@
 {elseif $field_value.type eq 'q'}
 	<input type="hidden" name="track[{$field_value.fieldId}]" />
 	<input type="hidden" name="{$field_value.ins_id}" value="{$field_field.value|escape}" />
-	{include file="tracker_item_field_value.tpl"}
+	{include file='tracker_item_field_value.tpl'}
 
 {/if}
 

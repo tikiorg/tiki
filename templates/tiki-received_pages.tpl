@@ -53,7 +53,7 @@
 
 <h2>{tr}Received Pages{/tr}</h2>
 <div align="center">
-	{include file="find.tpl"}
+	{include file='find.tpl'}
 	{if $channels|@count > 0}
 		<p>
 			<span class="highlight">{tr}The highlight pages already exist.{/tr}</span> {tr}Please, change the name if you want the page to be uploaded.{/tr}

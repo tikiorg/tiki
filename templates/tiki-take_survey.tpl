@@ -27,7 +27,7 @@
           <table class="normal">
             <tr>
               <td valign="top">
-                {include file="textareasize.tpl" area_name='editwiki' formId='editpageform'}
+                {include file='textareasize.tpl' area_name='editwiki' formId='editpageform'}
                 <br /><br />
                 {if $prefs.quicktags_over_textarea neq 'y'}
                   {include file='tiki-edit_help_tool.tpl' area_name=question_$area qtnum='2'}

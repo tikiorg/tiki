@@ -182,7 +182,7 @@
 					<td class="formcolor">
 						{tr}Data HTML{/tr}:
 						<br /><br />
-						{include file="textareasize.tpl" area_name='editwiki' formId='editpageform'}
+						{include file='textareasize.tpl' area_name='editwiki' formId='editpageform'}
 						{if $prefs.quicktags_over_textarea neq 'y'}
 							<br /><br />
 							{include file='tiki-edit_help_tool.tpl' area_name='data'}
@@ -204,7 +204,7 @@
 					<td class="formcolor" id="txtcol1">
 						{tr}Data Txt{/tr}:
 						<br /><br />
-						{include file="textareasize.tpl" area_name='editwikitxt' formId='editpageform'}
+						{include file='textareasize.tpl' area_name='editwikitxt' formId='editpageform'}
 					</td>
 					<td class="formcolor" id="txtcol2" >
 						<textarea id='editwikitxt' name="datatxt" rows="{$rows}" cols="{$cols}">{$info.datatxt|escape}</textarea>

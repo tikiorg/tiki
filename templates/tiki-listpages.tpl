@@ -2,7 +2,7 @@
 
 {title admpage="wiki" help="Using+Wiki+Pages#List_Pages"}{tr}Pages{/tr}{/title}
 
-{include file="find.tpl" find_show_languages='y' find_show_categories='y' find_show_num_rows='y'}
+{include file='find.tpl' find_show_languages='y' find_show_categories='y' find_show_num_rows='y'}
 
 <form name="checkform" method="post" action="{$smarty.server.PHP_SELF}">
 	<input type="hidden" name="offset" value="{$offset|escape}" />
@@ -17,6 +17,6 @@
 {/if}
 
 <div id="tiki-listpages-content">
-	{include file="tiki-listpages_content.tpl"}
+	{include file='tiki-listpages_content.tpl'}
 </div>
 

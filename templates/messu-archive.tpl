@@ -1,7 +1,7 @@
 {title help="Inter-User Messages"}{tr}Message Archive{/tr}{/title}
 
 {include file='tiki-mytiki_bar.tpl'}
-{include file="messu-nav.tpl"}
+{include file='messu-nav.tpl'}
 {if $prefs.messu_archive_size gt '0'}
 <br />
 <table border='0' cellpadding='0' cellspacing='0'>

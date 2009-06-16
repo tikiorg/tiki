@@ -94,7 +94,7 @@
 {* -------------------------------------------------- tab with list --- *}
 
 {if (($tracker_info.showStatus eq 'y' and $tracker_info.showStatusAdminOnly ne 'y') or $tiki_p_admin_trackers eq 'y') or $show_filters eq 'y'}
-{include file="tracker_filter.tpl"}
+{include file='tracker_filter.tpl'}
 {/if}
 
 {if $cant_pages > 1 or $initial}{initials_filter_links}{/if}
@@ -179,7 +179,7 @@ $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr
 	{cycle values="odd,even" print=false}
 	{foreach from=$items[user].field_values item=f}
 		{if in_array($f.fieldId, $popupFields)}
-			 <tr><th class="{cycle advance=false}">{$f.name}</th><td class="{cycle}">{include file="tracker_item_field_value.tpl" field_value=$f}</th></tr>
+			 <tr><th class="{cycle advance=false}">{$f.name}</th><td class="{cycle}">{include file='tracker_item_field_value.tpl' field_value=$f}</th></tr>
 		{/if}
 	{/foreach}
 	</table>
@@ -191,7 +191,7 @@ $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr
 {/if}
 {/if}
 
-{include file="tracker_item_field_value.tpl" field_value=$field_value list_mode="y" item=$items[user] showlinks="y" reloff=$smarty.section.user.index url=""}
+{include file='tracker_item_field_value.tpl' field_value=$field_value list_mode="y" item=$items[user] showlinks="y" reloff=$smarty.section.user.index url=""}
 
 </td>
 {/if}
@@ -423,11 +423,11 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 
 {* -------------------- drop down -------------------- *}
 {elseif $field_value.type eq 'd' or $field_value.type eq 'D'}
-{include file="tracker_item_field_input.tpl"}
+{include file='tracker_item_field_input.tpl'}
 
 {* -------------------- radio buttons -------------------- *}
 {elseif $field_value.type eq 'R'}
-{include file="tracker_item_field_input.tpl"}
+{include file='tracker_item_field_input.tpl'}
 
 {* -------------------- checkbox -------------------- *}
 {elseif $field_value.type eq 'c'}
@@ -488,7 +488,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 
 {* -------------------- antibot code -------------------- *}
 {if $prefs.feature_antibot eq 'y' && $user eq ''}
-{include file="antibot.tpl" tr_style="formcolor"}
+{include file='antibot.tpl' tr_style="formcolor"}
 {/if}
 
 {if $groupforalert ne ''}

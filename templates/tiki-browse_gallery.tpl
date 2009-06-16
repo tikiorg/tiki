@@ -178,7 +178,7 @@
 
 {pagination_links cant=$cant step=$maxImages offset=$offset}{/pagination_links}
 
-{include file="find.tpl"}
+{include file='find.tpl'}
 
 {if $prefs.feature_image_galleries_comments == 'y'
   && (($tiki_p_read_comments == 'y'

@@ -59,7 +59,7 @@
 {assign var=area_name value="blogedit"}
 {if $prefs.feature_smileys eq 'y' && not $wysiwyg}
 <tr><td class="editblogform">{tr}Smileys{/tr}</td><td class="editblogform">
-   {include file="tiki-smileys.tpl" area_name='blogedit'}
+   {include file='tiki-smileys.tpl' area_name='blogedit'}
 </td></tr>
 {/if}
 
@@ -87,7 +87,7 @@
   <tr>
     <td class="editblogform">
       <br />
-      {include file="textareasize.tpl" area_name='blogedit' formId='editpageform'}
+      {include file='textareasize.tpl' area_name='blogedit' formId='editpageform'}
       <br />
 
       {if $prefs.quicktags_over_textarea neq 'y'}
@@ -146,7 +146,7 @@
   {include file='freetag.tpl'}
 {/if}
 {if $prefs.feature_contribution eq 'y'}
-{include file="contribution.tpl"}
+{include file='contribution.tpl'}
 {/if}
 <tr><td class="editblogform">&nbsp;</td><td class="editblogform">
 <input type="submit" class="wikiaction" name="preview" value="{tr}Preview{/tr}" />

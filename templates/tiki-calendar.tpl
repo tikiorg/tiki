@@ -124,15 +124,15 @@
 		</form>
 	{/if}
 
-	{include file="tiki-calendar_nav.tpl"}
+	{include file='tiki-calendar_nav.tpl'}
 	{if $viewlist eq 'list'}
-		{include file="tiki-calendar_listmode.tpl"'}
+		{include file='tiki-calendar_listmode.tpl''}
 	{elseif $viewmode eq 'day'}
-		{include file="tiki-calendar_daymode.tpl"}
+		{include file='tiki-calendar_daymode.tpl'}
 	{elseif $viewmode eq 'week'}
-		{include file="tiki-calendar_weekmode.tpl"}
+		{include file='tiki-calendar_weekmode.tpl'}
 	{else}
-		{include file="tiki-calendar_calmode.tpl"}
+		{include file='tiki-calendar_calmode.tpl'}
 	{/if}
 <p>&nbsp;</p>
 </div>

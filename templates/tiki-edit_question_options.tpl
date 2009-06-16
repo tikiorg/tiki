@@ -21,7 +21,7 @@
 
 <h2>Options</h2>
 
-{include file="find.tpl"}
+{include file='find.tpl'}
 
 <table class="normal">
 <tr>

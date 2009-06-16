@@ -4,7 +4,7 @@
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{if !empty($pageLang)}{$pageLang}{else}{$prefs.language}{/if}" lang="{if !empty($pageLang)}{$pageLang}{else}{$prefs.language}{/if}">
 	<head>
-{include file="header.tpl"}
+{include file='header.tpl'}
 	</head>
 	<body{if isset($section) and $section eq 'wiki page' and $prefs.user_dbl eq 'y' and $dblclickedit eq 'y' and $tiki_p_edit eq 'y'} ondblclick="location.href='tiki-editpage.php?page={$page|escape:"url"}';"{/if} onload="{if $prefs.feature_tabs eq 'y'}tikitabs({if $cookietab neq ''}{$cookietab}{else}1{/if},50);{/if}{if $msgError} javascript:location.hash='msgError'{/if}"{if $section or $smarty.session.fullscreen eq 'y'} class="{if $section}tiki_{$section|replace:' ':'_'}{/if}{if $smarty.session.fullscreen eq 'y'} fullscreen{/if}"{/if}>
 		<ul class="jumplinks" style="position:absolute;top:-9000px;left:-9000px;z-index:9;">
@@ -23,11 +23,11 @@
 
 {* TikiTest ToolBar *}
 {if $prefs.feature_tikitests eq 'y' and $tikitest_state neq 0}
-	{include file="tiki-tests_topbar.tpl"}
+	{include file='tiki-tests_topbar.tpl'}
 {/if}
 
 {if $prefs.feature_ajax eq 'y'}
-	{include file="tiki-ajax_header.tpl"}
+	{include file='tiki-ajax_header.tpl'}
 {/if}
 
 		{if $prefs.feature_layoutshadows eq 'y'}<div id="main-shadow">{$prefs.main_shadow_start}{/if}<div id="main">
@@ -35,13 +35,13 @@
 			{if $prefs.feature_layoutshadows eq 'y'}<div id="header-shadow">{$prefs.header_shadow_start}{/if}<div class="clearfix" id="header"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
 		{* Site header section *}
 				<div class="clearfix" id="siteheader">
-		{include file="tiki-site_header.tpl"}
+		{include file='tiki-site_header.tpl'}
 				</div>
 			</div>{if $prefs.feature_layoutshadows eq 'y'}{$prefs.header_shadow_end}</div>{/if}
 {/if}
 
 {* New admin top bar for 3.0 *}
-{include file="tiki-admin_bar.tpl"}
+{include file='tiki-admin_bar.tpl'}
 
 			{if $prefs.feature_layoutshadows eq 'y'}<div id="middle-shadow">{$prefs.middle_shadow_start}{/if}<div class="clearfix" id="middle">
 				<div class="clearfix {if $prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}nofullscreen{else}fullscreen{/if}" id="c1c2">
@@ -114,7 +114,7 @@
 			{if $prefs.feature_layoutshadows eq 'y'}<div id="footer-shadow">{$prefs.footer_shadow_start}{/if}<div id="footer">
 				<div class="footerbgtrap">
 					<div class="content"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
-		{include file="tiki-bot_bar.tpl"}
+		{include file='tiki-bot_bar.tpl'}
 					</div>
 				</div>
 			</div>{* -- END of footer -- *}{if $prefs.feature_layoutshadows eq 'y'}{$prefs.footer_shadow_end}</div>{/if}
@@ -123,7 +123,7 @@
 
 		</div>{* -- END of main -- *}{if $prefs.feature_layoutshadows eq 'y'}{$prefs.main_shadow_end}</div>{/if}
 
-{include file="footer.tpl"}
+{include file='footer.tpl'}
 
 {if $prefs.feature_endbody_code}{*this code must be added just before </body>: needed by google analytics *}
 	{eval var=$prefs.feature_endbody_code}
