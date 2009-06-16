@@ -6,8 +6,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-include_once('lib/reportslib.php');
-
 class ArtLib extends TikiLib {
 	function ArtLib($db) {
 		$this->TikiLib($db);
@@ -102,9 +100,8 @@ class ArtLib extends TikiLib {
 		    //Reports added by Clemens John <clemens-john@gmx.de> May 19th 2009
 			//Pr�fen ob Reports versendet werden d�rfen
 			if ($prefs['feature_user_watches'] == 'y' && $prefs['feature_daily_report_watches'] == 'y') {
-				global $reportslib;
 				//Benutzer die Reports eingeschaltet haben holen
-				$report_users = $reportslib->getUsersForReport();
+				$report_users = $tikilib->getUsersForReport();
 				
 				//Benutzer die Reports eingeschaltet haben in das Report-Array verschieben.
 				foreach ($nots as $key=>$not) {
@@ -114,7 +111,7 @@ class ArtLib extends TikiLib {
 					}
 				}
 				//Daten in den Reportcache schaufeln
-				$reportslib->add_report_chache_entries($report_nots, 'article_deleted', array("articleId"=>$articleId, "articleTitle"=>$article_data['title'], "authorName"=>$article_data['authorName'], "user"=>$user));
+				$tikilib->add_report_chache_entries($report_nots, 'article_deleted', array("articleId"=>$articleId, "articleTitle"=>$article_data['title'], "authorName"=>$article_data['authorName'], "user"=>$user));
 			}
 		    
 		    if (count($nots) || is_array($emails)) {
@@ -331,12 +328,12 @@ class ArtLib extends TikiLib {
 		    $_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
 	    }
 	    
-	    global $prefs, $reportslib;
+	    global $prefs;
 		//Reports added by Clemens John <clemens-john@gmx.de> May 19th 2009
 		//Pr�fen ob Reports versendet werden d�rfen
 		if ($prefs['feature_user_watches'] == 'y' && $prefs['feature_daily_report_watches'] == 'y') {
 			//Benutzer die Reports eingeschaltet haben holen
-			$report_users = $reportslib->getUsersForReport();
+			$report_users = $tikilib->getUsersForReport();
 			
 			//Benutzer die Reports eingeschaltet haben in das Report-Array verschieben.
 			foreach ($nots as $key=>$not) {
@@ -346,7 +343,7 @@ class ArtLib extends TikiLib {
 				}
 			}
 			//Daten in den Reportcache schaufeln
-			$reportslib->add_report_chache_entries($report_nots, $event, array("articleId"=>$articleId, "articleTitle"=>$title, "authorName"=>$authorName, "user"=>$user));
+			$tikilib->add_report_chache_entries($report_nots, $event, array("articleId"=>$articleId, "articleTitle"=>$title, "authorName"=>$authorName, "user"=>$user));
 		}
 	    
 	    if (count($nots) || is_array($emails)) {

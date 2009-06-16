@@ -9,8 +9,6 @@
   * \param $topicName name of the parent topic
   */
 
-include_once ('lib/reportslib.php');
-
 function sendForumEmailNotification($event, $object, $forum_info, $title, $data, $author, $topicName, $messageId='', $inReplyTo='', $threadId, $parentId, $contributions='', $postId='') {
 	global $tikilib, $prefs, $smarty, $userlib;
 
@@ -107,9 +105,8 @@ function sendForumEmailNotification($event, $object, $forum_info, $title, $data,
 	//Reports added by Clemens John <clemens-john@gmx.de> May 19th 2009
 	//Pr�fen ob Reports versendet werden d�rfen
 	if ($prefs['feature_user_watches'] == 'y' && $prefs['feature_daily_report_watches'] == 'y') {
-		global $reportslib;
 		//Benutzer die Reports eingeschaltet haben holen
-		$report_users = $reportslib->getUsersForReport();
+		$report_users = $tikilib->getUsersForReport();
 		
 		//Benutzer die Reports eingeschaltet haben in das Report-Array verschieben.
 		foreach ($nots as $key=>$not) {
@@ -119,7 +116,7 @@ function sendForumEmailNotification($event, $object, $forum_info, $title, $data,
 			}
 		}
 		//Daten in den Reportcache schaufeln
-		$reportslib->add_report_chache_entries($report_nots, $event, array("forumId"=>$forum_info['forumId'], "forumName"=>$forum_info['name'], "topicId"=>$threadId, "threadId"=>$postId, "threadName"=>$topicName, "user"=>$author));
+		$tikilib->add_report_chache_entries($report_nots, $event, array("forumId"=>$forum_info['forumId'], "forumName"=>$forum_info['name'], "topicId"=>$threadId, "threadId"=>$postId, "threadName"=>$topicName, "user"=>$author));
 	}
 
 	if (count($nots)) {
@@ -235,9 +232,8 @@ function sendWikiEmailNotification($event, $pageName, $edit_user, $edit_comment,
 	//Reports added by Clemens John <clemens-john@gmx.de> May 19th 2009
 	//Pr�fen ob Reports versendet werden d�rfen
 	if ($prefs['feature_user_watches'] == 'y' && $prefs['feature_daily_report_watches'] == 'y') {
-		global $reportslib;
 		//Benutzer die Reports eingeschaltet haben holen
-		$report_users = $reportslib->getUsersForReport();
+		$report_users = $tikilib->getUsersForReport();
 		
 		//Benutzer die Reports eingeschaltet haben in das Report-Array verschieben.
 		foreach ($nots as $key=>$not) {
@@ -248,7 +244,7 @@ function sendWikiEmailNotification($event, $pageName, $edit_user, $edit_comment,
 		}
 	
 		//Daten in den Reportcache schaufeln
-		$reportslib->add_report_chache_entries($report_nots, $event, array("pageName"=>$pageName, "object"=>$pageName, "editUser"=>$edit_user, "editComment"=>$edit_comment, "oldVer"=>$oldver));
+		$tikilib->add_report_chache_entries($report_nots, $event, array("pageName"=>$pageName, "object"=>$pageName, "editUser"=>$edit_user, "editComment"=>$edit_comment, "oldVer"=>$oldver));
 	}
 
 	if (count($nots)) {
@@ -388,9 +384,8 @@ function sendFileGalleryEmailNotification($event, $galleryId, $galleryName, $nam
     	//Reports added by Clemens John <clemens-john@gmx.de> May 19th 2009
 		//Pr�fen ob Reports versendet werden d�rfen
 		if ($prefs['feature_user_watches'] == 'y' && $prefs['feature_daily_report_watches'] == 'y') {
-			global $reportslib;
 			//Benutzer die Reports eingeschaltet haben holen
-			$report_users = $reportslib->getUsersForReport();
+			$report_users = $tikilib->getUsersForReport();
 			
 			//Benutzer die Reports eingeschaltet haben in das Report-Array verschieben.
 			foreach ($nots as $key=>$not) {
@@ -401,7 +396,7 @@ function sendFileGalleryEmailNotification($event, $galleryId, $galleryName, $nam
 			}
 	
 			//Daten in den Reportcache schaufeln
-			$reportslib->add_report_chache_entries($report_nots, $event, array("name"=>$name, "fileId"=>$fileId, "fileName"=>$filename, "galleryId"=>$galleryId, "galleryName"=>$galleryName, "action"=>$action, "user"=>$user));
+			$tikilib->add_report_chache_entries($report_nots, $event, array("name"=>$name, "fileId"=>$fileId, "fileName"=>$filename, "galleryId"=>$galleryId, "galleryName"=>$galleryName, "action"=>$action, "user"=>$user));
 		}
 
         if (count($nots)) {
@@ -486,9 +481,8 @@ function sendCategoryEmailNotification($values) {
 		//Reports added by Clemens John <clemens-john@gmx.de> May 19th 2009
 		//Pr�fen ob Reports versendet werden d�rfen
 		if ($prefs['feature_user_watches'] == 'y' && $prefs['feature_daily_report_watches'] == 'y') {
-			global $reportslib;
 			//Benutzer die Reports eingeschaltet haben holen
-			$report_users = $reportslib->getUsersForReport();
+			$report_users = $tikilib->getUsersForReport();
 			
 			//Benutzer die Reports eingeschaltet haben in das Report-Array verschieben.
 			foreach ($nots as $key=>$not) {
@@ -500,7 +494,7 @@ function sendCategoryEmailNotification($values) {
 			
 			//Daten in den Reportcache schaufeln
 			$values['user'] = $user;
-			$reportslib->add_report_chache_entries($report_nots, $event, $values);
+			$tikilib->add_report_chache_entries($report_nots, $event, $values);
 		}
 
         if (count($nots)) {        		

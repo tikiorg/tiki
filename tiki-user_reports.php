@@ -22,14 +22,14 @@ include_once ('lib/reportslib.php');
 
 //Enable User Report
 if (isset($_POST['report_preferences']) && $_POST['use_daily_reports']=="true") {
-	$reportslib->add_user_report($user,$_POST['interval'],$_POST['view'],$_POST['type'], $_POST['always_email']);
+	$tikilib->add_user_report($user,$_POST['interval'],$_POST['view'],$_POST['type'], $_POST['always_email']);
 	header('Location: tiki-user_watches.php');
 	die;
 }
 
 //Enable User Report
 if (isset($_POST['report_preferences']) && $_POST['use_daily_reports']!="true") {
-	$reportslib->delete_user_report($user);
+	$tikilib->delete_user_report($user);
 	header('Location: tiki-user_watches.php');
 	die;
 }
