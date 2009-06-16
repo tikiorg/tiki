@@ -15,27 +15,24 @@ if ($prefs['feature_daily_report_watches'] != 'y') {
 }
 
 include_once ('lib/tikilib.php');
-include_once ('lib/wiki/histlib.php');
-include_once ('lib/imagegals/imagegallib.php');
-include_once ('lib/imagegals/imagegallib.php');
 include_once ('lib/reportslib.php');
 
 foreach ($tikilib->getUsersForSendingReport() as $key => $user) {
 	$report_preferences = $tikilib->get_report_preferences_by_user($user);
 	$user_data = $userlib->get_user_info($user);
-	//Wenn keine Emailadresse gesetzt ist, mache nichts und leere den Cache
+	//If Emailadress isn´t set, do nothing but clear the cache
 	if (!empty($user_data['email'])) {
-		//Hole Cache
+		//Fetch cache
 		$report_cache = $tikilib->get_report_cache_entries_by_user($user, "time ASC");
-		//Schicke Email wenn: Einträge vorhanden oder always_email = true
+		//Send email if there is a cache or if always_email = true
 		if ($report_cache OR (!$report_cache && $report_preferences['always_email']))
 			$reportslib->sendEmail($user_data, $report_preferences, $report_cache);
 	}
 
-	//LastReportSent updaten
+	//Update Database
 	$tikilib->updateLastSent($user_data);
 
-	//Cache leeren
+	//Empty cache
 	$tikilib->deleteUsersReportCache($user_data);
 }
 

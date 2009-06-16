@@ -169,10 +169,7 @@ user_watches_ajax();
 $smarty->assign("mootab",'y');
 }
 
-$report_preferences = $tikilib->get_report_preferences_by_user($user);
-if ($report_preferences) {
-	$smarty->assign_by_ref('report_preferences', $report_preferences);
-}
+$smarty->assign_by_ref('report_preferences', $tikilib->get_report_preferences_by_user($user));
 
 $smarty->assign('mid', 'tiki-user_watches.tpl');
 $smarty->display("tiki.tpl");

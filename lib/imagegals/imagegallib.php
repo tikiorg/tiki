@@ -909,22 +909,8 @@ class ImageGalsLib extends TikiLib {
 			$event = 'image_gallery_changed';
 			$nots = $this->get_event_watches($event, $galleryId);
 			
-			//Reports added by Clemens John <clemens-john@gmx.de> May 19th 2009
-			//Pr�fen ob Reports versendet werden d�rfen
-			if ($prefs['feature_user_watches'] == 'y' && $prefs['feature_daily_report_watches'] == 'y') {
-				//Benutzer die Reports eingeschaltet haben holen
-				$report_users = $tikilib->getUsersForReport();
-				
-				//Benutzer die Reports eingeschaltet haben in das Report-Array verschieben.
-				foreach ($nots as $key=>$not) {
-					if (in_array($not['user'], $report_users)) {
-						$report_nots[] = $not['user'];
-						unset($nots[$key]);
-					}
-				}
-				
-				//Daten in den Reportcache schaufeln
-				$tikilib->add_report_chache_entries($report_nots, $event, array("imageId"=>$imageId, "imageName"=>$name, "fileName"=>$filename, "galleryId"=>$galleryId, "galleryName"=>$galleryName, "action"=>$action, "user"=>$user));
+			if ($prefs['feature_daily_report_watches'] == 'y') {
+				$tikilib->makeReportCache($nots, array("event"=>$event, "imageId"=>$imageId, "imageName"=>$name, "fileName"=>$filename, "galleryId"=>$galleryId, "galleryName"=>$galleryName, "action"=>$action, "user"=>$user));
 			}
 			
 			include_once('lib/notifications/notificationemaillib.php');

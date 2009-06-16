@@ -101,22 +101,9 @@ function sendForumEmailNotification($event, $object, $forum_info, $title, $data,
 			$not['language'] = $defaultLanguage;
 		$nots[] = $not;
 	}
-	
-	//Reports added by Clemens John <clemens-john@gmx.de> May 19th 2009
-	//Pr�fen ob Reports versendet werden d�rfen
+
 	if ($prefs['feature_user_watches'] == 'y' && $prefs['feature_daily_report_watches'] == 'y') {
-		//Benutzer die Reports eingeschaltet haben holen
-		$report_users = $tikilib->getUsersForReport();
-		
-		//Benutzer die Reports eingeschaltet haben in das Report-Array verschieben.
-		foreach ($nots as $key=>$not) {
-			if (in_array($not['user'], $report_users)) {
-				$report_nots[] = $not['user'];
-				unset($nots[$key]);
-			}
-		}
-		//Daten in den Reportcache schaufeln
-		$tikilib->add_report_chache_entries($report_nots, $event, array("forumId"=>$forum_info['forumId'], "forumName"=>$forum_info['name'], "topicId"=>$threadId, "threadId"=>$postId, "threadName"=>$topicName, "user"=>$author));
+		$tikilib->makeReportCache($nots, array("event"=>$event, "forumId"=>$forum_info['forumId'], "forumName"=>$forum_info['name'], "topicId"=>$threadId, "threadId"=>$postId, "threadName"=>$topicName, "user"=>$author));
 	}
 
 	if (count($nots)) {
@@ -229,22 +216,8 @@ function sendWikiEmailNotification($event, $pageName, $edit_user, $edit_comment,
 
 	if ($edit_user=='') $edit_user = tra('Anonymous');
 	
-	//Reports added by Clemens John <clemens-john@gmx.de> May 19th 2009
-	//Pr�fen ob Reports versendet werden d�rfen
 	if ($prefs['feature_user_watches'] == 'y' && $prefs['feature_daily_report_watches'] == 'y') {
-		//Benutzer die Reports eingeschaltet haben holen
-		$report_users = $tikilib->getUsersForReport();
-		
-		//Benutzer die Reports eingeschaltet haben in das Report-Array verschieben.
-		foreach ($nots as $key=>$not) {
-			if (in_array($not['user'], $report_users)) {
-				$report_nots[] = $not['user'];
-				unset($nots[$key]);
-			}
-		}
-	
-		//Daten in den Reportcache schaufeln
-		$tikilib->add_report_chache_entries($report_nots, $event, array("pageName"=>$pageName, "object"=>$pageName, "editUser"=>$edit_user, "editComment"=>$edit_comment, "oldVer"=>$oldver));
+		$tikilib->makeReportCache($nots, array("event"=>$event, "pageName"=>$pageName, "object"=>$pageName, "editUser"=>$edit_user, "editComment"=>$edit_comment, "oldVer"=>$oldver));
 	}
 
 	if (count($nots)) {
@@ -379,26 +352,12 @@ function sendFileGalleryEmailNotification($event, $galleryId, $galleryName, $nam
                 for ($i = count($nots) - 1; $i >=0; --$i) {
                         $nots[$i]['language'] = $tikilib->get_user_preference($nots[$i]['user'], "language", $defaultLanguage);
                 }
+                
+				if ($prefs['feature_daily_report_watches'] == 'y') {
+					$tikilib->makeReportCache($nots, array("event"=>$event, "name"=>$name, "fileId"=>$fileId, "fileName"=>$filename, "galleryId"=>$galleryId, "galleryName"=>$galleryName, "action"=>$action, "user"=>$user));
+				}
         }
         
-    	//Reports added by Clemens John <clemens-john@gmx.de> May 19th 2009
-		//Pr�fen ob Reports versendet werden d�rfen
-		if ($prefs['feature_user_watches'] == 'y' && $prefs['feature_daily_report_watches'] == 'y') {
-			//Benutzer die Reports eingeschaltet haben holen
-			$report_users = $tikilib->getUsersForReport();
-			
-			//Benutzer die Reports eingeschaltet haben in das Report-Array verschieben.
-			foreach ($nots as $key=>$not) {
-				if (in_array($not['user'], $report_users)) {
-					$report_nots[] = $not['user'];
-					unset($nots[$key]);
-				}
-			}
-	
-			//Daten in den Reportcache schaufeln
-			$tikilib->add_report_chache_entries($report_nots, $event, array("name"=>$name, "fileId"=>$fileId, "fileName"=>$filename, "galleryId"=>$galleryId, "galleryName"=>$galleryName, "action"=>$action, "user"=>$user));
-		}
-
         if (count($nots)) {
                 include_once('lib/webmail/tikimaillib.php');
                 $mail = new TikiMail();
@@ -476,25 +435,14 @@ function sendCategoryEmailNotification($values) {
 			for ($i = count($nots) - 1; $i >=0; --$i) {
 				$nots[$i]['language'] = $tikilib->get_user_preference($nots[$i]['user'], "language", $defaultLanguage);
 			}
-		}
 
-		//Reports added by Clemens John <clemens-john@gmx.de> May 19th 2009
-		//Pr�fen ob Reports versendet werden d�rfen
-		if ($prefs['feature_user_watches'] == 'y' && $prefs['feature_daily_report_watches'] == 'y') {
-			//Benutzer die Reports eingeschaltet haben holen
-			$report_users = $tikilib->getUsersForReport();
-			
-			//Benutzer die Reports eingeschaltet haben in das Report-Array verschieben.
-			foreach ($nots as $key=>$not) {
-				if (in_array($not['user'], $report_users)) {
-					$report_nots[] = $not['user'];
-					unset($nots[$key]);
-				}
+			if ($prefs['feature_daily_report_watches'] == 'y') {
+				$cache_data = $values;
+				$cache_data['user'] = $user;
+				$cache_data['event'] = $event;
+				$tikilib->makeReportCache($nots, $cache_data);
 			}
-			
-			//Daten in den Reportcache schaufeln
-			$values['user'] = $user;
-			$tikilib->add_report_chache_entries($report_nots, $event, $values);
+
 		}
 
         if (count($nots)) {        		

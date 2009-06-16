@@ -283,24 +283,11 @@ class BlogLib extends TikiLib {
 			if (!isset($_SERVER["SERVER_NAME"])) {
 				$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
 			}
-			
-			//Reports added by Clemens John <clemens-john@gmx.de> May 19th 2009
-			//Pr�fen ob Reports versendet werden d�rfen
-			if ($prefs['feature_user_watches'] == 'y' && $prefs['feature_daily_report_watches'] == 'y') {
-				//Benutzer die Reports eingeschaltet haben holen
-				$report_users = $tikilib->getUsersForReport();
-				
-				//Benutzer die Reports eingeschaltet haben in das Report-Array verschieben.
-				foreach ($nots as $key=>$not) {
-					if (in_array($not['user'], $report_users)) {
-						$report_nots[] = $not['user'];
-						unset($nots[$key]);
-					}
-				}
-				//Daten in den Reportcache schaufeln
+
+			if ($prefs['feature_daily_report_watches'] == 'y') {
 				$query = "select `title` from `tiki_blogs` where `blogId`=?";
 				$blogTitle = $this->getOne($query, array((int)$blogId));
-				$tikilib->add_report_chache_entries($report_nots, 'blog_post', array("blogId"=>$blogId, "blogTitle"=>$blogTitle, "postId"=>$id, "user"=>$user));
+				$tikilib->makeReportCache($nots, array("event"=>'blog_post', "blogId"=>$blogId, "blogTitle"=>$blogTitle, "postId"=>$id, "user"=>$user));
 			}
 			
 			if (count($nots)) {

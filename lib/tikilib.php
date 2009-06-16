@@ -565,20 +565,6 @@ class TikiLib extends TikiDB {
 		return $ret;
 	}
 	
-	function getUsersForReport() {
-		$query = "select `user`, `interval`, `last_report` from tiki_user_reports";
-		$result = $this->query($query);
-		if (!$result->numRows()) {
-			return false;
-		}
-		$ret = array();
-		while ($res = $result->fetchRow()) {
-			$ret[] = $res['user'];
-		}
-
-		return $ret;
-	}
-
 	function getUsersForSendingReport() {
 		$query = "select `user`, `interval`, UNIX_TIMESTAMP(`last_report`) as last_report from tiki_user_reports";
 		$result = $this->query($query);
@@ -601,15 +587,30 @@ class TikiLib extends TikiDB {
 		return $ret;
 	}
 	
-	function add_report_chache_entries($users, $event, $data) {
-		foreach ($users as $user) {
-			$query = "insert into `tiki_user_reports_cache`(`user`, `event`, `data`,`time`) ";
-			$query.= "values(?,?,?,NOW())";
-			$this->query($query,array($user, $event, serialize($data)));
+	function makeReportCache(&$nots, $cache_data) {
+		//Get all users that have enabled reports
+		$query = "select `user` from tiki_user_reports";
+		$result = $this->query($query);
+		$report_users = array();
+		while ($res = $result->fetchRow()) {
+			$report_users[] = $res['user'];
 		}
 		
-		return true;
+		foreach ($nots as $key=>$not) {
+			//If user in $nots has enabled reports
+			if (in_array($not['user'], $report_users)) {
+				//dump the report-data to the report cache
+				$query = "insert into `tiki_user_reports_cache`(`user`, `event`, `data`,`time`) ";
+				$query.= "values(?,?,?,NOW())";
+				$this->query($query,array($not['user'], $cache_data['event'], serialize($cache_data)));
+
+				//and reove the user from $nots so that he doesn´t get a notification for the event
+				unset($nots[$key]);
+			}
+		}
 	}
+	
+	
 	
 	function get_report_cache_entries_by_user($user, $order_by) {
 		$query = "select `user`, `event`, `data`, `time` from `tiki_user_reports_cache` where `user` = ? ORDER BY $order_by";

@@ -9463,5 +9463,17 @@ $lang=Array(
 "to the topic" => "auf das Thema",
 "Nothing has happened." => "Es wurde nichts gändert",
 "more changes of the same type..." => "weitere &Auml;nderungen der selben Art...",
+"Use reports to summarise notifications about objects you are watching." => "Nutze Reports um Notifikations in einer Email zusammenzufassen.",
+"Interval in witch you want to get the reports" => "Intervall in dem dir Reports gesendet werden sollen",
+"Use reports" => "Reports benutzen",
+"Short report" => "Kurzer Report",
+"Detailed report" => "Detailierter Report",
+"HTML-Email" => "HTML-Email",
+"Plain text" => "Nur Text",
+"Send me an email also if nothing happened" => "Schicke mir eine Email, auch wenn nichts passiert ist",
+"Reports are disabled, only standard reporting is available" => "Reports sind ausgeschaltet, nur Standart-Reporting ist verfügbar",
+
+
+
 //Report-Translations (Email) END
 "###end###"=>"###end###");

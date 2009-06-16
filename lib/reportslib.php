@@ -5,7 +5,7 @@ class reportsLib extends TikiLib{
 		$this->TikiLib($db);
 	}
 	
-	//Fügt die verscheidenen Emailteile zusammen
+	//Sends the Email
 	public function sendEmail($user_data, $report_preferences, $report_cache) {
 		global $prefs, $smarty;
 
@@ -57,7 +57,7 @@ class reportsLib extends TikiLib{
 		return true;
 	}
 	
-	//Erstellt eine schöne Zeitangabe
+	//Makes time short
 	private function makeTime($time) {
 		if (date("d.m.Y", $time)==date("d.m.Y", time()-86400)) {
 			return tra("Yesterday")." ".date("H:i", $time);

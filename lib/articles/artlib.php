@@ -97,21 +97,8 @@ class ArtLib extends TikiLib {
 			    $_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
 		    }
 		    
-		    //Reports added by Clemens John <clemens-john@gmx.de> May 19th 2009
-			//Pr�fen ob Reports versendet werden d�rfen
 			if ($prefs['feature_user_watches'] == 'y' && $prefs['feature_daily_report_watches'] == 'y') {
-				//Benutzer die Reports eingeschaltet haben holen
-				$report_users = $tikilib->getUsersForReport();
-				
-				//Benutzer die Reports eingeschaltet haben in das Report-Array verschieben.
-				foreach ($nots as $key=>$not) {
-					if (in_array($not['user'], $report_users)) {
-						$report_nots[] = $not['user'];
-						unset($nots[$key]);
-					}
-				}
-				//Daten in den Reportcache schaufeln
-				$tikilib->add_report_chache_entries($report_nots, 'article_deleted', array("articleId"=>$articleId, "articleTitle"=>$article_data['title'], "authorName"=>$article_data['authorName'], "user"=>$user));
+				$tikilib->makeReportCache($nots, array("event"=>'article_deleted', "articleId"=>$articleId, "articleTitle"=>$article_data['title'], "authorName"=>$article_data['authorName'], "user"=>$user));
 			}
 		    
 		    if (count($nots) || is_array($emails)) {
@@ -329,21 +316,8 @@ class ArtLib extends TikiLib {
 	    }
 	    
 	    global $prefs;
-		//Reports added by Clemens John <clemens-john@gmx.de> May 19th 2009
-		//Pr�fen ob Reports versendet werden d�rfen
 		if ($prefs['feature_user_watches'] == 'y' && $prefs['feature_daily_report_watches'] == 'y') {
-			//Benutzer die Reports eingeschaltet haben holen
-			$report_users = $tikilib->getUsersForReport();
-			
-			//Benutzer die Reports eingeschaltet haben in das Report-Array verschieben.
-			foreach ($nots as $key=>$not) {
-				if (in_array($not['user'], $report_users)) {
-					$report_nots[] = $not['user'];
-					unset($nots[$key]);
-				}
-			}
-			//Daten in den Reportcache schaufeln
-			$tikilib->add_report_chache_entries($report_nots, $event, array("articleId"=>$articleId, "articleTitle"=>$title, "authorName"=>$authorName, "user"=>$user));
+			$tikilib->makeReportCache($nots, array("event"=>$event, "articleId"=>$articleId, "articleTitle"=>$title, "authorName"=>$authorName, "user"=>$user));
 		}
 	    
 	    if (count($nots) || is_array($emails)) {

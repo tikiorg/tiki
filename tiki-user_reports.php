@@ -20,14 +20,14 @@ if ($prefs['feature_daily_report_watches'] != 'y') {
 
 include_once ('lib/reportslib.php');
 
-//Enable User Report
+//Enable User Reports
 if (isset($_POST['report_preferences']) && $_POST['use_daily_reports']=="true") {
 	$tikilib->add_user_report($user,$_POST['interval'],$_POST['view'],$_POST['type'], $_POST['always_email']);
 	header('Location: tiki-user_watches.php');
 	die;
 }
 
-//Enable User Report
+//Disable User Reports
 if (isset($_POST['report_preferences']) && $_POST['use_daily_reports']!="true") {
 	$tikilib->delete_user_report($user);
 	header('Location: tiki-user_watches.php');
