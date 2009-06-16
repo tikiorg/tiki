@@ -424,6 +424,10 @@ input[id="sl-login-pass"] {}
 	margin: 0;
 	margin-top: 4px}
 
+#tiki-top #sitesearchbar br {
+	display: none;
+}
+
 select[name="where"],
 input[name="search"] {}
 
