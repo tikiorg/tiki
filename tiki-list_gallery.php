@@ -116,9 +116,9 @@ if($user!='admin' && $user!=$gal_info["user"] && $gal_info["public"]!='y') {
 	$gal_info["galleryId"] = 0;
 
 	$gal_info["user"] = 'admin';
-	$gal_info["name"] = 'System';
+	$gal_info["name"] = tra('System');
 	$gal_info["public"] = 'y';
-	$gal_info["description"] = 'System Gallery';
+	$gal_info["description"] = tra('System Gallery');
 	$gal_info["sortdirection"] = 'desc';
 	$gal_info["sortorder"] = 'created';
 }
@@ -168,9 +168,9 @@ if ($_REQUEST["galleryId"] == 0) {
 	$info["thumbSizeY"] = 100;
 	$info["galleryId"] = 0;
 	$info["user"] = 'admin';
-	$info["name"] = 'System';
+	$info["name"] = tra('System');
 	$info["public"] = 'y';
-	$info["description"] = 'System Gallery';
+	$info["description"] = tra('System Gallery');
 	$info["sortdirection"] = 'desc';
 	$info["sortorder"] = 'created';
 
