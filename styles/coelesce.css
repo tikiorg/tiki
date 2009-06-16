@@ -653,7 +653,6 @@ div.menuSection div.separator {}
 	color: #fff !important;
 	text-decoration: none} 
 
-* html .horbaritem a {font-size: .8em}
 .mdkverbar {} 
 
 .mdksubmenu {
@@ -704,7 +703,7 @@ div.menuSection div.separator {}
 
 .mdkitem a:active {} 
 
-/* Tree menu (also on Browse Categories */
+/* Tree menu (also on Browse Categories) */
 .treemenudiv {
 	display: block;
 	white-space: nowrap;
