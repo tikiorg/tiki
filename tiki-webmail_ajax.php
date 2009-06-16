@@ -45,7 +45,7 @@ function doPutBackWebmail(messageID) {
 
 //var refreshWebmailRequest;
 
-function doRefreshWebmail(start, reload) {
+function doRefreshWebmail(start, reload, checkAccount) {
 	if (\$jq('.box-webmail_inbox .box-data').css('display') != 'none') {
 		//if (\$jq('#$divId .webmail_refresh_busy').css('display') == 'none') {
 			xajax.config.requestURI = 'tiki-webmail_ajax.php';	// tell it where to send the request
@@ -62,7 +62,7 @@ function doRefreshWebmail(start, reload) {
 			//}
 			//xajax.call( 'refreshWebmail', { callback: cback, destDiv: '$divId', inStart: start, inReload: reload } );
 			
-			xajax_refreshWebmail('$divId', start, reload);
+			xajax_refreshWebmail('$divId', start, reload, checkAccount);
 			showWebmailMessage('".tra('Checking')."...');
 		//} else {
 		//	xajax.abortRequest(refreshWebmailRequest);
@@ -108,7 +108,7 @@ function showWebmailMessage(inMsg) {
 
 }
 
-function refreshWebmail($destDiv = 'mod-webmail_inbox', $inStart = 0, $inReload = false) {
+function refreshWebmail($destDiv = 'mod-webmail_inbox', $inStart = 0, $inReload = false, $inCheckAccount = false) {
 	global $user, $smarty, $prefs, $ajaxlib, $module_params;
 	
 	if (isset($_SESSION['webmailinbox'][$destDiv]['module_params'])) {
@@ -123,6 +123,9 @@ function refreshWebmail($destDiv = 'mod-webmail_inbox', $inStart = 0, $inReload 
 	$module_params['notitle'] = 'y';
 	$module_params['np'] = '0';
 	$module_params['module'] = 'webmail_inbox';
+	if ($inCheckAccount) {
+		$module_params['accountid'] = '0';
+	}
 	if ($inStart > 0) {
 		$_SESSION['webmailinbox'][$destDiv]['start'] = $inStart;
 	}

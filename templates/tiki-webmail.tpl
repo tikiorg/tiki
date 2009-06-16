@@ -8,26 +8,26 @@
 <table width="100%" border=0>
 	<tr>
 		<td>
-			<a href="tiki-webmail.php?locSection=mailbox" title="{tr}Mailbox{/tr}"><img src="img/webmail/mailbox.gif" alt="{tr}Mailbox{/tr}" /></a>
+			{self_link _icon='img/webmail/mailbox.gif' locSection='mailbox' _width='48' _height='48'}{tr}Mailbox{/tr}{/self_link}
 			<br />
-			<a class="link" href="tiki-webmail.php?locSection=mailbox" title="{tr}Mailbox{/tr}">{tr}Mailbox{/tr}</a>
+			{self_link locSection='mailbox'}{tr}Mailbox{/tr}{/self_link}
 		</td>
 		<td>
-			<a href="tiki-webmail.php?locSection=compose" title="{tr}Compose{/tr}"><img src="img/webmail/compose.gif" alt="{tr}Compose{/tr}" /></a>
+			{self_link _icon='img/webmail/compose.gif' locSection='compose' _width='48' _height='48'}{tr}Compose{/tr}{/self_link}
 			<br />
-			<a class="link" href="tiki-webmail.php?locSection=compose" title="{tr}Compose{/tr}">{tr}Compose{/tr}</a>
+			{self_link locSection='compose'}{tr}Compose{/tr}{/self_link}
 		</td>
 		<td>
-			<a href="tiki-webmail.php?locSection=contacts" title="{tr}Contacts{/tr}"><img src="img/webmail/contact.gif" alt="{tr}Contacts{/tr}" /></a>
+			{self_link _icon='img/webmail/contact.gif' locSection='contacts' _width='48' _height='48'}{tr}Contacts{/tr}{/self_link}
 			<br />
-			<a class="link" href="tiki-webmail.php?locSection=contacts" title="{tr}Contacts{/tr}">{tr}Contacts{/tr}</a>
+			{self_link locSection='contacts'}{tr}Contacts{/tr}{/self_link}
 		</td>
 		<td width="50%">
 		</td>
 		<td>
-			<a href="tiki-webmail.php?locSection=settings" title="{tr}Settings{/tr}"><img src="img/webmail/settings.gif" alt="{tr}Settings{/tr}" /></a>
+			{self_link _icon='img/webmail/settings.gif' locSection='settings' _width='48' _height='48'}{tr}Settings{/tr}{/self_link}
 			<br />
-			<a class="link" href="tiki-webmail.php?locSection=settings" title="{tr}Settings{/tr}">{tr}Settings{/tr}</a>
+			{self_link locSection='settings'}{tr}Settings{/tr}{/self_link}
 		</td>
 	</tr>
 </table>
@@ -191,14 +191,18 @@
 			{section name=ix loop=$accounts}
 				<tr>
 					<td class="{cycle advance=false}">
-						{if $accounts[ix].current ne 'y'}
-							<a href="tiki-webmail.php?locSection=settings&amp;current={$accounts[ix].accountId}" title="{tr}Activate{/tr}">{icon _id='star_grey' alt="{tr}Click to activate{/tr}"}</a>
+						{if $accounts[ix].current ne 'y' and $accounts[ix].accountId ne $mailCurrentAccount}
+							{self_link _icon='star_grey' locSection='settings' current=$accounts[ix].accountId}{tr}Activate{/tr}{/self_link}
 						{else}
 							{icon _id='star' alt="{tr}This is the active account.{/tr}"}
 						{/if}
 					</td>
 					<td class="{cycle advance=false}">
-						<a href="tiki-webmail.php?locSection=settings&amp;current={$accounts[ix].accountId}" class="{if $accounts[ix].current eq 'y'}tablename{else}link{/if}" title="{if $accounts[ix].current ne 'y'}{tr}Activate{/tr}{/if}">{$accounts[ix].account}</a>
+						{if $accounts[ix].current ne 'y' and $accounts[ix].accountId ne $mailCurrentAccount}
+							{self_link locSection='settings' current=$accounts[ix].accountId}{$accounts[ix].account class='link' _title='{tr}Activate{/tr}'}{/self_link}{* TODO make_title work? *}
+						{else}
+							<strong>{$accounts[ix].account}</strong>
+						{/if}
 					</td>
 					<td class="{cycle advance=false}">
 						{if $accounts[ix].current eq 'y'}{tr}Yes{/tr}{else}{tr}No{/tr}{/if}
@@ -213,10 +217,10 @@
 						{$accounts[ix].username}
 					</td>
 					<td class="{cycle}">
-						<a href="tiki-webmail.php?locSection=settings&amp;remove={$accounts[ix].accountId}" class="link" title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
-						<a href="tiki-webmail.php?locSection=settings&amp;accountId={$accounts[ix].accountId}" class="tablename" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
-						{if $accounts[ix].current ne 'y'}
-							<a href="tiki-webmail.php?locSection=settings&amp;current={$accounts[ix].accountId}" title="{tr}Activate{/tr}">{icon _id='accept' alt="{tr}Click to activate{/tr}"}</a>
+						{self_link _icon='cross' locSection=settings remove=$accounts[ix].accountId}{tr}Delete{/tr}{/self_link}
+						{self_link _icon='page_edit' locSection='settings' accountId=$accounts[ix].accountId}{tr}Edit{/tr}{/self_link}
+						{if $accounts[ix].current ne 'y' and $accounts[ix].accountId ne $mailCurrentAccount}
+							{self_link _icon='accept' locSection='settings' current=$accounts[ix].accountId}{tr}Activate{/tr}{/self_link}
 						{/if}
 					</td>
 				</tr>
@@ -245,13 +249,17 @@
 					<tr>
 						<td class="{cycle advance=false}">
 							{if $pubAccounts[ixp].current ne 'y' and $pubAccounts[ixp].accountId ne $mailCurrentAccount}
-								<a href="tiki-webmail.php?locSection=settings&amp;current={$pubAccounts[ixp].accountId}" title="{tr}Click to activate{/tr}">{icon _id='star_grey' alt="{tr}Click to activate{/tr}"}</a>
+								{self_link _icon='star_grey' locSection='settings' current=$pubAccounts[ixp].accountId}{tr}Activate{/tr}{/self_link}
 							{else}
 								{icon _id='star' alt="{tr}This is the active account.{/tr}"}
 							{/if}
 						</td>
 						<td class="{cycle advance=false}">
-							<a href="tiki-webmail.php?locSection=settings&amp;current={$pubAccounts[ixp].accountId}" class="{if $pubAccounts[ixp].current eq 'y'}tablename{else}link{/if}" title="{if $pubAccounts[ixp].current ne 'y'}{tr}Activate{/tr}{/if}">{$pubAccounts[ixp].account}</a>
+							{if $pubAccounts[ixp].current ne 'y' and $pubAccounts[ixp].accountId ne $mailCurrentAccount}
+								{self_link locSection='settings' current=$pubAccounts[ixp].accountId}{$pubAccounts[ixp].account class='link' _title='{tr}Activate{/tr}'}{/self_link}{* TODO make self_link _title work when no icon? *}
+							{else}
+								<strong>{$pubAccounts[ixp].account}</strong>
+							{/if}
 						</td>
 						<td class="{cycle advance=false}">{if $pubAccounts[ixp].current eq 'y'}{tr}Yes{/tr}{else}{tr}No{/tr}{/if}</td>
 						<td class="{cycle advance=false}">
@@ -263,11 +271,11 @@
 						<td class="{cycle advance=false}">{$pubAccounts[ixp].username}</td>
 						<td class="{cycle}">
 							{if $tiki_p_admin_group_webmail eq 'y'or $tiki_p_admin eq 'y'}
-								<a href="tiki-webmail.php?locSection=settings&amp;remove={$pubAccounts[ixp].accountId}" class="link" title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
-								<a href="tiki-webmail.php?locSection=settings&amp;accountId={$pubAccounts[ixp].accountId}" class="tablename" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
+								{self_link _icon='cross' locSection=settings remove=$pubAccounts[ixp].accountId}{tr}Delete{/tr}{/self_link}
+								{self_link _icon='page_edit' locSection='settings' accountId=$pubAccounts[ixp].accountId}{tr}Edit{/tr}{/self_link}
 							{/if}
 							{if $pubAccounts[ixp].current ne 'y' and $pubAccounts[ixp].accountId ne $mailCurrentAccount}
-								<a href="tiki-webmail.php?locSection=settings&amp;current={$pubAccounts[ixp].accountId}" title="{tr}Activate{/tr}">{icon _id='accept' alt="{tr}Click to activate{/tr}"}</a>
+								{self_link _icon='accept' locSection='settings' current=$pubAccounts[ixp].accountId}{tr}Activate{/tr}{/self_link}
 							{/if}
 						</td>
 					</tr>
