@@ -160,7 +160,7 @@ $ajaxlib = new TikiAjax();
 $ajaxlib->registerFunction("loadComponent");
 
 function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user = '') {
-	global $smarty, $ajaxlib, $prefs, $user;
+	global $smarty, $ajaxlib, $prefs, $user, $headerlib;
 	global $js_script;
 	$objResponse = new xajaxResponse('UTF-8');
 
@@ -276,7 +276,18 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
 		$tab = ( $cookietab != '' ) ? (int)$cookietab : 1;
 		$objResponse->script("tikitabs($tab,$max_tikitabs);");
 	}
-
+	// collect js from headerlib
+	foreach($headerlib->getJs() as $s) {
+		if (trim($s) != '') {
+			$objResponse->script($s);
+		}
+	}
+	foreach($headerlib->getJsfiles() as $f) {
+		if (trim($f) != '') {
+			$objResponse->includeScript($f);
+		}
+	}
+	
 	return $objResponse;
 }
 
