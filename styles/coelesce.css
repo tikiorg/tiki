@@ -384,7 +384,9 @@ div#sitead {margin: auto}
 	/*line-height: 1;
 	float: left*/}
 	
-.nohighlight {position: relative}
+* html #sitesearchbar .nohighlight {
+	margin-top: -18px;
+}
 
 #sitesearchbar .nohighlight ul.cssmenu {
 	position: absolute;
@@ -397,6 +399,9 @@ div#sitead {margin: auto}
 	
 #sitesearchbar ul.cssmenu > li { }
 
+#sitesearchbar .searchhighlight input {
+	border: none;
+}
 .cbox-data .nohighlight {
 	position: static;
 	height: 30px;
