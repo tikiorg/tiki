@@ -495,7 +495,9 @@ input[id="sl-login-pass"] {}
 
 #tiki-top {
 	background: url(coelesce/pagebg.jpg) repeat-x;
-	padding-top: 2px}
+	padding-top: 2px;
+	clear: both;
+}
 
 * html #tiki-top { font-size: 11px }
 *:first-child+html #tiki-top {
