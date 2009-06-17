@@ -87,8 +87,12 @@ if ($prefs['feature_ajax'] == 'y') {
 		}
 
 		/**
+		 * Register a JavaScript function
 		 * 
-		 * 
+		 * @access	public
+		 * @param	string|array $mFunction - JS function name OR array e.g. array('myFunctionName', array('callback' => 'myCallbackVarName')
+		 * @param	int $sRequestType {XAJAX_GET = 0}
+		 * @return	void
 		 */
 		function registerFunction($mFunction, $sRequestType=XAJAX_GET) {
 			$functionName = is_array($mFunction) ? $mFunction[0] : $mFunction;
@@ -109,7 +113,11 @@ if ($prefs['feature_ajax'] == 'y') {
 					} 
 				} 
 			}
-			xajax::register(XAJAX_FUNCTION,$mFunction);
+			if (is_array($mFunction) && count($mFunction) > 1) {
+				xajax::register(XAJAX_FUNCTION,$functionName, $mFunction[1]);
+			} else {
+				xajax::register(XAJAX_FUNCTION,$mFunction);
+			}
 		}
 
 		/*
