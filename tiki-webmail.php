@@ -579,7 +579,7 @@ END;
 
 	if (isset($_REQUEST["current"])) {
 		$webmaillib->current_webmail_account($user, $_REQUEST["current"]);
-		$headerlib->add_js('if (typeof doRefreshWebmail == "function") { doRefreshWebmail(0, false, true); }');
+		$headerlib->add_js('if (typeof doRefreshWebmail == "function") { doRefreshWebmail(); }');
 	}
 
 	$smarty->assign('mailCurrentAccount', $tikilib->get_user_preference($user, 'mailCurrentAccount', 0));

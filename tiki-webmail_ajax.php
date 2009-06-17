@@ -43,34 +43,38 @@ function doPutBackWebmail(messageID) {
 	\$jq('#$divId .webmail_refresh_message').show();
 }
 
-//var refreshWebmailRequest;
+var refreshWebmailRequest;
 
-function doRefreshWebmail(start, reload, checkAccount) {
+function doRefreshWebmail(start, reload) {
 	if (\$jq('.box-webmail_inbox .box-data').css('display') != 'none') {
-		//if (\$jq('#$divId .webmail_refresh_busy').css('display') == 'none') {
+		if (\$jq('#$divId .webmail_refresh_busy').css('display') == 'none') {
 			xajax.config.requestURI = 'tiki-webmail_ajax.php';	// tell it where to send the request
 			xajax.config.statusMessages = true;
 			xajax.config.waitCursor = false;
 			
-			// can't get callback to work in tiki - try again later :(
-			//cback = xajax.callback.create();
-			//cback.onRequest = function (oRequest) {
-			//	refreshWebmailRequest = oRequest;
-			//}
-			//cback.onComplete = function (oRequest) {
-			//	refreshWebmailRequest = false;
-			//}
-			//xajax.call( 'refreshWebmail', { callback: cback, destDiv: '$divId', inStart: start, inReload: reload } );
+			// set up a local callback
+			refreshWebmailCallback = xajax.callback.create();
+			refreshWebmailCallback.onRequest = function (oRequest) { refreshWebmailRequest = oRequest; }
+			refreshWebmailCallback.onComplete = function (oRequest) { refreshWebmailRequest = false; }
+			// and a global one so oither AJAX request cancel mail checking (also doesn't seem to really speed things up so far...)
+			xajax.callback.global.onRequest = function() { cancelRefreshWebmail(); };
 			
-			xajax_refreshWebmail('$divId', start, reload, checkAccount);
+			xajax_refreshWebmail('$divId', start, reload);
 			showWebmailMessage('".tra('Checking')."...');
-		//} else {
-		//	xajax.abortRequest(refreshWebmailRequest);
-		//	showWebmailMessage('".tra('Aborted')."...');
-		//}
+		} else {
+			cancelRefreshWebmail();
+		}
 	}
 	if (typeof autoRefresh != 'undefined' && typeof doRefreshWebmail == 'function') {
 		setTimeout('doRefreshWebmail()', autoRefresh);
+	}
+}
+
+function cancelRefreshWebmail() {
+	if (refreshWebmailRequest) {
+		xajax.abortRequest(refreshWebmailRequest);
+		showWebmailMessage('".tra('Aborted')."...');
+		setTimeout('clearWebmailMessage();', 1000);
 	}
 }
 
@@ -102,13 +106,18 @@ function showWebmailMessage(inMsg) {
 	clearWebmailMessage();
 	\$jq('#$divId .mod_webmail_list').hide();
 });
+
+\$jq(window).unload( function() {
+	// doesn't seem to help - gets processed after doRefreshWebmail anyway
+	cancelRefreshWebmail();
+});
 ");
 	
 } else {	// end if (!isset($_REQUEST['xjxfun'])) - AJAX call
 
 }
 
-function refreshWebmail($destDiv = 'mod-webmail_inbox', $inStart = 0, $inReload = false, $inCheckAccount = false) {
+function refreshWebmail($destDiv = 'mod-webmail_inbox', $inStart = 0, $inReload = false) {
 	global $user, $smarty, $prefs, $ajaxlib, $module_params;
 	
 	if (isset($_SESSION['webmailinbox'][$destDiv]['module_params'])) {
@@ -123,9 +132,7 @@ function refreshWebmail($destDiv = 'mod-webmail_inbox', $inStart = 0, $inReload 
 	$module_params['notitle'] = 'y';
 	$module_params['np'] = '0';
 	$module_params['module'] = 'webmail_inbox';
-	if ($inCheckAccount) {
-		$module_params['accountid'] = '0';
-	}
+
 	if ($inStart > 0) {
 		$_SESSION['webmailinbox'][$destDiv]['start'] = $inStart;
 	}
@@ -227,7 +234,7 @@ function putBackGroupMail($destDiv = 'mod-webmail_inbox', $msgId) {
 	return $objResponse;
 }
 
-$ajaxlib->registerFunction('refreshWebmail');
+$ajaxlib->registerFunction(array('refreshWebmail', array('callback' => 'refreshWebmailCallback')));
 $ajaxlib->registerFunction('takeGroupMail');
 $ajaxlib->registerFunction('putBackGroupMail');
 $ajaxlib->processRequests();
