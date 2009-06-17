@@ -30,9 +30,9 @@ foreach ($tikilib->getUsersForSendingReport() as $key => $user) {
 	}
 
 	//Update Database
-	$tikilib->updateLastSent($user_data);
+	//$tikilib->updateLastSent($user_data['login']);
 
 	//Empty cache
-	$tikilib->deleteUsersReportCache($user_data);
+	//$tikilib->deleteUsersReportCache($user_data['login']);
 }
 

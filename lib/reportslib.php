@@ -34,15 +34,17 @@ class reportsLib extends TikiLib{
 		} else {
 			$changes = tra("No changes");
 		}
-		
+
 		$subject = tra(ucfirst($report_preferences['interval'])." report from")." ".date("d.m.Y", time())." (".$changes.")";
 		$mail->setSubject($subject);
 		$mail_data = $smarty->fetchLang('de', "mail/report.tpl");
 		$mail->setText($mail_data);
-		
+
+		echo "<pre>";		
 		echo "Going to ".$user_data['email']."<br>";
 		echo "Subject: ".$subject."<br>";
 		echo "Message template:<br>".$mail_data;
+		echo "</pre>";
 				
 		$mail->buildMessage();
 		$mail->send(array($user_data['email']));
@@ -78,6 +80,7 @@ class reportsLib extends TikiLib{
 	}
 	
 	public function makeHtmlEmailBody($report_cache, $report_preferences) {
+		
 		$change_array = $this->makeChangeArray($report_cache);
 		
 		$somethingHasHappened = false;
@@ -99,12 +102,14 @@ class reportsLib extends TikiLib{
 				} elseif ($report_preferences['view']=="detailed" OR $key==0) {
 
 				if ($morechanges>0) {
-					$body .= "&nbsp;&nbsp;&nbsp;".tra("and")." ".$morechanges." ".tra("more changes of the same type...")."<br>";
+					$body .= "   ".tra("and")." ".$morechanges." ".tra("more changes of the same type...")."<br>";
 					$morechanges = 0;
+					if($report_preferences['type']=='plain')
+						$body .= "\r\n";
 				}
 
 				if($key>0)
-					$body .= "&nbsp; ";
+					$body .= "   ";
 				else
 					$body .= "<b>";
 
@@ -161,9 +166,14 @@ class reportsLib extends TikiLib{
 					$body .= "</b>";
 					
 				$body .= "<br>";
+				if($report_preferences['type']=='plain')
+					$body .= "\r\n";
 			}
 			}
 		}
+		
+		if($report_preferences['type']=='plain')
+			$body = strip_tags($body);
 		
 		if(!$somethingHasHappened) {
 			return tra("Nothing has happened.");

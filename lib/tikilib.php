@@ -534,20 +534,25 @@ class TikiLib extends TikiDB {
 	function add_user_report($user, $interval, $view, $type, $always_email) {
 		if(!isset($always_email))
 			$always_email = 0;
-			
-		if ($this->get_report_preferences_by_user($user))
-			$this->delete_user_report($user);
-
-		$query = "insert into `tiki_user_reports`(`user`, `interval`, `view`, `type`, `always_email`, `last_report`) ";
-		$query.= "values(?,?,?,?,?,NOW())";
-		$this->query($query,array($user,$interval,$view,$type,$always_email));
-
+		
+		if (!$this->get_report_preferences_by_user($user)) {
+			//Add new report entry	
+			$query = "insert into `tiki_user_reports`(`user`, `interval`, `view`, `type`, `always_email`, `last_report`) ";
+			$query.= "values(?,?,?,?,?,NOW())";
+			$this->query($query,array($user,$interval,$view,$type,$always_email));
+		} else {
+			//Update report entry
+			$query = "update `tiki_user_reports` set `interval`=?, `view`=?, `type`=?, `always_email`=? where `user`=?";
+			$this->query($query,array($interval,$view,$type,$always_email,$user));
+		}
 		return true;
 	}
 	
 	function delete_user_report($user) {
 		$query = "delete from `tiki_user_reports` where `user`=?";
 		$this->query($query,array($user));
+
+		$this->deleteUsersReportCache($user);
 		return true;
 	}
 	
@@ -627,15 +632,15 @@ class TikiLib extends TikiDB {
 		return $ret;
 	}
 	
-	function deleteUsersReportCache($user_data) {
+	function deleteUsersReportCache($user) {
 		$query = "delete from `tiki_user_reports_cache` where `user`=?";
-		$this->query($query,array($user_data['login']));
+		$this->query($query,array($user));
 		return true;
 	}
 	
-	function updateLastSent($user_data) {
+	function updateLastSent($user) {
 		$query = "update `tiki_user_reports` set last_report = NOW() where `user`=?";
-		$this->query($query,array($user_data['login']));
+		$this->query($query,array($user));
 		return true;
 	}
 	
