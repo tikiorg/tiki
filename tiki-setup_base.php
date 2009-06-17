@@ -215,6 +215,23 @@ $vartype['userole'] = 'int';
 $vartype['focus'] = 'string';
 $vartype['filegals_manager'] = 'vars';
 $vartype['ver'] = 'dotvars'; // filename hash for drawlib + rss type for rsslib
+$vartype['trackerId'] = 'int';
+$vartype['articleId'] = 'int';
+$vartype['galleryId'] = 'int';
+$vartype['blogId'] = 'int';
+$vartype['postId'] = 'int';
+$vartype['calendarId'] = 'int';
+$vartype['faqId'] = 'int';
+$vartype['quizId'] = 'int';
+$vartype['sheetId'] = 'int';
+$vartype['surveyId'] = 'int';
+$vartype['nlId'] = 'int';
+$vartype['chartId'] = 'int';
+$vartype['categoryId'] = 'int';
+$vartype['parentId'] = 'int';
+$vartype['bannerId'] = 'int';
+$vartype['rssId'] = 'int';
+$vartype['page_ref_id'] = 'int';
 
 function varcheck(&$array, $category) {
 	global $patterns, $vartype, $prefs;
