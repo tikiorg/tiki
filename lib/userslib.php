@@ -126,7 +126,7 @@ class UsersLib extends TikiLib {
 
 		$groups = $this->get_groups();
 		if (!$cachelib->isCached($objectType2 . "_permission_names")) {
-			$perms = $this->get_permissions(0, -1, 'permName_desc', $objectType2);
+			$perms = $this->get_permissions(0, -1, 'permName_desc', '', $objectType);
 			$cachelib->cacheItem($objectType2 . "_permission_names",serialize($perms));
 		} else {
 			$perms = unserialize($cachelib->getCached($objectType2 . "_permission_names"));
