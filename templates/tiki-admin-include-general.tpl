@@ -336,8 +336,8 @@
 	<div class="adminoptionlabel"><label for="user_show_realnames">{tr}Show user's real name instead of login (when possible){/tr}.</label>{if $prefs.feature_help eq 'y'} {help url="User+Preferences"}{/if}</div>
 </div>
 <div class="adminoptionbox">	  
-	<div class="adminoptionlabel"><label for="user_show_realnames">{tr}Highlight group{/tr}:</label> 
-	<select name="highlight_group">
+	<div class="adminoptionlabel"><label for="highlight_group">{tr}Highlight group{/tr}:</label> 
+	<select name="highlight_group" id="highlight_group">
 <option value="0">{tr}None{/tr}</option>
 {foreach key=g item=gr from=$listgroups}
 <option value="{$gr.groupName|escape}" {if $gr.groupName eq $prefs.highlight_group} selected="selected"{/if}>{$gr.groupName|truncate:"52":" ..."}</option>
