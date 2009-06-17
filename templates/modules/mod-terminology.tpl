@@ -13,6 +13,12 @@
             <option value=''>any language</option>
             <option value="en" selected="selected">English</option>
             <option value="fr" >Français</option>
+   
+   		    {section name=langNum loop=$user_languages}
+			<option value="{$all_language_names[$user_languages[langNum]].value|escape}">
+				{tr}{$user_languages[langNum].name}{/tr}
+			</option>
+		    {/section} 
             
 		    {section name=ix loop=$user_languages}
 			<option value="{$user_languages[ix].value|escape}" {if $search_terms_in_lang eq $user_languages[ix].value}selected="selected"{/if}>
