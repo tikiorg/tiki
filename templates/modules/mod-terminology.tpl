@@ -13,8 +13,18 @@
             <option value=''>any language</option>
             <option value="en" selected="selected">English</option>
             <option value="fr" >Français</option>
+            
+		    {section name=ix loop=$user_languages}
+			<option value="{$user_languages[ix].value|escape}" {if $search_terms_in_lang eq $user_languages[ix].value}selected="selected"{/if}>
+				{tr}{$user_languages[ix].name}{/tr}
+			</option>
+		    {/section}              
+            
           </select>
         </label>
+                
+              
+                
                 
         <input type="submit" class="wikiaction" name="search" value="Go"/> 
 

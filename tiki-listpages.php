@@ -10,6 +10,8 @@
 $section = 'wiki page';
 require_once('tiki-setup.php');
 require_once('lib/ajax/ajaxlib.php');
+global $multilinguallib;
+include_once('lib/multilingual/multilinguallib.php');
 
 $auto_query_args = array('initial','maxRecords','sort_mode','find','lang','langOrphan', 'findfilter_orphan', 'categId', 'category', 'page_orphans', 'structure_orphans', 'exact_match');
 
@@ -150,10 +152,7 @@ if ( ! empty($multiprint_pages) ) {
 	$smarty->assign('find', $find);
 	
 	$filter = '';
-	if (!empty($_REQUEST['lang'])) {
-		$filter['lang'] = $_REQUEST['lang'];
-		$smarty->assign_by_ref('find_lang', $_REQUEST['lang']);
-	}
+	$filter = setLangFilter($filter);
 	if (!empty($_REQUEST['langOrphan'])) {
 		$filter['langOrphan'] = $_REQUEST['langOrphan'];
 		$smarty->assign_by_ref('find_langOrphan', $_REQUEST['langOrphan']);
@@ -316,3 +315,12 @@ if ( ! empty($multiprint_pages) ) {
 		$smarty->display("tiki.tpl");
 	}
 }
+
+function setLangFilter($filter) {
+   global $_REQUEST, $_SESSION, $smarty, $multilinguallib;
+   $lang = $multilinguallib->currentSearchLanguage(false); 
+   $filter['lang'] = $lang;
+   $smarty->assign_by_ref('find_lang', $lang);   
+   return $filter;
+}
+

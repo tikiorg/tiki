@@ -730,6 +730,53 @@ class MultilingualLib extends TikiLib {
 		}
 		return $flags;
 	}
+
+    function currentSearchLanguage($searchingOnSecondLanguage) {
+       /*
+        * Set $searchingOnSecondLanguage to true in cases where 
+        * a translator may be searching terms or text in his second language,
+        * in order to find its translation into his first language.
+        */
+       global $_REQUEST, $_SESSION;
+       $lang = '';
+       if (!empty($_REQUEST['lang'])) {
+          $lang = $_REQUEST['lang'];
+       }
+       if ($lang == '') {
+//          print "-- tiki-listpages.whichLangToFilterOn: looking in session array<br>\n";
+          if (array_key_exists('find_page_last_done_in_lang', $_SESSION)) {
+             $lang = $_SESSION['find_page_last_done_in_lang'];
+          }
+       } 
+       if ($lang == '') {
+          $userPreferedLangs = $this->preferedLangs();
+          if ($searchingOnSecondLanguage &&
+              array_key_exists(1, $userPreferedLangs)) {
+              //
+              // Translators typically need to search for terms
+              // in their second language, not their first, because
+              // they are interetsed in how to translate them from
+              // second language to their first.
+              //
+              $lang = $userPreferedLangs[1];
+          } else {
+              $lang = $userPreferedLangs[0];
+          }
+//          print "-- multilingualib.currentSearchLanguage: \$userPreferedLangs="; var_dump($userPreferedLangs); print "<br>\n";
+       }
+//       print "-- multilingualib.currentSearchLanguage: returning \$lang='$lang'<br>\n"; 
+       $this->storeCurrentSearchLanguageInSession($lang);
+
+       return $lang;   
+    }
+    
+    function storeCurrentSearchLanguageInSession($lang) {
+       global $_SESSION;
+       $_SESSION['find_page_last_done_in_lang'] = $lang;
+    }
 }
+
+
+
 global $dbTiki;
 $multilinguallib = new MultilingualLib($dbTiki);
