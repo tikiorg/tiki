@@ -214,6 +214,7 @@ if ( ! empty($multiprint_pages) ) {
 	if (!isset($listpages_orphans)) {
 		$listpages_orphans = false;
 	}
+	
 	$listpages = $tikilib->list_pages($offset, $maxRecords, $sort_mode, $find, $initial, $exact_match, false, true, $listpages_orphans, $filter);
 
 	// Only show the 'Actions' column if the user can do at least one action on one of the listed pages
