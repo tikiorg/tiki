@@ -778,6 +778,35 @@ class MultilingualLib extends TikiLib {
        $_SESSION['find_page_last_done_in_lang'] = $lang;
     }
 
+    function preferedLangsInfo() {
+    
+       global $tikilib;
+
+       // Get IDs of user's preferred languages
+       $userLangIDs = $this->preferedLangs();
+   
+       // Get information about ALL languages supported by Tiki
+       $allLangsInfo = $tikilib->list_languages(false,'y');
+
+       // Create a map of language ID (ex: 'en') to language info
+       $langIDs2Info = array();
+       foreach ($allLangsInfo as $someLangInfo){
+          $langIDs2Info[$someLangInfo['value']] = $someLangInfo;
+       }
+
+       // Create list of language IDs AND names for user's prefered
+       // languages. 
+       $userLangsInfo = array();
+       $lang_index = 0;
+       foreach ($userLangIDs as $index => $someUserLangID) {
+          if ($langIDs2Info[$someUserLangID] != NULL) {
+             $userLangsInfo[$lang_index] = $langIDs2Info[$someUserLangID];
+             $lang_index++;
+           }
+       }
+       
+       return $userLangsInfo;  
+    }
 }
 
 global $dbTiki;
