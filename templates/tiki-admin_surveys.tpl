@@ -34,7 +34,7 @@
 			<td>
 				<select name="status">
 					<option value="o" {if $info.status eq 'o'}selected='selected'{/if}>{tr}Open{/tr}</option>
-					<option value="c" {if $info.status eq 'c'}selected='selected'{/if}>{tr}closed{/tr}</option>
+					<option value="c" {if $info.status eq 'c'}selected='selected'{/if}>{tr}Closed{/tr}</option>
 				</select>
 			</td>
 		</tr>
