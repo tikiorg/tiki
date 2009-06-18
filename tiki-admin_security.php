@@ -148,7 +148,7 @@ if($prefs['wikiplugin_redirect']=='y') {
      'message' => tra('The "Redirect Wikiplugin" is activated. It can be used by wiki editors for cross site scripting attacks.'));
 }
 
-if($prefs['wikiplugin_modules']=='y') {
+if($prefs['wikiplugin_module']=='y') {
    $tikisettings['wikiplugin_module']=array('risk' => tra('unsafe'),'setting' => tra('on'),
      'message' => tra('The "Module Wikiplugin" is activated. It can be used by wiki editors to add modules which permit to access information (see module list).'));
 }
