@@ -117,19 +117,12 @@ class UsersLib extends TikiLib {
     function inherit_global_permissions($objectId, $objectType) {
     	global $cachelib;
 
-		// check for annoying cases where some tables in the DB use singular and others use plural
-    	if ($objectType == 'category') {
-    		$objectType2 = 'categories';
-    	} else {
-    		$objectType2 = $objectType;
-    	}
-
 		$groups = $this->get_groups();
-		if (!$cachelib->isCached($objectType2 . "_permission_names")) {
+		if (!$cachelib->isCached($objectType . "_permission_names")) {
 			$perms = $this->get_permissions(0, -1, 'permName_desc', '', $objectType);
-			$cachelib->cacheItem($objectType2 . "_permission_names",serialize($perms));
+			$cachelib->cacheItem($objectType . "_permission_names",serialize($perms));
 		} else {
-			$perms = unserialize($cachelib->getCached($objectType2 . "_permission_names"));
+			$perms = unserialize($cachelib->getCached($objectType . "_permission_names"));
 		}
 		foreach ($groups['data'] as $group) {
 			foreach ($perms['data'] as $perm) {

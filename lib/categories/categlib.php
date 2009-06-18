@@ -515,11 +515,11 @@ class CategLib extends ObjectLib {
 			$parents = $this->get_object_categories("$type", $itemId);
 			$return_perms = array(); // initialize array for storing perms to be returned
 
-			if (!$cachelib->isCached("categories_permission_names")) {
+			if (!$cachelib->isCached("category_permission_names")) {
 				$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'category');
-				$cachelib->cacheItem("categories_permission_names",serialize($perms));
+				$cachelib->cacheItem("category_permission_names",serialize($perms));
 			} else {
-				$perms = unserialize($cachelib->getCached("categories_permission_names"));
+				$perms = unserialize($cachelib->getCached("category_permission_names"));
 			}
 
 			$permission_names = array();
