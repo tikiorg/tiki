@@ -47,6 +47,17 @@ foreach( $prefered as $lang )
 
 $contents = array();
 
+$show_langs_side_by_side = false;
+if (count($pages) == 2) {
+   // If only two languages, its best to show 
+   // them side by side for easier comparison
+   // (as opposed to one on top of the other).
+   // But for more than two languages, side by
+   // side is not possible, cause not enough real estate
+   $show_langs_side_by_side = true;
+}
+
+
 foreach( array_reverse( $pages ) as $id => $info )
 {
 	$page = $info['pageName'];
@@ -63,12 +74,26 @@ foreach( array_reverse( $pages ) as $id => $info )
     include('comments.php');
 
 	$contents[] = $smarty->fetch('tiki-show_page.tpl');
+	if ($show_langs_side_by_side) {
+	   // Enclose this language inside a table cell
+	   $curr_content_index = count($contents) - 1;
+	   $contents[$curr_content_index] = "\n<TD>\n$contents[$curr_content_index]\n</TD>\n";
+	}
 
 	if( $id === count($pages) - 1 )
 		$renderer->restoreAll();
 }
 
+$contents = array_reverse( $contents );
+
+if ($show_langs_side_by_side) {
+	// Put the two languages side by side in a table 
+	// for easier comparison
+	array_unshift($contents, "<TABLE>\n");
+	$contents[] = "</TABLE>\n";
+}
+
 $smarty->assign( 'excluded', $excluded );
-$smarty->assign( 'content', array_reverse( $contents ) );
+$smarty->assign( 'content', $contents);
 $smarty->assign( 'mid', 'tiki-all_languages.tpl' );
 $smarty->display( 'tiki.tpl' );
