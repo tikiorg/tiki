@@ -250,7 +250,7 @@ function md5_check_dir($root, $dir, $version, &$queries) {
 
 function build_packages($releaseVersion, $svnRelativePath) {
 	$script = TOOLS . '/tikirelease.sh';
-	if ($options['-debug-packaging']) {
+	if ($options['debug-packaging']) {
 	   $debugflag = '-x';
 	} else {
 	   $debugflag = '';
