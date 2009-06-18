@@ -13,8 +13,17 @@ require_once('lib/ajax/ajaxlib.php');
 global $multilinguallib;
 include_once('lib/multilingual/multilinguallib.php');
 
-$auto_query_args = array('initial','maxRecords','sort_mode','find','lang','langOrphan', 'findfilter_orphan', 'categId', 'category', 'page_orphans', 'structure_orphans', 'exact_match');
+$auto_query_args = array('initial','maxRecords','sort_mode','find','lang','langOrphan', 
+                         'findfilter_orphan', 'categId', 'category', 'page_orphans', 
+                         'structure_orphans', 'exact_match', 'hits_link_to_all_languages');
+                         
 
+if ($_REQUEST['hits_link_to_all_languages'] == 'On') {
+   $smarty->assign('all_langs', 'y');
+} else {
+   $smarty->assign('all_langs', '');
+}
+   
 $smarty->assign('headtitle',tra('Pages'));
 
 $access->check_feature( array( 'feature_wiki', 'feature_listPages' ) );

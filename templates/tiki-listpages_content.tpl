@@ -173,7 +173,7 @@
 
 		{if $prefs.wiki_list_name eq 'y'}
 			<td class="{cycle advance=false}">
-				<a href="{$listpages[changes].pageName|sefurl}" class="link" title="{tr}View page{/tr}&nbsp;{$listpages[changes].pageName}">
+				<a href="{$listpages[changes].pageName|sefurl:'wiki':'':$all_langs}" class="link" title="{tr}View page{/tr}&nbsp;{$listpages[changes].pageName}">
 					{$listpages[changes].pageName|truncate:$prefs.wiki_list_name_len:"...":true|escape}
 				</a>
 				{if $prefs.wiki_list_description eq 'y' && $listpages[changes].description neq ""}

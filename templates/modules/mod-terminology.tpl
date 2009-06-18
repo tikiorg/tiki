@@ -2,11 +2,18 @@
   <div align="left">
     <b>WARNING: This module is still under development. DO NOT ACTIVATE IT!</b>
     <p>
+    TODO: 
+    <ul>
+    <li/>Modifier multilinguallib->preferedLangs() de sorte qu'il mette en tete de liste, la derniere langue
+    qui a ete choisie pour visionnement (stockee dans $_SESSION).
+    </ul>
+    
     {tr}<b>Find term</b>{/tr}:<br>
 	<div id="mod-search_wiki_pager1" style="display: block" class="clearfix box-data">
       <form class="forms" method="post" action="tiki-listpages.php">
         <input name="find" size="14" type="text" accesskey="s" value=""/>
         <input type="hidden" name="exact_match" value="On"/>
+        <input type="hidden" name="hits_link_to_all_languages" value="On"/>
         <label class="findlang">
           <select name="lang" class="in">
             {section name=ix loop=$user_languages}
