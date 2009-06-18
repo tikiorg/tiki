@@ -3968,7 +3968,7 @@ CREATE TABLE "tiki_tracker_fields" (
   "trackerId" numeric(12,0) default '0' NOT NULL,
   "name" varchar(255) default NULL NULL,
   "options" text default '',
-  "type" char(15) default NULL NULL,
+  "type" varchar(15) default NULL NULL,
   "isMain" char(1) default NULL NULL,
   "isTblVisible" char(1) default NULL NULL,
   "position" numeric(4,0) default NULL NULL,
@@ -5411,6 +5411,7 @@ go
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_wiki_view_similar', 'Can view similar wiki pages', 'registered', 'wiki')
 go
+
 
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_workflow', 'Can admin workflow processes', 'admin', 'workflow', 'y')
