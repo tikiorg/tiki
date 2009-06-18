@@ -29,6 +29,16 @@ if ($s) {
        'setting' => $s);
 }
 
+$fcts = array('exec', 'passthru', 'shell_exec', 'system', 'proc_open','curl_exec', 'curl_multi_exec', 'parse_ini_file', 'show_source');
+foreach ($fcts as $fct) {
+	if (function_exists($fct)) {
+		$phpfunctions[$fct] = array('setting'=>tr('on'), 'risk'=> tra('risky'));
+	} else {
+		$phpfunctions[$fct] = array('setting'=>tr('off'), 'risk'=> tra('safe'));
+	}
+}
+$smarty->assign_by_ref('phpfunctions', $phpfunctions);
+
 // trans_sid
 $s=ini_get('session.use_trans_sid');
 if ($s) {
