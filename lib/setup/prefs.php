@@ -255,6 +255,7 @@ function get_default_prefs() {
 		'wikiplugin_sort' => 'y',
 		'wikiplugin_split' => 'y',
 		'wikiplugin_sql' => 'n',
+		'wikiplugin_stat' => 'n',
 		'wikiplugin_sub' => 'y',
 		'wikiplugin_subscribegroup' => 'n',
 		'wikiplugin_subscribegroups' => 'n',
