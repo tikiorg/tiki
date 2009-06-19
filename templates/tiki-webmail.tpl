@@ -342,9 +342,9 @@
 		<input type="submit" name="operate" value="{tr}Mark{/tr}" />
 		<br />
 		<br />
-		<table class="normal">
+		<table class="normal webmail_list">
 			<tr>
-				<th>&nbsp;</th>
+				<th>{*select_all checkbox_names='action[]' wrong flavour checkboxes - TODO again*}&nbsp;</th>
 				<th>&nbsp;</th>
 				<th>{tr}Sender{/tr}</th>
 				<th>{tr}Subject{/tr}</th>
@@ -353,16 +353,16 @@
 			</tr>
 			{section name=ix loop=$list}
 				{if $list[ix].isRead eq 'y'}
-					{assign var=class value="#CCCCCC"}
+					{assign var=class value="webmail_read"}
 				{else}
-					{assign var=class value="#FFFFFF"}
+					{assign var=class value=""}
 				{/if}
 				<tr>
-					<td style="background:{$class};">
+					<td class="{$class}">
 						<input type="checkbox" name="msg[{$list[ix].msgid}]" />
 						<input type="hidden" name="realmsg[{$list[ix].msgid}]" value="{$list[ix].realmsgid|escape}" />
 					</td>
-					<td style="background:{$class};">
+					<td class="{$class}">
 						{if $list[ix].isFlagged eq 'y'}
 							<a href="javascript: submit_form('{$list[ix].realmsgid|escape}','n')"><img src="img/webmail/flagged.gif" alt='{tr}Flagged{/tr}'></a>
 						{else}
@@ -374,13 +374,13 @@
 							<img src="img/webmail/replied.gif" alt='{tr}Replied{/tr}'/>
 						{/if}
 					</td>
-					<td style="background:{$class};">{$list[ix].sender.name}</td>
-					<td style="background:{$class};">
+					<td class="{$class}">{$list[ix].sender.name}</td>
+					<td class="{$class}">
 						<a class="link" href="tiki-webmail.php?locSection=read&amp;msgid={$list[ix].msgid}">{$list[ix].subject}</a>
 						{if $list[ix].has_attachment}<img src="img/webmail/clip.gif" alt='{tr}Clip{/tr}'/>{/if}
 					</td>
-					<td style="background:{$class};">{$list[ix].timestamp|tiki_short_datetime}</td>
-					<td align="right" style="background:{$class};">{$list[ix].size|kbsize}</td>
+					<td class="{$class}">{$list[ix].timestamp|tiki_short_datetime}</td>
+					<td align="right" class="{$class}">{$list[ix].size|kbsize}</td>
 				</tr>
 			{/section}
 		</table>
@@ -388,13 +388,13 @@
 {/if}
 
 {if $locSection eq 'read'}
-	{if $prev}<a class="link" href="tiki-webmail.php?locSection=read&amp;msgid={$prev}">{tr}Prev{/tr}</a> |{/if}
-	{if $next}<a class="link" href="tiki-webmail.php?locSection=read&amp;msgid={$next}">{tr}Next{/tr}</a> |{/if}
-	<a class="link" href="tiki-webmail.php?locSection=mailbox">{tr}Back To Mailbox{/tr}</a> |
+	{if $prev}{self_link locSection='read' msgid=$prev _noauto='y'}{tr}Prev{/tr}{/self_link} |{/if}
+	{if $next}{self_link locSection='read' msgid=$next _noauto='y'}{tr}Next{/tr}{/self_link} |{/if}
+	{self_link locSection=mailbox _noauto='y'}{tr}Back To Mailbox{/tr}{/self_link} |
 	{if $fullheaders eq 'n'}
-		<a class="link" href="tiki-webmail.php?locSection=read&amp;msgid={$msgid}&amp;fullheaders=1">{tr}Full Headers{/tr}</a>
+		{self_link locSection='read' msgid=$msgid fullheaders='1' msgid=$next _noauto='y'}{tr}Full Headers{/tr}{/self_link}
 	{else}
-		<a class="link" href="tiki-webmail.php?locSection=read&amp;msgid={$msgid}">{tr}Normal Headers{/tr}</a>
+		{self_link locSection='read' msgid=$msgid msgid=$next _noauto='y'}{tr}Normal Headers{/tr}{/self_link}
 	{/if}
 	<table>
 		<tr>
@@ -417,7 +417,7 @@
 					<input type="hidden" name="realmsgid" value="{$realmsgid|escape}" />
 					<input type="hidden" name="to" value="{$headers.replyto|escape}" />
 					<input type="hidden" name="subject" value="Re:{$headers.subject}" />
-					<input type="hidden" name="body" value="{$allbodies|escape}" />
+					<input type="hidden" name="body" value="{$plainbody|escape}" />
 				</form>
 			</td>
 			<td>
@@ -428,7 +428,7 @@
 					<input type="hidden" name="realmsgid" value="{$realmsgid|escape}" />
 					<input type="hidden" name="cc" value="{$headers.replycc|escape}" />
 					<input type="hidden" name="subject" value="Re:{$headers.subject}" />
-					<input type="hidden" name="body" value="{$allbodies|escape}" />
+					<input type="hidden" name="body" value="{$plainbody|escape}" />
 				</form>
 			</td>
 			<td>
@@ -438,60 +438,83 @@
 					<input type="hidden" name="to" value="" />
 					<input type="hidden" name="cc" value="" />
 					<input type="hidden" name="subject" value="Fw:{$headers.subject}" />
-					<input type="hidden" name="body" value="{$allbodies|escape}" />
+					<input type="hidden" name="body" value="{$plainbody|escape}" />
 				</form>
 			</td>
 		</tr>
 	</table>
 
-	<table>
+	<table class="webmail_message_headers">
 		{if $fullheaders eq 'n'}
-			<tr class="formcolor">
-				<td>{tr}From{/tr}</td>
+			<tr>
+				<th><strong>{tr}Subject{/tr}</strong></td>
+				<td><strong>{$headers.subject|escape}</strong></td>
+			</tr>
+			<tr>
+				<th>{tr}From{/tr}</td>
 				<td>{$headers.from|escape}</td>
 			</tr>
-			<tr class="formcolor">
-				<td>{tr}To{/tr}</td>
+			<tr>
+				<th>{tr}To{/tr}</td>
 				<td>{$headers.to|escape}</td>
 			</tr>
 			{if $headers.cc}
-				<tr class="formcolor">
+				<tr>
 					<td>{tr}Cc{/tr}</td>
 					<td>{$headers.cc|escape}</td>
 				</tr>
 			{/if}
-			<tr class="formcolor">
-				<td>{tr}Subject{/tr}</td>
-				<td>{$headers.subject|escape}</td>
-			</tr>
-			<tr class="formcolor">
-				<td>{tr}Date{/tr}</td>
+			<tr>
+				<th>{tr}Date{/tr}</td>
 				<td>{$headers.timestamp|tiki_short_datetime}</td>
 			</tr>
 		{/if}
 		{if $fullheaders eq 'y'}
 			{foreach key=key item=item from=$headers}
-				<tr class="formcolor">
-					<td>{$key}</td>
+				<tr>
+					<th>{$key}</td>
 					<td>
-						{section name=ix loop=$item}
-							{$item[ix]}
-							<br />
-						{sectionelse}
-							{$item}
-						{/section}
+						{if is_array($item)}
+							{foreach from=$item item=part}
+								{$part}
+								<br />
+							{/foreach} array
+						{else}
+							{$item} string
+						{/if}
 					</td>
 				</tr>
 			{/foreach}
 		{/if}
 	</table>
 
-	<br />
-
 	{section name=ix loop=$bodies}
-		{$bodies[ix]|nl2br}
-		<hr />
+		{assign var='wmid' value='webmail_message_'|cat:$msgid|cat:'_'|cat:$smarty.section.ix.index}
+		{assign var='wmopen' value='y'}
+		{if $bodies[ix].contentType eq 'text/plain'}
+			{if count($bodies) gt 1}
+				{assign var='wmopen' value='n'}
+			{/if}
+			{assign var='wmclass' value='webmail_message webmail_mono'}
+		{else}
+			{if $bodies[ix].contentType neq 'text/html'}
+				{assign var='wmopen' value='n'}
+			{/if}
+			{assign var='wmclass' value='webmail_message'}
+		{/if}
+		<div>
+			{button _flip_id=$wmid _text='{tr}Part{/tr}: '|cat:$bodies[ix].contentType _auto_args='*' _flip_default_open=$wmopen}{/button}
+		</div>
+		<div id="{$wmid}" class="{$wmclass}" {if $wmopen eq 'n'}style="display:none"{/if}>
+{$bodies[ix].body}
+		</div>
 	{/section}
+	<div>
+		{button _flip_id='webmail_message_source_'|cat:$msgid _text='{tr}Source{/tr}: ' _auto_args='*' _flip_default_open='y'}{/button}
+	</div>
+	<div id="webmail_message_source_{$msgid}" class="$wmclass" style="display:none">
+{$allbodies|nl2br}
+	</div>
 
 	{section name=ix loop=$attachs}
 		<div class="simplebox">

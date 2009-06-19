@@ -8,7 +8,11 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 class WebMailLib extends TikiLib {
 	
-	var $current_account_group='';
+	// current account row from database (tiki_user_mail_accounts)
+	// [accountId, user, account, pop, current, port, username, pass, msgs, smtp, useAuth, smtpPort, flagsPublic, autoRefresh, imap, mbox, maildir, useSSL]
+	var $current_account = array();
+	
+	// slightly complicated sub-query to check for public messages
 	var $SQL_CLAUSE_FOR_PUBLIC_MAILBOX = '(select count(*) from `tiki_user_mail_accounts` where `tiki_user_mail_accounts`.`accountId`=`tiki_webmail_messages`.`accountId` and `flagsPublic` = \'y\')';
 	
 	function WebMailLib($db) {
@@ -94,16 +98,17 @@ class WebMailLib extends TikiLib {
 			$this->query($query, array($user,(int)$accountId ));
 			$tikilib->set_user_preference($user, 'mailCurrentAccount', 0);
 		}
+		$this->get_current_webmail_account();
 	}
 
 	function list_webmail_accounts($user, $offset, $maxRecords, $sort_mode, $find) {
 		if ($find) {
 			$findesc = '%' . $find . '%';
 
-			$mid = " where `flagsPublic` <> 'y' and `user`=? and (`account` like ?)";
+			$mid = " where `flagsPublic` = 'n' and `user`=? and (`account` like ?)";
 			$bindvars = array($user, $findesc);
 		} else {
-			$mid = " where `flagsPublic` <> 'y' and `user`=?";
+			$mid = " where `flagsPublic` = 'n' and `user`=?";
 			$bindvars = array($user);
 		}
 
@@ -153,7 +158,7 @@ class WebMailLib extends TikiLib {
 	function count_webmail_accounts($user, $includePublic = true) {
 		$query_cant = 'SELECT COUNT(*) FROM `tiki_user_mail_accounts` WHERE `user`=?';
 		if ($includePublic) {
-			$query_cant .= ' OR `flagsPublic` <> \'n\'';
+			$query_cant .= ' OR `flagsPublic` = \'y\'';
 		}
 		$bindvars = array($user);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -169,13 +174,14 @@ class WebMailLib extends TikiLib {
 			$bindvars = array($user,$account,$pop,(int)$port,(int)$smtpPort,$username,$pass,$smtp,$useAuth,$msgs,$flagsPublic,(int)$autoRefresh,$imap,$mbox,$maildir,$useSSL,(int)$accountId, $user);
 			$result = $this->query($query,$bindvars);
 		} else {
-			$query = "delete from `tiki_user_mail_accounts` where `accountId`=? and `user`=?";
-			$bindvars = array((int)$accountId, $user);
-			$result = $this->query($query, $bindvars, -1, -1, false);
 
 			$query = "insert into `tiki_user_mail_accounts`(`user`,`account`,`pop`,`port`,`smtpPort`,`username`,`pass`,`smtp`,`useAuth`,`msgs`,`flagsPublic`,`autoRefresh`, `imap`, `mbox`, `maildir`, `useSSL`) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			$bindvars = array($user,$account,$pop,$port,$smtpPort,$username,$pass,$smtp,$useAuth,$msgs,$flagsPublic,$autoRefresh,$imap,$mbox,$maildir,$useSSL);
 			$result = $this->query($query, $bindvars);
+		}
+		if ($accountId == $this->get_current_webmail_accountId($user)) {
+			$this->current_account = array();	// reload
+			$this->get_webmail_account($user, $accountId);
 		}
 		return true;
 	}
@@ -194,36 +200,29 @@ class WebMailLib extends TikiLib {
 	
 	
 
-	function get_current_webmail_account($user) {
+	function get_current_webmail_accountId($user) {
 		global $tikilib;
 		
 		$pubAc = $tikilib->get_user_preference($user, 'mailCurrentAccount');
-		$query = "select * from `tiki_user_mail_accounts` where (`current`='y' and `user`=?) or (`flagsPublic`='y' and `accountId`=?)";
-		$result = $this->query($query, array($user, $pubAc));
-
-		if (!$result->numRows()) { return false; }
-
-		$res = $result->fetchRow();
-		$this->current_account_group = $res["flagsPublic"];
-		return $res;
+		if (empty($pubAc)) { $pubAc = 0; }
+		// check database even if pref is set in case it's changed
+		$query = "select accountId from `tiki_user_mail_accounts` where (`current`='y' and `user`=?) or (`flagsPublic`='y' and `accountId`=?)";
+		$result = $this->getOne($query, array($user, $pubAc));
+		
+		return $result;
+		
+	}
+	
+	function get_current_webmail_account($user) {
+		return $this->get_webmail_account($user);
 	}
 	
 	function is_current_webmail_account_public ($user) {
-		
-		if($this->current_account_group == ''){
-			$query = "select * from `tiki_user_mail_accounts` where `current`='y' and `user`=?";
-			$result = $this->query($query, array($user));
-			if (!$result->numRows())
-				return false;
-			$res = $result->fetchRow();
-			$this->current_account_group = $res["flagsPublic"];
-			return $res["flagsPublic"];
+
+		if ($this->current_account['flagsPublic'] =='y'){
+			return true;
 		} else {
-			if ($this->current_account_group=='y'){
-				return true;
-			} else {
-				return false;
-			}
+			return false;
 		}
 	}
 
@@ -234,14 +233,23 @@ class WebMailLib extends TikiLib {
 
 	}
 
-	function get_webmail_account($user, $accountId) {
+	function get_webmail_account($user, $accountId = 0) {
+		if ($accountId == 0) {
+			$accountId = $this->get_current_webmail_accountId($user);
+		}
+
 		$query = "select * from `tiki_user_mail_accounts` where `accountId`=? and (`user`=? or `flagsPublic`='y')";
 		$result = $this->query($query, array((int)$accountId,$user));
 
-		if (!$result->numRows())
-			return false;
+		if (!$result->numRows()) {
+			$res = array();
+		} else {
+			$res = $result->fetchRow();
+		}
 
-		$res = $result->fetchRow();
+		if ($accountId == $this->get_current_webmail_accountId($user)) {
+			$this->current_account = $res;
+		}
 		return $res;
 	}
 	
@@ -252,26 +260,25 @@ class WebMailLib extends TikiLib {
 	 * @return array		of partial message headers
 	 */
 	function refresh_mailbox($user, $accountid, $reload) {
-		global $webmail_account;	// TODO remove global
 		
 		if (!empty($accountid)) {
-			$webmail_account = $this->get_webmail_account($user, $accountid);
+			$this->current_account = $this->get_webmail_account($user, $accountid);
 		} else {
-			$webmail_account = $this->get_current_webmail_account($user);
+			$this->current_account = $this->get_current_webmail_account($user);
 		}
 		
-		if (empty($webmail_account)) {
+		if (empty($this->current_account)) {
 			return Array();
 		}
 		
 		// start getting mail
 		
 		$timeout = -1;
-		if ($webmail_account['autoRefresh'] > 0) {
-			$timeout = time() - $webmail_account['autoRefresh'];
+		if ($this->current_account['autoRefresh'] > 0) {
+			$timeout = time() - $this->current_account['autoRefresh'];
 		}
 		
-		$serialized_params = $webmail_account['accountId'].':'.$webmail_account['user'].':'.$webmail_account['account'];
+		$serialized_params = $this->current_account['accountId'].':'.$this->current_account['user'].':'.$this->current_account['account'];
 		
 		if (isset($_SESSION['webmailinbox'][$serialized_params]) && ((!isset($reload) || !$reload) && (isset($_SESSION['webmailinbox'][$serialized_params]['timestamp']) && $_SESSION['webmailinbox'][$serialized_params]['timestamp'] >  $timeout))) {
 			$webmail_list = $_SESSION['webmailinbox'][$serialized_params]['webmail_list'];
@@ -281,7 +288,7 @@ class WebMailLib extends TikiLib {
 			// get mail the zend way
 
 			try {
-				$mail = $this->get_mail_storage($webmail_account);
+				$mail = $this->get_mail_storage($this->current_account);
 				
 			} catch (Exception $e) {
 					// do something better with the error
@@ -348,41 +355,41 @@ class WebMailLib extends TikiLib {
 	}	// end refresh_mailbox()
 	
 	function get_mail_storage($webmail_account) {
-		if (!empty($webmail_account['imap'])) {
+		if (!empty($this->current_account['imap'])) {
 			
 			// connecting with Imap
 			require_once('lib/core/lib/Zend/Mail/Storage/Imap.php');
 			return new Zend_Mail_Storage_Imap(
-				array('host'     => $webmail_account["imap"],
-		              'user'     => $webmail_account["username"],
-		              'password' => $webmail_account["pass"],
-		              'port'	 => $webmail_account["port"],
-		              'ssl'		 => $webmail_account["useSSL"] == 'y' ? 'SSL' : false));
+				array('host'     => $this->current_account["imap"],
+		              'user'     => $this->current_account["username"],
+		              'password' => $this->current_account["pass"],
+		              'port'	 => $this->current_account["port"],
+		              'ssl'		 => $this->current_account["useSSL"] == 'y' ? 'SSL' : false));
 			
-		} else if (!empty($webmail_account['mbox'])) {
+		} else if (!empty($this->current_account['mbox'])) {
 			
 			// connecting with Mbox locally
 			require_once('lib/core/lib/Zend/Mail/Storage/Mbox.php');
 			return new Zend_Mail_Storage_Mbox(
-				array('filename' => $webmail_account["mbox"]));
+				array('filename' => $this->current_account["mbox"]));
 				
-		} else if (!empty($webmail_account['maildir'])) {
+		} else if (!empty($this->current_account['maildir'])) {
 			
 			// connecting with Maildir locally
 			require_once('lib/core/lib/Zend/Mail/Storage/Maildir.php');
 			return new Zend_Mail_Storage_Maildir(
-				array('dirname' => $webmail_account["mbox"]));
+				array('dirname' => $this->current_account["mbox"]));
 				
-		} else if (!empty($webmail_account['pop'])) {
+		} else if (!empty($this->current_account['pop'])) {
 			
 			// connecting with Pop3
 			require_once('lib/core/lib/Zend/Mail/Storage/Pop3.php');
 			return new Zend_Mail_Storage_Pop3(
-				array('host'     => $webmail_account["pop"],
-		              'user'     => $webmail_account["username"],
-		              'password' => $webmail_account["pass"],
-		              'port'	 => $webmail_account["port"],
-		              'ssl'		 => $webmail_account["useSSL"] == 'y' ? 'SSL' : false));
+				array('host'     => $this->current_account["pop"],
+		              'user'     => $this->current_account["username"],
+		              'password' => $this->current_account["pass"],
+		              'port'	 => $this->current_account["port"],
+		              'ssl'		 => $this->current_account["useSSL"] == 'y' ? 'SSL' : false));
 		}
 		// not returned yet?
 		require_once 'lib/core/lib/Zend/Mail/Storage/Exception.php';
@@ -393,25 +400,25 @@ class WebMailLib extends TikiLib {
 	 * @param $user			current user
 	 * @param $accountid	can be 0
 	 * @param $msgId		message to get
-	 * @return string		the message body
+	 * @param $getAllParts	if false returns the plain text body as a string - if true return an array of all parts
+	 * @return string/array	the message body/bodies
 	 */
-	function get_mail_content($user, $accountid, $msgId) {
+	function get_mail_content($user, $accountid, $msgId, $getAllParts = false) {
 		global $webmail_account;	// TODO remove global and refactor
 		
 		if (!empty($accountid)) {
-			$webmail_account = $this->get_webmail_account($user, $accountid);
+			$this->current_account = $this->get_webmail_account($user, $accountid);
 		} else {
-			$webmail_account = $this->get_current_webmail_account($user);
+			$this->current_account = $this->get_current_webmail_account($user);
 		}
 		
-		if (empty($webmail_account)) {
+		if (empty($this->current_account)) {
 			return '';
 		}
 		
-		// get single mail
-		// connecting with Pop3
+		// connecting with Zend
 		try {
-			$mail = $this->get_mail_storage($webmail_account);
+			$mail = $this->get_mail_storage($this->current_account);
 		} catch (Exception $e) {
 			// do something better with the error
 			return '';
@@ -421,38 +428,57 @@ class WebMailLib extends TikiLib {
 			return '';
 		}
 						
-		// output first text/plain part - from http://framework.zend.com/manual/en/zend.mail.read.html
 		$foundPart = null;
-		foreach (new RecursiveIteratorIterator($mail->getMessage($msgId)) as $part) {
+		$message = $mail->getMessage($msgId);
+		$cont = array();
+
+		// parse parts - initially from http://framework.zend.com/manual/en/zend.mail.read.html
+		foreach (new RecursiveIteratorIterator($message) as $part) {
+
+			$c = $part->getContent();
+			// deal with transfer encoding
+			try {	// no headerExists() func a part (why?)
+				$enc = $part->contentTransferEncoding;	
+			} catch (Zend_Mail_Exception $e) {
+				$enc = '';
+			}
 		    try {
-		        if (strtok($part->contentType, ';') == 'text/plain') {
-		            $foundPart = $part;
-		            break;
-		        }
-		    } catch (Zend_Mail_Exception $e) {
-		        // ignore
-		    }
+				switch ($enc) {
+					case 'quoted-printable':
+						$c = quoted_printable_decode($c);
+						break;
+					case 'base64':
+						$c = base64_decode($c);
+						break;
+					case '7bit':
+					case '8bit':
+					default:
+						$c = $c;
+				}
+				// deal with charset
+				if (preg_match('/charset\s*=\s*[\'"](.*)[\'"]/i', $part->contentType, $m) && count($m) > 1) {
+					$charset = $m[1];
+				}
+				if (!empty($charset) && strtolower($charset) != 'utf-8') {
+					$c = utf8_encode($c);
+				}
+				$cont[] = array('body' => trim($c), 'contentType' => strtok($part->contentType, ';'));
+				
+				if (strtok($part->contentType, ';') == 'text/plain' && !$getAllParts) {
+					break;
+			    }
+			} catch (Zend_Mail_Exception $e) {
+		    	// ignore?
+			}
 		}
-		$cont = '';
-		if (empty($foundPart)) {
-			$foundPart = $mail[$msgId];
+		if (empty($cont)) {
+			$cont[] = array('body' => $message->getContent(), 'contentType' => strtok($message->contentType, ';'));	// no parts, so try the whole message
 		}
-		$cont = $foundPart->getContent();
-		$enc = $foundPart->contentTransferEncoding;
-		switch ($enc) {
-			case '7bit':
-				$cont = $cont;
-				break;
-			case 'quoted-printable':
-				$cont = quoted_printable_decode($cont);
-				break;
-			case 'base64':
-				$cont = base64_decode($cont);
-				break;
-			default:
-				$cont = $cont;
+		if (empty($cont)) {
+			$cont[] = array('body' => tra('No mail body found'), 'contentType' => 'text/plain');
 		}
-		return $cont;
+		
+		return $getAllParts ? $cont : $cont[0];
 	}	// end get_mail_content()
 	
 } # class WebMailLib

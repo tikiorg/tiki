@@ -131,3 +131,58 @@ function decode_subject_utf8($string){
 		return $str;
 } 
 
+/**
+ * Format text, sender and date for a plain text email reply
+ * - Split into 75 char long lines prepended with >
+ * 
+ * @param $text		email text to be quoted
+ * @param $from		email from name/address to be quoted
+ * @param $date		date of mail to be quoted
+ * @return string	text ready for replying in a plain text email
+ */
+function format_email_reply(&$text, $from, $date) {
+	$lines = preg_split('/[\n\r]+/',wordwrap($text));
+	for ($i = 0; $i < count($lines); $i++) {
+		$lines[$i] = '> '.$lines[$i]."\n";
+	}
+	$str = !empty($from) ? $from.' wrote' : '';
+	$str .= !empty($date) ? ' on '.$date : '';
+	$str = "\n\n\n".$str."\n".implode($lines);
+	
+	return $str;
+}
+
+
+/**
+ * Attempt to close any unclosed HTML tags
+ * Needs to work with what's inside the BODY
+ * originally from http://snipplr.com/view/3618/close-tags-in-a-htmlsnippet/
+ * 
+ * @param $html			html input
+ * @return string		corrected html out
+ */
+function closetags ( $html ) {
+    #put all opened tags into an array
+    preg_match_all ( "#<([a-z]+)( .*)?(?!/)>#iU", $html, $result );
+    $openedtags = $result[1];
+ 
+    #put all closed tags into an array
+    preg_match_all ( "#</([a-z]+)>#iU", $html, $result );
+    $closedtags = $result[1];
+    $len_opened = count ( $openedtags );
+    # all tags are closed
+    if( count ( $closedtags ) == $len_opened ) {
+        return $html;
+    }
+    $openedtags = array_reverse ( $openedtags );
+    # close tags
+    for( $i = 0; $i < $len_opened; $i++ ) {
+        if ( !in_array ( $openedtags[$i], $closedtags )) {
+            $html .= "</" . $openedtags[$i] . ">";
+        } else {
+            unset ( $closedtags[array_search ( $openedtags[$i], $closedtags)] );
+        }
+    }
+    return $html;
+}
+

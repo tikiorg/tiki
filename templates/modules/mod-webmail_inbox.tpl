@@ -38,7 +38,7 @@
 			<a title="{tr}Refresh (non-ajax){/tr}" href="{$request_uri}refresh_mail=1">{icon _id='arrow_refresh'}</a>
 		{/if}
 	</div>
-	<div class="mod_webmail_list">
+	<div class="webmail_list">
 		{if isset($error)}<span class="error">{$error}</span>{/if}
 		{if isset($module_params.date_format)}
 			{assign var=date_format value=$module_params.date_format}
@@ -71,22 +71,23 @@
 					<span class="mod_webmail_date">{$date_short}</span>&nbsp;
 					{if !empty($webmail_list[ix].operator)}
 						{if $webmail_list[ix].operator eq $user}
-							<a class="button mod_webmail_action mod_webmail_taken" onclick="doPutBackWebmail({$webmail_list[ix].msgid})" href="#">{$webmail_list[ix].operator}</a>&nbsp;
+							<a class="button mod_webmail_action webmail_taken" onclick="doPutBackWebmail({$webmail_list[ix].msgid})" href="#">{$webmail_list[ix].operator}</a>&nbsp;
 						{else}
-							<span class="button mod_webmail_action mod_webmail_taken">{$webmail_list[ix].operator}</span>&nbsp;
+							<span class="button mod_webmail_action webmail_taken">{$webmail_list[ix].operator}</span>&nbsp;
 						{/if}
 					{else}
 						<a class="button mod_webmail_action" onclick="doTakeWebmail({$webmail_list[ix].msgid})" href="#">{tr}TAKE{/tr}</a>&nbsp;
 					{/if}
 					<span class="mod_webmail_from">{$sender.email|truncate:17:"...":true}</span>
-					<a class="clearfix linkmodule tips300 webmail_subject" href="tiki-webmail.php?locSection=read&amp;msgid={$webmail_list[ix].msgid}"
-							title="<span class='webmail_tip_title'><strong>{$subject}</strong><br />{tr}From{/tr}: <em>{$sender.name}</em> <tt>&amp;lt;{$sender.email}&amp;gt;</tt></span>|({$date_value})">
+					{assign var=tit value="<span class='webmail_tip_title'><strong>$subject</strong><br /></span>|{tr}From{/tr}: <em>`$sender.name`</em> &nbsp; <tt>&amp;lt;`$sender.email`&amp;gt;</tt><br /><small>[$date_value]</small>"}
+					{self_link _script='tiki-webmail.php' msgid=$webmail_list[ix].msgid locSection='read' _noauto='y' _class='clearfix linkmodule tips300 webmail_subject' _title=$tit}
 						{if $maxlen > 0}{* default value for maxlen param eq 26 *}
 							{$subject|truncate:$maxlen:"...":true}
 						{else}
 							{$subject}
 						{/if}
-					</a>
+					{/self_link}
+					{* self_link fails here because PHP_SELF is tiki-webmail_ajax.php, self_link needs to know the "real" page URL somehow *}
 				{/if}
 			</div>
 		{sectionelse}

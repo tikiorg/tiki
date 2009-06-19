@@ -2042,6 +2042,8 @@ div#ajaxLoading {
 
 /* webmail & groupmail */
 
+.box-webmail_inbox img.icon {vertical-align: middle}
+
 .webmail_item {
 	font-size: .9em;
 	border: #999 solid 1px;
@@ -2051,26 +2053,49 @@ div#ajaxLoading {
 .webmail_refresh_message {
 	font-size: .8em;}
 
-.mod_webmail_list .even {}
+.webmail_list .even {}
 
-.mod_webmail_list .odd {
+.webmail_list .odd {
 	background-color: #eee;}
 
-.mod_webmail_list .button {
+.webmail_list .button {
 	background-color: #fff;
 	border: #666 solid 1px;
 	display: inline-block;
 	padding: 0 2px;}
 
-.mod_webmail_list .webmail_read {background-color: #aaa;}
+.webmail_list .webmail_read {background-color: #aaa;}
 
-.mod_webmail_list .webmail_flagged {}
+.webmail_list .webmail_flagged {}
 
-.mod_webmail_list .webmail_replied {background-color: #888;}
+.webmail_list .webmail_replied {background-color: #888;}
 
-.mod_webmail_list .mod_webmail_taken {
+.webmail_list .webmail_taken {
 	border-color: #900;
 	color: #900;}
+
+.webmail_message {
+	background-color: #fff;}
+
+.webmail_mono {
+/*	max-width: 800px;
+	white-space: pre;
+	overflow: hidden;*/
+	font-size: 1.1em;
+	font-family: "Courier New", Courier, monospace}
+
+table.webmail_message_headers {
+	background-color: #fff;
+	width: 100%;
+	padding: 0 5em .5em 0;
+}
+
+table.webmail_message_headers th {
+	width: 6em;
+	font-style: italic;
+	text-align: right;
+	border: none;
+	background-color: transparent}
 
 /***** End New (unsorted) *****/
 
