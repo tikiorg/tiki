@@ -242,7 +242,7 @@ class StatsLib extends TikiLib {
 		return $data;
 	}
 	/* count the number of created or modified for this day, this month, this year */
-	function count_this_period($table = 'tiki_pages', $column ='created', $when='daily') {
+	function count_this_period($table = 'tiki_pages', $column ='created', $when='daily', $parentColumn ='', $parentId='') {
 		global $tikilib, $prefs;
 		$now = $tikilib->now;
 		$sec = TikiLib::date_format("%s", $now);
@@ -291,8 +291,14 @@ class StatsLib extends TikiLib {
 			$begin = $now;
 			break;
 		}
-		$query = 'select count(*) from `'.$table.'` where `'.$column.'` >= ? and `'.$column.'` <= ?';
-		$count = $tikilib->getOne($query, array((int)$begin, (int)$now));
+		$bindvars = array((int)$begin, (int)$now);
+		$where = '';
+		if (!empty($parentColumn) && !empty($parentId)) {
+			$where = " and `$parentColumn` = ?";
+			$bindvars[] = (int)$parentId;
+		}
+		$query = "select count(*) from `$table` where `$column` >= ? and `$column` <= ? $where";
+		$count = $tikilib->getOne($query, $bindvars);
 		return $count;
 	}
 	

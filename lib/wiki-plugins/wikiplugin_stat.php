@@ -12,7 +12,12 @@ function wikiplugin_stat_info() {
 			'type' => array(
 				'required' => true,
 				'name' => tra('Object type'),
-				'description' => 'trackeritem',
+				'description' => 'trackeritem '.tra('or').'wiki',
+			),
+			'parentId' => array(
+				'required' => false,
+				'name' => tra('Parent Id'),
+				'description' => tra('Parent Id'),
 			),
 			'lastday' => array(
 				'required' => false,
@@ -63,20 +68,27 @@ function wikiplugin_stat($data, $params) {
 	global $smarty;
 	global $statslib; include_once('lib/stats/statslib.php');
 	$stat = array();
-	switch ($params['type']) {
-	case 'trackeritem':
-		foreach ($params as $when=>$what) {
-			if ($when == 'type') {
-				continue;
-			}
-			if (!in_array($when, array('day', 'lastday', 'week', 'lastweek', 'month', 'lastmonth', 'year', 'lastyear'))) {
-				return tra('Incorrect param');
-			}
-			$stat[$params['type']][$when]['added'] = $statslib->count_this_period('tiki_tracker_items', 'created', $when);
+	foreach ($params as $when=>$what) {
+		if ($when == 'type' || $when == 'parentId') {
+			continue;
 		}
-		break;
-	default:
-		return tra('Incorrect param');
+		if (!in_array($when, array('day', 'lastday', 'week', 'lastweek', 'month', 'lastmonth', 'year', 'lastyear'))) {
+			return tra('Incorrect param:').$when;
+		}
+		switch ($params['type']) {
+		case 'trackeritem':
+			if (empty($params['parentId'])) {
+				$params['parentId'] = 0;
+			}
+			$stat[$params['type']][$when]['added'] = $statslib->count_this_period('tiki_tracker_items', 'created', $when, 'trackerId', $params['parentId']);
+			break;
+		case 'wiki':
+			$stat[$params['type']][$when]['added'] = $statslib->count_this_period('tiki_pages', 'created', $when);
+			break;
+		default:
+			return tra('Incorrect param:').$params['type'];
+		}
+	
 	}
 	$smarty->assign_by_ref('stat', $stat);
 	$code = $smarty->fetch('wiki-plugins/wikiplugin_stat.tpl');

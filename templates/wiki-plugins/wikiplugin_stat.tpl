@@ -1,6 +1,6 @@
 {* $Id$ *}
 {foreach from=$stat key=type item=typeStat}
-	<h3>{$type|escape}</h3>
+	{if count($stat) > 1}<h3>{$type|escape}</h3>{/if}
 	<table class="normal">
 		<tr>
 		{foreach from=$typeStat key=when item=item}
