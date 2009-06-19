@@ -8,15 +8,8 @@
     je vais à "fureteur web", je suis automatiquement redirigé vers "navigateur web". Le hic
     c'est que si je cherche pour "fureteur web", je le trouve pas car la page existe pas. Arranger
     ce bug.
-    </li>Dans tiki-alllanguages.php, si l'utilisateur a défini juste une langue dans ses prefs, alors prndre
-    pour acquis que l'utilisateur veut voir TOUTES LES LANGUES DU SITE (sinon, pourquoi
-    aurait-il demandé à voir All languages). Mais s'il a défini plus qu'une langue dans ses prefs,
-    alors prendre pour acquis qu'il veut juste voir les langues qu'il a définies.
-    Avantage: Quelqu'un peut voir plusieurs langues à la fois même sans s'être enregistré sur le site 
-    ou avoir défini des prefs, mais s'il s'enregistre et définit des prefs, alors
-    il peut lmiter les langues affichées à celles qu'il veut.
-    <li/>Modifier multilinguallib->preferedLangs() de sorte qu'il mette en tete de liste, la derniere langue
-    qui a ete choisie pour visionnement (stockee dans $_SESSION).
+    <li/>When creating a new terminology entry in French, system automatically loads 
+    template called Term Template fr.
     </ul>
     
     {tr}<b>Find term</b>{/tr}:<br>
@@ -47,7 +40,7 @@
 	<div class="box-footer">
 	</div>
 	
-	<p>    
+	<p>
     
     <a href="tiki-index.php?page=Get Started with Multilingual Terminology">{tr}Terminology Help{/tr}</a>
     

@@ -1,5 +1,7 @@
 <?php
 
+global $prefs;
+
 require 'tiki-setup.php';
 ini_set('display_errors', 'on');
 error_reporting(E_ALL);
@@ -32,16 +34,29 @@ $pages[] = $requested;
 $unordered = array();
 $excluded = array();
 
-$prefered = $multilinguallib->preferedLangs();
+$prefered_langs = $multilinguallib->preferedLangs();
+
+
+if (count($prefered_langs) == 1) {
+   // If user only has one language, then assume he wants to see all 
+   // languages supported by the site (otherwise, why would he have asked
+   // for all languages). This has the advantage that users can see multiple
+   // languages even if they haven't registered and set their language preferences,
+   // or if they haven't logged in. Yet, if they have registered, set language
+   // preferences, and logged in, they can limit the displayed languages
+   // to only those that they want.  
+   $prefered_langs = $prefs['available_languages'];
+//   print "-- tiki-all_languages: after replacing it by all site languages, \$prefered_langs=";var_dump($prefered_langs);print "<br>\n";
+}
 
 // Sort languages according to user's prefences
 foreach( $multilinguallib->getTrads( 'wiki page', $page_id ) as $row )
-	if( $row['objId'] != $page_id && in_array($row['lang'], $prefered) )
+	if( $row['objId'] != $page_id && in_array($row['lang'], $prefered_langs) )
 		$unordered[ $row['lang'] ] = $tikilib->get_page_info_from_id( $row['objId'] );
 	elseif( $row['lang'] != $requested['lang'] )
 		$excluded[] = $row['lang'];
 
-foreach( $prefered as $lang )
+foreach( $prefered_langs as $lang )
 	if( array_key_exists( $lang, $unordered ) )
 		$pages[] = $unordered[$lang];
 

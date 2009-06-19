@@ -222,7 +222,6 @@ class MultilingualLib extends TikiLib {
 	 * @param $langContext: optional the language the user comes from
 	 */
 	function preferedLangs($langContext = null,$include_browser_lang=TRUE) {
-//	    print "-- multilinguallib.preferedLangs: invoked<br>\n";
 		global $user, $prefs, $tikilib;
 		$langs = array();
 
@@ -738,8 +737,6 @@ class MultilingualLib extends TikiLib {
         * a translator may be searching terms or text in his second language,
         * in order to find its translation into his first language.
         */
-        
-//       print "-- multilinguallib.currentSearchLanguage: invoked<br>\n";
        global $_REQUEST, $_SESSION;
        $lang = '';
        if (!empty($_REQUEST['lang'])) {
