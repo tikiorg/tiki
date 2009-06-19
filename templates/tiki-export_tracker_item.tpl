@@ -26,9 +26,8 @@
 		{assign var='comma' value='n'}
 	{/if}
 {/strip}
-
-{strip}
-	{foreach from=$items item=item}
+{foreach from=$items item=item}
+{strip}{* DO NOT ident this strip - the line must not begin with space *}
 		{assign var='comma' value='n'}
 		{if $showItemId ne 'n'}
 			{assign var='comma' value='y'}
@@ -60,5 +59,5 @@
 				{if !$smarty.foreach.list.last}{$separator}{/if}
 			{/foreach}
 		{/if}
-	{/foreach}
-{/strip}
+	{/strip}
+{/foreach}
