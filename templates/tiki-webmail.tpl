@@ -32,13 +32,14 @@
 	</tr>
 </table>
 
+{if !empty($conmsg)}
+	{remarksbox type='warning' title='{tr}Error{/tr}'}{$conmsg}{/remarksbox}
+{/if}
+
 <hr/>
 
 {if $locSection eq 'settings'}
 	{if $tiki_p_admin_personal_webmail eq 'y' or $tiki_p_admin_group_webmail eq 'y'}
-		{if $conmsg ne ""}
-			<div class="simplebox error">{tr}There was an error connecting to your e-mail account.{/tr} {$conmsg}</div>
-		{/if}
 
 		{if $tiki_p_admin_personal_webmail eq 'y' or $tiki_p_admin_group_webmail eq 'y'}
 			<h2>{if $accountId eq ''}{tr}Add a new{/tr}{else}{tr}Edit this{/tr}{/if} {tr} mail account{/tr} {icon _id='add' id='addAccountIcon'}</h2>
@@ -302,7 +303,7 @@
 	<table width="100%">
 		<tr>
 			<td>
-				<a class="link" href="tiki-webmail.php?locSection=mailbox">{tr}Show All{/tr}</a> | <a class="link" href="tiki-webmail.php?locSection=mailbox&amp;filter=unread">{tr}Show Unread{/tr}</a> | <a class="link" href="tiki-webmail.php?locSection=mailbox&amp;filter=flagged">{tr}Show Flagged{/tr}</a> | {if $autoRefresh != 0}<a class="link" href="tiki-webmail.php?locSection=mailbox">{tr}Refresh now{/tr}</a> Auto refresh set for every {$autoRefresh} seconds.{else}<a class="link" href="tiki-webmail.php?locSection=mailbox">{tr}Refresh{/tr}</a>{/if}
+				<a class="link" href="tiki-webmail.php?locSection=mailbox">{tr}Show All{/tr}</a> | <a class="link" href="tiki-webmail.php?locSection=mailbox&amp;filter=unread">{tr}Show Unread{/tr}</a> | <a class="link" href="tiki-webmail.php?locSection=mailbox&amp;filter=flagged">{tr}Show Flagged{/tr}</a> | {if $autoRefresh != 0}<a class="link" href="tiki-webmail.php?locSection=mailbox&refresh_mail=1">{tr}Refresh now{/tr}</a> Auto refresh set for every {$autoRefresh} seconds.{else}<a class="link" href="tiki-webmail.php?locSection=mailbox">{tr}Refresh{/tr}</a>{/if}
 			</td>
 			<td align="right" style="text-align:right">
 				{if $flagsPublic eq 'y'}
@@ -344,7 +345,7 @@
 		<br />
 		<table class="normal webmail_list">
 			<tr>
-				<th>{*select_all checkbox_names='action[]' wrong flavour checkboxes - TODO again*}&nbsp;</th>
+				<th>{select_all checkbox_names='msg[]'}</th>
 				<th>&nbsp;</th>
 				<th>{tr}Sender{/tr}</th>
 				<th>{tr}Subject{/tr}</th>
@@ -359,7 +360,7 @@
 				{/if}
 				<tr>
 					<td class="{$class}">
-						<input type="checkbox" name="msg[{$list[ix].msgid}]" />
+						<input type="checkbox" name="msg[]" value="{$list[ix].msgid}" />
 						<input type="hidden" name="realmsg[{$list[ix].msgid}]" value="{$list[ix].realmsgid|escape}" />
 					</td>
 					<td class="{$class}">
@@ -478,9 +479,9 @@
 							{foreach from=$item item=part}
 								{$part}
 								<br />
-							{/foreach} array
+							{/foreach}
 						{else}
-							{$item} string
+							{$item}
 						{/if}
 					</td>
 				</tr>

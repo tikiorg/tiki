@@ -102,143 +102,160 @@ if ($_REQUEST["locSection"] == 'read') {
 		$mail = $webmaillib->get_mail_storage($current);
 	} catch (Exception $e) {
 		// do something better with the error
-		
+		$smarty->assign('conmsg', tra('There are a problem connecting to that account.').'<br />'.$e->getMessage());
 	}
 
 	if (isset($_REQUEST["delete_one"])) {
 		check_ticket('webmail');
-		$aux = $webmail_list[$_REQUEST["msgdel"]]; // $pop3->getParsedHeaders($_REQUEST["msgdel"]);
-		$webmaillib->remove_webmail_message($current["accountId"], $user, $aux['realmsgid']);
-		$mail->removeMessage($_REQUEST["msgdel"]);
+		$aux = $webmail_list[$_REQUEST["msgdel"]-1];
+		try {
+			$mail->removeMessage($_REQUEST["msgdel"]);
+			$webmaillib->remove_webmail_message($current["accountId"], $user, $aux['realmsgid']);
+			unset($_REQUEST["msgid"]);
+		} catch (Exception $e) {
+			$smarty->assign('conmsg', tra('There are a problem deleting that mail.').'<br />'.$e->getMessage());
+		}
 	}
 
-	$message = $mail->getMessage($_REQUEST["msgid"]);
-	$aux = $message->getHeaders();
-	$realmsgid = ereg_replace("[<>]","",$aux["message-id"]);
-	$smarty->assign('msgid', $_REQUEST["msgid"]);
-	$smarty->assign('realmsgid', $realmsgid);
-	$webmaillib->set_mail_flag($current["accountId"], $user, $realmsgid, 'isRead', 'y');
-	$mailsum = $mail->countMessages();
-	$numshow = $current["msgs"];
-
-	if ($_REQUEST["msgid"] == $mailsum) {
-		$smarty->assign('next', '');
-	} else {
-		$smarty->assign('next', $_REQUEST["msgid"] + 1);
-	}
-
-	if ($_REQUEST["msgid"] > 1) {
-		$smarty->assign('prev', $_REQUEST["msgid"] - 1);
-	} else {
-		$smarty->assign('prev', '');
-	}
-
-
-	$attachments = array();
+	if (isset($_REQUEST["msgid"])) {
+		$message = $mail->getMessage($_REQUEST["msgid"]);
+		$aux = $message->getHeaders();
+		$realmsgid = ereg_replace("[<>]","",$aux["message-id"]);
+		$smarty->assign('msgid', $_REQUEST["msgid"]);
+		$smarty->assign('realmsgid', $realmsgid);
+		$webmaillib->set_mail_flag($current["accountId"], $user, $realmsgid, 'isRead', 'y');
+		$mailsum = $mail->countMessages();
+		$numshow = $current["msgs"];
 	
-	if ($message->isMultipart()) {
-		// TODO	deal with attachments here??	
-	}
-	
-	$bodies = $webmaillib->get_mail_content($user, $current['accountId'], $_REQUEST["msgid"], true);
-	for ($i = 0; $i < count($bodies); $i++) {
-		if ($bodies[$i]['contentType'] == 'text/html') {
-			
-			$bod = $bodies[$i]['body'];
-			
-			// Clean the string using HTML Purifier
-			require_once('lib/htmlpurifier/HTMLPurifier.auto.php');
-			require_once('lib/htmlpurifier/HTMLPurifier.func.php');
-			$bod = HTMLPurifier($bod);
-			
-			if (preg_match_all('/<[\/]?body[^>]*>/i', $bod, $m, PREG_OFFSET_CAPTURE) && count($m) > 0 && count($m[0]) > 1) {
-				// gets positions of the start and end body tags then substr the bit inbetween
-				$bod = substr($bod, $m[0][0][1] + strlen($m[0][0][0]), $m[0][1][1]);
-			}
-			$bod = strip_tags( $bod, '<a><b><i><table><tbody><tr><td><th><ul><li><img><hr><ol><br /><h1><h2><h3><h4><h5><h6><div><span><font><form><input><textarea><checkbox><select><style>');
-			// try to close malformed html not fixed by the purifier - because people email Really Bad Things and this messes up *lite.css layout
-			$bod = closetags($bod);
-			$bodies[$i]['body'] = $bod;
-		
-		} else if ($bodies[$i]['contentType'] == 'text/plain') {
-			// reply text
-			$smarty->assign('plainbody', format_email_reply($bodies[$i]['body'], $aux['from'], $aux['date']));
-			$bodies[$i]['body'] = nl2br( $bodies[$i]['body'] );
+		if ($_REQUEST["msgid"] == $mailsum) {
+			$smarty->assign('next', '');
 		} else {
-			// attachments?
+			$smarty->assign('next', $_REQUEST["msgid"] + 1);
 		}
-	}
 	
-	array_multisort($bodies);	// this doesn't do what we need properly but seems to fluke it mostly - TODO a manual re-sort
-
-	$smarty->assign_by_ref('attachs', $attachments);
-	$smarty->assign_by_ref('bodies', $bodies);
-
-	try {
-		$allbodies = $message->getContent();
-	} catch (Exception $e) {
-		$allbodies = $e->getMessage();		
-	}
-
-	$smarty->assign('allbodies', htmlspecialchars($allbodies));
-
-	// collect addresses for reply
-	$to_addresses = $aux['from'];
-
-	// Get email addresses from the "from" portion
-	$to_addresses = split(',', $to_addresses);
-
-	$temp_max = count($to_addresses);
-	for ($i = 0; $i < $temp_max; $i++) {
-		preg_match("/<([^>]+)>/", $to_addresses[$i], $add);
-
-		if (isset($add[1])) {
-			$to_addresses[$i] = $add[1];
+		if ($_REQUEST["msgid"] > 1) {
+			$smarty->assign('prev', $_REQUEST["msgid"] - 1);
+		} else {
+			$smarty->assign('prev', '');
 		}
-	}
-
-	if (isset($aux['cc']) || ereg(',', $aux['to'])) {
-		$cc_addresses = "";
-
-		if (isset($aux['cc']))
-			$cc_addresses .= $aux['cc'];
-
-		//add addresses to cc from "to" field (for 'reply to all')
-		if ($cc_addresses != '')
-			$cc_addresses .= ',';
-
-		$cc_addresses .= $aux['to'];
-		$cc_addresses = split(',', $cc_addresses);
-
-		$temp_max = count($cc_addresses);
-		for ($i = 0; $i < $temp_max; $i++) {
-			preg_match("/<([^>]+)>/", $cc_addresses[$i], $add);
-
-			if (isset($add[1])) {
-				$cc_addresses[$i] = $add[1];
+	
+	
+		$attachments = array();
+		
+		if ($message->isMultipart()) {
+			// TODO	deal with attachments here??	
+		}
+		
+		$bodies = $webmaillib->get_mail_content($user, $current['accountId'], $_REQUEST["msgid"], true);
+		for ($i = 0; $i < count($bodies); $i++) {
+			if ($bodies[$i]['contentType'] == 'text/html') {
+				
+				$bod = $bodies[$i]['body'];
+				
+				// Clean the string using HTML Purifier
+				require_once('lib/htmlpurifier/HTMLPurifier.auto.php');
+				require_once('lib/htmlpurifier/HTMLPurifier.func.php');
+				$bod = HTMLPurifier($bod);
+				
+				if (preg_match_all('/<[\/]?body[^>]*>/i', $bod, $m, PREG_OFFSET_CAPTURE) && count($m) > 0 && count($m[0]) > 1) {
+					// gets positions of the start and end body tags then substr the bit inbetween
+					$bod = substr($bod, $m[0][0][1] + strlen($m[0][0][0]), $m[0][1][1]);
+				}
+				$bod = strip_tags( $bod, '<a><b><i><table><tbody><tr><td><th><ul><li><img><hr><ol><br /><h1><h2><h3><h4><h5><h6><div><span><font><form><input><textarea><checkbox><select><style>');
+				// try to close malformed html not fixed by the purifier - because people email Really Bad Things and this messes up *lite.css layout
+				$bod = closetags($bod);
+				$bodies[$i]['body'] = $bod;
+			
+			} else if ($bodies[$i]['contentType'] == 'text/plain') {
+				// reply text
+				$smarty->assign('plainbody', format_email_reply($bodies[$i]['body'], $aux['from'], $aux['date']));
+				$bodies[$i]['body'] = nl2br( $bodies[$i]['body'] );
+			} else {
+				// attachments?
 			}
 		}
-	} else {
-		$cc_addresses = array();
+		
+		array_multisort($bodies);	// this doesn't do what we need properly but seems to fluke it mostly - TODO a manual re-sort
+	
+		$smarty->assign_by_ref('attachs', $attachments);
+		$smarty->assign_by_ref('bodies', $bodies);
+	
+		try {
+			$allbodies = $message->getContent();
+		} catch (Exception $e) {
+			$allbodies = $e->getMessage();		
+		}
+	
+		$smarty->assign('allbodies', htmlspecialchars($allbodies));
+	
+		// collect addresses for reply
+		$to_addresses = $aux['from'];
+	
+		// Get email addresses from the "from" portion
+		$to_addresses = split(',', $to_addresses);
+	
+		$temp_max = count($to_addresses);
+		for ($i = 0; $i < $temp_max; $i++) {
+			preg_match("/<([^>]+)>/", $to_addresses[$i], $add);
+	
+			if (isset($add[1])) {
+				$to_addresses[$i] = $add[1];
+			}
+		}
+	
+		if (isset($aux['cc']) || ereg(',', $aux['to'])) {
+			$cc_addresses = "";
+	
+			if (isset($aux['cc']))
+				$cc_addresses .= $aux['cc'];
+	
+			//add addresses to cc from "to" field (for 'reply to all')
+			if ($cc_addresses != '')
+				$cc_addresses .= ',';
+	
+			$cc_addresses .= $aux['to'];
+			$cc_addresses = split(',', $cc_addresses);
+	
+			$temp_max = count($cc_addresses);
+			for ($i = 0; $i < $temp_max; $i++) {
+				preg_match("/<([^>]+)>/", $cc_addresses[$i], $add);
+	
+				if (isset($add[1])) {
+					$cc_addresses[$i] = $add[1];
+				}
+			}
+		} else {
+			$cc_addresses = array();
+		}
+	
+		$to_addresses = join(',', $to_addresses);
+		$cc_addresses = join(',', $cc_addresses);
+	
+		if (isset($aux['reply-to'])) {
+			$aux["replyto"] = $aux["reply-to"];
+	
+			$aux["replycc"] = $cc_addresses;
+		} else {
+			$aux["replycc"] = $cc_addresses;
+	
+			$aux["replyto"] = $to_addresses;
+		}
+		if (!isset($aux["delivery-date"])) {
+			$aux['delivery-date'] = $aux['date'];
+		}
+		$aux['timestamp'] = strtotime($aux['delivery-date']);
+		
+		$aux['subject'] = utf8_encode($aux['subject']);
+		$aux['from'] = utf8_encode($aux['from']);
+		$aux['to'] = utf8_encode($aux['to']);
+		$aux['cc'] = utf8_encode($aux['cc']);
+		$aux['date'] = utf8_encode($aux['date']);
+			
+		$smarty->assign('headers', $aux);
+		
+	} else {	// $_REQUEST["msgid"] unset by delete
+		handleWebmailRedirect("locSection=mailbox");
 	}
-
-	$to_addresses = join(',', $to_addresses);
-	$cc_addresses = join(',', $cc_addresses);
-
-	if (isset($aux['reply-to'])) {
-		$aux["replyto"] = $aux["reply-to"];
-
-		$aux["replycc"] = $cc_addresses;
-	} else {
-		$aux["replycc"] = $cc_addresses;
-
-		$aux["replyto"] = $to_addresses;
-	}
-	if (!isset($aux["delivery-date"])) {
-		$aux['delivery-date'] = $aux['date'];
-	}
-	$aux['timestamp'] = strtotime($aux['delivery-date']);
-	$smarty->assign('headers', $aux);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -280,6 +297,9 @@ END;
 	$smarty->assign('useSSL',$current['useSSL']);
 	$smarty->assign('flagsPublic',$current['flagsPublic']);
 	
+	if (isset($_REQUEST['refresh_mail'])) {
+		$webmail_reload = true;
+	}
 	try {
 		$webmail_list = $webmaillib->refresh_mailbox($user, $accountid, $webmail_reload);
 	} catch (Exception $e) {
@@ -288,6 +308,14 @@ END;
 		$urlq = http_build_query(array('locSection'=>'settings', 'conmsg'=>$err),'','&');
 		handleWebmailRedirect($urlq);
 		return;
+	}
+
+	// connecting with Zend
+	try {
+		$mail = $webmaillib->get_mail_storage($current);
+	} catch (Exception $e) {
+		// do something better with the error
+		$smarty->assign('conmsg', tra('There are a problem connecting to that account.').'<br />'.$e->getMessage());
 	}
 
 	// The user just clicked on one of the flags, so set up for flag change
@@ -310,29 +338,48 @@ END;
 		if (isset($_REQUEST["msg"])) {
 			check_ticket('webmail');
 			// Now we can delete the messages
-			foreach (array_keys($_REQUEST["msg"])as $msg) {
-				$listing = $webmail_list[$_REQUEST["msg"]];
-				$realmsgid = $listing['realmsgid'];
-				$webmaillib->remove_webmail_message($current['accountId'], $user, $realmsgid);
-				//$pop3->deleteMsg($msg);
+			$err = '';
+			foreach ($_REQUEST["msg"] as $msg) {
+				$aux = $webmail_list[$msg-1];
+				$realmsgid = $aux['realmsgid'];
+				try {
+					$mail->removeMessage($msg);
+					$webmaillib->remove_webmail_message($current['accountId'], $user, $realmsgid);
+					//$pop3->deleteMsg($msg);
+				} catch (Exception $e) {
+					$err .= $e->getMessage().' ('.tra('Mail ID').' '.$msg.')<br />';
+				}
+			}
+			if (!empty($err)) {
+				$smarty->assign('conmsg', tra('There are a problem deleting mails.').'<br />'.$err);
 			}
 		}
 	}
 
-	if (isset($_REQUEST["delete_one"])) {
+	if (isset($_REQUEST["delete_one"])) {	// currently unused?
 		check_ticket('webmail');
-		$aux = $webmail_list[$_REQUEST["msgdel"]]; //$pop3->getParsedHeaders($_REQUEST["msgdel"]);
-		$realmsgid = ereg_replace("[<>]","",$aux["Message-ID"]);
-		$webmaillib->remove_webmail_message($current["accountId"], $user, $realmsgid);
-		//$pop3->deleteMsg($_REQUEST["msgdel"]);
+		$aux = $webmail_list[$_REQUEST["msgdel"]-1];
+		$webmaillib->remove_webmail_message($current["accountId"], $user, $aux['realmsgid']);
+		try {
+			$mail->removeMessage($_REQUEST["msgdel"]);
+		} catch (Exception $e) {
+			$smarty->assign('conmsg', tra('There are a problem deleting that mail.').'<br />'.$e->getMessage());
+		}
 	}
-
+	
+	
 	if (isset($_REQUEST["delete_one"]) || isset($_REQUEST["delete"])) {
-		// Now delete the messages and reopen the mailbox to renumber messages
-		//$pop3->disconnect();
+		// Now reopen the mailbox to renumber messages
+		try {
+			$webmail_list = $webmaillib->refresh_mailbox($user, $accountid, true);	// really need a smarter way of caching the whole mailbox...
+		} catch (Exception $e) {
+			$err = $e->getMessage();
+	
+			$urlq = http_build_query(array('locSection'=>'settings', 'conmsg'=>$err),'','&');
+			handleWebmailRedirect($urlq);
+			return;
+		}
 
-		//$pop3->connect($current["pop"]);
-		//$pop3->ixp($current["username"], $current["pass"]);
 	}
 	$mailsum = count($webmail_list);
 
@@ -340,8 +387,10 @@ END;
 		if (isset($_REQUEST["msg"])) {
 			check_ticket('webmail');
 			// Now we can operate the messages
-			foreach (array_keys($_REQUEST["msg"])as $msg) {
-				$realmsg = $_REQUEST["realmsg"][$msg];
+			foreach ($_REQUEST["msg"] as $msg) {
+				$aux = $webmail_list[$msg-1];
+				$realmsg = $aux['realmsgid'];
+				
 				switch ($_REQUEST["action"]) {
 					
 				case "flag":

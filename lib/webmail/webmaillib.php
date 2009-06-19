@@ -310,7 +310,7 @@ class WebMailLib extends TikiLib {
 				
 				$wmail['from'] = $headers['from'];
 				$wmail['to'] = $headers['to'];
-				$wmail['subject'] = decode_subject_utf8($headers['subject']);
+				$wmail['subject'] = utf8_encode($headers['subject']);
 				$wmail['date'] = $headers['date'];
 				$wmail["timestamp"] = strtotime($headers['date']);
 				
