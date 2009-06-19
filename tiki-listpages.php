@@ -225,6 +225,15 @@ if ( ! empty($multiprint_pages) ) {
 	
 	$listpages = $tikilib->list_pages($offset, $maxRecords, $sort_mode, $find, $initial, $exact_match, false, true, $listpages_orphans, $filter);
 
+	if( $prefs['feature_wiki_pagealias'] == 'y' && $find ) {
+		global $semanticlib;
+		require_once 'lib/wiki/semanticlib.php';
+		$aliases = $semanticlib->getAliasContaining( $find );
+		$smarty->assign( 'aliases', $aliases );
+	} else {
+		$smarty->assign( 'aliases', null );
+	}
+
 	// Only show the 'Actions' column if the user can do at least one action on one of the listed pages
 	$show_actions = 'n';
 	$actions_perms = array('tiki_p_edit', 'tiki_p_wiki_view_history', 'tiki_p_assign_perm_wiki_page', 'tiki_p_remove');
