@@ -23,6 +23,47 @@ Version 3.1
 ------------------
 
 ----------------------------------------------
+r19703 | nyloth | 2009-06-19 16:28:22 +0200 (ven. 19 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19648 | xavidp | 2009-06-17 14:43:52 +0200 (mer. 17 juin 2009) | 1 line
+[bp/r19645][bp/r19644][FIX] topic image is shown when articles have a topic with a default image selected. Thanks sylvieg for fixing! :-)
+
+
+----------------------------------------------
+r19702 | nyloth | 2009-06-19 16:16:30 +0200 (ven. 19 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19673 | nyloth | 2009-06-18 11:53:46 +0200 (jeu. 18 juin 2009) | 2 lines
+[bp/r19672][FIX] release script: fix changelog generated for minor versions + remove useless comment
+
+
+----------------------------------------------
+r19697 | sylvieg | 2009-06-19 14:06:15 +0200 (ven. 19 juin 2009) | 4 lines
+
+[QT] Quality Team Backport
+
+[bp /r19655] clean some Ids for permission issue
+
+----------------------------------------------
+r19696 | sylvieg | 2009-06-19 13:59:58 +0200 (ven. 19 juin 2009) | 4 lines
+
+[QT] Quality Team Backport
+
+[FIX]incomplete proposed 19449 that breaks user tracker perm
+
+----------------------------------------------
+r19695 | nyloth | 2009-06-19 06:56:33 +0200 (ven. 19 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19662 | Jyhem | 2009-06-17 20:43:09 +0200 (mer. 17 juin 2009) | 1 line
+[FIX] Now new installs show the full list of category permissions when assigning category permissions again (rev 19660)
+
+
+----------------------------------------------
 r19614 | nyloth | 2009-06-16 17:07:44 +0200 (mar. 16 juin 2009) | 6 lines
 
 [QT] Quality Team Backport

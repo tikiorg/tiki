@@ -132,6 +132,8 @@ if ($prefs['feature_multilingual'] == 'y') {
 	include_once("lib/multilingual/multilinguallib.php");
 	$listpages['data'] = $multilinguallib->selectLangList('article', $listpages['data']);
 }
+$topics = $artlib->list_topics();
+$smarty->assign_by_ref('topics', $topics);
 
 $temp_max = count($listpages["data"]);
 for ($i = 0; $i < $temp_max; $i++) {

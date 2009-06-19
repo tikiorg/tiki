@@ -126,6 +126,9 @@ function wikiplugin_articles($data,$params) {
 	}
 	global $artlib; require_once ('lib/articles/artlib.php');
 
+         $topics = $artlib->list_topics();
+         $smarty->assign_by_ref('topics', $topics);
+
 	if (!empty($topic) && !strstr($topic, '!') && !strstr($topic, '+')) {
 		$smarty->assign_by_ref('topic', $topic);
 	} elseif (!empty($topicId) &&  is_numeric($topicId)) {
