@@ -6,7 +6,8 @@
 	{button href="tiki-send_newsletters.php" _text="{tr}Send Newsletters{/tr}"}
 </div>
 
-<h2>{tr}Create/Edit Newsletters{/tr}</h2>
+{tabset}
+{tab name='{tr}Create/Edit Newsletters{/tr}'}
 {if $individual eq 'y'}
 	<a class="link" href="tiki-objectpermissions.php?objectName={$info.name|escape:"url"}&amp;objectType=newsletter&amp;permType=newsletters&amp;objectId={$info.nlId}">{tr}There are individual permissions set for this newsletter{/tr}</a><br /><br />
 {/if}
@@ -65,7 +66,9 @@
 		</tr>
 	</table>
 </form>
-<h2>{tr}Newsletters{/tr}</h2>
+{/tab}
+
+{tab name='{tr}Newsletters{/tr}'}
 
 {if $channels or ($find ne '')}
   {include file='find.tpl'}
@@ -131,3 +134,5 @@
 </table>
 
 {pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
+{/tab}
+{/tabset}

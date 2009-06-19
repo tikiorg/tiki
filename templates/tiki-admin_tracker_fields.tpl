@@ -12,11 +12,13 @@
 	{button href="tiki-view_tracker.php?trackerId=$trackerId" _text="{tr}View This Tracker's Items{/tr}"}
 </div>
 
+{tabset}
 {if $fieldId eq "0"}
-<h2>{tr}New tracker field{/tr}</h2>
+{assign var='title' value='{tr}New tracker field{/tr}'}
 {else}
-<h2>{tr}Edit tracker field{/tr}</h2>
+{assign var='title' value='{tr}Edit tracker field{/tr}'}
 {/if}
+{tab name=$title}
 {if $error}
 	{remarksbox  type="warning" title="{tr}Errors{/tr}"}{tr}{$error}{/tr}{/remarksbox}
 {/if}
@@ -119,10 +121,11 @@
 <tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
+{/tab}
 
 <!-- {$plug} -->
 <a name="list"></a>
-<h2>{tr}Tracker fields{/tr}</h2>
+{tab name='{tr}Tracker fields{/tr}'}
 
 <table class="findtable">
 <tr><td>{tr}Find{/tr}</td>
@@ -189,8 +192,9 @@
 </table>
 
 {pagination_links cant=$cant step=$max offset=$offset}{/pagination_links}
+{/tab}
 
-<h2>{tr}Import/Export Trackers Fields{/tr}</h2>
+{tab name='{tr}Import/Export Trackers Fields{/tr}'}
 
 <form action="tiki-admin_tracker_fields.php" method="post">
 {if $find}<input type="hidden" name="find" value="{$find|escape}" />{/if}
@@ -233,4 +237,5 @@ isMandatory = {$channels[user].isMandatory}
 </textarea><br />
 <input type="submit" name="save" value="{tr}Import{/tr}" />
 </form>
-
+{/tab}
+{/tabset}

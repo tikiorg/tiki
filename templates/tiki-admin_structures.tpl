@@ -48,11 +48,13 @@
 {/foreach}
 <br /><br />
 {/if}
+
+{tabset}
+{tab name='{tr}Structures{/tr}'}
 {if $channels or ($find ne '')}
   {include file='find.tpl' find_show_languages='y' find_show_categories='y' find_show_num_rows='y' }
 {/if}
 <br />
-<h2>{tr}Structures{/tr}</h2>
 <table class="normal">
 <tr>
   <th>{tr}Structure ID{/tr}</th>
@@ -93,9 +95,10 @@
 </table>
 
 {pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
+{/tab}
 
 {if $tiki_p_edit_structures == 'y'}
-<h2>{tr}Create new structure{/tr}</h2>
+{tab name='{tr}Create new structure{/tr}'}
 <form action="tiki-admin_structures.php" method="post">
 <table class="normal">
 <tr>
@@ -121,4 +124,6 @@
 </tr>
 </table>
 </form>
+{/tab}
 {/if}
+{/tabset}
