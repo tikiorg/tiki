@@ -133,4 +133,5 @@
 {if $prefs.feature_sefurl neq 'n'}
 {self_link page="sefurl" _class="icon"}{icon _id="pics/large/goto.png" alt="{tr}Sef URL{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 {/if}
+{if $prefs.feature_jquery and $prefs.feature_jquery_reflection}{jq}$jq('img.reflect').reflect({});{/jq}{/if}{* for ajax *}
 <br class="clear" />
