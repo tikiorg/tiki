@@ -401,13 +401,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 
 {* -------------------- static text -------------------- *}
 {elseif $field_value.type eq 'S'}
-	{if $field_value.description}
-    {if $field_value.options_array[0] eq 1}
-      {wiki}{$field_value.description}{/wiki}
-    {else}
-      {$field_value.description|escape|nl2br}
-    {/if}
-	{/if}
+{include file='tracker_item_field_input.tpl'}
 
 {* -------------------- email -------------------- *}
 {elseif $field_value.type eq 'm'}
