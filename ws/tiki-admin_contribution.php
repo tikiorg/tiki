@@ -72,4 +72,3 @@ $smarty->assign_by_ref('contributions', $contributions['data']);
 ask_ticket('admin_contribution');
 $smarty->assign('mid', 'tiki-admin_contribution.tpl');
 $smarty->display("tiki.tpl");
- ?>

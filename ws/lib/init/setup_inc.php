@@ -7,4 +7,3 @@
 	define( 'TIKI_MODULES_PATH', TIKI_PATH.'/modules' );
 	define( 'TIKI_TEMPLATES_PATH', TIKI_PATH.'/templates' );
 	define( 'TIKI_STYLES_PATH', TIKI_TEMPLATES_PATH.'/styles' );
-?>

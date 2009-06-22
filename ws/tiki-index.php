@@ -39,6 +39,8 @@ include_once('lib/ajax/ajaxlib.php');
 require_once ("lib/wiki/wiki-ajax.php");
 require_once ("lib/wiki/renderlib.php");
 
+$auto_query_args = array('page','best_lang','bl','page_id','pagenum','page_ref_id','mode','sort_mode');
+
 if ($prefs['feature_categories'] == 'y') {
 	global $categlib;
 	if (!is_object($categlib)) {
@@ -110,6 +112,10 @@ if( $prefs['feature_wiki_structure'] == 'y' ) {
 		}
 
 	}
+} elseif (!empty($_REQUEST['page_ref_id'])) {
+	$smarty->assign('msg', tra('This feature is disabled').': feature_wiki_structure');
+	$smarty->display('error.tpl');
+	die;
 }
 
 if(isset($page_ref_id)) {
@@ -400,5 +406,3 @@ $smarty->display("tiki.tpl");
 
 // xdebug_dump_function_profile(XDEBUG_PROFILER_CPU);
 // debug: print all objects
-
-?>

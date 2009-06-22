@@ -64,5 +64,3 @@ ask_ticket('search-stats');
 // Display the template
 $smarty->assign('mid', 'tiki-search_stats.tpl');
 $smarty->display("tiki.tpl");
-
-?>

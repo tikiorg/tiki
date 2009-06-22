@@ -23,9 +23,960 @@ Version 3.0
 ------------------
 
 ----------------------------------------------
-r18369 | luciash | 2009-05-02 13:06:00 -0700 (Sat, 02 May 2009) | 1 line
+r18914 | nkoth | 2009-05-19 08:04:41 -0400 (Tue, 19 May 2009) | 2 lines
 
-parse error fix: missing comma
+[FIX] set proper branch in version checker
+
+----------------------------------------------
+r18902 | mrjc | 2009-05-18 20:00:14 -0400 (Mon, 18 May 2009) | 1 line
+
+[DOC] updated release instructions
+----------------------------------------------
+r18900 | mrjc | 2009-05-18 19:08:47 -0400 (Mon, 18 May 2009) | 1 line
+
+[DOC] Merged back Xavi's doc changes as per marclaporte's email Mon, May 18, 2009 at 6:49 PM
+----------------------------------------------
+r18894 | mrjc | 2009-05-18 18:02:53 -0400 (Mon, 18 May 2009) | 1 line
+
+[DOC] updating documentation re: weird SQL quote problem after convertsqls.sh
+----------------------------------------------
+r18893 | mrjc | 2009-05-18 17:52:45 -0400 (Mon, 18 May 2009) | 1 line
+
+[ENH] better comments - functionally same
+----------------------------------------------
+r18892 | mrjc | 2009-05-18 17:32:10 -0400 (Mon, 18 May 2009) | 1 line
+
+Changes to allow lookup by pathname, and accepted as 3rd party many other libs. Built part of new feature to aggregate files according to which feature the file contributes to, but this is disabled as it has a bug (introduces 'Array' into the last column of the table)
+----------------------------------------------
+r18891 | mrjc | 2009-05-18 17:27:48 -0400 (Mon, 18 May 2009) | 1 line
+
+With nkoth3, added missing permissions and feature checks
+----------------------------------------------
+r18884 | chibaguy | 2009-05-18 10:29:06 -0400 (Mon, 18 May 2009) | 1 line
+
+[FIX] Bad QuickTags background contrast.
+----------------------------------------------
+r18880 | sylvieg | 2009-05-18 06:37:48 -0400 (Mon, 18 May 2009) | 1 line
+
+typo thx geoff
+----------------------------------------------
+r18879 | chibaguy | 2009-05-18 05:28:51 -0400 (Mon, 18 May 2009) | 1 line
+
+[FIX] Site header search form width reduced (expands as needed); #siteloginbar's  second div display:inline removed to allow more logical line break (after submit button).
+----------------------------------------------
+r18878 | nkoth | 2009-05-18 04:58:38 -0400 (Mon, 18 May 2009) | 2 lines
+
+[FIX] The existing UI suggests that clearing all caches includes clearing user prefs sessions, and should in fact do so
+
+----------------------------------------------
+r18877 | chibaguy | 2009-05-18 04:27:14 -0400 (Mon, 18 May 2009) | 1 line
+
+[FIX] Wide pages caused in IE8 by 100%-wide div.postbody (blogs and forums).
+----------------------------------------------
+r18875 | pkdille | 2009-05-18 00:23:21 -0400 (Mon, 18 May 2009) | 1 line
+
+[FIX] tiki-forums: fix the sections in list forums (broken in r16691)
+----------------------------------------------
+r18874 | mrjc | 2009-05-17 22:42:44 -0400 (Sun, 17 May 2009) | 1 line
+
+Empty ie8 hacks file
+----------------------------------------------
+r18873 | mrjc | 2009-05-17 21:45:27 -0400 (Sun, 17 May 2009) | 1 line
+
+Hopefully the last ie7 fix. Thanks to jonny for pointing out ie7 hacks file doesn't need [id]
+----------------------------------------------
+r18872 | nkoth | 2009-05-17 21:42:29 -0400 (Sun, 17 May 2009) | 2 lines
+
+[FIX][ENH] ie7.css was not working properly for individual theme before. Also allow ie8.css
+
+----------------------------------------------
+r18871 | mrjc | 2009-05-17 21:04:33 -0400 (Sun, 17 May 2009) | 1 line
+
+header height fixes - pushing to ie7.css
+----------------------------------------------
+r18870 | mrjc | 2009-05-17 20:52:54 -0400 (Sun, 17 May 2009) | 1 line
+
+temp fix for ie7
+----------------------------------------------
+r18869 | jonnybradley | 2009-05-17 20:39:08 -0400 (Sun, 17 May 2009) | 2 lines
+
+[FIX] Tentative fix for login bar in Strasa on IE7
+
+----------------------------------------------
+r18868 | marclaporte | 2009-05-17 19:22:26 -0400 (Sun, 17 May 2009) | 1 line
+
+[MOD] Changing from time and date to date only for last blog posts module. 1- This makes the module have way too much clutter. 2- time is available on mouse-over, so it's duplicate info.  3- People typically post less than once per day so it's not relevant, and even if it was posts, are in chronological order anyway.   Blog profile is now good with this.  
+----------------------------------------------
+r18867 | xavidp | 2009-05-17 16:36:52 -0400 (Sun, 17 May 2009) | 1 line
+
+[FIX] Homepage_content updated to latest content from English language.php, and some some more strings translated for the latest install process, + a few more things
+----------------------------------------------
+r18866 | xavidp | 2009-05-17 16:35:30 -0400 (Sun, 17 May 2009) | 1 line
+
+[FIX] some more typos and consistancy changes to strings
+----------------------------------------------
+r18865 | xavidp | 2009-05-17 15:47:00 -0400 (Sun, 17 May 2009) | 1 line
+
+[FIX]Usability fix: custom.php_example files added, as in the fr lang, to help admins find out how to add customizations through that file
+----------------------------------------------
+r18864 | xavidp | 2009-05-17 15:45:40 -0400 (Sun, 17 May 2009) | 1 line
+
+[FIX]Typo
+----------------------------------------------
+r18863 | xavidp | 2009-05-17 15:36:58 -0400 (Sun, 17 May 2009) | 1 line
+
+[FIX]HOMEPAGE_CONTENT updated to meet latest english homepage (much better nowadays, imho). Thanks Pascal St-Jean for that
+----------------------------------------------
+r18862 | jonnybradley | 2009-05-17 11:54:05 -0400 (Sun, 17 May 2009) | 2 lines
+
+[FIX] IE6 #siteloginbar positioning fix
+
+----------------------------------------------
+r18861 | jonnybradley | 2009-05-17 11:01:13 -0400 (Sun, 17 May 2009) | 2 lines
+
+[FIX] Use transparent GIF for installer tiki3 logo on IE6
+
+----------------------------------------------
+r18860 | mrjc | 2009-05-17 10:59:42 -0400 (Sun, 17 May 2009) | 1 line
+
+added --debug-packaging: run tikirelease.sh with the -x option.
+----------------------------------------------
+r18853 | nkoth | 2009-05-16 13:05:51 -0400 (Sat, 16 May 2009) | 2 lines
+
+[FIX] plugin help not refreshed on plugin on/off changes 
+
+----------------------------------------------
+r18851 | nkoth | 2009-05-16 08:38:24 -0400 (Sat, 16 May 2009) | 2 lines
+
+[FIX] remove debug code
+
+----------------------------------------------
+r18849 | sylvieg | 2009-05-16 08:03:38 -0400 (Sat, 16 May 2009) | 1 line
+
+[FIX]tracker: do not look for voting if tracker does not use voting-> save one query per items
+----------------------------------------------
+r18848 | sylvieg | 2009-05-16 06:30:30 -0400 (Sat, 16 May 2009) | 1 line
+
+[FIX]tracker: 'edit field' button must not have sort_mode param transmitted
+----------------------------------------------
+r18845 | xavidp | 2009-05-15 12:33:11 -0400 (Fri, 15 May 2009) | 1 line
+
+[FIX] Upgrade instructions tip added to the installer, and translated to Spanish 
+----------------------------------------------
+r18844 | xavidp | 2009-05-15 12:32:24 -0400 (Fri, 15 May 2009) | 1 line
+
+[FIX] Upgrade instructions tip added to the installer, and translated to German (thx FrankP_german)
+----------------------------------------------
+r18843 | xavidp | 2009-05-15 12:29:58 -0400 (Fri, 15 May 2009) | 1 line
+
+[FIX] Upgrade instructions tip added to the installer, and translated to French (thx Sylvieg)
+----------------------------------------------
+r18811 | sept_7 | 2009-05-15 10:19:02 +0200 (ven. 15 mai 2009) | 2 lines
+
+[FIX] release script : avoir shipping the wrong version of Tiki
+
+----------------------------------------------
+r18809 | Jyhem | 2009-05-15 09:38:08 +0200 (ven. 15 mai 2009) | 1 line
+
+[FIX] Oops in 18771 (automated script did not like | )
+----------------------------------------------
+r18801 | mrjc | 2009-05-15 02:13:28 +0200 (ven. 15 mai 2009) | 1 line
+
+allows for pwd with spaces in (for my mac)
+----------------------------------------------
+r18800 | nkoth | 2009-05-15 01:44:25 +0200 (ven. 15 mai 2009) | 2 lines
+
+[FIX] this checkbox's function is now simply to select/deselect all categories, no longer the old legacy purpose of "remove all categories", so it should not use "cat_clearall" functionality anymore, otherwise it is not possible to select all categories through the use of this.
+
+----------------------------------------------
+r18799 | nkoth | 2009-05-15 00:18:18 +0200 (ven. 15 mai 2009) | 2 lines
+
+[FIX] typo (capitalization)
+
+----------------------------------------------
+r18798 | nkoth | 2009-05-15 00:05:18 +0200 (ven. 15 mai 2009) | 2 lines
+
+[FIX] There is no need for sitemycode_publish to be 'y' for admins to see the new link to ask them to change look and feel + logo. This is to make sure users don't inadvertently see legacy sitemycode  stuff they should not in upgrade situations.
+
+----------------------------------------------
+r18797 | sylvieg | 2009-05-14 23:35:06 +0200 (jeu. 14 mai 2009) | 1 line
+
+[FIX]structure: to have some categories when creating a new structure
+----------------------------------------------
+r18795 | sylvieg | 2009-05-14 22:52:04 +0200 (jeu. 14 mai 2009) | 1 line
+
+[FIX] sorry - must not encode all the page if postfilter is on
+----------------------------------------------
+r18793 | nkoth | 2009-05-14 21:19:24 +0200 (jeu. 14 mai 2009) | 2 lines
+
+[MOD] New barebones homepage with intro on the ways to configure Tiki
+
+----------------------------------------------
+r18792 | nkoth | 2009-05-14 21:11:28 +0200 (jeu. 14 mai 2009) | 2 lines
+
+[MOD] allow way to preload list by specifying profiles and categories in query string
+
+----------------------------------------------
+r18788 | jonnybradley | 2009-05-14 20:23:40 +0200 (jeu. 14 mai 2009) | 1 line
+
+[FIX] Removing typos - does the whole commit need rolling back? (r18771)
+----------------------------------------------
+r18786 | nkoth | 2009-05-14 19:32:13 +0200 (jeu. 14 mai 2009) | 2 lines
+
+[FIX] spelling
+
+----------------------------------------------
+r18785 | sept_7 | 2009-05-14 19:26:52 +0200 (jeu. 14 mai 2009) | 5 lines
+
+[ENH] installer : better handling of the setting of max_execution_time add @
+before ini_set to hide failure, and show a remark box in step 5
+"Install/upgrade" do warn the user that in case of a blank page it is a pb with
+the creation/upgrade of the database...
+
+----------------------------------------------
+r18783 | sept_7 | 2009-05-14 19:05:09 +0200 (jeu. 14 mai 2009) | 4 lines
+
+[EHN] Autosave ; move autosave from broken to need polish list in admin panel.
+I have fixed problems with it last week, so should work better, if it not the
+case please report...
+
+----------------------------------------------
+r18782 | chibaguy | 2009-05-14 19:03:32 +0200 (jeu. 14 mai 2009) | 1 line
+
+[FIX] Reinstated flexible height for #header-top div as this is necessary to accommodate various logo sizes. Also misc. layout.css improvements, and new font property for tikinewt (thanks to Matt).
+----------------------------------------------
+r18781 | sept_7 | 2009-05-14 19:02:36 +0200 (jeu. 14 mai 2009) | 3 lines
+
+[FIX] move the feature_floating_help in the right admin panel, it was not a
+feature of textarea...
+
+----------------------------------------------
+r18780 | Jyhem | 2009-05-14 18:43:03 +0200 (jeu. 14 mai 2009) | 1 line
+
+[ENH] Use utf-8 unbreakable space (is correct both for html pages and plain-text outbound emails)
+----------------------------------------------
+r18778 | jonnybradley | 2009-05-14 18:19:07 +0200 (jeu. 14 mai 2009) | 2 lines
+
+[MOD] Use Strasa/Cold for installer (only)
+
+----------------------------------------------
+r18777 | nkoth | 2009-05-14 18:14:00 +0200 (jeu. 14 mai 2009) | 2 lines
+
+[FIX] metatags robots admin field not working (bug 2300, bug 2141)
+
+----------------------------------------------
+r18776 | Jyhem | 2009-05-14 18:07:48 +0200 (jeu. 14 mai 2009) | 1 line
+
+[FIX] no html escapes in outbound test mail
+----------------------------------------------
+r18771 | Jyhem | 2009-05-14 15:39:50 +0200 (jeu. 14 mai 2009) | 1 line
+
+[ENH] Mass text correction (thanks Marc)
+----------------------------------------------
+r18770 | jonnybradley | 2009-05-14 15:33:53 +0200 (jeu. 14 mai 2009) | 3 lines
+
+[MOD] Adding feature checkboxes for pre-existing hidden features (feature_print_indexed and feature_multilingual_one_page)
+No idea what they do but you can now switch them on and off!
+
+----------------------------------------------
+r18767 | jonnybradley | 2009-05-14 14:30:25 +0200 (jeu. 14 mai 2009) | 1 line
+
+[MOD] Icon link to install/upgrade step and <em> tag around install/upgrade item in installation steps list to make it stand out a bit more (if existing $dbcon found)
+----------------------------------------------
+r18765 | lphuberdeau | 2009-05-14 13:39:57 +0200 (jeu. 14 mai 2009) | 1 line
+
+[MOD] Allow pages in profiles to specify translations
+----------------------------------------------
+r18763 | jonnybradley | 2009-05-14 13:12:10 +0200 (jeu. 14 mai 2009) | 1 line
+
+[FIX] Plugin form submit was breaking on IE6 when no 'content' field in form
+----------------------------------------------
+r18762 | mrjc | 2009-05-14 12:55:21 +0200 (jeu. 14 mai 2009) | 1 line
+
+Brought forward from trunk --no-commit and more descriptive packaging (I had meant to put it on 3.0 in the first place!)
+----------------------------------------------
+r18761 | marclaporte | 2009-05-14 12:32:46 +0200 (jeu. 14 mai 2009) | 1 line
+
+[MOD] Adding a link, visible only to admin, to edit logo, etc. (as discussed on IRC)
+----------------------------------------------
+r18760 | marclaporte | 2009-05-14 11:02:04 +0200 (jeu. 14 mai 2009) | 1 line
+
+[MOD] On clean install, mnu_application_menu is no longer visible to Anonymous. It is for Registered and up. And it moved lower on the left. 1- It conflicts with Blog profile and Intranet profile. 2- We are moving to using more & more the Site Identity menu, managed by the Tiki admin and more focused on each specific use case. 3- Moving lower on the left is to make space for inserting modules above if necessary. Longer term, more permanent solution will be to have bare-bones as a native profile so that profiles can move or remove modules.
+----------------------------------------------
+r18759 | marclaporte | 2009-05-14 07:16:42 +0200 (jeu. 14 mai 2009) | 1 line
+
+[MOD] Still not crazy about the idea, but logo back by popular demand.
+----------------------------------------------
+r18758 | marclaporte | 2009-05-14 06:10:39 +0200 (jeu. 14 mai 2009) | 1 line
+
+[UI] Re-ordering help, while continuing to respect the WYSIWYG check.
+----------------------------------------------
+r18757 | marclaporte | 2009-05-14 05:15:48 +0200 (jeu. 14 mai 2009) | 1 line
+
+[UI] More UI cleanup without affecting language strings
+----------------------------------------------
+r18756 | marclaporte | 2009-05-14 04:54:32 +0200 (jeu. 14 mai 2009) | 1 line
+
+[UI] Clearer documention. Using existing strings so translators need not worry :-)
+----------------------------------------------
+r18755 | marclaporte | 2009-05-14 04:47:14 +0200 (jeu. 14 mai 2009) | 1 line
+
+[FIX] Edit help was false because of missing feature check.
+----------------------------------------------
+r18754 | ricks99 | 2009-05-14 04:31:38 +0200 (jeu. 14 mai 2009) | 1 line
+
+[ENH]Use better plugin icons (instead or re-using the comment icons). Each icon should have a singular purpose.
+----------------------------------------------
+r18753 | marclaporte | 2009-05-14 04:28:12 +0200 (jeu. 14 mai 2009) | 1 line
+
+[UI] Removing redudant text which adds no new information. However, keep similar text which explains the feature in different words.
+----------------------------------------------
+r18752 | marclaporte | 2009-05-14 03:41:26 +0200 (jeu. 14 mai 2009) | 1 line
+
+[UI] adding space to be consistent with other icons
+----------------------------------------------
+r18751 | marclaporte | 2009-05-14 03:02:33 +0200 (jeu. 14 mai 2009) | 1 line
+
+[FIX] Removing extra quotes in edit help. 1- It was inconsistent, sometimes, with, sometimes without. 2- It's better without because it should be quite obvious that this is a syntax and we don't want people to think quotes are necessary. 3- Often, it's good to copy/paste from the help to get started and then, we end up with unwanted quotes.
+----------------------------------------------
+r18750 | marclaporte | 2009-05-14 02:48:48 +0200 (jeu. 14 mai 2009) | 1 line
+
+[MOD] Remove dynamic content from quicktags on clean install. 1- It wasn't using the right syntax for plugin help like Flash 2-There is no way to make quicktags optional so when people use this quicktag and feature is off, they get an ugly error. 3- It's easily accessible via edit plugin. 4- It's typically not something you use often like image or Flash plugin
+----------------------------------------------
+r18749 | marclaporte | 2009-05-14 02:03:38 +0200 (jeu. 14 mai 2009) | 1 line
+
+[FIX] Definition list syntax was incorrect
+----------------------------------------------
+r18748 | marclaporte | 2009-05-14 01:54:55 +0200 (jeu. 14 mai 2009) | 1 line
+
+[FIX] Adding feature check on this part of the edit help (Block Preformatting)
+----------------------------------------------
+r18747 | marclaporte | 2009-05-14 01:28:42 +0200 (jeu. 14 mai 2009) | 1 line
+
+[FIX] Remove duplicate documentation. cookie and polls are handled by plugins now. Also, poll needed a feature check.
+----------------------------------------------
+r18744 | marclaporte | 2009-05-13 23:31:07 +0200 (mer. 13 mai 2009) | 1 line
+
+[MOD] In wiki help, with a goal to reduce scrolling, change from table to line break. This permits to take advantage of screen real estate space that is otherwise empty. This space is especially wasted for syntax like comments and external links. This typically shaves off 2-3 lines in my tests.
+----------------------------------------------
+r18743 | marclaporte | 2009-05-13 23:05:47 +0200 (mer. 13 mai 2009) | 1 line
+
+[FIX] Removing wiki help for img and file. Reasons. 0- Too much scrolling. 1- They are both covered by edit plugin help. 2- file plugin depends on wiki attachment feature to be on, thus potential cause of error to user. 3-img plugin is covered by a quicktag, so users don't really need the help anyway. 4- Edit help should stick to the basics to keep it easy to translate, and most advanced stuff should be on doc.tikiwiki.org    Any potentially useful information was added to doc.tikiwiki.org/PluginFile and doc.tikiwiki.org/PluginImg
+----------------------------------------------
+r18742 | sylvieg | 2009-05-13 22:47:25 +0200 (mer. 13 mai 2009) | 1 line
+
+[FIX]ldap: always check in ldap
+----------------------------------------------
+r18741 | marclaporte | 2009-05-13 22:10:40 +0200 (mer. 13 mai 2009) | 1 line
+
+[FIX] indicate difference between this plugin and the file plugin
+----------------------------------------------
+r18740 | marclaporte | 2009-05-13 22:06:10 +0200 (mer. 13 mai 2009) | 1 line
+
+[FIX] correct false information and add link to documentation.
+----------------------------------------------
+r18739 | nagendra016 | 2009-05-13 21:33:39 +0200 (mer. 13 mai 2009) | 1 line
+
+[FIX] More information regarding enabling session storage in db added. Asked by Jonny n Matthew.
+----------------------------------------------
+r18738 | marclaporte | 2009-05-13 21:08:28 +0200 (mer. 13 mai 2009) | 1 line
+
+[FIX] Removing dynamic variables from basic help section, because 1-the feature can be turned off, 2- it's a duplication from plugin help.
+----------------------------------------------
+r18737 | marclaporte | 2009-05-13 20:49:10 +0200 (mer. 13 mai 2009) | 1 line
+
+[FIX] Removing RSS in edit help since it's already covered in plugin help.
+----------------------------------------------
+r18736 | marclaporte | 2009-05-13 20:40:56 +0200 (mer. 13 mai 2009) | 1 line
+
+[MOD] More compact UI for plugins help. Tested with __Floating edit help__ on or off. Would be better a table, but not simple to do because of template nesting.
+----------------------------------------------
+r18735 | nkoth | 2009-05-13 20:35:54 +0200 (mer. 13 mai 2009) | 2 lines
+
+[FIX] It will be nice to have shadowbox when js is on but floating help off. But when the shadowbox is closed, there is no way to get back to help as there is no icon to click. So hide the button for now in these cases.
+
+----------------------------------------------
+r18734 | jonnybradley | 2009-05-13 20:31:09 +0200 (mer. 13 mai 2009) | 2 lines
+
+[FIX] CSS fixes for IE6. Plugin edit form positioning now absolute near top (was appearing at bottom of page) and tabcontent now not covering up the tabs.
+
+----------------------------------------------
+r18733 | nkoth | 2009-05-13 20:13:42 +0200 (mer. 13 mai 2009) | 2 lines
+
+[FIX] better fix of r18724, make flip still work for js on, but feature_floating_help off
+
+----------------------------------------------
+r18732 | jonnybradley | 2009-05-13 19:48:51 +0200 (mer. 13 mai 2009) | 3 lines
+
+[FIX] Protect against attempts to set empty timezone.
+Was happening for me in installer using profiles creating blog posts, but this fix should stop the problem occurring in other cases.
+
+----------------------------------------------
+r18731 | jonnybradley | 2009-05-13 19:46:04 +0200 (mer. 13 mai 2009) | 2 lines
+
+[FIX] Plugin-edit GUI with nested plugins part 2 - this time for mootools (the default for 3.0) as well, only did jquery last time - oops
+
+----------------------------------------------
+r18730 | marclaporte | 2009-05-13 19:41:05 +0200 (mer. 13 mai 2009) | 1 line
+
+[DOC] Adding documentation to the code.
+----------------------------------------------
+r18729 | sylvieg | 2009-05-13 19:23:51 +0200 (mer. 13 mai 2009) | 1 line
+
+[FIX]swf: the directory swffix has been renamed swfobject
+----------------------------------------------
+r18728 | nkoth | 2009-05-13 19:08:07 +0200 (mer. 13 mai 2009) | 2 lines
+
+[FIX] preserve previous behavior where empty params are stripped (this is desired where there are many options)
+
+----------------------------------------------
+r18727 | marclaporte | 2009-05-13 18:59:39 +0200 (mer. 13 mai 2009) | 1 line
+
+[MOD] Turn off some plugins on barebones install to make it cleaner/simpler. Totally debatable. Remember that we can turn them on in relevant profiles.
+----------------------------------------------
+r18726 | Jyhem | 2009-05-13 18:40:30 +0200 (mer. 13 mai 2009) | 1 line
+
+[FIX] We send the test mail with utf-8 content. The header needs to reflect that.
+----------------------------------------------
+r18725 | sylvieg | 2009-05-13 18:35:18 +0200 (mer. 13 mai 2009) | 1 line
+
+[FIX]banner: need the swf include in module - the html code has already been recorded and we do not go through embed_flash again - so we need to load the swf js
+----------------------------------------------
+r18724 | nkoth | 2009-05-13 18:30:48 +0200 (mer. 13 mai 2009) | 2 lines
+
+[FIX] Make floating help optional
+
+----------------------------------------------
+r18723 | nkoth | 2009-05-13 17:40:33 +0200 (mer. 13 mai 2009) | 2 lines
+
+[FIX] do not show edit help if no perms to edit
+
+----------------------------------------------
+r18720 | jonnybradley | 2009-05-13 15:55:25 +0200 (mer. 13 mai 2009) | 1 line
+
+[FIX] Plugin-edit GUI with nested plugins (e.g. {img} inside VERSIONS()) should not show parsed html output of inner plugins in edit form body.
+----------------------------------------------
+r18713 | Jyhem | 2009-05-13 13:21:50 +0200 (mer. 13 mai 2009) | 1 line
+
+[FIX] Minor typos in the french installer, including html escapes in outbound test mail
+----------------------------------------------
+r18712 | sylvieg | 2009-05-13 12:00:41 +0200 (mer. 13 mai 2009) | 1 line
+
+rollback 18563 + give e perm denied message. Pretty tracker wiki page needs an additional perm: this page should be not viewable (as they are construction page , but a perm check is needed as a user can use TRACKER with a forbidden page that has nothing to do with trackers
+----------------------------------------------
+r18711 | Jyhem | 2009-05-13 11:17:41 +0200 (mer. 13 mai 2009) | 1 line
+
+[FIX] 'read' requires a parameter: this avoids a useless error message
+----------------------------------------------
+r18708 | nkoth | 2009-05-13 01:00:48 +0200 (mer. 13 mai 2009) | 2 lines
+
+[FIX] typo in prev commit
+
+----------------------------------------------
+r18707 | nkoth | 2009-05-13 00:58:37 +0200 (mer. 13 mai 2009) | 2 lines
+
+[FIX] (UI) Default to show 3.0+ mods, to avoid clutter of lots of old mods by default
+
+----------------------------------------------
+r18705 | nkoth | 2009-05-13 00:50:38 +0200 (mer. 13 mai 2009) | 2 lines
+
+[FIX] Add warning message to avoid users setting store session in db and getting themselves into trouble
+
+----------------------------------------------
+r18703 | nkoth | 2009-05-13 00:26:09 +0200 (mer. 13 mai 2009) | 2 lines
+
+[FIX] do not allow changing of username field when changing password when username is already provided (otherwise users might try to change their username)
+
+----------------------------------------------
+r18700 | nkoth | 2009-05-12 22:57:46 +0200 (mar. 12 mai 2009) | 2 lines
+
+[FIX] Do not show edit plugin icons in features other than wikis since they won't save the changes anyway
+
+----------------------------------------------
+r18699 | sylvieg | 2009-05-12 22:44:19 +0200 (mar. 12 mai 2009) | 1 line
+
+[FIX]BLOGLIST: Blog post title was supporting html -> no escape
+----------------------------------------------
+r18698 | sylvieg | 2009-05-12 22:22:14 +0200 (mar. 12 mai 2009) | 1 line
+
+[FIX]BLOGLIST: respect perm + sefurl + multilingual date + use a tpl
+----------------------------------------------
+r18695 | sylvieg | 2009-05-12 20:17:40 +0200 (mar. 12 mai 2009) | 1 line
+
+[FIX]structure: demote was not updating the pos of the previous brothers (but the pos of the previous uncles)
+----------------------------------------------
+r18692 | sylvieg | 2009-05-12 16:41:02 +0200 (mar. 12 mai 2009) | 1 line
+
+backport from trunk - to have the batch_structure working
+----------------------------------------------
+r18690 | nkoth | 2009-05-12 15:59:33 +0200 (mar. 12 mai 2009) | 1 line
+
+fix the top right corner login box location, was not visible
+----------------------------------------------
+r18687 | sylvieg | 2009-05-12 15:40:41 +0200 (mar. 12 mai 2009) | 1 line
+
+[FIX]search: help on the title to the doc + take away the little help near advanced search - as redundant with the big help + some label and classes for styling like find.tpl
+----------------------------------------------
+r18686 | awolfff | 2009-05-12 14:28:00 +0200 (mar. 12 mai 2009) | 2 lines
+
+[FIX] !bug 2435: File galeries did not present an upload dialogue if the margin is in "em". (Firefox 3.0.10)
+
+----------------------------------------------
+r18684 | sylvieg | 2009-05-12 14:24:17 +0200 (mar. 12 mai 2009) | 1 line
+
+rollback 18682
+----------------------------------------------
+r18683 | awolfff | 2009-05-12 13:45:13 +0200 (mar. 12 mai 2009) | 2 lines
+
+[ENH] Translation
+
+----------------------------------------------
+r18682 | sylvieg | 2009-05-12 13:44:22 +0200 (mar. 12 mai 2009) | 1 line
+
+[MOD] homogenize add_help message with a click here
+----------------------------------------------
+r18681 | jonnybradley | 2009-05-12 13:35:31 +0200 (mar. 12 mai 2009) | 1 line
+
+[FIX] Replace missing grey icons (in the right place this time)
+----------------------------------------------
+r18680 | jonnybradley | 2009-05-12 13:31:41 +0200 (mar. 12 mai 2009) | 1 line
+
+[KIL] Remove unused option dir
+----------------------------------------------
+r18679 | jonnybradley | 2009-05-12 13:24:38 +0200 (mar. 12 mai 2009) | 2 lines
+
+[FIX] Restore blue folder icons for strasa default
+
+----------------------------------------------
+r18678 | awolfff | 2009-05-12 13:16:25 +0200 (mar. 12 mai 2009) | 2 lines
+
+[ENH] Translations and date format
+
+----------------------------------------------
+r18676 | jonnybradley | 2009-05-12 13:04:29 +0200 (mar. 12 mai 2009) | 1 line
+
+[MOD] Added warning message if feature_clear_passwords = y (admin_security already lists this if on)
+----------------------------------------------
+r18675 | jonnybradley | 2009-05-12 12:31:21 +0200 (mar. 12 mai 2009) | 2 lines
+
+[FIX] Put back incorrectly deleted global $tikipath (thanks SylvieG)
+
+----------------------------------------------
+r18671 | Jyhem | 2009-05-12 09:26:45 +0200 (mar. 12 mai 2009) | 1 line
+
+[ENH] Grammar
+----------------------------------------------
+r18667 | chibaguy | 2009-05-12 08:06:11 +0200 (mar. 12 mai 2009) | 1 line
+
+[FIX] Misc. improvements.
+----------------------------------------------
+r18666 | chibaguy | 2009-05-12 07:51:10 +0200 (mar. 12 mai 2009) | 1 line
+
+[FIX] Full width + padding caused scrollbar.
+----------------------------------------------
+r18665 | chibaguy | 2009-05-12 07:43:52 +0200 (mar. 12 mai 2009) | 1 line
+
+[FIX] Workaround for IE6's #siteloginbar position problems.
+----------------------------------------------
+r18663 | chibaguy | 2009-05-12 04:34:35 +0200 (mar. 12 mai 2009) | 1 line
+
+[FIX] Zero-height br in conditional comment to prevent top-bar custom code from overlapping siteloginbar in IE7.
+----------------------------------------------
+r18662 | sept_7 | 2009-05-12 02:44:39 +0200 (mar. 12 mai 2009) | 3 lines
+
+[FIX] add_help : probabily a typo, allow add_help to set the alt text of the
+icon
+
+----------------------------------------------
+r18659 | mrjc | 2009-05-11 22:52:37 +0200 (lun. 11 mai 2009) | 1 line
+
+[FIX] plugin editor was discarding parameters not listed in module_info (jonnyb,  as discussed on IRC with nkoth, please help to review. Thanks)
+----------------------------------------------
+r18658 | sept_7 | 2009-05-11 22:45:05 +0200 (lun. 11 mai 2009) | 3 lines
+
+[FIX] better fix for commit 18647 : Try to set a longer execution time for the
+installer
+
+----------------------------------------------
+r18656 | nkoth | 2009-05-11 21:29:20 +0200 (lun. 11 mai 2009) | 2 lines
+
+[FIX] Provide enough space on top for "Register" when activated
+
+----------------------------------------------
+r18655 | nkoth | 2009-05-11 20:50:10 +0200 (lun. 11 mai 2009) | 2 lines
+
+[FIX] Do not allow checkbox to change inline plugin setting if it is hardcoded in plugin itself
+
+----------------------------------------------
+r18654 | jonnybradley | 2009-05-11 20:06:00 +0200 (lun. 11 mai 2009) | 3 lines
+
+[FIX] initialise $js_script if needed for array_merge() below to work (was set before by autosave i think)
+Fixes quicktags etc in AJAX edit mode
+
+----------------------------------------------
+r18653 | jonnybradley | 2009-05-11 19:43:25 +0200 (lun. 11 mai 2009) | 4 lines
+
+[FIX] Use same selectors for buttons in strasa/mono option (selectors have to be the same to override)
+
+Sorry about button2 leakage - TODO (again) for 3.1
+
+----------------------------------------------
+r18652 | marclaporte | 2009-05-11 19:31:13 +0200 (lun. 11 mai 2009) | 1 line
+
+[ENH] turning profile plugin on by default because we need in barebones install.
+----------------------------------------------
+r18651 | sylvieg | 2009-05-11 19:30:17 +0200 (lun. 11 mai 2009) | 1 line
+
+rollback 17317
+----------------------------------------------
+r18650 | nkoth | 2009-05-11 19:11:22 +0200 (lun. 11 mai 2009) | 2 lines
+
+[MOD] Fix confusing UI
+
+----------------------------------------------
+r18648 | jonnybradley | 2009-05-11 18:42:25 +0200 (lun. 11 mai 2009) | 6 lines
+
+[FIX][CSS] Use fix from Strasa for div#tikihelp invisibly covering up the right hand column and/or textarea scrollbar in all other themes (including transitional and layout).
+
+Unfortunately only works with an absolute pixel height value - 400px for now is small but safe.
+
+TODO for 3.1 - replace with dedicated JS function to use 95% (or whatever) of window height
+
+----------------------------------------------
+r18646 | marclaporte | 2009-05-11 18:13:09 +0200 (lun. 11 mai 2009) | 1 line
+
+[FIX] accidental commit
+----------------------------------------------
+r18644 | nkoth | 2009-05-11 18:12:32 +0200 (lun. 11 mai 2009) | 2 lines
+
+[FIX] This plugin should require admin validation to change, and also be set to inline
+
+----------------------------------------------
+r18642 | jonnybradley | 2009-05-11 17:50:57 +0200 (lun. 11 mai 2009) | 2 lines
+
+[MOD] Change 'forgotPass' pref to 'y' to reduce chance of admins' logging themselves out of new installs (providing they entered an admin email address)
+
+----------------------------------------------
+r18641 | nkoth | 2009-05-11 17:39:27 +0200 (lun. 11 mai 2009) | 2 lines
+
+[FIX] Profile plugin should be inline, i.e. without edit UI
+
+----------------------------------------------
+r18640 | nkoth | 2009-05-11 17:28:12 +0200 (lun. 11 mai 2009) | 2 lines
+
+[FIX] reinsert new prefs (seems to have somehow disappeared on prev commit
+
+----------------------------------------------
+r18639 | jonnybradley | 2009-05-11 17:27:16 +0200 (lun. 11 mai 2009) | 1 line
+
+[ENH] Mono folder icons for strasa/mono (again?)
+----------------------------------------------
+r18637 | nkoth | 2009-05-11 16:56:51 +0200 (lun. 11 mai 2009) | 2 lines
+
+[FIX] page history functions/previews/views should not include edit plugin UI
+
+----------------------------------------------
+r18635 | sylvieg | 2009-05-11 16:05:55 +0200 (lun. 11 mai 2009) | 1 line
+
+[FIX]freetag: clean up also freetags that reference also objects not existing anymore
+----------------------------------------------
+r18633 | nkoth | 2009-05-11 15:46:44 +0200 (lun. 11 mai 2009) | 2 lines
+
+[FIX] edit plugin icons should not show in preview mode
+
+----------------------------------------------
+r18630 | lphuberdeau | 2009-05-11 15:24:51 +0200 (lun. 11 mai 2009) | 1 line
+
+[NEW] Profile installer plugin (requested by marc)
+----------------------------------------------
+r18627 | chibaguy | 2009-05-11 14:31:18 +0200 (lun. 11 mai 2009) | 1 line
+
+[FIX] Fix top-level horizontal menu item widths in IE6. 
+----------------------------------------------
+r18626 | jonnybradley | 2009-05-11 14:26:16 +0200 (lun. 11 mai 2009) | 2 lines
+
+[FIX] Smarty icon plugin now theme "option" aware
+i.e. it will use images in styles/my_style/options/my_option/pics/icons/ etc for folder images etc
+----------------------------------------------
+r18625 | chibaguy | 2009-05-11 11:58:42 +0200 (lun. 11 mai 2009) | 1 line
+
+[FIX] Suckerfish menu appearance and function improved in IE6.
+----------------------------------------------
+r18624 | chibaguy | 2009-05-11 11:57:35 +0200 (lun. 11 mai 2009) | 1 line
+
+[FIX] Second-level lists losing focus in IE6.
+----------------------------------------------
+r18623 | pkdille | 2009-05-11 11:43:03 +0200 (lun. 11 mai 2009) | 1 line
+
+[FIX] calendar: fix the prev and next buttons position in viewmode div
+----------------------------------------------
+r18622 | chibaguy | 2009-05-11 08:53:41 +0200 (lun. 11 mai 2009) | 1 line
+
+[FIX] er, no need for ie6 hacks in ie6.css.
+----------------------------------------------
+r18621 | chibaguy | 2009-05-11 08:47:17 +0200 (lun. 11 mai 2009) | 1 line
+
+[FIX] Prevent css menu dropdowns from displaying behind/under tabs and tab content.
+----------------------------------------------
+r18620 | chibaguy | 2009-05-11 07:41:20 +0200 (lun. 11 mai 2009) | 1 line
+
+[FIX] Height settings for IE6 (which doesn't support min-height)
+----------------------------------------------
+r18619 | chibaguy | 2009-05-11 07:29:54 +0200 (lun. 11 mai 2009) | 1 line
+
+[FIX] For IE6, prevent module widening in columns; log-in bar location also fixed in Feb12
+----------------------------------------------
+r18618 | nkoth | 2009-05-11 02:36:53 +0200 (lun. 11 mai 2009) | 2 lines
+
+[FIX] Make edit plugin icon optional at the level of each icon, so that they can be disabled in the event of problems.
+
+----------------------------------------------
+r18617 | nkoth | 2009-05-11 00:56:56 +0200 (lun. 11 mai 2009) | 2 lines
+
+[FIX] Make img plugin as all other plugins be pref controllable
+
+----------------------------------------------
+r18616 | nkoth | 2009-05-10 23:24:18 +0200 (dim. 10 mai 2009) | 2 lines
+
+[FIX] Make top-right floating help plugins-help, add plugin work with text areas, and also quicktag plugin adding work.
+
+----------------------------------------------
+r18615 | gezzzan | 2009-05-10 21:57:11 +0200 (dim. 10 mai 2009) | 1 line
+
+HUN translation for wiki and plugin help and many other translations
+----------------------------------------------
+r18614 | sept_7 | 2009-05-10 21:22:06 +0200 (dim. 10 mai 2009) | 2 lines
+
+[FIX] save wiki page in WYSIWYG mode... /me go hidding under a rock :(
+
+----------------------------------------------
+r18613 | lindonb | 2009-05-10 19:43:49 +0200 (dim. 10 mai 2009) | 1 line
+
+[FIX] World's smallest fix. Changed one character (O to Z) so time zone appears instead of %O.
+----------------------------------------------
+r18612 | nkoth | 2009-05-10 18:29:11 +0200 (dim. 10 mai 2009) | 2 lines
+
+[FIX] hide insert plugin syntax tool in floating help area in wysiwyg and other cases with no textarea id set, as it won't work anyway. For the wysiwyg case, later we should have a way of inserting plugins from within the wysiwyg...
+
+----------------------------------------------
+r18611 | nkoth | 2009-05-10 18:27:42 +0200 (dim. 10 mai 2009) | 2 lines
+
+[FIX] add top-right floating help tool
+
+----------------------------------------------
+r18610 | nkoth | 2009-05-10 18:25:30 +0200 (dim. 10 mai 2009) | 2 lines
+
+[FIX] Since the generation of plugin help content is within list_plugins, info about textarea needs to be there, also the cache needs to respect for different text area
+
+----------------------------------------------
+r18609 | chibaguy | 2009-05-10 17:48:22 +0200 (dim. 10 mai 2009) | 1 line
+
+[FIX] More "mono-izing" of colors needed.
+----------------------------------------------
+r18608 | chibaguy | 2009-05-10 16:48:34 +0200 (dim. 10 mai 2009) | 1 line
+
+[FIX] label for needs an id, not class, so changed back to id but different name for module instance. (No bundled stylesheets currently style this id.)
+----------------------------------------------
+r18607 | chibaguy | 2009-05-10 16:29:46 +0200 (dim. 10 mai 2009) | 1 line
+
+[FIX] Same id (login-remember) appearing more than once in page causes validation error, so changed to class.
+----------------------------------------------
+r18606 | luciash | 2009-05-10 16:24:22 +0200 (dim. 10 mai 2009) | 1 line
+
+[FIX] wiki editpage JS quicktags icon to add image from file gallery: add at least an empty alt attribute to prevent xhtml validation errors
+----------------------------------------------
+r18605 | chibaguy | 2009-05-10 16:17:26 +0200 (dim. 10 mai 2009) | 1 line
+
+[FIX] bad <br /> clear property
+----------------------------------------------
+r18604 | luciash | 2009-05-10 16:13:22 +0200 (dim. 10 mai 2009) | 1 line
+
+[FIX] wiki editpage JS quicktags icon to add image from file gallery: use relative path instead of absolute
+----------------------------------------------
+r18603 | luciash | 2009-05-10 15:35:38 +0200 (dim. 10 mai 2009) | 1 line
+
+show help in strasa theme: have it displayed full height again when marc merged wiki syntax and plugins help
+----------------------------------------------
+r18602 | pkdille | 2009-05-10 09:20:40 +0200 (dim. 10 mai 2009) | 1 line
+
+[FIX] coelesce: typo
+----------------------------------------------
+r18601 | pkdille | 2009-05-10 08:53:36 +0200 (dim. 10 mai 2009) | 1 line
+
+[FIX] coelesce: some fix in the header: with and without logo and with various browsers
+----------------------------------------------
+r18600 | chibaguy | 2009-05-10 08:52:08 +0200 (dim. 10 mai 2009) | 1 line
+
+[FIX] Lost sitesearchbar when file was killed, so it returns for now.
+----------------------------------------------
+r18599 | chibaguy | 2009-05-10 08:30:41 +0200 (dim. 10 mai 2009) | 1 line
+
+[FIX] Adjustments mostly in site header and posts.
+----------------------------------------------
+r18598 | chibaguy | 2009-05-10 08:12:09 +0200 (dim. 10 mai 2009) | 1 line
+
+[FIX] Vertical alignment of site title and subtitle.
+----------------------------------------------
+r18597 | chibaguy | 2009-05-10 08:07:52 +0200 (dim. 10 mai 2009) | 1 line
+
+[KIL] Problem of bad display of site title when no logo was solved by using default template. Apparently css changes, etc. have made this file unnecessary. Please watch for any bad effect of removal.
+----------------------------------------------
+r18596 | marclaporte | 2009-05-10 08:02:24 +0200 (dim. 10 mai 2009) | 1 line
+
+[FIX] Remove link to nowhere. Unfortunately, there is no RSS feed for all changes across all trackers. You have to specify a trackerID. RSS feed per tracker can be found on tiki-view_tracker.php?trackerId= 
+----------------------------------------------
+r18595 | marclaporte | 2009-05-10 07:45:57 +0200 (dim. 10 mai 2009) | 1 line
+
+[FIX] RSS feed should show most recent change as no.1 
+----------------------------------------------
+r18594 | nkoth | 2009-05-10 07:33:35 +0200 (dim. 10 mai 2009) | 2 lines
+
+[FIX] Make add plugin buttons in help panel work (Note: lots of other sections need similar fix)
+
+----------------------------------------------
+r18593 | nkoth | 2009-05-10 05:44:37 +0200 (dim. 10 mai 2009) | 2 lines
+
+[FIX] retrieve cached plugin list properly
+
+----------------------------------------------
+r18592 | nkoth | 2009-05-10 05:26:04 +0200 (dim. 10 mai 2009) | 2 lines
+
+[FIX] Help insert plugin popup tool must specify area name to work
+
+----------------------------------------------
+r18591 | marclaporte | 2009-05-10 05:09:27 +0200 (dim. 10 mai 2009) | 1 line
+
+[FIX/MOD] merging back again wiki help and plugin help because for most users, there is no distinction between adding a link and adding a video. plugins are just advanced wiki syntax. Also, the plus buttons are not reliable and some users may not see the plugins section. Finally, adding a plugin is currently broken (but not by this commit).
+----------------------------------------------
+r18590 | marclaporte | 2009-05-10 02:00:54 +0200 (dim. 10 mai 2009) | 1 line
+
+[FIX] Adding __required__ note for comments body because if you leave blank, you get an error message. I don't think body should be mandatory but it is.
+----------------------------------------------
+r18589 | nkoth | 2009-05-09 22:44:34 +0200 (sam. 09 mai 2009) | 2 lines
+
+[FIX] Plugin embedded editor wuicktag to add plugin tag not working before (e.g. in tracker plugin)
+
+----------------------------------------------
+r18588 | sylvieg | 2009-05-09 21:57:53 +0200 (sam. 09 mai 2009) | 1 line
+
+[FIX] missing one - thx nkoth
+----------------------------------------------
+r18587 | sylvieg | 2009-05-09 21:49:44 +0200 (sam. 09 mai 2009) | 1 line
+
+[FIX]wiki: to have also plugin quicktag working in other area than editwiki
+----------------------------------------------
+r18585 | nkoth | 2009-05-09 20:23:31 +0200 (sam. 09 mai 2009) | 2 lines
+
+[FIX] Plugin list cache should be language specific
+
+----------------------------------------------
+r18584 | nkoth | 2009-05-09 19:33:14 +0200 (sam. 09 mai 2009) | 2 lines
+
+[FIX] Invalidate plugin list cache on plugin activation/deactivation
+
+----------------------------------------------
+r18583 | pkdille | 2009-05-09 17:57:17 +0200 (sam. 09 mai 2009) | 1 line
+
+[FIX] coelesce.css: the sitetitle and sitesubtitle have to stay on the side of the logo and not below. Import layout.css in this theme.
+----------------------------------------------
+r18582 | chibaguy | 2009-05-09 17:53:46 +0200 (sam. 09 mai 2009) | 1 line
+
+[FIX] Rollback to undo rename of Feb12, Darkroom, TheNews, and Tikinewt themes.
+----------------------------------------------
+r18581 | chibaguy | 2009-05-09 14:40:35 +0200 (sam. 09 mai 2009) | 2 lines
+
+[FIX] Renamed themes that would have compatibility problems at sites where the Tiki 2 versions are already installed (to prevent deprecated Tiki 2 version theme-specific tpl files from being used). (feb12.css missed in earlier commit.)
+
+----------------------------------------------
+r18580 | chibaguy | 2009-05-09 13:17:21 +0200 (sam. 09 mai 2009) | 1 line
+
+[FIX] Renamed theme in credits, for consistency.
+----------------------------------------------
+r18579 | chibaguy | 2009-05-09 13:13:15 +0200 (sam. 09 mai 2009) | 1 line
+
+[FIX] Renamed themes that would have compatibility problems at sites where the Tiki 2 versions are already installed (to prevent deprecated Tiki 2 version theme-specific tpl files from being used).
+----------------------------------------------
+r18578 | chibaguy | 2009-05-09 12:31:14 +0200 (sam. 09 mai 2009) | 1 line
+
+[FIX] Styling for span.button2 mostly missing, so class added to .button, etc.
+----------------------------------------------
+r18576 | sylvieg | 2009-05-08 22:20:00 +0200 (ven. 08 mai 2009) | 1 line
+
+[FIX]: no mail message ending with : must be translated into &nbsp;: because it wil be excaped
+----------------------------------------------
+r18575 | marclaporte | 2009-05-08 22:12:59 +0200 (ven. 08 mai 2009) | 1 line
+
+[FIX] Remove reference to source page in template as it's alwys blank. Applogies to translators.
+----------------------------------------------
+r18574 | sylvieg | 2009-05-08 21:16:39 +0200 (ven. 08 mai 2009) | 1 line
+
+[FIX]fgal: some perms errors messages
+----------------------------------------------
+r18573 | nkoth | 2009-05-08 20:24:48 +0200 (ven. 08 mai 2009) | 2 lines
+
+[FIX] Remove unnecessary and broken wiki help buttons (duplicates floating help)
+
+----------------------------------------------
+r18571 | sampaioprimo | 2009-05-08 18:43:29 +0200 (ven. 08 mai 2009) | 2 lines
+
+[FIX] tabs displaying properly in all admin pages when using tikinewt theme
+
+----------------------------------------------
+r18570 | sylvieg | 2009-05-08 18:16:10 +0200 (ven. 08 mai 2009) | 1 line
+
+[FIX]sheet: \n bugs javascript
+----------------------------------------------
+r18567 | sylvieg | 2009-05-08 17:37:19 +0200 (ven. 08 mai 2009) | 1 line
+
+[FIX]fr: better to see vendredi 8 mai than vendredi 08 mai
+----------------------------------------------
+r18566 | sylvieg | 2009-05-08 16:00:58 +0200 (ven. 08 mai 2009) | 1 line
+
+[FIX]print: no plugin edit icon when printing
+----------------------------------------------
+r18565 | jonnybradley | 2009-05-08 16:00:24 +0200 (ven. 08 mai 2009) | 1 line
+
+[FIX] Don't show unnecessary section edit button if hdr 1 is top of the page (and there is no section 0) [wish 2484]
+----------------------------------------------
+r18564 | sylvieg | 2009-05-08 15:49:23 +0200 (ven. 08 mai 2009) | 1 line
+
+[FIX]tracker: do not show the edit header/plugin icon for a pretty tracker
+----------------------------------------------
+r18563 | sylvieg | 2009-05-08 14:57:00 +0200 (ven. 08 mai 2009) | 1 line
+
+[FIX]tracker: tiki_p_use_as_template is not really useful as each field is tested individually
+----------------------------------------------
+r18561 | jonnybradley | 2009-05-08 13:38:41 +0200 (ven. 08 mai 2009) | 1 line
+
+[FIX] Changed Smarty var $name to $langname (fixes conflict with file gal edit, possibly others)
+----------------------------------------------
+r18560 | sylvieg | 2009-05-08 12:37:09 +0200 (ven. 08 mai 2009) | 1 line
+
+[FIX] use the same edist section icon
+----------------------------------------------
+r18559 | luciash | 2009-05-08 03:29:11 +0200 (ven. 08 mai 2009) | 1 line
+
+[FIX] attach wikiplugin: "applied" http://dev.tikiwiki.org/patch2475 (thanks to lindon)
+----------------------------------------------
+r18558 | sylvieg | 2009-05-07 23:55:14 +0200 (jeu. 07 mai 2009) | 1 line
+
+[FIX]sefurl: replace sequence mulitple - with - because 1/ more simple 2/ do not interfer with SPLIT
+----------------------------------------------
+r18557 | sylvieg | 2009-05-07 22:03:38 +0200 (jeu. 07 mai 2009) | 1 line
+
+[MOD]calendar_new: link the title to tiki-calendar
+----------------------------------------------
+r18556 | sylvieg | 2009-05-07 21:43:11 +0200 (jeu. 07 mai 2009) | 1 line
+
+[FIX]calendar: better fix for not show location in group popup + class around date in group popup
+----------------------------------------------
+r18552 | aproulx | 2009-05-07 20:03:04 +0200 (jeu. 07 mai 2009) | 1 line
+
+[ADD]Class for the month name
+----------------------------------------------
+r18551 | sylvieg | 2009-05-07 19:47:34 +0200 (jeu. 07 mai 2009) | 1 line
+
+[FIX]calendar: do not show location in popup in calendar_new
 ----------------------------------------------
 r18367 | luciash | 2009-05-02 12:25:49 -0700 (Sat, 02 May 2009) | 1 line
 

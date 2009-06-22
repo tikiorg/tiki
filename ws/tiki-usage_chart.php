@@ -50,5 +50,3 @@ if (isset($_REQUEST["type"])) {
 $graph->draw( $renderer );
 
 $renderer->httpOutput( 'stats.png' );
-
-?>

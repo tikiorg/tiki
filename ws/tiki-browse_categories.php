@@ -188,5 +188,3 @@ else
 	$smarty->assign('mid', 'tiki-browse_categories.tpl');
 	$smarty->display("tiki.tpl");
 }
-
-?>

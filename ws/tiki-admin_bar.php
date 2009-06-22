@@ -51,6 +51,3 @@ if (isset($secondLevelId) && $secondLevelId != '' && is_numeric($secondLevelId))
 $smarty->assign_by_ref('toplevelfeatures', $topLevelFeatures);
 $smarty->assign_by_ref('secondlevel', $secondLevelFeatures);
 $smarty->assign_by_ref('thirdlevel', $thirdLevelFeatures);
-
-
-?>

@@ -386,4 +386,3 @@ class OOoCalc extends absOOo {
    * */
 	}
 }
-?>

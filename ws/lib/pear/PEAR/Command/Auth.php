@@ -199,5 +199,3 @@ password from your user configuration.',
 
     // }}}
 }
-
-?>

@@ -492,6 +492,8 @@ class WikiRenderer
 		if ($prefs['feature_wikiapproval'] != 'y')
 			return;
 
+		$cats = $categlib->get_object_categories('wiki page',$this->page);
+
 		if ($tikilib->page_exists($prefs['wikiapproval_prefix'] . $this->page)) {
 			$this->smartyassign('hasStaging', 'y');
 		}
@@ -588,5 +590,3 @@ class WikiRenderer
 		$this->info[$name] = $value;
 	} // }}}
 }
-
-?>

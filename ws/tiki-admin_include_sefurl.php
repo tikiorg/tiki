@@ -19,4 +19,3 @@ if (!file_exists('.htaccess')) {
 	$smarty->assign('warning', tra('If you use apache, you need a .htaccess file to have this feature working'));
 }
 ask_ticket('admin-inc-sefurl');
-?>

@@ -86,5 +86,3 @@ if ($prefs['feature_theme_control'] == 'y') {
 		}
 	}
 }
-
-?>

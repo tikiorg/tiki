@@ -92,4 +92,3 @@ class  AcceptanceTests_SearchTest extends TikiSeleniumTestCase
         } 
     }
 }
-?>

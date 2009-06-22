@@ -102,17 +102,6 @@ div.tabrow {
 	text-decoration: none;
 }
 
-.Cal0:before {
-	content : "? ";
-}
-.Cal1:before {
-	content : "+ ";
-	background : #FFCC77;
-}
-.Cal2:before {
-	content : "X ";
-	background : #EEEEAA;
-}
 .caltitle {
 	font-weight : bold;
 	color : #425262;
@@ -505,10 +494,6 @@ a.viewmodeoff img {
 #exportcal .calinput {
 	padding: 10px;
 }
-.calbuttonBox {
-	/*float: left;
-	position: relative;*/
-}
 
 .statusbox {
 	margin-bottom : 1px;
@@ -543,25 +528,28 @@ a.addevent:hover { border-bottom:0px; }
 
 .tabrowLeft {  }
 .tabrowRight {  }
-.viewmode {width: 100%; text-align: center}
+
+.viewmode {
+	line-height: 1em;
+	width: 100%;
+	text-align: center;
+	padding: 1px;
+}
+
 .viewmode div {display: inline}
 .calbuttonBox {  }
 .calbuttonLeft {  }
 .calbuttonRight {  }
-.calbuttonoff {  }
 
-#prev {
-	margin-left: 30px;
-	float: left;
-	position: relative;
-	height: 20px;
-	width: 20px}
+.calbuttonoff , 
+.calbuttonon , 
+a.prev img ,
+a.next img {
+	vertical-align: middle;  
+}
 
-#next {
-	margin-left: 30px;
-	float: left;
-	position: relative;
-	height: 20px;
-	width: 20px}
-
-
+/* Smaller icons inside calendar headers, in order to have no impact on the position of items on the week and day views */
+.calHeading a img {
+	height: 14px;
+	width: 14px;
+}

@@ -102,9 +102,7 @@ $smarty->assign_by_ref('gal_info', $gal_info);
 $smarty->assign_by_ref('name', $gal_info['name']);
 $smarty->assign_by_ref('galleryId', $_REQUEST['galleryId']);
 
-
 $smarty->assign('reindex_file_id', -1);
-
 
 // Execute batch actions
 if ( $tiki_p_admin_file_galleries == 'y' ) {
@@ -215,7 +213,6 @@ if ( isset($_REQUEST['lock']) && isset($_REQUEST['fileId']) && $_REQUEST['fileId
 
 // Delete a file
 if ( ! empty($_REQUEST['remove']) ) {
-
 	// To remove an image the user must be the owner or the file or the gallery or admin
 	if ( ! $info = $filegallib->get_file_info($_REQUEST['remove']) ) {
 		$smarty->assign('msg', tra('Incorrect param'));
@@ -277,6 +274,12 @@ if ( isset($_REQUEST['edit_mode']) and $_REQUEST['edit_mode'] ) {
 
 	// Edit a file
 	if ( isset($_REQUEST['fileId']) && $_REQUEST['fileId'] > 0 ) {
+		if ($tiki_p_edit_gallery_file != 'y') {
+			$smarty->assign('errortype', 401);
+			$smarty->assign('msg', tra('Permission denied'));
+			$smarty->display('error.tpl');
+			die;
+		}
 		$info = $filegallib->get_file_info($_REQUEST['fileId']);
 
 		$smarty->assign('fileId', $_REQUEST['fileId']);
@@ -299,6 +302,11 @@ if ( isset($_REQUEST['edit_mode']) and $_REQUEST['edit_mode'] ) {
 			$smarty->assign('sortorder', 'created');
 			$smarty->assign('sortdirection', 'desc');
 		}
+	} elseif ($tiki_p_create_file_galleries != 'y') {
+		$smarty->assign('errortype', 401);
+		$smarty->assign('msg', tra('Permission denied'));
+		$smarty->display('error.tpl');
+		die;
 	}
 
 // Duplicate mode
@@ -729,28 +737,30 @@ if ( isset($_REQUEST['fileId']) ) {
 }
 
 if (isset($_GET['slideshow'])) {
-  $files = $tikilib->get_files(0, -1, $_REQUEST['sort_mode'], $_REQUEST['find'], $_REQUEST['galleryId'] == 0 ? -1 : $_REQUEST['galleryId'], false, false, false, true, false, false, false, true, '', false);
-  $smarty->assign('cant', $files['cant']);
-  $i = 0;
-  $smarty->assign_by_ref('filesid', $filesid);
-  $smarty->assign_by_ref('file', $files['data']);
-  reset($filesid);
-  $smarty->assign('firstId',current($filesid));
-  $smarty->assign('show_find', 'n');
-  $smarty->assign('direct_pagination', 'y');
+	$files = $tikilib->get_files(0, -1, $_REQUEST['sort_mode'], $_REQUEST['find'], $_REQUEST['galleryId'] == 0 ? -1 : $_REQUEST['galleryId'], false, false, false, true, false, false, false, true, '', false);
+	$smarty->assign('cant', $files['cant']);
+	$i = 0;
+	$smarty->assign_by_ref('filesid', $filesid);
+	$smarty->assign_by_ref('file', $files['data']);
+	reset($filesid);
+	$smarty->assign('firstId',current($filesid));
+	$smarty->assign('show_find', 'n');
+	$smarty->assign('direct_pagination', 'y');
 	//if ($prefs['feature_mootools'] == 'y') {
-		$smarty->display('file_gallery_slideshow.tpl');
+	$smarty->display('file_gallery_slideshow.tpl');
 	//} else if ($prefs['feature_jquery'] == 'y') {
 	// commented out for release 3.0 as it's not ready yet - TODO for 3.1 or 4
 	//	$smarty->display('tiki-file_gallery_slideshow.tpl');
 	//}
-  die();
-} else {
-	// Get list of files in the gallery
-	$files = $tikilib->get_files($_REQUEST['offset'], $_REQUEST['maxRecords'], $_REQUEST['sort_mode'], $_REQUEST['find'], $_REQUEST['galleryId'], true, true);
-	$smarty->assign_by_ref('files', $files['data']);
-	$smarty->assign('cant', $files['cant']);
-	$smarty->assign('mid','tiki-list_file_gallery.tpl');
+	die();
+}else {
+	if ( ! isset($_REQUEST["edit_mode"]) && ! isset($_REQUEST["edit"]) ){
+        	// Get list of files in the gallery
+                $files = $tikilib->get_files($_REQUEST['offset'], $_REQUEST['maxRecords'], $_REQUEST['sort_mode'], $_REQUEST['find'], $_REQUEST['galleryId'], true, true);
+                $smarty->assign_by_ref('files', $files['data']);
+                $smarty->assign('cant', $files['cant']);
+        }
+        $smarty->assign('mid','tiki-list_file_gallery.tpl');
 }
 
 // Browse view

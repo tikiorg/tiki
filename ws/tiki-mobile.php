@@ -76,5 +76,3 @@ if (isset($_REQUEST['content']) && $_REQUEST['content'] == "about") {
 }
 
 $TikiPage->create_page();
-
-?>

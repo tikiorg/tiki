@@ -2385,5 +2385,3 @@ class smtp {
 		return TRUE;
 	}
 } // class smtp
-
-?>

@@ -322,8 +322,9 @@ class RSSLib extends TikiLib {
 		foreach ($changes["data"] as $data)  {
 			$item = new FeedItem(); 
 			$item->title = $data["$titleId"]; 
-			// 2 parameters to replace			
-			if ($urlparam<>'') {
+			if (isset($data['sefurl'])) {
+				$item->link = $this->httpPrefix().dirname($urlarray["path"]).$dirname.$data['sefurl'];
+			} elseif ($urlparam<>'') {			// 2 parameters to replace
 				$item->link = sprintf($read, urlencode($data["$id"]), urlencode($data["$urlparam"]));
 			} else {
 				$item->link = sprintf($read, urlencode($data["$id"]));
@@ -376,7 +377,6 @@ class RSSLib extends TikiLib {
 					} else $item->author = $data["$authorId"];
 				}
 			}
-			 
 			$rss->addItem($item); 
 		} 
 		$data = $rss->createFeed($this->get_rss_version_name($rss_version));
@@ -429,7 +429,7 @@ class RSSLib extends TikiLib {
 
 		if ($rssId) {
 			$query = "update `tiki_rss_modules` set `name`=?,`description`=?,`refresh`=?,`url`=?,`showTitle`=?,`showPubDate`=? where `rssId`=?";
-			$bindvars=array($name,$description,$refresh,$url,$showTitle,$showPubDate,$rssId);
+			$bindvars=array($name,$description,$refresh,$url,$showTitle,$showPubDate,(int)$rssId);
 		} else {
 			// was: replace into, no clue why.
 			$query = "insert into `tiki_rss_modules`(`name`,`description`,`url`,`refresh`,`content`,`lastUpdated`,`showTitle`,`showPubDate`)
@@ -445,7 +445,7 @@ class RSSLib extends TikiLib {
 	function remove_rss_module($rssId) {
 		$query = "delete from `tiki_rss_modules` where `rssId`=?";
 
-		$result = $this->query($query,array($rssId));
+		$result = $this->query($query,array((int)$rssId));
 		return true;
 	}
 
@@ -453,7 +453,7 @@ class RSSLib extends TikiLib {
 	function get_rss_module($rssId) {
 		$query = "select * from `tiki_rss_modules` where `rssId`=?";
 
-		$result = $this->query($query,array($rssId));
+		$result = $this->query($query,array((int)$rssId));
 
 		if (!$result->numRows())
 			return false;
@@ -558,7 +558,7 @@ class RSSLib extends TikiLib {
 				return false;
 			}
 			$query = "update `tiki_rss_modules` set `content`=?, `lastUpdated`=? where `rssId`=?";
-			$result = $this->query($query,array((string)$data,(int) $this->now, $rssId));
+			$result = $this->query($query,array((string)$data,(int) $this->now, (int)$rssId));
 			return $data;
 		} else {
 			return false;
@@ -585,7 +585,7 @@ class RSSLib extends TikiLib {
 	function get_rss_showTitle($rssId) {
 		$query = "select `showTitle` from `tiki_rss_modules` where `rssId`=?";
 
-		$showTitle = $this->getOne($query,array($rssId));
+		$showTitle = $this->getOne($query,array((int)$rssId));
 		return $showTitle;
 	}
 
@@ -593,7 +593,7 @@ class RSSLib extends TikiLib {
 	function get_rss_showPubDate($rssId) {
 		$query = "select `showPubDate` from `tiki_rss_modules` where `rssId`=?";
 
-		$showPubDate = $this->getOne($query,array($rssId));
+		$showPubDate = $this->getOne($query,array((int)$rssId));
 		return $showPubDate;
 	}
 
@@ -673,5 +673,3 @@ class RSSLib extends TikiLib {
 }
 global $dbTiki, $rsslib;
 $rsslib = new RSSLib($dbTiki);
-
-?>

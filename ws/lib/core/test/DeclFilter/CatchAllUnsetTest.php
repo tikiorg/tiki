@@ -22,5 +22,3 @@ class DeclFilter_CatchAllUnsetTest extends TikiTestCase
 		$this->assertFalse( isset( $data['hello'] ) ); 
 	}
 }
-
-?>

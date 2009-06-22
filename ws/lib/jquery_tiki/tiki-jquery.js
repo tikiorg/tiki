@@ -4,10 +4,14 @@
 var $jq = jQuery.noConflict();
 
 $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
+	
+	var jqNoAnimElements = ['help_sections', 'ajaxLoading'];
 
 	// override existing show/hide routines here
 	show = function (foo,f,section) {
-		if ($jq("#" + foo).hasClass("tabcontent")) {
+		if (jQuery.inArray(foo, jqNoAnimElements) > -1) {		// exceptions that don't animate reliably
+			$jq("#" + foo).show();
+		} else if ($jq("#" + foo).hasClass("tabcontent")) {		// different anim prefs for tabs
 			showJQ("#" + foo, jqueryTiki.effect_tabs, jqueryTiki.effect_tabs_speed, jqueryTiki.effect_tabs_direction);
 		} else {
 			showJQ("#" + foo, jqueryTiki.effect, jqueryTiki.effect_speed, jqueryTiki.effect_direction);
@@ -16,7 +20,9 @@ $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 	};
 	
 	hide = function (foo,f, section) {
-		if ($jq("#" + foo).hasClass("tabcontent")) {
+		if (jQuery.inArray(foo, jqNoAnimElements) > -1) {		// exceptions
+			$jq("#" + foo).hide();
+		} else if ($jq("#" + foo).hasClass("tabcontent")) {
 			hideJQ("#" + foo, jqueryTiki.effect_tabs, jqueryTiki.effect_tabs_speed, jqueryTiki.effect_tabs_direction);
 		} else {
 			hideJQ("#" + foo, jqueryTiki.effect, jqueryTiki.effect_speed, jqueryTiki.effect_direction);
@@ -32,8 +38,13 @@ $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 	
 	// flip function... unfortunately didn't use show/hide (ay?)
 	flip = function (foo,style) {
-		if (style && style != 'block' || foo == 'help_sections') {
+		if (style && style != 'block' || foo == 'help_sections' || foo == 'fgalexplorer') {	// TODO find a better way?
 			$jq("#" + foo).toggle();	// inlines don't animate reliably (yet) (also help)
+			if ($jq("#" + foo).css('display') == 'none') {
+				setSessionVar('show_' + escape(foo), 'n');
+			} else {
+				setSessionVar('show_' + escape(foo), 'y');
+			}
 		} else {
 			if ($jq("#" + foo).css("display") == "none") {
 				setSessionVar('show_' + escape(foo), 'y');

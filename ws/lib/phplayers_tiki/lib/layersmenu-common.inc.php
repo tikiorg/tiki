@@ -956,5 +956,3 @@ function error($errormsg)
 }
 
 } /* END OF CLASS */
-
-?>

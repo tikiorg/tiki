@@ -19,7 +19,3 @@ function smarty_function_ed($params, &$smarty)
     
     print($banner);
 }
-
-
-
-?>

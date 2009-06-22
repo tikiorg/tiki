@@ -77,5 +77,3 @@ function wikiplugin_toc( $data, $params )
 		return "~np~$html~/np~";
 	}
 }
-
-?>

@@ -13,6 +13,9 @@
 	margin-left: -316px;
 	width: 316px}
 	
+* html #col2 .box {width: 158px}
+* html #col3 .box { width: 300px}
+	
 #col2 .cssmenu_vert > li {
 	width: 130px;
 	padding: 0 !important}

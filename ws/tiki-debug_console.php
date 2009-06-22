@@ -71,5 +71,3 @@ foreach ($tabs_list as $tname => $tcode) {
 
 $smarty->assign_by_ref('tabs', $tabs);
 }
-
-?>

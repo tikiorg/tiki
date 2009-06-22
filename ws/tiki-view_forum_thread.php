@@ -428,6 +428,12 @@ if ($prefs['feature_actionlog'] == 'y') {
 
 ask_ticket('view-forum');
 
+if ($prefs['feature_forum_parse'] == 'y') {
+	global $wikilib; include_once('lib/wiki/wikilib.php');
+	$plugins = $wikilib->list_plugins(true, 'editpost2');
+	$smarty->assign_by_ref('plugins', $plugins);
+}
+
 // Display the template
 if ( isset($_REQUEST['display']) ) {
 
@@ -463,5 +469,3 @@ if ( isset($_REQUEST['display']) ) {
 	$smarty->assign('mid', 'tiki-view_forum_thread.tpl');
 	$smarty->display('tiki.tpl');
 }
-
-?>

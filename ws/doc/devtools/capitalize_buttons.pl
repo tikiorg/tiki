@@ -41,6 +41,8 @@
 #                        slashes in text
 #  2007-12-29  JML    5: Now handles strings with single quotes (')
 #                        Abstract translated
+#              JML    6: Now handles strings with ()|
+#  2007-12-29  JML    7: Now handles strings with #
 #
 #TODO:
 #
@@ -74,14 +76,21 @@ options:
 my $word_lowercase = $ARGV[0];
 my $word_correct = $ARGV[1];
 my $word_lowercase_escaped = $word_lowercase;
+my $word_lowercase_escaped_perl = $word_lowercase;
 my $word_correct_escaped = $word_correct;
 $word_lowercase_escaped =~ s/\//\\\//g;
 $word_lowercase_escaped =~ s/'/'\\''/g;
+$word_lowercase_escaped =~ s/\#/\\#/g;
+$word_lowercase_escaped_perl = $word_lowercase_escaped;
+$word_lowercase_escaped_perl =~ s/\(/\\(/g;
+$word_lowercase_escaped_perl =~ s/\)/\\)/g;
+$word_lowercase_escaped_perl =~ s/\|/\\|/g;
 $word_correct_escaped =~ s/\//\\\//g;
 $word_correct_escaped =~ s/'/'\\''/g;
 #if($opt_verbose) {print "escaped lowercase: '$word_lowercase_escaped'\n";}
 if($opt_verbose){print "'$word_lowercase' --> '$word_correct' (given) '\u$word_lowercase' (auto)\n";}
 
+# This is the list of "complicated" looking languages
 my %languages_delicats=qw( 
 ar 1
 cn 1
@@ -141,12 +150,12 @@ while ( my $langfile = <lang/*/language.php> ){
 	print "Need to edit $langfile (lines found: $result)\n";
 	# here we edit the file
 	if($trycapitalisation==0){
-		$command="perl -pi.bak -e 's/(^(.*)\"($word_lowercase_escaped)\"[ 	]*=>[ 	]*\"([^\"]*)\"[ 	]*,.*\$)/\$1\\n\$2\"$word_correct_escaped\" => \"\$4\",/' $langfile";
+		$command="perl -pi.bak -e 's/(^(.*)\"($word_lowercase_escaped_perl)\"[ 	]*=>[ 	]*\"([^\"]*)\"[ 	]*,.*\$)/\$1\\n\$2\"$word_correct_escaped\" => \"\$4\",/' $langfile";
 	}else{
 		if($opt_ignorecase) { # then we assume that no attempt at capitalisation is expected
-			$command="perl -pi.bak -e 's/(^(.*)\"($word_lowercase_escaped)\"[ 	]*=>[ 	]*\"([^\"]*)\"[ 	]*,.*\$)/\$1\\n\$2\"$word_correct_escaped\" => \"\$4\",/' $langfile";
+			$command="perl -pi.bak -e 's/(^(.*)\"($word_lowercase_escaped_perl)\"[ 	]*=>[ 	]*\"([^\"]*)\"[ 	]*,.*\$)/\$1\\n\$2\"$word_correct_escaped\" => \"\$4\",/' $langfile";
 		}else{
-			$command="perl -pi.bak -e 's/(^(.*)\"($word_lowercase_escaped)\"[ 	]*=>[ 	]*\"([^\"]*)\"[ 	]*,.*\$)/\$1\\n\$2\"$word_correct_escaped\" => \"\\u\$4\",/' $langfile";
+			$command="perl -pi.bak -e 's/(^(.*)\"($word_lowercase_escaped_perl)\"[ 	]*=>[ 	]*\"([^\"]*)\"[ 	]*,.*\$)/\$1\\n\$2\"$word_correct_escaped\" => \"\\u\$4\",/' $langfile";
 		}
 	}
 	if($opt_verbose){print "-> $command\n";}

@@ -17,8 +17,10 @@ if (!function_exists('smarty_function_sefurl')) {
 			} else {
 				$url = $wikilib->sefurl($params['page']);
 				$url .= '&amp;structure='.urlencode($params['structure']);
-				//$url .= '&amp;page_ref_id='.$params['page_ref_id'];
 			}
+		}
+		if ($prefs['page_n_times_in_a_structure'] == 'y') {
+			$url .= '&amp;page_ref_id='.$params['page_ref_id'];
 		}
 		return $url;
 	}

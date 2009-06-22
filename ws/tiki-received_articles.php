@@ -205,5 +205,3 @@ ask_ticket('received-articles');
 // Display the template
 $smarty->assign('mid', 'tiki-received_articles.tpl');
 $smarty->display("tiki.tpl");
-
-?>

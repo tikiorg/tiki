@@ -83,6 +83,7 @@ if (isset($_REQUEST["features"])) {
 		"feature_user_bookmarks",
 		"feature_user_watches",
 		"feature_group_watches",
+		"feature_daily_report_watches",
 		"feature_user_watches_translations",
 		"feature_userfiles",
 		"feature_usermenu",
@@ -106,6 +107,8 @@ if (isset($_REQUEST["features"])) {
 		"feature_groupalert",
 		"feature_wiki_mindmap",
 		"use_minified_scripts",
+		"feature_print_indexed",
+		'debug_ignore_xdebug',
 	);
 
 	$pref_byref_values = array(
@@ -124,13 +127,6 @@ if (isset($_REQUEST["features"])) {
 
 }
 
-if (!empty($_REQUEST['tabs'])) {
-	$smarty->assign('tabs', $_REQUEST['tabs']=='on'?'n':'');
-} else {
-	$smarty->assign('tabs', '');
-}
-
 $smarty->assign('php_major_version', substr(PHP_VERSION, 0, strpos(PHP_VERSION, '.')));
 
 ask_ticket('admin-inc-features');
-?>

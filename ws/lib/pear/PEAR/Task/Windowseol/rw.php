@@ -59,4 +59,3 @@ class PEAR_Task_Windowseol_rw extends PEAR_Task_Windowseol
         return '';
     }
 }
-?>

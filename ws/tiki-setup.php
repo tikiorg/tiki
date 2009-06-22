@@ -17,6 +17,7 @@ if (version_compare(PHP_VERSION, '5.0.0', '<')) {
   exit;
 }
 
+require_once 'lib/setup/third_party.php';
 require_once 'tiki-filter-base.php';
 
 // Enable Versioning
@@ -95,7 +96,6 @@ if ( $prefs['feature_freetags'] == 'y' ) require_once('lib/setup/freetags.php');
 if ( $prefs['feature_categories'] == 'y' ) require_once('lib/setup/categories.php');
 if ( $prefs['feature_workspaces'] == 'y' ) require_once('lib/setup/wslib.php');
 if ( $prefs['feature_userlevels'] == 'y' ) require_once('lib/setup/userlevels.php');
-if ( $prefs['feature_fullscreen'] == 'y' ) require_once('lib/setup/fullscreen.php');
 if ( $prefs['auth_method'] == 'openid' ) require_once('lib/setup/openid.php');
 if ( $prefs['feature_wysiwyg'] == 'y' ) {
 	if ( ! isset($_SESSION['wysiwyg']) ) $_SESSION['wysiwyg'] = 'n';

@@ -183,5 +183,3 @@ ask_ticket('g-monitor-instances');
 
 $smarty->assign('mid', 'tiki-g-monitor_instances.tpl');
 $smarty->display("tiki.tpl");
-
-?>

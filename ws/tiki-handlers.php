@@ -17,5 +17,3 @@
 //$tikilib->add_pre_handler("foo");
 //$tikilib->add_pos_handler("foo");
 //$tikilib->add_postedit_handler("foo");
-
-?>

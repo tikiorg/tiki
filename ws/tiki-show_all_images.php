@@ -113,4 +113,3 @@ if (!isset($_REQUEST['view'])){
 } else {
 	echo "wrong.";
 }
-?>

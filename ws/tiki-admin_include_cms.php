@@ -51,6 +51,7 @@ if (isset($_REQUEST['artlist'])) {
 	'art_list_visible',
 	'art_list_lang',
 	'art_list_author',
+	'art_list_rating',
 	'art_list_reads',
 	'art_list_size',
 	'art_list_img'
@@ -73,4 +74,3 @@ if (isset($_REQUEST['import'])) {
 }
 
 ask_ticket('admin-inc-cms');
-?>

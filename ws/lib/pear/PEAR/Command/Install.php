@@ -1185,4 +1185,3 @@ Run post-installation scripts in package <package>, if any exist.
     }
 
 }
-?>

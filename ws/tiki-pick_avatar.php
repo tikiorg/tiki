@@ -145,5 +145,3 @@ ask_ticket('pick-avatar');
 
 $smarty->assign('mid', 'tiki-pick_avatar.tpl');
 $smarty->display("tiki.tpl");
-
-?>

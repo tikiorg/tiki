@@ -155,4 +155,3 @@ $smarty->assign("listgroups", $listgroups['data']);
 
 
 ask_ticket('admin-inc-login');
-?>

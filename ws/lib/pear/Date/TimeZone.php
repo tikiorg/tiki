@@ -7235,7 +7235,6 @@ if (isset($GLOBALS['_DATE_TIMEZONE_DEFAULT'])
 } else {
     Date_TimeZone::setDefault('UTC');
 }
-
 /*
  * Local variables:
  * mode: php
@@ -7244,4 +7243,3 @@ if (isset($GLOBALS['_DATE_TIMEZONE_DEFAULT'])
  * c-hanging-comment-ender-p: nil
  * End:
  */
-?>

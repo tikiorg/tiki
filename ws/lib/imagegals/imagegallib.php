@@ -898,17 +898,22 @@ class ImageGalsLib extends TikiLib {
 			refresh_index('images', $imageId);
 		}
 		
-		$this->notify($imageId, $galleryId, $name, $filename, $description, isset($gal_info['name'])?$gal_info['name']: '', $user);
+		$this->notify($imageId, $galleryId, $name, $filename, $description, isset($gal_info['name'])?$gal_info['name']: '', 'upload image', $user);
 
 		return $imageId;
 	}
 
-	function notify($imageId, $galleryId, $name, $filename, $description, $galleryName, $user) {
-		global $prefs;
+	function notify($imageId, $galleryId, $name, $filename, $description, $galleryName, $action, $user) {
+		global $prefs, $smarty, $tikilib;
 		if ($prefs['feature_user_watches'] == 'y') {
+			$event = 'image_gallery_changed';
+			$nots = $this->get_event_watches($event, $galleryId);
+			
+			if ($prefs['feature_daily_report_watches'] == 'y') {
+				$tikilib->makeReportCache($nots, array("event"=>$event, "imageId"=>$imageId, "imageName"=>$name, "fileName"=>$filename, "galleryId"=>$galleryId, "galleryName"=>$galleryName, "action"=>$action, "user"=>$user));
+			}
+			
 			include_once('lib/notifications/notificationemaillib.php');
-			global $smarty, $tikilib;
-			$nots = $this->get_event_watches('image_gallery_changed', $galleryId);
 			$smarty->assign_by_ref('galleryId', $galleryId);
 			$smarty->assign_by_ref('galleryName', $galleryName);
 			$smarty->assign_by_ref('mail_date', date('U'));
@@ -945,11 +950,13 @@ class ImageGalsLib extends TikiLib {
 		$this->rotate_image($id, 90);
 	}
 
-	function remove_image($id) {
+	function remove_image($id, $user) {
 		global $prefs;
 
 		$path = $this->getOne("select `path` from `tiki_images` where `imageId`=?",array($id));
-
+		$imageInfo = $this->get_image_info($id);
+		$gal_info = $this->get_gallery($imageInfo['galleryId']);
+		
 		if ($path) {
 			@unlink ($prefs['gal_use_dir'] . $path);
 
@@ -967,6 +974,7 @@ class ImageGalsLib extends TikiLib {
 		$query = "delete from `tiki_images_data` where `imageId`=?";
 		$result = $this->query($query,array((int)$id));
 		$this->remove_object('image', $id);
+		$this->notify($imageInfo['imageId'], $imageInfo['galleryId'], $imageInfo['name'], $imageInfo['filename'], $imageInfo['description'], isset($gal_info['name'])?$gal_info['name']: '', 'remove image', $user);
 		return true;
 	}
 
@@ -2224,5 +2232,3 @@ $thumbSizeY,$public,0,$visible,$sortorder,$sortdirection,$galleryimage,(int)$par
 global $dbTiki;
 global $imagegallib;
 $imagegallib = new ImageGalsLib($dbTiki);
-
-?>

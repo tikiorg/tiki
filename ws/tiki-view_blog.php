@@ -294,5 +294,3 @@ ask_ticket('blog');
 // Display the template
 $smarty->assign('mid', 'tiki-view_blog.tpl');
 $smarty->display("tiki.tpl");
-
-?>

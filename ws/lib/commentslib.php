@@ -2539,7 +2539,7 @@ class Comments extends TikiLib {
 
 						 // Deal with mail notifications.
 						include_once('lib/notifications/notificationemaillib.php');
-						sendForumEmailNotification(empty($params['comments_reply_threadId'])?'forum_post_topic':'forum_post_thread', $params['forumId'], $forum_info, $params['comments_title'], $params['comments_data'], $user, $params['comments_title'], $message_id, $in_reply_to, isset($params['comments_parentId'])?$params['comments_parentId']: $threadId, isset($params['comments_parentId'])?$params['comments_parentId']: 0, isset($params['contributions'])? $params['contributions']: '' );
+						sendForumEmailNotification(empty($params['comments_reply_threadId'])?'forum_post_topic':'forum_post_thread', $params['forumId'], $forum_info, $params['comments_title'], $params['comments_data'], $user, $params['comments_title'], $message_id, $in_reply_to, isset($params['comments_parentId'])?$params['comments_parentId']: $threadId, isset($params['comments_parentId'])?$params['comments_parentId']: 0, isset($params['contributions'])? $params['contributions']: '', $threadId);
 						// Set watch if requested
 						if ($prefs['feature_user_watches'] == 'y') {
 							if ($user && isset($params['set_thread_watch']) && $params['set_thread_watch'] == 'y') {

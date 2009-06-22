@@ -143,5 +143,3 @@ function wikiplugin_sql($data, $params) {
 
 	return $ret;
 } 
-
-?>

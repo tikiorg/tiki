@@ -63,5 +63,3 @@ function wikiplugin_equation($data, $params) {
     }
 	return $html;
 }
-
-?>

@@ -17,5 +17,3 @@ class AcceptanceTests_AllTests
         return $suite;
     }
 }
-
-?>

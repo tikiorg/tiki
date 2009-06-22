@@ -12,7 +12,7 @@ body {
 	text-align: left;
 	font: 72%/1.4em Verdana, Geneva, Arial, Helvetica, sans-serif;}
 
-html>body {font-size: 76%}
+html>body {font-size: 12px}
 
 /* workaround for Safari when in FCKEditor */
 html[dir=ltr]>body {
@@ -113,10 +113,9 @@ button,
 input[type=reset],
 input[type=submit],
 span.button input,
-.submitbutton,
 .calbuttonBox {
 	font-family: Verdana, Helvetica, Geneva, Arial, sans-serif;
-	font-size: 94%;
+	font-size: 11px;
 	font-weight: normal;
 	color: #fff;
 	background: #1d9ccf;
@@ -126,7 +125,7 @@ span.button input,
 	margin-right: 1px;
 	text-decoration: none;
 	white-space: nowrap;
-	cursor: pointer;}
+	cursor: pointer}
 
 /*.button a,
 .button a:visited {padding: 1px 4px}*/
@@ -136,7 +135,6 @@ button:hover,
 input[type=reset]:hover,
 input[type=submit]:hover,
 .button input:hover,
-.submitbutton:hover,
 .calbuttonBox:hover {
 	background-color: #1e7ea6;
 	color: #fff;
@@ -147,7 +145,11 @@ button:active,
 input[type=reset]:active,
 input[type=submit]:active,
 .button input:active,
-.submitbutton:active {border-color: #223845 #41cbe7 #41cbe7 #223845;  }
+span.highlight a:link,
+span.highlight a:visited {
+	border-color: #223845 #41cbe7 #41cbe7 #223845;
+	background: #5cbdef !important;
+	color: #000 !important}
 
 
 div.iconmenu {display: inline}
@@ -225,6 +227,7 @@ ul.jumplinks a:active {
 	width: 6em;
 	z-index: 9}
 
+.fullscreenbutton,
 #fullscreenbutton {
 	position: absolute;
 	top: 2px;
@@ -232,6 +235,7 @@ ul.jumplinks a:active {
 	z-index: 10;
 	font-size: 80%}
 	
+.fullscreenbutton:hover,
 #fullscreenbutton:hover {color: #000000}
 
 /* appears on print page */
@@ -265,8 +269,6 @@ ul.jumplinks a:active {
 /*	height: 70%;*/
 	padding-top: 40px;
 	padding-bottom: 40px}
-	
-*:first-child+html #middle {padding-top: 65px}
 
 #c1c2 {background: #fff}
 #c1c2 #wrapper {}
@@ -295,7 +297,7 @@ ul.jumplinks a:active {
 	text-align: left;
 	margin-left: 58px;
 	padding-bottom: 5px;	
-	background: #8ea2b4 url(strasa/box_bottom.gif) no-repeat 0 100%}
+	background: url(strasa/box_bottom.gif) no-repeat 0 100%}
 
 #col3 {
 	margin-left: -210px;
@@ -395,8 +397,7 @@ div#tiki-bot {}
 /* Site Header & Identity */
 #header-top {
 	color: #fff;
-	height: 97px;
-	background: #214d68 url(strasa/headerbg.jpg) repeat-x 0 100%}
+}
 
 #siteheader {
 	text-align: left;
@@ -406,21 +407,22 @@ div#tiki-bot {}
 	margin: 0}
 
 #customcode, #customcodewith_ad {
-	position: absolute;
-	width: 964px;
-	margin: auto}
+	background: #214d68 url(strasa/headerbg.jpg) repeat-x 0 100%;
+}
 
 #topbar_custom_code {
 	margin: 0 58px;
 }
 	
 div#sioptions {
-	height: 97px;
-	margin: 0 58px;
-	overflow: hidden;
+	background: #214d68 url(strasa/headerbg.jpg) repeat-x 0 100%;
+	padding: 0 58px;
 }
 
-#sioptionscentered {text-align: center}
+#sioptionscentered {
+	text-align: center;
+	background: #214d68 url(strasa/headerbg.jpg) repeat-x 0 100%;
+}
 
 div.floatright {
 	float: right;
@@ -431,7 +433,8 @@ div.floatleft {
 	clear: none}
 
 div#sitelogo {
-	margin: auto;	
+	margin: auto;
+	padding-top: 8px;
 	overflow: hidden;	
 }
 
@@ -445,17 +448,20 @@ div#sitead {margin: auto}
 	float: right;
 	font-size: 90%;
 	height: 24px;
+	line-height: 24px;
 	padding-left: 60px;
-	padding-top: 1px;
 	color: #fff;
 	background: #fff url(strasa/login.jpg) 0 0 no-repeat;
 }
 
-* html #siteloginbar {text-align: right}
-*:first-child+html #siteloginbar {max-width: 650px}
+* html #siteloginbar {
+	text-align: right;
+	width: 100%;
+	padding: 0;
+	background: #fff url(strasa/loginlong.jpg) 0 0 no-repeat}
 
-div.logged-in {padding-right: 20px}
-	
+*:first-child+html #siteloginbar {text-align: right}
+
 #siteloginbar a,
 #siteloginbar a:visited,
 #siteloginbar a:hover {
@@ -486,7 +492,7 @@ div.logged-in {padding-right: 20px}
 	padding-left: 60px;
 	padding-right: 10px;
 	padding-top: 0;
-	margin-top: -1px;
+	margin-top: 0;
 	background: url(strasa/register.jpg) no-repeat}
 
 #bannertopright {  }
@@ -497,7 +503,16 @@ div.logged-in {padding-right: 20px}
 	color: #5ae0ff;
 	font-size: 90%;
 	background: #204c65;
-	font-weight: normal }
+	font-weight: normal}
+	
+div.logged-in {padding-right: 20px}
+
+* html .logged-in {
+	color: #5ae0ff !important;
+	background: none !important}
+
+* html .logged-in a,
+* html .logged-in a:visited {color: #5ae0ff !important}
 	
 #sitelocbar {float: left; margin: 0 58px;}
 #sitelocbar a {background-color: #cce5ff; color: #0990cc !important; padding: 1px 4px}
@@ -507,14 +522,15 @@ div.logged-in {padding-right: 20px}
 
 /* #header text selectors, if needed */
 
-#sitetitles {color: #fff; float: left; height: 97px; line-height: 97px; overflow: hidden; vertical-align: bottom}
+#sitetitles {color: #fff; display: inline; height: 97px; line-height: 97px; overflow: hidden; vertical-align: bottom}
 
 #sitetitle,
 #sitesubtitle {font-family: Helvetica, sans-serif; font-weight: bold}
 
 #sitetitle {
-	font-size: 200%;
-	display: inline}
+	font-size: 220%;
+	display: inline;
+	letter-spacing: -0.05em}
 	
 * html #sitetitle {}
 
@@ -526,7 +542,8 @@ div.logged-in {padding-right: 20px}
 
 #sitesubtitle {
 	font-size: 110%;
-	display: inline}
+	display: inline;
+	margin-left: 0.2em}
 
 #header a,
 #header a:visited {}
@@ -560,7 +577,6 @@ div.logged-in {padding-right: 20px}
 	color: #fff;
 	font-size: 93%}
 
-input#fuser,
 select[name="where"],
 input[name="search"] {}
 
@@ -908,7 +924,8 @@ div#edithelpzone {display: none}
 .attention {color: red}
 
 .highlight,
-#highlight { background-color: #f2cd5e }
+#highlight {background: #5cbdef}
+span.highlight {background: inherit}
 
 .openid_url {
 	background: #fff url(../../img/icons/login-OpenID-bg.gif) no-repeat;
@@ -930,7 +947,6 @@ div#edithelpzone {display: none}
 .admlink,
 .forumbutlink {}
 
-div.searchdate {}
 div#debugconsole {}
 
 .mini {
@@ -985,67 +1001,55 @@ div.findsubmit {}
 
 /* New Help section */
 div#tikihelp {
-	position:fixed;
+	position: fixed;
 	right: 0;
-	top: 125px;
-	width : 340px;
-	height: auto; /* if there was height specified it covered the right column content "invisibly" making part of it unclickable */
-	max-height: 450px;
+	top: 0;
+	height: auto; /* if there was height specified it covered the right column content "invisibly" making part of it unclickable (from strasa) */
 	max-width: 50%;
-	padding:0;
-	margin:0;
-	background-color: transparent;
-	z-index: 2;
-	overflow: hidden;
-}
-
-* html div#tikihelp {position: absolute}
-
-div.help_icon {
-	border: 0;
-	margin: 0;
 	padding: 0;
-	height: 48px;
-	text-align: right;
+	margin: 0;
+	border: none;
+	background: transparent;
+	z-index: 820;
+	height: 100%;
 }
-div.help_icon img{
+
+* html div#tikihelp {
+	position: absolute;
+}
+
+.help_title { float: left }
+
+.help_close_icon,
+.help_fullscreen_icon {
+	float: right;
 	vertical-align: middle;
-	border: 0;
-	margin: 0;
-	padding: 0;
 }
-div.help_sections {
-	border: solid 1px #006699;
-	padding: 0;
-	margin: 0;
-	background-color: #006699;
-	width: 100%;
-	height: 400px;
-	overflow: hidden;
-}
+.help_fullscreen_icon { margin-right: 8px }
+.help_close_icon { margin-right: 20px }
+
 div.help_section_select {
 	font-weight : bold;
-	font-size: 12px;
-	background-color : #E7E9EA;
-	color: black;
+	font-size: 120%;
+	background: #e7e9ea;
+	color: #000;
 	width: 100%;
-	height: 20px;
-	margin: 0;
+	padding: 2px;
 }
-div.help_section_select * {
-	vertical-align: middle;
-}
-div.help_section {
-	margin: 0;
-	padding: 5px;
-	background-color: white;
-	color: black;
-	font-size: 0.8em;
-	height: 350px;
+
+div.help_sections {
+	width: 360px;
+	padding:  2px;
+	background: #aac9e9;
 	overflow: auto;
+	height: 100%;
 }
-div.help_section * {
-	vertical-align: middle;
+
+div.help_section {
+	margin: 5px;
+	padding: 5px;
+	background: #fff;
+	color: #000;
 }
 
 #site_report {text-align: center}
@@ -1078,6 +1082,10 @@ div.box {
 	background: #cce5ff;
 	border-bottom: 2px ridge #bed8f1;
 }
+
+* html #col2 .box,
+* html #col3 .box {width: 181px}
+
 #col3 .box {
 	border-bottom: 1px solid #cfcfcf;
 	/*margin-bottom: 10px*/ }
@@ -1363,9 +1371,9 @@ a.forumnameread { color: #006699}
  	top: -1px !important;
 }
 
-.tabinactive a {
-	color: #fff;
-}
+.tabinactive a,
+.tabinactive a:visited {
+	color: #fff}
 
 [class].tabinactive {
 	top: 0px !important
@@ -1581,13 +1589,27 @@ div#helptool {}
 
 /* Wiki plugins */
 
-/* Code plugin  */
+
 div.code {
 	font-size: 90%;
 	padding: 3px;
 	border: 1px dashed #a9a9a9;
 	background: #F5F5F5;
 	font-family: "Courier New", Courier, monospace}
+
+/* Code plugin  */
+.codecaption {
+	font-size: 90%;
+	padding: 0 10px;
+	position: relative;
+	bottom: -6px;
+	display: inline;
+	border: 1px dashed #696969;
+	border-bottom: 0;
+	margin-left: 4px;
+	color: #696969;
+	background: #F5F5F5;
+	font-weight: bold}
 
 .codelisting {
 	font-family: "Courier New", Courier, monospace;
@@ -1596,20 +1618,8 @@ div.code {
 	margin: 4px;
 	border: 1px dashed #696969;
 	overflow: auto; 
-   width: 500px}
+	width: 90%}
 
-.codecaption {
-	font-size: 90%;
-	padding: 0 10px;
-	position: relative;
-	bottom: -5px;
-	display: inline;
-	border: 1px solid #696969;
-	border-bottom: 0;
-	margin: 0;
-	color: #696969;
-	background: #F5F5F5;
-	font-weight: bold}
 
 /* Quote plugin */
 div.quoteheader {
@@ -1624,7 +1634,21 @@ div.quotebody {
 	padding-left: 6px
 }
 
-table.wikiplugin-split {border: none}
+table.wikiplugin-split {border: none; width: 100%}
+table.wikiplugin-split .codelisting {width: 95%}
+
+/* Versions plugin */
+#tiki-center .versionav {
+	padding: 0;
+	border: 0;
+	margin-bottom: -1px}
+	
+.versionav .button {margin-bottom: 0}
+
+#tiki-center .versioncontent {
+	border: 1px solid #aaa;
+	background: #fff;
+	padding: 1em}
 
 /** Wiki tocs **/
 div.tocnav {
@@ -1837,8 +1861,10 @@ span.posthead {
 body.tiki_blogs .post .title {margin-top: 0}
 
 body.tiki_blogs .postbody-title {
+	background:#1B3C54 url(strasa/headerbg.jpg);
 	float: none;
 	width: 100%;
+	min-width: 100%; /* IE7 */
 	min-height: 46px;
 	border: 0}
 	
@@ -1871,7 +1897,7 @@ body.tiki_blogs .author_info {min-height: 24px}
 * html body.tiki_blogs .author_info {height: 24px}
 body.tiki_blogs .author_info img {vertical-align: top}
 
-.postbody-title {border: 0}	
+body.tiki_blogs .postbody-title {border: 0}	
 
 body.tiki_blogs .postbody .postfooter {
 	width: 100%;
@@ -1889,15 +1915,12 @@ body.tiki_forums table.normal {margin: auto}
 
 .post .postbody {
 	clear: both;
-	width: 100%;
-	min-width: 100%;
 	border: solid 1px #a9a9a9;
 	border-top: solid 1px gray;
 	margin: 0;
 	margin-top: 5px;
 	padding: 0;
-	background: #fff;
-	font-size: 1.1em}
+	background: #fff}
 	
 * html .post .postbody {font-size: 11px}
 
@@ -1944,7 +1967,6 @@ body.tiki_forums table.normal {margin: auto}
 .post .author_info a:link,
 .post .author_info a:visited {color: #fff}
 
-.post .author_info .icons {display: block}
 .post .author_info .icons .actions {margin-right: 10px}
 .post .author_post_info_on {font-style: italic}
 
@@ -1953,7 +1975,7 @@ body.tiki_forums table.normal {margin: auto}
 	float: right;
 	font-size: 90%;
 	font-style: italic;
-	height: 24px;
+	min-height: 24px;
 	padding-left: 60px;
 	padding-top: 1px;
 	color: #fff;
@@ -1963,10 +1985,16 @@ body.tiki_forums table.normal {margin: auto}
 .commentStyle_headers .author_info {float: left}
 
 .post .postbody-title .actions {
+	text-align: right;
 	float: right;
-	font-size: 1em;
+	color: #fff;
+	font-size: 80%;
+	font-style: italic;
 	padding-top: 4px;
 	padding-right: 4px}
+	
+.post .postbody-title .actions a,
+.post .postbody-title .actions a:visited {color: #fff}
 
 .postbody-content {padding: 6px}
 .post .postbody .attachments {
@@ -2425,7 +2453,30 @@ div.multiselect {
 	
 .opaque .iconmenu {display: block}
 	
-.searchresults {display: inline}
+.searchresults {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	}
+
+.searchresults li {
+	margin: 10px 0 0;
+}
+
+.searchresults li .objecttype,
+	.searchresults li .parentname ,
+	.searchresults li .objectname 
+ {
+	font-size: 120%;
+	font-weight: bold;
+ }
+
+.searchresults .itemhits,
+	.searchresults .itemrelevance,
+	.searchresults .searchdate {
+	color: gray;
+	font-size: 90%;
+	}
 
 .calnavigation a:hover {background: red}
 
@@ -2471,7 +2522,7 @@ div.multiselect {
 	
 .calbuttonBox {margin-right: 3px}
 .calbuttonBox a {color: #fff}
-.calbuttonon a {font-weight: bold}
+.buttonon a, .calbuttonon a {font-weight: bold}
 
 #caltable .calfocuson,
 .box-data td.fc a.today,
@@ -2663,6 +2714,7 @@ div.messureadbody {
 /***** Ajax *****/
 
 div#ajaxLoading {
+	z-index: 10000;
 	display: none;
 	position: absolute;
 	top: 50px;

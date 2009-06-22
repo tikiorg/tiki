@@ -187,4 +187,3 @@ function convert_enums($colname,$content)
  $ret.="CHECK ($colname IN ($content))";
  return $ret;
 }
-?>

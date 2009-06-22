@@ -8,6 +8,7 @@
 require_once ('tiki-setup.php');
 require_once ('lib/tikilib.php');
 require_once ('lib/wiki/histlib.php');
+require_once('lib/wiki/wikilib.php');
 require_once ('lib/rss/rsslib.php'); 
 
 if ($prefs['feature_wiki'] != 'y') {
@@ -88,6 +89,7 @@ if ($output["data"]=="EMPTY") {
 		}
 		
 		$data["$descId"] = $result;
+		$data['sefurl'] = $wikilib->sefurl($data['pageName']);
 	
 		// hand over the version of the second page
 		$data["$param"] = $prev_page["version"];
@@ -100,5 +102,3 @@ if ($output["data"]=="EMPTY") {
 }
 header("Content-type: ".$output["content-type"]);
 print $output["data"];
-
-?>

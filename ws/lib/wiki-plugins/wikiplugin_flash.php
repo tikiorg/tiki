@@ -50,5 +50,3 @@ function wikiplugin_flash($data, $params) {
 	}
 	return "~np~$code~/np~";
 }
-
-?>

@@ -771,5 +771,3 @@ class NlLib extends TikiLib {
 }
 global $dbTiki;
 $nllib = new NlLib($dbTiki);
-
-?>

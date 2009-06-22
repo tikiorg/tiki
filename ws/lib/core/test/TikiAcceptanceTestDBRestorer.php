@@ -20,6 +20,7 @@
    		
   		
    		function __construct() {
+   			$this->current_dir = getcwd();
    			$this->mysql_data_dir = $this->set_mysql_data_dir();
    		}
    		
@@ -56,6 +57,7 @@
 			$mysqldump_command_line = "mysqldump --user=$this->tiki_test_db_user --password=$this->tiki_test_db_pwd $this->tiki_test_db > $dump_file";
 			shell_exec($mysqldump_command_line); 
 			echo (microtime(true) -$begTime)." sec\n";
+			chdir($this->current_dir);
 		    return true;  			
    		}
    		
@@ -64,9 +66,10 @@
   			chdir($this->mysql_data_dir);
  			echo "\n\rDumping start tables and times from information_schema: ";
 			$begTime = microtime(true);
-			$mysql_select_from_schema_command = "echo select TABLE_NAME,UPDATE_TIME from information_schema.TABLES WHERE TABLE_SCHEMA='tiki' | mysql --user=$this->tiki_test_db_user --password=$this->tiki_test_db_pwd > $this->tiki_schema_file_start";
+			$mysql_select_from_schema_command = "echo select TABLE_NAME,UPDATE_TIME from information_schema.TABLES WHERE TABLE_SCHEMA='$this->tiki_test_db' | mysql --user=$this->tiki_test_db_user --password=$this->tiki_test_db_pwd > $this->tiki_schema_file_start";
 		    exec($mysql_select_from_schema_command);
 		    echo (microtime(true) - $begTime)." sec\n";
+		    chdir($this->current_dir);
 		    return true;  			
    		}
    		
@@ -78,14 +81,12 @@
    		function restoreDB($tiki_test_db_dump) {
 			global $last_restored;
 			chdir($this->mysql_data_dir);
-//			$tiki_test_db_dump = $this->test_db_dump_files[$tiki_test];
 			if (!file_exists($tiki_test_db_dump)) {
    				die ("The initial database dump was not created. You need to create it first before you can restore it. Call TikiAcceptanceTestDBRestorer::create_dump_file()");
    			}
+
 			if ($last_restored == $tiki_test_db_dump) {
 				//restore only the changed tables
-//				$date = getdate();
-//   				$timestamp = $date[0];
    			
    				$tiki_schema_file_end = "dump_schema_tiki_end.txt";
 			
@@ -93,7 +94,7 @@
 		    	echo "\n\rDumping end tables and times from information_schema: ";
 				$begTime = microtime(true);
 			
-		    	$mysql_select_from_schema_command = "echo select TABLE_NAME,UPDATE_TIME from information_schema.TABLES WHERE TABLE_SCHEMA='tiki' | mysql --user=$this->tiki_test_db_user --password=$this->tiki_test_db_pwd > $tiki_schema_file_end";
+		    	$mysql_select_from_schema_command = "echo select TABLE_NAME,UPDATE_TIME from information_schema.TABLES WHERE TABLE_SCHEMA='$this->tiki_test_db' | mysql --user=$this->tiki_test_db_user --password=$this->tiki_test_db_pwd > $tiki_schema_file_end";
 		    	shell_exec($mysql_select_from_schema_command);
 		   		echo (microtime(true) -$begTime)." sec";
 		    
@@ -143,6 +144,7 @@
 		    	$this->create_testdb_dump_and_start_schema_files();
 		    	$last_restored = $tiki_test_db_dump;
 			}
+   			chdir($this->current_dir);
    		}
    		
    		function get_table_name(&$table_name_date_time) {
@@ -157,9 +159,3 @@
    		
    }
    
-   
-   
-//   $test_TikiAcceptanceTestDBRestorer = new TikiAcceptanceTestDBRestorer();
-//   $test_TikiAcceptanceTestDBRestorer->create_dump_file("listPagesTestDump.sql");
-
-?>

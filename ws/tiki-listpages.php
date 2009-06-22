@@ -10,9 +10,20 @@
 $section = 'wiki page';
 require_once('tiki-setup.php');
 require_once('lib/ajax/ajaxlib.php');
+global $multilinguallib;
+include_once('lib/multilingual/multilinguallib.php');
 
-$auto_query_args = array('initial','maxRecords','sort_mode','find','lang','langOrphan', 'findfilter_orphan');
+$auto_query_args = array('initial','maxRecords','sort_mode','find','lang','langOrphan', 
+                         'findfilter_orphan', 'categId', 'category', 'page_orphans', 
+                         'structure_orphans', 'exact_match', 'hits_link_to_all_languages');
+                         
 
+if ($_REQUEST['hits_link_to_all_languages'] == 'On') {
+   $smarty->assign('all_langs', 'y');
+} else {
+   $smarty->assign('all_langs', '');
+}
+   
 $smarty->assign('headtitle',tra('Pages'));
 
 $access->check_feature( array( 'feature_wiki', 'feature_listPages' ) );
@@ -150,10 +161,7 @@ if ( ! empty($multiprint_pages) ) {
 	$smarty->assign('find', $find);
 	
 	$filter = '';
-	if (!empty($_REQUEST['lang'])) {
-		$filter['lang'] = $_REQUEST['lang'];
-		$smarty->assign_by_ref('find_lang', $_REQUEST['lang']);
-	}
+	$filter = setLangFilter($filter);
 	if (!empty($_REQUEST['langOrphan'])) {
 		$filter['langOrphan'] = $_REQUEST['langOrphan'];
 		$smarty->assign_by_ref('find_langOrphan', $_REQUEST['langOrphan']);
@@ -214,7 +222,17 @@ if ( ! empty($multiprint_pages) ) {
 	if (!isset($listpages_orphans)) {
 		$listpages_orphans = false;
 	}
+	
 	$listpages = $tikilib->list_pages($offset, $maxRecords, $sort_mode, $find, $initial, $exact_match, false, true, $listpages_orphans, $filter);
+
+	if( $prefs['feature_wiki_pagealias'] == 'y' && $find ) {
+		global $semanticlib;
+		require_once 'lib/wiki/semanticlib.php';
+		$aliases = $semanticlib->getAliasContaining( $find );
+		$smarty->assign( 'aliases', $aliases );
+	} else {
+		$smarty->assign( 'aliases', null );
+	}
 
 	// Only show the 'Actions' column if the user can do at least one action on one of the listed pages
 	$show_actions = 'n';
@@ -315,4 +333,12 @@ if ( ! empty($multiprint_pages) ) {
 		$smarty->display("tiki.tpl");
 	}
 }
-?>
+
+function setLangFilter($filter) {
+   global $_REQUEST, $_SESSION, $smarty, $multilinguallib;
+   $lang = $multilinguallib->currentSearchLanguage(false); 
+   $filter['lang'] = $lang;
+   $smarty->assign_by_ref('find_lang', $lang);   
+   return $filter;
+}
+

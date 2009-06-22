@@ -19,7 +19,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 require_once('lib/tikilib.php'); # httpScheme(), get_user_preference
 require_once('lib/webmail/tikimaillib.php');
-require_once( 'lib/db/tikitable.php' );
 require_once( 'lib/db/tiki_registration_fields.php' );
 
 if (!isset($Debug)) $Debug = false;
@@ -440,8 +439,5 @@ class RegistrationLib extends TikiLib {
         ask_ticket('register');
     }
 }
-  
 global $dbTiki;
 $registrationlib= new RegistrationLib($dbTiki);
-
-?>

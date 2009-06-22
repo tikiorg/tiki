@@ -49,4 +49,3 @@ function wikiplugin_jq($data, $params) {
 	}
 	return '';
 }
-?>

@@ -299,5 +299,3 @@ class MultibarGraphic extends BarBasedGraphic // {{{1
 		) );
 	} 
 } // }}}1
-
-?>

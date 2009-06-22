@@ -31,4 +31,3 @@
  * @since      Class available since Release 1.4.0a1
  */
 class PEAR_Installer_Role_Php extends PEAR_Installer_Role_Common {}
-?>

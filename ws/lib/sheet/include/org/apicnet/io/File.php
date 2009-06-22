@@ -271,4 +271,3 @@ class File extends ErrorManager {
 		return Object::validClass($object, 'file');
 	}
 }
-?>

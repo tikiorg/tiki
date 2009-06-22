@@ -16,5 +16,3 @@ class TikiFilter_Callback implements Zend_Filter_Interface
 		return $f( $value );
 	}
 }
-
-?>

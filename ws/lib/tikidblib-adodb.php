@@ -162,7 +162,7 @@ function sql_error($query, $values, $result) {
     trigger_error($ADODB_LASTDB . " error:  " . htmlspecialchars($this->db->ErrorMsg()). " in query:<br /><pre>\n" . htmlspecialchars($query) . "\n</pre><br />", E_USER_WARNING);
     // only for debugging.
     //trigger_error($ADODB_LASTDB . " error:  " . $this->db->ErrorMsg(). " in query:<br />" . $query . "<br />", E_USER_WARNING);
-    $outp = "<div class='simplebox'><b>".htmlspecialchars(tra("An error occured in a database query!"))."</b></div>";
+    $outp = "<div class='simplebox'><b>".htmlspecialchars(tra("An error occurred in a database query!"))."</b></div>";
 
 	include_once ('installer/installlib.php');
 	$installer = new Installer;
@@ -207,7 +207,7 @@ function sql_error($query, $values, $result) {
 	
     $outp.= "<tr class='heading'><td colspan='2'>Built query was probably:</td></tr><tr class='formcolor'><td colspan='2'>".htmlspecialchars($q)."</td></tr>\n";
 
-    if (function_exists('xdebug_get_function_stack')) {
+    if (function_exists('xdebug_get_function_stack') && $prefs['debug_ignore_xdebug'] != 'y') {
 	function mydumpstack($stack) {
 	    $o='';
 	    foreach($stack as $line) {
@@ -480,5 +480,3 @@ function debugger_log($query, $values)
         $debugger->msg($this->num_queries.': '.$query);
     }
 }
-
-?>

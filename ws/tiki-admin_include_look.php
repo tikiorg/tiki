@@ -98,7 +98,6 @@ if (isset($_REQUEST["looksetup"])) {
 	"feature_topbar_custom_code",
 	"sitenav",
 	"bot_logo_code",
-	"transition_style_ver",
 	"direct_pagination_max_middle_links",
 	"direct_pagination_max_ending_links",
 	'feature_site_report_email',
@@ -112,7 +111,17 @@ if (isset($_REQUEST["looksetup"])) {
     'jquery_effect_tabs_speed',
 	'available_styles',
 	'iepngfix_selectors',
-	'iepngfix_elements'
+	'iepngfix_elements',
+	'main_shadow_start',
+	'main_shadow_end',
+	'header_shadow_start',
+	'header_shadow_end',
+	'middle_shadow_start',
+	'middle_shadow_end',
+	'center_shadow_start',
+	'center_shadow_end',
+	'footer_shadow_start',
+	'footer_shadow_end',
     );
 
     foreach ($pref_simple_values as $svitem) {
@@ -257,4 +266,3 @@ if (isset($_REQUEST["looksetup"])) {
 		}
 	}
 }
-?>

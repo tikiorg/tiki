@@ -63,5 +63,3 @@ if ($url != $_SERVER["REQUEST_URI"]) header('location: '.$url);
 
 $smarty->assign('current_location', $url);
 $smarty->assign('mpchar', (strpos($url, '?') ? '&' : '?'));
-
-?>

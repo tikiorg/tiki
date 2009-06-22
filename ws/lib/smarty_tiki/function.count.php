@@ -14,7 +14,3 @@ function smarty_function_count($params, &$smarty) {
     }
     print(count($var));
 }
-
-
-
-?>

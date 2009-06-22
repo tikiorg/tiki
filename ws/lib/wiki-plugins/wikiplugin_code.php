@@ -60,7 +60,7 @@ function wikiplugin_code($data, $params) {
 	$code = trim($data);
 
 	$parse_wiki = ( isset($wiki) && $wiki == 1 );
-	$escape_html = 0;
+	$escape_html = ( ! isset($ishtml) || $ishtml != 1 );
 
 	// Detect if GeSHI (Generic Syntax Highlighter) is available
 	$geshi_paths = array(
@@ -78,7 +78,7 @@ function wikiplugin_code($data, $params) {
 	// If 'color' is specified and GeSHI installed, use syntax highlighting with GeSHi
 	if ( isset($colors) && $colors != 'highlights' && class_exists('GeSHI') ) {
 
-		$geshi =& new GeSHi(TikiLib::htmldecode($code), $colors);
+		$geshi = new GeSHi(TikiLib::htmldecode($code), $colors);
 
 		if ( version_compare(GESHI_VERSION, 1.1) == -1) { // Old API
 			if ( isset($ln) && $ln > 0 ) {
@@ -158,5 +158,3 @@ function wikiplugin_code($data, $params) {
 
 	return $out;
 }
-
-?>

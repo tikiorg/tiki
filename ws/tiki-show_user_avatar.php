@@ -28,5 +28,3 @@ $content = $info["avatarData"];
 
 header ("Content-type: $type");
 echo "$content";
-
-?>

@@ -62,5 +62,3 @@
   }
 
   $smarty->assign('instances', $instances["data"]);
-
-?>

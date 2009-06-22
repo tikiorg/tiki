@@ -70,5 +70,3 @@ ask_ticket('referer-stats');
 // Display the template
 $smarty->assign('mid', 'tiki-referer_stats.tpl');
 $smarty->display("tiki.tpl");
-
-?>

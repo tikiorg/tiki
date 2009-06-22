@@ -1632,5 +1632,3 @@ function rdf_resolve_uri($uri_reference,&$buffer)
 }
 
 }
-
-?>

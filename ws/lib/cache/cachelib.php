@@ -176,4 +176,3 @@ class Cachelib {
 }
 
 $cachelib = new Cachelib();
-?>

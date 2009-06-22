@@ -21,5 +21,3 @@ if ($tiki_p_admin != 'y') {
 //$smarty->assign('mid','tiki-phpinfo.tpl');
 //$smarty->display("tiki.tpl");
 phpinfo();
-
-?>

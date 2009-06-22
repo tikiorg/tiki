@@ -41,6 +41,10 @@ if( file_exists( 'db/lock' ) ) {
 	createPage($title,$content);
 }
 
+$tikiroot = dirname($_SERVER['PHP_SELF']);
+$session_params = session_get_cookie_params();
+session_set_cookie_params($session_params['lifetime'],$tikiroot);
+unset($session_params);
 session_start();
 
 if ( file_exists( 'db/local.php' ) ) {
@@ -65,6 +69,7 @@ if ( installer_is_accessible() ) {
 } else {
 	$title='Tiki Installer Security Precaution';
 	$content='
+							<p>&nbsp;</p>
 							<p>You are attempting to run the Tiki Installer. For your protection, this installer can be used only by a site administrator.</p>
 							<p>To verify that you are a site administrator, enter your <strong><em>database</em></strong> credentials (database username and password) here.</p>
 							<p>If you have forgotten your database credentials, find the directory where you have unpacked your Tiki and have a look inside the <strong><code>db</code></strong> folder into the <strong><code>local.php</code></strong> file.</p>
@@ -72,7 +77,8 @@ if ( installer_is_accessible() ) {
 								<p><label for="dbuser">Database username</label>: <input type="text" name="dbuser"/></p>
 								<p><label for="dbpass">Database password</label>: <input type="password" name="dbpass"/></p>
 								<p><input type="submit" value=" Validate and Continue "/></p>
-							</form>';
+							</form>
+							<p>&nbsp;</p>';
 	createPage($title,$content);
 }
 
@@ -85,7 +91,15 @@ function createPage($title,$content){
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<link type="text/css" href="styles/thenews.css" rel="stylesheet" />
+		<link type="text/css" href="styles/strasa.css" rel="stylesheet" />
+		<style type="text/css" media="screen">
+html {
+	background-color: #fff;
+}
+#centercolumn {
+	padding: 4em 10em;
+}
+		</style>
 		<title>$title</title>
 	</head>
 	<body class="tiki_wiki" style="text-align: center;">

@@ -74,5 +74,3 @@ ask_ticket('list-cache');
 // Display the template
 $smarty->assign('mid', 'tiki-list_cache.tpl');
 $smarty->display("tiki.tpl");
-
-?>

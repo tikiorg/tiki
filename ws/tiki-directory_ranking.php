@@ -61,9 +61,8 @@ $smarty->assign_by_ref('cant', $items["cant"]);
 
 include_once ('tiki-section_options.php');
 ask_ticket('dir-ranking');
+$smarty->assign('headtitle',tra('Directory'));
 
 // Display the template
 $smarty->assign('mid', 'tiki-directory_ranking.tpl');
 $smarty->display("tiki.tpl");
-
-?>

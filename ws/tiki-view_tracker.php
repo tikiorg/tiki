@@ -103,9 +103,11 @@ if ($tiki_p_create_tracker_items == 'y' && !empty($t['end'])) {
 }
 
 if ($tiki_p_view_trackers != 'y') {
-	if ($user && !$my and isset($tracker_info['writerCanModify']) and $tracker_info['writerCanModify'] == 'y') {
+	$userCreatorFieldId = $trklib->get_field_id_from_type($_REQUEST['trackerId'], 'u', '1%');
+	$groupCreatorFieldId = $trklib->get_field_id_from_type($_REQUEST['trackerId'], 'g', '1%');
+	if ($user && !$my and isset($tracker_info['writerCanModify']) and $tracker_info['writerCanModify'] == 'y' and !empty($userCreatorFieldId)) {
 		$my = $user;
-	} elseif ($user && !$ours and isset($tracker_info['writergroupCanModify']) and $tracker_info['writergroupCanModify'] == 'y') {
+	} elseif ($user && !$ours and isset($tracker_info['writerGroupCanModify']) and $tracker_info['writerGroupCanModify'] == 'y' and !empty($groupCreatorFieldId) ) {
 		$ours = $group;
 	} elseif ($tiki_p_create_tracker_items != 'y') {
 		$smarty->assign('errortype', 401);
@@ -200,7 +202,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 	} else {
 		$creatorSelector = false;
 	}
-	if (($xfields["data"][$i]['isTblVisible'] == 'y' or $xfields["data"][$i]['isSearchable'] == 'y' or in_array($fid, $popupFields))
+	if (($xfields["data"][$i]['isTblVisible'] == 'y' or in_array($fid, $popupFields))
 		and ($xfields["data"][$i]['isHidden'] == 'n' or $xfields["data"][$i]['isHidden'] == 'p' or $tiki_p_admin_trackers == 'y' or ($xfields["data"][$i]['type'] == 's' and $xfields['data'][$i]['name'] == 'Rating' and $tiki_p_tracker_view_ratings == 'y'))
 		) {
 
@@ -516,23 +518,41 @@ if ($textarea_options) {
 	$smarty->assign_by_ref('quicktags', $quicktags["data"]);
 }
 
-if (($tiki_p_admin_trackers == 'y' or $tiki_p_modify_tracker_items == 'y') and isset($_REQUEST["remove"])) {
-  $area = 'deltrackeritem';
-  if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-    key_check($area);
-		$trklib->remove_tracker_item($_REQUEST["remove"]);
-  } else {
-    key_get($area);
-  }
-} elseif (($tiki_p_admin_trackers == 'y' or $tiki_p_modify_tracker_items == 'y') and isset($_REQUEST["batchaction"]) and $_REQUEST["batchaction"] == 'delete') {
+if (!empty($_REQUEST['remove'])) {
+	$item_info = $trklib->get_item_info($_REQUEST['remove']);
+	if ($tiki_p_admin_trackers == 'y'
+		|| ($tiki_p_modify_tracker_items == 'y' && $item_info['status'] != 'p' && $item_info['status'] != 'c')
+		|| ($tiki_p_modify_tracker_items_pending == 'y' && $item_info['status'] == 'p')
+		|| ($tiki_p_modify_tracker_items_closed == 'y' && $item_info['status'] == 'c')) {
+		$area = 'deltrackeritem';
+		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+			key_check($area);
+			$trklib->remove_tracker_item($_REQUEST['remove']);
+		} else {
+			key_get($area);
+		}
+	}
+} elseif (isset($_REQUEST["batchaction"]) and $_REQUEST["batchaction"] == 'delete') {
 	check_ticket('view-trackers');
 	foreach ($_REQUEST['action'] as $batchid) {
-		$trklib->remove_tracker_item($batchid);
+		$item_info = $trklib->get_item_info($batchid);
+		if ($tiki_p_admin_trackers == 'y'
+			|| ($tiki_p_modify_tracker_items == 'y' && $item_info['status'] != 'p' && $item_info['status'] != 'c')
+			|| ($tiki_p_modify_tracker_items_pending == 'y' && $item_info['status'] == 'p')
+			|| ($tiki_p_modify_tracker_items_closed == 'y' && $item_info['status'] == 'c')) {
+			$trklib->remove_tracker_item($batchid);
+		}
 	}
-} elseif (($tiki_p_admin_trackers == 'y' or $tiki_p_modify_tracker_items == 'y') and isset($_REQUEST['batchaction']) and ($_REQUEST['batchaction'] == 'o' || $_REQUEST['batchaction'] == 'p' || $_REQUEST['batchaction'] == 'c')) {
-check_ticket('view-trackers');
+} elseif (isset($_REQUEST['batchaction']) and ($_REQUEST['batchaction'] == 'o' || $_REQUEST['batchaction'] == 'p' || $_REQUEST['batchaction'] == 'c')) {
+	check_ticket('view-trackers');
 	foreach ($_REQUEST['action'] as $batchid) {
-		$trklib->replace_item($_REQUEST['trackerId'], $batchid, array('data'=>''), $_REQUEST['batchaction']);
+		$item_info = $trklib->get_item_info($batchid);
+		if ($tiki_p_admin_trackers == 'y'
+			|| ($tiki_p_modify_tracker_items == 'y' && $item_info['status'] != 'p' && $item_info['status'] != 'c')
+			|| ($tiki_p_modify_tracker_items_pending == 'y' && $item_info['status'] == 'p')
+			|| ($tiki_p_modify_tracker_items_closed == 'y' && $item_info['status'] == 'c')) {
+			$trklib->replace_item($_REQUEST['trackerId'], $batchid, array('data'=>''), $_REQUEST['batchaction']);
+		}
 	}
 }
 
@@ -711,7 +731,7 @@ if ($my and $writerfield) {
 	$filtervalue = '';
 	$_REQUEST['status'] = 'opc';
 } elseif ($ours and $writergroupfield) {
-	$exactvalue = $ours;
+	$exactvalue = $userlib->get_user_groups($user);
 	$filtervalue = '';
 	$_REQUEST['status'] = 'opc';
 } else {
@@ -777,6 +797,33 @@ if ($tracker_info['useAttachments'] == 'y' && $tracker_info['showAttachments'] =
 		$items["data"][$itkey]['hits'] = $res['hits'];
 	}
 }
+for ($i = 0; $i < count($xfields['data']); $i++) {
+	$fid = $xfields["data"][$i]["fieldId"];
+	if ($xfields["data"][$i]['isSearchable'] == 'y' and !isset($listfields[$fid])
+		and ($xfields["data"][$i]['isHidden'] == 'n' or $xfields["data"][$i]['isHidden'] == 'p' or $tiki_p_admin_trackers == 'y' or ($xfields["data"][$i]['type'] == 's' and $xfields['data'][$i]['name'] == 'Rating' and $tiki_p_tracker_view_ratings == 'y'))
+		) {
+
+		$listfields[$fid]['type'] = $xfields["data"][$i]["type"];
+		$listfields[$fid]['name'] = $xfields["data"][$i]["name"];
+		$listfields[$fid]['options'] = $xfields["data"][$i]["options"];
+		$listfields[$fid]['options_array'] = $xfields["data"][$i]['options_array'];
+		$listfields[$fid]['isMain'] = $xfields["data"][$i]["isMain"];
+		$listfields[$fid]['isTblVisible'] = $xfields["data"][$i]["isTblVisible"];
+		$listfields[$fid]['isHidden'] = $xfields["data"][$i]["isHidden"];
+		$listfields[$fid]['isSearchable'] = $xfields["data"][$i]["isSearchable"];
+		$listfields[$fid]['isMandatory'] = $xfields["data"][$i]["isMandatory"];
+		$listfields[$fid]['description'] = $xfields["data"][$i]["description"];
+		$listfields[$fid]['visibleBy'] = $xfields['data'][$i]['visibleBy'];
+		$listfields[$fid]['editableBy'] = $xfields['data'][$i]['editableBy'];
+
+		if ($listfields[$fid]['type'] == 'e' && $prefs['feature_categories'] == 'y') { //category
+			$parentId = $listfields[$fid]['options_array'][0];
+		    $listfields[$fid]['categories'] = $categlib->get_child_categories($parentId);
+		}
+		if (isset($xfields['data'][$i]['otherField']))
+			$listfields[$fid]['otherField'] = $xfields['data'][$i]['otherField'];
+	}
+}
 
 // dynamic list process
 foreach ($listfields as $sfid => $oneitem) {
@@ -837,7 +884,7 @@ foreach ($fields['data'] as $it) {
 }
 }
 
-if ($items['data']) {
+if (isset($tracker_info['useRatings']) && $tracker_info['useRatings'] == 'y' && $items['data']) {
 	foreach ($items['data'] as $f=>$v) {
 		$items['data'][$f]['my_rate'] = $tikilib->get_user_vote("tracker.".$_REQUEST["trackerId"].'.'.$items['data'][$f]['itemId'],$user);
 	}
@@ -851,5 +898,3 @@ ask_ticket('view-trackers');
 // Display the template
 $smarty->assign('mid', 'tiki-view_tracker.tpl');
 $smarty->display("tiki.tpl");
-//echo "<!-- ";var_dump($filtervalue); echo " -->";
-?>

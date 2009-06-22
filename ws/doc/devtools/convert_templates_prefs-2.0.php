@@ -61,5 +61,3 @@ foreach($elems as $filename) {
 	}
     }
 }
-
-?>

@@ -78,5 +78,3 @@ class CopyrightsLib extends TikiLib {
 		return true;
 	}
 }
-
-?>

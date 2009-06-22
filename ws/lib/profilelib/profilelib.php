@@ -233,7 +233,40 @@ class Tiki_Profile
 			}
 		}
 
+		$this->fetchExternals();
 		$this->getObjects();
+	} // }}}
+
+	private function fetchExternals() // {{{
+	{
+		$this->traverseForExternals( $this->data );
+	} // }}}
+	
+	private function traverseForExternals( &$data ) // {{{
+	{
+		if( is_array( $data ) )
+			foreach( $data as &$value )
+				$this->traverseForExternals( $value );
+		elseif( 0 === strpos( $data, 'wikicontent:' ) )
+		{
+			$pageName = substr( $data, strlen('wikicontent:') );
+			$data = $this->getPageContent( $pageName );
+		}
+	} // }}}
+
+	private function getPageContent( $pageName ) // {{{
+	{
+		$exportUrl = dirname( $this->url ) . '/tiki-export_wiki_pages.php?'
+			. http_build_query( array( 'page' => $pageName ) );
+
+		$content = tiki_get_remote_file( $exportUrl );
+		$content = str_replace( "\r", '', $content );
+		$begin = strpos( $content, "\n\n" );
+
+		if( $begin !== false )
+			return substr( $content, $begin + 2 );
+		else
+			return null;
 	} // }}}
 
 	function mergeData( $old, $new ) // {{{
@@ -479,7 +512,9 @@ class Tiki_Profile
 				'description' => '',
 				'home' => '',
 				'user_tracker' => 0,
+				'user_tracker_field' => 0,
 				'group_tracker' => 0,
+				'group_tracker_field' => 0,
 				'user_signup' => 'n',
 				'default_category' => 0,
 				'theme' => '',
@@ -616,10 +651,19 @@ class Tiki_Profile_Object
 	{
 		$this->data = &$data;
 		$this->profile = $profile;
-
-		$this->fetchExternals();
 	} // }}}
 
+	function getDescription() {
+		$str = '';
+		if ($this->isWellStructured()) {
+			$str .= $this->getType().' ';
+			$str .= '"'.isset($this->data['data']['name']) ? $this->data['data']['name'] : tra('No name').'"';
+		} else {
+			$str .= tra('Bad object');
+		}
+		return $str;
+	}
+	
 	function isWellStructured() // {{{
 	{
 		return isset( $this->data['type'], $this->data['data'] );
@@ -711,43 +755,9 @@ class Tiki_Profile_Object
 		return $this->profile;
 	} // }}}
 
-	private function fetchExternals() // {{{
-	{
-		$this->traverseForExternals( $this->data );
-	} // }}}
-	
-	private function traverseForExternals( &$data ) // {{{
-	{
-		if( is_array( $data ) )
-			foreach( $data as &$value )
-				$this->traverseForExternals( $value );
-		elseif( 0 === strpos( $data, 'wikicontent:' ) )
-		{
-			$pageName = substr( $data, strlen('wikicontent:') );
-			$data = $this->getPageContent( $pageName );
-		}
-	} // }}}
-
-	public function getPageContent( $pageName ) // {{{
-	{
-		$exportUrl = dirname( $this->profile->url ) . '/tiki-export_wiki_pages.php?'
-			. http_build_query( array( 'page' => $pageName ) );
-
-		$content = tiki_get_remote_file( $exportUrl );
-		$content = str_replace( "\r", '', $content );
-		$begin = strpos( $content, "\n\n" );
-
-		if( $begin !== false )
-			return substr( $content, $begin + 2 );
-		else
-			return null;
-	} // }}}
-
 	function __get( $name ) // {{{
 	{
 		if( array_key_exists( $name, $this->data['data'] ) )
 			return $this->data['data'][$name];
 	} // }}}
 }
-
-?>

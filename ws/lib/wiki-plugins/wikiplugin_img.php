@@ -5,7 +5,7 @@ function wikiplugin_img_info()
 	return array(
 		'name' => tra( 'Img' ),
 		'description' => tra( 'Displays an image.' ),
-		'prefs' => array(),
+		'prefs' => array( 'wikiplugin_img' ),
 		'params' => array(
 			'src' => array(
 				'required' => false,
@@ -89,6 +89,8 @@ function wikiplugin_img( $data, $params, $offset, $parseOptions )
 	$imgdata["usemap"] = '';
 	$imgdata["class"] = '';
 
+	// strip single quotes from params () to preserve 2.x {img} behaviour
+	$params = preg_replace("/^'(.*)'$/", '$1', $params);
 	$imgdata = array_merge( $imgdata, $params );
 
 	// Support both 'link' and 'lnk' syntax
@@ -179,5 +181,3 @@ function wikiplugin_img( $data, $params, $offset, $parseOptions )
 
 	return $repl;
 }
-
-?>

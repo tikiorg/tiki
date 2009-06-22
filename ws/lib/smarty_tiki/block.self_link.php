@@ -39,6 +39,24 @@ function smarty_block_self_link($params, $content, &$smarty, $repeat = false) {
 
 	if ( is_array($params) ) {
 
+		if ( ! empty($params['_selected']) ) {
+			// Filter the condition
+			if (preg_match('/[a-zA-Z0-9 =<>!]+/',$params['_selected'])) {
+				$error_report = error_reporting(~E_ALL);
+				$return = eval ( '$selected =' . $params['_selected'].";" );
+				error_reporting($error_report);
+				if ($return !== FALSE) {
+					if ($selected) {
+						if (! empty($params['_selected_class']) ) {
+							$params['_class'] = $params['_selected_class'];
+						} else {
+							$params['_class'] = 'selected';
+						}
+					}
+				}
+			}
+		}
+
 		if ( ! isset($content) ) $content = '';
 		if ( ! isset($params['_ajax']) ) $params['_ajax'] = 'y';
 		if ( ! isset($params['_script']) ) $params['_script'] = '';
@@ -51,7 +69,7 @@ function smarty_block_self_link($params, $content, &$smarty, $repeat = false) {
 				$params[$params['_sort_arg']] = $params['_sort_field'].'_asc,'.$params['_sort_field'].'_desc';
 			}
 			// Complete _script path if needed (not empty, not an anchor, ...)
-			if ( $params['_script'] != '' && $params['_script'][0] != '#' && $params['_script'] != 'javascript:void(0)' ) {
+			if ( !empty($params['_script']) && $params['_script'][0] != '#' && $params['_script'] != 'javascript:void(0)' ) {
 				if ( $params['_script'] != '' && $_SERVER['PHP_SELF'][0] == '/' && strpos($params['_script'], '/') === false ) {
 					$self_dir = dirname($_SERVER['PHP_SELF']);
 					$params['_script'] = ( $self_dir == '/' ? '' : $self_dir ).'/'.$params['_script'];
@@ -68,9 +86,10 @@ function smarty_block_self_link($params, $content, &$smarty, $repeat = false) {
 		if ( $params['_tag'] == 'y' ) {
 
 			if ( empty($params['_disabled']) ) {
-				if ( $params['_ajax'] == 'y' && $params['_script'] == '' ) {
+				if ( $params['_ajax'] == 'y' && $params['_script'] == '' && empty($params['_anchor']) ) {
 					require_once $smarty->_get_plugin_filepath('block', 'ajax_href');
 					if ( ! isset($params['_htmlelement']) ) $params['_htmlelement'] = 'tiki-center';
+					if ( ! isset($params['_onclick']) ) $params['_onclick'] = '';
 					if ( ! isset($params['_template']) ) {
 						$params['_template'] = basename($_SERVER['PHP_SELF'], '.php').'.tpl';
 						if ( $params['_template'] == 'tiki-index.tpl' ) $params['_template'] = 'tiki-show_page.tpl';
@@ -80,11 +99,12 @@ function smarty_block_self_link($params, $content, &$smarty, $repeat = false) {
 						$params['_template'] = '';
 					}
 					$ret = smarty_block_ajax_href(
-							array('template' => $params['_template'], 'htmlelement' => $params['_htmlelement']),
+							array('template' => $params['_template'], 'htmlelement' => $params['_htmlelement'], '_onclick' => $params['_onclick']),
 							$ret,
 							$smarty,
 							false
 							);
+							unset($params['_onclick']);
 				} else {
 					$ret = 'href="'.$ret.'"';
 				}
@@ -109,7 +129,10 @@ function smarty_block_self_link($params, $content, &$smarty, $repeat = false) {
 				}
 				if ( isset($params['_menu_icon']) ) $icon_params['_menu_icon'] = $params['_menu_icon'];
 				if ( isset($params['_icon_class']) ) $icon_params['class'] = $params['_icon_class'];
-
+				
+				if ( isset($params['_width']) ) $icon_params['width'] = $params['_width'];
+				if ( isset($params['_height']) ) $icon_params['height'] = $params['_height'];
+				
 				$content = smarty_function_icon($icon_params, $smarty);
 			}
 

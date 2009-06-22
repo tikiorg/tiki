@@ -92,5 +92,3 @@ function wikiplugin_catpath($data, $params) {
 
 	return $catpath;
 }
-
-?>

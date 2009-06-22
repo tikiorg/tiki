@@ -71,5 +71,3 @@ $smarty->assign_by_ref('listpages', $listpages["data"]);
 // Display the template
 $smarty->assign('mid', 'tiki-old_polls.tpl');
 $smarty->display("tiki.tpl");
-
-?>

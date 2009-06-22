@@ -104,5 +104,3 @@ class CatPickerTreeMaker extends TreeMaker {
 		return "\t" . '</li>';
 	}
 }
-
-?>

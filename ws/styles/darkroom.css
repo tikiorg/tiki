@@ -101,7 +101,6 @@ input[type=password] {
 
 button,
 .button,
-.submitbutton,
 .button input,
 .calbuttonBox {
 	background:#4E4E4E url(darkroom/button.png) top left repeat-x;
@@ -113,7 +112,7 @@ button,
 	vertical-align: middle;
 	cursor: pointer;
 	white-space: nowrap}
-.calbuttonBox{float: left; margin:0 2px 0 2px;}
+.calbuttonBox{margin:0 2px 0 2px;}
 #next { margin-left:0;}
 
 #page-bar .button {margin: 0 2px;}
@@ -134,7 +133,6 @@ button:hover,
 .button:hover,
 input[type=submit]:hover,
 input[type=reset]:hover,
-.submitbutton:hover,
 .button input:hover,
 .calbuttonBox:hover {border: 1px solid #B2B2B2}
 
@@ -188,6 +186,7 @@ ul.jumplinks a:focus, ul.jumplinks a:active {
 	width: 6em;
 	z-index: 9}
 
+.fullscreenbutton,
 #fullscreenbutton {
 	position: absolute;
 	top: 2px;
@@ -195,6 +194,7 @@ ul.jumplinks a:focus, ul.jumplinks a:active {
 	z-index: 10;
 	font-size: 80%}
 
+.fullscreenbutton:hover,
 #fullscreenbutton:hover {color: #D8D8D8}
 
 #tiki-clean {
@@ -273,7 +273,15 @@ div#tiki-main #tikimidtbl {
 
 /* Site Header & Identity */
 
-#header-top {position: relative} 
+#header-top {
+	position: relative;
+	height: 50px;
+	padding-top: 2px;
+} 
+
+#header-top {
+	height: auto;
+	min-height: 50px}
 
 #siteheader {
 	text-align: left;
@@ -755,10 +763,6 @@ div.imagerank {margin: 10px 5px}
 	font-weight: normal;
 	padding: 0}
 
-div.searchdate {
-	font-size: .95em;
-	color: #fff}
-
 div#debugconsole {
 	position: absolute;
 	background: #333;
@@ -805,9 +809,61 @@ a.tikihelp:hover {
 /* overrides inline css */
 div.adminanchors {}
 
-#rss {height: 16px}
 #rss img {vertical-align: middle}
 #rss small {font-size: 1em}
+
+/* New Help section */
+div#tikihelp {
+	position: fixed;
+	right: 0;
+	top: 0;
+	height: auto; /* if there was height specified it covered the right column content "invisibly" making part of it unclickable (from strasa) */
+	max-width: 50%;
+	padding: 0;
+	margin: 0;
+	border: none;
+	background: transparent;
+	z-index: 820;
+	height: 100%;
+}
+
+* html div#tikihelp {
+	position: absolute;
+}
+
+.help_title { float: left }
+
+.help_close_icon,
+.help_fullscreen_icon {
+	float: right;
+	vertical-align: middle;
+}
+.help_fullscreen_icon { margin-right: 8px }
+.help_close_icon { margin-right: 20px }
+
+div.help_section_select {
+	font-weight : bold;
+	font-size: 120%;
+	background: #e7e9ea;
+	color: #000;
+	width: 100%;
+	padding: 2px;
+}
+
+div.help_sections {
+	width: 360px;
+	padding:  2px;
+	background: #aac9e9;
+	overflow: auto;
+	height: 100%;
+}
+
+div.help_section {
+	margin: 5px;
+	padding: 5px;
+	background: #fff;
+	color: #000;
+}
 
 /**** Boxes *****/
 /** Modules **/
@@ -817,7 +873,8 @@ div.box {
 	background: #292929;
 	margin-bottom: 8px;
 	padding-bottom: 2px;
-	width: 190px;}
+	overflow: hidden;
+	width: 190px}
 
 h3.box-title {
 	display: block;
@@ -1027,7 +1084,7 @@ td.form {
 /* Needed for light-on-dark theme */
 div.quicktag {}
 div.quicktag img,
-#wikihelp-tab td img {background: #292929}
+#wikihelp-tab td img {background: #e4e4e4}
 div#helptool {}
 
 /* links to view an object from a table listing objects can be generalized to this link */
@@ -1252,6 +1309,7 @@ td.wikicell {
 	border-bottom: 1px solid #A9A9A9}
 
 .editdate {padding-bottom: 5px; padding-top: 5px}
+#textarea-toolbar {background: #e4e4e4/* url(darkroom/button.png) repeat-x*/}
 
 div#page-bar {
 	display: block;
@@ -1334,6 +1392,19 @@ div.quotebody {
 	color: #F5F5F5}
 
 table.wikiplugin-split {border: none}
+
+/* Versions plugin */
+#tiki-center .versionav {
+	padding: 0;
+	border: 0;
+	margin-bottom: -1px}
+	
+.versionav .button {margin-bottom: 0}
+
+#tiki-center .versioncontent {
+	border: 1px solid #818181;
+	background: #3f3f3f;
+	padding: 1em}
 
 /** Wiki tocs **/
 div.tocnav {
@@ -1624,8 +1695,6 @@ table.commentinfo {background: #F0F0F0}
 .post .postbody {
 	clear: both;
 	background: #343434;
-	width: 100%;
-	min-width: 100%;
 	margin: 0;
 	border: 0}
 
@@ -1790,7 +1859,7 @@ span.commentstitle {
 
 /* Find */
 .subcomment {margin-left: 10px}
-.findtable {padding: 15px 0;}
+#tiki-center .findtable {padding: 15px 0;}
 .findtable ul {list-style: none;padding:0; margin: 0;float: left;}
 .findtable ul li {float: left;}
 
@@ -2164,6 +2233,7 @@ td.calodd, td.caleven {border: 1px solid #999999}
 .caltoggle {
 	font-size: 90%;
 	background: #3F3F3F}
+.buttonon a,
 .calbuttonon a { text-decoration: underline;}
 
 .calHeadingOn a {
@@ -2184,12 +2254,35 @@ td.calodd, td.caleven {border: 1px solid #999999}
 .opaque .box-data  {
 	background: #3F3F3F}
 
-.searchresults { display: inline}
+.searchresults {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	}
+
+.searchresults li {
+	margin: 10px 0 0;
+}
+
+.searchresults li .objecttype,
+	.searchresults li .parentname ,
+	.searchresults li .objectname 
+ {
+	font-size: 120%;
+	font-weight: bold;
+ }
+
+.searchresults .itemhits,
+	.searchresults .itemrelevance,
+	.searchresults .searchdate {
+	color: #fff;
+	font-size: .95em;
+	}
 
 #caltable .calfocuson,
 .box-data td.fc a.today,
 .box-data td a.today {
-	background: #474747;
+	background: #292929       ;
 	border: solid 1px #696969}
 
 #caltable .calfocuson a {color: #D8D8D8}
@@ -2245,7 +2338,8 @@ td.calodd, td.caleven {border: 1px solid #999999}
 .daterow:hover {border: 1px solid #aaa}
 
 a.viewmodeon img.icon {border: white solid 1px !important;padding:0 0 0 2px;}
-
+.tabrow .viewmode { float: left; }
+.viewmode div {display: inline;}
 /*****  Polls  *****/
 
 div.pollresults {

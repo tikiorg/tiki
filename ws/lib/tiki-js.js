@@ -1011,7 +1011,8 @@ window.name = 'tiki';
 /* Function to add image from filegals in non wysiwyg editor */
 /* must be here when ajax is activated                       */
 function SetMyUrl(area,url) {
-  str = "{img link="+url+" src="+url.replace(/display$/, 'thumbnail')+" rel=shadowbox[g];type=img} ";
+	var myurl = url.replace(/.*\/([^\/]*)$/, '$1'); /* make relative path from the absolute url */
+  str = "{img src=\""+myurl.replace(/display$/, 'thumbnail')+"\" alt=\"\" link=\""+myurl+"\" rel=\"shadowbox[g];type=img\"} ";
   insertAt(area, str);
 }
 /* Count the number of words (spearated with space) */
@@ -1025,19 +1026,19 @@ function wordCount(maxSize, source, cpt, message) {
   }
 }
 
-function show_plugin_form( type, index, pageName, args, bodyContent )
+function show_plugin_form( type, index, pageName, pluginArgs, bodyContent )
 {
   var target = document.getElementById( type + index );
   var content = target.innerHTML;
 
-  var form = build_plugin_form( type, index, pageName, args, bodyContent );
+  var form = build_plugin_form( type, index, pageName, pluginArgs, bodyContent );
 
   target.innerHTML = '';
   target.appendChild( form );
 }
 
 /* wikiplugin editor */
-function popup_plugin_form( type, index, pageName, args, bodyContent, edit_icon )
+function popup_plugin_form( area_name, type, index, pageName, pluginArgs, bodyContent, edit_icon )
 {
   var container = document.createElement( 'div' );
   container.className = 'plugin-form-float';
@@ -1055,14 +1056,24 @@ function popup_plugin_form( type, index, pageName, args, bodyContent, edit_icon 
 
   if (!index) { index = 0; }
   if (!pageName) { pageName = ''; }
-  if (!args) { args = {}; }
-  if (!bodyContent) { bodyContent = ''; }
+  if (!pluginArgs) { pluginArgs = {}; }
+  if (!bodyContent) { 
+	  if (document.getSelection) {
+		  bodyContent = document.getSelection();
+	  } else if (window.getSelection) {
+		  bodyContent = window.getSelection();
+	  } else if (document.selection) {
+		  bodyContent = document.selection.createRange().text;
+	  } else {
+		  bodyContent = '';
+	  }
+  }
 
   var form = build_plugin_form(
     type,
     index,
     pageName,
-    args,
+    pluginArgs,
     bodyContent
   );
 
@@ -1072,26 +1083,29 @@ function popup_plugin_form( type, index, pageName, args, bodyContent, edit_icon 
     var params = [];
     var edit = edit_icon;
 
-    for( var k in meta.params )
-    {
-      if( typeof(meta.params[k]) != 'object' )
-        continue;
+    for(i=0; i<form.elements.length; i++){
+      element = form.elements[i].name;
 
-      if( ! form[ 'params[' + k + ']' ] )
-        continue;
+      var matches = element.match(/params\[(.*)\]/);
 
-      var val = form['params[' + k + ']'].value;
+      if (matches == null) {
+	// it's not a parameter, skip 
+        continue;
+      }
+      var param = matches[1];
+
+      var val = form.elements[i].value;
 
       if( val != '' )
-        params.push( k + '="' + val + '"' );
+        params.push( param + '="' + val + '"' ); 
     }
 
-    var blob = '{' + type.toUpperCase() + '(' + params.join(',') + ')}' + form.content.value + '{' + type.toUpperCase() + '}';
+    var blob = '{' + type.toUpperCase() + '(' + params.join(',') + ')}' + (typeof form.content != 'undefined' ? form.content.value : '') + '{' + type.toUpperCase() + '}';
 
     if (edit) {
       return true;
     } else {
-      insertAt( 'editwiki', blob );
+      insertAt( area_name, blob );
       document.body.removeChild( container );
     }
     return false;
@@ -1110,7 +1124,7 @@ function popup_plugin_form( type, index, pageName, args, bodyContent, edit_icon 
   container.appendChild( form );
 }
 
-function build_plugin_form( type, index, pageName, args, bodyContent )
+function build_plugin_form( type, index, pageName, pluginArgs, bodyContent )
 {
   var form = document.createElement( 'form' );
   form.method = 'post';
@@ -1149,33 +1163,28 @@ function build_plugin_form( type, index, pageName, args, bodyContent )
   table.className = 'normal';
   form.appendChild( table );
 
+  var potentiallyExtraPluginArgs = pluginArgs;
+
   var rowNumber = 0;
-  for( i in meta.params )
+  for( param in meta.params )
   {
-    if( typeof(meta.params[i]) != 'object' || meta.params[i].name == 'array' )
+    if( typeof(meta.params[param]) != 'object' || meta.params[param].name == 'array' )
       continue;
 
     var row = table.insertRow( rowNumber++ );
-    var label = row.insertCell( 0 );
-    var field = row.insertCell( 1 );
-    row.className = 'formcolor';
+    build_plugin_form_row(row, param, meta.params[param].name, meta.params[param].required, pluginArgs[param], meta.params[param].description)	
 
-    label.innerHTML = meta.params[i].name;
-    if( meta.params[i].required )
-      label.style.fontWeight = 'bold';
+    delete potentiallyExtraPluginArgs[param];
+  }
 
-    var input = document.createElement( 'input' );
-    input.type = 'text';
-    input.name = 'params[' + i + ']';
-    if( args[i] )
-      input.value = args[i];
+  for( extraArg in potentiallyExtraPluginArgs) {
+	if (extraArg == '') {
+	   // TODO HACK: See bug 2499 http://dev.tikiwiki.org/tiki-view_tracker_item.php?itemId=2499
+	   continue;
+        }
 
-    var desc = document.createElement( 'div' );
-    desc.style.fontSize = 'x-small';
-    desc.innerHTML = meta.params[i].description;
-
-    field.appendChild( input );
-    field.appendChild( desc );
+        var row = table.insertRow( rowNumber++ );
+	build_plugin_form_row(row, extraArg, extraArg, 'extra', pluginArgs[extraArg], extraArg)	
   }
 
   var bodyRow = table.insertRow(rowNumber++);
@@ -1211,6 +1220,36 @@ function build_plugin_form( type, index, pageName, args, bodyContent )
   return form;
 }
 
+
+function build_plugin_form_row(row, name, label_name, requiredOrSpecial, value, description)
+{
+
+    var label = row.insertCell( 0 );
+    var field = row.insertCell( 1 );
+    row.className = 'formcolor';
+
+    label.innerHTML = label_name;
+    switch ( requiredOrSpecial ) {
+	case (true):  // required flag
+	      label.style.fontWeight = 'bold';
+	case ('extra') :
+	      label.style.fontStyle = 'italic';
+    }
+
+    var input = document.createElement( 'input' );
+    input.type = 'text';
+    input.name = 'params['+name+']'; 
+    if( value )
+      input.value = value;
+
+    var desc = document.createElement( 'div' );
+    desc.style.fontSize = 'x-small';
+    desc.innerHTML = description; 
+
+    field.appendChild( input );
+    field.appendChild( desc );
+
+}
 
 // Password strength
 // Based from code by:
@@ -1469,3 +1508,4 @@ function hidedisabled(divid,value) {
 	document.getElementById(divid).style.display = 'block';
 	}
 }
+

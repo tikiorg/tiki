@@ -23,7 +23,7 @@ function get_default_prefs() {
 	global $cachelib;
 	if( isset($cachelib) && $cachelib->isCached("tiki_default_preferences_cache") ) {
 		$prefs = unserialize( $cachelib->getCached("tiki_default_preferences_cache") );
-		return $prefs;
+		if ( $prefs !== false ) return $prefs;
 	}
 
 	global $tikidate, $tikilib;
@@ -194,7 +194,7 @@ function get_default_prefs() {
 		'wikiplugin_copyright' => 'y',
 		'wikiplugin_countdown' => 'n',
 		'wikiplugin_dbreport' => 'n',
-		'wikiplugin_div' => 'y',
+		'wikiplugin_div' => 'n',
 		'wikiplugin_dl' => 'y',
 		'wikiplugin_draw' => 'y',
 		'wikiplugin_equation' => 'n',
@@ -205,8 +205,8 @@ function get_default_prefs() {
 		'wikiplugin_file' => 'y',
 		'wikiplugin_files' => 'y',
 		'wikiplugin_flash' => 'y',
-                'wikiplugin_footnote' => 'n',
-                'wikiplugin_footnotearea' => 'n',
+		'wikiplugin_footnote' => 'n',
+		'wikiplugin_footnotearea' => 'n',
 		'wikiplugin_ftp' => 'n',
 		'wikiplugin_gauge' => 'n',
 		'wikiplugin_googleanalytics' => 'n',
@@ -214,6 +214,7 @@ function get_default_prefs() {
 		'wikiplugin_group' => 'y',
 		'wikiplugin_html' => 'n',
 		'wikiplugin_iframe' => 'n',
+		'wikiplugin_img' => 'y',
 		'wikiplugin_image' => 'n',    // Experimental, may supercede img in 4.0
 		'wikiplugin_include' => 'y',
 		'wikiplugin_invite' => 'y',
@@ -236,6 +237,7 @@ function get_default_prefs() {
 		'wikiplugin_picture' => 'n',  // Old syntax for images
 		'wikiplugin_pluginmanager' => 'n',
 		'wikiplugin_poll' => 'y',
+		'wikiplugin_profile' => 'n',		
 		'wikiplugin_proposal' => 'n',
 		'wikiplugin_quote' => 'y',
 		'wikiplugin_rcontent' => 'y',
@@ -253,12 +255,13 @@ function get_default_prefs() {
 		'wikiplugin_sort' => 'y',
 		'wikiplugin_split' => 'y',
 		'wikiplugin_sql' => 'n',
+		'wikiplugin_stat' => 'n',
 		'wikiplugin_sub' => 'y',
-		'wikiplugin_subscribegroup' => 'y',
-		'wikiplugin_subscribegroups' => 'y',
+		'wikiplugin_subscribegroup' => 'n',
+		'wikiplugin_subscribegroups' => 'n',
 		'wikiplugin_sup' => 'y',
 		'wikiplugin_survey' => 'y',
-		'wikiplugin_tag' => 'y',
+		'wikiplugin_tag' => 'n',
 		'wikiplugin_thumb' => 'y',
 		'wikiplugin_titlesearch' => 'n',
 		'wikiplugin_toc' => 'y',
@@ -271,7 +274,7 @@ function get_default_prefs() {
 		'wikiplugin_trackerprefill' => 'y',
 		'wikiplugin_trackerstat' => 'y',
 		'wikiplugin_translated' => 'y',
-		'wikiplugin_tr' => 'y',
+		'wikiplugin_tr' => 'n',
 		'wikiplugin_usercount' => 'n',
 		'wikiplugin_userlist' => 'n',
 		'wikiplugin_versions' => 'n',
@@ -280,8 +283,125 @@ function get_default_prefs() {
 		'wikiplugin_webservice' => 'n',
 		'wikiplugin_youtube' => 'y',
 
+		// Inline wiki plugins have their edit plugin icon disabled
+		'wikiplugininline_agentinfo' => 'n',
+		'wikiplugininline_alink' => 'n',
+		'wikiplugininline_aname' => 'n',
+		'wikiplugininline_annotation' => 'n',
+		'wikiplugininline_article' => 'n',
+		'wikiplugininline_articles' => 'n',
+		'wikiplugininline_attach' => 'n',
+		'wikiplugininline_avatar' => 'n',
+		'wikiplugininline_back' => 'n',
+		'wikiplugininline_backlinks' => 'n',
+		'wikiplugininline_banner' => 'n',
+		'wikiplugininline_bloglist' => 'n',
+		'wikiplugininline_box' => 'n',
+		'wikiplugininline_category' => 'n',
+		'wikiplugininline_catorphans' => 'n',
+		'wikiplugininline_catpath' => 'n',
+		'wikiplugininline_center' => 'n',
+		'wikiplugininline_chart' => 'n',
+		'wikiplugininline_code' => 'n',
+		'wikiplugininline_content' => 'n',
+		'wikiplugininline_cookie' => 'n',
+		'wikiplugininline_copyright' => 'n',
+		'wikiplugininline_countdown' => 'n',
+		'wikiplugininline_dbreport' => 'n',
+		'wikiplugininline_div' => 'n',
+		'wikiplugininline_dl' => 'n',
+		'wikiplugininline_draw' => 'n',
+		'wikiplugininline_equation' => 'n',
+		'wikiplugininline_events' => 'n',
+		'wikiplugininline_fade' => 'n',
+		'wikiplugininline_fancylist' => 'n',
+		'wikiplugininline_fancytable' => 'n',
+		'wikiplugininline_file' => 'y',
+		'wikiplugininline_files' => 'n',
+		'wikiplugininline_flash' => 'n',
+                'wikiplugininline_footnote' => 'n',
+                'wikiplugininline_footnotearea' => 'n',
+		'wikiplugininline_ftp' => 'n',
+		'wikiplugininline_gauge' => 'n',
+		'wikiplugininline_googleanalytics' => 'n',
+		'wikiplugininline_googledoc' => 'n',
+		'wikiplugininline_group' => 'y',
+		'wikiplugininline_html' => 'n',
+		'wikiplugininline_iframe' => 'n',
+		'wikiplugininline_img' => 'n',
+		'wikiplugininline_image' => 'n',    // Experimental, may supercede img in 4.0
+		'wikiplugininline_include' => 'n',
+		'wikiplugininline invite' => 'n',
+		'wikiplugininline_jabber' => 'n',
+		'wikiplugininline_js' => 'n',
+		'wikiplugininline_jq' => 'n',
+		'wikiplugininline_lang' => 'n',
+		'wikiplugininline_lastmod' => 'n',
+		'wikiplugininline_listpages' => 'n',
+		'wikiplugininline_lsdir' => 'n',
+		'wikiplugininline_map' => 'n',
+		'wikiplugininline_mediaplayer' => 'n',
+		'wikiplugininline_miniquiz' => 'n',
+		'wikiplugininline_module' => 'n',
+		'wikiplugininline_mono' => 'n',
+		'wikiplugininline_mouseover' => 'n',
+		'wikiplugininline_mwtable' => 'n',
+		'wikiplugininline_myspace' => 'n',
+		'wikiplugininline_objecthits' => 'n',
+		'wikiplugininline_picture' => 'n',  // Old syntax for images
+		'wikiplugininline_pluginmanager' => 'n',
+		'wikiplugininline_poll' => 'n',
+		'wikiplugininline_profile' => 'n',
+		'wikiplugininline_proposal' => 'n',
+		'wikiplugininline_quote' => 'n',
+		'wikiplugininline_rcontent' => 'n',
+		'wikiplugininline_redirect' => 'n',
+		'wikiplugininline_regex' => 'n',
+		'wikiplugininline_remarksbox' => 'n',
+		'wikiplugininline_rss' => 'n',
+		'wikiplugininline_sf' => 'n',
+		'wikiplugininline_share' => 'n',
+		'wikiplugininline_sharethis' => 'n',
+		'wikiplugininline_sheet' => 'n',
+		'wikiplugininline_showpages' => 'n',
+		'wikiplugininline_skype' => 'n',
+		'wikiplugininline_snarf' => 'n',
+		'wikiplugininline_sort' => 'n',
+		'wikiplugininline_split' => 'n',
+		'wikiplugininline_sql' => 'n',
+		'wikiplugininline_sub' => 'n',
+		'wikiplugininline_subscribegroup' => 'n',
+		'wikiplugininline_subscribegroups' => 'n',
+		'wikiplugininline_sup' => 'n',
+		'wikiplugininline_survey' => 'n',
+		'wikiplugininline_tag' => 'n',
+		'wikiplugininline_thumb' => 'n',
+		'wikiplugininline_titlesearch' => 'n',
+		'wikiplugininline_toc' => 'n',
+		'wikiplugininline_topfriends' => 'n',
+		'wikiplugininline_trackerfilter' => 'n',
+		'wikiplugininline_trackeritemfield' => 'y',
+		'wikiplugininline_trackerlist' => 'n',
+		'wikiplugininline_trackertimeline' => 'n',
+		'wikiplugininline_tracker' => 'n',
+		'wikiplugininline_trackerprefill' => 'n',
+		'wikiplugininline_trackerstat' => 'n',
+		'wikiplugininline_translated' => 'n',
+		'wikiplugininline_tr' => 'n',
+		'wikiplugininline_usercount' => 'n',
+		'wikiplugininline_userlist' => 'n',
+		'wikiplugininline_versions' => 'n',
+		'wikiplugininline_vote' => 'n',
+		'wikiplugininline_wantedpages' => 'n',
+		'wikiplugininline_webservice' => 'n',
+		'wikiplugininline_youtube' => 'n',
+
 		// webservices
 		'webservice_consume_defaultcache' => 300, // 5 min
+		'feature_webservices' => 'y',
+
+		// semantic links
+		'feature_semantic' => 'y',
 
 		// wysiwyg
 		'feature_wysiwyg' => 'n',
@@ -468,6 +588,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'art_list_topic' => 'y',
 		'art_list_date' => 'y',
 		'art_list_author' => 'y',
+		'art_list_rating' => 'n',
 		'art_list_reads' => 'y',
 		'art_list_size' => 'y',
 		'art_list_expire' => 'y',
@@ -501,6 +622,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'groupTracker' => 'n',
 		'userTracker' => 'n',
 		'trk_with_mirror_tables' => 'n',
+		'trackerCreatorGroupName' => ' ',
 
 		// user
 		'feature_userlevels' => 'n',
@@ -545,7 +667,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'login_is_email' => 'n',
 		'validateUsers' => 'y',
 		'validateEmail' => 'n',
-		'forgotPass' => 'n',
+		'forgotPass' => 'y',
 		'change_password' => 'y',
 		'available_languages' => array(),
 		'available_styles' => array(),
@@ -700,6 +822,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_action_calendar' => 'n',
 		'calendar_start_year' => '+0',
 		'calendar_end_year' => '+3',
+		'calendar_list_begins_focus' => 'n',
 
 		// dates
 		'server_timezone' => isset($tikidate) ? $tikidate->getTimezoneId() : 'UTC',
@@ -813,6 +936,8 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'auth_ldap_adminpass' => '',
 		'auth_ldap_version' => 3,
 		'auth_ldap_nameattr' => 'displayName',
+		'auth_ldap_countryattr' => '',
+		'auth_ldap_emailattr' => '',
 		'https_login' => 'allowed',
 		'feature_show_stay_in_ssl_mode' => 'y',
 		'feature_switch_ssl_mode' => 'n',
@@ -899,9 +1024,9 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 
 		// html header
 		'metatag_keywords' => '',
-		'metatag_threadtitle' => '',
-		'metatag_imagetitle' => '',
-		'metatag_freetags' => '',
+		'metatag_threadtitle' => 'n',
+		'metatag_imagetitle' => 'n',
+		'metatag_freetags' => 'n',
 		'metatag_description' => '',
 		'metatag_author' => '',
 		'metatag_geoposition' => '',
@@ -917,8 +1042,14 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 
 		'site_crumb_seper' => '»',
 		'site_nav_seper' => '|',
-		'feature_sitemycode' => 'n',
-		'sitemycode' => '<div align="center"><b>{tr}Here you can (as an admin) place a piece of custom XHTML and/or Smarty code. Be careful and properly close all the tags before you choose to publish ! {/tr}</b></div>', // must be max. 250 chars now unless it'll change in tiki_prefs db table field value from VARCHAR(250) to BLOB by default
+		'feature_sitemycode' => 'y',
+		'sitemycode' => '{if $user eq "admin"}
+<div style="align: left; padding-left: 15px;">
+<a class="link" href="tiki-admin.php?page=look">
+{tr}Modify the look & feel (logo, theme, etc.){/tr}
+</a>
+</div>
+{/if}', // must be max. 250 chars now unless it'll change in tiki_prefs db table field value from VARCHAR(250) to BLOB by default
 		'sitemycode_publish' => 'n',
 		'feature_sitelogo' => 'y',
 		'sitelogo_bgcolor' => 'transparent',
@@ -972,6 +1103,16 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_site_report' => 'n',
 		'feature_site_send_link' => 'n',
 		'feature_layoutshadows' => 'n',
+		'main_shadow_start' => '',
+		'main_shadow_end' => '',
+		'header_shadow_start' => '',
+		'header_shadow_end' => '',
+		'middle_shadow_start' => '',
+		'middle_shadow_end' => '',
+		'center_shadow_start' => '',
+		'center_shadow_end' => '',
+		'footer_shadow_start' => '',
+		'footer_shadow_end' => '',
 
 		// mods
 		'feature_mods_provider' => 'n',
@@ -1088,6 +1229,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_user_watches' => 'n',
 		'feature_group_watches' => 'n',
 		'feature_user_watches_translations' => 'n',
+		'feature_daily_report_watches' => 'n',
 		'feature_workflow' => 'n',
 		'feature_xmlrpc' => 'n',
 		'helpurl' => "http://doc.tikiwiki.org/",
@@ -1132,6 +1274,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'bot_logo_code' => '',
 		'feature_blogposts_pings' => 'n',
 		'feature_create_webhelp' => 'n',
+		'page_n_times_in_a_structure' => 'n',
 		'feature_forums_search' => 'n',
 		'feature_trackbackpings' => 'n',
 		'feature_wiki_ext_icon' => 'y',
@@ -1181,6 +1324,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'iepngfix_elements' => '',
 		'use_minified_scripts' => 'y',		// for debugging
 		'valid_email_regex' => '^[_a-z0-9\+\.\-]+@[_a-z0-9\.\-]+\.[a-z]{2,4}$',
+		'debug_ignore_xdebug' => 'n',
 		
 		// JQuery
 		'feature_jquery' => 'y',			// Alternative lib for shadowbox etc
@@ -1191,7 +1335,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'jquery_effect_tabs' => 'slide',	// Different effect for tabs (['none' | 'normal' (for jq) | 'slide' etc]
 		'jquery_effect_tabs_direction' => 'vertical',
 		'jquery_effect_tabs_speed' => 'fast',
-		
+
 		'feature_jquery_ui' => 'n',				// include UI lib for more effects
 		'feature_jquery_tooltips' => 'y',		// use JQuery tooltips and override Overlib
 		'feature_jquery_autocomplete' => 'y',	// autocomplete on pages in QuickEdit (more coming soon)
@@ -1200,7 +1344,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_jquery_sheet' => 'n',			// spreadsheet TODO: implement
 		'feature_jquery_tablesorter' => 'n',	// sortable tables ([will] override existing)
 		'feature_jquery_cycle' => 'y',			// slideshow lib
-	
+
 		// SefUrl
 		'feature_sefurl' => 'n',
 		'feature_sefurl_filter' => 'n',
@@ -1226,7 +1370,6 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 
 		'feature_bidi' => 'n',
 		'feature_lastup' => 'y',
-		'transition_style_ver' => '3.0',
 
 		'magic_last_load' => 0,
 
@@ -1284,7 +1427,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 
 // Initialize prefs for which we want to use the site value (they will be prefixed with 'site_')
 // ( this is also used in tikilib, not only when reloading prefs )
-$user_overrider_prefs = array('language', 'style', 'userbreadCrumb', 'tikiIndex', 'wikiHomePage','default_calendars');
+$user_overrider_prefs = array('language', 'style', 'userbreadCrumb', 'tikiIndex', 'wikiHomePage','default_calendars', 'metatag_robots');
 
 // Check if prefs needs to be reloaded
 if (isset($_SESSION['s_prefs'])) {

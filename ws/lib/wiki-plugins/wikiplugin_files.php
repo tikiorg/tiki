@@ -13,7 +13,7 @@ function wikiplugin_files_info() {
 	return array(
 		'name' => tra('Files'),
 		'documentation' => 'PluginFiles',
-		'description' => tra("Displays a list of files"),
+		'description' => tra("Displays a list of files from the File Gallery"),
 		'prefs' => array( 'feature_file_galleries', 'wikiplugin_files' ),
 		'body' => tra('Title'),
 		'params' => array(
@@ -293,4 +293,3 @@ function wikiplugin_files($data, $params) {
 	$smarty->assign_by_ref('show_find', $showfind);
 	return '~np~'.$smarty->fetch('wiki-plugins/wikiplugin_files.tpl').'~/np~';
 }
-?>

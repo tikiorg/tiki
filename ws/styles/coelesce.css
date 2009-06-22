@@ -3,6 +3,7 @@
  * original design by Patrick Allard. Distributed under the LGPL license. 
  * This is a *litecss-based theme, so import lite/lite.css. */
  @import "lite/lite.css"; 
+ @import "layout/layout.css"; 
  
 /***** XHTML Elements ******/
 
@@ -109,16 +110,27 @@ span.button {
 span.button a,
 span.button a:visited,
 button,
-input[type=reset],
-input[type=submit],
 span.button input,
-.submitbutton,
 .calbuttonBox a {
 	font-family: Verdana, Helvetica, Geneva, Arial, sans-serif;
 	font-size: .95em;
 	font-weight: bold;
 	color: #449cd0;
-	background: #f5f5f5;
+	background: #ededed;
+	border: 1px solid #c5c5c5;
+	padding: 1px 4px;
+	margin-right: 1px;
+	text-decoration: none;
+	white-space: nowrap;
+	cursor: pointer}
+
+input[type=reset],
+input[type=submit] {
+	font-family: Verdana, Helvetica, Geneva, Arial, sans-serif;
+	font-size: .95em;
+	font-weight: bold;
+	color: #449cd0;
+	background: #ededed;
 	border: 1px solid #c5c5c5;
 	padding: 1px 4px;
 	margin-right: 1px;
@@ -134,26 +146,31 @@ span.button input,
 	border: 0;
 	padding: 0 4px}
 
-	/*
-*:first-child+html .button a,
-*:first-child+html .button a:visited,
-*:first-child+html button,
-*:first-child+html input[type=submit],
-*:first-child+html .button input,
-*:first-child+html .submitbutton,
-*:first-child+html .calbuttonoff,
-*:first-child+html .calbuttonon {line-height: 1em}*/
-
 .button a,
 .button a:visited {padding: 1px 4px}
 
 .button a:hover,
 button:hover,
-input[type=reset]:hover,
-input[type=submit]:hover,
 .button input:hover,
-.submitbutton:hover,
 .calbuttonBox a:hover {background: white}
+
+input[type=reset]:hover,
+input[type=submit]:hover {background: white}
+
+.button a:active,	
+button:active,
+.button input:active,
+span.highlight a:link,
+span.highlight a:visited {
+	color: #449cd0;
+	background: #dbdbdb;
+	border: 1px solid #527ca6;}
+
+input[type=reset]:active,
+input[type=submit]:active {
+	color: #449cd0;
+	background: #dbdbdb;
+	border: 1px solid #527ca6;}
 
 div.iconmenu {display: inline}
 
@@ -194,6 +211,7 @@ ul.jumplinks a:active {
 	width: 6em;
 	z-index: 9}
 
+.fullscreenbutton,
 #fullscreenbutton {
 	position: absolute;
 	top: 2px;
@@ -201,6 +219,7 @@ ul.jumplinks a:active {
 	z-index: 10;
 	font-size: 80%}
 	
+.fullscreenbutton:hover,
 #fullscreenbutton:hover {color: #82a7c8}
 
 #tiki-clean {
@@ -293,9 +312,11 @@ div#tiki-bot {}
 #header-top {
 	position: relative;
 	background: url(coelesce/pagebg.jpg) repeat-x bottom;
-	min-height: 80px}
+	height: 80px}
 	
-* html #header-top {height: 80px}
+#header-top[id] {
+	height: auto;
+	min-height: 80px}
 
 #siteheader {
 	text-align: left;
@@ -323,8 +344,11 @@ div.floatleft {
 	margin-left: 8px}
 
 div#sitelogo {
-	width: 50%;
-	padding-top: 8px}
+	padding-top: 8px;
+	white-space: nowrap;
+	overflow: hidden
+}
+div#sitelogo, div#sitelogo * { float: left }
 
 div#sitead {margin: auto}
 #sitead.floatright {padding-right: 40px}
@@ -337,50 +361,65 @@ div#sitead {margin: auto}
 	position: absolute;
 	right: 30px;
 	bottom: 12px;
-	width: 450px;
 	text-align: right;
 	color: #fff}
 	
 #login_search a,
 #login_search a:visited {color: #fff}
 	
-#siteloginbar * {display: inline}
 #login_language {display: none/*inline*/}
 
 #sitesearchbar {
 	display: block;
-	float: right;
-	margin: 0;
-	margin-top: 3px;
-	height: 33px;
-	text-align: left;
-	width: 342px;
-	background: url(coelesce/search_wide.jpg) no-repeat;
+	float: none;
+	margin: 3px 0 0 0;
 	padding: 0 0 0 15px;
-	color: #517ea7;}
+	height: 33px;
+	min-width: 180px;
+	text-align: left;
+	background: url(coelesce/search_wide.jpg) no-repeat;
+	color: #517ea7;
+	}
 	
+* html #sitesearchbar {
+	width: 180px;
+}
+
 #sitesearchbar .wrapper {
 	height: 33px;
 	background: url(coelesce/search_wide.jpg) 100% 0 no-repeat;
 	margin: 0;
-	padding: 0}
+	padding: 0 35px 0 0;
+	}
 
 #sitesearchbar form {
 	padding-top: 8px;
 	margin-right: 8px;
-	font-size: 12px}
+	font-size: 12px;
+	white-space: nowrap;
+	}
 
 #sitesearchbar form input.wikiaction {}
 	
 #sitesearchbar select[name="where"] {}
 #sitesearchbar ul.cssmenu * {
 	width: 40px;
-	/*line-height: 1;
-	float: left*/}
-	
-.nohighlight {position: relative}
+	}
 
-#sitesearchbar .nohighlight ul.cssmenu {
+#sitesearchbar .findtitle input {
+	border: none;
+}
+
+#sitesearchbar .findtable {
+}
+
+/* The two lines below are a hack for IE6 */
+* html #sitesearchbar .findtable {
+	position: fixed;
+	margin-top: -18px;
+}
+
+#sitesearchbar .findtable ul.cssmenu {
 	position: absolute;
 	top: 6px;
 	right: 40px;
@@ -391,27 +430,8 @@ div#sitead {margin: auto}
 	
 #sitesearchbar ul.cssmenu > li { }
 
-.cbox-data .nohighlight {
-	position: static;
-	height: 30px;
-	white-space: nowrap;}
-	
-.cbox-data .nohighlight form {display: inline}
-
-.cbox-data .nohighlight ul.cssmenu {
-	margin-left: 5px;
-	width: 40px}
-	
-.nohighlight ul.cssmenu li ul {
-	background: none;
-	border: none }
-
-.nohighlight .cssmenu li ul {margin: -23px 0 0 6px}
-
-input#fuser,
 select[name="where"] {border: none}
 
-input#fuser,
 select[name="where"],
 input[name="search"] {display: inline}
 	
@@ -421,15 +441,25 @@ input[id="sl-login-pass"] {}
 
 #bannertopright {}
 #siteloginbar input.wikiaction {}
+#siteloginbar { position: relative }
 #sitelocbar {float: left}
 #customcodewith_ad {width: 400px}
 
 /* #header text selectors, if needed */
 
 #sitetitles {
-	color: #fff; display: inline-block; height: 97px; line-height: 97px; overflow: hidden; vertical-align: bottom}
+	color: #fff;
+	display: inline;
+	height: 97px;
+	line-height: 97px;
+	overflow: hidden;
+	vertical-align: bottom;
+	}
 
-* html #sitetitles {display: inline; margin-top: 6px}
+* html #sitetitles {
+	display: inline;
+	margin-top: 6px;
+	}
 
 #sitetitle,
 #sitesubtitle {
@@ -439,11 +469,8 @@ input[id="sl-login-pass"] {}
 	font-weight: bold;
 	margin:0;
 	padding:0;
-	margin-bottom: 30px}
-	
-* html #sitetitle,
-* html #sitesubtitle {
-	display: block}
+	margin-bottom: 30px;
+	}
 
 #sitetitle {
 	color: #9eb8d5;
@@ -479,7 +506,9 @@ input[id="sl-login-pass"] {}
 
 #tiki-top {
 	background: url(coelesce/pagebg.jpg) repeat-x;
-	padding-top: 2px}
+	padding-top: 2px;
+	clear: both;
+}
 
 * html #tiki-top { font-size: 11px }
 *:first-child+html #tiki-top {
@@ -590,9 +619,7 @@ div.menuSection div.separator {}
 
 /** PHP Layers Menus **/
 
-.horbar {
-	width: 100%;
-	padding-left: 20px} 
+.horbar { width: 100% } 
 
 .horbar table {
 	width: auto;
@@ -618,7 +645,6 @@ div.menuSection div.separator {}
 	color: #fff !important;
 	text-decoration: none} 
 
-* html .horbaritem a {font-size: .8em}
 .mdkverbar {} 
 
 .mdksubmenu {
@@ -669,11 +695,11 @@ div.menuSection div.separator {}
 
 .mdkitem a:active {} 
 
-/* Tree menu (also on Browse Categories */
+/* Tree menu (also on Browse Categories) */
 .treemenudiv {
 	display: block;
 	white-space: nowrap;
-	background: #ccdceb;}
+	}
 
 .phplmnormal,
 a.phplmnormal:hover,
@@ -721,12 +747,15 @@ a.phplmselected:hover {color: #808080}
 .cssmenu_vert li ul {margin-left: 11em}
 
 .cssmenu_horiz li:hover ul,
-.cssmenu_vert li:hover ul {
+.cssmenu_vert li:hover ul,
+.cssmenu_horiz li.sfhover ul,
+.cssmenu_vert li.sfhover ul {
 	background: #ccdceb;
 	color: #5a7ea2;}
 
-#col2 .cssmenu_vert li ul {margin-left: 180px}
-#col2 .cssmenu_vert li ul li ul { margin-left: 11em}
+#col2 .cssmenu_vert {width: 180px}
+#col2 .cssmenu_vert li ul {margin-left: 177px}
+#col2 .cssmenu_vert li ul li ul {margin-left: 11em}
 
 .cssmenu_vert,
 .cssmenu_vert li {background: #ccdceb !important}
@@ -738,7 +767,8 @@ a.phplmselected:hover {color: #808080}
 	text-align: left;
 	color: #5a7ea2}
 	
-.cssmenu_horiz li:hover ul li:hover {
+.cssmenu_horiz li:hover ul li:hover,
+.cssmenu_horiz li.sfhover ul li.sfhover {
 	background: #eff8ff;
 	color: #5a7ea2;}
 
@@ -746,7 +776,7 @@ a.phplmselected:hover {color: #808080}
 .cssmenu_horiz li a:visited {
 	white-space: nowrap;
 	display: block;
-	padding: 6px 10px;
+	padding: 6px 1em;
 	font-weight: bold;
 	text-decoration: none;
 	background: inherit;
@@ -761,34 +791,37 @@ a.phplmselected:hover {color: #808080}
 	color: #295C83;
 	font-weight: bold;
 	text-decoration: none} 
-	
-.cssmenu_vert .sf-sub-indicator {background: url(coelesce/arrows-295c8e.png) no-repeat -10px -100px; /* 8-bit indexed alpha png. IE6 gets solid image only; */}
+
+.sf-sub-indicator {background: url(coelesce/arrows-295c8e.png) no-repeat -10px -100px; /* 8-bit indexed alpha png. IE6 gets solid image only; */}
 
 .cssmenu_vert li a:hover {
 	color: #82a7c8;
 	text-decoration: none}
 	
-#tiki-top > .cssmenu_horiz > li:hover { background: url(coelesce/pagebg.jpg) 0 -2px repeat-x }
+#tiki-top .cssmenu_horiz li:hover,
+#tiki-top .cssmenu_horiz li.sfhover {background: url(coelesce/pagebg.jpg) 0 -2px repeat-x }
 
 #tiki-top > .cssmenu_horiz {
 	padding-left: 20px;
 	border-left: 1px solid #2E5276;
 	border-right: 1px solid #ACC4E0}
 
-#tiki-top .cssmenu_horiz ul li:hover {background: #ecf5ff;}
+#tiki-top .cssmenu_horiz ul li:hover,
+#tiki-top .cssmenu_horiz ul li.sfhover {background: #ecf5ff;}
+
 #tiki-top .cssmenu_horiz ul li a {color: #5a7ea2}
 
-#tiki-top > ul.cssmenu_horiz > li > a {
+#tiki-top .cssmenu_horiz li a {
 	border-left: 1px solid #acc4e0;
 	border-right: 1px solid #2e5276;
 	padding: 9px 1em 10px 1em}
 	
-#tiki-top > ul.cssmenu_horiz > li.menuSection > a {padding-right: 2.6em}
-	
-#tiki-top > ul.cssmenu_horiz > li > ul> a {
-	background: #ccdceb;
-	padding-top: 10px;
-	padding-bottom: 9px}
+#tiki-top .cssmenu_horiz li.menuSection a {padding-right: 2.6em}
+
+#tiki-top .cssmenu_horiz li.menuLevel1 a {
+	border: 0;
+	padding: 6px 1em;
+	background: #ccdceb}
 	
 #tiki-top > .cssmenu_horiz > li > a:hover {color: #fff}
 
@@ -865,7 +898,6 @@ div#edithelpzone {display: none}
 .admlink,
 .forumbutlink {}
 
-div.searchdate {}
 div#debugconsole {}
 
 .mini {
@@ -911,6 +943,10 @@ img.icon {
 	vertical-align: middle;
 	margin: 0 1px}
 
+.findtitle, .findexactmatch, .findnumrows, .findtypes, .findlang {
+	white-space: nowrap;
+}
+
 .findtitle input {margin-left: 2px}
 
 .top_actions {
@@ -922,51 +958,55 @@ div.findsubmit {}
 
 /* New Help section */
 div#tikihelp {
-	position:fixed;
+	position: fixed;
 	right: 0;
-	top: 3px;
-	height: 95%;
+	top: 0;
+	height: auto; /* if there was height specified it covered the right column content "invisibly" making part of it unclickable (from strasa) */
 	max-width: 50%;
-	padding:0;
-	margin:0;
+	padding: 0;
+	margin: 0;
 	border: none;
 	background-color: transparent;
-	z-index: 2;
+	z-index: 820;
+	height: 100%;
 }
 
-* html div#tikihelp {position: absolute}
-
-div.help_icon {
-	border: 0;
-	margin: 0;
-	padding: 0;
+* html div#tikihelp {
+	position: absolute;
 }
-div.help_icon img{
+
+.help_title { float: left }
+
+.help_close_icon,
+.help_fullscreen_icon {
+	float: right;
 	vertical-align: middle;
-	border: 0;
-	margin: 0;
-	padding: 0;
 }
+.help_fullscreen_icon { margin-right: 8px }
+.help_close_icon { margin-right: 20px }
+
 div.help_section_select {
 	font-weight : bold;
 	font-size: 120%;
-	background-color : #E7E9EA;
-	color: black;
+	background: #e7e9ea;
+	color: #000;
 	width: 100%;
-	margin: 2px;
+	padding: 2px;
 }
+
 div.help_sections {
-	width : 360px;
+	width: 360px;
 	padding:  2px;
-	background-color: #AAC9E9;
-	max-height : 95%;
+	background: #aac9e9;
 	overflow: auto;
+	height: 100%;
 }
+
 div.help_section {
 	margin: 5px;
 	padding: 5px;
-	background-color: white;
-	color: black;
+	background: #fff;
+	color: #000;
 }
 
 #site_report {text-align: center}
@@ -979,6 +1019,23 @@ div.help_section {
 
 .findtable ul {list-style: none}
 .findtable ul li {float: left}
+
+.alphafilter {
+	display: block;
+	margin: 10px 0;
+	text-align:center;
+}
+
+.alphafilter a {
+	font-size: 120%;
+}
+
+.alphafilter .highlight {
+	background-color: #5a7ea2;
+	color: white;
+	font-weight: bold;
+	font-size: 130%;
+}
 
 ul.categories {
 	margin: 0;
@@ -997,10 +1054,10 @@ div.box {
 	border: 1px solid #527ca6;
 	margin-top: -1px;
 	text-align: left;
-	overflow: visible}
+	overflow: hidden;
+	}
 	
-#col3 div.box,
-#col2 div.box {width: 205px}
+* html div.box {width: 205px !important}
 
 h3.box-title {
 	padding-top: 0;
@@ -1116,7 +1173,12 @@ div.cbox {
 
 .warning  .rbox-title {}
 .warning .rbox-data {}
-div.simplebox {}
+
+div.simplebox {
+	border: 1px solid #527ca6;;
+	background: #fff;
+	padding: 1em}
+
 .highlight {}
 
 /***** Tables, Tabs and Lists ****/
@@ -1169,6 +1231,9 @@ th, table.normal td.heading {
 	background: #c3d3e5;
 	min-height: 32px;
 	text-align: center}
+	
+* html th,
+* html table.normal td.heading {height: 32px}
 	
 .formcolor td {padding: 3px}
 
@@ -1235,6 +1300,12 @@ a.forumnameread { color: #517ea7}
 	color: #5a7ea2}
 
 .tabinactive {border: 0 transparent !important}
+
+.tabinactive a,
+* html .tabinactive a:visited {
+	color: #fff}
+	
+* html .tabinactive a:hover {color: #5a7ea2}
 
 .tabcontent {
 	z-index: 200;
@@ -1330,6 +1401,42 @@ div#description,
 .wikitext ul li {} 
 .wikitext ul li ul li {}
 .wikitext ol {}
+
+.wikitext .showhide_heading .link	{
+	font-weight: normal;
+	font-size: 80%;
+	vertical-align: top;
+}
+
+.wikitext h1 {
+	margin: 5px 0 15px 0;
+	padding-left: 0px;
+}
+
+.wikitext h2 {
+	margin: 5px 0 10px 0;
+	padding-left: 10px;
+}
+
+.wikitext h3 {
+	margin: 5px 0 5px 0;
+	padding-left: 15px;
+}
+
+.wikitext h4 {
+	margin: 5px 0 5px 0;
+	padding-left: 20px;
+}
+
+.wikitext h5 {
+	margin: 5px 0 5px 0;
+	padding-left: 25px;
+}
+
+.wikitext h6 {
+	margin: 5px 0 5px 0;
+	padding-left: 30px;
+}
 
 table.wikitable {
 	border: 1px solid #A9A9A9;
@@ -1434,6 +1541,19 @@ div.quoteheader {margin-left: 20px}
 div.quotebody {font-style: italic}
 table.wikiplugin-split {border: none}
 
+/* Versions plugin */
+#tiki-center .versionav {
+	padding: 0;
+	border: 0;
+	margin-bottom: -1px}
+	
+.versionav .button {margin-bottom: 0}
+
+#tiki-center .versioncontent {
+	border: 1px solid #527ca6;
+	background: #fff;
+	padding: 1em}
+
 /** Wiki tocs **/
 div.tocnav {
 	background: #EBEBEB;
@@ -1493,6 +1613,12 @@ div.articletitle h2 {
 	margin: 0;
 	padding-left: 14px;
 	padding-top: 8px}
+	
+* html div.articletitle h2 {height: 26px}
+
+.wikitext div.articletitle h2 {
+	font-size: 1.55em;
+	padding-top: 10px}
 	
 div.articletitle h2 a:link,
 div.articletitle h2 a:visited {
@@ -1642,8 +1768,6 @@ body.tiki_forums table.normal {margin: auto}
 .post .postbody {
 	background: #fff;
 	clear: both;
-	width: 100%;
-	min-width: 100%;
 	margin: 0;
 	margin-top: 5px;
 	font-size: 1.1em}
@@ -1889,7 +2013,13 @@ textarea#editpost2 {
 .subcomment { margin-left: 10px}
 
 /* Help box*/
-div.commentsedithelp { background: #ffcfcf; color: #2d2d2d; border: 1px solid #ff0000; text-align: center; font-weight: bold}
+div.commentsedithelp { 
+	background: #ffcfcf; 
+	color: #2d2d2d; 
+	border: 1px solid #ff0000; 
+	text-align: center; 
+	font-weight: bold;
+	}
 
 /***** Categories *****/
 
@@ -1908,30 +2038,55 @@ td.categobjectsdataeven,
 td.categobjectsdataodd {}
 
 .catname {}
-.catblock {}
-.catlists {}
+.catblock {
+	padding: 5px;
+	margin-bottom: 3px;
+	min-width: 100%;
+	}
+
+.cattitle {
+	padding: 3px 5px 9px 5px;
+	display:inline;
+	font-weight: bold;
+	font-size: 110%;
+	border-top: 1px solid #D7D7D7;
+	border-left: 1px solid #D7D7D7;
+	border-right: 1px solid #D7D7D7;
+	border-bottom: 1px solid #EDEDED;
+	background: #EDEDED;
+	}
+
+.catlists {
+	margin-top: 8px;
+	border: 1px solid #D7D7D7;
+	background: #EDEDED;
+	}
+
 .catlists:hover {}
-.cattitle {}
 .catlists a.link {}
 .catlists a.link:hover {}
 
 .catfeatures {
-	margin-left: 0;
+	margin: 5px;
 	padding: 0;
-	font-weight: bold;
-	list-style: none}
+	list-style: none;
+	}
 
-ul.catfeatures li {}
+ul.catfeatures li {
+	font-weight: normal;
+	}
 
 .catitems {
-	margin-left: 0;
+	margin-left: 25px;
 	padding: 0;
-	font-weight: bold;
-	list-style: none}
+	list-style: none;
+	}
 
 ul.catitems li {
 	display: inline;
-	margin-right: 7px}
+	margin-right: 7px;
+	white-space : nowrap;
+	}
 
 ul.catitems li a.link {}
 
@@ -2246,13 +2401,37 @@ div.multiselect {
 .opaque .box-title {border-bottom: 1px solid #ccdceb}
 .opaque a {text-decoration: none}
 .opaque .iconmenu {display: block}
-.searchresults {display: inline}
+
+.searchresults {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	}
+
+.searchresults li {
+	margin: 10px 0 0;
+}
+
+.searchresults li .objecttype,
+	.searchresults li .parentname ,
+	.searchresults li .objectname 
+ {
+	font-size: 120%;
+	font-weight: bold;
+ }
+
+.searchresults .itemhits,
+	.searchresults .itemrelevance,
+	.searchresults .searchdate {
+	color: gray;
+	font-size: 90%;
+	}
 
 .calnavigation a:hover {background: red}
 #caltable .calfocuson,
 .box-data td.fc a.today,
 .box-data td a.today {
-	background: #D4D0C8;
+	background: #8DF378;
 	border: solid 1px #696969}
 
 #caltable .calfocuson a {color: #000}
@@ -2261,14 +2440,7 @@ div.multiselect {
 #caltable .calfocuson a {text-decoration:none}
 
 div.tabrow {/*height: 24px !important*/}
-.calbuttonon a {color: #295C8E}
-.calHeading,
-.calHeadingOn {
-	background: #c3d3e5;
-	color: #517ea7;
-	font-weight: bold;
-	height: 24px !important}
-	
+.buttonon a, .calbuttonon a {color: #295C8E !important}
 .calHeadingOn {background: #ccdceb}
 
 .day,
@@ -2287,18 +2459,19 @@ div.tabrow {/*height: 24px !important*/}
 	background: #c3d3e5;
 	color: #4a6a90}
 
+a.viewthisday:hover { border-bottom: 0 none; }
 .addevent {padding: 0 5px; float: right}
 * html .addevent {padding: 0}
 .calodd, .caleven { border: 1px solid #a9a9a9}
-.calodd {background: #dddfdf}
+.calodd {background: #fbfbfb}
 * html .calodd {padding: 0}
 .caleven {background: #f0f0f0}
 * html .caleven {padding: 0}
-.caldark {background: #c3d3e5}
 * html .caldark {padding: 0}
-.caldark .calfocus {background: #c3d3e5}
+.caldark .calfocus {background: none}
 .daterow {}
 .daterow:hover {}
+.viewmode div {margin-right: 4px}
 
 /*****  Polls  *****/
 
@@ -2451,6 +2624,7 @@ div.messureadbody {
 /***** Ajax *****/
 
 div#ajaxLoading {
+	z-index: 100000;
 	display: none;
 	position: absolute;
 	top: 50px;
@@ -2565,21 +2739,21 @@ table.default td {
 
 /* css/admin.css overrides */
 
-a.admbox {
+.admbox a, a.admbox {
 	border: 1px solid #708090;
 	background: #dddfdf center no-repeat}
 
-a.admbox:hover,
-a.admbox:focus,
-a.admbox:active {
+.admbox a, a.admbox:hover,
+.admbox a, a.admbox:focus,
+.admbox a, a.admbox:active {
 	background: #f0f0f0 center no-repeat;
 	border: 1px solid #696969}
 
-a.admbox.off {border: 1px solid #a9a9a9}
+.admbox a, a.admbox.off {border: 1px solid #a9a9a9}
 
-a.admbox.off:hover,
-a.admbox.off:focus,
-a.admbox.off:active {border: 1px solid #a9a9a9}
+.admbox a, a.admbox.off:hover,
+.admbox a, a.admbox.off:focus,
+.admbox a, a.admbox.off:active {border: 1px solid #a9a9a9}
 
 /* MiniChat  */
 div.box-minichat {width: 100%}

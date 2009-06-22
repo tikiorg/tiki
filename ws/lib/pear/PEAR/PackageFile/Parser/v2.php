@@ -114,4 +114,3 @@ class PEAR_PackageFile_Parser_v2 extends PEAR_XMLParser
         return $ret;
     }
 }
-?>

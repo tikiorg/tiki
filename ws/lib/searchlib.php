@@ -208,11 +208,8 @@ class SearchLib extends TikiLib {
 			$qwords = $this->db->quote($words);
 
 			$sqlft = 'MATCH(' . join(',', $h['search']). ') AGAINST (' . $qwords ;
-			if ($boolean == 'y') {
+			if ($boolean == 'y')
 				$sqlft .= ' IN BOOLEAN MODE';
-		    } else {
-		        $sqlft .= ' IN NATURAL LANGUAGE MODE';
-		    }
 			$sqlft .= ')';
 			$sqlWhere .= ' AND ' . $sqlft ;
 			$sqlFields .= ', ' . $sqlft . ' AS relevance';
@@ -252,10 +249,7 @@ class SearchLib extends TikiLib {
 
 		if (!$cant && $boolean != 'y') { // no result
 		
-			if ($fulltext && $words) {
-			    // try a simple search
-   		        echo "-- _find: \$fulltext && \$words holds, so actually trying the search<br>\n";
-
+			if ($fulltext && $words) { // try a simple search
 			    return $this->_find($h, $words, $offset, $maxRecords, false, $filter, $boolean, $type, $searchDate);
 			} else {
 
@@ -312,7 +306,7 @@ class SearchLib extends TikiLib {
 			'id' => array('p.`pageName`', 'c.`threadId`'),
 			'pageName' => $this->concat('p.`pageName`', "': '", 'c.`title`'),
 			'search' => array('c.`title`', 'c.`data`'),
-			'filter' => 'c.`objectType` = "wiki page" AND p.`pageName`=c.`object`',
+			'filter' => 'c.`objectType` = \'wiki page\' AND p.`pageName`=c.`object`',
 
 			'permName' => 'tiki_p_view',
 			'objectType' => 'wiki page',
@@ -482,7 +476,7 @@ class SearchLib extends TikiLib {
 			'id' => array('f.`forumId`', 'c.`threadId`'),
 			'pageName' => $this->concat('f.`name`', "': '", '`title`'),
 			'search' => array('c.`title`', 'c.`data`'),
-			'filter' => 'c.`objectType` = "forum" AND f.`forumId` = c.`object`',
+			'filter' => 'c.`objectType` = \'forum\' AND f.`forumId` = c.`object`',
 
 			'permName' => 'tiki_p_forum_read',
 			'objectType' => 'forum',
@@ -530,7 +524,7 @@ class SearchLib extends TikiLib {
 			'id' => array('`blogId`'),
 			'pageName' => '`title`',
 			'search' => array('`title`', 'b.`description`'),
-			'filter' => '`use_find` = "y"',
+			'filter' => '`use_find` = \'y\'',
 
 			'permName' => 'tiki_p_read_blog',
 			'objectType' => 'blog',
@@ -605,7 +599,7 @@ class SearchLib extends TikiLib {
 			'id' => array('p.`blogId`'),
 			'pageName' => $pagename,
 			'search' => array('p.`data`','p.`title`'),
-			'filter' => 'b.`use_find` = "y" AND b.`blogId` = p.`blogId`',
+			'filter' => 'b.`use_find` = \'y\' AND b.`blogId` = p.`blogId`',
 
 			'permName' => 'tiki_p_read_blog',
 			'objectType' => 'blog',
@@ -627,7 +621,7 @@ class SearchLib extends TikiLib {
 			'id' => array('tti.`itemId`'),
 			'pageName' => 'tti.`itemId`',
 			'search' => array('`value`'),
-			'filter' => 'ttf.`isSearchable` = "y"',
+			'filter' => 'ttf.`isSearchable` = \'y\'',
 			'permName' => 'tiki_p_view_trackers',
 			'objectType' => 'tracker',
 			'objectKey' => 'tt.`trackerId`',
@@ -764,5 +758,3 @@ class SearchLib extends TikiLib {
 		);
 	}
 } # class SearchLib
-
-?>

@@ -99,5 +99,3 @@ function key_check($area) {
 		die();
 	}
 }
-
-?>

@@ -330,5 +330,3 @@ foreach ($accs['data'] as $acc) {
   $pop3->disconnect();
 //echo $content;
 }//end foreach ($accs['data'] as $acc) {
-
-?>

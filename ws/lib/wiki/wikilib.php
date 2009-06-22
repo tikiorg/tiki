@@ -730,24 +730,29 @@ class WikiLib extends TikiLib {
 	return $ret;
     }
 
-	function list_plugins($with_help = false) {
+	function list_plugins($with_help = false, $area_name = 'wikiedit') {
+		if (isset($_SESSION['wysiwyg']) && $_SESSION['wysiwyg'] == 'y') {
+			// disable all plugin insert help functions
+			$area_name = '';	
+		}	
 		if ($with_help) {
 			global $cachelib, $headerlib;
 			$headerlib->add_jsfile( 'tiki-jsplugin.php' );
-			if (!$cachelib->isCached('plugindesc')) {
+			$cachetag = 'plugindesc' . $this->get_language() . $area_name;
+			if (!$cachelib->isCached( $cachetag ) ) {
 				$list = $this->plugin_get_list();
 
 				$plugins = array();
 				foreach ($list as $name) {
-					$pinfo["help"] = $this->get_plugin_description($name, $enabled);
+					$pinfo["help"] = $this->get_plugin_description($name, $enabled, $area_name);
 					$pinfo["name"] = strtoupper($name);
 
 					if( $enabled )
 						$plugins[] = $pinfo;
 				}
-				$cachelib->cacheItem("plugindesc",serialize($plugins));
+				$cachelib->cacheItem($cachetag,serialize($plugins));
 			} else {
-				$plugins = unserialize($cachelib->getCached("plugindesc"));
+				$plugins = unserialize($cachelib->getCached($cachetag));
 			}
 			return $plugins;
 		} else {
@@ -772,7 +777,7 @@ class WikiLib extends TikiLib {
     //
     // Call 'wikiplugin_.*_description()' from given file
     //
-    function get_plugin_description($name, &$enabled) {
+    function get_plugin_description($name, &$enabled, $area_name = 'wikiedit') {
     	global $tikilib;
         $data = '';
 
@@ -810,7 +815,8 @@ class WikiLib extends TikiLib {
 			if( isset( $ret['documentation'] ) && ctype_alnum( $ret['documentation'] ) ) {
 				$ret['documentation'] = "http://doc.tikiwiki.org/{$ret['documentation']}";
 			}
-
+			
+			$smarty->assign( 'area_name', $area_name );
 			$smarty->assign( 'plugin', $ret );
 			$smarty->assign( 'plugin_name', strtoupper( $name ) );
 			return $smarty->fetch( 'tiki-plugin_help.tpl' );
@@ -856,13 +862,18 @@ class WikiLib extends TikiLib {
 
 	    return $this->query($query, $bindvals) ? true : false;
 	}
-	function sefurl($page, $with_next='') {
+	function sefurl($page, $with_next='', $all_langs='') {
 		global $prefs, $smarty;
 		if( basename( $_SERVER['PHP_SELF'] ) == 'tiki-all_languages.php' ) {
 			return 'tiki-all_languages.php?page='.urlencode($page);
 		}
 
-		$href = 'tiki-index.php?page='.urlencode($page);
+        $script_name = 'tiki-index.php';
+        if ($all_langs == 'y') {
+           $script_name = 'tiki-all_languages.php';
+        }
+
+		$href = "$script_name?page=".urlencode($page);
 		if ($with_next) {
 			$href .= '&amp;';
 		}

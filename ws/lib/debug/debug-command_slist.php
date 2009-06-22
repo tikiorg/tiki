@@ -79,5 +79,3 @@ class DbgSList extends DebuggerCommand {
 function dbg_command_factory_slist() {
 	return new DbgSList();
 }
-
-?>

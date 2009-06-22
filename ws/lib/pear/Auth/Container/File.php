@@ -311,4 +311,3 @@ class Auth_Container_File extends Auth_Container
     // }}}
 
 }
-?>

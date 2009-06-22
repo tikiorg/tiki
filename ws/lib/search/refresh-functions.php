@@ -293,4 +293,3 @@ function refresh_index_wiki_all() { refresh_index('pages'); }
 function refresh_index_comments($threadId) { refresh_index('comments', $threadId); }
 function refresh_index_forum($page) { refresh_index('forums', $page); }
 function refresh_index_wiki($page) { refresh_index('pages', $page); }
-?>

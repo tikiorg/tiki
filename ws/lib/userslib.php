@@ -117,19 +117,12 @@ class UsersLib extends TikiLib {
     function inherit_global_permissions($objectId, $objectType) {
     	global $cachelib;
 
-		// check for annoying cases where some tables in the DB use singular and others use plural
-    	if ($objectType == 'category') {
-    		$objectType2 = 'categories';
-    	} else {
-    		$objectType2 = $objectType;
-    	}
-
 		$groups = $this->get_groups();
-		if (!$cachelib->isCached($objectType2 . "_permission_names")) {
-			$perms = $this->get_permissions(0, -1, 'permName_desc', $objectType2);
-			$cachelib->cacheItem($objectType2 . "_permission_names",serialize($perms));
+		if (!$cachelib->isCached($objectType . "_permission_names")) {
+			$perms = $this->get_permissions(0, -1, 'permName_desc', '', $objectType);
+			$cachelib->cacheItem($objectType . "_permission_names",serialize($perms));
 		} else {
-			$perms = unserialize($cachelib->getCached($objectType2 . "_permission_names"));
+			$perms = unserialize($cachelib->getCached($objectType . "_permission_names"));
 		}
 		foreach ($groups['data'] as $group) {
 			foreach ($perms['data'] as $perm) {
@@ -140,7 +133,7 @@ class UsersLib extends TikiLib {
 		}
     }
 
-    function get_object_permissions($objectId, $objectType) {
+    function get_object_permissions($objectId, $objectType, $group='', $perm='') {
 	$objectId = md5($objectType . strtolower($objectId));
 
 	$query = "select `groupName`, `permName`
@@ -148,6 +141,14 @@ class UsersLib extends TikiLib {
 	    where `objectId` = ? and
 	    `objectType` = ?";
 	$bindvars = array($objectId, $objectType);
+	if (!empty($group)) {
+		$query .= " and `groupName`=?";
+		$bindvars[] = $group;
+	}
+	if (!empty($perm)) {
+		$query .= " and `permName`=?";
+		$bindvars[] = $perm;
+	}
 	$result = $this->query($query, $bindvars);
 	$ret = array();
 
@@ -337,7 +338,7 @@ class UsersLib extends TikiLib {
 
 	// if we aren't using LDAP this will be quick
 	// if we are using tiki auth or if we're using an alternative auth except for admin
-	if ((!$auth_pear && !$auth_pam && !$auth_cas && !$auth_shib) || ((($auth_pear && $skip_admin) || ($auth_shib && $shib_skip_admin) || ($auth_pam && $pam_skip_admin) || ($auth_cas && $cas_skip_admin)) && $user == "admin") || ($auth_pear && $prefs['auth_create_user_tiki'] == 'y' && $userTiki)) {
+	if ((!$auth_pear && !$auth_pam && !$auth_cas && !$auth_shib) || ((($auth_pear && $skip_admin) || ($auth_shib && $shib_skip_admin) || ($auth_pam && $pam_skip_admin) || ($auth_cas && $cas_skip_admin)) && $user == "admin")) {
 	    // if the user verified ok, log them in
 	    if ($userTiki)  //user validated in tiki, update lastlogin and be done
 		return array($this->update_lastlogin($user), $user, $result);
@@ -760,6 +761,8 @@ class UsersLib extends TikiLib {
 	// attributes to fetch
 	$options['attributes'] = array();
 	if ( $nameattr = $prefs['auth_ldap_nameattr'] ) $options['attributes'][] = $nameattr;
+	if ( $countryattr = $prefs['auth_ldap_countryattr'] ) $options['attributes'][] = $countryattr;
+	if ( $emailattr = $prefs['auth_ldap_emailattr'] ) $options['attributes'][] = $emailattr;
 
 	// set the Auth options
 	//$a = new Auth('LDAP', $options, '', false, $user, $pass);
@@ -778,6 +781,9 @@ class UsersLib extends TikiLib {
 		case AUTH_LOGIN_OK:
 			// Retrieve LDAP information to update user data a bit later (when he will be completely validated or auto-created)
 			if ( $nameattr != '' ) $user_ldap_attributes['auth_ldap_nameattr'] = $a->getAuthData($nameattr);
+			if ( $countryattr != '' ) $user_ldap_attributes['auth_ldap_countryattr'] = $a->getAuthData($countryattr);
+			if ( $emailattr != '' ) $user_ldap_attributes['auth_ldap_emailattr'] = $a->getAuthData($emailattr);
+
 			return USER_VALID;
 
 		case AUTH_USER_NOT_FOUND:
@@ -1039,7 +1045,7 @@ function get_included_groups($group, $recur=true) {
 			}
 		}
 		$back = array_unique($ret);
-		if (!$recur) {
+		if ($recur) {
 			$this->groupinclude_cache[$engroup] = $back;
 		}
 		return $back;
@@ -1077,6 +1083,9 @@ function get_included_groups($group, $recur=true) {
 	$query = "delete from `users_usergroups` where `userId` = ? and
 		`groupName` = ?";
 	$result = $this->query($query, array($userid, $group));
+	$query = "update `users_users` set `default_group`=? where `login`=? and `default_group`=?";
+	$this->query($query, array('Registered', $user, $group));
+	$_SESSION['u_info']['group'] = 'Registered';
     }
 
     function remove_user_from_all_groups($user) {
@@ -1116,7 +1125,7 @@ function get_included_groups($group, $recur=true) {
 		$bindvars[] = 'y';
 	}
 
-	$query = "select `groupName` , `groupDesc`, `registrationChoice`, `userChoice` from `users_groups` $mid order by ".$this->convert_sortmode($sort_mode);
+	$query = "select * from `users_groups` $mid order by ".$this->convert_sortmode($sort_mode);
 	$query_cant = "select count(*) from `users_groups` $mid";
 	$result = $this->query($query, $bindvars, $maxRecords, $offset);
 	$cant = $this->getOne($query_cant, $bindvars);
@@ -1166,6 +1175,20 @@ function get_included_groups($group, $recur=true) {
 			return $groups;
 		} else {
 			return unserialize($cachelib->getCached("grouplist"));
+		}
+	}
+	function list_all_groupIds() {
+		global $cachelib;
+		if (!$cachelib->isCached("groupIdlist")) {
+			$groups = array();
+			$result = $this->query("select `id`, `groupName` from `users_groups` order by `groupName`", array());
+			while ($res = $result->fetchRow()) {
+				$groups[] = $res;
+			}
+			$cachelib->cacheItem("groupIdlist",serialize($groups));
+			return $groups;
+		} else {
+			return unserialize($cachelib->getCached("groupIdlist"));
 		}
 	}
 
@@ -1269,6 +1292,7 @@ function get_included_groups($group, $recur=true) {
 			$this->query("update `tiki_pages` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_pages` set `creator`=? where `creator`=?", array($to,$from));
 			$this->query("update `tiki_page_footnotes` set `user`=? where `user`=?", array($to,$from));
+			$this->query("update `tiki_newsletters` set `author`=? where `author`=?", array($to,$from));
 			$this->query("update `tiki_newsreader_servers` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_newsreader_marks` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_minical_events` set `user`=? where `user`=?", array($to,$from));
@@ -1302,6 +1326,7 @@ function get_included_groups($group, $recur=true) {
 			$this->query("update `tiki_calendar_roles` set `username`=? where `username`=?", array($to,$from));
 			$this->query("update `tiki_calendar_items` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_blogs` set `user`=? where `user`=?", array($to,$from));
+			$this->query("update `tiki_blog_posts` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_banning` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_banners` set `client`=? where `client`=?", array($to,$from));
 			$this->query("update `tiki_articles` set `author`=? where `author`=?", array($to,$from));
@@ -1321,6 +1346,23 @@ function get_included_groups($group, $recur=true) {
 			$this->query("update `tiki_friendship_requests` set `userTo`=? where `userTo`=?", array($to,$from));
 			$this->query("update `tiki_freetagged_objects` set `user`=? where `user`=?", array($to,$from));
 
+			$this->query("update `tiki_tracker_item_comments` set `user`=? where `user`=?", array($to,$from));
+
+			$result =  $this->query("select `fieldId`, `itemChoices` from `tiki_tracker_fields` where `type`='u'");
+
+			while($res = $result->fetchRow())
+			{
+				$this->query("update `tiki_tracker_item_fields` set `value`=? where `value`=? and `fieldId`=?", array($to,$from,$res['fieldId']));
+
+				$u = ($res['itemChoices'] != '' ) ? unserialize($res['itemChoices']) : array();
+
+				if($value=array_search($from, $u))
+				{
+					$u[$value] = $to ;
+					$u = serialize($u);
+					$this->query("update `tiki_tracker_fields` set `itemChoices`=? where `fieldId`=?", array($u,$res['fieldId']));
+				}
+			}
 			$cachelib->invalidate('userslist');
 			return true;
 		} else {
@@ -1342,7 +1384,9 @@ function get_included_groups($group, $recur=true) {
 	$query[] = "delete from `tiki_newsletter_groups` where `groupName` = ?";
 	$query[] = "delete from `tiki_newsreader_marks` where `groupName` = ?";
 	$query[] = "delete from `tiki_group_watches` where `group` = ?";
-	foreach ( $query as $q ) $this->query($q, array($group));
+	foreach ( $query as $q )
+		$this->query($q, array($group));
+	$this->query("update `users_users` set `default_group`=? where `default_group`=?", array('Registered', $group));
 
 	global $cachelib;
 	$cachelib->invalidate('grouplist');
@@ -1575,7 +1619,7 @@ function get_included_groups($group, $recur=true) {
 		$query = "select `permName` from `users_permissions` where `level` = ?";
 		$result = $this->query($query, array($level));
 		$ret = array();
-	
+
 		while ($res = $result->fetchRow()) {
 			$this->assign_permission_to_group($res['permName'], $group);
 		}
@@ -1590,10 +1634,10 @@ function get_included_groups($group, $recur=true) {
 	}
 
 	function remove_level_permissions($group, $level) {
-		$query = "select `permName` from `users_permissions` where `level` = ?";	
+		$query = "select `permName` from `users_permissions` where `level` = ?";
 		$result = $this->query($query, array($level));
 		$ret = array();
-	
+
 		while ($res = $result->fetchRow()) {
 			$this->remove_permission_from_group($res['permName'], $group);
 		}
@@ -1602,7 +1646,7 @@ function get_included_groups($group, $recur=true) {
 		$cachelib->invalidate("allperms");
 		$cachelib->empty_type_cache("fgals_perms");
 		$cachelib->invalidate("groupperms_$group");
-	
+
 		global $menulib; include_once('lib/menubuilder/menulib.php');
 		$menulib->empty_menu_cache();
 	}
@@ -1779,7 +1823,7 @@ function get_included_groups($group, $recur=true) {
 	}
 
     function get_user_detailled_permissions($user) {
-	
+
 	$groups = $this->get_user_groups($user);
 
 	// Use group cache if only one group
@@ -1805,7 +1849,7 @@ function get_included_groups($group, $recur=true) {
 		$cachelib->invalidate("allperms");
 		$cachelib->empty_type_cache("fgals_perms");
 		$cachelib->invalidate("groupperms_$group");
-	
+
 		global $menulib; include_once('lib/menubuilder/menulib.php');
 		$menulib->empty_menu_cache();
 
@@ -1845,7 +1889,7 @@ function get_included_groups($group, $recur=true) {
 
 	function group_has_permission($group, $perm) {
 		if ( empty($perm) || empty($group) ) return 0;
- 
+
 		$engroup = urlencode($group);
 		if ( ! isset($this->groupperm_cache[$engroup]) ) {
 			$this->groupperm_cache[$engroup] = array();
@@ -1866,7 +1910,7 @@ function get_included_groups($group, $recur=true) {
 		$cachelib->invalidate("allperms");
 		$cachelib->empty_type_cache("fgals_perms");
 		$cachelib->invalidate("groupperms_$group");
-	
+
 		global $menulib; include_once('lib/menubuilder/menulib.php');
 		$menulib->empty_menu_cache();
 
@@ -1879,6 +1923,15 @@ function get_included_groups($group, $recur=true) {
 	$result = $this->query($query, array($group));
 	$res = $result->fetchRow();
 	$perms = $this->get_group_permissions($group);
+	$res["perms"] = $perms;
+	return $res;
+    }
+	function get_groupId_info($groupId) {
+	$query = "select * from `users_groups` where `id`=?";
+
+	$result = $this->query($query, array($groupId));
+	$res = $result->fetchRow();
+	$perms = $this->get_group_permissions($res['groupName']);
 	$res["perms"] = $perms;
 	return $res;
     }
@@ -2166,7 +2219,7 @@ function get_included_groups($group, $recur=true) {
 		$query = 'delete from `tiki_user_preferences` where `prefName`=? and `user`=?';
 		$this->query($query, array('cookie',$user));
 	}
-	
+
 	function get_cookie_check() {
 		global $prefs;
 		if ($prefs['remembermethod'] == 'simple') {
@@ -2312,16 +2365,19 @@ function get_included_groups($group, $recur=true) {
 	return true;
 	}
 
-	function add_group($group, $desc='', $home='', $utracker=0, $gtracker=0, $rufields='', $userChoice='', $defcat=0, $theme='', $ufield='', $gfield='') {
+	function add_group($group, $desc='', $home='', $utracker=0, $gtracker=0, $rufields='', $userChoice='', $defcat=0, $theme='', $ufield=0, $gfield=0) {
+		$group = trim($group);
 		if ( $this->group_exists($group) ) return false;
 
 		$query = "insert into `users_groups` (`groupName`, `groupDesc`, `groupHome`,`groupDefCat`,`groupTheme`,`usersTrackerId`,`groupTrackerId`, `registrationUsersFieldIds`, `userChoice`, `usersFieldId`, `groupFieldId`) values(?,?,?,?,?,?,?,?,?,?,?)";
-		$this->query($query, array($group, $desc, $home, $defcat, $theme, (int)$utracker, (int)$gtracker, $rufields, $userChoice, $ufield, $gfield) );
+		$this->query($query, array($group, $desc, $home, $defcat, $theme, (int)$utracker, (int)$gtracker, $rufields, $userChoice, (int)$ufield, (int)$gfield) );
 
 		global $cachelib;
 		$cachelib->invalidate('grouplist');
+		$cachelib->invalidate('groupIdlist');
 
-		return true;
+		$query = "select `id` from `users_groups` where groupName=?";
+		return $this->getOne($query, array($group));
 	}
 
 	function change_group($olgroup,$group,$desc,$home,$utracker=0,$gtracker=0,$ufield=0,$gfield=0,$rufields='',$userChoice='',$defcat=0,$theme='') {
@@ -2373,10 +2429,10 @@ function get_included_groups($group, $recur=true) {
 				$g = serialize($g);
 				$this->query($query, array($g, $res['visibleBy']));
 			}
-	
+
 			$query = 'select * from `tiki_tracker_fields` where `editableBy` like ?';
 			$result = $this->query($query, array('%"'.$olgroup.'"%'));
-	
+
 			$query = 'update `tiki_tracker_fields` set `editableBy`=? where `editableBy`=?';
 			while ( $res = $result->fetchRow() ) {
 				$g = unserialize($res['editableBy']);

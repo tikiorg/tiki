@@ -40,4 +40,3 @@ function scrambleEmail($email, $method='unicode') {
 		return $email;
 	}
 }
-?>

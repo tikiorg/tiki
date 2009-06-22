@@ -73,7 +73,8 @@ if (isset($_REQUEST['version']) and trim($_REQUEST['version'])) {
 	$versionarg = '&amp;version='. urlencode($_REQUEST['version']);
 	$version = $_REQUEST['version'];
 } else {
-	$version = $versionarg = '';
+	$version = '3';
+	$versionarg = '&amp;version=3';
 }
 $smarty->assign('versionarg', $versionarg);
 $smarty->assign('version', $version);
@@ -263,5 +264,3 @@ $smarty->assign('versions', $versions);
 
 $smarty->assign('mid', 'tiki-mods.tpl');
 $smarty->display("tiki.tpl");
-
-?>

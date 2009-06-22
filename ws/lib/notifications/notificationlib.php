@@ -161,4 +161,3 @@ class NotificationLib extends TikiLib {
 }
 global $dbTiki;
 $notificationlib = new NotificationLib($dbTiki);
-?>

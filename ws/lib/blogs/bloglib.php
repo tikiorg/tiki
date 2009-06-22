@@ -283,6 +283,13 @@ class BlogLib extends TikiLib {
 			if (!isset($_SERVER["SERVER_NAME"])) {
 				$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
 			}
+
+			if ($prefs['feature_daily_report_watches'] == 'y') {
+				$query = "select `title` from `tiki_blogs` where `blogId`=?";
+				$blogTitle = $this->getOne($query, array((int)$blogId));
+				$tikilib->makeReportCache($nots, array("event"=>'blog_post', "blogId"=>$blogId, "blogTitle"=>$blogTitle, "postId"=>$id, "user"=>$user));
+			}
+			
 			if (count($nots)) {
 				include_once("lib/notifications/notificationemaillib.php");
 				$smarty->assign('mail_site', $_SERVER["SERVER_NAME"]);
@@ -479,5 +486,3 @@ class BlogLib extends TikiLib {
 }
 global $dbTiki;
 $bloglib = new BlogLib($dbTiki);
-
-?>

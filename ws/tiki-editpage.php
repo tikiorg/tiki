@@ -66,7 +66,7 @@ if (empty($_REQUEST["page"])) {
 	die;
 }
 
-if ($prefs['feature_wikiapproval'] == 'y' && substr($_REQUEST['page'], 0, strlen($prefs['wikiapproval_prefix'])) != $prefs['wikiapproval_prefix'] && isset($prefs['wikiapproval_master_group']) && !in_array($prefs['wikiapproval_master_group'], $tikilib->get_user_groups($user))) {
+if ($prefs['feature_wikiapproval'] == 'y' && substr($_REQUEST['page'], 0, strlen($prefs['wikiapproval_prefix'])) != $prefs['wikiapproval_prefix'] && !empty($prefs['wikiapproval_master_group']) && !in_array($prefs['wikiapproval_master_group'], $tikilib->get_user_groups($user))) {
 	$_REQUEST['page'] = $prefs['wikiapproval_prefix'] . $_REQUEST['page'];
 }
 
@@ -1316,7 +1316,9 @@ if ($prefs['feature_categories'] == 'y') {
 		}
 	}
 }
-$plugins = $wikilib->list_plugins(true);
+
+$plugins = $wikilib->list_plugins(true, 'editwiki');
+
 $smarty->assign_by_ref('plugins', $plugins);
 $smarty->assign('showstructs', array());
 if ($structlib->page_is_in_structure($_REQUEST["page"])) {
@@ -1408,4 +1410,3 @@ $smarty->assign('showtags', 'n');
 $smarty->assign('qtnum', '1');
 $smarty->assign('qtcycle', '');
 $smarty->display("tiki.tpl");
-?>

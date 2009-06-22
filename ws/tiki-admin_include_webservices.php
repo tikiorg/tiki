@@ -133,5 +133,3 @@ $smarty->assign( 'storedTemplates', $storedTemplates );
 $smarty->assign( 'url', $webservice->url );
 $smarty->assign( 'postbody', $webservice->body );
 $smarty->assign( 'params', $webservice->getParameterMap($_REQUEST['params']) );
-
-?>

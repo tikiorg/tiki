@@ -372,5 +372,3 @@ generate both package.xml.
         $gen->toPackageFile('.');
     }
 }
-
-?>
