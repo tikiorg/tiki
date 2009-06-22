@@ -164,10 +164,10 @@
 {section name=user loop=$channels}
 <tr class="{cycle}">
 <td>{if $tracker_info.useRatings ne 'y' or $channels[user].name ne "Rating"}
-<a class="link" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}{if $max and $max ne $prefs.maxRecords}&amp;max={$max}{/if}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode={$sort_mode}&amp;fieldId={$channels[user].fieldId}" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
+{self_link _icon='page_edit' cookietab='1' _anchor="content1" fieldId=$channels[user].fieldId}{tr}Edit{/tr}{/self_link}
 {/if}</td>
 <td>{if $tracker_info.useRatings ne 'y' or $channels[user].name ne "Rating"}
-<a class="link" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}{if $max and $max ne $prefs.maxRecords}&amp;max={$max}{/if}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode={$sort_mode}&amp;fieldId={$channels[user].fieldId}" title="{tr}Edit{/tr}">{$channels[user].fieldId}</a>{else}{$channels[user].fieldId}{/if}</td>
+{self_link cookietab='1' _anchor="content1" fieldId=$channels[user].fieldId _title='{tr}Edit{/tr}'}{$channels[user].fieldId}{/self_link}{else}{$channels[user].fieldId}{/if}</td>
 <td>{$channels[user].name}</td>
 <td>{assign var=x value=$channels[user].type}{$field_types[$x].label}</td>
 <td>{$channels[user].options|truncate:42:"..."|escape}</td>
