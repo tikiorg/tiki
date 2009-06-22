@@ -31,6 +31,7 @@ if (!isset($_REQUEST["trackerId"])) {
 	$smarty->display("error.tpl");
 	die;
 }
+$auto_args = array('trackerId','offsset', 'sort_mode', 'find', 'max');
 
 $smarty->assign('trackerId', $_REQUEST["trackerId"]);
 $tracker_info = $trklib->get_tracker($_REQUEST["trackerId"]);
