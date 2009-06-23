@@ -175,7 +175,7 @@
 	{/if}
 
 	{section name=rep loop=$comments_coms}
-		{include file="comment.tpl" comment=$comments_coms[rep]}
+		{include file='comment.tpl' comment=$comments_coms[rep]}
 		{if $thread_style != 'commentStyle_plain'}<br />{/if}
 	{/section}
 </form>
@@ -284,7 +284,7 @@
 	<table class="normal">
 		<tr>
 			<td class="formcolor">
-				<label for="comments-title">{tr}Title{/tr} <span class="attention">({tr}required{/tr})</span>: </label>
+				<label for="comments-title">{tr}Title{/tr} <span class="attention">({tr}required{/tr})</span> </label>
 			</td>
 			<td class="formcolor">
 				<input type="text" size="50" name="comments_title" id="comments-title" value="{$comment_title|escape}" />
@@ -318,7 +318,7 @@
 		{if $prefs.feature_smileys eq 'y'}
 		<tr>
 			<td class="formcolor"><label>{tr}Smileys{/tr}</label></td>
-			<td class="formcolor">{include file="tiki-smileys.tpl" area_name="editpost2"}</td>
+			<td class="formcolor">{include file='tiki-smileys.tpl' area_name="editpost2"}</td>
 		</tr>
 		{/if}
                 
@@ -326,19 +326,19 @@
                   <tr>
 		    <td class="formcolor"><label>{tr}Quicktags{/tr}</label></td>
                     <td class="formcolor">
-                      {include file=tiki-edit_help_tool.tpl area_name='editpost2'}
+                      {include file='tiki-edit_help_tool.tpl' area_name='editpost2'}
                     </td>
                   </tr>
                 {/if}
 
 		<tr>
 			<td class="formcolor">
-				<label for="editpost2">{if $forum_mode eq 'y'}{tr}Reply{/tr}{else}{tr}Comment{/tr}{/if}</label>
+				<label for="editpost2">{if $forum_mode eq 'y'}{tr}Reply{/tr}{else}{tr}Comment{/tr} <span class="attention">({tr}required{/tr})</span>{/if}</label>
 				<br /><br />
-				{include file="textareasize.tpl" area_name='editpost2' formId='editpostform'}
+				{include file='textareasize.tpl' area_name='editpost2' formId='editpostform'}
 				<br /><br />
                                 {if $quicktags and $prefs.quicktags_over_textarea neq 'y'}
-				  {include file=tiki-edit_help_tool.tpl area_name='editpost2'}
+				  {include file='tiki-edit_help_tool.tpl' area_name='editpost2'}
                                 {/if}
 			</td>
 			<td class="formcolor">
@@ -359,11 +359,11 @@
 		{/if}
 
 		{if $prefs.feature_contribution eq 'y'}
-			{include file="contribution.tpl" in_comment="y"}
+			{include file='contribution.tpl' in_comment="y"}
 		{/if}
 
 		{if $prefs.feature_antibot eq 'y'}
-			{include file="antibot.tpl" td_style="formcolor"}
+			{include file='antibot.tpl' td_style="formcolor"}
 		{/if}
 
 		{if !$user}

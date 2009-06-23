@@ -12,7 +12,7 @@
 {if $config.comments and !empty($comments)}
 <comments>
 {foreach from=$comments item=comment}
-	{include file="tiki-export_comment_xml.tpl"}
+	{include file='tiki-export_comment_xml.tpl'}
 {/foreach}
 </comments>
 {/if}

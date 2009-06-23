@@ -1,4 +1,3 @@
-{* start ************ Edit Form ***************}
 <form action="tiki-user_tasks.php" method="post">
 
 <input type="hidden" name="taskId" value="{$taskId|escape}" />
@@ -118,14 +117,14 @@
     </tr>
     <tr>
       <td class="formcolor">{tr}Description{/tr}<br /><br />
-        {include file="textareasize.tpl" area_name='edittask' formId='editpageform'}<br /><br /> 
+        {include file='textareasize.tpl' area_name='edittask' formId='editpageform'}<br /><br /> 
         {if $quicktags and $prefs.quicktags_over_textarea neq 'y'}
-          {include file=tiki-edit_help_tool.tpl area_name='description'}
+          {include file='tiki-edit_help_tool.tpl' area_name='description'}
         {/if}
       </td>
       <td colspan="3" class="formcolor">
         {if $quicktags and $prefs.quicktags_over_textarea eq 'y'}
-          {include file=tiki-edit_help_tool.tpl area_name='description'}
+          {include file='tiki-edit_help_tool.tpl' area_name='description'}
         {/if}
         <textarea id='edittask' style="width:98%;" rows="15" cols="80" name="description">{$info.description|escape}</textarea>
       </td>
@@ -264,6 +263,3 @@
   </tr>
 </table>
 </form>
-
-{* end ************ Edit Form ***************}
-

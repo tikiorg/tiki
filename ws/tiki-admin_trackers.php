@@ -274,6 +274,27 @@ if (isset($_REQUEST["save"])) {
 	} else {
 		$tracker_options['autoCreateGroup'] = 'n';
 	}
+	if (isset($_REQUEST['autoAssignGroupItem'])
+		&& ($_REQUEST['autoAssignGroupItem'] == 'on'
+			or $_REQUEST['autoAssignGroupItem'] == 'y')) {
+		$tracker_options['autoAssignGroupItem'] = 'y';
+	} else {
+		$tracker_options['autoAssignGroupItem'] = 'n';
+	}
+	if (isset($_REQUEST['autoAssignCreatorGroup'])
+		&& ($_REQUEST['autoAssignCreatorGroup'] == 'on'
+			or $_REQUEST['autoAssignCreatorGroup'] == 'y')) {
+		$tracker_options['autoAssignCreatorGroup'] = 'y';
+	} else {
+		$tracker_options['autoAssignCreatorGroup'] = 'n';
+	}
+	if (isset($_REQUEST['autoAssignCreatorGroupDefault'])
+		&& ($_REQUEST['autoAssignCreatorGroupDefault'] == 'on'
+			or $_REQUEST['autoAssignCreatorGroupDefault'] == 'y')) {
+		$tracker_options['autoAssignCreatorGroupDefault'] = 'y';
+	} else {
+		$tracker_options['autoAssignCreatorGroupDefault'] = 'n';
+	}
 	if (isset($_REQUEST["oneUserItem"])
 		&& ($_REQUEST["oneUserItem"] == 'on'
 			or $_REQUEST["oneUserItem"] == 'y')) {
@@ -289,7 +310,16 @@ if (isset($_REQUEST["save"])) {
 	} else {
 		$tracker_options["writerGroupCanModify"] = 'n';
 	}
-
+	if (empty($_REQUEST['autoCreateGroupInc'])) {
+		$tracker_options['autoCreateGroupInc'] = 0;
+	} else {
+		$tracker_options['autoCreateGroupInc'] = $_REQUEST['autoCreateGroupInc'];
+	}
+	if (empty($_REQUEST['autoCopyGroup'])) {
+		$tracker_options['autoCopyGroup'] = 0;
+	} else {
+		$tracker_options['autoCopyGroup'] = $_REQUEST['autoCopyGroup'];
+	}
 	if (isset($_REQUEST["defaultStatus"])
 		&& $_REQUEST["defaultStatus"]) {
 		if (is_array($_REQUEST["defaultStatus"])) {
@@ -439,6 +469,8 @@ $info['start']= 0;
 $info['end'] = 0;
 $info['autoCreateCategories']='';
 $info['autoCreateGroup'] = '';
+$info['autoCreateGroupInc'] = 0;
+$info['autoAssignGroupItem'] = '';
 
 if ($_REQUEST["trackerId"]) {
 	$info = array_merge($info,$tikilib->get_tracker($_REQUEST["trackerId"]));
@@ -456,10 +488,10 @@ foreach ($dstatus as $ds) {
 }
 
 
-$all_groups = $userlib->list_all_groups();
-if ( is_array($all_groups) ) {
-	foreach ( $all_groups as $g ){
-		$groupforAlertList[$g] =  ( $g == $info["groupforAlert"] )  ? 'selected' : '';
+$all_groupIds = $userlib->list_all_groupIds();
+if ( is_array($all_groupIds) ) {
+	foreach ( $all_groupIds as $g ){
+		$groupforAlertList[$g['groupName']] =  ( $g['groupName'] == $info["groupforAlert"] )  ? 'selected' : '';
 	}
 }
 
@@ -499,11 +531,10 @@ $smarty->assign('writerGroupCanModify', $info["writerGroupCanModify"]);
 $smarty->assign('defaultStatus', $info["defaultStatus"]);
 $smarty->assign('defaultStatusList', $info["defaultStatusList"]);
 $smarty->assign('autoCreateCategories', $info["autoCreateCategories"]);
-$smarty->assign('autoCreateGroup', $info['autoCreateGroup']);
 $smarty->assign_by_ref('groupforAlertList', $groupforAlertList);
 $smarty->assign('groupforAlert', $info["groupforAlert"]);
 $smarty->assign('showeachuser', $info["showeachuser"]);
-
+$smarty->assign_by_ref('all_groupIds', $all_groupIds);
 $smarty->assign_by_ref('info', $info);
 
 
@@ -583,11 +614,13 @@ include_once ("categorize_list.php");
 
 ask_ticket('admin-trackers');
 
+global $wikilib; include_once('lib/wiki/wikilib.php');
+$plugins = $wikilib->list_plugins(true, 'trackerDescription');
+$smarty->assign_by_ref('plugins', $plugins);
+
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 // Display the template
 $smarty->assign('mid', 'tiki-admin_trackers.tpl');
 $smarty->display("tiki.tpl");
-
-?>

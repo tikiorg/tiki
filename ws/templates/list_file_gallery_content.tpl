@@ -104,7 +104,7 @@
       <div class='opaque'>
         <div class='box-title'>{tr}Actions{/tr}</div>
         <div class='box-data'>
-          {include file=fgal_context_menu.tpl menu_icon=$prefs.use_context_menu_icon menu_text=$prefs.use_context_menu_text}
+          {include file='fgal_context_menu.tpl' menu_icon=$prefs.use_context_menu_icon menu_text=$prefs.use_context_menu_text}
         </div>
       </div>
       {/strip}{/capture}
@@ -264,7 +264,7 @@
   {/if}
   
   {if ( $prefs.use_context_menu_icon neq 'y' and $prefs.use_context_menu_text neq 'y' ) or $gal_info.show_action eq 'y' or $prefs.javascript_enabled neq 'y'}
-    <td class="{cycle advance=false}">{include file=fgal_context_menu.tpl}</td>
+    <td class="{cycle advance=false}">{include file='fgal_context_menu.tpl'}</td>
   {/if}
   
   {if ( $other_columns neq '' or $other_columns_selected neq '' ) and $prefs.javascript_enabled eq 'y'}
@@ -290,9 +290,11 @@
   {/section}
 
   {if $gal_info.show_checked ne 'n' and $tiki_p_admin_file_galleries eq 'y' and $prefs.javascript_enabled eq 'y'}
-  <tr><td colspan="{$nbCols}"><input name="switcher" id="clickall" type="checkbox" onclick="switchCheckboxes(this.form,'file[]',this.checked); switchCheckboxes(this.form,'subgal[]',this.checked);"/>
-    <label for="clickall">{tr}Select All{/tr}</label>
-  </td></tr>
+		<tr>
+			<td colspan="{$nbCols}">
+				{select_all checkbox_names='file[], subgal[]' label="{tr}Select All{/tr}"}
+			</td>
+		</tr>
   {/if}
 
 </table>

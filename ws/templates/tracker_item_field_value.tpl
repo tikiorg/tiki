@@ -4,11 +4,15 @@
 
 {if $field_value.type ne 'x'}
 {* ******************** link to the item ******************** *}
-{if $showlinks ne 'y'}
+{if $showlinks ne 'y' or (isset($field_value.showlinks) and $field_value.showlinks eq 'n')}
 	{assign var='is_link' value='n'}
 {elseif $field_value.isMain eq 'y'
- and ($tiki_p_view_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y' or $tiki_p_comment_tracker_items eq 'y'
- or ($tracker_info.writerCanModify eq 'y' and $user and $my eq $user) or ($tracker_info.writerGroupCanModify eq 'y' and $group and $ours eq $group))}
+ and ($tiki_p_view_trackers eq 'y' 
+ 	 or ($tiki_p_modify_tracker_items eq 'y' and $item.status ne 'p' and $item.status ne 'c')
+	 or ($tiki_p_modify_tracker_items_pending eq 'y' and $item.status eq 'p')
+	 or ($tiki_p_modify_tracker_items_closed eq 'y' and $item.status eq 'c')
+	 or $tiki_p_comment_tracker_items eq 'y'
+ 	 or ($tracker_info.writerCanModify eq 'y' and $user and $my eq $user) or ($tracker_info.writerGroupCanModify eq 'y' and $group and $ours eq $group))}
 	{if empty($url) and !empty($item.itemId)}
 		{assign var=urll value="tiki-view_tracker_item.php?itemId=`$item.itemId`&amp;trackerId=`$item.trackerId`&amp;show=view"}
 	{elseif strstr($url, 'itemId') and !empty($item.itemId)}
@@ -98,11 +102,19 @@
 {* -------------------- text field, numeric, drop down, radio,user/group/IP selector, autopincrement, dynamic list *} 
 {elseif $field_value.type eq  't' or $field_value.type eq 'n' or $field_value.type eq 'd' or $field_value.type eq 'D' or $field_value.type eq 'R' or $field_value.type eq 'u' or $field_value.type eq 'g' or $field_value.type eq 'I' or $field_value.type eq 'q' or $field_value.type eq 'w' or ($field_value.type eq 'C' and $field_value.computedtype ne 'f')}
 	{if $list_mode eq 'y'}
-		{$field_value.value|escape|truncate:255:"..."|default:"&nbsp;"}
+		{if $field_value.type eq 'u' }
+			{$field_value.value|username|truncate:255:"..."|escape|default:"&nbsp;"}
+		{else}			
+			{$field_value.value|truncate:255:"..."|escape|default:"&nbsp;"}
+		{/if}		
 	{elseif $list_mode eq 'csv'}
 		{$field_value.value}
 	{else}
-		{$field_value.value|escape}
+		{if $field_value.type eq 'u' }
+			{$field_value.value|username|escape}
+		{else}
+			{$field_value.value|escape}
+		{/if}		
 	{/if}
 
 
@@ -139,7 +151,7 @@
 		{assign var='Length' value=$prefs.MultimediaDefaultLength}
 	{/if}
 	{if $ModeVideo eq 'y' } { assign var="Height" value=$Height+$prefs.VideoHeight}{/if}
-	{include file=multiplayer.tpl url=$field_value.value w=$Length h=$Height video=$ModeVideo}
+	{include file='multiplayer.tpl' url=$field_value.value w=$Length h=$Height video=$ModeVideo}
 	{/if}
 
 {* -------------------- file -------------------- *}

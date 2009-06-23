@@ -1,6 +1,6 @@
 {title help="User+Calendar"}{tr}Mini Calendar: Preferences{/tr}{/title}
 
-{include file=tiki-mytiki_bar.tpl}
+{include file='tiki-mytiki_bar.tpl'}
 
 <div class="navbar">
 	{button href="tiki-minical.php#add" _text="{tr}Add{/tr} "}

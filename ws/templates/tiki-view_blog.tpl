@@ -2,7 +2,7 @@
 {if strlen($heading) > 0}
   {eval var=$heading}
 {else}
-  {include file="blog-heading.tpl"}
+  {include file='blog-heading.tpl'}
 {/if}
 {if $use_find eq 'y'}
 	<div class="blogtools">
@@ -128,8 +128,8 @@
   ||  $tiki_p_edit_comments  == 'y')}
 
   <div id="page-bar">
-  	   {include file=comments_button.tpl}
+  	   {include file='comments_button.tpl'}
   </div>
 
-  {include file=comments.tpl}
+  {include file='comments.tpl'}
 {/if}

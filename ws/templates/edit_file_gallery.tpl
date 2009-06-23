@@ -4,48 +4,37 @@
   <br /><a class="fgallink" href="tiki-objectpermissions.php?objectName={$name|escape:"url"}&amp;objectType=file+gallery&amp;permType=file+galleries&amp;objectId={$galleryId}">{tr}There are individual permissions set for this file gallery{/tr}</a>
   {/if}
   <div>
-    <form class="admin" action="tiki-list_file_gallery.php{if $filegals_manager neq ''}?filegals_manager={$filegals_manager|escape}{/if}" method="post">
+    <form class="admin" action="{$smarty.server.PHP_SELF}?{query}" method="post">
       <input type="hidden" name="galleryId" value="{$galleryId|escape}" />
 
 
-			{if $prefs.feature_tabs eq 'y'}
-       <span style="float:right; margin-bottom: -1em"><input type="submit" value="{tr}Save{/tr}" name="edit" />&nbsp;<input type="checkbox" name="viewitem" checked="checked"/> {tr}View inserted gallery{/tr}</span>
-			<div class="tabs" style="clear: both;">
-				<span id="tab1" class="tabmark tabactive"><a href="javascript:tikitabs(1,3);">{tr}Properties{/tr}</a></span>
-				<span id="tab2" class="tabmark tabactive"><a href="javascript:tikitabs(2,3);">{tr}Display Properties{/tr}</a></span>
-			</div>
-			{else}
        <div class="input_submit_container" style="text-align: right"><input type="submit" value="{tr}Save{/tr}" name="edit" />&nbsp;<input type="checkbox" name="viewitem" checked="checked"/> {tr}View inserted gallery{/tr}</div>
-			{/if}
-
-			<fieldset {if $prefs.feature_tabs eq 'y'}id="content1"  class="tabcontent" style="clear:both;display:block;"{/if}>
-			{if $prefs.feature_tabs neq 'y'}
-			  <legend class="heading"><a href="#"><span>{tr}Properties{/tr}</span></a></legend>
-				{/if}
+{tabset name="list_file_gallery"}
+  {tab name="{tr}Properties{/tr}"}
       <table class="normal">
-        <tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" size="50" name="name" value="{$gal_info.name|escape}" style="width:100%"/><br/><i>{tr}required field for podcasts{/tr}</i></td></tr>
-        <tr><td class="formcolor">{tr}Type{/tr}:</td><td class="formcolor">
-          <select name="fgal_type">
+        <tr><td class="formcolor"><label for="name">{tr}Name{/tr}:</label></td><td class="formcolor"><input type="text" size="50" id="name" name="name" value="{$gal_info.name|escape}" style="width:100%"/><br/><em>{tr}Required for podcasts{/tr}.</em></td></tr>
+        <tr><td class="formcolor"><label for="fgal_type">{tr}Type{/tr}:</label></td><td class="formcolor">
+          <select name="fgal_type" id="fgal_type">
             <!-- TODO: make this a configurable list read from database -->
-            <option value="default" {if $gal_info.type eq 'default'}selected="selected"{/if}>{tr}any file{/tr}</option>
-            <option value="podcast" {if $gal_info.type eq 'podcast'}selected="selected"{/if}>{tr}podcast (audio){/tr}</option>
-            <option value="vidcast" {if $gal_info.type eq 'vidcast'}selected="selected"{/if}>{tr}podcast (video){/tr}</option>
+            <option value="default" {if $gal_info.type eq 'default'}selected="selected"{/if}>{tr}Any file{/tr}</option>
+            <option value="podcast" {if $gal_info.type eq 'podcast'}selected="selected"{/if}>{tr}Podcast (audio){/tr}</option>
+            <option value="vidcast" {if $gal_info.type eq 'vidcast'}selected="selected"{/if}>{tr}Podcast (video){/tr}</option>
           </select>
         </td></tr>
-        <tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><textarea rows="5" cols="40" name="description" style="width:100%">{$gal_info.description|escape}</textarea><br/><i>{tr}required field for podcasts{/tr}</i></td></tr>
-        <tr><td class="formcolor">{tr}Gallery is visible to non-admin users?{/tr}</td><td class="formcolor"><input type="checkbox" name="visible" {if $gal_info.visible eq 'y'}checked="checked"{/if} /></td></tr>
+        <tr><td class="formcolor"><label for="description">{tr}Description{/tr}:</label></td><td class="formcolor"><textarea rows="5" cols="40" id="description" name="description" style="width:100%">{$gal_info.description|escape}</textarea><br/><em>{tr}Required for podcasts{/tr}.</em></td></tr>
+        <tr><td class="formcolor"><label for="visible">{tr}Gallery is visible to non-admin users{/tr}.<label></td><td class="formcolor"><input type="checkbox" id="visible" name="visible" {if $gal_info.visible eq 'y'}checked="checked"{/if} /></td></tr>
 
-        <tr><td class="formcolor">{tr}This Gallery is Public{/tr}:</td><td class="formcolor"><input type="checkbox" name="public" {if $gal_info.public eq 'y'}checked="checked"{/if}/><br /><i>{tr}Users with perms and not only the owner of the gallery can upload in it{/tr}</i></td></tr>
-        <tr><td class="formcolor">{tr}The files can be locked at download:{/tr} </td><td class="formcolor"><input type="checkbox" name="lockable" {if $gal_info.lockable eq 'y'}checked="checked"{/if}/></td></tr>
-        <tr><td class="formcolor">{tr}Maximum number of archives for each file{/tr}: </td><td class="formcolor"><input size="5" type="text" name="archives" value="{$gal_info.archives|escape}" /> <i>(0={tr}unlimited{/tr}) (-1={tr}none{/tr})</i>
+        <tr><td class="formcolor"><label for="public">{tr}Gallery is public{/tr}.</label></td><td class="formcolor"><input type="checkbox" id="public" name="public" {if $gal_info.public eq 'y'}checked="checked"{/if}/><br /><em>{tr}Any user with permission (not only the gallery owner) can upload files{/tr}.</em></td></tr>
+        <tr><td class="formcolor"><label for="lockable">{tr}Files can be locked at download{/tr}.</label> </td><td class="formcolor"><input type="checkbox" id="lockable" name="lockable" {if $gal_info.lockable eq 'y'}checked="checked"{/if}/></td></tr>
+        <tr><td class="formcolor"><label for="archives">{tr}Maximum number of archives for each file{/tr}:</label> </td><td class="formcolor"><input size="5" type="text" id="archives" name="archives" value="{$gal_info.archives|escape}" /><br /><em>{tr}Use{/tr} 0={tr}unlimited{/tr}, -1={tr}none{/tr}.</em>
 	{if ! isset($smarty.request.parentId)}
         </td></tr>
-        <tr><td class="formcolor">{tr}Parent gallery{/tr}:</td><td class="formcolor">
-          <select name="parentId">
+        <tr><td class="formcolor"><label for="parentId">{tr}Parent gallery{/tr}:</label></td><td class="formcolor">
+          <select name="parentId" id="parentId">
             <option value="-1" {if $parentId == -1} selected="selected"{/if}>{tr}none{/tr}</option>
             {foreach from=$all_galleries key=key item=item}
 							{if $galleryId neq $item.id}
-              <option value="{$item.id}" {if $parentId == $item.id} selected="selected"{/if}>{$item.name|escape}</option>
+              <option value="{$item.id}" {if $parentId == $item.id} selected="selected"{/if}>{if $item.parentName}{$item.parentName|escape} &gt; {/if}{$item.name|escape}</option>
 							{/if}
             {/foreach}
           </select>
@@ -54,8 +43,8 @@
 	{/if}
         </td></tr>
         {if $tiki_p_admin eq 'y' or $tiki_p_admin_file_galleries eq 'y'}
-        <tr><td class="formcolor">{tr}Owner of the gallery{/tr}:</td><td class="formcolor">
-          <select name="user">
+        <tr><td class="formcolor"><label for="user">{tr}Owner of the gallery{/tr}:</label></td><td class="formcolor">
+          <select name="user" id="user">
           {section name=ix loop=$users}<option value="{$users[ix].login|escape}"{if $creator eq $users[ix].login} selected="selected"{/if}>{$users[ix].login|username}</option>{/section}
           </select>
         </td></tr>
@@ -83,34 +72,32 @@
      {include file='categorize.tpl'}
 
 				</table>
-				</fieldset>
+	{/tab}
 <!--display -->
-			<fieldset {if $prefs.feature_tabs eq 'y'}id="content2"  class="tabcontent" style="clear:both;display:none;"{/if}>
-			{if $prefs.feature_tabs neq 'y'}
-			  <legend class="heading"><a href="#"><span>{tr}Display Properties{/tr}</span></a></legend>
-				{/if}
+	{tab name="{tr}Display Properties{/tr}"}
 				<table class="normal">
-        <tr><td class="formcolor">{tr}Default sort order{/tr}:</td><td class="formcolor">
-          <select name="sortorder">
+        <tr><td class="formcolor"><label for="sortorder">{tr}Default sort order{/tr}:</label></td><td class="formcolor">
+          <select name="sortorder" id="sortorder">
           {foreach from=$options_sortorder key=key item=item}
             <option value="{$item|escape}" {if $sortorder == $item} selected="selected"{/if}>{$key}</option>
           {/foreach}
-          </select>
-          <input type="radio" name="sortdirection" value="desc" {if $sortdirection == 'desc'}checked="checked"{/if} />{tr}descending{/tr}
-          <input type="radio" name="sortdirection" value="asc" {if $sortdirection == 'asc'}checked="checked"{/if} />{tr}ascending{/tr}
+          </select><br />
+          <input type="radio" id="sortdirection1" name="sortdirection" value="desc" {if $sortdirection == 'desc'}checked="checked"{/if} /><label for="sortdirection1">{tr}Descending{/tr}</label><br />
+          <input type="radio" id="sortdirection2" name="sortdirection" value="asc" {if $sortdirection == 'asc'}checked="checked"{/if} /><label for="sortdirection2">{tr}Ascending{/tr}</label>
         </td></tr>
         <tr>
-	  <td class="formcolor">{tr}Max description display size{/tr}</td>
-          <td class="formcolor"><input type="text" name="max_desc" value="{$max_desc|escape}" /></td>
+	  <td class="formcolor"><label for="max_desc">{tr}Max description display size{/tr}:</label></td>
+          <td class="formcolor"><input type="text" id="max_desc" name="max_desc" value="{$max_desc|escape}" /></td>
         </tr>
-        <tr><td class="formcolor">{tr}Max Rows per page{/tr}:</td><td class="formcolor"><input type="text" name="maxRows" value="{$maxRows|escape}" /></td></tr>
-        <tr><td class="formcolor">{tr}Listing configuration{/tr}</td><td class="formcolor">
+        <tr><td class="formcolor"><label for="maxRows">{tr}Max rows per page{/tr}:</label></td><td class="formcolor"><input type="text" id="maxRows" name="maxRows" value="{$maxRows|escape}" /></td></tr>
+        <tr><td class="formcolor" colspan="2">{tr}Select which items to display when listing galleries{/tr}: 
           <table>
             {include file='fgal_listing_conf.tpl'}
           </table>
         </td></tr>
       </table>
-     </fieldset>
+	{/tab}
+{/tabset}
 			<input type="submit" value="{tr}Save{/tr}" name="edit" />
     </form>
 	</div>

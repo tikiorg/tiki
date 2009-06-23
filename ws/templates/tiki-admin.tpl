@@ -1,33 +1,30 @@
 {* $Id$ *}
 {popup_init src="lib/overlib.js"}
+{title help="$helpUrl"}{tr}{$admintitle}{/tr}{/title}
 <div id="pageheader">
 {* bother to display this only when breadcrumbs are on *}
+{*
 {if $prefs.feature_breadcrumbs eq 'y'}
     {breadcrumbs type="trail" loc="page" crumbs=$crumbs}
     {breadcrumbs type="pagetitle" loc="page" crumbs=$crumbs}
 {/if}
+*}
 {if $db_requires_update}
 	{remarksbox type="warning" title="{tr}Database Version Problem{/tr}"}
 	{tr}Your database requires an update to match the current TikiWiki version. Please proceed to <a href="tiki-install.php">the installer</a>. Using Tiki with an incorrect database version usually provoke errors.{/tr}
 	{/remarksbox}
 {/if}
-{**
- * Page Title as h1 goes here
- *}
-    <h1 class="center pagetitle">{breadcrumbs type="pagetitle" loc="page" crumbs=$crumbs}</h1>
-{* description is built always *}
-{breadcrumbs type="desc" loc="page" crumbs=$trail}
-
+{tr}{$description}{/tr}
 </div>
 {* The rest determines which page to include using "page" GET parameter. Default : list-sections
 Add a value in first check when you create a new admin page. *}
-{if in_array($adminpage, array("features", "general", "login", "wiki", "gal", "fgal", "cms", "polls", "search", "blogs", "forums", "faqs", "trackers", "webmail", "rss", "directory", "userfiles", "maps", "metatags", "wikiatt","score", "community", "messages", "calendar","intertiki","freetags","gmap", "i18n","wysiwyg","copyright","category", "module", "look", "textarea", "multimedia", "ads", "profiles", "semantic", "plugins", "webservices", 'sefurl', "workspaces"))}
+{if in_array($adminpage, array("features", "general", "login", "wiki", "gal", "fgal", "cms", "polls", "search", "blogs", "forums", "faqs", "trackers", "webmail", "rss", "directory", "userfiles", "maps", "metatags", "wikiatt","score", "community", "messages", "calendar","intertiki","freetags","gmap", "i18n","wysiwyg","copyright","category", "module", "look", "textarea", "multimedia", "ads", "profiles", "semantic", "plugins", "webservices", 'sefurl'))}
   {assign var="include" value=$smarty.get.page}
 {else}
   {assign var="include" value="list-sections"}
 {/if}
 {if $include != "list-sections"}
-  <div class="simplebox adminanchors clearfix" >{include file="tiki-admin-include-anchors.tpl"}</div>
+  <div class="simplebox adminanchors clearfix" >{include file='tiki-admin-include-anchors.tpl'}</div>
 {/if}
 
 {if $feature_version_checks eq 'y' and $prefs.tiki_needs_upgrade eq 'y'}
@@ -57,6 +54,11 @@ Add a value in first check when you create a new admin page. *}
 			</li>
 		{/section}
 		</ul>
+	{/remarksbox}
+{/if}
+{if $pagetop_msg}
+	{remarksbox type="note" title="{tr}Note{/tr}"}
+		{$pagetop_msg}
 	{/remarksbox}
 {/if}
 

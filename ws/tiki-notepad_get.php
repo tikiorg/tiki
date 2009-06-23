@@ -45,5 +45,3 @@ $info = $notepadlib->get_note($user, $_REQUEST["noteId"]);
 header ("Content-type: text/plain");
 header ("Content-Disposition: $disposition; filename=note_".urlencode($user).'_'.$_REQUEST["noteId"].".txt;");
 echo $info['data'];
-
-?>

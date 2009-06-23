@@ -29,7 +29,7 @@
 {cycle values="odd,even" print=false}
 {section name=changes loop=$listpages}
 <tr>
-<td class="{cycle advance=false}">{$listpages[changes].bannerId}</td>
+<td class="{cycle advance=false}">{if $tiki_p_admin_banners eq 'y'}<a class="link" href="tiki-edit_banner.php?bannerId={$listpages[changes].bannerId}">{/if}{$listpages[changes].bannerId}{if $tiki_p_admin_banners eq 'y'}</a>{/if}</td>
 <td class="{cycle advance=false}">{$listpages[changes].client}</td>
 <td class="{cycle advance=false}">{$listpages[changes].url}</td>
 <td class="{cycle advance=false}">{$listpages[changes].zone}</td>

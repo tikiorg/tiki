@@ -20,7 +20,7 @@
 		</div>
 	{/foreach}
 	</div>
-	{else}{tr}None{/tr} <a href="tiki-admin_calendars.php" class="button" title="{tr}Create calendar{/tr}.">{tr}Create calendar{/tr}.</a>
+	{else}{tr}None{/tr} {button href="tiki-admin_calendars.php?show=mod" _text="{tr}Create calendar{/tr}"}
 	{/if}
 </div>
 </div>
@@ -33,6 +33,14 @@
   <option value="quarter" {if $prefs.calendar_view_mode eq 'quarter'}selected="selected"{/if}>{tr}Quarter{/tr}</option>
   <option value="semester" {if $prefs.calendar_view_mode eq 'semester'}selected="selected"{/if}>{tr}Semester{/tr}</option>
   <option value="year" {if $prefs.calendar_view_mode eq 'year'}selected="selected"{/if}>{tr}Year{/tr}</option>
+	</select>
+	</div>
+</div>
+<div class="adminoptionbox">
+	<div class="adminoptionlabel"><label for="calendar_list_begins_focus">{tr}View list begins{/tr}:</label> 
+	<select name="calendar_list_begins_focus" id="calendar_list_begins_focus">
+		<option value="y" {if $prefs.calendar_list_begins_focus eq 'y'}selected="selected"{/if}>{tr}Focus Date{/tr}</option>
+		<option value="n" {if $prefs.calendar_list_begins_focus eq 'n'}selected="selected"{/if}>{tr}Period beginning{/tr}</option>
 	</select>
 	</div>
 </div>

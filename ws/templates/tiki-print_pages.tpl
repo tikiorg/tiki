@@ -1,25 +1,12 @@
 {* $Id$ *}
 
-{title help="print"}{tr}Print multiple pages{/tr}{/title}
+{title}{tr}Print multiple pages{/tr}{/title}
 
 {include file='find.tpl'}
 
-{if $prefs.feature_tabs eq 'y'}
-  {cycle name=tabs values="1,2,3" print=false advance=false reset=true}
-    <div class="tabs">
-    <span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};">
-      <a href="javascript:tikitabs({cycle name=tabs},3);">{tr}Structures{/tr}</a>
-    </span>
-    <span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};">
-      <a href="javascript:tikitabs({cycle name=tabs},3);">{tr}Pages{/tr}</a>
-    </span>
-  </div>
-{/if}
-
-{cycle name=content values="1,2,3" print=false advance=false reset=true}
+{tabset name='tabs_print_pages'}
+	{tab name='{tr}Structures{/tr}'}
   {* --- tab with structures -- *}
-    <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
-
       {if $printstructures}
         <h2>{tr}Selected Structures{/tr}</h2>
         <form method="post" action="tiki-print_multi_pages.php">
@@ -50,11 +37,10 @@
         {/section}
       </select>
     </form>
-  </div>
+	{/tab}
 
+{tab name='{tr}Pages{/tr}'}
 {* --- tab with pages -- *}
-<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
-
 <table class="admin">
 	<tr>
 		<td width="45%">
@@ -115,5 +101,5 @@
 		</td>
 	</tr>
 </table>
-</div>
-
+{/tab}
+{/tabset}

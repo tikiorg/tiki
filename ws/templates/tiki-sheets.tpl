@@ -27,7 +27,7 @@
 <tr><td class="formcolor">{tr}Class Name{/tr}:</td><td class="formcolor"><input type="text" name="className" value="{$className|escape}"/></td></tr>
 <tr><td class="formcolor">{tr}Header Rows{/tr}:</td><td class="formcolor"><input type="text" name="headerRow" value="{$headerRow|escape}"/></td></tr>
 <tr><td class="formcolor">{tr}Footer Rows{/tr}:</td><td class="formcolor"><input type="text" name="footerRow" value="{$footerRow|escape}"/></td></tr>
-{include file=categorize.tpl}
+{include file='categorize.tpl'}
 {if $tiki_p_admin eq 'y'}
 <tr><td class="formcolor">{tr}Creator{/tr}:</td><td class="formcolor">
 		<select name="creator">
@@ -39,7 +39,7 @@
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" value="{tr}Save{/tr}" name="edit" /></td></tr>
 </table>
 </form>
-</div>
+
 <br />
 {else}
 <div class="navbar"><a href="tiki-sheets.php?edit_mode=edit&sheetId=0">{tr}Create new Sheet{/tr}</a></div>

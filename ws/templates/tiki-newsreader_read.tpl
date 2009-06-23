@@ -1,6 +1,6 @@
 {title help="newsreader"}{tr}Reading article from{/tr}:{$group}{/title}
 
-{include file=tiki-mytiki_bar.tpl}
+{include file='tiki-mytiki_bar.tpl'}
 
 {button href="tiki-newsreader_servers.php" _text="{tr}Back to servers{/tr}"}
 {if $serverId}

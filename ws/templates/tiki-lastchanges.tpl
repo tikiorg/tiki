@@ -6,17 +6,17 @@
 {if $days eq '1'}{assign var=thisclass value='highlight'}{else}{assign var=thisclass value=''}{/if}
 {button href="tiki-lastchanges.php?days=1" _text="{tr}Today{/tr}" _class=$thisclass}
 {if $days eq '2'}{assign var=thisclass value='highlight'}{else}{assign var=thisclass value=''}{/if}
-{button href="tiki-lastchanges.php?days=2" _text="{tr}Last{/tr} 2 {tr}days{/tr}" _class=$thisclass}
+{button href="tiki-lastchanges.php?days=2" _text="{tr}Last 2 days{/tr}" _class=$thisclass}
 {if $days eq '3'}{assign var=thisclass value='highlight'}{else}{assign var=thisclass value=''}{/if}
-{button href="tiki-lastchanges.php?days=3" _text="{tr}Last{/tr} 3 {tr}days{/tr}" _class=$thisclass}
+{button href="tiki-lastchanges.php?days=3" _text="{tr}Last 3 days{/tr}" _class=$thisclass}
 {if $days eq '5'}{assign var=thisclass value='highlight'}{else}{assign var=thisclass value=''}{/if}
-{button href="tiki-lastchanges.php?days=5" _text="{tr}Last{/tr} 5 {tr}days{/tr}" _class=$thisclass}
+{button href="tiki-lastchanges.php?days=5" _text="{tr}Last 5 days{/tr}" _class=$thisclass}
 {if $days eq '7'}{assign var=thisclass value='highlight'}{else}{assign var=thisclass value=''}{/if}
-{button href="tiki-lastchanges.php?days=7" _text="{tr}Last{/tr} {tr}week{/tr}" _class=$thisclass}
+{button href="tiki-lastchanges.php?days=7" _text="{tr}Last week{/tr}" _class=$thisclass}
 {if $days eq '14'}{assign var=thisclass value='highlight'}{else}{assign var=thisclass value=''}{/if}
-{button href="tiki-lastchanges.php?days=14" _text="{tr}Last{/tr} 2 {tr}weeks{/tr}" _class=$thisclass}
+{button href="tiki-lastchanges.php?days=14" _text="{tr}Last 2 weeks{/tr}" _class=$thisclass}
 {if $days eq '31'}{assign var=thisclass value='highlight'}{else}{assign var=thisclass value=''}{/if}
-{button href="tiki-lastchanges.php?days=31" _text="{tr}Last{/tr} {tr}month{/tr}" _class=$thisclass}
+{button href="tiki-lastchanges.php?days=31" _text="{tr}Last month{/tr}" _class=$thisclass}
 {if $days eq '0'}{assign var=thisclass value='highlight'}{else}{assign var=thisclass value=''}{/if}
 {button href="tiki-lastchanges.php?days=0" _text="{tr}All{/tr}" _class=$thisclass}
 </div>

@@ -84,9 +84,11 @@
 	{/section}
 {/if}
 
+<div class="wikitext">
+
 {if !$hide_page_header}
 {if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y' and isset($freetags.data[0]) and $prefs.freetags_show_middle eq 'y'}
-{include file="freetag_list.tpl"}
+{include file='freetag_list.tpl'}
 {/if}
 
 {if $pages > 1 and $prefs.wiki_page_navigation_bar neq 'bottom'}
@@ -103,8 +105,6 @@
 		<a href="tiki-index.php?{if $page_info}page_ref_id={$page_info.page_ref_id}{else}page={$page|escape:"url"}{/if}&amp;pagenum={$last_page}">{icon _id='resultset_last' alt="{tr}Last page{/tr}"}</a>
 	</div>
 {/if}
-
-<div class="wikitext">
 
 {**
  * Page Title as h1 here when the feature is on
@@ -164,7 +164,7 @@
 </table>
 </div>
 {/if}
-{if $prefs.feature_wiki_ratings eq 'y'}{include file="poll.tpl"}{/if}
+{if $prefs.feature_wiki_ratings eq 'y'}{include file='poll.tpl'}{/if}
 {/if} {*hide_page_header*}
 
 {if $pageLang eq 'ar' or $pageLang eq 'he'}
@@ -193,6 +193,7 @@ must not overlap the wiki content that could contain floated elements *}
 	</div>
 {/if}
 </div> {* End of main wiki page *}
+<!-- 1234 -->
 
 {if $has_footnote eq 'y'}<div class="wikitext" id="wikifootnote">{$footnote}</div>{/if}
 {if $wiki_authors_style neq 'none' || $prefs.wiki_feature_copyrights eq 'y'|| $print_page eq 'y'}

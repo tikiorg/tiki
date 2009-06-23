@@ -160,7 +160,7 @@
 			  </div>
 			</td>
 		</tr>
-    {include file=categorize.tpl}
+    {include file='categorize.tpl'}
   </table>
 	<table class="normal">
     <tr>

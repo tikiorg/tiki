@@ -8,7 +8,7 @@
 {/if}
 
 <form method="post">
-<table class="normal">
+<table class="normal invite">
 <tr>
 	<td>
 		<label for="email">{tr}Email address the person you want to invite{/tr}</label>
@@ -32,7 +32,7 @@
 	<td>
 		<select name="groups[]" id="groups" multiple="multiple">
 			{foreach from=$userGroups key=gx item=gi}
-				<option value="{$gx|escape}"{if isset($groups) && in_array($gx, $groups)} selected="selected"{/if}>{$gx|escape}</option>
+				<option value="{$gx|escape}"{if (isset($groups) && in_array($gx, $groups)) or (!isset($groups) && $gx eq $params.defaultgroup)} selected="selected"{/if}>{$gx|escape}</option>
 			{/foreach}
 		</select>
 	</td>

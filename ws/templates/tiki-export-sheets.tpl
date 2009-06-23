@@ -28,7 +28,7 @@
 	{/if}
 
 	{if $chart_enabled eq 'y'}
-		{button href="tiki-graph_sheet.php?sheetId={$sheetId}" _text="{tr}Graph{/tr}"}
+		{button href="tiki-graph_sheet.php?sheetId=$sheetId" _text="{tr}Graph{/tr}"}
 	{/if}
 </div>
 

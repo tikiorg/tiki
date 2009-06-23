@@ -155,5 +155,3 @@ ask_ticket('received-pages');
 // Display the template
 $smarty->assign('mid', 'tiki-received_pages.tpl');
 $smarty->display("tiki.tpl");
-
-?>

@@ -3,9 +3,9 @@
 {title help="MyTiki"}{tr}My Tiki{/tr}{/title}
 
 {if $prefs.feature_mootools eq 'y' and $prefs.feature_ajax eq 'y'}
-  {include file=tiki-mytiki_mootabs.tpl}
+  {include file='tiki-mytiki_mootabs.tpl'}
 {else}
-  {include file=tiki-mytiki_bar.tpl}
+  {include file='tiki-mytiki_bar.tpl'}
   <br />
 
   {capture name=my}
@@ -297,9 +297,9 @@
 
   {if $prefs.feature_workflow eq 'y' && $tiki_p_use_workflow eq 'y' && $mytiki_workflow eq 'y'}
     <div id="content7" class="content">
-      {include file="tiki-g-my_activities.tpl"}
+      {include file='tiki-g-my_activities.tpl'}
       <br /><br />
-      {include file="tiki-g-my_instances.tpl"}
+      {include file='tiki-g-my_instances.tpl'}
     </div>
   {/if}
   {/capture}

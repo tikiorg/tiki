@@ -14,7 +14,7 @@
 
 
 {if $prefs.feature_ajax ne 'y' && $prefs.feature_mootools ne 'y'}
-{include file=tiki-mytiki_bar.tpl}
+{include file='tiki-mytiki_bar.tpl'}
 {/if}
 <br />
 <h2>{tr}Select a news server to browse{/tr}</h2>

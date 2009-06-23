@@ -1,26 +1,9 @@
 <form action="tiki-admin.php?page=community" method="post">
 <div class="cbox">
-<table class="admin"><tr><td>
 <div style="padding:1em;" align="center"><input type="submit" value="{tr}Change preferences{/tr}" /></div>
 
-{if $prefs.feature_tabs eq 'y'}
-			{tabs}{strip}
-				{tr}General Settings{/tr}|
-				{tr}Users Listing{/tr}
-			{/strip}{/tabs}
-{/if}
-
-{cycle name=content values="1,2" print=false advance=false reset=true}
-
-    <fieldset{if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>
-      {if $prefs.feature_tabs neq 'y'}
-        <legend class="heading">
-          <a href="#content{cycle name=content assign=focus}{$focus}" onclick="flip('content{$focus}'); return false;">
-            <span>{tr}General Settings{/tr}</span>
-          </a>
-        </legend>
-        <div id="content{$focus}" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_content.$focus) and $smarty.session.tiki_cookie_jar.show_content.$focus neq 'y'}none{else}block{/if};">
-      {/if}
+{tabset name="admin_comuunity"}
+	{tab name="{tr}General Settings{/tr}"}
 <input type="hidden" name="userfeatures" />
 <fieldset><legend>{tr}Community{/tr}{if $prefs.feature_help eq 'y'} {help url="Community"}{/if}</legend>
 <div class="adminoptionbox">
@@ -48,7 +31,7 @@
 <div class="adminoptionbox">
 	<div class="adminoption"><input {if $prefs.feature_friends ne 'y'}disabled="disabled" {/if}type="checkbox" name="feature_community_mouseover_friends" id="community-mouseover-friends"{if $prefs.feature_community_mouseover_friends eq 'y'} checked="checked"{/if} /></div>
 	<div class="adminoptionlabel"><label for="community-mouseover-friends">{tr}Number of friends{/tr}{if $prefs.feature_friends ne 'y'}<br />{icon _id=information} {tr}Feature is disabled{/tr}. <a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}.</a>{/if}	
-	{if $prefs.feature_help eq 'y'} {help url="Friendship+Network"}{/if}</div>
+	{if $prefs.feature_help eq 'y'} {help url="Friendship+Network"}{/if}</label></div>
 </div>
 <div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" name="feature_community_mouseover_score" id="community-mouseover-score" {if $prefs.feature_community_mouseover_score eq 'y'}checked="checked"{/if} /></div>
@@ -85,7 +68,7 @@
 	<select name="users_prefs_mailCharset" id="users_prefs_mailCharset">
   <option value=''>{tr}default{/tr}</option>
    {section name=ix loop=$mailCharsets}
-      <option value="{$mailCharsets[ix]|escape}" {if $users_prefs_mailCharset eq $mailCharsets[ix]}selected="selected"{/if}>{$mailCharsets[ix]}</option>
+      <option value="{$mailCharsets[ix]|escape}" {if $prefs.users_prefs_mailCharset eq $mailCharsets[ix]|escape}selected="selected"{/if}>{$mailCharsets[ix]}</option>
    {/section}
   </select>
 	</div>
@@ -97,7 +80,7 @@
 <option value='' >{tr}default{/tr}</option>
 {section name=ix loop=$styles}
 	{if count($prefs.available_styles) == 0 || in_array($styles[ix], $prefs.available_styles)}
-        <option value="{$styles[ix]|escape}" {if $users_prefs_theme eq $styles[ix]}selected="selected"{/if}>{$styles[ix]}</option>
+        <option value="{$styles[ix]|escape}" {if $users_prefs_theme eq $styles[ix]|escape}selected="selected"{/if}>{$styles[ix]}</option>
 	{/if}
 {/section}
 </select>
@@ -134,7 +117,7 @@
 	</div>
 </div>
 <div class="adminoptionbox">
-	<div class="adminoptionlabel">{tr}Displayed time zone{/tr}:<label for=""></label></div>
+	<div class="adminoptionlabel">{tr}Displayed time zone{/tr}:<label></label></div>
 <div class="adminoptionboxchild">	
 	<div class="adminoptionlabel"><input type="radio" name="users_prefs_display_timezone" id="users_prefs_display_timezone1" value="Site" {if $prefs.users_prefs_display_timezone eq 'Site'}checked="checked"{/if}/><label for="users_prefs_display_timezone1">{tr}Site default{/tr}</label></div>
 	<div class="adminoptionlabel"><input type="radio" name="users_prefs_display_timezone" id="users_prefs_display_timezone2" value="Local" {if $prefs.users_prefs_display_timezone ne 'Site'}checked="checked"{/if}/><label for="users_prefs_display_timezone2">{tr}Detect user timezone if browser allows, otherwise site default{/tr}</label></div>
@@ -301,23 +284,11 @@
   {/if}
 {/if}
 </fieldset>
+	{/tab}
 
-	  {if $prefs.feature_tabs neq 'y'}</div>{/if}
-    </fieldset>
-
-
-    <fieldset{if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>
-      {if $prefs.feature_tabs neq 'y'}
-        <legend class="heading">
-          <a href="#content{cycle name=content assign=focus}{$focus}" onclick="flip('content{$focus}'); return false;">
-            <span>{tr}Users Listing{/tr}</span>
-          </a>
-        </legend>
-        <div id="content{$focus}" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_content.$focus) and $smarty.session.tiki_cookie_jar.show_content.$focus neq 'y'}none{else}block{/if};">
-      {/if}
-
+	{tab name="{tr}Users Listing{/tr}"}
 <div class="adminoptionbox">
-	<div class="adminoptionlabel">{tr}Select which items to display when listing users{/tr}.</a>
+	<div class="adminoptionlabel">{tr}Select which items to display when listing users{/tr}.
 {if $prefs.feature_friends ne 'y'}<br />{icon _id=information} {tr}Feature is disabled{/tr}. <a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}.</a>{/if}
 	</div>
 </div>
@@ -356,11 +327,9 @@
 </div>
 {/if}
 
-	  {if $prefs.feature_tabs neq 'y'}</div>{/if}
-    </fieldset>
-
+	{/tab}
+{/tabset}
 <div style="padding:1em;" align="center"><input type="submit" value="{tr}Change preferences{/tr}" /></div>
-</td></tr></table>
 </div>
 </form>
 

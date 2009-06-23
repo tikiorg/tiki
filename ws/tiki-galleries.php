@@ -494,4 +494,3 @@ ask_ticket('galleries');
 // Display the template
 $smarty->assign('mid', 'tiki-galleries.tpl');
 $smarty->display("tiki.tpl");
-?>

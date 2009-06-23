@@ -120,7 +120,7 @@
 				{else}
 					<input type="hidden" name="galleryId" value="{$galleryId}" />
 				{/if}
-				{include file=categorize.tpl}
+				{include file='categorize.tpl'}
 				<tr class="formcolor">
 					<td class="formcolor" colspan="2">
 						<b>{tr}Now enter the image URL{/tr} {tr}or upload a local image from your disk{/tr}</b>
@@ -159,16 +159,16 @@
 					</td>
 				</tr>
 				{if $prefs.feature_antibot eq 'y' && $user eq ''}
-					{include file="antibot.tpl" td_style="formcolor"}
+					{include file='antibot.tpl' td_style="formcolor"}
 				{/if}
 				<tr>
 					<td class="formcolor">&nbsp;</td>
 					<td class="formcolor">
 						<input type="submit" name="upload" value="{tr}Upload{/tr}" />
-						<span class="rbox-data">{tr}Note: Maximum image size is limited to{/tr} {$max_upload_size|kbsize}</span>
 					</td>
 				</tr>
 			</table>
+			{remarksbox type="note"}{tr}Maximum file size is around:{/tr} {if $tiki_p_admin eq 'y'}<a title="{$max_upload_size_comment}">{/if}{$max_upload_size|kbsize:true:0}{if $tiki_p_admin eq 'y'}</a>{/if}{/remarksbox}
 		</form>
 	</div>
 {else}

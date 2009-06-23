@@ -60,7 +60,7 @@ if ($tiki_p_rollback != 'y'  || $tiki_p_edit != 'y') {
 }
 
 $version = $histlib->get_version($page, $version);
-$version["data"] = $tikilib->parse_data($version["data"]);
+$version["data"] = $tikilib->parse_data($version["data"], array('preview_mode' => true));
 $smarty->assign_by_ref('preview', $version);
 
 if (isset($_REQUEST["rollback"])) {
@@ -82,5 +82,3 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 $smarty->assign('mid', 'tiki-rollback.tpl');
 $smarty->display("tiki.tpl");
-
-?>

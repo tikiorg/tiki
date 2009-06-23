@@ -178,7 +178,7 @@
 
 {pagination_links cant=$cant step=$maxImages offset=$offset}{/pagination_links}
 
-{include file="find.tpl"}
+{include file='find.tpl'}
 
 {if $prefs.feature_image_galleries_comments == 'y'
   && (($tiki_p_read_comments == 'y'
@@ -187,9 +187,9 @@
   ||  $tiki_p_edit_comments  == 'y')
 }
   <div id="page-bar">
-  	   {include file=comments_button.tpl}
+  	   {include file='comments_button.tpl'}
   </div>
-  {include file=comments.tpl}
+  {include file='comments.tpl'}
 {/if}
 
 <table class="normal noslideshow">

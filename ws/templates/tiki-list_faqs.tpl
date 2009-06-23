@@ -29,7 +29,7 @@
 					<textarea name="description" rows="4" cols="40">{$description|escape}</textarea>
 				</td>
 			</tr>
-			{include file=categorize.tpl}
+			{include file='categorize.tpl'}
 			<tr>
 				<td class="formcolor">
 					{tr}Users can suggest questions{/tr}:

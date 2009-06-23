@@ -12,11 +12,13 @@
 	{button href="tiki-view_tracker.php?trackerId=$trackerId" _text="{tr}View This Tracker's Items{/tr}"}
 </div>
 
+{tabset}
 {if $fieldId eq "0"}
-<h2>{tr}New tracker field{/tr}</h2>
+{assign var='title' value='{tr}New tracker field{/tr}'}
 {else}
-<h2>{tr}Edit tracker field{/tr}</h2>
+{assign var='title' value='{tr}Edit tracker field{/tr}'}
 {/if}
+{tab name=$title}
 {if $error}
 	{remarksbox  type="warning" title="{tr}Errors{/tr}"}{tr}{$error}{/tr}{/remarksbox}
 {/if}
@@ -63,7 +65,7 @@
 {sortlinks case=false}
 {foreach key=choice_k item=choice_i from=$fi.itemChoicesList}
 {$choice_k}
-<option value="{$choice_k|escape}"{if !empty($itemChoices) and in_array($choice_k, $itemChoices)} selected="selected"{/if}>{tr}{$choice_i}{/tr}</option>
+<option value="{$choice_k|escape}"{if !empty($itemChoices) and in_array($choice_k, $itemChoices)} selected="selected"{/if}>{if $type eq 'u'}{$choice_i|username|escape}{else}{tr}{$choice_i}{/tr}{/if}</option>
 {/foreach}
 {/sortlinks}
 </select>
@@ -103,7 +105,7 @@
 <tr class="formcolor"><td>{tr}Description{/tr}:
 {if $prefs.quicktags_over_textarea neq 'y'}
 	<div id="zStaticTextQuicktags" {if $type neq 'S'}style="display:none;"{/if}>
-	{include file=tiki-edit_help_tool.tpl qtnum="staticText" area_name="staticTextArea"}
+	{include file='tiki-edit_help_tool.tpl' qtnum="staticText" area_name="staticTextArea"}
 	</div>
 {/if}
 </td><td><div id='zDescription' {if $type eq 'S'}style="display:none;"{else}style="display:block;"{/if}style="display:block;" >{if $type ne 'S'}{tr}Description text is wiki-parsed:{/tr} <input type="checkbox" name="descriptionIsParsed" {if $descriptionIsParsed eq 'y'}checked="checked"{/if} />{/if}
@@ -111,7 +113,7 @@
 <div id='zStaticText' {if $type neq 'S'}style="display:none;"{/if}>
 {if $prefs.quicktags_over_textarea eq 'y'}
 	<div id="zStaticTextQuicktags" {if $type neq 'S'}style="display:none;"{/if}>
-	{include file=tiki-edit_help_tool.tpl qtnum="staticText" area_name="staticTextArea"}
+	{include file='tiki-edit_help_tool.tpl' qtnum="staticText" area_name="staticTextArea"}
 	</div>
 {/if}
 <textarea id="staticTextArea" name="descriptionStaticText" rows="20" cols="80" >{$description|escape}</textarea></div></td></tr>
@@ -119,10 +121,11 @@
 <tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
+{/tab}
 
 <!-- {$plug} -->
 <a name="list"></a>
-<h2>{tr}Tracker fields{/tr}</h2>
+{tab name='{tr}Tracker fields{/tr}'}
 
 <table class="findtable">
 <tr><td>{tr}Find{/tr}</td>
@@ -161,10 +164,10 @@
 {section name=user loop=$channels}
 <tr class="{cycle}">
 <td>{if $tracker_info.useRatings ne 'y' or $channels[user].name ne "Rating"}
-<a class="link" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}{if $max and $max ne $prefs.maxRecords}&amp;max={$max}{/if}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode={$sort_mode}&amp;fieldId={$channels[user].fieldId}" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
+{self_link _icon='page_edit' cookietab='1' _anchor="content1" fieldId=$channels[user].fieldId}{tr}Edit{/tr}{/self_link}
 {/if}</td>
 <td>{if $tracker_info.useRatings ne 'y' or $channels[user].name ne "Rating"}
-<a class="link" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}{if $max and $max ne $prefs.maxRecords}&amp;max={$max}{/if}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode={$sort_mode}&amp;fieldId={$channels[user].fieldId}" title="{tr}Edit{/tr}">{$channels[user].fieldId}</a>{else}{$channels[user].fieldId}{/if}</td>
+{self_link cookietab='1' _anchor="content1" fieldId=$channels[user].fieldId _title='{tr}Edit{/tr}'}{$channels[user].fieldId}{/self_link}{else}{$channels[user].fieldId}{/if}</td>
 <td>{$channels[user].name}</td>
 <td>{assign var=x value=$channels[user].type}{$field_types[$x].label}</td>
 <td>{$channels[user].options|truncate:42:"..."|escape}</td>
@@ -189,8 +192,9 @@
 </table>
 
 {pagination_links cant=$cant step=$max offset=$offset}{/pagination_links}
+{/tab}
 
-<h2>{tr}Import/Export Trackers Fields{/tr}</h2>
+{tab name='{tr}Import/Export Trackers Fields{/tr}'}
 
 <form action="tiki-admin_tracker_fields.php" method="post">
 {if $find}<input type="hidden" name="find" value="{$find|escape}" />{/if}
@@ -233,4 +237,5 @@ isMandatory = {$channels[user].isMandatory}
 </textarea><br />
 <input type="submit" name="save" value="{tr}Import{/tr}" />
 </form>
-
+{/tab}
+{/tabset}

@@ -20,6 +20,7 @@
 		<a href="javascript:void(0)" onClick="nd();nd();return false;">{icon _id="minus_small" alt="{tr}Close{/tr}" width="11" height="8"}</a>
 	</div>
 {/if}
+{if $group_by_item ne 'y'}
 <strong{if $cellstatus eq '2'} style="text-decoration:line-through"{/if}>
 {if $allday}
 	{tr}All-Day{/tr}
@@ -32,6 +33,7 @@
 {/if}
 </strong>
 <br />
+{/if}
 <a href="tiki-calendar_edit_item.php?viewcalitemId={$cellid}" title="{tr}Details{/tr}"{if $cellstatus eq '2'} style="text-decoration:line-through"{/if}>{$cellname}</a><br />
 {if $show_description eq 'y'}<span class="box-data">{$celldescription}</span><br />{/if}
 {if $show_participants eq 'y' and $cellparticipants}

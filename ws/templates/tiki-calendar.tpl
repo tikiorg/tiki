@@ -9,7 +9,7 @@
 	{/if}
 {/title}
 
-<div id="calscreen"{if $prefs.calendar_sticky_popup eq 'y'} onClick="nd();"{/if}>
+<div id="calscreen"{if $prefs.calendar_sticky_popup eq 'y'} onclick="nd();"{/if}>
 
 	<div class="navbar">
 		{if $displayedcals|@count eq 1 and $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
@@ -40,9 +40,11 @@
 		{/if}
 
 		{if $viewlist eq 'list'}
-			{button href="?viewlist=table" _text="{tr}Calendar View{/tr}"}
+			{capture name=href}?viewlist=table{if $smarty.request.todate}&amp;todate={$smarty.request.todate}{/if}{/capture}
+			{button href="`$smarty.capture.href`" _text="{tr}Calendar View{/tr}"}
 		{else}
-			{button href="?viewlist=list" _text="{tr}List View{/tr}"}
+			{capture name=href}?viewlist=list{if $smarty.request.todate}&amp;todate={$smarty.request.todate}{/if}{/capture}
+			{button href="`$smarty.capture.href`" _text="{tr}List View{/tr}"}
 		{/if}
 
 		{if count($listcals) >= 1}
@@ -85,8 +87,7 @@
 		<form id="filtercal" method="get" action="{$myurl}" name="f" style="display:none;">
 			<div class="caltitle">{tr}Group Calendars{/tr}</div>
 			<div class="caltoggle">
-				<input name="calswitch" id="calswitch" type="checkbox" onclick="switchCheckboxes(this.form,'calIds[]',this.checked);"/> 
-				<label for="calswitch">{tr}Check / Uncheck All{/tr}</label>
+				{select_all checkbox_names='calIds[]' label="{tr}Check / Uncheck All{/tr}"}				
 			</div>
 			{foreach item=k from=$listcals}
 				<div class="calcheckbox">
@@ -95,36 +96,43 @@
 				</div>
 			{/foreach}
 			<div class="calinput">
+				<input type="hidden" name="todate" value="{$focusdate}"/>
 				<input type="submit" name="refresh" value="{tr}Refresh{/tr}"/>
 			</div>
 		</form>
 	{/if}
 
-{if $tiki_p_admin_calendar eq 'y'}
-<form id="exportcal" method="post" action="{$exportUrl}" name="f" style="display:none;">
-<input type="hidden" name="export" value="y"/>
-<div class="caltitle">{tr}Export calendars{/tr}</div>
-<div class="caltoggle"><input name="calswitch" id="calswitch" type="checkbox" onclick="switchCheckboxes(this.form,'calendarIds[]',this.checked);"/> <label for="calswitch">{tr}Check / Uncheck All{/tr}</label></div>
-{foreach item=k from=$listcals}
-<div class="calcheckbox"><input type="checkbox" name="calendarIds[]" value="{$k|escape}" id="groupcal_{$k}" {if $thiscal.$k}checked="checked"{/if} />
-<label for="groupcal_{$k}" class="calId{$k}">{$infocals.$k.name}</label>
-</div>
-{/foreach}
-<div class="calcheckbox"><a href="{$iCalAdvParamsUrl}">{tr}advanced parameters{/tr}</a>
-</div>
-<div class="calinput"><input type="submit" name="valid" value="{tr}Export{/tr}"/></div>
-</form>
-{/if}
+	{if $tiki_p_admin_calendar eq 'y'}
+		<form id="exportcal" method="post" action="{$exportUrl}" name="f" style="display:none;">
+			<input type="hidden" name="export" value="y"/>
+			<div class="caltitle">{tr}Export calendars{/tr}</div>
+			<div class="caltoggle">
+				{select_all checkbox_names='calendarIds[]' label="{tr}Check / Uncheck All{/tr}"}
+			</div>
+			{foreach item=k from=$listcals}
+				<div class="calcheckbox">
+					<input type="checkbox" name="calendarIds[]" value="{$k|escape}" id="groupcal_{$k}" {if $thiscal.$k}checked="checked"{/if} />
+					<label for="groupcal_{$k}" class="calId{$k}">{$infocals.$k.name}</label>
+				</div>
+			{/foreach}
+			<div class="calcheckbox">
+				<a href="{$iCalAdvParamsUrl}">{tr}advanced parameters{/tr}</a>
+			</div>
+			<div class="calinput">
+				<input type="submit" name="valid" value="{tr}Export{/tr}"/>
+			</div>
+		</form>
+	{/if}
 
-	{include file="tiki-calendar_nav.tpl"}
+	{include file='tiki-calendar_nav.tpl'}
 	{if $viewlist eq 'list'}
-		{include file="tiki-calendar_listmode.tpl"'}
+		{include file='tiki-calendar_listmode.tpl''}
 	{elseif $viewmode eq 'day'}
-		{include file="tiki-calendar_daymode.tpl"}
+		{include file='tiki-calendar_daymode.tpl'}
 	{elseif $viewmode eq 'week'}
-		{include file="tiki-calendar_weekmode.tpl"}
+		{include file='tiki-calendar_weekmode.tpl'}
 	{else}
-		{include file="tiki-calendar_calmode.tpl"}
+		{include file='tiki-calendar_calmode.tpl'}
 	{/if}
 <p>&nbsp;</p>
 </div>

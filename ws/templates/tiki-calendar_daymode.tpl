@@ -1,5 +1,5 @@
 <div style="position:relative">
-  <table border="0" cellpading="0" cellspacing="0" style="width:100%">
+  <table border="0" cellpadding="0" cellspacing="0" style="width:100%">
 	<tr valign="middle" style="height:36px">
 	  <td id="month_title" style="text-align:center"><strong>{$focusdate|tiki_long_date}</strong></td>
 	</tr>
