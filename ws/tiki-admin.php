@@ -307,6 +307,11 @@ if (isset($_REQUEST["page"])) {
 		$description = 'Search engine friendly url';
 		$helpUrl = "Rewrite+Rules";
 		include_once ('tiki-admin_include_sefurl.php');
+	} else if ($adminPage == 'workspaces') {
+	    	$admintitle = 'Workspaces pre-alpha';
+		$description = 'Workspaces pre-alpha use with caution';
+		$helpUrl = "Workspace";
+		include_once ('tiki-admin_include_workspaces.php');
 	} else {
 		$helpUrl = '';
 	}

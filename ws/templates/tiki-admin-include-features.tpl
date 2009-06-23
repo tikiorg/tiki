@@ -61,7 +61,10 @@
 						<span class="checkbox"><input type="checkbox" name="feature_banners" {if $prefs.feature_banners eq 'y'}checked="checked"{/if}/></span>
 						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Banners" target="tikihelp" class="tikihelp" title="{tr}Banners{/tr}">{/if} {tr}Banners{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
 					</div>	
-
+					<div class="half_width">
+						<span
+						class="checkbox"><input type="checkbox" name="feature_workspaces" {if $prefs.feature_workspaces eq 'y'}checked="checked"{/if}/></span><span class="label"> {if $prefs.feature_workspaces eq 'y'}<a href="{$prefs.helpurl}Workspaces" target="tikihelp" class="tikihelp" title="{tr}Workspaces{/tr}">{/if}{tr}Workspaces{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
+					</div>	
 				</div>
 {/tab}
 		
