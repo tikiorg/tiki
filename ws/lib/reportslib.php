@@ -12,6 +12,8 @@ class reportsLib extends TikiLib{
 		include_once('lib/webmail/tikimaillib.php');
 		$mail = new TikiMail();
 		
+		
+		$smarty->assign('report_preferences', $report_preferences);
 		$smarty->assign('report_user', ucfirst($user_data['login']));
 		$smarty->assign('report_interval', ucfirst($report_preferences['interval']));
 		$smarty->assign('report_date', date("l d.m.Y"));
@@ -51,7 +53,12 @@ class reportsLib extends TikiLib{
 
 		$email_test_headers .= 'From: noreply@tikiwiki.org' . "\n";	// needs a valid sender
 		$email_test_headers .= 'Reply-to: '. $email_test_to . "\n";
-		$email_test_headers .= "Content-type: text/html; charset=utf-8\n";
+
+		if($report_preferences['type']=='plain')
+			$email_test_headers .= "Content-type: text/plain; charset=utf-8\n";
+		else
+			$email_test_headers .= "Content-type: text/html; charset=utf-8\n";
+			
 		$email_test_headers .= 'X-Mailer: Tiki/'.$TWV->version.' - PHP/' . phpversion() . "\n";
 			
 		$sentmail = mail($user_data['email'], $subject, $mail_data, $email_test_headers);

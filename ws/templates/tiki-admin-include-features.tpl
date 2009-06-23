@@ -203,6 +203,10 @@
 						<span class="checkbox"><input type="checkbox" name="feature_mootools" {if $prefs.feature_mootools eq 'y'}checked="checked"{/if}/></span>
 						<span class="label"> <a href="{$prefs.helpurl}Mootools" target="tikihelp" class="tikihelp" title="{tr}Mootools{/tr}"> {tr}Mootools{/tr}</a></span>
 					</div>
+					<div class="half_width">
+						<span class="checkbox"><input type="checkbox" name="feature_quick_object_perms" {if $prefs.feature_quick_object_perms eq 'y'}checked="checked"{/if}/></span>
+						<span class="label"> <a href="{$prefs.helpurl}Quickperms" target="tikihelp" class="tikihelp" title="{tr}Quickperms{/tr}"> {tr}Quickperms{/tr}</a></span>
+					</div>
 				</div>
 {/tab}
 				
