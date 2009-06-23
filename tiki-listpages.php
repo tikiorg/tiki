@@ -166,7 +166,9 @@ if ( ! empty($multiprint_pages) ) {
 	$smarty->assign('find', $find);
 	
 	$filter = '';
-	$filter = setLangFilter($filter);
+	if ($prefs['feature_multilingual'] == 'y') {
+		$filter = setLangFilter($filter);
+	}
 	if (!empty($_REQUEST['langOrphan'])) {
 		$filter['langOrphan'] = $_REQUEST['langOrphan'];
 		$smarty->assign_by_ref('find_langOrphan', $_REQUEST['langOrphan']);
