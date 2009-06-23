@@ -2,16 +2,11 @@
 
 include_once ('tiki-setup.php');
 
-if ($_SERVER['REMOTE_ADDR'] != "127.0.0.1") {
-	$smarty->assign('msg', tra("This script can only be called by the server!"));
-	$smarty->display("error.tpl");
-	die;
-}
+if ($_SERVER['REMOTE_ADDR'] != "127.0.0.1" AND !empty($_SERVER['REMOTE_ADDR']))
+	die("This script can only be called by the server!");
 
 if ($prefs['feature_daily_report_watches'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_daily_report_watches");
-	$smarty->display("error.tpl");
-	die;
+	die("This feature is disabled");
 }
 
 include_once ('lib/tikilib.php');
