@@ -54,10 +54,10 @@
 {section name=user loop=$channels}
 <tr class="{cycle}">
 <td>{if $tracker_info.useRatings ne 'y' or $channels[user].name ne "Rating"}
-{self_link _icon='page_edit' cookietab='2' _anchor="content2" fieldId=$channels[user].fieldId}{tr}Edit{/tr}{/self_link}
+{self_link _icon='page_edit' cookietab='2' _anchor="anchor2" fieldId=$channels[user].fieldId}{tr}Edit{/tr}{/self_link}
 {/if}</td>
 <td>{if $tracker_info.useRatings ne 'y' or $channels[user].name ne "Rating"}
-{self_link cookietab='2' _anchor="content2" fieldId=$channels[user].fieldId _title='{tr}Edit{/tr}'}{$channels[user].fieldId}{/self_link}{else}{$channels[user].fieldId}{/if}</td>
+{self_link cookietab='2' _anchor="anchor2" fieldId=$channels[user].fieldId _title='{tr}Edit{/tr}'}{$channels[user].fieldId}{/self_link}{else}{$channels[user].fieldId}{/if}</td>
 <td>{$channels[user].name}</td>
 <td>{assign var=x value=$channels[user].type}{$field_types[$x].label}</td>
 <td>{$channels[user].options|truncate:42:"..."|escape}</td>
