@@ -15,8 +15,12 @@ include_once('lib/multilingual/multilinguallib.php');
 
 $auto_query_args = array('initial','maxRecords','sort_mode','find','lang','langOrphan', 
                          'findfilter_orphan', 'categId', 'category', 'page_orphans', 
-                         'structure_orphans', 'exact_match', 'hits_link_to_all_languages');
+                         'structure_orphans', 'exact_match', 
+                         'hits_link_to_all_languages', 'create_new_pages_using_template_name');
                          
+$language = $_REQUEST['lang'];
+$template_id_for_new_pages = $multilinguallib->getTemplateIDInLanguage('wiki', $_REQUEST['create_new_pages_using_template_name'], $language);
+$smarty->assign('template_id', $template_id_for_new_pages);
 
 if ($_REQUEST['hits_link_to_all_languages'] == 'On') {
    $smarty->assign('all_langs', 'y');

@@ -307,9 +307,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 
 {* -------------------- system -------------------- *}
 {if $field_value.type eq 's' and ($field_value.name eq "Rating" or $field_value.name eq tra("Rating")) and $tiki_p_tracker_vote_ratings eq 'y'}
-	{section name=i loop=$field_value.options_array}
-		<input name="{$field_value.ins_id}" type="radio" value="{$field_value.options_array[i]|escape}" />{$field_value.options_array[i]}
-	{/section}
+	{include file='tracker_item_field_input.tpl'}
 {/if}
 
 {* -------------------- user selector -------------------- *}

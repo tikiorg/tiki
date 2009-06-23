@@ -371,7 +371,7 @@
 {/if}
 
 {if $find && $tiki_p_edit eq 'y' and $pagefound eq 'n'}
-	{button _text="{tr}Create Page{/tr}: $find" href="tiki-editpage.php?page=$find" _title="{tr}Create{/tr}"}
+	{button _text="{tr}Create Page{/tr}: $find" href="tiki-editpage.php?page=$find&lang=$find_lang&templateId=$template_id" _title="{tr}Create{/tr}"}
 {/if}
 {if $checkboxes_on eq 'y'}
 </form>
