@@ -223,7 +223,7 @@ foreach($page_perms as $perm) {
 $groups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
 
 foreach($groups['data'] as $key=>$group) {
-	if (is_array($current_permissions[$group['groupName']])) {
+	if (!empty($current_permissions) && is_array($current_permissions[$group['groupName']])) {
 		//Check if Group has admin perm.
 		$diff1 = array_diff($current_permissions[$group['groupName']], $perms['admin']);
 		$diff2 = array_diff($perms['admin'], $current_permissions[$group['groupName']]);
