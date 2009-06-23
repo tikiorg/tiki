@@ -25,12 +25,6 @@ if ($_REQUEST['objectType'] == 'wiki page') {
 	}
 } else {
 	$tikilib->get_perm_object($_REQUEST['objectId'], $_REQUEST['objectType']);
-	if ($_REQUEST['objectType'] == 'tracker') {
-		global $trklib; include('lib/trackers/trackerlib.php');
-		if ($groupCreatorFieldId = $trklib->get_field_id_from_type($_REQUEST['objectId'], 'g', '1%')) {
-			$smarty->assign('group_tracker', 'y');
-		}
-	}
 }
 
 if (!($tiki_p_admin_objects == 'y' || (isset($$perm) && $$perm == 'y') ||(isset($special_perm) && $special_perm == 'y'))) {
@@ -68,8 +62,101 @@ if ($_REQUEST['objectType'] == 'wiki' || $_REQUEST['objectType'] == 'wiki page')
 	}
 }
 
+	//Make Quickpermission bundles
+	//ADMIN (get´s all perms)
+	$quickperms['tiki_p_admin_file_galleries'] = "tiki_p_admin_file_galleries";
+	$quickperms['tiki_p_assign_perm_file_gallery'] = "tiki_p_assign_perm_file_gallery";
+	$quickperms['tiki_p_batch_upload_files'] = "tiki_p_batch_upload_files";
+	$quickperms['tiki_p_batch_upload_file_dir'] = "tiki_p_batch_upload_file_dir";
+	$quickperms['tiki_p_create_file_galleries'] = "tiki_p_create_file_galleries";
+	$quickperms['tiki_p_download_files'] = "tiki_p_download_files";
+	$quickperms['tiki_p_edit_gallery_file'] = "tiki_p_edit_gallery_file";
+	$quickperms['tiki_p_list_file_galleries'] = "tiki_p_list_file_galleries";
+	$quickperms['tiki_p_upload_files'] = "tiki_p_upload_files";
+	$quickperms['tiki_p_view_fgal_explorer'] = "tiki_p_view_fgal_explorer";
+	$quickperms['tiki_p_view_fgal_path'] = "tiki_p_view_fgal_path";
+	$quickperms['tiki_p_view_file_gallery'] = "tiki_p_view_file_gallery";
+	$perms['admin'] = $quickperms;
+		
+	//WRITE (get´s only write perms)
+	unset($quickperms['tiki_p_admin_file_galleries']);
+	unset($quickperms['tiki_p_assign_perm_file_gallery']);
+	unset($quickperms['tiki_p_create_file_galleries']);
+	unset($quickperms['tiki_p_edit_gallery_file']);
+	$perms['write'] = $quickperms;
+	
+	//READ (get´s only read perms)
+	unset($quickperms['tiki_p_batch_upload_files']);
+	unset($quickperms['tiki_p_batch_upload_file_dir']);
+	unset($quickperms['tiki_p_create_file_galleries']);
+	unset($quickperms['tiki_p_upload_files']);
+	$perms['read'] = $quickperms;
+
+	//NONE (doesn´t get any perms)
+	unset($quickperms['tiki_p_download_files']);
+	unset($quickperms['tiki_p_list_file_galleries']);
+	unset($quickperms['tiki_p_view_fgal_explorer']);
+	unset($quickperms['tiki_p_view_fgal_path']);
+	unset($quickperms['tiki_p_view_file_gallery']);
+	$perms['none'] = $quickperms;
+
 // Process the form to assign a new permission to this page
-if (isset($_REQUEST['assign']) && isset($_REQUEST['group']) && isset($_REQUEST['perm'])) {
+if (isset($_REQUEST['assign']) && isset($_REQUEST['quick_perms'])) {
+	check_ticket('object-perms');
+	
+	$groups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
+	
+	foreach($groups['data'] as $group) {
+		if(isset($_REQUEST["perm_".$group['groupName']])) {
+			$group = $group['groupName'];
+			$permission = $_REQUEST["perm_".$group];
+			
+			if ($permission != "userdefined") {
+				//Remove all permissions of a group
+				foreach($perms['admin'] as $perm) {
+					$userlib->remove_object_permission($group, $_REQUEST["objectId"], $_REQUEST["objectType"], $perm);
+				}
+
+				//Add chosen quickperm bundle to the objcet/group
+				foreach($perms["$permission"] as $perm) {
+					$userlib->assign_object_permission($group, $_REQUEST["objectId"], $_REQUEST["objectType"], $perm);				
+				}
+			}
+		}
+	}
+	
+	$cookietab = 2;
+	setcookie('tab',$cookietab);
+	$smarty->assign_by_ref('cookietab',$cookietab);
+	
+	
+	foreach($_REQUEST['perm'] as $perm) {
+		if ($tiki_p_admin_objects != 'y' && !$userlib->user_has_permission($user, $perm)) {
+			$smarty->assign('errortype', 401);
+			$smarty->assign('msg', tra('Permission denied'));
+			$smarty->display('error.tpl');
+			die;
+		}
+	}
+
+		if (!empty($_REQUEST['assignstructure']) && $_REQUEST['assignstructure'] == 'on' && !empty($pageInfoTree)) {
+		foreach($pageInfoTree as $subPage) {
+			foreach($_REQUEST['perm'] as $perm) {
+				foreach ($_REQUEST['group'] as $group) {
+					$userlib->assign_object_permission($group,$subPage["pageName"],'wiki page',$perm);
+				}
+			}
+		}
+	} else {
+		foreach($_REQUEST['perm'] as $perm) {
+			foreach ($_REQUEST['group'] as $group) {
+				$userlib->assign_object_permission($group, $_REQUEST["objectId"], $_REQUEST["objectType"], $perm);
+			}
+		}
+	}
+	$smarty->assign('groupName', $_REQUEST["group"]);
+
+} elseif (isset($_REQUEST['assign']) && isset($_REQUEST['group']) && isset($_REQUEST['perm'])) {
 	check_ticket('object-perms');
 	foreach($_REQUEST['perm'] as $perm) {
 		if ($tiki_p_admin_objects != 'y' && !$userlib->user_has_permission($user, $perm)) {
@@ -119,8 +206,8 @@ if (isset($_REQUEST['delsel_x']) && isset($_REQUEST['checked'])) {
 	}
 }
 
-if (isset($_REQUEST['delsel_x']) || isset($_REQUEST['action']) || isset($_REQUEST['assign'])) {
-	$cookietab = 2;
+if ((isset($_REQUEST['delsel_x']) || isset($_REQUEST['action']) || isset($_REQUEST['assign'])) AND (!isset($_REQUEST['quick_perms']))) {
+	$cookietab = 3;
 	setcookie('tab',$cookietab);
 	$smarty->assign_by_ref('cookietab',$cookietab);
 }
@@ -128,8 +215,41 @@ if (isset($_REQUEST['delsel_x']) || isset($_REQUEST['action']) || isset($_REQUES
 // Now we have to get the individual page permissions if any
 $page_perms = $userlib->get_object_permissions($_REQUEST["objectId"], $_REQUEST["objectType"]);
 
+foreach($page_perms as $perm) {
+	$current_permissions[$perm['groupName']][] = $perm['permName'];
+}
+
 // Get a list of groups
 $groups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
+
+foreach($groups['data'] as $key=>$group) {
+	if (is_array($current_permissions[$group['groupName']])) {
+		//Check if Group has admin perm.
+		$diff1 = array_diff($current_permissions[$group['groupName']], $perms['admin']);
+		$diff2 = array_diff($perms['admin'], $current_permissions[$group['groupName']]);
+		if (empty($diff1) AND empty($diff2))
+			$groups['data'][$key]['groupSumm'] = "admin";
+		
+		//Check if Group has write perm.
+		$diff1 = array_diff($current_permissions[$group['groupName']], $perms['write']);
+		$diff2 = array_diff($perms['write'], $current_permissions[$group['groupName']]);
+		if (empty($diff1) AND empty($diff2)) 
+			$groups['data'][$key]['groupSumm'] = "write";
+		
+		//Check if Group has read perm.
+		$diff1 = array_diff($current_permissions[$group['groupName']], $perms['read']);
+		$diff2 = array_diff($perms['read'], $current_permissions[$group['groupName']]);
+		if (empty($diff1) AND empty($diff2))
+			$groups['data'][$key]['groupSumm'] = "read";
+	
+		if (empty($groups['data'][$key]['groupSumm']))
+			$groups['data'][$key]['groupSumm'] = "userdefined";
+
+	} else {
+		$groups['data'][$key]['groupSumm'] = "none";
+	}
+}
+
 $smarty->assign_by_ref('groups', $groups["data"]);
 
 // Get a list of permissions
@@ -204,3 +324,4 @@ if ( isset($_REQUEST['filegals_manager']) && $_REQUEST['filegals_manager'] != ''
 }  else {
 	$smarty->display("tiki.tpl");
 }
+?>

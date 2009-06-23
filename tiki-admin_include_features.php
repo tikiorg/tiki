@@ -83,6 +83,7 @@ if (isset($_REQUEST["features"])) {
 		"feature_user_watches",
 		"feature_group_watches",
 		"feature_daily_report_watches",
+		"feature_quick_object_perms",
 		"feature_user_watches_translations",
 		"feature_userfiles",
 		"feature_usermenu",
