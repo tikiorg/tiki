@@ -1381,8 +1381,8 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'zend_mail_smtp_security' => '',
 
 		//workspaces
+		'new_to_ws' => 'y',
 		'feature_workspaces' => 'n',
-		'feature_workspaces_init' => 'y',
 	);
 
 	// spellcheck
