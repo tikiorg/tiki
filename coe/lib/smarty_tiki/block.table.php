@@ -31,10 +31,10 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  */
 
 function replace_columns_content(&$line,$content) {
-	preg_match_all("/%[^%]+?%/",$content,$matches,PREG_PATTERN_ORDER);
-	foreach($matches[0] as $c) {
-		$pattern[] = "/$c/";
-		$replace[] = $line[str_replace("%","",$c)];
+	preg_match_all("/((%25(?![0-9]))|%)(.+?)\\1/",$content,$matches,PREG_PATTERN_ORDER);
+	foreach($matches[3] as $c) {
+		$pattern[] = "/((%25(?![0-9]))|%)$c\\1/";
+		$replace[] = $line[$c];
 	}
 	return preg_replace($pattern,$replace,$content);
 }

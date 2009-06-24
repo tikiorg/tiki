@@ -39,6 +39,7 @@ function smarty_block_col($params, $content, &$smarty, &$repeat) {
 			if (isset($params['sort'])) $col['sort'] = $params['sort'];
 			if (!empty($content)) $col['content'] = $content;
 			$smarty_tables[$current][] = $col;
+			//echo"TOTO:<pre>".print_r($col,true)."</pre>";
 		}
 		return ;
 	}

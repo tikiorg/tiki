@@ -53,10 +53,16 @@
 *}
 
 {table from=$quicktags _template='tiki-admin_quicktags_content.tpl' _htmlelement='quicktags-content' _sort_arg='sort_mode' cycle="class"}
-{col title="{tr}Label{/tr}"  name='taglabel' sort=y type="link" href="tiki-admin_quicktags.php?tagId=%tagId%&amp;cookietab=2"}Label : %taglabel%{/col}
+{col title="{tr}Label{/tr}"  name='taglabel' sort=y type='link' href='tiki-admin_quicktags.php?tagId=%tagId%&amp;cookietab=2'}Label : %taglabel%{/col}
 {col title="{tr}Insert{/tr}"  name='taginsert' sort=y}{/col}
-{col title="{tr}Icon{/tr}"  name='tagicon' type="icon"}{/col}
+{col title="{tr}Icon{/tr}"  name='tagicon' type='icon'}{/col}
 {col title="{tr}Category{/tr}"  name='tagcategory' sort=y}{/col}
+{col title="{tr}Actions{/tr}" name='actions'}
+      {self_link _template='tiki-admin_quicktags_edit.tpl' _htmlelement='quicktags-edit' _class='link' cookietab="2" _anchor='tab2' tagId='%tagId%' _icon='page_edit'}{tr}Edit{/tr}{/self_link}
+      &nbsp;&nbsp;
+      {self_link _class='link' remove='%tagId%' _ajax='n' _icon='cross'}{tr}Remove{/tr}{/self_link}
+{/col}
+{*{col_action title='{tr}Edit{/tr}' _template='tiki-admin_quicktags_edit.tpl' _htmlelement='quicktags-edit' _class='link' _icon='page_edit'} *} 
 {/table}
 
 
