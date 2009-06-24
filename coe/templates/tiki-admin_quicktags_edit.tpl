@@ -3,6 +3,7 @@
 <input type="hidden" name="tagId" value="{$tagId|escape}" />
 <input type="hidden" name="offset" value="{$offset|escape}" />
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+	{button cookitab="2" _anchor="tab2" _text="{tr}Create New QuickTag{/tr}" tagId='null'}
 <table class="normal">
 <tr class="formcolor"><td>{tr}Label{/tr}:</td>
 <td><input type="text" maxlength="255" size="25" name="taglabel" value="{$info.taglabel|escape}" /></td></tr>
