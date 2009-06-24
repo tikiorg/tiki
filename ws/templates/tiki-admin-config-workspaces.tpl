@@ -1,8 +1,8 @@
-{remarksbox type="info" title="{tr}You must to configure Workspaces before to get ready!{/tr}"}
+{remarksbox type="info" title="{tr}You must configure Workspaces before you get ready!{/tr}"}
 	{if $warning}
 		{$warning}
 	{else}
-		{"{tr}Please select one option bellow. Remember this step is very important, so be careful when you select the workspace category container, because this will destroy any category o whatever inside it if the names are equal! If you don't know what are you doing, select the default option.{/tr}"}
+		{"{tr}Please, select one option bellow. Remember this step is very important, so be careful selecting the workspace category container, this will destroy any category and everything inside it if the names are equal! If you don't know what you are doing, select the default option.{/tr}"}
 	{/if}
 {/remarksbox}
 
@@ -16,7 +16,7 @@
 			<input type="radio" id="selected_workspace_name" name="selected_radio" checked="checked" value="selected_workspace_holder" />
 		</div>
 		<div>
-			<label for="selected_workspace">{tr}Create a new Workspace container, called 'Workspaces' (Default option){/tr}</label>
+			<label for="selected_workspace">{tr}Create new Workspace container, called 'Workspaces' (Default option){/tr}</label>
 		</div>
 	</div>
 	{if $prefs.feature_categories eq 'y'}
@@ -28,7 +28,7 @@
 			<label for="selected_used_category">{tr}Select a Category and convert it to a Workspace container{/tr}</label>
 			<select id="workspaces_category_list">
 				<option title="Example 1" value="1">Category example 1</option>
-				<option title="Example 2 " value="2">Category example 2</option>
+				<option title="Example 2" value="2">Category example 2</option>
 				<option title="Example 3" value="3">Category example 3</option>
 			</select>
 			{if $prefs.feature_help eq 'y'} {help url="Workspaces" desc="{tr}Workspaces manual page{/tr}"}{/if} <br />
