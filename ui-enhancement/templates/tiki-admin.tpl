@@ -26,11 +26,9 @@ Add a value in first check when you create a new admin page. *}
 {if $include != "list-sections"}
   <div class="simplebox adminanchors clearfix" >{include file='tiki-admin-include-anchors.tpl'}</div>
 {/if}
-
 {if $feature_version_checks eq 'y' and $prefs.tiki_needs_upgrade eq 'y'}
 <div class="simplebox highlight">{tr}A new version of Tikiwiki, <b>{$tiki_release}</b>, is available. You are currently running <b>{$tiki_version}</b>. Please visit <a href="http://tikiwiki.org/Download">http://tikiwiki.org/Download</a>.{/tr}</div>
 {/if}
-
 {if $tikifeedback}
 	{remarksbox type="note" title="{tr}Note{/tr}"}
 		{cycle values="odd,even" print=false}
@@ -63,7 +61,6 @@ Add a value in first check when you create a new admin page. *}
 {/if}
 
 {include file="tiki-admin-include-$include.tpl"}
-
 <br style="clear:both" />
 {remarksbox type="tip" title="{tr}Crosslinks to other features and settings{/tr}"}
 

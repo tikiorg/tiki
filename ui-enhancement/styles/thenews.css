@@ -1111,6 +1111,46 @@ div.simplebox {
 	padding: 1em;
 }
 
+
+/* features-box : for doing cool stuff in drag and drop */
+.features-box{
+    margin: 0.2em 0 0 0.4em;
+    padding: 3px;
+    border: solid 1px #ccc;
+    margin-bottom: 10px;
+    height: 500px;
+    overflow: auto;
+    clear:both;
+}
+
+.features-box-title{
+    background-color: #eee;
+}
+
+.features-box-content{
+    margin: 10px;
+    clear: both;
+}
+
+.features-box-separator{
+    margin-bottom: 10px;
+}
+
+.features-box-separator-title{
+    border-bottom: 1px solid #ccc;
+    font-family: arial;
+    font-weight: bold;
+}
+
+.addfeatures{
+    float:right;
+}
+
+.add-features-box{
+    border: 1px solid #ccc;
+    height: 300px;
+    overflow: auto;
+}
 /***** Tables, Tabs and Lists ****/
 /** Tables **/
 
