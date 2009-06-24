@@ -1,0 +1,9 @@
+/* $Id$ */
+
+.cssmenu_horiz li {
+	width: 11em;
+}
+
+.codelisting {
+	padding-bottom: 1.8em;
+}

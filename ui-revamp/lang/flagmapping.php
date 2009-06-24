@@ -12,7 +12,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 $flagmapping = array(
     'ar' 	=> array(  ''),
     'ca' 	=> array(  'Spain'),
-    'cn' 	=> array(  'Cina'),
+    'cn' 	=> array(  'China'),
     'zh' 	=> array(  'China'),
     'cs' 	=> array(  'Czech_Republic'),
     'da' 	=> array(  'Denmark'),
@@ -30,7 +30,7 @@ $flagmapping = array(
     'hr' 	=> array(  'Croatia'),
     'it' 	=> array(  'Italy'),
     'ja' 	=> array(  'Japan'),
-    'ko' 	=> array(  'Korea'),
+    'ko' 	=> array(  ''),
     'hu' 	=> array(  'Hungary'),
     'nl' 	=> array(  'Netherlands'),
     'no' 	=> array(  'Norway'),
@@ -45,6 +45,5 @@ $flagmapping = array(
     'sv' 	=> array(  'Sweden'),
     'tv' 	=> array(  'Tuvalu'),
     'tw' 	=> array(  'Taiwan'),
-    'uk' 	=> array(  'Ukrain')
+    'uk' 	=> array(  'Ukraine')
 );
-?>

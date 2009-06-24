@@ -25,9 +25,12 @@ class Installer
 		$dbversion_tiki = $TWV->getBaseVersion();
 
 		$this->runFile( dirname(__FILE__) . '/../db/tiki-'.$dbversion_tiki.'-'.$db_tiki.'.sql' );
+		$this->buildPatchList();
+		$this->buildScriptList();
 
 		// Base SQL file contains the distribution tiki patches up to this point
-		foreach( $this->patches as $patch ) {
+		$patches = $this->patches;
+		foreach( $patches as $patch ) {
 			if( preg_match( '/_tiki$/', $patch ) ) {
 				$this->recordPatch( $patch );
 			}
@@ -193,6 +196,8 @@ class Installer
 
 	function buildPatchList() // {{{
 	{
+		$this->patches = array();
+
 		$files = glob( dirname(__FILE__) . '/schema/*_*.sql' );
 		foreach( $files as $file ) {
 			$filename = basename( $file );
@@ -226,17 +231,28 @@ class Installer
 
 	function tableExists( $tableName ) // {{{
 	{
+		global $db_tiki;
 		static $list = null;
 		if( is_null( $list ) )
 		{
 			$list = array();
-			$result = $this->query( "show tables" );
+			switch ( $db_tiki ) {
+			    case 'sqlite':
+	    			$result = $this->query( "SELECT name FROM sqlite_master WHERE type = 'table'" );
+		    		break;
+			    default:
+			        $result = $this->query( "show tables" );
+			        break;
+			}
 			while( $row = $result->fetchRow() )
 				$list[] = reset( $row );
 		}
 
 		return in_array( $tableName, $list );
 	} // }}}
-}
 
-?>
+	function requiresUpdate() // {{{
+	{
+		return count( $this->patches ) > 0 ;
+	} // }}}
+}
