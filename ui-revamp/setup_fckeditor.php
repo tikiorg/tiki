@@ -20,10 +20,8 @@ if ( $tikidomain and is_file('styles/'.$tikidomain.'/'.$prefs['style']) ) {
 $smarty->assign('fckstyle',$fckstyle);
 
 $section = isset($_GET['section']) ? $_GET['section'] : 'wiki page';
-
 $quicktags = QuicktagsList::fromPreference( $section );
 file_put_contents('temp/cache/foo', print_r($quicktags->getWysiwygArray(), true));
 $smarty->assign('toolbar', $quicktags->getWysiwygArray() );
 
 $smarty->display('setup_fckeditor.tpl', null, null, 'application/javascript');
-?>

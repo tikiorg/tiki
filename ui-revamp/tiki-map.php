@@ -534,4 +534,3 @@ if (@$_REQUEST['maponly']!='frame') {
 	$smarty->assign("maponly","frame");
 	$smarty->display('map/tiki-map_frame.tpl');
 }
-?>

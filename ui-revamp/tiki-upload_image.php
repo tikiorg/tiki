@@ -20,7 +20,7 @@ if ($prefs['feature_galleries'] != 'y') {
 }
 
 // Now check permissions to access this page
-if ($tiki_p_upload_images != 'y' and !$tikilib->user_has_perm_on_object($user,$_REQUEST["galleryId"],"image gallery","tiki_p_upload_images") ) {
+if ($tiki_p_upload_images != 'y' and !$tikilib->user_has_perm_on_object($user,$_REQUEST["galleryId"],"image gallery","tiki_p_upload_images", 'tiki_p_edit_categorized') ) {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied you cannot upload images"));
 
@@ -430,5 +430,3 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 // Display the template
 $smarty->assign('mid', 'tiki-upload_image.tpl');
 $smarty->display("tiki.tpl");
-
-?>

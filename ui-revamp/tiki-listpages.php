@@ -11,8 +11,24 @@ $section = 'wiki page';
 require_once('tiki-setup.php');
 require_once('lib/ajax/ajaxlib.php');
 
-$auto_query_args = array('initial','maxRecords','sort_mode','find','lang','langOrphan');
+$auto_query_args = array('initial','maxRecords','sort_mode','find','lang','langOrphan', 
+                         'findfilter_orphan', 'categId', 'category', 'page_orphans', 
+                         'structure_orphans', 'exact_match', 
+                         'hits_link_to_all_languages', 'create_new_pages_using_template_name');
+                         
 
+if ($prefs['feature_multilingual'] == 'y' && isset($_REQUEST['lang']) && isset($_REQUEST['create_new_pages_using_template_name'])) {
+	global $multilinguallib; include_once('lib/multilingual/multilinguallib.php');
+	$template_id_for_new_pages = $multilinguallib->getTemplateIDInLanguage('wiki', $_REQUEST['create_new_pages_using_template_name'], $_REQUEST['lang']);
+	$smarty->assign('template_id', $template_id_for_new_pages);
+}
+
+if (isset($_REQUEST['hits_link_to_all_languages']) && $_REQUEST['hits_link_to_all_languages'] == 'On') {
+   $smarty->assign('all_langs', 'y');
+} else {
+   $smarty->assign('all_langs', '');
+}
+   
 $smarty->assign('headtitle',tra('Pages'));
 
 $access->check_feature( array( 'feature_wiki', 'feature_listPages' ) );
@@ -71,7 +87,7 @@ if ( !empty($_REQUEST['submit_mult']) && isset($_REQUEST["checked"]) ) {
 			global $wikilib; include_once('lib/wiki/wikilib.php');
 			foreach ($_REQUEST["checked"] as $check) {
 				$info = $tikilib->get_page_info($check);
-				if ($info['flag'] != 'L' && ($tiki_p_admin_wiki == 'y' || $tikilib->user_has_perm_on_object($user, $check, 'wiki page', 'tiki_p_lock'))) {
+				if ($info['flag'] != 'L' && ($tiki_p_admin_wiki == 'y' || $tikilib->user_has_perm_on_object($user, $check, 'wiki page', 'tiki_p_lock', 'tiki_p_edit_categorized'))) {
 					$wikilib->lock_page($check);
 					}	
 			}
@@ -150,9 +166,8 @@ if ( ! empty($multiprint_pages) ) {
 	$smarty->assign('find', $find);
 	
 	$filter = '';
-	if (!empty($_REQUEST['lang'])) {
-		$filter['lang'] = $_REQUEST['lang'];
-		$smarty->assign_by_ref('find_lang', $_REQUEST['lang']);
+	if ($prefs['feature_multilingual'] == 'y') {
+		$filter = setLangFilter($filter);
 	}
 	if (!empty($_REQUEST['langOrphan'])) {
 		$filter['langOrphan'] = $_REQUEST['langOrphan'];
@@ -166,6 +181,32 @@ if ( ! empty($multiprint_pages) ) {
 		global $categlib; include_once ('lib/categories/categlib.php');
 		$filter['categId'] = $categlib->get_category_id($_REQUEST['category']);
 		$smarty->assign_by_ref('find_categId', $filter['categId']);	
+	}
+	if ( (!empty($_REQUEST['page_orphans']) && $_REQUEST['page_orphans'] == 'y') || (isset($_REQUEST['findfilter_orphan']) && $_REQUEST['findfilter_orphan'] == 'page_orphans')) {
+		$listpages_orphans = true;
+	}
+	if ($prefs['feature_listorphanPages'] == 'y') {
+		if ( (!empty($_REQUEST['page_orphans']) && $_REQUEST['page_orphans'] == 'y') || (isset($_REQUEST['findfilter_orphan']) && $_REQUEST['findfilter_orphan'] == 'page_orphans')) {
+			$filter_values['orphan'] = 'page_orphans';
+		}
+		$filters['orphan']['page_orphans'] = tra('Orphan pages');
+	}
+	if ($prefs['feature_wiki_structure'] == 'y') {
+		if ( (!empty($_REQUEST['structure_orphans']) && $_REQUEST['structure_orphans'] == 'y') || (isset($_REQUEST['findfilter_orphan']) && $_REQUEST['findfilter_orphan'] == 'structure_orphans')) {
+			$filter['structure_orphans'] = true;
+		}
+		if ($prefs['feature_listorphanStructure'] == 'y') {
+			if ( (!empty($_REQUEST['structure_orphans']) && $_REQUEST['structure_orphans'] == 'y') || (isset($_REQUEST['findfilter_orphan']) && $_REQUEST['findfilter_orphan'] == 'structure_orphans')) {
+				$filter_values['orphan'] = 'structure_orphans';
+			}
+		$filters['orphan']['structure_orphans'] = tra('Pages not in structure');
+		}
+	}
+	if (!empty($filters)) {
+		$filter_names['orphan'] = tra('Type');
+		$smarty->assign_by_ref('filters', $filters);
+		$smarty->assign_by_ref('filter_names', $filter_names);
+		$smarty->assign_by_ref('filter_values', $filter_values);
 	}
 
 	if (isset($_REQUEST["initial"])) {
@@ -188,7 +229,17 @@ if ( ! empty($multiprint_pages) ) {
 	if (!isset($listpages_orphans)) {
 		$listpages_orphans = false;
 	}
+	
 	$listpages = $tikilib->list_pages($offset, $maxRecords, $sort_mode, $find, $initial, $exact_match, false, true, $listpages_orphans, $filter);
+
+	if( $prefs['feature_wiki_pagealias'] == 'y' && $find ) {
+		global $semanticlib;
+		require_once 'lib/wiki/semanticlib.php';
+		$aliases = $semanticlib->getAliasContaining( $find );
+		$smarty->assign( 'aliases', $aliases );
+	} else {
+		$smarty->assign( 'aliases', null );
+	}
 
 	// Only show the 'Actions' column if the user can do at least one action on one of the listed pages
 	$show_actions = 'n';
@@ -289,4 +340,13 @@ if ( ! empty($multiprint_pages) ) {
 		$smarty->display("tiki.tpl");
 	}
 }
-?>
+
+function setLangFilter($filter) {
+	global $smarty;
+	global $multilinguallib;  include_once('lib/multilingual/multilinguallib.php');
+   $lang = $multilinguallib->currentSearchLanguage(false); 
+   $filter['lang'] = $lang;
+   $smarty->assign_by_ref('find_lang', $lang);   
+   return $filter;
+}
+

@@ -355,5 +355,3 @@ function getUserBlogs($params) {
 	$myVal = new XML_RPC_Value($arrayVal, "array");
 	return new XML_RPC_Response($myVal);
 }
-
-?>

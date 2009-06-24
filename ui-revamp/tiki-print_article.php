@@ -91,5 +91,3 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 $smarty->assign('print_page', 'y');
 $smarty->display("tiki-print_article.tpl");
-
-?>

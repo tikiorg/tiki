@@ -99,5 +99,3 @@ ask_ticket('view-chart');
 
 $smarty->assign('mid', 'tiki-view_chart.tpl');
 $smarty->display("tiki.tpl");
-
-?>

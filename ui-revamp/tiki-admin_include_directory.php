@@ -22,4 +22,3 @@ if (isset($_REQUEST["directory"])) {
 	simple_set_value('directory_open_links');
 }
 ask_ticket('admin-inc-directory');
-?>

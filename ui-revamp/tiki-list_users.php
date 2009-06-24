@@ -90,4 +90,3 @@ include_once('tiki-section_options.php');
 // Display the template
 $smarty->assign('mid','tiki-list_users.tpl');
 $smarty->display("tiki.tpl");
-?>

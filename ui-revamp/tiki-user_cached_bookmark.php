@@ -39,5 +39,3 @@ $smarty->assign_by_ref('info', $info);
 $info["refresh"] = $info["lastUpdated"];
 $smarty->assign('mid', 'tiki-view_cache.tpl');
 $smarty->display('tiki-view_cache.tpl');
-
-?>

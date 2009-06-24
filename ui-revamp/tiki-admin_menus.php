@@ -11,6 +11,8 @@ require_once ('tiki-setup.php');
 
 include_once ('lib/menubuilder/menulib.php');
 
+$auto_query_args = array('offset','sort_mode','menuId');
+
 if ($tiki_p_admin != 'y' && $tiki_p_edit_menu != 'y') {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
@@ -34,6 +36,7 @@ if ($_REQUEST["menuId"]) {
 	$info["description"] = '';
 	$info["type"] = 'd';
 	$info['icon'] = null;
+	$info['use_items_icons'] = 'n';
 }
 
 $smarty->assign_by_ref('info', $info);
@@ -52,11 +55,12 @@ if (isset($_REQUEST["remove"])) {
 if (isset($_REQUEST["save"])) {
 	check_ticket('admin-menus');
 	if (!isset($_REQUEST['icon'])) $_REQUEST['icon'] = null;
-	$menulib->replace_menu($_REQUEST['menuId'], $_REQUEST['name'], $_REQUEST['description'], $_REQUEST['type'], $_REQUEST['icon']);
+	$_REQUEST['use_items_icons'] = ( isset($_REQUEST['use_items_icons']) && $_REQUEST['use_items_icons'] == 'on' ) ? 'y' : 'n';
+	$menulib->replace_menu($_REQUEST['menuId'], $_REQUEST['name'], $_REQUEST['description'], $_REQUEST['type'], $_REQUEST['icon'], $_REQUEST['use_items_icons']);
 	$smarty->clear_cache('tiki-user_menu.tpl', $_REQUEST['menuId']);
 	$_REQUEST["menuId"] = 0;
 	$smarty->assign('menuId', 0);
-	$smarty->assign('info', array('name'=>'', 'description'=>'', 'type'=>'d', 'icon'=>null));
+	$smarty->assign('info', array('name'=>'', 'description'=>'', 'type'=>'d', 'icon'=>null, 'use_items_icons'=>'n'));
 }
 
 if (!isset($_REQUEST["sort_mode"])) {
@@ -98,5 +102,3 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 // Display the template
 $smarty->assign('mid', 'tiki-admin_menus.tpl');
 $smarty->display("tiki.tpl");
-
-?>

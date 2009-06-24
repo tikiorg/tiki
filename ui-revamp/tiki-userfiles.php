@@ -47,7 +47,6 @@ $percentage = round($percentage);
 $smarty->assign('cellsize', $cellsize);
 $smarty->assign('percentage', $percentage);
 $smarty->assign('limitmb', $prefs['userfiles_quota']);
-$smarty->assign('user', $user);
 
 // Process upload here
 for ($i = 0; $i < 5; $i++) {
@@ -182,5 +181,3 @@ $smarty->assign("mootab",'y');
 }
 $smarty->assign('mid', 'tiki-userfiles.tpl');
 $smarty->display("tiki.tpl");
-
-?>

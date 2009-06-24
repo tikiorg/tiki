@@ -6,8 +6,15 @@ $force_no_compression = true;
 $skip = false;
 
 if ( isset($_GET['fileId']) && isset($_GET['thumbnail']) && isset($_COOKIE['PHPSESSID']) && count($_GET) == 2 ) {
+
+	$tikiroot = dirname($_SERVER['PHP_SELF']);
+	$session_params = session_get_cookie_params();
+	session_set_cookie_params($session_params['lifetime'],$tikiroot);
+	unset($session_params);
 	session_start();
+
 	if ( isset($_SESSION['allowed'][$_GET['fileId']]) ) {
+		require_once 'tiki-filter-base.php';
 		include('db/tiki-db.php');
 		include('lib/tikidblib.php');
 		$db = new TikiDB($dbTiki);
@@ -103,7 +110,7 @@ if (!$skip) {
 
 	if ( !$zip && $tiki_p_admin_file_galleries != 'y' && !$userlib->user_has_perm_on_object($user, $info['galleryId'], 'file gallery', 'tiki_p_download_files')) {
 		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra('You can not download files'));
+		$smarty->assign('msg', tra('Permission denied'));
 		$smarty->display('error.tpl');
 		die;
 	}

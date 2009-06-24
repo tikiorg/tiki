@@ -35,7 +35,7 @@ if (isset($_REQUEST["features"])) {
 		"feature_debug_console",
 		"feature_directory",
 		"feature_drawings",
-		"feature_events",
+		"feature_events", //2009-04-29 marclaporte: can we remove this?
 		"feature_faqs",
 		"feature_featuredLinks",
 		"feature_file_galleries",
@@ -82,6 +82,8 @@ if (isset($_REQUEST["features"])) {
 		"feature_user_bookmarks",
 		"feature_user_watches",
 		"feature_group_watches",
+		"feature_daily_report_watches",
+		"feature_quick_object_perms",
 		"feature_user_watches_translations",
 		"feature_userfiles",
 		"feature_usermenu",
@@ -101,7 +103,12 @@ if (isset($_REQUEST["features"])) {
 		"feature_magic",
 		"feature_minichat",
 		"feature_comments_moderation",
+		"feature_comments_locking",
 		"feature_groupalert",
+		"feature_wiki_mindmap",
+		"use_minified_scripts",
+		"feature_print_indexed",
+		'debug_ignore_xdebug',
 	);
 
 	$pref_byref_values = array(
@@ -116,17 +123,10 @@ if (isset($_REQUEST["features"])) {
 		byref_set_value ($britem);
 	}
 
-	$smarty->clear_compiled_tpl();
+	$cachelib->empty_full_cache();
 
-}
-
-if (!empty($_REQUEST['tabs'])) {
-	$smarty->assign('tabs', $_REQUEST['tabs']=='on'?'n':'');
-} else {
-	$smarty->assign('tabs', '');
 }
 
 $smarty->assign('php_major_version', substr(PHP_VERSION, 0, strpos(PHP_VERSION, '.')));
 
 ask_ticket('admin-inc-features');
-?>

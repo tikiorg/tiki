@@ -16,6 +16,12 @@ if (!($user == 'admin' || $tiki_p_admin == 'y' || $tiki_p_admin_users == 'y')) {
 	$smarty->display("error.tpl");
 	die;
 }
+if ($tiki_p_admin != 'y') {
+	$userGroups = $userlib->get_user_groups_inclusion($user);
+	$smarty->assign_by_ref('userGroups', $userGroups);
+} else {
+	$userGroups = array();
+}
 
 function discardUser($u, $reason) {
 	$u['reason'] = $reason;
@@ -23,7 +29,7 @@ function discardUser($u, $reason) {
 }
 
 function batchImportUsers() {
-	global $userlib, $smarty, $logslib, $tiki_p_admin, $user, $prefs;
+	global $userlib, $smarty, $logslib, $tiki_p_admin, $user, $prefs, $userGroups;
 
 	$fname = $_FILES['csvlist']['tmp_name'];
 	$fhandle = fopen($fname, "r");
@@ -60,8 +66,6 @@ function batchImportUsers() {
 	$added = 0;
 	$errors = array();
 	$discarded = array();
-	if ($tiki_p_admin != 'y')
-		$userGroups = $userlib->get_user_groups_inclusion($user);
 	foreach ($userrecs as $u) {
 		$local = array();
 		$exist = false;
@@ -100,7 +104,7 @@ function batchImportUsers() {
 			continue;
 		}
 		if (!$exist) {
-			$pass_first_login = (isset($_REQUEST['pass_first_login']) && $_REQUEST['pass_first_login'] == 'on') ? true: false;
+			$pass_first_login = ( isset($_REQUEST['pass_first_login']) && $_REQUEST['pass_first_login'] == 'on' );
 			$userlib->add_user($u['login'], $u['password'], $u['email'], '', $pass_first_login);
 			$logslib->add_log('users',sprintf(tra("Created account %s <%s>"),$u['login'], $u['email']));
 		}
@@ -164,7 +168,7 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 			} elseif (!empty($prefs['username_pattern']) && !preg_match($prefs['username_pattern'], $_REQUEST['name'])) {
 				$tikifeedback[] = array('num'=>1,'mes'=>tra("User login contains invalid characters"));
 			} else {
-				$pass_first_login = (isset($_REQUEST['pass_first_login']) && $_REQUEST['pass_first_login'] == 'on') ? true: false;
+				$pass_first_login = ( isset($_REQUEST['pass_first_login']) && $_REQUEST['pass_first_login'] == 'on' );
 
 				$polerr = $userlib->check_password_policy($_POST["pass"]);
 				if ( strlen($polerr)>0 ) {
@@ -174,8 +178,30 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 				}
 				if ($prefs['login_is_email'] == 'y' and empty($_REQUEST['email']))
 					$_REQUEST['email'] = $_REQUEST['name'];
-				if ($userlib->add_user($_REQUEST["name"], $_REQUEST["pass"], $_REQUEST["email"], '', $pass_first_login)) {
+
+				$send_validation_email = false;
+				if ( isset($_REQUEST['need_email_validation']) && $_REQUEST['need_email_validation'] == 'on' ) {
+					$send_validation_email = true;
+					$apass = addslashes(md5($tikilib->genPass()));
+				}
+
+				if ( $userlib->add_user(
+					$_REQUEST["name"],
+					( $send_validation_email ? $apass : $_REQUEST["pass"] ),
+					$_REQUEST["email"],
+					( $send_validation_email ? $_REQUEST["pass"] : '' ),
+					$pass_first_login
+				) ) {
 					$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("New %s created with %s %s."),tra("user"),tra("username"),$_REQUEST["name"]));
+					if ( $send_validation_email ) {
+
+						// No need to send credentials in mail if the user is forced to choose a new password after validation
+						$realpass = $pass_first_login ? '' : $_REQUEST["pass"];
+
+						$userlib->send_validation_email(
+							$_REQUEST['name'], $apass, $_REQUEST['email'], '', '', '', 'user_creation_validation_mail', $realpass
+						);
+					}
 					$cookietab = '1';
 					$_REQUEST['find'] = $_REQUEST["name"];
 				} else {
@@ -199,7 +225,13 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 			key_get($area);
 		}
 	}
-	if ( $_REQUEST["action"] == 'removegroup' && isset($_REQUEST["user"]) ) {
+	if ( $_REQUEST['action'] == 'removegroup' && isset($_REQUEST['user']) && !empty($_REQUEST['group']) ) {
+		if ($tiki_p_admin != 'y' &&  !array_key_exists($_REQUEST['group'], $userGroups)) {
+			$smarty->assign('errortype', 401);
+			$smarty->assign('msg', tra('Permission denied').' '.$_REQUEST['group']);
+			$smarty->display('error.tpl');
+			die;
+		}
 		$area = 'deluserfromgroup';
 		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_REQUEST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
@@ -240,24 +272,12 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 		$sort_mode = 'groupName_asc';
 		$initial = '';
 		$find = '';
-		if ($tiki_p_admin != 'y')
-			$userGroups = $userlib->get_user_groups_inclusion($user);
-		else
-			$userGroups = '';
-		$groups = $userlib->get_groups(0, -1, $sort_mode, $find, $initial, 'n', $userGroups);
-		$smarty->assign('groups', $groups['data']);
 	} elseif ($_REQUEST['submit_mult'] == 'set_default_groups') {
 		$set_default_groups_mode = TRUE;
 		$smarty->assign('set_default_groups_mode', 'y');
 		$sort_mode = 'groupName_asc';
 		$initial = '';
 		$find = '';
-		if ($tiki_p_admin != 'y')
-			$userGroups = $userlib->get_user_groups_inclusion($user);
-		else
-			$userGroups = '';
-		$groups = $userlib->get_groups(0, -1, $sort_mode, $find, $initial, 'n', $userGroups);
-		$smarty->assign('groups', $groups['data']);
 	} elseif ($_REQUEST['submit_mult'] == 'emailChecked') {
 		$email_mode = 'y';
 		$smarty->assign('email_mode', 'y');
@@ -267,8 +287,6 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 	}					
 } elseif (!empty($_REQUEST['group_management']) && $_REQUEST['group_management'] == 'add') {
 	if (!empty($_REQUEST["checked_groups"]) && !empty($_REQUEST["checked"])) {
-		if ($tiki_p_admin != 'y')
-			$userGroups = $userlib->get_user_groups_inclusion($user);
 		foreach ($_REQUEST['checked'] as $assign_user) {
 			foreach ($_REQUEST["checked_groups"] as $group) {
 				if ($tiki_p_admin == 'y' || array_key_exists($group, $userGroups)) {					
@@ -285,8 +303,10 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 	if (!empty($_REQUEST["checked_groups"]) && !empty($_REQUEST["checked"])) {
 		foreach ($_REQUEST['checked'] as $assign_user) {
 			foreach ($_REQUEST["checked_groups"] as $group) {
-				$userlib->remove_user_from_group($assign_user, $group);
-				$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s <b>%s</b> removed from %s <b>%s</b>."),tra("user"),$assign_user,tra("group"),$group));
+				if ($tiki_p_admin == 'y' || array_key_exists($group, $userGroups)) {
+					$userlib->remove_user_from_group($assign_user, $group);
+					$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s <b>%s</b> removed from %s <b>%s</b>."),tra("user"),$assign_user,tra("group"),$group));
+				}
 			}
 		}
 	}
@@ -297,8 +317,10 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 	if (!empty($_REQUEST["checked_group"]) && !empty($_REQUEST["checked"])) {
 		foreach ($_REQUEST['checked'] as $assign_user) {
 			$group = $_REQUEST["checked_group"];
-			$userlib->set_default_group($assign_user, $group);
-			$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("group <b>%s</b> set as the default group of user <b>%s</b>."),$group,$assign_user));
+			if ($tiki_p_admin == 'y' || array_key_exists($group, $userGroups)) {
+				$userlib->set_default_group($assign_user, $group);
+				$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("group <b>%s</b> set as the default group of user <b>%s</b>."),$group,$assign_user));
+			}
 		}
 	}
 	if (isset($tikifeedback[0]['msg'])) {
@@ -373,7 +395,6 @@ if (isset($_REQUEST["initial"])) {
 	$initial = '';
 }
 $smarty->assign('initial', $initial);
-$smarty->assign('initials', split(' ','a b c d e f g h i j k l m n o p q r s t u v w x y z'));
 
 if (isset($_REQUEST["find"])) {
 	$find = $_REQUEST["find"];
@@ -396,8 +417,6 @@ if (isset($_REQUEST["filterEmail"])) {
 }
 $smarty->assign('filterEmail', $filterEmail);
 
-
-//$users = $userlib->get_users($offset, $numrows, $sort_mode, $find, $initial, true);
 $users = $userlib->get_users($offset, $numrows, $sort_mode, $find, $initial, true, $filterGroup, $filterEmail);
 
 if (!empty($group_management_mode) || !empty($set_default_groups_mode) || !empty($email_mode)) {
@@ -448,17 +467,19 @@ if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
 				$smarty->display("error.tpl");
 				die;
 			} 
-			$polerr = $userlib->check_password_policy($_POST["pass"]);
-			if ( strlen($polerr)>0 ) {
-				$smarty->assign('msg',$polerr);
-			    $smarty->display("error.tpl");
-			    die;
-			}
-			if ($userlib->change_user_password($userinfo['login'], $_POST['pass'])) {
-				$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s modified successfully."),tra("password")));
-				$logslib->add_log('adminusers','changed password for '.$_POST['name']);
-			} else {
-				$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s modification failed."),tra("password")));
+			if ($tiki_p_admin == 'y' || $userinfo['login'] == $user) {
+				$polerr = $userlib->check_password_policy($_POST["pass"]);
+				if ( strlen($polerr)>0 ) {
+					$smarty->assign('msg',$polerr);
+					$smarty->display("error.tpl");
+					die;
+				}
+				if ($userlib->change_user_password($userinfo['login'], $_POST['pass'])) {
+					$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s modified successfully."),tra("password")));
+					$logslib->add_log('adminusers','changed password for '.$_POST['name']);
+				} else {
+					$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s modification failed."),tra("password")));
+				}
 			}
 		}
 		if ($userinfo['email'] != $_POST['email']) {
@@ -505,8 +526,17 @@ if (isset($_REQUEST['add'])) {
 	$cookietab = "2";
 }
 
-$all_groups = $userlib->get_groups();
-$smarty->assign_by_ref('all_groups', $all_groups['data']);
+if ($tiki_p_admin == 'y') {
+	$alls = $userlib->get_groups();
+	foreach($alls['data'] as $g) {
+		$all_groups[] = $g['groupName'];
+	}
+} else {
+	foreach ($userGroups as $g=>$t) {
+		$all_groups[] = $g;
+	}
+}
+$smarty->assign_by_ref('all_groups', $all_groups);
 
 $smarty->assign('userinfo', $userinfo);
 $smarty->assign('userId', $_REQUEST["user"]);
@@ -527,4 +557,3 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 $smarty->assign('mid', 'tiki-adminusers.tpl');
 $smarty->display("tiki.tpl");
-?>

@@ -33,4 +33,3 @@ while ($res = $result->fetchRow()) {
 $smarty->assign('users',$out);
 $smarty->assign('mid','tiki-gmap_usermap.tpl');
 $smarty->display('tiki.tpl');
-?>

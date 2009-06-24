@@ -236,5 +236,3 @@ function country_sort($a, $b) {
 	return strcmp($a, $b);
     }
 }
-
-?>

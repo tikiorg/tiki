@@ -89,4 +89,3 @@ if (($_REQUEST['for'] == 'user' && ($user == $userwatch || $tiki_p_admin == 'y')
 
 $smarty->assign('mid','tiki-gmap_locator.tpl');
 $smarty->display('tiki.tpl');
-?>

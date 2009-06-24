@@ -32,11 +32,4 @@ foreach ($evs as $ev) {
 	print ($command);
 	$minicallib->minical_event_reminded($user, $ev['eventId']);
 }
-
-?>
-
-<?php
-
 print ('<body onload="window.setInterval(\'location.reload()\',' . $refresh . ');">');
-
-?>

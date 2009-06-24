@@ -21,6 +21,7 @@ if (isset($_GET['selected']))
 $arrayFieldlist		= explode(',',$_GET["fieldlist"]);
 $arrayFilterfield	= explode(',',$_GET["filterfield"]);
 $arrayStatus		= explode(',',$_GET["status"]);
+$sort_mode = 'f_'.$arrayFieldlist[0].'_asc';
 
 header('Cache-Control: no-cache');
 
@@ -74,7 +75,7 @@ for ($index = 0; $index < count($arrayTrackerId); $index++)
 		$listfields[$fid]['isTblVisible'] = $xfields["data"][$dfid]["isTblVisible"];
 		$listfields[$fid]['isHidden'] = $xfields["data"][$dfid]["isHidden"];
 		$listfields[$fid]['isSearchable'] = $xfields["data"][$dfid]["isSearchable"];
-		$items = $trklib->list_items($arrayTrackerId[$index], 0, -1, '', $listfields, $arrayFilterfield[$index], $filtervalue, $arrayStatus[$index]);
+		$items = $trklib->list_items($arrayTrackerId[$index], 0, -1, $sort_mode, $listfields, $arrayFilterfield[$index], $filtervalue, $arrayStatus[$index]);
 
 		$isSelected = false;
 		for ($i = 0; $i < $items["cant"]; $i++) {
@@ -84,12 +85,11 @@ for ($index = 0; $index < count($arrayTrackerId); $index++)
 			} else {
 				$selbool = "false,false";
 			}
-			echo "sel[$index][$i+1]= new Option('" . $items["data"][$i]['field_values'][0]['value'] .
-				 "','" . $items["data"][$i]['field_values'][0]['value'] . "'," . $selbool . ");\n";
+			echo "sel[$index][$i+1]= new Option('" . str_replace("'", "\\'", $items["data"][$i]['field_values'][0]['value']) .
+				"','" . str_replace("'", "\\'", $items["data"][$i]['field_values'][0]['value']) . "'," . $selbool . ");\n";
 		}
 		if ( $isSelected == false && $selected != '') {
 			echo "sel[$index][$i+1]= new Option('" . $selected . "','" . $selected . "',true,true);\n";
 		}
 	}
 }
-?>

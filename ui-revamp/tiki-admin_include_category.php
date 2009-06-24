@@ -39,5 +39,4 @@ ask_ticket('admin-inc-category');
 
 }
 
-
-?>
+$headerlib->add_cssfile('css/admin.css');

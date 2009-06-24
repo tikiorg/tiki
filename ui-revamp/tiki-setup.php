@@ -1,6 +1,6 @@
 <?php
 
-// $Id: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.474.2.11 2008-03-20 19:35:06 kerrnel22 Exp $
+// $Id$
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -17,6 +17,7 @@ if (version_compare(PHP_VERSION, '5.0.0', '<')) {
   exit;
 }
 
+require_once 'lib/setup/third_party.php';
 require_once 'tiki-filter-base.php';
 
 // Enable Versioning
@@ -39,12 +40,8 @@ $tiki_timer->start();
 
 require_once('tiki-setup_base.php');
 
-// TikiTests are PHP5 only
-if ($prefs['feature_tikitests'] == 'y' and version_compare(PHP_VERSION, '5.0.0', '>='))  {
-	require_once('tiki_tests/tikitestslib.php');
-}
+if ( $prefs['feature_tikitests'] == 'y' ) require_once('tiki_tests/tikitestslib.php');
 $crumbs[] = new Breadcrumb($prefs['browsertitle'], '', $prefs['tikiIndex']);
-
 if ( $prefs['site_closed'] == 'y' ) require_once('lib/setup/site_closed.php');
 require_once('lib/setup/error_reporting.php');
 if ( $prefs['feature_bot_bar_debug'] == 'y' || $prefs['use_load_threshold'] == 'y' ) require_once('lib/setup/load_threshold.php');
@@ -98,7 +95,6 @@ if ( ! empty($_SESSION['interactive_translation_mode']) && ($_SESSION['interacti
 if ( $prefs['feature_freetags'] == 'y' ) require_once('lib/setup/freetags.php');
 if ( $prefs['feature_categories'] == 'y' ) require_once('lib/setup/categories.php');
 if ( $prefs['feature_userlevels'] == 'y' ) require_once('lib/setup/userlevels.php');
-if ( $prefs['feature_fullscreen'] == 'y' ) require_once('lib/setup/fullscreen.php');
 if ( $prefs['auth_method'] == 'openid' ) require_once('lib/setup/openid.php');
 if ( $prefs['feature_wysiwyg'] == 'y' ) {
 	if ( ! isset($_SESSION['wysiwyg']) ) $_SESSION['wysiwyg'] = 'n';
@@ -113,10 +109,7 @@ if( $prefs['feature_magic'] == 'y' && $tiki_p_admin == 'y' ) {
 	$smarty->assign('templatename', $templatename);
 	require_once('tiki-admin_bar.php');
 }
-if ( $prefs['feature_sefurl_filter'] == 'y' ) {
-  require_once ('tiki-sefurl.php');
-  $smarty->register_outputfilter('filter_out_sefurl');
-}
+require_once('lib/setup/smarty.php');
 
 $smarty->assign_by_ref('phpErrors', $phpErrors);
 $smarty->assign_by_ref('num_queries', $num_queries);
@@ -149,4 +142,4 @@ $smarty->assign('stay_in_ssl_mode', $stay_in_ssl_mode);
 $smarty->assign('tiki_version', $TWV->version);
 $smarty->assign('tiki_branch', $TWV->branch);
 $smarty->assign('tiki_star', $TWV->star);
-$smarty->assign('tiki_uses_cvs', $TWV->cvs);
+$smarty->assign('tiki_uses_svn', $TWV->svn);

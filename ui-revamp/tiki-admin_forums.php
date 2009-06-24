@@ -66,6 +66,16 @@ if (isset($_REQUEST["remove"])) {
     key_get($area);
   }
 }
+
+if ( isset($_REQUEST['lock']) && isset($_REQUEST['forumId']) ) {
+	check_ticket('view-forum');
+	if ( $_REQUEST['lock'] == 'y' ) {
+		$commentslib->lock_object_thread('forum:'.((int)$_REQUEST['forumId']));
+	} elseif ( $_REQUEST['lock'] == 'n' ) {
+		$commentslib->unlock_object_thread('forum:'.((int)$_REQUEST['forumId']));
+	}
+}
+
 if (isset($_REQUEST['batchaction']) && $_REQUEST['batchaction'] = 'delsel_x' && isset($_REQUEST['checked'])) {
 	check_ticket('admin-forums');
 	foreach($_REQUEST['checked'] as $id) {
@@ -271,23 +281,6 @@ for ($i = 0; $i < $max; $i++) {
 $smarty->assign_by_ref('channels', $channels["data"]);
 $smarty->assign_by_ref('cant', $channels["cant"]);
 
-$cant_pages = ceil($channels["cant"] / $maxRecords);
-$smarty->assign_by_ref('cant_pages', $cant_pages);
-$smarty->assign('actual_page', 1 + ($offset / $maxRecords));
-
-if ($channels["cant"] > ($offset + $maxRecords)) {
-	$smarty->assign('next_offset', $offset + $maxRecords);
-} else {
-	$smarty->assign('next_offset', -1);
-}
-
-// If offset is > 0 then prev_offset
-if ($offset > 0) {
-	$smarty->assign('prev_offset', $offset - $maxRecords);
-} else {
-	$smarty->assign('prev_offset', -1);
-}
-
 $cat_type = 'forum';
 $cat_objid = $_REQUEST["forumId"];
 $categories = array();
@@ -332,5 +325,3 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 // Display the template
 $smarty->assign('mid', 'tiki-admin_forums.tpl');
 $smarty->display("tiki.tpl");
-
-?>
