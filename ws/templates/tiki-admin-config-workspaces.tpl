@@ -2,7 +2,7 @@
 	{if $warning}
 		{$warning}
 	{else}
-		{"{tr}Please, select one option bellow. Remember this step is very important, so be careful selecting the workspace category container, this will destroy any category and everything inside it if the names are equal! If you don't know what you are doing, select the default option.{/tr}"}
+		{"{tr}Please, select one option bellow.{/tr}"}
 	{/if}
 {/remarksbox}
 
