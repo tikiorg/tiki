@@ -70,4 +70,3 @@ class PEAR_ChannelFile_Parser extends PEAR_XMLParser
         return $ret;
     }
 }
-?>

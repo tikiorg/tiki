@@ -21,6 +21,7 @@ function wikiplugin_countdown_help() {
 function wikiplugin_countdown_info() {
 	return array(
 		'name' => tra('Countdown'),
+		'documentation' => 'PluginCountdown',
 		'description' => tra('Displays a countdown from now until the specified date.'),
 		'prefs' => array('wikiplugin_countdown'),
 		'body' => tra('Text to append to the countdown.'),
@@ -69,5 +70,3 @@ function wikiplugin_countdown($data, $params) {
 	$ret = "$days ".tra("days").", $hours ".tra("hours").", $mins ".tra("minutes")." ".tra("and")." $secs ".tra("seconds")." $data";
 	return $ret;
 }
-
-?>

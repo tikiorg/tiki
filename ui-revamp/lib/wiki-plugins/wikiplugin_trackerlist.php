@@ -85,6 +85,11 @@ function wikiplugin_trackerlist_info() {
 				'name' => tra('Show Field Name'),
 				'description' => 'y|n',
 			),
+			'showitemrank' => array(
+				'required' => false,
+				'name' => tra('Show Item Rank'),
+				'description' => 'y|n',
+			),
 			'status' => array(
 				'required' => false,
 				'name' => tra('Status Filter'),
@@ -185,6 +190,21 @@ function wikiplugin_trackerlist_info() {
 				'name' => tra('Export Button'),
 				'description' => 'y|n',
 			),
+			'compute' => array(
+				'required' => false,
+				'name' => tra('Compute'),
+				'description' => tra('Sum or average all the values of a field  and displays it at the bottom of the table.').' '.tra('fieldId').'/sum:'.tra('fieldId').'/avg',
+			),
+			'silent' => array(
+				'required' => false,
+				'name' => tra('Silent'),
+				'description' => tra('Show nothing if no items'),
+			),
+			'showdelete' => array(
+				'required' => false,
+				'name' => tra('Delete'),
+				'description' => tra('Show a delete button'),
+			),
 		),
 	);
 }
@@ -210,6 +230,9 @@ function wikiplugin_trackerlist($data, $params) {
 		}
 
 		if ($tiki_p_admin_trackers != 'y') {
+			if ($perms['tiki_p_view_trackers'] != 'y' && !$user) {
+				return;
+			}
 			$userCreatorFieldId = $trklib->get_field_id_from_type($trackerId, 'u', '1%');
 			$groupCreatorFieldId = $trklib->get_field_id_from_type($trackerId, 'g', '1%');
 			$perms = $tikilib->get_perm_object($trackerId, 'tracker', $tracker_info, false);
@@ -258,7 +281,7 @@ function wikiplugin_trackerlist($data, $params) {
 		
 		//$query_array = array();
 		//$quarray = array();
-		//parse_str($_SERVER['QUERY_STRING'],$query_array);
+		//TikiLib::parse_str($_SERVER['QUERY_STRING'],$query_array);
 
 		if (isset($stickypopup) && $stickypopup == 'y') {
 			$stickypopup = true;
@@ -301,6 +324,16 @@ function wikiplugin_trackerlist($data, $params) {
 			$showfieldname = "y";
 		}
 		$smarty->assign_by_ref('showfieldname', $showfieldname);
+
+		if (!isset($showitemrank)) {
+			$showitemrank = 'n';
+		}
+		$smarty->assign_by_ref('showitemrank', $showitemrank);
+
+		if (!isset($showdelete)) {
+			$showdelete = 'n';
+		}
+		$smarty->assign_by_ref('showdelete', $showdelete);
 
 		if (!isset($status)) {
 			$status = "o";
@@ -411,7 +444,7 @@ function wikiplugin_trackerlist($data, $params) {
 				$exactvalue[] = isset($view)? (empty($user)?'Anonymous':$user): $view_user;
 			}
 		}
-		if (isset($view) && $view == 'page' && $_REQUEST['page']) {
+		if (isset($view) && $view == 'page' && isset($_REQUEST['page'])) {
 			if ($f = $trklib->get_field_id_from_type($trackerId, 'k')) {
 				$filterfield[] = $f;
 				$filtervalue[] = '';
@@ -520,6 +553,7 @@ function wikiplugin_trackerlist($data, $params) {
 					$exactvalue = array_merge(array($exactvalue), $groups);
 				global $group;// awful trick - but the filter garantee that the group is ok
 				$smarty->assign_by_ref('ours', $group);
+				$perms = array_merge($perms, $trklib->get_special_group_tracker_perm($tracker_info));
 			}
 		}
 
@@ -571,9 +605,22 @@ function wikiplugin_trackerlist($data, $params) {
 			$smarty->assign('exportUrl', $exportUrl);
 		}
 
+		if (!empty($_REQUEST['delete'])) {
+			if (($item_info = $trklib->get_item_info($_REQUEST['delete'])) && $trackerId == $item_info['trackerId']) {
+				if ($tiki_p_admin_trackers == 'y'
+					|| ($perms['tiki_p_modify_tracker_items'] == 'y' && $item_info['status'] != 'p' && $item_info['status'] != 'c')
+					|| ($perms['tiki_p_modify_tracker_items_pending'] == 'y' && $item_info['status'] == 'p')
+					|| ($perms['tiki_p_modify_tracker_items_closed'] == 'y' && $item_info['status'] == 'c')	) {
+					$trklib->remove_tracker_item($_REQUEST['delete']);
+				}
+			}
+		}
 
 		if (count($passfields)) {
 			$items = $trklib->list_items($trackerId, $tr_offset, $max, $tr_sort_mode, $passfields, $filterfield, $filtervalue, $tr_status, $tr_initial, $exactvalue, $filter);
+			if (isset($silent) && $silent == 'y' && empty($items['cant'])) {
+				return;
+			}
 
 			if ($items['cant'] == 1 && isset($goIfOne) && ($goIfOne == 'y' || $goIfOne == 1)) {
 				header('Location: tiki-view_tracker_item.php?itemId='.$items['data'][0]['itemId'].'&amp;trackerId='.$items['data'][0]['trackerId']);
@@ -595,6 +642,32 @@ function wikiplugin_trackerlist($data, $params) {
 					$res = $trklib->get_item_nb_attachments($items["data"][$itkey]['itemId']);
 					$items["data"][$itkey]['attachments']  = $res['attachments'];
 				}
+			}
+			if (!empty($compute)) {
+				$fs = preg_split('/ *: */', $compute);
+				foreach ($fs as $fieldId) {
+					if (strstr($fieldId, "/")) {
+						list($fieldId, $oper) = preg_split('/ *\/ */', $fieldId);
+						$oper = strtolower($oper);
+						if ($oper == 'average') {
+							$oper = 'avg';
+						} elseif ($oper != 'sum' && $oper != 'avg') {
+							$oper = 'sum';
+						}
+					} else {
+						$oper = 'sum';
+					}
+					$l = $trklib->list_tracker_field_values($trackerId, $fieldId, $tr_status, 'n');
+					foreach ($l as $i=>$ll) {
+						if (preg_match('/^ *$/', $ll) || !is_numeric($ll))
+							$l[$i] = '0';
+					}
+					eval('$value='.implode('+', $l).';');
+					if ($oper == 'avg')
+						$value = round($value / count($l));
+					$computedFields[$fieldId][] = array_merge(array('operator'=>$oper, 'value'=>$value), $passfields[$fieldId]);
+				}
+				$smarty->assign_by_ref('computedFields', $computedFields);
 			}
 			if (!isset($tpl) && !empty($wiki)) {
 				$tpl = "wiki:$wiki";
@@ -636,5 +709,3 @@ function wikiplugin_trackerlist($data, $params) {
 	}
 	return $back;
 }
-
-?>

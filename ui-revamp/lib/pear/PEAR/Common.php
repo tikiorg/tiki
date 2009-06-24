@@ -1123,4 +1123,3 @@ class PEAR_Common extends PEAR
 }
 require_once 'PEAR/Config.php';
 require_once 'PEAR/PackageFile.php';
-?>

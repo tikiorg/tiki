@@ -470,5 +470,3 @@ class PEAR_PackageFile
         return $info;
     }
 }
-
-?>

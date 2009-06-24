@@ -71,5 +71,3 @@ class FlinksLib extends TikiLib {
 }
 global $dbTiki;
 $flinkslib = new FlinksLib($dbTiki);
-
-?>

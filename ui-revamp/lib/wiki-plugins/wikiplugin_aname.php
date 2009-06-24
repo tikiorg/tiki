@@ -43,5 +43,3 @@ function wikiplugin_aname($data, $params)
 
 	return "<a id=\"$data\"></a>";
 }
-
-?>

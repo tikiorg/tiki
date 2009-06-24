@@ -314,4 +314,3 @@ class PEAR_REST_11
         return array_slice($states, $i + 1);
     }
 }
-?>

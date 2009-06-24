@@ -474,5 +474,3 @@ class Auth_Yadis_XRDS {
         return $result;
     }
 }
-
-?>

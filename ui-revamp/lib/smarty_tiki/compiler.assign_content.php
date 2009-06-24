@@ -40,7 +40,3 @@ function smarty_compiler_assign_content($tag_attrs, &$compiler) {
 	return "include_once('lib/smarty_tiki/function.$func_name.php');\n"
 		.'$this->assign('.$_params['var'].", smarty_function_$func_name(".$str_params.', $this));';
 }
-
-/* vim: set expandtab: */
-
-?>

@@ -178,5 +178,3 @@ function smarty_function_html_select_time($params, &$smarty)
     
     return $html_result;
 }
-
-?>

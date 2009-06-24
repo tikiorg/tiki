@@ -80,4 +80,3 @@ class PEAR_Task_Windowseol extends PEAR_Task_Common
         return preg_replace("/\r\n|\n\r|\r|\n/", "\r\n", $contents);
     }
 }
-?>

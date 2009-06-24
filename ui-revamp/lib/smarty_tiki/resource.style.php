@@ -45,5 +45,3 @@ function smarty_resource_style_trusted($tpl_name, &$smarty)
 {
     // not used for templates
 }
-?>
-

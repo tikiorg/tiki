@@ -4,6 +4,7 @@ function wikiplugin_toc_info()
 {
 	return array(
 		'name' => tra('Table of Contents (Structure)'),
+		'documentation' => 'PluginTOC',		
 		'description' => tra('Displays the table of contents for the current structure\'s subtree as part of the page content.'),
 		'prefs' => array( 'wikiplugin_toc', 'feature_wiki_structure' ),
 		'params' => array(
@@ -76,5 +77,3 @@ function wikiplugin_toc( $data, $params )
 		return "~np~$html~/np~";
 	}
 }
-
-?>

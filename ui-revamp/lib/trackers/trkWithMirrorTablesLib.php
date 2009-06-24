@@ -1132,4 +1132,3 @@ class TrkWithMirrorTablesLib extends TrackerLib {
 		return true;
 	}
 }
-?>

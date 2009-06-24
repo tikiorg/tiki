@@ -5,7 +5,7 @@ function wikiplugin_img_info()
 	return array(
 		'name' => tra( 'Img' ),
 		'description' => tra( 'Displays an image.' ),
-		'prefs' => array(),
+		'prefs' => array( 'wikiplugin_img' ),
 		'inline' => true,
 		'icon' => 'pics/icons/image.png',
 		'params' => array(
@@ -14,6 +14,11 @@ function wikiplugin_img_info()
 				'type' => 'image',
 				'name' => tra('Image Source'),
 				'description' => tra('Full URL to the image to display.'),
+			),
+			'alt' => array(
+				'required' => false,
+				'name' => tra('Alternate Text'),
+				'description' => tra('Alternate text to display if impossible to load the image.'),
 			),
 			'height' => array(
 				'required' => false,
@@ -60,11 +65,6 @@ function wikiplugin_img_info()
 				'name' => tra('Description'),
 				'description' => tra('Image description to display on the page.'),
 			),
-			'alt' => array(
-				'required' => false,
-				'name' => tra('Alternate Text'),
-				'description' => tra('Alternate text to display if impossible to load the image.'),
-			),
 			'usemap' => array(
 				'required' => false,
 				'name' => tra('Image Map'),
@@ -98,6 +98,8 @@ function wikiplugin_img( $data, $params, $offset, $parseOptions )
 	$imgdata["class"] = '';
 	$imgdata["mode"] = '';
 
+	// strip single quotes from params () to preserve 2.x {img} behaviour
+	$params = preg_replace("/^'(.*)'$/", '$1', $params);
 	$imgdata = array_merge( $imgdata, $params );
 
 	// Support both 'link' and 'lnk' syntax
@@ -191,5 +193,3 @@ function wikiplugin_img( $data, $params, $offset, $parseOptions )
 
 	return $repl;
 }
-
-?>

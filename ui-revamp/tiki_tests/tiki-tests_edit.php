@@ -183,5 +183,3 @@ $smarty->assign('summary',$options['summary']);
 $smarty->assign('title',tra("TikiTests Edit"));
 $smarty->assign('mid', 'tiki-tests_edit.tpl');
 $smarty->display('tiki.tpl');
-
-?>

@@ -287,5 +287,3 @@ class PEAR_Command_Common extends PEAR
 
     // }}}
 }
-
-?>

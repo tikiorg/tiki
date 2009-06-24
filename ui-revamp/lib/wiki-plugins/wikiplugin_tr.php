@@ -10,6 +10,7 @@ function wikiplugin_tr_help() {
 function wikiplugin_tr_info() {
 	return array(
 		'name' => tra('Translate'),
+		'documentation' => 'PluginTR',
 		'description' => tra('Translate a string using Tikiwiki translation table.'),
 		'prefs' => array( 'wikiplugin_tr' ),
 		'body' => tra('string'),
@@ -19,6 +20,5 @@ function wikiplugin_tr_info() {
 }
 
 function wikiplugin_tr($data) {
-	$return = tra($data);
-	return $return == '_HOMEPAGE_CONTENT_' ? tra($data, 'en') : $return;
+	return tra($data);
 }

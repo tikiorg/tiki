@@ -17,5 +17,3 @@ function smarty_function_reindex_file_pixel($params, &$smarty) {
   global $tikiroot;
   return '<img src="'.$tikiroot.'reindex_file.php?id='.$id.'" width="1" height="1" border="0" alt="" />';
 }
-
-?>

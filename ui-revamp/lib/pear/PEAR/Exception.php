@@ -393,5 +393,3 @@ class PEAR_Exception extends Exception
         return $causeMsg . $this->getTraceAsString();
     }
 }
-
-?>

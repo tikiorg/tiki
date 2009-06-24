@@ -68,5 +68,3 @@ $ret2 = "<a href='skype:$data?$action' onclick='return skypeCheck();'>$data?$act
 	
 	return $ret1.$ret2;
 }
-
-?>

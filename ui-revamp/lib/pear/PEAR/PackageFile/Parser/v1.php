@@ -462,4 +462,3 @@ class PEAR_PackageFile_Parser_v1
 
     // }}}
 }
-?>
