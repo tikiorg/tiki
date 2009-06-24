@@ -281,6 +281,7 @@ ul.jumplinks a:focus, ul.jumplinks a:active {
 	padding: 1em;
 }
 
+.fullscreenbutton,
 #fullscreenbutton {
 	position: absolute;
 	top: 2px;
@@ -291,6 +292,7 @@ ul.jumplinks a:focus, ul.jumplinks a:active {
 	border: 1px solid #D3D3D3;
 }
 
+.fullscreenbutton:hover,
 #fullscreenbutton:hover {}
 
 /* #Header */
@@ -387,6 +389,10 @@ div#sitead {
 	text-align: right;
 	display: block;
 	margin: 0;
+}
+
+#tiki-top #sitesearchbar br {
+	display: none;
 }
 
 /* Middle */
@@ -851,7 +857,7 @@ div#edithelpzone {	display: none;}
 * html .clearfix {	height: 1%;}
 #overdiv table {	width: auto !important;}
 .attention {	color: red;}
-.highlight, #highlight  {background-color: #f2cd5e}
+.highlight, #highlight  {background-color: #f2cd5e !important}
 
 /* OpenID  */
 .openid_url {
@@ -865,8 +871,6 @@ div#edithelpzone {	display: none;}
 div.imagerank { margin: 10px 5px; }
 .link, .gallink, .bloglink, .fgallink, .trailer,
 .opencomlink, .commentslink, .admlink,.forumbutlink { font-weight: normal; padding: 0; }
-div.searchdate { font-size: .95em;  }
-
 
 /* Pagination for listings */
 .mini {
@@ -2346,9 +2350,31 @@ Caltrack a:visited {color: #00BD02}
 	border-bottom: 1px solid black;
 	padding-bottom: 7px;
 }
+
 .searchresults {
-	display: inline;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	}
+
+.searchresults li {
+	margin: 10px 0 0;
 }
+
+.searchresults li .objecttype,
+	.searchresults li .parentname ,
+	.searchresults li .objectname 
+ {
+	font-size: 120%;
+	font-weight: bold;
+ }
+
+.searchresults .itemhits,
+	.searchresults .itemrelevance,
+	.searchresults .searchdate {
+	color: gray;
+	font-size: 90%;
+	}
 
 #caltable .calfocuson,
 .box-data td.fc a.today,
@@ -2356,6 +2382,7 @@ Caltrack a:visited {color: #00BD02}
 	background: #D4D0C8;
 	border: solid 1px #696969}
 
+.buttonon a,
 .calbuttonon a,
 .calHeadingOn a {font-weight: bold}
 

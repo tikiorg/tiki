@@ -87,8 +87,12 @@ if ($prefs['feature_ajax'] == 'y') {
 		}
 
 		/**
+		 * Register a JavaScript function
 		 * 
-		 * 
+		 * @access	public
+		 * @param	string|array $mFunction - JS function name OR array e.g. array('myFunctionName', array('callback' => 'myCallbackVarName')
+		 * @param	int $sRequestType {XAJAX_GET = 0}
+		 * @return	void
 		 */
 		function registerFunction($mFunction, $sRequestType=XAJAX_GET) {
 			$functionName = is_array($mFunction) ? $mFunction[0] : $mFunction;
@@ -109,7 +113,11 @@ if ($prefs['feature_ajax'] == 'y') {
 					} 
 				} 
 			}
-			xajax::register(XAJAX_FUNCTION,$mFunction);
+			if (is_array($mFunction) && count($mFunction) > 1) {
+				xajax::register(XAJAX_FUNCTION,$functionName, $mFunction[1]);
+			} else {
+				xajax::register(XAJAX_FUNCTION,$mFunction);
+			}
 		}
 
 		/*
@@ -160,7 +168,7 @@ $ajaxlib = new TikiAjax();
 $ajaxlib->registerFunction("loadComponent");
 
 function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user = '') {
-	global $smarty, $ajaxlib, $prefs, $user;
+	global $smarty, $ajaxlib, $prefs, $user, $headerlib;
 	global $js_script;
 	$objResponse = new xajaxResponse('UTF-8');
 
@@ -212,9 +220,7 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
 		}
 
 		if (preg_match('/overlib\(/Umis', $content)) {
-			//array_unshift($js_files, 'lib/overlib.js');	// just for now... (it stops the JS error on rollover but the tooltip doesn't appear - TODO replace with JQuery tips)
-			$js_script[] = file_get_contents('lib/overlib.js');
-			$content = '<div id="overDiv" style="position: absolute; visibility: hidden; z-index:1000;"></div>'.$content;
+			array_unshift($js_files, 'lib/overlib.js');	// just for now... (it stops the JS error on rollover but the tooltip doesn't appear - TODO replace with JQuery tips)
 		}
 
 		// now remove all the js from the source
@@ -278,7 +284,18 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
 		$tab = ( $cookietab != '' ) ? (int)$cookietab : 1;
 		$objResponse->script("tikitabs($tab,$max_tikitabs);");
 	}
-
+	// collect js from headerlib
+	foreach($headerlib->getJs() as $s) {
+		if (trim($s) != '') {
+			$objResponse->script($s);
+		}
+	}
+	foreach($headerlib->getJsfiles() as $f) {
+		if (trim($f) != '') {
+			$objResponse->includeScript($f);
+		}
+	}
+	
 	return $objResponse;
 }
 

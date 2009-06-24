@@ -2,7 +2,7 @@
 {*Smarty template*}
 <h1><a class="pagetitle" href="tiki-g-admin_instance.php?iid={$iid}">{tr}Admin instance{/tr}</a>
 </h1>
-{include file=tiki-g-monitor_bar.tpl}
+{include file='tiki-g-monitor_bar.tpl'}
 <h3>{tr}Process:{/tr} {$proc_info.name} {$proc_info.version}<br />
 {tr}Instance{/tr}: {$ins_info.name} <br />
 {tr}Activity{/tr}: {$acts.name} {if $acts.actstatus eq 'running'}<a href="tiki-g-run_activity.php?iid={$iid}&amp;activityId={$aid}"><img title='{tr}run instance{/tr}' alt='{tr}run instance{/tr}' src='lib/Galaxia/img/icons/next.gif' /></a>{/if}</h3>

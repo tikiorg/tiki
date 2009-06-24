@@ -62,4 +62,3 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapperTest extends TikiTes
    
 
 }
-?>

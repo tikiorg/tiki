@@ -115,7 +115,7 @@ if ( ! $options['no-lang-update'] && important_step("Update language files") ) {
 }
 
 if ( ! $options['no-changelog-update'] && important_step("Update '" . CHANGELOG_FILENAME . "' file (using final version number '$version')") ) {
-	if ( $ucf = update_changelog_file($mainversion) ) {
+	if ( $ucf = update_changelog_file($version) ) {
 		if ( $ucf['nbCommits'] == 0 ) {
 			info('>> Changelog updated (last commits were already inside)');
 		} else {
@@ -250,7 +250,7 @@ function md5_check_dir($root, $dir, $version, &$queries) {
 
 function build_packages($releaseVersion, $svnRelativePath) {
 	$script = TOOLS . '/tikirelease.sh';
-	if ($options['-debug-packaging']) {
+	if ($options['debug-packaging']) {
 	   $debugflag = '-x';
 	} else {
 	   $debugflag = '';
@@ -528,16 +528,6 @@ function update_changelog_file($newVersion) {
 				}
 				$parseLogs = true;
 				$lastReleaseMajorNumber = $versionMatches[1];
-/*				if ( $lastReleaseMajorNumber == 0 || $parseLogs ) {
-					$parseLogs = (
-						$lastReleaseMajorNumber == 0
-						|| ( ! $isNewMajorVersion && $lastReleaseMajorNumber == 0 )
-						|| ( $isNewMajorVersion && $versionMatches[1] == $lastReleaseMajorNumber )
-					);
-					$lastReleaseMajorNumber = $versionMatches[1];
-					if ( $parseLogs ) $minRevision = 0;
-				}
-*/
 			} elseif ( $parseLogs ) {
 				$matches = array();
 				if ( preg_match('/^r(\d+) \|/', $buffer, $matches) ) {

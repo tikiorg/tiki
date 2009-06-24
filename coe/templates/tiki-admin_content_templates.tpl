@@ -1,6 +1,6 @@
 {title help="Content+Templates"}{tr}Admin templates{/tr}{/title}
 
-{remarksbox type="tip" title="Tip"}Use the Administration page of each enabled feature to allow the use of content templates.{/remarksbox}
+{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use the Administration page of each enabled feature to allow the use of content templates.{/tr}{/remarksbox}
 
 {if $preview eq 'y'}
 	<h2>{tr}Preview{/tr}</h2>
@@ -71,7 +71,7 @@
 			<tr>
 				<td class="formcolor"><label>{tr}Quicktags{/tr}</label></td>
 				<td class="formcolor">
-					{include file=tiki-edit_help_tool.tpl area_name='editwiki'}
+					{include file='tiki-edit_help_tool.tpl' area_name='editwiki'}
 				</td>
 			</tr>
 		{/if}
@@ -85,11 +85,11 @@
 					{tr}Edit{/tr}:
 					<br />
 					<br />
-					{include file="textareasize.tpl" area_name='editwiki' formId='editpageform' ToolbarSet='Tiki'}
+					{include file='textareasize.tpl' area_name='editwiki' formId='editpageform' ToolbarSet='Tiki'}
 					<br />
 					<br />
 					{if $prefs.quicktags_over_textarea neq 'y'}
-						{include file=tiki-edit_help_tool.tpl area_name='editwiki'}
+						{include file='tiki-edit_help_tool.tpl' area_name='editwiki'}
 					{/if}  
 				</td>
 				<td class="formcolor">

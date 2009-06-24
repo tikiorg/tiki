@@ -26,7 +26,7 @@
 			{/foreach}
 		</ul>
 		<p>
-			<input type="submit" class="submit" value="{tr}Clear checked items{/tr}"/>
+			<input type="submit" value="{tr}Clear checked items{/tr}"/>
 		</p>
 	</form>
 {else}

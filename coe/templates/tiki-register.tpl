@@ -147,7 +147,17 @@
 					<td class="formcolor">
 		{foreach item=gr from=$listgroups}
 			{if $gr.registrationChoice eq 'y'}
-						<input type="radio" name="chosenGroup" id="gr_{$gr.groupName}" value="{$gr.groupName|escape}" /> <label for="gr_{$gr.groupName}">{if $gr.groupDesc}{tr}{$gr.groupDesc}{/tr}{else}{$gr.groupName}{/if}</label>{/if}
+				<div class="registergroup">
+					 <input type="radio" name="chosenGroup" id="gr_{$gr.groupName}" value="{$gr.groupName|escape}" /> 
+					 <label for="gr_{$gr.groupName}">
+					 	{if $gr.groupDesc}
+					 		{tr}{$gr.groupDesc}{/tr}
+						{else}
+							{$gr.groupName}
+						{/if}
+					</label>
+				</div>
+			{/if}
 		{/foreach}
 					</td>
 				</tr>
@@ -157,7 +167,7 @@
 
 				<tr>
 					<td class="formcolor">&nbsp;</td>
-					<td class="formcolor"><input class="button submit" type="submit" name="register" value="{tr}Register{/tr}" /></td>
+					<td class="formcolor"><input type="submit" name="register" value="{tr}Register{/tr}" /></td>
 				</tr>
 			</table>
 			</fieldset>

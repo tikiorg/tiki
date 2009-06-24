@@ -57,7 +57,7 @@ if (!empty($_REQUEST['fileId'])) {
 		$smarty->display('error.tpl');
 		die;
 	}
-	if (!empty($_REQUEST['galleryId']) && (is_numeric($_REQUEST['galleryId']) || is_string($_REQUEST['galleryId']))) {
+	if (!empty($_REQUEST['galleryId']) && !is_array($_REQUEST['galleryId'])) {
 		$_REQUEST['galleryId'] = array($_REQUEST['galleryId']);
 	}
 	if (empty($_REQUEST['galleryId'][0])) {
@@ -67,7 +67,9 @@ if (!empty($_REQUEST['fileId'])) {
 		$smarty->display('error.tpl');
 		die;
 	}
-}
+} elseif (isset($_REQUEST['galleryId']) && !is_array($_REQUEST['galleryId'])) {
+	$_REQUEST['galleryId'] = array($_REQUEST['galleryId']);
+}	
 
 if (isset($_REQUEST['galleryId'][0])) {
 	$gal_info = $tikilib->get_file_gallery((int)$_REQUEST['galleryId'][0]);
@@ -79,6 +81,19 @@ if (empty($_REQUEST['fileId']) && $tiki_p_upload_files != 'y' && $tiki_p_admin_f
 	$smarty->assign('msg', tra("Permission denied"));
 	$smarty->display('error.tpl');
 	die;
+}
+if (isset($_REQUEST['galleryId'][1])) {
+	foreach ($_REQUEST['galleryId'] as $i=>$gal) {
+		if (!$i)
+			continue;
+		$perms = $tikilib->get_perm_object($_REQUEST['galleryId'][$key], 'file gallery', $gal_info, false);
+		if ($perm['tiki_p_upload_files'] != 'y') {
+			$smarty->assign('errortype', 401);
+			$smarty->assign('msg', tra("Permission denied"));
+			$smarty->display('error.tpl');
+			die;
+		}
+	}
 }
 if (!empty($_REQUEST['fileId'])) {
 	if (!empty($fileInfo['lockedby']) && $fileInfo['lockedby'] != $user && $tiki_p_admin_file_galleries != 'y') { // if locked must be the locker
@@ -128,10 +143,10 @@ $_REQUEST['hit_limit'] = 0;
 
 $smarty->assign('show', 'n');
 
-if (!empty($_REQUEST['galleryId']) && $prefs['feature_groupalert'] == 'y') {
-	$groupforalert=$groupalertlib->GetGroup ('file gallery',(int)$_REQUEST["galleryId"]);
+if (!empty($_REQUEST['galleryId'][0]) && $prefs['feature_groupalert'] == 'y') {
+	$groupforalert=$groupalertlib->GetGroup ('file gallery',(int)$_REQUEST['galleryId'][0]);
 	if ( $groupforalert != '' ) {
-		$showeachuser=$groupalertlib->GetShowEachUser('file gallery',(int)$_REQUEST["galleryId"], $groupforalert) ;
+		$showeachuser=$groupalertlib->GetShowEachUser('file gallery',(int)$_REQUEST['galleryId'][0], $groupforalert) ;
 		$listusertoalert=$userlib->get_users(0,-1,'login_asc','',''	,false,$groupforalert,'') ;
 		$smarty->assign_by_ref('listusertoalert',$listusertoalert['data']);
 	}

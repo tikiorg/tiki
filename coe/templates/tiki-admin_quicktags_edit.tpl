@@ -1,10 +1,11 @@
 
-<form action="tiki-admin_quicktags.php" method="post">
+<form action="tiki-admin_quicktags.php?cookietab=1" method="post">
 <input type="hidden" name="tagId" value="{$tagId|escape}" />
 <input type="hidden" name="offset" value="{$offset|escape}" />
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 	{button cookitab="2" _anchor="tab2" _text="{tr}Create New QuickTag{/tr}" tagId='null'}
 <table class="normal">
+{button cookitab=2 tagId=0 _template='tiki-admin_quicktags_edit.tpl' _htmlelement='quicktags-edit' _text="{tr}Create New Tag{/tr}"}
 <tr class="formcolor"><td>{tr}Label{/tr}:</td>
 <td><input type="text" maxlength="255" size="25" name="taglabel" value="{$info.taglabel|escape}" /></td></tr>
 <tr class="formcolor"><td>{tr}Insert (use 'text' for figuring the selection){/tr}:</td>

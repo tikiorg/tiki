@@ -2847,7 +2847,7 @@ CREATE TABLE "tiki_tracker_fields" (
   "trackerId" bigint NOT NULL default '0',
   "name" varchar(255) default NULL,
   "options" text,
-  "type" char(15) default NULL,
+  "type" varchar(15) default NULL,
   "isMain" char(1) default NULL,
   "isTblVisible" char(1) default NULL,
   "position" smallint default NULL,
@@ -3052,6 +3052,10 @@ CREATE TABLE "tiki_user_mail_accounts" (
   "smtpPort" smallint default NULL,
   "flagsPublic" char(1) default 'n',				-- COMMENT 'MatWho - Shared Group Mail box if y',
   "autoRefresh" smallint NOT NULL default 0,		-- COMMENT 'seconds for mail list to refresh, 0 = none',
+  "imap" varchar( 255 ) default NULL,
+  "mbox" varchar( 255 ) default NULL,
+  "maildir" varchar( 255 ) default NULL,
+  "useSSL" char( 1 ) NOT NULL default 'n',
   PRIMARY KEY ("accountId")
 ) ENGINE=MyISAM  ;
 

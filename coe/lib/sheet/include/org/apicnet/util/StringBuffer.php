@@ -391,4 +391,3 @@ class StringBuffer extends Object{
 	}
 
 }
-?>

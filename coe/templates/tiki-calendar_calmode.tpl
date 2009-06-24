@@ -1,5 +1,5 @@
 {* $id$ *}
-<table border="0" cellpading="0" cellspacing="0" style="width:100%;border-collapse:collapse">
+<table border="0" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse">
   <tr valign="middle" style="height:36px">
 <td width="1%" class="weeks"></td>
 {section name=dn loop=$daysnames}
@@ -32,9 +32,11 @@
 		  {/if}
 		</tr>
 	  </table>
-	  <table border="0" cellpadding="0" cellspacing="0" style="width:100%;">
 {if $cell[w][d].focus}
 {section name=item loop=$cell[w][d].items}
+{if $smarty.section.item.first}
+	  <table border="0" cellpadding="0" cellspacing="0" style="width:100%;">
+{/if}
 	{assign var=over value=$cell[w][d].items[item].over}
 	{assign var=calendarId value=$cell[w][d].items[item].calendarId}
 		<tr valign="top">
@@ -69,9 +71,11 @@
 		 <td style="padding:0px;height:14px;border-style:solid;border-color: white; border-width:1px;width:100%;font-size:10px">&nbsp;</td>
 {/if}
 		</tr>
+{if $smarty.section.item.last}
+	  </table>
+{/if}
 {/section}
 {/if}
-	  </table>
 	</td>
 {/section}
   </tr>

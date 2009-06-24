@@ -186,6 +186,7 @@ ul.jumplinks a:focus, ul.jumplinks a:active {
 	width: 6em;
 	z-index: 9}
 
+.fullscreenbutton,
 #fullscreenbutton {
 	position: absolute;
 	top: 2px;
@@ -193,6 +194,7 @@ ul.jumplinks a:focus, ul.jumplinks a:active {
 	z-index: 10;
 	font-size: 80%}
 
+.fullscreenbutton:hover,
 #fullscreenbutton:hover {color: #D8D8D8}
 
 #tiki-clean {
@@ -760,10 +762,6 @@ div.imagerank {margin: 10px 5px}
 .forumbutlink {
 	font-weight: normal;
 	padding: 0}
-
-div.searchdate {
-	font-size: .95em;
-	color: #fff}
 
 div#debugconsole {
 	position: absolute;
@@ -1861,7 +1859,7 @@ span.commentstitle {
 
 /* Find */
 .subcomment {margin-left: 10px}
-.findtable {padding: 15px 0;}
+#tiki-center .findtable {padding: 15px 0;}
 .findtable ul {list-style: none;padding:0; margin: 0;float: left;}
 .findtable ul li {float: left;}
 
@@ -2235,6 +2233,7 @@ td.calodd, td.caleven {border: 1px solid #999999}
 .caltoggle {
 	font-size: 90%;
 	background: #3F3F3F}
+.buttonon a,
 .calbuttonon a { text-decoration: underline;}
 
 .calHeadingOn a {
@@ -2255,7 +2254,30 @@ td.calodd, td.caleven {border: 1px solid #999999}
 .opaque .box-data  {
 	background: #3F3F3F}
 
-.searchresults { display: inline}
+.searchresults {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	}
+
+.searchresults li {
+	margin: 10px 0 0;
+}
+
+.searchresults li .objecttype,
+	.searchresults li .parentname ,
+	.searchresults li .objectname 
+ {
+	font-size: 120%;
+	font-weight: bold;
+ }
+
+.searchresults .itemhits,
+	.searchresults .itemrelevance,
+	.searchresults .searchdate {
+	color: #fff;
+	font-size: .95em;
+	}
 
 #caltable .calfocuson,
 .box-data td.fc a.today,

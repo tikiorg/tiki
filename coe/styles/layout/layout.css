@@ -50,8 +50,6 @@ span.button {
 span.button a,
 span.button a:visited,
 button,
-input[type=reset],
-input[type=submit],
 span.button input,
 .calbuttonBox a {
 	padding: 1px 4px;
@@ -59,9 +57,10 @@ span.button input,
 	text-decoration: none;
 	white-space: nowrap;
 	cursor: pointer}
-	
-* html input[type=submit],
-* html input[type=reset] {
+
+/* Definitions below are the same as above, but are separated to make those above work in IE6 */
+input[type=reset],
+input[type=submit] {
 	padding: 1px 4px;
 	margin-right: 1px;
 	text-decoration: none;
@@ -76,18 +75,20 @@ span.button input,
 	
 .button a:hover,
 button:hover,
-input[type=reset]:hover,
-input[type=submit]:hover,
 .button input:hover,
 .calbuttonBox:hover {}
 
+input[type=reset]:hover,
+input[type=submit]:hover {}
+
 .button a:active,
 button:active,
-input[type=reset]:active,
-input[type=submit]:active,
 .button input:active,
 span.highlight a:link,
-span.highlight a:visited {  }
+span.highlight a:visited {}
+
+input[type=reset]:active,
+input[type=submit]:active {}
 
 span.highlight {
 	background: aqua;
@@ -222,11 +223,12 @@ div#sitead {margin: auto}
 	display: block;
 	margin: 0}
 	
-#sitesearchbar form {}	
+#sitesearchbar form {}
+#tiki-top #sitesearchbar br {display: none;}
 input#text
 input.wikiaction {}
 #sitesearchbar form button {}
-input#fuser,
+
 select[name="where"],
 input[name="search"] {}
 
@@ -409,6 +411,7 @@ ul.jumplinks a:active {
 	width: 6em;
 	z-index: 9}
 
+.fullscreenbutton, 
 #fullscreenbutton {
 	position: absolute;
 	top: 2px;
@@ -895,7 +898,9 @@ td.even {
 	border-collapse: collapse}
 
 /* Headings */
-th, td.heading {text-align: center}
+th,
+td.heading,
+tr.diffheader {text-align: center}
 
 form.admin {}
 form.admin fieldset {}
@@ -1036,7 +1041,7 @@ div.cachedpage {}
 #wikihelp-tab table td {}
 
 #wikihelp-tab table td {padding: 2px}
-textarea.wikiedit {font-size: 1.0em}
+textarea.wikiedit {}
 p.editdate {padding-top: 10px}
 img.externallink {}
 
@@ -1064,8 +1069,6 @@ table.wikiplugin-split .codelisting {width: 95%}
 	padding: 0}
 
 .wikitext .fancylist li {
-	background: transparent url(strasa/list_icon.png) top left no-repeat;
-	color: #f90;
 	font: italic 2em Verdana, Geneva, Arial, Helvetica, sans-serif;
 	line-height: 27px;
 	list-style-position: inside;
@@ -1073,7 +1076,6 @@ table.wikiplugin-split .codelisting {width: 95%}
 	padding: 6px 0 7px 15px}
 
 .wikitext .fancylist li p {
-	color: #000;
 	display: inline;
 	font-size: 50%;
 	font-style: normal;
@@ -1122,7 +1124,7 @@ div.tocnav {
 #tocnavicons {float: left}
 #tocnavaddpage {float: right}
 #tocnavlinks {clear: both}
-.fancytoclevel {list-style-image: url(../img/icons/footprint.gif)}
+.fancytoclevel {list-style-image: url(../../img/icons/footprint.gif)}
 li.toclevel {}
 
 /* TOC */
@@ -1137,9 +1139,9 @@ ul.toc * {border: none}
 /* Wiki diff styles */
 .diff td {border: 1px solid #696969}
 .diff div {border-top: 1px solid #696969}
-.diffheader {background: #696969; font-weight: bold}
-.diffadded {background: #ccffcc}
-.diffdeleted {background: #ffcccc}
+.diffbody {color: #000}
+.diffadded {background: #ccffcc; color: #000}
+.diffdeleted {background: #ffcccc; color: #000}
 
 .diffinldel {
 	background: #ffcccc;
@@ -1528,7 +1530,6 @@ opaque .box-title,
 div.multiselect {
 	vertical-align: middle;
 	padding: 0;
-	border:1px solid #80B1E2;
 	height: auto;
 	overflow: visible}
 
@@ -1743,7 +1744,17 @@ div.freetagObjectType {
 	right: 0}
 
 div.freetagObjectName a {text-decoration: none}	
-.searchresults {display: inline}
+
+.searchresults {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.searchresults li {
+	margin: 10px 0 0;
+}
+
 .freetaglist {
 	padding: 0 20px;
 	text-align: right}
@@ -1938,6 +1949,7 @@ td.mods_update {
 /***** Ajax, jquery. etc. *****/
 /***** Ajax *****/
 div#ajaxLoading {
+	z-index: 10000;
 	display: none;
 	position: absolute;
 	top: 50px;
@@ -1946,7 +1958,7 @@ div#ajaxLoading {
 	font-family: Verdana;
 	font-size: 90%;
 	text-align: center;
-	background: transparent url(../lib/shadowbox/images/loading-light.gif) no-repeat 50% 100%;
+	background: transparent url(../../lib/shadowbox/images/loading-light.gif) no-repeat 50% 100%;
 	height: 43px;
 	width: 50px;
 	padding-top: 32px}
@@ -2030,6 +2042,8 @@ div#ajaxLoading {
 
 /* webmail & groupmail */
 
+.box-webmail_inbox img.icon {vertical-align: middle}
+
 .webmail_item {
 	font-size: .9em;
 	border: #999 solid 1px;
@@ -2039,26 +2053,49 @@ div#ajaxLoading {
 .webmail_refresh_message {
 	font-size: .8em;}
 
-.mod_webmail_list .even {}
+.webmail_list .even {}
 
-.mod_webmail_list .odd {
+.webmail_list .odd {
 	background-color: #eee;}
 
-.mod_webmail_list .button {
+.webmail_list .button {
 	background-color: #fff;
 	border: #666 solid 1px;
 	display: inline-block;
 	padding: 0 2px;}
 
-.mod_webmail_list .webmail_read {background-color: #aaa;}
+.webmail_list .webmail_read {background-color: #aaa;}
 
-.mod_webmail_list .webmail_flagged {}
+.webmail_list .webmail_flagged {}
 
-.mod_webmail_list .webmail_replied {background-color: #888;}
+.webmail_list .webmail_replied {background-color: #888;}
 
-.mod_webmail_list .mod_webmail_taken {
+.webmail_list .webmail_taken {
 	border-color: #900;
 	color: #900;}
+
+.webmail_message {
+	background-color: #fff;}
+
+.webmail_mono {
+/*	max-width: 800px;
+	white-space: pre;
+	overflow: hidden;*/
+	font-size: 1.1em;
+	font-family: "Courier New", Courier, monospace}
+
+table.webmail_message_headers {
+	background-color: #fff;
+	width: 100%;
+	padding: 0 5em .5em 0;
+}
+
+table.webmail_message_headers th {
+	width: 6em;
+	font-style: italic;
+	text-align: right;
+	border: none;
+	background-color: transparent}
 
 /***** End New (unsorted) *****/
 

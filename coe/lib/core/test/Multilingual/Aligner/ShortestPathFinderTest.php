@@ -121,5 +121,3 @@ class Multilingual_Aligner_ShortestPathFinderTest extends TikiTestCase
    }
 
 }
-
-?>

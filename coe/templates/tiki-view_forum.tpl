@@ -201,21 +201,21 @@
 				{if $prefs.feature_smileys eq 'y'}
 				<tr class="formcolor">
 					<td>{tr}Smileys{/tr}</td>
-					<td>{include file="tiki-smileys.tpl" area_name='editpost'}</td>
+					<td>{include file='tiki-smileys.tpl' area_name='editpost'}</td>
 				</tr>
 			{/if}
 
 			<tr class="formcolor">
 				<td>{tr}Edit{/tr}
 					<br /><br />
-					{include file="textareasize.tpl" area_name='editpost' formId='editpageform'}
+					{include file='textareasize.tpl' area_name='editpost' formId='editpageform'}
 					{if $prefs.feature_forum_parse eq 'y' and $prefs.quicktags_over_textarea neq 'y'}
-						{include file=tiki-edit_help_tool.tpl area_name="editpost"}
+						{include file='tiki-edit_help_tool.tpl' area_name="editpost"}
 					{/if}
 				</td>
 				<td>
 					{if $prefs.feature_forum_parse eq 'y' and $prefs.quicktags_over_textarea eq 'y'}
-						{include file=tiki-edit_help_tool.tpl area_name='editpost'}
+						{include file='tiki-edit_help_tool.tpl' area_name='editpost'}
 					{/if}
 					<textarea id='editpost' name="comments_data" rows="{$rows}" cols="{$cols}">{$comment_data|escape}</textarea><input type="hidden" name="rows" value="{$rows}"/>
 					<input type="hidden" name="cols" value="{$cols}"/>
@@ -231,15 +231,15 @@
 				{/if}
 			
 				{if $prefs.feature_contribution eq 'y'}
-					{include file="contribution.tpl"}
+					{include file='contribution.tpl'}
 				{/if}
 
 				{if $prefs.feature_antibot eq 'y'}
-					{include file="antibot.tpl" tr_style="formcolor"}
+					{include file='antibot.tpl' tr_style="formcolor"}
 				{/if}
  
 				{if $prefs.feature_freetags eq 'y' and $tiki_p_freetags_tag eq 'y'}
-					{include file=freetag.tpl}
+					{include file='freetag.tpl'}
 				{/if}
 
 				{if $user and $prefs.feature_user_watches eq 'y' and (!isset($comments_threadId) or $comments_threadId eq 0)}

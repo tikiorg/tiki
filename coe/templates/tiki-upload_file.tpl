@@ -224,7 +224,7 @@
 	</div>
 	</div>
 	{if $prefs.javascript_enabled eq 'y' and !$editFileId}
-		{include file=categorize.tpl notable='y'}<br/>
+		{include file='categorize.tpl' notable='y'}<br/>
 	{/if}
 	{if $prefs.javascript_enabled eq 'y'}
 	<input type="hidden" name="upload" />
@@ -235,13 +235,13 @@
 	<input type="hidden" name="formId" value="0"/>
 	{$upload_str}
 	{if $editFileId}
-		{include file=categorize.tpl notable='y'}<br/>
+		{include file='categorize.tpl' notable='y'}<br/>
 		<input name="upload" type="submit" value="{tr}Save{/tr}"/>
 	{/if}
 	{if $prefs.javascript_enabled neq 'y' and !$editFileId}
 	{$upload_str}
 	{$upload_str}
-	{include file=categorize.tpl notable='y'}<br/>
+	{include file='categorize.tpl' notable='y'}<br/>
 	<hr />
 	<input type="submit" name="upload" value="{if $editFileId}{tr}Save{/tr}{else}{tr}Upload{/tr}{/if}"/>
 	{/if}

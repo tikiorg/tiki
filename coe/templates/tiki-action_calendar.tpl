@@ -35,12 +35,12 @@
 <div class="calinput"><input type="submit" name="refresh" value="{tr}Refresh{/tr}"/></div>
 </form>
 
-{include file="tiki-calendar_nav.tpl"}
+{include file='tiki-calendar_nav.tpl'}
 
 {if $viewlist eq 'list'}
-{include file="tiki-calendar_listmode.tpl"'}
+{include file='tiki-calendar_listmode.tpl''}
 {else}
-{include file="tiki-calendar_calmode.tpl"}
+{include file='tiki-calendar_calmode.tpl'}
 {/if}
 
 </div>

@@ -432,13 +432,11 @@
         	<td>
 						<fieldset>
 							<legend>
-								<a href="#" title="{tr}Top{/tr}"><span>
 								{if $prefs.feature_help eq 'y'}
 									<a href="{$prefs.helpurl}Users+Flip+Columns" target="tikihelp" class="tikihelp" title="{tr}Users can Flip Columns{/tr}">
 								{/if}
-        				{tr}Left column{/tr}:
+        						{tr}Left column{/tr}:
 								{if $prefs.feature_help eq 'y'}</a>{/if}
-								</span></a>
 							</legend>
         			<select name="feature_left_column">
 								<option value="y" {if $prefs.feature_left_column eq 'y'}selected="selected"{/if}>{tr}always{/tr}</option>
@@ -512,13 +510,11 @@
 					<td class="form">
 						<fieldset>
 							<legend>
-								<a href="#" title="{tr}Top{/tr}"><span>
-									{if $prefs.feature_help eq 'y'}
-										<a href="{$prefs.helpurl}Users+Flip+Columns" target="tikihelp" class="tikihelp" title="{tr}Users can Flip Columns{/tr}">
-									{/if}
-        					{tr}Right column{/tr}:
-									{if $prefs.feature_help eq 'y'}</a>{/if}
-								</span></a>
+								{if $prefs.feature_help eq 'y'}
+									<a href="{$prefs.helpurl}Users+Flip+Columns" target="tikihelp" class="tikihelp" title="{tr}Users can Flip Columns{/tr}">
+								{/if}
+        						{tr}Right column{/tr}:
+								{if $prefs.feature_help eq 'y'}</a>{/if}
 							</legend>
 							<select name="feature_right_column">
 								<option value="y" {if $prefs.feature_right_column eq 'y'}selected="selected"{/if}>{tr}always{/tr}</option>

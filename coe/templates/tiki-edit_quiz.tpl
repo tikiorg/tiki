@@ -38,7 +38,7 @@
 				<textarea name="description" id="quiz-desc" rows="4" cols="75">{$description|escape}</textarea>
 			</td>
 		</tr>
-		{include file=categorize.tpl}
+		{include file='categorize.tpl'}
 		<tr class="formcolor">
 			<td>{tr}Publish Date{/tr}</td>
 			<td>

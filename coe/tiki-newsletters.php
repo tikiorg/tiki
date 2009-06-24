@@ -9,7 +9,7 @@
 // Initialization
 require_once ('tiki-setup.php');
 
-include_once ('lib/newsletters/nllib.php');
+global $nllib; include_once ('lib/newsletters/nllib.php');
 
 if ($prefs['feature_newsletters'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_newsletters");
@@ -17,6 +17,7 @@ if ($prefs['feature_newsletters'] != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
+$auto_query_args = array('nlId','offsset', 'sort_mode', 'find');
 
 $smarty->assign('confirm', 'n');
 

@@ -162,7 +162,7 @@ function sql_error($query, $values, $result) {
     trigger_error($ADODB_LASTDB . " error:  " . htmlspecialchars($this->db->ErrorMsg()). " in query:<br /><pre>\n" . htmlspecialchars($query) . "\n</pre><br />", E_USER_WARNING);
     // only for debugging.
     //trigger_error($ADODB_LASTDB . " error:  " . $this->db->ErrorMsg(). " in query:<br />" . $query . "<br />", E_USER_WARNING);
-    $outp = "<div class='simplebox'><b>".htmlspecialchars(tra("An error occured in a database query!"))."</b></div>";
+    $outp = "<div class='simplebox'><b>".htmlspecialchars(tra("An error occurred in a database query!"))."</b></div>";
 
 	include_once ('installer/installlib.php');
 	$installer = new Installer;

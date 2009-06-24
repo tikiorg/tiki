@@ -119,7 +119,7 @@
 				</td>
 			</tr>
 
-			{include file=categorize.tpl}
+			{include file='categorize.tpl'}
 
 			<tr>
 				<td class="formcolor">

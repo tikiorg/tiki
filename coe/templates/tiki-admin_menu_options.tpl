@@ -267,7 +267,7 @@
 			<div class="box">
 				<div class="box-title">{$editable_menu_info.name}</div>
 				<div class="box-data">
-					{include file=tiki-user_menu.tpl menu_channels=$allchannels}
+					{include file='tiki-user_menu.tpl' menu_channels=$allchannels}
 				</div>
 			</div>
 		</td>

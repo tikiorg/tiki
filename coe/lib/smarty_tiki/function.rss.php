@@ -37,14 +37,14 @@ function smarty_function_rss($params, &$smarty)
     $data = $rsslib->get_rss_module_content($id);
     $items = $rsslib->parse_rss_data($data, $id);
 
-	if ($items[0]["isTitle"]=="y") {
+	if (isset($items[0]['isTitle']) && $items[0]['isTitle']=='y') {
 		print '<a target="_blank" href="'.$items[0]["link"].'" class="linkmenu">'.$items[0]["title"].'</a>';
 		$items = array_slice ($items, 1);
 	}
 
 	print('<ul class="rsslist">');
     for($i=0;$i<count($items) && $i<$max;$i++) {
-	if (!$skip[$i+1]) {
+	  if (empty($skip[$i+1]) || !$skip[$i+1]) {
 	    if ($items[$i]["title"] <> '') print('<li class="rssitem"><a target="_blank" href="'.$items[$i]["link"].'" class="rsslink">'.$items[$i]["title"].'</a>');
 	    if ($items[$i]["pubDate"] <> '') print(' <span class="rssdate">('.$items[$i]["pubDate"].')</span>');
 	    print('</li>');

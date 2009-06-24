@@ -30,7 +30,7 @@
 
 <h2>{tr}Dynamic zones{/tr}</h2>
 
-{include file="find.tpl"}
+{include file='find.tpl'}
 
 <form action="tiki-admin_html_page_content.php" method="post">
 <input type="hidden" name="pageName" value="{$pageName|escape}" />

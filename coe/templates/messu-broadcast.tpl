@@ -1,7 +1,7 @@
 {title help="Inter-User Messages"}{tr}Broadcast message{/tr}{/title}
 
-{include file=tiki-mytiki_bar.tpl}
-{include file="messu-nav.tpl"}
+{include file='tiki-mytiki_bar.tpl'}
+{include file='messu-nav.tpl'}
 <br /><br />
 
 

@@ -272,10 +272,10 @@
 				{$action.action} / {$action.objectType} / {$action.object} 
 				<table class="normal">
 					{if $prefs.feature_contribution eq 'y'}
-						{include file="contribution.tpl" section=$action.objectType}
+						{include file='contribution.tpl' section=$action.objectType}
 					{/if}
 					{if $prefs.feature_categories eq 'y'}
-						{include file="categorize.tpl"}
+						{include file='categorize.tpl'}
 					{/if}
 					<tr>
 						<td class="formcolor">&nbsp;</td>

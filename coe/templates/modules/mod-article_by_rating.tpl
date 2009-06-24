@@ -13,6 +13,7 @@
 
 {if $show_rating_selector eq 'y'}
 <form action="tiki-view_articles.php" style="padding: 5px;">
+	{if $module_params.sort_mode}<input type='hidden' name="sort_mode" value="{$module_params.sort_mode}" />{/if}
 	<select name="min_rating">
 		{section name=rt_val start=0 loop=11 step=1}
 			<option {if $smarty.section.rt_val.index eq $min_rating}selected{/if}>{$smarty.section.rt_val.index}</option>

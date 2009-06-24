@@ -242,4 +242,3 @@ class APIC extends Object {
 		}
 	} // end func
 }// end class
-?>

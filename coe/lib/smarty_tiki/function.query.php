@@ -138,7 +138,11 @@ function smarty_function_query($params, &$smarty) {
         $php_self = dirname($_SERVER['PHP_SELF']).'/'.$php_self;
       }
 
-    } elseif ( empty($params['_anchor']) ) {
+	} else {
+		$php_self = $_SERVER['PHP_SELF'];
+	}
+	/* temporary fix
+   } elseif ( empty($params['_anchor']) ) {
 
       // Use current script explicitely, except if there is an anchor which is enough
       // This also implies that if no anchor, every current URL params will be loosed
@@ -151,6 +155,7 @@ function smarty_function_query($params, &$smarty) {
       $params['_type'] = 'anchor';
 
     }
+	*/
 
     switch ( $params['_type'] ) {
       case 'absolute_uri':

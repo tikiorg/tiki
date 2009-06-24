@@ -89,12 +89,12 @@
 
 {tabset name='tabs_view_tracker'}
 
-{if $tiki_p_view_trackers eq 'y' or ($tracker_info.writerCanModify eq 'y' and $user)}
+{if $tiki_p_view_trackers eq 'y' or (($tracker_info.writerCanModify eq 'y' or $tracker_info.writerGroupCanModify eq 'y') and $user)}
 {tab name='{tr}Tracker Items{/tr}'}
 {* -------------------------------------------------- tab with list --- *}
 
 {if (($tracker_info.showStatus eq 'y' and $tracker_info.showStatusAdminOnly ne 'y') or $tiki_p_admin_trackers eq 'y') or $show_filters eq 'y'}
-{include file="tracker_filter.tpl"}
+{include file='tracker_filter.tpl'}
 {/if}
 
 {if $cant_pages > 1 or $initial}{initials_filter_links}{/if}
@@ -166,7 +166,11 @@ $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr
 
 {if $field_value.isTblVisible eq 'y' and $field_value.type ne 'x' and $field_value.type ne 'h' and ($field_value.isHidden eq 'n' or $field_value.isHidden eq 'p' or $tiki_p_admin_trackers eq 'y') and ($field_value.type ne 'p' or $field_value.options_array[0] ne 'password') and (empty($field_value.visibleBy) or in_array($default_group, $field_value.visibleBy) or $tiki_p_admin_trackers eq 'y')}
 <td class="auto">
-{if $field_value.isMain eq 'y' and ($tiki_p_view_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y' or $tiki_p_comment_tracker_items eq 'y'
+{if $field_value.isMain eq 'y' and ($tiki_p_view_trackers eq 'y' 
+ or ($tiki_p_modify_tracker_items eq 'y' and $item.status ne 'p' and $item.status ne 'c')
+ or ($tiki_p_modify_tracker_items_pending eq 'y' and $item.status eq 'p')
+ or ($tiki_p_modify_tracker_items_closed eq 'y' and $item.status eq 'c')
+ or $tiki_p_comment_tracker_items eq 'y'
  or ($tracker_info.writerCanModify eq 'y' and $user and $my eq $user) or ($tracker_info.writerCanModify eq 'y' and $group and $ours eq $group))}
 {if !empty($tracker_info.showPopup)}
 	{capture name=popup}
@@ -175,7 +179,7 @@ $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr
 	{cycle values="odd,even" print=false}
 	{foreach from=$items[user].field_values item=f}
 		{if in_array($f.fieldId, $popupFields)}
-			 <tr><th class="{cycle advance=false}">{$f.name}</th><td class="{cycle}">{include file="tracker_item_field_value.tpl" field_value=$f}</th></tr>
+			 <tr><th class="{cycle advance=false}">{$f.name}</th><td class="{cycle}">{include file='tracker_item_field_value.tpl' field_value=$f}</th></tr>
 		{/if}
 	{/foreach}
 	</table>
@@ -187,7 +191,7 @@ $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr
 {/if}
 {/if}
 
-{include file="tracker_item_field_value.tpl" field_value=$field_value list_mode="y" item=$items[user] showlinks="y" reloff=$smarty.section.user.index url=""}
+{include file='tracker_item_field_value.tpl' field_value=$field_value list_mode="y" item=$items[user] showlinks="y" reloff=$smarty.section.user.index url=""}
 
 </td>
 {/if}
@@ -283,7 +287,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {* --- display quicktags --- *}
   <br />
   {if $prefs.quicktags_over_textarea neq 'y'}
-    {include file=tiki-edit_help_tool.tpl qtnum=$fid area_name=$field_value.ins_id}
+    {include file='tiki-edit_help_tool.tpl' qtnum=$fid area_name=$field_value.ins_id}
   {/if}
 {/if}
 </td><td colspan="3" class="formcontent" >
@@ -297,9 +301,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 
 {* -------------------- system -------------------- *}
 {if $field_value.type eq 's' and ($field_value.name eq "Rating" or $field_value.name eq tra("Rating")) and $tiki_p_tracker_vote_ratings eq 'y'}
-	{section name=i loop=$field_value.options_array}
-		<input name="{$field_value.ins_id}" type="radio" value="{$field_value.options_array[i]|escape}" />{$field_value.options_array[i]}
-	{/section}
+	{include file='tracker_item_field_input.tpl'}
 {/if}
 
 {* -------------------- user selector -------------------- *}
@@ -377,7 +379,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 
 {* -------------------- page -------------------- *}
 {elseif $field_value.type eq 'k'}
-{include file=tracker_item_field_input.tpl}
+{include file='tracker_item_field_input.tpl'}
 
 {* -------------------- multimedia -------------------- *}
 {elseif $field_value.type eq 'M'}
@@ -397,21 +399,15 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 
 {* -------------------- static text -------------------- *}
 {elseif $field_value.type eq 'S'}
-	{if $field_value.description}
-    {if $field_value.options_array[0] eq 1}
-      {wiki}{$field_value.description}{/wiki}
-    {else}
-      {$field_value.description|escape|nl2br}
-    {/if}
-	{/if}
+{include file='tracker_item_field_input.tpl'}
 
 {* -------------------- email -------------------- *}
 {elseif $field_value.type eq 'm'}
-{include file=tracker_item_field_input.tpl}
+{include file='tracker_item_field_input.tpl'}
 
 {* -------------------- textarea -------------------- *}
 {elseif $field_value.type eq 'a'}
-{include file=tracker_item_field_input.tpl}
+{include file='tracker_item_field_input.tpl'}
 
 {* -------------------- date and time -------------------- *}
 {elseif $field_value.type eq 'f'}
@@ -419,11 +415,11 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 
 {* -------------------- drop down -------------------- *}
 {elseif $field_value.type eq 'd' or $field_value.type eq 'D'}
-{include file="tracker_item_field_input.tpl"}
+{include file='tracker_item_field_input.tpl'}
 
 {* -------------------- radio buttons -------------------- *}
 {elseif $field_value.type eq 'R'}
-{include file="tracker_item_field_input.tpl"}
+{include file='tracker_item_field_input.tpl'}
 
 {* -------------------- checkbox -------------------- *}
 {elseif $field_value.type eq 'c'}
@@ -484,7 +480,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 
 {* -------------------- antibot code -------------------- *}
 {if $prefs.feature_antibot eq 'y' && $user eq ''}
-{include file="antibot.tpl" tr_style="formcolor"}
+{include file='antibot.tpl' tr_style="formcolor"}
 {/if}
 
 {if $groupforalert ne ''}
@@ -522,7 +518,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {if $tiki_p_export_tracker eq 'y'}
 	{tab name='{tr}Export Tracker Items{/tr}'}
 	{* -------------------------------------------------- tab with export --- *}
-		{include file=tiki-export_tracker.tpl}
+		{include file='tiki-export_tracker.tpl'}
 	{/tab}
 {/if}
 {/tabset}

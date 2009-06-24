@@ -3971,7 +3971,7 @@ CREATE TABLE "tiki_tracker_fields" (
   "trackerId" numeric(12,0) default '0' NOT NULL,
   "name" varchar(255) default NULL NULL,
   "options" text default '',
-  "type" char(15) default NULL NULL,
+  "type" varchar(15) default NULL NULL,
   "isMain" char(1) default NULL NULL,
   "isTblVisible" char(1) default NULL NULL,
   "position" numeric(4,0) default NULL NULL,
@@ -4232,6 +4232,10 @@ CREATE TABLE "tiki_user_mail_accounts" (
   "smtpPort" numeric(4,0) default NULL NULL,
   "flagsPublic" char(1) default 'n',				-- COMMENT 'MatWho - Shared Group Mail box if y',
   "autoRefresh" numeric(4,0) default 0,		-- COMMENT 'seconds for mail list to refresh, 0 = none' NOT NULL,
+  "imap" varchar( 255 ) default NULL NULL,
+  "mbox" varchar( 255 ) default NULL NULL,
+  "maildir" varchar( 255 ) default NULL NULL,
+  "useSSL" char( 1 ) default 'n' NOT NULL,
   PRIMARY KEY (accountId)
 ) ENGINE=MyISAM  
 go

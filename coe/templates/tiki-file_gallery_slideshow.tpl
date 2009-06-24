@@ -83,7 +83,7 @@
 	}
 {/literal}
 	</style>
-	{* don't include file="header_jquery.tpl" - too bulky, just what we need copied from there *}
+	{* don't include file='header_jquery.tpl' - too bulky, just what we need copied from there *}
 	<!--  start jquery-tiki mini set-up -->
 	<script type="text/javascript" src="lib/jquery/jquery.min.js"></script>
 	<script type="text/javascript">

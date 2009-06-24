@@ -93,10 +93,15 @@ $crumbs[] = new Breadcrumb(tra('Administration'),
                               'Admin+Home',
                               tra('Help on Configuration Sections','',true));
 
+// Default values for AdminHome
+$admintitle = 'Administration';
+$helpUrl = 'Admin+Home';
+$helpDescription = $description = '';
+$url = 'tiki-admin.php';
+
 $adminPage = '';
 if (isset($_REQUEST["page"])) {
 	$adminPage = $_REQUEST["page"];
-	$helpUrl='';
 	if ($adminPage == "features") {
 		$admintitle = "Features"; //get_strings tra("Features")
 		$description = "Enable/disable Tiki features here, but configure them elsewhere"; //get_strings tra("Enable/disable Tiki features here, but configure them elsewhere") TODO FOR EACH DESCRIPTION
@@ -302,12 +307,16 @@ if (isset($_REQUEST["page"])) {
 		$description = 'Search engine friendly url';
 		$helpUrl = "Rewrite+Rules";
 		include_once ('tiki-admin_include_sefurl.php');
+	} else {
+		$helpUrl = '';
 	}
 
 	$url = 'tiki-admin.php'.'?page='.$adminPage;
 	if (!$helpUrl) {$helpUrl = ucfirst($adminPage)."+Config";}
 	$helpDescription = "Help on $admintitle Config";//get_strings tra("Help on $admintitle Config")
 } else {
+  $smarty->assign('admintitle', "Admin Home");
+  $smarty->assign('description', "Home Page for Administrators");
   $smarty->assign('headtitle', breadcrumb_buildHeadTitle($crumbs));
   $smarty->assign('description', $crumbs[0]->description);
 }
@@ -325,6 +334,8 @@ if(isset($admintitle)) {
   $smarty->assign_by_ref('admintitle', $admintitle);
   $headtitle = breadcrumb_buildHeadTitle($crumbs);
   $smarty->assign_by_ref('headtitle', $headtitle);
+  $smarty->assign_by_ref('helpUrl', $helpUrl);
+  $smarty->assign_by_ref('description', $description);
 }
 
 // VERSION TRACKING

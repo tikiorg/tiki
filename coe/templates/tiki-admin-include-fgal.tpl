@@ -158,7 +158,7 @@
 <div class="adminoptionbox">
 	<div class="adminoptionlabel">{tr}Select which items to display when listing galleries: {/tr}:</div>
         <table class="admin">
-		{include file="fgal_listing_conf.tpl"}
+		{include file='fgal_listing_conf.tpl'}
 		</table>
 </div>
 	{/tab}

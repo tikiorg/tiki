@@ -172,6 +172,7 @@ function wikiplugin_trackerstat($data, $params) {
 			$allValues = $trklib->get_all_items($trackerId, $fieldId, $status);
 			$j = -1;
 			foreach ($allValues as $value) {
+				$value = trim($value);
 				if ($j < 0 || $value != $v[$j]['value']) {
 					++$j;
 					$v[$j]['value'] = $value;

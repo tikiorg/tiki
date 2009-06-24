@@ -241,6 +241,66 @@ class StatsLib extends TikiLib {
 		}
 		return $data;
 	}
+	/* count the number of created or modified for this day, this month, this year */
+	function count_this_period($table = 'tiki_pages', $column ='created', $when='daily', $parentColumn ='', $parentId='') {
+		global $tikilib, $prefs;
+		$now = $tikilib->now;
+		$sec = TikiLib::date_format("%s", $now);
+		$min = TikiLib::date_format("%i", $now);
+		$hour = TikiLib::date_format("%H", $now);
+		$day = TikiLib::date_format("%d", $now);
+		$month = TikiLib::date_format("%m", $now);
+		$year = TikiLib::date_format("%Y", $now);
+		switch ($when){
+		case 'day':
+			$begin = TikiLib::make_time(0, 0, 0, $month, $day, $year);
+			break;
+		case 'lastday':
+			$begin = Tikilib::make_time($hour-24, $min, $sec, $month, $day, $year);
+			break;
+		case 'week':
+			$iweek = TikiLib::date_format("%w", $now);// 0 for Sunday...
+			if ($prefs['calendar_firstDayofWeek'] == 'user') {
+				$firstDayofWeek = (int)tra('First day of week: Sunday (its ID is 0) - translators you need to localize this string!');
+				if ( $firstDayofWeek < 1 || $firstDayofWeek > 6 ) {
+					$firstDayofWeek = 0;
+				} 
+			} else {
+				$firstDayofWeek = $prefs['calendar_firstDayofWeek'];
+			}
+			$iweek -= $firstDayofWeek;
+			if ($iweek < 0) $iweek += 7;
+			$begin = TikiLib::make_time(0, 0, 0, $month, $day-($iweek ), $year);
+			break;
+		case 'lastweek':
+			$begin = Tikilib::make_time($hour, $min, $sec, $month, $day-7, $year);
+			break;
+		case 'month':
+			$begin = TikiLib::make_time(0, 0, 0, $month, 1, $year);
+			break;
+		case 'lastmonth':
+			$begin = TikiLib::make_time($hour, $min, $sec, $month-1, $day, $year);
+			break;			
+		case 'year':
+			$begin = TikiLib::make_time(0, 0, 0, 1, 1, $year);
+			break;
+		case 'lastyear':
+			$begin = TikiLib::make_time($hour, $min, $sec, $month, $day, $year-1);
+			break;
+		default :
+			$begin = $now;
+			break;
+		}
+		$bindvars = array((int)$begin, (int)$now);
+		$where = '';
+		if (!empty($parentColumn) && !empty($parentId)) {
+			$where = " and `$parentColumn` = ?";
+			$bindvars[] = (int)$parentId;
+		}
+		$query = "select count(*) from `$table` where `$column` >= ? and `$column` <= ? $where";
+		$count = $tikilib->getOne($query, $bindvars);
+		return $count;
+	}
 	
 }
 global $dbTiki;

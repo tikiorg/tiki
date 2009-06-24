@@ -15,7 +15,7 @@ require_once('tiki-setup.php');
 
 global $prefs;
 
-if ($prefs['feature_categories'] == 'y') {
+if ($prefs['feature_categories'] == 'y' && $tiki_p_view_categories == 'y') {
 	global $categlib; include_once('lib/categories/categlib.php');
 
 	$smarty->assign('cat_categorize', 'n');

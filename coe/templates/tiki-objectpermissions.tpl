@@ -6,12 +6,19 @@
   {button href="$referer" _text="{tr}Back{/tr}"}
 </div>
 
-{tabset name='tabs_objectpermissions'}
+{if $prefs.feature_tabs eq 'y'}
+  <div class="tabs" style="clear: both;">
+	  <span id="tab1" class="tabmark tabactive"><a href="javascript:tikitabs(1,3);">{tr}View Permissions{/tr}</a></span>
+	  {if $prefs.feature_quick_object_perms eq 'y'}
+	  <span id="tab2" class="tabmark tabinactive"><a href="javascript:tikitabs(2,3);">{tr}Edit Permissions (Quick!){/tr}</a></span>
+	  {/if}
+	  <span id="tab3" class="tabmark tabinactive"><a href="javascript:tikitabs(3,3);">{tr}Edit Permissions{/tr}</a></span>
+  </div>
+{/if}
 
-{tab name='{tr}View Permissions{/tr}'}
-
+<fieldset {if $prefs.feature_tabs eq 'y'}id="content1"  class="tabcontent" style="clear:both;display:block; margin-left: 0;"{/if}>
 {if $prefs.feature_tabs neq 'y'}
-	<h2>{tr}View Permissions{/tr}</h2>
+	<legend class="heading"><a href="#"><span>{tr}View Permissions{/tr}</span></a></legend>
 {/if}
 {if $filegals_manager eq ''}
 {remarksbox type="warning" title="{tr}Warning{/tr}"}{tr}These permissions override any global permissions or category permissions affecting this object.{/tr}<br />
@@ -61,14 +68,14 @@
 <tr><td colspan="3">{if empty($page_perms)}{tr}No category permissions; global permissions apply{/tr}{else}{tr}No category permissions; special permissions apply{/tr}{/if}</td></tr>
 {/section}
 </table>
-{/tab}
+</fieldset>
 
-{tab name='{tr}Edit Permissions{/tr}'}
 
+<fieldset {if $prefs.feature_tabs eq 'y'}id="content3"  class="tabcontent" style="clear:both;display:block; margin-left:0;"{/if}>
 {if $prefs.feature_tabs neq 'y'}
-	<h2>{tr}Edit Permissions{/tr}</h2>
+	<legend class="heading"><a href="#"><span>{tr}Edit Permissions{/tr}</span></a></legend>
 {/if}
-<form method="post" action="tiki-objectpermissions.php{if $filegals_manager neq ''}?filegals_manager={$filegals_manager|escape}{/if}">
+<form name="allperms" method="post" action="tiki-objectpermissions.php{if $filegals_manager neq ''}?filegals_manager={$filegals_manager|escape}{/if}">
 {if $filegals_manager eq ''}
 {remarksbox type="warning" title="{tr}Warning{/tr}"}{tr}These permissions override any global permissions or category permissions affecting this object.{/tr}<br />
 {if $tiki_p_admin eq 'y'}{tr}To edit global permissions <a class="rbox-link" href="tiki-admingroups.php">click here</a>.{/tr}{/if}
@@ -77,12 +84,7 @@
 <h2>{tr}Current permissions for this object{/tr}</h2>
 <table class="normal">
 <tr>
-	<th>
-		{if $page_perms}
-			{select_all checkbox_names='checked[]'}
-		{/if}
-	</th>
-	<th>{tr}Permissions{/tr}</th>
+	<th colspan="2">{tr}Permissions{/tr}</th>
 	<th>{tr}Groups{/tr}</th>
 	<th style="width:20px">{tr}Action{/tr}</th>
 </tr>
@@ -102,17 +104,21 @@
 {sectionelse}
 <tr><td colspan="4" class="odd">{if !empty($categ_perms)}{tr}No individual permissions, category permissions apply{/tr}{else}{tr}No individual permissions, category permissions apply{/tr}{/if}</td></tr>
 {/section}
-</table>
-
 {if $page_perms}
-	<div>
-		{tr}Perform action with checked:{/tr} 
-		<input type="image" name="delsel" src='pics/icons/cross.png' alt='{tr}Delete{/tr}' title='{tr}Delete{/tr}' />
-		{if isset($inStructure)}
-			{tr}and also to all pages of the sub-structure:{/tr} <input name="removestructure" type="checkbox" />
-		{/if}
-	</div>
+<tr>
+	<td colspan="3">
+		<input type="checkbox" id="clickall" title="{tr}Select All{/tr}" onclick="switchCheckboxes(this.form,'checked[]',this.checked)"/>&nbsp;{tr}Select All{/tr}
+	</td>
+</tr>
 {/if}
+</table>
+{if $page_perms}<div>
+{tr}Perform action with checked:{/tr} 
+<input type="image" name="delsel" src='pics/icons/cross.png' alt='{tr}Delete{/tr}' title='{tr}Delete{/tr}' />
+{if isset($inStructure)}
+{tr}and also to all pages of the sub-structure:{/tr} <input name="removestructure" type="checkbox" />
+{/if}
+</div>{/if}
 
 <br/>
 
@@ -133,32 +139,40 @@
 		<th>{tr}Permissions{/tr}</th>
 		<th>{tr}Groups{/tr}</th>
 	</tr>
-<tr>
-<td><table width="100%">
-{cycle print=false values="even,odd"}
-{section name=prm loop=$perms}
-<tr class="{cycle advance=true}">
-  <td class="{cycle advance=false}" title="{$perms[prm].permName|escape}">
-    <input type="checkbox" name="perm[]" value="{$perms[prm].permName|escape}" title="{$perms[prm].permName|escape}"/>
-  </td>
-  <td class="{cycle advance=false}">
-    {$perms[prm].permName|escape}
-  </td>
-  <td class="{cycle advance=false}">
-    <div class="subcomment">{tr}{$perms[prm].permDesc|escape}{/tr}</div>
-  </td>
-  </tr>
-{/section}
-</table></td>
-<td><table width="100%">
-{cycle print=false values="even,odd"}
-{section name=grp loop=$groups}
-<tr class="{cycle advance=true}">
-  <td class="{cycle advance=false}"><input type="checkbox" name="group[]" value="{$groups[grp].groupName|escape}" {if $groupName eq $groups[grp].groupName }checked{/if}/>&nbsp;{$groups[grp].groupName|escape}</td></tr>
-{/section}
-</table></td></tr>
+	<tr>
+		<td>
+			<table width="100%">
+				{cycle print=false values="even,odd"}
+				{section name=prm loop=$perms}
+				<tr class="{cycle advance=true}">
+  					<td class="{cycle advance=false}" title="{$perms[prm].permName|escape}">
+    					<input type="checkbox" name="perm[]" id="{$perms[prm].permName}" value="{$perms[prm].permName|escape}" title="{$perms[prm].permName|escape}"/>
+  					</td>
+					<td class="{cycle advance=false}">
+    					{$perms[prm].permName|escape}
+	  				</td>
+  					<td class="{cycle advance=false}">
+    					<div class="subcomment">{tr}{$perms[prm].permDesc|escape}{/tr}</div>
+  					</td>
+  				</tr>
+				{/section}
+			</table>
+		</td>
+		<td>
+			<table width="100%">
+				{cycle print=false values="even,odd"}
+				{section name=grp loop=$groups}
+				<tr class="{cycle advance=true}">
+					<td class="{cycle advance=false}"><input type="checkbox" name="group[]" value="{$groups[grp].groupName|escape}" {if $groupName eq $groups[grp].groupName }checked{/if}/>&nbsp;{$groups[grp].groupName|escape}
+					</td>
+				</tr>
+				{/section}
+			</table>
+		</td>
+	</tr>
 </table>
-<div class="input_submit_container" style="text-align: center">
+
+ <div class="input_submit_container" style="text-align: center">
 	<input type="submit" name="assign" value="{tr}Assign{/tr}" />
 </div>
 {if ($objectType eq 'wiki' or $objectType eq 'wiki page') and !empty($inStructure)}
@@ -176,7 +190,90 @@
 {/section}
 </table>
 
+{* <a class="trailer" href="#" {popup sticky=true fullhtml="1" hauto=true vauto=true text=$smarty.capture.add_perm|escape:"javascript"|escape:"html"  trigger=onClick} >{tr}Add new Permissions{/tr}</a> *}
 </div>
 </form>
-{/tab}
-{/tabset}
+
+
+</fieldset>
+
+{if $prefs.feature_quick_object_perms eq 'y'}
+
+
+{* Example for implementing Wisent permissions, clemens john 16.04.2009 *}
+
+<form name="allperms" method="post" action="tiki-objectpermissions.php{if $filegals_manager neq ''}?filegals_manager={$filegals_manager|escape}{/if}">
+<fieldset {if $prefs.feature_tabs eq 'y'}id="content2"  class="tabcontent" style="clear:both;display:block; margin-left: 0;"{/if}>
+{if $prefs.feature_tabs neq 'y'}
+	<legend class="heading"><a href="#"><span>{tr}View Permissions{/tr}</span></a></legend>
+{/if}
+{if $filegals_manager eq ''}
+{remarksbox type="warning" title="{tr}Warning{/tr}"}{tr}These permissions override any global permissions or category permissions affecting this object.{/tr}<br />
+{if $tiki_p_admin eq 'y'}{tr}To edit global permissions <a class="rbox-link" href="tiki-admingroups.php">click here</a>.{/tr}{/if}
+{/remarksbox}
+{/if}
+
+<h2>{tr}Assign Quick-Permissions to this object{/tr}</h2>
+
+	<input type="hidden" name="quick_perms" value="true"/>
+	<table width="100%">
+		<tr class="{cycle advance=true}">
+			<td class="{cycle advance=false}">
+				<table>
+					<th>Permission</th>
+					<tr>
+						<td>Admin access</td>
+					<tr>
+					<tr>
+						<td>Write access</td>
+					<tr>
+					<tr>
+						<td>Read access</td>
+					<tr>
+					<tr>
+						<td>No access</td>
+					<tr>
+					<tr>
+						<td>Userdefined</td>
+					<tr>
+				</table>
+			</td>
+			{cycle print=false values="even,odd"}
+			{section name=grp loop=$groups}
+			<td class="{cycle advance=false}">
+				<table>
+					<th>{$groups[grp].groupName|escape}</th>
+					<tr>
+						<td><input type="radio" name="perm_{$groups[grp].groupName}" value="admin" {if $groups[grp].groupSumm eq 'admin'}checked{/if} /></td>
+					<tr>
+					<tr>
+						<td><input type="radio" name="perm_{$groups[grp].groupName}" value="write"{if $groups[grp].groupSumm eq 'write'}checked{/if} /></td>
+					<tr>
+					<tr>
+						<td><input type="radio" name="perm_{$groups[grp].groupName}" value="read" {if $groups[grp].groupSumm eq 'read'}checked{/if} /></td>
+					<tr>
+					<tr>
+						<td><input type="radio" name="perm_{$groups[grp].groupName}" value="none" {if $groups[grp].groupSumm eq 'none'}checked{/if} /></td>
+					<tr>
+					<tr>
+						<td><input type="radio" name="perm_{$groups[grp].groupName}" value="userdefined" {if $groups[grp].groupSumm eq 'userdefined'}checked{/if} disabled /></td>
+					<tr>
+				</table>
+			</td>
+			{/section}
+		</tr>
+	</table>
+	
+<input type="hidden" name="page" value="{$page|escape}" />
+<input type="hidden" name="referer" value="{$referer|escape}" />
+<input type="hidden" name="objectName" value="{$objectName|escape}" />
+<input type="hidden" name="objectType" value="{$objectType|escape}" />
+<input type="hidden" name="objectId" value="{$objectId|escape}" />
+<input type="hidden" name="permType" value="{$permType|escape}" />
+<div class="input_submit_container" style="text-align: center">
+	<input type="submit" name="assign" value="{tr}Assign{/tr}" />
+</div>
+
+</fieldset>
+</form>
+{/if}

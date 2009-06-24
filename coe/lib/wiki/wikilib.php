@@ -862,13 +862,18 @@ class WikiLib extends TikiLib {
 
 	    return $this->query($query, $bindvals) ? true : false;
 	}
-	function sefurl($page, $with_next='') {
+	function sefurl($page, $with_next='', $all_langs='') {
 		global $prefs, $smarty;
 		if( basename( $_SERVER['PHP_SELF'] ) == 'tiki-all_languages.php' ) {
 			return 'tiki-all_languages.php?page='.urlencode($page);
 		}
 
-		$href = 'tiki-index.php?page='.urlencode($page);
+        $script_name = 'tiki-index.php';
+        if ($all_langs == 'y') {
+           $script_name = 'tiki-all_languages.php';
+        }
+
+		$href = "$script_name?page=".urlencode($page);
 		if ($with_next) {
 			$href .= '&amp;';
 		}

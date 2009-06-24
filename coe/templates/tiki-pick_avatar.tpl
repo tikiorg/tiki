@@ -10,7 +10,7 @@
 
 
 {if $user eq $userwatch}
-	{include file=tiki-mytiki_bar.tpl}
+	{include file='tiki-mytiki_bar.tpl'}
 {else}
 	<div class="navbar">
 		{assign var=thisuserwatch value=$userwatch|escape}
@@ -102,7 +102,7 @@ function subavt() {
 <label for="userfile1">{tr}File (only .gif, .jpg and .png images approximately 45px × 45px){/tr}:</label>
 <input type="hidden" name="MAX_FILE_SIZE" value="10000000" />
 <input id="userfile1" name="userfile1" type="file" />
-<input class="button" type="submit" name="upload" value="{tr}Upload{/tr}" />
+<input type="submit" name="upload" value="{tr}Upload{/tr}" />
 </fieldset>
 </form>
 </div>

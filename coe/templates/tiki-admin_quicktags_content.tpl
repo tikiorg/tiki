@@ -43,7 +43,7 @@
     </td>
     {/foreach}
     <td class="{cycle}">
-      {self_link _template='tiki-admin_quicktags_edit.tpl' _htmlelement='quicktags-edit' _class='link' tagId=$quicktags[tag].tagId _icon='page_edit'}{tr}Edit{/tr}{/self_link}
+      {self_link cookietab=2 _template='tiki-admin_quicktags_edit.tpl' _htmlelement='quicktags-edit' _class='link' tagId=$quicktags[tag].tagId _icon='page_edit'}{tr}Edit{/tr}{/self_link}
       &nbsp;&nbsp;
       {self_link _class='link' remove=$quicktags[tag].tagId _ajax='n' _icon='cross'}{tr}Remove{/tr}{/self_link}
     </td>

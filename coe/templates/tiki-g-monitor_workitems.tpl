@@ -2,7 +2,7 @@
 {*Smarty template $Id$*}
 <h1><a class="pagetitle" href="tiki-g-monitor_workitems.php">{tr}Monitor workitems{/tr}</a>
 </h1>
-{include file=tiki-g-monitor_bar.tpl}
+{include file='tiki-g-monitor_bar.tpl'}
 <h2>{tr}List of workitems{/tr} ({$cant})</h2>
 
 {* FILTERING FORM *}
@@ -140,4 +140,4 @@
 {pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
 {* END OF PAGINATION *}
 
-{include file=tiki-g-monitor_stats.tpl}
+{include file='tiki-g-monitor_stats.tpl'}

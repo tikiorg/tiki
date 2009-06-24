@@ -4749,6 +4749,7 @@ $lang=Array(
 // "To use a menu in a tiki format" => "To use a menu in a tiki format",
 // "To use menu in a css/suckerfish format" => "To use menu in a css/suckerfish format",
 // "To customizing the menu's css id (#id)" => "To customizing the menu's css id (#id)",
+// "To customize the menu's CSS id (#)" => "To customizing the menu's css id (#id)",
 // "dynamic collapsed" => "dynamic collapsed",
 // "Folder Icon" => "Folder Icon",
 // "Path and filename of closed folder icon" => "Path and filename of closed folder icon",

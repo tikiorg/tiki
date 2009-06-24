@@ -11,8 +11,24 @@ $section = 'wiki page';
 require_once('tiki-setup.php');
 require_once('lib/ajax/ajaxlib.php');
 
-$auto_query_args = array('initial','maxRecords','sort_mode','find','lang','langOrphan', 'findfilter_orphan');
+$auto_query_args = array('initial','maxRecords','sort_mode','find','lang','langOrphan', 
+                         'findfilter_orphan', 'categId', 'category', 'page_orphans', 
+                         'structure_orphans', 'exact_match', 
+                         'hits_link_to_all_languages', 'create_new_pages_using_template_name');
+                         
 
+if ($prefs['feature_multilingual'] == 'y' && isset($_REQUEST['lang']) && isset($_REQUEST['create_new_pages_using_template_name'])) {
+	global $multilinguallib; include_once('lib/multilingual/multilinguallib.php');
+	$template_id_for_new_pages = $multilinguallib->getTemplateIDInLanguage('wiki', $_REQUEST['create_new_pages_using_template_name'], $_REQUEST['lang']);
+	$smarty->assign('template_id', $template_id_for_new_pages);
+}
+
+if (isset($_REQUEST['hits_link_to_all_languages']) && $_REQUEST['hits_link_to_all_languages'] == 'On') {
+   $smarty->assign('all_langs', 'y');
+} else {
+   $smarty->assign('all_langs', '');
+}
+   
 $smarty->assign('headtitle',tra('Pages'));
 
 $access->check_feature( array( 'feature_wiki', 'feature_listPages' ) );
@@ -150,9 +166,8 @@ if ( ! empty($multiprint_pages) ) {
 	$smarty->assign('find', $find);
 	
 	$filter = '';
-	if (!empty($_REQUEST['lang'])) {
-		$filter['lang'] = $_REQUEST['lang'];
-		$smarty->assign_by_ref('find_lang', $_REQUEST['lang']);
+	if ($prefs['feature_multilingual'] == 'y') {
+		$filter = setLangFilter($filter);
 	}
 	if (!empty($_REQUEST['langOrphan'])) {
 		$filter['langOrphan'] = $_REQUEST['langOrphan'];
@@ -214,7 +229,17 @@ if ( ! empty($multiprint_pages) ) {
 	if (!isset($listpages_orphans)) {
 		$listpages_orphans = false;
 	}
+	
 	$listpages = $tikilib->list_pages($offset, $maxRecords, $sort_mode, $find, $initial, $exact_match, false, true, $listpages_orphans, $filter);
+
+	if( $prefs['feature_wiki_pagealias'] == 'y' && $find ) {
+		global $semanticlib;
+		require_once 'lib/wiki/semanticlib.php';
+		$aliases = $semanticlib->getAliasContaining( $find );
+		$smarty->assign( 'aliases', $aliases );
+	} else {
+		$smarty->assign( 'aliases', null );
+	}
 
 	// Only show the 'Actions' column if the user can do at least one action on one of the listed pages
 	$show_actions = 'n';
@@ -315,3 +340,13 @@ if ( ! empty($multiprint_pages) ) {
 		$smarty->display("tiki.tpl");
 	}
 }
+
+function setLangFilter($filter) {
+	global $smarty;
+	global $multilinguallib;  include_once('lib/multilingual/multilinguallib.php');
+   $lang = $multilinguallib->currentSearchLanguage(false); 
+   $filter['lang'] = $lang;
+   $smarty->assign_by_ref('find_lang', $lang);   
+   return $filter;
+}
+

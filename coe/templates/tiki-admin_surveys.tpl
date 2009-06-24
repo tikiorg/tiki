@@ -28,13 +28,13 @@
 			<td>{tr}Description{/tr}:</td>
 			<td>{textarea name="description" rows="6" cols="80" _quicktags='y' _zoom='n'}{$info.description}{/textarea}</td>
 		</tr>
-		{include file=categorize.tpl}
+		{include file='categorize.tpl'}
 		<tr class="formcolor">
 			<td>{tr}Status{/tr}</td>
 			<td>
 				<select name="status">
 					<option value="o" {if $info.status eq 'o'}selected='selected'{/if}>{tr}Open{/tr}</option>
-					<option value="c" {if $info.status eq 'c'}selected='selected'{/if}>{tr}closed{/tr}</option>
+					<option value="c" {if $info.status eq 'c'}selected='selected'{/if}>{tr}Closed{/tr}</option>
 				</select>
 			</td>
 		</tr>

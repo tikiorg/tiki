@@ -195,14 +195,14 @@ if (isset($_REQUEST["save"]) && isset($_REQUEST["name"]) && strlen($_REQUEST["na
 	check_ticket('admin-categories');
 	// Save
 	if ($_REQUEST["categId"]) {
-	        if ($_REQUEST['parentId'] == $_REQUEST['categId']) {
-	            $smarty->assign('msg', tra("Category can`t be parent of itself"));
-  	            $smarty->display("error.tpl");
-	            die;
-                }
+		if ($_REQUEST['parentId'] == $_REQUEST['categId']) {
+			$smarty->assign('msg', tra("Category can`t be parent of itself"));
+			$smarty->display("error.tpl");
+			die;
+		}
 		$categlib->update_category($_REQUEST["categId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST["parentId"]);
 	} else if ($categlib->exist_child_category($_REQUEST['parentId'], $_REQUEST['name'])) {
-	  $errors[]= tra('You can not create a category with a name already existing at this level');
+		$errors[]= tra('You can not create a category with a name already existing at this level');
 	} else {
 		$newcategId = $categlib->add_category($_REQUEST["parentId"], $_REQUEST["name"], $_REQUEST["description"]);
 		if (isset($_REQUEST['assign_perms'])) {
@@ -299,7 +299,7 @@ $smarty->assign('categ_name', $categ_name);
 function array_csort($marray, $column) {
 	if (is_array($marray)) {
 		$sortarr = array();
-  	foreach ($marray as $key=>$row) { 
+		foreach ($marray as $key=>$row) { 
 			$sortarr[$key] = $row[$column]; 
 		}
  		array_multisort($sortarr, $marray); return $marray;

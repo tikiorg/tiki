@@ -115,6 +115,9 @@
 	<div class="adminoption"><input type="checkbox" id="feature_pear_date" name="feature_pear_date"{if $prefs.feature_pear_date eq 'y'} checked="checked"{/if} /></div>
 	<div class="adminoptionlabel"><label for="feature_pear_date">{tr}Use PEAR::Date library{/tr}.</label></div>
 </div>
+</fieldset>
+
+<fieldset><legend>{tr}Mail{/tr}</legend>
 <div class="adminoptionbox"><label for="general-charset">{tr}Default charset for sending mail{/tr}:</label> 
 	<select name="default_mail_charset" id="general-charset">
 		<option value="utf-8" {if $prefs.default_mail_charset eq "utf-8"}selected="selected"{/if}>utf-8</option>
@@ -336,8 +339,8 @@
 	<div class="adminoptionlabel"><label for="user_show_realnames">{tr}Show user's real name instead of login (when possible){/tr}.</label>{if $prefs.feature_help eq 'y'} {help url="User+Preferences"}{/if}</div>
 </div>
 <div class="adminoptionbox">	  
-	<div class="adminoptionlabel"><label for="user_show_realnames">{tr}Highlight group{/tr}:</label> 
-	<select name="highlight_group">
+	<div class="adminoptionlabel"><label for="highlight_group">{tr}Highlight group{/tr}:</label> 
+	<select name="highlight_group" id="highlight_group">
 <option value="0">{tr}None{/tr}</option>
 {foreach key=g item=gr from=$listgroups}
 <option value="{$gr.groupName|escape}" {if $gr.groupName eq $prefs.highlight_group} selected="selected"{/if}>{$gr.groupName|truncate:"52":" ..."}</option>

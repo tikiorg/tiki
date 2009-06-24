@@ -110,7 +110,7 @@
 					{tr}Description text is wiki-parsed:{/tr} 
 					<input type="checkbox" name="descriptionIsParsed" {if $descriptionIsParsed eq 'y'}checked="checked"{/if} onclick="toggleBlock('trackerDesc');" />
 					<div id="trackerDesc" style="display:none;" >
-						{include file=tiki-edit_help_tool.tpl qtnum="trackerDesc" area_name="trackerDescription"}
+						{include file='tiki-edit_help_tool.tpl' qtnum="trackerDesc" area_name="trackerDescription"}
 						{if $descriptionIsParsed eq 'y'}
 							<script language="javascript">
 								<!--//--><![CDATA[//><!--
@@ -124,7 +124,7 @@
 			</tr>
 
 			{if $prefs.feature_categories eq 'y'}
-				{include file=categorize.tpl colsCategorize=2}
+				{include file='categorize.tpl' colsCategorize=2}
 				<tr class="formcolor">
 					<td>{tr}Auto create corresponding categories{/tr}</td>
 					<td>
@@ -531,7 +531,7 @@ categories = {$catsdump}
 	</form>
 
 	{if $trackerId}
-		{include file=tiki-export_tracker.tpl}
+		{include file='tiki-export_tracker.tpl'}
 
 		<h2>{tr}Import CSV data{/tr}</h2>
 		<form action="tiki-import_tracker.php?trackerId={$trackerId}" method="post" enctype="multipart/form-data">
@@ -587,7 +587,7 @@ categories = {$catsdump}
 					{tr}Description text is wiki-parsed:{/tr} 
 					<input type="checkbox" name="duplicateDescriptionIsParsed" {if $descriptionIsParsed eq 'y'}checked="checked"{/if} onclick="toggleBlock('duplicateTrackerDesc');" />
 					<div id="duplicateTrackerDesc" style="display:none;" >
-						{include file=tiki-edit_help_tool.tpl qtnum="duplicateTrackerDesc" area_name="duplicateTrackerDescription"}
+						{include file='tiki-edit_help_tool.tpl' qtnum="duplicateTrackerDesc" area_name="duplicateTrackerDescription"}
 						{if $descriptionIsParsed eq 'y'}
 							<script language="javascript">
 							<!--//--><![CDATA[//><!--

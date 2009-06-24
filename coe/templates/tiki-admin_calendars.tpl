@@ -79,7 +79,7 @@
 <input type="hidden" name="calendarId" value="{$calendarId|escape}" />
 <table class="normal">
 {if $tiki_p_view_categories eq 'y'}
-{include file=categorize.tpl}
+{include file='categorize.tpl'}
 {/if}
 <tr class="formcolor"><td>{tr}Name{/tr}:</td><td><input type="text" name="name" value="{$name|escape}" />
 {tr}Show in popup box{/tr}

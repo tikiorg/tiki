@@ -33,7 +33,7 @@ function smarty_block_tab($params, $content, &$smarty, &$repeat) {
 			$smarty_tabset[] = $params['name'] = "tab"+sizeof($smarty_tabset);
 		}
 		
-		$ret = "<a name='tab".sizeof($smarty_tabset)."'>&nbsp;</a>";
+		$ret = "<a name='tab".sizeof($smarty_tabset)."'/>";
 		$ret .= "<fieldset ";
 		if ($prefs['feature_tabs'] == 'y' and (!isset($_COOKIE["tabbed_$smarty_tabset_name"]) or $_COOKIE["tabbed_$smarty_tabset_name"] != 'n')) {
    		$ret .= "id='content".sizeof($smarty_tabset)."' class='tabcontent' style='clear:both;display:block;'";

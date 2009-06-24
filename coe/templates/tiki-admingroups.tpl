@@ -25,18 +25,7 @@
 	{include file='find.tpl' find_show_num_rows='y'}
 
 	{if $cant_pages > 1 or !empty($initial) or !empty($find)}
-		<div align="center">
-			{section name=ini loop=$initials}
-				{if $initial and $initials[ini] eq $initial}
-					<span class="button">
-						<span>{$initials[ini]|capitalize}</span>
-					</span> .
-				{else}
-					<a href="tiki-admingroups.php?initial={$initials[ini]}{if $find}&amp;find={$find|escape:"url"}{/if}{if $numrows}&amp;numrows={$numrows}{/if}{if $sort_mode}&amp;sort_mode={$sort_mode}{/if}" class="prevnext">{$initials[ini]}</a> .
-				{/if}
-			{/section}
-				<a href="tiki-admingroups.php?initial={if $find}&amp;find={$find|escape:"url"}{/if}{if $numrows}&amp;numrows={$numrows}{/if}{if $sort_mode}&amp;sort_mode={$sort_mode}{/if}" class="prevnext">{tr}All{/tr}</a>
-		</div>
+		{initials_filter_links}
 	{/if}
 
 	<table class="normal">

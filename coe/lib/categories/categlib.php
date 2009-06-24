@@ -515,11 +515,11 @@ class CategLib extends ObjectLib {
 			$parents = $this->get_object_categories("$type", $itemId);
 			$return_perms = array(); // initialize array for storing perms to be returned
 
-			if (!$cachelib->isCached("categories_permission_names")) {
+			if (!$cachelib->isCached("category_permission_names")) {
 				$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'category');
-				$cachelib->cacheItem("categories_permission_names",serialize($perms));
+				$cachelib->cacheItem("category_permission_names",serialize($perms));
 			} else {
-				$perms = unserialize($cachelib->getCached("categories_permission_names"));
+				$perms = unserialize($cachelib->getCached("category_permission_names"));
 			}
 
 			$permission_names = array();
@@ -1489,6 +1489,13 @@ class CategLib extends ObjectLib {
 	function update_object_categories($categories, $objId, $objType, $desc='', $name='', $href='') {
 		global $prefs, $user;
 		$old_categories = $this->get_object_categories($objType, $objId);
+		
+		//Dirty hack to remove the Slash at the end of the ID (Why is there a slash?! Bug is reportet.)
+		foreach($categories as $key=>$category) {
+			if($category{strlen($category)-1}=="/")
+				$categories[$key]=substr($category, 0, -1);
+		}
+		
 		// need to prevent categories where user has no perm (but is set by other users with perm) to be wiped out
 		if ($prefs['feature_category_reinforce'] == "n") {
 			foreach ($old_categories as $old_cat) {

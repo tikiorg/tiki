@@ -4,7 +4,7 @@
 
 {if $prefs.feature_ajax ne 'y' && $prefs.feature_mootools ne 'y'}
 <!-- this bar is created by a ref to {include file=tiki-mytiki_bar.tpl} :) -->
-{include file=tiki-mytiki_bar.tpl}
+{include file='tiki-mytiki_bar.tpl'}
 {/if}
 
 <div style="text-align:center;">

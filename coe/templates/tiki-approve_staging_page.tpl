@@ -13,11 +13,11 @@
 {if $staging_atts|count >= 1 || $atts|count >=1}
 	{if  count($staging_atts) >= 1}
 		<h2>{tr}New attachments{/tr}</h2>
-		{include file="attachments.tpl" atts=$staging_atts target='_blank' attach_box="n"}
+		{include file='attachments.tpl' atts=$staging_atts target='_blank' attach_box="n"}
 	{/if}
 	{if count($atts) >= 1}
 		<h2>{tr}Old attachments{/tr}</h2>
-		{include file="attachments.tpl" atts=$atts target='_blank'  attach_box="n"}
+		{include file='attachments.tpl' atts=$atts target='_blank'  attach_box="n"}
 	{/if}
 {/if}
 

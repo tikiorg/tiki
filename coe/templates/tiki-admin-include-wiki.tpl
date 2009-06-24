@@ -51,7 +51,7 @@
 <div class="adminoptionbox">
 	<div class="adminoptionlabel"><label for="wiki_pagename_strip">{tr}Page name display stripper{/tr}:</label>
 	<input type="text" id="wiki_pagename_strip" name="wiki_pagename_strip" value="{$prefs.wiki_pagename_strip}" size="5" /> <input type="submit" name="setwikiregex" value="{tr}Set{/tr}" />
-	<br /><em>{tr}Enter a character to use as the delimiter when displaying page names. All characters after the delimiter will be stripped when displaying the page name.</em>{/tr}
+	<br /><em>{tr}Enter a character to use as the delimiter when displaying page titles. All characters after the delimiter will be stripped when displaying the page name.</em>{/tr}
 	</div>
 </div>
 
@@ -343,6 +343,13 @@ name="w_displayed_default" {if $prefs.w_displayed_default eq 'y'} checked="check
 	<div class="adminoptionlabel"><label for="feature_wiki_pictures">{tr}Pictures{/tr}</label>{if $prefs.feature_help eq 'y'} {help url="Wiki-Syntax Images"}{/if} <a class="link" href="tiki-assignpermission.php?type=wiki&amp;group=Anonymous" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a></div>
 
 <div class="adminoptionboxchild" id="usepictures" style="display:{if $prefs.feature_wiki_pictures eq 'y'}block{else}none{/if};">
+
+<div class="adminoptionbox">
+	<div class="adminoption"><input type="checkbox" name="feature_filegals_manager" id="feature_filegals_manager" {if $prefs.feature_filegals_manager eq 'y'}checked="checked" {/if}/> </div>
+	<div class="adminoptionlabel"><label for="feature_filegals_manager">{tr}Use File Galleries to store pictures {/tr}.</label></div>
+</div>
+
+
 <div class="adminoptionbox">
 	<div class="adminoptionlabel"><a class="button" href="tiki-admin.php?page=wiki&amp;rmvunusedpic=1">{tr}Remove unused pictures{/tr}</a></div>
 </div>
@@ -417,25 +424,41 @@ name="w_displayed_default" {if $prefs.w_displayed_default eq 'y'} checked="check
 </div>
 
 <div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" onclick="flip('discussforum');" id="feature_wiki_discuss" name="feature_wiki_discuss" {if $prefs.feature_wiki_discuss eq 'y'}checked="checked"{/if} {if $prefs.feature_forums ne 'y'} disabled="disabled"{/if} /></div>
-	<div class="adminoptionlabel"><label for="feature_wiki_discuss">{tr}Discuss pages on forums{/tr}.</label>
-	{if $prefs.feature_forums ne 'y'}<br />{icon _id=information}{tr}Forums are disabled.{/tr} <a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}</a>.{/if}</div>
-<div class="adminoptionboxchild" id="discussforum" style="display:{if ($prefs.feature_wiki_discuss eq 'y') and ($prefs.feature_forums eq 'y')}block{else}none{/if};">
-<div class="adminoptionbox">
-	<div class="adminoptionboxlabel"><label for="wiki_forum_id">{tr}Forum for discussion:{/tr}</label>{if $prefs.feature_forums eq 'y'} <a class="link" href="tiki-assignpermission.php?level=forum" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>{/if}
-	<select id="wiki_forum_id" name="wiki_forum_id"{if $prefs.feature_forums ne 'y' or !$all_forums} disabled="disabled"{/if}>
-{if $all_forums}    {section name=ix loop=$all_forums}
-    <option value="{$all_forums[ix].forumId|escape}" {if $all_forums[ix].forumId eq $prefs.wiki_forum_id}selected="selected"{/if}>{$all_forums[ix].name}</option>
-    {/section}
-{else}    <option value="">{tr}None{/tr}</option>
-{/if}
-    </select>
-	{if ($prefs.feature_forums eq 'y') and !$all_forums}       <div class="adminoptionbox"><a href="tiki-admin_forums.php" title="{tr}Forums{/tr}" class="button">Create a Forum</a></div>
-{/if}
+	<div class="adminoption">
+		<input type="hidden" name="wikidiscussprefs" />
+		<input type="checkbox" onclick="flip('discussforum');" id="feature_wiki_discuss" name="feature_wiki_discuss" {if $prefs.feature_wiki_discuss eq 'y'}checked="checked"{/if} {if $prefs.feature_forums ne 'y'} disabled="disabled"{/if} />
 	</div>
-</div>
-
-</div>	
+	<div class="adminoptionlabel">
+		<label for="feature_wiki_discuss">{tr}Discuss pages on forums{/tr}.</label>
+		{if $prefs.feature_forums ne 'y'}
+			<br />
+			{icon _id=information}{tr}Forums are disabled.{/tr} <a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}</a>.
+		{/if}
+	</div>
+	<div class="adminoptionboxchild" id="discussforum" style="display:{if ($prefs.feature_wiki_discuss eq 'y') and ($prefs.feature_forums eq 'y')}block{else}none{/if};">
+		<div class="adminoptionbox">
+			<div class="adminoptionboxlabel">
+				<label for="wiki_forum_id">{tr}Forum for discussion:{/tr}</label>
+				{if $prefs.feature_forums eq 'y'} 
+					<a class="link" href="tiki-assignpermission.php?level=forum" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
+				{/if}
+				<select id="wiki_forum_id" name="wiki_forum_id"{if $prefs.feature_forums ne 'y' or !$all_forums} disabled="disabled"{/if}>
+					{if $all_forums}
+						{section name=ix loop=$all_forums}
+							<option value="{$all_forums[ix].forumId|escape}" {if $all_forums[ix].forumId eq $prefs.wiki_forum_id}selected="selected"{/if}>{$all_forums[ix].name}</option>
+						{/section}
+					{else}    
+						<option value="">{tr}None{/tr}</option>
+					{/if}
+				</select>
+				{if ($prefs.feature_forums eq 'y') and !$all_forums}
+					<div class="adminoptionbox">
+						<a href="tiki-admin_forums.php" title="{tr}Forums{/tr}" class="button">Create a Forum</a>
+					</div>
+				{/if}
+			</div>
+		</div>
+	</div>	
 </div>
 
 
@@ -730,7 +753,9 @@ name="w_displayed_default" {if $prefs.w_displayed_default eq 'y'} checked="check
 <div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" id="wiki_list_name" name="wiki_list_name" {if $prefs.wiki_list_name eq 'y'}checked="checked"{/if} onclick="flip('namelength');" /></div>
 	<div class="adminoptionlabel"><label for="wiki_list_name">{tr}Name{/tr} </label></div>
-	<div class="adminoptionlabel" id="namelength" style="display:{if $prefs.wiki_list_name eq 'y'}block{else}none{/if};">{tr}Name length:{/tr} <input type="text" name="wiki_list_name_len" value="{$prefs.wiki_list_name_len}" size="3" />	</div>
+	<div class="adminoptionboxchild" id="namelength" style="display:{if $prefs.wiki_list_name eq 'y'}block{else}none{/if};"
+	<div class="adminoptionlabel">{tr}Name length:{/tr} <input type="text" name="wiki_list_name_len" value="{$prefs.wiki_list_name_len}" size="3" />	</div>
+	</div>
 </div>	 
 
 <div class="adminoptionbox">
@@ -761,13 +786,13 @@ name="w_displayed_default" {if $prefs.w_displayed_default eq 'y'} checked="check
 <div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" onclick="flip('commentlength');" id="wiki_list_comment" name="wiki_list_comment" {if $prefs.wiki_list_comment eq 'y'}checked="checked"{/if} /></div>
 	<div class="adminoptionlabel"><label for="wiki_list_comment">{tr}Edit comments{/tr}</label></div>
-	<div class="adminoptionlabel" id="commentlength" style="display:{if $prefs.wiki_list_comment eq 'y'}block{else}none{/if}">{tr}Edit Comments length:{/tr}<input type="text" name="wiki_list_comment_len" value="{$prefs.wiki_list_comment_len}" size="3" /></div>
+	<div class="adminoptionboxchild" id="commentlength" style="display:{if $prefs.wiki_list_comment eq 'y'}block{else}none{/if}">{tr}Edit Comments length:{/tr}<input type="text" name="wiki_list_comment_len" value="{$prefs.wiki_list_comment_len}" size="3" /></div>
 </div>
 
 <div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" id="wiki_list_description" name="wiki_list_description" {if $prefs.wiki_list_description eq 'y'}checked="checked" {/if} onclick="flip('descriptionlength');" /></div>
 	<div class="adminoptionlabel"><label for="wiki_list_description">{tr}Description{/tr}</label></div>
-	<div class="adminoptionlabel" id="descriptionlength" style="display:{if $prefs.wiki_list_description eq 'y'}block{else}none{/if};"><label for="wiki_list_description_len">{tr}Description length:{/tr} </label><input type="text" name="wiki_list_description_len" value="{$prefs.wiki_list_description_len}" size="3" id="wiki_list_description_len" /></div>
+	<div class="adminoptionboxchild" id="descriptionlength" style="display:{if $prefs.wiki_list_description eq 'y'}block{else}none{/if};"><label for="wiki_list_description_len">{tr}Description length:{/tr} </label><input type="text" name="wiki_list_description_len" value="{$prefs.wiki_list_description_len}" size="3" id="wiki_list_description_len" /></div>
 </div>
 
 <div class="adminoptionbox">

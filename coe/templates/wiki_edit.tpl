@@ -22,7 +22,7 @@
 		<div style='float:left; margin-right:5px'>{include file='textareasize.tpl' area_name='editwiki' formId='editpageform' ToolbarSet='Tiki'}</div>
 		{/if}
 		{if isset($quicktags)}
-			{include file=tiki-edit_help_tool.tpl area_name='editwiki' zoom_enable='y}
+			{include file='tiki-edit_help_tool.tpl' area_name='editwiki' zoom_enable='y}
 		{/if}
 	</div>
 	{/if}

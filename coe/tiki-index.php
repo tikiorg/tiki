@@ -392,7 +392,7 @@ ask_ticket('index');
 //add a hit
 $statslib->stats_hit($page,'wiki');
 if ($prefs['feature_actionlog'] == 'y') {
-	include_once('lib/logs/logslib.php');
+	global $logslib; include_once('lib/logs/logslib.php');
 	$logslib->add_action('Viewed', $page);
 }
 

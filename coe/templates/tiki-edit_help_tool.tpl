@@ -126,7 +126,7 @@ function openFgalsWindow() {
   {else}
 	style="float: right; border-left: medium double lightgrey; padding-left:8px; margin-left:8px"
   {/if}>
-	{include file=tiki-edit_help.tpl}
+	{include file='tiki-edit_help.tpl'}
   </div>
 
   {if $tiki_p_admin eq 'y' or $tiki_p_admin_quicktags eq 'y'}

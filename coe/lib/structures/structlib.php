@@ -1027,7 +1027,7 @@ function list_structures($offset, $maxRecords, $sort_mode, $find='', $exact_matc
 				  }
 			  }
 		  }
-		  $option['name'] = $channel['pageName'];
+		  $option['name'] = empty($channel['page_alias'])? $channel['pageName']: $channel['page_alias'];
 		  $option['type'] = empty($channel['sub'])? 'o': ($sectionLevel?$sectionLevel:'s');
 		  $option['url'] = smarty_function_sefurl(array('page'=>$channel['pageName'], 'structure'=>$structure, 'page_ref_id'=>$channel['page_ref_id'], 'sefurl'=>'n'), $smarty);
 		  $option['canonic'] = '(('.$channel['pageName'].'))';

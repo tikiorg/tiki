@@ -116,9 +116,9 @@ if($user!='admin' && $user!=$gal_info["user"] && $gal_info["public"]!='y') {
 	$gal_info["galleryId"] = 0;
 
 	$gal_info["user"] = 'admin';
-	$gal_info["name"] = 'System';
+	$gal_info["name"] = tra('System');
 	$gal_info["public"] = 'y';
-	$gal_info["description"] = 'System Gallery';
+	$gal_info["description"] = tra('System Gallery');
 	$gal_info["sortdirection"] = 'desc';
 	$gal_info["sortorder"] = 'created';
 }
@@ -140,7 +140,7 @@ if (isset($_REQUEST["remove"])) {
   $area = 'delgallery';
   if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
-		$imagegallib->remove_image($_REQUEST["remove"]);
+		$imagegallib->remove_image($_REQUEST["remove"], $user);
   } else {
     key_get($area);
   }
@@ -168,9 +168,9 @@ if ($_REQUEST["galleryId"] == 0) {
 	$info["thumbSizeY"] = 100;
 	$info["galleryId"] = 0;
 	$info["user"] = 'admin';
-	$info["name"] = 'System';
+	$info["name"] = tra('System');
 	$info["public"] = 'y';
-	$info["description"] = 'System Gallery';
+	$info["description"] = tra('System Gallery');
 	$info["sortdirection"] = 'desc';
 	$info["sortorder"] = 'created';
 

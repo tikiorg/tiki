@@ -454,6 +454,7 @@
 						{/if}
 					</table>
 					{remarksbox type="tip" title="{tr}Tip{/tr}"}
+						{if $prefs.feature_phplayers eq "y"}
 						{tr}To use <a target="tikihelp" href="http://phplayersmenu.sourceforge.net/">phplayersmenu</a>, you can use one of the three following syntaxes:{/tr}
 						<ul>
 							<li>{literal}{phplayers id=X}{/literal}</li>
@@ -462,8 +463,15 @@
 						</ul>
 						{tr}This will work well (or not!) depending on your theme. To learn more about <a target="tikihelp" href="http://themes.tikiwiki.org">themes</a>{/tr}
 						<br />
+						{/if}
 						{tr}To use a menu in a tiki format:{/tr} {literal}{menu id=X}{/literal}<br />
-						{tr}To use menu in a css/suckerfish format:{/tr} {literal}{menu id=X css=y}{/literal}
+						{if $prefs.feature_cssmenus eq 'y'}
+							{tr}To use menu in a css/suckerfish format:{/tr}
+							<ul>
+								<li>{literal}{menu id=X css=y type=vert}{/literal}</li>
+								<li>{literal}{menu id=X css=y type=horiz}{/literal}</li>
+							</ul>
+						{/if}
 					{/remarksbox}
 				</td>
 			</tr>

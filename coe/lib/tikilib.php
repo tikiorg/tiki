@@ -530,7 +530,120 @@ class TikiLib extends TikiDB {
 		}
 		return $ret;
 	}
+	
+	function add_user_report($user, $interval, $view, $type, $always_email) {
+		if(!isset($always_email))
+			$always_email = 0;
+		
+		if (!$this->get_report_preferences_by_user($user)) {
+			//Add new report entry	
+			$query = "insert into `tiki_user_reports`(`user`, `interval`, `view`, `type`, `always_email`, `last_report`) ";
+			$query.= "values(?,?,?,?,?,NOW())";
+			$this->query($query,array($user,$interval,$view,$type,$always_email));
+		} else {
+			//Update report entry
+			$query = "update `tiki_user_reports` set `interval`=?, `view`=?, `type`=?, `always_email`=? where `user`=?";
+			$this->query($query,array($interval,$view,$type,$always_email,$user));
+		}
+		return true;
+	}
+	
+	function delete_user_report($user) {
+		$query = "delete from `tiki_user_reports` where `user`=?";
+		$this->query($query,array($user));
 
+		$this->deleteUsersReportCache($user);
+		return true;
+	}
+	
+	function get_report_preferences_by_user($user) {
+		$query = "select `id`, `interval`, `view`, `type`, `always_email`, `last_report` from `tiki_user_reports` where `user` = ?";
+		$result = $this->query($query, array($user));
+		if (!$result->numRows()) {
+			return false;
+		}
+		$ret = array();
+		while ($res = $result->fetchRow()) {
+			$ret = $res;
+		}
+		
+		return $ret;
+	}
+	
+	function getUsersForSendingReport() {
+		$query = "select `user`, `interval`, UNIX_TIMESTAMP(`last_report`) as last_report from tiki_user_reports";
+		$result = $this->query($query);
+		if (!$result->numRows()) {
+			return false;
+		}
+		$ret = array();
+		while ($res = $result->fetchRow()) {
+			if ($res['interval']=="daily" AND ($res['last_report']+86400)<=time()) {
+				$ret[] = $res['user'];
+			}
+			if ($res['interval']=="weekly" AND ($res['last_report']+604800)<=time()) {
+				$ret[] = $res['user'];
+			}
+			if ($res['interval']=="monthly" AND ($res['last_report']+2419200)<=time()) {
+				$ret[] = $res['user'];
+			}
+		}
+
+		return $ret;
+	}
+	
+	function makeReportCache(&$nots, $cache_data) {
+		//Get all users that have enabled reports
+		$query = "select `user` from tiki_user_reports";
+		$result = $this->query($query);
+		$report_users = array();
+		while ($res = $result->fetchRow()) {
+			$report_users[] = $res['user'];
+		}
+		
+		foreach ($nots as $key=>$not) {
+			//If user in $nots has enabled reports
+			if (in_array($not['user'], $report_users)) {
+				//dump the report-data to the report cache
+				$query = "insert into `tiki_user_reports_cache`(`user`, `event`, `data`,`time`) ";
+				$query.= "values(?,?,?,NOW())";
+				$this->query($query,array($not['user'], $cache_data['event'], serialize($cache_data)));
+
+				//and reove the user from $nots so that he doesn´t get a notification for the event
+				unset($nots[$key]);
+			}
+		}
+	}
+	
+	
+	
+	function get_report_cache_entries_by_user($user, $order_by) {
+		$query = "select `user`, `event`, `data`, `time` from `tiki_user_reports_cache` where `user` = ? ORDER BY $order_by";
+		$result = $this->query($query, array($user));
+		if (!$result->numRows()) {
+			return false;
+		}
+		$ret = array();
+		while ($res = $result->fetchRow()) {
+			$res['data'] = unserialize($res['data']);
+			$ret[] = $res;
+		}
+		
+		return $ret;
+	}
+	
+	function deleteUsersReportCache($user) {
+		$query = "delete from `tiki_user_reports_cache` where `user`=?";
+		$this->query($query,array($user));
+		return true;
+	}
+	
+	function updateLastSent($user) {
+		$query = "update `tiki_user_reports` set last_report = NOW() where `user`=?";
+		$this->query($query,array($user));
+		return true;
+	}
+	
 	/*shared*/
 	function dir_stats() {
 		$aux = array();
@@ -1321,7 +1434,7 @@ class TikiLib extends TikiDB {
 		$result = $this->query("select `cookie`  from `tiki_cookies`",array(),1,$bid);
 		if ($res = $result->fetchRow()) {
 			$cookie = str_replace("\n", "", $res['cookie']);
-			return preg_replace('/^(.+?)(\s*--.+)?$/','<i>"$1"</i>$2',$cookie);
+			return preg_replace('/^(.+?)(\s*--.+)?$/','<em>"$1"</em>$2',$cookie);
 		} else {
 			return "";
 		}
@@ -2257,7 +2370,7 @@ class TikiLib extends TikiDB {
 					// If $user is admin then get ALL galleries, if not only user galleries are shown
 					// If the user is not admin then select it's own galleries or public galleries
 					if ( $tiki_p_admin_file_galleries != 'y' && $my_user != 'admin' && ! $parentId ) {
-						$g_mid = " WHERE (tfg.`user`='$my_user' OR tfg.`public`='y')"; /// FIXME: use bindvars
+						$g_mid = " WHERE (tfg.`user`='$my_user' OR tfg.`visible`='y' OR tfg.`public`='y')"; /// FIXME: use bindvars
 					}
 
 					$g_query = 'SELECT '.implode(', ', array_values($f2g_corresp)).' FROM '.$g_table.$g_join.$g_mid;
@@ -4341,13 +4454,15 @@ class TikiLib extends TikiDB {
 
 	/* this function will change if we got a table categ<->perm
 	 */
-	function get_perm_from_categPerms($categPerms, $objectType) {
+	function get_perm_from_categPerms($categPerms, $objectType, $global=true) {
 		global $userlib;
 		$ret = array();
-		$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', $this->get_permGroup_from_objectType($objectType));
-		foreach ($perms['data'] as $perm) {
-			global $$perm['permName'];
-			$ret[$perm['permName']] = $$perm['permName'];
+		$perms = $userlib->get_permissions(0, -1, 'permName_asc', '', $this->get_permGroup_from_objectType($objectType));
+		if ($global) {
+			foreach ($perms['data'] as $perm) {
+				global $$perm['permName'];
+				$ret[$perm['permName']] = $$perm['permName'];
+			}
 		}
 		if (empty($categPerms['tiki_p_view_categorized'])) {
 			$categPerms['tiki_p_view_categorized'] = 'n';
@@ -4367,9 +4482,13 @@ class TikiLib extends TikiDB {
 				}
 				if ($categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
 					$ret['tiki_p_modify_tracker_items'] = 'y';
+					$ret['tiki_p_modify_tracker_items_pending'] = 'y';
+					$ret['tiki_p_modify_tracker_items_closed'] = 'y';
 					$ret['tiki_p_create_tracker_items'] = 'y';
 				} else {
 					$ret['tiki_p_modify_tracker_items'] = 'n';
+					$ret['tiki_p_modify_tracker_items_pending'] = 'n';
+					$ret['tiki_p_modify_tracker_items_closed'] = 'n';
 					$ret['tiki_p_create_tracker_items'] = 'n';
 				}
 				break;
@@ -5312,6 +5431,7 @@ class TikiLib extends TikiDB {
 		$params_string = str_replace('&gt;', '>', $params_string);
 		$params_string = str_replace('&lt;', '<', $params_string);
 		$params_string = str_replace('&quot;', '"', $params_string);
+		$params_string = str_replace('&apos;', "'", $params_string);
 		$params_string = str_replace('&amp;', '&', $params_string);
 
 		$arguments = array();
@@ -5330,10 +5450,10 @@ class TikiLib extends TikiDB {
 			$params_string = substr( $params_string, $pos + 1 );
 			$params_string = ltrim( $params_string );
 
-			if( !empty($params_string) && $params_string{0} == '"' ) {
+			if( !empty($params_string) && ($params_string{0} == '"' || $params_string{0} == "'") ) {
 				$quote = 0;
 				// Parameter between quotes, find closing quote not escaped by a \
-				while( false !== $quote = strpos( $params_string, '"', $quote + 1 ) ) {
+				while( false !== $quote = strpos( $params_string, $params_string{0}, $quote + 1 ) ) {
 					if( $params_string{$quote - 1} != "\\" )
 						break;
 				}
@@ -5341,7 +5461,7 @@ class TikiLib extends TikiDB {
 				// Closing quote found
 				if( $quote !== false ) {
 					$value = substr( $params_string, 1, $quote - 1 );
-					$arguments[$name] = str_replace( '\"', '"', $value );
+					$arguments[$name] = str_replace( array('\"', "\\'"), array('"', "'"), $value );
 
 					$params_string = substr( $params_string, $quote + 1 );
 					continue;
@@ -6606,9 +6726,9 @@ class TikiLib extends TikiDB {
 		// Handle ~pre~...~/pre~ sections
 		$patterns[] = ';~pre~(.*?)~/pre~;s' ; $replace[] = '<pre>$1</pre>';
 
-		// Strike-deleted text --text--
+		// Strike-deleted text --text-- (but not in the context <!--[if IE]><--!>)
 		if (!$simple_wiki) {
-			$patterns[] = "/--(.+?)--/s"; $replace[] = "<del>$1</del>";
+			$patterns[] = "/(?!\<\!)--(.+?)--(?!\>)/s"; $replace[] = "<del>$1</del>";
 		}
 
 		// Handle comment sections

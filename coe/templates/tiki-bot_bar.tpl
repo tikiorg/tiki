@@ -66,14 +66,14 @@
 	</div>
 {/if}
 {if $prefs.feature_babelfish eq 'y' or $prefs.feature_babelfish_logo eq 'y'}
-	{include file="babelfish.tpl"}
+	{include file='babelfish.tpl'}
 {/if}
 <div id="power">
 	{if $prefs.feature_bot_bar_power_by_tw ne 'n'}
 		{tr}Powered by{/tr} <a href="http://info.tikiwiki.org" title="&#169; 2002&#8211;{$smarty.now|date_format:"%Y"} {tr}The TikiWiki Community{/tr}">{tr}TikiWiki CMS/Groupware{/tr}</a> {if $prefs.feature_topbar_version eq 'y'} v{$tiki_version} {if $tiki_uses_svn eq 'y'} (SVN){/if} -{$tiki_star}- {/if}
 	{/if}
 	<div id="credits">
-		{include file="credits.tpl"}
+		{include file='credits.tpl'}
 	</div>
 </div>
 

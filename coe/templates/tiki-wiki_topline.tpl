@@ -91,7 +91,7 @@
 
 	{if $prefs.feature_multilingual == 'y' && $prefs.show_available_translations eq 'y'}
 			<div style="float: left">
-		{include file="translated-lang.tpl" td='n'}
+		{include file='translated-lang.tpl' td='n'}
 			</div>
 	{/if}
 		</div>

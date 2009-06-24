@@ -220,12 +220,15 @@ function wikiplugin_tracker($data, $params) {
 			$perms = $tikilib->get_perm_object($trackerId, 'tracker', $tracker, false);
 			if ($perms['tiki_p_create_tracker_items'] == 'n' && empty($itemId)) {
 				return '<b>'.tra("You do not have permission to insert an item").'</b>';
-			} elseif ($perms['tiki_p_modify_tracker_items'] == 'n' && !empty($itemId)) { 
-				if ($tracker['writerGroupCanModify'] == 'y' && in_array($trklib->get_item_group_creator($trackerId, $itemId), $tikilib->get_user_groups($user))) {
-					global $group;
-					$smarty->assign_by_ref('ours', $group);
-				} else 
-					return '<b>'.tra("You do not have permission to modify an item").'</b>';
+			} elseif (!empty($itemId)) {
+				$item_info = $trklib->get_tracker_item($itemId);
+				if (!(($perms['tiki_p_modify_tracker_items'] == 'y' and $item_info['status'] != 'p' and $item_info['status'] != 'c') || ($perms['tiki_p_modify_tracker_items_pending'] == 'y' and $item_info['status'] == 'p') ||  ($perms['tiki_p_modify_tracker_items_closed'] == 'y' and $item_info['status'] == 'c'))) { 
+					if ($tracker['writerGroupCanModify'] == 'y' && in_array($trklib->get_item_group_creator($trackerId, $itemId), $tikilib->get_user_groups($user))) {
+						global $group;
+						$smarty->assign_by_ref('ours', $group);
+					} else 
+						return '<b>'.tra("You do not have permission to modify an item").'</b>';
+				}
 			}
 		}
 	}
@@ -619,7 +622,7 @@ function wikiplugin_tracker($data, $params) {
 			if (!empty($page))
 				$back .= '~np~';
 			$smarty->assign_by_ref('tiki_p_admin_trackers', $perms['tiki_p_admin_trackers']);
-			$back.= '<form enctype="multipart/form-data" method="post"'.($target?' target="'.$target.'"':'').'><input type="hidden" name="trackit" value="'.$trackerId.'" />';
+			$back.= '<form enctype="multipart/form-data" method="post"'.(isset($target)?' target="'.$target.'"':'').'><input type="hidden" name="trackit" value="'.$trackerId.'" />';
 			if (isset($fields))
 				$back .= '<input type="hidden" name="fields" value="'.$params['fields'].'" />';//if plugin inserted twice with the same trackerId
 			if (!empty($_REQUEST['page']))
@@ -727,8 +730,8 @@ function wikiplugin_tracker($data, $params) {
 						$flds['data'][$i]['value'] = $trklib->get_join_values($itemId, array_merge(array($f['options_array'][2]), array($f['options_array'][1]), array($finalFields[0])), $f['options_array'][0], $finalFields);
 					} elseif ($f['type'] == 'w') {
 						$refFieldId = $f['options_array'][2];
-						foreach ($flds['data'] as $i=>$f) {
-							if ($f['fieldId'] == $refFieldId) {
+						foreach ($flds['data'] as $i=>$ff) {
+							if ($ff['fieldId'] == $refFieldId) {
 								$refFieldId = $i;
 							}
 						}

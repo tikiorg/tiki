@@ -119,11 +119,11 @@ window.onload = timeIt;
 {/if}
 
 {if $preview && $translation_mode eq 'n'}
-  {include file="tiki-preview.tpl"}
+  {include file='tiki-preview.tpl'}
 {/if}
 {if $diff_style}
 <div style="overflow:auto;height:200px;">
-{include file=pagehistory.tpl}
+{include file='pagehistory.tpl'}
 
 </div>
 {/if}
@@ -200,9 +200,9 @@ window.onload = timeIt;
 <tr class="formcolor"><td colspan="2">{tr}Categories will be inherited from the structure top page{/tr}</td></tr>
 {/if}
 {else}
-{include file=categorize.tpl}
+{include file='categorize.tpl'}
 {/if}
-{include file=structures.tpl}
+{include file='structures.tpl'}
 {if $prefs.feature_wiki_templates eq 'y' and $tiki_p_use_content_templates eq 'y' and !$templateId}
   <tr class="formcolor">
     <td>{tr}Apply template{/tr}:</td>
@@ -262,7 +262,7 @@ window.onload = timeIt;
 {/if}
 {if $prefs.feature_smileys eq 'y' && $wysiwyg neq 'y'}
 <tr class="formcolor"><td>{tr}Smileys{/tr}:</td><td>
-{include file="tiki-smileys.tpl" area_name='editwiki'}
+{include file='tiki-smileys.tpl' area_name='editwiki'}
 </td>
 </tr>
 {/if}
@@ -275,7 +275,7 @@ window.onload = timeIt;
 <tr class="formcolor">
 <td colspan="2">
 {if $wysiwyg ne 'y' or $prefs.javascript_enabled ne 'y'}
-{include file="wiki_edit.tpl"}
+{include file='wiki_edit.tpl'}
 <input type="hidden" name="rows" value="{$rows}"/>
 <input type="hidden" name="cols" value="{$cols}"/>
 <input type="hidden" name="wysiwyg" value="n" />
@@ -381,7 +381,7 @@ function searchrep() {
 {/if}
 {/if}
 {if $prefs.feature_freetags eq 'y' and $tiki_p_freetags_tag eq 'y'}
-  {include file=freetag.tpl}
+  {include file='freetag.tpl'}
 {/if}
 {if $prefs.feature_wiki_allowhtml eq 'y' and $tiki_p_use_HTML eq 'y' and $wysiwyg neq 'y'}
 <tr class="formcolor"><td>{tr}Allow HTML{/tr}: </td><td><input type="checkbox" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if}/></td></tr>
@@ -456,7 +456,7 @@ function searchrep() {
 </td></tr>
 {/if}
 {if $prefs.feature_antibot eq 'y' && $anon_user eq 'y'}
-{include file="antibot.tpl" tr_style="formcolor"}
+{include file='antibot.tpl' tr_style="formcolor"}
 {/if}
 {if $prefs.wiki_feature_copyrights  eq 'y'}
 <tr class="formcolor"><td>{tr}License{/tr}:</td><td><a href="{$prefs.wikiLicensePage|sefurl}">{tr}{$prefs.wikiLicensePage}{/tr}</a></td></tr>
@@ -468,7 +468,7 @@ function searchrep() {
 <tr class="formcolor"><td>{tr}Lock this page{/tr}</td><td><input type="checkbox" name="lock_it" {if $lock_it eq 'y'}checked="checked"{/if}/></td></tr>
 {/if}
 {if $prefs.feature_contribution eq 'y'}
-  {include file="contribution.tpl"}
+  {include file='contribution.tpl'}
 {/if}
 {if $tiki_p_admin_wiki eq 'y' && $prefs.wiki_authors_style_by_page eq 'y'}
   {include file='wiki_authors_style.tpl' tr_class='formcolor' wiki_authors_style_site='y' style='tr'}

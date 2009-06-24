@@ -117,19 +117,12 @@ class UsersLib extends TikiLib {
     function inherit_global_permissions($objectId, $objectType) {
     	global $cachelib;
 
-		// check for annoying cases where some tables in the DB use singular and others use plural
-    	if ($objectType == 'category') {
-    		$objectType2 = 'categories';
-    	} else {
-    		$objectType2 = $objectType;
-    	}
-
 		$groups = $this->get_groups();
-		if (!$cachelib->isCached($objectType2 . "_permission_names")) {
-			$perms = $this->get_permissions(0, -1, 'permName_desc', $objectType2);
-			$cachelib->cacheItem($objectType2 . "_permission_names",serialize($perms));
+		if (!$cachelib->isCached($objectType . "_permission_names")) {
+			$perms = $this->get_permissions(0, -1, 'permName_desc', '', $objectType);
+			$cachelib->cacheItem($objectType . "_permission_names",serialize($perms));
 		} else {
-			$perms = unserialize($cachelib->getCached($objectType2 . "_permission_names"));
+			$perms = unserialize($cachelib->getCached($objectType . "_permission_names"));
 		}
 		foreach ($groups['data'] as $group) {
 			foreach ($perms['data'] as $perm) {
@@ -140,7 +133,7 @@ class UsersLib extends TikiLib {
 		}
     }
 
-    function get_object_permissions($objectId, $objectType) {
+    function get_object_permissions($objectId, $objectType, $group='', $perm='') {
 	$objectId = md5($objectType . strtolower($objectId));
 
 	$query = "select `groupName`, `permName`
@@ -148,6 +141,14 @@ class UsersLib extends TikiLib {
 	    where `objectId` = ? and
 	    `objectType` = ?";
 	$bindvars = array($objectId, $objectType);
+	if (!empty($group)) {
+		$query .= " and `groupName`=?";
+		$bindvars[] = $group;
+	}
+	if (!empty($perm)) {
+		$query .= " and `permName`=?";
+		$bindvars[] = $perm;
+	}
 	$result = $this->query($query, $bindvars);
 	$ret = array();
 
@@ -2364,11 +2365,12 @@ function get_included_groups($group, $recur=true) {
 	return true;
 	}
 
-	function add_group($group, $desc='', $home='', $utracker=0, $gtracker=0, $rufields='', $userChoice='', $defcat=0, $theme='', $ufield='', $gfield='') {
+	function add_group($group, $desc='', $home='', $utracker=0, $gtracker=0, $rufields='', $userChoice='', $defcat=0, $theme='', $ufield=0, $gfield=0) {
+		$group = trim($group);
 		if ( $this->group_exists($group) ) return false;
 
 		$query = "insert into `users_groups` (`groupName`, `groupDesc`, `groupHome`,`groupDefCat`,`groupTheme`,`usersTrackerId`,`groupTrackerId`, `registrationUsersFieldIds`, `userChoice`, `usersFieldId`, `groupFieldId`) values(?,?,?,?,?,?,?,?,?,?,?)";
-		$this->query($query, array($group, $desc, $home, $defcat, $theme, (int)$utracker, (int)$gtracker, $rufields, $userChoice, $ufield, $gfield) );
+		$this->query($query, array($group, $desc, $home, $defcat, $theme, (int)$utracker, (int)$gtracker, $rufields, $userChoice, (int)$ufield, (int)$gfield) );
 
 		global $cachelib;
 		$cachelib->invalidate('grouplist');

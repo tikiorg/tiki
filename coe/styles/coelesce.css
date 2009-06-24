@@ -110,10 +110,22 @@ span.button {
 span.button a,
 span.button a:visited,
 button,
-input[type=reset],
-input[type=submit],
 span.button input,
 .calbuttonBox a {
+	font-family: Verdana, Helvetica, Geneva, Arial, sans-serif;
+	font-size: .95em;
+	font-weight: bold;
+	color: #449cd0;
+	background: #ededed;
+	border: 1px solid #c5c5c5;
+	padding: 1px 4px;
+	margin-right: 1px;
+	text-decoration: none;
+	white-space: nowrap;
+	cursor: pointer}
+
+input[type=reset],
+input[type=submit] {
 	font-family: Verdana, Helvetica, Geneva, Arial, sans-serif;
 	font-size: .95em;
 	font-weight: bold;
@@ -139,18 +151,23 @@ span.button input,
 
 .button a:hover,
 button:hover,
-input[type=reset]:hover,
-input[type=submit]:hover,
 .button input:hover,
 .calbuttonBox a:hover {background: white}
 
+input[type=reset]:hover,
+input[type=submit]:hover {background: white}
+
 .button a:active,	
 button:active,
-input[type=reset]:active,
-input[type=submit]:active,
 .button input:active,
 span.highlight a:link,
 span.highlight a:visited {
+	color: #449cd0;
+	background: #dbdbdb;
+	border: 1px solid #527ca6;}
+
+input[type=reset]:active,
+input[type=submit]:active {
 	color: #449cd0;
 	background: #dbdbdb;
 	border: 1px solid #527ca6;}
@@ -194,6 +211,7 @@ ul.jumplinks a:active {
 	width: 6em;
 	z-index: 9}
 
+.fullscreenbutton,
 #fullscreenbutton {
 	position: absolute;
 	top: 2px;
@@ -201,6 +219,7 @@ ul.jumplinks a:active {
 	z-index: 10;
 	font-size: 80%}
 	
+.fullscreenbutton:hover,
 #fullscreenbutton:hover {color: #82a7c8}
 
 #tiki-clean {
@@ -352,16 +371,19 @@ div#sitead {margin: auto}
 
 #sitesearchbar {
 	display: block;
-	float: right;
+	float: none;
 	margin: 3px 0 0 0;
 	padding: 0 0 0 15px;
 	height: 33px;
 	min-width: 180px;
 	text-align: left;
 	background: url(coelesce/search_wide.jpg) no-repeat;
-	color: #517ea7;}
+	color: #517ea7;
+	}
 	
-* html #sitesearchbar {width: 180px}
+* html #sitesearchbar {
+	width: 180px;
+}
 
 #sitesearchbar .wrapper {
 	height: 33px;
@@ -382,17 +404,22 @@ div#sitead {margin: auto}
 #sitesearchbar select[name="where"] {}
 #sitesearchbar ul.cssmenu * {
 	width: 40px;
-	/*line-height: 1;
-	float: left*/}
-	
-.nohighlight {
-	position: relative !important; /* IE6 craches with this ! :( */
-	/* The two lines below are a hack for IE6 */
-	position: fixed;
-	_margin-top: -18px;
+	}
+
+#sitesearchbar .findtitle input {
+	border: none;
 }
 
-#sitesearchbar .nohighlight ul.cssmenu {
+#sitesearchbar .findtable {
+}
+
+/* The two lines below are a hack for IE6 */
+* html #sitesearchbar .findtable {
+	position: fixed;
+	margin-top: -18px;
+}
+
+#sitesearchbar .findtable ul.cssmenu {
 	position: absolute;
 	top: 6px;
 	right: 40px;
@@ -403,27 +430,8 @@ div#sitead {margin: auto}
 	
 #sitesearchbar ul.cssmenu > li { }
 
-.cbox-data .nohighlight {
-	position: static;
-	height: 30px;
-	white-space: nowrap;}
-	
-.cbox-data .nohighlight form {display: inline}
-
-.cbox-data .nohighlight ul.cssmenu {
-	margin-left: 5px;
-	width: 40px}
-	
-.nohighlight ul.cssmenu li ul {
-	background: none;
-	border: none }
-
-.nohighlight .cssmenu li ul {margin: -23px 0 0 6px}
-
-input#fuser,
 select[name="where"] {border: none}
 
-input#fuser,
 select[name="where"],
 input[name="search"] {display: inline}
 	
@@ -611,9 +619,7 @@ div.menuSection div.separator {}
 
 /** PHP Layers Menus **/
 
-.horbar {
-	width: 100%;
-	padding-left: 20px} 
+.horbar { width: 100% } 
 
 .horbar table {
 	width: auto;
@@ -892,7 +898,6 @@ div#edithelpzone {display: none}
 .admlink,
 .forumbutlink {}
 
-div.searchdate {}
 div#debugconsole {}
 
 .mini {
@@ -1396,6 +1401,42 @@ div#description,
 .wikitext ul li {} 
 .wikitext ul li ul li {}
 .wikitext ol {}
+
+.wikitext .showhide_heading .link	{
+	font-weight: normal;
+	font-size: 80%;
+	vertical-align: top;
+}
+
+.wikitext h1 {
+	margin: 5px 0 15px 0;
+	padding-left: 0px;
+}
+
+.wikitext h2 {
+	margin: 5px 0 10px 0;
+	padding-left: 10px;
+}
+
+.wikitext h3 {
+	margin: 5px 0 5px 0;
+	padding-left: 15px;
+}
+
+.wikitext h4 {
+	margin: 5px 0 5px 0;
+	padding-left: 20px;
+}
+
+.wikitext h5 {
+	margin: 5px 0 5px 0;
+	padding-left: 25px;
+}
+
+.wikitext h6 {
+	margin: 5px 0 5px 0;
+	padding-left: 30px;
+}
 
 table.wikitable {
 	border: 1px solid #A9A9A9;
@@ -2006,6 +2047,8 @@ td.categobjectsdataodd {}
 .cattitle {
 	padding: 3px 5px 9px 5px;
 	display:inline;
+	font-weight: bold;
+	font-size: 110%;
 	border-top: 1px solid #D7D7D7;
 	border-left: 1px solid #D7D7D7;
 	border-right: 1px solid #D7D7D7;
@@ -2029,12 +2072,13 @@ td.categobjectsdataodd {}
 	list-style: none;
 	}
 
-ul.catfeatures li {}
+ul.catfeatures li {
+	font-weight: normal;
+	}
 
 .catitems {
-	margin-left: 10px;
+	margin-left: 25px;
 	padding: 0;
-	font-weight: bold;
 	list-style: none;
 	}
 
@@ -2357,7 +2401,31 @@ div.multiselect {
 .opaque .box-title {border-bottom: 1px solid #ccdceb}
 .opaque a {text-decoration: none}
 .opaque .iconmenu {display: block}
-.searchresults {display: inline}
+
+.searchresults {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	}
+
+.searchresults li {
+	margin: 10px 0 0;
+}
+
+.searchresults li .objecttype,
+	.searchresults li .parentname ,
+	.searchresults li .objectname 
+ {
+	font-size: 120%;
+	font-weight: bold;
+ }
+
+.searchresults .itemhits,
+	.searchresults .itemrelevance,
+	.searchresults .searchdate {
+	color: gray;
+	font-size: 90%;
+	}
 
 .calnavigation a:hover {background: red}
 #caltable .calfocuson,
@@ -2372,7 +2440,7 @@ div.multiselect {
 #caltable .calfocuson a {text-decoration:none}
 
 div.tabrow {/*height: 24px !important*/}
-.calbuttonon a {color: #295C8E}
+.buttonon a, .calbuttonon a {color: #295C8E !important}
 .calHeadingOn {background: #ccdceb}
 
 .day,
@@ -2556,6 +2624,7 @@ div.messureadbody {
 /***** Ajax *****/
 
 div#ajaxLoading {
+	z-index: 100000;
 	display: none;
 	position: absolute;
 	top: 50px;
@@ -2670,21 +2739,21 @@ table.default td {
 
 /* css/admin.css overrides */
 
-a.admbox {
+.admbox a, a.admbox {
 	border: 1px solid #708090;
 	background: #dddfdf center no-repeat}
 
-a.admbox:hover,
-a.admbox:focus,
-a.admbox:active {
+.admbox a, a.admbox:hover,
+.admbox a, a.admbox:focus,
+.admbox a, a.admbox:active {
 	background: #f0f0f0 center no-repeat;
 	border: 1px solid #696969}
 
-a.admbox.off {border: 1px solid #a9a9a9}
+.admbox a, a.admbox.off {border: 1px solid #a9a9a9}
 
-a.admbox.off:hover,
-a.admbox.off:focus,
-a.admbox.off:active {border: 1px solid #a9a9a9}
+.admbox a, a.admbox.off:hover,
+.admbox a, a.admbox.off:focus,
+.admbox a, a.admbox.off:active {border: 1px solid #a9a9a9}
 
 /* MiniChat  */
 div.box-minichat {width: 100%}

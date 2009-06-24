@@ -1,6 +1,6 @@
 {title help="User+Contacts+Prefs"}{tr}User Contacts Preferences{/tr}{/title}
 
-{include file=tiki-mytiki_bar.tpl}
+{include file='tiki-mytiki_bar.tpl'}
 <div class="navbar">
 	{button href="tiki-contacts.php" _text="{tr}Contacts{/tr}"}
 </div>
@@ -22,7 +22,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td colspan="2" class="button">
+							<td colspan="2">
 								<input type='submit' name='prefs' value='{tr}Change preferences{/tr}' />
 							</td>
 						</tr>
@@ -74,7 +74,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td colspan="2" class="button">
+							<td colspan="2">
 								{tr}Add{/tr}: <input type='text' name='ext_add' /> <input type='submit' name='add_fields' value='{tr}Add{/tr}' />
 							</td>
 						</tr>

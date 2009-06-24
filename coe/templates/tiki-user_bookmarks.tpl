@@ -1,7 +1,7 @@
 {title help="User+Bookmarks"}{tr}User Bookmarks{/tr}{/title}
 
 {if $prefs.feature_ajax ne 'y' && $prefs.feature_mootools ne 'y'}
-  {include file=tiki-mytiki_bar.tpl}
+  {include file='tiki-mytiki_bar.tpl'}
   <br />
   <br />
 {/if}
