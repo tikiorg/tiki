@@ -110,5 +110,3 @@ $smarty->assign('object_page_controls', $controls);
 
 $smarty->assign('mid', 'tiki-rename_page.tpl');
 $smarty->display("tiki.tpl");
-
-?>

@@ -39,6 +39,8 @@ include_once('lib/ajax/ajaxlib.php');
 require_once ("lib/wiki/wiki-ajax.php");
 require_once ("lib/wiki/renderlib.php");
 
+$auto_query_args = array('page','best_lang','bl','page_id','pagenum','page_ref_id','mode','sort_mode');
+
 if ($prefs['feature_categories'] == 'y') {
 	global $categlib;
 	if (!is_object($categlib)) {
@@ -62,45 +64,15 @@ if (isset($_REQUEST['page_id'])) {
 $use_best_language = false;
 
 if ((!isset($_REQUEST['page']) || $_REQUEST['page'] == '') and !isset($_REQUEST['page_ref_id'])) {
-	$_REQUEST['page'] = $userHomePage = $userlib->get_user_default_homepage2($user);
-	
-	// Create the HomePage if it doesn't exist
-	if ( ! empty($userHomePage) ) {
-		if ( ! $tikilib->page_exists($userHomePage)) {
-			$tikilib->create_page($userHomePage, 0,'{TR()}_HOMEPAGE_CONTENT_{TR}',$tikilib->now,'Tiki initialization', 'admin', '0.0.0.0', '', 'en', false, null, 'n', '');
-			header('Location: tiki-index.php?page='.$userHomePage);
-		}
+	if ($tiki_p_view == 'n') {
+		$access->display_error( $page, tra('Permission denied you cannot view this page'), '403');
 	} else {
 		$access->display_error( '', tra('No name indicated for wiki page'));
-	}
-	if ($prefs['feature_best_language'] == 'y') {
-		$use_best_language = true;
 	}
 }
 $use_best_language = $use_best_language || isset($_REQUEST['bl']) || isset($_REQUEST['best_lang']) || isset($_REQUEST['switchLang']);
 
 $info = null;
-if ($prefs['feature_multilingual'] == 'y' && $use_best_language && !empty($_REQUEST['page'])) { // chose the best language page
-	global $multilinguallib;
-	include_once('lib/multilingual/multilinguallib.php');
-	$info = $tikilib->get_page_info($_REQUEST['page']);
-	$bestLangPageId = $multilinguallib->selectLangObj('wiki page', $info['page_id']);
-	if ($info['page_id'] != $bestLangPageId) {
-		$_REQUEST['page'] = $tikilib->get_page_name_from_id($bestLangPageId);
-		//TODO: introduce a get_info_from_id to save a sql request
-		$info = null;
-	} elseif ($info['lang'] != $prefs['language'] && $prefs['feature_homePage_if_bl_missing'] == 'y') {
-		if (!isset($userPageName))
-			$userPageName = $userlib->get_user_default_homepage2($user);
-		$_REQUEST['page'] = $userPageName;
-		$info = $tikilib->get_page_info($_REQUEST['page']);
-		$bestLangPageId = $multilinguallib->selectLangObj('wiki page', $info['page_id']);
-		if ($info['page_id'] != $bestLangPageId) {
-			$_REQUEST['page'] = $tikilib->get_page_name_from_id($bestLangPageId);
-			$info = null;
-		}
-	}
-}
 
 $structs_with_perm = array(); 
 if( $prefs['feature_wiki_structure'] == 'y' ) {
@@ -140,6 +112,10 @@ if( $prefs['feature_wiki_structure'] == 'y' ) {
 		}
 
 	}
+} elseif (!empty($_REQUEST['page_ref_id'])) {
+	$smarty->assign('msg', tra('This feature is disabled').': feature_wiki_structure');
+	$smarty->display('error.tpl');
+	die;
 }
 
 if(isset($page_ref_id)) {
@@ -395,7 +371,7 @@ if ($prefs['feature_user_watches'] == 'y') {
 		if($_REQUEST['watch_action']=='add') {
 			$tikilib->add_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object'],'wiki page',$page,"tiki-index.php?page=$page");
 		} elseif($_REQUEST['watch_action'] == 'add_desc') {
-			$tikilib->add_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object'],'structure',$page,"tiki-index.php?page=$page&amp;structure=$struct");
+			$tikilib->add_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object'],'structure',$page,"tiki-index.php?page=$page&amp;structure=".$_REQUEST['structure']);
 		} elseif($_REQUEST['watch_action'] == 'remove_desc') {
 			$tikilib->remove_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object'],'structure');
 		} else {
@@ -403,23 +379,6 @@ if ($prefs['feature_user_watches'] == 'y') {
 		}
 	}
 }
-
-if ($prefs['feature_group_watches'] == 'y'
-	&& ( $tiki_p_admin == 'y' || $tiki_p_admin_users == 'y' ) ) {
-	if(isset( $_REQUEST['watch_group'] ) && isset($_REQUEST['watch_event'])) {
-		check_ticket('index');
-		if($_REQUEST['watch_action']=='add') {
-			$tikilib->add_group_watch($_REQUEST['watch_group'],$_REQUEST['watch_event'],$_REQUEST['watch_object'],'wiki page',$page,"tiki-index.php?page=$page");
-		} elseif($_REQUEST['watch_action'] == 'add_desc') {
-			$tikilib->add_group_watch($_REQUEST['watch_group'],$_REQUEST['watch_event'],$_REQUEST['watch_object'],'structure',$page,"tiki-index.php?page=$page&amp;structure=$struct");
-		} elseif($_REQUEST['watch_action'] == 'remove_desc') {
-			$tikilib->remove_group_watch($_REQUEST['watch_group'],$_REQUEST['watch_event'],$_REQUEST['watch_object'], 'structure');
-		} else {
-			$tikilib->remove_group_watch($_REQUEST['watch_group'],$_REQUEST['watch_event'],$_REQUEST['watch_object']);
-		}
-	}
-}
-
 
 $sameurl_elements=Array('pageName','page');
 
@@ -433,7 +392,7 @@ ask_ticket('index');
 //add a hit
 $statslib->stats_hit($page,'wiki');
 if ($prefs['feature_actionlog'] == 'y') {
-	include_once('lib/logs/logslib.php');
+	global $logslib; include_once('lib/logs/logslib.php');
 	$logslib->add_action('Viewed', $page);
 }
 
@@ -453,5 +412,3 @@ $smarty->display("tiki.tpl");
 
 // xdebug_dump_function_profile(XDEBUG_PROFILER_CPU);
 // debug: print all objects
-
-?>

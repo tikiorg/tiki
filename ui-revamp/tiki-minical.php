@@ -259,5 +259,3 @@ $smarty->assign("mootab",'y');
 }
 $smarty->assign('mid', 'tiki-minical.tpl');
 $smarty->display("tiki.tpl");
-
-?>

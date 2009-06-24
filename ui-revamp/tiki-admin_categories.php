@@ -195,14 +195,14 @@ if (isset($_REQUEST["save"]) && isset($_REQUEST["name"]) && strlen($_REQUEST["na
 	check_ticket('admin-categories');
 	// Save
 	if ($_REQUEST["categId"]) {
-	        if ($_REQUEST['parentId'] == $_REQUEST['categId']) {
-	            $smarty->assign('msg', tra("Category can`t be parent of itself"));
-  	            $smarty->display("error.tpl");
-	            die;
-                }
+		if ($_REQUEST['parentId'] == $_REQUEST['categId']) {
+			$smarty->assign('msg', tra("Category can`t be parent of itself"));
+			$smarty->display("error.tpl");
+			die;
+		}
 		$categlib->update_category($_REQUEST["categId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST["parentId"]);
 	} else if ($categlib->exist_child_category($_REQUEST['parentId'], $_REQUEST['name'])) {
-	  $errors[]= tra('You can not create a category with a name already existing at this level');
+		$errors[]= tra('You can not create a category with a name already existing at this level');
 	} else {
 		$newcategId = $categlib->add_category($_REQUEST["parentId"], $_REQUEST["name"], $_REQUEST["description"]);
 		if (isset($_REQUEST['assign_perms'])) {
@@ -245,30 +245,32 @@ if (isset($_REQUEST['import']) && isset($_FILES['csvlist']['tmp_name'])) {
 		$smarty->display('error.tpl');
 		die;
 	}
-	if ($fields[0]!='category' && $fields[1]!='description' && $fields[2]!='parent') {
+	if ($fields[0]!='category' || $fields[1]!='description' || $fields[2]!='parent') {
 		$smarty->assign('msg', tra('The file does not have the required header:').' category, description, parent');
 		$smarty->display('error.tpl');
 		die;
 	}
 	while (!feof($fhandle)) {
 		$data = fgetcsv($fhandle, 1000);
-		$temp_max = count($fields);
-		if (strtolower($data[2]) != 'top' && !empty($data[2])) {
-			$parentId = $categlib->get_category_id($data[2]);
-			if (empty($parentId)) {
-				$smarty->assign('msg', tra('Incorrect param').' '.$data[2]);
-				$smarty->display('error.tpl');
-				die;
+		if (!empty($data)) {
+			$temp_max = count($fields);
+			if ($temp_max > 1 && strtolower($data[2]) != 'top' && !empty($data[2])) {
+				$parentId = $categlib->get_category_id($data[2]);
+				if (empty($parentId)) {
+					$smarty->assign('msg', tra('Incorrect param').' '.$data[2]);
+					$smarty->display('error.tpl');
+					die;
+				}
+			} else {
+				$parentId = 0;
 			}
-		} else {
-			$parentId = 0;
-		}
-		if (!$categlib->exist_child_category($parentId, $data[0])) {
-			$newcategId = $categlib->add_category($parentId, $data[0], $data[1]);
-			if (empty($newcategId)) {
-				$smarty->assign('msg', tra('Incorrect param').' '.$data[0]);
-				$smarty->display('error.tpl');
-				die;
+			if (!$categlib->exist_child_category($parentId, $data[0])) {
+				$newcategId = $categlib->add_category($parentId, $data[0], $data[1]);
+				if (empty($newcategId)) {
+					$smarty->assign('msg', tra('Incorrect param').' '.$data[0]);
+					$smarty->display('error.tpl');
+					die;
+				}
 			}
 		}
 	}
@@ -297,7 +299,7 @@ $smarty->assign('categ_name', $categ_name);
 function array_csort($marray, $column) {
 	if (is_array($marray)) {
 		$sortarr = array();
-  	foreach ($marray as $key=>$row) { 
+		foreach ($marray as $key=>$row) { 
 			$sortarr[$key] = $row[$column]; 
 		}
  		array_multisort($sortarr, $marray); return $marray;
@@ -405,5 +407,3 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 // Display the template
 $smarty->assign('mid', 'tiki-admin_categories.tpl');
 $smarty->display("tiki.tpl");
-
-?>

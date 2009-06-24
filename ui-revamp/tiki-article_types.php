@@ -91,5 +91,3 @@ include_once ('tiki-section_options.php');
 
 $smarty->assign('mid', 'tiki-article_types.tpl');
 $smarty->display("tiki.tpl");
-
-?>
