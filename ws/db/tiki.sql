@@ -3582,6 +3582,7 @@ INSERT IGNORE INTO tiki_actionlog_conf(action, objectType, status) VALUES ('Post
 INSERT IGNORE INTO tiki_actionlog_conf(action, objectType, status) VALUES ('Updated', 'blog', 'n');
 INSERT IGNORE INTO tiki_actionlog_conf(action, objectType, status) VALUES ('Removed', 'blog', 'n');
 INSERT IGNORE INTO tiki_actionlog_conf(action, objectType, status) VALUES ('Removed', 'file', 'n');
+INSERT IGNORE INTO tiki_actionlog_conf(action, objectType, status) VALUES ('Viewed', 'article', 'n');
 
 DROP TABLE IF EXISTS tiki_freetags;
 CREATE TABLE tiki_freetags (

@@ -1041,7 +1041,7 @@ div.cachedpage {}
 #wikihelp-tab table td {}
 
 #wikihelp-tab table td {padding: 2px}
-textarea.wikiedit {font-size: 1.0em}
+textarea.wikiedit {}
 p.editdate {padding-top: 10px}
 img.externallink {}
 

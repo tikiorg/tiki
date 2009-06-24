@@ -22,6 +22,13 @@ class TikiMail extends HtmlMimeMail {
 		if (isset($prefs['mail_crlf'])) {
 			$this->setCrlf($prefs['mail_crlf'] == "LF"? "\n": "\r\n");
 		}
+		if ($prefs['zend_mail_handler'] == 'smtp') {
+			if ($prefs['zend_mail_smtp_auth'] == 'login') {
+				$this->setSMTPParams($prefs['zend_mail_smtp_server'], $prefs['zend_mail_smtp_port'], $prefs['zend_mail_smtp_helo'], true, $prefs['zend_mail_smtp_user'], $prefs['zend_mail_smtp_pass']);
+			} else {
+				$this->setSMTPParams($prefs['zend_mail_smtp_server'], $prefs['zend_mail_smtp_port']);
+			}
+		}
 		if (empty($from)) {
 			$from = $prefs['sender_email'];
 		}
@@ -91,6 +98,9 @@ class TikiMail extends HtmlMimeMail {
 	function send($recipients, $type = 'mail') {
 		global $prefs;
 		global $logslib; include_once ('lib/logs/logslib.php');
+		if ($prefs['zend_mail_handler'] == 'smtp') {
+			$type = 'smtp';
+		}
 		$result = parent::send($recipients, $type);
 		$title = $result?'mail': 'mail error';
 		if (!$result || $prefs['log_mail'])
