@@ -24,7 +24,6 @@ $smarty->assign('create_new_pages_using_template_name', 'Term Template');
 
 function make_sure_terminology_profil_was_installed() {
 	global $smarty;
-	print "<pre>-- mod-terminology.make_sure_terminology_profil_was_installed: invoked</pre>\n";
 	$profile_installer = new Tiki_Profile_Installer;
 	$profile = Tiki_Profile::fromNames('profiles.tikiwiki.org', 'Collaborative_Multilingual_Terminology');
 	if ($profile_installer->isInstalled($profile)) {
