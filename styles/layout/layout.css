@@ -1259,7 +1259,7 @@ body.tiki_blogs .post .postfooter {
 body.tiki_forums table.normal {margin: auto}
 #forumpost {display: none}
 #forumpostopen {display: block}
-.post {width: 100%}
+.post {}
 
 .post .postbody {
 	clear: both;
@@ -1273,9 +1273,6 @@ body.tiki_forums table.normal {margin: auto}
 	float: left;
 	padding: 0 3px 3px 3px;
 	margin: 0;
-	width: 100%;
-	min-width: 100%;
-	height: 100%;
 	text-align: left}
 	
 .post .postbody .content p {}
@@ -1310,7 +1307,7 @@ body.tiki_forums table.normal {margin: auto}
 .commentStyle_headers .author_info {float: left}
 .post .postbody-title .actions {float: right}
 
-.postbody-content {min-width: 100%; margin: 5px}
+.postbody-content {margin: 5px}
 .post .postbody .attachments {
 	clear: both;
 	margin-top: 5px}
