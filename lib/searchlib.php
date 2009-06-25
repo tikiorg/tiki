@@ -414,7 +414,7 @@ class SearchLib extends TikiLib {
 			'search' => array('q.`question`', 'q.`answer`'),
 			'filter' => 'q.`faqId` = f.`faqId`',
 			'permName' => 'tiki_p_view_faqs',
-			'objectType' => 'faqs',
+			'objectType' => 'faq',
 			'objectKey' => 'f.`faqId`',
 		);
 
