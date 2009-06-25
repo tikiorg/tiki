@@ -61,7 +61,7 @@ function smarty_block_self_link($params, $content, &$smarty, $repeat = false) {
 		if ( ! isset($params['_ajax']) ) $params['_ajax'] = 'y';
 		if ( ! isset($params['_script']) ) $params['_script'] = '';
 		if ( ! isset($params['_tag']) ) $params['_tag'] = 'y';
-		if ( ! empty($params['_anchor']) ) $anchor = $params['_anchor'];
+		if ( ! empty($params['_anchor']) ) $anchor = $params['_anchor']; else $anchor = '';
 		if ( empty($params['_disabled']) ) {
 			if ( ! isset($params['_sort_arg']) ) $params['_sort_arg'] = 'sort';
 			if ( ! isset($params['_sort_field']) ) {
