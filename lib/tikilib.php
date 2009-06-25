@@ -4990,6 +4990,7 @@ class TikiLib extends TikiDB {
 	}
 
 	function page_exists_desc( &$pageName, $searchAlias = false ) {
+	
 		$page_info = $this->get_page_info($pageName, false);
 		
 		if ( $page_info === false ) {
@@ -5004,9 +5005,24 @@ class TikiLib extends TikiDB {
 						array( 'toPage' => $pageName ) );
 
 					if ( count($links) > 0 ) {
-						// May be multiple (inconsistencies), just use the first one
-						$pageName = $links[0]['fromPage'];
-						return $this->page_exists_desc( $pageName );
+					    // There are multiple aliases for this page. Need to disambiguate.
+					    //
+						// When feature_likePages is set, trying to display the alias itself will
+						// display an error page with the list of aliased pages in the "like pages" section.
+						// This allows the user to pick the appropriate alias.
+						// So, leave the $pageName to the alias.
+						// 
+						// If feature_likePages is not set, then the user will only see that the page does not
+						// exist. So it's better to just pick the first one.
+						//													
+						if ($prefs['feature_likePages'] = 'y') {
+							$desc = true;
+						} else {
+							// If feature_likePages is NOT set, then trying to display the 
+							$pageName = $links[0]['fromPage'];
+							$desc = $this->page_exists_desc( $pageName );
+						}
+						return $desc;
 					}
 				}
 			}
