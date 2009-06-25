@@ -32,6 +32,9 @@ else
 	if [ "$UNAME" = "CYGWIN" ]; then
 		AUSER=SYSTEM
 		AGROUP=SYSTEM
+	elif [ "$UNAME" = "Darwin" ]; then
+		AUSER=_www
+		AGROUP=_www
 	fi
 fi
 
