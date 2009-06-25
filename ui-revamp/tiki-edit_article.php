@@ -151,7 +151,7 @@ if (isset($_REQUEST["articleId"]) and $_REQUEST["articleId"] > 0) {
 
 // Now check permissions to access this page
 // echo $tiki_p_edit_article.$article_data["author"].$article_data["creator_edit"];
-if ($tiki_p_admin_cms != 'y' && !$tikilib->user_has_perm_on_object($user, $articleId, 'article', 'tiki_p_edit_article') and ($article_data["author"] != $user or $article_data["creator_edit"] != 'y')) {
+if ($tiki_p_admin_cms != 'y' && !$tikilib->user_has_perm_on_object($user, $articleId, 'article', 'tiki_p_edit_article', 'tiki_p_edit_categorized') and ($article_data["author"] != $user or $article_data["creator_edit"] != 'y')) {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied you cannot edit this article"));
 
@@ -492,7 +492,7 @@ include_once ('tiki-section_options.php');
 include_once("textareasize.php");
 
 global $wikilib; include_once('lib/wiki/wikilib.php');
-$plugins = $wikilib->list_plugins(true);
+$plugins = $wikilib->list_plugins(true, 'body');
 $smarty->assign_by_ref('plugins', $plugins);
 
 ask_ticket('edit-article');
@@ -503,5 +503,3 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 // Display the Index Template
 $smarty->assign('mid', 'tiki-edit_article.tpl');
 $smarty->display("tiki.tpl");
-
-?>

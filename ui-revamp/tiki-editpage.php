@@ -1,5 +1,5 @@
 <?php
-// $Id: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181.2.40 2008-03-06 16:29:45 sylvieg Exp $
+// $Id$
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -58,19 +58,15 @@ if (isset($_REQUEST['save']) && (!$user || $user == 'anonymous') && $prefs['feat
 
 $smarty->assign( 'translation_mode', (isNewTranslationMode() || isUpdateTranslationMode()) ?'y':'n' );
 
-// If from quickedit module and page is blank, tell user -- instead of editing the default page
-if ((isset($_REQUEST["quickedit"])) && ($_REQUEST["page"] == '')) {
+// If page is blank (from quickedit module or wherever) tell user -- instead of editing the default page
+// Dont get the page from default HomePage if not set (surely this would always be an error?)
+if (empty($_REQUEST["page"])) { 
 	$smarty->assign('msg', tra("You must specify a page name, it will be created if it doesn't exist."));
 	$smarty->display("error.tpl");
 	die;
 }
 
-// Get the page from the request var or default it to HomePage
-if (!isset($_REQUEST["page"]) || $_REQUEST["page"] == '') { 
-	$_REQUEST['page'] = $wikilib->get_default_wiki_page();
-}
-
-if ($prefs['feature_wikiapproval'] == 'y' && substr($_REQUEST['page'], 0, strlen($prefs['wikiapproval_prefix'])) != $prefs['wikiapproval_prefix'] && isset($prefs['wikiapproval_master_group']) && !in_array($prefs['wikiapproval_master_group'], $tikilib->get_user_groups($user))) {
+if ($prefs['feature_wikiapproval'] == 'y' && substr($_REQUEST['page'], 0, strlen($prefs['wikiapproval_prefix'])) != $prefs['wikiapproval_prefix'] && !empty($prefs['wikiapproval_master_group']) && !in_array($prefs['wikiapproval_master_group'], $tikilib->get_user_groups($user))) {
 	$_REQUEST['page'] = $prefs['wikiapproval_prefix'] . $_REQUEST['page'];
 }
 
@@ -737,7 +733,6 @@ if ($prefs['feature_wiki_footnotes'] == 'y') {
 		}
 	}
 }
-
 if (isset($_REQUEST["templateId"]) && $_REQUEST["templateId"] > 0 && !isset($_REQUEST['preview']) && !isset($_REQUEST['save'])) {
 	$template_data = $tikilib->get_template($_REQUEST["templateId"]);
 	$_REQUEST["edit"] = $template_data["content"]."\n".$_REQUEST["edit"];
@@ -908,7 +903,7 @@ if (isset($_REQUEST['mode_normal'])) {
 	$editplugin = $prefs['wiki_edit_plugin'];
 	$prefs['wiki_edit_plugin'] = 'n';		// and the external link icons
 	$edit_data = preg_replace('/(!!*)[\+\-]/m','$1', $edit_data);		// remove show/hide headings
-	$parsed = $tikilib->parse_data($edit_data,array('absolute_links'=>true, 'noparseplugins'=>true,'noheaderinc'=>true));
+	$parsed = $tikilib->parse_data($edit_data,array('absolute_links'=>true, 'parseimgonly'=>true,'noheaderinc'=>true));
 	$parsed = preg_replace('/<span class=\"img\">(.*?)<\/span>/im','$1', $parsed);					// remove spans round img's
 	$parsed = preg_replace("/src=\"img\/smiles\//im","src=\"".$tikiroot."img/smiles/", $parsed);	// fix smiley src's
 	$parsed = str_replace( 
@@ -938,7 +933,7 @@ $smarty->assign('pagedata', $parsed);
 // apply the optional post edit filters before preview
 if(isset($_REQUEST["preview"]) || ($prefs['wiki_spellcheck'] == 'y' && isset($_REQUEST["spellcheck"]) && $_REQUEST["spellcheck"] == 'on')) {
 	$parsed = $tikilib->apply_postedit_handlers($parsed);
-	$parsed = $tikilib->parse_data($parsed, array('is_html' => $is_html));
+	$parsed = $tikilib->parse_data($parsed, array('is_html' => $is_html, 'preview_mode'=>true));
 } else {
 	$parsed = "";
 }
@@ -1320,7 +1315,9 @@ if ($prefs['feature_categories'] == 'y') {
 		}
 	}
 }
-$plugins = $wikilib->list_plugins(true);
+
+$plugins = $wikilib->list_plugins(true, 'editwiki');
+
 $smarty->assign_by_ref('plugins', $plugins);
 $smarty->assign('showstructs', array());
 if ($structlib->page_is_in_structure($_REQUEST["page"])) {
@@ -1425,4 +1422,3 @@ $smarty->assign('showtags', 'n');
 $smarty->assign('qtnum', '1');
 $smarty->assign('qtcycle', '');
 $smarty->display("tiki.tpl");
-?>

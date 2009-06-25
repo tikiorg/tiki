@@ -58,6 +58,11 @@ function wikiplugin_tracker_info() {
 				'name' => tra('URL'),
 				'description' => tra('Url used for the field links'),
 			),
+			'target' => array(
+				'required' => false,
+				'name' => '_blank|_self|_parent|_top',
+				'description' => tra('Url target'),
+			),
 			'values' => array(
 				'required' => false,
 				'name' => tra('Values'),
@@ -215,12 +220,15 @@ function wikiplugin_tracker($data, $params) {
 			$perms = $tikilib->get_perm_object($trackerId, 'tracker', $tracker, false);
 			if ($perms['tiki_p_create_tracker_items'] == 'n' && empty($itemId)) {
 				return '<b>'.tra("You do not have permission to insert an item").'</b>';
-			} elseif ($perms['tiki_p_modify_tracker_items'] == 'n' && !empty($itemId)) { 
-				if ($tracker['writerGroupCanModify'] == 'y' && in_array($trklib->get_item_group_creator($trackerId, $itemId), $tikilib->get_user_groups($user))) {
-					global $group;
-					$smarty->assign_by_ref('ours', $group);
-				} else 
-					return '<b>'.tra("You do not have permission to modify an item").'</b>';
+			} elseif (!empty($itemId)) {
+				$item_info = $trklib->get_tracker_item($itemId);
+				if (!(($perms['tiki_p_modify_tracker_items'] == 'y' and $item_info['status'] != 'p' and $item_info['status'] != 'c') || ($perms['tiki_p_modify_tracker_items_pending'] == 'y' and $item_info['status'] == 'p') ||  ($perms['tiki_p_modify_tracker_items_closed'] == 'y' and $item_info['status'] == 'c'))) { 
+					if ($tracker['writerGroupCanModify'] == 'y' && in_array($trklib->get_item_group_creator($trackerId, $itemId), $tikilib->get_user_groups($user))) {
+						global $group;
+						$smarty->assign_by_ref('ours', $group);
+					} else 
+						return '<b>'.tra("You do not have permission to modify an item").'</b>';
+				}
 			}
 		}
 	}
@@ -291,6 +299,8 @@ function wikiplugin_tracker($data, $params) {
 							elseif ($flds['data'][$cpt]['type'] == 'I')
 								$_REQUEST['track'][$fl['fieldId']] = $tikilib->get_ip_address();
 						}
+					} elseif ($flds['data'][$cpt]['type'] == 'C' && empty($_REQUEST['track'][$fl['fieldId']])) {
+						$_REQUEST['track'][$fl['fieldId']] = '';
 					} elseif ($flds['data'][$cpt]['type'] == 'f') {
 						$ins_id = 'track_'.$fl['fieldId'];
 						if (isset($_REQUEST[$ins_id.'Day'])) {
@@ -468,6 +478,9 @@ function wikiplugin_tracker($data, $params) {
 							return '';
 						}
 					} else {
+						if (strstr($url, 'itemId')) {
+							$url = str_replace('itemId', 'itemId='.$rid, $url);
+						}
 						header("Location: $url");
 						die;
 					}
@@ -511,7 +524,10 @@ function wikiplugin_tracker($data, $params) {
 					$filter = &$flds['data'];
 				}
 				if (!empty($filter)) {
-					$flds['data'] = $trklib->get_item_fields($trackerId, $itemId, $filter, $itemUser);
+					foreach ($filter as $f) {
+						$filter2[$f['fieldId']] = $f;
+					}
+					$flds['data'] = $trklib->get_item_fields($trackerId, $itemId, $filter2, $itemUser);
 
 				}
 
@@ -606,7 +622,7 @@ function wikiplugin_tracker($data, $params) {
 			if (!empty($page))
 				$back .= '~np~';
 			$smarty->assign_by_ref('tiki_p_admin_trackers', $perms['tiki_p_admin_trackers']);
-			$back.= '<form enctype="multipart/form-data" method="post"><input type="hidden" name="trackit" value="'.$trackerId.'" />';
+			$back.= '<form enctype="multipart/form-data" method="post"'.(isset($target)?' target="'.$target.'"':'').'><input type="hidden" name="trackit" value="'.$trackerId.'" />';
 			if (isset($fields))
 				$back .= '<input type="hidden" name="fields" value="'.$params['fields'].'" />';//if plugin inserted twice with the same trackerId
 			if (!empty($_REQUEST['page']))
@@ -686,9 +702,15 @@ function wikiplugin_tracker($data, $params) {
 					} elseif ($f['type'] == 'u') {
 						if ($perms['tiki_p_admin_trackers'] == 'y' || ($f['options_array'][0] != 1 && $f['options_array'][0] != 2))
 							$flds['data'][$i]['list'] = $userlib->list_all_users();
+						elseif ($f['options_array'][0] == 1)
+							$flds['data'][$i]['value'] == $user;
 					} elseif ($f['type'] == 'g') {
-						if ($perms['tiki_p_admin_trackers'] == 'y' || $f['options_array'][0] != 1 && $f['options_array'][0] != 2)
+						if ($perms['tiki_p_admin_trackers'] == 'y' || ($f['options_array'][0] != 1 && $f['options_array'][0] != 2)) {
 							$flds['data'][$i]['list'] = $userlib->list_all_groups();
+						} elseif ($f['options_array'][0] == 1) {
+							global $group;
+							$flds['data'][$i]['value'] == $group;
+						}
 					} elseif ($f['type'] == 'e') {
 						global $categlib; include_once('lib/categories/categlib.php');
 						$flds['data'][$i]['list'] = $categlib->get_child_categories($f["options_array"][0]);
@@ -702,8 +724,8 @@ function wikiplugin_tracker($data, $params) {
 						$flds['data'][$i]['value'] = $trklib->get_join_values($itemId, array_merge(array($f['options_array'][2]), array($f['options_array'][1]), array($finalFields[0])), $f['options_array'][0], $finalFields);
 					} elseif ($f['type'] == 'w') {
 						$refFieldId = $f['options_array'][2];
-						foreach ($flds['data'] as $i=>$f) {
-							if ($f['fieldId'] == $refFieldId) {
+						foreach ($flds['data'] as $i=>$ff) {
+							if ($ff['fieldId'] == $refFieldId) {
 								$refFieldId = $i;
 							}
 						}
@@ -760,7 +782,7 @@ function wikiplugin_tracker($data, $params) {
 						}
 						$back .= ">".wikiplugin_tracker_name($f['fieldId'], $f['name'], $field_errors);
 						if ($showmandatory == 'y' and $f['isMandatory'] == 'y') {
-							$back.= "&nbsp;<b>*</b>&nbsp;";
+							$back.= "&nbsp;<strong class='mandatory_star'>*</strong>&nbsp;";
 							$onemandatory = true;
 						}
 						$back.= "</td><td>";
@@ -809,7 +831,7 @@ function wikiplugin_tracker($data, $params) {
 			}
 			$back .= "<input type='submit' name='action' value='".tra($action)."' />";
 			if ($showmandatory == 'y' and $onemandatory) {
-				$back.= "<br /><i>".tra("Fields marked with a * are mandatory.")."</i>";
+				$back.= "<em class='mandatory_note'>".tra("Fields marked with a * are mandatory.")."</em>";
 			}
 			if (empty($tpl) && empty($wiki)) {
 				$back.= "</td></tr>";
@@ -839,5 +861,3 @@ function wikiplugin_tracker($data, $params) {
 		return $back;
 	}
 }
-
-?>
