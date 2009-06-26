@@ -884,7 +884,8 @@ if( isset( $_REQUEST['translation_critical'] ) ) {
 
 // Parse (or not) $edit_data into $parsed
 // Handles switching editor modes
-if (isset($_REQUEST['mode_normal'])) {
+// _SESSION['wysiwyg'] is set by tiki-parsemode_setup.php
+if ( isset($_SESSION['wysiwyg']) and $_SESSION['wysiwyg'] == 'n' ) {
 	// Parsing page data as first time seeing html page in normal editor
 	$smarty->assign('msg', "Parsing html to wiki");
 	$parsed = '';
@@ -899,7 +900,7 @@ if (isset($_REQUEST['mode_normal'])) {
 	$info['is_html'] = false;
 	$info['wysiwyg'] = false;
 	$smarty->assign('allowhtml','n');
-} elseif (isset($_REQUEST['mode_wysiwyg'])) {
+} elseif ( isset($_SESSION['wysiwyg']) and $_SESSION['wysiwyg'] == 'y' ) {
 	// Parsing page data as first time seeing wiki page in wysiwyg editor
 	$smarty->assign('msg', "Parsing wiki to html");
 	$secedit = $prefs['wiki_edit_section'];
