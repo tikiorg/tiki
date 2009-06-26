@@ -302,3 +302,7 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
 if ($prefs['feature_ajax_autosave'] == 'y') {
 	require_once("lib/ajax/autosave.php");
 }
+
+if ($prefs['wysiwyg_htmltowiki'] == 'y') {
+	require_once("lib/ajax/tikitohtml.php");
+}
