@@ -307,27 +307,18 @@ class SemanticLib
 	{
 		global $tikilib;
 		$orig_query = $query;
-		$query = "%$query%";
+		if (!$exact_match) {
+			$query = "%$query%";
+		}
 		$result = $tikilib->query( "SELECT fromPage, toPage, reltype FROM tiki_links WHERE toPage LIKE ? AND reltype IS NOT NULL", array($query) );
 
-		$aliases_containing_query_words = array();
+		$aliases = array();
 		while( $row = $result->fetchRow() ) {
 			$types = explode( ',', $row['reltype'] );
 
 			if( in_array( 'alias', $types ) ) {
 				unset( $row['reltype'] );
-				$aliases_containing_query_words[] = $row;
-			}
-		}
-
-		if (!$exact_match) {
-			$aliases = $aliases_containing_query_words;
-		} else {
-			$aliases = array();
-			foreach ($aliases_containing_query_words as $an_alias_info) {
-			   if ($an_alias_info['toPage'] == $orig_query) {
-			   		$aliases[] = $an_alias_info;
-			   }
+				$aliases[] = $row;
 			}
 		}
 
