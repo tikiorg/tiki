@@ -1423,7 +1423,7 @@ function make_sure_page_to_be_created_is_not_an_alias() {
 		             "<b>$page</b>.\n<p>\n";
 		$error_msg .= tra("That page is an alias for the following pages").": ";
 		foreach ($aliases as $an_alias) {
-			$error_msg .= '<a href="'.$wikilib->sefurl($an_alias['fromPage']).'">'.$an_alias['fromPage'].'</a>, ';
+			$error_msg .= '<a href="'.$wikilib->editpage_url($an_alias['fromPage']).'">'.$an_alias['fromPage'].'</a>, ';
 		}
 		$error_msg .= "\n<p>\n";
 		$error_msg .= tra("If you want to create the page, you must first edit each the pages above, and remove the alias link it may contain. This link should look something like this");
