@@ -192,7 +192,7 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
     public function printImportantMessageForTestUsers() {
        die("MultilingualTest will not work unless:\n".
                    "- the name of the Tiki db is 'tiki_db_for_acceptance_tests' and \n".
-				   "- the file 'multilingualTestDump.sql' (not in svn, due to its size) is copied in the mySql data directory.\n" .
+				   "- the file 'multilingualTestDump.sql' (check it out from mods/acceptance_tests_files) is copied in the mySql data directory.\n" .
 				   "Comment out the call to printImportantMessageForTestUsers() in MultilingualTest::setUp() to run the tests.\n");
     }
     
