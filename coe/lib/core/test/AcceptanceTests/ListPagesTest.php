@@ -9,7 +9,7 @@ class  AcceptanceTests_ListPagesTest extends TikiSeleniumTestCase
     public function testListPagesTableIsWellFormed() {
         $this->openTikiPage('tiki-listpages.php');
         $this->_assertListPagesTableIsWellFormed();
-        $this->_assertListedPagesWere(array(0 => "HomePage", 1 => 'EnglishTestPage'), "Listed pages");  
+        $this->_assertListedPagesWere(array(0 => "HomePage", 1 => "EnglishTestPage"), "Listed pages");  
         $this->assertEquals("Page", $this->getTable("//div[@id='tiki-listpages-content']/table.0.0"));
     	$this->assertEquals("Hits", $this->getTable("//div[@id='tiki-listpages-content']/table.0.1"));
     	$this->assertEquals("Last mod", $this->getTable("//div[@id='tiki-listpages-content']/table.0.2"));
@@ -46,7 +46,7 @@ class  AcceptanceTests_ListPagesTest extends TikiSeleniumTestCase
         $this->assertTrue($this->isTextPresent("This is a test page in English"));
         $this->openTikiPage('tiki-listpages.php');
         $this->clickAndWait("link=HomePage");
-        $this->assertTrue($this->isTextPresent("This is the default HomePage for your Tiki"));
+        $this->assertTrue($this->isTextPresent("Thank you for installing Tiki"));
     }
     
     
@@ -66,7 +66,7 @@ class  AcceptanceTests_ListPagesTest extends TikiSeleniumTestCase
     public function printImportantMessageForTestUsers() {
        die("ListPagesTest will not work unless:\n".
                    "- the name of the Tiki db is 'tiki_db_for_acceptance_tests' and \n".
-				   "- the file 'listPagesTestDump.sql' (not in svn, due to its size) is copied in the mySql data directory.\n".	   
+				   "- the file 'listPagesTestDump.sql' (check it out from mods/acceptance_tests_files) is copied in the mySql data directory.\n".	   
 				   "Comment out the call to printImportantMessageForTestUsers() in ListPagesTest::setUp() to run the tests.\n");
     }
     
