@@ -32,7 +32,7 @@ function WikiToHTML($data) {
 	$content = $tikilib->parse_data($data,$options);
 	// remove spans round img's
   $content = preg_replace('/<span class=\"img\">(.*?)<\/span>/im','$1', $content);
-	$response->script("loadHTMLFromAjax('".preg_replace('/\n/',' ',$content)."')");
+	$response->script("loadHTMLFromAjax('".urlencode($content)."')");
   $prefs['wiki_edit_section'] = $secedit;
   $prefs['feature_wiki_ext_icon'] = $exticons;
   $prefs['wiki_edit_plugin'] = $editplugin;

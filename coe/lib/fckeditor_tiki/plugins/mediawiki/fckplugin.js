@@ -350,7 +350,7 @@ FCK.DataProcessor =
 							if (htmlNode.className == 'simplebox' ) {
 								stringBuilder.push( '^' ) ;
 								this._AppendChildNodes( htmlNode, stringBuilder, prefix ) ;
-								stringBuilder.push( '^\n' ) ;
+								stringBuilder.push( '^' ) ;
 								break;
 							}
 						case 'ol' :
@@ -489,7 +489,7 @@ FCK.DataProcessor =
 							
 						case 'table' :
 
-							stringBuilder.push( '\n||' ) ;
+							stringBuilder.push( '||' ) ;
 
 							for ( var r = 0 ; r < htmlNode.rows.length ; r++ )
 							{
@@ -845,7 +845,8 @@ FCK.DataProcessor =
 		var args = arguments ;
 		var loadHTMLFromAjax = function( result )
 		{
-			FCK.EditingArea.Textarea.value = result ;
+			alert(urldecode(result));
+			FCK.EditingArea.Textarea.value = urldecode(result) ;
 			original.apply( FCK, args ) ;
 		}
 		var edittools_markup = parent.document.getElementById ('editpage-specialchars') ;
@@ -871,7 +872,6 @@ FCK.DataProcessor =
 				window.parent.popup.parent.FCK_sajax( 'wfSajaxWikiToHTML', [FCK.EditingArea.Textarea.value], loadHTMLFromAjax ) ;
 			}
 			else{
-				window.parent.TikiToHTML = 'Test';
 				window.parent.loadHTMLFromAjax = loadHTMLFromAjax;
 				window.parent.xajax_WikiToHTML( FCK.EditingArea.Textarea.value ) ;
 			}
