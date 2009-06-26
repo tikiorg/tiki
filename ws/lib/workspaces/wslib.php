@@ -47,13 +47,24 @@ class wslib
 	// Remove a WS
 	function remove_ws ($ws_id)
 	{
+		$newParent=$categlib->get_category_description($ws_id);
+		// All its sub-workspaces will level up 
+		$query="update `tiki_categories` set `description` = replace (`description`,?,?)";	
+		$levelup = query($query,array((string)$ws_id,$newParent);
+		return $result = $categlib->remove_category($ws_id)
 	}
 	
-	// Add a object to a WS
-	function add_ws_object ($ws_id,$object_id)
+	// Add an object to a WS
+	function add_ws_object ($ws_id,$object_id,$type)
 	{
-		
+		return $result = $categlib->categorize_any( $type, $object_id, $ws_id )
 	} 
+	
+	// Remove an object from a WS
+	function remove_ws_object ($ws_id,$object_id)
+	{
+		return $result = $categlib->remove_object_from_category($object_id, $ws_id)
+	}
 }
 
 
