@@ -845,7 +845,6 @@ FCK.DataProcessor =
 		var args = arguments ;
 		var loadHTMLFromAjax = function( result )
 		{
-			alert(urldecode(result));
 			FCK.EditingArea.Textarea.value = urldecode(result) ;
 			original.apply( FCK, args ) ;
 		}
