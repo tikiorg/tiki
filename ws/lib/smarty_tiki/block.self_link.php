@@ -61,6 +61,7 @@ function smarty_block_self_link($params, $content, &$smarty, $repeat = false) {
 		if ( ! isset($params['_ajax']) ) $params['_ajax'] = 'y';
 		if ( ! isset($params['_script']) ) $params['_script'] = '';
 		if ( ! isset($params['_tag']) ) $params['_tag'] = 'y';
+		if ( ! empty($params['_anchor']) ) $anchor = $params['_anchor']; else $anchor = '';
 		if ( empty($params['_disabled']) ) {
 			if ( ! isset($params['_sort_arg']) ) $params['_sort_arg'] = 'sort';
 			if ( ! isset($params['_sort_field']) ) {
@@ -80,13 +81,14 @@ function smarty_block_self_link($params, $content, &$smarty, $repeat = false) {
 			}
 
 			$params['_type'] = $default_type;
+			if ( $params['_ajax'] == 'y') unset ($params['_anchor']);
 			$ret = smarty_function_query($params, $smarty);
 		}
 
 		if ( $params['_tag'] == 'y' ) {
 
 			if ( empty($params['_disabled']) ) {
-				if ( $params['_ajax'] == 'y' && $params['_script'] == '' && empty($params['_anchor']) ) {
+				if ( $params['_ajax'] == 'y' && $params['_script'] == '' ) {
 					require_once $smarty->_get_plugin_filepath('block', 'ajax_href');
 					if ( ! isset($params['_htmlelement']) ) $params['_htmlelement'] = 'tiki-center';
 					if ( ! isset($params['_onclick']) ) $params['_onclick'] = '';
@@ -99,7 +101,7 @@ function smarty_block_self_link($params, $content, &$smarty, $repeat = false) {
 						$params['_template'] = '';
 					}
 					$ret = smarty_block_ajax_href(
-							array('template' => $params['_template'], 'htmlelement' => $params['_htmlelement'], '_onclick' => $params['_onclick']),
+							array('template' => $params['_template'], 'htmlelement' => $params['_htmlelement'], '_onclick' => $params['_onclick'], '_anchor'=> $anchor),
 							$ret,
 							$smarty,
 							false

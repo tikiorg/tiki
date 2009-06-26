@@ -328,7 +328,8 @@
 	{sectionelse}
 		<tr>
 			<td colspan="{$cntcol}" class="odd">
-				<b>{tr}No records found{/tr}{if $find ne ''} {tr}with{/tr} &quot;{$find}&quot;{/if}{if $initial ne ''}{tr} {if $find ne ''}and {/if}starting with{/tr} &quot;{$initial}&quot;{/if}</b>
+				<b>{tr}No pages found{/tr}.{if $find ne ''} {tr}with{/tr} &quot;{$find}&quot;{/if}{if $initial ne ''}{tr} {if $find ne ''}and {/if}starting with{/tr} &quot;{$initial}&quot;{/if}</b>
+				{if $aliases_were_found == 'y'}<br><b>{tr}However, some page aliases fitting the query were found (see Aliases section above).{/tr}</b>{/if}
 			</td>
 		</tr>
 	{/section}
@@ -368,7 +369,8 @@
 	</noscript>
 {/if}
 
-{if $find && $tiki_p_edit eq 'y' and $pagefound eq 'n'}
+{if $find && $tiki_p_edit eq 'y' and $pagefound eq 'n' and $alias_found eq 'n'}
+    <p>
 	{button _text="{tr}Create Page{/tr}: $find" href="tiki-editpage.php?page=$find&lang=$find_lang&templateId=$template_id" _title="{tr}Create{/tr}"}
 {/if}
 {if $checkboxes_on eq 'y'}

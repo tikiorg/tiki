@@ -16,14 +16,17 @@
 	</div>
 {/if}
 
+<p>
+
 <div id="tiki-listpages-content">
 	{if $aliases}
 		<div class="aliases">
-			{tr}Page aliases found:{/tr}
+			<b>{tr}Page aliases found:{/tr}</b>
 			{foreach from=$aliases item=alias}
 				<a href="{$alias.toPage|sefurl}" title="{$alias.fromPage|escape}" class="alias">{$alias.toPage|escape}</a>
 			{/foreach}
 		</div>
+		<p>
 	{/if}
 	{include file='tiki-listpages_content.tpl'}
 </div>

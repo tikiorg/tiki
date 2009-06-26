@@ -1,7 +1,16 @@
 {tikimodule title="{tr}Terminology{/tr}" name="terminology flip=$module_params.flip decorations=$module_params.decorations}
   <div align="left">
-    <b>WARNING: This module is still under development. DO NOT ACTIVATE IT!</b>
-    <p>    
+    {if $terminology_profile_was_installed == 'n'}
+       <b>
+       {tr}WARNING{/tr}:{tr}This module can only work if the following profile has been installed:{/tr}
+       <br>
+       <a href="http://profiles.tikiwiki.org/Collaborative_Multilingual_Terminology">Collaborative_Multilingual_Terminology profile.</a>
+       <p>
+       {tr}That profile has not been installed yet, so you need to install it first.{/tr} {tr}For help on how to install profiles, see:{/tr}
+       <a href="http://profiles.tikiwiki.org/How+to+use+profiles">How to use profiles</a>.
+       </b>
+       <p>
+    {/if}
     {tr}<b>Find term</b>{/tr}:<br>
 	<div id="mod-search_wiki_pager1" style="display: block" class="clearfix box-data">
       <form class="forms" method="post" action="tiki-listpages.php">

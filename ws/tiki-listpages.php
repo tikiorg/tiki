@@ -232,14 +232,7 @@ if ( ! empty($multiprint_pages) ) {
 	
 	$listpages = $tikilib->list_pages($offset, $maxRecords, $sort_mode, $find, $initial, $exact_match, false, true, $listpages_orphans, $filter);
 
-	if( $prefs['feature_wiki_pagealias'] == 'y' && $find ) {
-		global $semanticlib;
-		require_once 'lib/wiki/semanticlib.php';
-		$aliases = $semanticlib->getAliasContaining( $find );
-		$smarty->assign( 'aliases', $aliases );
-	} else {
-		$smarty->assign( 'aliases', null );
-	}
+	possibly_look_for_page_aliases($find);
 
 	// Only show the 'Actions' column if the user can do at least one action on one of the listed pages
 	$show_actions = 'n';
@@ -350,3 +343,26 @@ function setLangFilter($filter) {
    return $filter;
 }
 
+function possibly_look_for_page_aliases($query) {
+	global $prefs, $smarty, $semanticlib;
+	if( $prefs['feature_wiki_pagealias'] == 'y' && $query ) {
+		global $semanticlib;
+		require_once 'lib/wiki/semanticlib.php';
+		$aliases = $semanticlib->getAliasContaining( $query );
+		$smarty->assign( 'aliases', $aliases );
+	} else {
+		$smarty->assign( 'aliases', null );
+	}
+	if (count($aliases) > 0) {
+		$smarty->assign('aliases_were_found', 'y');
+	} else {
+		$smarty->assign('aliases_were_found', 'n');
+	}
+	$alias_found = 'n';
+	foreach ($aliases as $an_alias_info) {
+		if ($an_alias_info['toPage'] == $query) {
+			$alias_found = 'y';
+		}
+	}
+	$smarty->assign('alias_found', $alias_found);
+}

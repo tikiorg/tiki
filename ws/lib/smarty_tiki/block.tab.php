@@ -33,11 +33,12 @@ function smarty_block_tab($params, $content, &$smarty, &$repeat) {
 			$smarty_tabset[] = $params['name'] = "tab"+sizeof($smarty_tabset);
 		}
 		
-		$ret = "<fieldset ";
+		$ret = "<a name='tab".sizeof($smarty_tabset)."'></a>";
+		$ret .= "<fieldset ";
 		if ($prefs['feature_tabs'] == 'y' and (!isset($_COOKIE["tabbed_$smarty_tabset_name"]) or $_COOKIE["tabbed_$smarty_tabset_name"] != 'n')) {
    		$ret .= "id='content".sizeof($smarty_tabset)."' class='tabcontent' style='clear:both;display:block;'";
 		} else {
-			$ret .= "id='anchor".sizeof($smarty_tabset)."'>";
+			$ret .= "id='content".sizeof($smarty_tabset)."'>";
 		}
 		if ($prefs['feature_tabs'] != 'y' or (isset($_COOKIE["tabbed_$smarty_tabset_name"]) and $_COOKIE["tabbed_$smarty_tabset_name"] == 'n')) {
      $ret .= '<legend class="heading"><a href="#"><span>'.$params['name'].'</span></a></legend>';

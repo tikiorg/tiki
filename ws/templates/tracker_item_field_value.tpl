@@ -166,11 +166,19 @@
 		{if strstr($field_value.options_array[0], 't')}
 			{$field_value.info.filename|iconify}&nbsp;
 		{/if}
+		{if strstr($field_value.options_array[0], 'm')}
+			{if $field_value.value ne ''}
+				{wiki}{literal}{MEDIAPLAYER(mp3="tiki-download_item_attachment.php?attId={/literal}{$field_value.value}{/literal}",style="max")}{/literal}{/wiki}
+			{/if}
+		{/if}
+														 
 	{/if}
 	{if $list_mode eq 'csv'}
 		{$field_value.value}
 	{else} 
-		<a href="tiki-download_item_attachment.php?attId={$field_value.value}" title="{tr}Download{/tr}">{icon _id='disk' alt="{tr}Download{/tr}"}</a>
+		{if !strstr($field_value.options_array[0], 'm')}
+			<a href="tiki-download_item_attachment.php?attId={$field_value.value}" title="{tr}Download{/tr}">{icon _id='disk' alt="{tr}Download{/tr}"}</a>
+		{/if}
 	{/if}
 
 {* -------------------- preference -------------------- *}
