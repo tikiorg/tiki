@@ -68,10 +68,10 @@ class TikiSeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase {
 
 
     private function _login_as($user) {
-    	if ($this->isElementPresent("login-user")){
+    	if ($this->isElementPresent("sl-login-user")){
 	    	$password = $this->user_credentials[$user];
-			$this->type("login-user", $user);
-    		$this->type("login-pass", $password);
+			$this->type("sl-login-user", $user);
+    		$this->type("sl-login-pass", $password);
     		$this->clickAndWait("login");
 			if ($this->isTextPresent("Invalid password")) {
 				return false;
