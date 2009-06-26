@@ -287,19 +287,19 @@ class UsersLib extends TikiLib {
 	// these will help us keep tabs of what is going on
 	$userTiki = false;
 	$userTikiPresent = false;
-	$userAuth = false;
-	$userAuthPresent = false;
+	$userLdap = false;
+	$userLdapPresent = false;
 
 	// read basic pam options
 	$auth_pam = ($prefs['auth_method'] == 'pam');
 	$pam_create_tiki = ($prefs['pam_create_user_tiki'] == 'y');
 	$pam_skip_admin = ($prefs['pam_skip_admin'] == 'y');
 
-	// read basic PEAR:Auth options
-	$auth_pear = ($prefs['auth_method'] == 'auth');
-	$create_tiki = ($prefs['auth_create_user_tiki'] == 'y');
-	$create_auth = ($prefs['auth_create_user_auth'] == 'y');
-	$skip_admin = ($prefs['auth_skip_admin'] == 'y');
+	// read basic LDAP options
+	$auth_ldap = ($prefs['auth_method'] == 'ldap');
+	$ldap_create_tiki = ($prefs['ldap_create_user_tiki'] == 'y');
+	$create_auth = ($prefs['ldap_create_user_ldap'] == 'y');
+	$skip_admin = ($prefs['ldap_skip_admin'] == 'y');
 
 	// read basic cas options
 	global $phpcas_enabled;
@@ -318,7 +318,7 @@ class UsersLib extends TikiLib {
 
 	// first attempt a login via the standard Tiki system
 	//
-	if (!($auth_shib || $auth_cas) || $user == 'admin') {
+	if (!($auth_shib || $auth_cas) || $user == 'admin') { //redflo: does this mean, that users in cas and shib are not replicated to tiki tables? Does this work well?
 		list($result, $user) = $this->validate_user_tiki($user, $pass, $challenge, $response, $validate_phase);
 	} else {
 		$result = NULL;
@@ -338,7 +338,7 @@ class UsersLib extends TikiLib {
 
 	// if we aren't using LDAP this will be quick
 	// if we are using tiki auth or if we're using an alternative auth except for admin
-	if ((!$auth_pear && !$auth_pam && !$auth_cas && !$auth_shib) || ((($auth_pear && $skip_admin) || ($auth_shib && $shib_skip_admin) || ($auth_pam && $pam_skip_admin) || ($auth_cas && $cas_skip_admin)) && $user == "admin")) {
+	if ((!$auth_ldap && !$auth_pam && !$auth_cas && !$auth_shib) || ((($auth_ldap && $skip_admin) || ($auth_shib && $shib_skip_admin) || ($auth_pam && $pam_skip_admin) || ($auth_cas && $cas_skip_admin)) && $user == "admin") || ($auth_ldap && ($prefs['auth_ldap_permit_tiki_users']=='y' && $userTiki))) { // todo: bad hack. better search for a more general solution here
 	    // if the user verified ok, log them in
 	    if ($userTiki)  //user validated in tiki, update lastlogin and be done
 		return array($this->update_lastlogin($user), $user, $result);
@@ -587,38 +587,42 @@ class UsersLib extends TikiLib {
 	}
 
 	// next see if we need to check LDAP
-	else {
+	else if($auth_ldap){
 	    // check the user account
-	    $result = $this->validate_user_auth($user, $pass);
+	    $result = $this->validate_user_ldap($user, $pass);
 
 	    switch ($result) {
 		case USER_VALID:
-		    $userAuth = true;
+		    $userLdap = true;
 
-		    $userAuthPresent = true;
+		    $userLdapPresent = true;
 		    break;
 
 		case PASSWORD_INCORRECT:
-		    $userAuthPresent = true;
+		    $userLdapPresent = true;
 
 		    break;
 	    }
 
 	    // start off easy
-	    // if the user verified in Tiki and Auth, log in
-	    if ($userAuth && $userTiki) {
-		return array($this->update_lastlogin($user), $user, $result);
+	    // if the user is in Tiki and password is verified in LDAP, log in
+	    if ($userLdap && $userTikiPresent) {
+		if( $res2=$this->ldap_sync_user_and_groups($user,$pass)) {
+			return array($this->update_lastlogin($user), $user, $result);
+		} else {
+			return array(false,$user,USER_UNKNOWN);
+		}
 	    }
 	    // if the user wasn't found in either system, just fail
-	    elseif (!$userTikiPresent && !$userAuthPresent) {
+	    elseif (!$userTikiPresent && !$userLdapPresent) {
 		return array(false, $user, $result);
 	    }
-	    // if the user was logged into Tiki but not found in Auth
-	    elseif ($userTiki && !$userAuthPresent) {
+	    // if the user was logged into Tiki but not found in LDAP
+	    elseif ($userTiki && !$userLdapPresent) {
 		// see if we can create a new account
 		if ($create_auth) {
 		    // need to make this better! *********************************************************
-		    $result = $this->create_user_auth($user, $pass);
+		    $result = $this->create_user_ldap($user, $pass);
 
 		    // if it worked ok, just log in
 		    if ($result == USER_VALID)
@@ -640,16 +644,22 @@ class UsersLib extends TikiLib {
 	    }
 
 	    // if the user was logged into Auth but not found in Tiki
-	    elseif ($userAuth && !$userTikiPresent) {
-		// see if we can create a new account
-		if ($create_tiki) {
+	    elseif ($userLdap && !$userTikiPresent) {
+		// see if we are allowed to create a new account
+		if ($ldap_create_tiki) {
 		    // need to make this better! *********************************************************
+		    //$userinfo = $this->get_ldap_user_info($user,$pass);
+		print_r($userinfo);
 		    $result = $this->add_user($user, $pass, '');
 
 		    // if it worked ok, just log in
 		    if ($result == USER_VALID) {
 			// before we log in, update the login counter
-			return array($this->update_lastlogin($user), $user, $result);
+			if( $res2=$this->ldap_sync_user_and_groups($user,$pass)) {
+				return array($this->update_lastlogin($user), $user, $result);
+			} else {
+				return array(false,$user,USER_UNKNOWN);
+			}
 		    }
 		    // if the server didn't work, do something!
 		    elseif ($result == SERVER_ERROR) {
@@ -666,7 +676,7 @@ class UsersLib extends TikiLib {
 		    return array(false, $user, $result);
 	    }
 	    // if the user was logged into Auth and found in Tiki (no password in Tiki user table necessary)
-	    elseif ($userAuth && $userTikiPresent)
+	    elseif ($userLdap && $userTikiPresent)
 		return array($this->update_lastlogin($user), $user, $result);
 	}
 
@@ -728,74 +738,173 @@ class UsersLib extends TikiLib {
 		}
     }
 
-    // validate the user in the PEAR::Auth system
-    function validate_user_auth($user, $pass) {
-	global $tikilib, $user_ldap_attributes, $prefs;
 
-	include_once ("Auth/Auth.php");
+    // validate the user via ldap and get a ldap connection
+    function validate_user_ldap($user, $pass) {
+        global $prefs;
+	global $logslib;
+		require_once('auth/ldap.php');
+		$ldap_options=array('host' => $prefs['auth_ldap_host'],
+				'port' => $prefs['auth_ldap_port'],
+				'version' => $prefs['auth_ldap_version'],
+				'starttls' => $prefs['auth_ldap_starttls'],
+				'ssl' => $prefs['auth_ldap_ssl'],
+				'basedn' => $prefs['auth_ldap_basedn'],
+				'scope' => $prefs['auth_ldap_scope'],
+				'bind_type' => $prefs['auth_ldap_type'],
+				'username' => $user,
+				'password' => $pass,
+				'userdn' => $prefs['auth_ldap_userdn'],
+				'useroc' => $prefs['auth_ldap_useroc'],
+				'userattr' => $prefs['auth_ldap_userattr'],
+				'fullnameattr' => $prefs['auth_ldap_nameattr'],
+				'emailattr' => $prefs['auth_ldap_emailattr'],
+				'countryattr' => $prefs['auth_ldap_countryattr'],
+				'groupdn' => $prefs['auth_ldap_groupdn'],
+				'groupattr' => $prefs['auth_ldap_groupattr'],
+				'groupoc' => $prefs['auth_ldap_groupoc'],
+				'groupnameattr' => $prefs['auth_ldap_groupnameatr'],
+				'groupdescattr' => $prefs['auth_ldap_groupdescatr'],
+				'groupmemberattr' => $prefs['auth_ldap_memberattr'],
+				'groupmemberisdn' => $prefs['auth_ldap_memberisdn'],
+				'usergroupattr' => $prefs['auth_ldap_usergroupattr'],
+				'groupgroupattr' => $prefs['auth_ldap_groupgroupattr'],
+				'debug' => $prefs['auth_ldap_debug']
+				);
+		// print_r($ldap_options);
+		$this->ldap=new TikiLdapLib($ldap_options);
+		switch($this->ldap->bind()) {
+			case LDAP_INVALID_CREDENTIALS:
+				return PASSWORD_INCORRECT;
+				break;
+			case LDAP_INVALID_SYNTAX:
+			case LDAP_NO_SUCH_OBJECT:
+			case LDAP_INVALID_DN_SYNTAX:
+				return USER_NOT_FOUND;
+				break;
+			case LDAP_SUCCESS:
+				if($prefs['auth_ldap_debug']=='y') $logslib->add_log('ldap','Bind successful.');
+				return USER_VALID;
+				break;
+			default:
+				return SERVER_ERROR;
+		}
 
-	// just make sure we're supposed to be here
-	if ($prefs['auth_method'] != 'auth')
-	    return false;
-
-	// get all of the LDAP options from the database
-	$options['url'] = $prefs['auth_ldap_url'];
-	$options['host'] = $prefs['auth_pear_host'];
-	$options['port'] = $prefs['auth_pear_port'];
-	$options['scope'] = $prefs['auth_ldap_scope'];
-	$options['basedn'] = $prefs['auth_ldap_basedn'];
-	$options['userdn'] = $prefs['auth_ldap_userdn'];
-	$options['userattr'] = $prefs['auth_ldap_userattr'];
-	$options['useroc'] = $prefs['auth_ldap_useroc'];
-	$options['groupdn'] = $prefs['auth_ldap_groupdn'];
-	$options['groupattr'] = $prefs['auth_ldap_groupattr'];
-	$options['groupoc'] = $prefs['auth_ldap_groupoc'];
-	$options['memberattr'] = $prefs['auth_ldap_memberattr'];
-	$options['memberisdn'] = ($prefs['auth_ldap_memberisdn'] == 'y');
-	$options['version'] = $prefs['auth_ldap_version'];
-
-	//added to allow for ldap systems that do not allow anonymous bind
-	$options['binddn'] = $prefs['auth_ldap_adminuser'];
-	$options['bindpw'] = $prefs['auth_ldap_adminpass'];
-
-	// attributes to fetch
-	$options['attributes'] = array();
-	if ( $nameattr = $prefs['auth_ldap_nameattr'] ) $options['attributes'][] = $nameattr;
-	if ( $countryattr = $prefs['auth_ldap_countryattr'] ) $options['attributes'][] = $countryattr;
-	if ( $emailattr = $prefs['auth_ldap_emailattr'] ) $options['attributes'][] = $emailattr;
-
-	// set the Auth options
-	//$a = new Auth('LDAP', $options, '', false, $user, $pass);
-
-	//corrected for the Auth v.13 upgrade
-	$a = new Auth('LDAP', $options, '', false);
-
-	//added to support Auth v1.3
-	$a->username = $user;
-	$a->password = $pass;
-	$a->status = AUTH_LOGIN_OK;
-
-	// check if the login correct
-	$a->login();
-	switch ($a->getStatus()) {
-		case AUTH_LOGIN_OK:
-			// Retrieve LDAP information to update user data a bit later (when he will be completely validated or auto-created)
-			if ( $nameattr != '' ) $user_ldap_attributes['auth_ldap_nameattr'] = $a->getAuthData($nameattr);
-			if ( $countryattr != '' ) $user_ldap_attributes['auth_ldap_countryattr'] = $a->getAuthData($countryattr);
-			if ( $emailattr != '' ) $user_ldap_attributes['auth_ldap_emailattr'] = $a->getAuthData($emailattr);
-
-			return USER_VALID;
-
-		case AUTH_USER_NOT_FOUND:
-			return USER_NOT_FOUND;
-
-		case AUTH_WRONG_LOGIN:
-			return PASSWORD_INCORRECT;
-
-		default:
-			return SERVER_ERROR;
-	}
+	// this should never happen
+	die('Assertion failed '.__FILE__.':'.__LINE__);
     }
+
+
+    // Help function to disable the user password. Used, whenever the user password 
+    // shall not be hold in the tiki db but in LDAP or somewhere else
+    function disable_tiki_auth($user) {
+	global $tiki;
+	$query = "update `users_users` set `password`=?, `hash`=? where " . $this->convert_binary(). " `login` = ?";
+	$result = $this->query($query, array('','',$user));
+    }
+
+    // called after create user or login from ldap
+    function ldap_sync_user_and_groups() {
+	global $prefs;
+	global $logslib;
+	$ret=true;
+	
+        if($prefs['auth_ldap_debug']=='y') $logslib->add_log('ldap','Syncing user and group with ldap');
+	$userattributes=$this->ldap->get_user_attributes();
+	//print("<pre>");print_r($userattributes);print("</pre>");
+	$user=$userattributes[$prefs['auth_ldap_userattr']];
+
+	// sync user information
+	$this->disable_tiki_auth($user);
+
+	
+	$u=array('login'=>$user);
+	if(isset($userattributes[$prefs['auth_ldap_nameattr']])) {
+		$u['realName']=$userattributes[$prefs['auth_ldap_nameattr']];
+	}
+
+	if(isset($userattributes[$prefs['auth_ldap_emailattr']])) {
+		$u['email']=$userattributes[$prefs['auth_ldap_emailattr']];
+	}
+	
+	if(isset($userattributes[$prefs['auth_ldap_countryattr']])) {
+		$u['country']=$userattributes[$prefs['auth_ldap_countryattr']];
+	}
+
+	if(count($u)>1) {
+		$this->set_user_fields($u);
+	}
+
+	// sync external group information of user
+	$ldapgroups=$this->ldap->get_groups();
+	$ldapgroups_simple=array();
+	$tikigroups=$this->get_user_groups($user);
+	foreach($ldapgroups as $group) {
+		$gname=$group[$prefs['auth_ldap_groupattr']];
+		$ldapgroups_simple[]=$gname; // needed later
+		if($this->group_exists($gname) && !$this->group_is_external($gname)) { // group exists
+			//check if we need to sync group information
+			if(isset($group[$prefs['auth_ldap_groupdescattr']])) {
+				$ginfo=$this->get_group_info($gname);
+				if($group[$prefs['auth_ldap_groupdescattr']] != $ginfo['groupDesc']) {
+					$this->set_group_description($gname,$group[$prefs['auth_ldap_groupdescattr']]);
+				}
+			}
+
+		} else if(!$this->group_exists($gname)){ // create group
+			if(isset($group[$prefs['auth_ldap_groupdescattr']])) {
+				$gdesc=$group[$prefs['auth_ldap_groupdescattr']];
+			} else {
+				$gdesc='';
+			}
+			$logslib->add_log('ldap','Creating external group '.$gname);
+			$this->add_group($gname,$gdesc,'',0,0,'','',0,'',0,0,'y');
+		}
+
+		// add user
+		if(!in_array($gname,$tikigroups)) {
+			$logslib->add_log('ldap','Adding user '.$user.' to external group '.$gname);
+			$this->assign_user_to_group($user,$gname);
+		}
+	}
+
+	// now clean up group membership if user has been unassigned from a group in ldap
+	$extgroups=$this->get_user_external_groups($user);
+	foreach($extgroups as $eg) {
+		if(!in_array($eg,$ldapgroups_simple)) {
+			$logslib->add_log('ldap','Removing user '.$user.' from external group '.$eg);
+			$this->remove_user_from_group($user, $eg);
+		}
+	}
+
+	return($ret);
+    }
+
+	function set_group_description($group,$description) {
+		$query = "update `users_groups` set `groupDesc`=? where `groupName`=?";
+		$result = $this->query($query, array($description,$group));
+
+	}
+
+	function group_is_external($group) {
+		$gi=$this->get_group_info($group);
+		if($gi['isExternal']=='y') {
+			return true;
+		}
+		return false;
+	}
+
+	// simple function - no group inclusion or intertiki
+	function get_user_external_groups($user) {
+		$userid = $this->get_user_id($user);
+		$query = "select u.`groupName` from `users_usergroups` u, `users_groups` g where u.`groupName`=g.`groupName` and u.`userId`=? and g.`isExternal`=?";
+		$result=$this->query($query,array((int) $userid,'y'));
+		$ret = array();
+		while ($res = $result->fetchRow()) {
+			 $ret[] = $res["groupName"];
+		}
+		return $ret;
+	}
 
     // validate the user in the Tiki database
     function validate_user_tiki($user, $pass, $challenge, $response, $validate_phase=false) {
@@ -892,14 +1001,15 @@ class UsersLib extends TikiLib {
 	return true;
     }
 
-    // create a new user in the Auth directory
-    function create_user_auth($user, $pass) {
+    // create a new user in the ldap directory
+    function create_user_ldap($user, $pass) {
+// todo: kein pear::auth mehr! alles in pead::ldap2 abbilden
 	global $tikilib, $prefs;
 
 	$options = array();
 	$options['url'] = $prefs['auth_ldap_url'];
-	$options['host'] = $prefs['auth_pear_host'];
-	$options['port'] = $prefs['auth_pear_port'];
+	$options['host'] = $prefs['auth_ldap_host'];
+	$options['port'] = $prefs['auth_ldap_port'];
 	$options['scope'] = $prefs['auth_ldap_scope'];
 	$options['basedn'] = $prefs['auth_ldap_basedn'];
 	$options['userdn'] = $prefs['auth_ldap_userdn'];
@@ -1985,6 +2095,8 @@ function get_included_groups($group, $recur=true) {
 		$hashmethod='crypt-md5';
 	    } else if ($len == 32) { // md5()
 		$hashmethod='tikihash';
+	    } else if ($len == 0) { // password is disabled in tiki -> external authentification
+		$hashmethod='pass_disabled';
 	    } else {
 		die("Unknown password format");
 	    }
@@ -2014,6 +2126,7 @@ function get_included_groups($group, $recur=true) {
 	    }
 	    return crypt($pass, $salt);
 
+	case 'pass_disabled': // md5(someting) is not empty string
 	case 'tikihash':
 	default:
 	    return md5($pass);
@@ -2365,12 +2478,12 @@ function get_included_groups($group, $recur=true) {
 	return true;
 	}
 
-	function add_group($group, $desc='', $home='', $utracker=0, $gtracker=0, $rufields='', $userChoice='', $defcat=0, $theme='', $ufield=0, $gfield=0) {
+	function add_group($group, $desc='', $home='', $utracker=0, $gtracker=0, $rufields='', $userChoice='', $defcat=0, $theme='', $ufield=0, $gfield=0,$isexternal='n') {
 		$group = trim($group);
 		if ( $this->group_exists($group) ) return false;
 
-		$query = "insert into `users_groups` (`groupName`, `groupDesc`, `groupHome`,`groupDefCat`,`groupTheme`,`usersTrackerId`,`groupTrackerId`, `registrationUsersFieldIds`, `userChoice`, `usersFieldId`, `groupFieldId`) values(?,?,?,?,?,?,?,?,?,?,?)";
-		$this->query($query, array($group, $desc, $home, $defcat, $theme, (int)$utracker, (int)$gtracker, $rufields, $userChoice, (int)$ufield, (int)$gfield) );
+		$query = "insert into `users_groups` (`groupName`, `groupDesc`, `groupHome`,`groupDefCat`,`groupTheme`,`usersTrackerId`,`groupTrackerId`, `registrationUsersFieldIds`, `userChoice`, `usersFieldId`, `groupFieldId`,`isExternal`) values(?,?,?,?,?,?,?,?,?,?,?,?)";
+		$this->query($query, array($group, $desc, $home, $defcat, $theme, (int)$utracker, (int)$gtracker, $rufields, $userChoice, (int)$ufield, (int)$gfield,$isexternal) );
 
 		global $cachelib;
 		$cachelib->invalidate('grouplist');
@@ -2380,7 +2493,7 @@ function get_included_groups($group, $recur=true) {
 		return $this->getOne($query, array($group));
 	}
 
-	function change_group($olgroup,$group,$desc,$home,$utracker=0,$gtracker=0,$ufield=0,$gfield=0,$rufields='',$userChoice='',$defcat=0,$theme='') {
+	function change_group($olgroup,$group,$desc,$home,$utracker=0,$gtracker=0,$ufield=0,$gfield=0,$rufields='',$userChoice='',$defcat=0,$theme='',$isexternal='n') {
 
 		if ( $olgroup == 'Anonymous' || $olgroup == 'Registered' ) {
 			// Changing group name of 'Anonymous' and 'Registered' is not allowed.
@@ -2393,8 +2506,8 @@ function get_included_groups($group, $recur=true) {
 
 		global $cachelib;
 
-		$query = "update `users_groups` set `groupName`=?, `groupDesc`=?, `groupHome`=?, `groupDefCat`=?, `groupTheme`=?, `usersTrackerId`=?, `groupTrackerId`=?, `usersFieldId`=?, `groupFieldId`=? , `registrationUsersFieldIds`=?, `userChoice`=? where `groupName`=?";
-		$result = $this->query($query, array($group, $desc, $home, $defcat, $theme, (int)$utracker, (int)$gtracker, (int)$ufield, (int)$gfield, $rufields, $userChoice, $olgroup));
+		$query = "update `users_groups` set `groupName`=?, `groupDesc`=?, `groupHome`=?, `groupDefCat`=?, `groupTheme`=?, `usersTrackerId`=?, `groupTrackerId`=?, `usersFieldId`=?, `groupFieldId`=? , `registrationUsersFieldIds`=?, `userChoice`=?, `isExternal`=? where `groupName`=?";
+		$result = $this->query($query, array($group, $desc, $home, $defcat, $theme, (int)$utracker, (int)$gtracker, (int)$ufield, (int)$gfield, $rufields, $userChoice, $isexternal, $olgroup));
 
 		if ( $olgroup != $group ) {
 			$query = array();
