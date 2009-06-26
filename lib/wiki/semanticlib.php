@@ -303,24 +303,35 @@ class SemanticLib
 		return $relations;
 	} // }}}
 
-	function getAliasContaining( $partial ) // {{{
+	function getAliasContaining( $query, $exact_match = false ) // {{{
 	{
 		global $tikilib;
+		$orig_query = $query;
+		$query = "%$query%";
+		$result = $tikilib->query( "SELECT fromPage, toPage, reltype FROM tiki_links WHERE toPage LIKE ? AND reltype IS NOT NULL", array($query) );
 
-		$partial = "%$partial%";
-		$result = $tikilib->query( "SELECT fromPage, toPage, reltype FROM tiki_links WHERE toPage LIKE ? AND reltype IS NOT NULL", array($partial) );
-
-		$out = array();
+		$aliases_containing_query_words = array();
 		while( $row = $result->fetchRow() ) {
 			$types = explode( ',', $row['reltype'] );
 
 			if( in_array( 'alias', $types ) ) {
 				unset( $row['reltype'] );
-				$out[] = $row;
+				$aliases_containing_query_words[] = $row;
 			}
 		}
 
-		return $out;
+		if (!$exact_match) {
+			$aliases = $aliases_containing_query_words;
+		} else {
+			$aliases = array();
+			foreach ($aliases_containing_query_words as $an_alias_info) {
+			   if ($an_alias_info['toPage'] == $orig_query) {
+			   		$aliases[] = $an_alias_info;
+			   }
+			}
+		}
+
+		return $aliases;
 	} // }}}
 }
 
