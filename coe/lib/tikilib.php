@@ -5683,7 +5683,7 @@ class TikiLib extends TikiDB {
 							}
 							global $headerlib;
 							$headerlib->add_jsfile( 'tiki-jsplugin.php' );
-							if( $option['fck'] != 'y' && $this->plugin_is_editable( $plugin_name ) && (empty($options['preview_mode']) || !$options['preview_mode']) && (empty($options['print']) || !$options['print']) ) {
+							if( $options['fck'] != 'y' && $this->plugin_is_editable( $plugin_name ) && (empty($options['preview_mode']) || !$options['preview_mode']) && (empty($options['print']) || !$options['print']) ) {
 								include_once('lib/smarty_tiki/function.icon.php');
 								global $page;
 								$id = 'plugin-edit-' . $plugin_name . $current_index;
@@ -6679,6 +6679,7 @@ class TikiLib extends TikiDB {
 		$options['print'] = isset($options['print']) ? $options['print'] : false;
 		$options['parseimgonly'] = isset($options['parseimgonly']) ? $options['parseimgonly'] : false;
 		$options['preview_mode'] = isset($options['preview_mode']) ? (bool)$options['preview_mode'] : false;
+		if (empty($options['fck'])) $options['fck'] = 'n';
 		
 		
 		// if simple_wiki is true, disable some wiki syntax
