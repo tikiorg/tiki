@@ -261,6 +261,7 @@ class TikiLdapLib {
 
 	// return dn of all groups a user belongs to
 	public function get_groups() {
+		if(empty($this->user_attributes)) $this->get_user_attributes();
 
 		$filter1=Net_LDAP2_Filter::create('objectClass','equals',$this->options['groupoc']);
 

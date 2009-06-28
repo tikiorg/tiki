@@ -456,6 +456,11 @@
 							<input type="text" name="auth_ldap_groupattr" id="auth_ldap_groupattr" value="{$prefs.auth_ldap_groupattr|escape}" />
 						</div>
 					</div>
+               <div class="adminoptionbox">
+                  <div class="adminoptionlabel"><label for="auth_ldap_groupdescattr">{tr}Group description attribute{/tr}:</label>
+                     <input type="text" name="auth_ldap_groupdescattr" id="auth_ldap_groupdescattr" value="{$prefs.auth_ldap_groupdescattr|escape}" />
+                  </div>                                
+               </div>
 					<div class="adminoptionbox">
 						<div class="adminoptionlabel"><label for="auth_ldap_groupoc">{tr}Group OC{/tr}:</label>
 							<input id="auth_ldap_groupoc" type="text" name="auth_ldap_groupoc" value="{$prefs.auth_ldap_groupoc|escape}" />
