@@ -118,7 +118,7 @@ class TikiAccessLib extends TikiLib {
 	}
 
 	// you must call ask_ticket('error') before calling this
-	function display_error($page, $errortitle="", $errortype="", $enableRedirect = true) {
+	function display_error($page, $errortitle="", $errortype="", $enableRedirect = true, $message='') {
 		global $smarty, $wikilib, $prefs, $tikiroot, $userlib, $user;
 		require_once ('tiki-setup.php');
 		include_once('lib/wiki/wikilib.php');
@@ -130,15 +130,18 @@ class TikiAccessLib extends TikiLib {
 
 		$detail = array(
 			'code' => $errortype,
-			'message' => $errortitle,
+			'errortitle' => $errortitle,
+			'message' => $message,
 		);
 
 		if ( !isset($errortitle) ) {
 			$detail['message'] = tra('unknown error');
+			$detail['errortitle'] = $detail['message'];
 		}
 
-		// Display the template
-		$smarty->assign('msg', $errortitle);
+		// Display the template		
+		$smarty->assign('msg', $detail['message']);
+		$smarty->assign('errortitle', $detail['errortitle']);
 		switch( $errortype ) {
 		case '404':
 			header ("HTTP/1.0 404 Not Found");
@@ -158,7 +161,8 @@ class TikiAccessLib extends TikiLib {
 		if( $this->is_serializable_request() ) {
 			$this->output_serialized( $detail );
 		} else {
-			$smarty->assign('errortitle', $detail['message']);
+			$smarty->assign('errortitle', $detail['errortitle']);
+			$smarty->assign('msg', $detail['message']);
 			$smarty->assign('errortype', $detail['code']);
 			if( isset( $detail['page'] ) )
 				$smarty->assign('page', $page);

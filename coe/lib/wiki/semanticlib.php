@@ -303,24 +303,26 @@ class SemanticLib
 		return $relations;
 	} // }}}
 
-	function getAliasContaining( $partial ) // {{{
+	function getAliasContaining( $query, $exact_match = false ) // {{{
 	{
 		global $tikilib;
+		$orig_query = $query;
+		if (!$exact_match) {
+			$query = "%$query%";
+		}
+		$result = $tikilib->query( "SELECT fromPage, toPage, reltype FROM tiki_links WHERE toPage LIKE ? AND reltype IS NOT NULL", array($query) );
 
-		$partial = "%$partial%";
-		$result = $tikilib->query( "SELECT fromPage, toPage, reltype FROM tiki_links WHERE toPage LIKE ? AND reltype IS NOT NULL", array($partial) );
-
-		$out = array();
+		$aliases = array();
 		while( $row = $result->fetchRow() ) {
 			$types = explode( ',', $row['reltype'] );
 
 			if( in_array( 'alias', $types ) ) {
 				unset( $row['reltype'] );
-				$out[] = $row;
+				$aliases[] = $row;
 			}
 		}
 
-		return $out;
+		return $aliases;
 	} // }}}
 }
 

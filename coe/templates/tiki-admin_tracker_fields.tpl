@@ -64,14 +64,14 @@
 <td>{$channels[user].position}</td>
 <td>{$channels[user].isMain}</td>
 <td>{$channels[user].isMultilingual}</td>
-<td>{$channels[user].isTblVisible}</td>
-<td>{$channels[user].isSearchable}</td>
+<td>{if $channels[user].isTblVisible eq 'y'}{icon _id='table' title='{tr}Tbl vis{/tr}'}{else}-{/if}</td>
+<td>{if $channels[user].isSearchable eq 'y'}{icon _id='magnifier' title='{tr}Searchable{/tr}'}{else}-{/if}</td>
 <td>{$channels[user].isPublic}</td>
 <td>{$channels[user].isHidden}
 {if !empty($channels[user].visibleBy)}<br />{icon _id=magnifier width=10 height=10}{foreach from=$channels[user].visibleBy item=g}{$g|escape} {/foreach}{/if}
 {if !empty($channels[user].editableBy)}<br />{icon _id=page_edit width=10 height=10}{foreach from=$channels[user].editableBy item=g}{$g|escape} {/foreach}{/if}
 </td>
-<td>{$channels[user].isMandatory}</td>
+<td>{if $channels[user].isMandatory eq 'y'}<a title="{tr}Mandatory{/tr}">*</a>{else}-{/if}</td>
 <td>{$channels[user].description|truncate:14:"..."}</td>
 <td>{if $tracker_info.useRatings ne 'y' or $channels[user].name ne "Rating"}
 <a class="link" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}{if $max and $max ne $prefs.maxRecords}&amp;max={$max}{/if}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].fieldId}" title="{tr}Remove{/tr}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a> 
