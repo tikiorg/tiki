@@ -4,7 +4,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-require_once ('wslib.php');
+require_once 'wslib.php';
 
 /**
  * TikiWiki CMS/GroupWare
@@ -34,14 +34,13 @@ class wsGuiController
     {
 	global $prefs, $tikilib;
 	if ($prefs['new_to_ws'] == 'y')
-	{
-	    //do{
-		$currentTime = (string) time();
-		$hash = md5($currentTime);
-	    //}while (($id = Workspacelib::init_ws($hash)) == -1);
-		//$tikilib->set_preference('new_to_ws', 'n');
-		$tikilib->set_preference('ws_container', $id);
-		wslib::init_ws();
+	{ 
+	    $currentTime = (string) time();
+	    $hash = md5($currentTime);
+	    $ws = new wslib();
+	    $id = $ws->init_ws($hash);
+	    $tikilib->set_preference('ws_container', $id);
+	    $tikilib->set_preference('new_to_ws', 'n');
 	}
     }
 }

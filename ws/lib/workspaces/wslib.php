@@ -30,6 +30,14 @@ include_once 'lib/categories/categlib.php';
  */
 class wslib extends CategLib 
 {
-    function init_ws(){
+    function __construct()
+    {
+	global $dbTiki;
+	parent::CategLib($dbTiki);
+    }
+
+    function init_ws($name)
+    {
+	return parent::add_category(0, $name, 'Workspaces Container');
     }
 }
