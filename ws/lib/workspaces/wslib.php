@@ -3,6 +3,7 @@ require_once ('../../tiki-setup.php');
 $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
 require_once ('lib/categories/categlib.php');
+require_once ('lib/userslib.php');
 
 class wslib 
 {
@@ -37,20 +38,41 @@ class wslib
 		// All its sub-workspaces will level up 
 		$query="update `tiki_categories` set `description` = replace (`description`,?,?)";	
 		$levelup = query($query,array((string)$ws_id,$newParent);
-		return $result = $categlib->remove_category($ws_id)
+		return $result = $categlib->remove_category($ws_id);
 	}
 	
 	// Add an object to a WS
 	function add_ws_object ($ws_id,$object_id,$type)
 	{
-		return $result = $categlib->categorize_any( $type, $object_id, $ws_id )
+		return $result = $categlib->categorize_any($type, $object_id, $ws_id );
 	} 
 	
 	// Remove an object from a WS
 	function remove_ws_object ($ws_id,$object_id)
 	{
-		return $result = $categlib->remove_object_from_category($object_id, $ws_id)
+		return $result = $categlib->remove_object_from_category($object_id, $ws_id);
 	}
+	
+	// Add a group into a WS
+	function add_ws_group ($ws_id,$groupname)
+	{
+		return $result = $userslib -> assign_object_permission($groupname,$ws_id,'Workspace','tiki_p_ws_view');
+	}
+	
+	//Get the groups that have access in a WS
+	function get_ws_groups ($ws_id)
+	{
+		$objectId = md5($objectType . strtolower($objectId));
+		$query = "select `groupName` from `users_objectpermissions` where `permName`=? and `objectId`=?";
+		$bindvars = array('tiki_p_ws_view', $objectType);
+		$result = $this->query($query, $bindvars);
+		$ret = array();
+
+		while ($res = $result->fetchRow())
+		{
+		   	 $ret[] = $res;
+		}
+		return $ret;
 }
 
 
