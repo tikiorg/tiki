@@ -1,6 +1,9 @@
 <?php
-require_once ('../../tiki-setup.php');
-$access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
+
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  header("location: index.php");
+  exit;
+}
 
 require_once ('lib/categories/categlib.php');
 require_once ('lib/userslib.php');
