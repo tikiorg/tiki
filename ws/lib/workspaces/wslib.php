@@ -1,28 +1,14 @@
 <?php
-/** \file
- * $Id: /cvsroot/tikiwiki/tiki/lib/workspaces/wslib.php by mangapower
- *
- * \brief Workspaces support class
- *
- */
+require_once ('../../tiki-setup.php');
+$access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
-//this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
-}
+require_once ('lib/categories/categlib.php');
 
 class wslib 
 {
 	
 	private $wsContainerId = $prefs['ws_container_id'];
 	
-	function __autoload() 
-	{
-	     require_once ('lib/categories/categlib.php');
-	     require_once ('tiki-setup.php')
-	}
-
 	// This function will set a container for WS in the category table and return its ID
 	function init_ws ($newName)
 	{

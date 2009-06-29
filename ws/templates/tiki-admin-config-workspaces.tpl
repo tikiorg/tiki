@@ -1,9 +1,5 @@
-{remarksbox type="info" title="{tr}You must configure Workspaces before you get ready!{/tr}"}
-	{if $warning}
-		{$warning}
-	{else}
-		{"{tr}Please, select one option bellow.{/tr}"}
-	{/if}
+{remarksbox type=$message.type title=$message.title}
+	{$message.content}
 {/remarksbox}
 
 	<div class="cbox">
@@ -16,7 +12,7 @@
 			<input type="radio" id="selected_workspace_name" name="selected_radio" checked="checked" value="selected_workspace_holder" />
 		</div>
 		<div>
-			<label for="selected_workspace">{tr}Create new Workspace container, called 'Workspaces' (Default option){/tr}</label>
+			<label for="selected_workspace">{tr}Create a new Workspace container (Default option){/tr}</label>
 		</div>
 	</div>
 	{if $prefs.feature_categories eq 'y'}
@@ -25,7 +21,9 @@
 			<input type="radio" id="selected_used_category"	name="selected_radio" value="selected_used_category" />
 		</div>
 		<div>
-			<label for="selected_used_category">{tr}Select a Category and convert it to a Workspace container{/tr}</label>
+			<label for="selected_used_category">{tr}Select a
+			Category and convert it to a Workspace
+			container:{/tr}</label>
 			<select id="workspaces_category_list">
 				<option title="Example 1" value="1">Category example 1</option>
 				<option title="Example 2" value="2">Category example 2</option>
@@ -40,7 +38,8 @@
 			<input type="radio" id="selected_new_container" name="selected_radio" value="selected_new_container"/>
 		</div>
 		<div>
-			<label for="selected_new_container">{tr}Create a new Workspace container{/tr}</label>
+			<label for="selected_new_container">{tr}Create a
+			new Workspace container, write the name:{/tr}</label>
 			<input type="text" id="new_container_name" name="new_container_name" />
 			{if $prefs.feature_help eq 'y'} {help url="Workpaces" desc="{tr}Workspaces manual page{/tr}"}{/if} <br />
 		</div>

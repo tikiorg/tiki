@@ -1381,8 +1381,10 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'zend_mail_smtp_security' => '',
 
 		//workspaces
-		'new_to_ws' => 'y',
 		'feature_workspaces' => 'n',
+		'new_to_ws' => 'y',	
+		'ws_container_id' => null,
+		'ws_container_name' => null,
 	);
 
 	// spellcheck
