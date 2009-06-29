@@ -884,6 +884,19 @@ class WikiLib extends TikiLib {
 			return $href;
 		}
 	}
+
+	function url_for_operation_on_a_page($script_name, $page, $with_next) {
+		$href = "$script_name?page=".urlencode($page);
+		if ($with_next) {
+			$href .= '&amp;';
+		}
+		return $href;
+	}
+
+	function editpage_url($page, $with_next) {
+		return $this->url_for_operation_on_a_page('tiki-editpage.php', $page, $with_next);
+	}
+
 	function move_attachments($old, $new) {
 		$query = 'update `tiki_wiki_attachments` set `page`=? where `page`=?';
 		$this->query($query, array($new, $old));

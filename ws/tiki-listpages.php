@@ -353,15 +353,17 @@ function possibly_look_for_page_aliases($query) {
 	} else {
 		$smarty->assign( 'aliases', null );
 	}
-	if (count($aliases) > 0) {
+	if (!empty($aliases) > 0) {
 		$smarty->assign('aliases_were_found', 'y');
 	} else {
 		$smarty->assign('aliases_were_found', 'n');
 	}
 	$alias_found = 'n';
-	foreach ($aliases as $an_alias_info) {
-		if ($an_alias_info['toPage'] == $query) {
-			$alias_found = 'y';
+	if (!empty($aliases)) {
+		foreach ($aliases as $an_alias_info) {
+			if ($an_alias_info['toPage'] == $query) {
+				$alias_found = 'y';
+			}
 		}
 	}
 	$smarty->assign('alias_found', $alias_found);

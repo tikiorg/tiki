@@ -16,8 +16,6 @@
 	</div>
 {/if}
 
-<p>
-
 <div id="tiki-listpages-content">
 	{if $aliases}
 		<div class="aliases">

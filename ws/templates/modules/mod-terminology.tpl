@@ -31,13 +31,15 @@
       </form>
       <!--[if IE]><br class="clear" style="height: 1px !important" /><![endif]-->
 	</div>
-	{tr}If not found, you will be given a chance to create it.{/tr}
+	<small>{tr}If not found, you will be given a chance to create it.{/tr}</small>
 	<div class="box-footer">
 	</div>
 	
 	<p>
     
-    <a href="tiki-index.php?page=Get Started with Multilingual Terminology">{tr}Terminology Help{/tr}</a>
+    <a href="tiki-index.php?page=Get Started with Multilingual Terminology">{tr}Help{/tr}</a>
+    &nbsp; &nbsp; <a href="tiki-index.php?page=Collaborative Terminology admin page">{tr}Admin{/tr}</a>
+    
     
      
   </div>
