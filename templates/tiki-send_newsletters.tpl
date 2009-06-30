@@ -14,7 +14,7 @@
 {/if}
 
 {if $upload_err_msg neq ''}
-	{remarksbox type="warning" title="{tr}Warning{/tr}" icon="error"}
+	{remarksbox type='warning' title="{tr}Warning{/tr}" icon='error'}
 		{$upload_err_msg}
 	{/remarksbox}
 {/if}
@@ -26,7 +26,7 @@
 	{/remarksbox}
 	
 	{if $errors}
-		<span class="attention">{tr}Errors detected{/tr}<br /></span>
+		{remarksbox type='warning' title="{tr}Errors{/tr}" icon='error'}
 		<table class="normal">
 			<tr class="formcolor">
 				<th>{tr}User{/tr}</th>
@@ -42,18 +42,14 @@
 				</tr>
 			{/section}
 		</table>
-		<br /><br />
+		{/remarksbox}
 	{/if}
 {/if}
 
 {if $presend eq 'y'}
-	<br />
-	<div class="title">
-		<h2>{tr}Please Confirm{/tr}</h2>
-	</div>
-	<div class="simplebox highlight">
+	{remarksbox type='warning' title="{tr}Please Confirm{/tr}"}
 		<b>{tr}This newsletter will be sent to {$subscribers} email addresses.{/tr}</b>
-	</div>
+	{/remarksbox}
 	<p>
 		<form method="post" action="tiki-send_newsletters.php">
 			<input type="hidden" name="nlId" value="{$nlId|escape}" />
@@ -63,6 +59,7 @@
 			<input type="hidden" name="dataparsed" value="{$dataparsed|escape}" />
 			<input type="hidden" name="cookietab" value="3" />
 			<input type="hidden" name="datatxt" value="{$datatxt|escape}" />
+			<input type="hidden" name="replyto" value="{$replyto|escape}" />
 			<input type="submit" name="send" value="{tr}Send{/tr}" />
 			<input type="submit" name="preview" value="{tr}Cancel{/tr}" />
 			{foreach from=$info.files item=newsletterfile key=fileid}
@@ -70,9 +67,7 @@
 			{/foreach}
 		</form>
 	</p>
-	<div class="title">
-		<h2>{tr}Preview{/tr}</h2>
-	</div>
+	<h2>{tr}Preview{/tr}</h2>
 	<h3>{tr}Subject{/tr}</h3>
 	<div class="simplebox wikitext">{$subject}</div>
 
@@ -93,11 +88,13 @@
 			</li>
 		{/foreach}
 	</ul>
+	{if !empty($replyto)}
+		<h3>{tr}Reply to{/tr}</h3>
+		{$replyto|escape}
+	{/if}
 {else}
 	{if $preview eq 'y'}
-		<div class="title">
-			<h2>{tr}Preview{/tr}</h2>
-		</div>
+		<h2>{tr}Preview{/tr}</h2>
 		<h3>{tr}Subject{/tr}</h3>
 		<div class="simplebox wikitext">{$info.subject}</div>
 
@@ -118,6 +115,10 @@
 				</li>
 			{/foreach}
 		</ul>
+		{if !empty($replyto)}
+			<h3>{tr}Reply to{/tr}</h3>
+			{$replyto|escape}
+		{/if}
 	{/if}
 
 {tabset name='tabs_send_newsletters'}
@@ -228,6 +229,11 @@
 						</div>
 						<p><a href="javascript:add_newsletter_file();">{tr}To add a file, click here{/tr}</a></p>
 					</td>
+				</tr>
+
+				<tr class="formcolor">
+					<td class="formcolor" id="txtcol1">{tr}Reply To Email{/tr}</td>
+					<td class="formcolor" id="txtcol2" ><input type="text" name="replyto" value="{$replyto|escape}" /> {tr}if not:{/tr} {$prefs.sender_email|escape}</td>
 				</tr>
 
 				<tr class="formcolor">
