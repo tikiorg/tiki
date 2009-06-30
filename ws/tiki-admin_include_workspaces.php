@@ -8,9 +8,6 @@ require_once ('lib/workspaces/wsController.php');
 
 $wsGui = new wsGuiController();
 
-//if ($wsGui->check_if_new_to_ws())
-//    $smarty->assign("welcome", true);
-    
-//$wsGui->prueba();
+$wsGui->check_if_new_to_ws();
 
 ask_ticket('admin-inc-workspaces');

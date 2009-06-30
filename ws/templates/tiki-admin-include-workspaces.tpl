@@ -10,7 +10,7 @@ href="http://dev.tikiwiki.org/workspace">{tr}Workspaces page{/tr}</a>.
 {tr}Things you can do currently: <br />
 <ul>
 <li>In the Test Tab you can view the Workspaces and its items.</li>
-<li>In the Video Demo Tab you can view a few screencast explanining different things related to Workspaces</li>
+<li>In the Video Tab you can view a few screencast explanining different things related to Workspaces (soon).</li>
 <li>In the Workspaces Dev Tools Tab, you can initiate (and other stuff) a set of Workspaces for quick look.</li>
 </ul>
 <strong>All sections listed here, are only during the development phase!</strong>{/tr}
@@ -25,18 +25,39 @@ href="http://dev.tikiwiki.org/workspace">{tr}Workspaces page{/tr}</a>.
 
 <input type="hidden" name="filegalfeatures" />
 
-<fieldset><legend>{tr}Info{/tr}</legend>
 
-</fieldset>
 
 
 {/tab}
 
-{tab name="{tr}Demo{/tr}"}
-
+{tab name="{tr}Video{/tr}"}
+<div class="adminoptionbox">
+<ul>
+<li>Some useful videos: <br /></li>
+</ul>
+</div>
 {/tab}
 
 {tab name="{tr}Workspaces Dev Tools{/tr}"}
+<fieldset><legend>{tr}Info{/tr}</legend>
+<div class="adminoptionbox">
+<ul>
+<li>Status: {if $prefs.feature_workspaces eq 'y'} <strong>Workspaces are enabled</strong> {else}<strong>Workspaces are disabled</strong>{/if}</li>
+<li>Workspaces Container Id: {$prefs.ws_container}</li>
+</ul>
+</div>
+</fieldset>
+<fieldset><legend>{tr}Script Creator{/tr}</legend>
+<div class="adminoptionbox">
+<input type="radio" id="wscreate" name="wsdevtools" value="n" checked="checked" /><label for="wscreate">{tr}Make a set of Workspaces, and some items inside it{/tr}.</label>
+</div>
+<div class="adminoptionbox">
+<input type="radio" id="wsdelete" name="wsdevtools" value="n" /><label for="wsdelete">{tr}Delete all Workspaces created before{/tr}.</label>
+</div>
+</fieldset>
+<div class="adminoptionbox">
+	<div class="adminoptionlabel"><div align="center"><input type="submit" name="wsoptions" value="{tr}Apply{/tr}"/></div></div>
+</div>
 {/tab}
 {/tabset}
 

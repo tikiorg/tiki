@@ -45,12 +45,5 @@ class wsGuiController
 	else
 	    return false;
     }
-
-    public function prueba()
-    {
-	global $tikilib;
-	$ws = new wslib();
-	$ws->get_ws_id("Circuitos electricos 2", '0');
-    }
 }
 
