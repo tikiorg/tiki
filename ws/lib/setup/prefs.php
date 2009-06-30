@@ -1382,7 +1382,6 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 
 		//workspaces
 		'feature_workspaces' => 'n',
-		'new_to_ws' => 'y',	
 		'ws_container_id' => null,
 		'ws_container_name' => null,
 	);

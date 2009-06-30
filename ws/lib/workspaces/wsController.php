@@ -30,17 +30,16 @@ require_once 'wslib.php';
  */
 class wsGuiController  
 {
-    public function checkIfNewToWS()
+    public function check_if_new_to_ws()
     {
 	global $prefs, $tikilib;
-	if ($prefs['new_to_ws'] == 'y')
+	if ($prefs['ws_container'] == null)
 	{ 
 	    $currentTime = (string) time();
 	    $hash = md5($currentTime);
 	    $ws = new wslib();
 	    $id = $ws->init_ws($hash);
 	    $tikilib->set_preference('ws_container', $id);
-	    $tikilib->set_preference('new_to_ws', 'n');
 	}
     }
 
