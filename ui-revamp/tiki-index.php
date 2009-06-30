@@ -144,8 +144,8 @@ if ( function_exists('utf8_encode') ) {
 // Get page data, if available
 if (!$info)
 	$info = $tikilib->get_page_info($page);
-
-
+	
+	
 // If the page doesn't exist then display an error
 if(empty($info) && !($user && $prefs['feature_wiki_userpage'] == 'y' && strcasecmp($prefs['feature_wiki_userpage_prefix'].$user, $page) == 0)) {
 	if ($user && $prefs['feature_wiki_userpage'] == 'y' && strcasecmp($prefs['feature_wiki_userpage_prefix'], $page) == 0) {

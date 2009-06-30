@@ -106,35 +106,17 @@
         </tr><tr>
 		
 
-		<td class="form"><label for="lang_use_db">{tr}Use database for translation{/tr}:</label></td>
-			<td><input type="checkbox" name="lang_use_db" id="lang_use_db"
-			{if $prefs.lang_use_db eq 'y'}checked="checked"{/if}/></td>
-			{if $prefs.lang_use_db eq 'y'}
-		</tr><tr>
-		
-		
-			<td></td>
-			<td><a class="link" href="tiki-edit_languages.php">{tr}Edit or ex/import Languages{/tr}</a></td>			
-		</tr><tr>
-		
-		
-			<td class="form"><label for="record_untranslated">{tr}Record untranslated{/tr}:</label></td>
-			<td><input type="checkbox" name="record_untranslated" id="record_untranslated"
-			{if $prefs.record_untranslated eq 'y'}checked="checked"{/if}/></td>
-			{/if}
-		</tr><tr>
-		
-		
-			<td class="form"><label for="feature_babelfish">{tr}Show Babelfish Translation URLs{/tr}:</label></td>
-			<td><input type="checkbox" name="feature_babelfish" id="feature_babelfish"
-			{if $prefs.feature_babelfish eq 'y'}checked="checked"{/if}/></td>
-		</tr><tr>
-		
-		
-			<td class="form"><label for="feature_babelfish_logo">{tr}Show Babelfish Translation Logo{/tr}:</label></td>		
-			<td><input type="checkbox" name="feature_babelfish_logo" id="feature_babelfish_logo"
-			{if $prefs.feature_babelfish_logo eq 'y'}checked="checked"{/if}/></td>
-		</tr><tr>
+<div class="adminoptionbox">
+	<div class="adminoption"><input type="checkbox" name="show_available_translations" id="show_available_translations"
+			{if $prefs.show_available_translations eq 'y'}checked="checked" {/if} /></div>
+	<div class="adminoptionlabel"><label for="show_available_translations">{tr}Display available translations{/tr}.</label></div>
+</div>
+
+<div class="adminoptionbox" id="langsync" style="display:{if $prefs.show_available_translations eq 'y'}block{else}none{/if};">
+	<div class="adminoption"><input type="checkbox" name="feature_sync_language" id="feature_sync_language"
+			{if $prefs.feature_sync_language eq 'y'}checked="checked"{/if}/></div>
+	<div class="adminoptionlabel"><label for="feature_sync_language">{tr}Changing page language will also change the site language{/tr}</label></div>
+</div>
 
 			<td class="form"><label for="show_available_translations">{tr}Display Available Translations{/tr}:</label></td>		
 			<td><input type="checkbox" name="show_available_translations" id="show_available_translations"

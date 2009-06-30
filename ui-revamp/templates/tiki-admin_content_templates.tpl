@@ -13,11 +13,14 @@
 {else}
 	<h2>{tr}Create new template{/tr}</h2>
 {/if}
-
-<form action="tiki-admin_content_templates.php" method="post">
+{if $wysiwyg eq 'n' or ($wysiwyg ne 'y' and $prefs.wysiwyg_default ne 'y')}
+<form action="tiki-admin_content_templates.php?&wysiwyg=n" method="post">
+{else} 
+<form action="tiki-admin_content_templates.php?&wysiwyg=y" method="post">
+{/if}
 {if $prefs.feature_wysiwyg eq 'y' and $prefs.wysiwyg_optional eq 'y'}
 	<div class="navbar">
-		{if $wysiwyg ne 'y'}
+		{if $wysiwyg eq 'n' or ($wysiwyg ne 'y' and $prefs.wysiwyg_default ne 'y')}
 			{button href="?templateId=$templateId&amp;wysiwyg=y" _text="{tr}Use wysiwyg editor{/tr}"}
 		{else}
 			{button href="?templateId=$templateId&amp;wysiwyg=n" _text="{tr}Use normal editor{/tr}"}
@@ -67,7 +70,7 @@
 			</td>
 		</tr>
 
-		{if $wysiwyg ne 'y' and $prefs.quicktags_over_textarea eq 'y'}
+		{if ($wysiwyg eq 'n' or ($wysiwyg ne 'y' and $prefs.wysiwyg_default ne 'y')) and $prefs.quicktags_over_textarea eq 'y'}
 			<tr>
 				<td class="formcolor"><label>{tr}Quicktags{/tr}</label></td>
 				<td class="formcolor">
@@ -78,7 +81,7 @@
 
 		<tr>
 			{assign var=area_name value="editwiki"}
-			{if $wysiwyg ne 'y'}
+			{if $wysiwyg eq 'n' or ($wysiwyg ne 'y' and $prefs.wysiwyg_default ne 'y')}
 				<td class="formcolor">{tr}Template{/tr}:
 					<br />
 					<br />

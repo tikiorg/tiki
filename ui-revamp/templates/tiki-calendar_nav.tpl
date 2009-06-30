@@ -1,4 +1,5 @@
 <center><div class="tabrow"><div class="tabrowRight"></div><div class="tabrowLeft"></div><div class="viewmode"><div class="calbuttonBox"><div class="calbuttonLeft"></div><div class="calbuttonoff"><a href="{$myurl}?viewmode=day&todate={$now}" title="{tr}Today{/tr}">{tr}Today{/tr}</a></div><div class="calbuttonRight"></div></div>
+	
 <div id="prev">
 {if $viewmode eq "day"}
 <a href="{$myurl}?todate={$daybefore}" title="&laquo; {tr}Day{/tr}" class="prev"><img src="images/a_pixel.gif" height="30" width="30" /></a>
@@ -34,4 +35,24 @@
 {elseif $viewmode eq "year"}
 <a href="{$myurl}?todate={$yearafter}" title="{tr}Year{/tr} &raquo;" class="next"><img src="images/a_pixel.gif" height="30" width="30" /></a>
 {/if}
-</div></div></div></center>
+</div></div></div><br style="clear:both" />
+
+{if $viewmode ne 'day'}
+<div class="calnavigation">
+	 {if $viewlist ne 'list' or $prefs.calendar_list_begins_focus ne 'y'}
+		{if $calendarViewMode eq 'month'}
+			{$currMonth|tiki_date_format:"%B %Y"}
+		{elseif $calendarViewMode eq 'week'}
+{* test display_field_order and use %d/%m or %m/%d  *}
+			{if ($prefs.display_field_order eq 'DMY') || ($prefs.display_field_order eq 'DYM') || ($prefs.display_field_order eq 'YDM')}		
+			{$daystart|tiki_date_format:"{tr}%d/%m{/tr}/%Y"} - {$dayend|tiki_date_format:"{tr}%d/%m{/tr}/%Y"}
+			{else} {$daystart|tiki_date_format:"{tr}%m/%d{/tr}/%Y"} - {$dayend|tiki_date_format:"{tr}%m/%d{/tr}/%Y"}
+			{/if}
+		{else}
+			{$daystart|tiki_date_format:"%B %Y"} - {$dayend|tiki_date_format:"%B %Y"}
+		{/if}
+	{else}
+		{$daystart|tiki_date_format:"{tr}%m/%d{/tr}/%Y"} - {$dayend|tiki_date_format:"{tr}%m/%d{/tr}/%Y"}
+	{/if}
+</div>
+{/if}

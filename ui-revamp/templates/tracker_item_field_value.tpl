@@ -154,8 +154,20 @@
 		{if strstr($field_value.options_array[0], 't')}
 			{$field_value.info.filename|iconify}&nbsp;
 		{/if}
+		{if strstr($field_value.options_array[0], 'm')}
+			{if $field_value.value ne ''}
+				{wiki}{literal}{MEDIAPLAYER(mp3="tiki-download_item_attachment.php?attId={/literal}{$field_value.value}",style="max")}{/literal}{/wiki}
+			{/if}
+		{/if}
+														 
 	{/if}
-	<a href="tiki-download_item_attachment.php?attId={$field_value.value}" title="{tr}Download{/tr}">{icon _id='disk' alt="{tr}Download{/tr}"}</a>
+	{if $list_mode eq 'csv'}
+		{$field_value.value}
+	{else} 
+		{if !strstr($field_value.options_array[0], 'm')}
+			<a href="tiki-download_item_attachment.php?attId={$field_value.value}" title="{tr}Download{/tr}">{icon _id='disk' alt="{tr}Download{/tr}"}</a>
+		{/if}
+	{/if}
 
 {* -------------------- preference -------------------- *}
 {elseif $field_value.type eq 'p'}
@@ -266,15 +278,20 @@
 			{if $item.my_rate eq NULL}
 				<b class="linkbut highlight">-</b>
 			{else}
-				<a href="{$smarty.server.PHP_SELF}{if $query_string}?{$query_string}{else}?{/if}
-					trackerId={$item.trackerId}
-					&amp;itemId={$item.itemId}
-					&amp;ins_{$field_value.fieldId}=NULL
-					{if $page}&amp;page={$page|escape:url}{/if}">-</a>
+				{tr}Number of votes{/tr}: {$field_value.numvotes|default:"0"}, {tr}Average{/tr}: {$field_value.voteavg|default:"0"},
+				{if $item.my_rate}{tr}Your rating{/tr}: {$item.my_rate}{else}{tr}You did not vote yet{/tr}{/if}
 			{/if}
-				{section name=i loop=$field_value.options_array}
-					{if $field_value.options_array[i] eq $item.my_rate}
-						<b class="linkbut highlight">{$field_value.options_array[i]}</b>
+		{/capture}
+		{capture name=myvote}
+			{tr}My rating:{/tr} {$item.my_rate}
+		{/capture}
+		<span class="rating">
+		<span style="white-space:nowrap">
+		{section name=i loop=$field_value.options_array}
+			{if $tiki_p_tracker_vote_ratings eq 'y' and isset($item.my_rate) and $field_value.options_array[i] eq $item.my_rate}
+				<b class="highlight">
+					{if $field_value.voteavg >= $field_value.options_array[i]}
+				   		{icon _id='star' alt=$field_value.options_array[i] title=$smarty.capture.myvote}
 					{else}
 						<a href="{$smarty.server.PHP_SELF}?
 						trackerId={$item.trackerId}
@@ -282,9 +299,27 @@
 						&amp;ins_{$field_value.fieldId}={$field_value.options_array[i]}
 						{if $page}&amp;page={$page|escape:url}{/if}">{$field_value.options_array[i]}</a>
 					{/if}
-				{/section}
-			</span></span>
+				</b>
+			{else}
+				{capture name=thisvote}{tr}Click to vote for this value:{/tr} {$field_value.options_array[i]}{/capture}
+				<a href="{$smarty.server.PHP_SELF}?trackerId={$item.trackerId}&amp;itemId={$item.itemId}&amp;ins_{$field_value.fieldId}={$field_value.options_array[i]}{if $page}&amp;page={$page|escape:url}{/if}">
+					{if $field_value.voteavg >= $field_value.options_array[i]}
+						{icon _id='star' alt=$field_value.options_array[i] title=$smarty.capture.thisvote}
+					{else}
+						{icon _id='star_grey' alt=$field_value.options_array[i] title=$smarty.capture.thisvote}
+					{/if}
+				</a>
+			{/if}
+			{assign var='previousvote' value=$field_value.options_array[i]}
+		{/section}
+		</span>
+		{if $item.itemId}
+			<small title="{tr}Votes{/tr}">
+				({$field_value.numvotes})
+			</small>
+			{icon _id='help' title=$smarty.capture.stat}
 		{/if}
+		<span>
 	{/if}
 
 {* -------------------- header ------------------------- *}

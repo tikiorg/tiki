@@ -18,5 +18,15 @@
 
 <div id="tiki-listpages-content">
 	{include file="tiki-listpages_content.tpl"}
+	{if $aliases}
+		<div class="aliases">
+			<b>{tr}Page aliases found:{/tr}</b>
+			{foreach from=$aliases item=alias}
+				<a href="{$alias.toPage|sefurl}" title="{$alias.fromPage|escape}" class="alias">{$alias.toPage|escape}</a>
+			{/foreach}
+		</div>
+		<p>
+	{/if}
+	{include file='tiki-listpages_content.tpl'}
 </div>
 

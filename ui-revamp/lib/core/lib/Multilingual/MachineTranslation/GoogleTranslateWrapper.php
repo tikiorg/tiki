@@ -11,6 +11,14 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper {
    	var $source_lang;
    	var $target_lang; 
    	var $google_ajax_url = "http://ajax.googleapis.com/ajax/services/language/translate?v=1.0";
+   	var $wiki_markup = array ("(===)");
+//   	var $wiki_markup = array(
+//   	"(___)", "(::)", "(~~\w+:)", "(~~)", "(\")", "(-+)","(+-)", "(===)", "(\^)", "(\{[^\{\}]\})", "(--)", 
+//   	"(~(\/)?np~)", "(\*)", "(-=)", "(=-)");
+   	var $escape_untranslatable_strings = "<span class='notranslate'> $0 </span>";
+   	
+   	var $notranslate_tag_left = "/(<span class='notranslate'>(.*)<\/span>\s)/U";
+   	var $notranslate_tag_right = "/(\s<span class='notranslate'>(.*)<\/span>)/U";
    	
    	function __construct ($source_lang, $target_lang) {
    		$this->source_lang = $source_lang;
@@ -20,6 +28,7 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper {
    	
    	function translateText($text) {
    		$langpair = $this->source_lang."|".$this->target_lang;
+   		$text = $this->escape_untranslatable_text($text);
    		$urlencoded_text = urlencode($text); 
    		$result = "";
    		$chunks = array();
@@ -34,6 +43,7 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper {
           		$ii++;
    			}  
    		}
+ 		$result = $this->remove_notranslate_tags($result);
 		return trim($result);
    	}
    	
@@ -79,5 +89,15 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper {
    		return $chunks;
    		
    	}
+   	
+   	function escape_untranslatable_text($text) {
+   		return preg_replace($this->wiki_markup, $this->escape_untranslatable_strings, $text);
+   	}
+
+	function remove_notranslate_tags($text){
+		$text = preg_replace($this->notranslate_tag_left,'$2',$text);
+   		$text = preg_replace($this->notranslate_tag_right,'$2',$text);
+   		return $text;
+	}
 }
 ?>

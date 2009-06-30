@@ -85,29 +85,39 @@ if (isset($_REQUEST["loginprefs"])) {
 	simple_set_toggle('feature_display_my_to_others');
 }
 
-if (isset($_REQUEST["auth_pear"])) {
+if (isset($_REQUEST["auth_ldap"])) {
 	check_ticket('admin-inc-login');
-	simple_set_toggle('auth_create_user_tiki');
-	simple_set_toggle('auth_create_user_auth');
-	simple_set_toggle('auth_skip_admin');
-	simple_set_value('auth_ldap_url');
-	simple_set_value('auth_pear_host');
-	simple_set_value('auth_pear_port');
+	simple_set_toggle('ldap_create_user_tiki');
+	simple_set_toggle('ldap_create_user_ldap');
+	simple_set_toggle('ldap_skip_admin');
+	simple_set_toggle('auth_ldap_permit_tiki_users');
+	simple_set_value('auth_ldap_host');
+	simple_set_value('auth_ldap_port');
+	simple_set_toggle('auth_ldap_debug');
+	simple_set_toggle('auth_ldap_ssl');
+	simple_set_toggle('auth_ldap_starttls');
+	simple_set_value('auth_ldap_type');
 	simple_set_value('auth_ldap_scope');
 	simple_set_value('auth_ldap_basedn');
 	simple_set_value('auth_ldap_userdn');
 	simple_set_value('auth_ldap_userattr');
-	simple_set_value('auth_ldap_url');
 	simple_set_value('auth_ldap_useroc');
+	simple_set_value('auth_ldap_nameattr');
+	simple_set_value('auth_ldap_emailattr');
+	simple_set_value('auth_ldap_countryattr');
+	simple_set_toggle('auth_ldap_syncuserattr');
+	simple_set_toggle('auth_ldap_syncgroupattr');
 	simple_set_value('auth_ldap_groupdn');
 	simple_set_value('auth_ldap_groupattr');
+	simple_set_value('auth_ldap_groupdescattr');
 	simple_set_value('auth_ldap_groupoc');
 	simple_set_value('auth_ldap_memberattr');
 	simple_set_toggle('auth_ldap_memberisdn');
 	simple_set_value('auth_ldap_adminuser');
 	simple_set_value('auth_ldap_adminpass');
 	simple_set_value('auth_ldap_version');
-	simple_set_value('auth_ldap_nameattr');
+	simple_set_value('auth_ldap_usergroupattr');
+	simple_set_value('auth_ldap_groupgroupattr');
 }
 
 if (isset($_REQUEST["auth_pam"])) {

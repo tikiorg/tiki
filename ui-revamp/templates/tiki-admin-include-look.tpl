@@ -423,7 +423,8 @@
 								</span></a>
 							</legend>
         			<select name="feature_left_column">
-								<option value="y" {if $prefs.feature_left_column eq 'y'}selected="selected"{/if}>{tr}always{/tr}</option>
+								<option value="y" {if $prefs.feature_left_column eq 'y'}selected="selected"{/if}>{tr}only if module{/tr}</option>
+								<option value="fixed" {if $prefs.feature_left_column eq 'fixed'}selected="selected"{/if}>{tr}always{/tr}</option>
 								<option value="user" {if $prefs.feature_left_column eq 'user'}selected="selected"{/if}>{tr}user decides{/tr}</option>
 								<option value="n" {if $prefs.feature_left_column eq 'n'}selected="selected"{/if}>{tr}never{/tr}</option>
 							</select>
@@ -503,7 +504,8 @@
 								</span></a>
 							</legend>
 							<select name="feature_right_column">
-								<option value="y" {if $prefs.feature_right_column eq 'y'}selected="selected"{/if}>{tr}always{/tr}</option>
+								<option value="y" {if $prefs.feature_right_column eq 'y'}selected="selected"{/if}>{tr}only if module{/tr}</option>
+								<option value="fixed" {if $prefs.feature_right_column eq 'fixed'}selected="selected"{/if}>{tr}always{/tr}</option>
 								<option value="user" {if $prefs.feature_right_column eq 'user'}selected="selected"{/if}>{tr}user decides{/tr}</option>
 								<option value="n" {if $prefs.feature_right_column eq 'n'}selected="selected"{/if}>{tr}never{/tr}</option>
 							</select>

@@ -17,6 +17,7 @@ class Tiki_Profile_Installer
 		'plugin_alias' => 'Tiki_Profile_InstallHandler_PluginAlias',
 		'webservice' => 'Tiki_Profile_InstallHandler_Webservice',
 		'webservice_template' => 'Tiki_Profile_InstallHandler_WebserviceTemplate',
+		'template' => 'Tiki_Profile_InstallHandler_Template',
 	);
 
 	private static $typeMap = array(
@@ -1305,6 +1306,58 @@ class Tiki_Profile_InstallHandler_WebserviceTemplate extends Tiki_Profile_Instal
 		$template->save();
 
 		return $template->name;
+	}
+} // }}}
+
+class Tiki_Profile_InstallHandler_Template extends Tiki_Profile_InstallHandler // {{{
+{
+	function getData()
+	{
+		if( $this->data )
+			return $this->data;
+
+		$defaults = array(
+			'sections' => array( 'wiki page' ),
+		);
+
+		$data = array_merge(
+			$defaults,
+			$this->obj->getData()
+		);
+
+		$data = Tiki_Profile::convertYesNo( $data );
+
+		return $this->data = $data;
+	}
+
+	function canInstall()
+	{
+		$data = $this->getData();
+		if( ! isset( $data['name'] ) )
+			return false;
+		if( ! isset( $data['content'] ) )
+			return false;
+		if( ! isset( $data['sections'] ) || ! is_array( $data['sections'] ) )
+			return false;
+
+		return true;
+	}
+
+	function _install()
+	{
+		global $templateslib;
+		if( ! $templateslib ) require_once 'lib/templates/templateslib.php';
+
+		$data = $this->getData();
+
+		$this->replaceReferences( $data );
+
+		$templateId = $templateslib->replace_template( null, $data['name'], $data['content'] );
+		foreach( $data['sections'] as $section ) {
+			$templateslib->add_template_to_section( $templateId, $section );
+		}
+
+		return $templateId;
 	}
 } // }}}
 
