@@ -30,7 +30,7 @@ require_once 'wslib.php';
  */
 class wsGuiController  
 {
-    function checkIfNewToWS()
+    public function checkIfNewToWS()
     {
 	global $prefs, $tikilib;
 	if ($prefs['new_to_ws'] == 'y')
@@ -42,6 +42,13 @@ class wsGuiController
 	    $tikilib->set_preference('ws_container', $id);
 	    $tikilib->set_preference('new_to_ws', 'n');
 	}
+    }
+
+    public function prueba()
+    {
+	global $tikilib;
+	$ws = new wslib();
+	$ws->exist_ws_child("Circuitos electricos 2", '0');
     }
 }
 

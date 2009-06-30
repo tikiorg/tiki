@@ -36,8 +36,24 @@ class wslib extends CategLib
 	parent::CategLib($dbTiki);
     }
 
-    function init_ws($name)
+    public function init_ws($name)
     {
 	return parent::add_category(0, $name, 'Workspaces Container');
+    }
+
+    public function add_ws($name, $parentWS)
+    {
+	global $prefs;
+	$wsContainerId = (int) $prefs['ws_container'];
+	return parent::add_category($wsContainerId, $name, $parentWS);
+    }
+
+    public function exist_ws_child($name, $parentWS)
+    {
+	global $prefs;
+	$query = "select `categId` from `tiki_categories` where `name`=? and `description`=? and `parentId`=?";
+	$wsContainerId = (int) $prefs['ws_container'];
+	$bindvars = array($name, $parentWS, $wsContainerId);
+	return $this->getOne($query, $bindvars);
     }
 }

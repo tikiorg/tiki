@@ -8,7 +8,6 @@ require_once ('lib/workspaces/wsController.php');
 
 $wsGui = new wsGuiController();
 $wsGui->checkIfNewToWS();
-
-
+$wsGui->prueba();
 
 ask_ticket('admin-inc-workspaces');
