@@ -1,25 +1,18 @@
 {* $Id$ *}
 
-{if $object_page_controls}
-	{include file='tiki-pagecontrols.tpl' controls=$object_page_controls}
-{else}
 {title help="Permission"}{tr}Assign permissions to {/tr}{tr}{$objectType|escape}{/tr}: {$objectName|escape}{/title}
 
 <div class="navbar">
   {button href="$referer" _text="{tr}Back{/tr}"}
+  {button href="tiki-list_object_permissions.php" _text="{tr}Object Permissions List{/tr}"}
 </div>
-{/if}
 
-{if $prefs.feature_tabs eq 'y'}
-  <div class="tabs" style="clear: both;">
-	  <span id="tab1" class="tabmark tabactive"><a href="javascript:tikitabs(1,3);">{tr}View Permissions{/tr}</a></span>
-	  <span id="tab2" class="tabmark tabinactive"><a href="javascript:tikitabs(2,3);">{tr}Edit Permissions{/tr}</a></span>
-  </div>
-{/if}
+{tabset name='tabs_objectpermissions'}
 
-<fieldset {if $prefs.feature_tabs eq 'y'}id="content1"  class="tabcontent" style="clear:both;display:block; margin-left: 0;"{/if}>
+{tab name='{tr}View Permissions{/tr}'}
+
 {if $prefs.feature_tabs neq 'y'}
-	<legend class="heading"><a href="#"><span>{tr}View Permissions{/tr}</span></a></legend>
+	<h2>{tr}View Permissions{/tr}</h2>
 {/if}
 {if $filegals_manager eq ''}
 {remarksbox type="warning" title="{tr}Warning{/tr}"}{tr}These permissions override any global permissions or category permissions affecting this object.{/tr}<br />
@@ -36,12 +29,13 @@
 {section  name=pg loop=$page_perms}
 <tr>
 <td class="{cycle advance=false}" title="{$page_perms[pg].permName}">{$page_perms[pg].permName|escape}<br /><i>{tr}{$page_perms[pg].permDesc|escape}{/tr}</i></td>
-<td class="{cycle advance=false}">{$page_perms[pg].groupName}</td>
+<td class="{cycle advance=false}">{if $page_perms[pg].groupName eq $prefs.trackerCreatorGroupName}<i>{tr}Creator Group{/tr}</i>{assign var=commentCreatorGroup value="y"}{else}{$page_perms[pg].groupName|escape}{/if}</td>
 </tr>
 {sectionelse}
 <tr><td colspan="4" class="odd">{if !empty($categ_perms)}{tr}No individual permissions, category permissions apply{/tr}{else}{tr}No individual permissions, category permissions apply{/tr}{/if}</td></tr>
 {/section}
 </table>
+{if isset($commentCreatorGroup) && $commentCreatorGroup eq 'y'}{remarksbox type="warning" title="{tr}Warning{/tr}"}{tr}Creator group perms apply only if no tiki_p_view_trackers{/tr}{/remarksbox}{/if}
 
 <br/>
 
@@ -69,12 +63,12 @@
 <tr><td colspan="3">{if empty($page_perms)}{tr}No category permissions; global permissions apply{/tr}{else}{tr}No category permissions; special permissions apply{/tr}{/if}</td></tr>
 {/section}
 </table>
-</fieldset>
+{/tab}
 
+{tab name='{tr}Edit Permissions{/tr}'}
 
-<fieldset {if $prefs.feature_tabs eq 'y'}id="content2"  class="tabcontent" style="clear:both;display:block; margin-left:0;"{/if}>
 {if $prefs.feature_tabs neq 'y'}
-	<legend class="heading"><a href="#"><span>{tr}Edit Permissions{/tr}</span></a></legend>
+	<h2>{tr}Edit Permissions{/tr}</h2>
 {/if}
 <form method="post" action="tiki-objectpermissions.php{if $filegals_manager neq ''}?filegals_manager={$filegals_manager|escape}{/if}">
 {if $filegals_manager eq ''}
@@ -85,7 +79,12 @@
 <h2>{tr}Current permissions for this object{/tr}</h2>
 <table class="normal">
 <tr>
-	<th colspan="2">{tr}Permissions{/tr}</th>
+	<th>
+		{if $page_perms}
+			{select_all checkbox_names='checked[]'}
+		{/if}
+	</th>
+	<th>{tr}Permissions{/tr}</th>
 	<th>{tr}Groups{/tr}</th>
 	<th style="width:20px">{tr}Action{/tr}</th>
 </tr>
@@ -99,27 +98,23 @@
 	{$page_perms[pg].permName|escape}<br /><i>{tr}{$page_perms[pg].permDesc|escape}{/tr}</i>
 </td>
 <td class="{cycle advance=false}">
-	{$page_perms[pg].groupName}
+	{if $page_perms[pg].groupName eq $prefs.trackerCreatorGroupName}<i>{tr}Creator Group{/tr}</i>{else}{$page_perms[pg].groupName|escape}{/if}
 </td>
 <td class="{cycle advance=true}"><a class="link" href="tiki-objectpermissions.php?referer={$referer|escape:"url"}&amp;action=remove&amp;objectName={$objectName}&amp;objectId={$objectId}&amp;objectType={$objectType}&amp;permType={$permType}&amp;page={$page|escape:"url"}&amp;perm={$page_perms[pg].permName}&amp;group={$page_perms[pg].groupName}{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}" title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a></td></tr>
 {sectionelse}
 <tr><td colspan="4" class="odd">{if !empty($categ_perms)}{tr}No individual permissions, category permissions apply{/tr}{else}{tr}No individual permissions, category permissions apply{/tr}{/if}</td></tr>
 {/section}
-{if $page_perms}
-<tr>
-	<td colspan="3">
-		<input type="checkbox" id="clickall" title="{tr}Select All{/tr}" onclick="switchCheckboxes(this.form,'checked[]',this.checked)"/>&nbsp;{tr}Select All{/tr}
-	</td>
-</tr>
-{/if}
 </table>
-{if $page_perms}<div>
-{tr}Perform action with checked:{/tr} 
-<input type="image" name="delsel" src='pics/icons/cross.png' alt='{tr}Delete{/tr}' title='{tr}Delete{/tr}' />
-{if isset($inStructure)}
-{tr}and also to all pages of the sub-structure:{/tr} <input name="removestructure" type="checkbox" />
+
+{if $page_perms}
+	<div>
+		{tr}Perform action with checked:{/tr} 
+		<input type="image" name="delsel" src='pics/icons/cross.png' alt='{tr}Delete{/tr}' title='{tr}Delete{/tr}' />
+		{if isset($inStructure)}
+			{tr}and also to all pages of the sub-structure:{/tr} <input name="removestructure" type="checkbox" />
+		{/if}
+	</div>
 {/if}
-</div>{/if}
 
 <br/>
 
@@ -131,7 +126,7 @@
 <input type="hidden" name="objectType" value="{$objectType|escape}" />
 <input type="hidden" name="objectId" value="{$objectId|escape}" />
 <input type="hidden" name="permType" value="{$permType|escape}" />
-<div class="button" style="text-align: center">
+<div class="input_submit_container" style="text-align: center">
 	<input type="submit" name="assign" value="{tr}Assign{/tr}" />
 </div>
 
@@ -163,9 +158,15 @@
 <tr class="{cycle advance=true}">
   <td class="{cycle advance=false}"><input type="checkbox" name="group[]" value="{$groups[grp].groupName|escape}" {if $groupName eq $groups[grp].groupName }checked{/if}/>&nbsp;{$groups[grp].groupName|escape}</td></tr>
 {/section}
+{if $group_tracker eq 'y'}
+<tr class="{cycle advance=true}"><td><hr /></td></tr>
+<tr class="{cycle advance=true}">
+  <td class="{cycle advance=false}"><input type="checkbox" name="group[]" value="{$prefs.trackerCreatorGroupName}" {if isset($groupName) and $grouName eq $prefs.trackerCreatorGroupName}checked{/if}/>&nbsp;<i>{tr}Creator Group{/tr}</i></td>
+</tr>
+{/if}
 </table></td></tr>
 </table>
-<div class="button" style="text-align: center">
+<div class="input_submit_container" style="text-align: center">
 	<input type="submit" name="assign" value="{tr}Assign{/tr}" />
 </div>
 {if ($objectType eq 'wiki' or $objectType eq 'wiki page') and !empty($inStructure)}
@@ -183,11 +184,7 @@
 {/section}
 </table>
 
-{* <a class="trailer" href="#" {popup sticky=true fullhtml="1" hauto=true vauto=true text=$smarty.capture.add_perm|escape:"javascript"|escape:"html"  trigger=onClick} >{tr}Add new Permissions{/tr}</a> *}
 </div>
 </form>
-</fieldset>
-
-{if $object_page_controls}
-	{include file='tiki-pagecontrols-footer.tpl' controls=$object_page_controls}
-{/if}
+{/tab}
+{/tabset}

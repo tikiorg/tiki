@@ -209,7 +209,9 @@ if (isset($_REQUEST["preview"])) {
 	} else {
 		$info["dataparsed"] = "<html><body>".(($info['wikiparse'] == 'y')?$tikilib->parse_data($info["data"], array('absolute_links' => true)):$info['data'])."</body></html>";
 	}
-	
+	if (!empty($_REQUEST['replyto'])) {
+		$smarty->assign('replyto', $_REQUEST['replyto']);
+	}
 	$smarty->assign('info', $info);
 }
 
@@ -249,6 +251,9 @@ if (isset($_REQUEST["save"])) {
 	$cant = count($subscribers);
 	$smarty->assign('subscribers', $cant);
 	$smarty->assign('info', $info);
+	if (!empty($_REQUEST['replyto'])) {
+		$smarty->assign('replyto', $_REQUEST['replyto']);
+	}
 }
 
 $smarty->assign('emited', 'n');
@@ -315,6 +320,9 @@ if (isset($_REQUEST["send"])) {
 			$userEmail = '';
 		}
 		$mail->setFrom($sender_email);
+		if (!empty($_REQUEST['replyto'])) {
+			$mail->setHeader("Reply-To", $_REQUEST['replyto']);
+		}
 		$mail->setSubject($_REQUEST["subject"]); // htmlMimeMail memorised the encoded subject
 		$languageEmail = ! $userEmail ? $prefs['site_language'] : $tikilib->get_user_preference($userEmail, "language", $prefs['site_language']);
 		if ($nl_info["unsubMsg"] == 'y') {
