@@ -53,15 +53,23 @@ class wslib extends CategLib
     // Remove a WS
 	function remove_ws ($ws_id)
 	{
-/*
+		global $prefs;
+		$wsContainerId = (int) $prefs['ws_container'];
 		$newParent = parent::get_category_description($ws_id);
-		// All its sub-workspaces will level up 
-		$query = "update `tiki_categories` set `description` = replace (`description`,?,?)";	
-		$levelup = query($query,array((string)$ws_id,$newParent);
-*/
-		$newParent = parent::get_category_description($ws_id);
-		parent::remove_category($ws_id);
-		return $newParent;
+		$query = "update `tiki_categories` set `description`=? where `description`=? and `parentId`=?";
+		$bindvars = array($newParent,$ws_id,$wsContainerId);
+	    // All its sub-workspaces will level up	
+		$result = $this->query($query,$bindvars);
+		
+		$objectType = 'ws';
+		$hashWS = md5($objectType . strtolower($ws_id));
+		$query = "delete from `users_objectpermissions` where `objectId` = ?"; 
+		$bindvars = array($hashWS);
+	    // Remove the WS permissions stored in objectpermissions
+	   	$result = $this->query($query,$bindvars);
+		
+	    // Remove the WS permissions stored in objectpermissions
+		return parent::remove_category($ws_id);
 	}
 	
     // Add an object to a WS
@@ -75,18 +83,8 @@ class wslib extends CategLib
 	{
 		return parent::remove_object_from_category($ws_ObjectId, $ws_id);
 	}
-	
-	/*
-	public function exist_ws_child($name, $parentWS)
-	{
-		global $prefs;
-		$query = "select `categId` from `tiki_categories` where `name`=? and `description`=? and `parentId`=?";
-		$wsContainerId = (int) $prefs['ws_container'];
-		$bindvars = array($name, $parentWS, $wsContainerId);
-		return $this->getOne($query, $bindvars);
-	}
-	*/
-	
+
+    // Get a WS Id
 	public function get_ws_id($name, $parentWS)
 	{
 		global $prefs;
@@ -97,10 +95,24 @@ class wslib extends CategLib
 	}
 	
     // Add a group into a WS
-	function add_ws_group ($ws_id,$groupname)
+	function add_ws_group ($ws_id,$groupName)
 	{
-		global $userlib;		
-		return $userslib->assign_object_permission($groupname,$ws_id,'Workspace','tiki_p_ws_view');
+		$objectType = 'ws';
+		$hashWS = md5($objectType . strtolower($ws_id));
+
+	    // If already exists, overwrite 
+		$query = "delete from `users_objectpermissions`
+		where `groupName` = ? and
+		`permName` = ? and
+		`objectId` = ?";
+		$result = $this->query($query, array($groupName, 'tiki_p_ws_view',$hashWS), -1, -1, false);
+
+		$query = "insert into `users_objectpermissions`(`groupName`,
+		`objectId`, `objectType`, `permName`)
+		values(?, ?, ?, ?)";		
+		$result = $this->query($query, array($groupName, $hashWS,'ws', 'tiki_p_ws_view'));
+		
+		return true;
 	}
     
 }

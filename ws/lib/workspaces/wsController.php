@@ -50,7 +50,7 @@ class wsGuiController
     {
 	global $tikilib;
 	$ws = new wslib();
-	$ws->exist_ws_child("Circuitos electricos 2", '0');
+	$ws->get_ws_id("Circuitos electricos 2", '0');
     }
 }
 
