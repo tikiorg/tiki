@@ -851,6 +851,8 @@ function display_howto() {
    HOWTO release Tiki
 --------------------------
 
+0/ When branching for 4.x, call it branches/4.x to be clearer than branches/3.0, because branches/4.x is indeed 4.1, 4.2, etc.
+
 1/ Preliminary manual tasks
    - run the tiki installer and correct anything obviously wrong
    - the "function update_readme_file" in this script will output to the top-level README:
