@@ -40,7 +40,10 @@ class wsGuiController
 	    $ws = new wslib();
 	    $id = $ws->init_ws($hash);
 	    $tikilib->set_preference('ws_container', $id);
+	    return true;
 	}
+	else
+	    return false;
     }
 
     public function prueba()

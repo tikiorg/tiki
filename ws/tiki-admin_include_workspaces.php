@@ -7,7 +7,10 @@ $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 require_once ('lib/workspaces/wsController.php');
 
 $wsGui = new wsGuiController();
-$wsGui->check_if_new_to_ws();
-$wsGui->prueba();
+
+//if ($wsGui->check_if_new_to_ws())
+//    $smarty->assign("welcome", true);
+    
+//$wsGui->prueba();
 
 ask_ticket('admin-inc-workspaces');
