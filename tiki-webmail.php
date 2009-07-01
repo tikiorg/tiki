@@ -155,9 +155,9 @@ if ($_REQUEST["locSection"] == 'read') {
 				$bod = $bodies[$i]['body'];
 				
 				// Clean the string using HTML Purifier
-				require_once('lib/htmlpurifier/HTMLPurifier.auto.php');
-				require_once('lib/htmlpurifier/HTMLPurifier.func.php');
-				//require_once('lib/htmlpurifier_tiki/HTMLPurifier.tiki.php');
+				//require_once('lib/htmlpurifier/HTMLPurifier.auto.php');
+				//require_once('lib/htmlpurifier/HTMLPurifier.func.php');
+				require_once('lib/htmlpurifier_tiki/HTMLPurifier.tiki.php');
 				$bod = HTMLPurifier($bod);
 				
 				if (preg_match_all('/<[\/]?body[^>]*>/i', $bod, $m, PREG_OFFSET_CAPTURE) && count($m) > 0 && count($m[0]) > 1) {
