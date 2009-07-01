@@ -2,18 +2,17 @@
 
 {*if $welcome*}
 {remarksbox type="info" title="{tr}Welcome{/tr}"}
-{tr}You have enabled succesfully Workspaces in TikiWiki. This feature is
-in heavily development, so don't expect to work properly. If you want to
-get more info, please go to {/tr} <a class="rbox-link"
-href="http://dev.tikiwiki.org/workspace">{tr}Workspaces page{/tr}</a>.
+{tr}You have succesfully enabled  Workspaces in TikiWiki. This feature under development, so please don't expect it works properly. If you want to
+get more info go to the {/tr} <a class="rbox-link"
+href="http://dev.tikiwiki.org/workspace">{tr}Workspaces wiki page{/tr}</a>.
 <hr />
-{tr}Things you can do currently: <br />
+{tr}Things you can currently do: <br />
 <ul>
-<li>In the Test Tab you can view the Workspaces and its items.</li>
+<li>In the Test Tab you can view the Workspaces and their items.</li>
 <li>In the Video Tab you can view a few screencast explanining different things related to Workspaces (soon).</li>
-<li>In the Workspaces Dev Tools Tab, you can initiate (and other stuff) a set of Workspaces for quick look.</li>
+<li>In the Workspaces Dev Tools Tab, you can initiate (and other stuff) a set of Workspaces.</li>
 </ul>
-<strong>All sections listed here, are only during the development phase!</strong>{/tr}
+<strong>All these sections listed here will be present only during the development!</strong>{/tr}
 {/remarksbox}
 {*/if*}
 
@@ -49,7 +48,7 @@ href="http://dev.tikiwiki.org/workspace">{tr}Workspaces page{/tr}</a>.
 </fieldset>
 <fieldset><legend>{tr}Script Creator{/tr}</legend>
 <div class="adminoptionbox">
-<input type="radio" id="wscreate" name="wsdevtools" value="create" checked="checked" /><label for="wscreate">{tr}Make a set of Workspaces, and some items inside it{/tr}.</label>
+<input type="radio" id="wscreate" name="wsdevtools" value="create" checked="checked" /><label for="wscreate">{tr}Create a set of Workspaces, and some items whithin them{/tr}.</label>
 </div>
 <div class="adminoptionbox">
 <input type="radio" id="wsdelete" name="wsdevtools" value="delete" /><label for="wsdelete">{tr}Delete all Workspaces created before{/tr}.</label>
