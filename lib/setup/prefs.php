@@ -1108,6 +1108,8 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'center_shadow_end' => '',
 		'footer_shadow_start' => '',
 		'footer_shadow_end' => '',
+		'box_shadow_start' => '',
+		'box_shadow_end' => '',
 
 		// mods
 		'feature_mods_provider' => 'n',
