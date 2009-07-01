@@ -1583,6 +1583,9 @@ class TikiLib extends TikiDB {
 			}
 			$ret[] = "Registered";
 			$ret[] = "Anonymous";
+			if($_SESSION["groups_are_emulated"]=="y"){
+				$ret = array_intersect($ret,unserialize($_SESSION['groups_emulated']));
+			}
 			$ret = array_unique($ret);
 			$this->usergroups_cache[$user] = $ret;
 			return $ret;
