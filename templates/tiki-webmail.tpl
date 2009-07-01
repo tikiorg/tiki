@@ -292,14 +292,6 @@
 
 
 {if $locSection eq 'mailbox'}
-	{if $autoRefresh neq 0}
-		<script type="text/JavaScript">
-			<!--
-			setTimeout("location.reload(true);",{$autoRefresh}*1000);
-			//   -->
-		</script>
-	{/if}
-
 	<table width="100%">
 		<tr>
 			<td>
@@ -643,10 +635,14 @@
 						</td>
 					</tr>
 					<tr class="formcolor">
-						<td>{tr}CC{/tr}</td>
+						<td>
+							<a title="{tr}Select from address book{/tr}" class="link" href="#" onclick="javascript:window.open('tiki-webmail_contacts.php?element=cc','','menubar=no,width=452,height=550');">{tr}CC{/tr}</a>:
+						</td>
 						<td>
 							<input id="cc" type="text" name="cc" value="{$cc|escape}" /></td>
-						<td>{tr}BCC{/tr}</td>
+						<td>
+							<a title="{tr}Select from address book{/tr}" class="link" href="#" onclick="javascript:window.open('tiki-webmail_contacts.php?element=bcc','','menubar=no,width=452,height=550');">{tr}BCC{/tr}</a>:
+						</td>
 						<td>
 							<input type="text" name="bcc" value="{$bcc}" id="bcc" />
 						</td>
