@@ -1,24 +1,21 @@
 <?php
+/**
+ * wslib.php - TikiWiki CMS/GroupWare
+ *
+ * This library enable the basic management of workspaces (WS)
+ * 
+ * @package	lib
+ * @author	Benjamin Palacios Gonzalo (mangapower) <mangapowerx@gmail.com>
+ * @license	http://www.opensource.org/licenses/lgpl-2.1.php
+ */
+
+//Controlling Access
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
 
-/**
- * TikiWiki CMS/GroupWare
- *
- * LICENSE
- *
- * This source file is subject to the LGPL license that is bundled
- * with this package in the file license.txt. If your distribuition 
- * doesn't have the license file, please go to http://license.com to see 
- * the complete license of the software.
- *
- * @category   	workspaces
- * @package   	lib
- * @author	Benjamin Palacios (mangapower) <mangapowerx@gmail.com>
- */
-
+//Rest of Imports
 include_once 'lib/categories/categlib.php';
 
 /**
@@ -42,7 +39,7 @@ class wslib extends CategLib
 		return parent::add_category(0, $name, 'Workspaces Container');
 	}
     
-    // Get the name and its parent WS and create a new WS (NOTE: parentID = WSContainerID)
+    // Create a new WS (NOTE: parentID = WSContainerID)
 	function add_ws ($name, $parentWS)
 	{
 		global $prefs;
