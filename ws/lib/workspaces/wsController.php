@@ -1,34 +1,28 @@
 <?php
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
-}
-
-require_once 'wslib.php';
-
 /**
- * TikiWiki CMS/GroupWare
+ * wsController.php - TikiWiki CMS/GroupWare
  *
- * LICENSE
- *
- * This source file is subject to the LGPL license that is bundled
- * with this package in the file license.txt. If your distribuition 
- * doesn't have the license file, please go to http://license.com to see 
- * the complete license of the software.
- *
- * @category   	workspaces
+ * This file will manage all actions can perform the user in 
+ * tiki-admin-include-workspaces.php
  * @package   	lib
  * @author	Aldo B.G (axold) <axold07@gmail.com>
+ * @license	http://www.opensource.org/licenses/lgpl-2.1.php
  */
+
+//Controlling access
+require_once 'tiki-setup.php';
+$access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
+
+//Rest of imports
+require_once 'wslib.php';
 
 /**
  * wsGuiParser
  *
- * @category	TikiWiki
- * @package	lib/workspaces
- * @version	$Id
+ * @subpackage	workspaces
+ * @version	0.1
  */
-class wsGuiController  
+class ws_gui_controller  
 {
     public function check_if_new_to_ws()
     {
@@ -44,6 +38,10 @@ class wsGuiController
 	}
 	else
 	    return false;
+    }
+
+    public function create_demo()
+    {
     }
 }
 

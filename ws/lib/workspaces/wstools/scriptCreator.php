@@ -27,7 +27,7 @@ $ws = new wslib();
 global $prefs;
 $wsContainerId = (int) $prefs['ws_container'];
 
-if (isset($_REQUEST['action']) && ($_REQUEST['action'] == init))
+if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'init'))
 {
 	if (!$objectlib->get_object_id('wiki page','Wiki1'))
 		$objectlib->add_object('wiki page','Wiki1');
@@ -44,7 +44,7 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == init))
 	if ($userlib->add_group('G2'));
 }
 
-if (isset($_REQUEST['action']) && ($_REQUEST['action'] == create))
+if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'create'))
 {
 	//Creating new WS
 	if  (!$ws->get_ws_id('WS1',$wsContainerId))
@@ -77,9 +77,11 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == create))
 	$ws->add_ws_object($id3,'Wiki3','wiki_page');
 	$ws->add_ws_object($id4,'Wiki4','wiki_page');
 	$ws->add_ws_object($id5,'Wiki5','wiki_page');
+
+	header("Location: ./../../../tiki-admin.php?page=workspaces");
 }
 	
-if (isset($_REQUEST['action']) && ($_REQUEST['action'] == destroy))
+if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'destroy'))
 {
 	//Getting existing WS id
 	$id1= $ws->get_ws_id('WS1',$wsContainerId);
@@ -94,9 +96,11 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == destroy))
 	$ws->remove_ws($id3);
 	$ws->remove_ws($id4);
 	$ws->remove_ws($id5);
+
+	header("Location: ./../../../tiki-admin.php?page=workspaces");
 }
 
-if ( isset($_REQUEST['action'])  &&  ($_REQUEST['action'] == listgroups))
+if ( isset($_REQUEST['action'])  &&  ($_REQUEST['action'] == 'listgroups'))
 {
 	$id = $ws->get_ws_id('WS3',$wsContainerId);
 	$listg = $ws->get_ws_groups($id);
