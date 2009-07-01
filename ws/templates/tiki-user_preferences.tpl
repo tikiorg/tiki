@@ -50,7 +50,7 @@
         {tr}Real Name{/tr}:
       </td>
       <td class="{cycle}">
-        {if $prefs.auth_ldap_nameattr eq '' || $prefs.auth_method ne 'auth'}
+        {if $prefs.auth_ldap_nameattr eq '' || $prefs.auth_method ne 'ldap'}
           <input type="text" name="realName" value="{$user_prefs.realName|escape}" />{else}{$user_prefs.realName}
         {/if}
       </td>

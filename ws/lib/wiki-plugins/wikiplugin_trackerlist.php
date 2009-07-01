@@ -463,6 +463,9 @@ function wikiplugin_trackerlist($data, $params) {
 		} elseif ($exactvalue == '#user') {
 			$exactvalue = $user;
 		}
+		if (!empty($_REQUEST['itemId'])) {
+			$itemId = $_REQUEST['itemId'];
+		}
 
 		if (isset($itemId)) {
 			if (strstr($itemId, ':'))
