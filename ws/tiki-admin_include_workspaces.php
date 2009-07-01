@@ -13,7 +13,7 @@ $ws_gui->check_if_new_to_ws();
 if ( isset($_REQUEST['wsoptions']) )
 {
     if ( (isset($_REQUEST['wsdevtools'])) && ($_REQUEST['wsdevtools'] == 'create') )
-	header("Location: ./lib/workspaces/wstools/scriptCreator.php?action=create");
+	header("Location: ./lib/workspaces/wstools/scriptCreator.php?action=init");
     else
 	header("Location: ./lib/workspaces/wstools/scriptCreator.php?action=destroy");
 }

@@ -42,6 +42,8 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'init'))
 
 	if ($userlib->add_group('G1'));
 	if ($userlib->add_group('G2'));
+
+	header("Location: ./scriptCreator.php?action=create");
 }
 
 if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'create'))
@@ -50,14 +52,16 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'create'))
 	if  (!$ws->get_ws_id('WS1',$wsContainerId))
 		$id1 = $ws->add_ws('WS1',$wsContainerId);
 	 if (!$ws->get_ws_id('WS2',$wsContainerId))
-		$id2 = $ws->add_ws('WS2',$wsContainerId);
+		$ws->add_ws('WS2',$wsContainerId);
 	if  (!$ws->get_ws_id('WS3',$wsContainerId))
-		$id3 = $ws->add_ws('WS3',$wsContainerId);
+	    $id3 = $ws->add_ws('WS3',$wsContainerId);
+
+	$id2 = $ws->get_ws_id('WS2',$wsContainerId);
 
 	//Creating new sub-WS under WS2
-	if  (!$ws->get_ws_id('WS21',$wsContainerId))
+	if  (!$ws->get_ws_id('WS21',$id2))
 		$id4 = $ws->add_ws('WS21',$id2);
-	if  (!$ws->get_ws_id('WS22',$wsContainerId))
+	if  (!$ws->get_ws_id('WS22',$id2))
 		$id5 = $ws->add_ws('WS22',$id2);
 	
 	//Adding G1 in WS1 and WS3
