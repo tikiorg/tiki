@@ -53,7 +53,8 @@ class wslib extends CategLib
 		global $prefs;
 		$wsContainerId = (int) $prefs['ws_container'];
 		$newParent = parent::get_category_description($ws_id);
-		$query = "update `tiki_categories` set `description`=? where `description`=? and `parentId`=?";
+		$query = "update `tiki_categories` set `description`=? where 
+		`description`=? and `parentId`=?";
 		$bindvars = array($newParent,$ws_id,$wsContainerId);
 	    // All its sub-workspaces will level up	
 		$result = $this->query($query,$bindvars);
@@ -85,7 +86,8 @@ class wslib extends CategLib
 	public function get_ws_id($name, $parentWS)
 	{
 		global $prefs;
-		$query = "select `categId` from `tiki_categories` where `name`=? and `description`=? and `parentId`=?";
+		$query = "select `categId` from `tiki_categories` where `name`=? and 
+		`description`=? and `parentId`=?";
 		$wsContainerId = (int) $prefs['ws_container'];
 		$bindvars = array($name, $parentWS, $wsContainerId);
 		return $this->getOne($query, $bindvars);
@@ -111,5 +113,18 @@ class wslib extends CategLib
 		
 		return true;
 	}
-    
+	
+    // Get the groups that have access in a WS
+    	function get_ws_groups ($ws_id)
+    	{
+    	
+    		$objectType = 'ws';
+		$hashWS = md5($objectType . strtolower($ws_id));
+		
+		$query = "select `groupName` from `users_objectpermissions` where 
+		`objectId`=? and `objectType`=? and `permName`=?";
+		$bindvars = array($hashWS, 'ws','tiki_p_ws_view');
+		
+		return $this->query($query,$bindvars);    	
+    	}
 }

@@ -22,6 +22,11 @@ include_once('lib/workspaces/wslib.php');
 include_once('lib/objectlib.php');
 include_once('lib/userslib.php');
 
+$ws = new wslib();
+
+global $prefs;
+$wsContainerId = (int) $prefs['ws_container'];
+
 if (isset($_REQUEST['action']) && ($_REQUEST['action'] == init))
 {
 	if (!$objectlib->get_object_id('wiki page','Wiki1'))
@@ -34,21 +39,13 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == init))
 		$objectlib->add_object('wiki page','Wiki4');
 	if (!$objectlib->get_object_id('wiki page','Wiki5'))
 		$objectlib->add_object('wiki page','Wiki5');
-	}
 
 	if ($userlib->add_group('G1'));
 	if ($userlib->add_group('G2'));
-	
-	return true;
 }
 
 if (isset($_REQUEST['action']) && ($_REQUEST['action'] == create))
 {
-	$ws = new wslib();
-	
-	global $prefs;
-	$wsContainerId = (int) $prefs['ws_container'];
-	
 	//Creating new WS
 	if  (!$ws->get_ws_id('WS1',$wsContainerId))
 		$id1 = $ws->add_ws('WS1',$wsContainerId);
@@ -80,17 +77,10 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == create))
 	$ws->add_ws_object($id3,'Wiki3','wiki_page');
 	$ws->add_ws_object($id4,'Wiki4','wiki_page');
 	$ws->add_ws_object($id5,'Wiki5','wiki_page');
-	
-	return true;
 }
 	
 if (isset($_REQUEST['action']) && ($_REQUEST['action'] == destroy))
 {
-	$ws = new wslib();
-	
-	global $prefs;
-	$wsContainerId = (int) $prefs['ws_container'];
-	
 	//Getting existing WS id
 	$id1= $ws->get_ws_id('WS1',$wsContainerId);
 	$id2= $ws->get_ws_id('WS2',$wsContainerId);
@@ -104,6 +94,11 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == destroy))
 	$ws->remove_ws($id3);
 	$ws->remove_ws($id4);
 	$ws->remove_ws($id5);
-	
-	return true;
+}
+
+if ( isset($_REQUEST['action'])  &&  ($_REQUEST['action'] == listgroups))
+{
+	$id = $ws->get_ws_id('WS3',$wsContainerId);
+	$listg = $ws->get_ws_groups($id);
+	echo ($listg);
 }
