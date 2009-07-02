@@ -10,9 +10,10 @@
  */
 
 //Controlling Access
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false)
+{
+	header("location: index.php");
+	exit;
 }
 
 //Rest of Imports
@@ -136,6 +137,65 @@ class wslib extends CategLib
 		
 		return $this->query($query,$bindvars); 	
 	}
+	
+	function list_all_ws($offset, $maxRecords, $sort_mode = 'name_asc', $find, $type, $objid)
+	{
+		$cats = $this->get_object_categories($type, $objid);
+
+		global $prefs;
+		if ($idws = $prefs['ws_container'] )
+		if ($find)
+		{
+			$findesc = '%' . $find . '%';
+			$bindvals=array($findesc);
+			$mid = " where `name` like ? and `parentId`=$idws";
+		}
+		else 
+		{
+      			$bindvals=array();
+			$mid = "where `parentId`=$idws";
+		}
+		
+		$query = "select * from `tiki_categories` $mid";// order by ".$this->convert_sortmode($sort_mode);
+		$query_cant = "select count(*) from `tiki_categories` $mid ";
+		$result = $this->query($query,$bindvals,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvals);
+		$ret = array();
+		
+		while ($res = $result->fetchRow()) 
+		{
+			if (!empty($cats) && in_array($res["categId"], $cats)) 
+				$res["incat"] = 'y';
+			else
+				$res["incat"] = 'n';
+      
+			$catpath = $this->get_category_path($res["categId"]);
+			$tepath = array();	
+			foreach ($catpath as $cat)
+				$tepath[] = $cat['name'];
+			$categpath = implode("::",$tepath);
+			$categpathforsort = implode("!!",$tepath); // needed to prevent cat::subcat to be sorted after cat2::subcat 
+			$res["categpath"] = $categpath;
+			$res["tepath"] = $tepath;
+			$res["deep"] = count($tepath);
+			$res['name'] = $this->get_category_name($res['categId']);
+			global $userlib;
+			if ($userlib->object_has_one_permission($res['categId'], 'category')) 
+				$res['has_perm'] = 'y';
+			 else 
+				$res['has_perm'] = 'n';
+			$ret["$categpathforsort"] = $res;
+		}
+
+		ksort($ret);
+		
+		$retval = array();
+		$retval["data"] = array_values($ret);
+		$retval["cant"] = $cant;
+		return $retval;
+	}
+	
+
 }
 
 global $dbTiki;

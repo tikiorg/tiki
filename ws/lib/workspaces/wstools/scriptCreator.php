@@ -123,6 +123,9 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'destroy'))
 if ( isset($_REQUEST['action'])  &&  ($_REQUEST['action'] == 'test'))
 {
 
-
-
+$catree = $wslib->list_all_ws(0,-1, 'name_asc','','',0);
+foreach ($catree['data'] as $key=>$c) {
+		echo($catree['data'][$key]['categId']); print "\n";
+		echo($catree['data'][$key]['name']); print "\n";
+	}
 }
