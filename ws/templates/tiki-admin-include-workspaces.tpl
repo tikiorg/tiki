@@ -35,6 +35,15 @@ href="http://dev.tikiwiki.org/workspace">{tr}Workspaces wiki page{/tr}</a>.
 </fieldset>
 <fieldset><legend>{tr}Inspector{/tr}</legend>
 <div class="adminoptionbox">
+{if $catree}
+
+<ul>
+{foreach from=$catree.data key=k item=v}
+   <li>{$catree.data.$k.categId} - {$catree.data.$k.name}</li>
+{/foreach}
+</ul>
+
+{/if}
 </div>
 </fieldset>
 {/tab}
