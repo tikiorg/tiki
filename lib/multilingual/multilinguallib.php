@@ -8,6 +8,9 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 class MultilingualLib extends TikiLib {
 	/** brief add a translation
 	  */
+	  
+	public $mtEnabled = 'y';
+	  
 	function MultilingualLib($db) {
 		parent::TikiLib($db);
 	}
@@ -818,7 +821,10 @@ class MultilingualLib extends TikiLib {
        }
        return null;
    }
-   
+
+	function setMachineTranslationFeatureTo($on_or_off) {
+		$this->mtEnabled = $on_or_off;
+	}   
 }
 
 global $dbTiki;
