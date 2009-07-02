@@ -18,11 +18,9 @@ require_once('../../../tiki-setup.php');
  */
 
 
-include_once('lib/workspaces/wslib.php');
 include_once('lib/objectlib.php');
 include_once('lib/userslib.php');
-
-$ws = new wslib();
+include_once('lib/workspaces/wslib.php');
 
 global $prefs;
 $wsContainerId = (int) $prefs['ws_container'];
@@ -49,38 +47,38 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'init'))
 if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'create'))
 {
 	//Creating new WS
-	if  (!$ws->get_ws_id('WS1',$wsContainerId))
-		$id1 = $ws->add_ws('WS1',$wsContainerId);
-	 if (!$ws->get_ws_id('WS2',$wsContainerId))
-		$ws->add_ws('WS2',$wsContainerId);
-	if  (!$ws->get_ws_id('WS3',$wsContainerId))
-	    $id3 = $ws->add_ws('WS3',$wsContainerId);
+	if  (!$wslib->get_ws_id('WS1',$wsContainerId))
+		$id1 = $wslib->add_ws('WS1',$wsContainerId);
+	 if (!$wslib->get_ws_id('WS2',$wsContainerId))
+		$wslib->add_ws('WS2',$wsContainerId);
+	if  (!$wslib->get_ws_id('WS3',$wsContainerId))
+	    $id3 = $wslib->add_ws('WS3',$wsContainerId);
 
-	$id2 = $ws->get_ws_id('WS2',$wsContainerId);
+	$id2 = $wslib->get_ws_id('WS2',$wsContainerId);
 
 	//Creating new sub-WS under WS2
-	if  (!$ws->get_ws_id('WS21',$id2))
-		$id4 = $ws->add_ws('WS21',$id2);
-	if  (!$ws->get_ws_id('WS22',$id2))
-		$id5 = $ws->add_ws('WS22',$id2);
+	if  (!$wslib->get_ws_id('WS21',$id2))
+		$id4 = $wslib->add_ws('WS21',$id2);
+	if  (!$wslib->get_ws_id('WS22',$id2))
+		$id5 = $wslib->add_ws('WS22',$id2);
 	
 	//Adding G1 in WS1 and WS3
-	$ws->add_ws_group($id1,'G1');
-	$ws->add_ws_group($id3,'G1');
+	$wslib->add_ws_group($id1,'G1');
+	$wslib->add_ws_group($id3,'G1');
 	
 	//Adding G2 in WS2, WS3, WS21 and WS22
-	$ws->add_ws_group($id2,'G2');
-	$ws->add_ws_group($id3,'G2');
-	$ws->add_ws_group($id4,'G2');
-	$ws->add_ws_group($id5,'G2');
+	$wslib->add_ws_group($id2,'G2');
+	$wslib->add_ws_group($id3,'G2');
+	$wslib->add_ws_group($id4,'G2');
+	$wslib->add_ws_group($id5,'G2');
 	
 	//Adding Resources in WS
-	$ws->add_ws_object($id1,'Wiki1','wiki_page');
-	$ws->add_ws_object($id2,'Wiki2','wiki_page');
-	$ws->add_ws_object($id3,'Wiki2','wiki_page');
-	$ws->add_ws_object($id3,'Wiki3','wiki_page');
-	$ws->add_ws_object($id4,'Wiki4','wiki_page');
-	$ws->add_ws_object($id5,'Wiki5','wiki_page');
+	$wslib->add_ws_object($id1,'Wiki1','wiki_page');
+	$wslib->add_ws_object($id2,'Wiki2','wiki_page');
+	$wslib->add_ws_object($id3,'Wiki2','wiki_page');
+	$wslib->add_ws_object($id3,'Wiki3','wiki_page');
+	$wslib->add_ws_object($id4,'Wiki4','wiki_page');
+	$wslib->add_ws_object($id5,'Wiki5','wiki_page');
 
 	header("Location: ./../../../tiki-admin.php?page=workspaces");
 }
@@ -88,25 +86,25 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'create'))
 if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'destroy'))
 {
 	//Getting existing WS id
-	$id1= $ws->get_ws_id('WS1',$wsContainerId);
-	$id2= $ws->get_ws_id('WS2',$wsContainerId);
-	$id3= $ws->get_ws_id('WS3',$wsContainerId);
-	$id4= $ws->get_ws_id('WS21',$id2);
-	$id5= $ws->get_ws_id('WS22',$id2);
+	$id1= $wslib->get_ws_id('WS1',$wsContainerId);
+	$id2= $wslib->get_ws_id('WS2',$wsContainerId);
+	$id3= $wslib->get_ws_id('WS3',$wsContainerId);
+	$id4= $wslib->get_ws_id('WS21',$id2);
+	$id5= $wslib->get_ws_id('WS22',$id2);
 	
 	//Removing WS
-	$ws->remove_ws($id1);
-	$ws->remove_ws($id2);
-	$ws->remove_ws($id3);
-	$ws->remove_ws($id4);
-	$ws->remove_ws($id5);
+	$wslib->remove_ws($id1);
+	$wslib->remove_ws($id2);
+	$wslib->remove_ws($id3);
+	$wslib->remove_ws($id4);
+	$wslib->remove_ws($id5);
 
 	header("Location: ./../../../tiki-admin.php?page=workspaces");
 }
 
-if ( isset($_REQUEST['action'])  &&  ($_REQUEST['action'] == 'listgroups'))
+if ( isset($_REQUEST['action'])  &&  ($_REQUEST['action'] == 'test'))
 {
-	$id = $ws->get_ws_id('WS3',$wsContainerId);
-	$listg = $ws->get_ws_groups($id);
-	echo ($listg);
+
+
+
 }

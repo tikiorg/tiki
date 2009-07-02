@@ -137,3 +137,6 @@ class wslib extends CategLib
 		return $this->query($query,$bindvars); 	
 	}
 }
+
+global $dbTiki;
+$wslib = new wslib( );
