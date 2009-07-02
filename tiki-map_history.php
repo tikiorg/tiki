@@ -11,16 +11,16 @@ require_once ('tiki-setup.php');
 include_once ('lib/map/maplib.php');
 
 if(!isset($prefs['feature_maps']) or $prefs['feature_maps'] != 'y') {
-  $smarty->assign('msg',tra("Feature disabled"));
-  $smarty->display("error.tpl");
-  die;
+	$smarty->assign('msg',tra("Feature disabled"));
+	$smarty->display("error.tpl");
+	die;
 }
 
 if($tiki_p_map_view != 'y') {
-  $smarty->assign('errortype', 401);
-  $smarty->assign('msg',tra("You do not have permissions to view the maps"));
-  $smarty->display("error.tpl");
-  die;
+	$smarty->assign('errortype', 401);
+	$smarty->assign('msg',tra("You do not have permissions to view the maps"));
+	$smarty->display("error.tpl");
+	die;
 }
 
 // Validate to prevent editing any file
@@ -31,9 +31,9 @@ if (isset($_REQUEST["mapfile"])) {
 		$smarty->display('error.tpl');
 		die;
 	}
-  $mapfile = $_REQUEST['mapfile'];
+	$mapfile = $_REQUEST['mapfile'];
 } else {
-  $mapfile = $prefs['default_map'];
+	$mapfile = $prefs['default_map'];
 }
 
 if (!isset($prefs['map_path']) or !$prefs['map_path']) {
