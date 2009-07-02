@@ -64,3 +64,4 @@ class PEAR_Task_Replace_rw extends PEAR_Task_Replace
         return $this->_params;
     }
 }
+?>

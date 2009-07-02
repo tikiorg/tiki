@@ -11,9 +11,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  * - css = use suckerfish menu
  * - type = vert|horiz
  * - id = menu ID (mandatory)
- * - tr = y|n , n means no option translation (default y)
- * - menu_cookie=y|n (default y)
- */
+ * - tr = y|n , n means no option translation (default y) */
 function smarty_function_menu($params, &$smarty)
 {
 	global $tikilib, $user, $headerlib, $prefs;
@@ -29,10 +27,6 @@ function smarty_function_menu($params, &$smarty)
 		$translate = 'y';
 	}
 	$smarty->assign_by_ref('translate', $translate);
-	if (empty($menu_cookie)) {
-		$menu_cookie = 'y';
-	}
-	$smarty->assign_by_ref('menu_cookie', $menu_cookie);
 	if (isset($css) and $prefs['feature_cssmenus'] == 'y') {
 		static $idCssmenu = 0;
 		if (isset($type) && ($type == 'vert' || $type == 'horiz')) {
@@ -57,21 +51,10 @@ function smarty_function_menu($params, &$smarty)
 	global $cachelib; include_once('lib/cache/cachelib.php');
 	$cacheName = isset($prefs['mylevel']) ? $prefs['mylevel'] : 0;
 	$cacheName .= '_'.$prefs['language'].'_'.md5(implode("\n", $tikilib->get_user_groups($user)));
-	if (isset($structureId)) {
-		$cacheType = 'structure_'.$structureId;
-	} else {
-		$cacheType = 'menu_'.$id.'_';
-	}
+	$cacheType = 'menu_'.$id.'_';
 
 	if ( $cachelib->isCached($cacheName, $cacheType) ) {
 		list($menu_info, $channels) = unserialize($cachelib->getCached($cacheName, $cacheType));
-	} elseif (isset($structureId)) {
-		global $structlib; include_once('lib/structures/structlib.php');
-		$channels = $structlib->build_subtree_toc($structureId);
-		$structure_info =  $structlib->s_get_page_info($structureId);
-		$channels = $structlib->to_menu($channels, $structure_info['pageName']);
-		$menu_info = array('type'=>'d', 'menuId'=> "s_$structureId");
-		//echo '<pre>'; print_r($channels); echo '</pre>';
 	} else {
 		$menu_info = $tikilib->get_menu($id);
 		$channels = $tikilib->list_menu_options($id,0,-1,'position_asc','','',isset($prefs['mylevel'])?$prefs['mylevel']:0);

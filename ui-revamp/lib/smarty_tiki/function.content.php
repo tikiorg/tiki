@@ -21,3 +21,5 @@ function smarty_function_content($params, &$smarty) {
 
   return $data;
 }
+
+?>

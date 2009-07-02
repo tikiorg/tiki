@@ -681,3 +681,5 @@ class XML_RPC_Server
  * c-hanging-comment-ender-p: nil
  * End:
  */
+
+?>

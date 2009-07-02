@@ -3,15 +3,15 @@
  * Tracker Library
  *
  * $Id$
- * \brief Functions to support accessing and processing of the Trackers.
+ * Functions to support accessing and process the Trackers.
  *
- * @package		Tiki
- * @subpackage		Trackers
+ * @package		TikiWiki
+ * @subpackage	Trackers
  * @author		Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
- * @copyright		Copyright (c) 2002-2009, All Rights Reserved.
- * 			See copyright.txt for details and a complete list of authors.
+ * @copyright	Copyright (c) 2002-2008  All Rights Reserved.
+ * 				See copyright.txt for details and a complete list of authors.
  * @license		LGPL - See license.txt for details.
- * @version		SVN $Rev$
+ * @version		SVN: $Rev$
  * @filesource
  * @link		http://dev.tikiwiki.org/Trackers
  * @since		Always
@@ -236,8 +236,8 @@ class TrackerLib extends TikiLib {
 			foreach ($watchers as $w) {
 				$mail = new TikiMail($w['user']);
 				$mail->setHeader("From", $prefs['sender_email']);
-				$mail->setSubject($smarty->fetchLang($w['language'], 'mail/tracker_changed_notification_subject.tpl'));
-				$mail->setText($smarty->fetchLang($w['language'], 'mail/tracker_changed_notification.tpl'));
+				$mail->setSubject($smarty->fetchLang($w['lang'], 'mail/tracker_changed_notification_subject.tpl'));
+				$mail->setText($smarty->fetchLang($w['lang'], 'mail/tracker_changed_notification.tpl'));
 				$mail->send(array($w['email']));
 			}
 		}
@@ -290,8 +290,8 @@ class TrackerLib extends TikiLib {
 			foreach ($watchers as $w) {
 				$mail = new TikiMail($w['user']);
 				$mail->setHeader("From", $prefs['sender_email']);
-				$mail->setSubject($smarty->fetchLang($w['language'], 'mail/tracker_changed_notification_subject.tpl'));
-				$mail->setText($smarty->fetchLang($w['language'], 'mail/tracker_changed_notification.tpl'));
+				$mail->setSubject($smarty->fetchLang($w['lang'], 'mail/tracker_changed_notification_subject.tpl'));
+				$mail->setText($smarty->fetchLang($w['lang'], 'mail/tracker_changed_notification.tpl'));
 				$mail->send(array($w['email']));
 			}
 		}
@@ -333,7 +333,6 @@ class TrackerLib extends TikiLib {
 	}
 
 	function list_last_comments($trackerId = 0, $itemId = 0, $offset, $maxRecords) {
-		global $user;
 	    $mid = "1=1";
 	    $bindvars = array();
 
@@ -348,10 +347,7 @@ class TrackerLib extends TikiLib {
 		$query_cant = "select count(*) from `tiki_tracker_item_comments` t left join `tiki_tracker_items` a on t.`itemId`=a.`itemId` where $mid and a.`trackerId`=? order by t.`posted` desc";
 	    }
 	    else {
-			if (!$this->user_has_perm_on_object($user, $trackerId, 'tracker', 'tiki_p_view_trackers') ) {
-				return array('cant'=>0);
-			}
-		$query = "select t.*, a.`trackerId` from `tiki_tracker_item_comments` t left join `tiki_tracker_items` a on t.`itemId`=a.`itemId` where $mid order by `posted` desc";
+		$query = "select * from `tiki_tracker_item_comments` where $mid order by `posted` desc";
 		$query_cant = "select count(*) from `tiki_tracker_item_comments` where $mid";
 	    }
 	    $result = $this->query($query,$bindvars,$maxRecords,$offset);
@@ -359,10 +355,6 @@ class TrackerLib extends TikiLib {
 	    $ret = array();
 
 	    while ($res = $result->fetchRow()) {
-			if (!$trackerId && !$this->user_has_perm_on_object($user, $res['trackerId'], 'tracker', 'tiki_p_view_trackers') ) {
-				--$cant;
-				continue;
-			}
 		$res["parsed"] = nl2br($res["data"]);
 		$ret[] = $res;
 	    }
@@ -562,16 +554,16 @@ class TrackerLib extends TikiLib {
 	}
 
 	function getSqlStatus($status, &$mid, &$bindvars, $trackerId) {
-		global $user;
+		global $tiki_p_view_trackers_pending,$tiki_p_view_trackers_closed, $user;
 		if (is_array($status)) {
 			$status = implode('', $status);
 		}
 
 		// Check perms
-		if ( $status && ! $this->user_has_perm_on_object($user, $trackerId, 'tracker', 'tiki_p_view_trackers_pending') && ! $this->group_creator_has_perm($trackerId, 'tiki_p_view_trackers_pending') ) {
+		if ( $status && ! $this->user_has_perm_on_object($user, $trackerId, 'tracker', 'tiki_p_view_trackers_pending') ) {
 			$status = str_replace('p', '', $status);
 		}
-		if ( $status && ! $this->user_has_perm_on_object($user, $trackerId, 'tracker', 'tiki_p_view_trackers_closed')  && ! $this->group_creator_has_perm($trackerId, 'tiki_p_view_trackers_closed') ) {
+		if ( $status && ! $this->user_has_perm_on_object($user, $trackerId, 'tracker', 'tiki_p_view_trackers_closed') ) {
 			$status = str_replace('c', '', $status);
 		}
 
@@ -591,42 +583,7 @@ class TrackerLib extends TikiLib {
 		}
 		return true;
 	}
-	function group_creator_has_perm($trackerId, $perm) {
-		global $prefs;
-		if ($groupCreatorFieldId = $this->get_field_id_from_type($trackerId, 'g', '1%')) {
-			$tracker_info = $this->get_tracker($trackerId);
-			$perms = $this->get_special_group_tracker_perm($tracker_info);
-			return empty($perms[$perm])? false: true;
-		} else {
-			return false;
-		}
-	}
-	/* group creator perms can only add perms,they can not take away perm
-	   and they are only used if tiki_p_view_trackers is not set for the tracker and if the tracker ha a group creator field
-	   must always be combined with a filter on the groups
-	*/
-	function get_special_group_tracker_perm($tracker_info, $global=false) {
-		global $prefs, $userlib, $smarty;
-		$ret = array();
-		$perms = $userlib->get_object_permissions($tracker_info['trackerId'], 'tracker', $prefs['trackerCreatorGroupName']);
-		foreach ($perms as $perm) {
-			$ret[$perm['permName']] ='y';
-			if ($global) {
-				$p = $perm['permName'];
-				global $$p;
-				$$p = 'y';
-				$smarty->assign("$p", 'y');
-			}
-		}
-		if ($tracker_info['writerGroupCanModify'] == 'y') { // old configuration 
-			$ret['tiki_p_modify_tracker_items'] = 'y';
-			if ($global) {
-				$tiki_p_modify_tracker_items = 'y';
-				$smarty->assign('tiki_p_modify_tracker_items', 'y');
-			}
-		}
-		return $ret;
-	}
+
 	/* to filter filterfield is an array of fieldIds
 	 * and the value of each field is either filtervalue or exactvalue
 	 * ex: filterfield=array('1','2', '3'), filtervalue=array(array('this', '*that'), ''), exactvalue('', array('there', 'those'), 'these')
@@ -634,8 +591,7 @@ class TrackerLib extends TikiLib {
 	 * listfields = array(fieldId=>array('type'=>, 'name'=>...), ...)
 	 */
 	function list_items($trackerId, $offset=0, $maxRecords=-1, $sort_mode ='' , $listfields='', $filterfield = '', $filtervalue = '', $status = '', $initial = '', $exactvalue = '', $filter='') {
-		//echo '<pre>FILTERFIELD:'; print_r($filterfield); echo '<br />FILTERVALUE:';print_r($filtervalue); echo '<br />EXACTVALUE:'; print_r($exactvalue); echo '<br />STATUS:'; print_r($status); echo '</pre>';
-		global $prefs;
+		global $tiki_p_view_trackers_pending, $tiki_p_view_trackers_closed, $tiki_p_admin_trackers, $prefs;
 
 		$cat_table = '';
 		$sort_tables = '';
@@ -821,12 +777,12 @@ class TrackerLib extends TikiLib {
 			else
 				$ret[$kx] = $res;
 		}
+
 		$retval = array();
 		$retval['data'] = array_values($ret);
 		$retval['cant'] = $cant;
 		return $retval;
 	}
-	/* listfields fieldId=>ooptions */
 	function get_item_fields($trackerId, $itemId, $listfields, &$itemUser) {
 		global $prefs, $user, $tiki_p_admin_trackers;
 		$fields = array();
@@ -881,22 +837,11 @@ class TrackerLib extends TikiLib {
 				eval('$computed = '.$calc.';');
 				$fopt['value'] = $computed;
 				$fil[$fieldId] = $computed;
-				preg_match('/#([0-9]+)/', $fopt['options'], $matches);
-				foreach ($matches as $k=>$match) {
-					if (!$k) continue;
-					if ($listfields[$match]['type'] == 'f' || $listfields[$match]['type'] == 'j') {
-						if (!$fil[$match])
-							$fopt['value'] = '';
-						$fopt['computedtype'] = 'f';
-						$fopt['options_array'] = $listfields[$match]['options_array'];
-						break;
-					}
-				}
 				break;
 			case 's':
 				$key = 'tracker.'.$trackerId.'.'.$itemId;
 				$fopt['numvotes'] = $this->getOne('select count(*) from `tiki_user_votings` where `id` = ?', array($key));
-				$fopt['voteavg'] = ( $fopt['numvotes'] > 0 ) ? round(($fopt['value'] / $fopt['numvotes'])) : '';
+				$fopt['voteavg'] = ( $fopt['numvotes'] > 0 ) ? ($fopt['value'] / $fopt['numvotes']) : '0';
 				break;
 			case 'e':
 				global $categlib;
@@ -952,12 +897,6 @@ class TrackerLib extends TikiLib {
 					$fopt['info'] = $this->get_item_attachment($fopt['value']);
 				}
 				break;
-			case 'G':
-				$vals = preg_split('/ *, */', $fopt['value']);
-				$fopt['x'] = $vals[0];
-				$fopt['y'] = $vals[1];
-				$fopt['z'] = $vals[2];
-				break;
 			default:
 				break;
 			}
@@ -1000,25 +939,11 @@ class TrackerLib extends TikiLib {
 		return($fields);
 	}
 
-	function replace_item($trackerId, $itemId, $ins_fields, $status = '', $ins_categs = array(), $bulk_import = false, $tracker_info='') {
+	function replace_item($trackerId, $itemId, $ins_fields, $status = '', $ins_categs = array(), $bulk_import = false) {
 		global $user, $smarty, $notificationlib, $prefs, $cachelib, $categlib, $tiki_p_admin_trackers, $userlib, $tikilib;
 		include_once('lib/categories/categlib.php');
 		include_once('lib/notifications/notificationlib.php');
 		$fil = array();
-		if (!empty($itemId)) { // prefill with current value - in case a computed use some other fields
-			$query = 'select `value`, `fieldId` from `tiki_tracker_item_fields` where `itemId`=?';
-			$result = $this->query($query, array($itemId));
-			while ($res = $result->fetchRow()) {
-				$fil[$res['fieldId']] = $res['value'];
-			}
-		}
-
-		if (empty($tracker_info)) {
-			$tracker_info = $this->get_tracker($trackerId);
-			if ($options = $this->get_tracker_options($trackerId)) {
-				$tracker_info = array_merge($tracker_info, $options);
-			}
-		}
 
 		if (!empty($itemId)) {
 			$new_itemId = 0;
@@ -1049,7 +974,7 @@ class TrackerLib extends TikiLib {
 			$remain_categs = array_diff($old_categs, $new_categs, $del_categs);
 		}
 		if (!empty($oldStatus) || !empty($status)) {
-			$the_data = '-[Status]-: ';
+			$the_data = tra('Status:').' ';
 			$statusTypes = $this->status_types();
 			if (isset($oldStatus) && $oldStatus != $status) {
 				$the_data .= $statusTypes[$oldStatus]['label'] . ' -> ';
@@ -1064,7 +989,6 @@ class TrackerLib extends TikiLib {
 		foreach($ins_fields["data"] as $i=>$array) {
 			if (!isset($ins_fields["data"][$i]["type"]) or $ins_fields["data"][$i]["type"] == 's') {
 				// system type, do nothing
-				continue;
 			} else if ($ins_fields["data"][$i]["type"] != 'u' && $ins_fields["data"][$i]["type"] != 'g' && $ins_fields["data"][$i]["type"] != 'I' && isset($ins_fields['data'][$i]['isHidden']) && ($ins_fields["data"][$i]["isHidden"] == 'p' or $ins_fields["data"][$i]["isHidden"] == 'y')and $tiki_p_admin_trackers != 'y') {
 					// hidden field type require tracker amdin perm
 			} elseif (empty($ins_fields["data"][$i]["fieldId"])) {
@@ -1164,10 +1088,6 @@ class TrackerLib extends TikiLib {
 			if ($ins_fields["data"][$i]["type"] == 'c' && $ins_fields['data'][$i]['value'] == 'on') {
 				$ins_fields['data'][$i]['value'] = 'y';
 			}
-			
-			if ($ins_fields['data'][$i]['type'] == 'g' && $ins_fields['data'][$i]['options_array'][0] == 1) {
-				$creatorGroupFieldId = $ins_fields['data'][$i]['fieldId'];
-			}
 
 			if ( $ins_fields["data"][$i]["type"] == 'M' && $ins_fields["data"][$i]["options_array"][0] >= '3' && isset($ins_fields["data"][$i]['value'])) {
 					$itId = $itemId ? $itemId : $new_itemId;
@@ -1244,21 +1164,21 @@ class TrackerLib extends TikiLib {
 					$my_remain_categs = array_intersect($remain_categs, $my_categs);
 
 					if (sizeof($my_new_categs) + sizeof($my_del_categs) == 0) {
-							$the_data .= "$name -[(unchanged)]-:\n";
+							$the_data .= "$name ".tra('(unchanged)') . ":\n";
 					} else {
 							$the_data .= "$name :\n";
 					}
 
 					if (sizeof($my_new_categs) > 0) {
-							$the_data .= "  -[Added]-:\n";
+							$the_data .= "  " . tra("Added:") . "\n";
 							$the_data .= $this->_describe_category_list($my_new_categs);
 					}
 					if (sizeof($my_del_categs) > 0) {
-							$the_data .= "  -[Removed]-:\n";
+							$the_data .= "  " . tra("Removed:") . "\n";
 							$the_data .= $this->_describe_category_list($my_del_categs);
 					}
 					if (sizeof($my_remain_categs) > 0) {
-							$the_data .= "  -[Remaining]-:\n";
+							$the_data .= "  " . tra("Remaining:") . "\n";
 							$the_data .= $this->_describe_category_list($my_remain_categs);
 					}
 					$the_data .= "\n";
@@ -1318,8 +1238,7 @@ class TrackerLib extends TikiLib {
 
 					$is_visible = !isset($ins_fields["data"][$i]["isHidden"]) || $ins_fields["data"][$i]["isHidden"] == 'n';
 
-					if ($itemId && $ins_fields['data'][$i]['type'] == 'q') { // do not change autoincrement of an item
-					} elseif ($itemId) {
+					if ($itemId) {
 						$result = $this->query('select `value` from `tiki_tracker_item_fields` where `itemId`=? and `fieldId`=?',array((int) $itemId,(int) $fieldId));
 						if ($row = $result->fetchRow()) {
 							if ($is_visible) {
@@ -1332,16 +1251,9 @@ class TrackerLib extends TikiLib {
 									$new_value = $value;
 								}
 								if ($old_value != $new_value) {
-									// split old value by lines
-									$lines = split("\n", $old_value);
-									// mark every old value line with standard email reply character
-									$old_value_lines = '';
-									foreach ($lines as $line) {
-										$old_value_lines .= '> '.$line;
-									}
-									$the_data .= "[-[$name]-]:\n--[Old]--:\n$old_value_lines\n\n*-[New]-*:\n$new_value\n----------\n";
+									$the_data .= "$name" . ":\n ".tra("Old:")." $old_value\n ".tra("New:")." $new_value\n\n";
 								} else {
-									$the_data .= "[-[$name]-] -[(unchanged)]-:\n$new_value\n----------\n";
+									$the_data .= "$name ".tra('(unchanged)') . ":\n $new_value\n\n";
 								}
 							}
 
@@ -1355,7 +1267,7 @@ class TrackerLib extends TikiLib {
 								} else {
 									$new_value = $value;
 								}
-								$the_data .= "[-[$name]-]:\n$new_value\n----------\n";
+								$the_data .= "$name".":\n   $new_value\n\n";
 							}
 							$query = "insert into `tiki_tracker_item_fields`(`itemId`,`fieldId`,`value`) values(?,?,?)";
 							$this->query($query,array((int) $itemId,(int) $fieldId,(string)$value));
@@ -1367,7 +1279,7 @@ class TrackerLib extends TikiLib {
 							} else {
 								$new_value = $value;
 							}
-							$the_data .= "[-[$name]-]:\n$new_value\n----------\n";
+							$the_data .= "$name".":\n   $new_value\n\n";
 						}
 
 						$query = "insert into `tiki_tracker_item_fields`(`itemId`,`fieldId`,`value`) values(?,?,?)";
@@ -1445,16 +1357,6 @@ class TrackerLib extends TikiLib {
 					}
 				} else {
 			    		// Use simple email
-					$foo = parse_url($_SERVER["REQUEST_URI"]);
-					$machine = $this->httpPrefix(). $foo["path"];
-					$parts = explode('/', $foo['path']);
-					if (count($parts) > 1) {
-						unset ($parts[count($parts) - 1]);
-					}
-					$machine = $this->httpPrefix(). implode('/', $parts);
-					if (!$itemId) {
-						$itemId = $new_itemId;
-					}
 
 			    		global $userlib;
 
@@ -1467,44 +1369,26 @@ class TrackerLib extends TikiLib {
 						}
 
 
-			    	// Try to find a Subject in $the_data looking for strings marked "-[Subject]-" TODO: remove the tra (language translation by submitter)
-			    	$the_string = '/^\[-\['.tra('Subject').'\]-\] -\[[^\]]*\]-:\n(.*)/m';
-			    	$subject_test_unchanged = preg_match( $the_string, $the_data, $unchanged_matches );
-			    	$the_string = '/^\[-\['.tra('Subject').'\]-\]:\n(.*)\n(.*)\n\n(.*)\n(.*)/m';
-			    	$subject_test_changed = preg_match( $the_string, $the_data, $matches );
-						$subject = '';
+			    		// Try to find a Subject in $the_data
+			    		$subject_test = preg_match( '/^Subject:\n   .*$/m', $the_data, $matches );
 
-			    	if( $subject_test_unchanged == 1 ) {
-							$subject = $unchanged_matches[1];
-			    	}
-			    	if( $subject_test_changed == 1 ) {
-							$subject = $matches[1].' '.$matches[2].' '.$matches[3].' '.$matches[4];
-			    	}
+			    		if( $subject_test == 1 ) {
+							$subject = preg_replace( '/^Subject:\n   /m', '', $matches[0] );
+							// Remove the subject from $the_data
+							$the_data = preg_replace( '/^Subject:\n   .*$/m', '', $the_data );
+			    		}
 
-						$i = 0;
+			    		$the_data = preg_replace( '/^.+:\n   /m', '', $the_data );
+
 						foreach ($watchers as $watcher) {
 							$mail = new TikiMail($watcher['user']);
-							// first we look for strings marked "-[...]-" to translate by watcher language
-							$translate_strings[$i] = preg_match_all( '/-\[([^\]]*)\]-/', $the_data, $tra_matches );
-							$watcher_subject = $subject;
-							$watcher_data = $the_data;
-							if ($translate_strings[$i] > 0) {
-								foreach ($tra_matches[1] as $match) {
-									// now we replace the marked strings with correct translations
-									$tra_replace = tra($match, $watcher['language']);
-									$tra_match = "/-\[".preg_quote($match)."\]-/m";
-									$watcher_subject = preg_replace($tra_match, $tra_replace, $watcher_subject);
-									$watcher_data = preg_replace($tra_match, $tra_replace, $watcher_data);
-								}
-							}
+							$mail->setSubject('['.$trackerName.'] '.tra('Tracker was modified at ', $watcher['language']). $_SERVER["SERVER_NAME"]);
+							$mail->setText($the_data);
 
-							$mail->setSubject('['.$trackerName.'] '.str_replace('> ','',$watcher_subject).' ('.tra('Tracker was modified at ', $watcher['language']). $_SERVER["SERVER_NAME"].' '.tra('by', $watcher['language']).' '.$user.')');
-							$mail->setText(tra('View the tracker item at:', $watcher['language'])."  $machine/tiki-view_tracker_item.php?itemId=$itemId\n\n" . $watcher_data);
 							if( ! empty( $my_sender ) ) {
-								$mail->setHeader("Reply-To", $my_sender);
+								$mail->setHeader("From", $my_sender);
 							}
 							$mail->send(array($watcher['email']));
-							$i++;
 						}
 				}
 			}
@@ -1514,47 +1398,23 @@ class TrackerLib extends TikiLib {
 		$query = "update `tiki_trackers` set `items`=?,`lastModif`=?  where `trackerId`=?";
 		$result = $this->query($query,array((int)$cant_items,(int) $this->now,(int) $trackerId));
 
-		if ($prefs['groupTracker'] == 'y' && isset($tracker_info['autoCreateGroup']) && $tracker_info['autoCreateGroup'] == 'y' && empty($itemId)) {
-			$groupName = $this->groupName($tracker_info, $new_itemId, $groupInc);
-			if (!empty($creatorGroupFieldId) && !empty($tracker_info['autoAssignGroupItem']) && $tracker_info['autoAssignGroupItem'] == 'y') {
-				if (!empty($tracker_info['autoCopyGroup'])) {
-					global $group;
-					$query = "insert into `tiki_tracker_item_fields`(`itemId`,`fieldId`,`value`) values(?,?,?)";
-					$this->query($query, array($new_itemId, $tracker_info['autoCopyGroup'], $group));
-				}
-				$query = 'update `tiki_tracker_item_fields` set `value`=? where `itemId`=? and `fieldId`=?';
-				$this->query($query, array($groupName, $new_itemId, $creatorGroupFieldId));
-			}
-			$desc = $this->get_isMain_value($trackerId, $new_itemId);
-			if (empty($desc))
-				$desc = $tracker_info['description'];
-			if ($userlib->add_group($groupName, $desc, '', 0, $trackerId, '', 'y', 0, '', '', $creatorGroupFieldId)) {
-				if (!empty($tracker_info['autoCreateGroupInc'])) {
-					$userlib->group_inclusion($groupName, $groupInc);
-				}
-			}
-			if ($tracker_info['autoAssignCreatorGroup'] == 'y') {
-				$userlib->assign_user_to_group($user, $groupName);
-			}
-			if ($tracker_info['autoAssignCreatorGroupDefault'] == 'y') {
-				$userlib->set_default_group($user, $groupName);
-				$_SESSION['u_info']['group'] = $groupName;
-			}
-		}
-
 		if (!$itemId) $itemId = $new_itemId;
 
 		global $cachelib;
 		require_once('lib/cache/cachelib.php');
 		$cachelib->invalidate('trackerItemLabel'.$itemId);
 
-		if ( isset($tracker_info['autoCreateCategories']) && $tracker_info['autoCreateCategories'] == 'y' && $prefs['feature_categories'] == 'y' ) {
+		$options = $this->get_tracker_options($trackerId);
+
+		if ( isset($options) && isset($options['autoCreateCategories']) && $options['autoCreateCategories'] == 'y' && $prefs['feature_categories'] == 'y' ) {
+			$trackerName = $this->getOne("select `name` from `tiki_trackers` where `trackerId`=?", array((int) $trackerId));
+			$trackerDescription = $this->getOne("select `description` from `tiki_trackers` where `trackerId`=?", array((int) $trackerId));
 			$tracker_item_desc = $this->get_isMain_value($trackerId, $itemId);
 
 			// Verify that parentCat exists Or Create It
 			$parentcategId = $categlib->get_category_id("Tracker $trackerId");
 			if ( ! isset($parentcategId) ) {
-				$parentcategId = $categlib->add_category(0,"Tracker $trackerId",$tracker_info['description']);
+				$parentcategId = $categlib->add_category(0,"Tracker $trackerId",$trackerDescription);
 			}
 			// Verify that the sub Categ doesn't already exists
 			$currentCategId = $categlib->get_category_id("Tracker Item $itemId");
@@ -1582,17 +1442,6 @@ class TrackerLib extends TikiLib {
 		}
 
 		return $itemId;
-	}
-
-	function groupName($tracker_info, $itemId, &$groupInc) {
-		if (empty($tracker_info['autoCreateGroupInc'])) {
-			$groupName = $tracker_info['name'];
-		} else {
-			global $userlib;
-			$group_info = $userlib->get_groupId_info($tracker_info['autoCreateGroupInc']);
-			$groupInc = $groupName = $group_info['groupName'];
-		}
-		return "$groupName $itemId";
 	}
 
 	function _format_data($field, $data) {
@@ -1716,7 +1565,9 @@ class TrackerLib extends TikiLib {
 			}
 			$need_reindex[] = $itemId;
 			if (!empty($cats)) {
-				$this->categorized_item($trackerId, $itemId, "item $itemId", $cats);
+				foreach ($cats as $c) {
+					$this->categorized_item($trackerId, $itemId, "item $itemId", $cats);
+				}
 			}
 			$query = "insert into `tiki_tracker_item_fields`(`itemId`,`fieldId`,`value`) values(?,?,?)";
 			$query2 = "update `tiki_tracker_item_fields` set `value`=? where `itemId`=? and `fieldId`=?";
@@ -1730,20 +1581,7 @@ class TrackerLib extends TikiLib {
 						if ($field['type'] == 'p' && $field['options_array'][0] == 'password') {
 							//$userlib->change_user_password($user, $ins_fields['data'][$i]['value']);
 							continue;
-						} elseif ($field['type'] == 'e') {
-							$cats = split('%%%', trim($data[$i]));
-							if (!empty($cats)) {
-								foreach ($cats as $c) {
-									global $categlib; include_once('lib/categories/categlib.php');
-									if ($cId = $categlib->get_category_id(trim($c)))
-										$catIds[] = $cId;
-								}
-								if (!empty($catIds)) {
-									$this->categorized_item($trackerId, $itemId, "item $itemId", $catIds);
-								}
-							}
-							$data[$i] = '';
-						} elseif ($field['type'] == 's') {
+						} elseif ($field['type'] == 'e' or $field['type'] == 's') {
 							$data[$i] = '';
 						} elseif ($field['type'] == 'a') {
 							$data[$i] = preg_replace('/\%\%\%/',"\r\n",$data[$i]);
@@ -1778,9 +1616,6 @@ class TrackerLib extends TikiLib {
 			foreach ( $need_reindex as $id ) refresh_index('tracker_items', $id);
 			unset($need_reindex);
 		}
-		$cant_items = $this->getOne("select count(*) from `tiki_tracker_items` where `trackerId`=?",array((int) $trackerId));
-		$query = "update `tiki_trackers` set `items`=?,`lastModif`=?  where `trackerId`=?";
-		$result = $this->query($query,array((int)$cant_items,(int) $this->now,(int) $trackerId));
 		return $total;
 	}
 
@@ -1915,7 +1750,7 @@ class TrackerLib extends TikiLib {
 	}
 
 	function remove_tracker_item($itemId) {
-		global $user, $prefs;
+		global $user;
 		$query = "select * from `tiki_tracker_items` where `itemId`=?";
 		$result = $this->query($query, array((int) $itemId));
 		$res = $result->fetchRow();
@@ -1940,7 +1775,6 @@ class TrackerLib extends TikiLib {
 			$smarty->assign('mail_itemId', $itemId);
 			$smarty->assign('mail_trackerId', $trackerId);
 			$smarty->assign('mail_trackerName', $trackerName);
-			$smarty->assign('mail_data', '');
 			$foo = parse_url($_SERVER["REQUEST_URI"]);
 			$machine = $this->httpPrefix(). $foo["path"];
 			$smarty->assign('mail_machine', $machine);
@@ -1956,8 +1790,8 @@ class TrackerLib extends TikiLib {
 			foreach ($watchers as $w) {
 				$mail = new TikiMail($w['user']);
 				$mail->setHeader("From", $prefs['sender_email']);
-				$mail->setSubject($smarty->fetchLang($w['language'], 'mail/tracker_changed_notification_subject.tpl'));
-				$mail->setText($smarty->fetchLang($w['language'], 'mail/tracker_changed_notification.tpl'));
+				$mail->setSubject($smarty->fetchLang($w['lang'], 'mail/tracker_changed_notification_subject.tpl'));
+				$mail->setText($smarty->fetchLang($w['lang'], 'mail/tracker_changed_notification.tpl'));
 				$mail->send(array($w['email']));
 			}
 		}
@@ -2003,14 +1837,9 @@ class TrackerLib extends TikiLib {
 
 		$options=$this->get_tracker_options($trackerId);
 		if (isset ($option) && isset($option['autoCreateCategories']) && $option['autoCreateCategories']=='y') {
-			$currentCategId=$categlib->get_category_id("Tracker Item $itemId");
-			$categlib->remove_category($currentCategId);
-		}
-		$this->remove_object("tracker $trackerId", $itemId);
-		if (isset($options['autoCreateGroup']) && $options['autoCreateGroup'] == 'y') {
-			global $userlib;
-			$groupName = $this->groupName($options, $itemId, $groupInc);
-			$userlib->remove_group($groupName);
+
+		$currentCategId=$categlib->get_category_id("Tracker Item $itemId");
+		$categlib->remove_category($currentCategId);
 		}
 		return true;
 	}
@@ -2106,9 +1935,6 @@ class TrackerLib extends TikiLib {
 
 	// Inserts or updates a tracker
 	function replace_tracker($trackerId, $name, $description, $options, $descriptionIsParsed) {
-		if ($trackerId === false && !empty($name)) {	// called from profiles - update not replace
-			$trackerId = $this->getOne('select max(`trackerId`) from `tiki_trackers` where `name`=?',array($name));
-		}
 		if ($trackerId) {
 			$old = $this->getOne('select count(*) from `tiki_trackers` where `trackerId`=?',array((int)$trackerId));
 			if ($old) {
@@ -2119,6 +1945,7 @@ class TrackerLib extends TikiLib {
 				$this->query($query,array($name,$description,$descriptionIsParsed,(int)$this->now,(int) $trackerId));
 			}
 		} else {
+			$this->query("delete from `tiki_trackers` where `name`=?",array($name),-1,-1,false);
 			$query = "insert into `tiki_trackers`(`name`,`description`,`descriptionIsParsed`,`created`,`lastModif`) values(?,?,?,?,?)";
 			$this->query($query,array($name,$description,$descriptionIsParsed,(int) $this->now,(int) $this->now));
 			$trackerId = $this->getOne("select max(`trackerId`) from `tiki_trackers` where `name`=? and `created`=?",array($name,(int) $this->now));
@@ -2184,10 +2011,6 @@ class TrackerLib extends TikiLib {
 			$editableBy = serialize($editableBy);
 		} else {
 			$editableBy = '';
-		}
-		
-		if ($fieldId === false && $trackerId && !empty($name)) {	// called from profiles - update not replace
-			$fieldId = $this->getOne("select max(`fieldId`) from `tiki_tracker_fields` where `trackerId`=? and `name`=?",array((int) $trackerId,$name));
 		}
 
 		if ($fieldId) {
@@ -2399,10 +2222,6 @@ class TrackerLib extends TikiLib {
 	}
 
 	function get_field_id_from_type($trackerId, $type, $option=NULL) {
-		static $memo;
-		if (isset($memo[$trackerId][$type][$option])) {
-			return $memo[$trackerId][$type][$option];
-		}
 		$mid = ' `trackerId`=? and `type`=? ';
 		$bindvars = array((int)$trackerId, $type);
 		if (!empty($option)) {
@@ -2413,9 +2232,7 @@ class TrackerLib extends TikiLib {
 			}
 			$bindvars[] = $option;
 		}
-		$fieldId = $this->getOne("select `fieldId` from `tiki_tracker_fields` where $mid",$bindvars);
-		$memo[$trackerId][$type][$option] = $fieldId;
-		return $fieldId;
+		return $this->getOne("select `fieldId` from `tiki_tracker_fields` where $mid",$bindvars);
 	}
 
 /*
@@ -2479,7 +2296,6 @@ class TrackerLib extends TikiLib {
 			'help'=>tra('<dl>
 				<dt>Function: Allows alphanumeric text input in a one-line field of arbitrary size.
 				<dt>Usage: <strong>samerow,size,prepend,append,max</strong>
-				<dt>Example: 0,80,$,,80
 				<dt>Description:
 				<dd><strong>[samerow]</strong> will display the next field or checkbox in the same row if a 1 is specified;
 				<dd><strong>[size]</strong> is the visible length of the field in characters;
@@ -2494,7 +2310,6 @@ class TrackerLib extends TikiLib {
 			'help'=>tra('<dl>
 				<dt>Function: Allows alphanumeric text input in a multi-line field of arbitrary size.
 				<dt>Usage: <strong>quicktags,width,height,max,listmax,wordmax</strong>
-				<dt>Example: 0,80,5,30,200
 				<dt>Description:
 				<dd><strong>[quicktags]</strong> enables quicktags if a 1 is specified;
 				<dd><strong>[width]</strong> is the width of the box, in chars;
@@ -2510,7 +2325,6 @@ class TrackerLib extends TikiLib {
 			'help'=>tra('<dl>
 				<dt>Function: Provides a checkbox field for yes/no, on/off input.
 				<dt>Usage: <strong>samerow</strong>
-				<dt>Example: 1
 				<dt>Description:
 				<dd><strong>[samerow]</strong> will display the next field on the same row if a 1 is specified.
 				</dl>'));
@@ -2520,7 +2334,6 @@ class TrackerLib extends TikiLib {
 			'help'=>tra('<dl>
 				<dt>Function: Provides a one-line field for numeric input only.  Prepend or append values may be alphanumeric.
 				<dt>Usage: <strong>samerow,size,prepend,append</strong>
-				<dt>Example: 0,60,,hours
 				<dt>Description:
 				<dd><strong>[samerow]</strong> will display the next field or checkbox in the same row if a 1 is specified;
 				<dd><strong>[size]</strong> is the visible size of the field in characters;
@@ -2534,7 +2347,6 @@ class TrackerLib extends TikiLib {
 			'help'=>tra('<dl>
 				<dt>Function: Allows users to select only from a specified set of options in a drop-down bar.
 				<dt>Usage: <strong>list_of_items</strong>
-				<dt>Example: yes,no
 				<dt>Description:
 				<dd><strong>[list_of_items]</strong> is the list of all values you want in the drop-down, separated by commas;
 				<dd>if you wish to specify a default value other than the first item, enter the value twice, consecutively, and it will appear once in the list as the default selection.
@@ -2545,7 +2357,6 @@ class TrackerLib extends TikiLib {
 			'help'=>tra('<dl>
 				<dt>Function: Allows users to select from a specified set of options in a drop-down bar, or provide an alternate selection in a one-line text field.
 				<dt>Usage: <strong>list_of_items</strong>
-				<dt>Example: yes,no
 				<dt>Description:
 				<dd><strong>[list_of_items]</strong> is the list of all values you want in the drop-down, separated by commas;
 				<dd>if you wish to specify a default value other than the first item, enter the value twice, consecutively, and it will appear once in the list as the default selection.
@@ -2556,7 +2367,6 @@ class TrackerLib extends TikiLib {
 			'help'=>tra('<dl>
 				<dt>Function: Provides a multiple-choice-style set of options from which a user may only choose one.
 				<dt>Usage: <strong>list_of_items</strong>
-				<dt>Example: yes,no
 				<dt>Description:
 				<dd><strong>[list of items]</strong> is the list of all values you want in the set, separated by commas;
 				<dd>if you wish to specify a default value other than the first item, enter the value twice, consecutively, and it will appear as the one selected.
@@ -2569,7 +2379,6 @@ class TrackerLib extends TikiLib {
 			'help'=>tra('<dl>
 				<dt>Function: Allows a selection from a specified list of usernames.
 				<dt>Usage: <strong>auto-assign,email_notify</strong>
-				<dt>Example: 1,1
 				<dt>Description:
 				<dd><strong>[auto-assign]</strong> will auto-assign the creator of the item if set to 1, or will set the selection to the user who last modified the item if set to 2, or will give the choice between all the users for other values;
 				<dd><strong>[email_notify]</strong> will send an email to the assigned user when the item is saved;
@@ -2582,7 +2391,6 @@ class TrackerLib extends TikiLib {
 			'help'=>tra('<dl>
 				<dt>Function: Allows a selection from a specified list of usergroups.
 				<dt>Usage: <strong>auto-assign</strong>
-				<dt>Example: 1
 				<dt>Description:
 				<dd><strong>[auto-assign]</strong> will auto-assign the field to the usergroup of the creator if set to 1, or will set the selection to the group of the user who last modified the item if set to 2, or will give the choice between all the groups for other values;
 				<dd>if the user does not have a default group set, the first group the user belongs to will be chosen, otherwise Registered group will be used.
@@ -2593,7 +2401,6 @@ class TrackerLib extends TikiLib {
 			'help'=>tra('<dl>
 				<dt>Function: Provides a field for entering an IP address.
 				<dt>Usage: <strong>auto-assign</strong>
-				<dt>Example: 1
 				<dt>Description:
 				<dd><strong>[auto-assign]</strong> will auto-populate the field with the IP address of the user who created the item if set to 1, or will set the field to the IP of the user who last modified the item if set to 2, or will be a free IP for other values.
 				</dl>'));
@@ -2603,7 +2410,6 @@ class TrackerLib extends TikiLib {
 			'help'=>tra('<dl>
 				<dt>Function: Allows a selection from the list of pages.
 				<dt>Usage: <strong>auto-assign, size, create</strong>
-				<dt>Example: 1
 				<dt>Description:
 				<dd><strong>[auto-assign]</strong> will auto-assign the creator of the item if set to 1
 				<dd><strong>[size]</strong> is the visible input length of the field in characters (<=0 not limited);
@@ -2617,7 +2423,6 @@ class TrackerLib extends TikiLib {
 			'help'=>tra('<dl>
 				<dt>Function: Allows a selection from a specified list of countries.
 				<dt>Usage: <strong>name_flag,sort</strong>
-				<dt>Example: 1,0
 				<dt>Description:
 				<dd><strong>[name_flag]</strong> default is 0 and will display both the country name and its flag, 1 will display only the country name, while 2 will show only the country flag;
 				<dd><strong>[sortorder]</strong> specifies the order the country list should be displayed in, where 0 is the default and sorts according to the translated name, and 1 sorts according to the english name;
@@ -2629,7 +2434,6 @@ class TrackerLib extends TikiLib {
 			'help'=>tra('<dl>
 				<dt>Function: Provides drop-down options to accurately select a date and/or time.
 				<dt>Usage: <strong>datetime,startyear,endyear,blankdate</strong>
-				<dt>Example: d,2000,,blank
 				<dt>Description:
 				<dd><strong>[datetime]</strong> will only allow a date to be selected if set to "d", and allows a full date and time selection if set to "dt", defaulting to "dt";
 				<dd><strong>[startyear]</strong> allows you to specify a custom first year in the date range (eg. 1987), default is current year;
@@ -2646,7 +2450,6 @@ class TrackerLib extends TikiLib {
 			'help'=>tra('<dl>
 				<dt>Function: Provides a javascript graphical date selector to select a date and/or time.
 				<dt>Usage: <strong>datetime</strong>
-				<dt>Example: dt
 				<dt>Description:
 				<dd><strong>[datetime]</strong> will only allow a date to be selected if set to "d", and allows a full date and time selection if set to "dt", defaulting to "dt".
 				</dl>'));
@@ -2655,8 +2458,7 @@ class TrackerLib extends TikiLib {
 			'opt'=>true,
 			'help'=>tra('<dl>
 				<dt>Function: Allows user to upload an image into the tracker item.
-				<dt>Usage: <strong>xListSize,yListSize,xDetailsSize,yDetailsSize,uploadLimitScale,shadowBox</strong>
-				<dt>Example: 30,30,100,100,1000,item
+				<dt>Usage: <strong>xListSize,yListSize,xDetailsSize,yDetailsSize,uploadLimitScale</strong>
 				<dt>Description:
 				<dd><strong>[xListSize]</strong> sets the pixel width of the image in the list view;
 				<dd><strong>[yListSize]</strong> sets the pixel height of the image in the list view;
@@ -2673,7 +2475,6 @@ class TrackerLib extends TikiLib {
 			'help'=>tra('<dl>
 				<dt>Function: ?
 				<dt>Usage: <strong>label,post,tiki-index.php,page:fieldname,highlight=test</strong>
-				<dt>Example: 
 				<dt>Description:
 				<dd><strong>[label]</strong> needs explanation;
 				<dd><strong>[post]</strong> needs explanation;
@@ -2694,7 +2495,6 @@ class TrackerLib extends TikiLib {
 			'help'=>tra('<dl>
 				<dt>Function: Allows insertion of a static block of text into a tracker to augment input fields. (non-editable)
 				<dt>Usage: <strong>wikiparse,max</strong>
-				<dt>Example: 1,20
 				<dt>Description:
 				<dd><strong>[wikiparse]</strong> will allow wiki syntax to be parsed if set to 1, otherwise default is 0 to only support line-breaks;
 				<dd><strong>[max]</strong> is the maximum number of characters that are displayed in list mode;
@@ -2706,7 +2506,6 @@ class TrackerLib extends TikiLib {
 			'help'=>tra('<dl>
 				<dt>Function: Allows one or more categories under a main category to be assigned to the tracker item.
 				<dt>Usage: <strong>parentId,inputtype,selectall</strong>
-				<dt>Example: 12,radio,1
 				<dt>Description:
 				<dd><strong>[parentId]</strong> is the ID of the main category, categories in the list will be children of this;
 				<dd><strong>[inputtype]</strong> is one of [d|m|radio|checkbox], where d is a drop-down list, m is a multiple-selection drop-down list, radio and checkbox are self-explanatory;
@@ -2719,7 +2518,6 @@ class TrackerLib extends TikiLib {
 			'help'=>tra('<dl>
 				<dt>Function: Provides a way to choose a value from another tracker (eventually with a link).
 				<dt>Usage: <strong>trackerId,fieldId,linkToItem,displayedFieldsList</strong>
-				<dt>Example: 3,5,1,6|8
 				<dt>Description:
 				<dd><strong>[trackerId]</strong> is the tracker ID of the fields you want to display;
 				<dd><strong>[fieldId]</strong> is the field in [trackerId] from which you can select a value among all the field values of the items of [trackerId];
@@ -2733,7 +2531,6 @@ class TrackerLib extends TikiLib {
 			'help'=>tra('<dl>
 				<dt>Function: Displays a list of field values from another tracker that has a relation with this tracker(eventually with a link).
 				<dt>Usage: <strong>trackerId,fieldIdThere,fieldIdHere,displayFieldIdThere,linkToItems</strong>
-				<dt>Example: 5,3,4,10|11
 				<dt>Description:
 				<dd><strong>[trackerId]</strong> is the tracker ID of the fields you want to display;
 				<dd><strong>[fieldIdThere]</strong> is the field (multiple fields can be separated with a ":") you want to link with;
@@ -2762,7 +2559,6 @@ class TrackerLib extends TikiLib {
 			'help'=>tra('<dl>
 				<dt>Function: Allows users to enter an email address with option of making it active.
 				<dt>Usage: <strong>link,watchopen,watchpending,watchclosed</strong>
-				<dt>Example: 0,o
 				<dt>Description:
 				<dd><strong>[link]</strong> may be one of [0|1|2] and specifies how to display the email address, defaulting to 0 as plain text, 1 as an encoded hex mailto link, or 2 as a standard mailto link;
 				<dd><strong>[watchopen]</strong> if set to "o" will email the address every time the status of the item changes to open;
@@ -2790,7 +2586,6 @@ class TrackerLib extends TikiLib {
 			'help'=>tra('<dl>
 				<dt>Function: Allows an incrementing value field, or itemId field. (non-editable)
 				<dt>Usage: <strong>start,prepend,append,itemId</strong>
-				<dt>Example: 1,,,itemId
 				<dt>Description:
 				<dd><strong>[start]</strong> is the starting value for the field, defaults to 1;
 				<dd><strong>[prepend]</strong> is text that will be displayed before the field;
@@ -2813,7 +2608,9 @@ class TrackerLib extends TikiLib {
 			'opt'=>false,
 			'help'=>tra('<dl>
 				<dt>Function: Use Google Maps.
-				<dt>Will display a Google Maps around a point.
+				<dt>Usage: <strong>Unknown</strong>
+				<dt>Description:
+				<dd><strong></strong> needs explanation;
 				</dl>'));
 		$type['s'] = array(
 			'label'=>tra('system'),
@@ -2841,7 +2638,6 @@ class TrackerLib extends TikiLib {
 			'help'=>tra('<dl>
 				<dt>Function: Allows user preference changes from a tracker.
 				<dt>Usage: <strong>type</strong>
-				<dt>Example: password
 				<dt>Description:
 				<dd><strong>[type]</strong> if value is password, will allow to change the user password, if value is email, will display/allow to change the user email;
 				</dl>'));
@@ -2851,9 +2647,8 @@ class TrackerLib extends TikiLib {
 			'help'=>tra('<dl>
 				<dt>Function: Allows a file to be attached to the tracker item.
 				<dt>Usage: <strong>listview</strong>
-				<dt>Example: nu
 				<dt>Description:
-				<dd><strong>[listview]</strong> may be one of [n|t|s|u|m] on their own or in any combination (n, t, ns, nts), allowing you to see the attachment in the item list view as its name (n), its type (t), its size (n), the username of the uploader (u), or the mediaplayer plugin(m);
+				<dd><strong>[listview]</strong> may be one of [n|t|s|u] on their own or in any combination (n, t, ns, nts), allowing you to see the attachment in the item list view as its name (n), its type (t), its name (n), or display the username of the uploader (u);
 				note that this option will cost an extra query to the database for each attachment and can severely impact performance with several attachments.
 				<dd>
 				</dl>'));
@@ -2879,11 +2674,6 @@ class TrackerLib extends TikiLib {
 		$result = $this->getOne($query, array((int)$itemId, "y"));
 		return $result;
 	}
-	function get_main_field($trackerId) {
-		$query = 'select `fieldId` from `tiki_tracker_fields` where `isMain`=? and `trackerId`=?';
-		return $this->getOne($query, array('y', $trackerId));
-	}
-		
 	function categorized_item($trackerId, $itemId, $mainfield, $ins_categs) {
 		global $categlib; include_once('lib/categories/categlib.php');
 		$cat_type = "tracker $trackerId";
@@ -2902,14 +2692,13 @@ class TrackerLib extends TikiLib {
 	}
 	/* list all the values of a field
 	 */
-	function list_tracker_field_values($trackerId, $fieldId, $status='o', $distinct='y') {
+	function list_tracker_field_values($trackerId, $fieldId, $status='o') {
 		$mid = '';
 		$bindvars[] = (int)$fieldId;
 		if (!$this->getSqlStatus($status, $mid, $bindvars, $trackerId))
 			return null;
 		$sort_mode = "value_asc";
-		$distinct = $distinct == 'y'?'distinct': '';
-		$query = "select $distinct(ttif.`value`) from `tiki_tracker_item_fields` ttif, `tiki_tracker_items` tti where tti.`itemId`= ttif.`itemId`and ttif.`fieldId`=? $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select distinct(ttif.`value`) from `tiki_tracker_item_fields` ttif, `tiki_tracker_items` tti where tti.`itemId`= ttif.`itemId`and ttif.`fieldId`=? $mid order by ".$this->convert_sortmode($sort_mode);
 		$result = $this->query( $query, $bindvars);
 		$ret = array();
 		while ($res = $result->fetchRow()) {
@@ -2969,13 +2758,6 @@ class TrackerLib extends TikiLib {
 	}
 	function get_item_creator($trackerId, $itemId) {
 		if ($fieldId = $this->get_field_id_from_type($trackerId, 'u', '1%')) { // user creator field
-			return $this->get_item_value($trackerId, $itemId, $fieldId);
-		} else {
-			return null;
-		}
-	}
-	function get_item_group_creator($trackerId, $itemId) {
-		if ($fieldId = $this->get_field_id_from_type($trackerId, 'g', '1%')) { // group creator field
 			return $this->get_item_value($trackerId, $itemId, $fieldId);
 		} else {
 			return null;
@@ -3161,7 +2943,6 @@ class TrackerLib extends TikiLib {
 		while ($res = $result->fetchRow()) {
 			$field_value = $this->get_tracker_field($res['fieldId']);
 			$field_value['value'] = $res['value'];
-			$field_value['showlinks'] = 'n';
 			$smarty->assign('field_value', $field_value);
 			$ret[$res['itemId']] = $smarty->fetch('tracker_item_field_value.tpl');
 			if (is_array($finalFields) && count($finalFields)) {
@@ -3172,7 +2953,6 @@ class TrackerLib extends TikiLib {
 					$field_value = $this->get_tracker_field($f);
 					$ff = $this->get_item_value($finalTrackerId, $res['itemId'], $f);;
 					$field_value['value'] = $ff;
-					$field_value['showlinks'] = 'n';
 					$smarty->assign('field_value', $field_value);
 					$ret[$res['itemId']] .= $separator.$smarty->fetch('tracker_item_field_value.tpl');
 				}
@@ -3202,10 +2982,6 @@ class TrackerLib extends TikiLib {
 			return NULL;
 		}
 	}
-	function rename_page($old, $new) {
-		$query = "update `tiki_tracker_item_fields` ttif left join `tiki_tracker_fields` ttf on (ttif.fieldId = ttf.fieldId) set ttif.`value`=? where ttif.`value`=? and ttf.`type` = ?";
-		$this->query($query, array($new, $old, 'k'));
-	}
 }
 
 global $dbTiki, $tikilib, $prefs;
@@ -3217,3 +2993,5 @@ if ( $prefs['trk_with_mirror_tables'] == 'y' ) {
 else {
 	$trklib = new TrackerLib($dbTiki);
 }
+
+?>

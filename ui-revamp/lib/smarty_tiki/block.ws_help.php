@@ -27,3 +27,4 @@ function smarty_block_ws_help($params, $content, &$smarty) {
 	return $smarty->fetch('tiki-workspaces_help.tpl');
 
 }
+?>

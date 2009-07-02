@@ -61,3 +61,7 @@ include_once('lib/tasks/tasklib.php');
 	$content .= ">".$info['title']."</a>";
     return $content;
 }
+
+
+
+?>

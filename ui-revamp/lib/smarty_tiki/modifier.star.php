@@ -10,3 +10,7 @@ function smarty_modifier_star($score)
 
     return $tikilib->get_star($score);
 }
+
+
+
+?>

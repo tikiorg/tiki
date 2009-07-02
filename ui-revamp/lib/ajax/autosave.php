@@ -15,7 +15,7 @@ if (isset($_REQUEST['noautosave'])) {
 }
 
 function auto_save($id, $data, $referer = "") {
-	global $user,$tikilib;
+	global $user;
 	$user_agent = $_SERVER['HTTP_USER_AGENT'];
 	$user_ip = $tikilib->get_ip_address();
 	if ($referer == "") {

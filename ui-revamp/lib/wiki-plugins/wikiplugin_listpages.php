@@ -190,3 +190,4 @@ function wikiplugin_listpages($data, $params) {
 
 	return '~np~'.$ret.'~/np~';
 }
+?>

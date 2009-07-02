@@ -24,3 +24,5 @@ function smarty_function_xajax_response($params, &$smarty) {
 
 	return $return;
 }
+
+?>

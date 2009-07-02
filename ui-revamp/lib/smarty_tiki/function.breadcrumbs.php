@@ -35,3 +35,4 @@ function smarty_function_breadcrumbs($params, &$smarty)
             break;
     }
 }
+?>

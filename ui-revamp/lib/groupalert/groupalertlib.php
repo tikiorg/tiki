@@ -1,6 +1,4 @@
 <?php
-// $Id$
-
 /*
  groupalert is used to select user of groups to send alert email (groupware notification)
 */
@@ -43,7 +41,7 @@ class groupAlertLib extends TikiLib {
 		if (!is_array($ListUserToAlert)) {
 			return;
 		}
-		$project=$tikilib->get_preference ("browsertitle");
+		$project=$tikilib->get_preference ("siteTitle");
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
 		$machine = $tikilib->httpPrefix() . dirname( $foo["path"] );
 		$URL=$machine."/".$URI;

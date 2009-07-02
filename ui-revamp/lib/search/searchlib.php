@@ -626,7 +626,7 @@ class SearchLib extends TikiLib {
         }
 
 	function find_exact_blogs($words,$offset, $maxRecords) {
-		global $prefs, $user, $smarty;
+          global $prefs, $user;
           if ($prefs['feature_blogs'] == 'y'  && count($words) >0) {
             $query="select distinct s.`page`, s.`location`, s.`last_update`, s.`count`,
                 b.`description`,b.`hits`,b.`lastModif`,b.`title` from
@@ -637,11 +637,10 @@ class SearchLib extends TikiLib {
             $result=$this->query($query,$words,$maxRecords,$offset);
             $cant=0;
             $ret=array();
-			include_once('tiki-sefurl.php');
             while ($res = $result->fetchRow()) {
 	     if($this->user_has_perm_on_object($user,$res['page'],'blog','tiki_p_read_blog', 'tiki_p_search_categorized')) {
               ++$cant;
-              $href = filter_out_sefurl("tiki-view_blog.php?blogId=".urlencode($res["page"]), $smarty, 'blog', $res['title']);
+              $href = "tiki-view_blog.php?blogId=".urlencode($res["page"]);
               $ret[] = array(
                 'pageName' => $res["title"],
                 'location' => tra("Blog"),
@@ -695,7 +694,7 @@ class SearchLib extends TikiLib {
         }
 
 	function find_exact_articles($words,$offset, $maxRecords) {
-		global $prefs, $user, $smarty;
+	  global $prefs, $user;
 	  if ($prefs['feature_articles']  == 'y'  && count($words) >0) {
 	    $query="select distinct s.`page`, s.`location`, s.`last_update`, s.`count`,
 	    	a.`heading`,a.`nbreads`,a.`publishDate`,a.`title`,a.`topicId` from
@@ -706,12 +705,11 @@ class SearchLib extends TikiLib {
 	    $result=$this->query($query,$words,$maxRecords,$offset);
 	    $cant=0;
 	    $ret=array();
-		include_once('tiki-sefurl.php');
 	    while ($res = $result->fetchRow()) {
 	     if($this->user_has_perm_on_object($user,$res['page'],'article','tiki_p_read_article', 'tiki_p_search_categorized') 
 			&& (empty($res['topicId']) || $this->user_has_perm_on_object($user, $res['topicId'], 'topic', 'tiki_p_topic_read'))) {
 		++$cant;
-		$href = filter_out_sefurl("tiki-read_article.php?articleId=".urlencode($res["page"]), $smarty, 'article', $res['title']);
+	      $href = "tiki-read_article.php?articleId=".urlencode($res["page"]);
 	      $ret[] = array(
 	        'pageName' => $res["title"],
 	        'location' => tra("Article"),
@@ -1028,3 +1026,5 @@ class SearchLib extends TikiLib {
 
 
 } # class SearchLib
+
+?>

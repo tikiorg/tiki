@@ -38,3 +38,4 @@ function smarty_block_tr($params, $content, &$smarty) {
 	else
 		return tra($content,$lang, true);
 }
+?>

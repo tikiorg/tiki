@@ -1,6 +1,6 @@
 <?php
 
-class JitFilter_AccessTest extends TikiTestCase
+class JitFilter_AccessTest extends PHPUnit_Framework_TestCase
 {
 	private $array;
 

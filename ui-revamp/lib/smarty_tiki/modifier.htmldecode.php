@@ -15,3 +15,4 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  * -------------------------------------------------------------
  */
 function smarty_modifier_htmldecode( $s ) { return TikiLib::htmldecode( $s ); }
+?>

@@ -1,6 +1,6 @@
 <?php
 
-class TikiFilter_CallbackTest extends TikiTestCase
+class TikiFilter_CallbackTest extends PHPUnit_Framework_TestCase
 {
 	function testSimple()
 	{

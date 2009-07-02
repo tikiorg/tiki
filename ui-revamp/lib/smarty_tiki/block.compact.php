@@ -33,3 +33,5 @@ function smarty_block_compact($params, $content, &$smarty)
     //
     return $content;
 }
+
+?>

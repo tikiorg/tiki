@@ -2159,3 +2159,5 @@ class PEAR_Config extends PEAR
         }
     }
 }
+
+?>

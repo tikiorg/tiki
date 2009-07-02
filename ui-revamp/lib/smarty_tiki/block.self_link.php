@@ -2,8 +2,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
-	header("location: index.php");
-	exit;
+  header("location: index.php");
+  exit;
 }
 
 /*
@@ -30,139 +30,110 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *   _on* : specify values of on* (e.g. onclick) HTML attributes used for javascript events
  */
 function smarty_block_self_link($params, $content, &$smarty, $repeat = false) {
-	global $prefs;
-	$default_type = 'absolute_path';
-	$default_icon_type = 'relative';
+    global $prefs;
+    $default_type = 'absolute_path';
+    $default_icon_type = 'relative';
 
-	if ( $repeat ) return;
-	require_once $smarty->_get_plugin_filepath('function', 'query');
+    if ( $repeat ) return;
+    require_once $smarty->_get_plugin_filepath('function', 'query');
 
-	if ( is_array($params) ) {
+    if ( is_array($params) ) {
 
-		if ( ! empty($params['_selected']) ) {
-			// Filter the condition
-			if (preg_match('/[a-zA-Z0-9 =<>!]+/',$params['_selected'])) {
-				$error_report = error_reporting(~E_ALL);
-				$return = eval ( '$selected =' . $params['_selected'].";" );
-				error_reporting($error_report);
-				if ($return !== FALSE) {
-					if ($selected) {
-						if (! empty($params['_selected_class']) ) {
-							$params['_class'] = $params['_selected_class'];
-						} else {
-							$params['_class'] = 'selected';
-						}
-					}
-				}
-			}
-		}
+      if ( ! isset($content) ) $content = '';
+      if ( ! isset($params['_ajax']) ) $params['_ajax'] = 'y';
+      if ( ! isset($params['_script']) ) $params['_script'] = '';
+      if ( ! isset($params['_tag']) ) $params['_tag'] = 'y';
+      if ( ! isset($params['_sort_arg']) ) $params['_sort_arg'] = 'sort';
+      if ( ! isset($params['_sort_field']) ) {
+        $params['_sort_field'] = '';
+      } elseif ( $params['_sort_arg'] != '' and ! isset($params[$params['_sort_arg']]) ) {
+	        $params[$params['_sort_arg']] = $params['_sort_field'].'_asc,'.$params['_sort_field'].'_desc';
+      }
+      // Complete _script path if needed (not empty, not an anchor, ...)
+      if ( $params['_script'] != '' && $params['_script'][0] != '#' ) {
+        if ( $params['_script'] != '' && $_SERVER['PHP_SELF'][0] == '/' && strpos($params['_script'], '/') === false ) {
+          $self_dir = dirname($_SERVER['PHP_SELF']);
+          $params['_script'] = ( $self_dir == '/' ? '' : $self_dir ).'/'.$params['_script'];
+        }
+        if ( $params['_script'] == $_SERVER['PHP_SELF'] ) {
+          $params['_script'] = '';
+        }
+      }
 
-		if ( ! isset($content) ) $content = '';
-		if ( ! isset($params['_ajax']) ) $params['_ajax'] = 'y';
-		if ( ! isset($params['_script']) ) $params['_script'] = '';
-		if ( ! isset($params['_tag']) ) $params['_tag'] = 'y';
-		if ( ! empty($params['_anchor']) ) $anchor = $params['_anchor']; else $anchor = '';
-		if ( empty($params['_disabled']) ) {
-			if ( ! isset($params['_sort_arg']) ) $params['_sort_arg'] = 'sort';
-			if ( ! isset($params['_sort_field']) ) {
-				$params['_sort_field'] = '';
-			} elseif ( $params['_sort_arg'] != '' and ! isset($params[$params['_sort_arg']]) ) {
-				$params[$params['_sort_arg']] = $params['_sort_field'].'_asc,'.$params['_sort_field'].'_desc';
-			}
-			// Complete _script path if needed (not empty, not an anchor, ...)
-			if ( !empty($params['_script']) && $params['_script'][0] != '#' && $params['_script'] != 'javascript:void(0)' ) {
-				if ( $params['_script'] != '' && $_SERVER['PHP_SELF'][0] == '/' && strpos($params['_script'], '/') === false ) {
-					$self_dir = dirname($_SERVER['PHP_SELF']);
-					$params['_script'] = ( $self_dir == '/' ? '' : $self_dir ).'/'.$params['_script'];
-				}
-				if ( $params['_script'] == $_SERVER['PHP_SELF'] ) {
-					$params['_script'] = '';
-				}
-			}
+      $params['_type'] = $default_type;
+      $ret = smarty_function_query($params, $smarty);
 
-			$params['_type'] = $default_type;
-			if ( $params['_ajax'] == 'y') unset ($params['_anchor']);
-			$ret = smarty_function_query($params, $smarty);
-		}
+      if ( $params['_tag'] == 'y' ) {
 
-		if ( $params['_tag'] == 'y' ) {
-
-			if ( empty($params['_disabled']) ) {
-				if ( $params['_ajax'] == 'y' && $params['_script'] == '' ) {
-					require_once $smarty->_get_plugin_filepath('block', 'ajax_href');
-					if ( ! isset($params['_htmlelement']) ) $params['_htmlelement'] = 'tiki-center';
-					if ( ! isset($params['_onclick']) ) $params['_onclick'] = '';
-					if ( ! isset($params['_template']) ) {
+        if ( $params['_ajax'] == 'y' && $params['_script'] == '' ) {
+          require_once $smarty->_get_plugin_filepath('block', 'ajax_href');
+          if ( ! isset($params['_htmlelement']) ) $params['_htmlelement'] = 'tiki-center';
+          if ( ! isset($params['_template']) ) {
 						$params['_template'] = basename($_SERVER['PHP_SELF'], '.php').'.tpl';
 						if ( $params['_template'] == 'tiki-index.tpl' ) $params['_template'] = 'tiki-show_page.tpl';
 					}
-					if ( ! file_exists('templates/'.$params['_template']) || $params['_template'] == 'noauto' ) {
-						$params['_htmlelement'] = '';
-						$params['_template'] = '';
+          if ( ! file_exists('templates/'.$params['_template']) || $params['_template'] == 'noauto' ) {
+            $params['_htmlelement'] = '';
+            $params['_template'] = '';
+          }
+          $ret = smarty_block_ajax_href(
+            array('template' => $params['_template'], 'htmlelement' => $params['_htmlelement']),
+            $ret,
+            $smarty,
+            false
+          );
+        } else {
+          $ret = 'href="'.$ret.'"';
+        }
+
+        if ( isset($params['_icon']) ) {
+          if ( ! isset($params['_title']) && $content != '' ) $params['_title'] = $content;
+          require_once $smarty->_get_plugin_filepath('function', 'icon');
+
+          $icon_params = array('_id' => $params['_icon'], '_type' => $default_icon_type);
+          if ( isset($params['_alt']) ) {
+            $icon_params['alt'] = $params['_alt'];
+          } elseif ( isset($params['_title']) ) {
+            $icon_params['alt'] = $params['_title'];
+            $icon_params['title'] = ''; // will already be included in the surrounding A tag
+          }
+
+          if ( isset($params['_menu_text']) && $params['_menu_text'] == 'y' ) {
+            $icon_params['_menu_text'] = $params['_menu_text'];
+            $icon_params['title'] = $params['_title']; // Used as the menu text
+            $params['_title'] = ''; // will already be displayed as the menu text
+          }
+          if ( isset($params['_menu_icon']) ) $icon_params['_menu_icon'] = $params['_menu_icon'];
+          if ( isset($params['_icon_class']) ) $icon_params['class'] = $params['_icon_class'];
+
+          $content = smarty_function_icon($icon_params, $smarty).$content;
+        }
+
+        $link = ( ( isset($params['_class']) && $params['_class'] != '' ) ? 'class="'.$params['_class'].'" ' : '' )
+              . ( ( isset($params['_style']) && $params['_style'] != '' ) ? 'style="'.$params['_style'].'" ' : '' )
+              . ( ( isset($params['_title']) && $params['_title'] != '' ) ? 'title="'.str_replace('"','\"',$params['_title']).'" ' : '' );
+				foreach ( $params as $k => $v ) {
+					if ( strlen($k) > 3 && substr($k, 0, 3) == '_on' ) {
+						$link .= htmlentities(substr($k, 1)).'="'.$v.'" '; // $v should be already htmlentitized in the template
+						unset($params[$k]);
 					}
-					$ret = smarty_block_ajax_href(
-							array('template' => $params['_template'], 'htmlelement' => $params['_htmlelement'], '_onclick' => $params['_onclick'], '_anchor'=> $anchor),
-							$ret,
-							$smarty,
-							false
-							);
-							unset($params['_onclick']);
-				} else {
-					$ret = 'href="'.$ret.'"';
 				}
-			}
+        $link .= $ret;
 
-			if ( isset($params['_icon']) ) {
-				if ( ! isset($params['_title']) && $content != '' ) $params['_title'] = $content;
-				require_once $smarty->_get_plugin_filepath('function', 'icon');
+        $ret = "<a $link>".$content.'</a>';
 
-				$icon_params = array('_id' => $params['_icon'], '_type' => $default_icon_type);
-				if ( isset($params['_alt']) ) {
-					$icon_params['alt'] = $params['_alt'];
-				} elseif ( isset($params['_title']) ) {
-					$icon_params['alt'] = $params['_title'];
-					$icon_params['title'] = ''; // will already be included in the surrounding A tag
-				}
+        if ( $params['_sort_field'] != '' ) {
+          require_once $smarty->_get_plugin_filepath('function', 'show_sort');
+          $ret .= "<a $link style='text-decoration:none;'>".smarty_function_show_sort(
+            array('sort' => $params['_sort_arg'], 'var' => $params['_sort_field']),
+            $smarty
+          ).'</a>';
+        }
+      }
+    } else {
+      $params = array('_type' => $default_type);
+      $ret = smarty_function_query($params, $smarty);
+    }
 
-				if ( isset($params['_menu_text']) && $params['_menu_text'] == 'y' ) {
-					$icon_params['_menu_text'] = $params['_menu_text'];
-					$icon_params['title'] = $params['_title']; // Used as the menu text
-					$params['_title'] = ''; // will already be displayed as the menu text
-				}
-				if ( isset($params['_menu_icon']) ) $icon_params['_menu_icon'] = $params['_menu_icon'];
-				if ( isset($params['_icon_class']) ) $icon_params['class'] = $params['_icon_class'];
-				
-				if ( isset($params['_width']) ) $icon_params['width'] = $params['_width'];
-				if ( isset($params['_height']) ) $icon_params['height'] = $params['_height'];
-				
-				$content = smarty_function_icon($icon_params, $smarty);
-			}
-
-			$link = ( ( isset($params['_class']) && $params['_class'] != '' ) ? 'class="'.$params['_class'].'" ' : '' )
-				. ( ( isset($params['_style']) && $params['_style'] != '' ) ? 'style="'.$params['_style'].'" ' : '' )
-				. ( ( isset($params['_title']) && $params['_title'] != '' ) ? 'title="'.str_replace('"','\"',$params['_title']).'" ' : '' );
-			foreach ( $params as $k => $v ) {
-				if ( strlen($k) > 3 && substr($k, 0, 3) == '_on' ) {
-					$link .= htmlentities(substr($k, 1)).'="'.$v.'" '; // $v should be already htmlentitized in the template
-					unset($params[$k]);
-				}
-			}
-			$link .= $ret;
-
-			$ret = "<a $link>".$content.'</a>';
-
-			if ( !empty($params['_sort_field']) ) {
-				require_once $smarty->_get_plugin_filepath('function', 'show_sort');
-				$ret .= "<a $link style='text-decoration:none;'>".smarty_function_show_sort(
-						array('sort' => $params['_sort_arg'], 'var' => $params['_sort_field']),
-						$smarty
-						).'</a>';
-			}
-		}
-	} else {
-		$params = array('_type' => $default_type);
-		$ret = smarty_function_query($params, $smarty);
-	}
-
-	return $ret;
+    return $ret;
 }

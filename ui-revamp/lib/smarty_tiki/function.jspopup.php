@@ -21,3 +21,7 @@ function smarty_function_jspopup($params, &$smarty)
     if(!isset($width)) $width='600';
     print("href='#' onclick='javascript:window.open(\"$href\",\"\",\"menubar=$menubar,scrollbars=$scrollbars,resizable=$resizable,height=$height,width=$width\");' ");
 }
+
+
+
+?>

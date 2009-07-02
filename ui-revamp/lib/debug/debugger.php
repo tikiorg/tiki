@@ -191,7 +191,10 @@ class Debugger extends ResultType
     $this->dmsgs[] = array("timestamp" => time(), "msg" => $this->str_var_dump($v));
   }
 }
+
 global $debugger;
 $debugger = new Debugger();
 // First message (will not appear if no user messages wil be added)
 $debugger->msg("Debugger startup OK. ".count($debugger->commands)." plugable commands found");
+
+?>

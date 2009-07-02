@@ -4,3 +4,4 @@ if ($skipmsg) {
 } else {
     $a = &new $ec($message, $code, $mode, $options, $userinfo);
 }
+?>

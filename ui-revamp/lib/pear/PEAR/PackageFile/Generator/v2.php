@@ -1528,3 +1528,4 @@ class PEAR_PackageFile_Generator_v2_XML_Util {
         return PEAR::raiseError($msg, $code);
     }
 }
+?>

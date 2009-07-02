@@ -765,3 +765,4 @@ class XML_Parser_Error extends PEAR_Error
     }
     // }}}
 }
+?>

@@ -24,3 +24,9 @@ function smarty_function_wikistructure($params, &$smarty) {
 	$html = str_replace(array('~np~', '~/np~'), '', $html);
 	return $html;
 }
+
+
+
+
+
+?>

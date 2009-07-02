@@ -31,3 +31,7 @@ function smarty_block_translation($params, $content, &$smarty)
 	}
     }
 }
+
+
+
+?>

@@ -24,3 +24,5 @@ function smarty_modifier_dbg($string, $label = '')
   $debugger->msg('Smarty log'.((strlen($label) > 0) ? ': '.$label : '').': '.$string);
   return $string;
 }
+
+?>

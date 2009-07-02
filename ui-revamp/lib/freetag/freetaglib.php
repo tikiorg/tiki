@@ -399,7 +399,7 @@ function get_objects_with_tag_combo($tagArray, $type='', $thisUser = '', $offset
      *	 - 'user' => The unique ID of the person who tagged the object with this tag.
      */ 
 	function get_tags_on_object($itemId, $type, $offset = 0, $maxRecords = -1, $user = NULL) {
-		if (!isset($itemId) || !isset($type) || empty($itemId) || empty($type) || is_array($itemId) || !is_string($type)) {
+		if (!isset($itemId) || !isset($type) || empty($itemId) || empty($type) || !is_int($itemId) || !is_string($type)) {
 			return false;
 		}
 
@@ -1179,12 +1179,11 @@ function get_objects_with_tag_combo($tagArray, $type='', $thisUser = '', $offset
     
 	function cleanup_tags() {
 		$this->query( "
-			DELETE FROM `tiki_freetagged_objects` WHERE `tagId` NOT IN(SELECT `tagId` FROM `tiki_freetags`)" );
-		$this->query('delete tfo from `tiki_freetagged_objects` tfo left join `tiki_objects` tob on (tob.`objectId`=tfo.`objectId`) where tob.`objectId` is null');
+			DELETE FROM tiki_freetagged_objects WHERE tagId NOT IN(SELECT tagId FROM tiki_freetags)" );
 		$this->query( "
-			DELETE FROM `tiki_freetags` 
-			WHERE `tagId` NOT IN(SELECT `tagId` FROM `tiki_freetagged_objects`)
-				AND `tagId` NOT IN(SELECT `objId` FROM `tiki_translated_objects` WHERE type = 'freetag')" );
+			DELETE FROM tiki_freetags 
+			WHERE tagId NOT IN(SELECT tagId FROM tiki_freetagged_objects)
+				AND tagId NOT IN(SELECT objId FROM tiki_translated_objects WHERE type = 'freetag')" );
 	    return true;
 	 }
 
@@ -1326,5 +1325,7 @@ function get_objects_with_tag_combo($tagArray, $type='', $thisUser = '', $offset
 		$this->cleanup_tags();
 	}
 }
+
 global $dbTiki;
 $freetaglib = new FreetagLib($dbTiki);
+?>

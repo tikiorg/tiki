@@ -37,3 +37,7 @@ function smarty_function_memusage($params, &$smarty)
       print (tra("Unknown"));
     }
 }
+
+
+
+?>

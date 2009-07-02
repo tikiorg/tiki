@@ -2232,3 +2232,5 @@ class PEAR_Registry extends PEAR
         return $ret;
     }
 }
+
+?>

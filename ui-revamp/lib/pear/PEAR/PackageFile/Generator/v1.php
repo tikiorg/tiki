@@ -1269,3 +1269,4 @@ class PEAR_PackageFile_Generator_v1
         return $ret;
     }
 }
+?>

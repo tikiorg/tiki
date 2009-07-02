@@ -55,3 +55,7 @@ function smarty_function_sameurl($params, &$smarty)
     }
     print($data);
 }
+
+
+
+?>

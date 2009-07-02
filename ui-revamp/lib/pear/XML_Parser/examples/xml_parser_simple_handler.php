@@ -46,9 +46,11 @@ class myHandlerSimple
         printf( 'Name is %s<br />', $data );
     }
 }
+
 $p = &new XML_Parser_Simple();
 $h = &new myHandlerSimple();
 $p->setHandlerObj($h);
 $result = $p->setInputFile('xml_parser_simple2.xml');
 $p->setMode('func');
 $result = $p->parse();
+?>

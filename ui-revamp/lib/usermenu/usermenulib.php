@@ -106,3 +106,5 @@ class UserMenuLib extends TikiLib {
 }
 global $dbTiki;
 $usermenulib = new UserMenuLib($dbTiki);
+
+?>

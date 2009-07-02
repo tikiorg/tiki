@@ -177,3 +177,4 @@ class PEAR_Installer_Role_Common
         return $roleInfo['phpextension'];
     }
 }
+?>

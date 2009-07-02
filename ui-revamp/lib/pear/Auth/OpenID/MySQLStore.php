@@ -74,3 +74,5 @@ class Auth_OpenID_MySQLStore extends Auth_OpenID_SQLStore {
         return "0x" . bin2hex($blob);
     }
 }
+
+?>

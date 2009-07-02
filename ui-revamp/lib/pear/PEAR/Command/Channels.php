@@ -734,3 +734,4 @@ password via the system\'s process list.
         $this->ui->outputData("Discovery of channel \"$channel\" succeeded", $command);
     }
 }
+?>

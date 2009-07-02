@@ -179,3 +179,4 @@ class PEAR_Task_Replace extends PEAR_Task_Common
         return $contents;
     }
 }
+?>

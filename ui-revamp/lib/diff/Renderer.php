@@ -198,3 +198,4 @@ class Text_Diff_Renderer {
     }
 
 }
+?>

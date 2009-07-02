@@ -40,3 +40,5 @@ function smarty_modifier_adjust($string, $length = 80,
     }
      
 }
+
+?>

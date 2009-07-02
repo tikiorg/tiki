@@ -50,3 +50,7 @@ function smarty_compiler_assign($tag_attrs, &$compiler) {
 
 	return "\$this->assign({$_params['var']}, {$_params['value']});";
 }
+
+/* vim: set expandtab: */
+
+?>

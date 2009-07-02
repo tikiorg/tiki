@@ -45,3 +45,4 @@ $result = $p->parse();
 if (PEAR::isError($result)) {
     print $result->getMessage() . "\n";
 }
+?>

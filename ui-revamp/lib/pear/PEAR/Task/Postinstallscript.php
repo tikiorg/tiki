@@ -326,3 +326,4 @@ class PEAR_Task_Postinstallscript extends PEAR_Task_Common
     {
     }
 }
+?>

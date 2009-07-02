@@ -310,3 +310,4 @@ class Auth_Container_DBLite extends Auth_Container
     // }}}
 
 }
+?>

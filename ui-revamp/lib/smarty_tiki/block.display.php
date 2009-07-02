@@ -24,3 +24,5 @@ function smarty_block_display($params, $content, &$smarty)
 			}
 		}
 }
+
+?>

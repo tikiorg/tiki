@@ -4348,7 +4348,10 @@ class Date_Calc
     // }}}
 
 }
+
 // }}}
+
+
 /*
  * Local variables:
  * mode: php
@@ -4357,3 +4360,4 @@ class Date_Calc
  * c-hanging-comment-ender-p: nil
  * End:
  */
+?>

@@ -18,3 +18,4 @@ function smarty_modifier_tr_if($source) {
 		return $source;
 	}
 }
+?>

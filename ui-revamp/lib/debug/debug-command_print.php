@@ -55,3 +55,5 @@ function dbg_command_factory_print()
 {
   return new DbgPrint();
 }
+
+?>

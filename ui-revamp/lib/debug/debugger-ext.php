@@ -65,3 +65,5 @@ class DebuggerCommand extends ResultType {
 // so debugger can create an instance of command handler
 // It must be called 'dbg_command_factory_[your-cmd-name]'
 // which is returns handler instance...
+
+?>

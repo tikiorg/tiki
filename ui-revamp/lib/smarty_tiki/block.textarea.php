@@ -10,8 +10,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  * smarty_block_textarea : add a textarea to a template.
  *
  * special params:
- *    _quicktags: if set to 'y', display quicktags above the textarea
- *    _enlarge: if set to 'y', display the enlarge buttons above the textarea
  *
  * usage: {textarea id='my_area' name='my_area'}{tr}My Text{/tr}{/textarea}
  *
@@ -21,13 +19,6 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	global $prefs;
 	if ( $repeat ) return;
 
-	if ( ! isset($params['_quicktags']) || $prefs['javascript_enabled'] != 'y') $params['_quicktags'] = 'n';
-/*
-	if ( ! isset($params['_wikiparsed']) ) {
-		// Quicktags implies wiki parsing
-		$params['_wikiparsed'] = $params['quicktags'];
-	}
-*/
 	if ( ! isset($params['_wysiwyg']) ) $params['_wysiwyg'] = 'n';
 	if ( isset($params['_zoom']) && $params['_zoom'] == 'n' ) {
 		$feature_template_zoom_orig = $prefs['feature_template_zoom'];
@@ -35,7 +26,7 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	}
 	if ( ! isset($params['_section']) ) {
 		global $section;
-		$params['_section'] = $section? $section: 'wiki';
+		$params['_section'] = $section;
 	}
 	if ( ! isset($params['style']) ) $params['style'] = 'width:99%';
 	$html = '';
@@ -45,17 +36,6 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 //		{editform Meat=$pagedata InstanceName='edit' ToolbarSet="Tiki"}
 //		<input type="hidden" name="wysiwyg" value="y" />
 	} else {
-		if ( $params['_quicktags'] == 'y' ) {
-			global $quicktagslib;
-			include_once ('lib/quicktags/quicktagslib.php');
-			$quicktags = $quicktagslib->list_quicktags(0, -1, 'taglabel_asc', '', $params['_section']);
-			$smarty->assign_by_ref('quicktags', $quicktags["data"]);
-		} else {
-			$smarty->clear_assign('quicktags');
-		}
-		if ( isset($params['_enlarge']) && $params['_enlarge'] == 'y' )
-			$smarty->assign_by_ref('enlarge', $params['_enlarge']);
-
 		$textarea_attributes = '';
 		foreach ( $params as $k => $v ) {
 			if ( $k == 'id' || $k == 'name' || $k == 'class' ) {
@@ -68,7 +48,7 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 		if ( $textarea_attributes != '' ) {
 			$smarty->assign('textarea_attributes', $textarea_attributes);
 		}
-		$smarty->assign_by_ref('pagedata', $content);
+		$smarty->assign('pagedata', $content);
 
 		$html .= $smarty->fetch('wiki_edit.tpl');
 

@@ -6,27 +6,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-/**
- * \brief Smarty modifier plugin to create user links with optional mouseover info
- * 
- * $Id$
- *
- * - type:     modifier
- * - name:     userlink
- * - purpose:  to return a user link
- *
- * @author 
- * @param string class (optional)
- * @param string idletime (optional)
- * @param string fullname (optional)
- * @param integer max_length (optional)
- * @return string user link
- * 
- * Syntax: {$foo|userlink[:"<class>"][:"<idletime>"][:"<fullname>"][:<max_length>]} (optional params in brackets)
- *
- * Example: {$userinfo.login|userlink:'link':::25}
- */
-
 function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set', $fullname='', $max_length=0) {
     global $tikilib, $userlib, $cachelib, $user, $prefs, $userprefslib;
 
@@ -94,13 +73,6 @@ function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set',
 				    $content .= $line."<br />";
 				}
 			    }
-				if ($prefs['feature_community_mouseover_gender'] == 'y' && $prefs['feature_community_gender'] == 'y') {
-					$gender = $userlib->get_user_preference($other_user, "gender");
-					if (!empty($gender) && $gender != 'Hidden') {
-						$content .= tra('Gender:').'&nbsp;';
-						$content .= tra($gender).'<br />';
-					}
-				}
 			    if ($prefs['feature_community_mouseover_friends'] == 'y' && $prefs['feature_friends'] == 'y') {
 				$content .= "<img src='img/icons/ico_friend.gif' />&nbsp;";
 				$content .= $tikilib->get_friends_count($other_user) . '&nbsp;&nbsp;&nbsp;';
@@ -113,7 +85,7 @@ function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set',
 			    if ($prefs['feature_community_mouseover_country'] == 'y') {
 				$country = $tikilib->get_user_preference($other_user, "country", "");
 				if ($country && $country != "Other") {
-				   $content .= "<img src='img/flags/$country.gif' /> ".tra(str_replace('_',' ',$country)) . "<br />";
+				   $content .= "<img src='img/flags/$country.gif' /> ".tra($country) . "<br />";
 				}
 					}
 					if ($prefs['feature_community_mouseover_distance'] == 'y') {
@@ -157,12 +129,7 @@ function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set',
 			    }
 
 			    if (!empty($content)) {
-			    	if ($prefs['feature_jquery'] == 'y' && $prefs['feature_jquery_tooltips'] == 'y') {
-			    		// not really mouseover, this goes in title for JQ
-			    		$mouseover = tra('User information - Click for more info').'|'.htmlspecialchars($content);
-			    	} else {
-						$mouseover = " onmouseover=\"return overlib('".addslashes($content)."',HAUTO,VAUTO,CAPTION,'<div align=\'center\'>".tra("User information - Click for more info")."</div>');\" onmouseout=\"nd()\" ";
-			    	}
+				$mouseover = " onmouseover=\"return overlib('".addslashes($content)."',HAUTO,VAUTO,CAPTION,'<div align=\'center\'>".tra("User information - Click for more info")."</div>');\" onmouseout=\"nd()\" ";
 			    }
 			}
 
@@ -172,15 +139,7 @@ function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set',
                     $cachelib->cacheItem($cacheItem, $ret);
                     return $ret;
 		} else {
-			if ($prefs['feature_jquery'] == 'y' && $prefs['feature_jquery_tooltips'] == 'y') {
-				if ($show_mouseover) {
-					$ret = "<a class='$class titletips' title=\"$mouseover\" href='tiki-user_information.php?userId=".urlencode($info['userId'])."' >$ou</a>$friend$star";
-				} else {
-					$ret = "<a class='$class' href='tiki-user_information.php?userId=".urlencode($info['userId'])."' >$ou</a>$friend$star";
-									}
-			} else {
-				$ret = "<a class='$class' $mouseover target='_top' href='tiki-user_information.php?userId=".urlencode($info['userId'])."' >$ou</a>$friend$star";
-			}
+                    $ret = "<a class='$class' $mouseover target='_top' href='tiki-user_information.php?userId=".urlencode($info['userId'])."' >$ou</a>$friend$star";
                     $cachelib->cacheItem($cacheItem, $ret);
                     return $ret;
 		}
@@ -190,3 +149,5 @@ function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set',
         return $ret;
     }
 }
+
+?>

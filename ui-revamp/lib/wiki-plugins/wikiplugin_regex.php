@@ -17,7 +17,7 @@ function wikiplugin_regex_info() {
 	return array(
 		'name' => tra('Regular Expression'),
 		'description' => tra('Takes regex expressions and parses the content between REGEX tags and replaces the text.'),
-		'prefs' => array( 'wikiplugin_regex' ),
+		'prefs' => array( 'wikiplugin_regexp' ),
 		'body' => tra('one data per line'),
 		'params' => array(
 			'search' => array(

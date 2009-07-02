@@ -495,3 +495,4 @@ class PEAR_Dependency
 
     // }}}
 }
+?>

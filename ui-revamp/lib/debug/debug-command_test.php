@@ -43,3 +43,5 @@ class DebuggerCommand_Test extends DebuggerCommand {
 function dbg_command_factory_test() {
 	return new DebuggerCommand_Test();
 }
+
+?>

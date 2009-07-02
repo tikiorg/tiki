@@ -710,3 +710,4 @@ class PEAR_DependencyDB
         }
     }
 }
+?>

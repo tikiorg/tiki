@@ -258,3 +258,4 @@ class PEAR_XMLParser
         $this->_dataStack[$this->_depth] .= $cdata;
     }
 }
+?>

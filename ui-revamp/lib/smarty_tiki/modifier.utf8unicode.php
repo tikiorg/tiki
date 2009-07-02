@@ -57,3 +57,6 @@ function smarty_modifier_utf8unicode($utf8_text) {
     }
     return $htmloutput; 
 }
+
+?>
+

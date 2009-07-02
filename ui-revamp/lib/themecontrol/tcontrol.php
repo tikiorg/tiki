@@ -175,3 +175,5 @@ class ThemeControlLib extends TikiLib {
 }
 global $dbTiki;
 $tcontrollib = new ThemeControlLib($dbTiki);
+
+?>

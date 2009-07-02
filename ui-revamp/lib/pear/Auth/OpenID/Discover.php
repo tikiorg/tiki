@@ -544,3 +544,5 @@ function Auth_OpenID_discover($uri, &$fetcher)
 
     return $result;
 }
+
+?>

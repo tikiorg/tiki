@@ -323,3 +323,4 @@ class XML_Parser_Simple extends XML_Parser
         $this->_data[$this->_depth] .= $data;
     }
 }
+?>

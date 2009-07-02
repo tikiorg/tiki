@@ -581,3 +581,4 @@ class Auth_OpenID {
                "</html>");
     }
 }
+?>

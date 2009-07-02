@@ -19,20 +19,11 @@ function smarty_modifier_kbsize($string, $bytes = false, $nb_decimals = 2)
   if ( $string == '' ) return '';
 
   // 1024 x 1024 = 1048576
-  if ( $string > 1048576 ) { 
-   $string = number_format($string/1048576,$nb_decimals);
-   $kb_string = 'M';
-  } 
-  elseif ( $string > 1024 ) { 
-   $string = number_format($string/1024,$nb_decimals);
-   $kb_string = 'K';
-  } 
-  else { 
-   $string = $string;
-   $kb_string = '';
-  }; 
-  
-  $kb_string = $kb_string.(($bytes) ? 'B' : 'b');
+  if ( $string > 1048576 ) $string = number_format($string/1048576,$nb_decimals).'&nbsp;M';
+  elseif ( $string > 1024 ) $string = number_format($string/1024,$nb_decimals).'&nbsp;K';
+  else $string = $string.'&nbsp;';
 
-  return $string.'&nbsp;'.tra($kb_string);
+  return $string.(($bytes) ? 'B' : 'b');
 }
+
+?>

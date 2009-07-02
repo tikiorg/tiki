@@ -9,8 +9,24 @@
 //this script may only be included - so its better to die if called directly.
 $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
-if (isset($_REQUEST['switchLang'])) { // check can change lang + valid lang
-	if ($prefs['change_language'] != 'y' || $prefs['feature_multilingual'] != 'y'
+// clear bl if bl is 'n' for backward compatibility
+if (isset($_REQUEST['bl']) && $_REQUEST['bl'] == 'n') {
+	unset($_REQUEST['bl']);
+}
+
+if (!empty($_SESSION['language'])) {
+	$saveLanguage = $_SESSION['language']; // if register_globals is on variable and _SESSION are the same
+}
+
+if ( $prefs['feature_detect_language'] == 'y' and !isset($u_info['prefs']['language'])) {
+	$browser_language = detect_browser_language();
+	if ( ! empty($browser_language) ) {
+		$prefs['language'] = $browser_language;
+	}
+}
+
+if (isset($_REQUEST['switchLang'])) {
+	if ($prefs['change_language'] != 'y'
 		|| !preg_match("/[a-zA-Z-_]*$/", $_REQUEST['switchLang'])
 		|| !file_exists('lang/'.$_REQUEST['switchLang'].'/language.php'))
 		unset($_REQUEST['switchLang']);
@@ -20,27 +36,22 @@ if (isset($_REQUEST['switchLang'])) { // check can change lang + valid lang
 	}
 }
 
-//echo "U_INFO:".$u_info['prefs']['language']." S_PREFS:".$_SESSION['s_prefs']['language']." PREFS:".$prefs['language'];
-if (isset($_REQUEST['switchLang'])) {
-	$prefs['language'] = $_REQUEST['switchLang'];
-	if ($prefs['feature_best_language'] == 'y' && empty($_REQUEST['bl'])) {
-		$_REQUEST['bl'] = 'y';
-	}
-	if ($user && $prefs['feature_userPreferences'] == 'y') {
+if ( $prefs['feature_userPreferences'] == 'y' && $user ) {
+	if ( $prefs['change_language'] == 'y' && isset($_REQUEST['switchLang']) ) {
+		$prefs['language'] = $_REQUEST['switchLang'];
 		$tikilib->set_user_preference($user, 'language', $prefs['language']);
-	} else {
-		$_SESSION['language'] = $prefs['language'];
-	}
-} elseif ( $prefs['feature_multilingual'] == 'y' && $prefs['change_language'] == 'y' && $prefs['feature_detect_language'] == 'y' and !isset($u_info['prefs']['language'])and !isset($_SESSION['s_prefs']['language'])) {
-	$browser_language = detect_browser_language();
-	if ( ! empty($browser_language) ) {
-		$prefs['language'] = $browser_language;
 	}
 }
 
-// clear bl if bl is 'n' for backward compatibility
-if (isset($_REQUEST['bl']) && $_REQUEST['bl'] == 'n') {
-	unset($_REQUEST['bl']);
+if (!$user) {
+	if (isset($_REQUEST['switchLang'])) {
+		$prefs['language'] = $_REQUEST['switchLang'];
+		$_SESSION['language'] = $prefs['language'];
+	} elseif  (!empty($saveLanguage)) { // users not logged that change the preference
+		$prefs['language'] = $saveLanguage;
+	}
+} elseif (!empty($saveLanguage) && $prefs['feature_userPreferences'] != 'y' && $prefs['change_language'] == 'y') {
+	$prefs['language'] = $saveLanguage;
 }
 
 if ( $prefs['lang_use_db'] != 'y' ) {

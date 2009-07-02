@@ -30,3 +30,5 @@ function smarty_modifier_duration_short($string) {
   }
   return $result;
 }
+
+?>

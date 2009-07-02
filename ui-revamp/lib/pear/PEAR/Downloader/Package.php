@@ -1850,3 +1850,4 @@ class PEAR_Downloader_Package
         return $info;
     }
 }
+?>

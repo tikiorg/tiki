@@ -31,3 +31,4 @@
  * @since      Class available since Release 1.7.0
  */
 class PEAR_Installer_Role_Www extends PEAR_Installer_Role_Common {}
+?>

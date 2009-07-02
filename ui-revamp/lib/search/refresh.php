@@ -62,3 +62,5 @@ function refresh_search_index() {
     call_user_func ($location);
   }
 }
+
+?>

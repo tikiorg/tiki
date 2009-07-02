@@ -1107,6 +1107,7 @@ class PEAR_Error
 
     // }}}
 }
+
 /*
  * Local Variables:
  * mode: php
@@ -1114,3 +1115,4 @@ class PEAR_Error
  * c-basic-offset: 4
  * End:
  */
+?>

@@ -11,3 +11,5 @@ function smarty_modifier_tiki_long_datetime($string) {
 	global $prefs;
 	return smarty_modifier_tiki_date_format($string, $prefs['long_date_format'].' '.$prefs['long_time_format']);
 }
+
+?>

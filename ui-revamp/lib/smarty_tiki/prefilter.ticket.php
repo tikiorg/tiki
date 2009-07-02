@@ -34,3 +34,4 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
                            '$2?{if $ticket}ticket={$ticket}&{/if}$4', $source);
     return $source;
  }
+?>

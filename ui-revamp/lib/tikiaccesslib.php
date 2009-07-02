@@ -118,30 +118,27 @@ class TikiAccessLib extends TikiLib {
 	}
 
 	// you must call ask_ticket('error') before calling this
-	function display_error($page, $errortitle="", $errortype="", $enableRedirect = true, $message='') {
-		global $smarty, $wikilib, $prefs, $tikiroot, $userlib, $user;
+	function display_error($page, $errortitle="", $errortype="", $enableRedirect = true) {
+		global $smarty, $wikilib, $prefs;
 		require_once ('tiki-setup.php');
 		include_once('lib/wiki/wikilib.php');
 
 		// Don't redirect when calls are made for web services
-		if ( $enableRedirect && $prefs['feature_redirect_on_error'] == 'y' && ! $this->is_machine_request() && ! $this->is_xajax_request() && $tikiroot.$prefs['tikiIndex'] != $_SERVER['PHP_SELF'] && $page != $userlib->get_user_default_homepage2($user) ) {
+		if ( $enableRedirect && $prefs['feature_redirect_on_error'] == 'y' && ! $this->is_machine_request() && ! $this->is_xajax_request() ) {
 			$this->redirect($prefs['tikiIndex']);
 		}
 
 		$detail = array(
 			'code' => $errortype,
-			'errortitle' => $errortitle,
-			'message' => $message,
+			'message' => $errortitle,
 		);
 
 		if ( !isset($errortitle) ) {
 			$detail['message'] = tra('unknown error');
-			$detail['errortitle'] = $detail['message'];
 		}
 
-		// Display the template		
-		$smarty->assign('msg', $detail['message']);
-		$smarty->assign('errortitle', $detail['errortitle']);
+		// Display the template
+		$smarty->assign('msg', $errortitle);
 		switch( $errortype ) {
 		case '404':
 			header ("HTTP/1.0 404 Not Found");
@@ -161,8 +158,7 @@ class TikiAccessLib extends TikiLib {
 		if( $this->is_serializable_request() ) {
 			$this->output_serialized( $detail );
 		} else {
-			$smarty->assign('errortitle', $detail['errortitle']);
-			$smarty->assign('msg', $detail['message']);
+			$smarty->assign('errortitle', $detail['message']);
 			$smarty->assign('errortype', $detail['code']);
 			if( isset( $detail['page'] ) )
 				$smarty->assign('page', $page);
@@ -387,4 +383,7 @@ class TikiAccessLib extends TikiLib {
 		}
 	}
 }
+
 $access = new TikiAccessLib($dbTiki);
+
+?>

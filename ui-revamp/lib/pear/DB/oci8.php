@@ -1152,3 +1152,5 @@ class DB_oci8 extends DB_common
  * c-basic-offset: 4
  * End:
  */
+
+?>

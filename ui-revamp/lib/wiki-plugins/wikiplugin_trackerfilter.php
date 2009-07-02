@@ -127,7 +127,6 @@ function wikiplugin_trackerfilter($data, $params) {
 		return $filters;
 	}
 	$smarty->assign_by_ref('filters', $filters);
-	//echo '<pre>';print_r($filters); echo '</pre>';
 	$smarty->assign_by_ref('trackerId', $trackerId);
 	$smarty->assign_by_ref('line', $line);
 	static $iTrackerFilter = 0;
@@ -231,27 +230,6 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', $for
 					$opts[] = $opt;
 				}
 				break;
-			case 'c': // checkbox
-				$opt['id'] = 'y';
-				$opt['name'] = 'Yes';
-				if (!empty($_REQUEST['f_'.$fieldId]) && $_REQUEST['f_'.$fieldId] == 'y') {
-					$opt['selected'] = 'y';
-					$selected = true;
-				} else {
-					$opt['selected'] = 'n';
-				}
-				$opts[] = $opt;
-				$opt['id'] = 'n';
-				$opt['name'] = 'No';
-				if (!empty($_REQUEST['f_'.$fieldId]) && $_REQUEST['f_'.$fieldId] == 'n') {
-					$opt['selected'] = 'y';
-					$selected = true;
-				} else {
-					$opt['selected'] = 'n';
-				}
-				$opts[] = $opt;
-				$formats[$fieldId] = 'r';
-				break;
 			case 'n': // numeric
 			case 'D': // drop down + other
 			case 't': // text
@@ -261,7 +239,6 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', $for
 			case 'y': // country
 			case 'w': //dynamic item lists
 			case 'r': //item link
-			case 'k': //page selector
 				if (isset($status)) {
 					$res = $trklib->list_tracker_field_values($trackerId, $fieldId, $status);
 				} else {
@@ -278,7 +255,7 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', $for
 					}
 					$opts[] = $opt;
 				}
-				break;
+				break;		
 		
 			default:
 				return tra('tracker field type not processed yet').' '.$field['type'];
@@ -288,3 +265,4 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', $for
 	}
 	return $filters;
 }
+?>

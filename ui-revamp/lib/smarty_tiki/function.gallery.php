@@ -36,3 +36,4 @@ function smarty_function_gallery($params, &$smarty)
     } 
     print('</div>');
 }    
+?>

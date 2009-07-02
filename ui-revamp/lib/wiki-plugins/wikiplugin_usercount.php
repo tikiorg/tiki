@@ -13,7 +13,6 @@ function wikiplugin_usercount_help() {
 function wikiplugin_usercount_info() {
 	return array(
 		'name' => tra('User Count'),
-		'documentation' => 'PluginUserCount',		
 		'description' => tra('Displays the number of registered users'),
 		'prefs' => array( 'wikiplugin_usercount' ),
 		'body' => tra('Group name'),
@@ -33,3 +32,5 @@ function wikiplugin_usercount($data, $params) {
 
         return $numusers;
 }
+
+?>

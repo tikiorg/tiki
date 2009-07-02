@@ -17,3 +17,4 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 function smarty_modifier_max_user_inscriptions( $text ) { 
   return substr($text,0,strpos($text,'#'));
 }
+?>

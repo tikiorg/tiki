@@ -329,10 +329,6 @@ class WikiLib extends TikiLib {
 		if ($prefs['wikiHomePage'] == $oldName) {
 			$tikilib->set_preference('wikiHomePage', $newName);
 		}
-		if ($prefs['feature_trackers'] == 'y') {
-			global $trklib; include_once('lib/trackers/trackerlib.php');
-			$trklib->rename_page($oldName, $newName);
-		}
 
 		return true;
 	}
@@ -856,36 +852,18 @@ class WikiLib extends TikiLib {
 
 	    return $this->query($query, $bindvals) ? true : false;
 	}
-	function sefurl($page, $with_next='') {
-		global $prefs, $smarty;
+	function sefurl($page) {
+		global $prefs;
 		if( basename( $_SERVER['PHP_SELF'] ) == 'tiki-all_languages.php' ) {
 			return 'tiki-all_languages.php?page='.urlencode($page);
 		}
 
-		$href = 'tiki-index.php?page='.urlencode($page);
-		if ($with_next) {
-			$href .= '&amp;';
-		}
 		if ($prefs['feature_sefurl'] == 'y') {
-			include_once('tiki-sefurl.php');
-			return  filter_out_sefurl($href, $smarty, 'wiki');
+			return urlencode($page);
 		} else {
-			return $href;
+			return 'tiki-index.php?page='.urlencode($page);
 		}
 	}
-
-	function url_for_operation_on_a_page($script_name, $page, $with_next) {
-		$href = "$script_name?page=".urlencode($page);
-		if ($with_next) {
-			$href .= '&amp;';
-		}
-		return $href;
-	}
-
-	function editpage_url($page, $with_next) {
-		return $this->url_for_operation_on_a_page('tiki-editpage.php', $page, $with_next);
-	}
-
 	function move_attachments($old, $new) {
 		$query = 'update `tiki_wiki_attachments` set `page`=? where `page`=?';
 		$this->query($query, array($new, $old));

@@ -83,9 +83,7 @@ function smarty_block_pagination_links($params, $url, &$smarty, $repeat) {
 	} else {
 		$nb_pages = ceil($params['cant'] / $params['step']);
 	}
-
-	if ( $nb_pages == 0 || ( $nb_pages == 1 && $prefs['pagination_hide_if_one_page'] == 'y' ) ) return '';
-
+	if ( $nb_pages == 0 ) return '';
 	if ( empty($url) || preg_match('/^\s*$/', $url) ) {
 		$url = smarty_function_query(array('_type' => $default_type), $smarty);
 	}
@@ -251,3 +249,5 @@ function smarty_block_pagination_links($params, $url, &$smarty, $repeat) {
 	}
 	return $html;
 }
+
+?>

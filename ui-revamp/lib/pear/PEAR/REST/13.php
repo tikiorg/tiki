@@ -277,3 +277,4 @@ class PEAR_REST_13 extends PEAR_REST_10
         return $this->_returnDownloadURL($base, $package, $release, $info, $found, $skippedphp, $channel);
     }
 }
+?>

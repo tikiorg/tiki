@@ -220,3 +220,4 @@ class PEAR_Frontend extends PEAR
     {
     }
 }
+?>

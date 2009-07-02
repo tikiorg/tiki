@@ -51,7 +51,9 @@ class myParser2 extends XML_Parser_Simple
         printf( 'Name is %s<br />', $data );
     }
 }
+
 $p = &new myParser2();
 $result = $p->setInputFile('xml_parser_simple2.xml');
 $p->setMode('func');
 $result = $p->parse();
+?>

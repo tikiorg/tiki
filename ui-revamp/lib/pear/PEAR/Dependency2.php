@@ -1296,3 +1296,4 @@ class PEAR_Dependency2
             $this->_currentPackage, true)));
     }
 }
+?>

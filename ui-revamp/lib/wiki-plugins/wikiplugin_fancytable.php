@@ -111,3 +111,5 @@ function wikiplugin_fancytable($data, $params) {
 
 	return $wret;
 }
+
+?>

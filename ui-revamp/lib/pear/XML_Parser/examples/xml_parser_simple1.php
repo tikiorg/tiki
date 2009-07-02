@@ -42,6 +42,9 @@ class myParser extends XML_Parser_Simple
         print '<br />';
     }
 }
+
 $p = &new myParser();
+
 $result = $p->setInputFile('xml_parser_simple1.xml');
 $result = $p->parse();
+?>

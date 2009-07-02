@@ -62,3 +62,5 @@ class DbgSPrint extends DebuggerCommand {
 function dbg_command_factory_sprint() {
 	return new DbgSPrint();
 }
+
+?>

@@ -394,3 +394,4 @@ class PEAR_REST
         return $data;
     }
 }
+?>

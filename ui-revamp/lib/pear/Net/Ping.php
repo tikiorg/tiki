@@ -1227,4 +1227,5 @@ exit;
     } /* function getLoss() */
 
 } /* class Net_Ping_Result */
+?>
 

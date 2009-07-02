@@ -29,3 +29,5 @@ function smarty_modifier_iconify($string, $filetype = null)
   ), $smarty);
 
 }
+
+?>

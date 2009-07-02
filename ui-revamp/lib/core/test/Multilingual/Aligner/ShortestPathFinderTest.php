@@ -1,6 +1,6 @@
 <?php
 
-class Multilingual_Aligner_ShortestPathFinderTest extends TikiTestCase
+class Multilingual_Aligner_ShortestPathFinderTest extends PHPUnit_Framework_TestCase
 {
 
    ////////////////////////////////////////////////////////////////

@@ -12,7 +12,6 @@ function wikiplugin_sub_help() {
 function wikiplugin_sub_info() {
 	return array(
 		'name' => tra( 'Subscript' ),
-		'documentation' => 'PluginSub',		
 		'description' => tra('Displays text in subscript.'),
 		'prefs' => array( 'wikiplugin_sub' ),
 		'body' => tra('text'),
@@ -28,3 +27,5 @@ function wikiplugin_sub($data, $params)
         extract ($params,EXTR_SKIP);
 	return "<sub>$data</sub>";
 }
+
+?>

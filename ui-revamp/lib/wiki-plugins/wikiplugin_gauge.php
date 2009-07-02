@@ -25,7 +25,6 @@ function wikiplugin_gauge_help() {
 function wikiplugin_gauge_info() {
 	return array(
 		'name' => tra('Gauge'),
-		'documentation' => 'PluginGauge',
 		'description' => tra('Displays a graphical gauge'),
 		'prefs' => array('wikiplugin_gauge'),
 		'body' => tra('description'),
@@ -181,3 +180,5 @@ function wikiplugin_gauge($data, $params) {
 	$html .= "</table>";
 	return $html;
 }
+
+?>

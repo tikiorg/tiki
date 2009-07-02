@@ -117,3 +117,5 @@ function smarty_function_jscalendar_body($params, &$smarty) {
 	return $back;
 
 }
+
+?>

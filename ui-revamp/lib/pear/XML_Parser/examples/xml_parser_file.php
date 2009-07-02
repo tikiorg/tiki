@@ -46,6 +46,9 @@ class myParser extends XML_Parser
         printf('handle end tag: %s<br />', $name);
     }
 }
+
 $p = &new myParser();
+
 $result = $p->setInputFile('xml_parser_file.xml');
 $result = $p->parse();
+?>

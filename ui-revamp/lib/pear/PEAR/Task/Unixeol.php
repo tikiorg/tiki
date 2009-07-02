@@ -80,3 +80,4 @@ class PEAR_Task_Unixeol extends PEAR_Task_Common
         return preg_replace("/\r\n|\n\r|\r|\n/", "\n", $contents);
     }
 }
+?>

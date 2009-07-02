@@ -3,9 +3,8 @@
 function wikiplugin_rcontent_info() {
 	return array(
 		'name' => tra( 'Random Dynamic Content' ),
-		'documentation' => 'PluginRcontent',			
 		'description' => tra( 'Includes random content from the dynamic content system.' ),
-		'prefs' => array( 'feature_dynamic_content', 'wikiplugin_rcontent' ),
+		'prefs' => array( 'feature_dynamic_content' ),
 		'params' => array(
 			'id' => array(
 				'required' => true,
@@ -23,3 +22,5 @@ function wikiplugin_rcontent( $data, $params) {
 	if( $params['id'] )
 		return $tikilib->get_random_content((int) $params['id']);
 }
+
+?>

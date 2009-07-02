@@ -29,3 +29,4 @@ function smarty_modifier_how_many_user_inscriptions( $text ) {
   
   return $nb;
 }
+?>

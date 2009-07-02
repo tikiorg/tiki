@@ -57,3 +57,5 @@ function wikiplugin_sort($data, $params) {
 	$data = trim($data);
 	return $data;
 }
+
+?>

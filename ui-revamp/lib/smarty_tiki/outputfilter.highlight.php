@@ -53,23 +53,23 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
     }
 
     $matches = array();
-    if ( strstr($source, 'id="col3"') ) {
+    if ( strstr($source, 'id="rightcolumn"') ) {
 
 	    if ( function_exists('mb_eregi') ) {
 		    // UTF8 support enabled
-		    mb_eregi('^(.*\s+id="tiki-center"[^>]*>)(.*)(<div[^>]*\s+id="col3".*)$', $source, $matches);
+		    mb_eregi('^(.*\s+id="centercolumn"[^>]*>)(.*)(<td[^>]*\s+id="rightcolumn".*)$', $source, $matches);
 	    } else {
 		    // This may not work at all with UTF8 chars
-		    preg_match('~(.* id="tiki-center"[^>]*>)(.*)(<div[^>]* id="col3".*)~xsi', $source, $matches);
+		    preg_match('~(.* id="centercolumn"[^>]*>)(.*)(<td[^>]* id="rightcolumn".*)~xsi', $source, $matches);
 	    }
 
     } elseif ( function_exists('mb_eregi') ) {
-    	if ( ! mb_eregi('^(.*\s+id="tiki-center"[^>]*>)(.*)$', $source, $matches) )
-				return $source;
-		} elseif ( ! preg_match('~(.* id="tiki-center"[^>]*>)(.*)~xsi', $source, $matches) ) {
-			return $source;
-		} else {
-			$matches[3] = '';
+    	if ( ! mb_eregi('^(.*\s+id="centercolumn"[^>]*>)(.*)$', $source, $matches) )
+		return $source;
+    } elseif ( ! preg_match('~(.* id="centercolumn"[^>]*>)(.*)~xsi', $source, $matches) ) {
+    	return $source;
+    } else {
+	 $matches[3] = '';
     }
 
 	// Avoid highlight parsing in unknown cases where $matches[2] is empty, which will result in an empty page.
@@ -113,13 +113,11 @@ function _enlightColor($matches) {
  // helper function
  // q= for Google, p= for Yahoo
  function _refererhi() {
-	 if (isset($_SERVER['HTTP_REFERER'])) {
-		 $referer = parse_url($_SERVER['HTTP_REFERER']);
-	 }
+     $referer = parse_url($_SERVER['HTTP_REFERER']);
      if (empty($referer['query'])) {
          return '';
      }
-     TikiLib::parse_str($referer['query'],$vars);
+     parse_str($referer['query'],$vars);
      if (isset($vars['q'])) {
          return $vars['q'];
      } else if (isset($vars['p'])) {
@@ -127,3 +125,4 @@ function _enlightColor($matches) {
      }
      return '';
  }
+?>

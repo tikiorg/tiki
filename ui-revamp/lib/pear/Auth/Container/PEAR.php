@@ -112,3 +112,4 @@ class Auth_Container_Pear extends Auth_Container
     // }}}
 
 }
+?>

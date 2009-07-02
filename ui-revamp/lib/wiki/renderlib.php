@@ -42,7 +42,6 @@ class WikiRenderer
 	public $canEdit = null;
 	public $canUndo = null;
 	private $canSlideshow = null;
-	public $trads = null;	// translated pages
 
 	function __construct( $info, $user ) // {{{
 	{
@@ -208,8 +207,8 @@ class WikiRenderer
 		include_once('lib/multilingual/multilinguallib.php');
 
 		if( $this->info['lang'] && $this->info['lang'] != 'NULL') { //NULL is a temporary patch
-			$this->trads = $multilinguallib->getTranslations('wiki page', $this->info['page_id'], $this->page, $this->info['lang']);
-			$this->smartyassign('trads', $this->trads);
+			$trads = $multilinguallib->getTranslations('wiki page', $this->info['page_id'], $this->page, $this->info['lang']);
+			$this->smartyassign('trads', $trads);
 			$pageLang = $this->info['lang'];
 			$this->smartyassign('pageLang', $pageLang);
 
@@ -245,9 +244,9 @@ class WikiRenderer
 
 	private function setupBacklinks() // {{{
 	{
-		global $prefs, $wikilib, $tiki_p_view_backlink;
+		global $prefs, $wikilib, $tiki_p_view_backlinks;
 
-		if ( $prefs['feature_backlinks'] == 'y' && $tiki_p_view_backlink == 'y') {
+		if ( $prefs['feature_backlinks'] == 'y' && $tiki_p_view_backlinks == 'y') {
 			$backlinks = $wikilib->get_backlinks($this->page);
 			$this->smartyassign('backlinks', $backlinks);
 
@@ -523,14 +522,14 @@ class WikiRenderer
 			$this->smartyassign('approvedPageName', $approvedPageName);	
 			$approvedPageExists = $tikilib->page_exists($approvedPageName);
 			$this->smartyassign('approvedPageExists', $approvedPageExists);
-		} elseif ($prefs['wikiapproval_approved_category'] > 0 && !empty($cats) && in_array($prefs['wikiapproval_approved_category'], $cats)) {
+		} elseif ($prefs['wikiapproval_approved_category'] > 0 && in_array($prefs['wikiapproval_approved_category'], $cats)) {
 			$stagingPageName = $prefs['wikiapproval_prefix'] . $this->page;
 			$this->smartyassign('needsStaging', 'y');
 			$this->smartyassign('stagingPageName', $stagingPageName);	
 			if ($tikilib->user_has_perm_on_object($this->user,$stagingPageName,'wiki page','tiki_p_edit','tiki_p_edit_categorized')) {
 				$this->smartyassign('canEditStaging', 'y');
 			} 	
-		} elseif ($prefs['wikiapproval_staging_category'] > 0 && !empty($cats) && in_array($prefs['wikiapproval_staging_category'], $cats) && !$tikilib->page_exists($prefs['wikiapproval_prefix'] . $this->page)) {
+		} elseif ($prefs['wikiapproval_staging_category'] > 0 && in_array($prefs['wikiapproval_staging_category'], $cats) && !$tikilib->page_exists($prefs['wikiapproval_prefix'] . $this->page)) {
 			$this->smartyassign('needsFirstApproval', 'y');		
 		}
 		if ($prefs['wikiapproval_outofsync_category'] == 0 || $prefs['wikiapproval_outofsync_category'] > 0 && in_array($prefs['wikiapproval_outofsync_category'], $cats)) {

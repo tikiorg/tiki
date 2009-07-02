@@ -86,3 +86,4 @@ function smarty_function_tikicon($params, &$smarty)
 	//Still didn't find it! Well lets output something
 	return output_icon($params, "broken.".$params['igroup']."/".$params['iname']);		 
 }
+?>

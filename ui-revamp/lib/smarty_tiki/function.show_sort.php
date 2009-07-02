@@ -38,3 +38,4 @@ function smarty_function_show_sort($params, &$smarty) {
 		}
 	}
 }
+?>

@@ -5,12 +5,11 @@ function wikiplugin_googleanalytics_info() {
 	return array(
 		'name' => tra('Google Analytics'),
 		'description' => tra('Add the tracking code for Google Analytics.'),
-		'prefs' => array( 'wikiplugin_googleanalytics' ),
 		'params' => array(
 			'account' => array(
-				'required' => true,
-				'name' => tra('Account number'),
-				'description' => tra('The account number for the site.'),
+			'required' => true,
+			'name' => tra('Account number'),
+			'description' => tra('The account number for the site.'),
 			),
 		),
 	);

@@ -506,3 +506,5 @@ class DB_dbase extends DB_common
  * c-basic-offset: 4
  * End:
  */
+
+?>

@@ -41,22 +41,17 @@ function wikiplugin_box_info() {
 			'align' => array(
 				'required' => false,
 				'name' => tra('Text Alignment'),
-				'description' => 'left|right|center',
+				'description' => tra('left|right|center'),
 			),
 			'float' => array(
 				'required' => false,
 				'name' => tra('Float Position'),
-				'description' => 'left|right' . ', ' . tra('for box with width lesser than 100%, make text wrap around the box.'),
+				'description' => tra('left|right, for box with width lesser than 100%, make text wrap around the box.'),
 			),
 			'class' => array(
 				'required' => false,
 				'name' => tra('CSS Class'),
 				'description' => tra('Apply custom CSS class to the box.'),
-			),
-			'id' => array(
-				'required' => false,
-				'name' => tra('ID'),
-				'description' => tra('ID'),
 			),
 		),
 	);
@@ -99,3 +94,5 @@ function wikiplugin_box($data, $params) {
 	//$data = $tikilib->parse_data($data);
 	return $begin . $data . $end;
 }
+
+?>

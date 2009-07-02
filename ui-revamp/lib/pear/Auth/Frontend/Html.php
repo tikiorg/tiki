@@ -138,3 +138,5 @@ class Auth_Frontend_Html {
     // }}}
 
 }
+
+?>

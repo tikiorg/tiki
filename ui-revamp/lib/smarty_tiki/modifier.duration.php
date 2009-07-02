@@ -78,3 +78,5 @@ function smarty_modifier_duration($string, $long=true)
   
   return implode(' ',$result);
 }
+
+?>

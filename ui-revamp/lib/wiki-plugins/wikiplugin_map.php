@@ -14,7 +14,6 @@ function wikiplugin_map_help() {
 function wikiplugin_map_info() {
 	return array(
 		'name' => tra('Map'),
-		'documentation' => 'PluginMap',	
 		'description' => tra('Displays a map'),
 		'prefs' => array( 'feature_maps', 'wikiplugin_map' ),
 		'params' => array(
@@ -89,3 +88,5 @@ function wikiplugin_map($data, $params) {
 	}
 	return $map;
 }
+
+?>

@@ -11,3 +11,4 @@ function smarty_block_itemfield($params, $content, &$smarty, &$repeat) {
 		if (($res = wikiplugin_trackeritemfield($content, $params))!== false)
 			echo $res;
 }
+?>

@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id$
+// CVS: $Id: tikilib.php,v 1.801.2.90 2008-03-19 18:08:39 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 	header("location: index.php");
@@ -200,22 +200,22 @@ class TikiLib extends TikiDB {
 	function list_watches($offset, $maxRecords, $sort_mode, $find) {
 		$mid = '';
 		$mid2 = '';
-		$bindvars = $bindvars1 = $bindvars2 = array();
+		$bindvars = array();
 		if ($find) {	
-			$mid = ' where `event` like ? or `email` like ? or `user` like ? or `object` like ? or `type` like ?';
-			$mid2 = ' where `event` like ? or `group` like ? or `object` like ? or `type` like ?';
-			$bindvars1 = array("%$find%", "%$find%", "%$find%", "%$find%", "%$find%");
-			$bindvars2 = array("%$find%", "%$find%", "%$find%", "%$find%");
+			$mid = ' where `event` like ? or `email` like ?';
+			$mid2 = ' where `event` like ? or `email` like ?';
+			$bindvars = array('%'.$find.'%', '%'.$find.'%', '%'.$find.'%');
 		}
-		$query = "select 'user' as watchtype, `watchId`, `user`, `event`, `object`, `title`, `type`, `url`, `email` from `tiki_user_watches` $mid 
+		$query = "select 'user' as watchtype, watchId, `user`, event, object, title, type, url, email from `tiki_user_watches` $mid 
 			UNION ALL
-				select 'group' as watchtype, `watchId`, `group`, `event`, `object`, `title`, `type`, `url`, '' as `email`
-				from `tiki_group_watches` $mid2
+			(
+				select 'group' as watchtype, watchId, `group`, event, object, title, type, url, '' as email
+				from tiki_group_watches $mid2
+			)
 			order by ".$this->convert_sortmode($sort_mode);
-		$query_cant = 'select count(*) from `tiki_user_watches` '.$mid;
-		$query_cant2 = 'select count(*) from `tiki_group_watches` '. $mid2;
-		$result = $this->query($query, array_merge($bindvars1, $bindvars2), $maxRecords, $offset);
-		$cant = $this->getOne($query_cant, $bindvars1) + $this->getOne($query_cant2, $bindvars2);
+		$query_cant = 'select count(*) from `tiki_user_watches`'.$mid;
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
@@ -757,14 +757,15 @@ class TikiLib extends TikiDB {
 		$this->compute_quiz_stats();
 		if ($find) {
 			$findesc = '%' . $find . '%';
-			$mid = " where `quizName` like ? ";
+
+			$mid = "  `quizName` like ? ";
 			$bindvars=array($findesc);
 		} else {
 			$mid = "  ";
 			$bindvars=array();
 		}
 
-		$query = "select * from `tiki_quiz_stats_sum` $mid order by " . $this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_quiz_stats_sum` $mid order by ".$this->convert_sortmode($sort_mode);
 		$query_cant = "select count(*) from `tiki_quiz_stats_sum` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -1213,7 +1214,7 @@ class TikiLib extends TikiDB {
 		$ret["pages"] = $this->getOne("select count(*) from `tiki_pages` where `lastModif`>?",array((int)$last));
 		$ret["files"] = $this->getOne("select count(*) from `tiki_files` where `created`>?",array((int)$last));
 		$ret["comments"] = $this->getOne("select count(*) from `tiki_comments` where `commentDate`>?",array((int)$last));
-		$ret["users"] = $this->getOne("select count(*) from `users_users` where `registrationDate`>? and `provpass`=?",array((int)$last, ''));
+		$ret["users"] = $this->getOne("select count(*) from `users_users` where `registrationDate`>?",array((int)$last));
 		$ret["trackers"] = $this->getOne("select count(*) from `tiki_tracker_items` where `lastModif`>?",array((int)$last));
 		$ret["calendar"] = $this->getOne("select count(*) from `tiki_calendar_items` where `lastmodif`>?",array((int)$last));
 		return $ret;
@@ -1780,30 +1781,30 @@ class TikiLib extends TikiDB {
 	function list_received_pages($offset, $maxRecords, $sort_mode = 'pageName_asc', $find='', $type='', $structureName='') {
 		$bindvars = array();
 		if ($type == 's')
-			$mid = ' `trp`.`structureName` is not null ';
+			$mid = ' `structureName` is not null ';
 		elseif ($type == 'p')
-			$mid = ' `trp`.`structureName` is null ';
+			$mid = ' `structureName` is null ';
 		else
 			$mid = '';
 		if ($find) {
 			$findesc = '%'.$find.'%';
 			if ($mid)
 				$mid .= ' and ';
-			$mid .= "(`trp`.`pagename` like ? or `trp`.`data` like ?)";
+			$mid .= "(`pagename` like ? or `data` like ?)";
 			$bindvars[] = $findesc;
 			$bindvars[] = $findesc;
 		}
 		if ($structureName) {
 			if ($mid)
 				$mid .= ' and ';
-			$mid .= ' `trp`.`structureName`=? ';
+			$mid .= ' `structureName`=? ';
 			$bindvars[] = $structureName;
 		}
 		if ($mid)
 			$mid = "where $mid";
 
 		$query = "select trp.*, tp.`pageName` as pageExists from `tiki_received_pages` trp left join `tiki_pages` tp on (tp.`pageName`=trp.`pageName`) $mid order by `structureName` asc, `pos` asc,".$this->convert_sortmode($sort_mode);
-		$query_cant = "select count(*) from `tiki_received_pages` trp $mid";
+		$query_cant = "select count(*) from `tiki_received_pages` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
@@ -1864,45 +1865,21 @@ class TikiLib extends TikiDB {
 			if (!$full) {
 				$display = true;
 				if (isset($res['section']) and $res['section']) {
-					if (strstr($res['section'], '|')) {
-						$display = false;
-						$sections = preg_split('/\s*|\s*/',$res['section']);
-						foreach ($sections as $sec) {
-							if (!isset($prefs[$sec]) or $prefs[$sec] != 'y') {
-								$display = true;
-								break;
-							}
-						}
-					} else {
-						$display = true;
-						$sections = preg_split('/\s*,\s*/',$res['section']);
-						foreach ($sections as $sec) {
-							if (!isset($prefs[$sec]) or $prefs[$sec] != 'y') {
-								$display = false;
-								break;
-							}
+					$sections = preg_split('/\s*,\s*/',$res['section']);
+					foreach ($sections as $sec) {
+						if (!isset($prefs[$sec]) or $prefs[$sec] != 'y') {
+							$display = false;
+							break;
 						}
 					}
 				}
 				if ($display && $tiki_p_admin != 'y') {
 					if (isset($res['perm']) and $res['perm']) {
-						if (strstr($res['perm'], '|')) {
-							$display = false;
-							$sections = preg_split('/\s*|\s*/',$res['perm']);
-							foreach ($sections as $sec) {
-								if (!isset($GLOBALS[$sec]) or $GLOBALS[$sec] != 'y') {
-									$display = true;
-									break;
-								}
-							}
-						} else {
-							$sections = preg_split('/\s*,\s*/',$res['perm']);
-							$display = true;
-							foreach ($sections as $sec) {
-								if (!isset($GLOBALS[$sec]) or $GLOBALS[$sec] != 'y') {
-									$display = false;
-									break;
-								}
+						$sections = preg_split('/\s*,\s*/',$res['perm']);
+						foreach ($sections as $sec) {
+							if (!isset($GLOBALS[$sec]) or $GLOBALS[$sec] != 'y') {
+								$display = false;
+								break;
 							}
 						}
 					}
@@ -1976,29 +1953,25 @@ class TikiLib extends TikiDB {
 	// Checks if a user has voted
 	/*shared*/
 	function user_has_voted($user, $id) {
-		global $prefs;
-		$ret = false;
-		$votes = $_SESSION['votes'];
-		if (is_array($votes) && in_array($id, $votes)) { // has already voted in the session (logged or not)
-			$ret = true;
-		}
+		// If user is not logged in then check the session
 		if (!$user) {
-			if ($prefs['ip_can_be_checked'] != 'y' && !isset($_COOKIE['PHPSESSID'])) {// cookie has not been activated too bad for him
+			if (!isset($_COOKIE['PHPSESSID'])) {// cookie has not been activated
 				$ret = true;
-			} elseif (isset($_COOKIE[md5("tiki_wiki_poll_$id")])) {
-				$ret = true;
+			} else {
+				$votes = $_SESSION["votes"];
+				if (in_array($id, $votes)) {
+					$ret = true;
+				} else {
+					$ret = false;
+				}
 			}
-			// we have no idea if cookie was deleted  or if really he has not voted
 		} else {
 			$query = "select count(*) from `tiki_user_votings` where `user`=? and `id`=?";
-			if ($this->getOne($query,array($user,(string) $id)) > 0) {
+			$result = $this->getOne($query,array($user,(string) $id));
+			if ($result) {
 				$ret = true;
-			}
-		}
-		if ($prefs['ip_can_be_checked'] == 'y') {
-			$query = 'select count(*) from `tiki_user_votings` where `ip`=? and `id`=?';
-			if ($this->getOne($query, array($this->get_ip_address(), $id)) > 0) {
-				return true; // IP has already voted logged or not
+			} else {
+				$ret = false;
 			}
 		}
 		return $ret;
@@ -2007,47 +1980,24 @@ class TikiLib extends TikiDB {
 	// Registers a user vote
 	/*shared*/
 	function register_user_vote($user, $id, $optionId=false) {
-		global $prefs;
-		$ip = $this->get_ip_address();
-		$_SESSION['votes'][] = $id;
-		setcookie(md5("tiki_wiki_poll_$id"), $ip, time()+60*60*24*300);
+		// If user is not logged in then register in the session
 		if (!$user) {
-			if ($prefs['ip_can_be_checked'] == 'y') {
-				$query = 'delete from `tiki_user_votings` where `ip`=? and `id`=?';
-				$result = $this->query($query, array($ip, $id));
-				if ( $optionId !== false ) {
-					$query = 'insert into `tiki_user_votings` (`user`, `ip`,`id`,`optionId`, `time`) values(?,?,?,?,?)';
-					$result = $this->query($query, array('', $ip, (string)$id, (int)$optionId, (int)$this->now));
-				}
-			} elseif ($optionId !== false) {
-				$query = 'insert into `tiki_user_votings` (`user`, `ip`,`id`,`optionId`, `time`) values(?,?,?,?,?)';
-				$result = $this->query($query, array('', $ip, (string)$id, (int)$optionId, (int)$this->now));
-			}
+			$_SESSION["votes"][] = $id;
 		} else {
-			if ($prefs['ip_can_be_checked'] == 'y') {
-				$query = 'delete from `tiki_user_votings` where (`user`=? or `ip`=?)and `id`=?';
-				$this->query($query, array($user, $ip, $id));
-			} else {
-				$query = 'delete from `tiki_user_votings` where `user`=? and `id`=?';
-				$this->query($query, array($user, (string)$id));
+			if ( $optionId === false ) {
+				$optionId = 0;
 			}
-			if ( $optionId !== false ) {
-				$query = 'insert into `tiki_user_votings` (`user`,`ip`, `id`,`optionId`, `time`) values(?,?,?,?,?)';
-				$result = $this->query($query, array($user, $ip, (string)$id, (int)$optionId, (int)$this->now));
+			$query = 'delete from `tiki_user_votings` where `user`=? and `id`=?';
+			$result = $this->query($query, array($user, (string)$id));
+			if ( $optionId !== null ) {
+				$query = 'insert into `tiki_user_votings` (`user`,`id`,`optionId`) values(?,?,?)';
+				$result = $this->query($query, array($user, (string)$id, $optionId));
 			}
 		}
 	}
 
 	function get_user_vote($id,$user) {
-		global $prefs;
-		$vote = null;
-		if ($user) {
-			$vote = $this->getOne("select `optionId` from `tiki_user_votings` where `user` = ? and `id` = ?",array( $user, $id));
-		}
-		if ($vote == null && $prefs['ip_can_be_checked'] == 'y') {
-			$vote = $this->getOne("select `optionId` from `tiki_user_votings` where `ip` = ? and `id` = ?",array( $user, $id));
-		}
-		return $vote;
+		return $this->getOne("select `optionId` from `tiki_user_votings` where `user` = ? and `id` = ?",array( $user, $id));
 	}
 	// end of user voting methods
 
@@ -2770,24 +2720,6 @@ class TikiLib extends TikiDB {
 		}
 
 		return $res;
-	}
-
-	/*shared*/
-	function get_blog_by_title($blogTitle) {
-		global $prefs, $user;
-
-    // Avoiding select by name so as to avoid SQL injection problems.
-		$query = "select `title`, `blogId` from `tiki_blogs` where `use_title` = 'y' ";
-		$result = $this->query($query);
-		if ($result->numRows()) {
-      while ($res = $result->fetchRow()) {
-        if( strtolower($res['title']) == strtolower($blogTitle) ) {
-          return $this->get_blog($res['blogId']);
-        }
-      }
-		}
-
-		return false;
 	}
 
 	/*shared*/
@@ -3682,8 +3614,7 @@ class TikiLib extends TikiDB {
 		//get_strings tra("Removed");
 		$query = "update `users_groups` set `groupHome`=? where `groupHome`=?";
 		$this->query($query, array(NULL, $page));
-		$query = 'delete from `tiki_theme_control_objects` where `name`=? and `type`=?';
-		$this->query($query, array($page, 'wiki page'));
+
 		$this->remove_object('wiki page', $page);
 
 		$query = "delete from `tiki_user_watches` where `event`=? and `object`=?";
@@ -3904,8 +3835,8 @@ class TikiLib extends TikiDB {
 			$tmp_mid = array();
 			foreach ($filter as $type=>$val) {
 				if ($type == 'categId') {
-					$join_tables .= " inner join `tiki_objects` as tob on (tob.`itemId`= tp.`pageName` and tob.`type`= ?) inner join `tiki_category_objects` as tc on (tc.`catObjectId`=tob.`objectId` and tc.`categId` IN(" . implode(', ', array_fill(0, count( (array) $val ), '?')) . ")) ";
-					$join_bindvars = array_merge(array('wiki page'), (array) $val);
+					$join_tables .= " inner join `tiki_objects` as tob on (tob.`itemId`= tp.`pageName` and tob.`type`= ?) inner join `tiki_category_objects` as tc on (tc.`catObjectId`=tob.`objectId` and tc.`categId`=?) ";
+					$join_bindvars = array('wiki page', $val);
 				} elseif ($type == 'lang') {
 					$tmp_mid[] = 'tp.`lang`=?';
 					$bindvars[] = $val;
@@ -3930,11 +3861,11 @@ class TikiLib extends TikiDB {
 			if (is_array($initial)) {
 				foreach($initial as $i) {
 					if ( ! empty($tmp_mid) ) $tmp_mid .= ' or ';
-					$tmp_mid .= ' `pageName` like ? ';
+					$tmp_mid .= '`pageName` like ? ';
 					$bindvars[] = $i.'%';
 				}
 			} else {
-				$tmp_mid = " `pageName` like ? ";
+				$tmp_mid = " `pageName` like ?";
 				$bindvars[] = $initial.'%';
 			}
 			$mid .= $tmp_mid.')';
@@ -3961,18 +3892,6 @@ class TikiLib extends TikiDB {
 		$n = -1;
 		$ret = array();
 		while ($res = $result->fetchRow()) {
-			if( $initial ) {
-				$valid = false;
-				foreach( (array) $initial as $candidate ) {
-					if( strpos( $res['pageName'], $candidate ) === 0 ) {
-						$valid = true;
-						break;
-					}
-				}
-
-				if( ! $valid )
-					continue;
-			}
 			//WYSIWYCA
 			$res['perms'] = $this->get_perm_object($res['pageName'], 'wiki page', $res, false);
 			if ( $res['perms']['tiki_p_view'] != 'y' ) continue;
@@ -4384,9 +4303,9 @@ class TikiLib extends TikiDB {
 			case 'history':
 				if ($categPerms['tiki_p_view_categorized'] == 'y' || $categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
 					$ret['tiki_p_view'] = 'y';
-					global $tiki_p_wiki_view_source; $ret['tiki_p_wiki_view_source'] = $tiki_p_wiki_view_source;
-					global $tiki_p_wiki_view_comments; $ret['tiki_p_wiki_view_comments'] = $tiki_p_wiki_view_comments;
-					global $tiki_p_wiki_view_attachments; $ret['tiki_p_wiki_view_attachments'] = $tiki_p_wiki_view_attachments;
+					$ret['tiki_p_wiki_view_source'] = 'y';
+					$ret['tiki_p_wiki_view_comments'] = 'y';
+					$ret['_wiki_view_attachments'] = 'y';
 				} else {
 					foreach($perms['data'] as $p) {
 						if ($p['permName'] != 'tiki_p_use_as_template')
@@ -4801,7 +4720,6 @@ class TikiLib extends TikiDB {
 	}
 
 	function page_exists_desc( &$pageName, $searchAlias = false ) {
-	
 		$page_info = $this->get_page_info($pageName, false);
 		
 		if ( $page_info === false ) {
@@ -4816,24 +4734,9 @@ class TikiLib extends TikiDB {
 						array( 'toPage' => $pageName ) );
 
 					if ( count($links) > 0 ) {
-					    // There are multiple aliases for this page. Need to disambiguate.
-					    //
-						// When feature_likePages is set, trying to display the alias itself will
-						// display an error page with the list of aliased pages in the "like pages" section.
-						// This allows the user to pick the appropriate alias.
-						// So, leave the $pageName to the alias.
-						// 
-						// If feature_likePages is not set, then the user will only see that the page does not
-						// exist. So it's better to just pick the first one.
-						//													
-						if ($prefs['feature_likePages'] = 'y') {
-							$desc = true;
-						} else {
-							// If feature_likePages is NOT set, then trying to display the 
-							$pageName = $links[0]['fromPage'];
-							$desc = $this->page_exists_desc( $pageName );
-						}
-						return $desc;
+						// May be multiple (inconsistencies), just use the first one
+						$pageName = $links[0]['fromPage'];
+						return $this->page_exists_desc( $pageName );
 					}
 				}
 			}
@@ -5155,7 +5058,7 @@ class TikiLib extends TikiDB {
 			$pluginskiplist = array();
 
 		$matcher_fake = array("~pp~","~np~","&lt;pre&gt;");
-		$matcher = "/\{([A-Z0-9_]+) *\(|\{([a-z]+)(\s|\})|~pp~|~np~|&lt;[pP][rR][eE]&gt;/";
+		$matcher = "/\{([A-Z]+)\(|\{([a-z]+)(\s|\})|~pp~|~np~|&lt;[pP][rR][eE]&gt;/";
 
 		$plugins = array();
 		preg_match_all( $matcher, $data, $tmp, PREG_SET_ORDER );
@@ -5402,8 +5305,7 @@ class TikiLib extends TikiDB {
 				// ~pp~ type "plugins"
 				$key = "§".md5($this->genPass())."§";
 				$noparsed["key"][] = preg_quote($key);
-				// comment out the following line: create problem with TRACKERLIST and popup because the <\/td> are changed
-				//$plugin_data = str_replace('\\','\\\\',$plugin_data);
+				$plugin_data = str_replace('\\','\\\\',$plugin_data);
 				//if( strstr( $plugin_data, '$' ) ) {
 					//$plugin_data = str_replace('$', '\$', $plugin_data);
 				//}
@@ -5443,23 +5345,6 @@ class TikiLib extends TikiDB {
 							$plugin_indexes[$plugin_name] = 0;
 
 						$current_index = ++$plugin_indexes[$plugin_name];
-						// We store CODE stuff out of the way too, but then process it as a plugin as well.
-						if( preg_match( '/^ *\{CODE\(/', $plugin_start ) ) {
-							$ret = wikiplugin_code($plugin_data, $arguments);
-
-							// Pull the np out.
-							preg_match( "/~np~(.*)~\/np~/s", $ret, $stuff );
-
-							if( count( $stuff ) > 0 ) {
-								$key = "§".md5($this->genPass())."§";
-								$noparsed["key"][] =  preg_quote($key);
-								$noparsed["data"][] = $stuff[1];
-
-								$ret = preg_replace( "/~np~.*~\/np~/s", $key, $ret );
-							}
-
-						} else {
-
 
 						// Handle nested plugins.
 						$this->parse_first($plugin_data, $preparsed, $noparsed, $options, $real_start_diff + $pos+strlen($plugin_start));
@@ -5490,35 +5375,16 @@ class TikiLib extends TikiDB {
 
 							$ret = '~np~' . $smarty->fetch('tiki-plugin_blocked.tpl') . '~/np~';
 						}
-						}
+
 						//echo '<pre>'; debug_print_backtrace(); echo '</pre>';
 						if( $this->plugin_is_editable( $plugin_name ) && (empty($options['print']) || !$options['print']) ) {
 							include_once('lib/smarty_tiki/function.icon.php');
 							global $headerlib, $page;
-							$id = 'plugin-edit-' . $plugin_name . $current_index;
+							$id = $plugin_name . $current_index;
 							$headerlib->add_jsfile( 'tiki-jsplugin.php?plugin=' . urlencode( $plugin_name ) );
-							if ($prefs['feature_jquery'] == 'y') {
-								$headerlib->add_js( "
-\$jq(document).ready( function() {
-	if( \$jq('#$id') ) \$jq('#$id').click( function(event) {
-		popup_plugin_form("
-			. json_encode($plugin_name) 
-			. ', ' 
-			. json_encode($current_index) 
-			. ', ' 
-			. json_encode($page) 
-			. ', ' 
-			. json_encode($arguments) 
-			. ', ' 
-			. json_encode(trim(TikiLib::htmldecode($plugin_data))) 
-			. ", event.target);
-	} );
-} );
-" );
-							} else if ($prefs['feature_mootools'] == 'y') {
-								$headerlib->add_js( "
+							$headerlib->add_js( "
 window.addEvent('domready', function() {
-	if( $('$id') ) $('$id').addEvent( 'click', function(event) {
+	$('$id').addEvent( 'click', function(event) {
 		popup_plugin_form("
 			. json_encode($plugin_name) 
 			. ', ' 
@@ -5533,8 +5399,7 @@ window.addEvent('domready', function() {
 	} );
 } );
 " );
-							}
-							$ret = '~np~<a id="' .$id. '" style="float:right" href="javascript:void(1)" class="editplugin">'.smarty_function_icon(array('_id'=>'shape_square_edit', 'alt'=>tra('Edit Plugin').':'.$plugin_name), $smarty).'</a>~/np~'.$ret;
+							$ret = '~np~<a id="' .$id. '" style="float:right" href="javascript:void(0)" class="editplugin">'.smarty_function_icon(array('_id'=>'shape_square_edit', 'alt'=>tra('Edit Plugin')), $smarty).'</a>~/np~'.$ret;
 						}
 
 					} else {
@@ -5846,17 +5711,15 @@ window.addEvent('domready', function() {
 			// Make sure all arguments are declared
 			$params = $info['params'];
 
-			if( ! isset( $info['extraparams'] ) && is_array($params) ) {
+			if( ! isset( $info['extraparams'] ) ) {
 				$args = array_intersect_key( $args, $params );
 			}
 
 			// Apply filters on values individually
-			if (!empty($args)) {
-				foreach( $args as $argKey => &$argValue ) {
-					$filter = isset($params[$argKey]['filter']) ? TikiFilter::get($params[$argKey]['filter']) : $default;
-					$argValue = $this->htmldecode($argValue);
-					$argValue = $filter->filter($argValue);
-				}
+			foreach( $args as $argKey => &$argValue ) {
+				$filter = isset($params[$argKey]['filter']) ? TikiFilter::get($params[$argKey]['filter']) : $default;
+				$argValue = $this->htmldecode($argValue);
+				$argValue = $filter->filter($argValue);
 			}
 		}
 
@@ -6640,7 +6503,6 @@ window.addEvent('domready', function() {
 		$need_autonumbering = ( preg_match('/^\!+[\-\+]?#/m', $data) > 0 );
 
 		$anch = array();
-		global $anch;
 		$pageNum = 1;
 
 		// 08-Jul-2003, by zaufi
@@ -6774,7 +6636,7 @@ window.addEvent('domready', function() {
 			}
 
 			// Replace monospaced text
-			$line = preg_replace("/(^|\s)-\+(.*?)\+-/", "$1<code>$2</code>", $line);
+			$line = preg_replace("/(^|\s)-\+(.*?)\+-/", "<code>$2</code>", $line);
 			// Replace bold text
 			$line = preg_replace("/__(.*?)__/", "<b>$1</b>", $line);
 			// Replace italic text
@@ -6963,9 +6825,8 @@ window.addEvent('domready', function() {
 						//  with images and HTML tags
 						$thisid = ereg_replace('§[a-z0-9]{32}§', '', $title_text);
 						$thisid = ereg_replace('</?[^>]+>', '', $thisid);
-						$thisid = ereg_replace('[^a-zA-Z0-9\:\.\-\_]+', '_', $thisid);
-						$thisid = ereg_replace('^[^a-zA-Z]*', '', $thisid);
-						if (empty($thisid)) $thisid = 'a'.md5($title_text);
+						$thisid = ereg_replace('[^a-zA-Z0-9]+', '_', $thisid);
+						$thisid = ereg_replace('^_', '', $thisid);
 
 						// Add a number to the anchor if it already exists, to avoid duplicated anchors
 						if ( isset($all_anchors[$thisid]) ) {
@@ -6976,18 +6837,18 @@ window.addEvent('domready', function() {
 						}
 
 						// Collect TOC entry if any {maketoc} is present on the page
-						//if ( $need_maketoc !== false ) {
-						$anch[] =  array(
+						if ( $need_maketoc !== false ) {
+							array_push($anch, array(
 										'id' => $thisid,
 										'hdrlevel' => $hdrlevel,
 										'pagenum' => $pageNum,
 										'title' => $title_text_base,
 										'title_displayed_num' => $current_title_num,
 										'title_real_num' => $current_title_real_num
-										);
-						//}
+										));
+						}
 						global $tiki_p_edit, $section;
-						if ($prefs['wiki_edit_section'] == 'y' && $section == 'wiki page' && $tiki_p_edit == 'y' and ( $prefs['wiki_edit_section_level'] == 0 or $hdrlevel <= $prefs['wiki_edit_section_level']) ){
+						if ($prefs['wiki_edit_section'] == 'y' && $section == 'wiki page' && $tiki_p_edit == 'y') {
 							global $smarty;
 							include_once('lib/smarty_tiki/function.icon.php');
 							$button = '<div class="icon_edit_section"><a href="tiki-editpage.php?';
@@ -7151,7 +7012,7 @@ window.addEvent('domready', function() {
 						$maketoc_footer = '</span>';
 						$link_class = 'link';
 				}
-				if ( count($anch) and $need_maketoc !== false) {
+				if ( count($anch) ) {
 					foreach ( $anch as $tocentry ) {
 						if ( $maketoc_args['maxdepth'] > 0 && $tocentry['hdrlevel'] > $maketoc_args['maxdepth'] ) {
 							continue;
@@ -7211,15 +7072,6 @@ window.addEvent('domready', function() {
 			}
 		}
 		$data = $new_data.$data;
-		// Add icon to edit the text before the first section
-		if ($prefs['wiki_edit_section'] == 'y' && isset($section) && $section == 'wiki page' && $tiki_p_edit == 'y' ){
-			$button = '<div class="icon_edit_section"><a href="tiki-editpage.php?';
-			if (!empty($options['page'])) {
-				$button .= 'page='.urlencode($options['page']).'&amp;';
-			}
-			$button .= 'hdr=0">'.smarty_function_icon(array('_id'=>'page_edit', 'alt'=>tra('Edit Section')), $smarty).'</a></div>';
-			$data = $button.$data;
-		}
 	}
 
 	function get_wiki_link_replacement( $pageLink, $extra = array() ) {
@@ -7784,7 +7636,7 @@ window.addEvent('domready', function() {
 		closedir ($h);
 
 		// Format and return the list
-		return TikiLib::format_language_list($languages, $short, $all);
+		return $this->format_language_list($languages, $short, $all);
 	}
 
 	function is_valid_language( $language ) {
@@ -8067,29 +7919,21 @@ window.addEvent('domready', function() {
 		return strlen($data);
 	}
 
-	function list_votes($id, $offset=0, $maxRecords=-1, $sort_mode='user_asc', $find='', $table='', $column='', $from='', $to='') {
+	function list_votes($id, $offset=0, $maxRecords=-1, $sort_mode='user_asc', $find='', $table='', $column='') {
 		$mid = 'where  `id`=?';
 		$bindvars[] = $id;
 		$select = '';
 		$join = '';
 		if (!empty($find)) {
-			$mid .= ' and (`user` like ? or `title` like ? or `ip` like ?)';
+			$mid .= " and `user` like ?";
 			$bindvars[] = '%'.$find.'%';
-			$bindvars[] = '%'.$find.'%';
-			$bindvars[] = '%'.$find.'%';
-		}
-		if (!empty($from) && !empty($to)) {
-			$mid .= ' and ((time >= ? and time <= ?) or time = ?)';
-			$bindvars[] = $from;
-			$bindvars[] = $to;
-			$bindvars[] = 0;
 		}
 		if (!empty($table) && !empty($column)) {
 			$select = ", `$table`.`$column` as title";
 			$join = "left join `$table` on (`tiki_user_votings`.`optionId` = `$table`.`optionId`)";
 		}
 		$query = "select * $select from `tiki_user_votings` $join $mid order by ".$this->convert_sortmode($sort_mode);
-		$query_cant = "select count(*) from `tiki_user_votings` $join $mid";
+		$query_cant = "select count(*) from `tiki_user_votings` $mid";
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
 		$cant = $this->getOne($query_cant, $bindvars);
 		$ret = array();
@@ -8192,20 +8036,12 @@ window.addEvent('domready', function() {
 
 	/* return the positions in data where the hdr-nth header is find
 	 */
-function get_wiki_section($data, $hdr) {
-	$start = 0;
-	$end = strlen($data);
-	$lines = explode("\n", $data);
-	$header = 0;
-	$pp_level = 0;
-	$np_level = 0;
-	for ($i = 0; $i < count($lines); ++$i) {
-		$pp_level += preg_match ('/~pp~/',$lines[$i]);
-		$pp_level -= preg_match ('/~\/pp~/',$lines[$i]);
-		$np_level += preg_match ('/~np~/',$lines[$i]);
-		$np_level -= preg_match ('/~\/np~/',$lines[$i]);
-		// We test if we are inside nonparsed or pre section to ignore !*
-		if ($pp_level%2 == 0 and $np_level%2 == 0) {
+	function get_wiki_section($data, $hdr) {
+		$start = 0;
+		$end = strlen($data);
+		$lines = explode("\n", $data);
+		$header = 0;
+		for ($i = 0; $i < count($lines); ++$i) {
 			if (substr($lines[$i], 0, 1) == '!') {
 				++$header;
 				if ($header == $hdr) { // we are on it - now find the next header at same or lower level
@@ -8220,20 +8056,12 @@ function get_wiki_section($data, $hdr) {
 					break;
 				}
 			}
+			$start += strlen($lines[$i]) + 1;
 		}
-		$start += strlen($lines[$i]) + 1;
+		return (array($start, $end));
 	}
-	return (array($start, $end));
-}
-
-/**
- * \brief Function to embed a flash object (using JS method by default when JS in user's browser is detected)
- *
- * So far it's being called from wikiplugin_flash.php and tiki-edit_banner.php
- *
- * @param javascript = y or n to force to generate a version with javascript or not, ='' user prefs
- */
-	function embed_flash($params, $javascript='', $flashvars = false) {
+	/* javascript = y or n to force to generate a version with javascript or not, ='' user prefs */
+	function embed_flash($params, $javascript='') {
 		global $prefs;
 		global $headerlib; include_once('lib/headerlib.php');
 		if (! isset($params['movie']) ) {
@@ -8246,9 +8074,8 @@ function get_wiki_section($data, $hdr) {
 						  'version' => '9.0.0',
 						  );
 		$params = array_merge( $defaults, $params );
-		
 		if ( ((empty($javascript) && $prefs['javascript_enabled'] == 'y') || $javascript == 'y')) {
-			$myId = ($params['id']) ? ($params['id']) : 'wp-flash-' . md5($params['movie']);
+			$myId = 'wp-flash-' . md5($params['movie']);
 			$movie = '"'.$params['movie'].'"';
 			$div = json_encode( $myId );
 			$width = (int) $params['width'];
@@ -8256,24 +8083,17 @@ function get_wiki_section($data, $hdr) {
 			$version = json_encode( $params['version'] );
 			unset( $params['movie'], $params['width'], $params['height'], $params['version'] );
 			$params = json_encode($params);
-			
-			if (!$flashvars) {
-				$flashvars = '{}';
-			} else {
-				$flashvars = json_encode($flashvars);
-				$flashvars = str_replace('\\/', '/', $flashvars);
-			}
 			$js = <<<JS
-swfobject.embedSWF( $movie, $div, $width, $height, $version, 'lib/swfobject/expressInstall.swf', $flashvars, $params, {} );
+swfobject.embedSWF( $movie, $div, $width, $height, $version, {}, $params, {} );
 JS;
-			$headerlib->add_jsfile( 'lib/swfobject/swfobject.js' );
+			$headerlib->add_jsfile( 'lib/swfobject.js' );
 			return "<div id=\"$myId\">" . tra('Flash player not available.') . "</div><script type=\"text/javascript\">\n<!--//--><![CDATA[//><!--\n$js\n//--><!]]>\n</script>\n";
 		} else { // link on the movie will not work with IE6
 			extract ($params,EXTR_SKIP);
-			$asetup = "<object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0\" width=\"$width\" height=\"$height\">";
-			$asetup .= "<param name=\"movie\" value=\"$movie\" />";
-			$asetup .= "<param name=\"quality\" value=\"$quality\" />";
-			$asetup .= "<param name=\"wmode\" value=\"transparent\" />";
+			$asetup = "<OBJECT CLASSID=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0\" WIDTH=\"$width\" HEIGHT=\"$height\">";
+			$asetup .= "<PARAM NAME=\"movie\" VALUE=\"$movie\">";
+			$asetup .= "<PARAM NAME=\"quality\" VALUE=\"$quality\">";
+			$asetup .= "<PARAM NAME=\"wmode\" VALUE=\"transparent\">";
 			$asetup .= "<embed src=\"$movie\" quality=\"$quality\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\" width=\"$width\" height=\"$height\" wmode=\"transparent\"></embed></object>";
 			return $asetup;
 		}

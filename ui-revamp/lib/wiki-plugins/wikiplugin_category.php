@@ -103,3 +103,5 @@ function wikiplugin_category($data, $params) {
 
 	return "~np~". $categlib->get_categoryobjects($catids,$types,$sort,$split,$sub,$and)."~/np~";
 }
+
+?>
