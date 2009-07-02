@@ -20,38 +20,55 @@ require_once('../../../tiki-setup.php');
 
 include_once('lib/objectlib.php');
 include_once('lib/userslib.php');
+include_once('lib/tikilib.php');
 include_once('lib/workspaces/wslib.php');
 
-global $prefs;
+
+
+global $prefs, $tikilib;
 $wsContainerId = (int) $prefs['ws_container'];
 
-if (isset($_REQUEST['action']))
+if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'init'))
 {
-    if (($_REQUEST['action'] == 'init'))
-    {
 	if (!$objectlib->get_object_id('wiki page','Wiki1'))
+	{
 		$objectlib->add_object('wiki page','Wiki1');
+		$tikilib->create_page('Wiki1', 0, '', time(), '');
+	}
 	if (!$objectlib->get_object_id('wiki page','Wiki2'))
+	{
 		$objectlib->add_object('wiki page','Wiki2');
+		$tikilib->create_page('Wiki2', 0, '', time(), '');
+	}
 	if (!$objectlib->get_object_id('wiki page','Wiki3'))
+	{
 		$objectlib->add_object('wiki page','Wiki3');
+		$tikilib->create_page('Wiki3', 0, '', time(), '');
+	}
 	if (!$objectlib->get_object_id('wiki page','Wiki4'))
+	{
 		$objectlib->add_object('wiki page','Wiki4');
+		$tikilib->create_page('Wiki4', 0, '', time(), '');
+	}
 	if (!$objectlib->get_object_id('wiki page','Wiki5'))
+	{
 		$objectlib->add_object('wiki page','Wiki5');
-
+		$tikilib->create_page('Wiki5', 0, '', time(), '');
+	}
+	
 	if ($userlib->add_group('G1'));
 	if ($userlib->add_group('G2'));
 
-    }
-    
-    if (($_REQUEST['action'] == 'create'))
-    {
-    	//Creating new WS
+	header("Location: ./scriptCreator.php?action=create");
+}
+
+if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'create'))
+{
+	//Creating new WS
 	if  (!$wslib->get_ws_id('WS1',$wsContainerId))
-    	    $id1 = $wslib->add_ws('WS1',$wsContainerId);
-       	if (!$wslib->get_ws_id('WS2',$wsContainerId))
-	    $wslib->add_ws('WS2',$wsContainerId);
+		$id1 = $wslib->add_ws('WS1',$wsContainerId);
+	 if (!$wslib->get_ws_id('WS2',$wsContainerId))
+		$wslib->add_ws('WS2',$wsContainerId);
 	if  (!$wslib->get_ws_id('WS3',$wsContainerId))
 	    $id3 = $wslib->add_ws('WS3',$wsContainerId);
 
@@ -81,10 +98,11 @@ if (isset($_REQUEST['action']))
 	$wslib->add_ws_object($id4,'Wiki4','wiki_page');
 	$wslib->add_ws_object($id5,'Wiki5','wiki_page');
 
-    }
+	header("Location: ./../../../tiki-admin.php?page=workspaces");
+}
 	
-    if ($_REQUEST['action'] == 'destroy')
-    {
+if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'destroy'))
+{
 	//Getting existing WS id
 	$id1= $wslib->get_ws_id('WS1',$wsContainerId);
 	$id2= $wslib->get_ws_id('WS2',$wsContainerId);
@@ -98,15 +116,13 @@ if (isset($_REQUEST['action']))
 	$wslib->remove_ws($id3);
 	$wslib->remove_ws($id4);
 	$wslib->remove_ws($id5);
-    }
 
-    if ($_REQUEST['action'] == 'clearcache')
-	$cachelib->empty_full_cache();
-    
-    if ($_REQUEST['action'] == 'test')
-    {
-    }
+	header("Location: ./../../../tiki-admin.php?page=workspaces");
 }
 
-if (isset($_REQUEST['redirect']) && ($_REQUEST['redirect'] == 'yes'))
-	    header("Location: ./../../../tiki-admin.php?page=workspaces");
+if ( isset($_REQUEST['action'])  &&  ($_REQUEST['action'] == 'test'))
+{
+
+
+
+}
