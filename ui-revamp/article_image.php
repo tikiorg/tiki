@@ -110,3 +110,5 @@ if (is_file($cachefile)) {
 	header ("Content-type: ".$type);
 	echo $data;
 }
+
+?>

@@ -52,3 +52,5 @@ ask_ticket('tc-sections');
 // Display the template
 $smarty->assign('mid', 'tiki-theme_control_sections.tpl');
 $smarty->display("tiki.tpl");
+
+?>

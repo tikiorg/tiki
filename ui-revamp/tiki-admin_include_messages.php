@@ -20,3 +20,5 @@ if (isset($_REQUEST["messagesprefs"])) {
 	simple_set_toggle('allowmsg_is_optional');
 	simple_set_toggle('allowmsg_by_default');
 }
+
+?>

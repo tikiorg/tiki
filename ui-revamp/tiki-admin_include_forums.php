@@ -25,18 +25,18 @@ if (isset($_REQUEST["forumprefs"])) {
 	'feature_forum_topics_archiving',
 	'feature_forum_replyempty',
 	'feature_forum_quickjump',
+	'feature_forum_topicd',
 	'feature_forum_local_search',
 	'feature_forum_local_tiki_search',
 	'feature_forums_search',
-  'feature_forum_content_search',
-  'feature_forums_name_search',
+        'feature_forum_content_search',
+        'feature_forums_name_search',
 	'feature_forums_allow_thread_titles',
 	'forum_comments_no_title_prefix'
 	);
 	foreach ( $pref_toggles as $toggle) simple_set_toggle($toggle);
 
 	simple_set_value('forums_ordering');
-	simple_set_value('forum_match_regex');
 }
 
 if (isset($_REQUEST["forumlistprefs"])) {
@@ -49,9 +49,6 @@ if (isset($_REQUEST["forumlistprefs"])) {
 	'forum_list_visits',
 	'forum_list_desc'
 	);
-	
-	simple_set_int('forum_list_description_len');
-	
 	foreach ($pref_toggles as $toggle) {
 		simple_set_toggle ($toggle);
 	}
@@ -77,5 +74,5 @@ include_once ("lib/commentslib.php");
 $commentslib = new Comments($dbTiki);
 $forums = $commentslib->list_forums(0, -1, 'name_desc', '');
 $smarty->assign_by_ref('forums', $forums["data"]);
-
 ask_ticket('admin-inc-forums');
+?>

@@ -45,3 +45,5 @@
     if (!empty($args['layout'])) {
         $tplData['layout'] = $args['layout'];
     }
+
+?>

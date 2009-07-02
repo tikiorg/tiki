@@ -86,3 +86,5 @@ ask_ticket('dir-validate');
 // Display the template
 $smarty->assign('mid', 'tiki-directory_validate_sites.tpl');
 $smarty->display("tiki.tpl");
+
+?>

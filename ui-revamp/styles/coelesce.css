@@ -1011,7 +1011,6 @@ div#tikihelp {
 	padding: 0;
 	margin: 0;
 	border: none;
-	z-index: 1000;
 	background: transparent}
 
 * html div#tikihelp {position: absolute}
@@ -2478,7 +2477,6 @@ div.messureadbody {
 	overflow: auto;
 	background: whitesmoke;
 	padding: 10px;
-	z-index: 500;
 	border: solid 2px #696969}
 
 .icon_edit_section {float: right}
@@ -2639,10 +2637,5 @@ div.minichatchans {overflow: auto}
 div.minichatdiv {
 	font-size: .9em;
 	overflow: auto}
-
-.quicktags-admin ul {
-	list-style-type:none;
-	padding:5px;
-}
 
 /* end of file */

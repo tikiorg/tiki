@@ -178,25 +178,26 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && (isset($_REQUEST
 		} else {
 			$openid_url = '';
 		}
+		unset($_SESSION['in_tracker']);
 		if($prefs['validateUsers'] == 'y' || (isset($prefs['validateRegistration']) && $prefs['validateRegistration'] == 'y')) {
 			$apass = addslashes(md5($tikilib->genPass()));
 			$userlib->send_validation_email($_REQUEST['name'], $apass, $_REQUEST['email'], '', '', isset($_REQUEST['chosenGroup'])?$_REQUEST['chosenGroup']:'');
 			
 			$userlib->add_user($_REQUEST["name"],$apass,$_REQUEST["email"],$_REQUEST["pass"], false, 'n', $openid_url);
+			if (isset($_REQUEST['chosenGroup']) && $userlib->get_registrationChoice($_REQUEST['chosenGroup']) == 'y') {
+				$userlib->set_default_group($_REQUEST['name'], $_REQUEST['chosenGroup']);
+			}	
 			$logslib->add_log('register','created account '.$_REQUEST["name"]);
 			$smarty->assign('showmsg','y');
 		} else {
 			$userlib->add_user($_REQUEST["name"],$_REQUEST["pass"],$_REQUEST["email"],'', false, 'n', $openid_url);
+			if (isset($_REQUEST['chosenGroup']) && $userlib->get_registrationChoice($_REQUEST['chosenGroup']) == 'y') {
+				$userlib->set_default_group($_REQUEST['name'], $_REQUEST['chosenGroup']);
+			}			
 			$logslib->add_log('register','created account '.$_REQUEST["name"]);
 			$smarty->assign('msg',$smarty->fetch('mail/user_welcome_msg.tpl'));
 			$smarty->assign('showmsg','y');
 		}
-		if (isset($_REQUEST['chosenGroup']) && $userlib->get_registrationChoice($_REQUEST['chosenGroup']) == 'y') {
-			$userlib->set_default_group($_REQUEST['name'], $_REQUEST['chosenGroup']);
-		} elseif (empty($_REQUEST['chosenGroup']) && isset($_SESSION['in_tracker'])) {
-			$userlib->set_default_group($_REQUEST['name'], 'Registered');// to have tiki-user_preferences links par default to the registration tracker
-		}
-		unset($_SESSION['in_tracker']);
 
 		// save default user preferences
 		$tikilib->set_user_preference($_REQUEST['name'], 'theme', $prefs['style']);
@@ -221,7 +222,6 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && (isset($_REQUEST
 		$tikilib->set_user_preference($_REQUEST['name'], 'allowMsgs', $prefs['users_prefs_allowMsgs']);
 		$tikilib->set_user_preference($_REQUEST['name'], 'mytiki_pages', $prefs['users_prefs_mytiki_pages']);
 		$tikilib->set_user_preference($_REQUEST['name'], 'mytiki_blogs',$prefs['users_prefs_mytiki_blogs']);
-		$tikilib->set_user_preference($_REQUEST['name'], 'mytiki_articles',$prefs['users_prefs_mytiki_articles']);
 		$tikilib->set_user_preference($_REQUEST['name'], 'mytiki_gals', $prefs['users_prefs_mytiki_gals']);
 		$tikilib->set_user_preference($_REQUEST['name'], 'mytiki_msgs', $prefs['users_prefs_mytiki_msgs']);
 		$tikilib->set_user_preference($_REQUEST['name'], 'mytiki_tasks', $prefs['users_prefs_mytiki_tasks']);
@@ -273,3 +273,5 @@ if ($prefs['feature_ajax'] == 'y') {
 
 $smarty->assign('mid','tiki-register.tpl');
 $smarty->display("tiki.tpl");
+
+?>

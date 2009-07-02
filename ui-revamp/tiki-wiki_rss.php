@@ -10,12 +10,6 @@ require_once ('lib/tikilib.php');
 require_once ('lib/wiki/histlib.php');
 require_once ('lib/rss/rsslib.php'); 
 
-if ($prefs['feature_wiki'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
-	$smarty->display("error.tpl");
-	die;
-}
-
 if ($prefs['rss_wiki'] != 'y') {
 	$errmsg=tra("rss feed disabled");
 	require_once ('tiki-rss_error.php');
@@ -65,8 +59,8 @@ if ($output["data"]=="EMPTY") {
 		}
 		$_REQUEST['redirectpage'] = 'y';//block the redirect interpretation 
 		$_REQUEST['page'] = $data["pageName"];
-		$curr_page_p = $tikilib->parse_data($curr_page[$descId], array('print'=>true));
-		$prev_page_p = $tikilib->parse_data($prev_page[$descId], array('print'=>true));
+		$curr_page_p = $tikilib->parse_data($curr_page["$descId"]);
+		$prev_page_p = $tikilib->parse_data($prev_page["$descId"]);
 	
 		// do a diff between both pages
 		require_once('lib/diff/difflib.php');

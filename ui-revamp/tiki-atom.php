@@ -105,3 +105,5 @@ if ($output == "")
 
  	$output .= "</feed>";
 }
+
+?>

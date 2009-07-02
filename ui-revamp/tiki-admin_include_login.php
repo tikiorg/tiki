@@ -14,6 +14,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 if (isset($_REQUEST["loginprefs"])) {
 	check_ticket('admin-inc-login');
+	simple_set_toggle('change_theme');
+	simple_set_toggle('change_language');
 	simple_set_toggle('change_password');
 	simple_set_value('messu_mailbox_size');
 	simple_set_value('messu_archive_size');
@@ -51,11 +53,12 @@ if (isset($_REQUEST["loginprefs"])) {
 	simple_set_value('https_port');
 	simple_set_value('rememberme');
 	simple_set_value('remembertime');
-	simple_set_value('remembermethod');
 	simple_set_value('cookie_name');
 	simple_set_value('cookie_domain');
 	simple_set_value('cookie_path');
 	simple_set_value('auth_method');
+	simple_set_toggle('feature_ticketlib');
+	simple_set_toggle('feature_ticketlib2');
 	simple_set_value('highlight_group');
 	simple_set_value('user_tracker_infos');
 	simple_set_toggle('desactive_login_autocomplete');
@@ -85,39 +88,29 @@ if (isset($_REQUEST["loginprefs"])) {
 	simple_set_toggle('feature_display_my_to_others');
 }
 
-if (isset($_REQUEST["auth_ldap"])) {
+if (isset($_REQUEST["auth_pear"])) {
 	check_ticket('admin-inc-login');
-	simple_set_toggle('ldap_create_user_tiki');
-	simple_set_toggle('ldap_create_user_ldap');
-	simple_set_toggle('ldap_skip_admin');
-	simple_set_toggle('auth_ldap_permit_tiki_users');
-	simple_set_value('auth_ldap_host');
-	simple_set_value('auth_ldap_port');
-	simple_set_toggle('auth_ldap_debug');
-	simple_set_toggle('auth_ldap_ssl');
-	simple_set_toggle('auth_ldap_starttls');
-	simple_set_value('auth_ldap_type');
+	simple_set_toggle('auth_create_user_tiki');
+	simple_set_toggle('auth_create_user_auth');
+	simple_set_toggle('auth_skip_admin');
+	simple_set_value('auth_ldap_url');
+	simple_set_value('auth_pear_host');
+	simple_set_value('auth_pear_port');
 	simple_set_value('auth_ldap_scope');
 	simple_set_value('auth_ldap_basedn');
 	simple_set_value('auth_ldap_userdn');
 	simple_set_value('auth_ldap_userattr');
+	simple_set_value('auth_ldap_url');
 	simple_set_value('auth_ldap_useroc');
-	simple_set_value('auth_ldap_nameattr');
-	simple_set_value('auth_ldap_emailattr');
-	simple_set_value('auth_ldap_countryattr');
-	simple_set_toggle('auth_ldap_syncuserattr');
-	simple_set_toggle('auth_ldap_syncgroupattr');
 	simple_set_value('auth_ldap_groupdn');
 	simple_set_value('auth_ldap_groupattr');
-	simple_set_value('auth_ldap_groupdescattr');
 	simple_set_value('auth_ldap_groupoc');
 	simple_set_value('auth_ldap_memberattr');
 	simple_set_toggle('auth_ldap_memberisdn');
 	simple_set_value('auth_ldap_adminuser');
 	simple_set_value('auth_ldap_adminpass');
 	simple_set_value('auth_ldap_version');
-	simple_set_value('auth_ldap_usergroupattr');
-	simple_set_value('auth_ldap_groupgroupattr');
+	simple_set_value('auth_ldap_nameattr');
 }
 
 if (isset($_REQUEST["auth_pam"])) {
@@ -210,8 +203,6 @@ $smarty->assign("listgroups", $listgroups['data']);
 // Users Defaults
 $mailCharsets = array('utf-8', 'iso-8859-1');
 $smarty->assign_by_ref('mailCharsets', $mailCharsets);
-
-$headerlib->add_cssfile('css/admin.css');
 
 ask_ticket('admin-inc-login');
 ?>

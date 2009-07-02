@@ -83,3 +83,4 @@ $ggg_traceFiles->outln(__FILE__);
 
 $ggg_tracer = new ggg_trace();
 // $ggg_tracer->outln("Tracer initialized in ggg-trace.php...");
+?>

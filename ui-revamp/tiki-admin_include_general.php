@@ -12,23 +12,7 @@
 require_once('tiki-setup.php');  
 $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
-
-
 if (isset($_REQUEST["new_prefs"])) {
-
-		$listgroups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
-		$in = array();
-		$out = array();
-		foreach ($listgroups['data'] as $gr) {
-			if ($gr['groupName'] == 'Anonymous')
-				continue;
-			if ($gr['registrationChoice'] == 'y' && isset($_REQUEST['registration_choices']) && !in_array($gr['groupName'], $_REQUEST['registration_choices'])) // deselect
-				$out[] = $gr['groupName'];
-			elseif ($gr['registrationChoice'] != 'y' && isset($_REQUEST['registration_choices']) && in_array($gr['groupName'], $_REQUEST['registration_choices'])) //select
-				$in[] = $gr['groupName'];
-		}
-
-
 	check_ticket('admin-inc-general');
     $pref_toggles = array(
         "anonCanEdit",
@@ -51,13 +35,8 @@ if (isset($_REQUEST["new_prefs"])) {
         "user_show_realnames",
 		"log_sql",
 		"log_mail",
-		'log_tpl',
 		"smarty_security",
 		"feature_pear_date",
-		"permission_denied_login_box",
-		"feature_ticketlib",
-		"feature_ticketlib2",
-		"feature_display_my_to_others",
     );
 
     foreach ($pref_toggles as $toggle) {
@@ -65,10 +44,10 @@ if (isset($_REQUEST["new_prefs"])) {
     }
 
     $pref_simple_values = array(
-        "browsertitle",
         "site_crumb_seper",
         "site_nav_seper",
         "contact_user",
+        "maxRecords",
         "sender_email",
         "system_os",
         "error_reporting_level",
@@ -77,24 +56,13 @@ if (isset($_REQUEST["new_prefs"])) {
         "urlIndex",
         "proxy_host",
         "proxy_port",
-        "ip_can_be_checked",
         "session_lifetime",
         "load_threshold",
         "site_busy_msg",
         "site_closed_msg",
         "helpurl",
         "tiki_version_check_frequency",
-        'log_sql_perf_min',
-        "permission_denied_url",
-        "highlight_group",
-        "user_tracker_infos",
-        'zend_mail_handler',
-        'zend_mail_smtp_server',
-        'zend_mail_smtp_auth',
-        'zend_mail_smtp_user',
-        'zend_mail_smtp_pass',
-        'zend_mail_smtp_port',
-        'zend_mail_smtp_security',
+		'log_sql_perf_min',
     );
 
     foreach ($pref_simple_values as $svitem) {
@@ -109,8 +77,8 @@ if (isset($_REQUEST["new_prefs"])) {
         "long_time_format",
         "short_date_format",
         "short_time_format",
-        "tikiIndex",
-	"users_prefs_display_timezone"
+        "siteTitle",
+        "tikiIndex"
     );
 
     foreach ($pref_byref_values as $britem) {
@@ -133,10 +101,12 @@ if (isset($_REQUEST["new_prefs"])) {
         $tikilib->set_preference("tmpDir", $tdir);
     }
     
+    // not needed anymore? -- gongo
+    //$smarty->assign('pagetop_msg', tra("Your settings have been updated. <a href='tiki-admin.php?page=general'>Click here</a> or come back later see the changes. That is a known bug that will be fixed in the next release."));
     $smarty->assign('pagetop_msg', "");
 }
 // Handle Password Change Request
-if (isset($_REQUEST["newadminpass"])) {
+elseif (isset($_REQUEST["newadminpass"])) {
 	check_ticket('admin-inc-general');
     if ($_REQUEST["adminpass"] <> $_REQUEST["again"]) {
         $msg = tra("The passwords do not match");
@@ -144,7 +114,7 @@ if (isset($_REQUEST["newadminpass"])) {
     }
 
     // Dont allow blank passwords here
-    if ( empty($_REQUEST["adminpass"]) ) {
+    if (strlen($_REQUEST["adminpass"]) == 0) {
     	$smarty->assign("msg", tra("You cannot have a blank password"));
 	$smarty->display("error.tpl");
 	die;
@@ -160,8 +130,8 @@ if (isset($_REQUEST["newadminpass"])) {
         $access->display_error(basename(__FILE__), $text);
     }
 
-    $userlib->change_user_password('admin', $_REQUEST['adminpass']);
-    $smarty->assign('pagetop_msg', tra('Your admin password has been changed'));
+    $userlib->change_user_password("admin", $_REQUEST["adminpass"]);
+    $smarty->assign('pagetop_msg', tra("Your admin password has been changed"));
 }
 
 // Get list of time zones
@@ -205,7 +175,5 @@ if ($prefs['home_file_gallery']) {
 	$smarty->assign("home_fil_name", '');
 }
 
-$listgroups = $userlib->get_groups(0, -1, 'groupName_desc', '', '', 'n');
-$smarty->assign("listgroups", $listgroups['data']);
-
 ask_ticket('admin-inc-general');
+?>

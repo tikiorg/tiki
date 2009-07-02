@@ -38,3 +38,5 @@ if (isset($_FILES['importfile']) && is_uploaded_file($_FILES['importfile']['tmp_
 }
 header('Location: tiki-view_tracker.php?trackerId='.$_REQUEST["trackerId"]);
 die;
+
+?>

@@ -68,3 +68,5 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
       if (!isset($_REQUEST[$toggle])) $_REQUEST[$toggle] = $prefs[$toggle];
       $tikilib->set_preference($toggle,  $_REQUEST[$toggle]);
 }
+
+?>

@@ -143,3 +143,5 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 // Get templates from the templates/modules directory
 $smarty->assign('mid', 'tiki-edit_templates.tpl');
 $smarty->display("tiki.tpl");
+
+?>

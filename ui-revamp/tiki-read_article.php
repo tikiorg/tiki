@@ -42,8 +42,8 @@ if (($article_data['publishDate'] > $tikilib->now) && ($tiki_p_admin != 'y' && $
 	die;
 }
 
-global $statslib; include_once ('lib/stats/statslib.php');
-global $artlib; include_once ('lib/articles/artlib.php');
+include_once ('lib/stats/statslib.php');
+include_once ('lib/articles/artlib.php');
 if ($prefs['feature_categories'] == 'y') {
 	global $categlib; include_once('lib/categories/categlib.php');
 }
@@ -98,7 +98,6 @@ if ($prefs['feature_freetags'] == 'y') {
 	$smarty->assign('show_reads', $article_data["show_reads"]);
 	$smarty->assign('size', $article_data["size"]);
 	$smarty->assign('show_size', $article_data["show_size"]);
-	$smarty->assign('use_ratings', $article_data["use_ratings"]);
 
 	if (strlen($article_data["image_data"]) > 0) {
 		$smarty->assign('hasImage', 'y');
@@ -219,11 +218,9 @@ ask_ticket('article-read');
 
 //add a hit
 $statslib->stats_hit($article_data["title"],"article",$article_data['articleId']);
-if ($prefs['feature_actionlog'] == 'y') {
-	global $logslib; include_once('lib/logs/logslib.php');
-	$logslib->add_action('Viewed', $_REQUEST['articleId'], 'article');
-}
 
 // Display the Index Template
 $smarty->assign('mid', 'tiki-read_article.tpl');
 $smarty->display("tiki.tpl");
+
+?>

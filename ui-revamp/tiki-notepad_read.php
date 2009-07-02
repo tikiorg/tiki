@@ -98,3 +98,5 @@ ask_ticket('notepad-read');
 
 $smarty->assign('mid', 'tiki-notepad_read.tpl');
 $smarty->display("tiki.tpl");
+
+?>

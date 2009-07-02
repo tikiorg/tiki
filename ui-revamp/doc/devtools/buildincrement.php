@@ -39,3 +39,5 @@ info("Reverting to prior status.");
 `svn switch {$local->entry->url}`;
 
 echo "$tar.gz was created.\n";
+
+?>

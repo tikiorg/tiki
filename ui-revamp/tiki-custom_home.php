@@ -19,3 +19,5 @@ if ($prefs['feature_custom_home'] != 'y') {
 // Display the template
 $smarty->assign('mid', 'tiki-custom_home.tpl');
 $smarty->display("tiki.tpl");
+
+?>

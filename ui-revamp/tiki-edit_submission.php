@@ -53,7 +53,7 @@ if (isset($_REQUEST["previewId"])) {
 $smarty->assign('subId', $subId);
 $smarty->assign('articleId', $subId);
 $smarty->assign('previewId', $previewId);
-$smarty->assign('imageIsChanged', (isset($_REQUEST['imageIsChanged']) && $_REQUEST['imageIsChanged']=='y')?'y':'n');
+$smarty->assign('imageIsChanged', ($_REQUEST["imageIsChanged"]=='y')?'y':'n');
 
 $smarty->assign('allowhtml', 'y');
 $publishDate = $tikilib->now;
@@ -431,7 +431,7 @@ include_once ("categorize_list.php");
 
 if ($prefs['feature_freetags'] == 'y') {
     include_once ("freetag_list.php");
-    if (isset($_REQUEST['preview'])) {
+    if ($_REQUEST["preview"]) {
 	$smarty->assign('taglist',$_REQUEST["freetag_string"]);
     }
 }
@@ -455,3 +455,5 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 // Display the Index Template
 $smarty->assign('mid', 'tiki-edit_submission.tpl');
 $smarty->display("tiki.tpl");
+
+?>

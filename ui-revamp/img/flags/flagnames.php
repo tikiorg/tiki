@@ -18,6 +18,7 @@ tra('American Samoa');
 tra('Andorra');
 tra('Angola');
 tra('Anguilla');
+tra('Antarctica');
 tra('Antigua');
 tra('Argentina');
 tra('Armenia');
@@ -262,3 +263,4 @@ tra('Yemen');
 tra('Yugoslavia');
 tra('Zambia');
 tra('Zimbabwe');
+?>

@@ -23,3 +23,5 @@ if (isset($_REQUEST['enlargeW']) || isset($_REQUEST['enlargeW_x']))
 elseif ((isset($_REQUEST['reduceW']) || isset($_REQUEST['reduceW_x'])) && $cols >= 40)
 	$cols -= 20;
 $smarty->assign('cols', (int) $cols);
+
+?>

@@ -37,3 +37,5 @@ if ($user) {
 
 // Display the template
 $smarty->display("tiki-live_support_client.tpl");
+
+?>

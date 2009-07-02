@@ -6,15 +6,8 @@ $force_no_compression = true;
 $skip = false;
 
 if ( isset($_GET['fileId']) && isset($_GET['thumbnail']) && isset($_COOKIE['PHPSESSID']) && count($_GET) == 2 ) {
-
-	$tikiroot = dirname($_SERVER['PHP_SELF']);
-	$session_params = session_get_cookie_params();
-	session_set_cookie_params($session_params['lifetime'],$tikiroot);
-	unset($session_params);
 	session_start();
-
-	if ( isset($_SESSION['allowed'][$_GET['fileId']]) ) {
-		require_once 'tiki-filter-base.php';
+	if ( $_SESSION['allowed'][$_GET['fileId']] ) {
 		include('db/tiki-db.php');
 		include('lib/tikidblib.php');
 		$db = new TikiDB($dbTiki);
@@ -110,7 +103,7 @@ if (!$skip) {
 
 	if ( !$zip && $tiki_p_admin_file_galleries != 'y' && !$userlib->user_has_perm_on_object($user, $info['galleryId'], 'file gallery', 'tiki_p_download_files')) {
 		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra('Permission denied'));
+		$smarty->assign('msg', tra('You can not download files'));
 		$smarty->display('error.tpl');
 		die;
 	}
@@ -152,11 +145,7 @@ $content = &$info['data'];
 
 $md5 = '';
 if ( ! empty($info['path']) )  {
-	if (!$skip and $filegallib->isPodCastGallery($info['galleryId'])) {
-		$filepath = $prefs['fgal_podcast_dir'].$info['path'];
-	} else {
-		$filepath = $prefs['fgal_use_dir'].$info['path'];
-	}
+	$filepath = $prefs['fgal_use_dir'].$info['path'];
 	if ( is_readable($filepath) ) {
 		$file_stats = stat($filepath);
 		$last_modified = $file_stats['mtime'];
@@ -176,12 +165,7 @@ if ( ! empty($info['path']) )  {
 }
 
 // ETag: Entity Tag used for strong cache validation.
-if ( ! isset($_GET['display']) || isset($_GET['x']) || isset($_GET['y']) || isset($_GET['scale']) || isset($_GET['max']) || isset($_GET['format']) ) {
-  // if image will be modified, emit a different ETag for modifications.
-  $etag = '"' . $md5 . '-' . crc32($md5) . '-' . crc32( $_GET['x'] . 'x' . $_GET['y'] . 'y' . $_GET['scale'] . 's' . $_GET['max'] . 'm' . $_GET['format'] . 'f' ) . '"';
-} else {
-  $etag = '"' . $md5 . '-' . crc32($md5) . '"';
-}
+$etag = '"' . $md5 . '-' . crc32($md5) . '"';
 header('ETag: '.$etag);
 
 $use_client_cache = false;

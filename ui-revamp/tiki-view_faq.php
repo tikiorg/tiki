@@ -133,3 +133,5 @@ ask_ticket('view-faq');
 // Display the template
 $smarty->assign('mid', 'tiki-view_faq.tpl');
 $smarty->display("tiki.tpl");
+
+?>

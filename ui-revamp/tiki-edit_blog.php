@@ -183,3 +183,5 @@ $smarty->assign('object_page_controls', $controls);
 // Display the Index Template
 $smarty->assign('mid', 'tiki-edit_blog.tpl');
 $smarty->display("tiki.tpl");
+
+?>

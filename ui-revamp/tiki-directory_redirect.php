@@ -41,3 +41,5 @@ $dirlib->dir_add_site_hit($_REQUEST['siteId']);
 // Redirect to the site URI
 header ("location: $url");
 die;
+
+?>

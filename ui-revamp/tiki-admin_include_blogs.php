@@ -73,3 +73,5 @@ ask_ticket('admin-inc-blogs');
 
 $blogs = $tikilib->list_blogs(0, -1, 'created_desc', '');
 $smarty->assign_by_ref('blogs', $blogs["data"]);
+
+?>

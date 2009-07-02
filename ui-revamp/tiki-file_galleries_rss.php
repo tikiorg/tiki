@@ -9,12 +9,6 @@ require_once ('tiki-setup.php');
 require_once ('lib/tikilib.php');
 require_once ('lib/rss/rsslib.php');
 
-if ($prefs['feature_file_galleries'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_file_galleries");
-	$smarty->display("error.tpl");
-	die;
-}
-
 if ($prefs['rss_file_galleries'] != 'y') {
         $errmsg=tra("rss feed disabled");
         require_once ('tiki-rss_error.php');
@@ -54,3 +48,5 @@ if ($output["data"]=="EMPTY") {
 }
 header("Content-type: ".$output["content-type"]);
 print $output["data"];
+
+?>		

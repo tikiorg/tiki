@@ -4,12 +4,6 @@ require_once 'tiki-setup.php';
 require_once 'lib/ointegratelib.php';
 require_once 'lib/webservicelib.php';
 
-//this script may only be included - so its better to die if called directly.
-if ( basename($_SERVER['SCRIPT_NAME']) == basename(__FILE__) ) {
-	header("Location: index.php");
-	exit;
-}
-
 if( isset( $_REQUEST['name'] ) && $webservice = Tiki_Webservice::getService( $_REQUEST['name'] ) ) {
 
 	if( isset( $_REQUEST['delete'] ) && empty( $_REQUEST['delete'] ) ) {
@@ -133,3 +127,5 @@ $smarty->assign( 'storedTemplates', $storedTemplates );
 $smarty->assign( 'url', $webservice->url );
 $smarty->assign( 'postbody', $webservice->body );
 $smarty->assign( 'params', $webservice->getParameterMap($_REQUEST['params']) );
+
+?>

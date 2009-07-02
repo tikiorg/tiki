@@ -66,3 +66,5 @@ if (is_file($bannercachefile)) {
 } else {
 	echo $data;
 }
+
+?>

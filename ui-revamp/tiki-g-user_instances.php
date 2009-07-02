@@ -176,3 +176,5 @@ ask_ticket('g-user-instances');
 
 $smarty->assign('mid', 'tiki-g-user_instances.tpl');
 $smarty->display("tiki.tpl");
+
+?>

@@ -106,3 +106,5 @@ ask_ticket('g-monitor-processes');
 
 $smarty->assign('mid', 'tiki-g-monitor_processes.tpl');
 $smarty->display("tiki.tpl");
+
+?>

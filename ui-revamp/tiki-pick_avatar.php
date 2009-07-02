@@ -1,6 +1,6 @@
 <?php
 
-// $Id$
+// $Id: /cvsroot/tikiwiki/tiki/tiki-pick_avatar.php,v 1.26.2.2 2007-11-23 23:03:46 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -107,9 +107,6 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 			$userprefslib->set_user_avatar($userwatch, 'u', '', $name, $size, $type, $data);
 		}
 	}
-/* redirect to prevent re-submit on page reload */
-	header('Location: tiki-pick_avatar.php');
-	exit;
 }
 
 if (isset($_REQUEST["uselib"])) {
@@ -131,7 +128,6 @@ while ($file = readdir($h)) {
 }
 
 closedir ($h);
-
 $smarty->assign_by_ref('avatars', $avatars);
 $smarty->assign('numav', count($avatars));
 $smarty->assign('yours', rand(0, count($avatars)));
@@ -145,3 +141,5 @@ ask_ticket('pick-avatar');
 
 $smarty->assign('mid', 'tiki-pick_avatar.tpl');
 $smarty->display("tiki.tpl");
+
+?>

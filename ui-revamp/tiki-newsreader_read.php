@@ -111,3 +111,5 @@ ask_ticket('news-read');
 
 $smarty->assign('mid', 'tiki-newsreader_read.tpl');
 $smarty->display("tiki.tpl");
+
+?>

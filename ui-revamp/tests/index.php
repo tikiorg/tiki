@@ -7,3 +7,4 @@
 // just redirects to the site's root to prevent directory browsing
 header ("location: ../tiki-index.php");
 die;
+?>

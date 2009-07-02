@@ -144,3 +144,5 @@ include_once ('tiki-section_options.php');
 // Get templates from the templates/modules directori
 $smarty->assign('mid', 'map/tiki-map_history.tpl');
 $smarty->display("tiki.tpl");
+
+?>

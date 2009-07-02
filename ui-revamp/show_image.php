@@ -154,3 +154,4 @@ header ("Content-Disposition: inline; filename=\"" . $imagegallib->filename.'"')
 echo $imagegallib->image;
 //}
 // ????? echo $data;
+?>

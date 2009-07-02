@@ -144,3 +144,5 @@ ask_ticket('minical-prefs');
 
 $smarty->assign('mid', 'tiki-minical_prefs.tpl');
 $smarty->display("tiki.tpl");
+
+?>

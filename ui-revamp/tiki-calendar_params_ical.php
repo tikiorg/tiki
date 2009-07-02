@@ -56,3 +56,4 @@ foreach ($rawcals["data"] as $cal_id=>$cal_data)
 $smarty->assign('listcals',$caladd);
 $smarty->assign('mid', 'tiki-calendar_params_ical.tpl');
 $smarty->display("tiki.tpl");
+?>

@@ -7,14 +7,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 require_once ('tiki-setup.php');
 
-if ($prefs['feature_mobile'] != 'y') {
-  $smarty->assign('msg', tra("This feature is disabled").": feature_mobile");
- 
-  $smarty->display("error.tpl");
-  die;
- }
-
-
 require ("lib/hawhaw/hawhaw.inc");
 $TikiPage = new HAW_deck("Tiki", HAW_ALIGN_CENTER);
 
@@ -35,3 +27,5 @@ $text3 = new HAW_text(
 $TikiPage->add_text($text3);
 
 $TikiPage->create_page();
+
+?>

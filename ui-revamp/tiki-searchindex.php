@@ -15,11 +15,7 @@ require_once ('lib/search/searchlib.php');
 $searchlib = &new SearchLib($tikilib->db);
 $auto_query_args = array('highlight','where');
 
-if (isset($_REQUEST["highlight"]) && !empty($_REQUEST["highlight"])) {
-    $smarty->assign('headtitle',tra('Search results'));
-} else {
-    $smarty->assign('headtitle',tra('Search'));
-}
+$smarty->assign('headtitle',tra('Search results'));
 
 if ($prefs['feature_search'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_search");

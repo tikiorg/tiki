@@ -10,12 +10,6 @@ require_once ('lib/tikilib.php');
 require_once ('lib/blogs/bloglib.php');
 require_once ('lib/rss/rsslib.php');
 
-if ($prefs['feature_blogs'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_blogs");
-	$smarty->display("error.tpl");
-	die;
-}
-
 if ($prefs['rss_blogs'] != 'y') {
         $errmsg=tra("rss feed disabled");
         require_once ('tiki-rss_error.php');
@@ -39,12 +33,12 @@ if ($output["data"]=="EMPTY") {
 	$title =  (!empty($title_rss_blogs)) ? $title_rss_blogs : tra("Tiki RSS feed for weblogs");
 	$desc =  (!empty($desc_rss_blogs)) ? $desc_rss_blogs : tra("Last posts to weblogs.");
 	$now = date("U");
-	$id = "postId";
+	$id = "blogId";
 	$descId = "data";
 	$dateId = "created";
 	$titleId = "title";
 	$authorId = "user";
-	$readrepl = "tiki-view_blog_post.php?postId=%s";
+	$readrepl = "tiki-view_blog_post.php?$id=%s&postId=%s";
 
         $tmp = $prefs['title_rss_'.$feed];
         if ($tmp<>'') $title = $tmp;
@@ -53,20 +47,20 @@ if ($output["data"]=="EMPTY") {
 	
 	$changes = $bloglib -> list_all_blog_posts(0, $prefs['max_rss_blogs'], $dateId.'_desc', '', $now);
 	$tmp = array();
-	include_once('tiki-sefurl.php');
 	foreach ($changes["data"] as $data)  {
       global $bloglib;
       if($prefs['summary_rss_blogs'] == "y") {
-         $data["$descId"] = $tikilib->parse_data($bloglib->get_page($data[$descId],1), array('print'=>true));
+         $data["$descId"] = $tikilib->parse_data($bloglib->get_page($data["$descId"],1));
       } else {
-         $data["$descId"] = $tikilib->parse_data($data[$descId], array('print'=>true));
+         $data["$descId"] = $tikilib->parse_data($data["$descId"]);
       }
-	  $data['sefurl'] = filter_out_sefurl(sprintf($readrepl, $data['postId'], $data['blogId']), $smarty, 'blogpost', $data['title']);
 		$tmp[] = $data;
 	}
 	$changes["data"] = $tmp;
 	$tmp = null;
-	$output = $rsslib->generate_feed($feed, $uniqueid, '', $changes, $readrepl, $id, '', $title, $titleId, $desc, $descId, $dateId, $authorId);
+	$output = $rsslib->generate_feed($feed, $uniqueid, '', $changes, $readrepl, 'postId', $id, $title, $titleId, $desc, $descId, $dateId, $authorId);
 }
 header("Content-type: ".$output["content-type"]);
 print $output["data"];
+
+?>

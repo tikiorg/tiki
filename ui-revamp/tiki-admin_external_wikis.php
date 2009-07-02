@@ -92,3 +92,5 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 // Display the template
 $smarty->assign('mid', 'tiki-admin_external_wikis.tpl');
 $smarty->display("tiki.tpl");
+
+?>

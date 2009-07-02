@@ -170,3 +170,5 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 $smarty->assign('mid', 'tiki-g-admin_graph.tpl');
 $smarty->display("tiki.tpl");
+
+?>

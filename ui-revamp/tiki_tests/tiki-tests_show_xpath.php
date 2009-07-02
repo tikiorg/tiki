@@ -15,10 +15,6 @@ if ($tiki_p_admin_tikitests != 'y' and $tiki_p_edit_tikitests != 'y') {
 	die;
 }
 
-$smarty->assign("tidy",extension_loaded("tidy"));
-$smarty->assign("http",extension_loaded("http"));
-$smarty->assign("curl",extension_loaded("curl"));
-
 function get_from_dom($element) {
 	if ($element === NULL) return NULL;
 	$es = $element->getElementsByTagName("*");
@@ -98,3 +94,5 @@ foreach($urls as $url) {
 	}
 	$count++;
 }
+
+?>

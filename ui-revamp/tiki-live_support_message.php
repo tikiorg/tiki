@@ -35,3 +35,5 @@ if ($user) {
 $smarty->assign('modules', $lsadminlib->get_modules());
 // Display the template
 $smarty->display("tiki-live_support_client.tpl");
+
+?>

@@ -66,10 +66,10 @@ if ($prefs['feature_theme_control'] == 'y') {
 			$headerlib->drop_cssfile('styles/'.$prefs['style']);
 			$headerlib->add_cssfile('styles/'.$tc_theme,51);
 		}
-		
-		$style_base = $tikilib->get_style_base($tc_theme);
+		$stlstl = split("-|\.",$tc_theme);
+		$style_base = $stlstl[0];
 	
-		if (empty($tc_theme_option)) {	// special handling for 'None' case
+		if ($tc_theme_option == '') {	// special handling for 'None' case
 			if ($tikidomain) {
 				$headerlib->drop_cssfile('styles/'.$style_base.'/options/'.$tikidomain.'/'.$prefs['style_option']);
 			} else {
@@ -86,3 +86,5 @@ if ($prefs['feature_theme_control'] == 'y') {
 		}
 	}
 }
+
+?>

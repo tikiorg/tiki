@@ -31,3 +31,5 @@ if (isset($_REQUEST["adssetup"])) {
     }
 
 }
+
+?>

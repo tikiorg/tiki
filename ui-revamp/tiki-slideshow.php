@@ -175,3 +175,5 @@ ask_ticket('slideshow');
 $smarty->assign('dblclickedit', 'y');
 $smarty->assign('mid', 'tiki-show_page.tpl');
 $smarty->display("tiki-slideshow.tpl");
+
+?>

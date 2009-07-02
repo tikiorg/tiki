@@ -152,3 +152,5 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 // Display the template
 $smarty->display("tiki-print_blog_post.tpl");
+
+?>

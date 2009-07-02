@@ -494,6 +494,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 						$fields['data'][$i]['lingualpvalue'][$num]['value'] = $tikilib->parse_data(htmlspecialchars($_REQUEST[$ins_id][$tmplang]));
 
 				}
+				echo 'gggg'.$ins_id;print_r($fields['data'][$i]['lingualvalue']);print_r($_REQUEST);
 				$ins_fields['data'][$i]['lingualpvalue']=$fields['data'][$i]['lingualpvalue'];
 				$ins_fields['data'][$i]['lingualvalue']=$fields['data'][$i]['lingualvalue'];
 			}
@@ -573,12 +574,6 @@ if (isset($_REQUEST['import'])) {
 } elseif (isset($_REQUEST["save"])) {
 
 	if ($tiki_p_create_tracker_items == 'y') {
-		if (empty($user) && $prefs['feature_antibot'] == 'y' && (!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
-				$smarty->assign('msg',tra("You have mistyped the anti-bot verification code; please try again."));
-				$smarty->assign('errortype', 'no_redirect_login');
-				$smarty->display("error.tpl");
-				die;
-		}
 
 		// Check field values for each type and presence of mandatory ones
 		$mandatory_missing = array();
@@ -619,15 +614,10 @@ if (isset($_REQUEST['import'])) {
 				$trackerId = $_REQUEST["trackerId"];
 				$trklib->replace_rating($trackerId,$itemid,$newItemRateField,$user,$newItemRate);
 			}
-			if(isset($_REQUEST["viewitem"]) && $_REQUEST["viewitem"] == 'view' ) {
+			if(isset($_REQUEST["viewitem"])) {
 				header('location: '.preg_replace('#[\r\n]+#', '',"tiki-view_tracker_item.php?trackerId=".$_REQUEST["trackerId"]."&itemId=".$itemid));
 				die;
-			}				
-			elseif(isset($_REQUEST["viewitem"]) && $_REQUEST["viewitem"] == 'new')
-			{
-				header('location: '.preg_replace('#[\r\n]+#', '',"tiki-view_tracker.php?trackerId=".$_REQUEST["trackerId"]."&cookietab=2"));
-				die;
-			}			
+			}
 			if (isset($tracker_info["defaultStatus"])) {
 				$_REQUEST['status'] = $tracker_info["defaultStatus"];
 			}
@@ -781,7 +771,7 @@ foreach ($listfields as $sfid => $oneitem) {
 		{
 			$listfields[$listfields[$sfid]['options_array'][2]]['http_request'][$i] .=
 				($listfields[$listfields[$sfid]['options_array'][2]]['http_request'][$i] ? "," : "") .
-				isset($listfields[$sfid]['options_array'][$i])?$listfields[$sfid]['options_array'][$i]:'';
+				 $listfields[$sfid]['options_array'][$i];
 		}
 		$listfields[$listfields[$sfid]['options_array'][2]]['http_request'][5] .=
 			($listfields[$listfields[$sfid]['options_array'][2]]['http_request'][5] ? "," : "") .

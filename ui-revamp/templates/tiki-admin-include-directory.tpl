@@ -9,7 +9,7 @@
   <div class="cbox-data">
       <form action="tiki-admin.php?page=directory" method="post">
         <table class="admin"><tr>
-          <td class="form"><label for="directory-columns">{tr}Number of columns per page when listing directory categories{/tr}</label></td>
+          <td class="form"><label for="directory-columns">{tr}Number of columns per page when listing categories{/tr}</label></td>
           <td><select name="directory_columns" id="directory-columns">
               <option value="1" {if $prefs.directory_columns eq 1}selected="selected"{/if}>1</option>
               <option value="2" {if $prefs.directory_columns eq 2}selected="selected"{/if}>2</option>

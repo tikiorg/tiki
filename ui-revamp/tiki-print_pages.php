@@ -11,8 +11,6 @@ $section = 'wiki page';
 require_once ('tiki-setup.php');
 include_once ('lib/structures/structlib.php');
 
-$auto_query_args = array('page_ref_id', 'page', 'find', 'pageName', 'structureId', 'offset', 'printpages', 'printstructures');
-
 if ($prefs['feature_wiki_multiprint'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_wiki_multiprint");
 
@@ -118,3 +116,5 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 // Display the template
 $smarty->assign('mid', 'tiki-print_pages.tpl');
 $smarty->display("tiki.tpl");
+
+?>

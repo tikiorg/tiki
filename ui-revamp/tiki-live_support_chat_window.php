@@ -61,3 +61,5 @@ if (!isset($user)) {
 
 // Display the template
 $smarty->display("tiki-live_support_chat_window.tpl");
+
+?>

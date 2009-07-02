@@ -14,3 +14,4 @@ global $wikilib; include_once('lib/wiki/wikilib.php');
 $plugins = $wikilib->list_plugins( true );
 
 $smarty->assign_by_ref('plugins', $plugins);
+?>

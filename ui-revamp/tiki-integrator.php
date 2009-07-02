@@ -63,3 +63,5 @@ if (isset($_REQUEST["file"])) $smarty->assign('file', $_REQUEST["file"]);
 // Display the template
 $smarty->assign('mid','tiki-integrator.tpl');
 $smarty->display("tiki.tpl");
+
+?>

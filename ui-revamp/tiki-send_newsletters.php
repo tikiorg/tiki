@@ -9,12 +9,10 @@
 // Initialization
 $section = 'newsletters';
 require_once ('tiki-setup.php');
-@ini_set('max_execution_time', 0); //will not work if safe_mode is on
+@ini_set('max_execution_time', 0); //will not work in safe_mode is on
 $prefs['feature_wiki_protect_email'] = 'n'; //not to alter the email
 
 include_once ('lib/newsletters/nllib.php');
-
-$auto_query_args = array('sort_mode','offset','find', 'nlId', 'cookietab');
 
 $sender_email = $userlib->get_user_email($user);
 
@@ -66,7 +64,8 @@ if ($_REQUEST["nlId"]) {
 	}
 	$smarty->assign('info', $info);
 }else{
-	//No newsletter selected -> Check if the textarea for the first has to be displayed
+	//No newsletter selected -> Check if the textarea for the first
+	//as to be displayed
 	$smarty->assign('allowTxt', $newsletters['data'][0]['allowTxt']);	
 }
 
@@ -136,23 +135,12 @@ foreach($newsletterfiles_post as $k => $id) {
 
 if (!empty($_FILES) && !empty($_FILES['newsletterfile'])) {
 	foreach ($_FILES['newsletterfile']['name'] as $i => $v) {
-		if ( $_FILES['newsletterfile']['error'][$i] == UPLOAD_ERR_OK ) {
-				$newsletterfiles[]=array(
-									'name' => $_FILES['newsletterfile']['name'][$i],
-									'type' => $_FILES['newsletterfile']['type'][$i],
-									'path' => $_FILES['newsletterfile']['tmp_name'][$i],
-									'error' => $_FILES['newsletterfile']['error'][$i],
-									'size' => $_FILES['newsletterfile']['size'][$i],
-									'savestate' => 'phptmp');
-		}	else {
-
-			$smarty->assign('upload_err_msg', tra('A problem occured during file uploading')
-																. '<br />'
-																. tra('File which was causing trouble was at rank') . '&nbsp;' . ($i + 1)
-																. '<br />' 
-																. tra('The error was:') . '&nbsp;<strong>' . $tikilib->uploaded_file_error($_FILES['newsletterfile']['error'][$i]) . '</strong>'
-											);
-		}
+		$newsletterfiles[]=array('name' => $_FILES['newsletterfile']['name'][$i],
+								 'type' => $_FILES['newsletterfile']['type'][$i],
+								 'path' => $_FILES['newsletterfile']['tmp_name'][$i],
+								 'error' => $_FILES['newsletterfile']['error'][$i],
+								 'size' => $_FILES['newsletterfile']['size'][$i],
+								 'savestate' => 'phptmp');
 	}
 }
 
@@ -177,6 +165,9 @@ foreach($info['files'] as $k => $newsletterfile) {
 $smarty->assign('preview', 'n');
 if (isset($_REQUEST["preview"])) {
 	$smarty->assign('preview', 'y');
+	//if (eregi("\<[ \t]*html[ \t\>]",  $_REQUEST["data"]))  // html newsletter - this will be the text sent with the html part
+	//	$smarty->assign('txt', nl2br(strip_tags($_REQUEST["data"])));
+	//TODO: the sent text version is not pretty: the text must be a textarea
 	if (isset($_REQUEST["subject"])) {
 		$info["subject"] = $_REQUEST["subject"];
 	} else {
@@ -201,7 +192,7 @@ if (isset($_REQUEST["preview"])) {
 	if (!empty($_REQUEST["usedTpl"])) {
 		$smarty->assign('dataparsed', (($info['wikiparse'] == 'y')?$tikilib->parse_data($info["data"], array('absolute_links' => true)): $info['data']));
 		$smarty->assign('subject', $info["subject"]);
-		$info["dataparsed"] = $smarty->fetch("newsletters/".$_REQUEST["usedTpl"]);
+		$info["dataparsed"]  = $smarty->fetch("newsletters/".$_REQUEST["usedTpl"]);
 	        if (stristr($info['dataparsed'], "<body") === false) {
         	        $info['dataparsed'] = "<html><body>".$info['dataparsed']."</body></html>";
         	}
@@ -209,9 +200,7 @@ if (isset($_REQUEST["preview"])) {
 	} else {
 		$info["dataparsed"] = "<html><body>".(($info['wikiparse'] == 'y')?$tikilib->parse_data($info["data"], array('absolute_links' => true)):$info['data'])."</body></html>";
 	}
-	if (!empty($_REQUEST['replyto'])) {
-		$smarty->assign('replyto', $_REQUEST['replyto']);
-	}
+	
 	$smarty->assign('info', $info);
 }
 
@@ -251,16 +240,14 @@ if (isset($_REQUEST["save"])) {
 	$cant = count($subscribers);
 	$smarty->assign('subscribers', $cant);
 	$smarty->assign('info', $info);
-	if (!empty($_REQUEST['replyto'])) {
-		$smarty->assign('replyto', $_REQUEST['replyto']);
-	}
 }
 
 $smarty->assign('emited', 'n');
 if (!empty($_REQUEST['datatxt']))
    $txt = $_REQUEST['datatxt'];
 if (empty($txt)&&!empty($_REQUEST["data"])) {
-	//No txt message is explicitely provided -> Create one with the html Version & remove Wiki tags
+	//No txt message is explicitely provided -> 
+	//Create one with the html Version & remove Wiki tags
 	$txt = strip_tags(str_replace(array("\r\n","&nbsp;") , array("\n"," ") , $_REQUEST["data"]));
 	$txt=preg_replace('/^!!!(.*?)$/m',"\n$1\n",$txt);
 	$txt=preg_replace('/^!!(.*?)$/m',"\n$1\n",$txt);
@@ -282,7 +269,7 @@ if (isset($_REQUEST["send"])) {
 	}
 	$sent = array();
 	$unsubmsg = '';
-	$errors = array();
+	$errors =  array();
 
 	if (isset($_REQUEST['errorEditionId'])) {
 		$users = $nllib->get_edition_errors($_REQUEST['errorEditionId']);
@@ -301,7 +288,7 @@ if (isset($_REQUEST["send"])) {
 	}
 
 	foreach ($users as $us) {
-		$userEmail = $us["login"];
+		$userEmail  = $us["login"];
 		$email = $us["email"];
 		if (!preg_match('/([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+/', trim($email))) {
 			$errors[] = array("user"=>$userEmail, "email"=>$email, "msg"=>tra("invalid email"));
@@ -320,10 +307,7 @@ if (isset($_REQUEST["send"])) {
 			$userEmail = '';
 		}
 		$mail->setFrom($sender_email);
-		if (!empty($_REQUEST['replyto'])) {
-			$mail->setHeader("Reply-To", $_REQUEST['replyto']);
-		}
-		$mail->setSubject($_REQUEST["subject"]); // htmlMimeMail memorised the encoded subject
+		$mail->setSubject($_REQUEST["subject"]); // htmlMimeMail memorised the encoded subject 
 		$languageEmail = ! $userEmail ? $prefs['site_language'] : $tikilib->get_user_preference($userEmail, "language", $prefs['site_language']);
 		if ($nl_info["unsubMsg"] == 'y') {
 			$unsubmsg = $nllib->get_unsub_msg($_REQUEST["nlId"], $email, $languageEmail, $us["code"], $userEmail);
@@ -351,7 +335,7 @@ if (isset($_REQUEST["send"])) {
 	if (count($errors) > 0) {
 		$smarty->assign_by_ref('errors', $errors);
 	}
-	$editionId = $nllib->replace_edition($_REQUEST["nlId"], $_REQUEST["subject"], $_REQUEST["data"], count($sent), $editionId, false, !empty($_REQUEST['datatxt'])?$txt:'', $info['files']);
+	$editionId = $nllib->replace_edition($_REQUEST["nlId"], $_REQUEST["subject"], $_REQUEST["data"], count($sent), $editionId, false, $txt, $info['files']);
 	foreach($info['files'] as $k => $f) {
 		if ($f['savestate'] == 'tikitemp') {
 			$newpath=$prefs['tmpDir'].'/newsletterfile-'.$f['filename'];
@@ -364,8 +348,7 @@ if (isset($_REQUEST["send"])) {
 }
 
 if (isset($_REQUEST["save_only"])) {
-	if (!isset($txt) || empty($_REQUEST['datatxt']))
-		$txt="";
+	if (!isset($txt))$txt="";
 	$smarty->assign('nlId', $_REQUEST['nlId']);	
 	$editionId = $nllib->replace_edition($_REQUEST['nlId'], $_REQUEST['subject'], $_REQUEST['data'], -1, $_REQUEST['editionId'], true,$txt, $info['files']);
 	foreach($info['files'] as $k => $f) {
@@ -464,13 +447,10 @@ $smarty->assign('cookietab', $_REQUEST['cookietab']);
 
 ask_ticket ('send-newsletter');
 
-global $wikilib; include_once('lib/wiki/wikilib.php');
-$plugins = $wikilib->list_plugins(true, 'editwiki');
-$smarty->assign_by_ref('plugins', $plugins);
-
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 // Display the template
 $smarty->assign('mid', 'tiki-send_newsletters.tpl');
 $smarty->display("tiki.tpl");
+?>

@@ -20,3 +20,4 @@ if (isset($_REQUEST["faqcomprefs"])) {
 	simple_set_value('faq_prefix');
 }
 ask_ticket('admin-inc-faqs');
+?>

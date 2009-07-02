@@ -413,4 +413,7 @@ function readargs($argv) {
 		$func($goption, $coption, $cparams);
 	}
 }
+
 readargs($argv);
+
+?>

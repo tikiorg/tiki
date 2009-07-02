@@ -28,3 +28,5 @@ $type = $data["image_type"];
 $data = $data["image_data"];
 header ("Content-type: $type");
 echo $data;
+
+?>

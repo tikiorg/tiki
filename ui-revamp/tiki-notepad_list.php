@@ -170,3 +170,5 @@ $smarty->assign("mootab",'y');
 }
 $smarty->assign('mid', 'tiki-notepad_list.tpl');
 $smarty->display("tiki.tpl");
+
+?>

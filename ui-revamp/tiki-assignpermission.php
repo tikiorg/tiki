@@ -130,16 +130,12 @@ $levels = $userlib->get_permission_levels();
 sort($levels);
 $smarty->assign('levels', $levels);
 
-// Get the list of permissions
-$group_info = $userlib->get_group_info($group);
-$smarty->assign_by_ref('group_info', $group_info);
-
 $perms = $userlib->get_permissions(0, -1, $sort_mode, $find, $_REQUEST["type"], $group);
 
 foreach ($perms['data'] as $perm) {
  	if ($perm['admin'] == 'y' && $perm['hasPerm'] == 'y') {
 		foreach ($perms['data'] as $key=>$p) {
-			if ($p['type'] == $perm['type'] && $perm['permName'] != $p['permName'] && !in_array($p['permName'], $group_info['perms'])) {
+			if ($p['type'] == $perm['type'] && $perm['permName'] != $p['permName']) {
 				$perms['data'][$key]['from_admin'] = 'y';
 				$perms['data'][$key]['hasPerm'] = 'y';
 			}
@@ -163,6 +159,10 @@ if ($group != 'Anonymous') {
 	}
 }
 
+// Get the list of permissions
+$group_info = $userlib->get_group_info($group);
+$smarty->assign_by_ref('group_info', $group_info);
+
 // Get users (list of users)
 $smarty->assign_by_ref('perms', $perms["data"]);
 
@@ -174,3 +174,5 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 // Display the template
 $smarty->assign('mid', 'tiki-assignpermission.tpl');
 $smarty->display("tiki.tpl");
+
+?>

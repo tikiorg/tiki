@@ -176,3 +176,4 @@ else {
 		$smarty->display("tiki.tpl");
 	}
 }
+?>

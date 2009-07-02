@@ -223,13 +223,11 @@ include_once("textareasize.php");
 
 ask_ticket('admin-content-templates');
 
-global $wikilib; include_once('lib/wiki/wikilib.php');
-$plugins = $wikilib->list_plugins(true, 'editwiki');
-$smarty->assign_by_ref('plugins', $plugins);
-
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 // Display the template
 $smarty->assign('mid', 'tiki-admin_content_templates.tpl');
 $smarty->display("tiki.tpl");
+
+?>

@@ -43,3 +43,4 @@ ask_ticket('replicate');
 
 $smarty->assign('mid', 'tiki-replicate.tpl');
 $smarty->display('tiki.tpl');
+?>

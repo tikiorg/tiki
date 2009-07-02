@@ -31,3 +31,5 @@ include_once ('tiki-section_options.php');
 $smarty->assign_by_ref('url', $_REQUEST["url"]);
 $smarty->assign('mid', 'tiki-featured_link.tpl');
 $smarty->display("tiki.tpl");
+
+?>

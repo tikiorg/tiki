@@ -18,15 +18,8 @@ $done = '';
 $output = '';
 $buf = '';
 
-global $cachelib; include_once('lib/cache/cachelib.php');
 if (isset($_GET['do'])) {
-	if ($_GET['do'] == 'all') {
-		$cachelib->erase_dir_content("templates_c/$tikidomain");
-		$cachelib->erase_dir_content("temp/cache/$tikidomain");
-		$cachelib->erase_dir_content("modules/cache/$tikidomain");
-		$tikilib->set_lastUpdatePrefs();
-		$logslib->add_log('system','erased all Tiki cache content');
-	} elseif ($_GET['do'] == 'templates_c') {
+	if ($_GET['do'] == 'templates_c') {
 		$cachelib->erase_dir_content("templates_c/$tikidomain");
 		$logslib->add_log('system','erased templates_c content');
 	} elseif ($_GET['do'] == 'temp_cache') {
@@ -156,3 +149,4 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 $smarty->assign('mid', 'tiki-admin_system.tpl');
 $smarty->display("tiki.tpl");
+?>

@@ -254,7 +254,7 @@ if($prefs['feature_user_watches'] == 'y') {
 	  if($_REQUEST['watch_action']=='add') {
 	    $tikilib->add_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object'],'Map',$_REQUEST['watch_object'],"tiki-map.php?mapfile=".$_REQUEST['watch_object']);
 	  } else {
-	    $tikilib->remove_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object'], 'map');
+	    $tikilib->remove_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object']);
 	  }
 	}
 
@@ -291,3 +291,5 @@ if (isset($_REQUEST["mapfile"])) {
 // Get templates from the templates/modules directory
 $smarty->assign('mid', 'map/tiki-map_edit.tpl');
 $smarty->display("tiki.tpl");
+
+?>

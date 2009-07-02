@@ -155,6 +155,8 @@ span.button a:visited {color: #F5F5F5}
 
 span.button a:hover {text-decoration: none}
 
+.button .iconmenu {display:inline;}
+
 input[type=checkbox] {border: 0}
 * html .findtable input {font-size: 1em}
 form.admin input[name="features"] {margin-bottom: 3px !important}
@@ -330,11 +332,6 @@ div#sitead {margin: auto}
 	bottom: 7px;
 	right: 3px;
 	color: #f5f5f5}
-	
-#siteloginbar a:link,
-#siteloginbar a:visited {
-	color: #fff;
-	text-decoration: none}
 
 input[id="sl-login-user"],
 input[id="sl-login-pass"] {}
@@ -388,12 +385,18 @@ input[id="sl-login-pass"] {}
 
 #sitesearchbar {
 	float: right;
-	padding-right: 4px;
-	text-align: right;
-	display: block;
-	margin: 0;
-	margin-top: 4px}
+	margin-right: 4px;
+	margin-top: 6px;
+	clear: none}
 
+#sitesearchbar select[name="where"] {margin-right: 50px}
+	
+#sitesearchbar ul.cssmenu > li > ul {
+	margin-top: -24px;
+	padding: 0;
+	margin-left: 0;
+	border: 0}
+	
 input#fuser,
 select[name="where"],
 input[name="search"] {}
@@ -447,12 +450,10 @@ a.flip img {display: none}
 	text-align: left}
 
 .horbaritem a,
-.horbaritem a:link,
 .horbaritem a:visited {
-	display: block;
-	padding: 8px 0 8px 5px;
+	padding: 6px 3px;
 	text-decoration: none;
-	font: 14px Verdana, Helvetica, Arial, Sans-Serif;
+	font: 1em Verdana, Helvetica, Arial, Sans-Serif;
 	color: white;
 	margin: 0}
 	
@@ -461,11 +462,12 @@ a.flip img {display: none}
 * html .horbaritem a:visited {font-size: 1.3em }
 
 .horbaritem a:hover {
-	background: url(feb12/header.jpg) 0 -40px repeat-x;
+	background: url(feb12/pagebg.jpg) repeat-x;
 	color: #eee !important;
 	text-decoration: none} 
 
 .horbaritem a:visited {} 
+* html .horbaritem a {font-size: .8em}
 .mdkverbar {} 
 
 .mdksubmenu {
@@ -475,7 +477,7 @@ a.flip img {display: none}
 	top: 0;
 	background: #FFFFFF;
 	visibility: hidden;
-	margin-top: 0}
+	margin-top: 10px}
 
 * html .mdksubmenu {margin-top: 0}
 *:first-child+html .mdksubmenu { margin-top: 0 }
@@ -523,8 +525,7 @@ a.flip img {display: none}
 
 .treemenudiv {
 	display: block;
-	white-space: nowrap:
-	background: #a8cce2;}
+	white-space: nowrap}
 
 .box-data table {width: 100%}
 * html .box-data table {width: 95%}
@@ -535,28 +536,25 @@ a.phplm:link,
 a.phplm:visited,
 a.phplm:hover,
 a.phplm:active {
-	font: 1em 'Trebuchet MS', sans-serif;
-	color: #794a93;
+	font: 100% Verdana, Tahoma, Arial, sans-serif;
+	color: #303030;
 	text-decoration: none;
-	font-weight: normal}
+	font-weight: bold}
 
-a.phplm:visited {color: #794a93}
-a.phplm:hover,
-a.phplm:active {
-	color: #006699;
-	text-decoration: underline;
-	background: none}
+a.phplm:visited {color: #726461}
+a.phplm:hover {color: #808080}
+a.phplm:active {color: #ff0000}
 
 a.phplmselected:link,
 a.phplmselected:visited,
 a.phplmselected:hover,
 a.phplmselected:active {
-	font-family: 'Trebuchet MS', sans-serif;
-	color: #794a93;
+	font: 100% Verdana, Tahoma, Arial, sans-serif;
+	color: black;
 	text-decoration: underline;
-	font-weight: normal}
+	font-weight: bold}
 
-a.phplmselected:hover {color: #006699}
+a.phplmselected:hover {color: #808080}
 
 .imgs	{
 	border: 0;
@@ -781,7 +779,8 @@ a.flipmodtitle:hover img {
 
 .box-data ol,
 .box-data ul {
-	padding-right: 1em}
+	/*padding-right: 1em;*/
+	overflow: hidden}
 
 /** Other boxes **/
 
@@ -1045,7 +1044,17 @@ h1 a.pagetitle:visited {
 
 h1 a.pagetitle:hover {text-decoration: none}
 
-.wikitopline {}
+.wikitopline {min-width: 99%}
+.wikiinfo { float: none !important }
+
+.wikiactions {float: right; white-space: nowrap !important;}
+.wikiactions .icons,
+.wikiactions form {display: inline-block}
+
+*:first-child+html .wikiactions .icons,
+*:first-child+html .wikiactions form,
+* html .wikiactions .icons,
+* html .wikiactions form {display: inline}
 
 #description {
 	font-size: .9em;
@@ -1259,27 +1268,8 @@ img.articleimage {
 	padding:2px 0;
 	margin-bottom:10px}
 
-div.articletrailer {
-	position: relative;
-	text-align: center;
-	margin-top: 1.1em}
-	
-div.articletrailer img {}
-
-div.article .status {
-	position: absolute;
-	left: 0}
-
-div.articletrailer span {
-	display: inline-block;
-	margin: auto;
-	white-space: nowrap}
-
-div.article .actions {
-	position: absolute;
-	right: 0;
-	top: 0}
-
+div.articletrailer {text-align: right}
+div.articletrailer .wikitopline {float: left} 
 div.articlebody {}
  
 div.articlesource {
@@ -1355,57 +1345,18 @@ span.posthead {
 	display: block;
 	font-weight: bold;
 	letter-spacing: .4pt}
-	
-body.tiki_blogs .post .title {  }
  
-/*div.posthead h3*/
-body.tiki_blogs .post .title h2 {
-	font-size: 1.2em;
-	margin-top: 0;
-	margin-bottom: 0}
+div.posthead h3 {font-size:1.2em}
  
-/*div.postbody*/
-body.tiki_blogs .post .postbody {
+div.postbody {
 	margin-right: 8px;
 	line-height: 1.2em;
-	margin-bottom: 1em;
-	border: 0;
-	background: none}
-	
-/* Maybe needs override to differentiate from forums */
-	
-body.tiki_blogs div.author_actions {
-	float: none;
-	text-align: right;
-	background: none;
-	border: 0;
-	width: 100%}
-	
-body.tiki_blogs .actions {background: none}
+	margin-bottom: 1em}
 
-body.tiki_blogs .author_info {
-	width: 100%;
-	float: none;
-	text-align: left;
-	background: none;
-	border: 0}
-
-.postbody-title {
-	background: none;
-	border: 0}
-	
-body.tiki_blogs .postbody-title {
-	float: none;
-	width: 100%;
-	background: none;
-	border: 0}
-
-body.tiki_blogs .postfooter {
-	width: 100%;
+div.postfooter {
+	clear: both;
+	float: right;
 	margin-bottom: 2em}
-	
-body.tiki_blogs .postfooter .actions {float: left}
-
 
 /***** Forums *****/
 body.tiki_forums table.normal {margin: auto}
@@ -2163,7 +2114,5 @@ a.icon,
 img.icon {
 	border: 0 !important;
 	background: transparent}
-
-.button .iconmenu {display:inline;}
 
 /* end of css file */

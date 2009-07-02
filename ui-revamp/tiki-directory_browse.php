@@ -149,3 +149,5 @@ ask_ticket('dir-browse');
 
 $smarty->assign('mid', 'tiki-directory_browse.tpl');
 $smarty->display("tiki.tpl");
+
+?>

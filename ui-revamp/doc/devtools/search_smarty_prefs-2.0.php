@@ -39,3 +39,5 @@ foreach($elems as $filename) {
 	}
     }
 }
+
+?>

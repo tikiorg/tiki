@@ -31,7 +31,6 @@ if (!isset($_REQUEST["trackerId"])) {
 	$smarty->display("error.tpl");
 	die;
 }
-$auto_query_args = array('trackerId','offsset', 'sort_mode', 'find', 'max');
 
 $smarty->assign('trackerId', $_REQUEST["trackerId"]);
 $tracker_info = $trklib->get_tracker($_REQUEST["trackerId"]);
@@ -283,9 +282,6 @@ $smarty->assign_by_ref('sort_mode', $sort_mode);
 $channels = $trklib->list_tracker_fields($_REQUEST["trackerId"], $offset, $max, $sort_mode, $find, false);
 $plug = array();
 foreach ($channels['data'] as $c) {
-	if ($c['type'] == 'A' && $tracker_info['useAttachments'] != 'y') { // attachement
-		$smarty->assign('error', 'This tracker does not allow attachments'); //get_strings tra('Tracker does not allow attachments')
-	}
 	if ($c['isPublic'] == 'y') {
 		$plug[] = $c['fieldId'];
 	}
@@ -308,3 +304,5 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 // Display the template
 $smarty->assign('mid', 'tiki-admin_tracker_fields.tpl');
 $smarty->display("tiki.tpl");
+
+?>

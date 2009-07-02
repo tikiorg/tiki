@@ -23,3 +23,4 @@ if (isset($_REQUEST["scoreevents"])) {
 $smarty->assign('events',$scorelib->get_all_events());
 
 ask_ticket('admin-inc-score');
+?>

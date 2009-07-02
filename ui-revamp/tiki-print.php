@@ -84,7 +84,7 @@ if (isset($_REQUEST['page_ref_id'])) {
     $page_ref_id = $_REQUEST['page_ref_id'];
 }
 
-$pdata = $tikilib->parse_data($info["data"], array('is_html' => $info["is_html"], 'print'=>'y'));
+$pdata = $tikilib->parse_data($info["data"], array('is_html' => $info["is_html"]));
 $smarty->assign_by_ref('parsed', $pdata);
 $smarty->assign_by_ref('lastModif', $info["lastModif"]);
 
@@ -127,3 +127,5 @@ if ( isset($_REQUEST['display']) && $_REQUEST['display'] == 'pdf' ) {
 } else {
 	$smarty->display('tiki-print.tpl');
 }
+
+?>

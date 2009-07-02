@@ -40,3 +40,4 @@ foreach ($pages as $p) {
 		echo "\n";
 	}
 }
+?>

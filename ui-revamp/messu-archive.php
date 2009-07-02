@@ -140,3 +140,5 @@ ask_ticket('messu-archive');
 
 $smarty->assign('mid', 'messu-archive.tpl');
 $smarty->display("tiki.tpl");
+
+?>

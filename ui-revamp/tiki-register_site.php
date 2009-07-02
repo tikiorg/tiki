@@ -20,7 +20,7 @@ $tmp2 = isset($_SERVER["PHP_SELF"]) ? $_SERVER["PHP_SELF"] : "";
 $url = $tmp1.dirname($tmp2);
 
 $info = Array();
-$info["name"] = $prefs['browsertitle'];
+$info["name"] = $prefs['siteTitle'];
 $info["description"] = '';
 $info["url"] = $url;
 $info["country"] = 'None';
@@ -33,3 +33,4 @@ $smarty->assign_by_ref('countries',$countries);
 // Display the template
 $smarty->assign('mid','tiki-register_site.tpl');
 $smarty->display("tiki.tpl");
+?>

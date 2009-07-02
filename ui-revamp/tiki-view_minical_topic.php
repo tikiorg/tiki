@@ -41,3 +41,5 @@ $content = &$info["data"];
 header ("Content-type: $type");
 header ("Content-Disposition: inline; filename=$file");
 echo "$content";
+
+?>

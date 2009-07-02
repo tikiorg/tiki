@@ -126,3 +126,5 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 $smarty->assign('mid', 'tiki-import_structuredtext.tpl');
 $smarty->display("tiki.tpl");
+
+?>

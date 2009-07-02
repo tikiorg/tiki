@@ -136,11 +136,14 @@ if (isset($_REQUEST["wikifeatures"])) {
 	'feature_wikiwords',
 	'feature_wikiwords_usedash',
 	'feature_wiki_plurals',
+	'feature_wiki_paragraph_formatting',
+	'feature_wiki_paragraph_formatting_add_br',
 	'feature_dump',
 	'feature_wiki_export',
 	'feature_wiki_rankings',
 	'feature_wiki_ratings',
 	'feature_wiki_footnotes',
+	'feature_wiki_monosp',
 	'feature_wiki_usrlock',
 	'feature_wiki_undo',
 	'feature_wiki_save_draft',
@@ -151,13 +154,12 @@ if (isset($_REQUEST["wikifeatures"])) {
 	'feature_wiki_multiprint',
 	// 'feature_wiki_pdf',
 	'feature_listPages',
-	'feature_listorphanPages',
-	'feature_listorphanStructure',
 	'feature_history',
 	'feature_source',
 	'feature_sandbox',
 	'feature_wiki_print',
 	'feature_wiki_replace',
+	'feature_antibot',
 	'feature_backlinks',
 	'feature_likePages',
 	'wiki_uses_slides',
@@ -166,8 +168,10 @@ if (isset($_REQUEST["wikifeatures"])) {
 	'feature_wiki_make_structure',
 	'feature_wiki_categorize_structure',
 	'feature_create_webhelp',
-	'page_n_times_in_a_structure',
+	'feature_wiki_ext_icon',
+	'wiki_edit_plugin',
 	'feature_wiki_userpage',
+	'feature_wiki_protect_email',
 	'feature_wiki_1like_redirection',
 	'feature_wiki_show_hide_before',
 	'feature_wiki_allowhtml',
@@ -176,8 +180,6 @@ if (isset($_REQUEST["wikifeatures"])) {
 	'wiki_edit_section',
 	'feature_actionlog_bytes',
 	'wiki_authors_style_by_page',
-	'wiki_edit_minor',
-	'feature_filegals_manager',
 	);
 	foreach ($pref_toggles as $toggle) {
 		simple_set_toggle($toggle);
@@ -186,13 +188,13 @@ if (isset($_REQUEST["wikifeatures"])) {
 	$pref_values = array(
 	'wiki_cache',
 	'warn_on_edit_time',
+	'feature_wiki_tables',
 	'feature_wiki_userpage_prefix',
 	'wiki_authors_style',
 	'feature_wiki_mandatory_category',
 	'wiki_page_navigation_bar',
 	'wiki_actions_bar',
 	'wiki_topline_position',
-	'wiki_edit_section_level',
 	'page_bar_position'
 	);
 	foreach ($pref_values as $value) {
@@ -302,3 +304,4 @@ $tags = $adminlib->get_tags();
 $smarty->assign_by_ref("tags", $tags);
 
 ask_ticket('admin-inc-wiki');
+?>

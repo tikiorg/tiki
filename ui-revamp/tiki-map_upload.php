@@ -246,3 +246,5 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 // Get templates from the templates/modules directori
 $smarty->assign('mid', 'map/tiki-map_upload.tpl');
 $smarty->display("tiki.tpl");
+
+?>

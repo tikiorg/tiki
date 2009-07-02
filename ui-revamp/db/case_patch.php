@@ -19,3 +19,4 @@ foreach ($list['data'] as $l) {
 		}
 	}
 }
+?>

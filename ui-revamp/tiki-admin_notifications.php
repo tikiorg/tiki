@@ -10,10 +10,6 @@ $inputConfiguration = array( array(
 	'staticKeyFilters' => array(
 		'offset' => 'digits',
 		'maxRecords' => 'digits',
-		'removeevent' => 'digits',
-		'removetype' => 'word',
-		'daconfirm' => 'word',
-		'ticket' => 'word',
 		'sort_mode' => 'word',
 		'find' => 'striptags',
 		'login' => 'username',
@@ -33,7 +29,7 @@ $inputConfiguration = array( array(
 require_once ('tiki-setup.php');
 include_once ('lib/notifications/notificationlib.php');
 
-if ($tiki_p_admin != 'y' && $tiki_p_admin_notifications != 'y') {
+if ($tiki_p_admin != 'y') {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 	$smarty->display("error.tpl");
@@ -50,18 +46,6 @@ $watches['user_registers'] = array(
 );
 $watches['article_submitted'] = array(
 	'label'=>tra('A user submits an article'),
-	'type'=>'cms',
-	'url'=>'tiki-list_submissions.php',
-	'object'=>'*'
-);
-$watches['article_edited'] = array(
-	'label'=>tra('A user edits an article'),
-	'type'=>'cms',
-	'url'=>'tiki-list_articles.php',
-	'object'=>'*'
-);
-$watches['article_deleted'] = array(
-	'label'=>tra('A user deletes an article'),
 	'type'=>'cms',
 	'url'=>'tiki-list_submissions.php',
 	'object'=>'*'
@@ -207,3 +191,5 @@ $smarty->assign('admin_mail',$admin_mail);
 // Display the template
 $smarty->assign('mid', 'tiki-admin_notifications.tpl');
 $smarty->display("tiki.tpl");
+
+?>

@@ -49,3 +49,5 @@ if( isset($jitRequest['edit']) ) {
 		$_REQUEST['edit'] = $jitRequest->edit->wikicontent();
 	}
 }
+
+?>

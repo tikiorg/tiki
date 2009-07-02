@@ -48,3 +48,4 @@ if ($movie) {
 // Display the template
 $smarty->assign('mid','tiki-listmovies.tpl');
 $smarty->display("tiki.tpl");
+?>

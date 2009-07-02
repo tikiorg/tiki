@@ -32,9 +32,6 @@ else
 	if [ "$UNAME" = "CYGWIN" ]; then
 		AUSER=SYSTEM
 		AGROUP=SYSTEM
-	elif [ "$UNAME" = "Darwin" ]; then
-		AUSER=_www
-		AGROUP=_www
 	fi
 fi
 
@@ -63,7 +60,7 @@ but it (the script) will still fix what it can according to the permissions
 of your user. This script will now ask you some questions. If you don't know
 what to answer, just press enter to each question (to use default value)"
 
-		read WAIT
+		read 
 		AUSER=$USER
 	fi
 
@@ -152,7 +149,7 @@ but it (the script) will still fix what it can according to the permissions
 of your user. This script will now ask you some questions. If you don't know
 what to answer, just press enter to each question (to use default value)"
 
-		read WAIT
+		read 
 		echo -n "Open global perms ..."
 #		find . -type d -exec chmod 777 {} \;
 #		find . -type f -exec chmod 666 {} \;

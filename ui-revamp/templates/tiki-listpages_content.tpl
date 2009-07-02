@@ -372,10 +372,8 @@
 	</p>
 {/if}
 
-{if $find && $tiki_p_edit eq 'y' and $pagefound eq 'n' and $alias_found eq 'n'}
-	<div class="navbar">
-		 {button _text="{tr}Create Page{/tr}: $find" href="tiki-editpage.php?page=$find&lang=$find_lang&templateId=$template_id" _title="{tr}Create{/tr}"}
-	</div>
+{if $find && $tiki_p_edit eq 'y' and $pagefound eq 'n'}
+	{button _text="{tr}Create Page{/tr}: $find" href="tiki-editpage.php?page=$find" _title="{tr}Create{/tr}"}
 {/if}
 
 </form>

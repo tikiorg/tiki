@@ -191,3 +191,6 @@ $smarty->assign('mid', 'tiki-forum_import.tpl');
 $smarty->display("tiki.tpl");
 
 exit;
+
+?>
+

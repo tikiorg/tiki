@@ -221,3 +221,5 @@ ask_ticket('take-quiz');
 // Display the template
 $smarty->assign('mid', 'tiki-take_quiz.tpl');
 $smarty->display("tiki.tpl");
+
+?>

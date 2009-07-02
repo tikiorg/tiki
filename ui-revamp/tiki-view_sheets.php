@@ -11,7 +11,6 @@
 $section = 'sheet';
 require_once ('tiki-setup.php');
 require_once ('lib/sheet/grid.php');
-$auto_query_args = array ('sheetId','readdate','mode');
 
 if ($prefs['feature_sheet'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_sheet");
@@ -44,7 +43,7 @@ $smarty->assign('chart_enabled', (function_exists('imagepng') || function_exists
 
 $info = $sheetlib->get_sheet_info( $_REQUEST["sheetId"] );
 
-if ($tiki_p_admin == 'y' || $tiki_p_admin_sheet == 'y' || ($user && $user == $info['author']) || $tikilib->user_has_perm_on_object($user, $_REQUEST['sheetId'], 'sheet', 'tiki_p_edit_sheet', 'tiki_p_edit_categorized'))
+if ($tiki_p_admin == 'y' || $tiki_p_admin_sheet == 'y' || ($user && $user == $info['author']) || $tikilib->user_has_perm_on_object($user, $_REQUEST['sheetId'], 'sheet', 'tiki_p_edit_sheet'))
 	$tiki_p_edit_sheet = 'y';
 else
 	$tiki_p_edit_sheet = 'n';
@@ -167,3 +166,5 @@ ask_ticket('sheet');
 // Display the template
 $smarty->assign('mid', 'tiki-view-sheets.tpl');
 $smarty->display("tiki.tpl");
+
+?>

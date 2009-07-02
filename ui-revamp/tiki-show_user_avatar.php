@@ -13,7 +13,7 @@ if( $prefs['feature_userPreferences'] != 'y' ) {
 	$smarty->display("error.tpl");
 	die;
 }
-global $userprefslib; include_once ('lib/userprefs/userprefslib.php');
+include_once ('lib/userprefs/userprefslib.php');
 
 // application to display an image from the database with 
 // option to resize the image dynamically creating a thumbnail on the fly.
@@ -28,3 +28,5 @@ $content = $info["avatarData"];
 
 header ("Content-type: $type");
 echo "$content";
+
+?>

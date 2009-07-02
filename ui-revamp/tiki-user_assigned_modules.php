@@ -118,3 +118,5 @@ $smarty->assign("mootab",'y');
 }
 $smarty->assign('mid', 'tiki-user_assigned_modules.tpl');
 $smarty->display("tiki.tpl");
+
+?>

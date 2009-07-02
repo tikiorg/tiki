@@ -118,3 +118,5 @@ if (isset($_REQUEST['poll_requests'])) {
 
 	echo $lslib->get_last_request();
 }
+
+?>

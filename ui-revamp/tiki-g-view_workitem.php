@@ -47,3 +47,5 @@ ask_ticket('g-view-workitem');
 
 $smarty->assign('mid', 'tiki-g-view_workitem.tpl');
 $smarty->display("tiki.tpl");
+
+?>

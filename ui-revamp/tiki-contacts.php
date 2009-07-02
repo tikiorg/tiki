@@ -183,3 +183,4 @@ $smarty->assign('myurl', 'tiki-contacts.php');
 
 $smarty->assign('mid','tiki-contacts.tpl');
 $smarty->display('tiki.tpl');
+?>

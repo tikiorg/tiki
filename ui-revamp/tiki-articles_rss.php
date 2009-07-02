@@ -9,12 +9,6 @@ require_once ('tiki-setup.php');
 require_once ('lib/tikilib.php');
 require_once ('lib/rss/rsslib.php');
 
-if ($prefs['feature_articles'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_articles");
-	$smarty->display("error.tpl");
-	die;
-}
-
 if ($prefs['rss_articles'] != 'y') {
 	$errmsg=tra("rss feed disabled");
 	require_once ('tiki-rss_error.php');
@@ -77,11 +71,9 @@ if ($output["data"]=="EMPTY") {
 
 	$changes = $tikilib -> list_articles(0, $prefs['max_rss_articles'], $dateId.'_desc', '', 0, $tikilib->now, $user, '', $topic, 'y', '', '', '', '', $articleLang);
 	$tmp = array();
-	include_once('tiki-sefurl.php');
 	foreach ($changes["data"] as $data)  {
-		$data["$descId"] = $tikilib->parse_data($data[$descId], array('print'=>true));
+		$data["$descId"] = $tikilib->parse_data($data["$descId"]);
 		$data["body"] = null;
-		$data['sefurl'] = filter_out_sefurl(sprintf($readrepl, $data['articleId']), $smarty, 'article', $data['title']);
 		$tmp[] = $data;
 	}
 	$changes["data"] = $tmp;
@@ -90,3 +82,5 @@ if ($output["data"]=="EMPTY") {
 }
 header("Content-type: ".$output["content-type"]);
 print $output["data"];
+
+?>

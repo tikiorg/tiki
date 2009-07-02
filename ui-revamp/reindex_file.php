@@ -59,4 +59,6 @@ print base64_decode(
 	'AAA8ALAAAAAABAAEAAAQC8EUAOw=='
 );
 flush();
+
 exit;
+?>

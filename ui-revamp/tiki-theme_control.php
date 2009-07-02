@@ -32,7 +32,7 @@ $smarty->assign('categories', $categories);
 
 $list_styles = $tikilib->list_styles();
 $smarty->assign_by_ref('styles',$list_styles);
-if (!empty($_REQUEST['theme'])) {
+if ($_REQUEST['theme']) {
 	$a_style = $_REQUEST['theme'];
 } else {
 	$a_style = $prefs['style'];
@@ -104,3 +104,5 @@ ask_ticket('theme-control');
 // Display the template
 $smarty->assign('mid', 'tiki-theme_control.tpl');
 $smarty->display("tiki.tpl");
+
+?>

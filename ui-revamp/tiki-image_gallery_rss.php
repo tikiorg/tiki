@@ -51,3 +51,5 @@ if ($output["data"]=="EMPTY") {
 }
 header("Content-type: ".$output["content-type"]);
 print $output["data"];
+
+?>

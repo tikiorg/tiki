@@ -60,3 +60,4 @@ if ($prefs['feature_contribution'] == 'y') {
 		}
 	}
 }
+?>

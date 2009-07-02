@@ -303,3 +303,5 @@ if ($popup) {
 	$smarty->assign('mid', 'tiki-browse_image.tpl');
 	$smarty->display("tiki.tpl");
 }
+
+?>

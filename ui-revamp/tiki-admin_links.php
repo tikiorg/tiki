@@ -87,3 +87,5 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 $smarty->assign('mid', 'tiki-admin_links.tpl');
 $smarty->display("tiki.tpl");
+
+?>

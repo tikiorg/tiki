@@ -1,5 +1,4 @@
 <?php
-  // analyse_file_path groups files by type, e.g. library, etc.
 
 
 // Usage:
@@ -13,86 +12,19 @@ if( isset( $_SERVER['REQUEST_METHOD'] ) ) die;
 
 // Add the imported libraries located in lib/
 $thirdpartyLibs = array(
-	'\./lib/pear.*',
-	'\./lib/Galaxia.*',
-	'\./lib/phplayers.*',
-	'\./lib/jgraphpad.*',
-	'\./lib/smarty.*',
-	'\./lib/adodb.*',
-	'\./lib/debug.*',
-	'\./lib/diff.*',
-	'\./lib/pdflib.*',
-	'\./lib/fckeditor/.*',
-	'\./lib/graph-engine/.*',
-	'\./lib/core/lib/Zend.*',
-	'\./lib/htmlparser/,*',
-	'\./lib/htmlpurifier/,*',
-	'\./lib/hawhaw.*',
-	'\./lib/ical.*',
-	'\./lib/images.*',
-	'\./lib/feedcreator.*',
-	'\./lib/sheet.*',
-	'\./lib/Horde/Yaml.*',
-	'\./lib/ajax/xajax/.*',
-	'\./lib/core/lib/DeclFilter.*',
-	'\./lib/core/lib/JitFilter.*',
-	'\./lib/core/lib/Multilingual.*',
-        '\./lib/core/lib/TikiFilter.*',
-	'\./lib/core/lib/WikiParser.*',
-	'\./lib/core/test/.*',
-	'\./lib/core/lib/WikiParser.*',
-	'\./lib.*', /* as per NKO 4:18 19-MAY-09 */
+	'pear',
+	'phplayers',
+	'jgraphpad',
+	'smarty',
+	'adodb',
+	'pdflib',
 );
 
-/* NOt in build
-        '\./lib/core/test/.*',
-	'\./db/convertscripts/.*',
-	'\./doc/devtools/.*', 
-	'\./db/local.php/.*', 
-*/
-
-/*
-The following need to be added as features
-FIX LATER
- ./tiki-login_openid.php
-
-The following are DELIBERATELY PUBLIC.
- ./tiki-change_password.php
- ./tiki-confirm_user_email.php
- ./tiki-cookie-jar.php
- ./tiki-error_simple.php
- ./tiki-information.php
- ./tiki-install.php
- ./tiki-install_disable.php
- ./tiki-jsplugin.php
- ./tiki-live_support_chat_frame.php
- ./tiki-login_scr.php
- ./tiki-register_ajax.php
-
-
-The following do actually have features, but the fix check checker 
-needs to be changed to accept access->check_permissions() so that also that it loads tikisetup.php
- ./tiki-mindmap.php
- ./tiki-orphan_pages.php
- ./tiki-plugins.php
- ./tiki-print_indexed.php
-
-
-The following need to be refactored to a lib
- ./tiki-testGD.php
- ./tiki-special_chars.php
-
-
-The following needs to be secured in a way other than "die"
- ./tiki-remote_backup.php 
-
-*/
-
 $safePaths = array(
-	'\./lib/wiki-plugins.*',
-	'\./lib/wiki-plugins-dist.*',
-	'\./lib/tree.*',
-	'\./lib/phplayers_tiki.*',
+	'wiki-plugins',
+	'wiki-plugins-dist',
+	'tree',
+	'phplayers_tiki',
 );
 
 if( !file_exists( 'tiki-setup.php' ) )
@@ -148,16 +80,9 @@ function includeonly_pattern() // {{{
 	return "/strpos\s*\(\s*\\\$_SERVER\s*\[\s*[\"']SCRIPT_NAME[\"']\s*\]\s*,\s*basename\s*\(\s*__FILE__\s*\)\s*\)\s*!==\s*(false|FALSE)/";
 } // }}}
 
-function includeonly_pattern3() // {{{
-{
-        return "/basename\s*\(\s*\\\$_SERVER\s*\[\s*[\"']SCRIPT_NAME[\"']\s*\]\s*\)\s*==\s*basename\s*\(\s*__FILE__\s*\)\s*\)/";
-} // }}}
-
-
 function includeonly_pattern2() // {{{
 {
-	return "/\\\$access\s*->\s*check_script\s*\(\s*\\\$_SERVER\s*\[\s*[\"']SCRIPT_NAME[\"']\s*\]\s*,\s*basename\s*\(\s*__FILE__\s*\)\s*\)/s";
-	//return "/\\\$access\s*\->\s*check_script\s*\(\s*\\\$_SERVER\s*\[\s*[\"']SCRIPT_NAME[\"']\s*\]\s*,\s*basename\s*\(\s*__FILE__\s*\)\s*\)/";
+	return "/\\\$access\s*->\s*check_script\s*\\(\s*\\\$_SERVER\s*\\[\s*[\"']SCRIPT_NAME[\"']\s*\\]\s*,\s*basename\s*\\(\s*__FILE__\s*\\)\s*\\)/";
 } // }}}
 
 function noweb_pattern() // {{{
@@ -172,7 +97,6 @@ function tikisetup_pattern() // {{{
 
 function scanfiles( $folder, &$files ) // {{{
 {
-  global $filesHash;
 	$handle = opendir( $folder );
 	if( !$handle )
 	{
@@ -190,27 +114,10 @@ function scanfiles( $folder, &$files ) // {{{
 
 		if( is_dir( $path ) )
 			scanfiles( $path, $files );
-		else {
-		  $analysis = analyse_file_path( $path );
-		  $files[] = $analysis;
-		  $filesHash[$path] = $analysis;
-		}
+		else
+			$files[] = analyse_file_path( $path );
 	}
 } // }}}
-
-// TODO This is an inefficient function, but more flexible than in_array
-function regex_match ( $path, $regex_possibles ) {
-  //  print "Checking $path in ".join($regex_possibles, ",")."\n";
-
-  foreach ($regex_possibles as $possible)  {
-    //    print "Matching $path against $possible\n";
-    if (preg_match( '%'.$possible.'%', $path)) {
-      //print "Matches $possible\n\n";
-      return true;
-    }
-  }
-  return false;
-}
 
 function analyse_file_path( $path ) // {{{
 {
@@ -237,9 +144,10 @@ function analyse_file_path( $path ) // {{{
 			$type = 'wikiplugin';
 		elseif( strpos( $path, './lib/' ) === 0 )
 		{
-			if( regex_match( $path, $thirdpartyLibs ) )
+			$parts = explode( '/', $path );
+			if( in_array( $parts[2], $thirdpartyLibs ) )
 				$type = '3dparty';
-			elseif( regex_match( $path, $safePaths ) )
+			elseif( in_array( $parts[2], $safePaths ) )
 				$type = 'safe';
 			else
 				$type = 'lib';
@@ -282,61 +190,23 @@ function analyse_file_path( $path ) // {{{
 
 function perform_feature_check( &$file ) // {{{
 {
-  global $features;
-        $index = array();
+	$index = array();
 	$feature_pattern = feature_pattern( $index );
 	$index = (array) $index;
-	$path =  $file['path'] ;
 
-	preg_match_all( $feature_pattern, get_content($path), $parts );
+	preg_match_all( $feature_pattern, get_content( $file['path'] ), $parts );
 
-	$featuresInFile = array();
+	$features = array();
 	foreach( $index as $i )
-		$featuresInFile = array_merge( $features, $parts[$i] );
+		$features = array_merge( $features, $parts[$i] );
 
-	$featuresInFile = array_unique( $featuresInFile );
-	$file['features'] = $featuresInFile;
-	//	var_dump($featuresInFile);
-	/*
-	 This data structure seems to be typical, and very confusing.
-	 An array of 3, with the zeroth element being a named element whose value is an array of one element.
-	 other elements being named, not numbered
-
-	 1array(3) { 
-	 2  ["feature_directory"]=> 
-	 3  array(1) { 
-	 4    [0]=> 
-	 5    string(28) "./tiki-directory_ranking.php" 
-	 6  } 
-	 7  [0]=> 
-	 8  string(18) "feature_html_pages" 
-	 9  [1]=> 
-	 10  string(21) "feature_theme_control" 
-	 11}
-	*/
-	/*
-	// store, for each feature, which files are involved
-	foreach ( $featuresInFile as $feature) {
-	  if (is_string($feature)) {
-	    if (preg_match('/feature/', $feature)) {
-	      // SMELL sure to be a better way to do this.
-	      //print "Listing as feature $feature\n";
-	      $featuresListed = (array) $features[$feature];
-	      array_push($featuresListed, $path);
-	      $features[$feature] = $featuresListed;
-	    }
-	  // TODO SMELL: this regex should not be necessary, it should only contain features at this point.
-	  // SMELL: it will also miss some vital elements.
-	  }
-	}
-	*/
-	return $featuresInFile;
+	$features = array_unique( $features );
+	$file['features'] = $features;
 } // }}}
 
 function perform_permission_check( &$file ) // {{{
 {
 	$index = 0;
-	
 	$permission_pattern = permission_pattern( $index );
 
 	preg_match_all( $permission_pattern, get_content( $file['path'] ), $parts );
@@ -347,25 +217,19 @@ function perform_permission_check( &$file ) // {{{
 
 function perform_includeonly_check( &$file ) // {{{
 {
-	$index = 0;
 	$pattern = includeonly_pattern($index);
 
 	preg_match_all( $pattern, get_content($file['path']), $parts );
 
-        $pattern = includeonly_pattern2($index);
+	$pattern = includeonly_pattern2($index);
 
-        preg_match_all( $pattern, get_content($file['path']), $parts2 );
+	preg_match_all( $pattern, get_content($file['path']), $parts2 );
 
-	$pattern = includeonly_pattern3($index);
-
-        preg_match_all( $pattern, get_content($file['path']), $parts3 );
-
-	$file['includeonly'] = count( $parts[0] ) > 0 || count( $parts2[0] ) > 0 || count( $parts3[0] ) > 0;
+	$file['includeonly'] = count( $parts[0] ) > 0 || count( $parts2[0] ) > 0;
 } // }}}
 
 function perform_noweb_check( &$file ) // {{{
 {
-	$index = 0;
 	$pattern = noweb_pattern($index);
 
 	preg_match_all( $pattern, get_content($file['path']), $parts );
@@ -375,8 +239,6 @@ function perform_noweb_check( &$file ) // {{{
 
 function perform_tikisetup_check( &$file ) // {{{
 {
-	$index = 0;
-
 	$pattern = tikisetup_pattern($index);
 
 	preg_match_all( $pattern, get_content($file['path']), $parts );
@@ -396,21 +258,9 @@ function perform_extract_skip_check( &$file ) // {{{
 
 } // }}}
 
-
-/* Build Files structures */
-// a hash of filenames, each element is a hash of attributes of that file
-$filesHash = array(); 
-
-// a hash of features, each element is a hash of filenames that use that feature
-$features = array();
-
-// note: the files[0..N] is intended to be replaced by the above hash.
 $files = array();
-
-// build these two files structures
 scanfiles( '.', $files );
 
-/* Iterate each file, and perform checks */
 $unsafe = array();
 foreach( $files as $key=>$dummy )
 {
@@ -463,13 +313,8 @@ usort( $unsafe, 'sort_cb' );
 To be safe, files must have either an include only check, block web access, have a feature check or have a permission check.
 </p>
 <ol>
-	<?php foreach( $unsafe as $unsafeUrlAndFile ): 
-	  $pathname = $unsafeUrlAndFile['path'];
-$url = substr( $unsafeUrlAndFile['path'], 2 );
-$fileRecord = $filesHash[$pathname];
-$fileType = $fileRecord['type'];
-	  ?>
-	<li> <?php echo $fileType; ?> <a href="<?php echo htmlentities( $url ) ?>"><?php echo htmlentities( $pathname ) ?></a></li>
+	<?php foreach( $unsafe as $file ): ?>
+	<li><a href="<?php echo htmlentities( substr( $file['path'], 2 ) ) ?>"><?php echo htmlentities( $file['path'] ) ?></a></li>
 	<?php endforeach; ?>
 </ol>
 <h1>All files</h1>
@@ -491,7 +336,7 @@ $fileType = $fileRecord['type'];
 		) ) ): ?>
 		<tr>
 			<td><a href="<?php echo htmlentities( substr( $file['path'], 2 ) ) ?>"><?php echo htmlentities( $file['path'] ) ?></a></td>
-			<td><?php if( isset($file['includeonly']) && $file['includeonly'] ) echo 'X' ?></td>
+			<td><?php if( $file['includeonly'] ) echo 'X' ?></td>
 			<td><?php if( $file['noweb'] ) echo 'X' ?></td>
 			<td><?php if( $file['tikisetup'] ) echo 'X' ?></td>
 			<td><?php if( $file['unsafeextract'] ) echo 'X' ?></td>
@@ -509,16 +354,5 @@ $fileType = $fileRecord['type'];
 		<?php endif; ?>
 	</tbody>
 </table>
-
-	<?php foreach($features as $featureKey => $featureValue) {
-	  print "$featureKey :\n";
-	  foreach ($featureValue as $file) {
-	    print "<li>$file</li>";
-	  }
-	  print "<br/><br/>\n";
-	} ?>
-
 </body>
 </html>
-
-<!-- If you see this in your terminal window it's because you didn't read the usage. See the start of the file. -->

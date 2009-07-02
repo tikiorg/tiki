@@ -28,3 +28,5 @@ if ($prefs['layout_section'] == 'y') {
 		}
 	}
 }
+
+?>

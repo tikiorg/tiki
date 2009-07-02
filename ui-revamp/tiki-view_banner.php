@@ -125,3 +125,5 @@ ask_ticket('view-banner');
 
 $smarty->assign('mid', 'tiki-view_banner.tpl');
 $smarty->display("tiki.tpl");
+
+?>

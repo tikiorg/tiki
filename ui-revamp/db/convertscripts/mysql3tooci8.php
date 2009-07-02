@@ -1,7 +1,7 @@
 <?php
 
 if (array_key_exists('SHELL', $_ENV)) {
-	$tikiversion='4.0';
+	$tikiversion='3.0';
 } else {
 	$tikiversion='1.9';
 
@@ -214,3 +214,4 @@ function convert_enums($colname,$content)
  $ret.="CHECK ($colname IN ($content))";
  return $ret;
 }
+?>

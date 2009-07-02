@@ -123,3 +123,5 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 $smarty->assign('mid', 'tiki-g-admin_shared_source.tpl');
 $smarty->display("tiki.tpl");
+
+?>

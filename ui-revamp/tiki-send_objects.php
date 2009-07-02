@@ -264,3 +264,5 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 // Display the template
 $smarty->assign('mid', 'tiki-send_objects.tpl');
 $smarty->display("tiki.tpl");
+
+?>

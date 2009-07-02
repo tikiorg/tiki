@@ -24,3 +24,5 @@ if(isset($_REQUEST["generate"])) {
 }
 
 die;
+
+?>

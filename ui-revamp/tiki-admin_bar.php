@@ -1,12 +1,6 @@
 <?php
 include_once ('lib/admin/magiclib.php');
 
-if ($prefs['feature_magic'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_magic");
-	$smarty->display("error.tpl");
-	die;
-}
-
 $headerlib->add_cssfile('css/spanky.css');
 $feature = $smarty->get_template_vars('feature');
 
@@ -51,3 +45,6 @@ if (isset($secondLevelId) && $secondLevelId != '' && is_numeric($secondLevelId))
 $smarty->assign_by_ref('toplevelfeatures', $topLevelFeatures);
 $smarty->assign_by_ref('secondlevel', $secondLevelFeatures);
 $smarty->assign_by_ref('thirdlevel', $thirdLevelFeatures);
+
+
+?>

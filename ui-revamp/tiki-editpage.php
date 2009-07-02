@@ -1,5 +1,5 @@
 <?php
-// $Id$
+// $Id: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181.2.40 2008-03-06 16:29:45 sylvieg Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -56,19 +56,21 @@ if (isset($_REQUEST['save']) && (!$user || $user == 'anonymous') && $prefs['feat
 	}
 }
 
-make_sure_page_to_be_created_is_not_an_alias();
-
 $smarty->assign( 'translation_mode', (isNewTranslationMode() || isUpdateTranslationMode()) ?'y':'n' );
 
-// If page is blank (from quickedit module or wherever) tell user -- instead of editing the default page
-// Dont get the page from default HomePage if not set (surely this would always be an error?)
-if (empty($_REQUEST["page"])) { 
+// If from quickedit module and page is blank, tell user -- instead of editing the default page
+if ((isset($_REQUEST["quickedit"])) && ($_REQUEST["page"] == '')) {
 	$smarty->assign('msg', tra("You must specify a page name, it will be created if it doesn't exist."));
 	$smarty->display("error.tpl");
 	die;
 }
 
-if ($prefs['feature_wikiapproval'] == 'y' && substr($_REQUEST['page'], 0, strlen($prefs['wikiapproval_prefix'])) != $prefs['wikiapproval_prefix'] && !empty($prefs['wikiapproval_master_group']) && !in_array($prefs['wikiapproval_master_group'], $tikilib->get_user_groups($user))) {
+// Get the page from the request var or default it to HomePage
+if (!isset($_REQUEST["page"]) || $_REQUEST["page"] == '') { 
+	$_REQUEST['page'] = $wikilib->get_default_wiki_page();
+}
+
+if ($prefs['feature_wikiapproval'] == 'y' && substr($_REQUEST['page'], 0, strlen($prefs['wikiapproval_prefix'])) != $prefs['wikiapproval_prefix'] && isset($prefs['wikiapproval_master_group']) && !in_array($prefs['wikiapproval_master_group'], $tikilib->get_user_groups($user))) {
 	$_REQUEST['page'] = $prefs['wikiapproval_prefix'] . $_REQUEST['page'];
 }
 
@@ -290,7 +292,7 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 			}
 			if (isset($_REQUEST["save"]) && !$category_needed && !$contribution_needed) {
 				if (strtolower($pagename) != 'sandbox' || $tiki_p_admin == 'y') {
-					$description = TikiFilter::get('striptags')->filter($description);
+					make_clean($description);
 					if ($tikilib->page_exists($pagename)) {
 						if ($prefs['feature_multilingual'] == 'y') {
 							$info = $tikilib->get_page_info($pagename);
@@ -735,6 +737,7 @@ if ($prefs['feature_wiki_footnotes'] == 'y') {
 		}
 	}
 }
+
 if (isset($_REQUEST["templateId"]) && $_REQUEST["templateId"] > 0 && !isset($_REQUEST['preview']) && !isset($_REQUEST['save'])) {
 	$template_data = $tikilib->get_template($_REQUEST["templateId"]);
 	$_REQUEST["edit"] = $template_data["content"]."\n".$_REQUEST["edit"];
@@ -763,15 +766,9 @@ if(isset($_REQUEST["edit"])) {
 	if (isset($info['draft'])) {
 		$edit_data = $info['draft']['data'];
 	} elseif (isset($info["data"])) {
-		if ((isset($_REQUEST['hdr']) || (!empty($_REQUEST['pos']) && isset($_REQUEST['cell']))) && $prefs['wiki_edit_section'] == 'y') {
-			if (isset($_REQUEST['hdr'])) {
-				if ($_REQUEST['hdr'] == 0) {
-					list($real_start, $real_len) = $tikilib->get_wiki_section($info['data'], 1);
-					$real_len = $real_start;
-					$real_start = 0;
-				} else {
-					list($real_start, $real_len) = $tikilib->get_wiki_section($info['data'], $_REQUEST['hdr']);
-				}
+		if ((!empty($_REQUEST['hdr']) || (!empty($_REQUEST['pos']) && isset($_REQUEST['cell']))) && $prefs['wiki_edit_section'] == 'y') {
+			if (!empty($_REQUEST['hdr'])) {
+				list($real_start, $real_len) = $tikilib->get_wiki_section($info['data'], $_REQUEST['hdr']);
 			} else {
 				include_once('lib/wiki-plugins/wikiplugin_split.php');
 				list($real_start, $real_len) = wikiplugin_split_cell($info['data'], $_REQUEST['pos'], $_REQUEST['cell']);
@@ -905,7 +902,7 @@ if (isset($_REQUEST['mode_normal'])) {
 	$editplugin = $prefs['wiki_edit_plugin'];
 	$prefs['wiki_edit_plugin'] = 'n';		// and the external link icons
 	$edit_data = preg_replace('/(!!*)[\+\-]/m','$1', $edit_data);		// remove show/hide headings
-	$parsed = $tikilib->parse_data($edit_data,array('absolute_links'=>true, 'parseimgonly'=>true,'noheaderinc'=>true));
+	$parsed = $tikilib->parse_data($edit_data,array('absolute_links'=>true, 'noparseplugins'=>true,'noheaderinc'=>true));
 	$parsed = preg_replace('/<span class=\"img\">(.*?)<\/span>/im','$1', $parsed);					// remove spans round img's
 	$parsed = preg_replace("/src=\"img\/smiles\//im","src=\"".$tikiroot."img/smiles/", $parsed);	// fix smiley src's
 	$parsed = str_replace( 
@@ -935,7 +932,7 @@ $smarty->assign('pagedata', $parsed);
 // apply the optional post edit filters before preview
 if(isset($_REQUEST["preview"]) || ($prefs['wiki_spellcheck'] == 'y' && isset($_REQUEST["spellcheck"]) && $_REQUEST["spellcheck"] == 'on')) {
 	$parsed = $tikilib->apply_postedit_handlers($parsed);
-	$parsed = $tikilib->parse_data($parsed, array('is_html' => $is_html, 'preview_mode'=>true));
+	$parsed = $tikilib->parse_data($parsed, array('is_html' => $is_html));
 } else {
 	$parsed = "";
 }
@@ -1119,15 +1116,9 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
 		} else {
 			$minor=false;
 		}
-		if ((isset($_REQUEST['hdr']) || (!empty($_REQUEST['pos']) && isset($_REQUEST['cell']))) && $prefs['wiki_edit_section'] == 'y') {
-			if (isset($_REQUEST['hdr'])) {
-				if ($_REQUEST['hdr'] == 0) {
-					list($real_start, $real_len) = $tikilib->get_wiki_section($info['data'], 1);
-					$real_len = $real_start;
-					$real_start = 0;
-				} else {
-					list($real_start, $real_len) = $tikilib->get_wiki_section($info['data'], $_REQUEST['hdr']);
-				}
+		if ((!empty($_REQUEST['hdr']) || (!empty($_REQUEST['pos']) && isset($_REQUEST['cell']))) && $prefs['wiki_edit_section'] == 'y') {
+			if (!empty($_REQUEST['hdr'])) {
+				list($real_start, $real_len) = $tikilib->get_wiki_section($info['data'], $_REQUEST['hdr']);
 			} else {
 				include_once('lib/wiki-plugins/wikiplugin_split.php');
 				list($real_start, $real_len) = wikiplugin_split_cell($info['data'], $_REQUEST['pos'], $_REQUEST['cell']);
@@ -1184,7 +1175,8 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
 				$last_child_ref_id = $last_child["page_ref_id"];
 			}
 			$page_ref_id = $structlib->s_create_page($_REQUEST['current_page_id'], $last_child_ref_id, $_REQUEST["page"], '');
-		} else {
+		}
+		else {
 			//Insert page after current page
 			$page_ref_id = $structlib->s_create_page($page_info["parent_id"], $_REQUEST['current_page_id'], $_REQUEST["page"], '');
 		}
@@ -1213,10 +1205,6 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
 	}
 	$_SESSION['saved_msg'] = $_REQUEST["page"];
 
-	if (!empty($_REQUEST['hdr'])) {
-		$tmp = $tikilib->parse_data($edit);
-		$url .= "#".$anch[$_REQUEST['hdr']-1]['id'];
-	}
 	header("location: $url");
 	die;
 } //save
@@ -1317,9 +1305,7 @@ if ($prefs['feature_categories'] == 'y') {
 		}
 	}
 }
-
-$plugins = $wikilib->list_plugins(true, 'editwiki');
-
+$plugins = $wikilib->list_plugins(true);
 $smarty->assign_by_ref('plugins', $plugins);
 $smarty->assign('showstructs', array());
 if ($structlib->page_is_in_structure($_REQUEST["page"])) {
@@ -1424,24 +1410,4 @@ $smarty->assign('showtags', 'n');
 $smarty->assign('qtnum', '1');
 $smarty->assign('qtcycle', '');
 $smarty->display("tiki.tpl");
-
-function make_sure_page_to_be_created_is_not_an_alias() {
-	global $_REQUEST, $semanticlib, $access, $wikilib;
-	$page = $_REQUEST["page"];
-	require_once 'lib/wiki/semanticlib.php';
-	$aliases = $semanticlib->getAliasContaining($page, true);
-	if (count($aliases) > 0) {
-		$error_title = tra("Cannot create aliased page");
-		$error_msg = tra("You attempted to create the following page:")." ".
-		             "<b>$page</b>.\n<p>\n";
-		$error_msg .= tra("That page is an alias for the following pages").": ";
-		foreach ($aliases as $an_alias) {
-			$error_msg .= '<a href="'.$wikilib->editpage_url($an_alias['fromPage']).'">'.$an_alias['fromPage'].'</a>, ';
-		}
-		$error_msg .= "\n<p>\n";
-		$error_msg .= tra("If you want to create the page, you must first edit each the pages above, and remove the alias link it may contain. This link should look something like this");
-		$error_msg .= ": <b>(alias($page))</b>";
-		require_once('lib/tikiaccesslib.php');
-		$access->display_error(page, $error_title, "", true, $error_msg);
-	}	
-}
+?>

@@ -69,3 +69,5 @@ while ($res = $result->fetchRow()) {
 		}
 	}
 }
+
+?>

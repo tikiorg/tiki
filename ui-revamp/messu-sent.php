@@ -155,3 +155,5 @@ ask_ticket('messu-sent');
 
 $smarty->assign('mid', 'messu-sent.tpl');
 $smarty->display("tiki.tpl");
+
+?>

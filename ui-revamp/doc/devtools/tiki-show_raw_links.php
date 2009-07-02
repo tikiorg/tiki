@@ -38,3 +38,4 @@ while ($res = $result->fetchRow()) {
 	}
 	echo $put."\n";
 }
+?>

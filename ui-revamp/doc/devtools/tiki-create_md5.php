@@ -86,3 +86,6 @@ fclose($fp);
    }
    echo "done. use mysqldump to extract the secdb table and to add it to the release<br>";
 }
+
+
+?>

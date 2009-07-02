@@ -96,3 +96,5 @@ ask_ticket('list-posts');
 // Display the template
 $smarty->assign('mid', 'tiki-list_posts.tpl');
 $smarty->display("tiki.tpl");
+
+?>

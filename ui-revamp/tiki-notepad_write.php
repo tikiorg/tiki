@@ -64,3 +64,5 @@ ask_ticket('notepad-write');
 
 $smarty->assign('mid', 'tiki-notepad_write.tpl');
 $smarty->display("tiki.tpl");
+
+?>

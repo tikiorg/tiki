@@ -96,15 +96,6 @@ $smarty->assign('forumId', $_REQUEST["forumId"]);
 include_once ("lib/commentslib.php");
 $commentslib = new Comments($dbTiki);
 
-if ( isset($_REQUEST['lock']) ) {
-	check_ticket('view-forum');
-	if ( $_REQUEST['lock'] == 'y' ) {
-		$commentslib->lock_comment($_REQUEST["comments_parentId"]);
-	} elseif ( $_REQUEST['lock'] == 'n' ) {
-		$commentslib->unlock_comment($_REQUEST["comments_parentId"]);
-	}
-}
-
 $commentslib->comment_add_hit($_REQUEST["comments_parentId"]);
 $commentslib->mark_comment($user, $_REQUEST['forumId'], $_REQUEST["comments_parentId"]);
 
@@ -267,17 +258,17 @@ if (isset($_REQUEST["post_reported"]) && $_REQUEST["post_reported"] == 'y') {
 }
 
 $smarty->assign_by_ref('forum_info', $forum_info);
-$thread_info = $commentslib->get_comment($_REQUEST["comments_parentId"], null, $forum_info);
+$thread_info = $commentslib->get_comment($_REQUEST["comments_parentId"]);
 if (empty($thread_info)) {
 	$smarty->assign('msg', tra("Incorrect thread"));
 	$smarty->display("error.tpl");
 	die;
 }
 if (!empty($thread_info['parentId'])) {
-	$thread_info['topic'] = $commentslib->get_comment($thread_info['parentId'], null, $forum_info);
+	$thread_info['topic'] = $commentslib->get_comment($thread_info['parentId']);
 }
 
-if ($tiki_p_admin_forum != 'y' && $thread_info['locked'] == 'y') {
+if ($tiki_p_admin_forum != 'y' && $thread_info['type'] == 'l') {
 	$tiki_p_forum_post = 'n';
 	$smarty->assign('tiki_p_forum_post', 'n');
 }
@@ -291,8 +282,7 @@ $thread_style = $forum_info['threadStyle'];
 $comments_vars = array('forumId');
 $comments_prefix_var = 'forum:';
 $comments_object_var = 'forumId';
-if (isset($forum_info["inbound_pop_server"]) && !empty($forum_info["inbound_pop_server"]))
-	$commentslib->process_inbound_mail($_REQUEST['forumId']);
+$commentslib->process_inbound_mail($_REQUEST['forumId']);
 
 //$end_time = microtime(true);
 
@@ -319,7 +309,7 @@ include_once ('tiki-section_options.php');
 
 if ($user && $tiki_p_notepad == 'y' && $prefs['feature_notepad'] == 'y' && isset($_REQUEST['savenotepad'])) {
     check_ticket('view-forum');
-    $info = $commentslib->get_comment($_REQUEST['savenotepad'], null, $forum_info);
+    $info = $commentslib->get_comment($_REQUEST['savenotepad']);
     $tikilib->replace_note($user, 0, $info['title'], $info['data']);
 }
 
@@ -329,7 +319,7 @@ if ($prefs['feature_user_watches'] == 'y') {
 	if ($_REQUEST['watch_action'] == 'add') {
 	    $tikilib->add_user_watch($user, $_REQUEST['watch_event'], $_REQUEST['watch_object'], 'forum topic', $forum_info['name'] . ':' . $thread_info['title'], "tiki-view_forum_thread.php?forumId=" . $_REQUEST['forumId'] . "&amp;comments_parentId=" . $_REQUEST['comments_parentId']);
 	} else {
-	    $tikilib->remove_user_watch($user, $_REQUEST['watch_event'], $_REQUEST['watch_object'], 'forum topic');
+	    $tikilib->remove_user_watch($user, $_REQUEST['watch_event'], $_REQUEST['watch_object']);
 	}
     }
 
@@ -400,10 +390,6 @@ if ($prefs['feature_freetags'] == 'y') {
     $tags = $freetaglib->get_tags_on_object($cat_objid, $cat_type);
     $smarty->assign('freetags',$tags);
 }
-if (isset($_SESSION['feedbacks'])) {
-	$smarty->assign('feedbacks', $_SESSION['feedbacks']);
-	unset($_SESSION['feedbacks']);
-}
 
 $defaultRows = $prefs['default_rows_textarea_forumthread'];
 include_once("textareasize.php");
@@ -422,12 +408,6 @@ if ($prefs['feature_actionlog'] == 'y') {
 }
 
 ask_ticket('view-forum');
-
-if ($prefs['feature_forum_parse'] == 'y') {
-	global $wikilib; include_once('lib/wiki/wikilib.php');
-	$plugins = $wikilib->list_plugins(true, 'editpost2');
-	$smarty->assign_by_ref('plugins', $plugins);
-}
 
 // Display the template
 if ( isset($_REQUEST['display']) ) {
@@ -464,3 +444,5 @@ if ( isset($_REQUEST['display']) ) {
 	$smarty->assign('mid', 'tiki-view_forum_thread.tpl');
 	$smarty->display('tiki.tpl');
 }
+
+?>

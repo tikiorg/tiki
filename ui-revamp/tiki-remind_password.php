@@ -42,7 +42,7 @@ if (isset($_REQUEST["remind"])) {
 			$info = $userlib->get_user_info($_REQUEST["name"]);
 			if (!empty($info['valid']) && ($prefs['validateRegistration'] == 'y' || $prefs['validateUsers'] == 'y')) {
 				$showmsg = 'e';
-				$userlib->send_validation_email($_REQUEST["name"], $info['valid'], $info['email'], 'y');
+				$userlib->send_validation_email($_REQUEST["username"], $info['valid'], $info['email'], 'y');
 			} elseif (empty($info['email'])) { //only renew if i can mail the pass
 				$showmsg = 'e';
 				$smarty->assign('msg', tra('Unable to send mail. User has not configured email'));
@@ -121,3 +121,5 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 // Display the template
 $smarty->assign('mid', 'tiki-remind_password.tpl');
 $smarty->display("tiki.tpl");
+
+?>

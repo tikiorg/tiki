@@ -132,8 +132,7 @@ if (isset($_REQUEST['mvimg']) && isset($_REQUEST['move_gallery'])) {
 	$smarty->assign('scaleSize', $_REQUEST['scaleSize']);
 
 if($imagegallib->havegd) {
-	$gdlib=tra('Detected, Version:').' '.$imagegallib->gdversion.' ('.tra('Test Image').': <img src="tiki-testGD.php" alt="" />)'; 
-        
+	$gdlib=tra('Detected, Version:').' '.$imagegallib->gdversion;
 } else {
 	$gdlib=tra('Not detected.');
 }
@@ -158,3 +157,4 @@ $smarty->assign_by_ref('galleries', $galleries["data"]);
 $smarty->assign("max_img_upload_size", $imagegallib->max_img_upload_size());
 
 ask_ticket('admin-inc-gal');
+?>

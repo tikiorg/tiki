@@ -59,3 +59,5 @@ $smarty->assign('status', $lslib->get_operator_status($user));
 
 // Display the template
 $smarty->display("tiki-live_support_console.tpl");
+
+?>

@@ -82,3 +82,5 @@ $smarty->assign('copyrights', $copyrights["data"]);
 // Display the template
 $smarty->assign('mid', 'copyrights.tpl');
 $smarty->display("tiki.tpl");
+
+?>

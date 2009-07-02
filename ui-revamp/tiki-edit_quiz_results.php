@@ -8,9 +8,8 @@
 
 // Initialization
 require_once ('tiki-setup.php');
-include_once ('lib/quizzes/quizlib.php');
 
-$auto_query_args = array('quizId', 'resultId', 'sort_mode', 'offset', 'find');
+include_once ('lib/quizzes/quizlib.php');
 
 if ($prefs['feature_quizzes'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_quizzes");
@@ -146,3 +145,5 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 // Display the template
 $smarty->assign('mid', 'tiki-edit_quiz_results.tpl');
 $smarty->display("tiki.tpl");
+
+?>

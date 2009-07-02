@@ -33,3 +33,5 @@ $smarty->assign_by_ref('repositories', $repositories);
 // Display the template
 $smarty->assign('mid','tiki-list_integrator_repositories.tpl');
 $smarty->display("tiki.tpl");
+
+?>

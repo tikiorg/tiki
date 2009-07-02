@@ -66,3 +66,5 @@ ask_ticket('view-chart-item');
 
 $smarty->assign('mid', 'tiki-view_chart_item.tpl');
 $smarty->display("tiki.tpl");
+
+?>

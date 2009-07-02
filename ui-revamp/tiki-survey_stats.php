@@ -9,9 +9,8 @@
 // Initialization
 $section = 'surveys';
 require_once ('tiki-setup.php');
-include_once ('lib/surveys/surveylib.php');
 
-$auto_query_args = array('sort_mode','offset','find');
+include_once ('lib/surveys/surveylib.php');
 
 if ($prefs['feature_surveys'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_surveys");
@@ -95,3 +94,5 @@ ask_ticket('survey-stats');
 // Display the template
 $smarty->assign('mid', 'tiki-survey_stats.tpl');
 $smarty->display("tiki.tpl");
+
+?>

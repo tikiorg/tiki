@@ -45,3 +45,5 @@ while ($r = mysql_fetch_array($results)) {
 	fclose($img);
 	echo "Done!\n";
 }
+
+?>

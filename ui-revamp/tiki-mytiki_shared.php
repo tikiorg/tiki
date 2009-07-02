@@ -10,3 +10,5 @@ if ($prefs['feature_messages'] == 'y' && $tiki_p_messages == 'y') {
 
 	$smarty->assign('unread', $unread);
 }
+
+?>

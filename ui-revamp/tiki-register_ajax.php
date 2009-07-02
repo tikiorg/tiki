@@ -1,4 +1,4 @@
-<?php
+<?
 require_once('tiki-setup.php');
 require_once('lib/ajax/ajaxlib.php');
 
@@ -39,3 +39,5 @@ $ajaxlib->setRequestURI('tiki-register_ajax.php');
 $ajaxlib->registerFunction('AJAXCheckUserName');
 $ajaxlib->registerFunction('AJAXCheckMail');
 $ajaxlib->processRequests();
+
+?>
