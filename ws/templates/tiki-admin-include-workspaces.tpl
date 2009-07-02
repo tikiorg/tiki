@@ -2,7 +2,7 @@
 
 {*if $welcome*}
 {remarksbox type="info" title="{tr}Welcome{/tr}"}
-{tr}You have succesfully enabled  Workspaces in TikiWiki. This feature is under development, so please don't expect if not works properly. If you want to
+{tr}You have succesfully enabled  Workspaces in TikiWiki. This feature is under development, so please don't expect nothing if not works properly. If you want to
 get more info go to the {/tr} <a class="rbox-link"
 href="http://dev.tikiwiki.org/workspace">{tr}Workspaces wiki page{/tr}</a>.
 <hr />
@@ -57,6 +57,9 @@ href="http://dev.tikiwiki.org/workspace">{tr}Workspaces wiki page{/tr}</a>.
 </div>
 <div class="adminoptionbox">
 <input type="radio" id="wsdelete" name="wsdevtools" value="delete" /><label for="wsdelete">{tr}Delete all Workspaces created before{/tr}.</label>
+</div>
+<div class="adminoptionbox">
+<input type="radio" id="wsdeleteall" name="wsdevtools" value="deleteall" /><label for="wsdeleteall">{tr}Delete all Workspaces including the WS container (Not working){/tr}.</label>
 </div>
 </fieldset>
 <div class="adminoptionbox">
