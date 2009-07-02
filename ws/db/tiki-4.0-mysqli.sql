@@ -3102,6 +3102,17 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_notifications', 'Can admin mail notifications', 'editors', 'mail notifications');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_invite', 'Can invite user in groups', 'editors', 'tiki');
 
+INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('tiki_p_ws_admin', 'Can admin all ws', 'globaladmin', 'ws', 'y');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_ws_addws', 'Can add ws', 'globaladmin', 'ws');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_ws_removews', 'Can remove ws', 'globaladmin', 'ws');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_ws_adminws', 'Can admin a single ws', 'admin', 'ws');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_ws_addresource', 'Can add resources to a single ws', 'admin', 'ws');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_ws_removeresource', 'Can remove resources from single ws', 'admin', 'ws');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_ws_adminresources', 'Can admin resources into single ws', 'admin', 'ws');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_ws_adminperms', 'Can admin perms inside a single ws', 'admin', 'ws');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_ws_admingroups', 'Can admin groups in a single ws', 'admin', 'ws');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_ws_view', 'Can view a single ws', 'registered', 'ws');
+
 UPDATE users_permissions SET feature_check = 'feature_wiki' WHERE permName IN(
 	'tiki_p_admin_wiki',
 	'tiki_p_assign_perm_wiki_page',

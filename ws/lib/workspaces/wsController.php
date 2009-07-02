@@ -43,5 +43,9 @@ class ws_gui_controller
     public function create_demo()
     {
     }
+
+    public function delete_demo()
+    {
+    }
 }
 
