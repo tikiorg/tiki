@@ -3,6 +3,7 @@
 	{if $calendar_type neq "tiki_actions"}
 			{button _auto_args="viewmode,focus" _title="{tr}Today{/tr}" _text="{tr}Today{/tr}" _class="calbuttonoff" viewmode='day' focus=$now}
 	{/if}
+	
 <div id="prev">
 {if $viewmode eq "day"}
 {self_link _class="next" todate=$daybefore _title="{tr}Day{/tr}" _alt="{tr}Day{/tr}" _icon=resultset_previous"}{/self_link}
@@ -48,7 +49,11 @@
 		{if $calendarViewMode eq 'month'}
 			{$currMonth|tiki_date_format:"%B %Y"}
 		{elseif $calendarViewMode eq 'week'}
-			{$daystart|tiki_date_format:"{tr}%m/%d{/tr}/%Y"} - {$dayend|tiki_date_format:"{tr}%m/%d{/tr}/%Y"}
+{* test display_field_order and use %d/%m or %m/%d  *}
+			{if ($prefs.display_field_order eq 'DMY') || ($prefs.display_field_order eq 'DYM') || ($prefs.display_field_order eq 'YDM')}		
+			{$daystart|tiki_date_format:"{tr}%d/%m{/tr}/%Y"} - {$dayend|tiki_date_format:"{tr}%d/%m{/tr}/%Y"}
+			{else} {$daystart|tiki_date_format:"{tr}%m/%d{/tr}/%Y"} - {$dayend|tiki_date_format:"{tr}%m/%d{/tr}/%Y"}
+			{/if}
 		{else}
 			{$daystart|tiki_date_format:"%B %Y"} - {$dayend|tiki_date_format:"%B %Y"}
 		{/if}

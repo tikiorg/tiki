@@ -167,7 +167,7 @@
 									<label for="feature_layoutshadows">{tr}Activate{/tr}:</label>
 								</td>
 								<td>				
-									<input class="checkbox" type="checkbox" name="feature_layoutshadows" id="feature_layoutshadows"{if $prefs.feature_layoutshadows eq 'y'} checked="checked"{/if} onclick="toggleTrTd('shd1');toggleTrTd('shd2');toggleTrTd('shd3');toggleTrTd('shd4');toggleTrTd('shd5');toggleTrTd('shd6');toggleTrTd('shd7');toggleTrTd('shd8');toggleTrTd('shd9');toggleTrTd('shd10');"  />
+									<input class="checkbox" type="checkbox" name="feature_layoutshadows" id="feature_layoutshadows"{if $prefs.feature_layoutshadows eq 'y'} checked="checked"{/if} onclick="toggleTrTd('shd1');toggleTrTd('shd2');toggleTrTd('shd3');toggleTrTd('shd4');toggleTrTd('shd5');toggleTrTd('shd6');toggleTrTd('shd7');toggleTrTd('shd8');toggleTrTd('shd9');toggleTrTd('shd10');toggleTrTd('shd11');toggleTrTd('shd12');"  />
 								</td>
 							</tr>
 							<tr id="shd1" {if $prefs.feature_layoutshadows ne 'y' and $prefs.javascript_enabled eq 'y'} style="display:none;"{/if}>
@@ -209,6 +209,14 @@
 							<tr id="shd10" {if $prefs.feature_layoutshadows ne 'y' and $prefs.javascript_enabled eq 'y'} style="display:none;"{/if}>
 								<td class="form"><label for="footer_shadow_end">{tr}Footer shadow end{/tr}</label></td>
 								<td class="form"><textarea name="footer_shadow_end" id="footer_shadow_end" rows="2" cols="40">{$prefs.footer_shadow_end|escape}</textarea></td>
+							</tr>
+							<tr id="shd11" {if $prefs.feature_layoutshadows ne 'y' and $prefs.javascript_enabled eq 'y'} style="display:none;"{/if}>
+								<td class="form"><label for="box_shadow_start">{tr}Module (box) shadow start{/tr}</label></td>
+								<td class="form"><textarea name="box_shadow_start" id="box_shadow_start" rows="2" cols="40">{$prefs.box_shadow_start|escape}</textarea></td>
+							</tr>
+							<tr id="shd12" {if $prefs.feature_layoutshadows ne 'y' and $prefs.javascript_enabled eq 'y'} style="display:none;"{/if}>
+								<td class="form"><label for="box_shadow_end">{tr}Module (box) shadow end{/tr}</label></td>
+								<td class="form"><textarea name="box_shadow_end" id="box_shadow_end" rows="2" cols="40">{$prefs.box_shadow_end|escape}</textarea></td>
 							</tr>
 							</table>
 						</fieldset>					
@@ -439,7 +447,8 @@
 								{if $prefs.feature_help eq 'y'}</a>{/if}
 							</legend>
         			<select name="feature_left_column">
-								<option value="y" {if $prefs.feature_left_column eq 'y'}selected="selected"{/if}>{tr}always{/tr}</option>
+								<option value="y" {if $prefs.feature_left_column eq 'y'}selected="selected"{/if}>{tr}only if module{/tr}</option>
+								<option value="fixed" {if $prefs.feature_left_column eq 'fixed'}selected="selected"{/if}>{tr}always{/tr}</option>
 								<option value="user" {if $prefs.feature_left_column eq 'user'}selected="selected"{/if}>{tr}user decides{/tr}</option>
 								<option value="n" {if $prefs.feature_left_column eq 'n'}selected="selected"{/if}>{tr}never{/tr}</option>
 							</select>
@@ -517,7 +526,8 @@
 								{if $prefs.feature_help eq 'y'}</a>{/if}
 							</legend>
 							<select name="feature_right_column">
-								<option value="y" {if $prefs.feature_right_column eq 'y'}selected="selected"{/if}>{tr}always{/tr}</option>
+								<option value="y" {if $prefs.feature_right_column eq 'y'}selected="selected"{/if}>{tr}only if module{/tr}</option>
+								<option value="fixed" {if $prefs.feature_right_column eq 'fixed'}selected="selected"{/if}>{tr}always{/tr}</option>
 								<option value="user" {if $prefs.feature_right_column eq 'user'}selected="selected"{/if}>{tr}user decides{/tr}</option>
 								<option value="n" {if $prefs.feature_right_column eq 'n'}selected="selected"{/if}>{tr}never{/tr}</option>
 							</select>

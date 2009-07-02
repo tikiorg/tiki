@@ -1583,6 +1583,9 @@ class TikiLib extends TikiDB {
 			}
 			$ret[] = "Registered";
 			$ret[] = "Anonymous";
+			if($_SESSION["groups_are_emulated"]=="y"){
+				$ret = array_intersect($ret,unserialize($_SESSION['groups_emulated']));
+			}
 			$ret = array_unique($ret);
 			$this->usergroups_cache[$user] = $ret;
 			return $ret;
@@ -5080,9 +5083,8 @@ class TikiLib extends TikiDB {
 
 		$html=$is_html?1:0;
 		if ($html && $prefs['feature_purifier'] != 'n') {
-			require "lib/htmlpurifier/HTMLPurifier.auto.php";
-			$purifier = new HTMLPurifier();
-			$edit_data = $purifier->purify($edit_data);
+			require_once('lib/htmlpurifier_tiki/HTMLPurifier.tiki.php');
+			$edit_data = HTMLPurifier($edit_data);
 		}
 		$mid = ''; $midvar = '';
 		$bindvars = array($name, (int)$hits, $data, (int)$lastModif, $comment, 1, $user, $ip, $description, $user, (int)strlen($data), $html, $this->now, $wysiwyg, $wiki_authors_style);
@@ -7696,9 +7698,8 @@ class TikiLib extends TikiDB {
 
 		$html=$is_html?1:0;
 		if ($html && $prefs['feature_purifier'] != 'n') {
-			require "lib/htmlpurifier/HTMLPurifier.auto.php";
-			$purifier = new HTMLPurifier();
-			$edit_data = $purifier->purify($edit_data);
+			require_once('lib/htmlpurifier_tiki/HTMLPurifier.tiki.php');
+			$edit_data = HTMLPurifier($edit_data);
 		}
 		$mid = '';
 

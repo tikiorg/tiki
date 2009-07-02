@@ -168,7 +168,7 @@
 		{/if}
 		{if strstr($field_value.options_array[0], 'm')}
 			{if $field_value.value ne ''}
-				{wiki}{literal}{MEDIAPLAYER(mp3="tiki-download_item_attachment.php?attId={/literal}{$field_value.value}{/literal}",style="max")}{/literal}{/wiki}
+				{wiki}{literal}{MEDIAPLAYER(mp3="tiki-download_item_attachment.php?attId={/literal}{$field_value.value}",style="max")}{/literal}{/wiki}
 			{/if}
 		{/if}
 														 
@@ -286,13 +286,15 @@
 			{if empty($field_value.numvotes)}
 				{tr}Number of votes{/tr}: 0
 			{else}
-				{tr}Rating{/tr}: {$field_value.value|default:"0"}, {tr}Number of votes{/tr}: {$field_value.numvotes|default:"0"}, {tr}Average{/tr}: {$field_value.voteavg|default:"0"},
+				{tr}Number of votes{/tr}: {$field_value.numvotes|default:"0"}, {tr}Average{/tr}: {$field_value.voteavg|default:"0"},
 				{if $item.my_rate}{tr}Your rating{/tr}: {$item.my_rate}{else}{tr}You did not vote yet{/tr}{/if}
 			{/if}
 		{/capture}
 		{capture name=myvote}
 			{tr}My rating:{/tr} {$item.my_rate}
 		{/capture}
+		<span class="rating">
+		<span style="white-space:nowrap">
 		{section name=i loop=$field_value.options_array}
 			{if $tiki_p_tracker_vote_ratings eq 'y' and isset($item.my_rate) and $field_value.options_array[i] eq $item.my_rate}
 				<b class="highlight">
@@ -314,6 +316,7 @@
 			{/if}
 			{assign var='previousvote' value=$field_value.options_array[i]}
 		{/section}
+		</span>
 		{if $item.itemId}
 			<small title="{tr}Votes{/tr}">
 				({$field_value.numvotes})
@@ -323,6 +326,7 @@
 		{if $tiki_p_tracker_vote_ratings eq 'y' and  isset($item.my_rate)}
 			<a href="{$smarty.server.PHP_SELF}{if $query_string}?{$query_string}{else}?{/if}trackerId={$item.trackerId}&amp;itemId={$item.itemId}&amp;ins_{$field_value.fieldId}=NULL{if $page}&amp;page={$page|escape:url}{/if}" title="{tr}Clik to delete your vote{/tr}">x</a>
 		{/if}
+		<span>
 	{/if}
 
 {* -------------------- header ------------------------- *}
