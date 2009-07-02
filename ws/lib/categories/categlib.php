@@ -55,9 +55,20 @@ class CategLib extends ObjectLib {
       $bindvals=array();
 			$mid = "";
 		}
+		
+		//For excluding ws
+		global $prefs;
+		if ($idws = $prefs['ws_container'] )
+			if ($find)
+				$exclude = "and not (`categId`=$idws or `parentId`=$idws)";
+			else
+				$exclude = "where not (`categId`=$idws or `parentId`=$idws)";
+		else
+			$exclude = "";
+		
 
-		$query = "select * from `tiki_categories` $mid order by ".$this->convert_sortmode($sort_mode);
-		$query_cant = "select count(*) from `tiki_categories` $mid";
+		$query = "select * from `tiki_categories` $mid $exclude order by ".$this->convert_sortmode($sort_mode);
+		$query_cant = "select count(*) from `tiki_categories` $mid ";
 		$result = $this->query($query,$bindvals,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvals);
 		$ret = array();
@@ -924,7 +935,11 @@ class CategLib extends ObjectLib {
 	function build_cache() {
 		global $cachelib;
 		$ret = array();
-		$query = "select * from `tiki_categories` order by `name`";
+		global $prefs;
+		if ($idws = $prefs['ws_container'] )
+			$query = "select * from `tiki_categories` where not (`categId`=$idws or `parentId`=$idws) order by `name`";
+		else
+			$query = "select * from `tiki_categories` order by `name`";
 		$result = $this->query($query,array());
 		while ($res = $result->fetchRow()) {
 			$id = $res["categId"];

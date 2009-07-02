@@ -174,7 +174,8 @@ $smarty->assign_by_ref('module_params', $module_params); // re-assigning this to
 $smarty->assign('maxlen', isset($module_params['maxlen']) ? $module_params['maxlen'] : 30);
 $smarty->assign('nonums', isset($module_params['nonums']) ? $module_params['nonums'] : 'n');
 $smarty->assign('request_uri', strpos($_SERVER['REQUEST_URI'], '?') === false ? $_SERVER['REQUEST_URI'].'?' : $_SERVER['REQUEST_URI'].'&');
-$module_rows = count($webmail_list);
+$module_rows = count($webmail_list_page);
+$smarty->assign('module_type', 'module');
 $smarty->assign('module_rows', $module_rows);
 if (isset($module_params['title'])) {
 	$smarty->assign('tpl_module_title', $module_params['title']);

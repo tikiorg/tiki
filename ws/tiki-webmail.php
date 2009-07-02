@@ -68,6 +68,7 @@ if (!$user) {
 if (!isset($_REQUEST["locSection"])) {
 	$_REQUEST["locSection"] = 'mailbox';
 }
+$headerlib->add_js('var webmailTimeoutId = null;',0);
 
 $smarty->assign('locSection', $_REQUEST["locSection"]);
 // Search if we have to add some contacts
@@ -91,7 +92,8 @@ if ($_REQUEST["locSection"] == 'read') {
 	} else {
 		$smarty->assign('fullheaders', 'n');
 	}
-
+	$headerlib->add_js('if (webmailTimeoutId) {window.clearTimeout(webmailTimeoutId);}',0);
+	
 	$current = $webmaillib->get_current_webmail_account($user);
 	
 	
@@ -153,8 +155,9 @@ if ($_REQUEST["locSection"] == 'read') {
 				$bod = $bodies[$i]['body'];
 				
 				// Clean the string using HTML Purifier
-				require_once('lib/htmlpurifier/HTMLPurifier.auto.php');
-				require_once('lib/htmlpurifier/HTMLPurifier.func.php');
+				//require_once('lib/htmlpurifier/HTMLPurifier.auto.php');
+				//require_once('lib/htmlpurifier/HTMLPurifier.func.php');
+				require_once('lib/htmlpurifier_tiki/HTMLPurifier.tiki.php');
 				$bod = HTMLPurifier($bod);
 				
 				if (preg_match_all('/<[\/]?body[^>]*>/i', $bod, $m, PREG_OFFSET_CAPTURE) && count($m) > 0 && count($m[0]) > 1) {
@@ -245,11 +248,11 @@ if ($_REQUEST["locSection"] == 'read') {
 		}
 		$aux['timestamp'] = strtotime($aux['delivery-date']);
 		
-		$aux['subject'] = utf8_encode($aux['subject']);
-		$aux['from'] = utf8_encode($aux['from']);
-		$aux['to'] = utf8_encode($aux['to']);
-		$aux['cc'] = utf8_encode($aux['cc']);
-		$aux['date'] = utf8_encode($aux['date']);
+		$aux['subject'] = isset($aux['subject']) ? utf8_encode($aux['subject']) : '';
+		$aux['from']    = isset($aux['from'])    ? utf8_encode($aux['from']) : '';
+		$aux['to']      = isset($aux['to'])      ? utf8_encode($aux['to']) : '';
+		$aux['cc']      = isset($aux['cc'])      ? utf8_encode($aux['cc']) : '';
+		$aux['date']    = isset($aux['date'])    ? utf8_encode($aux['date']) : '';
 			
 		$smarty->assign('headers', $aux);
 		
@@ -264,6 +267,12 @@ if ($_REQUEST["locSection"] == 'read') {
 
 if ($_REQUEST["locSection"] == 'mailbox') {
 	
+	$current = $webmaillib->get_current_webmail_account($user);
+	if (!$current) {
+		handleWebmailRedirect("locSection=settings");
+	}
+
+	$autoRefresh = $current['autoRefresh'];
 	$js = <<< END
 function submit_form(msgname,flg)
 {
@@ -271,6 +280,8 @@ function submit_form(msgname,flg)
   document.mailb.elements.quickFlagMsg.value= msgname;
   document.mailb.submit();
 }
+
+webmailTimeoutId = window.setTimeout("window.location.reload(true);",$autoRefresh*1000);
 END;
 	$headerlib->add_js($js,0);
 
@@ -283,11 +294,6 @@ END;
 	}
 
 	closedir ($h);
-
-	$current = $webmaillib->get_current_webmail_account($user);
-	if (!$current) {
-		handleWebmailRedirect("locSection=settings");
-	}
 
 	$smarty->assign('current', $current);
 	$smarty->assign('autoRefresh',$current['autoRefresh']);
@@ -571,6 +577,7 @@ if ($_REQUEST["locSection"] == 'settings') {
 END;
 		$headerlib->add_jq_onready($js);
 	}
+	$headerlib->add_js('if (webmailTimeoutId) {window.clearTimeout(webmailTimeoutId);}',0);
 	
 	if (isset($_REQUEST["conmsg"])) {
 		check_ticket('webmail');
@@ -668,7 +675,8 @@ if ($_REQUEST["locSection"] == 'compose') {
 	if (!$current) {
 		handleWebmailRedirect("locSection=settings");
 	}
-
+	$headerlib->add_js('if (webmailTimeoutId) {window.clearTimeout(webmailTimeoutId);}',0);
+	
 	// Send a message
 	if (isset($_REQUEST["reply"]) || isset($_REQUEST["replyall"])) {
 		check_ticket('webmail');
@@ -909,7 +917,8 @@ if ($_REQUEST["locSection"] == 'contacts') {
 	if (!isset($_REQUEST["contactId"])) {
 		$_REQUEST["contactId"] = 0;
 	}
-
+	$headerlib->add_js('if (webmailTimeoutId) {window.clearTimeout(webmailTimeoutId);}',0);
+	
 	$smarty->assign('contactId', $_REQUEST["contactId"]);
 
 	if ($_REQUEST["contactId"]) {
