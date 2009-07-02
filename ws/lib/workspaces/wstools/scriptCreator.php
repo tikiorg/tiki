@@ -25,8 +25,10 @@ include_once('lib/workspaces/wslib.php');
 global $prefs;
 $wsContainerId = (int) $prefs['ws_container'];
 
-if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'init'))
+if (isset($_REQUEST['action']))
 {
+    if (($_REQUEST['action'] == 'init'))
+    {
 	if (!$objectlib->get_object_id('wiki page','Wiki1'))
 		$objectlib->add_object('wiki page','Wiki1');
 	if (!$objectlib->get_object_id('wiki page','Wiki2'))
@@ -41,16 +43,15 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'init'))
 	if ($userlib->add_group('G1'));
 	if ($userlib->add_group('G2'));
 
-	header("Location: ./scriptCreator.php?action=create");
-}
-
-if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'create'))
-{
-	//Creating new WS
+    }
+    
+    if (($_REQUEST['action'] == 'create'))
+    {
+    	//Creating new WS
 	if  (!$wslib->get_ws_id('WS1',$wsContainerId))
-		$id1 = $wslib->add_ws('WS1',$wsContainerId);
-	 if (!$wslib->get_ws_id('WS2',$wsContainerId))
-		$wslib->add_ws('WS2',$wsContainerId);
+    	    $id1 = $wslib->add_ws('WS1',$wsContainerId);
+       	if (!$wslib->get_ws_id('WS2',$wsContainerId))
+	    $wslib->add_ws('WS2',$wsContainerId);
 	if  (!$wslib->get_ws_id('WS3',$wsContainerId))
 	    $id3 = $wslib->add_ws('WS3',$wsContainerId);
 
@@ -80,11 +81,10 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'create'))
 	$wslib->add_ws_object($id4,'Wiki4','wiki_page');
 	$wslib->add_ws_object($id5,'Wiki5','wiki_page');
 
-	header("Location: ./../../../tiki-admin.php?page=workspaces");
-}
+    }
 	
-if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'destroy'))
-{
+    if ($_REQUEST['action'] == 'destroy')
+    {
 	//Getting existing WS id
 	$id1= $wslib->get_ws_id('WS1',$wsContainerId);
 	$id2= $wslib->get_ws_id('WS2',$wsContainerId);
@@ -98,13 +98,15 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'destroy'))
 	$wslib->remove_ws($id3);
 	$wslib->remove_ws($id4);
 	$wslib->remove_ws($id5);
+    }
 
-	header("Location: ./../../../tiki-admin.php?page=workspaces");
+    if ($_REQUEST['action'] == 'clearcache')
+	$cachelib->empty_full_cache();
+    
+    if ($_REQUEST['action'] == 'test')
+    {
+    }
 }
 
-if ( isset($_REQUEST['action'])  &&  ($_REQUEST['action'] == 'test'))
-{
-
-
-
-}
+if (isset($_REQUEST['redirect']) && ($_REQUEST['redirect'] == 'yes'))
+	    header("Location: ./../../../tiki-admin.php?page=workspaces");

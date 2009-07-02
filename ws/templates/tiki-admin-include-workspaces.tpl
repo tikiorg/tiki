@@ -2,7 +2,7 @@
 
 {*if $welcome*}
 {remarksbox type="info" title="{tr}Welcome{/tr}"}
-{tr}You have succesfully enabled  Workspaces in TikiWiki. This feature under development, so please don't expect it works properly. If you want to
+{tr}You have succesfully enabled  Workspaces in TikiWiki. This feature is under development, so please don't expect if not works properly. If you want to
 get more info go to the {/tr} <a class="rbox-link"
 href="http://dev.tikiwiki.org/workspace">{tr}Workspaces wiki page{/tr}</a>.
 <hr />
@@ -19,25 +19,11 @@ href="http://dev.tikiwiki.org/workspace">{tr}Workspaces wiki page{/tr}</a>.
 <div class="cbox">
 <form action="tiki-admin.php?page=workspaces" method="post">
 
-{tabset name="fgal_admin"}
+{tabset name="ws_admin"}
 	{tab name="{tr}Test{/tr}"}
 
 <input type="hidden" name="filegalfeatures" />
 
-
-
-
-{/tab}
-
-{tab name="{tr}Video{/tr}"}
-<div class="adminoptionbox">
-<ul>
-<li>Some useful videos: <br /></li>
-</ul>
-</div>
-{/tab}
-
-{tab name="{tr}Workspaces Dev Tools{/tr}"}
 <fieldset><legend>{tr}Info{/tr}</legend>
 <div class="adminoptionbox">
 <ul>
@@ -46,9 +32,27 @@ href="http://dev.tikiwiki.org/workspace">{tr}Workspaces wiki page{/tr}</a>.
 </ul>
 </div>
 </fieldset>
+<fieldset><legend>{tr}Inspector{/tr}</legend>
+<div class="adminoptionbox">
+</div>
+</fieldset>
+{/tab}
+
+{tab name="{tr}Video{/tr}"}
+<div class="adminoptionbox">
+<ul>
+<li>Watch this section in the next days, there will be interesting things here ;)</li>
+</ul>
+</div>
+{/tab}
+
+{tab name="{tr}Workspaces Dev Tools{/tr}"}
 <fieldset><legend>{tr}Script Creator{/tr}</legend>
 <div class="adminoptionbox">
 <input type="radio" id="wscreate" name="wsdevtools" value="create" checked="checked" /><label for="wscreate">{tr}Create a set of Workspaces, and some items whithin them{/tr}.</label>
+</div>
+<div class="adminoptionbox">
+<input type="radio" id="clearcache" name="wsdevtools" value="clearcache" /><label for="clearcache">{tr}Clear the entire cache of TikiWiki{/tr}.</label>
 </div>
 <div class="adminoptionbox">
 <input type="radio" id="wsdelete" name="wsdevtools" value="delete" /><label for="wsdelete">{tr}Delete all Workspaces created before{/tr}.</label>

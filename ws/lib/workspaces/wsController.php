@@ -26,26 +26,16 @@ class ws_gui_controller
 {
     public function check_if_new_to_ws()
     {
-	global $prefs, $tikilib;
+	global $prefs, $tikilib, $wslib;
 	if ($prefs['ws_container'] == null)
 	{ 
 	    $currentTime = (string) time();
 	    $hash = md5($currentTime);
-	    $ws = new wslib();
-	    $id = $ws->init_ws($hash);
+	    $id = $wslib->init_ws($hash);
 	    $tikilib->set_preference('ws_container', $id);
 	    return true;
 	}
 	else
 	    return false;
     }
-
-    public function create_demo()
-    {
-    }
-
-    public function delete_demo()
-    {
-    }
 }
-

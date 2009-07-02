@@ -13,9 +13,11 @@ $ws_gui->check_if_new_to_ws();
 if ( isset($_REQUEST['wsoptions']) )
 {
     if ( (isset($_REQUEST['wsdevtools'])) && ($_REQUEST['wsdevtools'] == 'create') )
-	header("Location: ./lib/workspaces/wstools/scriptCreator.php?action=init");
+	header("Location: ./lib/workspaces/wstools/scriptCreator.php?action=init&redirect=yes");
+    else if ( ($_REQUEST['wsdevtools'] == 'clearcache') )
+	header("Location: ./lib/workspaces/wstools/scriptCreator.php?action=clearcache&redirect=yes");
     else
-	header("Location: ./lib/workspaces/wstools/scriptCreator.php?action=destroy");
+	header("Location: ./lib/workspaces/wstools/scriptCreator.php?action=destroy&redirect=yes");
 }
 
 ask_ticket('admin-inc-workspaces');
