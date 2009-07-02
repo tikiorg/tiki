@@ -39,7 +39,7 @@ class wslib extends CategLib
 		return parent::add_category(0, $name, 'Workspaces Container');
 	}
     
-    // Create a new WS (NOTE: parentID = WSContainerID)
+    // Create a new WS (NOTE: parentID will be always WSContainerID)
 	function add_ws ($name, $parentWS)
 	{
 		global $prefs;
@@ -114,17 +114,26 @@ class wslib extends CategLib
 		return true;
 	}
 	
-    // Get the groups that have access in a WS
+    // List the groups that have access to a WS
     	function get_ws_groups ($ws_id)
-    	{
-    	
+    	{    	
     		$objectType = 'ws';
 		$hashWS = md5($objectType . strtolower($ws_id));
 		
 		$query = "select `groupName` from `users_objectpermissions` where 
-		`objectId`=? and `objectType`=? and `permName`=?";
-		$bindvars = array($hashWS, 'ws','tiki_p_ws_view');
+		`objectId`=? and `permName`='tiki_p_ws_view'";
+		$bindvars = array($hashWS);
 		
 		return $this->query($query,$bindvars);    	
     	}
+    	
+    // List all WS that a group have access
+	function get_group_ws ($groupName)
+	{	
+		$query = "select `objectId` from `users_objectpermissions` where 
+		`groupName`=? and `permName`='tiki_p_ws_view'";
+		$bindvars = array($groupName);
+		
+		return $this->query($query,$bindvars); 	
+	}
 }
