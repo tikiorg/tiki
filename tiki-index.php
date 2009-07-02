@@ -430,13 +430,12 @@ function generate_machine_translated_markup($pageInfo, $targetLang) {
 
 
 function make_sure_machine_translation_is_enabled() {
-	global $multilinguallib, $access, $_REQUEST;
-	if ($multilinguallib->mtEnabled != 'y') {
+	global $multilinguallib, $access, $_REQUEST, $prefs;
+	if ($prefs['feature_machine_translation'] != 'y') {
 		require_once('lib/tikiaccesslib.php');	
 		$error_msg = tra("You have requested that this page be machine translated:").
 		             " <b>".$_REQUEST['page']."</b><p>".
 		             tra("However, the Machine Translation feature is not enabled. Please enable this feature, or ask a site admin to do it.");
-		ask_ticket('index');
 		$access->display_error($_REQUEST['page'], "Cannot machine translate this page", "", true, $error_msg);
 	}
 }
