@@ -2,12 +2,13 @@
   <div align="left">
     {if $terminology_profile_was_installed == 'n'}
        <b>
-       {tr}WARNING{/tr}:{tr}This module can only work if the following profile has been installed:{/tr}
-       <br>
-       <a href="http://profiles.tikiwiki.org/Collaborative_Multilingual_Terminology">Collaborative_Multilingual_Terminology profile.</a>
+       {tr}WARNING{/tr}:{tr}The Terminology is module can only work if the following profile has been installed:{/tr}
+       <b>Collaborative_Multilingual_Terminology</b>.
        <p>
-       {tr}That profile has not been installed yet, so you need to install it first.{/tr} {tr}For help on how to install profiles, see:{/tr}
-       <a href="http://profiles.tikiwiki.org/How+to+use+profiles">How to use profiles</a>.
+       {tr}That profile has not been installed yet, so you need to install it first.{/tr} {tr}To install this profile, click on the following link:{/tr}
+       <a href="tiki-admin.php?profile=Collaborative_Multilingual_Terminology&category=&repository=&page=profiles&list=List#profile-results">Install Collaborative_Multilingual_Terminology</a>. 
+       {tr}Then click on the name of that profile, wait a few seconds, and click on Install.{/tr}
+       {tr}Note that you may need admin privileges.{/tr}       
        </b>
        <p>
     {/if}
