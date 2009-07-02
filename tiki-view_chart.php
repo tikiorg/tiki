@@ -11,7 +11,6 @@ include_once ('lib/charts/chartlib.php');
 
 if ($prefs['feature_charts'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_charts");
-
 	$smarty->display("error.tpl");
 	die;
 }
@@ -25,7 +24,6 @@ if ($tiki_p_view_chart != 'y') {
 
 if (!isset($_REQUEST['chartId'])) {
 	$smarty->assign('msg', tra("No chart indicated"));
-
 	$smarty->display("error.tpl");
 	die;
 }
@@ -50,9 +48,7 @@ if (!isset($_REQUEST['period'])) {
 // next and previous periods if they exist
 if ($chart_info['frequency']) {
 	$lastPeriod = $chartlib->get_last_period($chart_info['chartId']);
-
 	$firstPeriod = $chartlib->get_first_period($chart_info['chartId']);
-
 	if ($firstPeriod && $firstPeriod < $_REQUEST['period']) {
 		$smarty->assign('prevPeriod', $_REQUEST['period'] - 1);
 	} else {

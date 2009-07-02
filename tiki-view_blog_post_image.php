@@ -11,7 +11,6 @@ require_once ('tiki-setup.php');
 
 if ($prefs['feature_blogs'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_blogs");
-
 	$smarty->display("error.tpl");
 	die;
 }

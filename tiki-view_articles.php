@@ -28,7 +28,6 @@ if ($prefs['feature_articles'] != 'y') {
 if ( ($tiki_p_read_article != 'y') && ($tiki_p_articles_read_heading != 'y') ) {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied you cannot view this section"));
-
 	$smarty->display("error.tpl");
 	die;
 }
@@ -40,13 +39,13 @@ if (isset($_REQUEST["remove"])) {
 		$smarty->display("error.tpl");
 		die;
 	}
-  $area = 'delarticle';
-  if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-    key_check($area);
+	$area = 'delarticle';
+	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+		key_check($area);
 		$artlib->remove_article($_REQUEST["remove"]);
-  } else {
-    key_get($area);
-  }
+	} else {
+		key_get($area);
+	}
 }
 
 // This script can receive the thresold
@@ -109,14 +108,14 @@ if (isset($_REQUEST["type"])) {
 
 if (isset($_REQUEST["topic"])) {
 	$topic = $_REQUEST["topic"];
- } else {
+} else {
 	$topic = '';
 }
 if (isset($_REQUEST['topicName'])) {
 	$topicName = $_REQUEST['topicName'];
- } else {
+} else {
 	$topicName = '';
- }
+}
 
 if (isset($_REQUEST["categId"])) {
 	$categId = $_REQUEST["categId"];
@@ -146,20 +145,20 @@ for ($i = 0; $i < $temp_max; $i++) {
 	$comments_objectId = $comments_prefix_var.$comments_object_var;
 	$listpages["data"][$i]["comments_cant"] = $commentslib->count_comments($comments_objectId);
 }
-	if (!empty($topicName) && !strstr($topicName, '!') && !strstr($topicName, '+')) {
-		$smarty->assign_by_ref('topic', $topicName);
-	} elseif (!empty($topic) &&  is_numeric($topic)) {
-		if (!empty($listpages['data'][0]['topicName']))
-			$smarty->assign_by_ref('topic', $listpages['data'][0]['topicName']);
-		else {
-			$topic_info = $artlib->get_topic($topic);
-			if (isset($topic_info['name']))
-				$smarty->assign_by_ref('topic', $topic_info['name']);
-		}
+if (!empty($topicName) && !strstr($topicName, '!') && !strstr($topicName, '+')) {
+	$smarty->assign_by_ref('topic', $topicName);
+} elseif (!empty($topic) &&  is_numeric($topic)) {
+	if (!empty($listpages['data'][0]['topicName']))
+		$smarty->assign_by_ref('topic', $listpages['data'][0]['topicName']);
+	else {
+		$topic_info = $artlib->get_topic($topic);
+		if (isset($topic_info['name']))
+			$smarty->assign_by_ref('topic', $topic_info['name']);
 	}
-	if (!empty($type) && !strstr($type, '!') && !strstr($type, '+')) {
-		$smarty->assign_by_ref('type', $type);
-	}
+}
+if (!empty($type) && !strstr($type, '!') && !strstr($type, '+')) {
+	$smarty->assign_by_ref('type', $type);
+}
 
 $smarty->assign('maxArticles', $prefs['maxArticles']);
 

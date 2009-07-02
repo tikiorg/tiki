@@ -12,14 +12,12 @@ include_once ('lib/charts/chartlib.php');
 //xdebug_start_profiling();
 if ($prefs['feature_charts'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_charts");
-
 	$smarty->display("error.tpl");
 	die;
 }
 
 if (!isset($_REQUEST['itemId'])) {
 	$smarty->assign('msg', tra("No item indicated"));
-
 	$smarty->display("error.tpl");
 	die;
 }
@@ -35,10 +33,8 @@ if (isset($_REQUEST['vote'])) {
 		check_ticket('view-chart-item');
 		if (!isset($_REQUEST['points']))
 			$_REQUEST['points'] = 0;
-
 		$chartlib->user_vote($user, $_REQUEST['itemId'], $_REQUEST['points']);
 	}
-
 	header ("Location: tiki-view_chart.php?chartId=" . $info['chartId']);
 }
 
