@@ -42,9 +42,8 @@
 	{if $tiki_p_admin_personal_webmail eq 'y' or $tiki_p_admin_group_webmail eq 'y'}
 
 		{if $tiki_p_admin_personal_webmail eq 'y' or $tiki_p_admin_group_webmail eq 'y'}
-			<h2>{if $accountId eq ''}{tr}Add a new{/tr}{else}{tr}Edit this{/tr}{/if} {tr} mail account{/tr} {icon _id='add' id='addAccountIcon'}</h2>
-
-			<div id="settingsFormDiv">
+			<h2>{if $accountId eq 0}{tr}Add a new{/tr}{else}{tr}Edit this{/tr}{/if} {tr} mail account{/tr} {icon _id='add' id='addAccountIcon'}</h2>
+			<div id="settingsFormDiv"{if $accountId eq 0 and count($accounts) != 0}style="display:none"{/if}>
 				<form action="tiki-webmail.php" method="post" name="settings">
 					<input type="hidden" name="accountId" value="{$accountId|escape}" />
 					<input type="hidden" name="locSection" value="settings" />
@@ -517,42 +516,78 @@
 {/if}
 
 {if $locSection eq 'contacts'}
-	<h2>{tr}Create/edit contacts{/tr}</h2>
-	<form action="tiki-webmail.php" method="post">
-		<input type="hidden" name="locSection" value="contacts" />
-		<input type="hidden" name="contactId" value="{$contactId|escape}" />
-		<table class="normal">
-			<tr class="formcolor">
-				<td>{tr}First Name{/tr}:</td>
-				<td>
-					<input type="text" maxlength="80" size="20" name="firstName" value="{$info.firstName|escape}" />
-				</td>
-			</tr>
-			<tr class="formcolor">
-				<td>{tr}Last Name{/tr}:</td>
-				<td>
-					<input type="text" maxlength="80" size="20" name="lastName" value="{$info.lastName|escape}" />
-				</td>
-			</tr>
-			<tr class="formcolor">
-				<td>{tr}Email{/tr}:</td>
-				<td>
-					<input type="text" maxlength="80" size="20" name="email" value="{$info.email|escape}" />
-				</td>
-			</tr>
-			<tr class="formcolor">
-				<td>{tr}Nickname{/tr}:</td>
-				<td>
-					<input type="text" maxlength="80" size="20" name="nickname" value="{$info.nickname|escape}" />
-				</td>
-			</tr>
-			<tr class="formcolor">
-				<td colspan="2">
-					<input type="submit" name="save" value="{tr}Save{/tr}" />
-				</td>
-			</tr>
-		</table>
-	</form>
+	<h2>{if $contactId eq 0}{tr}Add a new{/tr}{else}{tr}Edit this{/tr}{/if} {tr} contact{/tr} {icon _id='add' id='addContactIcon'}</h2>
+	<div id="contactsFormDiv"{if $contactId eq 0 and count($channels) != 0}style="display:none"{/if}>
+		<form action="tiki-webmail.php" method="post" name="contacts">
+			<input type="hidden" name="locSection" value="contacts" />
+			<input type="hidden" name="contactId" value="{$contactId|escape}" />
+			<table class="normal">
+				<tr class="formcolor">
+					<td>{tr}First Name{/tr}:</td>
+					<td>
+						<input type="text" maxlength="80" size="20" name="firstName" value="{$info.firstName|escape}" />
+					</td>
+				</tr>
+				<tr class="formcolor">
+					<td>{tr}Last Name{/tr}:</td>
+					<td>
+						<input type="text" maxlength="80" size="20" name="lastName" value="{$info.lastName|escape}" />
+					</td>
+				</tr>
+				<tr class="formcolor">
+					<td>{tr}Email{/tr}:</td>
+					<td>
+						<input type="text" maxlength="80" size="20" name="email" value="{$info.email|escape}" />
+					</td>
+				</tr>
+				<tr class="formcolor">
+					<td>{tr}Nickname{/tr}:</td>
+					<td>
+						<input type="text" maxlength="80" size="20" name="nickname" value="{$info.nickname|escape}" />
+					</td>
+				</tr>
+				<tr class="formcolor">
+					<td>{tr}Groups{/tr}:</td>
+					<td>
+						{if !empty($listgroups)}
+							{foreach item=gr from=$listgroups}
+								<div class="registergroup">
+									 <input type="checkbox"
+									 		id="gr_{$gr|escape}"
+									 		{if in_array($gr,$info.groups)}checked="checked"{/if}
+									 		{if $user neq $info.user and $tiki_p_admin neq 'y' and $tiki_p_admin_group_webmail neq 'y'}
+										 		name="dummy[]"
+									 			value="dummy"
+									 			disabled
+									 		{else}
+										 		name="groups[]"
+									 			value="{$gr|escape}"
+									 		{/if}
+									 	/> 
+									 <label for="gr_{$gr}">
+									 	{$gr}
+									</label>
+								</div>
+							{/foreach}
+						{/if}
+						{if !empty($other_groups)}
+							{tr}Other groups: {/tr}
+							{foreach item=ogr from=$other_groups}
+								<em>{$ogr}</em>&nbsp;
+								<input type="hidden" name="groups[]" value="{$ogr|escape}" />
+							{/foreach}
+						{/if}
+						<input type="hidden" name="user" value="{$info.user|escape}" />
+					</td>
+				</tr>
+				<tr class="formcolor">
+					<td colspan="2">
+						<input type="submit" name="save" value="{tr}Save{/tr}" />
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
 	
 	<h2>{tr}Contacts{/tr}</h2>
 	{include file='find.tpl'}
@@ -573,6 +608,10 @@
 				<th>
 					<a href="tiki-webmail.php?locSection=contacts&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'nickname_desc'}nickname_asc{else}nickname_desc{/if}">{tr}Nickname{/tr}</a>
 				</th>
+				<th>
+					{tr}Groups{/tr}
+				</th>
+				<th>&nbsp;</th>
 			</tr>
 			{cycle values="odd,even" print=false}
 			{section name=user loop=$channels}
@@ -581,11 +620,13 @@
 					<td class="{cycle advance=false}">{$channels[user].lastName}</td>
 					<td class="{cycle advance=false}">
 						<a class="link" href="tiki-webmail.php?locSection=contacts&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;contactId={$channels[user].contactId}">{$channels[user].email|escape}</a>
-						[&nbsp;&nbsp;
-						<a class="link" href="tiki-webmail.php?locSection=contacts&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$channels[user].contactId}" title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
-						&nbsp;&nbsp;]
 					</td>
 					<td class="{cycle advance=false}">{$channels[user].nickname}</td>
+					<td class="{cycle advance=false}">{','|implode:$channels[user].groups}</td>
+					<td class="{cycle}">
+						{self_link _icon='page_edit' locSection='contacts' contactId=$channels[user].contactId}{* offset=$offset sort_mode=$sort_mode _noauto='y'*}{tr}Edit{/tr}{/self_link}
+						{self_link _icon='cross' locSection='contacts' remove=$channels[user].contactId}{* offset=$offset sort_mode=$sort_mode find=$find _noauto='y'*}{tr}Delete{/tr}{/self_link}
+					</td>
 				</tr>
 			{/section}
 		</table>

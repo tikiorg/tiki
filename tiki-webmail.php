@@ -301,11 +301,10 @@ END;
 	$smarty->assign('useSSL',$current['useSSL']);
 	$smarty->assign('flagsPublic',$current['flagsPublic']);
 	
-	if (isset($_REQUEST['refresh_mail'])) {
-		$webmail_reload = true;
-	}
+	$webmail_reload = isset($_REQUEST['refresh_mail']);
+	
 	try {
-		$webmail_list = $webmaillib->refresh_mailbox($user, $accountid, $webmail_reload);
+		$webmail_list = $webmaillib->refresh_mailbox($user, $current['accountId'], $webmail_reload);
 	} catch (Exception $e) {
 		$err = $e->getMessage();
 
@@ -375,7 +374,7 @@ END;
 	if (isset($_REQUEST['delete_one']) || isset($_REQUEST['delete'])) {
 		// Now reopen the mailbox to renumber messages
 		try {
-			$webmail_list = $webmaillib->refresh_mailbox($user, $accountid, true);	// really need a smarter way of caching the whole mailbox...
+			$webmail_list = $webmaillib->refresh_mailbox($user, $current['accountId'], true);	// really need a smarter way of caching the whole mailbox...
 		} catch (Exception $e) {
 			$err = $e->getMessage();
 	
@@ -631,7 +630,7 @@ END;
 
 	$smarty->assign('mailCurrentAccount', $tikilib->get_user_preference($user, 'mailCurrentAccount', 0));
 
-	$smarty->assign('accountId', $_REQUEST['accountId']);
+	$smarty->assign('accountId', empty($_REQUEST['accountId']) ? 0 : $_REQUEST['accountId']);
 
 
 	if ($_REQUEST['accountId']) {
@@ -915,6 +914,35 @@ if ($_REQUEST['locSection'] == 'contacts') {
 	if (!isset($_REQUEST['contactId'])) {
 		$_REQUEST['contactId'] = 0;
 	}
+
+	if ($prefs['feature_jquery']) {
+		$deleteTitle = tra('Delete');
+		$deleteConfirm = tra('Are you sure you want to delete this contact?');
+		$js = <<< END
+
+// validate edit/add form
+\$jq('[name=contacts]').submit(function() {
+	if (!\$jq('[name=firstName]').val() &&
+		!\$jq('[name=lastName]').val() &&
+		!\$jq('[name=email]').val() &&
+		!\$jq('[name=nickname]').val()) {
+		\$jq('[name=firstName]').css('background-color', '#fcc').focus();
+		return false;
+	}
+});
+// confirm deletes
+\$jq('a[title=$deleteTitle]').click(function() {
+	return confirm('$deleteConfirm');
+});
+// open/close account form
+\$jq('#addContactIcon').click(function() {
+	flip(\$jq('#contactsFormDiv').attr('id'));
+}).css("cursor", "pointer");
+
+END;
+		$headerlib->add_jq_onready($js);
+	}
+	
 	$headerlib->add_js('if (webmailTimeoutId) {window.clearTimeout(webmailTimeoutId);}',0);
 	
 	$smarty->assign('contactId', $_REQUEST['contactId']);
@@ -924,10 +952,12 @@ if ($_REQUEST['locSection'] == 'contacts') {
 	} else {
 		$info = array();
 
+		$info['user'] = $user;
 		$info['firstName'] = '';
 		$info['lastName'] = '';
 		$info['email'] = '';
 		$info['nickname'] = '';
+		$info['groups'] = array();
 	}
 
 	$smarty->assign('info', $info);
@@ -939,12 +969,17 @@ if ($_REQUEST['locSection'] == 'contacts') {
 
 	if (isset($_REQUEST['save'])) {
 		check_ticket('webmail');
-		$contactlib->replace_contact($_REQUEST['contactId'], $_REQUEST['firstName'], $_REQUEST['lastName'], $_REQUEST['email'], $_REQUEST['nickname'], $user);
+		if (!isset($_REQUEST['groups'])) {
+			$_REQUEST['groups'] = array();
+		}
+		$contactlib->replace_contact($_REQUEST['contactId'], $_REQUEST['firstName'], $_REQUEST['lastName'], $_REQUEST['email'], $_REQUEST['nickname'], $_REQUEST['user'], $_REQUEST['groups']);
 
+		$info['user'] = $user;
 		$info['firstName'] = '';
 		$info['lastName'] = '';
 		$info['email'] = '';
 		$info['nickname'] = '';
+		$info['groups'] = array();
 		$smarty->assign('info', $info);
 		$smarty->assign('contactId', 0);
 	}
@@ -972,9 +1007,16 @@ if ($_REQUEST['locSection'] == 'contacts') {
 	$smarty->assign('find', $find);
 
 	$smarty->assign_by_ref('sort_mode', $sort_mode);
-
+	
+	// groups
+	//$listgroups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
+	$listgroups = $userlib->get_user_groups_inclusion($user);
+	$other_groups = array_diff($info['groups'],array_keys($listgroups));
+	$smarty->assign('listgroups', array_keys($listgroups) );
+	$smarty->assign('other_groups', $other_groups);
+	
 	if (!isset($_REQUEST['initial'])) {
-		$contacts = $contactlib->list_contacts($user, $offset, $maxRecords, $sort_mode, $find);
+		$contacts = $contactlib->list_contacts($user, $offset, $maxRecords, $sort_mode, $find, true);
 	} else {
 		$contacts = $contactlib->list_contacts_by_letter($user, $offset, $maxRecords, $sort_mode, $_REQUEST['initial']);
 	}
