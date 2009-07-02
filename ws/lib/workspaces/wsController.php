@@ -33,6 +33,7 @@ class ws_gui_controller
 	    $hash = md5($currentTime);
 	    $id = $wslib->init_ws($hash);
 	    $tikilib->set_preference('ws_container', $id);
+	    $tikilib->set_preference('ws_container_name', $hash);
 	    return true;
 	}
 	else

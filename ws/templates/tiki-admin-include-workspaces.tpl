@@ -29,6 +29,7 @@ href="http://dev.tikiwiki.org/workspace">{tr}Workspaces wiki page{/tr}</a>.
 <ul>
 <li>Status: {if $prefs.feature_workspaces eq 'y'} <strong>Workspaces are enabled</strong> {else}<strong>Workspaces are disabled</strong>{/if}</li>
 <li>Workspaces Container Id: {$prefs.ws_container}</li>
+<li>Workspaces Container Name: {$prefs.ws_container_name}</li>
 </ul>
 </div>
 </fieldset>
