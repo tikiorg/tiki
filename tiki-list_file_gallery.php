@@ -436,7 +436,7 @@ if ( isset($_REQUEST['edit']) ) {
 			'show_creator' => $_REQUEST['fgal_list_creator'],
 			'show_author' => $_REQUEST['fgal_list_author'],
 			'subgal_conf' => $_REQUEST['subgal_conf'],
-			'show_last_user' => $_REQUEST['fgal_list_user'],
+			'show_last_user' => $_REQUEST['fgal_list_last_user'],
 			'show_comment' => $_REQUEST['fgal_list_comment'],
 			'show_files' => $_REQUEST['fgal_list_files'],
 			'show_explorer' => ( isset($_REQUEST['fgal_show_explorer']) ? 'y' : 'n' ),
