@@ -13,7 +13,6 @@ include_once ('lib/directory/dirlib.php');
 
 if ($prefs['feature_directory'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_directory");
-
 	$smarty->display("error.tpl");
 	die;
 }
@@ -21,7 +20,6 @@ if ($prefs['feature_directory'] != 'y') {
 if ($tiki_p_admin_directory_cats != 'y') {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied"));
-
 	$smarty->display("error.tpl");
 	die;
 }
@@ -36,7 +34,6 @@ if ($_REQUEST["parent"] == 0) {
 	$parent_name = 'Top';
 } else {
 	$parent_info = $dirlib->dir_get_category($_REQUEST['parent']);
-
 	$parent_name = $parent_info['name'];
 }
 
@@ -48,9 +45,9 @@ $smarty->assign_by_ref('path', $path);
 
 // Remove a relationship
 if (isset($_REQUEST["remove"])) {
-  $area = 'deldirrelated';
-  if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-    key_check($area);
+	$area = 'deldirrelated';
+	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+		key_check($area);
 		$dirlib->dir_remove_related($_REQUEST["parent"], $_REQUEST["categId"]);
 	} else {
 		key_get($area);
@@ -61,7 +58,6 @@ if (isset($_REQUEST["remove"])) {
 if (isset($_REQUEST["update"])) {
 	check_ticket('dir-admin-related');
 	$dirlib->dir_remove_related($_REQUEST["parent"], $_REQUEST["oldcategId"]);
-
 	$dirlib->dir_add_categ_rel($_REQUEST["parent"], $_REQUEST["categId"]);
 }
 
@@ -69,7 +65,6 @@ if (isset($_REQUEST["update"])) {
 if (isset($_REQUEST["add"])) {
 	check_ticket('dir-admin-related');
 	$dirlib->dir_add_categ_rel($_REQUEST["parent"], $_REQUEST["categId"]);
-
 	if (isset($_REQUEST["mutual"]) && $_REQUEST["mutual"] == 'on') {
 		$dirlib->dir_add_categ_rel($_REQUEST["categId"], $_REQUEST["parent"]);
 	}

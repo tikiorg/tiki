@@ -13,7 +13,6 @@ include_once ('lib/directory/dirlib.php');
 
 if ($prefs['feature_directory'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_directory");
-
 	$smarty->display("error.tpl");
 	die;
 }
@@ -21,7 +20,6 @@ if ($prefs['feature_directory'] != 'y') {
 if ($tiki_p_validate_links != 'y') {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied"));
-
 	$smarty->display("error.tpl");
 	die;
 }
@@ -34,9 +32,9 @@ if (isset($_REQUEST["validate"]) && isset($_REQUEST['sites'])) {
 }
 
 if (isset($_REQUEST["remove"])) {
-  $area = 'deldirvalidate';
-  if ($prefs['feature_ticketlib2'] != 'y' or ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])))) {
-    key_check($area);
+	$area = 'deldirvalidate';
+	if ($prefs['feature_ticketlib2'] != 'y' or ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])))) {
+		key_check($area);
 		$dirlib->dir_remove_site($_REQUEST["remove"]);
 	} else {
 		key_get($area);

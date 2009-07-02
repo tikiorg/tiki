@@ -14,7 +14,6 @@ include_once ('lib/directory/dirlib.php');
 
 if ($prefs['feature_directory'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_directory");
-
 	$smarty->display("error.tpl");
 	die;
 }
@@ -22,7 +21,6 @@ if ($prefs['feature_directory'] != 'y') {
 if ($tiki_p_view_directory != 'y') {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied"));
-
 	$smarty->display("error.tpl");
 	die;
 }

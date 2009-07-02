@@ -41,12 +41,10 @@ if ($output["data"]=="EMPTY") {
 	$descId = "description";
 	$dateId = "created";
 	$readrepl = "tiki-directory_redirect.php?$id=%s";
-
-        $tmp = $prefs['title_rss_'.$feed];
-        if ($tmp<>'') $title = $tmp;
-        $tmp = $prefs['desc_rss_'.$feed];
-        if ($desc<>'') $desc = $tmp;
-
+	$tmp = $prefs['title_rss_'.$feed];
+	if ($tmp<>'') $title = $tmp;
+	$tmp = $prefs['desc_rss_'.$feed];
+	if ($desc<>'') $desc = $tmp;
 	$changes = $tikilib->dir_list_all_valid_sites2(0, $prefs['max_rss_directories'], $dateId.'_desc', '');
 	$output = $rsslib->generate_feed($feed, $uniqueid, '', $changes, $readrepl, '', $id, $title, $titleId, $desc, $descId, $dateId, '');
 }
