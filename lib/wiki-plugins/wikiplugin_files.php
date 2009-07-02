@@ -140,6 +140,11 @@ function wikiplugin_files($data, $params) {
 	if (isset($categId) && strstr($categId, ':')) {
 		$categId = explode(':', $categId);
 	}
+	static $iplugin = 0;
+	++$iplugin;
+	if (isset($_REQUEST["wp_files_sort_mode$iplugin"])) {
+		$sort = $_REQUEST["wp_files_sort_mode$iplugin"];
+	}
 	if (!isset($sort))
 		$sort = 'name_asc';
 	if (isset($galleryId)) {
@@ -186,7 +191,7 @@ function wikiplugin_files($data, $params) {
 		}
 	} elseif (isset($categId)) {
 		// galls of this category
-		$objects = $categlib->list_category_objects($categId, 0, -1, $sort, 'file gallery');
+		$objects = $categlib->list_category_objects($categId, 0, -1, 'itemId_asc', 'file gallery');
 		// get the files of the gallery
 		foreach ($objects['data'] as $og) {
 			$gal_info = $tikilib->get_file_gallery($og['itemId']);
@@ -220,7 +225,7 @@ function wikiplugin_files($data, $params) {
 			}
 		}
 		// files from this categ
-		$objects = $categlib->list_category_objects($categId, 0, -1, $sort, 'file');
+		$objects = $categlib->list_category_objects($categId, 0, -1, 'itemId_asc', 'file');
 		foreach ($objects['data'] as $of) {
 			$info = $filegallib->get_file_info($of['itemId']);
 			$gal_info = $tikilib->get_file_gallery($info['galleryId']);
@@ -291,6 +296,7 @@ function wikiplugin_files($data, $params) {
 		$showfind = 'n';
 	}
 	$smarty->assign_by_ref('show_find', $showfind);
+	$smarty->assign('sort_arg', "wp_files_sort_mode$iplugin");
 	return '~np~'.$smarty->fetch('wiki-plugins/wikiplugin_files.tpl').'~/np~';
 }
 ?>
