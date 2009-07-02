@@ -37,9 +37,10 @@ if (isset($module_params["submit"])) {
 if (isset($module_params["size"])) {
 	$size = $module_params["size"];
 	$smarty->assign('size', $size);
-}/* else {
-	$size = 15;
-}*/
+} else {
+	$module_params["size"] = '';
+	$smarty->assign('size', 15);;
+}
 if (isset($module_params["mod_quickedit_heading"])) {
 	$mod_quickedit_heading = $module_params["mod_quickedit_heading"];
 } else {
