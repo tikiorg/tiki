@@ -34,9 +34,4 @@ if(isset($user)) {
 }
 $smarty->assign_by_ref('userGroups', $userGroups);
 $smarty->assign_by_ref('chooseGroups', $chooseGroups);
-$tikilib->debug("user: $user",$debug,"green");
-$tikilib->debug("userGroups",$debug,"green");
-$tikilib->debug_r($userGroups,$debug,"green");
-$tikilib->debug("chooseGroups",$debug,"green");
-$tikilib->debug_r($chooseGroups,$debug,"green");
 
