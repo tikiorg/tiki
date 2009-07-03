@@ -49,6 +49,8 @@
 {if $presend eq 'y'}
 	{remarksbox type='warning' title="{tr}Please Confirm{/tr}"}
 		<b>{tr}This newsletter will be sent to {$subscribers} email addresses.{/tr}</b>
+		<br />
+		{tr}Reply to:{/tr} {if empty($replyto)}{$prefs.sender_email|escape} ({tr}default{/tr}){else}{$replyto|escape}{/if}
 	{/remarksbox}
 	<p>
 		<form method="post" action="tiki-send_newsletters.php">
@@ -88,10 +90,6 @@
 			</li>
 		{/foreach}
 	</ul>
-	{if !empty($replyto)}
-		<h3>{tr}Reply to{/tr}</h3>
-		{$replyto|escape}
-	{/if}
 {else}
 	{if $preview eq 'y'}
 		<h2>{tr}Preview{/tr}</h2>
@@ -115,10 +113,6 @@
 				</li>
 			{/foreach}
 		</ul>
-		{if !empty($replyto)}
-			<h3>{tr}Reply to{/tr}</h3>
-			{$replyto|escape}
-		{/if}
 	{/if}
 
 {tabset name='tabs_send_newsletters'}
