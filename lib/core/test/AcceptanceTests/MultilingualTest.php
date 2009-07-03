@@ -26,6 +26,12 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
        	$this->assertLanguagePicklistHasLanguages(array('English' => 'Multilingual Test Page 1', 
                                                     'Français' => 'Page de test multilingue 1'));                                                    
     }
+
+    public function testSwitchBetweenLanguages() {
+       $this->openTikiPage('tiki-index.php?page=Multilingual+Test+Page+1');
+       $this->doSwitchLanguageTo('Français');
+       $this->fail("Need to check that this indeed moves to the French page.");
+    }
     
   	
   	public function testLanguageLinkLeadsToTranslatedPageInThatLanguage() {
@@ -204,6 +210,9 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
                   "Language picklist was wrong. It should have contained ".$this->implode_with_key(",", $expAvailableLanguages)." but didn't.");           
     }
     
+    public function doSwitchLanguageTo($language) {
+       $this->click("xpath=//form[@id='available-languages-form']/select[@name='page' and option='English']");
+    }   
     public function assertLanguagePicklistDoesNotHaveLanguages($expAvailableLanguages) {
     	$this->assertSelectElementDoesNotContainItems("xpath=//select[@name='page' and @onchange='quick_switch_language( this )']",
                   $expAvailableLanguages, 
