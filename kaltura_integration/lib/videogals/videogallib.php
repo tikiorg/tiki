@@ -43,50 +43,28 @@ class VideoGalsLib extends TikiLib {
 
 	function edit_video($id, $name, $description, $tags) {
 		global $prefs;
-
 		$entry = new KalturaEntry();
 		$entry->name= $name;
 		$entry->description = $description;
 		$entry->tags = $tags;
-
+		$entry->galleryId = "1";
         $entry_id = $this->get_entry_from_video($id);
 
 		$kaltura_conf = kaltura_init_config();
 		$kuser = new KalturaSessionUser();
 		$kuser->userId = "123";
 		$kaltura_client = new KalturaClient($kaltura_conf);
-
-		$kres = $kaltura_client->start($kuser, $kaltura_conf->secret);
-
+		$kres = $kaltura_client->start($kuser, $kaltura_conf->secret,'',"edit:*",'');
 		$kres= $kaltura_client->updateEntry($kuser , $entry_id, $entry);
-
 		return true;
 	}
 
-	function insert_image($galleryId, $name, $description, $filename, $filetype, &$data, $size, $xsize, $ysize, $user, $t_data, $t_type ,$lat=NULL, $lon=NULL, $gal_info=NULL) {
+	function insert_video($galleryId, $entryId, $user) {
 		global $prefs;
-
-	}
-
-	function notify($imageId, $galleryId, $name, $filename, $description, $galleryName, $user) {
-		global $prefs;
-		if ($prefs['feature_user_watches'] == 'y') {
-			include_once('lib/notifications/notificationemaillib.php');
-			global $smarty, $tikilib;
-			$nots = $this->get_event_watches('image_gallery_changed', $galleryId);
-			$smarty->assign_by_ref('galleryId', $galleryId);
-			$smarty->assign_by_ref('galleryName', $galleryName);
-			$smarty->assign_by_ref('mail_date', date('U'));
-			$smarty->assign_by_ref('author', $user);
-			$foo = parse_url($_SERVER["REQUEST_URI"]);
-			$machine = $tikilib->httpPrefix(). dirname( $foo["path"] );
-			$smarty->assign_by_ref('mail_machine', $machine);
-			$smarty->assign_by_ref('fname', $name);
-			$smarty->assign_by_ref('filename', $filename);
-			$smarty->assign_by_ref('description', $description);
-			$smarty->assign_by_ref('imageId', $imageId);
-			sendEmailNotification($nots, 'watch', 'user_watch_image_gallery_changed_subject.tpl', NULL, 'user_watch_image_gallery_upload.tpl');
-		}
+	$query = "insert into `tiki_videos`(`galleryId`,`entryId`,`creator`,`last_user`) values (?,?,?,?)";
+	$result = $this->query($query,array((int)$galleryId,$entryId,$user,$user));
+	$res = $this->get_video_from_entry($entryId);
+	return $res;
 	}
 
 	function remove_video($id) {
@@ -137,9 +115,23 @@ class VideoGalsLib extends TikiLib {
 		while ($res = $result->fetchRow()) {
 
 			$kres = $kaltura_client->getEntry ( $kuser , $res['entryId']);
-			$ret[]= array_merge($res,$kres['result']['entry']);
-
-
+			$temp = array(
+			'id'=> $res['videoId'],
+			'entryId'=> $res['entryId'],
+			'name' => $kres['result']['entry']['name'], 
+			'description' => $kres['result']['entry']['description'], 
+			'size' =>  $kres['result']['entry']['duration'],
+			'created' =>  $kres['result']['entry']['createdAtAsInt'],
+			'creator' => 'admin', 
+			'hits' => $kres['result']['entry']['views'], 
+			'lastmodif' => $kres['result']['entry']['modifiedAt'], 
+			'last_user' => $res['last_user'],  
+			'visible' =>'', 
+			'public' => '',
+			'galleryId' => $galleryId
+			);
+			//$ret[]= array_merge($res,$kres['result']['entry']);
+		$ret[]= $temp;
 		}
 
 		$retval = array();
@@ -200,7 +192,7 @@ class VideoGalsLib extends TikiLib {
    print "Code for Sorting the list not completed";
 
 	if (!$sort_mode) {
-    				// first image in default gallery sortorder
+
     	$query2='select `sortorder`,`sortdirection` from `tiki_galleries_video` where `galleryId`=?';
     	$result=$this->query($query2,(int)$galleryId);
     	$res = $result->fetchRow();
@@ -217,251 +209,6 @@ class VideoGalsLib extends TikiLib {
 
 			return($videoId);
 	}
-
-
-
-	function get_gallery_image($galleryId,$rule='',$sort_mode = '') {
-		$query='select i.`imageId` from `tiki_videos` i, `tiki_videos_data` d
-                 where i.`imageId`=d.`imageId` and i.`galleryId`=? and d.`type`=? order by ';
-		/* if sort by filesize while browsing images it needs to be read from tiki_image_data table */
-
-		if ($sort_mode == 'filesize_asc' || $sort_mode == 'filesize_desc') {
-			$query.='d.';
-		} else {
-			$query.='i.';
-		}
-		$bindvars=array($galleryId,'o');
-		switch($rule) {
-			case 'firstu':
-				// first uploaded
-				$query.=$this->convert_sortmode('created_asc');
-				$imageId=$this->getOne($query,$bindvars);
-				break;
-			case 'lastu':
-				// last uploaded
-				$query.=$this->convert_sortmode('created_desc');
-				$imageId=$this->getOne($query,$bindvars);
-				break;
-			case 'all':
-			case 'first':
-			    if (!$sort_mode) {
-    				// first image in default gallery sortorder
-    				$query2='select `sortorder`,`sortdirection` from `tiki_galleries_video` where `galleryId`=?';
-    				$result=$this->query($query2,$bindvars);
-    				$res = $result->fetchRow();
-    				$sort_mode=$res['sortorder'].'_'.$res['sortdirection'];
-				}
-				$query.=$this->convert_sortmode($sort_mode);
-				if ($rule != 'all') {
-    				$imageId=$this->getOne($query,$bindvars);
-    				break;
-				}
-				$result=$this->query($query,$bindvars);
-				$imageId=array();
-    			while ($res = $result->fetchRow()) {
-    				$imageId[]=reset($res);
-    			}
-				break;
-			case 'last':
-			    if ($sort_mode) {
-			        $invsor = explode('_', $sort_mode);
-			        $sort_mode = $invsor[0] . '_' . ($invsor[1] == 'asc' ? 'desc' : 'asc');
-			    } else {
-    				// last image in default gallery sortorder
-    				$query2='select `sortorder`,`sortdirection` from `tiki_galleries_video` where `galleryId`=?';
-    				$result=$this->query($query2,$bindvars);
-    				$res = $result->fetchRow();
-    				if($res['sortdirection'] == 'asc') {
-    					$res['sortdirection']='desc';
-    				} else {
-    					$res['sortdirection']='asc';
-    				}
-    				$sort_mode=$res['sortorder'].'_'.$res['sortdirection'];
-				}
-				$query.=$this->convert_sortmode($sort_mode);
-				$imageId=$this->getOne($query,$bindvars);
-				break;
-			case 'random':
-				//random image of gallery
-				$ret=$this->get_random_image($galleryId);
-				$imageId=$ret['imageId'];
-				break;
-			case 'default':
-				//check gallery settings and re-run this function
-				$query='select `galleryimage` from `tiki_galleries_video` where `galleryId`=?';
-				$rule=$this->getOne($query,array($galleryId));
-				$imageId=$this->get_gallery_image($galleryId,$rule);
-				break;
-			default:
-				// imageId is listed in gallery settings
-				if (is_numeric($rule)) {
-					$imageId=(int) $rule;
-				} else {
-					// unknown.
-					$imageId=-1;
-				}
-				break;
-			}
-			return($imageId);
-	}
-
-	function get_prev_and_next_image($sort_mode, $find, $imageId, $galleryId = -1) {
-
-		if ($find) {
-			$findesc = '%' . $find . '%';
-
-			$mid = " and (`name` like ? or `description` like ?)";
-			$bindvars=array('o',$findesc,$findesc);
-		} else {
-			$mid = "";
-			$bindvars=array('o');
-		}
-
-		$midcant = "";
-		$cantvars=array();
-
-		if ($galleryId != -1 && is_numeric($galleryId)) {
-			$mid .= " and i.`galleryId`=? ";
-			$bindvars[]=(int)$galleryId;
-			$midcant = "where `galleryId`=? ";
-			$cantvars[]=(int)$galleryId;
-		}
-
-		$query = "select i.`imageId`
-                from `tiki_videos` i , `tiki_videos_data` d
-                 where i.`imageId`=d.`imageId`
-                 and d.`type`=?
-                $mid
-                order by ";
-        /* if sort by filesize while browsing images it needs to be read from tiki_image_data table */
-		if ($sort_mode == 'filesize_asc' || $sort_mode == 'filesize_desc') {
-			$query.='d.';
-		} else {
-			$query.='i.';
-		}
-        $query .= $this->convert_sortmode($sort_mode);
-		$result = $this->query($query,$bindvars);
-		$prev=-1; $next=0; $tmpid=0;
-		while ($res = $result->fetchRow()) {
-		        if ($imageId == $res['imageId']) {
-		                $prev=$tmpid;
-		        } else if ($prev >= 0) { // $prev is set, so, this one is the next
-		                $next=$res['imageId'];
-		                break;
-		        }
-		        $tmpid=$res['imageId'];
-		}
-		return array('prev' => ($prev > 0 ? $prev : 0), 'next' => $next);
-	}
-
-	function get_first_image($sort_mode, $find, $galleryId = -1) {
-
-		if ($find) {
-			$findesc = '%' . $find . '%';
-
-			$mid = " and (`name` like ? or `description` like ?)";
-			$bindvars=array('o',$findesc,$findesc);
-		} else {
-			$mid = "";
-			$bindvars=array('o');
-		}
-
-		$midcant = "";
-		$cantvars=array();
-
-		if ($galleryId != -1 && is_numeric($galleryId)) {
-			$mid .= " and i.`galleryId`=? ";
-			$bindvars[]=(int)$galleryId;
-			$midcant = "where `galleryId`=? ";
-			$cantvars[]=(int)$galleryId;
-		}
-
-		$query = "select i.`imageId`
-                from `tiki_videos` i , `tiki_videos_data` d
-                 where i.`imageId`=d.`imageId`
-                 and d.`type`=?
-                $mid
-                order by ".$this->convert_sortmode($sort_mode);
-		$result = $this->query($query,$bindvars,1,0);
-		$res = $result->fetchRow();
-		return $res['imageId'];
-	}
-
-	function get_last_image($sort_mode, $find, $galleryId = -1) {
-		if (strstr($sort_mode, 'asc')) {
-			$sort_mode = str_replace('asc', 'desc', $sort_mode);
-		} else {
-			$sort_mode = str_replace('desc', 'asc', $sort_mode);
-		}
-
-		if ($find) {
-			$findesc = '%' . $find . '%';
-
-			$mid = " and (`name` like ? or `description` like ?)";
-			$bindvars=array('o',$findesc,$findesc);
-		} else {
-			$mid = "";
-			$bindvars=array('o');
-		}
-
-		$midcant = "";
-		$cantvars=array();
-
-		if ($galleryId != -1 && is_numeric($galleryId)) {
-                        $mid .= " and i.`galleryId`=? ";
-                        $bindvars[]=(int)$galleryId;
-                        $midcant = "where `galleryId`=? ";
-                        $cantvars[]=(int)$galleryId;
-		}
-
-		$query = "select i.`imageId`
-                from `tiki_videos` i , `tiki_videos_data` d
-                 where i.`imageId`=d.`imageId`
-                 and d.`type`=?
-                $mid
-                order by ".$this->convert_sortmode($sort_mode);
-		$result = $this->query($query,$bindvars,1,0);
-		$res = $result->fetchRow();
-		return $res['imageId'];
-	}
-
-	function list_images($offset, $maxRecords, $sort_mode, $find, $galleryId = -1) {
-		return $this->get_images($offset, $maxRecords, $sort_mode, $find, $galleryId);
-	}
-
-    function get_random_image($galleryId = -1) {
-	$whgal = "";
-	$bindvars = array();
-	if (((int)$galleryId) != -1) {
-	    $whgal = " where `galleryId`=? ";
-	    $bindvars[] = (int) $galleryId;
-	}
-
-	$query = "select count(*) from `tiki_videos` $whgal";
-	$cant = $this->getOne($query,$bindvars);
-	$ret = array();
-
-	if ($cant) {
-	    $pick = rand(0, $cant - 1);
-
-	    $query = "select `imageId` ,`description`, `galleryId`,`name` from `tiki_videos` $whgal";
-	    $result = $this->query($query,$bindvars,1,$pick);
-	    $res = $result->fetchRow();
-	    $ret["galleryId"] = $res["galleryId"];
-	    $ret["imageId"] = $res["imageId"];
-	    $ret["name"] = $res["name"];
-	    $ret["description"] = $res["description"];
-	    $query = "select `name`  from `tiki_galleries_video` where `galleryId` = ?";
-	    $ret["gallery"] = $this->getOne($query,array((int)$res["galleryId"]));
-	} else {
-	    $ret["galleryId"] = 0;
-
-	    $ret["imageId"] = 0;
-	    $ret["name"] = tra("No image yet, sorry.");
-	}
-
-	return ($ret);
-    }
 
 	function list_galleries($offset = 0, $maxRecords = -1, $sort_mode = 'name_desc', $user, $find=false) {
 	    // If $user is admin then get ALL galleries, if not only user galleries are shown
@@ -660,9 +407,14 @@ class VideoGalsLib extends TikiLib {
 
 	function get_entry_from_video($videoid) {
 		$query = "select `entryId` from `tiki_videos` where `videoId`=?";
-
 		$entid = $this->getOne($query,array((int)$videoid));
 		return $entid;
+	}
+	
+	function get_video_from_entry($entryid) {
+		$query = "select `videoId` from `tiki_videos` where `entryId`=?";
+		$vidid = $this->getOne($query,array($entryid));
+		return $vidid;
 	}
 	function move_video($vidId, $galId) {
 		$query = "update `tiki_videos` set `galleryId`=? where `videoId`=?";
@@ -674,7 +426,7 @@ class VideoGalsLib extends TikiLib {
 	function get_video_info($id) {
 
 
-		$query = "select `entryId`,`galleryId`
+		$query = "select `videoId`,`entryId`,`galleryId`
                  from `tiki_videos` where
                      `videoId`=?";
 
@@ -687,11 +439,30 @@ class VideoGalsLib extends TikiLib {
 		$kaltura_client = new KalturaClient($kaltura_conf);
 
 		$kres = $kaltura_client->start($kuser, $kaltura_conf->secret);
+		$kres= $kaltura_client->getEntry ( $kuser , $res['entryId'],1);
+		$temp = array(
+			'id'=> $res['videoId'],
+			'galleryId'=> $res['galleryId'],
+			'entryId'=> $res['entryId'],
+			'name' => $kres['result']['entry']['name'], 
+			'description' => $kres['result']['entry']['description'], 
+			'tags' => $kres['result']['entry']['tags'], 
+			'size' =>  $kres['result']['entry']['duration'],
+			'created' =>  $kres['result']['entry']['createdAtAsInt'],
+			'creator' => 'admin', 
+			'hits' => $kres['result']['entry']['views'], 
+			'lastmodif' => $kres['result']['entry']['modifiedAt'], 
+			'last_user' => $res['last_user'],  
+			'thumbnail' => $kres['result']['entry']['thumbnailUrl']
+			);
 
-		$kres= $kaltura_client->getEntry ( $kuser , $res[entryId],1);
-
-		$res = array_merge($res,$kres['result']['entry'] );
-		return $res;
+		$ret = $temp;
+/*		
+		$ret = array();
+		$ret['name']='123Kaltura';
+		$ret['description']='test file';
+		$ret = array_merge($ret,$res );*/
+		return $ret;
 	}
 
 	function replace_gallery($galleryId, $name, $description, $theme, $user, $maxRows, $rowVideos, $thumbSizeX, $thumbSizeY, $public, $visible = 'y', $sortorder='created', $sortdirection='desc',

@@ -38,6 +38,7 @@ class KalturaEntry
 	var $licenseType;
 	var $credit;
 	var $groupId;
+	var $galleryId;
 	var $partnerData;
 	var $conversionQuality;
 	var $permissions;
