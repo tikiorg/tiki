@@ -59,7 +59,24 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapperTest extends TikiTes
    	  $this->assertEquals(trim(str_repeat("Niente al mondo è mai completamente sbagliato; fermato anche un orologio è giusto due volte al giorno. ",24)), $translation, "The translation was not correct for text of 1800 chars.");
    }
 
+   public function test_This_is_how_you_translate_some_text2() {
+   	  $text = "split";
+   	  $translation = $this->translator->translateText($text);
+   	  $this->assertEquals("dividere", $translation, "The translation was not correct for text: $text.");
+   }
+
+//   public function test_This_is_how_you_tell_Google_not_to_translate_some_wiki_plugin_markup() {
+//   	  $text = "<span class='notranslate'>{SPLIT}</span>";
+//   	  $translation = $this->translator->translateText($text);
+//   	  $this->assertEquals("<span class='notranslate'>{SPLIT}</span>", $translation, "The translation was not correct for text: $text.");
+//   }
    
 
+//TODO: test all possible wiki markup
+   public function test_This_is_how_you_tell_Google_not_to_translate_some_wiki_syntax() {
+   	  $text = "===Hello===";
+   	  $translation = $this->translator->translateText($text);
+   	  $this->assertEquals("===Ciao===", $translation, "The translation was not correct for text: $text.");
+   }
+
 }
-?>

@@ -274,6 +274,13 @@ if (isset($_REQUEST["save"])) {
 	} else {
 		$tracker_options['autoCreateGroup'] = 'n';
 	}
+	if (isset($_REQUEST['autoAssignGroupItem'])
+		&& ($_REQUEST['autoAssignGroupItem'] == 'on'
+			or $_REQUEST['autoAssignGroupItem'] == 'y')) {
+		$tracker_options['autoAssignGroupItem'] = 'y';
+	} else {
+		$tracker_options['autoAssignGroupItem'] = 'n';
+	}
 	if (isset($_REQUEST['autoAssignCreatorGroup'])
 		&& ($_REQUEST['autoAssignCreatorGroup'] == 'on'
 			or $_REQUEST['autoAssignCreatorGroup'] == 'y')) {
@@ -307,6 +314,11 @@ if (isset($_REQUEST["save"])) {
 		$tracker_options['autoCreateGroupInc'] = 0;
 	} else {
 		$tracker_options['autoCreateGroupInc'] = $_REQUEST['autoCreateGroupInc'];
+	}
+	if (empty($_REQUEST['autoCopyGroup'])) {
+		$tracker_options['autoCopyGroup'] = 0;
+	} else {
+		$tracker_options['autoCopyGroup'] = $_REQUEST['autoCopyGroup'];
 	}
 	if (isset($_REQUEST["defaultStatus"])
 		&& $_REQUEST["defaultStatus"]) {
@@ -458,6 +470,7 @@ $info['end'] = 0;
 $info['autoCreateCategories']='';
 $info['autoCreateGroup'] = '';
 $info['autoCreateGroupInc'] = 0;
+$info['autoAssignGroupItem'] = '';
 
 if ($_REQUEST["trackerId"]) {
 	$info = array_merge($info,$tikilib->get_tracker($_REQUEST["trackerId"]));
@@ -611,5 +624,3 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 // Display the template
 $smarty->assign('mid', 'tiki-admin_trackers.tpl');
 $smarty->display("tiki.tpl");
-
-?>

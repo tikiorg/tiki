@@ -132,7 +132,8 @@
 * html .cssmenu li ul a {background: none}
 
 div#col2,
-td#leftcolumn {overflow: visible !important}
+td#leftcolumn,
+div.cssmenubox {overflow: visible !important}
 
 .box-data .cssmenu_vert {z-index: 750}
 

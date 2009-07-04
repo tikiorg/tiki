@@ -103,9 +103,11 @@ if ($tiki_p_create_tracker_items == 'y' && !empty($t['end'])) {
 }
 
 if ($tiki_p_view_trackers != 'y') {
-	if ($user && !$my and isset($tracker_info['writerCanModify']) and $tracker_info['writerCanModify'] == 'y') {
+	$userCreatorFieldId = $trklib->get_field_id_from_type($_REQUEST['trackerId'], 'u', '1%');
+	$groupCreatorFieldId = $trklib->get_field_id_from_type($_REQUEST['trackerId'], 'g', '1%');
+	if ($user && !$my and isset($tracker_info['writerCanModify']) and $tracker_info['writerCanModify'] == 'y' and !empty($userCreatorFieldId)) {
 		$my = $user;
-	} elseif ($user && !$ours and isset($tracker_info['writergroupCanModify']) and $tracker_info['writergroupCanModify'] == 'y') {
+	} elseif ($user && !$ours and isset($tracker_info['writerGroupCanModify']) and $tracker_info['writerGroupCanModify'] == 'y' and !empty($groupCreatorFieldId) ) {
 		$ours = $group;
 	} elseif ($tiki_p_create_tracker_items != 'y') {
 		$smarty->assign('errortype', 401);
@@ -516,23 +518,41 @@ if ($textarea_options) {
 	$smarty->assign_by_ref('quicktags', $quicktags["data"]);
 }
 
-if (($tiki_p_admin_trackers == 'y' or $tiki_p_modify_tracker_items == 'y') and isset($_REQUEST["remove"])) {
-  $area = 'deltrackeritem';
-  if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-    key_check($area);
-		$trklib->remove_tracker_item($_REQUEST["remove"]);
-  } else {
-    key_get($area);
-  }
-} elseif (($tiki_p_admin_trackers == 'y' or $tiki_p_modify_tracker_items == 'y') and isset($_REQUEST["batchaction"]) and $_REQUEST["batchaction"] == 'delete') {
+if (!empty($_REQUEST['remove'])) {
+	$item_info = $trklib->get_item_info($_REQUEST['remove']);
+	if ($tiki_p_admin_trackers == 'y'
+		|| ($tiki_p_modify_tracker_items == 'y' && $item_info['status'] != 'p' && $item_info['status'] != 'c')
+		|| ($tiki_p_modify_tracker_items_pending == 'y' && $item_info['status'] == 'p')
+		|| ($tiki_p_modify_tracker_items_closed == 'y' && $item_info['status'] == 'c')) {
+		$area = 'deltrackeritem';
+		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+			key_check($area);
+			$trklib->remove_tracker_item($_REQUEST['remove']);
+		} else {
+			key_get($area);
+		}
+	}
+} elseif (isset($_REQUEST["batchaction"]) and $_REQUEST["batchaction"] == 'delete') {
 	check_ticket('view-trackers');
 	foreach ($_REQUEST['action'] as $batchid) {
-		$trklib->remove_tracker_item($batchid);
+		$item_info = $trklib->get_item_info($batchid);
+		if ($tiki_p_admin_trackers == 'y'
+			|| ($tiki_p_modify_tracker_items == 'y' && $item_info['status'] != 'p' && $item_info['status'] != 'c')
+			|| ($tiki_p_modify_tracker_items_pending == 'y' && $item_info['status'] == 'p')
+			|| ($tiki_p_modify_tracker_items_closed == 'y' && $item_info['status'] == 'c')) {
+			$trklib->remove_tracker_item($batchid);
+		}
 	}
-} elseif (($tiki_p_admin_trackers == 'y' or $tiki_p_modify_tracker_items == 'y') and isset($_REQUEST['batchaction']) and ($_REQUEST['batchaction'] == 'o' || $_REQUEST['batchaction'] == 'p' || $_REQUEST['batchaction'] == 'c')) {
-check_ticket('view-trackers');
+} elseif (isset($_REQUEST['batchaction']) and ($_REQUEST['batchaction'] == 'o' || $_REQUEST['batchaction'] == 'p' || $_REQUEST['batchaction'] == 'c')) {
+	check_ticket('view-trackers');
 	foreach ($_REQUEST['action'] as $batchid) {
-		$trklib->replace_item($_REQUEST['trackerId'], $batchid, array('data'=>''), $_REQUEST['batchaction']);
+		$item_info = $trklib->get_item_info($batchid);
+		if ($tiki_p_admin_trackers == 'y'
+			|| ($tiki_p_modify_tracker_items == 'y' && $item_info['status'] != 'p' && $item_info['status'] != 'c')
+			|| ($tiki_p_modify_tracker_items_pending == 'y' && $item_info['status'] == 'p')
+			|| ($tiki_p_modify_tracker_items_closed == 'y' && $item_info['status'] == 'c')) {
+			$trklib->replace_item($_REQUEST['trackerId'], $batchid, array('data'=>''), $_REQUEST['batchaction']);
+		}
 	}
 }
 
@@ -711,7 +731,7 @@ if ($my and $writerfield) {
 	$filtervalue = '';
 	$_REQUEST['status'] = 'opc';
 } elseif ($ours and $writergroupfield) {
-	$exactvalue = $ours;
+	$exactvalue = $userlib->get_user_groups($user);
 	$filtervalue = '';
 	$_REQUEST['status'] = 'opc';
 } else {
@@ -878,5 +898,3 @@ ask_ticket('view-trackers');
 // Display the template
 $smarty->assign('mid', 'tiki-view_tracker.tpl');
 $smarty->display("tiki.tpl");
-//echo "<!-- ";var_dump($filtervalue); echo " -->";
-?>

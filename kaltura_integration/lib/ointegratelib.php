@@ -370,5 +370,3 @@ class OIntegrate_Converter_TikiToHtml implements OIntegrate_Converter // {{{
 		return $tikilib->parse_data( htmlentities( $content, ENT_QUOTES, 'UTF-8' ) );
 	}
 } // }}}
-
-?>

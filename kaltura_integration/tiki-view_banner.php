@@ -18,7 +18,6 @@ if (!isset($bannerlib)) {
 
 if ($prefs['feature_banners'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_banners");
-
 	$smarty->display("error.tpl");
 	die;
 }
@@ -26,7 +25,6 @@ if ($prefs['feature_banners'] != 'y') {
 // CHECK FEATURE BANNERS AND ADMIN PERMISSION HERE
 if (!isset($_REQUEST["bannerId"])) {
 	$smarty->assign('msg', tra("No banner indicated"));
-
 	$smarty->display("error.tpl");
 	die;
 }
@@ -35,7 +33,6 @@ $info = $bannerlib->get_banner($_REQUEST["bannerId"]);
 
 if (!$info) {
 	$smarty->assign('msg', tra("Banner not found"));
-
 	$smarty->display("error.tpl");
 	die;
 }
@@ -44,7 +41,6 @@ if (!$info) {
 if (($user != $info["client"]) && ($tiki_p_admin_banners != 'y')) {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to edit this banner"));
-
 	$smarty->display("error.tpl");
 	die;
 }
@@ -115,7 +111,6 @@ if ($fp = @fopen($tikilib->httpPrefix(). $foo1 . "?id=$bannerId", "r")) {
 	while (!feof($fp)) {
 		$raw .= fread($fp, 8192);
 	}
-
 	fclose ($fp);
 }
 
@@ -125,5 +120,3 @@ ask_ticket('view-banner');
 
 $smarty->assign('mid', 'tiki-view_banner.tpl');
 $smarty->display("tiki.tpl");
-
-?>

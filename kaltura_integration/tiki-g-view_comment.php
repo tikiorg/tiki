@@ -42,5 +42,3 @@ $smarty->assign('timestamp',$_REQUEST['__timestamp']);
 $smarty->assign('jPrint',"print();");
 $smarty->assign('jClose',"window.close();");
 $smarty->display("tiki-g-view_comment.tpl");
-
-?>

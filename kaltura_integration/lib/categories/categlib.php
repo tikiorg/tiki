@@ -322,6 +322,7 @@ class CategLib extends ObjectLib {
 			 'file gallery' => 'tiki_p_view_file_gallery',
 			 'tracker' => 'tiki_p_view_trackers',
 			 'blog' => 'tiki_p_read_blog',
+			 'blog post' => 'tiki_p_read_blog',
 			 'quiz' => 'tiki_p_take_quiz',
 
 			 // overhead - we are checking individual permission on types below, but they
@@ -515,11 +516,11 @@ class CategLib extends ObjectLib {
 			$parents = $this->get_object_categories("$type", $itemId);
 			$return_perms = array(); // initialize array for storing perms to be returned
 
-			if (!$cachelib->isCached("categories_permission_names")) {
+			if (!$cachelib->isCached("category_permission_names")) {
 				$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'category');
-				$cachelib->cacheItem("categories_permission_names",serialize($perms));
+				$cachelib->cacheItem("category_permission_names",serialize($perms));
 			} else {
-				$perms = unserialize($cachelib->getCached("categories_permission_names"));
+				$perms = unserialize($cachelib->getCached("category_permission_names"));
 			}
 
 			$permission_names = array();
@@ -1078,9 +1079,7 @@ class CategLib extends ObjectLib {
 					}
 				}
 				$smarty->assign('catp',array_reverse($catp,true));
-				// hard coded line break removed and span.categpath defined as display:block in transitions/2.0to3.0.css
-				// to preserve previous behaviour (all aligned left on separate lines)
-				$catpath.= $smarty->fetch('categpath.tpl');
+				$catpath .= $smarty->fetch('categpath.tpl');
 			}
 			return $catpath;
     }
@@ -1491,6 +1490,15 @@ class CategLib extends ObjectLib {
 	function update_object_categories($categories, $objId, $objType, $desc='', $name='', $href='') {
 		global $prefs, $user;
 		$old_categories = $this->get_object_categories($objType, $objId);
+		
+		//Dirty hack to remove the Slash at the end of the ID (Why is there a slash?! Bug is reportet.)
+		if (!empty($categories)) {
+			foreach($categories as $key=>$category) {
+				if($category{strlen($category)-1}=="/")
+					$categories[$key]=substr($category, 0, -1);
+			}
+		}
+		
 		// need to prevent categories where user has no perm (but is set by other users with perm) to be wiped out
 		if ($prefs['feature_category_reinforce'] == "n") {
 			foreach ($old_categories as $old_cat) {
@@ -1552,10 +1560,5 @@ class CategLib extends ObjectLib {
 	}
 	
 }
-
-
-
 global $dbTiki;
 $categlib = new CategLib($dbTiki);
-
-?>

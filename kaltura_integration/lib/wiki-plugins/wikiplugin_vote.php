@@ -145,5 +145,3 @@ function wikiplugin_vote($data, $params) {
 	$smarty->assign('date', $tikilib->now);
 	return $smarty->fetch('wiki-plugins/wikiplugin_vote.tpl');
 }
-
-?>

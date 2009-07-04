@@ -15,7 +15,3 @@ function smarty_function_cookie($params, &$smarty)
     $data = $tikilib->pick_cookie();
     print($data);
 }
-
-
-
-?>

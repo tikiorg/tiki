@@ -26,7 +26,3 @@ function smarty_function_banner($params, &$smarty)
 	}
     print($banner);
 }
-
-
-
-?>

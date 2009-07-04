@@ -106,4 +106,3 @@ class Spreadsheet_Excel_Writer extends Spreadsheet_Excel_Writer_Workbook
         return $chr1.$chr2.$row;
     }
 }
-?>

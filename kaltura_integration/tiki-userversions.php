@@ -63,5 +63,3 @@ ask_ticket('userversion');
 
 $smarty->assign('mid', 'tiki-userversions.tpl');
 $smarty->display("tiki.tpl");
-
-?>

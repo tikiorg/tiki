@@ -23,5 +23,3 @@ function wikiplugin_content( $data, $params) {
 	if( $params['id'] )
 		return $tikilib->get_actual_content((int) $params['id']);
 }
-
-?>

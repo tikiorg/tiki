@@ -19,7 +19,9 @@ class  AcceptanceTests_SearchTest extends TikiSeleniumTestCase
     	$this->openTikiPage('tiki-index.php');
     	$this->logInIfNecessaryAs('admin');
         $query = 'feature';
+//        echo $this->getBodyText();
         $this->_searchFor($query);
+        
         $this->_assertSearchResultsWere(array(0 => "HomePage", 1 => 'Multilingual Test Page 1', 2 => 'Another page containing the word feature'), 
                                         $query, "");
     }
@@ -63,28 +65,30 @@ class  AcceptanceTests_SearchTest extends TikiSeleniumTestCase
     public function printImportantMessageForTestUsers() {
        die("SearchTest will not work unless:\n".
                    "- the name of the Tiki db is 'tiki_db_for_acceptance_tests' and \n".
-				   "- the file 'searchTestDump.sql' (not in svn, due to its size) is copied in the mySql data directory.\n" .
+				   "- the file 'searchTestDump.sql' (check it out from mods/acceptance_tests_files) is copied in the mySql data directory.\n" .
 				   "Comment out the call to printImportantMessageForTestUsers() in SearchTest::setUp() to run the tests.\n");
     }
 
 
     private function _searchFor($query) {
- 		$this->type('fuser', $query);
+ 		$this->type("highlight", $query);
     	$this->clickAndWait('search');
+    	
+
     }
 
     private function _assertSearchFormIsWellFormed() {
     
         $this->assertElementPresent("xpath=//form[@id='search-form']", 
                                     "Search form was not present");
-        $this->assertElementPresent("fuser", 
+        $this->assertElementPresent("highlight", 
                                     "Search input field not present");
         $this->assertElementPresent("xpath=//div[@id='sitesearchbar']", 
                                     "Site search bar was not present");
     }
      
     private function _assertSearchResultsWere($listOfHits, $query, $message) {
-        $this->assertElementPresent("xpath=//div[@class='searchresults']",
+        $this->assertElementPresent("xpath=//ul[@class='searchresults']",
                                     "List of search results was absent for query '$query'");
         $numExpectedHits = count($listOfHits);
         foreach ($listOfHits as $expectedHit) {
@@ -92,4 +96,3 @@ class  AcceptanceTests_SearchTest extends TikiSeleniumTestCase
         } 
     }
 }
-?>

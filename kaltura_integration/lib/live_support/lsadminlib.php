@@ -173,5 +173,3 @@ class LsAdminlib extends TikiLib {
 }
 global $dbTiki;
 $lsadminlib = new LsAdminlib($dbTiki);
-
-?>

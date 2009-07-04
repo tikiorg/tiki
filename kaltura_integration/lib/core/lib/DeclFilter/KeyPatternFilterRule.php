@@ -34,5 +34,3 @@ class DeclFilter_KeyPatternFilterRule extends DeclFilter_FilterRule
 		return TikiFilter::get( $this->rules[$pattern] );
 	}
 }
-
-?>

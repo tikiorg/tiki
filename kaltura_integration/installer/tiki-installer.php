@@ -24,8 +24,14 @@ require_once ( 'lib/smarty/libs/Smarty.class.php');
 require_once ('installer/installlib.php');
 
 $commands = array();
-$prefs = array();
-ini_set('magic_quotes_runtime',0);
+@ini_set('magic_quotes_runtime',0);
+
+// Initialize $prefs and force some values for the installer
+$prefs = array(
+	// tra() should not use $tikilib because this lib is not available in every steps of the installer
+	//  and because we want to be sure that translations of the installer are the original ones, even for an upgrade
+	'lang_use_db' => 'n' 
+);
 
 // Which step of the installer
 if (empty($_REQUEST['install_step'])) {
@@ -212,6 +218,7 @@ function isWindows() {
 class Smarty_Tikiwiki_Installer extends Smarty {
 
 	function Smarty_Tikiwiki_Installer() {
+		parent::Smarty();
 		$this->template_dir = "templates/";
 		$this->compile_dir = "templates_c/";
 		$this->config_dir = "configs/";
@@ -539,8 +546,8 @@ $smarty->load_filter('pre', 'tr');
 $smarty->load_filter('output', 'trimwhitespace');
 $smarty->assign('mid', 'tiki-install.tpl');
 $smarty->assign('style', 'thenews.css');
-$smarty->assign('virt',$virt);
-$smarty->assign('multi', $multi);
+$smarty->assign('virt', isset($virt) ? $virt : null );
+$smarty->assign('multi', isset($multi) ? $multi : null );
 if ($language != 'en')
 	$smarty->assign('lang', $language);
 
@@ -792,7 +799,13 @@ if ( isset($dbTiki) && is_object($dbTiki) && isset($_SESSION["install-logged-$mu
 if( isset( $_GET['lockenter'] ) )
 {
 	touch( 'db/lock' );
-	header( 'Location: tiki-index.php' );
+	require('tiki-logout.php');	// logs out then redirects to home page
+	exit;
+}
+
+if( isset( $_GET['nolockenter'] ) )
+{
+	require('tiki-logout.php');	// logs out then redirects to home page
 	exit;
 }
 
@@ -887,6 +900,8 @@ if ( $_REQUEST['general_settings'] == 'y' ) {
 	$switch_ssl_mode = ( isset($_REQUEST['feature_switch_ssl_mode']) && $_REQUEST['feature_switch_ssl_mode'] == 'on' ) ? 'y' : 'n';
 	$show_stay_in_ssl_mode = ( isset($_REQUEST['feature_show_stay_in_ssl_mode']) && $_REQUEST['feature_show_stay_in_ssl_mode'] == 'on' ) ? 'y' : 'n';
 
+	$dbTiki->Execute("DELETE FROM `tiki_preferences` WHERE `name` IN ('browsertitle', 'sender_email', 'https_login', 'https_port', 'feature_switch_ssl_mode', 'feature_show_stay_in_ssl_mode', 'language')");
+
 	$query = "INSERT INTO `tiki_preferences` (`name`, `value`) VALUES"
 		. " ('browsertitle', '" . $_REQUEST['browsertitle'] . "'),"
 		. " ('sender_email', '" . $_REQUEST['sender_email'] . "'),"
@@ -895,9 +910,9 @@ if ( $_REQUEST['general_settings'] == 'y' ) {
 		. " ('feature_switch_ssl_mode', '$switch_ssl_mode'),"
 		. " ('feature_show_stay_in_ssl_mode', '$show_stay_in_ssl_mode'),"
 		. " ('language', '$language')";
-	$query .= "; UPDATE `users_users` SET `email` = '".$_REQUEST['admin_email']."' WHERE `users_users`.`userId`=1";
 
 	$dbTiki->Execute($query);
+	$dbTiki->Execute("UPDATE `users_users` SET `email` = '".$_REQUEST['admin_email']."' WHERE `users_users`.`userId`=1");
 }
 
 

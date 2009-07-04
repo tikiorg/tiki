@@ -121,5 +121,3 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 // Display the template
 $smarty->assign('mid', 'tiki-remind_password.tpl');
 $smarty->display("tiki.tpl");
-
-?>

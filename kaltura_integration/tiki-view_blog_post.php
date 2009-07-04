@@ -15,7 +15,6 @@ $auto_query_args = array('postId','blogId','offset','find','sort_mode','page','m
 // first of all , we just die if blogs feature is not set
 if ($prefs['feature_blogs'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_blogs");
-
 	$smarty->display("error.tpl");
 	die;
 }
@@ -26,11 +25,11 @@ if (!isset($_REQUEST['blogId']) && !isset($_REQUEST['postId'])) {
 //	$blogId = $paths[count($paths) - 2];
 	$postId = $paths[count($paths) - 1];
 } else if (empty($_REQUEST["postId"])) {
-    $smarty->assign('msg', tra('No post indicated'));
-    $smarty->display('error.tpl');
-    die;
+	$smarty->assign('msg', tra('No post indicated'));
+	$smarty->display('error.tpl');
+	die;
 } else {
-    $postId = $_REQUEST['postId'];
+	$postId = $_REQUEST['postId'];
 }
 
 $post_info = $bloglib->get_post($postId);
@@ -51,17 +50,13 @@ if ($userlib->object_has_one_permission($blogId, 'blog')) {
 	if ($tiki_p_admin != 'y') {
 		// Now get all the permissions that are set for this type of permissions 'image gallery'
 		$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'blogs');
-
 		foreach ($perms["data"] as $perm) {
 			$permName = $perm["permName"];
-
 			if ($userlib->object_has_permission($user, $blogId, 'blog', $permName)) {
 				$$permName = 'y';
-
 				$smarty->assign("$permName", 'y');
 			} else {
 				$$permName = 'n';
-
 				$smarty->assign("$permName", 'n');
 			}
 		}
@@ -70,7 +65,6 @@ if ($userlib->object_has_one_permission($blogId, 'blog')) {
 
 if ($tiki_p_blog_admin == 'y') {
 	$tiki_p_create_blogs = 'y';
-
 	$smarty->assign('tiki_p_create_blogs', 'y');
 	$tiki_p_blog_post = 'y';
 	$smarty->assign('tiki_p_blog_post', 'y');
@@ -81,7 +75,6 @@ if ($tiki_p_blog_admin == 'y') {
 if ($tiki_p_read_blog != 'y') {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied you can not view this section"));
-
 	$smarty->display("error.tpl");
 	die;
 }
@@ -95,7 +88,6 @@ if ($user && $user == $blog_data["user"]) {
 if ($ownsblog == 'n' && $tiki_p_admin != 'y' && $post_info["priv"] == 'y') {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied: you cannot view this blog post while it is marked private"));
-
 	$smarty->display("error.tpl");
 	die;
 }
@@ -189,12 +181,11 @@ if ($user && $tiki_p_notepad == 'y' && $prefs['feature_notepad'] == 'y' && isset
 
 if ($prefs['feature_mobile'] == 'y' && isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile') {
 	include_once ("lib/hawhaw/hawtikilib.php");
-
 	HAWTIKI_view_blog_post ($post_info);
 }
 
 if (isset($_REQUEST['show_comments']) && $_REQUEST['show_comments'] == 1) {
-        $smarty->assign('show_comments', 1);
+	$smarty->assign('show_comments', 1);
 }
 
 if ($prefs['feature_freetags'] == 'y') {
@@ -209,5 +200,3 @@ ask_ticket('view-blog-post');
 // Display the template
 $smarty->assign('mid', 'tiki-view_blog_post.tpl');
 $smarty->display("tiki.tpl");
-
-?>

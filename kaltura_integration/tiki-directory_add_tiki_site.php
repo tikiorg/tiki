@@ -5,9 +5,9 @@ require_once('tiki-setup.php');
 include_once('lib/directory/dirlib.php');
 
 if($prefs['feature_directory'] != 'y') {
-  $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display("error.tpl");
-  die;  
+	$smarty->assign('msg',tra("This feature is disabled"));
+	$smarty->display("error.tpl");
+	die;  
 }
 
 // Set parent category to 2 ("tiki sites")
@@ -27,33 +27,33 @@ $_REQUEST["siteId"]=0;
 $smarty->assign('siteId',$_REQUEST["siteId"]);
 
 if (empty($_REQUEST["name"])) {
-  $smarty->assign('msg',tra("Must enter a name to add a site"));
-  $smarty->display("error.tpl");
-  die;  
+	$smarty->assign('msg',tra("Must enter a name to add a site"));
+	$smarty->display("error.tpl");
+	die;  
 }
 
 if (empty($_REQUEST["url"])) {
-  $smarty->assign('msg',tra("Must enter a url to add a site"));
-  $smarty->display("error.tpl");
-  die;  
+	$smarty->assign('msg',tra("Must enter a url to add a site"));
+	$smarty->display("error.tpl");
+	die;  
 }
 
 if ((substr($_REQUEST["url"],0,7)<>'http://') && (substr($_REQUEST["url"],0,8)<>'https://')) {
-  $_REQUEST["url"]='http://'.$_REQUEST["url"];
+	$_REQUEST["url"]='http://'.$_REQUEST["url"];
 }
   
 if($dirlib->dir_url_exists($_REQUEST['url'])) {
-  $smarty->assign('msg',tra("URL already added to the directory. Duplicate site?"));
-  $smarty->display("error.tpl");
-  die;  
+	$smarty->assign('msg',tra("URL already added to the directory. Duplicate site?"));
+	$smarty->display("error.tpl");
+	die;  
 }
   
 if($prefs['directory_validate_urls'] == 'y') {
-  @$fsh = fopen($_REQUEST['url'],'r');
-  if(!$fsh) {
-    $smarty->assign('msg',tra("URL cannot be accessed: wrong URL or site is offline and cannot be added to the directory"));
-    $smarty->display("error.tpl");
-    die;  
+	@$fsh = fopen($_REQUEST['url'],'r');
+	if(!$fsh) {
+		$smarty->assign('msg',tra("URL cannot be accessed: wrong URL or site is offline and cannot be added to the directory"));
+		$smarty->display("error.tpl");
+		die;  
   }
 }
   
@@ -78,4 +78,3 @@ $smarty->assign('save','y');
 // Display the template
 $smarty->assign('mid','tiki-register_site.tpl');
 $smarty->display("tiki.tpl");
-?>

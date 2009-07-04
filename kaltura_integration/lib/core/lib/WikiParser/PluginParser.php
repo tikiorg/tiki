@@ -23,5 +23,3 @@ class WikiParser_PluginParser
 		$this->pluginRunner = $runner;
 	}
 }
-
-?>

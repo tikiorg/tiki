@@ -5,36 +5,17 @@
 <div class="cbox">
 		<form class="admin" id="features" name="features" action="tiki-admin.php?page=features" method="post">
 			<div class="heading input_submit_container" style="text-align: right">
-        {if $prefs.feature_tabs eq 'y'}
-          {tr}No tabs{/tr}
-          <input type="checkbox" name="tabs"{if $tabs eq 'n'} checked="checked"{/if} onclick="document.features.submit();"/>
-        {/if}  
 				<input type="submit" name="features" value="{tr}Apply{/tr}" />
 				<input type="reset" name="featuresreset" value="{tr}Reset{/tr}" />
 			</div>
 
-{if $prefs.feature_tabs eq 'y' and $tabs ne 'n'}
-			{tabs}{strip}
-				{tr}Main{/tr}|
-				{tr}Global Features{/tr}|
-				{tr}More Functionality{/tr}|
-				{tr}UI Enhancements{/tr}|
-				{tr}Experimental{/tr}|
-				{tr}Admin{/tr}|
-				{tr}User{/tr}|
-				{tr}Programmer{/tr}
-			{/strip}{/tabs}
-{/if}
-
+{tabset name="admin_features"}
 {*
  * The following section is typically for features that act like Tikiwiki
  * sections and add a configuration icon to the sections list
  *}
-			<fieldset {if $prefs.feature_tabs eq 'y' and $tabs ne 'n'}id="content1"	class="tabcontent" style="clear:both;display:block;"{/if}>
-{if $prefs.feature_tabs neq 'y' or $tabs eq 'n'}
-				<legend class="heading"><a href="#"><span>{tr}Main Features{/tr}</span></a></legend>
-{/if}
-				<div class="admin">
+{tab name="{tr}Main Features{/tr}"}
+				<div class="admin clearfix">
 {* ---------- Main features ------------ *}
 					<div class="half_width">
 						<span class="checkbox"><input type="checkbox" name="feature_wiki" {if $prefs.feature_wiki eq 'y'}checked="checked"{/if}/></span>
@@ -82,13 +63,10 @@
 					</div>	
 
 				</div>
-			</fieldset>
+{/tab}
 		
 {* ---------- Global features ------------ *}
-			<fieldset {if $prefs.feature_tabs eq 'y' and $tabs ne 'n'}id="content2"	class="tabcontent" style="clear:both;display:none;"{/if}>
-{if $prefs.feature_tabs neq 'y' or $tabs eq 'n'}
-				<legend class="heading"><a href="#"><span>{tr}Site Global Features{/tr}</span></a></legend>
-{/if}
+{tab name="{tr}Site Global Features{/tr}"}
 				<div class="admin">
 					<div class="half_width">
 						<span class="checkbox"><input type="checkbox" name="feature_categories" {if $prefs.feature_categories eq 'y'}checked="checked"{/if}/></span>
@@ -119,13 +97,10 @@
 						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Internationalization" target="tikihelp" class="tikihelp" title="{tr}Internationalization{/tr}">{/if} {tr}Multilingual{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
 					</div>
 				</div>
-			</fieldset>
+{/tab}
 
 {* ---------- Additional features ------------ *}
-			<fieldset {if $prefs.feature_tabs eq 'y' and $tabs ne 'n'}id="content3"	class="tabcontent" style="clear:both;display:none;"{/if}>
-{if $prefs.feature_tabs neq 'y' or $tabs eq 'n'}
-				<legend class="heading"><a href="#"><span>{tr}Additional Features{/tr}</span></a></legend>
-{/if}
+{tab name="{tr}Additional Features{/tr}"}
 				<div class="admin">
 					<div class="half_width">
 						<span class="checkbox"><input type="checkbox" name="feature_faqs" {if $prefs.feature_faqs eq 'y'}checked="checked"{/if}/></span>
@@ -196,13 +171,10 @@
 						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Comments" target="tikihelp" class="tikihelp" title="{tr}Comments Locking{/tr}">{/if} {tr}Comments Locking{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
 					</div>
 				</div>
-			</fieldset>
+{/tab}
 
 {* ---------- User interface enhancement features ------------ *}
-			<fieldset {if $prefs.feature_tabs eq 'y' and $tabs ne 'n'}id="content4"	class="tabcontent" style="clear:both;display:none;"{/if}>
-{if $prefs.feature_tabs neq 'y' or $tabs eq 'n'}
-				<legend class="heading"><a href="#"><span>{tr}User interface enhancement features{/tr}</span></a></legend>
-{/if}
+{tab name="{tr}User interface enhancement features{/tr}"}
 				<div class="admin">
 					<div class="half_width">
 						<span class="checkbox"><input type="checkbox" name="feature_jscalendar" {if $prefs.feature_jscalendar eq 'y'}checked="checked"{/if}/></span>
@@ -229,17 +201,14 @@
 						<span class="label"> <a href="{$prefs.helpurl}Mootools" target="tikihelp" class="tikihelp" title="{tr}Mootools{/tr}"> {tr}Mootools{/tr}</a></span>
 					</div>
 					<div class="half_width">
-						<span class="checkbox"><input type="checkbox" name="feature_floating_help" {if $prefs.feature_floating_help eq 'y'}checked="checked"{/if}/></span>
-						<span class="label">{tr}Floating help aka the Big Blue Help Icon{/tr}</span>
+						<span class="checkbox"><input type="checkbox" name="feature_quick_object_perms" {if $prefs.feature_quick_object_perms eq 'y'}checked="checked"{/if}/></span>
+						<span class="label"> <a href="{$prefs.helpurl}Quickperms" target="tikihelp" class="tikihelp" title="{tr}Quickperms{/tr}"> {tr}Quickperms{/tr}</a></span>
 					</div>
 				</div>
-			</fieldset>
+{/tab}
 				
 {* ---------- Experimental features ------------ *}
-			<fieldset {if $prefs.feature_tabs eq 'y' and $tabs ne 'n'}id="content5"	class="tabcontent" style="clear:both;display:none;"{/if}>
-{if $prefs.feature_tabs neq 'y' or $tabs eq 'n'}
-				<legend class="heading"><a href="#"><span>{tr}Experimental Features{/tr}</span></a></legend>
-{/if}
+{tab name="{tr}Experimental Features{/tr}"}
 				<div class="admin">
 					<fieldset>
 						<legend class="heading">{icon _id="accept"}<span>{tr}Seem ok{/tr}</span></legend>
@@ -341,16 +310,11 @@
 							<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}SWFObject" target="tikihelp" class="tikihelp" title="{tr}SWFObject{/tr}">{/if} {tr}SwfObject{/tr} <i>{tr}Used to embed Flash content in wiki pages, banners etc.{/tr}</i>{if $prefs.feature_help eq 'y'}</a>{/if}</span>
 						</div>
 					</fieldset>
-
-
 				</div>
-			</fieldset>
+{/tab}
 
 {* ---------- Administration features ------------ *}
-			<fieldset {if $prefs.feature_tabs eq 'y' and $tabs ne 'n'}id="content6"	class="tabcontent" style="clear:both;display:none;"{/if}>
-{if $prefs.feature_tabs neq 'y' or $tabs eq 'n'}
-				<legend class="heading"><a href="#"><span>{tr}Administration Features{/tr}</span></a></legend>
-{/if}
+{tab name="{tr}Administration Features{/tr}"}
 				<div class="admin">
 					<div class="half_width">
 						<span class="checkbox"><input type="checkbox" name="feature_banning" {if $prefs.feature_banning eq 'y'}checked="checked"{/if}/></span>
@@ -381,13 +345,10 @@
 						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Custom+Home" target="tikihelp" class="tikihelp" title="{tr}Custom Home{/tr}">{/if} {tr}Custom Home{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
 					</div>
 				</div>
-			</fieldset>
+{/tab}
 				
 {* --- User Features --- *}
-			<fieldset {if $prefs.feature_tabs eq 'y' and $tabs ne 'n'}id="content7"	class="tabcontent" style="clear:both;display:none;"{/if}>
-{if $prefs.feature_tabs neq 'y' or $tabs eq 'n'}
-				<legend class="heading"><a href="#"><span>{tr}User Features{/tr}</span></a></legend>
-{/if}
+{tab name="{tr}User Features{/tr}"}
 				<div class="admin">
 					<div style="width: 49%; text-align: left; float: left">
 						<span class="checkbox"><input type="checkbox" name="feature_mytiki" {if $prefs.feature_mytiki eq 'y'}checked="checked"{/if} /></span>
@@ -425,6 +386,10 @@
 						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Group+Watches" target="tikihelp" class="tikihelp" title="{tr}Group Watches{/tr}">{/if} {tr}Group Watches{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
 					</div>
 					<div class="half_width">
+						<span class="checkbox"><input type="checkbox" name="feature_daily_report_watches" {if $prefs.feature_daily_report_watches eq 'y'}checked="checked"{/if}/></span>
+						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Daily+Reports" target="tikihelp" class="tikihelp" title="{tr}Daily Repors for User Watches{/tr}">{/if} {tr}Daily Reports{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
+					</div>
+					<div class="half_width">
 						<span class="checkbox"><input type="checkbox" name="feature_user_watches_translations"	{if $prefs.feature_user_watches_translations eq 'y'}checked="checked"{/if}/></span>
 						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}User+Watches" target="tikihelp" class="tikihelp" title="{tr}User Watches Translations{/tr}">{/if} {tr}User Watches Translations{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
 					</div>
@@ -460,12 +425,9 @@
 						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Group+Alert" target="tikihelp" class="tikihelp" title="{tr}Group Alert{/tr}">{/if} {tr}Group Alert{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
 					</div>
 				</div>
-			</fieldset>
+{/tab}
 
-			<fieldset {if $prefs.feature_tabs eq 'y' and $tabs ne 'n'}id="content8"	class="tabcontent" style="clear:both;display:none;"{/if}>
-{if $prefs.feature_tabs neq 'y' or $tabs eq 'n'}
-				<legend class="heading"><a href="#"><span>{tr}Programmer Features{/tr}</span></a></legend>
-{/if}
+{tab name="{tr}Programmer Features{/tr}"}
 				<div class="admin">
 					<div style="width: 49%; text-align: left; float: left">
 						<span class="checkbox"><input type="checkbox" name="feature_integrator" {if $prefs.feature_integrator eq 'y'}checked="checked"{/if}/></span>
@@ -495,11 +457,11 @@
 						<span class="checkbox"><input type="checkbox" name="debug_ignore_xdebug" {if $prefs.debug_ignore_xdebug eq 'y'}checked="checked"{/if}/></span>
 						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}DebugIgnoreXDebug" target="tikihelp" class="tikihelp" title="{tr}Ignore XDebug: Don't use XDebug debugging info if installed. Try this if you use xdebug and are geting blank pages.{/tr}">{/if} {tr}Ignore XDebug{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
 					</div>
-
 				</div>
-			</fieldset>
+{/tab}
+{/tabset}
 
-		<div class="input_submit_container"style="margin-top: 5px; text-align: center">
+		<div class="input_submit_container" style="margin-top: 5px; text-align: center">
 			<input type="submit" name="features" value="{tr}Apply{/tr}" />
 		</div>
 	</form>

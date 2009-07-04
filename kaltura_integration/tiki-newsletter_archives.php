@@ -13,7 +13,6 @@ include_once ('lib/newsletters/nllib.php');
 
 if ($prefs['feature_newsletters'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_newsletters");
-
 	$smarty->display("error.tpl");
 	die;
 }
@@ -113,5 +112,3 @@ include_once('tiki-section_options.php');
 // Display the template
 $smarty->assign('mid', 'tiki-newsletter_archives.tpl');
 $smarty->display("tiki.tpl");
-
-?>

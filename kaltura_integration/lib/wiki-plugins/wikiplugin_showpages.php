@@ -87,5 +87,3 @@ function wikiplugin_showpages($data, $params) {
 
 	return $text;
 }
-
-?>

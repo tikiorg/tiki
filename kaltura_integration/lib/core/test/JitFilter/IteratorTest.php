@@ -43,5 +43,3 @@ class JitFilter_IteratorTest extends TikiTestCase
 		}
 	}
 }
-
-?>

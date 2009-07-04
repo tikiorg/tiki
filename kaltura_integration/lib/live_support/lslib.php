@@ -183,5 +183,3 @@ class Lslib extends TikiLib {
 }
 global $dbTiki;
 $lslib = new Lslib($dbTiki);
-
-?>

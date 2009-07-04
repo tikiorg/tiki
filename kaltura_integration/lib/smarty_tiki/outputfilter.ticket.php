@@ -35,4 +35,3 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
                            '$2?ticket='.$ticket.'&$5', $source);
     return $source;
  }
-?>

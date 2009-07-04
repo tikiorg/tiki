@@ -267,7 +267,7 @@
 			<div class="box">
 				<div class="box-title">{$editable_menu_info.name}</div>
 				<div class="box-data">
-					{include file=tiki-user_menu.tpl menu_channels=$allchannels}
+					{include file='tiki-user_menu.tpl' menu_channels=$allchannels}
 				</div>
 			</div>
 		</td>
@@ -290,11 +290,7 @@
 		<tr>
 			<th>
 				{if $channels}
-					<script type="text/javascript">
-					<!--//--><![CDATA[//><!--
-						document.write("<input title=\"{tr}Select All{/tr}\" name=\"switcher\" id=\"clickall\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'checked[]',this.checked)\"/>");
-					//--><!]]>
-					</script>
+					{select_all checkbox_names='checked[]'}
 				{/if}
 			</th>
 			<th>{self_link _sort_arg='sort_mode' _sort_field='optionId'}{tr}ID{/tr}{/self_link}</th>

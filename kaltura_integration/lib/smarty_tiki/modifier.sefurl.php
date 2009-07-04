@@ -9,14 +9,14 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 	exit;
 }
 
-function smarty_modifier_sefurl($source, $type='wiki', $with_next = '' ) {
+function smarty_modifier_sefurl($source, $type='wiki', $with_next = '', $all_langs='' ) {
 	global $prefs, $wikilib, $smarty;
 	include_once('lib/wiki/wikilib.php');
 
 	switch($type){
 	case 'wiki page':
 	case 'wiki':
-		return $wikilib->sefurl($source, $with_next);
+		return $wikilib->sefurl($source, $with_next, $all_langs);
 	case 'blog':
 		$href = 'tiki-view_blog.php?blogId='.$source;
 		break;

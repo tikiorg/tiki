@@ -12,11 +12,84 @@
 	{button href="tiki-view_tracker.php?trackerId=$trackerId" _text="{tr}View This Tracker's Items{/tr}"}
 </div>
 
+{tabset}
+<!-- {$plug} -->
+<a name="list"></a>
+{tab name='{tr}Tracker fields{/tr}'}
+
+<table class="findtable">
+<tr><td>{tr}Find{/tr}</td>
+<td>
+<form method="get" action="tiki-admin_tracker_fields.php">
+<input type="text" name="find" value="{$find|escape}" />
+<input type="submit" value="{tr}Find{/tr}" name="search" />
+<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+<input type="hidden" name="trackerId" value="{$trackerId|escape}" />
+&nbsp;
+<input type="text" name="max" value="{$max|escape}" size="5"/>
+{tr}Rows{/tr}
+</form>
+</td>
+</tr>
+</table>
+<table class="normal">
+<tr>
+<th>&nbsp;</th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='fieldId'}{tr}Id{/tr}{/self_link}</th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='name'}{tr}Name{/tr}{/self_link}</th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='type'}{tr}Type{/tr}{/self_link}</th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='options'}{tr}Options{/tr}{/self_link}</th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='position'}{tr}Position{/tr}{/self_link}</th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='isMain'}{tr}isMain{/tr}{/self_link}</th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='isMultilingual'}{tr}Multilingual{/tr}{/self_link}</th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='isTblVisible'}{tr}Tbl vis{/tr}{/self_link}</th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='isSearchable'}{tr}Searchable{/tr}{/self_link}</th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='isPublic'}{tr}Public{/tr}{/self_link}</th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='isHidden'}{tr}Hidden{/tr}{/self_link}</th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='isMandatory'}{tr}Mandatory{/tr}{/self_link}</th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='description'}{tr}Description{/tr}{/self_link}</th>
+<th>&nbsp;</th>
+</tr>
+{cycle values="odd,even" print=false}
+{section name=user loop=$channels}
+<tr class="{cycle}">
+<td>{if $tracker_info.useRatings ne 'y' or $channels[user].name ne "Rating"}
+{self_link _icon='page_edit' cookietab='2' _anchor="anchor2" fieldId=$channels[user].fieldId}{tr}Edit{/tr}{/self_link}
+{/if}</td>
+<td>{if $tracker_info.useRatings ne 'y' or $channels[user].name ne "Rating"}
+{self_link cookietab='2' _anchor="anchor2" fieldId=$channels[user].fieldId _title='{tr}Edit{/tr}'}{$channels[user].fieldId}{/self_link}{else}{$channels[user].fieldId}{/if}</td>
+<td>{$channels[user].name}</td>
+<td>{assign var=x value=$channels[user].type}{$field_types[$x].label}</td>
+<td>{$channels[user].options|truncate:42:"..."|escape}</td>
+<td>{$channels[user].position}</td>
+<td>{$channels[user].isMain}</td>
+<td>{$channels[user].isMultilingual}</td>
+<td>{if $channels[user].isTblVisible eq 'y'}{icon _id='table' title='{tr}Tbl vis{/tr}'}{else}-{/if}</td>
+<td>{if $channels[user].isSearchable eq 'y'}{icon _id='magnifier' title='{tr}Searchable{/tr}'}{else}-{/if}</td>
+<td>{$channels[user].isPublic}</td>
+<td>{$channels[user].isHidden}
+{if !empty($channels[user].visibleBy)}<br />{icon _id=magnifier width=10 height=10}{foreach from=$channels[user].visibleBy item=g}{$g|escape} {/foreach}{/if}
+{if !empty($channels[user].editableBy)}<br />{icon _id=page_edit width=10 height=10}{foreach from=$channels[user].editableBy item=g}{$g|escape} {/foreach}{/if}
+</td>
+<td>{if $channels[user].isMandatory eq 'y'}<a title="{tr}Mandatory{/tr}">*</a>{else}-{/if}</td>
+<td>{$channels[user].description|truncate:14:"..."}</td>
+<td>{if $tracker_info.useRatings ne 'y' or $channels[user].name ne "Rating"}
+<a class="link" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}{if $max and $max ne $prefs.maxRecords}&amp;max={$max}{/if}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].fieldId}" title="{tr}Remove{/tr}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a> 
+<a class="link" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}&amp;fieldId={$channels[user].fieldId}&amp;up=1{if $offset > 1}&amp;offset={$offset}{/if}{if $max and $max ne $prefs.maxRecords}&amp;max={$max}{/if}">{icon _id='resultset_down'}</a>
+{/if}</td>
+</tr>
+{/section}
+</table>
+
+{pagination_links cant=$cant step=$max offset=$offset}{/pagination_links}
+{/tab}
+
 {if $fieldId eq "0"}
-<h2>{tr}New tracker field{/tr}</h2>
+{assign var='title' value='{tr}New tracker field{/tr}'}
 {else}
-<h2>{tr}Edit tracker field{/tr}</h2>
+{assign var='title' value='{tr}Edit tracker field{/tr}'}
 {/if}
+{tab name=$title}
 {if $error}
 	{remarksbox  type="warning" title="{tr}Errors{/tr}"}{tr}{$error}{/tr}{/remarksbox}
 {/if}
@@ -63,7 +136,7 @@
 {sortlinks case=false}
 {foreach key=choice_k item=choice_i from=$fi.itemChoicesList}
 {$choice_k}
-<option value="{$choice_k|escape}"{if !empty($itemChoices) and in_array($choice_k, $itemChoices)} selected="selected"{/if}>{tr}{$choice_i|username}{/tr}</option>
+<option value="{$choice_k|escape}"{if !empty($itemChoices) and in_array($choice_k, $itemChoices)} selected="selected"{/if}>{if $type eq 'u'}{$choice_i|username|escape}{else}{tr}{$choice_i}{/tr}{/if}</option>
 {/foreach}
 {/sortlinks}
 </select>
@@ -103,7 +176,7 @@
 <tr class="formcolor"><td>{tr}Description{/tr}:
 {if $prefs.quicktags_over_textarea neq 'y'}
 	<div id="zStaticTextQuicktags" {if $type neq 'S'}style="display:none;"{/if}>
-	{include file=tiki-edit_help_tool.tpl qtnum="staticText" area_name="staticTextArea"}
+	{include file='tiki-edit_help_tool.tpl' qtnum="staticText" area_name="staticTextArea"}
 	</div>
 {/if}
 </td><td><div id='zDescription' {if $type eq 'S'}style="display:none;"{else}style="display:block;"{/if}style="display:block;" >{if $type ne 'S'}{tr}Description text is wiki-parsed:{/tr} <input type="checkbox" name="descriptionIsParsed" {if $descriptionIsParsed eq 'y'}checked="checked"{/if} />{/if}
@@ -111,7 +184,7 @@
 <div id='zStaticText' {if $type neq 'S'}style="display:none;"{/if}>
 {if $prefs.quicktags_over_textarea eq 'y'}
 	<div id="zStaticTextQuicktags" {if $type neq 'S'}style="display:none;"{/if}>
-	{include file=tiki-edit_help_tool.tpl qtnum="staticText" area_name="staticTextArea"}
+	{include file='tiki-edit_help_tool.tpl' qtnum="staticText" area_name="staticTextArea"}
 	</div>
 {/if}
 <textarea id="staticTextArea" name="descriptionStaticText" rows="20" cols="80" >{$description|escape}</textarea></div></td></tr>
@@ -119,78 +192,10 @@
 <tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
+{/tab}
 
-<!-- {$plug} -->
-<a name="list"></a>
-<h2>{tr}Tracker fields{/tr}</h2>
 
-<table class="findtable">
-<tr><td>{tr}Find{/tr}</td>
-<td>
-<form method="get" action="tiki-admin_tracker_fields.php">
-<input type="text" name="find" value="{$find|escape}" />
-<input type="submit" value="{tr}Find{/tr}" name="search" />
-<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-<input type="hidden" name="trackerId" value="{$trackerId|escape}" />
-&nbsp;
-<input type="text" name="max" value="{$max|escape}" size="5"/>
-{tr}Rows{/tr}
-</form>
-</td>
-</tr>
-</table>
-<table class="normal">
-<tr>
-<th>&nbsp;</th>
-<th>{self_link _sort_arg='sort_mode' _sort_field='fieldId'}{tr}Id{/tr}{/self_link}</th>
-<th>{self_link _sort_arg='sort_mode' _sort_field='name'}{tr}Name{/tr}{/self_link}</th>
-<th>{self_link _sort_arg='sort_mode' _sort_field='type'}{tr}Type{/tr}{/self_link}</th>
-<th>{self_link _sort_arg='sort_mode' _sort_field='options'}{tr}Options{/tr}{/self_link}</th>
-<th>{self_link _sort_arg='sort_mode' _sort_field='position'}{tr}Position{/tr}{/self_link}</th>
-<th>{self_link _sort_arg='sort_mode' _sort_field='isMain'}{tr}isMain{/tr}{/self_link}</th>
-<th>{self_link _sort_arg='sort_mode' _sort_field='isMultilingual'}{tr}Multilingual{/tr}{/self_link}</th>
-<th>{self_link _sort_arg='sort_mode' _sort_field='isTblVisible'}{tr}Tbl vis{/tr}{/self_link}</th>
-<th>{self_link _sort_arg='sort_mode' _sort_field='isSearchable'}{tr}Searchable{/tr}{/self_link}</th>
-<th>{self_link _sort_arg='sort_mode' _sort_field='isPublic'}{tr}Public{/tr}{/self_link}</th>
-<th>{self_link _sort_arg='sort_mode' _sort_field='isHidden'}{tr}Hidden{/tr}{/self_link}</th>
-<th>{self_link _sort_arg='sort_mode' _sort_field='isMandatory'}{tr}Mandatory{/tr}{/self_link}</th>
-<th>{self_link _sort_arg='sort_mode' _sort_field='description'}{tr}Description{/tr}{/self_link}</th>
-<th>&nbsp;</th>
-</tr>
-{cycle values="odd,even" print=false}
-{section name=user loop=$channels}
-<tr class="{cycle}">
-<td>{if $tracker_info.useRatings ne 'y' or $channels[user].name ne "Rating"}
-<a class="link" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}{if $max and $max ne $prefs.maxRecords}&amp;max={$max}{/if}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode={$sort_mode}&amp;fieldId={$channels[user].fieldId}" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
-{/if}</td>
-<td>{if $tracker_info.useRatings ne 'y' or $channels[user].name ne "Rating"}
-<a class="link" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}{if $max and $max ne $prefs.maxRecords}&amp;max={$max}{/if}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode={$sort_mode}&amp;fieldId={$channels[user].fieldId}" title="{tr}Edit{/tr}">{$channels[user].fieldId}</a>{else}{$channels[user].fieldId}{/if}</td>
-<td>{$channels[user].name}</td>
-<td>{assign var=x value=$channels[user].type}{$field_types[$x].label}</td>
-<td>{$channels[user].options|truncate:42:"..."|escape}</td>
-<td>{$channels[user].position}</td>
-<td>{$channels[user].isMain}</td>
-<td>{$channels[user].isMultilingual}</td>
-<td>{$channels[user].isTblVisible}</td>
-<td>{$channels[user].isSearchable}</td>
-<td>{$channels[user].isPublic}</td>
-<td>{$channels[user].isHidden}
-{if !empty($channels[user].visibleBy)}<br />{icon _id=magnifier width=10 height=10}{foreach from=$channels[user].visibleBy item=g}{$g|escape} {/foreach}{/if}
-{if !empty($channels[user].editableBy)}<br />{icon _id=page_edit width=10 height=10}{foreach from=$channels[user].editableBy item=g}{$g|escape} {/foreach}{/if}
-</td>
-<td>{$channels[user].isMandatory}</td>
-<td>{$channels[user].description|truncate:14:"..."}</td>
-<td>{if $tracker_info.useRatings ne 'y' or $channels[user].name ne "Rating"}
-<a class="link" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}{if $max and $max ne $prefs.maxRecords}&amp;max={$max}{/if}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].fieldId}" title="{tr}Remove{/tr}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a> 
-<a class="link" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}&amp;fieldId={$channels[user].fieldId}&amp;up=1{if $offset > 1}&amp;offset={$offset}{/if}{if $max and $max ne $prefs.maxRecords}&amp;max={$max}{/if}">{icon _id='resultset_down'}</a>
-{/if}</td>
-</tr>
-{/section}
-</table>
-
-{pagination_links cant=$cant step=$max offset=$offset}{/pagination_links}
-
-<h2>{tr}Import/Export Trackers Fields{/tr}</h2>
+{tab name='{tr}Import/Export Trackers Fields{/tr}'}
 
 <form action="tiki-admin_tracker_fields.php" method="post">
 {if $find}<input type="hidden" name="find" value="{$find|escape}" />{/if}
@@ -233,4 +238,5 @@ isMandatory = {$channels[user].isMandatory}
 </textarea><br />
 <input type="submit" name="save" value="{tr}Import{/tr}" />
 </form>
-
+{/tab}
+{/tabset}

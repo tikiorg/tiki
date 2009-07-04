@@ -4,7 +4,6 @@
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-
 require_once ('tiki-setup.php');
 require_once ('lib/tikilib.php');
 require_once ('lib/blogs/bloglib.php');
@@ -71,19 +70,19 @@ if ($output["data"]=="EMPTY") {
 	$dateId = "created";
 	$authorId = "user";
 	$titleId = "title";
-	$readrepl = "tiki-view_blog_post.php?$id=%s&postId=%s";
+	$readrepl = "tiki-view_blog_post.php?postId=%s";
 
 	$changes = $bloglib -> list_blog_posts($_REQUEST["$id"], 0, $prefs['max_rss_blog'], $dateId.'_desc', '', '', $tikilib->now);
 	$tmp = array();
+	include_once('tiki-sefurl.php');
 	foreach ($changes["data"] as $data)  {
 		$data["$descId"] = $tikilib->parse_data($data[$descId], array('print'=>true));
+		$data['sefurl'] = filter_out_sefurl(sprintf($readrepl, $data['postId']), $smarty, 'blogpost', $data['title']);
 		$tmp[] = $data;
 	}
 	$changes["data"] = $tmp;
 	$tmp = null;
-	$output = $rsslib->generate_feed($feed, $uniqueid, '', $changes, $readrepl, 'postId', $id, $title, $titleId, $desc, $descId, $dateId, $authorId, false);
+	$output = $rsslib->generate_feed($feed, $uniqueid, '', $changes, $readrepl, 'blogId', '', $title, $titleId, $desc, $descId, $dateId, $authorId, false);
 }
 header("Content-type: ".$output["content-type"]);
 print $output["data"];
-
-?>

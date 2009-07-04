@@ -3150,6 +3150,7 @@ $lang=Array(
 // "switch with next option" => "switch with next option",
 // "To add new options to the menu set the optionId field to 0. To remove an option set the remove field to 'y'" => "To add new options to the menu set the optionId field to 0. To remove an option set the remove field to 'y'",
 // "To customizing the menu's css id (#id)" => "To customizing the menu's css id (#id)",
+// "To customize the menu's CSS id (#)" => "To customizing the menu's css id (#id)",
 // "Folder Icon" => "Folder Icon",
 // "Active Permissions" => "Active Permissions",
 // "Move Up" => "Move Up",
@@ -9451,4 +9452,3 @@ $lang=Array(
 "Top pages" => "Leglátogatottabb oldalak",
 "Last pages" => "Legutóbbi oldalak",
 "###end###"=>"###end###");
-?>

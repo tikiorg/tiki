@@ -32,5 +32,3 @@ function smarty_function_editform($params, &$smarty) {
 	$fcked->Config['CustomConfigurationsPath'] = $url_path.'setup_fckeditor.php';
 	echo $fcked->CreateHtml();
 }
-
-?>

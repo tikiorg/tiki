@@ -173,4 +173,3 @@ class PEAR_Task_Postinstallscript_rw extends PEAR_Task_Postinstallscript
             );
     }
 }
-?>

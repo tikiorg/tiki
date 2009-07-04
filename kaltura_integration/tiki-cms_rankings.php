@@ -89,5 +89,3 @@ ask_ticket('cms_rankings');
 // Display the template
 $smarty->assign('mid', 'tiki-ranking.tpl');
 $smarty->display("tiki.tpl");
-
-?>

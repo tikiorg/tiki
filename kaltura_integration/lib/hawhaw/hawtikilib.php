@@ -594,5 +594,3 @@ function HAWTIKI_deck_init(&$deck)
   $deck->set_height(HAWIKI_DISP_HEIGHT);
   $deck->set_disp_bgcolor(HAWIKI_DISP_BGCOLOR);
 }
-
-?>

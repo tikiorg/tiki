@@ -29,6 +29,16 @@ if ($s) {
        'setting' => $s);
 }
 
+$fcts = array('exec', 'passthru', 'shell_exec', 'system', 'proc_open','curl_exec', 'curl_multi_exec', 'parse_ini_file', 'show_source');
+foreach ($fcts as $fct) {
+	if (function_exists($fct)) {
+		$phpfunctions[$fct] = array('setting'=>tr('on'), 'risk'=> tra('risky'));
+	} else {
+		$phpfunctions[$fct] = array('setting'=>tr('off'), 'risk'=> tra('safe'));
+	}
+}
+$smarty->assign_by_ref('phpfunctions', $phpfunctions);
+
 // trans_sid
 $s=ini_get('session.use_trans_sid');
 if ($s) {
@@ -138,7 +148,7 @@ if($prefs['wikiplugin_redirect']=='y') {
      'message' => tra('The "Redirect Wikiplugin" is activated. It can be used by wiki editors for cross site scripting attacks.'));
 }
 
-if($prefs['wikiplugin_modules']=='y') {
+if($prefs['wikiplugin_module']=='y') {
    $tikisettings['wikiplugin_module']=array('risk' => tra('unsafe'),'setting' => tra('on'),
      'message' => tra('The "Module Wikiplugin" is activated. It can be used by wiki editors to add modules which permit to access information (see module list).'));
 }
@@ -387,5 +397,3 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 $smarty->assign('mid', 'tiki-admin_security.tpl');
 $smarty->display("tiki.tpl");
-
-?>

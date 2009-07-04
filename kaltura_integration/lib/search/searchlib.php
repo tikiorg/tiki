@@ -1028,5 +1028,3 @@ class SearchLib extends TikiLib {
 
 
 } # class SearchLib
-
-?>

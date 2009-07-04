@@ -59,5 +59,3 @@ function wikiplugin_fancylist($data, $params) {
 	}
 	return $result;
 }
-
-?>

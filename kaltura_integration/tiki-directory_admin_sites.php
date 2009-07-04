@@ -13,7 +13,6 @@ include_once('lib/directory/dirlib.php');
 
 if ($prefs['feature_directory'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_directory");
-
 	$smarty->display("error.tpl");
 	die;
 }
@@ -27,11 +26,9 @@ $all = 0;
 
 if ($_REQUEST["parent"] == 0) {
 	$parent_name = 'Top';
-
 	$all = 1;
 } else {
 	$parent_info = $dirlib->dir_get_category($_REQUEST['parent']);
-
 	$parent_name = $parent_info['name'];
 }
 
@@ -40,7 +37,6 @@ $smarty->assign('parent_name', $parent_name);
 if (isset($parent_info) && $user) {
 	if (in_array($parent_info['editorGroup'], $userlib->get_user_groups($user))) {
 		$tiki_p_admin_directory_sites = 'y';
-
 		$smarty->assign('tiki_p_admin_directory_sites', 'y');
 	}
 }
@@ -48,7 +44,6 @@ if (isset($parent_info) && $user) {
 if ($tiki_p_admin_directory_sites != 'y') {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied"));
-
 	$smarty->display("error.tpl");
 	die;
 }
@@ -69,7 +64,6 @@ if ($_REQUEST["siteId"]) {
 	$info = $dirlib->dir_get_site($_REQUEST["siteId"]);
 } else {
 	$info = array();
-
 	$info["name"] = '';
 	$info["description"] = '';
 	$info["url"] = '';
@@ -102,14 +96,12 @@ if (isset($_REQUEST["save"])) {
 	check_ticket('dir-admin-sites');
 	if (empty($_REQUEST["name"])) {
 		$smarty->assign('msg', tra("Must enter a name to add a site"));
-
 		$smarty->display("error.tpl");
 		die;
 	}
 
 	if (empty($_REQUEST["url"])) {
 		$smarty->assign('msg', tra("Must enter a url to add a site"));
-
 		$smarty->display("error.tpl");
 		die;
 	}
@@ -123,7 +115,6 @@ if (isset($_REQUEST["save"])) {
 
 	if (!isset($_REQUEST["siteCats"]) || count($_REQUEST["siteCats"]) == 0) {
 		$smarty->assign('msg', tra("Must select a category"));
-
 		$smarty->display("error.tpl");
 		die;
 	}
@@ -182,7 +173,6 @@ if ($all) {
 }
 
 $smarty->assign_by_ref('cant_pages', $items["cant"]);
-
 $smarty->assign_by_ref('items', $items["data"]);
 
 $categs = $dirlib->dir_get_all_categories_accept_sites(0, -1, 'name asc', $find, $_REQUEST["siteId"]);
@@ -203,5 +193,3 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 // Display the template
 $smarty->assign('mid', 'tiki-directory_admin_sites.tpl');
 $smarty->display("tiki.tpl");
-
-?>

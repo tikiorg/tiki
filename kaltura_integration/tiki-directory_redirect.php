@@ -13,7 +13,6 @@ include_once ('lib/directory/dirlib.php');
 
 if ($prefs['feature_directory'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_directory");
-
 	$smarty->display("error.tpl");
 	die;
 }
@@ -21,14 +20,12 @@ if ($prefs['feature_directory'] != 'y') {
 if ($tiki_p_view_directory != 'y') {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied"));
-
 	$smarty->display("error.tpl");
 	die;
 }
 
 if (!isset($_REQUEST['siteId'])) {
 	$smarty->assign('msg', tra("No site indicated"));
-
 	$smarty->display("error.tpl");
 	die;
 }
@@ -41,5 +38,3 @@ $dirlib->dir_add_site_hit($_REQUEST['siteId']);
 // Redirect to the site URI
 header ("location: $url");
 die;
-
-?>

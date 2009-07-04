@@ -110,7 +110,7 @@
 				|| $tiki_p_post_comments == 'y'
 				||$tiki_p_edit_comments == 'y')}
 				{assign var=pagemd5 value=$page|@md5}
-				{include file=comments_button.tpl}
+				{include file='comments_button.tpl'}
 			{/if}
 
 			{* don't show attachments button if feature disabled or no corresponding rights or no attached files and r/o*}
@@ -152,12 +152,12 @@
 
 {if $wiki_extras eq 'y' && $prefs.feature_wiki_attachments eq 'y' and $tiki_p_wiki_view_attachments eq 'y'}
 	<a name="attachments"></a>
-	{include file=attachments.tpl}
+	{include file='attachments.tpl'}
 {/if}
 
 {if $prefs.feature_wiki_comments eq 'y' and $tiki_p_wiki_view_comments == 'y' and $edit_page ne 'y'}
 	<a name="comments"></a>
-	{include file=comments.tpl}
+	{include file='comments.tpl'}
 {/if}
 
 {/strip}

@@ -96,7 +96,7 @@ RewriteRule ^irc([0-9]+)           tiki-irc_logs.php?focus=$1               [QSA
 RewriteRule ^int([0-9]+)           tiki-integrator.php?repID=$1             [QSA,L]
 RewriteRule ^sheet([0-9]+)         tiki-view_sheets.php?sheetId=$1          [QSA,L]
 RewriteRule ^ws([0-9]+)            tiki-workspaces_desktop.php?workspaceId=$1    [QSA,L]
-
+RewriteRule ^poll([0-9]+)          tiki-poll_form.php?pollId=$1             [QSA,L]
 RewriteRule ^wiki-([A-Za-z0-9]+)   tiki-index.php?page=$1                   [QSA,L]
 RewriteRule ^page-([A-Za-z0-9]+)   tiki-index.php?page=$1                   [QSA,L]
 RewriteRule ^show:(~?)(.+)$  tiki-slideshow.php?page=$1$2      [QSA,L]

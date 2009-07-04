@@ -149,8 +149,12 @@ ul.jumplinks a:active {
 }
 
 /* Site Header & Identity */
-#header-top {
-	background: #444444 url('mono/headerbg.jpg') repeat-x 0 100%;
+
+div#sioptions,
+#sioptionscentered,
+#customcode,
+#customcodewith_ad {
+	background: #444444 url(mono/headerbg.jpg) repeat-x 0 100%;
 }
 
 #siteloginbar {
@@ -1007,6 +1011,7 @@ div.multiselect {
 	border-color: #878787 #343434 #343434 #878787;
 }
 
+.buttonon a,
 .calbuttonon a,
 .calbuttonoff a {
 	color: #fff;
@@ -1142,11 +1147,6 @@ table.default thead td,
 table.default tfoot td {
 	background: #223845;
 	color: #e5e5e5;
-}
-
-table.default td {
-	border: solid 1px #A9A9A9;
-	background: black;
 }
 
 .highlight_word_0 {

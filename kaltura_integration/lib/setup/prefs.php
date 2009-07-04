@@ -23,7 +23,7 @@ function get_default_prefs() {
 	global $cachelib;
 	if( isset($cachelib) && $cachelib->isCached("tiki_default_preferences_cache") ) {
 		$prefs = unserialize( $cachelib->getCached("tiki_default_preferences_cache") );
-		return $prefs;
+		if ( $prefs !== false ) return $prefs;
 	}
 
 	global $tikidate, $tikilib;
@@ -255,6 +255,7 @@ function get_default_prefs() {
 		'wikiplugin_sort' => 'y',
 		'wikiplugin_split' => 'y',
 		'wikiplugin_sql' => 'n',
+		'wikiplugin_stat' => 'n',
 		'wikiplugin_sub' => 'y',
 		'wikiplugin_subscribegroup' => 'n',
 		'wikiplugin_subscribegroups' => 'n',
@@ -397,6 +398,10 @@ function get_default_prefs() {
 
 		// webservices
 		'webservice_consume_defaultcache' => 300, // 5 min
+		'feature_webservices' => 'y',
+
+		// semantic links
+		'feature_semantic' => 'y',
 
 		// wysiwyg
 		'feature_wysiwyg' => 'n',
@@ -583,6 +588,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'art_list_topic' => 'y',
 		'art_list_date' => 'y',
 		'art_list_author' => 'y',
+		'art_list_rating' => 'n',
 		'art_list_reads' => 'y',
 		'art_list_size' => 'y',
 		'art_list_expire' => 'y',
@@ -616,6 +622,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'groupTracker' => 'n',
 		'userTracker' => 'n',
 		'trk_with_mirror_tables' => 'n',
+		'trackerCreatorGroupName' => ' ',
 
 		// user
 		'feature_userlevels' => 'n',
@@ -929,6 +936,8 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'auth_ldap_adminpass' => '',
 		'auth_ldap_version' => 3,
 		'auth_ldap_nameattr' => 'displayName',
+		'auth_ldap_countryattr' => '',
+		'auth_ldap_emailattr' => '',
 		'https_login' => 'allowed',
 		'feature_show_stay_in_ssl_mode' => 'y',
 		'feature_switch_ssl_mode' => 'n',
@@ -1089,6 +1098,18 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_site_report' => 'n',
 		'feature_site_send_link' => 'n',
 		'feature_layoutshadows' => 'n',
+		'main_shadow_start' => '',
+		'main_shadow_end' => '',
+		'header_shadow_start' => '',
+		'header_shadow_end' => '',
+		'middle_shadow_start' => '',
+		'middle_shadow_end' => '',
+		'center_shadow_start' => '',
+		'center_shadow_end' => '',
+		'footer_shadow_start' => '',
+		'footer_shadow_end' => '',
+		'box_shadow_start' => '',
+		'box_shadow_end' => '',
 
 		// mods
 		'feature_mods_provider' => 'n',
@@ -1125,7 +1146,6 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'default_rows_textarea_comment' => '6',
 		'default_rows_textarea_forum' => '20',
 		'default_rows_textarea_forumthread' => '10',
-		'feature_floating_help' => 'y',
 
 		// pagination
 		'direct_pagination' => 'y',
@@ -1214,6 +1234,8 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_user_watches' => 'n',
 		'feature_group_watches' => 'n',
 		'feature_user_watches_translations' => 'n',
+		'feature_daily_report_watches' => 'n',
+		'feature_quick_object_perms' => 'n',
 		'feature_workflow' => 'n',
 		'feature_xmlrpc' => 'n',
 		'helpurl' => "http://doc.tikiwiki.org/",
@@ -1354,7 +1376,6 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 
 		'feature_bidi' => 'n',
 		'feature_lastup' => 'y',
-		'transition_style_ver' => '3.0',
 
 		'magic_last_load' => 0,
 

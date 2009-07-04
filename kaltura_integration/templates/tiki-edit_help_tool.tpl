@@ -120,6 +120,15 @@ function openFgalsWindow() {
   <hr style="width:90%; clear:both;" />
   {/if}
 
+  <div class='helptool-help'
+  {if (!isset($zoom_mode) || $zoom_mode eq 'n') and $prefs.quicktags_over_textarea neq 'y'}
+	style="float: left"
+  {else}
+	style="float: right; border-left: medium double lightgrey; padding-left:8px; margin-left:8px"
+  {/if}>
+	{include file='tiki-edit_help.tpl'}
+  </div>
+
   {if $tiki_p_admin eq 'y' or $tiki_p_admin_quicktags eq 'y'}
   <div class='helptool-admin'
   {if (!isset($zoom_mode) || $zoom_mode eq 'n') and $prefs.quicktags_over_textarea neq 'y'}

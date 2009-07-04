@@ -1023,6 +1023,4 @@ function newer($a,$b) {
 	} 
 	return 0;
 } 
-
 $modslib = new ModsLib();
-?>

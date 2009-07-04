@@ -250,5 +250,3 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 $smarty->assign('uses_tabs', 'y');
 $smarty->assign('mid', 'tiki-admin_calendars.tpl');
 $smarty->display("tiki.tpl");
-
-?>

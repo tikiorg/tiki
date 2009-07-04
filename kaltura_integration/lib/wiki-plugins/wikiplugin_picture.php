@@ -39,5 +39,3 @@ function wikiplugin_picture( $data, $params )
 
 	return $repl;
 }
-
-?>

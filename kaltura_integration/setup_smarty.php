@@ -10,19 +10,15 @@
 if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== FALSE) {
   header('location: index.php');
   exit;
-	die();
 }
 
-// add a line like the following in db/local.php to use an external smarty installation: $smarty_path='/usr/share/php/smarty/'
-define('TIKI_SMARTY_DIR', 'lib/smarty_tiki/');
-if ( isset($smarty_path) && $smarty_path != '' && file_exists($smarty_path.'Smarty.class.php') ) define('SMARTY_DIR', $smarty_path);
-else define('SMARTY_DIR', 'lib/smarty/libs/');
-
-require_once(SMARTY_DIR.'Smarty.class.php');
+require_once 'lib/setup/third_party.php';
+require_once SMARTY_DIR.'Smarty.class.php';
 
 class Smarty_Tikiwiki extends Smarty {
 	
 	function Smarty_Tikiwiki($tikidomain = '') {
+		parent::Smarty();
 		if ($tikidomain) { $tikidomain.= '/'; }
 		$this->template_dir = 'templates/';
 		$this->compile_dir = "templates_c/$tikidomain";
@@ -49,7 +45,7 @@ class Smarty_Tikiwiki extends Smarty {
 		);
 		$this->security_settings['IF_FUNCS'] = array_merge(
 			$this->security_settings['IF_FUNCS'],
-			array('tra', 'strlen', 'strstr', 'strtolower', 'basename', 'ereg', 'array_key_exists')
+			array('tra', 'strlen', 'strstr', 'strtolower', 'basename', 'ereg', 'array_key_exists', 'preg_match', 'in_array')
 		);
 		$secure_dirs[] = 'img/icons2';
 		$this->secure_dir = $secure_dirs;
@@ -238,7 +234,7 @@ class Smarty_Tikiwiki extends Smarty {
 
 $smarty = new Smarty_Tikiwiki($tikidomain);
 $smarty->load_filter('pre', 'tr');
-// $smarty->load_filter('output','trimwhitespace');
+$smarty->load_filter('pre', 'jq');
+
 include_once('lib/smarty_tiki/resource.wiki.php');
 $smarty->register_resource('wiki', array('smarty_resource_wiki_source', 'smarty_resource_wiki_timestamp', 'smarty_resource_wiki_secure', 'smarty_resource_wiki_trusted'));
-?>

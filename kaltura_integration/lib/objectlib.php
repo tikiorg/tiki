@@ -147,4 +147,3 @@ class ObjectLib extends TikiLib {
 }
 global $dbTiki;
 $objectlib = new ObjectLib($dbTiki);
-?>

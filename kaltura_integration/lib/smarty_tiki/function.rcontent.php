@@ -10,7 +10,3 @@ function smarty_function_rcontent($params, &$smarty) {
     global $dcslib; include_once('lib/dcs/dcslib.php');
     return $dcslib->get_random_content($params['id']);
 }
-
-
-
-?>

@@ -56,5 +56,3 @@ class HotwordsLib extends TikiLib {
 }
 global $dbTiki;
 $hotwordlib = new HotwordsLib($dbTiki);
-
-?>

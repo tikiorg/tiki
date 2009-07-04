@@ -155,5 +155,3 @@ class Tiki_Profile_List
 		return filemtime( $file );
 	} // }}}
 }
-
-?>

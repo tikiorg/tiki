@@ -44,5 +44,3 @@ $graph->setParam( 'grid-independant-major-guide', false );
 $graph->draw( $renderer );
 
 $renderer->httpOutput( 'stats.png' );
-
-?>

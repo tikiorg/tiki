@@ -107,16 +107,16 @@
 			<div class="fgal_file_c1">
 			<table width="100%">
 				<tr>
-					<td>{tr}File Title:{/tr}</td>
+					<td><label for="name">{tr}File title:{/tr}</label></td>
 					<td width="80%">
-						<input style="width:100%" type="text" name="name[]" {if $fileInfo.name}value="{$fileInfo.name}"{/if} size="40" /> {if $gal_info.type eq "podcast" or $gal_info.type eq "vidcast"} ({tr}required field for podcasts{/tr}){/if}
+						<input style="width:100%" type="text" id="name" name="name[]" {if $fileInfo.name}value="{$fileInfo.name}"{/if} size="40" /> {if $gal_info.type eq "podcast" or $gal_info.type eq "vidcast"} ({tr}required field for podcasts{/tr}){/if}
 					</td>
 				</tr>
 				<tr>
-					<td>{tr}File Description:{/tr}</td>
+					<td><label for="description>{tr}File description:{/tr}</label></td>
 					<td>
-						<textarea style="width:100%" rows="2" cols="40" name="description[]">{if $fileInfo.description}{$fileInfo.description}{/if}</textarea>
-					{if $gal_info.type eq "podcast" or $gal_info.type eq "vidcast"} ({tr}required field for podcasts{/tr}){/if}
+						<textarea style="width:100%" rows="2" cols="40" id="description" name="description[]">{if $fileInfo.description}{$fileInfo.description}{/if}</textarea>
+					{if $gal_info.type eq "podcast" or $gal_info.type eq "vidcast"}<br /><em>{tr}Required for podcasts{/tr}.</em>{/if}
 					</td>
 				</tr>
 				<tr>
@@ -125,10 +125,10 @@
 		This may be moved later in another specific place (e.g. simple popup) for
 		non-javascript browsers since it is not really a "Property" of the file *}
 				{if $prefs.javascript_enabled neq 'y' || !$editFileId}
-					<td>{tr}Upload from disk:{/tr}</td>
+					<td><label for="userfile">{tr}Upload from disk:{/tr}</label></td>
 					<td>
 						{if $editFileId}{$fileInfo.filename|escape}{/if}
-						<input name="userfile[]" type="file" size="15"/>
+						<input id="userfile" name="userfile[]" type="file" size="15"/>
 					</td>
 					{/if}
 				</tr>
@@ -138,9 +138,9 @@
 		<table width="100%">
 		{if !$editFileId and $tiki_p_batch_upload_files eq 'y'}
 			<tr><td>
-				{tr}Unzip zip files{/tr}
+				<label for="isbatch">{tr}Unzip zip files{/tr}:</label>
 			</td><td width="80%">
-				<input type="checkbox" name="isbatch[]" />
+				<input type="checkbox" id="isbatch" name="isbatch[]" />
 			</td></tr>
 		{/if}
 
@@ -151,9 +151,9 @@
 			{else}
 				{if $groupforalert eq ''}
 				<tr><td>
-					{tr}File Gallery:{/tr}
+					<label for="galleryId">{tr}File gallery:{/tr}</label>
 				</td><td width="80%">
-					<select name="galleryId[]">
+					<select id="galleryId" name="galleryId[]">
 					{section name=idx loop=$galleries}
 						{if ($galleries[idx].individual eq 'n') or ($galleries[idx].individual_tiki_p_upload_files eq 'y')}
 						<option value="{$galleries[idx].id|escape}" {if $galleries[idx].id eq $galleryId}selected="selected"{/if}>{$galleries[idx].name|escape}</option>
@@ -167,9 +167,9 @@
 			{/if}
 			{if $tiki_p_admin_file_galleries eq 'y'}
 				<tr><td>
-					{tr}Creator:{/tr}
+					<label for="user">{tr}Creator:{/tr}</label>
 				</td><td width="80%">
-					<select name="user[]">
+					<select id="user" name="user[]">
 					{section name=ix loop=$users}
 						<option value="{$users[ix].login|escape}"{if (isset($fileInfo) and $fileInfo.user eq $users[ix].login) or (!isset($fileInfo) and $user == $users[ix].login)}  selected="selected"{/if}>{$users[ix].login|username|escape}</option>
 					{/section}
@@ -179,9 +179,9 @@
 
 			{if $prefs.feature_file_galleries_author eq 'y'}
 				<tr><td>
-					{tr}Author if not the file creator:{/tr}
+					<label for="author">{tr}Author, if different from the Creator:{/tr}</label>
 				</td><td width="80%">
-					<input type="text" name="author[]" value="{$fileInfo.author|escape}" />
+					<input type="text" id="author"name="author[]" value="{$fileInfo.author|escape}" />
 				</td></tr>
 			{/if}
 			{if $groupforalert ne ''}
@@ -206,9 +206,9 @@
 		<div class="fgal_file_c3">
 		{if $prefs.fgal_limit_hits_per_file eq 'y'}
 			<label>
-				{tr}Maximum amount of downloads:{/tr}
-				<input type="text" name="hit_limit[]" value="{$hit_limit|default:0}"/>
-				{tr}0 for no limit{/tr}
+				<label for="hit_limit">{tr}Maximum number of downloads:{/tr}</label>
+				<input type="text" id="hit_limit" name="hit_limit[]" value="{$hit_limit|default:0}"/>
+				<br /><em>{tr}Use{/tr} {tr}0 for no limit{/tr}.</em>
 			</label>
 			<br/>
 		{/if}
@@ -216,15 +216,15 @@
 		{* We want comments only on updated files *}
 		{if $prefs.javascript_enabled neq 'y' && $editFileId}
 			<label>
-				{tr}Comment:{/tr}
-				<input type="text" name="comment[]" value="" size="40" />
+				<label for="comment">{tr}Comment:{/tr}</label>
+				<input type="text" id="comment" name="comment[]" value="" size="40" />
 			</label>
 			<br/>
 		{/if}
 	</div>
 	</div>
 	{if $prefs.javascript_enabled eq 'y' and !$editFileId}
-		{include file=categorize.tpl notable='y'}<br/>
+		{include file='categorize.tpl' notable='y'}<br/>
 	{/if}
 	{if $prefs.javascript_enabled eq 'y'}
 	<input type="hidden" name="upload" />
@@ -235,13 +235,13 @@
 	<input type="hidden" name="formId" value="0"/>
 	{$upload_str}
 	{if $editFileId}
-		{include file=categorize.tpl notable='y'}<br/>
+		{include file='categorize.tpl' notable='y'}<br/>
 		<input name="upload" type="submit" value="{tr}Save{/tr}"/>
 	{/if}
 	{if $prefs.javascript_enabled neq 'y' and !$editFileId}
 	{$upload_str}
 	{$upload_str}
-	{include file=categorize.tpl notable='y'}<br/>
+	{include file='categorize.tpl' notable='y'}<br/>
 	<hr />
 	<input type="submit" name="upload" value="{if $editFileId}{tr}Save{/tr}{else}{tr}Upload{/tr}{/if}"/>
 	{/if}

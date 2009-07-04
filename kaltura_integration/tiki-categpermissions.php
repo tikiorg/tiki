@@ -97,11 +97,11 @@ $groups = $userlib->get_groups(0, -1, 'groupName_desc');
 $smarty->assign_by_ref('groups', $groups['data']);
 
 // Get a list of permissions
-if (!$cachelib->isCached("categories_permission_names")) {
+if (!$cachelib->isCached("category_permission_names")) {
 	$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'category');
-	$cachelib->cacheItem("categories_permission_names",serialize($perms));
+	$cachelib->cacheItem("category_permission_names",serialize($perms));
 } else {
-	$perms = unserialize($cachelib->getCached("categories_permission_names"));
+	$perms = unserialize($cachelib->getCached("category_permission_names"));
 }
 $smarty->assign_by_ref('perms', $perms['data']);
 
@@ -112,5 +112,3 @@ ask_ticket('categpermission');
 
 $smarty->assign('mid', 'tiki-categpermissions.tpl');
 $smarty->display("tiki.tpl");
-
-?>

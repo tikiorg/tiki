@@ -27,5 +27,3 @@ if ($prefs['feature_banners'] != 'y') {
 $bannerlib->add_click($_REQUEST["id"]);
 $url = urldecode($_REQUEST["url"]);
 header ("location: $url");
-
-?>

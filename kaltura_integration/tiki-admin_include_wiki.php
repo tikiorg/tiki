@@ -177,6 +177,7 @@ if (isset($_REQUEST["wikifeatures"])) {
 	'feature_actionlog_bytes',
 	'wiki_authors_style_by_page',
 	'wiki_edit_minor',
+	'feature_filegals_manager',
 	);
 	foreach ($pref_toggles as $toggle) {
 		simple_set_toggle($toggle);
@@ -301,4 +302,3 @@ $tags = $adminlib->get_tags();
 $smarty->assign_by_ref("tags", $tags);
 
 ask_ticket('admin-inc-wiki');
-?>

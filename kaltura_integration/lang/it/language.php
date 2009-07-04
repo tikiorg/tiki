@@ -4791,6 +4791,7 @@ $lang=Array(
 // "To use a menu in a tiki format" => "To use a menu in a tiki format",
 // "To use menu in a css/suckerfish format" => "To use menu in a css/suckerfish format",
 // "To customizing the menu's css id (#id)" => "To customizing the menu's css id (#id)",
+// "To customize the menu's CSS id (#)" => "To customizing the menu's css id (#id)",
 // "Edit this Menu" => "Edit this Menu",
 // "Create new Menu" => "Create new Menu",
 // "Folder Icon" => "Folder Icon",
@@ -9288,4 +9289,3 @@ $lang=Array(
 "You are not permitted to remove someone else\\'s post!" => "Non hai il permesso di modificare il messaggio di un altro!",
 "No thread indicated" => "Nessun thread specificato",
 "###end###"=>"###end###");
-?>

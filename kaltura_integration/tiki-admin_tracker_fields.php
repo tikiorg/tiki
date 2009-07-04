@@ -31,6 +31,7 @@ if (!isset($_REQUEST["trackerId"])) {
 	$smarty->display("error.tpl");
 	die;
 }
+$auto_query_args = array('trackerId','offsset', 'sort_mode', 'find', 'max');
 
 $smarty->assign('trackerId', $_REQUEST["trackerId"]);
 $tracker_info = $trklib->get_tracker($_REQUEST["trackerId"]);
@@ -311,5 +312,3 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 // Display the template
 $smarty->assign('mid', 'tiki-admin_tracker_fields.tpl');
 $smarty->display("tiki.tpl");
-
-?>

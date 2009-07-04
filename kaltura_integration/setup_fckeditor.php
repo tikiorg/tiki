@@ -31,6 +31,4 @@ foreach ($tools as $t) {
 	}
 }
 $smarty->assign('toolbar',$toolbar);
-
 $smarty->display('setup_fckeditor.tpl', null, null, 'application/javascript');
-?>

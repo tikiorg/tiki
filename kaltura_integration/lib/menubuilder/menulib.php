@@ -417,5 +417,3 @@ class MenuLib extends TikiLib {
 }
 global $dbTiki;
 $menulib = new MenuLib($dbTiki);
-
-?>

@@ -53,6 +53,11 @@ function wikiplugin_box_info() {
 				'name' => tra('CSS Class'),
 				'description' => tra('Apply custom CSS class to the box.'),
 			),
+			'id' => array(
+				'required' => false,
+				'name' => tra('ID'),
+				'description' => tra('ID'),
+			),
 		),
 	);
 }
@@ -94,5 +99,3 @@ function wikiplugin_box($data, $params) {
 	//$data = $tikilib->parse_data($data);
 	return $begin . $data . $end;
 }
-
-?>

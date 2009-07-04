@@ -47,4 +47,3 @@ $data=preg_replace($search,$replace,$data);
 	$data = trim($data);
 	return $data;
 }
-?>

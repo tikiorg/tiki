@@ -494,5 +494,3 @@ class PEAR_Remote extends PEAR
     // }}}
 
 }
-
-?>

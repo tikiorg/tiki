@@ -29,7 +29,7 @@
 <div class="wikitext">{$sourced}</div>
 {/if}
 
-{include file=pagehistory.tpl}
+{include file='pagehistory.tpl'}
 
 <br />
 
@@ -189,5 +189,5 @@
 </form>
 {/if}
 
-{include file=tiki-page_bar.tpl}
+{include file='tiki-page_bar.tpl'}
 

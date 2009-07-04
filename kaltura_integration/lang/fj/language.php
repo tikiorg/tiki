@@ -4715,6 +4715,7 @@ $lang=Array(
 // "To use a menu in a tiki format" => "To use a menu in a tiki format",
 // "To use menu in a css/suckerfish format" => "To use menu in a css/suckerfish format",
 // "To customizing the menu's css id (#id)" => "To customizing the menu's css id (#id)",
+// "To customize the menu's CSS id (#)" => "To customizing the menu's css id (#id)",
 // "Edit this Menu" => "Edit this Menu",
 // "Create new Menu" => "Create new Menu",
 // "dynamic collapsed" => "dynamic collapsed",
@@ -8270,4 +8271,3 @@ $lang=Array(
 "The uploaded file ist not recognized as a image" => "The uploaded file is not recognized as an image",
 "No url indicated" => "No URL indicated",
 "###end###"=>"###end###");
-?>

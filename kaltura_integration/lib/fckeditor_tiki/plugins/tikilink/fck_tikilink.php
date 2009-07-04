@@ -39,4 +39,3 @@ if ($offset > 0) {
 
 $smarty->assign('listpages',$listpages['data']);
 $smarty->display('fck_tikilink.tpl');
-?>

@@ -48,7 +48,3 @@ array("feature_wiki","Wiki","wiki_new",tra("Create a new wiki page"),10,0), // t
 array("feature_wiki","Wiki","wiki_edit",tra("Edit an existing page"),5,0), // tikilib.php
 array("feature_wiki","Wiki","wiki_attach_file",tra("Attach file"),3,0) // wikilib.php
 );
-?>
-
-
-

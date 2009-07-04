@@ -21,7 +21,7 @@
 	*		filter_values         : array( filter_fieldX => filter_fieldX_selected_value, ... )
 	*
 	* Usage examples : {include file='find.tpl'}
-	*                  {include file="find.tpl" find_show_languages='y' find_show_categories='y' find_show_num_rows='y'} 
+	*                  {include file='find.tpl' find_show_languages='y' find_show_categories='y' find_show_num_rows='y'} 
 *}
 
 <div class="clearfix">

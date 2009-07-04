@@ -86,4 +86,3 @@ class PieChartGraphic extends Graphic // {{{1
 		) );
 	}
 } // }}}1
-?>

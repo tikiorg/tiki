@@ -21,5 +21,3 @@ interface DeclFilter_Rule
 	 */
 	function apply( array &$data, $key );
 }
-
-?>

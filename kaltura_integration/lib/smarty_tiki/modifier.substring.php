@@ -28,7 +28,3 @@ function smarty_modifier_substring($string, $position = 0, $length = null) {
 		return substr($string, $position, $length);
 	}
 }
-
-/* vim: set expandtab: */
-
-?>

@@ -23,7 +23,6 @@ if ($prefs['feature_freetags'] == 'y') {
 
 if ($prefs['feature_forums'] != 'y') {
     $smarty->assign('msg', tra("This feature is disabled").": feature_forums");
-
     $smarty->display("error.tpl");
     die;
 }
@@ -49,9 +48,9 @@ $commentslib = new Comments($dbTiki);
 
 if (!isset($_REQUEST["forumId"]) || !($forum_info = $commentslib->get_forum($_REQUEST["forumId"]))) {
 	$smarty->assign('errortype', 'no_redirect_login');
-    $smarty->assign('msg', tra("No forum indicated"));
-    $smarty->display("error.tpl");
-    die;
+	$smarty->assign('msg', tra("No forum indicated"));
+	$smarty->display("error.tpl");
+	die;
 }
 
 if (isset($_REQUEST["comments_postCancel"])) {
@@ -61,9 +60,9 @@ if (isset($_REQUEST["comments_postCancel"])) {
 }
 
 if (isset($_REQUEST["openpost"])) {
-    $smarty->assign('openpost', 'y');
+	$smarty->assign('openpost', 'y');
 } else {
-    $smarty->assign('openpost', 'n');
+	$smarty->assign('openpost', 'n');
 }
 
 $smarty->assign('forumId', $_REQUEST["forumId"]);
@@ -93,9 +92,9 @@ if ($tiki_p_admin_forum != 'y' && $user) {
 
 if ($tiki_p_admin_forum != 'y' && $tiki_p_forum_read != 'y') {
 	$smarty->assign('errortype', 401);
-    $smarty->assign('msg', tra("Permission denied to use this feature"));
-    $smarty->display("error.tpl");
-    die;
+	$smarty->assign('msg', tra("Permission denied to use this feature"));
+	$smarty->display("error.tpl");
+	die;
 }
 $commentslib->forum_add_hit($_REQUEST["forumId"]);
 
@@ -106,25 +105,25 @@ if (isset($_REQUEST['report']) && $tiki_p_forums_report == 'y') {
 
 if ($tiki_p_admin_forum == 'y') {
 	if (isset($_REQUEST['remove_attachment'])) {
-  	$area = 'delforumattach';
-  	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-    	key_check($area);
-			$commentslib->remove_thread_attachment($_REQUEST['remove_attachment']);
-  	} else {
-    	key_get($area);
-  	}
+  		$area = 'delforumattach';
+  		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+			key_check($area);
+	  	 	$commentslib->remove_thread_attachment($_REQUEST['remove_attachment']);
+  		} else {
+  	  		key_get($area);
+  		}
 	}
 
 	if (isset($_REQUEST['delsel_x'])) {
 		$area = 'delforumtopics';
 		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
-		if (isset($_REQUEST['forumtopic'])) {
-	    foreach (array_values($_REQUEST['forumtopic'])as $topic) {
-				$commentslib->remove_comment($topic);
-				$commentslib->register_remove_post($_REQUEST['forumId'], 0);
-	    }
-		}
+			if (isset($_REQUEST['forumtopic'])) {
+				foreach (array_values($_REQUEST['forumtopic'])as $topic) {
+					$commentslib->remove_comment($topic);
+					$commentslib->register_remove_post($_REQUEST['forumId'], 0);
+				}
+			}
 		} else {
 			// this SESSION var passes the current REQUEST variables since they are not passed by URL
 			$_SESSION["requestvars_$phpself"] = $_REQUEST;
@@ -132,70 +131,69 @@ if ($tiki_p_admin_forum == 'y') {
 		}
 	}
 
-    if ( isset($_REQUEST['lock']) && isset($_REQUEST['forumId']) ) {
-	check_ticket('view-forum');
-	if ( $_REQUEST['lock'] == 'y' ) {
-		$commentslib->lock_object_thread('forum:'.((int)$_REQUEST['forumId']));
-		$forum_info['is_locked'] = 'y';
-	} elseif ( $_REQUEST['lock'] == 'n' ) {
-		$commentslib->unlock_object_thread('forum:'.((int)$_REQUEST['forumId']));
-		$forum_info['is_locked'] = 'n';
-	}
-    }
-
-    if (isset($_REQUEST['locksel_x'])) {
-	if (isset($_REQUEST['forumtopic'])) {
+	if ( isset($_REQUEST['lock']) && isset($_REQUEST['forumId']) ) {
 		check_ticket('view-forum');
-	    foreach (array_values($_REQUEST['forumtopic'])as $topic) {
-		$commentslib->lock_comment($topic);
-	    }
-	}
-    }
-
-    if (isset($_REQUEST['unlocksel_x'])) {
-	if (isset($_REQUEST['forumtopic'])) {
-		check_ticket('view-forum');
-	    foreach (array_values($_REQUEST['forumtopic'])as $topic) {
-		$commentslib->unlock_comment($topic);
-	    }
-	}
-    }
-
-    if (isset($_REQUEST['movesel'])) {
-	if (isset($_REQUEST['forumtopic'])) {
-	    foreach (array_values($_REQUEST['forumtopic'])as $topic) {
-		check_ticket('view-forum');
-		// To move a topic you just have to change the object
-		$obj = 'forum:' . $_REQUEST['moveto'];
-
-		$commentslib->set_comment_object($topic, $obj);
-		// update the stats for the source and destination forums
-		$commentslib->forum_prune($_REQUEST['forumId']);
-		$commentslib->forum_prune($_REQUEST['moveto']);
-	    }
-	}
-    }
-
-    if (isset($_REQUEST['mergesel'])) {
-	if (isset($_REQUEST['forumtopic'])) {
-	    foreach (array_values($_REQUEST['forumtopic'])as $topic) {
-		check_ticket('view-forum');
-		// To move a topic you just have to change the object
-		if ($topic != $_REQUEST['mergetopic']) {
-		    $commentslib->set_parent($topic, $_REQUEST['mergetopic']);
+		if ( $_REQUEST['lock'] == 'y' ) {
+			$commentslib->lock_object_thread('forum:'.((int)$_REQUEST['forumId']));
+			$forum_info['is_locked'] = 'y';
+		} elseif ( $_REQUEST['lock'] == 'n' ) {
+			$commentslib->unlock_object_thread('forum:'.((int)$_REQUEST['forumId']));
+			$forum_info['is_locked'] = 'n';
 		}
-	    }
 	}
-    }
 
-    if ( $prefs['feature_forum_topics_archiving'] && isset($_REQUEST['archive']) && isset($_REQUEST['comments_parentId']) ) {
-	check_ticket('view-forum');
-	if ( $_REQUEST['archive'] == 'y' ) {
-	    $commentslib->archive_thread($_REQUEST['comments_parentId']);
-	} elseif ( $_REQUEST['archive'] == 'n' ) {
-	    $commentslib->unarchive_thread($_REQUEST['comments_parentId']);
+	if (isset($_REQUEST['locksel_x'])) {
+		if (isset($_REQUEST['forumtopic'])) {
+			check_ticket('view-forum');
+			foreach (array_values($_REQUEST['forumtopic'])as $topic) {
+				$commentslib->lock_comment($topic);
+			}
+		}
 	}
-    }
+
+	if (isset($_REQUEST['unlocksel_x'])) {
+		if (isset($_REQUEST['forumtopic'])) {
+			check_ticket('view-forum');
+			foreach (array_values($_REQUEST['forumtopic'])as $topic) {
+				$commentslib->unlock_comment($topic);
+			}
+		}
+	}
+
+	if (isset($_REQUEST['movesel'])) {
+		if (isset($_REQUEST['forumtopic'])) {
+			foreach (array_values($_REQUEST['forumtopic'])as $topic) {
+				check_ticket('view-forum');
+				// To move a topic you just have to change the object
+				$obj = 'forum:' . $_REQUEST['moveto'];
+				$commentslib->set_comment_object($topic, $obj);
+				// update the stats for the source and destination forums
+				$commentslib->forum_prune($_REQUEST['forumId']);
+				$commentslib->forum_prune($_REQUEST['moveto']);
+			}
+		}
+	}
+
+	if (isset($_REQUEST['mergesel'])) {
+		if (isset($_REQUEST['forumtopic'])) {
+			foreach (array_values($_REQUEST['forumtopic'])as $topic) {
+				check_ticket('view-forum');
+				// To move a topic you just have to change the object
+				if ($topic != $_REQUEST['mergetopic']) {
+					$commentslib->set_parent($topic, $_REQUEST['mergetopic']);
+				}
+			}
+		}
+	}
+
+	if ( $prefs['feature_forum_topics_archiving'] && isset($_REQUEST['archive']) && isset($_REQUEST['comments_parentId']) ) {
+		check_ticket('view-forum');
+		if ( $_REQUEST['archive'] == 'y' ) {
+			$commentslib->archive_thread($_REQUEST['comments_parentId']);
+		} elseif ( $_REQUEST['archive'] == 'n' ) {
+			$commentslib->unarchive_thread($_REQUEST['comments_parentId']);
+		}
+	}
 }
 
 $smarty->assign_by_ref('forum_info', $forum_info);
@@ -227,7 +225,7 @@ if (!isset($comments_prefix_var)) {
 }
 
 if (!isset($comments_object_var) || (!$comments_object_var) || !isset($_REQUEST[$comments_object_var])) {
-    die ("the comments_object_var variable is not set or cannot be found as a REQUEST variable");
+	die ("the comments_object_var variable is not set or cannot be found as a REQUEST variable");
 }
 
 $comments_objectId = $comments_prefix_var.$_REQUEST["$comments_object_var"];
@@ -250,43 +248,32 @@ if (isset($_REQUEST['comments_postComment'])) {
 // Here we send the user to the right thread/topic if it already exists; this
 // is used for the 'discuss' tab.  This is done down here because the thread
 // might have to be created, which happens above.
-if (isset($_REQUEST["comments_postComment"])) 
-{
-    // Check if the thread/topic already existis
-    $threadId = $commentslib->check_for_topic(
-		$_REQUEST["comments_title"],
-		$_REQUEST["comments_data"]
-	    );
-
-    // If it does, send the user there with no delay.
-    if ( $threadId )
-    {
-	// If the samely titled comment already
-	// exists, go straight to it.
-	$url = 'tiki-view_forum_thread.php?comments_parentId=' 
-	    . urlencode( $threadId )
-	    . '&forumId='
-	    . urlencode( $_REQUEST["forumId"]);
-	header('location: ' . $url);
-	exit;
-    }
+if (isset($_REQUEST["comments_postComment"])){
+	// Check if the thread/topic already existis
+	$threadId = $commentslib->check_for_topic($_REQUEST["comments_title"],$_REQUEST["comments_data"]);
+	// If it does, send the user there with no delay.
+	if ( $threadId ){
+		// If the samely titled comment already
+		// exists, go straight to it.
+		$url = 'tiki-view_forum_thread.php?comments_parentId=' . urlencode( $threadId ) . '&forumId=' . urlencode( $_REQUEST["forumId"]);
+		header('location: ' . $url);
+		exit;
+	}
 }
 
 if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_vote == 'y') {
-    // Process a vote here
-    if (isset($_REQUEST["comments_vote"]) && isset($_REQUEST["comments_threadId"])) {
-	check_ticket('view-forum');
-	$comments_show = 'y';
-
-	if (!$tikilib->user_has_voted($user, 'comment' . $_REQUEST["comments_threadId"])) {
-	    $commentslib->vote_comment($_REQUEST["comments_threadId"], $user, $_REQUEST["comments_vote"]);
-
-	    $tikilib->register_user_vote($user, 'comment' . $_REQUEST["comments_threadId"]);
+	// Process a vote here
+	if (isset($_REQUEST["comments_vote"]) && isset($_REQUEST["comments_threadId"])) {
+		check_ticket('view-forum');
+		$comments_show = 'y';
+		if (!$tikilib->user_has_voted($user, 'comment' . $_REQUEST["comments_threadId"])) {
+			$commentslib->vote_comment($_REQUEST["comments_threadId"], $user, $_REQUEST["comments_vote"]);
+			$tikilib->register_user_vote($user, 'comment' . $_REQUEST["comments_threadId"]);
+		}
+	
+		$_REQUEST["comments_threadId"] = 0;
+		$smarty->assign('comments_threadId', 0);
 	}
-
-	$_REQUEST["comments_threadId"] = 0;
-	$smarty->assign('comments_threadId', 0);
-    }
 }
 
 if ($user) {
@@ -294,86 +281,75 @@ if ($user) {
 	$smarty->assign_by_ref('userinfo',$userinfo);
 }
 
-if (isset($_REQUEST["comments_remove"]) && isset($_REQUEST["comments_threadId"]))
-{
-    if ($tiki_p_admin_forum == 'y'
-            || ($commentslib->user_can_edit_post(
-                    $user,
-                    $_REQUEST["comments_threadId"]
-                    )
-                && $tiki_p_forum_post_topic == 'y')
-       ) {
-			$area = 'delforumcomm';
-		  if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+if (isset($_REQUEST["comments_remove"]) && isset($_REQUEST["comments_threadId"])){
+	if ($tiki_p_admin_forum == 'y' || ($commentslib->user_can_edit_post($user,$_REQUEST["comments_threadId"]) && $tiki_p_forum_post_topic == 'y')) {
+		$area = 'delforumcomm';
+		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     		key_check($area);
-        $comments_show = 'y';
-        $commentslib->remove_comment($_REQUEST["comments_threadId"]);
-        $commentslib->register_remove_post($_REQUEST["forumId"], 0);
-			} else {
+			$comments_show = 'y';
+			$commentslib->remove_comment($_REQUEST["comments_threadId"]);
+			$commentslib->register_remove_post($_REQUEST["forumId"], 0);
+		} else {
     		key_get($area);
-		  }
-    } else { // user can't edit this post
-        $smarty->assign('msg', tra('You are not permitted to remove someone else\'s post!'));
+		}
+	} else { // user can't edit this post
+   	$smarty->assign('msg', tra('You are not permitted to remove someone else\'s post!'));
 		$smarty->assign('errortype', 'no_redirect_login');
-        $smarty->display("error.tpl");
-        die;
-    }
-		unset($_REQUEST["comments_threadId"]);
+      $smarty->display("error.tpl");
+		die;
+	}
+	unset($_REQUEST["comments_threadId"]);
 }
 
 if ($_REQUEST["comments_threadId"] > 0) {
-		$comment_info = $commentslib->get_comment($_REQUEST["comments_threadId"]);
-
-		$smarty->assign('comment_title', isset($_REQUEST['comments_title']) ? $_REQUEST['comments_title'] : $comment_info['title']);
-		$smarty->assign('comment_data', isset($_REQUEST['comments_data']) ? $_REQUEST['comments_data'] : $comment_info['data']);
-		$smarty->assign('comment_topictype', isset($_REQUEST['comment_topictype']) ? $_REQUEST['comment_topictype'] : $comment_info["type"]);
-		$smarty->assign('comment_topicsummary', isset($_REQUEST["comment_topicsummary"]) ? $_REQUEST["comment_topicsummary"] : $comment_info["summary"]);
-		$smarty->assign('comment_topicsmiley', $comment_info["smiley"]);
+	$comment_info = $commentslib->get_comment($_REQUEST["comments_threadId"]);
+	$smarty->assign('comment_title', isset($_REQUEST['comments_title']) ? $_REQUEST['comments_title'] : $comment_info['title']);
+	$smarty->assign('comment_data', isset($_REQUEST['comments_data']) ? $_REQUEST['comments_data'] : $comment_info['data']);
+	$smarty->assign('comment_topictype', isset($_REQUEST['comment_topictype']) ? $_REQUEST['comment_topictype'] : $comment_info["type"]);
+	$smarty->assign('comment_topicsummary', isset($_REQUEST["comment_topicsummary"]) ? $_REQUEST["comment_topicsummary"] : $comment_info["summary"]);
+	$smarty->assign('comment_topicsmiley', $comment_info["smiley"]);
 } else {
-		$smarty->assign('comment_title', isset($_REQUEST["comments_title"]) ? $_REQUEST["comments_title"] : '');
-		$smarty->assign('comment_data', isset($_REQUEST["comments_data"]) ? $_REQUEST["comments_data"] : '');
-		$smarty->assign('comment_topictype', isset($_REQUEST["comment_topictype"]) ? $_REQUEST["comment_topictype"] : '');
-		$smarty->assign('comment_topictype', 'n');
-		$smarty->assign('comment_topicsummary', '');
-		$smarty->assign('comment_topicsmiley', '');
+	$smarty->assign('comment_title', isset($_REQUEST["comments_title"]) ? $_REQUEST["comments_title"] : '');
+	$smarty->assign('comment_data', isset($_REQUEST["comments_data"]) ? $_REQUEST["comments_data"] : '');
+	$smarty->assign('comment_topictype', isset($_REQUEST["comment_topictype"]) ? $_REQUEST["comment_topictype"] : '');
+	$smarty->assign('comment_topictype', 'n');
+	$smarty->assign('comment_topicsummary', '');
+	$smarty->assign('comment_topicsmiley', '');
 }
 
 $smarty->assign('comment_preview', 'n');
 
 if (isset($_REQUEST["comments_previewComment"])) {
 	check_ticket('view-forum');
-    $smarty->assign('comments_preview_title', $_REQUEST["comments_title"]);
+	$smarty->assign('comments_preview_title', $_REQUEST["comments_title"]);
+	$smarty->assign('comments_preview_data', ($commentslib->parse_comment_data($_REQUEST["comments_data"])));
+	$smarty->assign('comment_title', $_REQUEST["comments_title"]);
+	$smarty->assign('comment_data', $_REQUEST["comments_data"]);
+	$smarty->assign('comment_topictype', $_REQUEST["comment_topictype"]);
+	if ($forum_info['topic_summary'] == 'y')
+		$smarty->assign('comment_topicsummary', $_REQUEST["comment_topicsummary"]);
+	if ($forum_info['topic_smileys'] == 'y')
+		$smarty->assign('comment_topicsmiley', $_REQUEST["comment_topicsmiley"]);
 
-    $smarty->assign('comments_preview_data', ($commentslib->parse_comment_data($_REQUEST["comments_data"])));
-    $smarty->assign('comment_title', $_REQUEST["comments_title"]);
-    $smarty->assign('comment_data', $_REQUEST["comments_data"]);
-    $smarty->assign('comment_topictype', $_REQUEST["comment_topictype"]);
-
-    if ($forum_info['topic_summary'] == 'y')
-	$smarty->assign('comment_topicsummary', $_REQUEST["comment_topicsummary"]);
-
-    if ($forum_info['topic_smileys'] == 'y')
-	$smarty->assign('comment_topicsmiley', $_REQUEST["comment_topicsmiley"]);
-
-    $smarty->assign('openpost', 'y');
-    $smarty->assign('comment_preview', 'y');
+	$smarty->assign('openpost', 'y');
+	$smarty->assign('comment_preview', 'y');
 }
 
 // Check for settings
 if (!isset($_REQUEST["comments_per_page"])) {
-    $_REQUEST["comments_per_page"] = $comments_per_page;
+	$_REQUEST["comments_per_page"] = $comments_per_page;
 }
 
 if (!isset($_REQUEST["thread_sort_mode"])) {
-    $_REQUEST["thread_sort_mode"] = $thread_sort_mode;
+	$_REQUEST["thread_sort_mode"] = $thread_sort_mode;
 } else {
-    $comments_show = 'y';
+	$comments_show = 'y';
 }
 
 if (!isset($_REQUEST["comments_commentFind"])) {
-    $_REQUEST["comments_commentFind"] = '';
+	$_REQUEST["comments_commentFind"] = '';
 } else {
-    $comments_show = 'y';
+	$comments_show = 'y';
 }
 
 $smarty->assign('comments_per_page', $_REQUEST["comments_per_page"]);
@@ -383,22 +359,22 @@ $smarty->assign('comments_commentFind', $_REQUEST["comments_commentFind"]);
 //print("Show: $comments_show<br />");
 // Offset setting for the list of comments
 if (!isset($_REQUEST["comments_offset"])) {
-    $comments_offset = 0;
+	$comments_offset = 0;
 } else {
-    $comments_offset = $_REQUEST["comments_offset"];
+	$comments_offset = $_REQUEST["comments_offset"];
 }
 
 $smarty->assign('comments_offset', $comments_offset);
 
 // Now check if we are displaying top-level comments or a specific comment
 if (!isset($_REQUEST["comments_parentId"])) {
-    $_REQUEST["comments_parentId"] = 0;
+	$_REQUEST["comments_parentId"] = 0;
 }
 
 $smarty->assign('comments_parentId', $_REQUEST["comments_parentId"]);
 
 if (!isset($_REQUEST['time_control']))
-$_REQUEST['time_control'] = 0;
+	$_REQUEST['time_control'] = 0;
 
 $commentslib->set_time_control($_REQUEST['time_control']);
 
@@ -450,7 +426,7 @@ if ($prefs['feature_user_watches'] == 'y') {
 		} else {
 			$tikilib->remove_user_watch($user, $_REQUEST['watch_event'], $_REQUEST['watch_object'], 'forum');
 		}
-    }
+	}
 
 	if ($user && $watch = $tikilib->user_watches($user, 'forum_post_topic', $_REQUEST['forumId'], 'forum')) {
 		$smarty->assign('user_watching_forum', 'y');
@@ -465,61 +441,57 @@ if ($prefs['feature_user_watches'] == 'y') {
 
     // Check, if the user is watching this forum by a category.    
 	if ($prefs['feature_categories'] == 'y') {    
-	    $watching_categories_temp=$categlib->get_watching_categories($_REQUEST["forumId"],'forum',$user);	    
-	    $smarty->assign('category_watched','n');
-	 	if (count($watching_categories_temp) > 0) {
-	 		$smarty->assign('category_watched','y');
+		$watching_categories_temp=$categlib->get_watching_categories($_REQUEST["forumId"],'forum',$user);	    
+		$smarty->assign('category_watched','n');
+		if (count($watching_categories_temp) > 0) {
+			$smarty->assign('category_watched','y');
 	 		$watching_categories=array();	 			 	
 	 		foreach ($watching_categories_temp as $wct ) {
-	 			$watching_categories[]=array("categId"=>$wct,"name"=>$categlib->get_category_name($wct));
+				$watching_categories[]=array("categId"=>$wct,"name"=>$categlib->get_category_name($wct));
 	 		}		 		 	
 	 		$smarty->assign('watching_categories', $watching_categories);
 	 	}    
 	} 		
-	
 }
 
 if ($tiki_p_admin_forum == 'y' || $prefs['feature_forum_quickjump'] == 'y') {
-    $all_forums = $commentslib->list_forums(0, -1, 'name_asc', '');
-
-    $temp_max = count($all_forums["data"]);
-    for ($i = 0; $i < $temp_max; $i++) {
-	if ($userlib->object_has_one_permission($all_forums["data"][$i]["forumId"], 'forum')) {
-	    if ($tiki_p_admin == 'y' || $userlib->object_has_permission($user, $all_forums["data"][$i]["forumId"], 'forum', 'tiki_p_admin_forum') || $userlib->object_has_permission($user, $all_forums["data"][$i]["forumId"], 'forum', 'tiki_p_forum_read')) {
-		$all_forums["data"][$i]["can_read"] = 'y';
-	    } else {
-		$all_forums["data"][$i]["can_read"] = 'n';
-	    }
-	} else {
-	    $all_forums["data"][$i]["can_read"] = 'y';
+	$all_forums = $commentslib->list_forums(0, -1, 'name_asc', '');
+	$temp_max = count($all_forums["data"]);
+	for ($i = 0; $i < $temp_max; $i++) {
+		if ($userlib->object_has_one_permission($all_forums["data"][$i]["forumId"], 'forum')) {
+			if ($tiki_p_admin == 'y' || $userlib->object_has_permission($user, $all_forums["data"][$i]["forumId"], 'forum', 'tiki_p_admin_forum')
+				 || $userlib->object_has_permission($user, $all_forums["data"][$i]["forumId"], 'forum', 'tiki_p_forum_read')) {
+				$all_forums["data"][$i]["can_read"] = 'y';
+			} else {
+				$all_forums["data"][$i]["can_read"] = 'n';
+			}
+		} else {
+			$all_forums["data"][$i]["can_read"] = 'y';
+		}
 	}
-    }
-
-    $smarty->assign('all_forums', $all_forums['data']);
+	$smarty->assign('all_forums', $all_forums['data']);
 }
 
 $smarty->assign('unread', 0);
 
 if ($user && $prefs['feature_messages'] == 'y' && $tiki_p_messages == 'y') {
     $unread = $tikilib->user_unread_messages($user);
-
     $smarty->assign('unread', $unread);
 }
 
 if ($tiki_p_admin_forum == 'y') {
     $smarty->assign('queued', $commentslib->get_num_queued($comments_objectId));
-
     $smarty->assign('reported', $commentslib->get_num_reported($_REQUEST['forumId']));
 }
 
 if ($prefs['feature_freetags'] == 'y') {
-    $cat_type = 'forum post';
-    $cat_objid = $_REQUEST["comments_threadId"];
-    include_once ("freetag_list.php");
-    //If in preview mode get the tags from the form and not from database
-    if (isset($_REQUEST["comments_previewComment"])) {
-	$smarty->assign('taglist',$_REQUEST["freetag_string"]);
-    }
+	$cat_type = 'forum post';
+	$cat_objid = $_REQUEST["comments_threadId"];
+	include_once ("freetag_list.php");
+	//If in preview mode get the tags from the form and not from database
+	if (isset($_REQUEST["comments_previewComment"])) {
+		$smarty->assign('taglist',$_REQUEST["freetag_string"]);
+   }
 }
 
 $defaultRows = $prefs['default_rows_textarea_forum'];
@@ -533,12 +505,11 @@ if ($prefs['feature_forum_parse'] == "y") {
 
 if ($prefs['feature_mobile'] =='y' && isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile') {
 	include_once ("lib/hawhaw/hawtikilib.php");
-
 	HAWTIKI_view_forum($forum_info['name'], $comments_coms, $tiki_p_forum_read, $comments_offset, $comments_maxRecords, $comments_cant);
 }
 if ($prefs['feature_contribution'] == 'y') {
-		$contributionItemId = $_REQUEST['comments_threadId'];
-		include_once('contribution.php');
+	$contributionItemId = $_REQUEST['comments_threadId'];
+	include_once('contribution.php');
 }
 
 if ($prefs['feature_forum_parse'] == 'y') {
@@ -552,5 +523,3 @@ ask_ticket('view-forum');
 // Display the template
 $smarty->assign('mid', 'tiki-view_forum.tpl');
 $smarty->display("tiki.tpl");
-
-?>

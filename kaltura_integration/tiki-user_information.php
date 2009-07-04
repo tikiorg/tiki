@@ -199,4 +199,3 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 $smarty->assign('mid', 'tiki-user_information.tpl');
 $smarty->display("tiki.tpl");
-?>

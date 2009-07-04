@@ -30,7 +30,7 @@
 	<form method="post" action="tiki-view_sheets.php?mode=edit&sheetId={$sheetId}" id="Grid"></form>
 	<div class='submit'>
 		<input type="submit" onclick='g.target.style.visibility = "hidden"; g.prepareSubmit(); g.target.submit();' value="{tr}Save{/tr}" />
-		{button href="tiki-view_sheets.php?sheetId=$sheetId" _text="{tr}Cancel{/tr}"}
+		{button sheetId="$sheetId" _text="{tr}Cancel{/tr}" _ajax="n"}
 	</div>
 	<script type="text/javascript" src="lib/sheet/grid.js"></script>
 	<script type="text/javascript" src="lib/sheet/control.js"></script>
@@ -67,9 +67,9 @@
 	
 		{if $tiki_p_edit_sheet eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
 			{if $editconflict eq 'y'}
-				{button href="tiki-view_sheets.php?sheetId=$sheetId&amp;readdate=$read_date&amp;mode=edit" _title="$semUser" _text="{tr}Edit{/tr}"}
+				{button sheetId="$sheetId" readdate="$read_date" mode="edit" _title="$semUser" _text="{tr}Edit{/tr}" _ajax="n"}
 			{else}
-				{button href="tiki-view_sheets.php?sheetId=$sheetId&amp;readdate=$read_date&amp;mode=edit" _text="{tr}Edit{/tr}"}
+				{button sheetId="$sheetId" readdate="$read_date" mode="edit" _text="{tr}Edit{/tr}" _ajax="n"}
 			{/if}
 		{/if}
 

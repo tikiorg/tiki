@@ -654,5 +654,3 @@ function compare_paths($p1, $p2) {
 		// must be case insentive to have the same than dir_mist_sites
 	return strcasecmp($p1["path"], $p2["path"]);
 }
-
-?>

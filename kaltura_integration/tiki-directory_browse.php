@@ -14,7 +14,6 @@ include_once('lib/directory/dirlib.php');
 
 if ($prefs['feature_directory'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_directory");
-
 	$smarty->display("error.tpl");
 	die;
 }
@@ -22,7 +21,6 @@ if ($prefs['feature_directory'] != 'y') {
 if ($tiki_p_view_directory != 'y') {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied"));
-
 	$smarty->display("error.tpl");
 	die;
 }
@@ -36,7 +34,6 @@ $all = 0;
 
 if ($_REQUEST["parent"] == 0) {
 	$parent_name = 'Top';
-
 	$all = 1;
 } else {
 	$parent_info = $dirlib->dir_get_category($_REQUEST['parent']);
@@ -74,10 +71,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 
 	if ($categs['data'][$i]['childrenType'] == 'c' && $categs['data'][$i]['viewableChildren'] > 0) {
 		// Generate the subcategories with most hist as the subcategories to show.
-		$subcats
-			= $dirlib->dir_list_categories($categs['data'][$i]['categId'], 0, $categs['data'][$i]['viewableChildren'], 'hits_desc',
-			'');
-
+		$subcats	= $dirlib->dir_list_categories($categs['data'][$i]['categId'], 0, $categs['data'][$i]['viewableChildren'], 'hits_desc',	'');
 		$categs['data'][$i]['subcats'] = $subcats['data'];
 	}
 
@@ -87,8 +81,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 	}
 
 	if ($categs['data'][$i]['childrenType'] == 'r' && $categs['data'][$i]['viewableChildren'] > 0) {
-		$categs['data'][$i]['subcats']
-			= $dirlib->get_random_subcats($categs['data'][$i]['categId'], $categs['data'][$i]['viewableChildren']);
+		$categs['data'][$i]['subcats'] = $dirlib->get_random_subcats($categs['data'][$i]['categId'], $categs['data'][$i]['viewableChildren']);
 	}
 }
 
@@ -102,7 +95,6 @@ $smarty->assign_by_ref('categ_info', $categ_info);
 if ($user) {
 	if (in_array($categ_info['editorGroup'], $userlib->get_user_groups($user))) {
 		$tiki_p_admin_directory_sites = 'y';
-
 		$smarty->assign('tiki_p_admin_directory_sites', 'y');
 	}
 }
@@ -131,9 +123,7 @@ if ($categ_info['allowSites'] == 'y') {
 	$smarty->assign('find', $find);
 
 	$items = $dirlib->dir_list_sites($_REQUEST['parent'], $offset, $prefs['directory_links_per_page'], $sort_mode, '', 'y');
-
 	$smarty->assign_by_ref('cant_pages', $items["cant"]);
-
 	$smarty->assign_by_ref('items', $items["data"]);
 }
 
@@ -149,5 +139,3 @@ ask_ticket('dir-browse');
 
 $smarty->assign('mid', 'tiki-directory_browse.tpl');
 $smarty->display("tiki.tpl");
-
-?>

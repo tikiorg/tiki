@@ -29,6 +29,7 @@ function refreshCache( entry ) { // {{{
 function showDetails( id, domain, profile ) { // {{{
 	
 	var nid = id + "-sub";
+	var infoId = id + "-info";
 	var prev = document.getElementById( id );
 	var obj = document.getElementById( nid );
 
@@ -39,8 +40,22 @@ function showDetails( id, domain, profile ) { // {{{
 		return;
 	}
 
+	var infoOb = document.getElementById( infoId );
+	if (!infoOb) {
+		infoOb = document.createElement('span');
+		infoOb.innerHTML = " ";
+		infoOb.style.fontStyle = "italic";
+		infoOb.id = infoId;
+		prev.getElementsByTagName("td")[0].appendChild( infoOb );
+	}
+	infoOb.innerHTML = " {/literal}{tr}Loading profile{/tr}{literal}...";
+	
 	var req = getHttpRequest( 'POST', baseURI + '&getinfo&pd=' + escape(domain) + '&pp=' + escape(profile), true );
 	req.onreadystatechange = function (aEvt) {
+		
+		if (infoOb) {
+			infoOb.innerHTML = "";
+		}
 		if (req.readyState == 4) {
 			if(req.status == 200) {
 				var data = eval( "(" + req.responseText + ")" );
@@ -82,6 +97,8 @@ function showDetails( id, domain, profile ) { // {{{
 					pp.value = profile;
 					p.appendChild(pp);
 
+					form.setAttribute ( "onsubmit", 'return confirm(\"{/literal}{tr}Are you sure you want to install the profile{/tr}{literal} ' + profile + '?\");' );
+					
 					cell.appendChild(form);
 				}
 				else if( data.installable )
@@ -135,6 +152,8 @@ function showDetails( id, domain, profile ) { // {{{
 					pp.value = profile;
 					p.appendChild(pp);
 
+					form.setAttribute ( "onsubmit", 'return confirm(\"{/literal}{tr}Are you sure you want to install the profile{/tr}{literal} ' + profile + '?\");' );
+
 					cell.appendChild(form);
 				}
 				else if( data.error )
@@ -187,6 +206,23 @@ function showDetails( id, domain, profile ) { // {{{
 				row.id = nid;
 				prev.parentNode.insertBefore( row, prev.nextSibling );
 			}
+		} else {		// readyState not 4 (complete)
+			
+			switch (req.readyState) {
+				case 1: {
+					infoOb.innerHTML = " {/literal}{tr}Loading profile{/tr}{literal}...";
+					break;
+				}
+				case 2: {
+					infoOb.innerHTML = " {/literal}{tr}Sending{/tr}{literal}...";
+					break;
+				}
+				case 3: {
+					infoOb.innerHTML = " {/literal}{tr}Waiting{/tr}{literal}...";
+					break;
+				}
+			}
+			
 		}
 	}
 	req.send('');
@@ -222,6 +258,19 @@ function showDetails( id, domain, profile ) { // {{{
 </div>
 
 <a name='profile-results'></a>
+{if $profilefeedback}
+	{remarksbox type="note" title="{tr}Note{/tr}"}
+		{cycle values="odd,even" print=false}
+		{tr}The following list of changes has been applied:{/tr}
+		<ul>
+		{section name=n loop=$profilefeedback}
+			<li class="{cycle}">
+				<p>{$profilefeedback[n]}</p>
+			</li>
+		{/section}
+		</ul>
+	{/remarksbox}
+{/if}
 <fieldset><legend>{tr}Profiles{/tr}</legend>
 <form method="get" action="tiki-admin.php#profile-results">
 <div class="adminoptionbox">

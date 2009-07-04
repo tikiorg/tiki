@@ -138,12 +138,24 @@ function smarty_function_query($params, &$smarty) {
         $php_self = dirname($_SERVER['PHP_SELF']).'/'.$php_self;
       }
 
-    } elseif ( empty($params['_anchor']) ) {
-			// Use current script explicitely, except if there is an anchor which is enough
-			// This also implies that if no anchor, every current URL params will be loosed
-			//
+	} else {
+		$php_self = $_SERVER['PHP_SELF'];
+	}
+	/* temporary fix
+   } elseif ( empty($params['_anchor']) ) {
+
+      // Use current script explicitely, except if there is an anchor which is enough
+      // This also implies that if no anchor, every current URL params will be loosed
+      //
       $php_self = $_SERVER['PHP_SELF'];
+
+    } else {
+
+      // If we just have an anchor, return only this anchor, usual types other than 'anchor' are irrelevant
+      $params['_type'] = 'anchor';
+
     }
+	*/
 
     switch ( $params['_type'] ) {
       case 'absolute_uri':
@@ -155,12 +167,12 @@ function smarty_function_query($params, &$smarty) {
       case 'relative':
 	$ret = basename($php_self).( $ret == '' ? '' : '?'.$ret );
         break;
-      case 'form_input': case 'arguments': /* default */
+      case 'form_input': case 'arguments': case 'anchor': /* default */
     }
   }
 
-	if ( isset($params['_anchor']) )
-		$ret .= '#' . $params['_anchor'];
+  if ( isset($params['_anchor']) )
+    $ret .= '#' . $params['_anchor'];
 
   return $ret;
 }

@@ -272,5 +272,3 @@ ask_ticket('edit-quiz-question');
 $smarty->assign('mid', 'tiki-quiz_edit.tpl');
 
 $smarty->display("tiki.tpl");
-
-?>

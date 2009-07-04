@@ -87,5 +87,3 @@ include_once ('tiki-section_options.php');
 // Display the template
 $smarty->assign('mid', 'tiki-likepages.tpl');
 $smarty->display("tiki.tpl");
-
-?>

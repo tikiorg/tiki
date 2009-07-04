@@ -160,5 +160,3 @@ class ShoutboxLib extends TikiLib {
 }
 global $dbTiki;
 $shoutboxlib = new ShoutboxLib($dbTiki);
-
-?>

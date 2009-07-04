@@ -63,5 +63,3 @@ function wikiplugin_article($data, $params) {
 	$article_data = $tikilib->get_article($Id);
 	return $article_data[$Field].$add;
 }
-
-?>

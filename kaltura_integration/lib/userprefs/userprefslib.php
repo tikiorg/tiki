@@ -64,5 +64,3 @@ class UserPrefsLib extends TikiLib {
 }
 global $dbTiki;
 $userprefslib = new UserPrefsLib($dbTiki);
-
-?>

@@ -41,11 +41,9 @@ $all = 0;
 
 if ($_REQUEST["parent"] == 0) {
 	$parent_name = 'Top';
-
 	$all = 1;
 } else {
 	$parent_info = $dirlib->dir_get_category($_REQUEST['parent']);
-
 	$parent_name = $parent_info['name'];
 }
 
@@ -54,7 +52,6 @@ $smarty->assign('parent_name', $parent_name);
 if (isset($parent_info) && $user) {
 	if (in_array($parent_info['editorGroup'], $userlib->get_user_groups($user))) {
 		$tiki_p_autosubmit_link = 'y';
-
 		$smarty->assign('tiki_p_autosubmit_link', 'y');
 	}
 }
@@ -73,7 +70,6 @@ if ($_REQUEST["siteId"]) {
 	$info = $dirlib->dir_get_site($_REQUEST["siteId"]);
 } else {
 	$info = array();
-
 	$info["name"] = '';
 	$info["description"] = '';
 	$info["url"] = '';
@@ -82,7 +78,6 @@ if ($_REQUEST["siteId"]) {
 }
 
 $smarty->assign_by_ref('info', $info);
-
 $smarty->assign('save', 'n');
 
 // Replace (add or edit) a site
@@ -91,7 +86,7 @@ if (isset($_REQUEST["save"])) {
 	$msg = "";
 
 	if (empty($user) && $prefs['feature_antibot'] == 'y' && (!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
- $msg .= tra("You have mistyped the anti-bot verification code; please try again.");
+		$msg .= tra("You have mistyped the anti-bot verification code; please try again.");
 	}
 
 	if (empty($_REQUEST["name"])) {
@@ -133,7 +128,7 @@ if (isset($_REQUEST["save"])) {
 	}
 	if ($msg == "") { // no error
 		$siteId = $dirlib->dir_replace_site($_REQUEST["siteId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST["url"],
-			$_REQUEST["country"], $_REQUEST["isValid"]);
+		$_REQUEST["country"], $_REQUEST["isValid"]);
 		$dirlib->remove_site_from_categories($siteId);
 
 		foreach ($_REQUEST["siteCats"] as $acat) {
@@ -207,11 +202,12 @@ $smarty->assign_by_ref('items', $items["data"]);
 $categs = $dirlib->dir_get_all_categories_accept_sites(0, -1, 'name asc', $find, $_REQUEST["siteId"]);
 if (isset($_REQUEST["save"]) && $msg != "" && isset($_REQUEST["siteCats"])) { // an error occured, the chosen categs have to be set again
 	$temp_max = sizeof($categs);
-	foreach ($_REQUEST["siteCats"] as $acat)
+	foreach ($_REQUEST["siteCats"] as $acat){
 		for ($ix = 0; $ix < $temp_max ; ++$ix) {
 			if ($categs[$ix]["categId"] == $acat)
 				$categs[$ix]["belongs"] = 'y';
 		}
+	}
 }
 $smarty->assign('categs', $categs);
 
@@ -228,13 +224,11 @@ $smarty->assign('mid', 'tiki-directory_add_site.tpl');
 $smarty->display("tiki.tpl");
 
 function country_sort($a, $b) {
-    if ($a == 'None' || $b == 'Other') {
-        return -1;
-    } elseif ($b == 'None' || $a == 'Other') {
-	return 1;
-    } else {
-	return strcmp($a, $b);
-    }
+	if ($a == 'None' || $b == 'Other') {
+		return -1;
+	} elseif ($b == 'None' || $a == 'Other') {
+		return 1;
+	} else {
+		return strcmp($a, $b);
+	}
 }
-
-?>

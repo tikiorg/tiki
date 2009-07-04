@@ -51,12 +51,12 @@
    		//Useful for creating dumps for diffent test db configurations
    		function create_dump_file($dump_file) {
   			chdir($this->mysql_data_dir);
- 			echo "\nDumping the whole tiki database: ";
-			$begTime = microtime(true);
+// 			echo "\nDumping the whole tiki database: ";
+//			$begTime = microtime(true);
 		
 			$mysqldump_command_line = "mysqldump --user=$this->tiki_test_db_user --password=$this->tiki_test_db_pwd $this->tiki_test_db > $dump_file";
 			shell_exec($mysqldump_command_line); 
-			echo (microtime(true) -$begTime)." sec\n";
+//			echo (microtime(true) -$begTime)." sec\n";
 			chdir($this->current_dir);
 		    return true;  			
    		}
@@ -64,11 +64,11 @@
    		//Creates start schema files from the test db
    		function create_start_schema_files() {
   			chdir($this->mysql_data_dir);
- 			echo "\n\rDumping start tables and times from information_schema: ";
-			$begTime = microtime(true);
+// 			echo "\n\rDumping start tables and times from information_schema: ";
+//			$begTime = microtime(true);
 			$mysql_select_from_schema_command = "echo select TABLE_NAME,UPDATE_TIME from information_schema.TABLES WHERE TABLE_SCHEMA='$this->tiki_test_db' | mysql --user=$this->tiki_test_db_user --password=$this->tiki_test_db_pwd > $this->tiki_schema_file_start";
 		    exec($mysql_select_from_schema_command);
-		    echo (microtime(true) - $begTime)." sec\n";
+//		    echo (microtime(true) - $begTime)." sec\n";
 		    chdir($this->current_dir);
 		    return true;  			
    		}
@@ -91,16 +91,16 @@
    				$tiki_schema_file_end = "dump_schema_tiki_end.txt";
 			
 		    	//GET THE CURRENT TABLES
-		    	echo "\n\rDumping end tables and times from information_schema: ";
-				$begTime = microtime(true);
+//		    	echo "\n\rDumping end tables and times from information_schema: ";
+//				$begTime = microtime(true);
 			
 		    	$mysql_select_from_schema_command = "echo select TABLE_NAME,UPDATE_TIME from information_schema.TABLES WHERE TABLE_SCHEMA='$this->tiki_test_db' | mysql --user=$this->tiki_test_db_user --password=$this->tiki_test_db_pwd > $tiki_schema_file_end";
 		    	shell_exec($mysql_select_from_schema_command);
-		   		echo (microtime(true) -$begTime)." sec";
+//		   		echo (microtime(true) -$begTime)." sec";
 		    
 		    	//COMPARE THE START AND END DUMPS
-		    	echo "\n\rCompare start and end tables and times from information_schema: ";
-				$begTime = microtime(true);
+//		    	echo "\n\rCompare start and end tables and times from information_schema: ";
+//				$begTime = microtime(true);
 			
 		    	$start_file_lines = file($this->tiki_schema_file_start, FILE_IGNORE_NEW_LINES);
 				$end_file_lines = file($tiki_schema_file_end, FILE_IGNORE_NEW_LINES);
@@ -109,10 +109,10 @@
 				//GET ONLY TABLE_NAMES THAT CHANGED
 				array_walk($diff, 'TikiAcceptanceTestDBRestorer::get_table_name');
 		    
-		    	echo (microtime(true) -$begTime)." sec";
+//		    	echo (microtime(true) -$begTime)." sec";
 		    
-		    	echo "\n\rCreate restore sql file: ";
-				$begTime = microtime(true);
+//		    	echo "\n\rCreate restore sql file: ";
+//				$begTime = microtime(true);
 					
 		    	$tiki_test_db_dump_as_string = file_get_contents($this->tiki_test_db_dump);
 			
@@ -127,15 +127,15 @@
 				}
 				fclose($tiki_restore_db_file);
 			
-				echo (microtime(true) -$begTime)." sec";
+//				echo (microtime(true) -$begTime)." sec";
 			
-				echo "\n\rRestore original database: ";
-				$begTime = microtime(true);
+//				echo "\n\rRestore original database: ";
+//				$begTime = microtime(true);
 			
 				//RESTORE THE ORIGINAL DATABASE
 				$mysql_restore_db_command = "mysql --user=$this->tiki_test_db_user --password=$this->tiki_test_db_pwd $this->tiki_test_db < $this->tiki_restore_db_file_name";
 		    	shell_exec($mysql_restore_db_command);
-		    	echo (microtime(true) -$begTime)." sec"; 
+//		    	echo (microtime(true) -$begTime)." sec"; 
 				$last_restored = $tiki_test_db_dump;
 			} else {
 				//restore the whole database				
@@ -153,15 +153,17 @@
 		}
    		
    		function restoreBareBonesDB() {
+   			chdir($this->mysql_data_dir);
    			$mysql_restore_db_command = "mysql --user=$this->tiki_test_db_user --password=$this->tiki_test_db_pwd $this->tiki_test_db < $this->tiki_bare_bones_db_dump";
 		    shell_exec($mysql_restore_db_command);
+		    chdir($this->current_dir);
+   		}
+   		
+   		function restoreDBFromScratch($dump_file) {
+   			chdir($this->mysql_data_dir);
+   			$mysql_restore_db_command = "mysql --user=$this->tiki_test_db_user --password=$this->tiki_test_db_pwd $this->tiki_test_db < $dump_file";
+		    shell_exec($mysql_restore_db_command);
+		    chdir($this->current_dir);
    		}
    		
    }
-   
-   
-   
-//   $test_TikiAcceptanceTestDBRestorer = new TikiAcceptanceTestDBRestorer();
-//   $test_TikiAcceptanceTestDBRestorer->create_dump_file("listPagesTestDump.sql");
-
-?>

@@ -44,5 +44,3 @@ function tiki_get_mime_sub($filename) {
 
 	return $filesplit["1"];
 }
-
-?>

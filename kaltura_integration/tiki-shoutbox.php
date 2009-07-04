@@ -44,7 +44,6 @@ if ($_REQUEST["msgId"]) {
 }
 
 $smarty->assign('message', $info["message"]);
-$smarty->assign('user', $info["user"]);
 
 if ($tiki_p_admin_shoutbox == 'y' || $user == $owner ) {
 	if (isset($_REQUEST["remove"])) {
@@ -68,7 +67,7 @@ if ($tiki_p_post_shoutbox == 'y') {
 			$smarty->assign('msg',tra("You have mistyped the anti-bot verification code; please try again."));
 			if (!empty($_REQUEST['message'])) $smarty->assign_by_ref('message', $_REQUEST['message']);
 		} else {
-			$shoutboxlib->replace_shoutbox($_REQUEST['msgId'], $user, $_REQUEST['message']);
+			$shoutboxlib->replace_shoutbox($_REQUEST['msgId'], $owner, $_REQUEST['message']);
 			$smarty->assign('msgId', '0');
 			$smarty->assign('message', '');
 		}
@@ -148,5 +147,3 @@ ask_ticket('shoutbox');
 // Display the template
 $smarty->assign('mid', 'tiki-shoutbox.tpl');
 $smarty->display("tiki.tpl");
-
-?>

@@ -21,7 +21,6 @@ if ($prefs['feature_categories'] == 'y') {
 
 if ($prefs['feature_faqs'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_faqs");
-
 	$smarty->display("error.tpl");
 	die;
 }
@@ -29,28 +28,26 @@ if ($prefs['feature_faqs'] != 'y') {
 if ($tiki_p_view_faqs != 'y') {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-
 	$smarty->display("error.tpl");
 	die;
 }
 
 if (!isset($_REQUEST["faqId"])) {
 	$smarty->assign('msg', tra("No faq indicated"));
-
 	$smarty->display("error.tpl");
 	die;
 }
 
 if ($tiki_p_admin != 'y' && $prefs['feature_categories'] == 'y') {
 	$perms_array = $categlib->get_object_categories_perms($user, 'faq', $_REQUEST['faqId']);
-   	if ($perms_array) {
-   		$is_categorized = TRUE;
-    	foreach ($perms_array as $perm => $value) {
+   if ($perms_array) {
+   	$is_categorized = TRUE;
+		foreach ($perms_array as $perm => $value) {
     		$$perm = $value;
-    	}
-   	} else {
-   		$is_categorized = FALSE;
-   	}
+		}
+	} else {
+   	$is_categorized = FALSE;
+  	}
 	if ($is_categorized && isset($tiki_p_view_categorized) && $tiki_p_view_categorized != 'y') {
 		$smarty->assign('errortype', 401);
 		$smarty->assign('msg',tra("Permission denied you cannot view this page"));
@@ -86,23 +83,23 @@ $smarty->assign_by_ref('channels', $channels["data"]);
 if (isset($_REQUEST["sugg"])) {
 	check_ticket('view-faq');
 	if ($tiki_p_suggest_faq == 'y') {
-	if (empty($user) && $prefs['feature_antibot'] == 'y' && (!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
- $error = tra('You have mistyped the anti-bot verification code; please try again.');
- $smarty->assign('error', $error);
-// Save the pending question and answer if antibot code is wrong
- $smarty->assign('pendingquestion', $_REQUEST["suggested_question"]);
- $smarty->assign('pendinganswer', $_REQUEST["suggested_answer"]);
- } else {
-  if (!empty($_REQUEST["suggested_question"]))
-  	{ 
-	   		$faqlib->add_suggested_faq_question($_REQUEST["faqId"], $_REQUEST["suggested_question"], $_REQUEST["suggested_answer"],
-			$user);
-} else {
- $error = tra('You must suggest a question; please try again.');
- $smarty->assign('error', $error);
-// Save the pending answer if question is empty
- $smarty->assign('pendinganswer', $_REQUEST["suggested_answer"]);
- 	}}}
+		if (empty($user) && $prefs['feature_antibot'] == 'y' && (!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
+		$error = tra('You have mistyped the anti-bot verification code; please try again.');
+		$smarty->assign('error', $error);
+		// Save the pending question and answer if antibot code is wrong
+		$smarty->assign('pendingquestion', $_REQUEST["suggested_question"]);
+		$smarty->assign('pendinganswer', $_REQUEST["suggested_answer"]);
+		} else {
+			if (!empty($_REQUEST["suggested_question"])){ 
+				$faqlib->add_suggested_faq_question($_REQUEST["faqId"], $_REQUEST["suggested_question"], $_REQUEST["suggested_answer"],$user);
+			} else {
+				$error = tra('You must suggest a question; please try again.');
+				$smarty->assign('error', $error);
+				// Save the pending answer if question is empty
+				$smarty->assign('pendinganswer', $_REQUEST["suggested_answer"]);
+		 	}
+		}
+	}
 }
 
 $suggested = $faqlib->list_suggested_questions(0, -1, 'created_desc', '', $_REQUEST["faqId"]);
@@ -111,7 +108,6 @@ $smarty->assign('suggested_cant', count($suggested["data"]));
 
 if ($prefs['feature_faq_comments'] == 'y') {
 	$comments_per_page = $prefs['faq_comments_per_page'];
-
 	$thread_sort_mode = $prefs['faq_comments_default_ordering'];
 	$comments_vars = array('faqId');
 	$comments_prefix_var = 'faq:';
@@ -123,7 +119,6 @@ include_once ('tiki-section_options.php');
 
 if ($prefs['feature_theme_control'] == 'y') {
 	$cat_type = 'faq';
-
 	$cat_objid = $_REQUEST["faqId"];
 	include ('tiki-tc.php');
 }
@@ -133,5 +128,3 @@ ask_ticket('view-faq');
 // Display the template
 $smarty->assign('mid', 'tiki-view_faq.tpl');
 $smarty->display("tiki.tpl");
-
-?>

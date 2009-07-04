@@ -28,7 +28,7 @@
 	{if ($info.task_version > 0) }
 		<a class="link" href="tiki-user_tasks.php?taskId={$taskId}&amp;tiki_view_mode=view&amp;show_history={$info.task_version-1}">{icon _id='resultset_previous' align="middle"}</a>
     {/if}
-        version: <b>{$info.task_version+1}</b>
+        {tr}version:{/tr} <b>{$info.task_version+1}</b>
     {if $info.task_version < $info.last_version }
         <a class="link" href="tiki-user_tasks.php?taskId={$taskId}&amp;tiki_view_mode=view&amp;show_history={$info.task_version+1}">{icon _id='resultset_next' align="middle"}</a>
     {/if}

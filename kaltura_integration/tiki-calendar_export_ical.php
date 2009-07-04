@@ -112,4 +112,3 @@ $smarty->assign('iCal', $iCal);
 // Display the template
 $smarty->assign('mid','tiki-calendar_export_ical.tpl');
 $smarty->display("tiki.tpl");
-?>

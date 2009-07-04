@@ -192,5 +192,3 @@ ask_ticket('tc-objects');
 // Display the template
 $smarty->assign('mid', 'tiki-theme_control_objects.tpl');
 $smarty->display("tiki.tpl");
-
-?>

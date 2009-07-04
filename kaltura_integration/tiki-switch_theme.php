@@ -37,4 +37,3 @@ if (isset($_GET['theme-option'])){
 
 header("location: $orig_url");
 exit;
-?>

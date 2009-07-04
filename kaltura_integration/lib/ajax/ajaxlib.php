@@ -87,8 +87,12 @@ if ($prefs['feature_ajax'] == 'y') {
 		}
 
 		/**
+		 * Register a JavaScript function
 		 * 
-		 * 
+		 * @access	public
+		 * @param	string|array $mFunction - JS function name OR array e.g. array('myFunctionName', array('callback' => 'myCallbackVarName')
+		 * @param	int $sRequestType {XAJAX_GET = 0}
+		 * @return	void
 		 */
 		function registerFunction($mFunction, $sRequestType=XAJAX_GET) {
 			$functionName = is_array($mFunction) ? $mFunction[0] : $mFunction;
@@ -109,7 +113,11 @@ if ($prefs['feature_ajax'] == 'y') {
 					} 
 				} 
 			}
-			xajax::register(XAJAX_FUNCTION,$mFunction);
+			if (is_array($mFunction) && count($mFunction) > 1) {
+				xajax::register(XAJAX_FUNCTION,$functionName, $mFunction[1]);
+			} else {
+				xajax::register(XAJAX_FUNCTION,$mFunction);
+			}
 		}
 
 		/*
@@ -160,7 +168,7 @@ $ajaxlib = new TikiAjax();
 $ajaxlib->registerFunction("loadComponent");
 
 function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user = '') {
-	global $smarty, $ajaxlib, $prefs, $user;
+	global $smarty, $ajaxlib, $prefs, $user, $headerlib;
 	global $js_script;
 	$objResponse = new xajaxResponse('UTF-8');
 
@@ -180,21 +188,15 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
 		// This has to be done here, since it is tikitabs() is usually called when loading the <body> tag
 		//   which is not done again when replacing content by the XAJAX response
 		//
-		$max_tikitabs = (int)$max_tikitabs;
-		if ( $max_tikitabs > 0 && $prefs['feature_tabs'] == 'y' ) {
-			global $cookietab;
-			$tab = ( $cookietab != '' ) ? (int)$cookietab : 1;
-			$objResponse->script("tikitabs($tab,$max_tikitabs);");
-		}
-		
+
 		// take out javascript from the html response because it needs to be sent specifically as javascript
 		// using $objResponse->script($s) below
-		
+
 		preg_match_all('/(?:<script.*type=[\'"]?text\/javascript[\'"]?.*>\s*?)(.*)(?:\s*<\/script>)/Umis', $content, $jsarr);
 		if (count($jsarr) > 1 && is_array($jsarr[1])) {
 			$js = preg_replace('/\s*?<\!--\/\/--><\!\[CDATA\[\/\/><\!--\s*?/Umis', '', $jsarr[1]);	// strip out CDATA XML wrapper if there
 			$js = preg_replace('/\s*?\/\/--><\!\]\]>\s*?/Umis', '', $js);
-			
+
 			// change 'function fName (' to 'fName = function(' (as it seems to work then)
 			$js = preg_replace('/function (.*)\(/Umis', "$1 = function(", $js);
 			//taginsert = function (
@@ -216,11 +218,9 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
 			$js =  $jsarr[1];
 			$js_files = array_merge($js_files, $js);
 		}
-		
+
 		if (preg_match('/overlib\(/Umis', $content)) {
-			//array_unshift($js_files, 'lib/overlib.js');	// just for now... (it stops the JS error on rollover but the tooltip doesn't appear - TODO replace with JQuery tips)
-			$js_script[] = file_get_contents('lib/overlib.js');
-			$content = '<div id="overDiv" style="position: absolute; visibility: hidden; z-index:1000;"></div>'.$content;
+			array_unshift($js_files, 'lib/overlib.js');	// just for now... (it stops the JS error on rollover but the tooltip doesn't appear - TODO replace with JQuery tips)
 		}
 
 		// now remove all the js from the source
@@ -233,9 +233,9 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
 		global $area;
 
 		$params = array(
-			'_tag' => 'n',
-			'_keepall' => 'y'
-		);
+				'_tag' => 'n',
+				'_keepall' => 'y'
+				);
 
 		if ( $prefs['feature_ticketlib2'] == 'y' ) {
 			$objResponse->confirmCommands(1, $smarty->get_template_vars('confirmation_text'));
@@ -254,7 +254,7 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
 	}
 
 	$js_files[] = 'tiki-jsplugin.php';
-	
+
 	if (sizeof($js_files)) {
 		foreach($js_files as $f) {
 			if (trim($f) != '') {
@@ -278,7 +278,24 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
 			$objResponse->call("auto_save");
 		}
 	}
-
+	$max_tikitabs = (int)$max_tikitabs;
+	if ( $max_tikitabs > 0 && $prefs['feature_tabs'] == 'y' ) {
+		global $cookietab;
+		$tab = ( $cookietab != '' ) ? (int)$cookietab : 1;
+		$objResponse->script("tikitabs($tab,$max_tikitabs);");
+	}
+	// collect js from headerlib
+	foreach($headerlib->getJs() as $s) {
+		if (trim($s) != '') {
+			$objResponse->script($s);
+		}
+	}
+	foreach($headerlib->getJsfiles() as $f) {
+		if (trim($f) != '') {
+			$objResponse->includeScript($f);
+		}
+	}
+	
 	return $objResponse;
 }
 

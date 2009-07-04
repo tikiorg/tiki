@@ -28,8 +28,6 @@ if (isset($_POST['action']) and isset($_POST['filename']) and trim($_POST['filen
 	}
 	die();
 }
-
 $smarty->assign('mid', 'tiki-tests_record.tpl');
 $smarty->assign('title',tra("TikiTest Record"));
 $smarty->display('tiki.tpl');
-?>

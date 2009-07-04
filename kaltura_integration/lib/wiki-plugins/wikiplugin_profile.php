@@ -74,5 +74,3 @@ function wikiplugin_profile( $data, $params ) {
 		return '__' . tr('Profile %0/%1 not found', $params['domain'], $params['name']) . '__';
 	}
 }
-
-?>

@@ -88,7 +88,7 @@
 	<input type="hidden" name="recurrent" value="1"/>
 		{tr}This event depends on a recurrence rule{/tr}
 	{else}
-<input type="checkbox" id="id_recurrent" name="recurrent" value="1" onClick="toggle('recurrenceRules');toggle('startdate');toggle('enddate');"{if $calitem.recurrenceId gt 0 or $recurrent eq 1}checked="checked"{/if}/><label for="id_recurrent">{tr}This event depends on a recurrence rule{/tr}</label>
+<input type="checkbox" id="id_recurrent" name="recurrent" value="1" onclick="toggle('recurrenceRules');toggle('startdate');toggle('enddate');"{if $calitem.recurrenceId gt 0 or $recurrent eq 1}checked="checked"{/if}/><label for="id_recurrent">{tr}This event depends on a recurrence rule{/tr}</label>
 	{/if}
 {else}
 	<span class="summary">{if $calitem.recurrenceId gt 0}{tr}This event depends on a recurrence rule{/tr}{else}{tr}This event is not recurrent{/tr}{/if}</span>
@@ -400,16 +400,16 @@
 <td>{tr}Description{/tr}
 {if $edit}
   <br /><br />
-  {include file="textareasize.tpl" area_name="editwiki" formId="editcalitem"}<br /><br />
+  {include file='textareasize.tpl' area_name="editwiki" formId="editcalitem"}<br /><br />
   {if $prefs.quicktags_over_textarea neq 'y'}
-    {include file="tiki-edit_help_tool.tpl" area_name="save[description]"}
+    {include file='tiki-edit_help_tool.tpl' area_name="save[description]"}
   {/if}
 {/if}
 
 </td><td>
 {if $edit}
   {if $prefs.quicktags_over_textarea eq 'y'}
-    {include file="tiki-edit_help_tool.tpl" area_name="save[description]"}
+    {include file='tiki-edit_help_tool.tpl' area_name="save[description]"}
   {/if}
   <textarea id='editwiki' class="wikiedit" cols="{$cols}" rows="{$rows}" name="save[description]" style="width:98%">{$calitem.description}</textarea>
   <input type="hidden" name="rows" value="{$rows}"/>
@@ -631,5 +631,3 @@ onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 </form>
 </div>
 {/strip}
-
-{include file=tiki-edit_help.tpl}

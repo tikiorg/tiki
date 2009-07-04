@@ -37,5 +37,3 @@ function wikiplugin_fade( $body, $params )
 	$body = $tikilib->parse_data( $body );
 	return "~np~<a href=\"javascript:toggle('$unique')\">$label</a><div id=\"$unique\" style=\"display:none\">$body</div>~/np~";
 }
-
-?>

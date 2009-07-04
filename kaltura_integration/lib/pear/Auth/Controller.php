@@ -298,5 +298,3 @@ class Auth_Controller
     // }}}
 
 }
-
-?>

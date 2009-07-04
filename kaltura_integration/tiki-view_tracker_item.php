@@ -294,6 +294,9 @@ if (!isset($tracker_info["writerGroupCanModify"]) or (isset($gtid) and ($_REQUES
 	$tracker_info["writerGroupCanModify"] = 'n';
 }
 $tikilib->get_perm_object($_REQUEST['trackerId'], 'tracker', $tracker_info);
+if (!empty($_REQUEST['itemId'])) {
+	$trklib->get_special_group_tracker_perm($tracker_info, true);
+}
 
 if ($tiki_p_view_trackers != 'y' and $tracker_info["writerCanModify"] != 'y' and $tracker_info["writerGroupCanModify"] != 'y'&& !$special) {
 	$smarty->assign('errortype', 401);
@@ -637,24 +640,15 @@ foreach($xfields["data"] as $i=>$array) {
 	}
 }
 
-if (isset($tracker_info["authorgroupfield"])) {
-	$tracker_info['authorgroup'] = $trklib->get_item_value($_REQUEST["trackerId"],$_REQUEST["itemId"],$tracker_info["authorgroupfield"]);
-	if ($tracker_info['authorgroup'] == $group) {
-		$tiki_p_modify_tracker_items = 'y';
-		$smarty->assign("tiki_p_modify_tracker_items","y");
-		$tiki_p_attach_trackers = 'y';
-		$smarty->assign("tiki_p_attach_trackers","y");
-		$tiki_p_comment_trackers = 'y';
-		$smarty->assign("tiki_p_comment_trackers","y");
-		$tiki_p_view_trackers = 'y';
-		$smarty->assign("tiki_p_view_trackers","y");
-	}
-}
 if (isset($tracker_info["authorfield"])) {
 	$tracker_info['authorindiv'] = $trklib->get_item_value($_REQUEST["trackerId"],$_REQUEST["itemId"],$tracker_info["authorfield"]);
 	if ($tracker_info['authorindiv'] == $user or $tracker_info['authorindiv'] == '') {
 		$tiki_p_modify_tracker_items = 'y';
 		$smarty->assign("tiki_p_modify_tracker_items","y");
+		$tiki_p_modify_tracker_items_pending = 'y';
+		$smarty->assign('tiki_p_modify_tracker_items_pending','y');
+		$tiki_p_modify_tracker_items_closed = 'y';
+		$smarty->assign('tiki_p_modify_tracker_items_closed','y');
 		$tiki_p_attach_trackers = 'y';
 		$smarty->assign("tiki_p_attach_trackers","y");
 		$tiki_p_comment_trackers = 'y';
@@ -680,14 +674,20 @@ if ($textarea_options) {
 	$smarty->assign('quicktags', $quicktags["data"]);
 }
 
-if ($tiki_p_admin_trackers == 'y' or $tiki_p_modify_tracker_items == 'y') {
+if ($tiki_p_admin_trackers == 'y'
+	|| ($tiki_p_modify_tracker_items == 'y' && $item_info['status'] != 'p' && $item_info['status'] != 'c')
+	|| ($tiki_p_modify_tracker_items_pending == 'y' && $item_info['status'] == 'p')
+	|| ($tiki_p_modify_tracker_items_closed == 'y' && $item_info['status'] == 'c')){
 	if (isset($_REQUEST["remove"])) {
 		check_ticket('view-trackers-items');
 		$trklib->remove_tracker_item($_REQUEST["remove"]);
 	}
 }
 
-if ($tiki_p_modify_tracker_items == 'y' || $special) {
+if (($tiki_p_modify_tracker_items == 'y' && $item_info['status'] != 'p' && $item_info['status'] != 'c')
+	|| ($tiki_p_modify_tracker_items_pending == 'y' && $item_info['status'] == 'p')
+	|| ($tiki_p_modify_tracker_items_closed == 'y' && $item_info['status'] == 'c')
+	|| $special) {
 	if (isset($_REQUEST["save"]) || isset($_REQUEST["save_return"])) {
 
 		// Check field values for each type and presence of mandatory ones
@@ -1277,5 +1277,3 @@ if ( $prefs['feature_ajax'] == 'y' ) {
 // Display the template
 $smarty->assign('mid', 'tiki-view_tracker_item.tpl');
 $smarty->display("tiki.tpl");
-
-?>

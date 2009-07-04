@@ -37,5 +37,3 @@ if ($info["path"]) {
 } else {
 	echo "$content";
 }
-
-?>

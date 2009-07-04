@@ -195,6 +195,16 @@ function wikiplugin_trackerlist_info() {
 				'name' => tra('Compute'),
 				'description' => tra('Sum or average all the values of a field  and displays it at the bottom of the table.').' '.tra('fieldId').'/sum:'.tra('fieldId').'/avg',
 			),
+			'silent' => array(
+				'required' => false,
+				'name' => tra('Silent'),
+				'description' => tra('Show nothing if no items'),
+			),
+			'showdelete' => array(
+				'required' => false,
+				'name' => tra('Delete'),
+				'description' => tra('Show a delete button'),
+			),
 		),
 	);
 }
@@ -220,6 +230,9 @@ function wikiplugin_trackerlist($data, $params) {
 		}
 
 		if ($tiki_p_admin_trackers != 'y') {
+			if ($perms['tiki_p_view_trackers'] != 'y' && !$user) {
+				return;
+			}
 			$userCreatorFieldId = $trklib->get_field_id_from_type($trackerId, 'u', '1%');
 			$groupCreatorFieldId = $trklib->get_field_id_from_type($trackerId, 'g', '1%');
 			$perms = $tikilib->get_perm_object($trackerId, 'tracker', $tracker_info, false);
@@ -316,6 +329,11 @@ function wikiplugin_trackerlist($data, $params) {
 			$showitemrank = 'n';
 		}
 		$smarty->assign_by_ref('showitemrank', $showitemrank);
+
+		if (!isset($showdelete)) {
+			$showdelete = 'n';
+		}
+		$smarty->assign_by_ref('showdelete', $showdelete);
 
 		if (!isset($status)) {
 			$status = "o";
@@ -445,6 +463,9 @@ function wikiplugin_trackerlist($data, $params) {
 		} elseif ($exactvalue == '#user') {
 			$exactvalue = $user;
 		}
+		if (!empty($_REQUEST['itemId'])) {
+			$itemId = $_REQUEST['itemId'];
+		}
 
 		if (isset($itemId)) {
 			if (strstr($itemId, ':'))
@@ -535,6 +556,7 @@ function wikiplugin_trackerlist($data, $params) {
 					$exactvalue = array_merge(array($exactvalue), $groups);
 				global $group;// awful trick - but the filter garantee that the group is ok
 				$smarty->assign_by_ref('ours', $group);
+				$perms = array_merge($perms, $trklib->get_special_group_tracker_perm($tracker_info));
 			}
 		}
 
@@ -586,9 +608,22 @@ function wikiplugin_trackerlist($data, $params) {
 			$smarty->assign('exportUrl', $exportUrl);
 		}
 
+		if (!empty($_REQUEST['delete'])) {
+			if (($item_info = $trklib->get_item_info($_REQUEST['delete'])) && $trackerId == $item_info['trackerId']) {
+				if ($tiki_p_admin_trackers == 'y'
+					|| ($perms['tiki_p_modify_tracker_items'] == 'y' && $item_info['status'] != 'p' && $item_info['status'] != 'c')
+					|| ($perms['tiki_p_modify_tracker_items_pending'] == 'y' && $item_info['status'] == 'p')
+					|| ($perms['tiki_p_modify_tracker_items_closed'] == 'y' && $item_info['status'] == 'c')	) {
+					$trklib->remove_tracker_item($_REQUEST['delete']);
+				}
+			}
+		}
 
 		if (count($passfields)) {
 			$items = $trklib->list_items($trackerId, $tr_offset, $max, $tr_sort_mode, $passfields, $filterfield, $filtervalue, $tr_status, $tr_initial, $exactvalue, $filter);
+			if (isset($silent) && $silent == 'y' && empty($items['cant'])) {
+				return;
+			}
 
 			if ($items['cant'] == 1 && isset($goIfOne) && ($goIfOne == 'y' || $goIfOne == 1)) {
 				header('Location: tiki-view_tracker_item.php?itemId='.$items['data'][0]['itemId'].'&amp;trackerId='.$items['data'][0]['trackerId']);
@@ -677,5 +712,3 @@ function wikiplugin_trackerlist($data, $params) {
 	}
 	return $back;
 }
-
-?>

@@ -397,15 +397,9 @@ class Calendar {
 		return tra($en[$w], $lan);
 	}
 }
-
-?>
-
-<?php
-
 // example
 //$c=new calendar('en');
 //$x=$c->day_of_week_str(2,3,2000,'po');
 //print("$x\n");
 //'ç'
 
-?>

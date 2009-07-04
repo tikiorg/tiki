@@ -85,4 +85,3 @@ class Auth_Container_vpopmail extends Auth_Container {
     // }}}
 
 }
-?>

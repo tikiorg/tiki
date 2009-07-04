@@ -16,11 +16,11 @@
 	{if $field_value.value}{$field_value.value|escape}{/if}
 
 {* -- visible for some groups -- *}
-{elseif !empty($field_value.visibleBy) and !in_array($default_group, $field_value.visibleBy) and $tiki_p_admin_trackers ne 'y'}
+{elseif !empty($field_value.visibleBy) and !in_array($default_group, $field_value.visibleBy) and !($user eq '' and in_array('Anonymous', $field_value.visibleBy)) and $tiki_p_admin_trackers ne 'y'}
 
 {* -- editable for some groups -- *}
-{elseif !empty($field_value.editableBy) and !in_array($default_group, $field_value.editableBy) and $tiki_p_admin_trackers ne 'y'}
-	{include file="tracker_item_field_value.tpl"}
+{elseif !empty($field_value.editableBy) and !in_array($default_group, $field_value.editableBy) and !($user eq '' and in_array('Anonymous', $field_value.editableBy)) and $tiki_p_admin_trackers ne 'y'}
+	{include file='tracker_item_field_value.tpl'}
 
 {* -------------------- system -------------------- *}
 {elseif $field_value.type eq 's' and ($field_value.name eq "Rating" or $field_value.name eq tra("Rating")) and $tiki_p_tracker_vote_ratings eq 'y'}
@@ -36,15 +36,15 @@
 		{foreach key=id item=one from=$field_value.list}
 			{if ( ! isset($field_value.itemChoices) || $field_value.itemChoices|@count eq 0 || in_array($one, $field_value.itemChoices) )}
 				{if $field_value.options_array[0] ne '2'}
-					<option value="{$one|escape}"{if $one eq $field_value.value} selected="selected"{/if}>{$one|username}</option>
+					<option value="{$one|escape}"{if $one eq $field_value.value} selected="selected"{/if}>{$one|username|escape}</option>
 				{else}
-					<option value="{$one|escape}"{if $one eq $user} selected="selected"{/if}>{$one|username}</option>
+					<option value="{$one|escape}"{if $one eq $user} selected="selected"{/if}>{$one|username|escape}</option>
 				{/if}
 			{/if}
 		{/foreach}
 		</select>
 	{else}
-		{$user|escape|username}
+		{$user|username|escape}
 	{/if}
 
 {* -------------------- IP selector -------------------- *}
@@ -81,9 +81,7 @@
 {* -------------------- category -------------------- *}
 {elseif $field_value.type eq 'e'}
 	{if !empty($field_value.options_array[2]) && ($field_value.options_array[2] eq '1' or $field_value.options_array[2] eq 'y')}
-		<script type="text/javascript">
-		{include file='categSelectAll.tpl'}
-		</script>
+		{select_all checkbox_names=`$field_value.ins_id`[] label="{tr}Select All{/tr}"}
 	{/if}
 	{if $field_value.options_array[1] eq 'd' || $field_value.options_array[1] eq 'm'}
 		<select name="{$field_value.ins_id}[]"{if $field_value.options_array[1] eq 'm'} multiple="multiple"{/if}>
@@ -128,12 +126,16 @@
 		{if isset($cur_field.options_array[1]) and $field_value.options_array[1] ne '' } {assign var=$Length value=$field_value.options_array[1] }{/if}
 		{if isset($cur_field.options_array[2]) and $field_value.options_array[2] ne '' } {assign var=$Height value=$field_value.options_array[2] }{/if}
 		{if $ModeVideo eq 'y' } { assign var="Height" value=$Height+$prefs.VideoHeight}{/if}
-		{include file=multiplayer.tpl url=$field_value.value w=$Length h=$Height video=$ModeVideo}
+		{include file='multiplayer.tpl' url=$field_value.value w=$Length h=$Height video=$ModeVideo}
 	{/if}
 
 {* -------------------- file -------------------- *}
 {elseif $field_value.type eq 'A'}
-	<input type="file" name="{$field_value.ins_id}"{if isset($input_err)} value="{$field_value.value}"{/if} />
+	{if $tiki_p_attach_trackers ne 'y'}
+		{tr}Permission denied{/tr}
+	{else}
+		<input type="file" name="{$field_value.ins_id}"{if isset($input_err)} value="{$field_value.value}"{/if} />
+	{/if}
 	{if !isset($input_err) and $field_value.value ne ''}
 		<br />
 		{$field_value.info.filename}&nbsp;
@@ -203,7 +205,7 @@
 	{/if}
 	{if $field_value.isMultilingual ne 'y'}
 		{if $prefs.quicktags_over_textarea eq 'y' and $field_value.options_array[0] eq 1}
-    		{include file=tiki-edit_help_tool.tpl qtnum=$field_value.fieldId area_name="area_"|cat:$field_value.fieldId}
+    		{include file='tiki-edit_help_tool.tpl' qtnum=$field_value.fieldId area_name="area_"|cat:$field_value.fieldId}
 		{/if}
 		{if $field_value.options_array[2] == 1}
 				<input type="text" name="{$field_value.ins_id}"{if $field_value.options_array[1] > 0} size="{$field_value.options_array[1]}"{/if}{if $field_value.options_array[3]>0} maxlength="{$field_value.options_array[3]}"{/if} value="{$field_value.value|escape}"{if $field_value.options_array[5]} onKeyUp="wordCount({$field_value.options_array[5]}, this, 'cpt_{$field_value.fieldId}', '{tr}Word Limit Exceeded{/tr}')"{/if} />
@@ -222,7 +224,7 @@
 			<td>{$ling.lang}</td>
       		<td>
 				{if $prefs.quicktags_over_textarea eq 'y' and $field_value.options_array[0] eq 1}
-        			{include file=tiki-edit_help_tool.tpl qtnum=$field_value.id area_name=area_`$field_value.id`_`$ling.lang`}
+        			{include file='tiki-edit_help_tool.tpl' qtnum=$field_value.id area_name=area_`$field_value.id`_`$ling.lang`}
         		{/if}
 				<textarea id="area_{$field_value.fieldId}_{$ling.lang}" name="{$field_value.ins_id}[{$ling.lang}]" cols="{if $field_value.options_array[1] gt 1}{$field_value.options_array[1]}{else}50{/if}" rows="{if $field_value.options_array[2] gt 1}{$field_value.options_array[2]}{else}4{/if}"{if $field_value.options_array[5] > 0} onKeyUp="wordCount({$field_value.options_array[5]}, this, 'cpt_{$field_value.fieldId}_{$ling.lang}', '{tr}Word Limit Exceeded{/tr}')"{/if}>
 					{$ling.value|escape}
@@ -384,7 +386,7 @@
 {elseif $field_value.type eq 'q'}
 	<input type="hidden" name="track[{$field_value.fieldId}]" />
 	<input type="hidden" name="{$field_value.ins_id}" value="{$field_field.value|escape}" />
-	{$field_value.value|escape}
+	{include file='tracker_item_field_value.tpl'}
 
 {/if}
 

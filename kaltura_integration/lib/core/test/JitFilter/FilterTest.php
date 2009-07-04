@@ -84,5 +84,3 @@ class JitFilter_FilterTest extends TikiTestCase
 		$this->assertEquals( '', $this->array['baz'][1] );
 	}
 }
-
-?>

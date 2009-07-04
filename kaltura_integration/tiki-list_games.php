@@ -263,5 +263,3 @@ ask_ticket('list-games');
 // Display the template
 $smarty->assign('mid', 'tiki-list_games.tpl');
 $smarty->display("tiki.tpl");
-
-?>

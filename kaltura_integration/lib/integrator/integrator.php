@@ -346,5 +346,3 @@ function add_replace_repository($repID, $name, $path, $start, $css, $vis, $cache
             array($tikilib->httpPrefix()."/%integrator%.php?repID=".$repID.(strlen($file) > 0 ? "&file=".$file : '')));
     }
 }
-
-?>

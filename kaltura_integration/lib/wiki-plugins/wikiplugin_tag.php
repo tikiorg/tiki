@@ -49,4 +49,3 @@ function wikiplugin_tag($data, $params) {
 	}
 	return "<$tag$style>$data</$tag>";
 }
-?>

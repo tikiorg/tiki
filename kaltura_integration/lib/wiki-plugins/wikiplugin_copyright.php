@@ -57,5 +57,3 @@ function wikiplugin_copyright($data, $params) {
 
 	return $result;
 }
-
-?>

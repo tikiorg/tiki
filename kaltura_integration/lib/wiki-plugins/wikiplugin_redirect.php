@@ -54,5 +54,3 @@ function wikiplugin_redirect($data, $params) {
 		
 	return $areturn;
 }
-
-?>

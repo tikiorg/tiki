@@ -114,4 +114,3 @@ function tr_replace( $content, $args ) {
 	
 	return str_replace( $needles, $replacements, $content );
 }
-?>

@@ -11,6 +11,8 @@ require_once ('tiki-setup.php');
 
 include_once ('lib/menubuilder/menulib.php');
 
+$auto_query_args = array('offset','sort_mode','menuId');
+
 if ($tiki_p_admin != 'y' && $tiki_p_edit_menu != 'y') {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
@@ -100,5 +102,3 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 // Display the template
 $smarty->assign('mid', 'tiki-admin_menus.tpl');
 $smarty->display("tiki.tpl");
-
-?>

@@ -55,5 +55,3 @@ $statslib->stats_hit($_REQUEST['pageName'],"html_pages");
 // Display the template
 $smarty->assign('mid', 'tiki-page.tpl');
 $smarty->display("tiki.tpl");
-
-?>

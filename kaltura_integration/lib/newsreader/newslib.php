@@ -112,5 +112,3 @@ class Newslib extends TikiLib {
 }
 global $dbTiki;
 $newslib = new Newslib($dbTiki);
-
-?>

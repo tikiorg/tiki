@@ -96,5 +96,3 @@ ask_ticket('list-contents');
 // Display the template
 $smarty->assign('mid', 'tiki-list_contents.tpl');
 $smarty->display("tiki.tpl");
-
-?>

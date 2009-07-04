@@ -45,5 +45,3 @@ class RefererLib extends TikiLib {
 }
 global $dbTiki;
 $refererlib = new RefererLib($dbTiki);
-
-?>

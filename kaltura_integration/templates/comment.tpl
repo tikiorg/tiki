@@ -4,12 +4,12 @@
 	<div class="inner"><span class="corners-top"><span></span></span>
 
 	<div class="clearfix postbody">
-		{include file="comment-header.tpl"}
-		{include file="comment-body.tpl"}
+		{include file='comment-header.tpl'}
+		{include file='comment-body.tpl'}
 	</div>
 
 {if $thread_style != 'commentStyle_headers'}
-	{include file="comment-footer.tpl"}
+	{include file='comment-footer.tpl'}
 	<br style="clear: both;" />
 {/if}
 
@@ -23,7 +23,7 @@
 		<div class="sub_comment_area">
 			<div class="sub_comment">
 		{/if}
-		{include file="comment.tpl" comment=$comment}
+		{include file='comment.tpl' comment=$comment}
 		{if $comment.doNotShow != 1  && $thread_style != 'commentStyle_plain' }
 			</div>
 		</div>

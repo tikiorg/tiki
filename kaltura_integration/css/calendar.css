@@ -102,17 +102,6 @@ div.tabrow {
 	text-decoration: none;
 }
 
-.Cal0:before {
-	content : "? ";
-}
-.Cal1:before {
-	content : "+ ";
-	background : #FFCC77;
-}
-.Cal2:before {
-	content : "X ";
-	background : #EEEEAA;
-}
 .caltitle {
 	font-weight : bold;
 	color : #425262;
@@ -544,7 +533,8 @@ a.addevent:hover { border-bottom:0px; }
 	line-height: 1em;
 	width: 100%;
 	text-align: center;
-	}
+	padding: 1px;
+}
 
 .viewmode div {display: inline}
 .calbuttonBox {  }
@@ -558,3 +548,8 @@ a.next img {
 	vertical-align: middle;  
 }
 
+/* Smaller icons inside calendar headers, in order to have no impact on the position of items on the week and day views */
+.calHeading a img {
+	height: 14px;
+	width: 14px;
+}

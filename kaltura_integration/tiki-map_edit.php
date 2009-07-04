@@ -12,16 +12,16 @@ include_once ('lib/stats/statslib.php');
 include_once ('lib/map/maplib.php');
 
 if(!isset($prefs['feature_maps']) or $prefs['feature_maps'] != 'y') {
-  $smarty->assign('msg',tra("Feature disabled"));
-  $smarty->display("error.tpl");
-  die;
+	$smarty->assign('msg',tra("Feature disabled"));
+	$smarty->display("error.tpl");
+	die;
 }
 
 if($tiki_p_map_view != 'y') {
-  $smarty->assign('errortype', 401);
-  $smarty->assign('msg',tra("You do not have permissions to view the maps"));
-  $smarty->display("error.tpl");
-  die;
+	$smarty->assign('errortype', 401);
+	$smarty->assign('msg',tra("You do not have permissions to view the maps"));
+	$smarty->display("error.tpl");
+	die;
 }
 
 if (!isset($_REQUEST["mode"])) {
@@ -57,30 +57,26 @@ $smarty->assign('title',tra("Mapfiles"));
 
 if (isset($_REQUEST["create"]) && ($tiki_p_map_create == 'y')) {
 	$newmapfile = $prefs['map_path'].$_REQUEST["newmapfile"];
-
 	if (!preg_match('/\.map$/i', $newmapfile) || preg_match('/\.\./', $_REQUEST["newmapfile"])) {
 		$smarty->assign('msg', tra("mapfile name incorrect"));
-
 		$smarty->display("error.tpl");
 		die;
 	}
-  ini_set("display_errors","0");
+	ini_set("display_errors","0");
 	$fp = @fopen($newmapfile, "r");
-  ini_set("display_errors","1");
+	ini_set("display_errors","1");
 	if ($fp) {
 		$smarty->assign('msg', tra("This mapfile already exists"));
-
 		$smarty->display("error.tpl");
 		fclose ($fp);
 		die;
 	}
-  ini_set("display_errors","0");
+	ini_set("display_errors","0");
 	$fp = fopen($newmapfile, "w");
-  ini_set("display_errors","1");
+	ini_set("display_errors","1");
 	if (!$fp) {
 		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra("You do not have permission to write to the mapfile"));
-
 		$smarty->display("error.tpl");
 		die;
 	}
@@ -120,40 +116,37 @@ if ((isset($_REQUEST["delete"])) && ($tiki_p_map_delete == 'y')) {
 
 // Save the mapfile
 if (isset($_REQUEST["save"])) {
-if ($tiki_p_map_edit != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
-
+	if ($tiki_p_map_edit != 'y') {
+		$smarty->assign('errortype', 401);
+		$smarty->assign('msg', tra("You do not have permission to use this feature"));
+		$smarty->display("error.tpl");
+		die;
+	}
 	if (!preg_match('/\.map$/i', $_REQUEST["mapfile"])) {
 		$smarty->assign('msg', tra("mapfile name incorrect"));
 		$smarty->display("error.tpl");
 		die;
 	}
-	
-
   
-  //Get the revision number
-  // Get mapfiles from the mapfiles directory
+	//Get the revision number
+	// Get mapfiles from the mapfiles directory
 	$files=$maplib->listMapsWithRev($prefs['map_path']);
 	
 	for ($i=0;$i<count($files);$i++) {
-  	if (substr($files[$i],0,strlen($_REQUEST["mapfile"]))==$_REQUEST["mapfile"]) {
-  		$suffix=substr($files[$i],strlen($_REQUEST["mapfile"]));
-  		$revision=".".sprintf("%04d",intval(substr($suffix,1))+1);
-  	}
-  }
+		if (substr($files[$i],0,strlen($_REQUEST["mapfile"]))==$_REQUEST["mapfile"]) {
+			$suffix=substr($files[$i],strlen($_REQUEST["mapfile"]));
+			$revision=".".sprintf("%04d",intval(substr($suffix,1))+1);
+  		}
+	}
 	
 	ini_set("display_errors","0");
-  if (!copy($prefs['map_path'].$_REQUEST["mapfile"],$prefs['map_path'].$_REQUEST["mapfile"].$revision)) {
+	if (!copy($prefs['map_path'].$_REQUEST["mapfile"],$prefs['map_path'].$_REQUEST["mapfile"].$revision)) {
 		$smarty->assign('msg', tra("I could not make a copy"));
 		$smarty->display("error.tpl");
 		die;  
-  }
+	}
 	$fp = fopen($prefs['map_path'].$_REQUEST["mapfile"], "w");
-  ini_set("display_errors","1");
+	ini_set("display_errors","1");
 	if (!$fp) {
 		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra("You do not have permission to write to the mapfile"));
@@ -179,43 +172,39 @@ if ($tiki_p_map_edit != 'y') {
 	fclose ($fp);
 	
 	if ($prefs['feature_user_watches'] == 'y') {
-	  $nots = $tikilib->get_event_watches('map_changed', $_REQUEST["mapfile"]);
+		$nots = $tikilib->get_event_watches('map_changed', $_REQUEST["mapfile"]);
+		foreach ($nots as $not) {
+			$smarty->assign('mail_site', $_SERVER["SERVER_NAME"]);
+			$smarty->assign('mail_page', $_REQUEST["mapfile"]);
+			$smarty->assign('mail_date', date("U"));
+			$smarty->assign('mail_user', $user);
+			$smarty->assign('mail_hash', $not['hash']);
+			$foo = parse_url($_SERVER["REQUEST_URI"]);
+			$machine = $tikilib->httpPrefix(). $foo["path"];
+			$smarty->assign('mail_machine', $machine);
+			$parts = explode('/', $foo['path']);
 
-	  foreach ($nots as $not) {
+			if (count($parts) > 1)
+				unset ($parts[count($parts) - 1]);
 
-		     $smarty->assign('mail_site', $_SERVER["SERVER_NAME"]);
-
-		     $smarty->assign('mail_page', $_REQUEST["mapfile"]);
-		     $smarty->assign('mail_date', date("U"));
-		     $smarty->assign('mail_user', $user);
-		     $smarty->assign('mail_hash', $not['hash']);
-		     $foo = parse_url($_SERVER["REQUEST_URI"]);
-		     $machine = $tikilib->httpPrefix(). $foo["path"];
-		     $smarty->assign('mail_machine', $machine);
-		     $parts = explode('/', $foo['path']);
-
-		     if (count($parts) > 1)
-			      unset ($parts[count($parts) - 1]);
-
-		     $smarty->assign('mail_machine_raw', $tikilib->httpPrefix(). implode('/', $parts));
-		     $mail_data = $smarty->fetch('mail/user_watch_map_changed.tpl');
-		     @mail($not['email'], tra('Map'). ' ' . $_REQUEST["mapfile"] . ' ' . tra('changed'), $mail_data, "From: ".$prefs['sender_email']."\r\nContent-type: text/plain;charset=utf-8\r\n");
-	  }
-	}
-	
+			$smarty->assign('mail_machine_raw', $tikilib->httpPrefix(). implode('/', $parts));
+			$mail_data = $smarty->fetch('mail/user_watch_map_changed.tpl');
+			@mail($not['email'], tra('Map'). ' ' . $_REQUEST["mapfile"] . ' ' . tra('changed'), $mail_data, "From: ".$prefs['sender_email']."\r\nContent-type: text/plain;charset=utf-8\r\n");
+		}
+	}	
 }
 
 if ((isset($_REQUEST["mapfile"])) && ($mode=='editing')) {
-if ($tiki_p_map_edit != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
- $mapfile = $prefs['map_path'] .$_REQUEST["mapfile"];
-  ini_set("display_errors","0"); 
+	if ($tiki_p_map_edit != 'y') {
+		$smarty->assign('errortype', 401);
+		$smarty->assign('msg', tra("You do not have permission to use this feature"));
+		$smarty->display("error.tpl");
+		die;
+	}
+	$mapfile = $prefs['map_path'] .$_REQUEST["mapfile"];
+	ini_set("display_errors","0"); 
 	$fp = fopen($mapfile, "r");
-  ini_set("display_errors","1");
+	ini_set("display_errors","1");
 	if (!$fp) {
 		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra("You do not have permission to read the mapfile"));
@@ -251,19 +240,18 @@ $smarty->assign('tiki_p_map_edit', $tiki_p_map_edit);
 // Watches
 if($prefs['feature_user_watches'] == 'y') {
 	if($user && isset($_REQUEST['watch_event'])) {
-	  if($_REQUEST['watch_action']=='add') {
-	    $tikilib->add_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object'],'Map',$_REQUEST['watch_object'],"tiki-map.php?mapfile=".$_REQUEST['watch_object']);
-	  } else {
-	    $tikilib->remove_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object'], 'map');
-	  }
+		if($_REQUEST['watch_action']=='add') {
+			 $tikilib->add_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object'],'Map',$_REQUEST['watch_object'],"tiki-map.php?mapfile=".$_REQUEST['watch_object']);
+		} else {
+			$tikilib->remove_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object'], 'map');
+		}
 	}
-
- $user_watching_map = array();
- foreach ($files as $key => $value) {
-	  $user_watching_map[$key]='n';
-	  if($user && $tikilib->user_watches($user,'map_changed',$value,'Map')) { 
-		  $user_watching_map[$key]='y';
-	  }
+	$user_watching_map = array();
+	foreach ($files as $key => $value) {
+		$user_watching_map[$key]='n';
+		if($user && $tikilib->user_watches($user,'map_changed',$value,'Map')) { 
+			$user_watching_map[$key]='y';
+		}
 	}
 	$smarty->assign('user_watching_map',$user_watching_map);
 }	
@@ -296,5 +284,3 @@ if (isset($_REQUEST["mapfile"])) {
 // Get templates from the templates/modules directory
 $smarty->assign('mid', 'map/tiki-map_edit.tpl');
 $smarty->display("tiki.tpl");
-
-?>

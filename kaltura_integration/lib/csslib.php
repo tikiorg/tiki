@@ -149,26 +149,6 @@ class cssLib extends TikiLib {
 		$version = $matches[2].".".$matches[3];
 		return $version;
 	}
-
-	/**
-	 *  Work out which transition stylesheet to use with a given stylesheet
-	 *  @returns path to transition stylesheet
-	 *  or empty string if a transition style isn't required
-	 *  @TODO: check that the transition stylesheet exists
-	 *  @TODO: cache results
-	 *  @TODO: return empty string if CSS file is /newer/ than db version?
-	 */
-	function transition_css($path, $default_ver='2.0') {
-		global $TWV;
-
-		$cssversion = $this->version_css($path);
-		// assume default_ver if no @version string
-		$cssversion = $cssversion ? $cssversion : $default_ver;
-		if( $TWV->getBaseVersion() == $cssversion || !$cssversion ) { return ''; }
-		return $cssversion."to".$TWV->getBaseVersion().".css";
-	}
 }
 global $dbTiki;
 $csslib = new cssLib($dbTiki);
-
-?>

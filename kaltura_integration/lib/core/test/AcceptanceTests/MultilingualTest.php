@@ -26,6 +26,12 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
        	$this->assertLanguagePicklistHasLanguages(array('English' => 'Multilingual Test Page 1', 
                                                     'Français' => 'Page de test multilingue 1'));                                                    
     }
+
+    public function testSwitchBetweenLanguages() {
+       $this->openTikiPage('tiki-index.php?page=Multilingual+Test+Page+1');
+       $this->doSwitchLanguageTo('Français');
+       $this->fail("Need to check that this indeed moves to the French page.");
+    }
     
   	
   	public function testLanguageLinkLeadsToTranslatedPageInThatLanguage() {
@@ -192,7 +198,7 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
     public function printImportantMessageForTestUsers() {
        die("MultilingualTest will not work unless:\n".
                    "- the name of the Tiki db is 'tiki_db_for_acceptance_tests' and \n".
-				   "- the file 'multilingualTestDump.sql' (not in svn, due to its size) is copied in the mySql data directory.\n" .
+				   "- the file 'multilingualTestDump.sql' (check it out from mods/acceptance_tests_files) is copied in the mySql data directory.\n" .
 				   "Comment out the call to printImportantMessageForTestUsers() in MultilingualTest::setUp() to run the tests.\n");
     }
     
@@ -204,6 +210,9 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
                   "Language picklist was wrong. It should have contained ".$this->implode_with_key(",", $expAvailableLanguages)." but didn't.");           
     }
     
+    public function doSwitchLanguageTo($language) {
+       $this->click("xpath=//form[@id='available-languages-form']/select[@name='page' and option='English']");
+    }   
     public function assertLanguagePicklistDoesNotHaveLanguages($expAvailableLanguages) {
     	$this->assertSelectElementDoesNotContainItems("xpath=//select[@name='page' and @onchange='quick_switch_language( this )']",
                   $expAvailableLanguages, 
@@ -219,7 +228,4 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
         $this->assertFalse($this->isElementPresent("xpath=//select[@name='page' and @onchange='quick_switch_language( this )']/option[@value='_translate_']",
                   "Translate option was present."));           
     }
-    
-    
 }
-?>

@@ -1112,5 +1112,3 @@ class DB_pgsql extends DB_common
  * c-basic-offset: 4
  * End:
  */
-
-?>

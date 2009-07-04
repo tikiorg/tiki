@@ -138,8 +138,8 @@ function verif_url($url, $use_tidy = TRUE) {
 		}
 	} else {
 		if (!$loaded) {
-			require_once("lib/htmlpurifier/HTMLPurifier.auto.php");
-			$config =& HTMLPurifier_Config::createDefault();
+			require_once('lib/htmlpurifier_tiki/HTMLPurifier.tiki.php');
+			$config = getHTMLPurifierTikiConfig();
 			$config->set('HTML', 'Doctype', 'XHTML 1.0 Transitional');
 			$config->set('HTML', 'TidyLevel', 'light');
 			$purifier = new HTMLPurifier($config);
@@ -269,5 +269,3 @@ if (isset($_REQUEST['action'])) {
 } else {
 	header("Location: tiki-tests_list.php");
 }
-
-?>

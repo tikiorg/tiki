@@ -73,5 +73,3 @@ class DbgPermissions extends DebuggerCommand {
 function dbg_command_factory_perm() {
 	return new DbgPermissions();
 }
-
-?>

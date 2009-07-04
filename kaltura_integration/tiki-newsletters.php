@@ -9,7 +9,7 @@
 // Initialization
 require_once ('tiki-setup.php');
 
-include_once ('lib/newsletters/nllib.php');
+global $nllib; include_once ('lib/newsletters/nllib.php');
 
 if ($prefs['feature_newsletters'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_newsletters");
@@ -17,6 +17,7 @@ if ($prefs['feature_newsletters'] != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
+$auto_query_args = array('nlId','offsset', 'sort_mode', 'find');
 
 $smarty->assign('confirm', 'n');
 
@@ -25,7 +26,6 @@ if (isset($_REQUEST["confirm_subscription"])) {
 	$conf = $nllib->confirm_subscription($_REQUEST["confirm_subscription"]);
 	if ($conf) {
 		$smarty->assign('confirm', 'y');
-
 		$smarty->assign('nl_info', $conf);
 	} else {
 		$smarty->assign('confirm', 'f');	// Signal failure
@@ -38,7 +38,6 @@ if (isset($_REQUEST["unsubscribe"])) {
 	$conf = $nllib->unsubscribe($_REQUEST["unsubscribe"]);
 	if ($conf) {
 		$smarty->assign('unsub', 'y');
-
 		$smarty->assign('nl_info', $conf);
 	} else {
 		$smarty->assign('unsub', 'f');	// Signal failure
@@ -47,7 +46,6 @@ if (isset($_REQUEST["unsubscribe"])) {
 
 if (!$user && $tiki_p_subscribe_newsletters != 'y' && !isset($_REQUEST["confirm_subscription"])) {
 	$smarty->assign('msg', tra("You must be logged in to subscribe to newsletters"));
-
 	$smarty->display("error.tpl");
 	die;
 }
@@ -66,23 +64,17 @@ $smarty->assign('url_subscribe', $tikilib->httpPrefix(). $foo["path"]);
 
 if (isset($_REQUEST["nlId"])) {
 	$smarty->assign('individual', 'n');
-
 	if ($userlib->object_has_one_permission($_REQUEST["nlId"], 'newsletter')) {
 		$smarty->assign('individual', 'y');
-
 		if ($tiki_p_admin != 'y') {
 			$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'newsletters');
-
 			foreach ($perms["data"] as $perm) {
 				$permName = $perm["permName"];
-
 				if ($userlib->object_has_permission($user, $_REQUEST["nlId"], 'newsletter', $permName)) {
 					$$permName = 'y';
-
 					$smarty->assign("$permName", 'y');
 				} else {
 					$$permName = 'n';
-
 					$smarty->assign("$permName", 'n');
 				}
 			}
@@ -100,12 +92,10 @@ $smarty->assign('email', $user_email);
 
 if ($tiki_p_subscribe_newsletters == 'y') {
 	if (isset($_REQUEST["subscribe"])) {
-	check_ticket('newsletters');
-
+		check_ticket('newsletters');
 		if ($tiki_p_subscribe_email != 'y') {
 			$_REQUEST["email"] = $userlib->get_user_email($user);
 		}
-
 		// Now subscribe the email address to the newsletter
 		$nl_info = $nllib->get_newsletter($_REQUEST["nlId"]);
 		if ($nl_info['allowAnySub'] != 'y' && $user) {
@@ -113,13 +103,11 @@ if ($tiki_p_subscribe_newsletters == 'y') {
 				$smarty->assign('subscribed', 'y');
 		} elseif ($nllib->newsletter_subscribe($_REQUEST["nlId"], $_REQUEST["email"] ))
 			$smarty->assign('subscribed', 'y'); // will receive en email
-
 	}
 }
 
 if (isset($_REQUEST["info"])) {
 	$nl_info = $nllib->get_newsletter($_REQUEST["nlId"]);
-
 	$smarty->assign('nl_info', $nl_info);
 	$smarty->assign('subscribe', 'y');
 }
@@ -173,5 +161,3 @@ include_once('tiki-section_options.php');
 // Display the template
 $smarty->assign('mid', 'tiki-newsletters.tpl');
 $smarty->display("tiki.tpl");
-
-?>

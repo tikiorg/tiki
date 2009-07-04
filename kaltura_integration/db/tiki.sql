@@ -2349,7 +2349,7 @@ CREATE TABLE tiki_tracker_fields (
   trackerId int(12) NOT NULL default '0',
   name varchar(255) default NULL,
   options text,
-  type char(15) default NULL,
+  type varchar(15) default NULL,
   isMain char(1) default NULL,
   isTblVisible char(1) default NULL,
   position int(4) default NULL,
@@ -2529,6 +2529,10 @@ CREATE TABLE tiki_user_mail_accounts (
   smtpPort int(4) default NULL,
   flagsPublic char(1) default 'n',				-- COMMENT 'MatWho - Shared Group Mail box if y',
   autoRefresh int(4) NOT NULL default 0,		-- COMMENT 'seconds for mail list to refresh, 0 = none',
+  imap varchar( 255 ) default NULL,
+  mbox varchar( 255 ) default NULL,
+  maildir varchar( 255 ) default NULL,
+  useSSL char( 1 ) NOT NULL default 'n',
   PRIMARY KEY (accountId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
@@ -2796,9 +2800,10 @@ CREATE TABLE users_groups (
   userChoice char(1) default NULL,
   groupDefCat int(12) default 0,
   groupTheme varchar(255) default '',
-  PRIMARY KEY id,
+  isExternal char(1) default 'n',
+  PRIMARY KEY (id),
   UNIQUE KEY groupName (groupName)
-) ENGINE=MyISAM, AUTO_INCREMENT=1;
+) ENGINE=MyISAM AUTO_INCREMENT=1;
 
 DROP TABLE IF EXISTS users_objectpermissions;
 CREATE TABLE users_objectpermissions (
@@ -2988,6 +2993,8 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_create_tracker_items', 'Can create new items for trackers', 'registered', 'trackers');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_list_trackers', 'Can list trackers', 'basic', 'trackers');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_modify_tracker_items', 'Can change tracker items', 'registered', 'trackers');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_modify_tracker_items_pending', 'Can change tracker pending items', 'registered', 'trackers');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_modify_tracker_items_closed', 'Can change tracker closed items', 'registered', 'trackers');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_tracker_view_ratings', 'Can view rating result for tracker items', 'basic', 'trackers');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_tracker_vote_ratings', 'Can vote a rating for tracker items', 'registered', 'trackers');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_trackers', 'Can view trackers', 'basic', 'trackers');
@@ -3576,6 +3583,7 @@ INSERT IGNORE INTO tiki_actionlog_conf(action, objectType, status) VALUES ('Post
 INSERT IGNORE INTO tiki_actionlog_conf(action, objectType, status) VALUES ('Updated', 'blog', 'n');
 INSERT IGNORE INTO tiki_actionlog_conf(action, objectType, status) VALUES ('Removed', 'blog', 'n');
 INSERT IGNORE INTO tiki_actionlog_conf(action, objectType, status) VALUES ('Removed', 'file', 'n');
+INSERT IGNORE INTO tiki_actionlog_conf(action, objectType, status) VALUES ('Viewed', 'article', 'n');
 
 DROP TABLE IF EXISTS tiki_freetags;
 CREATE TABLE tiki_freetags (
@@ -3857,3 +3865,36 @@ CREATE TABLE tiki_plugin_security (
 	KEY last_object (last_objectType, last_objectId)
 );
 
+DROP TABLE IF EXISTS `tiki_user_reports`;
+CREATE TABLE IF NOT EXISTS `tiki_user_reports` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user` varchar(200) COLLATE latin1_general_ci NOT NULL,
+  `interval` varchar(20) COLLATE latin1_general_ci NOT NULL,
+  `view` varchar(8) COLLATE latin1_general_ci NOT NULL,
+  `type` varchar(5) COLLATE latin1_general_ci NOT NULL,
+  `time_to_send` datetime NOT NULL,
+  `always_email` tinyint(1) NOT NULL,
+  `last_report` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM;
+
+DROP TABLE IF EXISTS `tiki_user_reports_cache`;
+CREATE TABLE IF NOT EXISTS `tiki_user_reports_cache` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user` varchar(200) COLLATE latin1_general_ci NOT NULL,
+  `event` varchar(200) COLLATE latin1_general_ci NOT NULL,
+  `data` text COLLATE latin1_general_ci NOT NULL,
+  `time` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM;
+
+DROP TABLE IF EXISTS `tiki_videos`;
+CREATE TABLE IF NOT EXISTS `tiki_videos` (
+  `videoId` int(14) NOT NULL auto_increment,
+  `galleryId` int(14) NOT NULL default '0',
+  `entryId` varchar(20) NOT NULL default '',
+  `creator` varchar(200) default '',
+  `last_user` varchar(200) default NULL,
+  PRIMARY KEY  (`videoId`),
+  KEY `galleryId` (`galleryId`)
+) ENGINE=MyISAM;

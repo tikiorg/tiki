@@ -430,5 +430,3 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 // Display the template
 $smarty->assign('mid', 'tiki-upload_image.tpl');
 $smarty->display("tiki.tpl");
-
-?>

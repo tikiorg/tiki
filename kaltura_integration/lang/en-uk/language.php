@@ -4891,6 +4891,7 @@ $lang=Array(
 // "To use a menu in a tiki format" => "To use a menu in a tiki format",
 // "To use menu in a css/suckerfish format" => "To use menu in a css/suckerfish format",
 // "To customizing the menu's css id (#id)" => "To customizing the menu's css id (#id)",
+// "To customize the menu's CSS id (#)" => "To customizing the menu's css id (#id)",
 // "Edit this Menu" => "Edit this Menu",
 // "Create new Menu" => "Create new Menu",
 // "dynamic collapsed" => "dynamic collapsed",
@@ -8263,4 +8264,3 @@ $lang=Array(
 "Colored text" => "Coloured text",
 "%m/%d/%Y [%H:%M]" => "%d/%m/%Y [%H:%M]",
 "###end###"=>"###end###");
-?>

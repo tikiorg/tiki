@@ -5,7 +5,7 @@
 {/if}
 
 {if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y' and isset($freetags.data[0]) and $prefs.freetags_show_middle eq 'y'}
-	{include file="freetag_list.tpl"}
+	{include file='freetag_list.tpl'}
 {/if}
 
 <div class="article">
@@ -49,7 +49,7 @@
 		</span>
 		<div class="actions">
 		{if $prefs.feature_multilingual eq 'y' and $show_lang eq 'y' and $lang and $prefs.show_available_translations eq 'y'}
-			{include file="translated-lang.tpl" td='y' type='article'}
+			{include file='translated-lang.tpl' td='y' type='article'}
 		{/if}
 		{if $tiki_p_edit_article eq 'y'}
 			<a class="icon" href="tiki-edit_article.php?articleId={$articleId}">{icon _id='page_edit'}</a>
@@ -150,10 +150,10 @@
 		(($tiki_p_read_comments == 'y' && $comments_cant != 0) || $tiki_p_post_comments == 'y' || $tiki_p_edit_comments == 'y')}
 
 	<div id="page-bar">
-		{include file=comments_button.tpl}
+		{include file='comments_button.tpl'}
 	</div>
 
-	{include file=comments.tpl}
+	{include file='comments.tpl'}
 {/if}
 
 {if $is_categorized eq 'y' and $prefs.feature_categories eq 'y' and $prefs.feature_categoryobjects eq 'y'}

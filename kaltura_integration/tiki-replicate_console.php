@@ -25,4 +25,3 @@ $smarty->assign('dumps', $dumps);
 ask_ticket('replicate');
 
 $smarty->display('tiki-replicate_console.tpl');
-?>

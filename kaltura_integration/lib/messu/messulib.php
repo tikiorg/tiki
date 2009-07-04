@@ -363,5 +363,3 @@ class Messu extends TikiLib {
 }
 global $dbTiki;
 $messulib = new Messu($dbTiki);
-
-?>

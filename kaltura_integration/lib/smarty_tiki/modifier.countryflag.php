@@ -27,5 +27,3 @@ function smarty_modifier_countryflag($user)
       return '';
   return "<img alt='".tra(str_replace('_',' ',$flag))."' src='img/flags/".$flag.".gif' title='".tra(str_replace('_',' ',$flag))."' />";
 }
-
-?>

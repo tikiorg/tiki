@@ -478,5 +478,3 @@ class TikiDB {
 		$debugger->msg($this->num_queries.': '.$query);
 	}
 }
-
-?>

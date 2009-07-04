@@ -86,4 +86,3 @@ if (isset($_REQUEST["freetagsset3d"])) {
 $headerlib->add_cssfile('css/admin.css');
 
 ask_ticket('admin-inc-freetags');
-?>

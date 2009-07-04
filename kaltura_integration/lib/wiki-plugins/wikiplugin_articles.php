@@ -126,6 +126,9 @@ function wikiplugin_articles($data,$params) {
 	}
 	global $artlib; require_once ('lib/articles/artlib.php');
 
+	$topics = $artlib->list_topics();
+	$smarty->assign_by_ref('topics', $topics);
+
 	if (!empty($topic) && !strstr($topic, '!') && !strstr($topic, '+')) {
 		$smarty->assign_by_ref('topic', $topic);
 	} elseif (!empty($topicId) &&  is_numeric($topicId)) {
@@ -150,4 +153,3 @@ function wikiplugin_articles($data,$params) {
 	}
 	//return str_replace("\n","",$smarty->fetch('tiki-view_articles.tpl')); // this considers the hour in the header like a link
 }
-?>

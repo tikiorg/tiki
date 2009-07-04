@@ -62,13 +62,13 @@
 
 <div class="top_post">
   {if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y' and isset($freetags.data[0]) and $prefs.freetags_show_middle eq 'y'}
-    {include file="freetag_list.tpl"}
+    {include file='freetag_list.tpl'}
   {/if}
 
-  {include file="comment.tpl" first='y' comment=$thread_info thread_style='commentStyle_plain'}
+  {include file='comment.tpl' first='y' comment=$thread_info thread_style='commentStyle_plain'}
 </div>
 
-{include file="comments.tpl"}
+{include file='comments.tpl'}
 
 <table id="forumjumpto" style="clear:both;" ><tr>
 
@@ -111,5 +111,3 @@
 		{/if}
 		</td>
 </tr></table>
-
-{if $prefs.feature_forum_parse == 'y'}{include file=tiki-edit_help.tpl}{/if}

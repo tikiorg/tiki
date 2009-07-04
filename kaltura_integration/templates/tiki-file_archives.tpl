@@ -27,4 +27,4 @@
 	{/if}
 </div>
 
-{include file=list_file_gallery.tpl}
+{include file='list_file_gallery.tpl'}

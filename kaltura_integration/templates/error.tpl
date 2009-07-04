@@ -14,7 +14,7 @@ close();
 
 {capture assign=mid_data}
 	{if ($errortype eq "402")}
-		{include file=tiki-login.tpl}
+		{include file='tiki-login.tpl'}
 	{elseif ($errortype eq 401 or $errortype eq 403) and !empty($prefs.permission_denied_url)}
 		{redirect url=$prefs.permission_denied_url}
 	{else}
@@ -44,16 +44,16 @@ close();
 
 					{if $prefs.feature_search eq 'y'}
 						{if $prefs.feature_search_fulltext eq 'y'}
-							{include file="tiki-searchresults.tpl" searchNoResults="false" searchStyle="menu" searchOrientation="horiz" words="$page"}
+							{include file='tiki-searchresults.tpl' searchNoResults="false" searchStyle="menu" searchOrientation="horiz" words="$page"}
 						{else}
-							{include file="tiki-searchindex.tpl" searchNoResults="true"	searchStyle="menu" searchOrientation="horiz" words="$page"}
+							{include file='tiki-searchindex.tpl' searchNoResults="true"	searchStyle="menu" searchOrientation="horiz" words="$page"}
 						{/if}
 					{/if}
 
 					<br />
 				{else}
 					{if $errortype eq 401 && empty($user) and $prefs.permission_denied_login_box eq 'y'} {* permission denied *}
-						{include file=tiki-login.tpl}
+						{include file='tiki-login.tpl'}
 					{elseif !isset($user) and $errortype != 'no_redirect_login' and $errortype != 'login'}
 						<div class="simplebox highlight">
 							{tr}You are not logged in.{/tr} <a href="tiki-login_scr.php">{tr}Go to Login Page{/tr}</a>
@@ -79,5 +79,5 @@ close();
 {if isset($smarty.request.xajax) && $smarty.request.xajax eq 'loadComponent'}
 {$mid_data}
 {else}
-{include file=tiki.tpl}
+{include file='tiki.tpl'}
 {/if}

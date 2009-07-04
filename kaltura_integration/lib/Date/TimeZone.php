@@ -172,7 +172,7 @@ class Date_TimeZone
      * @param string $id the id to test
      * @return boolean true if the supplied ID is valid
      */
-    function isValidID($id)
+    static function isValidID($id)
     {
         global $_DATE_TIMEZONE_DATA;
         if(isset($_DATE_TIMEZONE_DATA[$id])) {

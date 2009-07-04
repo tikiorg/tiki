@@ -56,6 +56,8 @@ if (isset($_REQUEST['save']) && (!$user || $user == 'anonymous') && $prefs['feat
 	}
 }
 
+make_sure_page_to_be_created_is_not_an_alias();
+
 $smarty->assign( 'translation_mode', (isNewTranslationMode() || isUpdateTranslationMode()) ?'y':'n' );
 
 // If page is blank (from quickedit module or wherever) tell user -- instead of editing the default page
@@ -66,7 +68,7 @@ if (empty($_REQUEST["page"])) {
 	die;
 }
 
-if ($prefs['feature_wikiapproval'] == 'y' && substr($_REQUEST['page'], 0, strlen($prefs['wikiapproval_prefix'])) != $prefs['wikiapproval_prefix'] && isset($prefs['wikiapproval_master_group']) && !in_array($prefs['wikiapproval_master_group'], $tikilib->get_user_groups($user))) {
+if ($prefs['feature_wikiapproval'] == 'y' && substr($_REQUEST['page'], 0, strlen($prefs['wikiapproval_prefix'])) != $prefs['wikiapproval_prefix'] && !empty($prefs['wikiapproval_master_group']) && !in_array($prefs['wikiapproval_master_group'], $tikilib->get_user_groups($user))) {
 	$_REQUEST['page'] = $prefs['wikiapproval_prefix'] . $_REQUEST['page'];
 }
 
@@ -733,7 +735,6 @@ if ($prefs['feature_wiki_footnotes'] == 'y') {
 		}
 	}
 }
-
 if (isset($_REQUEST["templateId"]) && $_REQUEST["templateId"] > 0 && !isset($_REQUEST['preview']) && !isset($_REQUEST['save'])) {
 	$template_data = $tikilib->get_template($_REQUEST["templateId"]);
 	$_REQUEST["edit"] = $template_data["content"]."\n".$_REQUEST["edit"];
@@ -1410,4 +1411,24 @@ $smarty->assign('showtags', 'n');
 $smarty->assign('qtnum', '1');
 $smarty->assign('qtcycle', '');
 $smarty->display("tiki.tpl");
-?>
+
+function make_sure_page_to_be_created_is_not_an_alias() {
+	global $_REQUEST, $semanticlib, $access, $wikilib;
+	$page = $_REQUEST["page"];
+	require_once 'lib/wiki/semanticlib.php';
+	$aliases = $semanticlib->getAliasContaining($page, true);
+	if (count($aliases) > 0) {
+		$error_title = tra("Cannot create aliased page");
+		$error_msg = tra("You attempted to create the following page:")." ".
+		             "<b>$page</b>.\n<p>\n";
+		$error_msg .= tra("That page is an alias for the following pages").": ";
+		foreach ($aliases as $an_alias) {
+			$error_msg .= '<a href="'.$wikilib->editpage_url($an_alias['fromPage']).'">'.$an_alias['fromPage'].'</a>, ';
+		}
+		$error_msg .= "\n<p>\n";
+		$error_msg .= tra("If you want to create the page, you must first edit each the pages above, and remove the alias link it may contain. This link should look something like this");
+		$error_msg .= ": <b>(alias($page))</b>";
+		require_once('lib/tikiaccesslib.php');
+		$access->display_error(page, $error_title, "", true, $error_msg);
+	}	
+}

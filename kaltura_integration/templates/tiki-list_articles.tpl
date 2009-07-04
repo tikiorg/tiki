@@ -14,7 +14,7 @@
 </div>
 
 {if $listpages or ($find ne '') or ($types ne '') or ($topics ne '') or ($lang ne '') or ($categId ne '')}
-	{include file="find.tpl" find_show_languages='y' find_show_categories='y' find_show_num_rows='y'}
+	{include file='find.tpl' find_show_languages='y' find_show_categories='y' find_show_num_rows='y'}
 {/if}
 
 <table class="normal">
@@ -42,6 +42,11 @@
 		{/if}
 		{if $prefs.art_list_author eq 'y'}
 			<th>{self_link _sort_arg='sort_mode' _sort_field='authorName'}{tr}AuthorName{/tr}{/self_link}</th>
+		{/if}
+		{if $prefs.art_list_rating eq 'y'}
+			<th style="text-align:right;">
+				{self_link _sort_arg='sort_mode' _sort_field='rating'}{tr}Rating{/tr}{/self_link}
+			</th>
 		{/if}
 		{if $prefs.art_list_reads eq 'y'}
 			<th style="text-align:right;">
@@ -93,6 +98,9 @@
 			{/if}
 			{if $prefs.art_list_author eq 'y'}	
 				<td class="{cycle advance=false}">{$listpages[changes].authorName}</td>
+			{/if}
+			{if $prefs.art_list_rating eq 'y'}
+				<td style="text-align:right;" class="{cycle advance=false}">{$listpages[changes].rating}</td>
 			{/if}
 			{if $prefs.art_list_reads eq 'y'}
 				<td style="text-align:right;" class="{cycle advance=false}">{$listpages[changes].nbreads}</td>

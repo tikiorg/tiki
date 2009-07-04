@@ -322,4 +322,3 @@ $mimeextensions=Array(
 "application/x-maker" => "book",
 "application/x-maker" => "fbdoc",
 );
-?>

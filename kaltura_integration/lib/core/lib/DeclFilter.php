@@ -158,5 +158,3 @@ class DeclFilter implements Zend_Filter_Interface
 		$this->rules[] = $rule;
 	}
 }
-
-?>

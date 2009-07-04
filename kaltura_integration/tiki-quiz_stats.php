@@ -101,5 +101,3 @@ ask_ticket('quiz-stats');
 // Display the template
 $smarty->assign('mid', 'tiki-quiz_stats.tpl');
 $smarty->display("tiki.tpl");
-
-?>

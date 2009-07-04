@@ -22,6 +22,7 @@ class Tiki_Profile_Installer
 		'article_type' => 'Tiki_Profile_InstallHandler_ArticleType',
 		'article' => 'Tiki_Profile_InstallHandler_Article',
 		'forum' => 'Tiki_Profile_InstallHandler_Forum',
+		'template' => 'Tiki_Profile_InstallHandler_Template',
 	);
 
 	private static $typeMap = array(
@@ -30,7 +31,33 @@ class Tiki_Profile_Installer
 	);
 
 	private $userData = false;
+	
+	private $feedback = array();	// Let users know what's happened
 
+	/**
+	 * @param $feed - (strings append, array replaces) lines of feedback text
+	 * @return none
+	 */
+	function setFeedback( $feed ) {
+		if (is_array( $feed )) {
+			$this->feedback = $feed;
+		} else {
+			$this->feedback[] = $feed;
+		}
+	}
+	
+	/**
+	 * @param $index - (int) index of feedback string to return if present
+	 * @return string or whole array if no index specified 
+	 */
+	function getFeedback( $index ) {
+		if (isset( $index ) && $index < count($this->feedback) ) {
+			return $this->feedback[ $index ];
+		} else {
+			return $this->feedback;
+		}
+	}
+	
 	public static function convertType( $type ) // {{{
 	{
 		if( array_key_exists( $type, self::$typeMap ) )
@@ -146,6 +173,9 @@ class Tiki_Profile_Installer
 		foreach( $profiles as $p )
 			$this->doInstall( $p );
 		
+		if (count($this->getFeedback()) == count($profiles)) {
+			$this->setFeedback(tra('Nothing was installed, check profile for errors'));
+		}
 		$cachelib->empty_full_cache();
 		return true;
 	} // }}}
@@ -188,22 +218,30 @@ class Tiki_Profile_Installer
 
 	private function doInstall( Tiki_Profile $profile ) // {{{
 	{
-		global $tikilib;
+		global $tikilib, $prefs;
 		
+		$this->setFeedback(tra('Installing').': '.$profile->profile);
+
 		$this->installed[$profile->getProfileKey()] = $profile;
 
-		foreach( $profile->getObjects() as $object )
+		foreach( $profile->getObjects() as $object ) {
 			$this->getInstallHandler( $object )->install();
-
+			$this->setFeedback(tra('Installed').': '.$object->getDescription());
+		}
 		$preferences = $profile->getPreferences();
 		$profile->replaceReferences( $preferences, $thus->userData );
-		foreach( $preferences as $pref => $value )
+		foreach( $preferences as $pref => $value ) {
+			if ($prefs[$pref] != $value) {
+				$this->setFeedback(tra('Preference set').': '.$pref.'='.$value);
+			}
 			$tikilib->set_preference( $pref, $value );
-
+		}
 		$permissions = $profile->getPermissions();
 		$profile->replaceReferences( $permissions, $thus->userData );
-		foreach( $permissions as $groupName => $info )
+		foreach( $permissions as $groupName => $info ) {
+			$this->setFeedback(tra('Group changed (or modified)').': '.$groupName);
 			$this->setupGroup( $groupName, $info['general'], $info['permissions'], $info['objects'] );
+		}
 	} // }}}
 
 	private function setupGroup( $groupName, $info, $permissions, $objects ) // {{{
@@ -211,7 +249,7 @@ class Tiki_Profile_Installer
 		global $userlib;
 
 		if( ! $userlib->group_exists( $groupName ) )
-			$userlib->add_group( $groupName, $info['description'], $info['home'], $info['user_tracker'], $info['group_tracke'], implode( ':', $info['registration_fields'] ), $info['user_signup'], $info['default_category'], $info['theme'] );
+			$userlib->add_group( $groupName, $info['description'], $info['home'], $info['user_tracker'], $info['group_tracker'], implode( ':', $info['registration_fields'] ), $info['user_signup'], $info['default_category'], $info['theme'], $info['user_tracker_field'], $info['group_tracker_field'] );
 
 		if( count( $info['include'] ) )
 		{
@@ -411,8 +449,9 @@ class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler //
 		global $trklib;
 		if( ! $trklib )
 			require_once 'lib/trackers/trackerlib.php';
-
-		return $trklib->replace_tracker( 0, $name, $description, $options );
+		
+		// using false as trackerId stops multiple trackers of same name being created
+		return $trklib->replace_tracker( false, $name, $description, $options, 'y' );
 	} // }}}
 } // }}}
 
@@ -525,7 +564,7 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 
 		return $trklib->replace_tracker_field(
 			$data['tracker'],
-			0,
+			false,
 			$data['name'],
 			$data['type'],
 			$data['link'],
@@ -898,6 +937,8 @@ class Tiki_Profile_InstallHandler_Module extends Tiki_Profile_InstallHandler // 
 		);
 
 		$data['groups'] = serialize( $data['groups'] );
+
+		$data = Tiki_Profile::convertYesNo( $data );
 
 		return $this->data = $data;
 	}
@@ -1778,6 +1819,58 @@ class Tiki_Profile_InstallHandler_Forum extends Tiki_Profile_InstallHandler // {
 	}
 } // }}}
 
+class Tiki_Profile_InstallHandler_Template extends Tiki_Profile_InstallHandler // {{{
+{
+	function getData()
+	{
+		if( $this->data )
+			return $this->data;
+
+		$defaults = array(
+			'sections' => array( 'wiki page' ),
+		);
+
+		$data = array_merge(
+			$defaults,
+			$this->obj->getData()
+		);
+
+		$data = Tiki_Profile::convertYesNo( $data );
+
+		return $this->data = $data;
+	}
+
+	function canInstall()
+	{
+		$data = $this->getData();
+		if( ! isset( $data['name'] ) )
+			return false;
+		if( ! isset( $data['content'] ) )
+			return false;
+		if( ! isset( $data['sections'] ) || ! is_array( $data['sections'] ) )
+			return false;
+
+		return true;
+	}
+
+	function _install()
+	{
+		global $templateslib;
+		if( ! $templateslib ) require_once 'lib/templates/templateslib.php';
+
+		$data = $this->getData();
+
+		$this->replaceReferences( $data );
+
+		$templateId = $templateslib->replace_template( null, $data['name'], $data['content'] );
+		foreach( $data['sections'] as $section ) {
+			$templateslib->add_template_to_section( $templateId, $section );
+		}
+
+		return $templateId;
+	}
+} // }}}
+
 interface Tiki_Profile_Converter
 {
 	function convert( $value );
@@ -1828,5 +1921,3 @@ class Tiki_Profile_ValueMapConverter // {{{
 		}
 	}
 } // }}}
-
-?>

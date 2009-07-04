@@ -120,7 +120,7 @@
 				{else}
 					<input type="hidden" name="galleryId" value="{$galleryId}" />
 				{/if}
-				{include file=categorize.tpl}
+				{include file='categorize.tpl'}
 				<tr class="formcolor">
 					<td class="formcolor" colspan="2">
 						<b>{tr}Now enter the image URL{/tr} {tr}or upload a local image from your disk{/tr}</b>
@@ -159,7 +159,7 @@
 					</td>
 				</tr>
 				{if $prefs.feature_antibot eq 'y' && $user eq ''}
-					{include file="antibot.tpl" td_style="formcolor"}
+					{include file='antibot.tpl' td_style="formcolor"}
 				{/if}
 				<tr>
 					<td class="formcolor">&nbsp;</td>

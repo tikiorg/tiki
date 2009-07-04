@@ -34,4 +34,3 @@ if (isset($_REQUEST["webmail"])) {
 	
 }
 ask_ticket('admin-inc-webmail');
-?>

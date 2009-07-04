@@ -159,5 +159,3 @@ $smarty->assign( 'rootlang', $rootlangs );
 // Display the template
 $smarty->assign('mid', 'tiki-freetag-translate.tpl');
 $smarty->display("tiki.tpl");
-
-?>

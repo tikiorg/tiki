@@ -16,12 +16,7 @@
 	<tr>
 		<th>
 		{if $comments}
-			<script type="text/javascript">
-			<!--//--><![CDATA[//><!--
-				// check / uncheck all.
-				document.write("<input name=\"switcher\" id=\"clickall\" type=\"checkbox\" title=\"{tr}Select All{/tr}\" onclick=\"switchCheckboxes(this.form,'checked[]',this.checked)\"/>");
-			//--><!]]>
-			</script>
+			{select_all checkbox_names='checked[]'}
 		{/if}
 		</th>
 	

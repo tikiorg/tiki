@@ -9,5 +9,3 @@ $p->PrintErrors();
 $p->SaveGrammar("htmlgrammar.cmp");
 print "Done.";
 //PrintArray($p->pg);
-
-?>

@@ -227,6 +227,7 @@ ul.jumplinks a:active {
 	width: 6em;
 	z-index: 9}
 
+.fullscreenbutton,
 #fullscreenbutton {
 	position: absolute;
 	top: 2px;
@@ -234,6 +235,7 @@ ul.jumplinks a:active {
 	z-index: 10;
 	font-size: 80%}
 	
+.fullscreenbutton:hover,
 #fullscreenbutton:hover {color: #000000}
 
 /* appears on print page */
@@ -267,8 +269,6 @@ ul.jumplinks a:active {
 /*	height: 70%;*/
 	padding-top: 40px;
 	padding-bottom: 40px}
-	
-*:first-child+html #middle {padding-top: 65px}
 
 #c1c2 {background: #fff}
 #c1c2 #wrapper {}
@@ -397,11 +397,6 @@ div#tiki-bot {}
 /* Site Header & Identity */
 #header-top {
 	color: #fff;
-	height: 97px;
-	background: #214d68 url(strasa/headerbg.jpg) repeat-x 0 100%}
-
-#header-top[id] {
-	min-height: 108px
 }
 
 #siteheader {
@@ -412,20 +407,22 @@ div#tiki-bot {}
 	margin: 0}
 
 #customcode, #customcodewith_ad {
-	position: absolute;
-	width: 964px;
-	margin: auto}
+	background: #214d68 url(strasa/headerbg.jpg) repeat-x 0 100%;
+}
 
 #topbar_custom_code {
 	margin: 0 58px;
 }
 	
 div#sioptions {
-	margin: 0 58px;
-	overflow: hidden;
+	background: #214d68 url(strasa/headerbg.jpg) repeat-x 0 100%;
+	padding: 0 58px;
 }
 
-#sioptionscentered {text-align: center}
+#sioptionscentered {
+	text-align: center;
+	background: #214d68 url(strasa/headerbg.jpg) repeat-x 0 100%;
+}
 
 div.floatright {
 	float: right;
@@ -463,7 +460,7 @@ div#sitead {margin: auto}
 	padding: 0;
 	background: #fff url(strasa/loginlong.jpg) 0 0 no-repeat}
 
-*:first-child+html #siteloginbar {max-width: 650px}
+*:first-child+html #siteloginbar {text-align: right}
 
 #siteloginbar a,
 #siteloginbar a:visited,
@@ -580,7 +577,6 @@ div.logged-in {padding-right: 20px}
 	color: #fff;
 	font-size: 93%}
 
-input#fuser,
 select[name="where"],
 input[name="search"] {}
 
@@ -951,7 +947,6 @@ span.highlight {background: inherit}
 .admlink,
 .forumbutlink {}
 
-div.searchdate {}
 div#debugconsole {}
 
 .mini {
@@ -1006,70 +1001,55 @@ div.findsubmit {}
 
 /* New Help section */
 div#tikihelp {
-	position:fixed;
+	position: fixed;
 	right: 0;
-	top: 125px;
-	width : 340px;
-	height: auto; /* if there was height specified it covered the right column content "invisibly" making part of it unclickable */
-	max-height: 450px;
+	top: 0;
+	height: auto; /* if there was height specified it covered the right column content "invisibly" making part of it unclickable (from strasa) */
 	max-width: 50%;
-	padding:0;
-	margin:0;
-	background-color: transparent;
+	padding: 0;
+	margin: 0;
+	border: none;
+	background: transparent;
 	z-index: 820;
-	overflow: hidden;
+	height: 100%;
 }
 
-* html div#tikihelp {position: absolute}
+* html div#tikihelp {
+	position: absolute;
+}
 
-div.help_icon {
-	border: 0;
-	margin: 0;
-	padding: 0;
-	height: 48px;
-	text-align: right;
-}
-div.help_icon a:hover {
-  text-decoration: none;
-}
-div.help_icon img{
+.help_title { float: left }
+
+.help_close_icon,
+.help_fullscreen_icon {
+	float: right;
 	vertical-align: middle;
-	border: 0;
-	margin: 0;
-	padding: 0;
 }
-div.help_sections {
-	border: solid 1px #006699;
-	padding: 0;
-	margin: 0;
-	background-color: #006699;
-	width: 100%;
-	height: 400px;
-	overflow: auto;
-}
+.help_fullscreen_icon { margin-right: 8px }
+.help_close_icon { margin-right: 20px }
+
 div.help_section_select {
 	font-weight : bold;
-	font-size: 12px;
-	background-color : #E7E9EA;
-	color: black;
+	font-size: 120%;
+	background: #e7e9ea;
+	color: #000;
 	width: 100%;
-	height: 20px;
-	margin: 0;
+	padding: 2px;
 }
-div.help_section_select * {
-	vertical-align: middle;
-}
-div.help_section {
-	margin: 0;
-	padding: 5px;
-	background-color: white;
-	color: black;
-	font-size: 0.8em;
-	/*height: 100%;*/
+
+div.help_sections {
+	width: 360px;
+	padding:  2px;
+	background: #aac9e9;
 	overflow: auto;
+	height: 100%;
 }
-div.help_section * {
-	vertical-align: middle;
+
+div.help_section {
+	margin: 5px;
+	padding: 5px;
+	background: #fff;
+	color: #000;
 }
 
 #site_report {text-align: center}
@@ -1391,9 +1371,9 @@ a.forumnameread { color: #006699}
  	top: -1px !important;
 }
 
-.tabinactive a {
-	color: #fff;
-}
+.tabinactive a,
+.tabinactive a:visited {
+	color: #fff}
 
 [class].tabinactive {
 	top: 0px !important
@@ -2473,7 +2453,30 @@ div.multiselect {
 	
 .opaque .iconmenu {display: block}
 	
-.searchresults {display: inline}
+.searchresults {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	}
+
+.searchresults li {
+	margin: 10px 0 0;
+}
+
+.searchresults li .objecttype,
+	.searchresults li .parentname ,
+	.searchresults li .objectname 
+ {
+	font-size: 120%;
+	font-weight: bold;
+ }
+
+.searchresults .itemhits,
+	.searchresults .itemrelevance,
+	.searchresults .searchdate {
+	color: gray;
+	font-size: 90%;
+	}
 
 .calnavigation a:hover {background: red}
 
@@ -2519,7 +2522,7 @@ div.multiselect {
 	
 .calbuttonBox {margin-right: 3px}
 .calbuttonBox a {color: #fff}
-.calbuttonon a {font-weight: bold}
+.buttonon a, .calbuttonon a {font-weight: bold}
 
 #caltable .calfocuson,
 .box-data td.fc a.today,
@@ -2711,6 +2714,7 @@ div.messureadbody {
 /***** Ajax *****/
 
 div#ajaxLoading {
+	z-index: 10000;
 	display: none;
 	position: absolute;
 	top: 50px;

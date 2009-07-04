@@ -258,5 +258,3 @@ class Auth_Container
     // }}}
 
 }
-
-?>

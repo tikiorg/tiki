@@ -724,5 +724,3 @@ class Mail_mimeDecode extends PEAR {
 		return $return;
 	}
 } // End of class
-
-?>
