@@ -1984,15 +1984,12 @@ function get_included_groups($group, $recur=true) {
 	}
 
 	function user_has_permission($user, $perm) {
-		// admin has all the permissions
-		if ($user == 'admin')
-			return true;
 
 		// Get user_groups ?
 		$groups = $this->get_user_groups($user);
 
 		foreach ($groups as $group) {
-			if ($this->group_has_permission($group, $perm)) {
+			if ($this->group_has_permission($group, $perm) || $this->group_has_permission($group, 'tiki_p_admin')) {
 				return true;
 			}
 		}
