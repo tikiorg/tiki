@@ -326,9 +326,6 @@ class WebMailLib extends TikiLib {
 				}
 				$wmail['sender']['name'] = htmlspecialchars($wmail['sender']['name']);
 
-//				$l = $pop3->_cmdList($i);
-//				$wmail['size'] = $l['size'];
-
 				if (!empty($headers['message-id'])) {
 					$wmail['realmsgid'] = ereg_replace('[<>]','', $headers['message-id']);
 				} else {
@@ -341,6 +338,13 @@ class WebMailLib extends TikiLib {
 				$wmail['subject'] = htmlspecialchars($wmail['subject']);
 					
 				$wmail['msgid'] = $messageNum;
+				
+				// TODO
+				$wmail['has_attachment'] = false;
+//				$l = $pop3->_cmdList($i);
+				$wmail['size'] = '';
+				
+				// Add to output
 				$webmail_list[] = $wmail;
 				
 			}

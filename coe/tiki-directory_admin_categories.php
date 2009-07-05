@@ -34,7 +34,6 @@ if ($_REQUEST["parent"] == 0) {
 	$parent_name = 'Top';
 } else {
 	$parent_info = $dirlib->dir_get_category($_REQUEST['parent']);
-
 	$parent_name = $parent_info['name'];
 }
 
@@ -56,7 +55,6 @@ if ($_REQUEST["categId"]) {
 	$info = $dirlib->dir_get_category($_REQUEST["categId"]);
 } else {
 	$info = array();
-
 	$info["name"] = '';
 	$info["childrenType"] = 'c';
 	$info["viewableChildren"] = 3;
@@ -69,13 +67,13 @@ $smarty->assign_by_ref('info', $info);
 
 // Remove a category
 if (isset($_REQUEST["remove"])) {
-  $area = 'deldircateg';
-  if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-    key_check($area);
+	$area = 'deldircateg';
+	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+		key_check($area);
 		$dirlib->dir_remove_category($_REQUEST["remove"]);
-  } else {
-    key_get($area);
-  }
+	} else {
+		key_get($area);
+	}
 }
 
 // Replace (add or edit) a category

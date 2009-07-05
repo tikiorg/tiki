@@ -13,16 +13,13 @@ include_once ('lib/directory/dirlib.php');
 
 if ($prefs['feature_directory'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_directory");
-
 	$smarty->display("error.tpl");
 	die;
 }
 
-if ($tiki_p_admin_directory
-	!= 'y' && $tiki_p_admin_directory_sites != 'y' && $tiki_p_admin_directory_cats != 'y' && $tiki_p_validate_links != 'y') {
+if ($tiki_p_admin_directory != 'y' && $tiki_p_admin_directory_sites != 'y' && $tiki_p_admin_directory_cats != 'y' && $tiki_p_validate_links != 'y') {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied"));
-
 	$smarty->display("error.tpl");
 	die;
 }

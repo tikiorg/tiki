@@ -101,6 +101,7 @@
 			{if $prefs.feature_translation eq 'y'}checked="checked"{/if}/></div>
 	<div class="adminoptionlabel"><label for="feature_translation">{tr}Translation assistant{/tr}</label>{if $prefs.feature_help eq 'y'} {help url="Translating+Tiki+content"}{/if}</div>
 </div>
+
 <div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" name="feature_urgent_translation" id="feature_urgent_translation"
 			{if $prefs.feature_urgent_translation eq 'y'}checked="checked"{/if}/></div>
@@ -145,6 +146,11 @@
 		{icon _id="error"} <em>{tr}Experimental{/tr}</em></label>{if $prefs.feature_help eq 'y'} {help url="Multilingual+One+Page"}{/if}</div>
 </div>
 
+<div class="adminoptionbox">
+	<div class="adminoption"><input type="checkbox" name="feature_machine_translation" id="feature_machine_translation"
+			{if $prefs.feature_machine_translation eq 'y'}checked="checked"{/if}/></div>
+	<div class="adminoptionlabel"><label for="feature_machine_translation">{tr}Machine Translation{/tr}{icon _id="error"} <em>{tr}Experimental{/tr}</em></label></div>
+</div>
 
 
 </div>

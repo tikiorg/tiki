@@ -6,6 +6,11 @@ class WikiRenderer
 	private $structureInfo;
 	private $user;
 	private $page;
+	
+	// If you want to render some wiki markup that is not actually contained
+	// in a page, then set this to the markup to be rendered.
+	private $content_to_render;
+	
 	private $pageNumber = 1;
 	private $sortMode = 'created_desc';
 	private $showAttachments = 'n';
@@ -37,11 +42,12 @@ class WikiRenderer
 	public $canUndo = null;
 	public $trads = null;	// translated pages
 
-	function __construct( $info, $user )
+	function __construct( $info, $user, $content_to_render='')
 	{
 		$this->info = $info;
 		$this->user = $user;
 		$this->page = $info['pageName'];
+		$this->content_to_render = $content_to_render;
 	}
 
 	function applyPermissions() // {{{
@@ -310,7 +316,11 @@ class WikiRenderer
 			$this->setPref( 'wiki_cache', $this->info['wiki_cache'] );
 		}
 
-		$pdata = $wikilib->get_parse($this->page, $canBeRefreshed);
+		if ($this->content_to_render == '') {
+			$pdata = $wikilib->get_parse($this->page, $canBeRefreshed);
+		} else {
+			$pdata = $this->content_to_render;
+		}
 		if ($canBeRefreshed) {
 			$this->smartyassign('cached_page','y');
 		}

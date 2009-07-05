@@ -30,6 +30,7 @@ $inputConfiguration = array(
 // Initialization
 $section = 'wiki page';
 require_once('tiki-setup.php');
+require_once('lib/multilingual/multilinguallib.php');
 if( $prefs['feature_wiki_structure'] == 'y' ) {
 	include_once('lib/structures/structlib.php');
 }
@@ -39,7 +40,8 @@ include_once('lib/ajax/ajaxlib.php');
 require_once ("lib/wiki/wiki-ajax.php");
 require_once ("lib/wiki/renderlib.php");
 
-$auto_query_args = array('page','best_lang','bl','page_id','pagenum','page_ref_id','mode','sort_mode');
+$auto_query_args = array('page','best_lang','bl','page_id','pagenum','page_ref_id','mode','sort_mode',
+                         'machine_translate_to_lang');
 
 if ($prefs['feature_categories'] == 'y') {
 	global $categlib;
@@ -47,6 +49,8 @@ if ($prefs['feature_categories'] == 'y') {
 		include_once('lib/categories/categlib.php');
 	}
 }
+
+$smarty->assign('machine_translate_to_lang', $_REQUEST['machine_translate_to_lang']);
 
 $access->check_feature( 'feature_wiki' );
 
@@ -143,8 +147,7 @@ if ( function_exists('utf8_encode') ) {
 
 // Get page data, if available
 if (!$info)
-	$info = $tikilib->get_page_info($page);
-	
+	$info = $tikilib->get_page_info($page);	
 	
 // If the page doesn't exist then display an error
 if(empty($info) && !($user && $prefs['feature_wiki_userpage'] == 'y' && strcasecmp($prefs['feature_wiki_userpage_prefix'].$user, $page) == 0)) {
@@ -178,7 +181,13 @@ if ($prefs['feature_multilingual'] == 'y' && $prefs['feature_sync_language'] == 
 
 $page = $info['pageName'];
 
-$pageRenderer = new WikiRenderer( $info, $user );
+if (isset($_REQUEST['machine_translate_to_lang'])) {
+	$translated_wiki_markup = generate_machine_translated_markup($info, $_REQUEST['machine_translate_to_lang']);
+} else {
+	$translated_wiki_markup = '';
+}
+
+$pageRenderer = new WikiRenderer( $info, $user, $translated_wiki_markup);
 $pageRenderer->applyPermissions();
 
 if( $page_ref_id )
@@ -406,3 +415,27 @@ $smarty->display("tiki.tpl");
 
 // xdebug_dump_function_profile(XDEBUG_PROFILER_CPU);
 // debug: print all objects
+
+
+function generate_machine_translated_markup($pageInfo, $targetLang) {
+	
+	make_sure_machine_translation_is_enabled();	
+	$pageContent = $pageInfo['data'];
+	$sourceLang = $pageInfo['lang'];
+	require_once('lib/core/lib/Multilingual/MachineTranslation/GoogleTranslateWrapper.php');
+	$translator = new Multilingual_MachineTranslation_GoogleTranslateWrapper($sourceLang,$targetLang);
+	$translatedContent = $translator->translateText($pageContent);	
+	return $translatedContent;
+}
+
+
+function make_sure_machine_translation_is_enabled() {
+	global $multilinguallib, $access, $_REQUEST, $prefs;
+	if ($prefs['feature_machine_translation'] != 'y') {
+		require_once('lib/tikiaccesslib.php');	
+		$error_msg = tra("You have requested that this page be machine translated:").
+		             " <b>".$_REQUEST['page']."</b><p>".
+		             tra("However, the Machine Translation feature is not enabled. Please enable this feature, or ask a site admin to do it.");
+		$access->display_error($_REQUEST['page'], "Cannot machine translate this page", "", true, $error_msg);
+	}
+}

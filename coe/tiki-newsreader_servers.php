@@ -14,14 +14,12 @@ include_once ('lib/newsreader/newslib.php');
 
 if (!$user) {
 	$smarty->assign('msg', tra("You are not logged in"));
-
 	$smarty->display("error.tpl");
 	die;
 }
 
 if ($prefs['feature_newsreader'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_newsreader");
-
 	$smarty->display("error.tpl");
 	die;
 }
@@ -29,7 +27,6 @@ if ($prefs['feature_newsreader'] != 'y') {
 if ($tiki_p_newsreader != 'y') {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied to use this feature"));
-
 	$smarty->display("error.tpl");
 	die;
 }
@@ -37,32 +34,29 @@ if (!isset($_REQUEST["serverId"]))
 	$_REQUEST["serverId"] = 0;
 
 if (isset($_REQUEST["remove"])) {
-  $area = 'delnewsserver';
-  if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-    key_check($area);
+	$area = 'delnewsserver';
+	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+		key_check($area);
 		$newslib->remove_server($user, $_REQUEST['remove']);
-  } else {
-    key_get($area);
-  }
+	} else {
+		key_get($area);
+	}
 }
 
 if ($_REQUEST["serverId"]) {
 	$info = $newslib->get_server($user, $_REQUEST["serverId"]);
 } else {
 	$info = array();
-
 	$info['server'] = '';
 	$info['port'] = 119;
 	$info['news_username'] = '';
-	;
 	$info['password'] = '';
 }
 
 if (isset($_REQUEST['save'])) {
 	check_ticket('news-server');
 	$newslib->replace_server(
-		$user, $_REQUEST["serverId"], $_REQUEST["server"], $_REQUEST["port"], $_REQUEST['news_username'], $_REQUEST['password']);
-
+	$user, $_REQUEST["serverId"], $_REQUEST["server"], $_REQUEST["port"], $_REQUEST['news_username'], $_REQUEST['password']);
 	$info = array();
 	$info['server'] = '';
 	$info['port'] = 119;
@@ -123,15 +117,15 @@ include_once ('tiki-section_options.php');
 include_once ('tiki-mytiki_shared.php');
 ask_ticket('news-server');
 if ($prefs['feature_ajax'] == "y") {
-function user_newsreaders_ajax() {
-    global $ajaxlib, $xajax;
-    $ajaxlib->registerTemplate("tiki-newsreader_servers.tpl");
-    $ajaxlib->registerTemplate("tiki-my_tiki.tpl");
-    $ajaxlib->registerFunction("loadComponent");
-    $ajaxlib->processRequests();
-}
-user_newsreaders_ajax();
-$smarty->assign("mootab",'y');
+	function user_newsreaders_ajax() {
+		global $ajaxlib, $xajax;
+		$ajaxlib->registerTemplate("tiki-newsreader_servers.tpl");
+		$ajaxlib->registerTemplate("tiki-my_tiki.tpl");
+		$ajaxlib->registerFunction("loadComponent");
+		$ajaxlib->processRequests();
+	}
+	user_newsreaders_ajax();
+	$smarty->assign("mootab",'y');
 }
 
 $smarty->assign('mid', 'tiki-newsreader_servers.tpl');

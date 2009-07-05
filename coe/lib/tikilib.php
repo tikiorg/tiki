@@ -1583,7 +1583,7 @@ class TikiLib extends TikiDB {
 			}
 			$ret[] = "Registered";
 			$ret[] = "Anonymous";
-			if($_SESSION["groups_are_emulated"]=="y"){
+			if (isset($_SESSION["groups_are_emulated"]) && $_SESSION["groups_are_emulated"]=="y"){
 				$ret = array_intersect($ret,unserialize($_SESSION['groups_emulated']));
 			}
 			$ret = array_unique($ret);
@@ -8445,7 +8445,10 @@ class TikiLib extends TikiDB {
 			$data = $this->parse_data($data, array('is_html' => $is_html));
 			$data = strip_tags($data);
 		}
-		return substr($data, 0, $length);
+		if (function_exists('mb_substr')) 
+			return mb_substr($data, 0, $length);
+		else
+			return substr($data, 0, $length);
 	}
 
 	function htmldecode($string, $quote_style = ENT_COMPAT, $translation_table = HTML_ENTITIES) {

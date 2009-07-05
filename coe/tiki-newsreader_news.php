@@ -12,28 +12,24 @@ include_once ('lib/newsreader/newslib.php');
 
 if (!$user) {
 	$smarty->assign('msg', tra("You are not logged in"));
-
 	$smarty->display("error.tpl");
 	die;
 }
 
 if ($prefs['feature_newsreader'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_newsreader");
-
 	$smarty->display("error.tpl");
 	die;
 }
 
 if ($tiki_p_newsreader != 'y') {
 	$smarty->assign('msg', tra("Permission denied to use this feature"));
-
 	$smarty->display("error.tpl");
 	die;
 }
 
 if ((!isset($_REQUEST['server'])) || (!isset($_REQUEST['port'])) || (!isset($_REQUEST['group']))) {
 	$smarty->assign('msg', tra("Missing information to read news (server,port,username,password,group) required"));
-
 	$smarty->display("error.tpl");
 	die;
 }
@@ -56,7 +52,6 @@ if (isset($_REQUEST['serverId'])) {
 
 if (!$newslib->news_set_server($_REQUEST['server'], $_REQUEST['port'], $_REQUEST['news_username'], $_REQUEST['password'])) {
 	$smarty->assign('msg', tra("Cannot connect to"). ':' . $info['server']);
-
 	$smarty->display("error.tpl");
 	die;
 }
@@ -65,7 +60,6 @@ $info = $newslib->news_select_group($_REQUEST['group']);
 
 if (!$info) {
 	$smarty->assign('msg', tra("Cannot get messages"));
-
 	$smarty->display("error.tpl");
 	die;
 }
@@ -111,16 +105,13 @@ $mark = $newslib->news_get_mark($user, $_REQUEST['serverId'], $_REQUEST['group']
 
 for ($i = $info['last'] - $offset; $count < $maxRecords && $i >= $info['first']; $i--) {
 	$count++;
-
 	$art = $newslib->news_split_headers($i);
 	$art['loopid'] = $i;
-
 	if (strtotime($art['Date']) > $mark) {
 		$art['status'] = 'new';
 	} else {
 		$art['status'] = 'old';
 	}
-
 	//$art['timestamp']=$tikilib->get_iso8601_datetime($art["Date"]);
 	$articles[] = $art;
 }

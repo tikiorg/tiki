@@ -45,7 +45,7 @@ class Smarty_Tikiwiki extends Smarty {
 		);
 		$this->security_settings['IF_FUNCS'] = array_merge(
 			$this->security_settings['IF_FUNCS'],
-			array('tra', 'strlen', 'strstr', 'strtolower', 'basename', 'ereg', 'array_key_exists', 'preg_match')
+			array('tra', 'strlen', 'strstr', 'strtolower', 'basename', 'ereg', 'array_key_exists', 'preg_match', 'in_array')
 		);
 		$secure_dirs[] = 'img/icons2';
 		$this->secure_dir = $secure_dirs;

@@ -416,7 +416,9 @@ foreach ( $allperms as $vperm ) {
 }
 
 // Permissions
-if ( $user && ( $user == 'admin' || $userlib->user_has_permission($user, 'tiki_p_admin') ) ) {
+// Ensure admins with tiki_p_admin get all permissions
+// Ensure user 'admin' gets all permissions unless admin wishes to emulate not being admin with module groups_emulation
+if ( $user && ( ( $user == 'admin' && $_SESSION["groups_are_emulated"] != "y" ) || $userlib->user_has_permission($user, 'tiki_p_admin') ) ) {
 	// Gives admins all permissions
 	foreach ($allperms as $vperm) {
 		$perm = $vperm['permName'];
