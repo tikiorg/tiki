@@ -105,7 +105,7 @@ if ($_REQUEST["galleryId"] != 0) {
 //$smarty->assign_by_ref('theme',$gal_info["theme"]);
 //$smarty->assign('use_theme','y');
 /*
-if($user!='admin' && $user!=$gal_info["user"] && $gal_info["public"]!='y') {
+if( $tiki_p_admin != 'y' && $user!=$gal_info["user"] && $gal_info["public"]!='y') {
   $smarty->assign('errortype', 401);
   $smarty->assign('msg',tra("Permission denied you cannot browse this gallery"));
   $smarty->display("error.tpl");

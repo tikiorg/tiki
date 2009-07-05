@@ -4,7 +4,7 @@
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 require_once ('tiki-setup.php');
-if ($user != 'admin' && $tiki_p_admin != 'y' && $tiki_p_clean_cache != 'y') { // admin test needed for the first inclusion of this perm befroring clearing the cache
+if ( $tiki_p_admin != 'y' && $tiki_p_clean_cache != 'y') { // admin test needed for the first inclusion of this perm before clearing the cache
     $smarty->assign('errortype', 401);
     $smarty->assign('msg', tra('You do not have permission to use this feature'));
     $smarty->display('error.tpl');
