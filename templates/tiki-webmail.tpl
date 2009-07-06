@@ -2,7 +2,7 @@
 
 {title help=Webmail admpage=webmail}{tr}Webmail{/tr}{/title}
 
-{* include file='tiki-mytiki_bar.tpl' *}
+{include file='tiki-mytiki_bar.tpl'}
 <br /><br />
 
 <table width="100%" border=0>
@@ -17,11 +17,13 @@
 			<br />
 			{self_link locSection='compose' _noauto='y'}{tr}Compose{/tr}{/self_link}
 		</td>
-		<td>
-			{self_link _icon='img/webmail/contact.gif' locSection='contacts' _width='48' _height='48' _noauto='y'}{tr}Contacts{/tr}{/self_link}
-			<br />
-			{self_link locSection='contacts' _noauto='y'}{tr}Contacts{/tr}{/self_link}
-		</td>
+		{if $prefs.feature_contacts eq 'y'}
+			<td>
+				{self_link _icon='img/webmail/contact.gif' _script='tiki-contacts.php' _width='48' _height='48' _noauto='y'}{tr}Contacts{/tr}{/self_link}
+				<br />
+				{self_link  _script='tiki-contacts.php' _noauto='y'}{tr}Contacts{/tr}{/self_link}
+			</td>
+		{/if}
 		<td width="50%">
 		</td>
 		<td>
@@ -513,142 +515,6 @@
 			<a class="link" href="tiki-webmail_download_attachment.php?locSection=read&amp;msgid={$msgid}&amp;getpart={$attachs[ix].part}">{$attachs[ix].name|iconify}{$attachs[ix].name}</a>
 		</div>
 	{/section}
-{/if}
-
-{if $locSection eq 'contacts'}
-	<h2>{if $contactId eq 0}{tr}Add a new{/tr}{else}{tr}Edit this{/tr}{/if} {tr} contact{/tr} {icon _id='add' id='addContactIcon'}</h2>
-	<div id="contactsFormDiv"{if $contactId eq 0 and count($channels) != 0}style="display:none"{/if}>
-		<form action="tiki-webmail.php" method="post" name="contacts">
-			<input type="hidden" name="locSection" value="contacts" />
-			<input type="hidden" name="contactId" value="{$contactId|escape}" />
-			<table class="normal">
-				<tr class="formcolor">
-					<td>{tr}First Name{/tr}:</td>
-					<td>
-						<input type="text" maxlength="80" size="20" name="firstName" value="{$info.firstName|escape}" />
-					</td>
-				</tr>
-				<tr class="formcolor">
-					<td>{tr}Last Name{/tr}:</td>
-					<td>
-						<input type="text" maxlength="80" size="20" name="lastName" value="{$info.lastName|escape}" />
-					</td>
-				</tr>
-				<tr class="formcolor">
-					<td>{tr}Email{/tr}:</td>
-					<td>
-						<input type="text" maxlength="80" size="20" name="email" value="{$info.email|escape}" />
-					</td>
-				</tr>
-				<tr class="formcolor">
-					<td>{tr}Nickname{/tr}:</td>
-					<td>
-						<input type="text" maxlength="80" size="20" name="nickname" value="{$info.nickname|escape}" />
-					</td>
-				</tr>
-				<tr class="formcolor">
-					<td>{tr}Groups{/tr}:</td>
-					<td>
-						{if !empty($listgroups)}
-							{foreach item=gr from=$listgroups}
-								<div class="registergroup">
-									 <input type="checkbox"
-									 		id="gr_{$gr|escape}"
-									 		{if in_array($gr,$info.groups)}checked="checked"{/if}
-									 		{if $user neq $info.user and $tiki_p_admin neq 'y' and $tiki_p_admin_group_webmail neq 'y'}
-										 		name="dummy[]"
-									 			value="dummy"
-									 			disabled
-									 		{else}
-										 		name="groups[]"
-									 			value="{$gr|escape}"
-									 		{/if}
-									 	/> 
-									 <label for="gr_{$gr}">
-									 	{$gr}
-									</label>
-								</div>
-							{/foreach}
-						{/if}
-						{if !empty($other_groups)}
-							{tr}Other groups: {/tr}
-							{foreach item=ogr from=$other_groups}
-								<em>{$ogr}</em>&nbsp;
-								<input type="hidden" name="groups[]" value="{$ogr|escape}" />
-							{/foreach}
-						{/if}
-						<input type="hidden" name="user" value="{$info.user|escape}" />
-					</td>
-				</tr>
-				<tr class="formcolor">
-					<td colspan="2">
-						<input type="submit" name="save" value="{tr}Save{/tr}" />
-					</td>
-				</tr>
-			</table>
-		</form>
-	</div>
-	
-	<h2>{tr}Contacts{/tr}</h2>
-	{include file='find.tpl'}
-
-		{initials_filter_links}
-
-		<table class="normal">
-			<tr>
-				<th>
-					<a href="tiki-webmail.php?locSection=contacts&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'firstName_desc'}firstName_asc{else}firstName_desc{/if}">{tr}First Name{/tr}</a>
-				</th>
-				<th>
-					<a href="tiki-webmail.php?locSection=contacts&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastName_desc'}lastName_asc{else}lastName_desc{/if}">{tr}Last Name{/tr}</a>
-				</th>
-				<th>
-					<a href="tiki-webmail.php?locSection=contacts&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'email_desc'}email_asc{else}email_desc{/if}">{tr}Email{/tr}</a>
-				</th>
-				<th>
-					<a href="tiki-webmail.php?locSection=contacts&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'nickname_desc'}nickname_asc{else}nickname_desc{/if}">{tr}Nickname{/tr}</a>
-				</th>
-				<th>
-					{tr}Groups{/tr}
-				</th>
-				<th>&nbsp;</th>
-			</tr>
-			{cycle values="odd,even" print=false}
-			{section name=user loop=$channels}
-				<tr>
-					<td class="{cycle advance=false}">{$channels[user].firstName}</td>
-					<td class="{cycle advance=false}">{$channels[user].lastName}</td>
-					<td class="{cycle advance=false}">
-						<a class="link" href="tiki-webmail.php?locSection=contacts&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;contactId={$channels[user].contactId}">{$channels[user].email|escape}</a>
-					</td>
-					<td class="{cycle advance=false}">{$channels[user].nickname}</td>
-					<td class="{cycle advance=false}">{','|implode:$channels[user].groups}</td>
-					<td class="{cycle}">
-						{self_link _icon='page_edit' locSection='contacts' contactId=$channels[user].contactId}{* offset=$offset sort_mode=$sort_mode _noauto='y'*}{tr}Edit{/tr}{/self_link}
-						{self_link _icon='cross' locSection='contacts' remove=$channels[user].contactId}{* offset=$offset sort_mode=$sort_mode find=$find _noauto='y'*}{tr}Delete{/tr}{/self_link}
-					</td>
-				</tr>
-			{/section}
-		</table>
-		
-		<div class="mini">
-			{if $prev_offset >= 0}
-				[<a class="prevnext" href="tiki-webmail.php?locSection=contacts&amp;find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}Prev{/tr}</a>]
-				&nbsp;
-			{/if}
-			{tr}Page{/tr}: {$actual_page}/{$cant_pages}
-			{if $next_offset >= 0}
-				&nbsp;[<a class="prevnext" href="tiki-webmail.php?locSection=contacts&amp;find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
-			{/if}
-			{if $prefs.direct_pagination eq 'y'}
-				<br />
-				{section loop=$cant_pages name=foo}
-					{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
-					<a class="prevnext" href="tiki-webmail.php?locSection=contacts&amp;find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">{$smarty.section.foo.index_next}</a>
-					&nbsp;
-				{/section}
-			{/if}
-		</div>
 {/if}
 
 {if $locSection eq 'compose'}
