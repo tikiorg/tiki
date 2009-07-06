@@ -37,10 +37,8 @@ $show_columns = array_fill_keys( array_keys( $modules ), 'n' );
 foreach( $modules as $zone => & $moduleList ) {
 	foreach( $moduleList as & $mod_reference ) {
 		$show_columns[$zone] = 'y';
-		$module_rows = $mod_reference["rows"];
-		$module_params = $mod_reference['params'];
-		include ('tiki-module.php');
-		$mod_reference['data'] = $data;
+
+		$mod_reference['data'] = $modlib->execute_module( $mod_reference );
 	}
 
 	$smarty->assign_by_ref( $zone, $moduleList );

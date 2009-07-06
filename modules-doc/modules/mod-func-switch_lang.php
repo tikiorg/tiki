@@ -6,6 +6,26 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
+function module_switch_lang_info() {
+	return array(
+		'name' => tra('Switch Language'),
+		'description' => tra('Displays a language picker to change the language of the site.'),
+		'prefs' => array( 'feature_multilingual' ),
+		'params' => array(
+			'mode' => array(
+				'name' => tra('Display mode'),
+				'description' => tra('Changes how the list of languages is displayed. Possible values are droplist, flags and words. Defaults to droplist.'),
+				'filter' => 'alpha',
+			),
+			'prefix' => array(
+				'name' => tra('Prefix'),
+				'description' => tra('Changes the default displayed prefix from \"Site Language:\"'),
+				'filter' => 'striptags',
+			),
+		),
+	);
+}
+
 function module_switch_lang( $mod_reference, $module_params ) {
 	global $tikilib, $smarty;
 

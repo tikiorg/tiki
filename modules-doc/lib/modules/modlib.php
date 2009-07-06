@@ -263,18 +263,6 @@ class ModLib extends TikiLib {
 		return $module;
 	}
 
-	function getStandardParameters() {
-		return array(
-			'lang',
-			'section',
-			'page',
-			'nopage',
-			'theme',
-			'creator',
-			'contributor',
-		);
-	}
-
 	function filter_active_module( $module ) {
 		global $section, $page, $prefs, $user, $user_groups, $tikilib;
 
@@ -378,6 +366,210 @@ class ModLib extends TikiLib {
 		}
 
 		return $out;
+	}
+
+	function get_module_info( $module ) {
+		if( is_array( $module ) ) {
+			$moduleName = $module['name'];
+		} else {
+			$moduleName = $module;
+		}
+
+		$phpfuncfile = 'modules/mod-func-' . $moduleName . '.php';
+		$info_func = "module_{$moduleName}_info";
+		$info = array();
+
+		if( file_exists( $phpfuncfile ) ) {
+			include_once $phpfuncfile;
+
+			if( function_exists( $info_func ) ) {
+				$info = $info_func();
+			}
+
+			$info['type'] = 'function';
+		}
+
+		$defaults = array(
+			'name' => $moduleName,
+			'description' => tra('Description not available'),
+			'type' => 'include',
+			'cachekeygen' => array( $this, 'createDefaultCacheKey' ),
+			'prefs' => array(),
+			'params' => array(),
+		);
+
+		$info = array_merge( $defaults, $info );
+
+		$info['params'] = array_merge( $info['params'], array(
+			'title' => array(
+				'name' => tra('Module Title'),
+				'description' => tra('Title to display at the top of the box.'),
+				'filter' => 'striptags',
+			),
+			'nobox' => array(
+				'name' => tra('No box'),
+				'description' => tra('?'),
+			),
+			'decorations' => array(
+				'name' => tra('Decorations'),
+				'description' => tra('?'),
+			),
+			'lang' => array(
+				'name' => tra('Language'),
+				'description' => tra('Module only applicable for the specified languages. Languages are defined as two character language codes. Multiple values can be separated by semi-colons.'),
+				'separator' => ';',
+				'filter' => 'lang',
+			),
+			'section' => array(
+				'name' => tra('Section'),
+				'description' => tra('Module only applicable for the specified sections. Multiple values can be separated by semi-colons.'),
+				'separator' => ';',
+				'filter' => 'striptags',
+			),
+			'page' => array(
+				'name' => tra('Page'),
+				'description' => tra('Module only applicable on the specified page names. Multiple values can be separated by semi-colons.'),
+				'separator' => ';',
+				'filter' => 'pagename',
+			),
+			'nopage' => array(
+				'name' => tra('No Page'),
+				'description' => tra('Module not applicable on the specified page names. Multiple values can be separated by semi-colons.'),
+				'separator' => ';',
+				'filter' => 'pagename',
+			),
+			'theme' => array(
+				'name' => tra('Theme'),
+				'description' => tra('Module enabled or disabled depending on the theme. Specified themes can be either included or excluded. Theme names prefixed by \"!\" are in the exclusion list. Multiple values can be separated by semi-colons.'),
+				'separator' => ';',
+				'filter' => 'themename',
+			),
+			'creator' => array(
+				'name' => tra('Creator'),
+				'description' => tra('Module only available based on the relationship of the user with the wiki page. Either only creators (y) or only non-creators (n) will see the module.'),
+				'filter' => 'alpha',
+			),
+			'contributor' => array(
+				'name' => tra('Creator'),
+				'description' => tra('Module only available based on the relationship of the user with the wiki page. Either only contributors (y) or only non-contributors (n) will see the module.'),
+				'filter' => 'alpha',
+			),
+		) );
+
+		return $info;
+	}
+
+	function createDefaultCacheKey( $module_reference ) {
+		global $prefs;
+		return md5( $mod_reference['moduleId'] . '-'. $prefs['language'] . '-' . serialize($mod_reference['params']) );
+	}
+
+	function execute_module( $mod_reference ) {
+		$module_rows = $mod_reference["rows"];
+		$module_params = $mod_reference['params'];
+
+		if (!$mod_reference['rows']) {
+			$mod_reference['rows'] = 10;
+		}
+
+		$info = $this->get_module_info( $mod_reference );
+		$cachefile = $this->get_cache_file( $mod_reference, $info );
+
+		global $smarty, $tikilib, $user;
+
+		if( ! $cachefile || $this->require_cache_build( $mod_reference, $cachefile ) ) {
+			if( isset( $module_params['title'] ) ) { 
+				$smarty->assign('tpl_module_title', tra( $module_params['title'] ) ); 
+			}
+
+			if( $info['type'] == 'include' ) {
+				$phpfile = 'modules/mod-' . $mod_reference['name'] . '.php';
+
+				if( file_exists( $phpfile ) ) {
+					include $phpfile;
+				}
+			} elseif( $info['type'] == 'function' ) {
+				$function = 'modules_' . $mod_reference['name'];
+
+				if( function_exists( $function ) ) {
+					$function( $mod_reference, $module_params );
+				}
+			}
+
+			$smarty->assign_by_ref('module_rows',$mod_reference['rows']);
+			$smarty->assign_by_ref('module_params', $module_params); // module code can unassign this if it wants to hide params
+			$smarty->assign('module_ord', $mod_reference['ord']);
+			$smarty->assign('module_position', $mod_reference['position']);
+			$smarty->assign('moduleId', $mod_reference['moduleId']);
+
+			$template = 'modules/mod-' . $mod_reference['name'] . '.tpl';
+
+			if (file_exists('templates/'.$template)) {
+				$data = $smarty->fetch($template);
+			} else {
+				$data = $this->get_user_module_content( $mod_reference['name'] );
+			}
+			$smarty->clear_assign('module_params'); // ensure params not available outside current module
+			$smarty->clear_assign('tpl_module_title');
+
+			file_put_contents( $cachefile, $data );
+		} else {
+			$data = file_get_contents( $cachefile );
+		}
+
+		return $data;
+	}
+
+	function get_user_module_content( $name ) {
+		global $tikilib, $smarty;
+
+		$info = $tikilib->get_user_module( $name );
+		if (!empty($info)) {
+			// test if we have a menu
+			if (strpos($info['data'],'{menu ') === 0 and strpos($info['data'],"css=y")) {
+				$smarty->assign('module_type','cssmenu');
+			} else {
+				$smarty->assign('module_type','module');
+			}
+
+			$smarty->assign('user_title', tra($info['title']));
+
+			if (isset($info['parse']) && $info['parse'] == 'y') {
+				$info['data'] = $tikilib->parse_data($info['data']);
+			}
+
+			$smarty->assign_by_ref('user_data', $info['data']);
+			$smarty->assign_by_ref('user_module_name', $info['name']);
+
+			return $smarty->fetch('modules/user_module.tpl');
+		}
+	}
+
+	function get_cache_file( $mod_reference, $info ) {
+		global $tikidomain, $user;
+		$nocache = 'templates/modules/mod-' . $mod_reference["name"] . '.tpl.nocache';
+
+		// Uncacheable
+		if( ! empty( $user ) || $mod_reference['cache_time'] <= 0 || file_exists( $nocache ) ) {
+			return null;
+		}
+
+		$cb = $info['cachekeygen'];
+
+		$cachefile = 'modules/cache/';
+		if ($tikidomain) {
+			$cachefile.= "$tikidomain/";
+		}
+
+		$cachefile .= 'mod-' . md5( call_user_func( $cb, $mod_reference ) );
+
+		return $cachefile;
+	}
+
+	function require_cache_build( $mod_reference, $cachefile ) {
+		global $tikilib;
+		return ! file_exists( $cachefile )
+			|| ( $tikilib->now - filemtime($cachefile) ) >= $mod_reference['cache_time'];
 	}
 }
 global $dbTiki;
