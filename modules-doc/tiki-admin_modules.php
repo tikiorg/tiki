@@ -79,13 +79,16 @@ if (!empty($_REQUEST['edit_assign'])) {
     $smarty->assign_by_ref('assign_position', $info["position"]);
     $smarty->assign_by_ref('assign_cache', $info["cache_time"]);
     $smarty->assign_by_ref('assign_rows', $info["rows"]);
-    $smarty->assign_by_ref('assign_params', $info["params"]);
     $smarty->assign_by_ref('assign_type', $info["type"]);
     $smarty->assign_by_ref('assign_order', $cosa);
     $smarty->assign_by_ref('info', $info);
     if (!$info['name']) {
         $smarty->assign('assign_selected', $_REQUEST['edit_assign']);
     }
+
+	$modinfo = $modlib->get_module_info( $info['name'] );
+	$modlib->dispatchValues( $info['params'], $modinfo['params'] );
+	$smarty->assign('assign_info', $modinfo);
 }
 if (!empty($_REQUEST['unassign'])) {
     check_ticket('admin-modules');
@@ -183,6 +186,10 @@ if (isset($_REQUEST["preview"])) {
     }
     $smarty->assign('module_groups', $grps);
     $smarty->assign_by_ref('preview_data', $data);
+
+	$modinfo = $modlib->get_module_info( $_REQUEST['assign_name'] );
+	$modlib->dispatchValues( $_REQUEST['assign_params'], $modinfo['params'] );
+	$smarty->assign( 'assign_info', $modinfo );
 }
 if (isset($_REQUEST["assign"])) {
     check_ticket('admin-modules');
@@ -225,6 +232,10 @@ $smarty->assign_by_ref('user_modules', $user_modules["data"]);
 $all_modules = $modlib->get_all_modules();
 sort($all_modules);
 $smarty->assign_by_ref('all_modules', $all_modules);
+$smarty->assign( 'all_modules_info', array_combine( 
+	$all_modules, 
+	array_map( array( $modlib, 'get_module_info' ), $all_modules ) 
+) );
 $orders = array();
 for ($i = 1;$i < 50;$i++) {
     $orders[] = $i;

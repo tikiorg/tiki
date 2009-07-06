@@ -32,6 +32,11 @@ class ModLib extends TikiLib {
 		//check for valid values
 		$cache_time = is_numeric($cache_time) ? $cache_time : 0;
 		$rows = is_numeric($rows) ? $rows : 10;
+
+		if( is_array( $params ) ) {
+			$params = $this->serializeParameters( $name, $params );
+		}
+
 		if ($moduleId) {
 			$query = "update `tiki_modules` set `name`=?,`title`=?,`position`=?,`ord`=?,`cache_time`=?,`rows`=?,`groups`=?,`params`=?,`type`=? where `moduleId`=?";
 			$result = $this->query($query,array($name,$title,$position,(int) $order,(int) $cache_time,(int) $rows,$groups,$params,$type, $moduleId));
@@ -458,7 +463,7 @@ class ModLib extends TikiLib {
 				'filter' => 'alpha',
 			),
 			'contributor' => array(
-				'name' => tra('Creator'),
+				'name' => tra('Contributor'),
 				'description' => tra('Module only available based on the relationship of the user with the wiki page. Either only contributors (y) or only non-contributors (n) will see the module.'),
 				'filter' => 'alpha',
 			),
@@ -578,6 +583,61 @@ class ModLib extends TikiLib {
 		global $tikilib;
 		return ! file_exists( $cachefile )
 			|| ( $tikilib->now - filemtime($cachefile) ) >= $mod_reference['cache_time'];
+	}
+
+	function dispatchValues( $input, & $params ) {
+		if( is_string( $input ) ) {
+			TikiLib::parse_str( $input, $module_params );
+		} else {
+			$module_params = $input;
+		}
+
+		foreach( $params as $name => & $inner ) {
+			if( isset( $module_params[$name] ) ) {
+				if( isset( $inner['separator'] ) ) {
+					$inner['value'] = implode( $inner['separator'], (array) $module_params[$name] );
+				} else {
+					$inner['value'] = $module_params[$name];
+				}
+			} else {
+				$inner['value'] = null;
+			}
+		}
+	}
+
+	function serializeParameters( $name, $params ) {
+		$info = $this->get_module_info( $name );
+		$expanded = array();
+
+		foreach( $info['params'] as $name => $def ) {
+			if( isset( $def['filter'] ) ) {
+				$filter = TikiFilter::get( $def['filter'] );
+			} else {
+				$filter = null;
+			}
+
+			if( isset( $params[$name] ) && ! empty( $params[$name] ) ) {
+				if( isset( $def['separator'] ) ) {
+					$parts = explode( $def['separator'], $params[$name] );
+					
+					if( $filter ) {
+						foreach( $parts as & $single ) {
+							$single = $filter->filter( $single );
+							$single = trim( $single );
+						}
+					}
+				} else {
+					$parts = $params[$name];
+					if( $filter ) {
+						$parts = $filter->filter( $parts );
+					}
+				}
+
+				$expanded[$name] = $parts;
+			}
+		}
+
+		return http_build_query( $expanded, '', '&' );
 	}
 }
 global $dbTiki;
