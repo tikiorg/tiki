@@ -319,7 +319,7 @@
 			{if $errors}
 				<div class="simple highlight">
 					{foreach from=$errors item=e}
-						{$e}</br />
+						{$e}<br />
 					{/foreach}
 				</div>
 			{/if}

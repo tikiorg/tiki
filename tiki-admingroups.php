@@ -302,6 +302,7 @@ if (!empty($_REQUEST['group']) && isset($_REQUEST['import'])) {
         if (function_exists("mb_detect_encoding") && mb_detect_encoding($data[0], "ASCII, UTF-8, ISO-8859-1") == "ISO-8859-1") {
             $data[0] = utf8_encode($data[0]);
         }
+		$data[0] = trim($data[0]);
         if (!$userlib->user_exists($data[0])) {
             $errors[] = tra("User doesn't exist") . ': ' . $data[0];
         } else {
