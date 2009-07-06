@@ -38,6 +38,7 @@ foreach( $modules as $zone => & $moduleList ) {
 	foreach( $moduleList as & $mod_reference ) {
 		$show_columns[$zone] = 'y';
 		$module_rows = $mod_reference["rows"];
+		$module_params = $mod_reference['params'];
 		include ('tiki-module.php');
 		$mod_reference['data'] = $data;
 	}
