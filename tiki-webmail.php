@@ -1,6 +1,6 @@
 <?php
 
-// $Id: /cvsroot/tikiwiki/tiki/tiki-webmail.php,v 1.40 2007-10-12 07:55:33 nyloth Exp $
+// $Id$
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10,7 +10,7 @@
 $section = 'webmail';
 require_once ('tiki-setup.php');
 if ($prefs['feature_ajax'] == 'y') {
-require_once ('lib/ajax/ajaxlib.php');
+	require_once ('lib/ajax/ajaxlib.php');
 }
 include_once ('lib/webmail/webmaillib.php');
 
@@ -25,7 +25,7 @@ if ($prefs['feature_webmail'] != 'y') {
 	die;
 }
 
-if ($tiki_p_use_webmail != 'y' || $tiki_p_use_group_webmail != 'y') {
+if ($tiki_p_use_webmail != 'y' && $tiki_p_use_group_webmail != 'y') {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra('Permission denied to use this feature'));
 
