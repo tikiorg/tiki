@@ -469,7 +469,7 @@ class ModLib extends TikiLib {
 
 	function createDefaultCacheKey( $module_reference ) {
 		global $prefs;
-		return md5( $mod_reference['moduleId'] . '-'. $prefs['language'] . '-' . serialize($mod_reference['params']) );
+		return md5( $mod_reference['moduleId'] . '-' . $mod_reference['name'] . '-'. $prefs['language'] . '-' . serialize($mod_reference['params']) );
 	}
 
 	function execute_module( $mod_reference ) {
