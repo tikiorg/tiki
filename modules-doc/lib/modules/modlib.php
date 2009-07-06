@@ -229,7 +229,7 @@ class ModLib extends TikiLib {
 
 		foreach( $list as & $partial ) {
 			$partial = array_map( array( $this, 'augment_module_parameters' ), $partial );
-			$partial = array_filter( $partial, array( $this, 'filter_active_module' ) );
+			$partial = array_values( array_filter( $partial, array( $this, 'filter_active_module' ) ) );
 		}
 
 		return $list;
@@ -265,6 +265,14 @@ class ModLib extends TikiLib {
 
 	function filter_active_module( $module ) {
 		global $section, $page, $prefs, $user, $user_groups, $tikilib;
+
+		// Validate preferences
+		$module_info = $this->get_module_info( $module['name'] );
+		foreach( $module_info['prefs'] as $p ) {
+			if( $prefs[$p] != 'y' ) {
+				return false;
+			}
+		}
 
 		$params = $module['params'];
 
