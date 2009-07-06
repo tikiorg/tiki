@@ -811,7 +811,7 @@ if ($_REQUEST["itemId"]) {
 				} elseif ($fields["data"][$i]["type"] == 'r') {
 					$ins_fields["data"][$i]["linkId"] = $trklib->get_item_id($fields["data"][$i]["options_array"][0], $fields["data"][$i]["options_array"][1], $info[$fid]);
 					$ins_fields["data"][$i]["value"] = $info[$fid];
-					$ins_fields["data"][$i]["list"] = $trklib->get_all_items($fields["data"][$i]["options_array"][0], $fields["data"][$i]["options_array"][1]);
+					$ins_fields["data"][$i]["list"] = array_unique($trklib->get_all_items($fields["data"][$i]["options_array"][0], $fields["data"][$i]["options_array"][1]));
 					if (isset($fields["data"][$i]["options_array"][3])) {
 						$ins_fields["data"][$i]["displayedvalue"] = $trklib->concat_item_from_fieldslist($fields["data"][$i]["options_array"][0], $trklib->get_item_id($fields["data"][$i]["options_array"][0], $fields["data"][$i]["options_array"][1], $info[$fid]) , $fields["data"][$i]["options_array"][3]);
 						$ins_fields["data"][$i]["listdisplay"] = $trklib->concat_all_items_from_fieldslist($fields["data"][$i]["options_array"][0], $fields["data"][$i]["options_array"][3]);
@@ -983,17 +983,7 @@ foreach($xfields['data'] as $sid => $onefield) {
 }
 foreach($ins_fields['data'] as $sid => $onefield) {
 	if ($ins_fields['data'][$sid]['type'] == 'w') {
-		if (!isset($ins_fields['data'][$id_fields[$ins_fields['data'][$sid]['options_array'][2]]]['http_request'])) $ins_fields['data'][$id_fields[$ins_fields['data'][$sid]['options_array'][2]]]['http_request'] = array(
-			'',
-			'',
-			'',
-			'',
-			'',
-			'',
-			'',
-			'',
-			''
-		);
+		if (!isset($ins_fields['data'][$id_fields[$ins_fields['data'][$sid]['options_array'][2]]]['http_request'])) $ins_fields['data'][$id_fields[$ins_fields['data'][$sid]['options_array'][2]]]['http_request'] = array('',	'',	'',	'',	'',	'',	'',	'',	'');
 		for ($i = 0; $i < 5; $i++) {
 			$ins_fields['data'][$id_fields[$ins_fields['data'][$sid]['options_array'][2]]]['http_request'][$i].= ($ins_fields['data'][$id_fields[$ins_fields['data'][$sid]['options_array'][2]]]['http_request'][$i] ? "," : "") . $ins_fields['data'][$sid]['options_array'][$i];
 		}
