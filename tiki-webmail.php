@@ -62,6 +62,13 @@ if (!$user) {
 	die;
 }
 
+$auto_query_args = array(
+    'msgid',
+	'locSection',
+	'filter'
+);
+
+
 if (!isset($_REQUEST['locSection'])) {
 	$_REQUEST['locSection'] = 'mailbox';
 }

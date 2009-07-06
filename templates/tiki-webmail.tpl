@@ -8,28 +8,28 @@
 <table width="100%" border=0>
 	<tr>
 		<td>
-			{self_link _icon='img/webmail/mailbox.gif' locSection='mailbox' _width='48' _height='48' _noauto='y'}{tr}Mailbox{/tr}{/self_link}
+			{self_link _icon='img/webmail/mailbox.gif' locSection='mailbox' _width='48' _height='48'}{tr}Mailbox{/tr}{/self_link}
 			<br />
-			{self_link locSection='mailbox' _noauto='y'}{tr}Mailbox{/tr}{/self_link}
+			{self_link locSection='mailbox'}{tr}Mailbox{/tr}{/self_link}
 		</td>
 		<td>
-			{self_link _icon='img/webmail/compose.gif' locSection='compose' _width='48' _height='48' _noauto='y'}{tr}Compose{/tr}{/self_link}
+			{self_link _icon='img/webmail/compose.gif' locSection='compose' _width='48' _height='48'}{tr}Compose{/tr}{/self_link}
 			<br />
-			{self_link locSection='compose' _noauto='y'}{tr}Compose{/tr}{/self_link}
+			{self_link locSection='compose'}{tr}Compose{/tr}{/self_link}
 		</td>
 		{if $prefs.feature_contacts eq 'y'}
 			<td>
-				{self_link _icon='img/webmail/contact.gif' _script='tiki-contacts.php' _width='48' _height='48' _noauto='y'}{tr}Contacts{/tr}{/self_link}
+				{self_link _icon='img/webmail/contact.gif' _script='tiki-contacts.php' _width='48' _height='48'}{tr}Contacts{/tr}{/self_link}
 				<br />
-				{self_link  _script='tiki-contacts.php' _noauto='y'}{tr}Contacts{/tr}{/self_link}
+				{self_link  _script='tiki-contacts.php'}{tr}Contacts{/tr}{/self_link}
 			</td>
 		{/if}
 		<td width="50%">
 		</td>
 		<td>
-			{self_link _icon='img/webmail/settings.gif' locSection='settings' _width='48' _height='48' _noauto='y'}{tr}Settings{/tr}{/self_link}
+			{self_link _icon='img/webmail/settings.gif' locSection='settings' _width='48' _height='48'}{tr}Settings{/tr}{/self_link}
 			<br />
-			{self_link locSection='settings' _noauto='y'}{tr}Settings{/tr}{/self_link}
+			{self_link locSection='settings'}{tr}Settings{/tr}{/self_link}
 		</td>
 	</tr>
 </table>
@@ -194,14 +194,14 @@
 				<tr>
 					<td class="{cycle advance=false}">
 						{if $accounts[ix].current ne 'y' and $accounts[ix].accountId ne $mailCurrentAccount}
-							{self_link _icon='star_grey' locSection='settings' current=$accounts[ix].accountId _noauto='y'}{tr}Activate{/tr}{/self_link}
+							{self_link _icon='star_grey' current=$accounts[ix].accountId}{tr}Activate{/tr}{/self_link}
 						{else}
 							{icon _id='star' alt="{tr}This is the active account.{/tr}"}
 						{/if}
 					</td>
 					<td class="{cycle advance=false}">
 						{if $accounts[ix].current ne 'y' and $accounts[ix].accountId ne $mailCurrentAccount}
-							{self_link locSection='settings' current=$accounts[ix].accountId _noauto='y'}{$accounts[ix].account class='link' _title='{tr}Activate{/tr}'}{/self_link}{* TODO make_title work? *}
+							{self_link current=$accounts[ix].accountId}{$accounts[ix].account class='link' _title='{tr}Activate{/tr}'}{/self_link}{* TODO make_title work? *}
 						{else}
 							<strong>{$accounts[ix].account}</strong>
 						{/if}
@@ -219,10 +219,10 @@
 						{$accounts[ix].username}
 					</td>
 					<td class="{cycle}">
-						{self_link _icon='cross' locSection=settings remove=$accounts[ix].accountId _noauto='y'}{tr}Delete{/tr}{/self_link}
-						{self_link _icon='page_edit' locSection='settings' accountId=$accounts[ix].accountId _noauto='y'}{tr}Edit{/tr}{/self_link}
+						{self_link _icon='cross' remove=$accounts[ix].accountId}{tr}Delete{/tr}{/self_link}
+						{self_link _icon='page_edit' accountId=$accounts[ix].accountId}{tr}Edit{/tr}{/self_link}
 						{if $accounts[ix].current ne 'y' and $accounts[ix].accountId ne $mailCurrentAccount}
-							{self_link _icon='accept' locSection='settings' current=$accounts[ix].accountId _noauto='y'}{tr}Activate{/tr}{/self_link}
+							{self_link _icon='accept' current=$accounts[ix].accountId}{tr}Activate{/tr}{/self_link}
 						{/if}
 					</td>
 				</tr>
@@ -251,14 +251,14 @@
 					<tr>
 						<td class="{cycle advance=false}">
 							{if $pubAccounts[ixp].current ne 'y' and $pubAccounts[ixp].accountId ne $mailCurrentAccount}
-								{self_link _icon='star_grey' locSection='settings' current=$pubAccounts[ixp].accountId _noauto='y'}{tr}Activate{/tr}{/self_link}
+								{self_link _icon='star_grey' current=$pubAccounts[ixp].accountId}{tr}Activate{/tr}{/self_link}
 							{else}
 								{icon _id='star' alt="{tr}This is the active account.{/tr}"}
 							{/if}
 						</td>
 						<td class="{cycle advance=false}">
 							{if $pubAccounts[ixp].current ne 'y' and $pubAccounts[ixp].accountId ne $mailCurrentAccount}
-								{self_link locSection='settings' current=$pubAccounts[ixp].accountId _noauto='y'}{$pubAccounts[ixp].account class='link' _title='{tr}Activate{/tr}'}{/self_link}{* TODO make self_link _title work when no icon? *}
+								{self_link current=$pubAccounts[ixp].accountId}{$pubAccounts[ixp].account class='link' _title='{tr}Activate{/tr}'}{/self_link}{* TODO make self_link _title work when no icon? *}
 							{else}
 								<strong>{$pubAccounts[ixp].account}</strong>
 							{/if}
@@ -273,11 +273,11 @@
 						<td class="{cycle advance=false}">{$pubAccounts[ixp].username}</td>
 						<td class="{cycle}">
 							{if $tiki_p_admin_group_webmail eq 'y'or $tiki_p_admin eq 'y'}
-								{self_link _icon='cross' locSection=settings remove=$pubAccounts[ixp].accountId _noauto='y'}{tr}Delete{/tr}{/self_link}
-								{self_link _icon='page_edit' locSection='settings' accountId=$pubAccounts[ixp].accountId _noauto='y'}{tr}Edit{/tr}{/self_link}
+								{self_link _icon='cross' remove=$pubAccounts[ixp].accountId}{tr}Delete{/tr}{/self_link}
+								{self_link _icon='page_edit' accountId=$pubAccounts[ixp].accountId}{tr}Edit{/tr}{/self_link}
 							{/if}
 							{if $pubAccounts[ixp].current ne 'y' and $pubAccounts[ixp].accountId ne $mailCurrentAccount}
-								{self_link _icon='accept' locSection='settings' current=$pubAccounts[ixp].accountId _noauto='y'}{tr}Activate{/tr}{/self_link}
+								{self_link _icon='accept' current=$pubAccounts[ixp].accountId}{tr}Activate{/tr}{/self_link}
 							{/if}
 						</td>
 					</tr>
@@ -296,7 +296,16 @@
 	<table width="100%">
 		<tr>
 			<td>
-				<a class="link" href="tiki-webmail.php?locSection=mailbox">{tr}Show All{/tr}</a> | <a class="link" href="tiki-webmail.php?locSection=mailbox&amp;filter=unread">{tr}Show Unread{/tr}</a> | <a class="link" href="tiki-webmail.php?locSection=mailbox&amp;filter=flagged">{tr}Show Flagged{/tr}</a> | {if $autoRefresh != 0}<a class="link" href="tiki-webmail.php?locSection=mailbox&refresh_mail=1">{tr}Refresh now{/tr}</a> Auto refresh set for every {$autoRefresh} seconds.{else}<a class="link" href="tiki-webmail.php?locSection=mailbox">{tr}Refresh{/tr}</a>{/if}
+				{self_link filter=''}{tr}Show All{/tr}{/self_link} |
+				{self_link filter='unread'}{tr}Show Unread{/tr}{/self_link} |
+				{self_link filter='flagged'}{tr}Show Flagged{/tr}{/self_link} |
+				{if $autoRefresh != 0}
+					{assign var=tip value="{tr}Auto refresh set for every $autoRefresh seconds.{/tr}"}
+					{self_link refresh_mail=1 _title=$tip}{tr}Refresh now{/tr}{/self_link}
+					<em></em>
+				{else}
+					{self_link refresh_mail=1}{tr}Refresh{/tr}{/self_link}
+				{/if}
 			</td>
 			<td align="right" style="text-align:right">
 				{if $flagsPublic eq 'y'}
@@ -370,7 +379,7 @@
 					</td>
 					<td class="{$class}">{$list[ix].sender.name}</td>
 					<td class="{$class}">
-						<a class="link" href="tiki-webmail.php?locSection=read&amp;msgid={$list[ix].msgid}">{$list[ix].subject}</a>
+						{self_link msgid=$list[ix].msgid locSection='read'}{$list[ix].subject}{/self_link}
 						{if $list[ix].has_attachment}<img src="img/webmail/clip.gif" alt='{tr}Clip{/tr}'/>{/if}
 					</td>
 					<td class="{$class}">{$list[ix].timestamp|tiki_short_datetime}</td>
@@ -382,13 +391,13 @@
 {/if}
 
 {if $locSection eq 'read'}
-	{if $prev}{self_link locSection='read' msgid=$prev _noauto='y'}{tr}Prev{/tr}{/self_link} |{/if}
-	{if $next}{self_link locSection='read' msgid=$next _noauto='y'}{tr}Next{/tr}{/self_link} |{/if}
-	{self_link locSection=mailbox _noauto='y'}{tr}Back To Mailbox{/tr}{/self_link} |
+	{if $prev}{self_link msgid=$prev}{tr}Prev{/tr}{/self_link} |{/if}
+	{if $next}{self_link msgid=$next}{tr}Next{/tr}{/self_link} |{/if}
+	{self_link locSection=mailbox}{tr}Back To Mailbox{/tr}{/self_link} |
 	{if $fullheaders eq 'n'}
-		{self_link locSection='read' msgid=$msgid fullheaders='1' msgid=$next _noauto='y'}{tr}Full Headers{/tr}{/self_link}
+		{self_link msgid=$msgid fullheaders='1' msgid=$next}{tr}Full Headers{/tr}{/self_link}
 	{else}
-		{self_link locSection='read' msgid=$msgid msgid=$next _noauto='y'}{tr}Normal Headers{/tr}{/self_link}
+		{self_link msgid=$msgid msgid=$next}{tr}Normal Headers{/tr}{/self_link}
 	{/if}
 	<table>
 		<tr>
@@ -497,16 +506,16 @@
 			{assign var='wmclass' value='webmail_message'}
 		{/if}
 		<div>
-			{button _flip_id=$wmid _text='{tr}Part{/tr}: '|cat:$bodies[ix].contentType _auto_args='*' _flip_default_open=$wmopen}{/button}
+			{button _flip_id=$wmid _text='{tr}Part{/tr}: '|cat:$bodies[ix].contentType _flip_default_open=$wmopen}{/button}
 		</div>
 		<div id="{$wmid}" class="{$wmclass}" {if $wmopen eq 'n'}style="display:none"{/if}>
 {$bodies[ix].body}
 		</div>
 	{/section}
 	<div>
-		{button _flip_id='webmail_message_source_'|cat:$msgid _text='{tr}Source{/tr}: ' _auto_args='*' _flip_default_open='y'}{/button}
+		{button _flip_id='webmail_message_source_'|cat:$msgid _text='{tr}Source{/tr}: ' _flip_default_open='n'}{/button}
 	</div>
-	<div id="webmail_message_source_{$msgid}" class="$wmclass" style="display:none">
+	<div id="webmail_message_source_{$msgid}" class="webmail_message webmail_mono" style="display:none">
 {$allbodies|nl2br}
 	</div>
 
