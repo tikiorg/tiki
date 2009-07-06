@@ -1,9 +1,19 @@
 <?php
 
 require_once 'PHPUnit/Extensions/SeleniumTestCase.php';
+require_once 'TikiSeleniumTestCase.php';
 
 class  AcceptanceTests_SearchTest extends TikiSeleniumTestCase
 {
+
+    protected function setUp()
+    {
+		$this->setBrowser('*firefox C:\Program Files\Mozilla Firefox\firefox.exe');
+        $this->setBrowserUrl('http://localhost/');
+        $this->current_test_db = "searchTestDump.sql";
+        $this->restoreDBforThisTest();
+    }
+
 
     public function ___testRememberToReactivateAllTestsInSearchTest() {
        	$this->fail("Don't forget to do this");
@@ -52,23 +62,6 @@ class  AcceptanceTests_SearchTest extends TikiSeleniumTestCase
     /**************************************
      * Helper methods
      **************************************/
-
-    protected function setUp()
-    {
-		$this->printImportantMessageForTestUsers();
-		$this->setBrowser('*firefox C:\Program Files\Mozilla Firefox\firefox.exe');
-        $this->setBrowserUrl('http://localhost/');
-        $this->current_test_db = "searchTestDump.sql";
-        $this->restoreDBforThisTest();
-    }
-
-    public function printImportantMessageForTestUsers() {
-       die("SearchTest will not work unless:\n".
-                   "- the name of the Tiki db is 'tiki_db_for_acceptance_tests' and \n".
-				   "- the file 'searchTestDump.sql' (check it out from mods/acceptance_tests_files) is copied in the mySql data directory.\n" .
-				   "Comment out the call to printImportantMessageForTestUsers() in SearchTest::setUp() to run the tests.\n");
-    }
-
 
     private function _searchFor($query) {
  		$this->type("highlight", $query);

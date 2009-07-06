@@ -1,4 +1,8 @@
 <?php
+require_once('AcceptanceTests/SearchTest.php');
+require_once('AcceptanceTests/ListPagesTest.php');
+require_once('AcceptanceTests/MultilingualTest.php');
+
 
 class AcceptanceTests_AllTests
 {
