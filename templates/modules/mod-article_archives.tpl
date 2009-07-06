@@ -11,7 +11,7 @@
 
 {tikimodule error=$module_params.error title=$tpl_module_title name="article_archives" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 
-{if $nonums == 'y'}<ol class="module">{else}<ul class="module">{/if}
+{if $nonums == 'y'}<ol>{else}<ul>{/if}
 {foreach key=maa_key item=maa_value from=$modArticleArchives}
 	<li>
 	<a class="linkmodule" href="tiki-view_articles.php?date_min={$maa_value.start_month}&date_max={$maa_value.end_month}{if $module_params.sort_mode}&sort_mode={$module_params.sort_mode}{/if}" title="">

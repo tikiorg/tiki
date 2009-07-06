@@ -29,19 +29,27 @@
 </form>
 {/if}
 
-{if $nonums != 'y'}<ol class="module">{else}<ul class="module">{/if}
+{if $nonums != 'y'}<ol>{else}<ul>{/if}
 
     {section name=ix loop=$modArticleArchives}
       <li>
 		{if !empty($showImg) or $showDate eq 'y'}
-		<div class="module">
-			{if $showDate eq 'y'}
-				<div class="date">{$modArticleArchives[ix].publishDate|tiki_short_date}</div>
-			{/if}
-			{if isset($showImg)}
-			{if $modArticleArchives[ix].hasImage eq 'y'}<div class="image"><img alt="" src="article_image.php?id={$modArticleArchives[ix].articleId}" width="{$showImg}" /></div>{elseif $modArticleArchives[ix].topicId}<div class="image"><img alt="" src="article_image.php?image_type=topic&amp;id={$modArticleArchives[ix].topicId}" width="{$showImg}" /></div>{/if}
-			{/if}
-		</div>
+			<div class="module">
+				{if $showDate eq 'y'}
+					<div class="date">{$modArticleArchives[ix].publishDate|tiki_short_date}</div>
+				{/if}
+				{if isset($showImg)}
+					{if $modArticleArchives[ix].hasImage eq 'y'}
+						<div class="image">
+							<img alt="" src="article_image.php?id={$modArticleArchives[ix].articleId}" width="{$showImg}" />
+						</div>
+					{elseif $modArticleArchives[ix].topicId}
+						<div class="image">
+							<img alt="" src="article_image.php?image_type=topic&amp;id={$modArticleArchives[ix].topicId}" width="{$showImg}" />
+						</div>
+					{/if}
+				{/if}
+			</div>
 		{/if}
 		
 		{if $absurl == 'y'}
