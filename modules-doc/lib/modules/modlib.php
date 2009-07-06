@@ -223,6 +223,162 @@ class ModLib extends TikiLib {
 		}
 		return $pass;
 	}
+
+	function get_modules_for_user( $user, array $module_zones ) {
+		$list = $this->get_raw_module_list_for_user( $user, $module_zones );
+
+		foreach( $list as & $partial ) {
+			$partial = array_map( array( $this, 'augment_module_parameters' ), $partial );
+			$partial = array_filter( $partial, array( $this, 'filter_active_module' ) );
+		}
+
+		return $list;
+	}
+
+	function augment_module_parameters( $module ) {
+		global $prefs;
+
+		TikiLib::parse_str( $module['params'], $module_params );
+
+		$default_params = array(
+			'decorators' => 'y',
+			'overflow' => 'n',
+			'nobox' => 'n',
+			'notitle' => 'n',
+			'error' => '',
+			'flip' => ( $prefs['user_flip_modules'] == 'module' ) ? 'n' : $prefs['user_flip_modules'],
+		);
+
+		$module_params = array_merge( $default_params, $module_params );
+
+		$module_params['module_position'] = $module['position'];
+		$module_params['module_ord'] = $module['ord'];
+
+		if( isset( $module_params['section'] ) && $module_params['section'] == 'wiki' ) {
+			$module_params['section'] = 'wiki page';
+		}
+
+		$module['params'] = $module_params;
+
+		return $module;
+	}
+
+	function getStandardParameters() {
+		return array(
+			'lang',
+			'section',
+			'page',
+			'nopage',
+			'theme',
+			'creator',
+			'contributor',
+		);
+	}
+
+	function filter_active_module( $module ) {
+		global $section, $page, $prefs, $user, $user_groups, $tikilib;
+
+		$params = $module['params'];
+
+		if( isset( $params["lang"] ) && ! in_array( $prefs['language'], (array) $params["lang"]) ) {
+			return false;
+		}
+
+		if( isset( $params['section'] ) && ( ! isset($section) || $section != $params['section'] ) ) {
+			return false;
+		}
+
+		if( isset( $params['nopage'] ) && isset( $page ) && isset( $section ) && $section == 'wiki page' ) {
+			if( in_array( $page, (array) $params['nopage'] ) ) {
+				return false;
+			}
+		}
+
+		if( isset( $params['page'] ) ) {
+			if( ! isset($section) || $section != 'wiki page' || ! isset( $page ) ) { // must be in a page
+				return false;
+			} elseif( ! in_array( $page, (array) $params['page'] ) ) {
+				return false;
+			}
+		}
+
+		if( isset( $params['theme'] ) ) {
+			global $tc_theme;
+
+			if( $params['theme']{0} != '!' ) { // usual behavior
+				if( isset($tc_theme) && $tc_theme > '' && $params['theme'] != $tc_theme ) {
+					return false;
+				} elseif( $params['theme'] != $prefs['style'] && ( !isset($tc_theme) || $tc_theme == '' ) ) {
+					return false;
+				}
+			} else { // negation behavior
+				$excluded_theme = substr($params['theme'],1);
+				if( isset($tc_theme) && $tc_theme > '' && $excluded_theme == $tc_theme ) {
+					return false;
+				} elseif( $excluded_theme == $prefs['style'] && ( ! isset( $tc_theme ) || $tc_theme == '' ) ) {
+					return false;
+				}
+			}
+		}
+
+		if( 'y' != $this->check_groups( $module, $user, $user_groups ) ) {
+			return false;
+		}
+
+		if( isset( $params['creator'] ) && $section == 'wiki page' && isset( $page ) ) {
+			if( ! $page_info = $tikilib->get_page_info( $page ) ) {
+				return false;
+			} elseif( $params['creator'] == 'y' && $page_info['creator'] != $user) {
+				return false;
+			} elseif( $params['creator'] == 'n' && $page_info['creator'] == $user ) {
+				return false;
+			}
+		}
+
+		if( isset( $params['contributor'] ) && $section == 'wiki page' && isset( $page ) ) {
+			global $wikilib; include_once('lib/wiki/wikilib.php');
+			if( ! $page_info = $tikilib->get_page_info( $page ) ) {
+				return false;
+			} else {
+				$contributors = $wikilib->get_contributors($page);
+				$contributors[] = $page_info['creator'];
+				$in = in_array($user, $contributors);
+
+				if( $params['contributor'] == 'y' && ! $in ) {
+					return false;
+				} elseif( $params['contributor'] == 'n' && $in ) {
+					return false;
+				}
+			}
+		}
+
+		return true;
+	}
+
+	private function get_raw_module_list_for_user( $user, array $module_zones ) {
+		global $prefs, $tiki_p_configure_modules, $usermoduleslib;
+
+		$out = array_fill_keys( array_values( $module_zones, array() ) );
+
+		if( $prefs['user_assigned_modules'] == 'y' 
+			&& $tiki_p_configure_modules == 'y' 
+			&& $user 
+			&& $usermoduleslib->user_has_assigned_modules($user) ) {
+
+			foreach( $module_zones as $zone => $zone_name ) {
+				$out[$zone_name] = $usermoduleslib->get_assigned_modules_user( $user, $zone );
+			}
+		} else {
+			$modules_by_position = $this->get_assigned_modules( null, 'y' );
+			foreach( $module_zones as $zone => $zone_name ) {
+				if( isset($modules_by_position[$zone]) ) {
+					$out[$zone_name] = $modules_by_position[$zone];
+				}
+			}
+		}
+
+		return $out;
+	}
 }
 global $dbTiki;
 $modlib = new ModLib($dbTiki);
