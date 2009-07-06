@@ -19,6 +19,7 @@ if (!empty($user) || $mod_reference['cache_time'] <=0 || !file_exists($cachefile
 	}
 	$template = 'modules/mod-' . $mod_reference['name'] . '.tpl';
 	$phpfile = 'modules/mod-' . $mod_reference['name'] . '.php';
+	$function = 'modules_' . $mod_reference['name'];
 	if (!$mod_reference['rows']) {
 		$mod_reference['rows'] = 10;
 	}
@@ -29,6 +30,10 @@ if (!empty($user) || $mod_reference['cache_time'] <=0 || !file_exists($cachefile
 	$smarty->assign('moduleId', $mod_reference['moduleId']);
 	if (file_exists($phpfile)) {
 		include ($phpfile);
+
+		if( function_exists( $function ) ) {
+			$function( $mod_reference, $module_params );
+		}
 	}
 	if (file_exists('templates/'.$template)) {
 		$data = $smarty->fetch($template);
