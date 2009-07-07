@@ -10,7 +10,7 @@ require_once 'TikiSeleniumTestCase.php';
 class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
 {
 
-	public function __testRememberToReactivateAllTestsInMultilingualTest() {
+	public function ___testRememberToReactivateAllTestsInMultilingualTest() {
     	$this->fail("Don't forget to do this");
     }
         
@@ -218,4 +218,5 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
         $this->assertFalse($this->isElementPresent("xpath=//select[@name='page' and @onchange='quick_switch_language( this )']/option[@value='_translate_']",
                   "Translate option was present."));           
     }
+
 }
