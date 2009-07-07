@@ -8,7 +8,9 @@ require_once 'tiki-setup.php';
 $access->check_feature('wiki_validate_plugin');
 $access->check_permission('tiki_p_plugin_approve');
 if (isset($_POST['clear']) && is_array($_POST['clear'])) {
-	foreach($_POST['clear'] as $fp) $tikilib->plugin_clear_fingerprint($fp);
+	foreach($_POST['clear'] as $fp) {
+		$tikilib->plugin_clear_fingerprint($fp);
+	}
 }
 $smarty->assign('plugin_list', $tikilib->list_plugins_pending_approval());
 $smarty->assign('mid', 'tiki-plugins.tpl');
