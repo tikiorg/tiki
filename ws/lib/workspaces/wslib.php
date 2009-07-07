@@ -44,8 +44,8 @@ class wslib extends CategLib
     // Create a new WS (NOTE: parentID will be always WSContainerID)
 	function add_ws ($name, $parentWS, $groupName, $permList=null)
 	{
-
-		include_once('lib/userslib.php');
+		require_once('lib/userslib.php');
+		global $userlib;
 		
 		// If the group doesn't exist, then it's created. Otherwise, nothing will happen.
 		if ($userlib->add_group($groupName));

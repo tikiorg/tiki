@@ -119,3 +119,6 @@ foreach ($catree['data'] as $key=>$c) {
 		echo($catree['data'][$key]['name']); print "\n";
 	}
 }
+
+if (isset($_REQUEST['redirect']) && ($_REQUEST['redirect'] == 'yes'))
+	header("Location: ./../../../tiki-admin.php?page=workspaces");
