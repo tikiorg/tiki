@@ -28,7 +28,7 @@ include_once('lib/workspaces/wslib.php');
 global $prefs, $tikilib;
 $wsContainerId = (int) $prefs['ws_container'];
 
-if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'init'))
+if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'init') && ($wsContainerId))
 {
 	if (!$objectlib->get_object_id('wiki page','Wiki1'))
 	{
@@ -55,9 +55,6 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'init'))
 		$objectlib->add_object('wiki page','Wiki5');
 		$tikilib->create_page('Wiki5', 0, '', time(), '');
 	}
-	
-	if ($userlib->add_group('G1'));
-	if ($userlib->add_group('G2'));
 
 	header("Location: ./scriptCreator.php?action=create");
 }
@@ -66,29 +63,22 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'create'))
 {
 	//Creating new WS
 	if  (!$wslib->get_ws_id('WS1',$wsContainerId))
-		$id1 = $wslib->add_ws('WS1',$wsContainerId,'G1',array('tiki_p_ws_admingroups', ));
+		$id1 = $wslib->add_ws('WS1',$wsContainerId,'G1',array('tiki_p_ws_admingroups','tiki_p_ws_adminresources'));
 	 if (!$wslib->get_ws_id('WS2',$wsContainerId))
-		$wslib->add_ws('WS2',$wsContainerId,'G2');
+		$wslib->add_ws('WS2',$wsContainerId,'G2',array('tiki_p_ws_adminperms'));
 	if  (!$wslib->get_ws_id('WS3',$wsContainerId))
-	    $id3 = $wslib->add_ws('WS3',$wsContainerId,'G1',array('adminWS'));
+	    $id3 = $wslib->add_ws('WS3',$wsContainerId,'G1',array('tiki_p_ws_adminws'));
 
 	$id2 = $wslib->get_ws_id('WS2',$wsContainerId);
 
 	//Creating new sub-WS under WS2
 	if  (!$wslib->get_ws_id('WS21',$id2))
-		$id4 = $wslib->add_ws('WS21',$id2);
+		$id4 = $wslib->add_ws('WS21',$id2,'G2');
 	if  (!$wslib->get_ws_id('WS22',$id2))
-		$id5 = $wslib->add_ws('WS22',$id2);
+		$id5 = $wslib->add_ws('WS22',$id2,'G2',array('tiki_p_ws_adminws'));
 	
-	//Adding G1 in WS1 and WS3
-	$wslib->add_ws_group($id1,'G1');
-	$wslib->add_ws_group($id3,'G1');
-	
-	//Adding G2 in WS2, WS3, WS21 and WS22
-	$wslib->add_ws_group($id2,'G2');
-	$wslib->add_ws_group($id3,'G2');
-	$wslib->add_ws_group($id4,'G2');
-	$wslib->add_ws_group($id5,'G2');
+	// Giving access to G2 in WS3
+	$wslib->set_permissions_for_group_in_ws($id3,'G1',array('tiki_p_ws_view','tiki_p_ws_addresource'));
 	
 	//Adding Resources in WS
 	$wslib->add_ws_object($id1,'Wiki1','wiki_page');
@@ -98,7 +88,7 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'create'))
 	$wslib->add_ws_object($id4,'Wiki4','wiki_page');
 	$wslib->add_ws_object($id5,'Wiki5','wiki_page');
 
-	header("Location: ./../../../tiki-admin.php?page=workspaces");
+	//header("Location: ./../../../tiki-admin.php?page=workspaces");
 }
 	
 if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'destroy'))
@@ -117,24 +107,15 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'destroy'))
 	$wslib->remove_ws($id4);
 	$wslib->remove_ws($id5);
 
-	header("Location: ./../../../tiki-admin.php?page=workspaces");
+	//header("Location: ./../../../tiki-admin.php?page=workspaces");
 }
 
 if ( isset($_REQUEST['action'])  &&  ($_REQUEST['action'] == 'test'))
 {
 
-/*$catree = $wslib->list_all_ws(0,-1, 'name_asc','','',0);
+$catree = $wslib->list_all_ws(0,-1, 'name_asc','','',0);
 foreach ($catree['data'] as $key=>$c) {
 		echo($catree['data'][$key]['categId']); print "\n";
 		echo($catree['data'][$key]['name']); print "\n";
 	}
-	*/
-	$titles[3] = 'three'; 
-	$titles[2] = 'two'; 
-	$titles[1] = 'one';
-	 
-	print_r( $titles);
-	
-	foreach ($titles as $t )
-		{ print "title=$t "; } 
 }

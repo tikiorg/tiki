@@ -44,18 +44,19 @@ class wslib extends CategLib
     // Create a new WS (NOTE: parentID will be always WSContainerID)
 	function add_ws ($name, $parentWS, $groupName, $permList=null)
 	{
-		include_once('lib/userslib.php');
 
+		include_once('lib/userslib.php');
+		
 		// If the group doesn't exist, then it's created. Otherwise, nothing will happen.
-		$userlib->add_group($groupName);
+		if ($userlib->add_group($groupName));
 		
 		// The workspace is created
 		$wsID = parent::add_category($this->ws_container,$name,(string) $parentWS);
 		
-		// It's given the tiki_p_ws_view permission to the selected group
-		$this->set_permission_for_group_in_ws($wsID,$groupName,'tiki_p_ws_view');
+		// It's given the tiki_p_ws_view permission to the selected group in the new ws
+			$this->set_permissions_for_group_in_ws($wsID,$groupName,array('tiki_p_ws_view'));
 		
-		// If the group will have additional admin permissions in the current ws
+		// It's added additional admin permissions to the group in the new ws
 		if ($permList != null)
 			$this->set_permissions_for_group_in_ws($wsID,$groupName,$permList);
 		
