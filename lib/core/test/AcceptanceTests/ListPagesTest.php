@@ -56,7 +56,6 @@ class  AcceptanceTests_ListPagesTest extends TikiSeleniumTestCase
 
     protected function setUp()
     {
-        $this->setBrowser('*firefox C:\Program Files\Mozilla Firefox\firefox.exe');
         $this->setBrowserUrl('http://localhost/');
         $this->current_test_db = "listPagesTestDump.sql";
         $this->restoreDBforThisTest();         

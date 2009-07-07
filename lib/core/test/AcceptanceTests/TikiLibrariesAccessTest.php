@@ -21,12 +21,12 @@ class  AcceptanceTests_TikiLibrariesAccessTest extends TikiTestCase
     public function ___testRememberToReactivateAllTestsInTikiLibrariesAccessTest() {
        	$this->fail("Don't forget to do this");
     }
-    
+       
     public function testAccessPreferences() {
     	global $tikilib;
     	
     	$pref_name = 'feature_machine_translation';
-    	
+
     	$gotPreference = $tikilib->get_preference($pref_name);
     	$this->assertEquals(NULL, $gotPreference, "get_preference() should initially have returned NULL for preference '$pref_name'");
     	$gotPreference = $prefs[$pref_name];
