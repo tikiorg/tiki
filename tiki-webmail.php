@@ -431,14 +431,14 @@ END;
 		$smarty->assign('filter', $_REQUEST['filter']);
 
 	// If we have a filter then we have to
-	if (isset($_REQUEST['filter'])) {
+	if (!empty($_REQUEST['filter'])) {
 		$tot = 0;
 
 		$aux['msgid'] = 'foo';
 		$filtered = array();
 		$filtered[] = $aux;
 
-		for ($i = 1; $i <= $mailsum; $i++) {
+		for ($i = 0; $i < $mailsum; $i++) {
 			$aux = $webmail_list[$i];
 			$webmaillib->replace_webmail_message($current['accountId'], $user, $aux['realmsgid']);
 			list($aux['isRead'], $aux['isFlagged'], $aux['isReplied'])
@@ -464,7 +464,7 @@ END;
 	$webmail_list_page = array();
 
 	for ($i = $upperlimit; $i > 0 && count($webmail_list_page) < $numshow; $i--) {
-		if (isset($_REQUEST['filter'])) {
+		if (!empty($_REQUEST['filter'])) {
 			$aux = $filtered[$i];
 		} else {
 			$aux = $webmail_list[$i-1];

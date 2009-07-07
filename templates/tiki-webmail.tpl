@@ -296,9 +296,9 @@
 	<table width="100%">
 		<tr>
 			<td>
-				{self_link filter=''}{tr}Show All{/tr}{/self_link} |
-				{self_link filter='unread'}{tr}Show Unread{/tr}{/self_link} |
-				{self_link filter='flagged'}{tr}Show Flagged{/tr}{/self_link} |
+				{if empty($filter)}<strong>{tr}Show All{/tr}</strong>{else}{self_link filter=''}{tr}Show All{/tr}{/self_link}{/if} |
+				{if $filter eq 'unread'}<strong>{tr}Show Unread{/tr}</strong>{else}{self_link filter='unread'}{tr}Show Unread{/tr}{/self_link}{/if} |
+				{if $filter eq 'flagged'}<strong>{tr}Show Flagged{/tr}</strong>{else}{self_link filter='flagged'}{tr}Show Flagged{/tr}{/self_link}{/if} |
 				{if $autoRefresh != 0}
 					{assign var=tip value="{tr}Auto refresh set for every $autoRefresh seconds.{/tr}"}
 					{self_link refresh_mail=1 _title=$tip}{tr}Refresh now{/tr}{/self_link}
@@ -314,18 +314,11 @@
 					{tr}Messages{/tr}
 				{/if}
 				{$showstart} to {$showend} {tr}of{/tr} {$total}
-				{if $first}
-					| <a class="link" href="tiki-webmail.php?locSection=mailbox&amp;start={$first}{if $filter}&amp;filter={$filter}{/if}">{tr}First{/tr}</a>
-				{/if}
-				{if $prevstart}
-					| <a class="link" href="tiki-webmail.php?locSection=mailbox&amp;start={$prevstart}{if $filter}&amp;filter={$filter}{/if}">{tr}Prev{/tr}</a>
-				{/if}
-				{if $nextstart}
-					| <a class="link" href="tiki-webmail.php?locSection=mailbox&start={$nextstart}{if $filter}&amp;filter={$filter}{/if}">{tr}Next{/tr}</a>
-				{/if}
-				{if $last}
-					| <a class="link" href="tiki-webmail.php?locSection=mailbox&amp;start={$last}{if $filter}&amp;filter={$filter}{/if}">{tr}Last{/tr}</a>
-				{/if}
+				&nbsp;
+				| {if $first}{self_link start=$first}{tr}First{/tr}{/self_link}{else}{tr}First{/tr}{/if}
+				| {if $prevstart}{self_link start=$prevstart}{tr}Prev{/tr}{/self_link}{else}{tr}Prev{/tr}{/if}
+				| {if $nextstart}{self_link start=$nextstart}{tr}Next{/tr}{/self_link}{else}{tr}Next{/tr}{/if}
+				| {if $last}{self_link start=$last}{tr}Last{/tr}{/self_link}{else}{tr}Last{/tr}{/if}
 			</td>
 		</tr>
 	</table>
