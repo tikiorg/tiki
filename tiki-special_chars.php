@@ -1,6 +1,10 @@
-<?php // -*- coding:utf-8 -*-
+<?php
+// (c) Copyright 2002-2009 by authors of the Tiki Wiki/CMS/Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details. // -*- coding:utf-8 -*-
 /* $Id: /cvsroot/tikiwiki/tiki/tiki-special_chars.php,v 1.5.2.1 2007-12-22 01:56:52 mose Exp $ */
-echo  '<?xml version="1.0" encoding="UTF-8"?>';
+echo '<?xml version="1.0" encoding="UTF-8"?>';
 ?>
 <!DOCTYPE html
      PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -164,10 +168,13 @@ onchange="handleListChange(this)">
   </tr>
   <tr>
     <td align="left" class="fixed">
-			<?php $area = preg_replace('/[^-_0-9a-zA-Z\.]/','',$_REQUEST["area_name"]); ?>
+			<?php
+$area = preg_replace('/[^-_0-9a-zA-Z\.]/', '', $_REQUEST["area_name"]); ?>
       <input type="text" id='spec' />
   <input type="button" class="button"
-onclick="javascript:window.opener.document.getElementById('<?php echo $area; ?>').value=window.opener.document.getElementById('<?php echo $area; ?>').value+getElementById('spec').value;" name="ins" value="ins" />
+onclick="javascript:window.opener.document.getElementById('<?php
+echo $area; ?>').value=window.opener.document.getElementById('<?php
+echo $area; ?>').value+getElementById('spec').value;" name="ins" value="ins" />
       <input type="button" class="button"
 onclick="window.close();" name="close" value="close" />
     </td>
