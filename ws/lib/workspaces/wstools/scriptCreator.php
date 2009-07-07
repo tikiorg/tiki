@@ -128,4 +128,5 @@ foreach ($catree['data'] as $key=>$c) {
 		echo($catree['data'][$key]['categId']); print "\n";
 		echo($catree['data'][$key]['name']); print "\n";
 	}
+	$userlib->add_group('G1');
 }

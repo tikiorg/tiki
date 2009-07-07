@@ -35,17 +35,32 @@ class wslib extends CategLib
 	}
 
     // This function will set a container for WS in the category table and return its ID
-	function init_ws($name)
+	function init_ws()
 	{
-		return parent::add_category(0, $name, 'Workspaces Container');
+		return parent::add_category(0, '', 'Workspaces Container');
 	}
     
     // Create a new WS (NOTE: parentID will be always WSContainerID)
-	function add_ws ($name, $parentWS)
+	function add_ws ($name, $parentWS, $groupName, $additionalPerms=null)
 	{
+		include_once('lib/userslib.php');
 		global $prefs;
 		$wsContainerId = (int) $prefs['ws_container'];
-		return parent::add_category($wsContainerId,$name,(string) $parentWS);
+		
+		// If the group doesn't exist, then it's created. Otherwise, nothing will happen.
+		$userlib->add_group($groupName);
+		
+		// The workspace is created
+		$wsID = parent::add_category($wsContainerId,$name,(string) $parentWS);
+		
+		// It's given the tiki_p_ws_view permission to the selected group
+		$this->set_permission_for_group_in_ws($wsID,$groupName,'tiki_p_ws_view');
+		
+		// If the group will have additional admin permissions in the current ws
+		if (!$additionalPerms == null)
+			$this->set_permission_for_group_in_ws($wsID,$groupName,);
+		
+		return $wsID;
 	}
 	
     // Remove a WS
@@ -94,8 +109,8 @@ class wslib extends CategLib
 		return $this->getOne($query, $bindvars);
 	}
 	
-    // Add a group into a WS
-	function add_ws_group ($ws_id,$groupName)
+    // Give a permission to a group for a specific WS (view, addresources, addgroups,...)
+	function set_permission_for_group_in_ws ($ws_id,$groupName,$permName)
 	{
 		$objectType = 'ws';
 		$hashWS = md5($objectType . strtolower($ws_id));
@@ -105,18 +120,18 @@ class wslib extends CategLib
 		where `groupName` = ? and
 		`permName` = ? and
 		`objectId` = ?";
-		$result = $this->query($query, array($groupName, 'tiki_p_ws_view',$hashWS), -1, -1, false);
+		$result = $this->query($query, array($groupName, $permName,$hashWS), -1, -1, false);
 
 		$query = "insert into `users_objectpermissions`(`groupName`,
 		`objectId`, `objectType`, `permName`)
 		values(?, ?, ?, ?)";		
-		$result = $this->query($query, array($groupName, $hashWS,'ws', 'tiki_p_ws_view'));
+		$result = $this->query($query, array($groupName, $hashWS,'ws', $permName));
 		
 		return true;
 	}
 	
     // List the groups that have access to a WS
-    	function get_ws_groups ($ws_id)
+    	function list_groups_that_can_access_in_ws ($ws_id)
     	{    	
     		$objectType = 'ws';
 		$hashWS = md5($objectType . strtolower($ws_id));
@@ -129,7 +144,7 @@ class wslib extends CategLib
     	}
     	
     // List all WS that a group have access
-	function get_group_ws ($groupName)
+	function list_ws_that_can_be_accessed_by_group ($groupName)
 	{	
 		$query = "select `objectId` from `users_objectpermissions` where 
 		`groupName`=? and `permName`='tiki_p_ws_view'";
