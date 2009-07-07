@@ -902,7 +902,11 @@ function get_objects_with_tag_combo($tagArray, $type='', $thisUser = '', $offset
 	$count = array();
 
 	while ($row = $result->fetchRow()) {
-	    $size[] = $row['size'] = ceil($this->max_cloud_text_size * $row['count'] / $top);
+	    $row['size'] =  ceil(1 +(1+ $row['count'] / $top)*log(1+$row['count']));
+		if ($row['size'] > $this->max_cloud_text_size) {
+			$row['size'] = $this->max_cloud_text_size;
+		}
+		$size[] = $row['size'];
 	    $tag[] = $row['tag'];
 	    $count[] = $row['count'];
 
