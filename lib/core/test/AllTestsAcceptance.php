@@ -19,12 +19,6 @@ error_reporting( E_ALL );
 ini_set( 'include_path', ini_get('include_path') . ';.;../lib;../../..' );
 loadTikiLibraries();
 
-/*
- * Note: Need to reset the include pathes relative to the root of tiki, because 
- * inclusion of the tiki files, move the currrent directory
- * to the root.
- */
-ini_set( 'include_path', ini_get('include_path') . ';./lib/core/test;./lib;.' );
 
 require_once('AcceptanceTests/AllTests.php');
 
@@ -48,9 +42,21 @@ class AllTests
 function loadTikiLibraries() {
 	/*
  	 * Note: for some reason, we need to declare many of the Tiki global variables
- 	 * here, otherwise they end up being NULL
+ 	 * here, otherwise they end up being NULL.
+ 	 *
+ 	 * Below, I declare those variables that seem most critical, and so far
+ 	 * my experiments work with just those 4. But we may need to define
+ 	 * more of them. 
+ 	 *
+ 	 * To find out all the global variables that are defined in a particular
+ 	 * tiki script, you can add the following statement at the bottom of the script:
+ 	 *
+ 	 *    print "<pre>-- upon exit, array_keys(\$GLOBAlS)="; var_dump(array_keys($GLOBALS)); print "</pre>\n";See a longer list of potentialOne way to find out global Tiki variables
+ 	 *
+ 	 * Note that most of those global variables will be system variables that have nothing
+ 	 * to do with Tiki, so we probably can ignore most of them.  
  	 */
-	global $wikilib, $dbTiki, $smarty, $tikilib;
+	global $wikilib, $dbTiki, $smarty, $tikilib, $multilinguallib;
 	require_once('tiki-setup.php');
 	include_once('lib/wiki/wikilib.php');
 
@@ -61,4 +67,11 @@ function loadTikiLibraries() {
 	ini_set( 'display_errors', 'on' );
 	error_reporting( E_ALL );
 	ini_set( 'include_path', ini_get('include_path') . ';.;../lib;../../..' );
+
+	/*
+ 	* Note: Need to reset the include pathes relative to the root of tiki, because 
+ 	* inclusion of the tiki files, move the currrent directory
+ 	* to the root.
+ 	*/
+	ini_set( 'include_path', ini_get('include_path') . ';./lib/core/test;./lib;.' );
 }
