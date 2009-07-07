@@ -1,14 +1,16 @@
 <?php
+// (c) Copyright 2002-2009 by authors of the Tiki Wiki/CMS/Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 //$Id: /cvsroot/tikiwiki/tiki/tiki-admin_contribution.php,v 1.7 2007-10-12 07:55:23 nyloth Exp $
-require_once('tiki-setup.php');
-
+require_once ('tiki-setup.php');
 if ($prefs['feature_contribution'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_contribution");
+	$smarty->assign('msg', tra("This feature is disabled") . ": feature_contribution");
 	$smarty->display("error.tpl");
 	die;
 }
-include_once('lib/contribution/contributionlib.php');
-
+include_once ('lib/contribution/contributionlib.php');
 if ($tiki_p_admin != 'y' && $tiki_p_admin_contribution != 'y') {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
@@ -47,18 +49,16 @@ if (isset($_REQUEST['setting'])) {
 	} else {
 		$tikilib->set_preference('feature_contributor_wiki', 'n');
 	}
-
-	
 }
 if (isset($_REQUEST['add']) && isset($_REQUEST['name'])) {
 	check_ticket('admin_contribution');
-	$contributionlib->add_contribution($_REQUEST['name'], isset($_REQUEST['description'])? $_REQUEST['description']: '');
+	$contributionlib->add_contribution($_REQUEST['name'], isset($_REQUEST['description']) ? $_REQUEST['description'] : '');
 }
 if (isset($_REQUEST['replace']) && isset($_REQUEST['name']) && isset($_REQUEST['contributionId'])) {
 	check_ticket('admin_contribution');
-	$contributionlib->replace_contribution($_REQUEST['contributionId'], $_REQUEST['name'], isset($_REQUEST['description'])? $_REQUEST['description']: '');
+	$contributionlib->replace_contribution($_REQUEST['contributionId'], $_REQUEST['name'], isset($_REQUEST['description']) ? $_REQUEST['description'] : '');
 	unset($_REQUEST['contributionId']);
-}	
+}
 if (isset($_REQUEST['remove'])) {
 	check_ticket('admin_contribution');
 	$contributionlib->remove_contribution($_REQUEST['remove']);

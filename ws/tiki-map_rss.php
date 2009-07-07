@@ -45,41 +45,35 @@ if ($output["data"]=="EMPTY") {
 	$dateId = "lastModif";
 	$authorId = "";
 	$readrepl = "tiki-map.php?mapfile=";
+	$tmp = $prefs['title_rss_'.$feed];
+	if ($tmp<>'') $title = $tmp;
+	$tmp = $prefs['desc_rss_'.$feed];
+	if ($desc<>'') $desc = $tmp;
+	// Get mapfiles from the mapfiles directory
+	$tmp = array();
+	$h = @opendir($prefs['map_path']);
+	while (($file = @readdir($h)) !== false){
+		if (preg_match('/\.map$/i', $file)){
+			$filetlist[$file] = filemtime ($prefs['map_path']."/".$file);
+		}
+	}
+	@arsort($filetlist, SORT_NUMERIC);
 	
-        $tmp = $prefs['title_rss_'.$feed];
-        if ($tmp<>'') $title = $tmp;
-        $tmp = $prefs['desc_rss_'.$feed];
-        if ($desc<>'') $desc = $tmp;
-	
-	  // Get mapfiles from the mapfiles directory
-	  $tmp = array();
-	  $h = @opendir($prefs['map_path']);
-	
-	  while (($file = @readdir($h)) !== false)
-	  {
-	  	if (preg_match('/\.map$/i', $file))
-	  	{
-	  		$filetlist[$file] = filemtime ($prefs['map_path']."/".$file);
-	  	}
-	  }
-	  @arsort($filetlist, SORT_NUMERIC);
-	
-	  $aux = array();
-	  $i=0;
-	  if (is_array($filetlist))
-	  while (list ($key, $val) = each ($filetlist))
-	  {
-	    if ($i >= $prefs['max_rss_mapfiles']) break;
-	    $i++;
-	  	$aux["name"] = $key;
-	  	$aux["lastModif"] = $val;
-	  	$aux["description"] = "";
-	  	$tmp[] = $aux;
-	  }
-	
-	  @closedir ($h);
-	  $changes = array();
-	  $changes["data"] = $tmp;
+	$aux = array();
+	$i=0;
+	if (is_array($filetlist)){
+		while (list ($key, $val) = each ($filetlist)){
+			if ($i >= $prefs['max_rss_mapfiles']) break;
+			$i++;
+			$aux["name"] = $key;
+			$aux["lastModif"] = $val;
+			$aux["description"] = "";
+			$tmp[] = $aux;
+		}
+	}
+	@closedir ($h);
+	$changes = array();
+	$changes["data"] = $tmp;
 	
 	$output = $rsslib->generate_feed($feed, $uniqueid, '', $changes, $readrepl, '', $id, $title, $titleId, $desc, $descId, $dateId, $authorId);
 }

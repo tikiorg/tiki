@@ -724,15 +724,10 @@ h3.box-title {
 .box-data a.linkmenu {display: block}
 
 .box-data ol,
-.box-data ul {padding-right: .6em}
-
-.box-data ol {
-	padding-left: 2em;
-	margin-top: 0;
-	margin-bottom: 0}
-
-.box-data ul {
-	padding-left: 0;
+	.box-data ul {
+	list-style-position: inside;
+	padding-left: 1em;
+	padding-right: .6em;
 	margin-top: 0;
 	margin-bottom: 0}
 

@@ -10,7 +10,7 @@
 include_once ("tiki-setup.php");
 
 if ( isset($_REQUEST['user']) ) {
-	if ( $_REQUEST['user'] == 'admin' ) $smarty->assign('showloginboxes', 'y');
+	if ( $_REQUEST['user'] == 'admin' && $_SESSION["groups_are_emulated"] != "y" ) $smarty->assign('showloginboxes', 'y');
 	else $smarty->assign('loginuser', $_REQUEST['user']);
 }
 if ($prefs['useGroupHome'] != 'y' && !isset($_SESSION['loginfrom'])) {

@@ -3,14 +3,14 @@
 {if $prefs.feature_user_bookmarks eq 'y' and $user and $tiki_p_create_bookmarks eq 'y'}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="<a href=\"tiki-user_bookmarks.php\">{tr}Bookmarks{/tr}</a>"}{/if}
 {tikimodule error=$module_params.error title=$tpl_module_title name="user_bookmarks" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
-<ul class="module">
+<ul>
     {section name=ix loop=$modb_folders}
 	<li>
         <a href="{$ownurl}{$modb_sep}bookmarks_parent={$modb_folders[ix].folderId}"><img src="img/icons/folderin.gif" /></a>&nbsp;{$modb_folders[ix].name}
 	</li>
     {/section}
 </ul>
-<ul class="module">
+<ul>
     {section name=ix loop=$modb_urls}
 	<li>
 	<a class="linkmodule" href="{$modb_urls[ix].url}">{$modb_urls[ix].name}</a>

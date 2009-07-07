@@ -56,21 +56,11 @@ class  AcceptanceTests_ListPagesTest extends TikiSeleniumTestCase
 
     protected function setUp()
     {
-   	    $this->printImportantMessageForTestUsers();
         $this->setBrowser('*firefox C:\Program Files\Mozilla Firefox\firefox.exe');
         $this->setBrowserUrl('http://localhost/');
         $this->current_test_db = "listPagesTestDump.sql";
         $this->restoreDBforThisTest();         
     }
-    
-    public function printImportantMessageForTestUsers() {
-       die("ListPagesTest will not work unless:\n".
-                   "- the name of the Tiki db is 'tiki_db_for_acceptance_tests' and \n".
-				   "- the file 'listPagesTestDump.sql' (check it out from mods/acceptance_tests_files) is copied in the mySql data directory.\n".	   
-				   "Comment out the call to printImportantMessageForTestUsers() in ListPagesTest::setUp() to run the tests.\n");
-    }
-    
-    
  
     private function _assertListPagesTableIsWellFormed() {
     

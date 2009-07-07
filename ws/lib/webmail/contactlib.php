@@ -1,5 +1,11 @@
 <?php
 
+// $Id$
+
+// Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -68,8 +74,8 @@ class ContactLib extends TikiLib {
 		return $ret;
 	}
 
-	function list_contacts_by_letter($user, $offset, $maxRecords, $sort_mode, $letter) {
-		return $this->list_contacts($user, $offset, $maxRecords, $sort_mode, '', false, $letter);
+	function list_contacts_by_letter($user, $offset, $maxRecords, $sort_mode, $letter, $include_group_contacts = false) {
+		return $this->list_contacts($user, $offset, $maxRecords, $sort_mode, '', $include_group_contacts, $letter);
 	}
 
 	function parse_nicknames($dirs) {
@@ -104,6 +110,7 @@ class ContactLib extends TikiLib {
 			$result = $this->query($query,array((int)$contactId,$firstName,$lastName,$email,$nickname,$user));
 		}
 		if (is_array($groups)) {
+			$this->query('delete from `tiki_webmail_contacts_groups` where `contactId`=?',array((int)$contactId));
 			foreach ($groups as $group) {
 				$this->query('insert into `tiki_webmail_contacts_groups` (`contactId`,`groupName`) values (?,?)',array((int)$contactId,$group));
 			}

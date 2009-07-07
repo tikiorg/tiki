@@ -396,8 +396,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 </select>
 
 {elseif $cur_field.type eq 'w'}
-<select name="ins_{$cur_field.id}" {if $cur_field.http_request}onchange="selectValues('trackerIdList={$cur_field.http_request[0]}&amp;fieldlist={$cur_field.http_request[3]}&amp;filterfield={$cur_field.http_request[1]}&amp;status={$cur_field.http_request[4]}&amp;mandatory={$cur_field.http_request[6]}&amp;filtervalue='+escape(this.value),'{$cur_field.http_request[5]}')"{/if}>
-</select>
+{include file='tracker_item_field_input.tpl' field_value=$cur_field item=$item_info}
 
 {elseif $cur_field.type eq 'd' or $cur_field.type eq 'D'
 or $cur_field.type eq 'R'
@@ -530,7 +529,7 @@ or $cur_field.type eq 'i'}
 {if $cur_field.http_request}
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--
-selectValues('trackerIdList={$cur_field.http_request[0]}&amp;fieldlist={$cur_field.http_request[3]}&amp;filterfield={$cur_field.http_request[1]}&amp;status={$cur_field.http_request[4]}&amp;mandatory={$cur_field.http_request[6]}&amp;filtervalue={$cur_field.http_request[7]|escape:"url"}&amp;selected={$cur_field.http_request[8]|escape:"url"}','{$cur_field.http_request[5]}')
+selectValues('trackerIdList={$cur_field.http_request[0]}&fieldlist={$cur_field.http_request[3]}&filterfield={$cur_field.http_request[1]}&status={$cur_field.http_request[4]}&mandatory={$cur_field.http_request[6]}&filtervalue={$cur_field.http_request[7]|escape:"url"}&selected={$cur_field.http_request[8]|escape:"url"}','{$cur_field.http_request[5]}')
 //--><!]]>
 </script>
 {/if}

@@ -1,17 +1,14 @@
 <?php
-// $Id: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.61.2.3 2008/03/23 14:12:05 sylvieg Exp $
-
-// Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
-
+// (c) Copyright 2002-2009 by authors of the Tiki Wiki/CMS/Groupware Project
+// 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-
+// $Id: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.61.2.3 2008/03/23 14:12:05 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
+	header("location: index.php");
+	exit;
 }
-
 if (isset($_REQUEST["loginprefs"])) {
 	check_ticket('admin-inc-login');
 	simple_set_toggle('change_password');
@@ -61,28 +58,22 @@ if (isset($_REQUEST["loginprefs"])) {
 	simple_set_toggle('desactive_login_autocomplete');
 	simple_set_toggle('permission_denied_login_box');
 	simple_set_value('permission_denied_url');
-
-
 	if (isset($_REQUEST['registration_choices'])) {
 		$listgroups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
 		$in = array();
 		$out = array();
-		foreach ($listgroups['data'] as $gr) {
-			if ($gr['groupName'] == 'Anonymous')
-				continue;
+		foreach($listgroups['data'] as $gr) {
+			if ($gr['groupName'] == 'Anonymous') continue;
 			if ($gr['registrationChoice'] == 'y' && !in_array($gr['groupName'], $_REQUEST['registration_choices'])) // deselect
-				$out[] = $gr['groupName'];
+			$out[] = $gr['groupName'];
 			elseif ($gr['registrationChoice'] != 'y' && in_array($gr['groupName'], $_REQUEST['registration_choices'])) //select
-				$in[] = $gr['groupName'];
+			$in[] = $gr['groupName'];
 		}
-		if (count($in))
-			$userlib->set_registrationChoice($in, 'y');
-		if (count($out))
-			$userlib->set_registrationChoice($out, NULL);
+		if (count($in)) $userlib->set_registrationChoice($in, 'y');
+		if (count($out)) $userlib->set_registrationChoice($out, NULL);
 	}
 	simple_set_toggle('feature_display_my_to_others');
 }
-
 if (isset($_REQUEST["auth_ldap"])) {
 	check_ticket('admin-inc-login');
 	simple_set_toggle('ldap_create_user_tiki');
@@ -117,14 +108,12 @@ if (isset($_REQUEST["auth_ldap"])) {
 	simple_set_value('auth_ldap_usergroupattr');
 	simple_set_value('auth_ldap_groupgroupattr');
 }
-
 if (isset($_REQUEST["auth_pam"])) {
 	check_ticket('admin-inc-login');
 	simple_set_toggle('pam_create_user_tiki');
 	simple_set_toggle('pam_skip_admin');
 	simple_set_value('pam_service');
 }
-
 if ($phpcas_enabled == 'y') {
 	if (isset($_REQUEST['auth_cas'])) {
 		check_ticket('admin-inc-login');
@@ -136,32 +125,23 @@ if ($phpcas_enabled == 'y') {
 		simple_set_value('cas_path');
 	}
 }
-
 if (isset($_REQUEST['auth_shib'])) {
 	check_ticket('admin-inc-login');
-  simple_set_toggle('shib_create_user_tiki');
-  simple_set_toggle('shib_skip_admin');
-  simple_set_value('shib_affiliation');
-  simple_set_toggle('shib_usegroup');
-  simple_set_value('shib_group');
+	simple_set_toggle('shib_create_user_tiki');
+	simple_set_toggle('shib_skip_admin');
+	simple_set_value('shib_affiliation');
+	simple_set_toggle('shib_usegroup');
+	simple_set_value('shib_group');
 }
-
-
 $smarty->assign("phpcas_enabled", $phpcas_enabled);
-$smarty->assign('gd_lib_found', function_exists('gd_info') ? 'y' : 'n' );
-
+$smarty->assign('gd_lib_found', function_exists('gd_info') ? 'y' : 'n');
 // Get list of available languages
 $languages = array();
-$languages = $tikilib->list_languages(false,null,true);
+$languages = $tikilib->list_languages(false, null, true);
 $smarty->assign_by_ref('languages', $languages);
-
 $smarty->assign("styles", $tikilib->list_styles());
-
-$listTrackers = $tikilib->list_trackers(0,-1,"name_desc","");
-$smarty->assign("listTrackers",$listTrackers['list']);
-
+$listTrackers = $tikilib->list_trackers(0, -1, "name_desc", "");
+$smarty->assign("listTrackers", $listTrackers['list']);
 $listgroups = $userlib->get_groups(0, -1, 'groupName_desc', '', '', 'n');
 $smarty->assign("listgroups", $listgroups['data']);
-
-
 ask_ticket('admin-inc-login');

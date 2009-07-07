@@ -16,7 +16,7 @@ include_once ('lib/userprefs/scrambleEmail.php');
 include_once ('lib/userprefs/userprefslib.php');
 
 // User preferences screen
-if ($prefs['feature_userPreferences'] != 'y' && $prefs['change_password'] != 'y' && $user != 'admin') {
+if ($prefs['feature_userPreferences'] != 'y' && $prefs['change_password'] != 'y' && $tiki_p_admin != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_userPreferences");
 	$smarty->display("error.tpl");
 	die;

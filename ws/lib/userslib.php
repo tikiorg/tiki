@@ -27,95 +27,95 @@ define ("AUTH_LOGIN_OK", 0);
 class UsersLib extends TikiLib {
 # var $db;  // The PEAR db object used to access the database
 
-    // change this to an email address to receive debug emails from the LDAP code
-    var $debug = false;
+	// change this to an email address to receive debug emails from the LDAP code
+	var $debug = false;
 
-    var $usergroups_cache;
-    var $groupperm_cache;
-    var $groupinclude_cache;
-    var $userobjectperm_cache; // used to cache queries in object_has_one_permission()
-    var $get_object_permissions_for_user_cache;
+	var $usergroups_cache;
+	var $groupperm_cache;
+	var $groupinclude_cache;
+	var $userobjectperm_cache; // used to cache queries in object_has_one_permission()
+	var $get_object_permissions_for_user_cache;
 
-    function UsersLib($db) {
-	$this->TikiLib($db);
+	function UsersLib($db) {
+		$this->TikiLib($db);
 
-	// Initialize caches
-	$this->usergroups_cache = array();
-	$this->groupperm_cache = array(array());
-	$this->groupinclude_cache = array();
-    $this->get_object_permissions_for_user_cache = array();
-    }
-
-    function assign_object_permission($groupName, $objectId, $objectType, $permName) {
-	$objectId = md5($objectType . strtolower($objectId));
-
-	$query = "delete from `users_objectpermissions`
-	    where `groupName` = ? and
-	    `permName` = ? and
-	    `objectId` = ?";
-	$result = $this->query($query, array($groupName, $permName,
-		    $objectId), -1, -1, false);
-
-	$query = "insert into `users_objectpermissions`(`groupName`,
-	`objectId`, `objectType`, `permName`)
-	    values(?, ?, ?, ?)";
-	$result = $this->query($query, array($groupName, $objectId,
-		    $objectType, $permName));
-	if ($objectType == 'file gallery') {
-		global $cachelib; require_once('lib/cache/cachelib.php');
-		$cachelib->empty_type_cache('fgals_perms_'.$objectId."_");
+		// Initialize caches
+		$this->usergroups_cache = array();
+		$this->groupperm_cache = array(array());
+		$this->groupinclude_cache = array();
+		$this->get_object_permissions_for_user_cache = array();
 	}
-	return true;
-    }
 
-    function object_has_permission($user, $objectId, $objectType, $permName) {
-	$groups = $this->get_user_groups($user);
-	$objectId = md5($objectType . strtolower($objectId));
-	$mid = implode(',',array_fill(0,count($groups),'?'));
-	$query = "select count(*) from `users_objectpermissions` where `groupName` in ($mid) and `objectId` = ? and `objectType` = ? and `permName` = ?";
-    $bindvars = array_merge($groups, array($objectId, $objectType, $permName));
-    $result = $this->getOne($query, $bindvars);
-    if ($result > 0) {
+	function assign_object_permission($groupName, $objectId, $objectType, $permName) {
+		$objectId = md5($objectType . strtolower($objectId));
+
+		$query = "delete from `users_objectpermissions`
+			where `groupName` = ? and
+			`permName` = ? and
+			`objectId` = ?";
+		$result = $this->query($query, array($groupName, $permName,
+			$objectId), -1, -1, false);
+
+		$query = "insert into `users_objectpermissions`(`groupName`,
+			`objectId`, `objectType`, `permName`)
+			values(?, ?, ?, ?)";
+		$result = $this->query($query, array($groupName, $objectId,
+			$objectType, $permName));
+		if ($objectType == 'file gallery') {
+			global $cachelib; require_once('lib/cache/cachelib.php');
+			$cachelib->empty_type_cache('fgals_perms_'.$objectId."_");
+		}
 		return true;
-	} else {
-		return false;
 	}
-    }
 
-    function remove_object_permission($groupName, $objectId, $objectType, $permName) {
-	$objectId = md5($objectType . strtolower($objectId));
-
-	$query = "delete from `users_objectpermissions`
-	    where `groupName` = ? and `objectId` = ?
-	    and `objectType` = ? and `permName` = ?";
-	$bindvars = array($groupName, $objectId, $objectType,
-		$permName);
-	$result = $this->query($query, $bindvars);
-	if ($objectType == 'file gallery') {
-		global $cachelib; require_once('lib/cache/cachelib.php');
-		$cachelib->empty_type_cache('fgals_perms_'.$objectId."_");
+	function object_has_permission($user, $objectId, $objectType, $permName) {
+		$groups = $this->get_user_groups($user);
+		$objectId = md5($objectType . strtolower($objectId));
+		$mid = implode(',',array_fill(0,count($groups),'?'));
+		$query = "select count(*) from `users_objectpermissions` where `groupName` in ($mid) and `objectId` = ? and `objectType` = ? and `permName` = ?";
+		$bindvars = array_merge($groups, array($objectId, $objectType, $permName));
+		$result = $this->getOne($query, $bindvars);
+		if ($result > 0) {
+			return true;
+		} else {
+			return false;
+		}
 	}
-	return true;
-    }
 
-    function copy_object_permissions($objectId,$destinationObjectId,$objectType) {
-	$objectId = md5($objectType . strtolower($objectId));
+	function remove_object_permission($groupName, $objectId, $objectType, $permName) {
+		$objectId = md5($objectType . strtolower($objectId));
 
-	$query = "select `permName`, `groupName`
-	    from `users_objectpermissions`
-	    where `objectId` =? and
-	    `objectType` = ?";
-	$bindvars = array($objectId, $objectType);
-	$result = $this->query($query, $bindvars);
-	while($res = $result->fetchRow()) {
-	    $this->assign_object_permission($res["groupName"],$destinationObjectId,$objectType,$res["permName"]);
+		$query = "delete from `users_objectpermissions`
+			where `groupName` = ? and `objectId` = ?
+			and `objectType` = ? and `permName` = ?";
+		$bindvars = array($groupName, $objectId, $objectType,
+			$permName);
+		$result = $this->query($query, $bindvars);
+		if ($objectType == 'file gallery') {
+			global $cachelib; require_once('lib/cache/cachelib.php');
+			$cachelib->empty_type_cache('fgals_perms_'.$objectId."_");
+		}
+		return true;
 	}
-	return true;
-    }
 
-    // assign permissions for an individual object according to the global permissions for that object type
-    function inherit_global_permissions($objectId, $objectType) {
-    	global $cachelib;
+	function copy_object_permissions($objectId,$destinationObjectId,$objectType) {
+		$objectId = md5($objectType . strtolower($objectId));
+
+		$query = "select `permName`, `groupName`
+			from `users_objectpermissions`
+			where `objectId` =? and
+			`objectType` = ?";
+		$bindvars = array($objectId, $objectType);
+		$result = $this->query($query, $bindvars);
+		while($res = $result->fetchRow()) {
+			$this->assign_object_permission($res["groupName"],$destinationObjectId,$objectType,$res["permName"]);
+		}
+		return true;
+	}
+
+	// assign permissions for an individual object according to the global permissions for that object type
+	function inherit_global_permissions($objectId, $objectType) {
+		global $cachelib;
 
 		$groups = $this->get_groups();
 		if (!$cachelib->isCached($objectType . "_permission_names")) {
@@ -131,33 +131,34 @@ class UsersLib extends TikiLib {
 				}
 			}
 		}
-    }
-
-    function get_object_permissions($objectId, $objectType, $group='', $perm='') {
-	$objectId = md5($objectType . strtolower($objectId));
-
-	$query = "select `groupName`, `permName`
-	    from `users_objectpermissions`
-	    where `objectId` = ? and
-	    `objectType` = ?";
-	$bindvars = array($objectId, $objectType);
-	if (!empty($group)) {
-		$query .= " and `groupName`=?";
-		$bindvars[] = $group;
-	}
-	if (!empty($perm)) {
-		$query .= " and `permName`=?";
-		$bindvars[] = $perm;
-	}
-	$result = $this->query($query, $bindvars);
-	$ret = array();
-
-	while ($res = $result->fetchRow()) {
-	    $ret[] = $res;
 	}
 
-	return $ret;
-    }
+	function get_object_permissions($objectId, $objectType, $group='', $perm='') {
+		$objectId = md5($objectType . strtolower($objectId));
+
+		$query = "select `groupName`, `permName`
+			from `users_objectpermissions`
+			where `objectId` = ? and
+			`objectType` = ?";
+		$bindvars = array($objectId, $objectType);
+		if (!empty($group)) {
+			$query .= " and `groupName`=?";
+			$bindvars[] = $group;
+		}
+		if (!empty($perm)) {
+			$query .= " and `permName`=?";
+			$bindvars[] = $perm;
+		}
+		$result = $this->query($query, $bindvars);
+		$ret = array();
+
+		while ($res = $result->fetchRow()) {
+			$ret[] = $res;
+		}
+
+		return $ret;
+	}
+
 	function get_object_permissions_for_user ($objectId, $objectType, $user) {
 		$params = md5($objectId . $objectType . $user);
 		//Check the cache for these parameters
@@ -179,21 +180,21 @@ class UsersLib extends TikiLib {
 		return $ret;
 	}
 
-    function object_has_one_permission($objectId, $objectType) {
-	$objectId = md5($objectType . strtolower($objectId));
+	function object_has_one_permission($objectId, $objectType) {
+		$objectId = md5($objectType . strtolower($objectId));
 
-	if(!isset($this->userobjectperm_cache) || !is_array($this->userobjectperm_cache)
-	   || !isset($this->userobjectperm_cache[$objectId])) {
-	// i think, we really dont need the "and `objectType`=?" because the objectId should be unique due to the md5()
-	$query = "select count(*) from `users_objectpermissions` where `objectId`=? and `objectType`=?";
-	$this->userobjectperm_cache[$objectId]= $this->getOne($query, array(
-		    $objectId,
-		    $objectType
-		    ));
+		if(!isset($this->userobjectperm_cache) || !is_array($this->userobjectperm_cache)
+			|| !isset($this->userobjectperm_cache[$objectId])) {
+			// i think, we really dont need the "and `objectType`=?" because the objectId should be unique due to the md5()
+			$query = "select count(*) from `users_objectpermissions` where `objectId`=? and `objectType`=?";
+			$this->userobjectperm_cache[$objectId]= $this->getOne($query, array(
+				$objectId,
+				$objectType
+				));
+		}
+
+		return $this->userobjectperm_cache[$objectId];
 	}
-
-	return $this->userobjectperm_cache[$objectId];
-    }
 
 	function user_exists($user) {
 		static $rv = array();
@@ -205,38 +206,38 @@ class UsersLib extends TikiLib {
 		return $rv[$user];
 	}
 
-    function group_exists($group) {
-	static $rv = array();
+	function group_exists($group) {
+		static $rv = array();
 
-	if (!isset($rv[$group])) {
-	    $query = "select count(`groupName`)  from `users_groups` where `groupName` = ?";
+		if (!isset($rv[$group])) {
+			$query = "select count(`groupName`)  from `users_groups` where `groupName` = ?";
 
-	    $result = $this->getOne($query, array($group));
-	    $rv[$group] = $result;
+			$result = $this->getOne($query, array($group));
+			$rv[$group] = $result;
+		}
+
+		return $rv[$group];
 	}
 
-	return $rv[$group];
-    }
-
-    function user_logout($user) {
-			global $prefs;
-			$query = 'delete from `tiki_user_preferences` where `prefName`=? and `user`=?';
-			$user = $this->query($query, array('cookie',(string)$user));
-			if ($prefs['feature_intertiki'] == 'y' and $prefs['feature_intertiki_sharedcookie'] == 'y' and !empty($prefs['feature_intertiki_mymaster'])) {
-				include_once('XML/RPC.php');
-				$remote = $prefs['interlist'][$prefs['feature_intertiki_mymaster']];
-				$remote['path'] = preg_replace("/^\/?/","/",$remote['path']);
-				$client = new XML_RPC_Client($remote['path'], $remote['host'], $remote['port']);
-				$client->setDebug(0);
-				$msg = new XML_RPC_Message(
-				       'intertiki.logout',
-							 array(
-							 new XML_RPC_Value($prefs['tiki_key'], 'string'),
-							 new XML_RPC_Value($user, 'string')
-							 ));
-				$client->send($msg);
-			}
-    }
+	function user_logout($user) {
+		global $prefs;
+		$query = 'delete from `tiki_user_preferences` where `prefName`=? and `user`=?';
+		$user = $this->query($query, array('cookie',(string)$user));
+		if ($prefs['feature_intertiki'] == 'y' and $prefs['feature_intertiki_sharedcookie'] == 'y' and !empty($prefs['feature_intertiki_mymaster'])) {
+			include_once('XML/RPC.php');
+			$remote = $prefs['interlist'][$prefs['feature_intertiki_mymaster']];
+			$remote['path'] = preg_replace("/^\/?/","/",$remote['path']);
+			$client = new XML_RPC_Client($remote['path'], $remote['host'], $remote['port']);
+			$client->setDebug(0);
+			$msg = new XML_RPC_Message(
+				   'intertiki.logout',
+						 array(
+						 new XML_RPC_Value($prefs['tiki_key'], 'string'),
+						 new XML_RPC_Value($user, 'string')
+						 ));
+			$client->send($msg);
+		}
+	}
 
     function genPass() {
 	// AWC: enable mixed case and digits, don't return too short password
@@ -1967,36 +1968,34 @@ function get_included_groups($group, $recur=true) {
 		return true;
 	}
 
-    function get_user_permissions($user) {
-	$groups = $this->get_user_groups($user);
+	function get_user_permissions($user) {
+		$groups = $this->get_user_groups($user);
 
-	$ret = array();
-	foreach ($groups as $group) {
-	    $perms = $this->get_group_permissions($group);
+		$ret = array();
+		foreach ($groups as $group) {
+			$perms = $this->get_group_permissions($group);
 
-	    foreach ($perms as $perm) {
-		$ret[] = $perm;
-	    }
+			foreach ($perms as $perm) {
+				$ret[] = $perm;
+			}
+		}
+
+		return $ret;
 	}
 
-	return $ret;
-    }
+	function user_has_permission($user, $perm) {
 
-    function user_has_permission($user, $perm) {
-	// admin has all the permissions
-	if ($user == 'admin')
-	    return true;
+		// Get user_groups ?
+		$groups = $this->get_user_groups($user);
 
-	// Get user_groups ?
-	$groups = $this->get_user_groups($user);
+		foreach ($groups as $group) {
+			if ($this->group_has_permission($group, $perm) || $this->group_has_permission($group, 'tiki_p_admin')) {
+				return true;
+			}
+		}
 
-	foreach ($groups as $group) {
-	    if ($this->group_has_permission($group, $perm))
-		return true;
+		return false;
 	}
-
-	return false;
-    }
 
 	function group_has_permission($group, $perm) {
 		if ( empty($perm) || empty($group) ) return 0;
