@@ -10,11 +10,8 @@
  */
 
 //Controlling Access
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false)
-{
-	header("location: index.php");
-	exit;
-}
+require_once 'tiki-setup.php';
+$access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
 //Rest of Imports
 include_once 'lib/categories/categlib.php';
@@ -28,10 +25,14 @@ include_once 'lib/categories/categlib.php';
  */
 class wslib extends CategLib 
 {
+    private $ws_container;
+
 	function __construct()
 	{
-		global $dbTiki;
+		global $dbTiki, $prefs;
 		parent::CategLib($dbTiki);
+
+		$this->ws_container = (int) $prefs['ws_container'];
 	}
 
     // This function will set a container for WS in the category table and return its ID
@@ -44,14 +45,12 @@ class wslib extends CategLib
 	function add_ws ($name, $parentWS, $groupName, $permList=null)
 	{
 		include_once('lib/userslib.php');
-		global $prefs;
-		$wsContainerId = (int) $prefs['ws_container'];
-		
+
 		// If the group doesn't exist, then it's created. Otherwise, nothing will happen.
 		$userlib->add_group($groupName);
 		
 		// The workspace is created
-		$wsID = parent::add_category($wsContainerId,$name,(string) $parentWS);
+		$wsID = parent::add_category($this->ws_container,$name,(string) $parentWS);
 		
 		// It's given the tiki_p_ws_view permission to the selected group
 		$this->set_permission_for_group_in_ws($wsID,$groupName,'tiki_p_ws_view');
@@ -66,12 +65,10 @@ class wslib extends CategLib
     // Remove a WS
 	function remove_ws ($ws_id)
 	{
-		global $prefs;
-		$wsContainerId = (int) $prefs['ws_container'];
 		$newParent = parent::get_category_description($ws_id);
 		$query = "update `tiki_categories` set `description`=? where 
 		`description`=? and `parentId`=?";
-		$bindvars = array($newParent,$ws_id,$wsContainerId);
+		$bindvars = array($newParent,$ws_id,$this->ws_container);
 	    // All its sub-workspaces will level up	
 		$result = $this->query($query,$bindvars);
 		
@@ -101,11 +98,9 @@ class wslib extends CategLib
     // Get a WS Id
 	public function get_ws_id($name, $parentWS)
 	{
-		global $prefs;
 		$query = "select `categId` from `tiki_categories` where `name`=? and 
 		`description`=? and `parentId`=?";
-		$wsContainerId = (int) $prefs['ws_container'];
-		$bindvars = array($name, $parentWS, $wsContainerId);
+		$bindvars = array($name, $parentWS, $this->ws_container);
 		return $this->getOne($query, $bindvars);
 	}
 	
@@ -159,8 +154,7 @@ class wslib extends CategLib
 	{
 		$cats = $this->get_object_categories($type, $objid);
 
-		global $prefs;
-		if ($idws = $prefs['ws_container'] )
+		if ($this->ws_container)
 		if ($find)
 		{
 			$findesc = '%' . $find . '%';
