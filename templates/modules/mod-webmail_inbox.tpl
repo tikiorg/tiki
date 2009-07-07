@@ -33,7 +33,7 @@
 				{icon _id='arrow_refresh' class='webmail_refresh_icon icon'}
 				{icon _id='img/spinner.gif' class='webmail_refresh_busy icon' style='display:none'}
 			</a>
-			<span class='webmail_refresh_message' style='display:none'></span>
+			&nbsp;<span class='webmail_refresh_message' style='display:none'></span>
 		{else}
 			<a title="{tr}Refresh (non-ajax){/tr}" href="{$request_uri}refresh_mail=1">{icon _id='arrow_refresh'}</a>
 		{/if}
@@ -78,7 +78,12 @@
 					{else}
 						<a class="button mod_webmail_action" onclick="doTakeWebmail({$webmail_list[ix].msgid})" href="#">{tr}TAKE{/tr}</a>&nbsp;
 					{/if}
-					<span class="mod_webmail_from">{$sender.email|truncate:17:"...":true}</span>
+					{if $sender.contactId gt 0}
+						{self_link _script='tiki-contacts.php' contactId=$sender.contactId _class="mod_webmail_from"}{$sender.email|truncate:17:"...":true}{/self_link}
+						<div style="float: right;">{self_link _script='tiki-contacts.php' contactId=$sender.contactId _icon='user_gray'}{tr}View contact{/tr}{/self_link}</div>
+					{else}
+						<span class="mod_webmail_from">{$sender.email|truncate:20:"...":true}</span>
+					{/if}
 					{assign var=tit value="<span class='webmail_tip_title'><strong>$subject</strong><br /></span>|{tr}From{/tr}: <em>`$sender.name`</em> &nbsp; <tt>&amp;lt;`$sender.email`&amp;gt;</tt><br /><small>[$date_value]</small>"}
 					{self_link _script='tiki-webmail.php' msgid=$webmail_list[ix].msgid locSection='read' _noauto='y' _class='clearfix linkmodule tips300 webmail_subject' _title=$tit}
 						{if $maxlen > 0}{* default value for maxlen param eq 26 *}

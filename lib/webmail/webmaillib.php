@@ -322,10 +322,14 @@ class WebMailLib extends TikiLib {
 				} else if (!strstr($wmail['sender']['email'], '@')) {
 					$e = $wmail['sender']['name'];
 					$wmail['sender']['name'] = $wmail['sender']['email'];
-					$wmail['sender']['email'] =  $wmail['sender']['name'];
+					$wmail['sender']['email'] =  $e;
 				}
 				$wmail['sender']['name'] = htmlspecialchars($wmail['sender']['name']);
 
+				// check if sender is in contacts
+				 global $contactlib; include_once ('lib/webmail/contactlib.php');
+				$wmail['sender']['contactId'] = $contactlib->get_contactId_email($wmail['sender']['email'], $user);
+				
 				if (!empty($headers['message-id'])) {
 					$wmail['realmsgid'] = ereg_replace('[<>]','', $headers['message-id']);
 				} else {
@@ -342,8 +346,8 @@ class WebMailLib extends TikiLib {
 				// TODO
 				$wmail['has_attachment'] = false;
 //				$l = $pop3->_cmdList($i);
-				$wmail['size'] = '';
-				
+				$wmail['size'] = 0;
+
 				// Add to output
 				$webmail_list[] = $wmail;
 				
