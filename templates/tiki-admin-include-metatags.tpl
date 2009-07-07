@@ -2,7 +2,7 @@
 <form action="tiki-admin.php?page=metatags" method="post">
 <div class="cbox">
 <table class="admin"><tr><td>
-<div align="center" style="padding:1em;"><input type="submit" name="metatags" value="{tr}Change Preferences{/tr}" /></div>
+<div align="center" style="padding:1em;"><input type="submit" name="metatags" value="{tr}Change preferences{/tr}" /></div>
 
 <fieldset><legend>{tr}Meta tags{/tr}{if $prefs.feature_help eq 'y'} {help url="Meta+Tags+Config"}{/if}</legend>
 <div class="adminoptionbox">
@@ -64,7 +64,7 @@
 </div>
 </fieldset>
 
-<div align="center" style="padding:1em;"><input type="submit" name="metatags" value="{tr}Change Preferences{/tr}" /></div>
+<div align="center" style="padding:1em;"><input type="submit" name="metatags" value="{tr}Change preferences{/tr}" /></div>
 </td></tr></table>
 </div>
 </form>

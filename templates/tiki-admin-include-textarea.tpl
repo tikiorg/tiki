@@ -4,7 +4,7 @@
 
 <form action="tiki-admin.php?page=textarea" method="post">
 <div class="cbox">
-<div align="center" style="padding:1em"><input type="submit" name="textareasetup" value="{tr}Change Preferences{/tr}" /></div>
+<div align="center" style="padding:1em"><input type="submit" name="textareasetup" value="{tr}Change preferences{/tr}" /></div>
 
 	{tabset name="admin_textarea"}
 		{tab name="{tr}General Settings{/tr}"}
@@ -465,7 +465,7 @@ $jq('#pluginalias_simple_new').hide();
 		</fieldset>
 		{/tab}
 	{/tabset}
-<div align="center" style="padding:1em"><input type="submit" name="textareasetup" value="{tr}Change Preferences{/tr}" /></div>
+<div align="center" style="padding:1em"><input type="submit" name="textareasetup" value="{tr}Change preferences{/tr}" /></div>
 </div>
 </form>
 
