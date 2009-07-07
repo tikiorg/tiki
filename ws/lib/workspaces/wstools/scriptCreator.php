@@ -66,11 +66,11 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'create'))
 {
 	//Creating new WS
 	if  (!$wslib->get_ws_id('WS1',$wsContainerId))
-		$id1 = $wslib->add_ws('WS1',$wsContainerId);
+		$id1 = $wslib->add_ws('WS1',$wsContainerId,'G1',array('tiki_p_ws_admingroups', ));
 	 if (!$wslib->get_ws_id('WS2',$wsContainerId))
-		$wslib->add_ws('WS2',$wsContainerId);
+		$wslib->add_ws('WS2',$wsContainerId,'G2');
 	if  (!$wslib->get_ws_id('WS3',$wsContainerId))
-	    $id3 = $wslib->add_ws('WS3',$wsContainerId);
+	    $id3 = $wslib->add_ws('WS3',$wsContainerId,'G1',array('adminWS'));
 
 	$id2 = $wslib->get_ws_id('WS2',$wsContainerId);
 
@@ -123,10 +123,18 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'destroy'))
 if ( isset($_REQUEST['action'])  &&  ($_REQUEST['action'] == 'test'))
 {
 
-$catree = $wslib->list_all_ws(0,-1, 'name_asc','','',0);
+/*$catree = $wslib->list_all_ws(0,-1, 'name_asc','','',0);
 foreach ($catree['data'] as $key=>$c) {
 		echo($catree['data'][$key]['categId']); print "\n";
 		echo($catree['data'][$key]['name']); print "\n";
 	}
-	$userlib->add_group('G1');
+	*/
+	$titles[3] = 'three'; 
+	$titles[2] = 'two'; 
+	$titles[1] = 'one';
+	 
+	print_r( $titles);
+	
+	foreach ($titles as $t )
+		{ print "title=$t "; } 
 }

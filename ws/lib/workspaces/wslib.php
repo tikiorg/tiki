@@ -41,7 +41,7 @@ class wslib extends CategLib
 	}
     
     // Create a new WS (NOTE: parentID will be always WSContainerID)
-	function add_ws ($name, $parentWS, $groupName, $additionalPerms=null)
+	function add_ws ($name, $parentWS, $groupName, $permList=null)
 	{
 		include_once('lib/userslib.php');
 		global $prefs;
@@ -57,8 +57,8 @@ class wslib extends CategLib
 		$this->set_permission_for_group_in_ws($wsID,$groupName,'tiki_p_ws_view');
 		
 		// If the group will have additional admin permissions in the current ws
-		if (!$additionalPerms == null)
-			$this->set_permission_for_group_in_ws($wsID,$groupName,);
+		if ($permList != null)
+			$this->set_permissions_for_group_in_ws($wsID,$groupName,$permList);
 		
 		return $wsID;
 	}
@@ -109,24 +109,26 @@ class wslib extends CategLib
 		return $this->getOne($query, $bindvars);
 	}
 	
-    // Give a permission to a group for a specific WS (view, addresources, addgroups,...)
-	function set_permission_for_group_in_ws ($ws_id,$groupName,$permName)
+    // Give a set of permissions to a group for a specific WS (view, addresources, addgroups,...)
+	function set_permissions_for_group_in_ws ($ws_id,$groupName,$permList)
 	{
 		$objectType = 'ws';
 		$hashWS = md5($objectType . strtolower($ws_id));
-
-	    // If already exists, overwrite 
-		$query = "delete from `users_objectpermissions`
-		where `groupName` = ? and
-		`permName` = ? and
-		`objectId` = ?";
-		$result = $this->query($query, array($groupName, $permName,$hashWS), -1, -1, false);
-
-		$query = "insert into `users_objectpermissions`(`groupName`,
-		`objectId`, `objectType`, `permName`)
-		values(?, ?, ?, ?)";		
-		$result = $this->query($query, array($groupName, $hashWS,'ws', $permName));
 		
+		foreach ($permList as $permName)
+		{
+		    // If already exists, overwrite 
+			$query = "delete from `users_objectpermissions`
+			where `groupName` = ? and
+			`permName` = ? and
+			`objectId` = ?";
+			$this->query($query, array($groupName, $permName,$hashWS), -1, -1, false);
+	
+			$query = "insert into `users_objectpermissions`(`groupName`,
+			`objectId`, `objectType`, `permName`)
+			values(?, ?, ?, ?)";		
+			$this->query($query, array($groupName, $hashWS,'ws', $permName));
+		}	
 		return true;
 	}
 	
