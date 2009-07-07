@@ -1385,7 +1385,6 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		//workspaces
 		'feature_workspaces' => 'n',
 		'ws_container' => null,
-		'ws_container_name' => null,
 	);
 
 	// spellcheck

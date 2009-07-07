@@ -29,11 +29,8 @@ class ws_gui_controller
 	global $prefs, $tikilib, $wslib;
 	if ($prefs['ws_container'] == null)
 	{ 
-	    $currentTime = (string) time();
-	    $hash = md5($currentTime);
-	    $id = $wslib->init_ws($hash);
+	    $id = $wslib->init_ws();
 	    $tikilib->set_preference('ws_container', $id);
-	    $tikilib->set_preference('ws_container_name', $hash);
 	    return true;
 	}
 	else

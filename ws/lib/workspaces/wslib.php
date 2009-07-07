@@ -27,12 +27,15 @@ class wslib extends CategLib
 {
     private $ws_container;
 
+    private $objectType;
+
 	function __construct()
 	{
 		global $dbTiki, $prefs;
 		parent::CategLib($dbTiki);
 
 		$this->ws_container = (int) $prefs['ws_container'];
+		$this->objectType = 'ws';
 	}
 
     // This function will set a container for WS in the category table and return its ID
@@ -48,13 +51,13 @@ class wslib extends CategLib
 		global $userlib;
 		
 		// If the group doesn't exist, then it's created. Otherwise, nothing will happen.
-		if ($userlib->add_group($groupName));
+		$userlib->add_group($groupName);
 		
 		// The workspace is created
 		$wsID = parent::add_category($this->ws_container,$name,(string) $parentWS);
 		
 		// It's given the tiki_p_ws_view permission to the selected group in the new ws
-			$this->set_permissions_for_group_in_ws($wsID,$groupName,array('tiki_p_ws_view'));
+		$this->set_permissions_for_group_in_ws($wsID,$groupName,array('tiki_p_ws_view'));
 		
 		// It's added additional admin permissions to the group in the new ws
 		if ($permList != null)
@@ -73,8 +76,7 @@ class wslib extends CategLib
 	    // All its sub-workspaces will level up	
 		$result = $this->query($query,$bindvars);
 		
-		$objectType = 'ws';
-		$hashWS = md5($objectType . strtolower($ws_id));
+		$hashWS = md5($this->objectType . strtolower($ws_id));
 		$query = "delete from `users_objectpermissions` where `objectId` = ?"; 
 		$bindvars = array($hashWS);
 	    // Remove the WS permissions stored in objectpermissions
@@ -108,8 +110,7 @@ class wslib extends CategLib
     // Give a set of permissions to a group for a specific WS (view, addresources, addgroups,...)
 	function set_permissions_for_group_in_ws ($ws_id,$groupName,$permList)
 	{
-		$objectType = 'ws';
-		$hashWS = md5($objectType . strtolower($ws_id));
+		$hashWS = md5($this->objectType . strtolower($ws_id));
 		
 		foreach ($permList as $permName)
 		{
@@ -131,8 +132,7 @@ class wslib extends CategLib
     // List the groups that have access to a WS
     	function list_groups_that_can_access_in_ws ($ws_id)
     	{    	
-    		$objectType = 'ws';
-		$hashWS = md5($objectType . strtolower($ws_id));
+		$hashWS = md5($this->objectType . strtolower($ws_id));
 		
 		$query = "select `groupName` from `users_objectpermissions` where 
 		`objectId`=? and `permName`='tiki_p_ws_view'";
@@ -210,5 +210,4 @@ class wslib extends CategLib
 
 }
 
-global $dbTiki;
-$wslib = new wslib( );
+$wslib = new wslib();

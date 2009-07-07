@@ -20,6 +20,6 @@ if ( isset($_REQUEST['wsoptions']) )
 	header("Location: ./lib/workspaces/wstools/scriptCreator.php?action=destroy&redirect=yes");
 }
 
-$ws_gui->list_ws_resources();
+//$ws_gui->list_ws_resources();
 
 ask_ticket('admin-inc-workspaces');

@@ -55,8 +55,6 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'init') && ($wsContain
 		$objectlib->add_object('wiki page','Wiki5');
 		$tikilib->create_page('Wiki5', 0, '', time(), '');
 	}
-
-	header("Location: ./scriptCreator.php?action=create");
 }
 
 if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'create'))
@@ -87,8 +85,6 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'create'))
 	$wslib->add_ws_object($id3,'Wiki3','wiki_page');
 	$wslib->add_ws_object($id4,'Wiki4','wiki_page');
 	$wslib->add_ws_object($id5,'Wiki5','wiki_page');
-
-	//header("Location: ./../../../tiki-admin.php?page=workspaces");
 }
 	
 if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'destroy'))
@@ -106,18 +102,11 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'destroy'))
 	$wslib->remove_ws($id3);
 	$wslib->remove_ws($id4);
 	$wslib->remove_ws($id5);
-
-	//header("Location: ./../../../tiki-admin.php?page=workspaces");
 }
 
 if ( isset($_REQUEST['action'])  &&  ($_REQUEST['action'] == 'test'))
 {
 
-$catree = $wslib->list_all_ws(0,-1, 'name_asc','','',0);
-foreach ($catree['data'] as $key=>$c) {
-		echo($catree['data'][$key]['categId']); print "\n";
-		echo($catree['data'][$key]['name']); print "\n";
-	}
 }
 
 if (isset($_REQUEST['redirect']) && ($_REQUEST['redirect'] == 'yes'))
