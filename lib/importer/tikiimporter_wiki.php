@@ -8,11 +8,13 @@
  * @package tikiimporter
  */
 
+require_once('tikiimporter.php');
+
 /**
  * Abstract class to provide basic functionalities to wiki importers.
  * Based on the work done on http://dev.tikiwiki.org/MediaWiki+to+TikiWiki+converter
  * 
- * Child classes must implement the functions validateInput(), parseData() and the variable inputData
+ * Child classes must implement the functions validateInput(), parseData()
  *
  * @package    tikiimporter
  */
@@ -40,7 +42,7 @@ class TikiImporter_Wiki extends TikiImporter
      *  
      * @return void
      */
-    public function import()
+    function import()
     {
         // how many revisions to import for each page
         if (!empty($_POST['wikiRevisions']) && $_POST['wikiRevisions'] > 0)
@@ -56,19 +58,24 @@ class TikiImporter_Wiki extends TikiImporter
         
         // child classes must implement those two methods
         $this->validateInput();
-        $this->parseData();
-        $this->insertData();        
+        $parsedData = $this->parseData();
+
+        $this->insertData($parsedData);
    }
 
     /**
-     * Insert the imported data into Tiki
+     * Insert the imported data into Tiki.
+     * 
+     * @param array $parsedData the return of $this->parseData()
      *
      * @return void
      */
-    protected function insertData()
+    function insertData($parsedData)
     {
-        foreach ($this->inputData as $page) {
-            $this->insertPage($page);
+        if (!empty($parsedData)) {
+            foreach ($parsedData as $page) {
+                $this->insertPage($page);
+            }
         }
     }
 
@@ -79,7 +86,7 @@ class TikiImporter_Wiki extends TikiImporter
      * and insert the information on Tiki using Tiki bultin functions.
      *
      * This method might be used by wiki importers to insert the pages in Tiki database.
-     * In order to do so $data must contain the following keys:
+     * In order to do so $page must contain the following keys:
      * - name: the name of the page
      * - revisions: an array of arrays with all the page revisions. Each revision array must contain the keys:
      *     - data: the page content (in Tiki with sintax, parsing must be done before calling this function)
@@ -92,41 +99,41 @@ class TikiImporter_Wiki extends TikiImporter
      * It also control the number of revisions to import ($this->revisionsNumber) and what to do if
      * the page name already exist ($this->alreadyExistentPageName) based on parameters passed by POST
      * 
-     * @param array $data
+     * @param array $page
      * @return void
      */
-    protected function insertPage($data)
+    function insertPage($page)
     {
         global $tikilib;
 
         // remove revisions that are not going to be imported
         if ($this->revisionsNumber > 0)
-            $data['revisions'] = array_slice($data['revisions'], -$this->revisionsNumber);
+            $page['revisions'] = array_slice($page['revisions'], -$this->revisionsNumber);
         
-        if ($tikilib->page_exists($data['name'])) {
+        if ($tikilib->page_exists($page['name'])) {
             switch ($this->alreadyExistentPageName) {
                 case 'override':
-                    $tikilib->remove_all_versions($data['name']);
+                    $tikilib->remove_all_versions($page['name']);
                     break;
                 case 'appendPrefix':
-                    $data['name'] = $this->softwareName . '_' . $data['name'];
+                    $page['name'] = $this->softwareName . '_' . $page['name'];
                     break;
                 default:
                     // $this->alreadyExistentPageName equal to 'doNotImport' or equal to invalid value 
-                    print "Page already exists, no action taken: {$data['name']}\n";
+                    print "Page already exists, no action taken: {$page['name']}\n";
                     return;
             }
         }
         
         $first = true;
-        foreach ($data['revisions'] as $rev) {
+        foreach ($page['revisions'] as $rev) {
             if ($first) {
                 // Invalidate cache
-                $tikilib->create_page($data['name'], 0, $rev['data'], $rev['lastModif'],
+                $tikilib->create_page($page['name'], 0, $rev['data'], $rev['lastModif'],
                     $rev['comment'], $rev['user'], $rev['ip']);
             } else {
                 $tikilib->cache_page_info = null;
-                $tikilib->update_page($data['name'], $rev['data'], $rev['comment'], $rev['user'],
+                $tikilib->update_page($page['name'], $rev['data'], $rev['comment'], $rev['user'],
                     $rev['ip'], '', $rev['minor'], '', false, null, $rev['lastModif']);
             }
 
