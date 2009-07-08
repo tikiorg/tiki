@@ -26,7 +26,6 @@ include_once 'lib/categories/categlib.php';
 class wslib extends CategLib 
 {
     private $ws_container;
-
     private $objectType;
 
 	function __construct()
@@ -137,18 +136,40 @@ class wslib extends CategLib
 		$query = "select `groupName` from `users_objectpermissions` where 
 		`objectId`=? and `permName`='tiki_p_ws_view'";
 		$bindvars = array($hashWS);
+		$result = $this->query($query,$bindvars);
 		
-		return $this->query($query,$bindvars);    	
+		while ($ret = $result->fetchRow())
+			$listWSGroups[] = $ret;
+		return $listWSGroups;
     	}
     	
     // List all WS that a group have access
 	function list_ws_that_can_be_accessed_by_group ($groupName)
 	{	
-		$query = "select `objectId` from `users_objectpermissions` where 
-		`groupName`=? and `permName`='tiki_p_ws_view'";
+		$query = "select `objectId` from `users_objectpermissions` where (`groupName`=? and `permName`='tiki_p_ws_view') ";
 		$bindvars = array($groupName);
+		$result = $this->query($query,$bindvars);
 		
-		return $this->query($query,$bindvars); 	
+		while ($res = $result->fetchRow())
+			$groupWS[] = $res["objectId"];
+		
+		$idws = $this->ws_container;
+		$query = "select * from `tiki_categories` where `parentId`= $idws";
+		$bindvars = array();
+		$listWS = $this->query($query,$bindvars);
+		
+		while ($res = $listWS->fetchRow()) 
+		{
+			$ws_id = $res["categId"];
+			$hashWS = md5($this->objectType . strtolower($ws_id));
+			
+			if (in_array($hashWS,$groupWS))
+			{
+				$workspaceID = $res["categId"];
+				$listGroupWS["$workspaceID"] = $res;
+			}
+		}
+		return $listGroupWS;
 	}
 	
 	function list_all_ws($offset, $maxRecords, $sort_mode = 'name_asc', $find, $type, $objid)
@@ -199,17 +220,13 @@ class wslib extends CategLib
 				$res['has_perm'] = 'n';
 			$ret["$categpathforsort"] = $res;
 		}
+		echo ("\n<br>");
 
 		ksort($ret);
 		
 		$retval = array();
 		$retval["data"] = array_values($ret);
 		$retval["cant"] = $cant;
-		
-		
-		$query = "select * from `tiki_categories` where `parentId`= ?";
-		$bindvars = array($idws);
-		return $this->query($query,$bindvars);
 		
 		return $retval;
 	}

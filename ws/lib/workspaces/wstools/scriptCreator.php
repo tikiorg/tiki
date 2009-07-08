@@ -76,7 +76,7 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'create'))
 		$id5 = $wslib->add_ws('WS22',$id2,'G2',array('tiki_p_ws_adminws'));
 	
 	// Giving access to G2 in WS3
-	$wslib->set_permissions_for_group_in_ws($id3,'G1',array('tiki_p_ws_view','tiki_p_ws_addresource'));
+	$wslib->set_permissions_for_group_in_ws($id3,'G2',array('tiki_p_ws_view','tiki_p_ws_addresource'));
 	
 	//Adding Resources in WS
 	$wslib->add_ws_object($id1,'Wiki1','wiki_page');
@@ -106,15 +106,28 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'destroy'))
 
 if ( isset($_REQUEST['action'])  &&  ($_REQUEST['action'] == 'test'))
 {
-	$listWS = $wslib->list_all_ws(-1,-1,'name_asc',null,'','');
-	var_dump($listWS);/*
+	$listWS = $wslib->list_all_ws(-1,-1,'name_asc',null,'wiki page','Wiki1');
+	echo ("\n<br>");
 	foreach ($listWS["data"] as $key)
 	{
 		echo ($key["categId"]);
 		echo ("	");
 		echo ($key["name"]);
 		echo ("\n<br>");
-	}*/
+	}/*
+	$wslib->list_ws_that_can_be_accessed_by_group ('G1') ;
+	echo ("\n<br>");
+	var_dump($wslib->get_ws_id ('WS3',1));
+	*/
+	echo ("\n<br>");
+	echo ("\n<br>");
+	echo ("\n<br>");
+	var_dump($listGroupWS = $wslib->list_ws_that_can_be_accessed_by_group ('G2'));
+	echo ("\n<br>");
+	echo ("\n<br>");
+	$id = $wslib->get_ws_id('WS3',$wsContainerId);
+	var_dump($listWSGroups = $wslib->list_groups_that_can_access_in_ws($id));
+
 }
 
 if (isset($_REQUEST['redirect']) && ($_REQUEST['redirect'] == 'yes'))
