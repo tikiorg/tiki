@@ -172,6 +172,25 @@ class wslib extends CategLib
 		return $listGroupWS;
 	}
 	
+    // List the WS that a user have access
+	function	list_ws_that_user_have_access ($user)
+	{
+		require_once('lib/userslib.php');
+		global $userlib;
+		
+		$ws = array();
+		
+		$groups = $userlib->get_user_groups($user);
+		foreach ($groups as $groupName)
+		{
+			$groupWS =  $this->list_ws_that_can_be_accessed_by_group ($groupName);
+			foreach ($groupWS as $wsres)
+				if (!in_array($wsres,$ws))
+					$ws[] = $wsres;
+		}
+		return $ws;
+	}
+	
 	function list_all_ws($offset, $maxRecords, $sort_mode = 'name_asc', $find, $type, $objid)
 	{
 		$cats = $this->get_object_categories($type, $objid);

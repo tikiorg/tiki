@@ -127,6 +127,9 @@ if ( isset($_REQUEST['action'])  &&  ($_REQUEST['action'] == 'test'))
 	echo ("\n<br>");
 	$id = $wslib->get_ws_id('WS3',$wsContainerId);
 	var_dump($listWSGroups = $wslib->list_groups_that_can_access_in_ws($id));
+	echo ("\n<br>");
+	echo ("\n<br>");
+	var_dump($wslib->list_ws_that_user_have_access('Ben'));
 
 }
 
