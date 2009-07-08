@@ -52,21 +52,12 @@ class CategLib extends ObjectLib {
 			$bindvals=array($findesc,$findesc);
 			$mid = " where (`name` like ? or `description` like ?)";
 		} else {
-      $bindvals=array();
+			$bindvals=array();
 			$mid = "";
 		}
-		
-		//For excluding ws
 		global $prefs;
-		if ($idws = $prefs['ws_container'] )
-			if ($find)
-				$exclude = "and not (`categId`=$idws or `parentId`=$idws)";
-			else
-				$exclude = "where not (`categId`=$idws or `parentId`=$idws)";
-		else
-			$exclude = "";
-		
-
+		$exlude = $this->exclude_categs ($prefs['ws_container'], $find);
+				
 		$query = "select * from `tiki_categories` $mid $exclude order by ".$this->convert_sortmode($sort_mode);
 		$query_cant = "select count(*) from `tiki_categories` $mid ";
 		$result = $this->query($query,$bindvals,$maxRecords,$offset);
@@ -106,6 +97,20 @@ class CategLib extends ObjectLib {
 		$retval["data"] = array_values($ret);
 		$retval["cant"] = $cant;
 		return $retval;
+	}
+
+	function exclude_categs ($excludeCategId, $find)
+	{
+	    if ($excludeCategId)
+	    {
+		if ($find)
+		    $exclude = "and not (`categId`=$excludeCategId or `parentId`=$excludeCategId)";
+		else
+		    $exclude = "where not (`categId`=$excludeCategId or `parentId`=$excludeCategId)";
+	    }
+	    else
+		$exclude = "";
+	    return $exclude;
 	}
 
 	function get_category_path_string($categId) {
@@ -354,6 +359,7 @@ class CategLib extends ObjectLib {
 			 'image' => 'tiki_p_view_image_gallery',
 			 'calendar' => 'tiki_p_view_calendar',
 			 'file' => 'tiki_p_download_files',
+			 'workspaces' => 'tiki_p_ws_view',
 			 
 			 // newsletters can't be categorized, although there's some code in tiki-admin_newsletters.php
 			 // 'newsletter' => ?,

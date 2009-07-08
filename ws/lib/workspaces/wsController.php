@@ -40,7 +40,6 @@ class ws_gui_controller
     public function list_ws_resources()
     {
 	global $wslib, $smarty;
-	
 	$catree = $wslib->list_all_ws(0,-1, 'name_asc','','',0);
 	$smarty->assign('catree', $catree);
     }

@@ -10,27 +10,41 @@
 require_once '../../../tiki-setup.php';
 require_once 'lib/workspaces/wslib.php';
 
-$testQuantity = 2000;
+$testQuantity = 1000;
 
 echo "<h2>--- Unit Test of Workspaces ---</h2>";
 echo "testQuantity = $testQuantity";
+
+echo <<<END
+<form action="unitesting.php" method="post">
+<input type="submit" name="Reload Test" value="Reload Test" />
+</form>
+END;
 
 echo "<h3>--- Adding WS using ws_add ---</h3>";
 
 global $prefs;
 $ws_container = $prefs['ws_container'];
+$wsnames = array();
 
-echo "<ul>";
-
-for ($i=0; $i<$testQuantity;$i++)
+for ($i=0; $i<$testQuantity; $i++)
 {
-    $hashtime = (string) time();
-    $group = (string) (time()+time());
-    $hash = md5($hashtime);
-    $hashgroup = md5($group);
-    $wslib->add_ws($hash, $ws_container, $hashgroup);
-    echo "<li>$i - $hash - $ws_container - $hashgroup</li>";
+    $time = (string) time();
+    $hashtime = md5($hashtime);
+    $wslib->add_ws($hashtime, $ws_container, $hashtime);
+    $wsnames[$i] = $hashtime;
 }
 
-echo "</ul>";
+$wslib->add_ws("workspace1", $ws_container, "biologia");
+$wslib->add_ws("workspace2", $ws_container, "biologia");
 
+echo "Done";
+
+echo "<h3>--- Gettin some WS using get_ws_id ---</h3>";
+
+echo "<ul>";
+for ($i=0; $i<$testQuantity; $i++)
+{
+    echo "<li>".$wslib->get_ws_id($wsnames[$i], (int) $ws_container)."</li>";
+}
+echo "</ul>";
