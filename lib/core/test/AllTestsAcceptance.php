@@ -59,6 +59,9 @@ function loadTikiLibraries() {
 	global $wikilib, $dbTiki, $smarty, $tikilib, $multilinguallib;
 	require_once('tiki-setup.php');
 	include_once('lib/wiki/wikilib.php');
+	include_once('lib/multilingual/multilinguallib.php');
+//	print "-- AllTestsAcceptance: \$multilinguallib="; var_dump($multilinguallib); print "\n";
+
 
 	/*
  	 * Need to reset error reporting because it is changed by 

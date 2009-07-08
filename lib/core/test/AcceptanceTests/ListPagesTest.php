@@ -5,6 +5,10 @@ require_once 'PHPUnit/Extensions/SeleniumTestCase.php';
 
 class  AcceptanceTests_ListPagesTest extends TikiSeleniumTestCase
 {
+
+	public function ___testRememberToReactivateTestsIn_AcceptanceTests_ListPagesTest() {
+		$this->fail("don't forget!!");
+	}
 	
     public function testListPagesTableIsWellFormed() {
         $this->openTikiPage('tiki-listpages.php');
@@ -56,7 +60,7 @@ class  AcceptanceTests_ListPagesTest extends TikiSeleniumTestCase
 
     protected function setUp()
     {
-        $this->setBrowserUrl('http://localhost/');
+    	$this->setBrowserUrl('http://localhost/');
         $this->current_test_db = "listPagesTestDump.sql";
         $this->restoreDBforThisTest();         
     }
