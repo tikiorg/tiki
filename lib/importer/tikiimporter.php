@@ -16,7 +16,7 @@
 /**
  * TikiImporter is a generic class that should be extended
  * by any importer class. Each importer class must implement
- * the methods validateInput() and import()
+ * the methods validateInput(), parseData() and import()
  * 
  */
 class TikiImporter
@@ -47,7 +47,14 @@ class TikiImporter
      * @var array
      */
     protected $inputData;
-    
+
+    /**
+     * Abstract method to start the import process and
+     * call all other functions for each step of the importation
+     * (validateInput(), parseData(), insertData())
+     */
+    public function import() {}
+
     /**
      * Abstract method to validate the input import data
      * 

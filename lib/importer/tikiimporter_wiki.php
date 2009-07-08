@@ -57,12 +57,21 @@ class TikiImporter_Wiki extends TikiImporter
         // child classes must implement those two methods
         $this->validateInput();
         $this->parseData();
-        
+        $this->insertData();        
+   }
+
+    /**
+     * Insert the imported data into Tiki
+     *
+     * @return void
+     */
+    protected function insertData()
+    {
         foreach ($this->inputData as $page) {
-            $this->importPage($page);
+            $this->insertPage($page);
         }
     }
-    
+
     /**
      * Create a new page or new page revision using Tiki bultin functions
      * 

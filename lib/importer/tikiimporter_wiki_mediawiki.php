@@ -63,7 +63,7 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
      * 
      * Note: the names of the keys are changed to reflected the names used by
      * Tiki builtin function (i.e. 'title' is changed to 'name' as it is used of 
-     * TikiLib::create_page() which will be called by TikiImporter_Wiki::importPage())
+     * TikiLib::create_page() which will be called by TikiImporter_Wiki::insertPage())
      * 
      * @param DOMElement $page
      * @return unknown_type
