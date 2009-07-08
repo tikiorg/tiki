@@ -36,10 +36,8 @@ if ($prefs['feature_ajax'] == 'y') {
 }
 
 global $webmaillib, $trklib, $headerlib, $user, $webmail_reload, $webmail_start, $smarty, $dbTiki;
-if (!isset($webmaillib)) { include_once ('lib/webmail/webmaillib.php'); }
-require_once ('lib/webmail/net_pop3.php');
-include_once ('lib/webmail/tikimaillib.php');
-if (!isset($trklib)) { include_once('lib/trackers/trackerlib.php'); }
+include_once ('lib/webmail/webmaillib.php');
+include_once('lib/trackers/trackerlib.php');
 
 
 // get autoRefresh val from account so it can go into the page JS
@@ -47,7 +45,6 @@ if (isset($module_params['accountid'])) {
 	$webmail_account = $webmaillib->get_webmail_account($user, $module_params['accountid']);
 } else {
 	$webmail_account = $webmaillib->get_current_webmail_account($user);
-	//$_SESSION['webmailinbox'][$module_params['module_id']]['module_params']['accountid'] = $webmail_account['accountId'];
 }
 
 if ($webmail_account && $webmail_account['autoRefresh'] > 0) {

@@ -8,7 +8,6 @@ class  AcceptanceTests_SearchTest extends TikiSeleniumTestCase
 
     protected function setUp()
     {
-		$this->setBrowser('*firefox C:\Program Files\Mozilla Firefox\firefox.exe');
         $this->setBrowserUrl('http://localhost/');
         $this->current_test_db = "searchTestDump.sql";
         $this->restoreDBforThisTest();

@@ -3105,6 +3105,7 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_notifications', 'Can admin mail notifications', 'editors', 'mail notifications');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_invite', 'Can invite user in groups', 'editors', 'tiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_delete_account', 'Can delete his own account', 'admin', 'tiki');
 
 UPDATE users_permissions SET feature_check = 'feature_wiki' WHERE permName IN(
 	'tiki_p_admin_wiki',

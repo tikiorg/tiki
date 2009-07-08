@@ -154,19 +154,20 @@ class wslib extends CategLib
 	function list_all_ws($offset, $maxRecords, $sort_mode = 'name_asc', $find, $type, $objid)
 	{
 		$cats = $this->get_object_categories($type, $objid);
-
+		$idws = $this->ws_container;
+		
 		if ($this->ws_container)
-		if ($find)
-		{
-			$findesc = '%' . $find . '%';
-			$bindvals=array($findesc);
-			$mid = " where `name` like ? and `parentId`=$idws";
-		}
-		else 
-		{
-      			$bindvals=array();
-			$mid = "where `parentId`=$idws";
-		}
+			if ($find)
+			{
+				$findesc = '%' . $find . '%';
+				$bindvals=array($findesc);
+				$mid = " where `name` like ? and `parentId`=$idws";
+			}
+			else 
+			{
+      				$bindvals=array();
+				$mid = "where `parentId`=$idws";
+			}
 		
 		$query = "select * from `tiki_categories` $mid";// order by ".$this->convert_sortmode($sort_mode);
 		$query_cant = "select count(*) from `tiki_categories` $mid ";
@@ -204,10 +205,16 @@ class wslib extends CategLib
 		$retval = array();
 		$retval["data"] = array_values($ret);
 		$retval["cant"] = $cant;
+		
+		
+		$query = "select * from `tiki_categories` where `parentId`= ?";
+		$bindvars = array($idws);
+		return $this->query($query,$bindvars);
+		
 		return $retval;
 	}
 	
-
+	
 }
 
 $wslib = new wslib();

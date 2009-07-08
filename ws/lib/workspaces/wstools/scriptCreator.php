@@ -106,7 +106,15 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'destroy'))
 
 if ( isset($_REQUEST['action'])  &&  ($_REQUEST['action'] == 'test'))
 {
-
+	$listWS = $wslib->list_all_ws(-1,-1,'name_asc',null,'','');
+	var_dump($listWS);/*
+	foreach ($listWS["data"] as $key)
+	{
+		echo ($key["categId"]);
+		echo ("	");
+		echo ($key["name"]);
+		echo ("\n<br>");
+	}*/
 }
 
 if (isset($_REQUEST['redirect']) && ($_REQUEST['redirect'] == 'yes'))

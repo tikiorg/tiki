@@ -246,6 +246,7 @@ function wikiplugin_tracker($data, $params) {
 		$trklib->replace_item($_REQUEST['trackerId'], $_REQUEST['itemId'], $img_field);
 	}
 	$back = '';
+	$js = '';
 
 	$thisIsThePlugin = isset($_REQUEST['trackit']) && $_REQUEST['trackit'] == $trackerId && ((isset($_REQUEST['fields']) && isset($params['fields']) && $_REQUEST['fields'] == $params['fields']) || (!isset($_REQUEST['fields']) && !isset($params['fields'])));
 
@@ -748,6 +749,8 @@ function wikiplugin_tracker($data, $params) {
 						$flds['data'][$refFieldId]['http_request'][6] .=
 							($flds['data'][$refFieldId]['http_request'][6] ? "," : "") .
 							$f['isMandatory'];
+						$flds['data'][$refFieldId]['http_request'][7] .= $flds['data'][$refFieldId]['value'];
+						$flds['data'][$refFieldId]['http_request'][8] .= ($flds['data'][$refFieldId]['http_request'][8] ? "," : "") . $f['value'];
 					}
 				}
 			}
@@ -817,6 +820,9 @@ function wikiplugin_tracker($data, $params) {
 						$back.= "</th></tr>";						
 						}
 					}
+					if (!empty($f['http_request']) && !empty($itemId)) {
+						$js .= 'selectValues("trackerIdList='.$f['http_request'][0].'&fieldlist='.$f['http_request'][3].'&filterfield='.$f['http_request'][1].'&status='.$f['http_request'][4].'&mandatory='.$f['http_request'][6].'&filtervalue='.$f['http_request'][7].'&selected='.$f['http_request'][8].'","'.$f['http_request'][5].'");';
+					}
 				}
 			}
 			if (!empty($tpl)) {
@@ -846,6 +852,9 @@ function wikiplugin_tracker($data, $params) {
 				$back .= '</div>';
 			}
 			$back.= '</form>';
+			if (!empty($js)) {
+				$back .= '<script type="text/javascript">'.$js.'</script>';
+			}
 			if (!empty($page))
 				$back .= '~/np~';
 			$smarty->assign_by_ref('tiki_p_admin_trackers', $tiki_p_admin_trackers);
