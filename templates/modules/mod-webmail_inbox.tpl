@@ -80,7 +80,7 @@
 					{/if}
 					{if $sender.contactId gt 0}
 						{self_link _script='tiki-contacts.php' contactId=$sender.contactId _class="mod_webmail_from"}{$sender.email|truncate:17:"...":true}{/self_link}
-						<div style="float: right;">{self_link _script='tiki-contacts.php' contactId=$sender.contactId _icon='user_gray'}{tr}View contact{/tr}{/self_link}</div>
+						<div style="float: right;">{self_link _script='tiki-contacts.php' contactId=$sender.contactId _icon='user_gray' _width=12 _height=12}{tr}View contact{/tr}{/self_link}</div>
 					{else}
 						<span class="mod_webmail_from">{$sender.email|truncate:20:"...":true}</span>
 					{/if}
@@ -96,7 +96,12 @@
 				{/if}
 			</div>
 		{sectionelse}
-			<p>{tr}No mail found.{/tr}</p>
+			{section name=foo loop=10}{* dummy loop to keep module height (approx) *}
+				<div class="webmail_item_empty">
+					&nbsp;<br />
+					&nbsp;<br />
+				</div>
+			{/section}
 		{/section}
 	</div>
 </form>

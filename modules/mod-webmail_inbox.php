@@ -17,8 +17,8 @@ if ($prefs['feature_webmail'] != 'y') {
 	$smarty->assign('error', 'This feature is disabled');
 	return;
 }
-global $tiki_p_use_webmail;
-if ($tiki_p_use_webmail != 'y') {
+global $tiki_p_use_webmail, $tiki_p_use_group_webmail;
+if ($tiki_p_use_webmail != 'y' && $tiki_p_use_group_webmail != 'y') {
 	$smarty->assign('tpl_module_title', tra('Webmail error'));
 	$smarty->assign('error', 'Permission denied to use this feature');
 	return;
@@ -35,9 +35,8 @@ if ($prefs['feature_ajax'] == 'y') {
 	return;
 }
 
-global $webmaillib, $trklib, $headerlib, $user, $webmail_reload, $webmail_start, $smarty, $dbTiki;
+global $webmaillib, $headerlib, $user, $webmail_reload, $webmail_start;
 include_once ('lib/webmail/webmaillib.php');
-include_once('lib/trackers/trackerlib.php');
 
 
 // get autoRefresh val from account so it can go into the page JS
@@ -58,7 +57,9 @@ global $webmail_list_page;
 
 if (!function_exists('webmail_refresh')) {
 function webmail_refresh() {	// called in ajax mode
-	global $webmaillib, $user, $smarty, $webmail_list_page, $webmail_account, $webmail_reload, $webmail_start, $module_params, $trklib;
+	global $webmaillib, $user, $smarty, $webmail_list_page, $webmail_account, $webmail_reload, $webmail_start, $module_params, $trklib, $contactlib;
+	include_once('lib/trackers/trackerlib.php');
+	include_once ('lib/webmail/contactlib.php');
 	
 	$accountid = isset($module_params['accountid']) ? $module_params['accountid'] : 0;
 	$webmail_account = $webmaillib->get_webmail_account($user, $accountid);
@@ -87,7 +88,7 @@ function webmail_refresh() {	// called in ajax mode
 
 	$upperlimit = $webmail_start;
 	$smarty->assign('start', $webmail_start);
-	$numshow = $webmail_account['msgs'];
+	$numshow = isset($module_params['rows']) ? $module_params['rows'] : $webmail_account['msgs'];
 	
 	$webmail_list_page = Array();
 	
@@ -104,6 +105,9 @@ function webmail_refresh() {	// called in ajax mode
 			$a_mail['operator'] = '';
 		}
 		
+		// check if sender is in contacts
+		$a_mail['sender']['contactId'] = $contactlib->get_contactId_email($a_mail['sender']['email'], $user);
+				
 		$webmail_list_page[] = $a_mail;
 	}
 	
