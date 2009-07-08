@@ -56,5 +56,9 @@ $sql = "SELECT `id`, `name` from `people` "
 class a {
 	//content
 }
+
+// global - for ease grep
+global $statslib; include_once ('lib/stats/statslib.php');
+
 // closing tag
 ?>
