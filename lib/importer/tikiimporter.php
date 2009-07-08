@@ -71,7 +71,7 @@ class TikiImporter
      * Must be implemented by classes
      * that extends this one. 
      */
-    public function import() {}
+    public function insertData() {}
     
     /**
      * Return a $importOptions array with the result of the concatenation of the $importOptions

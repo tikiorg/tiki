@@ -86,7 +86,7 @@ class TikiImporter_Wiki extends TikiImporter
      * @param array $data
      * @return void
      */
-    protected function importPage($data)
+    protected function insertPage($data)
     {
         global $tikilib;
 
