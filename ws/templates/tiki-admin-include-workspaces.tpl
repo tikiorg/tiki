@@ -29,10 +29,34 @@ href="http://dev.tikiwiki.org/workspace">{tr}Workspaces wiki page{/tr}</a>.
 <ul>
 <li>Status: {if $prefs.feature_workspaces eq 'y'} <strong>Workspaces are enabled</strong> {else}<strong>Workspaces are disabled</strong>{/if}</li>
 <li>Workspaces Container Id: {$prefs.ws_container}</li>
-<li>Workspaces Container Name: {$prefs.ws_container_name}</li>
 </ul>
 </div>
 </fieldset>
+
+<fieldset><legend>Create a WS</legend>
+<div class="adminoptionbox">
+
+<label for="wsname">Workspace Name: </label><input type="text" name="wsname" />
+
+<br /><br />
+
+<input type="radio" name="groupelection" id="selectgroup" checked="checked" /><label for="selectgroup">Select an group to add to the workspace:</label>
+<select name="selgroup">
+{foreach from=$groups.data key=k item=v }
+<option value="{$groups.data.$k.id}">{$groups.data.$k.groupName}</option>
+{/foreach}
+</select>
+<br /><br />
+<input type="radio" name="groupelection" id="creategroup" /><label for="creategroup">Create a new group to add to the workspace:</label><input type="text" name="groupname" />
+<br /><br />
+<input type="checkbox" name="resourceforws" id="resource" checked="checked" disabled="disabled" /><label for="resource">Create a wiki page inside this workspace</label>
+
+</div>
+<div class="adminoptionbox">
+	<div class="adminoptionlabel"><div align="center"><input type="submit" name="wscreate" value="{tr}Create{/tr}"/></div></div>
+</div>
+</fieldset>
+
 <fieldset><legend>{tr}Inspector{/tr}</legend>
 <div class="adminoptionbox">
 {if $catree}

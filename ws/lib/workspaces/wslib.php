@@ -58,8 +58,10 @@ class wslib extends CategLib
     {
 	global $userlib; require_once 'lib/userslib.php';
 
+	if (!$wsName)
+	    $wsName = $this->get_ws_name($idWS, $this->ws_container);
+
 	$groupName = ((string) $idWS)."::".$wsName."::".$nameGroup; //With this you can create two groups with same name in different ws
-	var_dump($groupName);
 
 	if ($userlib->add_group($groupName)) 
 	{
@@ -76,7 +78,7 @@ class wslib extends CategLib
 	    return false;
     }
 	
-    // Remove a WS
+    // Remove a WS -For now, not very useful, we need to create it again!-
     public function remove_ws ($ws_id)
     {
 	$newParent = parent::get_category_description($ws_id);
@@ -117,10 +119,10 @@ class wslib extends CategLib
 	}
 
 	//Get a WS name by its id
-	public function get_ws_name($id, $parentWS)
+	public function get_ws_name($wsid, $parentWS)
 	{
 	    $query = "select `categId` from `tiki_categories` where `categId`=? and `parentId`=?";
-	    $bindvars = array($id, $parentWS, $this->ws_container);
+	    $bindvars = array($wsid, $parentWS, $this->ws_container);
 	    return $this->getOne($query, $bindvars);
 	}
 
