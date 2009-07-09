@@ -10,7 +10,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 function smarty_function_breadcrumbs($params, &$smarty)
 {
     extract($params);
-
+	
     if (empty($crumbs)) {
         $smarty->trigger_error("assign: missing 'crumbs' parameter");
         return;
@@ -19,19 +19,27 @@ function smarty_function_breadcrumbs($params, &$smarty)
         $smarty->trigger_error("assign: missing 'loc' parameter");
         return;
     }
+    $text_to_display = '';
     switch ($type) {
         case 'fulltrail':
-            print(breadcrumb_buildHeadTitle($crumbs));
+			$text_to_display = breadcrumb_buildHeadTitle($crumbs);
             break;
         case 'pagetitle':
-            print(breadcrumb_getTitle($crumbs, $loc));
+			$text_to_display = breadcrumb_getTitle($crumbs, $loc);
             break;
         case 'desc':
-            print(breadcrumb_getDescription($crumbs, $loc));
+			$text_to_display = breadcrumb_getDescription($crumbs, $loc);
             break;
         case 'trail':
         default:
-            print(breadcrumb_buildTrail($crumbs,$loc));
+			$text_to_display = breadcrumb_buildTrail($crumbs,$loc);
             break;
     }
+    if(!empty($machine_translate)) {
+    	require_once('lib/core/lib/Multilingual/MachineTranslation/GoogleTranslateWrapper.php');
+		$translator = new Multilingual_MachineTranslation_GoogleTranslateWrapper($source_lang,$target_lang);
+		$text_to_display = $translator->translateText($text_to_display);	
+    }
+    print($text_to_display);
+    
 }
