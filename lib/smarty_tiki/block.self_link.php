@@ -106,7 +106,9 @@ function smarty_block_self_link($params, $content, &$smarty, $repeat = false) {
 							$smarty,
 							false
 							);
-							unset($params['_onclick']);
+					if ($prefs['feature_ajax'] == 'y') {
+						unset($params['_onclick']);
+					}
 				} else {
 					$ret = 'href="'.$ret.'"';
 				}
