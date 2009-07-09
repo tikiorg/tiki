@@ -5,6 +5,9 @@ require_once('../../../tiki-setup.php');
  NOTE: before you run this you should create 5 wiki pages with the names "Wiki1",
  "Wiki2", "Wiki3", "Wiki4" and "Wiki5", and two groups called "G1" and "G2" (This can be
  done if the script is called by ".../lib/workspaces/wstools/scriptCreator.php?action=init).
+ By the way it's necessary to create a user with the name of 'Ben' and include him in 
+ the groups G1 and G2. The next thing to do is to give to Wiki2 or Wiki3 the 
+ tiki_p_view for group G1 or G2. 
  
  To create sample WS and assign sample groups and wiki pages to WS:
  .../lib/workspaces/wstools/scriptCreator.php?action=create
@@ -107,29 +110,82 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'destroy'))
 if ( isset($_REQUEST['action'])  &&  ($_REQUEST['action'] == 'test'))
 {
 	$listWS = $wslib->list_all_ws(-1,-1,'name_asc',null,'wiki page','Wiki1');
+	echo ("List all WS stored in Tiki");
 	echo ("\n<br>");
 	foreach ($listWS["data"] as $key)
 	{
 		echo ($key["categId"]);
-		echo ("	");
+		echo ("		");
 		echo ($key["name"]);
 		echo ("\n<br>");
-	}/*
-	$wslib->list_ws_that_can_be_accessed_by_group ('G1') ;
+	}
+		
 	echo ("\n<br>");
-	var_dump($wslib->get_ws_id ('WS3',1));
-	*/
-	echo ("\n<br>");
-	echo ("\n<br>");
-	echo ("\n<br>");
-	var_dump($listGroupWS = $wslib->list_ws_that_can_be_accessed_by_group ('G2'));
-	echo ("\n<br>");
+	echo ("List all groups that have access to WS3");
 	echo ("\n<br>");
 	$id = $wslib->get_ws_id('WS3',$wsContainerId);
-	var_dump($listWSGroups = $wslib->list_groups_that_can_access_in_ws($id));
+	$listWSGroups = $wslib->list_groups_that_can_access_in_ws($id);
+	foreach ($listWSGroups as $key)
+	{
+		echo ($key["groupName"]);
+		echo ("\n<br>");
+	}
+	
 	echo ("\n<br>");
+	echo ("List all WS that group G2 have access");
 	echo ("\n<br>");
-	var_dump($wslib->list_ws_that_user_have_access('Ben'));
+	$listGroupWS = $wslib->list_ws_that_can_be_accessed_by_group ('G2');
+	ksort($listGroupWS);
+	foreach ($listGroupWS as $key)
+	{
+		echo ($key["categId"]);
+		echo ("		");
+		echo ($key["name"]);
+		echo ("\n<br>");
+	}
+	
+	echo ("\n<br>");
+	echo ("List all WS that the cool user named Ben have access");
+	echo ("\n<br>");
+	$user = 'Ben';
+	$listUserWS = $wslib->list_ws_that_user_have_access($user);
+	ksort($listUserWS);
+	foreach ($listUserWS as $key)
+	{
+		echo ($key["categId"]);
+		echo ("		");
+		echo ($key["name"]);
+		echo ("\n<br>");
+	}
+	
+	echo ("\n<br>");
+	echo ("List all objects stored in WS3");
+	echo ("\n<br>");
+	$listWSObjects = $wslib->list_ws_objects($id);
+	foreach ($listWSObjects as $key)
+	{
+		echo ($key["objectId"]);
+		echo ("     ");
+		echo ($key["type"]);
+		echo ("     ");
+		echo ($key["itemId"]);
+		echo ("\n<br>");
+	}
+	
+	echo ("\n<br>");
+	echo ("List all objects that the cool user named Ben have access from WS3");
+	echo ("\n<br>");
+	$listWSObjectsUser = $wslib->list_ws_objects_for_user ($id,$user);
+	foreach ($listWSObjectsUser as $key)
+	{
+		echo ($key["objectId"]);
+		echo ("     ");
+		echo ($key["type"]);
+		echo ("     ");
+		echo ($key["itemId"]);
+		echo ("\n<br>");
+	}
+	echo ("\n<br>");
 }
 
 if (isset($_REQUEST['redirect']) && ($_REQUEST['redirect'] == 'yes'))
