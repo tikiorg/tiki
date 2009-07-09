@@ -1,56 +1,56 @@
 <?php
-// $Id: /cvsroot/tikiwiki/tiki/tiki-admin_menu_options.php,v 1.31.2.3 2007-11-27 14:53:11 sylvieg Exp $
-// Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+// (c) Copyright 2002-2009 by authors of the Tiki Wiki/CMS/Groupware Project
+// 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// Initialization
+// $Id: /cvsroot/tikiwiki/tiki/tiki-admin_menu_options.php,v 1.31.2.3 2007-11-27 14:53:11 sylvieg Exp $
 require_once ('tiki-setup.php');
 include_once ('lib/menubuilder/menulib.php');
 if ($tiki_p_admin != 'y' && $tiki_p_edit_menu_option != 'y') {
-    $smarty->assign('errortype', 401);
-    $smarty->assign('msg', tra("You do not have permission to use this feature"));
-    $smarty->display("error.tpl");
-    die;
+	$smarty->assign('errortype', 401);
+	$smarty->assign('msg', tra("You do not have permission to use this feature"));
+	$smarty->display("error.tpl");
+	die;
 }
 if (!isset($_REQUEST["menuId"])) {
-    $smarty->assign('msg', tra("No menu indicated"));
-    $smarty->display("error.tpl");
-    die;
+	$smarty->assign('msg', tra("No menu indicated"));
+	$smarty->display("error.tpl");
+	die;
 }
 $auto_query_args = array(
-    'offset',
-    'find',
-    'sort_mode',
-    'menuId',
-    'maxRecords'
+	'offset',
+	'find',
+	'sort_mode',
+	'menuId',
+	'maxRecords'
 );
 if (!empty($_REQUEST['import']) && !empty($_FILES['csvfile']['tmp_name'])) {
-    $menulib->import_menu_options();
+	$menulib->import_menu_options();
 }
 if (!empty($_REQUEST['export'])) {
-    $menulib->export_menu_options();
+	$menulib->export_menu_options();
 }
 $maxPos = $menulib->get_max_option($_REQUEST["menuId"]);
 $smarty->assign('menuId', $_REQUEST["menuId"]);
 $editable_menu_info = $tikilib->get_menu($_REQUEST["menuId"]);
 $smarty->assign('editable_menu_info', $editable_menu_info);
 if (!isset($_REQUEST["optionId"])) {
-    $_REQUEST["optionId"] = 0;
+	$_REQUEST["optionId"] = 0;
 }
 $smarty->assign('optionId', $_REQUEST["optionId"]);
 if ($_REQUEST["optionId"]) {
-    $info = $menulib->get_menu_option($_REQUEST["optionId"]);
+	$info = $menulib->get_menu_option($_REQUEST["optionId"]);
 } else {
-    $info = array();
-    $info["name"] = '';
-    $info["url"] = '';
-    $info["section"] = '';
-    $info["perm"] = '';
-    $info["groupname"] = '';
-    $info["userlevel"] = '';
-    $info["type"] = 'o';
-    $info["icon"] = '';
-    $info["position"] = $maxPos + 2;
+	$info = array();
+	$info["name"] = '';
+	$info["url"] = '';
+	$info["section"] = '';
+	$info["perm"] = '';
+	$info["groupname"] = '';
+	$info["userlevel"] = '';
+	$info["type"] = 'o';
+	$info["icon"] = '';
+	$info["position"] = $maxPos + 2;
 }
 $smarty->assign('name', $info["name"]);
 $smarty->assign('url', $info["url"]);
@@ -62,77 +62,77 @@ $smarty->assign('position', $info["position"]);
 $smarty->assign('groupname', $info["groupname"]);
 $smarty->assign('userlevel', $info["userlevel"]);
 if (isset($_REQUEST["remove"])) {
-    check_ticket('admin-menu-options');
-    $area = 'delmenuoption';
-    if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-        key_check($area);
-        $menulib->remove_menu_option($_REQUEST["remove"]);
-        $maxPos = $menulib->get_max_option($_REQUEST["menuId"]);
-        $smarty->assign('position', $maxPos + 1);
-        $smarty->clear_cache(null, "menu" . $_REQUEST["menuId"]);
-    } else {
-        key_get($area);
-    }
+	check_ticket('admin-menu-options');
+	$area = 'delmenuoption';
+	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+		key_check($area);
+		$menulib->remove_menu_option($_REQUEST["remove"]);
+		$maxPos = $menulib->get_max_option($_REQUEST["menuId"]);
+		$smarty->assign('position', $maxPos + 1);
+		$smarty->clear_cache(null, "menu" . $_REQUEST["menuId"]);
+	} else {
+		key_get($area);
+	}
 }
 if (isset($_REQUEST["up"])) {
-    check_ticket('admin-menu-options');
-    $res = $menulib->prev_pos($_REQUEST["up"]);
+	check_ticket('admin-menu-options');
+	$res = $menulib->prev_pos($_REQUEST["up"]);
 }
 if (isset($_REQUEST["down"])) {
-    check_ticket('admin-menu-options');
-    $area = 'downmenuoption';
-    $res = $menulib->next_pos($_REQUEST["down"]);
+	check_ticket('admin-menu-options');
+	$area = 'downmenuoption';
+	$res = $menulib->next_pos($_REQUEST["down"]);
 }
 if (isset($_REQUEST['delsel_x']) && isset($_REQUEST['checked'])) {
-    check_ticket('admin-menu-options');
-    foreach($_REQUEST['checked'] as $id) {
-        $menulib->remove_menu_option($id);
-    }
-    $maxPos = $menulib->get_max_option($_REQUEST['menuId']);
-    $smarty->assign('position', $maxPos + 1);
-    $smarty->clear_cache(null, 'menu' . $_REQUEST['menuId']);
+	check_ticket('admin-menu-options');
+	foreach($_REQUEST['checked'] as $id) {
+		$menulib->remove_menu_option($id);
+	}
+	$maxPos = $menulib->get_max_option($_REQUEST['menuId']);
+	$smarty->assign('position', $maxPos + 1);
+	$smarty->clear_cache(null, 'menu' . $_REQUEST['menuId']);
 }
 if (isset($_REQUEST["save"])) {
-    if (!isset($_REQUEST['groupname'])) $_REQUEST['groupname'] = '';
-    elseif (is_array($_REQUEST['groupname'])) $_REQUEST['groupname'] = implode(',', $_REQUEST['groupname']);
-    if (!isset($_REQUEST['level'])) $_REQUEST['level'] = 0;
-    include_once ('lib/modules/modlib.php');
-    check_ticket('admin-menu-options');
-    $menulib->replace_menu_option($_REQUEST["menuId"], $_REQUEST["optionId"], $_REQUEST["name"], $_REQUEST["url"], $_REQUEST["type"], $_REQUEST["position"], $_REQUEST["section"], $_REQUEST["perm"], $_REQUEST["groupname"], $_REQUEST['level'], $_REQUEST['icon']);
-    $modlib->clear_cache();
-    $smarty->clear_cache(null, "menu" . $_REQUEST["menuId"]);
-    $smarty->assign('position', $_REQUEST["position"] + 1);
-    $smarty->assign('name', '');
-    $smarty->assign('optionId', 0);
-    $smarty->assign('url', '');
-    $smarty->assign('section', '');
-    $smarty->assign('perm', '');
-    $smarty->assign('groupname', '');
-    $smarty->assign('userlevel', 0);
-    $smarty->assign('type', 'o');
-    $smarty->assign('icon', '');
+	if (!isset($_REQUEST['groupname'])) $_REQUEST['groupname'] = '';
+	elseif (is_array($_REQUEST['groupname'])) $_REQUEST['groupname'] = implode(',', $_REQUEST['groupname']);
+	if (!isset($_REQUEST['level'])) $_REQUEST['level'] = 0;
+	include_once ('lib/modules/modlib.php');
+	check_ticket('admin-menu-options');
+	$menulib->replace_menu_option($_REQUEST["menuId"], $_REQUEST["optionId"], $_REQUEST["name"], $_REQUEST["url"], $_REQUEST["type"], $_REQUEST["position"], $_REQUEST["section"], $_REQUEST["perm"], $_REQUEST["groupname"], $_REQUEST['level'], $_REQUEST['icon']);
+	$modlib->clear_cache();
+	$smarty->clear_cache(null, "menu" . $_REQUEST["menuId"]);
+	$smarty->assign('position', $_REQUEST["position"] + 1);
+	$smarty->assign('name', '');
+	$smarty->assign('optionId', 0);
+	$smarty->assign('url', '');
+	$smarty->assign('section', '');
+	$smarty->assign('perm', '');
+	$smarty->assign('groupname', '');
+	$smarty->assign('userlevel', 0);
+	$smarty->assign('type', 'o');
+	$smarty->assign('icon', '');
 }
 if (!isset($_REQUEST["sort_mode"])) {
-    $sort_mode = 'position_asc';
+	$sort_mode = 'position_asc';
 } else {
-    $sort_mode = $_REQUEST["sort_mode"];
+	$sort_mode = $_REQUEST["sort_mode"];
 }
 if (!isset($_REQUEST["offset"])) {
-    $offset = 0;
+	$offset = 0;
 } else {
-    $offset = $_REQUEST["offset"];
+	$offset = $_REQUEST["offset"];
 }
 $smarty->assign_by_ref('offset', $offset);
 if (isset($_REQUEST["find"])) {
-    $find = $_REQUEST["find"];
+	$find = $_REQUEST["find"];
 } else {
-    $find = '';
+	$find = '';
 }
 $smarty->assign('find', $find);
 if (isset($_REQUEST['maxRecords'])) {
-    $maxRecords = $_REQUEST['maxRecords'];
+	$maxRecords = $_REQUEST['maxRecords'];
 } else {
-    $maxRecords = $prefs['maxRecords'];
+	$maxRecords = $prefs['maxRecords'];
 }
 $smarty->assign_by_ref('maxRecords', $maxRecords);
 $smarty->assign_by_ref('sort_mode', $sort_mode);

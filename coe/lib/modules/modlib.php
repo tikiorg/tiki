@@ -187,9 +187,9 @@ class ModLib extends TikiLib {
 	 * @param user = the user
 	 */
 	function check_groups($module_info, $user, $user_groups) {
-		global $prefs;
+		global $prefs, $tiki_p_admin;
 		$pass = 'y';
-		if ($user != 'admin' && $prefs['modallgroups'] != 'y') {
+		if ($tiki_p_admin != 'y' && $prefs['modallgroups'] != 'y') {
 			if ($module_info['groups']) {
 				$module_groups = unserialize($module_info['groups']);
 			} else {

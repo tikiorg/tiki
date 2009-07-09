@@ -34,7 +34,7 @@ function wikiplugin_sort($data, $params) {
 
 	$sort = (isset($sort)) ? $sort : "asc";
 
-	$lines = explode("\n", $data); // separate lines into array
+	$lines = preg_split("/\n+/", $data, -1, PREG_SPLIT_NO_EMPTY); // separate lines into array
 	// $lines = array_filter( $lines, "chop" ); // remove \n  
 	srand ((float)microtime() * 1000000); // needed for shuffle;
 

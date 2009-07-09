@@ -569,4 +569,21 @@
   </form>
 	{/tab}
 {/if}
+
+{if $tiki_p_delete_account eq 'y'}
+{tab name="{tr}Account Deletion{/tr}"}
+<form action="tiki-user_preferences.php" method="post" onsubmit='return confirm("{tr}Are you really sure you want to delete your account ?{/tr}");'>
+ <table class="normal">
+  <tr>
+   <td class="{cycle advance=false}"></td>
+   <td class="{cycle}"><input type='checkbox' name='deleteaccountconfirm' value='1'> {tr}Check this box if you really want to delete your account{/tr}</td>
+  </tr>
+    <tr>
+      <td colspan="2"  class="input_submit_container"><input type="submit" name="deleteaccount" value="{tr}Delete my account{/tr}" /></td>
+    </tr>
+ </table>
+</form>
+{/tab}
+{/if}
+
 {/tabset}

@@ -8,7 +8,7 @@
 <div class="cbox">
 <form action="tiki-admin.php?page=gmap" method="post">
 	<input type="hidden" name="gmapsetup" value="" />
-	<div align="center" style="padding:1em;"><input type="submit" value="{tr}Change Preferences{/tr}" /></div>
+	<div align="center" style="padding:1em;"><input type="submit" value="{tr}Change preferences{/tr}" /></div>
 
 <div class="adminoptionbox">
 	<div class="adminoptionlabel"><label for="gmap_key">{tr}Google Maps API Key{/tr}: </label>{if $prefs.feature_help eq 'y'}{icon _id=help link="http://www.google.com/apis/maps/signup.html"}{/if}
@@ -50,7 +50,7 @@
               </select></div>
 </div>	
 </fieldset>	
-	<div align="center" style="padding:1em;"><input type="submit" value="{tr}Change Preferences{/tr}" /></div>
+	<div align="center" style="padding:1em;"><input type="submit" value="{tr}Change preferences{/tr}" /></div>
 </form>
 </div>
 

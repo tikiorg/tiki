@@ -1,8 +1,13 @@
 <?php
+// (c) Copyright 2002-2009 by authors of the Tiki Wiki/CMS/Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id: /cvsroot/tikiwiki/tiki/tiki-parsemode_setup.php,v 1.5.2.1 2008-01-15 21:06:59 nkoth Exp $
-
-if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) != FALSE) { header('location: index.php'); exit; }
-
+if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) != FALSE) {
+	header('location: index.php');
+	exit;
+}
 global $parsemode_setup;
 $parsemode_setup = 'y';
 $is_html = false;
@@ -11,9 +16,9 @@ if ($prefs['feature_wysiwyg'] == 'y') {
 		$_SESSION['wysiwyg'] = 'y';
 	} elseif (isset($_REQUEST['mode_normal']) and $prefs['wysiwyg_optional'] == 'y') {
 		$_SESSION['wysiwyg'] = 'n';
-	} elseif ((isset($_REQUEST['wysiwyg']) and $_REQUEST['wysiwyg'] == 'y' and $prefs['wysiwyg_optional'] == 'y') ) {
+	} elseif ((isset($_REQUEST['wysiwyg']) and $_REQUEST['wysiwyg'] == 'y' and $prefs['wysiwyg_optional'] == 'y')) {
 		$_SESSION['wysiwyg'] = 'y';
-	} elseif ((isset($_REQUEST['wysiwyg']) and $_REQUEST['wysiwyg'] == 'n' and $prefs['wysiwyg_optional'] == 'y') ) {
+	} elseif ((isset($_REQUEST['wysiwyg']) and $_REQUEST['wysiwyg'] == 'n' and $prefs['wysiwyg_optional'] == 'y')) {
 		$_SESSION['wysiwyg'] = 'n';
 	} elseif ($prefs['wysiwyg_optional'] == 'n') {
 		$_SESSION['wysiwyg'] = 'y';
@@ -40,10 +45,9 @@ if ($_SESSION['wysiwyg'] == 'y') {
 		}
 	}
 }
-
-if( isset($jitRequest['edit']) ) {
+if (isset($jitRequest['edit'])) {
 	// Restore the property for the rest of the script
-	if( $is_html ) {
+	if ($is_html) {
 		$_REQUEST['edit'] = $jitRequest->edit->xss();
 	} else {
 		$_REQUEST['edit'] = $jitRequest->edit->wikicontent();

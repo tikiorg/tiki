@@ -27,6 +27,8 @@ $inputConfiguration = array(
 	) ),
 );
 
+
+
 // Initialization
 $section = 'wiki page';
 require_once('tiki-setup.php');
@@ -181,11 +183,14 @@ if ($prefs['feature_multilingual'] == 'y' && $prefs['feature_sync_language'] == 
 
 $page = $info['pageName'];
 
-if (isset($_REQUEST['machine_translate_to_lang'])) {
-	$translated_wiki_markup = generate_machine_translated_markup($info, $_REQUEST['machine_translate_to_lang']);
-} else {
-	$translated_wiki_markup = '';
-}
+//Uncomment if we decide to translate wiki markup. For now we are going 
+//with translating rendered html content
+
+//if (isset($_REQUEST['machine_translate_to_lang'])) {
+//	$translated_wiki_markup = generate_machine_translated_markup($info, $_REQUEST['machine_translate_to_lang']);
+//} else {
+//	$translated_wiki_markup = '';
+//}
 
 $pageRenderer = new WikiRenderer( $info, $user, $translated_wiki_markup);
 $pageRenderer->applyPermissions();
@@ -410,6 +415,12 @@ $smarty->assign('pdf_export', file_exists('lib/mozilla2ps/mod_urltopdf.php') ? '
 
 // Display the Index Template
 $pageRenderer->runSetups();
+$page_content = $smarty->get_template_vars('parsed');
+if (isset($_REQUEST['machine_translate_to_lang'])) {
+	$page_content = generate_machine_translated_content($page_content, $info, $_REQUEST['machine_translate_to_lang']);
+	$smarty->assign('parsed',$page_content);
+} 
+
 $smarty->assign('mid','tiki-show_page.tpl');
 $smarty->display("tiki.tpl");
 
@@ -417,17 +428,27 @@ $smarty->display("tiki.tpl");
 // debug: print all objects
 
 
-function generate_machine_translated_markup($pageInfo, $targetLang) {
-	
+function generate_machine_translated_markup($pageInfo, $targetLang) {	
 	make_sure_machine_translation_is_enabled();	
 	$pageContent = $pageInfo['data'];
 	$sourceLang = $pageInfo['lang'];
-	require_once('lib/core/lib/Multilingual/MachineTranslation/GoogleTranslateWrapper.php');
-	$translator = new Multilingual_MachineTranslation_GoogleTranslateWrapper($sourceLang,$targetLang);
-	$translatedContent = $translator->translateText($pageContent);	
-	return $translatedContent;
+	return translate_text($pageContent, $sourceLang, $targetLang);
 }
 
+function generate_machine_translated_content($pageContent, $pageInfo, $targetLang) {	
+	make_sure_machine_translation_is_enabled();	
+	$sourceLang = $pageInfo['lang'];	
+	return translate_text($pageContent, $sourceLang, $targetLang);
+}
+
+
+function translate_text($text, $sourceLang, $targetLang) {
+	require_once('lib/core/lib/Multilingual/MachineTranslation/GoogleTranslateWrapper.php');
+	$translator = new Multilingual_MachineTranslation_GoogleTranslateWrapper($sourceLang,$targetLang);
+	$translatedText = $translator->translateText($text);
+	return $translatedText;	
+	
+}
 
 function make_sure_machine_translation_is_enabled() {
 	global $multilinguallib, $access, $_REQUEST, $prefs;

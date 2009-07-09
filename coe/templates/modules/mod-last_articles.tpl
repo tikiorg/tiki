@@ -9,19 +9,27 @@
 {/if}
 {/if}
 {tikimodule error=$module_params.error title=$tpl_module_title name="last_articles" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
-{if $nonums != 'y'}<ol class="module">{else}<ul class="module">{/if}
+{if $nonums != 'y'}<ol>{else}<ul>{/if}
     {section name=ix loop=$modLastArticles}
       <li>
 		{if !empty($showImg) or $showDate eq 'y'}
-		<div class="module">
-			{if $showDate eq 'y'}
-				<div class="date">{$modLastArticles[ix].publishDate|tiki_short_date}</div>
+			<div class="module">
+				{if $showDate eq 'y'}
+					<div class="date">{$modLastArticles[ix].publishDate|tiki_short_date}</div>
+				{/if}
+				{if isset($showImg)}
+					{if $modLastArticles[ix].hasImage eq 'y'}
+						<div class="image">
+							<img alt="" src="article_image.php?id={$modLastArticles[ix].articleId}" width="{$showImg}" />
+						</div>
+						{elseif $modLastArticles[ix].topicId}
+							<div class="image">
+								<img alt="" src="article_image.php?image_type=topic&amp;id={$modLastArticles[ix].topicId}" width="{$showImg}" />
+							</div>
+						{/if}
+					{/if}
+				</div>		
 			{/if}
-			{if isset($showImg)}
-			{if $modLastArticles[ix].hasImage eq 'y'}<div class="image"><img alt="" src="article_image.php?id={$modLastArticles[ix].articleId}" width="{$showImg}" /></div>{elseif $modLastArticles[ix].topicId}<div class="image"><img alt="" src="article_image.php?image_type=topic&amp;id={$modLastArticles[ix].topicId}" width="{$showImg}" /></div>{/if}
-			{/if}
-		</div>		
-		{/if}
  		  {if $absurl == 'y'}
           <a class="linkmodule" href="{$base_url}{$modLastArticles[ix].articleId|sefurl:article}" title="{$modLastArticles[ix].publishDate|tiki_short_datetime}, {tr}by{/tr} {$modLastArticles[ix].author}">
             {$modLastArticles[ix].title}

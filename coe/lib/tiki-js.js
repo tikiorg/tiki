@@ -541,16 +541,16 @@ function setfolderstate(foo, def, img, status) {
       img = 'folder.png';
   }
     var src = img; // default
-  if (status == "o") {
-    show(foo);
-    src = "o" + img;
-  } else if (status != "c"  && def != 'd') {
-    show(foo);
-    src = "o" + img;
-  }
-  else {
-    hide(foo);
-  }
+	if (status == 'c') {
+		hide(foo);
+	} else {
+		show(foo);
+	}
+	if (status == 'c' && def != 'd') { /* need to change the open icon to a close one*/
+		src = src.replace(/^o/, '');
+	} else if (status != 'c' && def == 'd') { /* need to change the close icon to an open one */
+		src = 'o' + img;
+	}
   document.getElementsByName('icn' + foo)[0].src = document.getElementsByName('icn' + foo)[0].src.replace(/[^\\\/]*$/, src);
 }
 

@@ -1,5 +1,11 @@
 <?php
 
+// $Id$
+
+// Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -129,8 +135,8 @@ class ContactLib extends TikiLib {
 		return false;
 	}
 
-	function remove_contact($contactId, $user) {
-		if ( $this->is_a_user_contact($contactId, $user, true) ) {
+	function remove_contact($contactId, $user, $include_group_contacts = true) {
+		if ( $this->is_a_user_contact($contactId, $user, $include_group_contacts) ) {
 			$this->query('delete from `tiki_webmail_contacts` where `contactId`=?', array((int)$contactId));
 			$this->query('delete from `tiki_webmail_contacts_groups` where `contactId`=?',array((int)$contactId));
 			$this->query('delete from `tiki_webmail_contacts_ext` where `contactId`=?',array((int)$contactId));
@@ -138,26 +144,36 @@ class ContactLib extends TikiLib {
 		}
 		return false;
 	}
-	function get_contact_email($email, $user) {
-		$result=$this->query("Select `contactId` from tiki_webmail_contacts where `email`=?",array($email));
-		while ($res = $result->fetchRow()){
-			if ($this->is_a_user_contact($res, $user, false)) {
-				$contactId=$res;
-			}
-		}
-		$info=$this->get_contact($contatId, $user);
+	
+	function get_contact_email($email, $user, $include_group_contacts = true) {
+
+		$cid = $this->get_contactId_email($email, $user, $include_group_contacts);
+		if (!$cid) { return false; }
+		
+		$info=$this->get_contact($cid, $user, $include_group_contacts);
+		
 		foreach($info['ext'] as $k => $v) {
-	    		if (!in_array($k, array_keys($exts))) {
+	    	if (!in_array($k, array_keys($exts))) {
 				$exts[$k]=$v;
 				$traducted_exts[$k]['tra']=tra($info['fieldname']);
 				$traducted_exts[$k]['art']=$info['fieldname'];
 				$traducted_exts[$k]['id']=$k;
-	    		}
+	    	}
 		}
 		return $info['ext'];
 	}
-	function get_contact($contactId, $user) {
-		if ( $this->is_a_user_contact($contactId, $user, true) ) {
+	
+	function get_contactId_email($email, $user, $include_group_contacts = true) {
+		$cid = $this->getOne("Select `contactId` from tiki_webmail_contacts where `email`=?",array($email));
+		if ($this->is_a_user_contact($cid, $user, $include_group_contacts)) {
+			return $cid;
+		} else {
+			return 0;
+		}
+	}
+	
+	function get_contact($contactId, $user, $include_group_contacts = true) {
+		if ( $this->is_a_user_contact($contactId, $user, $include_group_contacts) ) {
 			$query = "select * from `tiki_webmail_contacts` where `contactId`=?";
 			$result = $this->query($query, array((int)$contactId));
 			if (!$result->numRows()) return false;
@@ -234,4 +250,5 @@ class ContactLib extends TikiLib {
 		}
 	}
 }
+global $dbTiki;
 $contactlib = new ContactLib($dbTiki);

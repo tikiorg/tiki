@@ -264,7 +264,6 @@ class SearchLib extends TikiLib {
 		$ret = array();
 
 		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-			//if (($prefs['feature_search_show_forbidden_cat'] == 'y' || $prefs['feature_search_show_forbidden_obj'] == 'y') && !$this->user_has_perm_on_object($user,$res['id1'],$objType,$permName) continue;
 			$href = sprintf(urldecode($h['href']), urlencode($res['id1']), $res['id2']);
 
 			// taking first 240 chars of text can bring broken html tags, better remove all tags.
@@ -551,13 +550,6 @@ class SearchLib extends TikiLib {
 			'id' => array('a.`articleId`'),
 			'pageName' => 'a.`title`',
 			'search' => array('a.`title`', 'a.`heading`', 'a.`body`'),
-
-			//'permNameGlobal' => 'tiki_p_read_article',
-			//'permNameObj' => 'tiki_p_topic_read',
-			//'objectType' => 'topic',
-			//'objectKeyPerm' => 'a.`topicId`',
-			//'objectKeyGroup' => 'a.`articleId`',
-			//'objectKeyCat' => 'a.`articleId`',
 			'permName' => 'tiki_p_read_article',
 			'objectType' =>'article',
 			'objectKey'=>'`articleId`'
@@ -568,7 +560,8 @@ class SearchLib extends TikiLib {
 		global $user, $smarty;
 		include_once('tiki-sefurl.php');
 		foreach ($res['data'] as $r) {
-			if (empty($r['name']) || $this->user_has_perm_on_object($user, $r['name'], 'topic', 'tiki_p_topic_read')) {
+			$objperm = $this->get_perm_object($r['name'], 'article', '', false);
+			if (empty($r['name']) || $objperm['tiki_p_topic_read'] == 'y') {
 				$r['name'] = $r['pageName'];
 				$r['href'] = filter_out_sefurl($r['href'], $smarty, 'article', $r['pageName']);
 				$ret['data'][] = $r;
