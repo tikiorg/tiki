@@ -1,17 +1,15 @@
 <?php
-// $Id$
 
-/* Workspaces GUI Management */
+/* Check access */
 require_once ('tiki-setup.php');
 $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
-require_once ('lib/workspaces/wsController.php');
-require_once 'lib/workspaces/wslib.php';
 
-$ws_gui = new ws_gui_controller();
-
-$ws_gui->check_if_new_to_ws();
-
+/* Rest of imports */
 global $userlib; require_once 'lib/userslib.php';
+global $wslib; require_once 'lib/workspaces/wslib.php';
+
+$wslib->init_ws();
+
 //var_dump($groups = $userlib->get_groups());
 $smarty->assign('groups', $userlib->get_groups());
 
