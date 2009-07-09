@@ -1,5 +1,6 @@
+{* $Id: tiki-editpage.tpl 20027 2009-07-09 19:31:46Z sylvieg $ *}
+<input type="submit" class="wikiaction" onmouseover="return overlib('{tr}Preview your changes.{/tr}');" onmouseout="nd();" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;" />
 {if $page|lower neq 'sandbox' or $tiki_p_admin eq 'y'}
-	<input type="submit" class="wikiaction" onmouseover="return overlib('{tr}Preview your changes.{/tr}');" onmouseout="nd();" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;" />
 	{if $translation_mode eq 'y'}
 		<input type="submit" class="wikiaction" onmouseover="return overlib('{tr}Save the page as a partial translation.{/tr}');" onmouseout="nd();" name="partial_save" value="{tr}Partial Translation{/tr}" onclick="needToConfirm=false"/>
 		<input type="submit" class="wikiaction" onmouseover="return overlib('{tr}Save the page as a completed translation.{/tr}');" onmouseout="nd();" name="save" value="{tr}Complete Translation{/tr}" onclick="needToConfirm=false"/>
