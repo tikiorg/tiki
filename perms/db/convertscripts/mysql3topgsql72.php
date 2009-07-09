@@ -1,7 +1,7 @@
 <?php
 /* $Id$ */
 
-$tikiversion='3.0';
+$tikiversion='4.0';
 if(!isset($_GET['version'])) {
    echo "version not given. Using default $tikiversion.<br />";
 } else {
@@ -230,4 +230,3 @@ function convert_enums($colname,$content)
  $ret.="CHECK ($colname IN ($content))";
  return $ret;
 }
-?>

@@ -134,5 +134,3 @@ class Auth_Anonymous extends Auth
     // }}}
 
 }
-
-?>

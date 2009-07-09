@@ -5,28 +5,22 @@
   {if $prefs.feature_forum_topics_archiving eq 'y' && $thread_info.archived eq 'y'}<em>({tr}Archived{/tr})</em>{/if}
 {/title}
 
-{if $unread > 0}
-  <a class='link' href='messu-mailbox.php'>{tr}You have{/tr} {$unread} {tr}unread private messages{/tr}<br /><br /></a>
-{/if}
-
-{if $was_queued eq 'y'}
-  {remarksbox type="warning" title="{tr}Information{/tr}" icon="information"}
-    {tr}Your message has been queued for approval, the message will be posted after a moderator approves it.{/tr}
-  {/remarksbox}
-{/if}
+<div class="navbar">
+	{if $tiki_p_admin_forum eq "y"}
+		{button href="tiki-admin_forums.php?forumId=$forumId" _text="{tr}Edit Forum{/tr}"} 
+	{/if}
+	{if $tiki_p_admin_forum eq 'y' or !isset($all_forums) or $all_forums|@count > 1 }
+		{button href="tiki-forums.php" _text="{tr}Forum List{/tr}"}
+	{/if}
+	{button href="tiki-view_forum.php?forumId=$forumId" _text="{tr}Topic List{/tr}"}
+</div>
 
 {if $post_reported eq 'y'}
-  <br />
+	<br />
 	<div class="simplebox highlight reported_note">
     {icon _id=information style="vertical-align:middle;align=left"} {tr}The post has been reported and will be reviewed by a moderator.{/tr}
-  </div>
+	</div>
 	<br />
-{/if}
-
-{if $tiki_p_admin_forum eq "y"}
-  <div class="navbar">
-		{button href="tiki-admin_forums.php?forumId=$forumId" _text="{tr}Edit Forum{/tr}"} 
-  </div>
 {/if}
 
 <a class="link" href="tiki-forums.php">{tr}Forums{/tr}</a> {$prefs.site_crumb_seper} <a class="link" href="tiki-view_forum.php?forumId={$forumId}">{$forum_info.name}</a>{if $thread_info.topic.threadId} {$prefs.site_crumb_seper} <a class="link" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;forumId={$forumId}&amp;comments_parentId={$thread_info.topic.threadId}">{$thread_info.topic.title}</a>{/if} {$prefs.site_crumb_seper} <a class="link" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;forumId={$forumId}&amp;comments_parentId={$smarty.request.comments_parentId}">{$thread_info.title}</a>
@@ -47,6 +41,15 @@
 		<a href="{$smarty.server.PHP_SELF}?{query archive="y"}" title="{tr}Archive{/tr}">{icon _id='package' alt='{tr}Archive{/tr}'}</a>
 			{/if}
 		{/if}
+
+		{if $tiki_p_forum_lock eq 'y'}
+			{if $thread_info.locked eq 'y'}
+				{self_link lock='n' _icon='lock_break' _alt="{tr}Unlock{/tr}"}{/self_link}
+			{else}
+				{self_link lock='y' _icon='lock_add' _alt="{tr}Lock{/tr}"}{/self_link}
+			{/if}
+		{/if}
+
 	</span>
 </div>
 
@@ -58,20 +61,14 @@
 {/if}
 
 <div class="top_post">
-  {if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y' and isset($freetags.data[0])}
-    {include file="freetag_list.tpl"}
+  {if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y' and isset($freetags.data[0]) and $prefs.freetags_show_middle eq 'y'}
+    {include file='freetag_list.tpl'}
   {/if}
 
-  {include file="comment.tpl" first='y' comment=$thread_info thread_style='commentStyle_plain'}
+  {include file='comment.tpl' first='y' comment=$thread_info thread_style='commentStyle_plain'}
 </div>
 
-{include file="comments.tpl"}
-
-{**** Seems buggy
-	{if $comments_threshold ne 0}
-	<div style="font-size: smaller;">{$comments_below} {tr}Comments below your current threshold{/tr}</div>
-	{/if}
-****}
+{include file='comments.tpl'}
 
 <table id="forumjumpto" style="clear:both;" ><tr>
 

@@ -1,6 +1,6 @@
 <?php
 
-class TikiFilter_XssTest extends PHPUnit_Framework_TestCase
+class TikiFilter_XssTest extends TikiTestCase
 {
 	function testSimple()
 	{
@@ -9,5 +9,3 @@ class TikiFilter_XssTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals( '<a href="http://example.com" on<x>click="al<x>ert(\'XSS\')">Example</a>', $filter->filter( '<a href="http://example.com" onclick="alert(\'XSS\')">Example</a>' ) );
 	}
 }
-
-?>

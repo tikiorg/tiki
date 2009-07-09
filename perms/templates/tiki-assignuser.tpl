@@ -12,10 +12,10 @@
 	{/if}
 </div>
 
-{if $tiki_p_admin eq 'y' or $tiki_p_admin_users eq 'y'}
-{if $prefs.feature_intertiki eq 'y' and !empty($prefs.feature_intertiki_mymaster)}
-  <br /><b>{tr}Warning: since this tiki site is in slave mode, all user information you enter manually will be automatically overriden by other site's data, including users permissions{/tr}</b>
-{/if}
+{if $prefs.feature_intertiki eq 'y' and $prefs.feature_intertiki_import_groups eq 'y'}
+	{remarksbox type="warning" title="{tr}Warning{/tr}"}
+		{tr}Since this tiki site is in slave mode and import groups, the master groups will be automatically reimported at each login{/tr}
+	{/remarksbox}
 {/if}
   
 <h2>{tr}User Information{/tr}</h2>
@@ -48,19 +48,8 @@
 </table>
 <br />
 <div align="left"><h2>{tr}Assign User {$assign_user} to Groups{/tr}</h2></div>
-<table class="findtable">
-<tr><td class="findtable">{tr}Find{/tr}</td>
-   <td class="findtable">
-   <form method="get" action="tiki-assignuser.php">
-     <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}Find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-     {if $assign_user}<input type="hidden" name="assign_user" value="{$assign_user|escape}" />{/if}
-	 {tr}Number of displayed rows{/tr}</td><td  class="findtitle"><input type="text" name="maxRecords" value="{$prefs.maxRecords|escape}" size="3" />
-   </form>
-   </td>
-</tr>
-</table>
+
+{include file='find.tpl' find_show_num_rows='y'}
 
 <table class="normal">
 <tr>

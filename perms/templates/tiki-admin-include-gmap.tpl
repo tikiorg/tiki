@@ -1,24 +1,33 @@
+
+
+{remarksbox type="note" title="{tr}Note{/tr}"}
+{tr}To use Google Maps, you must generate a Google Maps API Key for your web site. See <a href="http://www.google.com/apis/maps/signup.html">http://www.google.com/apis/maps/signup.html</a> for details.{/tr}
+{/remarksbox}
+
+
 <div class="cbox">
-  <div class="cbox-title">{tr}Google Map setup{/tr}</div>
-  <div class="cbox-data">
-      <form action="tiki-admin.php?page=gmap" method="post">
-        <table class="admin"><tr>
-<td colspan="2">
-{tr}You need to request a Google Maps Key for this web site. You can easily generate a key for your domain at :{/tr}
-<a href="http://www.google.com/apis/maps/signup.html">http://www.google.com/apis/maps/signup.html</a>
-</td>
-        </tr><tr>
-          <td class="form"><label for="gmap_key">{tr}Google Map Key{/tr}:</label></td>
-          <td><input type="text" name="gmap_key" id="gmap_key" value="{$prefs.gmap_key}" size="87" style="font-size:5pt;font-family:monospace;"/></td>
-        </tr><tr>
-          <td class="form"><label for="gmap_defaultx">{tr}Default x for map center{/tr}:</label></td>
-          <td><input type="text" name="gmap_defaultx" id="gmap_defaultx" value="{$prefs.gmap_defaultx}" /></td>
-        </tr><tr>
-          <td class="form"><label for="gmap_defaulty">{tr}Default y from map center{/tr}:</label></td>
-          <td><input type="text" name="gmap_defaulty" id="gmap_defaulty" value="{$prefs.gmap_defaulty}" /></td>
-        </tr><tr>
-          <td class="form"><label for="gmap_defaultz">{tr}Default zoom level{/tr}:</label></td>
-          <td><select name="gmap_defaultz" id="gmap_defaultz">
+<form action="tiki-admin.php?page=gmap" method="post">
+	<input type="hidden" name="gmapsetup" value="" />
+	<div align="center" style="padding:1em;"><input type="submit" value="{tr}Change preferences{/tr}" /></div>
+
+<div class="adminoptionbox">
+	<div class="adminoptionlabel"><label for="gmap_key">{tr}Google Maps API Key{/tr}: </label>{if $prefs.feature_help eq 'y'}{icon _id=help link="http://www.google.com/apis/maps/signup.html"}{/if}
+	<br /><input type="text" name="gmap_key" id="gmap_key" value="{$prefs.gmap_key}" size="87" /></div>
+</div>
+
+<fieldset><legend>{tr}Defaults{/tr}</legend>
+
+<div class="adminoptionbox">
+	<div class="adminoptionlabel"><label for="gmap_defaultx">{tr}Default x for map center{/tr}:</label> <input type="text" name="gmap_defaultx" id="gmap_defaultx" value="{$prefs.gmap_defaultx}" /></div>
+</div>
+
+<div class="adminoptionbox">
+	<div class="adminoptionlabel"><label for="gmap_defaulty">{tr}Default y from map center{/tr}:</label> <input type="text" name="gmap_defaulty" id="gmap_defaulty" value="{$prefs.gmap_defaulty}" /></div>
+</div>
+
+<div class="adminoptionbox">
+	<div class="adminoptionlabel"><label for="gmap_defaultz">{tr}Default zoom level{/tr}:</label>
+		<select name="gmap_defaultz" id="gmap_defaultz">
               <option value="1" {if $prefs.gmap_defaultz eq '1'}selected="selected"{/if}>1 - {tr}whole earth{/tr}</option>
               <option value="2" {if $prefs.gmap_defaultz eq '2'}selected="selected"{/if}>2</option>
               <option value="3" {if $prefs.gmap_defaultz eq '3'}selected="selected"{/if}>3</option>
@@ -38,12 +47,11 @@
               <option value="17" {if $prefs.gmap_defaultz eq '16'}selected="selected"{/if}>17</option>
               <option value="18" {if $prefs.gmap_defaultz eq '16'}selected="selected"{/if}>18</option>
               <option value="19" {if $prefs.gmap_defaultz eq '17'}selected="selected"{/if}>19 - {tr}max zoom{/tr}</option>
-              </select></td>
-        </tr><tr>
-          <td colspan="2" class="button"><input type="submit" name="gmapsetup" value="{tr}Save{/tr}" /></td>
-        </tr></table>
-      </form>
-  </div>
+              </select></div>
+</div>	
+</fieldset>	
+	<div align="center" style="padding:1em;"><input type="submit" value="{tr}Change preferences{/tr}" /></div>
+</form>
 </div>
 
 {if $prefs.feature_gmap eq 'y' and $show_map eq 'y'}

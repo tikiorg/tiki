@@ -1,3 +1,4 @@
+{if empty($sort_arg)}{assign var='sort_arg' value='sort_mode'}{/if}
 <table class="normal">
   <tr>
   {if $gal_info.show_checked ne 'n' and ($tiki_p_admin_file_galleries eq 'y' or $tiki_p_upload_files eq 'y')}
@@ -9,7 +10,7 @@
     <th style="width:1%">&nbsp;</th>
   {/if}
       
-  {if $show_parentName eq 'y'}<th>{self_link _sort_arg="sort_mode" _sort_field='parentName'}{tr}Gallery{/tr}{/self_link}</th>{/if}
+  {if $show_parentName eq 'y'}<th>{self_link _sort_arg=$sort_arg _sort_field='parentName'}{tr}Gallery{/tr}{/self_link}</th>{/if}
   {foreach from=$fgal_listing_conf item=item key=propname}
     {if isset($item.key)}
       {assign var=key_name value=$item.key}
@@ -44,12 +45,12 @@
 
       {if $propname eq 'name' and ( $gal_info.show_name eq 'a' or $gal_info.show_name eq 'f' ) }
         {assign var=nbCols value=`$nbCols+1`}
-        <th{$td_args}>{self_link _sort_arg="sort_mode" _sort_field='filename'}{if empty($galleryId)}{tr}Name{/tr}{else}{tr}Filename{/tr}{/if}{/self_link}</th>
+        <th{$td_args}>{self_link _sort_arg=$sort_arg _sort_field='filename'}{if empty($galleryId)}{tr}Name{/tr}{else}{tr}Filename{/tr}{/if}{/self_link}</th>
       {/if}
       {if !($galleryId eq 0 and $propname eq 'lockedby') and ($propname neq 'name' or ( $gal_info.show_name eq 'a' or $gal_info.show_name eq 'n' )) }
         {assign var=nbCols value=`$nbCols+1`}
         <th{$td_args}>
-           {self_link _sort_arg="sort_mode" _sort_field=$propname _title=$link_title}
+           {self_link _sort_arg=$sort_arg _sort_field=$propname _title=$link_title}
              {if $propicon}{icon _id=$propicon alt=$link_title}{else}{$propval}{/if}
 		   {/self_link}
         </th>
@@ -75,7 +76,7 @@
   {if $other_columns_selected neq ''}
     {assign var=nbCols value=`$nbCols+1`}
     <th>
-    {self_link _sort_arg='sort_mode' _sort_field=$other_columns_selected _title=$fgal_listing_conf.$other_columns_selected.name}{$fgal_listing_conf.$other_columns_selected.name}{/self_link}
+    {self_link _sort_arg=$sort_arg _sort_field=$other_columns_selected _title=$fgal_listing_conf.$other_columns_selected.name}{$fgal_listing_conf.$other_columns_selected.name}{/self_link}
     </th>
   {/if}
       
@@ -98,12 +99,13 @@
   {cycle values="odd,even" print=false}
   {section name=changes loop=$files}
   
+  {if ( ( ! isset($fileId) ) || $fileId == 0 ) || ( $fileId == $files[changes].id ) }
     {if ( $prefs.use_context_menu_icon eq 'y' or $prefs.use_context_menu_text eq 'y' ) and $gal_info.show_action neq 'y'}
       {capture name=over_actions}{strip}
       <div class='opaque'>
         <div class='box-title'>{tr}Actions{/tr}</div>
         <div class='box-data'>
-          {include file=fgal_context_menu.tpl menu_icon=$prefs.use_context_menu_icon menu_text=$prefs.use_context_menu_text}
+          {include file='fgal_context_menu.tpl' menu_icon=$prefs.use_context_menu_icon menu_text=$prefs.use_context_menu_text}
         </div>
       </div>
       {/strip}{/capture}
@@ -263,7 +265,7 @@
   {/if}
   
   {if ( $prefs.use_context_menu_icon neq 'y' and $prefs.use_context_menu_text neq 'y' ) or $gal_info.show_action eq 'y' or $prefs.javascript_enabled neq 'y'}
-    <td class="{cycle advance=false}">{include file=fgal_context_menu.tpl}</td>
+    <td class="{cycle advance=false}">{include file='fgal_context_menu.tpl'}</td>
   {/if}
   
   {if ( $other_columns neq '' or $other_columns_selected neq '' ) and $prefs.javascript_enabled eq 'y'}
@@ -281,6 +283,7 @@
   </tr>
   {cycle print=false}
 
+  {/if}
   {sectionelse}
   <tr><td colspan="{$nbCols}">
     <b>{tr}No records found{/tr}</b>
@@ -288,9 +291,11 @@
   {/section}
 
   {if $gal_info.show_checked ne 'n' and $tiki_p_admin_file_galleries eq 'y' and $prefs.javascript_enabled eq 'y'}
-  <tr><td colspan="{$nbCols}"><input name="switcher" id="clickall" type="checkbox" onclick="switchCheckboxes(this.form,'file[]',this.checked); switchCheckboxes(this.form,'subgal[]',this.checked);"/>
-    <label for="clickall">{tr}Select All{/tr}</label>
-  </td></tr>
+		<tr>
+			<td colspan="{$nbCols}">
+				{select_all checkbox_names='file[], subgal[]' label="{tr}Select All{/tr}"}
+			</td>
+		</tr>
   {/if}
 
 </table>

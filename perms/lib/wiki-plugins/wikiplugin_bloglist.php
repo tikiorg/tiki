@@ -11,6 +11,7 @@ function wikiplugin_bloglist_help() {
 function wikiplugin_bloglist_info() {
 	return array(
 		'name' => tra('Blog List'),
+		'documentation' => 'PluginBlogList',		
 		'description' => tra('Use BLOGLIST to include posts from a blog.'),
 		'prefs' => array( 'feature_blogs', 'wikiplugin_bloglist' ),
 		'params' => array(
@@ -29,32 +30,21 @@ function wikiplugin_bloglist_info() {
 }
 
 function wikiplugin_bloglist($data, $params) {
-	global $tikilib;
+	global $tikilib, $smarty;
 
-	extract ($params,EXTR_SKIP);
-
-	if (!isset($Id)) {
+	if (!isset($params['Id'])) {
 		$text = ("<b>missing blog Id for BLOGLIST plugins</b><br />");
 		$text .= wikiplugin_bloglist_help();
 		return $text;
 	}
-//	if (!isset($Field)) {
-//		$Field = 'heading';
-//	}
-	$text="<div class=\"blogtools\"><table><tr><th>" . tra("Date") . "</th><th>" . tra("Title") . "</th><th>" . tra("Author") . "</th></tr>\n";
-	$query = "select `postId`, `title`, `user`, `created`  from `tiki_blog_posts` where `blogId`=? order by `created` desc";
-	$result = $tikilib->query($query, array($Id));
-	$i=0;
-	while (($res = $result->fetchRow()) && (!isset($Items) || $i < $Items)) {
-        	$text.="<tr><td>" . TikiLib::date_format("%d/%M/%Y %H:%M", $res["created"]) . "</td>";
-		$text.="<td><a href=\"tiki-view_blog_post.php?blogId=" . $Id . "&postId=" . $res["postId"] . "\">" . $res["title"] . "</a></td>";
-        	$text.= "<td>" . $res["user"] . "</td></tr>\n";
-		$i++;
-  	}
-	$text.="</table></div>\n";
 
+	if (!isset($params['max'])) $params['max'] = -1;
+	if (!isset($params['offset'])) $params['offset'] = 0;
+	if (!isset($params['sort_mode'])) $params['sort_mode'] = 'created_desc';
+	if (!isset($params['find'])) $params['find'] = '';
 
-	return $text;
+	$blogItems = $tikilib->list_posts($params['offset'], $params['max'], $params['sort_mode'], $params['find'], $params['Id']);
+	$smarty->assign_by_ref('blogItems', $blogItems['data']);
+	$ret = $smarty->fetch('wiki-plugins/wikiplugin_bloglist.tpl');
+	return '~np~'.$ret.'~/np~';
 }
-
-?>

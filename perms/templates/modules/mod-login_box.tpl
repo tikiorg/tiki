@@ -18,7 +18,9 @@ function capLock(e){
 {tikimodule error=$module_params.error title=$tpl_module_title name="login_box" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
     {if $user}
       <div>{tr}Logged in as{/tr}: <span style="white-space: nowrap">{$user|userlink}</span></div>
-      <div style="text-align: center"><span class="button2"><a class="linkmodule" href="tiki-logout.php">{tr}Logout{/tr}</a></span></div>
+      <div style="text-align: center;">
+				{button href="tiki-logout.php" _text="{tr}Logout{/tr}"}
+			</div>
       {if $tiki_p_admin eq 'y'}
         <form action="{if $prefs.https_login eq 'encouraged' || $prefs.https_login eq 'required' || $prefs.https_login eq 'force_nocheck'}{$base_url_https}{/if}{$prefs.login_url}" method="post"{if $prefs.desactive_login_autocomplete eq 'y'} autocomplete="off"{/if}>
          <fieldset>
@@ -26,9 +28,9 @@ function capLock(e){
           <label for="login-switchuser">{tr}User{/tr}:</label>
           <input type="hidden" name="su" value="1" />
           <input type="text" name="username" id="login-switchuser" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" />
-{if $prefs.feature_help eq 'y'}
-		 {help url="Switch+User" desc="{tr}Help{/tr}"}
-{/if}
+					{if $prefs.feature_help eq 'y'}
+						{help url="Switch+User" desc="{tr}Help{/tr}"}
+					{/if}
           <div style="text-align: center"><button type="submit" name="actsu">{tr}Switch{/tr}</button></div>
          </fieldset>
         </form>
@@ -48,7 +50,7 @@ function capLock(e){
 		</form>
 	  {/if}
       {elseif $prefs.auth_method eq 'cas' && $showloginboxes neq 'y'}
-		<b><a class="linkmodule" href="tiki-login.php?user">{tr}Login through CAS{/tr}</a></b>
+		<b><a class="linkmodule" href="tiki-login.php?cas=y">{tr}Login through CAS{/tr}</a></b>
 		{if $prefs.cas_skip_admin eq 'y'}
 		<br /><a class="linkmodule" href="tiki-login_scr.php?user=admin">{tr}Login as admin{/tr}</a>
       {/if}
@@ -108,17 +110,17 @@ function capLock(e){
 		  </div>
           {if $prefs.rememberme ne 'disabled'}
             {if $prefs.rememberme eq 'always'}
-              <input type="hidden" name="rme" id="login-remember" value="on" />
+              <input type="hidden" name="rme" id="login-remember-module-input" value="on" />
             {else}
-              <div style="text-align: center"><input type="checkbox" name="rme" id="login-remember" value="on" /><label for="login-remember">{tr}Remember me{/tr}</label> ({tr}for{/tr} {if $prefs.remembertime eq 300}5 {tr}minutes{/tr}{elseif $prefs.remembertime eq 900}15 {tr}minutes{/tr}{elseif $prefs.remembertime eq 1800}30 {tr}minutes{/tr}{elseif $prefs.remembertime eq 3600}1 {tr}hour{/tr}{elseif $prefs.remembertime eq 7200}2 {tr}hours{/tr}{elseif $prefs.remembertime eq 36000}10 {tr}hours{/tr}{elseif $prefs.remembertime eq 72000}20 {tr}hours{/tr}{elseif $prefs.remembertime eq 86400} 1 {tr}day{/tr}{elseif $prefs.remembertime eq 604800}1 {tr}week{/tr}{elseif $prefs.remembertime eq 2629743}1 {tr}month{/tr}{elseif $prefs.remembertime eq 31556926}1 {tr}year{/tr}{/if})
+              <div style="text-align: center"><input type="checkbox" name="rme" id="login-remember-module" value="on" /><label for="login-remember-module">{tr}Remember me{/tr}</label> ({tr}for{/tr} {if $prefs.remembertime eq 300}5 {tr}minutes{/tr}{elseif $prefs.remembertime eq 900}15 {tr}minutes{/tr}{elseif $prefs.remembertime eq 1800}30 {tr}minutes{/tr}{elseif $prefs.remembertime eq 3600}1 {tr}hour{/tr}{elseif $prefs.remembertime eq 7200}2 {tr}hours{/tr}{elseif $prefs.remembertime eq 36000}10 {tr}hours{/tr}{elseif $prefs.remembertime eq 72000}20 {tr}hours{/tr}{elseif $prefs.remembertime eq 86400} 1 {tr}day{/tr}{elseif $prefs.remembertime eq 604800}1 {tr}week{/tr}{elseif $prefs.remembertime eq 2629743}1 {tr}month{/tr}{elseif $prefs.remembertime eq 31556926}1 {tr}year{/tr}{/if})
 			  </div>
             {/if}
           {/if}
-          <div style="text-align: center"><input type="submit" name="login" value="{tr}Login{/tr}" /></div>
+          <div style="text-align: center"><input class="button submit" type="submit" name="login" value="{tr}Login{/tr}" /></div>
        </fieldset>
           
           {if $prefs.forgotPass eq 'y' and $prefs.allowRegister eq 'y' and $prefs.change_password eq 'y'}
-            <div>[ <a class="linkmodule" href="tiki-register.php" title="{tr}Click here to register{/tr}">{tr}Register{/tr}</a> | <a class="linkmodule" href="tiki-remind_password.php" title="{tr}Click here if you've forgotten your password{/tr}">{tr}I forgot my pass{/tr}</a> ]</div>
+            <div>[&nbsp;<a class="linkmodule" href="tiki-register.php" title="{tr}Click here to register{/tr}">{tr}Register{/tr}</a> | <a class="linkmodule" href="tiki-remind_password.php" title="{tr}Click here if you've forgotten your password{/tr}">{tr}I forgot my password{/tr}</a>&nbsp;]</div>
           {/if}
           {if $prefs.forgotPass eq 'y' and $prefs.allowRegister ne 'y' and $prefs.change_password eq 'y'}
             <div><a class="linkmodule" href="tiki-remind_password.php" title="{tr}Click here if you've forgotten your password{/tr}">{tr}I forgot my password{/tr}</a></div>

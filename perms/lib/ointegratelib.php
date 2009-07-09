@@ -137,6 +137,10 @@ class OIntegrate
 		$parts = explode( ';', $type );
 		$type = trim($parts[0]);
 
+		if( empty($data) ) {
+			return null;
+		}
+
 		switch( $type )
 		{
 		case 'application/json':
@@ -366,5 +370,3 @@ class OIntegrate_Converter_TikiToHtml implements OIntegrate_Converter // {{{
 		return $tikilib->parse_data( htmlentities( $content, ENT_QUOTES, 'UTF-8' ) );
 	}
 } // }}}
-
-?>

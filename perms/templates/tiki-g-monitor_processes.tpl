@@ -1,10 +1,10 @@
 {popup_init src="lib/overlib.js"}
 {*Smarty template*}
-<h1><a class="pagetitle" href="tiki-g-monitor_processes.php">{tr}Monitor processes{/tr}</a>
+<h1><a class="pagetitle" href="tiki-g-monitor_processes.php">{tr}Monitor Processes{/tr}</a>
 
   
       {if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}GalaxiaMonitorProcesses" target="tikihelp" class="tikihelp" title="{tr}Galaxia Monitor Processes{/tr}">
+<a href="{$prefs.helpurl}Workflow" target="tikihelp" class="tikihelp" title="{tr}Galaxia Monitor Processes{/tr}">
 <img src="img/icons/help.gif" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
 
 
@@ -13,7 +13,7 @@
 <a href="tiki-edit_templates.php?template=tiki-g-monitor_processes.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Galaxia Monitor Processes tpl{/tr}"><img src="img/icons/info.gif" height="16" width="16" alt='{tr}Edit Tpl{/tr}' /></a>{/if}
 
 </h1>
-{include file=tiki-g-monitor_bar.tpl}
+{include file='tiki-g-monitor_bar.tpl'}
 <h2>{tr}List of processes{/tr} ({$cant})</h2>
 
 {* FILTERING FORM *}
@@ -143,4 +143,4 @@
 {pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
 {* END OF PAGINATION *}
 
-{include file=tiki-g-monitor_stats.tpl}
+{include file='tiki-g-monitor_stats.tpl'}

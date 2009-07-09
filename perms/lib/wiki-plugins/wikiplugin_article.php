@@ -20,7 +20,7 @@ function wikiplugin_article_info() {
 		'name' => tra('Article'),
 		'documentation' => 'PluginArticle',
 		'description' => tra('Includes an article\'s content within the page.'),
-		'prefs' => array( 'feature_article', 'wikiplugin_article' ),
+		'prefs' => array( 'feature_articles', 'wikiplugin_article' ),
 		'params' => array(
 			'Field' => array(
 				'required' => false,
@@ -54,7 +54,7 @@ function wikiplugin_article($data, $params) {
 		$Field = 'heading';
 	} 
 
-	if ($tiki_p_admin_cms == 'y' || $tikilib->user_has_perm_on_object($user, $articleId, 'article', 'tiki_p_edit_article') || ($article_data["author"] == $user && $article_data["creator_edit"] == 'y')) {
+	if ($tiki_p_admin_cms == 'y' || $tikilib->user_has_perm_on_object($user, $articleId, 'article', 'tiki_p_edit_article', 'tiki_p_edit_categorized') || ($article_data["author"] == $user && $article_data["creator_edit"] == 'y')) {
 	      $add="&nbsp;<a href='tiki-edit_article.php?articleId=$Id'><img src='/pics/icons/page_edit.png' style='border:0px;'></a>";
 	} else {
 	      $add="";
@@ -63,5 +63,3 @@ function wikiplugin_article($data, $params) {
 	$article_data = $tikilib->get_article($Id);
 	return $article_data[$Field].$add;
 }
-
-?>

@@ -5,7 +5,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
-
+global $smarty;
 if( $prefs['feature_mootools'] == 'y' ) {
 	global $headerlib;
 	$headerlib->add_jsfile( 'lib/mootools/Observer.js' );
@@ -36,8 +36,10 @@ if (isset($module_params["submit"])) {
 }
 if (isset($module_params["size"])) {
 	$size = $module_params["size"];
+	$smarty->assign('size', $size);
 } else {
-	$size = 15;
+	$module_params["size"] = '';
+	$smarty->assign('size', 15);;
 }
 if (isset($module_params["mod_quickedit_heading"])) {
 	$mod_quickedit_heading = $module_params["mod_quickedit_heading"];
@@ -52,7 +54,6 @@ if (isset($module_params["categId"])) {
 $smarty->assign('categId', $categId);
 $smarty->assign('mod_quickedit_heading', $mod_quickedit_heading);
 $smarty->assign('templateId', $templateId);
-$smarty->assign('size', $size);
 $smarty->assign('qe_action', $qe_action);
 $smarty->assign('submit', $submit);
 

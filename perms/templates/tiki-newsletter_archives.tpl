@@ -43,7 +43,7 @@
 {assign var=offset_bak value=0}
 {assign var=find value=$ed_find}
 {assign var=find_bak value=''}
-{include file=sent_newsletters.tpl }
+{include file='sent_newsletters.tpl'}
 
 {if $edition_errors}
   <h2>{tr}Errors:{/tr} {$edition_info.subject} / {$edition_info.sent|tiki_short_datetime}</h2>

@@ -4,8 +4,9 @@ function wikiplugin_picture_info()
 {
 	return array(
 		'name' => tra('Picture'),
-		'description' => tra('Search for images uploaded by users'),
-		'prefs' => array( 'feature_wiki_pictures' ),
+		'documentation' => 'PluginPicture',	
+		'description' => tra('Search for images uploaded by users').tra(' (deprecated - scheduled to be removed or changed significantly)'),
+		'prefs' => array( 'feature_wiki_pictures', 'wikiplugin_picture' ),
 		'params' => array(
 			'file' => array(
 				'name' => tra('File'),
@@ -38,5 +39,3 @@ function wikiplugin_picture( $data, $params )
 
 	return $repl;
 }
-
-?>

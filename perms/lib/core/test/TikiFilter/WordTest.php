@@ -1,6 +1,6 @@
 <?php
 
-class TikiFilter_WordTest extends PHPUnit_Framework_TestCase
+class TikiFilter_WordTest extends TikiTestCase
 {
 	private $array;
 
@@ -11,5 +11,3 @@ class TikiFilter_WordTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals( '123ab_c', $filter->filter('-123 ab_c') );
 	}
 }
-
-?>

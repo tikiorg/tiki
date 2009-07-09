@@ -1,43 +1,37 @@
 {if $prefs.feature_gmap eq 'y'}
 
 {title help="gmap"}{tr}Google Map Locator{/tr}{/title}
+{if $watch}({$watch}){/if}
 
 <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key={$prefs.gmap_key}"></script>
-
-<div class="wikitext">
-<table>
-{if $input eq 'y'}
-<tr><td colspan="2">
+<div clas="navbar">
 {button href="$backurl" _text="$backlink"}
-{if $watch}({$watch}){/if}
-<br />
-<br />
+</div>
+
 <form action="tiki-gmap_locator.php{$extraquery}" method="post">
-{if $watch}<input type="hidden" name="view_user" value="{$watch}" />{/if}
 <input type="text" name="point[x]" value="{$pointx}" id="pointx" size="16" />
 <input type="text" name="point[y]" value="{$pointy}" id="pointy" size="16" />
 <input type="text" name="point[z]" value="{$pointz}" id="pointz" size="2" />
-<input type="submit" name="act" value="{tr}Save clicked point{/tr}" /><br />
-<a href="tiki-gmap_locator.php?for=user&amp;recenter=y{if $watch}&amp;view_user={$watch}{/if}">Center map to saved point</a>
-</form>
-</td></tr>
-{/if}
-<tr><td>
-<form action="tiki-gmap_locator.php{$extraquery}" method="post">
-{if $watch}<input type="hidden" name="view_user" value="{$watch}" />{/if}
-<input type="hidden" name="default[x]" value="{$prefs.gmap_defaultx}" id="defx" />
-<input type="hidden" name="default[y]" value="{$prefs.gmap_defaulty}" id="defy" />
-<input type="hidden" name="default[z]" value="{$prefs.gmap_defaultz}" id="defz" />
+{if $input eq 'y'}
+{if $watch}<input type="hidden" name="view_user" value="{$watch|escape}" />{/if}
+{if $itemId}<input type="hidden" name="itemId" value="{$itemId}" />{/if}
+{if $fieldId}<input type="hidden" name="fieldId" value="{$fieldId}" />{/if}
+<input type="submit" name="act" value="{tr}Save clicked point{/tr}" /><br /><br />
+<input type="submit" name="reset_default" value="{tr}Reset view to default{/tr}" />
 <input type="submit" name="act" value="{tr}Save current view as default{/tr}" />
+<input type="submit" name="recenter" value="{tr}Center map to saved point{/tr}" />
+{/if}
+<input type="hidden" name="default[x]" value="{$pointx}" id="defx" />
+<input type="hidden" name="default[y]" value="{$pointy}" id="defy" />
+<input type="hidden" name="default[z]" value="{$pointz}" id="defz" />
+<input type="submit" name="reset_site_default" value="{tr}Reset view to site default{/tr}" />
 </form>
-</td>
-<td>
-<form action="tiki-gmap_locator.php{$extraquery}" method="post">
-{if $watch}<input type="hidden" name="view_user" value="{$watch}" />{/if}
-<input type="submit" name="reset_default" value="{tr}Reset view to site-wide default{/tr}" />
-</form>
-</td>
-</tr></table>
+
+{if $pointx eq ''}
+	{assign var=pointx value=$prefs.gmap_defaultx}
+	{assign var=pointy value=$prefs.gmap_defaulty}
+	{assign var=pointz value=$prefs.gmap_defaultz}
+{/if}
 
 <div id="map" style="width: 500px; height: 400px;border: 1px solid #000;"></div>
 </div>
@@ -48,7 +42,7 @@ function load() {literal}{{/literal}
   map.addControl(new GLargeMapControl());
   map.addControl(new GMapTypeControl());
   map.addControl(new GScaleControl());
-  map.setCenter(new GLatLng({$prefs.gmap_defaulty}, {$prefs.gmap_defaultx}), {$prefs.gmap_defaultz});
+  map.setCenter(new GLatLng({$pointy}, {$pointx}), {$pointz});
 
 {if $input eq 'y'}
 {if $pointx and $pointy}

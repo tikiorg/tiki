@@ -52,10 +52,11 @@ ajaxAutoSaveToolbarCommand.prototype.Execute = function()
 	{
 		toolbarButtonIcon = ajaxAutoSaveButton.DOMDiv.getElementsByTagName('IMG')[0];
 	}
-	else // FCKeditor 2.3+
+	else if (ajaxAutoSaveButton._UIButton) // FCKeditor 2.3+
 	{
 		toolbarButtonIcon = ajaxAutoSaveButton._UIButton.MainElement.getElementsByTagName('IMG')[0];
-	}
+	} else
+		return false;
 	toolbarButtonIcon.src = FCKPlugins.Items['ajaxAutoSave'].Path + "images/loadingSmall.gif";
 	//toolbarButtonIcon.title = FCKLang.ajaxAutoSaveButtonTitle;
 
@@ -98,10 +99,12 @@ ajaxAutoSaveToolbarCommand.prototype.onSelectionChange = function()
 	{
 		toolbarButtonIcon = ajaxAutoSaveButton.DOMDiv.getElementsByTagName('IMG')[0];
 	}
-	else // FCKeditor 2.3+
+	else if (ajaxAutoSaveButton._UIButton) // FCKeditor 2.3+
 	{
-		toolbarButtonIcon = ajaxAutoSaveButton._UIButton.MainElement.getElementsByTagName('IMG')[0];
+				toolbarButtonIcon = ajaxAutoSaveButton._UIButton.MainElement.getElementsByTagName('IMG')[0];
 	}
+	else
+		return false;
 	toolbarButtonIcon.src = FCKPlugins.Items['ajaxAutoSave'].Path + "images/ajaxAutoSaveDirty.gif";
 	toolbarButtonIcon.title = FCKLang.ajaxAutoSaveButtonTitle;
 

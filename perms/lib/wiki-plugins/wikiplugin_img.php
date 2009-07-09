@@ -5,12 +5,17 @@ function wikiplugin_img_info()
 	return array(
 		'name' => tra( 'Img' ),
 		'description' => tra( 'Displays an image.' ),
-		'prefs' => array(),
+		'prefs' => array( 'wikiplugin_img' ),
 		'params' => array(
 			'src' => array(
 				'required' => false,
 				'name' => tra('Image Source'),
 				'description' => tra('Full URL to the image to display.'),
+			),
+			'alt' => array(
+				'required' => false,
+				'name' => tra('Alternate Text'),
+				'description' => tra('Alternate text to display if impossible to load the image.'),
 			),
 			'height' => array(
 				'required' => false,
@@ -44,18 +49,13 @@ function wikiplugin_img_info()
 			),
 			'imalign' => array(
 				'required' => false,
-				'name' => tra('Alignment'),
-				'description' => tra('Image alignment in the page. (left, right, center) Uses CSS class img.'),
+				'name' => tra('Float Alignment'),
+				'description' => tra('Image alignment in the flow of the document. (left, right, none) Uses CSS float property.'),
 			),
 			'desc' => array(
 				'required' => false,
 				'name' => tra('Description'),
 				'description' => tra('Image description to display on the page.'),
-			),
-			'alt' => array(
-				'required' => false,
-				'name' => tra('Alternate Text'),
-				'description' => tra('Alternate text to display if impossible to load the image.'),
 			),
 			'usemap' => array(
 				'required' => false,
@@ -89,6 +89,8 @@ function wikiplugin_img( $data, $params, $offset, $parseOptions )
 	$imgdata["usemap"] = '';
 	$imgdata["class"] = '';
 
+	// strip single quotes from params () to preserve 2.x {img} behaviour
+	$params = preg_replace("/^'(.*)'$/", '$1', $params);
 	$imgdata = array_merge( $imgdata, $params );
 
 	// Support both 'link' and 'lnk' syntax
@@ -137,7 +139,7 @@ function wikiplugin_img( $data, $params, $offset, $parseOptions )
 	$repl = '<img alt="' . $imgdata["alt"] . '" src="'.$imgdata["src"].'" border="0" '.$imgdata_dim;
 
 	if ($imgdata["imalign"]) {
-		$repl .= ' align="' . $imgdata["imalign"] . '"';
+		$repl .= ' style="float: ' . $imgdata["imalign"] . '"';
 	}
 	if ($imgdata["usemap"]) {
 		$repl .= ' usemap="#'.$imgdata["usemap"].'"';
@@ -179,5 +181,3 @@ function wikiplugin_img( $data, $params, $offset, $parseOptions )
 
 	return $repl;
 }
-
-?>

@@ -1,4 +1,4 @@
-// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.81.2.15 2008-03-04 15:47:50 sept_7 Exp $
+// $Id$
 var feature_no_cookie = 'n';
 
 function browser() {
@@ -12,7 +12,11 @@ function browser() {
     this.safari = (navigator.userAgent.indexOf('Safari')>-1)
     this.op7 = (navigator.userAgent.indexOf('Opera')>-1 && this.v>=7)
     this.ie56 = (this.version.indexOf('MSIE 5')>-1||this.version.indexOf('MSIE 6')>-1)
+/* ie567 added by Enmore */
+	this.ie567 = (this.version.indexOf('MSIE 5')>-1||this.version.indexOf('MSIE 6')>-1||this.version.indexOf('MSIE 7')>-1)
     this.iewin = (this.ie56 && navigator.userAgent.indexOf('Windows')>-1)
+/* iewin7 added by Enmore */	
+	this.iewin7 = (this.ie567 && navigator.userAgent.indexOf('Windows')>-1)
     this.iemac = (this.ie56 && navigator.userAgent.indexOf('Mac')>-1)
     this.moz = (navigator.userAgent.indexOf('Mozilla')>-1)
     this.moz13 = (navigator.userAgent.indexOf('Mozilla')>-1 && navigator.userAgent.indexOf('1.3')>-1)
@@ -372,8 +376,8 @@ function insertAt(elementId, replaceString) {
   }
 }
 
-function setUserModuleFromCombo(id) {
-  document.getElementById('usermoduledata').value = document.getElementById('usermoduledata').value
+function setUserModuleFromCombo(id, textarea) {
+  document.getElementById(textarea).value = document.getElementById(textarea).value
     + document.getElementById(id).options[document.getElementById(id).selectedIndex].value;
 //document.getElementById('usermoduledata').value='das';
 }
@@ -427,7 +431,8 @@ function flip(foo,style) {
   showit = 'show_' + escape(foo);
 
   if (style == null) style = 'block';
-  if (this.iewin && style == 'table-cell') {
+/* iewin changed to iewin7 by Enmore */	
+	if (this.iewin7 && style == 'table-cell') {
     style = 'block';
   }
 
@@ -475,8 +480,17 @@ function flip_thumbnail_status(id) {
   }
 }
 
+function flip_class(itemid, class1, class2) {
+	var elem = document.getElementById(itemid);
+	if (elem && typeof elem != 'undefined') {
+		elem.className = elem.className == class1 ? class2 : class1;
+		setCookie('flip_class_' + itemid, elem.className);
+	}
+}
+
 function tikitabs(focus,max) {
-  for (var i = 1; i < max; i++) {
+  var didit = false, didone = false;
+  for (var i = 1; i <= max; i++) {
     var tabname = 'tab' + i;
     var content = 'content' + i;
     if (document.getElementById(tabname) && typeof document.getElementById(tabname) != 'undefined') {
@@ -486,13 +500,21 @@ function tikitabs(focus,max) {
         setCookie('tab',focus);
         document.getElementById(tabname).className = 'tabmark';
         document.getElementById(tabname).className += ' tabactive';
+        didit = true;
       } else {
         //hide(tabname);
         hide(content);
         document.getElementById(tabname).className = 'tabmark';
         document.getElementById(tabname).className += ' tabinactive';
       }
+      if (!didone) { didone = true; }
     }
+  }
+  if (didone && !didit) {
+	  show('content1');
+	  setCookie('tab',1);
+	  document.getElementById('tab1').className = 'tabmark';
+	  document.getElementById('tab1').className += ' tabactive';
   }
 }
 
@@ -508,8 +530,10 @@ function setfoldericonstate(foo) {
  * def: menu type (e:extended, c:collapsed, f:fixed)
  * the menu is collapsed function of its cookie: if no cookie is set, the def is used
  */
-function setfolderstate(foo, def, img) {
-  var status = getCookie(foo, "menu", "o");
+function setfolderstate(foo, def, img, status) {
+	if (!status) {
+		status = getCookie(foo, "menu", "o");
+	}
     if (!img) {
     if (document.getElementsByName('icn' + foo)[0].src.search(/[\\\/]/))
       img = document.getElementsByName('icn' + foo)[0].src.replace(/.*[\\\/]([^\\\/]*)$/, "$1");
@@ -517,16 +541,16 @@ function setfolderstate(foo, def, img) {
       img = 'folder.png';
   }
     var src = img; // default
-  if (status == "o") {
-    show(foo);
-    src = "o" + img;
-  } else if (status != "c"  && def != 'd') {
-    show(foo);
-    src = "o" + img;
-  }
-  else {
-    hide(foo);
-  }
+	if (status == 'c') {
+		hide(foo);
+	} else {
+		show(foo);
+	}
+	if (status == 'c' && def != 'd') { /* need to change the open icon to a close one*/
+		src = src.replace(/^o/, '');
+	} else if (status != 'c' && def == 'd') { /* need to change the close icon to an open one */
+		src = 'o' + img;
+	}
   document.getElementsByName('icn' + foo)[0].src = document.getElementsByName('icn' + foo)[0].src.replace(/[^\\\/]*$/, src);
 }
 
@@ -543,8 +567,10 @@ function setheadingstate(foo) {
   }
 }
 
-function setsectionstate(foo, def, img) {
-  var status = getCookie(foo, "menu", "o");
+function setsectionstate(foo, def, img, status) {
+	if (!status) {
+		status = getCookie(foo, "menu", "o");
+	}
   if (status == "o") {
     show(foo);
     if (img) src = "o" + img;
@@ -560,7 +586,7 @@ function setsectionstate(foo, def, img) {
 }
 
 function icntoggle(foo, img) {
-    if (!img) {
+  if (!img) {
     if (document.getElementsByName('icn' + foo)[0].src.search(/[\\\/]/))
       img = document.getElementsByName('icn' + foo)[0].src.replace(/.*[\\\/]([^\\\/]*)$/, "$1");
     else
@@ -576,27 +602,6 @@ function icntoggle(foo, img) {
     document.getElementsByName('icn' + foo)[0].src = document.getElementsByName('icn' + foo)[0].src.replace(/[^\\\/]*$/, img);
   }
 }
-
-//
-// set folder icon state during page load
-//
-function setFolderIcons() {
-  var elements = document.forms[the_form].elements[elements_name];
-
-  var elements_cnt = ( typeof (elements.length) != 'undefined') ? elements.length : 0;
-
-  if (elements_cnt) {
-    for (var i = 0; i < elements_cnt; i++) {
-      elements[i].checked = document.forms[the_form].elements[switcher_name].checked;
-    }
-  } else {
-    elements.checked = document.forms[the_form].elements[switcher_name].checked;
-
-    ;
-  } // end if... else
-
-  return true;
-}     // setFolderIcons()
 
 // Initialize a cross-browser XMLHttpRequest object.
 // The object return has to be sent using send(). More parameters can be
@@ -798,7 +803,7 @@ function flipWithSign(foo) {
 
 // set the state of a flipped entry after page reload
 function setFlipWithSign(foo) {
-  if (getCookie(foo) == "o") {
+  if (getCookie(foo, "showhide_headings", "o") == "o") {
     collapseSign("flipper" + foo);
 
     show(foo);
@@ -998,278 +1003,16 @@ function protectEmail(nom, domain, sep) {
     document.write('<a class="wiki" href="mailto:'+nom+'@'+domain+'">'+nom+sep+domain+'</a>');
 }
 
-// --- begin of sorttable, written by Stuart Langridge, November 2003, MIT license ---
-addEvent(window, "load", sortables_init);
-
-var SORT_COLUMN_INDEX;
-
-function sortables_init() {
-    // Find all tables with class sortable and make them sortable
-    if (!document.getElementsByTagName) return;
-    tbls = document.getElementsByTagName("table");
-    for (ti=0;ti<tbls.length;ti++) {
-        thisTbl = tbls[ti];
-        if (((' '+thisTbl.className+' ').indexOf("sortable") != -1) && (thisTbl.id)) {
-            //initTable(thisTbl.id);
-            ts_makeSortable(thisTbl);
-        }
-    }
-}
-
-function ts_makeSortable(table) {
-    if (table.rows && table.rows.length > 0) {
-        var firstRow = table.rows[0];
-    }
-    if (!firstRow) return;
-
-    // We have a first row: assume it's the header, and make its contents clickable links
-    for (var i=0;i<firstRow.cells.length;i++) {
-        var cell = firstRow.cells[i];
-        var txt = ts_getInnerText(cell);
-        cell.innerHTML = '<a href="#" class="sortheader" onclick="ts_resortTable(this);return false;">'+txt+'<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a>';
-    }
-}
-
-function ts_getInnerText(el) {
-  if (typeof el == "string") return el;
-  if (typeof el == "undefined") { return el };
-  if (el.innerText) return el.innerText;	//Not needed but it is faster
-  var str = "";
-
-  var cs = el.childNodes;
-  var l = cs.length;
-  for (var i = 0; i < l; i++) {
-    switch (cs[i].nodeType) {
-      case 1: //ELEMENT_NODE
-        str += ts_getInnerText(cs[i]);
-        break;
-      case 3:	//TEXT_NODE
-        str += cs[i].nodeValue;
-        break;
-    }
-  }
-  return str;
-}
-
-function ts_resortTable(lnk) {
-    // get the span
-    var span;
-    for (var ci=0;ci<lnk.childNodes.length;ci++) {
-        if (lnk.childNodes[ci].tagName && lnk.childNodes[ci].tagName.toLowerCase() == 'span') span = lnk.childNodes[ci];
-    }
-    var spantext = ts_getInnerText(span);
-    var td = lnk.parentNode;
-    var column = td.cellIndex;
-    var table = getParent(td,'TABLE');
-
-    // Work out a type for the column
-    if (table.rows.length <= 1) return;
-    var itm = ts_getInnerText(table.rows[1].cells[column]);
-    sortfn = ts_sort_caseinsensitive;
-    if (itm.match(/^\d\d[\/-]\d\d[\/-]\d\d\d\d$/)) sortfn = ts_sort_date;
-    if (itm.match(/^\d\d[\/-]\d\d[\/-]\d\d$/)) sortfn = ts_sort_date;
-    if (itm.match(/^[$]/)) sortfn = ts_sort_currency;
-    if (itm.match(/^[\d\.]+$/)) sortfn = ts_sort_numeric;
-    SORT_COLUMN_INDEX = column;
-    var firstRow = new Array();
-    var newRows = new Array();
-    for (i=0;i<table.rows[0].length;i++) { firstRow[i] = table.rows[0][i]; }
-    for (j=1;j<table.rows.length;j++) { newRows[j-1] = table.rows[j]; }
-
-    newRows.sort(sortfn);
-
-    if (span.getAttribute("sortdir") == 'down') {
-        ARROW = '&nbsp;&nbsp;<img src="pics/icons/resultset_up.png" border="0" width="16" height="16" />';
-        newRows.reverse();
-        span.setAttribute('sortdir','up');
-    } else {
-        ARROW = '&nbsp;&nbsp;<img src="pics/icons/resultset_down.png" border="0" width="16" height="16" />';
-        span.setAttribute('sortdir','down');
-    }
-
-    // We appendChild rows that already exist to the tbody, so it moves them rather than creating new ones
-    // don't do sortbottom rows
-    for (i=0;i<newRows.length;i++) { if (!newRows[i].className || (newRows[i].className && (newRows[i].className.indexOf('sortbottom') == -1))) table.tBodies[0].appendChild(newRows[i]);}
-    // do sortbottom rows only
-    for (i=0;i<newRows.length;i++) { if (newRows[i].className && (newRows[i].className.indexOf('sortbottom') != -1)) table.tBodies[0].appendChild(newRows[i]);}
-
-    // Delete any other arrows there may be showing
-    var allspans = document.getElementsByTagName("span");
-    for (var ci=0;ci<allspans.length;ci++) {
-        if (allspans[ci].className == 'sortarrow') {
-            if (getParent(allspans[ci],"table") == getParent(lnk,"table")) { // in the same table as us?
-                allspans[ci].innerHTML = '&nbsp;&nbsp;&nbsp;';
-            }
-        }
-    }
-
-    span.innerHTML = ARROW;
-}
-
-function getParent(el, pTagName) {
-  if (el == null) return null;
-  else if (el.nodeType == 1 && el.tagName.toLowerCase() == pTagName.toLowerCase())	// Gecko bug, supposed to be uppercase
-    return el;
-  else
-    return getParent(el.parentNode, pTagName);
-}
-function ts_sort_date(a,b) {
-    // y2k notes: two digit years less than 50 are treated as 20XX, greater than 50 are treated as 19XX
-    aa = ts_getInnerText(a.cells[SORT_COLUMN_INDEX]);
-    bb = ts_getInnerText(b.cells[SORT_COLUMN_INDEX]);
-    if (aa.length == 10) {
-        dt1 = aa.substr(6,4)+aa.substr(3,2)+aa.substr(0,2);
-    } else {
-        yr = aa.substr(6,2);
-        if (parseInt(yr) < 50) { yr = '20'+yr; } else { yr = '19'+yr; }
-        dt1 = yr+aa.substr(3,2)+aa.substr(0,2);
-    }
-    if (bb.length == 10) {
-        dt2 = bb.substr(6,4)+bb.substr(3,2)+bb.substr(0,2);
-    } else {
-        yr = bb.substr(6,2);
-        if (parseInt(yr) < 50) { yr = '20'+yr; } else { yr = '19'+yr; }
-        dt2 = yr+bb.substr(3,2)+bb.substr(0,2);
-    }
-    if (dt1==dt2) return 0;
-    if (dt1<dt2) return -1;
-    return 1;
-}
-
-function ts_sort_currency(a,b) {
-    aa = ts_getInnerText(a.cells[SORT_COLUMN_INDEX]).replace(/[^0-9.]/g,'');
-    bb = ts_getInnerText(b.cells[SORT_COLUMN_INDEX]).replace(/[^0-9.]/g,'');
-    return parseFloat(aa) - parseFloat(bb);
-}
-
-function ts_sort_numeric(a,b) {
-    aa = parseFloat(ts_getInnerText(a.cells[SORT_COLUMN_INDEX]));
-    if (isNaN(aa)) aa = 0;
-    bb = parseFloat(ts_getInnerText(b.cells[SORT_COLUMN_INDEX]));
-    if (isNaN(bb)) bb = 0;
-    return aa-bb;
-}
-
-function ts_sort_caseinsensitive(a,b) {
-    aa = ts_getInnerText(a.cells[SORT_COLUMN_INDEX]).toLowerCase();
-    bb = ts_getInnerText(b.cells[SORT_COLUMN_INDEX]).toLowerCase();
-    if (aa==bb) return 0;
-    if (aa<bb) return -1;
-    return 1;
-}
-
-function ts_sort_default(a,b) {
-    aa = ts_getInnerText(a.cells[SORT_COLUMN_INDEX]);
-    bb = ts_getInnerText(b.cells[SORT_COLUMN_INDEX]);
-    if (aa==bb) return 0;
-    if (aa<bb) return -1;
-    return 1;
-}
-
-// function to allow multiselection in checkboxes
-// must be called like this :
-//
-// <input type="checkbox" onclick="checkbox_list_check_all(form_name,[checkbox_name_1,checkbox_name2 ...],true|false);">
-function checkbox_list_check_all(form,list,checking) {
-  for (var checkbox in list) {
-    document.forms[form].elements[list[checkbox]].checked=checking;
-  }
-}
-
-
-function addEvent(elm, evType, fn, useCapture)
-// addEvent and removeEvent
-// cross-browser event handling for IE5+,  NS6 and Mozilla
-// By Scott Andrew
-{
-  if (elm.addEventListener){
-    elm.addEventListener(evType, fn, useCapture);
-    return true;
-  } else if (elm.attachEvent){
-    var r = elm.attachEvent("on"+evType, fn);
-    return r;
-  } else {
-    alert("Handler could not be removed");
-  }
-}
-
-function adjustThumbnails() {
-  var i,j,h = 0;
-  var t = document.getElementById("thumbnails").childNodes;
-  for ( i = 0; i < t.length; i++ ) {
-    if ( t[i].className == "thumbnailcontener" ) {
-      var t2 = t[i].childNodes;
-      for ( j = 0; j < t2.length; j++ ) {
-        if ( t2[j].className == "thumbnail" ) {
-          t2[j].style.height = "100%";
-          t2[j].style.overflow = "visible";
-        }
-      }
-      if ( t[i].offsetHeight >= h ) {
-        h = t[i].offsetHeight;
-        t[i].style.height = h+"px";
-      } else if ( t[i].offsetHeight < h ) {
-        t[i].style.height = h+"px";
-      }
-    }
-  }
-  for ( i = 0; i < t.length; i++ ) {
-    if ( t[i].className == "thumbnailcontener" ) {
-      if ( t[i].offsetHeight <= h ) {
-        t[i].style.height = h+"px";
-      } else {
-        break;
-      }
-    }
-  }
-}
-
-// --- end of sorttable ---
-/* do not need if all pngs are png8
-function correctPNG() // correctly handle PNG transparency in Win IE 5.5 & 6.
-{
-   var arVersion = navigator.appVersion.split("MSIE")
-   var version = parseFloat(arVersion[1])
-   if ((version >= 5.5) && (document.body.filters))
-   {
-      for(var i=0; i<document.images.length; i++)
-      {
-         var img = document.images[i]
-         var imgName = img.src.toUpperCase()
-         if (imgName.substring(imgName.length-3, imgName.length) == "PNG")
-         {
-            var imgID = (img.id) ? "id='" + img.id + "' " : ""
-            var imgClass = (img.className) ? "class='" + img.className + "' " : ""
-            var imgTitle = (img.title) ? "title='" + img.title + "' " : "title='" + img.alt + "' "
-            var imgStyle = "display:inline-block;" + img.style.cssText
-            if (img.align == "left") imgStyle = "float:left;" + imgStyle
-            if (img.align == "right") imgStyle = "float:right;" + imgStyle
-            if (img.parentElement.href) imgStyle = "cursor:hand;" + imgStyle
-            var strNewHTML = "<span " + imgID + imgClass + imgTitle
-            + " style=\"" + "width:" + img.width + "px; height:" + img.height + "px;" + imgStyle + ";"
-            + "filter:progid:DXImageTransform.Microsoft.AlphaImageLoader"
-            + "(src=\'" + img.src + "\', sizingMethod='scale');\"></span>"
-            img.outerHTML = strNewHTML
-            i = i-1
-         }
-      }
-   }
-}
-*/
 browser();
-/* do not need if all the pngs are png8
-if (this.iewin) {
-  window.attachEvent("onload", correctPNG);
 
-}
-*/
 // This was added to allow wiki3d to change url on tiki's window
 window.name = 'tiki';
 
 /* Function to add image from filegals in non wysiwyg editor */
 /* must be here when ajax is activated                       */
 function SetMyUrl(area,url) {
-  str = "{img src=" + url + " }\n";
+	var myurl = url.replace(/.*\/([^\/]*)$/, '$1'); /* make relative path from the absolute url */
+  str = "{img src=\""+myurl.replace(/display$/, 'thumbnail')+"\" alt=\"\" link=\""+myurl+"\" rel=\"shadowbox[g];type=img\"} ";
   insertAt(area, str);
 }
 /* Count the number of words (spearated with space) */
@@ -1283,18 +1026,19 @@ function wordCount(maxSize, source, cpt, message) {
   }
 }
 
-function show_plugin_form( type, index, pageName, args, bodyContent )
+function show_plugin_form( type, index, pageName, pluginArgs, bodyContent )
 {
   var target = document.getElementById( type + index );
   var content = target.innerHTML;
 
-  var form = build_plugin_form( type, index, pageName, args, bodyContent );
+  var form = build_plugin_form( type, index, pageName, pluginArgs, bodyContent );
 
   target.innerHTML = '';
   target.appendChild( form );
 }
 
-function popup_plugin_form( type, index, pageName, args, bodyContent, edit_icon )
+/* wikiplugin editor */
+function popup_plugin_form( area_name, type, index, pageName, pluginArgs, bodyContent, edit_icon )
 {
   var container = document.createElement( 'div' );
   container.className = 'plugin-form-float';
@@ -1304,22 +1048,32 @@ function popup_plugin_form( type, index, pageName, args, bodyContent, edit_icon 
   minimize.appendChild( icon );
   minimize.href = 'javascript:void(0)';
   container.appendChild( minimize );
-  icon.src = 'images/fullscreen_minimize.gif';
+  icon.src = 'pics/icons/cross.png';
   icon.style.position = 'absolute';
-  icon.style.top = '0px';
-  icon.style.right = '0px';
+  icon.style.top = '5px';
+  icon.style.right = '5px';
   icon.style.border = 'none';
 
   if (!index) { index = 0; }
   if (!pageName) { pageName = ''; }
-  if (!args) { args = {}; }
-  if (!bodyContent) { bodyContent = ''; }
+  if (!pluginArgs) { pluginArgs = {}; }
+  if (!bodyContent) { 
+	  if (document.getSelection) {
+		  bodyContent = document.getSelection();
+	  } else if (window.getSelection) {
+		  bodyContent = window.getSelection();
+	  } else if (document.selection) {
+		  bodyContent = document.selection.createRange().text;
+	  } else {
+		  bodyContent = '';
+	  }
+  }
 
   var form = build_plugin_form(
     type,
     index,
     pageName,
-    args,
+    pluginArgs,
     bodyContent
   );
 
@@ -1329,24 +1083,31 @@ function popup_plugin_form( type, index, pageName, args, bodyContent, edit_icon 
     var params = [];
     var edit = edit_icon;
 
-    for( var k in meta.params )
-    {
-      if( typeof(meta.params[k]) != 'object' )
-        continue;
+    for(i=0; i<form.elements.length; i++){
+      element = form.elements[i].name;
 
-      var val = form['params[' + k + ']'].value;
+      var matches = element.match(/params\[(.*)\]/);
+
+      if (matches == null) {
+	// it's not a parameter, skip 
+        continue;
+      }
+      var param = matches[1];
+
+      var val = form.elements[i].value;
 
       if( val != '' )
-        params.push( k + '="' + val + '"' );
+        params.push( param + '="' + val + '"' ); 
     }
 
-    var blob = '{' + type.toUpperCase() + '(' + params.join(',') + ')}' + form.content.value + '{' + type.toUpperCase() + '}';
+    var blob = '{' + type.toUpperCase() + '(' + params.join(',') + ')}' + (typeof form.content != 'undefined' ? form.content.value : '') + '{' + type.toUpperCase() + '}';
 
-    insertAt( 'editwiki', blob );
-
-    document.body.removeChild( container );
-    if (edit)
-      edit.style.display = 'inline';
+    if (edit) {
+      return true;
+    } else {
+      insertAt( area_name, blob );
+      document.body.removeChild( container );
+    }
     return false;
   }
 
@@ -1363,7 +1124,7 @@ function popup_plugin_form( type, index, pageName, args, bodyContent, edit_icon 
   container.appendChild( form );
 }
 
-function build_plugin_form( type, index, pageName, args, bodyContent )
+function build_plugin_form( type, index, pageName, pluginArgs, bodyContent )
 {
   var form = document.createElement( 'form' );
   form.method = 'post';
@@ -1402,38 +1163,35 @@ function build_plugin_form( type, index, pageName, args, bodyContent )
   table.className = 'normal';
   form.appendChild( table );
 
+  var potentiallyExtraPluginArgs = pluginArgs;
+
   var rowNumber = 0;
-  for( i in meta.params )
+  for( param in meta.params )
   {
-    if( typeof(meta.params[i]) != 'object' || meta.params[i].name == 'array' )
+    if( typeof(meta.params[param]) != 'object' || meta.params[param].name == 'array' )
       continue;
 
     var row = table.insertRow( rowNumber++ );
-    var label = row.insertCell( 0 );
-    var field = row.insertCell( 1 );
-    row.className = 'formcolor';
+    build_plugin_form_row(row, param, meta.params[param].name, meta.params[param].required, pluginArgs[param], meta.params[param].description)	
 
-    label.innerHTML = meta.params[i].name;
-    if( meta.params[i].required )
-      label.style.fontWeight = 'bold';
+    delete potentiallyExtraPluginArgs[param];
+  }
 
-    var input = document.createElement( 'input' );
-    input.type = 'text';
-    input.name = 'params[' + i + ']';
-    if( args[i] )
-      input.value = args[i];
+  for( extraArg in potentiallyExtraPluginArgs) {
+	if (extraArg == '') {
+	   // TODO HACK: See bug 2499 http://dev.tikiwiki.org/tiki-view_tracker_item.php?itemId=2499
+	   continue;
+        }
 
-    var desc = document.createElement( 'div' );
-    desc.style.fontSize = 'x-small';
-    desc.innerHTML = meta.params[i].description;
-
-    field.appendChild( input );
-    field.appendChild( desc );
+        var row = table.insertRow( rowNumber++ );
+	build_plugin_form_row(row, extraArg, extraArg, 'extra', pluginArgs[extraArg], extraArg)	
   }
 
   var bodyRow = table.insertRow(rowNumber++);
   var bodyCell = bodyRow.insertCell(0);
   var bodyField = document.createElement( 'textarea' );
+	bodyField.cols = '70'
+	bodyField.rows = '12';
   var bodyDesc = document.createElement( 'div' );
 
   if( meta.body )
@@ -1462,6 +1220,36 @@ function build_plugin_form( type, index, pageName, args, bodyContent )
   return form;
 }
 
+
+function build_plugin_form_row(row, name, label_name, requiredOrSpecial, value, description)
+{
+
+    var label = row.insertCell( 0 );
+    var field = row.insertCell( 1 );
+    row.className = 'formcolor';
+
+    label.innerHTML = label_name;
+    switch ( requiredOrSpecial ) {
+	case (true):  // required flag
+	      label.style.fontWeight = 'bold';
+	case ('extra') :
+	      label.style.fontStyle = 'italic';
+    }
+
+    var input = document.createElement( 'input' );
+    input.type = 'text';
+    input.name = 'params['+name+']'; 
+    if( value )
+      input.value = value;
+
+    var desc = document.createElement( 'div' );
+    desc.style.fontSize = 'x-small';
+    desc.innerHTML = description; 
+
+    field.appendChild( input );
+    field.appendChild( desc );
+
+}
 
 // Password strength
 // Based from code by:
@@ -1707,5 +1495,17 @@ function pollsToggleQuickOptions()
 	var display = $( 'tikiPollsQuickOptions' ).getStyle( 'display' );
 	if( display == 'none' ) $( 'tikiPollsQuickOptions' ).setStyle( 'display', 'block' );
 	else $( 'tikiPollsQuickOptions' ).setStyle( 'display', 'none' );
+}
+
+/**
+* toggles div for droplist with Disabled option
+*/
+
+function hidedisabled(divid,value) {
+	if(value=='disabled') {
+	document.getElementById(divid).style.display = 'none';
+	} else {
+	document.getElementById(divid).style.display = 'block';
+	}
 }
 

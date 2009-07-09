@@ -1,6 +1,6 @@
 <?php
 
-require_once 'DeclFilter/UnsetRule.php';
+require_once 'lib/core/lib/DeclFilter/UnsetRule.php';
 
 class DeclFilter_KeyPatternUnsetRule extends DeclFilter_UnsetRule
 {
@@ -22,5 +22,3 @@ class DeclFilter_KeyPatternUnsetRule extends DeclFilter_UnsetRule
 		return false;
 	}
 }
-
-?>

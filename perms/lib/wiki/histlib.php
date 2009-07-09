@@ -11,8 +11,11 @@ class HistLib extends TikiLib {
 		$this->TikiLib($db);
 	}
 
-	// Removes a specific version of a page
-	function remove_version($page, $version, $comment = '', $historyId = '') {
+	/* 
+		*	Removes a specific version of a page
+		*
+		*/
+	function remove_version($page, $version, $historyId = '') {
 		global $prefs;
 		if ($prefs['feature_contribution'] == 'y') {
 			global $contributionlib; include_once('lib/contribution/contributionlib.php');
@@ -43,8 +46,7 @@ class HistLib extends TikiLib {
 		    $comment = $info["comment"];
 		    $data = $info["data"];
 		    $description = $info["description"];
-			$query = "insert into `tiki_history`(`pageName`, `version`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`)
-		    			values(?,?,?,?,?,?,?,?)";
+				$query = "insert into `tiki_history`(`pageName`, `version`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`) values(?,?,?,?,?,?,?,?)";
 		    $this->query($query,array($page,(int) $old_version,(int) $lastModif,$user,$ip,$comment,$data,$description));
 		}
 		
@@ -63,9 +65,8 @@ class HistLib extends TikiLib {
 			$res["lastModif"] = time();
 			$res["comment"] = $res["comment"] . " [" . tra("rollback version ") . $version . "]"; 		
 		}
-		$query
-			= "update `tiki_pages` set `data`=?,`lastModif`=?,`user`=?,`comment`=?,`version`=`version`+1,`ip`=? where `pageName`=?";
-		$result = $this->query($query,array($res["data"],$res["lastModif"],$res["user"],$res["comment"],$res["ip"],$page));
+		$query = "update `tiki_pages` set `data`=?,`lastModif`=?,`user`=?,`comment`=?,`version`=`version`+1,`ip`=?, `description`=? where `pageName`=?";
+		$result = $this->query($query,array($res['data'], $res['lastModif'], $res['user'], $res['comment'], $res['ip'], $res['description'], $page));
 		$query = "delete from `tiki_links` where `fromPage` = ?";
 		$result = $this->query($query,array($page));
 		$this->clear_links($page);
@@ -75,9 +76,6 @@ class HistLib extends TikiLib {
 			$this->replace_link($page, $a_page);
 		}
 
-		//$query="delete from `tiki_history` where `pageName`='$page' and version='$version'";
-		//$result=$this->query($query);
-		//
 		global $prefs;
 		if ($prefs['feature_actionlog'] == 'y') {
 			global $logslib; include_once('lib/logs/logslib.php');
@@ -338,8 +336,8 @@ function histlib_helper_setup_diff( $page, $oldver, $newver )
 	}
 	$smarty->assign('diff_style', $_REQUEST["diff_style"]);
 	if ($_REQUEST["diff_style"] == "sideview") {
-		$old["data"] = $tikilib->parse_data($old["data"]);
-		$new["data"] = $tikilib->parse_data($new["data"]);
+		$old["data"] = $tikilib->parse_data($old["data"], array('preview_mode' => true));
+		$new["data"] = $tikilib->parse_data($new["data"], array('preview_mode' => true));
 	} else {
 		require_once('lib/diff/difflib.php');
 		if ($info['is_html'] == 1 and $_REQUEST["diff_style"] != "htmldiff") {
@@ -356,7 +354,7 @@ function histlib_helper_setup_diff( $page, $oldver, $newver )
 
 			$prefs['wiki_edit_plugin'] = 'n';
 			$prefs['wiki_edit_section'] = 'n';
-			$parse_options = array('is_html' => ($old['is_html'] == 1), 'noheadinc' => true);
+			$parse_options = array('is_html' => ($old['is_html'] == 1), 'noheadinc' => true, 'preview_mode' => true);
 			$old["data"] = $tikilib->parse_data($old["data"], $parse_options);
 
 			$parse_options = array('is_html' => ($new['is_html'] == 1), 'noheadinc' => true);
@@ -378,5 +376,3 @@ function histlib_strip_irrelevant( $data )
 	$data = preg_replace( "/<(h1|h2|h3|h4|h5|h6|h7)\s+([^\\\\>]+)>/i", '<$1>', $data );
 	return $data;
 }
-
-?>

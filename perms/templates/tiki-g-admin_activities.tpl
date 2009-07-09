@@ -3,7 +3,7 @@
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}To learn more about the <a class="rbox-link" target="tikihelp" href="http://workflow.tikiwiki.org">Galaxia workflow engine</a>{/tr}{/remarksbox}
 
-{include file=tiki-g-proc_bar.tpl}
+{include file='tiki-g-proc_bar.tpl'}
 
 {if count($errors) > 0}
 <div class="wikitext">

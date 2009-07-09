@@ -63,5 +63,3 @@ tiki_plugins[<?php echo json_encode( $plugin ) ?>] = <?php echo json_encode( $in
 $content = ob_get_contents();
 file_put_contents( $cache, $content );
 ob_end_flush();
-	
-?>

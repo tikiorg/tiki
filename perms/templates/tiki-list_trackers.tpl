@@ -4,12 +4,12 @@
 
 <div class="navbar">
   {if $tiki_p_admin_trackers eq 'y'}
-		{button href="tiki-admin_trackers.php?show=mod#mod" _text="{tr}Create Trackers{/tr}"}
+	{button href="tiki-admin_trackers.php?show=mod#mod" _text="{tr}Create Tracker{/tr}"}
   {/if}
 </div>
 
 {if ($channels) or ($find)}
-  {include file='find.tpl' _sort_mode='y'}
+  {include file='find.tpl'}
   {if ($find) and ($channels)}
     <p>{tr}Found{/tr} {$channels|@count} {tr}trackers{/tr}:</p>
   {/if}

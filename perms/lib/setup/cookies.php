@@ -9,7 +9,7 @@
 //this script may only be included - so its better to die if called directly.
 $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
-$headerlib->add_js("tiki_cookie_jar=new Array()");
+$headerlib->add_js("tiki_cookie_jar=new Array();");
 
 if ( isset($_SESSION['tiki_cookie_jar']) ) {
 	$cookielist = array();
@@ -53,12 +53,23 @@ function getCookie($name, $section=null, $default=null) {
 	}
 }
 
+global $cookietab;
 if ($prefs['feature_tabs'] == 'y') {
 	if( isset($_GET['cookietab'])) {
 		$smarty->assign('cookietab',$_GET['cookietab']);
-	} elseif (count($_POST) > 0 and preg_replace(array('/\?.*$/','/^http.?:\/\//'),'',$_SERVER['HTTP_REFERER']) == preg_replace('/\?.*$/','',$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']) && isset($_COOKIE['tab'])) {
+		$cookietab = $_GET['cookietab'];
+	} else if (count($_POST) > 0 and preg_replace(array('/\?.*$/','/^http.?:\/\//'),'',$_SERVER['HTTP_REFERER']) == preg_replace('/\?.*$/','',$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']) && isset($_COOKIE['tab'])) {
 		$smarty->assign('cookietab',$_COOKIE['tab']);
+		$cookietab = $_COOKIE['tab'];
+	} else if (isset($_SERVER['HTTP_REFERER']) && preg_replace(array('/\?.*$/','/^http.?:\/\//'),'',$_SERVER['HTTP_REFERER']) == preg_replace('/\?.*$/','',$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']) && isset($_COOKIE['tab'])) {
+		preg_match('/[\?\&]page=([^\&]*)/', $_SERVER['REQUEST_URI'], $q_match);	// TODO replace with better way to get a param?
+		preg_match('/[\?\&]page=([^\&]*)/', $_SERVER['HTTP_REFERER'], $ref_match);
+		if ($q_match == $ref_match) {	// for admin includes when staying on same panel
+			$smarty->assign('cookietab',$_COOKIE['tab']);
+			$cookietab = $_COOKIE['tab'];
+		}
 	} else {
 		$smarty->assign('cookietab',1);
+		$cookietab = 1;
 	}
 }

@@ -167,5 +167,3 @@ class Auth_Container_KADM5 extends Auth_Container {
     // }}}
 
 }
-
-?>

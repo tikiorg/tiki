@@ -1,6 +1,6 @@
 <?php
 
-class Multilingual_Aligner_SentenceSegmentorTest extends PHPUnit_Framework_TestCase
+class Multilingual_Aligner_SentenceSegmentorTest extends TikiTestCase
 {
 
    ////////////////////////////////////////////////////////////////
@@ -38,6 +38,12 @@ class Multilingual_Aligner_SentenceSegmentorTest extends PHPUnit_Framework_TestC
                                      "Segmentation did not deal properly with separation with question mark.");
    }   
 
+   public function test_segmentation_deals_with_several_question_marks() {
+      $text = "hello???? Anybody home?";
+      $expSentences = array("hello????", " Anybody home?");
+      $this->do_test_basic_segmentation($text, $expSentences, 
+                                     "Segmentation did not deal properly with separation with question mark.");
+   }   
    
    public function test_segmentation_deals_with_exclamation_mark() {
       $text = "hello! Anybody home!";
@@ -46,7 +52,16 @@ class Multilingual_Aligner_SentenceSegmentorTest extends PHPUnit_Framework_TestC
                                      "Segmentation did not deal properly with separation with exclamation mark.");
    }  
    
-   public function test_segmentation_deals_with_exclamation_empty_string() {
+
+   public function test_segmentation_deals_with_mix_of_exclamation_and_question_marks() {
+      $text = "hello?!? Anybody home!";
+      $expSentences = array("hello?!?", " Anybody home!");
+      $this->do_test_basic_segmentation($text, $expSentences, 
+                                     "Segmentation did not deal properly with separation with exclamation mark.");
+   }  
+
+
+   public function test_segmentation_deals_with_empty_string() {
       $text = "";
       $expSentences = array();
       $this->do_test_basic_segmentation($text, $expSentences, 
@@ -97,5 +112,3 @@ class Multilingual_Aligner_SentenceSegmentorTest extends PHPUnit_Framework_TestC
                           "Got      Sentences: $got_sentences_as_string\n");      
    }
 }
-
-?>

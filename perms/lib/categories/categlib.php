@@ -261,7 +261,7 @@ class CategLib extends ObjectLib {
 			return 0;
 		}
 
-		$query = "select o.`objectId` from `tiki_categorized_objects` c, `tiki_objects` o where c.`catObjectId`=o.`objectId` and o.`type`=? and o.`itemId`=?";
+		$query = "select o.`objectId` from `tiki_categorized_objects` c, `tiki_objects` o, `tiki_category_objects` tco where c.`catObjectId`=o.`objectId` and o.`type`=? and o.`itemId`=? and tco.`catObjectId`=c.`catObjectId`";
 		$bindvars = array($type,$itemId);
 		settype($bindvars["1"],"string");
 		$result = $this->query($query,$bindvars);
@@ -279,9 +279,11 @@ class CategLib extends ObjectLib {
 
 		$id = $this->add_object($type, $itemId, $description, $name, $href);
 		
-		$query = "insert into `tiki_categorized_objects` (`catObjectId`) values (?)";
-
-		$this->query($query, array($id));
+		$query = "select `catObjectId` from `tiki_categorized_objects` where `catObjectId`=?";
+		if (!$this->getOne($query, array($id))) {
+			$query = "insert into `tiki_categorized_objects` (`catObjectId`) values (?)";
+			$this->query($query, array($id));
+		}
 		$cachelib->invalidate('allcategs');
 		$cachelib->empty_type_cache('fgals_perms');
 		return $id;
@@ -320,6 +322,7 @@ class CategLib extends ObjectLib {
 			 'file gallery' => 'tiki_p_view_file_gallery',
 			 'tracker' => 'tiki_p_view_trackers',
 			 'blog' => 'tiki_p_read_blog',
+			 'blog post' => 'tiki_p_read_blog',
 			 'quiz' => 'tiki_p_take_quiz',
 
 			 // overhead - we are checking individual permission on types below, but they
@@ -513,59 +516,83 @@ class CategLib extends ObjectLib {
 			$parents = $this->get_object_categories("$type", $itemId);
 			$return_perms = array(); // initialize array for storing perms to be returned
 
-			if (!$cachelib->isCached("categories_permission_names")) {
+			if (!$cachelib->isCached("category_permission_names")) {
 				$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'category');
-				$cachelib->cacheItem("categories_permission_names",serialize($perms));
+				$cachelib->cacheItem("category_permission_names",serialize($perms));
 			} else {
-				$perms = unserialize($cachelib->getCached("categories_permission_names"));
+				$perms = unserialize($cachelib->getCached("category_permission_names"));
 			}
 
+			$permission_names = array();
 			foreach ($perms["data"] as $perm) {
-				$perm = $perm["permName"];
-				if ($tiki_p_admin == 'y') {
-					$return_perms["$perm"] = 'y';
-				} else {
-					foreach ($parents as $categId) {
-						if ($userlib->object_has_one_permission($categId, 'category')) {
-							if ($userlib->object_has_permission($user, $categId, 'category', $perm)) {
-								$return_perms["$perm"] = 'y';
-								if ($prefs['feature_category_reinforce'] == "n") {
-									break 1;
-								}
-							} else {
-								$return_perms["$perm"] = 'n';
-								// better-sorry-than-safe approach:
-								// if a user lacks a given permission regarding a particular category,
-								// that category takes precedence when considering if user has that permission
-								if ($prefs['feature_category_reinforce'] == "y") {
-									break 1;
-								}
-								// break out of one FOREACH loop
-							}
-						} else {
-							$categpath = $this->get_category_path($categId);
-							foreach ($categpath as $cat) {
-								if ($userlib->object_has_one_permission($cat['categId'], 'category')) {
-									if ($userlib->object_has_permission($user, $cat['categId'], 'category', $perm)) {
-										$return_perms["$perm"] = 'y';
-								   		break 1;
-									} else {
-										$return_perms["$perm"] = 'n';
-										// better-sorry-than-safe approach:
-										// if a user lacks a given permission regarding a particular category,
-										// that category takes precedence when considering if user has that permission
-										if ($prefs['feature_category_reinforce'] == "y") {
-											break 2;
-										}
-										// break out of one FOR loop and one FOREACH loop
-									}
-								} else { /* no special perm on cat  so general perm: (to see the categ panel as anonymous */ 
-									$return_perms[$perm] = $GLOBALS[$perm];
-								}
+				$permission_names[] = $perm["permName"];
+			}
 
+			//admins get it all
+			if ($tiki_p_admin == 'y') {
+				foreach ($permission_names as $perm) {
+					$return_perms["$perm"] = 'y';
+				}
+				return $return_perms;
+			}
+
+			//find out which permissions we're allowed or denied (or both, in the case of multiple categories)
+			$allowed_permissions = array();
+			$denied_permissions = array();
+			foreach ($parents as $categId) {
+				if ($userlib->object_has_one_permission($categId, 'category')) {
+					$user_perms = $userlib->get_object_permissions_for_user($categId, 'category', $user);
+					foreach ($permission_names as $perm) {
+						if (in_array($perm, $user_perms)) {
+							$allowed_permissions[] = $perm;
+						} else {
+							$denied_permissions[] = $perm;
+						}
+					}
+				} else {
+					$categpath = $this->get_category_path($categId);
+					foreach ($categpath as $cat) {
+						if ($userlib->object_has_one_permission($cat['categId'], 'category')) {
+							$user_perms = $userlib->get_object_permissions_for_user($categId, 'category', $user);
+							foreach ($permission_names as $perm) {
+								if (in_array($perm, $user_perms)) {
+									$allowed_permissions[] = $perm;
+								} else {
+									$denied_permissions[] = $perm;
+								}
 							}
 						}
+					}
+				}
+			}
+			$allowed_permissions = array_unique($allowed_permissions);
+			$denied_permissions = array_unique($denied_permissions);
+			//if this is yes, the user has to have the permission in every category to be granted permission
+			if ($prefs['feature_category_reinforce'] == "y") {
+				foreach ($allowed_permissions as $allowed_permission) {
+					if (!in_array($allowed_permission, $denied_permissions)) {
+						$return_perms["$allowed_permission"] =  'y';
+					} else {
+						$return_perms["$allowed_permission"] =  'n';
+					}
+				}
+			} else {
+				//otherwise, they just need the permission once
+				foreach ($allowed_permissions as $allowed_permission) {
+					$return_perms["$allowed_permission"] =  'y';
+				}
+			}
 
+			/* if no special perm on cat  so general perm: (to see the categ panel as anonymous */ 
+			if (!$allowed_permissions && !$denied_permissions) {
+				foreach ($permission_names as $perm) {
+					$return_perms[$perm] = $GLOBALS[$perm];
+				}
+			} else {
+				//set the rest to no
+				foreach ($permission_names as $perm) {
+					if (!in_array($perm, $allowed_permissions)) {
+						$return_perms["$perm"] =  'n';
 					}
 				}
 			}
@@ -573,7 +600,6 @@ class CategLib extends ObjectLib {
 		} else {
 			return FALSE;
 		}
-		
 	}
 
 	// Get all the objects in a category
@@ -1053,12 +1079,7 @@ class CategLib extends ObjectLib {
 					}
 				}
 				$smarty->assign('catp',array_reverse($catp,true));
-				// this line here needed to preserve old behavior where multiple categpaths
-				// are shown on different lines, since the line break has been taken out of categpath.tpl
-				// to avoid line break in the case where there is only one categpath
-				// TODO: perhaps the categpath should be returned as array so that templates can style with complete control?  
-				if ($catpath > '') $catpath .= '<br />';
-				$catpath.= $smarty->fetch('categpath.tpl');
+				$catpath .= $smarty->fetch('categpath.tpl');
 			}
 			return $catpath;
     }
@@ -1312,7 +1333,7 @@ class CategLib extends ObjectLib {
 	function unwatch_category($user, $categId) {
 		global $tikilib;		
 		
-		$tikilib->remove_user_watch($user, 'category_changed', $categId);
+		$tikilib->remove_user_watch($user, 'category_changed', $categId, 'Category' );
 	}
 
 
@@ -1323,10 +1344,10 @@ class CategLib extends ObjectLib {
 	function unwatch_category_and_descendants($user, $categId) {
 		global $tikilib;		
 		
-		$tikilib->remove_user_watch($user, 'category_changed', $categId);
+		$tikilib->remove_user_watch($user, 'category_changed', $categId, 'Category');
 		$descendants = $this->get_category_descendants($categId);
 		foreach ($descendants as $descendant) {
-			$tikilib->remove_user_watch($user, 'category_changed', $descendant);
+			$tikilib->remove_user_watch($user, 'category_changed', $descendant, 'Category');
 		}
 	}
 
@@ -1469,6 +1490,15 @@ class CategLib extends ObjectLib {
 	function update_object_categories($categories, $objId, $objType, $desc='', $name='', $href='') {
 		global $prefs, $user;
 		$old_categories = $this->get_object_categories($objType, $objId);
+		
+		//Dirty hack to remove the Slash at the end of the ID (Why is there a slash?! Bug is reportet.)
+		if (!empty($categories)) {
+			foreach($categories as $key=>$category) {
+				if($category{strlen($category)-1}=="/")
+					$categories[$key]=substr($category, 0, -1);
+			}
+		}
+		
 		// need to prevent categories where user has no perm (but is set by other users with perm) to be wiped out
 		if ($prefs['feature_category_reinforce'] == "n") {
 			foreach ($old_categories as $old_cat) {
@@ -1530,10 +1560,5 @@ class CategLib extends ObjectLib {
 	}
 	
 }
-
-
-
 global $dbTiki;
 $categlib = new CategLib($dbTiki);
-
-?>

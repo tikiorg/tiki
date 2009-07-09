@@ -29,6 +29,7 @@ function wikiplugin_showpages_help() {
 function wikiplugin_showpages_info() {
 	return array(
 		'name' => tra('Show Pages'),
+		'documentation' => 'PluginShowPages',
 		'description' => tra('List wiki pages'),
 		'prefs' => array( 'wikiplugin_showpages' ),
 		'params' => array(
@@ -86,5 +87,3 @@ function wikiplugin_showpages($data, $params) {
 
 	return $text;
 }
-
-?>

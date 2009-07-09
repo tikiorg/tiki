@@ -17,6 +17,12 @@ class Tiki_Profile_Installer
 		'plugin_alias' => 'Tiki_Profile_InstallHandler_PluginAlias',
 		'webservice' => 'Tiki_Profile_InstallHandler_Webservice',
 		'webservice_template' => 'Tiki_Profile_InstallHandler_WebserviceTemplate',
+		'rss' => 'Tiki_Profile_InstallHandler_Rss',
+		'topic' => 'Tiki_Profile_InstallHandler_Topic',
+		'article_type' => 'Tiki_Profile_InstallHandler_ArticleType',
+		'article' => 'Tiki_Profile_InstallHandler_Article',
+		'forum' => 'Tiki_Profile_InstallHandler_Forum',
+		'template' => 'Tiki_Profile_InstallHandler_Template',
 	);
 
 	private static $typeMap = array(
@@ -25,7 +31,33 @@ class Tiki_Profile_Installer
 	);
 
 	private $userData = false;
+	
+	private $feedback = array();	// Let users know what's happened
 
+	/**
+	 * @param $feed - (strings append, array replaces) lines of feedback text
+	 * @return none
+	 */
+	function setFeedback( $feed ) {
+		if (is_array( $feed )) {
+			$this->feedback = $feed;
+		} else {
+			$this->feedback[] = $feed;
+		}
+	}
+	
+	/**
+	 * @param $index - (int) index of feedback string to return if present
+	 * @return string or whole array if no index specified 
+	 */
+	function getFeedback( $index ) {
+		if (isset( $index ) && $index < count($this->feedback) ) {
+			return $this->feedback[ $index ];
+		} else {
+			return $this->feedback;
+		}
+	}
+	
 	public static function convertType( $type ) // {{{
 	{
 		if( array_key_exists( $type, self::$typeMap ) )
@@ -49,8 +81,8 @@ class Tiki_Profile_Installer
 		global $tikilib;
 
 		$result = $tikilib->query( "SELECT DISTINCT domain, profile FROM tiki_profile_symbols" );
-		while( $row = $result->fetchRow() )
-			$this->installed[sprintf( "http://%s/tiki-export_wiki_pages.php?page=%s", $row['domain'], urlencode($row['profile']) )] = true;
+		if ( $result ) while( $row = $result->fetchRow() )
+			$this->installed[Tiki_Profile::getProfileKeyFor( $row['domain'], $row['profile'] )] = true;
 	} // }}}
 
 	function setUserData( $userData ) // {{{
@@ -62,7 +94,7 @@ class Tiki_Profile_Installer
 	{
 		// Obtain the list of all required profiles
 		$dependencies = $profile->getRequiredProfiles(true);
-		$dependencies[$profile->url] = $profile;
+		$dependencies[$profile->getProfileKey()] = $profile;
 
 		$referenced = array();
 		$knownObjects = array();
@@ -71,11 +103,11 @@ class Tiki_Profile_Installer
 
 		// Build the list of dependencies for each profile
 		$short = array();
-		foreach( $dependencies as $url => $profile )
+		foreach( $dependencies as $key => $profile )
 		{
-			$short[$url] = array();
-			foreach( $profile->getRequiredProfiles() as $u => $p )
-				$short[$url][] = $u;
+			$short[$key] = array();
+			foreach( $profile->getRequiredProfiles() as $k => $p )
+				$short[$key][] = $k;
 
 			foreach( $profile->getNamedObjects() as $o )
 				$knownObjects[] = Tiki_Profile_Object::serializeNamedObject( $o );
@@ -93,9 +125,9 @@ class Tiki_Profile_Installer
 
 		// Build the list of packages that need to be installed
 		$toSequence = array();
-		foreach( $dependencies as $url => $profile )
+		foreach( $dependencies as $key => $profile )
 			if( ! $this->isInstalled( $profile ) )
-				$toSequence[] = $url;
+				$toSequence[] = $key;
 
 		// Order the packages to make sure all dependencies are met
 		$toInstall = array();
@@ -107,13 +139,13 @@ class Tiki_Profile_Installer
 			if( $counter++ > count( $toSequence ) * 2 )
 				throw new Exception( "Profiles could not be ordered: " . implode( ", ", $toSequence ) );
 
-			$url = reset( $toSequence );
+			$key = reset( $toSequence );
 
 			// Remove packages that are already scheduled or installed from dependencies
-			$short[$url] = array_diff( $short[$url], array_keys( $this->installed ), $toInstall );
+			$short[$key] = array_diff( $short[$key], array_keys( $this->installed ), $toInstall );
 
 			$element = array_shift( $toSequence );
-			if( count( $short[$url] ) )
+			if( count( $short[$key] ) )
 				$toSequence[] = $element;
 			else
 			{
@@ -124,15 +156,16 @@ class Tiki_Profile_Installer
 
 		$final = array();
 		// Perform the actual install
-		foreach( $toInstall as $url )
-			$final[] = $dependencies[$url];
+		foreach( $toInstall as $key )
+			$final[] = $dependencies[$key];
 
 		return $final;
 	} // }}}
 
 	function install( Tiki_Profile $profile ) // {{{
 	{
-		global $smarty;
+		global $cachelib;
+		require_once 'lib/cache/cachelib.php';
 
 		if( ! $profiles = $this->getInstallOrder( $profile ) )
 			return false;
@@ -140,13 +173,21 @@ class Tiki_Profile_Installer
 		foreach( $profiles as $p )
 			$this->doInstall( $p );
 		
-		$smarty->clear_compiled_tpl();
+		if (count($this->getFeedback()) == count($profiles)) {
+			$this->setFeedback(tra('Nothing was installed, check profile for errors'));
+		}
+		$cachelib->empty_full_cache();
 		return true;
 	} // }}}
 
 	function isInstalled( Tiki_Profile $profile ) // {{{
 	{
-		return array_key_exists( $profile->url, $this->installed );
+		return array_key_exists( $profile->getProfileKey(), $this->installed );
+	} // }}}
+
+	function isKeyInstalled( $domain, $profile ) // {{{
+	{
+		return array_key_exists( Tiki_Profile::getProfileKeyFor( $domain, $profile ), $this->installed );
 	} // }}}
 
 	function isInstallable( Tiki_Profile $profile ) // {{{
@@ -177,22 +218,30 @@ class Tiki_Profile_Installer
 
 	private function doInstall( Tiki_Profile $profile ) // {{{
 	{
-		global $tikilib;
+		global $tikilib, $prefs;
 		
-		$this->installed[$profile->url] = $profile;
+		$this->setFeedback(tra('Installing').': '.$profile->profile);
 
-		foreach( $profile->getObjects() as $object )
+		$this->installed[$profile->getProfileKey()] = $profile;
+
+		foreach( $profile->getObjects() as $object ) {
 			$this->getInstallHandler( $object )->install();
-
+			$this->setFeedback(tra('Installed').': '.$object->getDescription());
+		}
 		$preferences = $profile->getPreferences();
 		$profile->replaceReferences( $preferences, $thus->userData );
-		foreach( $preferences as $pref => $value )
+		foreach( $preferences as $pref => $value ) {
+			if ($prefs[$pref] != $value) {
+				$this->setFeedback(tra('Preference set').': '.$pref.'='.$value);
+			}
 			$tikilib->set_preference( $pref, $value );
-
+		}
 		$permissions = $profile->getPermissions();
 		$profile->replaceReferences( $permissions, $thus->userData );
-		foreach( $permissions as $groupName => $info )
+		foreach( $permissions as $groupName => $info ) {
+			$this->setFeedback(tra('Group changed (or modified)').': '.$groupName);
 			$this->setupGroup( $groupName, $info['general'], $info['permissions'], $info['objects'] );
+		}
 	} // }}}
 
 	private function setupGroup( $groupName, $info, $permissions, $objects ) // {{{
@@ -200,7 +249,7 @@ class Tiki_Profile_Installer
 		global $userlib;
 
 		if( ! $userlib->group_exists( $groupName ) )
-			$userlib->add_group( $groupName, $info['description'], $info['home'], $info['user_tracker'], $info['group_tracke'], implode( ':', $info['registration_fields'] ), $info['user_signup'], $info['default_category'], $info['theme'] );
+			$userlib->add_group( $groupName, $info['description'], $info['home'], $info['user_tracker'], $info['group_tracker'], implode( ':', $info['registration_fields'] ), $info['user_signup'], $info['default_category'], $info['theme'], $info['user_tracker_field'], $info['group_tracker_field'] );
 
 		if( count( $info['include'] ) )
 		{
@@ -227,6 +276,13 @@ class Tiki_Profile_Installer
 				else
 					$userlib->remove_object_permission( $groupName, $data['id'], $data['type'], $perm );
 			}
+	} // }}}
+
+	function forget( Tiki_Profile $profile ) // {{{
+	{
+		$key = $profile->getProfileKey();
+		unset($this->installed[$key]);
+		$profile->removeSymbols();
 	} // }}}
 }
 
@@ -393,8 +449,9 @@ class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler //
 		global $trklib;
 		if( ! $trklib )
 			require_once 'lib/trackers/trackerlib.php';
-
-		return $trklib->replace_tracker( 0, $name, $description, $options );
+		
+		// using false as trackerId stops multiple trackers of same name being created
+		return $trklib->replace_tracker( false, $name, $description, $options, 'y' );
 	} // }}}
 } // }}}
 
@@ -468,6 +525,7 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 				'computed' => 'C',
 				'preference' => 'p',
 				'attachment' => 'A',
+				'page' => 'k',
 			) ), // }}}
 			'visible' => new Tiki_Profile_ValueMapConverter( array(
 				'public' => 'n',
@@ -506,7 +564,7 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 
 		return $trklib->replace_tracker_field(
 			$data['tracker'],
-			0,
+			false,
 			$data['name'],
 			$data['type'],
 			$data['link'],
@@ -607,6 +665,10 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 	private $description;
 	private $name;
 	private $lang;
+	private $translations;
+
+	private $mode = 'create_or_update';
+	private $exists;
 
 	function fetchData()
 	{
@@ -623,6 +685,12 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 			$this->lang = $data['lang'];
 		if( array_key_exists( 'content', $data ) )
 			$this->content = $data['content'];
+		if( array_key_exists( 'mode', $data ) )
+			$this->mode = $data['mode'];
+		if( $this->lang
+			&& array_key_exists( 'translations', $data )
+			&& is_array( $data['translations'] ) )
+			$this->translations = $data['translations'];
 	}
 
 	function canInstall()
@@ -631,22 +699,82 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 		if( empty( $this->name ) || empty( $this->content ) )
 			return false;
 
+		global $tikilib;
+		$this->exists = $tikilib->page_exists($this->name);
+
+		switch( $this->mode ) {
+		case 'create':
+			if( $this->exists )
+				throw new Exception( "Page {$this->name} already exists and profile does not allow update." );
+			break;
+		case 'update':
+		case 'append':
+			if( ! $this->exists )
+				throw new Exception( "Page {$this->name} does not exist and profile only allows update." );
+			break;
+		case 'create_or_update':
+			$this->mode = $this->exists ? 'update' : 'create';
+			break;
+		case 'create_or_append':
+			$this->mode = $this->exists ? 'append' : 'create';
+			break;
+		default:
+			throw new Exception( "Invalid mode '{$this->mode}' for wiki handler." );
+		}
+
 		return true;
 	}
 
 	function _install()
 	{
+		// Normalize mode
+		$this->canInstall();
+
 		global $tikilib;
 		$this->fetchData();
 		$this->replaceReferences( $this->name );
 		$this->replaceReferences( $this->description );
 		$this->replaceReferences( $this->content );
 		$this->replaceReferences( $this->lang );
+		$this->replaceReferences( $this->translations );
 
-		if( $tikilib->create_page( $this->name, 0, $this->content, time(), 'Created by profile installer.', 'admin', '0.0.0.0', $this->description, $this->lang ) )
-			return $this->name;
-		else
-			return null;
+		if( strpos( $this->content, 'wikidirect:' ) === 0 ) {
+			$pageName = substr( $this->content, strlen('wikidirect:') );
+			$this->content = $this->obj->getPageContent( $pageName );
+		}
+
+		if( $this->mode == 'create' ) {
+			if( ! $tikilib->create_page( $this->name, 0, $this->content, time(), tra('Created by profile installer'), 'admin', '0.0.0.0', $this->description, $this->lang ) )
+				return null;
+		} else {
+			$info = $tikilib->get_page_info( $this->name, true, true );
+
+			if( ! $this->description )
+				$this->description = $info['description'];
+
+			if( ! $this->lang )
+				$this->lang = $info['lang'];
+
+			if( $this->mode == 'append' ) {
+				$this->content = rtrim( $info['data'] ) . "\n" . trim($this->content) . "\n";
+			}
+
+			$tikilib->update_page( $this->name, $this->content, tra('Page updated by profile installer'), 'admin', '0.0.0.0', $this->description, false, $this->lang );
+		}
+
+		global $multilinguallib;
+		require_once 'lib/multilingual/multilinguallib.php';
+
+		$current = $tikilib->get_page_id_from_name( $this->name );
+		foreach( $this->translations as $targetName ) {
+			$target = $tikilib->get_page_info( $targetName );
+
+			if( $target && $target['lang'] && $target['lang'] != $this->lang ) {
+				$multilinguallib->insertTranslation( 'wiki page', $current, $this->lang, $target['page_id'], $target['lang'] );
+			}
+		}
+
+		return $this->name;
 	}
 } // }}}
 
@@ -798,6 +926,7 @@ class Tiki_Profile_InstallHandler_Module extends Tiki_Profile_InstallHandler // 
 		$defaults = array(
 			'cache' => 0,
 			'rows' => 10,
+			'custom' => null,
 			'groups' => array(),
 			'params' => array(),
 		);
@@ -808,8 +937,10 @@ class Tiki_Profile_InstallHandler_Module extends Tiki_Profile_InstallHandler // 
 		);
 
 		$data['groups'] = serialize( $data['groups'] );
-		$data['params'] = http_build_query( $data['params'], '', '&' );
 
+		$data = Tiki_Profile::convertYesNo( $data );
+		$data['params'] = Tiki_Profile::convertYesNo( $data['params'] );
+		
 		return $this->data = $data;
 	}
 
@@ -831,7 +962,20 @@ class Tiki_Profile_InstallHandler_Module extends Tiki_Profile_InstallHandler // 
 		$data['position'] = ($data['position'] == 'left') ? 'l' : 'r';
 
 		$this->replaceReferences( $data );
+
+		$data['params'] = http_build_query( $data['params'], '', '&' );
 		
+		if( $data['custom'] )
+		{
+			$modlib->replace_user_module( $data['name'], $data['name'], (string) $data['custom'] );
+		}
+
+		if ( is_null($data['params']) )
+                {
+                        // Needed on some versions of php to make sure null is not passed all the way to query as a parameter, since params field in db cannot be null
+                        $data['params'] = '';
+                }
+
 		return $modlib->assign_module( 0, $data['name'], null, $data['position'], $data['order'], $data['cache'], $data['rows'], $data['groups'], $data['params'] );
 	}
 } // }}}
@@ -903,20 +1047,22 @@ class Tiki_Profile_InstallHandler_Menu extends Tiki_Profile_InstallHandler // {{
 
 		$item['position'] = $position;
 
+		$item['type'] = 's';
+
 		if( $parent )
 		{
-			if( $parent['type'] == 's' )
-				$item['type'] == 1;
+			if( $parent['type'] === 's' )
+				$item['type'] = 1;
 			else
 				$item['type'] = $parent['type'] + 1;
+
+			$item['level'] = $parent['level'] + 1;
 
 			$item['permissions'] = array_unique( 
 				array_merge( $parent['permissions'], $item['permissions'] ) );
 			$item['groups'] = array_unique( 
 				array_merge( $parent['groups'], $item['groups'] ) );
 		}
-		else
-			$item['type'] = 's';
 
 		foreach( $item['items'] as &$child )
 			$this->fixItem( $child, $position, $item );
@@ -924,9 +1070,6 @@ class Tiki_Profile_InstallHandler_Menu extends Tiki_Profile_InstallHandler // {{
 		foreach( $item['permissions'] as &$perm )
 			if( strpos( $perm, 'tiki_p_' ) !== 0 )
 				$perm = 'tiki_p_' . $perm;
-
-		if( count( $item['items'] ) == 0 )
-			$item['type'] = 'o';
 	} // }}}
 
 	function canInstall()
@@ -1253,6 +1396,482 @@ class Tiki_Profile_InstallHandler_WebserviceTemplate extends Tiki_Profile_Instal
 	}
 } // }}}
 
+class Tiki_Profile_InstallHandler_Rss extends Tiki_Profile_InstallHandler // {{{
+{
+	function getData()
+	{
+		if( $this->data )
+			return $this->data;
+
+		$data = $this->obj->getData();
+		$data = Tiki_Profile::convertLists( $data, array(
+			'show' => 'y',
+		), true );
+
+		$defaults = array(
+			'description' => null,
+			'refresh' => 30,
+			'show_title' => 'n',
+			'show_publication_date' => 'n',
+		);
+
+		$data = array_merge(
+			$defaults,
+			$data
+		);
+		$data = Tiki_Profile::convertYesNo( $data );
+
+		return $this->data = $data;
+	}
+
+	function canInstall()
+	{
+		$data = $this->getData();
+
+		if( ! isset( $data['name'], $data['url'] ) )
+			return false;
+
+		return true;
+	}
+
+	function _install()
+	{
+		global $rsslib;
+		$data = $this->getData();
+
+		$this->replaceReferences( $data );
+
+		require_once 'lib/rss/rsslib.php';
+
+		if( $rsslib->replace_rss_module( 0, $data['name'], $data['description'], $data['url'], $data['refresh'], $data['show_title'], $data['show_publication_date'] ) ) {
+
+			$id = (int) $rsslib->getOne("SELECT MAX(rssId) FROM tiki_rss_modules");
+			return $id;
+		}
+	}
+} // }}}
+
+class Tiki_Profile_InstallHandler_Topic extends Tiki_Profile_InstallHandler // {{{
+{
+	function getData()
+	{
+		if( $this->data )
+			return $this->data;
+
+		$data = $this->obj->getData();
+		$data = Tiki_Profile::convertYesNo( $data );
+
+		return $this->data = $data;
+	}
+
+	function canInstall()
+	{
+		$data = $this->getData();
+
+		if( ! isset( $data['name'] ) )
+			return false;
+
+		return true;
+	}
+
+	function _install()
+	{
+		global $artlib;
+		$data = $this->getData();
+
+		$this->replaceReferences( $data );
+
+		require_once 'lib/articles/artlib.php';
+
+		$id = $artlib->add_topic( $data['name'], null, null, null, null );
+
+		return $id;
+	}
+} // }}}
+
+class Tiki_Profile_InstallHandler_ArticleType extends Tiki_Profile_InstallHandler // {{{
+{
+	function getData()
+	{
+		if( $this->data )
+			return $this->data;
+
+		$data = $this->obj->getData();
+		$data = Tiki_Profile::convertLists( $data, array(
+			'show' => 'y',
+			'allow' => 'y',
+		), true );
+
+		$defaults = array(
+			'show_pre_publication' => 'n',
+			'show_post_expire' => 'n',
+			'show_heading_only' => 'n',
+			'show_image' => 'n',
+			'show_avatar' => 'n',
+			'show_author' => 'n',
+			'show_publication_date' => 'n',
+			'show_expiration_date' => 'n',
+			'show_reads' => 'n',
+			'show_size' => 'n',
+			'show_topline' => 'n',
+			'show_subtitle' => 'n',
+			'show_link_to' => 'n',
+			'show_image_caption' => 'n',
+			'show_language' => 'n',
+
+			'allow_ratings' => 'n',
+			'allow_comments' => 'n',
+			'allow_comments_rating_article' => 'n',
+			'allow_creator_edit' => 'n',
+		);
+
+		$data = array_merge( $defaults, $data );
+
+		$data = Tiki_Profile::convertYesNo( $data );
+
+		return $this->data = $data;
+	}
+
+	function canInstall()
+	{
+		$data = $this->getData();
+
+		if( ! isset( $data['name'] ) )
+			return false;
+
+		return true;
+	}
+
+	function _install()
+	{
+		global $artlib;
+		$data = $this->getData();
+
+		$this->replaceReferences( $data );
+
+		require_once 'lib/articles/artlib.php';
+
+		$converter = new Tiki_Profile_ValueMapConverter( array( 'y' => 'on' ) );
+
+		if( ! $artlib->get_type( $data['name'] ) ) {
+			$artlib->add_type( $data['name'] );
+		}
+		
+		$artlib->edit_type( 
+			$data['name'],
+			$converter->convert( $data['allow_ratings'] ),
+			$converter->convert( $data['show_pre_publication'] ),
+			$converter->convert( $data['show_post_expire'] ),
+			$converter->convert( $data['show_heading_only'] ),
+			$converter->convert( $data['allow_comments'] ),
+			$converter->convert( $data['allow_comments_rating_article'] ),
+			$converter->convert( $data['show_image'] ),
+			$converter->convert( $data['show_avatar'] ),
+			$converter->convert( $data['show_author'] ),
+			$converter->convert( $data['show_publication_date'] ),
+			$converter->convert( $data['show_expiration_date'] ),
+			$converter->convert( $data['show_reads'] ),
+			$converter->convert( $data['show_size'] ),
+			$converter->convert( $data['show_topline'] ),
+			$converter->convert( $data['show_subtitle'] ),
+			$converter->convert( $data['show_link_to'] ),
+			$converter->convert( $data['show_image_caption'] ),
+			$converter->convert( $data['show_language'] ),
+			$converter->convert( $data['allow_creator_edit'] )
+		);
+
+		return $data['name'];
+	}
+} // }}}
+
+class Tiki_Profile_InstallHandler_Article extends Tiki_Profile_InstallHandler // {{{
+{
+	function getData()
+	{
+		if( $this->data )
+			return $this->data;
+
+		$data = $this->obj->getData();
+
+		$defaults = array(
+			'author' => 'Anonymous',
+			'heading' => '',
+			'publication_date' => time(),
+			'expiration_date' => time() + 3600*24*30,
+			'type' => 'Article',
+			'topline' => '',
+			'subtitle' => '',
+			'link_to' => '',
+			'language' => 'en',
+		);
+
+		$data = array_merge( $defaults, $data );
+
+		return $this->data = $data;
+	}
+
+	function canInstall()
+	{
+		$data = $this->getData();
+
+		if( ! isset( $data['title'], $data['topic'], $data['body'] ) )
+			return false;
+
+		return true;
+	}
+
+	function _install()
+	{
+		global $artlib;
+		$data = $this->getData();
+
+		$this->replaceReferences( $data );
+
+		require_once 'lib/articles/artlib.php';
+
+		$dateConverter = new Tiki_Profile_DateConverter;
+
+		$id = $artlib->replace_article( 
+			$data['title'],
+			$data['author'],
+			$data['topic'],
+			'n',
+			null,
+			null,
+			null,
+			null,
+			$data['heading'],
+			$data['body'],
+			$dateConverter->convert( $data['publication_date'] ),
+			$dateConverter->convert( $data['expiration_date'] ),
+			'admin',
+			0,
+			0,
+			0,
+			$data['type'],
+			$data['topline'],
+			$data['subtitle'],
+			$data['link_to'],
+			null,
+			$data['language']
+		);
+
+		return $id;
+	}
+} // }}}
+
+class Tiki_Profile_InstallHandler_Forum extends Tiki_Profile_InstallHandler // {{{
+{
+	function getData()
+	{
+		if( $this->data )
+			return $this->data;
+
+		$data = $this->obj->getData();
+
+		$defaults = array(
+			'description' => '',
+			'flood_interval' => 120,
+			'moderator' => 'admin',
+			'per_page' => 10,
+			'prune_max_age' => 3*24*3600,
+			'prune_unreplied_max_age' => 30*24*3600,
+			'topic_order' => 'lastPost_desc',
+			'thread_order' => '',
+			'section' => '',
+			'inbound_pop_server' => '',
+			'inbound_pop_port' => 110,
+			'inbound_pop_user' => '',
+			'inbound_pop_password' => '',
+			'outbound_address' => '',
+			'outbound_from' => '',
+			'approval_type' => 'all_posted',
+			'moderator_group' => '',
+			'forum_password' => '',
+			'attachments' => 'none',
+			'attachments_store' => 'db',
+			'attachments_store_dir' => '',
+			'attachments_max_size' => 10000000,
+			'forum_last_n' => 0,
+			'comments_per_page' => '',
+			'thread_style' => '',
+			'is_flat' => 'n',
+
+			'list_topic_reads' => 'n',
+			'list_topic_replies' => 'n',
+			'list_topic_points' => 'n',
+			'list_topic_last_post' => 'n',
+			'list_topic_author' => 'n',
+
+			'show_description' => 'n',
+
+			'enable_flood_control' => 'n',
+			'enable_inbound_mail' => 'n',
+			'enable_prune_unreplied' => 'n',
+			'enable_prune_old' => 'n',
+			'enable_vote_threads' => 'n',
+			'enable_outbound_for_inbound' => 'n',
+			'enable_outbound_reply_link' => 'n',
+			'enable_topic_smiley' => 'n',
+			'enable_topic_summary' => 'n',
+			'enable_ui_avatar' => 'n',
+			'enable_ui_flag' => 'n',
+			'enable_ui_posts' => 'n',
+			'enable_ui_level' => 'n',
+			'enable_ui_email' => 'n',
+			'enable_ui_online' => 'n',
+			'enable_password_protection' => 'n',
+		);
+
+		$data = Tiki_Profile::convertLists( $data, array(
+			'enable' => 'y',
+			'list' => 'y',
+			'show' => 'y',
+		), true );
+
+		$data = array_merge( $defaults, $data );
+
+		$data = Tiki_Profile::convertYesNo( $data );
+
+		return $this->data = $data;
+	}
+
+	function canInstall()
+	{
+		$data = $this->getData();
+
+		if( ! isset( $data['name'] ) )
+			return false;
+
+		return true;
+	}
+
+	function _install()
+	{
+		global $dbTiki;
+		require_once 'lib/commentslib.php';
+		$comments = new Comments( $dbTiki );
+
+		$data = $this->getData();
+		$this->replaceReferences( $data );
+
+		$attConverter = new Tiki_Profile_ValueMapConverter( array(
+			'none' => 'att_no',
+			'everyone' => 'att_all',
+			'allowed' => 'att_perm',
+			'admin' => 'att_admin',
+		) );
+
+		$id = $comments->replace_forum( 
+			0,
+			$data['name'],
+			$data['description'],
+			$data['enable_flood_control'],
+			$data['flood_interval'],
+			$data['moderator'],
+			$data['mail'],
+			$data['enable_inbound_mail'],
+			$data['enable_prune_unreplied'],
+			$data['prune_unreplied_max_age'],
+			$data['enable_prune_old'],
+			$data['prune_max_age'],
+			$data['per_page'],
+			$data['topic_order'],
+			$data['thread_order'],
+			$data['section'],
+			$data['list_topic_reads'],
+			$data['list_topic_replies'],
+			$data['list_topic_points'],
+			$data['list_topic_last_post'],
+			$data['list_topic_author'],
+			$data['enable_vote_threads'],
+			$data['show_description'],
+			$data['inbound_pop_server'],
+			$data['inbound_pop_port'],
+			$data['inbound_pop_user'],
+			$data['inbound_pop_password'],
+			$data['outbound_address'],
+			$data['enable_outbound_for_inbound'],
+			$data['enable_outbound_reply_link'],
+			$data['outbound_from'],
+			$data['enable_topic_smiley'],
+			$data['enable_topic_summary'],
+			$data['enable_ui_avatar'],
+			$data['enable_ui_flag'],
+			$data['enable_ui_posts'],
+			$data['enable_ui_level'],
+			$data['enable_ui_email'],
+			$data['enable_ui_online'],
+			$data['approval_type'],
+			$data['moderator_group'],
+			$data['forum_password'],
+			$data['enable_password_protection'],
+			$attConverter->convert( $data['attachments'] ),
+			$data['attachments_store'],
+			$data['attachments_store_dir'],
+			$data['attachments_max_size'],
+			$data['forum_last_n'],
+			$data['comments_per_page'],
+			$data['thread_style'],
+			$data['is_flat']
+		);
+
+		return $id;
+	}
+} // }}}
+
+class Tiki_Profile_InstallHandler_Template extends Tiki_Profile_InstallHandler // {{{
+{
+	function getData()
+	{
+		if( $this->data )
+			return $this->data;
+
+		$defaults = array(
+			'sections' => array( 'wiki page' ),
+		);
+
+		$data = array_merge(
+			$defaults,
+			$this->obj->getData()
+		);
+
+		$data = Tiki_Profile::convertYesNo( $data );
+
+		return $this->data = $data;
+	}
+
+	function canInstall()
+	{
+		$data = $this->getData();
+		if( ! isset( $data['name'] ) )
+			return false;
+		if( ! isset( $data['content'] ) )
+			return false;
+		if( ! isset( $data['sections'] ) || ! is_array( $data['sections'] ) )
+			return false;
+
+		return true;
+	}
+
+	function _install()
+	{
+		global $templateslib;
+		if( ! $templateslib ) require_once 'lib/templates/templateslib.php';
+
+		$data = $this->getData();
+
+		$this->replaceReferences( $data );
+
+		$templateId = $templateslib->replace_template( null, $data['name'], $data['content'] );
+		foreach( $data['sections'] as $section ) {
+			$templateslib->add_template_to_section( $templateId, $section );
+		}
+
+		return $templateId;
+	}
+} // }}}
+
 interface Tiki_Profile_Converter
 {
 	function convert( $value );
@@ -1262,6 +1881,9 @@ class Tiki_Profile_DateConverter // {{{
 {
 	function convert( $value )
 	{
+		if( is_int( $value ) )
+			return $value;
+
 		$time = strtotime( $value );
 		if( $time !== false )
 			return $time;
@@ -1300,5 +1922,3 @@ class Tiki_Profile_ValueMapConverter // {{{
 		}
 	}
 } // }}}
-
-?>

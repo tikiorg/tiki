@@ -2,7 +2,7 @@
 {*Smarty template*}
 <h1><a class="pagetitle" href="tiki-g-view_workitem.php?itemId={$smarty.request.itemId}">{tr}Browsing Workitem{/tr}</a>
 </h1>
-{include file=tiki-g-monitor_bar.tpl}
+{include file='tiki-g-monitor_bar.tpl'}
 <h3>{tr}Workitem information{/tr}</h3>
 <table class="normal">
 <tr>

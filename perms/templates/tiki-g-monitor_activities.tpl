@@ -1,10 +1,10 @@
 {popup_init src="lib/overlib.js"}
 {*Smarty template*}
-<h1><a class="pagetitle" href="tiki-g-monitor_activities.php">{tr}Monitor activities{/tr}</a>
+<h1><a class="pagetitle" href="tiki-g-monitor_activities.php">{tr}Monitor Activities{/tr}</a>
 
   
       {if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}GalaxiaMonitorActivities" target="tikihelp" class="tikihelp" title="{tr}Galaxia Monitor Activities{/tr}">
+<a href="{$prefs.helpurl}Workflow" target="tikihelp" class="tikihelp" title="{tr}Galaxia Monitor Activities{/tr}">
 <img src="img/icons/help.gif" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
 
 
@@ -13,7 +13,7 @@
 
 
 </h1>
-{include file=tiki-g-monitor_bar.tpl}
+{include file='tiki-g-monitor_bar.tpl'}
 <h2>{tr}List of activities{/tr} ({$cant})</h2>
 
 {* FILTERING FORM *}
@@ -170,4 +170,4 @@
 {pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links} 
 {* END OF PAGINATION *}
 
-{include file=tiki-g-monitor_stats.tpl}
+{include file='tiki-g-monitor_stats.tpl'}

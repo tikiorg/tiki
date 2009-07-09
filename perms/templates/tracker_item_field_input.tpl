@@ -1,6 +1,10 @@
 {strip}
 {* param: field_value(id, ins_id, type, value,options_array, http_request,flags,defaultvalue, isMandatory, itemChoice, list, isHidden), tiki_p_.... item(creator, my_rate), input_err, ling, groups, item(creator,rating,trackerId)*}
 
+{if $field_value.isMandatory eq 'y'}
+	<span class="mandatory_field">
+{/if}
+
 {* ---- visible admin only ---- *}
 {if $field_value.isHidden eq 'y' and $tiki_p_admin_trackers ne 'y'}
 
@@ -12,11 +16,11 @@
 	{if $field_value.value}{$field_value.value|escape}{/if}
 
 {* -- visible for some groups -- *}
-{elseif !empty($field_value.visibleBy) and !in_array($default_group, $field_value.visibleBy) and $tiki_p_admin_trackers ne 'y'}
+{elseif !empty($field_value.visibleBy) and !in_array($default_group, $field_value.visibleBy) and !($user eq '' and in_array('Anonymous', $field_value.visibleBy)) and $tiki_p_admin_trackers ne 'y'}
 
 {* -- editable for some groups -- *}
-{elseif !empty($field_value.editableBy) and !in_array($default_group, $field_value.editableBy) and $tiki_p_admin_trackers ne 'y'}
-	{include file="tracker_item_field_value.tpl"}
+{elseif !empty($field_value.editableBy) and !in_array($default_group, $field_value.editableBy) and !($user eq '' and in_array('Anonymous', $field_value.editableBy)) and $tiki_p_admin_trackers ne 'y'}
+	{include file='tracker_item_field_value.tpl'}
 
 {* -------------------- system -------------------- *}
 {elseif $field_value.type eq 's' and ($field_value.name eq "Rating" or $field_value.name eq tra("Rating")) and $tiki_p_tracker_vote_ratings eq 'y'}
@@ -32,15 +36,15 @@
 		{foreach key=id item=one from=$field_value.list}
 			{if ( ! isset($field_value.itemChoices) || $field_value.itemChoices|@count eq 0 || in_array($one, $field_value.itemChoices) )}
 				{if $field_value.options_array[0] ne '2'}
-					<option value="{$one|escape}"{if $one eq $field_value.value} selected="selected"{/if}>{$one}</option>
+					<option value="{$one|escape}"{if $one eq $field_value.value} selected="selected"{/if}>{$one|username|escape}</option>
 				{else}
-					<option value="{$one|escape}"{if $one eq $user} selected="selected"{/if}>{$one}</option>
+					<option value="{$one|escape}"{if $one eq $user} selected="selected"{/if}>{$one|username|escape}</option>
 				{/if}
 			{/if}
 		{/foreach}
 		</select>
 	{else}
-		{$user|escape}
+		{$user|username|escape}
 	{/if}
 
 {* -------------------- IP selector -------------------- *}
@@ -77,9 +81,7 @@
 {* -------------------- category -------------------- *}
 {elseif $field_value.type eq 'e'}
 	{if !empty($field_value.options_array[2]) && ($field_value.options_array[2] eq '1' or $field_value.options_array[2] eq 'y')}
-		<script type="text/javascript">
-		{include file='categSelectAll.tpl'}
-		</script>
+		{select_all checkbox_names=`$field_value.ins_id`[] label="{tr}Select All{/tr}"}
 	{/if}
 	{if $field_value.options_array[1] eq 'd' || $field_value.options_array[1] eq 'm'}
 		<select name="{$field_value.ins_id}[]"{if $field_value.options_array[1] eq 'm'} multiple="multiple"{/if}>
@@ -124,12 +126,16 @@
 		{if isset($cur_field.options_array[1]) and $field_value.options_array[1] ne '' } {assign var=$Length value=$field_value.options_array[1] }{/if}
 		{if isset($cur_field.options_array[2]) and $field_value.options_array[2] ne '' } {assign var=$Height value=$field_value.options_array[2] }{/if}
 		{if $ModeVideo eq 'y' } { assign var="Height" value=$Height+$prefs.VideoHeight}{/if}
-		{include file=multiplayer.tpl url=$field_value.value w=$Length h=$Height video=$ModeVideo}
+		{include file='multiplayer.tpl' url=$field_value.value w=$Length h=$Height video=$ModeVideo}
 	{/if}
 
 {* -------------------- file -------------------- *}
 {elseif $field_value.type eq 'A'}
-	<input type="file" name="{$field_value.ins_id}"{if isset($input_err)} value="{$field_value.value}"{/if} />
+	{if $tiki_p_attach_trackers ne 'y'}
+		{tr}Permission denied{/tr}
+	{else}
+		<input type="file" name="{$field_value.ins_id}"{if isset($input_err)} value="{$field_value.value}"{/if} />
+	{/if}
 	{if !isset($input_err) and $field_value.value ne ''}
 		<br />
 		{$field_value.info.filename}&nbsp;
@@ -199,11 +205,15 @@
 	{/if}
 	{if $field_value.isMultilingual ne 'y'}
 		{if $prefs.quicktags_over_textarea eq 'y' and $field_value.options_array[0] eq 1}
-    		{include file=tiki-edit_help_tool.tpl qtnum=$field_value.fieldId area_name="area_"|cat:$field_value.fieldId}
-			{/if}
-		<textarea id="area_{$field_value.fieldId}" name="{$field_value.ins_id}" cols="{if $field_value.options_array[1] gt 1}{$field_value.options_array[1]}{else}50{/if}" rows="{if $field_value.options_array[2] gt 1}{$field_value.options_array[2]}{else}4{/if}"{if $field_value.options_array[5]} onKeyUp="wordCount({$field_value.options_array[5]}, this, 'cpt_{$field_value.fieldId}', '{tr}Word Limit Exceeded{/tr}')"{/if}>
-			{$field_value.value}
-		</textarea>
+    		{include file='tiki-edit_help_tool.tpl' qtnum=$field_value.fieldId area_name="area_"|cat:$field_value.fieldId}
+		{/if}
+		{if $field_value.options_array[2] == 1}
+				<input type="text" name="{$field_value.ins_id}"{if $field_value.options_array[1] > 0} size="{$field_value.options_array[1]}"{/if}{if $field_value.options_array[3]>0} maxlength="{$field_value.options_array[3]}"{/if} value="{$field_value.value|escape}"{if $field_value.options_array[5]} onKeyUp="wordCount({$field_value.options_array[5]}, this, 'cpt_{$field_value.fieldId}', '{tr}Word Limit Exceeded{/tr}')"{/if} />
+		{else}
+			<textarea id="area_{$field_value.fieldId}" name="{$field_value.ins_id}" cols="{if $field_value.options_array[1] >= 1}{$field_value.options_array[1]}{else}50{/if}" rows="{if $field_value.options_array[2] >= 1}{$field_value.options_array[2]}{else}4{/if}"{if $field_value.options_array[5]} onKeyUp="wordCount({$field_value.options_array[5]}, this, 'cpt_{$field_value.fieldId}', '{tr}Word Limit Exceeded{/tr}')"{/if}>
+				{$field_value.value}
+			</textarea>
+		{/if}
 		{if $field_value.options_array[5]}
 			<div class="wordCount">{tr}Word Count:{/tr} <input type="text" id="cpt_{$field_value.fieldId}" size="4" readOnly=true{if !empty($field_value.value)} value="{$field_value.value|count_words}"{/if} />{if $field_value.options_array[5] > 0} {tr}Max:{/tr} {$field_value.options_array[5]}{/if}</div>
 		{/if}
@@ -214,7 +224,7 @@
 			<td>{$ling.lang}</td>
       		<td>
 				{if $prefs.quicktags_over_textarea eq 'y' and $field_value.options_array[0] eq 1}
-        			{include file=tiki-edit_help_tool.tpl qtnum=$field_value.id area_name=area_`$field_value.id`_`$ling.lang`}
+        			{include file='tiki-edit_help_tool.tpl' qtnum=$field_value.id area_name=area_`$field_value.id`_`$ling.lang`}
         		{/if}
 				<textarea id="area_{$field_value.fieldId}_{$ling.lang}" name="{$field_value.ins_id}[{$ling.lang}]" cols="{if $field_value.options_array[1] gt 1}{$field_value.options_array[1]}{else}50{/if}" rows="{if $field_value.options_array[2] gt 1}{$field_value.options_array[2]}{else}4{/if}"{if $field_value.options_array[5] > 0} onKeyUp="wordCount({$field_value.options_array[5]}, this, 'cpt_{$field_value.fieldId}_{$ling.lang}', '{tr}Word Limit Exceeded{/tr}')"{/if}>
 					{$ling.value|escape}
@@ -257,13 +267,14 @@
 	{else}
 		{assign var=time value=$field_value.value}
 	{/if}
-	{if $field_value.options_array[0] eq 'd'}
+	{if $field_value.options_array[0] ne 't'}
 		{if $field_value.isMandatory ne 'y' and (isset($field_value.options_array[3]) and $field_value.options_array[3] eq 'blank')}
 			{html_select_date prefix=$field_value.ins_id time=$time start_year=$start end_year=$end field_order=$prefs.display_field_order all_empty=" "}
 		{else}
 			{html_select_date prefix=$field_value.ins_id time=$time start_year=$start end_year=$end field_order=$prefs.display_field_order}
 		{/if}
-	{else}
+	{/if}
+	{if $field_value.options_array[0] ne 'd'}
 		{tr}at{/tr} {html_select_time prefix=$field_value.ins_id time=$time display_seconds=false}
 	{/if}
 
@@ -321,7 +332,7 @@
 
 {* -------------------- item link -------------------- *}
 {elseif $field_value.type eq 'r'}
-	<select name="{$field_value.ins_id}" {if $field_value.http_request}onchange="selectValues('trackerIdList={$field_value.http_request[0]}&amp;fieldlist={$field_value.http_request[3]}&amp;filterfield={$field_value.http_request[1]}&amp;status={$field_value.http_request[4]}&amp;mandatory={$field_value.http_request[6]}&amp;filtervalue={$field_value.value}{$field_value.http_request[5]}')"{/if}>
+	<select name="{$field_value.ins_id}" {if $field_value.http_request}onchange="selectValues('trackerIdList={$field_value.http_request[0]}&amp;fieldlist={$field_value.http_request[3]}&amp;filterfield={$field_value.http_request[1]}&amp;status={$field_value.http_request[4]}&amp;mandatory={$field_value.http_request[6]}&amp;filtervalue='+escape(this.value),'{$field_value.http_request[5]}')"{/if}>
 		{if $field_value.isMandatory ne 'y' || empty($field_value.value)}
 			<option value=""></option>
 		{/if}
@@ -340,7 +351,8 @@
 
 {* -------------------- dynamic list -------------------- *}
 {elseif $field_value.type eq 'w'}
-	<select name="{$field_value.ins_id}" {if $field_value.http_request}onchange="selectValues('trackerIdList={$field_value.http_request[0]}&amp;fieldlist={$field_value.http_request[3]}&amp;filterfield={$field_value.http_request[1]}&amp;status={$field_value.http_request[4]}&amp;mandatory={$field_value.http_request[6]}&amp;filtervalue={$field_value.value}{$field_value.http_request[5]}')"{/if}>
+	<script type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
+<select name="{$field_value.ins_id}" {if $field_value.http_request}onchange="selectValues('trackerIdList={$field_value.http_request[0]}&amp;fieldlist={$field_value.http_request[3]}&amp;filterfield={$field_value.http_request[1]}&amp;status={$field_value.http_request[4]}&amp;mandatory={$field_value.http_request[6]}&amp;filtervalue={$field_value.value}{$field_value.http_request[5]}')"{/if}>
 	</select>
 
 
@@ -352,7 +364,7 @@
 {* -------------------- Google Map -------------------- *}
 {elseif $field_value.type eq 'G'}
 	<input type="text" name="{$field_value.ins_id}" value="{$field_value.value}" />
-	<br />{tr}Format : x,y,zoom - You can use Google Map Locator in the item view script.{/tr}
+	<br />{tr}Format: x,y,zoom where x is the longitude, and y is the latitude. Zoom is between 0(view Earth) and 19. You can use <a href="tiki-gmap_locator.php?for=item&amp;itemId={$item.itemId}&amp;trackerId={$item.trackerId}&amp;fieldId={$field_value.fieldId}">{tr}Google Map Locator{/tr}</a>.{/tr}
 
 {* -------------------- country selector -------------------- *}
 {elseif $field_value.type eq 'y'}
@@ -374,7 +386,12 @@
 {elseif $field_value.type eq 'q'}
 	<input type="hidden" name="track[{$field_value.fieldId}]" />
 	<input type="hidden" name="{$field_value.ins_id}" value="{$field_field.value|escape}" />
-	{$field_value.value|escape}
+	{include file='tracker_item_field_value.tpl'}
 
 {/if}
+
+{if $field_value.isMandatory eq 'y'}
+	</span>
+{/if}
+
 {/strip}

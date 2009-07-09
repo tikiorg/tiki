@@ -188,5 +188,4 @@ class Text_Diff_Renderer_htmldiff extends Tiki_Text_Diff_Renderer {
 		$this->_deleted($orig, TRUE);
 		$this->_added($final, TRUE);
 	}
-
 }

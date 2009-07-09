@@ -6,7 +6,7 @@
 
   
       {if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}GalaxiaUserActivities" target="tikihelp" class="tikihelp" title="{tr}Galaxia User Activities{/tr}">
+<a href="{$prefs.helpurl}Workflow" target="tikihelp" class="tikihelp" title="{tr}Galaxia User Activities{/tr}">
 <img src="img/icons/help.gif" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
 
 
@@ -16,7 +16,7 @@
 <img src="img/icons/info.gif" height="16" width="16" alt='{tr}Edit Tpl{/tr}' /></a>{/if}
 
 </h1>
-{include file=tiki-g-user_bar.tpl}
+{include file='tiki-g-user_bar.tpl'}
 <h2>{tr}List of activities{/tr} ({$cant})</h2>
 
 {* FILTERING FORM *}

@@ -3,8 +3,9 @@
 function wikiplugin_webservice_info() {
 	return array(
 		'name' => tra('Web Service'),
+		'documentation' => 'PluginWebservice',		
 		'description' => tra('Obtains and display remote information exposed in JSON or YAML. The plugin can be used to display registered or unregistered services. Registered services may use more parameters not defined in this interface.'),
-		'prefs' => array(),
+		'prefs' => array( 'wikiplugin_webservice' ),
 		'body' => tra('Template to apply to the data provided. Template format uses smarty templating engine using double brackets as delimiter. Output must provide wiki syntax. Body can be sent to a parameter instead by using the bodyname parameter.'),
 		'validate' => 'all',
 		'params' => array(
@@ -38,10 +39,10 @@ function wikiplugin_webservice_info() {
 
 function wikiplugin_webservice( $data, $params ) {
 	require_once 'lib/ointegratelib.php';
-	require_once( 'Horde/Yaml.php' );
-	require_once( 'Horde/Yaml/Loader.php' );
-	require_once( 'Horde/Yaml/Node.php' );
-	require_once( 'Horde/Yaml/Exception.php' );
+	require_once( 'lib/Horde/Yaml.php' );
+	require_once( 'lib/Horde/Yaml/Loader.php' );
+	require_once( 'lib/Horde/Yaml/Node.php' );
+	require_once( 'lib/Horde/Yaml/Exception.php' );
 
 	if( isset( $params['bodyname'] ) && ! empty($params['bodyname']) ) {
 		$params[ $params['bodyname'] ] = $data;
@@ -50,7 +51,7 @@ function wikiplugin_webservice( $data, $params ) {
 	}
 
 	if( ! empty( $data ) ) {
-		$templateFile = realpath( './temp/cache/' . md5($data) );
+		$templateFile = $GLOBALS['tikipath'] . 'temp/cache/' . md5($data); 
 
 		if( ! file_exists( $templateFile ) )
 			file_put_contents( $templateFile, $data );
@@ -88,5 +89,3 @@ function wikiplugin_webservice( $data, $params ) {
 		return '^' . tra('Missing parameters') . '^';
 	}
 }
-
-?>

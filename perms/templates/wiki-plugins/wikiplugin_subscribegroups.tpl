@@ -2,23 +2,37 @@
 {if !empty($userGroups)}
 {cycle values="odd,even" print=false}
 <table class="normal">
-{foreach from=$userGroups key=group item=type}
+{foreach from=$userGroups key=gr item=type}
 	<tr>
-	<td class="{cycle advance=false}">{if $type eq 'included'}<i>{$group|escape}</i>{else}{$group|escape}{/if}</td>
-	<td class="{cycle}">{if $type ne 'included'}<a href="{$smarty.server.REQUEST_URI}{if strstr($smarty.server.REQUEST_URI, '?')}&amp;{else}?{/if}unassign={$group|escape:'url'}"><img src="pics/icons/cross.png" height="16" width="16" alt="{tr}Unsubscribe{/tr}" /></a>{/if}</td>
+	<td class="{cycle advance=false}">
+		{if !empty($allGroups.$gr.groupHome)}<a href="{$allGroups.$gr.groupHome|escape:url}">{/if}
+		{if $type eq 'included'}<i>{$gr|escape}</i>{else}{$gr|escape}{/if}
+		{if !empty($allGroups.$gr.groupHome)}</a>{/if}
+		{if $showdefault eq 'y' and $default_group eq $gr}{icon _id='group' alt='{tr}Your default group{/tr}'}{/if}
+		{if $showgroupdescription eq 'y'}<div style="margin-left:10px">{$allGroups.$gr.groupDesc|escape}</div>{/if}
+	</td>
+	<td class="{cycle}">
+		{if $type ne 'included' and $allGroups.$gr.userChoice eq 'y'}
+			<a href="{$smarty.server.REQUEST_URI}{if strstr($smarty.server.REQUEST_URI, '?')}&amp;{else}?{/if}unassign={$gr|escape:'url'}">{icon _id='cross' alt='{tr}Unsubscribe{/tr}'}</a>
+		{/if}
+		{if $showdefault eq 'y' and ($default_group ne $gr or !empty($defaulturl))}
+			<a href="{$smarty.server.REQUEST_URI}{if strstr($smarty.server.REQUEST_URI, '?')}&amp;{else}?{/if}default={$gr|escape:'url'}" title="{tr}Change default group{/tr}">{icon _id='group' alt='{tr}Change default group{/tr}'}</a>
+		{/if}
+	</td>
 	</tr>
 {/foreach}
 </table>
 {/if}
 
-{if !empty($possiblegroups)}
+{if $showsubscribe ne 'n' && !empty($possibleGroups)}
 <form method="post">
 <select name="assign" onchange="this.form.submit();">
-<option value=""><i>{if isset($subscribe)}{subscribe|escape|{else}{tr}Subscribe to a group{/tr}{/if}</i></option>
-{foreach from=$possiblegroups item=group}
-	{if $group.userChoice eq 'y' and empty($userGroups[$group.groupName])}
-	<option value="{$group.groupName|escape}">{$group.groupName}</option>
-	{/if}
+<option value=""><i>{if !empty($subscribe)}{$subscribe|escape}{else}{tr}Subscribe to a group{/tr}{/if}</i></option>
+{foreach from=$possibleGroups item=gr}
+	<option value="{$gr|escape}">
+		{$gr|escape}
+		{if $showgroupdescription eq 'y' and !empty($allGroups.$gr.groupDesc)} ({$allGroups.$gr.groupDesc|escape}){/if}
+	</option>
 {/foreach}
 </select>
 </form>

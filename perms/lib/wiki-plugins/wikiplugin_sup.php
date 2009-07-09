@@ -12,6 +12,7 @@ function wikiplugin_sup_help() {
 function wikiplugin_sup_info() {
 	return array(
 		'name' => tra( 'Superscript' ),
+		'documentation' => 'PluginSup',		
 		'description' => tra('Displays text in superscript (exponent).'),
 		'prefs' => array( 'wikiplugin_sup' ),
 		'body' => tra('text'),
@@ -27,5 +28,3 @@ function wikiplugin_sup($data, $params)
         extract ($params,EXTR_SKIP);
 	return "<sup>$data</sup>";
 }
-
-?>

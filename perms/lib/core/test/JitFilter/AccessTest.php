@@ -1,6 +1,6 @@
 <?php
 
-class JitFilter_AccessTest extends PHPUnit_Framework_TestCase
+class JitFilter_AccessTest extends TikiTestCase
 {
 	private $array;
 
@@ -113,5 +113,3 @@ class JitFilter_AccessTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals( $filtered, array( 'hello', 'world' ) );
 	}
 }
-
-?>

@@ -268,4 +268,3 @@ class APIClassRegistry extends ErrorManager{
 		print("</ol></font>");
 	}
 }
-?>

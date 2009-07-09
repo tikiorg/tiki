@@ -1,11 +1,7 @@
 {title help="User+Calendar" url="tiki-minical.php?view=$view"}{tr}Mini Calendar{/tr}{/title}
 
 {if $prefs.feature_ajax ne 'y' && $prefs.feature_mootools ne 'y'}
-  {include file=tiki-mytiki_bar.tpl}
-{/if}
-
-{if $prefs.feature_ajax ne 'y' && $prefs.feature_mootools ne 'y'}
-	{include file=tiki-mytiki_bar.tpl}
+  {include file='tiki-mytiki_bar.tpl'}
 {/if}
 
 <div class="navbar">
@@ -129,7 +125,7 @@
 
 {if $view eq 'list' and (count($channels) > 0 or $find ne '')}
 
-{include file='find.tpl' _sort_mode='y'}
+{include file='find.tpl'}
 
 <a class="link" href="tiki-minical.php?view={$view}&amp;removeold=1">{tr}Remove old events{/tr}</a>
 <form action="tiki-minical.php" method="post">

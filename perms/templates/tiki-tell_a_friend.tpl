@@ -66,15 +66,15 @@
       <td class="formcolor">
         {tr}Your comment{/tr}
         <br /><br />
-        {include file="textareasize.tpl" area_name='comment' formId='tellafriend'}
+        {include file='textareasize.tpl' area_name='comment' formId='tellafriend'}
       </td>
       
       <td class="formcolor">
-        <textarea name="comment" style="width:95%;" rows="10" cols='{$cols}' id='comment'>{$comment|escape|@default:'{tr}I found an interesting page that I thought you would like.{/tr}'}</textarea>
+        <textarea name="comment" style="width:95%;" rows="10" cols='{$cols}' id='comment'>{$comment|escape|@default:"{tr}I found an interesting page that I thought you would like.{/tr}"}</textarea>
       </td>
     </tr>
 	{if $prefs.feature_antibot eq 'y' && $user eq ''}
-		{include file="antibot.tpl"}
+		{include file='antibot.tpl' td_style="formcolor"}
 	{/if}
 
     

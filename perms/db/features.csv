@@ -273,7 +273,6 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 351,Topics,128,,forum_list_topics,flag,,tiki_p_admin,,,Forums,,, 
 352,Last post,128,,forum_list_lastpost,flag,,tiki_p_admin,,,Forums,,, 
 353,Description,128,,forum_list_desc,flag,,tiki_p_admin,,,Forums,,, 
-354,feature_forum_topicd,127,,feature_forum_topicd,flag,,tiki_p_admin,,,Forums,,,cant find topic id
 355,Search method when searching in content: Non-Tiki search local to a forum,127,,feature_forum_local_search,flag,,tiki_p_admin,,,Forums,,, 
 356,Reply posts are empty,127,,feature_forum_replyempty,flag,,tiki_p_admin,,,Forums,,, 
 357,Allow first posts of a thread to have an empty body (will be a thread title),127,,feature_forums_allow_thread_titles,flag,,tiki_p_admin,,,Forums,,, 
@@ -353,7 +352,7 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 431,Proxy Host,1009,,proxy_host,simple,,tiki_p_admin,-9,,,,, 
 432,Long date format,48,,long_date_format,byref,,tiki_p_admin,,,Time+and+Date,Sample: {$now|tiki_long_date},, 
 433,Short date format,48,,short_date_format,byref,,tiki_p_admin,,,Time+and+Date,Sample: {$now|tiki_short_date},, 
-434,Site Title,876,,siteTitle,byref,,tiki_p_admin,,,,Will display in the browser's titlebar. ,,What is difference with sitetitle?
+434,Site Title,876,,browsertitle,byref,,tiki_p_admin,,,,Will display in the browser's titlebar. ,,What is difference with sitetitle?
 435,Short time format,48,,short_time_format,byref,,tiki_p_admin,,,Time+and+Date,Sample: {$now|tiki_short_time},, 
 436,Contact user,1000,,contact_user,simple,,tiki_p_admin,,,,,, 
 437,Store session in database,859,,session_db,flag,,tiki_p_admin,,,,,, 
@@ -388,7 +387,7 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 466,Display Timezone,48,,display_timezone,timezone,,tiki_p_admin,,,Time+and+Date,,,Not sure how/where this is used
 467,Mail end of line,1022,,mail_crlf,mailcrlf,,tiki_p_admin,,,,,, 
 468,Log Mail in Tiki Logs,1022,,log_mail,flag,,tiki_p_admin,,,,,, 
-469,Close site,1002,,site_closed,flag,,tiki_p_admin,5,,,Users with permission can sill login. ,, 
+469,Close site,1002,,site_closed,flag,,tiki_p_admin,5,,,Users with permission can still login. ,, 
 470,Long time format,48,,long_time_format,byref,,tiki_p_admin,,,Time+and+Date,Sample: {$now|tiki_long_date},, 
 471,URI to be used as Home Page,911,,urlIndex,simple,,tiki_p_admin,,430,,,, 
 473,Default Y Coordinate,22,,gmap_defaulty,simple,,tiki_p_admin,,,Gmap,,, 
@@ -520,7 +519,6 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 605,sitenav,3,,sitenav,special,,tiki_p_admin,50,,,,, 
 606,feature_site_report_email,3,,feature_site_report_email,simple,,tiki_p_admin,18,,,,, 
 608,Max. number of links around the current item,902,,direct_pagination_max_middle_links,simple,,tiki_p_admin,4,,Pagination,,, 
-609,feature_siteidentity,3,,feature_siteidentity,flag,,tiki_p_admin,22,,,,, 
 610,use_context_menu_text,3,,use_context_menu_text,flag,,tiki_p_admin,56,,,,, 
 611,Display 'First' and 'Last' links,902,,pagination_firstlast,flag,,tiki_p_admin,42,,Pagination,,, 
 612,Site Logo,876,,sitelogo_src,simple,,tiki_p_admin,,,,Path to image. ,, 
@@ -531,7 +529,6 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 617,sitead,3,,sitead,simple,,tiki_p_admin,48,,,,, 
 618,Site Search Bar,879,,feature_sitesearch,feature,,tiki_p_admin,,70,,,, 
 619,bot_logo_code,3,,bot_logo_code,simple,,tiki_p_admin,1,,,,, 
-620,Date,3,,feature_topbar_date,flag,,tiki_p_admin,32,651,,Display the current date and time. ,,"Will also provide a link to the calendar, if feature is enabled.  "
 621,Content,875,,sitemycode,special,,tiki_p_admin,,,this is a textarea,,, 
 622,feature_site_report,3,,feature_site_report,flag,,tiki_p_admin,17,,,,, 
 623,Max. number of links after the first or before the last item,902,,direct_pagination_max_ending_links,simple,,tiki_p_admin,3,,Pagination,,, 
@@ -552,7 +549,7 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 639,feature_bot_logo,3,,feature_bot_logo,flag,,tiki_p_admin,9,,,,, 
 640,feature_editcss,3,,feature_editcss,flag,,tiki_p_admin,13,,,,, 
 641,feature_topbar_debug,3,,feature_topbar_debug,flag,,tiki_p_admin,33,,,,, 
-642,Debug Info,3,,feature_bot_bar_debug,flag,,tiki_p_admin,6,602,,Display adminstrative debug information. ,, 
+642,Debug Info,3,,feature_bot_bar_debug,flag,,tiki_p_admin,6,602,,Display administrative debug information. ,, 
 643,Site Log Alt Description,876,,sitelogo_alt,simple,,tiki_p_admin,,,,"For example, for text browsers.  ",, 
 644,Use page description,912,,feature_sitedesc,byref,,tiki_p_admin,21,,,,, 
 645,feature_sitemenu,3,,feature_sitemenu,flag,,tiki_p_admin,25,,,,, 
@@ -825,7 +822,6 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 934,Definition List,913,,wikiplugin_dl,flag,,tiki_p_admin,,,,,, 
 935,Equation,913,,wikiplugin_equation,flag,,tiki_p_admin,,,,,, 
 936,Events,913,,wikiplugin_events,flag,,tiki_p_admin,,,,,, 
-937,Example,913,,wikiplugin_example,flag,,tiki_p_admin,,,,,, 
 938,Fancy Table,913,,wikiplugin_fancytable,flag,,tiki_p_admin,,,,,, 
 939,Flash video,913,,wikiplugin_flash,flag,,tiki_p_admin,,,,,, 
 940,Gauge,913,,wikiplugin_gauge,flag,,tiki_p_admin,,,,,, 
@@ -950,3 +946,10 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 1059,Show pertinence,70,,feature_search_show_pertinence,flag,,tiki_p_admin,,,,,,
 1060,Show object type,70,,feature_search_show_object_type,flag,,tiki_p_admin,,,,,,
 1061,Show last modification,70,,feature_search_show_last_modification,flag,,tiki_p_admin,,,,,,
+1062,Use edit plugin icons,1025,,wiki_edit_plugin,flag,,tiki_p_admin,,,,,, 
+1063,Group Watches,6,,feature_group_watches,feature,,tiki_p_admin,,,,,, 
+1064,Search Friendly URLs Filter,68,experimental,feature_sefurl_filter,feature,,tiki_p_admin,,,,,,Requires .htaccess file. Filters all output; uses more CPU than non-filter version. Can be used with non-filter SEF URL.
+1065,Iframe,913,,wikiplugin_iframe,flag,,tiki_p_admin,,,,,, 
+1066,Media Player,913,,wikiplugin_mediaplayer,flag,,tiki_p_admin,,,,,, 
+1067,Show freetags in middle column,26,,freetags_show_middle,flag,,tiki_p_admin,,,,,, 
+1068,Image plugin,913,,wikiplugin_image,flag,,tiki_p_admin,,,,,, 

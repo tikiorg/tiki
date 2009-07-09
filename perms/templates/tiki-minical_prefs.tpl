@@ -1,6 +1,6 @@
 {title help="User+Calendar"}{tr}Mini Calendar: Preferences{/tr}{/title}
 
-{include file=tiki-mytiki_bar.tpl}
+{include file='tiki-mytiki_bar.tpl'}
 
 <div class="navbar">
 	{button href="tiki-minical.php#add" _text="{tr}Add{/tr} "}
@@ -54,11 +54,11 @@
 	<td class="formcolor">
 	<select name="minical_reminders">
     <option value="0" {if $prefs.minical_reminders eq 0}selected="selected"{/if}>{tr}no reminders{/tr}</option>
-    <option value="60" {if $prefs.minical_reminders eq 60}selected="selected"{/if}>1 min</option>
-    <option value="120" {if $prefs.minical_reminders eq 120}selected="selected"{/if}>2 min</option>
-    <option value="300" {if $prefs.minical_reminders eq 300}selected="selected"{/if}>5 min</option>
-    <option value="600" {if $prefs.minical_reminders eq 600}selected="selected"{/if}>10 min</option>
-    <option value="900" {if $prefs.minical_reminders eq 900}selected="selected"{/if}>15 min</option>
+    <option value="60" {if $prefs.minical_reminders eq 60}selected="selected"{/if}>1 {tr}min{/tr}</option>
+    <option value="120" {if $prefs.minical_reminders eq 120}selected="selected"{/if}>2 {tr}min{/tr}</option>
+    <option value="300" {if $prefs.minical_reminders eq 300}selected="selected"{/if}>5 {tr}min{/tr}</option>
+    <option value="600" {if $prefs.minical_reminders eq 600}selected="selected"{/if}>10 {tr}min{/tr}</option>
+    <option value="900" {if $prefs.minical_reminders eq 900}selected="selected"{/if}>15 {tr}min{/tr}</option>
 	</select>
 	</td>
 </tr>
@@ -81,7 +81,7 @@
 </table>
 </form>
 
-<h2>{tr}Admin topics{/tr}</h2>
+<h2>{tr}Admin Topics{/tr}</h2>
 <form  enctype="multipart/form-data"  action="tiki-minical_prefs.php" method="post">
 <table class="normal">
 <tr>

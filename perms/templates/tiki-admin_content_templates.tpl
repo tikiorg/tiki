@@ -1,6 +1,6 @@
 {title help="Content+Templates"}{tr}Admin templates{/tr}{/title}
 
-{remarksbox type="tip" title="Tip"}Use the Administration page of each enabled feature to allow the use of content templates.{/remarksbox}
+{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use the Administration page of each enabled feature to allow the use of content templates.{/tr}{/remarksbox}
 
 {if $preview eq 'y'}
 	<h2>{tr}Preview{/tr}</h2>
@@ -13,11 +13,14 @@
 {else}
 	<h2>{tr}Create new template{/tr}</h2>
 {/if}
-
-<form action="tiki-admin_content_templates.php" method="post">
+{if $wysiwyg eq 'n' or ($wysiwyg ne 'y' and $prefs.wysiwyg_default ne 'y')}
+<form action="tiki-admin_content_templates.php?&wysiwyg=n" method="post">
+{else} 
+<form action="tiki-admin_content_templates.php?&wysiwyg=y" method="post">
+{/if}
 {if $prefs.feature_wysiwyg eq 'y' and $prefs.wysiwyg_optional eq 'y'}
 	<div class="navbar">
-		{if $wysiwyg ne 'y'}
+		{if $wysiwyg eq 'n' or ($wysiwyg ne 'y' and $prefs.wysiwyg_default ne 'y')}
 			{button href="?templateId=$templateId&amp;wysiwyg=y" _text="{tr}Use wysiwyg editor{/tr}"}
 		{else}
 			{button href="?templateId=$templateId&amp;wysiwyg=n" _text="{tr}Use normal editor{/tr}"}
@@ -58,7 +61,7 @@
 				{/if}
 				{if $prefs.feature_html_pages eq 'y'}
 					<input type="checkbox" name="section_html" {if $info.section_html eq 'y'}checked="checked"{/if} />
-					{tr}HTML pages{/tr}
+					{tr}HTML Pages{/tr}
 					<br />
 				{/if}
 				{if ($prefs.feature_cms_templates ne 'y') and ($prefs.feature_wiki_templates ne 'y') and ($prefs.feature_newsletters ne 'y') and ($prefs.feature_events ne 'y') and ($prefs.feature_html_pages ne 'y')}
@@ -67,29 +70,29 @@
 			</td>
 		</tr>
 
-		{if $wysiwyg ne 'y' and $prefs.quicktags_over_textarea eq 'y'}
+		{if ($wysiwyg eq 'n' or ($wysiwyg ne 'y' and $prefs.wysiwyg_default ne 'y')) and $prefs.quicktags_over_textarea eq 'y'}
 			<tr>
 				<td class="formcolor"><label>{tr}Quicktags{/tr}</label></td>
 				<td class="formcolor">
-					{include file=tiki-edit_help_tool.tpl area_name='editwiki'}
+					{include file='tiki-edit_help_tool.tpl' area_name='editwiki'}
 				</td>
 			</tr>
 		{/if}
 
 		<tr>
 			{assign var=area_name value="editwiki"}
-			{if $wysiwyg ne 'y'}
+			{if $wysiwyg eq 'n' or ($wysiwyg ne 'y' and $prefs.wysiwyg_default ne 'y')}
 				<td class="formcolor">{tr}Template{/tr}:
 					<br />
 					<br />
 					{tr}Edit{/tr}:
 					<br />
 					<br />
-					{include file="textareasize.tpl" area_name='editwiki' formId='editpageform' ToolbarSet='Tiki'}
+					{include file='textareasize.tpl' area_name='editwiki' formId='editpageform' ToolbarSet='Tiki'}
 					<br />
 					<br />
 					{if $prefs.quicktags_over_textarea neq 'y'}
-						{include file=tiki-edit_help_tool.tpl area_name='editwiki'}
+						{include file='tiki-edit_help_tool.tpl' area_name='editwiki'}
 					{/if}  
 				</td>
 				<td class="formcolor">
@@ -117,7 +120,7 @@
 
 <h2>{tr}Templates{/tr}</h2>
 {if $channels or ($find ne '')}
-	{include file='find.tpl' _sort_mode='y'}
+	{include file='find.tpl'}
 {/if}
 
 <table class="normal">
@@ -141,7 +144,7 @@
 				{section name=ix loop=$channels[user].sections}
 					{$channels[user].sections[ix]} 
 					<a title="{tr}Delete{/tr}" class="link" href="tiki-admin_content_templates.php?removesection={$channels[user].sections[ix]}&amp;rtemplateId={$channels[user].templateId}" 
-						{icon _id='cross' alt='{tr}Delete{/tr}'}
+						{icon _id='cross' alt='{tr}Remove section{/tr}'}
 					</a>
 					&nbsp;&nbsp;
 				{/section}

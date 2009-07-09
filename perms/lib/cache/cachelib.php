@@ -1,5 +1,5 @@
 <?php
-// $Header$
+// $Id$
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -7,10 +7,10 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-/*
-A basic library to handle a cache of some Tiki Objects,
-usage is simple and feel free to improve it
-*/
+/**
+ * \brief A basic library to handle a cache of some Tiki Objects,
+ * usage is simple and feel free to improve it
+ */
 
 class Cachelib {
 
@@ -100,7 +100,7 @@ class Cachelib {
 	$back = array();
 	$all = opendir($path);
 	while ($file = readdir($all)) {
-		if (is_dir($path.'/'.$file) and $file <> ".." and $file <> "." and $file <> "CVS") {
+		if (is_dir($path.'/'.$file) and $file <> ".." and $file <> "." and $file <> "CVS" and $file <> ".svn" ) {
 			$du = $this->du($path.'/'.$file);
 			$total+= $du['total'];
 			$cant+= $du['cant'];
@@ -125,7 +125,7 @@ class Cachelib {
 	if (!$path or !is_dir($path)) return 0;
 	if ($dir = opendir($path)) {
 		while (false !== ($file = readdir($dir))) {
-			if (substr($file,0,1) == "." or $file == 'CVS' or $file == "index.php" or $file == "README" ) continue;
+			if (substr($file,0,1) == "." or $file == 'CVS' or $file == '.svn' or $file == "index.php" or $file == "README" ) continue;
 			if (is_dir($path."/".$file)) {
 				$this->erase_dir_content($path."/".$file);
 				rmdir($path."/".$file);
@@ -176,4 +176,3 @@ class Cachelib {
 }
 
 $cachelib = new Cachelib();
-?>

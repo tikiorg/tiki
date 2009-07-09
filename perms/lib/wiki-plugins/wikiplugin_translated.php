@@ -15,7 +15,7 @@ function wikiplugin_translated_info() {
 		'name' => tra('Translated'),
 		'documentation' => 'PluginTranslated',
 		'description' => tra('Links to a translated content'),
-		'prefs' => array( 'wikiplugin_translated' ),
+		'prefs' => array( 'feature_multilingual', 'wikiplugin_translated' ),
 		'body' => tra('[url] or ((wikiname)) or ((inter:interwiki)) (use wiki syntax)'),
 		'params' => array(
 			'lang' => array(
@@ -60,5 +60,3 @@ function wikiplugin_translated($data, $params) {
 
 	return $back;
 }
-
-?>

@@ -1,6 +1,6 @@
 <?php
 
-class JitFilter_FilterTest extends PHPUnit_Framework_TestCase
+class JitFilter_FilterTest extends TikiTestCase
 {
 	private $array;
 
@@ -84,5 +84,3 @@ class JitFilter_FilterTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals( '', $this->array['baz'][1] );
 	}
 }
-
-?>

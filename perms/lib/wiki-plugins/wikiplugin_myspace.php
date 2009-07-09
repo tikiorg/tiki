@@ -10,6 +10,7 @@ function wikiplugin_myspace_help() {
 function wikiplugin_myspace_info() {
 	return array(
 		'name' => tra('MySpace'),
+		'documentation' => 'PluginMySpace',			
 		'description' => tra("Displays a SWF myspace mp3 playlist on the wiki page"),
 		'prefs' => array( 'wikiplugin_myspace' ),
 		'params' => array(
@@ -48,5 +49,3 @@ function wikiplugin_myspace($data, $params) {
 	return $data;
 
 }
-
-?>

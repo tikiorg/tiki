@@ -629,4 +629,3 @@ class Auth_Container_DB extends Auth_Container
     // }}}
 
 }
-?>

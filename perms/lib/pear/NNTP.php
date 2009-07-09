@@ -709,4 +709,3 @@ class Net_NNTP extends PEAR
         return $response;
     }
 }
-?>

@@ -1,4 +1,5 @@
 <?php
+// $Id$
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
@@ -8,6 +9,7 @@ class HeaderLib {
 	var $title;
 	var $jsfiles;
 	var $js;
+	var $jq_onready;
 	var $cssfiles;
 	var $css;
 	var $rssfeeds;
@@ -17,6 +19,7 @@ class HeaderLib {
 		$this->title = '';
 		$this->jsfiles = array();
 		$this->js = array();
+		$this->jq_onready = array();
 		$this->cssfiles = array();
 		$this->css = array();
 		$this->rssfeeds = array();
@@ -36,6 +39,18 @@ class HeaderLib {
 	function add_js($script,$rank=0) {
 		if (empty($this->js[$rank]) or !in_array($script,$this->js[$rank])) {
 			$this->js[$rank][] = $script;
+		}
+	}
+
+	/**
+	 * Adds lines or blocks of JQuery JavaScript to $jq(document).ready handler
+	 * @param $script = Script to execute
+	 * @param $rank   = Execution order (default=0)
+	 * @return nothing
+	 */
+	function add_jq_onready($script,$rank=0) {
+		if (empty($this->jq_onready[$rank]) or !in_array($script,$this->jq_onready[$rank])) {
+			$this->jq_onready[$rank][] = $script;
 		}
 	}
 
@@ -83,10 +98,8 @@ class HeaderLib {
 	}
 
 	function output_headers() {
-		global $style_ie6_css;
+		global $style_ie6_css, $style_ie7_css, $style_ie8_css;
 
-		ksort($this->jsfiles);
-		ksort($this->js);
 		ksort($this->cssfiles);
 		ksort($this->css);
 		ksort($this->rssfeeds);
@@ -125,13 +138,6 @@ class HeaderLib {
 			}
 		}
 
-		// Handle theme's special CSS file for IE6 hacks
-		if ( $style_ie6_css != '' ) {
-			$back .= "<!--[if IE 6]>\n"
-				.'<link rel="stylesheet" href="'.$style_ie6_css.'" type="text/css" />'."\n"
-				."<![endif]-->\n";
-		}
-
 		if (count($this->css)) {
 			$back.= "<style><!--\n";
 			foreach ($this->css as $x=>$css) {
@@ -143,6 +149,51 @@ class HeaderLib {
 			$back.= "-->\n</style>\n\n";
 		}
 
+		// Handle theme's special CSS file for IE6 hacks
+			$back .= "<!--[if lt IE 7]>\n"
+					.'<link rel="stylesheet" href="css/ie6.css" type="text/css" />'."\n";
+			if ( $style_ie6_css != '' ) {
+				$back .= '<link rel="stylesheet" href="'.$style_ie6_css.'" type="text/css" />'."\n";
+			}
+			$back .= "<![endif]-->\n";
+			$back .= "<!--[if IE 7]>\n"
+					.'<link rel="stylesheet" href="css/ie7.css" type="text/css" />'."\n";
+			if ( $style_ie7_css != '' ) {
+				$back .= '<link rel="stylesheet" href="'.$style_ie7_css.'" type="text/css" />'."\n";
+			}
+			$back .= "<![endif]-->\n";
+			$back .= "<!--[if IE 8]>\n"
+                                        .'<link rel="stylesheet" href="css/ie8.css" type="text/css" />'."\n";
+                        if ( $style_ie8_css != '' ) {
+                                $back .= '<link rel="stylesheet" href="'.$style_ie8_css.'" type="text/css" />'."\n";
+                        }
+                        $back .= "<![endif]-->\n";
+
+                        
+        $back .= $this->output_js();	// TODO move to end of page
+        
+		if (count($this->rssfeeds)) {
+			foreach ($this->rssfeeds as $x=>$rssf) {
+				$back.= "<!-- rss $x -->\n";
+				foreach ($rssf as $rsstitle=>$rssurl) {
+					$back.= "<link rel=\"alternate\" type=\"application/rss+xml\" title=\"$rsstitle\" href=\"$rssurl\" />\n";
+				}
+			}
+			$back.= "\n";
+		}
+
+		return $back;
+	}
+	
+	function output_js() {
+		global $prefs;
+		
+		ksort($this->jsfiles);
+		ksort($this->js);
+		ksort($this->jq_onready);
+		
+		$back = "\n";
+		
 		if (count($this->jsfiles)) {
 			foreach ($this->jsfiles as $x=>$jsf) {
 				$back.= "<!-- jsfile $x -->\n";
@@ -164,17 +215,63 @@ class HeaderLib {
 			$back.= "//--><!]]>\n</script>\n\n";
 		}
 		
-		if (count($this->rssfeeds)) {
-			foreach ($this->rssfeeds as $x=>$rssf) {
-				$back.= "<!-- rss $x -->\n";
-				foreach ($rssf as $rsstitle=>$rssurl) {
-					$back.= "<link rel=\"alternate\" type=\"application/rss+xml\" title=\"$rsstitle\" href=\"$rssurl\" />\n";
+		if ($prefs['feature_jquery'] == 'y') {
+			if (count($this->jq_onready)) {
+				$back .= "<script type=\"text/javascript\">\n<!--//--><![CDATA[//><!--\n";
+				$back .= '$jq("document").ready(function(){'."\n";
+				foreach ($this->jq_onready as $x=>$js) {
+					$back.= "// jq_onready $x \n";
+					foreach ($js as $j) {
+						$back.= "$j\n";
+					}
+				}
+				$back .= "});\n";
+				$back.= "//--><!]]>\n</script>\n";
+			}
+		}
+		
+		return $back;
+	}
+	
+	function getJs() {
+		global $prefs;
+		
+		ksort($this->js);
+		ksort($this->jq_onready);
+		$out = array();
+		
+		if (count($this->js)) {
+			foreach ($this->js as $x=>$js) {
+				foreach ($js as $j) {
+					$out[] = "$j\n";
 				}
 			}
-			$back.= "\n";
 		}
+		if ($prefs['feature_jquery'] == 'y') {
+			if (count($this->jq_onready)) {
+				foreach ($this->jq_onready as $x=>$js) {
+					foreach ($js as $j) {
+						$out[] = "$j\n";
+					}
+				}
+			}
+		}
+		return $out;
+	}
 
-		return $back;
+	function getJsfiles() {
+		
+		ksort($this->jsfiles);
+		$out = array();
+		
+		if (count($this->jsfiles)) {
+			foreach ($this->jsfiles as $x=>$jsf) {
+				foreach ($jsf as $jf) {
+					$out[] = "<script type=\"text/javascript\" src=\"$jf\"></script>\n";
+				}
+			}
+		}
+		return $out;
 	}
 
 }

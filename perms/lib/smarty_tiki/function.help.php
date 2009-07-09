@@ -16,7 +16,3 @@ function smarty_function_help($params, &$smarty)
     }
     print help_doclink($params);
 }
-
-
-
-?>

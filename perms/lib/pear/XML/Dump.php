@@ -183,5 +183,3 @@ class XML_RPC_Dump
  * c-hanging-comment-ender-p: nil
  * End:
  */
-
-?>

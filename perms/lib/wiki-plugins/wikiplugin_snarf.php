@@ -16,6 +16,7 @@ function wikiplugin_snarf_info() {
 		'documentation' => 'PluginSnarf',
 		'description' => tra('Include the content of a remote HTTP page. Regular expression selecting the content portion to include must be specified.'),
 		'prefs' => array( 'wikiplugin_snarf' ),
+		'validate' => 'all',
 		'params' => array(
 			'url' => array(
 				'required' => true,
@@ -117,5 +118,3 @@ function wikiplugin_snarf($data, $params)
     }
     return $ret;
 }
-
-?>

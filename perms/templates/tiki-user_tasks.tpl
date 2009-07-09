@@ -1,7 +1,7 @@
 {title help="User+Tasks"}{tr}Tasks{/tr}{/title}
 
 {if $prefs.feature_ajax ne 'y' && $prefs.feature_mootools ne 'y'}
-  {include file=tiki-mytiki_bar.tpl}
+  {include file='tiki-mytiki_bar.tpl'}
   <br /><br />
 {/if}
 
@@ -26,7 +26,7 @@
 
 {* start ************ Search  ***************}
 {if (not $show_form)} 
-  {include file='find.tpl' _sort_mode='y'}
+  {include file='find.tpl'}
 {/if}
 
 <span class="taskcount">{$cant}&nbsp;{tr}Tasks{/tr}</span>
@@ -65,7 +65,7 @@
 {/if}
 <tr>
 	<td>
-		<img src="{$img_accepted}" height="{$img_accepted_height}" width="{$img_accepted_width}" title='{tr}Accepted by Task User and Creator{/tr}' alt='{tr}Accepted User and Creator{/tr}' />:
+		<img src="{$img_accepted}" height="{$img_accepted_height}" width="{$img_accepted_width}" title='{tr}Accepted by Task User and Creator{/tr}' alt='{tr}Accepted User and Creator{/tr}' />
 	</td>
 	<td>
 		{tr}Task is accepted by user and creator{/tr}.
@@ -73,7 +73,7 @@
 </tr>
 <tr>
 	<td>
-		<img src="{$img_not_accepted}" height="{$img_not_accepted_height}" width="{$img_not_accepted_width}" title='{tr}Not Accepted by One User{/tr}' alt='{tr}Not Accepted User{/tr}' />:
+		<img src="{$img_not_accepted}" height="{$img_not_accepted_height}" width="{$img_not_accepted_width}" title='{tr}Not Accepted by One User{/tr}' alt='{tr}Not Accepted User{/tr}' />
 	</td>
 	<td>
 		{tr}Task is rejected by one user{/tr}.
@@ -105,7 +105,7 @@
 {if $admin_mode}<div align="center"><a class="highlight" >{tr}Admin Mode{/tr}</a></div><br />{/if}
 {* start ************ view  ***************}
 {if (($tiki_view_mode eq 'view') or ($tiki_view_mode eq 'preview'))}
-{include file=tiki-user_tasks_view.tpl}
+{include file='tiki-user_tasks_view.tpl'}
 {/if}
 
 {* end ************ View task ***************}
@@ -113,7 +113,7 @@
 {* start ************ Edit Form ***************}
 
 {if ($show_form)} 
-{include file=tiki-user_tasks_edit.tpl}
+{include file='tiki-user_tasks_edit.tpl'}
 {/if}
 
 {* end ************ Edit Form ***************}
@@ -124,7 +124,7 @@
 
 {* start ************ Task list ***************}
 {if ( not $show_form )} 
-{include file=tiki-user_tasks_list.tpl}
+{include file='tiki-user_tasks_list.tpl'}
 {/if} 
 
 {* end ************ Task list ***************}

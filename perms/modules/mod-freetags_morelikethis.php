@@ -7,7 +7,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 global $page;
-global $dbTiki;
+global $dbTiki, $smarty;
 global $freetaglib;
 global $tiki_p_view;
 if (!isset($freetaglib) or !is_object($freetaglib)) { include_once 'lib/freetag/freetaglib.php'; }

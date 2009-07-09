@@ -205,4 +205,3 @@ class PEAR_Task_Common
         return PEAR::raiseError($msg, $code);
     }
 }
-?>

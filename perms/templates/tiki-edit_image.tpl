@@ -26,7 +26,7 @@
 <tr><td class="formcolor">{tr}Latitude (WGS84/decimal degrees){/tr}:</td><td class="formcolor"><input type="text" name="lat" value="{$lat|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Longitude (WGS84/decimal degrees){/tr}:</td><td class="formcolor"><input type="text" name="lon" value="{$lon|escape}" /></td></tr>
 {/if}
-{include file=categorize.tpl}
+{include file='categorize.tpl'}
 <tr><td class="formcolor">{tr}Upload from disk to change the image:{/tr}</td><td class="formcolor">{$filename}<br /><input name="userfile" type="file" />
 </td></tr>
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="editimage" value="{tr}Save{/tr}" />&nbsp;&nbsp;<input type="submit" name="editimage_andgonext" value="{tr}Save and Go Next{/tr}" />&nbsp;&nbsp;<a class="link" href="tiki-browse_image.php?imageId={$imageId}">{tr}Cancel Edit{/tr}</a></td></tr>
@@ -47,6 +47,8 @@
     <td class="even">
     <small>
     {tr}You can include the image in an HTML page using one of these lines{/tr}:<br /><br />
+    &lt;img src="show_image.php?id={$imageId}" /&gt;<br />
+    &lt;img src="show_image.php?name={$name|escape}&amp;galleryId={$galleryId}" /&gt;<br />
     &lt;img src="{$url_show}?id={$imageId}" /&gt;<br />
     &lt;img src="{$url_show}?name={$name|escape}&amp;galleryId={$galleryId}" /&gt;<br />
     </small>
@@ -56,6 +58,8 @@
     <td class="even">
     <small>
     {tr}You can include the image in a tiki page using one of these lines{/tr}:<br /><br />
+    {literal}{{/literal}img src="show_image.php?id={$imageId}" {literal}}{/literal}<br />
+    {literal}{{/literal}img src="show_image.php?name={$name|escape}&amp;galleryId={$galleryId}" {literal}}{/literal}<br />
     {literal}{{/literal}img src="{$url_show}?id={$imageId}" {literal}}{/literal}<br />
     {literal}{{/literal}img src="{$url_show}?name={$name|escape}&amp;galleryId={$galleryId}" {literal}}{/literal}<br />
     </small>

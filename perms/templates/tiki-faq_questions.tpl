@@ -25,15 +25,15 @@
   <tr class="formcolor">
     <td class="formcolor">{tr}Answer{/tr}:
       <br /> 
-      {include file="textareasize.tpl" area_name='faqans' formId='editpageform'}
+      {include file='textareasize.tpl' area_name='faqans' formId='editpageform'}
       {if $prefs.quicktags_over_textarea neq 'y'}
         <br />
-        {include file=tiki-edit_help_tool.tpl area_name="faqans"}
+        {include file='tiki-edit_help_tool.tpl' area_name="faqans"}
       {/if}
     </td>
     <td class="formcolor" >
       {if $prefs.quicktags_over_textarea eq 'y'}
-        {include file=tiki-edit_help_tool.tpl area_name="faqans"}
+        {include file='tiki-edit_help_tool.tpl' area_name="faqans"}
       {/if}
       <textarea id='faqans' type="text" rows="8" cols="80" name="answer">{$answer|escape}</textarea>
     </td>
@@ -90,7 +90,7 @@
 <br />
 <h2>{tr}FAQ questions{/tr}</h2>
 {if $channels or ($find ne '')}
-  {include file='find.tpl' _sort_mode='y'}
+  {include file='find.tpl'}
 {/if}
 
 <table class="normal">
@@ -143,4 +143,3 @@
 {else}
 <h2>{tr}No suggested questions{/tr}</h2>
 {/if}
-

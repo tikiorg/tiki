@@ -1,6 +1,6 @@
-{title help="notepad"}{tr}Reading note:{/tr}&nbsp;{$info.name}{/title}
+'{title help="notepad"}{tr}Reading note:{/tr}&nbsp;{$info.name}{/title}
 
-{include file=tiki-mytiki_bar.tpl}
+{include file='tiki-mytiki_bar.tpl'}
 
 <div class="navbar"
 	{button href="tiki-notepad_list.php" _text="{tr}List notes{/tr}"}

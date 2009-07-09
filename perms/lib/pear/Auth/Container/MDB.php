@@ -615,4 +615,3 @@ class Auth_Container_MDB extends Auth_Container
     // }}}
 
 }
-?>

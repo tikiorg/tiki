@@ -1,6 +1,6 @@
 <?php
 
-require_once 'DeclFilter/Rule.php';
+require_once 'lib/core/lib/DeclFilter/Rule.php';
 
 abstract class DeclFilter_UnsetRule implements DeclFilter_Rule
 {
@@ -9,5 +9,3 @@ abstract class DeclFilter_UnsetRule implements DeclFilter_Rule
 		unset($data[$key]);
 	}
 }
-
-?>

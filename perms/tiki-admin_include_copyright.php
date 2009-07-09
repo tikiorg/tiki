@@ -1,59 +1,27 @@
 <?php
-
-// $Id: /cvsroot/tikiwiki/tiki/tiki-admin_include_copyright.php,v 1.4.2.1 2007-11-04 22:08:04 nyloth Exp $
-
-// Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+// (c) Copyright 2002-2009 by authors of the Tiki Wiki/CMS/Groupware Project
+// 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-
+// $Id: /cvsroot/tikiwiki/tiki/tiki-admin_include_copyright.php,v 1.4.2.1 2007-11-04 22:08:04 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
-
-
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
-}
-
-if ( $prefs['feature_copyright'] != 'y' )
-{
-	$smarty->assign('msg', tra("This feature is disabled").": feature_copyright");
-        $smarty->display("error.tpl");
-        die;
-
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
+	header("location: index.php");
+	exit;
 }
 if (isset($_REQUEST["setcopyright"])) {
-        check_ticket('admin-inc-copyright');
-        if (isset($_REQUEST["wiki_feature_copyrights"]) && $_REQUEST["wiki_feature_copyrights"] == "on") {
-                $tikilib->set_preference("wiki_feature_copyrights", 'y');
-        } else {
-                $tikilib->set_preference("wiki_feature_copyrights", 'n');
-        }
-       if (isset($_REQUEST["blogues_feature_copyrights"]) && $_REQUEST["blogues_feature_copyrights"] == "on") {
-                $tikilib->set_preference("blogues_feature_copyrights", 'y');
-        } else {
-                $tikilib->set_preference("blogues_feature_copyrights", 'n');
-        }
- 	if (isset($_REQUEST["faqs_feature_copyrights"]) && $_REQUEST["faqs_feature_copyrights"] == "on") {
-                $tikilib->set_preference("faqs_feature_copyrights", 'y');
-        } else {
-                $tikilib->set_preference("faqs_feature_copyrights", 'n');
-        }
-       if (isset($_REQUEST["articles_feature_copyrights"]) && $_REQUEST["articles_feature_copyrights"] == "on") {
-                $tikilib->set_preference("articles_feature_copyrights", 'y');
-        } else {
-                $tikilib->set_preference("articles_feature_copyrights", 'n');
-        }
-
-        if (isset($_REQUEST["wikiLicensePage"])) {
-                $tikilib->set_preference("wikiLicensePage", $_REQUEST["wikiLicensePage"]);
-        }
-
-        if (isset($_REQUEST["wikiSubmitNotice"])) {
-                $tikilib->set_preference("wikiSubmitNotice", $_REQUEST["wikiSubmitNotice"]);
-        }
+	check_ticket('admin-inc-copyright');
+	$pref_toggles = array(
+		"wiki_feature_copyrights",
+		"blogues_feature_copyrights",
+		"faqs_feature_copyrights",
+		"articles_feature_copyrights",
+	);
+	$pref_byref_values = array(
+		"wikiLicensePage",
+		"wikiSubmitNotice",
+	);
+	foreach($pref_toggles as $toggle) simple_set_toggle($toggle);
+	foreach($pref_byref_values as $value) byref_set_value($value);
 }
-
-
-
 ask_ticket('admin-inc-copyright');
-?>

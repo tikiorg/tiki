@@ -86,8 +86,5 @@ class ScoreLib extends TikiLib {
 	}
 
 }
-
 global $dbTiki;
 $scorelib = new ScoreLib($dbTiki);
-
-?>

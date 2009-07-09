@@ -7,13 +7,13 @@
 */
 function wikiplugin_files_help() {
 	return tra("List files in a file gallery (with a category) or in a category or a file gallery od this category.")
-		."<br />~np~{FILES(galleryId=id,categId=id,sort=name_asc,showaction=n,showfind=n)}Title{FILES}~/np~";
+		."<br />~np~{FILES(galleryId=id,categId=id,sort=name_asc,showaction=n,showfind=n,slideshow=n)}Title{FILES}~/np~";
 }
 function wikiplugin_files_info() {
 	return array(
 		'name' => tra('Files'),
 		'documentation' => 'PluginFiles',
-		'description' => tra("Displays a list of files"),
+		'description' => tra("Displays a list of files from the File Gallery"),
 		'prefs' => array( 'feature_file_galleries', 'wikiplugin_files' ),
 		'body' => tra('Title'),
 		'params' => array(
@@ -112,6 +112,11 @@ function wikiplugin_files_info() {
 				'name' => tra('Shows Number of Files'),
 				'description' => 'y|n',
 			),
+			'slideshow' => array(
+				'required' => false,
+				'name' => tra('Shows the slideshow of a gallery'),
+				'description' => 'y|n',
+			),
 	  )
 	 );
 }
@@ -135,6 +140,11 @@ function wikiplugin_files($data, $params) {
 	if (isset($categId) && strstr($categId, ':')) {
 		$categId = explode(':', $categId);
 	}
+	static $iplugin = 0;
+	++$iplugin;
+	if (isset($_REQUEST["wp_files_sort_mode$iplugin"])) {
+		$sort = $_REQUEST["wp_files_sort_mode$iplugin"];
+	}
 	if (!isset($sort))
 		$sort = 'name_asc';
 	if (isset($galleryId)) {
@@ -145,12 +155,17 @@ function wikiplugin_files($data, $params) {
 				return;
 			$p_download_files = $tikilib->user_has_perm_on_object($user, $galleryId, 'file gallery', 'tiki_p_download_files');
 			$p_admin_file_galleries = $tikilib->user_has_perm_on_object($user, $galleryId, 'file gallery', 'tiki_p_admin_file_galleries');
-			$p_edit_gallery_file = $tikilib->user_has_perm_on_object($user, $galleryId, 'file gallery', 'tiki_p_edit_gallery_file');
+			$p_edit_gallery_file = $tikilib->user_has_perm_on_object($user, $galleryId, 'file gallery', 'tiki_p_edit_gallery_file', 'tiki_p_edit_categorized');
 		} else {
 			$p_download_files = 'y';
 			$p_view_file_gallery = 'y';
 			$p_admin_file_galleries = 'y';
 			$p_edit_gallery_file = 'y';
+		}
+		if (!empty($slideshow) && $slideshow == 'y') {
+			if ($prefs['javascript_enabled'] != 'y') return;
+			if (empty($data)) $data = 'Slideshow';
+			return "~np~<a onclick=\"javascript:window.open('tiki-list_file_gallery.php?galleryId=$galleryId&amp;slideshow','','menubar=no,width=600,height=500,resizable=yes');\" href=\"#\">".tra($data).'</a>~/np~';
 		}
 		$find = isset($_REQUEST['find'])?  $_REQUEST['find']: '';
 		$fs = $tikilib->get_files(0, -1, $sort, $find, $galleryId, false, true);
@@ -176,7 +191,7 @@ function wikiplugin_files($data, $params) {
 		}
 	} elseif (isset($categId)) {
 		// galls of this category
-		$objects = $categlib->list_category_objects($categId, 0, -1, $sort, 'file gallery');
+		$objects = $categlib->list_category_objects($categId, 0, -1, 'itemId_asc', 'file gallery');
 		// get the files of the gallery
 		foreach ($objects['data'] as $og) {
 			$gal_info = $tikilib->get_file_gallery($og['itemId']);
@@ -186,7 +201,7 @@ function wikiplugin_files($data, $params) {
 					continue;
 				$p_download_files = $tikilib->user_has_perm_on_object($user, $gal_info['galleryId'], 'file gallery', 'tiki_p_download_files');
 				$p_admin_file_galleries = $tikilib->user_has_perm_on_object($user, $gal_info['galleryId'], 'file gallery', 'tiki_p_admin_file_galleries');
-				$p_edit_gallery_file = $tikilib->user_has_perm_on_object($user, $gal_info['galleryId'], 'file gallery', 'tiki_p_edit_gallery_file');
+				$p_edit_gallery_file = $tikilib->user_has_perm_on_object($user, $gal_info['galleryId'], 'file gallery', 'tiki_p_edit_gallery_file', 'tiki_p_edit_categorized');
 			} else {
 				$p_download_files = 'y';
 				$p_view_file_gallery = 'y';
@@ -210,7 +225,7 @@ function wikiplugin_files($data, $params) {
 			}
 		}
 		// files from this categ
-		$objects = $categlib->list_category_objects($categId, 0, -1, $sort, 'file');
+		$objects = $categlib->list_category_objects($categId, 0, -1, 'itemId_asc', 'file');
 		foreach ($objects['data'] as $of) {
 			$info = $filegallib->get_file_info($of['itemId']);
 			$gal_info = $tikilib->get_file_gallery($info['galleryId']);
@@ -220,7 +235,7 @@ function wikiplugin_files($data, $params) {
 					continue;
 				$info['p_download_files'] = $tikilib->user_has_perm_on_object($user, $info['galleryId'], 'file gallery', 'tiki_p_download_files');
 				$info['p_admin_file_galleries'] = $tikilib->user_has_perm_on_object($user, $info['galleryId'], 'file gallery', 'tiki_p_admin_file_galleries');
-				$info['p_edit_gallery_file'] = $tikilib->user_has_perm_on_object($user, $info['galleryId'], 'file gallery', 'tiki_p_edit_gallery_file');
+				$info['p_edit_gallery_file'] = $tikilib->user_has_perm_on_object($user, $info['galleryId'], 'file gallery', 'tiki_p_edit_gallery_file', 'tiki_p_edit_categorized');
 			} else {
 				$info['p_download_files'] = 'y';
 				$info['p_view_file_gallery'] = 'y';
@@ -281,6 +296,6 @@ function wikiplugin_files($data, $params) {
 		$showfind = 'n';
 	}
 	$smarty->assign_by_ref('show_find', $showfind);
+	$smarty->assign('sort_arg', "wp_files_sort_mode$iplugin");
 	return '~np~'.$smarty->fetch('wiki-plugins/wikiplugin_files.tpl').'~/np~';
 }
-?>

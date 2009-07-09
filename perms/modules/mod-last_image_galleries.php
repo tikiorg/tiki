@@ -7,6 +7,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
+global $smarty;
 global $imagegallib; include_once 'lib/imagegals/imagegallib.php';
 $ranking = $imagegallib->list_visible_galleries(0, $module_rows, 'lastModif_desc', $user, '');
 

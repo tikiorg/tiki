@@ -140,7 +140,7 @@ class StructLib extends TikiLib {
 			$this->query($query, array((int)$previous['page_ref_id'], (int)$pos, (int)$page_ref_id));
 			//Remove the space created by the demotion			
 			$query = "update `tiki_structures` set `pos`=`pos`-1 where `pos`>? and `parent_id`=?";
-			$this->query($query,array((int)$parent_info["pos"], (int)$parent_info["parent_id"]));  
+			$this->query($query,array((int)$page_info["pos"], (int)$page_info["parent_id"])); 
 			if ($prefs['feature_user_watches'] == 'y') {
 				include_once('lib/notifications/notificationemaillib.php');
 				sendStructureEmailNotification(array('action'=>'move_down', 'page_ref_id'=>$page_ref_id, 'parent_id'=>$previous['page_ref_id']));
@@ -169,6 +169,9 @@ class StructLib extends TikiLib {
 			$query = 'update `tiki_structures` set `pos`=? where `page_ref_id`=?';
 			$this->query($query,array((int)$res['pos'], (int)$page_info['page_ref_id']) );
 			$this->query($query,array((int)$page_info['pos'], (int)$res['page_ref_id']) );
+		} elseif ($page_info['pos'] > 1) { // a bug occured - try to fix
+			$query = 'update `tiki_structures` set `pos`=? where `page_ref_id`=?';
+			$this->query($query,array($page_info['pos']-1, (int)$page_info['page_ref_id']) );
 		}
 	}
   /** \brief Create a structure entry with the given name
@@ -251,7 +254,7 @@ class StructLib extends TikiLib {
       $level++;
     }
 		//Get all child nodes for this page_ref_id
-    $query = 'select `page_ref_id`, `page_alias`, `pageName`, `flag`, `user`';
+    $query = 'select `page_ref_id`, `page_alias`, `pageName`, `flag`, `user`, `pos` as db_pos ';
     $query .= 'from `tiki_structures` ts, `tiki_pages` tp ';
     $query .= 'where ts.`page_id` = tp.`page_id` and `parent_id`=? order by `pos` asc';
 		$result = $this->query($query,array((int)$page_ref_id));
@@ -260,6 +263,7 @@ class StructLib extends TikiLib {
 		while ($res = $result->fetchRow()) {
       //Add
       $aux['first']       = ($pos == 1);
+	  $aux['db_pos'] = $res['db_pos'];
       $aux['last']        = false;
       $aux['page_ref_id'] = $res['page_ref_id'];
       $aux['pageName']    = $res['pageName'];
@@ -359,8 +363,9 @@ class StructLib extends TikiLib {
   */
 	function s_get_structure_info($page_ref_id) {
 		$parent_id = $this->getOne('select `parent_id` from `tiki_structures` where `page_ref_id`=?', array((int)$page_ref_id));
-		if (!$parent_id)
+		if (!$parent_id) {
 			return $this->s_get_page_info($page_ref_id);
+		}
 		return $this->s_get_structure_info($parent_id);
 	}
   /**Returns an array of info about the parent
@@ -457,6 +462,7 @@ class StructLib extends TikiLib {
 	// it's used only in {toc} thing hardcoded in parse tikilib->parse -- (mose)
 	// the $tocPrefix can be used to Prefix a subtree as it would start from a given number (e.g. 2.1.3)
 	function build_subtree_toc($id,$slide=false,$order='asc',$tocPrefix='') {
+		global $user, $tikilib;
 		$ret = array();
 		$cant = $this->getOne('select count(*) from `tiki_structures` where `parent_id`=?',array((int)$id));
 		if ($cant) {
@@ -490,12 +496,15 @@ class StructLib extends TikiLib {
 					)
 				WHERE
 					parent_id = ?
-				";
+				order by ".$this->convert_sortmode('pos_'.$order);
 				$args[] = (int) $id;
 			}
 			$result = $this->query($query, $args);
 			$prefix=1;
 			while ($res = $result->fetchRow()) {
+				if (!$tikilib->user_has_perm_on_object($user, $res['pageName'], 'wiki page', 'tiki_p_view' ) ) {
+					continue;
+				}
 				$res['prefix']=($tocPrefix=='')?'':"$tocPrefix.";
 				$res['prefix'].=$prefix;
 				$prefix++;
@@ -825,7 +834,7 @@ function list_structures($offset, $maxRecords, $sort_mode, $find='', $exact_matc
 			} else {
 			  $res['webhelp']='n';
 			}
-			if ( $this->user_has_perm_on_object($user,$res['pageName'],'wiki page','tiki_p_edit') ) {
+			if ( $this->user_has_perm_on_object($user,$res['pageName'],'wiki page','tiki_p_edit', 'tiki_p_edit_categorized') ) {
 				$res['editable']='y';
 			} else {
 				$res['editable']='n';
@@ -1002,7 +1011,39 @@ function list_structures($offset, $maxRecords, $sort_mode, $find='', $exact_matc
 		$this->query($query, array($structure_id, $pos+1, $page_ref_id));
 	}
   }
+  /* transform a structure into a menu */
+  function to_menu($channels, $structure, $sectionLevel=0, $cumul=0) {
+	  global $smarty;
+	  include_once('lib/smarty_tiki/function.sefurl.php');
+	  $options = array();
+	  $cant = 0;
+	  foreach ($channels as $channel) {
+		  if (empty($channel['sub'])) {
+			  if (isset($options[$cant-1]['sectionLevel'])) {
+				  $level = $options[$cant-1]['sectionLevel'];
+				  while ($level-- > $sectionLevel) {
+					  $options[]= array('type' => '-', 'sectionLevel'=>$level);
+					  ++$cant;
+				  }
+			  }
+		  }
+		  $option['name'] = empty($channel['page_alias'])? $channel['pageName']: $channel['page_alias'];
+		  $option['type'] = empty($channel['sub'])? 'o': ($sectionLevel?$sectionLevel:'s');
+		  $option['url'] = smarty_function_sefurl(array('page'=>$channel['pageName'], 'structure'=>$structure, 'page_ref_id'=>$channel['page_ref_id'], 'sefurl'=>'n'), $smarty);
+		  $option['canonic'] = '(('.$channel['pageName'].'))';
+		  $option['sefurl'] = smarty_function_sefurl(array('page'=>$channel['pageName'], 'structure'=>$structure, 'page_ref_id'=>$channel['page_ref_id']), $smarty);
+		  $option['position'] = $cant + $cumul;
+		  $option['sectionLevel'] = $sectionLevel;
+		  ++$cant;
+		  $options[] = $option;
+		  if (!empty($channel['sub'])) {
+			  $oSub =  $this->to_menu($channel['sub'], $structure, $sectionLevel+1, $cant+$cumul);
+			  $cant += $oSub['cant'];
+			  $options = array_merge($options, $oSub['data']);
+		  }
+	  }
+	  return array('data'=>$options, 'cant'=>$cant);
+  }
 }
 global $dbTiki;
 $structlib = new StructLib($dbTiki);
-?>

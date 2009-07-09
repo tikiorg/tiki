@@ -6,7 +6,16 @@
 $force_no_compression = true;
 include('tiki-setup.php');
 
+if ($prefs['feature_wysiwyg'] != 'y') {
+	$smarty->assign('msg', tra("This feature is disabled").": feature_wysiwyg");
+	$smarty->display("error.tpl");
+	die;
+}
+
 $fckstyle = 'styles/'.$prefs['style'];
+if ( $tikidomain and is_file('styles/'.$tikidomain.'/'.$prefs['style']) ) {
+	$fckstyle = 'styles/'.$tikidomain.'/'.$prefs['style'];
+}
 $smarty->assign('fckstyle',$fckstyle);
 
 $tools = split("\r\n|\n",$prefs['wysiwyg_toolbar']);
@@ -22,6 +31,4 @@ foreach ($tools as $t) {
 	}
 }
 $smarty->assign('toolbar',$toolbar);
-
 $smarty->display('setup_fckeditor.tpl', null, null, 'application/javascript');
-?>

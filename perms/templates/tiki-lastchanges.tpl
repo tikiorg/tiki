@@ -1,43 +1,35 @@
-{title url="tiki-lastchanges.php?days=$days"}{tr}Last Changes{/tr}{/title}
+{* $Id$ *}
+
+{title admpage="wiki" help="Using+Wiki+Pages#Last_Changes" url="tiki-lastchanges.php?days=$days"}{tr}Last Changes{/tr}{/title}
+
 <div class="navbar">
 {if $days eq '1'}{assign var=thisclass value='highlight'}{else}{assign var=thisclass value=''}{/if}
 {button href="tiki-lastchanges.php?days=1" _text="{tr}Today{/tr}" _class=$thisclass}
 {if $days eq '2'}{assign var=thisclass value='highlight'}{else}{assign var=thisclass value=''}{/if}
-{button href="tiki-lastchanges.php?days=2" _text="{tr}Last{/tr} 2 {tr}days{/tr}" _class=$thisclass}
+{button href="tiki-lastchanges.php?days=2" _text="{tr}Last 2 days{/tr}" _class=$thisclass}
 {if $days eq '3'}{assign var=thisclass value='highlight'}{else}{assign var=thisclass value=''}{/if}
-{button href="tiki-lastchanges.php?days=3" _text="{tr}Last{/tr} 3 {tr}days{/tr}" _class=$thisclass}
+{button href="tiki-lastchanges.php?days=3" _text="{tr}Last 3 days{/tr}" _class=$thisclass}
 {if $days eq '5'}{assign var=thisclass value='highlight'}{else}{assign var=thisclass value=''}{/if}
-{button href="tiki-lastchanges.php?days=5" _text="{tr}Last{/tr} 5 {tr}days{/tr}" _class=$thisclass}
+{button href="tiki-lastchanges.php?days=5" _text="{tr}Last 5 days{/tr}" _class=$thisclass}
 {if $days eq '7'}{assign var=thisclass value='highlight'}{else}{assign var=thisclass value=''}{/if}
-{button href="tiki-lastchanges.php?days=7" _text="{tr}Last{/tr} {tr}week{/tr}" _class=$thisclass}
+{button href="tiki-lastchanges.php?days=7" _text="{tr}Last week{/tr}" _class=$thisclass}
 {if $days eq '14'}{assign var=thisclass value='highlight'}{else}{assign var=thisclass value=''}{/if}
-{button href="tiki-lastchanges.php?days=14" _text="{tr}Last{/tr} 2 {tr}weeks{/tr}" _class=$thisclass}
+{button href="tiki-lastchanges.php?days=14" _text="{tr}Last 2 weeks{/tr}" _class=$thisclass}
 {if $days eq '31'}{assign var=thisclass value='highlight'}{else}{assign var=thisclass value=''}{/if}
-{button href="tiki-lastchanges.php?days=31" _text="{tr}Last{/tr} {tr}month{/tr}" _class=$thisclass}
+{button href="tiki-lastchanges.php?days=31" _text="{tr}Last month{/tr}" _class=$thisclass}
 {if $days eq '0'}{assign var=thisclass value='highlight'}{else}{assign var=thisclass value=''}{/if}
 {button href="tiki-lastchanges.php?days=0" _text="{tr}All{/tr}" _class=$thisclass}
 </div>
 
 {if $lastchanges or ($find ne '')}
-<table class="findtable">
-<tr><td class="findtable">{tr}Find{/tr}</td>
-   <td class="findtable">
-   <form method="get" action="tiki-lastchanges.php">
-     <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}Find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-     <input type="hidden" name="days" value="0" />
-   </form>
-   </td>
-{if $findwhat != ""}
-   <td>
-   <a href="tiki-lastchanges.php" class="wiki">{tr}Search by Date{/tr}</a>
-   </td>
-{/if}   
-</tr>
-</table>
+	{include file='find.tpl'}
+	{if $findwhat != ""}
+		{button href="tiki-lastchanges.php" _text="{tr}Search by Date{/tr}"}
+	{/if}
 {/if}
+
 <br />
+
 {if $findwhat!=""}
 {tr}Found{/tr} "<b>{$findwhat}</b>" {tr}in{/tr} {$cant_records} {tr}LastChanges{/tr} 
 {/if}
@@ -47,7 +39,9 @@
 <th>{self_link _sort_arg='sort_mode' _sort_field='object'}{tr}Page{/tr}{/self_link}</th>
 <th>{self_link _sort_arg='sort_mode' _sort_field='action'}{tr}Action{/tr}{/self_link}</th>
 <th>{self_link _sort_arg='sort_mode' _sort_field='user'}{tr}User{/tr}{/self_link}</th>
+{if $prefs.feature_wiki_history_ip ne 'n'}
 <th>{self_link _sort_arg='sort_mode' _sort_field='ip'}{tr}Ip{/tr}{/self_link}</th>
+{/if}
 <th>{self_link _sort_arg='sort_mode' _sort_field='comment'}{tr}Comment{/tr}{/self_link}</th>
 <th>{tr}Action{/tr}</th>
 </tr>
@@ -60,7 +54,9 @@
 
 <td>{tr}{$lastchanges[changes].action|escape}{/tr}</td>
 <td>{$lastchanges[changes].user|userlink}</td>
+{if $prefs.feature_wiki_history_ip ne 'n'}
 <td>{$lastchanges[changes].ip}</td>
+{/if}
 <td>{$lastchanges[changes].comment}</td>
 <td>
 {if $tiki_p_wiki_view_history eq 'y'} 

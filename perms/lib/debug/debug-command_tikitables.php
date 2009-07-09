@@ -82,5 +82,3 @@ class DbgSQLTables extends DebuggerCommand {
 function dbg_command_factory_tikitables() {
 	return new DbgSQLTables();
 }
-
-?>

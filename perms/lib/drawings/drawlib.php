@@ -149,5 +149,3 @@ class DrawLib extends TikiLib {
 }
 global $dbTiki;
 $drawlib = new DrawLib($dbTiki);
-
-?>

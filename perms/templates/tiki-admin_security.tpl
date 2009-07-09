@@ -1,4 +1,4 @@
-{title help="Securiy+Admin"}{tr}Security Admin{/tr}{/title}
+{title help="Security+Admin"}{tr}Security Admin{/tr}{/title}
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}To <a class="rbox-link" target="tikihelp" href="http://security.tikiwiki.org/tiki-contact.php">report any security issues</a>.{/tr}{/remarksbox}
 
@@ -24,8 +24,30 @@
 {if !$phpsettings}<tr><td colspan="4" class="odd">{tr}No records found.{/tr}</td></tr>
 {/if}
 </table>
+<h2>{tr}PHP functions{/tr}</h2>
+<table class="normal">
+	<tr>
+		<th>{tr}Function{/tr}</th>
+		<th>{tr}Setting{/tr}</th>
+		<th>{tr}Risk Factor{/tr}</th>
+	</tr>
+	{foreach from=$phpfunctions key=key item=item}
+		<tr class="{cycle}">
+			<td>{$key}</td>
+			<td>{$item.setting}</td>
+			<td>{if $item.risk eq 'safe'}{icon _id=accept alt="$item.risk" style="vertical-align:middle"}
+				{elseif $item.risk eq 'risky'}{icon _id=exclamation alt="$item.risk" style="vertical-align:middle"}
+				{elseif $item.risk eq 'unsafe'}{icon _id=exclamation alt="$item.risk" style="vertical-align:middle"}
+				{elseif $item.risk eq 'unknown'}{icon _id=error alt="$item.risk" style="vertical-align:middle"}
+				{/if}
+				{$item.risk}
+			</td>
+		</tr>
+	{/foreach}
+</table>
+{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}To disallow a function, add a disable_functions=exec,passthru for instance in your php.ini{/tr}{/remarksbox}
 <br />
-<h2>{tr}Tikiwiki settings{/tr}</h2>
+<h2>{tr}TikiWiki settings{/tr}</h2>
 <table class="normal">
 <tr><th>{tr}Tiki variable{/tr}</th>
 <th>{tr}Setting{/tr}</th>
@@ -47,6 +69,8 @@
 {if !$tikisettings}<tr><td colspan="4" class="odd">{tr}No records found.{/tr}</td></tr>
 {/if}
 </table>
+{tr}About WikiPlugins and security: Make sure to only grant the "tiki_p_plugin_approve" permission to trusted editors.{/tr} {tr}You can deactivate risky plugins at (<a href="tiki-admin.php?page=textarea">tiki-admin.php?page=textarea</a>).{/tr} {tr}You can approve plugin use at <a href="tiki-plugins.php">tiki-plugins.php</a>.{/tr}
+
 <br />
 <h2>{tr}Security checks{/tr}</h2>
 <div class="form">

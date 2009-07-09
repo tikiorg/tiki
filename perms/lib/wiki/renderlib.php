@@ -6,6 +6,11 @@ class WikiRenderer
 	private $structureInfo;
 	private $user;
 	private $page;
+	
+	// If you want to render some wiki markup that is not actually contained
+	// in a page, then set this to the markup to be rendered.
+	private $content_to_render;
+	
 	private $pageNumber = 1;
 	private $sortMode = 'created_desc';
 	private $showAttachments = 'n';
@@ -35,12 +40,14 @@ class WikiRenderer
 
 	public $canView = false;
 	public $canUndo = null;
+	public $trads = null;	// translated pages
 
-	function __construct( $info, $user )
+	function __construct( $info, $user, $content_to_render='')
 	{
 		$this->info = $info;
 		$this->user = $user;
 		$this->page = $info['pageName'];
+		$this->content_to_render = $content_to_render;
 	}
 
 	function applyPermissions() // {{{
@@ -197,8 +204,8 @@ class WikiRenderer
 		include_once('lib/multilingual/multilinguallib.php');
 
 		if( $this->info['lang'] && $this->info['lang'] != 'NULL') { //NULL is a temporary patch
-			$trads = $multilinguallib->getTranslations('wiki page', $this->info['page_id'], $this->page, $this->info['lang']);
-			$this->smartyassign('trads', $trads);
+			$this->trads = $multilinguallib->getTranslations('wiki page', $this->info['page_id'], $this->page, $this->info['lang']);
+			$this->smartyassign('trads', $this->trads);
 			$pageLang = $this->info['lang'];
 			$this->smartyassign('pageLang', $pageLang);
 		}
@@ -230,9 +237,9 @@ class WikiRenderer
 
 	private function setupBacklinks() // {{{
 	{
-		global $prefs, $wikilib, $tiki_p_view_backlinks;
+		global $prefs, $wikilib, $tiki_p_view_backlink;
 
-		if ( $prefs['feature_backlinks'] == 'y' && $tiki_p_view_backlinks == 'y') {
+		if ( $prefs['feature_backlinks'] == 'y' && $tiki_p_view_backlink == 'y') {
 			$backlinks = $wikilib->get_backlinks($this->page);
 			$this->smartyassign('backlinks', $backlinks);
 		}
@@ -309,7 +316,11 @@ class WikiRenderer
 			$this->setPref( 'wiki_cache', $this->info['wiki_cache'] );
 		}
 
-		$pdata = $wikilib->get_parse($this->page, $canBeRefreshed);
+		if ($this->content_to_render == '') {
+			$pdata = $wikilib->get_parse($this->page, $canBeRefreshed);
+		} else {
+			$pdata = $this->content_to_render;
+		}
 		if ($canBeRefreshed) {
 			$this->smartyassign('cached_page','y');
 		}
@@ -382,7 +393,7 @@ class WikiRenderer
 
 	private function setupWatch() // {{{
 	{
-		global $prefs, $tikilib, $categlib;
+		global $prefs, $tikilib, $categlib, $userlib;
 		require_once 'lib/categories/categlib.php';
 		if ($prefs['feature_user_watches'] != 'y')
 			return;
@@ -410,6 +421,7 @@ class WikiRenderer
 				$this->smartyassign('watching_categories', $watching_categories);
 			}    
 		}    
+
 	} // }}}
 
 	private function setupCategories() // {{{
@@ -490,6 +502,8 @@ class WikiRenderer
 		if ($prefs['feature_wikiapproval'] != 'y')
 			return;
 
+		$cats = $categlib->get_object_categories('wiki page',$this->page);
+
 		if ($tikilib->page_exists($prefs['wikiapproval_prefix'] . $this->page)) {
 			$this->smartyassign('hasStaging', 'y');
 		}
@@ -503,14 +517,14 @@ class WikiRenderer
 			$this->smartyassign('approvedPageName', $approvedPageName);	
 			$approvedPageExists = $tikilib->page_exists($approvedPageName);
 			$this->smartyassign('approvedPageExists', $approvedPageExists);
-		} elseif ($prefs['wikiapproval_approved_category'] > 0 && in_array($prefs['wikiapproval_approved_category'], $cats)) {
+		} elseif ($prefs['wikiapproval_approved_category'] > 0 && !empty($cats) && in_array($prefs['wikiapproval_approved_category'], $cats)) {
 			$stagingPageName = $prefs['wikiapproval_prefix'] . $this->page;
 			$this->smartyassign('needsStaging', 'y');
 			$this->smartyassign('stagingPageName', $stagingPageName);	
 			if ($tikilib->user_has_perm_on_object($this->user,$stagingPageName,'wiki page','tiki_p_edit','tiki_p_edit_categorized')) {
 				$this->smartyassign('canEditStaging', 'y');
 			} 	
-		} elseif ($prefs['wikiapproval_staging_category'] > 0 && in_array($prefs['wikiapproval_staging_category'], $cats) && !$tikilib->page_exists($prefs['wikiapproval_prefix'] . $this->page)) {
+		} elseif ($prefs['wikiapproval_staging_category'] > 0 && !empty($cats) && in_array($prefs['wikiapproval_staging_category'], $cats) && !$tikilib->page_exists($prefs['wikiapproval_prefix'] . $this->page)) {
 			$this->smartyassign('needsFirstApproval', 'y');		
 		}
 		if ($prefs['wikiapproval_outofsync_category'] == 0 || $prefs['wikiapproval_outofsync_category'] > 0 && in_array($prefs['wikiapproval_outofsync_category'], $cats)) {
@@ -541,8 +555,7 @@ class WikiRenderer
 	private function setPref( $name, $value ) // {{{
 	{
 		global $prefs;
-
-		if( $value != $prefs[$name] && ! array_key_exists( $this->prefRestore[$name] = $value ) )
+		if( $value != $prefs[$name] && ! array_key_exists( $name, $this->prefRestore ) )
 			$this->prefRestore[$name] = $value;
 
 		$prefs[$name] = $value;
@@ -587,5 +600,3 @@ class WikiRenderer
 		$this->info[$name] = $value;
 	} // }}}
 }
-
-?>

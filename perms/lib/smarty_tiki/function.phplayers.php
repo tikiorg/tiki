@@ -14,31 +14,41 @@ syntax: {phplayers [type=tree|phptree|plain|hort|vert] [id=1] [file=/path/to/men
 
 */
 function smarty_function_phplayers($params, &$smarty) {
+	if (empty($params)) return '';
+
 	global $prefs, $tikiphplayers;
 	include_once('lib/phplayers_tiki/tiki-phplayers.php');
+
 	if ($prefs['feature_phplayers'] != 'y') {
-	  echo tra("phplayers are not available on this site");
-	  return;
+		return tra("phplayers are not available on this site");
 	}
-	//$smarty->assign('uses_phplayers','y'); doesn't seem to be use
-	extract($params);
 
-	if (empty($type)) {
-		$type = 'tree';
+	if (empty($params['type'])) {
+		$params['type'] = 'tree';
 	}
-	if (!isset($sectionLevel)) {
-		$sectionLevel = '';
+	if (!isset($params['sectionLevel'])) {
+		$params['sectionLevel'] = '';
 	}
-	if (!isset($translate)) {
-		$translate = 'y';
+	if (!isset($params['translate'])) {
+		$params['translate'] = 'y';
 	}
-	if (!empty($id)) {
-		$output = $tikiphplayers->mkMenuEntry($id, $curOption, $sectionLevel, $translate);
-	}
-	$name = 'usermenu'.$id;
-	if (!isset($file))
-		$file = '';
 
-	echo $tikiphplayers->mkMenu($output, $name, $type, $file, $curOption);
+	$use_items_icons = false;
+	if (!empty($params['id'])) {
+		$params['output'] = $tikiphplayers->mkMenuEntry(
+			$params['id'],
+			$params['curOption'],
+			$params['sectionLevel'],
+			$params['translate'],
+			$use_items_icons // Passed by reference to change the value
+		);
+	}
+	if (!isset($params['file'])) {
+		$params['file'] = '';
+	}
+
+	$return = $tikiphplayers->mkMenu($params['output'], 'usermenu'.$params['id'], $params['type'], $params['file'], $params['curOption']);
+	if ( $use_items_icons ) $return = str_replace('class="mdkverbar"', 'class="mdkverbar mdkverbar-with-icons"', $return);
+
+	return $return;
 }
-?>

@@ -8,6 +8,9 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 class MultilingualLib extends TikiLib {
 	/** brief add a translation
 	  */
+	  
+	public $mtEnabled = 'y';
+	  
 	function MultilingualLib($db) {
 		parent::TikiLib($db);
 	}
@@ -730,7 +733,99 @@ class MultilingualLib extends TikiLib {
 		}
 		return $flags;
 	}
+
+    function currentSearchLanguage($searchingOnSecondLanguage) {
+       /*
+        * Set $searchingOnSecondLanguage to true in cases where 
+        * a translator may be searching terms or text in his second language,
+        * in order to find its translation into his first language.
+        */
+       global $_REQUEST, $_SESSION;
+       $lang = '';
+       if (!empty($_REQUEST['lang'])) {
+          $lang = $_REQUEST['lang'];
+       }
+       if ($lang == '') {
+//          print "-- tiki-listpages.whichLangToFilterOn: looking in session array<br>\n";
+          if (array_key_exists('find_page_last_done_in_lang', $_SESSION)) {
+             $lang = $_SESSION['find_page_last_done_in_lang'];
+          }
+       } 
+       if ($lang == '') {
+          $userPreferedLangs = $this->preferedLangs();
+          if ($searchingOnSecondLanguage &&
+              array_key_exists(1, $userPreferedLangs)) {
+              //
+              // Translators typically need to search for terms
+              // in their second language, not their first, because
+              // they are interetsed in how to translate them from
+              // second language to their first.
+              //
+              $lang = $userPreferedLangs[1];
+          } else {
+              $lang = $userPreferedLangs[0];
+          }
+//          print "-- multilinguallib.currentSearchLanguage: \$userPreferedLangs="; var_dump($userPreferedLangs); print "<br>\n";
+       }
+//       print "-- multilinguallib.currentSearchLanguage: returning \$lang='$lang'<br>\n"; 
+       $this->storeCurrentSearchLanguageInSession($lang);
+
+       return $lang;   
+    }
+    
+    function storeCurrentSearchLanguageInSession($lang) {
+       global $_SESSION;
+       $_SESSION['find_page_last_done_in_lang'] = $lang;
+    }
+
+    function preferedLangsInfo() {
+    
+       global $tikilib;
+
+       // Get IDs of user's preferred languages
+       $userLangIDs = $this->preferedLangs();
+   
+       // Get information about ALL languages supported by Tiki
+       $allLangsInfo = $tikilib->list_languages(false,'y');
+
+       // Create a map of language ID (ex: 'en') to language info
+       $langIDs2Info = array();
+       foreach ($allLangsInfo as $someLangInfo){
+          $langIDs2Info[$someLangInfo['value']] = $someLangInfo;
+       }
+
+       // Create list of language IDs AND names for user's prefered
+       // languages. 
+       $userLangsInfo = array();
+       $lang_index = 0;
+       foreach ($userLangIDs as $index => $someUserLangID) {
+          if ($langIDs2Info[$someUserLangID] != NULL) {
+             $userLangsInfo[$lang_index] = $langIDs2Info[$someUserLangID];
+             $lang_index++;
+           }
+       }
+       
+       return $userLangsInfo;  
+    }
+    
+    
+    function getTemplateIDInLanguage($section, $template_name, $language) {
+       global $tikilib;
+       $all_templates = $tikilib->list_templates($section, 0, -1, 'name_asc', '');
+       $looking_for_template_named = "$template_name-$language";
+       foreach ($all_templates['data'] as $a_template) {
+          $a_template_name = $a_template['name'];
+          if ($a_template_name == $looking_for_template_named) {
+             return $a_template['templateId'];
+          }
+       }
+       return null;
+   }
+
+	function setMachineTranslationFeatureTo($on_or_off) {
+		$this->mtEnabled = $on_or_off;
+	}   
 }
+
 global $dbTiki;
 $multilinguallib = new MultilingualLib($dbTiki);
-?>

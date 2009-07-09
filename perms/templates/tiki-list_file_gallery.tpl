@@ -20,22 +20,26 @@
   {/strip}
 {/title}
 
-{if $edit_mode neq 'y' and $description neq ''}
-  <div class="simplebox">
-    {$description|escape}
+{if $edit_mode neq 'y' and $gal_info.description neq ''}
+  <div class="description">
+    {$gal_info.description|escape|nl2br}
   </div>
 {/if}
 
 <div class="navbar">
 {if $galleryId gt 0}
 
+  {if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
+	<a href="tiki-object_watches.php?objectId={$galleryId|escape:"url"}&amp;watch_event=file_gallery_changed&amp;objectType=File+Gallery&amp;objectName={$gal_info.name|escape:"url"}&amp;objectHref={'tiki-list_file_gallery.php?galleryId='|cat:$galleryId|escape:"url"}" class="icon">{icon _id='eye_group' alt='{tr}Group Monitor{/tr}' align='right' hspace="1"}</a>
+  {/if}
+
   {if $user and $prefs.feature_user_watches eq 'y'}
     {if $user_watching_file_gallery eq 'n'}
-      {self_link galleryName=$name watch_event='file_gallery_changed' watch_object=$galleryId watch_action='add'}{icon _id='eye' align='right' alt="{tr}Monitor this Gallery{/tr}"}{/self_link}
+      {self_link galleryName=$name watch_event='file_gallery_changed' watch_object=$galleryId watch_action='add'}{icon _id='eye' align='right' alt="{tr}Monitor this Gallery{/tr}" hspace="1"}{/self_link}
     {else}
-      {self_link galleryName=$name watch_event='file_gallery_changed' watch_object=$galleryId watch_action='remove'}{icon _id='no_eye' align='right' alt="{tr}Stop Monitoring this Gallery{/tr}"}{/self_link}
+      {self_link galleryName=$name watch_event='file_gallery_changed' watch_object=$galleryId watch_action='remove'}{icon _id='no_eye' align='right' alt="{tr}Stop Monitoring this Gallery{/tr}" hspace="1"}{/self_link}
     {/if}
-  {/if}  
+  {/if} 
   {if $prefs.rss_file_gallery eq 'y'}
     {if $gal_info.type eq "podcast" or $gal_info.type eq "vidcast"}
       <a href="tiki-file_gallery_rss.php?galleryId={$galleryId}&amp;ver=PODCAST">
@@ -107,7 +111,7 @@
 
 {/if}
 
-{if $edit_mode neq 'y'}
+{if $edit_mode neq 'y' and $fgal_options.show_slideshow.value eq 'y'}
   {button _text="{tr}SlideShow{/tr}" href="#" _onclick="javascript:window.open('tiki-list_file_gallery.php?galleryId=$galleryId&amp;slideshow','','menubar=no,width=600,height=500,resizable=yes');"}
 {/if}
 
@@ -160,7 +164,7 @@ if (getCookie("fgalKeepOpen")) {
   {if $category_watched eq 'y'}
     {tr}Watched by categories{/tr}:
     {section name=i loop=$watching_categories}
-      {button _text=$watching_categories[i].name href="tiki-browse_categories?parentId=`$watching_categories[i].categId`"}
+      {button _text=$watching_categories[i].name href="tiki-browse_categories.php?parentId=`$watching_categories[i].categId`"}
     {/section}
   {/if}			
 </div>
@@ -196,10 +200,10 @@ if (getCookie("fgalKeepOpen")) {
     ||  $tiki_p_edit_comments  == 'y')}
 
     <div id="page-bar">
-		  {include file=comments_button.tpl}
+		  {include file='comments_button.tpl'}
     </div>
 
-  {include file=comments.tpl}
+  {include file='comments.tpl'}
   {/if}
 {/if}
 

@@ -1,5 +1,5 @@
 
-{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}To configure your directory, find "Admin directory" under "Directory" on the application menu, or{/tr} <a class="rbox-link" href="tiki-directory_admin.php">{tr}Click Here{/tr}</a>.{/remarksbox}
+{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}To configure your directory, find "Admin Directory" under "Directory" on the application menu, or{/tr} <a class="rbox-link" href="tiki-directory_admin.php">{tr}Click Here{/tr}</a>.{/remarksbox}
 
 <div class="cbox">
   <div class="cbox-title">
@@ -9,7 +9,7 @@
   <div class="cbox-data">
       <form action="tiki-admin.php?page=directory" method="post">
         <table class="admin"><tr>
-          <td class="form"><label for="directory-columns">{tr}Number of columns per page when listing categories{/tr}</label></td>
+          <td class="form"><label for="directory-columns">{tr}Number of columns per page when listing directory categories{/tr}</label></td>
           <td><select name="directory_columns" id="directory-columns">
               <option value="1" {if $prefs.directory_columns eq 1}selected="selected"{/if}>1</option>
               <option value="2" {if $prefs.directory_columns eq 2}selected="selected"{/if}>2</option>
@@ -42,7 +42,7 @@
               <option value="f" {if $prefs.directory_open_links eq 'f'}selected="selected"{/if}>{tr}inline frame{/tr}</option>
               </select></td>
         </tr><tr>
-          <td colspan="2" class="button"><input type="submit" name="directory"
+          <td colspan="2" class="input_submit_container"><input type="submit" name="directory"
               value="{tr}Change preferences{/tr}" /></td>
         </tr></table>
       </form>

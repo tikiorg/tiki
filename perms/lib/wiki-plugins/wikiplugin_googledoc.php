@@ -16,7 +16,7 @@ function wikiplugin_googledoc_info() {
 		'name' => tra('googledoc'),
 		'documentation' => 'PluginGoogleDoc',
 		'description' => tra("Displays a Google document"),
-//		'prefs' => array( 'wikiplugin_googleDoc' ),
+		'prefs' => array( 'wikiplugin_googledoc' ),
 		'body' => tra('Leave this empty.'),
 //		'validate' => 'all',
 		'params' => array(
@@ -99,6 +99,13 @@ function wikiplugin_googledoc_info() {
 function wikiplugin_googledoc($data, $params) {
 
 	extract ($params);
+	
+	if (empty($type)) {
+		return tra('Required parameter "type" missing');
+	}
+	if (empty($key)) {
+		return tra('Required parameter "key" missing');
+	}
 
     if ($type =="sheet" or $type=="spreadsheet") {
 		$srcUrl="\"http://spreadsheets.google.com/pub?key=$key &output=html&widget=true\"";

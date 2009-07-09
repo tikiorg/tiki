@@ -60,5 +60,3 @@ class ResultType {
 		$this->result_tpl = $tpl;
 	}
 }
-
-?>

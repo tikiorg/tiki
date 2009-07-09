@@ -1,0 +1,6 @@
+<?php
+$lang_custom = array(
+//"Hello"=>"El meu hola",
+//"This is the place to customize your translation"=>":-)",
+);
+$lang = array_merge($lang, $lang_custom);

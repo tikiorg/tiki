@@ -3,6 +3,7 @@
 {else}
 	{title url="tiki-admin_calendars.php" admpage="calendar"}{tr}Admin Calendars{/tr}{/title}
 {/if}
+
 <div class="navbar">
 {if !empty($calendarId)}
 	{button _text="{tr}Create Calendar{/tr}" href="tiki-admin_calendars.php?show=mod"}
@@ -10,20 +11,14 @@
 {button _text="{tr}View Calendars{/tr}" href="tiki-calendar.php"}
 </div>
 
-{if $prefs.feature_tabs eq 'y'}
-	{cycle name=tabs values="1,2,3" print=false advance=false reset=true}
-	<div class="tabs">
-		 <span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},3);">{tr}List of Calendars{/tr}</a></span>
-		 <span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},3);">{if $calendarId}{tr}Edit Calendar{/tr}{else}{tr}Create Calendar{/tr}{/if}</a></span>
-	</div>
-{/if}
+{tabset name='tabs_admin_calendars'}
 
-{cycle name=content values="1,2,3" print=false advance=false reset=true}
+{tab name='{tr}List of Calendars{/tr}'}
 {* --- tab with list --- *}
-<div id="content{cycle name=content assign=focustab}{$focustab}"{if $prefs.feature_tabs eq 'y'} class="tabcontent" style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
+
 <h2>{tr}List of Calendars{/tr}</h2>
 {if count($calendars) gt 0}
-{include file='find.tpl' _sort_mode='y'}
+{include file='find.tpl'}
 
 <table class="normal">
 <tr>
@@ -73,17 +68,18 @@
 {else}
 <b>{tr}No records found{/tr}</b>
 {/if}
-</div>
+{/tab}
 
+{tab name='{tr}Create / Edit Calendar{/tr}'}
 {* --- tab with form --- *}
-<div id="content{cycle name=content assign=focustab}{$focustab}"{if $prefs.feature_tabs eq 'y'} class="tabcontent" style="display:{if $focustab eq $cookietab}block{else}none{/if};{/if}">
+
 <h2>{tr}Create/Edit Calendars{/tr}</h2>
 
 <form action="tiki-admin_calendars.php" method="post">
 <input type="hidden" name="calendarId" value="{$calendarId|escape}" />
 <table class="normal">
 {if $tiki_p_view_categories eq 'y'}
-{include file=categorize.tpl}
+{include file='categorize.tpl'}
 {/if}
 <tr class="formcolor"><td>{tr}Name{/tr}:</td><td><input type="text" name="name" value="{$name|escape}" />
 {tr}Show in popup box{/tr}
@@ -210,5 +206,5 @@
 {if $calendarId}{$name} : {/if}
 {tr}Delete events older than:{/tr} <input type="text" name="days" value="0"/> {tr}days{/tr} <input type="submit" name="clean" value="{tr}Delete{/tr}" />
 </form>
-
-</div>
+{/tab}
+{/tabset}

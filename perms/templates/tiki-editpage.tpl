@@ -58,7 +58,7 @@ window.onload = timeIt;
 	{if $beingStaged eq 'y' and $prefs.wikiapproval_hideprefix == 'y'}{assign var=pp value=$approvedPageName}{else}{assign var=pp value=$page}{/if}
 	{title}{if isset($hdr) && $prefs.wiki_edit_section eq 'y'}{tr}Edit Section{/tr}{else}{tr}Edit{/tr}{/if}: {$pp|escape}{if $pageAlias ne ''}&nbsp;({$pageAlias|escape}){/if}{/title}
 {else}
-   {title}{tr}Update '{$page}' based on '{$source_page}'{/tr}{/title}
+   {title}{tr}Update '{$page}'{/tr}{/title}
 {/if}
    
 {if $beingStaged eq 'y'}
@@ -119,15 +119,15 @@ window.onload = timeIt;
 {/if}
 
 {if $preview && $translation_mode eq 'n'}
-  {include file="tiki-preview.tpl"}
+  {include file='tiki-preview.tpl'}
 {/if}
 {if $diff_style}
 <div style="overflow:auto;height:200px;">
-{include file=pagehistory.tpl}
+{include file='pagehistory.tpl'}
 
 </div>
 {/if}
-<form  enctype="multipart/form-data" method="post" action="tiki-editpage.php" id='editpageform' name='editpageform'>
+<form  enctype="multipart/form-data" method="post" action="tiki-editpage.php?page={$page|escape:'url'}" id='editpageform' name='editpageform'>
 
 {if $diff_style}
 <select name="diff_style">
@@ -147,7 +147,6 @@ window.onload = timeIt;
 <input type="submit" class="wikiaction" onmouseover="return overlib('{tr}Change the style used to display differences to be translated.{/tr}');" onmouseout="nd();" name="preview" value="{tr}Change diff styles{/tr}" onclick="needToConfirm=false;" />
 {/if}
 
-<input type="hidden" name="page" value="{$page|escape}" />
 <input type="hidden" name="clock" value="{$edittimeout}" />
 {if $page_ref_id}
   <input type="hidden" name="page_ref_id" value="{$page_ref_id}" />
@@ -201,9 +200,9 @@ window.onload = timeIt;
 <tr class="formcolor"><td colspan="2">{tr}Categories will be inherited from the structure top page{/tr}</td></tr>
 {/if}
 {else}
-{include file=categorize.tpl}
+{include file='categorize.tpl'}
 {/if}
-{include file=structures.tpl}
+{include file='structures.tpl'}
 {if $prefs.feature_wiki_templates eq 'y' and $tiki_p_use_content_templates eq 'y' and !$templateId}
   <tr class="formcolor">
     <td>{tr}Apply template{/tr}:</td>
@@ -261,9 +260,9 @@ window.onload = timeIt;
 {/if}
 </td></tr>
 {/if}
-{if ($prefs.feature_smileys eq 'y') && ($wysiwyg neq 'y' or $prefs.wysiwyg_wiki_parsed eq 'y')}
+{if $prefs.feature_smileys eq 'y' && $wysiwyg neq 'y'}
 <tr class="formcolor"><td>{tr}Smileys{/tr}:</td><td>
-{include file="tiki-smileys.tpl" area_name='editwiki'}
+{include file='tiki-smileys.tpl' area_name='editwiki'}
 </td>
 </tr>
 {/if}
@@ -275,14 +274,14 @@ window.onload = timeIt;
 {/if}
 <tr class="formcolor">
 <td colspan="2">
-{if $wysiwyg ne 'y'}
-{include file="wiki_edit.tpl"}
+{if $wysiwyg ne 'y' or $prefs.javascript_enabled ne 'y'}
+{include file='wiki_edit.tpl'}
 <input type="hidden" name="rows" value="{$rows}"/>
 <input type="hidden" name="cols" value="{$cols}"/>
 <input type="hidden" name="wysiwyg" value="n" />
 {else}
-{capture name=autosave}{if $prefs.feature_ajax eq 'y'}{autosave test='n' id='edit' default=$pagedata preview=$preview}{else}{$pagedata}{/if}{/capture}
-  {if $prefs.feature_ajax eq 'y' and $noautosave neq 'y' and $has_autosave eq 'y'}
+{capture name=autosave}{if $prefs.feature_ajax eq 'y' and $prefs.feature_ajax_autosave eq 'y' and $noautosave neq 'y'}{autosave test='n' id='edit' default=$pagedata preview=$preview}{else}{$pagedata}{/if}{/capture}
+  {if $prefs.feature_ajax eq 'y' and $prefs.feature_ajax_autosave eq 'y' and $noautosave neq 'y' and $has_autosave eq 'y'}
   {remarksbox type="warning" title="{tr}AutoSave{/tr}"}
   {tr}If you want the saved version instead of the autosaved one{/tr}&nbsp;{self_link noautosave='y' _ajax='n'}{tr}Click Here{/tr}{/self_link}
   {/remarksbox}
@@ -362,7 +361,10 @@ function searchrep() {
 {/if}
 
 {if $page|lower neq 'sandbox'}
-<tr class="formcolor" id="input_edit_summary"><td>{tr}Edit Comment{/tr}:</td><td><input style="width:98%;" class="wikiedit" type="text" name="comment" value="{$commentdata|escape}" /></td></tr>
+<tr class="formcolor" id="input_edit_summary" style="vertical-align: middle"><td style="width: 25%">{tr}Edit Comment{/tr}:</td><td><input style="width:98%;" class="wikiedit" type="text" name="comment" value="{$commentdata|escape}" /></td></tr>
+{if $show_watch eq 'y'}
+	<tr class="formcolor"><td>{tr}Monitor this page{/tr}:</td><td><input type="checkbox" name="watch" value="1"{if $watch_checked eq 'y'} checked="checked"{/if} /></td></tr>
+{/if}
 {if $prefs.wiki_feature_copyrights  eq 'y'}
 <tr class="formcolor"><td>{tr}Copyright{/tr}:</td><td>
 <table border="0">
@@ -375,7 +377,7 @@ function searchrep() {
 {/if}
 {/if}
 {if $prefs.feature_freetags eq 'y' and $tiki_p_freetags_tag eq 'y'}
-  {include file=freetag.tpl}
+  {include file='freetag.tpl'}
 {/if}
 {if $prefs.feature_wiki_allowhtml eq 'y' and $tiki_p_use_HTML eq 'y' and $wysiwyg neq 'y'}
 <tr class="formcolor"><td>{tr}Allow HTML{/tr}: </td><td><input type="checkbox" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if}/></td></tr>
@@ -409,9 +411,9 @@ function searchrep() {
 </td></tr>
 {/if}
 {if $wysiwyg neq 'y'}
-{if $prefs.feature_wiki_pictures eq 'y' and $tiki_p_upload_picture eq 'y' and (!$quicktags or $prefs.feature_filegals_manager eq 'n')}
+{if $prefs.feature_wiki_pictures eq 'y' and $tiki_p_upload_picture eq 'y'}
 <tr class="formcolor"><td>{tr}Upload picture{/tr}:</td><td>
-{if $prefs.feature_filegals_manager eq 'y'}
+{if $prefs.feature_filegals_manager eq 'y' and $prefs.feature_file_galleries == 'y' and $tiki_p_list_file_galleries == 'y'}
 <input type="submit" class="wikiaction" value="{tr}Add another image{/tr}" onclick="javascript:needToConfirm = false;javascript:window.open('{$url_path}tiki-list_file_gallery.php?filegals_manager=editwiki','_blank','menubar=1,scrollbars=1,resizable=1,height=400,width=800');return false;" />
 {else}
 <input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
@@ -450,7 +452,7 @@ function searchrep() {
 </td></tr>
 {/if}
 {if $prefs.feature_antibot eq 'y' && $anon_user eq 'y'}
-{include file=antibot.tpl}
+{include file='antibot.tpl' tr_style="formcolor"}
 {/if}
 {if $prefs.wiki_feature_copyrights  eq 'y'}
 <tr class="formcolor"><td>{tr}License{/tr}:</td><td><a href="{$prefs.wikiLicensePage|sefurl}">{tr}{$prefs.wikiLicensePage}{/tr}</a></td></tr>
@@ -462,10 +464,10 @@ function searchrep() {
 <tr class="formcolor"><td>{tr}Lock this page{/tr}</td><td><input type="checkbox" name="lock_it" {if $lock_it eq 'y'}checked="checked"{/if}/></td></tr>
 {/if}
 {if $prefs.feature_contribution eq 'y'}
-  {include file="contribution.tpl"}
+  {include file='contribution.tpl'}
 {/if}
 {if $tiki_p_admin_wiki eq 'y' && $prefs.wiki_authors_style_by_page eq 'y'}
-  {include file='wiki_authors_style.tpl' tr_class='formcolor' wiki_authors_style_site='y'}
+  {include file='wiki_authors_style.tpl' tr_class='formcolor' wiki_authors_style_site='y' style='tr'}
 {/if}
 {if $prefs.wiki_actions_bar neq 'top'}
 <tr class="formcolor"><td colspan="2" style="text-align:center;">
@@ -479,4 +481,3 @@ function searchrep() {
 </form>
 <br />
 {include file='tiki-page_bar.tpl'}
-{include file='tiki-edit_help.tpl'}

@@ -48,11 +48,11 @@
           </tr>
           
           <tr>
-            <td colspan="2"><textarea cols="90" rows="8" name="wysiwyg_toolbar" id="wysiwyg_toolbar">{$prefs.wysiwyg_toolbar}</textarea></td>
+            <td colspan="2"><textarea cols="90" rows="8" name="wysiwyg_toolbar" id="wysiwyg_toolbar">{$prefs.wysiwyg_toolbar|escape}</textarea></td>
           </tr>
           
           <tr>
-            <td colspan="2" class="button"><input type="submit" name="wysiwygfeatures" value="{tr}Change preferences{/tr}" /></td>
+            <td colspan="2" class="input_submit_container"><input type="submit" name="wysiwygfeatures" value="{tr}Change preferences{/tr}" /></td>
           </tr>
         </table>
       </form>

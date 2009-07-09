@@ -231,5 +231,3 @@ else
 // Display the template
 $smarty->assign('mid', 'tiki-graph-sheets.tpl');
 $smarty->display("tiki.tpl");
-
-?>

@@ -6,7 +6,6 @@
  
  @import "lite/lite.css"; /* here we import *lite as the base */
 
-
 /***** XHTML Elements ******/
 body {
 	background: white;
@@ -15,20 +14,24 @@ body {
 	text-align: center;
 }
 
-*:first-child+html
-body {
+*:first-child+html body {
 	font-size: 75% !important;
 }
 
-
 html>body {
-	font-size: /*84.5%*/74%;
+	font-size: 12px;
 	text-align: left;
+}
+
+/* workaround for Safari when in FCKEditor */
+html[dir=ltr]>body {
+	display: block;
+	margin: 1em .5em;
 }
 
 body.fullscreen {}
 
-a,
+a, a:link,
 a:visited {
 	color: #005faa;
 	text-decoration: none;
@@ -83,7 +86,11 @@ img {	border: 0;}
 .wikitext img {}
 legend {color: #000}
 
-fieldset {border: solid 1px #A9A9A9}
+fieldset {
+	border: solid 1px #A9A9A9;
+	margin-bottom: 2px;
+	padding: 0.3em;
+}
 #col2 fieldset { width: 100px }
 
 form {
@@ -101,20 +108,21 @@ button:hover {
 
 button,
 input,
+label,
 textarea,
 option,
 select {
-	
+	margin: 1px;
+	vertical-align: middle;
 }
 
 /* IE */
 * html .wikitopline select {font-size: .9em;}
 
-input.button {}
-
 input[type=checkbox],
 input[type=radio] {
 	border: 0;
+	vertical-align: middle !important;
 }
 
 input[type=text],
@@ -122,35 +130,107 @@ input[type=password] {
 
 }
 
+/* all button variations */
+input.button,
 button,
-input[type=submit],
-.submitbutton,
 .button input,
-input[type=reset] {
-	border: 1px solid #aaa; 
+.button,
+input.wikiaction,
+.calbuttonBox {
+	border: solid 1px #aaa; 
 	background: #fbfbfb;
-	font-weight: normal;
-	color: #4C4C4C;
-	font-size: 90% !important;
+	color: #000;
+	text-transform: uppercase;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: .8em;
 }
 
+/* styles by type separated from the above because IE6 doesn't like multiple class specifications with bracket selectors together */
+input[type=submit],
+input[type=reset] {
+	border: solid 1px #aaa; 
+	background: #fbfbfb;
+	color: #000;
+	text-transform: uppercase;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: .8em}
+
+/* hovered buttons */
+input.button:hover,
 button:hover,
 input[type=submit]:hover,
-.submitbutton:hover,
-.button input:hover {
+.button input:hover,
+.button:hover,
+.calbuttonBox a:hover {
 	cursor: pointer;
 	background: #E6E6F8;
 }
 
-#col2 input { width: 100px }
+span.button,
+.calbuttonBox {
+	display: inline-block;
+	margin: 1px 2px;
+	padding: 2px}
 
-input[type=checkbox] {border: 0;}
+span.button a,
+.calbuttonBox a {
+	color: #000;
+	text-transform: uppercase;
+	font-family: Arial, Helvetica, sans-serif}
 
-* html .findtable input { font-size: 1em;}
+span.button a:hover,
+.calbuttonBox a:hover {text-decoration: none}
+
+#col2 input[type=text] {width: 95%}
+
+input[type=checkbox] {border: 0}
+
+* html .findtable input {font-size: 1em}
+.findtable ul {list-style-type: none}
 
 form.admin input[name="features"] {
 	margin-bottom: 3px !important;
 }
+
+/* look of admin form fieldsets when tabs are off */
+
+form.admin {padding: 3px}
+
+form.admin fieldset {border: solid 1px #8CACBB; margin: 0px; margin-bottom: 3px;}
+
+form.admin legend.heading {
+	background-color: transparent;
+	border: none;
+	line-height: 2em;
+	margin-top: -2px;
+	padding-left: 0px; padding-right: 0px;
+	}
+
+form.admin legend.heading a {
+	background-color: #8CACBB;
+	display: block;
+	top: -1em;
+	margin-top: 2px;
+	padding: 1px 1px 0;
+	position: relative;
+	text-decoration: none;
+}
+form.admin legend.heading a:hover {
+	background-color: #ACBB8C;
+	padding: 1px 0px 0;
+}
+form.admin legend.heading a span {
+	background-color: #EBEBEB;
+	display: block;
+	font-size: 1em;
+	line-height: 2em;
+	padding: 0 1em;
+}
+form.admin legend.heading a:hover span {
+	line-height: 1.9em;
+	margin-top: 0.1em; border-left: solid 1px #8CACBB; border-right: solid 1px #8CACBB;
+}
+
 
 select {
 }
@@ -170,14 +250,6 @@ label {
 	cursor: pointer;
 }
 
-/*
-ul, ol {
-
-	}
-	
-li {
-	
-}*/
 
 /***** Pasic Page Layout 
 	Including Site Header *****/
@@ -209,6 +281,7 @@ ul.jumplinks a:focus, ul.jumplinks a:active {
 	padding: 1em;
 }
 
+.fullscreenbutton,
 #fullscreenbutton {
 	position: absolute;
 	top: 2px;
@@ -219,6 +292,7 @@ ul.jumplinks a:focus, ul.jumplinks a:active {
 	border: 1px solid #D3D3D3;
 }
 
+.fullscreenbutton:hover,
 #fullscreenbutton:hover {}
 
 /* #Header */
@@ -237,16 +311,15 @@ ul.jumplinks a:focus, ul.jumplinks a:active {
 #sitetitle a:visited {color: #000}
 
 #header-top {position: relative}
+* html #header-top {height: 1%}
 
 /* Look & Feel options */
 #siteheader {
 	text-align: left;
 	background: transparent;
 	vertical-align: middle;
-	padding-top: 6px;
-	margin: 0;
-	position: relative;
-}
+	padding-top: 26px;
+	margin: 0}
 
 div#sioptions {padding: 1em}
 
@@ -284,7 +357,7 @@ div#sitead {
 #bannertopright {padding-right: 1em}
 #sitelocbar {
 	float: left;
-	padding-left: 10px;
+	padding: 2px 2px 3px 10px;
 }
 
 #siteloginbar {
@@ -292,12 +365,13 @@ div#sitead {
 	position: absolute;
 	bottom: 3px;
 	right: 10px;
-	font-size: 90%}
+	font-size: 1em}
+
+#siteloginbar * {margin: .2em}
 
  #siteloginbar.logged-in {
 	bottom: 3px;
 }
-
 
 /* tiki-top_bar.tpl - menu and search */
 
@@ -311,10 +385,14 @@ div#sitead {
 
 #sitesearchbar {
 	float: right;
-	padding-right: 4px;
+	padding: 0 4px 0 0;
 	text-align: right;
 	display: block;
 	margin: 0;
+}
+
+#tiki-top #sitesearchbar br {
+	display: none;
 }
 
 /* Middle */
@@ -338,11 +416,14 @@ div#sitead {
 }
 
 #c1c2 #wrapper .marginleft {
-	margin-left: 160px;
-}
+	margin-left: 214px}
+
+* html #c1c2 #wrapper .marginleft {
+	margin-left: 216px}
+
 
 #c1c2 #wrapper .marginright {
-	margin-right: 316px;
+	margin-right: 214px;
 }
 
 div#showhide_columns,
@@ -397,6 +478,21 @@ a.flip img {
 	margin-right: -1px;
 	padding: .8em;
 }
+/* give every div in #tiki-center some padding */
+#tiki-center div {
+	padding: 3px 2px;
+}
+/* little margin for all images in #tiki-center */
+#tiki-center img {
+	margin: 1px;
+}
+/* do not apply it on phplm tree in categories */
+#tiki-center .phplmnormal div {
+	padding: 0;
+}
+#tiki-center .phplmnormal img {
+	margin: 0;
+}
 
 /* IE */
 * html #tiki-center {
@@ -404,8 +500,8 @@ a.flip img {
 }
 
 #c1c2 #col2 {
-	width: 160px;
-	overflow: hidden;
+	width: 214px;
+	overflow: visible;
 }
 
 #c1c2 #col2 .content {
@@ -415,8 +511,8 @@ a.flip img {
 }
 
 #col3 {
-	margin-left: -316px;
-	width: 316px;
+	margin-left: -214px;
+	width: 214px;
 	text-align: left;
 	font-size: 1em;
 }
@@ -434,7 +530,8 @@ a.flip img {
  	text-align: center;
  	font-size: .9em;
 	border-top: 1px solid #999999;
-	margin-top: -2px;
+	position: relative;
+	top: -1px;
  }
 
 #footer .content {
@@ -469,10 +566,7 @@ div#tiki-bot {}
 	
 /****** Menus ******/
 
-.horbar {
-		bottom: 0;
-		width: 100%;
-} 
+.horbar {float: left} 
 
 .horbar table {
 	width: auto;
@@ -481,25 +575,27 @@ div#tiki-bot {}
 
 /* Text in the top level (visible by default) of the menu */
 .horbaritem a {
-	padding: 4px 3px 4px 1em;
+	padding: 6px 6px;
 	text-decoration: none;
 	font: .9em Verdana, Helvetica, Arial, Sans-Serif;
 	display: block;
 	border-right: 1px solid #aaa;
-} 
+}
 
 .horbaritem a:hover {
-	text-decoration: underline;
+	background-color: #fff;
+	text-decoration: none;
 } 
 
 .horbaritem a:visited {
 	
 } 
+.horbaritem img {vertical-align: middle;}
 
 /* IE */
-* html .horbaritem a {
-	font-size: .8em;
-}
+* html .horbaritem a,
+* html .mdkitem a {
+	font-size: 1em}
 
 .mdkverbar {
 	
@@ -510,8 +606,7 @@ div#tiki-bot {}
 	z-index: 999;
 	position: absolute;
 	left: 0;
-	top: 0;
-	background: #FFFFFF;
+	background-color: transparent;
 	visibility: hidden;
 }
 
@@ -522,8 +617,12 @@ div#tiki-bot {}
 .mdksubframe {
 	z-index: 1000;
 	position: relative;
+	left: -1px;
+	top: 1px;
+	background-color: #fff;
 	display: block;
-	border: 1px solid #999;
+	border: 1px solid #D3D3D3;
+	border-top: none;
 } 
 
 /* Menu items in drop down frame */
@@ -568,8 +667,7 @@ div#tiki-bot {}
 .treemenudiv {
 	display: block;
 	white-space: nowrap;
-}
-
+	background: #fff}
 
 .phplmnormal,
 a.phplmnormal:hover,
@@ -577,37 +675,122 @@ a.phplm:link,
 a.phplm:visited,
 a.phplm:hover,
 a.phplm:active {
-	font: 100% Verdana, Tahoma, Arial, sans-serif;
-	color: #303030;
+	font-family: Georgia, serif;;
+	color: #005faa;
 	text-decoration: none;
-	font-weight: bold;
+	font-weight: normal;
 }
 
 a.phplm:visited {
-	color: #726461;
+	color: #005faa;
 }
 
 a.phplm:hover {
-	color: #808080;
+	color: #005faa;
+	text-decoration: underline;
+	background: none;
 }
 
 a.phplm:active {
-	color: #ff0000;
+	color: #005faa;
+	font-weight: normal;
 }
 
 a.phplmselected:link,
 a.phplmselected:visited,
 a.phplmselected:hover,
 a.phplmselected:active {
-	font: 100% Verdana, Tahoma, Arial, sans-serif;
-	color: black;
-	text-decoration: underline;
-	font-weight: bold;
+	font: 100% Georgia, serif;;
+	color: #005faa;
+	text-decoration: none;
+	font-weight: normal;
+	background: none;
+	font-style: italic;
 }
 
 a.phplmselected:hover {
-	color: #808080;
+	color: #005faa;
+	text-decoration: underline;
 }
+
+/* cssmenus.css overrides (page controls and menus) */
+.cssmenu_vert,
+.cssmenu_vert ul,
+.cssmenu li,
+.cssmenu_horiz ul li,
+.cssmenu_vert li,
+.cssmenu li ul,
+.cssmenu_vert li ul,
+.cssmenu_horiz li ul {
+	width: 11em;
+	background: #fff}
+
+[class].cssmenu_horiz li ul {
+	width: auto;
+	min-width: 11em;
+}
+
+* html div.box-CSS_menu ul {margin-left: 0}
+
+#col2 .cssmenu_vert,
+#col2 .cssmenu_vert li {
+	width: 180px;
+	padding: 0 !important}
+
+#col2 .cssmenu_vert ul,
+#col2 .cssmenu_vert li ul li {width: 11em}
+
+.cssmenu li ul,
+.cssmenu_horiz li ul,
+.cssmenu_vert li ul {border: 1px solid #D3D3D3}
+
+.cssmenu_vert li ul,
+.cssmenu_vert li.sfhover ul {margin-top: -1.3em}
+
+.cssmenu_vert li ul {margin-left: 11em}
+#col2 .cssmenu_vert li ul {margin-left: 175px}
+#col2 .cssmenu_vert li ul li ul {margin-left: 11em}
+.cssmenu_horiz li ul ul {margin: -1em 0 0 11em}
+
+* html #col2 .cssmenu_vert,
+* html #col2 .cssmenu_vert li {
+	margin-left: 0;
+	padding-left: 0;
+	width: 160px}
+	
+* html #col2 .cssmenu_vert li ul {margin-left: 160px}
+
+*:first-child+html #col2 .cssmenu_vert {margin-left: 0}
+
+.cssmenu a,	
+.cssmenu_horiz a,
+.cssmenu_vert a {
+	text-decoration: none;
+	display: block;
+	/*line-height: 1.8em;*/
+	padding: 5px 6px}
+	
+.cssmenu a:hover,	
+.cssmenu_horiz a:hover,
+.cssmenu_vert a:hover {text-decoration: underline}
+
+#tiki-top > .cssmenu_horiz {
+	border-left: 1px solid #aaa}
+
+#tiki-top .cssmenu_horiz {
+	float: left;
+	margin-left: 11px;
+	font: .9em Verdana, Helvetica, Arial, Sans-Serif}
+
+#tiki-top > .cssmenu_horiz > li > a {
+	border-right: 1px solid #aaa;
+	padding: 8px 1em}
+	
+#tiki-top > .cssmenu_horiz > li.menuSection > a {padding-right: 2.6em}
+	
+.sf-sub-indicator {
+	background: url(thenews/arrows-005faa.png) no-repeat -10px -100px; /* 8-bit indexed alpha png. IE6 gets solid image only; */}
+
 
 /** Links in other menus **/
 div.separator,
@@ -617,7 +800,18 @@ div.separatorline {}
 .separator a:hover {}
 div.option a.linkmenu:hover {}
 a.separator img {}
-.option {}
+/* menu option */
+.option, .optionline,
+#tiki-center .option,
+#tiki-center .optionline {
+	background: transparent url('../img/icons2/corner-dots.gif') center left no-repeat;
+	padding: 0.2em 0 0.2em 1.6em;
+}
+.box .menuSection {padding-left: 5px;}
+
+.selected {font-weight: bold}
+.selected ul li a {font-weight: normal}
+
 div.optionline,
 .option a {}
 .option a:link,
@@ -644,7 +838,9 @@ div.menuSection div.separator {
 /* End from Tikineat */
 
 /****** Misc. Global Classes (layout and style) ****/
-.hidden {position: absolute; left: -10000px; top: 0px; width: 1px; height: 1px; overflow: hidden;}.floatlist {	clear: left;list-style-type: none;margin: 0;padding-left: 0;}
+
+.hidden {position: absolute; left: -10000px; top: 0; width: 1px; height: 1px; overflow: hidden;}
+.floatlist {	clear: left;list-style-type: none;margin: 0;padding-left: 0;}
 .floatlist li { float: left; }
 div#attzone,
 div#comzone {	display: none;	margin-top: 10px;}
@@ -652,13 +848,16 @@ div#attzoneopen,
 div#comzoneopen {	display: block; margin-top: 10px;}
 div#edithelpzone {	display: none;}
 #rules-copy-panel {	display: none;}
-.clear, #clear {	clear: both;}
-.clearfix:after {    content: ".";display: block;height: 0;clear: both;visibility: hidden;}
-/* IE */
+.clear, #clear { clear: both;}
+.clearfix:after { content: ".";display: block;height: 0;clear: both;visibility: hidden;}
+.clearfix {display: inline-block}
+/* Hide from IE Mac \*/
+.clearfix {display: block}
+/* End hide from IE Mac */
 * html .clearfix {	height: 1%;}
 #overdiv table {	width: auto !important;}
 .attention {	color: red;}
-.highlight, #highlight  {}
+.highlight, #highlight  {background-color: #f2cd5e !important}
 
 /* OpenID  */
 .openid_url {
@@ -672,8 +871,6 @@ div#edithelpzone {	display: none;}
 div.imagerank { margin: 10px 5px; }
 .link, .gallink, .bloglink, .fgallink, .trailer,
 .opencomlink, .commentslink, .admlink,.forumbutlink { font-weight: normal; padding: 0; }
-div.searchdate { font-size: .95em;  }
-
 
 /* Pagination for listings */
 .mini {
@@ -698,6 +895,59 @@ a.tikihelp:hover {
 	vertical-align: text-top;
 }
 
+/* New Help section */
+div#tikihelp {
+	position: fixed;
+	right: 0;
+	top: 0;
+	height: auto; /* if there was height specified it covered the right column content "invisibly" making part of it unclickable (from strasa) */
+	max-width: 50%;
+	padding: 0;
+	margin: 0;
+	border: none;
+	background: transparent;
+	z-index: 820;
+	height: 100%;
+}
+
+* html div#tikihelp {
+	position: absolute;
+}
+
+.help_title { float: left }
+
+.help_close_icon,
+.help_fullscreen_icon {
+	float: right;
+	vertical-align: middle;
+}
+.help_fullscreen_icon { margin-right: 8px }
+.help_close_icon { margin-right: 20px }
+
+div.help_section_select {
+	font-weight : bold;
+	font-size: 120%;
+	background: #e7e9ea;
+	color: #000;
+	width: 100%;
+	padding: 2px;
+}
+
+div.help_sections {
+	width: 360px;
+	padding:  2px;
+	background: #aac9e9;
+	overflow: auto;
+	height: 100%;
+}
+
+div.help_section {
+	margin: 5px;
+	padding: 5px;
+	background: #fff;
+	color: #000;
+}
+
 /** Admin pages **/
 /* overrides inline css */
 div.adminanchors {background: #F0F4F5 !important; border: 1px solid #999999}
@@ -711,48 +961,58 @@ div.box {
 	margin: 9px;
 }
 
+* html #col2 div.box,
+* html #col3 div.box {width: 181px}
+
 h3.box-title {
 	font-weight: normal;
-	margin: 0 0 7px 0;
+	margin: 0 0 7px 1em;
 	padding: 0;
+	height: 18px;
 	color: black;
 	text-transform: uppercase;
 	font-family: Arial, Helvetica, sans-serif;
 	display: block;
-	font-size:90%;
-	font-weight:bold;
-	text-indent: 1em;
-	position: relative;
-}
+	font-size: 90%;
+	font-weight: bold;
+	position: relative}
 
-.box a.flipmodtitle img {
+* html h3.box-title {position: static}
+
+.moduleflip {
 	display: none;
-}
-
-* html .box a.flipmodtitle img,
-.box:hover a.flipmodtitle img {
-	display: block;
 	position: absolute;
 	right: 0;
-	top: 0;
+	top: 0}
+
+* html .moduleflip {
+	position: static;
+	float: right;
+	margin-top: -16px}
+
+* html .moduleflip,
+.box:hover .moduleflip {display: block}
+
+* html .box img.flipmodimage,
+.box:hover img.flipmodimage {
 	height: 13px;
 	width: 13px;
 	border: 1px solid transparent;
 	background: #fff}
 	
-* html #col2 a.flipmodtitle img {right: 8px}
-* html #col3 a.flipmodtitle img {right: 20px}
-
-* html .box a.flipmodtitle img {border: none}
-a.flipmodtitle:hover img {border: 1px solid #AAAAAA !important}
+* html #col2 img.flipmodimage {right: 8px}
+* html #col3 img.flipmodimage {right: 20px}
+* html .box img.flipmodimage {border: none}
+img.flipmodimage:hover {border: 1px solid #AAAAAA !important}
 #col2 h3.box-title {}
 
 .opaque {
 	border-top: 1px solid #D3D3D3;
 	border-bottom: 1px solid #D3D3D3;
 	padding: 7px;
-	margin: 0;
-}
+	margin: 0}
+	
+.box-data {padding-bottom: 8px}
 
 * html .box-data {
 	padding: 7px 7px 30px 7px;
@@ -762,7 +1022,7 @@ a.flipmodtitle:hover img {border: 1px solid #AAAAAA !important}
 .box-data ul {padding-right: .6em}
 
 .box-data ol {padding-left: 2em; margin-top: 0; margin-bottom: 0;}
-.box-data ul {padding-left: 0; margin-top: 0; margin-bottom: 0}
+.box-data ul {padding-left: 1em; margin-top: 0; margin-bottom: 0}
 /* IE */
 * html .box-data ol {margin-left: 0em}
 * html .box-data ul {margin-left: 1em}
@@ -771,16 +1031,23 @@ a.flipmodtitle:hover img {border: 1px solid #AAAAAA !important}
 *:first-child+html .box-data ul {margin-left: 1em}
 
 
-.box-data ul li {
-	list-style: square;
-}
+.box-data ul li {list-style: square}
+.cssmenu li, .cssmenu_horiz li, .cssmenu_vert li {list-style: none !important}
+.box-data ul.cssmenu_vert {padding: 0}
+.box-since_last_visit_new div.box-data div {
+text-align: left !important}
+
+.box-since_last_visit_new a.linkmodule b {
+	font-family: Arial,Helvetica,sans-serif;
+	font-size: 85%;
+	text-transform: uppercase}
 
 /** Other boxes **/
 div.cbox {
 	background: #EBEBEB;
 	margin-bottom: 4px;
 	border: 1px solid #aaa;
-}
+	overflow: hidden}
 
 .cbox-title {
 	border-bottom: 1px solid #aaa;
@@ -802,11 +1069,31 @@ div.cbox {
 
 .cbox-data {
 	padding: 3px;
-}
+	overflow: hidden}
 
-.rbox {}
-.rbox-title {}
-.rbox-data {}
+/* rbox: remarks box (note/warning/tip/comment) */
+.rbox {
+	margin: 0.2em 0 0.4em;
+	text-align: left;
+}
+.rbox-title {
+	background-color: #f2cd5e;
+	border: none;
+	float: left;
+	font-size: 1em;
+	padding: 0.2em 0.8em;
+	line-height: 1.4em;
+	position: relative;
+	top: 1px;
+	z-index: 2;
+}
+.rbox-data {
+	background-color: #fff;
+	border: solid 1px #f2cd5e;
+	clear: left;
+	margin: 0;
+	padding: 6px 2px 2px 2px;
+}
 
 .warning .rbox-title {}
 .warning .rbox-data {}
@@ -832,16 +1119,14 @@ table {
 }
 
 table.normal, 
-table.admin,
-table.bloglist {
+table.admin{
 	padding: 0;
 	margin: 0;
 	border-collapse: collapse;
 	width: 100%;
 }
 
-table.normal,
-table.bloglist {
+table.normal {
 	border: solid 1px #909090;
 	border-collapse: collapse;
 }
@@ -853,13 +1138,13 @@ table.admin tr td div#page-bar {
 }
 
 table.normal th {
-	font-size: 1em;
-}
-td {}
+	font-size: 1em}
+	
+td {vertical-align: top}
 * html td {	font-size: 11px}
 
+table.normal td,
 td.normal,
-td.bloglist,
 .wikitable td,
 td.odd,
 td.even {
@@ -882,11 +1167,6 @@ th {
 	border-collapse: collapse;
 }
 
-.bloglist td {
-	border: solid 1px #909090;
-	border-collapse: collapse;
-}
-
 td.form {
 	padding: 0.2em;
 }
@@ -900,22 +1180,21 @@ td.form {
 .forumform td {
 	border: 1px solid #9D9DA1;
 	background: #E0DFE3;
-}
+	padding: 3px}
 
 /** Specific Tables **/
 
 /* Tables (list reduced due to classes not found in files) */
 table.normal, 
-table.admin,
-table.bloglist {
-	padding: 0;
+table.admin {
 	margin: 0;
 	border-collapse: collapse;
 	width: 100%;
 }
-
-table.normal,
-table.bloglist {
+table.normalnoborder {
+	width: 100%;
+}
+table.normal {
 	border: solid 1px #909090;
 	border-collapse: collapse;
 }
@@ -926,199 +1205,117 @@ table.admin tr td div#page-bar {
 	background-color: transparent;
 }
 
-/** Tabs **/
+/** Tiki Tabs **/
+
+div.content {
+	padding: 3px
+}
+
+div.content .tabs {
+	margin: 0px;
+}
 
 .tabs {
-	border-bottom: solid 1px #225566 !important;
-	margin-top: 10px !important; 
-  padding: 0 !important;
+	border-bottom: solid 1px #0a6aa6 !important;
+	margin-top: 10px !important;
+	padding: 0 !important;
 }
 
-.tabactive {
-	border: solid 1px #225566 !important;
-	border-bottom: none !important;
-	border-top-width: 2px !important;
-	position: relative;
-	top: -2px;
-}
-[class].tabactive {
-	top: -1px
-}
-.tabactive a {
-	background: #eee;
-}
-.tabinactive {
-	border: solid 1px #666 !important;
-	border-bottom: none !important;
-	position: relative !important;
-	top: -3px !important;
-}
-[class].tabinactive {
-	top: -2px !important;
+.admin {
+	padding: 2px;
 }
 
 .tabmark {
 	display: inline;
-	font-size: 85%;
-	background: #abcdef;
-	border: 1px solid #abcdef;
-	margin: 0;
+	font-size: 10px;
+	background-color: #bfbfbf;
+	margin: 0px;
 	margin-right: 5px;
-	padding: 1px 0 1px 0;
+	padding: 2px 0;
 }
 
-.tabmark a { 
-	border-bottom :0;
+.tabmark a {
+	border-bottom: 0;
 	color: #000;
-	padding: 1px 5px 1px 5px;
-	text-decoration: none;
+	font-weight: bold;
+	padding: 1px 5px;
 }
 
 .tabmark a:active {
-	background: #fff;
-	color: red;
+	background-color: #f2f2f2;
+	color: #0a6aa6;
 }
 
 .tabmark a:hover {
-	color: black;
-	background: #f0f9ff;
+	color: #0a6aa6;
+	background-color: #CFCFCF;
+	text-decoration: none;
 }
 
-.tabcontent {
-	z-index: 200;
+
+/* active (current) tab */
+.tabactive {
+	background-color : #f2f2f2 !important;
+	border: solid 1px #0a6aa6 !important;
+	border-bottom: none !important;
+	border-top-width: 2px !important;
 	position: relative;
-	border: 1px solid #abcdef;
+	bottom: 2px;
+	z-index: 2;
+}
+
+[class].tabactive {
+	bottom: 1px
+}
+.tabactive a:hover {
+	background-color : #f2f2f2 !important;
+}
+
+/* link of active tab */
+.tabactive a {
+	color: #0a6aa6 !important;
+}
+
+/* inactive tabs */
+.tabinactive {
+	border: solid 1px #666666 !important;
+	border-bottom: none !important;
+	position: relative !important;
+ 	top: -3px !important;
+}
+
+[class].tabinactive {
+	top: -2px !important
+}
+
+
+
+.tabcontent {
+	background-color: #f2f2f2;
+	border: solid 1px #0a6aa6 !important;
+	border-top: none !important;
+	margin: 0;
 	padding: 6px 2px 2px 2px;
-	margin-bottom: 25px;
-	background: #f0f9ff;
+	text-align: center;
 }
 
 .tabcontent table {
-	margin: 1% auto 2% auto;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 1%;
+	margin-bottom: 2%;
 	text-align: left;
 	width: 95%;
 }
+
 .tabcontent table td {
 	padding: 5px;
 }
 
-form fieldset.tabcontent {
-	border: 1px solid #225566;
-	border-top: none !important;
-}
-form.admin .tabs {
-	border-bottom: solid 1px #225566 !important;
-	margin: 10px 1px 0 0 !important;
-	padding: 0 !important;
+.commentbloc {
+	text-align: left;
 }
 
-/* Get the contextual info to make this specific.
-div.content {
-	padding: 3px;
-}
-
-div.content .tabs {
-	margin: 0;
-}
-
-.tab-wrapper {
-	border: 1px solid #EEEEEE;
-	padding: 0;
-}
-
-.tab-menu  {
-	clear: both;
-	line-height: 17px;
-	list-style-image: none;
-	list-style-position: outside;
-	list-style-type: none;
-	padding: 2px 0;
-	margin-bottom: 6px;
-	margin-top: 2px;
-	width: 100%;
-}
-
-.tab-menu li {
-	display: inline;
-	margin: 0 2px;
-	width: 200px;
-	padding-right: 1.5em;
-}
-
-.tab-menu li a 	{ 
-	padding: 1px 5px; 
-	background: #f5f5f5; 
-	color:  #222; 
-	font-weight: bold; 
-	text-decoration: none; 
-} 
-.tab-menu li a:hover, 
-.tab-menu li a:focus { 
-	background: #FAEC8F; 
-	border-bottom-color: #999; 
-} 
-
-.tab-menu li a:hover { 
-	background: #FAEC8F; 
-	border-bottom-color: #999; 
-} 
-
-.tab-menu li.tab-selected a { 
-	background: #BCEC8F; 
-}
-
-/* CHECK
-.tab-menu li img {
-	vertical-align: middle;
-}*/
-
-/*  tiki tabs -- deprecated?
-table.admin tr td div#page-bar {
-	margin-left: 5px;
-	margin-bottom: 0;
-	background-color: transparent;
-}
-
-span#tab1 {
-	background: #F5F5F5;
-}
-
-span#tab2 {
-	background: #ECECEC;
-}
-
-span#tab3 {
-	background: #DCDCDC;
-}
-
-#content1,
-#content2,
-#content3 {
-	border-top: 1px solid #A9A9A9;
-	border-left: 1px solid #A9A9A9;
-	border-right: 1px solid #696969;
-	border-bottom: 1px solid #696969;
-}
-
-#content1 {
-	padding: 10px;
-	background: #F5F5F5;
-
-}
-
-#content2 {
-	padding: 5px;
-	background: #ECECEC;
-}
-
-#content3 {
-	padding: 5px;
-	background: #DCDCDC;
-}
-table.admin div#content1 div.tabcontent div.cbox {
-	background-color: transparent;
-}
-*/
 
 /*** Feature-specific selectors ***/
 
@@ -1129,10 +1326,11 @@ h1 a.pagetitle {
 	font-size: 1.2em;
 }
 
-span#description {
-	font-size: .9em;
-	font-style: italic;
-}
+div#description,
+.description {
+	display: block;
+	font-size: .95em;
+	font-style: italic}
 
 #pageid {
 	float: left;
@@ -1177,6 +1375,23 @@ span#description {
 
 .wikitext ol {
 
+}
+
+/* fancylist wikiplugin */
+.wikitext .fancylist {
+	margin-left: 30px; padding-left: 30px;
+}
+.wikitext .fancylist li {
+	color: #999;
+	font: italic 2.2em Georgia, "Times New Roman", sans-serif;
+	list-style-position: outside;
+}
+
+.wikitext .fancylist li p {
+	color: #000;
+	display: inline;
+	font-size: 50%;
+	font-style: normal;
 }
 
 .titlebar {
@@ -1239,11 +1454,6 @@ ul.floatleft li {
 	margin-top: 8px;
 }
 
-span.button2,
-div.button2, .button3 {
-	margin-right: 5px;
-}
- 
 div.cache {}
 div.cachedpage {}
 .wikicache, .wikicache:visited {}
@@ -1267,8 +1477,7 @@ img.externallink {
 	
 }
 
-/* Wiki plugins */
-/* Code plugin  */
+/* code examples after uploaded file */
 div.code {
 	font-size: 90%;
 	padding: 3px;
@@ -1277,42 +1486,65 @@ div.code {
 	font-family: "Courier New", Courier, monospace;
 }
 
-.codelisting {
-	font-family: "Courier New", Courier, monospace;
-	padding: 10px;
-	background: #F5F5F5;
-	margin: 4px;
-	border: 1px dashed #ADACAF;
-	overflow: auto; 
-   width: 90%;
-}
 
+/* Wiki plugins */
+
+/* Code plugin  */
 .codecaption {
-	font-size: 90%;
+	font-size: 0.9em;
 	padding: 0 10px;
 	position: relative;
-	bottom: -5px;
+	bottom: -1em;
 	display: inline;
 	border: 1px solid #ADACAF;
 	border-bottom: 0;
-	margin: 0;
+	margin-left: 4px;
+	line-height: 1em;
 	color: #666666;
 	background: #F5F5F5;
 	font-weight: bold;
 }
 
+.codelisting {
+	font-family: "Courier New", Courier, monospace;
+	padding: 10px;
+	background: #F5F5F5;
+	border: 1px dashed #ADACAF;
+	margin-left: 4px;
+	overflow: auto;
+	width: 90%;
+}
+
 /* Quote plugin */
 div.quoteheader {
-	margin-left: 20px;
+	margin-left: 30px;
+	
 }
 
 div.quotebody {
+	margin: 0 15px 10px 30px;
 	font-style: italic;
+	border-left: 5px solid #D3D3D3;
+	padding-left: 6px
 }
 
 table.wikiplugin-split {
 	border: none;
 }
+
+/* Versions plugin */
+#tiki-center .versionav {
+	padding: 0;
+	border: 0;
+	margin-bottom: -1px}
+	
+.versionav .button {margin-bottom: 0}
+
+#tiki-center .versioncontent {
+	border: 1px solid #aaa;
+	background: #fff;
+	padding: 1em}
+
 /** Wiki tocs **/
 div.tocnav {
 	background: #EBEBEB;
@@ -1358,9 +1590,10 @@ ul.toc * {
 .diff div {
 	border-top: 1px solid #A9B8C2;
 }
-.diffheader {
+.diffheader td {
 	background: #A9B8C2;
 	font-weight: bold;
+	width: 50%;
 }
 .diffadded {
 	background: #CCFFCC;
@@ -1377,6 +1610,9 @@ ul.toc * {
 }
 .diffchar {
 	color: red;
+}
+.diffadded > .diffchar {
+	color : blue;
 }
 
 /***** Articles ****/
@@ -1396,14 +1632,15 @@ div.articletopline {
 }
 
 div.articletitle {
-	margin-top: 6px;
+	margin-top: 0;
 	margin-bottom:	15px;
 	text-align:	left;
 }
  
-span.titlea {
+div.articletitle h2 {
 	font-size: 200%;
 	font-weight: normal;
+	margin: 0;
 }
 
 span.titleb {
@@ -1446,12 +1683,27 @@ img.articleimage {
 	margin-bottom:10px;
 }
 
-div.articletrailer {text-align: right}
+div.articletrailer {
+	position: relative;
+	text-align: center;
+	margin-top: 1.1em}
+	
+div.articletrailer img {}
 
-div.articletrailer .wikitopline {
-	float: left;
-} 
- 
+div.article .status {
+	position: absolute;
+	left: 0}
+
+div.articletrailer span {
+	display: inline-block;
+	margin: auto;
+	white-space: nowrap}
+
+div.article .actions {
+	position: absolute;
+	right: 0;
+	top: 0}
+
 div.articlebody {
 	font-size: 125%;
 	line-height: 1.5em;
@@ -1472,7 +1724,7 @@ div.blogheading {
 }
 
 div.blogtitle {
-	font-size: 1.3em;
+	font-size: 1.8em;
 	font-weight: bold;
 	padding: 3px;
 	margin-top: 10px;
@@ -1499,7 +1751,6 @@ div.bloginfo {
 div.blogtools {
 	padding: 3px;
 	text-align: right;
-	/*margin-bottom: -2em;*/
 }
 
 .blogpost {
@@ -1556,34 +1807,61 @@ span.posthead span.link {
 	font-weight: bold;
 }
 
-div.posthead h3 {
-	font-size:1.2em}
+body.tiki_blogs .post .title {margin-top: 0}
+
+.tiki_blogs #tiki-center .postbody-title,
+.tiki_blogs #tiki-center .title {
+	padding-left: 0;
+	margin-left: 0}
+
+body.tiki_blogs .post .title h2 {
+	font-size: 1.7em;
+	margin-top: 0}
  
-div.postbody {
+/*div.postbody*/
+body.tiki_blogs .post .postbody {
 	margin-right: 8px;
 	line-height: 1.4em;
 	margin-bottom: 1em;
 }
 
-div.postfooter {
-	clear: both;
-	float: right;
+/* Maybe needs override to differentiate from forums */
+body.tiki_blogs .post .postbody {
+	background: none;
+	border: 0  }
+	
+body.tiki_blogs div.author_actions {
+	float: none;
+	background: none;
+	border: 0;
+	width: 100%}
+	
+body.tiki_blogs .actions {background: none}
+
+body.tiki_blogs .author_info {  }
+.postbody-title {
+	background: none;
+	border: 0}
+	
+body.tiki_blogs .postbody-title {
+	float: none;
+	width: 100%;
+	background: none;
+	border: 0}
+
+body.tiki_blogs .postfooter {
+	width: 100%;
 	margin-bottom: 2em;
 }
+
+body.tiki_blogs .postfooter .actions {float: left}
 
 /***** Forums *****/
 
 body.tiki_forums table.normal {
 	margin: auto;
 }
-/* can't find in 1.10
-div.forumtoolbar {
-	margin-bottom: 20px;
-	border: 0;
-}
-td.threadseparator {}
 
-*/
  
 td.threadsevenl {}
 td.threadsevenr {}
@@ -1620,6 +1898,8 @@ table.commentinfo {}
 
 /* forums new */
 
+.post {margin-bottom: 30px}
+
 .post .postbody {
 	clear: both;
 	border: solid 1px #E7EAED;
@@ -1630,30 +1910,46 @@ table.commentinfo {}
 	background-color: #F9FCFF;	font-size: 1.1em;}
 	
 * html .post .postbody {font-size: 11px}
-*:first-child+html .postbody { width: 55em }
+*:first-child+html .postbody {min-width: 100%}
 
-.post .postbody-title {
-	display: block;
+
+.postbody-title {
+	width: 100%;
+	float: none;
+	margin-top: 0;
+	margin-bottom: auto;
 	background-color: #E0EAF4; 
-	border-bottom: 1px solid #ACCCDD;
-	margin-bottom: 4px;
-	height: 100%;
-/*	overflow: auto;*/
-	padding-top: 2px;
-}
-.post .postbody-title .checkbox { float: left; }
-.post .postbody-title .title {
-	float: left;
+	border-bottom: 1px solid #ACCCDD}
+	
+.post .postbody-title .checkbox {float: left}
+
+.tiki_forums .post .postbody-title .title {
 	color: #29677B;
 	font-weight: bold;
 	font-size: 12px;
 	margin-left: 5px;
-	margin-top: 3px;
-}
-.post .author {	
+	margin-top: 3px}
+
+.author_actions {
+	width: 25%;
+	float: right;
 	text-align: right;
-	vertical-align: top;
-}
+	background-color: #E0EAF4;
+	border-bottom: 1px solid #ACCCDD;
+	border-left: 1px solid #ACCCDD;
+	margin-left: -1px}
+	
+*:first-child+html .author_actions {}
+	
+.author_actions .actions {
+	background-color: #E0EAF4}
+	
+.author_actions .actions a.link {padding: 2px}
+
+.author {	
+	text-align: right;
+	vertical-align: top}
+
 .post .author_post_info {
 	display: block;
 	background-color: #E0EAF4;
@@ -1665,13 +1961,10 @@ table.commentinfo {}
 .post .author_post_info_on { font-style: italic; }
 .post .author_info {
 	float: right;
-	background-color: #F0F8FF;
 	padding: 0 2px 2px 2px;
-	margin-left: 5px;
-	border-left: 1px solid #D7E5F3;
-	border-bottom: 1px solid #D7E5F3;
-}
-.commentStyle_headers .author_info { float: left; }
+	margin-left: 5px}
+
+.commentStyle_headers .author_info {}
 .post .postbody-title .actions {
 	float: right;
 	font-size: 10px;
@@ -1749,7 +2042,6 @@ table.commentinfo {}
 }
 .nb_replies { white-space: nowrap; }
 .post_preview, .top_post { margin-bottom: 15px; }
-/*.post .postbody .signature { float: left; }*/
 
 /* Comments */
 
@@ -1836,11 +2128,6 @@ div.freetagObjectType {
 }
 
 /***** Image Galleries *****/
-/*
-div.browsegallery {
-	text-align: center;
-	width: 100%;
-}*/
 
 table.galtable {
 	border-collapse: collapse;
@@ -2034,7 +2321,7 @@ Caltrack a:visited {color: #00BD02}
 
 .caldark .calfocus { background: inherit }
 
-.calfocuson + .calcontent { background: #e6eff8 }
+.calodd .calfocuson, .caleven .calfocuson , .calfocuson + .calcontent { background: #e6eff8 }
 
 .calprio1 a,
 .calprio2 a,
@@ -2063,15 +2350,41 @@ Caltrack a:visited {color: #00BD02}
 	border-bottom: 1px solid black;
 	padding-bottom: 7px;
 }
+
 .searchresults {
-	display: inline;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	}
+
+.searchresults li {
+	margin: 10px 0 0;
 }
+
+.searchresults li .objecttype,
+	.searchresults li .parentname ,
+	.searchresults li .objectname 
+ {
+	font-size: 120%;
+	font-weight: bold;
+ }
+
+.searchresults .itemhits,
+	.searchresults .itemrelevance,
+	.searchresults .searchdate {
+	color: gray;
+	font-size: 90%;
+	}
 
 #caltable .calfocuson,
 .box-data td.fc a.today,
 .box-data td a.today {
 	background: #D4D0C8;
 	border: solid 1px #696969}
+
+.buttonon a,
+.calbuttonon a,
+.calHeadingOn a {font-weight: bold}
 
 /*****  Polls  *****/
 div.pollresults {margin-top: 5px;font-size: 1.2em;padding: 0 5px;}
@@ -2170,8 +2483,8 @@ table.default	td {
   border-color: #A9A9A9;
   border-width: 1px;
   border-style: solid;
-  background-color: black;
-  color: #D8D8D8;
+  background-color: #ccc;
+  color: #000;
 }
 
 .advanced:before { content:url(../img/icons/mini_blue_diamond.gif)" "; }
@@ -2223,5 +2536,36 @@ a.icon,
 img.icon {
 	border: 0 !important;
 	background: transparent}
+	
+/* Minichat module */	
+	
+div.box-minichat {width: 95%}
+div.minichatchans {overflow: auto !important}
+.minichat {overflow: auto !important}
+
+div.minichatdiv {
+  font-size: .9em;
+  overflow: auto !important}
+
+body.tiki_mytiki #tiki-center form {
+	border: 1px solid #aaa;
+	padding: 10px}
+  
+body.tiki_mytiki #tiki-center form table.normal,
+body.tiki_mytiki #tiki-center .normal form {
+	border: none;}
+
+/* wikiplugin tracker */
+.mandatory_star {
+	font-weight: bold;
+	color: red;	
+}
+.mandatory_note{
+	display: block;
+	font-style: italic;
+	margin-top: 10px;
+}
+.close_help_icon { float: right }
+
 /* end of css file */
 

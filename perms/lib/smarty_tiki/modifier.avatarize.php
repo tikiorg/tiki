@@ -25,5 +25,3 @@ function smarty_modifier_avatarize($user)
   } 
   return $avatar;	
 }
-
-?>

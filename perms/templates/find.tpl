@@ -4,9 +4,8 @@
 	parameters used in this template:
 
 	* filegals_manager      : If value not empty, adds hidden input filegals_manager value=$filegals_manager
-	* _sort_mode             : If value = 'y' adds hidden input sort_mode value=$sort_mode
 
-	* what                  : Change form title. Default value (if $what empty) is "Find". If $what is not empty, the text presented is $what content
+	* whatlabel             : Change form title. Default value (if $whatlabel empty) is "Find". If $whatlabel is not empty, the text presented is $whatlabel content
 	* exact_match           : If set adds exact_match field
 	* types                 : If not empty adds type dropdown whith types array values
 	*		types_tag             : HTML element used to display types ('select' or 'checkbox'). Defaults to 'select'.
@@ -21,40 +20,34 @@
 	*		filter_names          : array( filter_field1 => filter_field1_name, ... )
 	*		filter_values         : array( filter_fieldX => filter_fieldX_selected_value, ... )
 	*
-	* Usage examples : {include file='find.tpl' _sort_mode='y'}
-	*                  {include file="find.tpl" find_show_languages='y' find_show_categories='y' find_show_num_rows='y'} 
+	* Usage examples : {include file='find.tpl'}
+	*                  {include file='find.tpl' find_show_languages='y' find_show_categories='y' find_show_num_rows='y'} 
 *}
 
 <div class="clearfix">
 		<form method="post" action="{$smarty.server.PHP_SELF}" class="findtable">
 		{if $filegals_manager neq ''}<input type="hidden" name="filegals_manager" value="{$filegals_manager|escape}" />{/if}
-		{if $_sort_mode eq 'y'}<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />{/if}
 
-		{query _type='form_input' maxRecords='NULL' type='NULL' types='NULL' find='NULL' topic='NULL' lang='NULL' exact_match='NULL' categId='NULL' filegals_manager='NULL' save='NULL'}
+		{query _type='form_input' maxRecords='NULL' type='NULL' types='NULL' find='NULL' topic='NULL' lang='NULL' exact_match='NULL' categId='NULL' filegals_manager='NULL' save='NULL' offset='NULL'}
 
-<ul>
-<li class="findtitle">	
-	<label for="findwhat">
-		{if empty($what)}
+	<label class="findtitle">
+		{if empty($whatlabel)}
 			{tr}Find{/tr}
 		{else}
-			{tr}{$what}{/tr}
+			{tr}{$whatlabel}{/tr}
 		{/if}
+		<input type="text" name="find" value="{$find|escape}" />
 	</label>
-	<input type="text" name="find" id="findwhat" value="{$find|escape}" />
-</li>
 
 {if isset($exact_match)}
-	<li class="findexactmatch">
-		<label for="findexactmatch">
+	<label class="findexactmatch" for="findexactmatch">
 			{tr}Exact&nbsp;match{/tr}
-		</label>
 		<input type="checkbox" name="exact_match" id="findexactmatch" {if $exact_match ne 'n'}checked="checked"{/if}/>
-	</li>
+	</label>
 {/if}
 
 {if !empty($types) and ( !isset($types_tag) or $types_tag eq 'select' ) }
-	<li class="findtypes"> 
+	<label class="findtypes"> 
 		<select name="type">
 			<option value='' {if $find_type eq ''}selected="selected"{/if}>{tr}any type{/tr}</option>
 			{section name=t loop=$types}
@@ -63,11 +56,11 @@
 				</option>
 			{/section}
 		</select>
-	</li>
+	</label>
 {/if}
 
 {if !empty($topics)}
-	<li class="findtopics"> 
+	<label class="findtopics"> 
 		<select name="topic">
 			<option value='' {if $find_topic eq ''}selected="selected"{/if}>{tr}all topic{/tr}</option>
 			{section name=ix loop=$topics}
@@ -76,13 +69,13 @@
 				</option>
 			{/section}
 		</select>
-	</li>
+	</label>
 {/if}
 
 {if $find_show_languages eq 'y' and $prefs.feature_multilingual eq 'y'}
-	<li class="findlang">
+	<label class="findlang">
 		<select name="lang" class="in">
-		<option value='' {if $find_lang eq ''}selected="selected"{/if}>{tr}any language{/tr}</option>
+			<option value='' {if $find_lang eq ''}selected="selected"{/if}>{tr}any language{/tr}</option>
 		{section name=ix loop=$languages}
 			{if !is_array($prefs.available_languages) || count($prefs.available_languages) == 0 || in_array($languages[ix].value, $prefs.available_languages)}
 			<option value="{$languages[ix].value|escape}" {if $find_lang eq $languages[ix].value}selected="selected"{/if}>
@@ -91,9 +84,9 @@
 			{/if}
 		{/section}
 		</select>
-		{tr}not in{/tr}
-		<select name="langOrphan" class="notin">
-		<option value='' {if $find_langOrphan eq ''}selected="selected"{/if}></option>
+		<label>{tr}not in{/tr}
+			<select name="langOrphan" class="notin">
+				<option value='' {if $find_langOrphan eq ''}selected="selected"{/if}></option>
 		{section name=ix loop=$languages}
 			{if !is_array($prefs.available_languages) || count($prefs.available_languages) == 0 || in_array($languages[ix].value, $prefs.available_languages)}
 				<option value="{$languages[ix].value|escape}" {if $find_langOrphan eq $languages[ix].value}selected="selected"{/if}>
@@ -101,12 +94,13 @@
 				</option>
 			{/if}
 		{/section}
-		</select>
-	</li>
+			</select>
+		</label>
+	</label>
 {/if}
 
 {if $find_show_categories eq 'y' and $prefs.feature_categories eq 'y' and !empty($categories)}
-	<li class="findcateg"> 
+	<label class="findcateg"> 
 		<select name="categId">
 			<option value='' {if $find_categId eq ''}selected="selected"{/if}>{tr}any category{/tr}</option>
 			{section name=ix loop=$categories}
@@ -115,29 +109,18 @@
 				</option>
 			{/section}
 		</select>
-	</li>
+	</label>
 {/if}
 
 {if $find_show_num_rows eq 'y'}
-	<li class="findnumrows"> 
-		<label for="findnumrows">
+	<label class="findnumrows" for="findnumrows">
 			{tr}Number of displayed rows{/tr}
 			<input type="text" name="maxRecords" id="findnumrows" value="{$maxRecords|escape}" size="3" />
-		</label>
-	</li>
+	</label>
 {/if}
 
-<li class="findsubmit">
-	<input type="submit" name="search" value="{tr}Go{/tr}" />
-	{if $find ne ''}
-		<span class="button">
-			<a href="{$smarty.server.PHP_SELF}?{query find='' types='' topic='' lang='' langOrphan='' exact_match='' categId='' maxRecords=''}" title="{tr}Clear Filter{/tr}">{tr}Clear Filter{/tr}</a>
-		</span>
-	{/if}
-</li>
-
 {if !empty($types) and isset($types_tag) and $types_tag eq 'checkbox' }
-	<li class="findtypes">
+	<div class="findtypes">
 		<ul>
 			<li>
 				{tr}in:{/tr}
@@ -148,11 +131,11 @@
 			</li>
 		{/foreach}
 		</ul>
-	</li>
+	</div>
 {/if}
 
 {if !empty($filters)}
-	<li class="findfilter">
+	<div class="findfilter">
 		{foreach key=key item=item from=$filters}
 			<span>
 				{$filter_names.$key}{tr}:{/tr}
@@ -164,10 +147,18 @@
 				{/foreach}
 			</select>
 		{/foreach}
-	</li>
+	</div>
 {/if}
 
-</ul>
+<label class="findsubmit">
+	<input type="submit" name="search" value="{tr}Go{/tr}" />
+	{if $find ne ''}
+		<span class="button">
+			<a href="{$smarty.server.PHP_SELF}?{query find='' types='' topic='' lang='' langOrphan='' exact_match='' categId='' maxRecords=''}" title="{tr}Clear Filter{/tr}">{tr}Clear Filter{/tr}</a>
+		</span>
+	{/if}
+</label>
+
 </form>
 </div>
-<div class="clear"></div>
+

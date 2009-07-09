@@ -18,5 +18,3 @@ class JitFilter_AllTests
         return $suite;
     }
 }
-
-?>

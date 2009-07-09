@@ -329,6 +329,10 @@ class WikiLib extends TikiLib {
 		if ($prefs['wikiHomePage'] == $oldName) {
 			$tikilib->set_preference('wikiHomePage', $newName);
 		}
+		if ($prefs['feature_trackers'] == 'y') {
+			global $trklib; include_once('lib/trackers/trackerlib.php');
+			$trklib->rename_page($oldName, $newName);
+		}
 
 		return true;
 	}
@@ -352,10 +356,10 @@ class WikiLib extends TikiLib {
 		return $res;
 	}
 	function get_parse($page, &$canBeRefreshed) {
-		global $prefs;
+		global $prefs, $user;
 		$content = '';
 		$canBeRefreshed = false;
-		if ($prefs['wiki_cache'] > 0) {
+		if ($prefs['wiki_cache'] > 0 && empty($user) ) {
 			$cache_info = $this->get_cache_info($page);
 			if (!empty($cache_info['cache_timestamp']) && $cache_info['cache_timestamp'] + $prefs['wiki_cache'] > $this->now) {
 				$content = $cache_info['cache'];
@@ -638,7 +642,7 @@ class WikiLib extends TikiLib {
 			$ret = array();
 
 			while ($res = $result->fetchRow()) {
-				if ($tikilib->user_has_perm_on_object($user, $page, 'wiki page', 'tiki_p_view'))
+				if ($tikilib->user_has_perm_on_object($user, $res['pageName'], 'wiki page', 'tiki_p_view'))
 					$ret[] = $res["pageName"];
 			}
 
@@ -663,7 +667,7 @@ class WikiLib extends TikiLib {
       else {
 		if ($prefs['feature_wiki_userpage'] == 'y' and strcasecmp(substr($page, 0, strlen($prefs['feature_wiki_userpage_prefix'])), $prefs['feature_wiki_userpage_prefix']) == 0 and strcasecmp($page, $prefs['feature_wiki_userpage_prefix'].$user) != 0)
 			return false;
-		if (!$this->user_has_perm_on_object($user,$page,'wiki page','tiki_p_edit'))
+		if (!$this->user_has_perm_on_object($user,$page,'wiki page','tiki_p_edit', 'tiki_p_edit_categorized'))
 			return false;
 		return ($this->is_locked($page, $info) == null || $user == $this->is_locked($page, $info))? true : false;
 	}
@@ -725,24 +729,29 @@ class WikiLib extends TikiLib {
 	return $ret;
     }
 
-	function list_plugins($with_help = false) {
+	function list_plugins($with_help = false, $area_name = 'wikiedit') {
+		if (isset($_SESSION['wysiwyg']) && $_SESSION['wysiwyg'] == 'y') {
+			// disable all plugin insert help functions
+			$area_name = '';	
+		}	
 		if ($with_help) {
 			global $cachelib, $headerlib;
 			$headerlib->add_jsfile( 'tiki-jsplugin.php' );
-			if (!$cachelib->isCached('plugindesc')) {
+			$cachetag = 'plugindesc' . $this->get_language() . $area_name;
+			if (!$cachelib->isCached( $cachetag ) ) {
 				$list = $this->plugin_get_list();
 
 				$plugins = array();
 				foreach ($list as $name) {
-					$pinfo["help"] = $this->get_plugin_description($name, $enabled);
+					$pinfo["help"] = $this->get_plugin_description($name, $enabled, $area_name);
 					$pinfo["name"] = strtoupper($name);
 
 					if( $enabled )
 						$plugins[] = $pinfo;
 				}
-				$cachelib->cacheItem("plugindesc",serialize($plugins));
+				$cachelib->cacheItem($cachetag,serialize($plugins));
 			} else {
-				$plugins = unserialize($cachelib->getCached("plugindesc"));
+				$plugins = unserialize($cachelib->getCached($cachetag));
 			}
 			return $plugins;
 		} else {
@@ -767,7 +776,7 @@ class WikiLib extends TikiLib {
     //
     // Call 'wikiplugin_.*_description()' from given file
     //
-    function get_plugin_description($name, &$enabled) {
+    function get_plugin_description($name, &$enabled, $area_name = 'wikiedit') {
     	global $tikilib;
         $data = '';
 
@@ -805,7 +814,8 @@ class WikiLib extends TikiLib {
 			if( isset( $ret['documentation'] ) && ctype_alnum( $ret['documentation'] ) ) {
 				$ret['documentation'] = "http://doc.tikiwiki.org/{$ret['documentation']}";
 			}
-
+			
+			$smarty->assign( 'area_name', $area_name );
 			$smarty->assign( 'plugin', $ret );
 			$smarty->assign( 'plugin_name', strtoupper( $name ) );
 			return $smarty->fetch( 'tiki-plugin_help.tpl' );
@@ -851,18 +861,41 @@ class WikiLib extends TikiLib {
 
 	    return $this->query($query, $bindvals) ? true : false;
 	}
-	function sefurl($page) {
-		global $prefs;
+	function sefurl($page, $with_next='', $all_langs='') {
+		global $prefs, $smarty;
 		if( basename( $_SERVER['PHP_SELF'] ) == 'tiki-all_languages.php' ) {
 			return 'tiki-all_languages.php?page='.urlencode($page);
 		}
 
+        $script_name = 'tiki-index.php';
+        if ($all_langs == 'y') {
+           $script_name = 'tiki-all_languages.php';
+        }
+
+		$href = "$script_name?page=".urlencode($page);
+		if ($with_next) {
+			$href .= '&amp;';
+		}
 		if ($prefs['feature_sefurl'] == 'y') {
-			return urlencode($page);
+			include_once('tiki-sefurl.php');
+			return  filter_out_sefurl($href, $smarty, 'wiki');
 		} else {
-			return 'tiki-index.php?page='.urlencode($page);
+			return $href;
 		}
 	}
+
+	function url_for_operation_on_a_page($script_name, $page, $with_next) {
+		$href = "$script_name?page=".urlencode($page);
+		if ($with_next) {
+			$href .= '&amp;';
+		}
+		return $href;
+	}
+
+	function editpage_url($page, $with_next) {
+		return $this->url_for_operation_on_a_page('tiki-editpage.php', $page, $with_next);
+	}
+
 	function move_attachments($old, $new) {
 		$query = 'update `tiki_wiki_attachments` set `page`=? where `page`=?';
 		$this->query($query, array($new, $old));

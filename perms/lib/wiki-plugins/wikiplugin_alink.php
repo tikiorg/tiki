@@ -82,5 +82,3 @@ function wikiplugin_alink($data, $params)
 	    return "<a href=\"#$aname\">$data</a>";
 	}
 }
-
-?>

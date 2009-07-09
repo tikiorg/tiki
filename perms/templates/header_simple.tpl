@@ -21,11 +21,11 @@
 
 {* --- tikiwiki block --- *}
 <script type="text/javascript" src="lib/tiki-js.js"></script>
-{include file="bidi.tpl"}
+{include file='bidi.tpl'}
 <title>
 {if isset($trail)}{breadcrumbs type="fulltrail" loc="head" crumbs=$trail}
 {else}
-{$prefs.siteTitle}
+{$prefs.browsertitle}
 {if !empty($headtitle)} : {$headtitle}
 {elseif !empty($page)} : {if $beingStaged eq 'y' and $prefs.wikiapproval_hideprefix == 'y'}{$approvedPageName|escape}{else}{$page|escape}{/if} {* add $description|escape if you want to put the description + update breadcrumb_build replace return $crumbs->title; with return empty($crumbs->description)? $crumbs->title: $crumbs->description; *}
 {elseif !empty($arttitle)} : {$arttitle}
@@ -44,6 +44,9 @@
 {if $prefs.site_favicon}<link rel="icon" href="{$prefs.site_favicon}" />{/if}
 <!--[if lt IE 7]> <link rel="StyleSheet" href="css/ie6.css" type="text/css" /> <![endif]-->
 
+{if ($prefs.feature_jquery neq "y" or $prefs.feature_jquery_tablesorter neq "y") and $prefs.javascript_enabled eq "y"}
+	<script type="text/javascript" src="lib/tiki-js-sorttable.js"></script>
+{/if}
 {if $prefs.feature_mootools eq "y"}
 <script type="text/javascript" src="lib/mootools/mootools.js"></script>
 {if $mootools_windoo eq "y"}
@@ -53,9 +56,12 @@
 <script src="lib/mootools/extensions/tabs/SimpleTabs.js" type="text/javascript" ></script> 
 {/if}
 {/if}
+{if $prefs.feature_jquery eq "y"}
+	{include file='header_jquery.tpl'}
+{/if}
 
-{if $prefs.feature_swffix eq "y"}
-<script type="text/javascript" src="lib/swffix/swffix.js"></script>
+{if $prefs.feature_swfobj eq "y"}
+<script type="text/javascript" src="lib/swfobject/swfobject.js"></script>
 {/if}
 
 {if $headerlib}{$headerlib->output_headers()}{/if}
@@ -80,10 +86,10 @@
 <!-- Includes for Shadowbox script -->
 	<link rel="stylesheet" type="text/css" href="lib/shadowbox/build/css/shadowbox.css" />
 
-{if $prefs.feature_mootools eq "y"}
-	<script type="text/javascript" src="lib/shadowbox/build/js/adapter/shadowbox-mootools.js" charset="utf-8"></script>
-{else}
+{if $prefs.feature_jquery eq "y"}
 	<script type="text/javascript" src="lib/shadowbox/build/js/adapter/shadowbox-jquery.js" charset="utf-8"></script>
+{elseif $prefs.feature_mootools eq "y"}
+	<script type="text/javascript" src="lib/shadowbox/build/js/adapter/shadowbox-mootools.js" charset="utf-8"></script>
 {/if}
 
 	<script type="text/javascript" src="lib/shadowbox/build/js/shadowbox.js" charset="utf-8"></script>

@@ -232,5 +232,3 @@ class FaqLib extends TikiLib {
 }
 global $dbTiki;
 $faqlib = new FaqLib($dbTiki);
-
-?>

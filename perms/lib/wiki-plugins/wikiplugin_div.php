@@ -70,4 +70,3 @@ function wikiplugin_div($data, $params) {
 	$end = "</$t>";
 	return $begin . $data . $end;
 }
-?>

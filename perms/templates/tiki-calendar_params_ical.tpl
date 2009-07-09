@@ -1,11 +1,11 @@
 {strip}
-{title}{tr}Avanced parameters for iCal export{/tr}{/title}
+{title}{tr}Advanced parameters for iCal export{/tr}{/title}
 
-<div class="navbar">
 {if $tiki_p_view_calendar eq 'y'}
-<span class="button2"><a href="tiki-calendar.php" class="linkbut">{tr}Calendar{/tr}</a></span>
+	<div class="navbar">
+		{button  href="tiki-calendar.php" _text="{tr}Calendar{/tr}"}
+	</div>
 {/if}
-</div>
 
 <div class="wikitext">
 

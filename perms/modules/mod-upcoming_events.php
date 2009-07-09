@@ -6,7 +6,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-global $calendarlib, $userlib, $tiki_p_admin, $tiki_p_view_calendar;
+global $calendarlib, $userlib, $tiki_p_admin, $tiki_p_view_calendar, $smarty;
 if ($prefs['feature_calendar'] != 'y')
 	return;
 include_once ('lib/calendar/calendarlib.php');
@@ -42,9 +42,12 @@ foreach ($rawcals["data"] as $cal_id=>$cal_data) {
 $smarty->assign_by_ref('infocals', $rawcals['data']);
 
 $events = array();
+if (!empty($module_params['calendarId']) && !is_array($module_params['calendarId']) && !is_numeric($module_params['calendarId'])) {
+	$module_params['calendarId'] = preg_split('/[\|:\&,]/', $module_params['calendarId']);
+}
 if (!empty($viewable))
 	$events = $calendarlib->upcoming_events($module_rows,
-		array_intersect(isset($module_params["calendarId"]) ? array($module_params["calendarId"]) : $calIds, $viewable),
+		array_intersect(isset($module_params['calendarId']) ? (is_array($module_params['calendarId'])?$module_params['calendarId']: array($module_params['calendarId'])) : $calIds, $viewable),
 		isset($module_params["maxDays"]) ? (int) $module_params["maxDays"] : 365,
 		'start_asc', 
 		isset($module_params["priorDays"]) ? (int) $module_params["priorDays"] : 0

@@ -6,7 +6,63 @@
 	{button href="tiki-send_newsletters.php" _text="{tr}Send Newsletters{/tr}"}
 </div>
 
-<h2>{tr}Create/Edit Newsletters{/tr}</h2>
+{tabset}
+
+{tab name='{tr}Newsletters{/tr}'}
+
+{if $channels or ($find ne '')}
+  {include file='find.tpl'}
+{/if}
+
+<table class="normal">
+	<tr>
+		<th>{self_link _sort_arg='sort_mode' _sort_field='nlId'}{tr}ID{/tr}{/self_link}</th>
+		<th>{self_link _sort_arg='sort_mode' _sort_field='name'}{tr}Newsletter{/tr}{/self_link}</th>
+		<th>{self_link _sort_arg='sort_mode' _sort_field='author'}{tr}Author{/tr}{/self_link}</th>
+		<th>{self_link _sort_arg='sort_mode' _sort_field='users'}{tr}Users{/tr}{/self_link}</th>
+		<th>{self_link _sort_arg='sort_mode' _sort_field='editions'}{tr}Editions{/tr}{/self_link}</th>
+		<th>{tr}Drafts{/tr}</th>
+		<th>{self_link _sort_arg='sort_mode' _sort_field='lastSent'}{tr}Last Sent{/tr}{/self_link}</th>
+		<th>{tr}Action{/tr}</th>
+	</tr>
+	
+	{cycle values="odd,even" print=false}
+	{section name=user loop=$channels}
+		<tr>
+			<td class="{cycle advance=false}">{self_link cookietab='2' _anchor='anchor2' nlId=$channels[user].nlId _title='{tr}Edit{/tr}'}{$channels[user].nlId}{/self_link}</td>
+			<td class="{cycle advance=false}">
+				{self_link cookietab='2' _anchor='anchor2' nlId=$channels[user].nlId _title="{tr}Edit{/tr}"}{$channels[user].name}{/self_link}
+				<div class="subcomment">{$channels[user].description}</div>
+			</td>
+			<td class="{cycle advance=false}">{$channels[user].author}</td>
+			<td class="{cycle advance=false}">{$channels[user].users} ({$channels[user].confirmed})</td>
+			<td class="{cycle advance=false}">{$channels[user].editions}</td>
+			<td class="{cycle advance=false}">{$channels[user].drafts}</td>
+			<td class="{cycle advance=false}">{$channels[user].lastSent|tiki_short_datetime}</td>
+			<td class="{cycle}">
+				{if ($channels[user].tiki_p_admin eq 'y') or ($channels[user].tiki_p_assign_perm_newsletters eq 'y')}
+					<a class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=newsletter&amp;permType=newsletters&amp;objectId={$channels[user].nlId}" title="{tr}Assign Permissions{/tr}">
+						<img width="16" height="16" alt="{tr}Assign Permissions{/tr}" src="pics/icons/key{if $channels[user].individual eq 'y'}_active{/if}.png" />
+					</a>
+				{/if}
+				{self_link _icon='page_edit' cookietab='2' _anchor='anchor2' nlId=$channels[user].nlId}{tr}Edit{/tr}{/self_link}
+				<a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$channels[user].nlId}" title="{tr}Subscriptions{/tr}">{icon _id='group' alt='{tr}Subscriptions{/tr}'}</a>
+				<a class="link" href="tiki-send_newsletters.php?nlId={$channels[user].nlId}" title="{tr}Send Newsletter{/tr}">{icon _id='email' alt="{tr}Send Newsletter{/tr}"}</a>
+				<a class="link" href="tiki-newsletter_archives.php?nlId={$channels[user].nlId}" title="{tr}Archives{/tr}">{icon _id='database' alt="{tr}Archives{/tr}"}</a>
+				{self_link _icon='cross' remove=$channels[user].nlId}{tr}Remove{/tr}{/self_link}
+			</td>
+		</tr>
+	{sectionelse}
+		<tr>
+			<td class="odd" colspan="10">{tr}No records{/tr}</td>
+		</tr>
+	{/section}
+</table>
+
+{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
+{/tab}
+
+{tab name='{tr}Create/Edit Newsletters{/tr}'}
 {if $individual eq 'y'}
 	<a class="link" href="tiki-objectpermissions.php?objectName={$info.name|escape:"url"}&amp;objectType=newsletter&amp;permType=newsletters&amp;objectId={$info.nlId}">{tr}There are individual permissions set for this newsletter{/tr}</a><br /><br />
 {/if}
@@ -65,73 +121,6 @@
 		</tr>
 	</table>
 </form>
-<h2>{tr}Newsletters{/tr}</h2>
+{/tab}
 
-{if $channels or ($find ne '')}
-  {include file='find.tpl' _sort_mode='y'}
-{/if}
-
-<table class="normal">
-	<tr>
-		<th>&nbsp;</th>
-		<th>
-			<a href="tiki-admin_newsletters.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'nlId_desc'}nlId_asc{else}nlId_desc{/if}">{tr}ID{/tr}</a>
-		</th>
-		<th>
-			<a href="tiki-admin_newsletters.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a>
-		</th>
-		<th>
-			<a href="tiki-admin_newsletters.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}Description{/tr}</a>
-		</th>
-		<th>
-			<a href="tiki-admin_newsletters.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'author_desc'}author_asc{else}author_desc{/if}">{tr}Author{/tr}</a>
-		</th>
-		<th>
-			<a href="tiki-admin_newsletters.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'users_desc'}users_asc{else}users_desc{/if}">{tr}Users{/tr}</a>
-		</th>
-		<th>
-			<a href="tiki-admin_newsletters.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'editions_desc'}editions_asc{else}editions_desc{/if}">{tr}Editions{/tr}</a>
-		</th>
-		<th>
-			<a>{tr}Drafts{/tr}</a>
-		</th>
-		<th>
-			<a href="tiki-admin_newsletters.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastSent_desc'}lastSent_asc{else}lastSent_desc{/if}">{tr}Last Sent{/tr}</a>
-		</th>
-		<th>{tr}Action{/tr}</th>
-	</tr>
-	
-	{cycle values="odd,even" print=false}
-	{section name=user loop=$channels}
-		<tr>
-			<td class="{cycle advance=false}">
-				<a class="link" href="tiki-admin_newsletters.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].nlId}" title="{tr}Remove{/tr}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
-			</td>
-			<td class="{cycle advance=false}">{$channels[user].nlId}</td>
-			<td class="{cycle advance=false}"><a class="link" href="tiki-admin_newsletters.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;nlId={$channels[user].nlId}" title="{tr}Edit{/tr}">{$channels[user].name}</a></td>
-			<td class="{cycle advance=false}">{$channels[user].description}</td>
-			<td class="{cycle advance=false}">{$channels[user].author}</td>
-			<td class="{cycle advance=false}">{$channels[user].users} ({$channels[user].confirmed})</td>
-			<td class="{cycle advance=false}">{$channels[user].editions}</td>
-			<td class="{cycle advance=false}">{$channels[user].drafts}</td>
-			<td class="{cycle advance=false}">{$channels[user].lastSent|tiki_short_datetime}</td>
-			<td class="{cycle}">
-				{if ($channels[user].tiki_p_admin eq 'y') or ($channels[user].tiki_p_assign_perm_newsletters eq 'y')}
-					<a class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=newsletter&amp;permType=newsletters&amp;objectId={$channels[user].nlId}" title="{tr}Assign Permissions{/tr}">
-						<img width="16" height="16" alt="{tr}Assign Permissions{/tr}" src="pics/icons/key{if $channels[user].individual eq 'y'}_active{/if}.png" />
-					</a>
-				{/if}
-				<a class="link" href="tiki-admin_newsletters.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;nlId={$channels[user].nlId}" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
-				<a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$channels[user].nlId}" title="{tr}Subscriptions{/tr}">{icon _id='group' alt='{tr}Subscriptions{/tr}'}</a>
-				<a class="link" href="tiki-send_newsletters.php?nlId={$channels[user].nlId}" title="{tr}Send Newsletter{/tr}">{icon _id='email' alt="{tr}Send Newsletter{/tr}"}</a>
-				<a class="link" href="tiki-newsletter_archives.php?nlId={$channels[user].nlId}" title="{tr}Archives{/tr}">{icon _id='database' alt="{tr}Archives{/tr}"}</a>
-			</td>
-		</tr>
-	{sectionelse}
-		<tr>
-			<td class="odd" colspan="10">{tr}No records{/tr}</td>
-		</tr>
-	{/section}
-</table>
-
-{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
+{/tabset}

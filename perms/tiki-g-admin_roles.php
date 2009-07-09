@@ -214,5 +214,3 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 $smarty->assign('mid', 'tiki-g-admin_roles.tpl');
 $smarty->display("tiki.tpl");
-
-?>

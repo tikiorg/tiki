@@ -13,9 +13,11 @@ class Tiki_Profile_List
 			{
 				$file = $this->getCacheLocation( $source );
 				$last = $this->getCacheLastUpdate( $source );
+				$short = dirname($source);
 				$sources[] = array(
 					'url' => $source,
-					'short' => dirname($source),
+					'domain' => (0===strpos($short,'http://')) ? substr($short, 7) : $short,
+					'short' => $short,
 					'status' => ($last && filesize($file)) ? 'open' : 'closed',
 					'lastupdate' => $last,
 					'formatted' => $last ? date( 'Y-m-d H:i:s', $last ) : '' );
@@ -59,8 +61,36 @@ class Tiki_Profile_List
 		return true;
 	} // }}}
 
+	function getCategoryList( $source = '' ) // {{{
+	{
+		$category_list = array();
+	
+		$sources = $this->getSources();
+
+		foreach( $sources as $s )
+		{
+			if( $source && $s['url'] != $source )
+                                continue;
+				
+			if( !$s['lastupdate'] )
+                                continue;
+
+                        $fp = fopen( $this->getCacheLocation( $s['url'] ), 'r' );
+
+                        while( false !== $row = fgetcsv( $fp, 200, "\t" ) )
+                        {
+				list( $c, $t, $i ) = $row;
+				if ($c) $category_list[] = $c;
+			}
+		}
+
+		natsort( $category_list );	
+		return( array_unique( $category_list ) );
+	} // }}}
+							
 	function getList( $source = '', $category = '', $profile = '' ) // {{{
 	{
+		$installer = new Tiki_Profile_Installer;
 		$list = array();
 
 		$sources = $this->getSources();
@@ -96,9 +126,10 @@ class Tiki_Profile_List
 				else
 				{
 					$list[$key] = array(
-						'domain' => $s['short'],
+						'domain' => $s['domain'],
 						'category' => $c,
 						'name' => $i,
+						'installed' => $installer->isKeyInstalled( $s['domain'], $i ),
 					);
 				}
 			}
@@ -124,5 +155,3 @@ class Tiki_Profile_List
 		return filemtime( $file );
 	} // }}}
 }
-
-?>

@@ -62,12 +62,14 @@ class TikiDate {
 	 * Default constructor
 	 */
 	function TikiDate() {
-		$this->date = new DateTime(date("Y-m-d H:i:s Z"));
+		$this->date = new DateTime();	// was: DateTime(date("Y-m-d H:i:s Z"))
+										// the Z (timezone) param was causing an error
+										// DateTime constructor defaults to "now" anyway so unnecessary?
 		$this->search = array_keys($this->translation_array);
 		$this->replace = array_values($this->translation_array);
 	}
 
-	function getTimeZoneList() {
+	static function getTimeZoneList() {
 		$tz = array();
 		$now = new DateTime("now",new DateTimeZone("GMT"));
 		$tz_list = DateTimeZone::listIdentifiers();
@@ -145,19 +147,23 @@ class TikiDate {
 	}
 
 	function setTZbyID($tz_id) {
-		$this->date->setTimeZone(new DateTimeZone($tz_id));
+		if (!empty($tz_id)) {
+			$this->date->setTimeZone(new DateTimeZone($tz_id));
+		}
 	}
 
 	function convertTZbyID($tz_id) {
-		$this->date->setTimeZone(new DateTimeZone($tz_id));
+		if (!empty($tz_id)) {
+			$this->date->setTimeZone(new DateTimeZone($tz_id));
+		}
 	}
 
 	function getTimezoneId() {
 		return $this->date->format("e");
 	}
 
-	function TimezoneIsValidId($id) {
-		return timezone_open($id) !== FALSE ;
+	static function TimezoneIsValidId($id) {
+		return empty($id) ? FALSE : timezone_open($id) !== FALSE ;
 	}
 
 }
@@ -168,5 +174,3 @@ class Date_Calc {
 		return cal_days_in_month(CAL_GREGORIAN, $month, $year);
 	}
 }
-
-?>

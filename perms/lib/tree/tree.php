@@ -166,5 +166,3 @@ class TreeMaker {
 		return '';
 	}
 }
-
-?>

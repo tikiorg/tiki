@@ -35,5 +35,3 @@ function smarty_function_var_dump($params, &$smarty)
     $debugger->msg("Smarty var_dump: Parameter 'var' not specified");
   return '<!-- var_dump('.$v.') -->';
 }
-
-?>

@@ -1,17 +1,16 @@
 {if $prefs.art_home_title ne ''}
-<h1>
-{if $prefs.art_home_title eq 'topic' and !empty($topic)}
-{section name=it loop=$topics}{if $topics[it].topicId eq $topic}{tr}{$topics[it].name}{/tr}{/if}{/section}
+{title help="Articles" admpage="cms"}
+{if $prefs.art_home_title eq 'topic' and !empty($topic)}{tr}{$topic}{/tr}
 {elseif $prefs.art_home_title eq 'type' and !empty($type)}{tr}{$type}{/tr}
 {else}{tr}Articles{/tr}{/if}
-</h1>
+{/title}
 {/if}
 {section name=ix loop=$listpages}
 {if $listpages[ix].disp_article eq 'y'}
 <div class="article">
 {if $listpages[ix].show_topline eq 'y' and $listpages[ix].topline}<div class="articletopline">{$listpages[ix].topline}</div>{/if}
 <div class="articletitle">
-<span class="titlea"><a href="tiki-read_article.php?articleId={$listpages[ix].articleId}">{$listpages[ix].title}</a></span><br />
+<h2><a href="{$listpages[ix].articleId|sefurl:article}">{$listpages[ix].title}</a></h2>
 {if $listpages[ix].show_subtitle eq 'y' and $listpages[ix].subtitle}<div class="articlesubtitle">{$listpages[ix].subtitle}</div>{/if}
 {if ($listpages[ix].show_author eq 'y')
  or ($listpages[ix].show_pubdate eq 'y')
@@ -52,13 +51,13 @@
 {if $listpages[ix].show_image eq 'y'}
 {if $listpages[ix].useImage eq 'y'}
 {if $listpages[ix].hasImage eq 'y'}
-<a href="tiki-read_article.php?articleId={$listpages[ix].articleId}" title="{if $listpages[ix].show_image_caption and
+<a href="{$listpages[ix].articleId|sefurl:article}" title="{if $listpages[ix].show_image_caption and
 $listpages[ix].image_caption}{$listpages[ix].image_caption}{else}{$listpages[ix].topicName}{/if}"><img 
 {if $listpages[ix].isfloat eq 'y'}style="margin-right:4px;float:left;"{else}class="articleimage"{/if} 
 alt="{if $listpages[ix].show_image_caption and $listpages[ix].image_caption}{$listpages[ix].image_caption}{else}{$listpages[ix].topicName}{/if}" src="article_image.php?image_type=article&amp;id={$listpages[ix].articleId}"
 {if $listpages[ix].image_x > 0} width="{$listpages[ix].image_x}"{/if}{if $listpages[ix].image_y > 0 } height="{$listpages[ix].image_y}"{/if} /></a>
 {else}
-<a href="tiki-read_article.php?articleId={$listpages[ix].articleId}" title="{if $listpages[ix].show_image_caption and
+<a href="$listpages[ix].articleId|sefurl:article}" title="{if $listpages[ix].show_image_caption and
 $listpages[ix].image_caption}{$listpages[ix].image_caption}{else}{$listpages[ix].topicName}{/if}"><img 
 {if $listpages[ix].isfloat eq 'y'}style="margin-right:4px;float:left;"{else}class="articleimage"{/if} 
 alt="{if $listpages[ix].show_image_caption and $listpages[ix].image_caption}{$listpages[ix].image_caption}{else}{$listpages[ix].topicName}{/if}" src="article_image.php?image_type=topic&amp;id={$listpages[ix].topicId}" /></a>
@@ -66,7 +65,7 @@ alt="{if $listpages[ix].show_image_caption and $listpages[ix].image_caption}{$li
 {else}
 {section name=it loop=$topics}
 {if ($topics[it].topicId eq $listpages[ix].topicId) and ($topics[it].image_size > 0)}
-<a href="tiki-read_article.php?articleId={$listpages[ix].articleId}" title="{if $listpages[ix].show_image_caption and
+<a href="{$listpages[ix].articleId|sefurl:article}" title="{if $listpages[ix].show_image_caption and
 $listpages[ix].image_caption}{$listpages[ix].image_caption}{else}{$listpages[ix].topicName}{/if}"><img 
 {if $listpages[ix].isfloat eq 'y'}style="margin-right:4px;float:left;"{else}class="articleimage"{/if} 
 alt="{if $listpages[ix].show_image_caption and $listpages[ix].image_caption}{$listpages[ix].image_caption}{else}{$listpages[ix].topicName}{/if}" src="article_image.php?image_type=topic&amp;id={$listpages[ix].topicId}" /></a>
@@ -85,26 +84,24 @@ alt="{if $listpages[ix].show_image_caption and $listpages[ix].image_caption}{$li
 </table>
 </div>
 <div class="articletrailer">
-<table class="wikitopline">
-<tr>
 {if ($listpages[ix].size > 0) or (($prefs.feature_article_comments eq 'y') and ($tiki_p_read_comments eq 'y'))}
   {if ($listpages[ix].heading_only ne 'y')}
     {if ($listpages[ix].size > 0)}
-	    <td class="articletrailer">
-	    <a href="tiki-read_article.php?articleId={$listpages[ix].articleId}" class="trailer">{tr}Read More{/tr}</a>
-	    </td>
+		<div class="status"> {* named to be similar to forum/blog item *}
+	    <a href="{$listpages[ix].articleId|sefurl:article}">{tr}Read More{/tr}</a>
+	    </div>
 	    {if ($listpages[ix].show_size eq 'y')}
-	      <td class="articletrailer">
+	      <span>
 	      ({$listpages[ix].size} {tr}bytes{/tr})
-	      </td>
+	      </span>
 	    {/if}
     {/if}
   {/if}
   {if ($prefs.feature_article_comments eq 'y')
    and ($tiki_p_read_comments eq 'y')
    and ($listpages[ix].allow_comments eq 'y')}
-    <td class="articletrailer">
-      <a href="tiki-read_article.php?articleId={$listpages[ix].articleId}&amp;show_comzone=y#comments"{if $listpages[ix].comments_cant > 0} class="highlight"{/if}>
+    <span>
+      <a href="{$listpages[ix].articleId|sefurl:article:with_next}show_comzone=y#comments"{if $listpages[ix].comments_cant > 0} class="highlight"{/if}>
         {if $listpages[ix].comments_cant == 0 or ($tiki_p_read_comments  == 'n' and $tiki_p_post_comments  == 'y')}
           {tr}Add Comment{/tr}
         {elseif $listpages[ix].comments_cant == 1}
@@ -113,25 +110,23 @@ alt="{if $listpages[ix].show_image_caption and $listpages[ix].image_caption}{$li
           {$listpages[ix].comments_cant}&nbsp;{tr}comments{/tr}
         {/if}
       </a>
-    </td>
+    </span>
   {/if}
 {/if}
-<td style="text-align:right;">
+<div class="actions">
 {if $tiki_p_edit_article eq 'y' or ($listpages[ix].author eq $user and $listpages[ix].creator_edit eq 'y')}
-  <a class="trailer" href="tiki-edit_article.php?articleId={$listpages[ix].articleId}">{icon _id='page_edit'}</a>
+  <a class="icon" href="tiki-edit_article.php?articleId={$listpages[ix].articleId}">{icon _id='page_edit'}</a>
 {/if}
 {if $prefs.feature_cms_print eq 'y'}
-  <a class="trailer" href="tiki-print_article.php?articleId={$listpages[ix].articleId}">{icon _id='printer' alt='{tr}Print{/tr}'}</a>
+  <a class="icon" href="tiki-print_article.php?articleId={$listpages[ix].articleId}">{icon _id='printer' alt='{tr}Print{/tr}'}</a>
 {/if}
 {if $prefs.feature_multilingual eq 'y' and $tiki_p_edit_article eq 'y'}
-<a class="trailer" href="tiki-edit_translation.php?id={$listpages[ix].articleId}&amp;type=article">{icon _id='world' alt='{tr}Translation{/tr}'}</a>
+ <a class="icon" href="tiki-edit_translation.php?id={$listpages[ix].articleId}&amp;type=article">{icon _id='world' alt='{tr}Translation{/tr}'}</a>
 {/if}
 {if $tiki_p_remove_article eq 'y'}
-  &nbsp;&nbsp;<a class="trailer" href="tiki-list_articles.php?remove={$listpages[ix].articleId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
+ <a class="icon" href="tiki-list_articles.php?remove={$listpages[ix].articleId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
 {/if}
-</td>
-</tr>
-</table>
+</div>
 </div>
 </div>
 {/if}

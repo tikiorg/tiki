@@ -8,7 +8,14 @@
 require_once ('tiki-setup.php');
 require_once ('lib/tikilib.php');
 require_once ('lib/wiki/histlib.php');
+require_once('lib/wiki/wikilib.php');
 require_once ('lib/rss/rsslib.php'); 
+
+if ($prefs['feature_wiki'] != 'y') {
+	$smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
+	$smarty->display("error.tpl");
+	die;
+}
 
 if ($prefs['rss_wiki'] != 'y') {
 	$errmsg=tra("rss feed disabled");
@@ -59,8 +66,8 @@ if ($output["data"]=="EMPTY") {
 		}
 		$_REQUEST['redirectpage'] = 'y';//block the redirect interpretation 
 		$_REQUEST['page'] = $data["pageName"];
-		$curr_page_p = $tikilib->parse_data($curr_page["$descId"]);
-		$prev_page_p = $tikilib->parse_data($prev_page["$descId"]);
+		$curr_page_p = $tikilib->parse_data($curr_page[$descId], array('print'=>true));
+		$prev_page_p = $tikilib->parse_data($prev_page[$descId], array('print'=>true));
 	
 		// do a diff between both pages
 		require_once('lib/diff/difflib.php');
@@ -82,6 +89,7 @@ if ($output["data"]=="EMPTY") {
 		}
 		
 		$data["$descId"] = $result;
+		$data['sefurl'] = $wikilib->sefurl($data['pageName']);
 	
 		// hand over the version of the second page
 		$data["$param"] = $prev_page["version"];
@@ -94,5 +102,3 @@ if ($output["data"]=="EMPTY") {
 }
 header("Content-type: ".$output["content-type"]);
 print $output["data"];
-
-?>

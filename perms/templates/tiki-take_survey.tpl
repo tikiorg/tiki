@@ -6,7 +6,7 @@
 <input type="hidden" name="surveyId" value="{$surveyId|escape}" />
 <input type="hidden" name="vote" value="yes" />
   {if !isset($show_name) or $show_name eq 'y'}<h2>{$survey_info.name}</h2>{/if}
-    <div class="quizdescription">{wiki}{$survey_info.description|escape}{/wiki}</div>
+    <div class="description">{wiki}{$survey_info.description|escape}{/wiki}</div>
     {section name=ix loop=$questions}
     <div class="questionblock">
       <div class="quizquestion">{$questions[ix].question}</div>
@@ -27,15 +27,15 @@
           <table class="normal">
             <tr>
               <td valign="top">
-                {include file="textareasize.tpl" area_name='editwiki' formId='editpageform'}
+                {include file='textareasize.tpl' area_name='editwiki' formId='editpageform'}
                 <br /><br />
                 {if $prefs.quicktags_over_textarea neq 'y'}
-                  {include file=tiki-edit_help_tool.tpl area_name=question_$area qtnum='2'}
+                  {include file='tiki-edit_help_tool.tpl' area_name=question_$area qtnum='2'}
                 {/if}
               </td>
               <td valign="top">
                 {if $prefs.quicktags_over_textarea eq 'y'}
-                  {include file=tiki-edit_help_tool.tpl area_name=question_$area qtnum='2'}
+                  {include file='tiki-edit_help_tool.tpl' area_name=question_$area qtnum='2'}
                 {/if}
                 <textarea id='editwiki' name="question_{$questions[ix].questionId}" rows="{$rows}" cols="{$cols}"></textarea>
               </td>

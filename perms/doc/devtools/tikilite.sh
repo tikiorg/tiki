@@ -65,9 +65,6 @@ echo "Removing Bablotron..."
 # Dependancies on PEAR::DB
 rm -rf lib/bablotron.php
 
-echo "Removing Custom images..."
-rm -rf img/custom
-
 echo "Removing Languages except default..."
 find lang/* -type d | grep -v "/$LANG_DEF" | grep -v CVS | xargs -- rm -rf
 
@@ -79,9 +76,6 @@ rm -rf lib/calendar/iCal
 
 echo "Removing jsCalendar..."
 rm -rf lib/jscalendar
-
-echo "Removing PDF generation..."
-rm -rf lib/pdflib
 
 #echo "Removing PDF fonts..."
 #find lib/pdflib/fonts -type f -name "*.afm" | grep -v php_Helvetica | grep -v php_Courier | xargs -- rm -f

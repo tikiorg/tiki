@@ -180,5 +180,3 @@ class DbgCmd_Watch extends DebuggerCommand {
 function dbg_command_factory_watch() {
 	return new DbgCmd_Watch();
 }
-
-?>

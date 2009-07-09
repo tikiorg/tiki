@@ -10,6 +10,7 @@ function wikiplugin_tr_help() {
 function wikiplugin_tr_info() {
 	return array(
 		'name' => tra('Translate'),
+		'documentation' => 'PluginTR',
 		'description' => tra('Translate a string using Tikiwiki translation table.'),
 		'prefs' => array( 'wikiplugin_tr' ),
 		'body' => tra('string'),

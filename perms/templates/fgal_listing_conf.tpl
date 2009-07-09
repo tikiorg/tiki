@@ -2,19 +2,31 @@
 
 {if is_array($fgal_options) and count($fgal_options) gt 0}
 	{foreach key=key item=item from=$fgal_options}
+		{if $key eq 'default_view'}
 <tr class="formcolor">
-	<td>{$item.name}</td>
-	<td><input type="checkbox" name="fgal_{$key}" {if $item.value eq 'y'}checked="checked"{/if}/></td>
+	<td><label for="fgal_{$key}">{$item.name}:<label></td>
+	<td>
+		<select id="fgal_{$key}" name="fgal_{$key}">
+			<option value="list"{if $item.value eq 'list'} selected="selected"{/if}>{tr}List{/tr}</option>
+			<option value="browse"{if $item.value eq 'browse'} selected="selected"{/if}>{tr}Browse{/tr}</option>
+		</select>
+	</td>
 </tr>
+		{else}
+<tr class="formcolor">
+	<td><label for="fgal_{$key}">{$item.name}:</label></td>
+	<td><input type="checkbox" id="fgal_{$key}" name="fgal_{$key}" {if $item.value eq 'y'}checked="checked"{/if}/></td>
+</tr>
+		{/if}
 	{/foreach}
 {/if}
 
 {if is_array($fgal_listing_conf) and count($fgal_listing_conf) gt 0}
 	{foreach key=key item=item from=$fgal_listing_conf}
 <tr class="formcolor">
-	<td>{$item.name}</td>
+	<td><label for="fgal_list_{$key}">{$item.name}:</label></td>
 	<td>
-		<select name="fgal_list_{$key}">
+		<select id="fgal_list_{$key}" name="fgal_list_{$key}">
 		{if $key eq 'name'}
 			<option value="a"{if $item.value eq 'a'} selected="selected"{/if}>{tr}Name-filename{/tr}</option>
 			<option value="n"{if $item.value eq 'n'} selected="selected"{/if}>{tr}Name{/tr}</option>

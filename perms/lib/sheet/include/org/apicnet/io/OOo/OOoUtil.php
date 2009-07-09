@@ -144,5 +144,3 @@ class OOoUtil extends absOOo{
 		$this->Directories();
 	}
 }
-
-?>

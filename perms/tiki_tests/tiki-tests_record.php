@@ -14,6 +14,10 @@ if ($tiki_p_admin_tikitests != 'y' and $tiki_p_edit_tikitests != 'y') {
 	die;
 }
 
+$smarty->assign("tidy",extension_loaded("tidy"));
+$smarty->assign("http",extension_loaded("http"));
+$smarty->assign("curl",extension_loaded("curl"));
+
 if (isset($_POST['action']) and isset($_POST['filename']) and trim($_POST['filename']) != "") {
 	setcookie("tikitest_record", "1", 0, "/");
 	setcookie("tikitest_filename", trim($_POST['filename']),0,"/");
@@ -24,8 +28,6 @@ if (isset($_POST['action']) and isset($_POST['filename']) and trim($_POST['filen
 	}
 	die();
 }
-
 $smarty->assign('mid', 'tiki-tests_record.tpl');
 $smarty->assign('title',tra("TikiTest Record"));
 $smarty->display('tiki.tpl');
-?>

@@ -16,9 +16,9 @@
 
 
 </h1>
-{include file=tiki-g-monitor_bar.tpl}
+{include file='tiki-g-monitor_bar.tpl'}
 {if $pid > 0}
-  {include file=tiki-g-proc_bar.tpl}
+  {include file='tiki-g-proc_bar.tpl'}
   {if count($errors)}
     <div class="wikitext">
       {tr}This process is invalid{/tr}:<br />

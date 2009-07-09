@@ -10,6 +10,9 @@ FCKConfig.BodyClass = 'wikitext';
 FCKConfig.FontNames = 'sans serif;serif;monospace;Arial;Comic Sans MS;Courier New;Tahoma;Times New Roman;Verdana' ;
 
 FCKConfig.ToolbarSets["Tiki"] = [ 
+{if $prefs.feature_ajax == 'y' and $prefs.feature_ajax_autosave eq 'y'}
+	['ajaxAutoSave'],
+{/if}
 {foreach item=it from=$toolbar name=lines}
   {foreach item=i from=$it name=item}
   [{foreach item=m from=$i name=im}'{$m}'{if $smarty.foreach.im.index+1 ne $smarty.foreach.im.total},{/if}{/foreach}]{if $smarty.foreach.lines.index+1 ne $smarty.foreach.lines.total},{/if}
@@ -60,21 +63,25 @@ FCKConfig.Plugins.Add( 'CleanHTML', null, _TikiRoot + 'lib/fckeditor_tiki/plugin
 
 FCKConfig.Plugins.Add( 'dragresizetable' );
 
-//----------------------------------------------------
-// ajaxAutoSave plugin
-FCKConfig.Plugins.Add('ajaxAutoSave','en', _TikiRoot + 'lib/fckeditor_tiki/plugins/') ;
+{if $prefs.feature_ajax_autosave eq 'y'}
+   //----------------------------------------------------
+   // ajaxAutoSave plugin
+   FCKConfig.Plugins.Add('ajaxAutoSave','en', _TikiRoot + 'lib/fckeditor_tiki/plugins/') ;
 
-// --- config settings for the ajaxAutoSave plugin ---
-// URL to post to
-FCKConfig.ajaxAutoSaveTargetUrl = '{$tikiroot}tiki-auto_save.php' ;
+   // --- config settings for the ajaxAutoSave plugin ---
+   // URL to post to
+   FCKConfig.ajaxAutoSaveTargetUrl = '{$tikiroot}tiki-auto_save.php' ;
 
-// Enable / Disable Plugin onBeforeUpdate Action
-FCKConfig.ajaxAutoSaveBeforeUpdateEnabled = true ;
+   // Enable / Disable Plugin onBeforeUpdate Action
+   FCKConfig.ajaxAutoSaveBeforeUpdateEnabled = true ;
 
-// RefreshTime
-FCKConfig.ajaxAutoSaveRefreshTime = 30 ;
+   // RefreshTime
+   FCKConfig.ajaxAutoSaveRefreshTime = 30 ;
 
-// Sensitivity to key strokes
-FCKConfig.ajaxAutoSaveSensitivity = 2 ;
+   // Sensitivity to key strokes
+   FCKConfig.ajaxAutoSaveSensitivity = 2 ;
+{/if}
 
-
+// as tikiwiki, we prefer <br> instead of <p> for newlines
+FCKConfig.EnterMode = 'br' ;			// p | div | br
+FCKConfig.ShiftEnterMode = 'p' ;	// p | div | br

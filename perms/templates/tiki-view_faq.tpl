@@ -1,4 +1,5 @@
 {title help="FAQs"}{tr}{$faq_info.title}{/tr}{/title}
+<div class="description">{$faq_info.description|escape}</div>
 
 <div class="navbar">
 	{button href="tiki-list_faqs.php" _text="{tr}List FAQs{/tr}"}
@@ -61,7 +62,7 @@
 		|| $tiki_p_post_comments == 'y'
 		|| $tiki_p_edit_comments == 'y')
 	}
-		{include file=comments_button.tpl}
+		{include file='comments_button.tpl'}
 	{/if}
 </div>
 
@@ -78,7 +79,7 @@
 <tr><td class="formcolor">{tr}Question{/tr}:</td><td class="formcolor"><textarea rows="2" cols="80" name="suggested_question" style="width:95%;">{if $pendingquestion}{$pendingquestion}{/if}</textarea></td></tr>
 <tr><td class="formcolor">{tr}Answer{/tr}:</td><td class="formcolor"><textarea rows="2" cols="80" name="suggested_answer" style="width:95%;">{if $pendinganswer}{$pendinganswer}{/if}</textarea></td></tr>
 {if $prefs.feature_antibot eq 'y' && $user eq ''}
-{include file="antibot.tpl"}
+{include file='antibot.tpl' td_style="formcolor"}
 {/if}
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="sugg" value=" {tr}Add{/tr} " /></td></tr>
 </table>
@@ -113,5 +114,5 @@
 && $comments_cant != 0)
 || $tiki_p_post_comments == 'y'
 || $tiki_p_edit_comments == 'y')}
-{include file=comments.tpl}
+{include file='comments.tpl'}
 {/if}

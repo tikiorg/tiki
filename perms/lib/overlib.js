@@ -1474,7 +1474,7 @@ registerPostParseFunction(checkPositionFlags);
 registerHook("hideObject", nbspCleanup, FAFTER);
 registerHook("horizontalPlacement", horizontalPlacement, FCHAIN);
 registerHook("verticalPlacement", verticalPlacement, FCHAIN);
-if (olNs4||(olIe5&&isMac)||olKq) olLoaded=1;
+if (olNs6||olNs4||(olIe5&&isMac)||olKq) olLoaded=1;
 registerNoParameterCommands('sticky,autostatus,autostatuscap,fullhtml,hauto,vauto,closeclick,wrap,followmouse,mouseoff,compatmode');
 ///////
 // ESTABLISH MOUSECAPTURING

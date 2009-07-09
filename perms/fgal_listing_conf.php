@@ -54,14 +54,20 @@ $smarty->assign_by_ref('fgal_listing_conf', $fgal_listing_conf);
 
 $fgal_options = array(
 	'show_explorer' => array('name' => tra('Explorer')),
-	'show_path' => array('name' => tra('Path'))
+	'show_path' => array('name' => tra('Path')),
+	'show_slideshow' => array('name' => tra('Slideshow')),
+	'default_view' => array('name' => tra('Default View'))
 );
 
 foreach ( $fgal_options as $k_gal => $v ) {
 	$k_prefs = 'fgal_'.$k_gal;
 
-	// Only check the current gallery value if the feature (in global prefs) is enabled
-	$fgal_options[$k_gal]['value'] = ( $prefs[$k_prefs] == 'y' && isset($gal_info) && isset($gal_info[$k_gal]) ) ? $gal_info[$k_gal] : $prefs[$k_prefs];
+	if ( $k_gal == 'default_view' ) {
+		$fgal_options[$k_gal]['value'] = ( isset($gal_info) && isset($gal_info[$k_gal]) ) ? $gal_info[$k_gal] : $prefs[$k_prefs];
+	} else {
+		// Only check the current gallery value if the feature (in global prefs) is enabled
+		$fgal_options[$k_gal]['value'] = ( $prefs[$k_prefs] == 'y' && isset($gal_info) && isset($gal_info[$k_gal]) ) ? $gal_info[$k_gal] : $prefs[$k_prefs];
+	}
 }
 
 $smarty->assign_by_ref('fgal_options', $fgal_options);

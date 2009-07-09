@@ -52,9 +52,16 @@
 			{/if}
 		{/if}
 	{/if}
+	{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
+		<a href="tiki-object_watches.php?objectId={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;objectType=wiki+page&amp;objectName={$page|escape:"url"}&amp;objectHref={'tiki-index.php?page='|cat:$page|escape:"url"}" class="icon">{icon _id='eye_group' alt='{tr}Group Monitor{/tr}'}</a>
+
+		{if $structure == 'y'}
+			<a href="tiki-object_watches.php?objectId={$page_info.page_ref_id|escape:"url"}&amp;watch_event=structure_changed&amp;objectType=structure&amp;objectName={$page|escape:"url"}&amp;objectHref={'tiki-index.php?page_ref_id='|cat:$page_ref_id|escape:"url"}" class="icon">{icon _id=eye_group_arrow_down alt='{tr}Group Monitor on Structure{/tr}'}</a>
+		{/if}
+	{/if}
 			</div><!-- END of icons -->
 
-	{if $prefs.feature_backlinks eq 'y' and $backlinks and $tiki_p_view_backlinks eq 'y'}
+	{if $prefs.feature_backlinks eq 'y' and $backlinks and $tiki_p_view_backlink eq 'y'}
 			<form action="tiki-index.php" method="get" style="display: block; float: left">
 				<select name="page" onchange="page.form.submit()">
 					<option>{tr}Backlinks{/tr}...</option>
@@ -84,7 +91,7 @@
 
 	{if $prefs.feature_multilingual == 'y' && $prefs.show_available_translations eq 'y'}
 			<div style="float: left">
-		{include file="translated-lang.tpl" td='n'}
+		{include file='translated-lang.tpl' td='n'}
 			</div>
 	{/if}
 		</div>

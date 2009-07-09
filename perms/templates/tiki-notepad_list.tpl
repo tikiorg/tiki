@@ -1,7 +1,7 @@
 {title help="notepad"}{tr}Notes{/tr}{/title}
 
 {if $prefs.feature_ajax ne 'y' && $prefs.feature_mootools ne 'y'}
-	{include file=tiki-mytiki_bar.tpl}
+	{include file='tiki-mytiki_bar.tpl'}
 {/if}
 
 <div class="navbar">
@@ -18,7 +18,7 @@
 {if count($channels) > 0 or $find ne ''}
 	<h2>{tr}Notes{/tr}</h2>
 
-	{include file='find.tpl' _sort_mode='y'}
+	{include file='find.tpl'}
 
 	<form action="tiki-notepad_list.php" method="post">
 		<table class="normal">

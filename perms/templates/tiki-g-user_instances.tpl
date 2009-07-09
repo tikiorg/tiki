@@ -1,10 +1,10 @@
 {popup_init src="lib/overlib.js"}
 {*Smarty template*}
-<h1><a class="pagetitle" href="tiki-g-user_instances.php">{tr}User instances{/tr}</a>
+<h1><a class="pagetitle" href="tiki-g-user_instances.php">{tr}User Instances{/tr}</a>
 
   
       {if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}GalaxiaUserInstances" target="tikihelp" class="tikihelp" title="{tr}Galaxia User Instances{/tr}">
+<a href="{$prefs.helpurl}Workflow" target="tikihelp" class="tikihelp" title="{tr}Galaxia User Instances{/tr}">
 <img src="img/icons/help.gif" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
 
 
@@ -14,7 +14,7 @@
 <img src="img/icons/info.gif" height="16" width="16" alt='{tr}Edit Tpl{/tr}' /></a>{/if}
 
 </h1>
-{include file=tiki-g-user_bar.tpl}
+{include file='tiki-g-user_bar.tpl'}
 <h2>{tr}List of processes{/tr} ({$cant})</h2>
 
 {* FILTERING FORM *}

@@ -1,6 +1,6 @@
 <?php
 
-class DeclFilter_ConfigureTest extends PHPUnit_Framework_TestCase
+class DeclFilter_ConfigureTest extends TikiTestCase
 {
 	function testSimple()
 	{
@@ -45,6 +45,18 @@ class DeclFilter_ConfigureTest extends PHPUnit_Framework_TestCase
 		);
 
 		$filter = DeclFilter::fromConfiguration( $configuration, array( 'catchAllFilter' ) );
+	}
+
+	/**
+	 * @expectedException Exception
+	 */
+	function testMissingLevel()
+	{
+		$configuration = array(
+			'catchAllUnset' => null,
+		);
+
+		$filter = DeclFilter::fromConfiguration( $configuration );
 	}
 
 	function testUnsetSome()
@@ -141,5 +153,3 @@ class DeclFilter_ConfigureTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals( $data['world'], '123abc' );
 	}
 }
-
-?>

@@ -7,21 +7,8 @@
 </div>
 
 <h2>{tr}Quizzes{/tr}</h2>
-<!-- begin find field -->
 {if $channels}
-	<table class="findtable">
-		<tr>
-			<td class="findtable">{tr}Find{/tr}</td>
-			<td class="findtable">
-				<form method="get" action="tiki-quiz_stats.php">
-					<input type="text" name="find" value="{$find|escape}" />
-					<input type="submit" value="{tr}Find{/tr}" name="search" />
-					<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-					<input type="hidden" name="quizId" value="{$quizId|escape}" />
-				</form>
-			</td>
-		</tr>
-	</table>
+	{include file='find.tpl'}
 {/if}
 
 <table class="normal">

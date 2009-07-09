@@ -335,14 +335,14 @@ class QuizLib extends TikiLib {
 		if ($find) {
 			$findesc = '%' . $find . '%';
 
-			$mid = " where `quizId`=? and `question` like ? ";
+			$mid = " where `quizId`=? and `answer` like ? ";
 			$bindvars=array((int)$quizId,$findesc);
 		} else {
 			$mid = " where `quizId`=? ";
 			$bindvars=array((int)$quizId);
 		}
 
-		$query = "select * from `tiki_quiz_results` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_quiz_results` $mid order by " . $this->convert_sortmode($sort_mode);
 		$query_cant = "select count(*) from `tiki_quiz_results` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -511,7 +511,7 @@ class QuizLib extends TikiLib {
 		if ($find) {
 			$findesc = '%' . $find . '%';
 
-			$mid = " where `questionId`=? and `option` ? ";
+			$mid = " where `questionId`=? and `optionText` like ? ";
 			$bindvars=array((int)$questionId,$findesc);
 		} else {
 			$mid = " where `questionId`=? ";
@@ -1007,5 +1007,3 @@ class Quiz {
 
 
 }
-
-?>

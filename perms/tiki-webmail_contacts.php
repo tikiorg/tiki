@@ -8,8 +8,8 @@
 
 // Initialization
 require_once ('tiki-setup.php');
-
 include_once ('lib/webmail/webmaillib.php');
+include_once ('lib/webmail/contactlib.php');
 
 $smarty->assign('element', $_REQUEST["element"]);
 
@@ -79,7 +79,7 @@ $maxRecords = 20;
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 
 if (!isset($_REQUEST["initial"])) {
-	$contacts = $contactlib->list_contacts($user, $offset, $maxRecords, $sort_mode, $find);
+	$contacts = $contactlib->list_contacts($user, $offset, $maxRecords, $sort_mode, $find, true);
 } else {
 	$contacts = $contactlib->list_contacts_by_letter($user, $offset, $maxRecords, $sort_mode, $_REQUEST["initial"]);
 }
@@ -108,5 +108,3 @@ ask_ticket('webmail-contact');
 
 //$smarty->display("tiki-webmail_contacts.tpl");
 $smarty->display("tiki-webmail_contacts.tpl");
-
-?>

@@ -1,6 +1,6 @@
 {popup_init src="lib/overlib.js"}
 
-{title url="tiki-blog_post.php?blogId=$blogId&postId=$postId"}{if $postId gt 0}{tr}Edit Post{/tr}{else}{tr}Post{/tr}{/if}{/title}
+{title url="tiki-blog_post.php?blogId=$blogId&postId=$postId"}{if $postId gt 0}{tr}Edit Post{/tr}{else}{tr}Post{/tr}{/if} - {$blog_data.title|escape}{/title}
 
 <div class="navbar">
 	{if $prefs.feature_wysiwyg eq 'y' and $prefs.wysiwyg_optional eq 'y'}
@@ -10,28 +10,33 @@
 			{button href="tiki-blog_post.php?wysiwyg=n" _auto_args='blogId,postId' _text="{tr}Use Normal Editor{/tr}"}
 		{/if}
 	{/if}
-	
+
 	{if $blogId gt 0 }
 		{assign var=thisblog value=$blogId|sefurl:blog}
 		{button href=$thisblog _text="{tr}View Blog{/tr}"}
 	{/if}
-	
-	{button href="tiki-list_blogs.php" _text="{tr}List Blogs{/tr}"}
+
+	{if $blogs|@count gt 1 }
+		{* No need for users to go to log list if they are already looking at the only blog *}
+		{button href="tiki-list_blogs.php" _text="{tr}List Blogs{/tr}"}
+	{/if}
 </div>
 
 {if $contribution_needed eq 'y'}
 	<div class="simplebox highlight">{tr}A contribution is mandatory{/tr}</div>
 {/if}
 {if $preview eq 'y'}
-	{include file=tiki-preview_post.tpl}
+	{include file='tiki-preview_post.tpl'}
 {/if}
 
+{if $wysiwyg ne 'y'}
 {remarksbox type="tip" title="{tr}Tip{/tr}"}
   {tr}If you want to use images please save the post first and you will be able to edit/post images. Use the &lt;img&gt; snippet to include uploaded images in the textarea editor or use the image URL to include images using the WYSIWYG editor. {/tr}
   {if $wysiwyg eq 'n' and $prefs.wysiwyg_optional eq 'y'}
     <hr />{tr}Use ...page... to separate pages in a multi-page post{/tr}
   {/if}
 {/remarksbox}
+{/if}
 
 <form enctype="multipart/form-data" name='blogpost' method="post" action="tiki-blog_post.php" id ='editpageform'>
 <input type="hidden" name="wysiwyg" value="{$wysiwyg|escape}" />
@@ -54,7 +59,7 @@
 {assign var=area_name value="blogedit"}
 {if $prefs.feature_smileys eq 'y' && not $wysiwyg}
 <tr><td class="editblogform">{tr}Smileys{/tr}</td><td class="editblogform">
-   {include file="tiki-smileys.tpl" area_name='blogedit'}
+   {include file='tiki-smileys.tpl' area_name='blogedit'}
 </td></tr>
 {/if}
 
@@ -72,7 +77,7 @@
   <tr>
     <td class="editblogform"><label>{tr}Quicktags{/tr}</label></td>
     <td class="editblogform">
-      {include file=tiki-edit_help_tool.tpl area_name='blogedit'}
+      {include file='tiki-edit_help_tool.tpl' area_name='blogedit'}
     </td>
   </tr>
 {/if}
@@ -82,12 +87,12 @@
   <tr>
     <td class="editblogform">
       <br />
-      {include file="textareasize.tpl" area_name='blogedit' formId='editpageform'}
+      {include file='textareasize.tpl' area_name='blogedit' formId='editpageform'}
       <br />
 
       {if $prefs.quicktags_over_textarea neq 'y'}
         <br /><br />
-        {include file=tiki-edit_help_tool.tpl area_name="blogedit"}
+        {include file='tiki-edit_help_tool.tpl' area_name="blogedit"}
       {/if}
     </td>
     
@@ -103,7 +108,7 @@
   </td>
 </tr>
 
-{if $postId > 0}
+{if $postId > 0 && $wysiwyg ne 'y'}
 	<tr><td class="editblogform">{tr}Upload image for this post{/tr}</td>
 	<td class="editblogform">
 	<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
@@ -131,25 +136,25 @@
 		</td></tr>
 	{/if}
 {/if}
+
 <tr><td class="editblogform">{tr}Mark entry as private:{/tr}</td>
   <td class="editblogform"><input type="checkbox" name="blogpriv" {if $blogpriv eq 'y'}checked="checked"{/if} /></td></tr>
 {if $prefs.blog_spellcheck eq 'y'}
 <tr><td class="editblogform">{tr}Spellcheck{/tr}: </td><td class="editblogform"><input type="checkbox" name="spellcheck" {if $spellcheck eq 'y'}checked="checked"{/if} /></td></tr>
 {/if}
 {if $prefs.feature_freetags eq 'y' and $tiki_p_freetags_tag eq 'y'}
-  {include file=freetag.tpl}
+  {include file='freetag.tpl'}
 {/if}
 {if $prefs.feature_contribution eq 'y'}
-{include file="contribution.tpl"}
+{include file='contribution.tpl'}
 {/if}
-<tr><td class="editblogform">&nbsp;</td><td class="editblogform"><input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" />
+<tr><td class="editblogform">&nbsp;</td><td class="editblogform">
 <input type="submit" class="wikiaction" name="preview" value="{tr}Preview{/tr}" />
+<input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" />
 <input type="submit" class="wikiaction" name="save_exit" value="{tr}Save and Exit{/tr}" />
+<input type="hidden" name="referer" value="{$referer|escape}" />
+&nbsp;&nbsp;&nbsp;<input type="submit" name="cancel" onclick='document.location="{$referer|escape:'html'}";return false;' value="{tr}Cancel{/tr}"/>
 </td></tr>
 </table>
 </form>
 <br />
-
-{button href="#edithelp" _onclick="javascript:show('edithelpzone');hide('wikiplhelp-tab');show('wikihelp-tab'); return true;" name="edithelp"	_text="{tr}Wiki Help{/tr}"}
-{button href="#edithelp" _onclick="javascript:show('edithelpzone');hide('wikihelp-tab');show('wikiplhelp-tab'); return true;" name="edithelp" _text="{tr}Plugin Help{/tr}"}
-{include file=tiki-edit_help.tpl}

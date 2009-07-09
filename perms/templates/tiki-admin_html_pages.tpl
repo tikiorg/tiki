@@ -61,7 +61,7 @@
     <tr class="formcolor">
       <td>
         {tr}Content{/tr}:<br />
-{include file="textareasize.tpl" area_name='htmlcode' formId='editpageform'} 
+{include file='textareasize.tpl' area_name='htmlcode' formId='editpageform'} 
       </td>
       <td>
         <textarea name="content" id="htmlcode" rows="25" style="width:95%;">{$info.content|escape}</textarea>
@@ -80,7 +80,7 @@
 <br />
 <h2>{tr}HTML pages{/tr}</h2>
 {if $channels}
-  {include file='find.tpl' _sort_mode='y'}
+  {include file='find.tpl'}
 {/if}
 <table class="normal">
   <tr>

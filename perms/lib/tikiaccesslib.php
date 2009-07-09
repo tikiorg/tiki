@@ -118,27 +118,30 @@ class TikiAccessLib extends TikiLib {
 	}
 
 	// you must call ask_ticket('error') before calling this
-	function display_error($page, $errortitle="", $errortype="", $enableRedirect = true) {
-		global $smarty, $wikilib, $prefs;
+	function display_error($page, $errortitle="", $errortype="", $enableRedirect = true, $message='') {
+		global $smarty, $wikilib, $prefs, $tikiroot, $userlib, $user;
 		require_once ('tiki-setup.php');
 		include_once('lib/wiki/wikilib.php');
 
 		// Don't redirect when calls are made for web services
-		if ( $enableRedirect && $prefs['feature_redirect_on_error'] == 'y' && ! $this->is_machine_request() && ! $this->is_xajax_request() ) {
+		if ( $enableRedirect && $prefs['feature_redirect_on_error'] == 'y' && ! $this->is_machine_request() && ! $this->is_xajax_request() && $tikiroot.$prefs['tikiIndex'] != $_SERVER['PHP_SELF'] && $page != $userlib->get_user_default_homepage2($user) ) {
 			$this->redirect($prefs['tikiIndex']);
 		}
 
 		$detail = array(
 			'code' => $errortype,
-			'message' => $errortitle,
+			'errortitle' => $errortitle,
+			'message' => $message,
 		);
 
 		if ( !isset($errortitle) ) {
 			$detail['message'] = tra('unknown error');
+			$detail['errortitle'] = $detail['message'];
 		}
 
-		// Display the template
-		$smarty->assign('msg', $errortitle);
+		// Display the template		
+		$smarty->assign('msg', $detail['message']);
+		$smarty->assign('errortitle', $detail['errortitle']);
 		switch( $errortype ) {
 		case '404':
 			header ("HTTP/1.0 404 Not Found");
@@ -158,7 +161,8 @@ class TikiAccessLib extends TikiLib {
 		if( $this->is_serializable_request() ) {
 			$this->output_serialized( $detail );
 		} else {
-			$smarty->assign('errortitle', $detail['message']);
+			$smarty->assign('errortitle', $detail['errortitle']);
+			$smarty->assign('msg', $detail['message']);
 			$smarty->assign('errortype', $detail['code']);
 			if( isset( $detail['page'] ) )
 				$smarty->assign('page', $page);
@@ -261,33 +265,46 @@ class TikiAccessLib extends TikiLib {
 			return $result;
 		}
 
-		//http basic auth headers if no user specified in http header.
-		if (empty($_SERVER['PHP_AUTH_USER'])) {
-			$result['header']='y';
-			return $result;
-		}
-
-		$user = $_SERVER['PHP_AUTH_USER'] ;
-		$pass = $_SERVER['PHP_AUTH_PW'] ;
-		list($res,$rest)=$userlib->validate_user_tiki($user, $pass, false, false);
-		if ($res==USER_VALID) {
-			$perms = $userlib->get_user_permissions($user);
-			foreach ($perms as $perm) {
-				eval('global $' . $perm . ';');
-				$$perm = 'y';
-				$smarty->assign($perm, 'y');
-			}
+		if( $this->http_auth() ) {
 			foreach ($rssrights as $perm) {
-				if ($$perm == 'y') {
+				if ($GLOBALS[$perm] == 'y') {
 					// if user/password and the appropriate rights are correct, allow.
 					return;
 				}
 			}
-		} 
+		}
 
-		//try to (re)authenticate the user
-		$result['header']='y';
 		return $result;
+	}
+
+	function http_auth()
+	{
+		global $tikidomain, $userlib, $user, $smarty;
+
+		if (! isset($_SERVER['PHP_AUTH_USER']) ) {
+			header('WWW-Authenticate: Basic realm="'.$tikidomain.'"');
+			header('HTTP/1.0 401 Unauthorized');
+			return false;
+		}
+		
+		$attempt = $_SERVER['PHP_AUTH_USER'] ;
+		$pass = $_SERVER['PHP_AUTH_PW'] ;
+		list($res,$rest)=$userlib->validate_user_tiki($attempt, $pass, false, false);
+
+		if ($res==USER_VALID) {
+			$user = $attempt;
+			$perms = $userlib->get_user_permissions($user);
+			foreach ($perms as $perm) {
+				$GLOBALS[$perm] = 'y';
+				$smarty->assign($perm, 'y');
+			}
+
+			return true;
+		} else {
+			header('WWW-Authenticate: Basic realm="'.$tikidomain.'"');
+			header('HTTP/1.0 401 Unauthorized');
+			return false;
+		}
 	}
 
 	function get_accept_types() {
@@ -370,7 +387,4 @@ class TikiAccessLib extends TikiLib {
 		}
 	}
 }
-
 $access = new TikiAccessLib($dbTiki);
-
-?>

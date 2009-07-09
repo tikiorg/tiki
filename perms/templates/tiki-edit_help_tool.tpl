@@ -12,8 +12,13 @@ function taginsert(area_name,tagid)
   tag[{$quicktags[qtg].tagId}]='{$quicktags[qtg].taginsert|escape:"javascript"}';
   {/section}
 //done
-{literal}  
-  insertAt(area_name,tag[tagid]);
+{literal} 
+	if (tag[tagid].indexOf("popup_plugin_form") == 0)  {
+		tag[tagid] = tag[tagid].replace("popup_plugin_form(", "popup_plugin_form('"+area_name+"',");
+		eval(tag[tagid]);
+	} else {
+		insertAt(area_name,tag[tagid]);
+	}
 }
 //--><!]]>
 </script>
@@ -25,9 +30,9 @@ function taginsert(area_name,tagid)
   </a>
   <br /><br />
 { /if}
-{*get_strings {tr}bold{/tr}
-              {tr}italic{/tr}
-              {tr}underline{/tr}
+{*get_strings {tr}text, bold{/tr}
+              {tr}text, italic{/tr}
+              {tr}text, underline{/tr}
               {tr}table{/tr}
               {tr}table new{/tr}
               {tr}external link{/tr}
@@ -38,11 +43,11 @@ function taginsert(area_name,tagid)
               {tr}rss feed{/tr}
               {tr}dynamic content{/tr}
               {tr}tagline{/tr}
-              {tr}hr{/tr}
+              {tr}horizontal rule{/tr}
               {tr}center text{/tr}
               {tr}colored text{/tr}
               {tr}dynamic variable{/tr}
-              {tr}Image{/tr}
+              {tr}image{/tr}
               {tr}New wms Metadata{/tr}
               {tr}New Class{/tr}
               {tr}New Projection{/tr}
@@ -55,6 +60,10 @@ function taginsert(area_name,tagid)
               {tr}New Web{/tr}
               {tr}New Outputformat{/tr}
               {tr}New Mapfile{/tr} 
+              {tr}Add image from File Gallery{/tr} 
+              {tr}quote{/tr} 
+              {tr}code{/tr} 
+              {tr}flash{/tr} 
               *}
 <div id='helptool{$qtnum}'
   {assign var=show value="show_helptool"|cat:$qtnum}
@@ -74,7 +83,8 @@ function taginsert(area_name,tagid)
     {cycle name='cycle'|cat:$qtnum values=$qtcycle|default:",,,</div><div>" advance=false print=false}
   {/if}
     {section name=qtg loop=$quicktags}
-      <a class="icon" title="{tr interactive='n'}{$quicktags[qtg].taglabel}{/tr}" href="javascript:taginsert('{$area_name}','{$quicktags[qtg].tagId}');" onclick="needToConfirm = false;"><img class="icon" src='{$quicktags[qtg].tagicon}' alt='{tr interactive="n"}{$quicktags[qtg].taglabel}{/tr}' title='{tr interactive="n"}{$quicktags[qtg].taglabel}{/tr}' /></a>
+	  {assign var='label' value=$quicktags[qtg].taglabel|regex_replace:"/^ +/":""}
+      <a class="icon" title="{tr interactive='n'}{$label}{/tr}" href="javascript:taginsert('{$area_name}','{$quicktags[qtg].tagId}');" onclick="needToConfirm = false;"><img class="icon" src='{$quicktags[qtg].tagicon}' alt='{tr interactive="n"}{$label}{/tr}' title='{tr interactive="n"}{$label}{/tr}' /></a>
       {if (!isset($zoom_mode) || $zoom_mode eq 'n') and $prefs.quicktags_over_textarea neq 'y'}{cycle name='cycle'|cat:$qtnum}{/if}
     {/section}
 
@@ -89,13 +99,13 @@ function openFgalsWindow() {
 	if(fgals_window && fgals_window.document) {
 		fgals_window.focus();
 	} else {{/literal}
-		fgals_window=window.open('{$url_path}tiki-list_file_gallery.php?filegals_manager={$area_name}','_blank','menubar=1,scrollbars=1,resizable=1,height=500,width=800,left=50,top=50');
+		fgals_window=window.open('{filegal_manager_url area_name=$area_name}','_blank','menubar=1,scrollbars=1,resizable=1,height=500,width=800,left=50,top=50');
 	{literal}}
 }
 //--><!]]>
 </script>
     {/literal}
-    <a title="{tr}Add another image{/tr}" href="#" onclick="needToConfirm=false; openFgalsWindow();return false;">{icon _id='image' alt='{tr}Add another image{/tr}'}</a>
+    <a title="{tr}Add Image from File Gallery{/tr}" href="#" onclick="needToConfirm=false; openFgalsWindow();return false;">{icon _id='pictures' alt='{tr}Add Image from File Gallery{/tr}'}</a>
     {if (!isset($zoom_mode) || $zoom_mode eq 'n') and $prefs.quicktags_over_textarea neq 'y'}{cycle name='cycle'|cat:$qtnum}{/if}
   {/if}
 
@@ -109,6 +119,15 @@ function openFgalsWindow() {
   {if (!isset($zoom_mode) || $zoom_mode eq 'n') and $prefs.quicktags_over_textarea neq 'y'}
   <hr style="width:90%; clear:both;" />
   {/if}
+
+  <div class='helptool-help'
+  {if (!isset($zoom_mode) || $zoom_mode eq 'n') and $prefs.quicktags_over_textarea neq 'y'}
+	style="float: left"
+  {else}
+	style="float: right; border-left: medium double lightgrey; padding-left:8px; margin-left:8px"
+  {/if}>
+	{include file='tiki-edit_help.tpl'}
+  </div>
 
   {if $tiki_p_admin eq 'y' or $tiki_p_admin_quicktags eq 'y'}
   <div class='helptool-admin'

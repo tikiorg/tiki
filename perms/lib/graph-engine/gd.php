@@ -305,5 +305,3 @@ class GD_GRenderer extends GRenderer // {{{1
 		imagestring( $this->gd, $style['font'], $x, $height, $string, $this->_getColor( 'Black' ) );
 	}
 } // }}}1
-
-?>

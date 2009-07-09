@@ -10,8 +10,8 @@
 $section = 'galleries';
 require_once ('tiki-setup.php');
 
-include_once ("lib/imagegals/imagegallib.php");
-include_once ('lib/categories/categlib.php');
+global $imagegallib; include_once ("lib/imagegals/imagegallib.php");
+global $categlib; include_once ('lib/categories/categlib.php');
 include_once ('lib/map/usermap.php');
 
 if ($prefs['feature_galleries'] != 'y') {
@@ -129,7 +129,7 @@ $smarty->assign('showdescription','n');
 $smarty->assign('showcreated','n');
 $smarty->assign('showuser','n');
 $smarty->assign('showhits','y');
-$smarty->assign('showxysize','y');
+$smarty->assign('showxysize','n');
 $smarty->assign('showfilesize','n');
 $smarty->assign('showfilename','n');
 $options_galleryimage=array(tra('first uploaded image') => 'firstu',
@@ -405,9 +405,6 @@ if (!isset($_REQUEST["sort_mode"])) {
 
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 
-// If offset is set use it if not then use offset =0
-// use the maxRecords php variable to set the limit
-// if sortMode is not set then use lastModif_desc
 if (!isset($_REQUEST["offset"])) {
 	$offset = 0;
 } else {
@@ -480,24 +477,6 @@ for ($i = 0; $i < $temp_max; $i++) {
 	}
 }
 
-// If there're more records then assign next_offset
-$cant_pages = ceil($galleries["cant"] / $maxRecords);
-$smarty->assign_by_ref('cant_pages', $cant_pages);
-$smarty->assign('actual_page', 1 + ($offset / $maxRecords));
-
-if ($galleries["cant"] > ($offset + $maxRecords)) {
-	$smarty->assign('next_offset', $offset + $maxRecords);
-} else {
-	$smarty->assign('next_offset', -1);
-}
-
-// If offset is > 0 then prev_offset
-if ($offset > 0) {
-	$smarty->assign('prev_offset', $offset - $maxRecords);
-} else {
-	$smarty->assign('prev_offset', -1);
-}
-
 $smarty->assign_by_ref('galleries', $galleries["data"]);
 $smarty->assign_by_ref('cant', $galleries["cant"]);
 
@@ -515,4 +494,3 @@ ask_ticket('galleries');
 // Display the template
 $smarty->assign('mid', 'tiki-galleries.tpl');
 $smarty->display("tiki.tpl");
-?>

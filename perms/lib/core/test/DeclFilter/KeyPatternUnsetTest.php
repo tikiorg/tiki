@@ -1,6 +1,6 @@
 <?php
 
-class DeclFilter_KeyPatternUnsetTest extends PHPUnit_Framework_TestCase
+class DeclFilter_KeyPatternUnsetTest extends TikiTestCase
 {
 	function testMatch()
 	{
@@ -36,5 +36,3 @@ class DeclFilter_KeyPatternUnsetTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals( $data['foo'], '123abc' );
 	}
 }
-
-?>

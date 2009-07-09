@@ -67,14 +67,14 @@ foreach ($rawcals["data"] as $cal_id=>$cal_data) {
 		} else {
 			$cal_data["tiki_p_view_calendar"] = 'n';
 		}
-		if ($userlib->user_has_perm_on_object($user, $cal_id, 'calendar', 'tiki_p_add_events')) {
+		if ($userlib->user_has_perm_on_object($user, $cal_id, 'calendar', 'tiki_p_add_events', 'tiki_p_edit_categorized')) {
 			$cal_data["tiki_p_add_events"] = 'y';
 			$tiki_p_add_events = "y";
 			$smarty->assign("tiki_p_add_events", "y");
 		} else {
 			$cal_data["tiki_p_add_events"] = 'n';
 		}
-		if ($userlib->user_has_perm_on_object($user, $cal_id, 'calendar', 'tiki_p_change_events')) {
+		if ($userlib->user_has_perm_on_object($user, $cal_id, 'calendar', 'tiki_p_change_events', 'tiki_p_edit_categorized')) {
 			$cal_data["tiki_p_change_events"] = 'y';
 		} else {
 			$cal_data["tiki_p_change_events"] = 'n';
@@ -141,18 +141,31 @@ $smarty->assign('modifTab', $modifTab);
 $smarty->assign('now', $tikilib->now);
 
 // set up list of groups
+$use_default_calendars = false;
 if (isset($_REQUEST["calIds"])and is_array($_REQUEST["calIds"])and count($_REQUEST["calIds"])) {
 	$_SESSION['CalendarViewGroups'] = array_intersect($_REQUEST["calIds"], $listcals);
-	$tikilib->set_user_preference($user,'default_calendars',serialize($_SESSION['CalendarViewGroups']));
+	if ( !empty($user) ) $tikilib->set_user_preference($user,'default_calendars',serialize($_SESSION['CalendarViewGroups']));
 } elseif (isset($_REQUEST["calIds"])and !is_array($_REQUEST["calIds"])) {
 	$_SESSION['CalendarViewGroups'] = array_intersect(array($_REQUEST["calIds"]), $listcals);
-	$tikilib->set_user_preference($user,'default_calendars',serialize($_SESSION['CalendarViewGroups']));
+	if ( !empty($user) ) $tikilib->set_user_preference($user,'default_calendars',serialize($_SESSION['CalendarViewGroups']));
 } elseif (!isset($_SESSION['CalendarViewGroups']) || !empty($_REQUEST['allCals'])) {
-	$_SESSION['CalendarViewGroups'] = array_intersect(is_array($prefs['default_calendars']) ? $prefs['default_calendars'] : unserialize($prefs['default_calendars']),$listcals);
+	$use_default_calendars = true;
 } elseif (isset($_REQUEST["refresh"])and !isset($_REQUEST["calIds"])) {
 	$_SESSION['CalendarViewGroups'] = array();
-} else {
-	$_SESSION['CalendarViewGroups'] = array_intersect(is_array($prefs['default_calendars']) ? $prefs['default_calendars'] : unserialize($prefs['default_calendars']), $listcals);
+} elseif ( ! empty($user) || ! isset($_SESSION['CalendarViewGroups']) ) {
+	$use_default_calendars = true;
+}
+
+if ( $use_default_calendars ) {
+	if ( $prefs['feature_default_calendars'] == 'y' ) {
+		$_SESSION['CalendarViewGroups'] = array_intersect(is_array($prefs['default_calendars']) ? $prefs['default_calendars'] : unserialize($prefs['default_calendars']), $listcals);
+	} elseif ( ! empty($user) ) {
+		$user_default_calendars = $tikilib->get_user_preference($user, 'default_calendars', $listcals);
+		if ( is_string($user_default_calendars) ) $user_default_calendars = unserialize($user_default_calendars);
+		$_SESSION['CalendarViewGroups'] = $user_default_calendars;
+	} else {
+		$_SESSION['CalendarViewGroups'] = $listcals;
+	}
 }
 
 $smarty->assign('displayedcals', $_SESSION['CalendarViewGroups']);
@@ -304,6 +317,7 @@ $registeredIndexes = array();
 	}
 	$smarty->assign('cellparticipants', $cellparticipants);
 
+	$smarty->assign('calendar_type', 'calendar');
         $smarty->assign('show_calname', $lec['show_calname']);
         $smarty->assign('show_description', $lec['show_description']);
         $smarty->assign('show_location', $lec['show_location']);
@@ -609,9 +623,16 @@ if ($max > 100) {
 					$hrows[$aDay][$anHour][$i]['concurrences'] = $concurrencies[$aDay][$hrows[$aDay][$anHour][$i]['calitemId']]['value'];
 					$hrows[$aDay][$anHour][$i]['duree'] = $eventHoraires[$aDay][$hrows[$aDay][$anHour][$i]['calitemId']]['duree'] * 24;
 					$hrows[$aDay][$anHour][$i]['left'] = $hrows[$aDay][$anHour][$i]['left'] + $concurrencies[$aDay][$hrows[$aDay][$anHour][$i]['calitemId']]['offset'];
-					$hrows[$aDay][$anHour][$i]['width'] = 
-						$concurrencies[$aDay][$hrows[$aDay][$anHour][$i]['calitemId']]['value'] == 1 ? 12.8 : 
-							$hrows[$aDay][$anHour][$i]['width']/$concurrencies[$aDay][$hrows[$aDay][$anHour][$i]['calitemId']]['value'];
+
+					if ( $concurrencies[$aDay][$hrows[$aDay][$anHour][$i]['calitemId']]['value'] != 1
+						&& $hrows[$aDay][$anHour][$i]['width'] > 0
+						&& $concurrencies[$aDay][$hrows[$aDay][$anHour][$i]['calitemId']]['value'] > 0
+					) {
+						$hrows[$aDay][$anHour][$i]['width'] = $hrows[$aDay][$anHour][$i]['width'] / $concurrencies[$aDay][$hrows[$aDay][$anHour][$i]['calitemId']]['value'];
+					} else {
+						$hrows[$aDay][$anHour][$i]['width'] = 12.8;
+					}
+
 					$manyEvents[$aDay]['tooMany'] = false;
 				} else {
 					$manyEvents[$aDay]['tooMany'] = true;
@@ -701,7 +722,7 @@ if($prefs['feature_user_watches'] == 'y' && $user && count($_SESSION['CalendarVi
 		if ($_REQUEST['watch_action'] == 'add') {
 	    	$tikilib->add_user_watch($user, $_REQUEST['watch_event'], $calId, 'calendar', $infocals['data'][$calId]['name'],"tiki-calendar.php?calIds[]=$calId");
 		} else {
-	    	$tikilib->remove_user_watch($user, $_REQUEST['watch_event'], $calId);
+	    	$tikilib->remove_user_watch($user, $_REQUEST['watch_event'], $calId, 'calendar');
 		}
 	}
 	if ($tikilib->user_watches($user,'calendar_changed', $calId, 'calendar')) {
@@ -736,7 +757,7 @@ setcookie('tab',$cookietab);
 $smarty->assign('cookietab',$cookietab);
 
 include_once ('lib/quicktags/quicktagslib.php');
-$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_desc','','calendar');
+$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_asc','','calendar');
 $smarty->assign_by_ref('quicktags', $quicktags["data"]);
 include_once("textareasize.php");
 
@@ -754,6 +775,5 @@ else {
 
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
-
+$smarty->assign('headtitle',tra('Calendar'));
 $smarty->display("tiki.tpl");
-?>

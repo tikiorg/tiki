@@ -150,5 +150,3 @@ ask_ticket('g-user-activities');
 
 $smarty->assign('mid', 'tiki-g-user_activities.tpl');
 $smarty->display("tiki.tpl");
-
-?>

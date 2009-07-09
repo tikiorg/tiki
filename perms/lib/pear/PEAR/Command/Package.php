@@ -839,5 +839,3 @@ used for automated conversion or learning the format.
 
     // }}}
 }
-
-?>

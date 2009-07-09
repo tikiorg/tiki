@@ -11,5 +11,3 @@ function smarty_modifier_isodate($string) {
 	global $tikilib;
 	return $tikilib->get_iso8601_datetime($string);
 }
-
-?>

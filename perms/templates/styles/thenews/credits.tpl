@@ -1,1 +1,1 @@
- | {tr}Theme{/tr}: <a href="http://themes.tikiwiki.org">The News</a>
+ | {tr}Theme{/tr}: The News

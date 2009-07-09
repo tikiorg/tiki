@@ -1066,5 +1066,3 @@ installed package.'
         $this->ui->outputData($data, 'package-info');
     }
 }
-
-?>

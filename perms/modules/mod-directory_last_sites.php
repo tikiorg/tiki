@@ -8,7 +8,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 // Parameter absurl set if the directory_last url is absolute or not [y|n].
 // If not set, default = relative
-global $prefs;
+global $prefs, $tikilib, $smarty;
 
 if ($prefs['feature_directory'] == 'y') {
 	if (isset($module_params['categoryId'])) {

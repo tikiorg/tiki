@@ -26,6 +26,7 @@ function wikiplugin_remarksbox_help() {
 function wikiplugin_remarksbox_info() {
 	return array(
 		'name' => tra('Remarks Box'),
+		'documentation' => 'PluginRemarksBox',		
 		'description' => tra('Displays a comment, tip, note or warning box'),
 		'prefs' => array( 'wikiplugin_remarksbox' ),
 		'body' => tra('remarks text'),
@@ -63,5 +64,3 @@ function wikiplugin_remarksbox($data, $params) {
 	$ret = '~np~'.smarty_block_remarksbox($params, '~/np~'.tra($data).'~np~', $smarty).'~/np~';
 	return $ret;
 }
-
-?>

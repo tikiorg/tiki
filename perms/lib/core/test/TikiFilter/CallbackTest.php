@@ -1,6 +1,6 @@
 <?php
 
-class TikiFilter_CallbackTest extends PHPUnit_Framework_TestCase
+class TikiFilter_CallbackTest extends TikiTestCase
 {
 	function testSimple()
 	{
@@ -9,5 +9,3 @@ class TikiFilter_CallbackTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals( 'HELLO', $filter->filter( 'hello' ) );
 	}
 }
-
-?>

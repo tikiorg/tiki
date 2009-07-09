@@ -56,6 +56,11 @@ function wikiplugin_split_info() {
 				'name' => tra('Editable'),
 				'description' => 'y|n'.' '.tra('Display edit icon for each section'),
 			),
+			'customclass' => array(
+				'required' => false,
+				'name' => tra('Custom class'),
+				'description' => tra('add a class to customize the design'),
+			),
 		),
 	);
 }
@@ -127,10 +132,8 @@ function wikiplugin_split($data, $params, $pos) {
 		$class = 'class="normal split"';
 		$percent = true;	
 	}
-
 	if (!isset($edit)) $edit = 'n';
-	
-	$result = '<table border="0" cellpadding="0" cellspacing="0" class="wikiplugin-split'.($percent ? ' normal' : '').'">';
+	$result = "<table border='0' cellpadding='0' cellspacing='0' class='wikiplugin-split".($percent ? " normal" : "").($customclass ? " $customclass" : "")."'>";
 
     // Attention: Dont forget to remove leading empty line in section ...
     //            it should remain from previous '---' line...
@@ -172,7 +175,7 @@ function wikiplugin_split($data, $params, $pos) {
 			if ($tiki_p_admin_wiki == 'y' || $tiki_p_admin == 'y')
 				$perm = true;
 			else
-				$perm = $tikilib->user_has_perm_on_object($user, $object, $type, 'tiki_p_edit');
+				$perm = $tikilib->user_has_perm_on_object($user, $object, $type, 'tiki_p_edit', 'tiki_p_edit_categorized');
 		} else { // TODO: other object type
 			$perm = false;
 		}
@@ -257,4 +260,3 @@ function  wikiplugin_split_cell($data, $pos, $cell) {
 	}
 	return array($start, $end - $start);
 }
-?>

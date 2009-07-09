@@ -1,6 +1,15 @@
 <?php
 // $Id$
 
+// Copyright (c) 2002-2009, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+
+/**
+ * Show recent articles.
+ *
+ **/
+
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -12,37 +21,43 @@ if (!function_exists('mod_last_articles_help')) {
 		return "type=Article|Event|...&topicId=1&topic=xx&categId=1&lang=en&showImg=width&showDate=y&showHeading=chars";
 	}
 }
+global $tikilib, $smarty;
 // Parameter absurl set if the last_article url is absolute or not [y|n].
 // If not set, default = relative
 
-// filter for type, topicId or topic...
-// if ! is in front of type or topic, the result is inversed
-$mod_type = isset($module_params["type"]) ? $module_params["type"] : '';
-$mod_topicId = isset($module_params["topicId"]) ? $module_params["topicId"] : '';
-$mod_topic = isset($module_params["topic"]) ? $module_params["topic"] : '';
-$smarty->assign('type',$mod_type);
-$smarty->assign('topicId',$mod_topicId);
-$categId = isset($module_params['categId']) ? $module_params['categId'] : '';
-$l = isset($module_params['lang']) ? $module_params['lang'] : '';
-if (isset($module_params['showImg'])) {
-	$smarty->assign('showImg', $module_params['showImg']);
-}
-if (isset($module_params['showDate']) && $module_params['showDate'] == 'y') {
-	$smarty->assign('showDate','y');
+$urlParams = array(
+	'topicId' => 'topic',
+	'topic' => 'topicName',
+	'categId' => 'categId',
+	'type' => 'type',
+	'lang' => 'lang',
+	'showImg' => NULL,
+	'showDate' => NULL,
+	'showHeading' => NULL,
+	'nonums' => NULL,
+	'absurl' => NULL
+);
+
+foreach ( $urlParams as $p => $v ) {
+	if ( isset($$p) ) continue;
+	$$p = isset($module_params[$p]) ? $module_params[$p] : '';
 }
 
-$ranking = $tikilib->list_articles(0,$module_rows,'publishDate_desc', '', '', date("U"), '', $mod_type, $mod_topicId, 'y', $mod_topic, $categId, '', '', $l);
-if (isset($module_params['showHeading']) && $module_params['showHeading'] != 'n') {
-	if ($module_params['showHeading'] == 'y')
-		$module_params['showHeading'] = -1;
-	$smarty->assign('showHeading',$module_params['showHeading']);
-	foreach ($ranking['data'] as $key=>$article) {
+$offset = (int) $module_params['offset'];
+if ( $absurl == '' ) $absurl = 'n';
+if ( $nonums == '' ) $nonums = 'n';
+if ( $showHeading != 'n') {
+	if ( $showHeading == 'y' ) $showHeading = -1;
+	foreach ( $ranking['data'] as $key => $article ) {
 		$ranking['data'][$key]['parsedHeading'] = $tikilib->parse_data($article['heading']);
 	}
 }
-$smarty->assign('modLastArticles',$ranking["data"]);
-$smarty->assign('nonums', isset($module_params["nonums"]) ? $module_params["nonums"] : 'n');
-$smarty->assign('absurl', isset($module_params["absurl"]) ? $module_params["absurl"] : 'n');
-$module_rows = count($ranking["data"]);
-$smarty->assign('module_rows', $module_rows);
 
+foreach ( $urlParams as $p => $v ) $smarty->assign($p, $$p);
+
+$ranking = $tikilib->list_articles($offset, $module_rows, 'publishDate_desc', '', '', date("U"), '', $type, $topicId, 'y', $topic, $categId, '', '', $lang);
+
+
+$module_rows = count($ranking['data']);
+$smarty->assign('module_rows', $module_rows);
+$smarty->assign('modLastArticles', $ranking['data']);

@@ -57,6 +57,7 @@
         {if !empty($sort_mode)}<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />{/if}
         {if isset($file_info)}<input type="hidden" name="fileId" value="{$file_info.fileId|escape}" />{/if}
         {if isset($page)}<input type="hidden" name="page" value="{$page|escape}" />{/if}
+        {if isset($view)}<input type="hidden" name="view" value="{$view|escape}" />{/if}
       
         {assign var=nbCols value=0}
         {assign var=other_columns value=''}
@@ -85,7 +86,7 @@
           {/if}
           {icon _id='pics/icons/mime/zip.png' _tag='input_image' name='zipsel' alt='{tr}Download the zip{/tr}' style='vertical-align: middle;'}
           {if $tiki_p_assign_perm_file_gallery eq 'y'}
-             {icon _id='key' _tag='input_image' name='permsel' alt='{tr}Assign Permissions{/tr}' title='{tr}Assign Permissions{/tr}' style='vertical-align: middle;'}
+             {icon _id='key' _tag='input_image' name='permsel' alt="{tr}Assign Permissions{/tr}" title="{tr}Assign Permissions{/tr}" style='vertical-align: middle;'}
           {/if}
           </div>
           {if $smarty.request.movesel_x and !isset($file_info)} 
@@ -107,7 +108,7 @@
            {tr}Assign Permissions{/tr}
            <select name="perms[]" multiple="multiple" size="5"}
               {foreach from=$perms item=perm}
-                <option value="assign_{$perm.permName|escape}">{$perm.permName|escape}</option>
+                <option value="{$perm.permName|escape}">{$perm.permName|escape}</option>
               {/foreach}
            </select>
            <select name="groups[]" multiple="multiple" size="5"}

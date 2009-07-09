@@ -10,7 +10,7 @@ if (!function_exists("mod_article_topics_help")) {
 		return tra('list topics with links to the articles');
 	}
 }
-
+global $smarty;
 $smarty->assign('module_title', isset($module_params["title"]) ? $module_params["title"] : tra("Article Topics"));
 
 global $artlib; include_once('lib/articles/artlib.php');

@@ -125,5 +125,3 @@ ask_ticket('g-monitor-workitems');
 
 $smarty->assign('mid', 'tiki-g-monitor_workitems.tpl');
 $smarty->display("tiki.tpl");
-
-?>

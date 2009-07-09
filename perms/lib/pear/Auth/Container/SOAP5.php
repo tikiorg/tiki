@@ -265,4 +265,3 @@ class Auth_Container_SOAP5 extends Auth_Container
     // }}}
 
 }
-?>

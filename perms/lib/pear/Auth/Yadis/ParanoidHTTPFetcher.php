@@ -232,5 +232,3 @@ class Auth_Yadis_ParanoidHTTPFetcher extends Auth_Yadis_HTTPFetcher {
                                            $new_headers, $body);
     }
 }
-
-?>

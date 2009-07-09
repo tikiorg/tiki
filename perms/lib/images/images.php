@@ -20,4 +20,3 @@ if ($detected_lib != '') {
   // Load the detected lib
   require_once('lib/images/'.$detected_lib.'.php');
 }
-?>

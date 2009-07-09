@@ -1,21 +1,17 @@
 <?php
+// (c) Copyright 2002-2009 by authors of the Tiki Wiki/CMS/Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
-
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	header("location: index.php");
 	exit;
 }
-
-// Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
-// All Rights Reserved. See copyright.txt for details and a complete list of authors.
-// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-
 // Process Features form(s)
 if (isset($_REQUEST["features"])) {
-
 	$features_toggles = array(
-		"contact_anon",
 		"feature_action_calendar",
 		"feature_actionlog",
 		"feature_ajax",
@@ -31,11 +27,12 @@ if (isset($_REQUEST["features"])) {
 		"feature_contact",
 		"feature_contacts",
 		"feature_contribution",
+		"feature_multilingual",
 		"feature_custom_home",
 		"feature_debug_console",
 		"feature_directory",
 		"feature_drawings",
-		"feature_events",
+		"feature_events", //2009-04-29 marclaporte: can we remove this?
 		"feature_faqs",
 		"feature_featuredLinks",
 		"feature_file_galleries",
@@ -71,6 +68,7 @@ if (isset($_REQUEST["features"])) {
 		"feature_score",
 		"feature_search",
 		"feature_sheet",
+		"feature_sefurl",
 		"feature_shoutbox",
 		"feature_stats",
 		"feature_surveys",
@@ -80,6 +78,9 @@ if (isset($_REQUEST["features"])) {
 		"feature_userPreferences",
 		"feature_user_bookmarks",
 		"feature_user_watches",
+		"feature_group_watches",
+		"feature_daily_report_watches",
+		"feature_quick_object_perms",
 		"feature_user_watches_translations",
 		"feature_userfiles",
 		"feature_usermenu",
@@ -92,38 +93,31 @@ if (isset($_REQUEST["features"])) {
 		"feature_multimedia",
 		"feature_userlevels",
 		"feature_mootools",
+		"feature_jquery",
 		"feature_shadowbox",
-		"feature_swffix",
-		"layout_section",
-		"feature_sefurl",
+		"feature_swfobj",
 		"feature_tikitests",
 		"feature_magic",
 		"feature_minichat",
 		"feature_comments_moderation",
+		"feature_comments_locking",
 		"feature_groupalert",
+		"feature_wiki_mindmap",
+		"use_minified_scripts",
+		"feature_print_indexed",
+		'debug_ignore_xdebug',
 	);
-
 	$pref_byref_values = array(
 		"user_flip_modules"
 	);
-
 	check_ticket('admin-inc-features');
-	foreach ($features_toggles as $toggle) {
-		simple_set_toggle ($toggle);
+	foreach($features_toggles as $toggle) {
+		simple_set_toggle($toggle);
 	}
-	foreach ($pref_byref_values as $britem) {
-		byref_set_value ($britem);
+	foreach($pref_byref_values as $britem) {
+		byref_set_value($britem);
 	}
-
-	$smarty->clear_compiled_tpl();
-
+	$cachelib->empty_full_cache();
 }
-
-if (!empty($_REQUEST['tabs'])) {
-	$smarty->assign('tabs', $_REQUEST['tabs']=='on'?'n':'');
-}
-
 $smarty->assign('php_major_version', substr(PHP_VERSION, 0, strpos(PHP_VERSION, '.')));
-
 ask_ticket('admin-inc-features');
-?>

@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-{title}{tr}History{/tr}: {$page}{/title}
+{title admpage="wiki"}{tr}History{/tr}: {$page}{/title}
 
 <div class="navbar">
 	{assign var=thispage value=$page|escape:url}
@@ -29,13 +29,13 @@
 <div class="wikitext">{$sourced}</div>
 {/if}
 
-{include file=pagehistory.tpl}
+{include file='pagehistory.tpl'}
 
 <br />
 
 {if (!isset($noHistory))}
 {if $preview || $source || $diff_style}<h2>{tr}History{/tr}</h2>{/if}
-<form action="tiki-pagehistory.php" method="post">
+<form action="tiki-pagehistory.php" method="get">
 <input type="hidden" name="page" value="{$page|escape}" />
 <div style="text-align:center;">
 <div class="simplebox"><b>{tr}Legend:{/tr}</b> {tr}v=view{/tr}{if $tiki_p_wiki_view_source eq "y" and $prefs.feature_source eq "y"}, {tr}s=source{/tr} {/if}{if $prefs.default_wiki_diff_style eq "old"}, {tr}c=compare{/tr}, {tr}d=diff{/tr}{/if}{if $tiki_p_rollback eq 'y'}, {tr}b=rollback{/tr}{/if}</div>
@@ -107,7 +107,7 @@
 </td>
 {if $prefs.default_wiki_diff_style ne "old" and $history}
 <td class="odd button"><input type="radio" name="oldver" value="0" title="{tr}Compare{/tr}" {if $old.version == $info.version}checked="checked"{/if} /></td>
-<td class="odd button"><input type="radio" name="newver" value="0" title="{tr}Compare{/tr}" {if $new.version == $info.version or !$diff_style}checked="checked"{/if} /></td>
+<td class="odd button"><input type="radio" name="newver" value="0" title="{tr}Compare{/tr}" {if $new.version == $info.version or !$smarty.request.diff_style}checked="checked"{/if} /></td>
 {/if}
 </tr>
 {cycle values="odd,even" print=false}
@@ -155,7 +155,7 @@
 </td>
 {if $prefs.default_wiki_diff_style ne "old"}
 <td class="{cycle advance=false} button">
-<input type="radio" name="oldver" value="{$element.version}" title="{tr}Older Version{/tr}" {if $old.version == $element.version or (!$diff_style and $smarty.foreach.hist.first)}checked="checked"{/if} />
+<input type="radio" name="oldver" value="{$element.version}" title="{tr}Older Version{/tr}" {if $old.version == $element.version or (!$smarty.request.diff_style and $smarty.foreach.hist.first)}checked="checked"{/if} />
 </td>
 <td class="{cycle} button">
 {* if $smarty.foreach.hist.last &nbsp; *}
@@ -189,5 +189,5 @@
 </form>
 {/if}
 
-{include file=tiki-page_bar.tpl}
+{include file='tiki-page_bar.tpl'}
 

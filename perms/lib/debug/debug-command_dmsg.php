@@ -43,5 +43,3 @@ class DbgCmd_DebugMessages extends DebuggerCommand {
 function dbg_command_factory_dmsg() {
 	return new DbgCmd_DebugMessages();
 }
-
-?>

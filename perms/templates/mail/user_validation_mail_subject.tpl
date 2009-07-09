@@ -1,3 +1,2 @@
-{* -*- coding:utf-8 -*- *}
-{tr}Your Tiki information registration{/tr} ({$mail_site})
+{* -*- coding:utf-8 -*- *}{tr}Your registration confirmation{/tr} ({$mail_site})
 

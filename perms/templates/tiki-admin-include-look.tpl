@@ -1,53 +1,38 @@
 {* $Id$ *}
-{strip}
 <div class="cbox">
-	<div class="cbox-title">
-	{tr}{$crumbs[$crumb]->title}{/tr}
-	{help crumb=$crumbs[$crumb]}</div>
-
 	<form action="tiki-admin.php?page=look"  id="look" name="look" onreset="return(confirm('{tr}Cancel Edit{/tr}'))"  class="admin" method="post">
-		<div class="heading button" style="text-align: right">
+		<div class="heading input_submit_container" style="text-align: right">
 			<input type="submit" name="looksetup" value="{tr}Apply{/tr}" />
 			<input type="reset" name="looksetupreset" value="{tr}Reset{/tr}" />
 		</div>
 
-		{if $prefs.feature_tabs eq 'y'}
-			{cycle name=tabs values="1,2,3,4" print=false advance=false reset=true}
-			<div class="tabs">
-				<span	id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark tabinactive">
-					<a href="#theme" onclick="javascript:tikitabs({cycle name=tabs},4); return false;">{tr}Theme{/tr}</a>
-				</span>
-				<span	id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark tabinactive">
-					<a href="#layout" onclick="javascript:tikitabs({cycle name=tabs},4); return false;">{tr}General Layout{/tr}</a>
-				</span>
-				<span	id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark tabinactive">
-					<a href="#other" onclick="javascript:tikitabs({cycle name=tabs},4); return false;">{tr}Other{/tr}</a>
-				</span>
-			</div>
-			{cycle name=content values="1,2,3,4" print=false advance=false reset=true}
-		{/if}
-
-		<fieldset{if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>
-			{if $prefs.feature_tabs neq 'y'}
-				<legend class="heading">
-					<a href="#theme" onclick="flip('theme'); return false;">
-						<span>{tr}Theme{/tr}</span>
-					</a>
-				</legend>
-				<div id="theme" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_theme) and $smarty.session.tiki_cookie_jar.show_theme neq 'y'}none{else}block{/if};">
-			{/if}
+{tabset name="admin_look"}
+	{tab name="{tr}Theme{/tr}"}
 				<table class="admin">
+					{if isset($thumbfile)}<tr>
+						<td colspan="2">
+							<div id="style_thumb_div"><img src="{$thumbfile}" alt="{tr}Theme Screenshot{/tr}" id="style_thumb" /></div>
+						</td>
+					</tr>{/if}
 					<tr>
 						<td class="form" >
 							<label for="general-theme">{tr}Theme{/tr}:</label>
 						</td>
 						<td width="67%">
-							<select name="site_style" id="general-theme" onchange="this.form.submit();">
+							<select name="site_style" id="general-theme">
 							{section name=ix loop=$styles}
 								<option value="{$styles[ix]|escape}"{if $a_style eq $styles[ix]} selected="selected"{/if}>{$styles[ix]}</option>
 							{/section}
 							</select>
-							{if $prefs.site_style != $a_style}<span class="highlight">{tr}* Note: Theme displayed differs from "site" theme ({$prefs.site_style}).{/tr}</span>{/if}
+							{if $prefs.javascript_enabled eq 'n' or $prefs.feature_jquery eq 'n'}
+								<input type="submit" name="changestyle" value="{tr}Go{/tr}" />
+							{/if}
+	  						{if $prefs.change_theme eq 'y' and ($user_prefs.theme neq '' and $prefs.site_style neq $user_prefs.theme) or ($prefs.style neq '' and $prefs.site_style neq $prefs.style)}
+	  							{remarksbox type="warning" title="{tr}Admin{/tr}"}{tr}The "users can change theme" feature will override the theme displayed.{/tr}{/remarksbox}
+							{/if}
+							{if $prefs.site_style != $a_style}
+								{remarksbox type="note" title="{tr}Note{/tr}}{tr}Theme not saved yet - click "Apply"{/tr}{/remarksbox}
+							{/if}
 						</td>
 					</tr>
 					<tr>
@@ -55,12 +40,45 @@
 							<label for="general-theme">{tr}Theme options{/tr}:</label>
 						</td>
 						<td width="67%">
-							<select name="site_style_option" id="general-theme-options" {if !$style_options}disabled{/if}>
+							<select name="site_style_option" id="general-theme-options" {if !$style_options}disabled="disabled"{/if}>
 							{if !$style_options}<option value="">{tr}None{/tr}</option>{/if}
 							{section name=ix loop=$style_options}
 								<option value="{$style_options[ix]|escape}"{if $prefs.style_option eq $style_options[ix]} selected="selected"{/if}>{$style_options[ix]}</option>
 							{/section}
 							</select>
+						</td>
+					</tr>
+					<tr>					
+  						<td class="form">{tr}Reg users can change theme{/tr}:</td>
+						<td>
+						    <table><tr>
+						    <td style="width: 20px"><input type="checkbox" name="change_theme" {if $prefs.change_theme eq 'y'}checked="checked"{/if}/></td>
+						    <td>
+						      <div id="select_available_styles" {if count($prefs.available_styles) > 0 and $prefs.available_styles[0] ne ''}style="display:none;"{else}style="display:block;"{/if}>
+						        <a class="link" href="javascript:show('available_styles');hide('select_available_styles');">{tr}Restrict available themes{/tr}</a>
+						      </div>
+						      <div id="available_styles" {if count($prefs.available_styles) == 0 or $prefs.available_styles[0] eq ''}style="display:none;"{else}style="display:block;"{/if}>
+						        {tr}Available styles:{/tr}<br />
+						        <select name="available_styles[]" multiple="multiple" size="5">
+								  <option value=''>{tr}All{/tr}</option>
+						          {section name=ix loop=$styles}
+						            <option value="{$styles[ix]|escape}"
+						              {if $prefs.available_styles|count gt 0 and in_array($styles[ix], $prefs.available_styles)}selected="selected"{/if}>
+						              {$styles[ix]}
+						            </option>
+						          {/section}
+						        </select>
+						      </div>
+						    </td>
+						    </tr></table>
+						</td>					
+					</tr>
+					<tr>
+						<td class="form">
+							<label for="useGroupTheme">{tr}Each group can have its theme{/tr}:</label>
+						</td>
+						<td>
+							<input type="checkbox" name="useGroupTheme" id="useGroupTheme" {if $prefs.useGroupTheme eq 'y'}checked="checked"{/if}/>
 						</td>
 					</tr>
 					<tr>
@@ -72,19 +90,6 @@
 							{section name=ix loop=$slide_styles}
 								<option value="{$slide_styles[ix]|escape}"{if $prefs.slide_style eq $slide_styles[ix]} selected="selected"{/if}>{$slide_styles[ix]}</option>
 							{/section}
-							</select>
-						</td>
-					</tr>
-					<tr>
-    	   		<td class="form">
-							<label for="transition_style_ver">{tr}Use transition style sheet from version{/tr}:</label>
-						</td>
-						<td>
-							<select name="transition_style_ver" id="transition_style_ver">
-								<option value="none" {if $prefs.transition_style_ver eq 'none'}selected="selected"{/if}>{tr}Never use transition css{/tr}</option>
-								<option value="css_specified_only" {if $prefs.transition_style_ver eq 'css_specified_only'}selected="selected"{/if}>{tr}Use @version:x.x specified in theme css or none if not specified{/tr}</option>
-								<option value="1.9" {if $prefs.transition_style_ver eq '1.9'}selected="selected"{/if}>{tr}Use @version:x.x specified in theme css or 1.9 if not specified{/tr}</option>
-								<option value="2.0" {if $prefs.transition_style_ver eq '2.0'}selected="selected"{/if}>{tr}Use @version:x.x specified in theme css or 2.0 if not specified{/tr}</option>
 							</select>
 						</td>
 					</tr>
@@ -143,40 +148,83 @@
 						{/if}
 					</td>
 				</tr>
-				<tr>
- 	       <td class="form" >
-						{if $prefs.feature_help eq 'y'}
-							<a href="{$prefs.helpurl}Site+Identity" target="tikihelp" class="tikihelp" title="{tr}Site Identity{/tr}">
-						{/if}
-						{tr}Site Identity{/tr}
-						{if $prefs.feature_help eq 'y'}</a>{/if}
-					</td>
-					<td >
-						<input type="checkbox" name="feature_siteidentity" {if $prefs.feature_siteidentity eq 'y'}checked="checked"{/if}/>
-						{tr}Required for many of the general layout features{/tr}
-					</td>
-				</tr>
 			</table>
-			{if $prefs.feature_tabs neq 'y'}</div>{/if}
-		</fieldset> 
+	{/tab}
 
+	{tab name="{tr}General Layout options{/tr}"}
 {* --- General Layout options --- *}
-
-		<fieldset{if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>
-			{if $prefs.feature_tabs neq 'y'}
-				<legend class="heading" id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}">
-					<a href="#layout" onclick="flip('layout'); return false;">
-						<span>{tr}General Layout options{/tr}</span>
-					</a>
-				</legend>
-				<div id="layout" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_layout) and $smarty.session.tiki_cookie_jar.show_layout neq 'y'}none{else}block{/if};">{/if}
 				<table class="admin" width="100%">
 				<tr>
 					<td class="form" colspan="5">
+
+					{* --- Shadow layer --- *}
+						<fieldset class="admin">
+							<legend>{tr}Shadow layer{/tr}</legend>
+							<div>{tr}Enable additional general layout layers for shadows, rounded corners or other decorative styling{/tr}</div>
+							<table class="admin">
+							<tr>
+								<td class="form">
+									<label for="feature_layoutshadows">{tr}Activate{/tr}:</label>
+								</td>
+								<td>				
+									<input class="checkbox" type="checkbox" name="feature_layoutshadows" id="feature_layoutshadows"{if $prefs.feature_layoutshadows eq 'y'} checked="checked"{/if} onclick="toggleTrTd('shd1');toggleTrTd('shd2');toggleTrTd('shd3');toggleTrTd('shd4');toggleTrTd('shd5');toggleTrTd('shd6');toggleTrTd('shd7');toggleTrTd('shd8');toggleTrTd('shd9');toggleTrTd('shd10');toggleTrTd('shd11');toggleTrTd('shd12');"  />
+								</td>
+							</tr>
+							<tr id="shd1" {if $prefs.feature_layoutshadows ne 'y' and $prefs.javascript_enabled eq 'y'} style="display:none;"{/if}>
+								<td class="form"><label for="main_shadow_start">{tr}Main shadow start{/tr}</label></td>
+								<td class="form"><textarea name="main_shadow_start" id="main_shadow_start" rows="2" cols="40">{$prefs.main_shadow_start|escape}</textarea></td>
+							</tr>
+							<tr id="shd2" {if $prefs.feature_layoutshadows ne 'y' and $prefs.javascript_enabled eq 'y'} style="display:none;"{/if}>
+								<td class="form"><label for="main_shadow_end">{tr}Main shadow end{/tr}</label></td>
+								<td class="form"><textarea name="main_shadow_end" id="main_shadow_end" rows="2" cols="40">{$prefs.main_shadow_end|escape}</textarea></td>
+							</tr>
+							<tr id="shd3" {if $prefs.feature_layoutshadows ne 'y' and $prefs.javascript_enabled eq 'y'} style="display:none;"{/if}>
+								<td class="form"><label for="header_shadow_start">{tr}Header shadow start{/tr}</label></td>
+								<td class="form"><textarea name="header_shadow_start" id="header_shadow_start" rows="2" cols="40">{$prefs.header_shadow_start|escape}</textarea></td>
+							</tr>
+							<tr id="shd4" {if $prefs.feature_layoutshadows ne 'y' and $prefs.javascript_enabled eq 'y'} style="display:none;"{/if}>
+								<td class="form"><label for="header_shadow_end">{tr}Header shadow end{/tr}</label></td>
+								<td class="form"><textarea name="header_shadow_end" id="header_shadow_end" rows="2" cols="40">{$prefs.header_shadow_end|escape}</textarea></td>
+							</tr>
+							<tr id="shd5" {if $prefs.feature_layoutshadows ne 'y' and $prefs.javascript_enabled eq 'y'} style="display:none;"{/if}>
+								<td class="form"><label for="middle_shadow_start">{tr}Middle shadow start{/tr}</label></td>
+								<td class="form"><textarea name="middle_shadow_start" id="middle_shadow_start" rows="2" cols="40">{$prefs.middle_shadow_start|escape}</textarea></td>
+							</tr>
+							<tr id="shd6" {if $prefs.feature_layoutshadows ne 'y' and $prefs.javascript_enabled eq 'y'} style="display:none;"{/if}>
+								<td class="form"><label for="middle_shadow_end">{tr}Middle shadow end{/tr}</label></td>
+								<td class="form"><textarea name="middle_shadow_end" id="middle_shadow_end" rows="2" cols="40">{$prefs.middle_shadow_end|escape}</textarea></td>
+							</tr>
+							<tr id="shd7" {if $prefs.feature_layoutshadows ne 'y' and $prefs.javascript_enabled eq 'y'} style="display:none;"{/if}>
+								<td class="form"><label for="center_shadow_start">{tr}Center shadow start{/tr}</label></td>
+								<td class="form"><textarea name="center_shadow_start" id="center_shadow_start" rows="2" cols="40">{$prefs.center_shadow_start|escape}</textarea></td>
+							</tr>
+							<tr id="shd8" {if $prefs.feature_layoutshadows ne 'y' and $prefs.javascript_enabled eq 'y'} style="display:none;"{/if}>
+								<td class="form"><label for="center_shadow_end">{tr}Center shadow end{/tr}</label></td>
+								<td class="form"><textarea name="center_shadow_end" id="center_shadow_end" rows="2" cols="40">{$prefs.center_shadow_end|escape}</textarea></td>
+							</tr>
+							<tr id="shd9" {if $prefs.feature_layoutshadows ne 'y' and $prefs.javascript_enabled eq 'y'} style="display:none;"{/if}>
+								<td class="form"><label for="footer_shadow_start">{tr}Footer shadow start{/tr}</label></td>
+								<td class="form"><textarea name="footer_shadow_start" id="footer_shadow_start" rows="2" cols="40">{$prefs.footer_shadow_start|escape}</textarea></td>
+							</tr>
+							<tr id="shd10" {if $prefs.feature_layoutshadows ne 'y' and $prefs.javascript_enabled eq 'y'} style="display:none;"{/if}>
+								<td class="form"><label for="footer_shadow_end">{tr}Footer shadow end{/tr}</label></td>
+								<td class="form"><textarea name="footer_shadow_end" id="footer_shadow_end" rows="2" cols="40">{$prefs.footer_shadow_end|escape}</textarea></td>
+							</tr>
+							<tr id="shd11" {if $prefs.feature_layoutshadows ne 'y' and $prefs.javascript_enabled eq 'y'} style="display:none;"{/if}>
+								<td class="form"><label for="box_shadow_start">{tr}Module (box) shadow start{/tr}</label></td>
+								<td class="form"><textarea name="box_shadow_start" id="box_shadow_start" rows="2" cols="40">{$prefs.box_shadow_start|escape}</textarea></td>
+							</tr>
+							<tr id="shd12" {if $prefs.feature_layoutshadows ne 'y' and $prefs.javascript_enabled eq 'y'} style="display:none;"{/if}>
+								<td class="form"><label for="box_shadow_end">{tr}Module (box) shadow end{/tr}</label></td>
+								<td class="form"><textarea name="box_shadow_end" id="box_shadow_end" rows="2" cols="40">{$prefs.box_shadow_end|escape}</textarea></td>
+							</tr>
+							</table>
+						</fieldset>					
+
 					{* --- Customize Site Header --- *}
 						<fieldset class="admin">
 							<legend>
-								<a href="#">
+								<a href="#" title="{tr}Top{/tr}">
 									<span>{tr}Custom Site Header{/tr}</span>
 								</a>
 							</legend>
@@ -216,7 +264,7 @@
 					{* --- Customize Site Logo and Site Titile--- *}
 						<fieldset>
 							<legend>
-								<a href="#"><span>{tr}Site Logo and Title{/tr}</span></a>
+								<a href="#" title="{tr}Top{/tr}"><span>{tr}Site Logo and Title{/tr}</span></a>
 							</legend>
 							<table class="admin">
 							<tr>
@@ -270,7 +318,7 @@
 									<label for="sitelogo_title">{tr}Site logo title (on mouse over){/tr}:</label>
 								</td>
 								<td>
-									<input type="text" name="sitelogo_title" id="sitelogo_title" value="{$prefs.sitelogo_title}" size="50" maxlength="50" />
+									<input type="text" name="sitelogo_title" id="sitelogo_title" value="{$prefs.sitelogo_title}" size="50" maxlength="200" />
 								</td>
 							</tr>
 							<tr>
@@ -278,7 +326,7 @@
 									<label for="sitelogo_alt">{tr}Alt. description (e.g. for text browsers){/tr}:</label>
 								</td>
 								<td>
-									<input type="text" name="sitelogo_alt" id="sitelogo_alt" value="{$prefs.sitelogo_alt}" size="50" maxlength="50" />
+									<input type="text" name="sitelogo_alt" id="sitelogo_alt" value="{$prefs.sitelogo_alt}" size="50" maxlength="200" />
 								</td>
 							</tr>
 							<tr>
@@ -286,7 +334,7 @@
 									<label for="_sitetitle">{tr}Site title{/tr}:</label>
 								</td>
 								<td>
-									<input type="text" name="sitetitle" id="_sitetitle" value="{$prefs.sitetitle}" size="50" maxlength="50" />
+									<input type="text" name="sitetitle" id="_sitetitle" value="{$prefs.sitetitle}" size="50" maxlength="200" />
 								</td>
 							</tr>
 							<tr>
@@ -294,7 +342,7 @@
 									<label for="_sitesubtitle">{tr}Site subtitle{/tr}:</label>
 								</td>
 								<td>
-									<input type="text" name="sitesubtitle" id="_sitesubtitle" value="{$prefs.sitesubtitle}" size="50" maxlength="50" />
+									<input type="text" name="sitesubtitle" id="_sitesubtitle" value="{$prefs.sitesubtitle}" size="50" maxlength="200" />
 								</td>
 							</tr>
 							</table>
@@ -303,7 +351,7 @@
 					{* --- Site Search Bar --- *}
         		<fieldset>
         			<legend>
-								<a href="#"><span>{tr}Site Search Bar{/tr}</span></a>
+								<a href="#" title="{tr}Top{/tr}"><span>{tr}Site Search Bar{/tr}</span></a>
 							</legend>
 							<table class="admin">
 							<tr> 
@@ -320,7 +368,7 @@
 					{* --- Site Login Bar --- *}
 						<fieldset>
 							<legend>
-								<a href="#"><span>{tr}Site Login Bar{/tr}</span></a>
+								<a href="#" title="{tr}Top{/tr}"><span>{tr}Site Login Bar{/tr}</span></a>
 							</legend>
 							<table class="admin">
 							<tr> 
@@ -337,13 +385,11 @@
 					{* --- Top Bar --- *}
 						<fieldset>
 							<legend>
-								<a href="#">
 								<span>
 									<input type="checkbox" name="feature_top_bar" {if $prefs.feature_top_bar eq 'y'}checked="checked"{/if}/>
-									{tr}Top Bar{/tr}
+								<a href="#" title="{tr}Top{/tr}">{tr}Top Bar{/tr}</a>
 								</span>
-								</a>
-							</legend>
+							</legend> 
 							<table class="admin">
 							<tr> 
 								<td class="form">
@@ -372,14 +418,6 @@
 							</tr>
 							<tr> 
 								<td class="form">
-									<label for="feature_topbar_date">{tr}Date{/tr}:</label>
-								</td>
-								<td>
-									<input type="checkbox" name="feature_topbar_date" id="feature_topbar_date"{if $prefs.feature_topbar_date eq 'y'} checked="checked"{/if} />
-								</td>
-							</tr>
-							<tr> 
-								<td class="form">
 									<label for="feature_topbar_debug">{tr}Debugger Console{/tr}:</label>
 								</td>
 								<td>
@@ -402,16 +440,15 @@
         	<td>
 						<fieldset>
 							<legend>
-								<a href="#"><span>
 								{if $prefs.feature_help eq 'y'}
 									<a href="{$prefs.helpurl}Users+Flip+Columns" target="tikihelp" class="tikihelp" title="{tr}Users can Flip Columns{/tr}">
 								{/if}
-        				{tr}Left column{/tr}:
+        						{tr}Left column{/tr}:
 								{if $prefs.feature_help eq 'y'}</a>{/if}
-								</span></a>
 							</legend>
         			<select name="feature_left_column">
-								<option value="y" {if $prefs.feature_left_column eq 'y'}selected="selected"{/if}>{tr}always{/tr}</option>
+								<option value="y" {if $prefs.feature_left_column eq 'y'}selected="selected"{/if}>{tr}only if module{/tr}</option>
+								<option value="fixed" {if $prefs.feature_left_column eq 'fixed'}selected="selected"{/if}>{tr}always{/tr}</option>
 								<option value="user" {if $prefs.feature_left_column eq 'user'}selected="selected"{/if}>{tr}user decides{/tr}</option>
 								<option value="n" {if $prefs.feature_left_column eq 'n'}selected="selected"{/if}>{tr}never{/tr}</option>
 							</select>
@@ -421,7 +458,7 @@
 					{* --- Site Breadcrumbs --- *}
 						<fieldset class="admin">
 							<legend>
-								<a href="#"><span>{tr}Site Breadcrumbs{/tr}</span></a>
+								<a href="#" title="{tr}Top{/tr}"><span>{tr}Site Breadcrumbs{/tr}</span></a>
 							</legend>
 							<table class="admin">
 							<tr>
@@ -482,16 +519,15 @@
 					<td class="form">
 						<fieldset>
 							<legend>
-								<a href="#"><span>
-									{if $prefs.feature_help eq 'y'}
-										<a href="{$prefs.helpurl}Users+Flip+Columns" target="tikihelp" class="tikihelp" title="{tr}Users can Flip Columns{/tr}">
-									{/if}
-        					{tr}Right column{/tr}:
-									{if $prefs.feature_help eq 'y'}</a>{/if}
-								</span></a>
+								{if $prefs.feature_help eq 'y'}
+									<a href="{$prefs.helpurl}Users+Flip+Columns" target="tikihelp" class="tikihelp" title="{tr}Users can Flip Columns{/tr}">
+								{/if}
+        						{tr}Right column{/tr}:
+								{if $prefs.feature_help eq 'y'}</a>{/if}
 							</legend>
 							<select name="feature_right_column">
-								<option value="y" {if $prefs.feature_right_column eq 'y'}selected="selected"{/if}>{tr}always{/tr}</option>
+								<option value="y" {if $prefs.feature_right_column eq 'y'}selected="selected"{/if}>{tr}only if module{/tr}</option>
+								<option value="fixed" {if $prefs.feature_right_column eq 'fixed'}selected="selected"{/if}>{tr}always{/tr}</option>
 								<option value="user" {if $prefs.feature_right_column eq 'user'}selected="selected"{/if}>{tr}user decides{/tr}</option>
 								<option value="n" {if $prefs.feature_right_column eq 'n'}selected="selected"{/if}>{tr}never{/tr}</option>
 							</select>
@@ -503,7 +539,7 @@
 					<td colspan="5">
 						<fieldset>
 							<legend>
-								<a href="#"><span>{tr}Site Report Bar{/tr}</span></a>
+								<a href="#" title="{tr}Top{/tr}"><span>{tr}Site Report Bar{/tr}</span></a>
 							</legend>
 							<table class="admin">
 							<tr> 
@@ -539,7 +575,7 @@
 					<td colspan="5">
 						<fieldset>
 							<legend>
-								<a href="#"><span>{tr}Custom Site Footer{/tr}</span></a>
+								<a href="#" title="{tr}Top{/tr}"><span>{tr}Custom Site Footer{/tr}</span></a>
 							</legend>
 							<table class="admin">
 							<tr>
@@ -568,7 +604,7 @@
 					<td colspan="5">
 						<fieldset>
 							<legend>
-								<a href="#"><span>{tr}Custom End of <body> Code{/tr}</span></a>
+								<a href="#" title="{tr}Top{/tr}"><span>{tr}Custom End of &lt;body&gt; Code{/tr}</span></a>
 							</legend>
 							<table class="admin">
 							<tr>
@@ -589,7 +625,7 @@
 					<td colspan="5" class="form">
 						<fieldset>
 							<legend>
-								<a href="#"><span>{tr}Bottom bar{/tr}</span></a>
+								<a href="#" title="{tr}Top{/tr}"><span>{tr}Bottom bar{/tr}</span></a>
 							</legend>
 							<label for="feature_bot_bar">{tr}Activate{/tr}:</label>
 							<input type="checkbox" name="feature_bot_bar" {if $prefs.feature_bot_bar eq 'y'}checked="checked"{/if}/>
@@ -612,8 +648,13 @@
 					<td colspan="5" class="form">
 						<fieldset>
 							<legend>
-								<a href="#"><span>{tr}Pagination links{/tr}</span></a>
+								<a href="#" title="{tr}Top{/tr}"><span>{tr}Pagination links{/tr}</span></a>
 							</legend>
+
+							<div class="adminoptionbox">	  
+							<div class="adminoptionlabel"><label for="general-max_records">{tr}Maximum number of records in listings{/tr}:</label> <input size="5" type="text" name="maxRecords" id="general-max_records" value="{$prefs.maxRecords|escape}" /></div>
+							</div>
+
 							<input type="checkbox" name="nextprev_pagination" id="nextprev_pagination" {if $prefs.nextprev_pagination eq 'y'}checked="checked"{/if}/>
 							<label for="nextprev_pagination">{tr}Use relative (next / previous) pagination links{/tr}</label>
 							<hr />
@@ -628,82 +669,412 @@
 							<label for="pagination_firstlast">{tr}Display 'First' and 'Last' links{/tr}</label><br />
 							<input type="checkbox" name="pagination_fastmove_links" id="pagination_fastmove_links" {if $prefs.pagination_fastmove_links eq 'y'}checked="checked"{/if}/>
 							<label for="pagination_fastmove_links">{tr}Display fast move links (by 10 percent of the total number of pages) {/tr}</label><br />
+							<input type="checkbox" name="pagination_hide_if_one_page" id="pagination_hide_if_one_page" {if $prefs.pagination_hide_if_one_page eq 'y'}checked="checked"{/if}/>
+							<label for="pagination_hide_if_one_page">{tr}Hide pagination when there is only one page{/tr}</label><br />
 							<input type="checkbox" name="pagination_icons" id="pagination_icons" {if $prefs.pagination_icons eq 'y'}checked="checked"{/if}/>
 							<label for="pagination_icons">{tr}Use Icons{/tr}</label><br />
 						</fieldset>
 					</td>
 				</tr>
-				<tr>
-				<td class="form" colspan="5">
-					<input type="checkbox" name="feature_menusfolderstyle" id="general-menu_folders" {if $prefs.feature_menusfolderstyle eq 'y'}checked="checked"{/if}/>
- 	       <label for="general-menu_folders">{tr}Display menus as folders{/tr}</label>
-				</td>
-			</tr>
-			<tr>
-				<td class="form" colspan="5">
-					<input type="checkbox" name="feature_tabs" id="general-feature_tabs" {if $prefs.feature_tabs eq 'y'}checked="checked"{/if}/>
-					<label for="general-feature_tabs">{tr}Use Tabs{/tr}</label>
-				</td>
-			</tr>
-			<tr>
-				<td class="form" colspan="5">
-					<div class="floatleft">
-						<input type="checkbox" name="layout_section" id="general-layout_section" {if $prefs.layout_section eq 'y'}checked="checked"{/if}/>
- 		       <label for="general-layout_section">{tr}Layout per section{/tr}</label>
-					</div>
-					<div class="floatright">
-						{if $prefs.layout_section eq 'y'}
-							<a href="tiki-admin_layout.php" class="linkbut link">
-						{else}
-							<span class="linkbut disabled">
-						{/if}
-						{tr}Admin layout per section{/tr}
-						{if $prefs.layout_section eq 'y'}
-							</a>
-						{else}
-							</span>
-						{/if}
-					</div>
-					<hr class="clear" />
-				</td>
-			</tr>
 			</table>
-			{if $prefs.feature_tabs neq 'y'}</div>{/if}
-		</fieldset>
-
-		<fieldset{if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>
-			{if $prefs.feature_tabs neq 'y'}
-				<legend class="heading" id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}">
-					<a href="#other" onclick="flip('other'); return false;">
-					<span>{tr}Other options{/tr}</span>
-					</a>
+	{/tab}
+		
+	{tab name="{tr}UI Effects{/tr}"}
+{* --- UI Effects (JQuery) --- *}
+			<fieldset class="admin">
+				<legend>
+					<a href="#"><span>{tr}JQuery plugins and add-ons{/tr}</span></a>
 				</legend>
-				<div id="other" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_other) and $smarty.session.tiki_cookie_jar.show_other neq 'y'}none{else}block{/if};">
-			{/if}
-			<div class="clear floatleft">
-				<input type="checkbox" id="use_context_menu_icon" name="use_context_menu_icon" {if $prefs.use_context_menu_icon eq 'y'}checked="checked"{/if} />
-				<label for="use_context_menu_icon">{tr}Use context menus for actions (icons) (only in file galleries yet){/tr}</label>
-			</div>
-			<div class="clear floatleft">
-				<input type="checkbox" id="use_context_menu_text" name="use_context_menu_text" {if $prefs.use_context_menu_text eq 'y'}checked="checked"{/if}/>
-				<label for="use_context_menu_text">{tr}Use context menus for actions (text) (only in file galleries yet){/tr}</label>
-			</div>
-			<div class="clear floatleft">
-				<label for="site_favicon">{tr}Favicon icon file name:{/tr}</label>
-				<input type="text" name="site_favicon" id="site_favicon" value="{$prefs.site_favicon}" size="12" maxlength="32" />
-			</div>
-			<div class="clear floatleft">
-				<label for="site_favicon_type">{tr}Favicon icon MIME type:{/tr}</label>
-				<select name="site_favicon_type" id="site_favicon_type">
-					<option value="image/png" {if $prefs.site_favicon_type eq 'image/png'}selected="selected"{/if}>{tr}image/png{/tr}</option>
-					<option value="image/bmp" {if $prefs.site_favicon_type eq 'image/bmp'}selected="selected"{/if}>{tr}image/bmp{/tr}</option>
-					<option value="image/x-icon" {if $prefs.site_favicon_type eq 'image/x-icon'}selected="selected"{/if}>{tr}image/x-icon{/tr}</option>
-				</select>
-			</div>
-			{if $prefs.feature_tabs neq 'y'}</div>{/if}
-		</fieldset>
+				{if $prefs.feature_jquery eq 'n'}
+				 	 {remarksbox type="warning" title="{tr}Warning{/tr}"}{tr}Requires jquery feature{/tr}</em>{icon _id="arrow_right" href="tiki-admin.php?page=features"}{/remarksbox}
+				{/if}
+				<table>
+					<tr>
+						<td width="30%">
+							<label for="feature_jquery_tooltips">{tr}JQuery Tooltips{/tr}</label>
+						</td>
+						<td width="2%">
+							{help url="JQuery#Tooltips" desc="{tr}JQuery Tooltips: Customisable help tips{/tr}"}
+						</td>
+						<td>
+							<input type="checkbox" name="feature_jquery_tooltips" {if $prefs.feature_jquery_tooltips eq 'y'}checked="checked"{/if}/>
+						</td>
+					</tr>
+					<tr>
+						<td width="30%">
+							<label for="feature_jquery_autocomplete">{tr}JQuery Autocomplete{/tr}</label>
+						</td>
+						<td width="2%">
+							{help url="JQuery#Autocomplete" desc="{tr}JQuery Autocomplete{/tr}"}
+						</td>
+						<td>
+							<input type="checkbox" name="feature_jquery_autocomplete" {if $prefs.feature_jquery_autocomplete eq 'y'}checked="checked"{/if}/>
+						</td>
+					</tr>
+					<tr>
+						<td width="30%">
+							<label for="feature_jquery_superfish">{tr}JQuery Superfish{/tr}</label>
+						</td>
+						<td width="2%">
+							{help url="JQuery#Superfish" desc="{tr}JQuery Superfish (effects on CSS menus){/tr}"}
+						</td>
+						<td>
+							<input type="checkbox" name="feature_jquery_superfish" {if $prefs.feature_jquery_superfish eq 'y'}checked="checked"{/if}/>
+						</td>
+					</tr>
+					<tr>
+						<td width="30%">
+							<label for="feature_jquery_reflection">{tr}JQuery Reflection{/tr}</label>
+						</td>
+						<td width="2%">
+							{help url="JQuery#Reflection" desc="{tr}JQuery Reflection (reflection effect on images){/tr}"}
+						</td>
+						<td>
+							<input type="checkbox" name="feature_jquery_reflection" {if $prefs.feature_jquery_reflection eq 'y'}checked="checked"{/if}/>
+						</td>
+					</tr>
+					<tr>
+						<td width="30%">
+							<label for="feature_jquery_cycle">{tr}JQuery Cycle (slideshow){/tr}</label>
+						</td>
+						<td width="2%">
+							{help url="JQuery#Cycle" desc="{tr}JQuery Cycle (slideshow){/tr}"}
+						</td>
+						<td>
+							<input type="checkbox" name="feature_jquery_cycle" {if $prefs.feature_jquery_cycle eq 'y'}checked="checked"{/if}/>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+							<hr />
+							<em>{tr}For future use{/tr}</em>
+						</td>
+					</tr>
+					<tr>
+						<td width="30%">
+							<label for="feature_jquery_ui">{tr}JQuery UI{/tr}</label>
+						</td>
+						<td width="2%">
+							{help url="JQuery#UI" desc="{tr}JQuery UI: More JQuery functionality{/tr}"}
+						</td>
+						<td>
+							<input type="checkbox" name="feature_jquery_ui" {if $prefs.feature_jquery_ui eq 'y'}checked="checked"{/if}/>
+						</td>
+					</tr>
+					<tr>
+						<td width="30%">
+							<label for="feature_jquery_sheet">{tr}JQuery Sheet{/tr}</label>
+						</td>
+						<td width="2%">
+							{help url="JQuery#Sheet" desc="{tr}JQuery Spreadsheet{/tr}"}
+						</td>
+						<td>
+							<input type="checkbox" name="feature_jquery_sheet" {if $prefs.feature_jquery_sheet eq 'y'}checked="checked"{/if}/>
+						</td>
+					</tr>
+					<tr>
+						<td width="30%">
+							<label for="feature_jquery_tablesorter">{tr}JQuery Sortable Tables{/tr}</label>
+						</td>
+						<td width="2%">
+							{help url="JQuery#TableSorter" desc="{tr}JQuery Sortable Tables{/tr}"}
+						</td>
+						<td>
+							<input type="checkbox" name="feature_jquery_tablesorter" {if $prefs.feature_jquery_tablesorter eq 'y'}checked="checked"{/if}/>
+						</td>
+					</tr>
+				</table>
+			</fieldset>
+			<fieldset class="admin">
+				<legend>
+					<a><span>{tr}Standard UI effects{/tr}</span></a>
+				</legend>
+				<table>
+					<tr>
+						<td width="30%">
+							<label for="jquery_effect">{tr}Effect for modules etc{/tr}</label>
+						</td>
+						<td width="2%">
+					        {help url="JQuery#Effects" desc="{tr}Main JQuery effect{/tr}"}
+						</td>
+						<td>
+							<select name="jquery_effect" id="jquery_effect">
+					            <option value="none" {if $prefs.jquery_effect_tabs eq 'none'}selected="selected"{/if}>
+					              {tr}None{/tr}</option>
+					            <option value="" {if $prefs.jquery_effect eq ''}selected="selected"{/if}>
+					              {tr}Default{/tr}</option>
+					            <option value="slide" {if $prefs.jquery_effect eq 'slide'}selected="selected"{/if}>
+					              {tr}Slide{/tr}</option>
+					            <option value="fade" {if $prefs.jquery_effect eq 'fade'}selected="selected"{/if}>
+					              {tr}Fade{/tr}</option>
+					            {if $prefs.feature_jquery_ui eq 'y'}
+					            <option value="blind_ui" {if $prefs.jquery_effect eq 'blind_ui'}selected="selected"{/if}>
+					              {tr}Blind (UI){/tr}</option>
+					            <option value="clip_ui" {if $prefs.jquery_effect eq 'clip_ui'}selected="selected"{/if}>
+					              {tr}Clip (UI){/tr}</option>
+					            <option value="drop_ui" {if $prefs.jquery_effect eq 'drop_ui'}selected="selected"{/if}>
+					              {tr}Drop (UI){/tr}</option>
+					            <option value="explode_ui" {if $prefs.jquery_effect eq 'explode_ui'}selected="selected"{/if}>
+					              {tr}Explode (UI){/tr}</option>
+					            <option value="fold_ui" {if $prefs.jquery_effect eq 'fold_ui'}selected="selected"{/if}>
+					              {tr}Fold (UI){/tr}</option>
+					            <option value="puff_ui" {if $prefs.jquery_effect eq 'puff_ui'}selected="selected"{/if}>
+					              {tr}Puff (UI){/tr}</option>
+					            <option value="slide_ui" {if $prefs.jquery_effect eq 'slide_ui'}selected="selected"{/if}>
+					              {tr}Slide (UI){/tr}</option>
+					            {/if}
+					         </select>
+						</td>
+					</tr>
+					<tr>
+						<td width="30%">
+							<label for="jquery_effect_speed">{tr}Effect speed{/tr}</label>
+						</td>
+						<td width="2%">
+						</td>
+						<td>
+							<select name="jquery_effect_speed" id="jquery_effect_speed">
+					            <option value="fast" {if $prefs.jquery_effect_speed eq 'fast'}selected="selected"{/if}>
+					              {tr}Fast{/tr}</option>
+					            <option value="normal" {if $prefs.jquery_effect_speed eq 'normal'}selected="selected"{/if}>
+					              {tr}Normal{/tr}</option>
+					            <option value="slow" {if $prefs.jquery_effect_speed eq 'slow'}selected="selected"{/if}>
+					              {tr}Slow{/tr}</option>
+					         </select>
+						</td>
+					</tr>
+					<tr>
+						<td width="30%">
+							<label for="jquery_effect_direction">{tr}Effect direction{/tr}</label>
+						</td>
+						<td width="2%">
+						</td>
+						<td>
+							<select name="jquery_effect_direction" id="jquery_effect_direction">
+					            <option value="vertical" {if $prefs.jquery_effect_direction eq 'vertical'}selected="selected"{/if}>
+					              {tr}Vertical{/tr}</option>
+					            <option value="horizontal" {if $prefs.jquery_effect_direction eq 'horizontal'}selected="selected"{/if}>
+					              {tr}Horizontal{/tr}</option>
+					            <option value="left" {if $prefs.jquery_effect_direction eq 'left'}selected="selected"{/if}>
+					              {tr}Left{/tr}</option>
+					            <option value="right" {if $prefs.jquery_effect_direction eq '"right"'}selected="selected"{/if}>
+					              {tr}Right{/tr}</option>
+					            <option value="up" {if $prefs.jquery_effect_direction eq 'up'}selected="selected"{/if}>
+					              {tr}Up{/tr}</option>
+					            <option value="down" {if $prefs.jquery_effect_direction eq 'down'}selected="selected"{/if}>
+					              {tr}Down{/tr}</option>
+					         </select>
+						</td>
+					</tr>
+				</table>
+			</fieldset>
+			<fieldset class="admin">
+				<legend>
+					<a><span>{tr}Tab UI effects{/tr}</span></a>
+				</legend>
+				<table>
+					<tr>
+						<td width="30%">
+							<label for="jquery_effect_tabs">{tr}Effect for tabs{/tr}</label>
+						</td>
+						<td width="2%">
+							{help url="JQuery#Effects" desc="{tr}JQuery effect for tabs{/tr}"}
+						</td>
+						<td>
+							<select name="jquery_effect_tabs" id="jquery_effect_tabs">
+					            <option value="none" {if $prefs.jquery_effect_tabs eq 'none'}selected="selected"{/if}>
+					              {tr}None{/tr}</option>
+					            <option value="normal" {if $prefs.jquery_effect_tabs eq 'normal'}selected="selected"{/if}>
+					              {tr}Normal{/tr}</option>
+					            <option value="slide" {if $prefs.jquery_effect_tabs eq 'slide'}selected="selected"{/if}>
+					              {tr}Slide{/tr}</option>
+					            <option value="fade" {if $prefs.jquery_effect_tabs eq 'fade'}selected="selected"{/if}>
+					              {tr}Fade{/tr}</option>
+					            {if $prefs.feature_jquery_ui eq 'y'}
+					            <option value="blind_ui" {if $prefs.jquery_effect_tabs eq 'blind_ui'}selected="selected"{/if}>
+					              {tr}Blind (UI){/tr}</option>
+					            <option value="clip_ui" {if $prefs.jquery_effect_tabs eq 'clip_ui'}selected="selected"{/if}>
+					              {tr}Clip (UI){/tr}</option>
+					            <option value="drop_ui" {if $prefs.jquery_effect_tabs eq 'drop_ui'}selected="selected"{/if}>
+					              {tr}Drop (UI){/tr}</option>
+					            <option value="explode_ui" {if $prefs.jquery_effect_tabs eq 'explode_ui'}selected="selected"{/if}>
+					              {tr}Explode (UI){/tr}</option>
+					            <option value="fold_ui" {if $prefs.jquery_effect_tabs eq 'fold_ui'}selected="selected"{/if}>
+					              {tr}Fold (UI){/tr}</option>
+					            <option value="puff_ui" {if $prefs.jquery_effect_tabs eq 'puff_ui'}selected="selected"{/if}>
+					              {tr}Puff (UI){/tr}</option>
+					            <option value="slide_ui" {if $prefs.jquery_effect_tabs eq 'slide_ui'}selected="selected"{/if}>
+					              {tr}Slide (UI){/tr}</option>
+					            {/if}
+					         </select>
+						</td>
+					</tr>
+					<tr>
+						<td width="30%">
+							<label for="jquery_effect_tabs_speed">{tr}Effect speed for tabs{/tr}</label>
+						</td>
+						<td width="2%">
+						</td>
+						<td>
+							<select name="jquery_effect_tabs_speed" id="jquery_effect_tabs_speed">
+					            <option value="fast" {if $prefs.jquery_effect_tabs_speed eq 'fast'}selected="selected"{/if}>
+					              {tr}Fast{/tr}</option>
+					            <option value="normal" {if $prefs.jquery_effect_tabs_speed eq 'normal'}selected="selected"{/if}>
+					              {tr}Normal{/tr}</option>
+					            <option value="slow" {if $prefs.jquery_effect_tabs_speed eq 'slow'}selected="selected"{/if}>
+					              {tr}Slow{/tr}</option>
+					         </select>
+						</td>
+					</tr>
+					<tr>
+						<td width="30%">
+							<label for="jquery_effect_tabs_direction">{tr}Effect direction for tabs{/tr}</label>
+						</td>
+						<td width="2%">
+						</td>
+						<td>
+							<select name="jquery_effect_tabs_direction" id="jquery_effect_tabs_direction">
+					            <option value="vertical" {if $prefs.jquery_effect_tabs_direction eq 'vertical'}selected="selected"{/if}>
+					              {tr}Vertical{/tr}</option>
+					            <option value="horizontal" {if $prefs.jquery_tabs_effect_direction eq 'horizontal'}selected="selected"{/if}>
+					              {tr}Horizontal{/tr}</option>
+					            <option value="left" {if $prefs.jquery_effect_tabs_direction eq 'left'}selected="selected"{/if}>
+					              {tr}Left{/tr}</option>
+					            <option value="right" {if $prefs.jquery_effect_tabs_direction eq '"right"'}selected="selected"{/if}>
+					              {tr}Right{/tr}</option>
+					            <option value="up" {if $prefs.jquery_effect_tabs_direction eq 'up'}selected="selected"{/if}>
+					              {tr}Up{/tr}</option>
+					            <option value="down" {if $prefs.jquery_effect_tabs_direction eq 'down'}selected="selected"{/if}>
+					              {tr}Down{/tr}</option>
+					         </select>
+						</td>
+					</tr>
+				</table>
+			</fieldset>
+	{/tab}
 
-		<div class="button clear" style="text-align: center"><input type="submit" name="looksetup" value="{tr}Apply{/tr}" /></div>
+	{tab name="{tr}Other options{/tr}"}
+{* --- Other --- *}
+			<fieldset class="admin">
+				<legend>
+					<a><span>{tr}Miscellaneous{/tr}</span></a>
+				</legend>
+				<table>
+					<tr>
+						<td width="30%">
+							<label for="general-feature_tabs">{tr}Use Tabs{/tr}</label>
+						</td>
+						<td width="2%">
+						</td>
+						<td>
+							<input type="checkbox" name="feature_tabs" id="general-feature_tabs" {if $prefs.feature_tabs eq 'y'}checked="checked"{/if}/>
+						</td>
+					</tr>
+					<tr>
+						<td width="30%">
+			        		<label for="general-menu_folders">{tr}Display menus as folders{/tr}</label>
+						</td>
+						<td width="2%">
+						</td>
+						<td>
+							<input type="checkbox" name="feature_menusfolderstyle" id="general-menu_folders" {if $prefs.feature_menusfolderstyle eq 'y'}checked="checked"{/if}/>
+						</td>
+					</tr>
+					<tr>
+						<td width="30%">
+							<label for="general-layout_section">{tr}Layout per section{/tr}</label>
+						</td>
+						<td width="2%">
+						</td>
+						<td>
+							<input type="checkbox" name="layout_section" id="general-layout_section" {if $prefs.layout_section eq 'y'}checked="checked"{/if}/>
+							{if $prefs.layout_section eq 'y'}<a href="tiki-admin_layout.php" class="linkbut link">{else}<span class="linkbut disabled">{/if}
+							{tr}Admin layout per section{/tr}
+							{if $prefs.layout_section eq 'y'}</a>{else}</span>{/if}
+						</td>
+					</tr>
+					<tr>
+						<td width="30%">
+							<label for="site_favicon">{tr}Favicon icon file name:{/tr}</label>
+						</td>
+						<td width="2%">
+						</td>
+						<td>
+							<input type="text" name="site_favicon" id="site_favicon" value="{$prefs.site_favicon}" size="12" maxlength="32" />
+						</td>
+					</tr>
+					<tr>
+						<td width="30%">
+							<label for="site_favicon_type">{tr}Favicon icon MIME type:{/tr}</label>
+						</td>
+						<td width="2%">
+						</td>
+						<td>
+							<select name="site_favicon_type" id="site_favicon_type">
+								<option value="image/png" {if $prefs.site_favicon_type eq 'image/png'}selected="selected"{/if}>{tr}image/png{/tr}</option>
+								<option value="image/bmp" {if $prefs.site_favicon_type eq 'image/bmp'}selected="selected"{/if}>{tr}image/bmp{/tr}</option>
+								<option value="image/x-icon" {if $prefs.site_favicon_type eq 'image/x-icon'}selected="selected"{/if}>{tr}image/x-icon{/tr}</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+							<div class="adminoptionbox">	  
+								<div class="checkbox">
+									<input type="checkbox" name="feature_iepngfix" id="feature_iepngfix"{if $prefs.feature_iepngfix eq 'y'} checked="checked"{/if} onclick="flip('iepngfix');" />
+								</div>
+								<label for="feature_iepngfix">{tr}Correct PNG images alpha transparency in IE6 (experimental){/tr}</label>
+								
+								<div id="iepngfix" class="adminoptionboxchild" style="display:{if $prefs.feature_iepngfix eq 'y'}block{else}none{/if};">
+									<label class="above" for="iepngfix_selectors">{tr}List of CSS selectors to be fixed, each selector separated by comma{/tr}</label>
+									<input class="fullwidth" id="iepngfix_selectors" type="text" name="iepngfix_selectors" size="32" value="{$prefs.iepngfix_selectors}" />
+									<label class="above" for="iepngfix_elements">{tr}List of HTMLDomElements to be fixed, each element separated by comma{/tr}</label>
+									<input class="fullwidth" id="iepngfix_elements" type="text" name="iepngfix_elements" size="32" value="{$prefs.iepngfix_elements}" />
+								</div>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td width="30%">
+			        		<label for="menus_items_icons">{tr}Allow users to define icons for menus entries{/tr}</label>
+						</td>
+						<td width="2%">
+						</td>
+						<td>
+							<input type="checkbox" name="menus_items_icons" id="menus_items_icons" {if $prefs.menus_items_icons eq 'y'}checked="checked"{/if}/>
+						</td>
+					</tr>
+				</table>
+				<fieldset>
+					<legend>
+						<span>{tr}Context Menus (only in file galleries so far){/tr}</span>
+					</legend>
+					<table>
+						<tr>
+							<td width="40%">
+								<label for="use_context_menu_icon">{tr}Use context menus for actions (icons){/tr}</label>
+							</td>
+							<td width="2%">
+							</td>
+							<td>
+								<input type="checkbox" id="use_context_menu_icon" name="use_context_menu_icon" {if $prefs.use_context_menu_icon eq 'y'}checked="checked"{/if} />
+							</td>
+						</tr>
+						<tr>
+							<td width="40%">
+								<label for="use_context_menu_text">{tr}Use context menus for actions (text){/tr}</label>
+							</td>
+							<td width="2%">
+							</td>
+							<td>
+								<input type="checkbox" id="use_context_menu_text" name="use_context_menu_text" {if $prefs.use_context_menu_text eq 'y'}checked="checked"{/if}/>
+							</td>
+						</tr>
+					</table>
+				</fieldset>
+			</fieldset>
+	{/tab}
+{/tabset}
+		<div class="input_submit_container clear" style="text-align: center"><input type="submit" name="looksetup" value="{tr}Apply{/tr}" /></div>
 	</form>
 </div><!-- cbox end -->
-{/strip}

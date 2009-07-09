@@ -9,14 +9,17 @@
 	{/if}
 {/title}
 
-<div id="calscreen"{if $prefs.calendar_sticky_popup eq 'y'} onClick="nd();"{/if}>
+<div id="calscreen"{if $prefs.calendar_sticky_popup eq 'y'} onclick="nd();"{/if}>
 
 	<div class="navbar">
+		{if $displayedcals|@count eq 1 and $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
+			<a href="tiki-object_watches.php?objectId={$displayedcals[0]|escape:"url"}&amp;watch_event=calendar_changed&amp;objectType=calendar&amp;objectName={$infocals[$x].name|escape:"url"}&amp;objectHref={'tiki-calendar.php?calIds[]='|cat:$displayedcals[0]|escape:"url"}" class="icon">{icon _id='eye_group' alt='{tr}Group Monitor{/tr}' align='right' hspace="1"}</a>
+		{/if}
 		{if $displayedcals|@count eq 1 and $user and $prefs.feature_user_watches eq 'y'}
 			{if $user_watching eq 'y'}
-				<a href="tiki-calendar.php?watch_event=calendar_changed&amp;watch_action=remove" class="icon">{icon _id='no_eye' alt="{tr}Stop Monitoring this Page{/tr}"}</a>
+				<a href="tiki-calendar.php?watch_event=calendar_changed&amp;watch_action=remove" class="icon">{icon _id='no_eye' alt="{tr}Stop Monitoring this Page{/tr}" align="right" hspace="1"}</a>
 			{else}
-				<a href="tiki-calendar.php?watch_event=calendar_changed&amp;watch_action=add" class="icon">{icon _id='eye' alt="{tr}Monitor this Page{/tr}"}</a>
+				<a href="tiki-calendar.php?watch_event=calendar_changed&amp;watch_action=add" class="icon">{icon _id='eye' alt="{tr}Monitor this Page{/tr}" align="right" hspace="1"}</a>
 			{/if}
 		{/if}
 
@@ -27,8 +30,8 @@
 				{button href="tiki-admin_calendars.php" _text="{tr}Admin Calendar{/tr}"}
 			{/if}
 		{/if}
-
-		{if $tiki_p_add_events eq 'y'}
+{* avoid Add Event being shown if no calendar is displayed *}
+		{if $tiki_p_add_events eq 'y' and $displayedcals|@count >0}
 			{button href="tiki-calendar_edit_item.php" _text="{tr}Add Event{/tr}"}
 		{/if}
 
@@ -37,9 +40,11 @@
 		{/if}
 
 		{if $viewlist eq 'list'}
-			{button href="?viewlist=table" _text="{tr}Calendar View{/tr}"}
+			{capture name=href}?viewlist=table{if $smarty.request.todate}&amp;todate={$smarty.request.todate}{/if}{/capture}
+			{button href="`$smarty.capture.href`" _text="{tr}Calendar View{/tr}"}
 		{else}
-			{button href="?viewlist=list" _text="{tr}List View{/tr}"}
+			{capture name=href}?viewlist=list{if $smarty.request.todate}&amp;todate={$smarty.request.todate}{/if}{/capture}
+			{button href="`$smarty.capture.href`" _text="{tr}List View{/tr}"}
 		{/if}
 
 		{if count($listcals) >= 1}
@@ -60,10 +65,17 @@
 				{button href="" _style="background-color:#fff;padding:0 4px;" _text="{tr}None{/tr}"}
 			{/if}
 		{/if}
-
+{* show jscalendar if set *}
+{if $prefs.feature_jscalendar eq 'y'}
+<div class="jscalrow">
+<form action="{$myurl}" method="post" name="f">
+{jscalendar date="$focusdate" id="trig" goto="$jscal_url" align="Bc"}
+</form>
+</div>
+{/if}
 	</div>
 
-	<br />
+
 
 	<div class="navbar" align="right">
 		{if $user and $prefs.feature_user_watches eq 'y'}
@@ -71,7 +83,7 @@
 				{tr}Watched by categories{/tr}:
 				{section name=i loop=$watching_categories}
 					{assign var=thiswatchingcateg value=$watching_categories[i].categId}
-					{button href="tiki-browse_categories?parentId=$thiswatchingcateg" _text=$watching_categories[i].name}
+					{button href="tiki-browse_categories.php?parentId=$thiswatchingcateg" _text=$watching_categories[i].name}
 					&nbsp;
 				{/section}
 			{/if}	
@@ -82,8 +94,7 @@
 		<form id="filtercal" method="get" action="{$myurl}" name="f" style="display:none;">
 			<div class="caltitle">{tr}Group Calendars{/tr}</div>
 			<div class="caltoggle">
-				<input name="calswitch" id="calswitch" type="checkbox" onclick="switchCheckboxes(this.form,'calIds[]',this.checked);"/> 
-				<label for="calswitch">{tr}Check / Uncheck All{/tr}</label>
+				{select_all checkbox_names='calIds[]' label="{tr}Check / Uncheck All{/tr}"}				
 			</div>
 			{foreach item=k from=$listcals}
 				<div class="calcheckbox">
@@ -92,36 +103,43 @@
 				</div>
 			{/foreach}
 			<div class="calinput">
+				<input type="hidden" name="todate" value="{$focusdate}"/>
 				<input type="submit" name="refresh" value="{tr}Refresh{/tr}"/>
 			</div>
 		</form>
 	{/if}
 
-{if $tiki_p_admin_calendar eq 'y'}
-<form id="exportcal" method="post" action="{$exportUrl}" name="f" style="display:none;">
-<input type="hidden" name="export" value="y"/>
-<div class="caltitle">{tr}Export calendars{/tr}</div>
-<div class="caltoggle"><input name="calswitch" id="calswitch" type="checkbox" onclick="switchCheckboxes(this.form,'calendarIds[]',this.checked);"/> <label for="calswitch">{tr}Check / Uncheck All{/tr}</label></div>
-{foreach item=k from=$listcals}
-<div class="calcheckbox"><input type="checkbox" name="calendarIds[]" value="{$k|escape}" id="groupcal_{$k}" {if $thiscal.$k}checked="checked"{/if} />
-<label for="groupcal_{$k}" class="calId{$k}">{$infocals.$k.name}</label>
-</div>
-{/foreach}
-<div class="calcheckbox"><a href="{$iCalAdvParamsUrl}">{tr}advanced parameters{/tr}</a>
-</div>
-<div class="calinput"><input type="submit" name="valid" value="{tr}Export{/tr}"/></div>
-</form>
-{/if}
+	{if $tiki_p_admin_calendar eq 'y'}
+		<form id="exportcal" method="post" action="{$exportUrl}" name="f" style="display:none;">
+			<input type="hidden" name="export" value="y"/>
+			<div class="caltitle">{tr}Export calendars{/tr}</div>
+			<div class="caltoggle">
+				{select_all checkbox_names='calendarIds[]' label="{tr}Check / Uncheck All{/tr}"}
+			</div>
+			{foreach item=k from=$listcals}
+				<div class="calcheckbox">
+					<input type="checkbox" name="calendarIds[]" value="{$k|escape}" id="groupcal_{$k}" {if $thiscal.$k}checked="checked"{/if} />
+					<label for="groupcal_{$k}" class="calId{$k}">{$infocals.$k.name}</label>
+				</div>
+			{/foreach}
+			<div class="calcheckbox">
+				<a href="{$iCalAdvParamsUrl}">{tr}advanced parameters{/tr}</a>
+			</div>
+			<div class="calinput">
+				<input type="submit" name="valid" value="{tr}Export{/tr}"/>
+			</div>
+		</form>
+	{/if}
 
-	{include file="tiki-calendar_nav.tpl"}
+	{include file='tiki-calendar_nav.tpl'}
 	{if $viewlist eq 'list'}
-		{include file="tiki-calendar_listmode.tpl"'}
+		{include file='tiki-calendar_listmode.tpl''}
 	{elseif $viewmode eq 'day'}
-		{include file="tiki-calendar_daymode.tpl"}
+		{include file='tiki-calendar_daymode.tpl'}
 	{elseif $viewmode eq 'week'}
-		{include file="tiki-calendar_weekmode.tpl"}
+		{include file='tiki-calendar_weekmode.tpl'}
 	{else}
-		{include file="tiki-calendar_calmode.tpl"}
+		{include file='tiki-calendar_calmode.tpl'}
 	{/if}
 <p>&nbsp;</p>
 </div>

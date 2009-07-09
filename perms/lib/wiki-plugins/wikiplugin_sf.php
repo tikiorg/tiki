@@ -24,6 +24,7 @@ function wikiplugin_sf_help() {
 function wikiplugin_sf_info() {
 	return array(
 		'name' => tra('SourceForge'),
+		'documentation' => 'PluginSF',		
 		'description' => tra("Automatically creates a link to the appropriate SourceForge object"),
 		'prefs' => array( 'wikiplugin_sf' ),
 		'body' => tra('text'),
@@ -111,5 +112,3 @@ function wikiplugin_sf($data, $params) {
 
 	return $back;
 }
-
-?>

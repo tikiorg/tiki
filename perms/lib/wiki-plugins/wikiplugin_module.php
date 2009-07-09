@@ -37,6 +37,8 @@ function wikiplugin_module_info() {
 		'documentation' => 'PluginModule',
 		'description' => tra("Displays a module inlined in page. More parameters can be added, not supported by UI."),
 		'prefs' => array( 'wikiplugin_module' ),
+		'validate' => 'all',
+		'extraparams' =>true,
 		'params' => array(
 			'module' => array(
 				'required' => true,
@@ -78,7 +80,7 @@ function wikiplugin_module_info() {
 }
 
 function wikiplugin_module($data, $params) {
-	global $tikilib, $cache_time, $smarty, $dbTiki, $prefs, $ranklib, $tikidomain, $user, $tiki_p_tasks, $tiki_p_create_bookmarks, $imagegallib;
+	global $tikilib, $cache_time, $smarty, $dbTiki, $prefs, $ranklib, $tikidomain, $user, $tiki_p_tasks, $tiki_p_create_bookmarks, $imagegallib, $module_params;
 
 	$out = '';
 	extract ($params,EXTR_SKIP);
@@ -187,5 +189,3 @@ function wikiplugin_module($data, $params) {
 
 	return $data;
 }
-
-?>
