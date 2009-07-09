@@ -6,7 +6,7 @@
  * 
  * @package	lib
  * @author	Benjamin Palacios Gonzalo (mangapower) <mangapowerx@gmail.com>
- * @author	Aldo Borrero Gonz√°lez (axold) <axold07@gmail.com>
+ * @author	Aldo Borrero Gonz·lez (axold) <axold07@gmail.com>
  * @license	http://www.opensource.org/licenses/lgpl-2.1.php
  */
 
@@ -91,7 +91,7 @@ class wslib extends CategLib
     	    // It's given the tiki_p_ws_view permission to the selected group in the new ws
 	    $this->set_permissions_for_group_in_ws($wsID,$groupName,array('tiki_p_ws_view'));
 	
-    	    // It's added additional admin permissions to the group in the new ws
+    	    // It's given additional admin permissions to the group in the new ws
 	    if ($additionalPerms != null)
 		$this->set_permissions_for_group_in_ws($wsID,$groupName,$additionalPerms);
 
@@ -104,7 +104,7 @@ class wslib extends CategLib
     /** Remove a WS
      *
      * @param $ws_id The WS id you want to delete
-     * @return -TODO-
+     * @return true
      */
     public function remove_ws ($ws_id)
     {
@@ -128,7 +128,9 @@ class wslib extends CategLib
     /** Add a object to a WS (it can be a wiki page, file gal, etc)
      *
      * @param $ws_id The id of the WS you want to add a object
-     * @param $itemId The
+     * @param $itemId The id of the item (in wikis it's equal to its name)
+     * @param $type The type of the object
+     * @param $itemId The Id of the categorized object (equal to its objectId)
      */
     public function add_ws_object ($ws_id,$itemId,$type)
     {
@@ -139,7 +141,7 @@ class wslib extends CategLib
      *
      * @param $ws_id The id of the WS
      * @param $ws_ObjectId The id of the object you want to delete
-     * @return TODO
+     * @return -
      */
     public function remove_ws_object ($ws_id,$ws_ObjectId)
     {
@@ -159,17 +161,16 @@ class wslib extends CategLib
 	return $this->getOne($query, $bindvars);
     }
 
-<<<<<<< .mine
     /** Get a WS name by its id
      *
      * @param $wsid The id of the WS you want to retrieve the name
      * @param $parentWS The id of the WS parent you want to search. If null, value ws_container will use instead
      * @return An array with all the names of WS you want to search
      */
-    public function get_ws_name($wsid, $parentWS)
+    public function get_ws_name($wsid)
     {
-	$query = "select `categId` from `tiki_categories` where `categId`=? and `parentId`=?";
-	$bindvars = array($wsid, $parentWS, $this->ws_container);
+	$query = "select `categId` from `tiki_categories` where `categId`=?";
+	$bindvars = array($wsid);
 	return $this->query($query, $bindvars);
     }
 	
@@ -331,26 +332,29 @@ class wslib extends CategLib
 	function list_ws_objects_for_user ($ws_id,$user)
 	{
 		require_once('lib/userslib.php');
-		global $userlib;
+		require_once('lib/objectlib.php');
+		global $userlib; global $objectlib;
 		
 		$listWSObjects = $this->list_ws_objects($ws_id);
 		
 		foreach ($listWSObjects as $object)
 		{
-			$objId = $object["itemId"];
 			$objectType = $object["type"];
+			$objId = $object["itemId"];
+			$viewPerm = $objectlib->get_needed_perm($objectType, "view");
+			
 			$groups = $userlib->get_user_groups($user);
 			
-			$gotPerm = false;		
+			$notFoundViewPerm = true;		
 			foreach ($groups as $groupName)
 			{
-				if (!$gotPerm)
+				if ($notFoundViewPerm)
 				{
 					$objectPermsGroup = $this->get_object_perms_for_group ($objId,$objectType,$groupName);
-					if (in_array('tiki_p_view',$objectPermsGroup))
+					if (in_array($viewPerm,$objectPermsGroup))
 					{
 						$listWSObjectsUser[] = $object;
-						$gotPerm = true;
+						$notFoundViewPerm = false;
 					}
 				}
 			}

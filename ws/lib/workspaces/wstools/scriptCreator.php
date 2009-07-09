@@ -168,7 +168,7 @@ if ( isset($_REQUEST['action'])  &&  ($_REQUEST['action'] == 'test'))
 		echo ("     ");
 		echo ($key["type"]);
 		echo ("     ");
-		echo ($key["itemId"]);
+		echo ($key["name"]);
 		echo ("\n<br>");
 	}
 	
@@ -182,7 +182,7 @@ if ( isset($_REQUEST['action'])  &&  ($_REQUEST['action'] == 'test'))
 		echo ("     ");
 		echo ($key["type"]);
 		echo ("     ");
-		echo ($key["itemId"]);
+		echo ($key["name"]);
 		echo ("\n<br>");
 	}
 	echo ("\n<br>");
