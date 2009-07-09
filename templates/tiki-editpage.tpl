@@ -167,13 +167,11 @@ window.onload = timeIt;
   <input type="hidden" name="add_child" value="true" />
 {/if}
 
-<div class="rbox tip">
-  <div class="rbox-data">
-  {if $page|lower neq 'sandbox'}
-    <strong>{tr}Note{/tr}</strong>: {tr}This edit session will expire in {$edittimeout} minutes{/tr}. {tr}<strong>Preview</strong> or <strong>Save</strong> your work to restart the edit session timer.{/tr}
-  {/if}
-  </div>
-</div>
+{if $page|lower neq 'sandbox'}
+	{remarksbox type='tip' title='{tr}Tip{/tr}'}
+	{tr}This edit session will expire in {$edittimeout} minutes{/tr}. {tr}<strong>Preview</strong> or <strong>Save</strong> your work to restart the edit session timer.{/tr}
+	{/remarksbox}
+{/if}
 
 {if ( $preview && $staging_preview neq 'y' ) or $prefs.wiki_actions_bar eq 'top' or $prefs.wiki_actions_bar eq 'both'}
 <div class='top_actions'>
