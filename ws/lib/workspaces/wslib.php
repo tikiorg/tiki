@@ -222,8 +222,8 @@ class wslib extends CategLib
     	
     /** List all WS that a group have access
      *
-     * @param $groupName The name of the group you want to check their perms
-     * @return An associative array with the perms
+     * @param $groupName The name of the group
+     * @return An associative array with the WS that the group have access
      */
     public function list_ws_that_can_be_accessed_by_group ($groupName)
     {	
@@ -253,15 +253,20 @@ class wslib extends CategLib
 	return $listGroupWS;
     }
 
-    /** List all WS  (TODO: Check if there are more clever form of make this)
+    /** List all WS stored in TikiWiki
      *
+     * TODO Find a better way to explain
      */
     public function list_all_ws ($offset, $maxRecords, $sort_mode= 'name_asc', $find, $type, $objid)
     {
-	return parent::list_all_categories ($offset, $maxRecords, $sort_mode = 'name_asc', $find, $type, $objid);
+		return parent::list_all_categories ($offset, $maxRecords, $sort_mode = 'name_asc', $find, $type, $objid);
     }
 	
-    // List all WS that can be accessed by a user
+    /** List all WS that a user have access
+     *
+     * @param $user The name of the user
+     * @return An associative array with the WS that the user has access
+     */
 	public function list_ws_that_user_have_access ($user)
 	{
 		require_once('lib/userslib.php');
@@ -310,7 +315,7 @@ class wslib extends CategLib
      * @param $objId The object you want to check
      * @param $objectType The type of the object
      * @param $groupName The name of the group
-     * @return An array with the objects perms in the group of the WS
+     * @return An array with the objects perms related to a object for a group
      */
 	function get_object_perms_for_group ($objId,$objectType,$groupName)
 	{
@@ -327,7 +332,7 @@ class wslib extends CategLib
      *
      * @param $ws_id The id of the WS
      * @param $user The username
-     * @return Associative array with the objects
+     * @return Associative array with the objects that a user have access from a WS
      */
 	function list_ws_objects_for_user ($ws_id,$user)
 	{
