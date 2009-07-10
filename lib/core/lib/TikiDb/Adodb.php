@@ -12,9 +12,6 @@ class TikiDb_Adodb extends TikiDb {
 		}
 
 		$this->db=$db;
-
-		global $ADODB_LASTDB;
-		$this->setServerType( $ADODB_LASTDB );
 	} // }}}
 
 	function qstr( $str ) // {{{

@@ -78,12 +78,12 @@ class TikiDb
 		$this->usersTablePrefix = $prefix;
 	} // }}}
 
-	protected function getServerType() // {{{
+	function getServerType() // {{{
 	{
 		return $this->serverType;
 	} // }}}
 
-	protected function setServerType( $type ) // {{{
+	function setServerType( $type ) // {{{
 	{
 		$this->serverType = $type;
 	} // }}}

@@ -85,3 +85,4 @@ function close_connection() {
 
 require_once 'TikiDb/Pdo.php';
 TikiDb::set( new TikiDb_Pdo( $dbTiki ) );
+

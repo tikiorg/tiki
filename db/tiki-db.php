@@ -119,7 +119,7 @@ class TikiDb_LegacyErrorHandler implements TikiDb_ErrorHandler
 	{
 		global $smarty, $prefs, $ajaxlib;
 
-		trigger_error($db->getServerType . " error:  " . htmlspecialchars($db->getErrorMessage()). " in query:<br /><pre>\n" . htmlspecialchars($query) . "\n</pre><br />", E_USER_WARNING);
+		trigger_error($db->getServerType() . " error:  " . htmlspecialchars($db->getErrorMessage()). " in query:<br /><pre>\n" . htmlspecialchars($query) . "\n</pre><br />", E_USER_WARNING);
 		// only for debugging.
 		$outp = "<div class='simplebox'><b>".htmlspecialchars(tra("An error occured in a database query!"))."</b></div>";
 		$outp.= "<br /><table class='form'>";
@@ -203,6 +203,7 @@ class TikiDb_LegacyErrorHandler implements TikiDb_ErrorHandler
 global $db_table_prefix, $common_users_table_prefix;
 
 $db = TikiDb::get();
+$db->setServerType( $db_tiki );
 $db->setErrorHandler( new TikiDb_LegacyErrorHandler );
 
 if( isset( $db_table_prefix ) )
