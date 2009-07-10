@@ -52,7 +52,9 @@ if ($prefs['feature_categories'] == 'y') {
 	}
 }
 
-$smarty->assign('machine_translate_to_lang', $_REQUEST['machine_translate_to_lang']);
+if (isset(_REQUEST['machine_translate_to_lang'])) {
+	$smarty->assign('machine_translate_to_lang', $_REQUEST['machine_translate_to_lang']);
+}
 
 $access->check_feature( 'feature_wiki' );
 
