@@ -80,7 +80,11 @@ class TikiDb
 
 	function getServerType() // {{{
 	{
-		return $this->serverType;
+		if( $this instanceof TikiDb_Pdo || $this instanceof TikiDb_Adodb ) {
+			return $this->serverType;
+		} else {
+			return self::get()->serverType;
+		}
 	} // }}}
 
 	function setServerType( $type ) // {{{
@@ -110,7 +114,7 @@ class TikiDb
 
 	protected function convertQuery( &$query ) // {{{
 	{
-		switch ($this->serverType) {
+		switch ($this->getServerType()) {
 			case "oci8":
 				$query = preg_replace("/`/", "\"", $query);
 
@@ -186,7 +190,7 @@ class TikiDb
 					"sqlite" => "1",
 					"sybase" => "1");
 
-			return $map[$this->serverType];
+			return $map[$this->getServerType()];
 		}
 
 		$sorts=explode(',', $sort_mode);
@@ -202,7 +206,7 @@ class TikiDb
 				$sort .= 'asc';
 			}
 
-			switch ($this->serverType) {
+			switch ($this->getServerType()) {
 				case "postgres7":
 					case "postgres8":
 					case "oci8":
@@ -237,7 +241,7 @@ class TikiDb
 
 	function convertBinary() // {{{
 	{
-		switch ($this->serverType) {
+		switch ($this->getServerType()) {
 		case "oci8":
 		case "postgres7":
 		case "postgres8":
@@ -253,7 +257,7 @@ class TikiDb
 	
 	function cast( $var,$type ) // {{{
 	{
-		switch ($this->serverType) {
+		switch ($this->getServerType()) {
 		case "sybase":
 			switch ($type) {
 			case "int":
