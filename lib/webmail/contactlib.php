@@ -14,10 +14,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 class ContactLib extends TikiLib {
 
-	function ContactLib($db) {
-		$this->TikiLib($db);
-	}
-
 	// Contacts
 	function list_contacts($user, $offset=-1, $maxRecords=-1,
 			       $sort_mode='firstName_asc,lastName_asc,email_asc',
@@ -35,8 +31,8 @@ class ContactLib extends TikiLib {
 			array_push($bindvars, $findesc, $findesc, $findesc, $findesc);
 		}
 
-		$query = "select c.* from `tiki_webmail_contacts` as c left join `tiki_webmail_contacts_groups` as a on a.`contactId`=c.`contactId` $mid group by contactId order by c.".$this->convert_sortmode($sort_mode);
-		//$query = "select * from `tiki_webmail_contacts` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select c.* from `tiki_webmail_contacts` as c left join `tiki_webmail_contacts_groups` as a on a.`contactId`=c.`contactId` $mid group by contactId order by c.".$this->convertSortMode($sort_mode);
+		//$query = "select * from `tiki_webmail_contacts` $mid order by ".$this->convertSortMode($sort_mode);
 
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
 		$ret = array();
@@ -250,5 +246,4 @@ class ContactLib extends TikiLib {
 		}
 	}
 }
-global $dbTiki;
-$contactlib = new ContactLib($dbTiki);
+$contactlib = new ContactLib;

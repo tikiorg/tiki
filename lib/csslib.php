@@ -7,9 +7,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 class cssLib extends TikiLib {
-	function cssLib($db) {
-		$this->TikiLib($db);
-	}
 
 	function list_css($path) {
 		$back = array();
@@ -150,5 +147,4 @@ class cssLib extends TikiLib {
 		return $version;
 	}
 }
-global $dbTiki;
-$csslib = new cssLib($dbTiki);
+$csslib = new cssLib;

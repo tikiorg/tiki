@@ -37,9 +37,8 @@ class TrackerLib extends TikiLib {
 	var $imgMimeTypes;
 	var $imgMaxSize;
 
-	function TrackerLib($db) {
-		parent::TikiLib($db);
-
+	function __construct() {
+		parent::__construct();
 		$this->imgMimeTypes = array('image/jpeg', 'image/gif', 'image/png', 'image/pjpeg');
 		$this->imgMaxSize = (1048576 * 4); // 4Mo
 	}
@@ -90,7 +89,7 @@ class TrackerLib extends TikiLib {
 			$bindvars=array((int) $itemId);
 		}
 		$query = "select `user`,`attId`,`itemId`,`filename`,`filesize`,`filetype`,`hits`,`created`,`comment`,`longdesc`,`version` ";
-		$query.= " from `tiki_tracker_item_attachments` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query.= " from `tiki_tracker_item_attachments` $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_tracker_item_attachments` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -128,7 +127,7 @@ class TrackerLib extends TikiLib {
 			$bindvars=array();
 		}
 		$query = "select `user`,`attId`,`itemId`,`filename`,`filesize`,`filetype`,`hits`,`created`,`comment`,`path` ";
-		$query.= " from `tiki_tracker_item_attachments` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query.= " from `tiki_tracker_item_attachments` $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_tracker_item_attachments` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -314,7 +313,7 @@ class TrackerLib extends TikiLib {
 			$bindvars = array((int) $itemId);
 		}
 
-		$query = "select * from `tiki_tracker_item_comments` where `itemId`=? $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_tracker_item_comments` where `itemId`=? $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_tracker_item_comments` where `itemId`=? $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -537,7 +536,7 @@ class TrackerLib extends TikiLib {
 			}
 
 			$query = "select ttif.`itemId` , ttif.`value` FROM `tiki_tracker_items` tti,`tiki_tracker_item_fields` ttif ";
-			$query.= " WHERE  $mid and  tti.`itemId` = ttif.`itemId` order by ".$this->convert_sortmode($sort_mode);
+			$query.= " WHERE  $mid and  tti.`itemId` = ttif.`itemId` order by ".$this->convertSortMode($sort_mode);
 			$result = $this->query($query,$bindvars);
 			$ret = array();
 			while ($res = $result->fetchRow()) {
@@ -799,7 +798,7 @@ class TrackerLib extends TikiLib {
 			.' FROM '.$base_tables.$sort_tables.$cat_table
 			.$mid
 			.' GROUP BY tti.`itemId`'
-			.' ORDER BY '.$this->convert_sortmode('sortvalue_'.$corder);
+			.' ORDER BY '.$this->convertSortMode('sortvalue_'.$corder);
 		$query_cant = 'SELECT count(DISTINCT ttif.`itemId`) FROM '.$base_tables.$sort_tables.$cat_table.$mid;
 
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
@@ -2060,7 +2059,7 @@ class TrackerLib extends TikiLib {
 			$mid .= 'and '.implode(' and ', $mids);
 		}
 
-		$query = "select * from `tiki_tracker_fields` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_tracker_fields` $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_tracker_fields` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -2909,7 +2908,7 @@ class TrackerLib extends TikiLib {
 			return null;
 		$sort_mode = "value_asc";
 		$distinct = $distinct == 'y'?'distinct': '';
-		$query = "select $distinct(ttif.`value`) from `tiki_tracker_item_fields` ttif, `tiki_tracker_items` tti where tti.`itemId`= ttif.`itemId`and ttif.`fieldId`=? $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select $distinct(ttif.`value`) from `tiki_tracker_item_fields` ttif, `tiki_tracker_items` tti where tti.`itemId`= ttif.`itemId`and ttif.`fieldId`=? $mid order by ".$this->convertSortMode($sort_mode);
 		$result = $this->query( $query, $bindvars);
 		$ret = array();
 		while ($res = $result->fetchRow()) {
@@ -3212,8 +3211,8 @@ global $dbTiki, $tikilib, $prefs;
 
 if ( $prefs['trk_with_mirror_tables'] == 'y' ) {
 	include_once ("trkWithMirrorTablesLib.php");
-	$trklib = new TrkWithMirrorTablesLib($dbTiki);
+	$trklib = new TrkWithMirrorTablesLib;
 }
 else {
-	$trklib = new TrackerLib($dbTiki);
+	$trklib = new TrackerLib;
 }

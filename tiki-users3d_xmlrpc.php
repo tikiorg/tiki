@@ -13,7 +13,7 @@ $map = array("getSubGraph" => array("function" => "getSubGraph"));
 $server = new XML_RPC_Server($map);
 function getSubGraph($params) {
 	global $dbTiki, $base_url;
-	$userlib = new UsersLib($dbTiki);
+	$userlib = new UsersLib;
 	$nodeName = $params->getParam(0);
 	$nodeName = $nodeName->scalarVal();
 	$depth = $params->getParam(1);

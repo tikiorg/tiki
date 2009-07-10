@@ -7,9 +7,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 class GameLib extends TikiLib {
-	function GameLib($db) {
-		$this->TikiLib($db);
-	}
 
 	function add_game_hit($game) {
 		global $prefs, $user;
@@ -41,5 +38,4 @@ class GameLib extends TikiLib {
 		return $hits;
 	}
 }
-global $dbTiki;
-$gamelib = new GameLib($dbTiki);
+$gamelib = new GameLib;

@@ -14,7 +14,7 @@ $auto_query_args = array(
 	'find'
 );
 if (!isset($rsslib)) {
-	$rsslib = new RssLib($dbTiki);
+	$rsslib = new RssLib;
 }
 if ($tiki_p_admin_rssmodules != 'y') {
 	$smarty->assign('errortype', 401);

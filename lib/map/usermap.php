@@ -14,11 +14,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 class MapsLib extends TikiLib {
 
-	function MapsLib($db) {
-		$this->TikiLib($db);
-	}
-
-
 	function makeusermap() {
 		global $prefs, $tikidomain, $smarty;
 
@@ -249,6 +244,5 @@ class MapsLib extends TikiLib {
 		return (tra("Image Map Generated in:").$prefs['map_path']."data/".$tdo.".shp");
 	}
 }
-global $dbTiki;
 global $mapslib;
-$mapslib = new MapsLib($dbTiki);
+$mapslib = new MapsLib;

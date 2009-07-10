@@ -7,9 +7,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 class DCSLib extends TikiLib {
-	function DCSLib($db) {
-		$this->TikiLib($db);
-	}
 
 	function remove_contents($contentId) {
 		$query = "delete from `tiki_programmed_content` where `contentId`=?";
@@ -41,7 +38,7 @@ class DCSLib extends TikiLib {
 				.' LEFT JOIN ( SELECT `contentId`, min(`publishDate`) AS `next` FROM `tiki_programmed_content` WHERE `publishDate`>=? GROUP BY contentId ) AS `tpcn` ON ( `tc`.`contentId` = `tpcn`.`contentId` )'
 				.' LEFT JOIN ( SELECT `contentId`, count(*) AS `old` FROM `tiki_programmed_content` WHERE `publishDate`<? GROUP BY contentId ) AS `tpco` ON ( `tc`.`contentId` = `tpco`.`contentId` )'
 				.' LEFT JOIN ( SELECT `contentId`, `data`, `publishDate` FROM `tiki_programmed_content` ) AS `tpcd` ON ( `tc`.`contentId` = `tpcd`.`contentId` AND `tpcd`.`publishDate` = `tpca`.`actual` ))'
-			." $mid ORDER BY ".$this->convert_sortmode($sort_mode);
+			." $mid ORDER BY ".$this->convertSortMode($sort_mode);
 
 		$query_cant = "select count(*) from `tiki_content` $mid";
 		$result = $this->query($query, array_merge(array($this->now, $this->now, $this->now, $this->now, $this->now, $this->now), $bindvars), $maxRecords, $offset);
@@ -109,7 +106,7 @@ class DCSLib extends TikiLib {
 			$bindvars=array($contentId);
 		}
 
-		$query = "select * from `tiki_programmed_content` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_programmed_content` $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_programmed_content` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -197,5 +194,4 @@ class DCSLib extends TikiLib {
 		return $contentId;
 	}
 }
-global $dbTiki;
-$dcslib = new DCSLib($dbTiki);
+$dcslib = new DCSLib;

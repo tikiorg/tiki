@@ -10,10 +10,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
    user, taskId, title, description, date, status, priority, completed, percentage
 */
 class FaqLib extends TikiLib {
-	function FaqLib($db) {
-		$this->TikiLib($db);
-	}
-
 	function add_suggested_faq_question($faqId, $question, $answer, $user) {
 		$question = strip_tags($question, '<a>');
 
@@ -44,7 +40,7 @@ class FaqLib extends TikiLib {
 			$mid = "";
 		}
 
-		$query = "select * from `tiki_suggested_faq_questions` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_suggested_faq_questions` $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_suggested_faq_questions` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -73,7 +69,7 @@ class FaqLib extends TikiLib {
 			$mid = "";
 		}
 
-		$query = "select * from `tiki_faq_questions` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_faq_questions` $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_faq_questions` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -187,7 +183,7 @@ class FaqLib extends TikiLib {
 			$bindvars=array((int) $faqId);
 		}
 
-		$query = "select * from `tiki_faq_questions` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_faq_questions` $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_faq_questions` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -230,5 +226,4 @@ class FaqLib extends TikiLib {
 		return $res;
 	}
 }
-global $dbTiki;
-$faqlib = new FaqLib($dbTiki);
+$faqlib = new FaqLib;

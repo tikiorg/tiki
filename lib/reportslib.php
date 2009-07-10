@@ -1,9 +1,6 @@
 <?php 
 
 class reportsLib extends TikiLib{
-	function reportsLib($db) {
-		$this->TikiLib($db);
-	}
 	
 	//Sends the Email
 	public function sendEmail($user_data, $report_preferences, $report_cache) {
@@ -189,5 +186,4 @@ class reportsLib extends TikiLib{
 		}
 	}
 }
-global $dbTiki;
-$reportslib = new reportsLib($dbTiki);
+$reportslib = new reportsLib;

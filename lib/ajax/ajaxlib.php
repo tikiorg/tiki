@@ -24,23 +24,13 @@ if ($prefs['feature_ajax'] == 'y') {
 
 
 		/**
-		 * PHP4 constructor.
-		 *
-		 * @access   public
-		 * @return   void
-		 */
-		function TikiAjax() {
-			TikiAjax::__construct();
-		}
-
-		/**
 		 * PHP 5 constructor.
 		 *
 		 * @access   public
 		 * @return   void
 		 */
 		function __construct() {
-			xajax::xajax();
+			parent::__construct();
 
 			$this->aTemplates = array();
 			$this->deniedFunctions = array();

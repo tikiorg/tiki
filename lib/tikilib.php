@@ -6,7 +6,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 	exit;
 }
 
-require_once('lib/tikidblib.php');
 require_once('lib/init/tra.php');
 if ( ! defined('DATE_FORMAT_UNIXTIME') ) define('DATE_FORMAT_UNIXTIME', 5);
 
@@ -20,7 +19,7 @@ if ( ! defined('DATE_FORMAT_UNIXTIME') ) define('DATE_FORMAT_UNIXTIME', 5);
 // * shared functions (marked as /*shared*/) are functions that are
 //   called from Tiki modules.
 
-class TikiLib extends TikiDB {
+class TikiLib extends TikiDb {
 	var $buffer;
 	var $flag;
 	var $parser;
@@ -36,12 +35,8 @@ class TikiLib extends TikiDB {
 	var $sessionId = null;
 
 	// Constructor receiving a PEAR::Db database object.
-	function TikiLib($db) {
-		if (!$db) {
-			die ("Invalid db object passed to TikiLib constructor");
-		}
-
-		$this->TikiDB($db);
+	// DB param left for interface compatibility, although not considered
+	function __construct( $db = null ) {
 		$this->now = (int) date('U');
 	}
 
@@ -211,7 +206,7 @@ class TikiLib extends TikiDB {
 			UNION ALL
 				select 'group' as watchtype, `watchId`, `group`, `event`, `object`, `title`, `type`, `url`, '' as `email`
 				from `tiki_group_watches` $mid2
-			order by ".$this->convert_sortmode($sort_mode);
+			order by ".$this->convertSortMode($sort_mode);
 		$query_cant = 'select count(*) from `tiki_user_watches` '.$mid;
 		$query_cant2 = 'select count(*) from `tiki_group_watches` '. $mid2;
 		$result = $this->query($query, array_merge($bindvars1, $bindvars2), $maxRecords, $offset);
@@ -263,12 +258,12 @@ class TikiLib extends TikiDB {
 
 	/*shared*/
 	function remove_user_watch($user, $event, $object, $type = 'wiki page') {
-		$query = "delete from `tiki_user_watches` where ".$this->convert_binary()." `user`=? and `event`=? and `object`=? and `type` = ?";
+		$query = "delete from `tiki_user_watches` where ".$this->convertBinary()." `user`=? and `event`=? and `object`=? and `type` = ?";
 		$this->query($query,array($user,$event,$object,$type));
 	}
 
 	function remove_group_watch($group, $event, $object, $type = 'wiki page') {
-		$query = "delete from `tiki_group_watches` where ".$this->convert_binary()." `group`=? and `event`=? and `object`=? and `type` = ?";
+		$query = "delete from `tiki_group_watches` where ".$this->convertBinary()." `group`=? and `event`=? and `object`=? and `type` = ?";
 		$this->query($query,array($group,$event,$object,$type));
 	}
 
@@ -281,7 +276,7 @@ class TikiLib extends TikiDB {
 			$bindvars[]=$event;
 		}
 
-		$query = "select * from `tiki_user_watches` where ".$this->convert_binary()." `user`=? $mid";
+		$query = "select * from `tiki_user_watches` where ".$this->convertBinary()." `user`=? $mid";
 		$result = $this->query($query,$bindvars);
 		$ret = array();
 
@@ -666,7 +661,7 @@ class TikiLib extends TikiDB {
 			$bindvars=array('y');
 		}
 
-		$query = "select * from `tiki_directory_sites` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_directory_sites` $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_directory_sites` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -862,7 +857,7 @@ class TikiLib extends TikiDB {
 		}
 
 		if ($n > 0) {
-		  $query = 'select * from `tiki_quizzes` where quizId in (' . implode(',', $retids) . ') order by ' . $this->convert_sortmode($sort_mode);
+		  $query = 'select * from `tiki_quizzes` where quizId in (' . implode(',', $retids) . ') order by ' . $this->convertSortMode($sort_mode);
 		  $result = $this->query($query);
 		  while ( $res = $result->fetchRow() ) {
 				$res['questions'] = $this->getOne('select count(*) from `tiki_quiz_questions` where `quizId`=?', array( (int) $res['quizId'] ));
@@ -887,7 +882,7 @@ class TikiLib extends TikiDB {
 			$bindvars=array();
 		}
 
-		$query = "select * from `tiki_quiz_stats_sum` $mid order by " . $this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_quiz_stats_sum` $mid order by " . $this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_quiz_stats_sum` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -920,7 +915,7 @@ class TikiLib extends TikiDB {
 			$mid = "";
 			$bindvars=array();
 		}
-		$query = "select * from `tiki_trackers` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_trackers` $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_trackers` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -967,7 +962,7 @@ class TikiLib extends TikiDB {
 		  }
 		}
 		if ( $n > 0 ) {
-		  $query = 'select * from `tiki_surveys` where `surveyId` in (' . implode(',',$retids) . ') order by ' . $this->convert_sortmode($sort_mode);
+		  $query = 'select * from `tiki_surveys` where `surveyId` in (' . implode(',',$retids) . ') order by ' . $this->convertSortMode($sort_mode);
 		  $result = $this->query($query);
 		  while ( $res = $result->fetchRow() ) {
 			$res["questions"] = $this->getOne( 'select count(*) from `tiki_survey_questions` where `surveyId`=?', array( (int) $res['surveyId']) );
@@ -1040,7 +1035,7 @@ class TikiLib extends TikiDB {
 			if (!$sort_mode) {
 				$sort_mode = "lastModif_desc";
 			}
-			$query = "select * from `tiki_tracker_items` tti $mid order by ".$this->convert_sortmode($sort_mode);
+			$query = "select * from `tiki_tracker_items` tti $mid order by ".$this->convertSortMode($sort_mode);
 			$query_cant = "select count(*) from `tiki_tracker_items` tti $mid ";
 		}
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
@@ -1363,7 +1358,7 @@ class TikiLib extends TikiDB {
 			$mid = "";
 		}
 		$query = "select `name` ,`created`,tcts.`templateId` from `tiki_content_templates` tct, `tiki_content_templates_sections` tcts ";
-		$query.= " where tcts.`templateId`=tct.`templateId` and `section`=? $mid order by ".$this->convert_sortmode($sort_mode);
+		$query.= " where tcts.`templateId`=tct.`templateId` and `section`=? $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_content_templates` tct, `tiki_content_templates_sections` tcts ";
 		$query_cant.= "where tcts.`templateId`=tct.`templateId` and `section`=? $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
@@ -1407,7 +1402,7 @@ class TikiLib extends TikiDB {
 		} else {
 			$mid = "";
 		}
-		$query = "select * from `tiki_games` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_games` $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_games` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -1635,7 +1630,7 @@ class TikiLib extends TikiDB {
 	  }
 
 	  if ($n > 0) {
-		$query = "select  * from `tiki_faqs` where faqId in (" . implode(',',$retids) . ") order by " . $this->convert_sortmode($sort_mode);
+		$query = "select  * from `tiki_faqs` where faqId in (" . implode(',',$retids) . ") order by " . $this->convertSortMode($sort_mode);
 		$result = $this->query($query);
 		while ( $res = $result->fetchRow() ) {
 		  $res['suggested'] = $this->getOne('select count(*) from `tiki_suggested_faq_questions` where `faqId`=?', array((int) $res['faqId']));
@@ -1820,7 +1815,7 @@ class TikiLib extends TikiDB {
 		}
 
 		$query = 'select threadId, forumId from `tiki_comments`,`tiki_forums`'
-			  . " where `object`=`forumId` and `objectType`=? and `parentId`=? $mid order by " . $this->convert_sortmode($sort_mode);
+			  . " where `object`=`forumId` and `objectType`=? and `parentId`=? $mid order by " . $this->convertSortMode($sort_mode);
 		$result = $this->query($query, $bindvars);
 		$res = $ret = $retids = array();
 		$n = 0;
@@ -1838,7 +1833,7 @@ class TikiLib extends TikiDB {
 		
 		if ( $n > 0 ) {
 		  $query = 'select * from `tiki_comments`'
-			  . ' where `threadId` in (' . implode(',', $retids) . ') order by ' . $this->convert_sortmode($sort_mode);
+			  . ' where `threadId` in (' . implode(',', $retids) . ') order by ' . $this->convertSortMode($sort_mode);
 		  $result = $this->query($query);
 		  while ( $res = $result->fetchRow() ) {
 			$ret[] = $res;
@@ -1864,7 +1859,7 @@ class TikiLib extends TikiDB {
 		}
 
 		$query = "select * from `tiki_comments`,`tiki_forums` where ";
-		$query.= " `forumId`=? and `object`=? and `objectType`=? and `parentId`=? $mid order by ".$this->convert_sortmode($sort_mode);
+		$query.= " `forumId`=? and `object`=? and `objectType`=? and `parentId`=? $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_comments`,`tiki_forums` where ";
 		$query_cant.= " `forumId`=? and `object`=? and `objectType`=? and `parentId`=? $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
@@ -1965,7 +1960,7 @@ class TikiLib extends TikiDB {
 		if ($mid)
 			$mid = "where $mid";
 
-		$query = "select trp.*, tp.`pageName` as pageExists from `tiki_received_pages` trp left join `tiki_pages` tp on (tp.`pageName`=trp.`pageName`) $mid order by `structureName` asc, `pos` asc," . $this->convert_sortmode($sort_mode);
+		$query = "select trp.*, tp.`pageName` as pageExists from `tiki_received_pages` trp left join `tiki_pages` tp on (tp.`pageName`=trp.`pageName`) $mid order by `structureName` asc, `pos` asc," . $this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_received_pages` trp $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -2014,7 +2009,7 @@ class TikiLib extends TikiDB {
 			$mid.= " and `userlevel`<=?";
 			$bindvars[] = $level;
 		}
-		$query = "select * from `tiki_menu_options` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_menu_options` $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_menu_options` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -2283,7 +2278,7 @@ class TikiLib extends TikiDB {
 		$f_table = '`tiki_files` as tf';
 		$g_table = '`tiki_file_galleries` as tfg';
 		$f_group_by = '';
-		$orderby = $this->convert_sortmode($sort_mode);
+		$orderby = $this->convertSortMode($sort_mode);
 
 		$f2g_corresp = array(
 				'0 as `isgal`' => '1 as `isgal`',
@@ -2606,7 +2601,7 @@ class TikiLib extends TikiDB {
 			$bindvars[] = $findesc;
 		}
 
-		$query = "select * from `tiki_file_galleries` where `visible`=? $whuser order by ".$this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_file_galleries` where `visible`=? $whuser order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_file_galleries` where `visible`=? $whuser";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -2718,7 +2713,7 @@ class TikiLib extends TikiDB {
 	{
 		global $userlib;
 
-		$sort_mode = $this->convert_sortmode($sort_mode);
+		$sort_mode = $this->convertSortMode($sort_mode);
 
 		if($find) {
 			$findesc = '%'.$find.'%';
@@ -2853,7 +2848,7 @@ class TikiLib extends TikiDB {
 
 		} else {
 
-			$sort_mode = $this->convert_sortmode($sort_mode);
+			$sort_mode = $this->convertSortMode($sort_mode);
 			$pref_where = $mid;
 			$pref_join = '';
 			$pref_field = '';
@@ -2896,7 +2891,7 @@ class TikiLib extends TikiDB {
 			$mid = '';
 			$bindvars = array();
 		}
-		$query = "select * from `tiki_blogs` $mid order by " . $this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_blogs` $mid order by " . $this->convertSortMode($sort_mode);
 		$result = $this->query($query, $bindvars);
 		$ret = array();
 		$cant = 0;
@@ -3021,7 +3016,7 @@ class TikiLib extends TikiDB {
 			$bindvars[] = $findesc;
 		}
 
-		$query = "select * from `tiki_blog_posts` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_blog_posts` $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_blog_posts` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -3207,7 +3202,7 @@ class TikiLib extends TikiDB {
 			`tiki_article_types`.`show_lang`,
 			`tiki_article_types`.`creator_edit`
 				from `tiki_articles`, `tiki_article_types`$fromSql
-				$mid $mid2 order by ".$this->convert_sortmode($sort_mode);
+				$mid $mid2 order by ".$this->convertSortMode($sort_mode);
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$query_cant = "select count(*) from  `tiki_articles`, `tiki_article_types`$fromSql $mid $mid2";
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -3272,7 +3267,7 @@ class TikiLib extends TikiDB {
 			$bindvars[] = $date;
 		}
 
-		$query = "select * from `tiki_submissions` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_submissions` $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_submissions` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -3378,7 +3373,7 @@ class TikiLib extends TikiDB {
 
 	/*shared*/
 	function get_featured_links($max = 10) {
-		$query = "select * from `tiki_featured_links` where `position` > ? order by ".$this->convert_sortmode("position_asc");
+		$query = "select * from `tiki_featured_links` where `position` > ? order by ".$this->convertSortMode("position_asc");
 		$result = $this->query($query, array(0), (int)$max, 0 );
 		$ret = array();
 		while ($res = $result->fetchRow()) {
@@ -3467,7 +3462,7 @@ class TikiLib extends TikiDB {
 			$filter .= ( $filter == '' ? 'where' : 'and' ) . " (`type` is null or `type` != 'h')";
 		}
 
-		$query = "select * from `tiki_modules` $filter order by ".$this->convert_sortmode("ord_asc");
+		$query = "select * from `tiki_modules` $filter order by ".$this->convertSortMode("ord_asc");
 
 		if ( isset($bindvars) ) {
 			$result = $this->query($query, $bindvars);
@@ -3647,7 +3642,7 @@ class TikiLib extends TikiDB {
 			$bindvars=array();
 		}
 
-		$query = "select `cacheId` ,`url`,`refresh` from `tiki_link_cache` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select `cacheId` ,`url`,`refresh` from `tiki_link_cache` $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_link_cache` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -3937,7 +3932,7 @@ class TikiLib extends TikiDB {
 		// If sort mode is versions then offset is 0, maxRecords is -1 (again) and sort_mode is nil
 		// If sort mode is links then offset is 0, maxRecords is -1 (again) and sort_mode is nil
 		// If sort mode is backlinks then offset is 0, maxRecords is -1 (again) and sort_mode is nil
-		$query = "select * from `tiki_galleries` $whuser order by ".$this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_galleries` $whuser order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_galleries` $whuser";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -3991,7 +3986,7 @@ class TikiLib extends TikiDB {
 
 	function last_pages($maxRecords = -1) {
 		global $user;
-		$query = "select `pageName`,`lastModif`,`user` from `tiki_pages` order by ".$this->convert_sortmode('lastModif_desc');
+		$query = "select `pageName`,`lastModif`,`user` from `tiki_pages` order by ".$this->convertSortMode('lastModif_desc');
 		$result = $this->query($query,array(),$maxRecords,0);
 		$ret = array();
 		while ($res = $result->fetchRow()) {
@@ -4007,7 +4002,7 @@ class TikiLib extends TikiDB {
 	function last_major_pages($maxRecords = -1) {
 		global $user;
 		$query = "select distinct(tp.`pageName`),tp.`lastModif`,tp.`user` from `tiki_pages` tp left join `tiki_actionlog` ta
-			on tp.`pageName`= ta.`object` and ta.`objectType`= 'wiki page' where ta.`action`!='' and ta.`objectType`= 'wiki page' order by tp.".$this->convert_sortmode('lastModif_desc');
+			on tp.`pageName`= ta.`object` and ta.`objectType`= 'wiki page' where ta.`action`!='' and ta.`objectType`= 'wiki page' order by tp.".$this->convertSortMode('lastModif_desc');
 		$result = $this->query($query,array(),$maxRecords,0);
 		$ret = array();
 		while ($res = $result->fetchRow()) {
@@ -4133,7 +4128,7 @@ class TikiLib extends TikiDB {
 
 		$query = "select $distinct"
 			.( $onlyCant ? "tp.`pageName`" : "tp.* ".$select )
-			." from `tiki_pages` as tp $join_tables $mid order by ".$this->convert_sortmode($sort_mode);
+			." from `tiki_pages` as tp $join_tables $mid order by ".$this->convertSortMode($sort_mode);
 
 		$result = $this->query($query, $bindvars);
 
@@ -8411,7 +8406,7 @@ class TikiLib extends TikiDB {
 			$select = ", `$table`.`$column` as title";
 			$join = "left join `$table` on (`tiki_user_votings`.`optionId` = `$table`.`optionId`)";
 		}
-		$query = "select * $select from `tiki_user_votings` $join $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select * $select from `tiki_user_votings` $join $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_user_votings` $join $mid";
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
 		$cant = $this->getOne($query_cant, $bindvars);

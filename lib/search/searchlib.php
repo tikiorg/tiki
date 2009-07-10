@@ -7,8 +7,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 class SearchLib extends TikiLib {
-	function SearchLib($db) {
-		$this->TikiLib($db);
+	function __construct() {
+		parent::__construct();
 		$this->wordlist_cache = array(); // for caching queries to the LRU-cache-list.
 	}
 

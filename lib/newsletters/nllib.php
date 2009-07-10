@@ -9,10 +9,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 include_once ('lib/webmail/tikimaillib.php');
 
 class NlLib extends TikiLib {
-	function NlLib($db) {
-		parent::TikiLib($db);
-	}
-
 	function replace_newsletter($nlId, $name, $description, $allowUserSub, $allowAnySub, $unsubMsg, $validateAddr,$allowTxt, $frequency , $author) {
 		if ($nlId) {
 			$query = "update `tiki_newsletters` set `name`=?, 
@@ -494,7 +490,7 @@ class NlLib extends TikiLib {
 			$mid = " ";
 		}
 
-		$query = "select * from `tiki_newsletters` $mid order by ".$this->convert_sortmode("$sort_mode");
+		$query = "select * from `tiki_newsletters` $mid order by ".$this->convertSortMode("$sort_mode");
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$query_cant = "select count(*) from  `tiki_newsletters` $mid";
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -569,7 +565,7 @@ class NlLib extends TikiLib {
 		$mid.=($drafts ? ' and tsn.`sent`=-1' : ' and tsn.`sent`<>-1');
 
 		$query = "select tsn.`editionId`,tn.`nlId`,`subject`,`data`,tsn.`users`,`sent`,`name` from `tiki_newsletters` tn, `tiki_sent_newsletters` tsn ";
-		$query.= " where tn.`nlId`=tsn.`nlId` $mid order by ".$this->convert_sortmode("$sort_mode");
+		$query.= " where tn.`nlId`=tsn.`nlId` $mid order by ".$this->convertSortMode("$sort_mode");
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$ret = array();
 		$query_cant = "select count(*) from `tiki_newsletters` tn, `tiki_sent_newsletters` tsn where tn.`nlId`=tsn.`nlId` $mid";
@@ -608,7 +604,7 @@ class NlLib extends TikiLib {
 			$mid = " where `nlId`=? and `isUser`!='g' ";
 		}
 
-		$query = "select * from `tiki_newsletter_subscriptions` $mid order by ".$this->convert_sortmode("$sort_mode").", email asc";
+		$query = "select * from `tiki_newsletter_subscriptions` $mid order by ".$this->convertSortMode("$sort_mode").", email asc";
 		$query_cant = "select count(*) from tiki_newsletter_subscriptions $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -633,7 +629,7 @@ class NlLib extends TikiLib {
 			$mid = " where `nlId`=? ";
 		}
 
-		$query = "select * from `tiki_newsletter_groups` $mid order by ".$this->convert_sortmode("$sort_mode");
+		$query = "select * from `tiki_newsletter_groups` $mid order by ".$this->convertSortMode("$sort_mode");
 		$query_cant = "select count(*) from `tiki_newsletter_groups` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -769,5 +765,4 @@ class NlLib extends TikiLib {
 		$this->query($query, array((int)$editionId));
 	}
 }
-global $dbTiki;
-$nllib = new NlLib($dbTiki);
+$nllib = new NlLib;

@@ -32,7 +32,7 @@ class ContributionLib extends TikiLib {
 		} else {
 			$mid = "";
 		}
-		$query = "select * from `tiki_contributions` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_contributions` $mid order by ".$this->convertSortMode($sort_mode);
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
 		$query_cant = "select count(*) from `tiki_contributions` $mid";
 		$cant = $this->getOne($query_cant, $bindvars);
@@ -150,5 +150,4 @@ class ContributionLib extends TikiLib {
 		return true;
 	}
 }
-global $dbTiki;
-$contributionlib = new ContributionLib($dbTiki);
+$contributionlib = new ContributionLib;

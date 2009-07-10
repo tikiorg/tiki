@@ -7,9 +7,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 class MenuLib extends TikiLib {
-	function MenuLib($db) {
-		$this->TikiLib($db);
-	}
 
 	function empty_menu_cache($menuId = 0) {
 		global $cachelib; include_once('lib/cache/cachelib.php');
@@ -34,7 +31,7 @@ class MenuLib extends TikiLib {
 			$bindvars=array();
 		}
 
-		$query = "select * from `tiki_menus` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_menus` $mid order by ".$this->convertSortMode($sort_mode);
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$query_cant = "select count(*) from `tiki_menus` $mid";
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -415,5 +412,4 @@ class MenuLib extends TikiLib {
 		die;
 	}
 }
-global $dbTiki;
-$menulib = new MenuLib($dbTiki);
+$menulib = new MenuLib;

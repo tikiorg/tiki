@@ -7,9 +7,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 class HistLib extends TikiLib {
-	function HistLib($db) {
-		$this->TikiLib($db);
-	}
 
 	/* 
 		*	Removes a specific version of a page
@@ -193,7 +190,7 @@ class HistLib extends TikiLib {
 	// history db table, which is one less than the current version 
 	function get_page_latest_version($page, $sort_mode='version_desc') {
 
-		$query = "select `version` from `tiki_history` where `pageName`=? order by ".$this->convert_sortmode($sort_mode);
+		$query = "select `version` from `tiki_history` where `pageName`=? order by ".$this->convertSortMode($sort_mode);
 		$result = $this->query($query,array($page),1);
 		$ret = array();
 		
@@ -237,7 +234,7 @@ class HistLib extends TikiLib {
 
 		$query = "select ta.`action`, ta.`lastModif`, ta.`user`, ta.`ip`, ta.`object`,th.`comment`, th.`version` as version, tp.`version` as versionlast from `tiki_actionlog` ta 
 			left join `tiki_history` th on  ta.`object`=th.`pageName` and ta.`lastModif`=th.`lastModif` and ta.`objectType`='wiki page'
-			left join `tiki_pages` tp on ta.`object`=tp.`pageName` and ta.`lastModif`=tp.`lastModif` " . $where . " order by ta.".$this->convert_sortmode($sort_mode);
+			left join `tiki_pages` tp on ta.`object`=tp.`pageName` and ta.`lastModif`=tp.`lastModif` " . $where . " order by ta.".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_actionlog` ta 
 			left join `tiki_history` th on  ta.`object`=th.`pageName` and ta.`lastModif`=th.`lastModif` 
 			left join `tiki_pages` tp on ta.`object`=tp.`pageName` and ta.`lastModif`=tp.`lastModif` " . $where;
@@ -294,8 +291,7 @@ class HistLib extends TikiLib {
 	}
 }
 
-global $dbTiki;
-$histlib = new HistLib($dbTiki);
+$histlib = new HistLib;
 
 function histlib_helper_setup_diff( $page, $oldver, $newver )
 {

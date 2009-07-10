@@ -206,12 +206,12 @@ if ($whataction == "edit_rec_sw" || $whataction == "edit_tran_sw") {
 	$sort_mode = "source_asc";
 
 	if ($whataction == "edit_tran_sw") {
-		$query = "select `source`, `tran` from `tiki_language` where `lang`=? $squeryedit order by ".$tikilib->convert_sortmode($sort_mode);
+		$query = "select `source`, `tran` from `tiki_language` where `lang`=? $squeryedit order by ".$tikilib->convertSortMode($sort_mode);
 		$nquery = "select count(*) from `tiki_language` where `lang`=? $squeryedit";
 		$untr_numrows= $tikilib->getOne($nquery,$bindvars);
 	        $result = $tikilib->query($query,$bindvars,$maxRecords,$tr_recnum);
 	} elseif ($whataction == "edit_rec_sw") {
-		$query = "select `source` from `tiki_untranslated` where `lang`=? $squeryrec order by ".$tikilib->convert_sortmode($sort_mode);
+		$query = "select `source` from `tiki_untranslated` where `lang`=? $squeryrec order by ".$tikilib->convertSortMode($sort_mode);
 		$nquery = "select count(*) from `tiki_untranslated` where `lang`=? $squeryrec";
 		$untr_numrows= $tikilib->getOne($nquery,$bindvars2);
 	        $result = $tikilib->query($query,$bindvars2,$maxRecords,$tr_recnum);

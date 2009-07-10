@@ -7,10 +7,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 class DrawLib extends TikiLib {
-	function DrawLib($db) {
-		$this->TikiLib($db);
-	}
-
 	function replace_drawing($drawId, $name, $filename_draw, $filename_pad, $user, $version) {
 		if ($drawId) {
 			$query = "update `tiki_drawings` set `name`=?, `filename_draw`=?, `filename_pad`=?, `timestamp`=?, `version`=?, `user`='?  where `drawId`=?";
@@ -106,7 +102,7 @@ class DrawLib extends TikiLib {
 		} else {
 			$mid = "";
 		}
-		$query = "select * from `tiki_drawings` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_drawings` $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_drawings` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -132,7 +128,7 @@ class DrawLib extends TikiLib {
 			$mid.= " and (`name` like ?)";
 			$bindvars[] = '%'.$find.'%';
 		}
-		$query = "select * from `tiki_drawings` $mid order by ".$this->convert_sortmode($sort_mode).",".$this->convert_sortmode("version_desc");
+		$query = "select * from `tiki_drawings` $mid order by ".$this->convertSortMode($sort_mode).",".$this->convertSortMode("version_desc");
 		$query_cant = "select count(*) from `tiki_drawings` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -147,5 +143,4 @@ class DrawLib extends TikiLib {
 		return $retval;
 	}
 }
-global $dbTiki;
-$drawlib = new DrawLib($dbTiki);
+$drawlib = new DrawLib;

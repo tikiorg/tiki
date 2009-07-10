@@ -8,7 +8,7 @@ require_once ('tiki-setup.php');
 require_once ('lib/tikilib.php'); // httpScheme()
 include_once ('lib/polls/polllib.php');
 if (!isset($polllib)) {
-	$polllib = new PollLib($dbTiki);
+	$polllib = new PollLib;
 }
 if ($tiki_p_admin_polls != 'y') {
 	$smarty->assign('errortype', 401);

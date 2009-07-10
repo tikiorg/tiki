@@ -7,10 +7,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 class ArtLib extends TikiLib {
-	function ArtLib($db) {
-		$this->TikiLib($db);
-	}
-
 	//Special parsing for multipage articles
 	function get_number_of_pages($data) {
 		$parts = explode("...page...", $data);
@@ -701,5 +697,4 @@ $show_expdate, $show_reads, $show_size, $show_topline, $show_subtitle, $show_lin
 
 }
 
-global $dbTiki;
-$artlib = new ArtLib($dbTiki);
+$artlib = new ArtLib;

@@ -7,9 +7,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 class BlogLib extends TikiLib {
-	function BlogLib($db) {
-		$this->TikiLib($db);
-	}
 
 	//Special parsing for multipage articles
 	function get_number_of_pages($data) {
@@ -130,7 +127,7 @@ class BlogLib extends TikiLib {
 		}
 		$mid = empty($mid) ? '' : 'where ' . implode(' and ', $mid);
 
-		$query = "select * from `tiki_blog_posts` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_blog_posts` $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_blog_posts` $mid";
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
 		$cant = $this->getOne($query_cant, $bindvars);
@@ -213,7 +210,7 @@ class BlogLib extends TikiLib {
 			}
 		}
 
-		$query = "select * from `tiki_blog_posts` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_blog_posts` $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_blog_posts` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -416,7 +413,7 @@ class BlogLib extends TikiLib {
 			$bindvars=array($user);
 		}
 
-		$query = "select * from `tiki_blog_posts` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_blog_posts` $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_blog_posts` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -484,5 +481,4 @@ class BlogLib extends TikiLib {
 		return $this->getOne($query, array((int)$blogId));
 	}
 }
-global $dbTiki;
-$bloglib = new BlogLib($dbTiki);
+$bloglib = new BlogLib;

@@ -14,19 +14,19 @@ include_once ('lib/dcs/dcslib.php');
 include_once ('lib/modules/modlib.php');
 include_once ('lib/structures/structlib.php');
 if (!isset($dcslib)) {
-	$dcslib = new DCSLib($dbTiki);
+	$dcslib = new DCSLib;
 }
 if (!isset($bannerlib)) {
-	$bannerlib = new BannerLib($dbTiki);
+	$bannerlib = new BannerLib;
 }
 if (!isset($rsslib)) {
-	$rsslib = new RssLib($dbTiki);
+	$rsslib = new RssLib;
 }
 if (!isset($polllib)) {
-	$polllib = new PollLib($dbTiki);
+	$polllib = new PollLib;
 }
 if (!isset($structlib)) {
-	$structlib = new StructLib($dbTiki);
+	$structlib = new StructLib;
 }
 $smarty->assign('wysiwyg', 'n');
 if (isset($_REQUEST['wysiwyg']) && $_REQUEST['wysiwyg'] == 'y') {

@@ -9,9 +9,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 include_once('lib/polls/polllib_shared.php');
 
 class PollLib extends PollLibShared {
-	function PollLib($db) {
-		$this->PollLibShared($db);
-	}
 
 	function list_polls($offset, $maxRecords, $sort_mode, $find) {
 
@@ -25,7 +22,7 @@ class PollLib extends PollLibShared {
 			$bindvars=array();
 		}
 
-		$query = "select * from `tiki_polls` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_polls` $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_polls` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -55,7 +52,7 @@ class PollLib extends PollLibShared {
 			$bindvars=array('a','c','o',(int) $this->now);
 		}
 
-		$query = "select * from `tiki_polls` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_polls` $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_polls` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -82,7 +79,7 @@ class PollLib extends PollLibShared {
 			$bindvars=array((int) $this->now);
 		}
 
-		$query = "select * from `tiki_polls` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_polls` $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_polls` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -132,5 +129,4 @@ class PollLib extends PollLibShared {
 	}
 
 }
-global $dbTiki;
-$polllib = new PollLib($dbTiki);
+$polllib = new PollLib;

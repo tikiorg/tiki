@@ -1031,7 +1031,7 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
 	){
 
 		include_once("lib/copyrights/copyrightslib.php");
-		$copyrightslib = new CopyrightsLib($dbTiki);
+		$copyrightslib = new CopyrightsLib;
 		$copyrightYear = $_REQUEST['copyrightYear'];
 		$copyrightTitle = $_REQUEST['copyrightTitle'];
 		$copyrightAuthors = $_REQUEST['copyrightAuthors'];
@@ -1338,7 +1338,7 @@ if (isset($_REQUEST['cat_categorize'])) {
 }
 if ($prefs['wiki_feature_copyrights'] == 'y' && $tiki_p_edit_copyrights == 'y') {
 	include_once ('lib/copyrights/copyrightslib.php');
-	$copyrightslib = new CopyrightsLib($dbTiki);
+	$copyrightslib = new CopyrightsLib;
 	$copyrights = $copyrightslib->list_copyrights($_REQUEST["page"]);
 	if ($copyrights['cant'])
 	$smarty->assign_by_ref('copyrights', $copyrights['data']);

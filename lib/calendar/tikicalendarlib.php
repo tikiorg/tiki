@@ -5,10 +5,6 @@ require_once('calendarlib.php');
 
 class TikiCalendarLib extends CalendarLib {
 
-	function TikiCalendarLib($db) {
-		parent::CalendarLib($db);
-	}
-
 	function list_items_by_day($tikiobj, $user, $tstart, $tstop, $offset, $maxRecords, $sort_mode = 'name_desc', $find = '') {
 		return $this->list_tiki_items($tikiobj, $user, $tstart, $tstop, $offset, $maxRecords, $sort_mode, $find);
 	}
@@ -166,5 +162,4 @@ class TikiCalendarLib extends CalendarLib {
 		return ( $with_infos ? $return : array_keys($return) );
 	}
 }
-global $dbTiki;
-$tikicalendarlib = new TikiCalendarLib($dbTiki);
+$tikicalendarlib = new TikiCalendarLib;

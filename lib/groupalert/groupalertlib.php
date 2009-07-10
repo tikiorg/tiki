@@ -12,10 +12,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 class groupAlertLib extends TikiLib {
 
-	function GroupAlertLib($db) {
-		parent::TikiLib($db);
-	}
-
 	function AddGroup ($ObjectType, $ObjectNumber,$GroupName,$displayEachUser) {
 		if ( $displayEachUser == "on" ) $displayEachUser='y';
 		if ( $displayEachUser == "" ) $displayEachUser='n';
@@ -59,5 +55,5 @@ class groupAlertLib extends TikiLib {
 	}
 	}
 }
-global $tikilib,$dbTiki;
-$groupalertlib = new groupAlertLib($dbTiki);
+global $groupalertlib;
+$groupalertlib = new groupAlertLib;

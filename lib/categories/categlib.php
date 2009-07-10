@@ -16,10 +16,6 @@ global $objectlib;require_once("lib/objectlib.php");
 
 class CategLib extends ObjectLib {
 
-	function CategLib($db) {
-		parent::ObjectLib($db);
-	}
-
 	function list_categs($categId=0) {
 		global $cachelib;
 		if (!$cachelib->isCached('allcategs')) {
@@ -56,7 +52,7 @@ class CategLib extends ObjectLib {
 			$mid = "";
 		}
 
-		$query = "select * from `tiki_categories` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_categories` $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_categories` $mid";
 		$result = $this->query($query,$bindvals,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvals);
@@ -443,7 +439,7 @@ class CategLib extends ObjectLib {
 		$orderBy = '';
 		if ($sort_mode) {
 			if ($sort_mode != 'shuffle') {
-				$orderBy = " ORDER BY ".$this->convert_sortmode($sort_mode);
+				$orderBy = " ORDER BY ".$this->convertSortMode($sort_mode);
 			}
 		}
 
@@ -1213,7 +1209,7 @@ class CategLib extends ObjectLib {
 		    $bindvars[] = $type;
 		}
 		$sort_mode = "created_desc";
-		$query = "select co.`catObjectId`, `categId`, `type`, `name`, `href` from `tiki_category_objects` co, `tiki_categorized_objects` cdo, `tiki_objects` o where co.`catObjectId`=cdo.`catObjectId` and o.`objectId`=cdo.`catObjectId` $mid order by o.".$this->convert_sortmode($sort_mode);
+		$query = "select co.`catObjectId`, `categId`, `type`, `name`, `href` from `tiki_category_objects` co, `tiki_categorized_objects` cdo, `tiki_objects` o where co.`catObjectId`=cdo.`catObjectId` and o.`objectId`=cdo.`catObjectId` $mid order by o.".$this->convertSortMode($sort_mode);
 		$result = $this->query($query,$bindvars,$maxRecords,0);
 
 		$ret = array('data'=>array());
@@ -1560,5 +1556,4 @@ class CategLib extends ObjectLib {
 	}
 	
 }
-global $dbTiki;
-$categlib = new CategLib($dbTiki);
+$categlib = new CategLib;

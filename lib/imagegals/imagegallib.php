@@ -8,10 +8,10 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 class ImageGalsLib extends TikiLib {
-	function ImageGalsLib($db) {
+	function __construct() {
+		parent::__construct();
 		global $prefs;
 
-		$this->TikiLib($db);
 		$exts=get_loaded_extensions();
 
 		// Which GD Version do we have?
@@ -1007,7 +1007,7 @@ class ImageGalsLib extends TikiLib {
                  where i.`imageId`=d.`imageId`
                 $mid
                  and d.`type`=?
-                order by ".$this->convert_sortmode($sort_mode);
+                order by ".$this->convertSortMode($sort_mode);
 		$bindvars[] = 'o';
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$ret = array();
@@ -1052,7 +1052,7 @@ class ImageGalsLib extends TikiLib {
 			g.`hits`,g.`maxRows`,g.`rowImages`,g.`thumbSizeX`,
 			g.`thumbSizeY`,g.`public`,g.`sortorder`,g.`sortdirection`,
 			g.`galleryimage`,g.`parentgallery`
-                order by ".$this->convert_sortmode($sort_mode);
+                order by ".$this->convertSortMode($sort_mode);
                 $result = $this->query($query,$bindvars,$maxRecords,$offset);
                 $ret = array();
 
@@ -1084,12 +1084,12 @@ class ImageGalsLib extends TikiLib {
 		switch($rule) {
 			case 'firstu':
 				// first uploaded
-				$query.=$this->convert_sortmode('created_asc');
+				$query.=$this->convertSortMode('created_asc');
 				$imageId=$this->getOne($query,$bindvars);
 				break;
 			case 'lastu':
 				// last uploaded
-				$query.=$this->convert_sortmode('created_desc');
+				$query.=$this->convertSortMode('created_desc');
 				$imageId=$this->getOne($query,$bindvars);
 				break;
 			case 'all':
@@ -1101,7 +1101,7 @@ class ImageGalsLib extends TikiLib {
     				$res = $result->fetchRow();
     				$sort_mode=$res['sortorder'].'_'.$res['sortdirection'];
 				}
-				$query.=$this->convert_sortmode($sort_mode);
+				$query.=$this->convertSortMode($sort_mode);
 				if ($rule != 'all') {
     				$imageId=$this->getOne($query,$bindvars);
     				break;
@@ -1128,7 +1128,7 @@ class ImageGalsLib extends TikiLib {
     				}
     				$sort_mode=$res['sortorder'].'_'.$res['sortdirection'];
 				}
-				$query.=$this->convert_sortmode($sort_mode);
+				$query.=$this->convertSortMode($sort_mode);
 				$imageId=$this->getOne($query,$bindvars);
 				break;
 			case 'random':
@@ -1189,7 +1189,7 @@ class ImageGalsLib extends TikiLib {
 		} else {
 			$query.='i.';
 		}
-        $query .= $this->convert_sortmode($sort_mode);
+        $query .= $this->convertSortMode($sort_mode);
 		$result = $this->query($query,$bindvars);
 		$prev=-1; $next=0; $tmpid=0;
 		while ($res = $result->fetchRow()) {
@@ -1231,7 +1231,7 @@ class ImageGalsLib extends TikiLib {
                  where i.`imageId`=d.`imageId`
                  and d.`type`=?
                 $mid
-                order by ".$this->convert_sortmode($sort_mode);
+                order by ".$this->convertSortMode($sort_mode);
 		$result = $this->query($query,$bindvars,1,0);
 		$res = $result->fetchRow();
 		return $res['imageId'];
@@ -1269,7 +1269,7 @@ class ImageGalsLib extends TikiLib {
                  where i.`imageId`=d.`imageId`
                  and d.`type`=?
                 $mid
-                order by ".$this->convert_sortmode($sort_mode);
+                order by ".$this->convertSortMode($sort_mode);
 		$result = $this->query($query,$bindvars,1,0);
 		$res = $result->fetchRow();
 		return $res['imageId'];
@@ -1357,7 +1357,7 @@ class ImageGalsLib extends TikiLib {
 	    // If sort mode is versions then offset is 0, maxRecords is -1 (again) and sort_mode is nil
 	    // If sort mode is links then offset is 0, maxRecords is -1 (again) and sort_mode is nil
 	    // If sort mode is backlinks then offset is 0, maxRecords is -1 (again) and sort_mode is nil
-	    $query = "select g.*, a.`name` as parentgalleryName from `tiki_galleries` g left join `tiki_galleries` a on g.`parentgallery` = a.`galleryId` $whuser order by ".$this->convert_sortmode($sort_mode);
+	    $query = "select g.*, a.`name` as parentgalleryName from `tiki_galleries` g left join `tiki_galleries` a on g.`parentgallery` = a.`galleryId` $whuser order by ".$this->convertSortMode($sort_mode);
 	    $query_cant = "select count(*) from `tiki_galleries` g $whuser";
 	    $result = $this->query($query,$bindvars,$maxRecords,$offset);
 	    $cant = $this->getOne($query_cant,$bindvars);
@@ -1431,7 +1431,7 @@ class ImageGalsLib extends TikiLib {
 	    // If sort mode is versions then offset is 0, maxRecords is -1 (again) and sort_mode is nil
 	    // If sort mode is links then offset is 0, maxRecords is -1 (again) and sort_mode is nil
 	    // If sort mode is backlinks then offset is 0, maxRecords is -1 (again) and sort_mode is nil
-	    $query = "select * from `tiki_galleries` where `visible`=? $whuser order by ".$this->convert_sortmode($sort_mode);
+	    $query = "select * from `tiki_galleries` where `visible`=? $whuser order by ".$this->convertSortMode($sort_mode);
 	    $query_cant = "select count(*) from `tiki_galleries` where `visible`=? $whuser";
 	    $result = $this->query($query,$bindvars,$maxRecords,$offset);
 	    $cant = $this->getOne($query_cant,$bindvars);
@@ -2229,6 +2229,5 @@ $thumbSizeY,$public,0,$visible,$sortorder,$sortdirection,$galleryimage,(int)$par
 	}
 	}
 }
-global $dbTiki;
 global $imagegallib;
-$imagegallib = new ImageGalsLib($dbTiki);
+$imagegallib = new ImageGalsLib;

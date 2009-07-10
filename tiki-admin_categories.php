@@ -13,7 +13,7 @@ include_once ('lib/directory/dirlib.php');
 include_once ('lib/trackers/trackerlib.php');
 include_once ('lib/commentslib.php');
 if (!isset($polllib)) {
-	$polllib = new PollLib($dbTiki);
+	$polllib = new PollLib;
 }
 if (!isset($commentslib)) {
 	$commentslib = new Comments($dbTiki);

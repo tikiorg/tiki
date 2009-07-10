@@ -82,7 +82,7 @@ if (!empty($_REQUEST['submit_mult']) && isset($_REQUEST["checked"])) {
 		case 'zip':
 			if ($tiki_p_admin == 'y') {
 				include_once ('lib/wiki/xmllib.php');
-				$xmllib = new XmlLib();
+				$xmllib = new XmlLib;
 				$zipFile = 'dump/xml.zip';
 				$config['debug'] = false;
 				if ($xmllib->export_pages($_REQUEST['checked'], null, $zipFile, $config)) {

@@ -9,10 +9,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 class SearchLib extends TikiLib {
-	function SearchLib($db) {
-		$this->TikiLib($db);
-	}
-
 	function register_search($words) {
 		$words = addslashes($words);
 
