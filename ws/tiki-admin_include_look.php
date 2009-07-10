@@ -221,7 +221,8 @@ if ($prefs['feature_jquery'] == 'y') {
 		}
 	});
 });
-JS) ;
+JS
+	);
 }
 // Get list of available slideshow styles
 $slide_styles = array();

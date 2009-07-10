@@ -326,10 +326,6 @@ class WebMailLib extends TikiLib {
 				}
 				$wmail['sender']['name'] = htmlspecialchars($wmail['sender']['name']);
 
-				// check if sender is in contacts
-				 global $contactlib; include_once ('lib/webmail/contactlib.php');
-				$wmail['sender']['contactId'] = $contactlib->get_contactId_email($wmail['sender']['email'], $user);
-				
 				if (!empty($headers['message-id'])) {
 					$wmail['realmsgid'] = ereg_replace('[<>]','', $headers['message-id']);
 				} else {
@@ -500,4 +496,5 @@ class WebMailLib extends TikiLib {
 	}	// end get_mail_content()
 	
 } # class WebMailLib
+global $dbTiki;
 $webmaillib = new WebMailLib($dbTiki);

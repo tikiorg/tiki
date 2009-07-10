@@ -1,5 +1,8 @@
 <?php
 
+require_once('tikiimporter_wiki.php');
+require_once('Text/Wiki/Mediawiki.php');
+
 /**
  * Parses a MediaWiki-style XML dump to import it into TikiWiki.
  * Requires PHP5 DOM extension.
@@ -15,46 +18,61 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
      * The DOM representation of the Mediawiki XML dump
      * @var DOMDocument object
      */
-    protected $dom = '';
+    public $dom = '';
 
     /**
      * @see lib/importer/TikiImporter#importOptions
      */
     static public $importOptions = array();    
-    
+
+    /**
+     * Start the importing process by loading the XML file.
+     * 
+     * @see lib/importer/TikiImporter_Wiki#import()
+     *
+     * @param string $filePath path to the XML file
+     * @return void
+     */
+    function import($filePath)
+    {
+        $this->dom = new DOMDocument;
+        $this->dom->load($filePath);
+        parent::import();
+    }
+
     /**
      * At present this method only validates the Mediawiki XML
      * against its DTD (Document Type Definition)
      * 
      * @see lib/importer/TikiImporter#validateInput()
      */
-    public function validateInput()
+    function validateInput()
     {
-        global $smarty;
-        
-        $this->dom = new DOMDocument;
-        $this->dom->load($_FILES['importFile']['tmp_name']);
-        if (!$this->dom->schemaValidate('./lib/importer/mediawiki_dump.xsd')) {
-            $msg = tra('File does not validate against schema. Try again.');
-            $smarty->assign('msg', $msg);
-            $smarty->display('error.tpl');
-            die;
+        try {
+            $this->dom->schemaValidate(dirname(__FILE__) . '/mediawiki_dump.xsd');
+        } catch (Exception $e) {
+            throw new DOMException($e->getMessage(), $e->getCode());
         }
     }
 
     /**
-     * Foreach page call $this->extractInfo() and assign the
-     * returned value to $this->inputData array
+     * Foreach page call $this->extractInfo() and append the
+     * returned value to $parsedData array
      * 
      * @see lib/importer/TikiImporter#parseData()
+     *
+     * @return array $parsedData
      */
-    public function parseData()
+    function parseData()
     {
+        $parsedData = array();
         $pages = $this->dom->getElementsByTagName('page');
 
         foreach ($pages as $page) {
-            $this->inputData[] = $this->extractInfo($page);
+            $parsedData[] = $this->extractInfo($page);
         }
+
+        return $parsedData;
     }
 
     /**
@@ -62,8 +80,8 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
      * that will be imported (page name, page content for all revisions)
      * 
      * Note: the names of the keys are changed to reflected the names used by
-     * Tiki builtin function (i.e. 'title' is changed to 'name' as it is used of 
-     * TikiLib::create_page() which will be called by TikiImporter_Wiki::importPage())
+     * Tiki builtin function (i.e. 'title' is changed to 'name' as used in 
+     * TikiLib::create_page() which will be called by TikiImporter_Wiki::insertPage())
      * 
      * @param DOMElement $page
      * @return unknown_type
@@ -78,6 +96,7 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
                 switch ($node->tagName)
                 {
                 case 'id':
+                    break;
                 case 'title':
                     $data['name'] = (string) $node->textContent;
                     break;
@@ -98,7 +117,7 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
      * that will be imported (page content converted to Tiki syntax, lastModif, minor, user and ip address)
      *
      * Note: the names of the keys are changed to reflected the names used by
-     * Tiki builtin function (i.e. 'text' is changed to 'data' as it is used of TikiLib::create_page())
+     * Tiki builtin function (i.e. 'text' is changed to 'data' as used in TikiLib::create_page())
      * 
      * @param DOMElement $page
      * @return unknown_type
@@ -113,7 +132,10 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
                 switch ($node->tagName)
                 {
                 case 'id':
+                    break;
                 case 'comment':
+                    $data['comment'] = $node->textContent;
+                    break;
                 case 'text':
                     $data['data'] = $this->convertMarkup($node->textContent);
                     break;
@@ -124,6 +146,7 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
 
                 case 'minor':
                     $data['minor'] = true;
+                    break;
 
                 case 'contributor':
                     $data = array_merge($data, $this->extractContributor($node));
@@ -148,11 +171,12 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
     function extractContributor(DOMElement $contributor)
     {
         $data = array();
-
+        
         foreach ($contributor->childNodes as $node) {
             if ($node instanceof DOMElement) {
                 switch ($node->tagName) {
                 case 'id':
+                    break;
                 case 'ip':
                     $data[$node->tagName] = (string) $node->textContent;
                     break;
@@ -182,10 +206,11 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
      * @return string $tikiText
      */
     function convertMarkup($mediawikiText) {
-        require_once('Text/Wiki/Mediawiki.php');
-        $parser = new Text_Wiki_Mediawiki();
-        $tikiText = $parser->transform($mediawikiText, 'Tiki');
-        return $tikiText;
+        if (!empty($mediawikiText)) {
+            $parser = Text_Wiki::factory('Mediawiki');
+            $tikiText = $parser->transform($mediawikiText, 'Tiki');
+            return $tikiText;
+        }
     }
 }
 

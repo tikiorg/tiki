@@ -87,9 +87,9 @@ window.onload = timeIt;
   {/if}
 {/if}
 {if $page|lower eq 'sandbox'}
-<div class="wikitext">
-{tr}The SandBox is a page where you can practice your editing skills, use the preview feature to preview the appearance of the page, no versions are stored for this page.{/tr}
-</div>
+	{remarksbox type='tip' title='{tr}Tip{/tr}'}
+		{tr}The SandBox is a page where you can practice your editing skills, use the preview feature to preview the appearance of the page, no versions are stored for this page.{/tr}
+	{/remarksbox}
 {/if}
 {if $category_needed eq 'y'}
 <div class="simplebox highlight">{tr}A category is mandatory{/tr}</div>
@@ -167,13 +167,11 @@ window.onload = timeIt;
   <input type="hidden" name="add_child" value="true" />
 {/if}
 
-<div class="rbox tip">
-  <div class="rbox-data">
-  {if $page|lower neq 'sandbox'}
-    <strong>{tr}Note{/tr}</strong>: {tr}This edit session will expire in {$edittimeout} minutes{/tr}. {tr}<strong>Preview</strong> or <strong>Save</strong> your work to restart the edit session timer.{/tr}
-  {/if}
-  </div>
-</div>
+{if $page|lower neq 'sandbox'}
+	{remarksbox type='tip' title='{tr}Tip{/tr}'}
+	{tr}This edit session will expire in {$edittimeout} minutes{/tr}. {tr}<strong>Preview</strong> or <strong>Save</strong> your work to restart the edit session timer.{/tr}
+	{/remarksbox}
+{/if}
 
 {if ( $preview && $staging_preview neq 'y' ) or $prefs.wiki_actions_bar eq 'top' or $prefs.wiki_actions_bar eq 'both'}
 <div class='top_actions'>
@@ -196,13 +194,18 @@ window.onload = timeIt;
 {/section}
 <input type="hidden" name="categId" value="{$categIdstr}" />
 <input type="hidden" name="cat_categorize" value="on" />
+
+{if $page|lower ne 'sandbox'}
 {if $prefs.feature_wiki_categorize_structure eq 'y'}
 <tr class="formcolor"><td colspan="2">{tr}Categories will be inherited from the structure top page{/tr}</td></tr>
 {/if}
 {else}
 {include file='categorize.tpl'}
 {/if}
+
 {include file='structures.tpl'}
+{/if}{* sandbox *}
+
 {if $prefs.feature_wiki_templates eq 'y' and $tiki_p_use_content_templates eq 'y' and !$templateId}
   <tr class="formcolor">
     <td>{tr}Apply template{/tr}:</td>
@@ -293,6 +296,7 @@ window.onload = timeIt;
 <input type="hidden" name="wysiwyg" value="y" />
 {/if}
 </td></tr>
+
 {if $prefs.feature_wiki_replace eq 'y'}
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--
@@ -321,6 +325,7 @@ function searchrep() {
 <input type="button" value="{tr}Replace{/tr}" onclick="javascript:searchrep();">
 </td></tr>
 {/if}
+
 {if $prefs.feature_wiki_footnotes eq 'y'}
 {if $user}
 <tr class="formcolor"><td>{tr}My Footnotes{/tr}:</td><td><textarea name="footnote" rows="8" cols="42" style="width:98%;" >{$footnote|escape}</textarea></td></tr>
@@ -335,7 +340,6 @@ function searchrep() {
 <option value="{$languages[ix].value|escape}"{if $lang eq $languages[ix].value or (not($data.page_id) and $lang eq '' and $languages[ix].value eq $prefs.language)} selected="selected"{/if}>{$languages[ix].name}</option>
 {/section}
 </select>
-
 
 {if $translationOf}
 <input type="hidden" name="translationOf" value="{$translationOf|escape}"/>
@@ -375,16 +379,19 @@ function searchrep() {
 </table>
 </td></tr>
 {/if}
-{/if}
 {if $prefs.feature_freetags eq 'y' and $tiki_p_freetags_tag eq 'y'}
   {include file='freetag.tpl'}
 {/if}
+{/if}
+
 {if $prefs.feature_wiki_allowhtml eq 'y' and $tiki_p_use_HTML eq 'y' and $wysiwyg neq 'y'}
 <tr class="formcolor"><td>{tr}Allow HTML{/tr}: </td><td><input type="checkbox" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if}/></td></tr>
 {/if}
+
 {if $prefs.wiki_spellcheck eq 'y'}
 <tr class="formcolor"><td>{tr}Spellcheck{/tr}: </td><td><input type="checkbox" name="spellcheck" {if $spellcheck eq 'y'}checked="checked"{/if}/></td></tr>
 {/if}
+
 {if $prefs.feature_wiki_import_html eq 'y'}
 <tr class="formcolor">
   <td>{tr}Import HTML{/tr}:</td>
@@ -401,6 +408,7 @@ function searchrep() {
   </td>
 </tr>
 {/if}
+
 {if $tiki_p_admin_wiki eq 'y' && $prefs.feature_wiki_import_page eq 'y'}
 <tr class="formcolor"><td>{tr}Import page{/tr}:</td><td>
 <input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
@@ -410,6 +418,7 @@ function searchrep() {
 {/if}
 </td></tr>
 {/if}
+
 {if $wysiwyg neq 'y'}
 {if $prefs.feature_wiki_pictures eq 'y' and $tiki_p_upload_picture eq 'y'}
 <tr class="formcolor"><td>{tr}Upload picture{/tr}:</td><td>
@@ -425,6 +434,7 @@ function searchrep() {
 {/if}
 </td></tr>
 {/if}
+
 {if $prefs.feature_wiki_attachments == 'y' and ($tiki_p_wiki_attach_files eq 'y' or $tiki_p_wiki_admin_attachments eq 'y')}
 <tr class="formcolor"><td>{tr}Upload file{/tr}:
 </td><td>
@@ -437,6 +447,8 @@ function searchrep() {
 </td></tr>
 {/if}
 {/if}
+
+{if $page|lower ne 'sandbox'}
 {if $prefs.feature_wiki_icache eq 'y'}
 <tr class="formcolor"><td>{tr}Cache{/tr}</td><td>
     <select name="wiki_cache">
@@ -451,24 +463,32 @@ function searchrep() {
     </select> 
 </td></tr>
 {/if}
+
 {if $prefs.feature_antibot eq 'y' && $anon_user eq 'y'}
 {include file='antibot.tpl' tr_style="formcolor"}
 {/if}
+
 {if $prefs.wiki_feature_copyrights  eq 'y'}
 <tr class="formcolor"><td>{tr}License{/tr}:</td><td><a href="{$prefs.wikiLicensePage|sefurl}">{tr}{$prefs.wikiLicensePage}{/tr}</a></td></tr>
+
 {if $prefs.wikiSubmitNotice neq ""}
 <tr class="formcolor"><td>{tr}Important{/tr}:</td><td><b>{tr}{$prefs.wikiSubmitNotice}{/tr}</b></td>
 {/if}
 {/if}
+
 {if $prefs.feature_wiki_usrlock eq 'y' && ($tiki_p_lock eq 'y' || $tiki_p_admin_wiki eq 'y')}
 <tr class="formcolor"><td>{tr}Lock this page{/tr}</td><td><input type="checkbox" name="lock_it" {if $lock_it eq 'y'}checked="checked"{/if}/></td></tr>
 {/if}
+
 {if $prefs.feature_contribution eq 'y'}
   {include file='contribution.tpl'}
 {/if}
+
 {if $tiki_p_admin_wiki eq 'y' && $prefs.wiki_authors_style_by_page eq 'y'}
   {include file='wiki_authors_style.tpl' tr_class='formcolor' wiki_authors_style_site='y' style='tr'}
 {/if}
+{/if}{* sandbox *}
+
 {if $prefs.wiki_actions_bar neq 'top'}
 <tr class="formcolor"><td colspan="2" style="text-align:center;">
   {include file='wiki_edit_actions.tpl'}

@@ -186,6 +186,18 @@ if ( isset($_REQUEST['action'])  &&  ($_REQUEST['action'] == 'test'))
 		echo ("\n<br>");
 	}
 	echo ("\n<br>");
+	
+	$wslib->add_ws_object($id,'Wiki5','wikipage');
+	$objectId1 = $objectlib->get_object_id('wiki page', 'Wiki5');
+	if (!$objectlib->get_object_id('wiki page','Wiki6'))
+	{
+		$objectlib->add_object('wiki page','Wiki6');
+		$tikilib->create_page('Wiki6', 0, '', time(), '');
+	}
+	$wslib->add_ws_object($id,'Wiki6','wikipage');
+	$objectId2 = $objectlib->get_object_id('wiki page', 'Wiki6');
+	$wslib->remove_ws_object($id,$objectId1,'Wiki5','wiki page');
+	$wslib->remove_ws_object($id,$objectId2,'Wiki6','wiki page');
 }
 
 if (isset($_REQUEST['redirect']) && ($_REQUEST['redirect'] == 'yes'))

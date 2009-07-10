@@ -141,11 +141,19 @@ class wslib extends CategLib
      *
      * @param $ws_id The id of the WS
      * @param $ws_ObjectId The id of the object you want to delete
-     * @return -
+     * @return true
      */
-    public function remove_ws_object ($ws_id,$ws_ObjectId)
+    public function remove_ws_object ($ws_id,$ws_ObjectId,$itemId,$type)
     {
-	return parent::remove_object_from_category($ws_ObjectId, $ws_id);
+       	parent::remove_object_from_category($ws_ObjectId, $ws_id);
+    	
+    	if (!parent::is_categorized($type,$itemId))
+    	{
+    		require_once('lib/objectlib.php'); global $objectlib;
+    		$objectlib->delete_object($type, $itemId);
+    	}
+    	
+	return true;
     }
 
     /** Get the WS id
@@ -367,6 +375,8 @@ class wslib extends CategLib
 		
 		return $listWSObjectsUser;
 	}
+	
+	
 }
 
 $wslib = new wslib();

@@ -730,7 +730,7 @@ a.forumnameread {
 	letter-spacing: 1px;
 	color: #000}
 
-.findtitle {float: left;}
+.findtitle, .findsubmit {float: left;}
 
 tr.odd {
 	border: 1px solid #8cacbb;

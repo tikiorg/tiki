@@ -126,7 +126,11 @@
 						<a class="link" href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;contactId={$channels[user].contactId}">{$channels[user].lastName}</a>
 					</td>
 					<td class="{cycle advance=false}">
-						<a class="link" href="mailto:{$channels[user].email}">{$channels[user].email}</a>
+						{if $prefs.feature_webmail eq 'y'}
+							{self_link _script='tiki-webmail.php' locSection='compose' to=$channels[user].email}{$channels[user].email}{/self_link}
+						{else}
+							<a class="link" href="mailto:{$channels[user].email}">{$channels[user].email}</a>
+						{/if}
 					</td>
 					<td class="{cycle advance=false}">
 						{$channels[user].nickname}
