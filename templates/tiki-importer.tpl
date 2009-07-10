@@ -1,4 +1,4 @@
-{title help="TikiWikiGenericImporter"}TikiWiki generic importer{/title}
+{title help="TikiWikiImporter"}TikiWiki importer{/title}
 
 <br />
 
@@ -19,7 +19,7 @@
         </select>
         <input type="submit" value="{tr}Ok{/tr}"/>
     </form>
-{else if $softwareSpecificOptions}
+{elseif $softwareSpecificOptions}
     <h4>Import options:</h4>
     <form method="post" enctype="multipart/form-data" action="tiki-importer.php">
         <input type="hidden" name="importerClassName" value="{$importerClassName}"/>
@@ -41,4 +41,8 @@
         <input type="file" name="importFile"/><br />
         <input type="submit" value="{tr}Import!{/tr}"/>
     </form>
+{elseif !empty($importFeedback)}
+    <h4>{tr}Congratulations! You have successful imported your {$softwareName} data to Tikiwiki.{/tr}</h4>
+    <p>{$importFeedback.importedPages} {tr}pages imported from a total of{/tr} {$importFeedback.totalPages}</p>
+    <p>{tr}You can see the list of wiki pages in your site{/tr} <a href="tiki-listpages.php">{tr}here{/tr}</a></p>
 {/if}

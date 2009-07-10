@@ -20,6 +20,22 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiTestCase
         $obj->expects($this->once())->method('insertData')->with($parsedData);
         $obj->import(dirname(__FILE__) . '/fixtures/mediawiki_sample.xml');
         $this->assertTrue($obj->dom instanceof DOMDocument);
+        $this->assertTrue($obj->dom->hasChildNodes());
+    }
+
+    public function testImportWithoutInternalMocking()
+    {
+        global $tikilib;
+        $tikilib = $this->getMock('TikiLib', array('create_page', 'update_page', 'page_exists', 'remove_all_versions'));
+
+        $expectedResult = array('totalPages' => 4, 'importedPages' => 4);
+        
+        $importFeedback = $this->obj->import(dirname(__FILE__) . '/fixtures/mediawiki_sample.xml');
+
+        $this->assertTrue($this->obj->dom instanceof DOMDocument);
+        $this->assertTrue($this->obj->dom->hasChildNodes());
+
+        $this->assertEquals($expectedResult, $importFeedback);
     }
 
     public function testValidateInput()

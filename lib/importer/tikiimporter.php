@@ -44,6 +44,8 @@ class TikiImporter
      * Abstract method to start the import process and
      * call all other functions for each step of the importation
      * (validateInput(), parseData(), insertData())
+     *
+     * @return array $importFeedback array with the number of pages imported etc
      */
     function import() {}
 

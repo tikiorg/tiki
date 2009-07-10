@@ -31,13 +31,13 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
      * @see lib/importer/TikiImporter_Wiki#import()
      *
      * @param string $filePath path to the XML file
-     * @return void
+     * @return parent::import()
      */
     function import($filePath)
     {
         $this->dom = new DOMDocument;
         $this->dom->load($filePath);
-        parent::import();
+        return parent::import();
     }
 
     /**
