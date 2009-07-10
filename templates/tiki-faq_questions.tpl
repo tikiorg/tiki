@@ -104,10 +104,10 @@
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}
-<tr>
-<td class="{cycle advance=false}">{$channels[user].questionId}</td>
-<td class="{cycle advance=false}">{$channels[user].question}</td>
-<td class="{cycle}" width="80px">
+<tr class="{cycle}">
+<td>{$channels[user].questionId}</td>
+<td>{$channels[user].question}</td>
+<td width="80px">
    <a class="link" href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;questionId={$channels[user].questionId}">{icon _id='page_edit'}</a>
    <a class="link" href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].questionId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
 </td>
@@ -130,10 +130,10 @@
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$suggested}
-<tr>
-  <td class="{cycle advance=false}">{$suggested[ix].question} </td>
-  <td class="{cycle advance=false}">{$suggested[ix].answer}</td>
-  <td class="{cycle}" width='80px'>
+<tr class="{cycle}">
+  <td>{$suggested[ix].question} </td>
+  <td>{$suggested[ix].answer}</td>
+  <td width='80px'>
   <a class="link" href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;approve_suggested={$suggested[ix].sfqId}" alt="{tr}Approve{/tr}">{icon _id=accept alt="{tr}Approve{/tr}"}</a>
   <a class="link" href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove_suggested={$suggested[ix].sfqId}">{icon _id=cross alt="{tr}Remove{/tr}"}</a> 
   </td>
