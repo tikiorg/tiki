@@ -8,8 +8,12 @@
  * 
  */
  
-require_once('PhpUnit/Framework/TestCase.php'); 
+require_once('PHPUnit/Framework/TestCase.php'); 
  
 class TikiTestCase extends PHPUnit_Framework_TestCase {
  	protected $backupGlobals = FALSE;	
+
+	function testNothing() {
+		// PHPUnit reports an error without a test in this class
+	}
 }
