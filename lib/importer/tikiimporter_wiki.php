@@ -104,7 +104,7 @@ class TikiImporter_Wiki extends TikiImporter
     function insertPage($page)
     {
         global $tikilib;
-
+        
         // remove revisions that are not going to be imported
         if ($this->revisionsNumber > 0)
             $page['revisions'] = array_slice($page['revisions'], -$this->revisionsNumber);
@@ -117,25 +117,24 @@ class TikiImporter_Wiki extends TikiImporter
                 case 'appendPrefix':
                     $page['name'] = $this->softwareName . '_' . $page['name'];
                     break;
-                default:
-                    // $this->alreadyExistentPageName equal to 'doNotImport' or equal to invalid value 
-                    print "Page already exists, no action taken: {$page['name']}\n";
+                case 'doNotImport':
                     return;
             }
         }
-        
-        $first = true;
-        foreach ($page['revisions'] as $rev) {
-            if ($first) {
-                $tikilib->create_page($page['name'], 0, $rev['data'], $rev['lastModif'],
-                    $rev['comment'], $rev['user'], $rev['ip']);
-            } else {
-                $tikilib->cache_page_info = null;
-                $tikilib->update_page($page['name'], $rev['data'], $rev['comment'], $rev['user'],
-                    $rev['ip'], '', $rev['minor'], '', false, null, $rev['lastModif']);
-            }
 
-            $first = false;
+        if (!empty($page)) { 
+            $first = true;
+            foreach ($page['revisions'] as $rev) {
+                if ($first) {
+                    $tikilib->create_page($page['name'], 0, $rev['data'], $rev['lastModif'],
+                        $rev['comment'], $rev['user'], $rev['ip']);
+                } else {
+                    $tikilib->cache_page_info = null;
+                    $tikilib->update_page($page['name'], $rev['data'], $rev['comment'], $rev['user'],
+                        $rev['ip'], '', $rev['minor'], '', false, null, $rev['lastModif']);
+                }
+                $first = false;
+            }
         }
     }
 }

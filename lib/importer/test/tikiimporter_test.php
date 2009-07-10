@@ -1,8 +1,9 @@
 <?php
 
+require_once(dirname(__FILE__) . '/../../core/test/TikiTestCase.php');
 require_once(dirname(__FILE__) . '/../tikiimporter.php');
 
-class TikiImporter_Test extends PHPUnit_Framework_TestCase
+class TikiImporter_Test extends TikiTestCase 
 {
     public function testGetOptions()
     {

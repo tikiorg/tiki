@@ -2,6 +2,7 @@
 
 // the expected output of TikiImporter_Wiki_Mediawiki::parseData(), used to test
 // the behavior of the TikiImporter_Wiki::insertPage()
+global $page;
 $page = array('revisions' => array(
                   0 => array(
                       'minor' => false,

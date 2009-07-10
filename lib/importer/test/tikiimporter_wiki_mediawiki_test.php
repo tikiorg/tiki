@@ -1,9 +1,9 @@
 <?php
 
-require_once('PHPUnit/Framework.php');
+require_once(dirname(__FILE__) . '/../../core/test/TikiTestCase.php');
 require_once(dirname(__FILE__) . '/../tikiimporter_wiki_mediawiki.php');
 
-class TikiImporter_Wiki_Mediawiki_Test extends PHPUnit_Framework_TestCase
+class TikiImporter_Wiki_Mediawiki_Test extends TikiTestCase 
 {
 
     protected function setUp()
