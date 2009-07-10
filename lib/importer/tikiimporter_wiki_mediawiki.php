@@ -24,7 +24,22 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
      * @see lib/importer/TikiImporter#importOptions
      */
     static public $importOptions = array();    
-    
+
+    /**
+     * Start the importing process by loading the XML file.
+     * 
+     * @see lib/importer/TikiImporter_Wiki#import()
+     *
+     * @param string $filePath path to the XML file
+     * @return void
+     */
+    function import($filePath)
+    {
+        $this->dom = new DOMDocument;
+        $this->dom->load($filePath);
+        parent::import();
+    }
+
     /**
      * At present this method only validates the Mediawiki XML
      * against its DTD (Document Type Definition)
@@ -33,15 +48,10 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
      */
     function validateInput()
     {
-        global $smarty;
-        
-        $this->dom = new DOMDocument;
-        $this->dom->load($_FILES['importFile']['tmp_name']);
-        if (!$this->dom->schemaValidate(dirname(__FILE__) . '/mediawiki_dump.xsd')) {
-            $msg = tra('File does not validate against schema. Try again.');
-            $smarty->assign('msg', $msg);
-            $smarty->display('error.tpl');
-            die;
+        try {
+            $this->dom->schemaValidate(dirname(__FILE__) . '/mediawiki_dump.xsd');
+        } catch (Exception $e) {
+            throw new DOMException($e->getMessage(), $e->getCode());
         }
     }
 
@@ -70,7 +80,7 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
      * that will be imported (page name, page content for all revisions)
      * 
      * Note: the names of the keys are changed to reflected the names used by
-     * Tiki builtin function (i.e. 'title' is changed to 'name' as it is used of 
+     * Tiki builtin function (i.e. 'title' is changed to 'name' as used in 
      * TikiLib::create_page() which will be called by TikiImporter_Wiki::insertPage())
      * 
      * @param DOMElement $page
@@ -107,7 +117,7 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
      * that will be imported (page content converted to Tiki syntax, lastModif, minor, user and ip address)
      *
      * Note: the names of the keys are changed to reflected the names used by
-     * Tiki builtin function (i.e. 'text' is changed to 'data' as it is used of TikiLib::create_page())
+     * Tiki builtin function (i.e. 'text' is changed to 'data' as used in TikiLib::create_page())
      * 
      * @param DOMElement $page
      * @return unknown_type
@@ -125,6 +135,7 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
                     break;
                 case 'comment':
                     $data['comment'] = $node->textContent;
+                    break;
                 case 'text':
                     $data['data'] = $this->convertMarkup($node->textContent);
                     break;
@@ -135,6 +146,7 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
 
                 case 'minor':
                     $data['minor'] = true;
+                    break;
 
                 case 'contributor':
                     $data = array_merge($data, $this->extractContributor($node));

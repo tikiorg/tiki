@@ -19,7 +19,13 @@ if (!empty($_POST['importerClassName'])) {
 
 if (!empty($_FILES['importFile'])) {
     // third step: start the importing process
-    $importer->import(); 
+    try {
+        $importer->import($_FILES['importFile']['tmp_name']); 
+    } catch(Exception $e) {
+        $smarty->assign('msg', $e->getMessage());
+        $smarty->display('error.tpl');
+        die;
+    }
 } else if (!empty($_POST['importerClassName'])) {
     // second step: display import options for the software previously chosen
     if (!file_exists('lib/importer/' . $importerClassName . '.php')) {

@@ -1,6 +1,6 @@
 <?php
 
-require_once('../tikiimporter.php');
+require_once(dirname(__FILE__) . '/../tikiimporter.php');
 
 class TikiImporter_Test extends PHPUnit_Framework_TestCase
 {

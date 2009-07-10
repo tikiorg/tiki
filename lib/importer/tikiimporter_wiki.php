@@ -59,7 +59,6 @@ class TikiImporter_Wiki extends TikiImporter
         // child classes must implement those two methods
         $this->validateInput();
         $parsedData = $this->parseData();
-
         $this->insertData($parsedData);
    }
 
@@ -128,7 +127,6 @@ class TikiImporter_Wiki extends TikiImporter
         $first = true;
         foreach ($page['revisions'] as $rev) {
             if ($first) {
-                // Invalidate cache
                 $tikilib->create_page($page['name'], 0, $rev['data'], $rev['lastModif'],
                     $rev['comment'], $rev['user'], $rev['ip']);
             } else {
