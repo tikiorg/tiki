@@ -1,0 +1,13 @@
+The Galaxia Workflow Engine is pre-configured to work with Tikiwiki.
+
+If you're working in a different environment, please rename config.php
+to config.tikiwiki.php and replace it with your own config.ABC.php file.
+
+If no specific configuration file exists for your environment yet, have
+a look at the others, create your own and then submit it to the Tikiwiki
+team for inclusion in CVS - thanks :-)
+
+Site administrators are encouraged to have a look at the configuration
+settings if they want to change the location of directories, database
+table names etc.
+
