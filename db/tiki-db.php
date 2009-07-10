@@ -106,13 +106,6 @@ $user_tiki = NULL;
 $pass_tiki = NULL;
 $dbs_tiki = NULL;
 
-unset ($host_map);
-unset ($db_tiki);
-unset ($host_tiki);
-unset ($user_tiki);
-unset ($pass_tiki);
-unset ($dbs_tiki);
-
 class TikiDb_LegacyErrorHandler implements TikiDb_ErrorHandler
 {
 	function handle( TikiDb $db, $query, $values, $result ) // {{{
@@ -212,3 +205,10 @@ if( isset( $db_table_prefix ) )
 if( isset( $common_users_table_prefix ) )
 	$db->setUsersTablePrefix( $common_users_table_prefix );
 
+
+unset ($host_map);
+unset ($db_tiki);
+unset ($host_tiki);
+unset ($user_tiki);
+unset ($pass_tiki);
+unset ($dbs_tiki);
