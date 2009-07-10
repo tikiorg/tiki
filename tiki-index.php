@@ -194,7 +194,7 @@ $page = $info['pageName'];
 //	$translated_wiki_markup = '';
 //}
 
-$pageRenderer = new WikiRenderer( $info, $user, $translated_wiki_markup);
+$pageRenderer = new WikiRenderer( $info, $user);
 $pageRenderer->applyPermissions();
 
 if( $page_ref_id )
