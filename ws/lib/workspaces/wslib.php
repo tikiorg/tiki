@@ -6,7 +6,7 @@
  * 
  * @package	lib
  * @author	Benjamin Palacios Gonzalo (mangapower) <mangapowerx@gmail.com>
- * @author	Aldo Borrero González (axold) <axold07@gmail.com>
+ * @author	Aldo Borrero Gonz?lez (axold) <axold07@gmail.com>
  * @license	http://www.opensource.org/licenses/lgpl-2.1.php
  */
 
@@ -62,46 +62,79 @@ class wslib extends CategLib
      * @param $additionalPerms Associative array for giving more perms than the default perm 'tiki_p_ws_view'
      * @return The ID of the WS
      */
-    public function add_ws ($name, $parentWS, $groupName, $additionalPerms=null)
+    public function create_ws ($name, $parentWS = null, $groupName, $noCreateNewGroup = false, $additionalPerms = null)
     {
-	$wsID = parent::add_category($this->ws_container,$name,(string) $parentWS);
-	$this->add_ws_group ($wsID, $name, $groupName, $additionalPerms);
-	return $wsID;
+	if (!$parentWS) $parentWS = $this->ws_container;
+	$ws_id = parent::add_category($this->ws_container, $name, (string) $parentWS);
+
+	if ($noCreateNewGroup) {
+	    $this->set_permissions_for_group_in_ws ($ws_id, $groupName, array('tiki_p_ws_view'));
+	    if ($additionalPerms != null)
+		$this->set_permissions_for_group_in_ws($ws_id, $groupName, $additionalPerms);
+	}
+	else
+    	    $this->add_ws_group ($ws_id, $name, $groupName, $additionalPerms);
+
+	return $ws_id;
     }
 
     /** Add new group to a WS
      *
-     * @param $idWS The WS id you want to add the group
+     * @param $id_ws The WS id you want to add the group
      * @param $wsName The name of the WS, it can be null
      * @param $nameGroup The name of the group you want to create
      * @param $additionalPerms Associative array for giving more perms than the default perm 'tiki_p_ws_view'
      * @return If the WS was sucesfully created true, if not false.
      */
-    public function add_ws_group ($idWS, $wsName=null, $nameGroup, $additionalPerms=null) 
+    public function add_ws_group ($id_ws, $wsName = null, $nameGroup, $additionalPerms = null) 
     {
 	global $userlib; require_once 'lib/userslib.php';
 
 	if (!$wsName)
-	    $wsName = $this->get_ws_name($idWS);
+	    $wsName = $this->get_ws_name($ws_id);
 
-	$groupName = ((string) $idWS)."::".$wsName."::".$nameGroup; //With this you can create two groups with same name in different ws
+	$groupName = $this->generate_ws_group_name ($id_ws, $wsName, $nameGroup); //With this you can create two groups with same name in different ws
 
 	if ($userlib->add_group($groupName)) 
 	{
     	    // It's given the tiki_p_ws_view permission to the selected group in the new ws
-	    $this->set_permissions_for_group_in_ws($wsID,$groupName,array('tiki_p_ws_view'));
+	    $this->set_permissions_for_group_in_ws($ws_id,$groupName,array('tiki_p_ws_view'));
 	
     	    // It's given additional admin permissions to the group in the new ws
 	    if ($additionalPerms != null)
-		$this->set_permissions_for_group_in_ws($wsID,$groupName,$additionalPerms);
+		$this->set_permissions_for_group_in_ws($ws_id,$groupName,$additionalPerms);
 
 	    return true;
 	}
 	else
 	    return false;
     }
+
+    /** Generate a group name specially created for WS. With this we can avoid the problems related to have two groups with the same name
+     * NOTE: For now is OK, if the future implementation of groups change, this would change!
+     *
+     * @param $id_ws The WS id
+     * @param $wsname The WS name
+     * @param $nameGroup The group name
+     * @return A string with this format: $id_ws<:>$wsName<:>$nameGroup
+     */
+    public function generate_ws_group_name ($id_ws, $wsname, $nameGroup)
+    {
+	return ((string) $id_ws)."<:>".$wsName."<:>".$nameGroup;
+    }
+
+    /** Parse a group name with the form $id_ws<:>$wsName<:>$nameGroup
+     * TODO: Make a regexp of this function
+     *
+     * @param $groupName The name of the group you want to parse
+     * @return An array with the values in each position. If the parse was not succesful return false
+     */
+    public function parse_ws_group_name ($groupName)
+    {
+	return explode("<:>", $groupName);
+    }
 	
-    /** Remove a WS
+    /** Remove a WS TODO: Not well defined yet
      *
      * @param $ws_id The WS id you want to delete
      * @return true
@@ -171,14 +204,16 @@ class wslib extends CategLib
 
     /** Get a WS name by its id
      *
-     * @param $wsid The id of the WS you want to retrieve the name
+     * @param $ws_id The id of the WS you want to retrieve the name
      * @param $parentWS The id of the WS parent you want to search. If null, value ws_container will use instead
      * @return An array with all the names of WS you want to search
      */
+
     public function get_ws_name($wsid)
     {
 	$query = "select `categId` from `tiki_categories` where `categId`=?";
 	$bindvars = array($wsid);
+
 	return $this->query($query, $bindvars);
     }
 	
