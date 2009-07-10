@@ -61,6 +61,10 @@ class Perms
 			}
 		}
 
+		if( ! $resolver ) {
+			$resolver = false;
+		}
+
 		foreach( $toSet as $hash ) {
 			$this->hashes[$hash] = $resolver;
 		}

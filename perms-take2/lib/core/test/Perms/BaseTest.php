@@ -55,5 +55,43 @@ class Perms_BaseTest extends TikiTestCase
 			'testNoContext' => array( array(), 'rG' ),
 		);
 	}
+
+	function testResolverNotCalledTwiceWhenFound() {
+		$mock = $this->getMock( 'Perms_ResolverFactory' );
+		$mock->expects($this->exactly(2))
+			->method( 'getHash' )
+			->will( $this->returnValue( '123' ) );
+		$mock->expects($this->once())
+			->method( 'getResolver' )
+			->will( $this->returnValue( new Perms_Resolver_Default(true) ) );
+
+		$perms = new Perms;
+		$perms->setResolverFactories( array(
+			$mock,
+		) );
+		Perms::set( $perms );
+		
+		Perms::get();
+		Perms::get();
+	}
+
+	function testResolverNotCalledTwiceWhenNotFound() {
+		$mock = $this->getMock( 'Perms_ResolverFactory' );
+		$mock->expects($this->exactly(2))
+			->method( 'getHash' )
+			->will( $this->returnValue( '123' ) );
+		$mock->expects($this->once())
+			->method( 'getResolver' )
+			->will( $this->returnValue( null ) );
+
+		$perms = new Perms;
+		$perms->setResolverFactories( array(
+			$mock,
+		) );
+		Perms::set( $perms );
+		
+		Perms::get();
+		Perms::get();
+	}
 }
 
