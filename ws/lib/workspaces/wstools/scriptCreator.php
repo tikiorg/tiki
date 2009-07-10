@@ -30,6 +30,7 @@ include_once('lib/workspaces/wslib.php');
 
 global $prefs, $tikilib;
 $wsContainerId = (int) $prefs['ws_container'];
+$user = 'Ben';
 
 if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'init') && ($wsContainerId))
 {
@@ -58,25 +59,32 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'init') && ($wsContain
 		$objectlib->add_object('wiki page','Wiki5');
 		$tikilib->create_page('Wiki5', 0, '', time(), '');
 	}
+	
+	if ($userlib->add_group('G1'));
+	if ($userlib->add_group('G2'));
+	if ($userlib->add_user($user, $user))
+	{
+		$userlib->assign_user_to_group($user, 'G1');
+		$userlib->assign_user_to_group($user, 'G2');
+	}
+	
 }
 
 if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'create'))
 {
 	//Creating new WS
 	if  (!$wslib->get_ws_id('WS1',$wsContainerId))
-		$id1 = $wslib->add_ws('WS1',$wsContainerId,'G1',array('tiki_p_ws_admingroups','tiki_p_ws_adminresources'));
+		$id1 = $wslib->create_ws ('WS1', null, 'G1', true ,array('tiki_p_ws_admingroups'));
 	 if (!$wslib->get_ws_id('WS2',$wsContainerId))
-		$wslib->add_ws('WS2',$wsContainerId,'G2',array('tiki_p_ws_adminperms'));
+		$id2 = $wslib->create_ws ('WS2', null, 'G2', true ,array('tiki_p_ws_adminresources'));
 	if  (!$wslib->get_ws_id('WS3',$wsContainerId))
-	    $id3 = $wslib->add_ws('WS3',$wsContainerId,'G1',array('tiki_p_ws_adminws'));
-
-	$id2 = $wslib->get_ws_id('WS2',$wsContainerId);
+		$id3 = $wslib->create_ws ('WS3', null, 'G1', true ,array('tiki_p_ws_adminws'));
 
 	//Creating new sub-WS under WS2
 	if  (!$wslib->get_ws_id('WS21',$id2))
-		$id4 = $wslib->add_ws('WS21',$id2,'G2');
+		$id4 = $wslib->create_ws ('WS21', null, 'G2', true);
 	if  (!$wslib->get_ws_id('WS22',$id2))
-		$id5 = $wslib->add_ws('WS22',$id2,'G2',array('tiki_p_ws_adminws'));
+		$id5 = $wslib->create_ws ('WS22', null, 'G2', true,array('tiki_p_ws_adminws'));
 	
 	// Giving access to G2 in WS3
 	$wslib->set_permissions_for_group_in_ws($id3,'G2',array('tiki_p_ws_view','tiki_p_ws_addresource'));
@@ -147,7 +155,6 @@ if ( isset($_REQUEST['action'])  &&  ($_REQUEST['action'] == 'test'))
 	echo ("\n<br>");
 	echo ("List all WS that the cool user named Ben have access");
 	echo ("\n<br>");
-	$user = 'Ben';
 	$listUserWS = $wslib->list_ws_that_user_have_access($user);
 	ksort($listUserWS);
 	foreach ($listUserWS as $key)
@@ -188,6 +195,7 @@ if ( isset($_REQUEST['action'])  &&  ($_REQUEST['action'] == 'test'))
 	echo ("\n<br>");
 	
 	$wslib->add_ws_object($id,'Wiki5','wikipage');
+	echo ("Se ha insertardo Wiki5 a WS3\n<br>");
 	$objectId1 = $objectlib->get_object_id('wiki page', 'Wiki5');
 	if (!$objectlib->get_object_id('wiki page','Wiki6'))
 	{
@@ -195,9 +203,12 @@ if ( isset($_REQUEST['action'])  &&  ($_REQUEST['action'] == 'test'))
 		$tikilib->create_page('Wiki6', 0, '', time(), '');
 	}
 	$wslib->add_ws_object($id,'Wiki6','wikipage');
+	echo ("Se ha insertado Wiki6 a WS3\n<br>");
 	$objectId2 = $objectlib->get_object_id('wiki page', 'Wiki6');
 	$wslib->remove_ws_object($id,$objectId1,'Wiki5','wiki page');
+	echo ("Se ha eliminado Wiki5 de WS3 pero permanece en Tiki\n<br>");
 	$wslib->remove_ws_object($id,$objectId2,'Wiki6','wiki page');
+	echo ("Se ha eliminado Wiki6 de WS3 y en Tiki\n<br>");
 }
 
 if (isset($_REQUEST['redirect']) && ($_REQUEST['redirect'] == 'yes'))

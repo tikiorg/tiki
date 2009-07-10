@@ -208,7 +208,6 @@ class wslib extends CategLib
      * @param $parentWS The id of the WS parent you want to search. If null, value ws_container will use instead
      * @return An array with all the names of WS you want to search
      */
-
     public function get_ws_name($wsid)
     {
 	$query = "select `categId` from `tiki_categories` where `categId`=?";
