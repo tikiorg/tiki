@@ -60,6 +60,9 @@ class TikiDb
 	{
 		$result = $this->query( $query, $values, 1, $offset, $reporterrors );
 		$res = $result->fetchRow();
+		if (empty($res)) {
+			return $res;
+		}
 		return reset( $res );
 	} // }}}
 
