@@ -47,11 +47,14 @@ session_set_cookie_params($session_params['lifetime'],$tikiroot);
 unset($session_params);
 session_start();
 
+require_once 'lib/core/lib/TikiDb/Adodb.php';
 if ( file_exists( 'db/local.php' ) ) {
 
 	include('db/local.php');
 	include_once('lib/adodb/adodb.inc.php');
 	$dbTiki = ADONewConnection($db_tiki);
+	$db = new TikiDb_Adodb( $dbTiki );
+	TikiDb::set( $db );
 
 	if( isset( $_POST['dbuser'], $_POST['dbpass'] ) )
 	{

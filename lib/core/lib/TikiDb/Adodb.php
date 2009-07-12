@@ -1,6 +1,6 @@
 <?php
 
-require_once 'TikiDb.php';
+require_once 'lib/core/lib/TikiDb.php';
 
 class TikiDb_Adodb extends TikiDb {
 	private $db;
