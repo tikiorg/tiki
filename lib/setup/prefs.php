@@ -1023,7 +1023,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'metatag_imagetitle' => 'n',
 		'metatag_freetags' => 'n',
 		'metatag_description' => '',
-		'metatag_pagedesc' => 'n'
+		'metatag_pagedesc' => 'n',
 		'metatag_author' => '',
 		'metatag_geoposition' => '',
 		'metatag_georegion' => '',
