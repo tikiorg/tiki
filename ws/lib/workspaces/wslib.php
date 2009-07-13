@@ -105,14 +105,13 @@ class wslib extends CategLib
      * @param $additionalPerms Associative array for giving more perms than the default perm 'tiki_p_ws_view'
      * @return If the WS was sucesfully created true, if not false.
      */
-    public function add_ws_group ($id_ws, $wsName = null, $nameGroup, $additionalPerms = null) 
+    public function add_ws_group ($ws_id, $wsName = null, $nameGroup, $additionalPerms = null) 
     {
 	global $userlib; require_once 'lib/userslib.php';
 
 	if (!$wsName) $wsName = $this->get_ws_name($ws_id);
 
 	$groupName = $this->generate_ws_group_name ($id_ws, $wsName, $nameGroup); //With this you can create two groups with same name in different ws
-	var_dump($groupName);
 
 	if ($userlib->add_group($groupName)) 
 	{
@@ -137,9 +136,9 @@ class wslib extends CategLib
      * @param $nameGroup The group name
      * @return A string with this format: $id_ws::$wsName::$nameGroup
      */
-    public function generate_ws_group_name ($id_ws, $wsName, $nameGroup)
+    public function generate_ws_group_name ($ws_id, $wsName, $nameGroup)
     {
-	return $name= ((string) $id_ws)."::".$wsName."::".$nameGroup;
+	return $name= ((string) $ws_id)."::".$wsName."::".$nameGroup;
     }
 
     /** Parse a group name with the form $id_ws<:>$wsName<:>$nameGroup
@@ -184,7 +183,7 @@ class wslib extends CategLib
      */
     public function add_ws_object ($ws_id,$itemId,$type)
     {
-	return parent::categorize_any($type, $itemId, $ws_id );
+	return parent::categorize_any($type, $itemId, $ws_id);
     } 
 	
     /** Remove an object inside in a WS
@@ -225,10 +224,10 @@ class wslib extends CategLib
      * @param $parentWS The id of the WS parent you want to search. If null, value ws_container will use instead
      * @return An array with all the names of WS you want to search
      */
-    public function get_ws_name($wsid)
+    public function get_ws_name($ws_id)
     {
 	$query = "select `categId` from `tiki_categories` where `categId`=?";
-	$bindvars = array($wsid);
+	$bindvars = array($ws_id);
 
 	return $this->query($query, $bindvars);
     }
@@ -316,7 +315,7 @@ class wslib extends CategLib
      *
      * TODO Find a better way to explain
      */
-    public function list_all_ws ($offset, $maxRecords, $sort_mode= 'name_asc', $find, $type, $objid)
+    public function list_all_ws ($offset, $maxRecords, $sort_mode = 'name_asc', $find, $type, $objid)
     {
 		return parent::list_all_categories ($offset, $maxRecords, $sort_mode = 'name_asc', $find, $type, $objid);
     }

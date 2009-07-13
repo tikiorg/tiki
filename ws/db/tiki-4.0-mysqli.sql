@@ -1614,8 +1614,11 @@ INSERT INTO `tiki_menu_options` (`optionId`, `menuId`, `type`, `name`, `url`, `p
 INSERT INTO `tiki_menu_options` (`optionId`, `menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (193,42,'o','Action Log','tiki-admin_actionlog.php',1255,'feature_actionlog','tiki_p_view_actionlog','',0);
 INSERT INTO `tiki_menu_options` (`optionId`, `menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (194,42,'o','Action Log','tiki-admin_actionlog.php',1255,'feature_actionlog','tiki_p_view_actionlog_owngroups','',0);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Content Templates','tiki-admin_content_templates.php',1256,'','tiki_p_edit_content_templates','',0);
+
 # Workspaces - only for testing, nothing more ;)
-INSERT INTO `tiki_menu_options` (`optionId`, `menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (300,42,'o','Workspaces','tiki-admin.php?page=workspaces',1145,'feature_workspaces','tiki_p_admin_ws','',0);
+INSERT INTO `tiki_menu_options` (`optionId`, `menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (300,42,'o','Workspaces','tiki-admin.php?page=workspaces',1257,'feature_workspaces','tiki_p_admin_ws','',0);
+INSERT INTO `tiki_menu_options` (`optionId`, `menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (301,42,'s','Workspaces','tiki-workspaces-index.php',1258,'feature_workspaces','tiki_p_view','',0);
+INSERT INTO `tiki_menu_options` (`optionId`, `menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (302,42,'o','My Workspaces','tiki-my-workspaces.php',1259,'feature_workspaces','tiki_p_view','',0);
 
 DROP TABLE IF EXISTS tiki_menus;
 CREATE TABLE tiki_menus (

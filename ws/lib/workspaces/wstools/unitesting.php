@@ -10,28 +10,12 @@
 require_once '../../../tiki-setup.php';
 require_once 'lib/workspaces/wslib.php';
 
-$testQuantity = 1000;
-
-echo "<h2>--- Unit Test of Workspaces ---</h2>";
-echo "testQuantity = $testQuantity";
-
 echo <<<END
-<form action="unitesting.php" method="post">
-<input type="submit" name="Reload Test" value="Reload Test" />
+<h1>Unit Test of WS</h1>
+<form action="tests/wsInsertionTest.php" method="post">
+<label for="quantity">Test Quantity (default 1000): </label><input type="text" name="quantity" />
+<input type="submit" name="Insertion Test" value="Insertion Test" />
 </form>
 END;
 
-echo "<h3>--- Adding WS using ws_add ---</h3>";
 
-global $prefs;
-$ws_container = $prefs['ws_container'];
-
-for ($i=0; $i<$testQuantity; $i++)
-{
-    $time = (string) microtime();
-    $hashtime = md5($time);
-    $wslib->create_ws($hashtime,$hashtime);
-}
-
-
-echo "Done";
