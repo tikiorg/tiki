@@ -4010,6 +4010,7 @@ CREATE TABLE "users_groups" (
   "userChoice" char(1) default NULL,
   "groupDefCat" number(12) default 0,
   "groupTheme" varchar(255) default '',
+  "isExternal" char(1) default 'n',
   PRIMARY KEY (id)
 ) ENGINE=MyISAM ;
 
@@ -4356,6 +4357,10 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_modify_tracker_items', 'Can change tracker items', 'registered', 'trackers');
 
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_modify_tracker_items_pending', 'Can change tracker pending items', 'registered', 'trackers');
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_modify_tracker_items_closed', 'Can change tracker closed items', 'registered', 'trackers');
+
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_tracker_view_ratings', 'Can view rating result for tracker items', 'basic', 'trackers');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_tracker_vote_ratings', 'Can vote a rating for tracker items', 'registered', 'trackers');
@@ -4556,6 +4561,8 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_notifications', 'Can admin mail notifications', 'editors', 'mail notifications');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_invite', 'Can invite user in groups', 'editors', 'tiki');
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_delete_account', 'Can delete his own account', 'admin', 'tiki');
 
 
 UPDATE users_permissions SET feature_check = 'feature_wiki' WHERE permName IN(
@@ -5361,6 +5368,8 @@ INSERT INTO "tiki_actionlog_conf" ("action","objectType","status") VALUES ('Remo
 
 INSERT INTO "tiki_actionlog_conf" ("action","objectType","status") VALUES ('Removed', 'file', 'n');
 
+INSERT INTO "tiki_actionlog_conf" ("action","objectType","status") VALUES ('Viewed', 'article', 'n');
+
 
 DROP TABLE "tiki_freetags";
 
@@ -5769,6 +5778,32 @@ CREATE TABLE "tiki_plugin_security" (
 );
 
 CREATE  INDEX "tiki_plugin_security_last_object" ON "tiki_plugin_security"("last_objectType" "last_objectId");
+
+DROP TABLE `tiki_user_reports`;
+
+CREATE TABLE "IF" NOT EXISTS `tiki_user_reports` (
+  `id` number(11) NOT NULL AUTO_INCREMENT,
+  `user` varchar(200) COLLATE latin1_general_ci NOT NULL,
+  `interval` varchar(20) COLLATE latin1_general_ci NOT NULL,
+  `view` varchar(8) COLLATE latin1_general_ci NOT NULL,
+  `type` varchar(5) COLLATE latin1_general_ci NOT NULL,
+  `time_to_send` datetime NOT NULL,
+  `always_email` number(1) NOT NULL,
+  `last_report` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM;
+
+
+DROP TABLE `tiki_user_reports_cache`;
+
+CREATE TABLE "IF" NOT EXISTS `tiki_user_reports_cache` (
+  `id` number(11) NOT NULL AUTO_INCREMENT,
+  `user` varchar(200) COLLATE latin1_general_ci NOT NULL,
+  `event` varchar(200) COLLATE latin1_general_ci NOT NULL,
+  `data` clob COLLATE latin1_general_ci NOT NULL,
+  `time` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM;
 
 ;
 
