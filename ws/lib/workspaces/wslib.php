@@ -27,7 +27,7 @@ include_once 'lib/categories/categlib.php';
  */
 class wslib extends CategLib 
 {
-    /** Stores the $prefs['ws_container'] for avoid to check in every function */
+    /** Stores the $prefs['ws_container'] for avoid to check it in every function */
     private $ws_container;
 
     /** Stores this objectype, this is WS */
@@ -35,13 +35,13 @@ class wslib extends CategLib
 
     /** Constructor, give the dbtiki to its parent, this is Categlib */
     public function __construct()
-	{
-		global $dbTiki, $prefs;
-		parent::CategLib($dbTiki);
+    {
+	global $dbTiki, $prefs;
+	parent::CategLib($dbTiki);
 
-		$this->ws_container = (int) $prefs['ws_container'];
-		$this->objectType = 'ws';
-	}
+	$this->ws_container = (int) $prefs['ws_container'];
+	$this->objectType = 'ws';
+    }
 
     /** Initialize the Workspaces in TikiWiki setting a container in the category table and return its ID
      *
@@ -50,8 +50,22 @@ class wslib extends CategLib
     public function init_ws()
     {
 	if (!$this->ws_container)
-	    return parent::add_category(0, '', 'Workspaces Container');
-	else return $this->ws_container;
+	{
+	    global $prefs, $tikilib;
+	    $id = parent::add_category(0, '', 'Workspaces Container');
+	    $tikilib->set_preference('ws_container', $id);
+	    $this->ws_container = (int) $prefs['ws_container'];
+	    return $id;
+	}
+    }
+
+    /** Get the ws_container stored in $prefs. This function is used to avoid certain calls to the $prefs array.
+     *
+     * @return The ws container id stored in the var $prefs
+     */
+    public function get_ws_container()
+    {
+	return $this->ws_container;
     }
     
     /** Create a new WS with one group inside it with the associated perm 'tiki_p_ws_view'.
@@ -126,7 +140,7 @@ class wslib extends CategLib
      */
     public function generate_ws_group_name ($id_ws, $wsname, $nameGroup)
     {
-	return ((string) $id_ws)."<:>".$wsName."<:>".$nameGroup;
+	return ((string) $id_ws)."::".$wsName."::".$nameGroup;
     }
 
     /** Parse a group name with the form $id_ws<:>$wsName<:>$nameGroup
