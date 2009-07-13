@@ -25,26 +25,13 @@ echo "<h3>--- Adding WS using ws_add ---</h3>";
 
 global $prefs;
 $ws_container = $prefs['ws_container'];
-$wsnames = array();
 
 for ($i=0; $i<$testQuantity; $i++)
 {
-    $time = (string) time();
-    $hashtime = md5($hashtime);
-    $wslib->add_ws($hashtime, $ws_container, $hashtime);
-    $wsnames[$i] = $hashtime;
+    $time = (string) microtime();
+    $hashtime = md5($time);
+    $wslib->create_ws($hashtime, '', null, $hashtime, false, null);
 }
 
-$wslib->add_ws("workspace1", $ws_container, "biologia");
-$wslib->add_ws("workspace2", $ws_container, "biologia");
 
 echo "Done";
-
-echo "<h3>--- Gettin some WS using get_ws_id ---</h3>";
-
-echo "<ul>";
-for ($i=0; $i<$testQuantity; $i++)
-{
-    echo "<li>".$wslib->get_ws_id($wsnames[$i], (int) $ws_container)."</li>";
-}
-echo "</ul>";

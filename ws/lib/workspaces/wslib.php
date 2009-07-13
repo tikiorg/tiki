@@ -2,11 +2,11 @@
 /**
  * wslib.php - TikiWiki CMS/GroupWare
  *
- * This library enable the basic management of workspaces (WS)
+ * This library enables the basic management of workspaces (WS)
  * 
  * @package	lib
  * @author	Benjamin Palacios Gonzalo (mangapower) <mangapowerx@gmail.com>
- * @author	Aldo Borrero Gonz?lez (axold) <axold07@gmail.com>
+ * @author	Aldo Borrero Gonzalez (axold) <axold07@gmail.com>
  * @license	http://www.opensource.org/licenses/lgpl-2.1.php
  */
 
@@ -45,7 +45,7 @@ class wslib extends CategLib
 
     /** Initialize the Workspaces in TikiWiki setting a container in the category table and return its ID
      *
-     * @return The ws_container ID
+     * @return The ws_container ID if it wasn't set before the ws_container, if not, null
      */
     public function init_ws()
     {
@@ -78,14 +78,13 @@ class wslib extends CategLib
      */
     public function create_ws ($name, $description='', $parentWS = null, $groupName, $noCreateNewGroup = false, $additionalPerms = null)
     {
-	if (!$parentWS)
-		$parentWS = 0;
-	
+	if (!$parentWS)	$parentWS = 0;
+
 	$query = "insert into `tiki_categories`(`name`,`description`,`parentId`,`hits`,`rootCategId`) values(?,?,?,?,?)";
-	$result = $this->query($query,array($name,$description,(int) $parentWS,0,$this->ws_container));
+	$result = $this->query($query, array($name, $description, (int) $parentWS, 0, $this->ws_container));
 	
 	$query = "select `categId` from `tiki_categories` where `name`=? and `parentId`=? and `rootCategId`=?";
-	$ws_id = $this->getOne($query,array($name,(int) $parentId));
+	$id_ws = $this->getOne($query, array($name, (int) $parentWS, $this->ws_container));
 	
 	if ($noCreateNewGroup) {
 	    $this->set_permissions_for_group_in_ws ($ws_id, $groupName, array('tiki_p_ws_view'));
@@ -93,7 +92,7 @@ class wslib extends CategLib
 		$this->set_permissions_for_group_in_ws($ws_id, $groupName, $additionalPerms);
 	}
 	else
-    	    $this->add_ws_group ($ws_id, $name, $groupName, $additionalPerms);
+	    $this->add_ws_group ($id_ws, $name, $groupName, $additionalPerms);
 
 	return $ws_id;
     }
@@ -110,10 +109,10 @@ class wslib extends CategLib
     {
 	global $userlib; require_once 'lib/userslib.php';
 
-	if (!$wsName)
-	    $wsName = $this->get_ws_name($ws_id);
+	if (!$wsName) $wsName = $this->get_ws_name($ws_id);
 
 	$groupName = $this->generate_ws_group_name ($id_ws, $wsName, $nameGroup); //With this you can create two groups with same name in different ws
+	var_dump($groupName);
 
 	if ($userlib->add_group($groupName)) 
 	{
@@ -136,11 +135,11 @@ class wslib extends CategLib
      * @param $id_ws The WS id
      * @param $wsname The WS name
      * @param $nameGroup The group name
-     * @return A string with this format: $id_ws<:>$wsName<:>$nameGroup
+     * @return A string with this format: $id_ws::$wsName::$nameGroup
      */
-    public function generate_ws_group_name ($id_ws, $wsname, $nameGroup)
+    public function generate_ws_group_name ($id_ws, $wsName, $nameGroup)
     {
-	return ((string) $id_ws)."::".$wsName."::".$nameGroup;
+	return $name= ((string) $id_ws)."::".$wsName."::".$nameGroup;
     }
 
     /** Parse a group name with the form $id_ws<:>$wsName<:>$nameGroup
@@ -151,10 +150,11 @@ class wslib extends CategLib
      */
     public function parse_ws_group_name ($groupName)
     {
-	return explode("<:>", $groupName);
+	return explode("::", $groupName);
     }
 	
-    /** Remove a WS TODO: Not well defined yet
+    /** Remove a WS 
+     * TODO: Not well defined yet
      *
      * @param $ws_id The WS id you want to delete
      * @return true
@@ -162,6 +162,17 @@ class wslib extends CategLib
     public function remove_ws ($ws_id)
     {	
 	return parent::remove_category($ws_id);
+    }
+
+
+    /** Remove all WS including the Workspaces container. It's a destructive function, so use with caution
+     * TODO: We need to think first about remove_ws because there are perms, objets and so on ...
+     *
+     * @return True
+     */
+    public function remove_all_ws ()
+    {
+
     }
 	
     /** Add a object to a WS (it can be a wiki page, file gal, etc)
