@@ -76,7 +76,7 @@ class wslib extends CategLib
      * @param $additionalPerms Associative array for giving more perms than the default perm 'tiki_p_ws_view'
      * @return The ID of the WS
      */
-    public function create_ws ($name, $description='', $parentWS = null, $groupName, $noCreateNewGroup = false, $additionalPerms = null)
+    public function create_ws ($name, $groupName, $parentWS = null, $noCreateNewGroup = false, $additionalPerms = null, $description = '')
     {
 	if (!$parentWS)	$parentWS = 0;
 

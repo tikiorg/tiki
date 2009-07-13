@@ -30,7 +30,7 @@ for ($i=0; $i<$testQuantity; $i++)
 {
     $time = (string) microtime();
     $hashtime = md5($time);
-    $wslib->create_ws($hashtime, '', null, $hashtime, false, null);
+    $wslib->create_ws($hashtime,$hashtime);
 }
 
 
