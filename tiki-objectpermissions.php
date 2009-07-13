@@ -190,7 +190,7 @@ $groups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
 
 //Quickperm
 foreach($groups['data'] as $key=>$group) {
-	if (!empty($current_permissions) && is_array($current_permissions[$group['groupName']])) {
+	if (!empty($current_permissions[$group['groupName']]) && is_array($current_permissions[$group['groupName']])) {
 		//Check if Group has admin perm.
 		$diff1 = array_diff($current_permissions[$group['groupName']], $perms['admin']);
 		$diff2 = array_diff($perms['admin'], $current_permissions[$group['groupName']]);
@@ -211,7 +211,7 @@ foreach($groups['data'] as $key=>$group) {
 		
 		//Check if Group has basic perm.
 		$diff1 = array_diff($current_permissions[$group['groupName']], $perms['basic']);
-		$diff2 = array_diff($perms['read'], $current_permissions[$group['groupName']]);
+		$diff2 = array_diff($perms['basic'], $current_permissions[$group['groupName']]);
 		if (empty($diff1) AND empty($diff2))
 			$groups['data'][$key]['groupSumm'] = "basic";
 		
