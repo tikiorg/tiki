@@ -52,7 +52,7 @@ if ($prefs['feature_categories'] == 'y') {
 	}
 }
 
-if (isset($_REQUEST['machine_translate_to_lang'])) {
+if (isset($_REQUEST['machine_translate_to_lang']) && $_REQUEST['machine_translate_to_lang'] != '') {
 	$smarty->assign('machine_translate_to_lang', $_REQUEST['machine_translate_to_lang']);
 }
 
@@ -419,7 +419,7 @@ $smarty->assign('pdf_export', file_exists('lib/mozilla2ps/mod_urltopdf.php') ? '
 // Display the Index Template
 $pageRenderer->runSetups();
 $page_content = $smarty->get_template_vars('parsed');
-if (isset($_REQUEST['machine_translate_to_lang'])) {
+if (isset($_REQUEST['machine_translate_to_lang']) && $_REQUEST['machine_translate_to_lang'] != '' ) {
 	$page_content = generate_machine_translated_content($page_content, $info, $_REQUEST['machine_translate_to_lang']);
 	$smarty->assign('parsed',$page_content);
 } 

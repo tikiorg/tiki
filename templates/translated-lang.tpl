@@ -28,12 +28,16 @@
 						return;
 					else if( option.value == "_translate_" ) {
 						element.form.action = "tiki-edit_translation.php";
-						element.value = page_to_translate;
+						element.value = page_to_translate;					
 						element.form.submit();
 					} else if( option.value == "_all_" ) {
 						element.form.action = "tiki-all_languages.php";
 						element.value = page_to_translate;
 						element.form.submit();
+				 	} else if (option.text.charAt(option.text.length - 1) == "*") {
+				 		element.form.machine_translate_to_lang.value = element.form.page.options[element.form.page.selectedIndex].value;
+						element.value = page_to_translate;
+						element.form.submit();				 		
 					} else
 						element.form.submit();
 				}
@@ -41,10 +45,16 @@
 				//--><!]]>
 				</script>
 				<form action="tiki-index.php" method="get">
+				<input type="hidden" name="machine_translate_to_lang" value="">
 				<select name="page" onchange="quick_switch_language( this )">
 					{section name=i loop=$trads}
 					<option value="{$trads[i].objName}">{$trads[i].langName}</option>
 					{/section}
+					{if $prefs.feature_machine_translation eq 'y'}
+					{section name=i loop=$langsCandidatesForMachineTranslation}
+					<option value="{$langsCandidatesForMachineTranslation[i].lang}">{$langsCandidatesForMachineTranslation[i].langName} *</option>
+					{/section}
+					{/if}
 					{if $prefs.feature_multilingual_one_page eq 'y'}
 					<option value="-">---</option>
 					<option value="_all_"{if basename($smarty.server.PHP_SELF) eq 'tiki-all_languages.php'} selected="selected"{/if}>{tr}All{/tr}</option>
