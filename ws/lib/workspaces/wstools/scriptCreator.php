@@ -5,8 +5,7 @@ require_once('../../../tiki-setup.php');
  NOTE: before you run this you should create 5 wiki pages with the names "Wiki1",
  "Wiki2", "Wiki3", "Wiki4" and "Wiki5", and two groups called "G1" and "G2" (This can be
  done if the script is called by ".../lib/workspaces/wstools/scriptCreator.php?action=init).
- By the way it's necessary to create a user with the name of 'Ben' and include him in 
- the groups G1 and G2. The next thing to do is to give to Wiki2 or Wiki3 the 
+ The next thing to do is to give to Wiki2 or Wiki3 the 
  tiki_p_view for group G1 or G2. 
  
  To create sample WS and assign sample groups and wiki pages to WS:
@@ -32,7 +31,7 @@ global $prefs, $tikilib;
 $wsContainerId = (int) $prefs['ws_container'];
 $user = 'Ben';
 
-if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'init') && ($wsContainerId))
+if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'init'))
 {
 	if (!$objectlib->get_object_id('wiki page','Wiki1'))
 	{
@@ -62,7 +61,7 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'init') && ($wsContain
 	
 	if ($userlib->add_group('G1'));
 	if ($userlib->add_group('G2'));
-	if ($userlib->add_user($user, $user))
+	if ($userlib->add_user($user, '12345'))
 	{
 		$userlib->assign_user_to_group($user, 'G1');
 		$userlib->assign_user_to_group($user, 'G2');
@@ -70,7 +69,7 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'init') && ($wsContain
 	
 }
 
-if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'create'))
+if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'create') && ($wsContainerId))
 {
 	//Creating new WS
 	if  (!$wslib->get_ws_id('WS1',$wsContainerId))
@@ -98,7 +97,7 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'create'))
 	$wslib->add_ws_object($id5,'Wiki5','wiki_page');
 }
 	
-if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'destroy'))
+if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'destroy') && ($wsContainerId))
 {
 	//Getting existing WS id
 	$id1= $wslib->get_ws_id('WS1',$wsContainerId);
@@ -115,7 +114,7 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'destroy'))
 	$wslib->remove_ws($id5);
 }
 
-if ( isset($_REQUEST['action'])  &&  ($_REQUEST['action'] == 'test'))
+if ( isset($_REQUEST['action'])  &&  ($_REQUEST['action'] == 'test') && ($wsContainerId))
 {
 	$listWS = $wslib->list_all_ws(-1,-1,'name_asc',null,'wiki page','Wiki1');
 	echo ("List all WS stored in Tiki");

@@ -62,11 +62,17 @@ class wslib extends CategLib
      * @param $additionalPerms Associative array for giving more perms than the default perm 'tiki_p_ws_view'
      * @return The ID of the WS
      */
-    public function create_ws ($name, $parentWS = null, $groupName, $noCreateNewGroup = false, $additionalPerms = null)
+    public function create_ws ($name, $description='', $parentWS = null, $groupName, $noCreateNewGroup = false, $additionalPerms = null)
     {
-	if (!$parentWS) $parentWS = $this->ws_container;
-	$ws_id = parent::add_category($this->ws_container, $name, (string) $parentWS);
-
+	if (!$parentWS)
+		$parentWS = 0;
+	
+	$query = "insert into `tiki_categories`(`name`,`description`,`parentId`,`hits`,`rootCategId`) values(?,?,?,?,?)";
+	$result = $this->query($query,array($name,$description,(int) $parentWS,0,$this->ws_container));
+	
+	$query = "select `categId` from `tiki_categories` where `name`=? and `parentId`=? and `rootCategId`=?";
+	$ws_id = $this->getOne($query,array($name,(int) $parentId));
+	
 	if ($noCreateNewGroup) {
 	    $this->set_permissions_for_group_in_ws ($ws_id, $groupName, array('tiki_p_ws_view'));
 	    if ($additionalPerms != null)
@@ -140,21 +146,7 @@ class wslib extends CategLib
      * @return true
      */
     public function remove_ws ($ws_id)
-    {
-	$newParent = parent::get_category_description($ws_id);
-	$query = "update `tiki_categories` set `description`=? where 
-	`description`=? and `parentId`=?";
-	$bindvars = array($newParent,$ws_id,$this->ws_container);
-    	// All its sub-workspaces will level up	
-	$result = $this->query($query,$bindvars);
-	
-	$hashWS = md5($this->objectType . strtolower($ws_id));
-	$query = "delete from `users_objectpermissions` where `objectId` = ?"; 
-	$bindvars = array($hashWS);
-    	// Remove the WS permissions stored in objectpermissions
-   	$result = $this->query($query,$bindvars);
-		
-	// Remove the WS permissions stored in objectpermissions
+    {	
 	return parent::remove_category($ws_id);
     }
 	
@@ -197,7 +189,7 @@ class wslib extends CategLib
      */
     public function get_ws_id($name, $parentWS)
     {
-	$query = "select `categId` from `tiki_categories` where `name`=? and `parentId`=?";
+	$query = "select `categId` from `tiki_categories` where `name`=? and `parentId`=? and `rootCategId`=?";
 	$bindvars = array($name, $parentWS, $this->ws_container);
 	return $this->getOne($query, $bindvars);
     }
@@ -277,7 +269,7 @@ class wslib extends CategLib
 	    $groupWS[] = $res["objectId"];
 		
 	$idws = $this->ws_container;
-	$query = "select * from `tiki_categories` where `parentId`= $idws";
+	$query = "select * from `tiki_categories` where `rootCategId`= $idws";
 	$bindvars = array();
 	$listWS = $this->query($query,$bindvars);
 		
