@@ -4,8 +4,7 @@ require_once('tiki-setup.php');
 require_once('lib/importer/tikiimporter.php');
 require_once('lib/importer/tikiimporter_wiki.php');
 
-// TODO: define a permission for the tiki importer
-if ($tiki_p_admin != 'y') {
+if ($tiki_p_admin_importer != 'y') {
     $smarty->assign('msg', tra("Permission denied you cannot view this section"));
     $smarty->display("error.tpl");
     die;
