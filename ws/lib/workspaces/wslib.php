@@ -170,7 +170,11 @@ class wslib extends CategLib
 	$listWSObjects = $this->list_ws_objects($ws_id);
 	foreach ($listWSObjects as $object)
 		$this->remove_ws_object ($ws_id,$object["objectId"],$object["itemId"],$object["type"]);
-	
+		
+	// Remove WS recursively
+	$wsChilds = $this->get_ws_childs ($ws_id);
+	foreach ($wsChilds as $child)
+		$this->remove_ws($child);
 	return parent::remove_category($ws_id);
     }
 
@@ -182,7 +186,18 @@ class wslib extends CategLib
      */
     public function remove_all_ws ()
     {
-
+    	// First, delete all WS parents
+    	$query = "select `categId` from `tiki_categories` where `parentId`=0 and `rootCategId`=?";
+    	$bindvars = array($this->ws_container);
+    	$result = $this->query($query,$bindvars); 
+    	while ($ret = $result->fetchRow())
+		$this->remove_ws($ret["categId"]);
+    	
+	// In the end, delete the WS Container
+	$this->remove_ws($this->ws_container);
+	
+	echo("WS have been slaughtered. You're the worst person in the world!!!  :-(");
+	return true;
     }
 	
     /** Add a object to a WS (it can be a wiki page, file gal, etc)
@@ -457,7 +472,20 @@ class wslib extends CategLib
 		return $listWSObjectsUser;
 	}
 	
-	
+    /** List the objects stored in a workspace for a specific user
+     *
+     * @param $ws_id The id of the WS
+     * @return Associative array with thel WS childs
+     */	
+     function get_ws_childs ($ws_id)
+     {
+     	$query = "select `categId` from `tiki_categories` where `parentId`= ?";
+     	$bindvars = array($ws_id);
+     	$result = $this->query($query,$bindvars);
+	while ($res = $result->fetchRow())
+		$wsChilds[] = $res["categId"];
+     	return $wsChilds;
+     }	
 }
 
 $wslib = new wslib();

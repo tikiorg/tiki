@@ -107,15 +107,18 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'destroy') && ($wsCont
 	$id1= $wslib->get_ws_id('WS1',0);
 	$id2= $wslib->get_ws_id('WS2',0);
 	$id3= $wslib->get_ws_id('WS3',0);
-	$id4= $wslib->get_ws_id('WS21',$id2);
 	$id5= $wslib->get_ws_id('WS22',$id2);
 	
 	//Removing WS
 	$wslib->remove_ws($id1);
-	$wslib->remove_ws($id3);
-	$wslib->remove_ws($id4);
 	$wslib->remove_ws($id5);
+	$wslib->remove_ws($id3);
 	$wslib->remove_ws($id2);
+}
+
+if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'apocalipsis') && ($wsContainerId))
+{
+	$wslib->remove_all_ws();
 }
 
 if ( isset($_REQUEST['action'])  &&  ($_REQUEST['action'] == 'test') && ($wsContainerId))
