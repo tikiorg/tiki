@@ -72,18 +72,18 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'init'))
 if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'create') && ($wsContainerId))
 {
 	//Creating new WS
-	if  (!$wslib->get_ws_id('WS1',$wsContainerId))
-		$id1 = $wslib->create_ws ('WS1', null, 'G1', true ,array('tiki_p_ws_admingroups'));
-	 if (!$wslib->get_ws_id('WS2',$wsContainerId))
-		$id2 = $wslib->create_ws ('WS2', null, 'G2', true ,array('tiki_p_ws_adminresources'));
-	if  (!$wslib->get_ws_id('WS3',$wsContainerId))
-		$id3 = $wslib->create_ws ('WS3', null, 'G1', true ,array('tiki_p_ws_adminws'));
+	if  (!($id1 = $wslib->get_ws_id('WS1',0)))
+		$id1 = $wslib->create_ws ('WS1', 'G2', null, true ,array('tiki_p_ws_admingroups'));
+	 if (!($id2 = $wslib->get_ws_id('WS2',0)))
+		$id2 = $wslib->create_ws ('WS2', 'G2', null, true ,array('tiki_p_ws_adminresources'));
+	if  (!($id3 = $wslib->get_ws_id('WS3',0)))
+		$id3 = $wslib->create_ws ('WS3', 'G1', null, true ,array('tiki_p_ws_adminws'));
 
 	//Creating new sub-WS under WS2
-	if  (!$wslib->get_ws_id('WS21',$id2))
-		$id4 = $wslib->create_ws ('WS21', null, 'G2', true);
-	if  (!$wslib->get_ws_id('WS22',$id2))
-		$id5 = $wslib->create_ws ('WS22', null, 'G2', true,array('tiki_p_ws_adminws'));
+	if  (!($id4 = $wslib->get_ws_id('WS21',$id2)))
+		$id4 = $wslib->create_ws ('WS21', 'G2', $id2, true);
+	if  (!($id5 = $wslib->get_ws_id('WS22',$id2)))
+		$id5 = $wslib->create_ws ('WS22', 'G2', $id2, true,array('tiki_p_ws_adminws'));
 	
 	// Giving access to G2 in WS3
 	$wslib->set_permissions_for_group_in_ws($id3,'G2',array('tiki_p_ws_view','tiki_p_ws_addresource'));
@@ -95,23 +95,27 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'create') && ($wsConta
 	$wslib->add_ws_object($id3,'Wiki3','wiki_page');
 	$wslib->add_ws_object($id4,'Wiki4','wiki_page');
 	$wslib->add_ws_object($id5,'Wiki5','wiki_page');
+	
+	//Adding ObjectPerms in Wiki2 (for G1) and Wiki3 (for G2)
+	$userlib->assign_object_permission('G1', 'Wiki2', 'wiki page', 'tiki_p_view');
+	$userlib->assign_object_permission('G2', 'Wiki3', 'wiki page', 'tiki_p_view');
 }
 	
 if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'destroy') && ($wsContainerId))
 {
 	//Getting existing WS id
-	$id1= $wslib->get_ws_id('WS1',$wsContainerId);
-	$id2= $wslib->get_ws_id('WS2',$wsContainerId);
-	$id3= $wslib->get_ws_id('WS3',$wsContainerId);
+	$id1= $wslib->get_ws_id('WS1',0);
+	$id2= $wslib->get_ws_id('WS2',0);
+	$id3= $wslib->get_ws_id('WS3',0);
 	$id4= $wslib->get_ws_id('WS21',$id2);
 	$id5= $wslib->get_ws_id('WS22',$id2);
 	
 	//Removing WS
 	$wslib->remove_ws($id1);
-	$wslib->remove_ws($id2);
 	$wslib->remove_ws($id3);
 	$wslib->remove_ws($id4);
 	$wslib->remove_ws($id5);
+	$wslib->remove_ws($id2);
 }
 
 if ( isset($_REQUEST['action'])  &&  ($_REQUEST['action'] == 'test') && ($wsContainerId))
@@ -130,7 +134,7 @@ if ( isset($_REQUEST['action'])  &&  ($_REQUEST['action'] == 'test') && ($wsCont
 	echo ("\n<br>");
 	echo ("List all groups that have access to WS3");
 	echo ("\n<br>");
-	$id = $wslib->get_ws_id('WS3',$wsContainerId);
+	$id = $wslib->get_ws_id('WS3',0);
 	$listWSGroups = $wslib->list_groups_that_can_access_in_ws($id);
 	foreach ($listWSGroups as $key)
 	{
@@ -203,11 +207,14 @@ if ( isset($_REQUEST['action'])  &&  ($_REQUEST['action'] == 'test') && ($wsCont
 	}
 	$wslib->add_ws_object($id,'Wiki6','wikipage');
 	echo ("Se ha insertado Wiki6 a WS3\n<br>");
+	$userlib->assign_object_permission('G1', 'Wiki5', 'wiki page', 'tiki_p_view');
+	$userlib->assign_object_permission('G2', 'Wiki5', 'wiki page', 'tiki_p_view');
+	$userlib->assign_object_permission('G1', 'Wiki6', 'wiki page', 'tiki_p_view');
 	$objectId2 = $objectlib->get_object_id('wiki page', 'Wiki6');
 	$wslib->remove_ws_object($id,$objectId1,'Wiki5','wiki page');
-	echo ("Se ha eliminado Wiki5 de WS3 pero permanece en Tiki\n<br>");
+	echo ("Se ha eliminado Wiki5 de WS3 y solo se han eliminado los permisos de los grupos unicos a WS3\n<br>");
 	$wslib->remove_ws_object($id,$objectId2,'Wiki6','wiki page');
-	echo ("Se ha eliminado Wiki6 de WS3 y en Tiki\n<br>");
+	echo ("Se ha eliminado Wiki6 de WS3 y se han eliminado todos los permisos asociados\n<br>");
 }
 
 if (isset($_REQUEST['redirect']) && ($_REQUEST['redirect'] == 'yes'))

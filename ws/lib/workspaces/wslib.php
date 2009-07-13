@@ -78,15 +78,16 @@ class wslib extends CategLib
      */
     public function create_ws ($name, $groupName, $parentWS = null, $noCreateNewGroup = false, $additionalPerms = null, $description = '')
     {
-	if (!$parentWS)	$parentWS = 0;
-
+    	if (!$parentWS)	$parentWS = 0;
+    	
 	$query = "insert into `tiki_categories`(`name`,`description`,`parentId`,`hits`,`rootCategId`) values(?,?,?,?,?)";
-	$result = $this->query($query, array($name, $description, (int) $parentWS, 0, $this->ws_container));
+	$this->query($query, array($name, $description, (int) $parentWS, 0, $this->ws_container));
 	
 	$query = "select `categId` from `tiki_categories` where `name`=? and `parentId`=? and `rootCategId`=?";
-	$id_ws = $this->getOne($query, array($name, (int) $parentWS, $this->ws_container));
+	$ws_id = $this->getOne($query, array($name, (int) $parentWS, $this->ws_container));
 	
-	if ($noCreateNewGroup) {
+	if ($noCreateNewGroup)
+	{
 	    $this->set_permissions_for_group_in_ws ($ws_id, $groupName, array('tiki_p_ws_view'));
 	    if ($additionalPerms != null)
 		$this->set_permissions_for_group_in_ws($ws_id, $groupName, $additionalPerms);
@@ -160,6 +161,16 @@ class wslib extends CategLib
      */
     public function remove_ws ($ws_id)
     {	
+    	// Remove perms assigned to the WS
+    	$hashWS = md5($this->objectType . strtolower($ws_id));
+	$query = "delete from `users_objectpermissions` where `objectType` = ? and `objectId` = ?";
+	$this->query($query, array($this->objectType, $hashWS), -1, -1, false);
+	
+	// Remove the WS objects
+	$listWSObjects = $this->list_ws_objects($ws_id);
+	foreach ($listWSObjects as $object)
+		$this->remove_ws_object ($ws_id,$object["objectId"],$object["itemId"],$object["type"]);
+	
 	return parent::remove_category($ws_id);
     }
 
@@ -195,11 +206,32 @@ class wslib extends CategLib
     public function remove_ws_object ($ws_id,$ws_ObjectId,$itemId,$type)
     {
        	parent::remove_object_from_category($ws_ObjectId, $ws_id);
+    	$hashObject = md5($type . strtolower($itemId));
     	
     	if (!parent::is_categorized($type,$itemId))
     	{
-    		require_once('lib/objectlib.php'); global $objectlib;
-    		$objectlib->delete_object($type, $itemId);
+		$query = "delete from `users_objectpermissions` where `objectType` = ? and `objectId` = ?";
+		$this->query($query, array($type, $hashObject), -1, -1, false);
+    		// parent::delete_object($type, $itemId);
+    	}
+    	else
+    	{
+    		$hashWS = md5($this->objectType . strtolower($ws_id));
+    		$query = "select `groupName` FROM `users_objectpermissions` t1 
+    				where `permName`='tiki_p_ws_view' and `objectId`=? and 
+    				not exists (select * FROM `users_objectpermissions` t2 
+    				where t1.`groupName`=t2.`groupName` 
+    				and `permName`='tiki_p_ws_view' 
+    				and not `objectId`=?)";
+    		$result = $this->query($query,array($hashWS,$hashWS));
+    		
+    		while ($ret = $result->fetchRow())
+	    		$listWSUniqueGroups[] = $ret;
+    		foreach ($listWSUniqueGroups as $group)
+    		{
+    			$query = "delete from `users_objectpermissions` where `groupName` = ? and `objectType` = ? and `objectId` = ?";
+    			$this->query($query,array($group["groupName"],$type,$hashObject));
+    		}
     	}
     	
 	return true;
@@ -254,7 +286,7 @@ class wslib extends CategLib
 	    $query = "insert into `users_objectpermissions`(`groupName`,
 		`objectId`, `objectType`, `permName`)
 		values(?, ?, ?, ?)";		
-	    $this->query($query, array($groupName, $hashWS,'ws', $permName));
+	    $this->query($query, array($groupName, $hashWS, $this->objectType, $permName));
 	}	
 	return true;
     }
@@ -395,7 +427,6 @@ class wslib extends CategLib
 	function list_ws_objects_for_user ($ws_id,$user)
 	{
 		require_once('lib/userslib.php');
-		require_once('lib/objectlib.php');
 		global $userlib; global $objectlib;
 		
 		$listWSObjects = $this->list_ws_objects($ws_id);
@@ -404,7 +435,7 @@ class wslib extends CategLib
 		{
 			$objectType = $object["type"];
 			$objId = $object["itemId"];
-			$viewPerm = $objectlib->get_needed_perm($objectType, "view");
+			$viewPerm = parent::get_needed_perm($objectType, "view");
 			
 			$groups = $userlib->get_user_groups($user);
 			
