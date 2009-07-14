@@ -60,10 +60,6 @@ if ($_REQUEST['objectType'] == 'wiki' || $_REQUEST['objectType'] == 'wiki page')
 //Quickperms
 $perms = $userlib->get_permissions(0, -1, 'permName_asc', '', $_REQUEST["permType"], '', true);
 
-echo "<pre>";
-print_r($perms);
-echo "</pre>";
-
 foreach($perms['data'] as $perm) {
 	if ($perm['level']=='basic')
 		$quickperms_['basic'][$perm['permName']] = $perm['permName'];
