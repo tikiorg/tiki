@@ -725,9 +725,13 @@ h3.box-title {
 	
 /* MiniChat  */
 div.box-minichat {width: 100%}
-div.minichatchans {overflow: auto}
-.minichat {overflow: auto}
-div.minichatdiv {overflow: auto}
+div.minichatdiv {font-size: .9em}
+
+div.minichat,
+div.minichatdiv,
+div.minichatchan {
+	overflow: auto;
+}
 
 /* mod-switch_lang */
 .box-switch_lang .box-data img {
@@ -1025,14 +1029,7 @@ table.wikiplugin-split {
 	clear: both}
 
 table.wikiplugin-split .codelisting {width: 95%}
-div.box-minichat {width: 100%}
-div.minichatchans {overflow: auto}
-.minichat {overflow: auto}
 
-div.minichatdiv {
-	font-size: .9em;
-	overflow: auto}
-	
 /* wikiplugin_footnotearea */
 .footnotearea {
 	margin-top: 2em;
