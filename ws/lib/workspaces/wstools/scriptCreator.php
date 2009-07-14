@@ -119,6 +119,7 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'destroy') && ($wsCont
 if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'apocalipsis') && ($wsContainerId))
 {
 	$wslib->remove_all_ws();
+	echo("WS have been slaughtered. You're the worst person in the world!!!  :-(");
 }
 
 if ( isset($_REQUEST['action'])  &&  ($_REQUEST['action'] == 'test') && ($wsContainerId))

@@ -153,9 +153,8 @@ class wslib extends CategLib
 	return explode("::", $groupName);
     }
 	
-    /** Remove a WS 
-     * TODO: Not well defined yet
-     *
+    /** Remove a WS and it childs
+     * 
      * @param $ws_id The WS id you want to delete
      * @return true
      */
@@ -165,6 +164,8 @@ class wslib extends CategLib
     	$hashWS = md5($this->objectType . strtolower($ws_id));
 	$query = "delete from `users_objectpermissions` where `objectType` = ? and `objectId` = ?";
 	$this->query($query, array($this->objectType, $hashWS), -1, -1, false);
+	
+	// Remove the WS groups
 	
 	// Remove the WS objects
 	$listWSObjects = $this->list_ws_objects($ws_id);
@@ -180,8 +181,7 @@ class wslib extends CategLib
 
 
     /** Remove all WS including the Workspaces container. It's a destructive function, so use with caution
-     * TODO: We need to think first about remove_ws because there are perms, objets and so on ...
-     *
+     * 
      * @return True
      */
     public function remove_all_ws ()
@@ -196,8 +196,25 @@ class wslib extends CategLib
 	// In the end, delete the WS Container
 	$this->remove_ws($this->ws_container);
 	
-	echo("WS have been slaughtered. You're the worst person in the world!!!  :-(");
 	return true;
+    }
+    
+    /** Remove a group from a WS
+     * 
+     * @param $ws_id The id of the WS where the group will be removed from
+     * @param $groupName The name of the group you want to remove
+     * @return true
+     */
+    public function remove_ws_group ($ws_id,$groupName)
+    {
+    	// Delete all perms added for the WS
+    	
+    	// Check if the group belong to other WS
+    	
+    	// If the group only had access to the current WS
+    	
+    	// If the group has access to other WS
+    	return true;
     }
 	
     /** Add a object to a WS (it can be a wiki page, file gal, etc)
@@ -205,7 +222,7 @@ class wslib extends CategLib
      * @param $ws_id The id of the WS you want to add a object
      * @param $itemId The id of the item (in wikis it's equal to its name)
      * @param $type The type of the object
-     * @param $itemId The Id of the categorized object (equal to its objectId)
+     * @return -
      */
     public function add_ws_object ($ws_id,$itemId,$type)
     {
@@ -216,6 +233,8 @@ class wslib extends CategLib
      *
      * @param $ws_id The id of the WS
      * @param $ws_ObjectId The id of the object you want to delete
+     * @param $itemId The id of the item you want to delete
+     * @param $type The type of the object you want to delete
      * @return true
      */
     public function remove_ws_object ($ws_id,$ws_ObjectId,$itemId,$type)
@@ -475,7 +494,7 @@ class wslib extends CategLib
     /** List the objects stored in a workspace for a specific user
      *
      * @param $ws_id The id of the WS
-     * @return Associative array with thel WS childs
+     * @return Associative array with the WS childs
      */	
      function get_ws_childs ($ws_id)
      {
