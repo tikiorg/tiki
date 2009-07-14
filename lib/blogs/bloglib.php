@@ -6,6 +6,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
+include_once('lib/reportslib.php');
+
 class BlogLib extends TikiLib {
 
 	//Special parsing for multipage articles
@@ -264,7 +266,7 @@ class BlogLib extends TikiLib {
 
 	function blog_post($blogId, $data, $user, $title = '', $contributions='', $priv='n') {
 		// update tiki_blogs and call activity functions
-		global $smarty, $tikilib, $prefs;
+		global $smarty, $tikilib, $prefs, $reportslib;
 
 		$data = strip_tags($data, '<a><b><i><h1><h2><h3><h4><h5><h6><ul><li><ol><br><p><table><tr><td><img><pre>');
 		$query = "insert into `tiki_blog_posts`(`blogId`,`data`,`created`,`user`,`title`,`priv`) values(?,?,?,?,?,?)";
@@ -284,7 +286,7 @@ class BlogLib extends TikiLib {
 			if ($prefs['feature_daily_report_watches'] == 'y') {
 				$query = "select `title` from `tiki_blogs` where `blogId`=?";
 				$blogTitle = $this->getOne($query, array((int)$blogId));
-				$tikilib->makeReportCache($nots, array("event"=>'blog_post', "blogId"=>$blogId, "blogTitle"=>$blogTitle, "postId"=>$id, "user"=>$user));
+				$reportslib->makeReportCache($nots, array("event"=>'blog_post', "blogId"=>$blogId, "blogTitle"=>$blogTitle, "postId"=>$id, "user"=>$user));
 			}
 			
 			if (count($nots)) {

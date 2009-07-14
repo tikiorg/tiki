@@ -7,6 +7,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
+include_once('lib/reportslib.php');
+
 class ImageGalsLib extends TikiLib {
 	function __construct() {
 		parent::__construct();
@@ -892,7 +894,7 @@ class ImageGalsLib extends TikiLib {
 			$nots = $this->get_event_watches($event, $galleryId);
 			
 			if ($prefs['feature_daily_report_watches'] == 'y') {
-				$tikilib->makeReportCache($nots, array("event"=>$event, "imageId"=>$imageId, "imageName"=>$name, "fileName"=>$filename, "galleryId"=>$galleryId, "galleryName"=>$galleryName, "action"=>$action, "user"=>$user));
+				$reportslib->makeReportCache($nots, array("event"=>$event, "imageId"=>$imageId, "imageName"=>$name, "fileName"=>$filename, "galleryId"=>$galleryId, "galleryName"=>$galleryName, "action"=>$action, "user"=>$user));
 			}
 			
 			include_once('lib/notifications/notificationemaillib.php');
