@@ -1203,6 +1203,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_multilingual' => 'n',
 		'feature_multilingual_one_page' => 'n',
 		'feature_multilingual_structures' => 'n',
+		'feature_machine_translation' => 'n',
 		'feature_newsletters' => 'n',
 		'feature_obzip' => 'n',
 		'feature_phplayers' => 'y', // Enabled by default for a better file gallery tree explorer
