@@ -8,6 +8,8 @@
   * \param $title of the message
   * \param $topicName name of the parent topic
   */
+
+include_once('lib/reportslib.php');
   
 function sendForumEmailNotification($event, $object, $forum_info, $title, $data, $author, $topicName, $messageId='', $inReplyTo='', $threadId, $parentId, $contributions='', $postId='') {
 	global $tikilib, $prefs, $smarty, $userlib;
@@ -218,7 +220,6 @@ function sendWikiEmailNotification($event, $pageName, $edit_user, $edit_comment,
 
 	if ($edit_user=='') $edit_user = tra('Anonymous');
 
-	include_once('lib/reportslib.php');
 	global $reportslib;
 	
 	if ($prefs['feature_user_watches'] == 'y' && $prefs['feature_daily_report_watches'] == 'y') {
@@ -346,7 +347,7 @@ function sendErrorEmailNotification($errno, $errstr, $errfile='?', $errline= '?'
 }
 
 function sendFileGalleryEmailNotification($event, $galleryId, $galleryName, $name, $filename, $description, $action, $user, $fileId) {
-        global $tikilib, $prefs, $smarty, $userlib;
+        global $tikilib, $prefs, $smarty, $userlib, $reportslib;
 
         $nots = array();
         $defaultLanguage = $prefs['site_language'];
@@ -358,8 +359,6 @@ function sendFileGalleryEmailNotification($event, $galleryId, $galleryName, $nam
                         $nots[$i]['language'] = $tikilib->get_user_preference($nots[$i]['user'], "language", $defaultLanguage);
                 }
 
-           		include_once('lib/reportslib.php');
-                
 				if ($prefs['feature_daily_report_watches'] == 'y') {
 					$reportslib->makeReportCache($nots, array("event"=>$event, "name"=>$name, "fileId"=>$fileId, "fileName"=>$filename, "galleryId"=>$galleryId, "galleryName"=>$galleryName, "action"=>$action, "user"=>$user));
 				}
@@ -423,7 +422,7 @@ function sendCategoryEmailNotification($values) {
         
         //$event, $categoryId, $categoryName, $categoryPath, 
 		//$description, $parentId, $parentName, $action
-        global $tikilib, $prefs, $smarty, $userlib, $user;
+        global $tikilib, $prefs, $smarty, $userlib, $user, $reportslib;
 
         $nots = array();
         $defaultLanguage = $prefs['site_language'];
@@ -443,8 +442,6 @@ function sendCategoryEmailNotification($values) {
 				$nots[$i]['language'] = $tikilib->get_user_preference($nots[$i]['user'], "language", $defaultLanguage);
 			}
 			
-       		include_once('lib/reportslib.php');
-
 			if ($prefs['feature_daily_report_watches'] == 'y') {
 				$cache_data = $values;
 				$cache_data['user'] = $user;

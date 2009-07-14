@@ -304,4 +304,6 @@ class reportsLib extends TikiLib{
 	//-----------------------------
 	
 }
+
+global $reportslib;
 $reportslib = new reportsLib;
