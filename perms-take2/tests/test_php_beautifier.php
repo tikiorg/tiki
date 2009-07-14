@@ -38,7 +38,7 @@ if ($a) {
 }
 
 // Comment
-fct(a) { //comment
+function fct($a) { //comment
 //comment
 	$a = $b;
 	/* coment */

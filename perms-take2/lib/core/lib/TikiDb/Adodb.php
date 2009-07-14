@@ -1,6 +1,6 @@
 <?php
 
-require_once 'TikiDb.php';
+require_once 'lib/core/lib/TikiDb.php';
 
 class TikiDb_Adodb extends TikiDb {
 	private $db;
@@ -12,9 +12,6 @@ class TikiDb_Adodb extends TikiDb {
 		}
 
 		$this->db=$db;
-
-		global $ADODB_LASTDB;
-		$this->setServerType( $ADODB_LASTDB );
 	} // }}}
 
 	function qstr( $str ) // {{{

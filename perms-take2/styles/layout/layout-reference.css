@@ -1,8 +1,18 @@
-/* $Id$ 
-	This file (layout.css) is to be imported
-	by theme stylesheets. */
+/* $Id$
+	This file is the fully-commented reference version
+	of the layout.css file. It was 'forked' from layout.css
+	at revision 20109 2009-07-14 10:13:25Z. 
+	This file (layout.css) is designed to be imported
+	by theme stylesheets, and has these sections:
+	XHTML elements, Siteheader & Identity; Menus, Links;
+	Misc. Center Col.; Misc. Global; Boxes; Tables, Tabs;
+	Wiki (inc. plugins, etc.); Articles; Blogs; Forums;
+	Galleries; Trackers; Categories, Tags; Polls; FAQs;
+	Quizzes;	Shoutbox; Directory; Messages; TikiSheets;
+	Calendar; Admin; and Ajax, jquery, etc. */
 
 /***** XHTML Elements *****/
+html {}
 body {
 	margin: 0;
 	padding: 0;
@@ -25,12 +35,25 @@ fieldset {
 	padding: 0.3em;
 }
 
+button,
+input,
+label,
+textarea,
+option,
+select {
+	/*margin: 0.2em;
+	vertical-align: middle;*/
+}
+
+.navbar{}
+
 span.button {
 	display: inline-block;
 	margin: 1px 2px;
 	padding: 2px;
 }
 
+/* Links in buttons */
 span.button a,
 span.button a:visited,
 button,
@@ -43,6 +66,7 @@ span.button input,
 	cursor: pointer;
 }
 
+/* Definitions below are the same as above, but are separated to make those above work in IE6 */
 input[type=reset],
 input[type=submit] {
 	padding: 1px 4px;
@@ -52,6 +76,23 @@ input[type=submit] {
 	cursor: pointer;
 }
 	
+.button a:hover,
+button:hover,
+.button input:hover,
+.calbuttonBox:hover {}
+
+input[type=reset]:hover,
+input[type=submit]:hover {}
+
+.button a:active,
+button:active,
+.button input:active,
+span.highlight a:link,
+span.highlight a:visited {}
+
+input[type=reset]:active,
+input[type=submit]:active {}
+
 span.highlight {
 	background: aqua;
 	padding: 0 !important;
@@ -103,13 +144,19 @@ img {
 	background: transparent;
 	vertical-align: middle;
 	padding: 0;
+	/*padding-top: 6px;*/
 	margin: 0;
 }
 
 #customcode {  }
 #customcodewith_ad {
+	/*position: absolute;
+	width: 964px;
+	margin: auto;*/
 	width: 400px;
 }
+
+div#sioptions {/*padding: 1em*/}
 
 #sioptionscentered {
 	text-align: center;
@@ -150,10 +197,15 @@ div#sitead {
 	padding-right: 4px;
 }
 
+.floatright img {}
+
 #sitelocbar {
 	float: left;
 	padding: 2px 2px 3px 10px;
 }
+
+#sitelocbar a {}
+#sitelocbar a:hover {}
 
 #siteloginbar {
 	text-align: right;
@@ -172,6 +224,10 @@ div#sitead {
 	float: right;
 	padding-left: 5px;
 }
+
+#siteloginbar a,
+#siteloginbar a:visited,
+#siteloginbar a:hover {}
 	
 #siteloginbar * {
 	white-space: nowrap;
@@ -180,6 +236,30 @@ div#sitead {
 #siteloginbar form {
 	padding-right: 0;
 }
+
+#sl-login-user,
+#sl-login-pass {}
+#siteloginbar #pass {}
+#siteloginbar .rme {}
+#siteloginbar .register {}
+#bannertopright {}
+#siteloginbar input.wikiaction {}
+#sitetitles {}
+
+#sitetitle,
+#sitesubtitle {}
+
+#sitetitle {}
+#sitesubtitle {}
+
+#header a,
+#header a:visited {}
+
+#header a:hover {}
+
+#tiki-top {}
+
+#tiki-top a {}
 
 #tiki-top table {
 	width: auto;
@@ -194,16 +274,30 @@ div#sitead {
 	display: block;
 	margin: 0;
 }
+	
+#sitesearchbar form {}	
+input#text
+input.wikiaction {}
+#sitesearchbar form button {}
+
+select[name="where"],
+input[name="search"] {}
+
+#topbar_custom_code {}
 
 /****** Menus_links ******/
 /** CSS (suckerfish) menus **/
 
 /** PHP Layers Menus **/
+.horbar {} 
+
 .horbar table {
 	width: auto;
 	text-align: left;
 	white-space: nowrap;
 }
+
+.horbaritem {}
 	
 .horbaritem a,
 .horbaritem a:link,
@@ -224,7 +318,7 @@ div#sitead {
 	width: auto;
 } 
 
-.mdksubframe {
+.mdksubframe { /*decorate*/
 	z-index: 1000;
 	position: relative;
 	display: block;
@@ -252,6 +346,22 @@ div#sitead {
 	white-space: nowrap;
 	overflow: hidden;
 }
+	
+.phplmnormal,
+a.phplmnormal:hover,
+a.phplm:link,
+a.phplm:visited,
+a.phplm:hover,
+a.phplm:active {}
+
+a.phplm:visited {}
+a.phplm:hover {}
+a.phplm:active {}
+
+a.phplmselected:link,
+a.phplmselected:visited,
+a.phplmselected:hover,
+a.phplmselected:active {}
 
 a.phplmselected:hover {}
 .imgs {
@@ -261,14 +371,48 @@ a.phplmselected:hover {}
 }
 	
 /** Links in other menus **/
+div.separator, div.separatorline {}
+.separator a:link,
+.separator a:visited,
+.separator a:hover {}
+
+div.option a.linkmenu:hover {}
+a.separator img {}
+.option {}
+
+div.optionline,
+.option a {}
+
+.option a:link,
+.option a:visited,
+a.linkmenu,
+.rsslink,
+.linkmenu:visited,
+.rsslink:visited {}
 
 .linkmenu,
 .linkmenu:visited {
 	display: block;
 }
 
+.linkmenu:hover {}
+
+div.option a:hover,
+div.option a:active {}
+
+a.linkmodule {}
+a.linkmodule:hover {}
+.rsslist {}
+.rssitem {}
+.rssitem:first-child {}
+.rssdate {}
+
+div.menuSection div.menuSection,
+div.menuSection div.separator {}
+
 /***** Misc. *****/
 /* centercolumn */
+#showhide_columns {}
 	
 a.flip,
 a.flip:visited,
@@ -293,6 +437,8 @@ a.flip img {
 	margin-top: 2px;
 }
 
+#tiki-center {}
+
 #rss {
 	padding: 1em 1em 0;
 }
@@ -305,6 +451,8 @@ a.flip img {
 #credits {
 	display: inline;
 }
+
+div#loadstats {}
 
 .error,
 #error {
@@ -357,6 +505,8 @@ ul.jumplinks a:active {
 	font-size: 80%;
 }
 	
+#fullscreenbutton:hover {}
+
 #tiki-clean {
 	text-align: left;
 	padding: 1em;
@@ -452,9 +602,21 @@ div#edithelpzone {
 	text-decoration: none;
 }
 
+.bannertext:hover {}
+
 div.imagerank {
 	margin: 10px 5px;
 }
+
+.link,
+.gallink,
+.bloglink,
+.fgallink,
+.trailer,
+.admlink,
+.forumbutlink {}
+
+div.searchdate {}
 
 div#debugconsole {
 	position: absolute;
@@ -510,6 +672,7 @@ a.tikihelp:hover {
 	font-size: 1em;
 }
 
+/* To enable removing deprecated tag from img.icon and prevent border on a.icon. */
 a.icon,
 img.icon {
 	border: 0 !important;
@@ -520,6 +683,7 @@ img.icon {
 	white-space: nowrap;
 }
 
+/** Find form **/
 .findtable {
   text-align: center;
   margin-bottom: 10px;
@@ -562,6 +726,9 @@ img.icon {
 	margin-top: 5px;
 }
 
+input#findwhat {}
+div.findsubmit {}
+
 ul.categories{
 	margin: 0;
 	padding: 0;
@@ -578,7 +745,7 @@ div#tikihelp {
 	position: fixed;
 	right: 0;
 	top: 0;
-	height: auto;
+	height: auto; /* if there was height specified it covered the right column content "invisibly" making part of it unclickable (from strasa) */
 	max-width: 50%;
 	padding: 0;
 	margin: 0;
@@ -675,6 +842,8 @@ div.help_section {
 
 /***** Boxes *****/
 /** Modules **/
+.box-shadow {}
+
 div.box {
 	overflow: hidden;
 }
@@ -684,6 +853,9 @@ h3.box-title {
 	display: block;
 	padding-top: 0;
 }
+
+.box-title a,
+.box-title a:link {}
 
 .moduleflip,
 .wikitext .box-title span img.flipmodimage {
@@ -702,6 +874,15 @@ h3.box-title {
 	border: 1px solid transparent;
 }
 
+
+.flipmodimage:hover {}
+
+#col2 h3.box-title {}
+#col2 .box-title a,
+#col2 .box-title a:link {}
+.box-title a:hover {}
+.box-data {}
+
 .box-data table {
 	width: 100%;
 }
@@ -719,6 +900,8 @@ h3.box-title {
 	margin-bottom: 0;
 }
 
+.box-footer {}
+
 .modcontrols {
 	display: block;
 	float: right;
@@ -726,6 +909,7 @@ h3.box-title {
 	height: 16px;
 }
 	
+/* MiniChat  */
 div.box-minichat {
 	width: 100%;
 }
@@ -740,6 +924,7 @@ div.minichatchan {
 	overflow: auto;
 }
 
+/* mod-switch_lang */
 .box-switch_lang .box-data img {
 	padding: .2em;
 	vertical-align: middle;
@@ -766,6 +951,7 @@ div.minichatchan {
 	padding: 0 1em;
 }
 
+/** Other boxes **/
 .cbox {
 	overflow: hidden;
 	border: 1px solid yellow;
@@ -777,6 +963,8 @@ div.minichatchan {
 	border-bottom: 1px solid yellow;
 	padding: 3px 3px 0 3px;
 }
+
+.cboxlink {}
 
 .cbox-data {
 	overflow: hidden;
@@ -817,6 +1005,18 @@ div.minichatchan {
 	padding: 0 3px 3px 3px;
 }
 
+.comment .rbox-title,
+.comment .rbox-data {}
+
+.note .rbox-title {}
+.note .rbox-data {}
+
+.tip .rbox-title,
+.tip .rbox-data {}
+
+.warning .rbox-title {}
+.warning .rbox-data {}
+
 div.simplebox {
 	color: green;
 	background: silver;
@@ -842,6 +1042,8 @@ table.normalnoborder {
 	width: 100%;
 }
 
+table.admin tr td div#page-bar {}
+
 td {
 	vertical-align: top;
 }
@@ -859,6 +1061,22 @@ td.form,
 	vertical-align: top;
 }
 
+table.email {}
+table.email td.body {}
+table.email td.heading {}
+table.email td.closeButton {}
+
+tr.odd {}
+tr.odd:hover {}
+tr.even {}
+tr.even:hover {}
+
+tr.odd td,
+td.odd {}
+
+tr.even td,
+td.even {}
+
 td.third {
 	text-align: center;
 }
@@ -874,11 +1092,24 @@ td.even {
 	border-collapse: collapse;
 }
 
+/* Headings */
 th,
 td.heading,
 tr.diffheader {
 	text-align: center;
 }
+
+form.admin {}
+form.admin fieldset {}
+form.admin legend.heading {}
+form.admin legend.heading a {}
+form.admin legend.heading a:hover {}
+form.admin legend.heading a span {}
+form.admin legend.heading a:hover span {}
+
+/* Cells in tracker items display */
+td.formlabel {}
+td.formcontent {}
 td.form {
 	padding: 0.2em;
 }
@@ -886,7 +1117,8 @@ td.form {
 /** Tabs **/
 .tabs {
 	margin: 10px 3px -18px 3px;
-	padding: 0;
+	/*border-bottom: solid 1px #666;
+	*/padding: 0;
 	position: relative;
 	z-index: 2;
 }
@@ -905,6 +1137,8 @@ td.form {
 	text-decoration: none;
 }
 
+.tabmark a:active {}
+.tabmark a:hover {}
 .tabactive {
 	border: solid 1px /*#696969*/ !important;
 	border-bottom: none;
@@ -917,8 +1151,10 @@ td.form {
 	top: -1px;
 }
 
+.tabactive a {}
 
 .tabinactive {
+	/*border: solid 1px #666 !important;*/
 	border-bottom: none/* !important*/;
 	position: relative/* !important*/;
 	top: -3px/* !important*/;
@@ -927,6 +1163,9 @@ td.form {
 [class].tabinactive {
 	top: -2px !important;
 }
+
+.tabinactive a,
+.tabinactive a:visited {}
 
 .tabcontent {
 	z-index: 1;
@@ -953,6 +1192,16 @@ table.admin div#content1 div.tabcontent div.cbox {
 }
 
 /***** Wiki *****/
+h1.pagetitle a,
+h1.pagetitle a:visited,
+h1.pagetitle a:hover,
+a.pagetitle,
+a.pagetitle:visited,
+a.pagetitle:hover {}
+
+h1 a.pagetitle:hover {}
+.wikitopline {}
+
 div#description,
 div.description {
 	display: block;
@@ -972,9 +1221,25 @@ div.description {
 	white-space: nowrap !important;
 }
 
+.wikiactions .icons,
+.wikiactions form {/*display: inline-block*/}
+
+.wikitext {}
 body.tiki_wiki #comments {
 	padding: 1em;
 }
+
+.wikitext h2, 
+.wikitext h3, 
+.wikitext h4,
+.wikitext h5 {}
+
+.titlebar {}
+.wikitext ul li {} 
+.wikitext ul li ul li {}
+.wikitext ol {}
+table.wikitable {}
+td.wikicell {}
 
 div.split {
 	clear: both;
@@ -993,17 +1258,36 @@ div#page-bar {
 	float: left;
 }
 
+div.cache {}
+div.cachedpage {}
+.wikicache, .wikicache:visited {}
+.wikicache:hover {}
+.wiki {}
+.wikinew {}
 .wiki-edithelp {
 	display: none;
 }
+
+#wikihelp-tab table,
+#wikihelp-tab table td {}
 
 #wikihelp-tab table td {
 	padding: 2px;
 }
 
+textarea.wikiedit {}
+
 p.editdate {
 	padding-top: 10px;
 }
+
+img.externallink {}
+
+/* Needed esp. for light-on-dark theme */
+div.quicktag {}
+div.quicktag img,
+#wikihelp-tab td img {}
+div#helptool {}
 
 /* Wiki plugins */
 table.wikiplugin-split {
@@ -1172,9 +1456,17 @@ div.article {
 	margin-bottom: 40px;
 }
 
+div.articletopline {}
+div.articletitle {}
+
 div.articletitle h2 {
 	margin: 0;
 }
+
+span.titleb {} 
+div.articlesubtitle {}
+div.articleheading {}
+div.articleheadingtext {}
 
 img.topicimage,
 img.articleimagenofloat,
@@ -1204,6 +1496,8 @@ div.articletrailer {
 	margin-top: 1.1em
 }
 	
+div.articletrailer img {}
+
 div.articletrailer .wikitopline {
 	float: left;
 }
@@ -1225,11 +1519,15 @@ div.article .actions {
 	top: 0;
 }
 
+div.articlebody {}
+
 div.articlesource {
 	margin-top: 5px;
 	font-style: italic;
 	font-size: 90%;
 }
+
+div.articletrailer .wikitopline {}
 
 /***** Blogs *****/
 div.breadcrumbs {
@@ -1242,6 +1540,9 @@ div.blogheading {
 	width: 100%;
 	clear: both;
 }
+
+div.blogtitle {}
+body.tiki_blogs div.description {}
 	
 div.blogdesc {
 	display: block;
@@ -1270,10 +1571,16 @@ a.blog:visited {
 	text-decoration: none;
 }
 
+a.blogt:hover {}
+
 .postinfo {
 	margin-bottom: 20px;
 	margin-top: 10px;
 }
+
+.postinfo a {}
+
+div.postinfo a.linkmodule {}
 
 .postinfo div {
 	margin-top: 30%;
@@ -1298,6 +1605,14 @@ body.tiki_blogs .post .title {
 	margin-top: 0;
 }
 
+body.tiki_blogs .post .title h2 {}
+
+body.tiki_blogs div.postbody {}
+body.tiki_blogs div.author_actions { }
+body.tiki_blogs .actions {}
+body.tiki_blogs .author_info {}
+body.tiki_blogs .postbody-title {}
+
 body.tiki_blogs .post .postfooter {
 	clear: both;
 	float: right;
@@ -1317,6 +1632,8 @@ body.tiki_forums table.normal {
 	display: block;
 }
 
+.post {}
+
 .post .postbody {
 	clear: both;
 	margin: 0;
@@ -1331,9 +1648,13 @@ body.tiki_forums table.normal {
 	text-align: left;
 }
 	
+.post .postbody .content p {}
+
 .post .postbody-title {
 	overflow: hidden;
 }
+
+.top_post .post .postbody-title {}
 
 .post .postbody-title .checkbox {
 	float: left;
@@ -1345,6 +1666,17 @@ body.tiki_forums table.normal {
 	margin-top: 3px;
 }
 	
+.postbody-title .title h2 {}
+.postbody-title .title h3 {  }
+.post .postbody-title .title a.link {}
+
+.title .freetaglist,
+.title a.freetag,
+.title a.freetag:visited {/*color: #fff*/}
+
+.postbody-title .title br.clear {}
+.post .author_actions {}
+
 .post .author {
 	float: right;
 	text-align: right;
@@ -1363,6 +1695,9 @@ body.tiki_forums table.normal {
 .post .author_info .icons .actions {
 	margin-right: 10px;
 }
+
+.post .author_post_info_on {}
+.post .author_info {}
 
 .commentStyle_headers .author_info {
 	float: left;
@@ -1392,6 +1727,8 @@ body.tiki_forums table.normal {
 	vertical-align: top;
 }
 
+.post .postfooter .status {}
+
 .post .postfooter {
 	float: right;
 	text-align: right;
@@ -1400,6 +1737,8 @@ body.tiki_forums table.normal {
 .post .inner > .postfooter {
 	clear: both;
 }
+
+.post .contribution {}
 
 .post .avatar {
 	float: right;
@@ -1454,6 +1793,7 @@ body.tiki_forums table.normal {
 	margin-bottom: 15px;
 }
 
+/* Comments */
 #comzone {
 	display: none;
 	margin: 5px 0;
@@ -1471,6 +1811,9 @@ span.commentstitle {
 	font-size: 1.2em;
 }
 
+.subcomment {}
+
+/* Comments moderation */
 .post-approved-n {
 	border-left: 3px dotted blue;
 }
@@ -1498,6 +1841,7 @@ table.galtable {
 	width: 100%;
 }
 
+
 body.tiki_galleries table.findtable {
 	display: inline;
 }
@@ -1515,6 +1859,9 @@ td.eventhumb img {
 	margin-right: 6px;
 }
 
+div.thumbnailcontenerchecked div.thumbnail {}
+div.thumbnails {}
+
 div#browse_image {
 	width: 100%;
 }
@@ -1524,6 +1871,8 @@ img.athumb {
 	margin: auto
 }
 
+.caption {}
+
 p.norecords {
 	font-weight: bold;
 }
@@ -1532,6 +1881,9 @@ div.imagetitle {
 	font-weight: bold;
 	font-size: 200%;
 }
+
+div.gallerylink { }
+div#browse_image {}
 
 div.showimage {
 	margin: 5px 0;
@@ -1553,6 +1905,31 @@ div#browse_image {
 }
 
 /***** File Galleries *****/
+div.thumbnailcontener {}
+div.thumbnail {}
+div.thumbnamecontener, div.thumbimagecontener {}
+div.thumbnamecontener {}
+div.thumbname, div.thumbimage {}
+div.thumbnamesub, div.thumbimagesub {}
+div.thumbnail:hover {}
+div.thumbnail:hover div.thumbnamecontener {}
+div.thumbimage img {}
+div.thumbinfos {}
+div.thumbinfo {}
+span.thumbinfoval {}
+div.thumbname {}
+div.thumbactions {}
+div.thumbactions * {}
+div.thumbactions input {}
+div.thumbactions a {}
+div.thumbdescription {}
+div.thumbdescription + div.thumbinfo {}
+div.thumbdescription span.thumbinfoname {}
+a.namealias {}
+div.gallerypath, div.gallerypath a {}
+div.gallerypath a:hover {}
+.fgalexplorer {/*border: 1px solid yellow*/}
+
 .fgallisting table td {
 	padding-left: 2px;
 	padding-right: 2px;
@@ -1595,6 +1972,7 @@ opaque .box-title,
 	vertical-align: middle;
 }
 	
+/* also for categorize.tpl */
 div.multiselect {
 	vertical-align: middle;
 	padding: 0;
@@ -1691,6 +2069,9 @@ div.multiselect div.selection:hover {
 }
 	
 /***** Categories, Tags *****/
+.treetitle {}
+.treenode {}
+
 span.categpath {
 	display: block;
 }
@@ -1698,6 +2079,27 @@ span.categpath {
 a.categpath {
 	display: inline;
 }
+
+table.tcategpath {}
+td.tdcategpath {}
+table.subcats {}
+td.tdsubcat {}
+.categlink {}
+table.catobjects {}
+
+td.categobjectsnameeven,
+td.categobjectsnameodd {}
+
+td.categobjectsdataeven,
+td.categobjectsdataodd {}
+
+.catname {}
+.catblock {}
+.catlists {}
+.catlists:hover {}
+.cattitle {}
+.catlists a.link {}
+.catlists a.link:hover {}
 
 .catfeatures {
 	margin-left: 0;
@@ -1722,6 +2124,8 @@ a.categpath {
 	display: inline;
 	margin-right: 7px;
 }
+
+.catitems li a.link {}
 
 /***** Tags (freetags) *****/
 .freetaglist {
@@ -1781,7 +2185,7 @@ a.categpath {
 }
 
 a.freetag,
-a.freetag:hover {
+a.freetag:hover {/* freetags.css (line 8)*/
 	background: none;
 	border: 0;
 	margin: auto;
@@ -1872,15 +2276,21 @@ div.freetagObjectName a {
 	text-align: right;
 }
 
+a.freetag {} /* articles... */
+
 .morcego_embedded {
 	border: 1px solid yellow;
 	text-align: center;
 }
 
 /*****  Polls  *****/
+div.pollresults {}
+
 table.pollresults {
 	width: 100%;
 }
+
+td.pollr {}
 
 #pollopen {
 	display: block;
@@ -1893,6 +2303,8 @@ table.pollresults {
 #polledit {
 	display: none;
 }
+
+.pollnav {}
 
 /***** FAQs *****/
 div.faqlistquestions {
@@ -1920,6 +2332,8 @@ div.questionblock {
 div.quizquestion {
 	margin-bottom: 5px;
 }
+
+div.quizoptions {}
 
 div.quizdescription {
 	margin-bottom: 10px;
@@ -1953,14 +2367,20 @@ div.dircategs {
 	font-size: 95%;
 }
 
+.dirlink {}
+
 .dirsublink {
 	font-size: .95em;
 }
+
+div.dirlistsites {}
 
 div.dirsite {
 	margin-bottom: 10px;
 	padding: 4px;
 }
+
+span.dirsitedesc {}
 
 span.dirsitetrail {
 	font-size: 95%;
@@ -1969,6 +2389,11 @@ span.dirsitetrail {
 span.dirsitecats {
 	font-size: 95%;
 }
+
+.dirsitelink {}
+div.dirrelated {}
+td.dirfooter {}
+div.dirfooter {}
 
 /***** Messages *****/
 td.prio1,
@@ -2059,8 +2484,14 @@ table.default tfoot td {}
 table.default td {}
 
 /***** Calendar *****/
+/* Properties are in css/calendar.css, 
+	which can be overridden
+	in theme stylesheets.  */
 
 /***** Admin *****/
+
+div.adminanchors {}
+
 .highlight_word_0{
 	color: #ffff66;
 	background: #666;
@@ -2310,6 +2741,9 @@ div#ajaxLoading {
 }
 
 .webmail_mono {
+/*	max-width: 800px;
+	white-space: pre;
+	overflow: hidden;*/
 	font-size: 1.1em;
 	font-family: "Courier New", Courier, monospace;
 }
@@ -2327,5 +2761,7 @@ table.webmail_message_headers th {
 	border: none;
 	background-color: transparent;
 }
+
+/***** End New (unsorted) *****/
 
 /* End of File */

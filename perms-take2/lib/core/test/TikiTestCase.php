@@ -17,3 +17,4 @@ class TikiTestCase extends PHPUnit_Framework_TestCase {
 		// PHPUnit reports an error without a test in this class
 	}
 }
+

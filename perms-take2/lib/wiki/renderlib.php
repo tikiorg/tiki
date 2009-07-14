@@ -202,7 +202,7 @@ class WikiRenderer
 			return;
 
 		include_once('lib/multilingual/multilinguallib.php');
-
+		
 		if( $this->info['lang'] && $this->info['lang'] != 'NULL') { //NULL is a temporary patch
 			$this->trads = $multilinguallib->getTranslations('wiki page', $this->info['page_id'], $this->page, $this->info['lang']);
 			$this->smartyassign('trads', $this->trads);
@@ -210,6 +210,24 @@ class WikiRenderer
 			$this->smartyassign('pageLang', $pageLang);
 		}
 		
+		if ($prefs['feature_machine_translation'] == 'y' && $this->info['lang'] && $this->info['lang'] != 'NULL') {
+			global $langmapping;
+			$preferedLangs = $multilinguallib->preferedLangs(null, false);
+			$usedLangs = array();
+			foreach( $this->trads as $trad )
+				$usedLangs[] = $trad['lang'];
+				
+			$langsCandidatesForMachineTranslation = array();
+			$i = 0;
+			foreach( $preferedLangs as $preferedLang )
+				if( ! in_array( $preferedLang, $usedLangs ) ) {		
+					$langsCandidatesForMachineTranslation[$i]['lang'] = $preferedLang;					
+					$langsCandidatesForMachineTranslation[$i]['langName'] = $langmapping[$preferedLang][0];
+					$i++;	
+				}
+			$this->smartyassign('langsCandidatesForMachineTranslation', $langsCandidatesForMachineTranslation);
+		}
+				
 		$stagingEnabled = (
 			$prefs['feature_wikiapproval'] == 'y' 
 			&& $tikilib->page_exists($prefs['wikiapproval_prefix'] . $this->page) );

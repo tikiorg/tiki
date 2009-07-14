@@ -15,7 +15,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-error_reporting (E_ALL);
 require_once( 'tiki-filter-base.php' );
 
 // Define and load Smarty components

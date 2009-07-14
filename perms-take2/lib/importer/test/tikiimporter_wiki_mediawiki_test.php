@@ -1,9 +1,9 @@
 <?php
 
-require_once('PHPUnit/Framework.php');
+require_once(dirname(__FILE__) . '/../../core/test/TikiTestCase.php');
 require_once(dirname(__FILE__) . '/../tikiimporter_wiki_mediawiki.php');
 
-class TikiImporter_Wiki_Mediawiki_Test extends PHPUnit_Framework_TestCase
+class TikiImporter_Wiki_Mediawiki_Test extends TikiTestCase 
 {
 
     protected function setUp()
@@ -20,6 +20,30 @@ class TikiImporter_Wiki_Mediawiki_Test extends PHPUnit_Framework_TestCase
         $obj->expects($this->once())->method('insertData')->with($parsedData);
         $obj->import(dirname(__FILE__) . '/fixtures/mediawiki_sample.xml');
         $this->assertTrue($obj->dom instanceof DOMDocument);
+        $this->assertTrue($obj->dom->hasChildNodes());
+    }
+
+    public function testImportWithoutInternalMocking()
+    {
+        global $tikilib;
+        $tikilib = $this->getMock('TikiLib', array('create_page', 'update_page', 'page_exists', 'remove_all_versions'));
+
+        $expectedResult = array('totalPages' => 4, 'importedPages' => 4);
+        
+        $importFeedback = $this->obj->import(dirname(__FILE__) . '/fixtures/mediawiki_sample.xml');
+
+        $this->assertTrue($this->obj->dom instanceof DOMDocument);
+        $this->assertTrue($this->obj->dom->hasChildNodes());
+
+        $this->assertEquals($expectedResult, $importFeedback);
+    }
+
+    public function testImportShouldRaiseExceptionForInvalidMimeType()
+    {
+        require_once(dirname(__FILE__) . '/../../init/tra.php');
+        $_FILES['importFile']['type'] = 'invalid/type';
+        $this->setExpectedException('UnexpectedValueException');
+        $this->obj->import(dirname(__FILE__) . '/fixtures/mediawiki_sample.xml');
     }
 
     public function testValidateInput()
@@ -28,7 +52,7 @@ class TikiImporter_Wiki_Mediawiki_Test extends PHPUnit_Framework_TestCase
         $this->obj->dom->load(dirname(__FILE__) . '/fixtures/mediawiki_sample.xml');
         $this->assertNull($this->obj->validateInput());
     }
-    
+
     public function testValidateInputShouldRaiseExceptionForInvalidXmlFile()
     {
         $this->obj->dom = new DOMDocument;
@@ -37,7 +61,7 @@ class TikiImporter_Wiki_Mediawiki_Test extends PHPUnit_Framework_TestCase
         $this->obj->validateInput();
     }
 
-    public function testParseData()
+   public function testParseData()
     {
         $obj = $this->getMock('TikiImporter_Wiki_Mediawiki', array('extractInfo'));
         $obj->dom = new DOMDocument;

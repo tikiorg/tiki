@@ -2859,6 +2859,10 @@ INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","
 go
 
 
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Tiki Importer','tiki-importer.php',1240,'','tiki_p_admin_importer','',0)
+go
+
+
 
 -- DROP TABLE "tiki_menus"
 go
@@ -4649,6 +4653,7 @@ CREATE TABLE "users_groups" (
   "userChoice" char(1) default NULL NULL,
   "groupDefCat" numeric(12,0) default 0,
   "groupTheme" varchar(255) default '',
+  "isExternal" char(1) default 'n',
   PRIMARY KEY (id)
 ) ENGINE=MyISAM 
 go
@@ -5290,6 +5295,14 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 go
 
 
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_modify_tracker_items_pending', 'Can change tracker pending items', 'registered', 'trackers')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_modify_tracker_items_closed', 'Can change tracker closed items', 'registered', 'trackers')
+go
+
+
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_tracker_view_ratings', 'Can view rating result for tracker items', 'basic', 'trackers')
 go
 
@@ -5675,6 +5688,14 @@ go
 
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_invite', 'Can invite user in groups', 'editors', 'tiki')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_delete_account', 'Can delete his own account', 'admin', 'tiki')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_importer', 'Can use the Tiki Importer', 'admin', 'tiki', 'y')
 go
 
 
@@ -7042,6 +7063,10 @@ INSERT INTO "tiki_actionlog_conf" ("action","objectType","status") VALUES ('Remo
 go
 
 
+INSERT INTO "tiki_actionlog_conf" ("action","objectType","status") VALUES ('Viewed', 'article', 'n')
+go
+
+
 
 -- DROP TABLE "tiki_freetags"
 go
@@ -7656,6 +7681,40 @@ go
 
 CREATE  INDEX "tiki_plugin_security_last_object" ON "tiki_plugin_security"("last_objectType" "last_objectId")
 go
+
+-- DROP TABLE `tiki_user_reports`
+go
+
+
+CREATE TABLE "IF" NOT EXISTS `tiki_user_reports` (
+  `id` numeric(11,0) NOT NULL AUTO_INCREMENT,
+  `user` varchar(200) COLLATE latin1_general_ci NOT NULL,
+  `interval` varchar(20) COLLATE latin1_general_ci NOT NULL,
+  `view` varchar(8) COLLATE latin1_general_ci NOT NULL,
+  `type` varchar(5) COLLATE latin1_general_ci NOT NULL,
+  `time_to_send` datetime NOT NULL,
+  `always_email` numeric(1,0) NOT NULL,
+  `last_report` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM
+go
+
+
+
+-- DROP TABLE `tiki_user_reports_cache`
+go
+
+
+CREATE TABLE "IF" NOT EXISTS `tiki_user_reports_cache` (
+  `id` numeric(11,0) NOT NULL AUTO_INCREMENT,
+  `user` varchar(200) COLLATE latin1_general_ci NOT NULL,
+  `event` varchar(200) COLLATE latin1_general_ci NOT NULL,
+  `data` text COLLATE latin1_general_ci NOT NULL,
+  `time` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM
+go
+
 
 
 go

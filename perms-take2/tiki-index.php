@@ -52,7 +52,7 @@ if ($prefs['feature_categories'] == 'y') {
 	}
 }
 
-if (isset($_REQUEST['machine_translate_to_lang'])) {
+if (isset($_REQUEST['machine_translate_to_lang']) && $_REQUEST['machine_translate_to_lang'] != '') {
 	$smarty->assign('machine_translate_to_lang', $_REQUEST['machine_translate_to_lang']);
 }
 
@@ -98,7 +98,7 @@ if( $prefs['feature_wiki_structure'] == 'y' ) {
 	}
 
 	//If a structure page isnt going to be displayed
-	if (!isset($page_ref_id)) {
+	if (!empty($page_ref_id)) {
 		//Check to see if its a member of any structures
 		if (isset($_REQUEST['structure']) && !empty($_REQUEST['structure'])) {
 			$struct=$_REQUEST['structure'];
@@ -126,7 +126,7 @@ if( $prefs['feature_wiki_structure'] == 'y' ) {
 	die;
 }
 
-if(isset($page_ref_id)) {
+if (!empty($page_ref_id)) {
     $page_info = $structlib->s_get_page_info($page_ref_id);
     $info = null;
     // others still need a good set page name or they will get confused.
@@ -150,8 +150,9 @@ if ( function_exists('utf8_encode') ) {
 
 
 // Get page data, if available
-if (!$info)
-	$info = $tikilib->get_page_info($page);	
+if (!$info) {
+	$info = $tikilib->get_page_info($page);
+}
 	
 // If the page doesn't exist then display an error
 if(empty($info) && !($user && $prefs['feature_wiki_userpage'] == 'y' && strcasecmp($prefs['feature_wiki_userpage_prefix'].$user, $page) == 0)) {
@@ -418,7 +419,7 @@ $smarty->assign('pdf_export', file_exists('lib/mozilla2ps/mod_urltopdf.php') ? '
 // Display the Index Template
 $pageRenderer->runSetups();
 $page_content = $smarty->get_template_vars('parsed');
-if (isset($_REQUEST['machine_translate_to_lang'])) {
+if (isset($_REQUEST['machine_translate_to_lang']) && $_REQUEST['machine_translate_to_lang'] != '' ) {
 	$page_content = generate_machine_translated_content($page_content, $info, $_REQUEST['machine_translate_to_lang']);
 	$smarty->assign('parsed',$page_content);
 } 

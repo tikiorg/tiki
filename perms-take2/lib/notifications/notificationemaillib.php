@@ -9,6 +9,8 @@
   * \param $topicName name of the parent topic
   */
 
+include_once('lib/reportslib.php');
+  
 function sendForumEmailNotification($event, $object, $forum_info, $title, $data, $author, $topicName, $messageId='', $inReplyTo='', $threadId, $parentId, $contributions='', $postId='') {
 	global $tikilib, $prefs, $smarty, $userlib;
 
@@ -102,8 +104,10 @@ function sendForumEmailNotification($event, $object, $forum_info, $title, $data,
 		$nots[] = $not;
 	}
 
+	include_once('lib/reportslib.php');
+
 	if ($prefs['feature_user_watches'] == 'y' && $prefs['feature_daily_report_watches'] == 'y') {
-		$tikilib->makeReportCache($nots, array("event"=>$event, "forumId"=>$forum_info['forumId'], "forumName"=>$forum_info['name'], "topicId"=>$threadId, "threadId"=>$postId, "threadName"=>$topicName, "user"=>$author));
+		$reportslib->makeReportCache($nots, array("event"=>$event, "forumId"=>$forum_info['forumId'], "forumName"=>$forum_info['name'], "topicId"=>$threadId, "threadId"=>$postId, "threadName"=>$topicName, "user"=>$author));
 	}
 
 	if (count($nots)) {
@@ -215,9 +219,11 @@ function sendWikiEmailNotification($event, $pageName, $edit_user, $edit_comment,
 	}
 
 	if ($edit_user=='') $edit_user = tra('Anonymous');
+
+	global $reportslib;
 	
 	if ($prefs['feature_user_watches'] == 'y' && $prefs['feature_daily_report_watches'] == 'y') {
-		$tikilib->makeReportCache($nots, array("event"=>$event, "pageName"=>$pageName, "object"=>$pageName, "editUser"=>$edit_user, "editComment"=>$edit_comment, "oldVer"=>$oldver));
+		$reportslib->makeReportCache($nots, array("event"=>$event, "pageName"=>$pageName, "object"=>$pageName, "editUser"=>$edit_user, "editComment"=>$edit_comment, "oldVer"=>$oldver));
 	}
 
 	if (count($nots)) {
@@ -341,7 +347,7 @@ function sendErrorEmailNotification($errno, $errstr, $errfile='?', $errline= '?'
 }
 
 function sendFileGalleryEmailNotification($event, $galleryId, $galleryName, $name, $filename, $description, $action, $user, $fileId) {
-        global $tikilib, $prefs, $smarty, $userlib;
+        global $tikilib, $prefs, $smarty, $userlib, $reportslib;
 
         $nots = array();
         $defaultLanguage = $prefs['site_language'];
@@ -352,9 +358,9 @@ function sendFileGalleryEmailNotification($event, $galleryId, $galleryName, $nam
                 for ($i = count($nots) - 1; $i >=0; --$i) {
                         $nots[$i]['language'] = $tikilib->get_user_preference($nots[$i]['user'], "language", $defaultLanguage);
                 }
-                
+
 				if ($prefs['feature_daily_report_watches'] == 'y') {
-					$tikilib->makeReportCache($nots, array("event"=>$event, "name"=>$name, "fileId"=>$fileId, "fileName"=>$filename, "galleryId"=>$galleryId, "galleryName"=>$galleryName, "action"=>$action, "user"=>$user));
+					$reportslib->makeReportCache($nots, array("event"=>$event, "name"=>$name, "fileId"=>$fileId, "fileName"=>$filename, "galleryId"=>$galleryId, "galleryName"=>$galleryName, "action"=>$action, "user"=>$user));
 				}
         }
         
@@ -416,7 +422,7 @@ function sendCategoryEmailNotification($values) {
         
         //$event, $categoryId, $categoryName, $categoryPath, 
 		//$description, $parentId, $parentName, $action
-        global $tikilib, $prefs, $smarty, $userlib, $user;
+        global $tikilib, $prefs, $smarty, $userlib, $user, $reportslib;
 
         $nots = array();
         $defaultLanguage = $prefs['site_language'];
@@ -435,14 +441,13 @@ function sendCategoryEmailNotification($values) {
 			for ($i = count($nots) - 1; $i >=0; --$i) {
 				$nots[$i]['language'] = $tikilib->get_user_preference($nots[$i]['user'], "language", $defaultLanguage);
 			}
-
+			
 			if ($prefs['feature_daily_report_watches'] == 'y') {
 				$cache_data = $values;
 				$cache_data['user'] = $user;
 				$cache_data['event'] = $event;
-				$tikilib->makeReportCache($nots, $cache_data);
+				$reportslib->makeReportCache($nots, $cache_data);
 			}
-
 		}
 
         if (count($nots)) {        		

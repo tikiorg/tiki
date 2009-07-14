@@ -40,7 +40,7 @@ class BannerLib extends TikiLib {
 			$mid .= implode('or', $mids).')';
 		}
 
-		$query = "select * from `tiki_banners` where $dw = ? and  `hourFrom`<=? and `hourTo`>=? and
+		$query = "select * from `tiki_banners` where `$dw` = ? and  `hourFrom`<=? and `hourTo`>=? and
 		( ((`useDates` = ?) and (`fromDate`<=? and `toDate`>=?)) or (`useDates` = ?) ) and
 		(`impressions`<`maxImpressions`  or `maxImpressions`=?) and (`clicks`<`maxClicks` or `maxClicks`=? or `maxClicks` is NULL) and `zone`=? order by ".$this->convertSortMode('random');
 		$result = $this->query($query,$bindvars,1,0);

@@ -166,7 +166,7 @@
 {if $machine_translate_to_lang != ''}
 	<div class="simplebox highlight">
 		<img src="pics/icons/exclamation.png" alt=" '.tra('Warning').'" style="vertical-align:middle" />
-			{tr}WARNING: This text was machine translated from the following page: {/tr}<a href="tiki-index.php?page={$page}">{$page}</a> 
+			{tr}WARNING: This text was automatically translated by Google Translate from the following page: {/tr}<a href="tiki-index.php?page={$page}">{$page}</a> 
 	</div>
 {/if}
 

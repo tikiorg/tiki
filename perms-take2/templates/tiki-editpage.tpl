@@ -269,9 +269,11 @@ window.onload = timeIt;
 </td>
 </tr>
 {/if}
-{if $prefs.feature_wiki_description eq 'y'}
+{if $prefs.feature_wiki_description eq 'y' or $prefs.metatag_pagedesc eq 'y'}
   <tr class="formcolor">
-    <td>{tr}Description{/tr}:</td>
+{if $prefs.metatag_pagedesc eq 'y'} <td>{tr}Description (used for metatags){/tr}:</td>
+{else} <td>{tr}Description{/tr}:</td>
+{/if}
     <td><input style="width:98%;" type="text" name="description" value="{$description|escape}" /></td>
   </tr>
 {/if}

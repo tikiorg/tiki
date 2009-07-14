@@ -1,6 +1,11 @@
 /* $Id$ 
-	This file (layout.css) is to be imported
-	by theme stylesheets. */
+	This file was created when Tiki 3 and trunk (to be Tiki 4)
+	had essentially the same layout CSS. As trunk's layout.css
+	is edited toward the release of Tiki 4, compare that file
+	with this one (which will stay at the Tiki 3 level)
+	to see what CSS changes might need to be made
+	in stylesheets that import layout.css.
+ */
 
 /***** XHTML Elements *****/
 body {

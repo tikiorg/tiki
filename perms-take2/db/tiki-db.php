@@ -106,20 +106,13 @@ $user_tiki = NULL;
 $pass_tiki = NULL;
 $dbs_tiki = NULL;
 
-unset ($host_map);
-unset ($db_tiki);
-unset ($host_tiki);
-unset ($user_tiki);
-unset ($pass_tiki);
-unset ($dbs_tiki);
-
 class TikiDb_LegacyErrorHandler implements TikiDb_ErrorHandler
 {
 	function handle( TikiDb $db, $query, $values, $result ) // {{{
 	{
 		global $smarty, $prefs, $ajaxlib;
 
-		trigger_error($db->getServerType . " error:  " . htmlspecialchars($db->getErrorMessage()). " in query:<br /><pre>\n" . htmlspecialchars($query) . "\n</pre><br />", E_USER_WARNING);
+		trigger_error($db->getServerType() . " error:  " . htmlspecialchars($db->getErrorMessage()). " in query:<br /><pre>\n" . htmlspecialchars($query) . "\n</pre><br />", E_USER_WARNING);
 		// only for debugging.
 		$outp = "<div class='simplebox'><b>".htmlspecialchars(tra("An error occured in a database query!"))."</b></div>";
 		$outp.= "<br /><table class='form'>";
@@ -203,6 +196,7 @@ class TikiDb_LegacyErrorHandler implements TikiDb_ErrorHandler
 global $db_table_prefix, $common_users_table_prefix;
 
 $db = TikiDb::get();
+$db->setServerType( $db_tiki );
 $db->setErrorHandler( new TikiDb_LegacyErrorHandler );
 
 if( isset( $db_table_prefix ) )
@@ -211,3 +205,10 @@ if( isset( $db_table_prefix ) )
 if( isset( $common_users_table_prefix ) )
 	$db->setUsersTablePrefix( $common_users_table_prefix );
 
+
+unset ($host_map);
+unset ($db_tiki);
+unset ($host_tiki);
+unset ($user_tiki);
+unset ($pass_tiki);
+unset ($dbs_tiki);

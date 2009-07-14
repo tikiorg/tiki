@@ -6,6 +6,8 @@
 // $Id: /cvsroot/tikiwiki/tiki/tiki-user_watches.php,v 1.21.2.1 2008-03-13 21:00:48 sylvieg Exp $
 $section = 'mytiki';
 include_once ('tiki-setup.php');
+include_once('lib/reportslib.php');
+
 if ($prefs['feature_ajax'] == "y") {
 	require_once ('lib/ajax/ajaxlib.php');
 }
@@ -144,6 +146,6 @@ if ($prefs['feature_ajax'] == "y") {
 	user_watches_ajax();
 	$smarty->assign("mootab", 'y');
 }
-$smarty->assign_by_ref('report_preferences', $tikilib->get_report_preferences_by_user($user));
+$smarty->assign_by_ref('report_preferences', $reportslib->get_report_preferences_by_user($user));
 $smarty->assign('mid', 'tiki-user_watches.tpl');
 $smarty->display("tiki.tpl");

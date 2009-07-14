@@ -35,6 +35,8 @@
 <div class="adminoptionbox">
 	<div class="adminoptionlabel"><label for="metatag_description">{tr}Description{/tr}:</label><br /> <textarea id="metatag_description" name="metatag_description" rows="5" cols="40" style="width:95%">{$prefs.metatag_description}</textarea></div>
 </div>
+	<div class="adminoption"><input type="checkbox" id="metatag_pagedesc" name="metatag_pagedesc" {if $prefs.metatag_pagedesc eq 'y'}checked="checked"{/if} /></div>
+	<div class="adminoptionlabel"><label for="metatag_pagedesc">{tr}Use individual page description for Wiki pages instead{/tr}.</label>
 
 <div class="adminoptionbox">
 	<div class="adminoptionlabel"><label for="metatag_author">{tr}Author{/tr}:</label> <input id="metatag_author" type="text" name="metatag_author" value="{$prefs.metatag_author}" size="50" /></div>

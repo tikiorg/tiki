@@ -40,7 +40,7 @@ class TikiImporter_Wiki extends TikiImporter
      * and start the importing proccess by calling the functions to
      * validate, parse and insert the data.
      *  
-     * @return void
+     * @return array $importFeedback number of pages imported etc
      */
     function import()
     {
@@ -59,7 +59,9 @@ class TikiImporter_Wiki extends TikiImporter
         // child classes must implement those two methods
         $this->validateInput();
         $parsedData = $this->parseData();
-        $this->insertData($parsedData);
+        $importFeedback = $this->insertData($parsedData);
+
+        return $importFeedback;
    }
 
     /**
@@ -67,15 +69,23 @@ class TikiImporter_Wiki extends TikiImporter
      * 
      * @param array $parsedData the return of $this->parseData()
      *
-     * @return void
+     * @return array $countData stats about the content that has been imported
      */
     function insertData($parsedData)
     {
+        $countData = array();
+        $countPages = 0;
+
         if (!empty($parsedData)) {
             foreach ($parsedData as $page) {
-                $this->insertPage($page);
+                if ($this->insertPage($page))
+                    $countPages++;
             }
         }
+
+        $countData['totalPages'] = count($parsedData);
+        $countData['importedPages'] = $countPages;
+        return $countData;
     }
 
     /**
@@ -99,12 +109,12 @@ class TikiImporter_Wiki extends TikiImporter
      * the page name already exist ($this->alreadyExistentPageName) based on parameters passed by POST
      * 
      * @param array $page
-     * @return void
+     * @return bool true if the page has been imported, otherwise returns false 
      */
     function insertPage($page)
     {
         global $tikilib;
-
+        
         // remove revisions that are not going to be imported
         if ($this->revisionsNumber > 0)
             $page['revisions'] = array_slice($page['revisions'], -$this->revisionsNumber);
@@ -117,26 +127,26 @@ class TikiImporter_Wiki extends TikiImporter
                 case 'appendPrefix':
                     $page['name'] = $this->softwareName . '_' . $page['name'];
                     break;
-                default:
-                    // $this->alreadyExistentPageName equal to 'doNotImport' or equal to invalid value 
-                    print "Page already exists, no action taken: {$page['name']}\n";
-                    return;
+                case 'doNotImport':
+                    return false;
             }
         }
-        
-        $first = true;
-        foreach ($page['revisions'] as $rev) {
-            if ($first) {
-                $tikilib->create_page($page['name'], 0, $rev['data'], $rev['lastModif'],
-                    $rev['comment'], $rev['user'], $rev['ip']);
-            } else {
-                $tikilib->cache_page_info = null;
-                $tikilib->update_page($page['name'], $rev['data'], $rev['comment'], $rev['user'],
-                    $rev['ip'], '', $rev['minor'], '', false, null, $rev['lastModif']);
-            }
 
-            $first = false;
+        if (!empty($page)) { 
+            $first = true;
+            foreach ($page['revisions'] as $rev) {
+                if ($first) {
+                    $tikilib->create_page($page['name'], 0, $rev['data'], $rev['lastModif'],
+                        $rev['comment'], $rev['user'], $rev['ip']);
+                } else {
+                    $tikilib->cache_page_info = null;
+                    $tikilib->update_page($page['name'], $rev['data'], $rev['comment'], $rev['user'],
+                        $rev['ip'], '', $rev['minor'], '', false, null, $rev['lastModif']);
+                }
+                $first = false;
+            }
         }
+        return true;
     }
 }
 
