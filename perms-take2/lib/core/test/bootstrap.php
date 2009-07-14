@@ -20,3 +20,14 @@ function __autoload( $name ) {
 	require_once( $path . '.php' );
 }
 
+require 'db/local.php';
+
+if (extension_loaded("pdo") and $api_tiki == 'pdo' ) {
+	require_once('db/tiki-db-pdo.php');
+} else {
+	require_once('db/tiki-db-adodb.php');
+}
+
+$db = TikiDb::get();
+$db->setServerType( $db_tiki );
+
