@@ -24,11 +24,11 @@
 	<div id="sitead" class="floatright">{eval var=$prefs.sitead}</div>
 		{/if}
 	<div id="sitelogo" class="floatleft" {if $prefs.sitelogo_bgcolor ne ''}style="background-color: {$prefs.sitelogo_bgcolor};"{/if}>
-		{if $prefs.sitelogo_src}<a href="./" title="{$prefs.sitelogo_title}"><img src="{$prefs.sitelogo_src}" alt="{$prefs.sitelogo_alt}" style="border: none" /></a>{/if}
+		{if $prefs.sitelogo_src}<a href="./" title="{tr}{$prefs.sitelogo_title}{/tr}"><img src="{$prefs.sitelogo_src}" alt="{tr}{$prefs.sitelogo_alt}{/tr}" style="border: none" /></a>{/if}
 	</div>
 	<div id="sitetitles" class="floatleft">
-		<div id="sitetitle"><a href="index.php">{$prefs.sitetitle}</a></div>
-		<div id="sitesubtitle">{$prefs.sitesubtitle}</div>
+		<div id="sitetitle"><a href="index.php">{tr}{$prefs.sitetitle}{/tr}</a></div>
+		<div id="sitesubtitle">{tr}{$prefs.sitesubtitle}{/tr}</div>
 	</div>
 	{/if}
 	{if $prefs.feature_sitelogo eq 'y' and $prefs.sitelogo_align eq 'right'}
@@ -36,11 +36,11 @@
 	<div id="sitead" class="floatleft">{eval var=$prefs.sitead}</div>
 		{/if}
 	<div id="sitetitles" class="floatright">
-		<div id="sitetitle"><a href="index.php">{$prefs.sitetitle}</a></div>
-		<div id="sitesubtitle">{$prefs.sitesubtitle}</div>
+		<div id="sitetitle"><a href="index.php">{tr}{$prefs.sitetitle}{/tr}</a></div>
+		<div id="sitesubtitle">{tr}{$prefs.sitesubtitle}{/tr}</div>
 	</div>
 	<div id="sitelogo" class="floatright"{if $prefs.sitelogo_bgcolor ne ''} style="background-color: {$prefs.sitelogo_bgcolor};" {/if}>
-		{if $prefs.sitelogo_src}<a href="./" title="{$prefs.sitelogo_title}"><img src="{$prefs.sitelogo_src}" alt="{$prefs.sitelogo_alt}" style="border: none" /></a>{/if}
+		{if $prefs.sitelogo_src}<a href="./" title="{tr}{$prefs.sitelogo_title}{/tr}"><img src="{$prefs.sitelogo_src}" alt="{tr}{$prefs.sitelogo_alt}{/tr}" style="border: none" /></a>{/if}
 	</div>
 	{/if}
 </div>
@@ -56,11 +56,11 @@
 	<div id="sitead" class="floatleft" {*style="width: 300px"*}>{eval var=$prefs.sitead}</div>
 	{/if}
 	<div id="sitelogo"{if $prefs.sitelogo_bgcolor ne ''} style="background-color: {$prefs.sitelogo_bgcolor};" {/if}>
-		{if $prefs.sitelogo_src}<a href="./" title="{$prefs.sitelogo_title}"><img src="{$prefs.sitelogo_src}" alt="{$prefs.sitelogo_alt}" style="border: none" /></a>{/if}
+		{if $prefs.sitelogo_src}<a href="./" title="{tr}{$prefs.sitelogo_title}{/tr}"><img src="{$prefs.sitelogo_src}" alt="{tr}{$prefs.sitelogo_alt}{/tr}" style="border: none" /></a>{/if}
 	</div>	
 	<div id="sitetitles">
-		<div id="sitetitle"><a href="index.php">{$prefs.sitetitle}</a></div>
-		<div id="sitesubtitle">{$prefs.sitesubtitle}</div>
+		<div id="sitetitle"><a href="index.php">{tr}{$prefs.sitetitle}{/tr}</a></div>
+		<div id="sitesubtitle">{tr}{$prefs.sitesubtitle}{/tr}</div>
 	</div>
 </div>
 {/if}
