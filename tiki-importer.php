@@ -19,7 +19,12 @@ if (!empty($_POST['importerClassName'])) {
     TikiImporter::changePhpSettings();
 }
 
-if (!empty($_FILES['importFile'])) {
+if (isset($_SESSION['tiki_importer_feedback'])) {
+    $smarty->assign('importFeedback', $_SESSION['tiki_importer_feedback']);
+    $smarty->assign('importLog', $_SESSION['tiki_importer_log']);
+    unset($_SESSION['tiki_importer_feedback']);
+    unset($_SESSION['tiki_importer_log']);
+} else if (!empty($_FILES['importFile'])) {
     // third step: start the importing process
 
     if ($_FILES['importFile']['error'] === UPLOAD_ERR_OK) {
@@ -37,7 +42,7 @@ if (!empty($_FILES['importFile'])) {
         die;
     }
 
-    $smarty->assign('importFeedback', $importFeedback);
+    die;
 } else if (!empty($_POST['importerClassName'])) {
     // second step: display import options for the software previously chosen
     if (!file_exists('lib/importer/' . $importerClassName . '.php')) {

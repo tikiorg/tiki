@@ -53,4 +53,10 @@
     <h4>{tr}Congratulations! You have successful imported your {$softwareName} data to Tikiwiki.{/tr}</h4>
     <p>{$importFeedback.importedPages} {tr}pages imported from a total of{/tr} {$importFeedback.totalPages}</p>
     <p>{tr}You can see the list of wiki pages in your site{/tr} <a href="tiki-listpages.php">{tr}here{/tr}</a></p>
+
+    <br /><br />
+    <p><b>{tr}Importer log:{/tr}</b></p>
+    <code>
+        {$importLog}
+    </code>
 {/if}

@@ -41,6 +41,15 @@ class TikiImporter
     static public $importOptions = array();
 
     /**
+     * During the importing process all the log
+     * strings will be appended to this object property
+     * using the method saveAndDisplayLog()
+     *
+     * @var string
+     */
+    public $log = '';
+
+    /**
      * Abstract method to start the import process and
      * call all other functions for each step of the importation
      * (validateInput(), parseData(), insertData())
@@ -131,7 +140,7 @@ class TikiImporter
      */
     static function displayPhpUploadError($code)
     {
-        require_once('../init/tra.php');
+        require_once(dirname(__FILE__) . '/../init/tra.php');
         $errors = array(1 => tra('The uploaded file exceeds the upload_max_filesize directive in php.ini.') . ' ' . ini_get('upload_max_filesize') . 'B',
             2 => tra('The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.'),
             3 => tra('The uploaded file was only partially uploaded. Please try again.'),
@@ -143,6 +152,23 @@ class TikiImporter
         
         if (isset($errors[$code]))
             return $errors[$code];
+    }
+
+    /**
+     * Append $msg to $this->log and output the $msg to the browser
+     * during the execution of the script using the flush() method
+     *
+     * @param string $msg the log message
+     * @return void
+     */
+    function saveAndDisplayLog($msg)
+    {
+        $this->log .= $msg;
+        // HACK ALERT: only echo the log message if NOT running the script from command line (to keep the phpunit output clean)
+        if (isset($_SERVER['HTTP_HOST'])) {
+            echo $msg;
+            flush();
+        }
     }
 }
 

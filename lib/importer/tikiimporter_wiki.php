@@ -40,7 +40,7 @@ class TikiImporter_Wiki extends TikiImporter
      * and start the importing proccess by calling the functions to
      * validate, parse and insert the data.
      *  
-     * @return array $importFeedback number of pages imported etc
+     * @return void 
      */
     function import()
     {
@@ -61,7 +61,16 @@ class TikiImporter_Wiki extends TikiImporter
         $parsedData = $this->parseData();
         $importFeedback = $this->insertData($parsedData);
 
-        return $importFeedback;
+        $this->saveAndDisplayLog('<br />Importation completed! Please await while the page reloads.');
+
+        // HACK ALERT: this if is to avoid the output when running phpunit tests
+        if (isset($_SERVER['HTTP_HOST'])) {
+            echo '<br /><br /><b><a href="tiki-importer.php">Click here</a> to finish the import process</b>';
+            flush();
+        }
+
+        $_SESSION['tiki_importer_feedback'] = $importFeedback;
+        $_SESSION['tiki_importer_log'] = $this->log;
    }
 
     /**
@@ -76,10 +85,16 @@ class TikiImporter_Wiki extends TikiImporter
         $countData = array();
         $countPages = 0;
 
+        $this->saveAndDisplayLog('<br />' . count($parsedData) . ' pages parsed. Starting to insert those pages into Tiki:<br />');
+
         if (!empty($parsedData)) {
             foreach ($parsedData as $page) {
-                if ($this->insertPage($page))
+                if ($this->insertPage($page)) {
                     $countPages++;
+                    $this->saveAndDisplayLog('Page ' . $page['name'] . ' sucessfully imported<br />');
+                } else {
+                    $this->saveAndDisplayLog('Page ' . $page['name'] . ' NOT imported (there was already a page with the same name)<br />');
+                }
             }
         }
 
@@ -146,6 +161,7 @@ class TikiImporter_Wiki extends TikiImporter
                 $first = false;
             }
         }
+
         return true;
     }
 }
