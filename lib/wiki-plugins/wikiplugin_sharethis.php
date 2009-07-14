@@ -9,60 +9,64 @@
 //
 */
 function wikiplugin_sharethis_help() {
-	return tra("Insert a ShareThis button from www.sharethis.com").":<br />~np~{SHARETHIS(sendsvcs=> , postfirst=> ,  rotateimage=> y|n, buttontext=> , headertitle=> , headerbg=> , headertxtcolor=> , linkfg=> , popup=> true|false, embed=> true|false)}{SHARETHIS} ~/np~ <br /> ";
+	return tra('Insert a ShareThis button from www.sharethis.com').":<br />~np~{SHARETHIS(sendsvcs=> , postfirst=> ,  rotateimage=> y|n, buttontext=> , headertitle=> , headerbg=> , headertxtcolor=> , linkfg=> , popup=> true|false, embed=> true|false)}{SHARETHIS} ~/np~ <br /> ";
 }
 function wikiplugin_sharethis_info() {
 	return array(
 		'name' => tra('sharethis'),
-		'documentation' => 'PluginShareThis',
-		'description' => tra("Display a social networking tool."),
+		'documentation' => 'PluginSharethis',
+		'description' => tra('Display a social networking tool.'),
 		'prefs' => array( 'wikiplugin_sharethis' ),
 		'params' => array(
 			'sendsvcs' => array(
 				'required' => false,
-				'name' => 'sendsvcs',
-				'description' => 'By default, email, aim and sms are available. Input one or two of the services separated by a | to limit the choice of send services.',
+				'name' => tra('Send services'),
+				'description' => tra('By default, email, aim and sms are available. Input one or two of the services separated by a | to limit the choice of send services.'),
 			),
 			'postfirst' => array(
 				'required' => false,
-				'name' => 'postfirst',
-				'description' => 'Input a list of post services (like facebook, myspace, digg, etc.) separated by a | to customize the services that are shown in the opening panel of the widget.',
+				'name' => tra('First post services shown'),
+				'description' => tra('Input a list of post services (like facebook, myspace, digg, etc.) separated by a | to customize the services that are shown in the opening panel of the widget.'),
 			),
 			'rotateimage' => array(
 				'required' => false,
-				'name' => 'rotateimage',
-				'description' => 'A value of y will cause the button icon to rotate every 3 seconds between a few icons, cycling through twice before stopping.',
+				'name' => tra('Rotate image'),
+				'description' => tra('A value of y will cause the button icon to rotate every 3 seconds between a few icons, cycling through twice before stopping.'),
 			),
 			'buttontext' => array(
 				'required' => false,
-				'name' => 'buttontext',
-				'description' => 'Custom link text for the button.',
+				'name' => tra('Button text'),
+				'description' => tra('Custom link text for the button.'),
 			),
 			'headertitle' => array(
 				'required' => false,
-				'name' => 'Optional header title text for the widget.',
+				'name' => tra('Header title'),
+				'description' => tra('Optional header title text for the widget.'),
 			),
 			'headerbg' => array(
 				'required' => false,
-				'name' => 'HTML color code (not color name) for the background color for the header if an optional header title is used.',
+				'name' => tra('Header background'),
+				'description' => tra('HTML color code (not color name) for the background color for the header if an optional header title is used.'),
 			),
 			'headertxtcolor' => array(
 				'required' => false,
-				'name' => 'HTML color code (not color name) for the header text if an optional header title is used.',
+				'name' => tra('Header text color'),
+				'description' => tra('HTML color code (not color name) for the header text if an optional header title is used.'),
 			),
 			'linkfg' => array(
 				'required' => false,
-				'name' => 'HTML color code (not color name) for the link text for all send and post services shown in the widget',
+				'name' => tra('Link text color for services'),
+				'description' => tra('HTML color code (not color name) for the link text for all send and post services shown in the widget'),
 			),
 			'popup' => array(
 				'required' => false,
-				'name' => 'popup',
-				'description' => 'A value of true will cause the widget to show in a pop-up window.',
+				'name' => tra('Pop-up'),
+				'description' => tra('A value of true will cause the widget to show in a pop-up window.'),
 			),
 			'embed' => array(
 				'required' => false,
-				'name' => 'embed',
-				'description' => 'A value of true will allow embedded elements (like flash) to be seen while iframe is loading.',
+				'name' => tra('Embedded elements'),
+				'description' => tra('A value of true will allow embedded elements (like flash) to be seen while iframe is loading.'),
 			),		)
 	);
 }
@@ -112,7 +116,7 @@ function wikiplugin_sharethis($data, $params) {
 	{
 		$sharethis_options['buttontext'] = $buttontext;
 	}
-	// set header title text, background color and text color
+	// set header title text. If header title is set by user, then set background color and text color
 	if($headertitle)
 	{
 		$sharethis_options['headertitle'] = str_replace(' ',$sp,$headertitle);
