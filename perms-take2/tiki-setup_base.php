@@ -360,11 +360,13 @@ $groupList = $tikilib->get_user_groups( $user );
 
 require_once 'lib/core/lib/Perms.php';
 require_once 'lib/core/lib/Perms/ResolverFactory/GlobalFactory.php';
+require_once 'lib/core/lib/Perms/ResolverFactory/ObjectFactory.php';
 
 $perms = new Perms;
 $perms->setGroups( $groupList );
 $perms->setPrefix( 'tiki_p_' );
 $perms->setResolverFactories( array(
+	new Perms_ResolverFactory_ObjectFactory,
 	new Perms_ResolverFactory_GlobalFactory,
 ) );
 Perms::set( $perms );
@@ -387,6 +389,7 @@ foreach( $permissionList as $permName ) {
 	$smarty->assign( $permName, $$permName );
 }
 unset($allperms);
+
 // --------------------------------------------------------------
 $magic_quotes_gpc = get_magic_quotes_gpc();
 $clean_xss = ($tiki_p_trust_input != 'y');

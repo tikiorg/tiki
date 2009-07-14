@@ -20,6 +20,7 @@ function __autoload( $name ) {
 	require_once( $path . '.php' );
 }
 
+$api_tiki = null;
 require 'db/local.php';
 
 if (extension_loaded("pdo") and $api_tiki == 'pdo' ) {
