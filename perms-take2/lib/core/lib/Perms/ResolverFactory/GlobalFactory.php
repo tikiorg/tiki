@@ -1,5 +1,7 @@
 <?php
 
+require_once 'lib/core/lib/Perms/ResolverFactory.php';
+
 class Perms_ResolverFactory_GlobalFactory implements Perms_ResolverFactory
 {
 	function getHash( array $context ) {
@@ -22,6 +24,7 @@ class Perms_ResolverFactory_GlobalFactory implements Perms_ResolverFactory
 			$perms[$group][] = $perm;
 		}
 
+		require_once 'lib/core/lib/Perms/Resolver/Static.php';
 		return new Perms_Resolver_Static( $perms );
 	}
 

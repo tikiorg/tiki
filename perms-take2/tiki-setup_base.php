@@ -351,42 +351,41 @@ if (!$cachelib->isCached("allperms")) {
 } else {
 	$allperms = unserialize($cachelib->getCached("allperms"));
 }
-$allperms = $allperms["data"];
-// Initializes permissions
-$admin_perms = array();
-foreach($allperms as $vperm) {
-	$perm = $vperm["permName"];
-	$$perm = 'n';
-	$smarty->assign("$perm", 'n');
-	if ($vperm['admin'] == 'y') {
-		$admin_perms[] = $perm;
-	}
+$permissionList = array();
+foreach( $allperms['data'] as $row ) {
+	$permissionList[] = $row['permName'];
 }
-// Permissions
-// Ensure admins with tiki_p_admin get all permissions
-// Ensure user 'admin' gets all permissions unless admin wishes to emulate not being admin with module groups_emulation
-if ($user && (($user == 'admin' && $_SESSION["groups_are_emulated"] != "y") || $userlib->user_has_permission($user, 'tiki_p_admin'))) {
-	// Gives admins all permissions
-	foreach($allperms as $vperm) {
-		$perm = $vperm['permName'];
-		$$perm = 'y';
-		$smarty->assign($perm, 'y');
-	}
-} else {
-	$perms = $userlib->get_user_detailled_permissions($user);
-	foreach($perms as $perm) {
-		$smarty->assign($perm['permName'], 'y');
-		$$perm['permName'] = 'y';
-		if (in_array($perm['permName'], $admin_perms)) { // assign all perms of the perm type
-			$ps = $userlib->get_permissions(0, -1, 'permName_desc', '', $perm['type']);
-			foreach($ps['data'] as $p) {
-				$$p['permName'] = 'y';
-				$smarty->assign($p['permName'], 'y');
-			}
-		}
-	}
+
+$groupList = $tikilib->get_user_groups( $user );
+
+require_once 'lib/core/lib/Perms.php';
+require_once 'lib/core/lib/Perms/ResolverFactory/GlobalFactory.php';
+
+$perms = new Perms;
+$perms->setGroups( $groupList );
+$perms->setPrefix( 'tiki_p_' );
+$perms->setResolverFactories( array(
+	new Perms_ResolverFactory_GlobalFactory,
+) );
+Perms::set( $perms );
+
+$global = Perms::get();
+
+if ($user && (($user == 'admin' && $_SESSION["groups_are_emulated"] != "y") || $global->admin ) ) {
+	// Admins have all rights and thus, bypass permission checks
+	require_once 'lib/core/lib/Perms/ResolverFactory/StaticFactory.php';
+	require_once 'lib/core/lib/Perms/Resolver/Default.php';
+	$perms->setResolverFactories( array(
+		new Perms_ResolverFactory_StaticFactory( 'admin', new Perms_Resolver_Default( true ) ),
+	) );
+
+	$global = Perms::get();
 }
-unset($admin_perms);
+
+$global->globalize( $permissionList );
+foreach( $permissionList as $permName ) {
+	$smarty->assign( $permName, $$permName );
+}
 unset($allperms);
 // --------------------------------------------------------------
 $magic_quotes_gpc = get_magic_quotes_gpc();
