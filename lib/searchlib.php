@@ -201,7 +201,7 @@ class SearchLib extends TikiLib {
 
 		if ($fulltext) {
 			$words = html_entity_decode($words); // to have the "
-			$qwords = $this->db->quote($words);
+			$qwords = $this->qstr($words);
 
 			$sqlft = 'MATCH(' . join(',', $h['search']). ') AGAINST (' . $qwords ;
 			if ($boolean == 'y')
@@ -215,9 +215,9 @@ class SearchLib extends TikiLib {
 
 			$vwords = split(' ', $words);
 			foreach ($vwords as $aword) {
-				//$aword = $this->db->quote('[[:<:]]' . strtoupper($aword) . '[[:>:]]');
+				//$aword = $this->qstr('[[:<:]]' . strtoupper($aword) . '[[:>:]]');
 				$aword = preg_replace('/([\*\.\?\^\$\+\(\]\|])/', '\\\\\1', $aword);
-				$aword = $this->db->quote('.*' . strtoupper($aword). '.*');
+				$aword = $this->qstr('.*' . strtoupper($aword). '.*');
 
 				$sqlWhere .= ' AND (';
 
