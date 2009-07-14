@@ -1932,6 +1932,11 @@ div#ajaxLoading {
 	white-space: normal !important;
 	padding: 5px 0 4px 8px}
 	
+#shadowbox_toolbar,
+#shadowbox_toolbar_inner {
+	height: auto;
+}
+	
 #shadowbox_content {
 	background: #f5f5f5;
 	color: #000}
