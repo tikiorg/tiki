@@ -15,17 +15,28 @@ if (!empty($_POST['importerClassName'])) {
     require_once('lib/importer/' . $importerClassName . '.php');
     $importer = new $importerClassName();
     $smarty->assign('softwareName', $importer->softwareName);
+
+    TikiImporter::changePhpSettings();
 }
 
 if (!empty($_FILES['importFile'])) {
     // third step: start the importing process
-    try {
-        $importFeedback = $importer->import($_FILES['importFile']['tmp_name']); 
-    } catch(Exception $e) {
-        $smarty->assign('msg', $e->getMessage());
+
+    if ($_FILES['importFile']['error'] === UPLOAD_ERR_OK) {
+        try {
+            $importFeedback = $importer->import($_FILES['importFile']['tmp_name']); 
+        } catch(Exception $e) {
+            $smarty->assign('msg', $e->getMessage());
+            $smarty->display('error.tpl');
+            die;
+        }
+    } else {
+        $msg = TikiImporter::displayPhpUploadError($_FILES['importFile']['error']);
+        $smarty->assign('msg', $msg);
         $smarty->display('error.tpl');
         die;
     }
+
     $smarty->assign('importFeedback', $importFeedback);
 } else if (!empty($_POST['importerClassName'])) {
     // second step: display import options for the software previously chosen

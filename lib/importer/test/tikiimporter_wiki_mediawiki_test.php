@@ -38,13 +38,21 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiTestCase
         $this->assertEquals($expectedResult, $importFeedback);
     }
 
+    public function testImportShouldRaiseExceptionForInvalidMimeType()
+    {
+        require_once(dirname(__FILE__) . '/../../init/tra.php');
+        $_FILES['importFile']['type'] = 'invalid/type';
+        $this->setExpectedException('UnexpectedValueException');
+        $this->obj->import(dirname(__FILE__) . '/fixtures/mediawiki_sample.xml');
+    }
+
     public function testValidateInput()
     {
         $this->obj->dom = new DOMDocument;
         $this->obj->dom->load(dirname(__FILE__) . '/fixtures/mediawiki_sample.xml');
         $this->assertNull($this->obj->validateInput());
     }
-    
+
     public function testValidateInputShouldRaiseExceptionForInvalidXmlFile()
     {
         $this->obj->dom = new DOMDocument;
@@ -53,7 +61,7 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiTestCase
         $this->obj->validateInput();
     }
 
-    public function testParseData()
+   public function testParseData()
     {
         $obj = $this->getMock('TikiImporter_Wiki_Mediawiki', array('extractInfo'));
         $obj->dom = new DOMDocument;

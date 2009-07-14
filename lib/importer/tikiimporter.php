@@ -101,6 +101,49 @@ class TikiImporter
         
         return $importOptions;
     }
+
+    /**
+     * Try to change some PHP settings to avoid problens while running the script:
+     *   - error_reporting
+     *   - display_errors
+     *   - max_execution_time
+     *
+     * @return void
+     */
+    static function changePhpSettings()
+    {
+        if (ini_get('error_reporting') != E_ALL)
+            error_reporting(E_ALL);
+
+        if (ini_get('display_errors') != true)
+            ini_set('display_errors', true);
+    
+        // change max_execution_time
+        if (ini_get('max_execution_time') < 360)
+            set_time_limit(360);
+    }
+
+    /**
+     * Handle the PHP $_FILES errors
+     *
+     * @param int $code error code
+     * @return string $message error message
+     */
+    static function displayPhpUploadError($code)
+    {
+        require_once('../init/tra.php');
+        $errors = array(1 => tra('The uploaded file exceeds the upload_max_filesize directive in php.ini.') . ' ' . ini_get('upload_max_filesize') . 'B',
+            2 => tra('The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.'),
+            3 => tra('The uploaded file was only partially uploaded. Please try again.'),
+            4 => tra('No file was uploaded.'),
+            6 => tra('Missing a temporary folder.'),
+            7 => tra('Failed to write file to disk.'),
+            8 => tra('File upload stopped by extension.'),
+        );
+        
+        if (isset($errors[$code]))
+            return $errors[$code];
+    }
 }
 
 ?>

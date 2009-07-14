@@ -9,6 +9,7 @@ $page = array('revisions' => array(
                       'lastModif' => 1123887605,
                       'user' => 'Igordebraga',
                       'ip' => '0.0.0.0',
+                      'comment' => '',
                       'data' => 'lista de __redes de ensino__, com diversas ((escola))s e universidades ao redor do brasil.
 
 
@@ -23,6 +24,7 @@ $page = array('revisions' => array(
                       'lastModif' => 1130805792,
                       'user' => 'Martiniano Hilário',
                       'ip' => '0.0.0.0',
+                      'comment' => '',
                       'data' => '{{Portal de Educação}}Lista de __redes de ensino__, com diversas ((escola))s e universidades ao redor do Brasil.
 
 
@@ -37,6 +39,7 @@ $page = array('revisions' => array(
                       'lastModif' => 1137345461,
                       'ip' => '201.24.14.135',
                       'user' => 'anonymous',
+                      'comment' => '',
                       'data' => '{{Portal de Educação}}Lista de __redes de ensino__, com diversas ((escola))s e universidades ao redor do Brasil.
 
 
@@ -53,6 +56,7 @@ $page = array('revisions' => array(
                       'lastModif' => 1138451599,
                       'ip' => '201.24.54.212',
                       'user' => 'anonymous',
+                      'comment' => '',
                       'data' => '{{Portal de Educação}}Lista de __redes de ensino__, com diversas ((escola))s e universidades ao redor do Brasil.
 
 
@@ -118,6 +122,7 @@ $page = array('revisions' => array(
                       'lastModif' => 1234172034,
                       'ip' => '189.41.74.5',
                       'user' => 'anonymous',
+                      'comment' => '',
                       'data' => '{{Portal de Educação}}Lista de __redes de ensino__, com diversas ((escola))s e universidades ao redor do Brasil.
 
 

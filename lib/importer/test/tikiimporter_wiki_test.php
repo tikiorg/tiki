@@ -94,6 +94,7 @@ class TikiImporter_Wiki_InsertPage_Test extends TikiTestCase
         global $tikilib;
         $tikilib = $this->getMock('TikiLib', array('create_page', 'update_page', 'page_exists', 'remove_all_versions'));
         $this->obj = new TikiImporter_Wiki_Mediawiki;
+        $this->obj->revisionsNumber = 0;
     }
 
     public function testInsertPage()

@@ -21,6 +21,12 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
     public $dom = '';
 
     /**
+     * Array of the valid mime types for the
+     * input file
+     */
+    public $validTypes = array('application/xml', 'text/xml');
+
+    /**
      * @see lib/importer/TikiImporter#importOptions
      */
     static public $importOptions = array();    
@@ -35,6 +41,10 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
      */
     function import($filePath)
     {
+        if (isset($_FILES['importFile']) && !in_array($_FILES['importFile']['type'], $this->validTypes)) {
+            throw new UnexpectedValueException(tra('Invalid file mime type'));
+        }
+
         $this->dom = new DOMDocument;
         $this->dom->load($filePath);
         return parent::import();
@@ -48,10 +58,8 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
      */
     function validateInput()
     {
-        try {
-            $this->dom->schemaValidate(dirname(__FILE__) . '/mediawiki_dump.xsd');
-        } catch (Exception $e) {
-            throw new DOMException($e->getMessage(), $e->getCode());
+        if (!@$this->dom->schemaValidate(dirname(__FILE__) . '/mediawiki_dump.xsd')) {
+            throw new DOMException(tra('XML file does not validate against the Mediawiki XML schema'));
         }
     }
 
@@ -126,6 +134,7 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
     {
         $data = array();
         $data['minor'] = false;
+        $data['comment'] = '';
 
         foreach ($revision->childNodes as $node) {
             if ($node instanceof DOMElement) {
@@ -139,25 +148,19 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
                 case 'text':
                     $data['data'] = $this->convertMarkup($node->textContent);
                     break;
-
                 case 'timestamp':
                     $data['lastModif'] = strtotime($node->textContent);
                     break;
-
                 case 'minor':
                     $data['minor'] = true;
                     break;
-
                 case 'contributor':
                     $data = array_merge($data, $this->extractContributor($node));
                     break;
-
-                default:
-                    print "Unknown tag in revision: {$node->tagName}\n";
                 }
             }
         }
-                
+
         return $data;
     }
 
