@@ -86,9 +86,12 @@ $kaltura_conf = kaltura_init_config();
 		$kuser = new KalturaSessionUser();
 		$kuser->userId = $user;
 		$kaltura_client = new KalturaClient($kaltura_conf);
-		$kres =$kaltura_client->start($kuser, $kaltura_conf->secret,'',"edit:*",'');
+		$kres =$kaltura_client->startSession($kuser, $kaltura_conf->secret,false,"edit:*");
+		$sessionId = $kres["result"]["ks"];
+		$kaltura_client->setKS($sessionId);
 		
-//print_r($kres);		
+//print_r($kres);
+		
 $cwflashVars = 'userId=' .$kuser->userId.
 			'&sessionId=' .$kres["result"]["ks"]. 
 			'&partnerId=' . $kaltura_conf->partnerId .
@@ -112,34 +115,26 @@ $smarty->assign_by_ref('cwflashVars',$cwflashVars);
 $smarty->assign_by_ref('seflashVars',$seflashVars);
 
 $smarty->assign('kcw_ui_conf_id',"36200");
-		
+
 // Process an upload or update here
 if (isset($_REQUEST["kcw_next"])) {
 	check_ticket('upload-video');
-
-	$entries = $_REQUEST["entryId"];
 	$gallery = "0";
 	if(isset($_REQUEST["gallery"]))  {
 		$gallery = $_REQUEST["gallery"];
 	}
 		
 	$smarty->assign_by_ref('galleryId', $_REQUEST["gallery"]);
-	//print_r($entries);
-	$videoEntries =array();
-	for($i=0; $i < count($_REQUEST["entryId"]); $i++) {
-		$res = $kaltura_client->getEntryRoughcuts($kuser,$_REQUEST["entryId"][$i]);
-		print_r($res);
+	$entries = $_REQUEST["entryId"];
+
+	for($i=0; $i < count($entries); $i++) {
+		$res = $kaltura_client->getEntryRoughcuts($kuser,$entries[$i]);
 		$roughcutId=$res['result']['roughcuts'][0]['id'];
 		$tmp = $videogallib->get_video_info($videogallib->insert_video($gallery,$roughcutId,$user));
 		$videoEntries[$i] = $tmp;
-		/*$videoEntries[$i]["name"] = "asd";
-		$videoEntries[$i]["description"] = "asdaaaa";
-		$videoEntries[$i]["tags"] = "amn";
-		$videoEntries[$i]["thumbnail"] = "pics/large/kaltura48x48.png";*/
 	}
 	$smarty->assign('editEntries',"true");
 	$smarty->assign_by_ref('videoEntries',$videoEntries);
-	//print_r($videoEntries);
 }
 if (isset($_REQUEST["update"])) {
 	
