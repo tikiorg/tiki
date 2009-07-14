@@ -139,18 +139,23 @@ class wslib extends CategLib
      */
     public function generate_ws_group_name ($ws_id, $wsName, $nameGroup)
     {
-	return $name= ((string) $ws_id)."::".$wsName."::".$nameGroup;
+	return $name = ((string) $ws_id)."::".$wsName."::".$nameGroup;
     }
 
-    /** Parse a group name with the form $id_ws<:>$wsName<:>$nameGroup
-     * TODO: Make a regexp of this function
+    /** Parse a group name with the form $ws_id<:>$wsName<:>$nameGroup
+     * Allowed characters in $ws_id are 0-9 with a variable length of 1 to 11 digits
+     * Allowed characters in $wsName are 0-9, A-Z, a-z, whitespace, -, < and >
+     * Allowed characters in $nameGroup are the same as above
+     * TODO: Work in progress, needs to be checked if works properly (I'm newbie to regex world :P)
+     * Yeah, I know, this exp is far from being perfect, but for testing purposes is OK
      *
      * @param $groupName The name of the group you want to parse
+     * @param $groupValues The values given in a reference array when you apply the function
      * @return An array with the values in each position. If the parse was not succesful return false
      */
-    public function parse_ws_group_name ($groupName)
+    public function parse_ws_group_name ($groupName, &$groupValues)
     {
-	return explode("::", $groupName);
+	return preg_match("%\b([\d]{1,11})\b::\b([\w\-<>\s]+)\b::\b([\w\-<>\s]+[^:]{2})\b%", $groupName, $groupValues);
     }
 	
     /** Remove a WS and it childs
@@ -176,6 +181,7 @@ class wslib extends CategLib
 	$wsChilds = $this->get_ws_childs ($ws_id);
 	foreach ($wsChilds as $child)
 		$this->remove_ws($child);
+
 	return parent::remove_category($ws_id);
     }
 
@@ -281,6 +287,7 @@ class wslib extends CategLib
     {
 	$query = "select `categId` from `tiki_categories` where `name`=? and `parentId`=? and `rootCategId`=?";
 	$bindvars = array($name, $parentWS, $this->ws_container);
+
 	return $this->getOne($query, $bindvars);
     }
 
@@ -322,6 +329,7 @@ class wslib extends CategLib
 		values(?, ?, ?, ?)";		
 	    $this->query($query, array($groupName, $hashWS, $this->objectType, $permName));
 	}	
+
 	return true;
     }
 	
@@ -341,6 +349,7 @@ class wslib extends CategLib
 
 	while ($ret = $result->fetchRow())
 	    $listWSGroups[] = $ret;
+
 	return $listWSGroups;
     }
     	
@@ -374,6 +383,7 @@ class wslib extends CategLib
 		$listGroupWS["$workspaceID"] = $res;
 	    }
 	}
+
 	return $listGroupWS;
     }
 
@@ -406,6 +416,7 @@ class wslib extends CategLib
 				if (!in_array($wsres,$ws))
 					$ws[$wsres["categId"]] = $wsres;
 		}
+
 		return $ws;
 	}
 	
@@ -414,25 +425,25 @@ class wslib extends CategLib
      * @param $ws_id The id of the WS
      * @return An associative array of objects related to a single WS
      */
-    function list_ws_objects ($ws_id)
+    public function list_ws_objects ($ws_id)
+    {
+	$query = "select `catObjectId` from `tiki_category_objects` where `categId`= ?";
+	$bindvars = array($ws_id);
+	$result = $this->query($query,$bindvars);
+	while ($res = $result->fetchRow())
+	    $listObjects[] = $res["catObjectId"];
+		
+	foreach ($listObjects as $objectId)
 	{
-		$query = "select `catObjectId` from `tiki_category_objects` where `categId`= ?";
-		$bindvars = array($ws_id);
-		$result = $this->query($query,$bindvars);
-		while ($res = $result->fetchRow())
-			$listObjects[] = $res["catObjectId"];
-		
-		foreach ($listObjects as $objectId)
-		{
-			$query = "select * from `tiki_objects` where `objectId`= ?";
-			$bindvars = array($objectId);
-			$result = $this->query($query,$bindvars);
-			while ($res = $result->fetchRow())
-				$listWSObjects[] = $res;
-		}
-		
-		return $listWSObjects;
+	    $query = "select * from `tiki_objects` where `objectId`= ?";
+    	    $bindvars = array($objectId);
+	    $result = $this->query($query,$bindvars);
+	    while ($res = $result->fetchRow())
+		$listWSObjects[] = $res;
 	}
+
+	return $listWSObjects;
+    }
 
     /** Get the stored perms for a object for a specific group
      *
@@ -441,16 +452,17 @@ class wslib extends CategLib
      * @param $groupName The name of the group
      * @return An array with the objects perms related to a object for a group
      */
-	function get_object_perms_for_group ($objId,$objectType,$groupName)
-	{
-		$objectId = md5($objectType . strtolower($objId));
-		$query = "select `permName` from `users_objectpermissions` where `groupName`=? and `objectId`=? and `objectType`=?";
-		$bindvars = array($groupName,$objectId,$objectType);
-		$result = $this->query($query,$bindvars);
-		while ($res = $result->fetchRow())
-			$objectPermsGroup[] = $res["permName"];
-		return $objectPermsGroup;
-	}
+    public function get_object_perms_for_group ($objId,$objectType,$groupName)
+    {
+	$objectId = md5($objectType . strtolower($objId));
+	$query = "select `permName` from `users_objectpermissions` where `groupName`=? and `objectId`=? and `objectType`=?";
+	$bindvars = array($groupName,$objectId,$objectType);
+	$result = $this->query($query,$bindvars);
+	while ($res = $result->fetchRow())
+	    $objectPermsGroup[] = $res["permName"];
+
+	return $objectPermsGroup;
+    }
 	
     /** List the objects stored in a workspace for a specific user
      *
@@ -458,51 +470,52 @@ class wslib extends CategLib
      * @param $user The username
      * @return Associative array with the objects that a user have access from a WS
      */
-	function list_ws_objects_for_user ($ws_id,$user)
+    public function list_ws_objects_for_user ($ws_id,$user)
+    {
+	require_once('lib/userslib.php');
+	global $userlib; global $objectlib;
+		
+	$listWSObjects = $this->list_ws_objects($ws_id);
+		
+	foreach ($listWSObjects as $object)
 	{
-		require_once('lib/userslib.php');
-		global $userlib; global $objectlib;
-		
-		$listWSObjects = $this->list_ws_objects($ws_id);
-		
-		foreach ($listWSObjects as $object)
+	    $objectType = $object["type"];
+	    $objId = $object["itemId"];
+	    $viewPerm = parent::get_needed_perm($objectType, "view");
+			
+	    $groups = $userlib->get_user_groups($user);
+			
+	    $notFoundViewPerm = true;		
+	    foreach ($groups as $groupName)
+	    {
+		if ($notFoundViewPerm)
 		{
-			$objectType = $object["type"];
-			$objId = $object["itemId"];
-			$viewPerm = parent::get_needed_perm($objectType, "view");
-			
-			$groups = $userlib->get_user_groups($user);
-			
-			$notFoundViewPerm = true;		
-			foreach ($groups as $groupName)
-			{
-				if ($notFoundViewPerm)
-				{
-					$objectPermsGroup = $this->get_object_perms_for_group ($objId,$objectType,$groupName);
-					if (in_array($viewPerm,$objectPermsGroup))
-					{
-						$listWSObjectsUser[] = $object;
-						$notFoundViewPerm = false;
-					}
-				}
-			}
-		} 
-		
-		return $listWSObjectsUser;
-	}
+		    $objectPermsGroup = $this->get_object_perms_for_group ($objId,$objectType,$groupName);
+		    if (in_array($viewPerm,$objectPermsGroup))
+		    {
+			$listWSObjectsUser[] = $object;
+			$notFoundViewPerm = false;
+		    }
+		}
+	    }
+	} 
+
+	return $listWSObjectsUser;
+    }
 	
     /** List the objects stored in a workspace for a specific user
      *
      * @param $ws_id The id of the WS
      * @return Associative array with the WS childs
      */	
-     function get_ws_childs ($ws_id)
+     public function get_ws_childs ($ws_id)
      {
      	$query = "select `categId` from `tiki_categories` where `parentId`= ?";
      	$bindvars = array($ws_id);
      	$result = $this->query($query,$bindvars);
 	while ($res = $result->fetchRow())
 		$wsChilds[] = $res["categId"];
+
      	return $wsChilds;
      }	
 }

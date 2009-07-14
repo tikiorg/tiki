@@ -31,7 +31,7 @@ for ($i=0; $i<$testQuantity; $i++)
 {
     $time = (string) microtime();
     $hashtime = md5($time);
-    $wslib->create_ws($hashtime,"Registered", null, true);
+    $wslib->create_ws($hashtime,$hashtime);
 }
 
 echo "Check the database tables tiki_categories <br />";
