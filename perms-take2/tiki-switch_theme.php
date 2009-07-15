@@ -16,13 +16,17 @@ if (isset($_GET['theme'])) {
 	if (empty($new_theme) || $new_theme != $prefs['style']) { // use default theme option when setting 'site default' or changing main theme
 		$_GET['theme-option'] = '';
 	}
-	if ($prefs['feature_userPreferences'] == 'y' && $user && $prefs['change_theme'] == 'y' && $group_theme == '') {
-		$tikilib->set_user_preference($user, 'theme', $new_theme);
-		$prefs['style'] = $new_theme;
-	} elseif ($prefs['change_theme'] == 'y') {
-		$prefs['style'] = $new_theme;
-		$_SESSION['s_prefs']['style'] = $new_theme;
+	if ($prefs['change_theme'] == 'y') {
+		if ($prefs['feature_userPreferences'] == 'y' && $user && $group_theme == '') {
+			$tikilib->set_user_preference($user, 'theme', $new_theme);
+		}
+		if (empty($new_theme)) {
+			$prefs['style'] = $prefs['site_style'];
+		} else {
+			$prefs['style'] = $new_theme;
+		}
 	}
+	$_SESSION['s_prefs']['style'] = $prefs['style'];
 }
 if (isset($_GET['theme-option'])) {
 	$new_theme_option = $_GET['theme-option'];

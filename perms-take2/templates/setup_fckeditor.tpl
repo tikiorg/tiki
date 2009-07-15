@@ -27,6 +27,8 @@ FCKConfig.StylesXmlPath = _TikiRoot + 'lib/fckeditor_tiki/tikistyles.xml';
 FCKConfig.TemplatesXmlPath = _TikiRoot + 'lib/fckeditor_tiki/tikitemplates.xml';
 
 FCKConfig.EditorAreaCSS = _TikiRoot + '{$fckstyle}' ;
+{if !empty($fckstyleoption)}FCKConfig.EditorAreaStyles = '' + _TikiRoot + '{$fckstyleoption}';{/if}
+
 FCKConfig.SkinPath = FCKConfig.BasePath + 'skins/{$prefs.wysiwyg_toolbar_skin}/' ;
 FCKConfig.DefaultLanguage   = '{$prefs.language}' ;
 FCKConfig.AutoDetectLanguage   = {if $prefs.feature_detect_language eq 'y'}true{else}false{/if} ;
