@@ -25,7 +25,7 @@
 <strong>In the future ...</strong><br /> 
 <ul><li>You will see a list of Workspaces to join in<br /> 
 </li><li>All of these Workspaces are open and public<br /> 
-</li><li>If a Workspace is private is not listed here<br /> 
+</li><li>If a Workspace is private then it won't be listed here. You need an invitation to sign in.<br /> 
 </li></ul> 
 <br /> 
 <br /> 

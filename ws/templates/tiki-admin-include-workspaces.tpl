@@ -1,7 +1,7 @@
 {* $Id: $ *}
 
 {remarksbox type="info" title="{tr}Welcome{/tr}"}
-{tr}You have succesfully enabled  Workspaces in TikiWiki. This feature is under development, so please don't expect nothing if not works properly. If you want to get more info go to the {/tr} <a class="rbox-link" href="http://dev.tikiwiki.org/workspace">{tr}Workspaces wiki page{/tr}</a>.
+{tr}You have succesfully enabled  Workspaces in TikiWiki. This feature is <em>under development</em>, so please don't expect nothing if not works properly. If you want to get more info go to the {/tr} <a class="rbox-link" href="http://dev.tikiwiki.org/workspace">{tr}Workspaces wiki page{/tr}</a>.
 <hr />
 {tr}Things you can currently do: <br />
 <ul>
@@ -17,20 +17,32 @@
 {tabset name="ws_admin"}
 	{tab name="{tr}General Settings{/tr}"}
 
-<input type="hidden" name="filegalfeatures" />
+<input type="hidden" name="wsfeatures" />
 
-<fieldset><legend>{tr}Info{/tr}</legend>
+<fieldset><legend>Hibernate Workspaces</legend>
 <div class="adminoptionbox">
-<ul>
-<li>Status: {if $prefs.feature_workspaces eq 'y'} <strong>Workspaces are enabled</strong> {else}<strong>Workspaces are disabled</strong>{/if}</li>
-<li>Workspaces Container Id: {$prefs.ws_container}</li>
-</ul>
+{remarksbox type="tip" title="Hibernate"}
+Use this option if you only want to desactivate Workspaces without losing any data on the database and without the need to go to features to disable it.
+{/remarksbox}
+
+<input type="checkbox" name="ws_hibernate" id="ws_hibernate" /><label for="ws_hibernate">Hibernate Workspaces</label>
 </div>
 </fieldset>
 
-<fieldset><legend>Settings -TODO-</legend>
+<fieldset><legend>Workspaces Templates Repository</legend>
 <div class="adminoptionbox">
+{remarksbox type="info" title="Templates Repository"}
+Activate this option if you want to recieve and share templates for the management of Workspaces (provider templates by default http://ws.profiles.tikiwiki.org).
+{/remarksbox}
+<input type="checkbox" name="ws_profiles_repo" id="ws_profiles_repo" /><label for="ws_profiles_repo">Enable Workspaces Templates Repository</label>
+</div>
+</fieldset>
 
+<fieldset><legend>Owners Workspaces List</legend>
+<div class="adminoptionbox">
+{remarksbox type="info" title="Templates Repository"}
+Here you can edit who is the Owner of the Workspace.
+{/remarksbox}
 </div>
 </fieldset>
 {/tab}
