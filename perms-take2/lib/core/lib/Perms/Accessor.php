@@ -2,6 +2,14 @@
 
 require_once 'lib/core/lib/Perms/Resolver.php';
 
+/**
+ * Interface providing convenient access to permissions in
+ * a resolver for a set of groups. The permissions can be
+ * accessed on the resolver as properties.
+ *
+ * The globalize() method also allows to deploy the permissions
+ * in their global variables.
+ */
 class Perms_Accessor
 {
 	private $resolver;

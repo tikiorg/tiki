@@ -2,6 +2,9 @@
 
 require_once 'lib/core/lib/Perms/ResolverFactory.php';
 
+/**
+ * Factory used in test cases to test fallbacks.
+ */
 class Perms_ResolverFactory_TestFactory implements Perms_ResolverFactory
 {
 	private $known;

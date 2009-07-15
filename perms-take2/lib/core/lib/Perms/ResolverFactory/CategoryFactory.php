@@ -2,11 +2,38 @@
 
 require_once 'lib/core/lib/Perms/ResolverFactory.php';
 
+/**
+ * The category ResolverFactory acts in two steps to resolve the permissions
+ * for the object contexts. It first loads the categories for the provided
+ * contexts, then load the permissions applicable to each individual category.
+ * It then assebles the resolver for the context based on all applicable
+ * category and the permissions that apply to them.
+ *
+ * In bulk load, only two queries are perfomed for all contexts.
+ *
+ * The category list of each object use within runtime as well as the
+ * permissions that apply for each of them is preserved internally. On
+ * sequential calls to obtain resolvers, obtaining the list of categories
+ * for each object will likely be required, however the query to obtain the
+ * permissions on those categories may not be required if those categories
+ * were already known.
+ *
+ * Category permissions apply from the moment one of the categories affected
+ * to the object contains one permission. All categories are equal and permissions
+ * from all categories are cumulated.
+ *
+ * Because permissions are applied to all decendents, only the direct categories
+ * are considered when resolving permissions.
+ */
 class Perms_ResolverFactory_CategoryFactory implements Perms_ResolverFactory
 {
 	private $knownObjects = array();
 	private $knownCategories = array();
 
+	/**
+	 * Provides a hash matching the full list of ordered categories
+	 * applicable to the context.
+	 */
 	function getHash( array $context ) {
 		if( ! isset( $context['type'], $context['object'] ) ) {
 			return '';
@@ -120,6 +147,11 @@ class Perms_ResolverFactory_CategoryFactory implements Perms_ResolverFactory
 		}
 	}
 
+	/** 
+	 * Merges the permissions available on groups from all categories
+	 * that apply to the context. A permission granted on any of the 
+	 * categories will be added to the pool.
+	 */
 	function getResolver( array $context ) {
 		if( ! isset( $context['type'], $context['object'] ) ) {
 			return null;
