@@ -213,13 +213,45 @@ class wslib extends CategLib
      */
     public function remove_ws_group ($ws_id,$groupName)
     {
-    	// Delete all perms added for the WS
-    	
-    	// Check if the group belong to other WS
+	// Check if the group is included in other WS
+    	$query = "select count(*) from `users_objectpermissions`
+			   where `groupName` = ? and `permName` = 'tiki_p_ws_view'";
+	$result = $this->getOne($query, array($groupName));
     	
     	// If the group only had access to the current WS
-    	
+    	if (($result == 1) && !($group == 'Anonymous' || $group == 'Registered' || $group == 'Admin'))
+    	{
+		// Delete the group
+		global $userlib; require_once 'lib/userslib.php';
+		$userlib->remove_group($groupName);		
+    	}    	
     	// If the group has access to other WS
+    	else
+    	{
+    	    	$hashWS = md5($this->objectType . strtolower($ws_id));
+    	  
+    		// Delete all perms added for the WS related to this group
+    		$query = "delete from `users_objectpermissions`
+				   where `groupName` = ? and `objectId` = ?";
+		$this->query($query, array($groupName, $hashWS), -1, -1, false);
+		
+		// Get the objects that only belongs to the WS
+		$query = "select * from `tiki_objects` t0, `tiki_category_objects` t1 
+				   where t0.`objectId` = t1.`catObjectId` and t1.`categId`=? 
+				   and not exists (select * from `tiki_category_objects` t2 
+				   where t1.`catObjectId`=t2.`catObjectId` and not t2.`categId`=?)";
+		$result = $this->query($query, array($ws_id, $ws_id));
+		while ($ret = $result->fetchRow())
+	    		$listWSUniqueObjects[] = $ret;
+	    	// For every unique object delete the object pems related to the group
+    		foreach ($listWSUniqueObjects as $ws_object)
+    		{
+    			$hashObject = $hashObject = md5($ws_object["type"] . strtolower($ws_object["itemId"] ));
+    			$query = "delete from `users_objectpermissions` where `groupName` = ? and `objectType` = ? and `objectId` = ?";
+    			$this->query($query,array($groupName,$ws_object["type"],$hashObject));
+    		}
+    	}
+    	
     	return true;
     }
 	
@@ -250,16 +282,20 @@ class wslib extends CategLib
     	
     	if (!parent::is_categorized($type,$itemId))
     	{
+		// Delete all the object perms related to the object
 		$query = "delete from `users_objectpermissions` where `objectType` = ? and `objectId` = ?";
 		$this->query($query, array($type, $hashObject), -1, -1, false);
+    		
+    		// Delete the object from Tiki (TBD)
     		// parent::delete_object($type, $itemId);
     	}
     	else
     	{
+    		// Get the groups that only have access to the WS in which the object is stored.
     		$hashWS = md5($this->objectType . strtolower($ws_id));
-    		$query = "select `groupName` FROM `users_objectpermissions` t1 
+    		$query = "select `groupName` from `users_objectpermissions` t1 
     				where `permName`='tiki_p_ws_view' and `objectId`=? and 
-    				not exists (select * FROM `users_objectpermissions` t2 
+    				not exists (select * from `users_objectpermissions` t2 
     				where t1.`groupName`=t2.`groupName` 
     				and `permName`='tiki_p_ws_view' 
     				and not `objectId`=?)";
@@ -267,6 +303,8 @@ class wslib extends CategLib
     		
     		while ($ret = $result->fetchRow())
 	    		$listWSUniqueGroups[] = $ret;
+	    		
+	    	// For every unique group delete the object perms related to the object
     		foreach ($listWSUniqueGroups as $group)
     		{
     			$query = "delete from `users_objectpermissions` where `groupName` = ? and `objectType` = ? and `objectId` = ?";
