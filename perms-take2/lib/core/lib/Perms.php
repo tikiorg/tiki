@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Facade class of the factory subsystem. Once configured, the ::get()
+ * Facade class of the permission subsystem. Once configured, the ::get()
  * static method can be used to obtain accessors for specific objects.
  * The accessor will contain all the rules applicable to the object.
  *
