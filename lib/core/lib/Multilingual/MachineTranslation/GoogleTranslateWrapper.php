@@ -80,17 +80,31 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper {
    	
    	
    	function getLangsCandidatesForMachineTranslation($trads) {
-   		global $langmapping;
+   		global $langmapping, $prefs;
 		$usedLangs = array();
 		foreach( $trads as $trad )
 			$usedLangs[] = $trad['lang'];
 				
 		$langsCandidatesForMachineTranslation = array();
-		$langsCandidatesForMachineTranslationRaw = $langmapping;
+		
+		if (!empty($prefs['available_languages'])) {
+		//restrict langs available for machine translation to those 
+		//available on the site
+			foreach ($prefs['available_languages'] as $availLang) {
+				$langsCandidatesForMachineTranslationRaw[$availLang] = $langmapping[$availLang];
+			}			
+		} else {
+			$langsCandidatesForMachineTranslationRaw = $langmapping;
+		}
+		
+		//restrict langs available for machine translation to those
+		//not already used for human translation
 		foreach ( $usedLangs as $usedLang) 
 			unset($langsCandidatesForMachineTranslationRaw[$usedLang]);
 		
-		//TODO: USE ONLY LANGS RESTRICTED BY SITE IF AVAIL. 
+		
+		//restrict langs available for machine translation to those 
+		//available from Google Translate
 		$langsSupportedByGoogleTranslate = $this->langsSupportedByGoogleTranslate;
 		
 		$i = 0;
