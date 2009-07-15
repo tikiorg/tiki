@@ -107,26 +107,9 @@ class Perms
 	}
 
 	private function loadBulk( $baseContext, $bulkKey, $data ) {
-		$remaining = array();
-		foreach( $data as $entry ) {
-			$context = $baseContext;
-			$context[$bulkKey] = $entry;
-			
-			if( ! $this->isKnown( $context ) ) {
-				$remaining[] = $entry;
-			}
-		}
-
 		foreach( $this->factories as $factory ) {
-			$remaining = $factory->bulk( $baseContext, $bulkKey, $remaining );
+			$data = $factory->bulk( $baseContext, $bulkKey, $data );
 		}
-	}
-
-	private function isKnown( $context ) {
-		$firstFactory = $this->factories[0];
-
-		$hash = $firstFactory->getHash( $context );
-		return isset( $this->hashes[$hash] );
 	}
 }
 
