@@ -13,6 +13,7 @@ class Framework_AllTests
  
         $suite->addTestSuite('TikiImporter_Test');
         $suite->addTestSuite('TikiImporter_Wiki_Test');
+        $suite->addTestSuite('TikiImporter_Wiki_InsertPage_Test');
         $suite->addTestSuite('TikiImporter_Wiki_Mediawiki_Test');
         
         return $suite;

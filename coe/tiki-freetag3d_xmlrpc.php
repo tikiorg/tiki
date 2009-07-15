@@ -26,7 +26,7 @@ function getSubGraph($params) {
     $queue = array($nodeName);
     $i = 0;
 
-    $tikilib = new TikiLib($dbTiki);
+    $tikilib = new TikiLib;
     $color = $prefs['freetags_3d_existing_page_color'];
 
     while ($i <= $depth && sizeof($queue) > 0) {

@@ -11,10 +11,6 @@ require_once "lib/pear/NNTP.php";
 class Newslib extends TikiLib {
 	var $nntp;
 
-	function Newslib($db) {
-		$this->TikiLib($db);
-	}
-
 	function get_server($user, $serverId) {
 		$query = "select * from `tiki_newsreader_servers` where `user`=? and `serverId`=?";
 		$result = $this->query($query, array($user,(int)$serverId));
@@ -68,7 +64,7 @@ class Newslib extends TikiLib {
 			$mid = "";
 		}
 
-		$query = "select * from `tiki_newsreader_servers` where `user`=? $mid order by ".$this->convert_sortmode("$sort_mode").",".$this->convert_sortmode("serverId_desc");
+		$query = "select * from `tiki_newsreader_servers` where `user`=? $mid order by ".$this->convertSortMode("$sort_mode").",".$this->convertSortMode("serverId_desc");
 		$query_cant = "select count(*) from `tiki_newsreader_servers` where `user`=? $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -110,5 +106,4 @@ class Newslib extends TikiLib {
 		return $this->nntp->getGroups();
 	}
 }
-global $dbTiki;
-$newslib = new Newslib($dbTiki);
+$newslib = new Newslib;

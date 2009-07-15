@@ -16,8 +16,7 @@ if ( isset($_GET['fileId']) && isset($_GET['thumbnail']) && isset($_COOKIE['PHPS
 	if ( isset($_SESSION['allowed'][$_GET['fileId']]) ) {
 		require_once 'tiki-filter-base.php';
 		include('db/tiki-db.php');
-		include('lib/tikidblib.php');
-		$db = new TikiDB($dbTiki);
+		$db = TikiDb::get();
 
 		$query = "select * from `tiki_files` where `fileId`=?";
 		$result = $db->query($query, array((int)$_GET['fileId']));

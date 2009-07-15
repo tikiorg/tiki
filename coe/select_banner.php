@@ -17,7 +17,7 @@ require_once ('tiki-setup.php');
 include_once ('lib/banners/bannerlib.php');
 
 if (!isset($bannerlib)) {
-	$bannerlib = new BannerLib($dbTiki);
+	$bannerlib = new BannerLib;
 }
 
 // CHECK FEATURE BANNERS HERE

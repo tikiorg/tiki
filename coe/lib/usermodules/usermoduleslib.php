@@ -22,10 +22,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *
  */
 class UserModulesLib extends TikiLib {
-	function UserModulesLib($db) {
-		$this->TikiLib($db);
-	}
-
 	function unassign_user_module($moduleId, $user) {
 		$query = "delete from `tiki_user_assigned_modules` where `moduleId`=? and `user`=?";
 		$result = $this->query($query,array($moduleId, $user));
@@ -238,5 +234,4 @@ class UserModulesLib extends TikiLib {
 		}
 	} 
 }
-global $dbTiki;
-$usermoduleslib = new UserModulesLib($dbTiki);
+$usermoduleslib = new UserModulesLib;

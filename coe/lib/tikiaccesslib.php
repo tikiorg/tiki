@@ -11,11 +11,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 class TikiAccessLib extends TikiLib {
 
-	function TikiAccessLib() {
-		global $dbTiki;
-		$this->TikiLib($dbTiki);
-	}
-
 	// check that the user is admin or has admin permissions
 	function check_admin($user,$feature_name="") {
 		global $tiki_p_admin, $prefs;
@@ -387,4 +382,4 @@ class TikiAccessLib extends TikiLib {
 		}
 	}
 }
-$access = new TikiAccessLib($dbTiki);
+$access = new TikiAccessLib;

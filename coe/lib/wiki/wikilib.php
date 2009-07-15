@@ -12,9 +12,6 @@ if( !defined( 'PLUGINS_DIR' ) ) {
 
 
 class WikiLib extends TikiLib {
-    function WikiLib($db) {
-	$this->TikiLib($db);
-    }
 
     //Special parsing for multipage articles
     function get_number_of_pages($data) {
@@ -435,7 +432,7 @@ class WikiLib extends TikiLib {
 	    $bindvars=array($page);
 	}
 
-	$query = "select `user`,`attId`,`page`,`filename`,`filesize`,`filetype`,`hits`,`created`,`comment` from `tiki_wiki_attachments` $mid order by ".$this->convert_sortmode($sort_mode);
+	$query = "select `user`,`attId`,`page`,`filename`,`filesize`,`filetype`,`hits`,`created`,`comment` from `tiki_wiki_attachments` $mid order by ".$this->convertSortMode($sort_mode);
 	$query_cant = "select count(*) from `tiki_wiki_attachments` $mid";
 	$result = $this->query($query,$bindvars,$maxRecords,$offset);
 	$cant = $this->getOne($query_cant,$bindvars);
@@ -460,7 +457,7 @@ class WikiLib extends TikiLib {
 			$bindvars=array();
 		}
 		$query = "select `user`,`attId`,`page`,`filename`,`filesize`,`filetype`,`hits`,`created`,`comment`,`path` ";
-		$query.= " from `tiki_wiki_attachments` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query.= " from `tiki_wiki_attachments` $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_wiki_attachments` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -548,7 +545,7 @@ class WikiLib extends TikiLib {
     }
 
     function wiki_link_structure() {
-	$query = "select `pageName` from `tiki_pages` order by ".$this->convert_sortmode("pageName_asc");
+	$query = "select `pageName` from `tiki_pages` order by ".$this->convertSortMode("pageName_asc");
 
 	$result = $this->query($query);
 
@@ -576,7 +573,7 @@ class WikiLib extends TikiLib {
     function remove_last_version($page, $comment = '') {
 
 	$this->invalidate_cache($page);
-	$query = "select * from `tiki_history` where `pageName`=? order by ".$this->convert_sortmode("lastModif_desc");
+	$query = "select * from `tiki_history` where `pageName`=? order by ".$this->convertSortMode("lastModif_desc");
 	$result = $this->query($query, array( $page ) );
 
 	if ($result->numRows()) {
@@ -825,7 +822,7 @@ class WikiLib extends TikiLib {
 
 	// get all modified pages for a user (if actionlog is not clean
 	function get_user_all_pages($user, $sort_mode) {
-		$query = "select  distinct(p.`pageName`), p.`user` as lastEditor, p.`creator`, max(a.`lastModif`) as date from `tiki_actionlog` as a, `tiki_pages` as p where a.`object`= p.`pageName` and a.`user`= ? and (a.`action`=? or a.`action`=?) group by p.`pagename` order by ".$this->convert_sortmode($sort_mode);
+		$query = "select  distinct(p.`pageName`), p.`user` as lastEditor, p.`creator`, max(a.`lastModif`) as date from `tiki_actionlog` as a, `tiki_pages` as p where a.`object`= p.`pageName` and a.`user`= ? and (a.`action`=? or a.`action`=?) group by p.`pagename` order by ".$this->convertSortMode($sort_mode);
 		$result = $this->query($query, array($user, 'Updated', 'Created'));
 		$ret = array();
 		while ($res = $result->fetchRow()) {
@@ -926,5 +923,4 @@ class WikiLib extends TikiLib {
 }
 
 global $wikilib;
-global $dbTiki;
-$wikilib = new WikiLib($dbTiki);
+$wikilib = new WikiLib;

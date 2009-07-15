@@ -13,7 +13,7 @@ require_once ('lib/tikilib.php'); # httpScheme()
 include_once ('lib/banners/bannerlib.php');
 
 if (!isset($bannerlib)) {
-	$bannerlib = new BannerLib($dbTiki);
+	$bannerlib = new BannerLib;
 }
 
 // CHECK FEATURE BANNERS AND ADMIN PERMISSION HERE

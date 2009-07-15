@@ -41,9 +41,20 @@ class TikiImporter
     static public $importOptions = array();
 
     /**
+     * During the importing process all the log
+     * strings will be appended to this object property
+     * using the method saveAndDisplayLog()
+     *
+     * @var string
+     */
+    public $log = '';
+
+    /**
      * Abstract method to start the import process and
      * call all other functions for each step of the importation
      * (validateInput(), parseData(), insertData())
+     *
+     * @return array $importFeedback array with the number of pages imported etc
      */
     function import() {}
 
@@ -98,6 +109,66 @@ class TikiImporter
         } while ($class = get_parent_class($class));
         
         return $importOptions;
+    }
+
+    /**
+     * Try to change some PHP settings to avoid problens while running the script:
+     *   - error_reporting
+     *   - display_errors
+     *   - max_execution_time
+     *
+     * @return void
+     */
+    static function changePhpSettings()
+    {
+        if (ini_get('error_reporting') != E_ALL)
+            error_reporting(E_ALL);
+
+        if (ini_get('display_errors') != true)
+            ini_set('display_errors', true);
+    
+        // change max_execution_time
+        if (ini_get('max_execution_time') < 360)
+            set_time_limit(360);
+    }
+
+    /**
+     * Handle the PHP $_FILES errors
+     *
+     * @param int $code error code
+     * @return string $message error message
+     */
+    static function displayPhpUploadError($code)
+    {
+        require_once(dirname(__FILE__) . '/../init/tra.php');
+        $errors = array(1 => tra('The uploaded file exceeds the upload_max_filesize directive in php.ini.') . ' ' . ini_get('upload_max_filesize') . 'B',
+            2 => tra('The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.'),
+            3 => tra('The uploaded file was only partially uploaded. Please try again.'),
+            4 => tra('No file was uploaded.'),
+            6 => tra('Missing a temporary folder.'),
+            7 => tra('Failed to write file to disk.'),
+            8 => tra('File upload stopped by extension.'),
+        );
+        
+        if (isset($errors[$code]))
+            return $errors[$code];
+    }
+
+    /**
+     * Append $msg to $this->log and output the $msg to the browser
+     * during the execution of the script using the flush() method
+     *
+     * @param string $msg the log message
+     * @return void
+     */
+    function saveAndDisplayLog($msg)
+    {
+        $this->log .= $msg;
+        // convert \n to <br> if running script in web browser
+        if (isset($_SERVER['HTTP_HOST']))
+            $msg = nl2br($msg);
+        echo $msg;
+        flush();
     }
 }
 

@@ -21,10 +21,37 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
     public $dom = '';
 
     /**
+     * Array of the valid mime types for the
+     * input file
+     */
+    public $validTypes = array('application/xml', 'text/xml');
+
+    /**
      * @see lib/importer/TikiImporter#importOptions
      */
     static public $importOptions = array();    
-    
+
+    /**
+     * Start the importing process by loading the XML file.
+     * 
+     * @see lib/importer/TikiImporter_Wiki#import()
+     *
+     * @param string $filePath path to the XML file
+     * @return parent::import()
+     */
+    function import($filePath)
+    {
+        if (isset($_FILES['importFile']) && !in_array($_FILES['importFile']['type'], $this->validTypes)) {
+            throw new UnexpectedValueException(tra('Invalid file mime type'));
+        }
+
+        $this->saveAndDisplayLog("Loading and validating the XML file\n");
+
+        $this->dom = new DOMDocument;
+        $this->dom->load($filePath);
+        return parent::import();
+    }
+
     /**
      * At present this method only validates the Mediawiki XML
      * against its DTD (Document Type Definition)
@@ -33,15 +60,8 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
      */
     function validateInput()
     {
-        global $smarty;
-        
-        $this->dom = new DOMDocument;
-        $this->dom->load($_FILES['importFile']['tmp_name']);
-        if (!$this->dom->schemaValidate(dirname(__FILE__) . '/mediawiki_dump.xsd')) {
-            $msg = tra('File does not validate against schema. Try again.');
-            $smarty->assign('msg', $msg);
-            $smarty->display('error.tpl');
-            die;
+        if (!@$this->dom->schemaValidate(dirname(__FILE__) . '/mediawiki_dump.xsd')) {
+            throw new DOMException(tra('XML file does not validate against the Mediawiki XML schema'));
         }
     }
 
@@ -58,10 +78,12 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
         $parsedData = array();
         $pages = $this->dom->getElementsByTagName('page');
 
+        $this->saveAndDisplayLog("\nStarting to parse " . $pages->length . " pages:\n");
+        flush();
+
         foreach ($pages as $page) {
             $parsedData[] = $this->extractInfo($page);
         }
-
         return $parsedData;
     }
 
@@ -70,7 +92,7 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
      * that will be imported (page name, page content for all revisions)
      * 
      * Note: the names of the keys are changed to reflected the names used by
-     * Tiki builtin function (i.e. 'title' is changed to 'name' as it is used of 
+     * Tiki builtin function (i.e. 'title' is changed to 'name' as used in 
      * TikiLib::create_page() which will be called by TikiImporter_Wiki::insertPage())
      * 
      * @param DOMElement $page
@@ -98,7 +120,9 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
                 }
             }
         }
-            
+        
+        $this->saveAndDisplayLog('Page "' . $data['name'] . '" succesfully parsed with ' . count($data['revisions']) . " revisions\n");
+
         return $data;
     }
 
@@ -107,7 +131,7 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
      * that will be imported (page content converted to Tiki syntax, lastModif, minor, user and ip address)
      *
      * Note: the names of the keys are changed to reflected the names used by
-     * Tiki builtin function (i.e. 'text' is changed to 'data' as it is used of TikiLib::create_page())
+     * Tiki builtin function (i.e. 'text' is changed to 'data' as used in TikiLib::create_page())
      * 
      * @param DOMElement $page
      * @return unknown_type
@@ -116,6 +140,7 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
     {
         $data = array();
         $data['minor'] = false;
+        $data['comment'] = '';
 
         foreach ($revision->childNodes as $node) {
             if ($node instanceof DOMElement) {
@@ -125,27 +150,23 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
                     break;
                 case 'comment':
                     $data['comment'] = $node->textContent;
+                    break;
                 case 'text':
                     $data['data'] = $this->convertMarkup($node->textContent);
                     break;
-
                 case 'timestamp':
                     $data['lastModif'] = strtotime($node->textContent);
                     break;
-
                 case 'minor':
                     $data['minor'] = true;
-
+                    break;
                 case 'contributor':
                     $data = array_merge($data, $this->extractContributor($node));
                     break;
-
-                default:
-                    print "Unknown tag in revision: {$node->tagName}\n";
                 }
             }
         }
-                
+
         return $data;
     }
 

@@ -6,7 +6,6 @@ if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== false) {
   exit;
 }
 
-if (preg_match('/^adodb$/i', $api_tiki)) {
 	define('ADODB_FORCE_NULLS', 1);
 	define('ADODB_ASSOC_CASE', 2);
 	define('ADODB_CASE_ASSOC', 2); // typo in adodb's driver for sybase?
@@ -25,10 +24,6 @@ if (preg_match('/^adodb$/i', $api_tiki)) {
 	$ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 
 // ADODB_FETCH_BOTH appears to be buggy for null values
-} else {
-	// Database connection for the tiki system
-	include_once ('lib/pear/DB.php');
-}
 
 $dsn = "$db_tiki://$user_tiki:$pass_tiki@$host_tiki/$dbs_tiki";
 //$dsn = "mysql://$user_tiki@$pass_tiki(localhost)/$dbs_tiki";
@@ -79,3 +74,6 @@ function close_connection() {
 	global $dbTiki;
 	$dbTiki->Close();
 }
+
+require_once 'TikiDb/Adodb.php';
+TikiDb::set( new TikiDb_Adodb( $dbTiki ) );

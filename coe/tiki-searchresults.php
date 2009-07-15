@@ -9,7 +9,7 @@ require_once ('tiki-setup.php');
 require_once ('lib/ajax/ajaxlib.php');
 require_once ('lib/searchlib.php');
 $auto_query_args = array('highlight', 'where', 'initial', 'maxRecords', 'sort_mode', 'find', 'lang', 'words', 'boolean');
-$searchlib = new SearchLib($tikilib->db);
+$searchlib = new SearchLib;
 $smarty->assign('headtitle', tra('Search'));
 if ($prefs['feature_search'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled") . ": feature_search");

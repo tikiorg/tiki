@@ -25,11 +25,6 @@ if (!isset($Debug)) $Debug = false;
 
 class RegistrationLib extends TikiLib {
 
-  function RegistrationLib($db) 
-  {
-    $this->TikiLib($db);  
-  }
-  
     // Validate emails...
   function SnowCheckMail($Email,$sender_email,$novalidation,$Debug=false)
   {
@@ -439,5 +434,4 @@ class RegistrationLib extends TikiLib {
         ask_ticket('register');
     }
 }
-global $dbTiki;
-$registrationlib= new RegistrationLib($dbTiki);
+$registrationlib= new RegistrationLib;

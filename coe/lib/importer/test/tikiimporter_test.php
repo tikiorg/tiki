@@ -1,8 +1,9 @@
 <?php
 
-require_once('../tikiimporter.php');
+require_once(dirname(__FILE__) . '/tikiimporter_testcase.php');
+require_once(dirname(__FILE__) . '/../tikiimporter.php');
 
-class TikiImporter_Test extends PHPUnit_Framework_TestCase
+class TikiImporter_Test extends TikiImporter_TestCase 
 {
     public function testGetOptions()
     {
@@ -16,7 +17,21 @@ class TikiImporter_Test extends PHPUnit_Framework_TestCase
                                 array('name' => 'differentName', 'property' => 'anotherProperty'));
         $object = new TikiImporterFirstChild();
         $this->assertEquals($expectedResult, $object->getOptions());
-   }
+    }
+
+    public function testChangePhpSettings()
+    {
+        TikiImporter::changePhpSettings();
+        $this->assertEquals(E_ALL, ini_get('error_reporting'), 'Should change the value of the error reporting');
+        $this->assertEquals(1, ini_get('display_errors'), 'Should change the value of display_errors');
+        $this->assertEquals(360, ini_get('max_execution_time'), 'Should change the value of max_execution_time');
+    }
+
+    public function testDisplayPhpUploadError()
+    {
+        $this->assertNull(TikiImporter::displayPhpUploadError(-1), 'Should return null if invalid code passed as param');
+        $this->assertEquals('No file was uploaded.', TikiImporter::displayPhpUploadError(4));
+    }
 }
 
 

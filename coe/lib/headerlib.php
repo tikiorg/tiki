@@ -15,7 +15,7 @@ class HeaderLib {
 	var $rssfeeds;
 	var $metatags;
 	
-	function HeaderLib() {
+	function __construct() {
 		$this->title = '';
 		$this->jsfiles = array();
 		$this->js = array();
@@ -276,5 +276,5 @@ class HeaderLib {
 
 }
 
-$headerlib = new HeaderLib();
+$headerlib = new HeaderLib;
 $smarty->assign_by_ref('headerlib', $headerlib);

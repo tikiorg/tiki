@@ -6,11 +6,9 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-class ArtLib extends TikiLib {
-	function ArtLib($db) {
-		$this->TikiLib($db);
-	}
+include_once('lib/reportslib.php');
 
+class ArtLib extends TikiLib {
 	//Special parsing for multipage articles
 	function get_number_of_pages($data) {
 		$parts = explode("...page...", $data);
@@ -68,7 +66,7 @@ class ArtLib extends TikiLib {
 	}
 
 	function remove_article($articleId, $article_data='') {
-		global $smarty, $tikilib, $user, $prefs;
+		global $smarty, $tikilib, $user, $prefs, $reportslib;
 		
 		if ($articleId) {
 			if (empty($article_data)) $article_data = $this->get_article($articleId);
@@ -98,7 +96,7 @@ class ArtLib extends TikiLib {
 		    }
 		    
 			if ($prefs['feature_user_watches'] == 'y' && $prefs['feature_daily_report_watches'] == 'y') {
-				$tikilib->makeReportCache($nots, array("event"=>'article_deleted', "articleId"=>$articleId, "articleTitle"=>$article_data['title'], "authorName"=>$article_data['authorName'], "user"=>$user));
+				$reportslib->makeReportCache($nots, array("event"=>'article_deleted', "articleId"=>$articleId, "articleTitle"=>$article_data['title'], "authorName"=>$article_data['authorName'], "user"=>$user));
 			}
 		    
 		    if (count($nots) || is_array($emails)) {
@@ -238,7 +236,7 @@ class ArtLib extends TikiLib {
 	$heading, $body, $publishDate, $expireDate, $user, $articleId, $image_x, $image_y, $type, 
 	$topline, $subtitle, $linkto, $image_caption, $lang, $rating = 0, $isfloat = 'n', $emails='', $from='') {
 		
-		global $smarty, $tikilib;
+		global $smarty, $tikilib, $reportslib;
 		
 		if ($expireDate < $publishDate) {
 		    $expireDate = $publishDate;
@@ -317,7 +315,7 @@ class ArtLib extends TikiLib {
 	    
 	    global $prefs;
 		if ($prefs['feature_user_watches'] == 'y' && $prefs['feature_daily_report_watches'] == 'y') {
-			$tikilib->makeReportCache($nots, array("event"=>$event, "articleId"=>$articleId, "articleTitle"=>$title, "authorName"=>$authorName, "user"=>$user));
+			$reportslib->makeReportCache($nots, array("event"=>$event, "articleId"=>$articleId, "articleTitle"=>$title, "authorName"=>$authorName, "user"=>$user));
 		}
 	    
 	    if (count($nots) || is_array($emails)) {
@@ -701,5 +699,4 @@ $show_expdate, $show_reads, $show_size, $show_topline, $show_subtitle, $show_lin
 
 }
 
-global $dbTiki;
-$artlib = new ArtLib($dbTiki);
+$artlib = new ArtLib;

@@ -27,7 +27,7 @@ if ($prefs['error_reporting_level'] != 0) {
 
 error_reporting($prefs['error_reporting_level']);
 
-if ( $prefs['log_sql'] == 'y' ) {
+if ( $prefs['log_sql'] == 'y' && $api_tiki == 'adodb' ) {
 	$dbTiki->LogSQL();
 	global $ADODB_PERF_MIN;
 	$ADODB_PERF_MIN = $prefs['log_sql_perf_min'];

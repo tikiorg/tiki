@@ -5,7 +5,7 @@
 
 
 {else}<br><br>{/if}
-{if $report_preferences.type eq 'html'}<u>{/if}{tr}Changes in detail:{/tr}{if $report_preferences.type eq 'html'}<u><br>{else}
+{if $report_preferences.type eq 'html'}<u>{/if}{tr}Changes in detail:{/tr}{if $report_preferences.type eq 'html'}</u><br>{else}
 
 -----------------------
 

@@ -8,9 +8,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 // this is an abstract class
 class ObjectLib extends TikiLib {
-	function ObjectLib($db) {
-		parent::TikiLib($db);
-	}
 
     function add_object($type, $itemId, $description = '', $name = '', $href = '') {
 
@@ -145,5 +142,4 @@ class ObjectLib extends TikiLib {
 	}	
 	
 }
-global $dbTiki;
-$objectlib = new ObjectLib($dbTiki);
+$objectlib = new ObjectLib;

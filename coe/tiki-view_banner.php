@@ -8,7 +8,7 @@ require_once ('tiki-setup.php');
 require_once ('lib/tikilib.php'); // httpScheme()
 include_once ('lib/banners/bannerlib.php');
 if (!isset($bannerlib)) {
-	$bannerlib = new BannerLib($dbTiki);
+	$bannerlib = new BannerLib;
 }
 if ($prefs['feature_banners'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled") . ": feature_banners");

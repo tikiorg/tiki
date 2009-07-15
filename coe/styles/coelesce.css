@@ -1447,6 +1447,7 @@ div#page-bar {
 	display: block;
 	margin-top: 0;
 	float: none;
+	height: 20px;
 	line-height: 20px;
 	}
 

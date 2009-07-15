@@ -7,9 +7,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 class UserMenuLib extends TikiLib {
-	function UserMenuLib($db) {
-		$this->TikiLib($db);
-	}
 
 	function add_bk($user) {
 		$query = "select tubu.`name`,`url` from `tiki_user_bookmarks_urls` tubu, `tiki_user_bookmarks_folders` tubf where tubu.`folderId`=tubf.`folderId` and tubf.`parentId`=? and tubu.`user`=?";
@@ -54,7 +51,7 @@ class UserMenuLib extends TikiLib {
 			$bindvars=array($user);
 		}
 
-		$query = "select * from `tiki_user_menus` where `user`=? $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_user_menus` where `user`=? $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_user_menus` where `user`=? $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -104,5 +101,4 @@ class UserMenuLib extends TikiLib {
 		$this->query($query,array($user,$menuId));
 	}
 }
-global $dbTiki;
-$usermenulib = new UserMenuLib($dbTiki);
+$usermenulib = new UserMenuLib;

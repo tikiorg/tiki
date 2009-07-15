@@ -15,10 +15,6 @@ class WebMailLib extends TikiLib {
 	// slightly complicated sub-query to check for public messages
 	var $SQL_CLAUSE_FOR_PUBLIC_MAILBOX = '(select count(*) from `tiki_user_mail_accounts` where `tiki_user_mail_accounts`.`accountId`=`tiki_webmail_messages`.`accountId` and `flagsPublic` = \'y\')';
 	
-	function WebMailLib($db) {
-		parent::TikiLib($db);
-	}
-
 	function remove_webmail_message($current, $user, $msgid) {
 
 		$query = "delete from `tiki_webmail_messages` where `mailId`=? and (`user`=? or $this->SQL_CLAUSE_FOR_PUBLIC_MAILBOX)";	// mailId is message-id
@@ -112,7 +108,7 @@ class WebMailLib extends TikiLib {
 			$bindvars = array($user);
 		}
 
-		$query = "select * from `tiki_user_mail_accounts` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_user_mail_accounts` $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_user_mail_accounts` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -139,7 +135,7 @@ class WebMailLib extends TikiLib {
 			$bindvars = array();
 		}
 
-		$query = "select * from `tiki_user_mail_accounts` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_user_mail_accounts` $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_user_mail_accounts` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -496,5 +492,4 @@ class WebMailLib extends TikiLib {
 	}	// end get_mail_content()
 	
 } # class WebMailLib
-global $dbTiki;
-$webmaillib = new WebMailLib($dbTiki);
+$webmaillib = new WebMailLib;

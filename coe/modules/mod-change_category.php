@@ -13,7 +13,7 @@ global $categlib; require_once('lib/categories/categlib.php');
   
 // temporary limitation to wiki pages
 // params : id (id of parent categ) and shy (show only if page is in categ)
-if ($prefs['feature_categories'] == 'y' && (isset($_REQUEST['page']) || isset($_REQUEST['page_ref_if']))) {
+if ($prefs['feature_categories'] == 'y' && (!empty($_REQUEST['page']) || !empty($_REQUEST['page_ref_if']))) {
 	if (empty($_REQUEST['page'])) {
 		global $structlib; include_once('lib/structures/structlib.php');
 		$page_info = $structlib->s_get_page_info($_REQUEST['page_ref_id']);

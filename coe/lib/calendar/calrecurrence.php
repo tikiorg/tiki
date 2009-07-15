@@ -37,8 +37,7 @@ class CalRecurrence extends TikiLib {
 	private $lastModif;
 
 	public function CalRecurrence($param = -1) {
-		global $dbTiki;
-		parent::__construct($dbTiki);
+		parent::__construct();
 		if ($param > 0)
 			$this->setId($param);
 		$this->load();

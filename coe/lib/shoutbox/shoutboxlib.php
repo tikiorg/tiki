@@ -7,10 +7,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 class ShoutboxLib extends TikiLib {
-	function ShoutboxLib($db) {
-		$this->TikiLib($db);
-	}
-
 	function list_shoutbox($offset, $maxRecords, $sort_mode, $find) {
 		global $prefs;
 		if ($find) {
@@ -21,7 +17,7 @@ class ShoutboxLib extends TikiLib {
 			$bindvars = array();
 		}
 
-		$query = "select * from `tiki_shoutbox` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_shoutbox` $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_shoutbox` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -125,7 +121,7 @@ class ShoutboxLib extends TikiLib {
                         $bindvars = array();
                 }
 
-                $query = "select * from `tiki_shoutbox_words` $mid order by ".$this->convert_sortmode($sort_mode);
+                $query = "select * from `tiki_shoutbox_words` $mid order by ".$this->convertSortMode($sort_mode);
                 $query_cant = "select count(*) from `tiki_shoutbox_words` $mid";
                 $result = $this->query($query,$bindvars,$maxRecords,$offset);
                 $cant = $this->getOne($query_cant,$bindvars);
@@ -158,5 +154,4 @@ class ShoutboxLib extends TikiLib {
 
 
 }
-global $dbTiki;
-$shoutboxlib = new ShoutboxLib($dbTiki);
+$shoutboxlib = new ShoutboxLib;

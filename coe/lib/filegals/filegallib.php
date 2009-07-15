@@ -8,10 +8,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 class FileGalLib extends TikiLib {
-	function FileGalLib($db) {
-		$this->TikiLib($db);
-	}
-
 	function isPodCastGallery($galleryId, $gal_info=null) {
 		if (empty($gal_info))
 			$gal_info = $this->get_file_gallery_info((int)$galleryId);
@@ -772,5 +768,4 @@ class FileGalLib extends TikiLib {
 		return $info;
 	}
 }
-global $dbTiki;
-$filegallib = new FileGalLib($dbTiki);
+$filegallib = new FileGalLib;
