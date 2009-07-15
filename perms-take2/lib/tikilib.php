@@ -4091,83 +4091,16 @@ class TikiLib extends TikiDb {
 	// if O.K. this function shall replace similar constructs in list_pages and other functions above.
 	// $categperm is the category permission that should grant $perm. if none, pass 0
 	function user_has_perm_on_object($user,$object,$objtype,$perm,$categperm='tiki_p_view_categorized') {
-		global $prefs, $userlib;
-		static $cacheUserPerm;
-		$keyCache = "$user/$object/$objtype/$perm";
-		if (!empty($cacheUserPerm[$keyCache])) {
-			return $cacheUserPerm[$keyCache];
+		global $userlib;
+		$groups = $userlib->get_groups();
+		$accessor = Perms::get( array( 'type' => $objtype, 'object' => $object ) );
+		$resolver = $accessor->getResolver();
+
+		if( strpos( $perm, 'tiki_p_' ) ) {
+			$perm = substr( $perm, strlen( 'tiki_p_' ) );
 		}
-		// superadmin
-		if($userlib->user_has_permission($user, 'tiki_p_admin') || $user == 'admin') {
-			$cacheUserPerm[$keyCache] = true;
-			return(TRUE);
-		}
-		if ($userlib->object_has_one_permission($object, $objtype)) {
-			// wiki permissions override category permissions
-			//handle multiple permissions
-			if(is_array($perm)) {
-				foreach($perm as $p) {
-					if(!$userlib->object_has_permission($user, $object, $objtype,$p)) {
-						$cacheUserPerm[$keyCache] = false;
-						return(FALSE);
-					}
-				}
-			} else {
-				if (!$userlib->object_has_permission($user, $object, $objtype,$perm)) {
-					$cacheUserPerm[$keyCache] = false;
-					return(FALSE);
-				}
-			}
-			$cacheUserPerm[$keyCache] = true;
-			return (TRUE);
-		} elseif ($prefs['feature_categories'] == 'y' && $categperm !== 0) {
-			// no wiki permissions so now we check category permissions
-			global $categlib;
-			if (!is_object($categlib)) {
-				include_once('lib/categories/categlib.php');
-			}
-			unset($tiki_p_view_categorized); // unset this var in case it was set previously
-			$perms_array = $categlib->get_object_categories_perms($user, $objtype, $object);
-			if ($perms_array) {
-				$is_categorized = TRUE;
-				foreach ($perms_array as $p => $value) {
-					$$p = $value;
-				}
-				if ($tiki_p_admin_categories == 'y' && $tiki_p_view_categorized == 'n')
-					$tiki_p_view_categorized = 'y';
-			} else {
-				$is_categorized = FALSE;
-			}
-			if ($is_categorized && !empty($categperm) && $$categperm != 'y') {
-				$cacheUserPerm[$keyCache] = false;
-				return (FALSE);
-			}
-			// Proposed by sewilco: Put this block into a comment 
-			// if you want Do not ignore Group perm on categorized object.
-			if ($is_categorized && !empty($categperm) && $$categperm == 'y') {
-				$cacheUserPerm[$keyCache] = true;
-				return (TRUE);
-			}
-			
-			// if it has no category perms or the user does not have
-			// the perms, continue to check individual perms!
-		}
-		// no individual and no category perms. So has the user the perm itself?
-		if (is_array($perm)) {
-			foreach($perm as $p) {
-				if(!$userlib->user_has_permission($user, $p)) {
-					$cacheUserPerm[$keyCache] = false;
-					return(FALSE);
-				}
-			}
-		} else {
-			if(!$userlib->user_has_permission($user, $perm)) {
-				$cacheUserPerm[$keyCache] = false;
-				return(FALSE);
-			}
-		}
-		$cacheUserPerm[$keyCache] = true;
-		return(TRUE);
+
+		return $resolver->check( $perm, $groups );
 	}
 
 	/* get all the perm of an object either in a table or global+smarty set
