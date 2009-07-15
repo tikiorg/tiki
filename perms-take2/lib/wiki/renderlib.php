@@ -203,28 +203,34 @@ class WikiRenderer
 
 		include_once('lib/multilingual/multilinguallib.php');
 		
-		if( $this->info['lang'] && $this->info['lang'] != 'NULL') { //NULL is a temporary patch
+		if( !empty($this->info['lang'])) { 
 			$this->trads = $multilinguallib->getTranslations('wiki page', $this->info['page_id'], $this->page, $this->info['lang']);
 			$this->smartyassign('trads', $this->trads);
 			$pageLang = $this->info['lang'];
 			$this->smartyassign('pageLang', $pageLang);
 		}
 		
-		if ($prefs['feature_machine_translation'] == 'y' && $this->info['lang'] && $this->info['lang'] != 'NULL') {
+		if ($prefs['feature_machine_translation'] == 'y' && !empty($this->info['lang'])) {
 			global $langmapping;
-			$preferedLangs = $multilinguallib->preferedLangs(null, false);
+//			$preferedLangs = $multilinguallib->preferedLangs(null, false);
 			$usedLangs = array();
 			foreach( $this->trads as $trad )
 				$usedLangs[] = $trad['lang'];
 				
 			$langsCandidatesForMachineTranslation = array();
+			$langsCandidatesForMachineTranslationRaw = $langmapping;
+			foreach ( $usedLangs as $usedLang) 
+				unset($langsCandidatesForMachineTranslationRaw[$usedLang]);
+				
 			$i = 0;
-			foreach( $preferedLangs as $preferedLang )
-				if( ! in_array( $preferedLang, $usedLangs ) ) {		
-					$langsCandidatesForMachineTranslation[$i]['lang'] = $preferedLang;					
-					$langsCandidatesForMachineTranslation[$i]['langName'] = $langmapping[$preferedLang][0];
-					$i++;	
-				}
+			
+			//TODO: HERE LIMIT THIS ARRAY TO LANGS SUPPORTED BY GOOGLE!!!!
+			//TODO: USE ONLY LANGS RESTRICTED BY SITE IF AVAIL. 
+			foreach (array_keys($langsCandidatesForMachineTranslationRaw) as $langCandidate) {
+				$langsCandidatesForMachineTranslation[$i]['lang'] = $langCandidate;
+				$langsCandidatesForMachineTranslation[$i]['langName'] = $langsCandidatesForMachineTranslationRaw[$langCandidate][0];
+				$i++;
+			} 	
 			$this->smartyassign('langsCandidatesForMachineTranslation', $langsCandidatesForMachineTranslation);
 		}
 				

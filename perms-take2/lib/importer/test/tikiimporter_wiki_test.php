@@ -1,11 +1,12 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../core/test/TikiTestCase.php');
+require_once(dirname(__FILE__) . '/tikiimporter_testcase.php');
 require_once(dirname(__FILE__) . '/../tikiimporter_wiki.php');
 require_once(dirname(__FILE__) . '/../tikiimporter_wiki_mediawiki.php');
 
-class TikiImporter_Wiki_Test extends TikiTestCase
+class TikiImporter_Wiki_Test extends TikiImporter_TestCase
 {
+    
     public function testImportShouldCallMethodsToStartImportProcess()
     {
         $obj = $this->getMock('TikiImporter_Wiki', array('validateInput', 'parseData', 'insertData'));
@@ -13,6 +14,7 @@ class TikiImporter_Wiki_Test extends TikiTestCase
         $obj->expects($this->once())->method('parseData');
         $obj->expects($this->once())->method('insertData');
 
+        $this->expectOutputString("\nImportation completed!\n\n<b><a href=\"tiki-importer.php\">Click here</a> to finish the import process</b>");
         $obj->import();
    }
 
@@ -35,17 +37,20 @@ class TikiImporter_Wiki_Test extends TikiTestCase
         $this->assertEquals('doNotImport', $obj->alreadyExistentPageName);
     }
 
-    public function testImportShouldReturnNumberOfPagesImported()
+    public function testImportShouldSetSessionVariables()
     {
-        $expectedResult = array('importedPages' => 10, 'totalPages' => '13');
-        $obj = $this->getMock('TikiImporter_Wiki', array('validateInput', 'parseData', 'insertData'));
+        $expectedImportFeedback = array('importedPages' => 10, 'totalPages' => '13');
+        $obj = $this->getMock('TikiImporter_Wiki', array('validateInput', 'parseData', 'insertData', 'saveAndDisplayLog'));
         $obj->expects($this->once())->method('validateInput'); 
         $obj->expects($this->once())->method('parseData');
-        $obj->expects($this->once())->method('insertData')->will($this->returnValue($expectedResult));
+        $obj->expects($this->once())->method('insertData')->will($this->returnValue($expectedImportFeedback));
+        $obj->expects($this->once())->method('saveAndDisplayLog');
+        
+        $obj->log = 'some log string';
+        $obj->import();
 
-        $importFeedback = $obj->import();
-
-        $this->assertEquals($expectedResult, $importFeedback);
+        $this->assertEquals($expectedImportFeedback, $_SESSION['tiki_importer_feedback']);
+        $this->assertEquals('some log string', $_SESSION['tiki_importer_log']);
     }
 
     public function testInsertDataCallInsertPageFourTimes()
@@ -85,7 +90,7 @@ class TikiImporter_Wiki_Test extends TikiTestCase
     }
 }
 
-class TikiImporter_Wiki_InsertPage_Test extends TikiTestCase
+class TikiImporter_Wiki_InsertPage_Test extends TikiImporter_TestCase
 {
 
     protected function setUp()

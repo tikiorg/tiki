@@ -45,12 +45,18 @@
 				//--><!]]>
 				</script>
 				<form action="tiki-index.php" method="get">
+				{if $prefs.feature_machine_translation eq 'y'}
 				<input type="hidden" name="machine_translate_to_lang" value="">
+				{/if}
 				<select name="page" onchange="quick_switch_language( this )">
+					{if $prefs.feature_machine_translation eq 'y'}
+					<option value="Human Translations" disabled="disabled" style="color:black;font-weight:bold">Human Translations</option>
+					{/if}
 					{section name=i loop=$trads}
 					<option value="{$trads[i].objName}">{$trads[i].langName}</option>
 					{/section}
 					{if $prefs.feature_machine_translation eq 'y'}
+					<option value="Machine Translations" disabled="disabled" style="color:black;font-weight:bold">Machine Translations</option>
 					{section name=i loop=$langsCandidatesForMachineTranslation}
 					<option value="{$langsCandidatesForMachineTranslation[i].lang}">{$langsCandidatesForMachineTranslation[i].langName} *</option>
 					{/section}
