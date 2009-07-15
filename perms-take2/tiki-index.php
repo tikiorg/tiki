@@ -256,7 +256,7 @@ if (
 }
 
 if ( 
-	objectperms->admin_wiki
+	$objectperms->admin_wiki
 	|| 
 	($user and ($user == $info['user']) and $objectperms->lock and ($prefs['feature_wiki_usrlock'] == 'y'))
 ) {
