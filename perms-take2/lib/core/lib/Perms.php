@@ -30,6 +30,22 @@ class Perms
 		self::$instance = $perms;
 	}
 
+	public static function bulk( array $baseContext, $bulkKey, array $data, $dataKey = null ) {
+		$remaining = array();
+
+		foreach( $data as $entry ) {
+			if( $dataKey ) {
+				$value = $entry[$dataKey];
+			} else {
+				$value = $entry;
+			}
+
+			$remaining[] = $value;
+		}
+
+		self::$instance->loadBulk( $baseContext, $bulkKey, $remaining );
+	}
+
 	function setGroups( array $groups ) {
 		$this->groups = $groups;
 	}
@@ -70,6 +86,29 @@ class Perms
 		}
 
 		return $resolver;
+	}
+
+	private function loadBulk( $baseContext, $bulkKey, $data ) {
+		$remaining = array();
+		foreach( $data as $entry ) {
+			$context = $baseContext;
+			$context[$bulkKey] = $entry;
+			
+			if( ! $this->isKnown( $context ) ) {
+				$remaining[] = $entry;
+			}
+		}
+
+		foreach( $this->factories as $factory ) {
+			$remaining = $factory->bulk( $baseContext, $bulkKey, $remaining );
+		}
+	}
+
+	private function isKnown( $context ) {
+		$firstFactory = $this->factories[0];
+
+		$hash = $firstFactory->getHash( $context );
+		return isset( $this->hashes[$hash] );
 	}
 }
 

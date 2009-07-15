@@ -107,8 +107,10 @@ if( $prefs['feature_wiki_structure'] == 'y' ) {
 		}
 		//Get the structures this page is a member of
 		$structs = $structlib->get_page_structures($_REQUEST["page"],$struct);
+		Perms::bulk( array( 'type' => 'wiki page' ), 'object', $structs, 'permName' );
 		foreach ($structs as $t_structs) {
-			if ($tikilib->user_has_perm_on_object($user,$t_structs['pageName'],'wiki page','tiki_p_view')) {
+			$context = array( 'type' => 'wiki page', 'object' => $t_structs['pageName'] );
+			if( Perms::get( $context )->view ) {
 				$structs_with_perm[] = $t_structs;
 			}
 		}

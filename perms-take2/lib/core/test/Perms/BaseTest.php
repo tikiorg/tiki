@@ -93,5 +93,70 @@ class Perms_BaseTest extends TikiTestCase
 		Perms::get();
 		Perms::get();
 	}
+
+	function testBulkLoading() {
+		$mockObject = $this->getMock( 'Perms_ResolverFactory' );
+		$mockCategory = $this->getMock( 'Perms_ResolverFactory' );
+		$mockGlobal = $this->getMock( 'Perms_ResolverFactory' );
+
+		$perms = new Perms;
+		$perms->setResolverFactories( array( $mockObject, $mockCategory, $mockGlobal ) );
+		Perms::set($perms);
+
+		$mockObject->expects($this->any())
+			->method('getHash')
+			->will($this->returnCallback(array($this,'customHash')));
+		$mockObject->expects($this->once())
+			->method('bulk')
+			->with($this->equalTo(array( 'type' => 'wiki page' )), $this->equalTo('object'), $this->equalTo(array('A', 'B', 'C', 'D', 'E')))
+			->will($this->returnValue( array('A', 'C', 'E') ));
+		$mockCategory->expects($this->once())
+			->method('bulk')
+			->with($this->equalTo(array( 'type' => 'wiki page' )), $this->equalTo('object'), $this->equalTo(array('A', 'C', 'E')))
+			->will($this->returnValue( array('C') ) );
+		$mockGlobal->expects($this->once())
+			->method('bulk')
+			->with($this->equalTo(array( 'type' => 'wiki page')), $this->equalTo('object'), $this->equalTo(array('C')) )
+			->will($this->returnArgument(0));
+
+		$data = array(
+			array( 'pageId' => 1, 'pageName' => 'A', 'content' => 'Hello World' ),
+			array( 'pageId' => 2, 'pageName' => 'B', 'content' => 'Hello World' ),
+			array( 'pageId' => 3, 'pageName' => 'C', 'content' => 'Hello World' ),
+			array( 'pageId' => 4, 'pageName' => 'D', 'content' => 'Hello World' ),
+			array( 'pageId' => 5, 'pageName' => 'E', 'content' => 'Hello World' ),
+		);
+
+		Perms::bulk( array( 'type' => 'wiki page' ), 'object', $data, 'pageName' );
+	}
+
+	function testBulkPrefiltersAlreadyKnown() {
+		$mockObject = $this->getMock( 'Perms_ResolverFactory' );
+
+		$perms = new Perms;
+		$perms->setResolverFactories( array( $mockObject ) );
+		Perms::set($perms);
+
+		$mockObject->expects($this->any())
+			->method('getHash')
+			->will($this->returnCallback(array($this,'customHash')));
+		$mockObject->expects($this->once())
+			->method('getResolver')
+			->with($this->equalTo( array('type' => 'wiki page', 'object' => 'C') ))
+			->will($this->returnValue( new Perms_Resolver_Default(true) ) );
+		$mockObject->expects($this->once())
+			->method('bulk')
+			->with($this->equalTo(array( 'type' => 'wiki page' )), $this->equalTo('object'), $this->equalTo(array('A', 'B')))
+			->will($this->returnValue( array('A', 'C', 'E') ));
+
+		Perms::get( array( 'type' => 'wiki page', 'object' => 'C' ) );
+
+		$data = array( 'A', 'B', 'C' );
+		Perms::bulk( array( 'type' => 'wiki page' ), 'object', $data );
+	}
+
+	function customHash( $context ) {
+		return serialize($context);
+	}
 }
 

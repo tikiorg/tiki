@@ -12,6 +12,10 @@ class Perms_ResolverFactory_TestFactory implements Perms_ResolverFactory
 		$this->resolvers = $resolvers;
 	}
 
+	function bulk( array $baseContext, $bulkKey, array $values ) {
+		return array();
+	}
+
 	function getHash( array $context ) {
 		$parts = array();
 		

@@ -12,6 +12,10 @@ class Perms_ResolverFactory_ObjectFactory implements Perms_ResolverFactory
 		}
 	}
 
+	function bulk( array $baseContext, $bulkKey, array $values ) {
+		return array();
+	}
+
 	function getResolver( array $context ) {
 		if( ! isset( $context['type'], $context['object'] ) ) {
 			return null;

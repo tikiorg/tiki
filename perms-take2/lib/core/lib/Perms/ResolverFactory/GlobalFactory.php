@@ -28,6 +28,10 @@ class Perms_ResolverFactory_GlobalFactory implements Perms_ResolverFactory
 		return new Perms_Resolver_Static( $perms );
 	}
 
+	function bulk( array $baseContext, $bulkKey, array $values ) {
+		return array();
+	}
+
 	private function sanitize( $name ) {
 		if( strpos( $name, 'tiki_p_' ) === 0 ) {
 			return substr( $name, strlen( 'tiki_p_' ) );
