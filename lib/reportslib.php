@@ -3,7 +3,7 @@
 class reportsLib extends TikiLib{
 
 	//Sends the Email
-	public function sendEmail($user_data, $report_preferences, $report_cache) {
+	public function sendEmail($user_data, $report_preferences, $report_cache, $tikiUrl) {
 		global $prefs, $smarty, $tikilib;
 
 		include_once('lib/webmail/tikimaillib.php');
@@ -21,7 +21,7 @@ class reportsLib extends TikiLib{
 			$smarty->assign('mail_contributions', $contributionlib->print_contributions($contributions));
 		}
 
-		$smarty->assign('report_body', $this->makeHtmlEmailBody($report_cache, $report_preferences));
+		$smarty->assign('report_body', $this->makeHtmlEmailBody($report_cache, $report_preferences, $tikiUrl));
 
 		$mail->setUser($user_data['login']);
 		if(is_array($report_cache)) {
@@ -72,10 +72,7 @@ class reportsLib extends TikiLib{
 		return $change_array;
 	}
 	
-	public function makeHtmlEmailBody($report_cache, $report_preferences) {
-		//Complete URL to your Tikiwiki installation without ending slash!
-		$tikiUrl = "http://localhost/trunktest";
-
+	public function makeHtmlEmailBody($report_cache, $report_preferences, $tikiUrl) {
 		global $tikilib;		
 		$change_array = $this->makeChangeArray($report_cache);
 		$somethingHasHappened = false;
