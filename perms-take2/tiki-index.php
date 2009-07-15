@@ -72,7 +72,7 @@ if (isset($_REQUEST['page_id'])) {
 $use_best_language = false;
 
 if ((!isset($_REQUEST['page']) || $_REQUEST['page'] == '') and !isset($_REQUEST['page_ref_id'])) {
-	if ($tiki_p_view == 'n') {
+	if ($objectperms->view == 'n') {
 		$access->display_error( $page, tra('Permission denied you cannot view this page'), '403');
 	} else {
 		$access->display_error( '', tra('No name indicated for wiki page'));
@@ -196,7 +196,7 @@ $page = $info['pageName'];
 //}
 
 $pageRenderer = new WikiRenderer( $info, $user);
-$pageRenderer->applyPermissions();
+$objectperms = $pageRenderer->applyPermissions();
 
 if( $page_ref_id )
 	$pageRenderer->setStructureInfo( $page_info );
@@ -244,9 +244,9 @@ if($prefs['count_admin_pvs'] == 'y' || $user!='admin') {
 // Check if we have to perform an action for this page
 // for example lock/unlock
 if ( 
-	($tiki_p_admin_wiki == 'y') 
+	($objectperms->admin_wiki == 'y') 
 	|| 
-	($user and ($tiki_p_lock == 'y') and ($prefs['feature_wiki_usrlock'] == 'y'))
+	($user and ($objectperms->lock == 'y') and ($prefs['feature_wiki_usrlock'] == 'y'))
 ) {
 	if ( isset($_REQUEST['action']) ) {
 		check_ticket('index');
@@ -259,9 +259,9 @@ if (
 }
 
 if ( 
-	($tiki_p_admin_wiki == 'y') 
+	($objectperms->admin_wiki == 'y') 
 	|| 
-	($user and ($user == $info['user']) and ($tiki_p_lock == 'y') and ($prefs['feature_wiki_usrlock'] == 'y'))
+	($user and ($user == $info['user']) and ($objectperms->lock == 'y') and ($prefs['feature_wiki_usrlock'] == 'y'))
 ) {
 	if ( isset($_REQUEST['action']) ) {
 		check_ticket('index');
@@ -276,7 +276,7 @@ if (
 
 // Save to notepad if user wants to
 if($user 
-	&& $tiki_p_notepad == 'y' 
+	&& $objectperms->notepad == 'y' 
 	&& $prefs['feature_notepad'] == 'y' 
 	&& isset($_REQUEST['savenotepad'])) {
     check_ticket('index');
@@ -329,7 +329,7 @@ if (isset($_SESSION['saved_msg']) && $_SESSION['saved_msg'] == $info['pageName']
 }
 
 // Comments engine!
-if ($prefs['feature_wiki_comments'] == 'y' and $tiki_p_wiki_view_comments == 'y') {
+if ($prefs['feature_wiki_comments'] == 'y' and $objectperms->wiki_view_comments == 'y') {
     $comments_per_page = $prefs['wiki_comments_per_page'];
     $thread_sort_mode = $prefs['wiki_comments_default_ordering'];
     $comments_vars=Array('page');
@@ -342,7 +342,7 @@ if($prefs['feature_wiki_attachments'] == 'y') {
     if(isset($_REQUEST['removeattach'])) {
 	check_ticket('index');
 	$owner = $wikilib->get_attachment_owner($_REQUEST['removeattach']);
-	if( ($user && ($owner == $user) ) || ($tiki_p_wiki_admin_attachments == 'y') ) {
+	if( ($user && ($owner == $user) ) || ($objectperms->wiki_admin_attachments == 'y') ) {
 		$area = 'removeattach';
 	    if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
@@ -353,7 +353,7 @@ if($prefs['feature_wiki_attachments'] == 'y') {
 	}
 	$pageRenderer->setShowAttachments( 'y' );
     }
-    if(isset($_REQUEST['attach']) && ($tiki_p_wiki_admin_attachments == 'y' || $tiki_p_wiki_attach_files == 'y')) {
+    if(isset($_REQUEST['attach']) && ($objectperms->wiki_admin_attachments == 'y' || $objectperms->wiki_attach_files == 'y')) {
 	check_ticket('index');
 	// Process an attachment here
 	if(isset($_FILES['userfile1'])&&is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
@@ -382,7 +382,7 @@ if($prefs['feature_wiki_attachments'] == 'y') {
 if ($prefs['feature_user_watches'] == 'y') {
 	if($user && isset($_REQUEST['watch_event']) && !isset($_REQUEST['watch_group'])) {
 		check_ticket('index');
-		if (($_REQUEST['watch_action'] == 'add_desc' || $_REQUEST['watch_action'] == 'remove_desc') && $tiki_p_watch_structure != 'y') {
+		if (($_REQUEST['watch_action'] == 'add_desc' || $_REQUEST['watch_action'] == 'remove_desc') && $objectperms->watch_structure != 'y') {
 			$access->display_error( $page, tra('Permission denied'), '403');
 		}
 		if($_REQUEST['watch_action']=='add') {

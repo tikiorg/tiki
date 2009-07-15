@@ -371,9 +371,9 @@ $perms->setResolverFactories( array(
 ) );
 Perms::set( $perms );
 
-$global = Perms::get();
+$globalperms = Perms::get();
 
-if ($user && (($user == 'admin' && $_SESSION["groups_are_emulated"] != "y") || $global->admin ) ) {
+if ($user && (($user == 'admin' && $_SESSION["groups_are_emulated"] != "y") || $globalperms->admin ) ) {
 	// Admins have all rights and thus, bypass permission checks
 	require_once 'lib/core/lib/Perms/ResolverFactory/StaticFactory.php';
 	require_once 'lib/core/lib/Perms/Resolver/Default.php';
@@ -381,10 +381,10 @@ if ($user && (($user == 'admin' && $_SESSION["groups_are_emulated"] != "y") || $
 		new Perms_ResolverFactory_StaticFactory( 'admin', new Perms_Resolver_Default( true ) ),
 	) );
 
-	$global = Perms::get();
+	$globalperms = Perms::get();
 }
 
-$global->globalize( $permissionList );
+$globalperms->globalize( $permissionList );
 foreach( $permissionList as $permName ) {
 	$smarty->assign( $permName, $$permName );
 }
