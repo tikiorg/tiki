@@ -4094,11 +4094,7 @@ class TikiLib extends TikiDb {
 		global $userlib;
 		$groups = $userlib->get_groups();
 		$accessor = Perms::get( array( 'type' => $objtype, 'object' => $object ) );
-		$resolver = $accessor->getResolver();
-
-		if( strpos( $perm, 'tiki_p_' ) ) {
-			$perm = substr( $perm, strlen( 'tiki_p_' ) );
-		}
+		$accessor->setGroups( $groups );
 
 		return $resolver->check( $perm, $groups );
 	}
