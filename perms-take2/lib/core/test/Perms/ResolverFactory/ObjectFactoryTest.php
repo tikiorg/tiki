@@ -88,6 +88,41 @@ class Perms_ResolverFactory_ObjectFactoryTest extends PHPUnit_Framework_TestCase
 		$this->assertNull( $factory->getResolver( array( 'type' => 'wiki page' ) ) );
 		$this->assertNull( $factory->getResolver( array( 'object' => 'HomePage' ) ) );
 	}
+
+	function testBulkLoading() {
+		$data = array(
+			array( 'Anonymous', 'tiki_p_view', 'wiki page', md5('wiki pagehomepage') ),
+			array( 'Anonymous', 'tiki_p_edit', 'wiki page', md5('wiki pagehomepage') ),
+			array( 'Anonymous', 'tiki_p_admin', 'blog', md5('wiki pagehomepage') ),
+			array( 'Anonymous', 'tiki_p_admin', 'wiki page', md5('wiki pageuserlist') ),
+			array( 'Admins', 'tiki_p_admin', 'wiki page', md5('wiki pagehomepage') ),
+			array( 'Anonymous', 'tiki_p_admin', 'wiki page', md5('wiki pageuserpagefoobar') ),
+		);
+
+		$db = TikiDb::get();
+		foreach( $data as $row ) {
+			$db->query( 'INSERT INTO users_objectpermissions (groupName, permName, objectType, objectId) VALUES(?,?,?,?)', array_values( $row ) );
+		}
+
+		$factory = new Perms_ResolverFactory_ObjectFactory;
+		$out = $factory->bulk( array( 'type' => 'wiki page' ), 'object', array('HomePage', 'UserPageFoobar', 'HelloWorld') );
+		
+		$this->assertEquals( array( 'HelloWorld' ), $out );
+	}
+
+	function testBulkLoadingWithoutObject() {
+		$factory = new Perms_ResolverFactory_ObjectFactory;
+		$out = $factory->bulk( array( 'type' => 'wiki page' ), 'objectId', array('HomePage', 'UserPageFoobar', 'HelloWorld') );
+		
+		$this->assertEquals( array('HomePage', 'UserPageFoobar', 'HelloWorld'), $out );
+	}
+
+	function testBulkLoadingWithoutType() {
+		$factory = new Perms_ResolverFactory_ObjectFactory;
+		$out = $factory->bulk( array(), 'object', array('HomePage', 'UserPageFoobar', 'HelloWorld') );
+		
+		$this->assertEquals( array('HomePage', 'UserPageFoobar', 'HelloWorld'), $out );
+	}
 }
 
 ?>

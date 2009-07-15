@@ -4,6 +4,8 @@ require_once 'lib/core/lib/Perms/ResolverFactory.php';
 
 class Perms_ResolverFactory_ObjectFactory implements Perms_ResolverFactory
 {
+	private $known = array();
+
 	function getHash( array $context ) {
 		if( isset( $context['type'], $context['object'] ) ) {
 			return 'object:' . $context['type'] . ':' . strtolower( $context['object'] );
@@ -13,7 +15,50 @@ class Perms_ResolverFactory_ObjectFactory implements Perms_ResolverFactory
 	}
 
 	function bulk( array $baseContext, $bulkKey, array $values ) {
-		return array();
+		if( $bulkKey != 'object' || ! isset( $baseContext['type'] ) ) {
+			return $values;
+		}
+		
+		$objects = array();
+		$hashes = array();
+
+		foreach( $values as $v ) {
+			$hash = $this->getHash( array_merge( $baseContext, array( 'object' => $v ) ) );
+			if( ! isset( $this->known[$hash] ) ) {
+				$this->known[$hash] = array();
+				$key = md5( $baseContext['type'] . strtolower( $v ) );
+				$objects[$key] = $v;
+				$hashes[$key] = $hash;
+			}
+		}
+
+		if( count( $objects ) == 0 ) {
+			return array();
+		}
+
+		$db = TikiDb::get();
+
+		$escapedObjects = array_map( array( $db, 'qstr' ), array_keys( $objects ) );
+		$escapedObjects = implode( ', ', $escapedObjects );
+
+		$result = $db->query( 'SELECT objectId, groupName, permName FROM users_objectpermissions WHERE objectType = ? AND objectId IN(' . $escapedObjects . ')', array( $baseContext['type'] ) );
+		$found = array();
+
+		while( $row = $result->fetchRow() ) {
+			$object = $row['objectId'];
+			$group = $row['groupName'];
+			$perm = $this->sanitize( $row['permName'] );
+			$hash = $hashes[$object];
+			$found[] = $objects[$object];
+
+			if( ! isset( $this->known[$hash][$group] ) ) {
+				$this->known[$hash][$group] = array();
+			}
+
+			$this->known[$hash][$group][] = $perm;
+		}
+
+		return array_values( array_diff( $values, $found ) );
 	}
 
 	function getResolver( array $context ) {
@@ -21,23 +66,11 @@ class Perms_ResolverFactory_ObjectFactory implements Perms_ResolverFactory
 			return null;
 		}
 
-		$objectId = md5( $context['type'] . strtolower( $context['object'] ) );
+		$hash = $this->getHash( $context );
 
-		$perms = array();
-		$db = TikiDb::get();
+		$this->bulk( $context, 'object', array( $context['object'] ) );
 
-		$result = $db->query( 'SELECT groupName, permName FROM users_objectpermissions WHERE objectType = ? AND objectId = ?', array( $context['type'], $objectId ) );
-
-		while( $row = $result->fetchRow() ) {
-			$group = $row['groupName'];
-			$perm = $this->sanitize( $row['permName'] );
-
-			if( ! isset( $perms[$group] ) ) {
-				$perms[$group] = array();
-			}
-
-			$perms[$group][] = $perm;
-		}
+		$perms = $this->known[$hash];
 
 		if( count( $perms ) == 0 ) {
 			return null;
