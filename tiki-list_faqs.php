@@ -96,7 +96,7 @@ if (isset($_REQUEST["save"])) {
 }
 
 if (!isset($_REQUEST["sort_mode"])) {
-	$sort_mode = 'created_desc';
+	$sort_mode = 'title_asc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
