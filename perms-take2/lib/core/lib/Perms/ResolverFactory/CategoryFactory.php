@@ -1,0 +1,170 @@
+<?php
+
+require_once 'lib/core/lib/Perms/ResolverFactory.php';
+
+class Perms_ResolverFactory_CategoryFactory implements Perms_ResolverFactory
+{
+	private $knownObjects = array();
+	private $knownCategories = array();
+
+	function getHash( array $context ) {
+		if( ! isset( $context['type'], $context['object'] ) ) {
+			return '';
+		}
+
+		$this->bulk( $context, 'object', array( $context['object'] ) );
+
+		$key = $this->objectKey( $context );
+
+		if( count( $this->knownObjects[$key] ) > 0 ) {
+			return 'category:' . implode( ':', $this->knownObjects[$key] );
+		}
+	}
+
+	function bulk( array $baseContext, $bulkKey, array $values ) {
+		if( ! isset($baseContext['type']) || $bulkKey != 'object' ) {
+			return $values;
+		}
+
+		$newCategories = $this->bulkLoadCategories( $baseContext, $bulkKey, $values );
+		if( count( $newCategories ) != 0 ) {
+			$this->bulkLoadPermissions( $newCategories );
+		}
+
+		$remaining = array();
+
+		foreach( $values as $v ) {
+			$key = $this->objectKey( array_merge( $baseContext, array( 'object' => $v ) ) );
+			if( count( $this->knownObjects[$key] ) == 0 ) {
+				$remaining[] = $v;
+			} else {
+				$add = true;
+				foreach( $this->knownObjects[$key] as $categ ) {
+					if( count( $this->knownCategories[$categ] ) > 0 ) {
+						$add = false;
+						break;
+					}
+				}
+
+				if( $add ) {
+					$remaining[] = $v;
+				}
+			}
+		}
+
+		return $remaining;
+	}
+
+	private function bulkLoadCategories( $baseContext, $bulkKey, $values ) {
+		$objects = array();
+		$keys = array();
+
+		foreach( $values as $v ) {
+			$key = $this->objectKey( array_merge( $baseContext, array( 'object' => $v ) ) );
+
+			if( ! isset( $this->knownObjects[$key] ) ) {
+				$objects[$v] = $key;
+				$this->knownObjects[$key] = array();
+			}
+		}
+
+		$db = TikiDb::get();
+		$escapedItems = array_map( array( $db, 'qstr' ), array_keys( $objects ) );
+		$escapedItems = implode( ',', $escapedItems );
+		$result = $db->query( 'SELECT categId, itemId FROM tiki_category_objects INNER JOIN tiki_objects ON catObjectId = objectId WHERE type = ? AND itemId IN(' . $escapedItems . ') ORDER BY catObjectId, categId', array( $baseContext['type'] ) );
+
+		$categories = array();
+
+		while( $row = $result->fetchRow() ) {
+			$category = (int) $row['categId'];
+			$object = $row['itemId'];
+			$key = $objects[$object];
+			
+			$this->knownObjects[$key][] = $category;
+
+			if( ! isset( $this->knownCategories[$category] ) ) {
+				$categories[$category] = true;
+			}
+		}
+
+		return array_keys( $categories );
+	}
+
+	private function bulkLoadPermissions( $categories ) {
+		$objects = array();
+
+		foreach( $categories as $categ ) {
+			$objects[md5( 'category' . $categ )] = $categ;
+			$this->knownCategories[$categ] = array();
+		}
+
+		$db = TikiDb::get();
+
+		$escapedObjects = array_map( array( $db, 'qstr' ), array_keys( $objects ) );
+		$escapedObjects = implode( ', ', $escapedObjects );
+
+		$result = $db->query( 'SELECT objectId, groupName, permName FROM users_objectpermissions WHERE objectType = \'category\' AND objectId IN(' . $escapedObjects . ')' );
+
+		while( $row = $result->fetchRow() ) {
+			$object = $row['objectId'];
+			$group = $row['groupName'];
+			$categ = $objects[$object];
+
+			$perm = $this->sanitize( $row['permName'] );
+
+			if( ! isset( $this->knownCategories[$categ][$group] ) ) {
+				$this->knownCategories[$categ][$group] = array();
+			}
+
+			$this->knownCategories[$categ][$group][] = $perm;
+		}
+	}
+
+	function getResolver( array $context ) {
+		if( ! isset( $context['type'], $context['object'] ) ) {
+			return null;
+		}
+
+		$this->bulk( $context, 'object', array( $context['object'] ) );
+
+		$key = $this->objectKey( $context );
+
+		$categories = $this->knownObjects[$key];
+
+		$perms = array();
+
+		foreach( $categories as $categ ) {
+			foreach( $this->knownCategories[$categ] as $group => $partialPerms ) {
+				if( ! isset( $perms[$group] ) ) {
+					$perms[$group] = array();
+				}
+
+				$perms[$group] = array_merge( $perms[$group], array_combine( $partialPerms, $partialPerms ) );
+			}
+		}
+
+		foreach( $perms as & $p ) {
+			$p = array_values( $p );
+		}
+
+		if( count( $perms ) === 0 ) {
+			return null;
+		} else {
+			return new Perms_Resolver_Static( $perms );
+		}
+	}
+
+	private function sanitize( $name ) {
+		if( strpos( $name, 'tiki_p_' ) === 0 ) {
+			return substr( $name, strlen( 'tiki_p_' ) );
+		} else {
+			return $name;
+		}
+	}
+
+	private function objectKey( $context ) {
+		return $context['type'] . strtolower( $context['object'] );
+	}
+}
+
+?>
