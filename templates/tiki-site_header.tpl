@@ -77,12 +77,12 @@
 	{include file="tiki-site_header_login.tpl"}
 {/if}
 {/if}
-<!--[if IE]><br style="clear:both; height: 0" /> <![endif]-->
+<!--[if IE]><br style="clear:both; height: 0" /><![endif]-->
 </div>{*  end div#header-top *}
 {* navbar and search *}
 <div class="clearfix" id="tiki-top">
 	{include file="tiki-top_bar.tpl"}
-<!--[if IE 7]><br style="clear:both; height: 0" /> <![endif]-->
+<!--[if IE 7]><br style="clear:both; height: 0" /><![endif]-->
 </div>
 {* topbar custom code *}
 {if $prefs.feature_topbar_custom_code}
