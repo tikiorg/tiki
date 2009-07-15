@@ -46,6 +46,24 @@ class Perms
 		self::$instance->loadBulk( $baseContext, $bulkKey, $remaining );
 	}
 
+	public static function filter( array $baseContext, $bulkKey, array $data, $dataKey, $permission ) {
+		self::bulk( $baseContext, $bulkKey, $data, $dataKey );
+
+		$valid = array();
+
+		foreach( $data as $entry ) {
+			$context = $baseContext;
+			$context[$bulkKey] = $entry[$dataKey];
+
+			$accessor = self::get( $context );
+			if( $accessor->$permission ) {
+				$valid[] = $entry;
+			}
+		}
+
+		return $valid;
+	}
+
 	function setGroups( array $groups ) {
 		$this->groups = $groups;
 	}

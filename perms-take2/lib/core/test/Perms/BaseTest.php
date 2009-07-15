@@ -158,5 +158,37 @@ class Perms_BaseTest extends TikiTestCase
 	function customHash( $context ) {
 		return serialize($context);
 	}
+
+	function testFiltering() {
+		$perms = new Perms;
+		$perms->setResolverFactories( array(
+			new Perms_ResolverFactory_TestFactory( array('object'), array(
+				'A' => new Perms_Resolver_Default( true ),
+				'B' => new Perms_Resolver_Default( true ),
+				'C' => new Perms_Resolver_Default( false ),
+				'D' => new Perms_Resolver_Default( false ),
+				'E' => new Perms_Resolver_Default( true ),
+			) ),
+		) );
+		Perms::set($perms);
+
+		$data = array(
+			array( 'pageId' => 1, 'pageName' => 'A', 'content' => 'Hello World' ),
+			array( 'pageId' => 2, 'pageName' => 'B', 'content' => 'Hello World' ),
+			array( 'pageId' => 3, 'pageName' => 'C', 'content' => 'Hello World' ),
+			array( 'pageId' => 4, 'pageName' => 'D', 'content' => 'Hello World' ),
+			array( 'pageId' => 5, 'pageName' => 'E', 'content' => 'Hello World' ),
+		);
+
+		$out = Perms::filter( array( 'type' => 'wiki page' ), 'object', $data, 'pageName', 'view' );
+
+		$expect = array(
+			array( 'pageId' => 1, 'pageName' => 'A', 'content' => 'Hello World' ),
+			array( 'pageId' => 2, 'pageName' => 'B', 'content' => 'Hello World' ),
+			array( 'pageId' => 5, 'pageName' => 'E', 'content' => 'Hello World' ),
+		);
+
+		$this->assertEquals( $expect, $out );
+	}
 }
 

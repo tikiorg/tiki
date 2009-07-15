@@ -107,13 +107,8 @@ if( $prefs['feature_wiki_structure'] == 'y' ) {
 		}
 		//Get the structures this page is a member of
 		$structs = $structlib->get_page_structures($_REQUEST["page"],$struct);
-		Perms::bulk( array( 'type' => 'wiki page' ), 'object', $structs, 'permName' );
-		foreach ($structs as $t_structs) {
-			$context = array( 'type' => 'wiki page', 'object' => $t_structs['pageName'] );
-			if( Perms::get( $context )->view ) {
-				$structs_with_perm[] = $t_structs;
-			}
-		}
+		$structs_with_perms = Perms::filter( array( 'type' => 'wiki page' ), 'object', $structs, 'permName', 'view' );
+
 		//If page is only member of one structure, display if requested
 		$single_struct = count($structs_with_perm) == 1; 
 		if ((!empty($struct) || $prefs['feature_wiki_open_as_structure'] == 'y') && $single_struct) {
