@@ -10,6 +10,55 @@
  require_once 'Multilingual/Aligner/SentenceSegmentor.php'; 
  
 class Multilingual_MachineTranslation_GoogleTranslateWrapper {
+
+//this array should be updated as Google Translate
+//adds more languages
+
+	public $langsSupportedByGoogleTranslate = 
+			array (
+				'sq' => 'Albanian',
+				'ar' => 'Arabic',
+				'bg' => 'Bulgarian',
+				'ca' => 'Catalan',
+				'zh' => 'Chinese',
+				'hr' => 'Croatian',
+				'cs' => 'Czech',
+				'da' => 'Danish',
+				'nl' => 'Dutch',
+				'en' => 'English',
+				'et' => 'Estonian',
+				'fil' => 'Filipino',
+				'fi' => 'Finnish',
+				'fr' => 'French',
+				'gl' => 'Galician',
+				'de' => 'German',
+				'el' => 'Greek',
+				'he' => 'Hebrew',
+				'hi' => 'Hindi',
+				'hu' => 'Hungarian',
+				'id' => 'Indonesian',
+				'it' => 'Italian',
+				'ja' => 'Japanese',
+				'ko' => 'Korean',
+				'lv' => 'Latvian',
+				'lt' => 'Lithuanian',
+				'mt' => 'Maltese',
+				'no' => 'Norwegian',
+				'fa' => 'Persian',
+				'pl' => 'Polish',
+				'pt' => 'Portuguese',
+				'ro' => 'Romanian',
+				'ru' => 'Russian',
+				'sr' => 'Serbian',
+				'sk' => 'Slovak',
+				'sl' => 'Slovenian',
+				'es' => 'Spanish',
+				'sv' => 'Swedish',
+				'th' => 'Thai',
+				'tr' => 'Turkish',
+				'uk' => 'Ukrainian',
+				'vi' => 'Vietnamese');
+
    	var $source_lang;
    	var $target_lang; 
    	var $google_ajax_url = "http://ajax.googleapis.com/ajax/services/language/translate?v=1.0";
@@ -27,6 +76,32 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper {
    	function __construct ($source_lang, $target_lang) {
    		$this->source_lang = $source_lang;
    		$this->target_lang = $target_lang;
+   	}
+   	
+   	
+   	function getLangsCandidatesForMachineTranslation($trads) {
+   		global $langmapping;
+		$usedLangs = array();
+		foreach( $trads as $trad )
+			$usedLangs[] = $trad['lang'];
+				
+		$langsCandidatesForMachineTranslation = array();
+		$langsCandidatesForMachineTranslationRaw = $langmapping;
+		foreach ( $usedLangs as $usedLang) 
+			unset($langsCandidatesForMachineTranslationRaw[$usedLang]);
+		
+		//TODO: USE ONLY LANGS RESTRICTED BY SITE IF AVAIL. 
+		$langsSupportedByGoogleTranslate = $this->langsSupportedByGoogleTranslate;
+		
+		$i = 0;
+		foreach (array_keys($langsCandidatesForMachineTranslationRaw) as $langCandidate) {
+			if (in_array($langCandidate,array_keys($langsSupportedByGoogleTranslate))) {
+				$langsCandidatesForMachineTranslation[$i]['lang'] = $langCandidate;
+				$langsCandidatesForMachineTranslation[$i]['langName'] = $langsCandidatesForMachineTranslationRaw[$langCandidate][0];
+				$i++;
+			}
+		}
+		return $langsCandidatesForMachineTranslation;
    	}
    	
    	
