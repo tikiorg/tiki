@@ -45,7 +45,7 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
             throw new UnexpectedValueException(tra('Invalid file mime type'));
         }
 
-        $this->saveAndDisplayLog('Loading and validating the XML file<br />');
+        $this->saveAndDisplayLog("Loading and validating the XML file\n");
 
         $this->dom = new DOMDocument;
         $this->dom->load($filePath);
@@ -78,7 +78,7 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
         $parsedData = array();
         $pages = $this->dom->getElementsByTagName('page');
 
-        $this->saveAndDisplayLog('<br />Starting to parse ' . $pages->length . ' pages:<br />');
+        $this->saveAndDisplayLog("\nStarting to parse " . $pages->length . " pages:\n");
         flush();
 
         foreach ($pages as $page) {
@@ -121,7 +121,7 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
             }
         }
         
-        $this->saveAndDisplayLog('Page "' . $data['name'] . '" succesfully parsed with ' . count($data['revisions']) . ' revisions<br />');
+        $this->saveAndDisplayLog('Page "' . $data['name'] . '" succesfully parsed with ' . count($data['revisions']) . " revisions\n");
 
         return $data;
     }

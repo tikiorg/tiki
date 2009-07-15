@@ -3,7 +3,7 @@
 require_once(dirname(__FILE__) . '/../../core/test/TikiTestCase.php');
 require_once(dirname(__FILE__) . '/../tikiimporter_wiki_mediawiki.php');
 
-class TikiImporter_Wiki_Mediawiki_Test extends TikiTestCase 
+class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase 
 {
 
     protected function setUp()
@@ -14,11 +14,15 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiTestCase
     public function testImport()
     {
         $parsedData = 'Some text';
+
         $obj = $this->getMock('TikiImporter_Wiki_Mediawiki', array('validateInput', 'parseData', 'insertData'));
         $obj->expects($this->once())->method('validateInput');
         $obj->expects($this->once())->method('parseData')->will($this->returnValue($parsedData));
         $obj->expects($this->once())->method('insertData')->with($parsedData);
+
+        $this->expectOutputString("Loading and validating the XML file\n\nImportation completed!\n\n<b><a href=\"tiki-importer.php\">Click here</a> to finish the import process</b>");
         $obj->import(dirname(__FILE__) . '/fixtures/mediawiki_sample.xml');
+
         $this->assertTrue($obj->dom instanceof DOMDocument);
         $this->assertTrue($obj->dom->hasChildNodes());
     }
@@ -27,16 +31,16 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiTestCase
     {
         global $tikilib;
         $tikilib = $this->getMock('TikiLib', array('create_page', 'update_page', 'page_exists', 'remove_all_versions'));
+        $obj = $this->getMock('TikiImporter_Wiki_Mediawiki', array('saveAndDisplayLog'));
+        $obj->expects($this->exactly(12))->method('saveAndDisplayLog');
 
         $expectedImportFeedback = array('totalPages' => 4, 'importedPages' => 4);
-        $expectedLog = 'Loading and validating the XML file<br /><br />Starting to parse 4 pages:<br />Page "Redes de ensino" succesfully parsed with 8 revisions<br />Page "Núcleo Pedagógico Integrado" succesfully parsed with 15 revisions<br />Page "Categoria:Escolas fictícias" succesfully parsed with 5 revisions<br />Page "Academia Colarossi" succesfully parsed with 2 revisions<br /><br />4 pages parsed. Starting to insert those pages into Tiki:<br />Page Redes de ensino sucessfully imported<br />Page Núcleo Pedagógico Integrado sucessfully imported<br />Page Categoria:Escolas fictícias sucessfully imported<br />Page Academia Colarossi sucessfully imported<br /><br />Importation completed! Please await while the page reloads.';
         
-        $this->obj->import(dirname(__FILE__) . '/fixtures/mediawiki_sample.xml');
+        $obj->import(dirname(__FILE__) . '/fixtures/mediawiki_sample.xml');
 
-        $this->assertTrue($this->obj->dom instanceof DOMDocument);
-        $this->assertTrue($this->obj->dom->hasChildNodes());
+        $this->assertTrue($obj->dom instanceof DOMDocument);
+        $this->assertTrue($obj->dom->hasChildNodes());
         $this->assertEquals($expectedImportFeedback, $_SESSION['tiki_importer_feedback']);
-        $this->assertEquals($expectedLog, $_SESSION['tiki_importer_log']);
     }
 
     public function testImportShouldRaiseExceptionForInvalidMimeType()

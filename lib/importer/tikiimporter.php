@@ -164,11 +164,11 @@ class TikiImporter
     function saveAndDisplayLog($msg)
     {
         $this->log .= $msg;
-        // HACK ALERT: only echo the log message if NOT running the script from command line (to keep the phpunit output clean)
-        if (isset($_SERVER['HTTP_HOST'])) {
-            echo $msg;
-            flush();
-        }
+        // convert \n to <br> if running script in web browser
+        if (isset($_SERVER['HTTP_HOST']))
+            $msg = nl2br($msg);
+        echo $msg;
+        flush();
     }
 }
 
