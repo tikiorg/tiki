@@ -83,10 +83,8 @@ form {
 hr {
 	width: 100%;
 	height: 1px;
-	background: red;
 	border-width: 0;
 	padding: 0;
-	color: red;
 }
 	
 img {
@@ -768,13 +766,9 @@ div.minichatchan {
 
 .cbox {
 	overflow: hidden;
-	border: 1px solid yellow;
-	background: white;
-	color: black;
 }
 
 .cbox-title {
-	border-bottom: 1px solid yellow;
 	padding: 3px 3px 0 3px;
 }
 
@@ -791,7 +785,6 @@ div.minichatchan {
 .rbox-data {
 	overflow: hidden;
 	padding: 1px 3px;
-	border: 1px solid yellow;
 }
 
 .rbox-title {
@@ -801,9 +794,6 @@ div.minichatchan {
 	position: relative;
 	bottom: -1px;
 	padding: 3px;
-	background: yellow;
-	border: 1px solid yellow;
-	border-bottom: 0;
 }
 	
 .rbox img {
@@ -818,9 +808,6 @@ div.minichatchan {
 }
 
 div.simplebox {
-	color: green;
-	background: silver;
-	border: 1px solid green;
 	padding: 3px;
 }
 
@@ -2280,33 +2267,33 @@ div#ajaxLoading {
 .webmail_list .even {}
 
 .webmail_list .odd {
-	background-color: #eee;
+	background: #eee;
 }
 
 .webmail_list .button {
-	background-color: #fff;
+	background: #fff;
 	border: #666 solid 1px;
 	display: inline-block;
 	padding: 0 2px;
 }
 
 .webmail_list .webmail_read {
-	background-color: #aaa;
+	background: #aaa;
 }
 
 .webmail_list .webmail_flagged {}
 
 .webmail_list .webmail_replied {
-	background-color: #888;
+	background: #888;
 }
 
 .webmail_list .webmail_taken {
-	border-color: #900;
+	border: #900;
 	color: #900;
 }
 
 .webmail_message {
-	background-color: #fff;
+	background: #fff;
 }
 
 .webmail_mono {
@@ -2315,7 +2302,7 @@ div#ajaxLoading {
 }
 
 table.webmail_message_headers {
-	background-color: #fff;
+	background: #fff;
 	width: 100%;
 	padding: 0 5em .5em 0;
 }
@@ -2325,7 +2312,7 @@ table.webmail_message_headers th {
 	font-style: italic;
 	text-align: right;
 	border: none;
-	background-color: transparent;
+	background: transparent;
 }
 
 /* End of File */
