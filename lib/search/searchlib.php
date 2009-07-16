@@ -488,7 +488,7 @@ class SearchLib extends TikiLib {
                 `tiki_searchindex` s, `tiki_trackers` t where `searchword` in
                 (".implode(',',array_fill(0,count($words),'?')).") and
                 s.`location`='tracker' and
-                ".$this->sql_cast("s.`page`","int")."=t.`trackerId`";
+                ".$this->cast("s.`page`","int")."=t.`trackerId`";
             $result=$this->query($query,$words,$maxRecords,$offset);
             $cant1=0;
             $ret1=array();
@@ -566,7 +566,7 @@ class SearchLib extends TikiLib {
                 `tiki_searchindex` s, `tiki_galleries` g where `searchword` in
                 (".implode(',',array_fill(0,count($words),'?')).") and
                 s.`location`='imggal' and
-                ".$this->sql_cast("s.`page`","int")."=g.`galleryId` order by `hits` desc";
+                ".$this->cast("s.`page`","int")."=g.`galleryId` order by `hits` desc";
             $result=$this->query($query,$words,$maxRecords,$offset);
             $cant=0;
             $ret=array();
@@ -599,7 +599,7 @@ class SearchLib extends TikiLib {
                 `tiki_searchindex` s, `tiki_images` g, `tiki_galleries` gal where `searchword` in
                 (".implode(',',array_fill(0,count($words),'?')).") and
                 s.`location`='img' and 
-                ".$this->sql_cast("s.`page`","int")."=g.`imageId` order by `hits` desc";
+                ".$this->cast("s.`page`","int")."=g.`imageId` order by `hits` desc";
             $result=$this->query($query,$words,$maxRecords,$offset);
             $cant=0;
             $ret=array();
@@ -633,7 +633,7 @@ class SearchLib extends TikiLib {
                 `tiki_searchindex` s, `tiki_blogs` b where `searchword` in
                 (".implode(',',array_fill(0,count($words),'?')).") and
                 s.`location`='blog' and
-                ".$this->sql_cast("s.`page`","int")."=b.`blogId` order by `hits` desc";
+                ".$this->cast("s.`page`","int")."=b.`blogId` order by `hits` desc";
             $result=$this->query($query,$words,$maxRecords,$offset);
             $cant=0;
             $ret=array();
@@ -668,7 +668,7 @@ class SearchLib extends TikiLib {
                 `tiki_searchindex` s, `tiki_blogs` b ,`tiki_blog_posts` bp where `searchword` in
                 (".implode(',',array_fill(0,count($words),'?')).") and
                 s.`location`='blog_post' and
-                ".$this->sql_cast("s.`page`","int")."=bp.`postId` and
+                ".$this->cast("s.`page`","int")."=bp.`postId` and
 		bp.`blogId`=b.`blogId` order by `hits` desc";
             $result=$this->query($query,$words,$maxRecords,$offset);
             $cant=0;
@@ -702,7 +702,7 @@ class SearchLib extends TikiLib {
 		`tiki_searchindex` s, `tiki_articles` a where `searchword` in
 		(".implode(',',array_fill(0,count($words),'?')).") and
 		s.`location`='article' and
-		".$this->sql_cast("s.`page`","int")."=a.`articleId` order by `nbreads` desc";
+		".$this->cast("s.`page`","int")."=a.`articleId` order by `nbreads` desc";
 	    $result=$this->query($query,$words,$maxRecords,$offset);
 	    $cant=0;
 	    $ret=array();
@@ -772,7 +772,7 @@ class SearchLib extends TikiLib {
                 `tiki_searchindex` s, `tiki_directory_categories` d where `searchword` in
                 (".implode(',',array_fill(0,count($words),'?')).") and
                 s.`location`='dir_cat' and
-                ".$this->sql_cast("s.`page`","int")."=d.`categId` order by `hits` desc";
+                ".$this->cast("s.`page`","int")."=d.`categId` order by `hits` desc";
             $result=$this->query($query,$words,$maxRecords,$offset);
             $cant=0;
             $ret=array();
@@ -806,7 +806,7 @@ class SearchLib extends TikiLib {
                 `tiki_searchindex` s, `tiki_directory_sites` d ,`tiki_category_sites` cs where `searchword` in
                 (".implode(',',array_fill(0,count($words),'?')).") and
                 s.`location`='dir_site' and
-                ".$this->sql_cast("s.`page`","int")."=d.`siteId` and
+                ".$this->cast("s.`page`","int")."=d.`siteId` and
                 cs.`siteId`=d.`siteId`";
 			global $tiki_p_admin;
 			if ($tiki_p_admin != 'y') {
@@ -848,7 +848,7 @@ class SearchLib extends TikiLib {
                 `tiki_searchindex` s, `tiki_faqs` f where `searchword` in
                 (".implode(',',array_fill(0,count($words),'?')).") and
                 s.`location`='faq' and
-                ".$this->sql_cast("s.`page`","int")."=f.`faqId` order by `hits` desc";
+                ".$this->cast("s.`page`","int")."=f.`faqId` order by `hits` desc";
             $result=$this->query($query,$words,$maxRecords,$offset);
             $cant=0;
             $ret=array();
@@ -882,7 +882,7 @@ class SearchLib extends TikiLib {
                 `tiki_searchindex` s, `tiki_faqs` faq, `tiki_faq_questions` f where `searchword` in
                 (".implode(',',array_fill(0,count($words),'?')).") and
                 s.`location`='faq_question' and
-                ".$this->sql_cast("s.`page`","int")."=f.`questionId` and
+                ".$this->cast("s.`page`","int")."=f.`questionId` and
 		f.`faqId`=faq.`faqId` order by `hits` desc";
             $result=$this->query($query,$words,$maxRecords,$offset);
             $cant=0;
@@ -925,7 +925,7 @@ class SearchLib extends TikiLib {
                 `tiki_searchindex` s, `tiki_forums` f where `searchword` in
                 (".implode(',',array_fill(0,count($words),'?')).") and
                 s.`location`='forum' and
-                ".$this->sql_cast("s.`page`","int")."=f.`forumId` $mid order by `hits` desc";
+                ".$this->cast("s.`page`","int")."=f.`forumId` $mid order by `hits` desc";
             $result=$this->query($query,$bindvars,$maxRecords,$offset);
             $cant=0;
             $ret=array();
@@ -966,8 +966,8 @@ class SearchLib extends TikiLib {
 		`tiki_searchindex` s, `tiki_comments` f,`tiki_forums` fo where `searchword` in
 		(".implode(',',array_fill(0,count($words),'?')).") and
 		s.`location`='forumcomment' and
-		".$this->sql_cast("s.`page`","int")."=f.`threadId` and
-		fo.`forumId`=".$this->sql_cast("f.`object`","int")." $mid order by `count` desc";
+		".$this->cast("s.`page`","int")."=f.`threadId` and
+		fo.`forumId`=".$this->cast("f.`object`","int")." $mid order by `count` desc";
 	  $result=$this->query($query,$bindvars,$maxRecords,$offset);
 	  $cant=0;
 	  $ret=array();
@@ -999,7 +999,7 @@ class SearchLib extends TikiLib {
 		`tiki_searchindex` s, `tiki_files` f, `tiki_file_galleries` g  where `searchword` in
 		(".implode(',',array_fill(0,count($words),'?')).") and
 		s.`location`='file' and f.`galleryId`= g.`galleryId` and f.`archiveId`=0 and 
-		".$this->sql_cast("s.`page`","int")."=f.`fileId` order by `count` desc";
+		".$this->cast("s.`page`","int")."=f.`fileId` order by `count` desc";
 	  $result=$this->query($query,$words,$maxRecords,$offset);
 
 	  $cant = 0;
