@@ -302,8 +302,9 @@ abstract class Tiki_Profile_InstallHandler // {{{
 	final function install()
 	{
 		$id = $this->_install();
-		if( empty( $id ) )
+		if( empty( $id ) ) {
 			die( 'Handler failure: ' . get_class( $this ) . "\n" );
+		}
 
 		$this->obj->setValue( $id );
 	}
@@ -703,7 +704,14 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 		if( empty( $this->name ) || empty( $this->content ) )
 			return false;
 
+		$this->convertMode();
+
+		return true;
+	}
+
+	private function convertMode() {
 		global $tikilib;
+
 		$this->exists = $tikilib->page_exists($this->name);
 
 		switch( $this->mode ) {
@@ -717,16 +725,14 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 				throw new Exception( "Page {$this->name} does not exist and profile only allows update." );
 			break;
 		case 'create_or_update':
-			$this->mode = $this->exists ? 'update' : 'create';
-			break;
+			return $this->exists ? 'update' : 'create';
 		case 'create_or_append':
-			$this->mode = $this->exists ? 'append' : 'create';
-			break;
+			return $this->exists ? 'append' : 'create';
 		default:
 			throw new Exception( "Invalid mode '{$this->mode}' for wiki handler." );
 		}
 
-		return true;
+		return $this->mode;
 	}
 
 	function _install()
@@ -742,6 +748,8 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 		$this->replaceReferences( $this->lang );
 		$this->replaceReferences( $this->translations );
 		$this->replaceReferences( $this->message );
+
+		$this->mode = $this->convertMode();
 
 		if( strpos( $this->content, 'wikidirect:' ) === 0 ) {
 			$pageName = substr( $this->content, strlen('wikidirect:') );
