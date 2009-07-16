@@ -39,8 +39,12 @@
 </div>
 
 <div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" name="feature_filegals_manager" id="feature_filegals_manager" {if $prefs.feature_filegals_manager eq 'y'}checked="checked" {/if}/> </div>
+	<div class="adminoption"><input type="checkbox" name="feature_filegals_manager" id="feature_filegals_manager" {if $prefs.feature_filegals_manager eq 'y'}checked="checked" {/if}onclick="flip('usefilegals_manager');" /> </div>
 	<div class="adminoptionlabel"><label for="feature_filegals_manager">{tr}Use File Galleries to store pictures {/tr}.</label></div>
+	<div class="adminoptionboxchild" id="usefilegals_manager" style="display:{if $prefs.feature_filegals_manager eq 'y'}block{else}none{/if};">
+		<div class="adminoption"><input type="checkbox" id="feature_filegals_manager_optional" name="feature_filegals_manager_optional" {if $prefs.feature_filegals_manager_optional eq 'y'}checked="checked"{/if}/></div>
+		<div class="adminoptionlabel"><label for="feature_filegals_manager_optional">{tr}...but allow the previous "upload to img/wiki_up method"{/tr}.</label></div>
+	</div>
 </div>
 
 <div class="adminoptionbox">
