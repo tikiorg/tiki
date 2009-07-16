@@ -666,6 +666,7 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 	private $name;
 	private $lang;
 	private $translations;
+	private $message;
 
 	private $mode = 'create_or_update';
 	private $exists;
@@ -676,6 +677,9 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 			return;
 
 		$data = $this->obj->getData();
+
+		if( array_key_exists( 'message', $data ) )
+			$this->message = $data['message'];
 
 		if( array_key_exists( 'name', $data ) )
 			$this->name = $data['name'];
@@ -737,6 +741,7 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 		$this->replaceReferences( $this->content );
 		$this->replaceReferences( $this->lang );
 		$this->replaceReferences( $this->translations );
+		$this->replaceReferences( $this->message );
 
 		if( strpos( $this->content, 'wikidirect:' ) === 0 ) {
 			$pageName = substr( $this->content, strlen('wikidirect:') );
@@ -744,7 +749,10 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 		}
 
 		if( $this->mode == 'create' ) {
-			if( ! $tikilib->create_page( $this->name, 0, $this->content, time(), tra('Created by profile installer'), 'admin', '0.0.0.0', $this->description, $this->lang ) )
+			if( ! $this->message ) {
+				$this->message = tra('Created by profile installer');
+			}
+			if( ! $tikilib->create_page( $this->name, 0, $this->content, time(), $this->message, 'admin', '0.0.0.0', $this->description, $this->lang ) )
 				return null;
 		} else {
 			$info = $tikilib->get_page_info( $this->name, true, true );
@@ -759,7 +767,10 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 				$this->content = rtrim( $info['data'] ) . "\n" . trim($this->content) . "\n";
 			}
 
-			$tikilib->update_page( $this->name, $this->content, tra('Page updated by profile installer'), 'admin', '0.0.0.0', $this->description, false, $this->lang );
+			if( ! $this->message ) {
+				$this->message = tra('Page updated by profile installer');
+			}
+			$tikilib->update_page( $this->name, $this->content, $this->message, 'admin', '0.0.0.0', $this->description, false, $this->lang );
 		}
 
 		global $multilinguallib;
