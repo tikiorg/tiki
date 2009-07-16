@@ -745,7 +745,7 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 
 		if( strpos( $this->content, 'wikidirect:' ) === 0 ) {
 			$pageName = substr( $this->content, strlen('wikidirect:') );
-			$this->content = $this->obj->getPageContent( $pageName );
+			$this->content = $this->obj->getProfile()->getPageContent( $pageName );
 		}
 
 		if( $this->mode == 'create' ) {
