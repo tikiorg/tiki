@@ -1,5 +1,6 @@
 <?php
 // $Id: searchlib.php,v 1.38.2.4 2008-03-20 15:33:27 nyloth Exp $
+
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -304,18 +305,6 @@ class SearchLib extends TikiLib {
 				$fileresults['cant'] = 0;
 			}
 
-		  /* // check if feature is enabled before searching
-          $wikiresults=$this->find_part_wiki($words,$offset, $maxRecords);
-          $artresults=$this->find_part_articles($words,$offset, $maxRecords);
-          $forumresults=$this->find_part_forums($words,$offset, $maxRecords);
-          $blogresults=$this->find_part_blogs($words,$offset, $maxRecords);
-          $blogpostsresults=$this->find_part_blog_posts($words,$offset, $maxRecords);
-          $faqresults=$this->find_part_faqs($words,$offset, $maxRecords);
-          $dirresults=$this->find_part_directory($words,$offset, $maxRecords);
-          $imggalsresults=$this->find_part_imggals($words,$offset, $maxRecords);
-          $imgresults=$this->find_part_img($words,$offset, $maxRecords);
-          $trackerresults=$this->find_part_trackers($words,$offset, $maxRecords);
-          */
 
           //merge the results
           $res=array();
