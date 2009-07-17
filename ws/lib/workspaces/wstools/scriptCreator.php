@@ -33,6 +33,7 @@ $user = 'Ben';
 
 if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'init'))
 {
+/*
 	if (!$objectlib->get_object_id('wiki page','Wiki1'))
 	{
 		$objectlib->add_object('wiki page','Wiki1');
@@ -58,6 +59,7 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'init'))
 		$objectlib->add_object('wiki page','Wiki5');
 		$tikilib->create_page('Wiki5', 0, '', time(), '');
 	}
+	*/
 }
 
 if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'create') && ($wsContainerId))
@@ -89,12 +91,16 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'create') && ($wsConta
 	$wslib->set_permissions_for_group_in_ws($id3,'G2',array('tiki_p_ws_view','tiki_p_ws_addresource'));
 	
 	// Adding Resources in WS
-	$wslib->add_ws_object($id1,'Wiki1','wiki_page');
-	$wslib->add_ws_object($id2,'Wiki2','wiki_page');
-	$wslib->add_ws_object($id3,'Wiki2','wiki_page');
-	$wslib->add_ws_object($id3,'Wiki3','wiki_page');
-	$wslib->add_ws_object($id4,'Wiki4','wiki_page');
-	$wslib->add_ws_object($id5,'Wiki5','wiki_page');
+	$wslib->create_ws_object($id1,'Wiki1','wiki page');
+	$wslib->create_ws_object($id2,'Wiki2','wiki page');
+	$wslib->add_ws_object($id3,'Wiki2','wiki page');
+	$wslib->create_ws_object($id3,'Wiki3','wiki page');
+	$wslib->create_ws_object($id3,'FileGallery_WS3','file gallery');
+	$wslib->create_ws_object($id3,'ImgGallery_WS3','image gallery');
+	$wslib->create_ws_object($id3,'Blog_WS3','blog');
+	$wslib->create_ws_object($id4,'Wiki4','wiki page');
+	$wslib->create_ws_object($id5,'Wiki5','wiki page');
+	$wslib->create_ws_object($id5,'Wiki5','wiki page');
 	
 	// Adding ObjectPerms in Wiki2 (for G1) and Wiki3 (for G2)
 	$userlib->assign_object_permission('G1', 'Wiki2', 'wiki page', 'tiki_p_view');

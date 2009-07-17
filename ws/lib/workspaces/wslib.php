@@ -262,10 +262,182 @@ class wslib extends CategLib
      * @param $type The type of the object
      * @return -
      */
-    public function add_ws_object ($ws_id,$itemId,$type)
+    public function add_ws_object ($ws_id, $itemId, $type, $name = '', $description = '', $href = '')
     {
-	return parent::categorize_any($type, $itemId, $ws_id);
+	$id = parent::add_categorized_object($type, $itemId, $description, $name, $href);
+	parent::categorize($id,$ws_id);
+	return true;
     } 
+
+    /** Create a new object (it can be a wiki page, file gal, etc)
+     *
+     * @param $ws_id The id of the WS you want to add a object
+     * @param $itemId The id of the item (in wikis it's equal to its name)
+     * @param $type The type of the object
+     * @return -
+     */    
+    public function create_ws_object ($ws_id, $name, $type, $description='', $params = null)
+    {
+    	global $user;
+    	switch ($type)
+    	{
+    		case 'category':
+		{
+			parent::add_category($ws_id, $name, $description);
+			return true;			
+		}
+		case 'wiki page':
+		case 'wikipage':
+		case 'wiki_page':
+		{
+			global $tikilib;
+			$tikilib->create_page($name, 0, '', date("U"), $description, $user, $_SERVER["REMOTE_ADDR"], $description);
+			$itemId = $name;
+			$href = "tiki-index.php?page=".urlencode($name);
+			break;
+		}
+		case 'tracker':
+		{
+			global $trklib;
+			include_once ('lib/trackers/trackerlib.php');
+			$tracker_options["showCreated"] = 'y';
+			$tracker_options["showStatus"] = 'y';
+			$tracker_options["showStatusAdminOnly"] = 'y';
+			$tracker_options["simpleEmail"] = 'n';
+			$tracker_options["outboundEmail"] = '';
+			$tracker_options["newItemStatus"] = 'y';
+			$tracker_options["useRatings"] = 'y';
+			$tracker_options["showRatings"] = 'y';
+			$tracker_options["useComments"] = 'y';
+			$tracker_options["showComments"] = 'y';
+			$tracker_options["useAttachments"] = 'y';
+			$tracker_options["showAttachments"] = 'y';
+			$tracker_options["showLastModif"] = 'y';
+			$tracker_options["defaultOrderDir"] = 'asc';
+			$tracker_options["newItemStatus"] = '';
+			$tracker_options["modItemStatus"] = '';
+			$tracker_options["defaultOrderKey"] = '';
+			$tracker_options["writerCanModify"] = 'y';
+			$tracker_options["writerGroupCanModify"] = 'n';
+			$tracker_options["defaultStatus"] = 'o';
+			$itemId = $trklib->replace_tracker(null, $name, $description,$tracker_options); 
+			$href = "tiki-view_tracker.php?trackerId=".$itemId;
+			break;
+		}
+		case 'quiz':
+		{
+			global $quizlib;
+			include_once ('lib/quizzes/quizlib.php');
+			$itemId = $quizlib->replace_quiz(null, $name, $description, 'n', 'n', 'y', 'n', 'n', 'n', 10, 'y', 60 * 60, date("U"), date("U"), '');
+			$href = "./tiki-take_quiz.php?quizId=".$itemId;
+			break;
+		}
+		case 'article':
+		{
+			global $artlib;
+			include_once ('lib/articles/artlib.php');
+			$itemId = $artlib->replace_submission($name, $user, null, 'n', '', 0, '', '', $description, '', date("U"), date("U"), $user, 0, 0, 0, null, '', $description, '', '', '', '', 'n');
+			$href = "./tiki-read_article.php?articleId=".$itemId;
+			break;
+		}
+		case 'faq':
+		{
+			global $faqlib;
+			include_once ('lib/faqs/faqlib.php');
+			$itemId = $faqlib->replace_faq(null, $name, $description, 'y');
+			$href = "./tiki-view_faq.php?faqId=".$itemId;
+			break;
+		}
+		case 'blog':
+		{
+			global $bloglib;
+			include_once ('lib/blogs/bloglib.php');
+			$itemId = $bloglib->replace_blog($name, $description, $user, 'y', 10, '', '', 'y', 'y', 'y', 'y');
+			$href =  "tiki-view_blog.php?blogId=".$itemId;			
+			break;
+		}
+		
+		case 'directory':
+		{
+			//$itemId = 0; 
+			//$href = "".$itemId;
+			break;
+		}
+		case 'gallery':
+		case 'gal':
+		case 'image gallery':
+		{
+			global $imagegallib;
+			include_once ("lib/imagegals/imagegallib.php");
+			$itemId = $imagegallib->replace_gallery(null, $name, $description, '', $user, 5, 5, 80, 80, 'y', 'y', 'created', 'desc', 'first', -1, 'y', 'y', 'y', 'y', 'y', 'y', 'y', 'y', 'n', 'o', 'n');
+			$href = "./tiki-browse_gallery.php?galleryId=".$itemId;
+			$type = "image gallery";
+			break;
+		}
+		case 'file_gallery':
+		case 'file gallery':
+		case 'fgal':
+		{
+			global $filegallib;
+			include_once ('lib/filegals/filegallib.php');
+			$itemId = $filegallib->replace_file_gallery(null, $name, $description, "admin", 15, 'y', 'y', 'y', 'y', 'y', 'y', 'y', 'y', 'y', 2024);
+			$href = "./tiki-list_file_gallery.php?galleryId=".$id;
+			$type = "file gallery";			
+			break;
+		}
+		case 'forum':
+		{
+			global $commentslib;
+			include_once ("lib/commentslib.php");
+			$itemId = $commentslib->replace_forum(null,$name,$description, 'n', 120, $user, '', 'n', 'n', '2592000', 'n', '2592000', 20, 'commentDate_desc', 'commentDate_desc',
+			 '', 'y', 'y', 'y', 'y', 'y', 'y', 'y', '', 110, '', '', '', '', '', '', 'y', 'y', 'y', 'y', 'y', 'y', 'n', 'n', 'all_posted', '', '', 'n', 'att_no', 'db', '', '1000000', 'y');
+			$href = "./tiki-view_forum.php?forumId=".$itemId;
+			break;
+		}
+		case 'calendar':
+		{
+			global $calendarlib;
+			include_once ('lib/calendar/calendarlib.php');
+			$customflags["customlanguages"] = 'n';
+			$customflags["customlocations"] = 'y';
+			$customflags["customparticipants"] = 'y';
+			$customflags["customcategories"] = 'y';
+			$customflags["custompriorities"] = 'y';
+			$customflags["customsubscription"] = 'n';
+			$customflags["personal"] = "n";
+			$itemId = $calendarlib->set_calendar(null, $user, $name, $description, $customflags); 
+			$href = "tiki-calendar.php?calendarId=".$itemId."&calIds[]=".$itemId."&viewmode=month";
+			break;
+		}
+		case 'sheet':
+		{
+			global $sheetlib;
+			include_once ('lib/sheet/grid.php');
+			$itemId = $sheetlib->replace_sheet(null, $name, $description, $user );
+			$sheetlib->replace_layout($itemId, 'default', 0, 0 );
+			$href = "tiki-view_sheets.php?sheetId=".$itemId;	
+			break;
+		}
+		case 'survey':
+		{
+			global $srvlib;
+			include_once ('lib/surveys/surveylib.php');
+			$itemId = $srvlib->replace_survey(null, $name, $description, "o");
+			$href = "tiki-take_survey.php?surveyId=".$itemId;
+			break;
+		}
+		case 'structure':
+		{
+			global $structlib;
+			include_once ('lib/structures/structlib.php');
+			$itemId = $structlib->s_create_page(null, null, $name, $description);
+			$href = "./tiki-index.php?page_ref_id=".$itemId;
+			break;
+		}
+    	}
+    	
+	return $this->add_ws_object ($ws_id, $itemId, $type, $name, $description, $href);
+    }
 	
     /** Remove an object inside in a WS
      *
@@ -337,10 +509,10 @@ class wslib extends CategLib
      */
     public function get_ws_name($ws_id)
     {
-	$query = "select `categId` from `tiki_categories` where `categId`=?";
+	$query = "select `categName` from `tiki_categories` where `categId`=?";
 	$bindvars = array($ws_id);
 
-	return $this->query($query, $bindvars);
+	return $this->getOne($query, $bindvars);
     }
 	
     /** Give a set of permissions to a group for a specific WS (view, addresources, addgroups,...)
@@ -376,14 +548,14 @@ class wslib extends CategLib
      * @param $ws_id The id of the WS
      * @return A list of the groups that have access to the given WS
      */
-    public function list_groups_that_can_access_in_ws ($ws_id)
+    public function list_groups_that_can_access_in_ws ($ws_id, $maxRecords = -1, $offset = -1)
     {    	
 	$hashWS = md5($this->objectType . strtolower($ws_id));
 
 	$query = "select `groupName` from `users_objectpermissions` where 
 	    `objectId`=? and `permName`='tiki_p_ws_view'";
 	$bindvars = array($hashWS);
-	$result = $this->query($query,$bindvars);
+	$result = $this->query($query,$bindvars,$maxRecords,$offset);
 
 	while ($ret = $result->fetchRow())
 	    $listWSGroups[] = $ret;
@@ -396,11 +568,11 @@ class wslib extends CategLib
      * @param $groupName The name of the group
      * @return An associative array with the WS that the group have access
      */
-    public function list_ws_that_can_be_accessed_by_group ($groupName)
+    public function list_ws_that_can_be_accessed_by_group ($groupName, $maxRecords = -1, $offset = -1)
     {	
 	$query = "select `objectId` from `users_objectpermissions` where (`groupName`=? and `permName`='tiki_p_ws_view') ";
 	$bindvars = array($groupName);
-	$result = $this->query($query,$bindvars);
+	$result = $this->query($query,$bindvars,$maxRecords,$offset);
 
 	while ($res = $result->fetchRow())
 	    $groupWS[] = $res["objectId"];
@@ -417,10 +589,21 @@ class wslib extends CategLib
 
 	    if (in_array($hashWS,$groupWS))
 	    {
-		$workspaceID = $res["categId"];
-		$listGroupWS["$workspaceID"] = $res;
+	    	$wspath = $this->get_category_path($res["categId"]);
+		$tepath = array();	
+		foreach ($wspath as $ws) {
+			$tepath[] = $ws['name'];
+		}
+		$wspath = implode("::",$tepath);
+		$wspathforsort = implode("!!",$tepath);
+		$res["wspath"] = $wspath;
+		$res["deep"] = count($tepath);
+		
+		$listGroupWS["$wspathforsort"] = $res;
 	    }
 	}
+	
+	ksort($listGroupWS);
 
 	return $listGroupWS;
     }
@@ -439,23 +622,52 @@ class wslib extends CategLib
      * @param $user The name of the user
      * @return An associative array with the WS that the user has access
      */
-	public function list_ws_that_user_have_access ($user)
+	public function list_ws_that_user_have_access ($user, $maxRecords = -1, $offset = -1)
 	{
 		require_once('lib/userslib.php');
 		global $userlib;
 		
 		$ws = array();		
 		
-		$groups = $userlib->get_user_groups($user);		
-		foreach ($groups as $groupName)
+		$query = "select distinct t3.`objectId` from `users_objectpermissions` t3, `users_usergroups` t2, `users_users` t1
+				   where t1.`login` = ? 
+				   and (t1.`userId` = t2.`userId`) 
+				   and (t2.`groupName` = t3.`groupName`) 
+				   and t3.`permName` = 'tiki_p_ws_view'";
+		$result = $this->query($query,array($user), $maxRecords, $offset);
+		while ($res = $result->fetchRow())
+			$userWSHashes[] = $res["objectId"];
+		
+		$idws = $this->ws_container;
+		$query = "select * from `tiki_categories` where `rootCategId`= $idws";
+		$bindvars = array();
+		$listWS = $this->query($query,$bindvars);
+		
+		while ($res = $listWS->fetchRow()) 
 		{
-			$groupWS =  $this->list_ws_that_can_be_accessed_by_group ($groupName);
-			foreach ($groupWS as $wsres)
-				if (!in_array($wsres,$ws))
-					$ws[$wsres["categId"]] = $wsres;
+		    $ws_id = $res["categId"];
+		    $hashWS = md5($this->objectType . strtolower($ws_id));
+	
+		    if (in_array($hashWS,$userWSHashes))
+		    {
+		    	$wspath = $this->get_category_path($res["categId"]);
+			$tepath = array();	
+			foreach ($wspath as $ws)
+			{
+				$tepath[] = $ws['name'];
+			}
+			$wspath = implode("::",$tepath);
+			$wspathforsort = implode("!!",$tepath);
+			$res["wspath"] = $wspath;
+			$res["deep"] = count($tepath);
+			
+			$listUserWS["$wspathforsort"] = $res;
+		    }
 		}
 
-		return $ws;
+		ksort($listUserWS);
+
+		return $listUserWS;
 	}
 	
     /** List the objects stored in a workspace
@@ -463,11 +675,11 @@ class wslib extends CategLib
      * @param $ws_id The id of the WS
      * @return An associative array of objects related to a single WS
      */
-    public function list_ws_objects ($ws_id)
+    public function list_ws_objects ($ws_id, $maxRecords = -1, $offset = -1)
     {
 	$query = "select `catObjectId` from `tiki_category_objects` where `categId`= ?";
 	$bindvars = array($ws_id);
-	$result = $this->query($query,$bindvars);
+	$result = $this->query($query,$bindvars, $maxRecords, $offset);
 	while ($res = $result->fetchRow())
 	    $listObjects[] = $res["catObjectId"];
 		
@@ -490,14 +702,14 @@ class wslib extends CategLib
      * @param $groupName The name of the group
      * @return An array with the objects perms related to a object for a group
      */
-    public function get_object_perms_for_group ($objId,$objectType,$groupName)
+    public function get_object_perms_for_group ($objId, $objectType, $groupName)
     {
 	$objectId = md5($objectType . strtolower($objId));
 	$query = "select `permName` from `users_objectpermissions` where `groupName`=? and `objectId`=? and `objectType`=?";
-	$bindvars = array($groupName,$objectId,$objectType);
+	$bindvars = array($groupName, $objectId, $objectType);
 	$result = $this->query($query,$bindvars);
 	while ($res = $result->fetchRow())
-	    $objectPermsGroup[] = $res["permName"];
+		$objectPermsGroup[] = $res["permName"];
 
 	return $objectPermsGroup;
     }
@@ -508,7 +720,7 @@ class wslib extends CategLib
      * @param $user The username
      * @return Associative array with the objects that a user have access from a WS
      */
-    public function list_ws_objects_for_user ($ws_id,$user)
+    public function list_ws_objects_for_user ($ws_id, $user)
     {
 	require_once('lib/userslib.php');
 	global $userlib; global $objectlib;
@@ -521,19 +733,19 @@ class wslib extends CategLib
 	    $objId = $object["itemId"];
 	    $viewPerm = parent::get_needed_perm($objectType, "view");
 			
-	    $groups = $userlib->get_user_groups($user);
+	   $groups = $userlib->get_user_groups($user);
 			
 	    $notFoundViewPerm = true;		
 	    foreach ($groups as $groupName)
 	    {
 		if ($notFoundViewPerm)
 		{
-		    $objectPermsGroup = $this->get_object_perms_for_group ($objId,$objectType,$groupName);
-		    if (in_array($viewPerm,$objectPermsGroup))
-		    {
-			$listWSObjectsUser[] = $object;
-			$notFoundViewPerm = false;
-		    }
+			$objectPermsGroup = $this->get_object_perms_for_group ($objId, $objectType, $groupName);
+			if (in_array($viewPerm,$objectPermsGroup))
+			{
+				$listWSObjectsUser[] = $object;
+				$notFoundViewPerm = false;
+			}
 		}
 	    }
 	} 
