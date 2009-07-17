@@ -356,13 +356,6 @@ class wslib extends CategLib
 			$href =  "tiki-view_blog.php?blogId=".$itemId;			
 			break;
 		}
-		
-		case 'directory':
-		{
-			//$itemId = 0; 
-			//$href = "".$itemId;
-			break;
-		}
 		case 'gallery':
 		case 'gal':
 		case 'image gallery':
@@ -380,8 +373,15 @@ class wslib extends CategLib
 		{
 			global $filegallib;
 			include_once ('lib/filegals/filegallib.php');
-			$itemId = $filegallib->replace_file_gallery(null, $name, $description, "admin", 15, 'y', 'y', 'y', 'y', 'y', 'y', 'y', 'y', 'y', 2024);
-			$href = "./tiki-list_file_gallery.php?galleryId=".$id;
+			$fgal_info = array();
+			$fgal_info['galleryId'] = null;
+			$fgal_info['name'] = $name;
+			$fgal_info['desc'] = $description;
+			$fgal_info['user'] = 'admin';
+			$fgal_info['maxRows'] = 15;
+			$fgal_info['public'] = "y";
+			$itemId = $filegallib->replace_file_gallery($fgal_info);
+			$href = "./tiki-list_file_gallery.php?galleryId=".$itemId;
 			$type = "file gallery";			
 			break;
 		}
@@ -426,17 +426,23 @@ class wslib extends CategLib
 			$href = "tiki-take_survey.php?surveyId=".$itemId;
 			break;
 		}
-		case 'structure':
-		{
-			global $structlib;
-			include_once ('lib/structures/structlib.php');
-			$itemId = $structlib->s_create_page(null, null, $name, $description);
-			$href = "./tiki-index.php?page_ref_id=".$itemId;
-			break;
-		}
     	}
     	
 	return $this->add_ws_object ($ws_id, $itemId, $type, $name, $description, $href);
+    }
+    
+    /** Check if an object belong to a WS or not
+     *
+     * @param $objectId The id of the object
+     * @return true if the object belong at least to a WS
+     */
+    public function is_object_in_ws($objectId)
+    {
+	$query = "select t0.count(*) from `tiki_categories` t0, `tiki_category_objects` t1 
+			   where t1.`objectId` = ? and t1.`categId`= t0.`categId` 
+			   and t0.`rootCategId`=?";
+	$bindvars = array($objectId, $this->ws_container);
+	return (($this->getOne($query,$bindvars)) >= 1);
     }
 	
     /** Remove an object inside in a WS
@@ -447,22 +453,121 @@ class wslib extends CategLib
      * @param $type The type of the object you want to delete
      * @return true
      */
-    public function remove_ws_object ($ws_id,$ws_ObjectId,$itemId,$type)
+    public function remove_ws_object ($ws_id,$objectId,$itemId,$type)
     {
-       	parent::remove_object_from_category($ws_ObjectId, $ws_id);
+       	parent::remove_object_from_category($objectId, $ws_id);
     	$hashObject = md5($type . strtolower($itemId));
     	
-    	if (!parent::is_categorized($type,$itemId))
+    	if ($type == "category")
     	{
+    		parent::remove_category($objectId);
+		return true;
+    	}	
+    	
+    	if (!$this->is_object_in_ws($objectId))
+    	{
+    		echo("<br>Delete the ".$type." ".$itemId."<br>");
 		// Delete all the object perms related to the object
 		$query = "delete from `users_objectpermissions` where `objectType` = ? and `objectId` = ?";
 		$this->query($query, array($type, $hashObject), -1, -1, false);
     		
     		// Delete the object from Tiki (TBD)
-    		// parent::delete_object($type, $itemId);
+    		switch ($type)
+    		{
+			case 'wiki page':
+			case 'wikipage':
+			case 'wiki_page':
+			{
+				global $tikilib;
+				$tikilib->remove_all_versions($itemId);
+				break;
+			}
+			case 'tracker':
+			{
+				global $trklib;
+				include_once ('lib/trackers/trackerlib.php');
+				$trklib->remove_tracker($itemId);
+				break;
+			}
+			case 'quiz':
+			{
+				global $quizlib;
+				include_once ('lib/quizzes/quizlib.php');
+				$quizlib->remove_quiz($itemId) ;
+				break;
+			}
+			case 'article':
+			{
+				global $artlib;
+				include_once ('lib/articles/artlib.php');
+				$artlib->remove_submission($itemId);
+				break;
+			}
+			case 'faq':
+			{
+				global $faqlib;
+				include_once ('lib/faqs/faqlib.php');
+				$faqlib->remove_faq($itemId);
+				break;
+			}
+			case 'blog':
+			{
+				global $bloglib;
+				include_once ('lib/blogs/bloglib.php');
+				$bloglib->remove_blog($itemId);
+				break;
+			}
+			case 'gallery':
+			case 'gal':
+			case 'image gallery':
+			{
+				global $imagegallib;
+				include_once ("lib/imagegals/imagegallib.php");
+				$imagegallib->remove_gallery($itemId);
+				break;
+			}
+			case 'file_gallery':
+			case 'file gallery':
+			case 'fgal':
+			{
+				global $filegallib;
+				include_once ('lib/filegals/filegallib.php');
+				$filegallib->remove_file_gallery($itemId);
+				break;
+			}
+			case 'forum':
+			{
+				global $commentslib;
+				include_once ("lib/commentslib.php");
+				$commentslib->remove_forum($itemId);
+				break;
+			}
+			case 'calendar':
+			{
+				global $calendarlib;
+				include_once ('lib/calendar/calendarlib.php');
+				$calendarlib = drop_calendar($itemId);
+				break;
+			}
+			case 'sheet':
+			{
+				global $sheetlib;
+				include_once ('lib/sheet/grid.php');
+				$sheetlib->remove_sheet($itemId);
+				break;
+			}
+			case 'survey':
+			{
+				global $srvlib;
+				include_once ('lib/surveys/surveylib.php');
+				$srvlib->remove_survey($itemId);
+				break;
+			}
+    		}
     	}
     	else
     	{
+    		echo("<br>Just remove the ".$type." ".$itemId." from WS<br>");
     		// Get the groups that only have access to the WS in which the object is stored.
     		$hashWS = md5($this->objectType . strtolower($ws_id));
     		$query = "select `groupName` from `users_objectpermissions` t1 
