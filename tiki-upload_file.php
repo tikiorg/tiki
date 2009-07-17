@@ -206,6 +206,7 @@ if (isset($_REQUEST["upload"])) {
 			}
 			$data = '';
 			$fhash = '';
+			$extension = '';
 			if (($prefs['fgal_use_db'] == 'n') || ($podCastGallery)) {
 				$fhash = md5($name = $_FILES["userfile"]['name'][$key]);
 				$extension = '';
@@ -263,8 +264,11 @@ if (isset($_REQUEST["upload"])) {
 					$errors[] = tra('Warning: Empty file:') . ' ' . $name . '. ' . tra('Please re-upload your file');
 				}
 			}
-			if (!isset($_REQUEST['name'][$key])) $_REQUEST['name'][$key] = $name;
+			if (empty($_REQUEST['name'][$key])) $_REQUEST['name'][$key] = $name;
 			if (empty($_REQUEST['user'][$key])) $_REQUEST['user'][$key] = $user;
+			if (!isset($_REQUEST['description'][$key])) $_REQUEST['description'][$key] = '';
+			if (empty($_REQUEST['author'][$key])) $_REQUEST['author'][$key] = $user;
+			
 			$fileInfo['filename'] = $file_name;
 			if (isset($data)) {
 				if ($editFile) {
