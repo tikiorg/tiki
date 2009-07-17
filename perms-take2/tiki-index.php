@@ -105,7 +105,7 @@ if( $prefs['feature_wiki_structure'] == 'y' ) {
 		}
 		//Get the structures this page is a member of
 		$structs = $structlib->get_page_structures($_REQUEST["page"],$struct);
-		$structs_with_perms = Perms::filter( array( 'type' => 'wiki page' ), 'object', $structs, 'permName', 'view' );
+		$structs_with_perms = Perms::filter( array( 'type' => 'wiki page' ), 'object', $structs, array( 'object' => 'permName' ), 'view' );
 
 		//If page is only member of one structure, display if requested
 		$single_struct = count($structs_with_perm) == 1; 

@@ -102,6 +102,7 @@ class Perms
 	public static function get( array $context = array() ) {
 		require_once 'lib/core/lib/Perms/Accessor.php';
 		$accessor = new Perms_Accessor;
+		$accessor->setContext( $context );
 
 		if( self::$instance ) {
 			$accessor->setPrefix( self::$instance->prefix );
@@ -172,14 +173,16 @@ class Perms
 	 * @param $permission string The permission name to validate on each record.
 	 * @return array What remains of the dataset after filtering.
 	 */
-	public static function filter( array $baseContext, $bulkKey, array $data, $dataKey, $permission ) {
-		self::bulk( $baseContext, $bulkKey, $data, $dataKey );
+	public static function filter( array $baseContext, $bulkKey, array $data, array $contextMap, $permission ) {
+		self::bulk( $baseContext, $bulkKey, $data, $contextMap[$bulkKey] );
 
 		$valid = array();
 
 		foreach( $data as $entry ) {
 			$context = $baseContext;
-			$context[$bulkKey] = $entry[$dataKey];
+			foreach( $contextMap as $to => $from ) {
+				$context[$to] = $entry[$from];
+			}
 
 			$accessor = self::get( $context );
 			if( $accessor->$permission ) {

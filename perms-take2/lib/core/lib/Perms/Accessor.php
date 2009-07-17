@@ -14,6 +14,7 @@ class Perms_Accessor
 {
 	private $resolver;
 	private $prefix = '';
+	private $context = array();
 	private $groups = array();
 
 	function setPrefix( $prefix ) {
@@ -38,6 +39,14 @@ class Perms_Accessor
 
 	function getResolver() {
 		return $this->resolver;
+	}
+
+	function setContext( array $context ) {
+		$this->context = $context;
+	}
+
+	function getContext() {
+		return $this->context;
 	}
 
 	function __get( $name ) {

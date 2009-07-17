@@ -25,6 +25,13 @@ class Perms_AccessorTest extends TikiTestCase
 		$this->assertEquals( 'hello_', $accessor->getPrefix() );
 	}
 
+	function testGetSetContext() {
+		$accessor = new Perms_Accessor;
+		$accessor->setContext( array( 'type' => 'wiki page', 'object' => 'HomePage' ) );
+
+		$this->assertEquals( array( 'type' => 'wiki page', 'object' => 'HomePage' ), $accessor->getContext() );
+	}
+
 	function testGetDefaultGroups() {
 		$accessor = new Perms_Accessor;
 

@@ -21,6 +21,12 @@ class Perms_BaseTest extends TikiTestCase
 		$this->assertEquals( $expect, Perms::get() );
 	}
 
+	function testContextPropagatesToAccessor() {
+		$accessor = Perms::get( array( 'context' ) );
+
+		$this->assertEquals( array( 'context' ), $accessor->getContext() );
+	}
+
 	/**
 	 * @dataProvider resolverMatches
 	 */
@@ -145,22 +151,43 @@ class Perms_BaseTest extends TikiTestCase
 		Perms::set($perms);
 
 		$data = array(
-			array( 'pageId' => 1, 'pageName' => 'A', 'content' => 'Hello World' ),
-			array( 'pageId' => 2, 'pageName' => 'B', 'content' => 'Hello World' ),
-			array( 'pageId' => 3, 'pageName' => 'C', 'content' => 'Hello World' ),
-			array( 'pageId' => 4, 'pageName' => 'D', 'content' => 'Hello World' ),
-			array( 'pageId' => 5, 'pageName' => 'E', 'content' => 'Hello World' ),
+			array( 'pageId' => 1, 'pageName' => 'A', 'content' => 'Hello World', 'creator' => 'admin' ),
+			array( 'pageId' => 2, 'pageName' => 'B', 'content' => 'Hello World', 'creator' => 'admin' ),
+			array( 'pageId' => 3, 'pageName' => 'C', 'content' => 'Hello World', 'creator' => 'admin' ),
+			array( 'pageId' => 4, 'pageName' => 'D', 'content' => 'Hello World', 'creator' => 'admin' ),
+			array( 'pageId' => 5, 'pageName' => 'E', 'content' => 'Hello World', 'creator' => 'admin' ),
 		);
 
-		$out = Perms::filter( array( 'type' => 'wiki page' ), 'object', $data, 'pageName', 'view' );
+		$out = Perms::filter( array( 'type' => 'wiki page' ), 'object', $data, array( 'object' => 'pageName', 'creator' => 'creator' ), 'view' );
 
 		$expect = array(
-			array( 'pageId' => 1, 'pageName' => 'A', 'content' => 'Hello World' ),
-			array( 'pageId' => 2, 'pageName' => 'B', 'content' => 'Hello World' ),
-			array( 'pageId' => 5, 'pageName' => 'E', 'content' => 'Hello World' ),
+			array( 'pageId' => 1, 'pageName' => 'A', 'content' => 'Hello World', 'creator' => 'admin' ),
+			array( 'pageId' => 2, 'pageName' => 'B', 'content' => 'Hello World', 'creator' => 'admin' ),
+			array( 'pageId' => 5, 'pageName' => 'E', 'content' => 'Hello World', 'creator' => 'admin' ),
 		);
 
 		$this->assertEquals( $expect, $out );
+	}
+
+	function testContextBuilding() {
+		$perms = new Perms;
+		$perms->setResolverFactories( array(
+			$mock = $this->getMock( 'Perms_ResolverFactory' )
+		) );
+		Perms::set($perms);
+
+		$mock->expects( $this->once() )
+			->method( 'getResolver' )
+			->with( $this->equalTo( array( 'type' => 'wiki page', 'object' => 'Hello World', 'creator' => 'admin' ) ) )
+			->will( $this->returnValue( null ) );
+		$mock->expects( $this->once() )
+			->method( 'bulk' );
+
+		$data = array(
+			array( 'pageId' => 1, 'pageName' => 'Hello World', 'content' => 'Hello World', 'creator' => 'admin' ),
+		);
+
+		Perms::filter( array( 'type' => 'wiki page' ), 'object', $data, array( 'object' => 'pageName', 'creator' => 'creator' ), 'view' );
 	}
 }
 
