@@ -27,8 +27,6 @@ $inputConfiguration = array(
 	) ),
 );
 
-
-
 // Initialization
 $section = 'wiki page';
 require_once('tiki-setup.php');
