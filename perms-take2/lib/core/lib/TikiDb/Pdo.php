@@ -83,7 +83,11 @@ class TikiDb_Pdo extends TikiDb {
 			return false;
 		} else {
 			$this->setErrorMessage( "" );
-			$tmp = new TikiDb_Pdo_Result($pq->fetchAll());
+			if( $pq->columnCount() ) {
+				$tmp = new TikiDb_Pdo_Result($pq->fetchAll());
+			} else {
+				$tmp = new TikiDb_Pdo_Result(array());
+			}
 			$pq->closeCursor();
 			return $tmp;
 		}
