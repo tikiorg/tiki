@@ -4115,11 +4115,10 @@ class TikiLib extends TikiDb_Bridge {
 	function get_perm_object($objectId, $objectType, $info='', $global=true) {
 		global $smarty, $userlib;
 		$perms = Perms::get( array( 'type' => $objectType, 'object' => $objectId ) );
-
-		$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', $this->get_permGroup_from_objectType($objectType));
+		$permDescs = $userlib->get_permissions(0, -1, 'permName_desc', '', $this->get_permGroup_from_objectType($objectType));
 
 		$ret = array();
-		foreach( $perms['data'] as $perm ) {
+		foreach( $permDescs['data'] as $perm ) {
 			$perm = $perm['permName'];
 
 			$ret[$perm] = $perms->$perm ? 'y' : 'n';
