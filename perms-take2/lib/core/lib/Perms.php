@@ -156,7 +156,9 @@ class Perms
 			$remaining[] = $value;
 		}
 
-		self::$instance->loadBulk( $baseContext, $bulkKey, $remaining );
+		if( count( $remaining ) ) {
+			self::$instance->loadBulk( $baseContext, $bulkKey, $remaining );
+		}
 	}
 
 	/**
