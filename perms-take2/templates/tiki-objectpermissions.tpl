@@ -213,11 +213,9 @@
 <table width="100%">
 	<tr class="{cycle advance=true}">
 		<th>Groups</th>
-		<th onmouseover="return overlib('{foreach item=prm from=$perms_admin}<div>{$prm}</div>{/foreach}');" onmouseout="nd();">Admin</th>
-		<th onmouseover="return overlib('{foreach item=prm from=$perms_editors}<div>{$prm}</div>{/foreach}');" onmouseout="nd();">Editor</th>
-		<th onmouseover="return overlib('{foreach item=prm from=$perms_registered}<div>{$prm}</div>{/foreach}');" onmouseout="nd();">Registered</th>
-		<th onmouseover="return overlib('{foreach item=prm from=$perms_basic}<div>{$prm}</div>{/foreach}');" onmouseout="nd();">Basic</th>
-		<th onmouseover="return overlib('<p>No Permissions are added</p><p>All assigned permissions will be removed</p>');" onmouseout="nd();">No access</th>
+		{foreach item=permgroup from=$quickperms}
+			<th>{$permgroup.name}</th>
+		{/foreach}
 		<th onmouseover="return overlib('A couple of userdefined permissions are currently assigned (See tab Edit Permissions)');" onmouseout="nd();">Advanced</th>
 	</tr>
 	{cycle print=false values="even,odd"}
@@ -226,11 +224,9 @@
 		<td>
 			{$groups[grp].groupName|escape}
 		</td>
-		<td><input type="radio" name="perm_{$groups[grp].groupName}" value="admin" {if $groups[grp].groupSumm eq 'admin'}checked{/if} /></td>
-		<td><input type="radio" name="perm_{$groups[grp].groupName}" value="editors"{if $groups[grp].groupSumm eq 'editors'}checked{/if} /></td>
-		<td><input type="radio" name="perm_{$groups[grp].groupName}" value="registered" {if $groups[grp].groupSumm eq 'registered'}checked{/if} /></td>
-		<td><input type="radio" name="perm_{$groups[grp].groupName}" value="basic" {if $groups[grp].groupSumm eq 'basic'}checked{/if} /></td>
-		<td><input type="radio" name="perm_{$groups[grp].groupName}" value="none" {if $groups[grp].groupSumm eq 'none'}checked{/if} /></td>
+		{foreach item=permgroup from=$quickperms}
+			<td><input type="radio" name="perm_{$groups[grp].groupName}" value="{$permgroup.name}" {if $groups[grp].groupSumm eq $permgroup.name}checked{/if} /></td>
+		{/foreach}
 		<td><input type="radio" name="perm_{$groups[grp].groupName}" value="userdefined" {if $groups[grp].groupSumm eq 'userdefined'}checked{/if} disabled /></td>
 	</tr>
 	{/section}

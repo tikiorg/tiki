@@ -57,10 +57,10 @@ if ($_REQUEST['objectType'] == 'wiki' || $_REQUEST['objectType'] == 'wiki page')
 		$smarty->assign('inStructure', 'y');
 	}
 }
-//Quickperms
-$perms = $userlib->get_permissions(0, -1, 'permName_asc', '', $_REQUEST["permType"], '', true);
 
-foreach($perms['data'] as $perm) {
+//Quickperms
+$databaseperms = $userlib->get_permissions(0, -1, 'permName_asc', '', $_REQUEST["permType"], '', true);
+foreach($databaseperms['data'] as $perm) {
 	if ($perm['level']=='basic')
 		$quickperms_['basic'][$perm['permName']] = $perm['permName'];
 	elseif ($perm['level']=='registered')
@@ -71,8 +71,6 @@ foreach($perms['data'] as $perm) {
 		$quickperms_['admin'][$perm['permName']] = $perm['permName'];
 }
 
-unset($perms);
-
 if(!isset($quickperms_['basic']))
 	$quickperms_['basic'] = array();
 if(!isset($quickperms_['registered']))
@@ -82,16 +80,53 @@ if(!isset($quickperms_['editors']))
 if(!isset($quickperms_['admin']))
 $quickperms_['admin'] = array();
 
-$perms['basic'] = array_merge($quickperms_['basic']);
-$perms['registered'] = array_merge($quickperms_['basic'], $quickperms_['registered']);
-$perms['editors'] = array_merge($quickperms_['basic'], $quickperms_['registered'], $quickperms_['editors']);
-$perms['admin'] = array_merge($quickperms_['basic'], $quickperms_['registered'], $quickperms_['editors'], $quickperms_['admin']);
-$perms['none'] = array();
+$perms['basic']['name'] = "basic";
+$perms['basic']['data'] = array_merge($quickperms_['basic']);
+$perms['registered']['name'] = "registered";
+$perms['registered']['data'] = array_merge($quickperms_['basic'], $quickperms_['registered']);
+$perms['editors']['name'] = "editors";
+$perms['editors']['data'] = array_merge($quickperms_['basic'], $quickperms_['registered'], $quickperms_['editors']);
+$perms['admin']['name'] = "admin";
+$perms['admin']['data'] = array_merge($quickperms_['basic'], $quickperms_['registered'], $quickperms_['editors'], $quickperms_['admin']);
+$perms['none']['name'] = "none";
+$perms['none']['data'] = array();
 
-$smarty->assign('perms_admin', $perms['admin']);
-$smarty->assign('perms_registered', $perms['registered']);
-$smarty->assign('perms_editors', $perms['editors']);
-$smarty->assign('perms_basic', $perms['basic']);
+//Test to map permissions of ile galleries into read write admin admin levels.
+if($_REQUEST["permType"]=="file galleries") {
+	unset($perms);
+	$quickperms_temp['tiki_p_admin_file_galleries'] = 'tiki_p_admin_file_galleries';
+	$quickperms_temp['tiki_p_assign_perm_file_gallery'] = 'tiki_p_assign_perm_file_gallery';
+	$quickperms_temp['tiki_p_batch_upload_files'] = 'tiki_p_batch_upload_files';
+	$quickperms_temp['tiki_p_batch_upload_file_dir'] = 'tiki_p_batch_upload_file_dir';
+	$quickperms_temp['tiki_p_create_file_galleries'] = 'tiki_p_create_file_galleries';
+	$quickperms_temp['tiki_p_download_files'] = 'tiki_p_download_files';
+	$quickperms_temp['tiki_p_edit_gallery_file'] = 'tiki_p_edit_gallery_file';
+	$quickperms_temp['tiki_p_list_file_galleries'] = 'tiki_p_list_file_galleries';
+	$quickperms_temp['tiki_p_upload_files'] = 'tiki_p_upload_files';
+	$quickperms_temp['tiki_p_view_fgal_explorer'] = 'tiki_p_view_fgal_explorer';
+	$quickperms_temp['tiki_p_view_fgal_path'] = 'tiki_p_view_fgal_path';
+	$quickperms_temp['tiki_p_view_file_gallery'] = 'tiki_p_view_file_gallery';
+	$perms['admin']['name'] = "admin";
+	$perms['admin']['data'] = $quickperms_temp;
+	
+	unset($quickperms_temp['tiki_p_admin_file_galleries']);
+	unset($quickperms_temp['tiki_p_assign_perm_file_gallery']);
+	$perms['write']['name'] = "write";
+	$perms['write']['data'] = $quickperms_temp;
+	
+	unset($quickperms_temp['tiki_p_batch_upload_files']);
+	unset($quickperms_temp['tiki_p_batch_upload_file_dir']);
+	unset($quickperms_temp['tiki_p_create_file_galleries']);
+	unset($quickperms_temp['tiki_p_edit_gallery_file']);
+	unset($quickperms_temp['tiki_p_upload_files']);
+	$perms['read']['name'] = "read";
+	$perms['read']['data'] = $quickperms_temp;
+	
+	$perms['none']['name'] = "none";
+	$perms['none']['data'] = array();
+}
+
+$smarty->assign('quickperms', $perms);
 
 if (isset($_REQUEST['assign']) && isset($_REQUEST['quick_perms'])) {
 	check_ticket('object-perms');
@@ -105,12 +140,13 @@ if (isset($_REQUEST['assign']) && isset($_REQUEST['quick_perms'])) {
 			
 			if ($permission != "userdefined") {
 				//Remove all permissions of a group
-				foreach($perms['admin'] as $perm) {
+				
+				foreach($perms['admin']['data'] as $perm) {
 					$userlib->remove_object_permission($group, $_REQUEST["objectId"], $_REQUEST["objectType"], $perm);
 				}
 				
 				//Add chosen quickperm bundle to the objcet/group
-				foreach($perms["$permission"] as $perm) {
+				foreach($perms["$permission"]['data'] as $perm) {
 					$userlib->assign_object_permission($group, $_REQUEST["objectId"], $_REQUEST["objectType"], $perm);				
 				}
 			}
@@ -190,38 +226,23 @@ $groups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
 
 //Quickperm
 foreach($groups['data'] as $key=>$group) {
-	if (!empty($current_permissions[$group['groupName']]) && is_array($current_permissions[$group['groupName']])) {
-		//Check if Group has admin perm.
-		$diff1 = array_diff($current_permissions[$group['groupName']], $perms['admin']);
-		$diff2 = array_diff($perms['admin'], $current_permissions[$group['groupName']]);
-		if (empty($diff1) AND empty($diff2))
-			$groups['data'][$key]['groupSumm'] = "admin";
-		
-		//Check if Group has editors perm.
-		$diff1 = array_diff($current_permissions[$group['groupName']], $perms['editors']);
-		$diff2 = array_diff($perms['editors'], $current_permissions[$group['groupName']]);
-		if (empty($diff1) AND empty($diff2))
-			$groups['data'][$key]['groupSumm'] = "editors";
-		
-		//Check if Group has registered perm.
-		$diff1 = array_diff($current_permissions[$group['groupName']], $perms['registered']);
-		$diff2 = array_diff($perms['registered'], $current_permissions[$group['groupName']]);
-		if (empty($diff1) AND empty($diff2)) 
-			$groups['data'][$key]['groupSumm'] = "registered";
-		
-		//Check if Group has basic perm.
-		$diff1 = array_diff($current_permissions[$group['groupName']], $perms['basic']);
-		$diff2 = array_diff($perms['basic'], $current_permissions[$group['groupName']]);
-		if (empty($diff1) AND empty($diff2))
-			$groups['data'][$key]['groupSumm'] = "basic";
-		
-		//If Group has NO perm.
-		if (empty($groups['data'][$key]['groupSumm']))
-			$groups['data'][$key]['groupSumm'] = "userdefined";
-
-	} else {
-		$groups['data'][$key]['groupSumm'] = "none";
+	foreach($perms as $perm) {
+		if (!empty($current_permissions[$group['groupName']]) && is_array($current_permissions[$group['groupName']])) {
+			//Check if Group has admin perm.
+			$diff1 = array_diff($current_permissions[$group['groupName']], $perms[$perm['name']]['data']);
+			$diff2 = array_diff($perms[$perm['name']]['data'], $current_permissions[$group['groupName']]);
+			if (empty($diff1) AND empty($diff2)) {
+				$groups['data'][$key]['groupSumm'] = $perm['name'];
+				break;
+			}
+		} else {
+			$groups['data'][$key]['groupSumm'] = "none";
+			break;
+		}
 	}
+	//If Group has NO perm.
+	if (empty($groups['data'][$key]['groupSumm']))
+		$groups['data'][$key]['groupSumm'] = "userdefined";
 }
 //Quickperm END
 

@@ -302,8 +302,9 @@ abstract class Tiki_Profile_InstallHandler // {{{
 	final function install()
 	{
 		$id = $this->_install();
-		if( empty( $id ) )
+		if( empty( $id ) ) {
 			die( 'Handler failure: ' . get_class( $this ) . "\n" );
+		}
 
 		$this->obj->setValue( $id );
 	}
@@ -666,6 +667,7 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 	private $name;
 	private $lang;
 	private $translations;
+	private $message;
 
 	private $mode = 'create_or_update';
 	private $exists;
@@ -676,6 +678,9 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 			return;
 
 		$data = $this->obj->getData();
+
+		if( array_key_exists( 'message', $data ) )
+			$this->message = $data['message'];
 
 		if( array_key_exists( 'name', $data ) )
 			$this->name = $data['name'];
@@ -699,7 +704,14 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 		if( empty( $this->name ) || empty( $this->content ) )
 			return false;
 
+		$this->convertMode();
+
+		return true;
+	}
+
+	private function convertMode() {
 		global $tikilib;
+
 		$this->exists = $tikilib->page_exists($this->name);
 
 		switch( $this->mode ) {
@@ -713,16 +725,14 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 				throw new Exception( "Page {$this->name} does not exist and profile only allows update." );
 			break;
 		case 'create_or_update':
-			$this->mode = $this->exists ? 'update' : 'create';
-			break;
+			return $this->exists ? 'update' : 'create';
 		case 'create_or_append':
-			$this->mode = $this->exists ? 'append' : 'create';
-			break;
+			return $this->exists ? 'append' : 'create';
 		default:
 			throw new Exception( "Invalid mode '{$this->mode}' for wiki handler." );
 		}
 
-		return true;
+		return $this->mode;
 	}
 
 	function _install()
@@ -737,14 +747,20 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 		$this->replaceReferences( $this->content );
 		$this->replaceReferences( $this->lang );
 		$this->replaceReferences( $this->translations );
+		$this->replaceReferences( $this->message );
+
+		$this->mode = $this->convertMode();
 
 		if( strpos( $this->content, 'wikidirect:' ) === 0 ) {
 			$pageName = substr( $this->content, strlen('wikidirect:') );
-			$this->content = $this->obj->getPageContent( $pageName );
+			$this->content = $this->obj->getProfile()->getPageContent( $pageName );
 		}
 
 		if( $this->mode == 'create' ) {
-			if( ! $tikilib->create_page( $this->name, 0, $this->content, time(), tra('Created by profile installer'), 'admin', '0.0.0.0', $this->description, $this->lang ) )
+			if( ! $this->message ) {
+				$this->message = tra('Created by profile installer');
+			}
+			if( ! $tikilib->create_page( $this->name, 0, $this->content, time(), $this->message, 'admin', '0.0.0.0', $this->description, $this->lang ) )
 				return null;
 		} else {
 			$info = $tikilib->get_page_info( $this->name, true, true );
@@ -759,7 +775,10 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 				$this->content = rtrim( $info['data'] ) . "\n" . trim($this->content) . "\n";
 			}
 
-			$tikilib->update_page( $this->name, $this->content, tra('Page updated by profile installer'), 'admin', '0.0.0.0', $this->description, false, $this->lang );
+			if( ! $this->message ) {
+				$this->message = tra('Page updated by profile installer');
+			}
+			$tikilib->update_page( $this->name, $this->content, $this->message, 'admin', '0.0.0.0', $this->description, false, $this->lang );
 		}
 
 		global $multilinguallib;

@@ -75,5 +75,5 @@ function close_connection() {
 	$dbTiki->Close();
 }
 
-require_once 'TikiDb/Adodb.php';
+require_once 'lib/core/lib/TikiDb/Adodb.php';
 TikiDb::set( new TikiDb_Adodb( $dbTiki ) );

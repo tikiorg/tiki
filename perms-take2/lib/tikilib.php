@@ -19,7 +19,9 @@ if ( ! defined('DATE_FORMAT_UNIXTIME') ) define('DATE_FORMAT_UNIXTIME', 5);
 // * shared functions (marked as /*shared*/) are functions that are
 //   called from Tiki modules.
 
-class TikiLib extends TikiDb {
+require_once('lib/core/lib/TikiDb/Bridge.php');
+
+class TikiLib extends TikiDb_Bridge {
 	var $buffer;
 	var $flag;
 	var $parser;

@@ -124,6 +124,8 @@ class Installer
 			exit(1);
 		}
 
+		$command = "";
+		
 		while(!feof($fp)) {
 			$command.= fread($fp,4096);
 		}

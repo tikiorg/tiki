@@ -254,7 +254,7 @@ class Tiki_Profile
 		}
 	} // }}}
 
-	private function getPageContent( $pageName ) // {{{
+	public function getPageContent( $pageName ) // {{{
 	{
 		$exportUrl = dirname( $this->url ) . '/tiki-export_wiki_pages.php?'
 			. http_build_query( array( 'page' => $pageName ) );

@@ -995,6 +995,8 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 
 		// use filegals for image inclusion
 		'feature_filegals_manager' => 'y',
+		// but allow previous wiki_up behaviour too
+		'feature_filegals_manager_optional' => 'n',
 
 		// contact & mail
 		'feature_contact' => 'n',

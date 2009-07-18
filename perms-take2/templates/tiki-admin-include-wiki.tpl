@@ -345,10 +345,13 @@ name="w_displayed_default" {if $prefs.w_displayed_default eq 'y'} checked="check
 <div class="adminoptionboxchild" id="usepictures" style="display:{if $prefs.feature_wiki_pictures eq 'y'}block{else}none{/if};">
 
 <div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" name="feature_filegals_manager" id="feature_filegals_manager" {if $prefs.feature_filegals_manager eq 'y'}checked="checked" {/if}/> </div>
+	<div class="adminoption"><input type="checkbox" name="feature_filegals_manager" id="feature_filegals_manager" {if $prefs.feature_filegals_manager eq 'y'}checked="checked" {/if}onclick="flip('usefilegals_manager');" /> </div>
 	<div class="adminoptionlabel"><label for="feature_filegals_manager">{tr}Use File Galleries to store pictures {/tr}.</label></div>
+	<div class="adminoptionboxchild" id="usefilegals_manager" style="display:{if $prefs.feature_filegals_manager eq 'y'}block{else}none{/if};">
+		<div class="adminoption"><input type="checkbox" id="feature_filegals_manager_optional" name="feature_filegals_manager_optional" {if $prefs.feature_filegals_manager_optional eq 'y'}checked="checked"{/if}/></div>
+		<div class="adminoptionlabel"><label for="feature_filegals_manager_optional">{tr}...but allow the previous "upload to img/wiki_up method"{/tr}.</label></div>
+	</div>
 </div>
-
 
 <div class="adminoptionbox">
 	<div class="adminoptionlabel"><a class="button" href="tiki-admin.php?page=wiki&amp;rmvunusedpic=1">{tr}Remove unused pictures{/tr}</a></div>

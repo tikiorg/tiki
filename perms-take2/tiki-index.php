@@ -40,6 +40,9 @@ include_once('lib/ajax/ajaxlib.php');
 require_once ("lib/wiki/wiki-ajax.php");
 require_once ("lib/wiki/renderlib.php");
 
+error_reporting(E_ALL);
+ini_set('display_errors','on');
+
 $auto_query_args = array('page','best_lang','bl','page_id','pagenum','page_ref_id','mode','sort_mode',
                          'machine_translate_to_lang');
 
