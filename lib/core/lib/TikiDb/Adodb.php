@@ -19,7 +19,7 @@ class TikiDb_Adodb extends TikiDb {
 		return $this->db->quote( $str );
 	} // }}}
 
-	function query( $query, $values = null, $numrows = -1, $offset = -1, $reporterrors = true ) // {{{
+	function query( $query = null, $values = null, $numrows = -1, $offset = -1, $reporterrors = true ) // {{{
 	{
 		global $num_queries;
 		$num_queries++;
