@@ -189,5 +189,16 @@ class Perms_BaseTest extends TikiTestCase
 
 		Perms::filter( array( 'type' => 'wiki page' ), 'object', $data, array( 'object' => 'pageName', 'creator' => 'creator' ), 'view' );
 	}
+
+	function testSkipBulkOnEmptySet() {
+		$perms = new Perms;
+		$perms->setResolverFactories( array(
+			$mock = $this->getMock( 'Perms_ResolverFactory' )
+		) );
+		Perms::set($perms);
+
+		$mock->expects( $this->never() )
+			->method('bulk');
+	}
 }
 

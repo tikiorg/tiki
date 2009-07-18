@@ -2,6 +2,8 @@
 
 class Perms_ResolverFactory_ObjectFactoryTest extends PHPUnit_Framework_TestCase
 {
+	private $tableData = array();
+
 	function setUp() {
 		$db = TikiDb::get();
 

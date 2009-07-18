@@ -96,7 +96,7 @@ class Perms_ResolverFactory_CategoryFactory implements Perms_ResolverFactory
 		}
 
 		$db = TikiDb::get();
-		$result = $db->query( 'SELECT categId, itemId FROM tiki_category_objects INNER JOIN tiki_objects ON catObjectId = objectId WHERE type = ? AND ' . $db->in( 'itemId', $objects ) . ' ORDER BY catObjectId, categId', array( $baseContext['type'] ) );
+		$result = $db->query( 'SELECT categId, itemId FROM tiki_category_objects INNER JOIN tiki_objects ON catObjectId = objectId WHERE type = ? AND ' . $db->in( 'itemId', array_keys( $objects ) ) . ' ORDER BY catObjectId, categId', array( $baseContext['type'] ) );
 
 		$categories = array();
 
