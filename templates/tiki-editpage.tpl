@@ -195,16 +195,16 @@ window.onload = timeIt;
 <input type="hidden" name="categId" value="{$categIdstr}" />
 <input type="hidden" name="cat_categorize" value="on" />
 
-{if $page|lower ne 'sandbox'}
 {if $prefs.feature_wiki_categorize_structure eq 'y'}
 <tr class="formcolor"><td colspan="2">{tr}Categories will be inherited from the structure top page{/tr}</td></tr>
 {/if}
 {else}
+{if $page|lower ne 'sandbox'}
 {include file='categorize.tpl'}
+{/if}{* sandbox *}
 {/if}
 
 {include file='structures.tpl'}
-{/if}{* sandbox *}
 
 {if $prefs.feature_wiki_templates eq 'y' and $tiki_p_use_content_templates eq 'y' and !$templateId}
   <tr class="formcolor">
