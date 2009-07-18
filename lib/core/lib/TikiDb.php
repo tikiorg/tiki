@@ -1,7 +1,7 @@
 <?php
-require_once 'TikiDb/ErrorHandler.php';
+require_once 'lib/core/lib/TikiDb/ErrorHandler.php';
 
-class TikiDb
+abstract class TikiDb
 {
 	private static $instance;
 
@@ -38,15 +38,9 @@ class TikiDb
 		$elapsed_in_db+=$now - $starttime;
 	} // }}}
 
-	function qstr( $str ) // {{{
-	{
-		return self::get()->qstr( $str );
-	} // }}}
+	abstract function qstr( $str );
 
-	function query( $query = null, $values = null, $numrows = -1, $offset = -1, $reporterrors = true ) // {{{
-	{
-		return self::get()->query( $query, $values, $numrows, $offset, $reporterrors );
-	} // }}}
+	abstract function query( $query = null, $values = null, $numrows = -1, $offset = -1, $reporterrors = true );
 
 	function queryError( $query, &$error, $values = null, $numrows = -1, $offset = -1 ) // {{{
 	{
@@ -83,11 +77,7 @@ class TikiDb
 
 	function getServerType() // {{{
 	{
-		if( $this instanceof TikiDb_Pdo || $this instanceof TikiDb_Adodb ) {
-			return $this->serverType;
-		} else {
-			return self::get()->serverType;
-		}
+		return $this->serverType;
 	} // }}}
 
 	function setServerType( $type ) // {{{
@@ -95,7 +85,7 @@ class TikiDb
 		$this->serverType = $type;
 	} // }}}
 
-	protected function getErrorMessage() // {{{
+	function getErrorMessage() // {{{
 	{
 		return $this->errorMessage;
 	} // }}}

@@ -78,6 +78,6 @@ function close_connection() {
 	$dbTiki= NULL;
 }
 
-require_once 'TikiDb/Pdo.php';
+require_once 'lib/core/lib/TikiDb/Pdo.php';
 TikiDb::set( new TikiDb_Pdo( $dbTiki ) );
 
