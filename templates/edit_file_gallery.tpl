@@ -6,6 +6,7 @@
   <div>
     <form class="admin" action="{$smarty.server.PHP_SELF}?{query}" method="post">
       <input type="hidden" name="galleryId" value="{$galleryId|escape}" />
+      <input type="hidden" name="filegals_manager" value="{$filegals_manager}" />
 
 
        <div class="input_submit_container" style="text-align: right"><input type="submit" value="{tr}Save{/tr}" name="edit" />&nbsp;<input type="checkbox" name="viewitem" checked="checked"/> {tr}View inserted gallery{/tr}</div>

@@ -7,7 +7,7 @@
 	{if !empty($galleryId)}
 		{if $filegals_manager neq ''}
 			{assign var=fgmanager value=$filegals_manager|escape}
-			{button href="tiki-list_file_gallery.php?galleryId=$galleryId&amp;filegals_manager=$fmanager" _text="{tr}Browse Gallery{/tr}"}
+			{button galleryId="$galleryId" filegals_manager="$fmanager" href="tiki-list_file_gallery.php" _text="{tr}Browse Gallery{/tr}"}
 		{else}
 			{button href="tiki-list_file_gallery.php?galleryId=$galleryId" _text="{tr}Browse Gallery{/tr}"}
 		{/if}
@@ -64,7 +64,14 @@
 					<img src="tiki-download_file.php?fileId={$uploads[ix].fileId}&amp;thumbnail=y" />
 				</td>
 				<td>
+					{if $filegals_manager neq ''}
+					{assign var=seturl value="`$url_path`tiki-download_file.php?fileId=`$uploads[ix].fileId`&display"}
+
+          {* Note: When using this code inside FCKeditor, SetMyUrl function is not defined and we use FCKeditor SetUrl native function *}
+          <a href="javascript:if (typeof window.opener.SetMyUrl != 'undefined') window.opener.SetMyUrl('{$filegals_manager|escape}','{$seturl}'); else window.opener.SetUrl('{$seturl}'); checkClose();" title="{tr}Click Here to Insert in Wiki Syntax{/tr}">{$uploads[ix].name} ({$uploads[ix].size|kbsize})</a>
+					{else}
 					<b>{$uploads[ix].name} ({$uploads[ix].size|kbsize})</b>
+					{/if}
 					{button href="#" _flip_id="uploadinfos`$uploads[ix].fileId`" _text="{tr}Additional Info{/tr}"}
 					<div style="{if $prefs.javascript_enabled eq 'y'}display:none;{/if}" id="uploadinfos{$uploads[ix].fileId}">
 						{tr}You can download this file using{/tr}: <div class="code"><a class="link" href="{$uploads[ix].dllink}">{$uploads[ix].dllink}</a></div>
@@ -233,6 +240,9 @@
 	<div id="form">
 	<form {if $prefs.javascript_enabled eq 'y' and !$editFileId}onsubmit='return false' target='upload_progress_0'{/if} id='file_0' name='file_0' action='tiki-upload_file.php' enctype='multipart/form-data' method='post' style='margin:0px; padding:0px'>
 	<input type="hidden" name="formId" value="0"/>
+	{if $filegals_manager neq ''}
+		<input type="hidden" name="filegals_manager" value="{$filegals_manager}"/>
+	{/if}
 	{$upload_str}
 	{if $editFileId}
 		{include file='categorize.tpl' notable='y'}<br/>
@@ -283,6 +293,9 @@
 		function add_upload_file() {
 			tmp = "<form onsubmit='return false' id='file_"+nb_upload+"' name='file_"+nb_upload+"' action='tiki-upload_file.php' target='upload_progress_"+nb_upload+"' enctype='multipart/form-data' method='post' style='margin:0px; padding:0px'>";
 			{/literal}
+			{if $filegals_manager neq ''}
+			tmp += '<input type="hidden" name="filegals_manager" value="{$filegals_manager}"/>';
+			{/if}
 			tmp += '<input type="hidden" name="formId" value="'+nb_upload+'"/>';
 			tmp += '{$upload_str|strip|escape:'javascript'}';
 			{literal}

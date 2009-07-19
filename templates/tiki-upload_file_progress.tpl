@@ -5,7 +5,14 @@
 			<img src="tiki-download_file.php?fileId={$fileId}&amp;thumbnail=y" />
 		</td>
 		<td>
+		{if $filegals_manager neq ''}
+			{assign var=seturl value="`$url_path`tiki-download_file.php?fileId=$fileId&display"}
+
+			{* Note: When using this code inside FCKeditor, SetMyUrl function is not defined and we use FCKeditor SetUrl native function *}
+			<a href="javascript:if (typeof window.opener.SetMyUrl != 'undefined') window.opener.SetMyUrl('{$filegals_manager|escape}','{$seturl}'); else window.opener.SetUrl('{$seturl}'); checkClose();" title="{tr}Click Here to Insert in Wiki Syntax{/tr}">{$name} ({$size|kbsize})</a>
+		{else}
 			<b>{$name} ({$size|kbsize})</b>
+		{/if}
 			<div>
 			{button href="#" _onclick="javascript:flip('uploadinfos$fileId');flip('close_uploadinfos$fileId','inline');return false;" _text="{tr}Additional Info{/tr}"}
 			<span id="close_uploadinfos{$fileId}" style="display:none">

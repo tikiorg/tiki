@@ -20,7 +20,7 @@ if ($prefs['feature_groupalert'] == 'y') {
 }
 include ('lib/filegals/max_upload_size.php');
 @ini_set('max_execution_time', 0); //will not work in safe_mode is on
-$auto_query_args = array('galleryId', 'fileId');
+$auto_query_args = array('galleryId', 'fileId', 'filegals_manager');
 function print_progress($msg) {
 	global $prefs;
 	if ($prefs['javascript_enabled'] == 'y') {
@@ -310,6 +310,9 @@ if (isset($_REQUEST["upload"])) {
 					include_once ('categorize.php');
 					// Print progress
 					if ($prefs['javascript_enabled'] == 'y') {
+						if (!empty($_REQUEST['filegals_manager'])) {
+							$smarty->assign('filegals_manager', $_REQUEST['filegals_manager']);
+						}
 						$smarty->assign("name", $aux['name']);
 						$smarty->assign("size", $aux['size']);
 						$smarty->assign("fileId", $aux['fileId']);
@@ -405,7 +408,7 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 // Display the template
 if ($prefs['javascript_enabled'] != 'y' or !isset($_REQUEST["upload"])) {
 	$smarty->assign('mid', 'tiki-upload_file.tpl');
-	if (isset($_REQUEST['filegals_manager']) && $_REQUEST['filegals_manager'] != '') {
+	if (!empty($_REQUEST['filegals_manager'])) {
 		$smarty->assign('filegals_manager', $_REQUEST['filegals_manager']);
 		$smarty->display("tiki-print.tpl");
 	} else {
