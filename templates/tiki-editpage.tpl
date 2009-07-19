@@ -425,7 +425,7 @@ function searchrep() {
 {if $prefs.feature_wiki_pictures eq 'y' and $tiki_p_upload_picture eq 'y'}
 <tr class="formcolor"><td>{tr}Upload picture{/tr}:</td><td>
 {if $prefs.feature_filegals_manager eq 'y' and $prefs.feature_file_galleries == 'y' and $tiki_p_list_file_galleries == 'y'}
-<input type="submit" class="wikiaction tips" value="{tr}Add another image{/tr}" title="{tr}Add another image{/tr}|{tr}Use the File Galleries to choose or upload an image{/tr}{if $prefs.feature_filegals_manager_optional eq 'y'}{tr}<hr />Optionally use the file upload button below{/tr}{/if}"  onclick="javascript:needToConfirm = false;javascript:window.open('{$url_path}tiki-list_file_gallery.php?filegals_manager=editwiki','_blank','menubar=1,scrollbars=1,resizable=1,height=400,width=800');return false;" />
+<input type="submit" class="wikiaction tips" value="{tr}Add another image{/tr}" title="{tr}Add another image{/tr}|{tr}Use the File Galleries to choose or upload an image{/tr}{if $prefs.feature_filegals_manager_optional eq 'y'}{tr}<hr />Optionally use the file upload button below{/tr}{/if}"  onclick="javascript:needToConfirm = false;javascript:openFgalsWindow('{filegal_manager_url area_name=editwiki}');return false;" />
 {/if}
 {if ($prefs.feature_filegals_manager eq 'y' and $prefs.feature_filegals_manager_optional eq 'y') or $prefs.feature_filegals_manager neq 'y'}
 <div class="clearfix"">
