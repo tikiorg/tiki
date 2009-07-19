@@ -11,6 +11,8 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	exit;
 }
 global $smarty, $tikilib, $user;
+// Reset default module_type
+$smarty->assign('module_type', 'module');
 $cachefile = 'modules/cache/';
 if ($tikidomain) {
 	$cachefile.= "$tikidomain/";
@@ -42,8 +44,6 @@ if (!empty($user) || $mod_reference['cache_time'] <= 0 || !file_exists($cachefil
 			// test if we have a menu
 			if (strpos($info['data'], '{menu ') === 0 and strpos($info['data'], "css=y")) {
 				$smarty->assign('module_type', 'cssmenu');
-			} else {
-				$smarty->assign('module_type', 'module');
 			}
 			$smarty->assign('user_title', tra($info['title']));
 			if (isset($info['parse']) && $info['parse'] == 'y') $info['data'] = $tikilib->parse_data($info['data']);
