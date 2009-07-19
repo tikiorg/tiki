@@ -22,7 +22,6 @@ if (isset($_REQUEST["textareasetup"]) && (!isset($_COOKIE['tab']) || $_COOKIE['t
 		"feature_hotwords_nw",
 		"feature_dynamic_content",
 		"feature_filegals_manager",
-		'feature_filegals_manager_optional',
 		"feature_use_quoteplugin",
 		"feature_comments_post_as_anonymous",
 		"feature_smileys",

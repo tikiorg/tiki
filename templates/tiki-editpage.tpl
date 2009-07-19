@@ -425,17 +425,14 @@ function searchrep() {
 {if $prefs.feature_wiki_pictures eq 'y' and $tiki_p_upload_picture eq 'y'}
 <tr class="formcolor"><td>{tr}Upload picture{/tr}:</td><td>
 {if $prefs.feature_filegals_manager eq 'y' and $prefs.feature_file_galleries == 'y' and $tiki_p_list_file_galleries == 'y'}
-<input type="submit" class="wikiaction tips" value="{tr}Add another image{/tr}" title="{tr}Add another image{/tr}|{tr}Use the File Galleries to choose or upload an image{/tr}{if $prefs.feature_filegals_manager_optional eq 'y'}{tr}<hr />Optionally use the file upload button below{/tr}{/if}"  onclick="javascript:needToConfirm = false;javascript:openFgalsWindow('{filegal_manager_url area_name=editwiki}');return false;" />
-{/if}
-{if ($prefs.feature_filegals_manager eq 'y' and $prefs.feature_filegals_manager_optional eq 'y') or $prefs.feature_filegals_manager neq 'y'}
-<div class="clearfix"">
-	<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
-	<input type="hidden" name="hasAlreadyInserted" value="" />
-	<input type="hidden" name="prefix" value="/img/wiki_up/{if $tikidomain}{$tikidomain}/{/if}" />
-	<input name="picfile1" type="file" onchange="javascript:insertImgFile('editwiki','picfile1','hasAlreadyInserted','img')"/>
-	<div id="new_img_form"></div>
-	<a href="javascript:addImgForm()" onclick="needToConfirm = false;">{tr}Add another image button{/tr}</a>
-</div>
+<input type="submit" class="wikiaction" value="{tr}Add another image{/tr}" onclick="javascript:needToConfirm = false;javascript:openFgalsWindow('{filegal_manager_url area_name=editwiki}');return false;" />
+{else}
+<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
+<input type="hidden" name="hasAlreadyInserted" value="" />
+<input type="hidden" name="prefix" value="/img/wiki_up/{if $tikidomain}{$tikidomain}/{/if}" />
+<input name="picfile1" type="file" onchange="javascript:insertImgFile('editwiki','picfile1','hasAlreadyInserted','img')"/>
+<div id="new_img_form"></div>
+<a href="javascript:addImgForm()" onclick="needToConfirm = false;">{tr}Add another image{/tr}</a>
 {/if}
 </td></tr>
 {/if}
