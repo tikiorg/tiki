@@ -193,7 +193,7 @@
           href="tiki-list_file_gallery.php?galleryId={$files[changes].id}{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}"
         {else}
           {if $filegals_manager neq ''}
-            {assign var=seturl value="`$url_path``$files[changes].id|sefurl:display`"}
+            {assign var=seturl value=$files[changes].id|sefurl:display}
 
             {* Note: When using this code inside FCKeditor, SetMyUrl function is not defined and we use FCKeditor SetUrl native function *}
             href="javascript:if (typeof window.opener.SetMyUrl != 'undefined') window.opener.SetMyUrl('{$filegals_manager|escape}','{$seturl}'); else window.opener.SetUrl('{$seturl}'); checkClose();"  title="{tr}Click Here to Insert in Wiki Syntax{/tr}"
