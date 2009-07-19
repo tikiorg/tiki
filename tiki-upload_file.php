@@ -127,7 +127,7 @@ if (!empty($_REQUEST['galleryId'][0]) && $prefs['feature_groupalert'] == 'y') {
 	$smarty->assign_by_ref('groupforalert', $groupforalert);
 	$smarty->assign_by_ref('showeachuser', $showeachuser);
 }
-if (isset($_REQUEST['fileId'])) $editFileId = $_REQUEST['fileId'];
+if (isset($_REQUEST['fileId'])) {$editFileId = $_REQUEST['fileId'];} else {$editFileId = 0;}
 $editFile = false;
 if (!empty($editFileId)) {
 	if (!empty($_REQUEST['name'][0])) $fileInfo['name'] = $_REQUEST['name'][0];
@@ -135,9 +135,9 @@ if (!empty($editFileId)) {
 	if (!empty($_REQUEST['user'][0])) $fileInfo['user'] = $_REQUEST['user'][0];
 	if (!empty($_REQUEST['author'][0])) $fileInfo['author'] = $_REQUEST['author'][0];
 	$smarty->assign_by_ref('fileInfo', $fileInfo);
-	$smarty->assign('editFileId', $editFileId);
 	$editFile = true;
 }
+$smarty->assign('editFileId', $editFileId);
 if (!empty($_REQUEST['galleryId'][0])) {
 	//$gal_info = $tikilib->get_file_gallery((int)$_REQUEST["galleryId"]);
 	$smarty->assign_by_ref('gal_info', $gal_info);
@@ -353,6 +353,9 @@ if (isset($_REQUEST["upload"])) {
 		header("location: tiki-list_file_gallery.php?galleryId=" . $_REQUEST["galleryId"][0]);
 		die;
 	}
+} else {
+	$smarty->assign('errors', array());
+	$smarty->assign('uploads', array());
 }
 // Get the list of galleries to display the select box in the template
 if (isset($_REQUEST['galleryId']) && is_numeric($_REQUEST['galleryId'])) {
