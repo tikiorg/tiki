@@ -114,7 +114,7 @@
     {capture name=over_preview}{strip}
     {if $files[changes].type|truncate:6:'':true eq 'image/'}
     <div class='opaque'>
-      <img src="tiki-download_file.php?fileId={$files[changes].id}&amp;thumbnail" />
+      <img src="{$files[changes].id|sefurl:thumbnail}" />
     </div>
     {/if}
     {/strip}{/capture}
@@ -193,7 +193,7 @@
           href="tiki-list_file_gallery.php?galleryId={$files[changes].id}{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}"
         {else}
           {if $filegals_manager neq ''}
-            {assign var=seturl value="`$url_path`tiki-download_file.php?fileId=`$files[changes].id`&display"}
+            {assign var=seturl value="`$url_path``$files[changes].id|sefurl:display`"}
 
             {* Note: When using this code inside FCKeditor, SetMyUrl function is not defined and we use FCKeditor SetUrl native function *}
             href="javascript:if (typeof window.opener.SetMyUrl != 'undefined') window.opener.SetMyUrl('{$filegals_manager|escape}','{$seturl}'); else window.opener.SetUrl('{$seturl}'); checkClose();"  title="{tr}Click Here to Insert in Wiki Syntax{/tr}"
@@ -202,7 +202,7 @@
             {if $gal_info.type eq 'podcast' or $gal_info.type eq 'vidcast'}
               href="{$download_path}{$files[changes].path}" title="{tr}Download{/tr}"
             {else}
-              href="tiki-download_file.php?fileId={$files[changes].id}" title="{tr}Download{/tr}"
+              href="{$files[changes].id|sefurl:file}" title="{tr}Download{/tr}"
             {/if}
           {/if}
           {if $smarty.capture.over_preview neq ''}
