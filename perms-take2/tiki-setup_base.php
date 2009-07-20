@@ -381,13 +381,20 @@ require_once 'lib/core/lib/Perms/ResolverFactory/GlobalFactory.php';
 require_once 'lib/core/lib/Perms/ResolverFactory/CategoryFactory.php';
 require_once 'lib/core/lib/Perms/ResolverFactory/ObjectFactory.php';
 
+$sequence = array(
+	new Perms_Check_Direct,
+	new Perms_Check_Indirect( $map ),
+);
+
+if( $user ) {
+	require_once 'lib/core/lib/Perms/Check/Creator.php';
+	$sequence[] = new Perms_Check_Creator( $user );
+}
+
 $perms = new Perms;
 $perms->setGroups( $groupList );
 $perms->setPrefix( 'tiki_p_' );
-$perms->setCheckSequence( array(
-	new Perms_Check_Direct,
-	new Perms_Check_Indirect( $map ),
-) );
+$perms->setCheckSequence( $sequence );
 $perms->setResolverFactories( array(
 	new Perms_ResolverFactory_ObjectFactory,
 	new Perms_ResolverFactory_CategoryFactory,
