@@ -352,13 +352,31 @@ if (!$cachelib->isCached("allperms")) {
 	$allperms = unserialize($cachelib->getCached("allperms"));
 }
 $permissionList = array();
+$adminPermissions = array();
+
 foreach( $allperms['data'] as $row ) {
 	$permissionList[] = $row['permName'];
+
+	if( $row['admin'] == 'y' ) {
+		$adminPermissions[ $row['type'] ] = substr( $row['permName'], strlen( 'tiki_p_' ) );
+	}
+}
+
+// Create a map from the permission to the admin permission
+$map = array();
+foreach( $allperms['data'] as $row ) {
+	$type = $row['type'];
+	if( isset( $adminPermissions[$type] ) && $row['admin'] != 'y' ) {
+		$permName = substr( $row['permName'], strlen( 'tiki_p_' ) );
+		$map[ $permName ] = $adminPermissions[$type];
+	}
 }
 
 $groupList = $tikilib->get_user_groups( $user );
 
 require_once 'lib/core/lib/Perms.php';
+require_once 'lib/core/lib/Perms/Check/Direct.php';
+require_once 'lib/core/lib/Perms/Check/Indirect.php';
 require_once 'lib/core/lib/Perms/ResolverFactory/GlobalFactory.php';
 require_once 'lib/core/lib/Perms/ResolverFactory/CategoryFactory.php';
 require_once 'lib/core/lib/Perms/ResolverFactory/ObjectFactory.php';
@@ -366,6 +384,10 @@ require_once 'lib/core/lib/Perms/ResolverFactory/ObjectFactory.php';
 $perms = new Perms;
 $perms->setGroups( $groupList );
 $perms->setPrefix( 'tiki_p_' );
+$perms->setCheckSequence( array(
+	new Perms_Check_Direct,
+	new Perms_Check_Indirect( $map ),
+) );
 $perms->setResolverFactories( array(
 	new Perms_ResolverFactory_ObjectFactory,
 	new Perms_ResolverFactory_CategoryFactory,
