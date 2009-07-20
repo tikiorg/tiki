@@ -165,17 +165,20 @@ class wslib extends CategLib
      */
     public function remove_ws ($ws_id)
     {	
-    	// Remove perms assigned to the WS
-    	$hashWS = md5($this->objectType . strtolower($ws_id));
-	$query = "delete from `users_objectpermissions` where `objectType` = ? and `objectId` = ?";
-	$this->query($query, array($this->objectType, $hashWS), -1, -1, false);
-	
-	// Remove the WS groups
+    	// Remove the WS groups
+	$listWSGroups = $this->list_groups_that_can_access_in_ws ($ws_id);
+	foreach ($listWSGroups as $group)
+		$this->remove_ws_group ($ws_id,$group["groupName"]);
 	
 	// Remove the WS objects
 	$listWSObjects = $this->list_ws_objects($ws_id);
 	foreach ($listWSObjects as $object)
 		$this->remove_ws_object ($ws_id,$object["objectId"],$object["itemId"],$object["type"]);
+    	
+    	// Remove perms assigned to the WS
+    	$hashWS = md5($this->objectType . strtolower($ws_id));
+	$query = "delete from `users_objectpermissions` where `objectType` = ? and `objectId` = ?";
+	$this->query($query, array($this->objectType, $hashWS), -1, -1, false);
 		
 	// Remove WS recursively
 	$wsChilds = $this->get_ws_childs ($ws_id);
@@ -217,7 +220,6 @@ class wslib extends CategLib
     	$query = "select count(*) from `users_objectpermissions`
 			   where `groupName` = ? and `permName` = 'tiki_p_ws_view'";
 	$result = $this->getOne($query, array($groupName));
-    	
     	// If the group only had access to the current WS
     	if (($result == 1) && !($group == 'Anonymous' || $group == 'Registered' || $group == 'Admin'))
     	{
@@ -438,11 +440,12 @@ class wslib extends CategLib
      */
     public function is_object_in_ws($objectId)
     {
-	$query = "select t0.count(*) from `tiki_categories` t0, `tiki_category_objects` t1 
-			   where t1.`objectId` = ? and t1.`categId`= t0.`categId` 
+	$query = "select count(t0.`categId`) from `tiki_categories` t0, `tiki_category_objects` t1 
+			   where t1.`catObjectId` = ? and t1.`categId`= t0.`categId` 
 			   and t0.`rootCategId`=?";
 	$bindvars = array($objectId, $this->ws_container);
-	return (($this->getOne($query,$bindvars)) >= 1);
+	$num = $this->getOne($query,$bindvars);
+	return ($num >= 1);
     }
 	
     /** Remove an object inside in a WS
@@ -466,7 +469,6 @@ class wslib extends CategLib
     	
     	if (!$this->is_object_in_ws($objectId))
     	{
-    		echo("<br>Delete the ".$type." ".$itemId."<br>");
 		// Delete all the object perms related to the object
 		$query = "delete from `users_objectpermissions` where `objectType` = ? and `objectId` = ?";
 		$this->query($query, array($type, $hashObject), -1, -1, false);
@@ -567,7 +569,6 @@ class wslib extends CategLib
     	}
     	else
     	{
-    		echo("<br>Just remove the ".$type." ".$itemId." from WS<br>");
     		// Get the groups that only have access to the WS in which the object is stored.
     		$hashWS = md5($this->objectType . strtolower($ws_id));
     		$query = "select `groupName` from `users_objectpermissions` t1 

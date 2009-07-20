@@ -34,14 +34,14 @@ $user = 'Ben';
 if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'create'))
 {
 	// Creating Groups and user
-	echo("Creating Groups");
-	if ($userlib->add_group('G1'));
-	if ($userlib->add_group('G2'));
+	echo("Creating Groups<br>");
+	$userlib->add_group('G1');
+	$userlib->add_group('G2');
 	if ($userlib->add_user($user, '12345'));
 	$userlib->assign_user_to_group($user, 'G1');
 	$userlib->assign_user_to_group($user, 'G2');
 
-	echo("Creating WS");
+	echo("Creating WS<br>");
 	// Creating new WS
 	if  (!($id1 = $wslib->get_ws_id('WS1',0)))
 		$id1 = $wslib->create_ws ('WS1', 'G2', null, true ,array('tiki_p_ws_admingroups'));
@@ -60,6 +60,7 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'create'))
 	$wslib->set_permissions_for_group_in_ws($id3,'G2',array('tiki_p_ws_view','tiki_p_ws_addresource'));
 	
 	// Adding Resources in WS
+	echo("Creating Resources<br>");
 	$wslib->create_ws_object($id1,'Wiki1','wiki page');
 	$wslib->create_ws_object($id2,'Wiki2','wiki page');
 	$wslib->add_ws_object($id3,'Wiki2','wiki page');
@@ -85,6 +86,7 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'destroy') && ($wsCont
 	$id5= $wslib->get_ws_id('WS22',$id2);
 	
 	// Removing WS
+	echo("Delete all created WS, with it groups and resources");
 	$wslib->remove_ws($id1);
 	$wslib->remove_ws($id5);
 	$wslib->remove_ws($id3);
