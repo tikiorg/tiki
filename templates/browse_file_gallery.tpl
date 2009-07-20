@@ -76,7 +76,7 @@
           {assign var=seturl value=$files[changes].id|sefurl:display}
 
           {* Note: When using this code inside FCKeditor, SetMyUrl function is not defined and we use FCKeditor SetUrl native function *}
-          href="javascript:if (typeof window.opener.SetMyUrl != 'undefined') window.opener.SetMyUrl('{$filegals_manager|escape}','{$seturl}'); else window.opener.SetUrl('{$seturl}'); checkClose();" title="{tr}Click Here to Insert in Wiki Syntax{/tr}"
+          href="javascript:if (typeof window.opener.SetMyUrl != 'undefined') window.opener.SetMyUrl('{$filegals_manager|escape}','{$seturl}'); else window.opener.SetUrl('{$tikiroot}{$seturl}'); checkClose();" title="{tr}Click Here to Insert in Wiki Syntax{/tr}"
 
         {elseif $tiki_p_download_files eq 'y'}
           {if $gal_info.type eq 'podcast' or $gal_info.type eq 'vidcast'}
