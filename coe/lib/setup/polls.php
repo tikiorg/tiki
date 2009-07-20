@@ -12,9 +12,7 @@ $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 if ( isset($_REQUEST['pollVote']) ) {
 	if ( $tiki_p_vote_poll == 'y' && isset($_REQUEST['polls_optionId']) ) {
 		if( $prefs['feature_poll_anonymous'] == 'y' || $user ) {
-			if ( ! isset($polllib) or ! is_object($polllib) ) {
-				include_once('lib/polls/polllib_shared.php');
-			}
+			global $polllib; include_once('lib/polls/polllib_shared.php');
 			if (($prefs['feature_poll_revote'] == 'y' && $user) || !$tikilib->user_has_voted($user, 'poll'.$_REQUEST['polls_pollId'])) {
 				$polllib->poll_vote($user, $_REQUEST['polls_pollId'], $_REQUEST['polls_optionId']);
 				$tikilib->register_user_vote($user, 'poll' . $_REQUEST['polls_pollId'], $_REQUEST['polls_optionId']);
