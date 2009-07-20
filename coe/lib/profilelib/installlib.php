@@ -23,6 +23,7 @@ class Tiki_Profile_Installer
 		'article' => 'Tiki_Profile_InstallHandler_Article',
 		'forum' => 'Tiki_Profile_InstallHandler_Forum',
 		'template' => 'Tiki_Profile_InstallHandler_Template',
+		'perspective' => 'Tiki_Profile_InstallHandler_Perspective',
 	);
 
 	private static $typeMap = array(
@@ -1888,6 +1889,58 @@ class Tiki_Profile_InstallHandler_Template extends Tiki_Profile_InstallHandler /
 		}
 
 		return $templateId;
+	}
+} // }}}
+
+class Tiki_Profile_InstallHandler_Perspective extends Tiki_Profile_InstallHandler // {{{
+{
+	function getData()
+	{
+		if( $this->data )
+			return $this->data;
+
+		$defaults = array(
+			'preferences' => array(),
+		);
+
+		$data = array_merge(
+			$defaults,
+			$this->obj->getData()
+		);
+
+		$data['preferences'] = Tiki_Profile::convertLists( $data['preferences'], array(
+			'enable' => 'y', 
+			'disable' => 'n'
+		) );
+
+		$data['preferences'] = Tiki_Profile::convertYesNo( $data['preferences'] );
+
+		return $this->data = $data;
+	}
+
+	function canInstall()
+	{
+		$data = $this->getData();
+		if( ! isset( $data['name'] ) )
+			return false;
+
+		return true;
+	}
+
+	function _install()
+	{
+		global $perspectivelib;
+		require_once 'lib/perspectivelib.php';
+
+		$data = $this->getData();
+
+		$this->replaceReferences( $data );
+
+		if( $persp = $perspectivelib->replace_perspective( 0, $data['name'] ) ) {
+			$perspectivelib->replace_preferences( $persp, $data['preferences'] );
+		}
+
+		return $persp;
 	}
 } // }}}
 
