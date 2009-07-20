@@ -163,12 +163,12 @@ class RankLib extends TikiLib {
 		{		
 		$query = "select * from
 		`tiki_comments` a,`tiki_forums` tf where
-		`object`=".$this->sql_cast("`forumId`","string")." and `objectType` = 'forum' and
+		`object`=".$this->cast("`forumId`","string")." and `objectType` = 'forum' and
 		`parentId`=0 $mid order by `commentDate` desc";
 		} else {		
 		$query = "select a.*, tf.*, max(b.`commentDate`) as `lastPost` from
 		`tiki_comments` a left join `tiki_comments` b on b.`parentId`=a.`threadId` right join `tiki_forums` tf on "
-		.$this->sql_cast("tf.`forumId`","string")." = a.`object`".
+		.$this->cast("tf.`forumId`","string")." = a.`object`".
 		" where	a.`objectType` = 'forum' and a.`parentId`=0 $mid group by a.`threadId` order by `lastPost` desc";
 		}
 
@@ -213,7 +213,7 @@ class RankLib extends TikiLib {
 		while( $count < $limit) {
 			$query = "select `name`, `title`, `commentDate`, `parentId`, `threadId`, `forumId`, `userName` from
 				`tiki_comments`,`tiki_forums` where
-				`object`=".$this->sql_cast("`forumId`","string")." and `objectType` = 'forum'
+				`object`=".$this->cast("`forumId`","string")." and `objectType` = 'forum'
 				order by `commentDate` desc"; 
 			$result = $this->query($query,array(),1,$offset);
 			$offset++;

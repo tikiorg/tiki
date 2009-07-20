@@ -347,7 +347,7 @@ if (isset($_REQUEST['edit'])) {
 			$categlib->build_cache();
 		}
 		if (isset($_REQUEST['viewitem'])) {
-			header('Location: tiki-list_file_gallery.php?galleryId=' . $fgid);
+			header('Location: tiki-list_file_gallery.php?galleryId=' . $fgid.(!empty($_REQUEST['filegals_manager'])?'&filegals_manager='.$_REQUEST['filegals_manager']:''));
 			die;
 		}
 		$smarty->assign('edit_mode', 'y');
@@ -524,10 +524,6 @@ if (!isset($_REQUEST['maxRecords']) || $_REQUEST['maxRecords'] <= 0) {
 $smarty->assign_by_ref('maxRecords', $_REQUEST['maxRecords']);
 if (!isset($_REQUEST['offset'])) $_REQUEST['offset'] = 0;
 $smarty->assign_by_ref('offset', $_REQUEST['offset']);
-if (isset($_GET['slideshow'])) {
-	$_REQUEST['maxRecords'] = $maxRecords = - 1;
-	$offset = 0;
-}
 if (empty($_REQUEST['sort_mode'])) {
 	if ($gal_info['sort_mode'] == 'name_asc' && $gal_info['show_name'] == 'f') {
 		$_REQUEST['sort_mode'] = 'filename_asc';
@@ -542,6 +538,8 @@ if (isset($_REQUEST['fileId'])) {
 	$smarty->assign('fileId', $_REQUEST['fileId']);
 }
 if (isset($_GET['slideshow'])) {
+	$_REQUEST['maxRecords'] = $maxRecords = - 1;
+	$offset = 0;
 	$files = $tikilib->get_files(0, -1, $_REQUEST['sort_mode'], $_REQUEST['find'], $_REQUEST['galleryId'] == 0 ? -1 : $_REQUEST['galleryId'], false, false, false, true, false, false, false, true, '', false);
 	$smarty->assign('cant', $files['cant']);
 	$i = 0;
@@ -701,7 +699,7 @@ if ($_REQUEST['galleryId'] == 0) {
 include_once ('fgal_listing_conf.php');
 $smarty->assign('view', isset($_REQUEST['view']) ? $_REQUEST['view'] : $fgal_options['default_view']['value']);
 // Display the template
-if (isset($_REQUEST['filegals_manager']) && $_REQUEST['filegals_manager'] != '') {
+if (!empty($_REQUEST['filegals_manager'])) {
 	$smarty->assign('filegals_manager', $_REQUEST['filegals_manager']);
 	$smarty->display('tiki_full.tpl');
 } else {

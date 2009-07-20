@@ -1015,6 +1015,18 @@ function SetMyUrl(area,url) {
   str = "{img src=\""+myurl.replace(/display$/, 'thumbnail')+"\" alt=\"\" link=\""+myurl+"\" rel=\"shadowbox[g];type=img\"} ";
   insertAt(area, str);
 }
+
+if (typeof fgals_window == "undefined") {
+	var fgals_window = null;
+}
+function openFgalsWindow(filegal_manager_url, area_name) {
+	if(fgals_window && fgals_window.document) {
+		fgals_window.focus();
+	} else {
+		fgals_window=window.open(filegal_manager_url,'_blank','menubar=1,scrollbars=1,resizable=1,height=500,width=800,left=50,top=50');
+	}
+}
+
 /* Count the number of words (spearated with space) */
 function wordCount(maxSize, source, cpt, message) {
   var formcontent = source.value;

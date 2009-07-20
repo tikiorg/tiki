@@ -124,10 +124,10 @@ form {
 hr {
 	width: 100%;
 	height: 1px;
-	background: red;
+/*	background: red; */
 	border-width: 0;
 	padding: 0;
-	color: red;
+/*	color: red; */
 }
 	
 img {
@@ -954,13 +954,13 @@ div.minichatchan {
 /** Other boxes **/
 .cbox {
 	overflow: hidden;
-	border: 1px solid yellow;
+/*	border: 1px solid yellow;
 	background: white;
-	color: black;
+	color: black; */
 }
 
 .cbox-title {
-	border-bottom: 1px solid yellow;
+/*	border-bottom: 1px solid yellow; */
 	padding: 3px 3px 0 3px;
 }
 
@@ -979,7 +979,7 @@ div.minichatchan {
 .rbox-data {
 	overflow: hidden;
 	padding: 1px 3px;
-	border: 1px solid yellow;
+/*	border: 1px solid yellow;*/
 }
 
 .rbox-title {
@@ -989,9 +989,9 @@ div.minichatchan {
 	position: relative;
 	bottom: -1px;
 	padding: 3px;
-	background: yellow;
+/*	background: yellow;
 	border: 1px solid yellow;
-	border-bottom: 0;
+	border-bottom: 0; */
 }
 	
 .rbox img {
@@ -1018,9 +1018,9 @@ div.minichatchan {
 .warning .rbox-data {}
 
 div.simplebox {
-	color: green;
+/*	color: green;
 	background: silver;
-	border: 1px solid green;
+	border: 1px solid green; */
 	padding: 3px;
 }
 
@@ -2711,7 +2711,7 @@ div#ajaxLoading {
 .webmail_list .even {}
 
 .webmail_list .odd {
-	background-color: #eee;
+	background: #eee;
 }
 
 .webmail_list .button {
@@ -2722,13 +2722,13 @@ div#ajaxLoading {
 }
 
 .webmail_list .webmail_read {
-	background-color: #aaa;
+	background: #aaa;
 }
 
 .webmail_list .webmail_flagged {}
 
 .webmail_list .webmail_replied {
-	background-color: #888;
+	background: #888;
 }
 
 .webmail_list .webmail_taken {
@@ -2737,7 +2737,7 @@ div#ajaxLoading {
 }
 
 .webmail_message {
-	background-color: #fff;
+	background: #fff;
 }
 
 .webmail_mono {
@@ -2749,7 +2749,7 @@ div#ajaxLoading {
 }
 
 table.webmail_message_headers {
-	background-color: #fff;
+	background: #fff;
 	width: 100%;
 	padding: 0 5em .5em 0;
 }
@@ -2759,7 +2759,7 @@ table.webmail_message_headers th {
 	font-style: italic;
 	text-align: right;
 	border: none;
-	background-color: transparent;
+	background: transparent;
 }
 
 /***** End New (unsorted) *****/

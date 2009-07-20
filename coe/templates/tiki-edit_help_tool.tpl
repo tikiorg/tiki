@@ -89,23 +89,7 @@ function taginsert(area_name,tagid)
     {/section}
 
   {if ($prefs.feature_filegals_manager eq 'y') and ($prefs.feature_file_galleries eq 'y') and ($tiki_p_list_file_galleries eq 'y') and ($prefs.feature_wiki_pictures eq 'y')}
-    {literal}
-<script type="text/javascript">
-<!--//--><![CDATA[//><!--
-if (typeof fgals_window == "undefined") {
-	var fgals_window = null;
-}
-function openFgalsWindow() {
-	if(fgals_window && fgals_window.document) {
-		fgals_window.focus();
-	} else {{/literal}
-		fgals_window=window.open('{filegal_manager_url area_name=$area_name}','_blank','menubar=1,scrollbars=1,resizable=1,height=500,width=800,left=50,top=50');
-	{literal}}
-}
-//--><!]]>
-</script>
-    {/literal}
-    <a title="{tr}Add Image from File Gallery{/tr}" href="#" onclick="needToConfirm=false; openFgalsWindow();return false;">{icon _id='pictures' alt='{tr}Add Image from File Gallery{/tr}'}</a>
+    <a title="{tr}Add Image from File Gallery{/tr}" href="#" onclick="needToConfirm=false; openFgalsWindow('{filegal_manager_url area_name=$area_name}');return false;">{icon _id='pictures' alt='{tr}Add Image from File Gallery{/tr}'}</a>
     {if (!isset($zoom_mode) || $zoom_mode eq 'n') and $prefs.quicktags_over_textarea neq 'y'}{cycle name='cycle'|cat:$qtnum}{/if}
   {/if}
 

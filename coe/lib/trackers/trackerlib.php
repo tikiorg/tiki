@@ -855,8 +855,17 @@ class TrackerLib extends TikiLib {
 				$fopt['fieldId'] = $fieldId;
 			$fieldId = $fopt['fieldId'];
 			$fopt['value'] = ( isset($fil[$fieldId]) ) ? $fil[$fieldId] : '';
-			if ($tiki_p_admin_trackers != 'y' && ($fopt['isHidden'] == 'y' || ($fopt['isHidden'] == 'c' && $itemUser != $user))) {
-				$fopt['value'] = '';
+			if ($tiki_p_admin_trackers != 'y') {
+				if ($fopt['isHidden'] == 'y') {
+					$fopt['value'] = '';
+				} elseif ($fopt['isHidden'] == 'c') {
+					if (empty($itemUser)) {
+						$itemUser = $this->get_item_creator($trackerId, $itemId);
+					}
+					if ($itemUser != $user) {
+						$fopt['value'] = '';
+					}
+				}
 			}
 			$fopt['linkId'] = '';
 			if (!empty($fopt['options'])) {

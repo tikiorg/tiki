@@ -48,10 +48,6 @@ try {
 $dbTiki->setAttribute(PDO::ATTR_CASE,PDO::CASE_NATURAL);
 $dbTiki->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_WARNING);
 $dbTiki->setAttribute(PDO::ATTR_ORACLE_NULLS,PDO::NULL_EMPTY_STRING);
-//$dbTiki->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY,false);
-if ($dbTiki->getAttribute(PDO::ATTR_DRIVER_NAME) == 'mysql') {
-	$dbTiki->exec("SET CHARACTER SET utf8");
-}
 
 $pq = $dbTiki->prepare('select `login` from `users_users` limit 1');
 $result = $pq->execute();
@@ -85,6 +81,6 @@ function close_connection() {
 	$dbTiki= NULL;
 }
 
-require_once 'TikiDb/Pdo.php';
+require_once 'lib/core/lib/TikiDb/Pdo.php';
 TikiDb::set( new TikiDb_Pdo( $dbTiki ) );
 

@@ -16,14 +16,10 @@ class TikiDb_Adodb extends TikiDb {
 
 	function qstr( $str ) // {{{
 	{
-		if (function_exists('mysql_real_escape_string')) {
-			return "'" . mysql_real_escape_string($str). "'";
-		} else {
-			return "'" . mysql_escape_string($str). "'";
-		}
+		return $this->db->quote( $str );
 	} // }}}
 
-	function query( $query, $values = null, $numrows = -1, $offset = -1, $reporterrors = true ) // {{{
+	function query( $query = null, $values = null, $numrows = -1, $offset = -1, $reporterrors = true ) // {{{
 	{
 		global $num_queries;
 		$num_queries++;

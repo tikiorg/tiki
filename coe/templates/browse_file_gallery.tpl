@@ -73,16 +73,16 @@
         href="tiki-list_file_gallery.php?galleryId={$files[changes].id}{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}&amp;view=browse"
       {else}
         {if $filegals_manager neq ''}
-          {assign var=seturl value="`$url_path`tiki-download_file.php?fileId=`$files[changes].id`&display"}
+          {assign var=seturl value=$files[changes].id|sefurl:display}
 
           {* Note: When using this code inside FCKeditor, SetMyUrl function is not defined and we use FCKeditor SetUrl native function *}
-          href="javascript:if (typeof window.opener.SetMyUrl != 'undefined') window.opener.SetMyUrl('{$filegals_manager|escape}','{$seturl}'); else window.opener.SetUrl('{$seturl}'); checkClose();"
+          href="javascript:if (typeof window.opener.SetMyUrl != 'undefined') window.opener.SetMyUrl('{$filegals_manager|escape}','{$seturl}'); else window.opener.SetUrl('{$tikiroot}{$seturl}'); checkClose();" title="{tr}Click Here to Insert in Wiki Syntax{/tr}"
 
         {elseif $tiki_p_download_files eq 'y'}
           {if $gal_info.type eq 'podcast' or $gal_info.type eq 'vidcast'}
             href="{$download_path}{$files[changes].path}"
           {else}
-            href="tiki-download_file.php?fileId={$files[changes].id}&amp;{if $prefs.javascript_enabled eq 'y'}preview{else}display=y{/if}"
+            href="{if $prefs.javascript_enabled eq 'y'}{$files[changes].id|sefurl:preview}{else}{$files[changes].id|sefurl:display}{/if}"
           {/if}
         {/if}
       {/if}
@@ -97,7 +97,7 @@
           <div class="thumbimage">
             <div class="thumbimagesub" style="width:{$thumbnail_size}px;">{assign var=key_type value=$files[changes].type|truncate:9:'':true}
               <a {$link}{if $prefs.feature_shadowbox eq 'y' && $filegals_manager eq ''} rel="shadowbox[gallery];type={if $key_type eq 'image/png' or $key_type eq 'image/jpe' or $key_type eq 'image/gif'}img{else}iframe{/if}"{/if}{if $over_infos neq ''} {popup fullhtml="1" text=$over_infos|escape:"javascript"|escape:"html"}{else} title="{if $files[changes].name neq ''}{$files[changes].name|escape}{/if}{if $files[changes].description neq ''} ({$files[changes].description|escape}){/if}"{/if}>
-                <img src="tiki-download_file.php?fileId={$files[changes].id}&amp;thumbnail" />
+				<img src="{$files[changes].id|sefurl:thumbnail}" />
               </a>
             </div>
           </div>
@@ -106,20 +106,20 @@
 	{if $show_infos eq 'y'}
         <div class="thumbinfos">
         {foreach from=$fgal_listing_conf item=item key=propname}
-
+          {assign var=key_name_len value=16}
           {if isset($item.key)}
             {assign var=key_name value=$item.key}
           {else}
             {assign var=key_name value="show_$propname"}
           {/if}
           {if isset($gal_info.$key_name) and ( $gal_info.$key_name eq 'y' or $gal_info.$key_name eq 'a' or $gal_info.$key_name eq 'i' or $propname eq 'name' ) }
-            {assign var=propval value=$files[changes].$propname|escape}
+            {assign var=propval value=$files[changes].$propname|truncate:$key_name_len|escape}
         
             {* Format property values *}
             {if $propname eq 'id' or $propname eq 'name'}
               {if $propname eq 'name' and $propval eq '' and $gal_info.show_name eq 'n'}
                 {* show the filename if only name should be displayed but is empty *}
-                {assign var=propval value=$files[changes].filename}
+                {assign var=propval value=$files[changes].filename|truncate:$key_name_len}
                 {assign var=propval value="<a class='fgalname namealias' $link>$propval</a>"}
               {else}
                 {assign var=propval value="<a class='fgalname' $link>$propval</a>"}
@@ -141,7 +141,7 @@
             <div class="thumbname">
               <div class="thumbnamesub" style="width:{$thumbnail_size}px">
                 {if $gal_info.show_name eq 'f' or ($gal_info.show_name eq 'a' and $files[changes].name eq '')}
-                  <a class="fgalname" {$link} title="{$files[changes].filename}">{$files[changes].filename}</a>
+                  <a class="fgalname" {$link} title="{$files[changes].filename}">{$files[changes].filename|truncate:$key_name_len}</a>
                 {else}
                   {$propval}
                 {/if}

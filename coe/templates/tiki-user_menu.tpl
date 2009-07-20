@@ -30,7 +30,7 @@
 		</span>
 		{if $chdata.url and $link_on_section eq 'y'}
 			<span class="separatoricon-url" style="display:none">
-				<a href="{if $prefs.feature_sefurl eq 'y' and $chdata.sefurl}{$chdata.sefurl}{else}{$chdata.url}{/if}">
+				<a href="{if $prefs.feature_sefurl eq 'y' and !empty($chdata.sefurl)}{$chdata.sefurl}{else}{$chdata.url}{/if}">
 					{icon _id=$chdata.icon alt="{tr}Toggle{/tr}" _defaultdir='pics/large'}
 				</a>
 			</span>
@@ -57,7 +57,7 @@
 	{/if}
 {/if} 
 {if $chdata.url and $link_on_section eq 'y'}
-<a href="{if $prefs.feature_sefurl eq 'y' and $chdata.sefurl}{$chdata.sefurl}{else}{$chdata.url}{/if}" class="separator">
+<a href="{if $prefs.feature_sefurl eq 'y' and !empty($chdata.sefurl)}{$chdata.sefurl}{else}{$chdata.url}{/if}" class="separator">
 {else}
 <a href="javascript:icntoggle('menu{$cname}');" class="separator">
 {/if}
@@ -75,7 +75,7 @@
 
 {* ----------------------------- option *}
 {elseif $chdata.type eq 'o'}
-<div class="option{$sep}{if isset($chdata.selected) and $chdata.selected} selected{/if}"><a href="{if $prefs.feature_sefurl eq 'y' and $chdata.sefurl}{$chdata.sefurl}{else}{$chdata.url}{/if}" class="linkmenu">{if $prefs.menus_items_icons eq 'y' and $menu_info.use_items_icons eq 'y' and ($opensec eq 0 or $chdata.icon neq '')}{icon _id=$chdata.icon alt='' _defaultdir='pics/large'} {/if}<span class="menuText">{if $translate eq 'n'}{$chdata.name|escape}{else}{tr}{$chdata.name}{/tr}{/if}</span></a></div>
+<div class="option{$sep}{if isset($chdata.selected) and $chdata.selected} selected{/if}"><a href="{if $prefs.feature_sefurl eq 'y' and !empty($chdata.sefurl)}{$chdata.sefurl}{else}{$chdata.url}{/if}" class="linkmenu">{if $prefs.menus_items_icons eq 'y' and $menu_info.use_items_icons eq 'y' and ($opensec eq 0 or $chdata.icon neq '')}{icon _id=$chdata.icon alt='' _defaultdir='pics/large'} {/if}<span class="menuText">{if $translate eq 'n'}{$chdata.name|escape}{else}{tr}{$chdata.name}{/tr}{/if}</span></a></div>
 {if $sep eq 'line'}{assign var=sep value=''}{/if}
 
 {* ----------------------------- separator *}

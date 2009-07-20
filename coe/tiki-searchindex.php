@@ -6,8 +6,7 @@
 // $Id: /cvsroot/tikiwiki/tiki/tiki-searchindex.php,v 1.16.2.4 2008-03-05 22:33:29 sylvieg Exp $
 $section = 'search';
 require_once ('tiki-setup.php');
-// note: lib/search/searchlib.php is new. the old one was lib/searchlib.php
-require_once ('lib/search/searchlib.php');
+require_once ('lib/search/searchlib-tiki.php');
 $auto_query_args = array('highlight', 'where');
 $searchlib = new SearchLib;
 $smarty->assign('headtitle', tra('Search'));
