@@ -49,6 +49,7 @@ class Smarty_Tikiwiki extends Smarty {
 		);
 		$secure_dirs[] = 'img/icons2';
 		$this->secure_dir = $secure_dirs;
+		$this->security_settings['ALLOW_SUPER_GLOBALS'] = true;
 	}
 
 	function _smarty_include($params) {
