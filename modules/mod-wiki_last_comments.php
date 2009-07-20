@@ -68,7 +68,7 @@ if (!function_exists('module_last_comments')) {
 }
 global $smarty;
 switch ($module_params['type']) {
-case 'cms':
+case 'cms': case 'article': case 'articles':
 	$module_params['type'] = 'article';
 	break;
 default:
