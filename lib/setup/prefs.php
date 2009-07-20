@@ -1206,6 +1206,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_machine_translation' => 'n',
 		'feature_newsletters' => 'n',
 		'feature_obzip' => 'n',
+		'feature_perspective' => 'n', // If enabling by default, update further in this file
 		'feature_phplayers' => 'y', // Enabled by default for a better file gallery tree explorer
 		'feature_cssmenus' => 'n',
 		'feature_projects' => 'n',
@@ -1464,6 +1465,15 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 
 	// Override default prefs with values specified in database
 	$modified = $tikilib->get_db_preferences();
+
+	// Disabled by default so it has to be modified
+	if( $modified['feature_perspective'] == 'y' ) {
+		if( isset( $_SESSION['current_perspective'] ) ) {
+			require_once 'lib/perspectivelib.php';
+			$changes = $perspectivelib->get_preferences( $_SESSION['current_perspective'] );
+			$modified = array_merge( $modified, $changes );
+		}
+	}
 
 	// Unserialize serialized preferences
 	if ( isset($_SESSION['serialized_prefs']) && is_array($_SESSION['serialized_prefs']) ) {
