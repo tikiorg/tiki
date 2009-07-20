@@ -7422,6 +7422,18 @@ INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`) VALUES(
 go
 
 
+INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`) VALUES('tiki-download_file.php\\?fileId=(\\d+)&amp;thumbnail', 'thumbnail$1', 'thumbnail', 'feature_file_galleries')
+go
+
+
+INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`) VALUES('tiki-download_file.php\\?fileId=(\\d+)&amp;display', 'display$1', 'display', 'feature_file_galleries')
+go
+
+
+INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`) VALUES('tiki-download_file.php\\?fileId=(\\d+)&amp;preview', 'preview$1', 'preview', 'feature_file_galleries')
+go
+
+
 INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`) VALUES('tiki-view_forum.php\\?forumId=(\\d+)', 'forum$1', 'forum', 'feature_forums')
 go
 
@@ -7714,6 +7726,26 @@ CREATE TABLE "IF" NOT EXISTS `tiki_user_reports_cache` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM
 go
+
+
+
+CREATE TABLE "tiki_perspectives" (
+  "perspectiveId" int NOT NULL AUTO_INCREMENT,
+  "name" varchar(100) NOT NULL,
+  PRIMARY KEY( perspectiveId )
+) ENGINE=MyISAM
+go
+
+
+
+CREATE TABLE "tiki_perspective_preferences" (
+  "perspectiveId" int NOT NULL,
+  "pref" varchar(40) NOT NULL,
+  "value" text default '',
+  PRIMARY KEY( perspectiveId, pref )
+) ENGINE=MyISAM
+go
+
 
 
 

@@ -20,7 +20,7 @@ if ($prefs['feature_groupalert'] == 'y') {
 }
 include ('lib/filegals/max_upload_size.php');
 @ini_set('max_execution_time', 0); //will not work in safe_mode is on
-$auto_query_args = array('galleryId', 'fileId');
+$auto_query_args = array('galleryId', 'fileId', 'filegals_manager');
 function print_progress($msg) {
 	global $prefs;
 	if ($prefs['javascript_enabled'] == 'y') {
@@ -127,7 +127,7 @@ if (!empty($_REQUEST['galleryId'][0]) && $prefs['feature_groupalert'] == 'y') {
 	$smarty->assign_by_ref('groupforalert', $groupforalert);
 	$smarty->assign_by_ref('showeachuser', $showeachuser);
 }
-if (isset($_REQUEST['fileId'])) $editFileId = $_REQUEST['fileId'];
+if (isset($_REQUEST['fileId'])) {$editFileId = $_REQUEST['fileId'];} else {$editFileId = 0;}
 $editFile = false;
 if (!empty($editFileId)) {
 	if (!empty($_REQUEST['name'][0])) $fileInfo['name'] = $_REQUEST['name'][0];
@@ -135,9 +135,9 @@ if (!empty($editFileId)) {
 	if (!empty($_REQUEST['user'][0])) $fileInfo['user'] = $_REQUEST['user'][0];
 	if (!empty($_REQUEST['author'][0])) $fileInfo['author'] = $_REQUEST['author'][0];
 	$smarty->assign_by_ref('fileInfo', $fileInfo);
-	$smarty->assign('editFileId', $editFileId);
 	$editFile = true;
 }
+$smarty->assign('editFileId', $editFileId);
 if (!empty($_REQUEST['galleryId'][0])) {
 	//$gal_info = $tikilib->get_file_gallery((int)$_REQUEST["galleryId"]);
 	$smarty->assign_by_ref('gal_info', $gal_info);
@@ -310,6 +310,9 @@ if (isset($_REQUEST["upload"])) {
 					include_once ('categorize.php');
 					// Print progress
 					if ($prefs['javascript_enabled'] == 'y') {
+						if (!empty($_REQUEST['filegals_manager'])) {
+							$smarty->assign('filegals_manager', $_REQUEST['filegals_manager']);
+						}
 						$smarty->assign("name", $aux['name']);
 						$smarty->assign("size", $aux['size']);
 						$smarty->assign("fileId", $aux['fileId']);
@@ -350,6 +353,9 @@ if (isset($_REQUEST["upload"])) {
 		header("location: tiki-list_file_gallery.php?galleryId=" . $_REQUEST["galleryId"][0]);
 		die;
 	}
+} else {
+	$smarty->assign('errors', array());
+	$smarty->assign('uploads', array());
 }
 // Get the list of galleries to display the select box in the template
 if (isset($_REQUEST['galleryId']) && is_numeric($_REQUEST['galleryId'])) {
@@ -405,7 +411,7 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 // Display the template
 if ($prefs['javascript_enabled'] != 'y' or !isset($_REQUEST["upload"])) {
 	$smarty->assign('mid', 'tiki-upload_file.tpl');
-	if (isset($_REQUEST['filegals_manager']) && $_REQUEST['filegals_manager'] != '') {
+	if (!empty($_REQUEST['filegals_manager'])) {
 		$smarty->assign('filegals_manager', $_REQUEST['filegals_manager']);
 		$smarty->display("tiki-print.tpl");
 	} else {

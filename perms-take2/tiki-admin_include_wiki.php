@@ -159,7 +159,6 @@ if (isset($_REQUEST["wikifeatures"])) {
 		'wiki_authors_style_by_page',
 		'wiki_edit_minor',
 		'feature_filegals_manager',
-		'feature_filegals_manager_optional',
 	);
 	foreach($pref_toggles as $toggle) {
 		simple_set_toggle($toggle);

@@ -84,16 +84,14 @@ class TikiDb_Pdo extends TikiDb {
 		} else {
 			$this->setErrorMessage( "" );
 			if( $pq->columnCount() ) {
-				$tmp = new TikiDb_Pdo_Result($pq->fetchAll());
+				return $pq->fetchAll();
 			} else {
-				$tmp = new TikiDb_Pdo_Result(array());
+				return array();
 			}
-			$pq->closeCursor();
-			return $tmp;
 		}
 	} // }}}
 
-	function query($query = null, $values = null, $numrows = -1, $offset = -1, $reporterrors = true ) // {{{
+	function fetchAll($query = null, $values = null, $numrows = -1, $offset = -1, $reporterrors = true ) // {{{
 	{
 		$result = $this->_query($query,$values, $numrows, $offset);
 		if (!$result ) {
@@ -103,6 +101,18 @@ class TikiDb_Pdo extends TikiDb {
 		}
 
 		return $result;
+	} // }}}
+
+	function query($query = null, $values = null, $numrows = -1, $offset = -1, $reporterrors = true ) // {{{
+	{
+		$result = $this->_query($query,$values, $numrows, $offset);
+		if ( $result === false ) {
+			if ($reporterrors) {
+				$this->handleQueryError($query, $values, $result);
+			}
+		}
+
+		return new TikiDb_Pdo_Result($result);
 	} // }}}
 }
 
