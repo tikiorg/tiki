@@ -177,15 +177,9 @@ class Installer
 
 	function query( $query, $values = array() ) // {{{
 	{
-		global $dbTiki, $tikilib;
-
 		$error = '';
-		if( $tikilib ) {
-			$result = $tikilib->queryError( $query, $error, $values );
-		} elseif( $dbTiki && method_exists( $dbTiki, 'Execute' ) ) {
-			$result = $dbTiki->Execute( $query, $values );
-			$error = $dbTiki->ErrorMsg();
-		}
+		$db = TikiDb::get();
+		$result = $db->queryError( $query, $error, $values );
 
 		if( $result ) {
 			$this->success[] = $query;

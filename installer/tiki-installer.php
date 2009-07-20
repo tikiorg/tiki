@@ -648,6 +648,9 @@ if (!file_exists($local)) {
 		$smarty->assign('dbcon', 'n');
 	} else {
 		$dbTiki = ADONewConnection($db_tiki);
+		$db = new TikiDb_Adodb( $dbTiki );
+		$db->setErrorHandler( new InstallerDatabaseErrorHandler );
+		TikiDb::set( $db );
 
 		if (!$dbTiki->Connect($host_tiki, $user_tiki, $pass_tiki, $dbs_tiki)) {
 			$dbcon = false;
@@ -696,6 +699,9 @@ if ((!$dbcon or (isset($_REQUEST['resetdb']) and $_REQUEST['resetdb']=='y' &&
 	)) && isset($_REQUEST['dbinfo'])) {
 
 	$dbTiki = &ADONewConnection($_REQUEST['db']);
+	$db = new TikiDb_Adodb( $dbTiki );
+	$db->setErrorHandler( new InstallerDatabaseErrorHandler );
+	TikiDb::set( $db );
 
 	if (isset($_REQUEST['name']) and $_REQUEST['name']) {
 		if (!@$dbTiki->Connect($_REQUEST['host'], $_REQUEST['user'], $_REQUEST['pass'], $_REQUEST['name'])) {
