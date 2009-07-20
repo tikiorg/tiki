@@ -68,9 +68,7 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper {
 
 //html markup	
 //Google doesn't return parens upon translation
-//also keep track of spaces (Google adds them after no translate tag and we remove them afterwards, 
-//this is to remember the ones to keep)
-	var $markup = "/\s*<[^>]*>\s*|\(|\)/";
+	var $markup = "/<[^>]*>|\(|\)/";
 		
    	var $escape_untranslatable_strings = "<span class='notranslate'>$0</span>";
    	
