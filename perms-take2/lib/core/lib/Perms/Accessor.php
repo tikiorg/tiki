@@ -16,6 +16,7 @@ class Perms_Accessor
 	private $prefix = '';
 	private $context = array();
 	private $groups = array();
+	private $checkSequence = null;
 
 	function setPrefix( $prefix ) {
 		$this->prefix = $prefix;
@@ -49,12 +50,26 @@ class Perms_Accessor
 		return $this->context;
 	}
 
+	function setCheckSequence( array $sequence ) {
+		$this->checkSequence = $sequence;
+	}
+
 	function __get( $name ) {
 
 		if( $this->resolver ) {
 			$name = $this->sanitize( $name );
 			
-			return $this->resolver->check( $name, $this->groups );
+			if( $this->checkSequence ) {
+				foreach( $this->checkSequence as $check ) {
+					if( $check->check( $this->resolver, $this->context, $name, $this->groups ) ) {
+						return true;
+					}
+				}
+
+				return false;
+			} else {
+				return $this->resolver->check( $name, $this->groups );
+			}
 		} else {
 			return false;
 		}

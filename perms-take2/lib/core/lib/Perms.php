@@ -92,6 +92,7 @@ class Perms
 	private $prefix = '';
 	private $groups = array();
 	private $factories = array();
+	private $checkSequence = null;
 
 	private $hashes = array();
 
@@ -107,6 +108,10 @@ class Perms
 		if( self::$instance ) {
 			$accessor->setPrefix( self::$instance->prefix );
 			$accessor->setGroups( self::$instance->groups );
+
+			if( self::$instance->checkSequence ) {
+				$accessor->setCheckSequence( self::$instance->checkSequence );
+			}
 
 			if( $resolver = self::$instance->getResolver( $context ) ) {
 				$accessor->setResolver( $resolver );
@@ -205,6 +210,10 @@ class Perms
 
 	function setResolverFactories( array $factories ) {
 		$this->factories = $factories;
+	}
+
+	function setCheckSequence( array $sequence ) {
+		$this->checkSequence = $sequence;
 	}
 
 	private function getResolver( array $context ) {
