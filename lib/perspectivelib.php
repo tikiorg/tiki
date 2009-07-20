@@ -58,6 +58,12 @@ class PerspectiveLib
 		
 		return ! empty( $id );
 	}
+
+	function list_perspectives() {
+		$db = TikiDb::get();
+
+		return $db->fetchAll( "SELECT perspectiveId, name FROM tiki_perspectives" );
+	}
 }
 
 global $perspectivelib;
