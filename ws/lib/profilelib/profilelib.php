@@ -24,6 +24,22 @@ class Tiki_Profile
 	private static $known = array();
 	private static $resolvePrefix = null;
 
+	public function __construct() // {{{
+	{
+	} // }}}
+
+	function __get( $name ) // {{{
+	{
+		switch( $name )
+		{
+		case 'domain':
+		case 'profile':
+		case 'url':
+		case 'pageUrl':
+			return $this->$name;
+		}
+	} // }}}
+
 	public static function convertLists( $data, $conversion, $prependKey = false ) // {{{
 	{
 		foreach( $conversion as $key => $endValue )
@@ -164,22 +180,6 @@ class Tiki_Profile
 		$profile->loadYaml( $content );
 
 		return $profile;
-	} // }}}
-
-	private function __construct() // {{{
-	{
-	} // }}}
-
-	function __get( $name ) // {{{
-	{
-		switch( $name )
-		{
-		case 'domain':
-		case 'profile':
-		case 'url':
-		case 'pageUrl':
-			return $this->$name;
-		}
 	} // }}}
 
 	private function analyseMeta( $url ) // {{{
@@ -570,14 +570,15 @@ class Tiki_Profile
 			{
 				$o = new Tiki_Profile_Object( $entry, $this );
 				if( $o->isWellStructured() )
-					$objects[] = $o;
+				    $objects[] = $o;
 			}
+
 
 		$classified = array();
 		$names = array();
 
 		// Order object creations to make sure all objects are created when needed
-		// Circular dependencies get dicarded
+		// Circular dependencies get discarded
 		$counter = 0;
 		while( ! empty( $objects ) )
 		{
@@ -623,11 +624,17 @@ class Tiki_Profile
 
 class Tiki_Profile_Object
 {
-	private $data;
+    	private $data;
 	private $profile;
 	private $id = false;
 
 	private $references = null;
+
+	function __construct( &$data, Tiki_Profile $profile ) // {{{
+	{
+		$this->data = &$data;
+		$this->profile = $profile;
+	}
 
 	public static function serializeNamedObject( $object ) // {{{
 	{
@@ -647,12 +654,6 @@ class Tiki_Profile_Object
 		return $objects;
 	} // }}}
 	
-	function __construct( &$data, Tiki_Profile $profile ) // {{{
-	{
-		$this->data = &$data;
-		$this->profile = $profile;
-	} // }}}
-
 	function getDescription() {
 		$str = '';
 		if ($this->isWellStructured()) {

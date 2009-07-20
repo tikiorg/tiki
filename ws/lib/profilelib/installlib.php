@@ -23,6 +23,7 @@ class Tiki_Profile_Installer
 		'article' => 'Tiki_Profile_InstallHandler_Article',
 		'forum' => 'Tiki_Profile_InstallHandler_Forum',
 		'template' => 'Tiki_Profile_InstallHandler_Template',
+		'ws' => 'Tiki_Profile_InstallHandler_Workspaces',
 	);
 
 	private static $typeMap = array(
@@ -33,6 +34,15 @@ class Tiki_Profile_Installer
 	private $userData = false;
 	
 	private $feedback = array();	// Let users know what's happened
+
+	function __construct() // {{{
+	{
+		global $tikilib;
+
+		$result = $tikilib->query( "SELECT DISTINCT domain, profile FROM tiki_profile_symbols" );
+		if ( $result ) while( $row = $result->fetchRow() )
+			$this->installed[Tiki_Profile::getProfileKeyFor( $row['domain'], $row['profile'] )] = true;
+	} // }}}
 
 	/**
 	 * @param $feed - (strings append, array replaces) lines of feedback text
@@ -76,15 +86,6 @@ class Tiki_Profile_Installer
 			return $id;
 	} // }}}
 
-	function __construct() // {{{
-	{
-		global $tikilib;
-
-		$result = $tikilib->query( "SELECT DISTINCT domain, profile FROM tiki_profile_symbols" );
-		if ( $result ) while( $row = $result->fetchRow() )
-			$this->installed[Tiki_Profile::getProfileKeyFor( $row['domain'], $row['profile'] )] = true;
-	} // }}}
-
 	function setUserData( $userData ) // {{{
 	{
 		$this->userData = $userData;
@@ -98,6 +99,7 @@ class Tiki_Profile_Installer
 
 		$referenced = array();
 		$knownObjects = array();
+
 		foreach( Tiki_Profile_Object::getNamedObjects() as $o )
 			$knownObjects[] = Tiki_Profile_Object::serializeNamedObject( $o );
 
@@ -198,6 +200,7 @@ class Tiki_Profile_Installer
 			if( ! $handler )
 				throw new Exception( "No handler found for object type {$object->getType()} in {$profile->domain}:{$profile->profile}" );
 
+			$handler->getData();
 			if( ! $handler->canInstall() )
 				throw new Exception( "Object (#{$object->getRef()}) of type {$object->getType()} in {$profile->domain}:{$profile->profile} does not validate" );
 		}
@@ -1922,3 +1925,31 @@ class Tiki_Profile_ValueMapConverter // {{{
 		}
 	}
 } // }}}
+
+//Working on it, probably a lot of bugs to solve
+class Tiki_Profile_InstallHandler_Workspaces extends Tiki_Profile_InstallHandler
+{
+
+    function getData()
+    {
+	if( $this->data ) return $this->data;
+
+	$data = $this->obj->getData();
+	var_dump($data['groups']['Admin Group']['objects'][0]['share_with']);
+	$data = Tiki_Profile::convertYesNo( $data );
+	var_dump($data);
+
+	return $this->data = $data;
+    }
+
+    function canInstall()
+    {
+	if ( isset($this->data['name']) && isset($this->data['groups']) ) return true;
+	else return false;
+    }
+
+    function _install()
+    {
+
+    }
+}

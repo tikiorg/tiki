@@ -33,6 +33,7 @@ foreach( $_REQUEST['channels'] as $info )
 
 $config = Tiki_Profile_ChannelList::fromConfiguration( $prefs['profile_channels'] );
 
+
 $channels = array_unique( $channels );
 $groups = $tikilib->get_user_groups( $user );
 
@@ -69,6 +70,7 @@ foreach( $calls as $call ) {
 
 	$installer->setUserData( $userInput );
 	$installer->install( $profile );
+	var_dump($profile);
 }
 
 if( isset($_REQUEST['return_uri']) ) {
