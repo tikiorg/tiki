@@ -227,8 +227,14 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper {
    		foreach ($this->array_of_untranslatable_strings_and_their_ids as $id => $markup) {
    			$id = "id".$id;
    			$text = preg_replace($this->notranslate_tag,'$2',$text);
+   			//Google Translate adds spaces where "no translate" tag has been and elsewhere, here we are getting rid of them
 			$text = preg_replace("/\s*$id\s*/", $markup, $text);
    		}
+   		//put spaces back to separate tags and parens from the text
+   		$tags_glued_to_text = "/([^[<|\s\>|\(]+]*)(<[^[>|\/]*]*>[^[<]*]*<\s*\/[^[>]*]*>)([^[<|\s]*]*)/";
+   		$parens = "/([^[\(]*]*)(\([^[\)]*]*\))([^[\(]*]*)/";  		
+   		$text = preg_replace($tags_glued_to_text, '$1 $2 $3', $text);
+   		$text = preg_replace($parens, '$1 $2 $3', $text);
    		return $text;
 	}
 
