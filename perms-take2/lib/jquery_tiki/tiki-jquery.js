@@ -136,6 +136,9 @@ $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 			$jq(el).css('position', 'absolute').css('visibility', 'hidden');
 			document.body.appendChild(el);
 			$jq(el).html(tip);
+			if ($jq(el).width() > $jq(window).width()) {
+				$jq(el).width($jq(window).width() * 0.8);
+			}
 			options.width = $jq(el).width();
 			document.body.removeChild(el);
 

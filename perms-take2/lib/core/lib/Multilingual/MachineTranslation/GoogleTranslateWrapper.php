@@ -62,10 +62,13 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper {
    	var $source_lang;
    	var $target_lang; 
    	var $google_ajax_url = "http://ajax.googleapis.com/ajax/services/language/translate?v=1.0";
-    
+
+//wiki markup (keep this regex in case we decide to translate wiki markup and not html)    
 //	var $markup = "/<[^>]*>|[\`\!\@\#\$\%\^\&\*\{\[\}\]\:\;\"\'\<\,\>\.\?\/\|\\\=\-\+]{2,}|\{[\s\S]*?\}|\(\([\s\S]*?\)\)|\~[a-z]{2}\~[\s\S]*?\~\/[a-z]{2}\~|\~hs\~|\~\~[\s\S]*?\:|\~\~/";
-	
-	var $markup = "/<[^>]*>/";
+
+//html markup	
+//Google doesn't return parens upon translation
+	var $markup = "/<[^>]*>|\(|\)/";
 		
    	var $escape_untranslatable_strings = "<span class='notranslate'>$0</span>";
    	
@@ -209,13 +212,13 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper {
 //adding dot after </ul> to have it segmented properly. otherwise when the html contains only lists, 
 //sentence segmentor can't find where to segment the text
    			if ($markup == "</ul>") {
-   				$text = preg_replace("/".preg_quote($markup,'/')."/", " ".$id.". ", $text);
+   				$text = preg_replace("/".preg_quote($markup,'/')."/", $id.".", $text);
    			} else {
-   				$text = preg_replace("/".preg_quote($markup,'/')."/", " ".$id." ", $text);
+				$text = preg_replace("/".preg_quote($markup,'/')."/", $id, $text);
    			}
 		}
 		
-		$text = preg_replace("/(id[\d]+\.?(\s*id[\d]+)*)/", $this->escape_untranslatable_strings, $text);
+		$text = preg_replace("/(id[\d]+\.?(id[\d]+)*)/", $this->escape_untranslatable_strings, $text);
 		return $text;
    	}
 
@@ -224,8 +227,14 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper {
    		foreach ($this->array_of_untranslatable_strings_and_their_ids as $id => $markup) {
    			$id = "id".$id;
    			$text = preg_replace($this->notranslate_tag,'$2',$text);
+   			//Google Translate adds spaces where "no translate" tag has been and elsewhere, here we are getting rid of them
 			$text = preg_replace("/\s*$id\s*/", $markup, $text);
    		}
+   		//put spaces back to separate tags and parens from the text
+   		$tags_glued_to_text = "/([^[<|\s\>|\(]+]*)(<[^[>|\/]*]*>[^[<]*]*<\s*\/[^[>]*]*>)([^[<|\s]*]*)/";
+   		$parens = "/([^[\(]*]*)(\([^[\)]*]*\))([^[\(]*]*)/";  		
+   		$text = preg_replace($tags_glued_to_text, '$1 $2 $3', $text);
+   		$text = preg_replace($parens, '$1 $2 $3', $text);
    		return $text;
 	}
 

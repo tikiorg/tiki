@@ -205,15 +205,27 @@ function takeGroupMail($destDiv = 'mod-webmail_inbox', $msgId) {
 		
 	}
 	
+	// make name for wiki page
+	$pageName = str_replace('@', '_AT_', $m['sender']['email']);
+	$contId = $contactlib->get_contactId_email($m['sender']['email'], $user);
+	
 	// add or update (?) contact
+	$ext = $contactlib->get_ext_by_name($user, tra('Wiki Page'), $contId);
+	if (!$ext) {
+		$contactlib->add_ext($user, tra('Wiki Page'), true);	// a public field
+		$ext = $contactlib->get_ext_by_name($user, tra('Wiki Page'), $contId);
+	}
+	
 	$arr = split(" ", trim(html_entity_decode($m['sender']['name']), '"\' '), 2);
 	if (count($arr) < 2) {
 		$arr[] = '';
 	}
-	$contactlib->replace_contact($contactlib->get_contactId_email($m['sender']['email'], $user), $arr[0], $arr[1], $m['sender']['email'], '', $user, array($module_params['group']), array());
+	$contactlib->replace_contact($contId, $arr[0], $arr[1], $m['sender']['email'], '', $user, array($module_params['group']), array($ext['fieldId'] => $pageName), true);
+	if (!$contId) {
+		$contId = $contactlib->get_contactId_email($m['sender']['email'], $user);
+	}
 	
 	// make or update wiki page
-	$pageName = str_replace('@', '_AT_', $m['sender']['email']);
 	global $wikilib; include_once('lib/wiki/wikilib.php');
 	
 	if (!$wikilib->page_exists($pageName)) {
@@ -221,6 +233,8 @@ function takeGroupMail($destDiv = 'mod-webmail_inbox', $msgId) {
 		$description = "Page $comment for ".$m['sender']['email'];
 		$data = '!GroupMail case with '.$m['sender']['email']."\n";
 		$data .= "''$comment''\n\n";
+		$data .= "!!Info\n";
+		$data .= "Contact info: [tiki-contacts.php?contactId=$contId|".$m['sender']['name']."]\n\n";
 		$data .= "!!Logs\n";
 		$data .= '{trackerlist trackerId="'.$module_params['trackerId'].'" '.
 					'fields="'.$module_params['fromFId'].':'.$module_params['operatorFId'].':'.$module_params['subjectFId'].':'.$module_params['datetimeFId'].'" '.
@@ -231,6 +245,7 @@ function takeGroupMail($destDiv = 'mod-webmail_inbox', $msgId) {
 		$tikilib->create_page($pageName, 0, $data, $tikilib->now, $comment, $user, $tikilib->get_ip_address(),$description);
 		$categlib->update_object_categories(array($categlib->get_category_id('Help Team Pages')), $pageName, 'wiki page');		// TODO remove hard-coded cat name
 	}
+	
 	$objResponse->redirect($wikilib->sefurl($pageName));
 	
 	return $objResponse;

@@ -101,7 +101,7 @@ if ($_REQUEST['locSection'] == 'read') {
 	$current = $webmaillib->get_current_webmail_account($user);
 	
 	
-	$smarty->assign('current', $current);
+	$smarty->assign_by_ref('current', $current);
 
 	// connecting with Zend
 	try {
