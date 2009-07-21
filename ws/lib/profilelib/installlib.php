@@ -1919,6 +1919,10 @@ class Tiki_Profile_InstallHandler_Workspaces extends Tiki_Profile_InstallHandler
     //Needs to be more precise, but for now is OK
     function canInstall()
     {
+	//If the user not have initialized WS ...
+	global $wslib; require_once 'lib/workspaces/wslib.php';
+	$wslib->init_ws();
+
 	$data = $this->getData();
 	if ( array_key_exists("name", $data) && array_key_exists("groups", $data) ) return true;
 	else return false;
