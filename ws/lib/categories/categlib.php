@@ -44,7 +44,7 @@ class CategLib extends ObjectLib {
 		}
 	}
 	
-	function list_all_categories($offset, $maxRecords, $sort_mode = 'name_asc', $find, $type, $objid) {
+	function list_all_categories($offset, $maxRecords, $sort_mode = 'name_asc', $find, $type, $objid, $showWS = false) {
 		$cats = $this->get_object_categories($type, $objid);
 
 		if ($find) {
@@ -56,7 +56,7 @@ class CategLib extends ObjectLib {
 			$mid = "";
 		}
 		global $prefs;
-		$exlude = $this->exclude_categs ($prefs['ws_container'], $find);
+		$exclude = $this->exclude_categs ($prefs['ws_container'], $find, $showWS);
 				
 		$query = "select * from `tiki_categories` $mid $exclude order by ".$this->convert_sortmode($sort_mode);
 		$query_cant = "select count(*) from `tiki_categories` $mid ";
@@ -99,14 +99,24 @@ class CategLib extends ObjectLib {
 		return $retval;
 	}
 
-	function exclude_categs ($excludeCategId, $find)
+	function exclude_categs ($excludeCategId, $find, $showWS)
 	{
 	    if ($excludeCategId)
 	    {
-		if ($find)
-		    $exclude = "and not (`categId`=$excludeCategId or `parentId`=$excludeCategId)";
+	    	if ($showWS)
+		{
+			if ($find)
+				$exclude = "and `rootCategId` = $excludeCategId";
+			else
+				$exclude = "where `rootCategId` =$excludeCategId";
+		}
 		else
-		    $exclude = "where not (`categId`=$excludeCategId or `parentId`=$excludeCategId)";
+		{
+			if ($find)
+		    		$exclude = "and not (`categId`=$excludeCategId or `rootCategId`=$excludeCategId)";
+			else
+		    		$exclude = "where not (`categId`=$excludeCategId or `rootCategId`=$excludeCategId)";
+		}
 	    }
 	    else
 		$exclude = "";
@@ -923,7 +933,7 @@ class CategLib extends ObjectLib {
 		return $ret;
 	}
 
-	function get_all_categories() {
+	function get_all_categories($showWS = false) {
 		global $cachelib;
 	/*
 		// inhibited because allcateg_ext is cached now
@@ -935,15 +945,18 @@ class CategLib extends ObjectLib {
 			$ret[] = $res;
 		}
 	*/
-		return $this->get_all_categories_ext();
+		return $this->get_all_categories_ext($showWS);
 	}
 	/* build the cache with the categpath and the count */
-	function build_cache() {
+	function build_cache($showWS = false) {
 		global $cachelib;
 		$ret = array();
 		global $prefs;
 		if ($idws = $prefs['ws_container'] )
-			$query = "select * from `tiki_categories` where not (`categId`=$idws or `parentId`=$idws) order by `name`";
+			if (!$showWS)
+				$query = "select * from `tiki_categories` where not (`categId`=$idws or `rootCategId`=$idws) order by `name`";
+			else
+				$query = "select * from `tiki_categories` where `rootCategId`=$idws order by `name`";
 		else
 			$query = "select * from `tiki_categories` order by `name`";
 		$result = $this->query($query,array());
@@ -971,21 +984,21 @@ class CategLib extends ObjectLib {
 	}
 
 	// Same as get_all_categories + it also get info about count of objects
-	function get_all_categories_ext() {
+	function get_all_categories_ext($showWS = false) {
 		global $cachelib;
 		if (!$cachelib->isCached("allcategs")) {
-			$ret = $this->build_cache();
+			$ret = $this->build_cache($showWS);
 		} else {
 			$ret = unserialize($cachelib->getCached("allcategs"));
 		}
 		return $ret;
 	}
 
-	function get_all_categories_respect_perms($user, $perm) {
+	function get_all_categories_respect_perms($user, $perm, $showWS = false) {
 		global $cachelib;
 		global $userlib;
 		
-		$result = $this->get_all_categories_ext();
+		$result = $this->get_all_categories_ext($showWS);
 		$ret = array();
 		foreach ($result as $res) {
 			if ($userlib->user_has_permission($user, 'tiki_p_admin')) {

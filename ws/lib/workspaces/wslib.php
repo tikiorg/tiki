@@ -720,7 +720,7 @@ class wslib extends CategLib
      */
     public function list_all_ws ($offset, $maxRecords, $sort_mode = 'name_asc', $find, $type, $objid)
     {
-		return parent::list_all_categories ($offset, $maxRecords, $sort_mode = 'name_asc', $find, $type, $objid);
+		return parent::list_all_categories ($offset, $maxRecords, $sort_mode = 'name_asc', $find, $type, $objid, true);
     }
 	
     /** List all WS that a user have access
@@ -783,20 +783,12 @@ class wslib extends CategLib
      */
     public function list_ws_objects ($ws_id, $maxRecords = -1, $offset = -1)
     {
-	$query = "select `catObjectId` from `tiki_category_objects` where `categId`= ?";
+	$query = "select * from `tiki_objects` t0, `tiki_category_objects` t1 
+			   where t1.`categId`=? and t1.`catObjectId`=t0.`objectId`";
 	$bindvars = array($ws_id);
-	$result = $this->query($query,$bindvars, $maxRecords, $offset);
+	$result = $this->query($query,$bindvars);
 	while ($res = $result->fetchRow())
-	    $listObjects[] = $res["catObjectId"];
-		
-	foreach ($listObjects as $objectId)
-	{
-	    $query = "select * from `tiki_objects` where `objectId`= ?";
-    	    $bindvars = array($objectId);
-	    $result = $this->query($query,$bindvars);
-	    while ($res = $result->fetchRow())
 		$listWSObjects[] = $res;
-	}
 
 	return $listWSObjects;
     }
@@ -874,6 +866,18 @@ class wslib extends CategLib
 
      	return $wsChilds;
      }	
+     
+      /** Add a user in a group
+     *
+     * @param $user The id of the user
+     * @param $groupName The name of the group
+     * @return -
+     */	
+     public function add_user_to_ws_group ($user, $groupName)
+     {
+     	global $userlib; require_once 'lib/userslib.php';
+     	$userlib->assign_user_to_group($user, $groupName);
+     }
 }
 
 $wslib = new wslib();
