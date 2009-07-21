@@ -56,7 +56,16 @@ if ($output["data"] == "EMPTY") {
 		if ($f['isHidden'] == 'y' || $f['isHidden'] == 'c') continue;
 		$fields[$f['fieldId']] = $f;
 	}
-	$tmp = $trklib->list_items($_REQUEST[$id], 0, $prefs['max_rss_tracker'], $sort_mode, $fields);
+	if (isset($_REQUEST['filterfield'])) {
+		$filterfield = explode(':', $_REQUEST['filterfield']);
+		if (isset($_REQUEST['exactvalue'])) {
+			$exactvalue = explode(':', $_REQUEST['exactvalue']);
+		}
+	} else {
+		$filterfield = null;
+		$exactvalue = null;
+	}
+	$tmp = $trklib->list_items($_REQUEST[$id], 0, $prefs['max_rss_tracker'], $sort_mode, $fields, $filterfield, null, null, null, $exactvalue);
 	foreach($tmp["data"] as $data) {
 		$data[$titleId] = tra('Tracker item:') . ' #' . $data["$urlparam"];
 		$data[$descId] = '';
