@@ -4731,6 +4731,9 @@ class TikiLib extends TikiDb_Bridge {
 		}
 
 		$cond_query = '';
+		if (empty($query_cond)) {
+			$query_cond = '1';
+		}
 		$result = null;
 		if ( is_null($bindvars) ) $bindvars = array();
 		if ( count($needed) > 0 ) {
@@ -4743,11 +4746,10 @@ class TikiLib extends TikiDb_Bridge {
 				$cond_query .= "`$field_name`=?";
 				$bindvars[] = $var;
 			}
-
-			$query = "select `$field_name`, `value` from `$table` where $query_cond $cond_query";
-			$result = $this->query($query, $bindvars);
 		}
-
+		$query = "select `$field_name`, `value` from `$table` where $query_cond $cond_query";
+		$result = $this->query($query, $bindvars);
+		
 		if ( $result ) {
 			while ( $res = $result->fetchRow() ) {
 				// store the db value in the global array
