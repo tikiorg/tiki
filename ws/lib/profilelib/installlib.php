@@ -1883,15 +1883,27 @@ class Tiki_Profile_InstallHandler_Workspaces extends Tiki_Profile_InstallHandler
 	"all",
 	"drain_perms"
     );
-    private $ws_ids;
 
-    private function processDataAndInstall($subArray)
+    private function processDataAndInstall($data)
     {
 	global $wslib; require_once 'lib/workspaces/wslib.php';
 	if ($this->canInstall())
+	    return $wslib->create_ws($data['name'], $this->fetchGroupData($data), $data['parent'], $data['description']);
+    }
+
+    private function fetchGroupData($subArray)
+    {
+	foreach ($subArray['groups'] as $group)
 	{
-	    $wslib->create_ws();
+	    $groupsArray[] = array (
+		"groupName" => $group['name'],
+		"groupDescription" => $group['description'],
+		"noCreateNewGroup" => false,
+		"additionalPerms" => null
+		);
 	}
+
+	return $groupsArray;
     }
 
     function getData()
@@ -1917,12 +1929,8 @@ class Tiki_Profile_InstallHandler_Workspaces extends Tiki_Profile_InstallHandler
 	$data = $this->getData();
 	$ids = array();
 
-	var_dump($data);
-
-	//foreach ($data as $subArray)
-	//    $ws_ids[] = $this->processDataAndInstall($subArray);
-
-	return 5;//$ids;
+	//var_dump($data);
+	return $this->processDataAndInstall($data);
     }
 }
 

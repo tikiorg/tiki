@@ -72,7 +72,8 @@ class wslib extends CategLib
      *
      * @param $name Name of the Workspace
      * @param $parentWS Name of the ParentWS, if ParentWS is null, its default value will be ws_container
-     * @param $groupName The name of the group
+     * @param $groups An associative array of groups in the form array("groupName" => (string) name, "groupDescription" => (string) description,
+     * "noCreateNewGroup" => boolean, "additionalPerms" => array("additionalperm1", "additionalperm2", ...))
      * @param $additionalPerms Associative array for giving more perms than the default perm 'tiki_p_ws_view'
      * @return The ID of the WS
      */
@@ -120,7 +121,7 @@ public function create_ws ($name, $groups, $parentWS = null, $description = '')
 
 	if (!$wsName) $wsName = $this->get_ws_name($ws_id);
 
-	$groupName = $this->generate_ws_group_name ($id_ws, $wsName, $nameGroup); //With this you can create two groups with same name in different ws
+	$groupName = $nameGroup;//$this->generate_ws_group_name ($id_ws, $wsName, $nameGroup); //With this you can create two groups with same name in different ws
 
 	if ($userlib->add_group($groupName)) 
 	{
