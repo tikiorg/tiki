@@ -93,7 +93,7 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'create'))
 					"noCreateNewGroup" => true,
 					"additionalPerms" => array()
 					);
-		$id4 = $wslib->create_ws ('WS21', $groups, null);
+		$id4 = $wslib->create_ws ('WS21', $groups, $id2);
 	}
 	if  (!($id5 = $wslib->get_ws_id('WS22',$id2)))
 	{
@@ -104,7 +104,7 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'create'))
 					"noCreateNewGroup" => true,
 					"additionalPerms" => array('tiki_p_ws_adminws')
 					);
-		$id5 = $wslib->create_ws ('WS22', $groups, null);
+		$id5 = $wslib->create_ws ('WS22', $groups, $id2);
 	}
 		
 	// Adding Resources in WS
@@ -149,7 +149,7 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'apocalipsis') && ($ws
 
 if ( isset($_REQUEST['action'])  &&  ($_REQUEST['action'] == 'test') && ($wsContainerId))
 {
-	$listWS = $wslib->list_all_ws(-1,-1,'name_asc',null,'wiki page','Wiki1');
+	$listWS = $wslib->list_all_ws(-1,-1,'name_asc',null,'','');
 	echo ("List all WS stored in Tiki");
 	echo ("\n<br>");
 	foreach ($listWS["data"] as $key)

@@ -729,7 +729,7 @@ public function create_ws ($name, $groups, $parentWS = null, $description = '')
      */
     public function list_all_ws ($offset, $maxRecords, $sort_mode = 'name_asc', $find, $type, $objid)
     {
-		return parent::list_all_categories ($offset, $maxRecords, $sort_mode = 'name_asc', $find, $type, $objid, true);
+		return parent::list_all_categories ($offset, $maxRecords, $sort_mode, $find, $type, $objid, true);
     }
 	
     /** List all WS that a user have access
