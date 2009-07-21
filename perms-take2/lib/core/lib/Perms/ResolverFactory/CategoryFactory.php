@@ -95,6 +95,10 @@ class Perms_ResolverFactory_CategoryFactory implements Perms_ResolverFactory
 			}
 		}
 
+		if( count( $objects ) == 0 ) {
+			return array();
+		}
+
 		$db = TikiDb::get();
 		$result = $db->query( 'SELECT categId, itemId FROM tiki_category_objects INNER JOIN tiki_objects ON catObjectId = objectId WHERE type = ? AND ' . $db->in( 'itemId', array_keys( $objects ) ) . ' ORDER BY catObjectId, categId', array( $baseContext['type'] ) );
 
@@ -125,10 +129,7 @@ class Perms_ResolverFactory_CategoryFactory implements Perms_ResolverFactory
 
 		$db = TikiDb::get();
 
-		$escapedObjects = array_map( array( $db, 'qstr' ), array_keys( $objects ) );
-		$escapedObjects = implode( ', ', $escapedObjects );
-
-		$result = $db->query( 'SELECT objectId, groupName, permName FROM users_objectpermissions WHERE objectType = \'category\' AND objectId IN(' . $escapedObjects . ')' );
+		$result = $db->query( 'SELECT objectId, groupName, permName FROM users_objectpermissions WHERE objectType = \'category\' AND ' . $db->in( array_keys( $objects ) ) );
 
 		while( $row = $result->fetchRow() ) {
 			$object = $row['objectId'];

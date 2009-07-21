@@ -29,7 +29,7 @@
  *       array( 'type' => 'wiki page' ), 
  *       'object',
  *       $pages,
- *       'pageName',
+ *       array( 'object' => 'pageName' ),
  *       'view' );
  *
  * The sample above would return the data without elements not visible,
