@@ -76,7 +76,7 @@ class wslib extends CategLib
      * @param $additionalPerms Associative array for giving more perms than the default perm 'tiki_p_ws_view'
      * @return The ID of the WS
      */
-    public function create_ws ($name, $groupName, $parentWS = null, $noCreateNewGroup = false, $additionalPerms = null, $description = '')
+public function create_ws ($name, $groups, $parentWS = null, $description = '')
     {
     	if (!$parentWS)	$parentWS = 0;
     	
@@ -86,15 +86,23 @@ class wslib extends CategLib
 	$query = "select `categId` from `tiki_categories` where `name`=? and `parentId`=? and `rootCategId`=?";
 	$ws_id = $this->getOne($query, array($name, (int) $parentWS, $this->ws_container));
 	
-	if ($noCreateNewGroup)
+	foreach ($groups as $group)
 	{
-	    $this->set_permissions_for_group_in_ws ($ws_id, $groupName, array('tiki_p_ws_view'));
-	    if ($additionalPerms != null)
-		$this->set_permissions_for_group_in_ws($ws_id, $groupName, $additionalPerms);
+		$groupName = $group["groupName"];
+		$groupDescription = $group["groupDescription"];
+		$noCreateNewGroup = $group["noCreateNewGroup"];
+		$additionalPerms = $group["additionalPerms"];
+	
+		if ($noCreateNewGroup)
+		{
+		    $this->set_permissions_for_group_in_ws ($ws_id, $groupName, array('tiki_p_ws_view'));
+		    if ($additionalPerms != null)
+			$this->set_permissions_for_group_in_ws($ws_id, $groupName, $additionalPerms);
+		}
+		else
+		    $this->add_ws_group ($ws_id, $name, $groupName, $additionalPerms);
 	}
-	else
-	    $this->add_ws_group ($id_ws, $name, $groupName, $additionalPerms);
-
+		
 	return $ws_id;
     }
 

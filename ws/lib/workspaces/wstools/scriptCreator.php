@@ -44,21 +44,69 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'create'))
 	echo("Creating WS<br>");
 	// Creating new WS
 	if  (!($id1 = $wslib->get_ws_id('WS1',0)))
-		$id1 = $wslib->create_ws ('WS1', 'G2', null, true ,array('tiki_p_ws_admingroups'));
+	{
+		$groups = array();
+		$groups[] = array(
+					"groupName" => "G1",
+					"groupDescription" => "",
+					"noCreateNewGroup" => true,
+					"additionalPerms" => array('tiki_p_ws_admingroups') 
+					);
+		$id1 = $wslib->create_ws ('WS1', $groups, null);
+	}
 	 if (!($id2 = $wslib->get_ws_id('WS2',0)))
-		$id2 = $wslib->create_ws ('WS2', 'G2', null, true ,array('tiki_p_ws_adminresources'));
+	 {
+		$groups = array();
+		$groups[] = array(
+					"groupName" => "G1",
+					"groupDescription" => "",
+					"noCreateNewGroup" => true,
+					"additionalPerms" => array('tiki_p_ws_adminresources')
+					);
+		$id2 = $wslib->create_ws ('WS2', $groups, null);
+	}
 	if  (!($id3 = $wslib->get_ws_id('WS3',0)))
-		$id3 = $wslib->create_ws ('WS3', 'G1', null, true ,array('tiki_p_ws_adminws'));
+	{
+		$groups = array();
+		$groups[] = array(
+					"groupName" => "G1",
+					"groupDescription" => "",
+					"noCreateNewGroup" => true,
+					"additionalPerms" => array('tiki_p_ws_adminws')
+					);
+		$groups[] = array(
+					"groupName" => "G2",
+					"groupDescription" => "",
+					"noCreateNewGroup" => true,
+					"additionalPerms" => array('tiki_p_ws_view','tiki_p_ws_addresource')
+					);
+		$id3 = $wslib->create_ws ('WS3', $groups, null);
+	}
 
 	// Creating new sub-WS under WS2
 	if  (!($id4 = $wslib->get_ws_id('WS21',$id2)))
-		$id4 = $wslib->create_ws ('WS21', 'G2', $id2, true);
+	{
+		$groups = array();
+		$groups[] = array(
+					"groupName" => "G2",
+					"groupDescription" => "",
+					"noCreateNewGroup" => true,
+					"additionalPerms" => array()
+					);
+		$id4 = $wslib->create_ws ('WS21', $groups, null);
+	}
 	if  (!($id5 = $wslib->get_ws_id('WS22',$id2)))
-		$id5 = $wslib->create_ws ('WS22', 'G2', $id2, true,array('tiki_p_ws_adminws'));
-	
-	// Giving access to G2 in WS3
-	$wslib->set_permissions_for_group_in_ws($id3,'G2',array('tiki_p_ws_view','tiki_p_ws_addresource'));
-	
+	{
+		$groups = array();
+		$groups[] = array(
+					"groupName" => "G2",
+					"groupDescription" => "",
+					"noCreateNewGroup" => true,
+					"additionalPerms" => array('tiki_p_ws_adminws')
+					);
+		$id5 = $wslib->create_ws ('WS22', $groups, null);
+	}
+		
 	// Adding Resources in WS
 	echo("Creating Resources<br>");
 	$wslib->create_ws_object($id1,'Wiki1','wiki page');

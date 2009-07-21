@@ -113,9 +113,9 @@ class CategLib extends ObjectLib {
 		else
 		{
 			if ($find)
-		    		$exclude = "and not (`categId`=$excludeCategId or `rootCategId`=$excludeCategId)";
+		    		$exclude = "and not `categId`=$excludeCategId and `rootCategId` is NULL";
 			else
-		    		$exclude = "where not (`categId`=$excludeCategId or `rootCategId`=$excludeCategId)";
+		    		$exclude = "where not `categId`=$excludeCategId and `rootCategId` is NULL";
 		}
 	    }
 	    else
@@ -267,7 +267,7 @@ class CategLib extends ObjectLib {
 		global $cachelib;
 		$query = "insert into `tiki_categories`(`name`,`description`,`parentId`,`hits`) values(?,?,?,?)";
 		$result = $this->query($query,array($name,$description,(int) $parentId,0));
-		$query = "select `categId` from `tiki_categories` where `name`=? and `parentId`=?";
+		$query = "select `categId` from `tiki_categories` where `name`=? and `parentId`=? and `rootCategId`= NULL";
 		$id = $this->getOne($query,array($name,(int) $parentId));
 		$cachelib->invalidate('allcategs');
 		$cachelib->empty_type_cache('fgals_perms');
@@ -953,10 +953,10 @@ class CategLib extends ObjectLib {
 		$ret = array();
 		global $prefs;
 		if ($idws = $prefs['ws_container'] )
-			if (!$showWS)
-				$query = "select * from `tiki_categories` where not (`categId`=$idws or `rootCategId`=$idws) order by `name`";
-			else
+			if ($showWS)
 				$query = "select * from `tiki_categories` where `rootCategId`=$idws order by `name`";
+			else
+				$query = "select * from `tiki_categories` where not `categId`=$idws and `rootCategId`is NULL order by `name`";
 		else
 			$query = "select * from `tiki_categories` order by `name`";
 		$result = $this->query($query,array());
