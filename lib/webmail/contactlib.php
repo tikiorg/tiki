@@ -114,16 +114,17 @@ class ContactLib extends TikiLib {
 			}
 		}
 		if (!$dontDeleteExts) {
-			if ($tiki_p_admin == 'y') {	// only a quick fix for shared ext contact data - only admins can delete
+			if ($tiki_p_admin == 'y' || $tiki_p_admin_group_webmail == 'y') {	// only a quick fix for shared ext contact data - only admins can delete
 				$query = 'delete from `tiki_webmail_contacts_ext` where `contactId`=?';
+				$bindvars = array((int)$contactId);
 			} else {
 				$query = 'DELETE  `tiki_webmail_contacts_ext`.* AS x FROM `tiki_webmail_contacts_ext` AS x '.	// probably mysql specific - how do we do this for other db's?
 						 'LEFT JOIN `tiki_webmail_contacts_fields` AS f ON x.`fieldId`=f.`fieldId`'.
-						 'WHERE x.`contactId`=? AND f.`flagsPublic`=\'n\'';
-				// FIXME - not working
+						 'WHERE x.`contactId`=? AND f.`flagsPublic`=\'n\' AND f.`user`=?';
+				$bindvars = array((int)$contactId, $user);
 			}
 			
-			$this->query($query, array((int)$contactId));
+			$this->query($query, $bindvars);
 		
 		}
 		foreach($exts as $fieldId => $ext) if ($fieldId > 0 && $ext != '') {
