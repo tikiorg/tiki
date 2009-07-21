@@ -1875,6 +1875,57 @@ class Tiki_Profile_InstallHandler_Template extends Tiki_Profile_InstallHandler /
 	}
 } // }}}
 
+//Working on it, probably a lot of bugs to solve
+class Tiki_Profile_InstallHandler_Workspaces extends Tiki_Profile_InstallHandler
+{
+    //This array stores all magic keywords used by this handler
+    private $specialKeywords = array(
+	"all",
+	"drain_perms"
+    );
+    private $ws_ids;
+
+    private function processDataAndInstall($subArray)
+    {
+	global $wslib; require_once 'lib/workspaces/wslib.php';
+	if ($this->canInstall())
+	{
+	    $wslib->create_ws();
+	}
+    }
+
+    function getData()
+    {
+	if ( $this->data ) return $this->data;
+
+	$data = $this->obj->getData();
+	$data = Tiki_Profile::convertYesNo( $data );
+
+	return $this->data = $data;
+    }
+
+    //Needs to be more precise, but for now is OK
+    function canInstall()
+    {
+	$data = $this->getData();
+	if ( array_key_exists("name", $data) && array_key_exists("groups", $data) ) return true;
+	else return false;
+    }
+
+    function _install()
+    {
+	$data = $this->getData();
+	$ids = array();
+
+	var_dump($data);
+
+	//foreach ($data as $subArray)
+	//    $ws_ids[] = $this->processDataAndInstall($subArray);
+
+	return 5;//$ids;
+    }
+}
+
 interface Tiki_Profile_Converter
 {
 	function convert( $value );
@@ -1925,31 +1976,3 @@ class Tiki_Profile_ValueMapConverter // {{{
 		}
 	}
 } // }}}
-
-//Working on it, probably a lot of bugs to solve
-class Tiki_Profile_InstallHandler_Workspaces extends Tiki_Profile_InstallHandler
-{
-
-    function getData()
-    {
-	if( $this->data ) return $this->data;
-
-	$data = $this->obj->getData();
-	var_dump($data['groups']['Admin Group']['objects'][0]['share_with']);
-	$data = Tiki_Profile::convertYesNo( $data );
-	var_dump($data);
-
-	return $this->data = $data;
-    }
-
-    function canInstall()
-    {
-	if ( isset($this->data['name']) && isset($this->data['groups']) ) return true;
-	else return false;
-    }
-
-    function _install()
-    {
-
-    }
-}

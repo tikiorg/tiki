@@ -12,7 +12,7 @@
 
 //Controlling Access
 require_once 'tiki-setup.php';
-$access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
+//$access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
 //Rest of Imports
 include_once 'lib/categories/categlib.php';

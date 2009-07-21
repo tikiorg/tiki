@@ -70,7 +70,6 @@ foreach( $calls as $call ) {
 
 	$installer->setUserData( $userInput );
 	$installer->install( $profile );
-	var_dump($profile);
 }
 
 if( isset($_REQUEST['return_uri']) ) {
