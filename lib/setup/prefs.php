@@ -705,6 +705,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'users_prefs_user_information' => 'private',
 		'users_prefs_userbreadCrumb' => '4',
 		'users_prefs_mailCharset' => 'utf-8',
+		'users_prefs_mailCurrentAccount' => '0',
 		'validateRegistration' => 'n',
 
 		// user messages
