@@ -186,13 +186,50 @@ class Perms
 		$valid = array();
 
 		foreach( $data as $entry ) {
-			$context = $baseContext;
-			foreach( $contextMap as $to => $from ) {
-				$context[$to] = $entry[$from];
+			if( self::hasPerm( $baseContext, $contextMap, $entry, $permission ) ) {
+				$valid[] = $entry;
+			}
+		}
+
+		return $valid;
+	}
+
+	private function hasPerm( $baseContext, $contextMap, $entry, $permission ) {
+		$context = $baseContext;
+		foreach( $contextMap as $to => $from ) {
+			$context[$to] = $entry[$from];
+		}
+
+		$accessor = self::get( $context );
+		return $accessor->$permission;
+	}
+
+	public static function mixedFilter( array $baseContext, $discriminator, $bulkKey, $data, $contextMapMap, $permissionMap ) {
+		$perType = array();
+
+		foreach( $data as $row ) {
+			$type = $row[$discriminator];
+			if( ! isset( $perType[$type] ) ) {
+				$perType[$type] = array();
 			}
 
-			$accessor = self::get( $context );
-			if( $accessor->$permission ) {
+			$key = $contextMapMap[$type][$bulkKey];
+			$perType[$type][] = $row[$key];
+		}
+
+		foreach( $perType as $type => $values ) {
+			$context = $baseContext;
+			$context[ $contextMapMap[$type][$discriminator] ] = $type;
+
+			self::$instance->loadBulk( $context, $bulkKey, $values );
+		}
+
+		$valid = array();
+
+		foreach( $data as $entry ) {
+			$type = $entry[$discriminator];
+
+			if( self::hasPerm( $baseContext, $contextMapMap[$type], $entry, $permissionMap[$type] ) ) {
 				$valid[] = $entry;
 			}
 		}

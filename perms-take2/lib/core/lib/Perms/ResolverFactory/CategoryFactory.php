@@ -129,7 +129,7 @@ class Perms_ResolverFactory_CategoryFactory implements Perms_ResolverFactory
 
 		$db = TikiDb::get();
 
-		$result = $db->query( 'SELECT objectId, groupName, permName FROM users_objectpermissions WHERE objectType = \'category\' AND ' . $db->in( array_keys( $objects ) ) );
+		$result = $db->query( 'SELECT objectId, groupName, permName FROM users_objectpermissions WHERE objectType = \'category\' AND ' . $db->in( 'objectId', array_keys( $objects ) ) );
 
 		while( $row = $result->fetchRow() ) {
 			$object = $row['objectId'];
