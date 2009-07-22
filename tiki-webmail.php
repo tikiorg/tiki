@@ -282,9 +282,11 @@ function submit_form(msgname,flg)
   document.mailb.elements.quickFlagMsg.value= msgname;
   document.mailb.submit();
 }
-
-webmailTimeoutId = window.setTimeout('window.location.reload(true);',$autoRefresh*1000);
 END;
+
+	if ($autorefresh > 0) {
+		$js .= 'webmailTimeoutId = window.setTimeout("window.location.reload(true);",$autoRefresh*1000);';
+	}
 	$headerlib->add_js($js,0);
 
 	$h = opendir('temp/mail_attachs/');
