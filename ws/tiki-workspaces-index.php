@@ -10,11 +10,15 @@
 
 //Basic import
 require_once 'tiki-setup.php';
+require_once('lib/workspaces/wslib.php');
 
 //Rest of Imports
 
 //Assign the title to the template
 $smarty->assign('headtitle', tra('Workspaces Home'));
+
+$listWS = $wslib->list_ws_that_user_have_access ($user, 25, 0);
+$smarty->assign('listWS',$listWS);
 
 // Display the template
 $smarty->assign('mid', 'tiki-workspaces-index.tpl');

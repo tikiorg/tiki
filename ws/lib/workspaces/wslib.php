@@ -843,6 +843,30 @@ public function create_ws ($name, $groups, $parentWS = null, $description = '')
 
 	return $objectPermsGroup;
     }
+    
+        /** Get the stored perms for a object for a specific user
+     *
+     * @param $objId The object you want to check
+     * @param $objectType The type of the object
+     * @param $user The name of the user
+     * @return An array with the objects perms related to a object for a user
+     */
+    public function get_object_perms_for_user ($objId, $objectType, $user)
+    {
+	$objectId = md5($objectType . strtolower($objId));
+	$query = "select distinct t3.`permName` from `users_objectpermissions` t3, `users_usergroups` t2, `users_users` t1
+				   where t1.`login` = ? 
+				   and (t1.`userId` = t2.`userId`) 
+				   and (t2.`groupName` = t3.`groupName`) 
+				   and t3.`objectId`=? 
+				   and t3.`objectType`=?";
+	$bindvars = array($user, $objectId, $objectType);
+	$result = $this->query($query,$bindvars);
+	while ($res = $result->fetchRow())
+		$objectPermsUser[] = $res["permName"];
+
+	return $objectPermsUser;
+    }
 	
     /** List the objects stored in a workspace for a specific user
      *
@@ -859,25 +883,13 @@ public function create_ws ($name, $groups, $parentWS = null, $description = '')
 		
 	foreach ($listWSObjects as $object)
 	{
-	    $objectType = $object["type"];
-	    $objId = $object["itemId"];
-	    $viewPerm = parent::get_needed_perm($objectType, "view");
-			
-	   $groups = $userlib->get_user_groups($user);
-			
-	    $notFoundViewPerm = true;		
-	    foreach ($groups as $groupName)
-	    {
-		if ($notFoundViewPerm)
-		{
-			$objectPermsGroup = $this->get_object_perms_for_group ($objId, $objectType, $groupName);
-			if (in_array($viewPerm,$objectPermsGroup))
-			{
-				$listWSObjectsUser[] = $object;
-				$notFoundViewPerm = false;
-			}
-		}
-	    }
+		$objectType = $object["type"];
+		$objId = $object["itemId"];
+		$viewPerm = parent::get_needed_perm($objectType, "view");
+		
+		$objectPermsUser = $this->get_object_perms_for_user ($objId, $objectType, $user);
+		if (in_array($viewPerm,$objectPermsUser))
+			$listWSObjectsUser[] = $object;
 	} 
 
 	return $listWSObjectsUser;

@@ -16,8 +16,22 @@
 <ul><li>You want to get started quickly<br /> 
 </li><li>You don't feel like learning the Admin Panel right away<br /> 
 </li><li>You want to quickly test out some of Tiki's Features<br /> 
-</li></ul> 
-<br /> -->
+</li>
+</ul>
+ <br /> --><table>
+<tr>
+   <th>Name</th>
+   <th>Description</th>
+   <th>Path</th>
+</tr> 
+{foreach from=$listWS item=data}
+	<tr>
+		<td><a href = {$data.href}>{$data.name}</a></td>
+		<td>{$data.description}</td>
+		<td>{$data.wspath}</td>
+	</tr>
+{/foreach}
+</table>
 
 </td><td valign="top" width="40%" > 
 <br /> 
