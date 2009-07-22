@@ -16,7 +16,7 @@ $smarty->assign('groups', $userlib->get_groups());
 if ( isset($_REQUEST['wsoptions']) )
 {
     if ( (isset($_REQUEST['wsdevtools'])) && ($_REQUEST['wsdevtools'] == 'create') )
-	header("Location: ./lib/workspaces/wstools/scriptCreator.php?action=init&redirect=yes");
+	header("Location: ./lib/workspaces/wstools/scriptCreator.php?action=create&redirect=yes");
     else if ( ($_REQUEST['wsdevtools'] == 'clearcache') )
 	header("Location: ./lib/workspaces/wstools/scriptCreator.php?action=clearcache&redirect=yes");
     else
