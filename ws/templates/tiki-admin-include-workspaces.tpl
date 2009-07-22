@@ -45,6 +45,9 @@ Here you can edit who is the Owner of the Workspace.
 {/remarksbox}
 </div>
 </fieldset>
+<div class="adminoptionbox">
+	<div class="adminoptionlabel"><div align="center"><input type="submit" name="wsoptions" value="{tr}Apply{/tr}"/></div></div>
+</div>
 {/tab}
 
 {tab name="{tr}Workspaces Dev Tools{/tr}"}
