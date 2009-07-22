@@ -61,11 +61,20 @@ if ($output["data"] == "EMPTY") {
 		if (isset($_REQUEST['exactvalue'])) {
 			$exactvalue = explode(':', $_REQUEST['exactvalue']);
 		}
+		if (isset($_REQUEST['filtertvalue'])) {
+			$exactvalue = explode(':', $_REQUEST['filtervalue']);
+		}
 	} else {
 		$filterfield = null;
 		$exactvalue = null;
+		$filtervalue = null;
 	}
-	$tmp = $trklib->list_items($_REQUEST[$id], 0, $prefs['max_rss_tracker'], $sort_mode, $fields, $filterfield, null, null, null, $exactvalue);
+	if (isset($_REQUEST['status'])) {
+		$status = $_REQUEST['status'];
+	} else {
+		$status = null;
+	}
+	$tmp = $trklib->list_items($_REQUEST[$id], 0, $prefs['max_rss_tracker'], $sort_mode, $fields, $filterfield, $filtervalue, $status, null, $exactvalue);
 	foreach($tmp["data"] as $data) {
 		$data[$titleId] = tra('Tracker item:') . ' #' . $data["$urlparam"];
 		$data[$descId] = '';
