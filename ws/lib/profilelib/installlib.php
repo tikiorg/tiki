@@ -1892,11 +1892,28 @@ class Tiki_Profile_InstallHandler_Workspaces extends Tiki_Profile_InstallHandler
 		"groupName" => $group['name'],
 		"groupDescription" => $group['description'],
 		"noCreateNewGroup" => $group['new_group'],
-		"additionalPerms" => $group['allow']
-		);
+		"additionalPerms" => $this->doPermsConvertions ($group['allow']));
+
+	    if (isset($group['members']))
+	    {
+		$members = $group['members'];
+		global $userlib;
+
+		foreach ($members as $member)
+		    if ($userlib->user_exists($member))
+			$userlib->assign_user_to_group($member, $group['name']);
+	    }
 	}
 
 	return $groupsArray;
+    }
+
+    //This is for testing, I need to use lp functions instead
+    private function doPermsConvertions ($listOfPerms)
+    {
+	foreach ( $listOfPerms as $key => $value )
+	    $listOfPerms[$key] = 'tiki_p_'.$value;
+	return $listOfPerms;
     }
 
     function getData()
@@ -1927,11 +1944,14 @@ class Tiki_Profile_InstallHandler_Workspaces extends Tiki_Profile_InstallHandler
 	if ($this->canInstall()){
 	    $id = $wslib->create_ws($data['name'], $this->fetchGroupData($data), $data['parent'], $data['description']);
 
-	    var_dump($data['groups'][0]);
-
-	    var_dump($permissions = Tiki_Profile::convertLists( $data['groups'][0], array('allow' => 'y',), 'tiki_p_' ));
-
-
+	    //Hummm I'm in trouble, lol
+	    /*if (isset($data['objects'])){
+		$helper = new Tiki_Profile();
+		
+		$installer = new Tiki_Profile_Installer();
+		$installer->install()
+	    }*/
+	    var_dump($data);
 	    return $id;
 	}
     }

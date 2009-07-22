@@ -295,7 +295,7 @@ public function create_ws ($name, $groups, $parentWS = null, $description = '')
     		case 'category':
 		{
 			parent::add_category($ws_id, $name, $description);
-			return true;			
+			break;			
 		}
 		case 'wiki page':
 		case 'wikipage':
