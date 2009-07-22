@@ -794,6 +794,7 @@ public function create_ws ($name, $groups, $parentWS = null, $description = '')
 			$wspathforsort = implode("!!",$tepath);
 			$res["wspath"] = $wspath;
 			$res["deep"] = count($tepath);
+			$res["href"] = "tiki-user_ws.php?showWS=".$ws_id;
 			
 			$listUserWS["$wspathforsort"] = $res;
 		    }
@@ -816,8 +817,11 @@ public function create_ws ($name, $groups, $parentWS = null, $description = '')
 	$bindvars = array($ws_id);
 	$result = $this->query($query,$bindvars);
 	while ($res = $result->fetchRow())
-		$listWSObjects[] = $res;
-
+	{
+		$valforsort = $res["type"]."!!".$res["itemId"];
+		$listWSObjects["$valforsort"] = $res;
+	}
+	ksort($listWSObjects);
 	return $listWSObjects;
     }
 
