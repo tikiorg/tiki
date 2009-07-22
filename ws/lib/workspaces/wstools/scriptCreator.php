@@ -165,8 +165,8 @@ if ( isset($_REQUEST['action'])  &&  ($_REQUEST['action'] == 'test') && ($wsCont
 	echo ("\n<br>");
 	echo ("List all groups that have access to WS3");
 	echo ("\n<br>");
-	$id = $wslib->get_ws_id('WS3',0);
-	$listWSGroups = $wslib->list_groups_that_can_access_in_ws($id);
+	$id3 = $wslib->get_ws_id('WS3',0);
+	$listWSGroups = $wslib->list_groups_that_can_access_in_ws($id3);
 	foreach ($listWSGroups as $key)
 	{
 		echo ($key["groupName"]);
@@ -202,7 +202,7 @@ if ( isset($_REQUEST['action'])  &&  ($_REQUEST['action'] == 'test') && ($wsCont
 	echo ("\n<br>");
 	echo ("List all objects stored in WS3");
 	echo ("\n<br>");
-	$listWSObjects = $wslib->list_ws_objects($id);
+	$listWSObjects = $wslib->list_ws_objects($id3);
 	foreach ($listWSObjects as $key)
 	{
 		echo ($key["objectId"]);
@@ -216,7 +216,7 @@ if ( isset($_REQUEST['action'])  &&  ($_REQUEST['action'] == 'test') && ($wsCont
 	echo ("\n<br>");
 	echo ("List all objects that the cool user named Ben have access from WS3");
 	echo ("\n<br>");
-	$listWSObjectsUser = $wslib->list_ws_objects_for_user ($id,$user);
+	$listWSObjectsUser = $wslib->list_ws_objects_for_user ($id3,$user);
 	foreach ($listWSObjectsUser as $key)
 	{
 		echo ($key["objectId"]);
@@ -228,33 +228,125 @@ if ( isset($_REQUEST['action'])  &&  ($_REQUEST['action'] == 'test') && ($wsCont
 	}
 	echo ("\n<br>");
 	
-	$wslib->add_ws_object($id, 'Wiki5', 'wiki page');
+	$wslib->add_ws_object($id3, 'Wiki5', 'wiki page');
 	echo ("Wiki5 have been added in WS3\n<br>");
-	$wslib->create_ws_object($id, 'Wiki6', 'wiki page');
+	$wslib->create_ws_object($id3, 'Wiki6', 'wiki page');
 	echo ("Wiki6 have been added in WS3\n<br>");
 	$userlib->assign_object_permission('G1', 'Wiki5', 'wiki page', 'tiki_p_view');
 	$userlib->assign_object_permission('G2', 'Wiki5', 'wiki page', 'tiki_p_view');
 	$userlib->assign_object_permission('G1', 'Wiki6', 'wiki page', 'tiki_p_view');
+	echo ("\n<br>");
+	
+	echo ("List all objects that the cool user named Ben have access from WS3");
+	echo ("\n<br>");
+	$listWSObjectsUser = $wslib->list_ws_objects_for_user ($id3,$user);
+	foreach ($listWSObjectsUser as $key)
+	{
+		echo ($key["objectId"]);
+		echo ("     ");
+		echo ($key["type"]);
+		echo ("     ");
+		echo ($key["name"]);
+		echo ("\n<br>");
+	}
+	echo ("\n<br>");
+	
 	$objectId1 = $objectlib->get_object_id('wiki page', 'Wiki5');
 	$objectId2 = $objectlib->get_object_id('wiki page', 'Wiki6');
-	$wslib->remove_ws_object($id,$objectId1,'Wiki5','wiki page');
+	$wslib->remove_ws_object($id3,$objectId1,'Wiki5','wiki page');
 	echo ("Wiki5 have been removed from WS3 and only the perms related to the uniques groups in WS3 have been deleted\n<br>");
-	$wslib->remove_ws_object($id,$objectId2,'Wiki6','wiki page');
+	$wslib->remove_ws_object($id3,$objectId2,'Wiki6','wiki page');
 	echo ("Wiki6 have been removed from WS3 and all it permissions have been deleted\n<br>\n<br>");
+	
+	echo ("List all objects that the cool user named Ben have access from WS3");
+	echo ("\n<br>");
+	$listWSObjectsUser = $wslib->list_ws_objects_for_user ($id3,$user);
+	foreach ($listWSObjectsUser as $key)
+	{
+		echo ($key["objectId"]);
+		echo ("     ");
+		echo ($key["type"]);
+		echo ("     ");
+		echo ($key["name"]);
+		echo ("\n<br>");
+	}
+	echo ("\n<br>");
 	
 	$id1 = $wslib->get_ws_id('WS1',0);
 	if ($userlib->add_group('G3'));
-	$wslib->set_permissions_for_group_in_ws($id1,'G1',array('tiki_p_ws_view'));
+	$wslib->set_permissions_for_group_in_ws($id1,'G2',array('tiki_p_ws_view'));
 	$wslib->set_permissions_for_group_in_ws($id1,'G3',array('tiki_p_ws_view'));
 	$wslib->add_ws_object($id1,'Wiki2','wiki page');
-	$userlib->assign_object_permission('G1', 'Wiki1', 'wiki page', 'tiki_p_view');
+	$userlib->assign_object_permission('G2', 'Wiki1', 'wiki page', 'tiki_p_view');
 	$userlib->assign_object_permission('G3', 'Wiki1', 'wiki page', 'tiki_p_view');
-	echo ("G1 have been added in WS1 and can view Wiki1\n<br>");
+	echo ("G2 have been added in WS1 and can view Wiki1\n<br>");
 	echo ("G3 have been added in WS1 and can view Wiki1\n<br>");
-	$wslib->remove_ws_group($id1,'G1');
+	
+	echo ("\n<br>");
+	echo ("List all groups that have access to WS1");
+	echo ("\n<br>");
+	$listWSGroups = $wslib->list_groups_that_can_access_in_ws($id1);
+	foreach ($listWSGroups as $key)
+	{
+		echo ($key["groupName"]);
+		echo ("\n<br>");
+	}
+	
+	echo ("\n<br>");
+	
+	$wslib->remove_ws_group($id1,'G2');
 	$wslib->remove_ws_group($id1,'G3');
-	echo ("G1 have been removed in WS1 and can't view Wiki1 anymore, but still exist in Tiki\n<br>");
-	echo ("G3 have been removed in WS1 and have disapeared from Tiki\n<br>");
+	echo ("G2 have been removed in WS1 and can't view Wiki1 anymore, but still exist in Tiki\n<br>");
+	echo ("G3 have been removed in WS1 and have been deleted from Tiki\n<br>\n<br>");
+	
+	
+	echo ("List all groups that have access to WS1");
+	echo ("\n<br>");
+	$listWSGroups = $wslib->list_groups_that_can_access_in_ws($id1);
+	foreach ($listWSGroups as $key)
+	{
+		echo ($key["groupName"]);
+		echo ("\n<br>");
+	}
+	echo ("\n<br>");
+	
+	echo("Testing new function: set_permissions_for_group_in_object");
+	
+	$group1 = array();
+	$group1["groupName"] = 'G1';
+	$group1["permList"] = array('tiki_p_view', 'tiki_p_edit');
+	
+	$group2 = array();
+	$group2["groupName"] = 'G2';
+	$group2["permList"] = array('tiki_p_view', 'tiki_p_edit');
+	
+	$groupSet = array();
+	$groupSet[] = $group1;
+	$groupSet[] = $group2;
+	
+	$itemId = 'Wiki4';
+	$type = 'wiki page';
+	 
+	$wslib->set_permissions_for_groups_in_object ($itemId, $type, $groupSet);
+	
+	$id2 = $wslib->get_ws_id('WS2',0);
+	$id4 = $wslib->get_ws_id('WS21',$id2);
+	echo ("\n<br>");
+	echo ("List all objects that the cool user named Ben have access from WS21");
+	echo ("\n<br>");
+	$listWSObjectsUser = $wslib->list_ws_objects_for_user ($id4,$user);
+	foreach ($listWSObjectsUser as $key)
+	{
+		echo ($key["objectId"]);
+		echo ("     ");
+		echo ($key["type"]);
+		echo ("     ");
+		echo ($key["name"]);
+		echo ("\n<br>");
+	}
+	echo ("\n<br>");
+	
+	
 }
 
 if ( isset($_REQUEST['action'])  &&  ($_REQUEST['action'] == 'mensaje') && ($wsContainerId))

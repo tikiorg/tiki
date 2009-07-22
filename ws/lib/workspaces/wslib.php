@@ -657,6 +657,25 @@ public function create_ws ($name, $groups, $parentWS = null, $description = '')
 
 	return true;
     }
+    
+    /** Give a set of permissions to a set of groups for a specific object (view, edit, comment...)
+     *
+     * @param $ws_id The id of the WS
+     * @param $groupSet an asociative array in the form array("groupName" => (string) name,  "permList" => array("perm1", "perm2", ...) 
+     */
+    public function set_permissions_for_groups_in_object ($itemId, $objectType, $groupSet)
+    {
+    	global $userlib; require_once 'lib/userslib.php';
+    	
+	foreach ($groupSet as $group)
+	{
+		$groupName = $group["groupName"];
+		$permList = $group["permList"];
+		foreach ($permList as $permName)
+		    $userlib->assign_object_permission($groupName, $itemId, $objectType, $permName);
+	}	
+	return true;
+    }
 	
     /** List the groups that have access to a WS
      *
