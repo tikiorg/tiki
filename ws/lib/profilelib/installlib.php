@@ -232,7 +232,7 @@ class Tiki_Profile_Installer
 			$this->setFeedback(tra('Installed').': '.$object->getDescription());
 		}
 		$preferences = $profile->getPreferences();
-		$profile->replaceReferences( $preferences, $thus->userData );
+		$profile->replaceReferences( $preferences, $this->userData );
 		foreach( $preferences as $pref => $value ) {
 			if ($prefs[$pref] != $value) {
 				$this->setFeedback(tra('Preference set').': '.$pref.'='.$value);
@@ -240,7 +240,7 @@ class Tiki_Profile_Installer
 			$tikilib->set_preference( $pref, $value );
 		}
 		$permissions = $profile->getPermissions();
-		$profile->replaceReferences( $permissions, $thus->userData );
+		$profile->replaceReferences( $permissions, $this->userData );
 		foreach( $permissions as $groupName => $info ) {
 			$this->setFeedback(tra('Group changed (or modified)').': '.$groupName);
 			$this->setupGroup( $groupName, $info['general'], $info['permissions'], $info['objects'] );
@@ -1884,13 +1884,6 @@ class Tiki_Profile_InstallHandler_Workspaces extends Tiki_Profile_InstallHandler
 	"drain_perms"
     );
 
-    private function processDataAndInstall($data)
-    {
-	global $wslib; require_once 'lib/workspaces/wslib.php';
-	if ($this->canInstall())
-	    return $wslib->create_ws($data['name'], $this->fetchGroupData($data), $data['parent'], $data['description']);
-    }
-
     private function fetchGroupData($subArray)
     {
 	foreach ($subArray['groups'] as $group)
@@ -1898,8 +1891,8 @@ class Tiki_Profile_InstallHandler_Workspaces extends Tiki_Profile_InstallHandler
 	    $groupsArray[] = array (
 		"groupName" => $group['name'],
 		"groupDescription" => $group['description'],
-		"noCreateNewGroup" => false,
-		"additionalPerms" => null
+		"noCreateNewGroup" => $group['new_group'],
+		"additionalPerms" => $group['allow']
 		);
 	}
 
@@ -1919,22 +1912,28 @@ class Tiki_Profile_InstallHandler_Workspaces extends Tiki_Profile_InstallHandler
     //Needs to be more precise, but for now is OK
     function canInstall()
     {
-	//If the user not have initialized WS ...
-	global $wslib; require_once 'lib/workspaces/wslib.php';
-	$wslib->init_ws();
-
+	global $prefs; //require_once 'lib/workspaces/wslib.php';
 	$data = $this->getData();
-	if ( array_key_exists("name", $data) && array_key_exists("groups", $data) ) return true;
+
+	if ( ($prefs['ws_container']) && array_key_exists("name", $data) && array_key_exists("groups", $data) ) return true;
 	else return false;
     }
 
     function _install()
     {
 	$data = $this->getData();
-	$ids = array();
 
-	//var_dump($data);
-	return $this->processDataAndInstall($data);
+	global $wslib; require_once 'lib/workspaces/wslib.php';
+	if ($this->canInstall()){
+	    $id = $wslib->create_ws($data['name'], $this->fetchGroupData($data), $data['parent'], $data['description']);
+
+	    var_dump($data['groups'][0]);
+
+	    var_dump($permissions = Tiki_Profile::convertLists( $data['groups'][0], array('allow' => 'y',), 'tiki_p_' ));
+
+
+	    return $id;
+	}
     }
 }
 
