@@ -40,6 +40,8 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'create'))
 	if ($userlib->add_user($user, '12345'));
 	$userlib->assign_user_to_group($user, 'G1');
 	$userlib->assign_user_to_group($user, 'G2');
+	$userlib->assign_user_to_group('admin', 'G1');
+	$userlib->assign_user_to_group('admin', 'G2');
 
 	echo("Creating WS<br>");
 	// Creating new WS
@@ -58,7 +60,7 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'create'))
 	 {
 		$groups = array();
 		$groups[] = array(
-					"groupName" => "G1",
+					"groupName" => "G2",
 					"groupDescription" => "",
 					"noCreateNewGroup" => true,
 					"additionalPerms" => array('tiki_p_ws_adminresources')

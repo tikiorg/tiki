@@ -101,7 +101,7 @@ public function create_ws ($name, $groups, $parentWS = null, $description = '')
 			$this->set_permissions_for_group_in_ws($ws_id, $groupName, $additionalPerms);
 		}
 		else
-		    $this->add_ws_group ($ws_id, $name, $groupName, $additionalPerms);
+		    $this->add_ws_group ($ws_id, $name, $groupName, $groupDescription, $additionalPerms);
 	}
 		
 	return $ws_id;
@@ -115,7 +115,7 @@ public function create_ws ($name, $groups, $parentWS = null, $description = '')
      * @param $additionalPerms Associative array for giving more perms than the default perm 'tiki_p_ws_view'
      * @return If the WS was sucesfully created true, if not false.
      */
-    public function add_ws_group ($ws_id, $wsName = null, $nameGroup, $additionalPerms = null) 
+    public function add_ws_group ($ws_id, $wsName = null, $nameGroup, $description, $additionalPerms = null) 
     {
 	global $userlib; require_once 'lib/userslib.php';
 
@@ -123,7 +123,7 @@ public function create_ws ($name, $groups, $parentWS = null, $description = '')
 
 	$groupName = $nameGroup;//$this->generate_ws_group_name ($id_ws, $wsName, $nameGroup); //With this you can create two groups with same name in different ws
 
-	if ($userlib->add_group($groupName)) 
+	if ($userlib->add_group($groupName, $description)) 
 	{
     	    // It's given the tiki_p_ws_view permission to the selected group in the new ws
 	    $this->set_permissions_for_group_in_ws($ws_id,$groupName,array('tiki_p_ws_view'));
