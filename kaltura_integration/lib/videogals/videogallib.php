@@ -9,17 +9,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 include_once ("includes.php");
 
-class VideoGalsLib extends TikiLib {
-
-
-
-	function VideoGalsLib($db) {
-		global $prefs;
-
-		$this->TikiLib($db);
-		$exts=get_loaded_extensions();
-
-	}
+class VideoGalsLib {
 
 	function add_gallery_hit($id) {
 		global $prefs, $user;
@@ -549,7 +539,7 @@ $thumbSizeY,$public,0,$visible,$sortorder,$sortdirection,(int)$parentgallery,$sh
 }
 global $dbTiki;
 global $videogallib;
-$videogallib = new VideoGalsLib($dbTiki);
+$videogallib = new VideoGalsLib();
 
 ?>
 
