@@ -1,56 +1,7 @@
 {title help="FAQs" admpage="faqs"}{tr}FAQs{/tr}{/title}
 
-{if $tiki_p_admin_faqs eq 'y'}
-  {if $faqId > 0}
-		<h2>{tr}Edit this FAQ:{/tr} {$title}</h2>
-		<div class="navbar">
-			{button href="tiki-list_faqs.php" _text="{tr}Create new FAQ{/tr}"} 
-		</div>
-  {else}
-		<h2>{tr}Create New FAQ:{/tr}</h2>
-	{/if}
-
-	<form action="tiki-list_faqs.php" method="post">
-		<input type="hidden" name="faqId" value="{$faqId|escape}" />
-		<table class="normal">
-			<tr>
-				<td class="formcolor">
-					{tr}Title{/tr}:
-				</td>
-				<td class="formcolor">
-					<input type="text" name="title" value="{$title|escape}" />
-				</td>
-			</tr>
-			<tr>
-				<td class="formcolor">
-					{tr}Description{/tr}:
-				</td>
-				<td class="formcolor">
-					<textarea name="description" rows="4" cols="40">{$description|escape}</textarea>
-				</td>
-			</tr>
-			{include file='categorize.tpl'}
-			<tr>
-				<td class="formcolor">
-					{tr}Users can suggest questions{/tr}:
-				</td>
-				<td class="formcolor">
-					<input type="checkbox" name="canSuggest" {if $canSuggest eq 'y'}checked="checked"{/if} />
-				</td>
-			</tr>
-			<tr>
-				<td class="formcolor">
-					&nbsp;
-				</td>
-				<td class="formcolor">
-					<input type="submit" name="save" value="{tr}Save{/tr}" />
-				</td>
-			</tr>
-		</table>
-	</form>
-{/if}
-
-<h2>{tr}Available FAQs{/tr}</h2>
+{tabset name='tabs_list_faqs'}
+{tab name='{tr}Available FAQs{/tr}'}
 
 {if $channels or ($find ne '')}
   {include file='find.tpl'}
@@ -104,3 +55,58 @@
 </table>
 
 {pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
+{/tab}
+
+{if $tiki_p_admin_faqs eq 'y'}
+{tab name={tr}Edit/Create{/tr}}
+  {if $faqId > 0}
+		<h2>{tr}Edit this FAQ:{/tr} {$title}</h2>
+		<div class="navbar">
+			{button href="tiki-list_faqs.php" _text="{tr}Create new FAQ{/tr}"} 
+		</div>
+  {else}
+		<h2>{tr}Create New FAQ:{/tr}</h2>
+	{/if}
+
+	<form action="tiki-list_faqs.php" method="post">
+		<input type="hidden" name="faqId" value="{$faqId|escape}" />
+		<table class="normal">
+			<tr>
+				<td class="formcolor">
+					{tr}Title{/tr}:
+				</td>
+				<td class="formcolor">
+					<input type="text" name="title" value="{$title|escape}" />
+				</td>
+			</tr>
+			<tr>
+				<td class="formcolor">
+					{tr}Description{/tr}:
+				</td>
+				<td class="formcolor">
+					<textarea name="description" rows="4" cols="40">{$description|escape}</textarea>
+				</td>
+			</tr>
+			{include file='categorize.tpl'}
+			<tr>
+				<td class="formcolor">
+					{tr}Users can suggest questions{/tr}:
+				</td>
+				<td class="formcolor">
+					<input type="checkbox" name="canSuggest" {if $canSuggest eq 'y'}checked="checked"{/if} />
+				</td>
+			</tr>
+			<tr>
+				<td class="formcolor">
+					&nbsp;
+				</td>
+				<td class="formcolor">
+					<input type="submit" name="save" value="{tr}Save{/tr}" />
+				</td>
+			</tr>
+		</table>
+	</form>
+{/tab}
+{/if}
+{/tabset}
+
