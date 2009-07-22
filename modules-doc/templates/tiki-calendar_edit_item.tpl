@@ -415,7 +415,7 @@
   <input type="hidden" name="rows" value="{$rows}"/>
   <input type="hidden" name="cols" value="{$cols}"/>
 {else}
-  <span class="description">{$calitem.parsed|default:"<i>No description</i>"}</span>
+  <span class="description">{$calitem.parsed|default:"<i>{tr}No description{/tr}</i>"}</span>
 {/if}
 </td></tr>
 

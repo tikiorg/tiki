@@ -8,7 +8,7 @@
 	{if $prefs.feature_siteloc eq 'page' and $prefs.feature_breadcrumbs eq 'y'}
 		{if $prefs.feature_siteloclabel eq 'y'}{tr}Location : {/tr}{/if}
 		{breadcrumbs type="trail" loc="page" crumbs=$crumbs}
-		{if $prefs.feature_page_title eq 'y'}{breadcrumbs type="pagetitle" loc="page" crumbs=$crumbs}{/if}
+		{if $prefs.feature_page_title eq 'y'}{breadcrumbs type="pagetitle" loc="page" crumbs=$crumbs machine_translate=$machine_translate_to_lang source_lang=$pageLang target_lang=$machine_translate_to_lang}{/if}
 	{/if}
 
 {if $beingStaged eq 'y'}
@@ -106,12 +106,8 @@
 	</div>
 {/if}
 
-{**
- * Page Title as h1 here when the feature is on
- *}
 {if $prefs.feature_page_title eq 'y'}
-	<h1 class="pagetitle">{breadcrumbs type="pagetitle" loc="page" crumbs=$crumbs}</h1>
-    
+	<h1 class="pagetitle">{breadcrumbs type="pagetitle" loc="page" crumbs=$crumbs machine_translate=$machine_translate_to_lang source_lang=$pageLang target_lang=$machine_translate_to_lang}</h1>
 {/if}
 
 {if $structure eq 'y'}
@@ -166,6 +162,12 @@
 {/if}
 {if $prefs.feature_wiki_ratings eq 'y'}{include file='poll.tpl'}{/if}
 {/if} {*hide_page_header*}
+
+{if $machine_translate_to_lang != ''}
+	{remarksbox type="warning" title="{tr}Warning{/tr}" highlight="y"}
+       {tr}This text was automatically translated by Google Translate from the following page: {/tr}<a href="tiki-index.php?page={$page}">{$page}</a>
+	{/remarksbox}
+{/if}
 
 {if $pageLang eq 'ar' or $pageLang eq 'he'}
 <div style="direction:RTL; unicode-bidi:embed; text-align: right; {if $pageLang eq 'ar'}font-size: large;{/if}">
@@ -257,7 +259,7 @@ must not overlap the wiki content that could contain floated elements *}
 {include  file=tiki-wiki_topline.tpl}
 {/if}
 {if $print_page ne 'y'}
-{if !$prefs.page_bar_position or $prefs.page_bar_position eq 'bottom' or $prefs.page_bar_position eq 'both'}
+{if (!$prefs.page_bar_position or $prefs.page_bar_position eq 'bottom' or $prefs.page_bar_position eq 'both') and $machine_translate_to_lang == ''}
 {include  file=tiki-page_bar.tpl}
 {/if}
 {/if}

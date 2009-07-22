@@ -1,6 +1,6 @@
 <?php
 // $Id: /cvsroot/tikiwiki/tiki/tiki-admin_modules.php,v 1.52.2.1 2007-11-25 21:42:35 sylvieg Exp $
-// Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+// (c) Copyright 2002-2009 by authors of the Tiki Wiki/CMS/Groupware Project
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 $section = 'admin';
@@ -13,19 +13,19 @@ include_once ('lib/dcs/dcslib.php');
 include_once ('lib/modules/modlib.php');
 include_once ('lib/structures/structlib.php');
 if (!isset($dcslib)) {
-    $dcslib = new DCSLib($dbTiki);
+    $dcslib = new DCSLib;
 }
 if (!isset($bannerlib)) {
-    $bannerlib = new BannerLib($dbTiki);
+    $bannerlib = new BannerLib;
 }
 if (!isset($rsslib)) {
-    $rsslib = new RssLib($dbTiki);
+    $rsslib = new RssLib;
 }
 if (!isset($polllib)) {
-    $polllib = new PollLib($dbTiki);
+    $polllib = new PollLib;
 }
 if (!isset($structlib)) {
-    $structlib = new StructLib($dbTiki);
+    $structlib = new StructLib;
 }
 $smarty->assign('wysiwyg', 'n');
 if (isset($_REQUEST['wysiwyg']) && $_REQUEST['wysiwyg'] == 'y') {

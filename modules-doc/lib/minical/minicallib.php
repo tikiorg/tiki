@@ -7,10 +7,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 class MiniCalLib extends TikiLib {
-	function MiniCalLib($db) {
-		parent::TikiLib($db);
-	}
-
 	// Returns an array where each member of the array has:
 	// start: unix timestamp of the interval start time
 	// end  : unix timestamp of the interval end time
@@ -27,7 +23,7 @@ class MiniCalLib extends TikiLib {
 			$aux['start'] = $start;
 			$end_p = $start + $interval;
 			$aux['end'] = $end_p;
-			$query = "select * from `tiki_minical_events` where `user`=? and `start`>=? and `start`<? order by ".$this->convert_sortmode("start_asc");
+			$query = "select * from `tiki_minical_events` where `user`=? and `start`>=? and `start`<? order by ".$this->convertSortMode("start_asc");
 			//print($query);print("<br />");
 			$result = $this->query($query,array($user,(int)$start,(int)$end_p));
 			$events = array();
@@ -70,7 +66,7 @@ class MiniCalLib extends TikiLib {
 			$mid = "";
 		}
 
-		$query = "select `isIcon`,`path`,`name`,`topicId` from `tiki_minical_topics` where `user`=? $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select `isIcon`,`path`,`name`,`topicId` from `tiki_minical_topics` where `user`=? $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_minical_topics` where `user`=? $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -101,7 +97,7 @@ class MiniCalLib extends TikiLib {
 			$mid = "";
 		}
 
-		$query = "select * from `tiki_minical_events` where `user`=? $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_minical_events` where `user`=? $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_minical_events` where `user`=? $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -133,7 +129,7 @@ class MiniCalLib extends TikiLib {
 		} else {
 			$mid = "";
 		}
-		$query = "select * from `tiki_minical_events` where `start`>? and `user`=? $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_minical_events` where `start`>? and `user`=? $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_minical_events` where `start`>? and `user`=? $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -207,5 +203,4 @@ class MiniCalLib extends TikiLib {
 		$this->query($query,array($user,(int)$pdate));
 	}
 }
-global $dbTiki;
-$minicallib = new MiniCalLib($dbTiki);
+$minicallib = new MiniCalLib;

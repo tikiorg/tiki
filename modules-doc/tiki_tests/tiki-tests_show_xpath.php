@@ -47,8 +47,8 @@ function enlight_xpath($url, $xpath) {
 		if (!$loaded) {
 			require_once('lib/htmlpurifier_tiki/HTMLPurifier.tiki.php');
 			$config = getHTMLPurifierTikiConfig();
-			$config->set('HTML', 'Doctype', 'XHTML 1.0 Transitional');
-			$config->set('Attr','EnableID', true);
+			$config->set('HTML.Doctype', 'XHTML 1.0 Transitional');
+			$config->set('Attr.EnableID', true);
 			$purifier = new HTMLPurifier($config);
 			$loaded = true;
 		}

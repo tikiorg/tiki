@@ -4,6 +4,7 @@
  */
  
  require_once 'PHPUnit/Extensions/SeleniumTestCase.php';
+ require_once 'TikiAcceptanceTestDBRestorer.php';
  
  
 class TikiSeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase {

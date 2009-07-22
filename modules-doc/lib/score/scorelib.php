@@ -13,10 +13,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 class ScoreLib extends TikiLib {
 
-	function ScoreLib($db) {
-		$this->TikiLib($db);
-	}
-
 	// User's general classification on site
 	function user_position($user) {
 		$score = $this->getOne("select `score` from `users_users` where `login`=?",array($user));
@@ -86,5 +82,4 @@ class ScoreLib extends TikiLib {
 	}
 
 }
-global $dbTiki;
-$scorelib = new ScoreLib($dbTiki);
+$scorelib = new ScoreLib;

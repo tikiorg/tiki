@@ -10,10 +10,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
    user, taskId, title, description, date, status, priority, completed, percentage
 */
 class NotepadLib extends TikiLib {
-	function NotepadLib($db) {
-		$this->TikiLib($db);
-	}
-
 	function get_note($user, $noteId) {
 		$query = "select * from `tiki_user_notes` where `user`=? and `noteId`=?";
 		$result = $this->query($query,array($user,(int)$noteId));
@@ -44,7 +40,7 @@ class NotepadLib extends TikiLib {
 			$mid = "";
 		}
 
-		$query = "select * from `tiki_user_notes` where `user`=? $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_user_notes` where `user`=? $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_user_notes` where `user`=? $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -62,5 +58,4 @@ class NotepadLib extends TikiLib {
 		return $retval;
 	}
 }
-global $dbTiki;
-$notepadlib = new NotepadLib($dbTiki);
+$notepadlib = new NotepadLib;

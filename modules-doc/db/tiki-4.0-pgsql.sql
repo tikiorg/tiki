@@ -1993,6 +1993,8 @@ INSERT INTO "tiki_menu_options" ("optionId","menuId","type","name","url","positi
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'o','Content Templates','tiki-admin_content_templates.php',1256,'','tiki_p_edit_content_templates','',0);
 
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'o','Tiki Importer','tiki-importer.php',1240,'','tiki_p_admin_importer','',0);
+
 
 DROP TABLE "tiki_menus";
 
@@ -3369,6 +3371,7 @@ CREATE TABLE "users_groups" (
   "userChoice" char(1) default NULL,
   "groupDefCat" bigint default 0,
   "groupTheme" varchar(255) default '',
+  "isExternal" char(1) default 'n',
   PRIMARY KEY ("id")
 ) ENGINE=MyISAM ;
 
@@ -3710,6 +3713,10 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_modify_tracker_items', 'Can change tracker items', 'registered', 'trackers');
 
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_modify_tracker_items_pending', 'Can change tracker pending items', 'registered', 'trackers');
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_modify_tracker_items_closed', 'Can change tracker closed items', 'registered', 'trackers');
+
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_tracker_view_ratings', 'Can view rating result for tracker items', 'basic', 'trackers');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_tracker_vote_ratings', 'Can vote a rating for tracker items', 'registered', 'trackers');
@@ -3911,6 +3918,10 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_notifications', 'Can admin mail notifications', 'editors', 'mail notifications');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_invite', 'Can invite user in groups', 'editors', 'tiki');
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_delete_account', 'Can delete his own account', 'admin', 'tiki');
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_importer', 'Can use the Tiki Importer', 'admin', 'tiki', 'y');
 
 
 UPDATE users_permissions SET feature_check = 'feature_wiki' WHERE permName IN(
@@ -4683,6 +4694,8 @@ INSERT INTO "tiki_actionlog_conf" ("action","objectType","status") VALUES ('Remo
 
 INSERT INTO "tiki_actionlog_conf" ("action","objectType","status") VALUES ('Removed', 'file', 'n');
 
+INSERT INTO "tiki_actionlog_conf" ("action","objectType","status") VALUES ('Viewed', 'article', 'n');
+
 
 DROP TABLE "tiki_freetags";
 
@@ -4940,6 +4953,12 @@ INSERT INTO "tiki_sefurl_regex_out" ("left","right","type","feature") VALUES ('t
 
 INSERT INTO "tiki_sefurl_regex_out" ("left","right","type","feature") VALUES ('tiki-download_file.php\\?fileId=(\\d+)', 'dl$1', 'file', 'feature_file_galleries');
 
+INSERT INTO "tiki_sefurl_regex_out" ("left","right","type","feature") VALUES ('tiki-download_file.php\\?fileId=(\\d+)&amp;thumbnail', 'thumbnail$1', 'thumbnail', 'feature_file_galleries');
+
+INSERT INTO "tiki_sefurl_regex_out" ("left","right","type","feature") VALUES ('tiki-download_file.php\\?fileId=(\\d+)&amp;display', 'display$1', 'display', 'feature_file_galleries');
+
+INSERT INTO "tiki_sefurl_regex_out" ("left","right","type","feature") VALUES ('tiki-download_file.php\\?fileId=(\\d+)&amp;preview', 'preview$1', 'preview', 'feature_file_galleries');
+
 INSERT INTO "tiki_sefurl_regex_out" ("left","right","type","feature") VALUES ('tiki-view_forum.php\\?forumId=(\\d+)', 'forum$1', 'forum', 'feature_forums');
 
 INSERT INTO "tiki_sefurl_regex_out" ("left","right","type","feature") VALUES ('tiki-browse_gallery.php\\?galleryId=(\\d+)', 'gallery$1', 'gallery', 'feature_galleries');
@@ -5074,6 +5093,48 @@ CREATE TABLE "tiki_plugin_security" (
 );
 
 CREATE  INDEX "tiki_plugin_security_last_object" ON "tiki_plugin_security"("last_objectType","last_objectId");
+
+DROP TABLE "tiki_user_reports";
+
+CREATE TABLE "IF" NOT EXISTS tiki_user_reports (
+  "id" bigserial,
+  "user" varchar(200) COLLATE latin1_general_ci NOT NULL,
+  "interval" varchar(20) COLLATE latin1_general_ci NOT NULL,
+  "view" varchar(8) COLLATE latin1_general_ci NOT NULL,
+  "type" varchar(5) COLLATE latin1_general_ci NOT NULL,
+  "time_to_send" datetime NOT NULL,
+  "always_email" smallint NOT NULL,
+  "last_report" datetime NOT NULL,
+  PRIMARY KEY ("id")
+) ENGINE=MyISAM;
+
+
+DROP TABLE "tiki_user_reports_cache";
+
+CREATE TABLE "IF" NOT EXISTS tiki_user_reports_cache (
+  "id" bigserial,
+  "user" varchar(200) COLLATE latin1_general_ci NOT NULL,
+  "event" varchar(200) COLLATE latin1_general_ci NOT NULL,
+  "data" text COLLATE latin1_general_ci NOT NULL,
+  "time" datetime NOT NULL,
+  PRIMARY KEY ("id")
+) ENGINE=MyISAM;
+
+
+CREATE TABLE "tiki_perspectives" (
+  "perspectiveId" bigserial,
+  "name" varchar(100) NOT NULL,
+  PRIMARY KEY ("perspectiveId")
+) ENGINE=MyISAM;
+
+
+CREATE TABLE "tiki_perspective_preferences" (
+  "perspectiveId" int NOT NULL,
+  "pref" varchar(40) NOT NULL,
+  "value" text,
+  PRIMARY KEY ("perspectiveId","pref")
+) ENGINE=MyISAM;
+
 
 ;
 

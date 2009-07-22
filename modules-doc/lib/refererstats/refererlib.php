@@ -7,9 +7,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 class RefererLib extends TikiLib {
-	function RefererLib($db) {
-		$this->TikiLib($db);
-	}
 
 	function clear_referer_stats() {
 		$query = "delete from tiki_referer_stats";
@@ -27,7 +24,7 @@ class RefererLib extends TikiLib {
 			$mid = "";
 		}
 
-		$query = "select * from `tiki_referer_stats` $mid order by ".$this->convert_sortmode($sort_mode);;
+		$query = "select * from `tiki_referer_stats` $mid order by ".$this->convertSortMode($sort_mode);;
 		$query_cant = "select count(*) from `tiki_referer_stats` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -43,5 +40,4 @@ class RefererLib extends TikiLib {
 		return $retval;
 	}
 }
-global $dbTiki;
-$refererlib = new RefererLib($dbTiki);
+$refererlib = new RefererLib;

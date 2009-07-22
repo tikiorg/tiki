@@ -27,6 +27,8 @@ FCKConfig.StylesXmlPath = _TikiRoot + 'lib/fckeditor_tiki/tikistyles.xml';
 FCKConfig.TemplatesXmlPath = _TikiRoot + 'lib/fckeditor_tiki/tikitemplates.xml';
 
 FCKConfig.EditorAreaCSS = _TikiRoot + '{$fckstyle}' ;
+{if !empty($fckstyleoption)}FCKConfig.EditorAreaStyles = '' + _TikiRoot + '{$fckstyleoption}';{/if}
+
 FCKConfig.SkinPath = FCKConfig.BasePath + 'skins/{$prefs.wysiwyg_toolbar_skin}/' ;
 FCKConfig.DefaultLanguage   = '{$prefs.language}' ;
 FCKConfig.AutoDetectLanguage   = {if $prefs.feature_detect_language eq 'y'}true{else}false{/if} ;
@@ -53,11 +55,12 @@ FCKConfig.ProcessHTMLEntities = false;
 {if $prefs.feature_filegals_manager eq 'y'}
 FCKConfig.ImageDlgHideAdvanced = true ;
 FCKConfig.ImageDlgHideLink = true ;
-{/if}
-FCKConfig.ImageUpload = false ;
+{else}
 FCKConfig.Plugins.Add( 'tikiimage', null, _TikiRoot + 'lib/fckeditor_tiki/plugins/' ) ;
 FCKConfig.tikiimageBtn = "{tr}Insert an image{/tr}" ;
 FCKConfig.tikiimageDlgTitle = "{tr}Tiki Image - Insert an image{/tr}" ;
+{/if}
+FCKConfig.ImageUpload = false ;
 
 FCKConfig.Plugins.Add( 'CleanHTML', null, _TikiRoot + 'lib/fckeditor_tiki/plugins/' );
 

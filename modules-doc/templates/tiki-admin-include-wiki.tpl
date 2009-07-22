@@ -753,8 +753,8 @@ name="w_displayed_default" {if $prefs.w_displayed_default eq 'y'} checked="check
 <div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" id="wiki_list_name" name="wiki_list_name" {if $prefs.wiki_list_name eq 'y'}checked="checked"{/if} onclick="flip('namelength');" /></div>
 	<div class="adminoptionlabel"><label for="wiki_list_name">{tr}Name{/tr} </label></div>
-	<div class="adminoptionboxchild" id="namelength" style="display:{if $prefs.wiki_list_name eq 'y'}block{else}none{/if};"
-	<div class="adminoptionlabel">{tr}Name length:{/tr} <input type="text" name="wiki_list_name_len" value="{$prefs.wiki_list_name_len}" size="3" />	</div>
+	<div class="adminoptionboxchild" id="namelength" style="display:{if $prefs.wiki_list_name eq 'y'}block{else}none{/if};">
+		<div class="adminoptionlabel">{tr}Name length:{/tr} <input type="text" name="wiki_list_name_len" value="{$prefs.wiki_list_name_len}" size="3" /></div>
 	</div>
 </div>	 
 

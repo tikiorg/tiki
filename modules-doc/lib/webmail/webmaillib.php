@@ -15,10 +15,6 @@ class WebMailLib extends TikiLib {
 	// slightly complicated sub-query to check for public messages
 	var $SQL_CLAUSE_FOR_PUBLIC_MAILBOX = '(select count(*) from `tiki_user_mail_accounts` where `tiki_user_mail_accounts`.`accountId`=`tiki_webmail_messages`.`accountId` and `flagsPublic` = \'y\')';
 	
-	function WebMailLib($db) {
-		parent::TikiLib($db);
-	}
-
 	function remove_webmail_message($current, $user, $msgid) {
 
 		$query = "delete from `tiki_webmail_messages` where `mailId`=? and (`user`=? or $this->SQL_CLAUSE_FOR_PUBLIC_MAILBOX)";	// mailId is message-id
@@ -112,7 +108,7 @@ class WebMailLib extends TikiLib {
 			$bindvars = array($user);
 		}
 
-		$query = "select * from `tiki_user_mail_accounts` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_user_mail_accounts` $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_user_mail_accounts` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -139,7 +135,7 @@ class WebMailLib extends TikiLib {
 			$bindvars = array();
 		}
 
-		$query = "select * from `tiki_user_mail_accounts` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_user_mail_accounts` $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_user_mail_accounts` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -322,7 +318,7 @@ class WebMailLib extends TikiLib {
 				} else if (!strstr($wmail['sender']['email'], '@')) {
 					$e = $wmail['sender']['name'];
 					$wmail['sender']['name'] = $wmail['sender']['email'];
-					$wmail['sender']['email'] =  $wmail['sender']['name'];
+					$wmail['sender']['email'] =  $e;
 				}
 				$wmail['sender']['name'] = htmlspecialchars($wmail['sender']['name']);
 
@@ -342,8 +338,8 @@ class WebMailLib extends TikiLib {
 				// TODO
 				$wmail['has_attachment'] = false;
 //				$l = $pop3->_cmdList($i);
-				$wmail['size'] = '';
-				
+				$wmail['size'] = 0;
+
 				// Add to output
 				$webmail_list[] = $wmail;
 				
@@ -446,7 +442,12 @@ class WebMailLib extends TikiLib {
 			} catch (Zend_Mail_Exception $e) {
 				$enc = '';
 			}
-		    try {
+			try {	// no headerExists() func a part (why?)
+				$ct = $part->contentType;	
+			} catch (Zend_Mail_Exception $e) {
+				$ct = '';
+			}
+			try {
 				switch ($enc) {
 					case 'quoted-printable':
 						$c = quoted_printable_decode($c);
@@ -460,15 +461,15 @@ class WebMailLib extends TikiLib {
 						$c = $c;
 				}
 				// deal with charset
-				if (preg_match('/charset\s*=\s*[\'"](.*)[\'"]/i', $part->contentType, $m) && count($m) > 1) {
+				if (preg_match('/charset\s*=\s*[\'"](.*)[\'"]/i', $ct, $m) && count($m) > 1) {
 					$charset = $m[1];
 				}
 				if (!empty($charset) && strtolower($charset) != 'utf-8') {
 					$c = utf8_encode($c);
 				}
-				$cont[] = array('body' => trim($c), 'contentType' => strtok($part->contentType, ';'));
+				$cont[] = array('body' => trim($c), 'contentType' => strtok($ct, ';'));
 				
-				if (strtok($part->contentType, ';') == 'text/plain' && !$getAllParts) {
+				if (strtok($ct, ';') == 'text/plain' && !$getAllParts) {
 					break;
 			    }
 			} catch (Zend_Mail_Exception $e) {
@@ -476,7 +477,12 @@ class WebMailLib extends TikiLib {
 			}
 		}
 		if (empty($cont)) {
-			$cont[] = array('body' => $message->getContent(), 'contentType' => strtok($message->contentType, ';'));	// no parts, so try the whole message
+			$cont[] = array('body' => $message->getContent());	// no parts, so try the whole message
+			try {	// no headerExists() func a part (why?)
+				$cont[0]['contentType'] = strtok($message->contentType, ';');	
+			} catch (Zend_Mail_Exception $e) {
+				$cont[0]['contentType'] = 'text/plain';
+			}
 		}
 		if (empty($cont)) {
 			$cont[] = array('body' => tra('No mail body found'), 'contentType' => 'text/plain');
@@ -486,4 +492,4 @@ class WebMailLib extends TikiLib {
 	}	// end get_mail_content()
 	
 } # class WebMailLib
-$webmaillib = new WebMailLib($dbTiki);
+$webmaillib = new WebMailLib;

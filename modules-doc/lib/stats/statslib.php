@@ -7,10 +7,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 class StatsLib extends TikiLib {
-	function StatsLib($db) {
-		$this->TikiLib($db);
-	}
-
 	// obsolete, but keeped for compatibility purposes
 	// use Tikilib::list_pages() instead
 	function list_orphan_pages($offset = 0, $maxRecords = -1, $sort_mode = 'pageName_desc', $find = '', $onlyCant=false) {
@@ -105,8 +101,8 @@ class StatsLib extends TikiLib {
 	function forum_stats() {
 		$stats = array();
 		$stats["forums"] = $this->getOne("select count(*) from `tiki_forums`",array());
-		$stats["topics"] = $this->getOne( "select count(*) from `tiki_comments`,`tiki_forums` where `object`=".$this->sql_cast('`forumId`','string')." and `objectType`=? and `parentId`=?",array('forum',0));
-		$stats["threads"] = $this->getOne( "select count(*) from `tiki_comments`,`tiki_forums` where `object`=".$this->sql_cast('`forumId`','string')." and `objectType`=? and `parentId`<>?",array('forum',0));
+		$stats["topics"] = $this->getOne( "select count(*) from `tiki_comments`,`tiki_forums` where `object`=".$this->cast('`forumId`','string')." and `objectType`=? and `parentId`=?",array('forum',0));
+		$stats["threads"] = $this->getOne( "select count(*) from `tiki_comments`,`tiki_forums` where `object`=".$this->cast('`forumId`','string')." and `objectType`=? and `parentId`<>?",array('forum',0));
 		$stats["tpf"] = ($stats["forums"] ? $stats["topics"] / $stats["forums"] : 0);
 		$stats["tpt"] = ($stats["topics"] ? $stats["threads"] / $stats["topics"] : 0);
 		$stats["visits"] = $this->getOne("select sum(`hits`) from `tiki_forums`",array());
@@ -304,4 +300,4 @@ class StatsLib extends TikiLib {
 	
 }
 global $dbTiki;
-$statslib = new StatsLib($dbTiki);
+$statslib = new StatsLib;

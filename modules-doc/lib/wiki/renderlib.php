@@ -202,14 +202,21 @@ class WikiRenderer
 			return;
 
 		include_once('lib/multilingual/multilinguallib.php');
-
-		if( $this->info['lang'] && $this->info['lang'] != 'NULL') { //NULL is a temporary patch
+		require_once('lib/core/lib/Multilingual/MachineTranslation/GoogleTranslateWrapper.php');
+		
+		if( !empty($this->info['lang'])) { 
 			$this->trads = $multilinguallib->getTranslations('wiki page', $this->info['page_id'], $this->page, $this->info['lang']);
 			$this->smartyassign('trads', $this->trads);
 			$pageLang = $this->info['lang'];
 			$this->smartyassign('pageLang', $pageLang);
 		}
 		
+		if ($prefs['feature_machine_translation'] == 'y' && !empty($this->info['lang'])) {
+			$translator = new Multilingual_MachineTranslation_GoogleTranslateWrapper();
+			$langsCandidatesForMachineTranslation = $translator->getLangsCandidatesForMachineTranslation($this->trads);
+			$this->smartyassign('langsCandidatesForMachineTranslation', $langsCandidatesForMachineTranslation);
+		}
+				
 		$stagingEnabled = (
 			$prefs['feature_wikiapproval'] == 'y' 
 			&& $tikilib->page_exists($prefs['wikiapproval_prefix'] . $this->page) );

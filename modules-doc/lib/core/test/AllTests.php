@@ -2,7 +2,7 @@
 ini_set( 'display_errors', 'on' );
 error_reporting( E_ALL );
 
-ini_set( 'include_path', ini_get('include_path') . ';.;../lib;../../..' );
+ini_set( 'include_path', ini_get('include_path') . PATH_SEPARATOR . '.' . PATH_SEPARATOR . '../lib' . PATH_SEPARATOR . '../../..' );
 
 function tra( $string ) {
 	return $string;
@@ -29,7 +29,6 @@ class AllTests
         $suite->addTest(DeclFilter_AllTests::suite());
         $suite->addTest(Multilingual_AllTests::suite());
         $suite->addTest(WikiParser_AllTests::suite());
-        $suite->addTest(AcceptanceTests_AllTests::suite());
         
         return $suite;
     }

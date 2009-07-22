@@ -7,16 +7,13 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 class ExportLib extends TikiLib {
-	function ExportLib($db) {
-		$this->TikiLib($db);
-	}
 
 	function MakeWikiZip() {
 		global $tikidomain;
 		$zipname = "wikidb.zip";
 		include_once ("lib/tar.class.php");
 		$tar = new tar();
-		$query = "select `pageName` from `tiki_pages` order by ".$this->convert_sortmode("pageName_asc");
+		$query = "select `pageName` from `tiki_pages` order by ".$this->convertSortMode("pageName_asc");
 		$result = $this->query($query,array());
 
 		while ($res = $result->fetchRow()) {
@@ -57,7 +54,7 @@ class ExportLib extends TikiLib {
 	// Returns all the versions for this page
 	// without the data itself
 	function get_page_history($page) {
-		$query = "select `pageName`, `description`, `version`, `lastModif`, `user`, `ip`, `data`, `comment` from `tiki_history` where `pageName`=? order by ".$this->convert_sortmode("version_desc");
+		$query = "select `pageName`, `description`, `version`, `lastModif`, `user`, `ip`, `data`, `comment` from `tiki_history` where `pageName`=? order by ".$this->convertSortMode("version_desc");
 		$result = $this->query($query,array($page));
 		$ret = array();
 
@@ -77,5 +74,4 @@ class ExportLib extends TikiLib {
 		return $ret;
 	}
 }
-global $dbTiki;
-$exportlib = new ExportLib($dbTiki);
+$exportlib = new ExportLib;

@@ -9,9 +9,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 global $usermoduleslib; include_once('lib/usermodules/usermoduleslib.php');
 
 class ModLib extends TikiLib {
-	function ModLib($db) {
-		$this->TikiLib($db);
-	}
 
 	function replace_user_module($name, $title, $data, $parse=NULL) {
 		if ((!empty($name)) && (!empty($data))) {
@@ -157,7 +154,7 @@ class ModLib extends TikiLib {
 	}
 
 	function list_user_modules($sort_mode='name_asc') {
-		$query = "select * from `tiki_user_modules` order by ".$this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_user_modules` order by ".$this->convertSortMode($sort_mode);
 
 		$result = $this->query($query,array());
 		$query_cant = "select count(*) from `tiki_user_modules`";
@@ -192,9 +189,9 @@ class ModLib extends TikiLib {
 	 * @param user = the user
 	 */
 	function check_groups($module_info, $user, $user_groups) {
-		global $prefs;
+		global $prefs, $tiki_p_admin;
 		$pass = 'y';
-		if ($user != 'admin' && $prefs['modallgroups'] != 'y') {
+		if ($tiki_p_admin != 'y' && $prefs['modallgroups'] != 'y') {
 			if ($module_info['groups']) {
 				$module_groups = unserialize($module_info['groups']);
 			} else {
@@ -640,5 +637,4 @@ class ModLib extends TikiLib {
 		return http_build_query( $expanded, '', '&' );
 	}
 }
-global $dbTiki;
-$modlib = new ModLib($dbTiki);
+$modlib = new ModLib;

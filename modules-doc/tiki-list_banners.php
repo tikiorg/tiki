@@ -1,28 +1,20 @@
 <?php
-
-// $Id: /cvsroot/tikiwiki/tiki/tiki-list_banners.php,v 1.16 2007-10-12 07:55:28 nyloth Exp $
-
-// Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+// (c) Copyright 2002-2009 by authors of the Tiki Wiki/CMS/Groupware Project
+// 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-
-// Initialization
+// $Id: /cvsroot/tikiwiki/tiki/tiki-list_banners.php,v 1.16 2007-10-12 07:55:28 nyloth Exp $
 require_once ('tiki-setup.php');
-
 include_once ('lib/banners/bannerlib.php');
-
 if (!isset($bannerlib)) {
-	$bannerlib = new BannerLib($dbTiki);
+	$bannerlib = new BannerLib;
 }
-
 // CHECK FEATURE BANNERS HERE
 if ($prefs['feature_banners'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_banners");
-
+	$smarty->assign('msg', tra("This feature is disabled") . ": feature_banners");
 	$smarty->display("error.tpl");
 	die;
 }
-
 // IF NOT LOGGED aND NOT ADMIN BAIL OUT
 if ($tiki_p_admin != 'y') {
 	$smarty->assign('errortype', 401);
@@ -30,7 +22,6 @@ if ($tiki_p_admin != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
-
 if (isset($_REQUEST["remove"])) {
 	if ($tiki_p_admin_banners != 'y') {
 		$smarty->assign('errortype', 401);
@@ -38,15 +29,14 @@ if (isset($_REQUEST["remove"])) {
 		$smarty->display("error.tpl");
 		die;
 	}
-  $area = 'delbanner';
-  if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-    key_check($area);
+	$area = 'delbanner';
+	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+		key_check($area);
 		$bannerlib->remove_banner($_REQUEST["remove"]);
-  } else {
-    key_get($area);
-  }
+	} else {
+		key_get($area);
+	}
 }
-
 // This script can receive the thresold
 // for the information as the number of
 // days to get in the log 1,3,4,etc
@@ -56,9 +46,7 @@ if (!isset($_REQUEST["sort_mode"])) {
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
-
 $smarty->assign_by_ref('sort_mode', $sort_mode);
-
 // If offset is set use it if not then use offset =0
 // use the maxRecords php variable to set the limit
 // if sortMode is not set then use lastModif_desc
@@ -67,26 +55,19 @@ if (!isset($_REQUEST["offset"])) {
 } else {
 	$offset = $_REQUEST["offset"];
 }
-
 $smarty->assign_by_ref('offset', $offset);
-
 if (isset($_REQUEST["find"])) {
 	$find = $_REQUEST["find"];
 } else {
 	$find = '';
 }
-
 $smarty->assign('find', $find);
-
 // Get a list of last changes to the Wiki database
 $who = 'admin';
-
 $listpages = $bannerlib->list_banners($offset, $maxRecords, $sort_mode, $find, $who);
 $smarty->assign_by_ref('cant_pages', $listpages["cant"]);
-
 $smarty->assign_by_ref('listpages', $listpages["data"]);
 ask_ticket('list-banners');
-
 // Display the template
 $smarty->assign('mid', 'tiki-list_banners.tpl');
 $smarty->display("tiki.tpl");

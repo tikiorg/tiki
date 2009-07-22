@@ -8,6 +8,8 @@
  * 
  */
  
+require_once('PHPUnit/Framework/TestCase.php'); 
+ 
 class TikiTestCase extends PHPUnit_Framework_TestCase {
-  protected $backupGlobals = FALSE;	
-} 
+ 	protected $backupGlobals = FALSE;	
+}

@@ -9,7 +9,7 @@
 {/if}
 
 {tikimodule error=$module_params.error title=$tpl_module_title name="last_visitors" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
-	<ol style="list-style-position:inside; margin:0; padding:0;{if ($nonums eq 'y') or ($showavatars eq 'y')} list-style-type:none;{else} list-style-type:decimal;{/if}">
+	{if ($nonums eq 'y') or ($showavatars eq 'y')}<ul style="padding-left:0; list-style:none;">{else}<ol>{/if}
 		{if !$user}
 			<li>
 				{if $showavatars eq 'y'}
@@ -57,5 +57,5 @@
 				{/if}
 			</li>
 		{/foreach}
-	</ol>
+	{if ($nonums eq 'y') or ($showavatars eq 'y')}</ul>{else}<ol>{/if}
 {/tikimodule}

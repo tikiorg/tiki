@@ -25,7 +25,7 @@ function getSubGraph($params) {
     $queue = array($nodeName);
     $i = 0;
 
-    $tikilib = new TikiLib($dbTiki);
+    $tikilib = new TikiLib;
     $existing_color = $prefs['wiki_3d_existing_page_color'];
     $missing_color = $prefs['wiki_3d_missing_page_color'];
 

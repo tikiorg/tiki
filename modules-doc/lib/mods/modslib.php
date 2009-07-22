@@ -406,7 +406,7 @@ class ModsLib {
 	var $types;
 	var $versions;
 
-	function ModsLib() { 
+	function __construct() { 
 		$this->types = array();
 		$this->feedback_listeners = array();
 		$this->versions = array('Unspecified' => -1,'1.x' => 1.0,'1.9.x' => 1.9,'2.x' => 2.0,'3.x' => 3.0, '4.x' => 4.0);
@@ -1023,4 +1023,4 @@ function newer($a,$b) {
 	} 
 	return 0;
 } 
-$modslib = new ModsLib();
+$modslib = new ModsLib;

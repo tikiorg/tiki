@@ -12,8 +12,8 @@ class bablotron extends TikiLib {
 	var $lan;
 	var $tbl;
 
-	function bablotron($db, $lan) {
-		$this->TikiLib($db);
+	function __construct($db, $lan) {
+		parent::__construct();
 		$this->lan = preg_replace('/-/','_',$lan);
 		$this->tbl = 'babl_words_' . $this->lan;
 	}

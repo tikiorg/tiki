@@ -1,6 +1,5 @@
 <?php
-/* $Id: wikiplugin_module.php,v 1.33 2007-10-12 07:55:48 nyloth Exp $
-Displays a module inlined in page
+/* Displays a module inlined in page
 
 Parameters
 module name : module=>lambda
@@ -139,12 +138,15 @@ function wikiplugin_module($data, $params) {
 		if ($float != 'nofloat') {
 			$data = "<div style='float: $float;'>";
 		} else {
-			$data = "<div>";
+			$data = "";
 		}	
 		if ($np) {
-  		$data.= "~np~$out~/np~</div>";
+  		$data.= "~np~$out~/np~";
 		} else {
-			$data.= "$out</div>";
+			$data.= "$out";
+		}
+		if ($float != 'nofloat') {
+			$data .= "</div>";
 		}
 	} else {
         // Display error message

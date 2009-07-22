@@ -18,10 +18,6 @@ global $rss_cache_time;
 
 class RSSLib extends TikiLib {
 
-	function RSSLib($db) {
-		$this->TikiLib($db);
-	}
-
 	// ------------------------------------
 	// functions for rss feeds we syndicate
 	// ------------------------------------
@@ -404,7 +400,7 @@ class RSSLib extends TikiLib {
 			$bindvars=array();
 		}
 
-		$query = "select * from `tiki_rss_modules` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_rss_modules` $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_rss_modules` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -671,5 +667,5 @@ class RSSLib extends TikiLib {
 		return $xmlstr;
 	}
 }
-global $dbTiki, $rsslib;
-$rsslib = new RSSLib($dbTiki);
+global $rsslib;
+$rsslib = new RSSLib;

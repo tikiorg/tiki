@@ -10,7 +10,7 @@ require_once 'TikiSeleniumTestCase.php';
 class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
 {
 
-	public function __testRememberToReactivateAllTestsInMultilingualTest() {
+	public function ___testRememberToReactivateAllTestsInMultilingualTest() {
     	$this->fail("Don't forget to do this");
     }
         
@@ -29,17 +29,17 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
 
     public function testSwitchBetweenLanguages() {
        $this->openTikiPage('tiki-index.php?page=Multilingual+Test+Page+1');
+       $this->logInIfNecessaryAs('admin');
        $this->doSwitchLanguageTo('Français');
-       $this->fail("Need to check that this indeed moves to the French page.");
+       $this->assertTrue(preg_match("/page\=Page\+de\+test\+multilingue\+1/",$this->getLocation()) == 1);
     }
     
   	
   	public function testLanguageLinkLeadsToTranslatedPageInThatLanguage() {
   		$this->openTikiPage('tiki-index.php?page=Multilingual+Test+Page+1');
   		$this->logInIfNecessaryAs('admin');
-  		$this->select("page", "label=Français");
-    	$this->waitForPageToLoad("30000");
-    	$this->assertTrue(preg_match('/page=Page\+de\+test\+multilingue\+1/', $this->getLocation()) == 1);
+  		$this->doSwitchLanguageTo('Français');
+  		$this->assertTrue(preg_match('/page=Page\+de\+test\+multilingue\+1/', $this->getLocation()) == 1);
     	$this->assertElementPresent("link=Page de test multilingue 1");
     	$this->assertLanguagePicklistHasLanguages(array('Français' => 'Page de test multilingue 1', 
 													'English' => 'Multilingual Test Page 1' 
@@ -82,8 +82,7 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
     	//intervention.
     	$this->openTikiPage('tiki-index.php?page=Multilingual+Test+Page+1');
     	$this->logInIfNecessaryAs('admin');
-    	$this->select("page", "label=Français");
-    	$this->waitForPageToLoad("30000");
+    	$this->doSwitchLanguageTo('Français');
     	$this->clickAndWait("link=Translate");
     	$this->select("language_list", "label=English British (en-uk)");
     	$this->type("translation_name", "Multilingual Test Page 1");
@@ -98,8 +97,7 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
     	//But it shouldn't change the language of the existing page to the language chosen for translation. 
     	$this->openTikiPage('tiki-index.php?page=Multilingual+Test+Page+1');
     	$this->logInIfNecessaryAs('admin');
-    	$this->select("page", "label=Français");
-    	$this->waitForPageToLoad("30000");
+    	$this->doSwitchLanguageTo('Français');
     	$this->clickAndWait("link=Translate");
     	$this->select("language_list", "label=English British (en-uk)");
     	$this->type("translation_name", "Multilingual Test Page 1");
@@ -188,22 +186,11 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
 
     protected function setUp()
     {
-        $this->printImportantMessageForTestUsers();
-        $this->setBrowser('*firefox C:\Program Files\Mozilla Firefox\firefox.exe');
         $this->setBrowserUrl('http://localhost/');
         $this->current_test_db = "multilingualTestDump.sql";
         $this->restoreDBforThisTest();
     }
     
-    public function printImportantMessageForTestUsers() {
-       die("MultilingualTest will not work unless:\n".
-                   "- the name of the Tiki db is 'tiki_db_for_acceptance_tests' and \n".
-				   "- the file 'multilingualTestDump.sql' (check it out from mods/acceptance_tests_files) is copied in the mySql data directory.\n" .
-				   "Comment out the call to printImportantMessageForTestUsers() in MultilingualTest::setUp() to run the tests.\n");
-    }
-    
-    
-
     public function assertLanguagePicklistHasLanguages($expAvailableLanguages) {
         $this->assertSelectElementContainsItems("xpath=//select[@name='page' and @onchange='quick_switch_language( this )']",
                   $expAvailableLanguages, 
@@ -211,7 +198,8 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
     }
     
     public function doSwitchLanguageTo($language) {
-       $this->click("xpath=//form[@id='available-languages-form']/select[@name='page' and option='English']");
+		$this->select("page", "label=$language");
+		$this->waitForPageToLoad("30000");
     }   
     public function assertLanguagePicklistDoesNotHaveLanguages($expAvailableLanguages) {
     	$this->assertSelectElementDoesNotContainItems("xpath=//select[@name='page' and @onchange='quick_switch_language( this )']",
@@ -228,4 +216,5 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
         $this->assertFalse($this->isElementPresent("xpath=//select[@name='page' and @onchange='quick_switch_language( this )']/option[@value='_translate_']",
                   "Translate option was present."));           
     }
+
 }

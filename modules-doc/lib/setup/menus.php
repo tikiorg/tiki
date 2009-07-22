@@ -17,7 +17,9 @@ function setDisplayMenu($name) {
 	if ( getCookie($name, 'menu', isset($_COOKIE['menu']) ? null : 'o') == 'o' ) {
 		$smarty->assign('mnu_'.$name, 'display:block;');
 		$smarty->assign('icn_'.$name, 'o');
-	} else $smarty->assign('mnu_'.$name, 'display:none;');
+	} else {
+		$smarty->assign('mnu_'.$name, 'display:none;');
+	}
 }
 
 setDisplayMenu('nlmenu');

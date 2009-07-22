@@ -12,7 +12,7 @@ include_once ('lib/dcs/dcslib.php');
 $auto_query_args = array('contentId','sort_mode','offset','find');
 
 if (!isset($dcslib)) {
-	$dcslib = new DCSLib($dbTiki);
+	$dcslib = new DCSLib;
 }
 
 if ($prefs['feature_dynamic_content'] != 'y') {

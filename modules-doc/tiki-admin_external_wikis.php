@@ -1,62 +1,62 @@
 <?php
-// $Id: /cvsroot/tikiwiki/tiki/tiki-admin_external_wikis.php,v 1.15.2.1 2007-11-25 21:42:34 sylvieg Exp $
-// Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+// (c) Copyright 2002-2009 by authors of the Tiki Wiki/CMS/Groupware Project
+// 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// Initialization
+// $Id: /cvsroot/tikiwiki/tiki/tiki-admin_external_wikis.php,v 1.15.2.1 2007-11-25 21:42:34 sylvieg Exp $
 require_once ('tiki-setup.php');
 include_once ('lib/admin/adminlib.php');
 if ($tiki_p_admin != 'y') {
-    $smarty->assign('errortype', 401);
-    $smarty->assign('msg', tra('You do not have permission to use this feature'));
-    $smarty->display('error.tpl');
-    die;
+	$smarty->assign('errortype', 401);
+	$smarty->assign('msg', tra('You do not have permission to use this feature'));
+	$smarty->display('error.tpl');
+	die;
 }
 if (!isset($_REQUEST["extwikiId"])) {
-    $_REQUEST["extwikiId"] = 0;
+	$_REQUEST["extwikiId"] = 0;
 }
 $smarty->assign('extwikiId', $_REQUEST["extwikiId"]);
 if ($_REQUEST["extwikiId"]) {
-    $info = $adminlib->get_extwiki($_REQUEST["extwikiId"]);
+	$info = $adminlib->get_extwiki($_REQUEST["extwikiId"]);
 } else {
-    $info = array();
-    $info["extwiki"] = '';
-    $info['name'] = '';
+	$info = array();
+	$info["extwiki"] = '';
+	$info['name'] = '';
 }
 $smarty->assign('info', $info);
 if (isset($_REQUEST["remove"])) {
-    $area = 'delextwiki';
-    if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-        key_check($area);
-        $adminlib->remove_extwiki($_REQUEST["remove"]);
-    } else {
-        key_get($area);
-    }
+	$area = 'delextwiki';
+	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+		key_check($area);
+		$adminlib->remove_extwiki($_REQUEST["remove"]);
+	} else {
+		key_get($area);
+	}
 }
 if (isset($_REQUEST["save"])) {
-    check_ticket('admin-external-wikis');
-    $adminlib->replace_extwiki($_REQUEST["extwikiId"], $_REQUEST["extwiki"], $_REQUEST['name']);
-    $info = array();
-    $info["extwiki"] = '';
-    $info['name'] = '';
-    $smarty->assign('info', $info);
-    $smarty->assign('name', '');
+	check_ticket('admin-external-wikis');
+	$adminlib->replace_extwiki($_REQUEST["extwikiId"], $_REQUEST["extwiki"], $_REQUEST['name']);
+	$info = array();
+	$info["extwiki"] = '';
+	$info['name'] = '';
+	$smarty->assign('info', $info);
+	$smarty->assign('name', '');
 }
 if (!isset($_REQUEST["sort_mode"])) {
-    $sort_mode = 'extwikiId_desc';
+	$sort_mode = 'extwikiId_desc';
 } else {
-    $sort_mode = $_REQUEST["sort_mode"];
+	$sort_mode = $_REQUEST["sort_mode"];
 }
 if (!isset($_REQUEST["offset"])) {
-    $offset = 0;
+	$offset = 0;
 } else {
-    $offset = $_REQUEST["offset"];
+	$offset = $_REQUEST["offset"];
 }
 $smarty->assign_by_ref('offset', $offset);
 if (isset($_REQUEST["find"])) {
-    $find = $_REQUEST["find"];
+	$find = $_REQUEST["find"];
 } else {
-    $find = '';
+	$find = '';
 }
 $smarty->assign('find', $find);
 $smarty->assign_by_ref('sort_mode', $sort_mode);

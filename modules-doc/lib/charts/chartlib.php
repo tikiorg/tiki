@@ -7,10 +7,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 class ChartLib extends TikiLib {
-	function ChartLib($db) {
-		$this->TikiLib($db);
-	}
-
 	function add_chart_hit($chartId) {
 		global $prefs, $user;
 
@@ -438,7 +434,7 @@ class ChartLib extends TikiLib {
 			}
 		}
 
-		$query = "select * from `tiki_charts` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_charts` $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_charts` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -480,7 +476,7 @@ class ChartLib extends TikiLib {
 			}
 		}
 
-		$query = "select * from `tiki_chart_items` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_chart_items` $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_chart_items` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -496,5 +492,4 @@ class ChartLib extends TikiLib {
 		return $retval;
 	}
 }
-global $dbTiki;
-$chartlib = new ChartLib($dbTiki);
+$chartlib = new ChartLib;

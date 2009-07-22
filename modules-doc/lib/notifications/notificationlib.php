@@ -32,9 +32,6 @@ if (!isset($Debug)) $Debug = false;
  * @since 1.x
  */
 class NotificationLib extends TikiLib {
-	function NotificationLib($db) {
-		$this->TikiLib($db);
-	}
 	function list_mail_events($offset, $maxRecords, $sort_mode, $find) {
 		if ($find) {
 			$findesc = '%' . $find . '%';
@@ -44,7 +41,7 @@ class NotificationLib extends TikiLib {
 			$mid = " ";
 			$bindvars=array();
 		}
-		$query = "select * from `tiki_user_watches` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_user_watches` $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_user_watches` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -159,5 +156,4 @@ class NotificationLib extends TikiLib {
        		return $success;
 	}
 }
-global $dbTiki;
-$notificationlib = new NotificationLib($dbTiki);
+$notificationlib = new NotificationLib;

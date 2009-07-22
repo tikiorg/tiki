@@ -55,6 +55,6 @@
 	</div>
 </div>
 <div class="heading input_submit_container" style="text-align: center;padding:1em;">
-	 <input type="submit" name="save" value="{tr}Change Preferences{/tr}" />
+	 <input type="submit" name="save" value="{tr}Change preferences{/tr}" />
 </div>
 </form>

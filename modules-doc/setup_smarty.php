@@ -41,7 +41,7 @@ class Smarty_Tikiwiki extends Smarty {
 
 		$this->security_settings['MODIFIER_FUNCS'] = array_merge(
 			$this->security_settings['MODIFIER_FUNCS'],
-			array('addslashes', 'ucfirst', 'ucwords', 'urlencode', 'md5', 'implode', 'explode', 'is_array', 'htmlentities')
+			array('addslashes', 'ucfirst', 'ucwords', 'urlencode', 'md5', 'implode', 'explode', 'is_array', 'htmlentities', 'var_dump')
 		);
 		$this->security_settings['IF_FUNCS'] = array_merge(
 			$this->security_settings['IF_FUNCS'],
@@ -49,6 +49,7 @@ class Smarty_Tikiwiki extends Smarty {
 		);
 		$secure_dirs[] = 'img/icons2';
 		$this->secure_dir = $secure_dirs;
+		$this->security_settings['ALLOW_SUPER_GLOBALS'] = true;
 	}
 
 	function _smarty_include($params) {

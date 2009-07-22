@@ -45,7 +45,7 @@
 	{/if}
 
 	{if $files[changes].type|truncate:6:'':true eq 'image/' }
-		<a href="tiki-download_file.php?fileId={$files[changes].id}&amp;display">
+		<a href="{$files[changes].id|sefurl:display}">
 		{icon _id='magnifier' _menu_text=$menu_text _menu_icon=$menu_icon alt="{tr}Display{/tr}"}
 		</a>
 	{/if}
@@ -55,7 +55,7 @@
 		{if $gal_info.type eq 'podcast' or $gal_info.type eq 'vidcast'}
 			<a href="{$download_path}{$files[changes].path}">
 		{else}
-			<a href="tiki-download_file.php?fileId={$files[changes].id}">
+			<a href="{$files[changes].id|sefurl:file}">
 		{/if}
 		{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='disk' alt='{tr}Download{/tr}'}</a> 
 	{/if}
@@ -110,12 +110,12 @@
 					{if $prefs.javascript_enabled eq 'y'}
 
 					{* with javascript, the main page will be reloaded to lock the file and change it's lockedby informations *}
-					<a href="#" onclick="window.open('tiki-download_file.php?fileId={$files[changes].fileId}&lock=y'); document.location.href = '{self_link _type='absolute_uri' _tag='n' fileId=$files[changes].fileId lock=y}{/self_link}'; return false;">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='disk_lock' alt='{tr}Download and lock{/tr}'}</a>
+					<a href="#" onclick="window.open('{$files[changes].fileId|sefurl:file}&lock=y'); document.location.href = '{self_link _type='absolute_uri' _tag='n' fileId=$files[changes].fileId lock=y}{/self_link}'; return false;">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='disk_lock' alt='{tr}Download and lock{/tr}'}</a>
 
 					{else}
 
 					{* without javascript, the lockedby informations won't be refreshed until the user do it itself *}
-					<a href="tiki-download_file.php?fileId={$files[changes].fileId}&amp;lock=y">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='disk_lock' alt='{tr}Download and lock{/tr}'}</a>
+					<a href="{$files[changes].fileId|sefurl:file}&amp;lock=y">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='disk_lock' alt='{tr}Download and lock{/tr}'}</a>
 
 					{/if}
 					{self_link _icon='lock_add' _menu_text=$menu_text _menu_icon=$menu_icon lock='y' fileId=$files[changes].fileId}{tr}Lock{/tr}{/self_link}

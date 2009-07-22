@@ -7,9 +7,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 class BannerLib extends TikiLib {
-	function BannerLib($db) {
-		$this->TikiLib($db);
-	}
 
 	function select_banner($zone, $target='_blank') {
 		global $prefs;
@@ -43,9 +40,9 @@ class BannerLib extends TikiLib {
 			$mid .= implode('or', $mids).')';
 		}
 
-		$query = "select * from `tiki_banners` where $dw = ? and  `hourFrom`<=? and `hourTo`>=? and
+		$query = "select * from `tiki_banners` where `$dw` = ? and  `hourFrom`<=? and `hourTo`>=? and
 		( ((`useDates` = ?) and (`fromDate`<=? and `toDate`>=?)) or (`useDates` = ?) ) and
-		(`impressions`<`maxImpressions`  or `maxImpressions`=?) and (`clicks`<`maxClicks` or `maxClicks`=? or `maxClicks` is NULL) and `zone`=? order by ".$this->convert_sortmode('random');
+		(`impressions`<`maxImpressions`  or `maxImpressions`=?) and (`clicks`<`maxClicks` or `maxClicks`=? or `maxClicks` is NULL) and `zone`=? order by ".$this->convertSortMode('random');
 		$result = $this->query($query,$bindvars,1,0);
 		if (!($res = $result->fetchRow())) {
 			return false;
@@ -139,7 +136,7 @@ class BannerLib extends TikiLib {
 			}
 		}
 
-		$query = "select * from `tiki_banners` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_banners` $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_banners` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -290,5 +287,4 @@ class BannerLib extends TikiLib {
 		return true;
 	}
 }
-global $dbTiki;
-$bannerlib = new BannerLib($dbTiki);
+$bannerlib = new BannerLib;

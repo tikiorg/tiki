@@ -14,6 +14,15 @@ if ($prefs['feature_contacts'] != 'y') {
 }
 include_once ('lib/webmail/contactlib.php');
 
+$auto_query_args = array(
+    'contactId',
+	'view',
+	'find',
+	'sort_mode',
+	'offset',
+	'initial'
+);
+
 if (!isset($_REQUEST["contactId"])) {
 	$_REQUEST["contactId"] = 0;
 }

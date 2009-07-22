@@ -36,8 +36,8 @@ class UsersLib extends TikiLib {
 	var $userobjectperm_cache; // used to cache queries in object_has_one_permission()
 	var $get_object_permissions_for_user_cache;
 
-	function UsersLib($db) {
-		$this->TikiLib($db);
+	function __construct() {
+		parent::__construct();
 
 		// Initialize caches
 		$this->usergroups_cache = array();
@@ -267,7 +267,7 @@ class UsersLib extends TikiLib {
 
     function validate_hash($user, $hash) {
 	return $this->getOne(
-		"select count(*) from `users_users` where " . $this->convert_binary(). " `login` = ? and `hash`=?",
+		"select count(*) from `users_users` where " . $this->convertBinary(). " `login` = ? and `hash`=?",
 		array($user, $hash)
 		);
     }
@@ -801,7 +801,7 @@ class UsersLib extends TikiLib {
     // shall not be hold in the tiki db but in LDAP or somewhere else
     function disable_tiki_auth($user) {
 	global $tiki;
-	$query = "update `users_users` set `password`=?, `hash`=? where " . $this->convert_binary(). " `login` = ?";
+	$query = "update `users_users` set `password`=?, `hash`=? where " . $this->convertBinary(). " `login` = ?";
 	$result = $this->query($query, array('','',$user));
     }
 
@@ -913,7 +913,7 @@ class UsersLib extends TikiLib {
 	global $prefs;
 
 	// first verify that the user exists
-	$query = "select * from `users_users` where " . $this->convert_binary(). " `login` = ?";
+	$query = "select * from `users_users` where " . $this->convertBinary(). " `login` = ?";
 	$result = $this->query($query, array($user) );
 
 	if (!$result->numRows())
@@ -962,7 +962,7 @@ class UsersLib extends TikiLib {
 	} else {
 	    // Use challenge-reponse method
 	    // Compare pass against md5(user,challenge,hash)
-	    $hash = $this->getOne("select `hash`  from `users_users` where " . $this->convert_binary(). " `login`=?",
+	    $hash = $this->getOne("select `hash`  from `users_users` where " . $this->convertBinary(). " `login`=?",
 		    array($user) );
 
 	    if (!isset($_SESSION["challenge"]))
@@ -1056,7 +1056,7 @@ class UsersLib extends TikiLib {
 	    $bindvars=array();
 	}
 
-	$query = "select `login` from `users_users` $mid order by ".$this->convert_sortmode($sort_mode);
+	$query = "select `login` from `users_users` $mid order by ".$this->convertSortMode($sort_mode);
 	$result = $this->query($query,$bindvars,$maxRecords,$offset);
 	$ret = array();
 
@@ -1108,7 +1108,7 @@ function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'login_asc', $fin
 		$mbindvars = $bindvars;
 	}
 
-	$query = "select uu.* from `users_users` uu $mid order by ".$this->convert_sortmode($sort_mode);
+	$query = "select uu.* from `users_users` uu $mid order by ".$this->convertSortMode($sort_mode);
 	$query_cant = "select count(*) from `users_users` uu $mmid";
 	$result = $this->query($query, $bindvars, $maxRecords, $offset);
 	$cant = $this->getOne($query_cant, $mbindvars);
@@ -1237,7 +1237,7 @@ function get_included_groups($group, $recur=true) {
 		$bindvars[] = 'y';
 	}
 
-	$query = "select * from `users_groups` $mid order by ".$this->convert_sortmode($sort_mode);
+	$query = "select * from `users_groups` $mid order by ".$this->convertSortMode($sort_mode);
 	$query_cant = "select count(*) from `users_groups` $mid";
 	$result = $this->query($query, $bindvars, $maxRecords, $offset);
 	$cant = $this->getOne($query_cant, $bindvars);
@@ -1347,15 +1347,15 @@ function get_included_groups($group, $recur=true) {
 			$trklib->remove_tracker_item( $itemId );
 	}
 
-	$query = "delete from `users_users` where ". $this->convert_binary()." `login` = ?";
+	$query = "delete from `users_users` where ". $this->convertBinary()." `login` = ?";
 	$result = $this->query($query, array( $user ) );
 	$query = "delete from `users_usergroups` where `userId`=?";
 	$result = $this->query($query, array( $userId ) );
-	$query = "delete from `tiki_user_watches` where ". $this->convert_binary()." `user`=?";
+	$query = "delete from `tiki_user_watches` where ". $this->convertBinary()." `user`=?";
 	$result = $this->query($query, array($user));
-	$query = "delete from `tiki_user_preferences` where ". $this->convert_binary()." `user`=?";
+	$query = "delete from `tiki_user_preferences` where ". $this->convertBinary()." `user`=?";
 	$result = $this->query($query, array($user));
-	$query = "delete from `tiki_newsletter_subscriptions` where ". $this->convert_binary()." `email`=? and `isUser`=?";
+	$query = "delete from `tiki_newsletter_subscriptions` where ". $this->convertBinary()." `email`=? and `isUser`=?";
 	$result = $this->query($query, array($user, 'y'));
 
 	$cachelib->invalidate('userslist');
@@ -1866,7 +1866,7 @@ function get_included_groups($group, $recur=true) {
 		global $prefs;
 
 		$values = array();
-		$sort_mode = $this->convert_sortmode($sort_mode);
+		$sort_mode = $this->convertSortMode($sort_mode);
 		$mid = '';
 		if ($type) {
 			$mid = ' where `type`= ? ';
@@ -2252,7 +2252,7 @@ function get_included_groups($group, $recur=true) {
     $oldMail = $this->get_user_email($user);
     $notificationlib->update_mail_address($user, $oldMail, $email);
 
-	$query = "update `users_users` set `email`=? where " . $this->convert_binary(). " `login`=?";
+	$query = "update `users_users` set `email`=? where " . $this->convertBinary(). " `login`=?";
 
 	$result = $this->query($query, array(
 		    $email,
@@ -2264,23 +2264,23 @@ function get_included_groups($group, $recur=true) {
 	// is this still necessary?
 	if (!empty($pass)) {
 	    $hash = $this->hash_pass($pass);
-	    $query = "update `users_users` set `hash`=?  where " . $this->convert_binary(). " `login`=?";
+	    $query = "update `users_users` set `hash`=?  where " . $this->convertBinary(). " `login`=?";
 	    $result = $this->query($query, array(
 						 $hash,
 						 $user
 						 ));
 	}
 
-	$query = "update `tiki_user_watches` set `email`=? where " . $this->convert_binary(). " `user`=?";
+	$query = "update `tiki_user_watches` set `email`=? where " . $this->convertBinary(). " `user`=?";
 	$result = $this->query($query, array( $email, $user));
 
-	$query = "update `tiki_live_support_requests` set `email`=? where " . $this->convert_binary(). " `user`=?";
+	$query = "update `tiki_live_support_requests` set `email`=? where " . $this->convertBinary(). " `user`=?";
 	$result = $this->query($query, array( $email, $user));
 				return true;
     }
 
     function get_user_password($user) {
-	$query = "select `password`,`provpass`  from `users_users` where " . $this->convert_binary(). " `login`=?";
+	$query = "select `password`,`provpass`  from `users_users` where " . $this->convertBinary(). " `login`=?";
 
 	$result = $this->query($query, array($user));
 	$res = $result->fetchRow();
@@ -2292,7 +2292,7 @@ function get_included_groups($group, $recur=true) {
 
     function get_user_email($user) {
     	global $prefs;
-        return ( $prefs['login_is_email'] == 'y' && $user != 'admin' ) ? $user : $this->getOne("select `email` from `users_users` where " . $this->convert_binary(). " `login`=?", array($user));
+        return ( $prefs['login_is_email'] == 'y' && $user != 'admin' ) ? $user : $this->getOne("select `email` from `users_users` where " . $this->convertBinary(). " `login`=?", array($user));
     }
 
     /**
@@ -2307,7 +2307,7 @@ function get_included_groups($group, $recur=true) {
     }
 
     function get_user_hash($user) {
-	$query = "select `hash`  from `users_users` where " .  $this->convert_binary(). " `login` = ?";
+	$query = "select `hash`  from `users_users` where " .  $this->convertBinary(). " `login` = ?";
 	$pass = $this->getOne($query, array($user));
 	return $pass;
     }
@@ -2375,7 +2375,7 @@ function get_included_groups($group, $recur=true) {
     	if (($phpcas_enabled == 'y' and $prefs['auth_method'] == 'cas') || $prefs['change_password'] != 'y') {
     		return false;
     	}
-		$confirm = $this->getOne("select `pass_confirm`  from `users_users` where " . $this->convert_binary(). " `login`=?", array($user));
+		$confirm = $this->getOne("select `pass_confirm`  from `users_users` where " . $this->convertBinary(). " `login`=?", array($user));
 		if (!$confirm) {
 			return true;
 		}
@@ -2393,7 +2393,7 @@ function get_included_groups($group, $recur=true) {
 		if ($prefs['email_due'] < 0) {
 			return false;
 		}
-		$confirm = $this->getOne("select `email_confirm`  from `users_users` where " . $this->convert_binary(). " `login`=?", array($user));
+		$confirm = $this->getOne("select `email_confirm`  from `users_users` where " . $this->convertBinary(). " `login`=?", array($user));
 		if ($confirm + (60 * 60 * 24 * $prefs['email_due']) < $this->now) {
 		    return true;
 		}
@@ -2401,7 +2401,7 @@ function get_included_groups($group, $recur=true) {
     }
 
 	function unsuccessful_logins($user) {
-		return $this->getOne('select `unsuccessful_logins` from `users_users` where ' . $this->convert_binary(). ' `login`=?', array($user));
+		return $this->getOne('select `unsuccessful_logins` from `users_users` where ' . $this->convertBinary(). ' `login`=?', array($user));
 	}
 
     function renew_user_password($user) {
@@ -2464,7 +2464,7 @@ function get_included_groups($group, $recur=true) {
 	    $pass = '';
 	}
 
-	$query = "update `users_users` set `hash`=? ,`password`=? ,`pass_confirm`=?, `provpass`=? where " . $this->convert_binary(). " `login`=?";
+	$query = "update `users_users` set `hash`=? ,`password`=? ,`pass_confirm`=?, `provpass`=? where " . $this->convertBinary(). " `login`=?";
 	$result = $this->query($query, array(
 		    $hash,
 		    $pass,
@@ -2605,7 +2605,7 @@ function get_included_groups($group, $recur=true) {
 
 	if (sizeof($q) > 0) {
 	    $query = "update `users_users` set " . implode(",", $q). " where " .
-		$this->convert_binary(). " `login` = ?";
+		$this->convertBinary(). " `login` = ?";
 	    $bindvars[] = $u['login'];
 	    $result = $this->query($query, $bindvars);
 	}

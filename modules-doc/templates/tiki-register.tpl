@@ -172,7 +172,7 @@
 			</table>
 			</fieldset>
 		</form>
-		<div class="simplebox">
-	{icon _id=information style="vertical-align:middle" align="left"}{tr}NOTE: Make sure to whitelist this domain to prevent registration emails being canned by your spam filter!{/tr}
-		</div>
+		{remarksbox type="note"  title="{tr}Note{/tr}"}
+			{tr}Make sure to whitelist this domain to prevent registration emails being canned by your spam filter!{/tr}
+		{/remarksbox}
 {/if}

@@ -7,9 +7,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 class UserFilesLib extends TikiLib {
-	function UserFilesLib($db) {
-		$this->TikiLib($db);
-	}
 
 	function userfiles_quota($user) {
 		if ($user == 'admin') {
@@ -39,7 +36,7 @@ class UserFilesLib extends TikiLib {
 			$bindvars=array($user);
 		}
 
-		$query = "select `fileId`,`user`,`name`,`filename`,`filetype`,`filesize`,`created`,`hits` from `tiki_userfiles` where `user`=? $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select `fileId`,`user`,`name`,`filename`,`filetype`,`filesize`,`created`,`hits` from `tiki_userfiles` where `user`=? $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_userfiles` where `user`=? $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -76,5 +73,4 @@ class UserFilesLib extends TikiLib {
 		$this->query($query,array($user,(int) $fileId));
 	}
 }
-global $dbTiki;
-$userfileslib = new UserFilesLib($dbTiki);
+$userfileslib = new UserFilesLib;

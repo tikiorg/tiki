@@ -8,10 +8,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 class SurveyLib extends TikiLib 
 {
-	function SurveyLib($db) {
-		parent::TikiLib($db);
-	}
-
 	function add_survey_hit($surveyId) {
 		global $prefs, $user;
 
@@ -168,7 +164,7 @@ class SurveyLib extends TikiLib
 			$mid = " where `surveyId`=?";
 		}
 
-		$query = "select * from `tiki_survey_questions` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_survey_questions` $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_survey_questions` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -272,7 +268,7 @@ class SurveyLib extends TikiLib
 			$mid = " ";
 		}
 
-		$query = "select * from `tiki_survey_questions` $mid order by ".$this->convert_sortmode("$sort_mode");
+		$query = "select * from `tiki_survey_questions` $mid order by ".$this->convertSortMode("$sort_mode");
 		$query_cant = "select count(*) from `tiki_survey_questions` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -398,5 +394,4 @@ class SurveyLib extends TikiLib
 		return true;
 	}
 }
-global $dbTiki;
-$srvlib = new SurveyLib($dbTiki);
+$srvlib = new SurveyLib;

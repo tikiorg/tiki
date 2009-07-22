@@ -12,7 +12,11 @@
 {if $nonums != 'y'}<ol>{else}<ul>{/if}
 	{section name=ix loop=$modLastFiles}
 	<li>
-          <a class="linkmodule" href="tiki-download_file.php?fileId={$modLastFiles[ix].fileId}">
+		{if $prefs.feature_shadowbox eq 'y' and $modLastFiles[ix].type|substring:0:5 eq 'image'}
+			<a class="linkmodule" href="{$modLastFiles[ix].fileId|sefurl:preview}" rel="shadowbox[modLastFiles];type=img">
+		{else}
+			<a class="linkmodule" href="{$modLastFiles[ix].fileId|sefurl:file}">
+		{/if}
             {$modLastFiles[ix].filename}
           </a>
 	 </li>

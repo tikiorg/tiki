@@ -22,7 +22,7 @@ if ($user) {
 	$offset=0;
 	
 	// retrieve latest actions from logging table
-	$query = "select * from `tiki_actionlog` $uid order by ".$tikilib->convert_sortmode("lastModif_desc");
+	$query = "select * from `tiki_actionlog` $uid order by ".$tikilib->convertSortMode("lastModif_desc");
 	$query_cant = "select count(*) from `tiki_actionlog` $uid";
 	$result = $tikilib->query($query,$bindvars,$module_rows,$offset);
 	$cant = $tikilib->getOne($query_cant,$bindvars);
