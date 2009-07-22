@@ -1,4 +1,4 @@
-<h1>{$userWS_title}</h1>
+<h1>{$rWS_title}</h1>
 
 <table>
 <tr>

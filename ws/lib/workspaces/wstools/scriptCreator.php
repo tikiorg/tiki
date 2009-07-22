@@ -253,9 +253,9 @@ if ( isset($_REQUEST['action'])  &&  ($_REQUEST['action'] == 'test') && ($wsCont
 	
 	$objectId1 = $objectlib->get_object_id('wiki page', 'Wiki5');
 	$objectId2 = $objectlib->get_object_id('wiki page', 'Wiki6');
-	$wslib->remove_ws_object($id3,$objectId1,'Wiki5','wiki page');
+	$wslib->remove_object_from_ws($id3,$objectId1,'Wiki5','wiki page');
 	echo ("Wiki5 have been removed from WS3 and only the perms related to the uniques groups in WS3 have been deleted\n<br>");
-	$wslib->remove_ws_object($id3,$objectId2,'Wiki6','wiki page');
+	$wslib->remove_object_from_ws($id3,$objectId2,'Wiki6','wiki page');
 	echo ("Wiki6 have been removed from WS3 and all it permissions have been deleted\n<br>\n<br>");
 	
 	echo ("List all objects that the cool user named Ben have access from WS3");
@@ -294,8 +294,8 @@ if ( isset($_REQUEST['action'])  &&  ($_REQUEST['action'] == 'test') && ($wsCont
 	
 	echo ("\n<br>");
 	
-	$wslib->remove_ws_group($id1,'G2');
-	$wslib->remove_ws_group($id1,'G3');
+	$wslib->remove_group_from_ws($id1,'G2');
+	$wslib->remove_group_from_ws($id1,'G3');
 	echo ("G2 have been removed in WS1 and can't view Wiki1 anymore, but still exist in Tiki\n<br>");
 	echo ("G3 have been removed in WS1 and have been deleted from Tiki\n<br>\n<br>");
 	

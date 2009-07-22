@@ -177,12 +177,12 @@ public function create_ws ($name, $groups, $parentWS = null, $description = '')
     	// Remove the WS groups
 	$listWSGroups = $this->list_groups_that_can_access_in_ws ($ws_id);
 	foreach ($listWSGroups as $group)
-		$this->remove_ws_group ($ws_id,$group["groupName"]);
+		$this->remove_group_from_ws ($ws_id,$group["groupName"]);
 	
 	// Remove the WS objects
 	$listWSObjects = $this->list_ws_objects($ws_id);
 	foreach ($listWSObjects as $object)
-		$this->remove_ws_object ($ws_id,$object["objectId"],$object["itemId"],$object["type"]);
+		$this->remove_object_from_ws ($ws_id,$object["objectId"],$object["itemId"],$object["type"]);
     	
     	// Remove perms assigned to the WS
     	$hashWS = md5($this->objectType . strtolower($ws_id));
@@ -223,7 +223,7 @@ public function create_ws ($name, $groups, $parentWS = null, $description = '')
      * @param $groupName The name of the group you want to remove
      * @return true
      */
-    public function remove_ws_group ($ws_id,$groupName)
+    public function remove_group_from_ws ($ws_id,$groupName)
     {
 	// Check if the group is included in other WS
     	$query = "select count(*) from `users_objectpermissions`
@@ -465,7 +465,7 @@ public function create_ws ($name, $groups, $parentWS = null, $description = '')
      * @param $type The type of the object you want to delete
      * @return true
      */
-    public function remove_ws_object ($ws_id,$objectId,$itemId,$type)
+    public function remove_object_from_ws ($ws_id,$objectId,$itemId,$type)
     {
        	parent::remove_object_from_category($objectId, $ws_id);
     	$hashObject = md5($type . strtolower($itemId));
@@ -557,7 +557,7 @@ public function create_ws ($name, $groups, $parentWS = null, $description = '')
 			{
 				global $calendarlib;
 				include_once ('lib/calendar/calendarlib.php');
-				$calendarlib = drop_calendar($itemId);
+				$calendarlib->drop_calendar($itemId);
 				break;
 			}
 			case 'sheet':
