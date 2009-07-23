@@ -45,7 +45,7 @@ class WebMailLib extends TikiLib {
 		//MatWho 16/09/08 - Fixed mailId removed (int) as mail ids are strings
 		$query ="SELECT * FROM `tiki_webmail_messages` WHERE `accountId` = ? AND `mailId` = ? AND (`user`=? or $this->SQL_CLAUSE_FOR_PUBLIC_MAILBOX)";
 		$result = $this->query($query,array((int)$current,$msgid,$user));
-		$foundMatch = $result->fetchInto($row, DB_FETCHMODE_ASSOC);
+		$row = $result->fetchRow();
 		
 		if ($row != NULL) {
 		    // Update is select found a match
@@ -87,7 +87,7 @@ class WebMailLib extends TikiLib {
 		$result = $this->query($query, array($user));
 		
 		$acc = $this->get_webmail_account($user, $accountId);
-		if ($acc && $acc['flagsPublic'] == 'y') {
+		if ($acc && $acc['flagsPublic'] == 'y' && $acc['user'] != $user ) {
 			$tikilib->set_user_preference($user, 'mailCurrentAccount', $accountId);
 		} else {
 			$query = "update `tiki_user_mail_accounts` set `current`='y' where `user`=? and `accountId`=?";
@@ -188,7 +188,7 @@ class WebMailLib extends TikiLib {
 		$bindvars = array($user,$account,$pop,$port,$smtpPort,$username,$pass,$smtp,$useAuth,$msgs,$flagsPublic,$autoRefresh,$imap,$mbox,$maildir,$useSSL);
 		$result = $this->query($query, $bindvars);
 
-		$query = 'SELECT `accountID` FROM `tiki_user_mail_accounts` WHERE `user`=? AND `account`=? AND `pop`=? AND `port`=? AND `smtpPort`=? AND `username`=? AND `pass`=? AND `smtp`=? AND `useAuth`=? AND `msgs`=? AND `flagsPublic`=? AND `autoRefresh`=?';
+		$query = 'SELECT `accountID` FROM `tiki_user_mail_accounts` WHERE `user`=? AND `account`=? AND `pop`=? AND `port`=? AND `smtpPort`=? AND `username`=? AND `pass`=? AND `smtp`=? AND `useAuth`=? AND `msgs`=? AND `flagsPublic`=? AND `autoRefresh`=? AND `imap`=? AND `mbox`=? AND `maildir`=? AND `useSSL`=?';
 		$accountID = $this->getOne($query, $bindvars);
 
 		return $accountID;
@@ -213,15 +213,6 @@ class WebMailLib extends TikiLib {
 		return $this->get_webmail_account($user);
 	}
 	
-	function is_current_webmail_account_public ($user) {
-
-		if ($this->current_account['flagsPublic'] =='y'){
-			return true;
-		} else {
-			return false;
-		}
-	}
-
 	function remove_webmail_account($user, $accountId) {
 		$query = "delete from `tiki_user_mail_accounts` where `accountId`=? and `user`=?";
 		$result = $this->query($query, array((int)$accountId,$user));

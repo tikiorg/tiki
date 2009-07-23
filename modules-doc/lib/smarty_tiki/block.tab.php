@@ -22,7 +22,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  */
 
 function smarty_block_tab($params, $content, &$smarty, &$repeat) {
-	global $prefs, $smarty_tabset_name, $smarty_tabset;
+	global $prefs, $smarty_tabset_name, $smarty_tabset, $cookietab;
 	
 	if ( $repeat ) {
 		return;
@@ -36,12 +36,12 @@ function smarty_block_tab($params, $content, &$smarty, &$repeat) {
 		$ret = "<a name='tab".sizeof($smarty_tabset)."'></a>";
 		$ret .= "<fieldset ";
 		if ($prefs['feature_tabs'] == 'y' and (!isset($_COOKIE["tabbed_$smarty_tabset_name"]) or $_COOKIE["tabbed_$smarty_tabset_name"] != 'n')) {
-   		$ret .= "id='content".sizeof($smarty_tabset)."' class='tabcontent' style='clear:both;display:block;'";
+   			$ret .= "id='content".sizeof($smarty_tabset)."' class='tabcontent' style='clear:both;display:".(sizeof($smarty_tabset) == $cookietab ? 'block' : 'none').";'>";
 		} else {
 			$ret .= "id='content".sizeof($smarty_tabset)."'>";
 		}
 		if ($prefs['feature_tabs'] != 'y' or (isset($_COOKIE["tabbed_$smarty_tabset_name"]) and $_COOKIE["tabbed_$smarty_tabset_name"] == 'n')) {
-     $ret .= '<legend class="heading"><a href="#"><span>'.$params['name'].'</span></a></legend>';
+     		$ret .= '<legend class="heading"><a href="#"><span>'.$params['name'].'</span></a></legend>';
 		}
 	
 		$ret .= "$content</fieldset>";

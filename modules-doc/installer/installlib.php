@@ -236,6 +236,9 @@ class Installer
 			    case 'sqlite':
 	    			$result = $this->query( "SELECT name FROM sqlite_master WHERE type = 'table'" );
 		    		break;
+		    	    case 'pgsql':
+		    	        $result = $this->query( "SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'" );
+		    	        break;
 			    default:
 			        $result = $this->query( "show tables" );
 			        break;

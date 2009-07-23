@@ -19,6 +19,7 @@ function wikiplugin_trackerlist_info() {
 				'required' => true,
 				'name' => tra('Tracker ID'),
 				'description' => tra('Tracker ID'),
+				'filter' => 'digits'
 			),
 			'fields' => array(
 				'required' => false,
@@ -29,6 +30,7 @@ function wikiplugin_trackerlist_info() {
 				'required' => false,
 				'name' => tra('Sort'),
 				'description' => 'y|n',
+				'filter' => 'alpha'
 			),
 			'popup' => array(
 				'required' => false,
@@ -39,71 +41,84 @@ function wikiplugin_trackerlist_info() {
 				'required' => false,
 				'name' => tra('Sticky Popup'),
 				'description' => 'y|n',
+				'filter' => 'alpha'
 			),
 			'showtitle' => array(
 				'required' => false,
 				'name' => tra('Show Title'),
 				'description' => 'y|n',
+				'filter' => 'alpha'
 			),
 			'showlinks' => array(
 				'required' => false,
 				'name' => tra('Show Links'),
 				'description' => 'y|n',
+				'filter' => 'alpha'
 			),
 			'showdesc' => array(
 				'required' => false,
 				'name' => tra('Show Description'),
 				'description' => 'y|n',
+				'filter' => 'alpha'
 			),
 			'shownbitems' => array(
 				'required' => false,
 				'name' => tra('shownbitems'),
 				'description' => 'y|n',
+				'filter' => 'alpha'
 			),
 			'showinitials' => array(
 				'required' => false,
 				'name' => tra('Show Initials'),
 				'description' => 'y|n',
+				'filter' => 'alpha'
 			),
 			'showstatus' => array(
 				'required' => false,
 				'name' => tra('Show Status'),
 				'description' => 'y|n',
+				'filter' => 'alpha'
 			),
 			'showcreated' => array(
 				'required' => false,
 				'name' => tra('Show Creation Date'),
 				'description' => 'y|n',
+				'filter' => 'alpha'
 			),
 			'showlastmodif' => array(
 				'required' => false,
 				'name' => tra('Show Last Modification'),
 				'description' => 'y|n',
+				'filter' => 'alpha'
 			),
 			'showfieldname' => array(
 				'required' => false,
 				'name' => tra('Show Field Name'),
 				'description' => 'y|n',
+				'filter' => 'alpha'
 			),
 			'showitemrank' => array(
 				'required' => false,
 				'name' => tra('Show Item Rank'),
 				'description' => 'y|n',
+				'filter' => 'alpha'
 			),
 			'status' => array(
 				'required' => false,
 				'name' => tra('Status Filter'),
 				'description' => 'o|p|c|op|oc|pc|opc'.' '.tra('Which item status to list. o = open, p = pending, c = closed.'),
+				'filter' => 'alpha'
 			),
 			'sort_mode' => array(
 				'required' => false,
 				'name' => tra('Sort Mode'),
-				'description' => tra('?'),
+				'description' => tra('Sort Mode'),
 			),
 			'max' => array(
 				'required' => false,
-				'name' => tra('Max'),
-				'description' => tra('?'),
+				'name' => tra('Maximum number of items'),
+				'description' => tra('Maximum number of items'),
+				'filter' => 'int'
 			),
 			'filterfield' => array(
 				'required' => false,
@@ -128,22 +143,26 @@ function wikiplugin_trackerlist_info() {
 			'goIfOne' => array(
 				'required' => false,
 				'name' => tra('goIfOne'),
-				'description' => tra('?'),
+				'description' => 'y|n',
+				'filter' => 'alpha'
 			),
 			'more' => array(
 				'required' => false,
 				'name' => tra('More'),
 				'description' => 'y|n',
+				'filter' => 'alpha'
 			),
 			'moreurl' => array(
 				'required' => false,
 				'name' => tra('More URL'),
-				'description' => tra('?'),
+				'description' => tra('More Url'),
+				'filter' => 'url'
 			),
 			'view' => array(
 				'required' => false,
 				'name' => tra('View'),
 				'description' => 'user|page '.tra('Select automatically the item of the current user or the page'),
+				'filter' => 'alpha'
 			),
 			'tpl' => array(
 				'required' => false,
@@ -154,6 +173,7 @@ function wikiplugin_trackerlist_info() {
 				'required' => false,
 				'name' => tra('Wiki'),
 				'description' => tra('?'),
+				'filter' => 'pagename'
 			),
 			'view_user' => array(
 				'required' => false,
@@ -169,6 +189,7 @@ function wikiplugin_trackerlist_info() {
 				'required' => false,
 				'name' => tra('URL'),
 				'description' => tra('link url'),
+				'filter' => 'url'
 			),
 			'ldelim' => array(
 				'required' => false,
@@ -184,11 +205,13 @@ function wikiplugin_trackerlist_info() {
 				'required' => false,
 				'name' => tra('Mode'),
 				'description' => 'y|n'.' '.tra('If y, value will be truncated'),
+				'filter' => 'alpha'
 			),
 			'export' => array(
 				'required' => false,
 				'name' => tra('Export Button'),
 				'description' => 'y|n',
+				'filter' => 'alpha'
 			),
 			'compute' => array(
 				'required' => false,
@@ -197,13 +220,15 @@ function wikiplugin_trackerlist_info() {
 			),
 			'silent' => array(
 				'required' => false,
-				'name' => tra('Silent'),
-				'description' => tra('Show nothing if no items'),
+				'name' => tra('Show nothing if no items'),
+				'description' => 'y|n',
+				'filter' => 'alpha'
 			),
 			'showdelete' => array(
 				'required' => false,
 				'name' => tra('Delete'),
-				'description' => tra('Show a delete button'),
+				'description' => 'y|n',
+				'filter' => 'alpha'
 			),
 		),
 	);

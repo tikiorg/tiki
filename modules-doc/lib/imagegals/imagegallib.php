@@ -1299,7 +1299,7 @@ where i.`imageId`=d.`imageId` and i.`galleryId`=? and d.`type`=? order by ';
 
 	function list_galleries($offset = 0, $maxRecords = -1, $sort_mode = 'name_desc', $user, $find=false) {
 		// If $user is admin then get ALL galleries, if not only user galleries are shown
-		global $tiki_p_admin_galleries;
+		global $tiki_p_admin_galleries, $tiki_p_admin;
 
 		$old_sort_mode = '';
 
@@ -1317,7 +1317,7 @@ where i.`imageId`=d.`imageId` and i.`galleryId`=? and d.`type`=? order by ';
 		}
 
 		// If the user is not admin then select `it` 's own galleries or public galleries
-		if (($tiki_p_admin_galleries == 'y') or ($user == 'admin')) {
+		if (($tiki_p_admin_galleries == 'y') or ($tiki_p_admin == 'y') or ($user == 'admin')) {
 			$whuser = "";
 			$bindvars=array();
 		} else {

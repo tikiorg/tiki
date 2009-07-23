@@ -6,26 +6,29 @@
 // $Id: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.96.2.7 2008-01-29 02:58:11 nkoth Exp $
 $section = 'forums';
 require_once ('tiki-setup.php');
-if ($prefs['feature_categories'] == 'y') {
-	global $categlib;
-	if (!is_object($categlib)) {
-		include_once ('lib/categories/categlib.php');
-	}
-}
 if ($prefs['feature_forums'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled") . ": feature_forums");
 	$smarty->display("error.tpl");
 	die;
 }
-if (!isset($_REQUEST['forumId'])) {
-	$smarty->assign('msg', tra("No forum indicated"));
-	$smarty->display("error.tpl");
-	die;
-}
+include_once ("lib/commentslib.php");
+$commentslib = new Comments($dbTiki);
 if (!isset($_REQUEST['comments_parentId'])) {
 	$smarty->assign('msg', tra("No thread indicated"));
 	$smarty->display("error.tpl");
 	die;
+}
+if (empty($_REQUEST['forumId'])) {
+	$thread_info = $commentslib->get_comment($_REQUEST['comments_parentId']);
+	if (empty($thread_info['object']) || $thread_info['objectType'] != 'forum') {
+		$smarty->assign('msg', tra('Incorrect thread'));
+		$smarty->display('error.tpl');
+		die;
+	}
+	$_REQUEST['forumId'] = $thread_info['object'];
+}
+if ($prefs['feature_categories'] == 'y') {
+	global $categlib; include_once ('lib/categories/categlib.php');
 }
 if (!isset($_REQUEST['topics_offset'])) {
 	$_REQUEST['topics_offset'] = 1;
@@ -64,8 +67,6 @@ if (isset($_REQUEST["comments_reply_threadId"])) {
 	$smarty->assign('comments_reply_threadId', $_REQUEST["comments_reply_threadId"]);
 }
 $smarty->assign('forumId', $_REQUEST["forumId"]);
-include_once ("lib/commentslib.php");
-$commentslib = new Comments($dbTiki);
 if (isset($_REQUEST['lock'])) {
 	check_ticket('view-forum');
 	if ($_REQUEST['lock'] == 'y') {

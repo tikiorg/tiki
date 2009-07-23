@@ -4731,6 +4731,9 @@ class TikiLib extends TikiDb_Bridge {
 		}
 
 		$cond_query = '';
+		if (empty($query_cond)) {
+			$query_cond = '1';
+		}
 		$result = null;
 		if ( is_null($bindvars) ) $bindvars = array();
 		if ( count($needed) > 0 ) {
@@ -4743,11 +4746,10 @@ class TikiLib extends TikiDb_Bridge {
 				$cond_query .= "`$field_name`=?";
 				$bindvars[] = $var;
 			}
-
-			$query = "select `$field_name`, `value` from `$table` where $query_cond $cond_query";
-			$result = $this->query($query, $bindvars);
 		}
-
+		$query = "select `$field_name`, `value` from `$table` where $query_cond $cond_query";
+		$result = $this->query($query, $bindvars);
+		
 		if ( $result ) {
 			while ( $res = $result->fetchRow() ) {
 				// store the db value in the global array
@@ -8691,22 +8693,6 @@ function validate_email($email,$checkserver='n') {
 		}
 	} else {
 		return true;
-	}
-}
-
-function tiki_get_remote_file( $url ) {
-	if( ini_get( 'allow_url_fopen' ) )
-		return file_get_contents( $url );
-	elseif( function_exists( 'curl_init' ) ) {
-		$ch = curl_init( $url );
-		curl_setopt( $ch, CURLOPT_HEADER, false );
-		curl_setopt( $ch, CURLOPT_NOBODY, false );
-		curl_setopt( $ch, CURLOPT_FOLLOWLOCATION, false );
-		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-
-		return curl_exec( $ch );
-	} else {
-		return false;
 	}
 }
 /* Editor configuration

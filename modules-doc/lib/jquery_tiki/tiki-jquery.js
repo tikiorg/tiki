@@ -135,7 +135,13 @@ $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 			var el = document.createElement('DIV');
 			$jq(el).css('position', 'absolute').css('visibility', 'hidden');
 			document.body.appendChild(el);
+			if (tip.length > 1500) {
+				tip = tip.substring(0, 1500);	// setting html to anything bigger seems to blow jquery away :(
+			}
 			$jq(el).html(tip);
+			if ($jq(el).width() > $jq(window).width()) {
+				$jq(el).width($jq(window).width() * 0.8);
+			}
 			options.width = $jq(el).width();
 			document.body.removeChild(el);
 

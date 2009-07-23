@@ -2,6 +2,7 @@
 <div class="description">{$faq_info.description|escape}</div>
 
 <div class="navbar">
+	{self_link print='y'}{icon _id='printer' align='right' hspace='1' alt='{tr}Print{/tr}'}{/self_link}
 	{button href="tiki-list_faqs.php" _text="{tr}List FAQs{/tr}"}
 	
 	{if $tiki_p_admin_faqs eq 'y'}
@@ -25,6 +26,7 @@
 			{/section}
 		</ol>
 	</div>
+
 	<h2>{tr}Answers{/tr}</h2>
 	{section name=ix loop=$channels}
 		<a name="q{$channels[ix].questionId}"></a>
@@ -51,7 +53,7 @@
 	{/section}
 {/if}
 
-<div id="page-bar">
+<div class="navbar">
 	{if $faq_info.canSuggest eq 'y' and $tiki_p_suggest_faq eq 'y'}
 		{button href="javascript:flip('faqsugg');" _flip_id="faqsugg" _text="{tr}Add Suggestion{/tr}"}
 	{/if}

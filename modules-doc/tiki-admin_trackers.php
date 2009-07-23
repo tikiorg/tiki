@@ -47,7 +47,7 @@ if (!empty($_REQUEST['duplicate']) && !empty($_REQUEST['name']) && !empty($_REQU
 if (!empty($_REQUEST['show']) && $_REQUEST['show'] == 'mod') {
 	$cookietab = '2';
 } else {
-	$cookietab = '1';
+	if (!isset($cookietab)) { $cookietab = '1'; }
 }
 if (isset($_REQUEST["remove"])) {
 	$area = 'deltracker';

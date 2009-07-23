@@ -101,7 +101,7 @@ if ($_REQUEST['locSection'] == 'read') {
 	$current = $webmaillib->get_current_webmail_account($user);
 	
 	
-	$smarty->assign('current', $current);
+	$smarty->assign_by_ref('current', $current);
 
 	// connecting with Zend
 	try {
@@ -282,9 +282,11 @@ function submit_form(msgname,flg)
   document.mailb.elements.quickFlagMsg.value= msgname;
   document.mailb.submit();
 }
-
-webmailTimeoutId = window.setTimeout('window.location.reload(true);',$autoRefresh*1000);
 END;
+
+	if ($autorefresh > 0) {
+		$js .= 'webmailTimeoutId = window.setTimeout("window.location.reload(true);",$autoRefresh*1000);';
+	}
 	$headerlib->add_js($js,0);
 
 	$h = opendir('temp/mail_attachs/');

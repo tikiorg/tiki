@@ -52,7 +52,7 @@ function smarty_block_tabset($params, $content, &$smarty, &$repeat) {
 		} else {
 			return $content;
 		}
-		$ret = "<div class='floatright'>$notabs</div><br class='clear'/>";
+		$ret = "<div class='tabstoggle floatright'>$notabs</div><br class='clear'/>";
 		if ( isset($_COOKIE["tabbed_$smarty_tabset_name"]) && $_COOKIE["tabbed_$smarty_tabset_name"] == 'n' ) {
 			return $ret.$content;
 		}

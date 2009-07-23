@@ -142,7 +142,7 @@ $auto_query_args = array(
 	'initial',
 	'filterGroup'
 );
-$cookietab = "1";
+if (!isset($cookietab)) { $cookietab = '1'; }
 if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name'])) {
 	check_ticket('admin-users');
 	batchImportUsers();
@@ -549,7 +549,7 @@ if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
 	$userinfo['registrationDate'] = '';
 	$userinfo['age'] = '';
 	$userinfo['currentLogin'] = '';
-	$cookietab = "1";
+	if (!isset($cookietab)) { $cookietab = '1'; }
 	$_REQUEST["user"] = 0;
 }
 if (isset($_REQUEST['add'])) {
