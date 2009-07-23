@@ -328,7 +328,7 @@ class QuicktagInline extends Quicktag
 
 	function getWikiHtml( $areaName ) // {{{
 	{
-		return '<a href="javascript:insertAt(\'' . $areaName . '\', \'' . htmlentities($this->syntax, ENT_QUOTES, 'UTF-8') . '\')" onclick="needToConfirm=false;" title="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '">' . $this->getIconHtml() . '</a>';
+		return '<a href="javascript:insertAt(\'' . $areaName . '\', \'' . addslashes(htmlentities($this->syntax, ENT_COMPAT, 'UTF-8')) . '\')" onclick="needToConfirm=false;" title="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '">' . $this->getIconHtml() . '</a>';
 	} // }}}
 }
 
@@ -401,7 +401,7 @@ class QuicktagBlock extends QuicktagInline // Will change in the future
 
 	function getWikiHtml( $areaName ) // {{{
 	{
-		return '<a href="javascript:insertAt(\'' . $areaName . '\', \'' . htmlentities($this->syntax, ENT_QUOTES, 'UTF-8') . '\', true)" onclick="needToConfirm=false;" title="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '">' . $this->getIconHtml() . '</a>';
+		return '<a href="javascript:insertAt(\'' . $areaName . '\', \'' . addslashes(htmlentities($this->syntax, ENT_COMPAT, 'UTF-8')) . '\', true)" onclick="needToConfirm=false;" title="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '">' . $this->getIconHtml() . '</a>';
 	} // }}}
 }
 
@@ -443,7 +443,7 @@ class QuicktagLineBased extends QuicktagInline // Will change in the future
 
 	function getWikiHtml( $areaName ) // {{{
 	{
-		return '<a href="javascript:insertAt(\'' . $areaName . '\', \'' . htmlentities($this->syntax, ENT_QUOTES, 'UTF-8') . '\', true, true)" onclick="needToConfirm=false;" title="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '">' . $this->getIconHtml() . '</a>';
+		return '<a href="javascript:insertAt(\'' . $areaName . '\', \'' . addslashes(htmlentities($this->syntax, ENT_COMPAT, 'UTF-8')) . '\', true, true)" onclick="needToConfirm=false;" title="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '">' . $this->getIconHtml() . '</a>';
 	} // }}}
 }
 
