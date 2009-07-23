@@ -128,3 +128,44 @@ a.admbox.off:hover, a.admbox.off:focus, a.admbox.off:active {
 }
 
 div.adminanchors a {float: left}
+
+/* from ui-revamp branch */
+
+.quicktags-admin .rows .row {
+	height: 150px;
+	width: 200px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	display: inline-block
+	display: inline;
+	border: solid thin black;
+}
+
+.quicktags-admin .li { display: block; }
+
+.quicktags-admin .full {
+	border: solid thin black;
+	position: absolute;
+	height: 478px;
+	width: 280px;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+.quicktags-admin .rows {
+	position: relative; 
+	left: 350px;
+	top: 12px;
+	width: 400px;
+}
+
+.quicktags-admin .quicktag {
+	cursor: pointer;
+}
+
+.quicktag img.icon {
+	vertical-align: middle;
+	margin-right: 4px;
+}
+
+/* end from ui-revamp branch */

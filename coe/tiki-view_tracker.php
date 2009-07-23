@@ -453,11 +453,11 @@ for ($i = 0; $i < $temp_max; $i++) {
 		$mainfield = $fields["data"][$i]["value"];
 	}
 }
-if ($textarea_options) {
-	global $quicktagslib;
-	include_once ('lib/quicktags/quicktagslib.php');
-	$quicktags = $quicktagslib->list_quicktags(0, -1, 'taglabel_asc', '', 'trackers');
-	$smarty->assign_by_ref('quicktags', $quicktags["data"]);
+if ($textarea_options) {	// TODO check in template
+//	global $quicktagslib;
+//	include_once ('lib/quicktags/quicktagslib.php');
+//	$quicktags = $quicktagslib->list_quicktags(0, -1, 'taglabel_asc', '', 'trackers');
+//	$smarty->assign_by_ref('quicktags', $quicktags["data"]);
 }
 if (!empty($_REQUEST['remove'])) {
 	$item_info = $trklib->get_item_info($_REQUEST['remove']);

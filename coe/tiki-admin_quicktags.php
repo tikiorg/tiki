@@ -1,114 +1,118 @@
 <?php
-// (c) Copyright 2002-2009 by authors of the Tiki Wiki/CMS/Groupware Project
-// 
-// All Rights Reserved. See copyright.txt for details and a complete list of authors.
-// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-admin_quicktags.php,v 1.22.2.1 2008-01-29 12:38:33 nyloth Exp $
-require_once ('tiki-setup.php');
-include_once ('lib/quicktags/quicktagslib.php');
-if ($tiki_p_admin_quicktags != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
-$auto_query_args = array(
-	'tagId',
-	'category',
-	'sort_mode'
-);
-if (!isset($_REQUEST["tagId"])) {
-	$_REQUEST["tagId"] = 0;
-}
-$smarty->assign('tagId', $_REQUEST["tagId"]);
-$smarty->assign('table_headers', array(
-	'taglabel' => tra('Label') ,
-	'taginsert' => tra('Insert') ,
-	'tagicon' => tra('Icon') ,
-	'tagcategory' => tra('Category') ,
-));
-if ($_REQUEST["tagId"]) {
-	$info = $quicktagslib->get_quicktag($_REQUEST["tagId"]);
+
+/*$inputConfiguration = array( array(
+	'staticKeyFilters' => array(
+		'save' => 'alpha',
+		'load' => 'alpha',
+		'pref' => 'striptags',
+		'section' => 'striptags',
+	),
+	'catchAllUnset' => null,
+) );*/
+/* disabled for now, was stopping js detect */
+
+require_once 'tiki-setup.php';
+require_once 'lib/quicktags/quicktagslib.php';
+
+$access->check_permission('tiki_p_admin');
+
+$sections = array( 'global', 'wiki page' );
+
+if( isset($_REQUEST['section'])
+	&& in_array($_REQUEST['section'], $sections) ) {
+
+	$section = $_REQUEST['section'];
 } else {
-	$info = array();
-	$info['taglabel'] = '';
-	$info['taginsert'] = '';
-	$info['tagicon'] = '';
+	$section = reset($sections);
 }
-if (isset($_REQUEST["remove"])) {
-	$area = "delquicktag";
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$quicktagslib->remove_quicktag($_REQUEST["remove"]);
-	} else {
-		key_get($area);
+
+if( isset($_REQUEST['save'], $_REQUEST['pref']) ) {
+	$prefName = 'toolbar_' . $section;
+	$tikilib->set_preference( $prefName, $_REQUEST['pref'] );
+}
+
+$current = $tikilib->get_preference( 'toolbar_' . $section );
+$current = preg_replace( '/\s+/', '', $current );
+$current = trim( $current, '/' );
+$current = explode( '/', $current );
+$loadedRows = count($current);
+foreach( $current as & $line ) {
+	$line = explode( ',', $line );
+}
+
+$rowCount = max($loadedRows, 2) + 1;
+
+$init = '';
+$setup = '';
+$map = array();
+foreach( Quicktag::getList() as $name ) {
+	$tag = Quicktag::getTag($name);
+	if( ! $tag )
+		continue;
+
+	$wys = strlen($tag->getWysiwygToken()) ? 'qt-wys' : '';
+	$wiki = strlen($tag->getWikiHtml('')) ? 'qt-wiki' : '';
+	$icon = $tag->getIconHtml();
+	$map[$name] = <<<JS
+item = document.createElement('li');
+item.className = 'quicktag qt-$name $wys $wiki';
+item.innerHTML = '$icon$name';
+JS;
+
+	$init .= $map[$name];
+	$init .= 'list.adopt(item);';
+}
+
+foreach( $current as $k => $l ) {
+	foreach( $l as $name ) {
+		if( isset($map[$name]) ) {
+			$init .= $map[$name];
+			$init .= "\$('row-$k').adopt(item);";
+		}
 	}
 }
-if (isset($_REQUEST["save"])) {
-	$quicktagslib->replace_quicktag($_REQUEST["tagId"], $_REQUEST["taglabel"], $_REQUEST['taginsert'], $_REQUEST['tagicon'], $_REQUEST['tagcategory']);
-	$info = array();
-	$info['taglabel'] = '';
-	$info['taginsert'] = '';
-	$info['tagicon'] = '';
-	$info['tagcategory'] = '';
-	$smarty->assign('name', '');
-}
-$smarty->assign('info', $info);
-if (!isset($_REQUEST["sort_mode"])) {
-	$sort_mode = 'tagId_desc';
-} else {
-	$sort_mode = $_REQUEST["sort_mode"];
-}
-$smarty->assign_by_ref('sort_mode', $sort_mode);
-if (!isset($_REQUEST["offset"])) {
-	$offset = 0;
-} else {
-	$offset = $_REQUEST["offset"];
-}
-$smarty->assign_by_ref('offset', $offset);
-if (isset($_REQUEST["find"])) {
-	$find = $_REQUEST["find"];
-} else {
-	$find = '';
-}
-$smarty->assign('find', $find);
-if (isset($_REQUEST["category"])) {
-	$category = $_REQUEST["category"];
-	if ($category == 'All') $category = '';
-	elseif ($category == 'wiki page') $category = 'wiki';
-	elseif ($category == 'cms') $category = 'articles';
-} else {
-	$category = '';
-}
-$smarty->assign('category', $category);
-$list_categories = array();
-foreach($sections as $k => $v) {
-	if ($prefs[$v['feature']] != 'y' || !isset($v['objectType'])) continue;
-	if ($k == 'wiki page') $k = 'wiki';
-	elseif ($k == 'cms') $k = 'articles';
-	$list_categories[$k] = tra(ucwords($v['objectType']));
-}
-asort($list_categories);
-$smarty->assign_by_ref('list_categories', $list_categories);
-$quicktags = $quicktagslib->list_quicktags($offset, $maxRecords, $sort_mode, $find, ($category == '' ? array_keys($list_categories) : $category));
-$smarty->assign_by_ref('quicktags', $quicktags["data"]);
-$smarty->assign('cant', $quicktags['cant']);
-$icon_path = array(
-	"images",
-	"img/icons",
-	"img/icn",
-	"pics/icons"
+
+for( $i = 0; $rowCount > $i; ++$i )
+	$setup .= <<<JS
+window.quicktags_sortable.addLists( $('row-$i') );
+JS;
+
+$headerlib->add_js( <<<JS
+window.addEvent( 'domready', function(event) {
+	var item;
+	var list = $('full-list');
+	$init
+	window.quicktags_sortable = new Sortables( $('full-list'), {
+		constrain: false,
+		clone: true,
+		revert: true
+	} );
+
+	$setup
+
+	var seri = function(element) {
+		return element.innerHTML;
+	};
+
+	window.quicktags_sortable.saveRows = function() {
+		window.quicktags_sortable.removeLists($('full-list'));
+		var lists = [];
+		var ser = window.quicktags_sortable.serialize(false, seri );
+		for( var i = 0; ser.length > i; ++i )
+			lists.push( ser[i].join(',') );
+
+		$('qt-form-field').value = lists.join('/');
+	}
+} );
+JS
 );
-$list_icons = $quicktagslib->list_icons($icon_path);
-$smarty->assign_by_ref('list_icons', $list_icons);
-// disallow robots to index page:
-$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
-if ($prefs['feature_ajax'] == 'y') {
-	global $ajaxlib;
-	require_once ('lib/ajax/ajaxlib.php');
-	$ajaxlib->registerTemplate('tiki-admin_quicktags_content.tpl');
-	$ajaxlib->registerTemplate('tiki-admin_quicktags_edit.tpl');
-}
-// Display the template
-$smarty->assign('mid', 'tiki-admin_quicktags.tpl');
-$smarty->display("tiki.tpl");
+
+$headerlib->add_cssfile('css/admin.css');
+
+$smarty->assign( 'loaded', $section );
+$smarty->assign( 'rows', range( 0, $rowCount - 1 ) );
+$smarty->assign( 'sections', $sections );
+$smarty->assign( 'mid', 'tiki-admin_quicktags.tpl' );
+$smarty->display( 'tiki.tpl' );
+
+?>

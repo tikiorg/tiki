@@ -321,12 +321,12 @@
 			<td class="formcolor">{include file='tiki-smileys.tpl' area_name="editpost2"}</td>
 		</tr>
 		{/if}
-                
-                {if $quicktags and $prefs.quicktags_over_textarea eq 'y'}
+                {assign var=quicktags_html value=true}{* can't find where this gets set in ui-revamp project *}
+                {if $quicktags_html and $prefs.quicktags_over_textarea eq 'y'}
                   <tr>
-		    <td class="formcolor"><label>{tr}Quicktags{/tr}</label></td>
+		    		<td class="formcolor"><label>{tr}Quicktags{/tr}</label></td>
                     <td class="formcolor">
-                      {include file='tiki-edit_help_tool.tpl' area_name='editpost2'}
+                      {quicktags area_name='editpost2'}
                     </td>
                   </tr>
                 {/if}
@@ -337,9 +337,9 @@
 				<br /><br />
 				{include file='textareasize.tpl' area_name='editpost2' formId='editpostform'}
 				<br /><br />
-                                {if $quicktags and $prefs.quicktags_over_textarea neq 'y'}
-				  {include file='tiki-edit_help_tool.tpl' area_name='editpost2'}
-                                {/if}
+                {if $quicktags_html and $prefs.quicktags_over_textarea neq 'y'}
+				  {quicktags area_name='editpost2'}
+                {/if}
 			</td>
 			<td class="formcolor">
 				<textarea id="editpost2" name="comments_data" rows="{$rows}" cols="{$cols}">{if $prefs.feature_forum_replyempty ne 'y' || $edit_reply > 0 || $comment_preview eq 'y'}{$comment_data|escape}{/if}</textarea>

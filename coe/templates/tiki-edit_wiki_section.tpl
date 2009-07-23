@@ -18,12 +18,12 @@
   {include file='textareasize.tpl' area_name='editwiki' formId='editwikiform'}
   <br /><br />
   {if $quicktags and $prefs.quicktags_over_textarea neq 'y'}
-    {include file='tiki-edit_help_tool.tpl' area_name='editwiki'}
+    {quicktags area_name='editwiki'}
   {/if}
   </td>
   <td>
     {if $quicktags and $prefs.quicktags_over_textarea eq 'y'}
-      {include file='tiki-edit_help_tool.tpl' area_name='editwiki'}
+      {quicktags area_name='editwiki'}
     {/if}
     <textarea class="wikiedit" id="editwiki" name="data" rows="{$rows}" cols="{$cols}">{$data|escape}</textarea>
     <input type="hidden" name="rows" value="{$rows}"/>
