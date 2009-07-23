@@ -959,7 +959,7 @@ class TrackerLib extends TikiLib {
 				}
 				break;
 			case 'A':
-				if (!empty($fopt['options_array'][0])) {
+				if (!empty($fopt['options_array'][0]) && !empty($fopt['value'])) {
 					$fopt['info'] = $this->get_item_attachment($fopt['value']);
 				}
 				break;
