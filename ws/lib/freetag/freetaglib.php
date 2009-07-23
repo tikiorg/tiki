@@ -85,8 +85,8 @@ class FreetagLib extends ObjectLib {
      * Constructor for the freetag class. 
      *
      */ 
-	function FreetagLib($db) {
-		$this->ObjectLib($db);
+	function __construct() {
+		parent::__construct();
 
 		// update private vars with tiki preferences
 		global $prefs;
@@ -144,7 +144,7 @@ class FreetagLib extends ObjectLib {
 	$query = "SELECT DISTINCT o.* ";
 	$query_cant = "SELECT COUNT(*) ";
 	
-	$query_end = "FROM `tiki_objects` o, `tiki_freetagged_objects` fto, `tiki_freetags` t WHERE fto.`tagId`=t.`tagId` AND o.`objectId` = fto.`objectId` AND `tag` = ? $mid ORDER BY o.". $this->convert_sortmode($sort_mode);
+	$query_end = "FROM `tiki_objects` o, `tiki_freetagged_objects` fto, `tiki_freetags` t WHERE fto.`tagId`=t.`tagId` AND o.`objectId` = fto.`objectId` AND `tag` = ? $mid ORDER BY o.". $this->convertSortMode($sort_mode);
 
 	
 	
@@ -298,7 +298,7 @@ function get_objects_with_tag_combo($tagArray, $type='', $thisUser = '', $offset
 	$query_cant = "SELECT COUNT(DISTINCT o.`objectId`) ";
 	
 	$query_end = "FROM `tiki_objects` o, `tiki_freetagged_objects` fto, `tiki_freetags` t 
-	WHERE fto.`tagId`=t.`tagId` AND o.`objectId` = fto.`objectId` AND $tag_sql $mid ORDER BY ". $this->convert_sortmode($sort_mode);
+	WHERE fto.`tagId`=t.`tagId` AND o.`objectId` = fto.`objectId` AND $tag_sql $mid ORDER BY ". $this->convertSortMode($sort_mode);
 	// note the original line was originally here to fix ambiguous 'created' column for default sort. Not a neat fix the o. prefix is ugly.	So changed default order instead.
 	
 	$query      .= $query_end;
@@ -934,7 +934,7 @@ function get_objects_with_tag_combo($tagArray, $type='', $thisUser = '', $offset
      */
 
     function get_tag_suggestion($exclude = '', $max = 10, $lang = null) {
-	$query = "select t.* from `tiki_freetags` t, `tiki_freetagged_objects` o where t.`tagId`=o.`tagId` and (`lang` = ? or `lang` is null) order by " . $this->convert_sortmode('random');
+	$query = "select t.* from `tiki_freetags` t, `tiki_freetagged_objects` o where t.`tagId`=o.`tagId` and (`lang` = ? or `lang` is null) order by " . $this->convertSortMode('random');
 	$result = $this->query($query, array( $lang ));
 
 	$tags = array();
@@ -1330,5 +1330,4 @@ function get_objects_with_tag_combo($tagArray, $type='', $thisUser = '', $offset
 		$this->cleanup_tags();
 	}
 }
-global $dbTiki;
-$freetaglib = new FreetagLib($dbTiki);
+$freetaglib = new FreetagLib;

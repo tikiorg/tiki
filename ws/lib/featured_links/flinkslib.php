@@ -7,9 +7,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 class FlinksLib extends TikiLib {
-	function FlinksLib($db) {
-		$this->TikiLib($db);
-	}
 
 	function add_featured_link($url, $title, $description = '', $position = 0, $type = 'f') {
 		$query = "delete from `tiki_featured_links` where `url`=?";
@@ -69,5 +66,4 @@ class FlinksLib extends TikiLib {
 		return true;
 	}
 }
-global $dbTiki;
-$flinkslib = new FlinksLib($dbTiki);
+$flinkslib = new FlinksLib;

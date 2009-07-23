@@ -15,7 +15,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-error_reporting (E_ALL);
 require_once( 'tiki-filter-base.php' );
 
 // Define and load Smarty components
@@ -567,7 +566,7 @@ $smarty->assign('tiki_version_name', preg_replace('/^(\d+\.\d+)([^\d])/', '\1 \2
 $dbservers = array();
 if ( function_exists('mysqli_connect') ) $dbservers['mysqli'] = tra('MySQL Improved (mysqli). Requires MySQL 4.1+');
 if ( function_exists('mysql_connect') ) $dbservers['mysql'] = tra('MySQL classic (mysql)');
-if ( function_exists('pg_connect') ) $dbservers['pgsql'] = tra('PostgeSQL 7.2+');
+if ( function_exists('pg_connect') ) $dbservers['pgsql'] = tra('PostgreSQL 8.3+');
 if ( function_exists('oci_connect') ) $dbservers['oci8'] = tra('Oracle');
 if ( function_exists('sybase_connect') ) $dbservers['sybase'] = tra('Sybase');
 if ( function_exists('sqlite_open') ) $dbservers['sqlite'] = tra('SQLLite');
@@ -649,6 +648,9 @@ if (!file_exists($local)) {
 		$smarty->assign('dbcon', 'n');
 	} else {
 		$dbTiki = ADONewConnection($db_tiki);
+		$db = new TikiDb_Adodb( $dbTiki );
+		$db->setErrorHandler( new InstallerDatabaseErrorHandler );
+		TikiDb::set( $db );
 
 		if (!$dbTiki->Connect($host_tiki, $user_tiki, $pass_tiki, $dbs_tiki)) {
 			$dbcon = false;
@@ -697,6 +699,9 @@ if ((!$dbcon or (isset($_REQUEST['resetdb']) and $_REQUEST['resetdb']=='y' &&
 	)) && isset($_REQUEST['dbinfo'])) {
 
 	$dbTiki = &ADONewConnection($_REQUEST['db']);
+	$db = new TikiDb_Adodb( $dbTiki );
+	$db->setErrorHandler( new InstallerDatabaseErrorHandler );
+	TikiDb::set( $db );
 
 	if (isset($_REQUEST['name']) and $_REQUEST['name']) {
 		if (!@$dbTiki->Connect($_REQUEST['host'], $_REQUEST['user'], $_REQUEST['pass'], $_REQUEST['name'])) {
@@ -753,9 +758,9 @@ if ( isset($dbTiki) && is_object($dbTiki) && isset($_SESSION["install-logged-$mu
 		$smarty->assign('dbdone', 'y');
 		$install_type = 'scratch';
 		require_once 'lib/tikilib.php';
-		$tikilib = new TikiLib( $dbTiki );
+		$tikilib = new TikiLib;
 		require_once 'lib/userslib.php';
-		$userlib = new UsersLib( $dbTiki );
+		$userlib = new UsersLib;
 		require_once 'lib/profilelib/profilelib.php';
 		require_once 'lib/profilelib/installlib.php';
 		require_once 'lib/setup/compat.php';

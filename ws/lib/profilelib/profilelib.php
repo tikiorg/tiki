@@ -134,7 +134,7 @@ class Tiki_Profile
 		if( $profile->analyseMeta( $url ) ) {
 
 			// Obtain the page export
-			$content = tiki_get_remote_file( $url );
+			$content = TikiLib::httprequest( $url );
 			$content = html_entity_decode( $content );
 			$content = str_replace( "\r", '', $content );
 
@@ -254,12 +254,12 @@ class Tiki_Profile
 		}
 	} // }}}
 
-	private function getPageContent( $pageName ) // {{{
+	public function getPageContent( $pageName ) // {{{
 	{
 		$exportUrl = dirname( $this->url ) . '/tiki-export_wiki_pages.php?'
 			. http_build_query( array( 'page' => $pageName ) );
 
-		$content = tiki_get_remote_file( $exportUrl );
+		$content = TikiLib::httprequest( $exportUrl );
 		$content = str_replace( "\r", '', $content );
 		$begin = strpos( $content, "\n\n" );
 

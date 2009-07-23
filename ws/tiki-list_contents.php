@@ -8,7 +8,7 @@ require_once ('tiki-setup.php');
 include_once ('lib/dcs/dcslib.php');
 $auto_query_args = array('sort_mode', 'offset', 'find');
 if (!isset($dcslib)) {
-	$dcslib = new DCSLib($dbTiki);
+	$dcslib = new DCSLib;
 }
 if ($prefs['feature_dynamic_content'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled") . ": feature_dynamic_content");

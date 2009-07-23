@@ -13,9 +13,8 @@ include_once ("lib/commentslib.php");
 include_once ("lib/logs/logslib.php");
 
 class MagicLib extends TikiLib {
-	function MagicLib($db) {
-		$this->TikiLib($db);
-
+	function __construct() {
+		parent::__construct();
 		global $prefs;
 		$lastLoad = $prefs['magic_last_load'];
 		$lastMod = filemtime( 'db/features.csv' );
@@ -304,5 +303,4 @@ class MagicLib extends TikiLib {
 		return $slide_styles;
 	}
 }
-global $dbTiki;
-$magiclib = new MagicLib($dbTiki);
+$magiclib = new MagicLib;

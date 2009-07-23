@@ -7,12 +7,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 class HtmlPagesLib extends TikiLib {
-	function HtmlPagesLib($db) {
-		$this->TikiLib($db);
-	}
-
 	function remove_html_page($pageName) {
-		$query = "delete from `tiki_html_pages` where ".$this->convert_binary()." `pageName`=?";
+		$query = "delete from `tiki_html_pages` where ".$this->convertBinary()." `pageName`=?";
 		$result = $this->query($query,array($pageName));
 		return true;
 	}
@@ -26,7 +22,7 @@ class HtmlPagesLib extends TikiLib {
 		} else {
 			$mid = "";
 		}
-		$query = "select `pageName`,`refresh`,`created`,`type` from `tiki_html_pages` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select `pageName`,`refresh`,`created`,`type` from `tiki_html_pages` $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_html_pages` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -42,13 +38,13 @@ class HtmlPagesLib extends TikiLib {
 
 	function list_html_page_content($pageName, $offset, $maxRecords, $sort_mode, $find) {
 		$bindvars = array($pageName);
-		$mid = " where ".$this->convert_binary()." `pageName`=? ";
+		$mid = " where ".$this->convertBinary()." `pageName`=? ";
 		if ($find) {
 			$mid = " and (`pageName` like ? or `content` like ?)";
 			$bindvars[] = "%$find%";
 			$bindvars[] = "%$find%";
 		}
-		$query = "select * from `tiki_html_pages_dynamic_zones` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_html_pages_dynamic_zones` $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_html_pages_dynamic_zones` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -85,7 +81,7 @@ class HtmlPagesLib extends TikiLib {
 	}
 
 	function replace_html_page($pageName, $type, $content, $refresh) {
-		$query = "delete from `tiki_html_pages` where ".$this->convert_binary()." `pageName`=?";
+		$query = "delete from `tiki_html_pages` where ".$this->convertBinary()." `pageName`=?";
 		$this->query($query,array($pageName),-1,-1,false);
 		$query = "insert into `tiki_html_pages`(`pageName`,`content`,`type`,`created`,`refresh`) values(?,?,?,?,?)";
 		$result = $this->query($query,array($pageName,$content,$type,(int)$this->now,(int)$refresh));
@@ -94,27 +90,27 @@ class HtmlPagesLib extends TikiLib {
 		preg_match_all("/\{ted id=([^\}]+)\}/", $content, $teds);
 		$all_eds = array_merge($eds[1], $teds[1]);
 
-		$query = "select `zone` from `tiki_html_pages_dynamic_zones` where ".$this->convert_binary()." `pageName`=?";
+		$query = "select `zone` from `tiki_html_pages_dynamic_zones` where ".$this->convertBinary()." `pageName`=?";
 		$result = $this->query($query,array($pageName));
 
 		while ($res = $result->fetchRow()) {
 			if (!in_array($res["zone"], $all_eds)) {
-				$query2 = "delete from `tiki_html_pages_dynamic_zones` where ".$this->convert_binary()." `pageName`=? and `zone`=?";
+				$query2 = "delete from `tiki_html_pages_dynamic_zones` where ".$this->convertBinary()." `pageName`=? and `zone`=?";
 				$result2 = $this->query($query2,array($pageName,$res['zone']));
 			}
 		}
 
 		for ($i = 0; $i < count($eds[0]); $i++) {
-			if (!$this->getOne( "select count(*) from `tiki_html_pages_dynamic_zones` where ".$this->convert_binary()." `pageName`=? and `zone`=?",array($pageName,$eds[1][$i]))) {
-				$this->query("delete from `tiki_html_pages_dynamic_zones` where ".$this->convert_binary()." `pageName`=? and `zone`=?",array($pageName,$eds[1][$i]));
+			if (!$this->getOne( "select count(*) from `tiki_html_pages_dynamic_zones` where ".$this->convertBinary()." `pageName`=? and `zone`=?",array($pageName,$eds[1][$i]))) {
+				$this->query("delete from `tiki_html_pages_dynamic_zones` where ".$this->convertBinary()." `pageName`=? and `zone`=?",array($pageName,$eds[1][$i]));
 				$query = "insert into `tiki_html_pages_dynamic_zones`(`pageName`,`zone`,`type`) values(?,?,?)";
 				$result = $this->query($query,array($pageName,$eds[1][$i],'tx'));
 			}
 		}
 
 		for ($i = 0; $i < count($teds[0]); $i++) {
-			if (!$this->getOne( "select count(*) from `tiki_html_pages_dynamic_zones` where ".$this->convert_binary()." `pageName`=? and zone=?",array($pageName,$teds[1][$i]))) {
-				$this->query("delete from `tiki_html_pages_dynamic_zones` where ".$this->convert_binary()." `pageName`=? and `zone`=?",array($pageName,$teds[1][$i]));
+			if (!$this->getOne( "select count(*) from `tiki_html_pages_dynamic_zones` where ".$this->convertBinary()." `pageName`=? and zone=?",array($pageName,$teds[1][$i]))) {
+				$this->query("delete from `tiki_html_pages_dynamic_zones` where ".$this->convertBinary()." `pageName`=? and `zone`=?",array($pageName,$teds[1][$i]));
 				$query = "insert into `tiki_html_pages_dynamic_zones`(`pageName`,`zone`,`type`) values(?,?,?)";
 				$result = $this->query($query,array($pageName,$teds[1][$i],'ta'));
 			}
@@ -123,19 +119,19 @@ class HtmlPagesLib extends TikiLib {
 	}
 
 	function replace_html_page_content($pageName, $zone, $content) {
-		$query = "update `tiki_html_pages_dynamic_zones` set `content`=? where ".$this->convert_binary()." `pageName`=? and `zone`=?";
+		$query = "update `tiki_html_pages_dynamic_zones` set `content`=? where ".$this->convertBinary()." `pageName`=? and `zone`=?";
 		$result = $this->query($query,array($content,$pageName,$zone));
 		return $zone;
 	}
 
 	function remove_html_page_content($pageName, $zone) {
-		$query = "delete from `tiki_html_pages_dynamic_zones` where ".$this->convert_binary()." `pageName`=? and `zone`=?";
+		$query = "delete from `tiki_html_pages_dynamic_zones` where ".$this->convertBinary()." `pageName`=? and `zone`=?";
 		$result = $this->query($query,array($pageName,$zone));
 		return true;
 	}
 
 	function get_html_page($pageName) {
-		$query = "select * from `tiki_html_pages` where ".$this->convert_binary()." `pageName`=?";
+		$query = "select * from `tiki_html_pages` where ".$this->convertBinary()." `pageName`=?";
 		$result = $this->query($query,array($pageName));
 		if (!$result->numRows()) return false;
 		$res = $result->fetchRow();
@@ -143,12 +139,11 @@ class HtmlPagesLib extends TikiLib {
 	}
 
 	function get_html_page_content($pageName, $zone) {
-		$query = "select * from `tiki_html_pages_dynamic_zones` where ".$this->convert_binary()." `pageName`=? and `zone`=?";
+		$query = "select * from `tiki_html_pages_dynamic_zones` where ".$this->convertBinary()." `pageName`=? and `zone`=?";
 		$result = $this->query($query,array($pageName,$zone));
 		if (!$result->numRows()) return false;
 		$res = $result->fetchRow();
 		return $res;
 	}
 }
-global $dbTiki;
-$htmlpageslib = new HtmlPagesLib($dbTiki);
+$htmlpageslib = new HtmlPagesLib;

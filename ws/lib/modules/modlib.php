@@ -9,9 +9,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 global $usermoduleslib; include_once('lib/usermodules/usermoduleslib.php');
 
 class ModLib extends TikiLib {
-	function ModLib($db) {
-		$this->TikiLib($db);
-	}
 
 	function replace_user_module($name, $title, $data, $parse=NULL) {
 		if ((!empty($name)) && (!empty($data))) {
@@ -152,7 +149,7 @@ class ModLib extends TikiLib {
 	}
 
 	function list_user_modules($sort_mode='name_asc') {
-		$query = "select * from `tiki_user_modules` order by ".$this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_user_modules` order by ".$this->convertSortMode($sort_mode);
 
 		$result = $this->query($query,array());
 		$query_cant = "select count(*) from `tiki_user_modules`";
@@ -224,5 +221,4 @@ class ModLib extends TikiLib {
 		return $pass;
 	}
 }
-global $dbTiki;
-$modlib = new ModLib($dbTiki);
+$modlib = new ModLib;

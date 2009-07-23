@@ -227,5 +227,4 @@ class TikiPhplayers extends TikiLib {
 		return $res;
 	}
 }
-global $dbTiki;
-$tikiphplayers = new TikiPhpLayers($dbTiki);
+$tikiphplayers = new TikiPhpLayers();

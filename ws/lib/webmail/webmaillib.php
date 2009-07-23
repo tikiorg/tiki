@@ -15,10 +15,6 @@ class WebMailLib extends TikiLib {
 	// slightly complicated sub-query to check for public messages
 	var $SQL_CLAUSE_FOR_PUBLIC_MAILBOX = '(select count(*) from `tiki_user_mail_accounts` where `tiki_user_mail_accounts`.`accountId`=`tiki_webmail_messages`.`accountId` and `flagsPublic` = \'y\')';
 	
-	function WebMailLib($db) {
-		parent::TikiLib($db);
-	}
-
 	function remove_webmail_message($current, $user, $msgid) {
 
 		$query = "delete from `tiki_webmail_messages` where `mailId`=? and (`user`=? or $this->SQL_CLAUSE_FOR_PUBLIC_MAILBOX)";	// mailId is message-id
@@ -49,7 +45,7 @@ class WebMailLib extends TikiLib {
 		//MatWho 16/09/08 - Fixed mailId removed (int) as mail ids are strings
 		$query ="SELECT * FROM `tiki_webmail_messages` WHERE `accountId` = ? AND `mailId` = ? AND (`user`=? or $this->SQL_CLAUSE_FOR_PUBLIC_MAILBOX)";
 		$result = $this->query($query,array((int)$current,$msgid,$user));
-		$foundMatch = $result->fetchInto($row, DB_FETCHMODE_ASSOC);
+		$row = $result->fetchRow();
 		
 		if ($row != NULL) {
 		    // Update is select found a match
@@ -91,7 +87,7 @@ class WebMailLib extends TikiLib {
 		$result = $this->query($query, array($user));
 		
 		$acc = $this->get_webmail_account($user, $accountId);
-		if ($acc && $acc['flagsPublic'] == 'y') {
+		if ($acc && $acc['flagsPublic'] == 'y' && $acc['user'] != $user ) {
 			$tikilib->set_user_preference($user, 'mailCurrentAccount', $accountId);
 		} else {
 			$query = "update `tiki_user_mail_accounts` set `current`='y' where `user`=? and `accountId`=?";
@@ -112,7 +108,7 @@ class WebMailLib extends TikiLib {
 			$bindvars = array($user);
 		}
 
-		$query = "select * from `tiki_user_mail_accounts` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_user_mail_accounts` $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_user_mail_accounts` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -139,7 +135,7 @@ class WebMailLib extends TikiLib {
 			$bindvars = array();
 		}
 
-		$query = "select * from `tiki_user_mail_accounts` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_user_mail_accounts` $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_user_mail_accounts` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -192,7 +188,7 @@ class WebMailLib extends TikiLib {
 		$bindvars = array($user,$account,$pop,$port,$smtpPort,$username,$pass,$smtp,$useAuth,$msgs,$flagsPublic,$autoRefresh,$imap,$mbox,$maildir,$useSSL);
 		$result = $this->query($query, $bindvars);
 
-		$query = 'SELECT `accountID` FROM `tiki_user_mail_accounts` WHERE `user`=? AND `account`=? AND `pop`=? AND `port`=? AND `smtpPort`=? AND `username`=? AND `pass`=? AND `smtp`=? AND `useAuth`=? AND `msgs`=? AND `flagsPublic`=? AND `autoRefresh`=?';
+		$query = 'SELECT `accountID` FROM `tiki_user_mail_accounts` WHERE `user`=? AND `account`=? AND `pop`=? AND `port`=? AND `smtpPort`=? AND `username`=? AND `pass`=? AND `smtp`=? AND `useAuth`=? AND `msgs`=? AND `flagsPublic`=? AND `autoRefresh`=? AND `imap`=? AND `mbox`=? AND `maildir`=? AND `useSSL`=?';
 		$accountID = $this->getOne($query, $bindvars);
 
 		return $accountID;
@@ -217,15 +213,6 @@ class WebMailLib extends TikiLib {
 		return $this->get_webmail_account($user);
 	}
 	
-	function is_current_webmail_account_public ($user) {
-
-		if ($this->current_account['flagsPublic'] =='y'){
-			return true;
-		} else {
-			return false;
-		}
-	}
-
 	function remove_webmail_account($user, $accountId) {
 		$query = "delete from `tiki_user_mail_accounts` where `accountId`=? and `user`=?";
 		$result = $this->query($query, array((int)$accountId,$user));
@@ -496,5 +483,4 @@ class WebMailLib extends TikiLib {
 	}	// end get_mail_content()
 	
 } # class WebMailLib
-global $dbTiki;
-$webmaillib = new WebMailLib($dbTiki);
+$webmaillib = new WebMailLib;

@@ -8,9 +8,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 include_once ('lib/webmail/tikimaillib.php');
 
 class EvLib extends TikiLib {
-	function EvLib($db) {
-		parent::TikiLib($db);
-	}
 
 	function replace_event($evId, $name, $description, $allowUserSub, $allowAnySub, $unsubMsg, $validateAddr) {
 		if ($evId) {
@@ -221,7 +218,7 @@ class EvLib extends TikiLib {
 			$mid = " ";
 		}
 
-		$query = "select * from `tiki_events` $mid order by ".$this->convert_sortmode("$sort_mode");
+		$query = "select * from `tiki_events` $mid order by ".$this->convertSortMode("$sort_mode");
 		$query_cant = "select count(*) from `tiki_events` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -253,7 +250,7 @@ class EvLib extends TikiLib {
 		}
 
 		$query = "select tsn.`editionId`,tn.`evId`,`subject`,`data`,tsn.`users`,`sent`,`name` from `tiki_events` tn, `tiki_sent_events` tsn ";
-		$query.= " where tn.`evId`=tsn.`evId` $mid order by ".$this->convert_sortmode("$sort_mode");
+		$query.= " where tn.`evId`=tsn.`evId` $mid order by ".$this->convertSortMode("$sort_mode");
 		$query_cant = "select count(*) from `tiki_events` tn, `tiki_sent_events` tsn where tn.`evId`=tsn.`evId` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -280,7 +277,7 @@ class EvLib extends TikiLib {
 			$mid = " where `evId`=? ";
 		}
 
-		$query = "select * from `tiki_event_subscriptions` $mid order by ".$this->convert_sortmode("$sort_mode");
+		$query = "select * from `tiki_event_subscriptions` $mid order by ".$this->convertSortMode("$sort_mode");
 		$query_cant = "select count(*) from tiki_event_subscriptions $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -325,5 +322,4 @@ class EvLib extends TikiLib {
 	}
 
 }
-global $dbTiki;
-$evlib = new EvLib($dbTiki);
+$evlib = new EvLib;

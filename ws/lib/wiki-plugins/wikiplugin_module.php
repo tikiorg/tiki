@@ -128,6 +128,8 @@ function wikiplugin_module($data, $params) {
 		$module_rows = $max;
 		$module_params = $params;
 		if (!isset($module_params['decorations'])) $module_params['decorations'] = 'n';
+		if (!isset($module_params['nobox'])) $module_params['nobox'] = 'n';
+				
 		if (!isset($module_params['flip']) && isset($prefs['user_flip_modules']) && $prefs['user_flip_modules'] != 'module')
 			$module_params['flip'] = $prefs['user_flip_modules'];
 		elseif (!isset($module_params['flip']))
@@ -137,6 +139,7 @@ function wikiplugin_module($data, $params) {
 		} else {
 			$smarty->clear_assign('tpl_module_title');
 		}
+		
 		$smarty->assign_by_ref('module_rows',$module_rows);
 		$smarty->assign_by_ref('module_params', $module_params); // module code can unassign this if it wants to hide params
 
@@ -175,12 +178,15 @@ function wikiplugin_module($data, $params) {
 		if ($float != 'nofloat') {
 			$data = "<div style='float: $float;'>";
 		} else {
-			$data = "<div>";
+			$data = "";
 		}	
 		if ($np) {
-  		$data.= "~np~$out~/np~</div>";
+  			$data.= "~np~$out~/np~";
 		} else {
-			$data.= "$out</div>";
+			$data.= "$out";
+		}
+		if ($float != 'nofloat') {
+			$data .= "</div>";
 		}
 	} else {
         // Display error message

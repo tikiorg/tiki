@@ -9,21 +9,25 @@ if ($_SERVER['REMOTE_ADDR'] != "127.0.0.1" AND !empty($_SERVER['REMOTE_ADDR'])) 
 if ($prefs['feature_daily_report_watches'] != 'y') {
 	die("This feature is disabled");
 }
-include_once ('lib/tikilib.php');
 include_once ('lib/reportslib.php');
-foreach($tikilib->getUsersForSendingReport() as $key => $user) {
-	$report_preferences = $tikilib->get_report_preferences_by_user($user);
+
+//Complete URL to your Tikiwiki installation without ending slash!
+$tikiUrl = "http://localhost/trunktest";
+
+foreach($reportslib->getUsersForSendingReport() as $key => $user) {
+	$report_preferences = $reportslib->get_report_preferences_by_user($user);
 	$user_data = $userlib->get_user_info($user);
+
 	//If Emailadress isn´t set, do nothing but clear the cache
 	if (!empty($user_data['email'])) {
 		//Fetch cache
-		$report_cache = $tikilib->get_report_cache_entries_by_user($user, "time ASC");
+		$report_cache = $reportslib->get_report_cache_entries_by_user($user, "time ASC");
 		//Send email if there is a cache or if always_email = true
-		if ($report_cache OR (!$report_cache && $report_preferences['always_email'])) $reportslib->sendEmail($user_data, $report_preferences, $report_cache);
+		if ($report_cache OR (!$report_cache && $report_preferences['always_email']))
+			$reportslib->sendEmail($user_data, $report_preferences, $report_cache, $tikiUrl);
 	}
 	//Update Database
-	//$tikilib->updateLastSent($user_data['login']);
+	$reportslib->updateLastSent($user_data['login']);
 	//Empty cache
-	//$tikilib->deleteUsersReportCache($user_data['login']);
-	
+	$reportslib->deleteUsersReportCache($user_data['login']);
 }

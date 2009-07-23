@@ -11,10 +11,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 class Comments extends TikiLib {
     var $time_control = 0;
 
-    function Comments($db) {
-	$this->TikiLib($db);
-    }
-
     /* Functions for the forums */
     function report_post($forumId, $parentId, $threadId, $user, $reason = '') {
 
@@ -45,7 +41,7 @@ class Comments extends TikiLib {
 	tfr.`reason`, tfr.`user`, `title`, SUBSTRING(`data` FROM 1 FOR 100) as `snippet` from `tiki_forums_reported`
 	    tfr,  `tiki_comments` tc where tfr.`threadId` = tc.`threadId`
 	    and `forumId`=? $mid order by ".
-	    $this->convert_sortmode($sort_mode);
+	    $this->convertSortMode($sort_mode);
 	$query_cant = "select count(*) from `tiki_forums_reported` tfr,
 	`tiki_comments` tc where tfr.`threadId` = tc.`threadId` and
 	    `forumId`=? $mid";
@@ -576,7 +572,7 @@ class Comments extends TikiLib {
 	    $bindvars=array($object);
 	}
 
-	$query = "select * from `tiki_forums_queue` where `object`=? $mid order by ".$this->convert_sortmode($sort_mode);
+	$query = "select * from `tiki_forums_queue` where `object`=? $mid order by ".$this->convertSortMode($sort_mode);
 	$query_cant = "select count(*) from `tiki_forums_queue` where `object`=? $mid";
 
 	$result = $this->query($query, $bindvars,$maxRecords,$offset );
@@ -713,7 +709,7 @@ class Comments extends TikiLib {
 	if($this->driver != 'sybase') {
 		$query .=",a.`object`,a.`objectType`,a.`parentId`,a.`userName`,a.`commentDate`,a.`hits`,a.`type`,a.`points`,a.`votes`,a.`average`,a.`title`,a.`data`,a.`hash`,a.`user_ip`,a.`summary`,a.`smiley`,a.`message_id`,a.`in_reply_to`,a.`comment_rating`,a.`locked` ";
 	}
-	$query .="order by `sticky` desc, ".$this->convert_sortmode($sort_mode).", `threadId`";
+	$query .="order by `sticky` desc, ".$this->convertSortMode($sort_mode).", `threadId`";
 
 	$bind_vars = array((string) $forumId);
 	if ( ! $include_archived ) $bind_vars[] = 'n';
@@ -747,7 +743,7 @@ class Comments extends TikiLib {
 	$bind_mid = array('forum', $forumId);
 	$sort_mode = 'commentDate_desc';
 
-	$query = "select * from `tiki_comments` $mid order by ".$this->convert_sortmode($sort_mode);
+	$query = "select * from `tiki_comments` $mid order by ".$this->convertSortMode($sort_mode);
 	$result = $this->query($query, $bind_mid, $maxRecords, 0);
 
 	$ret = array();
@@ -974,7 +970,7 @@ class Comments extends TikiLib {
 	    $bindvars=array();
 	}
 
-	$query = "select * from `tiki_forums` $mid order by `section` asc,".$this->convert_sortmode($sort_mode);
+	$query = "select * from `tiki_forums` $mid order by `section` asc,".$this->convertSortMode($sort_mode);
 	$result = $this->query($query,$bindvars);
 	$ret = array();
 	$count = 0;
@@ -1050,7 +1046,7 @@ class Comments extends TikiLib {
 	    $bindvars=array($section);
 	}
 
-	$query = "select * from `tiki_forums` $mid order by ".$this->convert_sortmode($sort_mode);
+	$query = "select * from `tiki_forums` $mid order by ".$this->convertSortMode($sort_mode);
 	$query_cant = "select count(*) from `tiki_forums`";
 	$result = $this->query($query,$bindvars,$maxRecords,$offset);
 	$cant = $this->getOne($query_cant,array());
@@ -1150,7 +1146,7 @@ class Comments extends TikiLib {
 	$result = $this->query($query,array((int) $forumId));
 
 	$lastPost = $this->getOne("select max(`commentDate`) from
-		`tiki_comments`,`tiki_forums` where `object` = ".$this->sql_cast("`forumId`","string").
+		`tiki_comments`,`tiki_forums` where `object` = ".$this->cast("`forumId`","string").
 		"and `objectType` = 'forum' and
 		`forumId` = ?", array( (int) $forumId ) );
 	$query = "update `tiki_forums` set `lastPost`=? where
@@ -1454,7 +1450,7 @@ class Comments extends TikiLib {
 
 	}
 
-	$query = $query . " order by " . $this->convert_sortmode($sort_mode);
+	$query = $query . " order by " . $this->convertSortMode($sort_mode);
 
 	if($sort_mode != 'commentDate_desc') {
 	    $query.=",`commentDate` desc";
@@ -1706,15 +1702,15 @@ class Comments extends TikiLib {
 		and tc2.`parentId` = ?
 		$mid 
 		and (tc1.`in_reply_to` = ?
-		or (tc2.`in_reply_to` = \"\" or tc2.`in_reply_to` is null or tc2.message_id is null or tc2.parentid = 0))
-		$time_cond order by tc1.".$this->convert_sortmode($sort_mode).",tc1.`threadId`";
+		or (tc2.`in_reply_to` = '' or tc2.`in_reply_to` is null or tc2.`message_id` is null or tc2.`parentid` = 0))
+		$time_cond order by tc1.".$this->convertSortMode($sort_mode).",tc1.`threadId`";
 		$bind_mid_cant = $bind_mid;
 		$bind_mid = array_merge(array($parentId,$parentId), $bind_mid, array($parent_message_id));
 
 		$query_cant = "select count(*) from `tiki_comments` as tc1 $mid $time_cond";
 	} else {
 	    $query_cant = "select count(*) from `tiki_comments` as tc1 $mid $time_cond";
-	    $query = "select * from `tiki_comments` as tc1 $mid $time_cond order by tc1.".$this->convert_sortmode($sort_mode).",`threadId`";
+	    $query = "select * from `tiki_comments` as tc1 $mid $time_cond order by tc1.".$this->convertSortMode($sort_mode).",`threadId`";
 	    $bind_mid_cant = $bind_mid;
 	}
 
@@ -1894,7 +1890,7 @@ class Comments extends TikiLib {
 			$join = ' left join `tiki_comments` tc2 on(tc2.`threadId`=tc.`parentId`)';
 		}
 
-		$query = "select tc.*, tc2.`title` as parentTitle from `tiki_comments` tc $join where $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select tc.*, tc2.`title` as parentTitle from `tiki_comments` tc $join where $mid order by ".$this->convertSortMode($sort_mode);
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
 		$query = "select count(*) from `tiki_comments` tc where $mid";
 		$cant = $this->getOne($query, $bindvars);

@@ -682,7 +682,7 @@ if (isset($_REQUEST['graph'])) {
 	$galleries = $imagegallib->list_visible_galleries(0, -1, 'name_asc', $user, '');
 	$smarty->assign('galleries', $galleries['data']);
 }
-$cookietab = 1;
+if (!isset($cookietab)) { $cookietab = '1'; }
 setcookie('tab', $cookietab);
 $smarty->assign('cookietab', $cookietab);
 if (isset($_REQUEST['time'])) $smarty->assign('time', $_REQUEST['time']);

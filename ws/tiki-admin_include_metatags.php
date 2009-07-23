@@ -16,6 +16,7 @@ if (isset($_REQUEST["metatags"])) {
 	simple_set_toggle('metatag_imagetitle');
 	simple_set_toggle('metatag_freetags');
 	simple_set_value('metatag_description');
+	simple_set_toggle('metatag_pagedesc');	
 	simple_set_value('metatag_author');
 	simple_set_value('metatag_geoposition');
 	simple_set_value('metatag_georegion');

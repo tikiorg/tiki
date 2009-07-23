@@ -25,7 +25,7 @@ if (isset($_REQUEST['import'])) {
 	if (is_uploaded_file($_FILES['zip']['tmp_name'])) {
 		check_ticket('import_xml_zip');
 		include_once('lib/wiki/xmllib.php');
-		$xmllib = new XmlLib();
+		$xmllib = new XmlLib;
 		$zipFile = $_FILES['zip']['tmp_name'];
 		$config = array();
 		if ($xmllib->import_pages($zipFile, $config)) {

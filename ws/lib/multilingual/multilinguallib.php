@@ -11,9 +11,6 @@ class MultilingualLib extends TikiLib {
 	  
 	public $mtEnabled = 'y';
 	  
-	function MultilingualLib($db) {
-		parent::TikiLib($db);
-	}
 	/* @brief add an object and its transaltion set into the set of translations of another one
 	 * @param: type = (idem tiki_categ) 'wiki page'...
 	 * @param: srcId = id of the source
@@ -827,5 +824,4 @@ class MultilingualLib extends TikiLib {
 	}   
 }
 
-global $dbTiki;
-$multilinguallib = new MultilingualLib($dbTiki);
+$multilinguallib = new MultilingualLib;

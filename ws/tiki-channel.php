@@ -5,12 +5,9 @@ require_once 'lib/profilelib/profilelib.php';
 require_once 'lib/profilelib/installlib.php';
 require_once 'lib/profilelib/channellib.php';
 
-if ($tiki_p_admin != 'y') {
-  $smarty->assign('errortype', 401);
-  $smarty->assign('msg', tra("You do not have permission to use this feature"));
-  $smarty->display("error.tpl");
-  die;
-}
+// This file will handle a second mode of authentication, don't limit it to permissions.
+// Only channels registered through the admin panel can be executed.
+// Each channel execution validates access rights.
 
 if( ! isset($_REQUEST['channels']) || ! is_array($_REQUEST['channels']) ) {
 	$access->display_error( 'tiki-channel.php', tra('Invalid request. Expecting channels array.') );

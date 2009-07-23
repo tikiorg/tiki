@@ -140,7 +140,7 @@ if ($_REQUEST["calendarId"]) {
 	if (!empty($_REQUEST['show']) && $_REQUEST['show'] == 'mod') {
 		$cookietab = '2';
 	} else {
-		$cookietab = 1;
+		if (!isset($cookietab)) { $cookietab = '1'; }
 	}
 }
 if ($prefs['feature_groupalert'] == 'y') {

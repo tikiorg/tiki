@@ -28,10 +28,6 @@ class Image extends ImageAbstract {
 		}
 	}
 
-	function Image($image, $isfile = false) {
-		Image::__construct($image, $isfile);
-	}
-
 	function _resize($x, $y) {
 		if ($this->data) {
 			return imagick_scale(&$this->data, $x, $y);

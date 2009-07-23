@@ -16,12 +16,8 @@ global $objectlib;require_once("lib/objectlib.php");
 
 class CategLib extends ObjectLib {
 
-	function CategLib($db) {
-		parent::ObjectLib($db);
-	}
-
 	function list_categs($categId=0) {
-		global $cachelib;
+		global $cachelib; include_once('lib/cache/cachelib.php');
 		if (!$cachelib->isCached('allcategs')) {
 			$back = $this->build_cache();
 		} else {
@@ -124,7 +120,7 @@ class CategLib extends ObjectLib {
 	}
 
 	function get_category_path_string($categId) {
-		global $cachelib;
+		global $cachelib; include_once('lib/cache/cachelib.php');
 		if (!$cachelib->isCached('allcategs')) {
 			$categs = $this->build_cache();
 		} else {
@@ -151,15 +147,10 @@ class CategLib extends ObjectLib {
 	}
 
 	function get_category($categId) {
-	   if(!isset($this->category_cache) || !isset($this->category_cache[$categId])) {
-		$query = "select * from `tiki_categories` where `categId`=?";
-		$result = $this->query($query,array((int) $categId));
-		if (!$result->numRows()) {
-		   $this->category_cache[$categId] = false;
+		if(!isset($this->category_cache) || !isset($this->category_cache[$categId])) {
+			$this->update_category_cache($categId);
 		}
-		$this->category_cache[$categId] = $result->fetchRow();
-	   }
-	   return $this->category_cache[$categId];
+		return $this->category_cache[$categId];
 	}
 	
 	function get_category_id($name){
@@ -187,7 +178,7 @@ class CategLib extends ObjectLib {
 	}
 	
 	function remove_category($categId) {
-		global $cachelib;
+		global $cachelib; include_once('lib/cache/cachelib.php');
 
 		$parentId=$this->get_category_parent($categId);
 		$categoryName=$this->get_category_name($categId);
@@ -240,7 +231,7 @@ class CategLib extends ObjectLib {
 	}
 
 	function update_category($categId, $name, $description, $parentId) {
-		global $cachelib;
+		global $cachelib; include_once('lib/cache/cachelib.php');
 
 		$oldCategory=$this->get_category($categId);
 		$oldCategoryName=$oldCategory['name'];
@@ -264,7 +255,7 @@ class CategLib extends ObjectLib {
 	}
 
 	function add_category($parentId, $name, $description) {
-		global $cachelib;
+		global $cachelib; include_once('lib/cache/cachelib.php');
 		$query = "insert into `tiki_categories`(`name`,`description`,`parentId`,`hits`) values(?,?,?,?)";
 		$result = $this->query($query,array($name,$description,(int) $parentId,0));
 		$query = "select `categId` from `tiki_categories` where `name`=? and `parentId`=? and `rootCategId`is NULL";
@@ -282,7 +273,7 @@ class CategLib extends ObjectLib {
 	function is_categorized($type, $itemId) {
 		if ( empty($itemId) ) return 0;
 
-		global $cachelib;
+		global $cachelib; include_once('lib/cache/cachelib.php');
 		if ( $cachelib->isCached('allcategs') && count(unserialize($cachelib->getCached('allcategs'))) == 0 ) {
 			return 0;
 		}
@@ -301,7 +292,7 @@ class CategLib extends ObjectLib {
 	}
 
 	function add_categorized_object($type, $itemId, $description, $name, $href) {
-		global $cachelib;
+		global $cachelib; include_once('lib/cache/cachelib.php');
 
 		$id = $this->add_object($type, $itemId, $description, $name, $href);
 		
@@ -470,7 +461,7 @@ class CategLib extends ObjectLib {
 		$orderBy = '';
 		if ($sort_mode) {
 			if ($sort_mode != 'shuffle') {
-				$orderBy = " ORDER BY ".$this->convert_sortmode($sort_mode);
+				$orderBy = " ORDER BY ".$this->convertSortMode($sort_mode);
 			}
 		}
 
@@ -538,7 +529,8 @@ class CategLib extends ObjectLib {
 	function get_object_categories_perms($user, $type, $itemId) {		
 		$is_categorized = $this->is_categorized("$type",$itemId);
 		if ($is_categorized) {
-			global $cachelib, $userlib, $tiki_p_admin, $prefs;
+			global $cachelib; include_once('lib/cache/cachelib.php');
+			global $userlib, $tiki_p_admin, $prefs;
 			
 			$parents = $this->get_object_categories("$type", $itemId);
 			$return_perms = array(); // initialize array for storing perms to be returned
@@ -649,7 +641,7 @@ class CategLib extends ObjectLib {
 	}
 
 	function remove_object_from_category($catObjectId, $categId) {
-		global $cachelib;
+		global $cachelib; include_once('lib/cache/cachelib.php');
 		$query = "delete from `tiki_category_objects` where `catObjectId`=? and `categId`=?";
 		$result = $this->query($query,array($catObjectId,$categId));
 		$query = "select count(*) from `tiki_category_objects` where `catObjectId`=?";
@@ -906,7 +898,8 @@ class CategLib extends ObjectLib {
 
 	// FUNCTIONS TO CATEGORIZE SPECIFIC OBJECTS END ////
 	function get_child_categories($categId) {
-	  global $cachelib, $prefs;
+		global $cachelib; include_once('lib/cache/cachelib.php');
+		global $prefs;
 		if (!$categId) $categId = "0"; // avoid wrong cache
 		if (!$cachelib->isCached("childcategs$categId")) {
 			$ret = array();
@@ -934,7 +927,7 @@ class CategLib extends ObjectLib {
 	}
 
 	function get_all_categories($showWS = false) {
-		global $cachelib;
+		global $cachelib; include_once('lib/cache/cachelib.php');
 	/*
 		// inhibited because allcateg_ext is cached now
 		$query = " select `name`,`categId`,`parentId` from `tiki_categories` order by `name`";
@@ -949,7 +942,7 @@ class CategLib extends ObjectLib {
 	}
 	/* build the cache with the categpath and the count */
 	function build_cache($showWS = false) {
-		global $cachelib;
+		global $cachelib; include_once('lib/cache/cachelib.php');
 		$ret = array();
 		global $prefs;
 		$idws = $prefs['ws_container'];
@@ -986,7 +979,7 @@ class CategLib extends ObjectLib {
 
 	// Same as get_all_categories + it also get info about count of objects
 	function get_all_categories_ext($showWS = false) {
-		global $cachelib;
+		global $cachelib; include_once('lib/cache/cachelib.php');
 		if (!$cachelib->isCached("allcategs")) {
 			$ret = $this->build_cache($showWS);
 		} else {
@@ -996,7 +989,7 @@ class CategLib extends ObjectLib {
 	}
 
 	function get_all_categories_respect_perms($user, $perm, $showWS = false) {
-		global $cachelib;
+		global $cachelib; include_once('lib/cache/cachelib.php');
 		global $userlib;
 		
 		$result = $this->get_all_categories_ext($showWS);
@@ -1085,7 +1078,7 @@ class CategLib extends ObjectLib {
 			// must keep tiki_categorized object because poll or ... can use it
 	    
 		    // Refresh categories
-		    global $cachelib;
+		    global $cachelib; include_once('lib/cache/cachelib.php');
 		    $cachelib->invalidate('allcategs');
         $cachelib->empty_type_cache('fgals_perms');
 		}
@@ -1248,7 +1241,7 @@ class CategLib extends ObjectLib {
 		    $bindvars[] = $type;
 		}
 		$sort_mode = "created_desc";
-		$query = "select co.`catObjectId`, `categId`, `type`, `name`, `href` from `tiki_category_objects` co, `tiki_categorized_objects` cdo, `tiki_objects` o where co.`catObjectId`=cdo.`catObjectId` and o.`objectId`=cdo.`catObjectId` $mid order by o.".$this->convert_sortmode($sort_mode);
+		$query = "select co.`catObjectId`, `categId`, `type`, `name`, `href` from `tiki_category_objects` co, `tiki_categorized_objects` cdo, `tiki_objects` o where co.`catObjectId`=cdo.`catObjectId` and o.`objectId`=cdo.`catObjectId` $mid order by o.".$this->convertSortMode($sort_mode);
 		$result = $this->query($query,$bindvars,$maxRecords,0);
 
 		$ret = array('data'=>array());
@@ -1595,5 +1588,4 @@ class CategLib extends ObjectLib {
 	}
 	
 }
-global $dbTiki;
-$categlib = new CategLib($dbTiki);
+$categlib = new CategLib;

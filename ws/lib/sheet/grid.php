@@ -1929,4 +1929,4 @@ class SheetLib extends TikiLib
 	}
 	
 } // }}}1
-$sheetlib = &new SheetLib( $tikilib->db );
+$sheetlib = new SheetLib;
