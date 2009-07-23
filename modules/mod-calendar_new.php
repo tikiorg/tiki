@@ -13,6 +13,13 @@ if ( $prefs['feature_calendar'] == 'y' ) {
 	global $userlib; include_once('lib/userslib.php');
 	global $headerlib; $headerlib->add_cssfile('css/calendar.css',20);
 	global $calendarViewMode;
+	if (isset($module_params['calendarId'])) {
+		if (is_array($module_params['calendarId'])) {
+			$module_params['calIds'] = $module_params['calendarId'];
+		} else {
+			$module_params['calIds'] = array($module_params['calendarId']);
+		}
+	}
 
 	if (isset($_REQUEST['viewmode'])) $save_viewmode = $_REQUEST['viewmode'];
 	if (!empty($module_params['viewmode']))
