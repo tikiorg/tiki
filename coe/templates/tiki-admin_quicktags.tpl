@@ -10,9 +10,10 @@
 			<input name="load" type="submit" value="{tr}Load{/tr}"/>
 		</div>
 	</form>
-	<label>{tr}All Quicktags:{/tr}</label><br/>
-	<ul id="full-list" class="full"></ul>
-
+	<div class="rows">
+		<label>{tr}All Quicktags:{/tr}</label><br/>
+		<ul id="full-list" class="full"></ul>
+	</div>
 	<div class="rows">
 		{foreach from=$rows item=i}
 			<label for="row-{$i|escape}">{tr}Row{/tr}&nbsp;{$i}:</label>
@@ -20,7 +21,7 @@
 		{/foreach}
 	</div>
 	<form method="post" action="tiki-admin_quicktags.php" onsubmit="return window.quicktags_sortable.saveRows()">
-		<div>
+		<div class="selectDiv">
 			<input id="qt-form-field" type="hidden" name="pref" value=""/>
 			<select name="section">
 				{foreach from=$sections item=name}

@@ -136,35 +136,41 @@ div.adminanchors a {float: left}
 	width: 200px;
 	overflow-y: auto;
 	overflow-x: hidden;
-	display: inline-block
-	display: inline;
+/*	display: inline-block
+	display: inline;*/
 	border: solid thin black;
+	margin: 0;
 }
 
 .quicktags-admin .rows {
 	min-height: 490px;
+	float: left;
+	padding: 1em 2em 1em 0;
 }
 
-.quicktags-admin .li { display: block; }
+.quicktags-admin .selectDiv {
+	float: left;
+	clear: left;
+}
+
+.quicktags-admin .li {
+	display: block;
+}
 
 .quicktags-admin .full {
 	border: solid thin black;
-	position: absolute;
+	float: left;
 	height: 478px;
-	width: 280px;
+	width: 200px;
 	overflow-y: auto;
 	overflow-x: hidden;
-}
-
-.quicktags-admin .rows {
-	position: relative; 
-	left: 350px;
-	top: 12px;
-	width: 400px;
+	margin: 0;
 }
 
 .quicktags-admin .quicktag {
 	cursor: pointer;
+	height: 1.5em;
+	line-height: 1.2em;
 }
 
 .quicktag img.icon {
