@@ -47,6 +47,29 @@ abstract class Quicktag
 
 		return array_merge( array(
 			'-',
+			'bold',
+			'italic',
+			'strike',
+			'sub',
+			'sup',
+			'tikilink',
+			'link',
+			'anchor',
+			'color',
+			'bgcolor',
+			'center',
+			'table',
+			'rule',
+			'pagebreak',
+			'blockquote',
+			'h1',
+			'h2',
+			'h3',
+			'image',
+			'list',
+			'numlist',
+			'specialchar',
+			'smiley',
 			'templates',
 			'cut',
 			'copy',
@@ -73,29 +96,6 @@ abstract class Quicktag
 			'fontname',
 			'fontsize',
 			'source',
-			'bold',
-			'italic',
-			'strike',
-			'sub',
-			'sup',
-			'tikilink',
-			'link',
-			'anchor',
-			'color',
-			'bgcolor',
-			'center',
-			'table',
-			'rule',
-			'pagebreak',
-			'blockquote',
-			'h1',
-			'h2',
-			'h3',
-			'image',
-			'list',
-			'numlist',
-			'specialchar',
-			'smiley',
 			'fullscreen',
 			'enlarge',
 			'reduce',
@@ -157,6 +157,7 @@ class QuicktagSeparator extends Quicktag
 	function __construct() // {{{
 	{
 		$this->setWysiwygToken('-');
+		$this->setIcon('pics/icons/tree_vertline.png');
 	} // }}}
 
 	function getWikiHtml( $areaName ) // {{{
@@ -167,22 +168,23 @@ class QuicktagSeparator extends Quicktag
 
 class QuicktagFckOnly extends Quicktag
 { 
-	private function __construct( $token ) // {{{
+	private function __construct( $token, $icon = 'pics/icons/shading.png' ) // {{{
 	{
 		$this->setWysiwygToken( $token );
+		$this->setIcon($icon);
 	} // }}}
 	
 	public static function fromName( $name ) // {{{
 	{
 		switch( $name ) {
 		case 'templates':
-			return new self( 'Templates' );
+			return new self( 'Templates', 'pics/icons/page_white_stack.png' );
 		case 'cut':
-			return new self( 'Cut' );
+			return new self( 'Cut', 'pics/icons/cut.png' );
 		case 'copy':
-			return new self( 'Copy' );
+			return new self( 'Copy', 'pics/icons/page_copy.png' );
 		case 'paste':
-			return new self( 'Paste' );
+			return new self( 'Paste', 'pics/icons/page_paste.png' );
 		case 'pastetext':
 			return new self( 'PasteText' );
 		case 'pasteword':
@@ -304,16 +306,13 @@ class QuicktagInline extends Quicktag
 			$syntax = '~~white,black:text~~';
 			break;
 		default:
-			$label = tra($tagName);
-			$icon = tra('pics/icons/shading.png');
-			$wysiwyg = $tagName;
-			$syntax = '';
+			return;
 		}
 
 		$tag = new self;
 		$tag->setLabel( $label )
 			->setWysiwygToken( $wysiwyg )
-			->setIcon( $icon )
+			->setIcon( !empty($icon) ? $icon : 'pics/icons/shading.png' )
 			->setSyntax( $syntax );
 		
 		return $tag;
@@ -384,16 +383,13 @@ class QuicktagBlock extends QuicktagInline // Will change in the future
 			$syntax = '{img src= width= height= link= }';
 			break;
 		default:
-			$label = tra($tagName);
-			$icon = tra('pics/icons/shading.png');
-			$wysiwyg = $tagName;
-			$syntax = '';
+			return;
 		}
 
 		$tag = new self;
 		$tag->setLabel( $label )
 			->setWysiwygToken( $wysiwyg )
-			->setIcon( $icon )
+			->setIcon( !empty($icon) ? $icon : 'pics/icons/shading.png' )
 			->setSyntax( $syntax );
 		
 		return $tag;
@@ -425,17 +421,13 @@ class QuicktagLineBased extends QuicktagInline // Will change in the future
 			$syntax = '#text';
 			break;
 		default:
-			$label = tra($tagName);
-			$icon = tra('pics/icons/shading.png');
-			$wysiwyg = $tagName;
-			$syntax = '';
-			break;
+			return;
 		}
 
 		$tag = new self;
 		$tag->setLabel( $label )
 			->setWysiwygToken( $wysiwyg )
-			->setIcon( $icon )
+			->setIcon( !empty($icon) ? $icon : 'pics/icons/shading.png' )
 			->setSyntax( $syntax );
 		
 		return $tag;
@@ -478,16 +470,13 @@ class QuicktagPicker extends Quicktag
 			}
 			break;
 		default:
-			$label = tra($tagName);
-			$icon = tra('pics/icons/shading.png');
-			$wysiwyg = $tagName;
-			$syntax = '';
+			return;
 		}
 
 		$tag = new self;
 		$tag->setWysiwygToken( $wysiwyg )
 			->setLabel( $label )
-			->setIcon( $icon )
+			->setIcon( !empty($icon) ? $icon : 'pics/icons/shading.png' )
 			->setList( $list );
 		foreach( $prefs as $pref ) {
 			$tag->addRequiredPreference( $pref );
@@ -621,7 +610,7 @@ class QuicktagWikiplugin extends Quicktag
 				}
 
 				$tag = new self;
-				$tag->setLabel( $info['name'] )
+				$tag->setLabel( str_ireplace('wikiplugin_', '', $info['name'] ))
 					->setIcon( $icon )
 					->setWysiwygToken( self::getToken( $name ) )
 					->setPluginName( $name );
@@ -759,7 +748,7 @@ class QuicktagsList
 				foreach( $group as $tag ) {
 					$groupHtml .= $tag->getWikiHtml( $areaName );
 				}
-
+				
 				if( ! empty($groupHtml) ) {
 					$param = empty($lineHtml) ? '' : ' style="border-left: double gray; height: 20px;"';
 					$lineHtml .= "<span$param>$groupHtml</span>";

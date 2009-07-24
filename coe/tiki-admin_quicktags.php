@@ -26,22 +26,27 @@ if( isset($_REQUEST['section'])
 	$section = reset($sections);
 }
 
+$auto_query_args = array('section');
+
 if( isset($_REQUEST['save'], $_REQUEST['pref']) ) {
 	$prefName = 'toolbar_' . $section;
 	$tikilib->set_preference( $prefName, $_REQUEST['pref'] );
 }
 
 $current = $tikilib->get_preference( 'toolbar_' . $section );
-$current = preg_replace( '/\s+/', '', $current );
-$current = trim( $current, '/' );
-$current = explode( '/', $current );
-$loadedRows = count($current);
-foreach( $current as & $line ) {
-	$line = explode( ',', $line );
+if (!empty($current)) {
+	$current = preg_replace( '/\s+/', '', $current );
+	$current = trim( $current, '/' );
+	$current = explode( '/', $current );
+	$loadedRows = count($current);
+	foreach( $current as & $line ) {
+		$line = explode( ',', $line );
+	}
+
+	$rowCount = max($loadedRows, 1) + 1;
+} else {
+	$rowCount = 1;
 }
-
-$rowCount = max($loadedRows, 2) + 1;
-
 $init = '';
 $setup = '';
 $map = array();
@@ -91,15 +96,23 @@ window.addEvent( 'domready', function(event) {
 	$setup
 
 	var seri = function(element) {
-		return element.innerHTML;
+		if (element.hasChildNodes()) {
+			return element.lastChild.nodeValue;
+		} else {
+			return element.innerHTML;
+		}
 	};
 
 	window.quicktags_sortable.saveRows = function() {
 		window.quicktags_sortable.removeLists($('full-list'));
 		var lists = [];
 		var ser = window.quicktags_sortable.serialize(false, seri );
-		for( var i = 0; ser.length > i; ++i )
-			lists.push( ser[i].join(',') );
+		if (typeof(ser[0]) == 'object' && (ser[0] instanceof Array)) {
+			for( var i = 0; ser.length > i; ++i )
+				lists.push( ser[i].join(',') );
+		} else {
+			lists.push( ser.join(',') );
+		}
 
 		$('qt-form-field').value = lists.join('/');
 	}

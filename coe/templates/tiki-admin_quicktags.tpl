@@ -15,7 +15,7 @@
 
 	<div class="rows">
 		{foreach from=$rows item=i}
-			<label>{tr}Line{/tr}&nbsp;{$i}:</label>
+			<label for="row-{$i|escape}">{tr}Row{/tr}&nbsp;{$i}:</label>
 			<ul id="row-{$i|escape}" class="row"></ul>
 		{/foreach}
 	</div>
