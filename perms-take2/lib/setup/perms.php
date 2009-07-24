@@ -52,15 +52,18 @@ if( $user ) {
 	$sequence[] = new Perms_Check_Creator( $user );
 }
 
+$factories = array();
+$factories[] = new Perms_ResolverFactory_ObjectFactory;
+if( $prefs['feature_categories'] == 'y' ) {
+	$factories[] = new Perms_ResolverFactory_CategoryFactory;
+}
+$factories[] = new Perms_ResolverFactory_GlobalFactory;
+
 $perms = new Perms;
 $perms->setGroups( $groupList );
 $perms->setPrefix( 'tiki_p_' );
 $perms->setCheckSequence( $sequence );
-$perms->setResolverFactories( array(
-	new Perms_ResolverFactory_ObjectFactory,
-	new Perms_ResolverFactory_CategoryFactory,
-	new Perms_ResolverFactory_GlobalFactory,
-) );
+$perms->setResolverFactories( $factories );
 Perms::set( $perms );
 
 $globalperms = Perms::get();
