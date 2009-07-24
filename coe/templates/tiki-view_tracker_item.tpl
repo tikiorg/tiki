@@ -15,6 +15,7 @@
       <a href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;watch=stop" title="{tr}Stop Monitor{/tr}">{icon _id='no_eye' align="right" hspace="1" alt="{tr}Stop Monitor{/tr}"}</a>
     {/if}
   {/if}
+	{self_link print='y'}{icon _id='printer' align='right' hspace='1' alt='{tr}Print{/tr}'}{/self_link}
 
   {if $tiki_p_list_trackers eq 'y' or $tiki_p_admin_trackers eq 'y'}
 		{button href="tiki-list_trackers.php" _text="{tr}List Trackers{/tr}"}

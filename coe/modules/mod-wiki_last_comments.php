@@ -13,6 +13,7 @@ if (!function_exists('module_last_comments')) {
 	function module_last_comments($limit, $type='wiki page') {
 		global $tikilib, $user;
 		$bindvars = array($type);
+		$where = '';
 		switch ($type) {
 		case 'article':
 			$join = 'left join `tiki_articles` ta on (tc.`object` = ta.`articleId`)';

@@ -1188,4 +1188,9 @@ if ($prefs['feature_ajax'] == 'y') {
 }
 // Display the template
 $smarty->assign('mid', 'tiki-view_tracker_item.tpl');
-$smarty->display("tiki.tpl");
+if (isset($_REQUEST['print'])) {
+	$smarty->display('tiki-print.tpl');
+	$smarty->assign('print', 'y');
+} else {
+	$smarty->display('tiki.tpl');
+}

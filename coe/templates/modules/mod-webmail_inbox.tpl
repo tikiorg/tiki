@@ -79,7 +79,11 @@
 						<a class="button mod_webmail_action" onclick="doTakeWebmail({$webmail_list[ix].msgid})" href="#">{tr}TAKE{/tr}</a>&nbsp;
 					{/if}
 					{if $sender.contactId gt 0}
-						{self_link _script='tiki-contacts.php' contactId=$sender.contactId _class="mod_webmail_from"}{$sender.email|truncate:17:"...":true}{/self_link}
+						{if !empty($sender.wikiPage)}
+							{self_link _script=$sender.wikiPage|sefurl _class="mod_webmail_from"}{$sender.email|truncate:17:"...":true}{/self_link}
+						{else}
+							{self_link _script='tiki-contacts.php' contactId=$sender.contactId _class="mod_webmail_from"}{$sender.email|truncate:17:"...":true}{/self_link}
+						{/if}
 						<div style="float: right;">{self_link _script='tiki-contacts.php' contactId=$sender.contactId _icon='user_gray' _width=12 _height=12}{tr}View contact{/tr}{/self_link}</div>
 					{else}
 						<span class="mod_webmail_from">{$sender.email|truncate:20:"...":true}</span>

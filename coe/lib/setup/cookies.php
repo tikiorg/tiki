@@ -59,6 +59,14 @@ if ($prefs['feature_tabs'] == 'y') {
 		$smarty->assign('cookietab',$_GET['cookietab']);
 		$cookietab = $_GET['cookietab'];
 	} else if (count($_POST) > 0 and preg_replace(array('/\?.*$/','/^http.?:\/\//'),'',$_SERVER['HTTP_REFERER']) == preg_replace('/\?.*$/','',$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']) && isset($_COOKIE['tab'])) {
+		// AJAX call (probably) and same URI, reset cookietab if changed "page"
+		if ($prefs['feature_ajax'] == 'y' && isset($_POST['xjxfun'])) {
+			if (isset($_COOKIE['tab_last_query']) && $_COOKIE['tab_last_query'] != $_SERVER['QUERY_STRING']) {
+				setcookie('tab', '1');
+				$_COOKIE['tab'] = '1';
+			}
+			setcookie('tab_last_query', $_SERVER['QUERY_STRING']);
+		}
 		$smarty->assign('cookietab',$_COOKIE['tab']);
 		$cookietab = $_COOKIE['tab'];
 	} else if (isset($_SERVER['HTTP_REFERER']) && preg_replace(array('/\?.*$/','/^http.?:\/\//'),'',$_SERVER['HTTP_REFERER']) == preg_replace('/\?.*$/','',$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']) && isset($_COOKIE['tab'])) {
@@ -70,6 +78,6 @@ if ($prefs['feature_tabs'] == 'y') {
 		}
 	} else {
 		$smarty->assign('cookietab',1);
-		$cookietab = 1;
+		$cookietab = '1';
 	}
 }

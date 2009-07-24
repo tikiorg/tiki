@@ -1702,7 +1702,7 @@ class Comments extends TikiLib {
 		and tc2.`parentId` = ?
 		$mid 
 		and (tc1.`in_reply_to` = ?
-		or (tc2.`in_reply_to` = \"\" or tc2.`in_reply_to` is null or tc2.message_id is null or tc2.parentid = 0))
+		or (tc2.`in_reply_to` = '' or tc2.`in_reply_to` is null or tc2.`message_id` is null or tc2.`parentid` = 0))
 		$time_cond order by tc1.".$this->convertSortMode($sort_mode).",tc1.`threadId`";
 		$bind_mid_cant = $bind_mid;
 		$bind_mid = array_merge(array($parentId,$parentId), $bind_mid, array($parent_message_id));

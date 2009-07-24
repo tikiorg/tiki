@@ -1,6 +1,6 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../core/test/TikiTestCase.php');
+require_once(dirname(__FILE__) . '/tikiimporter_testcase.php');
 require_once(dirname(__FILE__) . '/../tikiimporter_wiki_mediawiki.php');
 
 class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase 
@@ -75,6 +75,18 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
         $this->assertEquals(4, count($obj->parseData()));
     }
 
+    public function testParseDataShouldPrintMessageIfErrorToParseAPage()
+    {
+        $obj = $this->getMock('TikiImporter_Wiki_Mediawiki', array('extractInfo', 'saveAndDisplayLog'));
+        $obj->expects($this->exactly(4))->method('extractInfo')->will($this->throwException(new ImporterParserException('')));
+        $obj->expects($this->exactly(5))->method('saveAndDisplayLog')->will($this->returnValue(''));
+
+        $obj->dom = new DOMDocument;
+        $obj->dom->load(dirname(__FILE__) . '/fixtures/mediawiki_sample.xml');
+
+        $this->assertEquals(array(), $obj->parseData());
+    }
+
     public function testExtractInfo()
     {
         $dom = new DOMDocument;
@@ -82,6 +94,8 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
         $expectedNames = array('Redes de ensino', 'Academia Colarossi');
 
         $pages = $dom->getElementsByTagName('page');
+
+        $this->expectOutputString("Page \"Redes de ensino\" succesfully parsed with 8 revisions (from a total of 8 revisions).\nPage \"Academia Colarossi\" succesfully parsed with 2 revisions (from a total of 2 revisions).\n");
 
         $i = 0;
         foreach ($pages as $page) {
@@ -91,6 +105,38 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
             $return = $obj->extractInfo($page);
             $this->assertEquals($expectedNames[$i++], $return['name']);
             $this->assertGreaterThan(1, count($return['revisions']));
+        }
+    }
+
+    public function testExtractInfoShouldPrintErrorMessageIfProblemWithRevision()
+    {
+        $obj = $this->getMock('TikiImporter_Wiki_Mediawiki', array('extractRevision'));
+        $obj->expects($this->exactly(10))->method('extractRevision')->will($this->onConsecutiveCalls(array(), array(), $this->throwException(new ImporterParserException)));
+
+        $dom = new DOMDocument;
+        $dom->load(dirname(__FILE__) . '/fixtures/mediawiki_page.xml');
+        $pages = $dom->getElementsByTagName('page');
+
+        $this->expectOutputString("Error while parsing revision 3 of the page \"Redes de ensino\". Or there is a problem on the page syntax or on the Text_Wiki parser (the parser used by the importer).\nPage \"Redes de ensino\" succesfully parsed with 7 revisions (from a total of 8 revisions).\nPage \"Academia Colarossi\" succesfully parsed with 2 revisions (from a total of 2 revisions).\n");
+
+        foreach ($pages as $page) {
+            $obj->extractInfo($page);
+        }
+    }
+
+    public function testExtractInfoShouldThrowExceptionIfUnableToParseAllRevisionsOfPage()
+    {
+        $obj = $this->getMock('TikiImporter_Wiki_Mediawiki', array('extractRevision', 'saveAndDisplayLog'));
+        $obj->expects($this->exactly(8))->method('extractRevision')->will($this->throwException(new ImporterParserException));
+        $obj->expects($this->exactly(8))->method('saveAndDisplayLog')->will($this->returnValue(''));
+
+        $dom = new DOMDocument;
+        $dom->load(dirname(__FILE__) . '/fixtures/mediawiki_page.xml');
+        $pages = $dom->getElementsByTagName('page');
+
+        foreach ($pages as $page) {
+            $this->setExpectedException('Exception');
+            $this->assertNull($obj->extractInfo($page));
         }
     }
 
@@ -115,6 +161,25 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
 
             $this->assertEquals($expectedResult[$i++], $obj->extractRevision($revision));
        }
+    }
+
+    public function testExtractRevisionShouldRaiseExceptionForInvalidSyntax()
+    {
+        // for PEAR_Error
+        require_once('PEAR.php');
+
+        $obj = $this->getMock('TikiImporter_Wiki_Mediawiki', array('convertMarkup', 'extractContributor'));
+        $obj->expects($this->once())->method('convertMarkup')->will($this->returnValue(new PEAR_Error('some message')));
+        $obj->expects($this->once())->method('extractContributor')->will($this->returnValue(array()));
+
+        $dom = new DOMDocument;
+        $dom->load(dirname(__FILE__) . '/fixtures/mediawiki_revision_invalid_syntax.xml');
+        $revisions = $dom->getElementsByTagName('revision');
+
+        foreach ($revisions as $revision) {
+            $this->setExpectedException('ImporterParserException');
+            $this->assertNull($obj->extractRevision($revision));
+        }
     }
 
     public function testExtractContributor()

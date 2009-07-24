@@ -191,16 +191,17 @@
 			</tr>
 			{cycle values="odd,even" print=false}
 			{section name=ix loop=$accounts}
+				{assign var=active value=$accounts[ix].current eq 'y' and $accounts[ix].user eq $user or $accounts[ix].accountId eq $mailCurrentAccount}
 				<tr>
 					<td class="{cycle advance=false}">
-						{if $accounts[ix].current ne 'y' and $accounts[ix].accountId ne $mailCurrentAccount}
+						{if $active neq 'y'}
 							{self_link _icon='star_grey' current=$accounts[ix].accountId}{tr}Activate{/tr}{/self_link}
 						{else}
 							{icon _id='star' alt="{tr}This is the active account.{/tr}"}
 						{/if}
 					</td>
 					<td class="{cycle advance=false}">
-						{if $accounts[ix].current ne 'y' and $accounts[ix].accountId ne $mailCurrentAccount}
+						{if $active neq 'y'}
 							{self_link current=$accounts[ix].accountId}{$accounts[ix].account class='link' _title='{tr}Activate{/tr}'}{/self_link}{* TODO make_title work? *}
 						{else}
 							<strong>{$accounts[ix].account}</strong>
@@ -221,7 +222,7 @@
 					<td class="{cycle}">
 						{self_link _icon='cross' remove=$accounts[ix].accountId}{tr}Delete{/tr}{/self_link}
 						{self_link _icon='page_edit' accountId=$accounts[ix].accountId}{tr}Edit{/tr}{/self_link}
-						{if $accounts[ix].current ne 'y' and $accounts[ix].accountId ne $mailCurrentAccount}
+						{if $active neq 'y'}
 							{self_link _icon='accept' current=$accounts[ix].accountId}{tr}Activate{/tr}{/self_link}
 						{/if}
 					</td>
@@ -248,22 +249,23 @@
 				</tr>
 				{cycle values="odd,even" print=false}
 				{section name=ixp loop=$pubAccounts}
+					{assign var=active value=$pubAccounts[ixp].current eq 'y' and $pubAccounts[ix].user eq $user or $pubAccounts[ixp].accountId eq $mailCurrentAccount}
 					<tr>
 						<td class="{cycle advance=false}">
-							{if $pubAccounts[ixp].current ne 'y' and $pubAccounts[ixp].accountId ne $mailCurrentAccount}
+							{if $active neq 'y'}
 								{self_link _icon='star_grey' current=$pubAccounts[ixp].accountId}{tr}Activate{/tr}{/self_link}
 							{else}
 								{icon _id='star' alt="{tr}This is the active account.{/tr}"}
 							{/if}
 						</td>
 						<td class="{cycle advance=false}">
-							{if $pubAccounts[ixp].current ne 'y' and $pubAccounts[ixp].accountId ne $mailCurrentAccount}
+							{if $active neq 'y'}
 								{self_link current=$pubAccounts[ixp].accountId}{$pubAccounts[ixp].account class='link' _title='{tr}Activate{/tr}'}{/self_link}{* TODO make self_link _title work when no icon? *}
 							{else}
 								<strong>{$pubAccounts[ixp].account}</strong>
 							{/if}
 						</td>
-						<td class="{cycle advance=false}">{if $pubAccounts[ixp].current eq 'y'}{tr}Yes{/tr}{else}{tr}No{/tr}{/if}</td>
+						<td class="{cycle advance=false}">{if $pubAccounts[ixp].current ne 'y' or $pubAccounts[ix].user ne $user}{tr}Yes{/tr}{else}{tr}No{/tr}{/if}</td>
 						<td class="{cycle advance=false}">
 							{if !empty($pubAccounts[ixp].imap)}{tr}IMAP{/tr}: {$pubAccounts[ixp].imap} ({$pubAccounts[ixp].port})
 							{elseif !empty($pubAccounts[ixp].mbox)}{tr}Mbox{/tr}: {$pubAccounts[ixp].mbox}
@@ -276,7 +278,7 @@
 								{self_link _icon='cross' remove=$pubAccounts[ixp].accountId}{tr}Delete{/tr}{/self_link}
 								{self_link _icon='page_edit' accountId=$pubAccounts[ixp].accountId}{tr}Edit{/tr}{/self_link}
 							{/if}
-							{if $pubAccounts[ixp].current ne 'y' and $pubAccounts[ixp].accountId ne $mailCurrentAccount}
+							{if $active neq 'y'}
 								{self_link _icon='accept' current=$pubAccounts[ixp].accountId}{tr}Activate{/tr}{/self_link}
 							{/if}
 						</td>

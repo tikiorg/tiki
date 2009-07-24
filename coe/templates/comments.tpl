@@ -368,7 +368,7 @@
 
 		{if !$user}
 			<tr>
-				<td class="formcolor"><label for="anonymus_name">{tr}Enter your name{/tr}</label></td>
+				<td class="formcolor"><label for="anonymus_name">{tr}Enter your name{/tr} ({tr}optional{/tr})</span></label></td>
 				<td class="formcolor"><input type="text" maxlength="50" size="12" id="anonymous_name" name="anonymous_name" /></td>
 			</tr>
 			{if $forum_mode eq 'y'}

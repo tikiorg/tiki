@@ -3341,23 +3341,21 @@ class TikiLib extends TikiDb_Bridge {
 	/*shared*/
 	function get_assigned_modules($position = null, $displayed="n") {
 		$filter = '';
+		$bindvars = array();
 
 		if ( $position !== null ) {
 			$filter .= 'where `position`=?';
-			$bindvars = array($position);
+			$bindvars[] = $position;
 		}
 
 		if ( $displayed != 'n' ) {
-			$filter .= ( $filter == '' ? 'where' : 'and' ) . " (`type` is null or `type` != 'h')";
+			$filter .= ( $filter == '' ? 'where' : 'and' ) . " (`type` is null or `type` != ?)";
+			$bindvars[] = 'y';
 		}
 
 		$query = "select * from `tiki_modules` $filter order by ".$this->convertSortMode("ord_asc");
 
-		if ( isset($bindvars) ) {
-			$result = $this->query($query, $bindvars);
-		} else {
-			$result = $this->query($query);
-		}
+		$result = $this->query($query, $bindvars);
 
 		$ret = array();
 		while ( $res = $result->fetchRow() ) {
@@ -4731,6 +4729,9 @@ class TikiLib extends TikiDb_Bridge {
 		}
 
 		$cond_query = '';
+		if (empty($query_cond)) {
+			$query_cond = '1';
+		}
 		$result = null;
 		if ( is_null($bindvars) ) $bindvars = array();
 		if ( count($needed) > 0 ) {
@@ -4743,11 +4744,10 @@ class TikiLib extends TikiDb_Bridge {
 				$cond_query .= "`$field_name`=?";
 				$bindvars[] = $var;
 			}
-
-			$query = "select `$field_name`, `value` from `$table` where $query_cond $cond_query";
-			$result = $this->query($query, $bindvars);
 		}
-
+		$query = "select `$field_name`, `value` from `$table` where $query_cond $cond_query";
+		$result = $this->query($query, $bindvars);
+		
 		if ( $result ) {
 			while ( $res = $result->fetchRow() ) {
 				// store the db value in the global array
