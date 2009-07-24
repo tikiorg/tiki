@@ -1,6 +1,6 @@
-<h1>{$rWS_title}</h1>
+<h1>{$WS_title}</h1>
 
-<table>
+<table class="admin">
 <tr>
    <th>Object Name</th>
    <th>Type</th>
@@ -14,5 +14,3 @@
 	</tr>
 {/foreach}
 </table>
-
-<p> "I am still learning how to deal with smartasses..." </p>

@@ -151,6 +151,11 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'apocalipsis') && ($ws
 
 if ( isset($_REQUEST['action'])  &&  ($_REQUEST['action'] == 'test') && ($wsContainerId))
 {
+	echo("Show WS container <br>");
+	$ws_id = $wslib->get_ws_container();
+	echo($ws_id."<br>");
+	echo("<br>");
+	
 	$listWS = $wslib->list_all_ws(-1,-1,'name_asc',null,'','');
 	echo ("List all WS stored in Tiki");
 	echo ("\n<br>");

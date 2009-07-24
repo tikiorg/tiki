@@ -5,6 +5,7 @@
  * This is the index page of WS, with it a normal user can search his WS, other WS, and more stuff
  * 
  * @author 	Aldo Borrero Gonzalez (axold) <axold07@gmail.com>
+  * @author 	Benjamín Palacios Gonzalo (mangapower) <mangapowerx@gmail.com>
  * @license	http://www.opensource.org/licenses/lgpl-2.1.php
  */
 
@@ -17,7 +18,7 @@ require_once('lib/workspaces/wslib.php');
 //Assign the title to the template
 $smarty->assign('headtitle', tra('Workspaces Home'));
 
-$listWS = $wslib->list_ws_that_user_have_access ($user, 25, 0);
+$listWS = $wslib->list_ws_that_user_have_access ($user, 10, 0);
 $smarty->assign('listWS',$listWS);
 
 // Display the template

@@ -54,7 +54,7 @@ class CategLib extends ObjectLib {
 		global $prefs;
 		$exclude = $this->exclude_categs ($prefs['ws_container'], $find, $showWS);
 				
-		$query = "select * from `tiki_categories` $mid $exclude order by ".$this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_categories` $mid $exclude"; //order by ".$this->convert_sortmode($sort_mode);
 		$query_cant = "select count(*) from `tiki_categories` $mid ";
 		$result = $this->query($query,$bindvals,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvals);

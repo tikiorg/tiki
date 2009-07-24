@@ -36,8 +36,7 @@ class wslib extends CategLib
     /** Constructor, give the dbtiki to its parent, this is Categlib */
     public function __construct()
     {
-	global $dbTiki, $prefs;
-	parent::CategLib($dbTiki);
+	global $prefs;
 
 	$this->ws_container = (int) $prefs['ws_container'];
 	$this->objectType = 'ws';
@@ -77,7 +76,7 @@ class wslib extends CategLib
      * @param $additionalPerms Associative array for giving more perms than the default perm 'tiki_p_ws_view'
      * @return The ID of the WS
      */
-public function create_ws ($name, $groups, $parentWS = null, $description = '')
+    public function create_ws ($name, $groups, $parentWS = null, $description = '')
     {
     	if (!$parentWS)	$parentWS = 0;
     	
@@ -287,7 +286,7 @@ public function create_ws ($name, $groups, $parentWS = null, $description = '')
      * @param $type The type of the object
      * @return -
      */    
-    public function create_ws_object ($ws_id, $name, $type, $description='', $params = null)
+    public function create_ws_object ($ws_id, $name, $type, $description='', $params = array())
     {
     	global $user;
     	switch ($type)
@@ -311,26 +310,46 @@ public function create_ws ($name, $groups, $parentWS = null, $description = '')
 		{
 			global $trklib;
 			include_once ('lib/trackers/trackerlib.php');
-			$tracker_options["showCreated"] = 'y';
-			$tracker_options["showStatus"] = 'y';
-			$tracker_options["showStatusAdminOnly"] = 'y';
-			$tracker_options["simpleEmail"] = 'n';
-			$tracker_options["outboundEmail"] = '';
-			$tracker_options["newItemStatus"] = 'y';
-			$tracker_options["useRatings"] = 'y';
-			$tracker_options["showRatings"] = 'y';
-			$tracker_options["useComments"] = 'y';
-			$tracker_options["showComments"] = 'y';
-			$tracker_options["useAttachments"] = 'y';
-			$tracker_options["showAttachments"] = 'y';
-			$tracker_options["showLastModif"] = 'y';
-			$tracker_options["defaultOrderDir"] = 'asc';
-			$tracker_options["newItemStatus"] = '';
-			$tracker_options["modItemStatus"] = '';
-			$tracker_options["defaultOrderKey"] = '';
-			$tracker_options["writerCanModify"] = 'y';
-			$tracker_options["writerGroupCanModify"] = 'n';
-			$tracker_options["defaultStatus"] = 'o';
+			//$tracker_options["showCreated"] = 'y';
+			$tracker_options["showCreated"] = $params["showCreated"];
+			//$tracker_options["showStatus"] = 'y';
+			$tracker_options["showStatus"] = $params["showStatus"];
+			//$tracker_options["showStatusAdminOnly"] = 'y';
+			$tracker_options["showStatusAdminOnly"] = $params["showStatusAdminOnly"];
+			//$tracker_options["simpleEmail"] = 'n';
+			$tracker_options["simpleEmail"] = $params["simpleEmail"];
+			//$tracker_options["outboundEmail"] = '';
+			$tracker_options["outboundEmail"] = $params["outboundEmail"];
+			//$tracker_options["newItemStatus"] = 'y';
+			$tracker_options["newItemStatus"] = $params["newItemStatus"];
+			//$tracker_options["useRatings"] = 'y';
+			$tracker_options["useRatings"] = $params["useRatings"];
+			//$tracker_options["showRatings"] = 'y';
+			$tracker_options["showRatings"] = $params["showRatings"];
+			//$tracker_options["useComments"] = 'y';
+			$tracker_options["useComments"] = $params["useComments"];
+			//$tracker_options["showComments"] = 'y';
+			$tracker_options["showComments"] = $params["showComments"];
+			//$tracker_options["useAttachments"] = 'y';
+			$tracker_options["useAttachments"] = $params["useAttachments"];
+			//$tracker_options["showAttachments"] = 'y';
+			$tracker_options["showAttachments"] = $params["showAttachments"];
+			//$tracker_options["showLastModif"] = 'y';
+			$tracker_options["showLastModif"] = $params["showLastModif"];
+			//$tracker_options["defaultOrderDir"] = 'asc';
+			$tracker_options["defaultOrderDir"] = $params["defaultOrderDir"];
+			//$tracker_options["newItemStatus"] = '';
+			$tracker_options["newItemStatus"] = $params["newItemStatus"];
+			//$tracker_options["modItemStatus"] = '';
+			$tracker_options["modItemStatus"] = $params["modItemStatus"];
+			//$tracker_options["defaultOrderKey"] = '';
+			$tracker_options["defaultOrderKey"] = $params["defaultOrderKey"];
+			//$tracker_options["writerCanModify"] = 'y';
+			$tracker_options["writerCanModify"] = $params["writerCanModify"];
+			//$tracker_options["writerGroupCanModify"] = 'n';
+			$tracker_options["writerGroupCanModify"] = $params["writerGroupCanModify"];
+			//$tracker_options["defaultStatus"] = 'o';
+			$tracker_options["defaultStatus"] = $params["defaultStatus"];
 			$itemId = $trklib->replace_tracker(null, $name, $description,$tracker_options); 
 			$href = "tiki-view_tracker.php?trackerId=".$itemId;
 			break;
@@ -794,7 +813,7 @@ public function create_ws ($name, $groups, $parentWS = null, $description = '')
 			$wspathforsort = implode("!!",$tepath);
 			$res["wspath"] = $wspath;
 			$res["deep"] = count($tepath);
-			$res["href"] = "tiki-user_ws.php?showWS=".$ws_id;
+			$res["href"] = "tiki-user_ws.php?showWS=".$ws_id."&nameWS=".$res['name'];
 			
 			$listUserWS["$wspathforsort"] = $res;
 		    }
@@ -921,6 +940,31 @@ public function create_ws ($name, $groups, $parentWS = null, $description = '')
      {
      	global $userlib; require_once 'lib/userslib.php';
      	$userlib->assign_user_to_group($user, $groupName);
+     }
+     
+      /** Count the number the WS stored in Tiki or the number of WS that a user have access
+     *
+     * @param $user The id of the user (if not set, then get the WS stored in Tiki)
+     * @return $cant the number the WS stored in Tiki or the number of WS that a user have access
+     */	
+     public function count_ws ($userName = null)
+     {
+     	if ($userName)
+     	{
+     		$query = "select count(distinct t3.`objectId`) from `users_objectpermissions` t3, `users_usergroups` t2, `users_users` t1
+				   where t1.`login` = ? 
+				   and (t1.`userId` = t2.`userId`) 
+				   and (t2.`groupName` = t3.`groupName`) 
+				   and t3.`permName` = 'tiki_p_ws_view'";
+		$bindvals = array($userName);
+     	}
+     	else
+     	{
+     		$query_cant = "select count(*) from `tiki_categories` where `rootCategId` = ? ";
+     		$bindvals = array($this->ws_container);
+     	}	
+	$cant = $this->getOne($query_cant,$bindvals);
+	return $cant;
      }
 }
 

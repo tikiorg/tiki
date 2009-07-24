@@ -18,7 +18,7 @@
 </li><li>You want to quickly test out some of Tiki's Features<br /> 
 </li>
 </ul>
- <br /> --><table>
+ <br /> --><table class = admin>
 <tr>
    <th>Name</th>
    <th>Description</th>
