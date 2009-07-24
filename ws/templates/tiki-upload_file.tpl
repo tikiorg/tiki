@@ -6,10 +6,9 @@
 <div class="navbar">
 	{if !empty($galleryId)}
 		{if $filegals_manager neq ''}
-			{assign var=fgmanager value=$filegals_manager|escape}
-			{button href="tiki-list_file_gallery.php?galleryId=$galleryId&amp;filegals_manager=$fmanager" _text="{tr}Browse Gallery{/tr}"}
+			{button galleryId="$galleryId" href="tiki-list_file_gallery.php" _text="{tr}Browse Gallery{/tr}"}
 		{else}
-			{button href="tiki-list_file_gallery.php?galleryId=$galleryId" _text="{tr}Browse Gallery{/tr}"}
+			{button galleryId="$galleryId" href="tiki-list_file_gallery.php" _text="{tr}Browse Gallery{/tr}"}
 		{/if}
 	{/if}
 
@@ -61,15 +60,25 @@
 		{section name=ix loop=$uploads}
 			<tr>
 				<td class="{cycle values="odd,even"}" style="text-align: center">
-					<img src="tiki-download_file.php?fileId={$uploads[ix].fileId}&amp;thumbnail=y" />
+					<img src="{$uploads[ix].fileId|sefurl:thumbnail}" />
 				</td>
 				<td>
-					<b>{$uploads[ix].name} ({$uploads[ix].size|kbsize})</b>
+					{if $filegals_manager neq ''}
+						{assign var=seturl value=$uploads[ix].fileId|sefurl:display}
+						
+						{* Note: When using this code inside FCKeditor, SetMyUrl function is not defined and we use FCKeditor SetUrl native function *}
+						<a href="javascript:if (typeof window.opener.SetMyUrl != 'undefined') window.opener.SetMyUrl('{$filegals_manager|escape}','{$seturl}'); else window.opener.SetUrl('{$tikiroot}{$seturl}'); checkClose();" title="{tr}Click Here to Insert in Wiki Syntax{/tr}">{$uploads[ix].name} ({$uploads[ix].size|kbsize})</a>
+					{else}
+						<b>{$uploads[ix].name} ({$uploads[ix].size|kbsize})</b>
+					{/if}
 					{button href="#" _flip_id="uploadinfos`$uploads[ix].fileId`" _text="{tr}Additional Info{/tr}"}
 					<div style="{if $prefs.javascript_enabled eq 'y'}display:none;{/if}" id="uploadinfos{$uploads[ix].fileId}">
-						{tr}You can download this file using{/tr}: <div class="code"><a class="link" href="{$uploads[ix].dllink}">{$uploads[ix].dllink}</a></div>
-						{tr}You can link to the file from a Wiki page using{/tr}: <div class="code">[tiki-download_file.php?fileId={$uploads[ix].fileId}|{$uploads[ix].name} ({$uploads[ix].size|kbsize})]</div>
-						{tr}You can display an image in a Wiki page using{/tr}: <div class="code">&#x7b;img src="tiki-download_file.php?fileId={$uploads[ix].fileId}&amp;preview" link="{$uploads[ix].dllink}" alt="{$uploads[ix].name} ({$uploads[ix].size|kbsize})"}</div>
+						{tr}You can download this file using{/tr}: <div class="code"><a class="link" href="{$uploads[ix].dllink}">{$uploads[ix].fileId|sefurl:file}</a></div>
+						{tr}You can link to the file from a Wiki page using{/tr}: <div class="code">[{$uploads[ix].fileId|sefurl:file}|{$uploads[ix].name} ({$uploads[ix].size|kbsize})]</div>
+						{tr}You can display an image in a Wiki page using{/tr}: <div class="code">&#x7b;img src="{$uploads[ix].fileId|sefurl:preview}" link="{$uploads[ix].fileId|sefurl:file}" alt="{$uploads[ix].name} ({$uploads[ix].size|kbsize})"}</div>
+						{if $prefs.feature_shadowbox eq 'y'}
+							{tr}Or using as a thumbnail with ShadowBox{/tr}: <div class="code">&#x7b;img src="{$uploads[ix].fileId|sefurl:thumbnail}" link="{$uploads[ix].fileId|sefurl:preview}" rel="shadowbox[gallery];type=img" alt="{$name} ({$uploads[ix].size|kbsize})"}</div>
+						{/if}
 						{tr}You can link to the file from an HTML page using{/tr}: <div class="code">&lt;a href="{$uploads[ix].dllink}"&gt;{$uploads[ix].name} ({$uploads[ix].size|kbsize})&lt;/a&gt;</div>
 					</div>
 				</td>
@@ -79,7 +88,7 @@
 		<br />
 
 		<h2>{tr}Upload File{/tr}</h2>
-	{elseif $fileChangedMessage}
+	{elseif isset($fileChangedMessage)}
 		<div align="center">
 			<div class="wikitext">
 				{$fileChangedMessage}
@@ -109,13 +118,13 @@
 				<tr>
 					<td><label for="name">{tr}File title:{/tr}</label></td>
 					<td width="80%">
-						<input style="width:100%" type="text" id="name" name="name[]" {if $fileInfo.name}value="{$fileInfo.name}"{/if} size="40" /> {if $gal_info.type eq "podcast" or $gal_info.type eq "vidcast"} ({tr}required field for podcasts{/tr}){/if}
+						<input style="width:100%" type="text" id="name" name="name[]" {if isset($fileInfo) and $fileInfo.name}value="{$fileInfo.name}"{/if} size="40" /> {if $gal_info.type eq "podcast" or $gal_info.type eq "vidcast"} ({tr}required field for podcasts{/tr}){/if}
 					</td>
 				</tr>
 				<tr>
 					<td><label for="description>{tr}File description:{/tr}</label></td>
 					<td>
-						<textarea style="width:100%" rows="2" cols="40" id="description" name="description[]">{if $fileInfo.description}{$fileInfo.description}{/if}</textarea>
+						<textarea style="width:100%" rows="2" cols="40" id="description" name="description[]">{if isset($fileInfo) and $fileInfo.description}{$fileInfo.description}{/if}</textarea>
 					{if $gal_info.type eq "podcast" or $gal_info.type eq "vidcast"}<br /><em>{tr}Required for podcasts{/tr}.</em>{/if}
 					</td>
 				</tr>
@@ -149,7 +158,7 @@
 				<input type="hidden" name="fileId" value="{$editFileId}"/>
 				<input type="hidden" name="lockedby" value="{$fileInfo.lockedby|escape}" \>
 			{else}
-				{if $groupforalert eq ''}
+				{if empty($groupforalert)}
 				<tr><td>
 					<label for="galleryId">{tr}File gallery:{/tr}</label>
 				</td><td width="80%">
@@ -184,7 +193,7 @@
 					<input type="text" id="author"name="author[]" value="{$fileInfo.author|escape}" />
 				</td></tr>
 			{/if}
-			{if $groupforalert ne ''}
+			{if !empty($groupforalert)}
 				{if $showeachuser eq 'y' }
 					<tr><td>
 						{tr}Choose users to alert{/tr}
@@ -233,6 +242,9 @@
 	<div id="form">
 	<form {if $prefs.javascript_enabled eq 'y' and !$editFileId}onsubmit='return false' target='upload_progress_0'{/if} id='file_0' name='file_0' action='tiki-upload_file.php' enctype='multipart/form-data' method='post' style='margin:0px; padding:0px'>
 	<input type="hidden" name="formId" value="0"/>
+	{if $filegals_manager neq ''}
+		<input type="hidden" name="filegals_manager" value="{$filegals_manager}"/>
+	{/if}
 	{$upload_str}
 	{if $editFileId}
 		{include file='categorize.tpl' notable='y'}<br/>
@@ -252,7 +264,7 @@
 	<div id="page_bar">
 	{if $prefs.javascript_enabled eq 'y'  and  !$editFileId}
 			<input type="button" onclick="upload('0', 'loader_0')" value="{tr}Upload{/tr}"/>
-			<input type="button" onclick="javascript:add_upload_file('multiple_upload')" value="{tr lang=$lang}Add File{/tr}"/>
+			<input type="button" onclick="javascript:add_upload_file('multiple_upload')" value="{tr}Add File{/tr}"/>
 	{/if}
 	</div>
 	</div>
@@ -283,6 +295,9 @@
 		function add_upload_file() {
 			tmp = "<form onsubmit='return false' id='file_"+nb_upload+"' name='file_"+nb_upload+"' action='tiki-upload_file.php' target='upload_progress_"+nb_upload+"' enctype='multipart/form-data' method='post' style='margin:0px; padding:0px'>";
 			{/literal}
+			{if $filegals_manager neq ''}
+			tmp += '<input type="hidden" name="filegals_manager" value="{$filegals_manager}"/>';
+			{/if}
 			tmp += '<input type="hidden" name="formId" value="'+nb_upload+'"/>';
 			tmp += '{$upload_str|strip|escape:'javascript'}';
 			{literal}

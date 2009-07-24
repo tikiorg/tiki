@@ -7,10 +7,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 class BookmarkLib extends TikiLib {
-	function BookmarkLib($db) {
-		$this->TikiLib($db);
-	}
-
 	function get_folder_path($folderId, $user) {
 		$path = '';
 
@@ -136,7 +132,7 @@ class BookmarkLib extends TikiLib {
 			$bindvars=array($folderId,$user);
 		}
 
-		$query = "select * from `tiki_user_bookmarks_urls` where `folderId`=? and `user`=? $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_user_bookmarks_urls` where `folderId`=? and `user`=? $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_user_bookmarks_urls` where `folderId`=? and `user`=? $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -170,5 +166,4 @@ class BookmarkLib extends TikiLib {
 		return $ret;
 	}
 }
-global $dbTiki;
-$bookmarklib = new BookmarkLib($dbTiki);
+$bookmarklib = new BookmarkLib;

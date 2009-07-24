@@ -57,8 +57,106 @@ if ($_REQUEST['objectType'] == 'wiki' || $_REQUEST['objectType'] == 'wiki page')
 		$smarty->assign('inStructure', 'y');
 	}
 }
+
+//Quickperms
+$databaseperms = $userlib->get_permissions(0, -1, 'permName_asc', '', $_REQUEST["permType"], '', true);
+foreach($databaseperms['data'] as $perm) {
+	if ($perm['level']=='basic')
+		$quickperms_['basic'][$perm['permName']] = $perm['permName'];
+	elseif ($perm['level']=='registered')
+		$quickperms_['registered'][$perm['permName']] = $perm['permName'];
+	elseif ($perm['level']=='editors')
+		$quickperms_['editors'][$perm['permName']] = $perm['permName'];
+	elseif ($perm['level']=='admin')
+		$quickperms_['admin'][$perm['permName']] = $perm['permName'];
+}
+
+if(!isset($quickperms_['basic']))
+	$quickperms_['basic'] = array();
+if(!isset($quickperms_['registered']))
+	$quickperms_['registered'] = array();
+if(!isset($quickperms_['editors']))
+	$quickperms_['editors'] = array();
+if(!isset($quickperms_['admin']))
+$quickperms_['admin'] = array();
+
+$perms['basic']['name'] = "basic";
+$perms['basic']['data'] = array_merge($quickperms_['basic']);
+$perms['registered']['name'] = "registered";
+$perms['registered']['data'] = array_merge($quickperms_['basic'], $quickperms_['registered']);
+$perms['editors']['name'] = "editors";
+$perms['editors']['data'] = array_merge($quickperms_['basic'], $quickperms_['registered'], $quickperms_['editors']);
+$perms['admin']['name'] = "admin";
+$perms['admin']['data'] = array_merge($quickperms_['basic'], $quickperms_['registered'], $quickperms_['editors'], $quickperms_['admin']);
+$perms['none']['name'] = "none";
+$perms['none']['data'] = array();
+
+//Test to map permissions of ile galleries into read write admin admin levels.
+if($_REQUEST["permType"]=="file galleries") {
+	unset($perms);
+	$quickperms_temp['tiki_p_admin_file_galleries'] = 'tiki_p_admin_file_galleries';
+	$quickperms_temp['tiki_p_assign_perm_file_gallery'] = 'tiki_p_assign_perm_file_gallery';
+	$quickperms_temp['tiki_p_batch_upload_files'] = 'tiki_p_batch_upload_files';
+	$quickperms_temp['tiki_p_batch_upload_file_dir'] = 'tiki_p_batch_upload_file_dir';
+	$quickperms_temp['tiki_p_create_file_galleries'] = 'tiki_p_create_file_galleries';
+	$quickperms_temp['tiki_p_download_files'] = 'tiki_p_download_files';
+	$quickperms_temp['tiki_p_edit_gallery_file'] = 'tiki_p_edit_gallery_file';
+	$quickperms_temp['tiki_p_list_file_galleries'] = 'tiki_p_list_file_galleries';
+	$quickperms_temp['tiki_p_upload_files'] = 'tiki_p_upload_files';
+	$quickperms_temp['tiki_p_view_fgal_explorer'] = 'tiki_p_view_fgal_explorer';
+	$quickperms_temp['tiki_p_view_fgal_path'] = 'tiki_p_view_fgal_path';
+	$quickperms_temp['tiki_p_view_file_gallery'] = 'tiki_p_view_file_gallery';
+	$perms['admin']['name'] = "admin";
+	$perms['admin']['data'] = $quickperms_temp;
+	
+	unset($quickperms_temp['tiki_p_admin_file_galleries']);
+	unset($quickperms_temp['tiki_p_assign_perm_file_gallery']);
+	$perms['write']['name'] = "write";
+	$perms['write']['data'] = $quickperms_temp;
+	
+	unset($quickperms_temp['tiki_p_batch_upload_files']);
+	unset($quickperms_temp['tiki_p_batch_upload_file_dir']);
+	unset($quickperms_temp['tiki_p_create_file_galleries']);
+	unset($quickperms_temp['tiki_p_edit_gallery_file']);
+	unset($quickperms_temp['tiki_p_upload_files']);
+	$perms['read']['name'] = "read";
+	$perms['read']['data'] = $quickperms_temp;
+	
+	$perms['none']['name'] = "none";
+	$perms['none']['data'] = array();
+}
+
+$smarty->assign('quickperms', $perms);
+
+if (isset($_REQUEST['assign']) && isset($_REQUEST['quick_perms'])) {
+	check_ticket('object-perms');
+	
+	$groups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
+	
+	foreach($groups['data'] as $group) {
+		if(isset($_REQUEST["perm_".$group['groupName']])) {
+			$group = $group['groupName'];
+			$permission = $_REQUEST["perm_".$group];
+			
+			if ($permission != "userdefined") {
+				//Remove all permissions of a group
+				
+				foreach($perms['admin']['data'] as $perm) {
+					$userlib->remove_object_permission($group, $_REQUEST["objectId"], $_REQUEST["objectType"], $perm);
+				}
+				
+				//Add chosen quickperm bundle to the objcet/group
+				foreach($perms["$permission"]['data'] as $perm) {
+					$userlib->assign_object_permission($group, $_REQUEST["objectId"], $_REQUEST["objectType"], $perm);				
+				}
+			}
+		}
+	}
+}
+//Quickperm END
+
 // Process the form to assign a new permission to this page
-if (isset($_REQUEST['assign']) && isset($_REQUEST['group']) && isset($_REQUEST['perm'])) {
+elseif (isset($_REQUEST['assign']) && isset($_REQUEST['group']) && isset($_REQUEST['perm'])) {
 	check_ticket('object-perms');
 	foreach($_REQUEST['perm'] as $perm) {
 		if ($tiki_p_admin_objects != 'y' && !$userlib->user_has_permission($user, $perm)) {
@@ -106,18 +204,52 @@ if (isset($_REQUEST['delsel_x']) && isset($_REQUEST['checked'])) {
 		}
 	}
 }
-if (isset($_REQUEST['delsel_x']) || isset($_REQUEST['action']) || isset($_REQUEST['assign'])) {
+if (isset($_REQUEST['quick_perms'])) {
+		$cookietab = 3;
+		setcookie('tab',$cookietab);
+		$smarty->assign_by_ref('cookietab',$cookietab);
+} elseif ((isset($_REQUEST['delsel_x']) || isset($_REQUEST['action']) || isset($_REQUEST['assign']))) {
 	$cookietab = 2;
 	setcookie('tab', $cookietab);
 	$smarty->assign_by_ref('cookietab', $cookietab);
 }
 // Now we have to get the individual page permissions if any
 $page_perms = $userlib->get_object_permissions($_REQUEST["objectId"], $_REQUEST["objectType"]);
+//Quickperm
+foreach($page_perms as $perm) {
+	$current_permissions[$perm['groupName']][] = $perm['permName'];
+}
+//Quickperm END
+
 // Get a list of groups
 $groups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
+
+//Quickperm
+foreach($groups['data'] as $key=>$group) {
+	foreach($perms as $perm) {
+		if (!empty($current_permissions[$group['groupName']]) && is_array($current_permissions[$group['groupName']])) {
+			//Check if Group has admin perm.
+			$diff1 = array_diff($current_permissions[$group['groupName']], $perms[$perm['name']]['data']);
+			$diff2 = array_diff($perms[$perm['name']]['data'], $current_permissions[$group['groupName']]);
+			if (empty($diff1) AND empty($diff2)) {
+				$groups['data'][$key]['groupSumm'] = $perm['name'];
+				break;
+			}
+		} else {
+			$groups['data'][$key]['groupSumm'] = "none";
+			break;
+		}
+	}
+	//If Group has NO perm.
+	if (empty($groups['data'][$key]['groupSumm']))
+		$groups['data'][$key]['groupSumm'] = "userdefined";
+}
+//Quickperm END
+
 $smarty->assign_by_ref('groups', $groups["data"]);
 // Get a list of permissions
 $perms = $userlib->get_permissions(0, -1, 'permName_asc', '', $_REQUEST["permType"], '', true);
+
 if ($tiki_p_admin_objects != 'y') {
 	$userPerms = array();
 	foreach($perms['data'] as $perm) {

@@ -9,9 +9,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 class LogsLib extends TikiLib {
 
-	function LogsLib($db) {
-		$this->TikiLib($db);
-	}
 
 	function add_log($type,$message,$who='',$ip='',$client='',$time='') {
 		global $user;
@@ -77,7 +74,7 @@ class LogsLib extends TikiLib {
 			$mid = " where ".implode(" and ",$amid)." ";
 		}
 		$query = "select `logId`,`loguser`,`logtype`,`logmessage`,`logtime`,`logip`,`logclient` ";
-		$query.= " from `tiki_logs` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query.= " from `tiki_logs` $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_logs` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -290,7 +287,7 @@ class LogsLib extends TikiLib {
 		} else {
 			$query = "select a.* from `tiki_actionlog` a ,`tiki_actionlog_conf` c where $mid";
 		}
-		$query .= " order by ".$this->convert_sortmode($sort_mode);
+		$query .= " order by ".$this->convertSortMode($sort_mode);
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
 		$ret = array();
 		while ($res = $result->fetchRow()) {
@@ -909,7 +906,7 @@ class LogsLib extends TikiLib {
 			$amid = '`sql1` like ? or `params` like ? or `tracer` like ?';
 			$bindvars[] = $findesc;$bindvars[] = $findesc;$bindvars[] = $findesc;
 		}
-		$query = 'select * from `adodb_logsql`'.($find?" where $amid":'').' order by '.$this->convert_sortmode($sort_mode);
+		$query = 'select * from `adodb_logsql`'.($find?" where $amid":'').' order by '.$this->convertSortMode($sort_mode);
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
 		$query_cant = 'select count(*) from `adodb_logsql`'.($find?" where $amid":'');
 		$cant = $this->getOne($query_cant, $bindvars);
@@ -1079,5 +1076,4 @@ class LogsLib extends TikiLib {
 		$this->query($query, array($actionId));
 	}
 }
-global $dbTiki;
-$logslib = new LogsLib($dbTiki);
+$logslib = new LogsLib;

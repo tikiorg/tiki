@@ -117,7 +117,7 @@
 <div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" name="feature_multilingual_structures" id="feature_multilingual_structures"
 			{if $prefs.feature_multilingual_structures eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="feature_multilingual_structures">{tr}Multilingual structures{/tr}</label>{if $prefs.feature_help eq 'y'} {help url="Structure"}{/if}
+	<div class="adminoptionlabel">	<label for="feature_multilingual_structures">{tr}Multilingual structures{/tr}</label>{if $prefs.feature_help eq 'y'} {help url="Structure"}{/if}
 	{if $prefs.feature_wiki_structure ne 'y'}<br />{icon _id=information} <em>{tr}Structures are disabled{/tr}. <a href="tiki-admin.php?page=wiki" title="{tr}Wiki{/tr}">{tr}Enable now{/tr}</a>.</em>{/if}
 	</div>
 </div>
@@ -149,7 +149,7 @@
 <div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" name="feature_machine_translation" id="feature_machine_translation"
 			{if $prefs.feature_machine_translation eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="feature_machine_translation">{tr}Machine Translation{/tr}{icon _id="error"} <em>{tr}Experimental{/tr}</em></label></div>
+	<div class="adminoptionlabel"><label for="feature_machine_translation">{tr}Machine Translation (by Google Translate){/tr}&nbsp;&nbsp;{icon _id="error"} <em>{tr}Experimental{/tr}</em></label>{if $prefs.feature_help eq 'y'} {help url="Translating+Tiki+content"}{/if}</div>
 </div>
 
 

@@ -8,7 +8,8 @@
 {/if}
 {if $prefs.metatag_author ne ''}		<meta name="author" content="{$prefs.metatag_author}" />
 {/if}
-{if $prefs.metatag_description ne ''}		<meta name="description" content="{$prefs.metatag_description}" />
+{if $prefs.metatag_pagedesc eq 'y' and $description ne ''}		<meta name="description" content="{$description}" />
+{elseif $prefs.metatag_description ne '' or $description eq ''}		<meta name="description" content="{$prefs.metatag_description}" />
 {/if}
 {if $prefs.metatag_geoposition ne ''}		<meta name="geo.position" content="{$prefs.metatag_geoposition}" />
 {/if}

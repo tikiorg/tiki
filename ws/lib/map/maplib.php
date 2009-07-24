@@ -7,9 +7,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 class MapLib {
-	function MapLib() {
-		# this is probably uneeded now
-	}
 
 	function listMaps($mappath) {
 		if (!isset($mappath) or !$mappath or !is_dir($mappath)) {
@@ -89,4 +86,4 @@ class MapLib {
 	}
 	
 }
-$maplib = new MapLib();
+$maplib = new MapLib;

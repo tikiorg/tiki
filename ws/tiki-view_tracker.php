@@ -56,7 +56,7 @@ if (!empty($_REQUEST['show']) && $_REQUEST['show'] == 'view') {
 } elseif (empty($_REQUEST['cookietab'])) {
 	if ($tracker_info['writerCanModify'] == 'y' && $user) $cookietab = '1';
 	elseif (!($tiki_p_view_trackers == 'y' || $tiki_p_admin == 'y' || $tiki_p_admin_trackers == 'y') && $tiki_p_create_tracker_items == 'y') $cookietab = "2";
-	else $cookietab = "1";
+	else if (!isset($cookietab)) { $cookietab = '1'; }
 } else {
 	$cookietab = $_REQUEST['cookietab'];
 }

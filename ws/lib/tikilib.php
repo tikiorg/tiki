@@ -3341,23 +3341,21 @@ class TikiLib extends TikiDb_Bridge {
 	/*shared*/
 	function get_assigned_modules($position = null, $displayed="n") {
 		$filter = '';
+		$bindvars = array();
 
 		if ( $position !== null ) {
 			$filter .= 'where `position`=?';
-			$bindvars = array($position);
+			$bindvars[] = $position;
 		}
 
 		if ( $displayed != 'n' ) {
-			$filter .= ( $filter == '' ? 'where' : 'and' ) . " (`type` is null or `type` != 'h')";
+			$filter .= ( $filter == '' ? 'where' : 'and' ) . " (`type` is null or `type` != ?)";
+			$bindvars[] = 'y';
 		}
 
 		$query = "select * from `tiki_modules` $filter order by ".$this->convertSortMode("ord_asc");
 
-		if ( isset($bindvars) ) {
-			$result = $this->query($query, $bindvars);
-		} else {
-			$result = $this->query($query);
-		}
+		$result = $this->query($query, $bindvars);
 
 		$ret = array();
 		while ( $res = $result->fetchRow() ) {

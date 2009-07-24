@@ -211,16 +211,18 @@
 		return ch;
 	}
 
-	function ext_add(extid, text, defaultvalue) {
+	function ext_add(extid, text, defaultvalue, pub) {
 		var option=document.getElementById('ext_option_'+extid);
 		option.disabled='1';
 
 		var tr,td, input;
 		tr=newelem('tr', { 'class':'formcolor', 'id':'tr_ext_'+extid });
 		td=newelem('td', { });
-		input=newelem('input', { 'type':'button', 'value':'-', 'onclick':'ext_remove(\''+extid+'\');' });
-		td.appendChild(input);
-		td.innerHTML+=text+':';
+		if (pub != 'y' || {/literal}{if $tiki_p_admin_group_webmail eq 'y'}1{else}0{/if}{literal}) {	// add button only if not public
+			input=newelem('input', { 'type':'button', 'value':'-', 'onclick':'ext_remove(\''+extid+'\');' });
+			td.appendChild(input);
+		}
+		td.innerHTML += (pub == 'y' ? ' <em>' : ' ') + text + ':' + (pub == 'y' ? '</em>' : '');
 		tr.appendChild(td);
 
 		td=newelem('td', { });
@@ -249,18 +251,18 @@
 		option.disabled='';
 	}
 
-	function extmenu_add(extid, text, defaultvalue) {
+	function extmenu_add(extid, text, defaultvalue, pub) {
 		var selectelem=document.getElementById('select_exts');
 		var option=newelem('option', { 'id':'ext_option_'+extid, 'value':extid });
 		option.innerHTML=text;
 		selectelem.appendChild(option);
 		if (defaultvalue != '')
-			ext_add(extid, text, defaultvalue);
+			ext_add(extid, text, defaultvalue, pub);
 	}
 {/literal}
 
 {foreach from=$exts item=ext key=k}
-	extmenu_add('{$k|escape}', '{$ext.tra|escape}', '{$info.ext[$ext.id]|escape:quotes}');
+	extmenu_add('{$k|escape}', '{$ext.tra|escape}', '{$info.ext[$ext.id]|escape:quotes}', '{$ext.public|escape}');
 {/foreach}
 
 {literal}

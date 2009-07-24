@@ -263,7 +263,7 @@ if (isset($_REQUEST["page"])) {
 		$helpUrl = "Module";
 		include_once ('tiki-admin_include_module.php');
 	} else if ($adminPage == "look") {
-		$admintitle = "Look & Feel"; //get_strings tra("Look & Feel")
+		$admintitle = "Look &amp; Feel"; //get_strings tra("Look &amp; Feel")
 		$description = "Customize look and feel of your Tiki"; //get_strings tra("Customize look and feel of your Tiki")
 		$helpUrl = "Look+and+Feel";
 		include_once ('tiki-admin_include_look.php');

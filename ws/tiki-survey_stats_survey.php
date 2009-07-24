@@ -122,4 +122,9 @@ ask_ticket('survey-stats-survey');
 
 // Display the template
 $smarty->assign('mid', 'tiki-survey_stats_survey.tpl');
-$smarty->display("tiki.tpl");
+if (isset($_REQUEST['print'])) {
+	$smarty->display('tiki-print.tpl');
+	$smarty->assign('print', 'y');
+} else {
+	$smarty->display('tiki.tpl');
+}

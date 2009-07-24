@@ -7,10 +7,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 class RankLib extends TikiLib {
-	function RankLib($db) {
-		$this->TikiLib($db);
-	}
-
 	function wiki_ranking_top_pages($limit, $categ=array()) {
 		global $user, $prefs;
 		
@@ -167,12 +163,12 @@ class RankLib extends TikiLib {
 		{		
 		$query = "select * from
 		`tiki_comments` a,`tiki_forums` tf where
-		`object`=".$this->sql_cast("`forumId`","string")." and `objectType` = 'forum' and
+		`object`=".$this->cast("`forumId`","string")." and `objectType` = 'forum' and
 		`parentId`=0 $mid order by `commentDate` desc";
 		} else {		
 		$query = "select a.*, tf.*, max(b.`commentDate`) as `lastPost` from
 		`tiki_comments` a left join `tiki_comments` b on b.`parentId`=a.`threadId` right join `tiki_forums` tf on "
-		.$this->sql_cast("tf.`forumId`","string")." = a.`object`".
+		.$this->cast("tf.`forumId`","string")." = a.`object`".
 		" where	a.`objectType` = 'forum' and a.`parentId`=0 $mid group by a.`threadId` order by `lastPost` desc";
 		}
 
@@ -217,7 +213,7 @@ class RankLib extends TikiLib {
 		while( $count < $limit) {
 			$query = "select `name`, `title`, `commentDate`, `parentId`, `threadId`, `forumId`, `userName` from
 				`tiki_comments`,`tiki_forums` where
-				`object`=".$this->sql_cast("`forumId`","string")." and `objectType` = 'forum'
+				`object`=".$this->cast("`forumId`","string")." and `objectType` = 'forum'
 				order by `commentDate` desc"; 
 			$result = $this->query($query,array(),1,$offset);
 			$offset++;
@@ -285,7 +281,7 @@ class RankLib extends TikiLib {
 	}
 
     function forums_top_posters($qty) {
-        $query = "select `user`, `posts` from `tiki_user_postings` order by ".$this->convert_sortmode("posts_desc");
+        $query = "select `user`, `posts` from `tiki_user_postings` order by ".$this->convertSortMode("posts_desc");
         $result = $this->query($query, array(),$qty);
         $ret = array();
 
@@ -626,7 +622,7 @@ class RankLib extends TikiLib {
 			}
 			$mid .= ")";
 		}
-		$query = "select distinct tp.`user`, count(*) as `numb` from `tiki_pages` tp $mid group by `user` order by ".$this->convert_sortmode("numb_desc");
+		$query = "select distinct tp.`user`, count(*) as `numb` from `tiki_pages` tp $mid group by `user` order by ".$this->convertSortMode("numb_desc");
 
 		$result = $this->query($query,$bindvals,$limit,0);
 		$ret = array();
@@ -646,7 +642,7 @@ class RankLib extends TikiLib {
 	}
 
 	function cms_ranking_top_authors($limit) {
-		$query = "select distinct `author`, count(*) as `numb` from `tiki_articles` group by `author` order by ".$this->convert_sortmode("numb_desc");
+		$query = "select distinct `author`, count(*) as `numb` from `tiki_articles` group by `author` order by ".$this->convertSortMode("numb_desc");
 
 		$result = $this->query($query,array(),$limit,0);
 		$ret = array();
@@ -666,5 +662,4 @@ class RankLib extends TikiLib {
 	}
 
 }
-global $dbTiki;
-$ranklib = new RankLib($dbTiki);
+$ranklib = new RankLib;

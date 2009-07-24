@@ -16,7 +16,7 @@ error_reporting( E_ALL );
  * but loading Tiki libraries involves a lot of black magic, so it's best 
  * to do it once and do it centrally
  */
-ini_set( 'include_path', ini_get('include_path') . ';.;../lib;../../..' );
+ini_set( 'include_path', ini_get('include_path') . PATH_SEPARATOR . '.' . PATH_SEPARATOR . '../lib' . PATH_SEPARATOR . '../../..' );
 loadTikiLibraries();
 
 
@@ -69,12 +69,12 @@ function loadTikiLibraries() {
  	 */
 	ini_set( 'display_errors', 'on' );
 	error_reporting( E_ALL );
-	ini_set( 'include_path', ini_get('include_path') . ';.;../lib;../../..' );
+	ini_set( 'include_path', ini_get('include_path') . PATH_SEPARATOR . '.' . PATH_SEPARATOR . '../lib' . PATH_SEPARATOR . '../../..' );
 
 	/*
  	* Note: Need to reset the include pathes relative to the root of tiki, because 
  	* inclusion of the tiki files, move the currrent directory
  	* to the root.
  	*/
-	ini_set( 'include_path', ini_get('include_path') . ';./lib/core/test;./lib;.' );
+	ini_set( 'include_path', ini_get('include_path') . PATH_SEPARATOR . './lib/core/test' . PATH_SEPARATOR . './lib' . PATH_SEPARTOR . '.' );
 }

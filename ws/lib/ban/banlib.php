@@ -7,10 +7,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 class BanLib extends TikiLib {
-	function BanLib($db) {
-		$this->TikiLib($db);
-	}
-
 	function get_rule($banId) {
 		$query = "select * from `tiki_banning` where `banId`=?";
 
@@ -58,7 +54,7 @@ class BanLib extends TikiLib {
 			}
 		}
 
-		$query = "select * from `tiki_banning` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_banning` $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_banning` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -142,5 +138,4 @@ class BanLib extends TikiLib {
 		}
 	}
 }
-global $dbTiki;
-$banlib = new BanLib($dbTiki);
+$banlib = new BanLib;

@@ -195,16 +195,16 @@ window.onload = timeIt;
 <input type="hidden" name="categId" value="{$categIdstr}" />
 <input type="hidden" name="cat_categorize" value="on" />
 
-{if $page|lower ne 'sandbox'}
 {if $prefs.feature_wiki_categorize_structure eq 'y'}
 <tr class="formcolor"><td colspan="2">{tr}Categories will be inherited from the structure top page{/tr}</td></tr>
 {/if}
 {else}
+{if $page|lower ne 'sandbox'}
 {include file='categorize.tpl'}
+{/if}{* sandbox *}
 {/if}
 
 {include file='structures.tpl'}
-{/if}{* sandbox *}
 
 {if $prefs.feature_wiki_templates eq 'y' and $tiki_p_use_content_templates eq 'y' and !$templateId}
   <tr class="formcolor">
@@ -269,9 +269,11 @@ window.onload = timeIt;
 </td>
 </tr>
 {/if}
-{if $prefs.feature_wiki_description eq 'y'}
+{if $prefs.feature_wiki_description eq 'y' or $prefs.metatag_pagedesc eq 'y'}
   <tr class="formcolor">
-    <td>{tr}Description{/tr}:</td>
+{if $prefs.metatag_pagedesc eq 'y'} <td>{tr}Description (used for metatags){/tr}:</td>
+{else} <td>{tr}Description{/tr}:</td>
+{/if}
     <td><input style="width:98%;" type="text" name="description" value="{$description|escape}" /></td>
   </tr>
 {/if}
@@ -423,7 +425,7 @@ function searchrep() {
 {if $prefs.feature_wiki_pictures eq 'y' and $tiki_p_upload_picture eq 'y'}
 <tr class="formcolor"><td>{tr}Upload picture{/tr}:</td><td>
 {if $prefs.feature_filegals_manager eq 'y' and $prefs.feature_file_galleries == 'y' and $tiki_p_list_file_galleries == 'y'}
-<input type="submit" class="wikiaction" value="{tr}Add another image{/tr}" onclick="javascript:needToConfirm = false;javascript:window.open('{$url_path}tiki-list_file_gallery.php?filegals_manager=editwiki','_blank','menubar=1,scrollbars=1,resizable=1,height=400,width=800');return false;" />
+<input type="submit" class="wikiaction" value="{tr}Add another image{/tr}" onclick="javascript:needToConfirm = false;javascript:openFgalsWindow('{filegal_manager_url area_name=editwiki}');return false;" />
 {else}
 <input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
 <input type="hidden" name="hasAlreadyInserted" value="" />

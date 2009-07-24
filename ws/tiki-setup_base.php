@@ -41,10 +41,10 @@ require_once ("lib/cache/cachelib.php");
 global $logslib;
 require_once ("lib/logs/logslib.php");
 include_once ('lib/init/tra.php');
-$tikilib = new TikiLib($dbTiki);
+$tikilib = new TikiLib;
 // Get tiki-setup_base needed preferences in one query
 $prefs = array();
-$needed_prefs = array('session_lifetime' => '0', 'session_db' => 'n', 'sessions_silent' => 'disabled', 'language' => 'en', 'feature_pear_date' => 'y', 'lastUpdatePrefs' => - 1, 'feature_fullscreen' => 'n', 'error_reporting_level' => 0
+$needed_prefs = array('session_lifetime' => '0', 'session_db' => 'n', 'sessions_silent' => 'disabled', 'language' => 'en', 'feature_pear_date' => 'y', 'lastUpdatePrefs' => - 1, 'feature_fullscreen' => 'n', 'error_reporting_level' => 0, 'smarty_notice_reporting' => 'n'
 // needed by initlib
 );
 $tikilib->get_preferences($needed_prefs, true, true);
@@ -91,9 +91,9 @@ if ($prefs['smarty_security'] == 'y') {
 	$smarty->security = true;
 }
 require_once ("lib/userslib.php");
-$userlib = new UsersLib($dbTiki);
+$userlib = new UsersLib;
 require_once ("lib/tikiaccesslib.php");
-$access = new TikiAccessLib();
+$access = new TikiAccessLib;
 require_once ("lib/breadcrumblib.php");
 // ------------------------------------------------------
 // DEAL WITH XSS-TYPE ATTACKS AND OTHER REQUEST ISSUES

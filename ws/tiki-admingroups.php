@@ -11,7 +11,7 @@ if ($tiki_p_admin != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
-$cookietab = "1";
+if (!isset($cookietab)) { $cookietab = '1'; }
 list($trackers, $ag_utracker, $ag_ufield, $ag_gtracker, $ag_gfield, $ag_rufields) = array(
 	array() ,
 	0,
@@ -249,7 +249,7 @@ if (!empty($_REQUEST["group"])) {
 	foreach($allgroups as $rr) {
 		$inc["$rr"] = "n";
 	}
-	$cookietab = "1";
+	if (!isset($cookietab)) { $cookietab = '1'; }
 	$_REQUEST["group"] = 0;
 }
 if (isset($_REQUEST['add'])) {

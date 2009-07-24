@@ -52,12 +52,6 @@ class PluginsLib extends TikiLib {
 	var $aInfoPresetNames = array(
 	"hits" => "Hits", "lastModif" => "Last mod", "user" => "Last author", "len" => "Size", "comment" => "Com", "creator" => "Creator", "version" => "Last ver", "flag" => "Status", "versions" => "Vers", "links" => "Links", "backlinks" => "Backlinks");
 	/**
-	* Constructor
-	*/
-	function PluginsLib() {
-	    $this->TikiLib($GLOBALS["dbTiki"]);
-	}
-	/**
 	* Process the params, in this order:
 	* - default values, asigned on {@link PluginsLib::getDefaultArguments()}
 	* - request values, sended by GET or POST method, if $request is put to true

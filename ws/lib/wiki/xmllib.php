@@ -15,10 +15,6 @@ class XmlLib extends TikiLib {
 	var $zip = '';
 	var $config = array('comments'=>true, 'attachments'=>true, 'history'=>true, 'images'=>true, 'debug'=>false);
 	var $structureStack = array();
-	function XmlLib() {
-		global $dbTiki;
-		parent::TikiLib($dbTiki);
-	}
 	function get_error() {
 		$str = '';
 		foreach ($this->errors as $i=>$error) {
@@ -339,8 +335,7 @@ class XmlLib extends TikiLib {
 	}
 
 }
-global $dbTiki;
-$xmllib = new XmlLib($dbTiki);
+$xmllib = new XmlLib;
 
 require_once('lib/pear/XML_Parser/Parser.php');
 class page_Parser extends XML_Parser {

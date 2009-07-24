@@ -14,7 +14,7 @@ require_once ('lib/tikilib.php'); # httpScheme()
 include_once ('lib/polls/polllib.php');
 
 if (!isset($polllib)) {
-	$polllib = new PollLib($dbTiki);
+	$polllib = new PollLib;
 }
 
 if ($prefs['feature_polls'] != 'y') {

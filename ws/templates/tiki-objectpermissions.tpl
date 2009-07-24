@@ -65,6 +65,7 @@
 </table>
 {/tab}
 
+
 {tab name='{tr}Edit Permissions{/tr}'}
 
 {if $prefs.feature_tabs neq 'y'}
@@ -187,4 +188,65 @@
 </div>
 </form>
 {/tab}
+
+{* Quickperms *}
+
+{if $prefs.feature_quick_object_perms eq 'y'}
+<form name="allperms" method="post" action="tiki-objectpermissions.php{if $filegals_manager neq ''}?filegals_manager={$filegals_manager|escape}{/if}">
+<input type="hidden" name="quick_perms" value="true"/>
+
+{tab name='{tr}Quick Permissions{/tr}'}
+
+{if $prefs.feature_tabs neq 'y'}
+	<h2>{tr}Quick Permissions{/tr}</h2>
+{/if}
+
+{if $filegals_manager eq ''}
+{remarksbox type="warning" title="{tr}Warning{/tr}"}{tr}These permissions override any global permissions or category permissions affecting this object.{/tr}<br />
+{if $tiki_p_admin eq 'y'}{tr}To edit global permissions <a class="rbox-link" href="tiki-admingroups.php">click here</a>.{/tr}{/if}
+{/remarksbox}
+{/if}
+
+<h2>{tr}Assign Quick-Permissions to this object{/tr}</h2>
+
+
+<table width="100%">
+	<tr class="{cycle advance=true}">
+		<th>Groups</th>
+		{foreach item=permgroup from=$quickperms}
+			<th>{$permgroup.name}</th>
+		{/foreach}
+		<th onmouseover="return overlib('A couple of userdefined permissions are currently assigned (See tab Edit Permissions)');" onmouseout="nd();">Advanced</th>
+	</tr>
+	{cycle print=false values="even,odd"}
+	{section name=grp loop=$groups}
+	<tr>
+		<td>
+			{$groups[grp].groupName|escape}
+		</td>
+		{foreach item=permgroup from=$quickperms}
+			<td><input type="radio" name="perm_{$groups[grp].groupName}" value="{$permgroup.name}" {if $groups[grp].groupSumm eq $permgroup.name}checked{/if} /></td>
+		{/foreach}
+		<td><input type="radio" name="perm_{$groups[grp].groupName}" value="userdefined" {if $groups[grp].groupSumm eq 'userdefined'}checked{/if} disabled /></td>
+	</tr>
+	{/section}
+</table>
+	
+<input type="hidden" name="page" value="{$page|escape}" />
+<input type="hidden" name="referer" value="{$referer|escape}" />
+<input type="hidden" name="objectName" value="{$objectName|escape}" />
+<input type="hidden" name="objectType" value="{$objectType|escape}" />
+<input type="hidden" name="objectId" value="{$objectId|escape}" />
+<input type="hidden" name="permType" value="{$permType|escape}" />
+<div class="input_submit_container" style="text-align: center">
+	<input type="submit" name="assign" value="{tr}Assign{/tr}" />
+</div>
+
+</fieldset>
+{/tab}
+</form>
+{/if}
+
+{* Quickperms END *}
+
 {/tabset}

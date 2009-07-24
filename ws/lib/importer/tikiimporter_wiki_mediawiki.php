@@ -21,6 +21,12 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
     public $dom = '';
 
     /**
+     * Array of the valid mime types for the
+     * input file
+     */
+    public $validTypes = array('application/xml', 'text/xml');
+
+    /**
      * @see lib/importer/TikiImporter#importOptions
      */
     static public $importOptions = array();    
@@ -31,13 +37,20 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
      * @see lib/importer/TikiImporter_Wiki#import()
      *
      * @param string $filePath path to the XML file
-     * @return void
+     * @return parent::import()
+     * @throws UnexpectedValueException if invalid file mime type
      */
     function import($filePath)
     {
+        if (isset($_FILES['importFile']) && !in_array($_FILES['importFile']['type'], $this->validTypes)) {
+            throw new UnexpectedValueException(tra('Invalid file mime type'));
+        }
+
+        $this->saveAndDisplayLog("Loading and validating the XML file\n");
+
         $this->dom = new DOMDocument;
         $this->dom->load($filePath);
-        parent::import();
+        return parent::import();
     }
 
     /**
@@ -45,13 +58,13 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
      * against its DTD (Document Type Definition)
      * 
      * @see lib/importer/TikiImporter#validateInput()
+     *
+     * @throws DOMException if XML file does not validate against schema
      */
     function validateInput()
     {
-        try {
-            $this->dom->schemaValidate(dirname(__FILE__) . '/mediawiki_dump.xsd');
-        } catch (Exception $e) {
-            throw new DOMException($e->getMessage(), $e->getCode());
+        if (!@$this->dom->schemaValidate(dirname(__FILE__) . '/mediawiki_dump.xsd')) {
+            throw new DOMException(tra('XML file does not validate against the Mediawiki XML schema'));
         }
     }
 
@@ -59,8 +72,6 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
      * Foreach page call $this->extractInfo() and append the
      * returned value to $parsedData array
      * 
-     * @see lib/importer/TikiImporter#parseData()
-     *
      * @return array $parsedData
      */
     function parseData()
@@ -68,10 +79,15 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
         $parsedData = array();
         $pages = $this->dom->getElementsByTagName('page');
 
-        foreach ($pages as $page) {
-            $parsedData[] = $this->extractInfo($page);
-        }
+        $this->saveAndDisplayLog("\nStarting to parse " . $pages->length . " pages:\n");
 
+        foreach ($pages as $page) {
+            try {
+                $parsedData[] = $this->extractInfo($page);
+            } catch (ImporterParserException $e) {
+                $this->saveAndDisplayLog($e->getMessage());
+            }
+        }
         return $parsedData;
     }
 
@@ -84,13 +100,15 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
      * TikiLib::create_page() which will be called by TikiImporter_Wiki::insertPage())
      * 
      * @param DOMElement $page
-     * @return unknown_type
+     * @return array $data information for one wiki page 
+     * @throws ImporterParserException if fail to parse all revisions of a page
      */
     function extractInfo(DOMElement $page)
     {
         $data = array();
         $data['revisions'] = array();
 
+        $i = 0;
         foreach ($page->childNodes as $node) {
             if ($node instanceof DOMElement) {
                 switch ($node->tagName)
@@ -101,15 +119,26 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
                     $data['name'] = (string) $node->textContent;
                     break;
                 case 'revision':
-                    $data['revisions'][] = $this->extractRevision($node);
+                    $i++;
+                    try {
+                        $data['revisions'][] = $this->extractRevision($node);
+                    } catch (ImporterParserException $e) {
+                        $this->saveAndDisplayLog('Error while parsing revision ' . $i . ' of the page "' . $data['name'] . '". Or there is a problem on the page syntax or on the Text_Wiki parser (the parser used by the importer).' . "\n");
+                    }
                     break;
                 default:
                     print "Unknown tag : {$node->tagName}\n";
                 }
             }
         }
-            
-        return $data;
+
+        if (count($data['revisions']) > 0) {
+            $msg = 'Page "' . $data['name'] . '" succesfully parsed with ' . count($data['revisions']) . " revisions (from a total of $i revisions).\n";
+            $this->saveAndDisplayLog($msg);
+            return $data;
+        } else {
+            throw new ImporterParserException('Page "' . $data['name'] . '" is NOT going to be imported. It was not possible to parse any of the page revisions.' . "\n");
+        }
     }
 
     /**
@@ -120,12 +149,14 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
      * Tiki builtin function (i.e. 'text' is changed to 'data' as used in TikiLib::create_page())
      * 
      * @param DOMElement $page
-     * @return unknown_type
+     * @return array $data information for one wiki page revision
+     * @throws ImporterParserException if unable to parse revision content
      */
     function extractRevision(DOMElement $revision)
     {
         $data = array();
         $data['minor'] = false;
+        $data['comment'] = '';
 
         foreach ($revision->childNodes as $node) {
             if ($node instanceof DOMElement) {
@@ -137,27 +168,26 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
                     $data['comment'] = $node->textContent;
                     break;
                 case 'text':
-                    $data['data'] = $this->convertMarkup($node->textContent);
+                    $text = $this->convertMarkup($node->textContent);
+                    if (get_class($text) == 'PEAR_Error') {
+                        throw new ImporterParserException($text->message);
+                    } else {
+                        $data['data'] = $text;
+                    }
                     break;
-
                 case 'timestamp':
                     $data['lastModif'] = strtotime($node->textContent);
                     break;
-
                 case 'minor':
                     $data['minor'] = true;
                     break;
-
                 case 'contributor':
                     $data = array_merge($data, $this->extractContributor($node));
                     break;
-
-                default:
-                    print "Unknown tag in revision: {$node->tagName}\n";
                 }
             }
         }
-                
+
         return $data;
     }
 
@@ -208,10 +238,16 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
     function convertMarkup($mediawikiText) {
         if (!empty($mediawikiText)) {
             $parser = Text_Wiki::factory('Mediawiki');
+
+            // do not replace space by underscore in wikilinks
+            $parser->setParseConf('Wikilink', 'spaceUnderscore', false);
+
             $tikiText = $parser->transform($mediawikiText, 'Tiki');
             return $tikiText;
         }
     }
 }
+
+class ImporterParserException extends Exception {}
 
 ?>

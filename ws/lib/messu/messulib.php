@@ -8,11 +8,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 class Messu extends TikiLib {
 
-	function Messu($db) {
-
-		$this->TikiLib($db);
-	}
-
 	/**
 	 * Put sent message to 'sent' box
 	 */
@@ -126,7 +121,7 @@ class Messu extends TikiLib {
 			$bindvars[] = $findesc;
 		}
 
-		$query = "select * from `messu_".$dbsource."` where `user`=? $mid order by ".$this->convert_sortmode($sort_mode).",".$this->convert_sortmode("msgId_desc");
+		$query = "select * from `messu_".$dbsource."` where `user`=? $mid order by ".$this->convertSortMode($sort_mode).",".$this->convertSortMode("msgId_desc");
 		$query_cant = "select count(*) from `messu_".$dbsource."` where `user`=? $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -361,5 +356,4 @@ class Messu extends TikiLib {
 	}
 
 }
-global $dbTiki;
-$messulib = new Messu($dbTiki);
+$messulib = new Messu;

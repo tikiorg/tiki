@@ -7,10 +7,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 class QuickTagsLib extends TikiLib {
-	function QuickTagsLib($db) {
-		$this->TikiLib($db);
-	}
-
 	function list_quicktags($offset, $maxRecords, $sort_mode, $find, $category=null) {
 		
 		$bindvars=array();
@@ -36,7 +32,7 @@ class QuickTagsLib extends TikiLib {
 			}
 		}
 
-		$query = "select * from `tiki_quicktags` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_quicktags` $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_quicktags` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -99,5 +95,4 @@ class QuickTagsLib extends TikiLib {
 	}
 
 }
-global $dbTiki;
-$quicktagslib = new QuickTagsLib($dbTiki);
+$quicktagslib = new QuickTagsLib;
