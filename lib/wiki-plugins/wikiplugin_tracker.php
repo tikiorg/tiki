@@ -582,12 +582,16 @@ function wikiplugin_tracker($data, $params) {
 					}
 					$outf[] = $l;
 				}
-			} elseif (!isset($fields)) {
+			} elseif (empty($fields) && empty($wiki)) {
 				foreach ($flds['data'] as $f) {
 					if ($f['isMandatory'] == 'y')
 						$optional[] = $f['fieldId'];
 					$outf[] = $f['fieldId'];
 				}
+			} elseif (empty($fields) && !empty($wiki)) {
+				$wiki_info = $tikilib->get_page_info($wiki);
+				preg_match_all('/\{\$f_([0-9]+)/', $wiki_info['data'], $matches);
+				$outf = $matches[1];
 			}
 
 			// Display warnings when needed
