@@ -364,14 +364,14 @@ class CategLib extends ObjectLib {
 			}
 			$where = " AND c.`categId` IN (".str_repeat("?,",count($bindWhere)-1)."?)";
 	    } else {
-		if ($deep) {
-			$bindWhere = $this->get_category_descendants($categId);
-			$bindWhere[] = $categId;
-			$where = " AND c.`categId` IN (".str_repeat("?,",count($bindWhere)-1)."?)";
-		} else {
-			$bindWhere = array($categId);
-			$where = ' AND c.`categId`=? ';
-		}
+			if ($deep) {
+				$bindWhere = $this->get_category_descendants($categId);
+				$bindWhere[] = $categId;
+				$where = " AND c.`categId` IN (".str_repeat("?,",count($bindWhere)-1)."?)";
+			} else {
+				$bindWhere = array($categId);
+				$where = ' AND c.`categId`=? ';
+			}
 	    }
 
 	        // Restrict results by keyword
@@ -386,50 +386,7 @@ class CategLib extends ObjectLib {
 		$permMap = $this->map_object_type_to_permission();
 		$groupList = $this->get_user_groups($user);
 
-		$where .= " AND (( u.`objectId` IS NULL AND (o.`type` IN (''";
-
-		$allowField = '';
-		$bindAllow = array();
-		$addTrackerItem = false;
-		foreach ($permMap as $objType => $permName) {
-		  if (empty($type) || $type == $objType || ($type == "trackerItem" && $objType == "tracker")) {
-		    if ($type == "trackerItem") {
-			$allowField .= "(o.`type`like ? AND u.`permName`=?) OR ";
-			$bindAllow[] = "tracker %";
-		    } else {
-			$allowField .= "(o.`type`=? AND u.`permName`=?) OR ";
-			$bindAllow[] = $objType;
-		    }
-		    $bindAllow[] = $permName;
-		    
-		    global $$permName;
-		    if ($$permName == 'y' && (empty($type) || $type != "trackerItem")) {
-			$where .= ",?";
-			$bindWhere[] = $objType;
-		    }
-		    if ($objType == "tracker" && $$permName == 'y') {
-			$addTrackerItem = true;
-		    }
-		  }
-		}
-		$where .= ")";
-		if ($addTrackerItem) {
-			$where .= " OR o.`type` like ?";
-			$bindWhere[] .= "tracker %";
-		}
-
-		$allowField = preg_replace("/OR $/",") ",$allowField);
-		if (!$userlib->user_has_permission($user, 'tiki_p_admin')) { // do not filter on group if admin
-			$allowField .= " AND u.`groupName` IN (''";	
-			foreach ($groupList as $grp) {
-		    	$bindAllow[] = $grp;
-		    	$allowField .= ",?";
-			}
-			$where .= ')';
-		}
-		$where .= ") OR (($allowField )))";
-
-		$bindVars = array_merge($bindWhere, $bindAllow);
+		$bindVars = $bindWhere;
 
 		$orderBy = '';
 		if ($sort_mode) {
@@ -438,30 +395,38 @@ class CategLib extends ObjectLib {
 			}
 		}
 
-		$query_cant = "SELECT DISTINCT c.*, o.* FROM `tiki_category_objects` c, `tiki_categorized_objects` co, `tiki_objects` o LEFT JOIN `users_objectpermissions` u ON u.`objectId`=MD5(".$this->concat("o.`type`","LOWER(o.`itemId`)").") AND u.`objectType`=o.`type` WHERE c.`catObjectId`=o.`objectId` AND o.`objectId`=co.`catObjectId` $where";
+		// Fetch all results as was done before, but only do it once
+		$query_cant = "SELECT DISTINCT c.*, o.* FROM `tiki_category_objects` c, `tiki_categorized_objects` co, `tiki_objects` o WHERE c.`catObjectId`=o.`objectId` AND o.`objectId`=co.`catObjectId` $where";
 		$query = $query_cant . $orderBy;
-		$result = $this->query($query,$bindVars,$maxRecords,$offset);
-		$resultCant = $this->query($query_cant,$bindVars);
-		$cant = $resultCant->numRows();
+		$result = $this->fetchAll($query,$bindVars);
+		$cant = count($result);
+		
+		// Filter based on permissions
+		$contextMap = array( 'type' => 'type', 'object' => 'itemId' );
+		$contextMapMap = array_fill_keys( array_keys( $permMap ), $contextMap );
+		$result = Perms::mixedFilter( array(), 'type', 'itemId', $result, $contextMapMap, $permMap );
+		
+		if( $maxResult == -1 ) {
+			$maxResult = $cant;
+		}
+
+		// Capture only the required portion
+		$result = array_slice( $result, $offset, $maxResult );
 
 		$ret = array();
 		$objs = array();
 
-		while ($res = $result->fetchRow()) {
+		foreach( $result as $res ) {
 			if (!in_array($res['catObjectId'].'-'.$res['categId'], $objs)) { // same object and same category
-				global $tiki_p_admin_categories;
-				if ($tiki_p_admin_categories == 'y' || !$userlib->object_has_one_permission($res['categId'], 'category') 
-					or ($userlib->object_has_permission($user, $res['categId'], 'category', 'tiki_p_view_categories') and $userlib->object_has_permission($user, $res['categId'], 'category', 'tiki_p_view_categorized'))) {
-			    if (preg_match('/tracker/',$res['type'])&&$res['description']=='') {
-							$trackerId=preg_replace('/^.*trackerId=([0-9]+).*$/','$1',$res['href']);
-							$res['name']=$trklib->get_isMain_value($trackerId,$res['itemId']);
-							$filed=$trklib->get_field_id($trackerId,"description");
-							$res['description']=$trklib->get_item_value($trackerId,$res['itemId'],$filed);
-							$res['type']=$this->getOne("select `name` from `tiki_trackers` where `trackerId`=?",array((int) $trackerId));
-					}
-			    $ret[] = $res;
-					$objs[] = $res['catObjectId'].'-'.$res['categId'];
+				if (preg_match('/tracker/',$res['type'])&&$res['description']=='') {
+					$trackerId=preg_replace('/^.*trackerId=([0-9]+).*$/','$1',$res['href']);
+					$res['name']=$trklib->get_isMain_value($trackerId,$res['itemId']);
+					$filed=$trklib->get_field_id($trackerId,"description");
+					$res['description']=$trklib->get_item_value($trackerId,$res['itemId'],$filed);
+					$res['type']=$this->getOne("select `name` from `tiki_trackers` where `trackerId`=?",array((int) $trackerId));
 				}
+				$ret[] = $res;
+				$objs[] = $res['catObjectId'].'-'.$res['categId'];
 			}
 		}
 
