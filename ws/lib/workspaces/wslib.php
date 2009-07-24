@@ -893,12 +893,12 @@ class wslib extends CategLib
      * @param $user The username
      * @return Associative array with the objects that a user have access from a WS
      */
-    public function list_ws_objects_for_user ($ws_id, $user)
+    public function list_ws_objects_for_user ($ws_id, $user, $maxRecord = -1, $offset = -1)
     {
 	require_once('lib/userslib.php');
 	global $userlib; global $objectlib;
 		
-	$listWSObjects = $this->list_ws_objects($ws_id);
+	$listWSObjects = $this->list_ws_objects($ws_id, $maxRecord, $offset);
 		
 	foreach ($listWSObjects as $object)
 	{
@@ -908,7 +908,11 @@ class wslib extends CategLib
 		
 		$objectPermsUser = $this->get_object_perms_for_user ($objId, $objectType, $user);
 		if (in_array($viewPerm,$objectPermsUser))
-			$listWSObjectsUser[] = $object;
+			$object["userCanView"] = "y";
+		else
+			$object["userCanView"] = "n";
+				
+		$listWSObjectsUser[] = $object;		
 	} 
 
 	return $listWSObjectsUser;

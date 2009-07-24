@@ -224,12 +224,15 @@ if ( isset($_REQUEST['action'])  &&  ($_REQUEST['action'] == 'test') && ($wsCont
 	$listWSObjectsUser = $wslib->list_ws_objects_for_user ($id3,$user);
 	foreach ($listWSObjectsUser as $key)
 	{
-		echo ($key["objectId"]);
-		echo ("     ");
-		echo ($key["type"]);
-		echo ("     ");
-		echo ($key["name"]);
-		echo ("\n<br>");
+		if ($key["userCanView"] == "y")
+		{
+			echo ($key["objectId"]);
+			echo ("     ");
+			echo ($key["type"]);
+			echo ("     ");
+			echo ($key["name"]);
+			echo ("<br>");
+		}
 	}
 	echo ("\n<br>");
 	
@@ -247,12 +250,15 @@ if ( isset($_REQUEST['action'])  &&  ($_REQUEST['action'] == 'test') && ($wsCont
 	$listWSObjectsUser = $wslib->list_ws_objects_for_user ($id3,$user);
 	foreach ($listWSObjectsUser as $key)
 	{
-		echo ($key["objectId"]);
-		echo ("     ");
-		echo ($key["type"]);
-		echo ("     ");
-		echo ($key["name"]);
-		echo ("\n<br>");
+		if ($key["userCanView"] == "y")
+		{
+			echo ($key["objectId"]);
+			echo ("     ");
+			echo ($key["type"]);
+			echo ("     ");
+			echo ($key["name"]);
+			echo ("<br>");
+		}
 	}
 	echo ("\n<br>");
 	
@@ -268,12 +274,16 @@ if ( isset($_REQUEST['action'])  &&  ($_REQUEST['action'] == 'test') && ($wsCont
 	$listWSObjectsUser = $wslib->list_ws_objects_for_user ($id3,$user);
 	foreach ($listWSObjectsUser as $key)
 	{
-		echo ($key["objectId"]);
-		echo ("     ");
-		echo ($key["type"]);
-		echo ("     ");
-		echo ($key["name"]);
-		echo ("\n<br>");
+		if ($key["userCanView"] == "y")
+		{
+			echo ($key["objectId"]);
+			echo ("     ");
+			echo ($key["type"]);
+			echo ("     ");
+			echo ($key["name"]);
+			echo ("
+<br>");
+		}
 	}
 	echo ("\n<br>");
 	
@@ -342,12 +352,15 @@ if ( isset($_REQUEST['action'])  &&  ($_REQUEST['action'] == 'test') && ($wsCont
 	$listWSObjectsUser = $wslib->list_ws_objects_for_user ($id4,$user);
 	foreach ($listWSObjectsUser as $key)
 	{
-		echo ($key["objectId"]);
-		echo ("     ");
-		echo ($key["type"]);
-		echo ("     ");
-		echo ($key["name"]);
-		echo ("\n<br>");
+		if ($key["userCanView"] == "y")
+		{
+			echo ($key["objectId"]);
+			echo ("     ");
+			echo ($key["type"]);
+			echo ("     ");
+			echo ($key["name"]);
+			echo ("\n<br>");
+		}
 	}
 	echo ("\n<br>");
 	

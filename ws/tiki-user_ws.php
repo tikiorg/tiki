@@ -5,10 +5,10 @@ require_once('lib/workspaces/wslib.php');
 
 if ( isset($_REQUEST['showWS']))
 {
-	$ws_id = (int) $_REQUEST['showWS'];
-	 $ws_name = $_REQUEST['nameWS'];
-	 
-	 // Set title
+	$ws_id = $_REQUEST['showWS'];
+	$ws_name = $_REQUEST['nameWS'];
+	
+	// Set title
 	$title = "Objects for ".$user." in '".$ws_name."'";
 	$smarty->assign('headtitle', tra($title));
 	$smarty->assign('WS_title', $title);

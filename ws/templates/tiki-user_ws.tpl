@@ -8,7 +8,13 @@
 </tr> 
 {foreach from=$resources item=data}
 	<tr>
-		<td><a href = {$data.href}>{$data.name}</a></td>
+		<td>
+			{if $data.userCanView eq "y"}
+				<a href = {$data.href}>{$data.name}</a>
+			{else}
+				{$data.name}
+			{/if}
+		</td>
 		<td>{$data.type}</td>
 		<td>{$data.description}</td>
 	</tr>
