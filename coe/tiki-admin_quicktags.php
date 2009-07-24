@@ -126,7 +126,18 @@ $init
 \$jq('#full-list').sortable({
 	connectWith: '.row',
 	forcePlaceholderSize: true,
-	forceHelperSize: true
+	forceHelperSize: true,
+	remove: function(event, ui) {	// special handling for separator to allow duplicates
+		if (\$jq(ui.item).text() == '-') {
+			\$jq(this).prepend(\$jq(ui.item).clone());	// leave a copy at the top of the full list
+		}
+	},
+	receive: function(event, ui) {
+		if (\$jq(ui.item).text() == '-') {
+			\$jq(this).children().remove('.qt--');		// remove all seps
+			\$jq(this).prepend(\$jq(ui.item).clone());	// put one back at the top
+		}
+	}
 }); 							//.disableSelection();
 
 window.quicktags_sortable = Object();

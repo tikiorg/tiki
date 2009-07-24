@@ -514,6 +514,10 @@ img.icon {
 	background: transparent;
 }
 
+img.icon {
+	vertical-align: middle;
+}
+
 .iconmenutext {
 	white-space: nowrap;
 }
@@ -569,6 +573,17 @@ ul.categories li{
 	list-style: none;
 	margin: 0;
 	padding: 0;
+}
+
+/* New Quicktags (toolbars) */
+
+a.quicktag {
+	padding: 0 .5em 0 0;
+}
+
+span.quicktag-list {
+	padding: 0 0 0 .5em;
+	line-height: 20px; 
 }
 
 /* New Help section */

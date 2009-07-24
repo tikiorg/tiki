@@ -362,7 +362,11 @@ function insertAt(elementId, replaceString, blockLevel, perLine) {
 						newString += "\n";
 				}
 			} else {
-				newString = replaceString.replace(toBeReplaced, textarea.value.substring(selectionStart, selectionEnd));
+				if (replaceString.match(toBeReplaced)) {
+					newString = replaceString.replace(toBeReplaced, textarea.value.substring(selectionStart, selectionEnd));
+				} else {
+					newString = replaceString + '\n' + textarea.value.substring(selectionStart, selectionEnd);
+				}
 			}
 			textarea.value = textarea.value.substring(0, selectionStart)
 				+ newString

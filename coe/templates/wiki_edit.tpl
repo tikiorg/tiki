@@ -17,7 +17,9 @@
 <div id='edit-zone'>
 	{if $zoom_mode eq 'n' and $prefs.quicktags_over_textarea neq 'y'}<table style="border:0; width:100%"><tr><td style="border:0;">{/if}
 	<div id='textarea-toolbar' style='padding:3px; font-size:10px; {if $zoom_mode eq 'n' and $prefs.quicktags_over_textarea neq 'y'}float:left;{/if}'>
-		{quicktags area_name='editwiki' zoom_enable='y'}
+		{if !isset($textarea_name)}{assign var=textarea_name value='editwiki'}{/if}
+		{if !isset($enlarge)}{assign var=enlarge value='y'}{/if}
+		{quicktags area_name=$textarea_name zoom_enable=$enlarge}
 	</div>
 	{if $zoom_mode eq 'n' and $prefs.quicktags_over_textarea neq 'y'}</td><td style="border:0;">{/if}
 	<!--autosave -->
