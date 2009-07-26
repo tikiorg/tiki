@@ -7493,7 +7493,31 @@ class TikiLib extends TikiDb_Bridge {
 		global $prefs;
 
 		if ($prefs['feature_smileys'] == 'y') {
+			// Example of all Tiki Smileys (the old syntax)
+			// (:biggrin:) (:confused:) (:cool:) (:cry:) (:eek:) (:evil:) (:exclaim:) (:frown:)
+			// (:idea:) (:lol:) (:mad:) (:mrgreen:) (:neutral:) (:question:) (:razz:) (:redface:)
+			// (:rolleyes:) (:sad:) (:smile:) (:surprised:) (:twisted:) (:wink:) (:arrow:) (:santa:)
+			
 			$data = preg_replace("/\(:([^:]+):\)/", "<img alt=\"$1\" src=\"img/smiles/icon_$1.gif\" />", $data);
+
+			// Example of Tiki Smileys in the new (common chat) syntax
+			// :-D :-S B-) :'( 8-o }:( !-) >:( i-) LOL >X( |-D :-| ?-) :-p |-] :-/ :-( :-) :-o }:) ;-) ->) *<:)
+			
+			// support for common emoticons format
+			// TODO: test if it doesn't conflict, move it to a separate lib ? use pngs (not animated only) ? support emoticon themes ?
+			// replace any match starting with a space and the following:
+			// :) :-)
+			$data = preg_replace('/(\s):-?\)/', "$1<img alt=\":-)\" title=\"".tra('smiling')."\" src=\"img/smiles/icon_smile.gif\" />", $data);
+			// :( :-(
+			$data = preg_replace('/(\s):-?\(/', "$1<img alt=\":-(\" title=\"".tra('sad')."\" src=\"img/smiles/icon_sad.gif\" />", $data);
+			// :D :-D
+			$data = preg_replace('/(\s):-?D/', "$1<img alt=\":-D\" title=\"".tra('grinning')."\" src=\"img/smiles/icon_biggrin.gif\" />", $data);
+			// :S :-S :s :-s
+			$data = preg_replace('/(\s):-?S/i', "$1<img alt=\":-S\" title=\"".tra('confused')."\" src=\"img/smiles/icon_confused.gif\" />", $data);
+			// B) B-)
+			$data = preg_replace('/(\s)B-?\)/', "$1<img alt=\"B-)\" title=\"".tra('cool')."\" src=\"img/smiles/icon_cool.gif\" />", $data);
+			
+			// to be continued...
 		}
 		return $data;
 	}
