@@ -4721,27 +4721,6 @@ go
 
 
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_categories', 'Can admin categories', 'editors', 'category', 'y')
-go
-
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_categorized', 'Can edit items in categories', 'registered', 'category')
-go
-
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_categories', 'Can view categories', 'basic', 'category')
-go
-
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_categorized', 'Can view categorized items', 'basic', 'category')
-go
-
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_search_categorized', 'Can search on objects of this category', 'basic', 'category')
-go
-
-
-
 INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_charts', 'Can admin charts', 'admin', 'charts', 'y')
 go
 
@@ -5696,6 +5675,27 @@ go
 
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_importer', 'Can use the Tiki Importer', 'admin', 'tiki', 'y')
+go
+
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_category', 'Can see the category in a listing', 'basic', 'category')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_modify_object_categories', 'Can change the categories on the object', 'editors', 'tiki')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_add_object', 'Can add objects in the category', 'editors', 'category')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_remove_object', 'Can remove objects from the category', 'editors', 'category')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_create_category', 'Can create new categories', 'admin', 'category')
 go
 
 
