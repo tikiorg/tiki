@@ -1,6 +1,7 @@
 <?php
 /* $Id$ */
 
+// Set tikiversion variable
 $tikiversion='4.0';
 if(!isset($_GET['version'])) {
    echo "version not given. Using default $tikiversion.<br />";
@@ -53,11 +54,14 @@ function parse($stmt)
 
   //replace comments
   $stmt=preg_replace("/#/","--",$stmt);
+  
   //Remove odd characters.
   //These chars should probably never be in the mysql file, but there are some there now.  So this'll remove them.
   $stmt=preg_replace("/`/","",$stmt);
+  
   // drop TYPE=MyISAM and AUTO_INCREMENT=1
-  $stmt=preg_replace("/TYPE=MyISAM/","",$stmt);
+  $stmt=preg_replace("/ TYPE=MyISAM/","",$stmt);
+  $stmt=preg_replace("/ ENGINE=MyISAM/","",$stmt);
   $stmt=preg_replace("/AUTO_INCREMENT=1/","",$stmt);
   //postgres cannot DROP TABLE IF EXISTS
   $stmt=preg_replace("/DROP TABLE IF EXISTS/","DROP TABLE",$stmt);

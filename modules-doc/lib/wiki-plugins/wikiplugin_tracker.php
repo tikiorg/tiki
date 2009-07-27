@@ -582,7 +582,18 @@ function wikiplugin_tracker($data, $params) {
 					}
 					$outf[] = $l;
 				}
-			} elseif (!isset($fields)) {
+			} elseif (empty($fields) && !empty($wiki)) {
+				$wiki_info = $tikilib->get_page_info($wiki);
+				preg_match_all('/\$f_([0-9]+)/', $wiki_info['data'], $matches);
+				$outf = $matches[1];
+			} elseif (empty($fields) && !empty($tpl)) {
+				$f = $smarty->get_filename($tpl);
+				if (!empty($f)) {
+					$f = file_get_contents($f);
+					preg_match_all('/\$f_([0-9]+)/', $f, $matches);
+					$outf = $matches[1];
+				}
+			} elseif (empty($fields) && empty($wiki)) {
 				foreach ($flds['data'] as $f) {
 					if ($f['isMandatory'] == 'y')
 						$optional[] = $f['fieldId'];
