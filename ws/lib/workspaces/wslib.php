@@ -834,7 +834,7 @@ class wslib extends CategLib
 	$query = "select * from `tiki_objects` t0, `tiki_category_objects` t1 
 			   where t1.`categId`=? and t1.`catObjectId`=t0.`objectId`";
 	$bindvars = array($ws_id);
-	$result = $this->query($query,$bindvars);
+	$result = $this->query($query,$bindvars, $maxRecords, $offset);
 	while ($res = $result->fetchRow())
 	{
 		$valforsort = $res["type"]."!!".$res["itemId"];
@@ -893,12 +893,12 @@ class wslib extends CategLib
      * @param $user The username
      * @return Associative array with the objects that a user have access from a WS
      */
-    public function list_ws_objects_for_user ($ws_id, $user, $maxRecord = -1, $offset = -1)
+    public function list_ws_objects_for_user ($ws_id, $user, $maxRecords = -1, $offset = -1)
     {
 	require_once('lib/userslib.php');
 	global $userlib; global $objectlib;
 		
-	$listWSObjects = $this->list_ws_objects($ws_id, $maxRecord, $offset);
+	$listWSObjects = $this->list_ws_objects($ws_id, $maxRecords, $offset);
 		
 	foreach ($listWSObjects as $object)
 	{
@@ -946,29 +946,57 @@ class wslib extends CategLib
      	$userlib->assign_user_to_group($user, $groupName);
      }
      
-      /** Count the number the WS stored in Tiki or the number of WS that a user have access
+      /** Count the number of WS stored in Tiki or the number of WS that a user have access
      *
      * @param $user The id of the user (if not set, then get the WS stored in Tiki)
-     * @return $cant the number the WS stored in Tiki or the number of WS that a user have access
+     * @return $cant the number of WS stored in Tiki or the number of WS that a user have access
      */	
      public function count_ws ($userName = null)
      {
      	if ($userName)
      	{
-     		$query = "select count(distinct t3.`objectId`) from `users_objectpermissions` t3, `users_usergroups` t2, `users_users` t1
-				   where t1.`login` = ? 
-				   and (t1.`userId` = t2.`userId`) 
-				   and (t2.`groupName` = t3.`groupName`) 
-				   and t3.`permName` = 'tiki_p_ws_view'";
+     		$query_cant = "select count(distinct t3.`objectId`) from `users_objectpermissions` t3, `users_usergroups` t2, `users_users` t1
+					     where t1.`login` = ? 
+					     and (t1.`userId` = t2.`userId`) 
+					     and (t2.`groupName` = t3.`groupName`) 
+					     and t3.`permName` = 'tiki_p_ws_view'";
 		$bindvals = array($userName);
      	}
      	else
      	{
      		$query_cant = "select count(*) from `tiki_categories` where `rootCategId` = ? ";
      		$bindvals = array($this->ws_container);
-     	}	
-	$cant = $this->getOne($query_cant,$bindvals);
-	return $cant;
+     	}
+	return $this->getOne($query_cant,$bindvals);
+     }
+     
+     /** Count the number of objects stored in a WS
+     *
+     * @param $ws_id The id of the ws
+     * @return $cant the number of objects stored in the WS
+     */	
+     public function count_objects_in_ws ($ws_id)
+     {
+     	$query_cant = "select count(*) from `tiki_category_objects` where `categId` = ?";
+     	$bindvals = array($ws_id);
+     	
+     	return $this->getOne($query_cant,$bindvals);
+     }
+     
+     /** Return the admin permissions available for a group in a WS
+     *
+     * @param $ws_id The id of the ws
+     * @return $cant the number of objects stored in the WS
+     */	
+     public function get_ws_adminperms ()
+     {
+     	$query = "SELECT * FROM `users_permissions` where `type`='ws' and `level`='admin'";
+     	$bindvals = array();
+     	$result = $this->query($query,$bindvals);
+     	
+     	while ($res = $result->fetchRow())
+		$wsPerms[] = $res;
+	return $wsPerms;
      }
 }
 

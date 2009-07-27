@@ -19,7 +19,7 @@ $offset = $_REQUEST['offset'];
 // List the objects that the user has access within the WS
 $listWS = $wslib->list_ws_that_user_have_access ($user, $maxRecord, $offset);
 $smarty->assign('listWS',$listWS);
-$numWSUser = $wslib->count_ws ();
+$numWSUser = $wslib->count_ws ($user);
 
 if ($offset > 0)
 {
