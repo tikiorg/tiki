@@ -404,7 +404,7 @@ class CategLib extends ObjectLib {
 		// Filter based on permissions
 		$contextMap = array( 'type' => 'type', 'object' => 'itemId' );
 		$contextMapMap = array_fill_keys( array_keys( $permMap ), $contextMap );
-		$result = Perms::mixedFilter( array(), 'type', 'itemId', $result, $contextMapMap, $permMap );
+		$result = Perms::mixedFilter( array(), 'type', 'object', $result, $contextMapMap, $permMap );
 		
 		if( $maxResult == -1 ) {
 			$maxResult = $cant;
