@@ -20,12 +20,18 @@
       {cycle values="odd,even" print=false}
       {section name=ix loop=$categories}
       {if $categories[ix].incat eq 'y'}
-				<div class="{cycle} option"><input type="checkbox" name="cat_categories[]" value="{$categories[ix].categId|escape}" checked="checked"/>{if $categories[ix].categpath}{$categories[ix].categpath}{else}{$categories[ix].name}{/if}</div>
+				<div class="{cycle} option">
+					<input type="checkbox" name="cat_categories[]" value="{$categories[ix].categId|escape}" checked="checked"/>{if $categories[ix].categpath}{$categories[ix].categpath}{else}{$categories[ix].name}{/if}
+					<input type="hidden" name="cat_managed[]" value="{$categories[ix].categId|escape}"/>
+				</div>
 			{/if}
       {/section}
       {section name=ix loop=$categories}
       {if $categories[ix].incat neq 'y'}
-				<div class="{cycle} option"><input type="checkbox" name="cat_categories[]" value="{$categories[ix].categId|escape}"/>{if $categories[ix].categpath}{$categories[ix].categpath}{else}{$categories[ix].name}{/if}</div>
+				<div class="{cycle} option">
+					<input type="checkbox" name="cat_categories[]" value="{$categories[ix].categId|escape}"/>{if $categories[ix].categpath}{$categories[ix].categpath}{else}{$categories[ix].name}{/if}
+					<input type="hidden" name="cat_managed[]" value="{$categories[ix].categId|escape}"/>
+				</div>
 			{/if}
       {/section}
     </div>

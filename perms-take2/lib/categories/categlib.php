@@ -288,6 +288,11 @@ class CategLib extends ObjectLib {
 		$result = $this->query($query,array((int) $catObjectId,(int) $categId));
 	}
 
+	function uncategorize($catObjectId, $categId) {
+		$query = "delete from `tiki_category_objects` where `catObjectId`=? and `categId`=?";
+		$result = $this->query($query,array((int) $catObjectId,(int) $categId),-1,-1,false);
+	}
+
 	function get_category_descendants($categId) {
 		global $user,$userlib;
 		$query = "select `categId` from `tiki_categories` where `parentId`=?";
@@ -1445,8 +1450,8 @@ class CategLib extends ObjectLib {
 		}
 		return $result;
 	}
-	function update_object_categories($categories, $objId, $objType, $desc='', $name='', $href='') {
-		global $prefs, $user;
+	function update_object_categories($categories, $objId, $objType, $desc='', $name='', $href='', $managedCategories = null) {
+		global $prefs, $user, $userlib;
 		$old_categories = $this->get_object_categories($objType, $objId);
 		
 		//Dirty hack to remove the Slash at the end of the ID (Why is there a slash?! Bug is reportet.)
@@ -1457,46 +1462,42 @@ class CategLib extends ObjectLib {
 			}
 		}
 		
-		// need to prevent categories where user has no perm (but is set by other users with perm) to be wiped out
-		if ($prefs['feature_category_reinforce'] == "n") {
-			foreach ($old_categories as $old_cat) {
-				if (!$this->has_edit_permission($user, $old_cat)) {
-					$categories[] = $old_cat;
-				}			
-			}
-			if (is_array($categories))
-				$categories = array_unique($categories);
-		}
 		if (empty($categories)) {
-			$new_categories = array();
-			$removed_categories = $old_categories;
-
-			/* Fallback to group default category, if specified and none has been set
-			* NOTE this will only work if you set the user's default_group
-			*/
-			global $userlib, $user;
 			$forcedcat = $userlib->get_user_group_default_category($user);
 			if ( !is_null($forcedcat) ) {
 				$categories[] = $forcedcat;
-				$new_categories[] = $forcedcat;
 			}
-		} else {
-			$new_categories = array_diff($categories, $old_categories);
-			$removed_categories = array_diff($old_categories, $categories);						
 		}
+
+		require_once 'lib/core/lib/Category/Manipulator.php';
+		$manip = new Category_Manipulator( $objType, $objId );
+		$manip->setCurrentCategories( $old_categories );
+		$manip->setNewCategories( $categories ? $categories : array() );
+
+		if( is_array( $managedCategories ) ) {
+			$manip->setManagedCategories( $managedCategories );
+		}
+
+		$new_categories = $manip->getAddedCategories();
+		$removed_categories = $manip->getRemovedCategories();
 
 		$this->add_object($objType, $objId, $desc, $name, $href);
 		if (empty($new_categories) and empty($removed_categories)) { //nothing changed
 			return;
 		}
-		$this->uncategorize_object($objType, $objId);
-		foreach ($categories as $category) {
-			if ($category) {
-				if (!($catObjectId = $this->is_categorized($objType, $objId))) {
-					$catObjectId = $this->add_categorized_object($objType, $objId, $desc, $name, $href);
-				}
-				$this->categorize($catObjectId, $category);
+
+		foreach ($new_categories as $category) {
+			if (!($catObjectId = $this->is_categorized($objType, $objId))) {
+				$catObjectId = $this->add_categorized_object($objType, $objId, $desc, $name, $href);
 			}
+			$this->categorize($catObjectId, $category);
+		}
+
+		foreach ($removed_categories as $category) {
+			if (!($catObjectId = $this->is_categorized($objType, $objId))) {
+				continue;
+			}
+			$this->uncategorize($catObjectId, $category);
 		}
 
 		if ($prefs['feature_user_watches'] == 'y') {

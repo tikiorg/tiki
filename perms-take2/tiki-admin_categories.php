@@ -23,7 +23,7 @@ if ($prefs['feature_categories'] != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
-if ($tiki_p_admin_categories != 'y') {
+if (! $globalperms->admin_categories) {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 	$smarty->display("error.tpl");

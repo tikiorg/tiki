@@ -44,15 +44,12 @@ if ($prefs['feature_categories'] == 'y' && isset($cat_type) && isset($cat_objid)
 			$all_categories = $categlib->list_categs();
 		}
 		$smarty->assign('mandatory_category', $prefs[$pref]);
-	} else
+	} else {
 		$all_categories = $categlib->list_categs();
-	$categories = array();
-	for ($i = 0; $i < count($all_categories); $i++) {
-		if ( $tikilib->user_has_perm_on_object($user,$all_categories[$i]['categId'],'category','tiki_p_view_categories')
-			|| $tikilib->user_has_perm_on_object($user,$all_categories[$i]['categId'],'category','tiki_p_admin_categories')
-		) {
-			$categories[] = $all_categories[$i];
-		}
+	}
+
+	if( ! empty( $all_categories ) ) {
+		$categories = Perms::filter( array( 'type' => 'category' ), 'object', $all_categories, array( 'object' => 'categId' ), 'view_category' );
 	}
 
 if (isset ($categories)) {
