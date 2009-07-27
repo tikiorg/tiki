@@ -24,14 +24,16 @@ class TikiImporter_Wiki extends TikiImporter
     /**
      * @see lib/importer/TikiImporter#importOptions
      */
-	static public $importOptions = array(/*array('name' => 'attachments', 'type' => 'checkbox', 'label' => 'Import images and attachments'),*/
-                                   array('name' => 'wikiRevisions', 'type' => 'text', 'label' => 'Number of page revisions to import (0 for all revisions)'),
-                                   array('name' => 'alreadyExistentPageName', 'type' => 'select', 'label' => 'What to do with page names that already exists in TikiWiki?',
-                                            'options' => array(array('name' => 'doNotImport', 'label' => 'Do not import'),
-                                                               array('name' => 'override', 'label' => 'Override'),
-                                                               array('name' => 'appendPrefix', 'label' => 'Append software name as prefix to the page name'))
-                                        )     
-                             );
+	static public $importOptions = array(
+        array('name' => 'wikiRevisions', 'type' => 'text', 'label' => 'Number of page revisions to import (0 for all revisions)'),
+        array('name' => 'alreadyExistentPageName', 'type' => 'select', 'label' => 'What to do with page names that already exists in TikiWiki?',
+            'options' => array(
+                array('name' => 'doNotImport', 'label' => 'Do not import'),
+                array('name' => 'override', 'label' => 'Override'),
+                array('name' => 'appendPrefix', 'label' => 'Append software name as prefix to the page name')
+            )
+        )     
+    );
     
     /**
      * Main function that starts the importing proccess
