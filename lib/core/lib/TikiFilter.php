@@ -35,6 +35,7 @@ class TikiFilter
 		case 'groupname':
 		case 'pagename':
 		case 'topicname':
+		case 'themename':
 			// Use striptags
 		case 'striptags':
 			require_once 'Zend/Filter/StripTags.php';
@@ -49,9 +50,11 @@ class TikiFilter
 		case 'rawhtml_unsafe':
 			require_once 'TikiFilter/RawUnsafe.php';
 			return new TikiFilter_RawUnsafe;
+		case 'lang':
+			require_once 'Zend/Filter/PregReplace.php';
+			return new Zend_Filter_PregReplace( '/^.*([a-z]{2})(\-[a-z]{2}).*$/', '$1$2' );
 		case 'email':
 		case 'url':
-		case 'lang':
 			// TODO
 			require_once 'TikiFilter/PreventXss.php';
 			return new TikiFilter_PreventXss;
