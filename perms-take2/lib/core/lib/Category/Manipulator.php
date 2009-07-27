@@ -77,8 +77,10 @@ class Category_Manipulator
 		$categories = $this->managed;
 		Perms::bulk( array( 'type' => 'category' ), 'object', $categories );
 
-		$this->current = array_intersect( $this->current, $this->managed );
-		$this->new = array_intersect( $this->new, $this->new );
+		if( $this->managed ) {
+			$this->current = array_intersect( $this->current, $this->managed );
+			$this->new = array_intersect( $this->new, $this->new );
+		}
 
 		$this->prepared = true;
 	}

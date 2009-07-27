@@ -19,6 +19,22 @@ class Category_ManipulatorTest extends TikiTestCase
 		$this->assertEquals( array( 3, 7 ), $manip->getRemovedCategories() );
 	}
 
+	function testManipulationWithoutSpecifyingManaged() {
+		$perms = new Perms;
+		$perms->setResolverFactories( array(
+			new Perms_ResolverFactory_StaticFactory( 'root', new Perms_Resolver_Default( true ) ),
+		) );
+		Perms::set( $perms );
+
+		$manip = new Category_Manipulator( 'wiki page', 'Hello World' );
+		$manip->setCurrentCategories( array( 1, 2, 3, 7 ) );
+
+		$manip->setNewCategories( array( 1, 2, 4 ) );
+
+		$this->assertEquals( array( 4 ), $manip->getAddedCategories() );
+		$this->assertEquals( array( 3, 7 ), $manip->getRemovedCategories() );
+	}
+
 	function testLimitationOnRange() {
 		$perms = new Perms;
 		$perms->setResolverFactories( array(
