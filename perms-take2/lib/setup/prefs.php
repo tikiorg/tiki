@@ -1042,8 +1042,8 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_sitemycode' => 'y',
 		'sitemycode' => '{if $user eq "admin"}
 <div style="align: left; padding-left: 15px;">
-<a class="link" href="tiki-admin.php?page=look">
-{tr}Modify the look & feel (logo, theme, etc.){/tr}
+<a class="link" href="tiki-admin.php?page=look&amp;cookietab=2">
+{tr}Modify the look &amp; feel (logo, theme, etc.){/tr}
 </a>
 </div>
 {/if}', // must be max. 250 chars now unless it'll change in tiki_prefs db table field value from VARCHAR(250) to BLOB by default

@@ -69,6 +69,9 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper {
 //html markup	
 //Google doesn't return parens upon translation
 	var $markup = "/<[^>]*>|\(|\)/";
+
+	var $title_tag = "/(<[Hh][\d][^>]*>(<[^>]*>)*)([^<]*)/";
+	
 		
    	var $escape_untranslatable_strings = "<span class='notranslate'>$0</span>";
    	
@@ -196,6 +199,16 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper {
 	 */
 
    	function escape_untranslatable_text($text) {
+		//Title is all between <hx> tags. Put it in lower case, so Google doesn't
+		//take the capitalized words as proper names
+		if (preg_match_all($this->title_tag, $text, $matches) !=0 ){
+			$i = 0;
+			while ($i < count($matches[0])) {
+				$text = str_replace($matches[0][$i], $matches[1][$i].strtolower($matches[3][$i]), $text);
+				$i++;
+			}
+		}
+		
    		preg_match_all($this->markup, $text, $matches);
 		foreach ($matches[0] as $matched_markup) {
 			$id = array_search($matched_markup, $this->array_of_untranslatable_strings_and_their_ids);

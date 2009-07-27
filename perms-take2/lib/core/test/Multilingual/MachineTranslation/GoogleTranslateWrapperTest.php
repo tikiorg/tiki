@@ -100,7 +100,21 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapperTest extends TikiTes
 	  	$translation = $translator->translateText($text);
 		$this->assertEquals('différentes façons de <strong>Get Started</strong> avec Tiki', $translation, "The translation was not correct for text: $text.");	
 	}
+	
+	public function test_english_one_title_gets_translated() {
+		$text = '<h3 class="showhide_heading" id="Get_Started_using_Profiles"><a class="wiki"  href="tiki-admin.php?profile=&amp;category=Featured+profiles&amp;repository=http%3a%2f%2fprofiles.tikiwiki.org%2fprofiles&amp;preloadlist=y&amp;page=profiles&amp;list=List#profile-results" rel="">Get Started using Admin Panel</a><br /></h3>';
+		$translator = new Multilingual_MachineTranslation_GoogleTranslateWrapper('en','fr');
+	  	$translation = $translator->translateText($text);
+		$this->assertEquals('<h3 class="showhide_heading" id="Get_Started_using_Profiles"><a class="wiki"  href="tiki-admin.php?profile=&amp;category=Featured+profiles&amp;repository=http%3a%2f%2fprofiles.tikiwiki.org%2fprofiles&amp;preloadlist=y&amp;page=profiles&amp;list=List#profile-results" rel="">la première utilisation de panneau admin</a><br /></h3>', $translation, "The translation was not correct for text: $text.");	
+	}
 
+
+	public function test_english_titles_get_translated() {
+		$text = '<h3 class="showhide_heading" id="Get_Started_using_Profiles"><a class="wiki"  href="tiki-admin.php?profile=&amp;category=Featured+profiles&amp;repository=http%3a%2f%2fprofiles.tikiwiki.org%2fprofiles&amp;preloadlist=y&amp;page=profiles&amp;list=List#profile-results" rel="">Get Started using Admin Panel</a><br /></h3><h3 class="showhide_heading" id="Get_Started_using_Profiles"><a class="wiki"  href="tiki-admin.php?profile=&amp;category=Featured+profiles&amp;repository=http%3a%2f%2fprofiles.tikiwiki.org%2fprofiles&amp;preloadlist=y&amp;page=profiles&amp;list=List#profile-results" rel="">Get Started using Profiles</a><br /></h3>';
+		$translator = new Multilingual_MachineTranslation_GoogleTranslateWrapper('en','fr');
+	  	$translation = $translator->translateText($text);
+		$this->assertEquals('<h3 class="showhide_heading" id="Get_Started_using_Profiles"><a class="wiki"  href="tiki-admin.php?profile=&amp;category=Featured+profiles&amp;repository=http%3a%2f%2fprofiles.tikiwiki.org%2fprofiles&amp;preloadlist=y&amp;page=profiles&amp;list=List#profile-results" rel="">la première utilisation de panneau admin</a><br /></h3><h3 class="showhide_heading" id="Get_Started_using_Profiles"><a class="wiki"  href="tiki-admin.php?profile=&amp;category=Featured+profiles&amp;repository=http%3a%2f%2fprofiles.tikiwiki.org%2fprofiles&amp;preloadlist=y&amp;page=profiles&amp;list=List#profile-results" rel="">la première utilisation de profils</a><br /></h3>', $translation, "The translation was not correct for text: $text.");	
+	}
 //Tests below are desactivated. For now we will be machine translating already 
 //rendered html content. Keeping the tests if we decide otherwise. 
 

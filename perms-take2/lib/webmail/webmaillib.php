@@ -188,7 +188,7 @@ class WebMailLib extends TikiLib {
 		$bindvars = array($user,$account,$pop,$port,$smtpPort,$username,$pass,$smtp,$useAuth,$msgs,$flagsPublic,$autoRefresh,$imap,$mbox,$maildir,$useSSL);
 		$result = $this->query($query, $bindvars);
 
-		$query = 'SELECT `accountID` FROM `tiki_user_mail_accounts` WHERE `user`=? AND `account`=? AND `pop`=? AND `port`=? AND `smtpPort`=? AND `username`=? AND `pass`=? AND `smtp`=? AND `useAuth`=? AND `msgs`=? AND `flagsPublic`=? AND `autoRefresh`=?';
+		$query = 'SELECT `accountID` FROM `tiki_user_mail_accounts` WHERE `user`=? AND `account`=? AND `pop`=? AND `port`=? AND `smtpPort`=? AND `username`=? AND `pass`=? AND `smtp`=? AND `useAuth`=? AND `msgs`=? AND `flagsPublic`=? AND `autoRefresh`=? AND `imap`=? AND `mbox`=? AND `maildir`=? AND `useSSL`=?';
 		$accountID = $this->getOne($query, $bindvars);
 
 		return $accountID;

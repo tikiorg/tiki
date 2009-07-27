@@ -628,7 +628,7 @@
 								<a href="#" title="{tr}Top{/tr}"><span>{tr}Bottom bar{/tr}</span></a>
 							</legend>
 							<label for="feature_bot_bar">{tr}Activate{/tr}:</label>
-							<input type="checkbox" name="feature_bot_bar" {if $prefs.feature_bot_bar eq 'y'}checked="checked"{/if}/>
+							<input type="checkbox" id="feature_bot_bar" name="feature_bot_bar" {if $prefs.feature_bot_bar eq 'y'}checked="checked"{/if}/>
 							<hr />
 							<input type="checkbox" id="feature_bot_bar_icons" name="feature_bot_bar_icons"	{if $prefs.feature_bot_bar_icons eq 'y'}checked="checked"{/if}/>
 							<label for="feature_bot_bar_icons">{tr}Bottom bar icons{/tr}</label>
@@ -697,7 +697,7 @@
 							{help url="JQuery#Tooltips" desc="{tr}JQuery Tooltips: Customisable help tips{/tr}"}
 						</td>
 						<td>
-							<input type="checkbox" name="feature_jquery_tooltips" {if $prefs.feature_jquery_tooltips eq 'y'}checked="checked"{/if}/>
+							<input type="checkbox" id="feature_jquery_tooltips" name="feature_jquery_tooltips" {if $prefs.feature_jquery_tooltips eq 'y'}checked="checked"{/if}/>
 						</td>
 					</tr>
 					<tr>
@@ -708,7 +708,7 @@
 							{help url="JQuery#Autocomplete" desc="{tr}JQuery Autocomplete{/tr}"}
 						</td>
 						<td>
-							<input type="checkbox" name="feature_jquery_autocomplete" {if $prefs.feature_jquery_autocomplete eq 'y'}checked="checked"{/if}/>
+							<input type="checkbox" id="feature_jquery_autocomplete" name="feature_jquery_autocomplete" {if $prefs.feature_jquery_autocomplete eq 'y'}checked="checked"{/if}/>
 						</td>
 					</tr>
 					<tr>
@@ -719,7 +719,7 @@
 							{help url="JQuery#Superfish" desc="{tr}JQuery Superfish (effects on CSS menus){/tr}"}
 						</td>
 						<td>
-							<input type="checkbox" name="feature_jquery_superfish" {if $prefs.feature_jquery_superfish eq 'y'}checked="checked"{/if}/>
+							<input type="checkbox" id="feature_jquery_superfish" name="feature_jquery_superfish" {if $prefs.feature_jquery_superfish eq 'y'}checked="checked"{/if}/>
 						</td>
 					</tr>
 					<tr>
@@ -730,7 +730,7 @@
 							{help url="JQuery#Reflection" desc="{tr}JQuery Reflection (reflection effect on images){/tr}"}
 						</td>
 						<td>
-							<input type="checkbox" name="feature_jquery_reflection" {if $prefs.feature_jquery_reflection eq 'y'}checked="checked"{/if}/>
+							<input type="checkbox" id="feature_jquery_reflection" name="feature_jquery_reflection" {if $prefs.feature_jquery_reflection eq 'y'}checked="checked"{/if}/>
 						</td>
 					</tr>
 					<tr>
@@ -741,7 +741,7 @@
 							{help url="JQuery#Cycle" desc="{tr}JQuery Cycle (slideshow){/tr}"}
 						</td>
 						<td>
-							<input type="checkbox" name="feature_jquery_cycle" {if $prefs.feature_jquery_cycle eq 'y'}checked="checked"{/if}/>
+							<input type="checkbox" id="feature_jquery_cycle" name="feature_jquery_cycle" {if $prefs.feature_jquery_cycle eq 'y'}checked="checked"{/if}/>
 						</td>
 					</tr>
 					<tr>
@@ -758,7 +758,7 @@
 							{help url="JQuery#UI" desc="{tr}JQuery UI: More JQuery functionality{/tr}"}
 						</td>
 						<td>
-							<input type="checkbox" name="feature_jquery_ui" {if $prefs.feature_jquery_ui eq 'y'}checked="checked"{/if}/>
+							<input type="checkbox" id="feature_jquery_ui" name="feature_jquery_ui" {if $prefs.feature_jquery_ui eq 'y'}checked="checked"{/if}/>
 						</td>
 					</tr>
 					<tr>
@@ -769,7 +769,7 @@
 							{help url="JQuery#Sheet" desc="{tr}JQuery Spreadsheet{/tr}"}
 						</td>
 						<td>
-							<input type="checkbox" name="feature_jquery_sheet" {if $prefs.feature_jquery_sheet eq 'y'}checked="checked"{/if}/>
+							<input type="checkbox" id="feature_jquery_sheet" name="feature_jquery_sheet" {if $prefs.feature_jquery_sheet eq 'y'}checked="checked"{/if}/>
 						</td>
 					</tr>
 					<tr>
@@ -780,7 +780,7 @@
 							{help url="JQuery#TableSorter" desc="{tr}JQuery Sortable Tables{/tr}"}
 						</td>
 						<td>
-							<input type="checkbox" name="feature_jquery_tablesorter" {if $prefs.feature_jquery_tablesorter eq 'y'}checked="checked"{/if}/>
+							<input type="checkbox" id="feature_jquery_tablesorter" name="feature_jquery_tablesorter" {if $prefs.feature_jquery_tablesorter eq 'y'}checked="checked"{/if}/>
 						</td>
 					</tr>
 				</table>

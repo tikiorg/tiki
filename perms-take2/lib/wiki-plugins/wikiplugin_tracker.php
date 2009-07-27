@@ -22,6 +22,7 @@ function wikiplugin_tracker_info() {
 				'required' => true,
 				'name' => tra('Tracker ID'),
 				'description' => tra('Tracker ID'),
+				'filter' => 'digits'
 			),
 			'fields' => array(
 				'required' => true,
@@ -37,26 +38,31 @@ function wikiplugin_tracker_info() {
 				'required' => false,
 				'name' => tra('Show Title'),
 				'description' => 'y|n',
+				'filter' => 'alpha'
 			),
 			'showdesc' => array(
 				'required' => false,
 				'name' => tra('Show Description'),
 				'description' => 'y|n',
+				'filter' => 'alpha'
 			),
 			'showmandatory' => array(
 				'required' => false,
 				'name' => tra('Show Mandatory'),
 				'description' => 'y|n',
+				'filter' => 'alpha'
 			),
 			'embedded' => array(
 				'required' => false,
 				'name' => tra('Embedded'),
 				'description' => 'y|n',
+				'filter' => 'alpha'
 			),
 			'url' => array(
 				'required' => false,
 				'name' => tra('URL'),
 				'description' => tra('Url used for the field links'),
+				'filter' => 'url'
 			),
 			'target' => array(
 				'required' => false,
@@ -72,6 +78,7 @@ function wikiplugin_tracker_info() {
 				'required' => false,
 				'name' => tra('Sort'),
 				'description' => 'y|n',
+				'filter' => 'alpha'
 			),
 			'preview' => array(
 				'required' => false,
@@ -87,6 +94,7 @@ function wikiplugin_tracker_info() {
 				'required' => false,
 				'name' => tra('itemId'),
 				'description' => tra('itemId if you want to edit an item'),
+				'filter' => 'digit'
 			),
 			'tpl' => array(
 				'required' => false,
@@ -97,11 +105,13 @@ function wikiplugin_tracker_info() {
 				'required' => false,
 				'name' => tra('Wiki'),
 				'description' => tra('Name of the wiki page containing the template to display the tracker items.'),
+				'filter' => 'pagename'
 			),
 			'newstatus' => array(
 				'required' => false,
 				'name' => tra('New Status'),
 				'description' => 'o|p|c'. ' '.tra('Default status applied to newly created items.'),
+				'filter' => 'alpha'
 			),
 			'colwidth' => array(
 				'required' => false,
@@ -548,7 +558,7 @@ function wikiplugin_tracker($data, $params) {
 					}
 				}
 			}
-			
+
 			$optional = array();
 			$outf = array();
 			if (isset($fields) && !empty($fields)) {
@@ -572,7 +582,18 @@ function wikiplugin_tracker($data, $params) {
 					}
 					$outf[] = $l;
 				}
-			} elseif (!isset($fields)) {
+			} elseif (empty($fields) && !empty($wiki)) {
+				$wiki_info = $tikilib->get_page_info($wiki);
+				preg_match_all('/\$f_([0-9]+)/', $wiki_info['data'], $matches);
+				$outf = $matches[1];
+			} elseif (empty($fields) && !empty($tpl)) {
+				$f = $smarty->get_filename($tpl);
+				if (!empty($f)) {
+					$f = file_get_contents($f);
+					preg_match_all('/\$f_([0-9]+)/', $f, $matches);
+					$outf = $matches[1];
+				}
+			} elseif (empty($fields) && empty($wiki)) {
 				foreach ($flds['data'] as $f) {
 					if ($f['isMandatory'] == 'y')
 						$optional[] = $f['fieldId'];
@@ -776,7 +797,6 @@ function wikiplugin_tracker($data, $params) {
 					$back .= '<input type="hidden" name="track['.$f['fieldId'].']" />';
 				}
 				if (in_array($f['fieldId'],$outf)) {
-
 					if (!empty($tpl) || !empty($wiki)) {
 						$smarty->assign_by_ref('field_value', $f);
 						$smarty->assign('f_'.$f['fieldId'], $smarty->fetch('tracker_item_field_input.tpl'));

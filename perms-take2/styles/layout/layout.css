@@ -2323,5 +2323,7 @@ table.webmail_message_headers th {
 	border: none;
 	background: transparent;
 }
-
+@media print {
+	.tikihelp, .navbar, .tabstoggle, .tabs, #show-errors-button {display:none;}
+}
 /* End of File */
