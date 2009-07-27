@@ -583,7 +583,15 @@ a.quicktag {
 
 span.quicktag-list {
 	padding: 0 0 0 .5em;
-	line-height: 20px; 
+	line-height: 20px;
+	border-left: medium double lightgray;
+}
+
+.helptool-admin {
+	float: right;
+	border-left: medium double lightgrey;
+	padding-left:8px;
+	margin-left:8px;
 }
 
 /* New Help section */

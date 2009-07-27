@@ -32,7 +32,7 @@ if ($prefs['feature_jquery'] == 'y') {
 	die;
 }
 
-$sections = array( 'global', 'wiki page' );
+$sections = array( 'global', 'wiki page', 'trackers', 'blogs', 'calendar', 'cms', 'faqs', 'newsletters', 'forums', 'maps');
 
 if( isset($_REQUEST['section'])
 	&& in_array($_REQUEST['section'], $sections) ) {

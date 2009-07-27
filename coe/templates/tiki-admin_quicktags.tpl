@@ -2,12 +2,12 @@
 <div class="quicktags-admin">
 	<form method="get" action="tiki-admin_quicktags.php">
 		<div>
-			<select name="section">
+			<select name="section" onchange="this.form.submit()">
 				{foreach from=$sections item=name}
 					<option{if $name eq $loaded} selected="selected"{/if}>{$name|escape}</option>
 				{/foreach}
 			</select>
-			<input name="load" type="submit" value="{tr}Load{/tr}"/>
+			{if $prefs.javascript_enabled eq 'n'}<input name="load" type="submit" value="{tr}Load{/tr}"/>{/if}
 		</div>
 	</form>
 	<div class="rows">

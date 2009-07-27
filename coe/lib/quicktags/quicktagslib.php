@@ -36,6 +36,8 @@ abstract class Quicktag
 			return new QuicktagTextareaResize( 'enlarge' );
 		elseif( $tagName == 'reduce' )
 			return new QuicktagTextareaResize( 'reduce' );
+		elseif( $tagName == 'help' )
+			return new QuicktagHelptool;
 		elseif( $tagName == '-' )
 			return new QuicktagSeparator;
 	} // }}}
@@ -67,6 +69,7 @@ abstract class Quicktag
 			'h1',
 			'h2',
 			'h3',
+			'toc',
 			'image',
 			'list',
 			'numlist',
@@ -101,6 +104,7 @@ abstract class Quicktag
 			'fullscreen',
 			'enlarge',
 			'reduce',
+			'help',
 		), $plugins );
 	} // }}}
 
@@ -157,7 +161,7 @@ abstract class Quicktag
 		global $smarty;
 		
 		$params = array();
-		$params['_onclick'] = $click;
+		$params['_onclick'] = $click . (substr(count($click)-1) != ';' ? ';' : '') . 'return false;';
 		$params['_class'] = 'quicktag ' . (!empty($class) ? ' '.$class : '');
 		$content = $title;
 		$params['_icon'] = $this->icon;
@@ -165,6 +169,11 @@ abstract class Quicktag
 		return smarty_block_self_link($params, $content, $smarty);
 	} // }}}
 	
+	function getLabel() // {{{
+	{
+		return $this->label;
+	} // }}}
+
 }
 
 class QuicktagSeparator extends Quicktag
@@ -402,6 +411,12 @@ class QuicktagBlock extends QuicktagInline // Will change in the future
 			$wysiwyg = 'tikiimage';
 			$syntax = '{img src= width= height= link= }';
 			break;
+		case 'toc':
+			$label = tra('Table of contents');
+			$icon = tra('pics/icons/book.png');
+			$wysiwyg = 'TOC';
+			$syntax = '{maketoc}';
+			break;
 		default:
 			return;
 		}
@@ -621,6 +636,35 @@ class QuicktagTextareaResize extends Quicktag
 	} // }}}
 }
 
+class QuicktagHelptool extends Quicktag
+{
+	function __construct() // {{{
+	{
+		$this->setLabel( tra('Wiki Help') )
+			->setIcon( 'pics/icons/help.png' );
+	} // }}}
+	
+	function getWikiHtml( $areaName ) // {{{
+	{
+
+		global $wikilib, $smarty, $plugins;
+		if (!isset($plugins)) {
+			include_once ('lib/wiki/wikilib.php');
+			$plugins = $wikilib->list_plugins(true);
+		}
+		$smarty->assign_by_ref('plugins', $plugins);
+		return $smarty->fetch("tiki-edit_help.tpl");
+		
+//		return $this->getSelfLink('needToConfirm=false;flip(\'help_sections\')',
+//							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-resize');
+	} // }}}
+
+	function isAccessible() // {{{
+	{
+		return parent::isAccessible();
+	} // }}}
+}
+
 class QuicktagWikiplugin extends Quicktag
 {
 	private $pluginName;
@@ -679,7 +723,7 @@ class QuicktagWikiplugin extends Quicktag
 
 	function getWikiHtml( $areaName ) // {{{
 	{
-		return $this->getSelfLink('textareasize(\'' . $areaName . '\', ' . $this->diff . ', 0);needToConfirm = false;',
+		return $this->getSelfLink('popup_plugin_form(\'' . $this->pluginName . '\');needToConfirm=false;',
 							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-plugin');
 		//return '<a href="javascript:popup_plugin_form(\'' . $this->pluginName . '\')" onclick="needToConfirm=false;" title="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '" class="quicktag">' . $this->getIconHtml() . '</a>';
 	} // }}}
@@ -768,8 +812,18 @@ class QuicktagsList
 
 	function getWikiHtml( $areaName ) // {{{
 	{
+		global $tiki_p_admin, $tiki_p_admin_quicktags, $smarty, $section;
 		$html = '';
 
+		if ($tiki_p_admin == 'y' or $tiki_p_admin_quicktags == 'y') {
+			$params = array('_script' => 'tiki-admin_quicktags.php', '_onclick' => 'needToConfirm = true;', '_class' => 'quicktag', '_icon' => 'wrench', '_ajax' => 'n');
+			if (isset($section)) { $params['section'] = $section; }
+			$content = tra('Admin Quicktags');
+			$html .= '<div class="helptool-admin">';
+			$html .= smarty_block_self_link($params, $content, $smarty);
+			$html .= '</div>';
+		}
+		
 		foreach( $this->lines as $line ) {
 			$lineHtml = '';
 
@@ -780,11 +834,10 @@ class QuicktagsList
 				}
 				
 				if( ! empty($groupHtml) ) {
-					$param = empty($lineHtml) ? '' : ' class="quicktag-list" style="border-left: double gray;"';
+					$param = empty($lineHtml) ? '' : ' class="quicktag-list"';
 					$lineHtml .= "<span$param>$groupHtml</span>";
 				}
 			}
-
 			if( ! empty($lineHtml) ) {
 				$html .= "<div>$lineHtml</div>";
 			}
@@ -792,6 +845,18 @@ class QuicktagsList
 
 		return $html;
 	} // }}}
+	
+	function contains($name) { // {{{
+		foreach( $this->lines as $line ) {
+			foreach( $line as $group ) {
+				foreach( $group as $tag ) {
+					if ($tag->getLabel() == $name) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	} // }}}
 }
 
-?>

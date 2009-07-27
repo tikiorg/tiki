@@ -129,16 +129,15 @@ a.admbox.off:hover, a.admbox.off:focus, a.admbox.off:active {
 
 div.adminanchors a {float: left}
 
-/* from ui-revamp branch */
+/* from ui-revamp branch, via coe branch - jb july 2009 */
 
-.quicktags-admin .rows .row {
-	height: 150px;
+.quicktags-admin .full {
+	border: solid thin gray;
+	float: left;
+	height: 478px;
 	width: 200px;
 	overflow-y: auto;
 	overflow-x: hidden;
-/*	display: inline-block
-	display: inline;*/
-	border: solid thin black;
 	margin: 0;
 }
 
@@ -157,14 +156,9 @@ div.adminanchors a {float: left}
 	display: block;
 }
 
-.quicktags-admin .full {
-	border: solid thin black;
-	float: left;
-	height: 478px;
-	width: 200px;
-	overflow-y: auto;
-	overflow-x: hidden;
-	margin: 0;
+.quicktag img.icon {
+	vertical-align: middle;
+	margin-right: 4px;
 }
 
 .quicktags-admin .quicktag {
@@ -173,9 +167,23 @@ div.adminanchors a {float: left}
 	line-height: 1.2em;
 }
 
-.quicktag img.icon {
-	vertical-align: middle;
-	margin-right: 4px;
+.quicktags-admin .rows .row {
+	height: 20px;
+	width: 400px;
+	overflow-y: auto;
+	overflow-x: hidden;
+/*	display: inline-block
+	display: inline;*/
+	border: solid thin gray;
+	margin: 0;
+	padding: 2px 4px 0;
+}
+
+.quicktags-admin .row li.quicktag {
+	list-style-type: none;
+	float: left;
+	width: 18px;
+	overflow: hidden;
 }
 
 .qt-wys {
