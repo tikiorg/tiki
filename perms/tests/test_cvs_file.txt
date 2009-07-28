@@ -1,8 +1,0 @@
-$Id$
-this file is used to test commits
-'hello'
-"are we really on BRANCH-1-10, mama ?"
-$Date: $
-$Date$
-$Author$
-$Revision$
