@@ -658,18 +658,16 @@ class WikiLib extends TikiLib {
 	}
 	return ($info["flag"] == 'L')? $info["user"] : null;
     }
-    function is_editable($page, $user, $info=null) {
-	global $tiki_p_admin, $tiki_p_admin_wiki, $prefs;
-      if ($tiki_p_admin == 'y' || $tiki_p_admin_wiki == 'y')
-            return true;
-      else {
+	function is_editable($page, $user, $info=null) {
+		global $prefs;
+		$perms = Perms::get( array( 'type' => 'wiki page', 'object' => $page ) );
+
 		if ($prefs['feature_wiki_userpage'] == 'y' and strcasecmp(substr($page, 0, strlen($prefs['feature_wiki_userpage_prefix'])), $prefs['feature_wiki_userpage_prefix']) == 0 and strcasecmp($page, $prefs['feature_wiki_userpage_prefix'].$user) != 0)
 			return false;
-		if (!$this->user_has_perm_on_object($user,$page,'wiki page','tiki_p_edit', 'tiki_p_edit_categorized'))
+		if (!$perms->edit )
 			return false;
 		return ($this->is_locked($page, $info) == null || $user == $this->is_locked($page, $info))? true : false;
 	}
-    }
 
     function lock_page($page) {
 	global $user, $tikilib;
