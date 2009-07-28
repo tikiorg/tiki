@@ -356,7 +356,7 @@ class ModLib extends TikiLib {
 	private function get_raw_module_list_for_user( $user, array $module_zones ) {
 		global $prefs, $tiki_p_configure_modules, $usermoduleslib;
 
-		$out = array_fill_keys( array_values( $module_zones, array() ) );
+		$out = array_fill_keys( array_values( $module_zones ), array() );
 
 		if( $prefs['user_assigned_modules'] == 'y' 
 			&& $tiki_p_configure_modules == 'y' 
@@ -471,7 +471,7 @@ class ModLib extends TikiLib {
 
 	function createDefaultCacheKey( $module_reference ) {
 		global $prefs;
-		return md5( $mod_reference['moduleId'] . '-' . $mod_reference['name'] . '-'. $prefs['language'] . '-' . serialize($mod_reference['params']) );
+		return $mod_reference['moduleId'] . '-' . $mod_reference['name'] . '-'. $prefs['language'] . '-' . serialize($mod_reference['params']);
 	}
 
 	function execute_module( $mod_reference ) {
