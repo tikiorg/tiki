@@ -105,11 +105,6 @@ button:hover {
 	cursor: pointer;
 }
 
-
-* html .wikitopline select {
-	font-size: .9em;
-}
-
 input.button {
 	margin: 0;
 	font: bold 1em Arial, Sans-serif;
@@ -179,22 +174,6 @@ input[type=submit]:hover,
 	text-decoration: none;
 }
 
-* html input[type=reset]:hover,
-* html input[type=submit]:hover {
-	background: url(feb12/header.jpg) repeat-x 0 100%;
-	color: #F5F5F5;
-	cursor: pointer;
-}
-
-* html span.button a,
-* html span.button a:visited {
-	background: url(feb12/header.jpg) repeat-x 0 -2px;
-}
-
-* html span.button a:hover {
-	color: #F5F5F5;
-	background: url(feb12/header.jpg) repeat-x 0 100%;
-}
 
 .button a:active,	
 button:active,
@@ -209,10 +188,6 @@ span.highlight a:visited {
 
 input[type=checkbox] {
 	border: 0;
-}
-
-* html .findtable input {
-	font-size: 1em;
 }
 
 form.admin input[name="features"] {
@@ -326,10 +301,6 @@ ul.jumplinks a:focus, ul.jumplinks a:active {
 
 #tiki-center {
 	padding: 1em;
-}
-
-* html #tiki-center {
-	font-size: 1em;
 }
 
 #c1c2 #col2 {
@@ -489,10 +460,6 @@ input[id="sl-login-pass"] {
 	padding-bottom: 14px;
 }
 
-* html #sitetitle {
-	padding-top: 20px;
-}
-
 #sitetitle a,
 #sitetitle a:link,
 #sitetitle a:visited {
@@ -517,10 +484,6 @@ input[id="sl-login-pass"] {
 	height: 34px;
 	padding-top: 3px;
 	font-size: 14px;
-}
-
-* html #tiki-top {
-	font-size: 11px;
 }
 
 #tiki-top a {
@@ -576,10 +539,6 @@ a.flip img {
 	margin-top: 2px;
 }
 
-* html #tiki-center {
-	font-size: 1em;
-}
-
 #rss {
 	padding: 1em 1em 0;
 }
@@ -613,12 +572,6 @@ a.flip img {
 	margin: 0;
 }
 
-* html .horbaritem a,
-* html .horbaritem a:link,
-* html .horbaritem a:visited {
-	font-size: 1.3em;
-}
-
 .horbaritem a:hover {
 	background: url(feb12/header.jpg) 0 -40px repeat-x;
 	color: #eee !important;
@@ -632,14 +585,6 @@ a.flip img {
 	top: 0;
 	background: #FFFFFF;
 	visibility: hidden;
-	margin-top: 0;
-}
-
-* html .mdksubmenu {
-	margin-top: 0;
-}
-
-*:first-child+html .mdksubmenu {
 	margin-top: 0;
 }
 
@@ -714,10 +659,6 @@ a.flip img {
 
 .box-data table {
 	width: 100%;
-}
-
-* html .box-data table {
-	width: 95%;
 }
 
 .phplmnormal,
@@ -799,12 +740,6 @@ a.phplmselected:hover {
 }
 
 	
-* html #tiki-top .cssmenu_horiz li a {
-	font-size: 14px;
-	padding: 6px 3px;
-	display: block;
-}
-
 #tiki-top > .cssmenu_horiz > li.menusection > a {
 	padding-right: 2.6em;
 }
@@ -938,11 +873,6 @@ div#edithelpzone {
 	display: block;
 }
 
-/* End hide from IE Mac */
-* html .clearfix {
-	height: 1%;
-}
-
 #overdiv table {
 	width: auto !important;
 }
@@ -1029,10 +959,6 @@ div#tikihelp {
 	height: 100%;
 }
 
-* html div#tikihelp {
-	position: absolute;
-}
-
 .help_title {
 	float: left;
 }
@@ -1082,10 +1008,6 @@ div.box {
 	margin-bottom: 1.5em;
 }
 
-* html div.box {
-	width: 200px;
-}
-
 .wikitext div.box {
 	width: 95%;
 }
@@ -1096,10 +1018,6 @@ h3.box-title {
 	position: relative;
 }
 
-* html h3.box-title {
-	position: static;
-}
-
 .moduleflip {
 	display: none;
 	position: absolute;
@@ -1107,31 +1025,12 @@ h3.box-title {
 	top: 0;
 }
 
-* html .moduleflip {
-	position: static;
-	float: right;
-}
-
-* html .moduleflip,
 .box:hover .moduleflip {
 	display: block;
 }
 
 .box:hover img.flipmodimage {
 	border: 1px solid transparent;
-}
-
-* html img.flipmodimage {
-	border: none;
-}
-
-* html .box img.flipmodimage {
-	border: none;
-}
-
-* html #col2 img.flipmodimage,
-* html #col3 img.flipmodimage {
-	margin-top: -12px;
 }
 
 .flipmodimage:hover {
@@ -1214,10 +1113,6 @@ table.bloglist td {
 td {
 	vertical-align: top;
 	font-size: inherit;
-}
-
-* html td {
-	font-size: 100%;
 }
 
 .normal td,
@@ -1458,10 +1353,6 @@ div#description,
 
 .wikitopline table {
 	width: 100%;
-}
-
-* html .wikitopline table {
-	width: 97%;
 }
 
 /* End from Tikineat */
@@ -1926,14 +1817,6 @@ td.forumtoolbar {
 	font-weight: normal;
 }
 
-* html .post .postbody {
-	font-size: 1em;
-}
-
-*:first-child+html .postbody {
-	min-width: 100% !important;
-}
-
 .postbody-content {
 	padding: 8px;
 }
@@ -2235,10 +2118,6 @@ table.galtable {
 	border-collapse: collapse;
 	border: 1px solid #8CACBB;
 	width: 100%;
-}
-
-* html body table.galtable {
-	width: 97%;
 }
 
 html>body .galtable {
@@ -2901,7 +2780,6 @@ a.admbox.off:active {
 	border: 1px solid #9f9f9f;
 }
 
-	
 a.icon,
 img.icon {
 	border: 0 !important;
@@ -2911,5 +2789,4 @@ img.icon {
 .button .iconmenu {
 	display: inline;
 }
-
 /* end of css file */

@@ -23,10 +23,6 @@ html>body {
 	font-size: 74% !important;
 }
 
-*:first-child+html body {
-	font-size: 72% !important;
-}
-
 /* workaround for Safari when in FCKEditor */
 html[dir=ltr]>body {
 	display: block;
@@ -225,14 +221,6 @@ select[name="theme"] {
 
 input[type=wikiaction] {
 	margin-bottom: 2px;
-}
-
-* html .findtable input {
-	font-size: 1em;
-}
-
-* html .wikitopline select {
-	font-size: .9em;
 }
 
 small {
@@ -478,12 +466,6 @@ div#sitead {
 	font-size: 90%;
 }
 
-* html #siteloginbar {
-	position: absolute;
-	top: 10px;
-	right: 10px;
-}
-
 #siteloginbar * {
 	padding: 2px;
 }
@@ -557,10 +539,6 @@ a.flip img {
 
 #tiki-center {
 	background: #3F3F3F;
-}
-
-* html #tiki-center {
-	font-size: 1em;
 }
 
 /* end layout divs, etc. */
@@ -806,14 +784,6 @@ img.imgs {
 	color: #909090 !important;
 }
 
-* html #tiki-top .cssmenu_horiz li {
-	background: transparent;
-}
-
-* html #tiki-top .cssmenu_horiz li ul li {
-	background: #999;
-}
-
 /** Links in other menus **/
  
 div.separator, div.separatorline {
@@ -961,11 +931,6 @@ div#edithelpzone {
 	display: block;
 }
 
-/* End hide from IE Mac */
-* html .clearfix {
-	height: 1%;
-}
-
 #overdiv table {
 	width: auto !important;
 }
@@ -1090,10 +1055,6 @@ div#tikihelp {
 	height: 100%;
 }
 
-* html div#tikihelp {
-	position: absolute;
-}
-
 .help_title {
 	float: left;
 }
@@ -1157,10 +1118,6 @@ h3.box-title {
 	position: relative;
 }
 
-* html h3.box-title {
-	position: static;
-}
-
 .box-title a {
 	color: #9D9D9D;
 }
@@ -1172,22 +1129,12 @@ h3.box-title {
 	top: 0;
 }
 
-* html .moduleflip {
-	position: static;
-	float: right;
-}
-
-* html .moduleflip,
 .box:hover .moduleflip {
 	display: block;
 }
 
 .box:hover img.flipmodimage {
 	border: 1px solid transparent;
-}
-
-* html img.flipmodimage {
-	border: none;
 }
 
 img.flipmodimage:hover {
@@ -1200,10 +1147,6 @@ img.flipmodimage:hover {
 	color: #DCDCDC;
 	line-height: 1.4em;
 	margin: 8px;
-}
-
-* html .box img.flipmodimage {
-	border: none;
 }
 
 .box-data a.linkmenu {
@@ -1327,19 +1270,8 @@ table.normalnoborder {
 	width: 100%;
 }
 
-* html table.normal, 
-* html table.admin,
-* html table.bloglist {
-	width: 97%;
-	font-size: 11px;
-}
-
 td {
 	vertical-align: top;
-}
-
-* html td {
-	font-size: 11px;
 }
 
 table.normal td,
@@ -1616,11 +1548,6 @@ a.wiki {
 
 .wikitopline table {
 	width: 100%;
-}
-
-* html .wikitopline table {
-	font-size: 1.2em;
-	width: 97%;
 }
 
 html>body .wikitopline table {
@@ -2081,14 +2008,6 @@ body.tiki_forums table.normal {
 	border: 0;
 }
 
-* html .post .postbody {
-	font-size: 11px;
-}
-
-*:first-child+html .post .postbody {
-	min-width: 100% !important;
-}
-
 .post .postbody .content {
 	color: #D8D8D8;
 	border-color: transparent;
@@ -2184,10 +2103,6 @@ body.tiki_forums table.normal {
 .postbody-content {
 	min-width: 100%;
 	margin: 5px;
-}
-
-*:first-child+html .postbody-content {
-	min-width: 73%;
 }
 
 .post .postbody .attachments {
@@ -2432,21 +2347,12 @@ table.galtable {
 	width: 100%;
 }
 
-* html body table.galtable {
-	width: 97%;
-}
-
-html>body .galtable {
-	width: 100%;
-}
-
 td.oddthumb {
 	background: #696969;
 	border: 1px solid #474747;
 	border-collapse: collapse;
 }
 
- 
 td.eventhumb {
 	background: #3f3f3f;
 	border: 1px solid #6a6a6a;
@@ -2865,10 +2771,6 @@ td.calodd, td.caleven {
 	float: right;
 }
 
-* html .addevent {
-	padding: 0;
-}
-
 .calodd, .caleven {
 	border: none;
 }
@@ -2877,16 +2779,8 @@ td.calodd, td.caleven {
 	background: #474747;
 }
 
-* html .calodd {
-	padding: 0;
-}
-
 .caleven {
 	background: #3F3F3F;
-}
-
-* html .caleven {
-	padding: 0;
 }
 
 .calhours,
@@ -2897,10 +2791,6 @@ td.calodd, td.caleven {
 .caldark {
 	background: #696969;
 	border: 1px solid #999999;
-}
-
-* html .caldark {
-	padding: 0;
 }
 
 .caldark .calfocus {

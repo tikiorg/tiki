@@ -46,11 +46,6 @@ h1 {
 	padding-left: 14px;
 }
 
-* html h1 {
-	margin-bottom: auto;
-}
-
-	
 h2 {
 	font-size: 1.5em;
 }
@@ -114,10 +109,6 @@ textarea {
 	color: #2d2d2d;
 }
 
-* html .wikitopline select {
-	font-size: .9em;
-}
-
 input[type=checkbox],
 input[type=radio] {
 	border: 0;
@@ -171,19 +162,6 @@ input[type=submit] {
 	white-space: nowrap;
 	cursor: pointer;
 	font: bold .95em Verdana, Helvetica, Geneva, Arial, sans-serif;
-}
-
-	
-* html span.button a {
-	background: #f5f5f5;
-}
-
-	
-* html span.button a:link,
-* html span.button a:visited {
-	text-decoration: none;
-	border: 0;
-	padding: 0 4px;
 }
 
 .button a,
@@ -485,10 +463,6 @@ div#sitead {
 	color: #517ea7;
 }
 
-* html #sitesearchbar {
-	width: 180px;
-}
-
 #sitesearchbar .wrapper {
 	height: 33px;
 	background: url(coelesce/search_wide.jpg) 100% 0 no-repeat;
@@ -512,12 +486,6 @@ div#sitead {
 }
 
 #sitesearchbar .findtable {
-}
-
-/* The two lines below are a hack for IE6 */
-* html #sitesearchbar .findtable {
-	position: fixed;
-	margin-top: -18px;
 }
 
 #sitesearchbar .findtable ul.cssmenu {
@@ -562,11 +530,6 @@ input[name="search"] {
 	vertical-align: bottom;
 }
 
-* html #sitetitles {
-	display: inline;
-	margin-top: 6px;
-}
-
 #sitetitle,
 #sitesubtitle {
 	display: inline;
@@ -582,15 +545,6 @@ input[name="search"] {
 	color: #9eb8d5;
 	font-size: 34px;
 	display: inline;
-}
-
-* html #sitetitle {
-	height: 34px;
-}
-
-* html #sitesubtitle {
-	font-size: 14px;
-	height: 18px;
 }
 
 #sitetitle a,
@@ -614,14 +568,6 @@ input[name="search"] {
 	background: url(coelesce/pagebg.jpg) repeat-x;
 	padding-top: 2px;
 	clear: both;
-}
-
-* html #tiki-top {
-	font-size: 11px;
-}
-
-*:first-child+html #tiki-top {
-	height: 32px;
 }
 
 #tiki-top table {
@@ -659,10 +605,6 @@ a.flip img {
 .tellafriend {
 	padding: 0 30px;
 	text-align: right;
-}
-
-* html #tiki-center {
-	font-size: 1em;
 }
 
 #rss {
@@ -1065,11 +1007,6 @@ div#edithelpzone {
 	display: block;
 }
 
-/* End hide from IE Mac */
-* html .clearfix {
-	height: 1%;
-}
-
 #overdiv table {
 	width: auto !important;
 }
@@ -1172,10 +1109,6 @@ div#tikihelp {
 	background: transparent;
 }
 
-* html div#tikihelp {
-	position: absolute;
-}
-
 .help_title {
 	float: left;
 }
@@ -1274,10 +1207,6 @@ div.box {
 	overflow: hidden;
 }
 
-* html div.box {
-	width: 205px !important;
-}
-
 h3.box-title {
 	padding-top: 0;
 	padding-left: 15px;
@@ -1288,10 +1217,6 @@ h3.box-title {
 	border-bottom: 0;
 	height: 18px;
 	position: relative;
-}
-
-* html h3.box-title {
-	position: static;
 }
 
 .box-title a,
@@ -1306,22 +1231,12 @@ h3.box-title {
 	top: 0;
 }
 
-* html .moduleflip {
-	position: static;
-	float: right;
-}
-
-* html .moduleflip,
 .box:hover .moduleflip {
 	display: block;
 }
 
 .box:hover img.flipmodimage {
 	border: 1px solid transparent;
-}
-
-* html img.flipmodimage {
-	border: none;
 }
 
 img.flipmodimage:hover {
@@ -1418,17 +1333,8 @@ table.admin {
 	width: 100%;
 }
 
-* html table.normal, 
-* html table.admin {
-	width: 97%;
-}
-
 td {
 	vertical-align: top;
-}
-
-* html td {
-	font-size: 11px;
 }
 
 .odd {
@@ -1466,11 +1372,6 @@ th, table.normal td.heading {
 	background: #c3d3e5;
 	min-height: 32px;
 	text-align: center;
-}
-
-* html th,
-* html table.normal td.heading {
-	height: 32px;
 }
 
 .formcolor td {
@@ -1545,13 +1446,8 @@ a.forumnameread {
 	border: 0 transparent !important;
 }
 
-.tabinactive a,
-* html .tabinactive a:visited {
+.tabinactive a {
 	color: #fff;
-}
-
-* html .tabinactive a:hover {
-	color: #5a7ea2;
 }
 
 .tabcontent {
@@ -1643,13 +1539,6 @@ div#description,
 .wikiactions .icons,
 .wikiactions form {
 	display: inline-block;
-}
-
-*:first-child+html .wikiactions .icons,
-*:first-child+html .wikiactions form,
-* html .wikiactions .icons,
-* html .wikiactions form {
-	display: inline;
 }
 
 #backlinks {
@@ -1930,11 +1819,6 @@ div.articletitle h2 {
 	padding-top: 8px;
 }
 
-	
-* html div.articletitle h2 {
-	height: 26px;
-}
-
 .wikitext div.articletitle h2 {
 	font-size: 1.55em;
 	padding-top: 10px;
@@ -2061,10 +1945,6 @@ div.bloginfo {
 	text-transform: none;
 }
 
-* html .bloginfo table {
-	font-size: 11px;
-}
-
 div.blogtools {
 	padding: 3px;
 	text-align: right;
@@ -2101,10 +1981,6 @@ a.blogt:hover {
 	margin-top: 30%;
 }
 
-* html .postbody table {
-	font-size: 11px;
-}
-
 /***** Forums *****/
 body.tiki_forums table.normal {
 	margin: auto;
@@ -2129,11 +2005,6 @@ body.tiki_forums table.normal {
 	margin: 0;
 	margin-top: 5px;
 	font-size: 1.1em;
-}
-
-	
-* html .post .postbody {
-	font-size: 11px;
 }
 
 .top_post .post .postbody {
@@ -2564,10 +2435,6 @@ table.galtable {
 	width: 100%;
 }
 
-* html body table.galtable {
-	width: 97%;
-}
-
 body.tiki_galleries table.findtable {
 	display: inline;
 }
@@ -2940,10 +2807,6 @@ a.viewthisday:hover {
 	float: right;
 }
 
-* html .addevent {
-	padding: 0;
-}
-
 .calodd, .caleven {
 	border: 1px solid #a9a9a9;
 }
@@ -2952,20 +2815,8 @@ a.viewthisday:hover {
 	background: #fbfbfb;
 }
 
-* html .calodd {
-	padding: 0;
-}
-
 .caleven {
 	background: #f0f0f0;
-}
-
-* html .caleven {
-	padding: 0;
-}
-
-* html .caldark {
-	padding: 0;
 }
 
 .caldark .calfocus {

@@ -102,8 +102,6 @@ select {
 	margin: 0 2px;
 }
 
-/** html .wikitopline select {font-size: .9em}*/
-
 input[type=checkbox],
 input[type=radio] {
 	border: 0;
@@ -282,19 +280,8 @@ ul.jumplinks a:active {
 	position: relative;
 }
 
-	
-* html #header {
-	height: 121px;
-}
-
-* html #header,
-*:first-child+html #header {
-	background: #fff;
-}
-
 #middle {
 	background: #fff;
-	/*	height: 70%;*/
 	padding-top: 40px;
 	padding-bottom: 40px;
 }
@@ -308,7 +295,6 @@ ul.jumplinks a:active {
 	margin-right: 30px !important;
 }
 
-	
 #c1c2 #wrapper .marginleft {
 	margin-left: 240px;
 }
@@ -455,7 +441,6 @@ div#tiki-main #tikimidtbl {
 	margin: 0 58px;
 }
 
-	
 div#sioptions {
 	background: #214d68 url(strasa/headerbg.jpg) repeat-x 0 100%;
 	padding: 0 58px;
@@ -506,17 +491,6 @@ div#sitead {
 	padding-left: 60px;
 	color: #fff;
 	background: #fff url(strasa/login.jpg) 0 0 no-repeat;
-}
-
-* html #siteloginbar {
-	text-align: right;
-	width: 100%;
-	padding: 0;
-	background: #fff url(strasa/loginlong.jpg) 0 0 no-repeat;
-}
-
-*:first-child+html #siteloginbar {
-	text-align: right;
 }
 
 #siteloginbar a,
@@ -573,19 +547,8 @@ div#sitead {
 	font-weight: normal;
 }
 
-	
 div.logged-in {
 	padding-right: 20px;
-}
-
-* html .logged-in {
-	color: #5ae0ff !important;
-	background: none !important;
-}
-
-* html .logged-in a,
-* html .logged-in a:visited {
-	color: #5ae0ff !important;
 }
 
 #sitelocbar {
@@ -646,10 +609,6 @@ div.logged-in {
 #tiki-top {
 	text-align: right;
 	margin-right: 40px;
-}
-
-* html #tiki-top {
-	font-size: 11px;
 }
 
 #tiki-top a,
@@ -733,11 +692,6 @@ a.flip img {
 	clear: both;
 }
 
-/* IE */
-* html #tiki-center {
-	font-size: 1em;
-}
-
 #rss {
 	padding: 1em 1em 0;
 }
@@ -779,12 +733,6 @@ a.flip img {
 	white-space: nowrap;
 }
 
-* html .horbar {
-	top: 10px;
-	left: auto;
-	right: 40px;
-}
-
 .horbar table {
 	width: auto;
 	text-align: left;
@@ -813,11 +761,6 @@ a.flip img {
 	color: #fff;
 }
 
-* html .horbaritem a {
-	font-size: 1em;
-	border-color: #224a5f;
-}
- 
 .mdksubmenu {
 	z-index: 999;
 	position: absolute;
@@ -827,10 +770,6 @@ a.flip img {
 	margin-top: 3px;
 }
 	
-* html .mdksubmenu {
-	margin-top: 0;
-}
-
 .mdksubmenu table {
 	width: auto;
 }
@@ -1104,11 +1043,6 @@ div#edithelpzone {
 	display: block;
 }
 
-/* End hide from IE Mac */
-* html .clearfix {
-	height: 1%;
-}
-
 #overdiv table {
 	width: auto !important;
 }
@@ -1139,7 +1073,6 @@ span.highlight {
 .bannertext:hover {
 	color: #000000;
 }
-
 
 .mini {
 	width: 100%;
@@ -1215,10 +1148,6 @@ div#tikihelp {
 	background: transparent;
 	z-index: 820;
 	height: 100%;
-}
-
-* html div#tikihelp {
-	position: absolute;
 }
 
 .help_title {
@@ -1304,11 +1233,6 @@ div.box {
 	border-bottom: 2px ridge #bed8f1;
 }
 
-* html #col2 .box,
-* html #col3 .box {
-	width: 181px;
-}
-
 #col3 .box {
 	border-bottom: 1px solid #cfcfcf;
 }
@@ -1317,10 +1241,6 @@ h3.box-title {
 	padding-top: 4px;
 	padding-left: 10px;
 	position: relative;
-}
-
-* html h3.box-title {
-	position: static;
 }
 
 #col2 .box-title {
@@ -1335,22 +1255,12 @@ h3.box-title {
 	top: 0;
 }
 
-* html .moduleflip {
-	position: static;
-	float: right;
-}
-
-* html .moduleflip,
 .box:hover .moduleflip {
 	display: block;
 }
 
 .box:hover img.flipmodimage {
 	border: 1px solid transparent;
-}
-
-* html img.flipmodimage {
-	border: none;
 }
 
 img.flipmodimage:hover {
@@ -1445,18 +1355,8 @@ table.admin {
 	width: 100%;
 }
 
-* html table.normal, 
-* html table.admin,
-* html table.bloglist {
-	width: 97%;
-}
-
 td {
 	vertical-align: top;
-}
-
-* html td {
-	font-size: 11px;
 }
 
 .formcolor td,
@@ -2109,10 +2009,6 @@ div.bloginfo {
 	text-transform: none;
 }
 
-* html .bloginfo table {
-	font-size: 11px;
-}
-
 div.blogtools {
 	padding: 3px;
 	text-align: right;
@@ -2165,11 +2061,6 @@ body.tiki_blogs .postbody-title {
 	border: 0;
 }
 
-	
-* html body.tiki_blogs .postbody-title {
-	height: 46px;
-}
-
 body.tiki_blogs .postbody-title img {
 	float: right;
 }
@@ -2203,10 +2094,6 @@ body.tiki_blogs .actions img.icon {
 
 body.tiki_blogs .author_info {
 	min-height: 24px;
-}
-
-* html body.tiki_blogs .author_info {
-	height: 24px;
 }
 
 body.tiki_blogs .author_info img {
@@ -2251,11 +2138,6 @@ body.tiki_forums table.normal {
 	margin-top: 5px;
 	padding: 0;
 	background: #fff;
-}
-
-	
-* html .post .postbody {
-	font-size: 11px;
 }
 
 .post .postbody .content {
@@ -2556,7 +2438,6 @@ a.freetag_2 {
 	font-size: .9em;
 }
 
-	
 a.freetag_3 {
 	text-decoration: none;
 	font-size: 1em;
@@ -2607,10 +2488,6 @@ table.galtable {
 	border-collapse: collapse;
 	border: 1px solid #696969;
 	width: 100%;
-}
-
-* html body table.galtable {
-	width: 97%;
 }
 
 body.tiki_galleries table.findtable {
@@ -2818,7 +2695,6 @@ div.multiselect {
 	color: #00BD02;
 }
 
-	
 .calweb {
 	font-size: 90%;
 }
@@ -3038,10 +2914,6 @@ div.multiselect {
 	float: right;
 }
 
-* html .addevent {
-	padding: 0;
-}
-
 .calodd, .caleven {
 	border: 1px solid #a9a9a9;
 }
@@ -3050,24 +2922,12 @@ div.multiselect {
 	background: #f0f0f0;
 }
 
-* html .calodd {
-	padding: 0;
-}
-
 .caleven {
 	background: #dcdcdc;
 }
 
-* html .caleven {
-	padding: 0;
-}
-
 .caldark {
 	background: #cce5ff;
-}
-
-* html .caldark {
-	padding: 0;
 }
 
 .caldark .calfocus {
@@ -3081,7 +2941,6 @@ div.pollresults {
 	padding: 0 5px;
 }
 
-	
 table.pollresults {
 	width: 100%;
 }

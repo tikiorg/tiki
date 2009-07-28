@@ -113,11 +113,6 @@ select {
 	vertical-align: middle;
 }
 
-/* IE */
-* html .wikitopline select {
-	font-size: .9em;
-}
-
 input[type=checkbox],
 input[type=radio] {
 	border: 0;
@@ -184,10 +179,6 @@ span.button a:hover,
 
 input[type=checkbox] {
 	border: 0;
-}
-
-* html .findtable input {
-	font-size: 1em;
 }
 
 .findtable ul {
@@ -336,10 +327,6 @@ ul.jumplinks a:focus, ul.jumplinks a:active {
 	position: relative;
 }
 
-* html #header-top {
-	height: 1%;
-}
-
 /* Look & Feel options */
 #siteheader {
 	text-align: left;
@@ -451,10 +438,6 @@ div#sitead {
 	margin-left: 214px;
 }
 
-* html #c1c2 #wrapper .marginleft {
-	margin-left: 216px;
-}
-
 #c1c2 #wrapper .marginright {
 	margin-right: 214px;
 }
@@ -531,11 +514,6 @@ a.flip img {
 
 #tiki-center .phplmnormal img {
 	margin: 0;
-}
-
-/* IE */
-* html #tiki-center {
-	font-size: 1em;
 }
 
 #c1c2 #col2 {
@@ -619,12 +597,6 @@ div#tiki-main #tikimidtbl {
  
 .horbaritem img {
 	vertical-align: middle;
-}
-
-/* IE */
-* html .horbaritem a,
-* html .mdkitem a {
-	font-size: 1em;
 }
 
 /* contains mdksubframe div */
@@ -755,10 +727,6 @@ a.phplmselected:hover {
 	min-width: 11em;
 }
 
-* html div.box-css_menu ul {
-	margin-left: 0;
-}
-
 #col2 .cssmenu_vert,
 #col2 .cssmenu_vert li {
 	width: 180px;
@@ -795,22 +763,6 @@ a.phplmselected:hover {
 
 .cssmenu_horiz li ul ul {
 	margin: -1em 0 0 11em;
-}
-
-* html #col2 .cssmenu_vert,
-* html #col2 .cssmenu_vert li {
-	margin-left: 0;
-	padding-left: 0;
-	width: 160px;
-}
-
-	
-* html #col2 .cssmenu_vert li ul {
-	margin-left: 160px;
-}
-
-*:first-child+html #col2 .cssmenu_vert {
-	margin-left: 0;
 }
 
 .cssmenu a,	
@@ -942,11 +894,6 @@ div#edithelpzone {
 	display: block;
 }
 
-/* End hide from IE Mac */
-* html .clearfix {
-	height: 1%;
-}
-
 #overdiv table {
 	width: auto !important;
 }
@@ -1019,10 +966,6 @@ div#tikihelp {
 	height: 100%;
 }
 
-* html div#tikihelp {
-	position: absolute;
-}
-
 .help_title {
 	float: left;
 }
@@ -1079,11 +1022,6 @@ div.box {
 	margin: 9px;
 }
 
-* html #col2 div.box,
-* html #col3 div.box {
-	width: 181px;
-}
-
 h3.box-title {
 	margin: 0 0 7px 1em;
 	padding: 0;
@@ -1096,10 +1034,6 @@ h3.box-title {
 	font: normal 90% Arial, Helvetica, sans-serif;
 }
 
-* html h3.box-title {
-	position: static;
-}
-
 .moduleflip {
 	display: none;
 	position: absolute;
@@ -1107,18 +1041,10 @@ h3.box-title {
 	top: 0;
 }
 
-* html .moduleflip {
-	position: static;
-	float: right;
-	margin-top: -16px;
-}
-
-* html .moduleflip,
 .box:hover .moduleflip {
 	display: block;
 }
 
-* html .box img.flipmodimage,
 .box:hover img.flipmodimage {
 	height: 13px;
 	width: 13px;
@@ -1126,18 +1052,6 @@ h3.box-title {
 	background: #fff;
 }
 	
-* html #col2 img.flipmodimage {
-	right: 8px;
-}
-
-* html #col3 img.flipmodimage {
-	right: 20px;
-}
-
-* html .box img.flipmodimage {
-	border: none;
-}
-
 img.flipmodimage:hover {
 	border: 1px solid #AAAAAA !important;
 }
@@ -1151,10 +1065,6 @@ img.flipmodimage:hover {
 
 .box-data {
 	padding-bottom: 8px;
-}
-
-* html .box-data {
-	padding: 7px 7px 30px 7px;
 }
 
 .box-data ol,
@@ -1172,24 +1082,6 @@ img.flipmodimage:hover {
 	padding-left: 1em;
 	margin-top: 0;
 	margin-bottom: 0;
-}
-
-/* IE */
-* html .box-data ol {
-	margin-left: 0;
-}
-
-* html .box-data ul {
-	margin-left: 1em;
-}
-
-/* IE7 */
-*:first-child+html .box-data ol {
-	margin-left: 0;
-}
-
-*:first-child+html .box-data ul {
-	margin-left: 1em;
 }
 
 .box-data ul li {
@@ -1301,10 +1193,6 @@ table.normal th {
 	
 td {
 	vertical-align: top;
-}
-
-* html td {
-	font-size: 11px;
 }
 
 table.normal td,
@@ -1560,10 +1448,6 @@ div#description,
 
 .wikitopline table {
 	width: 100%;
-}
-
-* html .wikitopline table {
-	width: 97%;
 }
 
 /* End from Tikineat */
@@ -2054,14 +1938,6 @@ td.forumtoolbar {
 	background: #F9FCFF;
 }
 
-* html .post .postbody {
-	font-size: 11px;
-}
-
-*:first-child+html .postbody {
-	min-width: 100%;
-}
-
 .postbody-title {
 	width: 100%;
 	float: none;
@@ -2361,14 +2237,6 @@ div.freetagobjecttype {
 table.galtable {
 	border-collapse: collapse;
 	border: 1px solid #8CACBB;
-	width: 100%;
-}
-
-* html body table.galtable {
-	width: 97%;
-}
-
-html>body .galtable {
 	width: 100%;
 }
 

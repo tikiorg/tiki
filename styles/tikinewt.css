@@ -25,10 +25,6 @@ body {
 	color: #000;
 }
 
-*:first-child+html body {
-	font-size: 70%;
-}
-
  /***** Layout (overrides layout.css
 		and styles page layout divs)  *****/
 div#tiki-main {
@@ -60,10 +56,6 @@ div#tiki-main {
 	margin: 8px 3px 0;
 	padding: 5px;
 	border: 1px solid #8cacbb;
-}
-
-* html #tiki-center {
-	font-size: 1em;
 }
 
 #c1c2 #wrapper .marginleft {
@@ -205,10 +197,6 @@ select {
 	vertical-align: middle;
 }
 
-* html .wikitopline select {
-	font-size: .9em;
-}
-
 button,
 input {
 	margin-right: 1px;
@@ -265,35 +253,11 @@ span.button input,
 	font: bold .95em/2em Verdana, Helvetica, Geneva, Arial, sans-serif;
 }
 
-	
-* html input[type=submit],
-* html input[type=reset] {
-	color: #223344;
-	background: #c7d0d9;
-	border: 1px solid #999;
-	padding: 0 4px;
-	margin-right: 1px;
-	text-decoration: none;
-	white-space: nowrap;
-	cursor: pointer;
-	display: inline;
-	outline: none;
-	font: bold .95em/2em Verdana, Helvetica, Geneva, Arial, sans-serif;
-}
-
-	
 .button a,
 .button a:visited {
 	padding: 1px 4px;
 }
 	
-* html span.button a:link,
-* html span.button a:visited {
-	text-decoration: none;
-	border: 0;
-	padding: 0 4px;
-}
-
 span.button a:hover,
 button:hover,
 input[type=reset]:hover,
@@ -452,10 +416,6 @@ div#sitelogo {
 .horbaritem {
 	padding: 2px 6px;
 	border-right: 1px solid #8cacbb;
-}
-
-* html .horbaritem a {
-	font-size: .8em;
 }
 
 .mdkverbar {
@@ -696,13 +656,6 @@ h3.box-title {
 	top: 0;
 }
 
-* html .moduleflip {
-	position: static;
-	float: right;
-	margin-top: -16px;
-}
-
-* html .moduleflip,
 .box:hover .moduleflip {
 	display: block !important;
 }
@@ -882,11 +835,6 @@ div.heading, th {
 	padding: 0 2px;
 }
 
-* html td,
-* html th {
-	font-size: 11px;
-}
-
 form.admin {
 	padding: 3px;
 }
@@ -1017,10 +965,6 @@ td.third {
 	padding: 2px 1% 9px;
 	font-size: 140%;
 	text-align: center;
-}
-
-* html td.third {
-	font-size: 13px;
 }
 
 /** Tabs **/
@@ -1224,20 +1168,12 @@ div.wikitext div.img {
 	width: 100%;
 }
 
-* html .wikitopline table {
-	width: 97%;
-}
-
 div#description,
 .description {
 	display: block;
 	font-size: .95em;
 	font-style: italic;
 	color: #666;
-}
-
-* html .wikitopline table {
-	font-size: 1.2em;
 }
 
 .wikinew {
@@ -1613,14 +1549,6 @@ body.tiki_blogs .postfooter .actions {
 	background: #f9fcff;
 }
 
-* html .post .postbody {
-	font-size: 11px;
-}
-
-*:first-child+html .post .postbody {
-	min-width: 100% !important;
-}
-
 .postbody-title {
 	display: block;
 	clear: both;
@@ -1757,10 +1685,6 @@ table.galtable {
 	width: 100%;
 }
 
-* html body table.galtable {
-	width: 97%;
-}
-
 td.oddthumb {
 	background: #e7e9ea;
 	border: 1px solid #8cacbb;
@@ -1824,11 +1748,6 @@ div.thumbimage {
 	vertical-align: middle;
 	left: 0;
 	top: 50%;
-}
-
-* html div.thumbname,
-* html div.thumbimage {
-	position: absolute;
 }
 
 div.thumbnamesub, div.thumbimagesub {
