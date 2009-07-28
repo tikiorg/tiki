@@ -43,6 +43,20 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
         $this->assertEquals($expectedImportFeedback, $_SESSION['tiki_importer_feedback']);
     }
 
+    public function testImportShouldCallCheckRequirementsForAttachments()
+    {
+        $parsedData = 'Some text';
+
+        $obj = $this->getMock('TikiImporter_Wiki_Mediawiki', array('validateInput', 'parseData', 'insertData', 'checkRequirementsForAttachments'));
+        $obj->expects($this->once())->method('validateInput');
+        $obj->expects($this->once())->method('parseData')->will($this->returnValue($parsedData));
+        $obj->expects($this->once())->method('insertData')->with($parsedData);
+        $obj->expects($this->once())->method('checkRequirementsForAttachments');
+        $_POST['importAttachments'] = 1;
+
+        $obj->import(dirname(__FILE__) . '/fixtures/mediawiki_sample.xml');
+    }
+
     public function testImportShouldRaiseExceptionForInvalidMimeType()
     {
         require_once(dirname(__FILE__) . '/../../init/tra.php');
@@ -68,16 +82,16 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
 
    public function testParseData()
     {
-        $obj = $this->getMock('TikiImporter_Wiki_Mediawiki', array('extractInfo'));
+        $obj = $this->getMock('TikiImporter_Wiki_Mediawiki', array('extractInfo', 'downloadAttachment'));
         $obj->dom = new DOMDocument;
         $obj->dom->load(dirname(__FILE__) . '/fixtures/mediawiki_sample.xml');
         $obj->expects($this->exactly(4))->method('extractInfo')->will($this->returnValue(array()));
         $this->assertEquals(4, count($obj->parseData()));
     }
 
-    public function testParseDataShouldPrintMessageIfErrorToParseAPage()
+    public function testParseDataShouldPrintMessageIfErrorToParseAPageWhenExtractInfoReturnException()
     {
-        $obj = $this->getMock('TikiImporter_Wiki_Mediawiki', array('extractInfo', 'saveAndDisplayLog'));
+        $obj = $this->getMock('TikiImporter_Wiki_Mediawiki', array('extractInfo', 'saveAndDisplayLog', 'downloadAttachment'));
         $obj->expects($this->exactly(4))->method('extractInfo')->will($this->throwException(new ImporterParserException('')));
         $obj->expects($this->exactly(5))->method('saveAndDisplayLog')->will($this->returnValue(''));
 
@@ -85,6 +99,31 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
         $obj->dom->load(dirname(__FILE__) . '/fixtures/mediawiki_sample.xml');
 
         $this->assertEquals(array(), $obj->parseData());
+    }
+
+    public function testParseDataHandleDifferentlyPagesAndFilePages()
+    {
+        $obj = $this->getMock('TikiImporter_Wiki_Mediawiki', array('extractInfo', 'saveAndDisplayLog', 'downloadAttachment'));
+        $obj->expects($this->exactly(4))->method('extractInfo')->will($this->returnValue(array()));
+        $obj->expects($this->exactly(2))->method('downloadAttachment')->will($this->returnValue(array()));
+        $obj->importAttachments = true;
+
+        $obj->dom = new DOMDocument;
+        $obj->dom->load(dirname(__FILE__) . '/fixtures/mediawiki_sample.xml');
+        $this->assertEquals(4, count($obj->parseData()));
+   }
+
+    public function testDownloadAttachment()
+    {
+        $this->obj->attachmentsDestDir = dirname(__FILE__) . '/fixtures/';
+        $dom = new DOMDocument;
+        $dom->load(dirname(__FILE__) . '/fixtures/mediawiki_upload.xml');
+        $upload = $dom->getElementsByTagName('upload')->item(0);
+        $filePath = $this->obj->attachmentsDestDir . $upload->getElementsByTagName('filename')->item(0)->nodeValue;
+        $this->expectOutputString("File Qlandkartegt-0.11.1.tar.gz sucessfully imported!\n");
+        $this->obj->downloadAttachment($upload);
+        $this->assertFileExists($filePath);
+        unlink($filePath);
     }
 
     public function testExtractInfo()
