@@ -3101,7 +3101,8 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_invite', 'Can invite user in groups', 'editors', 'tiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_delete_account', 'Can delete his own account', 'admin', 'tiki');
 INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('tiki_p_admin_importer', 'Can use the Tiki Importer', 'admin', 'tiki', 'y');
-
+ 
+ INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('tiki_p_admin_categories', 'Can admin categories', 'editors', 'category', 'y');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_category', 'Can see the category in a listing', 'basic', 'category');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_modify_object_categories', 'Can change the categories on the object', 'editors', 'tiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_add_object', 'Can add objects in the category', 'editors', 'category');

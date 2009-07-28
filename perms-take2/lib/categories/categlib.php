@@ -1349,20 +1349,14 @@ class CategLib extends ObjectLib {
 	 * Returns true if the given user has view permission for the category.
 	 */
 	function has_view_permission($user, $categoryId) {
-		global $userlib;
-							
-		return ($userlib->user_has_permission($user,'tiki_p_admin')
-				|| ($userlib->user_has_permission($user,'tiki_p_view_categorized') && !$userlib->object_has_one_permission($categoryId,"category"))
-				|| ($userlib->user_has_permission($user,'tiki_p_admin_categories') && !$userlib->object_has_one_permission($categoryId,"category"))				 
-				|| $userlib->object_has_permission($user, $categoryId, "category", "tiki_p_view_categorized") 
-				|| $userlib->object_has_permission($user, $categoryId, "category", "tiki_p_admin_categories")
-				);
+		return Perms::get( array( 'type' => 'category', 'object' => $categoryId ) )->view_category;
 	}
 
 	/**
 	 * Returns true if the given user has edit permission for the category.
 	 */
 	function has_edit_permission($user, $categoryId) {
+		// TODO Fix this, only used by staging and approval, edit no longer has a meaning
 		global $userlib;
 		return ($userlib->user_has_permission($user,'tiki_p_admin')
 				|| ($userlib->user_has_permission($user,'tiki_p_edit_categorized') && !$userlib->object_has_one_permission($categoryId,"category"))
