@@ -924,21 +924,8 @@ class CategLib extends ObjectLib {
 	}
 
 	function get_all_categories_respect_perms($user, $perm) {
-		global $cachelib; include_once('lib/cache/cachelib.php');
-		global $userlib;
-		
 		$result = $this->get_all_categories_ext();
-		$ret = array();
-		foreach ($result as $res) {
-			if ($userlib->user_has_permission($user, 'tiki_p_admin')) {
-				$ret[] = $res;				
-			} else {
-				if ($userlib->user_has_perm_on_object($user, $res['categId'], 'category', $perm)) {
-					$ret[] = $res;
-				}
-			}
-		}
-		return $ret;
+		return Perms::filter( array( 'type' => 'category' ), 'object', $result, array( 'object' => 'categId' ), $perm );
 	}
 
 	

@@ -54,10 +54,12 @@ if (isset($_REQUEST["deep"]) && $_REQUEST["deep"] == 'on') {
 }
 $canView = false;
 if (is_array($_REQUEST['parentId'])) {
+	Perms::bulk( array( 'type' => 'category' ), 'object', $_REQUEST['parentId'] );
 	foreach($_REQUEST['parentId'] as $p) {
-		$paths[] = $categlib->get_category_path($p);
-		$p_info = $categlib->get_category($p);
-		if ($userlib->user_has_perm_on_object($user, $p_info['categId'], 'category', 'tiki_p_view_categories')) {
+		$perms = Perms::get( array( 'type' => 'category', 'object' => $p ) );
+		if( $perms->view_category ) {
+			$paths[] = $categlib->get_category_path($p);
+			$p_info = $categlib->get_category($p);
 			$canView = true;
 		}
 	}
@@ -65,13 +67,13 @@ if (is_array($_REQUEST['parentId'])) {
 } else {
 	// If the parent category is not zero get the category path
 	if ($_REQUEST["parentId"]) {
+		$perms = Perms::get( array( 'type' => 'category', 'object' => $_REQUEST['parentId'] ) );
+
 		$path = $categlib->get_category_path($_REQUEST["parentId"]);
 		$p_info = $categlib->get_category($_REQUEST["parentId"]);
 		$father = $p_info["parentId"];
 		$smarty->assign_by_ref('p_info', $p_info);
-		if ($userlib->user_has_perm_on_object($user, $p_info['categId'], 'category', 'tiki_p_view_categories')) {
-			$canView = true;
-		}
+		$canView = $perms->view_category;
 	} else {
 		$path = tra("TOP");
 		$father = 0;
@@ -86,8 +88,8 @@ if (!$canView) {
 	$smarty->display("error.tpl");
 	die;
 }
-//$ctall = $categlib->get_all_categories();
-$ctall = $categlib->get_all_categories_respect_perms($user, 'tiki_p_view_categories');
+
+$ctall = $categlib->get_all_categories_respect_perms(null, 'view_category');
 if ($prefs['feature_phplayers'] == 'y' && $prefs['feature_category_use_phplayers'] == 'y') {
 	global $tikiphplayers;
 	include_once ('lib/phplayers_tiki/tiki-phplayers.php');

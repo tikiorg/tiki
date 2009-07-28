@@ -14,6 +14,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 require_once('tiki-setup.php');  
 global $prefs, $userlib;
+$catobjperms = Perms::get( array( 'type' => $cat_type, 'object' => $cat_objid ) );
 
 $smarty->assign('mandatory_category', '-1');
 if ($prefs['feature_categories'] == 'y' && isset($cat_type) && isset($cat_objid)) {
@@ -50,20 +51,22 @@ if ($prefs['feature_categories'] == 'y' && isset($cat_type) && isset($cat_objid)
 
 	if( ! empty( $all_categories ) ) {
 		$categories = Perms::filter( array( 'type' => 'category' ), 'object', $all_categories, array( 'object' => 'categId' ), 'view_category' );
+	} else {
+		$categories = array();
 	}
 
-if (isset ($categories)) {
 	$num_categories = count($categories);
-}
-else {
-	$num_categories = 0;
-};
+ 	$can = $catobjperms->modify_object_categories;
 
 	for ($i = 0; $i < $num_categories; $i++) {
+		$catperms = Perms::get( array( 'type' => 'category', 'object' => $categories[$i]['categId'] ) );
+
 		if (!empty($cats) && in_array($categories[$i]["categId"], $cats)) {
 			$categories[$i]["incat"] = 'y';
+			$categories[$i]['canchange'] = $can && $catperms->remove_object;
 		} else {
 			$categories[$i]["incat"] = 'n';
+			$categories[$i]['canchange'] = $can && $catperms->add_object;
 		}
 		if (isset($_REQUEST["cat_categories"]) && isset($_REQUEST["cat_categorize"]) && $_REQUEST["cat_categorize"] == 'on') {
 			if (in_array($categories[$i]["categId"], $_REQUEST["cat_categories"])) {
@@ -81,10 +84,11 @@ else {
 	$tree_nodes = array();
 	foreach ($categories as $c) {
 		if (isset($c['name']) || $c['parentId'] != 0) {
+			$smarty->assign( 'category_data', $c );
 			$tree_nodes[] = array(
 				'id' => $c['categId'],
 				'parent' => $c['parentId'],
-				'data' => '<span class="tips" title="'.$c['description'].'"><input type="checkbox" name="cat_categories[]" value="' . $c['categId'] . ($c['incat'] == 'y' ? '" checked="checked"' : '" ') . '/> ' . $c['name'] . '</span>'
+				'data' => $smarty->fetch( 'category_tree_entry.tpl' ),
 			);
 			if ($c['parentId'] == 0) {
 				$tree_nodes[count($tree_nodes) - 1]['data'] = '<strong>'.$tree_nodes[count($tree_nodes) - 1]['data'].'</strong>';

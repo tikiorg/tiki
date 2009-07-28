@@ -53,12 +53,21 @@ if ($prefs['feature_categories'] == 'y' && $catobjperms->modify_object_categorie
 		$categories = $categlib->list_categs($prefs['feature_wiki_mandatory_category']);
 	else
 		$categories = $categlib->list_categs();
+
+	$categories = Perms::filter( array( 'type' => 'category' ), 'object', $categories, array( 'object' => 'categId' ), 'view_category' );
+
 	$num_categories = count($categories);
+ 	$can = $catobjperms->modify_object_categories;
+
 	for ($iCat = 0; $iCat < $num_categories; $iCat++) {
+		$catperms = Perms::get( array( 'type' => 'category', 'object' => $categories[$i]['categId'] ) );
+
 		if (in_array($categories[$iCat]["categId"], $cats)) {
 			$categories[$iCat]["incat"] = 'y';
+			$categories[$i]['canchange'] = $can && $catperms->remove_object;
 		} else {
 			$categories[$iCat]["incat"] = 'n';
+			$categories[$i]['canchange'] = $can && $catperms->add_object;
 		}
 	}
 	$smarty->assign_by_ref('categories', $categories["data"]);
