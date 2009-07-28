@@ -1,4 +1,37 @@
 <?php
+/**
+ * installlib.php - TikiWiki CMS/GroupWare
+ *
+ * This library defines the handlers of Profiles. 
+ *
+ * A list of current working handlers are:
+ * 	Trackers
+ * 	Wiki Pages
+ * 	Categories
+ * 	File Galleries
+ * 	Menus
+ * 	Modules
+ * 	Blogs
+ * 	Blogs post
+ * 	Plugin Alias
+ * 	Webservices
+ * 	Rss
+ * 	Topic
+ * 	Article
+ * 	Article Type
+ * 	Forum
+ * 	Template
+ *
+ * A list of current handlers in development are:
+ * 	Workspaces (known as WS)
+ * 	Perspective
+ *
+ * TODO: Poor documented, this for newbies is the worst thing.
+ *
+ * @package 	lib
+ * @author	Louis Philippe (lphuberdau) <email> 
+ * @license	http://www.opensource.org/licenses/lgpl-2.1.php
+ */
 
 class Tiki_Profile_Installer
 {
@@ -199,8 +232,7 @@ class Tiki_Profile_Installer
 		{
 			$handler = $this->getInstallHandler( $object );
 			if( ! $handler )
-				throw new Exception( "No handler found for object type {$object->getType()} in {$profile->domain}:{$profile->profile}" );
-
+				throw new Exception( "No handler found for object type {$object->getType()} in {$profile->domain}:{$profile->profile}" );			
 			$handler->getData();
 			if( ! $handler->canInstall() )
 				throw new Exception( "Object (#{$object->getRef()}) of type {$object->getType()} in {$profile->domain}:{$profile->profile} does not validate" );
@@ -702,7 +734,12 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 			$this->translations = $data['translations'];
 	}
 
-	function canInstall()
+	function getData()
+	{
+	    $this->fetchData();
+	}
+
+	public function canInstall()
 	{
 		$this->fetchData();
 		if( empty( $this->name ) || empty( $this->content ) )
@@ -1898,11 +1935,6 @@ class Tiki_Profile_InstallHandler_Template extends Tiki_Profile_InstallHandler /
 //Working on it, probably a lot of bugs to solve
 class Tiki_Profile_InstallHandler_Workspaces extends Tiki_Profile_InstallHandler
 {
-    //This array stores all magic keywords used by this handler
-    private $specialKeywords = array(
-	"all",
-	"drain_perms"
-    );
 
     private function fetchGroupData($subArray)
     {
@@ -1911,7 +1943,7 @@ class Tiki_Profile_InstallHandler_Workspaces extends Tiki_Profile_InstallHandler
 	    $groupsArray[] = array (
 		"groupName" => $group['name'],
 		"groupDescription" => $group['description'],
-		"noCreateNewGroup" => $group['new_group'],
+		"noCreateNewGroup" => isset($group['new_group']) ? $group['new_group'] : false,
 		"additionalPerms" => $this->doPermsConvertions ($group['allow']));
 
 	    if (isset($group['members']))
@@ -1940,8 +1972,21 @@ class Tiki_Profile_InstallHandler_Workspaces extends Tiki_Profile_InstallHandler
     {
 	if ( $this->data ) return $this->data;
 
-	$data = $this->obj->getData();
-	$data = Tiki_Profile::convertYesNo( $data );
+	$defaults = array(
+	    'parent' => null,
+	);
+
+	$data = array_merge(
+	    $defaults,
+	    $this->obj->getData()
+	);
+
+	/*$data['preferences'] = Tiki_Profile::convertLists( $data['preferences'], array(
+	    'enable' => 'y', 
+	    'disable' => 'n'
+	) );*/
+
+	//$data['preferences'] = Tiki_Profile::convertYesNo( $data['preferences'] );
 
 	return $this->data = $data;
     }
@@ -1949,10 +1994,9 @@ class Tiki_Profile_InstallHandler_Workspaces extends Tiki_Profile_InstallHandler
     //Needs to be more precise, but for now is OK
     function canInstall()
     {
-	global $prefs; //require_once 'lib/workspaces/wslib.php';
 	$data = $this->getData();
 
-	if ( ($prefs['ws_container']) && array_key_exists("name", $data) && array_key_exists("groups", $data) ) return true;
+	if ( isset($data["name"]) && isset($data["groups"]) && isset($data['items']) ) return true;
 	else return false;
     }
 
@@ -1960,18 +2004,28 @@ class Tiki_Profile_InstallHandler_Workspaces extends Tiki_Profile_InstallHandler
     {
 	$data = $this->getData();
 
+	var_dump($this->replaceReferences( $data ));
+
 	global $wslib; require_once 'lib/workspaces/wslib.php';
+
 	if ($this->canInstall()){
 	    $id = $wslib->create_ws($data['name'], $this->fetchGroupData($data), $data['parent'], $data['description']);
 
-	    //Hummm I'm in trouble, lol
-	    /*if (isset($data['objects'])){
-		$helper = new Tiki_Profile();
-		
-		$installer = new Tiki_Profile_Installer();
-		$installer->install()
-	    }*/
-	    var_dump($data);
+	    //With this I can obtain what objects was installed before the install of the ws
+	    $profile_id = Tiki_Profile::withPrefix( '' );
+	    global $tikilib;
+	    $result = $tikilib->query( "SELECT value FROM tiki_profile_symbols WHERE profile like '%$profile_id%'" );
+
+	    //This needs more development, but for today is ok!
+	    $i=0;
+	    foreach ($data['items'] as $item)
+	    {
+		$wslib->add_ws_object($id, $result->result[$i]['value'], $item['type']);
+		foreach ($data['items'][$i]['groups'] as $group)
+    		    $wslib->set_permissions_for_groups_in_object($result->result[$i]['value'], $item['type'], array("groupName" => $group, "permList" => $data['items'][$i]['allow']));
+		$i++;
+	    }
+
 	    return $id;
 	}
     }

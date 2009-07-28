@@ -33,7 +33,7 @@ class wslib extends CategLib
     /** Stores this objectype, this is WS */
     private $objectType;
 
-    /** Constructor, give the dbtiki to its parent, this is Categlib */
+    /** Constructor, set the atributes in wslib */
     public function __construct()
     {
 	global $prefs;
@@ -138,7 +138,7 @@ class wslib extends CategLib
     }
 
     /** Generate a group name specially created for WS. With this we can avoid the problems related to have two groups with the same name
-     * NOTE: For now is OK, if the future implementation of groups change, this would change!
+     * TODO: This is no longer nedeed!
      *
      * @param $id_ws The WS id
      * @param $wsname The WS name
@@ -151,11 +151,7 @@ class wslib extends CategLib
     }
 
     /** Parse a group name with the form $ws_id<:>$wsName<:>$nameGroup
-     * Allowed characters in $ws_id are 0-9 with a variable length of 1 to 11 digits
-     * Allowed characters in $wsName are 0-9, A-Z, a-z, whitespace, -, < and >
-     * Allowed characters in $nameGroup are the same as above
-     * TODO: Work in progress, needs to be checked if works properly (I'm newbie to regex world :P)
-     * Yeah, I know, this exp is far from being perfect, but for testing purposes is OK
+     * TODO: This is no longer needed ;)
      *
      * @param $groupName The name of the group you want to parse
      * @param $groupValues The values given in a reference array when you apply the function
