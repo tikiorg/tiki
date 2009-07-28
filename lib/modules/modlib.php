@@ -190,6 +190,9 @@ class ModLib extends TikiLib {
 	 */
 	function check_groups($module_info, $user, $user_groups) {
 		global $prefs, $tiki_p_admin;
+		if( empty( $user ) ) {
+			$user_groups = array( 'Anonymous' );
+		}
 		$pass = 'y';
 		if ($tiki_p_admin != 'y' && $prefs['modallgroups'] != 'y') {
 			if ($module_info['groups']) {
