@@ -411,12 +411,12 @@ class CategLib extends ObjectLib {
 		$contextMapMap = array_fill_keys( array_keys( $permMap ), $contextMap );
 		$result = Perms::mixedFilter( array(), 'type', 'object', $result, $contextMapMap, $permMap );
 		
-		if( $maxResult == -1 ) {
-			$maxResult = $cant;
+		if( $maxRecords == -1 ) {
+			$maxRecords = $cant;
 		}
 
 		// Capture only the required portion
-		$result = array_slice( $result, $offset, $maxResult );
+		$result = array_slice( $result, $offset, $maxRecords );
 
 		$ret = array();
 		$objs = array();

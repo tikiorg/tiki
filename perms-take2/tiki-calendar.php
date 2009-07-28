@@ -34,6 +34,7 @@ $bufdata = array();
 $modifiable = array();
 if (!isset($cookietab)) { $cookietab = '1'; }
 $rawcals = $calendarlib->list_calendars();
+$rawcals['data'] = Perms::filter( array( 'type' => 'calendar' ), 'object', $rawcals['data'], array( 'object' => 'calendarId' ), 'view_calendar' );
 $viewOneCal = $tiki_p_view_calendar;
 $modifTab = 0;
 
@@ -62,28 +63,11 @@ foreach ($rawcals["data"] as $cal_id=>$cal_data) {
 			$cal_data["tiki_p_change_events"] = 'n';
 		}
 	} else {		
-		if ($userlib->user_has_perm_on_object($user, $cal_id, 'calendar', 'tiki_p_view_calendar')) {
-			$cal_data["tiki_p_view_calendar"] = 'y';
-		} else {
-			$cal_data["tiki_p_view_calendar"] = 'n';
-		}
-		if ($userlib->user_has_perm_on_object($user, $cal_id, 'calendar', 'tiki_p_add_events', 'tiki_p_edit_categorized')) {
-			$cal_data["tiki_p_add_events"] = 'y';
-			$tiki_p_add_events = "y";
-			$smarty->assign("tiki_p_add_events", "y");
-		} else {
-			$cal_data["tiki_p_add_events"] = 'n';
-		}
-		if ($userlib->user_has_perm_on_object($user, $cal_id, 'calendar', 'tiki_p_change_events', 'tiki_p_edit_categorized')) {
-			$cal_data["tiki_p_change_events"] = 'y';
-		} else {
-			$cal_data["tiki_p_change_events"] = 'n';
-		}
-		if ($userlib->user_has_perm_on_object($user, $cal_id, 'calendar', 'tiki_p_admin_calendar')) {
-			$cal_data["tiki_p_view_calendar"] = 'y';
-			$cal_data["tiki_p_add_events"] = 'y';
-			$cal_data["tiki_p_change_events"] = 'y';
-		}
+		$calperms = Perms::get( array( 'type' => 'calendar', 'object' => $cal_id ) );
+		$cal_data["tiki_p_view_calendar"] = $calperms->view_calendar ? 'y' : 'n';
+		$cal_data["tiki_p_view_events"] = $calperms->view_events ? 'y' : 'n';
+		$cal_data["tiki_p_add_events"] = $calperms->add_events ? 'y' : 'n';
+		$cal_data["tiki_p_change_events"] = $calperms->change_events ? 'y' : 'n';
 	}
 	if ($cal_data["tiki_p_view_calendar"] == 'y') {
 		$viewOneCal = 'y';
@@ -100,29 +84,6 @@ foreach ($rawcals["data"] as $cal_id=>$cal_data) {
 		$modifTab = 1;
 		$modifiable[] = $cal_id;
 		$visible[] = $cal_id;
-	}
-}
-
-if ($prefs['feature_categories'] == 'y' and isset($_REQUEST['calIds'])) {
-	$is_categorized = FALSE;
-	if (!is_array($_REQUEST['calIds'])) {
-		$_REQUEST['calIds'] = array($_REQUEST['calIds']);
-	}
-	foreach ($_REQUEST['calIds'] as $calId) {
-		$perms_array = $categlib->get_object_categories_perms($user, 'calendar', $calId);
-		if ($perms_array) {
-			foreach ($perms_array as $perm => $value) {
-				$$perm = $value;
-			}
-		} else {
-			$is_categorized = FALSE;
-		}
-		if ($is_categorized && isset($tiki_p_view_categorized) && $tiki_p_view_categorized != 'y') {
-			$smarty->assign('errortype', 401);
-			$smarty->assign('msg',tra("Permission denied you cannot view this page"));
-			$smarty->display("error.tpl");
-			die;
-		}
 	}
 }
 

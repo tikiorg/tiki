@@ -82,6 +82,13 @@ class Perms_Accessor
 		}
 	}
 
+	function smartify( $smarty, $permissions ) {
+		foreach( $permissions as $perm ) {
+			$perm = $this->sanitize( $perm );
+			$smarty->assign( 'tiki_p_' . $perm, $this->$perm ? 'y' : 'n' );
+		}
+	}
+
 	private function sanitize( $name ) {
 		if( $this->prefix && strpos( $name, $this->prefix ) === 0 ) {
 			return substr( $name, strlen( $this->prefix ) );

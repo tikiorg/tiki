@@ -194,7 +194,7 @@ class Perms
 		return $valid;
 	}
 
-	private function hasPerm( $baseContext, $contextMap, $entry, $permission ) {
+	private static function hasPerm( $baseContext, $contextMap, $entry, $permission ) {
 		$context = $baseContext;
 		foreach( $contextMap as $to => $from ) {
 			$context[$to] = $entry[$from];

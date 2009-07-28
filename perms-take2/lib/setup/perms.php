@@ -80,7 +80,6 @@ if ($user && (($user == 'admin' && $_SESSION["groups_are_emulated"] != "y") || $
 }
 
 $globalperms->globalize( $permissionList );
-foreach( $permissionList as $permName ) {
-	$smarty->assign( $permName, $$permName );
-}
+$globalperms->smartify( $smarty, $permissionList );
+
 unset($allperms);

@@ -67,13 +67,12 @@ if ($rawcals['cant'] == 0 && $tiki_p_admin_calendar == 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
+
+$rawcals['data'] = Perms::filter( array( 'type' => 'calendar' ), 'object', $rawcals['data'], array( 'object' => 'calendarId' ), 'view_calendar' );
+
 foreach ($rawcals["data"] as $cal_id=>$cal_data) {
-  if ($tiki_p_admin == 'y') {
-    $cal_data["tiki_p_view_calendar"] = 'y';
-    $cal_data["tiki_p_view_events"] = 'y';
-    $cal_data["tiki_p_add_events"] = 'y';
-    $cal_data["tiki_p_change_events"] = 'y';
-  } elseif ($cal_data["personal"] == "y") {
+  $calperms = Perms::get( array( 'type' => 'calendar', 'object' => $cal_id ) );
+  if ($cal_data["personal"] == "y") {
     if ($user) {
       $cal_data["tiki_p_view_calendar"] = 'y';
     	$cal_data["tiki_p_view_events"] = 'y';
@@ -86,42 +85,10 @@ foreach ($rawcals["data"] as $cal_id=>$cal_data) {
       $cal_data["tiki_p_change_events"] = 'n';
     }
   } else {
-    if ($userlib->object_has_one_permission($cal_id,'calendar')) {
-      if ($userlib->object_has_permission($user, $cal_id, 'calendar', 'tiki_p_admin_calendar')) {
-        $cal_data["tiki_p_view_calendar"] = 'y';
-        $cal_data["tiki_p_add_events"] = 'y';
-        $cal_data["tiki_p_change_events"] = 'y';
-      } else {
-				if ($userlib->object_has_permission($user, $cal_id, 'calendar', 'tiki_p_view_calendar')) {
-					$cal_data["tiki_p_view_calendar"] = 'y';
-				} else {
-					$cal_data["tiki_p_view_calendar"] = 'n';
-				}
-				if ($userlib->object_has_permission($user, $cal_id, 'calendar', 'tiki_p_view_events')) {
-					$cal_data["tiki_p_view_events"] = 'y';
-				} else {
-					$cal_data["tiki_p_view_events"] = 'n';
-				}
-				if ($userlib->object_has_permission($user, $cal_id, 'calendar', 'tiki_p_add_events')) {
-					$cal_data["tiki_p_add_events"] = 'y';
-					$tiki_p_add_events = "y";
-					$smarty->assign("tiki_p_add_events", "y");
-				} else {
-					$cal_data["tiki_p_add_events"] = 'n';
-				}
-				if ($userlib->object_has_permission($user, $cal_id, 'calendar', 'tiki_p_change_events')) {
-					$cal_data["tiki_p_change_events"] = 'y';
-				} else {
-					$cal_data["tiki_p_change_events"] = 'n';
-				}
-				$smarty->assign("tiki_p_change_events", $cal_data["tiki_p_change_events"] );
-			}
-    } else {
-      $cal_data["tiki_p_view_calendar"] = $tiki_p_view_calendar;
-      $cal_data["tiki_p_view_events"] = $tiki_p_view_events;
-      $cal_data["tiki_p_add_events"] = $tiki_p_add_events;
-      $cal_data["tiki_p_change_events"] = $tiki_p_change_events;
-    }
+      $cal_data["tiki_p_view_calendar"] = $calperms->view_calendar ? 'y' : 'n';
+      $cal_data["tiki_p_view_events"] = $calperms->view_events ? 'y' : 'n';
+      $cal_data["tiki_p_add_events"] = $calperms->add_events ? 'y' : 'n';
+      $cal_data["tiki_p_change_events"] = $calperms->change_events ? 'y' : 'n';
   }
 	$caladd["$cal_id"] = $cal_data;
 }
@@ -155,21 +122,15 @@ if ($prefs['feature_groupalert'] == 'y' && !empty($calID) ) {
 	$smarty->assign_by_ref('showeachuser',$showeachuser);
 }
 
-if ($prefs['feature_categories'] == 'y') {
-  global $categlib; include_once ('lib/categories/categlib.php');
-  $perms_array = $categlib->get_object_categories_perms($user, 'calendar', $calID);
-  if ($perms_array) {
-    foreach ($perms_array as $p=>$v) {
-      $$p = $v;
-    }
-    if (isset($tiki_p_view_categorized) && $tiki_p_view_categorized != 'y') {
-		$smarty->assign('errortype', 401);
-      $smarty->assign('msg',tra("Permission denied you cannot view this page"));
-      $smarty->display("error.tpl");
-      die;
-    }
-  }
+$tikilib->get_perm_object( $calID, 'calendar' );
+
+if( $tiki_p_view_calendar != 'y' ) {
+	$smarty->assign('errortype', 401);
+	$smarty->assign('msg',tra("Permission denied you cannot view this page"));
+	$smarty->display("error.tpl");
+	die;
 }
+
 if (isset($_REQUEST['save']) && !isset($_REQUEST['preview']) && !isset($_REQUEST['act'])) {
 	$_REQUEST['changeCal'] = 'y';
 }

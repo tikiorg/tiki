@@ -307,15 +307,6 @@ if ($tiki_p_view_trackers != 'y' and $tracker_info["writerCanModify"] != 'y' and
 	$smarty->display("error.tpl");
 	die;
 }
-if ($tiki_p_admin_trackers != 'y' && $prefs['feature_categories'] == 'y') {
-	$itemPerms = $categlib->get_object_categories_perms($user, 'tracker ' . $_REQUEST['trackerId'], $_REQUEST['itemId']);
-	if (isset($itemPerms['tiki_p_view_categorized']) && $itemPerms['tiki_p_view_categorized'] == 'n') {
-		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra("Permission denied"));
-		$smarty->display("error.tpl");
-		die;
-	}
-}
 $status_types = $trklib->status_types();
 $smarty->assign('status_types', $status_types);
 $fields = array();

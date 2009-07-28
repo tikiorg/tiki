@@ -31,48 +31,10 @@ if (!isset($_REQUEST["galleryId"])) {
 	die;
 }
 $smarty->assign('individual', 'n');
-if ($userlib->object_has_one_permission($_REQUEST["galleryId"], 'image gallery')) {
-	$smarty->assign('individual', 'y');
-	if ($tiki_p_admin != 'y') {
-		// Now get all the permissions that are set for this type of permissions 'image gallery'
-		$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'image galleries');
-		foreach($perms["data"] as $perm) {
-			$permName = $perm["permName"];
-			if ($userlib->object_has_permission($user, $_REQUEST["galleryId"], 'image gallery', $permName)) {
-				$$permName = 'y';
-				$smarty->assign("$permName", 'y');
-			} else {
-				$$permName = 'n';
-				$smarty->assign("$permName", 'n');
-			}
-		}
-	}
-} elseif ($tiki_p_admin != 'y' && $prefs['feature_categories'] == 'y') {
-	$perms_array = $categlib->get_object_categories_perms($user, 'image gallery', $_REQUEST['galleryId']);
-	if ($perms_array) {
-		$is_categorized = TRUE;
-		foreach($perms_array as $perm => $value) {
-			$$perm = $value;
-		}
-	} else {
-		$is_categorized = FALSE;
-	}
-	if ($is_categorized && isset($tiki_p_view_categorized) && $tiki_p_view_categorized != 'y') {
-		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra("Permission denied you cannot view this page"));
-		$smarty->display("error.tpl");
-		die;
-	}
-}
-if ($tiki_p_admin_galleries == 'y') {
-	$tiki_p_view_image_gallery = 'y';
-	$smarty->assign("tiki_p_view_image_gallery", 'y');
-	$tiki_p_upload_images = 'y';
-	$smarty->assign("tiki_p_upload_images", 'y');
-	$tiki_p_create_galleries = 'y';
-	$smarty->assign("tiki_p_create_galleries", 'y');
-}
-if ($tiki_p_view_image_gallery != 'y') {
+
+$tikilib->get_perm_object( $_REQUEST['galleryId'], 'image gallery' );
+
+if ( $tiki_p_view_image_gallery != 'y' ) {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied you can not view this section"));
 	$smarty->display("error.tpl");
