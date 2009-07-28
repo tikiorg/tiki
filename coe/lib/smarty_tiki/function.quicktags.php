@@ -18,12 +18,18 @@ function smarty_function_quicktags($params, $content, &$smarty, $repeat)
 			$params['section'] = 'global';
 	}
 
+	if( isset( $params['comments'] ) && $params['comments'] == 'y' ) {
+		$comments = true;
+	} else {
+		$comments = false;
+	}
+	
 	if( ! isset( $params['area_name'] ) ) {
 		$params['area_name'] = 'wikiedit';
 	}
 
 	include_once( 'lib/quicktags/quicktagslib.php' );
-	$list = QuicktagsList::fromPreference( $params['section'] );
+	$list = QuicktagsList::fromPreference( $params['section'] . ($comments ? '_comments' : '') );
 	return $list->getWikiHtml( $params['area_name'] );
 }
 

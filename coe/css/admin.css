@@ -169,11 +169,9 @@ div.adminanchors a {float: left}
 
 .quicktags-admin .rows .row {
 	height: 20px;
-	width: 400px;
+	min-width: 500px;
 	overflow-y: auto;
 	overflow-x: hidden;
-/*	display: inline-block
-	display: inline;*/
 	border: solid thin gray;
 	margin: 0;
 	padding: 2px 4px 0;
@@ -186,6 +184,18 @@ div.adminanchors a {float: left}
 	overflow: hidden;
 }
 
+.quicktags-admin .row li.qt-plugin {
+	width: auto;
+	background-color: #9C0;
+	border: thin #690 solid;
+	margin: 0 .4em 0 0;
+	padding: 2px .4em 0 .2em;
+	color: #030;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 10px;
+}
+
 .qt-wys {
 	font-style: italic;
 }
@@ -194,6 +204,16 @@ div.adminanchors a {float: left}
 	font-weight: bold;
 }
 
+#qt_filter_div {
+	background-color: #fff;
+	border-top: thin gray solid;
+	border-right: thin gray solid;
+	border-bottom: none;
+	border-left: thin gray solid;
+	padding-left: .5em;
+}
 
-
+#qt_filter_div a {
+	
+}
 /* end from ui-revamp branch */

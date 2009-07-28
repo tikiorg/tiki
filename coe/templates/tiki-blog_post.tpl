@@ -56,13 +56,6 @@
 <table class="normal">
 {/if}
 
-{assign var=area_name value="blogedit"}
-{if $prefs.feature_smileys eq 'y' && not $wysiwyg}
-<tr><td class="editblogform">{tr}Smileys{/tr}</td><td class="editblogform">
-   {include file='tiki-smileys.tpl' area_name='blogedit'}
-</td></tr>
-{/if}
-
 {if $blog_data.use_title eq 'y' || !$blogId}
   <tr>
     <td class="editblogform">{tr}Title{/tr}</td><td class="editblogform">

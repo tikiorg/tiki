@@ -161,11 +161,17 @@ abstract class Quicktag
 		global $smarty;
 		
 		$params = array();
-		$params['_onclick'] = $click . (substr(count($click)-1) != ';' ? ';' : '') . 'return false;';
+		$params['_onclick'] = $click . (substr($click, strlen($click)-1) != ';' ? ';' : '') . 'return false;';
 		$params['_class'] = 'quicktag ' . (!empty($class) ? ' '.$class : '');
+		$params['_ajax'] = 'n';
 		$content = $title;
 		$params['_icon'] = $this->icon;
-		$params['_ajax'] = 'n';
+			
+		if (strpos($class, 'qt-plugin') !== false) {
+			$params['_menu_text'] = 'y';
+			$params['_menu_icon'] = 'y';
+		} else {
+		}
 		return smarty_block_self_link($params, $content, $smarty);
 	} // }}}
 	
@@ -538,23 +544,33 @@ class QuicktagPicker extends Quicktag
 		if( ! $pickerAdded ) {
 			$headerlib->add_js( <<<JS
 var pickerData = [];
+var pickerDiv;
 
 function displayPicker( closeTo, list, areaname ) {
-	var div = document.createElement('div');
-	document.body.appendChild( div );
+	var pickerDiv = document.createElement('div');
+	document.body.appendChild( pickerDiv );
 
-	var coord = closeTo.getCoordinates();
-
-	div.className = 'quicktags-picker';
-	div.style.left = coord.left + 'px';
-	div.style.top = coord.bottom + 'px';
+	var coord;
+	if (typeof closeTo.getCoordinates == 'function') {	// moo
+		coord = closeTo.getCoordinates();
+	} else if (\$jq) {									// jq
+		coord = \$jq(closeTo).offset();
+		coord.bottom = coord.top + \$jq(closeTo).height();
+	}
+	pickerDiv.className = 'quicktags-picker';
+	pickerDiv.style.left = coord.left + 'px';
+	pickerDiv.style.top = (coord.bottom + 8) + 'px';
 
 	var prepareLink = function( link, ins, disp ) {
 		link.innerHTML = disp;
 		link.href = 'javascript:void(0)';
 		link.onclick = function() {
 			insertAt( areaname, ins );
-			div.dispose();
+			if (typeof pickerDiv.dispose == 'function') {
+				pickerDiv.dispose();
+			} else if (\$jq) {
+				\$jq('div.quicktags-picker').remove();
+			}
 		}
 	};
 
@@ -562,8 +578,8 @@ function displayPicker( closeTo, list, areaname ) {
 		var char = pickerData[list][i];
 		var link = document.createElement( 'a' );
 
-		div.appendChild( link );
-		div.appendChild( document.createTextNode(' ') );
+		pickerDiv.appendChild( link );
+		pickerDiv.appendChild( document.createTextNode(' ') );
 		prepareLink( link, i, char );
 	}
 }
@@ -723,7 +739,7 @@ class QuicktagWikiplugin extends Quicktag
 
 	function getWikiHtml( $areaName ) // {{{
 	{
-		return $this->getSelfLink('popup_plugin_form(\'' . $this->pluginName . '\');needToConfirm=false;',
+		return $this->getSelfLink('popup_plugin_form(\'' . $areaName . '\',\'' . $this->pluginName . '\');needToConfirm=false;',
 							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-plugin');
 		//return '<a href="javascript:popup_plugin_form(\'' . $this->pluginName . '\')" onclick="needToConfirm=false;" title="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '" class="quicktag">' . $this->getIconHtml() . '</a>';
 	} // }}}
@@ -739,7 +755,7 @@ class QuicktagsList
 	{
 		global $tikilib;
 
-		$global = $tikilib->get_preference( 'toolbar_global' );
+		$global = $tikilib->get_preference( 'toolbar_global' . (strpos($section, '_comments') !== false ? '_comments' : ''));
 		$local = $tikilib->get_preference( 'toolbar_'.$section, $global );
 
 		return self::fromPreferenceString( $local );
