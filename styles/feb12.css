@@ -41,9 +41,6 @@ caption {
 	font-weight: bold;
 }
 
-div {
-}
-
 h1, h2, h3, h4, h5 {
 	font: bold 1em 'Trebuchet MS', Tahoma, Sans-serif;
 	color: #93554a;
@@ -85,14 +82,9 @@ hr {
 	color: #8CACBB;
 }
 
-p {
-}
 
 img {
 	border: 0;
-}
-
-.wikitext img {
 }
 
 fieldset {
@@ -105,24 +97,14 @@ form {
 	padding: 0;
 }
 
-	
 legend {
 	color: #333;
-}
-
-button {
 }
 
 button:hover {
 	cursor: pointer;
 }
 
-button,
-input,
-textarea,
-option,
-select {
-}
 
 * html .wikitopline select {
 	font-size: .9em;
@@ -154,7 +136,6 @@ input[type=password] {
 	font-size: 0.9em;
 }
 
-	
 input[type=submit],
 input[type=file],
 input[type=reset],
@@ -181,7 +162,6 @@ span.button input,
 	cursor: pointer;
 }
 
-	
 *:first-child+html input {
 	font-weight: normal;
 }
@@ -216,7 +196,6 @@ input[type=submit]:hover,
 	background: url(feb12/header.jpg) repeat-x 0 100%;
 }
 
-	
 .button a:active,	
 button:active,
 input[type=reset]:active,
@@ -268,15 +247,6 @@ label {
 	margin: 0 2px;
 }
 
-ul, ol {
-}
-
-li {
-}
-
-ul {
-}
-
 ul span, ol span {
 	color: #333;
 }
@@ -301,7 +271,6 @@ ul.jumplinks a:focus, ul.jumplinks a:active {
 	background: #339999;
 }
 
-	
 #tiki-clean {
 	text-align: left;
 	padding: 1em;
@@ -323,7 +292,6 @@ ul.jumplinks a:focus, ul.jumplinks a:active {
 	cursor: pointer;
 }
 
-	
 /*** Type 1 (*litecss-based) layout 
 	(overrides lite.css) ***/
 #main {
@@ -343,9 +311,6 @@ ul.jumplinks a:focus, ul.jumplinks a:active {
 	font-size: 1em;
 }
 
-#c1c2 #wrapper {
-}
-
 .fullscreen #col1 {
 	margin-left: 30px !important;
 	margin-right: 30px !important;
@@ -357,15 +322,6 @@ ul.jumplinks a:focus, ul.jumplinks a:active {
 
 #c1c2 #wrapper .marginright {
 	margin-right: 240px;
-}
-
-/*#c1c2	#wrapper	#col1	.content {
-	width: auto !important;
-	width: 100%}*/
-#c1c2 #wrapper #col1 {
-}
-
-#c1c2 #wrapper #col1 .content {
 }
 
 #tiki-center {
@@ -402,36 +358,16 @@ ul.jumplinks a:focus, ul.jumplinks a:active {
 	font-size: .9em;
 }
 
-#footer a:link,
-#footer a:visited {
-}
-
-#footer a:hover {
-}
-
-.footerbgtrap {
-}
-
 /* end Type 1 layout divs, etc. */
 /*** Error page ***/
 div#tiki-main #tiki-top {
 	margin-top: 100px;
 }
 
-div#tiki-mid {
-}
-
-div#tiki-main #tiki-top {
-}
-
 /* To center cbox */
 div#tiki-main #tikimidtbl {
 	margin: auto;
 	width: auto;
-}
-
-	
-div#tiki-bot {
 }
 
 /* Site Header & Identity */
@@ -441,7 +377,6 @@ div#tiki-bot {
 	position: relative;
 }
 
-	
 #header-top[id] {
 	height: auto;
 	min-height: 98px;
@@ -451,7 +386,6 @@ div#tiki-bot {
 	text-align: left;
 	background: transparent;
 	vertical-align: top;
-	/*padding-top: 1em;*/
 	padding-bottom: 0;
 	margin: 0;
 }
@@ -517,7 +451,6 @@ div#sitead {
 	color: #f5f5f5;
 }
 
-	
 /* give every sub-element of #siteloginbar some padding */
 #siteloginbar * {
 	padding: 2px;
@@ -542,7 +475,6 @@ input[id="sl-login-pass"] {
 	float: left;
 }
 
-	
 /* #header text selectors */
 #sitetitles {
 	color: #052653;
@@ -554,8 +486,6 @@ input[id="sl-login-pass"] {
 
 #sitetitle {
 	font-size: 2.2em;
-	/*height: 2.2em;
-	padding-top: 30px;*/
 	padding-bottom: 14px;
 }
 
@@ -580,13 +510,6 @@ input[id="sl-login-pass"] {
 	padding-bottom: 5px;
 }
 
-#header a,
-#header a:visited {
-}
-
-#header a:hover {
-}
-
 /* tiki-top_bar.tpl - menu and search */
 #tiki-top {
 	background: url(feb12/header.jpg) repeat-x;
@@ -596,7 +519,6 @@ input[id="sl-login-pass"] {
 	font-size: 14px;
 }
 
-	
 * html #tiki-top {
 	font-size: 11px;
 }
@@ -623,17 +545,8 @@ input[id="sl-login-pass"] {
 	display: none;
 }
 
-select[name="where"],
-input[name="search"] {
-}
-
-#siteheader #description {
-}
-
 /* end header */
 /* centercolumn */
-#showhide_columns {
-}
 
 a.flip,
 a.flip:visited,
@@ -663,10 +576,6 @@ a.flip img {
 	margin-top: 2px;
 }
 
-/* Also is .content */
-#tiki-center {
-}
-
 * html #tiki-center {
 	font-size: 1em;
 }
@@ -687,8 +596,6 @@ a.flip img {
 	
 /****** Menus ******/
 /** PHP Layers Menus **/
-.horbar {
-}
 
 .horbar table {
 	width: auto;
@@ -706,7 +613,6 @@ a.flip img {
 	margin: 0;
 }
 
-	
 * html .horbaritem a,
 * html .horbaritem a:link,
 * html .horbaritem a:visited {
@@ -717,12 +623,6 @@ a.flip img {
 	background: url(feb12/header.jpg) 0 -40px repeat-x;
 	color: #eee !important;
 	text-decoration: none;
-}
- 
-.horbaritem a:visited {
-}
- 
-.mdkverbar {
 }
  
 .mdksubmenu {
@@ -762,7 +662,6 @@ a.flip img {
 	white-space: nowrap;
 }
 
-	
 .mdkverbar .mdkitem {
 	border-top: none;
 }
@@ -789,7 +688,6 @@ a.flip img {
 	color: #487384;
 }
  
-	
 .mdksubmenu .mdkitem a {
 	font-size: 1.2em;
 }
@@ -806,9 +704,6 @@ a.flip img {
 .mdkitem a:hover {
 	color: #993300;
 	text-decoration: none;
-}
- 
-.mdkitem a:active {
 }
  
 .treemenudiv {
@@ -880,7 +775,6 @@ a.phplmselected:hover {
 	background: #a8cce2 !important;
 }
 
-	
 .cssmenu_horiz ul li:hover {
 	background: none;
 }
@@ -892,7 +786,6 @@ a.phplmselected:hover {
 	color: #487384;
 }
 
-	
 #tiki-top > .cssmenu_horiz {
 	margin-left: 20px;
 }
@@ -912,7 +805,6 @@ a.phplmselected:hover {
 	display: block;
 }
 
-	
 #tiki-top > .cssmenu_horiz > li.menusection > a {
 	padding-right: 2.6em;
 }
@@ -923,7 +815,6 @@ a.phplmselected:hover {
 	text-decoration: none;
 }
 
-	
 #tiki-top .cssmenu_horiz li ul a {
 	color: #000;
 }
@@ -933,13 +824,11 @@ a.phplmselected:hover {
 	text-decoration: none;
 }
 
-	
 #col2 .cssmenu_vert > li {
 	width: 192px;
 	padding: 0 !important;
 }
 
-	
 #col2 .cssmenu_vert > li:hover {
 	background: #97c0da;
 }
@@ -967,16 +856,6 @@ div.option a.linkmenu:hover {
 	color: #794a93;
 }
 
-a.separator img {
-}
-
-.option {
-}
-
-div.optionline,
-.option a {
-}
-
 .option a:link,
 .option a:visited,
 a.linkmenu,
@@ -990,27 +869,8 @@ a.linkmenu,
 	color: #794a93;
 }
 
-div.option a:hover,
-div.option a:active {
-}
-
 a.linkmodule {
 	color: #794a93;
-}
-
-a.linkmodule:hover {
-}
-
-.rsslist {
-}
-
-.rssitem {
-}
-
-.rssitem:first-child {
-}
-
-.rssdate {
 }
 
 /****** Misc. Global Classes (layout and style) ****/
@@ -1069,7 +929,6 @@ div#edithelpzone {
 	visibility: hidden;
 }
 
-	
 .clearfix {
 	display: inline-block;
 }
@@ -1100,9 +959,6 @@ div#edithelpzone {
 .bannertext {
 	font-size: .95em;
 	text-decoration: none;
-}
-
-.bannertext:hover {
 }
 
 div.imagerank {
@@ -1221,9 +1077,6 @@ div.help_section {
 
 /**** Boxes *****/
 /** Modules **/
-.box-shadow {
-}
-
 div.box {
 	overflow: hidden;
 	margin-bottom: 1.5em;
@@ -1243,7 +1096,6 @@ h3.box-title {
 	position: relative;
 }
 
-	
 * html h3.box-title {
 	position: static;
 }
@@ -1286,19 +1138,6 @@ h3.box-title {
 	border: 1px solid #58A7D2 !important;
 }
 
-#col2 h3.box-title {
-}
-
-#col2 .box-title a,
-#col2 .box-title a:link {
-}
-
-.box-title a:hover {
-}
-
-.box-data {
-}
-
 .box-data ol,
 .box-data ul {
 	padding-right: 1em;
@@ -1309,15 +1148,6 @@ div.cbox {
 	color: #333;
 	background: #fff;
 	overflow: hidden;
-}
-
-.cbox-title {
-}
-
-.cboxlink {
-}
-
-.cbox-data {
 }
 
 .rbox {
@@ -1345,27 +1175,11 @@ div.cbox {
 	text-decoration: underline;
 }
 
-.comment .rbox-title,
-.comment .rbox-data {
-}
-
-.note .rbox-title {
-}
-
-.note .rbox-data {
-}
-
 .tip .rbox-title,
 .tip .rbox-data,
 .rbox-data.tip {
 	background: #794a93;
 	color: #f5f5f5;
-}
-
-.warning .rbox-title {
-}
-
-.warning .rbox-data {
 }
 
 div.simplebox {
@@ -1395,9 +1209,6 @@ table.bloglist,
 table.bloglist td {
 	border: solid 1px #909090;
 	border-collapse: collapse;
-}
-
-table.admin tr td div#page-bar {
 }
 
 td {
@@ -1432,9 +1243,6 @@ tr.even td,
 td.even {
 	background: #ECECEC;
 	border-right: 1px solid #909090;
-}
-
-td.third {
 }
 
 th,
@@ -1559,13 +1367,6 @@ form.admin .tabs {
 	padding: 0 !important;
 }
 
-/* Get the contextual info to make this specific.*/
-div.content {
-}
-
-div.content .tabs {
-}
-
 .tab-wrapper {
 	border: 1px solid #EEEEEE;
 	padding: 0;
@@ -1610,9 +1411,6 @@ h1 a.pagetitle:hover {
 	text-decoration: none;
 }
 
-.wikitopline {
-}
-
 div#description,
 .description {
 	display: block;
@@ -1628,9 +1426,6 @@ div#description,
 #cachedpage {
 	float: right;
 	font-size: small;
-}
-
-.categpath {
 }
 
 .wikitext {
@@ -1654,15 +1449,6 @@ div#description,
 	border-top: 1px solid #999;
 	border-bottom: 1px solid #999;
 	margin: 10px 0 10px 0;
-}
-
-.wikitext ul li {
-}
- 
-.wikitext ul li ul li {
-}
-
-.wikitext ol {
 }
 
 /* From Tikineat */
@@ -1723,24 +1509,6 @@ ul.floatleft li {
 	margin-top: 8px;
 }
 
-div.cache {
-}
-
-div.cachedpage {
-}
-
-.wikicache, .wikicache:visited {
-}
-
-.wikicache:hover {
-}
-
-.wiki {
-}
-
-.wikinew {
-}
-
 .wiki-edithelp {
 	display: none;
 }
@@ -1757,15 +1525,6 @@ div.cachedpage {
 
 textarea.wikiedit {
 	font-size: 1.0em;
-}
-
-p.editdate {
-}
-
-div.wiki-edithelp {
-}
-
-img.externallink {
 }
 
 /* Wiki plugins */
@@ -1821,7 +1580,6 @@ table.wikiplugin-split {
 	margin-bottom: -1px;
 }
 
-	
 .versionav .button {
 	margin-bottom: 0;
 }
@@ -1840,7 +1598,6 @@ div.tocnav {
 	clear: both;
 }
 
- 
 #tocnavicons {
 	float: left;
 }
@@ -1923,7 +1680,6 @@ div.articletitle {
 	text-align: left;
 }
 
- 
 div.articletitle h2 {
 	font-size: 1.5em;
 	font-weight: normal;
@@ -1944,9 +1700,6 @@ div.articlesubtitle {
 
 div.articleheading {
 	margin-top: 6px;
-}
-
-div.articleheadingtext {
 }
 
 img.topicimage,
@@ -1977,10 +1730,6 @@ div.articletrailer {
 	margin-top: 0.8em;
 }
 
-	
-div.articletrailer img {
-}
-
 div.article .status {
 	position: absolute;
 	left: 0;
@@ -1997,10 +1746,6 @@ div.article .actions {
 	right: 0;
 	top: 0;
 }
-
-div.articlebody {
-}
-
  
 div.articlesource {
 	margin-top: 5px;
@@ -2008,7 +1753,6 @@ div.articlesource {
 	font-size: 90%;
 }
 
- 
 /***** Blogs *****/
 div.blogheading {
 	display: block;
@@ -2046,17 +1790,12 @@ div.blogtools {
 	text-align: right;
 }
 
-.blogpost {
-}
-
- 
 .postinfo a {
 	color: #9CF;
 	text-decoration: none;
 	border-bottom: 1px dotted #9CF;
 }
 
-/*.postinfo div a img,*/
 a.blogt,
 a.blog:visited {
 	border: 0;
@@ -2075,9 +1814,6 @@ div.postinfo a.linkmodule {
 	margin-top: 30%;
 }
 
-.small {
-}
-
 div.posthead {
 	text-align: left;
 	padding: 3px;
@@ -2094,21 +1830,12 @@ span.posthead {
 	font-weight: bold;
 	letter-spacing: .4pt;
 }
-
-	
-body.tiki_blogs .post .title {
-}
-
- 
-/*div.posthead h3*/
 body.tiki_blogs .post .title h2 {
 	font-size: 1.2em;
 	margin-top: 0;
 	margin-bottom: 0;
 }
 
- 
-/*div.postbody*/
 body.tiki_blogs .post .postbody {
 	margin-right: 8px;
 	line-height: 1.2em;
@@ -2117,9 +1844,6 @@ body.tiki_blogs .post .postbody {
 	background: none;
 }
 
-	
-/* Maybe needs override to differentiate from forums */
-	
 body.tiki_blogs div.author_actions {
 	float: none;
 	text-align: right;
@@ -2128,7 +1852,6 @@ body.tiki_blogs div.author_actions {
 	width: 100%;
 }
 
-	
 body.tiki_blogs .actions {
 	background: none;
 }
@@ -2146,7 +1869,6 @@ body.tiki_blogs .author_info {
 	border: 0;
 }
 
-	
 body.tiki_blogs .postbody-title {
 	float: none;
 	width: 100%;
@@ -2159,7 +1881,6 @@ body.tiki_blogs .postfooter {
 	margin-bottom: 2em;
 }
 
-	
 body.tiki_blogs .postfooter .actions {
 	float: left;
 }
@@ -2167,19 +1888,6 @@ body.tiki_blogs .postfooter .actions {
 /***** Forums *****/
 body.tiki_forums table.normal {
 	margin: auto;
-}
-
- 
-td.threadsevenl {
-}
-
-td.threadsevenr {
-}
-
-td.threadsoddl {
-}
-
-td.threadsoddr {
 }
 
 table.threads {
@@ -2200,19 +1908,11 @@ td.forumtoolbar {
 	vertical-align: bottom;
 }
 
- 
 .toolbarlink {
 	font-weight: bold;
 	text-decoration: none;
 }
 
-.forumvotelink {
-}
-
-table.commentinfo {
-}
-
-/* Forums new (divs in 1.10) */
 .post .postbody {
 	clear: both;
 	width: 100%;
@@ -2226,7 +1926,6 @@ table.commentinfo {
 	font-weight: normal;
 }
 
-	
 * html .post .postbody {
 	font-size: 1em;
 }
@@ -2259,7 +1958,6 @@ table.commentinfo {
 .post .postbody-title .title {
 	float: left;
 	color: #29677B;
-	/*font-weight: bold;*/
 	font-size: 1.2em;
 	margin-left: 5px;
 	margin-top: 3px;
@@ -2415,7 +2113,6 @@ table.commentinfo {
 	margin-bottom: 15px;
 }
 
-/*.post .postbody .signature { float: left}*/
 /* Comments */
 #comzone {
 	display: none;
@@ -2423,14 +2120,12 @@ table.commentinfo {
 	padding: 0;
 }
 
- 
 #comzoneopen {
 	display: block;
 	margin: 5px 0;
 	padding: 0;
 }
 
- 
 span.commentstitle {
 	font-weight: bold;
 	font-size: 12px;
@@ -2453,72 +2148,13 @@ textarea#editpost2 {
 }
 
 /***** Categories *****/
-table.tcategpath {
-}
-
-td.tdcategpath {
-}
-
-.categpath {
-}
-
-table.subcats {
-}
-
-td.tdsubcat {
-}
-
-.categlink {
-}
-
-table.catobjects {
-}
-
-td.categobjectsnameeven,
-td.categobjectsnameodd {
-}
-
-td.categobjectsdataeven,
-td.categobjectsdataodd {
-}
-
-.catname {
-}
-
-.catblock {
-}
-
-.catlists {
-}
-
-.catlists:hover {
-}
-
-.cattitle {
-}
-
-.catlists a.link {
-}
-
-.catlists a.link:hover {
-}
-
 ul.catfeatures {
 	list-style: none;
-}
-
-ul.catfeatures li {
-}
-
-ul.catitems {
 }
 
 ul.catitems li {
 	display: inline;
 	margin-right: 10px;
-}
-
-ul.catitems li a.link {
 }
 
 /***** Tags (freetags) *****/
@@ -2549,7 +2185,6 @@ a.freetag_2 {
 	font-size: .9em;
 }
 
-	
 a.freetag_3 {
 	text-decoration: none;
 	font-size: 1em;
@@ -2577,13 +2212,11 @@ a.freetag_7 {
 
 div.freetagobjectodd {
 	margin: 2px;
-	/*background-color : #F7F9FA;*/
 	position: relative;
 }
 
 div.freetagobjecteven {
 	margin: 2px;
-	/*background-color : #E7E9EA;*/
 	position: relative;
 }
 
@@ -2616,7 +2249,6 @@ body.tiki_galleries table.findtable {
 	display: inline;
 }
 
-/* Check this one ?? */
 div.browsegallery {
 	text-align: center;
 	width: 100%;
@@ -2640,7 +2272,6 @@ img.athumb {
 	margin: auto;
 }
 
-/* Check ?? */
 div#browse_image {
 	width: 100%;
 }
@@ -2656,9 +2287,6 @@ p.norecords {
 div.imagetitle {
 	font-weight: bold;
 	font-size: 200%;
-}
-
-div.gallerylink {
 }
 
 div.showimage {
@@ -2678,74 +2306,6 @@ div.imgaldescr {
 }
 
 /***** File Galleries *****/
-div.thumbnailcontener {
-}
-
-div.thumbnail {
-}
-
-div.thumbnamecontener, div.thumbimagecontener {
-}
-
-div.thumbnamecontener {
-}
-
-div.thumbname, div.thumbimage {
-}
-
-div.thumbnamesub, div.thumbimagesub {
-}
-
-div.thumbnail:hover {
-}
-
-div.thumbnail:hover div.thumbnamecontener {
-}
-
-div.thumbimage img {
-}
-
-div.thumbinfos {
-}
-
-div.thumbinfo {
-}
-
-span.thumbinfoval {
-}
-
-div.thumbname {
-}
-
-div.thumbactions {
-}
-
-div.thumbactions * {
-}
-
-div.thumbactions input {
-}
-
-div.thumbactions a {
-}
-
-div.thumbdescription {
-}
-
-div.thumbdescription + div.thumbinfo {
-}
-
-div.thumbdescription span.thumbinfoname {
-}
-
-a.namealias {
-}
-
-div.gallerypath, div.gallerypath a {
-}
-
-div.gallerypath a:hover {
-}
 
 .fgalexplorer {
 	border: 1px solid #8CACBB;
@@ -2778,7 +2338,6 @@ div.gallerypath a:hover {
 	font-size: 90%;
 }
 
-	
 .calart,
 .calblog,
 .calchart,
@@ -2850,7 +2409,6 @@ div.gallerypath a:hover {
 	color: #8B4513;
 }
 
-	
 .calnl,
 .calnl a,
 .calnl a:visited {
@@ -3017,21 +2575,6 @@ div.gallerypath a:hover {
 	text-decoration: none;
 }
 
-.day, .day:visited {
-}
-
-.today {
-}
-
-.nav {
-}
-
-.changedate {
-}
-
-.date {
-}
-
 .calfocuson + .calcontent {
 	background: #a8cce2;
 }
@@ -3053,7 +2596,6 @@ div.pollresults {
 	padding: 0 5px;
 }
 
-	
 table.pollresults {
 	width: 100%;
 }
@@ -3072,9 +2614,6 @@ td.pollr {
 
 #polledit {
 	display: none;
-}
-
-.pollnav {
 }
 
 /** FAQs **/
@@ -3107,9 +2646,6 @@ div.quizquestion {
 	margin-bottom: 5px;
 }
 
-div.quizoptions {
-}
-
 div.quizdescription {
 	margin-bottom: 10px;
 }
@@ -3137,9 +2673,6 @@ textarea.tshoutbox{
 	width: 162px;
 }
 
-.wiki-table {
-}
-
 .wiki-tr-a td {
 	border: 0;
 }
@@ -3152,9 +2685,6 @@ textarea.tshoutbox{
 div.dircategs {
 	border: 1px solid #8CACBB;
 	padding: 5px;
-}
-
-.dirlink {
 }
 
 .dirsublink {
@@ -3171,18 +2701,12 @@ div.dirsite {
 	padding: 4px;
 }
 
-span.dirsitedesc {
-}
-
 span.dirsitetrail {
 	font-size: 95%;
 }
 
 span.dirsitecats {
 	font-size: 95%;
-}
-
-.dirsitelink {
 }
 
 div.dirrelated {

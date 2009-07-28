@@ -39,15 +39,6 @@ a:hover {
 	color: #82a7c8;
 }
 
-caption {
-}
-
-div {
-}
-
-h1, h2, h3, h4, h5 {
-}
-
 h1 {
 	font-weight: bold;
 	font-size: 1.8em;
@@ -55,7 +46,6 @@ h1 {
 	padding-left: 14px;
 }
 
-	
 * html h1 {
 	margin-bottom: auto;
 }
@@ -90,9 +80,6 @@ hr {
 	color: #2d2d2d;
 }
 
-p {
-}
-
 img {
 	border: 0;
 }
@@ -122,7 +109,6 @@ body.wikitext {
 	font: 100% !important Verdana, Helvetica, Geneva, Arial, sans-serif;
 }
 
-	
 textarea {
 	border: 1px solid #89a3c2;
 	color: #2d2d2d;
@@ -238,12 +224,8 @@ div.iconmenu {
 	display: inline;
 }
 
-/* * html .findtable input {font-size: 1em}*/
 form.admin input[name="features"] {
 	margin-bottom: 3px !important;
-}
-
-select {
 }
 
 select[multiple] {
@@ -262,15 +244,6 @@ label {
 	margin: 0 2px;
 }
 
-ol {
-}
-
-ul {
-}
-
-li {
-}
-
 /***** Page Layout *****/
 /** off-screen **/
 ul.jumplinks {
@@ -278,7 +251,6 @@ ul.jumplinks {
 	list-style-type: none;
 }
 
-	
 ul.jumplinks,
 .jumplinks {
 	position: absolute;
@@ -310,7 +282,6 @@ ul.jumplinks a:active {
 	font-size: 80%;
 }
 
-	
 .fullscreenbutton:hover,
 #fullscreenbutton:hover {
 	color: #82a7c8;
@@ -330,7 +301,6 @@ ul.jumplinks a:active {
 	font-size: 1.05em;
 }
 
-	
 #header {
 	text-align: left;
 	background: #96bce3;
@@ -340,13 +310,6 @@ ul.jumplinks a:active {
 	background: white;
 	margin-top: 28px;
 	margin-bottom: 20px;
-}
-
-	
-#c1c2 {
-}
-
-#c1c2 #wrapper {
 }
 
 .fullscreen #col1 {
@@ -373,7 +336,6 @@ ul.jumplinks a:active {
 	margin-right: 30px;
 }
 
-	
 body.tiki_wiki_page #c1c2 #wrapper #col1 > .content {
 	position: relative;
 }
@@ -410,13 +372,6 @@ body.tiki_wiki_page #c1c2 #wrapper #col1 #tiki-center {
 	border-top: 1px solid #517ba5;
 }
 
-#footer a:link,
-#footer a:visited {
-}
-
-#footer a:hover {
-}
-
 .footerbgtrap {
 	border-top: 1px solid #ebf5ff;
 	background: #ccdceb;
@@ -424,19 +379,11 @@ body.tiki_wiki_page #c1c2 #wrapper #col1 #tiki-center {
 
 /* end Type 1 layout divs, etc. */
 /*** Error page ***/
-div#tiki-mid {
-}
-
-div#tiki-main #tiki-top {
-}
 
 /* To center cbox */
 div#tiki-main #tikimidtbl {
 	margin: auto;
 	width: auto;
-}
-
-div#tiki-bot {
 }
 
 /* Site Header & Identity */
@@ -446,7 +393,6 @@ div#tiki-bot {
 	height: 80px;
 }
 
-	
 #header-top[id] {
 	height: auto;
 	min-height: 80px;
@@ -508,9 +454,6 @@ div#sitead {
 	padding-left: 10px;
 }
 
-.floatright img {
-}
-
 #login_search {
 	display: block;
 	position: absolute;
@@ -526,7 +469,6 @@ div#sitead {
 	color: #fff;
 }
 
-	
 #login_language {
 	display: none; /*inline*/
 }
@@ -543,7 +485,6 @@ div#sitead {
 	color: #517ea7;
 }
 
-	
 * html #sitesearchbar {
 	width: 180px;
 }
@@ -560,13 +501,6 @@ div#sitead {
 	margin-right: 8px;
 	font-size: 12px;
 	white-space: nowrap;
-}
-
-#sitesearchbar form input.wikiaction {
-}
-
-	
-#sitesearchbar select[name="where"] {
 }
 
 #sitesearchbar ul.cssmenu * {
@@ -597,9 +531,6 @@ div#sitead {
 }
 
 	
-#sitesearchbar ul.cssmenu > li {
-}
-
 select[name="where"] {
 	border: none;
 }
@@ -607,17 +538,6 @@ select[name="where"] {
 select[name="where"],
 input[name="search"] {
 	display: inline;
-}
-
-	
-input[id="sl-login-user"],
-input[id="sl-login-pass"] {
-}
-
-#bannertopright {
-}
-
-#siteloginbar input.wikiaction {
 }
 
 #siteloginbar {
@@ -681,20 +601,12 @@ input[id="sl-login-pass"] {
 	text-decoration: none;
 }
 
-	 
 #sitesubtitle {
 	display: inline;
 	margin-left: 14px;
 	color: white;
 	font-size: 14px;
 	font-weight: normal;
-}
-
-#header a,
-#header a:visited {
-}
-
-#header a:hover {
 }
 
 /* tiki-top_bar.tpl - menu and search */
@@ -712,9 +624,6 @@ input[id="sl-login-pass"] {
 	height: 32px;
 }
 
-#tiki-top a {
-}
-
 #tiki-top table {
 	width: auto;
 }
@@ -727,9 +636,6 @@ input[id="sl-login-pass"] {
 /* centercolumn */
 #showhide_columns {
 	min-width: 100%;
-}
-
-*:first-child+html #showhide_columns {
 }
 
 a.flip,
@@ -755,13 +661,6 @@ a.flip img {
 	text-align: right;
 }
 
-.fullscreen .tellafriend {
-}
-
-/* Also is .content */
-#tiki-center {
-}
-
 * html #tiki-center {
 	font-size: 1em;
 }
@@ -775,7 +674,6 @@ a.flip img {
 	font-size: .9em;
 }
 
-	
 #credits {
 	display: inline;
 }
@@ -809,27 +707,10 @@ div.separator, div.separatorline {
 	font-weight: bold;
 }
 
-div.option a.linkmenu:hover {
-}
-
-a.separator img {
-}
-
-.option {
-}
-
 div.optionline,
 .option a {
 	color: #295c83;
 	font-weight: bold;
-}
-
-.option a:link,
-.option a:visited,
-a.linkmenu,
-.rsslink,
-.linkmenu:visited,
-.rsslink:visited {
 }
 
 .linkmenu,
@@ -841,35 +722,10 @@ a.linkmenu,
 	color: #82a7c8;
 }
 
-div.option a:hover,
-div.option a:active {
-}
-
-a.linkmodule {
-}
-
 a.linkmodule:hover {
 	color: #82a7c8;
 }
 
-.rsslist {
-}
-
-.rssitem {
-}
-
-.rssitem:first-child {
-}
-
-.rssdate {
-}
-
-/* From Tikineat -- check */
-div.menusection div.menusection,
-div.menusection div.separator {
-}
-
-/* End from Tikineat */
 /** PHP Layers Menus **/
 .horbar {
 	width: 100%;
@@ -882,7 +738,6 @@ div.menusection div.separator {
 	border-right: 1px solid #acc4e0;
 }
 
-/* Text in the top level (visible by default) of the menu */
 .horbaritem a,
 .horbaritem a:visited {
 	white-space: nowrap;
@@ -897,13 +752,9 @@ div.menusection div.separator {
 	border-right: 1px solid #264062;
 }
 
-	
 .horbaritem a:hover {
 	color: #fff !important;
 	text-decoration: none;
-}
- 
-.mdkverbar {
 }
  
 .mdksubmenu {
@@ -928,7 +779,6 @@ div.menusection div.separator {
 	background: #ccdceb;
 }
 
-	
 .mdkitem {
 	position: relative;
 	text-align: left;
@@ -962,9 +812,6 @@ div.menusection div.separator {
 	color: #82a7c8;
 	text-decoration: none;
 	background: #eff8ff;
-}
- 
-.mdkitem a:active {
 }
  
 /* Tree menu (also on Browse Categories) */
@@ -1020,7 +867,6 @@ a.phplmselected:hover {
 	height: 18px;
 }
 
-	
 /** CSS (suckerfish) menus **/
 .cssmenu li ul,
 .cssmenu_horiz li ul,
@@ -1065,13 +911,11 @@ a.phplmselected:hover {
 	width: 11em;
 }
 
-	
 .cssmenu_horiz ul li {
 	text-align: left;
 	color: #5a7ea2;
 }
 
-	
 .cssmenu_horiz li:hover ul li:hover,
 .cssmenu_horiz li.sfhover ul li.sfhover {
 	background: #eff8ff;
@@ -1090,12 +934,10 @@ a.phplmselected:hover {
 	font-size: 12px;
 }
 
-	
 .cssmenu_horiz li.selected > a {
 	background: inherit;
 }
 
-	
 .cssmenu_vert li a {
 	padding: 3px 6px;
 	font-size: 1em;
@@ -1113,7 +955,6 @@ a.phplmselected:hover {
 	text-decoration: none;
 }
 
-	
 #tiki-top .cssmenu_horiz li:hover,
 #tiki-top .cssmenu_horiz li.sfhover {
 	background: url(coelesce/pagebg.jpg) 0 -2px repeat-x;
@@ -1140,7 +981,6 @@ a.phplmselected:hover {
 	padding: 9px 1em 10px 1em;
 }
 
-	
 #tiki-top .cssmenu_horiz li.menusection a {
 	padding-right: 2.6em;
 }
@@ -1151,7 +991,6 @@ a.phplmselected:hover {
 	background: #ccdceb;
 }
 
-	
 #tiki-top > .cssmenu_horiz > li > a:hover {
 	color: #fff;
 }
@@ -1217,7 +1056,6 @@ div#edithelpzone {
 	visibility: hidden;
 }
 
-	
 .clearfix {
 	display: inline-block;
 }
@@ -1240,10 +1078,6 @@ div#edithelpzone {
 	color: red;
 }
 
-.highlight,
-#highlight {
-}
-
 .openid_url {
 	background: #fff url(../../img/icons/login-OpenID-bg.gif) no-repeat;
 	padding-left: 18px;
@@ -1256,20 +1090,6 @@ div#edithelpzone {
 
 .bannertext:hover {
 	color: #82a7c8;
-}
-
-.link,
-.gallink,
-.bloglink,
-.fgallink,
-.trailer,
-.opencomlink,
-.commentslink,
-.admlink,
-.forumbutlink {
-}
-
-div#debugconsole {
 }
 
 .mini {
@@ -1300,10 +1120,6 @@ a.tikihelp:hover {
 	vertical-align: middle;
 }
 
-div.adminanchors {
-}
-
-/* To enable removing deprecated tag from img.icon and prevent border on a.icon. */
 a.icon,
 img.icon {
 	border: 0 !important;
@@ -1314,7 +1130,6 @@ img.icon {
 	white-space: nowrap;
 }
 
-/** Find form **/
 .findtable {
 	text-align: center;
 	margin-bottom: 10px;
@@ -1326,7 +1141,11 @@ img.icon {
 	margin: 0 1px;
 }
 
-.findtitle, .findexactmatch, .findnumrows, .findtypes, .findlang {
+.findtitle,
+.findexactmatch,
+.findnumrows,
+.findtypes,
+.findlang {
 	white-space: nowrap;
 }
 
@@ -1339,13 +1158,6 @@ img.icon {
 	margin-top: 5px;
 }
 
-input#findwhat {
-}
-
-div.findsubmit {
-}
-
-/* New Help section */
 div#tikihelp {
 	position: fixed;
 	right: 0;
@@ -1454,9 +1266,6 @@ ul.categories li {
 }
 
 /** Modules **/
-.box-shadow {
-}
-
 div.box {
 	background: #ccdceb;
 	border: 1px solid #527ca6;
@@ -1465,7 +1274,6 @@ div.box {
 	overflow: hidden;
 }
 
-	
 * html div.box {
 	width: 205px !important;
 }
@@ -1482,7 +1290,6 @@ h3.box-title {
 	position: relative;
 }
 
-	
 * html h3.box-title {
 	position: static;
 }
@@ -1499,7 +1306,6 @@ h3.box-title {
 	top: 0;
 }
 
-	
 * html .moduleflip {
 	position: static;
 	float: right;
@@ -1532,10 +1338,6 @@ img.flipmodimage:hover {
 	width: 100%;
 }
 
-.box-footer {
-}
-
-/* Check on this ?? */
 .modcontrols {
 	display: block;
 	float: right;
@@ -1565,9 +1367,6 @@ div.cbox {
 	vertical-align: middle;
 }
 
-.cboxlink {
-}
-
 .cbox-data {
 	background: #f5f5f5;
 	overflow: hidden;
@@ -1579,7 +1378,6 @@ div.cbox {
 	color: #2d2d2d;
 }
 
-	
 .rbox-title,
 .rbox-data {
 	padding: 1px 3px;
@@ -1593,30 +1391,9 @@ div.cbox {
 	border-bottom: transparent;
 }
 
-	
 .rbox-data {
 	display: block;
 	border: 1px solid #4a6a90;
-}
-
-.comment .rbox-title,
-.comment .rbox-data {
-}
-
-.note .rbox-title {
-}
-
-.note .rbox-data {
-}
-
-.tip .rbox-title,
-.tip .rbox-data {
-}
-
-.warning  .rbox-title {
-}
-
-.warning .rbox-data {
 }
 
 div.simplebox {
@@ -1624,9 +1401,6 @@ div.simplebox {
 	;
 	background: #fff;
 	padding: 1em;
-}
-
-.highlight {
 }
 
 /***** Tables, Tabs and Lists ****/
@@ -1647,9 +1421,6 @@ table.admin {
 * html table.normal, 
 * html table.admin {
 	width: 97%;
-}
-
-table.admin tr td div#page-bar {
 }
 
 td {
@@ -1687,7 +1458,7 @@ td.even {
 	vertical-align: top;
 }
 
- /* headings */
+/* headings */
 th, table.normal td.heading {
 	font-size: 1em;
 	font-weight: bold;
@@ -1697,32 +1468,15 @@ th, table.normal td.heading {
 	text-align: center;
 }
 
-	
 * html th,
 * html table.normal td.heading {
 	height: 32px;
 }
 
-	
 .formcolor td {
 	padding: 3px;
 }
 
-/* cells in tracker items display */
-td.formlabel {
-}
-
-td.formcontent {
-}
-
-/* links to view an object from a table listing objects can be generalized to this link */
-a.fgalname {
-}
-
-a.fgalname:hover {
-}
-
- 
 a.tablename,
 a.galname,
 a.imagename,
@@ -1748,7 +1502,6 @@ a.forumnameread {
 	z-index: 201;
 }
 
-	
 .tabmark {
 	display: inline;
 	font-size: 85%;
@@ -1761,7 +1514,6 @@ a.forumnameread {
 	border: 0;
 }
 
-	
 .tabmark a {
 	color: #ccdceb;
 	font-size: 11px;
@@ -1780,7 +1532,6 @@ a.forumnameread {
 	text-decoration: none;
 }
 
-	
 .tabactive {
 	border: 0 !important;
 }
@@ -1799,7 +1550,6 @@ a.forumnameread {
 	color: #fff;
 }
 
-	
 * html .tabinactive a:hover {
 	color: #5a7ea2;
 }
@@ -1865,15 +1615,8 @@ h1 a:hover {
 	color: #2d2d2d;
 }
 
-body.tiki_wiki_page .wikitopline {
-}
-
-	
 .wikitopline .content br {
 	display: none;
-}
-
-.wikiinfo {
 }
 
 div#description,
@@ -1891,9 +1634,6 @@ div#description,
 #cachedpage {
 	float: right;
 	font-size: small;
-}
-
-.categpath {
 }
 
 .wikiactions {
@@ -1916,10 +1656,6 @@ div#description,
 	display: inline;
 }
 
-.wikitext {
-}
-
- 
 .titlebar {
 	padding: 0.1em;
 	background: #C3D3E5;
@@ -1927,15 +1663,6 @@ div#description,
 	font-weight: bold;
 	text-align: center;
 	margin: 10px 0;
-}
-
-.wikitext ul li {
-}
- 
-.wikitext ul li ul li {
-}
-
-.wikitext ol {
 }
 
 .wikitext .showhide_heading .link	{
@@ -1979,21 +1706,15 @@ table.wikitable {
 	border-collapse: collapse;
 }
 
- 
 td.wikicell {
 	padding: 3px;
 	border: 1px solid #a9a9a9;
 	border-collapse: collapse;
 }
 
-	
-/* editable wiki section */
 div.split {
 	border: 1px dashed #696969;
 	clear: both;
-}
-
-.editdate {
 }
 
 div#page-bar {
@@ -2027,24 +1748,6 @@ ul.floatleft li {
 	margin-top: 8px;
 }
 
-div.cache {
-}
-
-div.cachedpage {
-}
-
-.wikicache, .wikicache:visited {
-}
-
-.wikicache:hover {
-}
-
-.wiki {
-}
-
-.wikinew {
-}
-
 .wiki-edithelp {
 	display: none;
 }
@@ -2061,26 +1764,6 @@ div.cachedpage {
 
 textarea.wikiedit {
 	font-size: 1.0em;
-}
-
-p.editdate {
-}
-
-div.wiki-edithelp {
-}
-
-img.externallink {
-}
-
-/* Needed esp. for light-on-dark theme */
-div.quicktag {
-}
-
-div.quicktag img,
-#wikihelp-tab td img {
-}
-
-div#helptool {
 }
 
 /* Wiki plugins */
@@ -2136,7 +1819,6 @@ table.wikiplugin-split {
 	margin-bottom: -1px;
 }
 
-	
 .versionav .button {
 	margin-bottom: 0;
 }
@@ -2155,7 +1837,6 @@ div.tocnav {
 	clear: both;
 }
 
- 
 #tocnavicons {
 	float: left;
 }
@@ -2170,9 +1851,6 @@ div.tocnav {
 
 .fancytoclevel {
 	list-style-image: url(../img/icons/footprint.gif);
-}
-
-li.toclevel {
 }
 
 /* TOC */
@@ -2242,7 +1920,6 @@ div.articletitle {
 	text-align: left;
 }
 
- 
 div.articletitle h2 {
 	min-height: 26px;
 	background: url(coelesce/tiki-centerbg.jpg) repeat-x;
@@ -2327,10 +2004,6 @@ div.articletrailer {
 	margin-top: 1.1em;
 }
 
-	
-div.articletrailer img {
-}
-
 div.article .status {
 	position: absolute;
 	left: 0;
@@ -2346,9 +2019,6 @@ div.article .actions {
 	position: absolute;
 	right: 0;
 	top: 0;
-}
-
-div.articlebody {
 }
 
 div.articlesource {
@@ -2400,15 +2070,10 @@ div.blogtools {
 	text-align: right;
 }
 
-	
 .blogactions {
 	float: right;
 }
 
-.blogpost {
-}
-
-/*.postinfo div a img,*/
 a.blogt,
 a.blog:visited {
 	border: 0;
@@ -2432,17 +2097,8 @@ a.blogt:hover {
 	border-bottom: none;
 }
 
-div.postinfo a.linkmodule {
-}
-
 .postinfo div {
 	margin-top: 30%;
-}
-
-.small {
-}
-
-body.tiki_blogs .post .author_info img {
 }
 
 * html .postbody table {
@@ -2491,16 +2147,11 @@ body.tiki_forums table.normal {
 	background: #c3d3e5 !important;
 }
 
-	
-.postbody .content p {
-}
-
 .postbody-title {
 	color: #000;
 	background: inherit;
 }
 
-	
 .top_post .post .postbody-title {
 	border-top: 2px solid #fff;
 }
@@ -2511,13 +2162,6 @@ body.tiki_forums table.normal {
 
 .postbody-title .title {
 	color: #2d2d2d;
-}
-
-	
-.postbody-title .title h2 {
-}
-
-.postbody-title .title h3 {
 }
 
 .postbody-title .title a.link {
@@ -2550,14 +2194,10 @@ body.tiki_forums table.normal {
 	border-right: 2px solid #fff;
 }
 
-/*
-*:first-child+html .author_actions .author { max-width:74% }
-*/
 .author_actions .author * img {
 	vertical-align: middle;
 }
 
-	
 .author_actions > .actions {
 	position: absolute;
 	top: 0;
@@ -2570,9 +2210,6 @@ body.tiki_forums table.normal {
 	border-left: 2px solid #fff;
 }
 
-/*
-*:first-child+html .author_actions > .actions { max-width:24% }
-*/
 .post .author_info {
 	background: inherit;
 	display: inline-block;
@@ -2585,14 +2222,12 @@ body.tiki_forums table.normal {
 	height: 21px;
 }
 
-	
 .post .author_info img {
 	height: 21px;
 	width: 21px;
 	vertical-align: middle;
 }
 
-	
 .author_posts,
 .author_stars {
 	display: inline-block;
@@ -2604,7 +2239,6 @@ body.tiki_forums table.normal {
 	border-right: 2px solid #fff;
 }
 
-	
 .post .author_info a.link,
 .post .author_info a.link:visited {
 	color: #000;
@@ -2624,9 +2258,6 @@ body.tiki_forums table.normal {
 	padding: 0 2px;
 }
 
-.post .author_info .icons .actions {
-}
-
 .post .author_post_info_on {
 	font-style: normal;
 }
@@ -2635,15 +2266,6 @@ body.tiki_forums table.normal {
 	float: left;
 }
 
-/*
-.postbody-title > .actions {
-	float: right;
-	font-size: 1em}
-
-.postbody-content {
-	padding: 12px;
-	background: #e6edf5;
-	color: #000}*/
 .postbody .attachments {
 	clear: both;
 	border: 0;
@@ -2697,7 +2319,6 @@ body.tiki_blogs .post .avatar {
 	background: #f0f8ff;
 }
 
-	
 .post .avatar img {
 	height: 21px;
 	width: 21px;
@@ -2756,7 +2377,6 @@ body.tiki_blogs .post .avatar {
 	margin-bottom: 15px;
 }
 
-/*.post .postbody .signature { float: left}*/
 /* Comments */
 #comzone {
 	display: none;
@@ -2764,14 +2384,12 @@ body.tiki_blogs .post .avatar {
 	padding: 0;
 }
 
- 
 #comzoneopen {
 	display: block;
 	margin: 5px 0;
 	padding: 0;
 }
 
- 
 span.commentstitle {
 	font-weight: bold;
 	font-size: 1.2em;
@@ -2791,22 +2409,15 @@ span.commentstitle {
 	background: url(../../img/icons2/dots.gif);
 }
 
-/*.post-approved-n .content, .post-approved-r .content,
-.post-approved-n .title, .post-approved-r .title,
-.post-approved-n .postfooter, .post-approved-r .postfooter,
-tr.post-approved-n td span, tr.post-approved-r td span {opacity: 0.5}
-tr.post-approved-n td span, tr.post-approved-r td span {opacity: 0.6}*/
 textarea#editpost2 {
 	width: 100%;
 	font-size: 1em;
 }
 
-/* Find */
 .subcomment {
 	margin-left: 10px;
 }
 
-/* Help box*/
 div.commentsedithelp {
 	background: #ffcfcf;
 	color: #2d2d2d;
@@ -2816,37 +2427,6 @@ div.commentsedithelp {
 }
 
 /***** Categories *****/
-table.tcategpath {
-}
-
-td.tdcategpath {
-}
-
-.categpath {
-}
-
-table.subcats {
-}
-
-td.tdsubcat {
-}
-
-.categlink {
-}
-
-table.catobjects {
-}
-
-td.categobjectsnameeven,
-td.categobjectsnameodd {
-}
-
-td.categobjectsdataeven,
-td.categobjectsdataodd {
-}
-
-.catname {
-}
 
 .catblock {
 	padding: 5px;
@@ -2859,9 +2439,7 @@ td.categobjectsdataodd {
 	display: inline;
 	font-weight: bold;
 	font-size: 110%;
-	border-top: 1px solid #D7D7D7;
-	border-left: 1px solid #D7D7D7;
-	border-right: 1px solid #D7D7D7;
+	border: 1px solid #D7D7D7;
 	border-bottom: 1px solid #EDEDED;
 	background: #EDEDED;
 }
@@ -2870,15 +2448,6 @@ td.categobjectsdataodd {
 	margin-top: 8px;
 	border: 1px solid #D7D7D7;
 	background: #EDEDED;
-}
-
-.catlists:hover {
-}
-
-.catlists a.link {
-}
-
-.catlists a.link:hover {
 }
 
 .catfeatures {
@@ -2901,9 +2470,6 @@ ul.catitems li {
 	display: inline;
 	margin-right: 7px;
 	white-space: nowrap;
-}
-
-ul.catitems li a.link {
 }
 
 /***** Tags (freetags) *****/
@@ -2946,7 +2512,6 @@ a.freetag_2 {
 	font-size: .9em;
 }
 
-	
 a.freetag_3 {
 	text-decoration: none;
 	font-size: 1em;
@@ -3007,7 +2572,6 @@ body.tiki_galleries table.findtable {
 	display: inline;
 }
 
-/* Check this one ?? */
 div.browsegallery {
 	text-align: center;
 	width: 100%;
@@ -3029,9 +2593,6 @@ td.eventhumb img {
 div.thumbnailcontenerchecked div.thumbnail {
 	border-color: #a9a9a9;
 	background: #f8f8ff;
-}
-
-div.thumbnails {
 }
 
 div#browse_image {
@@ -3056,12 +2617,6 @@ div.imagetitle {
 	font-size: 200%;
 }
 
-div.gallerylink {
-}
-
-div#browse_image {
-}
-
 div.showimage {
 	text-align: center;
 	margin: 5px 0;
@@ -3079,74 +2634,6 @@ div.imgaldescr {
 }
 
 /***** File Galleries *****/
-div.thumbnailcontener {
-}
-
-div.thumbnail {
-}
-
-div.thumbnamecontener, div.thumbimagecontener {
-}
-
-div.thumbnamecontener {
-}
-
-div.thumbname, div.thumbimage {
-}
-
-div.thumbnamesub, div.thumbimagesub {
-}
-
-div.thumbnail:hover {
-}
-
-div.thumbnail:hover div.thumbnamecontener {
-}
-
-div.thumbimage img {
-}
-
-div.thumbinfos {
-}
-
-div.thumbinfo {
-}
-
-span.thumbinfoval {
-}
-
-div.thumbname {
-}
-
-div.thumbactions {
-}
-
-div.thumbactions * {
-}
-
-div.thumbactions input {
-}
-
-div.thumbactions a {
-}
-
-div.thumbdescription {
-}
-
-div.thumbdescription + div.thumbinfo {
-}
-
-div.thumbdescription span.thumbinfoname {
-}
-
-a.namealias {
-}
-
-div.gallerypath, div.gallerypath a {
-}
-
-div.gallerypath a:hover {
-}
 
 .fgalexplorer {
 	border: 0;
@@ -3174,8 +2661,6 @@ div.gallerypath a:hover {
 /* also for categorize.tpl */
 div.multiselect {
 	vertical-align: middle;
-	/*overflow-y: auto;
-	overflow-x: hidden;*/
 	overflow: auto;
 	height: auto;
 	width: 100%;
@@ -3417,32 +2902,12 @@ div.multiselect {
 	text-decoration: none;
 }
 
-div.tabrow {
-	: ; /*height: 24px !important*/
-}
-
 .buttonon a, .calbuttonon a {
 	color: #295C8E !important;
 }
 
 .calheadingon {
 	background: #ccdceb;
-}
-
-.day,
-.day:visited {
-}
-
-.today {
-}
-
-.nav {
-}
-
-.changedate {
-}
-
-.date {
 }
 
 .calinput {
@@ -3507,12 +2972,6 @@ a.viewthisday:hover {
 	background: none;
 }
 
-.daterow {
-}
-
-.daterow:hover {
-}
-
 .viewmode div {
 	margin-right: 4px;
 }
@@ -3524,7 +2983,6 @@ div.pollresults {
 	padding: 0 5px;
 }
 
-	
 table.pollresults {
 	width: 100%;
 }
@@ -3543,9 +3001,6 @@ td.pollr {
 
 #polledit {
 	display: none;
-}
-
-.pollnav {
 }
 
 /***** FAQs *****/
@@ -3578,9 +3033,6 @@ div.quizquestion {
 	margin-bottom: 5px;
 }
 
-div.quizoptions {
-}
-
 div.quizdescription {
 	margin-bottom: 10px;
 }
@@ -3608,9 +3060,6 @@ textarea.tshoutbox{
 	width: 162px;
 }
 
-.wiki-table {
-}
-
 .wiki-tr-a td {
 	border: 0;
 }
@@ -3623,9 +3072,6 @@ textarea.tshoutbox{
 div.dircategs {
 	border: 1px solid #696969;
 	padding: 5px;
-}
-
-.dirlink {
 }
 
 .dirsublink {
@@ -3642,18 +3088,12 @@ div.dirsite {
 	padding: 4px;
 }
 
-span.dirsitedesc {
-}
-
 span.dirsitetrail {
 	font-size: 95%;
 }
 
 span.dirsitecats {
 	font-size: 95%;
-}
-
-.dirsitelink {
 }
 
 div.dirrelated {
@@ -3719,7 +3159,6 @@ div.messureadbody {
 	color: #2d2d2d;
 }
 
-	
 /***** Sheets *****/
 .plugin-desc {
 	padding: 5px;
@@ -3780,7 +3219,6 @@ div#ajaxloading {
 	padding: 5px 0 4px 8px;
 }
 
-	
 #shadowbox_content {
 	background: #f5f5f5;
 }
@@ -3945,5 +3383,4 @@ div.minichatdiv {
 	font-size: .9em;
 	overflow: auto;
 }
-
 /* end of file */

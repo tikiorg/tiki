@@ -101,9 +101,6 @@ div#tiki-main {
 	text-align: left;
 }
 
-#footer {
-}
-
 .footerbgtrap {
 	padding-top: 10px;
 	padding-bottom: 5px;
@@ -361,10 +358,6 @@ div#sioptions {
 	margin: 8px;
 }
 
-#sioptionscentered {
-	: ; /*margin: 1em*/
-}
-
 div#sitelogo {
 	margin: auto;
 	overflow: hidden;
@@ -399,7 +392,6 @@ div#sitelogo {
 	background: #c7d0d9;
 	padding-bottom: 1px;
 	border: 1px solid #8cacbb;
-	/*border-width: 1px 0;*/
 	margin: 0 10px;
 	padding: 0 5px;
 }
@@ -583,7 +575,6 @@ div.menusection div.separator {
 	font-size: .95em;
 }
 
-	
 .separator {
 	font-size: .95em;
 	text-decoration: none;
@@ -1596,7 +1587,6 @@ body.tiki_blogs .author_info {
 	border: 0;
 }
 
-	
 body.tiki_blogs .postbody-title {
 	float: none;
 	width: 100%;
@@ -1651,7 +1641,6 @@ body.tiki_blogs .postfooter .actions {
 	margin-top: 3px;
 }
 
-	
 .post .postbody-title .title a.link {
 	font-weight: bold;
 	text-decoration: none;
@@ -1709,9 +1698,6 @@ body.tiki_blogs .postfooter .actions {
 	margin: 2px;
 }
 
-/*	
-*:first-child+html .postbody-content {min-width: 73%}
-*/
 .post .postbody .attachments {
 	border-top: 1px dotted #d9d9d9;
 }
@@ -2076,7 +2062,6 @@ div.freetagobjecteven {
 	background: #e7e9ea;
 }
 
-	
 /*****  Polls  *****/
 div.pollresults {
 	margin-top: 5px;
@@ -2254,9 +2239,6 @@ table.default td {
 	background: #fff;
 	width: auto;
 	border: 1px solid #666;
-	/*  border-radius : 10px;
-  -moz-border-radius : 10px;
-  -khtml-border-radius : 10px; */
 	padding: 5px;
 	text-align: left;
 }
@@ -2297,7 +2279,6 @@ div.adminanchors {
 	padding: 1px 5px;
 	background: #f5f5f5;
 	color: #222;
-	/*font-weight: bold;*/
 	text-decoration: none;
 }
  

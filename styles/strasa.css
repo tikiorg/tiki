@@ -26,9 +26,6 @@ html[dir=ltr]>body {
 	margin: 1em .5em;
 }
 
-body.fullscreen {
-}
-
 a,
 a:link,
 a:visited {
@@ -39,12 +36,6 @@ a:visited {
 a:hover {
 	text-decoration: underline;
 	color: #000000;
-}
-
-caption {
-}
-
-div {
 }
 
 h1, h2, h3, h4, h5 {
@@ -84,9 +75,6 @@ hr {
 	color: #000;
 }
 
-p {
-}
-
 img {
 	border: 0;
 }
@@ -99,9 +87,6 @@ fieldset {
 form {
 	margin: 0;
 	padding: 0;
-}
-
-legend {
 }
 
 input,
@@ -118,8 +103,6 @@ select {
 }
 
 /** html .wikitopline select {font-size: .9em}*/
-input.button {
-}
 
 input[type=checkbox],
 input[type=radio] {
@@ -148,7 +131,6 @@ input#search {
 	background: #E7F8FD;
 	border: 1px solid #33CCFF;
 	color: #517298;
-	/*	font-size: 12px;*/
 	height: 16px;
 	margin-right: 10px;
 	width: 160px;
@@ -156,10 +138,6 @@ input#search {
 
 input#comments-title {
 	font-family: "Courier New", Courier, monospace;
-}
-
-input[type=file],
-select {
 }
 
 /* Links in buttons */
@@ -182,8 +160,6 @@ span.button input,
 	font: normal 11px Verdana, Helvetica, Geneva, Arial, sans-serif;
 }
 
-/*.button a,
-.button a:visited {padding: 1px 4px}*/
 .button a:hover,
 button:hover,
 input[type=reset]:hover,
@@ -211,47 +187,14 @@ div.iconmenu {
 	display: inline;
 }
 
-/* Was graphic button experiment. Works but needs adjusting. Dumped because
-	of inconsistency with submit style.
-span.button {
-	height: 22px;
-	background: url(strasa/buttonwhite.jpg) no-repeat;
-	background-position: 0 -22px;	
-	padding-left: 10px;
-	margin-right: 10px;
-	margin-bottom: 2px;
-	white-space: nowrap;
-	float: left}
-	
-span.button:hover {background: url(strasa/buttonwhite.jpg) 0 0 no-repeat;height: 22px}
-
-span.button a,
-span.button a:link { 
-	background: url(strasa/buttonwhite.jpg) no-repeat;
-	background-position: 100% -22px;
-	color: #fff;
-	font-weight: normal;
-	font-size: 12px;
-	height: 22px;
-	padding: 5px 10px 5px 0;
-	margin: 0}
-	
-span.button a:hover {
-	background: url(strasa/buttonwhite.jpg) 100% 0 no-repeat;
-	height: 22px;
-	text-decoration: none} */
 span.button {
 	display: inline-block;
 	margin: 1px 2px;
 	padding: 2px;
 }
 
-/* * html .findtable input {font-size: 1em}*/
 form.admin input[name="features"] {
 	margin-bottom: 3px !important;
-}
-
-select {
 }
 
 select[multiple] {
@@ -268,15 +211,6 @@ small {
 
 label {
 	margin: 0 2px;
-}
-
-ol {
-}
-
-ul {
-}
-
-li {
 }
 
 /***** Page Layout *****/
@@ -369,9 +303,6 @@ ul.jumplinks a:active {
 	background: #fff;
 }
 
-#c1c2 #wrapper {
-}
-
 .fullscreen #col1 {
 	margin-left: 30px !important;
 	margin-right: 30px !important;
@@ -384,9 +315,6 @@ ul.jumplinks a:active {
 
 #c1c2 #wrapper .marginright {
 	margin-right: 210px;
-}
-
-#c1c2 #wrapper #col1 {
 }
 
 #c1c2 #wrapper #col1 #tiki-center {
@@ -424,13 +352,6 @@ ul.jumplinks a:active {
 	font-size: .9em;
 	color: #999;
 	background: #2e3035;
-}
-
-#footer a:link,
-#footer a:visited {
-}
-
-#footer a:hover {
 }
 
 .footerbgtrap {
@@ -507,16 +428,10 @@ div#tiki-main {
 	background: #fff;
 }
 
-div#tiki-mid {
-}
-
 /* To center cbox */
 div#tiki-main #tikimidtbl {
 	margin: auto;
 	width: auto;
-}
-
-div#tiki-bot {
 }
 
 /* Site Header & Identity */
@@ -583,9 +498,6 @@ div#sitead {
 	padding-left: 10px;
 }
 
-.floatright img {
-}
-
 #siteloginbar {
 	float: right;
 	font-size: 90%;
@@ -613,7 +525,6 @@ div#sitead {
 	color: #fff;
 	text-decoration: none;
 }
-
 	
 #siteloginbar * {
 	white-space: nowrap;
@@ -631,13 +542,11 @@ div#sitead {
 	width: 8em !important;
 }
 
-	
 #siteloginbar #pass {
 	float: right;
 	padding-left: 5px;
 }
 
- 
 #siteloginbar .rme,
 #siteloginbar .pass {
 	display: inline;
@@ -653,9 +562,6 @@ div#sitead {
 	padding-top: 0;
 	margin-top: 0;
 	background: url(strasa/register.jpg) no-repeat;
-}
-
-#bannertopright {
 }
 
 #siteloginbar input.wikiaction {
@@ -682,7 +588,6 @@ div.logged-in {
 	color: #5ae0ff !important;
 }
 
-	
 #sitelocbar {
 	float: left;
 	margin: 0 58px;
@@ -724,10 +629,6 @@ div.logged-in {
 	letter-spacing: -0.05em;
 }
 
-	
-* html #sitetitle {
-}
-
 #sitetitle a,
 #sitetitle a:link,
 #sitetitle a:hover {
@@ -739,13 +640,6 @@ div.logged-in {
 	font-size: 110%;
 	display: inline;
 	margin-left: 0.2em;
-}
-
-#header a,
-#header a:visited {
-}
-
-#header a:hover {
 }
 
 /* tiki-top_bar.tpl - menu and search */
@@ -764,7 +658,6 @@ div.logged-in {
 	text-decoration: none;
 }
 
-	
 #tiki-top a:hover {
 	color: #fff;
 }
@@ -794,8 +687,6 @@ input[name="search"] {
 
 /* end header */
 /* centercolumn */
-#showhide_columns {
-}
 
 a.flip,
 a.flip:visited {
@@ -803,7 +694,6 @@ a.flip:visited {
 	font-size: 90%;
 }
 
-	
 a.flip:hover {
 	color: #006699;
 	text-decoration: none;
@@ -838,9 +728,6 @@ a.flip img {
 	text-align: right;
 }
 
-.fullscreen .tellafriend {
-}
-
 /* Also is .content */
 #tiki-center {
 	clear: both;
@@ -860,7 +747,6 @@ a.flip img {
 	font-size: .9em;
 }
 
-	
 #credits {
 	display: inline;
 }
@@ -931,9 +817,6 @@ a.flip img {
 	font-size: 1em;
 	border-color: #224a5f;
 }
-
-.mdkverbar {
-}
  
 .mdksubmenu {
 	z-index: 999;
@@ -943,7 +826,6 @@ a.flip img {
 	visibility: hidden;
 	margin-top: 3px;
 }
-
 	
 * html .mdksubmenu {
 	margin-top: 0;
@@ -961,7 +843,6 @@ a.flip img {
 	background: #1b3a50;
 }
 
-	
 .mdkitem {
 	position: relative;
 	text-align: left;
@@ -991,9 +872,6 @@ a.flip img {
 	text-decoration: none;
 }
  
-.mdkitem a:active {
-}
- 
 #col2 .mdkitem a {
 	color: #006699;
 }
@@ -1008,7 +886,6 @@ a.flip img {
 	white-space: nowrap;
 }
 
-	
 #col2 .treemenudiv {
 	background: #cce5ff;
 }
@@ -1060,7 +937,6 @@ a.phplmselected:hover {
 	height: 18px;
 }
 
-	
 /** CSS (suckerfish) menus **/
 .cssmenu ul,
 .cssmenu_vert li ul,
@@ -1069,20 +945,17 @@ a.phplmselected:hover {
 	background: #1b3a50;
 }
 
-	
 .cssmenu_vert li ul {
 	margin-left: 11.05em; /* second-level lists */
 	margin-top: -1.35em;
 	padding-bottom: 1px; /*enable border to show */
 }
 
-	
 .cssmenu_vert li ul {
 	background: #cce5ff;
 	border: 1px solid #233039;
 }
 
-	
 .cssmenu_horiz li:hover {
 	background: #1b3a50;
 }
@@ -1091,7 +964,6 @@ a.phplmselected:hover {
 	background: none;
 }
 
-	
 .cssmenu a,	
 .cssmenu_horiz a,
 .cssmenu_vert a {
@@ -1102,7 +974,6 @@ a.phplmselected:hover {
 	color: #006699;
 }
 
-	
 .cssmenu_vert a:link,
 .cssmenu_vert a:visited {
 	color: #006699;
@@ -1132,7 +1003,6 @@ a.phplmselected:hover {
 	text-align: left;
 }
 
-	
 .cssmenu_horiz > li.menusection > a {
 	padding-right: 2.6em;
 }
@@ -1143,9 +1013,6 @@ div.separator {
 	padding-bottom: 3px;
 }
 
-div.separator, div.separatorline {
-}
-
 .separator a:link,
 .separator a:visited,
 .separator a:hover {
@@ -1154,53 +1021,18 @@ div.separator, div.separatorline {
 	font-weight: bold;
 }
 
-div.option a.linkmenu:hover {
-}
-
-a.separator img {
-}
-
 .option {
 	margin-left: 20px;
-}
-
-div.optionline,
-.option a {
-}
-
-.option a:link,
-.option a:visited,
-a.linkmenu, .rsslink, .linkmenu:visited, .rsslink:visited {
 }
 
 .linkmenu:hover {
 	color: #000000;
 }
 
-div.option a:hover,
-div.option a:active {
-}
-
-a.linkmodule {
-}
-
 a.linkmodule:hover {
 	color: #000000;
 }
 
-.rsslist {
-}
-
-.rssitem {
-}
-
-.rssitem:first-child {
-}
-
-.rssdate {
-}
-
-/* From Tikineat -- check */
 div.menusection div.menusection,
 div.menusection div.separator {
 	margin-left: 16px;
@@ -1263,7 +1095,6 @@ div#edithelpzone {
 	visibility: hidden;
 }
 
-	
 .clearfix {
 	display: inline-block;
 }
@@ -1309,19 +1140,6 @@ span.highlight {
 	color: #000000;
 }
 
-.link,
-.gallink,
-.bloglink,
-.fgallink,
-.trailer,
-.opencomlink,
-.commentslink,
-.admlink,
-.forumbutlink {
-}
-
-div#debugconsole {
-}
 
 .mini {
 	width: 100%;
@@ -1353,7 +1171,6 @@ div.adminanchors {
 	background: #077aa7 !important;
 }
 
-/* To enable removing deprecated tag from img.icon and prevent border on a.icon. */
 a.icon,
 img.icon {
 	border: 0 !important;
@@ -1383,12 +1200,6 @@ img.icon {
 .top_actions {
 	text-align: right;
 	margin-top: 5px;
-}
-
-input#findwhat {
-}
-
-div.findsubmit {
 }
 
 /* New Help section */
@@ -1483,14 +1294,11 @@ ul.categories li {
 }
 
 /** Modules **/
-.box-shadow {
-}
 
 div.box {
 	overflow: hidden;
 }
 
-	
 #col2 .box {
 	background: #cce5ff;
 	border-bottom: 2px ridge #bed8f1;
@@ -1511,18 +1319,15 @@ h3.box-title {
 	position: relative;
 }
 
-	
 * html h3.box-title {
 	position: static;
 }
 
-	
 #col2 .box-title {
 	margin-top: 0;
 	margin-bottom: 0;
 }
 
-	
 .moduleflip {
 	display: none;
 	position: absolute;
@@ -1552,28 +1357,8 @@ img.flipmodimage:hover {
 	border: 1px solid #58A7D2 !important;
 }
 
-#col2 h3.box-title {
-}
-
-#col2 .box-title a,
-#col2 .box-title a:link {
-}
-
-.box-title a:hover {
-}
-
 .box-data {
 	padding: 0 5px 10px 10px;
-}
-
-.box-data ol,
-.box-data ul {
-}
-
-.box-data ol li {
-}
-
-.box-footer {
 }
 
 /* Check on this ?? */
@@ -1583,7 +1368,6 @@ img.flipmodimage:hover {
 	width: 64px;
 	height: 16px;
 }
-
 	
 /** Other boxes **/
 div.cbox {
@@ -1600,7 +1384,6 @@ div.cbox {
 	text-align: center;
 }
 
-	
 .cbox-title a:link,
 .cbox-title a:visited {
 	color: #5ae0ff;
@@ -1609,9 +1392,6 @@ div.cbox {
 .cbox-title a:hover {
 	color: #fff;
 	text-decoration: none;
-}
-
-.cboxlink {
 }
 
 .cbox-data {
@@ -1623,7 +1403,6 @@ div.cbox {
 	border-collapse: collapse;
 }
 
-	
 .rbox {
 	margin: 0.2em 0 0.4em;
 	text-align: left;
@@ -1649,33 +1428,10 @@ div.cbox {
 	background: #fff;
 }
 
-.comment .rbox-title,
-.comment .rbox-data {
-}
-
-.note .rbox-title {
-}
-
-.note .rbox-data {
-}
-
-.tip .rbox-title,
-.tip .rbox-data {
-}
-
-.warning  .rbox-title {
-}
-
-.warning .rbox-data {
-}
-
 div.simplebox {
 	border: 1px solid #aaa;
 	background: #fff;
 	padding: 1em;
-}
-
-.highlight {
 }
 
 /***** Tables, Tabs and Lists ****/
@@ -1695,9 +1451,6 @@ table.admin {
 	width: 97%;
 }
 
-table.admin tr td div#page-bar {
-}
-
 td {
 	vertical-align: top;
 }
@@ -1715,30 +1468,12 @@ td {
 	padding: 3px;
 }
 
-table.email {
-}
-
-table.email td.body {
-}
-
-table.email td.heading {
-}
-
-table.email td.closebutton {
-}
-
 tr.odd {
 	background: #f0f0f0;
 }
 
-tr.odd:hover {
-}
-
 tr.even {
 	background: #dcdcdc;
-}
-
-tr.even:hover {
 }
 
 td.odd {
@@ -1749,10 +1484,6 @@ td.odd {
 td.even {
 	background: #dcdcdc;
 	color: #000;
-}
-
-tr.even td.even,
-tr.odd td.odd {
 }
 
 td.third {
@@ -1787,41 +1518,6 @@ td.heading a:link,
 td.heading a:visited {
 	color: #5ae0ff;
 	text-decoration: none;
-}
-
-form.admin {
-}
-
-form.admin fieldset {
-}
-
-form.admin legend.heading {
-}
-
-form.admin legend.heading a {
-}
-
-form.admin legend.heading a:hover {
-}
-
-form.admin legend.heading a span {
-}
-
-form.admin legend.heading a:hover span {
-}
-
-/* cells in tracker items display */
-td.formlabel {
-}
-
-td.formcontent {
-}
-
-/* links to view an object from a table listing objects can be generalized to this link */
-a.fgalname {
-}
-
-a.fgalname:hover {
 }
 
  
@@ -1937,17 +1633,6 @@ a.forumnameread {
 	padding: 5px;
 }
 
-/*
-.tabcontent th {
-	background: none;
-	color: #000;
-	border-bottom: 1px solid #1b3a50}
-*/
-form fieldset.tabcontent {
-	: ; /*border: 1px solid #223845;
-	border-top: none !important*/
-}
-
 .tab-wrapper {
 	border: 1px solid #F3FCFE;
 	padding: 0;
@@ -2020,9 +1705,6 @@ a.pagetitle:hover {
 	text-decoration: none;
 }
 
-.wikitopline {
-}
-
 div#description,
 .description {
 	display: block;
@@ -2040,29 +1722,11 @@ div#description,
 	font-size: small;
 }
 
-.categpath {
-}
-
-.wikitext {
-}
-
-.wikitext h1, 
-.wikitext h2, 
-.wikitext h3, 
-.wikitext h4 {
-}
-
 .titlebar {
 	padding: 0.1em;
 	border-top: 1px solid #696969;
 	border-bottom: 1px solid #696969;
 	margin: 10px 0;
-}
-
-.wikitext ul li {
-}
- 
-.wikitext ul li ul li {
 }
 
 .wikitext .fancylist {
@@ -2092,40 +1756,21 @@ div#description,
 	margin-left: -3px;
 }
 
-/* From Tikineat */
-.wikitext div.box {
-}
-
-.wikitopline table {
-}
-
-html>body .wikitopline table {
-}
-
-/* End from Tikineat */
 table.wikitable {
 	border: 1px solid #A9A9A9;
 	border-collapse: collapse;
 }
 
- 
 td.wikicell {
 	padding: 3px;
 	border: 1px solid #a9a9a9;
 	border-collapse: collapse;
 }
 
-	
 /* editable wiki section */
 div.split {
 	border: 1px dashed #696969;
 	clear: both;
-}
-
-.editdate {
-}
-
-div.navbar {
 }
 
 div#page-bar {
@@ -2154,24 +1799,6 @@ ul.floatleft li {
 	margin-top: 8px;
 }
 
-div.cache {
-}
-
-div.cachedpage {
-}
-
-.wikicache, .wikicache:visited {
-}
-
-.wikicache:hover {
-}
-
-.wiki {
-}
-
-.wikinew {
-}
-
 .wiki-edithelp {
 	display: none;
 }
@@ -2184,30 +1811,6 @@ div.cachedpage {
 
 #wikihelp-tab table td {
 	padding: 2px;
-}
-
-textarea.wikiedit {
-	: ; /*font-size: 1.0em*/
-}
-
-p.editdate {
-}
-
-div.wiki-edithelp {
-}
-
-img.externallink {
-}
-
-/* Needed esp. for light-on-dark theme */
-div.quicktag {
-}
-
-div.quicktag img,
-#wikihelp-tab td img {
-}
-
-div#helptool {
 }
 
 /* Wiki plugins */
@@ -2271,7 +1874,6 @@ table.wikiplugin-split .codelisting {
 	margin-bottom: -1px;
 }
 
-	
 .versionav .button {
 	margin-bottom: 0;
 }
@@ -2290,7 +1892,6 @@ div.tocnav {
 	clear: both;
 }
 
- 
 #tocnavicons {
 	float: left;
 }
@@ -2305,9 +1906,6 @@ div.tocnav {
 
 .fancytoclevel {
 	list-style-image: url(../img/icons/footprint.gif);
-}
-
-li.toclevel {
 }
 
 /* TOC */
@@ -2376,10 +1974,6 @@ div.articletopline {
 	font-style: italic;
 	padding-left: 6px;
 }
-
-div.articletitle {
-}
-
  
 div.articletitle h2 {
 	background: #1b3c54 url(strasa/headerbg.jpg) repeat-x 0 100%;
@@ -2388,13 +1982,11 @@ div.articletitle h2 {
 	margin: 0;
 }
 
-	
 div.articletitle h2 a {
 	color: #fff;
 	font-weight: bold;
 }
 
-	
 div.articletitle h2 a:hover {
 	text-decoration: none;
 }
@@ -2412,7 +2004,6 @@ span.titleb {
 	background: #2598c5 url(strasa/login.jpg) left bottom no-repeat;
 }
 
-	
 div.articlesubtitle {
 	margin-top: -1px;
 	padding-left: 6px;
@@ -2428,9 +2019,6 @@ div.articletitle br {
 div.articleheading {
 	margin-top: 6px;
 	padding: 4px;
-}
-
-div.articleheadingtext {
 }
 
 img.topicimage,
@@ -2459,10 +2047,6 @@ div.articletrailer {
 	position: relative;
 	text-align: center;
 	margin-top: 1.1em;
-}
-
-	
-div.articletrailer img {
 }
 
 div.article .status {
@@ -2541,15 +2125,6 @@ div.blogtools {
 .blogpost {
 }
 
-/*.postinfo div a img,
-a.blogt,
-a.blog:visited {
-	border: 0;
-	text-decoration: none}
-
-a.blogt:hover {
-	color: #FFF;
-	border-bottom: 1px dotted #FFF}*/
 .postinfo {
 	margin-bottom: 20px;
 	margin-top: 10px;
@@ -2562,14 +2137,8 @@ a.blogt:hover {
 	border-bottom: none;
 }
 
-div.postinfo a.linkmodule {
-}
-
 .postinfo div {
 	margin-top: 30%;
-}
-
-.small {
 }
 
 div.posthead {
@@ -2583,7 +2152,6 @@ span.posthead {
 	letter-spacing: .4pt;
 }
 
-	
 body.tiki_blogs .post .title {
 	margin-top: 0;
 }
@@ -2606,27 +2174,22 @@ body.tiki_blogs .postbody-title img {
 	float: right;
 }
 
-/*div.posthead h3*/
 body.tiki_blogs .post .title h2{
 	font-size: 1.2em;
 }
 
- 
-/*div.postbody*/
 body.tiki_blogs .post .postbody {
 	margin-right: 8px;
 	line-height: 1.2em;
 	margin-bottom: 1em;
 }
 
-	
 body.tiki_blogs div.author_actions {
 	float: none;
 	border: 0;
 	width: 100%;
 }
 
-	
 body.tiki_blogs .author_actions .actions {
 	float: right;
 	background: url(strasa/login.jpg) no-repeat 100% 0;
@@ -2634,7 +2197,6 @@ body.tiki_blogs .author_actions .actions {
 	min-height: 24px;
 }
 
-	
 body.tiki_blogs .actions img.icon {
 	padding: 4px 0;
 }
@@ -2660,7 +2222,6 @@ body.tiki_blogs .postbody .postfooter {
 	margin-bottom: 2em;
 }
 
-	
 body.tiki_blogs .post .postfooter .actions {
 	float: left;
 }
@@ -2697,18 +2258,13 @@ body.tiki_forums table.normal {
 	font-size: 11px;
 }
 
-/* String up to and including first '.content' needed in *litecss themes to override higher .content properties. */
-/*#c1c2 #wrapper #col1 .content */.post .postbody .content {
+.post .postbody .content {
 	float: none;
 	padding: 0;
 	margin: 0 !important;
 	text-align: left;
 	color: #000;
 	background: #fff !important;
-}
-
-	
-#c1c2 #wrapper #col1 .content .post .postbody .content p {
 }
 
 .post .postbody-title {
@@ -2729,7 +2285,6 @@ body.tiki_forums table.normal {
 	margin-top: 3px;
 }
 
-	
 .post .postbody-title .title a.link {
 	color: #fff;
 }
@@ -2750,7 +2305,6 @@ body.tiki_forums table.normal {
 	padding: 0 2px 2px 2px;
 }
 
-	
 .post .author_info a:link,
 .post .author_info a:visited {
 	color: #fff;
@@ -2764,7 +2318,6 @@ body.tiki_forums table.normal {
 	font-style: italic;
 }
 
-/* How do the following two differ? */
 .post .author_info {
 	float: right;
 	font-size: 90%;
@@ -2794,7 +2347,6 @@ body.tiki_forums table.normal {
 	padding-right: 4px;
 }
 
-	
 .post .postbody-title .actions a,
 .post .postbody-title .actions a:visited {
 	color: #fff;
@@ -2902,7 +2454,6 @@ body.tiki_forums table.normal {
 	margin-bottom: 15px;
 }
 
-/*.post .postbody .signature { float: left}*/
 /* Comments */
 #comzone {
 	display: none;
@@ -2910,20 +2461,17 @@ body.tiki_forums table.normal {
 	padding: 0;
 }
 
- 
 #comzoneopen {
 	display: block;
 	margin: 5px 0;
 	padding: 0;
 }
 
- 
 span.commentstitle {
 	font-weight: bold;
 	font-size: 1.2em;
 }
 
-	
 /* Comments moderation */
 .post-approved-n {
 	border-left: 3px dotted blue;
@@ -2937,11 +2485,6 @@ span.commentstitle {
 	background: url(../../img/icons2/dots.gif);
 }
 
-/*.post-approved-n .content, .post-approved-r .content,
-.post-approved-n .title, .post-approved-r .title,
-.post-approved-n .postfooter, .post-approved-r .postfooter,
-tr.post-approved-n td span, tr.post-approved-r td span {opacity: 0.5}
-tr.post-approved-n td span, tr.post-approved-r td span {opacity: 0.6}*/
 textarea#editpost2 {
 	width: 100%;
 }
@@ -2961,64 +2504,12 @@ div.commentsedithelp {
 }
 
 /***** Categories *****/
-table.tcategpath {
-}
-
-td.tdcategpath {
-}
-
-.categpath {
-}
-
-table.subcats {
-}
-
-td.tdsubcat {
-}
-
-.categlink {
-}
-
-table.catobjects {
-}
-
-td.categobjectsnameeven,
-td.categobjectsnameodd {
-}
-
-td.categobjectsdataeven,
-td.categobjectsdataodd {
-}
-
-.catname {
-}
-
-.catblock {
-}
-
-.catlists {
-}
-
-.catlists:hover {
-}
-
-.cattitle {
-}
-
-.catlists a.link {
-}
-
-.catlists a.link:hover {
-}
 
 .catfeatures {
 	margin-left: 0;
 	padding: 0;
 	font-weight: bold;
 	list-style: none;
-}
-
-ul.catfeatures li {
 }
 
 .catitems {
@@ -3031,9 +2522,6 @@ ul.catfeatures li {
 ul.catitems li {
 	display: inline;
 	margin-right: 6px;
-}
-
-ul.catitems li a.link {
 }
 
 /***** Tags (freetags) *****/
@@ -3096,13 +2584,11 @@ a.freetag_7 {
 
 div.freetagobjectodd {
 	margin: 2px;
-	/*background-color : #F7F9FA;*/
 	position: relative;
 }
 
 div.freetagobjecteven {
 	margin: 2px;
-	/*background-color : #E7E9EA;*/
 	position: relative;
 }
 
@@ -3131,7 +2617,6 @@ body.tiki_galleries table.findtable {
 	display: inline;
 }
 
-/* Check this one ?? */
 div.browsegallery {
 	text-align: center;
 	width: 100%;
@@ -3153,9 +2638,6 @@ td.eventhumb img {
 div.thumbnailcontenerchecked div.thumbnail {
 	border-color: #a9a9a9;
 	background: #f8f8ff;
-}
-
-div.thumbnails {
 }
 
 div#browse_image {
@@ -3180,12 +2662,6 @@ div.imagetitle {
 	font-size: 200%;
 }
 
-div.gallerylink {
-}
-
-div#browse_image {
-}
-
 div.showimage {
 	text-align: center;
 	margin: 5px 0;
@@ -3203,74 +2679,6 @@ div.imgaldescr {
 }
 
 /***** File Galleries *****/
-div.thumbnailcontener {
-}
-
-div.thumbnail {
-}
-
-div.thumbnamecontener, div.thumbimagecontener {
-}
-
-div.thumbnamecontener {
-}
-
-div.thumbname, div.thumbimage {
-}
-
-div.thumbnamesub, div.thumbimagesub {
-}
-
-div.thumbnail:hover {
-}
-
-div.thumbnail:hover div.thumbnamecontener {
-}
-
-div.thumbimage img {
-}
-
-div.thumbinfos {
-}
-
-div.thumbinfo {
-}
-
-span.thumbinfoval {
-}
-
-div.thumbname {
-}
-
-div.thumbactions {
-}
-
-div.thumbactions * {
-}
-
-div.thumbactions input {
-}
-
-div.thumbactions a {
-}
-
-div.thumbdescription {
-}
-
-div.thumbdescription + div.thumbinfo {
-}
-
-div.thumbdescription span.thumbinfoname {
-}
-
-a.namealias {
-}
-
-div.gallerypath, div.gallerypath a {
-}
-
-div.gallerypath a:hover {
-}
 
 .fgal_top_bar {
 	margin: 5px 0;
@@ -3298,12 +2706,9 @@ div.gallerypath a:hover {
 	vertical-align: middle;
 }
 
-	
 /* also for categorize.tpl */
 div.multiselect {
 	vertical-align: middle;
-	/*overflow-y: auto;
-	overflow-x: hidden;*/
 	overflow: auto;
 	height: auto;
 	width: 100%;
@@ -3498,12 +2903,10 @@ div.multiselect {
 	text-decoration: none;
 }
 
-	
 .opaque .iconmenu {
 	display: block;
 }
 
-	
 .searchresults {
 	list-style: none;
 	padding: 0;
@@ -3613,22 +3016,6 @@ div.multiselect {
 	text-decoration: none;
 }
 
-.day,
-.day:visited {
-}
-
-.today {
-}
-
-.nav {
-}
-
-.changedate {
-}
-
-.date {
-}
-
 .calinput {
 	background: #223845;
 }
@@ -3687,12 +3074,6 @@ div.multiselect {
 	background: #cce5ff;
 }
 
-.daterow {
-}
-
-.daterow:hover {
-}
-
 /*****  Polls  *****/
 div.pollresults {
 	margin-top: 5px;
@@ -3719,9 +3100,6 @@ td.pollr {
 
 #polledit {
 	display: none;
-}
-
-.pollnav {
 }
 
 /***** FAQs *****/
@@ -3754,9 +3132,6 @@ div.quizquestion {
 	margin-bottom: 5px;
 }
 
-div.quizoptions {
-}
-
 div.quizdescription {
 	margin-bottom: 10px;
 }
@@ -3784,9 +3159,6 @@ textarea.tshoutbox{
 	width: 162px;
 }
 
-.wiki-table {
-}
-
 .wiki-tr-a td {
 	border: 0;
 }
@@ -3799,9 +3171,6 @@ textarea.tshoutbox{
 div.dircategs {
 	border: 1px solid #696969;
 	padding: 5px;
-}
-
-.dirlink {
 }
 
 .dirsublink {
@@ -3818,18 +3187,12 @@ div.dirsite {
 	padding: 4px;
 }
 
-span.dirsitedesc {
-}
-
 span.dirsitetrail {
 	font-size: 95%;
 }
 
 span.dirsitecats {
 	font-size: 95%;
-}
-
-.dirsitelink {
 }
 
 div.dirrelated {
@@ -3895,7 +3258,6 @@ div.messureadbody {
 	color: black;
 }
 
-	
 /***** Sheets *****/
 .plugin-desc {
 	padding: 5px;
@@ -3956,7 +3318,6 @@ div#ajaxloading {
 	padding: 5px 0 4px 8px;
 }
 
-	
 #shadowbox_content {
 	background: #F3FCFE;
 }
