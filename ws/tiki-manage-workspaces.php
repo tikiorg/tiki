@@ -31,13 +31,31 @@ if ( isset($_REQUEST['wsName']))
 	if (($name == "") || ($groupName == ""))
 	{
 		if ($name == "")
-			echo("Falta nombre del WS");
+		{
+				$smarty->assign('msg', tra("Workspace can not be blank"));
+				$smarty->display("error.tpl");
+				die;
+		}
 		else if ($groupName == "")
-			echo("Falta nombre del grupo nuevo");
+		{
+				$smarty->assign('msg', tra("Group name can not be blank"));
+				$smarty->display("error.tpl");
+				die;
+		}
 	}
+	
+	// Check if a WS with the same name exists in the same level
+	$wsid = $wslib->get_ws_id($name, $parentWS);
+	if (!empty($wsid))
+	{
+			$smarty->assign('msg', tra("There already exists a Workspace with that name in the same level"));
+			$smarty->display("error.tpl");
+			die;
+	}
+	
+	// If everything is ok, then the Workspace is created
 	else
 	{
-		var_dump($adminPerms);
 		$perms = array($adminPerms);
 		$groups = array();
 		$groups[] = array(
@@ -48,19 +66,44 @@ if ( isset($_REQUEST['wsName']))
 					);
 		$wslib->create_ws ($name, $groups, $parentWS, $description);
 		
-		header("Location: ./tiki-create_ws.php");
+		header("Location: ./tiki-manage-workspaces.php");
 	}
-	
 }
 else
 {
 	require_once 'lib/userslib.php';
 	
+	// List Workspaces Tab
+	if ( !isset($_REQUEST['maxRecords']))
+		$_REQUEST['maxRecords'] = 25;
+	if ( !isset($_REQUEST['offset']))
+		$_REQUEST['offset'] = 0;
+	
+	$maxRecords = $_REQUEST['maxRecords']; 
+	$offset = $_REQUEST['offset'];
+	
+	$listWS = $wslib->list_all_ws($offset, $maxRecords, 'name_asc', "", "", "");
+	$smarty->assign('listWS', $listWS);
+	if ($offset > 0)
+	{
+		$offset_prev = (int) $offset- (int) $maxRecords;
+		$href_prev = "tiki-manage-workspaces.php?maxRecords=".$maxRecords."&offset=".$offset_prev;
+	}
+	if (((int) $offset + (int) $maxRecords) <= (int) $listWS["cant"])
+	{
+		$offset_next = (int) $offset+ (int) $maxRecords;
+		$href_next = "tiki-manage-workspaces.php?maxRecords=".$maxRecords."&offset=".$offset_next;
+	}
+	
+	$smarty->assign('prev_page',$href_prev);
+	$smarty->assign('next_page',$href_next);
+	
+	// Add Workspace Tab	
 	$listGroups = $userlib->get_groups();
 	$smarty->assign('listGroups', $listGroups);
 	
-	$listWS = $wslib->list_all_ws(-1,-1,'name_asc',null,'','');
-	$smarty->assign('listWS', $listWS);
+	$listParentWS = $wslib->list_all_ws(-1,-1,'name_asc',null,'','');
+	$smarty->assign('listParentWS', $listParentWS);
 	
 	$listPerms = $wslib->get_ws_adminperms ();
 	$smarty->assign('listPerms', $listPerms);

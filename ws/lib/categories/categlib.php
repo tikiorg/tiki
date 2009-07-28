@@ -78,6 +78,8 @@ class CategLib extends ObjectLib {
 			$res["tepath"] = $tepath;
 			$res["deep"] = count($tepath);
 			$res['name'] = $this->get_category_name($res['categId']);
+			if ($showWS)
+				$res['href'] = "tiki-user_ws.php?showWS=".$res["categId"]."&nameWS=".$res['name'];
 			global $userlib;
 			if ($userlib->object_has_one_permission($res['categId'], 'category')) {
 				$res['has_perm'] = 'y';
