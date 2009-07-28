@@ -3213,7 +3213,7 @@ CREATE TABLE 'tiki_user_votings' (
   "id" varchar(255) NOT NULL default '',
   "optionId" bigint NOT NULL default 0,
   "time" bigint NOT NULL default 0,
-  PRIMARY KEY (user(100),id(100))
+  KEY (user(100),id(100))
 ) ENGINE=MyISAM;
 
 CREATE  INDEX "tiki_user_votings_ip" ON "tiki_user_votings"(`"ip"`);
@@ -5133,12 +5133,16 @@ CREATE TABLE 'IF' NOT EXISTS tiki_user_reports_cache (
 ) ENGINE=MyISAM;
 
 
+DROP TABLE IF EXISTS 'tiki_perspectives';
+
 CREATE TABLE 'tiki_perspectives' (
   "perspectiveId" int NOT NULL AUTO_INCREMENT,
   "name" varchar(100) NOT NULL,
   PRIMARY KEY( perspectiveId )
 ) ENGINE=MyISAM;
 
+
+DROP TABLE IF EXISTS 'tiki_perspective_preferences';
 
 CREATE TABLE 'tiki_perspective_preferences' (
   "perspectiveId" int NOT NULL,

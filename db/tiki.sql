@@ -3894,12 +3894,14 @@ CREATE TABLE IF NOT EXISTS `tiki_user_reports_cache` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
 
+DROP TABLE IF EXISTS `tiki_perspectives`;
 CREATE TABLE tiki_perspectives (
 	perspectiveId int NOT NULL AUTO_INCREMENT,
 	name varchar(100) NOT NULL,
 	PRIMARY KEY( perspectiveId )
 ) ENGINE=MyISAM;
 
+DROP TABLE IF EXISTS `tiki_perspective_preferences`;
 CREATE TABLE tiki_perspective_preferences (
 	perspectiveId int NOT NULL,
 	pref varchar(40) NOT NULL,

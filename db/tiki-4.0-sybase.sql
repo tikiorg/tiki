@@ -4425,7 +4425,7 @@ CREATE TABLE "tiki_user_votings" (
   "id" varchar(255) default '' NOT NULL,
   "optionId" numeric(10,0) default 0 NOT NULL,
   "time" numeric(14,0) default 0 NOT NULL,
-  PRIMARY KEY (`user`(100),id(100))
+  KEY (`user`(100),id(100))
 ) ENGINE=MyISAM
 go
 
@@ -7729,6 +7729,10 @@ go
 
 
 
+-- DROP TABLE `tiki_perspectives`
+go
+
+
 CREATE TABLE "tiki_perspectives" (
   "perspectiveId" int NOT NULL AUTO_INCREMENT,
   "name" varchar(100) NOT NULL,
@@ -7736,6 +7740,10 @@ CREATE TABLE "tiki_perspectives" (
 ) ENGINE=MyISAM
 go
 
+
+
+-- DROP TABLE `tiki_perspective_preferences`
+go
 
 
 CREATE TABLE "tiki_perspective_preferences" (
