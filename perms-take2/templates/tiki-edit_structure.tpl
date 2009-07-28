@@ -203,7 +203,7 @@
 </tr>
 </table>
 </form>
-{if $tiki_p_view_categories == 'y' && $prefs.feature_wiki_categorize_structure == 'y' && $all_editable == 'y'}
+{if $prefs.feature_wiki_categorize_structure == 'y' && $all_editable == 'y'}
 <form action="tiki-edit_structure.php" method="post">
 <input type="hidden" name="page_ref_id" value="{$page_ref_id}" />
 <h3>{tr}Categorize all pages in structure together{/tr}:</h3>

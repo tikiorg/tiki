@@ -318,7 +318,7 @@ if (!empty($_REQUEST['group']) && isset($_REQUEST['import'])) {
 if ($prefs['feature_categories'] == 'y') {
 	global $categlib;
 	include_once ('lib/categories/categlib.php');
-	$categories = $categlib->get_all_categories_respect_perms($user, 'tiki_p_view_categories');
+	$categories = $categlib->get_all_categories_respect_perms($user, 'view_category');
 	$smarty->assign_by_ref('categories', $categories);
 }
 $av_themes = $tikilib->list_styles();

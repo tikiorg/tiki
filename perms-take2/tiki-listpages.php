@@ -231,17 +231,15 @@ if (!empty($multiprint_pages)) {
 	if ($prefs['feature_categories'] == 'y') {
 		global $categlib;
 		include_once ('lib/categories/categlib.php');
-		$categories = $categlib->get_all_categories_respect_perms($user, 'tiki_p_view_categories');
+		$categories = $categlib->get_all_categories_respect_perms($user, 'view_category');
 		$smarty->assign_by_ref('categories', $categories);
 		if ((isset($prefs['wiki_list_categories']) && $prefs['wiki_list_categories'] == 'y') || (isset($prefs['wiki_list_categories_path']) && $prefs['wiki_list_categories_path'] == 'y')) {
 			foreach($listpages['data'] as $i => $check) {
 				$cats = $categlib->get_object_categories('wiki page', $check['pageName']);
 				foreach($cats as $cat) {
-					if ($userlib->user_has_perm_on_object($user, $cat, 'category', 'tiki_p_view_categories')) {
-						$listpages['data'][$i]['categpath'][] = $cp = $categlib->get_category_path_string($cat);
-						if ($s = strrchr($cp, ':')) $listpages['data'][$i]['categname'][] = substr($s, 1);
-						else $listpages['data'][$i]['categname'][] = $cp;
-					}
+					$listpages['data'][$i]['categpath'][] = $cp = $categlib->get_category_path_string($cat);
+					if ($s = strrchr($cp, ':')) $listpages['data'][$i]['categname'][] = substr($s, 1);
+					else $listpages['data'][$i]['categname'][] = $cp;
 				}
 			}
 		}

@@ -115,9 +115,7 @@
 		{remarksbox type="tip" title="{tr}Note{/tr}"}{tr}Use single spaces to indent structure levels{/tr}{/remarksbox}
    </td>
 </tr>    
-{if $tiki_p_view_categories eq 'y'}
 {include file='categorize.tpl'}
-{/if}
 <tr>
    <td class="formcolor">&nbsp;</td>
    <td colspan="2" class="formcolor"><input type="submit" value="{tr}Create New Structure{/tr}" name="create" /></td>
