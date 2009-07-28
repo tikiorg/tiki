@@ -522,7 +522,9 @@ class ModLib extends TikiLib {
 			$smarty->clear_assign('module_params'); // ensure params not available outside current module
 			$smarty->clear_assign('tpl_module_title');
 
-			file_put_contents( $cachefile, $data );
+			if (!empty($cachefile)) {
+				file_put_contents( $cachefile, $data );
+			}
 		} else {
 			$data = file_get_contents( $cachefile );
 		}
