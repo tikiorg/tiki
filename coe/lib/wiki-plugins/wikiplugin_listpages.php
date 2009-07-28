@@ -14,6 +14,7 @@ function wikiplugin_listpages_info() {
 		'documentation' => 'PluginListpages',
 		'description' => tra('List wiki pages.'),
 		'prefs' => array('wikiplugin_listpages'),
+		'icon' => 'pics/icons/page_white_stack.png',
 		'params' => array(
 			'offset' => array(
 				'required' => false,

@@ -17,6 +17,7 @@ function wikiplugin_tracker_info() {
 		'description' => tra("Displays an input form for tracker submit"),
 		'prefs' => array( 'feature_trackers', 'wikiplugin_tracker' ),
 		'body' => tra('Confirmation message after posting form'),
+		'icon' => 'pics/icons/database.png',
 		'params' => array(
 			'trackerId' => array(
 				'required' => true,

@@ -24,6 +24,7 @@ function wikiplugin_countdown_info() {
 		'documentation' => 'PluginCountdown',
 		'description' => tra('Displays a countdown from now until the specified date.'),
 		'prefs' => array('wikiplugin_countdown'),
+		'icon' => 'pics/icons/clock.png',
 		'body' => tra('Text to append to the countdown.'),
 		'params' => array(
 			'enddate' => array(

@@ -14,6 +14,7 @@ function wikiplugin_rss_info() {
 		'documentation' => 'PluginRSS',
 		'description' => tra('Inserts an RSS feed output.'),
 		'prefs' => array( 'wikiplugin_rss' ),
+		'icon' => 'pics/icons/rss.png',
 		'params' => array(
 			'id' => array(
 				'required' => true,

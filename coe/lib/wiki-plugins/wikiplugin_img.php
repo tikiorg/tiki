@@ -6,6 +6,7 @@ function wikiplugin_img_info()
 		'name' => tra( 'Img' ),
 		'description' => tra( 'Displays an image.' ),
 		'prefs' => array( 'wikiplugin_img' ),
+		'icon' => 'pics/icons/picture.png',
 		'params' => array(
 			'src' => array(
 				'required' => false,
