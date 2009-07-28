@@ -1,5 +1,6 @@
 <?php
 
+// Set tikiversion variable
 $tikiversion='4.0';
 if(!isset($_GET['version'])) {
    echo "version not given. Using default $tikiversion.<br />";
@@ -8,6 +9,7 @@ if(!isset($_GET['version'])) {
       $tikiversion=$_GET['version'];
    }
 }
+
 
 // read file
 $file="../tiki-$tikiversion-mysql.sql";

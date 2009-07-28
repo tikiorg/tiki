@@ -29,7 +29,22 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
     /**
      * @see lib/importer/TikiImporter#importOptions
      */
-    static public $importOptions = array();    
+    static public $importOptions = array(
+        array('name' => 'importAttachments', 'type' => 'checkbox', 'label' => 'Import images and attachments'),
+    );    
+
+    /**
+     * The directory used to save the attachments.
+     * It is defined on $this->import()
+     */
+    var $attachmentsDestDir = '';
+
+    /**
+     * Wheter to import or not the attachments if the option has been
+     * marked by the user and if it is possible to write in the
+     * destination dir
+     */
+    var $importAttachments = false;
 
     /**
      * Start the importing process by loading the XML file.
@@ -44,6 +59,10 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
     {
         if (isset($_FILES['importFile']) && !in_array($_FILES['importFile']['type'], $this->validTypes)) {
             throw new UnexpectedValueException(tra('Invalid file mime type'));
+        }
+
+        if (!empty($_POST['importAttachments']) && $_POST['importAttachments'] == 'on') {
+            $this->checkRequirementsForAttachments();
         }
 
         $this->saveAndDisplayLog("Loading and validating the XML file\n");
@@ -69,8 +88,44 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
     }
 
     /**
-     * Foreach page call $this->extractInfo() and append the
-     * returned value to $parsedData array
+     * Check for all the requirements to import attachments
+     * and also set the $this->attachmentsDestDir.
+     * If one of them is not satisfied the script will die.
+     * Otherwise set $this->importAttachments to true
+     *
+     * @returns void
+     */
+    function checkRequirementsForAttachments()
+    {
+        global $tikidomain;
+
+        $this->attachmentsDestDir = dirname(__FILE__) . '/../../img/wiki_up/';
+        if ($tikidomain)
+            $this->attachmentsDestDir .= $tikidomain;
+
+        if (ini_get('allow_url_fopen') === false) {
+            $this->saveAndDisplayLog("ABORTING: you need to enable the PHP setting 'allow_url_fopen' to be able to import attachments. Fix the problem or try to import without the attachments.\n");
+            die;
+        }
+
+        if (!file_exists($this->attachmentsDestDir)) {
+            $this->saveAndDisplayLog("ABORTING: destination directory for attachments ($this->attachmentsDestDir) does no exist. Fix the problem or try to import without the attachments.\n");
+            die;
+        } elseif (!is_writable($this->attachmentsDestDir)) {
+            $this->saveAndDisplayLog("ABORTING: destination directory for attachments ($this->attachmentsDestDir) is not writable. Fix the problem or try to import without attachments.\n");
+            die;
+        }
+
+        $this->importAttachments = true;
+    }
+
+    /**
+     * Foreach page check if it is a wiki page or a wiki page
+     * attachment and call the proper method, respectively 
+     * $this->extractInfo() and $this->handleFileUpload()
+     *
+     * In the case of a wiki page append the returned value of
+     * $this->extractInfo() to $parsedData array
      * 
      * @return array $parsedData
      */
@@ -82,13 +137,50 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
         $this->saveAndDisplayLog("\nStarting to parse " . $pages->length . " pages:\n");
 
         foreach ($pages as $page) {
-            try {
-                $parsedData[] = $this->extractInfo($page);
-            } catch (ImporterParserException $e) {
-                $this->saveAndDisplayLog($e->getMessage());
+            // TODO: discover if there is a better to to check if $page has 'upload' element
+            $upload = $page->getElementsByTagName('upload');
+
+            if ($upload->length >= 1) {
+                // is a reference to a wiki page attachment
+                if ($this->importAttachments)
+                    $this->downloadAttachment($upload->item(0));
+            } else {
+                // is a wiki page
+                try {
+                    $parsedData[] = $this->extractInfo($page);
+                } catch (ImporterParserException $e) {
+                    $this->saveAndDisplayLog($e->getMessage());
+                }
             }
         }
+
         return $parsedData;
+    }
+
+    /**
+     * Receive an DOMElement page with the attribute 'upload'
+     * and try to download the file to the 
+     * img/wiki_up/ directory
+     *
+     * @param DOMElement $upload
+     * @return void
+     */
+    function downloadAttachment(DOMElement $upload) {
+        $fileName = $upload->getElementsByTagName('filename')->item(0)->nodeValue;
+        $fileUrl = $upload->getElementsByTagName('src')->item(0)->nodeValue;
+
+        if ($attachmentContent = file_get_contents($fileUrl)) {
+            $newFile = fopen($this->attachmentsDestDir . $fileName, 'w');
+            fwrite($newFile, $attachmentContent);
+            $this->saveAndDisplayLog("File $fileName sucessfully imported!\n");
+        } else {
+            $this->saveAndDisplayLog("Unable to import file $fileName\n");
+        }
+        // check if is possible to download file
+        // download file
+        // save it on img/wiki_up/$domain
+        // print message to the user
+        // what to do with conflicting names?
     }
 
     /**

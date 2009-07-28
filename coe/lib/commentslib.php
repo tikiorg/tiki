@@ -1,5 +1,5 @@
 <?php
-// $Id: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.167.2.22 2008/03/24 14:51:10 sylvieg Exp $
+// $Id$
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -7,7 +7,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 // A library to handle comments on object (notes, articles, etc)
-// This is just a test
 class Comments extends TikiLib {
     var $time_control = 0;
 
@@ -1557,16 +1556,7 @@ class Comments extends TikiLib {
 	}
     }
 
-    function parse_smileys($data) {
-	global $prefs;
-
-	if ($prefs['feature_smileys'] == 'y') {
-	    $data = preg_replace("/\(:([^:]+):\)/", "<img alt=\"$1\" src=\"img/smiles/icon_$1.gif\" />", $data);
-	}
-
-	return $data;
-    }
-
+    
     function pick_cookie() {
 	$cant = $this->getOne("select count(*) from `tiki_cookies`",array());
 
@@ -1602,10 +1592,11 @@ class Comments extends TikiLib {
 	// Segundo intento reemplazar los [link] comunes
 	$data = preg_replace("/\[([^\]\|]+)\]/", '<a class="commentslink" href="$1">$1</a>', $data);
 
-	// Llamar aqui a parse smileys
-	$data = $this->parse_smileys($data);
+	// smileys
+	$data = $tikilib->parse_smileys($data);
+	
 	$data = preg_replace("/---/", "<hr/>", $data);
-	// Reemplazar --- por <hr/>
+	// replace --- with <hr/>
 	return nl2br($data);
     }
 

@@ -1,5 +1,29 @@
 <mediawiki xmlns="http://www.mediawiki.org/xml/export-0.3/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mediawiki.org/xml/export-0.3/ http://www.mediawiki.org/xml/export-0.3.xsd" version="0.3" xml:lang="pt">
   <siteinfo>
+    <sitename>Dev</sitename>
+    <base>http://localhost/mediawiki/index.php/P%C3%A1gina_principal</base>
+    <generator>MediaWiki 1.14.0</generator>
+    <case>first-letter</case>
+    <namespaces>
+      <namespace key="-2">Media</namespace>
+      <namespace key="-1">Especial</namespace>
+      <namespace key="0" />
+      <namespace key="1">Discussão</namespace>
+      <namespace key="2">Usuário</namespace>
+      <namespace key="3">Usuário Discussão</namespace>
+      <namespace key="4">Dev</namespace>
+      <namespace key="5">Dev Discussão</namespace>
+      <namespace key="6">Arquivo</namespace>
+      <namespace key="7">Arquivo Discussão</namespace>
+      <namespace key="8">MediaWiki</namespace>
+      <namespace key="9">MediaWiki Discussão</namespace>
+      <namespace key="10">Predefinição</namespace>
+      <namespace key="11">Predefinição Discussão</namespace>
+      <namespace key="12">Ajuda</namespace>
+      <namespace key="13">Ajuda Discussão</namespace>
+      <namespace key="14">Categoria</namespace>
+      <namespace key="15">Categoria Discussão</namespace>
+    </namespaces>
   </siteinfo>
   <page>
     <title>Redes de ensino</title>
@@ -140,8 +164,59 @@
 *[[Rede Salesiana de Escolas]]
 *[[MACRO Clube de Ensino]]
 
+[[Arquivo:Passelivre.jpg]]
+
 [[Categoria:Escolas]]</text>
     </revision>
+  </page>
+  <page>
+    <title>Arquivo:Qlandkartegt-0.11.1.tar.gz</title>
+    <id>2</id>
+    <revision>
+      <id>2</id>
+      <timestamp>2009-07-22T21:47:45Z</timestamp>
+      <contributor>
+        <username>Admin</username>
+        <id>1</id>
+      </contributor>
+      <comment>adsfasdf</comment>
+      <text xml:space="preserve">adsfasdf</text>
+    </revision>
+    <upload>
+      <timestamp>2009-07-22T21:47:45Z</timestamp>
+      <contributor>
+        <username>Admin</username>
+        <id>1</id>
+      </contributor>
+      <comment>adsfasdf</comment>
+      <filename>Qlandkartegt-0.11.1.tar.gz</filename>
+      <src>http://localhost/mediawiki/images/a/af/Qlandkartegt-0.11.1.tar.gz</src>
+      <size>3252598</size>
+    </upload>
+  </page>
+  <page>
+    <title>Arquivo:Passelivre.jpg</title>
+    <id>3</id>
+    <revision>
+      <id>4</id>
+      <timestamp>2009-07-22T21:50:42Z</timestamp>
+      <contributor>
+        <username>Admin</username>
+        <id>1</id>
+      </contributor>
+      <text xml:space="preserve" />
+    </revision>
+    <upload>
+      <timestamp>2009-07-22T21:50:42Z</timestamp>
+      <contributor>
+        <username>Admin</username>
+        <id>1</id>
+      </contributor>
+      <comment />
+      <filename>Passelivre.jpg</filename>
+      <src>http://localhost/mediawiki/images/b/bb/Passelivre.jpg</src>
+      <size>94751</size>
+    </upload>
   </page>
   <page>
     <title>Núcleo Pedagógico Integrado</title>

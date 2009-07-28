@@ -1,0 +1,11 @@
+/* $Id$
+	Tikinewt theme selectors for IE7.
+*/
+
+body {
+	font-size: 70%;
+}
+
+.post .postbody {
+	min-width: 100% !important;
+}
