@@ -5608,6 +5608,7 @@ CREATE TABLE `tiki_sent_newsletters_files` (
   KEY `editionId` (`editionId`)
 );
 
+
 DROP TABLE `tiki_sefurl_regex_out`;
 
 CREATE TABLE `tiki_sefurl_regex_out` (
@@ -5620,9 +5621,9 @@ CREATE TABLE `tiki_sefurl_regex_out` (
   `comment` varchar(256),
   `order` number(11) NULL default 0,
   PRIMARY KEY(`id`),
-  UNIQUE KEY `left` (`left`(256)),
   "INDEX" `idx1` (silent, type, feature(30))
 );
+
 
 INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`) VALUES('tiki-index.php\\?page=(.+)', '$1', 'wiki', 'feature_wiki');
 

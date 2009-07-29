@@ -7354,6 +7354,7 @@ CREATE TABLE `tiki_sent_newsletters_files` (
 go
 
 
+
 -- DROP TABLE `tiki_sefurl_regex_out`
 go
 
@@ -7368,10 +7369,10 @@ CREATE TABLE `tiki_sefurl_regex_out` (
   `comment` varchar(256),
   `order` numeric(11,0) NULL default 0,
   PRIMARY KEY(`id`),
-  UNIQUE KEY `left` (`left`(256)),
   "INDEX" `idx1` (silent, type, feature(30))
 )
 go
+
 
 
 INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`) VALUES('tiki-index.php\\?page=(.+)', '$1', 'wiki', 'feature_wiki')
