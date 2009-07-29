@@ -182,6 +182,10 @@
 {elseif $field_value.type eq 'm'}
 	<input type="text" name="{$field_value.ins_id}" value="{$field_value.value|escape}" />
 
+{* -------------------- url  -------------------- *}
+{elseif $field_value.type eq 'L'}
+	<input type="text" name="{$field_value.ins_id}" value="{$field_value.value|escape}" />
+
 {* -------------------- numeric field -------------------- *}
 {elseif $field_value.type eq 'n'}
 	{*prepend*}{if $field_value.options_array[2]}<span class="formunit">{$field_value.options_array[2]}&nbsp;</span>{/if}
