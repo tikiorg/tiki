@@ -1,7 +1,7 @@
 {strip}
 {* param: field_value(id, ins_id, type, value,options_array, http_request,flags,defaultvalue, isMandatory, itemChoice, list, isHidden), tiki_p_.... item(creator, my_rate), input_err, ling, groups, item(creator,rating,trackerId)*}
 
-{if $field_value.isMandatory eq 'y'}
+{if $field_value.isMandatory eq 'y' and $showmandatory eq 'y'}
 	<span class="mandatory_field">
 {/if}
 
@@ -180,6 +180,10 @@
 
 {* -------------------- email  -------------------- *}
 {elseif $field_value.type eq 'm'}
+	<input type="text" name="{$field_value.ins_id}" value="{$field_value.value|escape}" />
+
+{* -------------------- url  -------------------- *}
+{elseif $field_value.type eq 'L'}
 	<input type="text" name="{$field_value.ins_id}" value="{$field_value.value|escape}" />
 
 {* -------------------- numeric field -------------------- *}
@@ -390,8 +394,8 @@
 
 {/if}
 
-{if $field_value.isMandatory eq 'y'}
-	</span>
+{if $field_value.isMandatory eq 'y' and $showmandatory eq 'y'}
+	<strong class='mandatory_star'>*</strong></span>
 {/if}
 
 {/strip}

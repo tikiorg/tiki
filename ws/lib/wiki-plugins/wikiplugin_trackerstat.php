@@ -190,10 +190,10 @@ function wikiplugin_trackerstat($data, $params) {
 			$total = $trklib->get_nb_items($trackerId);
 			for (; $j >= 0; --$j) {
 				$v[$j]['average'] = 100*$v[$j]['count']/$total;
+				if ($tracker_info['showStatus'] == 'y') {
+					$v[$j]['href'] .= "&amp;status=$status";
+				}
 			}
-		}
-		if ($tracker_info['showStatus'] == 'y') {
-			$v[$j]['href'] .= "&amp;status=$status";
 		}
 		if (!empty($v)) {
 			$stat['name'] = $allFields["data"][$i]['name'];

@@ -1995,7 +1995,7 @@ class Tiki_Profile_InstallHandler_Workspaces extends Tiki_Profile_InstallHandler
     {
 	$data = $this->getData();
 
-	if ( isset($data["name"]) && isset($data["groups"]) && isset($data['items']) ) return true;
+	if ( isset($data["name"]) && isset($data["groups"]) ) return true;
 	else return false;
     }
 
@@ -2008,7 +2008,15 @@ class Tiki_Profile_InstallHandler_Workspaces extends Tiki_Profile_InstallHandler
 	global $wslib; if (!$wslib) require_once 'lib/workspaces/wslib.php';
 
 	if ($this->canInstall()){
-	    $id = $wslib->create_ws($data['name'], $this->fetchGroupData($data), $data['parent'], $data['description']);
+	    $id = $wslib->create_ws($data['name'], null, $data['parent'], $data['description']);
+
+	    foreach ($groups as $group)
+	    {
+	    }
+
+
+
+
 
 	    //With this I can obtain what objects was installed before the install of the ws
 	    $profile_id = Tiki_Profile::withPrefix( '' );

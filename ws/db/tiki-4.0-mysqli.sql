@@ -2664,7 +2664,7 @@ CREATE TABLE tiki_user_votings (
   id varchar(255) NOT NULL default '',
   optionId int(10) NOT NULL default 0,
   time int(14) NOT NULL default 0,
-  PRIMARY KEY (`user`(100),id(100)),
+  KEY (`user`(100),id(100)),
   KEY ip (`ip`),
   KEY id (`id`)
 ) ENGINE=MyISAM;
@@ -3913,12 +3913,14 @@ CREATE TABLE IF NOT EXISTS `tiki_user_reports_cache` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
 
+DROP TABLE IF EXISTS `tiki_perspectives`;
 CREATE TABLE tiki_perspectives (
 	perspectiveId int NOT NULL AUTO_INCREMENT,
 	name varchar(100) NOT NULL,
 	PRIMARY KEY( perspectiveId )
 ) ENGINE=MyISAM;
 
+DROP TABLE IF EXISTS `tiki_perspective_preferences`;
 CREATE TABLE tiki_perspective_preferences (
 	perspectiveId int NOT NULL,
 	pref varchar(40) NOT NULL,

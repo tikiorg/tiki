@@ -582,7 +582,18 @@ function wikiplugin_tracker($data, $params) {
 					}
 					$outf[] = $l;
 				}
-			} elseif (!isset($fields)) {
+			} elseif (empty($fields) && !empty($wiki)) {
+				$wiki_info = $tikilib->get_page_info($wiki);
+				preg_match_all('/\$f_([0-9]+)/', $wiki_info['data'], $matches);
+				$outf = $matches[1];
+			} elseif (empty($fields) && !empty($tpl)) {
+				$f = $smarty->get_filename($tpl);
+				if (!empty($f)) {
+					$f = file_get_contents($f);
+					preg_match_all('/\$f_([0-9]+)/', $f, $matches);
+					$outf = $matches[1];
+				}
+			} elseif (empty($fields) && empty($wiki)) {
 				foreach ($flds['data'] as $f) {
 					if ($f['isMandatory'] == 'y')
 						$optional[] = $f['fieldId'];
@@ -786,8 +797,12 @@ function wikiplugin_tracker($data, $params) {
 					$back .= '<input type="hidden" name="track['.$f['fieldId'].']" />';
 				}
 				if (in_array($f['fieldId'],$outf)) {
+					if ($showmandatory == 'y' and $f['isMandatory'] == 'y') {
+						$onemandatory = true;
+					}
 					if (!empty($tpl) || !empty($wiki)) {
 						$smarty->assign_by_ref('field_value', $f);
+						$smarty->assign('showmandatory', $showmandatory);
 						$smarty->assign('f_'.$f['fieldId'], $smarty->fetch('tracker_item_field_input.tpl'));
 					} else {
 						if (in_array($f['fieldId'], $optional)) {
@@ -801,7 +816,6 @@ function wikiplugin_tracker($data, $params) {
 						$back .= ">".wikiplugin_tracker_name($f['fieldId'], $f['name'], $field_errors);
 						if ($showmandatory == 'y' and $f['isMandatory'] == 'y') {
 							$back.= "&nbsp;<strong class='mandatory_star'>*</strong>&nbsp;";
-							$onemandatory = true;
 						}
 						$back.= "</td><td>";
 						} else {
