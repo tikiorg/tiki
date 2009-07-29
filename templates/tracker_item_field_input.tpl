@@ -115,7 +115,7 @@
 {* -------------------- multimedia -------------------- *}
 {elseif $field_value.type eq 'M'}
 	{if ($field_value.options_array[0] > '2')}
-		<input type="file" name="{$field_value.ins_id}"  value="{$field_value.value} />
+		<input type="file" name="{$field_value.ins_id}"  value="{$field_value.value}" />
 	{else}
 		<input type="text" name="{$field_value.ins_id}" value="{$field_value.value}" />
 	{/if}
