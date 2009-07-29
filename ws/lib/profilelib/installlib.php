@@ -1936,38 +1936,6 @@ class Tiki_Profile_InstallHandler_Template extends Tiki_Profile_InstallHandler /
 class Tiki_Profile_InstallHandler_Workspaces extends Tiki_Profile_InstallHandler
 {
 
-    private function fetchGroupData($subArray)
-    {
-	foreach ($subArray['groups'] as $group)
-	{
-	    $groupsArray[] = array (
-		"groupName" => $group['name'],
-		"groupDescription" => $group['description'],
-		"noCreateNewGroup" => isset($group['new_group']) ? $group['new_group'] : false,
-		"additionalPerms" => $this->doPermsConvertions ($group['allow']));
-
-	    if (isset($group['members']))
-	    {
-		$members = $group['members'];
-		global $userlib;
-
-		foreach ($members as $member)
-		    if ($userlib->user_exists($member))
-			$userlib->assign_user_to_group($member, $group['name']);
-	    }
-	}
-
-	return $groupsArray;
-    }
-
-    //This is for testing, I need to use lp functions instead
-    private function doPermsConvertions ($listOfPerms)
-    {
-	foreach ( $listOfPerms as $key => $value )
-	    $listOfPerms[$key] = 'tiki_p_'.$value;
-	return $listOfPerms;
-    }
-
     function getData()
     {
 	if ( $this->data ) return $this->data;
@@ -2010,28 +1978,40 @@ class Tiki_Profile_InstallHandler_Workspaces extends Tiki_Profile_InstallHandler
 	if ($this->canInstall()){
 	    $id = $wslib->create_ws($data['name'], null, $data['parent'], $data['description']);
 
-	    foreach ($groups as $group)
-	    {
-	    }
-
-
-
-
-
-	    //With this I can obtain what objects was installed before the install of the ws
+	    //With this I can obtain what objects was installed by the profile before the install of the ws profile
 	    $profile_id = Tiki_Profile::withPrefix( '' );
 	    global $tikilib; if (!$tikilib) require_once 'lib/tikilib.php';
 	    $result = $tikilib->query( "SELECT value FROM tiki_profile_symbols WHERE profile like '%{$profile_id}%'" );
 
+	    foreach ($data['groups'] as $group)
+	    {
+		$wslib->add_ws_group ($id, $data['name'], $group['name'], $group['description'], null);
+		    
+		global $userlib; if (!$userlib) require_once 'lib/userlib.php';
+
+		foreach ($group['members'] as $member)
+		    if ($userlib->user_exists($member))
+			$userlib->assign_user_to_group($member, $group['name']);
+
+		if ( isset($group['items']) )
+		{
+		    foreach ($group['items'] as $item)
+		    {
+			var_dump ($item);
+		    }
+		}
+	    }
+
+	    
 	    //This needs more development, but for today is ok!
-	    $i=0;
+	    /*$i=0;
 	    foreach ($data['items'] as $item)
 	    {
 		$wslib->add_ws_object($id, $result->result[$i]['value'], $item['type']);
 		foreach ($data['items'][$i]['groups'] as $group)
     		    $wslib->set_permissions_for_groups_in_object($result->result[$i]['value'], $item['type'], array("groupName" => $group, "permList" => $data['items'][$i]['allow']));
 		$i++;
-	    }
+	    }*/
 
 	    return $id;
 	}
