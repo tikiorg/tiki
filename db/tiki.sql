@@ -3769,6 +3769,7 @@ CREATE TABLE `tiki_sent_newsletters_files` (
   PRIMARY KEY  (`id`),
   KEY `editionId` (`editionId`)
 );
+
 DROP TABLE IF EXISTS `tiki_sefurl_regex_out`;
 CREATE TABLE `tiki_sefurl_regex_out` (
   `id` int(11) NOT NULL auto_increment,
@@ -3780,9 +3781,9 @@ CREATE TABLE `tiki_sefurl_regex_out` (
   `comment` varchar(256),
   `order` int(11) NULL default 0,
   PRIMARY KEY(`id`),
-  UNIQUE KEY `left` (`left`(256)),
   INDEX `idx1` (silent, type, feature(30))
 );
+
 INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`) VALUES('tiki-index.php\\?page=(.+)', '$1', 'wiki', 'feature_wiki');
 INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`) VALUES('tiki-slideshow.php\\?page=(.+)', 'show:$1', '', 'feature_wiki');
 INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`) VALUES('tiki-read_article.php\\?articleId=(\\d+)', 'article$1', 'article', 'feature_articles');
