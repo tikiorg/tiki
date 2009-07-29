@@ -33,7 +33,7 @@ class wslib extends CategLib
     /** Stores this objectype, this is WS */
     private $objectType;
 
-    /** Constructor, set the atributes in wslib */
+    /** Constructor, give the dbtiki to its parent, this is Categlib */
     public function __construct()
     {
 	global $prefs;
@@ -76,7 +76,7 @@ class wslib extends CategLib
      * @param $additionalPerms Associative array for giving more perms than the default perm 'tiki_p_ws_view'
      * @return The ID of the WS
      */
-    public function create_ws ($name, $groups = null, $parentWS = null, $description = '')
+    public function create_ws ($name, $groups, $parentWS = null, $description = '')
     {
     	if (!$parentWS)	$parentWS = 0;
     	
@@ -85,10 +85,9 @@ class wslib extends CategLib
 	
 	$query = "select `categId` from `tiki_categories` where `name`=? and `parentId`=? and `rootCategId`=?";
 	$ws_id = $this->getOne($query, array($name, (int) $parentWS, $this->ws_container));
-
-	if ($groups){
-	    foreach ($groups as $group)
-	    {
+	
+	foreach ($groups as $group)
+	{
 		$groupName = $group["groupName"];
 		$groupDescription = $group["groupDescription"];
 		$noCreateNewGroup = $group["noCreateNewGroup"];
@@ -102,7 +101,6 @@ class wslib extends CategLib
 		}
 		else
 		    $this->add_ws_group ($ws_id, $name, $groupName, $groupDescription, $additionalPerms);
-	    }
 	}
 		
 	return $ws_id;
@@ -140,7 +138,7 @@ class wslib extends CategLib
     }
 
     /** Generate a group name specially created for WS. With this we can avoid the problems related to have two groups with the same name
-     * TODO: This is no longer nedeed!
+     * NOTE: For now is OK, if the future implementation of groups change, this would change!
      *
      * @param $id_ws The WS id
      * @param $wsname The WS name
@@ -153,7 +151,11 @@ class wslib extends CategLib
     }
 
     /** Parse a group name with the form $ws_id<:>$wsName<:>$nameGroup
-     * TODO: This is no longer needed ;)
+     * Allowed characters in $ws_id are 0-9 with a variable length of 1 to 11 digits
+     * Allowed characters in $wsName are 0-9, A-Z, a-z, whitespace, -, < and >
+     * Allowed characters in $nameGroup are the same as above
+     * TODO: Work in progress, needs to be checked if works properly (I'm newbie to regex world :P)
+     * Yeah, I know, this exp is far from being perfect, but for testing purposes is OK
      *
      * @param $groupName The name of the group you want to parse
      * @param $groupValues The values given in a reference array when you apply the function
@@ -323,46 +325,26 @@ class wslib extends CategLib
 		{
 			global $trklib;
 			include_once ('lib/trackers/trackerlib.php');
-			//$tracker_options["showCreated"] = 'y';
-			$tracker_options["showCreated"] = $params["showCreated"];
-			//$tracker_options["showStatus"] = 'y';
-			$tracker_options["showStatus"] = $params["showStatus"];
-			//$tracker_options["showStatusAdminOnly"] = 'y';
-			$tracker_options["showStatusAdminOnly"] = $params["showStatusAdminOnly"];
-			//$tracker_options["simpleEmail"] = 'n';
-			$tracker_options["simpleEmail"] = $params["simpleEmail"];
-			//$tracker_options["outboundEmail"] = '';
-			$tracker_options["outboundEmail"] = $params["outboundEmail"];
-			//$tracker_options["newItemStatus"] = 'y';
-			$tracker_options["newItemStatus"] = $params["newItemStatus"];
-			//$tracker_options["useRatings"] = 'y';
-			$tracker_options["useRatings"] = $params["useRatings"];
-			//$tracker_options["showRatings"] = 'y';
-			$tracker_options["showRatings"] = $params["showRatings"];
-			//$tracker_options["useComments"] = 'y';
-			$tracker_options["useComments"] = $params["useComments"];
-			//$tracker_options["showComments"] = 'y';
-			$tracker_options["showComments"] = $params["showComments"];
-			//$tracker_options["useAttachments"] = 'y';
-			$tracker_options["useAttachments"] = $params["useAttachments"];
-			//$tracker_options["showAttachments"] = 'y';
-			$tracker_options["showAttachments"] = $params["showAttachments"];
-			//$tracker_options["showLastModif"] = 'y';
-			$tracker_options["showLastModif"] = $params["showLastModif"];
-			//$tracker_options["defaultOrderDir"] = 'asc';
-			$tracker_options["defaultOrderDir"] = $params["defaultOrderDir"];
-			//$tracker_options["newItemStatus"] = '';
-			$tracker_options["newItemStatus"] = $params["newItemStatus"];
-			//$tracker_options["modItemStatus"] = '';
-			$tracker_options["modItemStatus"] = $params["modItemStatus"];
-			//$tracker_options["defaultOrderKey"] = '';
-			$tracker_options["defaultOrderKey"] = $params["defaultOrderKey"];
-			//$tracker_options["writerCanModify"] = 'y';
-			$tracker_options["writerCanModify"] = $params["writerCanModify"];
-			//$tracker_options["writerGroupCanModify"] = 'n';
-			$tracker_options["writerGroupCanModify"] = $params["writerGroupCanModify"];
-			//$tracker_options["defaultStatus"] = 'o';
-			$tracker_options["defaultStatus"] = $params["defaultStatus"];
+			$tracker_options["showCreated"] = 'y';
+			$tracker_options["showStatus"] = 'y';
+			$tracker_options["showStatusAdminOnly"] = 'y';
+			$tracker_options["simpleEmail"] = 'n';
+			$tracker_options["outboundEmail"] = '';
+			$tracker_options["newItemStatus"] = 'y';
+			$tracker_options["useRatings"] = 'y';
+			$tracker_options["showRatings"] = 'y';
+			$tracker_options["useComments"] = 'y';
+			$tracker_options["showComments"] = 'y';
+			$tracker_options["useAttachments"] = 'y';
+			$tracker_options["showAttachments"] = 'y';
+			$tracker_options["showLastModif"] = 'y';
+			$tracker_options["defaultOrderDir"] = 'asc';
+			$tracker_options["newItemStatus"] = '';
+			$tracker_options["modItemStatus"] = '';
+			$tracker_options["defaultOrderKey"] = '';
+			$tracker_options["writerCanModify"] = 'y';
+			$tracker_options["writerGroupCanModify"] = 'n';
+			$tracker_options["defaultStatus"] = 'o';
 			$itemId = $trklib->replace_tracker(null, $name, $description,$tracker_options); 
 			$href = "tiki-view_tracker.php?trackerId=".$itemId;
 			break;
@@ -864,27 +846,24 @@ class wslib extends CategLib
 	ksort($listWSObjects);
 	return $listWSObjects;
     }
-
-    /** Get the stored perms for a object for a specific group
-     *
-     * @param $objId The object you want to check
-     * @param $objectType The type of the object
-     * @param $groupName The name of the group
-     * @return An array with the objects perms related to a object for a group
-     */
-    public function get_object_perms_for_group ($objId, $objectType, $groupName)
-    {
-	$objectId = md5($objectType . strtolower($objId));
-	$query = "select `permName` from `users_objectpermissions` where `groupName`=? and `objectId`=? and `objectType`=?";
-	$bindvars = array($groupName, $objectId, $objectType);
-	$result = $this->query($query,$bindvars);
-	while ($res = $result->fetchRow())
-		$objectPermsGroup[] = $res["permName"];
-
-	return $objectPermsGroup;
-    }
     
-        /** Get the stored perms for a object for a specific user
+    /** List the categories stored in a workspace
+     *
+     * @param $ws_id The id of the WS
+     * @return An associative array of categories related to a single WS
+     */
+     public function list_ws_categories ($ws_id, $maxRecords = -1, $offset = -1)
+    {
+	$query = "select * from `tiki_categories`where `parentId`=? and `rootCategId`is NULL";
+	$bindvars = array($ws_id);
+	$result = $this->query($query,$bindvars, $maxRecords, $offset);
+	while ($res = $result->fetchRow())
+		$listWSCategories[$res["categId"]] = $res;
+	ksort($listWSCategories);
+	return $listWSCategories;
+    }
+
+    /** Get the stored perms for a object for a specific user
      *
      * @param $objId The object you want to check
      * @param $objectType The type of the object
@@ -1000,6 +979,22 @@ class wslib extends CategLib
      {
      	$query_cant = "select count(*) from `tiki_category_objects` where `categId` = ?";
      	$bindvals = array($ws_id);
+     	
+     	return $this->getOne($query_cant,$bindvals);
+     }
+     
+     /** Count the number of groups that have access in a WS
+     *
+     * @param $ws_id The id of the ws
+     * @return $cant the number of objects stored in the WS
+     */	
+     public function count_groups_in_ws ($ws_id)
+     {
+     	$hashWS = md5($this->objectType . strtolower($ws_id));
+
+	$query_cant = "select count(*) from `users_objectpermissions` where 
+	    `objectId`=? and `permName`='tiki_p_ws_view'";
+	$bindvals = array($hashWS);
      	
      	return $this->getOne($query_cant,$bindvals);
      }

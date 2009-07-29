@@ -28,8 +28,30 @@
 	<table border='0' cellpadding='0' cellspacing='0' class='wikiplugin-split normal'>
 	<tr>
 		<td valign="top" width="60%" >
-			
-		</td>
+			<h2>Objects in '{$wsName}'</h2>
+			<div class="cbox">
+			<table class="admin">
+				<tr>
+   					<th>Object Name</th>
+   					<th>Type</th>
+   					<th>Description</th>
+				</tr> 
+				{foreach from=$resources item=data}
+					<tr>
+						<td><a href = {$data.href}>{$data.name}</a></td>
+						<td>{$data.type}</td>
+						<td>{$data.description}</td>
+					</tr>
+				{/foreach}
+			</table>
+			</div>
+		{if not empty($prev_pageObj)}
+			<a class="button" href = {$prev_pageObj}>Back</a>
+		{/if}
+		{if not empty($next_pageObj)}
+			<a class="button" href = {$next_pageObj}>Next</a>
+		{/if}
+		</td>		
 		<td valign="top" width="40%" >
 			<h2>Add Object in '{$wsName}'</h2>
 			<br>
@@ -50,9 +72,10 @@
 						<option value="tracker">Tracker</option>
 						<option value="faq">Faq</option>
 						<option value="quiz">Quiz</option>
-						<option value="article">article</option>
+						<option value="article">Article</option>
 						<option value="calendar">Calendar</option>
 						<option value="sheet">Sheet</option>
+						<option value="category">Category</option>
 					</select>
 				</div>
 				<div>
@@ -80,18 +103,18 @@
 		</tr> 
 		{foreach from=$listWS item=data}
 			<tr>
-				<td><a href = {$data.href}>{$data.name}</a></td>
+				<td><a href = {$data.href_edit}>{$data.name}</a></td>
 				<td>{$data.description}</td>
 				<td>{$data.categpath}</td>
 			</tr>
 		{/foreach}
 	   </table>
 	</div>
-	{if not empty($prev_page)}
-		<a class="button" href = {$prev_page}>Back</a>
+	{if not empty($prev_pageWS)}
+		<a class="button" href = {$prev_pageWS}>Back</a>
 	{/if}
-	{if not empty($next_page)}
-		<a class="button" href = {$next_page}>Next</a>
+	{if not empty($next_pageWS)}
+		<a class="button" href = {$next_pageWS}>Next</a>
 	{/if}
    {/tab}
    
