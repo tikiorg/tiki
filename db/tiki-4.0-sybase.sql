@@ -5763,8 +5763,6 @@ UPDATE users_permissions SET feature_check = 'feature_wiki_comments' WHERE permN
 go
 
 
-
---Added 20081018
 UPDATE users_permissions SET feature_check = 'feature_wiki_export' WHERE permName = 'tiki_p_export_wiki'
 go
 
@@ -5863,7 +5861,7 @@ go
 CREATE  INDEX "users_users_openid_url" ON "users_users"("openid_url")
 go
 
------- Administrator account
+-- Administrator account
 INSERT INTO "users_users" ("email","login","password","hash") VALUES ('','admin','admin','f6fdffe48c908deb0f4c3bd36c032e72')
 go
 
