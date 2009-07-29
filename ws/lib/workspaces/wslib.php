@@ -163,6 +163,21 @@ class wslib extends CategLib
     {
 	return preg_match("%\b([\d]{1,11})\b::\b([\w\-<>\s]+)\b::\b([\w\-<>\s]+[^:]{2})\b%", $groupName, $groupValues);
     }
+    
+    /** Change a WS name and description
+     * 
+     * @param $ws_id The WS id you want to update
+     * @param $wsName The new name for the WS
+     * @param $wsDesc The new description for the WS
+     * @return true
+     */
+    public function update_ws_data ($ws_id, $wsName, $wsDesc)
+    {
+    	$query = "update `tiki_categories` set `name`=?, `description`=? where `categId` = ?";
+    	$bindvars = array($wsName, $wsDesc, $ws_id);
+    	$this->query($query, $bindvars);
+    	return true; 
+    }
 	
     /** Remove a WS and it childs
      * 
@@ -641,7 +656,15 @@ class wslib extends CategLib
      */
     public function get_ws_name($ws_id)
     {
-	$query = "select `categName` from `tiki_categories` where `categId`=?";
+	$query = "select `name` from `tiki_categories` where `categId`=?";
+	$bindvars = array($ws_id);
+
+	return $this->getOne($query, $bindvars);
+    }
+    
+    public function get_ws_description($ws_id)
+    {
+	$query = "select `description` from `tiki_categories` where `categId`=?";
 	$bindvars = array($ws_id);
 
 	return $this->getOne($query, $bindvars);
@@ -811,7 +834,7 @@ class wslib extends CategLib
 			$wspathforsort = implode("!!",$tepath);
 			$res["wspath"] = $wspath;
 			$res["deep"] = count($tepath);
-			$res["href"] = "tiki-user_ws.php?showWS=".$ws_id."&nameWS=".$res['name'];
+			$res["href"] = "tiki-user_ws.php?showWS=".$ws_id;
 			
 			$listUserWS["$wspathforsort"] = $res;
 		    }

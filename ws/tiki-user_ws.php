@@ -6,7 +6,7 @@ require_once('lib/workspaces/wslib.php');
 if ( isset($_REQUEST['showWS']))
 {
 	$ws_id = $_REQUEST['showWS'];
-	$ws_name = $_REQUEST['nameWS'];
+	$ws_name = $wslib->get_ws_name($ws_id);
 	
 	// Set title
 	$title = "Objects for ".$user." in '".$ws_name."'";

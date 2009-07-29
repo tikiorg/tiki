@@ -6,6 +6,8 @@ require_once('lib/workspaces/wslib.php');
 $title = "WorkSpace Management";
 $smarty->assign('headtitle', tra($title));
 
+// Check if the user can admin WS
+
 if ( isset($_REQUEST['wsName']))
 {	
 	$name = $_REQUEST['wsName'];
@@ -69,9 +71,48 @@ if ( isset($_REQUEST['wsName']))
 		header("Location: ./tiki-manage-workspaces.php");
 	}
 }
+
+else if ( isset($_REQUEST['editedWS']))
+{
+	$wsId = $_REQUEST['editedWS'];
+	
+	$wsName = $_REQUEST['wsNewName'];	
+	$wsDesc = $_REQUEST['wsNewDesc'];
+	
+	$wslib->update_ws_data($wsId, $wsName, $wsDesc);
+	
+	header("Location: ./tiki-manage-workspaces.php?editWS=".$wsId);
+}
+
+else if ( isset($_REQUEST['addObjectinWS']))
+{
+	//create_ws_object ($ws_id, $name, $type, $description);
+}
+
+else if ( isset($_REQUEST['editWS']))
+{
+	$smarty->assign('editWS', "y");	
+	
+	$wsId = $_REQUEST['editWS'];
+	$smarty->assign('wsId', $wsId);
+	
+	$wsName = $wslib->get_ws_name($wsId);
+	$smarty->assign('wsName', $wsName);
+	
+	$smarty->assign('title', "Edit '".$wsName."'");
+	
+	$wsDesc = $wslib->get_ws_description($wsId);
+	$smarty->assign('wsDesc',$wsDesc);
+	 
+	$smarty->assign('mid', 'tiki-manage-workspaces.tpl');
+	$smarty->display('tiki.tpl');
+}
+
 else
 {
 	require_once 'lib/userslib.php';
+	
+	$smarty->assign('title', "Workspaces Management");
 	
 	// List Workspaces Tab
 	if ( !isset($_REQUEST['maxRecords']))
@@ -82,8 +123,15 @@ else
 	$maxRecords = $_REQUEST['maxRecords']; 
 	$offset = $_REQUEST['offset'];
 	
-	$listWS = $wslib->list_all_ws($offset, $maxRecords, 'name_asc', "", "", "");
+	$listWS_temp = $wslib->list_all_ws($offset, $maxRecords, 'name_asc', "", "", "");
+	$listWS = array();
+	foreach ($listWS_temp["data"] as $res)
+	{
+		$res['href'] = "tiki-manage-workspaces.php?editWS=".$res["categId"];
+		$listWS[] = $res;
+	}
 	$smarty->assign('listWS', $listWS);
+	
 	if ($offset > 0)
 	{
 		$offset_prev = (int) $offset- (int) $maxRecords;
