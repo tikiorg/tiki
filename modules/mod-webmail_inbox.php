@@ -12,6 +12,7 @@ if (!$user) {
 	return;	// modules cannot "exit", they must "return" to keep tiki alive
 }
 
+global $prefs;
 if ($prefs['feature_webmail'] != 'y') {
 	$smarty->assign('tpl_module_title', tra('Webmail error'));
 	$smarty->assign('error', 'This feature is disabled');
