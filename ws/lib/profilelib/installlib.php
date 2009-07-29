@@ -1981,17 +1981,16 @@ class Tiki_Profile_InstallHandler_Workspaces extends Tiki_Profile_InstallHandler
 	    $this->obj->getData()
 	);
 
-	/*$data['preferences'] = Tiki_Profile::convertLists( $data['preferences'], array(
+	$data['preferences'] = Tiki_Profile::convertLists( $data['preferences'], array(
 	    'enable' => 'y', 
 	    'disable' => 'n'
-	) );*/
+	) );
 
-	//$data['preferences'] = Tiki_Profile::convertYesNo( $data['preferences'] );
+	$data['preferences'] = Tiki_Profile::convertYesNo( $data['preferences'] );
 
 	return $this->data = $data;
     }
 
-    //Needs to be more precise, but for now is OK
     function canInstall()
     {
 	$data = $this->getData();
@@ -2004,17 +2003,17 @@ class Tiki_Profile_InstallHandler_Workspaces extends Tiki_Profile_InstallHandler
     {
 	$data = $this->getData();
 
-	var_dump($this->replaceReferences( $data ));
+	$this->replaceReferences( $data );
 
-	global $wslib; require_once 'lib/workspaces/wslib.php';
+	global $wslib; if (!$wslib) require_once 'lib/workspaces/wslib.php';
 
 	if ($this->canInstall()){
 	    $id = $wslib->create_ws($data['name'], $this->fetchGroupData($data), $data['parent'], $data['description']);
 
 	    //With this I can obtain what objects was installed before the install of the ws
 	    $profile_id = Tiki_Profile::withPrefix( '' );
-	    global $tikilib;
-	    $result = $tikilib->query( "SELECT value FROM tiki_profile_symbols WHERE profile like '%$profile_id%'" );
+	    global $tikilib; if (!$tikilib) require_once 'lib/tikilib.php';
+	    $result = $tikilib->query( "SELECT value FROM tiki_profile_symbols WHERE profile like '%{$profile_id}%'" );
 
 	    //This needs more development, but for today is ok!
 	    $i=0;
