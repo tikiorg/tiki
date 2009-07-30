@@ -414,8 +414,7 @@ class wslib extends CategLib
 		{
 			global $commentslib;
 			include_once ("lib/commentslib.php");
-			$itemId = $commentslib->replace_forum(null,$name,$description, 'n', 120, $user, '', 'n', 'n', '2592000', 'n', '2592000', 20, 'commentDate_desc', 'commentDate_desc',
-			 '', 'y', 'y', 'y', 'y', 'y', 'y', 'y', '', 110, '', '', '', '', '', '', 'y', 'y', 'y', 'y', 'y', 'y', 'n', 'n', 'all_posted', '', '', 'n', 'att_no', 'db', '', '1000000', 'y');
+			$itemId = $commentslib->replace_forum(null, $name, $description, 'n', 120, $user);
 			$href = "./tiki-view_forum.php?forumId=".$itemId;
 			break;
 		}
@@ -451,6 +450,7 @@ class wslib extends CategLib
 			$href = "tiki-take_survey.php?surveyId=".$itemId;
 			break;
 		}
+		
     	}
     	
 	return $this->add_ws_object ($ws_id, $itemId, $type, $name, $description, $href);
@@ -708,8 +708,9 @@ class wslib extends CategLib
     {    	
 	$hashWS = md5($this->objectType . strtolower($ws_id));
 
-	$query = "select `groupName` from `users_objectpermissions` where 
-	    `objectId`=? and `permName`='tiki_p_ws_view'";
+	$query = "select t0.* from `users_groups` t0, `users_objectpermissions` t1 where
+			   t1.`objectId`=? and t1.`permName`='tiki_p_ws_view' 
+			   and t1.`groupName` = t0.`groupName`";
 	$bindvars = array($hashWS);
 	$result = $this->query($query,$bindvars,$maxRecords,$offset);
 
@@ -845,22 +846,6 @@ class wslib extends CategLib
 	}
 	ksort($listWSObjects);
 	return $listWSObjects;
-    }
-    
-    /** List the categories stored in a workspace
-     *
-     * @param $ws_id The id of the WS
-     * @return An associative array of categories related to a single WS
-     */
-     public function list_ws_categories ($ws_id, $maxRecords = -1, $offset = -1)
-    {
-	$query = "select * from `tiki_categories`where `parentId`=? and `rootCategId`is NULL";
-	$bindvars = array($ws_id);
-	$result = $this->query($query,$bindvars, $maxRecords, $offset);
-	while ($res = $result->fetchRow())
-		$listWSCategories[$res["categId"]] = $res;
-	ksort($listWSCategories);
-	return $listWSCategories;
     }
 
     /** Get the stored perms for a object for a specific user

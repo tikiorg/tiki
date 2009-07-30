@@ -15,15 +15,77 @@
 		
 		<div>
 			<label for="wsNewDesc">Description: <br/></label>
-				<textarea name="wsNewDesc" id="wsNewDesc" cols="30" rows="10" >{$wsDesc}</textarea>
+				<textarea name="wsNewDesc" id="wsNewDesc" cols="40" rows="10" >{$wsDesc}</textarea>
 		</div>
       </div>
       <input type="hidden" id="editedWS" name="editedWS" value={$wsId} />
       <input type="submit" value="Save" class="button" align="middle">
       </form>
    {/tab}
+   
    {tab name="{tr}Groups{/tr}"}
+   <table border='0' cellpadding='0' cellspacing='0' class='wikiplugin-split normal'>
+	<tr>
+		<td valign="top" width="60%" >
+			<h2>Groups in '{$wsName}'</h2>
+			<div class="cbox">
+			<table class="admin">
+				<tr>
+   					<th>Group Name</th>
+   					<th>Description</th>
+				</tr> 
+				{foreach from=$groups item=data}
+					<tr>
+						<td><a>{$data.groupName}</a></td>
+						<td>{$data.groupDesc}</td>
+					</tr>
+				{/foreach}
+			</table>
+			</div>
+		{if not empty($prev_pageGroup)}
+			<a class="button" href = {$prev_pageGroup}>Back</a>
+		{/if}
+		{if not empty($next_pageGroup)}
+			<a class="button" href = {$next_pageGroup}>Next</a>
+		{/if}
+		</td>		
+		<td valign="top" width="40%" >
+			<h2>Add Group in '{$wsName}'</h2>
+			<form action="tiki-manage-workspaces.php" method="post">
+			<div class="cbox" align="left">
+				Choose a group option: <br />
+				<input type="radio" name="addGroupSelect" id="addNew" value="addNew" />
+				<label for="new"> Create a new group:</label> 
+					<input type="text" id="addNewGroup" name="addNewGroup" size="20" />
+				<label for="groupDescrition"> Description:</label> 
+					<textarea name="addGroupDesc" id="addGroupDesc" cols="30" rows="1"></textarea>
+				<br />
+				<input type="radio" name="addGroupSelect" id="addOld" value="addOld" checked="checked"/>
+				<label for="addOld"> Select an old group: 
+				</label>
+					<select name="addOldGroup" id="addOldGroup">
+						{foreach from=$listGroupsforAdd.data item=group}
+							<option value={$group.groupName}>{$group.groupName}</option>
+						{/foreach}
+					</select>
+			</div>
+			<div>
+			<label for="addAdminPerms">Select an admin permission for this group (optional): <br /></label>
+			<select name="addAdminPerms" id="addAdminPerms">
+				<option> </option>
+				{foreach from=$listPerms item=perm}
+					<option value={$perm.permName}>{$perm.permName} - {$perm.permDesc}</option>
+				{/foreach}
+			</select>
+			</div>
+			<input type="submit" value="Add Group" class="button">
+			<input type="hidden" id="addGroupinWS" name="addGroupinWS" value={$wsId} />
+			</form>
+		</td> 
+	</tr>
+   </table>
    {/tab}
+   
    {tab name="{tr}Objects{/tr}"}
 	<table border='0' cellpadding='0' cellspacing='0' class='wikiplugin-split normal'>
 	<tr>
@@ -54,7 +116,6 @@
 		</td>		
 		<td valign="top" width="40%" >
 			<h2>Add Object in '{$wsName}'</h2>
-			<br>
 			<div class="cbox" align="left">
 				<form action="tiki-manage-workspaces.php" method="post">
 				<div>
@@ -75,6 +136,7 @@
 						<option value="article">Article</option>
 						<option value="calendar">Calendar</option>
 						<option value="sheet">Sheet</option>
+						<option value="survey">Survey</option>
 						<option value="category">Category</option>
 					</select>
 				</div>
@@ -121,17 +183,14 @@
    {tab name="{tr}Add Workspace{/tr}"}
       <div class="cbox" align="left">	
 	  <form action="tiki-manage-workspaces.php" method="post">
-	
 		<div>
 			<label for="wsName">Name: <br/></label>
 				<input type="text" id="wsName" name="wsName" size="20" />
 		</div>
-		
 		<div>
 			<label for="wsDesc">Description: <br/></label>
 				<textarea name="wsDesc" id="wsDesc" cols="30" rows="10"></textarea>
 		</div>
-		
 		<div>
 			<label for="parentWS">Select a Parent WS (optional): </label>
 			<select name="parentWS" id="parentWS">
@@ -141,18 +200,14 @@
 				{/foreach}
 			</select>
 		</div>
-	
 		<div>
 			Choose a group option: <br />
 			<input type="radio" name="groupSelect" id="new" value="new" />
-				<label for="new"> Create a new group:
-				</label> 
+				<label for="new"> Create a new group:</label> 
 					<input type="text" id="newGroup" name="newGroup" size="20" />
-				<label for="groupDescrition"> Description: 
-				</label> 
+				<label for="groupDescrition"> Description:</label> 
 					<textarea name="groupDesc" id="groupDesc" cols="30" rows="1"></textarea>
 				<br />
-			</br>
 			<input type="radio" name="groupSelect" id="old" value="old" checked="checked"/>
 				<label for="old"> Select an old group: 
 				</label>
@@ -163,7 +218,6 @@
 					</select>
 				
 		</div>
-		
 		<div>
 			<label for="adminPerms">Select an admin permission for this group (optional): </label>
 			<select name="adminPerms" id="adminPerms">
