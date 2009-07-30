@@ -4,11 +4,11 @@
 // Set tikiversion variable
 $tikiversion='4.0';
 if(!isset($_GET['version'])) {
-   echo "version not given. Using default $tikiversion.<br />";
+	echo "version not given. Using default $tikiversion.<br />";
 } else {
-   if(preg_match('/\d\.\d/',$_GET['version'])) {
-      $tikiversion=$_GET['version'];
-   }
+	if(preg_match('/\d\.\d/',$_GET['version'])) {
+		$tikiversion=$_GET['version'];
+	}
 }
 
 
@@ -165,39 +165,41 @@ function do_inserts($tab,$content,$tail)
 }
 
 function quotemd5($a)
-{ return ("'".md5($a)."'");}
+{
+	return ("'".md5($a)."'");
+}
 
 function quote_prim_cols($key,$content)
 {
-  $ret="\n  $key (";
-  $cols=split(",",$content);
-  foreach ($cols as $vals) {
-    $vals=preg_replace("/\(.*\)/","",$vals);
-    $ret.="\"".trim($vals)."\"";
-  }
-  $ret=preg_replace("/\"\"/","\",\"",$ret);
-  $ret.=")";
-  return $ret;
+	$ret="\n  $key (";
+	$cols=split(",",$content);
+	foreach ($cols as $vals) {
+		$vals=preg_replace("/\(.*\)/","",$vals);
+		$ret.="\"".trim($vals)."\"";
+	}
+	$ret=preg_replace("/\"\"/","\",\"",$ret);
+	$ret.=")";
+	return $ret;
 }
 
 function convert_enums($colname,$content)
 {
- $enumvals=split(",",$content);
- $isnum=true;
- $length=0;
- $colname=stripslashes($colname);
- $ret="\n  $colname ";
- foreach ($enumvals as $vals) {
-   if (!is_int($vals)) $isnum=false;
-   if (strlen($vals)>$length) $length=strlen($vals);
- }
- if ($isnum) {
-   if ($length < 4) $ret.="smallint ";
-   elseif ($length < 9) $ret.="integer ";
-   else $ret.="bigint ";
- } else {
-   $ret.="varchar($length) ";
- }
- $ret.="CHECK ($colname IN ($content))";
- return $ret;
+	$enumvals=split(",",$content);
+	$isnum=true;
+	$length=0;
+	$colname=stripslashes($colname);
+	$ret="\n  $colname ";
+	foreach ($enumvals as $vals) {
+		if (!is_int($vals)) $isnum=false;
+		if (strlen($vals)>$length) $length=strlen($vals);
+	}
+	if ($isnum) {
+		if ($length < 4) $ret.="smallint ";
+		elseif ($length < 9) $ret.="integer ";
+		else $ret.="bigint ";
+	} else {
+		$ret.="varchar($length) ";
+	}
+	$ret.="CHECK ($colname IN ($content))";
+	return $ret;
 }
