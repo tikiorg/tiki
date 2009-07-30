@@ -101,7 +101,7 @@ CREATE TABLE galaxia_user_roles (
   `pId` int(14) NOT NULL default '0',
   `roleId` int(14) NOT NULL auto_increment,
   `user` varchar(200) NOT NULL default '',
-  PRIMARY KEY (roleId, user)
+  PRIMARY KEY (`roleId`, `user`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS galaxia_workitems;

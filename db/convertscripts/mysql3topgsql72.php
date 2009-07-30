@@ -61,10 +61,17 @@ function parse($stmt)
 	$poststmt="\n\n";
 
 
-	// Replace `with "
+	// Replace `with " – these mark table- and columnames
 	$stmt=preg_replace('/`/', '"', $stmt);
 	
-	// drop TYPE=MyISAM and AUTO_INCREMENT=1
+	// in key declarations, remove length if there
+	//  PRIMARY KEY (`roleId`, `user`)
+	$stmt = preg_replace(
+		"/ KEY \((.*)\)/e",
+		'\' KEY (\' . strip_paranthesisWithNumbers("$1") . \')\'',
+		$stmt);
+	
+	// drop ENGINE=MyISAM and AUTO_INCREMENT=1
 	$stmt=preg_replace('/ ENGINE=MyISAM/', '', $stmt);
 	$stmt=preg_replace('/ AUTO_INCREMENT=1/', '', $stmt);
 	
@@ -125,23 +132,30 @@ function parse($stmt)
 	// remove text indices
 	$stmt=preg_replace("/,\n[ \t]+FULLTEXT KEY ([a-zA-Z0-9_]+) \((.+)\)/","",$stmt);
 
+	// 
 	$stmt=preg_replace("/,\n[ \t]+(UNIQUE) KEY ([a-zA-Z0-9_]+) \((.+)\)/e","create_index('$2','$3','$1')",$stmt);
 	$stmt=preg_replace("/,\n[ \t]+(UNIQUE) *\((.+)\)/e","create_index('unknown','$2','$1')",$stmt);
 	
 	// explicit create index
 	$stmt=preg_replace("/CREATE *(UNIQUE)* *INDEX *([a-z0-9_]+) *ON *([a-z0-9_]+) *\((.*)\)/ei","create_explicit_index('$2','$3','$4','$1')",$stmt);
 	
-	// handle inserts
+	// convert inserts
 	$stmt=preg_replace("/INSERT INTO ([a-zA-Z0-9_]*).*\(([^\)]+)\) VALUES *(.*)/ie","do_inserts('$1','$2','$3')",$stmt);
 	$stmt=preg_replace("/INSERT IGNORE INTO ([a-zA-Z0-9_]*).*\(([^\)]+)\) VALUES *(.*)/ie","do_inserts('$1','$2','$3')",$stmt);
 	
-	// the update
+	// convert updates
 	$stmt=preg_replace("/update ([a-zA-Z0-9_]+) set (.*)/e","do_updates('$1','$2')",$stmt);
 	$stmt=preg_replace("/UPDATE ([a-zA-Z0-9_]+) set (.*)/e","do_updates('$1','$2')",$stmt);
 	
-	// clean cases where UNIQUE was alone at the end
+	// clean cases where UNIQUE was alone at the end: remove commas at the end of table definition
 	$stmt=preg_replace("/,( *)\)/","$1)",$stmt);
 	return $stmt.";".$poststmt;
+}
+
+function strip_paranthesisWithNumbers($txt)
+{
+	$txt = preg_replace("/\(\d+\)/", '', $txt);
+	return $txt;
 }
 
 function record_tablename($prefix,$tabnam,$tail)
@@ -175,7 +189,7 @@ function create_index($name,$content,$type="")
 {
 	global $table_name;
 	global $poststmt;
-	$poststmt.="CREATE $type INDEX \"".$table_name."_".$name."\" ON \"".$table_name."\"(";
+	$poststmt.="CREATE " . ( !empty($type)?$type.' ' : '' ) . "INDEX \"".$table_name."_".$name."\" ON \"".$table_name."\"(";
 	$cols=split(",",$content);
 	$allvals="";
 	foreach ($cols as $vals) {
