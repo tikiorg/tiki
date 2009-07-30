@@ -27,7 +27,6 @@ echo "<br />\n";
 
 
 // split into statements
-
 $statements=preg_split("#(;\n)|(;\r\n)#",$data);
 
 echo "<table>\n";
@@ -52,8 +51,6 @@ function parse($stmt)
   global $poststmt;
   $poststmt="\n\n";
 
-  //replace comments
-  $stmt=preg_replace("/#/","--",$stmt);
   
   //Remove odd characters.
   //These chars should probably never be in the mysql file, but there are some there now.  So this'll remove them.
