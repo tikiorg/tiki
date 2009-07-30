@@ -45,27 +45,27 @@
 
 			<table class="normal">
 				<tr>
-					<td class="formcolor">{tr}Name{/tr}:</td>
+      <td class="formcolor"><label for="name">{tr}Name{/tr}:</label></td>
 					<td class="formcolor">
-						<input type="text" name="name" value="{$info.name|escape}" />
+						<input type="text" id="name" name="name" value="{$info.name|escape}" />
 					</td>
 				</tr>
 			  <tr>
-					<td class="formcolor">{tr}Description:{/tr}</td>
+      <td class="formcolor"><label for="description">{tr}Description:{/tr}</label></td>
 			    <td class="formcolor">
-						<textarea rows="5" cols="60" name="description">{$info.description|escape}</textarea>
+						<textarea rows="5" cols="60" id="description" name="description">{$info.description|escape}</textarea>
 					</td>
 			  </tr>
 			  <tr>
-			    <td class="formcolor">{tr}URL:{/tr}</td>
+      <td class="formcolor"><label for="url">{tr}URL:{/tr}</label></td>
 			    <td class="formcolor">
-						<input type="text" size="60" name="url" value="{if $info.url ne ""}{$info.url|escape}{else}http://{/if}" />
+						<input type="text" size="60" id="url" name="url" value="{if $info.url ne ""}{$info.url|escape}{else}http://{/if}" />
 					</td>
 			  </tr>
 			  <tr>
-			    <td class="formcolor">{tr}Categories:{/tr}</td>
+			    <td class="formcolor"><label for="siteCats">{tr}Categories:{/tr}</label></td>
 			    <td class="formcolor">
-				    <select name="siteCats[]" multiple="multiple" size="4">
+				    <select id="siteCats" name="siteCats[]" multiple="multiple" size="4">
 					    {section name=ix loop=$categs}
 					      <option value="{$categs[ix].categId|escape}" {if $categs[ix].belongs eq 'y' or $categs[ix].categId eq $addtocat}selected="selected"{/if}>{$categs[ix].path}</option>
 					    {/section}
@@ -77,9 +77,9 @@
 				</tr>
 				{if $prefs.directory_country_flag eq 'y'}
 					<tr>
-						<td class="formcolor">{tr}Country{/tr}:</td>
+      <td class="formcolor"><label for="country">{tr}Country{/tr}:</label></td>
 				    <td class="formcolor">
-				      <select name="country">
+				      <select id="country" name="country">
 				        {section name=ux loop=$countries}
 					        <option value="{$countries[ux]|escape}" {if $info.country eq $countries[ux]}selected="selected"{/if}>{$countries[ux]}</option>
 				        {/section}
