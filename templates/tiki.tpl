@@ -104,7 +104,7 @@
 				<br style="clear:both" />
 	{/if}
 {/if}
-		<!--[if IE 7]><br style="clear:both; height: 0" /> <![endif]-->
+		<!--[if IE 7]><br style="clear:both; height: 0" /><![endif]-->
 			</div>{* -- END of middle -- *}{if $prefs.feature_layoutshadows eq 'y'}{$prefs.middle_shadow_end}</div>{/if}
 
 {if $prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
