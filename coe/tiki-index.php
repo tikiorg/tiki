@@ -191,14 +191,13 @@ $page = $info['pageName'];
 
 //Uncomment if we decide to translate wiki markup. For now we are going 
 //with translating rendered html content
-
+//$translatedWikiMarkup = '';
 //if (isset($_REQUEST['machine_translate_to_lang'])) {
-//	$translated_wiki_markup = generate_machine_translated_markup($info, $_REQUEST['machine_translate_to_lang']);
-//} else {
-//	$translated_wiki_markup = '';
-//}
+//	$translatedWikiMarkup = generate_machine_translated_markup($info, $_REQUEST['machine_translate_to_lang']);
+//} 
 
 $pageRenderer = new WikiRenderer( $info, $user);
+//$pageRenderer = new WikiRenderer( $info, $user, $translated_wiki_markup);
 $pageRenderer->applyPermissions();
 
 if( $page_ref_id )
@@ -421,6 +420,8 @@ $smarty->assign('pdf_export', file_exists('lib/mozilla2ps/mod_urltopdf.php') ? '
 
 // Display the Index Template
 $pageRenderer->runSetups();
+
+//TRANSLATING HTML
 $page_content = $smarty->get_template_vars('parsed');
 if (!empty($_REQUEST['machine_translate_to_lang'])) {
 	$page_content = generate_machine_translated_content($page_content, $info, $_REQUEST['machine_translate_to_lang']);
@@ -444,13 +445,13 @@ function generate_machine_translated_markup($pageInfo, $targetLang) {
 function generate_machine_translated_content($pageContent, $pageInfo, $targetLang) {	
 	make_sure_machine_translation_is_enabled();	
 	$sourceLang = $pageInfo['lang'];	
-	return translate_text($pageContent, $sourceLang, $targetLang);
+	return translate_text($pageContent, $sourceLang, $targetLang, true);
 }
 
 
-function translate_text($text, $sourceLang, $targetLang) {
+function translate_text($text, $sourceLang, $targetLang, $html) {
 	require_once('lib/core/lib/Multilingual/MachineTranslation/GoogleTranslateWrapper.php');
-	$translator = new Multilingual_MachineTranslation_GoogleTranslateWrapper($sourceLang,$targetLang);
+	$translator = new Multilingual_MachineTranslation_GoogleTranslateWrapper($sourceLang,$targetLang,$html);
 	$translatedText = $translator->translateText($text);
 	return $translatedText;	
 	

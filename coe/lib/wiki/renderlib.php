@@ -326,7 +326,7 @@ class WikiRenderer
 		if ($this->content_to_render == '') {
 			$pdata = $wikilib->get_parse($this->page, $canBeRefreshed);
 		} else {
-			$pdata = $this->content_to_render;
+			$pdata = $wikilib->parse_data($this->content_to_render);
 		}
 		if ($canBeRefreshed) {
 			$this->smartyassign('cached_page','y');
