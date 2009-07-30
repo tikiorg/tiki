@@ -3961,8 +3961,6 @@ UPDATE users_permissions SET feature_check = 'feature_wiki_ratings' WHERE permNa
 
 UPDATE users_permissions SET feature_check = 'feature_wiki_comments' WHERE permName = 'tiki_p_wiki_view_comments';
 
-
---Added 20081018
 UPDATE users_permissions SET feature_check = 'feature_wiki_export' WHERE permName = 'tiki_p_export_wiki';
 
 UPDATE users_permissions SET feature_check = 'feature_history' WHERE permName = 'tiki_p_wiki_view_history';
@@ -4031,7 +4029,7 @@ CREATE  INDEX "users_users_login" ON "users_users"("login");
 CREATE  INDEX "users_users_registrationDate" ON "users_users"("registrationDate");
 CREATE  INDEX "users_users_openid_url" ON "users_users"("openid_url");
 
------- Administrator account
+-- Administrator account
 INSERT INTO "users_users" ("email","login","password","hash") VALUES ('','admin','admin','f6fdffe48c908deb0f4c3bd36c032e72');
 
 UPDATE "users_users" SET "currentLogin"="lastLogin","registrationDate"="lastLogin";
@@ -4913,6 +4911,7 @@ CREATE TABLE "tiki_sent_newsletters_files" (
 );
 
 CREATE  INDEX "tiki_sent_newsletters_files_editionId" ON "tiki_sent_newsletters_files"("editionId");
+
 DROP TABLE "tiki_sefurl_regex_out";
 
 CREATE TABLE "tiki_sefurl_regex_out" (
@@ -4928,7 +4927,7 @@ CREATE TABLE "tiki_sefurl_regex_out" (
   "INDEX" idx1 (silent, type, feature(30))
 );
 
-CREATE UNIQUE INDEX "tiki_sefurl_regex_out_left" ON "tiki_sefurl_regex_out"(substr("left", 0, 256));
+
 INSERT INTO "tiki_sefurl_regex_out" ("left","right","type","feature") VALUES ('tiki-index.php\\?page=(.+)', '$1', 'wiki', 'feature_wiki');
 
 INSERT INTO "tiki_sefurl_regex_out" ("left","right","type","feature") VALUES ('tiki-slideshow.php\\?page=(.+)', 'show:$1', '', 'feature_wiki');

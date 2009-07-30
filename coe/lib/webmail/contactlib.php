@@ -248,7 +248,7 @@ class ContactLib extends TikiLib {
 					 'WHERE f.`flagsPublic`=\'y\' AND f.`fieldname`=? AND x.`contactId`=?';
 			$res = $this->query($query, array($name, (int) $contactId));
 		}
-		if (!$res || !$res->numRows()) {	// temporary global fields - need to agg groupishness one day..?
+		if (!$res || !$res->numRows()) {	// temporary global fields - need to add groupishness one day..?
 			$res = $this->query('SELECT * FROM `tiki_webmail_contacts_fields` WHERE `user`=? AND `fieldname`=?', array($user, $name));
 		}
 		if (!$res || !$res->numRows()) {
@@ -263,7 +263,7 @@ class ContactLib extends TikiLib {
 		if ($public) {	// check for previous public one
 			$c = $this->getOne('SELECT COUNT(*) FROM `tiki_webmail_contacts_fields` WHERE `fieldname`=? AND `flagsPublic`=\'y\'', array($name));
 		}
-		if (!c) {
+		if (!$c) {
 			$pubvar = $public ? 'y' : 'n';
 			$this->query("INSERT INTO `tiki_webmail_contacts_fields` (`user`, `fieldname`, `flagsPublic`) VALUES (?,?,?)", array($user, $name, $pubvar));
 		}
