@@ -15,7 +15,11 @@ if(!isset($_GET['version'])) {
 // read file
 $file="../tiki-$tikiversion-mysql.sql";
 @$fp = fopen($file,"r");
-if(!$fp) echo "Error opening $file";
+if(!$fp)
+{
+	echo "Error opening $file";
+	exit();
+}
 $data = '';
 echo "reading $file: ";
 while(!feof($fp)) {
@@ -27,9 +31,10 @@ echo "<br />\n";
 
 
 // split into statements
-$statements=preg_split("#(;\n)|(;\r\n)#",$data);
+$statements = preg_split("#(;\n)|(;\r\n)#", $data);
 
 echo "<table>\n";
+
 // step though statements
 $fp=fopen($tikiversion.".to_pgsql72.sql","w");
 foreach ($statements as $statement)
@@ -37,14 +42,18 @@ foreach ($statements as $statement)
 	echo "<tr><td><pre>\n";
 	echo $statement.";";
 	echo "\n</pre></td><td><pre>\n";
-	$parsed=parse($statement);
-	fwrite($fp,$parsed);
+	$parsed = parse($statement);
+	fwrite($fp, $parsed);
 	echo $parsed;
 	echo "\n</pre></td></tr>\n";
 }
 fclose($fp);
 echo "</table>\n";
 
+
+/** parse MySQL statements and convert to PostgreSQL statements
+ * return parsed string
+ */
 function parse($stmt)
 {
 	// variable for statements that have to be appended
@@ -55,38 +64,51 @@ function parse($stmt)
 	//Remove odd characters.
 	//These chars should probably never be in the mysql file, but there are some there now.  So this'll remove them.
 	$stmt=preg_replace("/`/","",$stmt);
-
+	
 	// drop TYPE=MyISAM and AUTO_INCREMENT=1
 	$stmt=preg_replace("/ TYPE=MyISAM/","",$stmt);
 	$stmt=preg_replace("/ ENGINE=MyISAM/","",$stmt);
 	$stmt=preg_replace("/AUTO_INCREMENT=1/","",$stmt);
+	
+	// TODO: this should not be necessary. If works, remove
 	//postgres cannot DROP TABLE IF EXISTS
-	$stmt=preg_replace("/DROP TABLE IF EXISTS/","DROP TABLE",$stmt);
+	//$stmt=preg_replace("/DROP TABLE IF EXISTS/","DROP TABLE",$stmt);
+	
 	//auto_increment things
 	$stmt=preg_replace("/int(eger)* NOT NULL auto_increment/i","bigserial",$stmt);
 	$stmt=preg_replace("/int(eger)*\(\d\) (unsigned )*NOT NULL auto_increment/i","serial",$stmt);
 	$stmt=preg_replace("/int(eger)*\(\d\d\) (unsigned )*NOT NULL auto_increment/i","bigserial",$stmt);
+	
 	// integer types
 	$stmt=preg_replace("/tinyint\([1-4]\)/","smallint",$stmt);
 	$stmt=preg_replace("/int(eger)*\([1-4]\)( unsigned)*/","smallint",$stmt);
 	$stmt=preg_replace("/int(eger)*\([5-9]\)( unsigned)*/","integer",$stmt);
 	$stmt=preg_replace("/int(eger)*\(\d\d\)( unsigned)*/","bigint",$stmt);
+	
 	// timestamps
 	$stmt=preg_replace("/timestamp\([^\)]+\)/","timestamp(3)",$stmt);
+	
 	// blobs
 	$stmt=preg_replace("/longblob|tinyblob|blob/","bytea",$stmt);
+	
 	// text fields
 	$stmt=preg_replace("/longtext/","text",$stmt);
+	
 	// quote column names
 	$stmt=preg_replace("/\n[ \t]+([a-zA-Z0-9_]+)/","\n  \"$1\"",$stmt);
+	
 	// quote and record table names
 	$stmt=preg_replace("/(DROP TABLE |CREATE TABLE )([a-zA-Z0-9_]+)( \()*/e","record_tablename('$1','$2','$3')",$stmt);
+	
 	// unquote the PRIMARY and other Keys
 	$stmt=preg_replace("/\n[ \t]+\"(PRIMARY|KEY|FULLTEXT|UNIQUE)\"/","\n  $1",$stmt);
+	
 	// convert enums
 	$stmt=preg_replace("/\n[ \t]+(\"[a-zA-Z0-9_]+\") enum *\(([^\)]+)\)/e","convert_enums('$1','$2')",$stmt);
+	
 	// quote column names in primary keys
 	$stmt=preg_replace("/\n[ \t]+(PRIMARY KEY) *\((.+)\)/e","quote_prim_cols('$1','$2')",$stmt);
+	
 	// create indexes from KEY ...
 	$stmt=preg_replace("/,\n[ \t]+KEY ([a-zA-Z0-9_]+) \((.+)\)/e","create_index('$1','$2')",$stmt);
 

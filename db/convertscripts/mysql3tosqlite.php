@@ -15,7 +15,10 @@ if(!isset($_GET['version'])) {
 // read file
 $file="../tiki-$tikiversion-mysql.sql";
 @$fp = fopen($file,"r");
-if(!$fp) echo "Error opening $file";
+if(!$fp)
+{
+	echo "Error opening $file";
+}
 $data = '';
 echo "reading $file: ";
 while(!feof($fp)) {
@@ -27,7 +30,6 @@ echo "<br />\n";
 
 
 // split into statements
-
 $statements=preg_split("#(;\n)|(;\r\n)#",$data);
 
 echo "<table>\n";
