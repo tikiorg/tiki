@@ -359,7 +359,7 @@ class ModLib extends TikiLib {
 	private function get_raw_module_list_for_user( $user, array $module_zones ) {
 		global $prefs, $tiki_p_configure_modules, $usermoduleslib;
 
-		$out = array_fill_keys( array_values( $module_zones ), array() );
+		$out = array_fill_keys( array_values($module_zones), array() );
 
 		if( $prefs['user_assigned_modules'] == 'y' 
 			&& $tiki_p_configure_modules == 'y' 

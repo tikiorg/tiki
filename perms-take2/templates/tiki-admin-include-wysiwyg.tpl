@@ -48,7 +48,7 @@
           </tr>
           
           <tr>
-            <td colspan="2"><textarea cols="90" rows="8" name="wysiwyg_toolbar" id="wysiwyg_toolbar">{$prefs.wysiwyg_toolbar|escape}</textarea></td>
+            <td colspan="2"><textarea style="width:100%" rows="8" name="wysiwyg_toolbar" id="wysiwyg_toolbar">{$prefs.wysiwyg_toolbar|escape}</textarea></td>
           </tr>
           
           <tr>
