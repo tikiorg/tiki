@@ -289,8 +289,7 @@ CREATE TABLE "tiki_articles" (
   KEY "topicId" ("topicId"),
   KEY "publishDate" ("publishDate"),
   KEY "expireDate" ("expireDate"),
-  KEY "type" ("type"),
-  FULLTEXT KEY "ft" ("title", "heading", "body")
+  KEY "type" ("type")
 ) ;
 
 
@@ -426,8 +425,7 @@ CREATE TABLE "tiki_blog_posts" (
   PRIMARY KEY ("postId"),
   KEY "data" ("data"(255)),
   KEY "blogId" ("blogId"),
-  KEY "created" ("created"),
-  FULLTEXT KEY "ft" ("data", "title")
+  KEY "created" ("created")
 ) ;
 
 
@@ -468,8 +466,7 @@ CREATE TABLE "tiki_blogs" (
   PRIMARY KEY ("blogId"),
   KEY "title" ("title"),
   KEY "description" ("description"(255)),
-  KEY "hits" ("hits"),
-  FULLTEXT KEY "ft" ("title", "description")
+  KEY "hits" ("hits")
 ) ;
 
 
@@ -480,7 +477,7 @@ CREATE TABLE "tiki_calendar_categories" (
   "calendarId" bigint NOT NULL default '0',
   "name" varchar(255) NOT NULL default '',
   PRIMARY KEY ("calcatId"),
-  UNIQUE KEY "catname" ("calendarId", "name"(16))
+  UNIQUE ("calendarId", "name")
 ) ;
 
 
@@ -542,7 +539,6 @@ CREATE TABLE "tiki_calendar_items" (
   "allday" smallint NOT NULL default '0',
   PRIMARY KEY ("calitemId"),
   KEY "calendarId" ("calendarId"),
-  FULLTEXT KEY "ft" ("name","description"),
   CONSTRAINT "fk_calitems_recurrence"
 	FOREIGN KEY ("recurrenceId") REFERENCES "tiki_calendar_recurrence"("recurrenceId")
 	ON UPDATE CASCADE ON DELETE SET NULL
@@ -557,7 +553,7 @@ CREATE TABLE "tiki_calendar_locations" (
   "name" varchar(255) NOT NULL default '',
   "description" bytea,
   PRIMARY KEY ("callocId"),
-  UNIQUE KEY "locname" ("calendarId", "name"(16))
+  UNIQUE ("calendarId", "name")
 ) ;
 
 
@@ -798,15 +794,14 @@ CREATE TABLE "tiki_comments" (
   "approved" char(1) NOT NULL default 'y',
   "locked" char(1) NOT NULL default 'n',
   PRIMARY KEY ("threadId"),
-  UNIQUE KEY "no_repeats" (parentId, userName(40), title(100), commentDate, message_id(40), in_reply_to(40)),
+  UNIQUE (parentId, userName, title, commentDate, message_id, in_reply_to),
   KEY "title" (title),
   KEY "data" (data(255)),
   KEY "hits" (hits),
   KEY "tc_pi" (parentId),
   KEY "objectType" (object, objectType),
   KEY "commentDate" (commentDate),
-  KEY "threaded" (message_id, in_reply_to, parentId),
-  FULLTEXT KEY "ft" (title,data)
+  KEY "threaded" (message_id, in_reply_to, parentId)
 ) ;
 
 
@@ -906,8 +901,7 @@ CREATE TABLE "tiki_directory_sites" (
   "cache_timestamp" bigint default NULL,
   PRIMARY KEY ("siteId"),
   KEY (isValid),
-  KEY (url),
-  FULLTEXT KEY "ft" (name,description)
+  KEY (url)
 ) ;
 
 
@@ -965,8 +959,7 @@ CREATE TABLE "tiki_faq_questions" (
   PRIMARY KEY ("questionId"),
   KEY "faqId" (faqId),
   KEY "question" (question(255)),
-  KEY "answer" (answer(255)),
-  FULLTEXT KEY "ft" (question,answer)
+  KEY "answer" (answer(255))
 ) ;
 
 
@@ -983,8 +976,7 @@ CREATE TABLE "tiki_faqs" (
   PRIMARY KEY ("faqId"),
   KEY "title" (title),
   KEY "description" (description(255)),
-  KEY "hits" (hits),
-  FULLTEXT KEY "ft" (title,description)
+  KEY "hits" (hits)
 ) ;
 
 
@@ -1078,8 +1070,7 @@ CREATE TABLE "tiki_files" (
   KEY "created" (created),
   KEY "archiveId" (archiveId),
   KEY "galleryId" (galleryId),
-  KEY "hits" (hits),
-  FULLTEXT KEY "ft" (name,description,search_data,filename)
+  KEY "hits" (hits)
 ) ;
 
 
@@ -1251,8 +1242,7 @@ CREATE TABLE "tiki_galleries" (
   KEY "description" (description(255)),
   KEY "hits" (hits),
   KEY "parentgallery" (parentgallery),
-  KEY "visibleUser" (visible, user),
-  FULLTEXT KEY "ft" (name,description)
+  KEY "visibleUser" (visible, user)
 ) ;
 
 
@@ -1372,8 +1362,7 @@ CREATE TABLE "tiki_images" (
   KEY "hits" (hits),
   KEY "ti_gId" (galleryId),
   KEY "ti_cr" (created),
-  KEY "ti_us" (user),
-  FULLTEXT KEY "ft" (name,description)
+  KEY "ti_us" (user)
 ) ;
 
 
@@ -1621,7 +1610,7 @@ CREATE TABLE "tiki_menu_options" (
   "userlevel" smallint default 0,
   "icon" varchar(200),
   PRIMARY KEY ("optionId"),
-  UNIQUE KEY "uniq_menu" (menuId,name(30),url(50),position,section(60),perm(50),groupname(50))
+  UNIQUE (menuId,name,url,position,section,perm,groupname)
 ) ;
 
 
@@ -2197,10 +2186,9 @@ CREATE TABLE "tiki_pages" (
   "wysiwyg" char(1) default NULL,
   "wiki_authors_style" varchar(20) default '',
   PRIMARY KEY ("page_id"),
-  UNIQUE KEY "pageName" (pageName),
+  UNIQUE (pageName),
   KEY "data" (data(255)),
   KEY "pageRank" (pageRank),
-  FULLTEXT KEY "ft" (pageName,description,data),
   KEY "lastModif"(lastModif)
 );
 
@@ -2604,7 +2592,7 @@ CREATE TABLE "tiki_sessions" (
   "tikihost" varchar(200) default NULL,
   PRIMARY KEY ("sessionId"),
   KEY "user" (user),
-  KEY "timestamp" (timestamp)
+  KEY "timestamp" ("timestamp")
 );
 
 
@@ -2617,7 +2605,7 @@ CREATE TABLE "tiki_sheet_layout" (
   "headerRow" smallint NOT NULL default '0',
   "footerRow" smallint NOT NULL default '0',
   "className" varchar(64) default NULL,
-  UNIQUE KEY "sheetId" (sheetId,begin)
+  UNIQUE ("sheetId", "begin")
 );
 
 
@@ -2635,7 +2623,7 @@ CREATE TABLE "tiki_sheet_values" (
   "height" smallint NOT NULL default '1',
   "format" varchar(255) default NULL,
   "user" varchar(200) default '',
-  UNIQUE KEY "sheetId" (sheetId,begin,rowIndex,columnIndex),
+  UNIQUE (sheetId,begin,rowIndex,columnIndex),
   KEY "sheetId_2" (sheetId,rowIndex,columnIndex)
 );
 
@@ -2927,8 +2915,7 @@ CREATE TABLE "tiki_tracker_item_fields" (
   PRIMARY KEY ("itemId","fieldId","lang"),
   INDEX fieldId (fieldId),
   INDEX value (value(250)),
-  INDEX lang (lang),
-  FULLTEXT KEY "ft" (value)
+  INDEX lang (lang)
 );
 
 
@@ -2984,7 +2971,7 @@ CREATE TABLE "tiki_untranslated" (
   "source" bytea NOT NULL,
   "lang" char(16) NOT NULL default '',
   PRIMARY KEY ("source","lang"),
-  UNIQUE KEY "id" (id),
+  UNIQUE (id),
   KEY "id_2" (id)
 ) ;
 
@@ -3201,10 +3188,10 @@ CREATE TABLE "tiki_user_tasks" (
   "priority" smallint default NULL,
   "completed" bigint default NULL,
   "percentage" smallint default NULL,
-  PRIMARY KEY ("taskId")
+  PRIMARY KEY ("taskId"),
+  UNIQUE(creator, created)
 );
 
-CREATE UNIQUE INDEX "_unknown" ON ""("creator","created");
 
 DROP TABLE IF EXISTS "tiki_user_votings";
 
@@ -3386,7 +3373,7 @@ CREATE TABLE "users_groups" (
   "groupTheme" varchar(255) default '',
   "isExternal" char(1) default 'n',
   PRIMARY KEY ("id"),
-  UNIQUE KEY "groupName" (groupName)
+  UNIQUE (groupName)
 );
 
 
@@ -4939,7 +4926,7 @@ CREATE TABLE "tiki_sefurl_regex_out" (
   "comment" varchar(256),
   "order" bigint NULL default 0,
   PRIMARY KEY("id"),
-  UNIQUE KEY "left" ("left"(128)),
+  UNIQUE ("left"),
   INDEX "idx1" (silent, type, feature(30))
 );
 

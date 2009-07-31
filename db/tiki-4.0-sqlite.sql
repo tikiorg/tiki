@@ -2616,7 +2616,7 @@ CREATE TABLE tiki_sheet_layout (
   headerRow smallint NOT NULL default '0',
   footerRow smallint NOT NULL default '0',
   className varchar(64) default NULL,
-  UNIQUE KEY sheetId (sheetId,begin)
+  UNIQUE KEY sheetId (sheetId, begin)
 ) ENGINE=MyISAM;
 
 

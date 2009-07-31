@@ -2128,7 +2128,7 @@ CREATE TABLE `tiki_sessions` (
   `tikihost` varchar(200) default NULL,
   PRIMARY KEY (`sessionId`),
   KEY `user` (user),
-  KEY `timestamp` (timestamp)
+  KEY `timestamp` (`timestamp`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_sheet_layout`;
@@ -2139,7 +2139,7 @@ CREATE TABLE `tiki_sheet_layout` (
   `headerRow` int(4) NOT NULL default '0',
   `footerRow` int(4) NOT NULL default '0',
   `className` varchar(64) default NULL,
-  UNIQUE KEY `sheetId` (sheetId,begin)
+  UNIQUE KEY `sheetId` (`sheetId`, `begin`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_sheet_values`;

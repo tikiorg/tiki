@@ -110,15 +110,8 @@ function parse($stmt)
 		"FOREIGN KEY ('$2') REFERENCES $3 ($4)",
 		$stmt);
 	
-	
-	// quote column names
-	//$stmt=preg_replace("/\n[ \t]+([a-zA-Z0-9_]+)/","\n  \"$1\"",$stmt);
-	
 	// quote and record table names
 	$stmt=preg_replace("/(DROP TABLE IF EXISTS |DROP TABLE |CREATE TABLE )([a-zA-Z0-9_]+)( \()/e", "record_tablename('$1','$2','$3')", $stmt);
-	
-	// unquote the PRIMARY and other Keys
-	//$stmt=preg_replace("/\n[ \t]+\"(PRIMARY|KEY|FULLTEXT|UNIQUE|ON|FOREIGN)\"/","\n  $1",$stmt);
 	
 	// quote column names in primary keys
 	//$stmt=preg_replace("/\n[ \t]+(PRIMARY KEY) *\((.+)\)/e","quote_prim_cols('$1','$2')",$stmt);
@@ -130,11 +123,16 @@ function parse($stmt)
 	// Work arounds for this include adding the tsearch2 module to postgres and other drastic changes.
 	//$stmt=preg_replace("/,\n[ \t]+FULLTEXT KEY ([a-zA-Z0-9_]+) \((.+)\)/e","create_index('$1','$2')",$stmt);
 	// remove text indices
-	$stmt=preg_replace("/,\n[ \t]+FULLTEXT KEY ([a-zA-Z0-9_]+) \((.+)\)/","",$stmt);
-
-	// 
-	$stmt=preg_replace("/,\n[ \t]+(UNIQUE) KEY ([a-zA-Z0-9_]+) \((.+)\)/e","create_index('$2','$3','$1')",$stmt);
-	$stmt=preg_replace("/,\n[ \t]+(UNIQUE) *\((.+)\)/e","create_index('unknown','$2','$1')",$stmt);
+	$stmt = preg_replace("/,\n[ \t]+FULLTEXT KEY (\"[a-zA-Z0-9_]+\" )?\((.+)\)/", '', $stmt);
+	
+	// convert UNIQUE KEY to UNIQUE
+	$stmt = preg_replace(
+		"/,\n([ \t]+)UNIQUE KEY (\"[a-zA-Z0-9_]+\" )?\((.*)\)/e",
+		'",\n$1UNIQUE (".strip_paranthesisWithNumbers("$3").")"',
+		$stmt);
+	//$stmt = preg_replace("/,\n([ \t]+)UNIQUE \((.*)\(.*\)(.*)\)/e", ',\n$1UNIQUE ($2$3\)', $stmt);
+	//$stmt = preg_replace("/,\n[ \t]+(UNIQUE) KEY ([a-zA-Z0-9_]+) \((.+)\)/e", "create_index('$2','$3','$1')", $stmt);
+	//$stmt = preg_replace("/,\n[ \t]+(UNIQUE) *\((.+)\)/e", "create_index('unknown','$2','$1')", $stmt);
 	
 	// explicit create index
 	$stmt=preg_replace("/CREATE *(UNIQUE)* *INDEX *([a-z0-9_]+) *ON *([a-z0-9_]+) *\((.*)\)/ei","create_explicit_index('$2','$3','$4','$1')",$stmt);
