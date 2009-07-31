@@ -15,14 +15,14 @@ CREATE TABLE `galaxia_activities` (
   `lastModif` int(14) default NULL,
   `description` text,
   `expirationTime` int(6) unsigned NOT NULL default '0',
-  PRIMARY KEY (activityId)
+  PRIMARY KEY (`activityId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `galaxia_activity_roles`;
 CREATE TABLE `galaxia_activity_roles` (
   `activityId` int(14) NOT NULL default '0',
   `roleId` int(14) NOT NULL default '0',
-  PRIMARY KEY (activityId,roleId)
+  PRIMARY KEY (`activityId`,`roleId`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `galaxia_instance_activities`;
@@ -33,7 +33,7 @@ CREATE TABLE `galaxia_instance_activities` (
   `ended` int(14) NOT NULL default '0',
   `user` varchar(200) default '',
   `status` enum('running','completed') default NULL,
-  PRIMARY KEY (instanceId,activityId)
+  PRIMARY KEY (`instanceId`,`activityId`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `galaxia_instance_comments`;
@@ -47,7 +47,7 @@ CREATE TABLE `galaxia_instance_comments` (
   `comment` text,
   `activity` varchar(80) default NULL,
   `timestamp` int(14) default NULL,
-  PRIMARY KEY (cId)
+  PRIMARY KEY (`cId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `galaxia_instances`;
@@ -62,7 +62,7 @@ CREATE TABLE `galaxia_instances` (
   `ended` int(14) default NULL,
   `status` enum('active','exception','aborted','completed') default NULL,
   `properties` longblob,
-  PRIMARY KEY (instanceId)
+  PRIMARY KEY (`instanceId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `galaxia_processes`;
@@ -75,7 +75,7 @@ CREATE TABLE `galaxia_processes` (
   `description` text,
   `lastModif` int(14) default NULL,
   `normalized_name` varchar(80) default NULL,
-  PRIMARY KEY (pId)
+  PRIMARY KEY (`pId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `galaxia_roles`;
@@ -85,7 +85,7 @@ CREATE TABLE `galaxia_roles` (
   `lastModif` int(14) default NULL,
   `name` varchar(80) default NULL,
   `description` text,
-  PRIMARY KEY (roleId)
+  PRIMARY KEY (`roleId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `galaxia_transitions`;
@@ -93,7 +93,7 @@ CREATE TABLE `galaxia_transitions` (
   `pId` int(14) NOT NULL default '0',
   `actFromId` int(14) NOT NULL default '0',
   `actToId` int(14) NOT NULL default '0',
-  PRIMARY KEY (actFromId,actToId)
+  PRIMARY KEY (`actFromId`,`actToId`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `galaxia_user_roles`;
@@ -114,7 +114,7 @@ CREATE TABLE `galaxia_workitems` (
   `started` int(14) default NULL,
   `ended` int(14) default NULL,
   `user` varchar(200) default '',
-  PRIMARY KEY (itemId)
+  PRIMARY KEY (`itemId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `messu_messages`;
@@ -134,7 +134,7 @@ CREATE TABLE `messu_messages` (
   `isReplied` char(1) default NULL,
   `isFlagged` char(1) default NULL,
   `priority` int(2) default NULL,
-  PRIMARY KEY (msgId),
+  PRIMARY KEY (`msgId`),
   KEY userIsRead (user, isRead)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
@@ -155,7 +155,7 @@ CREATE TABLE `messu_archive` (
   `isReplied` char(1) default NULL,
   `isFlagged` char(1) default NULL,
   `priority` int(2) default NULL,
-  PRIMARY KEY (msgId)
+  PRIMARY KEY (`msgId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `messu_sent`;
@@ -175,7 +175,7 @@ CREATE TABLE `messu_sent` (
   `isReplied` char(1) default NULL,
   `isFlagged` char(1) default NULL,
   `priority` int(2) default NULL,
-  PRIMARY KEY (msgId)
+  PRIMARY KEY (`msgId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `sessions`;
@@ -184,7 +184,7 @@ CREATE TABLE sessions(
   `expiry` int(11) unsigned NOT NULL,
   `expireref` varchar(64),
   `data` text NOT NULL,
-  PRIMARY KEY (sesskey),
+  PRIMARY KEY (`sesskey`),
   KEY expiry (expiry)
 ) ENGINE=MyISAM;
 
@@ -199,7 +199,7 @@ CREATE TABLE `tiki_actionlog` (
   `ip` varchar(15) default NULL,
   `comment` varchar(200) default NULL,
   `categId` int(12) NOT NULL default '0',
-  PRIMARY KEY (actionId),
+  PRIMARY KEY (`actionId`),
   KEY lastModif(lastModif),
   KEY object(object(100), objectType, action(100))
 ) ENGINE=MyISAM;
@@ -247,7 +247,7 @@ CREATE TABLE `tiki_articles` (
   `type` varchar(50) default NULL,
   `rating` decimal(3,2) default NULL,
   `isfloat` char(1) default NULL,
-  PRIMARY KEY (articleId),
+  PRIMARY KEY (`articleId`),
   KEY title (title),
   KEY heading (heading(255)),
   KEY body (body(255)),
@@ -282,7 +282,7 @@ CREATE TABLE `tiki_article_types` (
   `show_lang` varchar(1) default 'n',
   `creator_edit` varchar(1) default NULL,
   `comment_can_rate_article` char(1) default NULL,
-  PRIMARY KEY (type),
+  PRIMARY KEY (`type`),
   KEY show_pre_publ (show_pre_publ),
   KEY show_post_expire (show_post_expire)
 ) ENGINE=MyISAM ;
@@ -325,7 +325,7 @@ CREATE TABLE `tiki_banners` (
   `maxClicks` int(8) default NULL,
   `clicks` int(8) default NULL,
   `zone` varchar(40) default NULL,
-  PRIMARY KEY (bannerId),
+  PRIMARY KEY (`bannerId`),
   INDEX ban1(zone,useDates,impressions,maxImpressions,hourFrom,hourTo,fromDate,toDate,mon,tue,wed,thu,fri,sat,sun)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
@@ -344,14 +344,14 @@ CREATE TABLE `tiki_banning` (
   `use_dates` char(1) default NULL,
   `created` int(14) default NULL,
   `message` text,
-  PRIMARY KEY (banId)
+  PRIMARY KEY (`banId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_banning_sections`;
 CREATE TABLE `tiki_banning_sections` (
   `banId` int(12) NOT NULL default '0',
   `section` varchar(100) NOT NULL default '',
-  PRIMARY KEY (banId,section)
+  PRIMARY KEY (`banId`,`section`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_blog_activity`;
@@ -359,7 +359,7 @@ CREATE TABLE `tiki_blog_activity` (
   `blogId` int(8) NOT NULL default '0',
   `day` int(14) NOT NULL default '0',
   `posts` int(8) default NULL,
-  PRIMARY KEY (blogId,day)
+  PRIMARY KEY (`blogId`,`day`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_blog_posts`;
@@ -374,7 +374,7 @@ CREATE TABLE `tiki_blog_posts` (
   `trackbacks_from` text,
   `title` varchar(255) default NULL,
   `priv` varchar(1) default NULL,
-  PRIMARY KEY (postId),
+  PRIMARY KEY (`postId`),
   KEY data (data(255)),
   KEY blogId (blogId),
   KEY created (created),
@@ -389,7 +389,7 @@ CREATE TABLE `tiki_blog_posts_images` (
   `filetype` varchar(80) default NULL,
   `filesize` int(14) default NULL,
   `data` longblob,
-  PRIMARY KEY (imgId)
+  PRIMARY KEY (`imgId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_blogs`;
@@ -412,7 +412,7 @@ CREATE TABLE `tiki_blogs` (
   `add_poster` char(1) default NULL,
   `allow_comments` char(1) default NULL,
   `show_avatar` char(1) default NULL,
-  PRIMARY KEY (blogId),
+  PRIMARY KEY (`blogId`),
   KEY title (title),
   KEY description (description(255)),
   KEY hits (hits),
@@ -424,7 +424,7 @@ CREATE TABLE `tiki_calendar_categories` (
   `calcatId` int(11) NOT NULL auto_increment,
   `calendarId` int(14) NOT NULL default '0',
   `name` varchar(255) NOT NULL default '',
-  PRIMARY KEY (calcatId),
+  PRIMARY KEY (`calcatId`),
   UNIQUE KEY catname (calendarId,name(16))
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
@@ -456,7 +456,7 @@ CREATE TABLE `tiki_calendar_recurrence` (
   `user` varchar(200) default '',
   `created` int(14) NOT NULL default '0',
   `lastmodif` int(14) NOT NULL default '0',
-  PRIMARY KEY (recurrenceId),
+  PRIMARY KEY (`recurrenceId`),
   KEY calendarId (calendarId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
@@ -481,7 +481,7 @@ CREATE TABLE `tiki_calendar_items` (
   `created` int(14) NOT NULL default '0',
   `lastmodif` int(14) NOT NULL default '0',
   `allday` tinyint(1) NOT NULL default '0',
-  PRIMARY KEY (calitemId),
+  PRIMARY KEY (`calitemId`),
   KEY calendarId (calendarId),
   FULLTEXT KEY ft (`name`,`description`),
   CONSTRAINT `fk_calitems_recurrence`
@@ -495,7 +495,7 @@ CREATE TABLE `tiki_calendar_locations` (
   `calendarId` int(14) NOT NULL default '0',
   `name` varchar(255) NOT NULL default '',
   `description` blob,
-  PRIMARY KEY (callocId),
+  PRIMARY KEY (`callocId`),
   UNIQUE KEY locname (calendarId,name(16))
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
@@ -504,7 +504,7 @@ CREATE TABLE `tiki_calendar_roles` (
   `calitemId` int(14) NOT NULL default '0',
   `username` varchar(200) NOT NULL default '',
   `role` enum('0','1','2','3','6') NOT NULL default '0',
-  PRIMARY KEY (calitemId,username(16),role)
+  PRIMARY KEY (`calitemId`,`username`(16),`role`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_calendars`;
@@ -523,7 +523,7 @@ CREATE TABLE `tiki_calendars` (
   `created` int(14) NOT NULL default '0',
   `lastmodif` int(14) NOT NULL default '0',
   `personal` enum ('n', 'y') NOT NULL default 'n',
-  PRIMARY KEY (calendarId)
+  PRIMARY KEY (`calendarId`)
 ) ENGINE=MyISAM ;
 
 DROP TABLE IF EXISTS `tiki_calendar_options`;
@@ -531,7 +531,7 @@ CREATE TABLE `tiki_calendar_options` (
 	calendarId int(14) NOT NULL default 0,
 	optionName varchar(120) NOT NULL default '',
 	value varchar(255),
-	PRIMARY KEY (calendarId,optionName)
+	PRIMARY KEY (`calendarId`,`optionName`)
 ) ENGINE=MyISAM ;
 
 DROP TABLE IF EXISTS `tiki_categories`;
@@ -541,7 +541,7 @@ CREATE TABLE `tiki_categories` (
   `description` varchar(250) default NULL,
   `parentId` int(12) default NULL,
   `hits` int(8) default NULL,
-  PRIMARY KEY (categId)
+  PRIMARY KEY (`categId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_objects`;
@@ -555,7 +555,7 @@ CREATE TABLE `tiki_objects` (
   `href` varchar(200) default NULL,
   `hits` int(8) default NULL,
   `comments_locked` char(1) NOT NULL default 'n',
-  PRIMARY KEY (objectId),
+  PRIMARY KEY (`objectId`),
   KEY (type, objectId),
   KEY (itemId, type)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
@@ -570,21 +570,21 @@ DROP TABLE IF EXISTS `tiki_category_objects`;
 CREATE TABLE `tiki_category_objects` (
   `catObjectId` int(12) NOT NULL default '0',
   `categId` int(12) NOT NULL default '0',
-  PRIMARY KEY (catObjectId,categId)
+  PRIMARY KEY (`catObjectId`,`categId`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_object_ratings`;
 CREATE TABLE `tiki_object_ratings` (
   `catObjectId` int(12) NOT NULL default '0',
   `pollId` int(12) NOT NULL default '0',
-  PRIMARY KEY (catObjectId,pollId)
+  PRIMARY KEY (`catObjectId`,`pollId`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_category_sites`;
 CREATE TABLE `tiki_category_sites` (
   `categId` int(10) NOT NULL default '0',
   `siteId` int(14) NOT NULL default '0',
-  PRIMARY KEY (categId,siteId)
+  PRIMARY KEY (`categId`,`siteId`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_chart_items`;
@@ -598,7 +598,7 @@ CREATE TABLE `tiki_chart_items` (
   `votes` int(14) default NULL,
   `points` int(14) default NULL,
   `average` decimal(4,2) default NULL,
-  PRIMARY KEY (itemId)
+  PRIMARY KEY (`itemId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_charts`;
@@ -621,7 +621,7 @@ CREATE TABLE `tiki_charts` (
   `lastChart` int(14) default NULL,
   `voteAgainAfter` int(14) default NULL,
   `created` int(14) default NULL,
-  PRIMARY KEY (chartId)
+  PRIMARY KEY (`chartId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_charts_rankings`;
@@ -634,7 +634,7 @@ CREATE TABLE `tiki_charts_rankings` (
   `period` int(14) NOT NULL default '0',
   `rvotes` int(14) NOT NULL default '0',
   `raverage` decimal(4,2) NOT NULL default '0.00',
-  PRIMARY KEY (chartId,itemId,period)
+  PRIMARY KEY (`chartId`,`itemId`,`period`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_charts_votes`;
@@ -643,7 +643,7 @@ CREATE TABLE `tiki_charts_votes` (
   `itemId` int(14) NOT NULL default '0',
   `timestamp` int(14) default NULL,
   `chartId` int(14) default NULL,
-  PRIMARY KEY (user,itemId)
+  PRIMARY KEY (`user`,`itemId`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_chat_channels`;
@@ -656,7 +656,7 @@ CREATE TABLE `tiki_chat_channels` (
   `moderator` varchar(200) default NULL,
   `active` char(1) default NULL,
   `refresh` int(6) default NULL,
-  PRIMARY KEY (channelId)
+  PRIMARY KEY (`channelId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_chat_messages`;
@@ -666,7 +666,7 @@ CREATE TABLE `tiki_chat_messages` (
   `data` varchar(255) default NULL,
   `poster` varchar(200) NOT NULL default 'anonymous',
   `timestamp` int(14) default NULL,
-  PRIMARY KEY (messageId)
+  PRIMARY KEY (`messageId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_chat_users`;
@@ -674,7 +674,7 @@ CREATE TABLE `tiki_chat_users` (
   `nickname` varchar(200) NOT NULL default '',
   `channelId` int(8) NOT NULL default '0',
   `timestamp` int(14) default NULL,
-  PRIMARY KEY (nickname,channelId)
+  PRIMARY KEY (`nickname`,`channelId`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_comments`;
@@ -702,7 +702,7 @@ CREATE TABLE `tiki_comments` (
   `archived` char(1) default NULL,
   `approved` char(1) NOT NULL default 'y',
   `locked` char(1) NOT NULL default 'n',
-  PRIMARY KEY (threadId),
+  PRIMARY KEY (`threadId`),
   UNIQUE KEY no_repeats (parentId, userName(40), title(100), commentDate, message_id(40), in_reply_to(40)),
   KEY title (title),
   KEY data (data(255)),
@@ -719,7 +719,7 @@ CREATE TABLE `tiki_content` (
   `contentId` int(8) NOT NULL auto_increment,
   `description` text,
   `contentLabel` varchar(255) NOT NULL default '',
-  PRIMARY KEY (contentId)
+  PRIMARY KEY (`contentId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_content_templates`;
@@ -728,21 +728,21 @@ CREATE TABLE `tiki_content_templates` (
   `content` longblob,
   `name` varchar(200) default NULL,
   `created` int(14) default NULL,
-  PRIMARY KEY (templateId)
+  PRIMARY KEY (`templateId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_content_templates_sections`;
 CREATE TABLE `tiki_content_templates_sections` (
   `templateId` int(10) NOT NULL default '0',
   `section` varchar(250) NOT NULL default '',
-  PRIMARY KEY (templateId,section)
+  PRIMARY KEY (`templateId`,`section`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_cookies`;
 CREATE TABLE `tiki_cookies` (
   `cookieId` int(10) NOT NULL auto_increment,
   `cookie` text,
-  PRIMARY KEY (cookieId)
+  PRIMARY KEY (`cookieId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_copyrights`;
@@ -754,7 +754,7 @@ CREATE TABLE `tiki_copyrights` (
   `authors` varchar(200) default NULL,
   `copyright_order` int(11) default NULL,
   `userName` varchar(200) default '',
-  PRIMARY KEY (copyrightId)
+  PRIMARY KEY (`copyrightId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_directory_categories`;
@@ -770,14 +770,14 @@ CREATE TABLE `tiki_directory_categories` (
   `showCount` char(1) default NULL,
   `editorGroup` varchar(200) default NULL,
   `hits` int(12) default NULL,
-  PRIMARY KEY (categId)
+  PRIMARY KEY (`categId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_directory_search`;
 CREATE TABLE `tiki_directory_search` (
   `term` varchar(250) NOT NULL default '',
   `hits` int(14) default NULL,
-  PRIMARY KEY (term)
+  PRIMARY KEY (`term`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_directory_sites`;
@@ -793,7 +793,7 @@ CREATE TABLE `tiki_directory_sites` (
   `lastModif` int(14) default NULL,
   `cache` longblob,
   `cache_timestamp` int(14) default NULL,
-  PRIMARY KEY (siteId),
+  PRIMARY KEY (`siteId`),
   KEY (isValid),
   KEY (url),
   FULLTEXT KEY ft (name,description)
@@ -808,7 +808,7 @@ CREATE TABLE `tiki_drawings` (
   `filename_pad` varchar(250) default NULL,
   `timestamp` int(14) default NULL,
   `user` varchar(200) default '',
-  PRIMARY KEY (drawId)
+  PRIMARY KEY (`drawId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_dsn`;
@@ -816,14 +816,14 @@ CREATE TABLE `tiki_dsn` (
   `dsnId` int(12) NOT NULL auto_increment,
   `name` varchar(200) NOT NULL default '',
   `dsn` varchar(255) default NULL,
-  PRIMARY KEY (dsnId)
+  PRIMARY KEY (`dsnId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_dynamic_variables`;
 CREATE TABLE `tiki_dynamic_variables` (
   `name` varchar(40) NOT NULL,
   `data` text,
-  PRIMARY KEY (name)
+  PRIMARY KEY (`name`)
 );
 
 DROP TABLE IF EXISTS `tiki_extwiki`;
@@ -831,7 +831,7 @@ CREATE TABLE `tiki_extwiki` (
   `extwikiId` int(12) NOT NULL auto_increment,
   `name` varchar(200) NOT NULL default '',
   `extwiki` varchar(255) default NULL,
-  PRIMARY KEY (extwikiId)
+  PRIMARY KEY (`extwikiId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_faq_questions`;
@@ -841,7 +841,7 @@ CREATE TABLE `tiki_faq_questions` (
   `position` int(4) default NULL,
   `question` text,
   `answer` text,
-  PRIMARY KEY (questionId),
+  PRIMARY KEY (`questionId`),
   KEY faqId (faqId),
   KEY question (question(255)),
   KEY answer (answer(255)),
@@ -857,7 +857,7 @@ CREATE TABLE `tiki_faqs` (
   `questions` int(5) default NULL,
   `hits` int(8) default NULL,
   `canSuggest` char(1) default NULL,
-  PRIMARY KEY (faqId),
+  PRIMARY KEY (`faqId`),
   KEY title (title),
   KEY description (description(255)),
   KEY hits (hits),
@@ -872,7 +872,7 @@ CREATE TABLE `tiki_featured_links` (
   `hits` int(8) default NULL,
   `position` int(6) default NULL,
   `type` char(1) default NULL,
-  PRIMARY KEY (url)
+  PRIMARY KEY (`url`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_file_galleries`;
@@ -914,7 +914,7 @@ CREATE TABLE `tiki_file_galleries` (
   `show_path` char(1) default NULL,
   `show_slideshow` char(1) default NULL,
   `default_view` varchar(20) default NULL,
-  PRIMARY KEY (galleryId)
+  PRIMARY KEY (`galleryId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_files`;
@@ -943,7 +943,7 @@ CREATE TABLE `tiki_files` (
   `lockedby` varchar(200) default '',
   `comment` varchar(200) default NULL,
   `archiveId` int(14) default 0,
-  PRIMARY KEY (fileId),
+  PRIMARY KEY (`fileId`),
   KEY name (name),
   KEY description (description(255)),
   KEY created (created),
@@ -966,7 +966,7 @@ CREATE TABLE `tiki_forum_attachments` (
   `dir` varchar(200) default NULL,
   `created` int(14) default NULL,
   `path` varchar(250) default NULL,
-  PRIMARY KEY (attId),
+  PRIMARY KEY (`attId`),
   KEY threadId (threadId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
@@ -976,7 +976,7 @@ CREATE TABLE `tiki_forum_reads` (
   `threadId` int(14) NOT NULL default '0',
   `forumId` int(14) default NULL,
   `timestamp` int(14) default NULL,
-  PRIMARY KEY (user,threadId)
+  PRIMARY KEY (`user`,`threadId`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_forums`;
@@ -1038,7 +1038,7 @@ CREATE TABLE `tiki_forums` (
   `commentsPerPage` varchar(100) default NULL,
   `is_flat` char(1) default NULL,
   `mandatory_contribution` char(1) default NULL,
-  PRIMARY KEY (forumId)
+  PRIMARY KEY (`forumId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_forums_queue`;
@@ -1059,7 +1059,7 @@ CREATE TABLE `tiki_forums_queue` (
   `in_reply_to` varchar(128) default NULL,
   `tags` varchar(255) default NULL,
   `email` varchar(255) default NULL,
-  PRIMARY KEY (qId)
+  PRIMARY KEY (`qId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_forums_reported`;
@@ -1070,7 +1070,7 @@ CREATE TABLE `tiki_forums_reported` (
   `user` varchar(200) default '',
   `timestamp` int(14) default NULL,
   `reason` varchar(250) default NULL,
-  PRIMARY KEY (threadId)
+  PRIMARY KEY (`threadId`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_galleries`;
@@ -1105,7 +1105,7 @@ CREATE TABLE `tiki_galleries` (
   `showfilename` char(1) NOT NULL default 'n',
   `defaultscale` varchar(10) NOT NULL DEFAULT 'o',
   `showcategories` char(1) NOT NULL default 'n', 
-  PRIMARY KEY (galleryId),
+  PRIMARY KEY (`galleryId`),
   KEY name (name),
   KEY description (description(255)),
   KEY hits (hits),
@@ -1118,7 +1118,7 @@ DROP TABLE IF EXISTS `tiki_galleries_scales`;
 CREATE TABLE `tiki_galleries_scales` (
   `galleryId` int(14) NOT NULL default '0',
   `scale` int(11) NOT NULL default '0',
-  PRIMARY KEY (galleryId,scale)
+  PRIMARY KEY (`galleryId`,`scale`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_games`;
@@ -1127,14 +1127,14 @@ CREATE TABLE `tiki_games` (
   `hits` int(8) default NULL,
   `votes` int(8) default NULL,
   `points` int(8) default NULL,
-  PRIMARY KEY (gameName)
+  PRIMARY KEY (`gameName`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_group_inclusion`;
 CREATE TABLE `tiki_group_inclusion` (
   `groupName` varchar(255) NOT NULL default '',
   `includeGroup` varchar(255) NOT NULL default '',
-  PRIMARY KEY (groupName(30),includeGroup(30))
+  PRIMARY KEY (`groupName`(30),`includeGroup`(30))
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_group_watches`;
@@ -1164,7 +1164,7 @@ CREATE TABLE `tiki_history` (
   `data` longblob,
   `type` varchar(50) default NULL,
   `is_html` TINYINT(1) NOT NULL DEFAULT 0,
-  PRIMARY KEY (pageName,version),
+  PRIMARY KEY (`pageName`,`version`),
   KEY `user` (`user`),
   KEY(historyId)
 ) ENGINE=MyISAM;
@@ -1173,7 +1173,7 @@ DROP TABLE IF EXISTS `tiki_hotwords`;
 CREATE TABLE `tiki_hotwords` (
   `word` varchar(40) NOT NULL default '',
   `url` varchar(255) NOT NULL default '',
-  PRIMARY KEY (word)
+  PRIMARY KEY (`word`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_html_pages`;
@@ -1183,7 +1183,7 @@ CREATE TABLE `tiki_html_pages` (
   `refresh` int(10) default NULL,
   `type` char(1) default NULL,
   `created` int(14) default NULL,
-  PRIMARY KEY (pageName)
+  PRIMARY KEY (`pageName`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_html_pages_dynamic_zones`;
@@ -1192,7 +1192,7 @@ CREATE TABLE `tiki_html_pages_dynamic_zones` (
   `zone` varchar(80) NOT NULL default '',
   `type` char(2) default NULL,
   `content` text,
-  PRIMARY KEY (pageName,zone)
+  PRIMARY KEY (`pageName`,`zone`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_images`;
@@ -1207,7 +1207,7 @@ CREATE TABLE `tiki_images` (
   `user` varchar(200) default '',
   `hits` int(14) default NULL,
   `path` varchar(255) default NULL,
-  PRIMARY KEY (imageId),
+  PRIMARY KEY (`imageId`),
   KEY name (name),
   KEY description (description(255)),
   KEY hits (hits),
@@ -1228,7 +1228,7 @@ CREATE TABLE `tiki_images_data` (
   `filename` varchar(80) default NULL,
   `data` longblob,
   `etag` varchar(32) default NULL,
-  PRIMARY KEY (imageId,xsize,ysize,type),
+  PRIMARY KEY (`imageId`,`xsize`,`ysize`,`type`),
   KEY t_i_d_it (imageId,type)
 ) ENGINE=MyISAM;
 
@@ -1237,14 +1237,14 @@ CREATE TABLE `tiki_language` (
   `source` tinyblob NOT NULL,
   `lang` char(16) NOT NULL default '',
   `tran` tinyblob,
-  PRIMARY KEY (source(255),lang)
+  PRIMARY KEY (`source`(255),`lang`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_languages`;
 CREATE TABLE `tiki_languages` (
   `lang` char(16) NOT NULL default '',
   `language` varchar(255) default NULL,
-  PRIMARY KEY (lang)
+  PRIMARY KEY (`lang`)
 ) ENGINE=MyISAM;
 
 INSERT INTO tiki_languages(lang, language) VALUES('en','English');
@@ -1255,7 +1255,7 @@ CREATE TABLE `tiki_link_cache` (
   `url` varchar(250) default NULL,
   `data` longblob,
   `refresh` int(14) default NULL,
-  PRIMARY KEY (cacheId),
+  PRIMARY KEY (`cacheId`),
   KEY url (url)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 CREATE INDEX urlindex ON tiki_link_cache (url(250));
@@ -1265,7 +1265,7 @@ CREATE TABLE `tiki_links` (
   `fromPage` varchar(160) NOT NULL default '',
   `toPage` varchar(160) NOT NULL default '',
   `reltype` varchar(50),
-  PRIMARY KEY (fromPage,toPage),
+  PRIMARY KEY (`fromPage`,`toPage`),
   KEY toPage (toPage)
 ) ENGINE=MyISAM;
 
@@ -1278,7 +1278,7 @@ CREATE TABLE `tiki_live_support_events` (
   `senderId` varchar(32) default NULL,
   `data` text,
   `timestamp` int(14) default NULL,
-  PRIMARY KEY (eventId)
+  PRIMARY KEY (`eventId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_live_support_message_comments`;
@@ -1287,7 +1287,7 @@ CREATE TABLE `tiki_live_support_message_comments` (
   `msgId` int(12) default NULL,
   `data` text,
   `timestamp` int(14) default NULL,
-  PRIMARY KEY (cId)
+  PRIMARY KEY (`cId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_live_support_messages`;
@@ -1304,14 +1304,14 @@ CREATE TABLE `tiki_live_support_messages` (
   `title` varchar(200) default NULL,
   `module` int(4) default NULL,
   `email` varchar(250) default NULL,
-  PRIMARY KEY (msgId)
+  PRIMARY KEY (`msgId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_live_support_modules`;
 CREATE TABLE `tiki_live_support_modules` (
   `modId` int(4) NOT NULL auto_increment,
   `name` varchar(90) default NULL,
-  PRIMARY KEY (modId)
+  PRIMARY KEY (`modId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 INSERT INTO tiki_live_support_modules(name) VALUES('wiki');
@@ -1335,7 +1335,7 @@ CREATE TABLE `tiki_live_support_operators` (
   `votes` int(10) default NULL,
   `points` int(10) default NULL,
   `status_since` int(14) default NULL,
-  PRIMARY KEY (user)
+  PRIMARY KEY (`user`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_live_support_requests`;
@@ -1354,7 +1354,7 @@ CREATE TABLE `tiki_live_support_requests` (
   `resolution` varchar(40) default NULL,
   `chat_started` int(14) default NULL,
   `chat_ended` int(14) default NULL,
-  PRIMARY KEY (reqId)
+  PRIMARY KEY (`reqId`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_logs`;
@@ -1366,7 +1366,7 @@ CREATE TABLE `tiki_logs` (
   `logip` varchar(200),
   `logclient` text NOT NULL,
   `logtime` int(14) NOT NULL,
-  PRIMARY KEY (logId),
+  PRIMARY KEY (`logId`),
   KEY logtype (logtype)
 ) ENGINE=MyISAM;
 
@@ -1396,14 +1396,14 @@ CREATE TABLE `tiki_mailin_accounts` (
   `article_topicId` int(4) default NULL,
   `article_type` varchar(50) default NULL,
   `discard_after` varchar(255) default NULL,
-  PRIMARY KEY (accountId)
+  PRIMARY KEY (`accountId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_menu_languages`;
 CREATE TABLE `tiki_menu_languages` (
   `menuId` int(8) NOT NULL auto_increment,
   `language` char(16) NOT NULL default '',
-  PRIMARY KEY (menuId,language)
+  PRIMARY KEY (`menuId`,`language`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_menu_options`;
@@ -1419,7 +1419,7 @@ CREATE TABLE `tiki_menu_options` (
   `groupname` text default NULL,
   `userlevel` int(4) default 0,
   `icon` varchar(200),
-  PRIMARY KEY (optionId),
+  PRIMARY KEY (`optionId`),
   UNIQUE KEY uniq_menu (menuId,name(30),url(50),position,section(60),perm(50),groupname(50))
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
@@ -1624,7 +1624,7 @@ CREATE TABLE `tiki_menus` (
   `type` char(1) default NULL,
   `icon` varchar(200) default NULL,
   `use_items_icons` char(1) NOT NULL DEFAULT 'n',
-  PRIMARY KEY (menuId)
+  PRIMARY KEY (`menuId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 INSERT INTO tiki_menus (menuId,name,description,type) VALUES ('42','Application menu','Main extensive navigation menu','d');
@@ -1641,7 +1641,7 @@ CREATE TABLE `tiki_minical_events` (
   `duration` int(3) default NULL,
   `topicId` int(12) default NULL,
   `reminded` char(1) default NULL,
-  PRIMARY KEY (eventId)
+  PRIMARY KEY (`eventId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_minical_topics`;
@@ -1655,7 +1655,7 @@ CREATE TABLE `tiki_minical_topics` (
   `data` longblob,
   `path` varchar(250) default NULL,
   `isIcon` char(1) default NULL,
-  PRIMARY KEY (topicId)
+  PRIMARY KEY (`topicId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_modules`;
@@ -1670,7 +1670,7 @@ CREATE TABLE `tiki_modules` (
   `rows` int(4) default NULL,
   `params` varchar(255) default NULL,
   `groups` text,
-  PRIMARY KEY (name(100), position, ord, params(140)),
+  PRIMARY KEY (`name`(100), `position`, `ord`, `params`(140)),
   KEY positionType (position, type),
   KEY moduleId (moduleId)
 ) ENGINE=MyISAM;
@@ -1686,7 +1686,7 @@ CREATE TABLE `tiki_newsletter_subscriptions` (
   `subscribed` int(14) default NULL,
   `isUser` char(1) NOT NULL default 'n',
   `included` char(1) NOT NULL default 'n',
-  PRIMARY KEY (nlId,email,isUser)
+  PRIMARY KEY (`nlId`,`email`,`isUser`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_newsletter_groups`;
@@ -1694,14 +1694,14 @@ CREATE TABLE `tiki_newsletter_groups` (
   `nlId` int(12) NOT NULL default '0',
   `groupName` varchar(255) NOT NULL default '',
   `code` varchar(32) default NULL,
-  PRIMARY KEY (nlId,groupName)
+  PRIMARY KEY (`nlId`,`groupName`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_newsletter_included`;
 CREATE TABLE `tiki_newsletter_included` (
   `nlId` int(12) NOT NULL default '0',
   `includedId` int(12) NOT NULL default '0',
-  PRIMARY KEY (nlId,includedId)
+  PRIMARY KEY (`nlId`,`includedId`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_newsletters`;
@@ -1720,7 +1720,7 @@ CREATE TABLE `tiki_newsletters` (
   `frequency` int(14) default NULL,
   `allowTxt` char(1) default 'y',
   `author` varchar(200) default NULL,
-  PRIMARY KEY (nlId)
+  PRIMARY KEY (`nlId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_newsreader_marks`;
@@ -1740,7 +1740,7 @@ CREATE TABLE `tiki_newsreader_servers` (
   `port` int(4) default NULL,
   `username` varchar(200) default NULL,
   `password` varchar(200) default NULL,
-  PRIMARY KEY (serverId)
+  PRIMARY KEY (`serverId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_page_footnotes`;
@@ -1778,7 +1778,7 @@ CREATE TABLE `tiki_pages` (
   `created` int(14),
   `wysiwyg` char(1) default NULL,
   `wiki_authors_style` varchar(20) default '',
-  PRIMARY KEY (page_id),
+  PRIMARY KEY (`page_id`),
   UNIQUE KEY pageName (pageName),
   KEY data (data(255)),
   KEY pageRank (pageRank),
@@ -1794,14 +1794,14 @@ CREATE TABLE `tiki_page_drafts` (
   `description` varchar(200) default NULL,
   `comment` varchar(200) default NULL,
   `lastModif` int(14) default NULL,
-  PRIMARY KEY (pageName(120), `user`(120))
+  PRIMARY KEY (`pageName`(120), `user`(120))
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_pageviews`;
 CREATE TABLE `tiki_pageviews` (
   `day` int(14) NOT NULL default '0',
   `pageviews` int(14) default NULL,
-  PRIMARY KEY (day)
+  PRIMARY KEY (`day`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_poll_objects`;
@@ -1819,7 +1819,7 @@ CREATE TABLE `tiki_poll_options` (
   `title` varchar(200) default NULL,
   `position` int(4) NOT NULL default '0',
   `votes` int(8) default NULL,
-  PRIMARY KEY (optionId)
+  PRIMARY KEY (`optionId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_polls`;
@@ -1830,7 +1830,7 @@ CREATE TABLE `tiki_polls` (
   `active` char(1) default NULL,
   `publishDate` int(14) default NULL,
   `voteConsiderationSpan` int(4) default 0,
-  PRIMARY KEY (pollId)
+  PRIMARY KEY (`pollId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_preferences`;
@@ -1859,7 +1859,7 @@ CREATE TABLE `tiki_programmed_content` (
   `contentId` int(8) NOT NULL default '0',
   `publishDate` int(14) NOT NULL default '0',
   `data` text,
-  PRIMARY KEY (pId)
+  PRIMARY KEY (`pId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_quiz_question_options`;
@@ -1868,7 +1868,7 @@ CREATE TABLE `tiki_quiz_question_options` (
   `questionId` int(10) default NULL,
   `optionText` text,
   `points` int(4) default NULL,
-  PRIMARY KEY (optionId)
+  PRIMARY KEY (`optionId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_quiz_questions`;
@@ -1879,7 +1879,7 @@ CREATE TABLE `tiki_quiz_questions` (
   `position` int(4) default NULL,
   `type` char(1) default NULL,
   `maxPoints` int(4) default NULL,
-  PRIMARY KEY (questionId)
+  PRIMARY KEY (`questionId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_quiz_results`;
@@ -1889,7 +1889,7 @@ CREATE TABLE `tiki_quiz_results` (
   `fromPoints` int(4) default NULL,
   `toPoints` int(4) default NULL,
   `answer` text,
-  PRIMARY KEY (resultId)
+  PRIMARY KEY (`resultId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_quiz_stats`;
@@ -1898,7 +1898,7 @@ CREATE TABLE `tiki_quiz_stats` (
   `questionId` int(10) NOT NULL default '0',
   `optionId` int(10) NOT NULL default '0',
   `votes` int(10) default NULL,
-  PRIMARY KEY (quizId,questionId,optionId)
+  PRIMARY KEY (`quizId`,`questionId`,`optionId`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_quiz_stats_sum`;
@@ -1909,7 +1909,7 @@ CREATE TABLE `tiki_quiz_stats_sum` (
   `avgpoints` decimal(5,2) default NULL,
   `avgavg` decimal(5,2) default NULL,
   `avgtime` decimal(5,2) default NULL,
-  PRIMARY KEY (quizId)
+  PRIMARY KEY (`quizId`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_quizzes`;
@@ -1951,7 +1951,7 @@ CREATE TABLE `tiki_quizzes` (
   `sData` text,
   `sEpilogue` text,
   `passingperct` int(4) default 0,
-  PRIMARY KEY (quizId, nVersion)
+  PRIMARY KEY (`quizId`, `nVersion`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_received_articles`;
@@ -1979,7 +1979,7 @@ CREATE TABLE `tiki_received_articles` (
   `author` varchar(200) default NULL,
   `type` varchar(50) default NULL,
   `rating` decimal(3,2) default NULL,
-  PRIMARY KEY (receivedArticleId)
+  PRIMARY KEY (`receivedArticleId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_received_pages`;
@@ -1999,7 +1999,7 @@ CREATE TABLE `tiki_received_pages` (
   `parentName` varchar(250) default NULL,
   `page_alias` varchar(250) default '',
   `pos` int(4) default NULL,
-  PRIMARY KEY (receivedPageId),
+  PRIMARY KEY (`receivedPageId`),
   KEY structureName (structureName)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
@@ -2008,14 +2008,14 @@ CREATE TABLE `tiki_referer_stats` (
   `referer` varchar(255) NOT NULL default '',
   `hits` int(10) default NULL,
   `last` int(14) default NULL,
-  PRIMARY KEY (referer)
+  PRIMARY KEY (`referer`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_related_categories`;
 CREATE TABLE `tiki_related_categories` (
   `categId` int(10) NOT NULL default '0',
   `relatedTo` int(10) NOT NULL default '0',
-  PRIMARY KEY (categId,relatedTo)
+  PRIMARY KEY (`categId`,`relatedTo`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_rss_modules`;
@@ -2029,7 +2029,7 @@ CREATE TABLE `tiki_rss_modules` (
   `showTitle` char(1) default 'n',
   `showPubDate` char(1) default 'n',
   `content` longblob,
-  PRIMARY KEY (rssId),
+  PRIMARY KEY (`rssId`),
   KEY name (name)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
@@ -2040,7 +2040,7 @@ CREATE TABLE `tiki_rss_feeds` (
   `refresh` int(8) default '300',
   `lastUpdated` int(14) default NULL,
   `cache` longblob,
-  PRIMARY KEY (name,rssVer)
+  PRIMARY KEY (`name`,`rssVer`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_searchindex`;
@@ -2050,7 +2050,7 @@ CREATE TABLE tiki_searchindex(
   `page` varchar(255) NOT NULL default '',
   `count` int(11) NOT NULL default '1',
   `last_update` int(11) NOT NULL default '0',
-  PRIMARY KEY (searchword,location,page(80)),
+  PRIMARY KEY (`searchword`,`location`,`page`(80)),
   KEY last_update (last_update),
   KEY location (location(50), page(200))
 ) ENGINE=MyISAM;
@@ -2061,7 +2061,7 @@ CREATE TABLE tiki_searchsyllable(
   `syllable` varchar(80) NOT NULL default '',
   `lastUsed` int(11) NOT NULL default '0',
   `lastUpdated` int(11) NOT NULL default '0',
-  PRIMARY KEY (syllable),
+  PRIMARY KEY (`syllable`),
   KEY lastUsed (lastUsed)
 ) ENGINE=MyISAM;
 
@@ -2070,14 +2070,14 @@ DROP TABLE IF EXISTS `tiki_searchwords`;
 CREATE TABLE tiki_searchwords(
   `syllable` varchar(80) NOT NULL default '',
   `searchword` varchar(80) NOT NULL default '',
-  PRIMARY KEY (syllable,searchword)
+  PRIMARY KEY (`syllable`,`searchword`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_search_stats`;
 CREATE TABLE `tiki_search_stats` (
   `term` varchar(50) NOT NULL default '',
   `hits` int(10) default NULL,
-  PRIMARY KEY (term)
+  PRIMARY KEY (`term`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_secdb`;
@@ -2086,7 +2086,7 @@ CREATE TABLE tiki_secdb(
   `filename` varchar(250) NOT NULL,
   `tiki_version` varchar(60) NOT NULL,
   `severity` int(4) NOT NULL default '0',
-  PRIMARY KEY (md5_value,filename(100),tiki_version),
+  PRIMARY KEY (`md5_value`,`filename`(100),`tiki_version`),
   KEY sdb_fn (filename)
 ) ENGINE=MyISAM;
 
@@ -2096,7 +2096,7 @@ CREATE TABLE `tiki_semaphores` (
   `objectType` varchar(20) default 'wiki page',
   `user` varchar(200) NOT NULL default '',
   `timestamp` int(14) default NULL,
-  PRIMARY KEY (semName)
+  PRIMARY KEY (`semName`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_sent_newsletters`;
@@ -2108,7 +2108,7 @@ CREATE TABLE `tiki_sent_newsletters` (
   `subject` varchar(200) default NULL,
   `data` longblob,
   `datatxt` longblob,
-  PRIMARY KEY (editionId)
+  PRIMARY KEY (`editionId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_sent_newsletters_errors`;
@@ -2126,7 +2126,7 @@ CREATE TABLE `tiki_sessions` (
   `user` varchar(200) default '',
   `timestamp` int(14) default NULL,
   `tikihost` varchar(200) default NULL,
-  PRIMARY KEY (sessionId),
+  PRIMARY KEY (`sessionId`),
   KEY user (user),
   KEY timestamp (timestamp)
 ) ENGINE=MyISAM;
@@ -2165,7 +2165,7 @@ CREATE TABLE `tiki_sheets` (
   `title` varchar(200) NOT NULL default '',
   `description` text,
   `author` varchar(200) NOT NULL default '',
-  PRIMARY KEY (sheetId)
+  PRIMARY KEY (`sheetId`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_shoutbox`;
@@ -2175,21 +2175,21 @@ CREATE TABLE `tiki_shoutbox` (
   `timestamp` int(14) default NULL,
   `user` varchar(200) NULL default '',
   `hash` varchar(32) default NULL,
-  PRIMARY KEY (msgId)
+  PRIMARY KEY (`msgId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_shoutbox_words`;
 CREATE TABLE `tiki_shoutbox_words` (
   `word` VARCHAR( 40 ) NOT NULL ,
   `qty` INT DEFAULT '0' NOT NULL ,
-  PRIMARY KEY (word)
+  PRIMARY KEY (`word`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_structure_versions`;
 CREATE TABLE `tiki_structure_versions` (
   `structure_id` int(14) NOT NULL auto_increment,
   `version` int(14) default NULL,
-  PRIMARY KEY (structure_id)
+  PRIMARY KEY (`structure_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_structures`;
@@ -2201,7 +2201,7 @@ CREATE TABLE `tiki_structures` (
   `page_version` int(8) default NULL,
   `page_alias` varchar(240) NOT NULL default '',
   `pos` int(4) default NULL,
-  PRIMARY KEY (page_ref_id),
+  PRIMARY KEY (`page_ref_id`),
   KEY pidpaid (page_id,parent_id),
   KEY page_id (page_id)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
@@ -2241,7 +2241,7 @@ CREATE TABLE `tiki_submissions` (
   `type` varchar(50) default NULL,
   `rating` decimal(3,2) default NULL,
   `isfloat` char(1) default NULL,
-  PRIMARY KEY (subId)
+  PRIMARY KEY (`subId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_suggested_faq_questions`;
@@ -2252,7 +2252,7 @@ CREATE TABLE `tiki_suggested_faq_questions` (
   `answer` text,
   `created` int(14) default NULL,
   `user` varchar(200) NOT NULL default '',
-  PRIMARY KEY (sfqId)
+  PRIMARY KEY (`sfqId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_survey_question_options`;
@@ -2261,7 +2261,7 @@ CREATE TABLE `tiki_survey_question_options` (
   `questionId` int(12) NOT NULL default '0',
   `qoption` text,
   `votes` int(10) default NULL,
-  PRIMARY KEY (optionId)
+  PRIMARY KEY (`optionId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_survey_questions`;
@@ -2278,7 +2278,7 @@ CREATE TABLE `tiki_survey_questions` (
   `mandatory` char(1) NOT NULL default 'n',
   `max_answers` int(5) NOT NULL default 0,
   `min_answers` int(5) NOT NULL default 0,
-  PRIMARY KEY (questionId)
+  PRIMARY KEY (`questionId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_surveys`;
@@ -2290,7 +2290,7 @@ CREATE TABLE `tiki_surveys` (
   `lastTaken` int(14) default NULL,
   `created` int(14) default NULL,
   `status` char(1) default NULL,
-  PRIMARY KEY (surveyId)
+  PRIMARY KEY (`surveyId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_tags`;
@@ -2306,14 +2306,14 @@ CREATE TABLE `tiki_tags` (
   `user` varchar(200) NOT NULL default '',
   `ip` varchar(15) default NULL,
   `flag` char(1) default NULL,
-  PRIMARY KEY (tagName,pageName)
+  PRIMARY KEY (`tagName`,`pageName`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_theme_control_categs`;
 CREATE TABLE `tiki_theme_control_categs` (
   `categId` int(12) NOT NULL default '0',
   `theme` varchar(250) NOT NULL default '',
-  PRIMARY KEY (categId)
+  PRIMARY KEY (`categId`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_theme_control_objects`;
@@ -2322,14 +2322,14 @@ CREATE TABLE `tiki_theme_control_objects` (
   `type` varchar(250) NOT NULL default '',
   `name` varchar(250) NOT NULL default '',
   `theme` varchar(250) NOT NULL default '',
-  PRIMARY KEY (objId(100), type(100))
+  PRIMARY KEY (`objId`(100), `type`(100))
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_theme_control_sections`;
 CREATE TABLE `tiki_theme_control_sections` (
   `section` varchar(250) NOT NULL default '',
   `theme` varchar(250) NOT NULL default '',
-  PRIMARY KEY (section)
+  PRIMARY KEY (`section`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_topics`;
@@ -2342,7 +2342,7 @@ CREATE TABLE `tiki_topics` (
   `image_data` longblob,
   `active` char(1) default NULL,
   `created` int(14) default NULL,
-  PRIMARY KEY (topicId)
+  PRIMARY KEY (`topicId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_tracker_fields`;
@@ -2366,7 +2366,7 @@ CREATE TABLE `tiki_tracker_fields` (
   `visibleBy` text,
   `editableBy` text,
   `descriptionIsParsed` char(1) default 'n',
-  PRIMARY KEY (fieldId),
+  PRIMARY KEY (`fieldId`),
   INDEX trackerId (trackerId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
@@ -2385,7 +2385,7 @@ CREATE TABLE `tiki_tracker_item_attachments` (
   `comment` varchar(250) default NULL,
   `longdesc` blob,
   `version` varchar(40) default NULL,
-  PRIMARY KEY (attId),
+  PRIMARY KEY (`attId`),
   INDEX itemId (itemId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
@@ -2397,7 +2397,7 @@ CREATE TABLE `tiki_tracker_item_comments` (
   `data` text,
   `title` varchar(200) default NULL,
   `posted` int(14) default NULL,
-  PRIMARY KEY (commentId)
+  PRIMARY KEY (`commentId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_tracker_item_fields`;
@@ -2406,7 +2406,7 @@ CREATE TABLE `tiki_tracker_item_fields` (
   `fieldId` int(12) NOT NULL default '0',
   `value` text,
   `lang` char(16) default NULL,
-  PRIMARY KEY (itemId,fieldId,lang),
+  PRIMARY KEY (`itemId`,`fieldId`,`lang`),
   INDEX fieldId (fieldId),
   INDEX value (value(250)),
   INDEX lang (lang),
@@ -2420,7 +2420,7 @@ CREATE TABLE `tiki_tracker_items` (
   `created` int(14) default NULL,
   `status` char(1) default NULL,
   `lastModif` int(14) default NULL,
-  PRIMARY KEY (itemId),
+  PRIMARY KEY (`itemId`),
   INDEX trackerId (trackerId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
@@ -2429,7 +2429,7 @@ CREATE TABLE `tiki_tracker_options` (
   `trackerId` int(12) NOT NULL default '0',
   `name` varchar(80) NOT NULL default '',
   `value` text default NULL,
-  PRIMARY KEY (trackerId,name(30))
+  PRIMARY KEY (`trackerId`,`name`(30))
 ) ENGINE=MyISAM ;
 
 DROP TABLE IF EXISTS `tiki_trackers`;
@@ -2449,7 +2449,7 @@ CREATE TABLE `tiki_trackers` (
   `items` int(10) default NULL,
   `showComments` char(1) default NULL,
   `orderAttachments` varchar(255) NOT NULL default 'filename,created,filesize,hits,desc',
-  PRIMARY KEY (trackerId)
+  PRIMARY KEY (`trackerId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_untranslated`;
@@ -2457,7 +2457,7 @@ CREATE TABLE `tiki_untranslated` (
   `id` int(14) NOT NULL auto_increment,
   `source` tinyblob NOT NULL,
   `lang` char(16) NOT NULL default '',
-  PRIMARY KEY (source(255),lang),
+  PRIMARY KEY (`source`(255),`lang`),
   UNIQUE KEY id (id),
   KEY id_2 (id)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
@@ -2468,7 +2468,7 @@ CREATE TABLE `tiki_user_answers` (
   `quizId` int(10) NOT NULL default '0',
   `questionId` int(10) NOT NULL default '0',
   `optionId` int(10) NOT NULL default '0',
-  PRIMARY KEY (userResultId,quizId,questionId,optionId)
+  PRIMARY KEY (`userResultId`,`quizId`,`questionId`,`optionId`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_user_answers_uploads`;
@@ -2480,7 +2480,7 @@ CREATE TABLE `tiki_user_answers_uploads` (
   `filetype` varchar(64) NOT NULL default '',
   `filesize` varchar(255) NOT NULL default '',
   `filecontent` longblob NOT NULL,
-  PRIMARY KEY (answerUploadId)
+  PRIMARY KEY (`answerUploadId`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_user_assigned_modules`;
@@ -2491,7 +2491,7 @@ CREATE TABLE `tiki_user_assigned_modules` (
   `ord` int(4) default NULL,
   `type` char(1) default NULL,
   `user` varchar(200) NOT NULL default '',
-  PRIMARY KEY (name(30),user,position, ord)
+  PRIMARY KEY (`name`(30),`user`,`position`, `ord`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_user_bookmarks_folders`;
@@ -2500,7 +2500,7 @@ CREATE TABLE `tiki_user_bookmarks_folders` (
   `parentId` int(12) default NULL,
   `user` varchar(200) NOT NULL default '',
   `name` varchar(30) default NULL,
-  PRIMARY KEY (user,folderId)
+  PRIMARY KEY (`user`,`folderId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_user_bookmarks_urls`;
@@ -2512,7 +2512,7 @@ CREATE TABLE `tiki_user_bookmarks_urls` (
   `lastUpdated` int(14) default NULL,
   `folderId` int(12) NOT NULL default '0',
   `user` varchar(200) NOT NULL default '',
-  PRIMARY KEY (urlId)
+  PRIMARY KEY (`urlId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_user_mail_accounts`;
@@ -2535,7 +2535,7 @@ CREATE TABLE `tiki_user_mail_accounts` (
   `mbox` varchar( 255 ) default NULL,
   `maildir` varchar( 255 ) default NULL,
   `useSSL` char( 1 ) NOT NULL default 'n',
-  PRIMARY KEY (accountId)
+  PRIMARY KEY (`accountId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_user_menus`;
@@ -2546,7 +2546,7 @@ CREATE TABLE `tiki_user_menus` (
   `name` varchar(40) default NULL,
   `position` int(4) default NULL,
   `mode` char(1) default NULL,
-  PRIMARY KEY (menuId)
+  PRIMARY KEY (`menuId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_user_modules`;
@@ -2555,7 +2555,7 @@ CREATE TABLE `tiki_user_modules` (
   `title` varchar(40) default NULL,
   `data` longblob,
   `parse` char(1) default NULL,
-  PRIMARY KEY (name)
+  PRIMARY KEY (`name`)
 ) ENGINE=MyISAM;
 
 INSERT INTO tiki_user_modules (name, title, data, parse) VALUES ('mnu_application_menu', 'Menu', '{menu id=42}', 'n');
@@ -2570,7 +2570,7 @@ CREATE TABLE `tiki_user_notes` (
   `data` text,
   `size` int(14) default NULL,
   `parse_mode` varchar(20) default NULL,
-  PRIMARY KEY (noteId)
+  PRIMARY KEY (`noteId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_user_postings`;
@@ -2580,7 +2580,7 @@ CREATE TABLE `tiki_user_postings` (
   `last` int(14) default NULL,
   `first` int(14) default NULL,
   `level` int(8) default NULL,
-  PRIMARY KEY (user)
+  PRIMARY KEY (`user`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_user_preferences`;
@@ -2588,7 +2588,7 @@ CREATE TABLE `tiki_user_preferences` (
   `user` varchar(200) NOT NULL default '',
   `prefName` varchar(40) NOT NULL default '',
   `value` varchar(250) default NULL,
-  PRIMARY KEY (user,prefName)
+  PRIMARY KEY (`user`,`prefName`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_user_quizzes`;
@@ -2601,14 +2601,14 @@ CREATE TABLE `tiki_user_quizzes` (
   `maxPoints` int(12) default NULL,
   `resultId` int(10) default NULL,
   `userResultId` int(10) NOT NULL auto_increment,
-  PRIMARY KEY (userResultId)
+  PRIMARY KEY (`userResultId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_user_taken_quizzes`;
 CREATE TABLE `tiki_user_taken_quizzes` (
   `user` varchar(200) NOT NULL default '',
   `quizId` varchar(255) NOT NULL default '',
-  PRIMARY KEY (user,quizId(50))
+  PRIMARY KEY (`user`,`quizId`(50))
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_user_tasks_history`;
@@ -2628,7 +2628,7 @@ CREATE TABLE `tiki_user_tasks_history` (
   `percentage` int(4) DEFAULT NULL,
   `accepted_creator` char(1) DEFAULT NULL,             -- y - yes, n - no, null - waiting
   `accepted_user` char(1) DEFAULT NULL,                -- y - yes, n - no, null - waiting
-  PRIMARY KEY (belongs_to, task_version)
+  PRIMARY KEY (`belongs_to`, `task_version`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_user_tasks`;
@@ -2644,7 +2644,7 @@ CREATE TABLE `tiki_user_tasks` (
   `priority` int(2) default NULL,
   `completed` int(14) default NULL,
   `percentage` int(4) default NULL,
-  PRIMARY KEY (taskId),
+  PRIMARY KEY (`taskId`),
   UNIQUE(creator, created)
 ) ENGINE=MyISAM AUTO_INCREMENT=1;
 
@@ -2687,7 +2687,7 @@ CREATE TABLE `tiki_userfiles` (
   `isFile` char(1) default NULL,
   `path` varchar(255) default NULL,
   `created` int(14) default NULL,
-  PRIMARY KEY (fileId)
+  PRIMARY KEY (`fileId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_userpoints`;
@@ -2703,7 +2703,7 @@ CREATE TABLE `tiki_users` (
   `password` varchar(40) default NULL,
   `email` varchar(200) default NULL,
   `lastLogin` int(14) default NULL,
-  PRIMARY KEY (user)
+  PRIMARY KEY (`user`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_webmail_contacts`;
@@ -2714,14 +2714,14 @@ CREATE TABLE `tiki_webmail_contacts` (
   `email` varchar(250) default NULL,
   `nickname` varchar(200) default NULL,
   `user` varchar(200) NOT NULL default '',
-  PRIMARY KEY (contactId)
+  PRIMARY KEY (`contactId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_webmail_contacts_groups`;
 CREATE TABLE `tiki_webmail_contacts_groups` (
   `contactId` int(12) NOT NULL,
   `groupName` varchar(255) NOT NULL,
-  PRIMARY KEY (contactId,groupName(200))
+  PRIMARY KEY (`contactId`,`groupName`(200))
 ) ENGINE=MyISAM ;
 
 DROP TABLE IF EXISTS `tiki_webmail_messages`;
@@ -2733,7 +2733,7 @@ CREATE TABLE `tiki_webmail_messages` (
   `isReplied` char(1) default NULL,
   `isFlagged` char(1) default NULL,
   `flaggedMsg` varchar(50) default '',
-  PRIMARY KEY (accountId,mailId)
+  PRIMARY KEY (`accountId`,`mailId`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_wiki_attachments`;
@@ -2749,14 +2749,14 @@ CREATE TABLE `tiki_wiki_attachments` (
   `hits` int(10) default NULL,
   `created` int(14) default NULL,
   `comment` varchar(250) default NULL,
-  PRIMARY KEY (attId),
+  PRIMARY KEY (`attId`),
   KEY page (page)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_zones`;
 CREATE TABLE `tiki_zones` (
   `zone` varchar(40) NOT NULL default '',
-  PRIMARY KEY (zone)
+  PRIMARY KEY (`zone`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_download`;
@@ -2767,7 +2767,7 @@ CREATE TABLE `tiki_download` (
   `type` varchar(20) NOT NULL default '',
   `date` int(14) NOT NULL default '0',
   `IP` varchar(50) NOT NULL default '',
-  PRIMARY KEY (id),
+  PRIMARY KEY (`id`),
   KEY object (object,userId,type),
   KEY userId (userId),
   KEY type (type),
@@ -2779,7 +2779,7 @@ CREATE TABLE `users_grouppermissions` (
   `groupName` varchar(255) NOT NULL default '',
   `permName` varchar(40) NOT NULL default '',
   `value` char(1) default '',
-  PRIMARY KEY (groupName(30),permName)
+  PRIMARY KEY (`groupName`(30),`permName`)
 ) ENGINE=MyISAM;
 
 
@@ -2801,7 +2801,7 @@ CREATE TABLE `users_groups` (
   `groupDefCat` int(12) default 0,
   `groupTheme` varchar(255) default '',
   `isExternal` char(1) default 'n',
-  PRIMARY KEY (id),
+  PRIMARY KEY (`id`),
   UNIQUE KEY groupName (groupName)
 ) ENGINE=MyISAM AUTO_INCREMENT=1;
 
@@ -2811,7 +2811,7 @@ CREATE TABLE `users_objectpermissions` (
   `permName` varchar(40) NOT NULL default '',
   `objectType` varchar(20) NOT NULL default '',
   `objectId` varchar(32) NOT NULL default '',
-  PRIMARY KEY (objectId, objectType, groupName(30),permName)
+  PRIMARY KEY (`objectId`, `objectType`, `groupName`(30),`permName`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `users_permissions`;
@@ -2822,7 +2822,7 @@ CREATE TABLE `users_permissions` (
   `type` varchar(20) default NULL,
   `admin` varchar(1) default NULL,
   `feature_check` VARCHAR(50) NULL,
-  PRIMARY KEY (permName),
+  PRIMARY KEY (`permName`),
   KEY type (type)
 ) ENGINE=MyISAM;
 
@@ -3146,7 +3146,7 @@ DROP TABLE IF EXISTS `users_usergroups`;
 CREATE TABLE `users_usergroups` (
   `userId` int(8) NOT NULL default '0',
   `groupName` varchar(255) NOT NULL default '',
-  PRIMARY KEY (userId,groupName(30))
+  PRIMARY KEY (`userId`,`groupName`(30))
 ) ENGINE=MyISAM;
 
 INSERT INTO users_groups (groupName,groupDesc) VALUES ('Anonymous','Public users not logged');
@@ -3180,7 +3180,7 @@ CREATE TABLE `users_users` (
   `unsuccessful_logins` int(14) default 0,
   `openid_url` varchar(255) default NULL,
   `waiting` char(1) default NULL,
-  PRIMARY KEY (userId),
+  PRIMARY KEY (`userId`),
   KEY score (score),
   KEY login (login),
   KEY registrationDate (registrationDate),
@@ -3205,7 +3205,7 @@ CREATE TABLE `tiki_integrator_reps` (
   `cacheable` char(1) NOT NULL default 'y',
   `expiration` int(11) NOT NULL default '0',
   `description` text NOT NULL,
-  PRIMARY KEY (repID)
+  PRIMARY KEY (`repID`)
 ) ENGINE=MyISAM;
 
 INSERT INTO tiki_integrator_reps VALUES ('1','Doxygened (1.3.4) Documentation','','index.html','doxygen.css','n','y','0','Use this repository as rule source for all your repositories based on doxygened docs. To setup yours just add new repository and copy rules from this repository :)');
@@ -3222,7 +3222,7 @@ CREATE TABLE `tiki_integrator_rules` (
   `rxmod` varchar(20) NOT NULL default '',
   `enabled` char(1) NOT NULL default 'n',
   `description` text NOT NULL,
-  PRIMARY KEY (ruleID),
+  PRIMARY KEY (`ruleID`),
   KEY repID (repID)
 ) ENGINE=MyISAM;
 
@@ -3237,7 +3237,7 @@ CREATE TABLE `tiki_quicktags` (
   `taginsert` text,
   `tagicon` varchar(255) default NULL,
   `tagcategory` varchar(255) default NULL,
-  PRIMARY KEY (tagId),
+  PRIMARY KEY (`tagId`),
   KEY tagcategory (tagcategory),
   KEY taglabel (taglabel)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
@@ -3427,7 +3427,7 @@ CREATE TABLE `tiki_translated_objects` (
   `type` varchar(50) NOT NULL,
   `objId` varchar(255) NOT NULL,
   `lang` varchar(16) default NULL,
-  PRIMARY KEY (type, objId),
+  PRIMARY KEY (`type`, `objId`),
   KEY traId ( traId )
 ) ENGINE=MyISAM AUTO_INCREMENT=1;
 
@@ -3443,7 +3443,7 @@ CREATE TABLE `tiki_friendship_requests` (
   `userFrom` varchar(200) NOT NULL default '',
   `userTo` varchar(200) NOT NULL default '',
   `tstamp` timestamp(14) NOT NULL,
-  PRIMARY KEY (userFrom(120),userTo(120))
+  PRIMARY KEY (`userFrom`(120),`userTo`(120))
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_score`;
@@ -3451,7 +3451,7 @@ CREATE TABLE `tiki_score` (
   event varchar(40) NOT NULL default '',
   score int(11) NOT NULL default '0',
   expiration int(11) NOT NULL default '0',
-  PRIMARY KEY (event)
+  PRIMARY KEY (`event`)
 ) ENGINE=MyISAM;
 
 INSERT INTO tiki_score (event, score, expiration) VALUES ('login',1,0);
@@ -3491,7 +3491,7 @@ CREATE TABLE `tiki_users_score` (
   `event_id` char(200) NOT NULL default '',
   `expire` int(14) NOT NULL default '0',
   `tstamp` timestamp(14) NOT NULL,
-  PRIMARY KEY (user(110),event_id(110)),
+  PRIMARY KEY (`user`(110),`event_id`(110)),
   KEY user (user(110),event_id(110),expire)
 ) ENGINE=MyISAM;
 
@@ -3507,7 +3507,7 @@ CREATE TABLE `tiki_stats` (
   `type` varchar(20) NOT NULL default '',
   `day` int(14) NOT NULL default '0',
   `hits` int(14) NOT NULL default '0',
-  PRIMARY KEY (object(200),type,day)
+  PRIMARY KEY (`object`(200),`type`,`day`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_events`;
@@ -3518,7 +3518,7 @@ CREATE TABLE `tiki_events` (
   `file` varchar(200) NOT NULL default '',
   `object` varchar(200) NOT NULL default '',
   `method` varchar(200) NOT NULL default '',
-  PRIMARY KEY (callback_type,`order`)
+  PRIMARY KEY (`callback_type`,`order`)
 ) ENGINE=MyISAM;
 
 INSERT IGNORE INTO tiki_events(callback_type,`order`,event,file,object,method) VALUES ('1', '20', 'user_registers', 'lib/registration/registrationlib.php', 'registrationlib', 'callback_tikiwiki_setup_custom_fields');
@@ -3535,7 +3535,7 @@ CREATE TABLE `tiki_registration_fields` (
   `type` varchar(255) NOT NULL default 'text',
   `show` tinyint(1) NOT NULL default '1',
   `size` varchar(10) default '10',
-  PRIMARY KEY (id)
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_actionlog_conf`;
@@ -3544,7 +3544,7 @@ CREATE TABLE `tiki_actionlog_conf` (
   `action` varchar(32) NOT NULL default '',
   `objectType` varchar(32) NOT NULL default '',
   `status` char(1) default '',
-  PRIMARY KEY (action, objectType),
+  PRIMARY KEY (`action`, `objectType`),
   KEY (id)
 ) ENGINE=MyISAM;
 
@@ -3592,7 +3592,7 @@ CREATE TABLE `tiki_freetags` (
   `tag` varchar(30) NOT NULL default '',
   `raw_tag` varchar(50) NOT NULL default '',
   `lang` varchar(16) NULL,
-  PRIMARY KEY (tagId)
+  PRIMARY KEY (`tagId`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_freetagged_objects`;
@@ -3601,7 +3601,7 @@ CREATE TABLE `tiki_freetagged_objects` (
   `objectId` int(11) NOT NULL default 0,
   `user` varchar(200) default '',
   `created` int(14) NOT NULL default '0',
-  PRIMARY KEY (tagId,user,objectId),
+  PRIMARY KEY (`tagId`,`user`,`objectId`),
   KEY (tagId),
   KEY (user),
   KEY (objectId)
@@ -3612,14 +3612,14 @@ CREATE TABLE `tiki_contributions` (
   `contributionId` int(12) NOT NULL auto_increment,
   `name` varchar(100) default NULL,
   `description` varchar(250) default NULL,
-  PRIMARY KEY (contributionId)
+  PRIMARY KEY (`contributionId`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_contributions_assigned`;
 CREATE TABLE `tiki_contributions_assigned` (
   `contributionId` int(12) NOT NULL,
   `objectId` int(12) NOT NULL,
-  PRIMARY KEY (objectId, contributionId)
+  PRIMARY KEY (`objectId`, `contributionId`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_webmail_contacts_ext`;
@@ -3753,7 +3753,7 @@ CREATE TABLE `tiki_groupalert` (
   `objectType` varchar( 20 ) NOT NULL default '',
   `objectId` varchar(10) NOT NULL default '',
   `displayEachuser` char( 1 ) default NULL ,
-  PRIMARY KEY ( objectType,objectId )
+  PRIMARY KEY ( `objectType`, `objectId` )
 ) ENGINE=MyISAM ;
 
 DROP TABLE IF EXISTS `tiki_sent_newsletters_files`;
