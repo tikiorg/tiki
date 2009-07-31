@@ -767,5 +767,33 @@ class FileGalLib extends TikiLib {
 		rmdir($temp);
 		return $info;
 	}
+	// Build galleries browsing tree and current gallery path array
+	function add2tree(&$tree, &$galleries, &$gallery_id, &$gallery_path, &$expanded, $link, $cur_id = - 1) {
+		static $total = 1;
+		static $nb_galleries = 0;
+		$i = 0;
+		$current_path = array();
+		$path_found = false;
+		if ($nb_galleries == 0) $nb_galleries = count($galleries);
+		for ($gk = 0; $gk < $nb_galleries; $gk++) {
+			$gv = & $galleries[$gk];
+			if ($gv['parentId'] == $cur_id && $gv['id'] != $cur_id) {
+				$tree[$i] = & $galleries[$gk];
+				$tree[$i]['link_var'] = 'galleryId';
+				$tree[$i]['link_id'] = $gv['id'];
+				$tree[$i]['link'] = $link."?".$tree[$i]['link_var']."=".$tree[$i]['link_id'];
+				$tree[$i]['pos'] = $total++;
+				$this->add2tree($tree[$i]['data'], $galleries, $gallery_id, $gallery_path, $expanded, $link, $gv['id']);
+				if (!$path_found && $gv['id'] == $gallery_id) {
+					if ($_REQUEST['galleryId'] == $gv['id']) $tree[$i]['current'] = 1;
+					array_unshift($gallery_path, array($gallery_id, $gv['name']));
+					$expanded[] = $tree[$i]['pos'] + 1;
+					$gallery_id = $cur_id;
+					$path_found = true;
+				}
+				$i++;
+			}
+		}
+	}
 }
 $filegallib = new FileGalLib;
