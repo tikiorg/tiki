@@ -42,10 +42,7 @@ class Perms_ResolverFactory_ObjectFactory implements Perms_ResolverFactory
 
 		$db = TikiDb::get();
 
-		$escapedObjects = array_map( array( $db, 'qstr' ), array_keys( $objects ) );
-		$escapedObjects = implode( ', ', $escapedObjects );
-
-		$result = $db->query( 'SELECT objectId, groupName, permName FROM users_objectpermissions WHERE objectType = ? AND objectId IN(' . $escapedObjects . ')', array( $baseContext['type'] ) );
+		$result = $db->query( 'SELECT objectId, groupName, permName FROM users_objectpermissions WHERE objectType = ? AND ' . $db->in( 'objectId', array_keys( $objects ) ), array( $baseContext['type'] ) );
 		$found = array();
 
 		while( $row = $result->fetchRow() ) {
