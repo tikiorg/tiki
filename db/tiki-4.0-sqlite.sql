@@ -1838,6 +1838,8 @@ INSERT INTO "," ("optionId","menuId","type","name","url","position","section","p
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (107,42,'s','Newsletters','tiki-newsletters.php',900,'feature_newsletters','tiki_p_admin_newsletters','',0);
 
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (107,42,'s','Newsletters','tiki-newsletters.php',900,'feature_newsletters','tiki_p_list_newsletters','',0);
+
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (108,42,'o','Send Newsletters','tiki-send_newsletters.php',905,'feature_newsletters','tiki_p_send_newsletters','',0);
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (109,42,'o','Admin Newsletters','tiki-admin_newsletters.php',910,'feature_newsletters','tiki_p_admin_newsletters','',0);
@@ -3663,6 +3665,8 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_subscribe_email', 'Can subscribe any email to newsletters', 'editors', 'newsletters');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_subscribe_newsletters', 'Can subscribe to newsletters', 'basic', 'newsletters');
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_list_newsletters', 'Can list newsletters', 'basic', 'newsletters');
 
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_polls','Can admin polls', 'admin', 'polls', 'y');
