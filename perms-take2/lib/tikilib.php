@@ -4026,7 +4026,7 @@ class TikiLib extends TikiDb_Bridge {
 		while ($res = $result->fetchRow()) {
 			$raw[] = $res;
 		}
-		$raw = Perms::filter( array( 'type' => 'wiki page' ), 'object', $raw, array( 'object' => 'permName', 'creator' => 'creator' ), 'view' );
+		$raw = Perms::filter( array( 'type' => 'wiki page' ), 'object', $raw, array( 'object' => 'pageName', 'creator' => 'creator' ), 'view' );
 
 		foreach( $raw as $res ) {
 			if( $initial ) {
