@@ -2781,6 +2781,12 @@ class TrackerLib extends TikiLib {
 				<dd><strong>[watchclosed]</strong> if set to "c" will email the address every time the status of the item changes to closed;
 				<dd>multiple options must appear in the order specified, separated by commas.
 				</dl>'));
+		$type['L'] = array(
+			'label'=>tra('url'),
+			'opt'=>true,
+			'help'=>tra('<dl>
+				<dt>Function: Allows users to enter an url in a wiki syntax.
+				</dl>'));
 		$type['M'] = array(
 			'label'=>tra('multimedia'),
 			'opt'=>true,

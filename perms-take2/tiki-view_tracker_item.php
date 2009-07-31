@@ -372,7 +372,7 @@ foreach($xfields["data"] as $i => $array) {
 				if ($fields["data"][$i]['options_array'][0] == 'd') {
 					$ins_fields["data"][$i]["value"] = $tikilib->make_time(0, 0, 0, $xxxm, $xxxd, $xxxy);
 				} else {
-					$ins_fields["data"][$i]["value"] = $tikilib->make_time($tikilib->hour, $tikilib->minute, 0, $xxxm, $xxxd, $xxxy);
+					$ins_fields["data"][$i]["value"] = $tikilib->make_time(date('H', $tikilib->now), date('i', $tikilib->now), 0, $xxxm, $xxxd, $xxxy);
 				}
 			}
 			/********

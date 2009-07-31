@@ -35,7 +35,6 @@
 	{/if}
 
 	{if $tiki_p_admin_trackers eq 'y'}
-		&nbsp;&nbsp;
 		{button href="tiki-admin_trackers.php" _text="{tr}Admin Trackers{/tr}"}
 		{button href="tiki-admin_trackers.php?trackerId=$trackerId" _text="{tr}Edit This Tracker{/tr}"}
 		{button href="tiki-admin_tracker_fields.php?trackerId=$trackerId" _text="{tr}Edit Fields{/tr}"}
@@ -98,6 +97,8 @@
 {/if}
 
 {if $cant_pages > 1 or $initial}{initials_filter_links}{/if}
+
+<div align='left'>{tr}Items found:{/tr} {$item_count}</div>
 
 {if $items|@count ge '1'}
 {* ------- list headings --- *}
@@ -403,6 +404,10 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 
 {* -------------------- email -------------------- *}
 {elseif $field_value.type eq 'm'}
+{include file='tracker_item_field_input.tpl'}
+
+{* -------------------- url -------------------- *}
+{elseif $field_value.type eq 'L'}
 {include file='tracker_item_field_input.tpl'}
 
 {* -------------------- textarea -------------------- *}

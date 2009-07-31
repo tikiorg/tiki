@@ -5,52 +5,52 @@ go
 -- Database : tikiwiki
 -- --------------------------------------------------------
 
--- DROP TABLE "galaxia_activities"
+-- DROP TABLE `galaxia_activities`
 go
 
 
-CREATE TABLE "galaxia_activities" (
-  "activityId" numeric(14 ,0) identity,
-  "name" varchar(80) default NULL NULL,
-  "normalized_name" varchar(80) default NULL NULL,
-  "pId" numeric(14,0) default '0' NOT NULL,
-  "type" varchar(12) default NULL NULL CHECK ("type" IN ('start','end','split','switch','join','activity','standalone')),
-  "isAutoRouted" char(1) default NULL NULL,
-  "flowNum" numeric(10,0) default NULL NULL,
-  "isInteractive" char(1) default NULL NULL,
-  "lastModif" numeric(14,0) default NULL NULL,
-  "description" text default '',
-  "expirationTime" numeric(6,0) default '0' NOT NULL,
+CREATE TABLE `galaxia_activities` (
+  `activityId numeric(14 ,0) identity,
+  `name` varchar(80) default NULL NULL,
+  `normalized_name` varchar(80) default NULL NULL,
+  `pId` numeric(14,0) default '0' NOT NULL,
+  `type` enum('start','end','split','switch','join','activity','standalone') default NULL NULL,
+  `isAutoRouted` char(1) default NULL NULL,
+  `flowNum` numeric(10,0) default NULL NULL,
+  `isInteractive` char(1) default NULL NULL,
+  `lastModif` numeric(14,0) default NULL NULL,
+  `description` text,
+  `expirationTime` numeric(6,0) default '0' NOT NULL,
   PRIMARY KEY (activityId)
 ) ENGINE=MyISAM  
 go
 
 
 
--- DROP TABLE "galaxia_activity_roles"
+-- DROP TABLE `galaxia_activity_roles`
 go
 
 
-CREATE TABLE "galaxia_activity_roles" (
-  "activityId" numeric(14,0) default '0' NOT NULL,
-  "roleId" numeric(14,0) default '0' NOT NULL,
+CREATE TABLE `galaxia_activity_roles` (
+  `activityId` numeric(14,0) default '0' NOT NULL,
+  `roleId` numeric(14,0) default '0' NOT NULL,
   PRIMARY KEY (activityId,roleId)
 ) ENGINE=MyISAM
 go
 
 
 
--- DROP TABLE "galaxia_instance_activities"
+-- DROP TABLE `galaxia_instance_activities`
 go
 
 
-CREATE TABLE "galaxia_instance_activities" (
-  "instanceId" numeric(14,0) default '0' NOT NULL,
-  "activityId" numeric(14,0) default '0' NOT NULL,
-  "started" numeric(14,0) default '0' NOT NULL,
-  "ended" numeric(14,0) default '0' NOT NULL,
-  "user" varchar(200) default '',
-  "status" varchar(11) default NULL NULL CHECK ("status" IN ('running','completed')),
+CREATE TABLE `galaxia_instance_activities` (
+  `instanceId` numeric(14,0) default '0' NOT NULL,
+  `activityId` numeric(14,0) default '0' NOT NULL,
+  `started` numeric(14,0) default '0' NOT NULL,
+  `ended` numeric(14,0) default '0' NOT NULL,
+  `user` varchar(200) default '',
+  `status` enum('running','completed') default NULL NULL,
   PRIMARY KEY (instanceId,activityId)
 ) ENGINE=MyISAM
 go
@@ -62,55 +62,55 @@ go
 
 
 CREATE TABLE "galaxia_instance_comments" (
-  "cId" numeric(14 ,0) identity,
-  "instanceId" numeric(14,0) default '0' NOT NULL,
-  "user" varchar(200) default '',
-  "activityId" numeric(14,0) default NULL NULL,
-  "hash" varchar(34) default NULL NULL,
-  "title" varchar(250) default NULL NULL,
-  "comment" text default '',
-  "activity" varchar(80) default NULL NULL,
-  "timestamp" numeric(14,0) default NULL NULL,
+  `cId numeric(14 ,0) identity,
+  `instanceId` numeric(14,0) default '0' NOT NULL,
+  `user` varchar(200) default '',
+  `activityId` numeric(14,0) default NULL NULL,
+  `hash` varchar(34) default NULL NULL,
+  `title` varchar(250) default NULL NULL,
+  `comment` text,
+  `activity` varchar(80) default NULL NULL,
+  `timestamp` numeric(14,0) default NULL NULL,
   PRIMARY KEY (cId)
 ) ENGINE=MyISAM  
 go
 
 
 
--- DROP TABLE "galaxia_instances"
+-- DROP TABLE `galaxia_instances`
 go
 
 
-CREATE TABLE "galaxia_instances" (
-  "instanceId" numeric(14 ,0) identity,
-  "pId" numeric(14,0) default '0' NOT NULL,
-  "started" numeric(14,0) default NULL NULL,
-  "name" varchar(200) default 'No Name' NOT NULL,
-  "owner" varchar(200) default NULL NULL,
-  "nextActivity" numeric(14,0) default NULL NULL,
-  "nextUser" varchar(200) default NULL NULL,
-  "ended" numeric(14,0) default NULL NULL,
-  "status" varchar(11) default NULL NULL CHECK ("status" IN ('active','exception','aborted','completed')),
-  "properties" image default '',
+CREATE TABLE `galaxia_instances` (
+  `instanceId numeric(14 ,0) identity,
+  `pId` numeric(14,0) default '0' NOT NULL,
+  `started` numeric(14,0) default NULL NULL,
+  `name` varchar(200) default 'No Name' NOT NULL,
+  `owner` varchar(200) default NULL NULL,
+  `nextActivity` numeric(14,0) default NULL NULL,
+  `nextUser` varchar(200) default NULL NULL,
+  `ended` numeric(14,0) default NULL NULL,
+  `status` enum('active','exception','aborted','completed') default NULL NULL,
+  `properties` image,
   PRIMARY KEY (instanceId)
 ) ENGINE=MyISAM  
 go
 
 
 
--- DROP TABLE "galaxia_processes"
+-- DROP TABLE `galaxia_processes`
 go
 
 
-CREATE TABLE "galaxia_processes" (
-  "pId" numeric(14 ,0) identity,
-  "name" varchar(80) default NULL NULL,
-  "isValid" char(1) default NULL NULL,
-  "isActive" char(1) default NULL NULL,
-  "version" varchar(12) default NULL NULL,
-  "description" text default '',
-  "lastModif" numeric(14,0) default NULL NULL,
-  "normalized_name" varchar(80) default NULL NULL,
+CREATE TABLE `galaxia_processes` (
+  `pId numeric(14 ,0) identity,
+  `name` varchar(80) default NULL NULL,
+  `isValid` char(1) default NULL NULL,
+  `isActive` char(1) default NULL NULL,
+  `version` varchar(12) default NULL NULL,
+  `description` text,
+  `lastModif` numeric(14,0) default NULL NULL,
+  `normalized_name` varchar(80) default NULL NULL,
   PRIMARY KEY (pId)
 ) ENGINE=MyISAM  
 go
@@ -122,11 +122,11 @@ go
 
 
 CREATE TABLE "galaxia_roles" (
-  "roleId" numeric(14 ,0) identity,
-  "pId" numeric(14,0) default '0' NOT NULL,
-  "lastModif" numeric(14,0) default NULL NULL,
-  "name" varchar(80) default NULL NULL,
-  "description" text default '',
+  `roleId numeric(14 ,0) identity,
+  `pId` numeric(14,0) default '0' NOT NULL,
+  `lastModif` numeric(14,0) default NULL NULL,
+  `name` varchar(80) default NULL NULL,
+  `description` text,
   PRIMARY KEY (roleId)
 ) ENGINE=MyISAM  
 go
@@ -138,9 +138,9 @@ go
 
 
 CREATE TABLE "galaxia_transitions" (
-  "pId" numeric(14,0) default '0' NOT NULL,
-  "actFromId" numeric(14,0) default '0' NOT NULL,
-  "actToId" numeric(14,0) default '0' NOT NULL,
+  `pId` numeric(14,0) default '0' NOT NULL,
+  `actFromId` numeric(14,0) default '0' NOT NULL,
+  `actToId` numeric(14,0) default '0' NOT NULL,
   PRIMARY KEY (actFromId,actToId)
 ) ENGINE=MyISAM
 go
@@ -152,10 +152,10 @@ go
 
 
 CREATE TABLE "galaxia_user_roles" (
-  "pId" numeric(14,0) default '0' NOT NULL,
-  "roleId" numeric(14 ,0) identity,
-  "user" varchar(200) default '' NOT NULL,
-  PRIMARY KEY (roleId,user)
+  `pId` numeric(14,0) default '0' NOT NULL,
+  `roleId numeric(14 ,0) identity,
+  `user` varchar(200) default '' NOT NULL,
+  PRIMARY KEY (`roleId`, `user`)
 ) ENGINE=MyISAM  
 go
 
@@ -166,14 +166,14 @@ go
 
 
 CREATE TABLE "galaxia_workitems" (
-  "itemId" numeric(14 ,0) identity,
-  "instanceId" numeric(14,0) default '0' NOT NULL,
-  "orderId" numeric(14,0) default '0' NOT NULL,
-  "activityId" numeric(14,0) default '0' NOT NULL,
-  "properties" image default '',
-  "started" numeric(14,0) default NULL NULL,
-  "ended" numeric(14,0) default NULL NULL,
-  "user" varchar(200) default '',
+  `itemId numeric(14 ,0) identity,
+  `instanceId` numeric(14,0) default '0' NOT NULL,
+  `orderId` numeric(14,0) default '0' NOT NULL,
+  `activityId` numeric(14,0) default '0' NOT NULL,
+  `properties` image,
+  `started` numeric(14,0) default NULL NULL,
+  `ended` numeric(14,0) default NULL NULL,
+  `user` varchar(200) default '',
   PRIMARY KEY (itemId)
 ) ENGINE=MyISAM  
 go
@@ -185,21 +185,21 @@ go
 
 
 CREATE TABLE "messu_messages" (
-  "msgId" numeric(14 ,0) identity,
-  "user" varchar(200) default '' NOT NULL,
-  "user_from" varchar(200) default '' NOT NULL,
-  "user_to" text default '',
-  "user_cc" text default '',
-  "user_bcc" text default '',
-  "subject" varchar(255) default NULL NULL,
-  "body" text default '',
-  "hash" varchar(32) default NULL NULL,
-  "replyto_hash" varchar(32) default NULL NULL,
-  "date" numeric(14,0) default NULL NULL,
-  "isRead" char(1) default NULL NULL,
-  "isReplied" char(1) default NULL NULL,
-  "isFlagged" char(1) default NULL NULL,
-  "priority" numeric(2,0) default NULL NULL,
+  `msgId numeric(14 ,0) identity,
+  `user` varchar(200) default '' NOT NULL,
+  `user_from` varchar(200) default '' NOT NULL,
+  `user_to` text,
+  `user_cc` text,
+  `user_bcc` text,
+  `subject` varchar(255) default NULL NULL,
+  `body` text,
+  `hash` varchar(32) default NULL NULL,
+  `replyto_hash` varchar(32) default NULL NULL,
+  `date` numeric(14,0) default NULL NULL,
+  `isRead` char(1) default NULL NULL,
+  `isReplied` char(1) default NULL NULL,
+  `isFlagged` char(1) default NULL NULL,
+  `priority` numeric(2,0) default NULL NULL,
   PRIMARY KEY (msgId)
 ) ENGINE=MyISAM  
 go
@@ -213,21 +213,21 @@ go
 
 
 CREATE TABLE "messu_archive" (
-  "msgId" numeric(14 ,0) identity,
-  "user" varchar(40) default '' NOT NULL,
-  "user_from" varchar(40) default '' NOT NULL,
-  "user_to" text default '',
-  "user_cc" text default '',
-  "user_bcc" text default '',
-  "subject" varchar(255) default NULL NULL,
-  "body" text default '',
-  "hash" varchar(32) default NULL NULL,
-  "replyto_hash" varchar(32) default NULL NULL,
-  "date" numeric(14,0) default NULL NULL,
-  "isRead" char(1) default NULL NULL,
-  "isReplied" char(1) default NULL NULL,
-  "isFlagged" char(1) default NULL NULL,
-  "priority" numeric(2,0) default NULL NULL,
+  `msgId numeric(14 ,0) identity,
+  `user` varchar(40) default '' NOT NULL,
+  `user_from` varchar(40) default '' NOT NULL,
+  `user_to` text,
+  `user_cc` text,
+  `user_bcc` text,
+  `subject` varchar(255) default NULL NULL,
+  `body` text,
+  `hash` varchar(32) default NULL NULL,
+  `replyto_hash` varchar(32) default NULL NULL,
+  `date` numeric(14,0) default NULL NULL,
+  `isRead` char(1) default NULL NULL,
+  `isReplied` char(1) default NULL NULL,
+  `isFlagged` char(1) default NULL NULL,
+  `priority` numeric(2,0) default NULL NULL,
   PRIMARY KEY (msgId)
 ) ENGINE=MyISAM  
 go
@@ -239,21 +239,21 @@ go
 
 
 CREATE TABLE "messu_sent" (
-  "msgId" numeric(14 ,0) identity,
-  "user" varchar(40) default '' NOT NULL,
-  "user_from" varchar(40) default '' NOT NULL,
-  "user_to" text default '',
-  "user_cc" text default '',
-  "user_bcc" text default '',
-  "subject" varchar(255) default NULL NULL,
-  "body" text default '',
-  "hash" varchar(32) default NULL NULL,
-  "replyto_hash" varchar(32) default NULL NULL,
-  "date" numeric(14,0) default NULL NULL,
-  "isRead" char(1) default NULL NULL,
-  "isReplied" char(1) default NULL NULL,
-  "isFlagged" char(1) default NULL NULL,
-  "priority" numeric(2,0) default NULL NULL,
+  `msgId numeric(14 ,0) identity,
+  `user` varchar(40) default '' NOT NULL,
+  `user_from` varchar(40) default '' NOT NULL,
+  `user_to` text,
+  `user_cc` text,
+  `user_bcc` text,
+  `subject` varchar(255) default NULL NULL,
+  `body` text,
+  `hash` varchar(32) default NULL NULL,
+  `replyto_hash` varchar(32) default NULL NULL,
+  `date` numeric(14,0) default NULL NULL,
+  `isRead` char(1) default NULL NULL,
+  `isReplied` char(1) default NULL NULL,
+  `isFlagged` char(1) default NULL NULL,
+  `priority` numeric(2,0) default NULL NULL,
   PRIMARY KEY (msgId)
 ) ENGINE=MyISAM  
 go
@@ -265,10 +265,10 @@ go
 
 
 CREATE TABLE "sessions"(
-  "sesskey" char(32) NOT NULL,
-  "expiry" numeric(11,0) NOT NULL,
-  "expireref" varchar(64) default '',
-  "data" text NOT NULL,
+  `sesskey` char(32) NOT NULL,
+  `expiry` numeric(11,0) NOT NULL,
+  `expireref` varchar(64),
+  `data` text NOT NULL,
   PRIMARY KEY (sesskey)
 ) ENGINE=MyISAM
 go
@@ -282,15 +282,15 @@ go
 
 
 CREATE TABLE "tiki_actionlog" (
-  "actionId" numeric(8 ,0) identity,
-  "action" varchar(255) default '' NOT NULL,
-  "lastModif" numeric(14,0) default NULL NULL,
-  "object" varchar(255) default NULL NULL,
-  "objectType" varchar(32) default '' NOT NULL,
-  "user" varchar(200) default '',
-  "ip" varchar(15) default NULL NULL,
-  "comment" varchar(200) default NULL NULL,
-  "categId" numeric(12,0) default '0' NOT NULL,
+  `actionId numeric(8 ,0) identity,
+  `action` varchar(255) default '' NOT NULL,
+  `lastModif` numeric(14,0) default NULL NULL,
+  `object` varchar(255) default NULL NULL,
+  `objectType` varchar(32) default '' NOT NULL,
+  `user` varchar(200) default '',
+  `ip` varchar(15) default NULL NULL,
+  `comment` varchar(200) default NULL NULL,
+  `categId` numeric(12,0) default '0' NOT NULL,
   PRIMARY KEY (actionId),
   KEY lastModif(lastModif),
   KEY object(object(100), objectType, action(100))
@@ -304,14 +304,15 @@ go
 
 
 CREATE TABLE "tiki_actionlog_params" (
-  "actionId" numeric(8,0) NOT NULL,
-  "name" varchar(40) NOT NULL,
-  "value" text default '',
-  KEY (actionId)
+  `actionId` numeric(8,0) NOT NULL,
+  `name` varchar(40) NOT NULL,
+  `value` text
 ) ENGINE=MyISAM
 go
 
 
+CREATE  INDEX "tiki_actionlog_params_actionIDIndex" ON "tiki_actionlog_params"("actionId")
+go
 CREATE  INDEX "tiki_actionlog_params_nameValue" ON "tiki_actionlog_params"("name" "value")
 go
 
@@ -320,38 +321,38 @@ go
 
 
 CREATE TABLE "tiki_articles" (
-  "articleId" numeric(8 ,0) identity,
-  "topline" varchar(255) default NULL NULL,
-  "title" varchar(255) default NULL NULL,
-  "subtitle" varchar(255) default NULL NULL,
-  "linkto" varchar(255) default NULL NULL,
-  "lang" varchar(16) default NULL NULL,
-  "state" char(1) default 's',
-  "authorName" varchar(60) default NULL NULL,
-  "topicId" numeric(14,0) default NULL NULL,
-  "topicName" varchar(40) default NULL NULL,
-  "size" numeric(12,0) default NULL NULL,
-  "useImage" char(1) default NULL NULL,
-  "image_name" varchar(80) default NULL NULL,
-  "image_caption" text default NULL NULL,
-  "image_type" varchar(80) default NULL NULL,
-  "image_size" numeric(14,0) default NULL NULL,
-  "image_x" numeric(4,0) default NULL NULL,
-  "image_y" numeric(4,0) default NULL NULL,
-  "image_data" image default '',
-  "publishDate" numeric(14,0) default NULL NULL,
-  "expireDate" numeric(14,0) default NULL NULL,
-  "created" numeric(14,0) default NULL NULL,
-  "heading" text default '',
-  "body" text default '',
-  "hash" varchar(32) default NULL NULL,
-  "author" varchar(200) default NULL NULL,
-  "nbreads" numeric(14,0) default NULL NULL,
-  "votes" numeric(8,0) default NULL NULL,
-  "points" numeric(14,0) default NULL NULL,
-  "type" varchar(50) default NULL NULL,
-  "rating" decimal(3,2) default NULL NULL,
-  "isfloat" char(1) default NULL NULL,
+  `articleId numeric(8 ,0) identity,
+  `topline` varchar(255) default NULL NULL,
+  `title` varchar(255) default NULL NULL,
+  `subtitle` varchar(255) default NULL NULL,
+  `linkto` varchar(255) default NULL NULL,
+  `lang` varchar(16) default NULL NULL,
+  `state` char(1) default 's',
+  `authorName` varchar(60) default NULL NULL,
+  `topicId` numeric(14,0) default NULL NULL,
+  `topicName` varchar(40) default NULL NULL,
+  `size` numeric(12,0) default NULL NULL,
+  `useImage` char(1) default NULL NULL,
+  `image_name` varchar(80) default NULL NULL,
+  `image_caption` text default NULL NULL,
+  `image_type` varchar(80) default NULL NULL,
+  `image_size` numeric(14,0) default NULL NULL,
+  `image_x` numeric(4,0) default NULL NULL,
+  `image_y` numeric(4,0) default NULL NULL,
+  `image_data` image,
+  `publishDate` numeric(14,0) default NULL NULL,
+  `expireDate` numeric(14,0) default NULL NULL,
+  `created` numeric(14,0) default NULL NULL,
+  `heading` text,
+  `body` text,
+  `hash` varchar(32) default NULL NULL,
+  `author` varchar(200) default NULL NULL,
+  `nbreads` numeric(14,0) default NULL NULL,
+  `votes` numeric(8,0) default NULL NULL,
+  `points` numeric(14,0) default NULL NULL,
+  `type` varchar(50) default NULL NULL,
+  `rating` decimal(3,2) default NULL NULL,
+  `isfloat` char(1) default NULL NULL,
   PRIMARY KEY (articleId)
 ) ENGINE=MyISAM  
 go
@@ -383,26 +384,26 @@ go
 
 
 CREATE TABLE "tiki_article_types" (
-  "type" varchar(50) NOT NULL,
-  "use_ratings" varchar(1) default NULL NULL,
-  "show_pre_publ" varchar(1) default NULL NULL,
-  "show_post_expire" varchar(1) default 'y',
-  "heading_only" varchar(1) default NULL NULL,
-  "allow_comments" varchar(1) default 'y',
-  "show_image" varchar(1) default 'y',
-  "show_avatar" varchar(1) default NULL NULL,
-  "show_author" varchar(1) default 'y',
-  "show_pubdate" varchar(1) default 'y',
-  "show_expdate" varchar(1) default NULL NULL,
-  "show_reads" varchar(1) default 'y',
-  "show_size" varchar(1) default 'n',
-  "show_topline" varchar(1) default 'n',
-  "show_subtitle" varchar(1) default 'n',
-  "show_linkto" varchar(1) default 'n',
-  "show_image_caption" varchar(1) default 'n',
-  "show_lang" varchar(1) default 'n',
-  "creator_edit" varchar(1) default NULL NULL,
-  "comment_can_rate_article" char(1) default NULL NULL,
+  `type` varchar(50) NOT NULL,
+  `use_ratings` varchar(1) default NULL NULL,
+  `show_pre_publ` varchar(1) default NULL NULL,
+  `show_post_expire` varchar(1) default 'y',
+  `heading_only` varchar(1) default NULL NULL,
+  `allow_comments` varchar(1) default 'y',
+  `show_image` varchar(1) default 'y',
+  `show_avatar` varchar(1) default NULL NULL,
+  `show_author` varchar(1) default 'y',
+  `show_pubdate` varchar(1) default 'y',
+  `show_expdate` varchar(1) default NULL NULL,
+  `show_reads` varchar(1) default 'y',
+  `show_size` varchar(1) default 'n',
+  `show_topline` varchar(1) default 'n',
+  `show_subtitle` varchar(1) default 'n',
+  `show_linkto` varchar(1) default 'n',
+  `show_image_caption` varchar(1) default 'n',
+  `show_lang` varchar(1) default 'n',
+  `creator_edit` varchar(1) default NULL NULL,
+  `comment_can_rate_article` char(1) default NULL NULL,
   PRIMARY KEY (type)
 ) ENGINE=MyISAM 
 go
@@ -435,37 +436,37 @@ go
 
 
 CREATE TABLE "tiki_banners" (
-  "bannerId" numeric(12 ,0) identity,
-  "client" varchar(200) default '' NOT NULL,
-  "url" varchar(255) default NULL NULL,
-  "title" varchar(255) default NULL NULL,
-  "alt" varchar(250) default NULL NULL,
-  "which" varchar(50) default NULL NULL,
-  "imageData" image default '',
-  "imageType" varchar(200) default NULL NULL,
-  "imageName" varchar(100) default NULL NULL,
-  "HTMLData" text default '',
-  "fixedURLData" varchar(255) default NULL NULL,
-  "textData" text default '',
-  "fromDate" numeric(14,0) default NULL NULL,
-  "toDate" numeric(14,0) default NULL NULL,
-  "useDates" char(1) default NULL NULL,
-  "mon" char(1) default NULL NULL,
-  "tue" char(1) default NULL NULL,
-  "wed" char(1) default NULL NULL,
-  "thu" char(1) default NULL NULL,
-  "fri" char(1) default NULL NULL,
-  "sat" char(1) default NULL NULL,
-  "sun" char(1) default NULL NULL,
-  "hourFrom" varchar(4) default NULL NULL,
-  "hourTo" varchar(4) default NULL NULL,
-  "created" numeric(14,0) default NULL NULL,
-  "maxImpressions" numeric(8,0) default NULL NULL,
-  "impressions" numeric(8,0) default NULL NULL,
-  "maxUserImpressions" numeric(8,0) default -1,
-  "maxClicks" numeric(8,0) default NULL NULL,
-  "clicks" numeric(8,0) default NULL NULL,
-  "zone" varchar(40) default NULL NULL,
+  `bannerId numeric(12 ,0) identity,
+  `client` varchar(200) default '' NOT NULL,
+  `url` varchar(255) default NULL NULL,
+  `title` varchar(255) default NULL NULL,
+  `alt` varchar(250) default NULL NULL,
+  `which` varchar(50) default NULL NULL,
+  `imageData` image,
+  `imageType` varchar(200) default NULL NULL,
+  `imageName` varchar(100) default NULL NULL,
+  `HTMLData` text,
+  `fixedURLData` varchar(255) default NULL NULL,
+  `textData` text,
+  `fromDate` numeric(14,0) default NULL NULL,
+  `toDate` numeric(14,0) default NULL NULL,
+  `useDates` char(1) default NULL NULL,
+  `mon` char(1) default NULL NULL,
+  `tue` char(1) default NULL NULL,
+  `wed` char(1) default NULL NULL,
+  `thu` char(1) default NULL NULL,
+  `fri` char(1) default NULL NULL,
+  `sat` char(1) default NULL NULL,
+  `sun` char(1) default NULL NULL,
+  `hourFrom` varchar(4) default NULL NULL,
+  `hourTo` varchar(4) default NULL NULL,
+  `created` numeric(14,0) default NULL NULL,
+  `maxImpressions` numeric(8,0) default NULL NULL,
+  `impressions` numeric(8,0) default NULL NULL,
+  `maxUserImpressions` numeric(8,0) default -1,
+  `maxClicks` numeric(8,0) default NULL NULL,
+  `clicks` numeric(8,0) default NULL NULL,
+  `zone` varchar(40) default NULL NULL,
   PRIMARY KEY (bannerId),
   "INDEX" ban1(zone,useDates,impressions,maxImpressions,hourFrom,hourTo,fromDate,toDate,mon,tue,wed,thu,fri,sat,sun)
 ) ENGINE=MyISAM  
@@ -478,19 +479,19 @@ go
 
 
 CREATE TABLE "tiki_banning" (
-  "banId" numeric(12 ,0) identity,
-  "mode" varchar(6) default NULL NULL CHECK ("mode" IN ('user','ip')),
-  "title" varchar(200) default NULL NULL,
-  "ip1" char(3) default NULL NULL,
-  "ip2" char(3) default NULL NULL,
-  "ip3" char(3) default NULL NULL,
-  "ip4" char(3) default NULL NULL,
-  "user" varchar(200) default '',
-  "date_from" timestamp NOT NULL,
-  "date_to" timestamp NOT NULL,
-  "use_dates" char(1) default NULL NULL,
-  "created" numeric(14,0) default NULL NULL,
-  "message" text default '',
+  `banId numeric(12 ,0) identity,
+  `mode` enum('user','ip') default NULL NULL,
+  `title` varchar(200) default NULL NULL,
+  `ip1` char(3) default NULL NULL,
+  `ip2` char(3) default NULL NULL,
+  `ip3` char(3) default NULL NULL,
+  `ip4` char(3) default NULL NULL,
+  `user` varchar(200) default '',
+  `date_from` timestamp NOT NULL,
+  `date_to` timestamp NOT NULL,
+  `use_dates` char(1) default NULL NULL,
+  `created` numeric(14,0) default NULL NULL,
+  `message` text,
   PRIMARY KEY (banId)
 ) ENGINE=MyISAM  
 go
@@ -502,8 +503,8 @@ go
 
 
 CREATE TABLE "tiki_banning_sections" (
-  "banId" numeric(12,0) default '0' NOT NULL,
-  "section" varchar(100) default '' NOT NULL,
+  `banId` numeric(12,0) default '0' NOT NULL,
+  `section` varchar(100) default '' NOT NULL,
   PRIMARY KEY (banId,section)
 ) ENGINE=MyISAM
 go
@@ -515,9 +516,9 @@ go
 
 
 CREATE TABLE "tiki_blog_activity" (
-  "blogId" numeric(8,0) default '0' NOT NULL,
-  "day" numeric(14,0) default '0' NOT NULL,
-  "posts" numeric(8,0) default NULL NULL,
+  `blogId` numeric(8,0) default '0' NOT NULL,
+  `day` numeric(14,0) default '0' NOT NULL,
+  `posts` numeric(8,0) default NULL NULL,
   PRIMARY KEY (blogId,day)
 ) ENGINE=MyISAM
 go
@@ -529,16 +530,16 @@ go
 
 
 CREATE TABLE "tiki_blog_posts" (
-  "postId" numeric(8 ,0) identity,
-  "blogId" numeric(8,0) default '0' NOT NULL,
-  "data" text default '',
-  "data_size" numeric(11,0) default '0' NOT NULL,
-  "created" numeric(14,0) default NULL NULL,
-  "user" varchar(200) default '',
-  "trackbacks_to" text default '',
-  "trackbacks_from" text default '',
-  "title" varchar(255) default NULL NULL,
-  "priv" varchar(1) default NULL NULL,
+  `postId numeric(8 ,0) identity,
+  `blogId` numeric(8,0) default '0' NOT NULL,
+  `data` text,
+  `data_size` numeric(11,0) default '0' NOT NULL,
+  `created` numeric(14,0) default NULL NULL,
+  `user` varchar(200) default '',
+  `trackbacks_to` text,
+  `trackbacks_from` text,
+  `title` varchar(255) default NULL NULL,
+  `priv` varchar(1) default NULL NULL,
   PRIMARY KEY (postId)
 ) ENGINE=MyISAM  
 go
@@ -558,12 +559,12 @@ go
 
 
 CREATE TABLE "tiki_blog_posts_images" (
-  "imgId" numeric(14 ,0) identity,
-  "postId" numeric(14,0) default '0' NOT NULL,
-  "filename" varchar(80) default NULL NULL,
-  "filetype" varchar(80) default NULL NULL,
-  "filesize" numeric(14,0) default NULL NULL,
-  "data" image default '',
+  `imgId numeric(14 ,0) identity,
+  `postId` numeric(14,0) default '0' NOT NULL,
+  `filename` varchar(80) default NULL NULL,
+  `filetype` varchar(80) default NULL NULL,
+  `filesize` numeric(14,0) default NULL NULL,
+  `data` image,
   PRIMARY KEY (imgId)
 ) ENGINE=MyISAM  
 go
@@ -575,24 +576,24 @@ go
 
 
 CREATE TABLE "tiki_blogs" (
-  "blogId" numeric(8 ,0) identity,
-  "created" numeric(14,0) default NULL NULL,
-  "lastModif" numeric(14,0) default NULL NULL,
-  "title" varchar(200) default NULL NULL,
-  "description" text default '',
-  "user" varchar(200) default '',
-  "public" char(1) default NULL NULL,
-  "posts" numeric(8,0) default NULL NULL,
-  "maxPosts" numeric(8,0) default NULL NULL,
-  "hits" numeric(8,0) default NULL NULL,
-  "activity" decimal(4,2) default NULL NULL,
-  "heading" text default '',
-  "use_find" char(1) default NULL NULL,
-  "use_title" char(1) default NULL NULL,
-  "add_date" char(1) default NULL NULL,
-  "add_poster" char(1) default NULL NULL,
-  "allow_comments" char(1) default NULL NULL,
-  "show_avatar" char(1) default NULL NULL,
+  `blogId numeric(8 ,0) identity,
+  `created` numeric(14,0) default NULL NULL,
+  `lastModif` numeric(14,0) default NULL NULL,
+  `title` varchar(200) default NULL NULL,
+  `description` text,
+  `user` varchar(200) default '',
+  `public` char(1) default NULL NULL,
+  `posts` numeric(8,0) default NULL NULL,
+  `maxPosts` numeric(8,0) default NULL NULL,
+  `hits` numeric(8,0) default NULL NULL,
+  `activity` decimal(4,2) default NULL NULL,
+  `heading` text,
+  `use_find` char(1) default NULL NULL,
+  `use_title` char(1) default NULL NULL,
+  `add_date` char(1) default NULL NULL,
+  `add_poster` char(1) default NULL NULL,
+  `allow_comments` char(1) default NULL NULL,
+  `show_avatar` char(1) default NULL NULL,
   PRIMARY KEY (blogId)
 ) ENGINE=MyISAM  
 go
@@ -612,9 +613,9 @@ go
 
 
 CREATE TABLE "tiki_calendar_categories" (
-  "calcatId" numeric(11 ,0) identity,
-  "calendarId" numeric(14,0) default '0' NOT NULL,
-  "name" varchar(255) default '' NOT NULL,
+  `calcatId numeric(11 ,0) identity,
+  `calendarId` numeric(14,0) default '0' NOT NULL,
+  `name` varchar(255) default '' NOT NULL,
   PRIMARY KEY (calcatId)
 ) ENGINE=MyISAM  
 go
@@ -628,32 +629,32 @@ go
 
 
 CREATE TABLE "tiki_calendar_recurrence" (
-  "recurrenceId" numeric(14 ,0) identity,
-  "calendarId" numeric(14,0) default '0' NOT NULL,
-  "start" numeric(4,0) default '0' NOT NULL,
-  "end" numeric(4,0) default '2359' NOT NULL,
-  "allday" numeric(1,0) default '0' NOT NULL,
-  "locationId" numeric(14,0) default NULL NULL,
-  "categoryId" numeric(14,0) default NULL NULL,
-  "nlId" numeric(12,0) default '0' NOT NULL,
-  "priority" varchar(3) default '1' NOT NULL CHECK ("priority" IN ('1','2','3','4','5','6','7','8','9')),
-  "status" varchar(3) default '0' NOT NULL CHECK ("status" IN ('0','1','2')),
-  "url" varchar(255) default NULL NULL,
-  "lang" char(16) default 'en' NOT NULL,
-  "name" varchar(255) default '' NOT NULL,
-  "description" image default '',
-  "weekly" numeric(1,0) default '0',
-  "weekday" numeric(1,0) default NULL NULL,
-  "monthly" numeric(1,0) default '0',
-  "dayOfMonth" numeric(2,0) default NULL NULL,
-  "yearly" numeric(1,0) default '0',
-  "dateOfYear" numeric(4,0) default NULL NULL,
-  "nbRecurrences" numeric(8,0) default NULL NULL,
-  "startPeriod" numeric(14,0) default NULL NULL,
-  "endPeriod" numeric(14,0) default NULL NULL,
-  "user" varchar(200) default '',
-  "created" numeric(14,0) default '0' NOT NULL,
-  "lastmodif" numeric(14,0) default '0' NOT NULL,
+  `recurrenceId numeric(14 ,0) identity,
+  `calendarId` numeric(14,0) default '0' NOT NULL,
+  `start` numeric(4,0) default '0' NOT NULL,
+  `end` numeric(4,0) default '2359' NOT NULL,
+  `allday` numeric(1,0) default '0' NOT NULL,
+  `locationId` numeric(14,0) default NULL NULL,
+  `categoryId` numeric(14,0) default NULL NULL,
+  `nlId` numeric(12,0) default '0' NOT NULL,
+  `priority` enum('1','2','3','4','5','6','7','8','9') default '1' NOT NULL,
+  `status` enum('0','1','2') default '0' NOT NULL,
+  `url` varchar(255) default NULL NULL,
+  `lang` char(16) default 'en' NOT NULL,
+  `name` varchar(255) default '' NOT NULL,
+  `description` image,
+  `weekly` numeric(1,0) default '0',
+  `weekday` numeric(1,0),
+  `monthly` numeric(1,0) default '0',
+  `dayOfMonth` numeric(2,0),
+  `yearly` numeric(1,0) default '0',
+  `dateOfYear` numeric(4,0),
+  `nbRecurrences` numeric(8,0),
+  `startPeriod` numeric(14,0),
+  `endPeriod` numeric(14,0),
+  `user` varchar(200) default '',
+  `created` numeric(14,0) default '0' NOT NULL,
+  `lastmodif` numeric(14,0) default '0' NOT NULL,
   PRIMARY KEY (recurrenceId)
 ) ENGINE=MyISAM  
 go
@@ -662,41 +663,41 @@ go
 CREATE  INDEX "tiki_calendar_recurrence_calendarId" ON "tiki_calendar_recurrence"("calendarId")
 go
 
--- DROP TABLE "tiki_calendar_items"
+-- DROP TABLE `tiki_calendar_items`
 go
 
 
-CREATE TABLE "tiki_calendar_items" (
-  "calitemId" numeric(14 ,0) identity,
-  "calendarId" numeric(14,0) default '0' NOT NULL,
-  "start" numeric(14,0) default '0' NOT NULL,
-  "end" numeric(14,0) default '0' NOT NULL,
-  "locationId" numeric(14,0) default NULL NULL,
-  "categoryId" numeric(14,0) default NULL NULL,
-  "nlId" numeric(12,0) default '0' NOT NULL,
-  "priority" varchar(4) default '0' CHECK ("priority" IN ('0', '1','2','3','4','5','6','7','8','9')),
-  "status" varchar(3) default '0' NOT NULL CHECK ("status" IN ('0','1','2')),
-  "url" varchar(255) default NULL NULL,
-  "lang" char(16) default 'en' NOT NULL,
-  "name" varchar(255) default '' NOT NULL,
-  "description" text default '',
-  "recurrenceId" numeric(14,0) default NULL NULL,
-  "changed" numeric(1,0) DEFAULT '0',
-  "user" varchar(200) default '',
-  "created" numeric(14,0) default '0' NOT NULL,
-  "lastmodif" numeric(14,0) default '0' NOT NULL,
-  "allday" numeric(1,0) default '0' NOT NULL,
+CREATE TABLE `tiki_calendar_items` (
+  `calitemId numeric(14 ,0) identity,
+  `calendarId` numeric(14,0) default '0' NOT NULL,
+  `start` numeric(14,0) default '0' NOT NULL,
+  `end` numeric(14,0) default '0' NOT NULL,
+  `locationId` numeric(14,0) default NULL NULL,
+  `categoryId` numeric(14,0) default NULL NULL,
+  `nlId` numeric(12,0) default '0' NOT NULL,
+  `priority` enum('0', '1','2','3','4','5','6','7','8','9') default '0',
+  `status` enum('0','1','2') default '0' NOT NULL,
+  `url` varchar(255) default NULL NULL,
+  `lang` char(16) default 'en' NOT NULL,
+  `name` varchar(255) default '' NOT NULL,
+  `description` text,
+  `recurrenceId` numeric(14,0),
+  `changed` numeric(1,0) DEFAULT '0',
+  `user` varchar(200) default '',
+  `created` numeric(14,0) default '0' NOT NULL,
+  `lastmodif` numeric(14,0) default '0' NOT NULL,
+  `allday` numeric(1,0) default '0' NOT NULL,
   PRIMARY KEY (calitemId),
-  "CONSTRAINT" fk_calitems_recurrence
-  "FOREIGN" KEY (recurrenceId) REFERENCES tiki_calendar_recurrence(recurrenceId)
+  "CONSTRAINT" `fk_calitems_recurrence`
+  "FOREIGN" KEY (`recurrenceId`) REFERENCES `tiki_calendar_recurrence`(`recurrenceId`)
   "ON" UPDATE CASCADE ON DELETE SET NULL
 ) ENGINE=MyISAM  
 go
 
 
-CREATE  INDEX "tiki_calendar_items_calendarId" ON "tiki_calendar_items"("calendarId")
+CREATE  INDEX "tiki_calendar_recurrence_calendarId" ON "tiki_calendar_recurrence"("calendarId")
 go
-CREATE  INDEX "tiki_calendar_items_ft" ON "tiki_calendar_items"("name","description")
+CREATE  INDEX "tiki_calendar_recurrence_ft" ON "tiki_calendar_recurrence"(`"name"``"description"`)
 go
 
 -- DROP TABLE "tiki_calendar_locations"
@@ -704,10 +705,10 @@ go
 
 
 CREATE TABLE "tiki_calendar_locations" (
-  "callocId" numeric(14 ,0) identity,
-  "calendarId" numeric(14,0) default '0' NOT NULL,
-  "name" varchar(255) default '' NOT NULL,
-  "description" image default '',
+  `callocId numeric(14 ,0) identity,
+  `calendarId` numeric(14,0) default '0' NOT NULL,
+  `name` varchar(255) default '' NOT NULL,
+  `description` image,
   PRIMARY KEY (callocId)
 ) ENGINE=MyISAM  
 go
@@ -721,9 +722,9 @@ go
 
 
 CREATE TABLE "tiki_calendar_roles" (
-  "calitemId" numeric(14,0) default '0' NOT NULL,
-  "username" varchar(200) default '' NOT NULL,
-  "role" varchar(3) default '0' NOT NULL CHECK ("role" IN ('0','1','2','3','6')),
+  `calitemId` numeric(14,0) default '0' NOT NULL,
+  `username` varchar(200) default '' NOT NULL,
+  `role` enum('0','1','2','3','6') default '0' NOT NULL,
   PRIMARY KEY (calitemId,username(16),role)
 ) ENGINE=MyISAM
 go
@@ -735,20 +736,20 @@ go
 
 
 CREATE TABLE "tiki_calendars" (
-  "calendarId" numeric(14 ,0) identity,
-  "name" varchar(80) default '' NOT NULL,
-  "description" varchar(255) default NULL NULL,
-  "user" varchar(200) default '' NOT NULL,
-  "customlocations" varchar(3) default 'n' NOT NULL CHECK ("customlocations" IN ('n','y')),
-  "customcategories" varchar(3) default 'n' NOT NULL CHECK ("customcategories" IN ('n','y')),
-  "customlanguages" varchar(3) default 'n' NOT NULL CHECK ("customlanguages" IN ('n','y')),
-  "custompriorities" varchar(3) default 'n' NOT NULL CHECK ("custompriorities" IN ('n','y')),
-  "customparticipants" varchar(3) default 'n' NOT NULL CHECK ("customparticipants" IN ('n','y')),
-  "customsubscription" varchar(3) default 'n' NOT NULL CHECK ("customsubscription" IN ('n','y')),
-  "customstatus" varchar(3) default 'y' NOT NULL CHECK ("customstatus" IN ('n','y')),
-  "created" numeric(14,0) default '0' NOT NULL,
-  "lastmodif" numeric(14,0) default '0' NOT NULL,
-  "personal" enum ('n', 'y') default 'n' NOT NULL,
+  `calendarId numeric(14 ,0) identity,
+  `name` varchar(80) default '' NOT NULL,
+  `description` varchar(255) default NULL NULL,
+  `user` varchar(200) default '' NOT NULL,
+  `customlocations` enum('n','y') default 'n' NOT NULL,
+  `customcategories` enum('n','y') default 'n' NOT NULL,
+  `customlanguages` enum('n','y') default 'n' NOT NULL,
+  `custompriorities` enum('n','y') default 'n' NOT NULL,
+  `customparticipants` enum('n','y') default 'n' NOT NULL,
+  `customsubscription` enum('n','y') default 'n' NOT NULL,
+  `customstatus` enum('n','y') default 'y' NOT NULL,
+  `created` numeric(14,0) default '0' NOT NULL,
+  `lastmodif` numeric(14,0) default '0' NOT NULL,
+  `personal` enum ('n', 'y') default 'n' NOT NULL,
   PRIMARY KEY (calendarId)
 ) ENGINE=MyISAM 
 go
@@ -774,11 +775,11 @@ go
 
 
 CREATE TABLE "tiki_categories" (
-  "categId" numeric(12 ,0) identity,
-  "name" varchar(100) default NULL NULL,
-  "description" varchar(250) default NULL NULL,
-  "parentId" numeric(12,0) default NULL NULL,
-  "hits" numeric(8,0) default NULL NULL,
+  `categId numeric(12 ,0) identity,
+  `name` varchar(100) default NULL NULL,
+  `description` varchar(250) default NULL NULL,
+  `parentId` numeric(12,0) default NULL NULL,
+  `hits` numeric(8,0) default NULL NULL,
   PRIMARY KEY (categId)
 ) ENGINE=MyISAM  
 go
@@ -790,15 +791,15 @@ go
 
 
 CREATE TABLE "tiki_objects" (
-  "objectId" numeric(12 ,0) identity,
-  "type" varchar(50) default NULL NULL,
-  "itemId" varchar(255) default NULL NULL,
-  "description" text default '',
-  "created" numeric(14,0) default NULL NULL,
-  "name" varchar(200) default NULL NULL,
-  "href" varchar(200) default NULL NULL,
-  "hits" numeric(8,0) default NULL NULL,
-  "comments_locked" char(1) default 'n' NOT NULL,
+  `objectId numeric(12 ,0) identity,
+  `type` varchar(50) default NULL NULL,
+  `itemId` varchar(255) default NULL NULL,
+  `description` text,
+  `created` numeric(14,0) default NULL NULL,
+  `name` varchar(200) default NULL NULL,
+  `href` varchar(200) default NULL NULL,
+  `hits` numeric(8,0) default NULL NULL,
+  `comments_locked` char(1) default 'n' NOT NULL,
   PRIMARY KEY (objectId),
   KEY (type, objectId),
   KEY (itemId, type)
@@ -824,8 +825,8 @@ go
 
 
 CREATE TABLE "tiki_category_objects" (
-  "catObjectId" numeric(12,0) default '0' NOT NULL,
-  "categId" numeric(12,0) default '0' NOT NULL,
+  `catObjectId` numeric(12,0) default '0' NOT NULL,
+  `categId` numeric(12,0) default '0' NOT NULL,
   PRIMARY KEY (catObjectId,categId)
 ) ENGINE=MyISAM
 go
@@ -837,8 +838,8 @@ go
 
 
 CREATE TABLE "tiki_object_ratings" (
-  "catObjectId" numeric(12,0) default '0' NOT NULL,
-  "pollId" numeric(12,0) default '0' NOT NULL,
+  `catObjectId` numeric(12,0) default '0' NOT NULL,
+  `pollId` numeric(12,0) default '0' NOT NULL,
   PRIMARY KEY (catObjectId,pollId)
 ) ENGINE=MyISAM
 go
@@ -850,8 +851,8 @@ go
 
 
 CREATE TABLE "tiki_category_sites" (
-  "categId" numeric(10,0) default '0' NOT NULL,
-  "siteId" numeric(14,0) default '0' NOT NULL,
+  `categId` numeric(10,0) default '0' NOT NULL,
+  `siteId` numeric(14,0) default '0' NOT NULL,
   PRIMARY KEY (categId,siteId)
 ) ENGINE=MyISAM
 go
@@ -863,15 +864,15 @@ go
 
 
 CREATE TABLE "tiki_chart_items" (
-  "itemId" numeric(14 ,0) identity,
-  "title" varchar(250) default NULL NULL,
-  "description" text default '',
-  "chartId" numeric(14,0) default '0' NOT NULL,
-  "created" numeric(14,0) default NULL NULL,
-  "URL" varchar(250) default NULL NULL,
-  "votes" numeric(14,0) default NULL NULL,
-  "points" numeric(14,0) default NULL NULL,
-  "average" decimal(4,2) default NULL NULL,
+  `itemId numeric(14 ,0) identity,
+  `title` varchar(250) default NULL NULL,
+  `description` text,
+  `chartId` numeric(14,0) default '0' NOT NULL,
+  `created` numeric(14,0) default NULL NULL,
+  `URL` varchar(250) default NULL NULL,
+  `votes` numeric(14,0) default NULL NULL,
+  `points` numeric(14,0) default NULL NULL,
+  `average` decimal(4,2) default NULL NULL,
   PRIMARY KEY (itemId)
 ) ENGINE=MyISAM  
 go
@@ -883,24 +884,24 @@ go
 
 
 CREATE TABLE "tiki_charts" (
-  "chartId" numeric(14 ,0) identity,
-  "title" varchar(250) default NULL NULL,
-  "description" text default '',
-  "hits" numeric(14,0) default NULL NULL,
-  "singleItemVotes" char(1) default NULL NULL,
-  "singleChartVotes" char(1) default NULL NULL,
-  "suggestions" char(1) default NULL NULL,
-  "autoValidate" char(1) default NULL NULL,
-  "topN" numeric(6,0) default NULL NULL,
-  "maxVoteValue" numeric(4,0) default NULL NULL,
-  "frequency" numeric(14,0) default NULL NULL,
-  "showAverage" char(1) default NULL NULL,
-  "isActive" char(1) default NULL NULL,
-  "showVotes" char(1) default NULL NULL,
-  "useCookies" char(1) default NULL NULL,
-  "lastChart" numeric(14,0) default NULL NULL,
-  "voteAgainAfter" numeric(14,0) default NULL NULL,
-  "created" numeric(14,0) default NULL NULL,
+  `chartId numeric(14 ,0) identity,
+  `title` varchar(250) default NULL NULL,
+  `description` text,
+  `hits` numeric(14,0) default NULL NULL,
+  `singleItemVotes` char(1) default NULL NULL,
+  `singleChartVotes` char(1) default NULL NULL,
+  `suggestions` char(1) default NULL NULL,
+  `autoValidate` char(1) default NULL NULL,
+  `topN` numeric(6,0) default NULL NULL,
+  `maxVoteValue` numeric(4,0) default NULL NULL,
+  `frequency` numeric(14,0) default NULL NULL,
+  `showAverage` char(1) default NULL NULL,
+  `isActive` char(1) default NULL NULL,
+  `showVotes` char(1) default NULL NULL,
+  `useCookies` char(1) default NULL NULL,
+  `lastChart` numeric(14,0) default NULL NULL,
+  `voteAgainAfter` numeric(14,0) default NULL NULL,
+  `created` numeric(14,0) default NULL NULL,
   PRIMARY KEY (chartId)
 ) ENGINE=MyISAM  
 go
@@ -912,14 +913,14 @@ go
 
 
 CREATE TABLE "tiki_charts_rankings" (
-  "chartId" numeric(14,0) default '0' NOT NULL,
-  "itemId" numeric(14,0) default '0' NOT NULL,
-  "position" numeric(14,0) default '0' NOT NULL,
-  "timestamp" numeric(14,0) default '0' NOT NULL,
-  "lastPosition" numeric(14,0) default '0' NOT NULL,
-  "period" numeric(14,0) default '0' NOT NULL,
-  "rvotes" numeric(14,0) default '0' NOT NULL,
-  "raverage" decimal(4,2) default '0.00' NOT NULL,
+  `chartId` numeric(14,0) default '0' NOT NULL,
+  `itemId` numeric(14,0) default '0' NOT NULL,
+  `position` numeric(14,0) default '0' NOT NULL,
+  `timestamp` numeric(14,0) default '0' NOT NULL,
+  `lastPosition` numeric(14,0) default '0' NOT NULL,
+  `period` numeric(14,0) default '0' NOT NULL,
+  `rvotes` numeric(14,0) default '0' NOT NULL,
+  `raverage` decimal(4,2) default '0.00' NOT NULL,
   PRIMARY KEY (chartId,itemId,period)
 ) ENGINE=MyISAM
 go
@@ -931,10 +932,10 @@ go
 
 
 CREATE TABLE "tiki_charts_votes" (
-  "user" varchar(200) default '' NOT NULL,
-  "itemId" numeric(14,0) default '0' NOT NULL,
-  "timestamp" numeric(14,0) default NULL NULL,
-  "chartId" numeric(14,0) default NULL NULL,
+  `user` varchar(200) default '' NOT NULL,
+  `itemId` numeric(14,0) default '0' NOT NULL,
+  `timestamp` numeric(14,0) default NULL NULL,
+  `chartId` numeric(14,0) default NULL NULL,
   PRIMARY KEY (user,itemId)
 ) ENGINE=MyISAM
 go
@@ -946,14 +947,14 @@ go
 
 
 CREATE TABLE "tiki_chat_channels" (
-  "channelId" numeric(8 ,0) identity,
-  "name" varchar(30) default NULL NULL,
-  "description" varchar(250) default NULL NULL,
-  "max_users" numeric(8,0) default NULL NULL,
-  "mode" char(1) default NULL NULL,
-  "moderator" varchar(200) default NULL NULL,
-  "active" char(1) default NULL NULL,
-  "refresh" numeric(6,0) default NULL NULL,
+  `channelId numeric(8 ,0) identity,
+  `name` varchar(30) default NULL NULL,
+  `description` varchar(250) default NULL NULL,
+  `max_users` numeric(8,0) default NULL NULL,
+  `mode` char(1) default NULL NULL,
+  `moderator` varchar(200) default NULL NULL,
+  `active` char(1) default NULL NULL,
+  `refresh` numeric(6,0) default NULL NULL,
   PRIMARY KEY (channelId)
 ) ENGINE=MyISAM  
 go
@@ -965,11 +966,11 @@ go
 
 
 CREATE TABLE "tiki_chat_messages" (
-  "messageId" numeric(8 ,0) identity,
-  "channelId" numeric(8,0) default '0' NOT NULL,
-  "data" varchar(255) default NULL NULL,
-  "poster" varchar(200) default 'anonymous' NOT NULL,
-  "timestamp" numeric(14,0) default NULL NULL,
+  `messageId numeric(8 ,0) identity,
+  `channelId` numeric(8,0) default '0' NOT NULL,
+  `data` varchar(255) default NULL NULL,
+  `poster` varchar(200) default 'anonymous' NOT NULL,
+  `timestamp` numeric(14,0) default NULL NULL,
   PRIMARY KEY (messageId)
 ) ENGINE=MyISAM  
 go
@@ -981,9 +982,9 @@ go
 
 
 CREATE TABLE "tiki_chat_users" (
-  "nickname" varchar(200) default '' NOT NULL,
-  "channelId" numeric(8,0) default '0' NOT NULL,
-  "timestamp" numeric(14,0) default NULL NULL,
+  `nickname` varchar(200) default '' NOT NULL,
+  `channelId` numeric(8,0) default '0' NOT NULL,
+  `timestamp` numeric(14,0) default NULL NULL,
   PRIMARY KEY (nickname,channelId)
 ) ENGINE=MyISAM
 go
@@ -995,29 +996,29 @@ go
 
 
 CREATE TABLE "tiki_comments" (
-  "threadId" numeric(14 ,0) identity,
-  "object" varchar(255) default '' NOT NULL,
-  "objectType" varchar(32) default '' NOT NULL,
-  "parentId" numeric(14,0) default NULL NULL,
-  "userName" varchar(200) default '',
-  "commentDate" numeric(14,0) default NULL NULL,
-  "hits" numeric(8,0) default NULL NULL,
-  "type" char(1) default NULL NULL,
-  "points" decimal(8,2) default NULL NULL,
-  "votes" numeric(8,0) default NULL NULL,
-  "average" decimal(8,4) default NULL NULL,
-  "title" varchar(255) default NULL NULL,
-  "data" text default '',
-  "hash" varchar(32) default NULL NULL,
-  "user_ip" varchar(15) default NULL NULL,
-  "summary" varchar(240) default NULL NULL,
-  "smiley" varchar(80) default NULL NULL,
-  "message_id" varchar(128) default NULL NULL,
-  "in_reply_to" varchar(128) default NULL NULL,
-  "comment_rating" numeric(2,0) default NULL NULL,
-  "archived" char(1) default NULL NULL,
-  "approved" char(1) default 'y' NOT NULL,
-  "locked" char(1) default 'n' NOT NULL,
+  `threadId numeric(14 ,0) identity,
+  `object` varchar(255) default '' NOT NULL,
+  `objectType` varchar(32) default '' NOT NULL,
+  `parentId` numeric(14,0) default NULL NULL,
+  `userName` varchar(200) default '',
+  `commentDate` numeric(14,0) default NULL NULL,
+  `hits` numeric(8,0) default NULL NULL,
+  `type` char(1) default NULL NULL,
+  `points` decimal(8,2) default NULL NULL,
+  `votes` numeric(8,0) default NULL NULL,
+  `average` decimal(8,4) default NULL NULL,
+  `title` varchar(255) default NULL NULL,
+  `data` text,
+  `hash` varchar(32) default NULL NULL,
+  `user_ip` varchar(15) default NULL NULL,
+  `summary` varchar(240) default NULL NULL,
+  `smiley` varchar(80) default NULL NULL,
+  `message_id` varchar(128) default NULL NULL,
+  `in_reply_to` varchar(128) default NULL NULL,
+  `comment_rating` numeric(2,0) default NULL NULL,
+  `archived` char(1) default NULL NULL,
+  `approved` char(1) default 'y' NOT NULL,
+  `locked` char(1) default 'n' NOT NULL,
   PRIMARY KEY (threadId)
 ) ENGINE=MyISAM  
 go
@@ -1047,9 +1048,9 @@ go
 
 
 CREATE TABLE "tiki_content" (
-  "contentId" numeric(8 ,0) identity,
-  "description" text default '',
-  "contentLabel" varchar(255) default '' NOT NULL,
+  `contentId numeric(8 ,0) identity,
+  `description` text,
+  `contentLabel` varchar(255) default '' NOT NULL,
   PRIMARY KEY (contentId)
 ) ENGINE=MyISAM  
 go
@@ -1061,10 +1062,10 @@ go
 
 
 CREATE TABLE "tiki_content_templates" (
-  "templateId" numeric(10 ,0) identity,
-  "content" image default '',
-  "name" varchar(200) default NULL NULL,
-  "created" numeric(14,0) default NULL NULL,
+  `templateId numeric(10 ,0) identity,
+  `content` image,
+  `name` varchar(200) default NULL NULL,
+  `created` numeric(14,0) default NULL NULL,
   PRIMARY KEY (templateId)
 ) ENGINE=MyISAM  
 go
@@ -1076,8 +1077,8 @@ go
 
 
 CREATE TABLE "tiki_content_templates_sections" (
-  "templateId" numeric(10,0) default '0' NOT NULL,
-  "section" varchar(250) default '' NOT NULL,
+  `templateId` numeric(10,0) default '0' NOT NULL,
+  `section` varchar(250) default '' NOT NULL,
   PRIMARY KEY (templateId,section)
 ) ENGINE=MyISAM
 go
@@ -1089,8 +1090,8 @@ go
 
 
 CREATE TABLE "tiki_cookies" (
-  "cookieId" numeric(10 ,0) identity,
-  "cookie" text default '',
+  `cookieId numeric(10 ,0) identity,
+  `cookie` text,
   PRIMARY KEY (cookieId)
 ) ENGINE=MyISAM  
 go
@@ -1102,13 +1103,13 @@ go
 
 
 CREATE TABLE "tiki_copyrights" (
-  "copyrightId" numeric(12 ,0) identity,
-  "page" varchar(200) default NULL NULL,
-  "title" varchar(200) default NULL NULL,
-  "year" numeric(11,0) default NULL NULL,
-  "authors" varchar(200) default NULL NULL,
-  "copyright_order" numeric(11,0) default NULL NULL,
-  "userName" varchar(200) default '',
+  `copyrightId numeric(12 ,0) identity,
+  `page` varchar(200) default NULL NULL,
+  `title` varchar(200) default NULL NULL,
+  `year` numeric(11,0) default NULL NULL,
+  `authors` varchar(200) default NULL NULL,
+  `copyright_order` numeric(11,0) default NULL NULL,
+  `userName` varchar(200) default '',
   PRIMARY KEY (copyrightId)
 ) ENGINE=MyISAM  
 go
@@ -1120,17 +1121,17 @@ go
 
 
 CREATE TABLE "tiki_directory_categories" (
-  "categId" numeric(10 ,0) identity,
-  "parent" numeric(10,0) default NULL NULL,
-  "name" varchar(240) default NULL NULL,
-  "description" text default '',
-  "childrenType" char(1) default NULL NULL,
-  "sites" numeric(10,0) default NULL NULL,
-  "viewableChildren" numeric(4,0) default NULL NULL,
-  "allowSites" char(1) default NULL NULL,
-  "showCount" char(1) default NULL NULL,
-  "editorGroup" varchar(200) default NULL NULL,
-  "hits" numeric(12,0) default NULL NULL,
+  `categId numeric(10 ,0) identity,
+  `parent` numeric(10,0) default NULL NULL,
+  `name` varchar(240) default NULL NULL,
+  `description` text,
+  `childrenType` char(1) default NULL NULL,
+  `sites` numeric(10,0) default NULL NULL,
+  `viewableChildren` numeric(4,0) default NULL NULL,
+  `allowSites` char(1) default NULL NULL,
+  `showCount` char(1) default NULL NULL,
+  `editorGroup` varchar(200) default NULL NULL,
+  `hits` numeric(12,0) default NULL NULL,
   PRIMARY KEY (categId)
 ) ENGINE=MyISAM  
 go
@@ -1142,8 +1143,8 @@ go
 
 
 CREATE TABLE "tiki_directory_search" (
-  "term" varchar(250) default '' NOT NULL,
-  "hits" numeric(14,0) default NULL NULL,
+  `term` varchar(250) default '' NOT NULL,
+  `hits` numeric(14,0) default NULL NULL,
   PRIMARY KEY (term)
 ) ENGINE=MyISAM
 go
@@ -1155,17 +1156,17 @@ go
 
 
 CREATE TABLE "tiki_directory_sites" (
-  "siteId" numeric(14 ,0) identity,
-  "name" varchar(240) default NULL NULL,
-  "description" text default '',
-  "url" varchar(255) default NULL NULL,
-  "country" varchar(255) default NULL NULL,
-  "hits" numeric(12,0) default NULL NULL,
-  "isValid" char(1) default NULL NULL,
-  "created" numeric(14,0) default NULL NULL,
-  "lastModif" numeric(14,0) default NULL NULL,
-  "cache" image default '',
-  "cache_timestamp" numeric(14,0) default NULL NULL,
+  `siteId numeric(14 ,0) identity,
+  `name` varchar(240) default NULL NULL,
+  `description` text,
+  `url` varchar(255) default NULL NULL,
+  `country` varchar(255) default NULL NULL,
+  `hits` numeric(12,0) default NULL NULL,
+  `isValid` char(1) default NULL NULL,
+  `created` numeric(14,0) default NULL NULL,
+  `lastModif` numeric(14,0) default NULL NULL,
+  `cache` image,
+  `cache_timestamp` numeric(14,0) default NULL NULL,
   PRIMARY KEY (siteId),
   KEY (isValid),
   KEY (url)
@@ -1181,13 +1182,13 @@ go
 
 
 CREATE TABLE "tiki_drawings" (
-  "drawId" numeric(12 ,0) identity,
-  "version" numeric(8,0) default NULL NULL,
-  "name" varchar(250) default NULL NULL,
-  "filename_draw" varchar(250) default NULL NULL,
-  "filename_pad" varchar(250) default NULL NULL,
-  "timestamp" numeric(14,0) default NULL NULL,
-  "user" varchar(200) default '',
+  `drawId numeric(12 ,0) identity,
+  `version` numeric(8,0) default NULL NULL,
+  `name` varchar(250) default NULL NULL,
+  `filename_draw` varchar(250) default NULL NULL,
+  `filename_pad` varchar(250) default NULL NULL,
+  `timestamp` numeric(14,0) default NULL NULL,
+  `user` varchar(200) default '',
   PRIMARY KEY (drawId)
 ) ENGINE=MyISAM  
 go
@@ -1199,9 +1200,9 @@ go
 
 
 CREATE TABLE "tiki_dsn" (
-  "dsnId" numeric(12 ,0) identity,
-  "name" varchar(200) default '' NOT NULL,
-  "dsn" varchar(255) default NULL NULL,
+  `dsnId numeric(12 ,0) identity,
+  `name` varchar(200) default '' NOT NULL,
+  `dsn` varchar(255) default NULL NULL,
   PRIMARY KEY (dsnId)
 ) ENGINE=MyISAM  
 go
@@ -1213,8 +1214,8 @@ go
 
 
 CREATE TABLE "tiki_dynamic_variables" (
-  "name" varchar(40) NOT NULL,
-  "data" text default '',
+  `name` varchar(40) NOT NULL,
+  `data` text,
   PRIMARY KEY (name)
 )
 go
@@ -1226,9 +1227,9 @@ go
 
 
 CREATE TABLE "tiki_extwiki" (
-  "extwikiId" numeric(12 ,0) identity,
-  "name" varchar(200) default '' NOT NULL,
-  "extwiki" varchar(255) default NULL NULL,
+  `extwikiId numeric(12 ,0) identity,
+  `name` varchar(200) default '' NOT NULL,
+  `extwiki` varchar(255) default NULL NULL,
   PRIMARY KEY (extwikiId)
 ) ENGINE=MyISAM  
 go
@@ -1240,11 +1241,11 @@ go
 
 
 CREATE TABLE "tiki_faq_questions" (
-  "questionId" numeric(10 ,0) identity,
-  "faqId" numeric(10,0) default NULL NULL,
-  "position" numeric(4,0) default NULL NULL,
-  "question" text default '',
-  "answer" text default '',
+  `questionId numeric(10 ,0) identity,
+  `faqId` numeric(10,0) default NULL NULL,
+  `position` numeric(4,0) default NULL NULL,
+  `question` text,
+  `answer` text,
   PRIMARY KEY (questionId)
 ) ENGINE=MyISAM  
 go
@@ -1264,13 +1265,13 @@ go
 
 
 CREATE TABLE "tiki_faqs" (
-  "faqId" numeric(10 ,0) identity,
-  "title" varchar(200) default NULL NULL,
-  "description" text default '',
-  "created" numeric(14,0) default NULL NULL,
-  "questions" numeric(5,0) default NULL NULL,
-  "hits" numeric(8,0) default NULL NULL,
-  "canSuggest" char(1) default NULL NULL,
+  `faqId numeric(10 ,0) identity,
+  `title` varchar(200) default NULL NULL,
+  `description` text,
+  `created` numeric(14,0) default NULL NULL,
+  `questions` numeric(5,0) default NULL NULL,
+  `hits` numeric(8,0) default NULL NULL,
+  `canSuggest` char(1) default NULL NULL,
   PRIMARY KEY (faqId)
 ) ENGINE=MyISAM  
 go
@@ -1290,12 +1291,12 @@ go
 
 
 CREATE TABLE "tiki_featured_links" (
-  "url" varchar(200) default '' NOT NULL,
-  "title" varchar(200) default NULL NULL,
-  "description" text default '',
-  "hits" numeric(8,0) default NULL NULL,
-  "position" numeric(6,0) default NULL NULL,
-  "type" char(1) default NULL NULL,
+  `url` varchar(200) default '' NOT NULL,
+  `title` varchar(200) default NULL NULL,
+  `description` text,
+  `hits` numeric(8,0) default NULL NULL,
+  `position` numeric(6,0) default NULL NULL,
+  `type` char(1) default NULL NULL,
   PRIMARY KEY (url)
 ) ENGINE=MyISAM
 go
@@ -1307,43 +1308,43 @@ go
 
 
 CREATE TABLE "tiki_file_galleries" (
-  "galleryId" numeric(14 ,0) identity,
-  "name" varchar(80) default '' NOT NULL,
-  "type" varchar(20) default 'default' NOT NULL,
-  "description" text default '',
-  "created" numeric(14,0) default NULL NULL,
-  "visible" char(1) default NULL NULL,
-  "lastModif" numeric(14,0) default NULL NULL,
-  "user" varchar(200) default '',
-  "hits" numeric(14,0) default NULL NULL,
-  "votes" numeric(8,0) default NULL NULL,
-  "points" decimal(8,2) default NULL NULL,
-  "maxRows" numeric(10,0) default NULL NULL,
-  "public" char(1) default NULL NULL,
-  "show_id" char(1) default NULL NULL,
-  "show_icon" char(1) default NULL NULL,
-  "show_name" char(1) default NULL NULL,
-  "show_size" char(1) default NULL NULL,
-  "show_description" char(1) default NULL NULL,
-  "max_desc" numeric(8,0) default NULL NULL,
-  "show_created" char(1) default NULL NULL,
-  "show_hits" char(1) default NULL NULL,
-  "parentId" numeric(14,0) default -1 NOT NULL,
-  "lockable" char(1) default 'n',
-  "show_lockedby" char(1) default NULL NULL,
-  "archives" numeric(4,0) default -1,
-  "sort_mode" char(20) default NULL NULL,
-  "show_modified" char(1) default NULL NULL,
-  "show_author" char(1) default NULL NULL,
-  "show_creator" char(1) default NULL NULL,
-  "subgal_conf" varchar(200) default NULL NULL,
-  "show_last_user" char(1) default NULL NULL,
-  "show_comment" char(1) default NULL NULL,
-  "show_files" char(1) default NULL NULL,
-  "show_explorer" char(1) default NULL NULL,
-  "show_path" char(1) default NULL NULL,
-  "show_slideshow" char(1) default NULL NULL,
-  "default_view" varchar(20) default NULL NULL,
+  `galleryId numeric(14 ,0) identity,
+  `name` varchar(80) default '' NOT NULL,
+  `type` varchar(20) default 'default' NOT NULL,
+  `description` text,
+  `created` numeric(14,0) default NULL NULL,
+  `visible` char(1) default NULL NULL,
+  `lastModif` numeric(14,0) default NULL NULL,
+  `user` varchar(200) default '',
+  `hits` numeric(14,0) default NULL NULL,
+  `votes` numeric(8,0) default NULL NULL,
+  `points` decimal(8,2) default NULL NULL,
+  `maxRows` numeric(10,0) default NULL NULL,
+  `public` char(1) default NULL NULL,
+  `show_id` char(1) default NULL NULL,
+  `show_icon` char(1) default NULL NULL,
+  `show_name` char(1) default NULL NULL,
+  `show_size` char(1) default NULL NULL,
+  `show_description` char(1) default NULL NULL,
+  `max_desc` numeric(8,0) default NULL NULL,
+  `show_created` char(1) default NULL NULL,
+  `show_hits` char(1) default NULL NULL,
+  `parentId` numeric(14,0) default -1 NOT NULL,
+  `lockable` char(1) default 'n',
+  `show_lockedby` char(1) default NULL NULL,
+  `archives` numeric(4,0) default -1,
+  `sort_mode` char(20) default NULL NULL,
+  `show_modified` char(1) default NULL NULL,
+  `show_author` char(1) default NULL NULL,
+  `show_creator` char(1) default NULL NULL,
+  `subgal_conf` varchar(200) default NULL NULL,
+  `show_last_user` char(1) default NULL NULL,
+  `show_comment` char(1) default NULL NULL,
+  `show_files` char(1) default NULL NULL,
+  `show_explorer` char(1) default NULL NULL,
+  `show_path` char(1) default NULL NULL,
+  `show_slideshow` char(1) default NULL NULL,
+  `default_view` varchar(20) default NULL NULL,
   PRIMARY KEY (galleryId)
 ) ENGINE=MyISAM  
 go
@@ -1355,30 +1356,30 @@ go
 
 
 CREATE TABLE "tiki_files" (
-  "fileId" numeric(14 ,0) identity,
-  "galleryId" numeric(14,0) default '0' NOT NULL,
-  "name" varchar(200) default '' NOT NULL,
-  "description" text default '',
-  "created" numeric(14,0) default NULL NULL,
-  "filename" varchar(80) default NULL NULL,
-  "filesize" numeric(14,0) default NULL NULL,
-  "filetype" varchar(250) default NULL NULL,
-  "data" image default '',
-  "user" varchar(200) default '',
-  "author" varchar(40) default NULL NULL,
-  "hits" numeric(14,0) default NULL NULL,
-  "votes" numeric(8,0) default NULL NULL,
-  "points" decimal(8,2) default NULL NULL,
-  "path" varchar(255) default NULL NULL,
-  "reference_url" varchar(250) default NULL NULL,
-  "is_reference" char(1) default NULL NULL,
-  "hash" varchar(32) default NULL NULL,
-  "search_data" longtext,
-  "lastModif" integer(14) DEFAULT NULL NULL,
-  "lastModifUser" varchar(200) DEFAULT NULL NULL,
-  "lockedby" varchar(200) default '',
-  "comment" varchar(200) default NULL NULL,
-  "archiveId" numeric(14,0) default 0,
+  `fileId numeric(14 ,0) identity,
+  `galleryId` numeric(14,0) default '0' NOT NULL,
+  `name` varchar(200) default '' NOT NULL,
+  `description` text,
+  `created` numeric(14,0) default NULL NULL,
+  `filename` varchar(80) default NULL NULL,
+  `filesize` numeric(14,0) default NULL NULL,
+  `filetype` varchar(250) default NULL NULL,
+  `data` image,
+  `user` varchar(200) default '',
+  `author` varchar(40) default NULL NULL,
+  `hits` numeric(14,0) default NULL NULL,
+  `votes` numeric(8,0) default NULL NULL,
+  `points` decimal(8,2) default NULL NULL,
+  `path` varchar(255) default NULL NULL,
+  `reference_url` varchar(250) default NULL NULL,
+  `is_reference` char(1) default NULL NULL,
+  `hash` varchar(32) default NULL NULL,
+  `search_data` longtext,
+  `lastModif` integer(14) DEFAULT NULL NULL,
+  `lastModifUser` varchar(200) DEFAULT NULL NULL,
+  `lockedby` varchar(200) default '',
+  `comment` varchar(200) default NULL NULL,
+  `archiveId` numeric(14,0) default 0,
   PRIMARY KEY (fileId)
 ) ENGINE=MyISAM  
 go
@@ -1404,17 +1405,17 @@ go
 
 
 CREATE TABLE "tiki_forum_attachments" (
-  "attId" numeric(14 ,0) identity,
-  "threadId" numeric(14,0) default '0' NOT NULL,
-  "qId" numeric(14,0) default '0' NOT NULL,
-  "forumId" numeric(14,0) default NULL NULL,
-  "filename" varchar(250) default NULL NULL,
-  "filetype" varchar(250) default NULL NULL,
-  "filesize" numeric(12,0) default NULL NULL,
-  "data" image default '',
-  "dir" varchar(200) default NULL NULL,
-  "created" numeric(14,0) default NULL NULL,
-  "path" varchar(250) default NULL NULL,
+  `attId numeric(14 ,0) identity,
+  `threadId` numeric(14,0) default '0' NOT NULL,
+  `qId` numeric(14,0) default '0' NOT NULL,
+  `forumId` numeric(14,0) default NULL NULL,
+  `filename` varchar(250) default NULL NULL,
+  `filetype` varchar(250) default NULL NULL,
+  `filesize` numeric(12,0) default NULL NULL,
+  `data` image,
+  `dir` varchar(200) default NULL NULL,
+  `created` numeric(14,0) default NULL NULL,
+  `path` varchar(250) default NULL NULL,
   PRIMARY KEY (attId)
 ) ENGINE=MyISAM  
 go
@@ -1428,10 +1429,10 @@ go
 
 
 CREATE TABLE "tiki_forum_reads" (
-  "user" varchar(200) default '' NOT NULL,
-  "threadId" numeric(14,0) default '0' NOT NULL,
-  "forumId" numeric(14,0) default NULL NULL,
-  "timestamp" numeric(14,0) default NULL NULL,
+  `user` varchar(200) default '' NOT NULL,
+  `threadId` numeric(14,0) default '0' NOT NULL,
+  `forumId` numeric(14,0) default NULL NULL,
+  `timestamp` numeric(14,0) default NULL NULL,
   PRIMARY KEY (user,threadId)
 ) ENGINE=MyISAM
 go
@@ -1443,63 +1444,63 @@ go
 
 
 CREATE TABLE "tiki_forums" (
-  "forumId" numeric(8 ,0) identity,
-  "name" varchar(255) default NULL NULL,
-  "description" text default '',
-  "created" numeric(14,0) default NULL NULL,
-  "lastPost" numeric(14,0) default NULL NULL,
-  "threads" numeric(8,0) default NULL NULL,
-  "comments" numeric(8,0) default NULL NULL,
-  "controlFlood" char(1) default NULL NULL,
-  "floodInterval" numeric(8,0) default NULL NULL,
-  "moderator" varchar(200) default NULL NULL,
-  "hits" numeric(8,0) default NULL NULL,
-  "mail" varchar(200) default NULL NULL,
-  "useMail" char(1) default NULL NULL,
-  "section" varchar(200) default NULL NULL,
-  "usePruneUnreplied" char(1) default NULL NULL,
-  "pruneUnrepliedAge" numeric(8,0) default NULL NULL,
-  "usePruneOld" char(1) default NULL NULL,
-  "pruneMaxAge" numeric(8,0) default NULL NULL,
-  "topicsPerPage" numeric(6,0) default NULL NULL,
-  "topicOrdering" varchar(100) default NULL NULL,
-  "threadOrdering" varchar(100) default NULL NULL,
-  "att" varchar(80) default NULL NULL,
-  "att_store" varchar(4) default NULL NULL,
-  "att_store_dir" varchar(250) default NULL NULL,
-  "att_max_size" numeric(12,0) default NULL NULL,
-  "ui_level" char(1) default NULL NULL,
-  "forum_password" varchar(32) default NULL NULL,
-  "forum_use_password" char(1) default NULL NULL,
-  "moderator_group" varchar(200) default NULL NULL,
-  "approval_type" varchar(20) default NULL NULL,
-  "outbound_address" varchar(250) default NULL NULL,
-  "outbound_mails_for_inbound_mails" char(1) default NULL NULL,
-  "outbound_mails_reply_link" char(1) default NULL NULL,
-  "outbound_from" varchar(250) default NULL NULL,
-  "inbound_pop_server" varchar(250) default NULL NULL,
-  "inbound_pop_port" numeric(4,0) default NULL NULL,
-  "inbound_pop_user" varchar(200) default NULL NULL,
-  "inbound_pop_password" varchar(80) default NULL NULL,
-  "topic_smileys" char(1) default NULL NULL,
-  "ui_avatar" char(1) default NULL NULL,
-  "ui_flag" char(1) default NULL NULL,
-  "ui_posts" char(1) default NULL NULL,
-  "ui_email" char(1) default NULL NULL,
-  "ui_online" char(1) default NULL NULL,
-  "topic_summary" char(1) default NULL NULL,
-  "show_description" char(1) default NULL NULL,
-  "topics_list_replies" char(1) default NULL NULL,
-  "topics_list_reads" char(1) default NULL NULL,
-  "topics_list_pts" char(1) default NULL NULL,
-  "topics_list_lastpost" char(1) default NULL NULL,
-  "topics_list_author" char(1) default NULL NULL,
-  "vote_threads" char(1) default NULL NULL,
-  "forum_last_n" numeric(2,0) default 0,
-  "threadStyle" varchar(100) default NULL NULL,
-  "commentsPerPage" varchar(100) default NULL NULL,
-  "is_flat" char(1) default NULL NULL,
-  "mandatory_contribution" char(1) default NULL NULL,
+  `forumId numeric(8 ,0) identity,
+  `name` varchar(255) default NULL NULL,
+  `description` text,
+  `created` numeric(14,0) default NULL NULL,
+  `lastPost` numeric(14,0) default NULL NULL,
+  `threads` numeric(8,0) default NULL NULL,
+  `comments` numeric(8,0) default NULL NULL,
+  `controlFlood` char(1) default NULL NULL,
+  `floodInterval` numeric(8,0) default NULL NULL,
+  `moderator` varchar(200) default NULL NULL,
+  `hits` numeric(8,0) default NULL NULL,
+  `mail` varchar(200) default NULL NULL,
+  `useMail` char(1) default NULL NULL,
+  `section` varchar(200) default NULL NULL,
+  `usePruneUnreplied` char(1) default NULL NULL,
+  `pruneUnrepliedAge` numeric(8,0) default NULL NULL,
+  `usePruneOld` char(1) default NULL NULL,
+  `pruneMaxAge` numeric(8,0) default NULL NULL,
+  `topicsPerPage` numeric(6,0) default NULL NULL,
+  `topicOrdering` varchar(100) default NULL NULL,
+  `threadOrdering` varchar(100) default NULL NULL,
+  `att` varchar(80) default NULL NULL,
+  `att_store` varchar(4) default NULL NULL,
+  `att_store_dir` varchar(250) default NULL NULL,
+  `att_max_size` numeric(12,0) default NULL NULL,
+  `ui_level` char(1) default NULL NULL,
+  `forum_password` varchar(32) default NULL NULL,
+  `forum_use_password` char(1) default NULL NULL,
+  `moderator_group` varchar(200) default NULL NULL,
+  `approval_type` varchar(20) default NULL NULL,
+  `outbound_address` varchar(250) default NULL NULL,
+  `outbound_mails_for_inbound_mails` char(1) default NULL NULL,
+  `outbound_mails_reply_link` char(1) default NULL NULL,
+  `outbound_from` varchar(250) default NULL NULL,
+  `inbound_pop_server` varchar(250) default NULL NULL,
+  `inbound_pop_port` numeric(4,0) default NULL NULL,
+  `inbound_pop_user` varchar(200) default NULL NULL,
+  `inbound_pop_password` varchar(80) default NULL NULL,
+  `topic_smileys` char(1) default NULL NULL,
+  `ui_avatar` char(1) default NULL NULL,
+  `ui_flag` char(1) default NULL NULL,
+  `ui_posts` char(1) default NULL NULL,
+  `ui_email` char(1) default NULL NULL,
+  `ui_online` char(1) default NULL NULL,
+  `topic_summary` char(1) default NULL NULL,
+  `show_description` char(1) default NULL NULL,
+  `topics_list_replies` char(1) default NULL NULL,
+  `topics_list_reads` char(1) default NULL NULL,
+  `topics_list_pts` char(1) default NULL NULL,
+  `topics_list_lastpost` char(1) default NULL NULL,
+  `topics_list_author` char(1) default NULL NULL,
+  `vote_threads` char(1) default NULL NULL,
+  `forum_last_n` numeric(2,0) default 0,
+  `threadStyle` varchar(100) default NULL NULL,
+  `commentsPerPage` varchar(100) default NULL NULL,
+  `is_flat` char(1) default NULL NULL,
+  `mandatory_contribution` char(1) default NULL NULL,
   PRIMARY KEY (forumId)
 ) ENGINE=MyISAM  
 go
@@ -1511,22 +1512,22 @@ go
 
 
 CREATE TABLE "tiki_forums_queue" (
-  "qId" numeric(14 ,0) identity,
-  "object" varchar(32) default NULL NULL,
-  "parentId" numeric(14,0) default NULL NULL,
-  "forumId" numeric(14,0) default NULL NULL,
-  "timestamp" numeric(14,0) default NULL NULL,
-  "user" varchar(200) default '',
-  "title" varchar(240) default NULL NULL,
-  "data" text default '',
-  "type" varchar(60) default NULL NULL,
-  "hash" varchar(32) default NULL NULL,
-  "topic_smiley" varchar(80) default NULL NULL,
-  "topic_title" varchar(240) default NULL NULL,
-  "summary" varchar(240) default NULL NULL,
-  "in_reply_to" varchar(128) default NULL NULL,
-  "tags" varchar(255) default NULL NULL,
-  "email" varchar(255) default NULL NULL,
+  `qId numeric(14 ,0) identity,
+  `object` varchar(32) default NULL NULL,
+  `parentId` numeric(14,0) default NULL NULL,
+  `forumId` numeric(14,0) default NULL NULL,
+  `timestamp` numeric(14,0) default NULL NULL,
+  `user` varchar(200) default '',
+  `title` varchar(240) default NULL NULL,
+  `data` text,
+  `type` varchar(60) default NULL NULL,
+  `hash` varchar(32) default NULL NULL,
+  `topic_smiley` varchar(80) default NULL NULL,
+  `topic_title` varchar(240) default NULL NULL,
+  `summary` varchar(240) default NULL NULL,
+  `in_reply_to` varchar(128) default NULL NULL,
+  `tags` varchar(255) default NULL NULL,
+  `email` varchar(255) default NULL NULL,
   PRIMARY KEY (qId)
 ) ENGINE=MyISAM  
 go
@@ -1538,12 +1539,12 @@ go
 
 
 CREATE TABLE "tiki_forums_reported" (
-  "threadId" numeric(12,0) default '0' NOT NULL,
-  "forumId" numeric(12,0) default '0' NOT NULL,
-  "parentId" numeric(12,0) default '0' NOT NULL,
-  "user" varchar(200) default '',
-  "timestamp" numeric(14,0) default NULL NULL,
-  "reason" varchar(250) default NULL NULL,
+  `threadId` numeric(12,0) default '0' NOT NULL,
+  `forumId` numeric(12,0) default '0' NOT NULL,
+  `parentId` numeric(12,0) default '0' NOT NULL,
+  `user` varchar(200) default '',
+  `timestamp` numeric(14,0) default NULL NULL,
+  `reason` varchar(250) default NULL NULL,
   PRIMARY KEY (threadId)
 ) ENGINE=MyISAM
 go
@@ -1555,36 +1556,36 @@ go
 
 
 CREATE TABLE "tiki_galleries" (
-  "galleryId" numeric(14 ,0) identity,
-  "name" varchar(80) default '' NOT NULL,
-  "description" text default '',
-  "created" numeric(14,0) default NULL NULL,
-  "lastModif" numeric(14,0) default NULL NULL,
-  "visible" char(1) default NULL NULL,
-  "geographic" char(1) default NULL NULL,
-  "theme" varchar(60) default NULL NULL,
-  "user" varchar(200) default '',
-  "hits" numeric(14,0) default NULL NULL,
-  "maxRows" numeric(10,0) default NULL NULL,
-  "rowImages" numeric(10,0) default NULL NULL,
-  "thumbSizeX" numeric(10,0) default NULL NULL,
-  "thumbSizeY" numeric(10,0) default NULL NULL,
-  "public" char(1) default NULL NULL,
-  "sortorder" varchar(20) default 'created' NOT NULL,
-  "sortdirection" varchar(4) default 'desc' NOT NULL,
-  "galleryimage" varchar(20) default 'first' NOT NULL,
-  "parentgallery" numeric(14,0) default -1 NOT NULL,
-  "showname" char(1) default 'y' NOT NULL,
-  "showimageid" char(1) default 'n' NOT NULL,
-  "showdescription" char(1) default 'n' NOT NULL,
-  "showcreated" char(1) default 'n' NOT NULL,
-  "showuser" char(1) default 'n' NOT NULL,
-  "showhits" char(1) default 'y' NOT NULL,
-  "showxysize" char(1) default 'y' NOT NULL,
-  "showfilesize" char(1) default 'n' NOT NULL,
-  "showfilename" char(1) default 'n' NOT NULL,
-  "defaultscale" varchar(10) DEFAULT 'o' NOT NULL,
-  "showcategories" char(1) default 'n' NOT NULL, 
+  `galleryId numeric(14 ,0) identity,
+  `name` varchar(80) default '' NOT NULL,
+  `description` text,
+  `created` numeric(14,0) default NULL NULL,
+  `lastModif` numeric(14,0) default NULL NULL,
+  `visible` char(1) default NULL NULL,
+  `geographic` char(1) default NULL NULL,
+  `theme` varchar(60) default NULL NULL,
+  `user` varchar(200) default '',
+  `hits` numeric(14,0) default NULL NULL,
+  `maxRows` numeric(10,0) default NULL NULL,
+  `rowImages` numeric(10,0) default NULL NULL,
+  `thumbSizeX` numeric(10,0) default NULL NULL,
+  `thumbSizeY` numeric(10,0) default NULL NULL,
+  `public` char(1) default NULL NULL,
+  `sortorder` varchar(20) default 'created' NOT NULL,
+  `sortdirection` varchar(4) default 'desc' NOT NULL,
+  `galleryimage` varchar(20) default 'first' NOT NULL,
+  `parentgallery` numeric(14,0) default -1 NOT NULL,
+  `showname` char(1) default 'y' NOT NULL,
+  `showimageid` char(1) default 'n' NOT NULL,
+  `showdescription` char(1) default 'n' NOT NULL,
+  `showcreated` char(1) default 'n' NOT NULL,
+  `showuser` char(1) default 'n' NOT NULL,
+  `showhits` char(1) default 'y' NOT NULL,
+  `showxysize` char(1) default 'y' NOT NULL,
+  `showfilesize` char(1) default 'n' NOT NULL,
+  `showfilename` char(1) default 'n' NOT NULL,
+  `defaultscale` varchar(10) DEFAULT 'o' NOT NULL,
+  `showcategories` char(1) default 'n' NOT NULL, 
   PRIMARY KEY (galleryId)
 ) ENGINE=MyISAM  
 go
@@ -1608,8 +1609,8 @@ go
 
 
 CREATE TABLE "tiki_galleries_scales" (
-  "galleryId" numeric(14,0) default '0' NOT NULL,
-  "scale" numeric(11,0) default '0' NOT NULL,
+  `galleryId` numeric(14,0) default '0' NOT NULL,
+  `scale` numeric(11,0) default '0' NOT NULL,
   PRIMARY KEY (galleryId,scale)
 ) ENGINE=MyISAM
 go
@@ -1621,10 +1622,10 @@ go
 
 
 CREATE TABLE "tiki_games" (
-  "gameName" varchar(200) default '' NOT NULL,
-  "hits" numeric(8,0) default NULL NULL,
-  "votes" numeric(8,0) default NULL NULL,
-  "points" numeric(8,0) default NULL NULL,
+  `gameName` varchar(200) default '' NOT NULL,
+  `hits` numeric(8,0) default NULL NULL,
+  `votes` numeric(8,0) default NULL NULL,
+  `points` numeric(8,0) default NULL NULL,
   PRIMARY KEY (gameName)
 ) ENGINE=MyISAM
 go
@@ -1636,8 +1637,8 @@ go
 
 
 CREATE TABLE "tiki_group_inclusion" (
-  "groupName" varchar(255) default '' NOT NULL,
-  "includeGroup" varchar(255) default '' NOT NULL,
+  `groupName` varchar(255) default '' NOT NULL,
+  `includeGroup` varchar(255) default '' NOT NULL,
   PRIMARY KEY (groupName(30),includeGroup(30))
 ) ENGINE=MyISAM
 go
@@ -1649,13 +1650,13 @@ go
 
 
 CREATE TABLE "tiki_group_watches" (
-  "watchId" numeric(12 ,0) identity,
+  `watchId numeric(12 ,0) identity,
   `group` varchar(200) default '' NOT NULL,
-  "event" varchar(40) default '' NOT NULL,
-  "object" varchar(200) default '' NOT NULL,
-  "title" varchar(250) default NULL NULL,
-  "type" varchar(200) default NULL NULL,
-  "url" varchar(250) default NULL NULL,
+  `event` varchar(40) default '' NOT NULL,
+  `object` varchar(200) default '' NOT NULL,
+  `title` varchar(250) default NULL NULL,
+  `type` varchar(200) default NULL NULL,
+  `url` varchar(250) default NULL NULL,
   PRIMARY KEY (`group`(50),event,object(100))
 ) ENGINE=MyISAM
 go
@@ -1669,18 +1670,18 @@ go
 
 
 CREATE TABLE "tiki_history" (
-  "historyId" numeric(12 ,0) identity,
-  "pageName" varchar(160) default '' NOT NULL,
-  "version" numeric(8,0) default '0' NOT NULL,
-  "version_minor" numeric(8,0) default '0' NOT NULL,
-  "lastModif" numeric(14,0) default NULL NULL,
-  "description" varchar(200) default NULL NULL,
-  "user" varchar(200) default '' not null,
-  "ip" varchar(15) default NULL NULL,
-  "comment" varchar(200) default NULL NULL,
-  "data" image default '',
-  "type" varchar(50) default NULL NULL,
-  "is_html" TINYINT(1) DEFAULT 0 NOT NULL,
+  `historyId numeric(12 ,0) identity,
+  `pageName` varchar(160) default '' NOT NULL,
+  `version` numeric(8,0) default '0' NOT NULL,
+  `version_minor` numeric(8,0) default '0' NOT NULL,
+  `lastModif` numeric(14,0) default NULL NULL,
+  `description` varchar(200) default NULL NULL,
+  `user` varchar(200) default '' not null,
+  `ip` varchar(15) default NULL NULL,
+  `comment` varchar(200) default NULL NULL,
+  `data` image,
+  `type` varchar(50) default NULL NULL,
+  `is_html` TINYINT(1) DEFAULT 0 NOT NULL,
   PRIMARY KEY (pageName,version),
   KEY `user` (`user`),
   KEY(historyId)
@@ -1694,8 +1695,8 @@ go
 
 
 CREATE TABLE "tiki_hotwords" (
-  "word" varchar(40) default '' NOT NULL,
-  "url" varchar(255) default '' NOT NULL,
+  `word` varchar(40) default '' NOT NULL,
+  `url` varchar(255) default '' NOT NULL,
   PRIMARY KEY (word)
 ) ENGINE=MyISAM
 go
@@ -1707,11 +1708,11 @@ go
 
 
 CREATE TABLE "tiki_html_pages" (
-  "pageName" varchar(200) default '' NOT NULL,
-  "content" image default '',
-  "refresh" numeric(10,0) default NULL NULL,
-  "type" char(1) default NULL NULL,
-  "created" numeric(14,0) default NULL NULL,
+  `pageName` varchar(200) default '' NOT NULL,
+  `content` image,
+  `refresh` numeric(10,0) default NULL NULL,
+  `type` char(1) default NULL NULL,
+  `created` numeric(14,0) default NULL NULL,
   PRIMARY KEY (pageName)
 ) ENGINE=MyISAM
 go
@@ -1723,10 +1724,10 @@ go
 
 
 CREATE TABLE "tiki_html_pages_dynamic_zones" (
-  "pageName" varchar(40) default '' NOT NULL,
-  "zone" varchar(80) default '' NOT NULL,
-  "type" char(2) default NULL NULL,
-  "content" text default '',
+  `pageName` varchar(40) default '' NOT NULL,
+  `zone` varchar(80) default '' NOT NULL,
+  `type` char(2) default NULL NULL,
+  `content` text,
   PRIMARY KEY (pageName,zone)
 ) ENGINE=MyISAM
 go
@@ -1738,16 +1739,16 @@ go
 
 
 CREATE TABLE "tiki_images" (
-  "imageId" numeric(14 ,0) identity,
-  "galleryId" numeric(14,0) default '0' NOT NULL,
-  "name" varchar(200) default '' NOT NULL,
-  "description" text default '',
-  "lon" float default NULL NULL,
-  "lat" float default NULL NULL,
-  "created" numeric(14,0) default NULL NULL,
-  "user" varchar(200) default '',
-  "hits" numeric(14,0) default NULL NULL,
-  "path" varchar(255) default NULL NULL,
+  `imageId numeric(14 ,0) identity,
+  `galleryId` numeric(14,0) default '0' NOT NULL,
+  `name` varchar(200) default '' NOT NULL,
+  `description` text,
+  `lon` float default NULL NULL,
+  `lat` float default NULL NULL,
+  `created` numeric(14,0) default NULL NULL,
+  `user` varchar(200) default '',
+  `hits` numeric(14,0) default NULL NULL,
+  `path` varchar(255) default NULL NULL,
   PRIMARY KEY (imageId)
 ) ENGINE=MyISAM  
 go
@@ -1773,15 +1774,15 @@ go
 
 
 CREATE TABLE "tiki_images_data" (
-  "imageId" numeric(14,0) default '0' NOT NULL,
-  "xsize" numeric(8,0) default '0' NOT NULL,
-  "ysize" numeric(8,0) default '0' NOT NULL,
-  "type" char(1) default '' NOT NULL,
-  "filesize" numeric(14,0) default NULL NULL,
-  "filetype" varchar(80) default NULL NULL,
-  "filename" varchar(80) default NULL NULL,
-  "data" image default '',
-  "etag" varchar(32) default NULL NULL,
+  `imageId` numeric(14,0) default '0' NOT NULL,
+  `xsize` numeric(8,0) default '0' NOT NULL,
+  `ysize` numeric(8,0) default '0' NOT NULL,
+  `type` char(1) default '' NOT NULL,
+  `filesize` numeric(14,0) default NULL NULL,
+  `filetype` varchar(80) default NULL NULL,
+  `filename` varchar(80) default NULL NULL,
+  `data` image,
+  `etag` varchar(32) default NULL NULL,
   PRIMARY KEY (imageId,xsize,ysize,type)
 ) ENGINE=MyISAM
 go
@@ -1795,9 +1796,9 @@ go
 
 
 CREATE TABLE "tiki_language" (
-  "source" image NOT NULL,
-  "lang" char(16) default '' NOT NULL,
-  "tran" image default '',
+  `source` image NOT NULL,
+  `lang` char(16) default '' NOT NULL,
+  `tran` image,
   PRIMARY KEY (source(255),lang)
 ) ENGINE=MyISAM
 go
@@ -1809,8 +1810,8 @@ go
 
 
 CREATE TABLE "tiki_languages" (
-  "lang" char(16) default '' NOT NULL,
-  "language" varchar(255) default NULL NULL,
+  `lang` char(16) default '' NOT NULL,
+  `language` varchar(255) default NULL NULL,
   PRIMARY KEY (lang)
 ) ENGINE=MyISAM
 go
@@ -1827,10 +1828,10 @@ go
 
 
 CREATE TABLE "tiki_link_cache" (
-  "cacheId" numeric(14 ,0) identity,
-  "url" varchar(250) default NULL NULL,
-  "data" image default '',
-  "refresh" numeric(14,0) default NULL NULL,
+  `cacheId numeric(14 ,0) identity,
+  `url` varchar(250) default NULL NULL,
+  `data` image,
+  `refresh` numeric(14,0) default NULL NULL,
   PRIMARY KEY (cacheId)
 ) ENGINE=MyISAM  
 go
@@ -1848,9 +1849,9 @@ go
 
 
 CREATE TABLE "tiki_links" (
-  "fromPage" varchar(160) default '' NOT NULL,
-  "toPage" varchar(160) default '' NOT NULL,
-  "reltype" varchar(50) default '',
+  `fromPage` varchar(160) default '' NOT NULL,
+  `toPage` varchar(160) default '' NOT NULL,
+  `reltype` varchar(50),
   PRIMARY KEY (fromPage,toPage)
 ) ENGINE=MyISAM
 go
@@ -1864,13 +1865,13 @@ go
 
 
 CREATE TABLE "tiki_live_support_events" (
-  "eventId" numeric(14 ,0) identity,
-  "reqId" varchar(32) default '' NOT NULL,
-  "type" varchar(40) default NULL NULL,
-  "seqId" numeric(14,0) default NULL NULL,
-  "senderId" varchar(32) default NULL NULL,
-  "data" text default '',
-  "timestamp" numeric(14,0) default NULL NULL,
+  `eventId numeric(14 ,0) identity,
+  `reqId` varchar(32) default '' NOT NULL,
+  `type` varchar(40) default NULL NULL,
+  `seqId` numeric(14,0) default NULL NULL,
+  `senderId` varchar(32) default NULL NULL,
+  `data` text,
+  `timestamp` numeric(14,0) default NULL NULL,
   PRIMARY KEY (eventId)
 ) ENGINE=MyISAM  
 go
@@ -1882,10 +1883,10 @@ go
 
 
 CREATE TABLE "tiki_live_support_message_comments" (
-  "cId" numeric(12 ,0) identity,
-  "msgId" numeric(12,0) default NULL NULL,
-  "data" text default '',
-  "timestamp" numeric(14,0) default NULL NULL,
+  `cId numeric(12 ,0) identity,
+  `msgId` numeric(12,0) default NULL NULL,
+  `data` text,
+  `timestamp` numeric(14,0) default NULL NULL,
   PRIMARY KEY (cId)
 ) ENGINE=MyISAM  
 go
@@ -1897,18 +1898,18 @@ go
 
 
 CREATE TABLE "tiki_live_support_messages" (
-  "msgId" numeric(12 ,0) identity,
-  "data" text default '',
-  "timestamp" numeric(14,0) default NULL NULL,
-  "user" varchar(200) default '' not null,
-  "username" varchar(200) default NULL NULL,
-  "priority" numeric(2,0) default NULL NULL,
-  "status" char(1) default NULL NULL,
-  "assigned_to" varchar(200) default NULL NULL,
-  "resolution" varchar(100) default NULL NULL,
-  "title" varchar(200) default NULL NULL,
-  "module" numeric(4,0) default NULL NULL,
-  "email" varchar(250) default NULL NULL,
+  `msgId numeric(12 ,0) identity,
+  `data` text,
+  `timestamp` numeric(14,0) default NULL NULL,
+  `user` varchar(200) default '' not null,
+  `username` varchar(200) default NULL NULL,
+  `priority` numeric(2,0) default NULL NULL,
+  `status` char(1) default NULL NULL,
+  `assigned_to` varchar(200) default NULL NULL,
+  `resolution` varchar(100) default NULL NULL,
+  `title` varchar(200) default NULL NULL,
+  `module` numeric(4,0) default NULL NULL,
+  `email` varchar(250) default NULL NULL,
   PRIMARY KEY (msgId)
 ) ENGINE=MyISAM  
 go
@@ -1920,8 +1921,8 @@ go
 
 
 CREATE TABLE "tiki_live_support_modules" (
-  "modId" numeric(4 ,0) identity,
-  "name" varchar(90) default NULL NULL,
+  `modId numeric(4 ,0) identity,
+  `name` varchar(90) default NULL NULL,
   PRIMARY KEY (modId)
 ) ENGINE=MyISAM  
 go
@@ -1962,17 +1963,17 @@ go
 
 
 CREATE TABLE "tiki_live_support_operators" (
-  "user" varchar(200) default '' NOT NULL,
-  "accepted_requests" numeric(10,0) default NULL NULL,
-  "status" varchar(20) default NULL NULL,
-  "longest_chat" numeric(10,0) default NULL NULL,
-  "shortest_chat" numeric(10,0) default NULL NULL,
-  "average_chat" numeric(10,0) default NULL NULL,
-  "last_chat" numeric(14,0) default NULL NULL,
-  "time_online" numeric(10,0) default NULL NULL,
-  "votes" numeric(10,0) default NULL NULL,
-  "points" numeric(10,0) default NULL NULL,
-  "status_since" numeric(14,0) default NULL NULL,
+  `user` varchar(200) default '' NOT NULL,
+  `accepted_requests` numeric(10,0) default NULL NULL,
+  `status` varchar(20) default NULL NULL,
+  `longest_chat` numeric(10,0) default NULL NULL,
+  `shortest_chat` numeric(10,0) default NULL NULL,
+  `average_chat` numeric(10,0) default NULL NULL,
+  `last_chat` numeric(14,0) default NULL NULL,
+  `time_online` numeric(10,0) default NULL NULL,
+  `votes` numeric(10,0) default NULL NULL,
+  `points` numeric(10,0) default NULL NULL,
+  `status_since` numeric(14,0) default NULL NULL,
   PRIMARY KEY (user)
 ) ENGINE=MyISAM
 go
@@ -1984,20 +1985,20 @@ go
 
 
 CREATE TABLE "tiki_live_support_requests" (
-  "reqId" varchar(32) default '' NOT NULL,
-  "user" varchar(200) default '' NOT NULL,
-  "tiki_user" varchar(200) default NULL NULL,
-  "email" varchar(200) default NULL NULL,
-  "operator" varchar(200) default NULL NULL,
-  "operator_id" varchar(32) default NULL NULL,
-  "user_id" varchar(32) default NULL NULL,
-  "reason" text default '',
-  "req_timestamp" numeric(14,0) default NULL NULL,
-  "timestamp" numeric(14,0) default NULL NULL,
-  "status" varchar(40) default NULL NULL,
-  "resolution" varchar(40) default NULL NULL,
-  "chat_started" numeric(14,0) default NULL NULL,
-  "chat_ended" numeric(14,0) default NULL NULL,
+  `reqId` varchar(32) default '' NOT NULL,
+  `user` varchar(200) default '' NOT NULL,
+  `tiki_user` varchar(200) default NULL NULL,
+  `email` varchar(200) default NULL NULL,
+  `operator` varchar(200) default NULL NULL,
+  `operator_id` varchar(32) default NULL NULL,
+  `user_id` varchar(32) default NULL NULL,
+  `reason` text,
+  `req_timestamp` numeric(14,0) default NULL NULL,
+  `timestamp` numeric(14,0) default NULL NULL,
+  `status` varchar(40) default NULL NULL,
+  `resolution` varchar(40) default NULL NULL,
+  `chat_started` numeric(14,0) default NULL NULL,
+  `chat_ended` numeric(14,0) default NULL NULL,
   PRIMARY KEY (reqId)
 ) ENGINE=MyISAM
 go
@@ -2009,13 +2010,13 @@ go
 
 
 CREATE TABLE "tiki_logs" (
-  "logId" numeric(8 ,0) identity,
-  "logtype" varchar(20) NOT NULL,
-  "logmessage" text NOT NULL,
-  "loguser" varchar(40) NOT NULL,
-  "logip" varchar(200) default '',
-  "logclient" text NOT NULL,
-  "logtime" numeric(14,0) NOT NULL,
+  `logId numeric(8 ,0) identity,
+  `logtype` varchar(20) NOT NULL,
+  `logmessage` text NOT NULL,
+  `loguser` varchar(40) NOT NULL,
+  `logip` varchar(200),
+  `logclient` text NOT NULL,
+  `logtime` numeric(14,0) NOT NULL,
   PRIMARY KEY (logId)
 ) ENGINE=MyISAM
 go
@@ -2029,9 +2030,9 @@ go
 
 
 CREATE TABLE "tiki_mail_events" (
-  "event" varchar(200) default NULL NULL,
-  "object" varchar(200) default NULL NULL,
-  "email" varchar(200) default NULL
+  `event` varchar(200) default NULL NULL,
+  `object` varchar(200) default NULL NULL,
+  `email` varchar(200) default NULL
 ) ENGINE=MyISAM
 go
 
@@ -2042,23 +2043,23 @@ go
 
 
 CREATE TABLE "tiki_mailin_accounts" (
-  "accountId" numeric(12 ,0) identity,
-  "user" varchar(200) default '' NOT NULL,
-  "account" varchar(50) default '' NOT NULL,
-  "pop" varchar(255) default NULL NULL,
-  "port" numeric(4,0) default NULL NULL,
-  "username" varchar(100) default NULL NULL,
-  "pass" varchar(100) default NULL NULL,
-  "active" char(1) default NULL NULL,
-  "type" varchar(40) default NULL NULL,
-  "smtp" varchar(255) default NULL NULL,
-  "useAuth" char(1) default NULL NULL,
-  "smtpPort" numeric(4,0) default NULL NULL,
-  "anonymous" char(1) default 'y' NOT NULL,
-  "attachments" char(1) default 'n' NOT NULL,
-  "article_topicId" numeric(4,0) default NULL NULL,
-  "article_type" varchar(50) default NULL NULL,
-  "discard_after" varchar(255) default NULL NULL,
+  `accountId numeric(12 ,0) identity,
+  `user` varchar(200) default '' NOT NULL,
+  `account` varchar(50) default '' NOT NULL,
+  `pop` varchar(255) default NULL NULL,
+  `port` numeric(4,0) default NULL NULL,
+  `username` varchar(100) default NULL NULL,
+  `pass` varchar(100) default NULL NULL,
+  `active` char(1) default NULL NULL,
+  `type` varchar(40) default NULL NULL,
+  `smtp` varchar(255) default NULL NULL,
+  `useAuth` char(1) default NULL NULL,
+  `smtpPort` numeric(4,0) default NULL NULL,
+  `anonymous` char(1) default 'y' NOT NULL,
+  `attachments` char(1) default 'n' NOT NULL,
+  `article_topicId` numeric(4,0) default NULL NULL,
+  `article_type` varchar(50) default NULL NULL,
+  `discard_after` varchar(255) default NULL NULL,
   PRIMARY KEY (accountId)
 ) ENGINE=MyISAM  
 go
@@ -2070,8 +2071,8 @@ go
 
 
 CREATE TABLE "tiki_menu_languages" (
-  "menuId" numeric(8 ,0) identity,
-  "language" char(16) default '' NOT NULL,
+  `menuId numeric(8 ,0) identity,
+  `language` char(16) default '' NOT NULL,
   PRIMARY KEY (menuId,language)
 ) ENGINE=MyISAM  
 go
@@ -2083,17 +2084,17 @@ go
 
 
 CREATE TABLE "tiki_menu_options" (
-  "optionId" numeric(8 ,0) identity,
-  "menuId" numeric(8,0) default NULL NULL,
-  "type" char(1) default NULL NULL,
-  "name" varchar(200) default NULL NULL,
-  "url" varchar(255) default NULL NULL,
-  "position" numeric(4,0) default NULL NULL,
-  "section" text default NULL NULL,
-  "perm" text default NULL NULL,
-  "groupname" text default NULL NULL,
-  "userlevel" numeric(4,0) default 0,
-  "icon" varchar(200) default '',
+  `optionId numeric(8 ,0) identity,
+  `menuId` numeric(8,0) default NULL NULL,
+  `type` char(1) default NULL NULL,
+  `name` varchar(200) default NULL NULL,
+  `url` varchar(255) default NULL NULL,
+  `position` numeric(4,0) default NULL NULL,
+  `section` text default NULL NULL,
+  `perm` text default NULL NULL,
+  `groupname` text default NULL NULL,
+  `userlevel` numeric(4,0) default 0,
+  `icon` varchar(200),
   PRIMARY KEY (optionId)
 ) ENGINE=MyISAM  
 go
@@ -2530,6 +2531,10 @@ INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`",
 go
 
 
+INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (107,42,'s','Newsletters','tiki-newsletters.php',900,'feature_newsletters','tiki_p_list_newsletters','',0)
+go
+
+
 INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (108,42,'o','Send Newsletters','tiki-send_newsletters.php',905,'feature_newsletters','tiki_p_send_newsletters','',0)
 go
 
@@ -2869,12 +2874,12 @@ go
 
 
 CREATE TABLE "tiki_menus" (
-  "menuId" numeric(8 ,0) identity,
-  "name" varchar(200) default '' NOT NULL,
-  "description" text default '',
-  "type" char(1) default NULL NULL,
-  "icon" varchar(200) default NULL NULL,
-  "use_items_icons" char(1) DEFAULT 'n' NOT NULL,
+  `menuId numeric(8 ,0) identity,
+  `name` varchar(200) default '' NOT NULL,
+  `description` text,
+  `type` char(1) default NULL NULL,
+  `icon` varchar(200) default NULL NULL,
+  `use_items_icons` char(1) DEFAULT 'n' NOT NULL,
   PRIMARY KEY (menuId)
 ) ENGINE=MyISAM  
 go
@@ -2891,16 +2896,16 @@ go
 
 
 CREATE TABLE "tiki_minical_events" (
-  "user" varchar(200) default '',
-  "eventId" numeric(12 ,0) identity,
-  "title" varchar(250) default NULL NULL,
-  "description" text default '',
-  "start" numeric(14,0) default NULL NULL,
-  "end" numeric(14,0) default NULL NULL,
-  "security" char(1) default NULL NULL,
-  "duration" numeric(3,0) default NULL NULL,
-  "topicId" numeric(12,0) default NULL NULL,
-  "reminded" char(1) default NULL NULL,
+  `user` varchar(200) default '',
+  `eventId numeric(12 ,0) identity,
+  `title` varchar(250) default NULL NULL,
+  `description` text,
+  `start` numeric(14,0) default NULL NULL,
+  `end` numeric(14,0) default NULL NULL,
+  `security` char(1) default NULL NULL,
+  `duration` numeric(3,0) default NULL NULL,
+  `topicId` numeric(12,0) default NULL NULL,
+  `reminded` char(1) default NULL NULL,
   PRIMARY KEY (eventId)
 ) ENGINE=MyISAM  
 go
@@ -2912,15 +2917,15 @@ go
 
 
 CREATE TABLE "tiki_minical_topics" (
-  "user" varchar(200) default '',
-  "topicId" numeric(12 ,0) identity,
-  "name" varchar(250) default NULL NULL,
-  "filename" varchar(200) default NULL NULL,
-  "filetype" varchar(200) default NULL NULL,
-  "filesize" varchar(200) default NULL NULL,
-  "data" image default '',
-  "path" varchar(250) default NULL NULL,
-  "isIcon" char(1) default NULL NULL,
+  `user` varchar(200) default '',
+  `topicId numeric(12 ,0) identity,
+  `name` varchar(250) default NULL NULL,
+  `filename` varchar(200) default NULL NULL,
+  `filetype` varchar(200) default NULL NULL,
+  `filesize` varchar(200) default NULL NULL,
+  `data` image,
+  `path` varchar(250) default NULL NULL,
+  `isIcon` char(1) default NULL NULL,
   PRIMARY KEY (topicId)
 ) ENGINE=MyISAM  
 go
@@ -2932,16 +2937,16 @@ go
 
 
 CREATE TABLE "tiki_modules" (
-  "moduleId" numeric(8 ,0) identity,
-  "name" varchar(200) default '' NOT NULL,
-  "position" char(1) default NULL NULL,
-  "ord" numeric(4,0) default NULL NULL,
-  "type" char(1) default NULL NULL,
-  "title" varchar(255) default NULL NULL,
-  "cache_time" numeric(14,0) default NULL NULL,
-  "rows" numeric(4,0) default NULL NULL,
-  "params" varchar(255) default NULL NULL,
-  "groups" text default '',
+  `moduleId numeric(8 ,0) identity,
+  `name` varchar(200) default '' NOT NULL,
+  `position` char(1) default NULL NULL,
+  `ord` numeric(4,0) default NULL NULL,
+  `type` char(1) default NULL NULL,
+  `title` varchar(255) default NULL NULL,
+  `cache_time` numeric(14,0) default NULL NULL,
+  `rows` numeric(4,0) default NULL NULL,
+  `params` varchar(255) default NULL NULL,
+  `groups` text,
   PRIMARY KEY (name(100), position, ord, params(140))
 ) ENGINE=MyISAM
 go
@@ -2962,13 +2967,13 @@ go
 
 
 CREATE TABLE "tiki_newsletter_subscriptions" (
-  "nlId" numeric(12,0) default '0' NOT NULL,
-  "email" varchar(255) default '' NOT NULL,
-  "code" varchar(32) default NULL NULL,
-  "valid" char(1) default NULL NULL,
-  "subscribed" numeric(14,0) default NULL NULL,
-  "isUser" char(1) default 'n' NOT NULL,
-  "included" char(1) default 'n' NOT NULL,
+  `nlId` numeric(12,0) default '0' NOT NULL,
+  `email` varchar(255) default '' NOT NULL,
+  `code` varchar(32) default NULL NULL,
+  `valid` char(1) default NULL NULL,
+  `subscribed` numeric(14,0) default NULL NULL,
+  `isUser` char(1) default 'n' NOT NULL,
+  `included` char(1) default 'n' NOT NULL,
   PRIMARY KEY (nlId,email,isUser)
 ) ENGINE=MyISAM
 go
@@ -2980,9 +2985,9 @@ go
 
 
 CREATE TABLE "tiki_newsletter_groups" (
-  "nlId" numeric(12,0) default '0' NOT NULL,
-  "groupName" varchar(255) default '' NOT NULL,
-  "code" varchar(32) default NULL NULL,
+  `nlId` numeric(12,0) default '0' NOT NULL,
+  `groupName` varchar(255) default '' NOT NULL,
+  `code` varchar(32) default NULL NULL,
   PRIMARY KEY (nlId,groupName)
 ) ENGINE=MyISAM
 go
@@ -2994,8 +2999,8 @@ go
 
 
 CREATE TABLE "tiki_newsletter_included" (
-  "nlId" numeric(12,0) default '0' NOT NULL,
-  "includedId" numeric(12,0) default '0' NOT NULL,
+  `nlId` numeric(12,0) default '0' NOT NULL,
+  `includedId` numeric(12,0) default '0' NOT NULL,
   PRIMARY KEY (nlId,includedId)
 ) ENGINE=MyISAM
 go
@@ -3007,20 +3012,20 @@ go
 
 
 CREATE TABLE "tiki_newsletters" (
-  "nlId" numeric(12 ,0) identity,
-  "name" varchar(200) default NULL NULL,
-  "description" text default '',
-  "created" numeric(14,0) default NULL NULL,
-  "lastSent" numeric(14,0) default NULL NULL,
-  "editions" numeric(10,0) default NULL NULL,
-  "users" numeric(10,0) default NULL NULL,
-  "allowUserSub" char(1) default 'y',
-  "allowAnySub" char(1) default NULL NULL,
-  "unsubMsg" char(1) default 'y',
-  "validateAddr" char(1) default 'y',
-  "frequency" numeric(14,0) default NULL NULL,
-  "allowTxt" char(1) default 'y',
-  "author" varchar(200) default NULL NULL,
+  `nlId numeric(12 ,0) identity,
+  `name` varchar(200) default NULL NULL,
+  `description` text,
+  `created` numeric(14,0) default NULL NULL,
+  `lastSent` numeric(14,0) default NULL NULL,
+  `editions` numeric(10,0) default NULL NULL,
+  `users` numeric(10,0) default NULL NULL,
+  `allowUserSub` char(1) default 'y',
+  `allowAnySub` char(1) default NULL NULL,
+  `unsubMsg` char(1) default 'y',
+  `validateAddr` char(1) default 'y',
+  `frequency` numeric(14,0) default NULL NULL,
+  `allowTxt` char(1) default 'y',
+  `author` varchar(200) default NULL NULL,
   PRIMARY KEY (nlId)
 ) ENGINE=MyISAM  
 go
@@ -3032,10 +3037,10 @@ go
 
 
 CREATE TABLE "tiki_newsreader_marks" (
-  "user" varchar(200) default '' NOT NULL,
-  "serverId" numeric(12,0) default '0' NOT NULL,
-  "groupName" varchar(255) default '' NOT NULL,
-  "timestamp" numeric(14,0) default '0' NOT NULL,
+  `user` varchar(200) default '' NOT NULL,
+  `serverId` numeric(12,0) default '0' NOT NULL,
+  `groupName` varchar(255) default '' NOT NULL,
+  `timestamp` numeric(14,0) default '0' NOT NULL,
   PRIMARY KEY (`user`(100),serverId,groupName(100))
 ) ENGINE=MyISAM
 go
@@ -3047,12 +3052,12 @@ go
 
 
 CREATE TABLE "tiki_newsreader_servers" (
-  "user" varchar(200) default '' NOT NULL,
-  "serverId" numeric(12 ,0) identity,
-  "server" varchar(250) default NULL NULL,
-  "port" numeric(4,0) default NULL NULL,
-  "username" varchar(200) default NULL NULL,
-  "password" varchar(200) default NULL NULL,
+  `user` varchar(200) default '' NOT NULL,
+  `serverId numeric(12 ,0) identity,
+  `server` varchar(250) default NULL NULL,
+  `port` numeric(4,0) default NULL NULL,
+  `username` varchar(200) default NULL NULL,
+  `password` varchar(200) default NULL NULL,
   PRIMARY KEY (serverId)
 ) ENGINE=MyISAM  
 go
@@ -3064,9 +3069,9 @@ go
 
 
 CREATE TABLE "tiki_page_footnotes" (
-  "user" varchar(200) default '' NOT NULL,
-  "pageName" varchar(250) default '' NOT NULL,
-  "data" text default '',
+  `user` varchar(200) default '' NOT NULL,
+  `pageName` varchar(250) default '' NOT NULL,
+  `data` text,
   PRIMARY KEY (`user`(150),pageName(100))
 ) ENGINE=MyISAM
 go
@@ -3078,31 +3083,31 @@ go
 
 
 CREATE TABLE "tiki_pages" (
-  "page_id" numeric(14 ,0) identity,
-  "pageName" varchar(160) default '' NOT NULL,
-  "hits" numeric(8,0) default NULL NULL,
-  "data" mediumtext,
-  "description" varchar(200) default NULL NULL,
-  "lastModif" numeric(14,0) default NULL NULL,
-  "comment" varchar(200) default NULL NULL,
-  "version" numeric(8,0) default '0' NOT NULL,
-  "user" varchar(200) default '',
-  "ip" varchar(15) default NULL NULL,
-  "flag" char(1) default NULL NULL,
-  "points" numeric(8,0) default NULL NULL,
-  "votes" numeric(8,0) default NULL NULL,
-  "cache" longtext,
-  "wiki_cache" numeric(10,0) default NULL NULL,
-  "cache_timestamp" numeric(14,0) default NULL NULL,
-  "pageRank" decimal(4,3) default NULL NULL,
-  "creator" varchar(200) default NULL NULL,
-  "page_size" numeric(10,0) default '0',
-  "lang" varchar(16) default NULL NULL,
-  "lockedby" varchar(200) default NULL NULL,
-  "is_html" numeric(1,0) default 0,
-  "created" numeric(14,0) default NULL NULL,
-  "wysiwyg" char(1) default NULL NULL,
-  "wiki_authors_style" varchar(20) default '',
+  `page_id numeric(14 ,0) identity,
+  `pageName` varchar(160) default '' NOT NULL,
+  `hits` numeric(8,0) default NULL NULL,
+  `data` mediumtext,
+  `description` varchar(200) default NULL NULL,
+  `lastModif` numeric(14,0) default NULL NULL,
+  `comment` varchar(200) default NULL NULL,
+  `version` numeric(8,0) default '0' NOT NULL,
+  `user` varchar(200) default '',
+  `ip` varchar(15) default NULL NULL,
+  `flag` char(1) default NULL NULL,
+  `points` numeric(8,0) default NULL NULL,
+  `votes` numeric(8,0) default NULL NULL,
+  `cache` longtext,
+  `wiki_cache` numeric(10,0) default NULL NULL,
+  `cache_timestamp` numeric(14,0) default NULL NULL,
+  `pageRank` decimal(4,3) default NULL NULL,
+  `creator` varchar(200) default NULL NULL,
+  `page_size` numeric(10,0) default '0',
+  `lang` varchar(16) default NULL NULL,
+  `lockedby` varchar(200) default NULL NULL,
+  `is_html` numeric(1,0) default 0,
+  `created` numeric(14,0),
+  `wysiwyg` char(1) default NULL NULL,
+  `wiki_authors_style` varchar(20) default '',
   PRIMARY KEY (page_id),
   KEY lastModif(lastModif)
 ) ENGINE=MyISAM 
@@ -3123,12 +3128,12 @@ go
 
 
 CREATE TABLE "tiki_page_drafts" (
-  "user" varchar(200) default '',
-  "pageName" varchar(255) NOT NULL,
-  "data" mediumtext,
-  "description" varchar(200) default NULL NULL,
-  "comment" varchar(200) default NULL NULL,
-  "lastModif" numeric(14,0) default NULL NULL,
+  `user` varchar(200) default '',
+  `pageName` varchar(255) NOT NULL,
+  `data` mediumtext,
+  `description` varchar(200) default NULL NULL,
+  `comment` varchar(200) default NULL NULL,
+  `lastModif` numeric(14,0) default NULL NULL,
   PRIMARY KEY (pageName(120), `user`(120))
 ) ENGINE=MyISAM
 go
@@ -3140,8 +3145,8 @@ go
 
 
 CREATE TABLE "tiki_pageviews" (
-  "day" numeric(14,0) default '0' NOT NULL,
-  "pageviews" numeric(14,0) default NULL NULL,
+  `day` numeric(14,0) default '0' NOT NULL,
+  `pageviews` numeric(14,0) default NULL NULL,
   PRIMARY KEY (day)
 ) ENGINE=MyISAM
 go
@@ -3167,11 +3172,11 @@ go
 
 
 CREATE TABLE "tiki_poll_options" (
-  "pollId" numeric(8,0) default '0' NOT NULL,
-  "optionId" numeric(8 ,0) identity,
-  "title" varchar(200) default NULL NULL,
-  "position" numeric(4,0) default '0' NOT NULL,
-  "votes" numeric(8,0) default NULL NULL,
+  `pollId` numeric(8,0) default '0' NOT NULL,
+  `optionId numeric(8 ,0) identity,
+  `title` varchar(200) default NULL NULL,
+  `position` numeric(4,0) default '0' NOT NULL,
+  `votes` numeric(8,0) default NULL NULL,
   PRIMARY KEY (optionId)
 ) ENGINE=MyISAM  
 go
@@ -3183,12 +3188,12 @@ go
 
 
 CREATE TABLE "tiki_polls" (
-  "pollId" numeric(8 ,0) identity,
-  "title" varchar(200) default NULL NULL,
-  "votes" numeric(8,0) default NULL NULL,
-  "active" char(1) default NULL NULL,
-  "publishDate" numeric(14,0) default NULL NULL,
-  "voteConsiderationSpan" numeric(4,0) default 0,
+  `pollId numeric(8 ,0) identity,
+  `title` varchar(200) default NULL NULL,
+  `votes` numeric(8,0) default NULL NULL,
+  `active` char(1) default NULL NULL,
+  `publishDate` numeric(14,0) default NULL NULL,
+  `voteConsiderationSpan` numeric(4,0) default 0,
   PRIMARY KEY (pollId)
 ) ENGINE=MyISAM  
 go
@@ -3200,9 +3205,9 @@ go
 
 
 CREATE TABLE "tiki_preferences" (
-  "name" varchar(40) default '' NOT NULL,
-  "value" text default '',
-  PRIMARY KEY (name)
+  `name` varchar(40) default '' NOT NULL,
+  `value` text,
+  PRIMARY KEY (`name`)
 ) ENGINE=MyISAM
 go
 
@@ -3213,15 +3218,15 @@ go
 
 
 CREATE TABLE "tiki_private_messages" (
-  "messageId" numeric(8 ,0) identity,
-  "toNickname" varchar(200) default '' NOT NULL,
-  "poster" varchar(200) default 'anonymous' NOT NULL,
-  "timestamp" numeric(14,0) default NULL NULL,
-  "received" numeric(1,0) default 0 not null,
-  "message" varchar(255) default NULL NULL,
-  "key"(received),
-  "key"(timestamp),
-  PRIMARY KEY (messageId)
+  `messageId numeric(8 ,0) identity,
+  `toNickname` varchar(200) default '' NOT NULL,
+  `poster` varchar(200) default 'anonymous' NOT NULL,
+  `timestamp` numeric(14,0) default NULL NULL,
+  `received` numeric(1,0) default 0 not null,
+  `message` varchar(255) default NULL NULL,
+  PRIMARY KEY (`messageId`),
+  KEY (`received`),
+  KEY (`timestamp`)
 ) ENGINE=MyISAM  
 go
 
@@ -3232,10 +3237,10 @@ go
 
 
 CREATE TABLE "tiki_programmed_content" (
-  "pId" numeric(8 ,0) identity,
-  "contentId" numeric(8,0) default '0' NOT NULL,
-  "publishDate" numeric(14,0) default '0' NOT NULL,
-  "data" text default '',
+  `pId numeric(8 ,0) identity,
+  `contentId` numeric(8,0) default '0' NOT NULL,
+  `publishDate` numeric(14,0) default '0' NOT NULL,
+  `data` text,
   PRIMARY KEY (pId)
 ) ENGINE=MyISAM  
 go
@@ -3247,10 +3252,10 @@ go
 
 
 CREATE TABLE "tiki_quiz_question_options" (
-  "optionId" numeric(10 ,0) identity,
-  "questionId" numeric(10,0) default NULL NULL,
-  "optionText" text default '',
-  "points" numeric(4,0) default NULL NULL,
+  `optionId numeric(10 ,0) identity,
+  `questionId` numeric(10,0) default NULL NULL,
+  `optionText` text,
+  `points` numeric(4,0) default NULL NULL,
   PRIMARY KEY (optionId)
 ) ENGINE=MyISAM  
 go
@@ -3262,12 +3267,12 @@ go
 
 
 CREATE TABLE "tiki_quiz_questions" (
-  "questionId" numeric(10 ,0) identity,
-  "quizId" numeric(10,0) default NULL NULL,
-  "question" text default '',
-  "position" numeric(4,0) default NULL NULL,
-  "type" char(1) default NULL NULL,
-  "maxPoints" numeric(4,0) default NULL NULL,
+  `questionId numeric(10 ,0) identity,
+  `quizId` numeric(10,0) default NULL NULL,
+  `question` text,
+  `position` numeric(4,0) default NULL NULL,
+  `type` char(1) default NULL NULL,
+  `maxPoints` numeric(4,0) default NULL NULL,
   PRIMARY KEY (questionId)
 ) ENGINE=MyISAM  
 go
@@ -3279,11 +3284,11 @@ go
 
 
 CREATE TABLE "tiki_quiz_results" (
-  "resultId" numeric(10 ,0) identity,
-  "quizId" numeric(10,0) default NULL NULL,
-  "fromPoints" numeric(4,0) default NULL NULL,
-  "toPoints" numeric(4,0) default NULL NULL,
-  "answer" text default '',
+  `resultId numeric(10 ,0) identity,
+  `quizId` numeric(10,0) default NULL NULL,
+  `fromPoints` numeric(4,0) default NULL NULL,
+  `toPoints` numeric(4,0) default NULL NULL,
+  `answer` text,
   PRIMARY KEY (resultId)
 ) ENGINE=MyISAM  
 go
@@ -3295,10 +3300,10 @@ go
 
 
 CREATE TABLE "tiki_quiz_stats" (
-  "quizId" numeric(10,0) default '0' NOT NULL,
-  "questionId" numeric(10,0) default '0' NOT NULL,
-  "optionId" numeric(10,0) default '0' NOT NULL,
-  "votes" numeric(10,0) default NULL NULL,
+  `quizId` numeric(10,0) default '0' NOT NULL,
+  `questionId` numeric(10,0) default '0' NOT NULL,
+  `optionId` numeric(10,0) default '0' NOT NULL,
+  `votes` numeric(10,0) default NULL NULL,
   PRIMARY KEY (quizId,questionId,optionId)
 ) ENGINE=MyISAM
 go
@@ -3310,12 +3315,12 @@ go
 
 
 CREATE TABLE "tiki_quiz_stats_sum" (
-  "quizId" numeric(10,0) default '0' NOT NULL,
-  "quizName" varchar(255) default NULL NULL,
-  "timesTaken" numeric(10,0) default NULL NULL,
-  "avgpoints" decimal(5,2) default NULL NULL,
-  "avgavg" decimal(5,2) default NULL NULL,
-  "avgtime" decimal(5,2) default NULL NULL,
+  `quizId` numeric(10,0) default '0' NOT NULL,
+  `quizName` varchar(255) default NULL NULL,
+  `timesTaken` numeric(10,0) default NULL NULL,
+  `avgpoints` decimal(5,2) default NULL NULL,
+  `avgavg` decimal(5,2) default NULL NULL,
+  `avgtime` decimal(5,2) default NULL NULL,
   PRIMARY KEY (quizId)
 ) ENGINE=MyISAM
 go
@@ -3327,43 +3332,43 @@ go
 
 
 CREATE TABLE "tiki_quizzes" (
-  "quizId" numeric(10 ,0) identity,
-  "name" varchar(255) default NULL NULL,
-  "description" text default '',
-  "canRepeat" char(1) default NULL NULL,
-  "storeResults" char(1) default NULL NULL,
-  "questionsPerPage" numeric(4,0) default NULL NULL,
-  "timeLimited" char(1) default NULL NULL,
-  "timeLimit" numeric(14,0) default NULL NULL,
-  "created" numeric(14,0) default NULL NULL,
-  "taken" numeric(10,0) default NULL NULL,
-  "immediateFeedback" char(1) default NULL NULL,
-  "showAnswers" char(1) default NULL NULL,
-  "shuffleQuestions" char(1) default NULL NULL,
-  "shuffleAnswers" char(1) default NULL NULL,
-  "publishDate" numeric(14,0) default NULL NULL,
-  "expireDate" numeric(14,0) default NULL NULL,
-  "bDeleted" char(1) default NULL NULL,
-  "nVersion" numeric(4,0) NOT NULL,
-  "nAuthor" numeric(4,0) default NULL NULL,
-  "bOnline" char(1) default NULL NULL,
-  "bRandomQuestions" char(1) default NULL NULL,
-  "nRandomQuestions" numeric(4,0) default NULL NULL,
-  "bLimitQuestionsPerPage" char(1) default NULL NULL,
-  "nLimitQuestionsPerPage" numeric(4,0) default NULL NULL,
-  "bMultiSession" char(1) default NULL NULL,
-  "nCanRepeat" numeric(4,0) default NULL NULL,
-  "sGradingMethod" varchar(80) default NULL NULL,
-  "sShowScore" varchar(80) default NULL NULL,
-  "sShowCorrectAnswers" varchar(80) default NULL NULL,
-  "sPublishStats" varchar(80) default NULL NULL,
-  "bAdditionalQuestions" char(1) default NULL NULL,
-  "bForum" char(1) default NULL NULL,
-  "sForum" varchar(80) default NULL NULL,
-  "sPrologue" text default '',
-  "sData" text default '',
-  "sEpilogue" text default '',
-  "passingperct" numeric(4,0) default 0,
+  `quizId numeric(10 ,0) identity,
+  `name` varchar(255) default NULL NULL,
+  `description` text,
+  `canRepeat` char(1) default NULL NULL,
+  `storeResults` char(1) default NULL NULL,
+  `questionsPerPage` numeric(4,0) default NULL NULL,
+  `timeLimited` char(1) default NULL NULL,
+  `timeLimit` numeric(14,0) default NULL NULL,
+  `created` numeric(14,0) default NULL NULL,
+  `taken` numeric(10,0) default NULL NULL,
+  `immediateFeedback` char(1) default NULL NULL,
+  `showAnswers` char(1) default NULL NULL,
+  `shuffleQuestions` char(1) default NULL NULL,
+  `shuffleAnswers` char(1) default NULL NULL,
+  `publishDate` numeric(14,0) default NULL NULL,
+  `expireDate` numeric(14,0) default NULL NULL,
+  `bDeleted` char(1) default NULL NULL,
+  `nVersion` numeric(4,0) NOT NULL,
+  `nAuthor` numeric(4,0) default NULL NULL,
+  `bOnline` char(1) default NULL NULL,
+  `bRandomQuestions` char(1) default NULL NULL,
+  `nRandomQuestions` numeric(4,0) default NULL NULL,
+  `bLimitQuestionsPerPage` char(1) default NULL NULL,
+  `nLimitQuestionsPerPage` numeric(4,0) default NULL NULL,
+  `bMultiSession` char(1) default NULL NULL,
+  `nCanRepeat` numeric(4,0) default NULL NULL,
+  `sGradingMethod` varchar(80) default NULL NULL,
+  `sShowScore` varchar(80) default NULL NULL,
+  `sShowCorrectAnswers` varchar(80) default NULL NULL,
+  `sPublishStats` varchar(80) default NULL NULL,
+  `bAdditionalQuestions` char(1) default NULL NULL,
+  `bForum` char(1) default NULL NULL,
+  `sForum` varchar(80) default NULL NULL,
+  `sPrologue` text,
+  `sData` text,
+  `sEpilogue` text,
+  `passingperct` numeric(4,0) default 0,
   PRIMARY KEY (quizId, nVersion)
 ) ENGINE=MyISAM  
 go
@@ -3375,29 +3380,29 @@ go
 
 
 CREATE TABLE "tiki_received_articles" (
-  "receivedArticleId" numeric(14 ,0) identity,
-  "receivedFromSite" varchar(200) default NULL NULL,
-  "receivedFromUser" varchar(200) default NULL NULL,
-  "receivedDate" numeric(14,0) default NULL NULL,
-  "title" varchar(80) default NULL NULL,
-  "authorName" varchar(60) default NULL NULL,
-  "size" numeric(12,0) default NULL NULL,
-  "useImage" char(1) default NULL NULL,
-  "image_name" varchar(80) default NULL NULL,
-  "image_type" varchar(80) default NULL NULL,
-  "image_size" numeric(14,0) default NULL NULL,
-  "image_x" numeric(4,0) default NULL NULL,
-  "image_y" numeric(4,0) default NULL NULL,
-  "image_data" image default '',
-  "publishDate" numeric(14,0) default NULL NULL,
-  "expireDate" numeric(14,0) default NULL NULL,
-  "created" numeric(14,0) default NULL NULL,
-  "heading" text default '',
-  "body" image default '',
-  "hash" varchar(32) default NULL NULL,
-  "author" varchar(200) default NULL NULL,
-  "type" varchar(50) default NULL NULL,
-  "rating" decimal(3,2) default NULL NULL,
+  `receivedArticleId numeric(14 ,0) identity,
+  `receivedFromSite` varchar(200) default NULL NULL,
+  `receivedFromUser` varchar(200) default NULL NULL,
+  `receivedDate` numeric(14,0) default NULL NULL,
+  `title` varchar(80) default NULL NULL,
+  `authorName` varchar(60) default NULL NULL,
+  `size` numeric(12,0) default NULL NULL,
+  `useImage` char(1) default NULL NULL,
+  `image_name` varchar(80) default NULL NULL,
+  `image_type` varchar(80) default NULL NULL,
+  `image_size` numeric(14,0) default NULL NULL,
+  `image_x` numeric(4,0) default NULL NULL,
+  `image_y` numeric(4,0) default NULL NULL,
+  `image_data` image,
+  `publishDate` numeric(14,0) default NULL NULL,
+  `expireDate` numeric(14,0) default NULL NULL,
+  `created` numeric(14,0) default NULL NULL,
+  `heading` text,
+  `body` image,
+  `hash` varchar(32) default NULL NULL,
+  `author` varchar(200) default NULL NULL,
+  `type` varchar(50) default NULL NULL,
+  `rating` decimal(3,2) default NULL NULL,
   PRIMARY KEY (receivedArticleId)
 ) ENGINE=MyISAM  
 go
@@ -3409,21 +3414,21 @@ go
 
 
 CREATE TABLE "tiki_received_pages" (
-  "receivedPageId" numeric(14 ,0) identity,
-  "pageName" varchar(160) default '' NOT NULL,
-  "data" image default '',
-  "description" varchar(200) default NULL NULL,
-  "comment" varchar(200) default NULL NULL,
-  "receivedFromSite" varchar(200) default NULL NULL,
-  "receivedFromUser" varchar(200) default NULL NULL,
-  "receivedDate" numeric(14,0) default NULL NULL,
-  "parent" varchar(255) default NULL NULL,
-  "position" numeric(3,0) unsigned default NULL NULL,
-  "alias" varchar(255) default NULL NULL,
-  "structureName" varchar(250) default NULL NULL,
-  "parentName" varchar(250) default NULL NULL,
-  "page_alias" varchar(250) default '',
-  "pos" numeric(4,0) default NULL NULL,
+  `receivedPageId numeric(14 ,0) identity,
+  `pageName` varchar(160) default '' NOT NULL,
+  `data` image,
+  `description` varchar(200) default NULL NULL,
+  `comment` varchar(200) default NULL NULL,
+  `receivedFromSite` varchar(200) default NULL NULL,
+  `receivedFromUser` varchar(200) default NULL NULL,
+  `receivedDate` numeric(14,0) default NULL NULL,
+  `parent` varchar(255) default NULL NULL,
+  `position` numeric(3,0) unsigned default NULL NULL,
+  `alias` varchar(255) default NULL NULL,
+  `structureName` varchar(250) default NULL NULL,
+  `parentName` varchar(250) default NULL NULL,
+  `page_alias` varchar(250) default '',
+  `pos` numeric(4,0) default NULL NULL,
   PRIMARY KEY (receivedPageId)
 ) ENGINE=MyISAM  
 go
@@ -3437,9 +3442,9 @@ go
 
 
 CREATE TABLE "tiki_referer_stats" (
-  "referer" varchar(255) default '' NOT NULL,
-  "hits" numeric(10,0) default NULL NULL,
-  "last" numeric(14,0) default NULL NULL,
+  `referer` varchar(255) default '' NOT NULL,
+  `hits` numeric(10,0) default NULL NULL,
+  `last` numeric(14,0) default NULL NULL,
   PRIMARY KEY (referer)
 ) ENGINE=MyISAM
 go
@@ -3451,8 +3456,8 @@ go
 
 
 CREATE TABLE "tiki_related_categories" (
-  "categId" numeric(10,0) default '0' NOT NULL,
-  "relatedTo" numeric(10,0) default '0' NOT NULL,
+  `categId` numeric(10,0) default '0' NOT NULL,
+  `relatedTo` numeric(10,0) default '0' NOT NULL,
   PRIMARY KEY (categId,relatedTo)
 ) ENGINE=MyISAM
 go
@@ -3464,15 +3469,15 @@ go
 
 
 CREATE TABLE "tiki_rss_modules" (
-  "rssId" numeric(8 ,0) identity,
-  "name" varchar(30) default '' NOT NULL,
-  "description" text default '',
-  "url" varchar(255) default '' NOT NULL,
-  "refresh" numeric(8,0) default NULL NULL,
-  "lastUpdated" numeric(14,0) default NULL NULL,
-  "showTitle" char(1) default 'n',
-  "showPubDate" char(1) default 'n',
-  "content" image default '',
+  `rssId numeric(8 ,0) identity,
+  `name` varchar(30) default '' NOT NULL,
+  `description` text,
+  `url` varchar(255) default '' NOT NULL,
+  `refresh` numeric(8,0) default NULL NULL,
+  `lastUpdated` numeric(14,0) default NULL NULL,
+  `showTitle` char(1) default 'n',
+  `showPubDate` char(1) default 'n',
+  `content` image,
   PRIMARY KEY (rssId)
 ) ENGINE=MyISAM  
 go
@@ -3486,11 +3491,11 @@ go
 
 
 CREATE TABLE "tiki_rss_feeds" (
-  "name" varchar(30) default '' NOT NULL,
-  "rssVer" char(1) default '1' NOT NULL,
-  "refresh" numeric(8,0) default '300',
-  "lastUpdated" numeric(14,0) default NULL NULL,
-  "cache" image default '',
+  `name` varchar(30) default '' NOT NULL,
+  `rssVer` char(1) default '1' NOT NULL,
+  `refresh` numeric(8,0) default '300',
+  `lastUpdated` numeric(14,0) default NULL NULL,
+  `cache` image,
   PRIMARY KEY (name,rssVer)
 ) ENGINE=MyISAM
 go
@@ -3502,11 +3507,11 @@ go
 
 
 CREATE TABLE "tiki_searchindex"(
-  "searchword" varchar(80) default '' NOT NULL,
-  "location" varchar(80) default '' NOT NULL,
-  "page" varchar(255) default '' NOT NULL,
-  "count" numeric(11,0) default '1' NOT NULL,
-  "last_update" numeric(11,0) default '0' NOT NULL,
+  `searchword` varchar(80) default '' NOT NULL,
+  `location` varchar(80) default '' NOT NULL,
+  `page` varchar(255) default '' NOT NULL,
+  `count` numeric(11,0) default '1' NOT NULL,
+  `last_update` numeric(11,0) default '0' NOT NULL,
   PRIMARY KEY (searchword,location,page(80))
 ) ENGINE=MyISAM
 go
@@ -3523,9 +3528,9 @@ go
 
 
 CREATE TABLE "tiki_searchsyllable"(
-  "syllable" varchar(80) default '' NOT NULL,
-  "lastUsed" numeric(11,0) default '0' NOT NULL,
-  "lastUpdated" numeric(11,0) default '0' NOT NULL,
+  `syllable` varchar(80) default '' NOT NULL,
+  `lastUsed` numeric(11,0) default '0' NOT NULL,
+  `lastUpdated` numeric(11,0) default '0' NOT NULL,
   PRIMARY KEY (syllable)
 ) ENGINE=MyISAM
 go
@@ -3540,8 +3545,8 @@ go
 
 
 CREATE TABLE "tiki_searchwords"(
-  "syllable" varchar(80) default '' NOT NULL,
-  "searchword" varchar(80) default '' NOT NULL,
+  `syllable` varchar(80) default '' NOT NULL,
+  `searchword` varchar(80) default '' NOT NULL,
   PRIMARY KEY (syllable,searchword)
 ) ENGINE=MyISAM
 go
@@ -3553,8 +3558,8 @@ go
 
 
 CREATE TABLE "tiki_search_stats" (
-  "term" varchar(50) default '' NOT NULL,
-  "hits" numeric(10,0) default NULL NULL,
+  `term` varchar(50) default '' NOT NULL,
+  `hits` numeric(10,0) default NULL NULL,
   PRIMARY KEY (term)
 ) ENGINE=MyISAM
 go
@@ -3566,10 +3571,10 @@ go
 
 
 CREATE TABLE "tiki_secdb"(
-  "md5_value" varchar(32) NOT NULL,
-  "filename" varchar(250) NOT NULL,
-  "tiki_version" varchar(60) NOT NULL,
-  "severity" numeric(4,0) default '0' NOT NULL,
+  `md5_value` varchar(32) NOT NULL,
+  `filename` varchar(250) NOT NULL,
+  `tiki_version` varchar(60) NOT NULL,
+  `severity` numeric(4,0) default '0' NOT NULL,
   PRIMARY KEY (md5_value,filename(100),tiki_version)
 ) ENGINE=MyISAM
 go
@@ -3583,10 +3588,10 @@ go
 
 
 CREATE TABLE "tiki_semaphores" (
-  "semName" varchar(250) default '' NOT NULL,
-  "objectType" varchar(20) default 'wiki page',
-  "user" varchar(200) default '' NOT NULL,
-  "timestamp" numeric(14,0) default NULL NULL,
+  `semName` varchar(250) default '' NOT NULL,
+  `objectType` varchar(20) default 'wiki page',
+  `user` varchar(200) default '' NOT NULL,
+  `timestamp` numeric(14,0) default NULL NULL,
   PRIMARY KEY (semName)
 ) ENGINE=MyISAM
 go
@@ -3598,13 +3603,13 @@ go
 
 
 CREATE TABLE "tiki_sent_newsletters" (
-  "editionId" numeric(12 ,0) identity,
-  "nlId" numeric(12,0) default '0' NOT NULL,
-  "users" numeric(10,0) default NULL NULL,
-  "sent" numeric(14,0) default NULL NULL,
-  "subject" varchar(200) default NULL NULL,
-  "data" image default '',
-  "datatxt" image default '',
+  `editionId numeric(12 ,0) identity,
+  `nlId` numeric(12,0) default '0' NOT NULL,
+  `users` numeric(10,0) default NULL NULL,
+  `sent` numeric(14,0) default NULL NULL,
+  `subject` varchar(200) default NULL NULL,
+  `data` image,
+  `datatxt` image,
   PRIMARY KEY (editionId)
 ) ENGINE=MyISAM  
 go
@@ -3616,10 +3621,10 @@ go
 
 
 CREATE TABLE "tiki_sent_newsletters_errors" (
-  "editionId" numeric(12,0) default NULL NULL,
-  "email" varchar(255) default '',
-  "login" varchar(40) default '',
-  "error" char(1) default '',
+  `editionId` numeric(12,0),
+  `email` varchar(255),
+  `login` varchar(40) default '',
+  `error` char(1) default '',
   KEY (editionId)
 ) ENGINE=MyISAM 
 go
@@ -3631,10 +3636,10 @@ go
 
 
 CREATE TABLE "tiki_sessions" (
-  "sessionId" varchar(32) default '' NOT NULL,
-  "user" varchar(200) default '',
-  "timestamp" numeric(14,0) default NULL NULL,
-  "tikihost" varchar(200) default NULL NULL,
+  `sessionId` varchar(32) default '' NOT NULL,
+  `user` varchar(200) default '',
+  `timestamp` numeric(14,0) default NULL NULL,
+  `tikihost` varchar(200) default NULL NULL,
   PRIMARY KEY (sessionId)
 ) ENGINE=MyISAM
 go
@@ -3650,12 +3655,12 @@ go
 
 
 CREATE TABLE "tiki_sheet_layout" (
-  "sheetId" numeric(8,0) default '0' NOT NULL,
-  "begin" numeric(10,0) default '0' NOT NULL,
-  "end" numeric(10,0) default NULL NULL,
-  "headerRow" numeric(4,0) default '0' NOT NULL,
-  "footerRow" numeric(4,0) default '0' NOT NULL,
-  "className" varchar(64) default NULL NULL
+  `sheetId` numeric(8,0) default '0' NOT NULL,
+  `begin` numeric(10,0) default '0' NOT NULL,
+  `end` numeric(10,0) default NULL NULL,
+  `headerRow` numeric(4,0) default '0' NOT NULL,
+  `footerRow` numeric(4,0) default '0' NOT NULL,
+  `className` varchar(64) default NULL NULL
 ) ENGINE=MyISAM
 go
 
@@ -3668,17 +3673,17 @@ go
 
 
 CREATE TABLE "tiki_sheet_values" (
-  "sheetId" numeric(8,0) default '0' NOT NULL,
-  "begin" numeric(10,0) default '0' NOT NULL,
-  "end" numeric(10,0) default NULL NULL,
-  "rowIndex" numeric(4,0) default '0' NOT NULL,
-  "columnIndex" numeric(4,0) default '0' NOT NULL,
-  "value" varchar(255) default NULL NULL,
-  "calculation" varchar(255) default NULL NULL,
-  "width" numeric(4,0) default '1' NOT NULL,
-  "height" numeric(4,0) default '1' NOT NULL,
-  "format" varchar(255) default NULL NULL,
-  "user" varchar(200) default ''
+  `sheetId` numeric(8,0) default '0' NOT NULL,
+  `begin` numeric(10,0) default '0' NOT NULL,
+  `end` numeric(10,0) default NULL NULL,
+  `rowIndex` numeric(4,0) default '0' NOT NULL,
+  `columnIndex` numeric(4,0) default '0' NOT NULL,
+  `value` varchar(255) default NULL NULL,
+  `calculation` varchar(255) default NULL NULL,
+  `width` numeric(4,0) default '1' NOT NULL,
+  `height` numeric(4,0) default '1' NOT NULL,
+  `format` varchar(255) default NULL NULL,
+  `user` varchar(200) default ''
 ) ENGINE=MyISAM
 go
 
@@ -3693,10 +3698,10 @@ go
 
 
 CREATE TABLE "tiki_sheets" (
-  "sheetId" numeric(8 ,0) identity,
-  "title" varchar(200) default '' NOT NULL,
-  "description" text default '',
-  "author" varchar(200) default '' NOT NULL,
+  `sheetId numeric(8 ,0) identity,
+  `title` varchar(200) default '' NOT NULL,
+  `description` text,
+  `author` varchar(200) default '' NOT NULL,
   PRIMARY KEY (sheetId)
 ) ENGINE=MyISAM
 go
@@ -3708,11 +3713,11 @@ go
 
 
 CREATE TABLE "tiki_shoutbox" (
-  "msgId" numeric(10 ,0) identity,
-  "message" varchar(255) default NULL NULL,
-  "timestamp" numeric(14,0) default NULL NULL,
-  "user" varchar(200) NULL default '',
-  "hash" varchar(32) default NULL NULL,
+  `msgId numeric(10 ,0) identity,
+  `message` varchar(255) default NULL NULL,
+  `timestamp` numeric(14,0) default NULL NULL,
+  `user` varchar(200) NULL default '',
+  `hash` varchar(32) default NULL NULL,
   PRIMARY KEY (msgId)
 ) ENGINE=MyISAM  
 go
@@ -3724,8 +3729,8 @@ go
 
 
 CREATE TABLE "tiki_shoutbox_words" (
-  "word" VARCHAR( 40 ) NOT NULL ,
-  "qty" INT DEFAULT '0' NOT NULL ,
+  `word` VARCHAR( 40 ) NOT NULL ,
+  `qty` INT DEFAULT '0' NOT NULL ,
   PRIMARY KEY (word)
 ) ENGINE=MyISAM
 go
@@ -3737,8 +3742,8 @@ go
 
 
 CREATE TABLE "tiki_structure_versions" (
-  "structure_id" numeric(14 ,0) identity,
-  "version" numeric(14,0) default NULL NULL,
+  `structure_id numeric(14 ,0) identity,
+  `version` numeric(14,0) default NULL NULL,
   PRIMARY KEY (structure_id)
 ) ENGINE=MyISAM  
 go
@@ -3750,13 +3755,13 @@ go
 
 
 CREATE TABLE "tiki_structures" (
-  "page_ref_id" numeric(14 ,0) identity,
-  "structure_id" numeric(14,0) NOT NULL,
-  "parent_id" numeric(14,0) default NULL NULL,
-  "page_id" numeric(14,0) NOT NULL,
-  "page_version" numeric(8,0) default NULL NULL,
-  "page_alias" varchar(240) default '' NOT NULL,
-  "pos" numeric(4,0) default NULL NULL,
+  `page_ref_id numeric(14 ,0) identity,
+  `structure_id` numeric(14,0) NOT NULL,
+  `parent_id` numeric(14,0) default NULL NULL,
+  `page_id` numeric(14,0) NOT NULL,
+  `page_version` numeric(8,0) default NULL NULL,
+  `page_alias` varchar(240) default '' NOT NULL,
+  `pos` numeric(4,0) default NULL NULL,
   PRIMARY KEY (page_ref_id)
 ) ENGINE=MyISAM  
 go
@@ -3772,39 +3777,39 @@ go
 
 
 CREATE TABLE "tiki_submissions" (
-  "subId" numeric(8 ,0) identity,
-  "topline" varchar(255) default NULL NULL,
-  "title" varchar(255) default NULL NULL,
-  "subtitle" varchar(255) default NULL NULL,
-  "linkto" varchar(255) default NULL NULL,
-  "lang" varchar(16) default NULL NULL,
-  "authorName" varchar(60) default NULL NULL,
-  "topicId" numeric(14,0) default NULL NULL,
-  "topicName" varchar(40) default NULL NULL,
-  "size" numeric(12,0) default NULL NULL,
-  "useImage" char(1) default NULL NULL,
-  "image_name" varchar(80) default NULL NULL,
-  "image_caption" text default NULL NULL,
-  "image_type" varchar(80) default NULL NULL,
-  "image_size" numeric(14,0) default NULL NULL,
-  "image_x" numeric(4,0) default NULL NULL,
-  "image_y" numeric(4,0) default NULL NULL,
-  "image_data" image default '',
-  "publishDate" numeric(14,0) default NULL NULL,
-  "expireDate" numeric(14,0) default NULL NULL,
-  "created" numeric(14,0) default NULL NULL,
-  "bibliographical_references" text default '',
-  "resume" text default '',
-  "heading" text default '',
-  "body" text default '',
-  "hash" varchar(32) default NULL NULL,
-  "author" varchar(200) default '' NOT NULL,
-  "nbreads" numeric(14,0) default NULL NULL,
-  "votes" numeric(8,0) default NULL NULL,
-  "points" numeric(14,0) default NULL NULL,
-  "type" varchar(50) default NULL NULL,
-  "rating" decimal(3,2) default NULL NULL,
-  "isfloat" char(1) default NULL NULL,
+  `subId numeric(8 ,0) identity,
+  `topline` varchar(255) default NULL NULL,
+  `title` varchar(255) default NULL NULL,
+  `subtitle` varchar(255) default NULL NULL,
+  `linkto` varchar(255) default NULL NULL,
+  `lang` varchar(16) default NULL NULL,
+  `authorName` varchar(60) default NULL NULL,
+  `topicId` numeric(14,0) default NULL NULL,
+  `topicName` varchar(40) default NULL NULL,
+  `size` numeric(12,0) default NULL NULL,
+  `useImage` char(1) default NULL NULL,
+  `image_name` varchar(80) default NULL NULL,
+  `image_caption` text default NULL NULL,
+  `image_type` varchar(80) default NULL NULL,
+  `image_size` numeric(14,0) default NULL NULL,
+  `image_x` numeric(4,0) default NULL NULL,
+  `image_y` numeric(4,0) default NULL NULL,
+  `image_data` image,
+  `publishDate` numeric(14,0) default NULL NULL,
+  `expireDate` numeric(14,0) default NULL NULL,
+  `created` numeric(14,0) default NULL NULL,
+  `bibliographical_references` text,
+  `resume` text,
+  `heading` text,
+  `body` text,
+  `hash` varchar(32) default NULL NULL,
+  `author` varchar(200) default '' NOT NULL,
+  `nbreads` numeric(14,0) default NULL NULL,
+  `votes` numeric(8,0) default NULL NULL,
+  `points` numeric(14,0) default NULL NULL,
+  `type` varchar(50) default NULL NULL,
+  `rating` decimal(3,2) default NULL NULL,
+  `isfloat` char(1) default NULL NULL,
   PRIMARY KEY (subId)
 ) ENGINE=MyISAM  
 go
@@ -3816,12 +3821,12 @@ go
 
 
 CREATE TABLE "tiki_suggested_faq_questions" (
-  "sfqId" numeric(10 ,0) identity,
-  "faqId" numeric(10,0) default '0' NOT NULL,
-  "question" text default '',
-  "answer" text default '',
-  "created" numeric(14,0) default NULL NULL,
-  "user" varchar(200) default '' NOT NULL,
+  `sfqId numeric(10 ,0) identity,
+  `faqId` numeric(10,0) default '0' NOT NULL,
+  `question` text,
+  `answer` text,
+  `created` numeric(14,0) default NULL NULL,
+  `user` varchar(200) default '' NOT NULL,
   PRIMARY KEY (sfqId)
 ) ENGINE=MyISAM  
 go
@@ -3833,10 +3838,10 @@ go
 
 
 CREATE TABLE "tiki_survey_question_options" (
-  "optionId" numeric(12 ,0) identity,
-  "questionId" numeric(12,0) default '0' NOT NULL,
-  "qoption" text default '',
-  "votes" numeric(10,0) default NULL NULL,
+  `optionId numeric(12 ,0) identity,
+  `questionId` numeric(12,0) default '0' NOT NULL,
+  `qoption` text,
+  `votes` numeric(10,0) default NULL NULL,
   PRIMARY KEY (optionId)
 ) ENGINE=MyISAM  
 go
@@ -3848,18 +3853,18 @@ go
 
 
 CREATE TABLE "tiki_survey_questions" (
-  "questionId" numeric(12 ,0) identity,
-  "surveyId" numeric(12,0) default '0' NOT NULL,
-  "question" text default '',
-  "options" text default '',
-  "type" char(1) default NULL NULL,
-  "position" numeric(5,0) default NULL NULL,
-  "votes" numeric(10,0) default NULL NULL,
-  "value" numeric(10,0) default NULL NULL,
-  "average" decimal(4,2) default NULL NULL,
-  "mandatory" char(1) default 'n' NOT NULL,
-  "max_answers" numeric(5,0) default 0 NOT NULL,
-  "min_answers" numeric(5,0) default 0 NOT NULL,
+  `questionId numeric(12 ,0) identity,
+  `surveyId` numeric(12,0) default '0' NOT NULL,
+  `question` text,
+  `options` text,
+  `type` char(1) default NULL NULL,
+  `position` numeric(5,0) default NULL NULL,
+  `votes` numeric(10,0) default NULL NULL,
+  `value` numeric(10,0) default NULL NULL,
+  `average` decimal(4,2) default NULL NULL,
+  `mandatory` char(1) default 'n' NOT NULL,
+  `max_answers` numeric(5,0) default 0 NOT NULL,
+  `min_answers` numeric(5,0) default 0 NOT NULL,
   PRIMARY KEY (questionId)
 ) ENGINE=MyISAM  
 go
@@ -3871,13 +3876,13 @@ go
 
 
 CREATE TABLE "tiki_surveys" (
-  "surveyId" numeric(12 ,0) identity,
-  "name" varchar(200) default NULL NULL,
-  "description" text default '',
-  "taken" numeric(10,0) default NULL NULL,
-  "lastTaken" numeric(14,0) default NULL NULL,
-  "created" numeric(14,0) default NULL NULL,
-  "status" char(1) default NULL NULL,
+  `surveyId numeric(12 ,0) identity,
+  `name` varchar(200) default NULL NULL,
+  `description` text,
+  `taken` numeric(10,0) default NULL NULL,
+  `lastTaken` numeric(14,0) default NULL NULL,
+  `created` numeric(14,0) default NULL NULL,
+  `status` char(1) default NULL NULL,
   PRIMARY KEY (surveyId)
 ) ENGINE=MyISAM  
 go
@@ -3889,17 +3894,17 @@ go
 
 
 CREATE TABLE "tiki_tags" (
-  "tagName" varchar(80) default '' NOT NULL,
-  "pageName" varchar(160) default '' NOT NULL,
-  "hits" numeric(8,0) default NULL NULL,
-  "description" varchar(200) default NULL NULL,
-  "data" image default '',
-  "lastModif" numeric(14,0) default NULL NULL,
-  "comment" varchar(200) default NULL NULL,
-  "version" numeric(8,0) default '0' NOT NULL,
-  "user" varchar(200) default '' NOT NULL,
-  "ip" varchar(15) default NULL NULL,
-  "flag" char(1) default NULL NULL,
+  `tagName` varchar(80) default '' NOT NULL,
+  `pageName` varchar(160) default '' NOT NULL,
+  `hits` numeric(8,0) default NULL NULL,
+  `description` varchar(200) default NULL NULL,
+  `data` image,
+  `lastModif` numeric(14,0) default NULL NULL,
+  `comment` varchar(200) default NULL NULL,
+  `version` numeric(8,0) default '0' NOT NULL,
+  `user` varchar(200) default '' NOT NULL,
+  `ip` varchar(15) default NULL NULL,
+  `flag` char(1) default NULL NULL,
   PRIMARY KEY (tagName,pageName)
 ) ENGINE=MyISAM
 go
@@ -3911,8 +3916,8 @@ go
 
 
 CREATE TABLE "tiki_theme_control_categs" (
-  "categId" numeric(12,0) default '0' NOT NULL,
-  "theme" varchar(250) default '' NOT NULL,
+  `categId` numeric(12,0) default '0' NOT NULL,
+  `theme` varchar(250) default '' NOT NULL,
   PRIMARY KEY (categId)
 ) ENGINE=MyISAM
 go
@@ -3924,10 +3929,10 @@ go
 
 
 CREATE TABLE "tiki_theme_control_objects" (
-  "objId" varchar(250) default '' NOT NULL,
-  "type" varchar(250) default '' NOT NULL,
-  "name" varchar(250) default '' NOT NULL,
-  "theme" varchar(250) default '' NOT NULL,
+  `objId` varchar(250) default '' NOT NULL,
+  `type` varchar(250) default '' NOT NULL,
+  `name` varchar(250) default '' NOT NULL,
+  `theme` varchar(250) default '' NOT NULL,
   PRIMARY KEY (objId(100), type(100))
 ) ENGINE=MyISAM
 go
@@ -3939,8 +3944,8 @@ go
 
 
 CREATE TABLE "tiki_theme_control_sections" (
-  "section" varchar(250) default '' NOT NULL,
-  "theme" varchar(250) default '' NOT NULL,
+  `section` varchar(250) default '' NOT NULL,
+  `theme` varchar(250) default '' NOT NULL,
   PRIMARY KEY (section)
 ) ENGINE=MyISAM
 go
@@ -3952,14 +3957,14 @@ go
 
 
 CREATE TABLE "tiki_topics" (
-  "topicId" numeric(14 ,0) identity,
-  "name" varchar(40) default NULL NULL,
-  "image_name" varchar(80) default NULL NULL,
-  "image_type" varchar(80) default NULL NULL,
-  "image_size" numeric(14,0) default NULL NULL,
-  "image_data" image default '',
-  "active" char(1) default NULL NULL,
-  "created" numeric(14,0) default NULL NULL,
+  `topicId numeric(14 ,0) identity,
+  `name` varchar(40) default NULL NULL,
+  `image_name` varchar(80) default NULL NULL,
+  `image_type` varchar(80) default NULL NULL,
+  `image_size` numeric(14,0) default NULL NULL,
+  `image_data` image,
+  `active` char(1) default NULL NULL,
+  `created` numeric(14,0) default NULL NULL,
   PRIMARY KEY (topicId)
 ) ENGINE=MyISAM  
 go
@@ -3971,25 +3976,25 @@ go
 
 
 CREATE TABLE "tiki_tracker_fields" (
-  "fieldId" numeric(12 ,0) identity,
-  "trackerId" numeric(12,0) default '0' NOT NULL,
-  "name" varchar(255) default NULL NULL,
-  "options" text default '',
-  "type" varchar(15) default NULL NULL,
-  "isMain" char(1) default NULL NULL,
-  "isTblVisible" char(1) default NULL NULL,
-  "position" numeric(4,0) default NULL NULL,
-  "isSearchable" char(1) default 'y' NOT NULL,
-  "isPublic" char(1) default 'n' NOT NULL,
-  "isHidden" char(1) default 'n' NOT NULL,
-  "isMandatory" char(1) default 'n' NOT NULL,
-  "description" text default '',
-  "isMultilingual" char(1) default 'n',
-  "itemChoices" text default '',
-  "errorMsg" text default '',
-  "visibleBy" text default '',
-  "editableBy" text default '',
-  "descriptionIsParsed" char(1) default 'n',
+  `fieldId numeric(12 ,0) identity,
+  `trackerId` numeric(12,0) default '0' NOT NULL,
+  `name` varchar(255) default NULL NULL,
+  `options` text,
+  `type` varchar(15) default NULL NULL,
+  `isMain` char(1) default NULL NULL,
+  `isTblVisible` char(1) default NULL NULL,
+  `position` numeric(4,0) default NULL NULL,
+  `isSearchable` char(1) default 'y' NOT NULL,
+  `isPublic` char(1) default 'n' NOT NULL,
+  `isHidden` char(1) default 'n' NOT NULL,
+  `isMandatory` char(1) default 'n' NOT NULL,
+  `description` text,
+  `isMultilingual` char(1) default 'n',
+  `itemChoices` text,
+  `errorMsg` text,
+  `visibleBy` text,
+  `editableBy` text,
+  `descriptionIsParsed` char(1) default 'n',
   PRIMARY KEY (fieldId),
   "INDEX" trackerId (trackerId)
 ) ENGINE=MyISAM  
@@ -4002,19 +4007,19 @@ go
 
 
 CREATE TABLE "tiki_tracker_item_attachments" (
-  "attId" numeric(12 ,0) identity,
-  "itemId" numeric(12,0) default 0 NOT NULL,
-  "filename" varchar(80) default NULL NULL,
-  "filetype" varchar(80) default NULL NULL,
-  "filesize" numeric(14,0) default NULL NULL,
-  "user" varchar(200) default NULL NULL,
-  "data" image default '',
-  "path" varchar(255) default NULL NULL,
-  "hits" numeric(10,0) default NULL NULL,
-  "created" numeric(14,0) default NULL NULL,
-  "comment" varchar(250) default NULL NULL,
-  "longdesc" image default '',
-  "version" varchar(40) default NULL NULL,
+  `attId numeric(12 ,0) identity,
+  `itemId` numeric(12,0) default 0 NOT NULL,
+  `filename` varchar(80) default NULL NULL,
+  `filetype` varchar(80) default NULL NULL,
+  `filesize` numeric(14,0) default NULL NULL,
+  `user` varchar(200) default NULL NULL,
+  `data` image,
+  `path` varchar(255) default NULL NULL,
+  `hits` numeric(10,0) default NULL NULL,
+  `created` numeric(14,0) default NULL NULL,
+  `comment` varchar(250) default NULL NULL,
+  `longdesc` image,
+  `version` varchar(40) default NULL NULL,
   PRIMARY KEY (attId),
   "INDEX" itemId (itemId)
 ) ENGINE=MyISAM  
@@ -4027,12 +4032,12 @@ go
 
 
 CREATE TABLE "tiki_tracker_item_comments" (
-  "commentId" numeric(12 ,0) identity,
-  "itemId" numeric(12,0) default '0' NOT NULL,
-  "user" varchar(200) default NULL NULL,
-  "data" text default '',
-  "title" varchar(200) default NULL NULL,
-  "posted" numeric(14,0) default NULL NULL,
+  `commentId numeric(12 ,0) identity,
+  `itemId` numeric(12,0) default '0' NOT NULL,
+  `user` varchar(200) default NULL NULL,
+  `data` text,
+  `title` varchar(200) default NULL NULL,
+  `posted` numeric(14,0) default NULL NULL,
   PRIMARY KEY (commentId)
 ) ENGINE=MyISAM  
 go
@@ -4044,10 +4049,10 @@ go
 
 
 CREATE TABLE "tiki_tracker_item_fields" (
-  "itemId" numeric(12,0) default '0' NOT NULL,
-  "fieldId" numeric(12,0) default '0' NOT NULL,
-  "value" text default '',
-  "lang" char(16) default NULL NULL,
+  `itemId` numeric(12,0) default '0' NOT NULL,
+  `fieldId` numeric(12,0) default '0' NOT NULL,
+  `value` text,
+  `lang` char(16) default NULL NULL,
   PRIMARY KEY (itemId,fieldId,lang),
   "INDEX" fieldId (fieldId),
   "INDEX" value (value(250)),
@@ -4064,11 +4069,11 @@ go
 
 
 CREATE TABLE "tiki_tracker_items" (
-  "itemId" numeric(12 ,0) identity,
-  "trackerId" numeric(12,0) default '0' NOT NULL,
-  "created" numeric(14,0) default NULL NULL,
-  "status" char(1) default NULL NULL,
-  "lastModif" numeric(14,0) default NULL NULL,
+  `itemId numeric(12 ,0) identity,
+  `trackerId` numeric(12,0) default '0' NOT NULL,
+  `created` numeric(14,0) default NULL NULL,
+  `status` char(1) default NULL NULL,
+  `lastModif` numeric(14,0) default NULL NULL,
   PRIMARY KEY (itemId),
   "INDEX" trackerId (trackerId)
 ) ENGINE=MyISAM  
@@ -4081,9 +4086,9 @@ go
 
 
 CREATE TABLE "tiki_tracker_options" (
-  "trackerId" numeric(12,0) default '0' NOT NULL,
-  "name" varchar(80) default '' NOT NULL,
-  "value" text default NULL NULL,
+  `trackerId` numeric(12,0) default '0' NOT NULL,
+  `name` varchar(80) default '' NOT NULL,
+  `value` text default NULL NULL,
   PRIMARY KEY (trackerId,name(30))
 ) ENGINE=MyISAM 
 go
@@ -4095,21 +4100,21 @@ go
 
 
 CREATE TABLE "tiki_trackers" (
-  "trackerId" numeric(12 ,0) identity,
-  "name" varchar(255) default NULL NULL,
-  "description" text default '',
-  "descriptionIsParsed" varchar(1) NULL default '0',
-  "created" numeric(14,0) default NULL NULL,
-  "lastModif" numeric(14,0) default NULL NULL,
-  "showCreated" char(1) default NULL NULL,
-  "showStatus" char(1) default NULL NULL,
-  "showLastModif" char(1) default NULL NULL,
-  "useComments" char(1) default NULL NULL,
-  "useAttachments" char(1) default NULL NULL,
-  "showAttachments" char(1) default NULL NULL,
-  "items" numeric(10,0) default NULL NULL,
-  "showComments" char(1) default NULL NULL,
-  "orderAttachments" varchar(255) default 'filename,created,filesize,hits,desc' NOT NULL,
+  `trackerId numeric(12 ,0) identity,
+  `name` varchar(255) default NULL NULL,
+  `description` text,
+  `descriptionIsParsed` varchar(1) NULL default '0',
+  `created` numeric(14,0) default NULL NULL,
+  `lastModif` numeric(14,0) default NULL NULL,
+  `showCreated` char(1) default NULL NULL,
+  `showStatus` char(1) default NULL NULL,
+  `showLastModif` char(1) default NULL NULL,
+  `useComments` char(1) default NULL NULL,
+  `useAttachments` char(1) default NULL NULL,
+  `showAttachments` char(1) default NULL NULL,
+  `items` numeric(10,0) default NULL NULL,
+  `showComments` char(1) default NULL NULL,
+  `orderAttachments` varchar(255) default 'filename,created,filesize,hits,desc' NOT NULL,
   PRIMARY KEY (trackerId)
 ) ENGINE=MyISAM  
 go
@@ -4121,9 +4126,9 @@ go
 
 
 CREATE TABLE "tiki_untranslated" (
-  "id" numeric(14 ,0) identity,
-  "source" image NOT NULL,
-  "lang" char(16) default '' NOT NULL,
+  `id numeric(14 ,0) identity,
+  `source` image NOT NULL,
+  `lang` char(16) default '' NOT NULL,
   PRIMARY KEY (source(255),lang)
 ) ENGINE=MyISAM  
 go
@@ -4139,10 +4144,10 @@ go
 
 
 CREATE TABLE "tiki_user_answers" (
-  "userResultId" numeric(10,0) default '0' NOT NULL,
-  "quizId" numeric(10,0) default '0' NOT NULL,
-  "questionId" numeric(10,0) default '0' NOT NULL,
-  "optionId" numeric(10,0) default '0' NOT NULL,
+  `userResultId` numeric(10,0) default '0' NOT NULL,
+  `quizId` numeric(10,0) default '0' NOT NULL,
+  `questionId` numeric(10,0) default '0' NOT NULL,
+  `optionId` numeric(10,0) default '0' NOT NULL,
   PRIMARY KEY (userResultId,quizId,questionId,optionId)
 ) ENGINE=MyISAM
 go
@@ -4154,13 +4159,13 @@ go
 
 
 CREATE TABLE "tiki_user_answers_uploads" (
-  "answerUploadId" numeric(4 ,0) identity,
-  "userResultId" numeric(11,0) default '0' NOT NULL,
-  "questionId" numeric(11,0) default '0' NOT NULL,
-  "filename" varchar(255) default '' NOT NULL,
-  "filetype" varchar(64) default '' NOT NULL,
-  "filesize" varchar(255) default '' NOT NULL,
-  "filecontent" image NOT NULL,
+  `answerUploadId numeric(4 ,0) identity,
+  `userResultId` numeric(11,0) default '0' NOT NULL,
+  `questionId` numeric(11,0) default '0' NOT NULL,
+  `filename` varchar(255) default '' NOT NULL,
+  `filetype` varchar(64) default '' NOT NULL,
+  `filesize` varchar(255) default '' NOT NULL,
+  `filecontent` image NOT NULL,
   PRIMARY KEY (answerUploadId)
 ) ENGINE=MyISAM
 go
@@ -4172,12 +4177,12 @@ go
 
 
 CREATE TABLE "tiki_user_assigned_modules" (
-  "moduleId" numeric(8,0) NOT NULL,
-  "name" varchar(200) default '' NOT NULL,
-  "position" char(1) default NULL NULL,
-  "ord" numeric(4,0) default NULL NULL,
-  "type" char(1) default NULL NULL,
-  "user" varchar(200) default '' NOT NULL,
+  `moduleId` numeric(8,0) NOT NULL,
+  `name` varchar(200) default '' NOT NULL,
+  `position` char(1) default NULL NULL,
+  `ord` numeric(4,0) default NULL NULL,
+  `type` char(1) default NULL NULL,
+  `user` varchar(200) default '' NOT NULL,
   PRIMARY KEY (name(30),user,position, ord)
 ) ENGINE=MyISAM
 go
@@ -4189,10 +4194,10 @@ go
 
 
 CREATE TABLE "tiki_user_bookmarks_folders" (
-  "folderId" numeric(12 ,0) identity,
-  "parentId" numeric(12,0) default NULL NULL,
-  "user" varchar(200) default '' NOT NULL,
-  "name" varchar(30) default NULL NULL,
+  `folderId numeric(12 ,0) identity,
+  `parentId` numeric(12,0) default NULL NULL,
+  `user` varchar(200) default '' NOT NULL,
+  `name` varchar(30) default NULL NULL,
   PRIMARY KEY (user,folderId)
 ) ENGINE=MyISAM  
 go
@@ -4204,13 +4209,13 @@ go
 
 
 CREATE TABLE "tiki_user_bookmarks_urls" (
-  "urlId" numeric(12 ,0) identity,
-  "name" varchar(30) default NULL NULL,
-  "url" varchar(250) default NULL NULL,
-  "data" image default '',
-  "lastUpdated" numeric(14,0) default NULL NULL,
-  "folderId" numeric(12,0) default '0' NOT NULL,
-  "user" varchar(200) default '' NOT NULL,
+  `urlId numeric(12 ,0) identity,
+  `name` varchar(30) default NULL NULL,
+  `url` varchar(250) default NULL NULL,
+  `data` image,
+  `lastUpdated` numeric(14,0) default NULL NULL,
+  `folderId` numeric(12,0) default '0' NOT NULL,
+  `user` varchar(200) default '' NOT NULL,
   PRIMARY KEY (urlId)
 ) ENGINE=MyISAM  
 go
@@ -4222,24 +4227,24 @@ go
 
 
 CREATE TABLE "tiki_user_mail_accounts" (
-  "accountId" numeric(12 ,0) identity,
-  "user" varchar(200) default '' NOT NULL,
-  "account" varchar(50) default '' NOT NULL,
-  "pop" varchar(255) default NULL NULL,
-  "current" char(1) default NULL NULL,
-  "port" numeric(4,0) default NULL NULL,
-  "username" varchar(100) default NULL NULL,
-  "pass" varchar(100) default NULL NULL,
-  "msgs" numeric(4,0) default NULL NULL,
-  "smtp" varchar(255) default NULL NULL,
-  "useAuth" char(1) default NULL NULL,
-  "smtpPort" numeric(4,0) default NULL NULL,
-  "flagsPublic" char(1) default 'n',				-- COMMENT 'MatWho - Shared Group Mail box if y',
-  "autoRefresh" numeric(4,0) default 0,		-- COMMENT 'seconds for mail list to refresh, 0 = none' NOT NULL,
-  "imap" varchar( 255 ) default NULL NULL,
-  "mbox" varchar( 255 ) default NULL NULL,
-  "maildir" varchar( 255 ) default NULL NULL,
-  "useSSL" char( 1 ) default 'n' NOT NULL,
+  `accountId numeric(12 ,0) identity,
+  `user` varchar(200) default '' NOT NULL,
+  `account` varchar(50) default '' NOT NULL,
+  `pop` varchar(255) default NULL NULL,
+  `current` char(1) default NULL NULL,
+  `port` numeric(4,0) default NULL NULL,
+  `username` varchar(100) default NULL NULL,
+  `pass` varchar(100) default NULL NULL,
+  `msgs` numeric(4,0) default NULL NULL,
+  `smtp` varchar(255) default NULL NULL,
+  `useAuth` char(1) default NULL NULL,
+  `smtpPort` numeric(4,0) default NULL NULL,
+  `flagsPublic` char(1) default 'n',				-- COMMENT 'MatWho - Shared Group Mail box if y',
+  `autoRefresh` numeric(4,0) default 0,		-- COMMENT 'seconds for mail list to refresh, 0 = none' NOT NULL,
+  `imap` varchar( 255 ) default NULL NULL,
+  `mbox` varchar( 255 ) default NULL NULL,
+  `maildir` varchar( 255 ) default NULL NULL,
+  `useSSL` char( 1 ) default 'n' NOT NULL,
   PRIMARY KEY (accountId)
 ) ENGINE=MyISAM  
 go
@@ -4251,12 +4256,12 @@ go
 
 
 CREATE TABLE "tiki_user_menus" (
-  "user" varchar(200) default '' NOT NULL,
-  "menuId" numeric(12 ,0) identity,
-  "url" varchar(250) default NULL NULL,
-  "name" varchar(40) default NULL NULL,
-  "position" numeric(4,0) default NULL NULL,
-  "mode" char(1) default NULL NULL,
+  `user` varchar(200) default '' NOT NULL,
+  `menuId numeric(12 ,0) identity,
+  `url` varchar(250) default NULL NULL,
+  `name` varchar(40) default NULL NULL,
+  `position` numeric(4,0) default NULL NULL,
+  `mode` char(1) default NULL NULL,
   PRIMARY KEY (menuId)
 ) ENGINE=MyISAM  
 go
@@ -4268,10 +4273,10 @@ go
 
 
 CREATE TABLE "tiki_user_modules" (
-  "name" varchar(200) default '' NOT NULL,
-  "title" varchar(40) default NULL NULL,
-  "data" image default '',
-  "parse" char(1) default NULL NULL,
+  `name` varchar(200) default '' NOT NULL,
+  `title` varchar(40) default NULL NULL,
+  `data` image,
+  `parse` char(1) default NULL NULL,
   PRIMARY KEY (name)
 ) ENGINE=MyISAM
 go
@@ -4288,14 +4293,14 @@ go
 
 
 CREATE TABLE "tiki_user_notes" (
-  "user" varchar(200) default '' NOT NULL,
-  "noteId" numeric(12 ,0) identity,
-  "created" numeric(14,0) default NULL NULL,
-  "name" varchar(255) default NULL NULL,
-  "lastModif" numeric(14,0) default NULL NULL,
-  "data" text default '',
-  "size" numeric(14,0) default NULL NULL,
-  "parse_mode" varchar(20) default NULL NULL,
+  `user` varchar(200) default '' NOT NULL,
+  `noteId numeric(12 ,0) identity,
+  `created` numeric(14,0) default NULL NULL,
+  `name` varchar(255) default NULL NULL,
+  `lastModif` numeric(14,0) default NULL NULL,
+  `data` text,
+  `size` numeric(14,0) default NULL NULL,
+  `parse_mode` varchar(20) default NULL NULL,
   PRIMARY KEY (noteId)
 ) ENGINE=MyISAM  
 go
@@ -4307,11 +4312,11 @@ go
 
 
 CREATE TABLE "tiki_user_postings" (
-  "user" varchar(200) default '' NOT NULL,
-  "posts" numeric(12,0) default NULL NULL,
-  "last" numeric(14,0) default NULL NULL,
-  "first" numeric(14,0) default NULL NULL,
-  "level" numeric(8,0) default NULL NULL,
+  `user` varchar(200) default '' NOT NULL,
+  `posts` numeric(12,0) default NULL NULL,
+  `last` numeric(14,0) default NULL NULL,
+  `first` numeric(14,0) default NULL NULL,
+  `level` numeric(8,0) default NULL NULL,
   PRIMARY KEY (user)
 ) ENGINE=MyISAM
 go
@@ -4323,9 +4328,9 @@ go
 
 
 CREATE TABLE "tiki_user_preferences" (
-  "user" varchar(200) default '' NOT NULL,
-  "prefName" varchar(40) default '' NOT NULL,
-  "value" varchar(250) default NULL NULL,
+  `user` varchar(200) default '' NOT NULL,
+  `prefName` varchar(40) default '' NOT NULL,
+  `value` varchar(250) default NULL NULL,
   PRIMARY KEY (user,prefName)
 ) ENGINE=MyISAM
 go
@@ -4337,14 +4342,14 @@ go
 
 
 CREATE TABLE "tiki_user_quizzes" (
-  "user" varchar(200) default '',
-  "quizId" numeric(10,0) default NULL NULL,
-  "timestamp" numeric(14,0) default NULL NULL,
-  "timeTaken" numeric(14,0) default NULL NULL,
-  "points" numeric(12,0) default NULL NULL,
-  "maxPoints" numeric(12,0) default NULL NULL,
-  "resultId" numeric(10,0) default NULL NULL,
-  "userResultId" numeric(10 ,0) identity,
+  `user` varchar(200) default '',
+  `quizId` numeric(10,0) default NULL NULL,
+  `timestamp` numeric(14,0) default NULL NULL,
+  `timeTaken` numeric(14,0) default NULL NULL,
+  `points` numeric(12,0) default NULL NULL,
+  `maxPoints` numeric(12,0) default NULL NULL,
+  `resultId` numeric(10,0) default NULL NULL,
+  `userResultId numeric(10 ,0) identity,
   PRIMARY KEY (userResultId)
 ) ENGINE=MyISAM  
 go
@@ -4356,8 +4361,8 @@ go
 
 
 CREATE TABLE "tiki_user_taken_quizzes" (
-  "user" varchar(200) default '' NOT NULL,
-  "quizId" varchar(255) default '' NOT NULL,
+  `user` varchar(200) default '' NOT NULL,
+  `quizId` varchar(255) default '' NOT NULL,
   PRIMARY KEY (user,quizId(50))
 ) ENGINE=MyISAM
 go
@@ -4369,23 +4374,21 @@ go
 
 
 CREATE TABLE "tiki_user_tasks_history" (
-  "belongs_to" integer(14) NOT NULL,                   -- the first task in a history it has the same id as the task id
-  "task_version" integer(4) DEFAULT 0 NOT NULL,        -- version number for the history it starts with 0
-  "title" varchar(250) NOT NULL,                       -- title
-  "description" text DEFAULT NULL NULL,                     -- description
-  "start" integer(14) DEFAULT NULL NULL,                    -- date of the starting, if it is not set than there is no starting date
-  "end" integer(14) DEFAULT NULL NULL,                      -- date of the end, if it is not set than there is not dealine
-  "lasteditor" varchar(200) NOT NULL,                  -- lasteditor: username of last editior
-  "lastchanges" integer(14) NOT NULL,                  -- date of last changes
-  "priority" integer(2) DEFAULT 3 NOT NULL,                     -- priority
-  "completed" integer(14) DEFAULT NULL NULL,                -- date of the completation if it is null it is not yet completed
-  "deleted" integer(14) DEFAULT NULL NULL,                  -- date of the deleteation it it is null it is not deleted
-  "status" char(1) DEFAULT NULL NULL,                       -- null := waiting,
-                                                     -- o := open / in progress,
-                                                     -- c := completed -> (percentage = 100)
-  "percentage" numeric(4,0) DEFAULT NULL NULL,
-  "accepted_creator" char(1) DEFAULT NULL NULL,             -- y - yes, n - no, null - waiting
-  "accepted_user" char(1) DEFAULT NULL NULL,                -- y - yes, n - no, null - waiting
+  `belongs_to` integer(14) NOT NULL,                   -- the first task in a history it has the same id as the task id
+  `task_version` integer(4) DEFAULT 0 NOT NULL,        -- version number for the history it starts with 0
+  `title` varchar(250) NOT NULL,                       -- title
+  `description` text DEFAULT NULL NULL,                     -- description
+  `start` integer(14) DEFAULT NULL NULL,                    -- date of the starting, if it is not set than there is no starting date
+  `end` integer(14) DEFAULT NULL NULL,                      -- date of the end, if it is not set than there is not dealine
+  `lasteditor` varchar(200) NOT NULL,                  -- lasteditor: username of last editior
+  `lastchanges` integer(14) NOT NULL,                  -- date of last changes
+  `priority` integer(2) DEFAULT 3 NOT NULL,                     -- priority
+  `completed` integer(14) DEFAULT NULL NULL,                -- date of the completation if it is null it is not yet completed
+  `deleted` integer(14) DEFAULT NULL NULL,                  -- date of the deleteation it it is null it is not deleted
+  `status` char(1) DEFAULT NULL NULL,                       -- null := waiting, o := open / in progress, c := completed -> (percentage = 100)
+  `percentage` numeric(4,0) DEFAULT NULL NULL,
+  `accepted_creator` char(1) DEFAULT NULL NULL,             -- y - yes, n - no, null - waiting
+  `accepted_user` char(1) DEFAULT NULL NULL,                -- y - yes, n - no, null - waiting
   PRIMARY KEY (belongs_to, task_version)
 ) ENGINE=MyISAM  
 go
@@ -4397,17 +4400,17 @@ go
 
 
 CREATE TABLE "tiki_user_tasks" (
-  "taskId" integer(14) NOT NULL auto_increment,        -- task id
-  "last_version" integer(4) DEFAULT 0 NOT NULL,        -- last version of the task starting with 0
-  "user" varchar(200) DEFAULT '' NOT NULL,              -- task user
-  "creator" varchar(200) NOT NULL,                     -- username of creator
-  "public_for_group" varchar(30) DEFAULT NULL NULL,         -- this group can also view the task, if it is null it is not public
-  "rights_by_creator" char(1) DEFAULT NULL NULL,            -- null the user can delete the task,
-  "created" integer(14) NOT NULL,                      -- date of the creation
-  "status" char(1) default NULL NULL,
-  "priority" numeric(2,0) default NULL NULL,
-  "completed" numeric(14,0) default NULL NULL,
-  "percentage" numeric(4,0) default NULL NULL,
+  `taskId` integer(14) NOT NULL auto_increment,        -- task id
+  `last_version` integer(4) DEFAULT 0 NOT NULL,        -- last version of the task starting with 0
+  `user` varchar(200) DEFAULT '' NOT NULL,              -- task user
+  `creator` varchar(200) NOT NULL,                     -- username of creator
+  `public_for_group` varchar(30) DEFAULT NULL NULL,         -- this group can also view the task, if it is null it is not public
+  `rights_by_creator` char(1) DEFAULT NULL NULL,            -- null the user can delete the task,
+  `created` integer(14) NOT NULL,                      -- date of the creation
+  `status` char(1) default NULL NULL,
+  `priority` numeric(2,0) default NULL NULL,
+  `completed` numeric(14,0) default NULL NULL,
+  `percentage` numeric(4,0) default NULL NULL,
   PRIMARY KEY (taskId),
   UNIQUE(creator, created)
 ) ENGINE=MyISAM 
@@ -4420,12 +4423,12 @@ go
 
 
 CREATE TABLE "tiki_user_votings" (
-  "user" varchar(200) default '',
-  "ip" varchar(15) default NULL NULL,
-  "id" varchar(255) default '' NOT NULL,
-  "optionId" numeric(10,0) default 0 NOT NULL,
-  "time" numeric(14,0) default 0 NOT NULL,
-  PRIMARY KEY (`user`(100),id(100))
+  `user` varchar(200) default '',
+  `ip` varchar(15) default NULL NULL,
+  `id` varchar(255) default '' NOT NULL,
+  `optionId` numeric(10,0) default 0 NOT NULL,
+  `time` numeric(14,0) default 0 NOT NULL,
+  KEY (`user`(100),id(100))
 ) ENGINE=MyISAM
 go
 
@@ -4440,14 +4443,14 @@ go
 
 
 CREATE TABLE "tiki_user_watches" (
-  "watchId" numeric(12 ,0) identity,
-  "user" varchar(200) default '' NOT NULL,
-  "event" varchar(40) default '' NOT NULL,
-  "object" varchar(200) default '' NOT NULL,
-  "title" varchar(250) default NULL NULL,
-  "type" varchar(200) default NULL NULL,
-  "url" varchar(250) default NULL NULL,
-  "email" varchar(200) default NULL NULL,
+  `watchId numeric(12 ,0) identity,
+  `user` varchar(200) default '' NOT NULL,
+  `event` varchar(40) default '' NOT NULL,
+  `object` varchar(200) default '' NOT NULL,
+  `title` varchar(250) default NULL NULL,
+  `type` varchar(200) default NULL NULL,
+  `url` varchar(250) default NULL NULL,
+  `email` varchar(200) default NULL NULL,
   PRIMARY KEY (`user`(50),event,object(100),email(50))
 ) ENGINE=MyISAM
 go
@@ -4461,17 +4464,17 @@ go
 
 
 CREATE TABLE "tiki_userfiles" (
-  "user" varchar(200) default '' NOT NULL,
-  "fileId" numeric(12 ,0) identity,
-  "name" varchar(200) default NULL NULL,
-  "filename" varchar(200) default NULL NULL,
-  "filetype" varchar(200) default NULL NULL,
-  "filesize" varchar(200) default NULL NULL,
-  "data" image default '',
-  "hits" numeric(8,0) default NULL NULL,
-  "isFile" char(1) default NULL NULL,
-  "path" varchar(255) default NULL NULL,
-  "created" numeric(14,0) default NULL NULL,
+  `user` varchar(200) default '' NOT NULL,
+  `fileId numeric(12 ,0) identity,
+  `name` varchar(200) default NULL NULL,
+  `filename` varchar(200) default NULL NULL,
+  `filetype` varchar(200) default NULL NULL,
+  `filesize` varchar(200) default NULL NULL,
+  `data` image,
+  `hits` numeric(8,0) default NULL NULL,
+  `isFile` char(1) default NULL NULL,
+  `path` varchar(255) default NULL NULL,
+  `created` numeric(14,0) default NULL NULL,
   PRIMARY KEY (fileId)
 ) ENGINE=MyISAM  
 go
@@ -4483,9 +4486,9 @@ go
 
 
 CREATE TABLE "tiki_userpoints" (
-  "user" varchar(200) default '' NOT NULL,
-  "points" decimal(8,2) default NULL NULL,
-  "voted" numeric(8,0) default NULL
+  `user` varchar(200) default '' NOT NULL,
+  `points` decimal(8,2) default NULL NULL,
+  `voted` numeric(8,0) default NULL
 ) ENGINE=MyISAM
 go
 
@@ -4496,10 +4499,10 @@ go
 
 
 CREATE TABLE "tiki_users" (
-  "user" varchar(200) default '' NOT NULL,
-  "password" varchar(40) default NULL NULL,
-  "email" varchar(200) default NULL NULL,
-  "lastLogin" numeric(14,0) default NULL NULL,
+  `user` varchar(200) default '' NOT NULL,
+  `password` varchar(40) default NULL NULL,
+  `email` varchar(200) default NULL NULL,
+  `lastLogin` numeric(14,0) default NULL NULL,
   PRIMARY KEY (user)
 ) ENGINE=MyISAM
 go
@@ -4511,12 +4514,12 @@ go
 
 
 CREATE TABLE "tiki_webmail_contacts" (
-  "contactId" numeric(12 ,0) identity,
-  "firstName" varchar(80) default NULL NULL,
-  "lastName" varchar(80) default NULL NULL,
-  "email" varchar(250) default NULL NULL,
-  "nickname" varchar(200) default NULL NULL,
-  "user" varchar(200) default '' NOT NULL,
+  `contactId numeric(12 ,0) identity,
+  `firstName` varchar(80) default NULL NULL,
+  `lastName` varchar(80) default NULL NULL,
+  `email` varchar(250) default NULL NULL,
+  `nickname` varchar(200) default NULL NULL,
+  `user` varchar(200) default '' NOT NULL,
   PRIMARY KEY (contactId)
 ) ENGINE=MyISAM  
 go
@@ -4528,8 +4531,8 @@ go
 
 
 CREATE TABLE "tiki_webmail_contacts_groups" (
-  "contactId" numeric(12,0) NOT NULL,
-  "groupName" varchar(255) NOT NULL,
+  `contactId` numeric(12,0) NOT NULL,
+  `groupName` varchar(255) NOT NULL,
   PRIMARY KEY (contactId,groupName(200))
 ) ENGINE=MyISAM 
 go
@@ -4541,13 +4544,13 @@ go
 
 
 CREATE TABLE "tiki_webmail_messages" (
-  "accountId" numeric(12,0) default '0' NOT NULL,
-  "mailId" varchar(255) default '' NOT NULL,
-  "user" varchar(200) default '' NOT NULL,
-  "isRead" char(1) default NULL NULL,
-  "isReplied" char(1) default NULL NULL,
-  "isFlagged" char(1) default NULL NULL,
-  "flaggedMsg" varchar(50) default '',
+  `accountId` numeric(12,0) default '0' NOT NULL,
+  `mailId` varchar(255) default '' NOT NULL,
+  `user` varchar(200) default '' NOT NULL,
+  `isRead` char(1) default NULL NULL,
+  `isReplied` char(1) default NULL NULL,
+  `isFlagged` char(1) default NULL NULL,
+  `flaggedMsg` varchar(50) default '',
   PRIMARY KEY (accountId,mailId)
 ) ENGINE=MyISAM
 go
@@ -4559,17 +4562,17 @@ go
 
 
 CREATE TABLE "tiki_wiki_attachments" (
-  "attId" numeric(12 ,0) identity,
-  "page" varchar(200) default '' NOT NULL,
-  "filename" varchar(80) default NULL NULL,
-  "filetype" varchar(80) default NULL NULL,
-  "filesize" numeric(14,0) default NULL NULL,
-  "user" varchar(200) default '' NOT NULL,
-  "data" image default '',
-  "path" varchar(255) default NULL NULL,
-  "hits" numeric(10,0) default NULL NULL,
-  "created" numeric(14,0) default NULL NULL,
-  "comment" varchar(250) default NULL NULL,
+  `attId numeric(12 ,0) identity,
+  `page` varchar(200) default '' NOT NULL,
+  `filename` varchar(80) default NULL NULL,
+  `filetype` varchar(80) default NULL NULL,
+  `filesize` numeric(14,0) default NULL NULL,
+  `user` varchar(200) default '' NOT NULL,
+  `data` image,
+  `path` varchar(255) default NULL NULL,
+  `hits` numeric(10,0) default NULL NULL,
+  `created` numeric(14,0) default NULL NULL,
+  `comment` varchar(250) default NULL NULL,
   PRIMARY KEY (attId)
 ) ENGINE=MyISAM  
 go
@@ -4583,7 +4586,7 @@ go
 
 
 CREATE TABLE "tiki_zones" (
-  "zone" varchar(40) default '' NOT NULL,
+  `zone` varchar(40) default '' NOT NULL,
   PRIMARY KEY (zone)
 ) ENGINE=MyISAM
 go
@@ -4595,12 +4598,12 @@ go
 
 
 CREATE TABLE "tiki_download" (
-  "id" numeric(11 ,0) identity,
-  "object" varchar(255) default '' NOT NULL,
-  "userId" numeric(8,0) default '0' NOT NULL,
-  "type" varchar(20) default '' NOT NULL,
-  "date" numeric(14,0) default '0' NOT NULL,
-  "IP" varchar(50) default '' NOT NULL,
+  `id numeric(11 ,0) identity,
+  `object` varchar(255) default '' NOT NULL,
+  `userId` numeric(8,0) default '0' NOT NULL,
+  `type` varchar(20) default '' NOT NULL,
+  `date` numeric(14,0) default '0' NOT NULL,
+  `IP` varchar(50) default '' NOT NULL,
   PRIMARY KEY (id)
 ) ENGINE=MyISAM
 go
@@ -4620,9 +4623,9 @@ go
 
 
 CREATE TABLE "users_grouppermissions" (
-  "groupName" varchar(255) default '' NOT NULL,
-  "permName" varchar(40) default '' NOT NULL,
-  "value" char(1) default '',
+  `groupName` varchar(255) default '' NOT NULL,
+  `permName` varchar(40) default '' NOT NULL,
+  `value` char(1) default '',
   PRIMARY KEY (groupName(30),permName)
 ) ENGINE=MyISAM
 go
@@ -4640,20 +4643,20 @@ go
 
 
 CREATE TABLE "users_groups" (
-  "id" numeric(11 ,0) identity,
-  "groupName" varchar(255) default '' NOT NULL,
-  "groupDesc" varchar(255) default NULL NULL,
-  "groupHome" varchar(255) default '',
-  "usersTrackerId" numeric(11,0) default NULL NULL,
-  "groupTrackerId" numeric(11,0) default NULL NULL,
-  "usersFieldId" numeric(11,0) default NULL NULL,
-  "groupFieldId" numeric(11,0) default NULL NULL,
-  "registrationChoice" char(1) default NULL NULL,
-  "registrationUsersFieldIds" text default '',
-  "userChoice" char(1) default NULL NULL,
-  "groupDefCat" numeric(12,0) default 0,
-  "groupTheme" varchar(255) default '',
-  "isExternal" char(1) default 'n',
+  `id numeric(11 ,0) identity,
+  `groupName` varchar(255) default '' NOT NULL,
+  `groupDesc` varchar(255) default NULL NULL,
+  `groupHome` varchar(255),
+  `usersTrackerId` numeric(11,0),
+  `groupTrackerId` numeric(11,0),
+  `usersFieldId` numeric(11,0),
+  `groupFieldId` numeric(11,0),
+  `registrationChoice` char(1) default NULL NULL,
+  `registrationUsersFieldIds` text,
+  `userChoice` char(1) default NULL NULL,
+  `groupDefCat` numeric(12,0) default 0,
+  `groupTheme` varchar(255) default '',
+  `isExternal` char(1) default 'n',
   PRIMARY KEY (id)
 ) ENGINE=MyISAM 
 go
@@ -4667,10 +4670,10 @@ go
 
 
 CREATE TABLE "users_objectpermissions" (
-  "groupName" varchar(255) default '' NOT NULL,
-  "permName" varchar(40) default '' NOT NULL,
-  "objectType" varchar(20) default '' NOT NULL,
-  "objectId" varchar(32) default '' NOT NULL,
+  `groupName` varchar(255) default '' NOT NULL,
+  `permName` varchar(40) default '' NOT NULL,
+  `objectType` varchar(20) default '' NOT NULL,
+  `objectId` varchar(32) default '' NOT NULL,
   PRIMARY KEY (objectId, objectType, groupName(30),permName)
 ) ENGINE=MyISAM
 go
@@ -4682,12 +4685,12 @@ go
 
 
 CREATE TABLE "users_permissions" (
-  "permName" varchar(40) default '' NOT NULL,
-  "permDesc" varchar(250) default NULL NULL,
-  "level" varchar(80) default NULL NULL,
-  "type" varchar(20) default NULL NULL,
-  "admin" varchar(1) default NULL NULL,
-  "feature_check" VARCHAR(50) NULL,
+  `permName` varchar(40) default '' NOT NULL,
+  `permDesc` varchar(250) default NULL NULL,
+  `level` varchar(80) default NULL NULL,
+  `type` varchar(20) default NULL NULL,
+  `admin` varchar(1) default NULL NULL,
+  `feature_check` VARCHAR(50) NULL,
   PRIMARY KEY (permName)
 ) ENGINE=MyISAM
 go
@@ -5160,6 +5163,10 @@ go
 
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_subscribe_newsletters', 'Can subscribe to newsletters', 'basic', 'newsletters')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_list_newsletters', 'Can list newsletters', 'basic', 'newsletters')
 go
 
 
@@ -5763,8 +5770,6 @@ UPDATE users_permissions SET feature_check = 'feature_wiki_comments' WHERE permN
 go
 
 
-
---Added 20081018
 UPDATE users_permissions SET feature_check = 'feature_wiki_export' WHERE permName = 'tiki_p_export_wiki'
 go
 
@@ -5798,8 +5803,8 @@ go
 
 
 CREATE TABLE "users_usergroups" (
-  "userId" numeric(8,0) default '0' NOT NULL,
-  "groupName" varchar(255) default '' NOT NULL,
+  `userId` numeric(8,0) default '0' NOT NULL,
+  `groupName` varchar(255) default '' NOT NULL,
   PRIMARY KEY (userId,groupName(30))
 ) ENGINE=MyISAM
 go
@@ -5824,31 +5829,31 @@ go
 
 
 CREATE TABLE "users_users" (
-  "userId" numeric(8 ,0) identity,
-  "email" varchar(200) default NULL NULL,
-  "login" varchar(200) default '' NOT NULL,
-  "password" varchar(30) default '',
-  "provpass" varchar(30) default NULL NULL,
-  "default_group" varchar(255) default '',
-  "lastLogin" numeric(14,0) default NULL NULL,
-  "currentLogin" numeric(14,0) default NULL NULL,
-  "registrationDate" numeric(14,0) default NULL NULL,
-  "challenge" varchar(32) default NULL NULL,
-  "pass_confirm" numeric(14,0) default NULL NULL,
-  "email_confirm" numeric(14,0) default NULL NULL,
-  "hash" varchar(34) default NULL NULL,
-  "created" numeric(14,0) default NULL NULL,
-  "avatarName" varchar(80) default NULL NULL,
-  "avatarSize" numeric(14,0) default NULL NULL,
-  "avatarFileType" varchar(250) default NULL NULL,
-  "avatarData" image default '',
-  "avatarLibName" varchar(200) default NULL NULL,
-  "avatarType" char(1) default NULL NULL,
-  "score" numeric(11,0) default 0 NOT NULL,
-  "valid" varchar(32) default NULL NULL,
-  "unsuccessful_logins" numeric(14,0) default 0,
-  "openid_url" varchar(255) default NULL NULL,
-  "waiting" char(1) default NULL NULL,
+  `userId numeric(8 ,0) identity,
+  `email` varchar(200) default NULL NULL,
+  `login` varchar(200) default '' NOT NULL,
+  `password` varchar(30) default '',
+  `provpass` varchar(30) default NULL NULL,
+  `default_group` varchar(255),
+  `lastLogin` numeric(14,0) default NULL NULL,
+  `currentLogin` numeric(14,0) default NULL NULL,
+  `registrationDate` numeric(14,0) default NULL NULL,
+  `challenge` varchar(32) default NULL NULL,
+  `pass_confirm` numeric(14,0) default NULL NULL,
+  `email_confirm` numeric(14,0) default NULL NULL,
+  `hash` varchar(34) default NULL NULL,
+  `created` numeric(14,0) default NULL NULL,
+  `avatarName` varchar(80) default NULL NULL,
+  `avatarSize` numeric(14,0) default NULL NULL,
+  `avatarFileType` varchar(250) default NULL NULL,
+  `avatarData` image,
+  `avatarLibName` varchar(200) default NULL NULL,
+  `avatarType` char(1) default NULL NULL,
+  `score` numeric(11,0) default 0 NOT NULL,
+  `valid` varchar(32) default NULL NULL,
+  `unsuccessful_logins` numeric(14,0) default 0,
+  `openid_url` varchar(255) default NULL NULL,
+  `waiting` char(1) default NULL NULL,
   PRIMARY KEY (userId)
 ) ENGINE=MyISAM  
 go
@@ -5863,7 +5868,7 @@ go
 CREATE  INDEX "users_users_openid_url" ON "users_users"("openid_url")
 go
 
------- Administrator account
+-- Administrator account
 INSERT INTO "users_users" ("email","login","password","hash") VALUES ('','admin','admin','f6fdffe48c908deb0f4c3bd36c032e72')
 go
 
@@ -5890,15 +5895,15 @@ go
 
 
 CREATE TABLE "tiki_integrator_reps" (
-  "repID" numeric(11 ,0) identity,
-  "name" varchar(255) default '' NOT NULL,
-  "path" varchar(255) default '' NOT NULL,
-  "start_page" varchar(255) default '' NOT NULL,
-  "css_file" varchar(255) default '' NOT NULL,
-  "visibility" char(1) default 'y' NOT NULL,
-  "cacheable" char(1) default 'y' NOT NULL,
-  "expiration" numeric(11,0) default '0' NOT NULL,
-  "description" text NOT NULL,
+  `repID numeric(11 ,0) identity,
+  `name` varchar(255) default '' NOT NULL,
+  `path` varchar(255) default '' NOT NULL,
+  `start_page` varchar(255) default '' NOT NULL,
+  `css_file` varchar(255) default '' NOT NULL,
+  `visibility` char(1) default 'y' NOT NULL,
+  `cacheable` char(1) default 'y' NOT NULL,
+  `expiration` numeric(11,0) default '0' NOT NULL,
+  `description` text NOT NULL,
   PRIMARY KEY (repID)
 ) ENGINE=MyISAM
 go
@@ -5915,16 +5920,16 @@ go
 
 
 CREATE TABLE "tiki_integrator_rules" (
-  "ruleID" numeric(11 ,0) identity,
-  "repID" numeric(11,0) default '0' NOT NULL,
-  "ord" numeric(2,0) default '0' NOT NULL,
-  "srch" image NOT NULL,
-  "repl" image NOT NULL,
-  "type" char(1) default 'n' NOT NULL,
-  "casesense" char(1) default 'y' NOT NULL,
-  "rxmod" varchar(20) default '' NOT NULL,
-  "enabled" char(1) default 'n' NOT NULL,
-  "description" text NOT NULL,
+  `ruleID numeric(11 ,0) identity,
+  `repID` numeric(11,0) default '0' NOT NULL,
+  `ord` numeric(2,0) default '0' NOT NULL,
+  `srch` image NOT NULL,
+  `repl` image NOT NULL,
+  `type` char(1) default 'n' NOT NULL,
+  `casesense` char(1) default 'y' NOT NULL,
+  `rxmod` varchar(20) default '' NOT NULL,
+  `enabled` char(1) default 'n' NOT NULL,
+  `description` text NOT NULL,
   PRIMARY KEY (ruleID)
 ) ENGINE=MyISAM
 go
@@ -5951,11 +5956,11 @@ go
 
 
 CREATE TABLE "tiki_quicktags" (
-  "tagId" numeric(4 ,0) identity,
-  "taglabel" varchar(255) default NULL NULL,
-  "taginsert" text default '',
-  "tagicon" varchar(255) default NULL NULL,
-  "tagcategory" varchar(255) default NULL NULL,
+  `tagId numeric(4 ,0) identity,
+  `taglabel` varchar(255) default NULL NULL,
+  `taginsert` text,
+  `tagicon` varchar(255) default NULL NULL,
+  `tagcategory` varchar(255) default NULL NULL,
   PRIMARY KEY (tagId)
 ) ENGINE=MyISAM  
 go
@@ -6630,10 +6635,10 @@ go
 
 
 CREATE TABLE "tiki_translated_objects" (
-  "traId" numeric(14 ,0) identity,
-  "type" varchar(50) NOT NULL,
-  "objId" varchar(255) NOT NULL,
-  "lang" varchar(16) default NULL NULL,
+  `traId numeric(14 ,0) identity,
+  `type` varchar(50) NOT NULL,
+  `objId` varchar(255) NOT NULL,
+  `lang` varchar(16) default NULL NULL,
   PRIMARY KEY (type, objId)
 ) ENGINE=MyISAM 
 go
@@ -6647,8 +6652,8 @@ go
 
 
 CREATE TABLE "tiki_friends" (
-  "user" varchar(200) default '' NOT NULL,
-  "friend" varchar(200) default '' NOT NULL,
+  `user` varchar(200) default '' NOT NULL,
+  `friend` varchar(200) default '' NOT NULL,
   PRIMARY KEY (`user`(120),friend(120))
 ) ENGINE=MyISAM
 go
@@ -6660,9 +6665,9 @@ go
 
 
 CREATE TABLE "tiki_friendship_requests" (
-  "userFrom" varchar(200) default '' NOT NULL,
-  "userTo" varchar(200) default '' NOT NULL,
-  "tstamp" timestamp NOT NULL,
+  `userFrom` varchar(200) default '' NOT NULL,
+  `userTo` varchar(200) default '' NOT NULL,
+  `tstamp` timestamp NOT NULL,
   PRIMARY KEY (userFrom(120),userTo(120))
 ) ENGINE=MyISAM
 go
@@ -6809,10 +6814,10 @@ go
 
 
 CREATE TABLE "tiki_users_score" (
-  "user" char(200) default '' NOT NULL,
-  "event_id" char(200) default '' NOT NULL,
-  "expire" numeric(14,0) default '0' NOT NULL,
-  "tstamp" timestamp NOT NULL,
+  `user` char(200) default '' NOT NULL,
+  `event_id` char(200) default '' NOT NULL,
+  `expire` numeric(14,0) default '0' NOT NULL,
+  `tstamp` timestamp NOT NULL,
   PRIMARY KEY (user(110),event_id(110))
 ) ENGINE=MyISAM
 go
@@ -6826,8 +6831,8 @@ go
 
 
 CREATE TABLE "tiki_file_handlers" (
-  "mime_type" varchar(64) default NULL NULL,
-  "cmd" varchar(238) default NULL
+  `mime_type` varchar(64) default NULL NULL,
+  `cmd` varchar(238) default NULL
 ) ENGINE=MyISAM
 go
 
@@ -6838,10 +6843,10 @@ go
 
 
 CREATE TABLE "tiki_stats" (
-  "object" varchar(255) default '' NOT NULL,
-  "type" varchar(20) default '' NOT NULL,
-  "day" numeric(14,0) default '0' NOT NULL,
-  "hits" numeric(14,0) default '0' NOT NULL,
+  `object` varchar(255) default '' NOT NULL,
+  `type` varchar(20) default '' NOT NULL,
+  `day` numeric(14,0) default '0' NOT NULL,
+  `hits` numeric(14,0) default '0' NOT NULL,
   PRIMARY KEY (object(200),type,day)
 ) ENGINE=MyISAM
 go
@@ -6853,12 +6858,12 @@ go
 
 
 CREATE TABLE "tiki_events" (
-  "callback_type" numeric(1,0) default '3' NOT NULL,
+  `callback_type` numeric(1,0) default '3' NOT NULL,
   `order` numeric(2,0) default '50' NOT NULL,
-  "event" varchar(200) default '' NOT NULL,
-  "file" varchar(200) default '' NOT NULL,
-  "object" varchar(200) default '' NOT NULL,
-  "method" varchar(200) default '' NOT NULL,
+  `event` varchar(200) default '' NOT NULL,
+  `file` varchar(200) default '' NOT NULL,
+  `object` varchar(200) default '' NOT NULL,
+  `method` varchar(200) default '' NOT NULL,
   PRIMARY KEY (callback_type,`order`)
 ) ENGINE=MyISAM
 go
@@ -6891,12 +6896,12 @@ go
 
 
 CREATE TABLE "tiki_registration_fields" (
-  "id" numeric(11 ,0) identity,
-  "field" varchar(255) default '' NOT NULL,
-  "name" varchar(255) default NULL NULL,
-  "type" varchar(255) default 'text' NOT NULL,
+  `id numeric(11 ,0) identity,
+  `field` varchar(255) default '' NOT NULL,
+  `name` varchar(255) default NULL NULL,
+  `type` varchar(255) default 'text' NOT NULL,
   `show` numeric(1,0) default '1' NOT NULL,
-  "size" varchar(10) default '10',
+  `size` varchar(10) default '10',
   PRIMARY KEY (id)
 ) ENGINE=MyISAM
 go
@@ -6908,12 +6913,12 @@ go
 
 
 CREATE TABLE "tiki_actionlog_conf" (
-  "id" numeric(11 ,0) identity,
-  "action" varchar(32) default '' NOT NULL,
-  "objectType" varchar(32) default '' NOT NULL,
- `status` char(1) default '',
-PRIMARY KEY (action, objectType),
-KEY (id)
+  `id numeric(11 ,0) identity,
+  `action` varchar(32) default '' NOT NULL,
+  `objectType` varchar(32) default '' NOT NULL,
+  `status` char(1) default '',
+  PRIMARY KEY (action, objectType),
+  KEY (id)
 ) ENGINE=MyISAM
 go
 
@@ -7073,10 +7078,10 @@ go
 
 
 CREATE TABLE "tiki_freetags" (
-  "tagId" numeric(10 ,0) identity,
-  "tag" varchar(30) default '' NOT NULL,
-  "raw_tag" varchar(50) default '' NOT NULL,
-  "lang" varchar(16) NULL,
+  `tagId numeric(10 ,0) identity,
+  `tag` varchar(30) default '' NOT NULL,
+  `raw_tag` varchar(50) default '' NOT NULL,
+  `lang` varchar(16) NULL,
   PRIMARY KEY (tagId)
 ) ENGINE=MyISAM
 go
@@ -7088,10 +7093,10 @@ go
 
 
 CREATE TABLE "tiki_freetagged_objects" (
-  "tagId" numeric(12 ,0) identity,
-  "objectId" numeric(11,0) default 0 NOT NULL,
-  "user" varchar(200) default '',
-  "created" numeric(14,0) default '0' NOT NULL,
+  `tagId numeric(12 ,0) identity,
+  `objectId` numeric(11,0) default 0 NOT NULL,
+  `user` varchar(200) default '',
+  `created` numeric(14,0) default '0' NOT NULL,
   PRIMARY KEY (tagId,user,objectId),
   KEY (tagId),
   KEY (user),
@@ -7106,9 +7111,9 @@ go
 
 
 CREATE TABLE "tiki_contributions" (
-  "contributionId" numeric(12 ,0) identity,
-  "name" varchar(100) default NULL NULL,
-  "description" varchar(250) default NULL NULL,
+  `contributionId numeric(12 ,0) identity,
+  `name` varchar(100) default NULL NULL,
+  `description` varchar(250) default NULL NULL,
   PRIMARY KEY (contributionId)
 ) ENGINE=MyISAM
 go
@@ -7120,8 +7125,8 @@ go
 
 
 CREATE TABLE "tiki_contributions_assigned" (
-  "contributionId" numeric(12,0) NOT NULL,
-  "objectId" numeric(12,0) NOT NULL,
+  `contributionId` numeric(12,0) NOT NULL,
+  `objectId` numeric(12,0) NOT NULL,
   PRIMARY KEY (objectId, contributionId)
 ) ENGINE=MyISAM
 go
@@ -7185,11 +7190,11 @@ go
 
 
 CREATE TABLE "tiki_pages_changes" (
-  "page_id" numeric(14,0) default NULL NULL,
-  "version" numeric(10,0) default NULL NULL,
-  "segments_added" numeric(10,0) default NULL NULL,
-  "segments_removed" numeric(10,0) default NULL NULL,
-  "segments_total" numeric(10,0) default NULL NULL,
+  `page_id` numeric(14,0),
+  `version` numeric(10,0),
+  `segments_added` numeric(10,0),
+  `segments_removed` numeric(10,0),
+  `segments_total` numeric(10,0),
   PRIMARY KEY(page_id, version)
 )
 go
@@ -7219,13 +7224,13 @@ go
 
 
 CREATE TABLE "tiki_profile_symbols" (
-	`domain` VARCHAR(50) NOT NULL,
-	`profile` VARCHAR(50) NOT NULL,
-	`object` VARCHAR(50) NOT NULL,
-	`type` VARCHAR(20) NOT NULL,
-	`value` VARCHAR(50) NOT NULL,
-	`named` ENUM('y','n') NOT NULL,
-	`creation_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  `domain` VARCHAR(50) NOT NULL,
+  `profile` VARCHAR(50) NOT NULL,
+  `object` VARCHAR(50) NOT NULL,
+  `type` VARCHAR(20) NOT NULL,
+  `value` VARCHAR(50) NOT NULL,
+  `named` ENUM('y','n') NOT NULL,
+  `creation_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
   PRIMARY KEY ( `domain`, `profile`, `object` ),
   "INDEX"(`named`)
 )
@@ -7263,8 +7268,8 @@ go
 
 
 CREATE TABLE "tiki_schema" (
-  "patch_name" VARCHAR(100) PRIMARY KEY,
-  "install_date" TIMESTAMP
+  `patch_name` VARCHAR(100) PRIMARY KEY,
+  `install_date` TIMESTAMP
 ) ENGINE=MyISAM
 go
 
@@ -7275,9 +7280,9 @@ go
 
 
 CREATE TABLE "tiki_semantic_tokens" (
-  "token" VARCHAR(15) PRIMARY KEY,
-  "label" VARCHAR(25) NOT NULL,
-  "invert_token" VARCHAR(15)
+  `token` VARCHAR(15) PRIMARY KEY,
+  `label` VARCHAR(25) NOT NULL,
+  `invert_token` VARCHAR(15)
 ) ENGINE=MyISAM 
 go
 
@@ -7294,11 +7299,11 @@ go
 
 
 CREATE TABLE "tiki_webservice" (
-  "service" VARCHAR(25) NOT NULL PRIMARY KEY,
-  "url" VARCHAR(250),
-  "body" TEXT,
-  "schema_version" VARCHAR(5),
-  "schema_documentation" VARCHAR(250)
+  `service` VARCHAR(25) NOT NULL PRIMARY KEY,
+  `url` VARCHAR(250),
+  `body` TEXT,
+  `schema_version` VARCHAR(5),
+  `schema_documentation` VARCHAR(250)
 ) ENGINE=MyISAM 
 go
 
@@ -7309,12 +7314,12 @@ go
 
 
 CREATE TABLE "tiki_webservice_template" (
-  "service" VARCHAR(25) NOT NULL,
-  "template" VARCHAR(25) NOT NULL,
-  "engine" VARCHAR(15) NOT NULL,
-  "output" VARCHAR(15) NOT NULL,
-  "content" TEXT NOT NULL,
-  "last_modif" INT,
+  `service` VARCHAR(25) NOT NULL,
+  `template` VARCHAR(25) NOT NULL,
+  `engine` VARCHAR(15) NOT NULL,
+  `output` VARCHAR(15) NOT NULL,
+  `content` TEXT NOT NULL,
+  `last_modif` INT,
   PRIMARY KEY( service, template )
 ) ENGINE=MyISAM 
 go
@@ -7327,10 +7332,10 @@ go
 
 
 CREATE TABLE "tiki_groupalert" (
-  "groupName" varchar(255) default '' NOT NULL,
-  "objectType" varchar( 20 ) default '' NOT NULL,
-  "objectId"  varchar(10) default '' NOT NULL,
-  "displayEachuser"  char( 1 ) default NULL NULL ,
+  `groupName` varchar(255) default '' NOT NULL,
+  `objectType` varchar( 20 ) default '' NOT NULL,
+  `objectId` varchar(10) default '' NOT NULL,
+  `displayEachuser` char( 1 ) default NULL NULL ,
   PRIMARY KEY ( objectType,objectId )
 ) ENGINE=MyISAM 
 go
@@ -7354,6 +7359,7 @@ CREATE TABLE `tiki_sent_newsletters_files` (
 go
 
 
+
 -- DROP TABLE `tiki_sefurl_regex_out`
 go
 
@@ -7368,10 +7374,11 @@ CREATE TABLE `tiki_sefurl_regex_out` (
   `comment` varchar(256),
   `order` numeric(11,0) NULL default 0,
   PRIMARY KEY(`id`),
-  UNIQUE KEY `left` (`left`(256)),
+  UNIQUE KEY `left` (`left`(128)),
   "INDEX" `idx1` (silent, type, feature(30))
 )
 go
+
 
 
 INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`) VALUES('tiki-index.php\\?page=(.+)', '$1', 'wiki', 'feature_wiki')
@@ -7681,12 +7688,12 @@ go
 
 
 CREATE TABLE "tiki_plugin_security" (
-  "fingerprint" VARCHAR(200) NOT NULL PRIMARY KEY,
-  "status" VARCHAR(10) NOT NULL,
-  "approval_by" VARCHAR(200) NULL,
-  "last_update" TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-  "last_objectType" VARCHAR(20) NOT NULL,
-  "last_objectId" VARCHAR(200) NOT NULL
+  `fingerprint` VARCHAR(200) NOT NULL PRIMARY KEY,
+  `status` VARCHAR(10) NOT NULL,
+  `approval_by` VARCHAR(200) NULL,
+  `last_update` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  `last_objectType` VARCHAR(20) NOT NULL,
+  `last_objectId` VARCHAR(200) NOT NULL
 )
 go
 
@@ -7729,19 +7736,27 @@ go
 
 
 
+-- DROP TABLE `tiki_perspectives`
+go
+
+
 CREATE TABLE "tiki_perspectives" (
-  "perspectiveId" int NOT NULL AUTO_INCREMENT,
-  "name" varchar(100) NOT NULL,
+  `perspectiveId` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
   PRIMARY KEY( perspectiveId )
 ) ENGINE=MyISAM
 go
 
 
 
+-- DROP TABLE `tiki_perspective_preferences`
+go
+
+
 CREATE TABLE "tiki_perspective_preferences" (
-  "perspectiveId" int NOT NULL,
-  "pref" varchar(40) NOT NULL,
-  "value" text default '',
+  `perspectiveId` int NOT NULL,
+  `pref` varchar(40) NOT NULL,
+  `value` text,
   PRIMARY KEY( perspectiveId, pref )
 ) ENGINE=MyISAM
 go

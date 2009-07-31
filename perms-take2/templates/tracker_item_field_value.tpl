@@ -277,6 +277,14 @@
 		{$field_value.value|escape|default:"&nbsp;"}
 	{/if}
 
+{* -------------------- url -------------------- *}
+{elseif $field_value.type eq 'L'}
+	{if $list_mode eq 'csv'}
+		{$field_value.value|escape}
+	{else}
+		{wiki line='1'}{$field_value.value}{/wiki}
+	{/if}
+
 {* -------------------- rating -------------------- *}
 {elseif $field_value.type eq 's' and ($field_value.name eq "Rating" or $field_value.name eq tra("Rating")) and $tiki_p_tracker_view_ratings eq 'y'}
 	{if $list_mode eq 'csv'}

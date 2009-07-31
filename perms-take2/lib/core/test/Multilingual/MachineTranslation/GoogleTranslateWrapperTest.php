@@ -8,10 +8,10 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapperTest extends TikiTes
 	
 //  protected $backupGlobals = FALSE;
 
-   public function test_This_is_how_you_create_a_GoogleTranslateWrapper() {
+   public function _test_This_is_how_you_create_a_GoogleTranslateWrapper() {
       $source_lang = 'en';
       $target_lang = 'it'; 	   	
-      $translator = new Multilingual_MachineTranslation_GoogleTranslateWrapper($source_lang,$target_lang);
+      $translator = new Multilingual_MachineTranslation_GoogleTranslateWrapper($source_lang,$target_lang, false);
    }
    
 
@@ -25,45 +25,53 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapperTest extends TikiTes
    protected function setUp()  {
       $source_lang = 'en';
       $target_lang = 'it'; 	
-      $this->translator = new Multilingual_MachineTranslation_GoogleTranslateWrapper($source_lang,$target_lang);
+      //3rd param false for translating wiki syntax, true for html
+      $this->translator = new Multilingual_MachineTranslation_GoogleTranslateWrapper($source_lang,$target_lang, true);
    }
    
    
-   public function test_This_is_how_you_translate_some_text() {
+   public function _test_This_is_how_you_translate_some_text() {
    	  $text = "Hello";
    	  $translation = $this->translator->translateText($text);
    	  $this->assertEquals("Ciao", $translation, "The translation was not correct for text: $text.");
    }
 
-   public function test_This_is_how_you_translate_sentence_by_sentence() {
+   public function _test_This_is_how_you_translate_sentence_by_sentence() {
    	  $text = "Hello world! How are you?";
    	  $translation = $this->translator->translateSentenceBySentence($text);
    	  $this->assertEquals("Ciao mondo!Come stai?", $translation, "The translation was not correct for text: $text.");
    }
    
-   public function test_translate_text_that_translates_into_accentuated_text() {
+   public function _test_translate_text_that_translates_into_accentuated_text() {
    	  $text = "Nothing in the world is ever completely wrong; even a stopped clock is right twice a day.";
    	  $translation = $this->translator->translateText($text);
    	  $this->assertEquals("Niente al mondo è mai completamente sbagliato; fermato anche un orologio è giusto due volte al giorno.", $translation, "The translation was not correct for text that translates into text that contains accentuated chars.");
    }
 
-   public function test_translate_text_with_up_to_1800_chars() {
+   public function _test_translate_text_with_up_to_1800_chars() {
    	  $text = str_repeat("Nothing in the world is ever completely wrong; even a stopped clock is right twice a day. ",19); //max url: 2065 chars; urlencoded string: 1980
    	  $translation = $this->translator->translateText($text);
    	  $this->assertEquals(trim(str_repeat("Niente al mondo è mai completamente sbagliato; fermato anche un orologio è giusto due volte al giorno. ",19)), $translation, "The translation was not correct for text of 1800 chars.");
    }
    
-   public function test_translate_text_with_more_than_1800_chars() {
+   public function _test_translate_text_with_more_than_1800_chars() {
    	  $text = str_repeat("Nothing in the world is ever completely wrong; even a stopped clock is right twice a day. ",24); 
    	  $translation = $this->translator->translateText($text);
    	  $this->assertEquals(trim(str_repeat("Niente al mondo è mai completamente sbagliato; fermato anche un orologio è giusto due volte al giorno. ",24)), $translation, "The translation was not correct for text of 1800 chars.");
    }
 
-   public function test_This_is_how_you_translate_some_text2() {
+   public function _test_This_is_how_you_translate_some_text2() {
    	  $text = "split";
    	  $translation = $this->translator->translateText($text);
    	  $this->assertEquals("dividere", $translation, "The translation was not correct for text: $text.");
    }
+
+
+////////////////////////////////////////////////
+//
+//  Tests for machine translating html content
+//
+///////////////////////////////////////////////
 
 
    public function test_Google_should_not_translate_html_syntax() {
@@ -84,7 +92,7 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapperTest extends TikiTes
 	  $text = "<ul><li>You want to get started quickly<br /></li></ul>";
 	  $translator = new Multilingual_MachineTranslation_GoogleTranslateWrapper('en','fr');
 	  $translation = $translator->translateText($text);
-   	  $this->assertEquals("<ul><li>Vous voulez démarrer rapidement<br /></li></ul>", $translation, "The translation was not correct for text: $text.");
+   	  $this->assertEquals('<ul><li>Vous voulez démarrer rapidement<br /></li></ul>', $translation, "The translation was not correct for text: $text.");
 	}
 
 	public function test_that_parens_stay_after_translation() {
@@ -115,33 +123,37 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapperTest extends TikiTes
 	  	$translation = $translator->translateText($text);
 		$this->assertEquals('<h3 class="showhide_heading" id="Get_Started_using_Profiles"><a class="wiki"  href="tiki-admin.php?profile=&amp;category=Featured+profiles&amp;repository=http%3a%2f%2fprofiles.tikiwiki.org%2fprofiles&amp;preloadlist=y&amp;page=profiles&amp;list=List#profile-results" rel="">la première utilisation de panneau admin</a><br /></h3><h3 class="showhide_heading" id="Get_Started_using_Profiles"><a class="wiki"  href="tiki-admin.php?profile=&amp;category=Featured+profiles&amp;repository=http%3a%2f%2fprofiles.tikiwiki.org%2fprofiles&amp;preloadlist=y&amp;page=profiles&amp;list=List#profile-results" rel="">la première utilisation de profils</a><br /></h3>', $translation, "The translation was not correct for text: $text.");	
 	}
-//Tests below are desactivated. For now we will be machine translating already 
-//rendered html content. Keeping the tests if we decide otherwise. 
+
+////////////////////////////////////////////////
+//
+//  Tests for machine translating wiki syntax
+//
+///////////////////////////////////////////////
 
    public function _test_Google_should_not_translate_wiki_plugin_markup() {
    	  $text = "Hello{SPLIT}world";
    	  $translation = $this->translator->translateText($text);
-	  $this->assertRegExp("/Ciao\s*{SPLIT}\s*mondo/", $translation, "The translation was not correct for text: $text.");
+	  $this->assertEquals("Ciao{SPLIT}mondo", $translation, "The translation was not correct for text: $text.");
    }
    
 
    public function _test_Google_should_not_translate_wiki_syntax_UNDERLINE() {
    	  $text = "===Hello===";
    	  $translation = $this->translator->translateText($text);
-   	  $this->assertRegExp("/===\s?Ciao\s?===/", $translation, "The translation was not correct for text: $text.");
+   	  $this->assertEquals("===Ciao===", $translation, "The translation was not correct for text: $text.");
    }
 
 
    public function _test_Google_should_not_translate_wiki_syntax_TWO_WORDS_UNDERLINED() {
    	  $text = "===Hello world===";
    	  $translation = $this->translator->translateText($text);
-   	  $this->assertRegExp("/===\s?Ciao mondo\s?===/", $translation, "The translation was not correct for text: $text.");
+   	  $this->assertEquals("===Ciao mondo===", $translation, "The translation was not correct for text: $text.");
    }
 
    public function _test_Google_should_not_translate_wiki_syntax_MONOSPACED_TEXT() {
    	  $text = "-+Hello world+-";
    	  $translation = $this->translator->translateText($text);
-   	  $this->assertRegExp("/\-\+\s?Ciao mondo\s?\+\-/", $translation, "The translation was not correct for text: $text.");
+   	  $this->assertEquals("-+Ciao mondo+-", $translation, "The translation was not correct for text: $text.");
    }
 
    public function _test_Google_should_not_translate_wiki_syntax_BULLET() {
@@ -153,49 +165,76 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapperTest extends TikiTes
    public function _test_Google_should_not_translate_wiki_syntax_INDENTED_TEXT() {
    	  $text = ";Hello world: Hello world";
    	  $translation = $this->translator->translateText($text);
-   	  $this->assertRegExp("/;\s?Ciao mondo: Ciao mondo/", $translation, "The translation was not correct for text: $text.");
+   	  $this->assertEquals(";Ciao mondo: Ciao mondo", $translation, "The translation was not correct for text: $text.");
    }
 
    public function _test_Google_should_not_translate_wiki_syntax_LINK() {
    	  $text = "((Hello World))";
    	  $translation = $this->translator->translateText($text);
-   	  $this->assertRegExp("/((\s?Hello World\s?))/", $translation, "The translation was not correct for text: $text.");
+   	  $this->assertEquals("((Ciao Mondo))", $translation, "The translation was not correct for text: $text.");
+   }
+   
+   public function _test_Google_should_no_translate_wiki_syntax_NO_WIKIWORD() {
+   	  $text = "This is the default ))HomePage((.<br />And some other text.";
+   	  $translation = $this->translator->translateText($text);
+   	  $this->assertEquals("Questa è l'impostazione predefinita ))HomePage((.\ne di alcuni altri testi.", $translation, "The translation was not correct for text: $text.");
    }
 
    public function _test_Google_should_not_translate_wiki_syntax_LINK_TO_A_SITE() {
-   	  $text = "[doc.tikiwiki.org]";
+   	  $text = "[doc.tikiwiki.org|Tiki Documentation]";
    	  $translation = $this->translator->translateText($text);
-   	  $this->assertRegExp("/[\s?doc.tikiwiki.org\s?]/", $translation, "The translation was not correct for text: $text.");
+   	  $this->assertEquals("[doc.tikiwiki.org|Tiki Documentazione]", $translation, "The translation was not correct for text: $text.");
    }
+   
+   public function _test_Google_should_not_translate_wiki_syntax_LINK_TO_A_SITE2() {
+   	  $text = "[hhtp://www.something.com/some/thing]";
+   	  $translation = $this->translator->translateText($text);
+   	  $this->assertEquals("[hhtp://www.something.com/some/thing]", $translation, "The translation was not correct for text: $text.");
+   }
+   
    
    public function _test_Google_should_not_translate_wiki_syntax_TIKI_COMMENT() {
    	  $text = "~tc~Hello world~/tc~";
    	  $translation = $this->translator->translateText($text);
-   	  $this->assertRegExp("/\~tc\~Hello world\~\/tc\~/", $translation, "The translation was not correct for text: $text.");
+   	  $this->assertEquals("~tc~Hello world~/tc~", $translation, "The translation was not correct for text: $text.");
    }
    
    public function _test_Google_should_not_translate_wiki_syntax_HTML_COMMENT() {
    	  $text = "~hc~Hello world~/hc~";
    	  $translation = $this->translator->translateText($text);
-   	  $this->assertRegExp("/\~hc\~Hello world\~\/hc\~/", $translation, "The translation was not correct for text: $text.");
+   	  $this->assertEquals("~hc~Hello world~/hc~", $translation, "The translation was not correct for text: $text.");
    }
 
    public function _test_Google_should_not_translate_wiki_syntax_HORIZONTAL_SPACE() {
    	  $text = "~hs~Hello world";
    	  $translation = $this->translator->translateText($text);
-   	  $this->assertRegExp("/\~hs\~\s?Ciao mondo/", $translation, "The translation was not correct for text: $text.");
+   	  $this->assertEquals("~hs~Ciao mondo", $translation, "The translation was not correct for text: $text.");
    }
 
    public function _test_Google_should_not_translate_wiki_syntax_HEADING() {
    	  $text = "!!!#Hello world";
    	  $translation = $this->translator->translateText($text);
-   	  $this->assertRegExp("/[\!]{3}\#\s?Ciao mondo/", $translation, "The translation was not correct for text: $text.");
+   	  $this->assertEquals("!!!#Ciao mondo", $translation, "The translation was not correct for text: $text.");
    }
 
    public function _test_Google_should_not_translate_wiki_syntax_COLOURS() {
    	  $text = "~~blue:Hello world~~";
    	  $translation = $this->translator->translateText($text);
-   	  $this->assertRegExp("/\~\~blue\:Ciao mondo\~\~/", $translation, "The translation was not correct for text: $text.");
+   	  $this->assertEquals("~~blue:Ciao mondo~~", $translation, "The translation was not correct for text: $text.");
    }
+ 
+   public function _test_Google_should_not_translate_wiki_syntax_BOLD() {
+   	  $text = "* __{* comment *}__";
+   	  $translation = $this->translator->translateText($text);
+   	  $this->assertEquals("* __{* comment *}__", $translation, "The translation was not correct for text: $text.");
+   }
+   
+   public function _test_Google_should_not_translate_wiki_syntax_IN_THE_MIDDLE() {
+	  $text = "Hello __beautiful__ world";
+	  $translation = $this->translator->translateText($text);
+	  $this->assertEquals("Ciao __bella__ mondo", $translation, "The translation was not correct for text: $text.");
+   }
+   	
+
 
 }

@@ -1,7 +1,9 @@
 {title help="Newsletters"}{tr}Sent editions{/tr}{if $nl_info}: {$nl_info.name}{/if}{/title}
 
 <div class="navbar">
-	{button href="tiki-newsletters.php" _text="{tr}List Newsletters{/tr}"}
+	{if $tiki_p_list_newsletters eq "y"}
+		{button href="tiki-newsletters.php" _text="{tr}List Newsletters{/tr}"}
+	{/if}
 	{if $tiki_p_subscribe_newsletters eq "y"}
 		{button href="tiki-newsletters.php?nlId=$nlId&amp;info=1" _text="{tr}Subscribe{/tr}"}
 	{/if}

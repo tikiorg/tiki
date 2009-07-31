@@ -1,43 +1,43 @@
--- ******************************************************
+-- --------------------------------------------------------
 -- Database : tikiwiki
--- ******************************************************
+-- --------------------------------------------------------
 
 DROP TABLE IF EXISTS 'galaxia_activities';
 
-CREATE TABLE 'galaxia_activities' (
-  "activityId" INTEGER,
-  "name" varchar(80) default NULL,
-  "normalized_name" varchar(80) default NULL,
-  "pId" bigint NOT NULL default '0',
-  "type" varchar(12) CHECK ("type" IN ('start','end','split','switch','join','activity','standalone')) default NULL,
-  "isAutoRouted" char(1) default NULL,
-  "flowNum" bigint default NULL,
-  "isInteractive" char(1) default NULL,
-  "lastModif" bigint default NULL,
-  "description" text,
-  "expirationTime" integer unsigned NOT NULL default '0',
+CREATE TABLE galaxia_activities (
+  activityId INTEGER,
+  name varchar(80) default NULL,
+  normalized_name varchar(80) default NULL,
+  pId bigint NOT NULL default '0',
+  type enum('start','end','split','switch','join','activity','standalone') default NULL,
+  isAutoRouted char(1) default NULL,
+  flowNum bigint default NULL,
+  isInteractive char(1) default NULL,
+  lastModif bigint default NULL,
+  description text,
+  expirationTime integer unsigned NOT NULL default '0',
   PRIMARY KEY (activityId)
 ) ENGINE=MyISAM ;
 
 
 DROP TABLE IF EXISTS 'galaxia_activity_roles';
 
-CREATE TABLE 'galaxia_activity_roles' (
-  "activityId" bigint NOT NULL default '0',
-  "roleId" bigint NOT NULL default '0',
+CREATE TABLE galaxia_activity_roles (
+  activityId bigint NOT NULL default '0',
+  roleId bigint NOT NULL default '0',
   PRIMARY KEY (activityId,roleId)
 ) ENGINE=MyISAM;
 
 
 DROP TABLE IF EXISTS 'galaxia_instance_activities';
 
-CREATE TABLE 'galaxia_instance_activities' (
-  "instanceId" bigint NOT NULL default '0',
-  "activityId" bigint NOT NULL default '0',
-  "started" bigint NOT NULL default '0',
-  "ended" bigint NOT NULL default '0',
-  "user" varchar(200) default '',
-  "status" varchar(11) CHECK ("status" IN ('running','completed')) default NULL,
+CREATE TABLE galaxia_instance_activities (
+  instanceId bigint NOT NULL default '0',
+  activityId bigint NOT NULL default '0',
+  started bigint NOT NULL default '0',
+  ended bigint NOT NULL default '0',
+  user varchar(200) default '',
+  status enum('running','completed') default NULL,
   PRIMARY KEY (instanceId,activityId)
 ) ENGINE=MyISAM;
 
@@ -45,47 +45,47 @@ CREATE TABLE 'galaxia_instance_activities' (
 DROP TABLE IF EXISTS 'galaxia_instance_comments';
 
 CREATE TABLE 'galaxia_instance_comments' (
-  "cId" INTEGER,
-  "instanceId" bigint NOT NULL default '0',
-  "user" varchar(200) default '',
-  "activityId" bigint default NULL,
-  "hash" varchar(34) default NULL,
-  "title" varchar(250) default NULL,
-  "comment" text,
-  "activity" varchar(80) default NULL,
-  "timestamp" bigint default NULL,
+  cId INTEGER,
+  instanceId bigint NOT NULL default '0',
+  user varchar(200) default '',
+  activityId bigint default NULL,
+  hash varchar(34) default NULL,
+  title varchar(250) default NULL,
+  comment text,
+  activity varchar(80) default NULL,
+  timestamp bigint default NULL,
   PRIMARY KEY (cId)
 ) ENGINE=MyISAM ;
 
 
 DROP TABLE IF EXISTS 'galaxia_instances';
 
-CREATE TABLE 'galaxia_instances' (
-  "instanceId" INTEGER,
-  "pId" bigint NOT NULL default '0',
-  "started" bigint default NULL,
-  "name" varchar(200) NOT NULL default 'No Name',
-  "owner" varchar(200) default NULL,
-  "nextActivity" bigint default NULL,
-  "nextUser" varchar(200) default NULL,
-  "ended" bigint default NULL,
-  "status" varchar(11) CHECK ("status" IN ('active','exception','aborted','completed')) default NULL,
-  "properties" bytea,
+CREATE TABLE galaxia_instances (
+  instanceId INTEGER,
+  pId bigint NOT NULL default '0',
+  started bigint default NULL,
+  name varchar(200) NOT NULL default 'No Name',
+  owner varchar(200) default NULL,
+  nextActivity bigint default NULL,
+  nextUser varchar(200) default NULL,
+  ended bigint default NULL,
+  status enum('active','exception','aborted','completed') default NULL,
+  properties bytea,
   PRIMARY KEY (instanceId)
 ) ENGINE=MyISAM ;
 
 
 DROP TABLE IF EXISTS 'galaxia_processes';
 
-CREATE TABLE 'galaxia_processes' (
-  "pId" INTEGER,
-  "name" varchar(80) default NULL,
-  "isValid" char(1) default NULL,
-  "isActive" char(1) default NULL,
-  "version" varchar(12) default NULL,
-  "description" text,
-  "lastModif" bigint default NULL,
-  "normalized_name" varchar(80) default NULL,
+CREATE TABLE galaxia_processes (
+  pId INTEGER,
+  name varchar(80) default NULL,
+  isValid char(1) default NULL,
+  isActive char(1) default NULL,
+  version varchar(12) default NULL,
+  description text,
+  lastModif bigint default NULL,
+  normalized_name varchar(80) default NULL,
   PRIMARY KEY (pId)
 ) ENGINE=MyISAM ;
 
@@ -93,11 +93,11 @@ CREATE TABLE 'galaxia_processes' (
 DROP TABLE IF EXISTS 'galaxia_roles';
 
 CREATE TABLE 'galaxia_roles' (
-  "roleId" INTEGER,
-  "pId" bigint NOT NULL default '0',
-  "lastModif" bigint default NULL,
-  "name" varchar(80) default NULL,
-  "description" text,
+  roleId INTEGER,
+  pId bigint NOT NULL default '0',
+  lastModif bigint default NULL,
+  name varchar(80) default NULL,
+  description text,
   PRIMARY KEY (roleId)
 ) ENGINE=MyISAM ;
 
@@ -105,9 +105,9 @@ CREATE TABLE 'galaxia_roles' (
 DROP TABLE IF EXISTS 'galaxia_transitions';
 
 CREATE TABLE 'galaxia_transitions' (
-  "pId" bigint NOT NULL default '0',
-  "actFromId" bigint NOT NULL default '0',
-  "actToId" bigint NOT NULL default '0',
+  pId bigint NOT NULL default '0',
+  actFromId bigint NOT NULL default '0',
+  actToId bigint NOT NULL default '0',
   PRIMARY KEY (actFromId,actToId)
 ) ENGINE=MyISAM;
 
@@ -115,24 +115,24 @@ CREATE TABLE 'galaxia_transitions' (
 DROP TABLE IF EXISTS 'galaxia_user_roles';
 
 CREATE TABLE 'galaxia_user_roles' (
-  "pId" bigint NOT NULL default '0',
-  "roleId" INTEGER,
-  "user" varchar(200) NOT NULL default '',
-  PRIMARY KEY (roleId,user)
+  pId bigint NOT NULL default '0',
+  roleId INTEGER,
+  user varchar(200) NOT NULL default '',
+  PRIMARY KEY (roleId, user)
 ) ENGINE=MyISAM ;
 
 
 DROP TABLE IF EXISTS 'galaxia_workitems';
 
 CREATE TABLE 'galaxia_workitems' (
-  "itemId" INTEGER,
-  "instanceId" bigint NOT NULL default '0',
-  "orderId" bigint NOT NULL default '0',
-  "activityId" bigint NOT NULL default '0',
-  "properties" bytea,
-  "started" bigint default NULL,
-  "ended" bigint default NULL,
-  "user" varchar(200) default '',
+  itemId INTEGER,
+  instanceId bigint NOT NULL default '0',
+  orderId bigint NOT NULL default '0',
+  activityId bigint NOT NULL default '0',
+  properties bytea,
+  started bigint default NULL,
+  ended bigint default NULL,
+  user varchar(200) default '',
   PRIMARY KEY (itemId)
 ) ENGINE=MyISAM ;
 
@@ -140,21 +140,21 @@ CREATE TABLE 'galaxia_workitems' (
 DROP TABLE IF EXISTS 'messu_messages';
 
 CREATE TABLE 'messu_messages' (
-  "msgId" INTEGER,
-  "user" varchar(200) NOT NULL default '',
-  "user_from" varchar(200) NOT NULL default '',
-  "user_to" text,
-  "user_cc" text,
-  "user_bcc" text,
-  "subject" varchar(255) default NULL,
-  "body" text,
-  "hash" varchar(32) default NULL,
-  "replyto_hash" varchar(32) default NULL,
-  "date" bigint default NULL,
-  "isRead" char(1) default NULL,
-  "isReplied" char(1) default NULL,
-  "isFlagged" char(1) default NULL,
-  "priority" smallint default NULL,
+  msgId INTEGER,
+  user varchar(200) NOT NULL default '',
+  user_from varchar(200) NOT NULL default '',
+  user_to text,
+  user_cc text,
+  user_bcc text,
+  subject varchar(255) default NULL,
+  body text,
+  hash varchar(32) default NULL,
+  replyto_hash varchar(32) default NULL,
+  date bigint default NULL,
+  isRead char(1) default NULL,
+  isReplied char(1) default NULL,
+  isFlagged char(1) default NULL,
+  priority smallint default NULL,
   PRIMARY KEY (msgId)
 ) ENGINE=MyISAM ;
 
@@ -163,21 +163,21 @@ CREATE  INDEX "messu_messages_userIsRead" ON "messu_messages"("user" "isRead");
 DROP TABLE IF EXISTS 'messu_archive';
 
 CREATE TABLE 'messu_archive' (
-  "msgId" INTEGER,
-  "user" varchar(40) NOT NULL default '',
-  "user_from" varchar(40) NOT NULL default '',
-  "user_to" text,
-  "user_cc" text,
-  "user_bcc" text,
-  "subject" varchar(255) default NULL,
-  "body" text,
-  "hash" varchar(32) default NULL,
-  "replyto_hash" varchar(32) default NULL,
-  "date" bigint default NULL,
-  "isRead" char(1) default NULL,
-  "isReplied" char(1) default NULL,
-  "isFlagged" char(1) default NULL,
-  "priority" smallint default NULL,
+  msgId INTEGER,
+  user varchar(40) NOT NULL default '',
+  user_from varchar(40) NOT NULL default '',
+  user_to text,
+  user_cc text,
+  user_bcc text,
+  subject varchar(255) default NULL,
+  body text,
+  hash varchar(32) default NULL,
+  replyto_hash varchar(32) default NULL,
+  date bigint default NULL,
+  isRead char(1) default NULL,
+  isReplied char(1) default NULL,
+  isFlagged char(1) default NULL,
+  priority smallint default NULL,
   PRIMARY KEY (msgId)
 ) ENGINE=MyISAM ;
 
@@ -185,21 +185,21 @@ CREATE TABLE 'messu_archive' (
 DROP TABLE IF EXISTS 'messu_sent';
 
 CREATE TABLE 'messu_sent' (
-  "msgId" INTEGER,
-  "user" varchar(40) NOT NULL default '',
-  "user_from" varchar(40) NOT NULL default '',
-  "user_to" text,
-  "user_cc" text,
-  "user_bcc" text,
-  "subject" varchar(255) default NULL,
-  "body" text,
-  "hash" varchar(32) default NULL,
-  "replyto_hash" varchar(32) default NULL,
-  "date" bigint default NULL,
-  "isRead" char(1) default NULL,
-  "isReplied" char(1) default NULL,
-  "isFlagged" char(1) default NULL,
-  "priority" smallint default NULL,
+  msgId INTEGER,
+  user varchar(40) NOT NULL default '',
+  user_from varchar(40) NOT NULL default '',
+  user_to text,
+  user_cc text,
+  user_bcc text,
+  subject varchar(255) default NULL,
+  body text,
+  hash varchar(32) default NULL,
+  replyto_hash varchar(32) default NULL,
+  date bigint default NULL,
+  isRead char(1) default NULL,
+  isReplied char(1) default NULL,
+  isFlagged char(1) default NULL,
+  priority smallint default NULL,
   PRIMARY KEY (msgId)
 ) ENGINE=MyISAM ;
 
@@ -207,10 +207,10 @@ CREATE TABLE 'messu_sent' (
 DROP TABLE IF EXISTS 'sessions';
 
 CREATE TABLE 'sessions'(
-  "sesskey" char(32) NOT NULL,
-  "expiry" bigint unsigned NOT NULL,
-  "expireref" varchar(64),
-  "data" text NOT NULL,
+  sesskey char(32) NOT NULL,
+  expiry bigint unsigned NOT NULL,
+  expireref varchar(64),
+  data text NOT NULL,
   PRIMARY KEY (sesskey)
 ) ENGINE=MyISAM;
 
@@ -219,15 +219,15 @@ CREATE  INDEX "sessions_expiry" ON "sessions"("expiry");
 DROP TABLE IF EXISTS 'tiki_actionlog';
 
 CREATE TABLE 'tiki_actionlog' (
-  "actionId" INTEGER,
-  "action" varchar(255) NOT NULL default '',
-  "lastModif" bigint default NULL,
-  "object" varchar(255) default NULL,
-  "objectType" varchar(32) NOT NULL default '',
-  "user" varchar(200) default '',
-  "ip" varchar(15) default NULL,
-  "comment" varchar(200) default NULL,
-  "categId" bigint NOT NULL default '0',
+  actionId INTEGER,
+  action varchar(255) NOT NULL default '',
+  lastModif bigint default NULL,
+  object varchar(255) default NULL,
+  objectType varchar(32) NOT NULL default '',
+  user varchar(200) default '',
+  ip varchar(15) default NULL,
+  comment varchar(200) default NULL,
+  categId bigint NOT NULL default '0',
   PRIMARY KEY (actionId),
   KEY lastModif(lastModif),
   KEY object(object(100), objectType, action(100))
@@ -237,49 +237,49 @@ CREATE TABLE 'tiki_actionlog' (
 DROP TABLE IF EXISTS 'tiki_actionlog_params';
 
 CREATE TABLE 'tiki_actionlog_params' (
-  "actionId" integer NOT NULL,
-  "name" varchar(40) NOT NULL,
-  "value" text,
-  KEY (actionId)
+  actionId integer NOT NULL,
+  name varchar(40) NOT NULL,
+  value text
 ) ENGINE=MyISAM;
 
+CREATE  INDEX "tiki_actionlog_params_actionIDIndex" ON "tiki_actionlog_params"("actionId");
 CREATE  INDEX "tiki_actionlog_params_nameValue" ON "tiki_actionlog_params"("name" "value");
 
 DROP TABLE IF EXISTS 'tiki_articles';
 
 CREATE TABLE 'tiki_articles' (
-  "articleId" INTEGER,
-  "topline" varchar(255) default NULL,
-  "title" varchar(255) default NULL,
-  "subtitle" varchar(255) default NULL,
-  "linkto" varchar(255) default NULL,
-  "lang" varchar(16) default NULL,
-  "state" char(1) default 's',
-  "authorName" varchar(60) default NULL,
-  "topicId" bigint default NULL,
-  "topicName" varchar(40) default NULL,
-  "size" bigint default NULL,
-  "useImage" char(1) default NULL,
-  "image_name" varchar(80) default NULL,
-  "image_caption" text default NULL,
-  "image_type" varchar(80) default NULL,
-  "image_size" bigint default NULL,
-  "image_x" smallint default NULL,
-  "image_y" smallint default NULL,
-  "image_data" bytea,
-  "publishDate" bigint default NULL,
-  "expireDate" bigint default NULL,
-  "created" bigint default NULL,
-  "heading" text,
-  "body" text,
-  "hash" varchar(32) default NULL,
-  "author" varchar(200) default NULL,
-  "nbreads" bigint default NULL,
-  "votes" integer default NULL,
-  "points" bigint default NULL,
-  "type" varchar(50) default NULL,
-  "rating" decimal(3,2) default NULL,
-  "isfloat" char(1) default NULL,
+  articleId INTEGER,
+  topline varchar(255) default NULL,
+  title varchar(255) default NULL,
+  subtitle varchar(255) default NULL,
+  linkto varchar(255) default NULL,
+  lang varchar(16) default NULL,
+  state char(1) default 's',
+  authorName varchar(60) default NULL,
+  topicId bigint default NULL,
+  topicName varchar(40) default NULL,
+  size bigint default NULL,
+  useImage char(1) default NULL,
+  image_name varchar(80) default NULL,
+  image_caption text default NULL,
+  image_type varchar(80) default NULL,
+  image_size bigint default NULL,
+  image_x smallint default NULL,
+  image_y smallint default NULL,
+  image_data bytea,
+  publishDate bigint default NULL,
+  expireDate bigint default NULL,
+  created bigint default NULL,
+  heading text,
+  body text,
+  hash varchar(32) default NULL,
+  author varchar(200) default NULL,
+  nbreads bigint default NULL,
+  votes integer default NULL,
+  points bigint default NULL,
+  type varchar(50) default NULL,
+  rating decimal(3,2) default NULL,
+  isfloat char(1) default NULL,
   PRIMARY KEY (articleId)
 ) ENGINE=MyISAM ;
 
@@ -297,26 +297,26 @@ CREATE  INDEX "tiki_articles_ft" ON "tiki_articles"("title","heading","body");
 DROP TABLE IF EXISTS 'tiki_article_types';
 
 CREATE TABLE 'tiki_article_types' (
-  "type" varchar(50) NOT NULL,
-  "use_ratings" varchar(1) default NULL,
-  "show_pre_publ" varchar(1) default NULL,
-  "show_post_expire" varchar(1) default 'y',
-  "heading_only" varchar(1) default NULL,
-  "allow_comments" varchar(1) default 'y',
-  "show_image" varchar(1) default 'y',
-  "show_avatar" varchar(1) default NULL,
-  "show_author" varchar(1) default 'y',
-  "show_pubdate" varchar(1) default 'y',
-  "show_expdate" varchar(1) default NULL,
-  "show_reads" varchar(1) default 'y',
-  "show_size" varchar(1) default 'n',
-  "show_topline" varchar(1) default 'n',
-  "show_subtitle" varchar(1) default 'n',
-  "show_linkto" varchar(1) default 'n',
-  "show_image_caption" varchar(1) default 'n',
-  "show_lang" varchar(1) default 'n',
-  "creator_edit" varchar(1) default NULL,
-  "comment_can_rate_article" char(1) default NULL,
+  type varchar(50) NOT NULL,
+  use_ratings varchar(1) default NULL,
+  show_pre_publ varchar(1) default NULL,
+  show_post_expire varchar(1) default 'y',
+  heading_only varchar(1) default NULL,
+  allow_comments varchar(1) default 'y',
+  show_image varchar(1) default 'y',
+  show_avatar varchar(1) default NULL,
+  show_author varchar(1) default 'y',
+  show_pubdate varchar(1) default 'y',
+  show_expdate varchar(1) default NULL,
+  show_reads varchar(1) default 'y',
+  show_size varchar(1) default 'n',
+  show_topline varchar(1) default 'n',
+  show_subtitle varchar(1) default 'n',
+  show_linkto varchar(1) default 'n',
+  show_image_caption varchar(1) default 'n',
+  show_lang varchar(1) default 'n',
+  creator_edit varchar(1) default NULL,
+  comment_can_rate_article char(1) default NULL,
   PRIMARY KEY (type)
 ) ENGINE=MyISAM ;
 
@@ -335,37 +335,37 @@ INSERT INTO "tiki_article_types" ("type","show_post_expire","heading_only","allo
 DROP TABLE IF EXISTS 'tiki_banners';
 
 CREATE TABLE 'tiki_banners' (
-  "bannerId" INTEGER,
-  "client" varchar(200) NOT NULL default '',
-  "url" varchar(255) default NULL,
-  "title" varchar(255) default NULL,
-  "alt" varchar(250) default NULL,
-  "which" varchar(50) default NULL,
-  "imageData" bytea,
-  "imageType" varchar(200) default NULL,
-  "imageName" varchar(100) default NULL,
-  "HTMLData" text,
-  "fixedURLData" varchar(255) default NULL,
-  "textData" text,
-  "fromDate" bigint default NULL,
-  "toDate" bigint default NULL,
-  "useDates" char(1) default NULL,
-  "mon" char(1) default NULL,
-  "tue" char(1) default NULL,
-  "wed" char(1) default NULL,
-  "thu" char(1) default NULL,
-  "fri" char(1) default NULL,
-  "sat" char(1) default NULL,
-  "sun" char(1) default NULL,
-  "hourFrom" varchar(4) default NULL,
-  "hourTo" varchar(4) default NULL,
-  "created" bigint default NULL,
-  "maxImpressions" integer default NULL,
-  "impressions" integer default NULL,
-  "maxUserImpressions" integer default -1,
-  "maxClicks" integer default NULL,
-  "clicks" integer default NULL,
-  "zone" varchar(40) default NULL,
+  bannerId INTEGER,
+  client varchar(200) NOT NULL default '',
+  url varchar(255) default NULL,
+  title varchar(255) default NULL,
+  alt varchar(250) default NULL,
+  which varchar(50) default NULL,
+  imageData bytea,
+  imageType varchar(200) default NULL,
+  imageName varchar(100) default NULL,
+  HTMLData text,
+  fixedURLData varchar(255) default NULL,
+  textData text,
+  fromDate bigint default NULL,
+  toDate bigint default NULL,
+  useDates char(1) default NULL,
+  mon char(1) default NULL,
+  tue char(1) default NULL,
+  wed char(1) default NULL,
+  thu char(1) default NULL,
+  fri char(1) default NULL,
+  sat char(1) default NULL,
+  sun char(1) default NULL,
+  hourFrom varchar(4) default NULL,
+  hourTo varchar(4) default NULL,
+  created bigint default NULL,
+  maxImpressions integer default NULL,
+  impressions integer default NULL,
+  maxUserImpressions integer default -1,
+  maxClicks integer default NULL,
+  clicks integer default NULL,
+  zone varchar(40) default NULL,
   PRIMARY KEY (bannerId),
   "INDEX" ban1(zone,useDates,impressions,maxImpressions,hourFrom,hourTo,fromDate,toDate,mon,tue,wed,thu,fri,sat,sun)
 ) ENGINE=MyISAM ;
@@ -374,19 +374,19 @@ CREATE TABLE 'tiki_banners' (
 DROP TABLE IF EXISTS 'tiki_banning';
 
 CREATE TABLE 'tiki_banning' (
-  "banId" INTEGER,
-  "mode" varchar(6) CHECK ("mode" IN ('user','ip')) default NULL,
-  "title" varchar(200) default NULL,
-  "ip1" char(3) default NULL,
-  "ip2" char(3) default NULL,
-  "ip3" char(3) default NULL,
-  "ip4" char(3) default NULL,
-  "user" varchar(200) default '',
-  "date_from" timestamp(3) NOT NULL,
-  "date_to" timestamp(3) NOT NULL,
-  "use_dates" char(1) default NULL,
-  "created" bigint default NULL,
-  "message" text,
+  banId INTEGER,
+  mode enum('user','ip') default NULL,
+  title varchar(200) default NULL,
+  ip1 char(3) default NULL,
+  ip2 char(3) default NULL,
+  ip3 char(3) default NULL,
+  ip4 char(3) default NULL,
+  user varchar(200) default '',
+  date_from timestamp(3) NOT NULL,
+  date_to timestamp(3) NOT NULL,
+  use_dates char(1) default NULL,
+  created bigint default NULL,
+  message text,
   PRIMARY KEY (banId)
 ) ENGINE=MyISAM ;
 
@@ -394,8 +394,8 @@ CREATE TABLE 'tiki_banning' (
 DROP TABLE IF EXISTS 'tiki_banning_sections';
 
 CREATE TABLE 'tiki_banning_sections' (
-  "banId" bigint NOT NULL default '0',
-  "section" varchar(100) NOT NULL default '',
+  banId bigint NOT NULL default '0',
+  section varchar(100) NOT NULL default '',
   PRIMARY KEY (banId,section)
 ) ENGINE=MyISAM;
 
@@ -403,9 +403,9 @@ CREATE TABLE 'tiki_banning_sections' (
 DROP TABLE IF EXISTS 'tiki_blog_activity';
 
 CREATE TABLE 'tiki_blog_activity' (
-  "blogId" integer NOT NULL default '0',
-  "day" bigint NOT NULL default '0',
-  "posts" integer default NULL,
+  blogId integer NOT NULL default '0',
+  day bigint NOT NULL default '0',
+  posts integer default NULL,
   PRIMARY KEY (blogId,day)
 ) ENGINE=MyISAM;
 
@@ -413,16 +413,16 @@ CREATE TABLE 'tiki_blog_activity' (
 DROP TABLE IF EXISTS 'tiki_blog_posts';
 
 CREATE TABLE 'tiki_blog_posts' (
-  "postId" INTEGER,
-  "blogId" integer NOT NULL default '0',
-  "data" text,
-  "data_size" bigint unsigned NOT NULL default '0',
-  "created" bigint default NULL,
-  "user" varchar(200) default '',
-  "trackbacks_to" text,
-  "trackbacks_from" text,
-  "title" varchar(255) default NULL,
-  "priv" varchar(1) default NULL,
+  postId INTEGER,
+  blogId integer NOT NULL default '0',
+  data text,
+  data_size bigint unsigned NOT NULL default '0',
+  created bigint default NULL,
+  user varchar(200) default '',
+  trackbacks_to text,
+  trackbacks_from text,
+  title varchar(255) default NULL,
+  priv varchar(1) default NULL,
   PRIMARY KEY (postId)
 ) ENGINE=MyISAM ;
 
@@ -434,12 +434,12 @@ CREATE  INDEX "tiki_blog_posts_ft" ON "tiki_blog_posts"("data","title");
 DROP TABLE IF EXISTS 'tiki_blog_posts_images';
 
 CREATE TABLE 'tiki_blog_posts_images' (
-  "imgId" INTEGER,
-  "postId" bigint NOT NULL default '0',
-  "filename" varchar(80) default NULL,
-  "filetype" varchar(80) default NULL,
-  "filesize" bigint default NULL,
-  "data" bytea,
+  imgId INTEGER,
+  postId bigint NOT NULL default '0',
+  filename varchar(80) default NULL,
+  filetype varchar(80) default NULL,
+  filesize bigint default NULL,
+  data bytea,
   PRIMARY KEY (imgId)
 ) ENGINE=MyISAM ;
 
@@ -447,24 +447,24 @@ CREATE TABLE 'tiki_blog_posts_images' (
 DROP TABLE IF EXISTS 'tiki_blogs';
 
 CREATE TABLE 'tiki_blogs' (
-  "blogId" INTEGER,
-  "created" bigint default NULL,
-  "lastModif" bigint default NULL,
-  "title" varchar(200) default NULL,
-  "description" text,
-  "user" varchar(200) default '',
-  "public" char(1) default NULL,
-  "posts" integer default NULL,
-  "maxPosts" integer default NULL,
-  "hits" integer default NULL,
-  "activity" decimal(4,2) default NULL,
-  "heading" text,
-  "use_find" char(1) default NULL,
-  "use_title" char(1) default NULL,
-  "add_date" char(1) default NULL,
-  "add_poster" char(1) default NULL,
-  "allow_comments" char(1) default NULL,
-  "show_avatar" char(1) default NULL,
+  blogId INTEGER,
+  created bigint default NULL,
+  lastModif bigint default NULL,
+  title varchar(200) default NULL,
+  description text,
+  user varchar(200) default '',
+  public char(1) default NULL,
+  posts integer default NULL,
+  maxPosts integer default NULL,
+  hits integer default NULL,
+  activity decimal(4,2) default NULL,
+  heading text,
+  use_find char(1) default NULL,
+  use_title char(1) default NULL,
+  add_date char(1) default NULL,
+  add_poster char(1) default NULL,
+  allow_comments char(1) default NULL,
+  show_avatar char(1) default NULL,
   PRIMARY KEY (blogId)
 ) ENGINE=MyISAM ;
 
@@ -476,9 +476,9 @@ CREATE  INDEX "tiki_blogs_ft" ON "tiki_blogs"("title","description");
 DROP TABLE IF EXISTS 'tiki_calendar_categories';
 
 CREATE TABLE 'tiki_calendar_categories' (
-  "calcatId" INTEGER,
-  "calendarId" bigint NOT NULL default '0',
-  "name" varchar(255) NOT NULL default '',
+  calcatId INTEGER,
+  calendarId bigint NOT NULL default '0',
+  name varchar(255) NOT NULL default '',
   PRIMARY KEY (calcatId)
 ) ENGINE=MyISAM ;
 
@@ -487,32 +487,32 @@ CREATE UNIQUE INDEX "tiki_calendar_categories_catname" ON "tiki_calendar_categor
 DROP TABLE IF EXISTS 'tiki_calendar_recurrence';
 
 CREATE TABLE 'tiki_calendar_recurrence' (
-  "recurrenceId" INTEGER,
-  "calendarId" bigint NOT NULL default '0',
-  "start" smallint NOT NULL default '0',
-  "end" smallint NOT NULL default '2359',
-  "allday" smallint NOT NULL default '0',
-  "locationId" bigint default NULL,
-  "categoryId" bigint default NULL,
-  "nlId" bigint NOT NULL default '0',
-  "priority" varchar(3) CHECK ("priority" IN ('1','2','3','4','5','6','7','8','9')) NOT NULL default '1',
-  "status" varchar(3) CHECK ("status" IN ('0','1','2')) NOT NULL default '0',
-  "url" varchar(255) default NULL,
-  "lang" char(16) NOT NULL default 'en',
-  "name" varchar(255) NOT NULL default '',
-  "description" bytea,
-  "weekly" smallint default '0',
-  "weekday" smallint,
-  "monthly" smallint default '0',
-  "dayOfMonth" smallint,
-  "yearly" smallint default '0',
-  "dateOfYear" smallint,
-  "nbRecurrences" integer,
-  "startPeriod" bigint,
-  "endPeriod" bigint,
-  "user" varchar(200) default '',
-  "created" bigint NOT NULL default '0',
-  "lastmodif" bigint NOT NULL default '0',
+  recurrenceId INTEGER,
+  calendarId bigint NOT NULL default '0',
+  start smallint NOT NULL default '0',
+  end smallint NOT NULL default '2359',
+  allday smallint NOT NULL default '0',
+  locationId bigint default NULL,
+  categoryId bigint default NULL,
+  nlId bigint NOT NULL default '0',
+  priority enum('1','2','3','4','5','6','7','8','9') NOT NULL default '1',
+  status enum('0','1','2') NOT NULL default '0',
+  url varchar(255) default NULL,
+  lang char(16) NOT NULL default 'en',
+  name varchar(255) NOT NULL default '',
+  description bytea,
+  weekly smallint default '0',
+  weekday smallint,
+  monthly smallint default '0',
+  dayOfMonth smallint,
+  yearly smallint default '0',
+  dateOfYear smallint,
+  nbRecurrences integer,
+  startPeriod bigint,
+  endPeriod bigint,
+  user varchar(200) default '',
+  created bigint NOT NULL default '0',
+  lastmodif bigint NOT NULL default '0',
   PRIMARY KEY (recurrenceId)
 ) ENGINE=MyISAM ;
 
@@ -520,42 +520,42 @@ CREATE  INDEX "tiki_calendar_recurrence_calendarId" ON "tiki_calendar_recurrence
 
 DROP TABLE IF EXISTS 'tiki_calendar_items';
 
-CREATE TABLE 'tiki_calendar_items' (
-  "calitemId" INTEGER,
-  "calendarId" bigint NOT NULL default '0',
-  "start" bigint NOT NULL default '0',
-  "end" bigint NOT NULL default '0',
-  "locationId" bigint default NULL,
-  "categoryId" bigint default NULL,
-  "nlId" bigint NOT NULL default '0',
-  "priority" varchar(4) CHECK ("priority" IN ('0', '1','2','3','4','5','6','7','8','9')) default '0',
-  "status" varchar(3) CHECK ("status" IN ('0','1','2')) NOT NULL default '0',
-  "url" varchar(255) default NULL,
-  "lang" char(16) NOT NULL default 'en',
-  "name" varchar(255) NOT NULL default '',
-  "description" text,
-  "recurrenceId" bigint,
-  "changed" smallint DEFAULT '0',
-  "user" varchar(200) default '',
-  "created" bigint NOT NULL default '0',
-  "lastmodif" bigint NOT NULL default '0',
-  "allday" smallint NOT NULL default '0',
+CREATE TABLE tiki_calendar_items (
+  calitemId INTEGER,
+  calendarId bigint NOT NULL default '0',
+  start bigint NOT NULL default '0',
+  end bigint NOT NULL default '0',
+  locationId bigint default NULL,
+  categoryId bigint default NULL,
+  nlId bigint NOT NULL default '0',
+  priority enum('0', '1','2','3','4','5','6','7','8','9') default '0',
+  status enum('0','1','2') NOT NULL default '0',
+  url varchar(255) default NULL,
+  lang char(16) NOT NULL default 'en',
+  name varchar(255) NOT NULL default '',
+  description text,
+  recurrenceId bigint,
+  changed smallint DEFAULT '0',
+  user varchar(200) default '',
+  created bigint NOT NULL default '0',
+  lastmodif bigint NOT NULL default '0',
+  allday smallint NOT NULL default '0',
   PRIMARY KEY (calitemId),
   "CONSTRAINT" fk_calitems_recurrence
   "FOREIGN" KEY (recurrenceId) REFERENCES tiki_calendar_recurrence(recurrenceId)
   "ON" UPDATE CASCADE ON DELETE SET NULL
 ) ENGINE=MyISAM ;
 
-CREATE  INDEX "tiki_calendar_items_calendarId" ON "tiki_calendar_items"("calendarId");
-CREATE  INDEX "tiki_calendar_items_ft" ON "tiki_calendar_items"("name","description");
+CREATE  INDEX "`tiki_calendar_items`_calendarId" ON "`tiki_calendar_items`"("calendarId");
+CREATE  INDEX "`tiki_calendar_items`_ft" ON "`tiki_calendar_items`"(`"name"``"description"`);
 
 DROP TABLE IF EXISTS 'tiki_calendar_locations';
 
 CREATE TABLE 'tiki_calendar_locations' (
-  "callocId" INTEGER,
-  "calendarId" bigint NOT NULL default '0',
-  "name" varchar(255) NOT NULL default '',
-  "description" bytea,
+  callocId INTEGER,
+  calendarId bigint NOT NULL default '0',
+  name varchar(255) NOT NULL default '',
+  description bytea,
   PRIMARY KEY (callocId)
 ) ENGINE=MyISAM ;
 
@@ -564,9 +564,9 @@ CREATE UNIQUE INDEX "tiki_calendar_locations_locname" ON "tiki_calendar_location
 DROP TABLE IF EXISTS 'tiki_calendar_roles';
 
 CREATE TABLE 'tiki_calendar_roles' (
-  "calitemId" bigint NOT NULL default '0',
-  "username" varchar(200) NOT NULL default '',
-  "role" varchar(3) CHECK ("role" IN ('0','1','2','3','6')) NOT NULL default '0',
+  calitemId bigint NOT NULL default '0',
+  username varchar(200) NOT NULL default '',
+  role enum('0','1','2','3','6') NOT NULL default '0',
   PRIMARY KEY (calitemId,username(16),role)
 ) ENGINE=MyISAM;
 
@@ -574,20 +574,20 @@ CREATE TABLE 'tiki_calendar_roles' (
 DROP TABLE IF EXISTS 'tiki_calendars';
 
 CREATE TABLE 'tiki_calendars' (
-  "calendarId" INTEGER,
-  "name" varchar(80) NOT NULL default '',
-  "description" varchar(255) default NULL,
-  "user" varchar(200) NOT NULL default '',
-  "customlocations" varchar(3) CHECK ("customlocations" IN ('n','y')) NOT NULL default 'n',
-  "customcategories" varchar(3) CHECK ("customcategories" IN ('n','y')) NOT NULL default 'n',
-  "customlanguages" varchar(3) CHECK ("customlanguages" IN ('n','y')) NOT NULL default 'n',
-  "custompriorities" varchar(3) CHECK ("custompriorities" IN ('n','y')) NOT NULL default 'n',
-  "customparticipants" varchar(3) CHECK ("customparticipants" IN ('n','y')) NOT NULL default 'n',
-  "customsubscription" varchar(3) CHECK ("customsubscription" IN ('n','y')) NOT NULL default 'n',
-  "customstatus" varchar(3) CHECK ("customstatus" IN ('n','y')) NOT NULL default 'y',
-  "created" bigint NOT NULL default '0',
-  "lastmodif" bigint NOT NULL default '0',
-  "personal" varchar(4) CHECK ("personal" IN ('n', 'y')) NOT NULL default 'n',
+  calendarId INTEGER,
+  name varchar(80) NOT NULL default '',
+  description varchar(255) default NULL,
+  user varchar(200) NOT NULL default '',
+  customlocations enum('n','y') NOT NULL default 'n',
+  customcategories enum('n','y') NOT NULL default 'n',
+  customlanguages enum('n','y') NOT NULL default 'n',
+  custompriorities enum('n','y') NOT NULL default 'n',
+  customparticipants enum('n','y') NOT NULL default 'n',
+  customsubscription enum('n','y') NOT NULL default 'n',
+  customstatus enum('n','y') NOT NULL default 'y',
+  created bigint NOT NULL default '0',
+  lastmodif bigint NOT NULL default '0',
+  personal enum ('n', 'y') NOT NULL default 'n',
   PRIMARY KEY (calendarId)
 ) ENGINE=MyISAM ;
 
@@ -605,11 +605,11 @@ CREATE TABLE 'tiki_calendar_options' (
 DROP TABLE IF EXISTS 'tiki_categories';
 
 CREATE TABLE 'tiki_categories' (
-  "categId" INTEGER,
-  "name" varchar(100) default NULL,
-  "description" varchar(250) default NULL,
-  "parentId" bigint default NULL,
-  "hits" integer default NULL,
+  categId INTEGER,
+  name varchar(100) default NULL,
+  description varchar(250) default NULL,
+  parentId bigint default NULL,
+  hits integer default NULL,
   PRIMARY KEY (categId)
 ) ENGINE=MyISAM ;
 
@@ -617,15 +617,15 @@ CREATE TABLE 'tiki_categories' (
 DROP TABLE IF EXISTS 'tiki_objects';
 
 CREATE TABLE 'tiki_objects' (
-  "objectId" INTEGER,
-  "type" varchar(50) default NULL,
-  "itemId" varchar(255) default NULL,
-  "description" text,
-  "created" bigint default NULL,
-  "name" varchar(200) default NULL,
-  "href" varchar(200) default NULL,
-  "hits" integer default NULL,
-  "comments_locked" char(1) NOT NULL default 'n',
+  objectId INTEGER,
+  type varchar(50) default NULL,
+  itemId varchar(255) default NULL,
+  description text,
+  created bigint default NULL,
+  name varchar(200) default NULL,
+  href varchar(200) default NULL,
+  hits integer default NULL,
+  comments_locked char(1) NOT NULL default 'n',
   PRIMARY KEY (objectId),
   KEY (type, objectId),
   KEY (itemId, type)
@@ -643,8 +643,8 @@ CREATE TABLE tiki_categorized_objects (
 DROP TABLE IF EXISTS 'tiki_category_objects';
 
 CREATE TABLE 'tiki_category_objects' (
-  "catObjectId" bigint NOT NULL default '0',
-  "categId" bigint NOT NULL default '0',
+  catObjectId bigint NOT NULL default '0',
+  categId bigint NOT NULL default '0',
   PRIMARY KEY (catObjectId,categId)
 ) ENGINE=MyISAM;
 
@@ -652,8 +652,8 @@ CREATE TABLE 'tiki_category_objects' (
 DROP TABLE IF EXISTS 'tiki_object_ratings';
 
 CREATE TABLE 'tiki_object_ratings' (
-  "catObjectId" bigint NOT NULL default '0',
-  "pollId" bigint NOT NULL default '0',
+  catObjectId bigint NOT NULL default '0',
+  pollId bigint NOT NULL default '0',
   PRIMARY KEY (catObjectId,pollId)
 ) ENGINE=MyISAM;
 
@@ -661,8 +661,8 @@ CREATE TABLE 'tiki_object_ratings' (
 DROP TABLE IF EXISTS 'tiki_category_sites';
 
 CREATE TABLE 'tiki_category_sites' (
-  "categId" bigint NOT NULL default '0',
-  "siteId" bigint NOT NULL default '0',
+  categId bigint NOT NULL default '0',
+  siteId bigint NOT NULL default '0',
   PRIMARY KEY (categId,siteId)
 ) ENGINE=MyISAM;
 
@@ -670,15 +670,15 @@ CREATE TABLE 'tiki_category_sites' (
 DROP TABLE IF EXISTS 'tiki_chart_items';
 
 CREATE TABLE 'tiki_chart_items' (
-  "itemId" INTEGER,
-  "title" varchar(250) default NULL,
-  "description" text,
-  "chartId" bigint NOT NULL default '0',
-  "created" bigint default NULL,
-  "URL" varchar(250) default NULL,
-  "votes" bigint default NULL,
-  "points" bigint default NULL,
-  "average" decimal(4,2) default NULL,
+  itemId INTEGER,
+  title varchar(250) default NULL,
+  description text,
+  chartId bigint NOT NULL default '0',
+  created bigint default NULL,
+  URL varchar(250) default NULL,
+  votes bigint default NULL,
+  points bigint default NULL,
+  average decimal(4,2) default NULL,
   PRIMARY KEY (itemId)
 ) ENGINE=MyISAM ;
 
@@ -686,24 +686,24 @@ CREATE TABLE 'tiki_chart_items' (
 DROP TABLE IF EXISTS 'tiki_charts';
 
 CREATE TABLE 'tiki_charts' (
-  "chartId" INTEGER,
-  "title" varchar(250) default NULL,
-  "description" text,
-  "hits" bigint default NULL,
-  "singleItemVotes" char(1) default NULL,
-  "singleChartVotes" char(1) default NULL,
-  "suggestions" char(1) default NULL,
-  "autoValidate" char(1) default NULL,
-  "topN" integer default NULL,
-  "maxVoteValue" smallint default NULL,
-  "frequency" bigint default NULL,
-  "showAverage" char(1) default NULL,
-  "isActive" char(1) default NULL,
-  "showVotes" char(1) default NULL,
-  "useCookies" char(1) default NULL,
-  "lastChart" bigint default NULL,
-  "voteAgainAfter" bigint default NULL,
-  "created" bigint default NULL,
+  chartId INTEGER,
+  title varchar(250) default NULL,
+  description text,
+  hits bigint default NULL,
+  singleItemVotes char(1) default NULL,
+  singleChartVotes char(1) default NULL,
+  suggestions char(1) default NULL,
+  autoValidate char(1) default NULL,
+  topN integer default NULL,
+  maxVoteValue smallint default NULL,
+  frequency bigint default NULL,
+  showAverage char(1) default NULL,
+  isActive char(1) default NULL,
+  showVotes char(1) default NULL,
+  useCookies char(1) default NULL,
+  lastChart bigint default NULL,
+  voteAgainAfter bigint default NULL,
+  created bigint default NULL,
   PRIMARY KEY (chartId)
 ) ENGINE=MyISAM ;
 
@@ -711,14 +711,14 @@ CREATE TABLE 'tiki_charts' (
 DROP TABLE IF EXISTS 'tiki_charts_rankings';
 
 CREATE TABLE 'tiki_charts_rankings' (
-  "chartId" bigint NOT NULL default '0',
-  "itemId" bigint NOT NULL default '0',
-  "position" bigint NOT NULL default '0',
-  "timestamp" bigint NOT NULL default '0',
-  "lastPosition" bigint NOT NULL default '0',
-  "period" bigint NOT NULL default '0',
-  "rvotes" bigint NOT NULL default '0',
-  "raverage" decimal(4,2) NOT NULL default '0.00',
+  chartId bigint NOT NULL default '0',
+  itemId bigint NOT NULL default '0',
+  position bigint NOT NULL default '0',
+  timestamp bigint NOT NULL default '0',
+  lastPosition bigint NOT NULL default '0',
+  period bigint NOT NULL default '0',
+  rvotes bigint NOT NULL default '0',
+  raverage decimal(4,2) NOT NULL default '0.00',
   PRIMARY KEY (chartId,itemId,period)
 ) ENGINE=MyISAM;
 
@@ -726,10 +726,10 @@ CREATE TABLE 'tiki_charts_rankings' (
 DROP TABLE IF EXISTS 'tiki_charts_votes';
 
 CREATE TABLE 'tiki_charts_votes' (
-  "user" varchar(200) NOT NULL default '',
-  "itemId" bigint NOT NULL default '0',
-  "timestamp" bigint default NULL,
-  "chartId" bigint default NULL,
+  user varchar(200) NOT NULL default '',
+  itemId bigint NOT NULL default '0',
+  timestamp bigint default NULL,
+  chartId bigint default NULL,
   PRIMARY KEY (user,itemId)
 ) ENGINE=MyISAM;
 
@@ -737,14 +737,14 @@ CREATE TABLE 'tiki_charts_votes' (
 DROP TABLE IF EXISTS 'tiki_chat_channels';
 
 CREATE TABLE 'tiki_chat_channels' (
-  "channelId" INTEGER,
-  "name" varchar(30) default NULL,
-  "description" varchar(250) default NULL,
-  "max_users" integer default NULL,
-  "mode" char(1) default NULL,
-  "moderator" varchar(200) default NULL,
-  "active" char(1) default NULL,
-  "refresh" integer default NULL,
+  channelId INTEGER,
+  name varchar(30) default NULL,
+  description varchar(250) default NULL,
+  max_users integer default NULL,
+  mode char(1) default NULL,
+  moderator varchar(200) default NULL,
+  active char(1) default NULL,
+  refresh integer default NULL,
   PRIMARY KEY (channelId)
 ) ENGINE=MyISAM ;
 
@@ -752,11 +752,11 @@ CREATE TABLE 'tiki_chat_channels' (
 DROP TABLE IF EXISTS 'tiki_chat_messages';
 
 CREATE TABLE 'tiki_chat_messages' (
-  "messageId" INTEGER,
-  "channelId" integer NOT NULL default '0',
-  "data" varchar(255) default NULL,
-  "poster" varchar(200) NOT NULL default 'anonymous',
-  "timestamp" bigint default NULL,
+  messageId INTEGER,
+  channelId integer NOT NULL default '0',
+  data varchar(255) default NULL,
+  poster varchar(200) NOT NULL default 'anonymous',
+  timestamp bigint default NULL,
   PRIMARY KEY (messageId)
 ) ENGINE=MyISAM ;
 
@@ -764,9 +764,9 @@ CREATE TABLE 'tiki_chat_messages' (
 DROP TABLE IF EXISTS 'tiki_chat_users';
 
 CREATE TABLE 'tiki_chat_users' (
-  "nickname" varchar(200) NOT NULL default '',
-  "channelId" integer NOT NULL default '0',
-  "timestamp" bigint default NULL,
+  nickname varchar(200) NOT NULL default '',
+  channelId integer NOT NULL default '0',
+  timestamp bigint default NULL,
   PRIMARY KEY (nickname,channelId)
 ) ENGINE=MyISAM;
 
@@ -774,29 +774,29 @@ CREATE TABLE 'tiki_chat_users' (
 DROP TABLE IF EXISTS 'tiki_comments';
 
 CREATE TABLE 'tiki_comments' (
-  "threadId" INTEGER,
-  "object" varchar(255) NOT NULL default '',
-  "objectType" varchar(32) NOT NULL default '',
-  "parentId" bigint default NULL,
-  "userName" varchar(200) default '',
-  "commentDate" bigint default NULL,
-  "hits" integer default NULL,
-  "type" char(1) default NULL,
-  "points" decimal(8,2) default NULL,
-  "votes" integer default NULL,
-  "average" decimal(8,4) default NULL,
-  "title" varchar(255) default NULL,
-  "data" text,
-  "hash" varchar(32) default NULL,
-  "user_ip" varchar(15) default NULL,
-  "summary" varchar(240) default NULL,
-  "smiley" varchar(80) default NULL,
-  "message_id" varchar(128) default NULL,
-  "in_reply_to" varchar(128) default NULL,
-  "comment_rating" smallint default NULL,
-  "archived" char(1) default NULL,
-  "approved" char(1) NOT NULL default 'y',
-  "locked" char(1) NOT NULL default 'n',
+  threadId INTEGER,
+  object varchar(255) NOT NULL default '',
+  objectType varchar(32) NOT NULL default '',
+  parentId bigint default NULL,
+  userName varchar(200) default '',
+  commentDate bigint default NULL,
+  hits integer default NULL,
+  type char(1) default NULL,
+  points decimal(8,2) default NULL,
+  votes integer default NULL,
+  average decimal(8,4) default NULL,
+  title varchar(255) default NULL,
+  data text,
+  hash varchar(32) default NULL,
+  user_ip varchar(15) default NULL,
+  summary varchar(240) default NULL,
+  smiley varchar(80) default NULL,
+  message_id varchar(128) default NULL,
+  in_reply_to varchar(128) default NULL,
+  comment_rating smallint default NULL,
+  archived char(1) default NULL,
+  approved char(1) NOT NULL default 'y',
+  locked char(1) NOT NULL default 'n',
   PRIMARY KEY (threadId)
 ) ENGINE=MyISAM ;
 
@@ -813,9 +813,9 @@ CREATE UNIQUE INDEX "tiki_comments_no_repeats" ON "tiki_comments"("parentId" "us
 DROP TABLE IF EXISTS 'tiki_content';
 
 CREATE TABLE 'tiki_content' (
-  "contentId" INTEGER,
-  "description" text,
-  "contentLabel" varchar(255) NOT NULL default '',
+  contentId INTEGER,
+  description text,
+  contentLabel varchar(255) NOT NULL default '',
   PRIMARY KEY (contentId)
 ) ENGINE=MyISAM ;
 
@@ -823,10 +823,10 @@ CREATE TABLE 'tiki_content' (
 DROP TABLE IF EXISTS 'tiki_content_templates';
 
 CREATE TABLE 'tiki_content_templates' (
-  "templateId" INTEGER,
-  "content" bytea,
-  "name" varchar(200) default NULL,
-  "created" bigint default NULL,
+  templateId INTEGER,
+  content bytea,
+  name varchar(200) default NULL,
+  created bigint default NULL,
   PRIMARY KEY (templateId)
 ) ENGINE=MyISAM ;
 
@@ -834,8 +834,8 @@ CREATE TABLE 'tiki_content_templates' (
 DROP TABLE IF EXISTS 'tiki_content_templates_sections';
 
 CREATE TABLE 'tiki_content_templates_sections' (
-  "templateId" bigint NOT NULL default '0',
-  "section" varchar(250) NOT NULL default '',
+  templateId bigint NOT NULL default '0',
+  section varchar(250) NOT NULL default '',
   PRIMARY KEY (templateId,section)
 ) ENGINE=MyISAM;
 
@@ -843,8 +843,8 @@ CREATE TABLE 'tiki_content_templates_sections' (
 DROP TABLE IF EXISTS 'tiki_cookies';
 
 CREATE TABLE 'tiki_cookies' (
-  "cookieId" INTEGER,
-  "cookie" text,
+  cookieId INTEGER,
+  cookie text,
   PRIMARY KEY (cookieId)
 ) ENGINE=MyISAM ;
 
@@ -852,13 +852,13 @@ CREATE TABLE 'tiki_cookies' (
 DROP TABLE IF EXISTS 'tiki_copyrights';
 
 CREATE TABLE 'tiki_copyrights' (
-  "copyrightId" INTEGER,
-  "page" varchar(200) default NULL,
-  "title" varchar(200) default NULL,
-  "year" bigint default NULL,
-  "authors" varchar(200) default NULL,
-  "copyright_order" bigint default NULL,
-  "userName" varchar(200) default '',
+  copyrightId INTEGER,
+  page varchar(200) default NULL,
+  title varchar(200) default NULL,
+  year bigint default NULL,
+  authors varchar(200) default NULL,
+  copyright_order bigint default NULL,
+  userName varchar(200) default '',
   PRIMARY KEY (copyrightId)
 ) ENGINE=MyISAM ;
 
@@ -866,17 +866,17 @@ CREATE TABLE 'tiki_copyrights' (
 DROP TABLE IF EXISTS 'tiki_directory_categories';
 
 CREATE TABLE 'tiki_directory_categories' (
-  "categId" INTEGER,
-  "parent" bigint default NULL,
-  "name" varchar(240) default NULL,
-  "description" text,
-  "childrenType" char(1) default NULL,
-  "sites" bigint default NULL,
-  "viewableChildren" smallint default NULL,
-  "allowSites" char(1) default NULL,
-  "showCount" char(1) default NULL,
-  "editorGroup" varchar(200) default NULL,
-  "hits" bigint default NULL,
+  categId INTEGER,
+  parent bigint default NULL,
+  name varchar(240) default NULL,
+  description text,
+  childrenType char(1) default NULL,
+  sites bigint default NULL,
+  viewableChildren smallint default NULL,
+  allowSites char(1) default NULL,
+  showCount char(1) default NULL,
+  editorGroup varchar(200) default NULL,
+  hits bigint default NULL,
   PRIMARY KEY (categId)
 ) ENGINE=MyISAM ;
 
@@ -884,8 +884,8 @@ CREATE TABLE 'tiki_directory_categories' (
 DROP TABLE IF EXISTS 'tiki_directory_search';
 
 CREATE TABLE 'tiki_directory_search' (
-  "term" varchar(250) NOT NULL default '',
-  "hits" bigint default NULL,
+  term varchar(250) NOT NULL default '',
+  hits bigint default NULL,
   PRIMARY KEY (term)
 ) ENGINE=MyISAM;
 
@@ -893,17 +893,17 @@ CREATE TABLE 'tiki_directory_search' (
 DROP TABLE IF EXISTS 'tiki_directory_sites';
 
 CREATE TABLE 'tiki_directory_sites' (
-  "siteId" INTEGER,
-  "name" varchar(240) default NULL,
-  "description" text,
-  "url" varchar(255) default NULL,
-  "country" varchar(255) default NULL,
-  "hits" bigint default NULL,
-  "isValid" char(1) default NULL,
-  "created" bigint default NULL,
-  "lastModif" bigint default NULL,
-  "cache" bytea,
-  "cache_timestamp" bigint default NULL,
+  siteId INTEGER,
+  name varchar(240) default NULL,
+  description text,
+  url varchar(255) default NULL,
+  country varchar(255) default NULL,
+  hits bigint default NULL,
+  isValid char(1) default NULL,
+  created bigint default NULL,
+  lastModif bigint default NULL,
+  cache bytea,
+  cache_timestamp bigint default NULL,
   PRIMARY KEY (siteId),
   KEY (isValid),
   KEY (url)
@@ -914,13 +914,13 @@ CREATE  INDEX "tiki_directory_sites_ft" ON "tiki_directory_sites"("name","descri
 DROP TABLE IF EXISTS 'tiki_drawings';
 
 CREATE TABLE 'tiki_drawings' (
-  "drawId" INTEGER,
-  "version" integer default NULL,
-  "name" varchar(250) default NULL,
-  "filename_draw" varchar(250) default NULL,
-  "filename_pad" varchar(250) default NULL,
-  "timestamp" bigint default NULL,
-  "user" varchar(200) default '',
+  drawId INTEGER,
+  version integer default NULL,
+  name varchar(250) default NULL,
+  filename_draw varchar(250) default NULL,
+  filename_pad varchar(250) default NULL,
+  timestamp bigint default NULL,
+  user varchar(200) default '',
   PRIMARY KEY (drawId)
 ) ENGINE=MyISAM ;
 
@@ -928,9 +928,9 @@ CREATE TABLE 'tiki_drawings' (
 DROP TABLE IF EXISTS 'tiki_dsn';
 
 CREATE TABLE 'tiki_dsn' (
-  "dsnId" INTEGER,
-  "name" varchar(200) NOT NULL default '',
-  "dsn" varchar(255) default NULL,
+  dsnId INTEGER,
+  name varchar(200) NOT NULL default '',
+  dsn varchar(255) default NULL,
   PRIMARY KEY (dsnId)
 ) ENGINE=MyISAM ;
 
@@ -938,8 +938,8 @@ CREATE TABLE 'tiki_dsn' (
 DROP TABLE IF EXISTS 'tiki_dynamic_variables';
 
 CREATE TABLE 'tiki_dynamic_variables' (
-  "name" varchar(40) NOT NULL,
-  "data" text,
+  name varchar(40) NOT NULL,
+  data text,
   PRIMARY KEY (name)
 );
 
@@ -947,9 +947,9 @@ CREATE TABLE 'tiki_dynamic_variables' (
 DROP TABLE IF EXISTS 'tiki_extwiki';
 
 CREATE TABLE 'tiki_extwiki' (
-  "extwikiId" INTEGER,
-  "name" varchar(200) NOT NULL default '',
-  "extwiki" varchar(255) default NULL,
+  extwikiId INTEGER,
+  name varchar(200) NOT NULL default '',
+  extwiki varchar(255) default NULL,
   PRIMARY KEY (extwikiId)
 ) ENGINE=MyISAM ;
 
@@ -957,11 +957,11 @@ CREATE TABLE 'tiki_extwiki' (
 DROP TABLE IF EXISTS 'tiki_faq_questions';
 
 CREATE TABLE 'tiki_faq_questions' (
-  "questionId" INTEGER,
-  "faqId" bigint default NULL,
-  "position" smallint default NULL,
-  "question" text,
-  "answer" text,
+  questionId INTEGER,
+  faqId bigint default NULL,
+  position smallint default NULL,
+  question text,
+  answer text,
   PRIMARY KEY (questionId)
 ) ENGINE=MyISAM ;
 
@@ -973,13 +973,13 @@ CREATE  INDEX "tiki_faq_questions_ft" ON "tiki_faq_questions"("question","answer
 DROP TABLE IF EXISTS 'tiki_faqs';
 
 CREATE TABLE 'tiki_faqs' (
-  "faqId" INTEGER,
-  "title" varchar(200) default NULL,
-  "description" text,
-  "created" bigint default NULL,
-  "questions" integer default NULL,
-  "hits" integer default NULL,
-  "canSuggest" char(1) default NULL,
+  faqId INTEGER,
+  title varchar(200) default NULL,
+  description text,
+  created bigint default NULL,
+  questions integer default NULL,
+  hits integer default NULL,
+  canSuggest char(1) default NULL,
   PRIMARY KEY (faqId)
 ) ENGINE=MyISAM ;
 
@@ -991,12 +991,12 @@ CREATE  INDEX "tiki_faqs_ft" ON "tiki_faqs"("title","description");
 DROP TABLE IF EXISTS 'tiki_featured_links';
 
 CREATE TABLE 'tiki_featured_links' (
-  "url" varchar(200) NOT NULL default '',
-  "title" varchar(200) default NULL,
-  "description" text,
-  "hits" integer default NULL,
-  "position" integer default NULL,
-  "type" char(1) default NULL,
+  url varchar(200) NOT NULL default '',
+  title varchar(200) default NULL,
+  description text,
+  hits integer default NULL,
+  position integer default NULL,
+  type char(1) default NULL,
   PRIMARY KEY (url)
 ) ENGINE=MyISAM;
 
@@ -1004,43 +1004,43 @@ CREATE TABLE 'tiki_featured_links' (
 DROP TABLE IF EXISTS 'tiki_file_galleries';
 
 CREATE TABLE 'tiki_file_galleries' (
-  "galleryId" INTEGER,
-  "name" varchar(80) NOT NULL default '',
-  "type" varchar(20) NOT NULL default 'default',
-  "description" text,
-  "created" bigint default NULL,
-  "visible" char(1) default NULL,
-  "lastModif" bigint default NULL,
-  "user" varchar(200) default '',
-  "hits" bigint default NULL,
-  "votes" integer default NULL,
-  "points" decimal(8,2) default NULL,
-  "maxRows" bigint default NULL,
-  "public" char(1) default NULL,
-  "show_id" char(1) default NULL,
-  "show_icon" char(1) default NULL,
-  "show_name" char(1) default NULL,
-  "show_size" char(1) default NULL,
-  "show_description" char(1) default NULL,
-  "max_desc" integer default NULL,
-  "show_created" char(1) default NULL,
-  "show_hits" char(1) default NULL,
-  "parentId" bigint NOT NULL default -1,
-  "lockable" char(1) default 'n',
-  "show_lockedby" char(1) default NULL,
-  "archives" smallint default -1,
-  "sort_mode" char(20) default NULL,
-  "show_modified" char(1) default NULL,
-  "show_author" char(1) default NULL,
-  "show_creator" char(1) default NULL,
-  "subgal_conf" varchar(200) default NULL,
-  "show_last_user" char(1) default NULL,
-  "show_comment" char(1) default NULL,
-  "show_files" char(1) default NULL,
-  "show_explorer" char(1) default NULL,
-  "show_path" char(1) default NULL,
-  "show_slideshow" char(1) default NULL,
-  "default_view" varchar(20) default NULL,
+  galleryId INTEGER,
+  name varchar(80) NOT NULL default '',
+  type varchar(20) NOT NULL default 'default',
+  description text,
+  created bigint default NULL,
+  visible char(1) default NULL,
+  lastModif bigint default NULL,
+  user varchar(200) default '',
+  hits bigint default NULL,
+  votes integer default NULL,
+  points decimal(8,2) default NULL,
+  maxRows bigint default NULL,
+  public char(1) default NULL,
+  show_id char(1) default NULL,
+  show_icon char(1) default NULL,
+  show_name char(1) default NULL,
+  show_size char(1) default NULL,
+  show_description char(1) default NULL,
+  max_desc integer default NULL,
+  show_created char(1) default NULL,
+  show_hits char(1) default NULL,
+  parentId bigint NOT NULL default -1,
+  lockable char(1) default 'n',
+  show_lockedby char(1) default NULL,
+  archives smallint default -1,
+  sort_mode char(20) default NULL,
+  show_modified char(1) default NULL,
+  show_author char(1) default NULL,
+  show_creator char(1) default NULL,
+  subgal_conf varchar(200) default NULL,
+  show_last_user char(1) default NULL,
+  show_comment char(1) default NULL,
+  show_files char(1) default NULL,
+  show_explorer char(1) default NULL,
+  show_path char(1) default NULL,
+  show_slideshow char(1) default NULL,
+  default_view varchar(20) default NULL,
   PRIMARY KEY (galleryId)
 ) ENGINE=MyISAM ;
 
@@ -1048,30 +1048,30 @@ CREATE TABLE 'tiki_file_galleries' (
 DROP TABLE IF EXISTS 'tiki_files';
 
 CREATE TABLE 'tiki_files' (
-  "fileId" INTEGER,
-  "galleryId" bigint NOT NULL default '0',
-  "name" varchar(200) NOT NULL default '',
-  "description" text,
-  "created" bigint default NULL,
-  "filename" varchar(80) default NULL,
-  "filesize" bigint default NULL,
-  "filetype" varchar(250) default NULL,
-  "data" bytea,
-  "user" varchar(200) default '',
-  "author" varchar(40) default NULL,
-  "hits" bigint default NULL,
-  "votes" integer default NULL,
-  "points" decimal(8,2) default NULL,
-  "path" varchar(255) default NULL,
-  "reference_url" varchar(250) default NULL,
-  "is_reference" char(1) default NULL,
-  "hash" varchar(32) default NULL,
-  "search_data" longtext,
-  "lastModif" integer(14) DEFAULT NULL,
-  "lastModifUser" varchar(200) DEFAULT NULL,
-  "lockedby" varchar(200) default '',
-  "comment" varchar(200) default NULL,
-  "archiveId" bigint default 0,
+  fileId INTEGER,
+  galleryId bigint NOT NULL default '0',
+  name varchar(200) NOT NULL default '',
+  description text,
+  created bigint default NULL,
+  filename varchar(80) default NULL,
+  filesize bigint default NULL,
+  filetype varchar(250) default NULL,
+  data bytea,
+  user varchar(200) default '',
+  author varchar(40) default NULL,
+  hits bigint default NULL,
+  votes integer default NULL,
+  points decimal(8,2) default NULL,
+  path varchar(255) default NULL,
+  reference_url varchar(250) default NULL,
+  is_reference char(1) default NULL,
+  hash varchar(32) default NULL,
+  search_data longtext,
+  lastModif integer(14) DEFAULT NULL,
+  lastModifUser varchar(200) DEFAULT NULL,
+  lockedby varchar(200) default '',
+  comment varchar(200) default NULL,
+  archiveId bigint default 0,
   PRIMARY KEY (fileId)
 ) ENGINE=MyISAM ;
 
@@ -1086,17 +1086,17 @@ CREATE  INDEX "tiki_files_ft" ON "tiki_files"("name","description","search_data"
 DROP TABLE IF EXISTS 'tiki_forum_attachments';
 
 CREATE TABLE 'tiki_forum_attachments' (
-  "attId" INTEGER,
-  "threadId" bigint NOT NULL default '0',
-  "qId" bigint NOT NULL default '0',
-  "forumId" bigint default NULL,
-  "filename" varchar(250) default NULL,
-  "filetype" varchar(250) default NULL,
-  "filesize" bigint default NULL,
-  "data" bytea,
-  "dir" varchar(200) default NULL,
-  "created" bigint default NULL,
-  "path" varchar(250) default NULL,
+  attId INTEGER,
+  threadId bigint NOT NULL default '0',
+  qId bigint NOT NULL default '0',
+  forumId bigint default NULL,
+  filename varchar(250) default NULL,
+  filetype varchar(250) default NULL,
+  filesize bigint default NULL,
+  data bytea,
+  dir varchar(200) default NULL,
+  created bigint default NULL,
+  path varchar(250) default NULL,
   PRIMARY KEY (attId)
 ) ENGINE=MyISAM ;
 
@@ -1105,10 +1105,10 @@ CREATE  INDEX "tiki_forum_attachments_threadId" ON "tiki_forum_attachments"("thr
 DROP TABLE IF EXISTS 'tiki_forum_reads';
 
 CREATE TABLE 'tiki_forum_reads' (
-  "user" varchar(200) NOT NULL default '',
-  "threadId" bigint NOT NULL default '0',
-  "forumId" bigint default NULL,
-  "timestamp" bigint default NULL,
+  user varchar(200) NOT NULL default '',
+  threadId bigint NOT NULL default '0',
+  forumId bigint default NULL,
+  timestamp bigint default NULL,
   PRIMARY KEY (user,threadId)
 ) ENGINE=MyISAM;
 
@@ -1116,63 +1116,63 @@ CREATE TABLE 'tiki_forum_reads' (
 DROP TABLE IF EXISTS 'tiki_forums';
 
 CREATE TABLE 'tiki_forums' (
-  "forumId" INTEGER,
-  "name" varchar(255) default NULL,
-  "description" text,
-  "created" bigint default NULL,
-  "lastPost" bigint default NULL,
-  "threads" integer default NULL,
-  "comments" integer default NULL,
-  "controlFlood" char(1) default NULL,
-  "floodInterval" integer default NULL,
-  "moderator" varchar(200) default NULL,
-  "hits" integer default NULL,
-  "mail" varchar(200) default NULL,
-  "useMail" char(1) default NULL,
-  "section" varchar(200) default NULL,
-  "usePruneUnreplied" char(1) default NULL,
-  "pruneUnrepliedAge" integer default NULL,
-  "usePruneOld" char(1) default NULL,
-  "pruneMaxAge" integer default NULL,
-  "topicsPerPage" integer default NULL,
-  "topicOrdering" varchar(100) default NULL,
-  "threadOrdering" varchar(100) default NULL,
-  "att" varchar(80) default NULL,
-  "att_store" varchar(4) default NULL,
-  "att_store_dir" varchar(250) default NULL,
-  "att_max_size" bigint default NULL,
-  "ui_level" char(1) default NULL,
-  "forum_password" varchar(32) default NULL,
-  "forum_use_password" char(1) default NULL,
-  "moderator_group" varchar(200) default NULL,
-  "approval_type" varchar(20) default NULL,
-  "outbound_address" varchar(250) default NULL,
-  "outbound_mails_for_inbound_mails" char(1) default NULL,
-  "outbound_mails_reply_link" char(1) default NULL,
-  "outbound_from" varchar(250) default NULL,
-  "inbound_pop_server" varchar(250) default NULL,
-  "inbound_pop_port" smallint default NULL,
-  "inbound_pop_user" varchar(200) default NULL,
-  "inbound_pop_password" varchar(80) default NULL,
-  "topic_smileys" char(1) default NULL,
-  "ui_avatar" char(1) default NULL,
-  "ui_flag" char(1) default NULL,
-  "ui_posts" char(1) default NULL,
-  "ui_email" char(1) default NULL,
-  "ui_online" char(1) default NULL,
-  "topic_summary" char(1) default NULL,
-  "show_description" char(1) default NULL,
-  "topics_list_replies" char(1) default NULL,
-  "topics_list_reads" char(1) default NULL,
-  "topics_list_pts" char(1) default NULL,
-  "topics_list_lastpost" char(1) default NULL,
-  "topics_list_author" char(1) default NULL,
-  "vote_threads" char(1) default NULL,
-  "forum_last_n" smallint default 0,
-  "threadStyle" varchar(100) default NULL,
-  "commentsPerPage" varchar(100) default NULL,
-  "is_flat" char(1) default NULL,
-  "mandatory_contribution" char(1) default NULL,
+  forumId INTEGER,
+  name varchar(255) default NULL,
+  description text,
+  created bigint default NULL,
+  lastPost bigint default NULL,
+  threads integer default NULL,
+  comments integer default NULL,
+  controlFlood char(1) default NULL,
+  floodInterval integer default NULL,
+  moderator varchar(200) default NULL,
+  hits integer default NULL,
+  mail varchar(200) default NULL,
+  useMail char(1) default NULL,
+  section varchar(200) default NULL,
+  usePruneUnreplied char(1) default NULL,
+  pruneUnrepliedAge integer default NULL,
+  usePruneOld char(1) default NULL,
+  pruneMaxAge integer default NULL,
+  topicsPerPage integer default NULL,
+  topicOrdering varchar(100) default NULL,
+  threadOrdering varchar(100) default NULL,
+  att varchar(80) default NULL,
+  att_store varchar(4) default NULL,
+  att_store_dir varchar(250) default NULL,
+  att_max_size bigint default NULL,
+  ui_level char(1) default NULL,
+  forum_password varchar(32) default NULL,
+  forum_use_password char(1) default NULL,
+  moderator_group varchar(200) default NULL,
+  approval_type varchar(20) default NULL,
+  outbound_address varchar(250) default NULL,
+  outbound_mails_for_inbound_mails char(1) default NULL,
+  outbound_mails_reply_link char(1) default NULL,
+  outbound_from varchar(250) default NULL,
+  inbound_pop_server varchar(250) default NULL,
+  inbound_pop_port smallint default NULL,
+  inbound_pop_user varchar(200) default NULL,
+  inbound_pop_password varchar(80) default NULL,
+  topic_smileys char(1) default NULL,
+  ui_avatar char(1) default NULL,
+  ui_flag char(1) default NULL,
+  ui_posts char(1) default NULL,
+  ui_email char(1) default NULL,
+  ui_online char(1) default NULL,
+  topic_summary char(1) default NULL,
+  show_description char(1) default NULL,
+  topics_list_replies char(1) default NULL,
+  topics_list_reads char(1) default NULL,
+  topics_list_pts char(1) default NULL,
+  topics_list_lastpost char(1) default NULL,
+  topics_list_author char(1) default NULL,
+  vote_threads char(1) default NULL,
+  forum_last_n smallint default 0,
+  threadStyle varchar(100) default NULL,
+  commentsPerPage varchar(100) default NULL,
+  is_flat char(1) default NULL,
+  mandatory_contribution char(1) default NULL,
   PRIMARY KEY (forumId)
 ) ENGINE=MyISAM ;
 
@@ -1180,22 +1180,22 @@ CREATE TABLE 'tiki_forums' (
 DROP TABLE IF EXISTS 'tiki_forums_queue';
 
 CREATE TABLE 'tiki_forums_queue' (
-  "qId" INTEGER,
-  "object" varchar(32) default NULL,
-  "parentId" bigint default NULL,
-  "forumId" bigint default NULL,
-  "timestamp" bigint default NULL,
-  "user" varchar(200) default '',
-  "title" varchar(240) default NULL,
-  "data" text,
-  "type" varchar(60) default NULL,
-  "hash" varchar(32) default NULL,
-  "topic_smiley" varchar(80) default NULL,
-  "topic_title" varchar(240) default NULL,
-  "summary" varchar(240) default NULL,
-  "in_reply_to" varchar(128) default NULL,
-  "tags" varchar(255) default NULL,
-  "email" varchar(255) default NULL,
+  qId INTEGER,
+  object varchar(32) default NULL,
+  parentId bigint default NULL,
+  forumId bigint default NULL,
+  timestamp bigint default NULL,
+  user varchar(200) default '',
+  title varchar(240) default NULL,
+  data text,
+  type varchar(60) default NULL,
+  hash varchar(32) default NULL,
+  topic_smiley varchar(80) default NULL,
+  topic_title varchar(240) default NULL,
+  summary varchar(240) default NULL,
+  in_reply_to varchar(128) default NULL,
+  tags varchar(255) default NULL,
+  email varchar(255) default NULL,
   PRIMARY KEY (qId)
 ) ENGINE=MyISAM ;
 
@@ -1203,12 +1203,12 @@ CREATE TABLE 'tiki_forums_queue' (
 DROP TABLE IF EXISTS 'tiki_forums_reported';
 
 CREATE TABLE 'tiki_forums_reported' (
-  "threadId" bigint NOT NULL default '0',
-  "forumId" bigint NOT NULL default '0',
-  "parentId" bigint NOT NULL default '0',
-  "user" varchar(200) default '',
-  "timestamp" bigint default NULL,
-  "reason" varchar(250) default NULL,
+  threadId bigint NOT NULL default '0',
+  forumId bigint NOT NULL default '0',
+  parentId bigint NOT NULL default '0',
+  user varchar(200) default '',
+  timestamp bigint default NULL,
+  reason varchar(250) default NULL,
   PRIMARY KEY (threadId)
 ) ENGINE=MyISAM;
 
@@ -1216,36 +1216,36 @@ CREATE TABLE 'tiki_forums_reported' (
 DROP TABLE IF EXISTS 'tiki_galleries';
 
 CREATE TABLE 'tiki_galleries' (
-  "galleryId" INTEGER,
-  "name" varchar(80) NOT NULL default '',
-  "description" text,
-  "created" bigint default NULL,
-  "lastModif" bigint default NULL,
-  "visible" char(1) default NULL,
-  "geographic" char(1) default NULL,
-  "theme" varchar(60) default NULL,
-  "user" varchar(200) default '',
-  "hits" bigint default NULL,
-  "maxRows" bigint default NULL,
-  "rowImages" bigint default NULL,
-  "thumbSizeX" bigint default NULL,
-  "thumbSizeY" bigint default NULL,
-  "public" char(1) default NULL,
-  "sortorder" varchar(20) NOT NULL default 'created',
-  "sortdirection" varchar(4) NOT NULL default 'desc',
-  "galleryimage" varchar(20) NOT NULL default 'first',
-  "parentgallery" bigint NOT NULL default -1,
-  "showname" char(1) NOT NULL default 'y',
-  "showimageid" char(1) NOT NULL default 'n',
-  "showdescription" char(1) NOT NULL default 'n',
-  "showcreated" char(1) NOT NULL default 'n',
-  "showuser" char(1) NOT NULL default 'n',
-  "showhits" char(1) NOT NULL default 'y',
-  "showxysize" char(1) NOT NULL default 'y',
-  "showfilesize" char(1) NOT NULL default 'n',
-  "showfilename" char(1) NOT NULL default 'n',
-  "defaultscale" varchar(10) NOT NULL DEFAULT 'o',
-  "showcategories" char(1) NOT NULL default 'n', 
+  galleryId INTEGER,
+  name varchar(80) NOT NULL default '',
+  description text,
+  created bigint default NULL,
+  lastModif bigint default NULL,
+  visible char(1) default NULL,
+  geographic char(1) default NULL,
+  theme varchar(60) default NULL,
+  user varchar(200) default '',
+  hits bigint default NULL,
+  maxRows bigint default NULL,
+  rowImages bigint default NULL,
+  thumbSizeX bigint default NULL,
+  thumbSizeY bigint default NULL,
+  public char(1) default NULL,
+  sortorder varchar(20) NOT NULL default 'created',
+  sortdirection varchar(4) NOT NULL default 'desc',
+  galleryimage varchar(20) NOT NULL default 'first',
+  parentgallery bigint NOT NULL default -1,
+  showname char(1) NOT NULL default 'y',
+  showimageid char(1) NOT NULL default 'n',
+  showdescription char(1) NOT NULL default 'n',
+  showcreated char(1) NOT NULL default 'n',
+  showuser char(1) NOT NULL default 'n',
+  showhits char(1) NOT NULL default 'y',
+  showxysize char(1) NOT NULL default 'y',
+  showfilesize char(1) NOT NULL default 'n',
+  showfilename char(1) NOT NULL default 'n',
+  defaultscale varchar(10) NOT NULL DEFAULT 'o',
+  showcategories char(1) NOT NULL default 'n', 
   PRIMARY KEY (galleryId)
 ) ENGINE=MyISAM ;
 
@@ -1259,8 +1259,8 @@ CREATE  INDEX "tiki_galleries_ft" ON "tiki_galleries"("name","description");
 DROP TABLE IF EXISTS 'tiki_galleries_scales';
 
 CREATE TABLE 'tiki_galleries_scales' (
-  "galleryId" bigint NOT NULL default '0',
-  "scale" bigint NOT NULL default '0',
+  galleryId bigint NOT NULL default '0',
+  scale bigint NOT NULL default '0',
   PRIMARY KEY (galleryId,scale)
 ) ENGINE=MyISAM;
 
@@ -1268,10 +1268,10 @@ CREATE TABLE 'tiki_galleries_scales' (
 DROP TABLE IF EXISTS 'tiki_games';
 
 CREATE TABLE 'tiki_games' (
-  "gameName" varchar(200) NOT NULL default '',
-  "hits" integer default NULL,
-  "votes" integer default NULL,
-  "points" integer default NULL,
+  gameName varchar(200) NOT NULL default '',
+  hits integer default NULL,
+  votes integer default NULL,
+  points integer default NULL,
   PRIMARY KEY (gameName)
 ) ENGINE=MyISAM;
 
@@ -1279,8 +1279,8 @@ CREATE TABLE 'tiki_games' (
 DROP TABLE IF EXISTS 'tiki_group_inclusion';
 
 CREATE TABLE 'tiki_group_inclusion' (
-  "groupName" varchar(255) NOT NULL default '',
-  "includeGroup" varchar(255) NOT NULL default '',
+  groupName varchar(255) NOT NULL default '',
+  includeGroup varchar(255) NOT NULL default '',
   PRIMARY KEY (groupName(30),includeGroup(30))
 ) ENGINE=MyISAM;
 
@@ -1288,13 +1288,13 @@ CREATE TABLE 'tiki_group_inclusion' (
 DROP TABLE IF EXISTS 'tiki_group_watches';
 
 CREATE TABLE 'tiki_group_watches' (
-  "watchId" INTEGER,
+  watchId INTEGER,
   group varchar(200) NOT NULL default '',
-  "event" varchar(40) NOT NULL default '',
-  "object" varchar(200) NOT NULL default '',
-  "title" varchar(250) default NULL,
-  "type" varchar(200) default NULL,
-  "url" varchar(250) default NULL,
+  event varchar(40) NOT NULL default '',
+  object varchar(200) NOT NULL default '',
+  title varchar(250) default NULL,
+  type varchar(200) default NULL,
+  url varchar(250) default NULL,
   PRIMARY KEY (group(50),event,object(100))
 ) ENGINE=MyISAM;
 
@@ -1303,18 +1303,18 @@ CREATE  INDEX "tiki_group_watches_watchId" ON "tiki_group_watches"("watchId");
 DROP TABLE IF EXISTS 'tiki_history';
 
 CREATE TABLE 'tiki_history' (
-  "historyId" INTEGER,
-  "pageName" varchar(160) NOT NULL default '',
-  "version" integer NOT NULL default '0',
-  "version_minor" integer NOT NULL default '0',
-  "lastModif" bigint default NULL,
-  "description" varchar(200) default NULL,
-  "user" varchar(200) not null default '',
-  "ip" varchar(15) default NULL,
-  "comment" varchar(200) default NULL,
-  "data" bytea,
-  "type" varchar(50) default NULL,
-  "is_html" TINYINT(1) NOT NULL DEFAULT 0,
+  historyId INTEGER,
+  pageName varchar(160) NOT NULL default '',
+  version integer NOT NULL default '0',
+  version_minor integer NOT NULL default '0',
+  lastModif bigint default NULL,
+  description varchar(200) default NULL,
+  user varchar(200) not null default '',
+  ip varchar(15) default NULL,
+  comment varchar(200) default NULL,
+  data bytea,
+  type varchar(50) default NULL,
+  is_html TINYINT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (pageName,version),
   KEY user (user),
   KEY(historyId)
@@ -1324,8 +1324,8 @@ CREATE TABLE 'tiki_history' (
 DROP TABLE IF EXISTS 'tiki_hotwords';
 
 CREATE TABLE 'tiki_hotwords' (
-  "word" varchar(40) NOT NULL default '',
-  "url" varchar(255) NOT NULL default '',
+  word varchar(40) NOT NULL default '',
+  url varchar(255) NOT NULL default '',
   PRIMARY KEY (word)
 ) ENGINE=MyISAM;
 
@@ -1333,11 +1333,11 @@ CREATE TABLE 'tiki_hotwords' (
 DROP TABLE IF EXISTS 'tiki_html_pages';
 
 CREATE TABLE 'tiki_html_pages' (
-  "pageName" varchar(200) NOT NULL default '',
-  "content" bytea,
-  "refresh" bigint default NULL,
-  "type" char(1) default NULL,
-  "created" bigint default NULL,
+  pageName varchar(200) NOT NULL default '',
+  content bytea,
+  refresh bigint default NULL,
+  type char(1) default NULL,
+  created bigint default NULL,
   PRIMARY KEY (pageName)
 ) ENGINE=MyISAM;
 
@@ -1345,10 +1345,10 @@ CREATE TABLE 'tiki_html_pages' (
 DROP TABLE IF EXISTS 'tiki_html_pages_dynamic_zones';
 
 CREATE TABLE 'tiki_html_pages_dynamic_zones' (
-  "pageName" varchar(40) NOT NULL default '',
-  "zone" varchar(80) NOT NULL default '',
-  "type" char(2) default NULL,
-  "content" text,
+  pageName varchar(40) NOT NULL default '',
+  zone varchar(80) NOT NULL default '',
+  type char(2) default NULL,
+  content text,
   PRIMARY KEY (pageName,zone)
 ) ENGINE=MyISAM;
 
@@ -1356,16 +1356,16 @@ CREATE TABLE 'tiki_html_pages_dynamic_zones' (
 DROP TABLE IF EXISTS 'tiki_images';
 
 CREATE TABLE 'tiki_images' (
-  "imageId" INTEGER,
-  "galleryId" bigint NOT NULL default '0',
-  "name" varchar(200) NOT NULL default '',
-  "description" text,
-  "lon" float default NULL,
-  "lat" float default NULL,
-  "created" bigint default NULL,
-  "user" varchar(200) default '',
-  "hits" bigint default NULL,
-  "path" varchar(255) default NULL,
+  imageId INTEGER,
+  galleryId bigint NOT NULL default '0',
+  name varchar(200) NOT NULL default '',
+  description text,
+  lon float default NULL,
+  lat float default NULL,
+  created bigint default NULL,
+  user varchar(200) default '',
+  hits bigint default NULL,
+  path varchar(255) default NULL,
   PRIMARY KEY (imageId)
 ) ENGINE=MyISAM ;
 
@@ -1380,15 +1380,15 @@ CREATE  INDEX "tiki_images_ft" ON "tiki_images"("name","description");
 DROP TABLE IF EXISTS 'tiki_images_data';
 
 CREATE TABLE 'tiki_images_data' (
-  "imageId" bigint NOT NULL default '0',
-  "xsize" integer NOT NULL default '0',
-  "ysize" integer NOT NULL default '0',
-  "type" char(1) NOT NULL default '',
-  "filesize" bigint default NULL,
-  "filetype" varchar(80) default NULL,
-  "filename" varchar(80) default NULL,
-  "data" bytea,
-  "etag" varchar(32) default NULL,
+  imageId bigint NOT NULL default '0',
+  xsize integer NOT NULL default '0',
+  ysize integer NOT NULL default '0',
+  type char(1) NOT NULL default '',
+  filesize bigint default NULL,
+  filetype varchar(80) default NULL,
+  filename varchar(80) default NULL,
+  data bytea,
+  etag varchar(32) default NULL,
   PRIMARY KEY (imageId,xsize,ysize,type)
 ) ENGINE=MyISAM;
 
@@ -1397,9 +1397,9 @@ CREATE  INDEX "tiki_images_data_t_i_d_it" ON "tiki_images_data"("imageId","type"
 DROP TABLE IF EXISTS 'tiki_language';
 
 CREATE TABLE 'tiki_language' (
-  "source" bytea NOT NULL,
-  "lang" char(16) NOT NULL default '',
-  "tran" bytea,
+  source bytea NOT NULL,
+  lang char(16) NOT NULL default '',
+  tran bytea,
   PRIMARY KEY (source(255),lang)
 ) ENGINE=MyISAM;
 
@@ -1407,8 +1407,8 @@ CREATE TABLE 'tiki_language' (
 DROP TABLE IF EXISTS 'tiki_languages';
 
 CREATE TABLE 'tiki_languages' (
-  "lang" char(16) NOT NULL default '',
-  "language" varchar(255) default NULL,
+  lang char(16) NOT NULL default '',
+  language varchar(255) default NULL,
   PRIMARY KEY (lang)
 ) ENGINE=MyISAM;
 
@@ -1419,10 +1419,10 @@ INSERT INTO "tiki_languages" ("lang","language") VALUES ('en','English');
 DROP TABLE IF EXISTS 'tiki_link_cache';
 
 CREATE TABLE 'tiki_link_cache' (
-  "cacheId" INTEGER,
-  "url" varchar(250) default NULL,
-  "data" bytea,
-  "refresh" bigint default NULL,
+  cacheId INTEGER,
+  url varchar(250) default NULL,
+  data bytea,
+  refresh bigint default NULL,
   PRIMARY KEY (cacheId)
 ) ENGINE=MyISAM ;
 
@@ -1433,9 +1433,9 @@ CREATE INDEX urlindex ON tiki_link_cache (url(250));
 DROP TABLE IF EXISTS 'tiki_links';
 
 CREATE TABLE 'tiki_links' (
-  "fromPage" varchar(160) NOT NULL default '',
-  "toPage" varchar(160) NOT NULL default '',
-  "reltype" varchar(50),
+  fromPage varchar(160) NOT NULL default '',
+  toPage varchar(160) NOT NULL default '',
+  reltype varchar(50),
   PRIMARY KEY (fromPage,toPage)
 ) ENGINE=MyISAM;
 
@@ -1444,13 +1444,13 @@ CREATE  INDEX "tiki_links_toPage" ON "tiki_links"("toPage");
 DROP TABLE IF EXISTS 'tiki_live_support_events';
 
 CREATE TABLE 'tiki_live_support_events' (
-  "eventId" INTEGER,
-  "reqId" varchar(32) NOT NULL default '',
-  "type" varchar(40) default NULL,
-  "seqId" bigint default NULL,
-  "senderId" varchar(32) default NULL,
-  "data" text,
-  "timestamp" bigint default NULL,
+  eventId INTEGER,
+  reqId varchar(32) NOT NULL default '',
+  type varchar(40) default NULL,
+  seqId bigint default NULL,
+  senderId varchar(32) default NULL,
+  data text,
+  timestamp bigint default NULL,
   PRIMARY KEY (eventId)
 ) ENGINE=MyISAM ;
 
@@ -1458,10 +1458,10 @@ CREATE TABLE 'tiki_live_support_events' (
 DROP TABLE IF EXISTS 'tiki_live_support_message_comments';
 
 CREATE TABLE 'tiki_live_support_message_comments' (
-  "cId" INTEGER,
-  "msgId" bigint default NULL,
-  "data" text,
-  "timestamp" bigint default NULL,
+  cId INTEGER,
+  msgId bigint default NULL,
+  data text,
+  timestamp bigint default NULL,
   PRIMARY KEY (cId)
 ) ENGINE=MyISAM ;
 
@@ -1469,18 +1469,18 @@ CREATE TABLE 'tiki_live_support_message_comments' (
 DROP TABLE IF EXISTS 'tiki_live_support_messages';
 
 CREATE TABLE 'tiki_live_support_messages' (
-  "msgId" INTEGER,
-  "data" text,
-  "timestamp" bigint default NULL,
-  "user" varchar(200) not null default '',
-  "username" varchar(200) default NULL,
-  "priority" smallint default NULL,
-  "status" char(1) default NULL,
-  "assigned_to" varchar(200) default NULL,
-  "resolution" varchar(100) default NULL,
-  "title" varchar(200) default NULL,
-  "module" smallint default NULL,
-  "email" varchar(250) default NULL,
+  msgId INTEGER,
+  data text,
+  timestamp bigint default NULL,
+  user varchar(200) not null default '',
+  username varchar(200) default NULL,
+  priority smallint default NULL,
+  status char(1) default NULL,
+  assigned_to varchar(200) default NULL,
+  resolution varchar(100) default NULL,
+  title varchar(200) default NULL,
+  module smallint default NULL,
+  email varchar(250) default NULL,
   PRIMARY KEY (msgId)
 ) ENGINE=MyISAM ;
 
@@ -1488,8 +1488,8 @@ CREATE TABLE 'tiki_live_support_messages' (
 DROP TABLE IF EXISTS 'tiki_live_support_modules';
 
 CREATE TABLE 'tiki_live_support_modules' (
-  "modId" INTEGER,
-  "name" varchar(90) default NULL,
+  modId INTEGER,
+  name varchar(90) default NULL,
   PRIMARY KEY (modId)
 ) ENGINE=MyISAM ;
 
@@ -1512,17 +1512,17 @@ INSERT INTO "tiki_live_support_modules" ("name") VALUES ('charts');
 DROP TABLE IF EXISTS 'tiki_live_support_operators';
 
 CREATE TABLE 'tiki_live_support_operators' (
-  "user" varchar(200) NOT NULL default '',
-  "accepted_requests" bigint default NULL,
-  "status" varchar(20) default NULL,
-  "longest_chat" bigint default NULL,
-  "shortest_chat" bigint default NULL,
-  "average_chat" bigint default NULL,
-  "last_chat" bigint default NULL,
-  "time_online" bigint default NULL,
-  "votes" bigint default NULL,
-  "points" bigint default NULL,
-  "status_since" bigint default NULL,
+  user varchar(200) NOT NULL default '',
+  accepted_requests bigint default NULL,
+  status varchar(20) default NULL,
+  longest_chat bigint default NULL,
+  shortest_chat bigint default NULL,
+  average_chat bigint default NULL,
+  last_chat bigint default NULL,
+  time_online bigint default NULL,
+  votes bigint default NULL,
+  points bigint default NULL,
+  status_since bigint default NULL,
   PRIMARY KEY (user)
 ) ENGINE=MyISAM;
 
@@ -1530,20 +1530,20 @@ CREATE TABLE 'tiki_live_support_operators' (
 DROP TABLE IF EXISTS 'tiki_live_support_requests';
 
 CREATE TABLE 'tiki_live_support_requests' (
-  "reqId" varchar(32) NOT NULL default '',
-  "user" varchar(200) NOT NULL default '',
-  "tiki_user" varchar(200) default NULL,
-  "email" varchar(200) default NULL,
-  "operator" varchar(200) default NULL,
-  "operator_id" varchar(32) default NULL,
-  "user_id" varchar(32) default NULL,
-  "reason" text,
-  "req_timestamp" bigint default NULL,
-  "timestamp" bigint default NULL,
-  "status" varchar(40) default NULL,
-  "resolution" varchar(40) default NULL,
-  "chat_started" bigint default NULL,
-  "chat_ended" bigint default NULL,
+  reqId varchar(32) NOT NULL default '',
+  user varchar(200) NOT NULL default '',
+  tiki_user varchar(200) default NULL,
+  email varchar(200) default NULL,
+  operator varchar(200) default NULL,
+  operator_id varchar(32) default NULL,
+  user_id varchar(32) default NULL,
+  reason text,
+  req_timestamp bigint default NULL,
+  timestamp bigint default NULL,
+  status varchar(40) default NULL,
+  resolution varchar(40) default NULL,
+  chat_started bigint default NULL,
+  chat_ended bigint default NULL,
   PRIMARY KEY (reqId)
 ) ENGINE=MyISAM;
 
@@ -1551,13 +1551,13 @@ CREATE TABLE 'tiki_live_support_requests' (
 DROP TABLE IF EXISTS 'tiki_logs';
 
 CREATE TABLE 'tiki_logs' (
-  "logId" INTEGER,
-  "logtype" varchar(20) NOT NULL,
-  "logmessage" text NOT NULL,
-  "loguser" varchar(40) NOT NULL,
-  "logip" varchar(200),
-  "logclient" text NOT NULL,
-  "logtime" bigint NOT NULL,
+  logId INTEGER,
+  logtype varchar(20) NOT NULL,
+  logmessage text NOT NULL,
+  loguser varchar(40) NOT NULL,
+  logip varchar(200),
+  logclient text NOT NULL,
+  logtime bigint NOT NULL,
   PRIMARY KEY (logId)
 ) ENGINE=MyISAM;
 
@@ -1566,32 +1566,32 @@ CREATE  INDEX "tiki_logs_logtype" ON "tiki_logs"("logtype");
 DROP TABLE IF EXISTS 'tiki_mail_events';
 
 CREATE TABLE 'tiki_mail_events' (
-  "event" varchar(200) default NULL,
-  "object" varchar(200) default NULL,
-  "email" varchar(200) default NULL
+  event varchar(200) default NULL,
+  object varchar(200) default NULL,
+  email varchar(200) default NULL
 ) ENGINE=MyISAM;
 
 
 DROP TABLE IF EXISTS 'tiki_mailin_accounts';
 
 CREATE TABLE 'tiki_mailin_accounts' (
-  "accountId" INTEGER,
-  "user" varchar(200) NOT NULL default '',
-  "account" varchar(50) NOT NULL default '',
-  "pop" varchar(255) default NULL,
-  "port" smallint default NULL,
-  "username" varchar(100) default NULL,
-  "pass" varchar(100) default NULL,
-  "active" char(1) default NULL,
-  "type" varchar(40) default NULL,
-  "smtp" varchar(255) default NULL,
-  "useAuth" char(1) default NULL,
-  "smtpPort" smallint default NULL,
-  "anonymous" char(1) NOT NULL default 'y',
-  "attachments" char(1) NOT NULL default 'n',
-  "article_topicId" smallint default NULL,
-  "article_type" varchar(50) default NULL,
-  "discard_after" varchar(255) default NULL,
+  accountId INTEGER,
+  user varchar(200) NOT NULL default '',
+  account varchar(50) NOT NULL default '',
+  pop varchar(255) default NULL,
+  port smallint default NULL,
+  username varchar(100) default NULL,
+  pass varchar(100) default NULL,
+  active char(1) default NULL,
+  type varchar(40) default NULL,
+  smtp varchar(255) default NULL,
+  useAuth char(1) default NULL,
+  smtpPort smallint default NULL,
+  anonymous char(1) NOT NULL default 'y',
+  attachments char(1) NOT NULL default 'n',
+  article_topicId smallint default NULL,
+  article_type varchar(50) default NULL,
+  discard_after varchar(255) default NULL,
   PRIMARY KEY (accountId)
 ) ENGINE=MyISAM ;
 
@@ -1599,8 +1599,8 @@ CREATE TABLE 'tiki_mailin_accounts' (
 DROP TABLE IF EXISTS 'tiki_menu_languages';
 
 CREATE TABLE 'tiki_menu_languages' (
-  "menuId" INTEGER,
-  "language" char(16) NOT NULL default '',
+  menuId INTEGER,
+  language char(16) NOT NULL default '',
   PRIMARY KEY (menuId,language)
 ) ENGINE=MyISAM ;
 
@@ -1608,17 +1608,17 @@ CREATE TABLE 'tiki_menu_languages' (
 DROP TABLE IF EXISTS 'tiki_menu_options';
 
 CREATE TABLE 'tiki_menu_options' (
-  "optionId" INTEGER,
-  "menuId" integer default NULL,
-  "type" char(1) default NULL,
-  "name" varchar(200) default NULL,
-  "url" varchar(255) default NULL,
-  "position" smallint default NULL,
-  "section" text default NULL,
-  "perm" text default NULL,
-  "groupname" text default NULL,
-  "userlevel" smallint default 0,
-  "icon" varchar(200),
+  optionId INTEGER,
+  menuId integer default NULL,
+  type char(1) default NULL,
+  name varchar(200) default NULL,
+  url varchar(255) default NULL,
+  position smallint default NULL,
+  section text default NULL,
+  perm text default NULL,
+  groupname text default NULL,
+  userlevel smallint default 0,
+  icon varchar(200),
   PRIMARY KEY (optionId)
 ) ENGINE=MyISAM ;
 
@@ -1838,6 +1838,8 @@ INSERT INTO "," ("optionId","menuId","type","name","url","position","section","p
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (107,42,'s','Newsletters','tiki-newsletters.php',900,'feature_newsletters','tiki_p_admin_newsletters','',0);
 
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (107,42,'s','Newsletters','tiki-newsletters.php',900,'feature_newsletters','tiki_p_list_newsletters','',0);
+
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (108,42,'o','Send Newsletters','tiki-send_newsletters.php',905,'feature_newsletters','tiki_p_send_newsletters','',0);
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (109,42,'o','Admin Newsletters','tiki-admin_newsletters.php',910,'feature_newsletters','tiki_p_admin_newsletters','',0);
@@ -2009,12 +2011,12 @@ INSERT INTO "," ("menuId","type","name","url","position","section","perm","group
 DROP TABLE IF EXISTS 'tiki_menus';
 
 CREATE TABLE 'tiki_menus' (
-  "menuId" INTEGER,
-  "name" varchar(200) NOT NULL default '',
-  "description" text,
-  "type" char(1) default NULL,
-  "icon" varchar(200) default NULL,
-  "use_items_icons" char(1) NOT NULL DEFAULT 'n',
+  menuId INTEGER,
+  name varchar(200) NOT NULL default '',
+  description text,
+  type char(1) default NULL,
+  icon varchar(200) default NULL,
+  use_items_icons char(1) NOT NULL DEFAULT 'n',
   PRIMARY KEY (menuId)
 ) ENGINE=MyISAM ;
 
@@ -2025,16 +2027,16 @@ INSERT INTO "tiki_menus" ("menuId","name","description","type") VALUES ('42','Ap
 DROP TABLE IF EXISTS 'tiki_minical_events';
 
 CREATE TABLE 'tiki_minical_events' (
-  "user" varchar(200) default '',
-  "eventId" INTEGER,
-  "title" varchar(250) default NULL,
-  "description" text,
-  "start" bigint default NULL,
-  "end" bigint default NULL,
-  "security" char(1) default NULL,
-  "duration" smallint default NULL,
-  "topicId" bigint default NULL,
-  "reminded" char(1) default NULL,
+  user varchar(200) default '',
+  eventId INTEGER,
+  title varchar(250) default NULL,
+  description text,
+  start bigint default NULL,
+  end bigint default NULL,
+  security char(1) default NULL,
+  duration smallint default NULL,
+  topicId bigint default NULL,
+  reminded char(1) default NULL,
   PRIMARY KEY (eventId)
 ) ENGINE=MyISAM ;
 
@@ -2042,15 +2044,15 @@ CREATE TABLE 'tiki_minical_events' (
 DROP TABLE IF EXISTS 'tiki_minical_topics';
 
 CREATE TABLE 'tiki_minical_topics' (
-  "user" varchar(200) default '',
-  "topicId" INTEGER,
-  "name" varchar(250) default NULL,
-  "filename" varchar(200) default NULL,
-  "filetype" varchar(200) default NULL,
-  "filesize" varchar(200) default NULL,
-  "data" bytea,
-  "path" varchar(250) default NULL,
-  "isIcon" char(1) default NULL,
+  user varchar(200) default '',
+  topicId INTEGER,
+  name varchar(250) default NULL,
+  filename varchar(200) default NULL,
+  filetype varchar(200) default NULL,
+  filesize varchar(200) default NULL,
+  data bytea,
+  path varchar(250) default NULL,
+  isIcon char(1) default NULL,
   PRIMARY KEY (topicId)
 ) ENGINE=MyISAM ;
 
@@ -2058,16 +2060,16 @@ CREATE TABLE 'tiki_minical_topics' (
 DROP TABLE IF EXISTS 'tiki_modules';
 
 CREATE TABLE 'tiki_modules' (
-  "moduleId" INTEGER,
-  "name" varchar(200) NOT NULL default '',
-  "position" char(1) default NULL,
-  "ord" smallint default NULL,
-  "type" char(1) default NULL,
-  "title" varchar(255) default NULL,
-  "cache_time" bigint default NULL,
-  "rows" smallint default NULL,
-  "params" varchar(255) default NULL,
-  "groups" text,
+  moduleId INTEGER,
+  name varchar(200) NOT NULL default '',
+  position char(1) default NULL,
+  ord smallint default NULL,
+  type char(1) default NULL,
+  title varchar(255) default NULL,
+  cache_time bigint default NULL,
+  rows smallint default NULL,
+  params varchar(255) default NULL,
+  groups text,
   PRIMARY KEY (name(100), position, ord, params(140))
 ) ENGINE=MyISAM;
 
@@ -2080,13 +2082,13 @@ INSERT INTO "tiki_modules" ("name","position","ord","cache_time","params","group
 DROP TABLE IF EXISTS 'tiki_newsletter_subscriptions';
 
 CREATE TABLE 'tiki_newsletter_subscriptions' (
-  "nlId" bigint NOT NULL default '0',
-  "email" varchar(255) NOT NULL default '',
-  "code" varchar(32) default NULL,
-  "valid" char(1) default NULL,
-  "subscribed" bigint default NULL,
-  "isUser" char(1) NOT NULL default 'n',
-  "included" char(1) NOT NULL default 'n',
+  nlId bigint NOT NULL default '0',
+  email varchar(255) NOT NULL default '',
+  code varchar(32) default NULL,
+  valid char(1) default NULL,
+  subscribed bigint default NULL,
+  isUser char(1) NOT NULL default 'n',
+  included char(1) NOT NULL default 'n',
   PRIMARY KEY (nlId,email,isUser)
 ) ENGINE=MyISAM;
 
@@ -2094,9 +2096,9 @@ CREATE TABLE 'tiki_newsletter_subscriptions' (
 DROP TABLE IF EXISTS 'tiki_newsletter_groups';
 
 CREATE TABLE 'tiki_newsletter_groups' (
-  "nlId" bigint NOT NULL default '0',
-  "groupName" varchar(255) NOT NULL default '',
-  "code" varchar(32) default NULL,
+  nlId bigint NOT NULL default '0',
+  groupName varchar(255) NOT NULL default '',
+  code varchar(32) default NULL,
   PRIMARY KEY (nlId,groupName)
 ) ENGINE=MyISAM;
 
@@ -2104,8 +2106,8 @@ CREATE TABLE 'tiki_newsletter_groups' (
 DROP TABLE IF EXISTS 'tiki_newsletter_included';
 
 CREATE TABLE 'tiki_newsletter_included' (
-  "nlId" bigint NOT NULL default '0',
-  "includedId" bigint NOT NULL default '0',
+  nlId bigint NOT NULL default '0',
+  includedId bigint NOT NULL default '0',
   PRIMARY KEY (nlId,includedId)
 ) ENGINE=MyISAM;
 
@@ -2113,20 +2115,20 @@ CREATE TABLE 'tiki_newsletter_included' (
 DROP TABLE IF EXISTS 'tiki_newsletters';
 
 CREATE TABLE 'tiki_newsletters' (
-  "nlId" INTEGER,
-  "name" varchar(200) default NULL,
-  "description" text,
-  "created" bigint default NULL,
-  "lastSent" bigint default NULL,
-  "editions" bigint default NULL,
-  "users" bigint default NULL,
-  "allowUserSub" char(1) default 'y',
-  "allowAnySub" char(1) default NULL,
-  "unsubMsg" char(1) default 'y',
-  "validateAddr" char(1) default 'y',
-  "frequency" bigint default NULL,
-  "allowTxt" char(1) default 'y',
-  "author" varchar(200) default NULL,
+  nlId INTEGER,
+  name varchar(200) default NULL,
+  description text,
+  created bigint default NULL,
+  lastSent bigint default NULL,
+  editions bigint default NULL,
+  users bigint default NULL,
+  allowUserSub char(1) default 'y',
+  allowAnySub char(1) default NULL,
+  unsubMsg char(1) default 'y',
+  validateAddr char(1) default 'y',
+  frequency bigint default NULL,
+  allowTxt char(1) default 'y',
+  author varchar(200) default NULL,
   PRIMARY KEY (nlId)
 ) ENGINE=MyISAM ;
 
@@ -2134,10 +2136,10 @@ CREATE TABLE 'tiki_newsletters' (
 DROP TABLE IF EXISTS 'tiki_newsreader_marks';
 
 CREATE TABLE 'tiki_newsreader_marks' (
-  "user" varchar(200) NOT NULL default '',
-  "serverId" bigint NOT NULL default '0',
-  "groupName" varchar(255) NOT NULL default '',
-  "timestamp" bigint NOT NULL default '0',
+  user varchar(200) NOT NULL default '',
+  serverId bigint NOT NULL default '0',
+  groupName varchar(255) NOT NULL default '',
+  timestamp bigint NOT NULL default '0',
   PRIMARY KEY (user(100),serverId,groupName(100))
 ) ENGINE=MyISAM;
 
@@ -2145,12 +2147,12 @@ CREATE TABLE 'tiki_newsreader_marks' (
 DROP TABLE IF EXISTS 'tiki_newsreader_servers';
 
 CREATE TABLE 'tiki_newsreader_servers' (
-  "user" varchar(200) NOT NULL default '',
-  "serverId" INTEGER,
-  "server" varchar(250) default NULL,
-  "port" smallint default NULL,
-  "username" varchar(200) default NULL,
-  "password" varchar(200) default NULL,
+  user varchar(200) NOT NULL default '',
+  serverId INTEGER,
+  server varchar(250) default NULL,
+  port smallint default NULL,
+  username varchar(200) default NULL,
+  password varchar(200) default NULL,
   PRIMARY KEY (serverId)
 ) ENGINE=MyISAM ;
 
@@ -2158,9 +2160,9 @@ CREATE TABLE 'tiki_newsreader_servers' (
 DROP TABLE IF EXISTS 'tiki_page_footnotes';
 
 CREATE TABLE 'tiki_page_footnotes' (
-  "user" varchar(200) NOT NULL default '',
-  "pageName" varchar(250) NOT NULL default '',
-  "data" text,
+  user varchar(200) NOT NULL default '',
+  pageName varchar(250) NOT NULL default '',
+  data text,
   PRIMARY KEY (user(150),pageName(100))
 ) ENGINE=MyISAM;
 
@@ -2168,31 +2170,31 @@ CREATE TABLE 'tiki_page_footnotes' (
 DROP TABLE IF EXISTS 'tiki_pages';
 
 CREATE TABLE 'tiki_pages' (
-  "page_id" INTEGER,
-  "pageName" varchar(160) NOT NULL default '',
-  "hits" integer default NULL,
-  "data" mediumtext,
-  "description" varchar(200) default NULL,
-  "lastModif" bigint default NULL,
-  "comment" varchar(200) default NULL,
-  "version" integer NOT NULL default '0',
-  "user" varchar(200) default '',
-  "ip" varchar(15) default NULL,
-  "flag" char(1) default NULL,
-  "points" integer default NULL,
-  "votes" integer default NULL,
-  "cache" longtext,
-  "wiki_cache" bigint default NULL,
-  "cache_timestamp" bigint default NULL,
-  "pageRank" decimal(4,3) default NULL,
-  "creator" varchar(200) default NULL,
-  "page_size" bigint unsigned default '0',
-  "lang" varchar(16) default NULL,
-  "lockedby" varchar(200) default NULL,
-  "is_html" smallint default 0,
-  "created" bigint,
-  "wysiwyg" char(1) default NULL,
-  "wiki_authors_style" varchar(20) default '',
+  page_id INTEGER,
+  pageName varchar(160) NOT NULL default '',
+  hits integer default NULL,
+  data mediumtext,
+  description varchar(200) default NULL,
+  lastModif bigint default NULL,
+  comment varchar(200) default NULL,
+  version integer NOT NULL default '0',
+  user varchar(200) default '',
+  ip varchar(15) default NULL,
+  flag char(1) default NULL,
+  points integer default NULL,
+  votes integer default NULL,
+  cache longtext,
+  wiki_cache bigint default NULL,
+  cache_timestamp bigint default NULL,
+  pageRank decimal(4,3) default NULL,
+  creator varchar(200) default NULL,
+  page_size bigint unsigned default '0',
+  lang varchar(16) default NULL,
+  lockedby varchar(200) default NULL,
+  is_html smallint default 0,
+  created bigint,
+  wysiwyg char(1) default NULL,
+  wiki_authors_style varchar(20) default '',
   PRIMARY KEY (page_id),
   KEY lastModif(lastModif)
 ) ENGINE=MyISAM;
@@ -2205,12 +2207,12 @@ CREATE UNIQUE INDEX "tiki_pages_pageName" ON "tiki_pages"("pageName");
 DROP TABLE IF EXISTS 'tiki_page_drafts';
 
 CREATE TABLE 'tiki_page_drafts' (
-  "user" varchar(200) default '',
-  "pageName" varchar(255) NOT NULL,
-  "data" mediumtext,
-  "description" varchar(200) default NULL,
-  "comment" varchar(200) default NULL,
-  "lastModif" bigint default NULL,
+  user varchar(200) default '',
+  pageName varchar(255) NOT NULL,
+  data mediumtext,
+  description varchar(200) default NULL,
+  comment varchar(200) default NULL,
+  lastModif bigint default NULL,
   PRIMARY KEY (pageName(120), user(120))
 ) ENGINE=MyISAM;
 
@@ -2218,8 +2220,8 @@ CREATE TABLE 'tiki_page_drafts' (
 DROP TABLE IF EXISTS 'tiki_pageviews';
 
 CREATE TABLE 'tiki_pageviews' (
-  "day" bigint NOT NULL default '0',
-  "pageviews" bigint default NULL,
+  day bigint NOT NULL default '0',
+  pageviews bigint default NULL,
   PRIMARY KEY (day)
 ) ENGINE=MyISAM;
 
@@ -2237,11 +2239,11 @@ CREATE TABLE tiki_poll_objects (
 DROP TABLE IF EXISTS 'tiki_poll_options';
 
 CREATE TABLE 'tiki_poll_options' (
-  "pollId" integer NOT NULL default '0',
-  "optionId" INTEGER,
-  "title" varchar(200) default NULL,
-  "position" smallint NOT NULL default '0',
-  "votes" integer default NULL,
+  pollId integer NOT NULL default '0',
+  optionId INTEGER,
+  title varchar(200) default NULL,
+  position smallint NOT NULL default '0',
+  votes integer default NULL,
   PRIMARY KEY (optionId)
 ) ENGINE=MyISAM ;
 
@@ -2249,12 +2251,12 @@ CREATE TABLE 'tiki_poll_options' (
 DROP TABLE IF EXISTS 'tiki_polls';
 
 CREATE TABLE 'tiki_polls' (
-  "pollId" INTEGER,
-  "title" varchar(200) default NULL,
-  "votes" integer default NULL,
-  "active" char(1) default NULL,
-  "publishDate" bigint default NULL,
-  "voteConsiderationSpan" smallint default 0,
+  pollId INTEGER,
+  title varchar(200) default NULL,
+  votes integer default NULL,
+  active char(1) default NULL,
+  publishDate bigint default NULL,
+  voteConsiderationSpan smallint default 0,
   PRIMARY KEY (pollId)
 ) ENGINE=MyISAM ;
 
@@ -2262,8 +2264,8 @@ CREATE TABLE 'tiki_polls' (
 DROP TABLE IF EXISTS 'tiki_preferences';
 
 CREATE TABLE 'tiki_preferences' (
-  "name" varchar(40) NOT NULL default '',
-  "value" text,
+  name varchar(40) NOT NULL default '',
+  value text,
   PRIMARY KEY (name)
 ) ENGINE=MyISAM;
 
@@ -2271,25 +2273,25 @@ CREATE TABLE 'tiki_preferences' (
 DROP TABLE IF EXISTS 'tiki_private_messages';
 
 CREATE TABLE 'tiki_private_messages' (
-  "messageId" INTEGER,
-  "toNickname" varchar(200) NOT NULL default '',
-  "poster" varchar(200) NOT NULL default 'anonymous',
-  "timestamp" bigint default NULL,
-  "received" smallint not null default 0,
-  "message" varchar(255) default NULL,
-  "key"(received),
-  "key"(timestamp),
-  PRIMARY KEY (messageId)
+  messageId INTEGER,
+  toNickname varchar(200) NOT NULL default '',
+  poster varchar(200) NOT NULL default 'anonymous',
+  timestamp bigint default NULL,
+  received smallint not null default 0,
+  message varchar(255) default NULL,
+  PRIMARY KEY (messageId),
+  KEY (received),
+  KEY (timestamp)
 ) ENGINE=MyISAM ;
 
 
 DROP TABLE IF EXISTS 'tiki_programmed_content';
 
 CREATE TABLE 'tiki_programmed_content' (
-  "pId" INTEGER,
-  "contentId" integer NOT NULL default '0',
-  "publishDate" bigint NOT NULL default '0',
-  "data" text,
+  pId INTEGER,
+  contentId integer NOT NULL default '0',
+  publishDate bigint NOT NULL default '0',
+  data text,
   PRIMARY KEY (pId)
 ) ENGINE=MyISAM ;
 
@@ -2297,10 +2299,10 @@ CREATE TABLE 'tiki_programmed_content' (
 DROP TABLE IF EXISTS 'tiki_quiz_question_options';
 
 CREATE TABLE 'tiki_quiz_question_options' (
-  "optionId" INTEGER,
-  "questionId" bigint default NULL,
-  "optionText" text,
-  "points" smallint default NULL,
+  optionId INTEGER,
+  questionId bigint default NULL,
+  optionText text,
+  points smallint default NULL,
   PRIMARY KEY (optionId)
 ) ENGINE=MyISAM ;
 
@@ -2308,12 +2310,12 @@ CREATE TABLE 'tiki_quiz_question_options' (
 DROP TABLE IF EXISTS 'tiki_quiz_questions';
 
 CREATE TABLE 'tiki_quiz_questions' (
-  "questionId" INTEGER,
-  "quizId" bigint default NULL,
-  "question" text,
-  "position" smallint default NULL,
-  "type" char(1) default NULL,
-  "maxPoints" smallint default NULL,
+  questionId INTEGER,
+  quizId bigint default NULL,
+  question text,
+  position smallint default NULL,
+  type char(1) default NULL,
+  maxPoints smallint default NULL,
   PRIMARY KEY (questionId)
 ) ENGINE=MyISAM ;
 
@@ -2321,11 +2323,11 @@ CREATE TABLE 'tiki_quiz_questions' (
 DROP TABLE IF EXISTS 'tiki_quiz_results';
 
 CREATE TABLE 'tiki_quiz_results' (
-  "resultId" INTEGER,
-  "quizId" bigint default NULL,
-  "fromPoints" smallint default NULL,
-  "toPoints" smallint default NULL,
-  "answer" text,
+  resultId INTEGER,
+  quizId bigint default NULL,
+  fromPoints smallint default NULL,
+  toPoints smallint default NULL,
+  answer text,
   PRIMARY KEY (resultId)
 ) ENGINE=MyISAM ;
 
@@ -2333,10 +2335,10 @@ CREATE TABLE 'tiki_quiz_results' (
 DROP TABLE IF EXISTS 'tiki_quiz_stats';
 
 CREATE TABLE 'tiki_quiz_stats' (
-  "quizId" bigint NOT NULL default '0',
-  "questionId" bigint NOT NULL default '0',
-  "optionId" bigint NOT NULL default '0',
-  "votes" bigint default NULL,
+  quizId bigint NOT NULL default '0',
+  questionId bigint NOT NULL default '0',
+  optionId bigint NOT NULL default '0',
+  votes bigint default NULL,
   PRIMARY KEY (quizId,questionId,optionId)
 ) ENGINE=MyISAM;
 
@@ -2344,12 +2346,12 @@ CREATE TABLE 'tiki_quiz_stats' (
 DROP TABLE IF EXISTS 'tiki_quiz_stats_sum';
 
 CREATE TABLE 'tiki_quiz_stats_sum' (
-  "quizId" bigint NOT NULL default '0',
-  "quizName" varchar(255) default NULL,
-  "timesTaken" bigint default NULL,
-  "avgpoints" decimal(5,2) default NULL,
-  "avgavg" decimal(5,2) default NULL,
-  "avgtime" decimal(5,2) default NULL,
+  quizId bigint NOT NULL default '0',
+  quizName varchar(255) default NULL,
+  timesTaken bigint default NULL,
+  avgpoints decimal(5,2) default NULL,
+  avgavg decimal(5,2) default NULL,
+  avgtime decimal(5,2) default NULL,
   PRIMARY KEY (quizId)
 ) ENGINE=MyISAM;
 
@@ -2357,43 +2359,43 @@ CREATE TABLE 'tiki_quiz_stats_sum' (
 DROP TABLE IF EXISTS 'tiki_quizzes';
 
 CREATE TABLE 'tiki_quizzes' (
-  "quizId" INTEGER,
-  "name" varchar(255) default NULL,
-  "description" text,
-  "canRepeat" char(1) default NULL,
-  "storeResults" char(1) default NULL,
-  "questionsPerPage" smallint default NULL,
-  "timeLimited" char(1) default NULL,
-  "timeLimit" bigint default NULL,
-  "created" bigint default NULL,
-  "taken" bigint default NULL,
-  "immediateFeedback" char(1) default NULL,
-  "showAnswers" char(1) default NULL,
-  "shuffleQuestions" char(1) default NULL,
-  "shuffleAnswers" char(1) default NULL,
-  "publishDate" bigint default NULL,
-  "expireDate" bigint default NULL,
-  "bDeleted" char(1) default NULL,
-  "nVersion" smallint NOT NULL,
-  "nAuthor" smallint default NULL,
-  "bOnline" char(1) default NULL,
-  "bRandomQuestions" char(1) default NULL,
-  "nRandomQuestions" smallint default NULL,
-  "bLimitQuestionsPerPage" char(1) default NULL,
-  "nLimitQuestionsPerPage" smallint default NULL,
-  "bMultiSession" char(1) default NULL,
-  "nCanRepeat" smallint default NULL,
-  "sGradingMethod" varchar(80) default NULL,
-  "sShowScore" varchar(80) default NULL,
-  "sShowCorrectAnswers" varchar(80) default NULL,
-  "sPublishStats" varchar(80) default NULL,
-  "bAdditionalQuestions" char(1) default NULL,
-  "bForum" char(1) default NULL,
-  "sForum" varchar(80) default NULL,
-  "sPrologue" text,
-  "sData" text,
-  "sEpilogue" text,
-  "passingperct" smallint default 0,
+  quizId INTEGER,
+  name varchar(255) default NULL,
+  description text,
+  canRepeat char(1) default NULL,
+  storeResults char(1) default NULL,
+  questionsPerPage smallint default NULL,
+  timeLimited char(1) default NULL,
+  timeLimit bigint default NULL,
+  created bigint default NULL,
+  taken bigint default NULL,
+  immediateFeedback char(1) default NULL,
+  showAnswers char(1) default NULL,
+  shuffleQuestions char(1) default NULL,
+  shuffleAnswers char(1) default NULL,
+  publishDate bigint default NULL,
+  expireDate bigint default NULL,
+  bDeleted char(1) default NULL,
+  nVersion smallint NOT NULL,
+  nAuthor smallint default NULL,
+  bOnline char(1) default NULL,
+  bRandomQuestions char(1) default NULL,
+  nRandomQuestions smallint default NULL,
+  bLimitQuestionsPerPage char(1) default NULL,
+  nLimitQuestionsPerPage smallint default NULL,
+  bMultiSession char(1) default NULL,
+  nCanRepeat smallint default NULL,
+  sGradingMethod varchar(80) default NULL,
+  sShowScore varchar(80) default NULL,
+  sShowCorrectAnswers varchar(80) default NULL,
+  sPublishStats varchar(80) default NULL,
+  bAdditionalQuestions char(1) default NULL,
+  bForum char(1) default NULL,
+  sForum varchar(80) default NULL,
+  sPrologue text,
+  sData text,
+  sEpilogue text,
+  passingperct smallint default 0,
   PRIMARY KEY (quizId, nVersion)
 ) ENGINE=MyISAM ;
 
@@ -2401,29 +2403,29 @@ CREATE TABLE 'tiki_quizzes' (
 DROP TABLE IF EXISTS 'tiki_received_articles';
 
 CREATE TABLE 'tiki_received_articles' (
-  "receivedArticleId" INTEGER,
-  "receivedFromSite" varchar(200) default NULL,
-  "receivedFromUser" varchar(200) default NULL,
-  "receivedDate" bigint default NULL,
-  "title" varchar(80) default NULL,
-  "authorName" varchar(60) default NULL,
-  "size" bigint default NULL,
-  "useImage" char(1) default NULL,
-  "image_name" varchar(80) default NULL,
-  "image_type" varchar(80) default NULL,
-  "image_size" bigint default NULL,
-  "image_x" smallint default NULL,
-  "image_y" smallint default NULL,
-  "image_data" bytea,
-  "publishDate" bigint default NULL,
-  "expireDate" bigint default NULL,
-  "created" bigint default NULL,
-  "heading" text,
-  "body" bytea,
-  "hash" varchar(32) default NULL,
-  "author" varchar(200) default NULL,
-  "type" varchar(50) default NULL,
-  "rating" decimal(3,2) default NULL,
+  receivedArticleId INTEGER,
+  receivedFromSite varchar(200) default NULL,
+  receivedFromUser varchar(200) default NULL,
+  receivedDate bigint default NULL,
+  title varchar(80) default NULL,
+  authorName varchar(60) default NULL,
+  size bigint default NULL,
+  useImage char(1) default NULL,
+  image_name varchar(80) default NULL,
+  image_type varchar(80) default NULL,
+  image_size bigint default NULL,
+  image_x smallint default NULL,
+  image_y smallint default NULL,
+  image_data bytea,
+  publishDate bigint default NULL,
+  expireDate bigint default NULL,
+  created bigint default NULL,
+  heading text,
+  body bytea,
+  hash varchar(32) default NULL,
+  author varchar(200) default NULL,
+  type varchar(50) default NULL,
+  rating decimal(3,2) default NULL,
   PRIMARY KEY (receivedArticleId)
 ) ENGINE=MyISAM ;
 
@@ -2431,21 +2433,21 @@ CREATE TABLE 'tiki_received_articles' (
 DROP TABLE IF EXISTS 'tiki_received_pages';
 
 CREATE TABLE 'tiki_received_pages' (
-  "receivedPageId" INTEGER,
-  "pageName" varchar(160) NOT NULL default '',
-  "data" bytea,
-  "description" varchar(200) default NULL,
-  "comment" varchar(200) default NULL,
-  "receivedFromSite" varchar(200) default NULL,
-  "receivedFromUser" varchar(200) default NULL,
-  "receivedDate" bigint default NULL,
-  "parent" varchar(255) default NULL,
-  "position" smallint unsigned default NULL,
-  "alias" varchar(255) default NULL,
-  "structureName" varchar(250) default NULL,
-  "parentName" varchar(250) default NULL,
-  "page_alias" varchar(250) default '',
-  "pos" smallint default NULL,
+  receivedPageId INTEGER,
+  pageName varchar(160) NOT NULL default '',
+  data bytea,
+  description varchar(200) default NULL,
+  comment varchar(200) default NULL,
+  receivedFromSite varchar(200) default NULL,
+  receivedFromUser varchar(200) default NULL,
+  receivedDate bigint default NULL,
+  parent varchar(255) default NULL,
+  position smallint unsigned default NULL,
+  alias varchar(255) default NULL,
+  structureName varchar(250) default NULL,
+  parentName varchar(250) default NULL,
+  page_alias varchar(250) default '',
+  pos smallint default NULL,
   PRIMARY KEY (receivedPageId)
 ) ENGINE=MyISAM ;
 
@@ -2454,9 +2456,9 @@ CREATE  INDEX "tiki_received_pages_structureName" ON "tiki_received_pages"("stru
 DROP TABLE IF EXISTS 'tiki_referer_stats';
 
 CREATE TABLE 'tiki_referer_stats' (
-  "referer" varchar(255) NOT NULL default '',
-  "hits" bigint default NULL,
-  "last" bigint default NULL,
+  referer varchar(255) NOT NULL default '',
+  hits bigint default NULL,
+  last bigint default NULL,
   PRIMARY KEY (referer)
 ) ENGINE=MyISAM;
 
@@ -2464,8 +2466,8 @@ CREATE TABLE 'tiki_referer_stats' (
 DROP TABLE IF EXISTS 'tiki_related_categories';
 
 CREATE TABLE 'tiki_related_categories' (
-  "categId" bigint NOT NULL default '0',
-  "relatedTo" bigint NOT NULL default '0',
+  categId bigint NOT NULL default '0',
+  relatedTo bigint NOT NULL default '0',
   PRIMARY KEY (categId,relatedTo)
 ) ENGINE=MyISAM;
 
@@ -2473,15 +2475,15 @@ CREATE TABLE 'tiki_related_categories' (
 DROP TABLE IF EXISTS 'tiki_rss_modules';
 
 CREATE TABLE 'tiki_rss_modules' (
-  "rssId" INTEGER,
-  "name" varchar(30) NOT NULL default '',
-  "description" text,
-  "url" varchar(255) NOT NULL default '',
-  "refresh" integer default NULL,
-  "lastUpdated" bigint default NULL,
-  "showTitle" char(1) default 'n',
-  "showPubDate" char(1) default 'n',
-  "content" bytea,
+  rssId INTEGER,
+  name varchar(30) NOT NULL default '',
+  description text,
+  url varchar(255) NOT NULL default '',
+  refresh integer default NULL,
+  lastUpdated bigint default NULL,
+  showTitle char(1) default 'n',
+  showPubDate char(1) default 'n',
+  content bytea,
   PRIMARY KEY (rssId)
 ) ENGINE=MyISAM ;
 
@@ -2490,11 +2492,11 @@ CREATE  INDEX "tiki_rss_modules_name" ON "tiki_rss_modules"("name");
 DROP TABLE IF EXISTS 'tiki_rss_feeds';
 
 CREATE TABLE 'tiki_rss_feeds' (
-  "name" varchar(30) NOT NULL default '',
-  "rssVer" char(1) NOT NULL default '1',
-  "refresh" integer default '300',
-  "lastUpdated" bigint default NULL,
-  "cache" bytea,
+  name varchar(30) NOT NULL default '',
+  rssVer char(1) NOT NULL default '1',
+  refresh integer default '300',
+  lastUpdated bigint default NULL,
+  cache bytea,
   PRIMARY KEY (name,rssVer)
 ) ENGINE=MyISAM;
 
@@ -2502,11 +2504,11 @@ CREATE TABLE 'tiki_rss_feeds' (
 DROP TABLE IF EXISTS 'tiki_searchindex';
 
 CREATE TABLE 'tiki_searchindex'(
-  "searchword" varchar(80) NOT NULL default '',
-  "location" varchar(80) NOT NULL default '',
-  "page" varchar(255) NOT NULL default '',
-  "count" bigint NOT NULL default '1',
-  "last_update" bigint NOT NULL default '0',
+  searchword varchar(80) NOT NULL default '',
+  location varchar(80) NOT NULL default '',
+  page varchar(255) NOT NULL default '',
+  count bigint NOT NULL default '1',
+  last_update bigint NOT NULL default '0',
   PRIMARY KEY (searchword,location,page(80))
 ) ENGINE=MyISAM;
 
@@ -2517,9 +2519,9 @@ CREATE  INDEX "tiki_searchindex_location" ON "tiki_searchindex"("location" "page
 DROP TABLE IF EXISTS 'tiki_searchsyllable';
 
 CREATE TABLE 'tiki_searchsyllable'(
-  "syllable" varchar(80) NOT NULL default '',
-  "lastUsed" bigint NOT NULL default '0',
-  "lastUpdated" bigint NOT NULL default '0',
+  syllable varchar(80) NOT NULL default '',
+  lastUsed bigint NOT NULL default '0',
+  lastUpdated bigint NOT NULL default '0',
   PRIMARY KEY (syllable)
 ) ENGINE=MyISAM;
 
@@ -2529,8 +2531,8 @@ CREATE  INDEX "tiki_searchsyllable_lastUsed" ON "tiki_searchsyllable"("lastUsed"
 DROP TABLE IF EXISTS 'tiki_searchwords';
 
 CREATE TABLE 'tiki_searchwords'(
-  "syllable" varchar(80) NOT NULL default '',
-  "searchword" varchar(80) NOT NULL default '',
+  syllable varchar(80) NOT NULL default '',
+  searchword varchar(80) NOT NULL default '',
   PRIMARY KEY (syllable,searchword)
 ) ENGINE=MyISAM;
 
@@ -2538,8 +2540,8 @@ CREATE TABLE 'tiki_searchwords'(
 DROP TABLE IF EXISTS 'tiki_search_stats';
 
 CREATE TABLE 'tiki_search_stats' (
-  "term" varchar(50) NOT NULL default '',
-  "hits" bigint default NULL,
+  term varchar(50) NOT NULL default '',
+  hits bigint default NULL,
   PRIMARY KEY (term)
 ) ENGINE=MyISAM;
 
@@ -2547,10 +2549,10 @@ CREATE TABLE 'tiki_search_stats' (
 DROP TABLE IF EXISTS 'tiki_secdb';
 
 CREATE TABLE 'tiki_secdb'(
-  "md5_value" varchar(32) NOT NULL,
-  "filename" varchar(250) NOT NULL,
-  "tiki_version" varchar(60) NOT NULL,
-  "severity" smallint NOT NULL default '0',
+  md5_value varchar(32) NOT NULL,
+  filename varchar(250) NOT NULL,
+  tiki_version varchar(60) NOT NULL,
+  severity smallint NOT NULL default '0',
   PRIMARY KEY (md5_value,filename(100),tiki_version)
 ) ENGINE=MyISAM;
 
@@ -2559,10 +2561,10 @@ CREATE  INDEX "tiki_secdb_sdb_fn" ON "tiki_secdb"("filename");
 DROP TABLE IF EXISTS 'tiki_semaphores';
 
 CREATE TABLE 'tiki_semaphores' (
-  "semName" varchar(250) NOT NULL default '',
-  "objectType" varchar(20) default 'wiki page',
-  "user" varchar(200) NOT NULL default '',
-  "timestamp" bigint default NULL,
+  semName varchar(250) NOT NULL default '',
+  objectType varchar(20) default 'wiki page',
+  user varchar(200) NOT NULL default '',
+  timestamp bigint default NULL,
   PRIMARY KEY (semName)
 ) ENGINE=MyISAM;
 
@@ -2570,13 +2572,13 @@ CREATE TABLE 'tiki_semaphores' (
 DROP TABLE IF EXISTS 'tiki_sent_newsletters';
 
 CREATE TABLE 'tiki_sent_newsletters' (
-  "editionId" INTEGER,
-  "nlId" bigint NOT NULL default '0',
-  "users" bigint default NULL,
-  "sent" bigint default NULL,
-  "subject" varchar(200) default NULL,
-  "data" bytea,
-  "datatxt" bytea,
+  editionId INTEGER,
+  nlId bigint NOT NULL default '0',
+  users bigint default NULL,
+  sent bigint default NULL,
+  subject varchar(200) default NULL,
+  data bytea,
+  datatxt bytea,
   PRIMARY KEY (editionId)
 ) ENGINE=MyISAM ;
 
@@ -2584,10 +2586,10 @@ CREATE TABLE 'tiki_sent_newsletters' (
 DROP TABLE IF EXISTS 'tiki_sent_newsletters_errors';
 
 CREATE TABLE 'tiki_sent_newsletters_errors' (
-  "editionId" bigint,
-  "email" varchar(255),
-  "login" varchar(40) default '',
-  "error" char(1) default '',
+  editionId bigint,
+  email varchar(255),
+  login varchar(40) default '',
+  error char(1) default '',
   KEY (editionId)
 ) ENGINE=MyISAM ;
 
@@ -2595,10 +2597,10 @@ CREATE TABLE 'tiki_sent_newsletters_errors' (
 DROP TABLE IF EXISTS 'tiki_sessions';
 
 CREATE TABLE 'tiki_sessions' (
-  "sessionId" varchar(32) NOT NULL default '',
-  "user" varchar(200) default '',
-  "timestamp" bigint default NULL,
-  "tikihost" varchar(200) default NULL,
+  sessionId varchar(32) NOT NULL default '',
+  user varchar(200) default '',
+  timestamp bigint default NULL,
+  tikihost varchar(200) default NULL,
   PRIMARY KEY (sessionId)
 ) ENGINE=MyISAM;
 
@@ -2608,12 +2610,12 @@ CREATE  INDEX "tiki_sessions_timestamp" ON "tiki_sessions"("timestamp");
 DROP TABLE IF EXISTS 'tiki_sheet_layout';
 
 CREATE TABLE 'tiki_sheet_layout' (
-  "sheetId" integer NOT NULL default '0',
-  "begin" bigint NOT NULL default '0',
-  "end" bigint default NULL,
-  "headerRow" smallint NOT NULL default '0',
-  "footerRow" smallint NOT NULL default '0',
-  "className" varchar(64) default NULL
+  sheetId integer NOT NULL default '0',
+  begin bigint NOT NULL default '0',
+  end bigint default NULL,
+  headerRow smallint NOT NULL default '0',
+  footerRow smallint NOT NULL default '0',
+  className varchar(64) default NULL
 ) ENGINE=MyISAM;
 
 CREATE UNIQUE INDEX "tiki_sheet_layout_sheetId" ON "tiki_sheet_layout"("sheetId","begin");
@@ -2621,17 +2623,17 @@ CREATE UNIQUE INDEX "tiki_sheet_layout_sheetId" ON "tiki_sheet_layout"("sheetId"
 DROP TABLE IF EXISTS 'tiki_sheet_values';
 
 CREATE TABLE 'tiki_sheet_values' (
-  "sheetId" integer NOT NULL default '0',
-  "begin" bigint NOT NULL default '0',
-  "end" bigint default NULL,
-  "rowIndex" smallint NOT NULL default '0',
-  "columnIndex" smallint NOT NULL default '0',
-  "value" varchar(255) default NULL,
-  "calculation" varchar(255) default NULL,
-  "width" smallint NOT NULL default '1',
-  "height" smallint NOT NULL default '1',
-  "format" varchar(255) default NULL,
-  "user" varchar(200) default ''
+  sheetId integer NOT NULL default '0',
+  begin bigint NOT NULL default '0',
+  end bigint default NULL,
+  rowIndex smallint NOT NULL default '0',
+  columnIndex smallint NOT NULL default '0',
+  value varchar(255) default NULL,
+  calculation varchar(255) default NULL,
+  width smallint NOT NULL default '1',
+  height smallint NOT NULL default '1',
+  format varchar(255) default NULL,
+  user varchar(200) default ''
 ) ENGINE=MyISAM;
 
 CREATE  INDEX "tiki_sheet_values_sheetId_2" ON "tiki_sheet_values"("sheetId","rowIndex","columnIndex");
@@ -2640,10 +2642,10 @@ CREATE UNIQUE INDEX "tiki_sheet_values_sheetId" ON "tiki_sheet_values"("sheetId"
 DROP TABLE IF EXISTS 'tiki_sheets';
 
 CREATE TABLE 'tiki_sheets' (
-  "sheetId" INTEGER,
-  "title" varchar(200) NOT NULL default '',
-  "description" text,
-  "author" varchar(200) NOT NULL default '',
+  sheetId INTEGER,
+  title varchar(200) NOT NULL default '',
+  description text,
+  author varchar(200) NOT NULL default '',
   PRIMARY KEY (sheetId)
 ) ENGINE=MyISAM;
 
@@ -2651,11 +2653,11 @@ CREATE TABLE 'tiki_sheets' (
 DROP TABLE IF EXISTS 'tiki_shoutbox';
 
 CREATE TABLE 'tiki_shoutbox' (
-  "msgId" INTEGER,
-  "message" varchar(255) default NULL,
-  "timestamp" bigint default NULL,
-  "user" varchar(200) NULL default '',
-  "hash" varchar(32) default NULL,
+  msgId INTEGER,
+  message varchar(255) default NULL,
+  timestamp bigint default NULL,
+  user varchar(200) NULL default '',
+  hash varchar(32) default NULL,
   PRIMARY KEY (msgId)
 ) ENGINE=MyISAM ;
 
@@ -2663,8 +2665,8 @@ CREATE TABLE 'tiki_shoutbox' (
 DROP TABLE IF EXISTS 'tiki_shoutbox_words';
 
 CREATE TABLE 'tiki_shoutbox_words' (
-  "word" VARCHAR( 40 ) NOT NULL ,
-  "qty" INT DEFAULT '0' NOT NULL ,
+  word VARCHAR( 40 ) NOT NULL ,
+  qty INT DEFAULT '0' NOT NULL ,
   PRIMARY KEY (word)
 ) ENGINE=MyISAM;
 
@@ -2672,8 +2674,8 @@ CREATE TABLE 'tiki_shoutbox_words' (
 DROP TABLE IF EXISTS 'tiki_structure_versions';
 
 CREATE TABLE 'tiki_structure_versions' (
-  "structure_id" INTEGER,
-  "version" bigint default NULL,
+  structure_id INTEGER,
+  version bigint default NULL,
   PRIMARY KEY (structure_id)
 ) ENGINE=MyISAM ;
 
@@ -2681,13 +2683,13 @@ CREATE TABLE 'tiki_structure_versions' (
 DROP TABLE IF EXISTS 'tiki_structures';
 
 CREATE TABLE 'tiki_structures' (
-  "page_ref_id" INTEGER,
-  "structure_id" bigint NOT NULL,
-  "parent_id" bigint default NULL,
-  "page_id" bigint NOT NULL,
-  "page_version" integer default NULL,
-  "page_alias" varchar(240) NOT NULL default '',
-  "pos" smallint default NULL,
+  page_ref_id INTEGER,
+  structure_id bigint NOT NULL,
+  parent_id bigint default NULL,
+  page_id bigint NOT NULL,
+  page_version integer default NULL,
+  page_alias varchar(240) NOT NULL default '',
+  pos smallint default NULL,
   PRIMARY KEY (page_ref_id)
 ) ENGINE=MyISAM ;
 
@@ -2697,39 +2699,39 @@ CREATE  INDEX "tiki_structures_page_id" ON "tiki_structures"("page_id");
 DROP TABLE IF EXISTS 'tiki_submissions';
 
 CREATE TABLE 'tiki_submissions' (
-  "subId" INTEGER,
-  "topline" varchar(255) default NULL,
-  "title" varchar(255) default NULL,
-  "subtitle" varchar(255) default NULL,
-  "linkto" varchar(255) default NULL,
-  "lang" varchar(16) default NULL,
-  "authorName" varchar(60) default NULL,
-  "topicId" bigint default NULL,
-  "topicName" varchar(40) default NULL,
-  "size" bigint default NULL,
-  "useImage" char(1) default NULL,
-  "image_name" varchar(80) default NULL,
-  "image_caption" text default NULL,
-  "image_type" varchar(80) default NULL,
-  "image_size" bigint default NULL,
-  "image_x" smallint default NULL,
-  "image_y" smallint default NULL,
-  "image_data" bytea,
-  "publishDate" bigint default NULL,
-  "expireDate" bigint default NULL,
-  "created" bigint default NULL,
-  "bibliographical_references" text,
-  "resume" text,
-  "heading" text,
-  "body" text,
-  "hash" varchar(32) default NULL,
-  "author" varchar(200) NOT NULL default '',
-  "nbreads" bigint default NULL,
-  "votes" integer default NULL,
-  "points" bigint default NULL,
-  "type" varchar(50) default NULL,
-  "rating" decimal(3,2) default NULL,
-  "isfloat" char(1) default NULL,
+  subId INTEGER,
+  topline varchar(255) default NULL,
+  title varchar(255) default NULL,
+  subtitle varchar(255) default NULL,
+  linkto varchar(255) default NULL,
+  lang varchar(16) default NULL,
+  authorName varchar(60) default NULL,
+  topicId bigint default NULL,
+  topicName varchar(40) default NULL,
+  size bigint default NULL,
+  useImage char(1) default NULL,
+  image_name varchar(80) default NULL,
+  image_caption text default NULL,
+  image_type varchar(80) default NULL,
+  image_size bigint default NULL,
+  image_x smallint default NULL,
+  image_y smallint default NULL,
+  image_data bytea,
+  publishDate bigint default NULL,
+  expireDate bigint default NULL,
+  created bigint default NULL,
+  bibliographical_references text,
+  resume text,
+  heading text,
+  body text,
+  hash varchar(32) default NULL,
+  author varchar(200) NOT NULL default '',
+  nbreads bigint default NULL,
+  votes integer default NULL,
+  points bigint default NULL,
+  type varchar(50) default NULL,
+  rating decimal(3,2) default NULL,
+  isfloat char(1) default NULL,
   PRIMARY KEY (subId)
 ) ENGINE=MyISAM ;
 
@@ -2737,12 +2739,12 @@ CREATE TABLE 'tiki_submissions' (
 DROP TABLE IF EXISTS 'tiki_suggested_faq_questions';
 
 CREATE TABLE 'tiki_suggested_faq_questions' (
-  "sfqId" INTEGER,
-  "faqId" bigint NOT NULL default '0',
-  "question" text,
-  "answer" text,
-  "created" bigint default NULL,
-  "user" varchar(200) NOT NULL default '',
+  sfqId INTEGER,
+  faqId bigint NOT NULL default '0',
+  question text,
+  answer text,
+  created bigint default NULL,
+  user varchar(200) NOT NULL default '',
   PRIMARY KEY (sfqId)
 ) ENGINE=MyISAM ;
 
@@ -2750,10 +2752,10 @@ CREATE TABLE 'tiki_suggested_faq_questions' (
 DROP TABLE IF EXISTS 'tiki_survey_question_options';
 
 CREATE TABLE 'tiki_survey_question_options' (
-  "optionId" INTEGER,
-  "questionId" bigint NOT NULL default '0',
-  "qoption" text,
-  "votes" bigint default NULL,
+  optionId INTEGER,
+  questionId bigint NOT NULL default '0',
+  qoption text,
+  votes bigint default NULL,
   PRIMARY KEY (optionId)
 ) ENGINE=MyISAM ;
 
@@ -2761,18 +2763,18 @@ CREATE TABLE 'tiki_survey_question_options' (
 DROP TABLE IF EXISTS 'tiki_survey_questions';
 
 CREATE TABLE 'tiki_survey_questions' (
-  "questionId" INTEGER,
-  "surveyId" bigint NOT NULL default '0',
-  "question" text,
-  "options" text,
-  "type" char(1) default NULL,
-  "position" integer default NULL,
-  "votes" bigint default NULL,
-  "value" bigint default NULL,
-  "average" decimal(4,2) default NULL,
-  "mandatory" char(1) NOT NULL default 'n',
-  "max_answers" integer NOT NULL default 0,
-  "min_answers" integer NOT NULL default 0,
+  questionId INTEGER,
+  surveyId bigint NOT NULL default '0',
+  question text,
+  options text,
+  type char(1) default NULL,
+  position integer default NULL,
+  votes bigint default NULL,
+  value bigint default NULL,
+  average decimal(4,2) default NULL,
+  mandatory char(1) NOT NULL default 'n',
+  max_answers integer NOT NULL default 0,
+  min_answers integer NOT NULL default 0,
   PRIMARY KEY (questionId)
 ) ENGINE=MyISAM ;
 
@@ -2780,13 +2782,13 @@ CREATE TABLE 'tiki_survey_questions' (
 DROP TABLE IF EXISTS 'tiki_surveys';
 
 CREATE TABLE 'tiki_surveys' (
-  "surveyId" INTEGER,
-  "name" varchar(200) default NULL,
-  "description" text,
-  "taken" bigint default NULL,
-  "lastTaken" bigint default NULL,
-  "created" bigint default NULL,
-  "status" char(1) default NULL,
+  surveyId INTEGER,
+  name varchar(200) default NULL,
+  description text,
+  taken bigint default NULL,
+  lastTaken bigint default NULL,
+  created bigint default NULL,
+  status char(1) default NULL,
   PRIMARY KEY (surveyId)
 ) ENGINE=MyISAM ;
 
@@ -2794,17 +2796,17 @@ CREATE TABLE 'tiki_surveys' (
 DROP TABLE IF EXISTS 'tiki_tags';
 
 CREATE TABLE 'tiki_tags' (
-  "tagName" varchar(80) NOT NULL default '',
-  "pageName" varchar(160) NOT NULL default '',
-  "hits" integer default NULL,
-  "description" varchar(200) default NULL,
-  "data" bytea,
-  "lastModif" bigint default NULL,
-  "comment" varchar(200) default NULL,
-  "version" integer NOT NULL default '0',
-  "user" varchar(200) NOT NULL default '',
-  "ip" varchar(15) default NULL,
-  "flag" char(1) default NULL,
+  tagName varchar(80) NOT NULL default '',
+  pageName varchar(160) NOT NULL default '',
+  hits integer default NULL,
+  description varchar(200) default NULL,
+  data bytea,
+  lastModif bigint default NULL,
+  comment varchar(200) default NULL,
+  version integer NOT NULL default '0',
+  user varchar(200) NOT NULL default '',
+  ip varchar(15) default NULL,
+  flag char(1) default NULL,
   PRIMARY KEY (tagName,pageName)
 ) ENGINE=MyISAM;
 
@@ -2812,8 +2814,8 @@ CREATE TABLE 'tiki_tags' (
 DROP TABLE IF EXISTS 'tiki_theme_control_categs';
 
 CREATE TABLE 'tiki_theme_control_categs' (
-  "categId" bigint NOT NULL default '0',
-  "theme" varchar(250) NOT NULL default '',
+  categId bigint NOT NULL default '0',
+  theme varchar(250) NOT NULL default '',
   PRIMARY KEY (categId)
 ) ENGINE=MyISAM;
 
@@ -2821,10 +2823,10 @@ CREATE TABLE 'tiki_theme_control_categs' (
 DROP TABLE IF EXISTS 'tiki_theme_control_objects';
 
 CREATE TABLE 'tiki_theme_control_objects' (
-  "objId" varchar(250) NOT NULL default '',
-  "type" varchar(250) NOT NULL default '',
-  "name" varchar(250) NOT NULL default '',
-  "theme" varchar(250) NOT NULL default '',
+  objId varchar(250) NOT NULL default '',
+  type varchar(250) NOT NULL default '',
+  name varchar(250) NOT NULL default '',
+  theme varchar(250) NOT NULL default '',
   PRIMARY KEY (objId(100), type(100))
 ) ENGINE=MyISAM;
 
@@ -2832,8 +2834,8 @@ CREATE TABLE 'tiki_theme_control_objects' (
 DROP TABLE IF EXISTS 'tiki_theme_control_sections';
 
 CREATE TABLE 'tiki_theme_control_sections' (
-  "section" varchar(250) NOT NULL default '',
-  "theme" varchar(250) NOT NULL default '',
+  section varchar(250) NOT NULL default '',
+  theme varchar(250) NOT NULL default '',
   PRIMARY KEY (section)
 ) ENGINE=MyISAM;
 
@@ -2841,14 +2843,14 @@ CREATE TABLE 'tiki_theme_control_sections' (
 DROP TABLE IF EXISTS 'tiki_topics';
 
 CREATE TABLE 'tiki_topics' (
-  "topicId" INTEGER,
-  "name" varchar(40) default NULL,
-  "image_name" varchar(80) default NULL,
-  "image_type" varchar(80) default NULL,
-  "image_size" bigint default NULL,
-  "image_data" bytea,
-  "active" char(1) default NULL,
-  "created" bigint default NULL,
+  topicId INTEGER,
+  name varchar(40) default NULL,
+  image_name varchar(80) default NULL,
+  image_type varchar(80) default NULL,
+  image_size bigint default NULL,
+  image_data bytea,
+  active char(1) default NULL,
+  created bigint default NULL,
   PRIMARY KEY (topicId)
 ) ENGINE=MyISAM ;
 
@@ -2856,25 +2858,25 @@ CREATE TABLE 'tiki_topics' (
 DROP TABLE IF EXISTS 'tiki_tracker_fields';
 
 CREATE TABLE 'tiki_tracker_fields' (
-  "fieldId" INTEGER,
-  "trackerId" bigint NOT NULL default '0',
-  "name" varchar(255) default NULL,
-  "options" text,
-  "type" varchar(15) default NULL,
-  "isMain" char(1) default NULL,
-  "isTblVisible" char(1) default NULL,
-  "position" smallint default NULL,
-  "isSearchable" char(1) NOT NULL default 'y',
-  "isPublic" char(1) NOT NULL default 'n',
-  "isHidden" char(1) NOT NULL default 'n',
-  "isMandatory" char(1) NOT NULL default 'n',
-  "description" text,
-  "isMultilingual" char(1) default 'n',
-  "itemChoices" text,
-  "errorMsg" text,
-  "visibleBy" text,
-  "editableBy" text,
-  "descriptionIsParsed" char(1) default 'n',
+  fieldId INTEGER,
+  trackerId bigint NOT NULL default '0',
+  name varchar(255) default NULL,
+  options text,
+  type varchar(15) default NULL,
+  isMain char(1) default NULL,
+  isTblVisible char(1) default NULL,
+  position smallint default NULL,
+  isSearchable char(1) NOT NULL default 'y',
+  isPublic char(1) NOT NULL default 'n',
+  isHidden char(1) NOT NULL default 'n',
+  isMandatory char(1) NOT NULL default 'n',
+  description text,
+  isMultilingual char(1) default 'n',
+  itemChoices text,
+  errorMsg text,
+  visibleBy text,
+  editableBy text,
+  descriptionIsParsed char(1) default 'n',
   PRIMARY KEY (fieldId),
   "INDEX" trackerId (trackerId)
 ) ENGINE=MyISAM ;
@@ -2883,19 +2885,19 @@ CREATE TABLE 'tiki_tracker_fields' (
 DROP TABLE IF EXISTS 'tiki_tracker_item_attachments';
 
 CREATE TABLE 'tiki_tracker_item_attachments' (
-  "attId" INTEGER,
-  "itemId" bigint NOT NULL default 0,
-  "filename" varchar(80) default NULL,
-  "filetype" varchar(80) default NULL,
-  "filesize" bigint default NULL,
-  "user" varchar(200) default NULL,
-  "data" bytea,
-  "path" varchar(255) default NULL,
-  "hits" bigint default NULL,
-  "created" bigint default NULL,
-  "comment" varchar(250) default NULL,
-  "longdesc" bytea,
-  "version" varchar(40) default NULL,
+  attId INTEGER,
+  itemId bigint NOT NULL default 0,
+  filename varchar(80) default NULL,
+  filetype varchar(80) default NULL,
+  filesize bigint default NULL,
+  user varchar(200) default NULL,
+  data bytea,
+  path varchar(255) default NULL,
+  hits bigint default NULL,
+  created bigint default NULL,
+  comment varchar(250) default NULL,
+  longdesc bytea,
+  version varchar(40) default NULL,
   PRIMARY KEY (attId),
   "INDEX" itemId (itemId)
 ) ENGINE=MyISAM ;
@@ -2904,12 +2906,12 @@ CREATE TABLE 'tiki_tracker_item_attachments' (
 DROP TABLE IF EXISTS 'tiki_tracker_item_comments';
 
 CREATE TABLE 'tiki_tracker_item_comments' (
-  "commentId" INTEGER,
-  "itemId" bigint NOT NULL default '0',
-  "user" varchar(200) default NULL,
-  "data" text,
-  "title" varchar(200) default NULL,
-  "posted" bigint default NULL,
+  commentId INTEGER,
+  itemId bigint NOT NULL default '0',
+  user varchar(200) default NULL,
+  data text,
+  title varchar(200) default NULL,
+  posted bigint default NULL,
   PRIMARY KEY (commentId)
 ) ENGINE=MyISAM ;
 
@@ -2917,10 +2919,10 @@ CREATE TABLE 'tiki_tracker_item_comments' (
 DROP TABLE IF EXISTS 'tiki_tracker_item_fields';
 
 CREATE TABLE 'tiki_tracker_item_fields' (
-  "itemId" bigint NOT NULL default '0',
-  "fieldId" bigint NOT NULL default '0',
-  "value" text,
-  "lang" char(16) default NULL,
+  itemId bigint NOT NULL default '0',
+  fieldId bigint NOT NULL default '0',
+  value text,
+  lang char(16) default NULL,
   PRIMARY KEY (itemId,fieldId,lang),
   "INDEX" fieldId (fieldId),
   "INDEX" value (value(250)),
@@ -2932,11 +2934,11 @@ CREATE  INDEX "tiki_tracker_item_fields_ft" ON "tiki_tracker_item_fields"("value
 DROP TABLE IF EXISTS 'tiki_tracker_items';
 
 CREATE TABLE 'tiki_tracker_items' (
-  "itemId" INTEGER,
-  "trackerId" bigint NOT NULL default '0',
-  "created" bigint default NULL,
-  "status" char(1) default NULL,
-  "lastModif" bigint default NULL,
+  itemId INTEGER,
+  trackerId bigint NOT NULL default '0',
+  created bigint default NULL,
+  status char(1) default NULL,
+  lastModif bigint default NULL,
   PRIMARY KEY (itemId),
   "INDEX" trackerId (trackerId)
 ) ENGINE=MyISAM ;
@@ -2945,9 +2947,9 @@ CREATE TABLE 'tiki_tracker_items' (
 DROP TABLE IF EXISTS 'tiki_tracker_options';
 
 CREATE TABLE 'tiki_tracker_options' (
-  "trackerId" bigint NOT NULL default '0',
-  "name" varchar(80) NOT NULL default '',
-  "value" text default NULL,
+  trackerId bigint NOT NULL default '0',
+  name varchar(80) NOT NULL default '',
+  value text default NULL,
   PRIMARY KEY (trackerId,name(30))
 ) ENGINE=MyISAM ;
 
@@ -2955,21 +2957,21 @@ CREATE TABLE 'tiki_tracker_options' (
 DROP TABLE IF EXISTS 'tiki_trackers';
 
 CREATE TABLE 'tiki_trackers' (
-  "trackerId" INTEGER,
-  "name" varchar(255) default NULL,
-  "description" text,
-  "descriptionIsParsed" varchar(1) NULL default '0',
-  "created" bigint default NULL,
-  "lastModif" bigint default NULL,
-  "showCreated" char(1) default NULL,
-  "showStatus" char(1) default NULL,
-  "showLastModif" char(1) default NULL,
-  "useComments" char(1) default NULL,
-  "useAttachments" char(1) default NULL,
-  "showAttachments" char(1) default NULL,
-  "items" bigint default NULL,
-  "showComments" char(1) default NULL,
-  "orderAttachments" varchar(255) NOT NULL default 'filename,created,filesize,hits,desc',
+  trackerId INTEGER,
+  name varchar(255) default NULL,
+  description text,
+  descriptionIsParsed varchar(1) NULL default '0',
+  created bigint default NULL,
+  lastModif bigint default NULL,
+  showCreated char(1) default NULL,
+  showStatus char(1) default NULL,
+  showLastModif char(1) default NULL,
+  useComments char(1) default NULL,
+  useAttachments char(1) default NULL,
+  showAttachments char(1) default NULL,
+  items bigint default NULL,
+  showComments char(1) default NULL,
+  orderAttachments varchar(255) NOT NULL default 'filename,created,filesize,hits,desc',
   PRIMARY KEY (trackerId)
 ) ENGINE=MyISAM ;
 
@@ -2977,9 +2979,9 @@ CREATE TABLE 'tiki_trackers' (
 DROP TABLE IF EXISTS 'tiki_untranslated';
 
 CREATE TABLE 'tiki_untranslated' (
-  "id" INTEGER,
-  "source" bytea NOT NULL,
-  "lang" char(16) NOT NULL default '',
+  id INTEGER,
+  source bytea NOT NULL,
+  lang char(16) NOT NULL default '',
   PRIMARY KEY (source(255),lang)
 ) ENGINE=MyISAM ;
 
@@ -2989,10 +2991,10 @@ CREATE UNIQUE INDEX "tiki_untranslated_id" ON "tiki_untranslated"("id");
 DROP TABLE IF EXISTS 'tiki_user_answers';
 
 CREATE TABLE 'tiki_user_answers' (
-  "userResultId" bigint NOT NULL default '0',
-  "quizId" bigint NOT NULL default '0',
-  "questionId" bigint NOT NULL default '0',
-  "optionId" bigint NOT NULL default '0',
+  userResultId bigint NOT NULL default '0',
+  quizId bigint NOT NULL default '0',
+  questionId bigint NOT NULL default '0',
+  optionId bigint NOT NULL default '0',
   PRIMARY KEY (userResultId,quizId,questionId,optionId)
 ) ENGINE=MyISAM;
 
@@ -3000,13 +3002,13 @@ CREATE TABLE 'tiki_user_answers' (
 DROP TABLE IF EXISTS 'tiki_user_answers_uploads';
 
 CREATE TABLE 'tiki_user_answers_uploads' (
-  "answerUploadId" INTEGER,
-  "userResultId" bigint NOT NULL default '0',
-  "questionId" bigint NOT NULL default '0',
-  "filename" varchar(255) NOT NULL default '',
-  "filetype" varchar(64) NOT NULL default '',
-  "filesize" varchar(255) NOT NULL default '',
-  "filecontent" bytea NOT NULL,
+  answerUploadId INTEGER,
+  userResultId bigint NOT NULL default '0',
+  questionId bigint NOT NULL default '0',
+  filename varchar(255) NOT NULL default '',
+  filetype varchar(64) NOT NULL default '',
+  filesize varchar(255) NOT NULL default '',
+  filecontent bytea NOT NULL,
   PRIMARY KEY (answerUploadId)
 ) ENGINE=MyISAM;
 
@@ -3014,12 +3016,12 @@ CREATE TABLE 'tiki_user_answers_uploads' (
 DROP TABLE IF EXISTS 'tiki_user_assigned_modules';
 
 CREATE TABLE 'tiki_user_assigned_modules' (
-  "moduleId" integer NOT NULL,
-  "name" varchar(200) NOT NULL default '',
-  "position" char(1) default NULL,
-  "ord" smallint default NULL,
-  "type" char(1) default NULL,
-  "user" varchar(200) NOT NULL default '',
+  moduleId integer NOT NULL,
+  name varchar(200) NOT NULL default '',
+  position char(1) default NULL,
+  ord smallint default NULL,
+  type char(1) default NULL,
+  user varchar(200) NOT NULL default '',
   PRIMARY KEY (name(30),user,position, ord)
 ) ENGINE=MyISAM;
 
@@ -3027,10 +3029,10 @@ CREATE TABLE 'tiki_user_assigned_modules' (
 DROP TABLE IF EXISTS 'tiki_user_bookmarks_folders';
 
 CREATE TABLE 'tiki_user_bookmarks_folders' (
-  "folderId" INTEGER,
-  "parentId" bigint default NULL,
-  "user" varchar(200) NOT NULL default '',
-  "name" varchar(30) default NULL,
+  folderId INTEGER,
+  parentId bigint default NULL,
+  user varchar(200) NOT NULL default '',
+  name varchar(30) default NULL,
   PRIMARY KEY (user,folderId)
 ) ENGINE=MyISAM ;
 
@@ -3038,13 +3040,13 @@ CREATE TABLE 'tiki_user_bookmarks_folders' (
 DROP TABLE IF EXISTS 'tiki_user_bookmarks_urls';
 
 CREATE TABLE 'tiki_user_bookmarks_urls' (
-  "urlId" INTEGER,
-  "name" varchar(30) default NULL,
-  "url" varchar(250) default NULL,
-  "data" bytea,
-  "lastUpdated" bigint default NULL,
-  "folderId" bigint NOT NULL default '0',
-  "user" varchar(200) NOT NULL default '',
+  urlId INTEGER,
+  name varchar(30) default NULL,
+  url varchar(250) default NULL,
+  data bytea,
+  lastUpdated bigint default NULL,
+  folderId bigint NOT NULL default '0',
+  user varchar(200) NOT NULL default '',
   PRIMARY KEY (urlId)
 ) ENGINE=MyISAM ;
 
@@ -3052,24 +3054,24 @@ CREATE TABLE 'tiki_user_bookmarks_urls' (
 DROP TABLE IF EXISTS 'tiki_user_mail_accounts';
 
 CREATE TABLE 'tiki_user_mail_accounts' (
-  "accountId" INTEGER,
-  "user" varchar(200) NOT NULL default '',
-  "account" varchar(50) NOT NULL default '',
-  "pop" varchar(255) default NULL,
-  "current" char(1) default NULL,
-  "port" smallint default NULL,
-  "username" varchar(100) default NULL,
-  "pass" varchar(100) default NULL,
-  "msgs" smallint default NULL,
-  "smtp" varchar(255) default NULL,
-  "useAuth" char(1) default NULL,
-  "smtpPort" smallint default NULL,
-  "flagsPublic" char(1) default 'n',				-- COMMENT 'MatWho - Shared Group Mail box if y',
-  "autoRefresh" smallint NOT NULL default 0,		-- COMMENT 'seconds for mail list to refresh, 0 = none',
-  "imap" varchar( 255 ) default NULL,
-  "mbox" varchar( 255 ) default NULL,
-  "maildir" varchar( 255 ) default NULL,
-  "useSSL" char( 1 ) NOT NULL default 'n',
+  accountId INTEGER,
+  user varchar(200) NOT NULL default '',
+  account varchar(50) NOT NULL default '',
+  pop varchar(255) default NULL,
+  current char(1) default NULL,
+  port smallint default NULL,
+  username varchar(100) default NULL,
+  pass varchar(100) default NULL,
+  msgs smallint default NULL,
+  smtp varchar(255) default NULL,
+  useAuth char(1) default NULL,
+  smtpPort smallint default NULL,
+  flagsPublic char(1) default 'n',				-- COMMENT 'MatWho - Shared Group Mail box if y',
+  autoRefresh smallint NOT NULL default 0,		-- COMMENT 'seconds for mail list to refresh, 0 = none',
+  imap varchar( 255 ) default NULL,
+  mbox varchar( 255 ) default NULL,
+  maildir varchar( 255 ) default NULL,
+  useSSL char( 1 ) NOT NULL default 'n',
   PRIMARY KEY (accountId)
 ) ENGINE=MyISAM ;
 
@@ -3077,12 +3079,12 @@ CREATE TABLE 'tiki_user_mail_accounts' (
 DROP TABLE IF EXISTS 'tiki_user_menus';
 
 CREATE TABLE 'tiki_user_menus' (
-  "user" varchar(200) NOT NULL default '',
-  "menuId" INTEGER,
-  "url" varchar(250) default NULL,
-  "name" varchar(40) default NULL,
-  "position" smallint default NULL,
-  "mode" char(1) default NULL,
+  user varchar(200) NOT NULL default '',
+  menuId INTEGER,
+  url varchar(250) default NULL,
+  name varchar(40) default NULL,
+  position smallint default NULL,
+  mode char(1) default NULL,
   PRIMARY KEY (menuId)
 ) ENGINE=MyISAM ;
 
@@ -3090,10 +3092,10 @@ CREATE TABLE 'tiki_user_menus' (
 DROP TABLE IF EXISTS 'tiki_user_modules';
 
 CREATE TABLE 'tiki_user_modules' (
-  "name" varchar(200) NOT NULL default '',
-  "title" varchar(40) default NULL,
-  "data" bytea,
-  "parse" char(1) default NULL,
+  name varchar(200) NOT NULL default '',
+  title varchar(40) default NULL,
+  data bytea,
+  parse char(1) default NULL,
   PRIMARY KEY (name)
 ) ENGINE=MyISAM;
 
@@ -3104,14 +3106,14 @@ INSERT INTO "tiki_user_modules" ("name","title","data","parse") VALUES ('mnu_app
 DROP TABLE IF EXISTS 'tiki_user_notes';
 
 CREATE TABLE 'tiki_user_notes' (
-  "user" varchar(200) NOT NULL default '',
-  "noteId" INTEGER,
-  "created" bigint default NULL,
-  "name" varchar(255) default NULL,
-  "lastModif" bigint default NULL,
-  "data" text,
-  "size" bigint default NULL,
-  "parse_mode" varchar(20) default NULL,
+  user varchar(200) NOT NULL default '',
+  noteId INTEGER,
+  created bigint default NULL,
+  name varchar(255) default NULL,
+  lastModif bigint default NULL,
+  data text,
+  size bigint default NULL,
+  parse_mode varchar(20) default NULL,
   PRIMARY KEY (noteId)
 ) ENGINE=MyISAM ;
 
@@ -3119,11 +3121,11 @@ CREATE TABLE 'tiki_user_notes' (
 DROP TABLE IF EXISTS 'tiki_user_postings';
 
 CREATE TABLE 'tiki_user_postings' (
-  "user" varchar(200) NOT NULL default '',
-  "posts" bigint default NULL,
-  "last" bigint default NULL,
-  "first" bigint default NULL,
-  "level" integer default NULL,
+  user varchar(200) NOT NULL default '',
+  posts bigint default NULL,
+  last bigint default NULL,
+  first bigint default NULL,
+  level integer default NULL,
   PRIMARY KEY (user)
 ) ENGINE=MyISAM;
 
@@ -3131,9 +3133,9 @@ CREATE TABLE 'tiki_user_postings' (
 DROP TABLE IF EXISTS 'tiki_user_preferences';
 
 CREATE TABLE 'tiki_user_preferences' (
-  "user" varchar(200) NOT NULL default '',
-  "prefName" varchar(40) NOT NULL default '',
-  "value" varchar(250) default NULL,
+  user varchar(200) NOT NULL default '',
+  prefName varchar(40) NOT NULL default '',
+  value varchar(250) default NULL,
   PRIMARY KEY (user,prefName)
 ) ENGINE=MyISAM;
 
@@ -3141,14 +3143,14 @@ CREATE TABLE 'tiki_user_preferences' (
 DROP TABLE IF EXISTS 'tiki_user_quizzes';
 
 CREATE TABLE 'tiki_user_quizzes' (
-  "user" varchar(200) default '',
-  "quizId" bigint default NULL,
-  "timestamp" bigint default NULL,
-  "timeTaken" bigint default NULL,
-  "points" bigint default NULL,
-  "maxPoints" bigint default NULL,
-  "resultId" bigint default NULL,
-  "userResultId" INTEGER,
+  user varchar(200) default '',
+  quizId bigint default NULL,
+  timestamp bigint default NULL,
+  timeTaken bigint default NULL,
+  points bigint default NULL,
+  maxPoints bigint default NULL,
+  resultId bigint default NULL,
+  userResultId INTEGER,
   PRIMARY KEY (userResultId)
 ) ENGINE=MyISAM ;
 
@@ -3156,8 +3158,8 @@ CREATE TABLE 'tiki_user_quizzes' (
 DROP TABLE IF EXISTS 'tiki_user_taken_quizzes';
 
 CREATE TABLE 'tiki_user_taken_quizzes' (
-  "user" varchar(200) NOT NULL default '',
-  "quizId" varchar(255) NOT NULL default '',
+  user varchar(200) NOT NULL default '',
+  quizId varchar(255) NOT NULL default '',
   PRIMARY KEY (user,quizId(50))
 ) ENGINE=MyISAM;
 
@@ -3165,23 +3167,21 @@ CREATE TABLE 'tiki_user_taken_quizzes' (
 DROP TABLE IF EXISTS 'tiki_user_tasks_history';
 
 CREATE TABLE 'tiki_user_tasks_history' (
-  "belongs_to" integer(14) NOT NULL,                   -- the first task in a history it has the same id as the task id
-  "task_version" integer(4) NOT NULL DEFAULT 0,        -- version number for the history it starts with 0
-  "title" varchar(250) NOT NULL,                       -- title
-  "description" text DEFAULT NULL,                     -- description
-  "start" integer(14) DEFAULT NULL,                    -- date of the starting, if it is not set than there is no starting date
-  "end" integer(14) DEFAULT NULL,                      -- date of the end, if it is not set than there is not dealine
-  "lasteditor" varchar(200) NOT NULL,                  -- lasteditor: username of last editior
-  "lastchanges" integer(14) NOT NULL,                  -- date of last changes
-  "priority" integer(2) NOT NULL DEFAULT 3,                     -- priority
-  "completed" integer(14) DEFAULT NULL,                -- date of the completation if it is null it is not yet completed
-  "deleted" integer(14) DEFAULT NULL,                  -- date of the deleteation it it is null it is not deleted
-  "status" char(1) DEFAULT NULL,                       -- null := waiting,
-                                                     -- o := open / in progress,
-                                                     -- c := completed -> (percentage = 100)
-  "percentage" smallint DEFAULT NULL,
-  "accepted_creator" char(1) DEFAULT NULL,             -- y - yes, n - no, null - waiting
-  "accepted_user" char(1) DEFAULT NULL,                -- y - yes, n - no, null - waiting
+  belongs_to integer(14) NOT NULL,                   -- the first task in a history it has the same id as the task id
+  task_version integer(4) NOT NULL DEFAULT 0,        -- version number for the history it starts with 0
+  title varchar(250) NOT NULL,                       -- title
+  description text DEFAULT NULL,                     -- description
+  start integer(14) DEFAULT NULL,                    -- date of the starting, if it is not set than there is no starting date
+  end integer(14) DEFAULT NULL,                      -- date of the end, if it is not set than there is not dealine
+  lasteditor varchar(200) NOT NULL,                  -- lasteditor: username of last editior
+  lastchanges integer(14) NOT NULL,                  -- date of last changes
+  priority integer(2) NOT NULL DEFAULT 3,                     -- priority
+  completed integer(14) DEFAULT NULL,                -- date of the completation if it is null it is not yet completed
+  deleted integer(14) DEFAULT NULL,                  -- date of the deleteation it it is null it is not deleted
+  status char(1) DEFAULT NULL,                       -- null := waiting, o := open / in progress, c := completed -> (percentage = 100)
+  percentage smallint DEFAULT NULL,
+  accepted_creator char(1) DEFAULT NULL,             -- y - yes, n - no, null - waiting
+  accepted_user char(1) DEFAULT NULL,                -- y - yes, n - no, null - waiting
   PRIMARY KEY (belongs_to, task_version)
 ) ENGINE=MyISAM ;
 
@@ -3189,17 +3189,17 @@ CREATE TABLE 'tiki_user_tasks_history' (
 DROP TABLE IF EXISTS 'tiki_user_tasks';
 
 CREATE TABLE 'tiki_user_tasks' (
-  "taskId" INTEGER,        -- task id
-  "last_version" integer(4) NOT NULL DEFAULT 0,        -- last version of the task starting with 0
-  "user" varchar(200) NOT NULL DEFAULT '',              -- task user
-  "creator" varchar(200) NOT NULL,                     -- username of creator
-  "public_for_group" varchar(30) DEFAULT NULL,         -- this group can also view the task, if it is null it is not public
-  "rights_by_creator" char(1) DEFAULT NULL,            -- null the user can delete the task,
-  "created" integer(14) NOT NULL,                      -- date of the creation
-  "status" char(1) default NULL,
-  "priority" smallint default NULL,
-  "completed" bigint default NULL,
-  "percentage" smallint default NULL,
+  taskId INTEGER,        -- task id
+  last_version integer(4) NOT NULL DEFAULT 0,        -- last version of the task starting with 0
+  user varchar(200) NOT NULL DEFAULT '',              -- task user
+  creator varchar(200) NOT NULL,                     -- username of creator
+  public_for_group varchar(30) DEFAULT NULL,         -- this group can also view the task, if it is null it is not public
+  rights_by_creator char(1) DEFAULT NULL,            -- null the user can delete the task,
+  created integer(14) NOT NULL,                      -- date of the creation
+  status char(1) default NULL,
+  priority smallint default NULL,
+  completed bigint default NULL,
+  percentage smallint default NULL,
   PRIMARY KEY (taskId),
   UNIQUE(creator, created)
 ) ENGINE=MyISAM;
@@ -3208,12 +3208,12 @@ CREATE TABLE 'tiki_user_tasks' (
 DROP TABLE IF EXISTS 'tiki_user_votings';
 
 CREATE TABLE 'tiki_user_votings' (
-  "user" varchar(200) default '',
-  "ip" varchar(15) default NULL,
-  "id" varchar(255) NOT NULL default '',
-  "optionId" bigint NOT NULL default 0,
-  "time" bigint NOT NULL default 0,
-  PRIMARY KEY (user(100),id(100))
+  user varchar(200) default '',
+  ip varchar(15) default NULL,
+  id varchar(255) NOT NULL default '',
+  optionId bigint NOT NULL default 0,
+  time bigint NOT NULL default 0,
+  KEY (user(100),id(100))
 ) ENGINE=MyISAM;
 
 CREATE  INDEX "tiki_user_votings_ip" ON "tiki_user_votings"(`"ip"`);
@@ -3222,14 +3222,14 @@ CREATE  INDEX "tiki_user_votings_id" ON "tiki_user_votings"(`"id"`);
 DROP TABLE IF EXISTS 'tiki_user_watches';
 
 CREATE TABLE 'tiki_user_watches' (
-  "watchId" INTEGER,
-  "user" varchar(200) NOT NULL default '',
-  "event" varchar(40) NOT NULL default '',
-  "object" varchar(200) NOT NULL default '',
-  "title" varchar(250) default NULL,
-  "type" varchar(200) default NULL,
-  "url" varchar(250) default NULL,
-  "email" varchar(200) default NULL,
+  watchId INTEGER,
+  user varchar(200) NOT NULL default '',
+  event varchar(40) NOT NULL default '',
+  object varchar(200) NOT NULL default '',
+  title varchar(250) default NULL,
+  type varchar(200) default NULL,
+  url varchar(250) default NULL,
+  email varchar(200) default NULL,
   PRIMARY KEY (user(50),event,object(100),email(50))
 ) ENGINE=MyISAM;
 
@@ -3238,17 +3238,17 @@ CREATE  INDEX "tiki_user_watches_watchId" ON "tiki_user_watches"("watchId");
 DROP TABLE IF EXISTS 'tiki_userfiles';
 
 CREATE TABLE 'tiki_userfiles' (
-  "user" varchar(200) NOT NULL default '',
-  "fileId" INTEGER,
-  "name" varchar(200) default NULL,
-  "filename" varchar(200) default NULL,
-  "filetype" varchar(200) default NULL,
-  "filesize" varchar(200) default NULL,
-  "data" bytea,
-  "hits" integer default NULL,
-  "isFile" char(1) default NULL,
-  "path" varchar(255) default NULL,
-  "created" bigint default NULL,
+  user varchar(200) NOT NULL default '',
+  fileId INTEGER,
+  name varchar(200) default NULL,
+  filename varchar(200) default NULL,
+  filetype varchar(200) default NULL,
+  filesize varchar(200) default NULL,
+  data bytea,
+  hits integer default NULL,
+  isFile char(1) default NULL,
+  path varchar(255) default NULL,
+  created bigint default NULL,
   PRIMARY KEY (fileId)
 ) ENGINE=MyISAM ;
 
@@ -3256,19 +3256,19 @@ CREATE TABLE 'tiki_userfiles' (
 DROP TABLE IF EXISTS 'tiki_userpoints';
 
 CREATE TABLE 'tiki_userpoints' (
-  "user" varchar(200) NOT NULL default '',
-  "points" decimal(8,2) default NULL,
-  "voted" integer default NULL
+  user varchar(200) NOT NULL default '',
+  points decimal(8,2) default NULL,
+  voted integer default NULL
 ) ENGINE=MyISAM;
 
 
 DROP TABLE IF EXISTS 'tiki_users';
 
 CREATE TABLE 'tiki_users' (
-  "user" varchar(200) NOT NULL default '',
-  "password" varchar(40) default NULL,
-  "email" varchar(200) default NULL,
-  "lastLogin" bigint default NULL,
+  user varchar(200) NOT NULL default '',
+  password varchar(40) default NULL,
+  email varchar(200) default NULL,
+  lastLogin bigint default NULL,
   PRIMARY KEY (user)
 ) ENGINE=MyISAM;
 
@@ -3276,12 +3276,12 @@ CREATE TABLE 'tiki_users' (
 DROP TABLE IF EXISTS 'tiki_webmail_contacts';
 
 CREATE TABLE 'tiki_webmail_contacts' (
-  "contactId" INTEGER,
-  "firstName" varchar(80) default NULL,
-  "lastName" varchar(80) default NULL,
-  "email" varchar(250) default NULL,
-  "nickname" varchar(200) default NULL,
-  "user" varchar(200) NOT NULL default '',
+  contactId INTEGER,
+  firstName varchar(80) default NULL,
+  lastName varchar(80) default NULL,
+  email varchar(250) default NULL,
+  nickname varchar(200) default NULL,
+  user varchar(200) NOT NULL default '',
   PRIMARY KEY (contactId)
 ) ENGINE=MyISAM ;
 
@@ -3289,8 +3289,8 @@ CREATE TABLE 'tiki_webmail_contacts' (
 DROP TABLE IF EXISTS 'tiki_webmail_contacts_groups';
 
 CREATE TABLE 'tiki_webmail_contacts_groups' (
-  "contactId" bigint NOT NULL,
-  "groupName" varchar(255) NOT NULL,
+  contactId bigint NOT NULL,
+  groupName varchar(255) NOT NULL,
   PRIMARY KEY (contactId,groupName(200))
 ) ENGINE=MyISAM ;
 
@@ -3298,13 +3298,13 @@ CREATE TABLE 'tiki_webmail_contacts_groups' (
 DROP TABLE IF EXISTS 'tiki_webmail_messages';
 
 CREATE TABLE 'tiki_webmail_messages' (
-  "accountId" bigint NOT NULL default '0',
-  "mailId" varchar(255) NOT NULL default '',
-  "user" varchar(200) NOT NULL default '',
-  "isRead" char(1) default NULL,
-  "isReplied" char(1) default NULL,
-  "isFlagged" char(1) default NULL,
-  "flaggedMsg" varchar(50) default '',
+  accountId bigint NOT NULL default '0',
+  mailId varchar(255) NOT NULL default '',
+  user varchar(200) NOT NULL default '',
+  isRead char(1) default NULL,
+  isReplied char(1) default NULL,
+  isFlagged char(1) default NULL,
+  flaggedMsg varchar(50) default '',
   PRIMARY KEY (accountId,mailId)
 ) ENGINE=MyISAM;
 
@@ -3312,17 +3312,17 @@ CREATE TABLE 'tiki_webmail_messages' (
 DROP TABLE IF EXISTS 'tiki_wiki_attachments';
 
 CREATE TABLE 'tiki_wiki_attachments' (
-  "attId" INTEGER,
-  "page" varchar(200) NOT NULL default '',
-  "filename" varchar(80) default NULL,
-  "filetype" varchar(80) default NULL,
-  "filesize" bigint default NULL,
-  "user" varchar(200) NOT NULL default '',
-  "data" bytea,
-  "path" varchar(255) default NULL,
-  "hits" bigint default NULL,
-  "created" bigint default NULL,
-  "comment" varchar(250) default NULL,
+  attId INTEGER,
+  page varchar(200) NOT NULL default '',
+  filename varchar(80) default NULL,
+  filetype varchar(80) default NULL,
+  filesize bigint default NULL,
+  user varchar(200) NOT NULL default '',
+  data bytea,
+  path varchar(255) default NULL,
+  hits bigint default NULL,
+  created bigint default NULL,
+  comment varchar(250) default NULL,
   PRIMARY KEY (attId)
 ) ENGINE=MyISAM ;
 
@@ -3331,7 +3331,7 @@ CREATE  INDEX "tiki_wiki_attachments_page" ON "tiki_wiki_attachments"("page");
 DROP TABLE IF EXISTS 'tiki_zones';
 
 CREATE TABLE 'tiki_zones' (
-  "zone" varchar(40) NOT NULL default '',
+  zone varchar(40) NOT NULL default '',
   PRIMARY KEY (zone)
 ) ENGINE=MyISAM;
 
@@ -3339,12 +3339,12 @@ CREATE TABLE 'tiki_zones' (
 DROP TABLE IF EXISTS 'tiki_download';
 
 CREATE TABLE 'tiki_download' (
-  "id" INTEGER,
-  "object" varchar(255) NOT NULL default '',
-  "userId" integer NOT NULL default '0',
-  "type" varchar(20) NOT NULL default '',
-  "date" bigint NOT NULL default '0',
-  "IP" varchar(50) NOT NULL default '',
+  id INTEGER,
+  object varchar(255) NOT NULL default '',
+  userId integer NOT NULL default '0',
+  type varchar(20) NOT NULL default '',
+  date bigint NOT NULL default '0',
+  IP varchar(50) NOT NULL default '',
   PRIMARY KEY (id)
 ) ENGINE=MyISAM;
 
@@ -3356,9 +3356,9 @@ CREATE  INDEX "tiki_download_date" ON "tiki_download"("date");
 DROP TABLE IF EXISTS 'users_grouppermissions';
 
 CREATE TABLE 'users_grouppermissions' (
-  "groupName" varchar(255) NOT NULL default '',
-  "permName" varchar(40) NOT NULL default '',
-  "value" char(1) default '',
+  groupName varchar(255) NOT NULL default '',
+  permName varchar(40) NOT NULL default '',
+  value char(1) default '',
   PRIMARY KEY (groupName(30),permName)
 ) ENGINE=MyISAM;
 
@@ -3370,20 +3370,20 @@ INSERT INTO "users_grouppermissions" ("groupName","permName") VALUES ('Anonymous
 DROP TABLE IF EXISTS 'users_groups';
 
 CREATE TABLE 'users_groups' (
-  "id" INTEGER,
-  "groupName" varchar(255) NOT NULL default '',
-  "groupDesc" varchar(255) default NULL,
-  "groupHome" varchar(255),
-  "usersTrackerId" bigint,
-  "groupTrackerId" bigint,
-  "usersFieldId" bigint,
-  "groupFieldId" bigint,
-  "registrationChoice" char(1) default NULL,
-  "registrationUsersFieldIds" text,
-  "userChoice" char(1) default NULL,
-  "groupDefCat" bigint default 0,
-  "groupTheme" varchar(255) default '',
-  "isExternal" char(1) default 'n',
+  id INTEGER,
+  groupName varchar(255) NOT NULL default '',
+  groupDesc varchar(255) default NULL,
+  groupHome varchar(255),
+  usersTrackerId bigint,
+  groupTrackerId bigint,
+  usersFieldId bigint,
+  groupFieldId bigint,
+  registrationChoice char(1) default NULL,
+  registrationUsersFieldIds text,
+  userChoice char(1) default NULL,
+  groupDefCat bigint default 0,
+  groupTheme varchar(255) default '',
+  isExternal char(1) default 'n',
   PRIMARY KEY (id)
 ) ENGINE=MyISAM;
 
@@ -3392,10 +3392,10 @@ CREATE UNIQUE INDEX "users_groups_groupName" ON "users_groups"("groupName");
 DROP TABLE IF EXISTS 'users_objectpermissions';
 
 CREATE TABLE 'users_objectpermissions' (
-  "groupName" varchar(255) NOT NULL default '',
-  "permName" varchar(40) NOT NULL default '',
-  "objectType" varchar(20) NOT NULL default '',
-  "objectId" varchar(32) NOT NULL default '',
+  groupName varchar(255) NOT NULL default '',
+  permName varchar(40) NOT NULL default '',
+  objectType varchar(20) NOT NULL default '',
+  objectId varchar(32) NOT NULL default '',
   PRIMARY KEY (objectId, objectType, groupName(30),permName)
 ) ENGINE=MyISAM;
 
@@ -3403,12 +3403,12 @@ CREATE TABLE 'users_objectpermissions' (
 DROP TABLE IF EXISTS 'users_permissions';
 
 CREATE TABLE 'users_permissions' (
-  "permName" varchar(40) NOT NULL default '',
-  "permDesc" varchar(250) default NULL,
-  "level" varchar(80) default NULL,
-  "type" varchar(20) default NULL,
-  "admin" varchar(1) default NULL,
-  "feature_check" VARCHAR(50) NULL,
+  permName varchar(40) NOT NULL default '',
+  permDesc varchar(250) default NULL,
+  level varchar(80) default NULL,
+  type varchar(20) default NULL,
+  admin varchar(1) default NULL,
+  feature_check VARCHAR(50) NULL,
   PRIMARY KEY (permName)
 ) ENGINE=MyISAM;
 
@@ -3654,6 +3654,8 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_subscribe_email', 'Can subscribe any email to newsletters', 'editors', 'newsletters');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_subscribe_newsletters', 'Can subscribe to newsletters', 'basic', 'newsletters');
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_list_newsletters', 'Can list newsletters', 'basic', 'newsletters');
 
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_polls','Can admin polls', 'admin', 'polls', 'y');
@@ -3973,8 +3975,6 @@ UPDATE users_permissions SET feature_check = 'feature_wiki_ratings' WHERE permNa
 
 UPDATE users_permissions SET feature_check = 'feature_wiki_comments' WHERE permName = 'tiki_p_wiki_view_comments';
 
-
---Added 20081018
 UPDATE users_permissions SET feature_check = 'feature_wiki_export' WHERE permName = 'tiki_p_export_wiki';
 
 UPDATE users_permissions SET feature_check = 'feature_history' WHERE permName = 'tiki_p_wiki_view_history';
@@ -3994,8 +3994,8 @@ UPDATE users_permissions SET feature_check = 'feature_source' WHERE permName = '
 DROP TABLE IF EXISTS 'users_usergroups';
 
 CREATE TABLE 'users_usergroups' (
-  "userId" integer NOT NULL default '0',
-  "groupName" varchar(255) NOT NULL default '',
+  userId integer NOT NULL default '0',
+  groupName varchar(255) NOT NULL default '',
   PRIMARY KEY (userId,groupName(30))
 ) ENGINE=MyISAM;
 
@@ -4010,31 +4010,31 @@ INSERT INTO "users_groups" ("groupName","groupDesc") VALUES ('Admins','Administr
 DROP TABLE IF EXISTS 'users_users';
 
 CREATE TABLE 'users_users' (
-  "userId" INTEGER,
-  "email" varchar(200) default NULL,
-  "login" varchar(200) NOT NULL default '',
-  "password" varchar(30) default '',
-  "provpass" varchar(30) default NULL,
-  "default_group" varchar(255),
-  "lastLogin" bigint default NULL,
-  "currentLogin" bigint default NULL,
-  "registrationDate" bigint default NULL,
-  "challenge" varchar(32) default NULL,
-  "pass_confirm" bigint default NULL,
-  "email_confirm" bigint default NULL,
-  "hash" varchar(34) default NULL,
-  "created" bigint default NULL,
-  "avatarName" varchar(80) default NULL,
-  "avatarSize" bigint default NULL,
-  "avatarFileType" varchar(250) default NULL,
-  "avatarData" bytea,
-  "avatarLibName" varchar(200) default NULL,
-  "avatarType" char(1) default NULL,
-  "score" bigint NOT NULL default 0,
-  "valid" varchar(32) default NULL,
-  "unsuccessful_logins" bigint default 0,
-  "openid_url" varchar(255) default NULL,
-  "waiting" char(1) default NULL,
+  userId INTEGER,
+  email varchar(200) default NULL,
+  login varchar(200) NOT NULL default '',
+  password varchar(30) default '',
+  provpass varchar(30) default NULL,
+  default_group varchar(255),
+  lastLogin bigint default NULL,
+  currentLogin bigint default NULL,
+  registrationDate bigint default NULL,
+  challenge varchar(32) default NULL,
+  pass_confirm bigint default NULL,
+  email_confirm bigint default NULL,
+  hash varchar(34) default NULL,
+  created bigint default NULL,
+  avatarName varchar(80) default NULL,
+  avatarSize bigint default NULL,
+  avatarFileType varchar(250) default NULL,
+  avatarData bytea,
+  avatarLibName varchar(200) default NULL,
+  avatarType char(1) default NULL,
+  score bigint NOT NULL default 0,
+  valid varchar(32) default NULL,
+  unsuccessful_logins bigint default 0,
+  openid_url varchar(255) default NULL,
+  waiting char(1) default NULL,
   PRIMARY KEY (userId)
 ) ENGINE=MyISAM ;
 
@@ -4043,7 +4043,7 @@ CREATE  INDEX "users_users_login" ON "users_users"("login");
 CREATE  INDEX "users_users_registrationDate" ON "users_users"("registrationDate");
 CREATE  INDEX "users_users_openid_url" ON "users_users"("openid_url");
 
------- Administrator account
+-- Administrator account
 INSERT INTO "users_users" ("email","login","password","hash") VALUES ('','admin','admin','f6fdffe48c908deb0f4c3bd36c032e72');
 
 UPDATE "users_users" SET "currentLogin"="lastLogin" "registrationDate"="lastLogin";
@@ -4058,15 +4058,15 @@ INSERT INTO "users_grouppermissions" ("groupName","permName") VALUES ('Admins','
 DROP TABLE IF EXISTS 'tiki_integrator_reps';
 
 CREATE TABLE 'tiki_integrator_reps' (
-  "repID" INTEGER,
-  "name" varchar(255) NOT NULL default '',
-  "path" varchar(255) NOT NULL default '',
-  "start_page" varchar(255) NOT NULL default '',
-  "css_file" varchar(255) NOT NULL default '',
-  "visibility" char(1) NOT NULL default 'y',
-  "cacheable" char(1) NOT NULL default 'y',
-  "expiration" bigint NOT NULL default '0',
-  "description" text NOT NULL,
+  repID INTEGER,
+  name varchar(255) NOT NULL default '',
+  path varchar(255) NOT NULL default '',
+  start_page varchar(255) NOT NULL default '',
+  css_file varchar(255) NOT NULL default '',
+  visibility char(1) NOT NULL default 'y',
+  cacheable char(1) NOT NULL default 'y',
+  expiration bigint NOT NULL default '0',
+  description text NOT NULL,
   PRIMARY KEY (repID)
 ) ENGINE=MyISAM;
 
@@ -4077,16 +4077,16 @@ INSERT INTO tiki_integrator_reps VALUES ('1','Doxygened (1.3.4) Documentation','
 DROP TABLE IF EXISTS 'tiki_integrator_rules';
 
 CREATE TABLE 'tiki_integrator_rules' (
-  "ruleID" INTEGER,
-  "repID" bigint NOT NULL default '0',
-  "ord" smallint unsigned NOT NULL default '0',
-  "srch" bytea NOT NULL,
-  "repl" bytea NOT NULL,
-  "type" char(1) NOT NULL default 'n',
-  "casesense" char(1) NOT NULL default 'y',
-  "rxmod" varchar(20) NOT NULL default '',
-  "enabled" char(1) NOT NULL default 'n',
-  "description" text NOT NULL,
+  ruleID INTEGER,
+  repID bigint NOT NULL default '0',
+  ord smallint unsigned NOT NULL default '0',
+  srch bytea NOT NULL,
+  repl bytea NOT NULL,
+  type char(1) NOT NULL default 'n',
+  casesense char(1) NOT NULL default 'y',
+  rxmod varchar(20) NOT NULL default '',
+  enabled char(1) NOT NULL default 'n',
+  description text NOT NULL,
   PRIMARY KEY (ruleID)
 ) ENGINE=MyISAM;
 
@@ -4096,17 +4096,17 @@ INSERT INTO tiki_integrator_rules VALUES ('1','1','1','.*<body[^>]*?>(.*?)</body
 
 INSERT INTO tiki_integrator_rules VALUES ('2','1','2','img src=(\"|\')(?!http://)','img src=\1{path}/','y','n','i','y','Fix image paths');
 
-INSERT INTO tiki_integrator_rules VALUES ('3','1','3','href=(\"|\')(?!(--|(http|ftp)://))','href=\1tiki-integrator.php?repID={repID}&file=','y','n','i','y','Replace internal links to integrator. Don\'t touch an external link.');
+INSERT INTO tiki_integrator_rules VALUES ('3','1','3','href=(\"|\')(?!(#|(http|ftp)://))','href=\1tiki-integrator.php?repID={repID}&file=','y','n','i','y','Replace internal links to integrator. Don\'t touch an external link.');
 
 
 DROP TABLE IF EXISTS 'tiki_quicktags';
 
 CREATE TABLE 'tiki_quicktags' (
-  "tagId" INTEGER,
-  "taglabel" varchar(255) default NULL,
-  "taginsert" text,
-  "tagicon" varchar(255) default NULL,
-  "tagcategory" varchar(255) default NULL,
+  tagId INTEGER,
+  taglabel varchar(255) default NULL,
+  taginsert text,
+  tagicon varchar(255) default NULL,
+  tagcategory varchar(255) default NULL,
   PRIMARY KEY (tagId)
 ) ENGINE=MyISAM ;
 
@@ -4140,7 +4140,7 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('center text','::text::','pics/icons/text_align_center.png','wiki');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' colored text','~~--FF0000:text~~','pics/icons/palette.png','wiki');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' colored text','~~#FF0000:text~~','pics/icons/palette.png','wiki');
 
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('dynamic variable','%text%','pics/icons/database_gear.png','wiki');
 
@@ -4148,7 +4148,7 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('list bullets', '*text', 'pics/icons/text_list_bullets.png', 'wiki');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('list numbers', '--text', 'pics/icons/text_list_numbers.png', 'wiki');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('list numbers', '#text', 'pics/icons/text_list_numbers.png', 'wiki');
 
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' deleted','--text--','pics/icons/text_strikethrough.png','wiki');
 
@@ -4162,27 +4162,27 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 -- maps
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New wms Metadata','METADATA\r\n		\"wms_name\" \"myname\"\r\n 	"wms_srs" "EPSG:4326"\r\n 	"wms_server_version" " "\r\n 	"wms_layers" "mylayers"\r\n 	"wms_request" "myrequest"\r\n 	"wms_format" " "\r\n 	"wms_time" " "\r\n END', 'pics/icons/tag_blue_add.png','maps');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New Class', 'CLASS\r\n EXPRESSION ()\r\n SYMBOL 0\r\n OUTLINECOLOR\r\n COLOR\r\n NAME "myclass" \r\nEND --end of class', 'pics/icons/application_add.png','maps');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New Class', 'CLASS\r\n EXPRESSION ()\r\n SYMBOL 0\r\n OUTLINECOLOR\r\n COLOR\r\n NAME "myclass" \r\nEND #end of class', 'pics/icons/application_add.png','maps');
 
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New Projection','PROJECTION\r\n "init=epsg:4326"\r\nEND','pics/icons/image_add.png','maps');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New Query','--\r\n-- Start of query definitions\r\n--\r\n QUERYMAP\r\n STATUS ON\r\n STYLE HILITE\r\nEND','pics/icons/database_gear.png','maps');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New Query','#\r\n# Start of query definitions\r\n#\r\n QUERYMAP\r\n STATUS ON\r\n STYLE HILITE\r\nEND','pics/icons/database_gear.png','maps');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New Scalebar','--\r\n-- Start of scalebar\r\n--\r\nSCALEBAR\r\n IMAGECOLOR 255 255 255\r\n STYLE 1\r\n SIZE 400 2\r\n COLOR 0 0 0\r\n UNITS KILOMETERS\r\n INTERVALS 5\r\n STATUS ON\r\nEND','pics/icons/layout_add.png','maps');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New Scalebar','#\r\n# Start of scalebar\r\n#\r\nSCALEBAR\r\n IMAGECOLOR 255 255 255\r\n STYLE 1\r\n SIZE 400 2\r\n COLOR 0 0 0\r\n UNITS KILOMETERS\r\n INTERVALS 5\r\n STATUS ON\r\nEND','pics/icons/layout_add.png','maps');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New Layer','LAYER\r\n NAME\r\n TYPE\r\n STATUS ON\r\n DATA "mydata"\r\nEND --end of layer', 'pics/icons/layers.png', 'maps');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New Layer','LAYER\r\n NAME\r\n TYPE\r\n STATUS ON\r\n DATA "mydata"\r\nEND #end of layer', 'pics/icons/layers.png', 'maps');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New Label','LABEL\r\n COLOR\r\n ANGLE\r\n FONT arial\r\n TYPE TRUETYPE\r\n POSITION\r\n PARTIALS TRUE\r\n SIZE 6\r\n BUFFER 0\r\n OUTLINECOLOR \r\nEND --end of label', 'pics/icons/comment_add.png', 'maps');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New Label','LABEL\r\n COLOR\r\n ANGLE\r\n FONT arial\r\n TYPE TRUETYPE\r\n POSITION\r\n PARTIALS TRUE\r\n SIZE 6\r\n BUFFER 0\r\n OUTLINECOLOR \r\nEND #end of label', 'pics/icons/comment_add.png', 'maps');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New Reference','--\r\n--start of reference\r\n--\r\n REFERENCE\r\n SIZE 120 60\r\n STATUS ON\r\n EXTENT -180 -90 182 88\r\n OUTLINECOLOR 255 0 0\r\n IMAGE "myimagedata"\r\n COLOR -1 -1 -1\r\nEND','pics/icons/picture_add.png','maps');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New Reference','#\r\n#start of reference\r\n#\r\n REFERENCE\r\n SIZE 120 60\r\n STATUS ON\r\n EXTENT -180 -90 182 88\r\n OUTLINECOLOR 255 0 0\r\n IMAGE "myimagedata"\r\n COLOR -1 -1 -1\r\nEND','pics/icons/picture_add.png','maps');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New Legend','--\r\n--start of Legend\r\n--\r\n LEGEND\r\n KEYSIZE 18 12\r\n POSTLABELCACHE TRUE\r\n STATUS ON\r\nEND','pics/icons/note_add.png','maps');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New Legend','#\r\n#start of Legend\r\n#\r\n LEGEND\r\n KEYSIZE 18 12\r\n POSTLABELCACHE TRUE\r\n STATUS ON\r\nEND','pics/icons/note_add.png','maps');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New Web','--\r\n-- Start of web interface definition\r\n--\r\nWEB\r\n TEMPLATE "myfile/url"\r\n MINSCALE 1000\r\n MAXSCALE 40000\r\n IMAGEPATH "myimagepath"\r\n IMAGEURL "mypath"\r\nEND', 'pics/icons/world_link.png', 'maps');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New Web','#\r\n# Start of web interface definition\r\n#\r\nWEB\r\n TEMPLATE "myfile/url"\r\n MINSCALE 1000\r\n MAXSCALE 40000\r\n IMAGEPATH "myimagepath"\r\n IMAGEURL "mypath"\r\nEND', 'pics/icons/world_link.png', 'maps');
 
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New Outputformat','OUTPUTFORMAT\r\n NAME\r\n DRIVER " "\r\n MIMETYPE "myimagetype"\r\n IMAGEMODE RGB\r\n EXTENSION "png"\r\nEND','pics/icons/newspaper_go.png','maps');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New Mapfile','--\r\n-- Start of mapfile\r\n--\r\nNAME MYMAPFLE\r\n STATUS ON\r\nSIZE \r\nEXTENT\r\nUNITS \r\nSHAPEPATH " "\r\nIMAGETYPE " "\r\nFONTSET " "\r\nIMAGECOLOR -1 -1 -1\r\n\r\n--remove this text and add objects here\r\n\r\nEND -- end of mapfile','pics/icons/world_add.png','maps');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New Mapfile','#\r\n# Start of mapfile\r\n#\r\nNAME MYMAPFLE\r\n STATUS ON\r\nSIZE \r\nEXTENT\r\nUNITS \r\nSHAPEPATH " "\r\nIMAGETYPE " "\r\nFONTSET " "\r\nIMAGECOLOR -1 -1 -1\r\n\r\n#remove this text and add objects here\r\n\r\nEND # end of mapfile','pics/icons/world_add.png','maps');
 
 
 -- newsletters
@@ -4204,7 +4204,7 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('center text','::text::','pics/icons/text_align_center.png','newsletters');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' colored text','~~--FF0000:text~~','pics/icons/palette.png','newsletters');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' colored text','~~#FF0000:text~~','pics/icons/palette.png','newsletters');
 
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('image','popup_plugin_form("img")','pics/icons/picture.png','newsletters');
 
@@ -4238,7 +4238,7 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('center text','::text::','pics/icons/text_align_center.png','trackers');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' colored text','~~--FF0000:text~~','pics/icons/palette.png','trackers');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' colored text','~~#FF0000:text~~','pics/icons/palette.png','trackers');
 
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('dynamic variable','%text%','pics/icons/database_gear.png','trackers');
 
@@ -4280,7 +4280,7 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('center text','::text::','pics/icons/text_align_center.png','blogs');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' colored text','~~--FF0000:text~~','pics/icons/palette.png','blogs');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' colored text','~~#FF0000:text~~','pics/icons/palette.png','blogs');
 
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('dynamic variable','%text%','pics/icons/database_gear.png','blogs');
 
@@ -4322,7 +4322,7 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('center text','::text::','pics/icons/text_align_center.png','calendar');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' colored text','~~--FF0000:text~~','pics/icons/palette.png','calendar');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' colored text','~~#FF0000:text~~','pics/icons/palette.png','calendar');
 
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('dynamic variable','%text%','pics/icons/database_gear.png','calendar');
 
@@ -4358,7 +4358,7 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('center text','::text::','pics/icons/text_align_center.png','articles');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' colored text','~~--FF0000:text~~','pics/icons/palette.png','articles');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' colored text','~~#FF0000:text~~','pics/icons/palette.png','articles');
 
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('dynamic variable','%text%','pics/icons/database_gear.png','articles');
 
@@ -4400,7 +4400,7 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('center text','::text::','pics/icons/text_align_center.png','faqs');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' colored text','~~--FF0000:text~~','pics/icons/palette.png','faqs');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' colored text','~~#FF0000:text~~','pics/icons/palette.png','faqs');
 
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('dynamic variable','%text%','pics/icons/database_gear.png','faqs');
 
@@ -4436,7 +4436,7 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('center text','::text::','pics/icons/text_align_center.png','forums');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' colored text','~~--FF0000:text~~','pics/icons/palette.png','forums');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' colored text','~~#FF0000:text~~','pics/icons/palette.png','forums');
 
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('dynamic variable','%text%','pics/icons/database_gear.png','forums');
 
@@ -4455,10 +4455,10 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 DROP TABLE IF EXISTS 'tiki_translated_objects';
 
 CREATE TABLE 'tiki_translated_objects' (
-  "traId" INTEGER,
-  "type" varchar(50) NOT NULL,
-  "objId" varchar(255) NOT NULL,
-  "lang" varchar(16) default NULL,
+  traId INTEGER,
+  type varchar(50) NOT NULL,
+  objId varchar(255) NOT NULL,
+  lang varchar(16) default NULL,
   PRIMARY KEY (type, objId)
 ) ENGINE=MyISAM;
 
@@ -4467,8 +4467,8 @@ CREATE  INDEX "tiki_translated_objects_traId" ON "tiki_translated_objects"( "tra
 DROP TABLE IF EXISTS 'tiki_friends';
 
 CREATE TABLE 'tiki_friends' (
-  "user" varchar(200) NOT NULL default '',
-  "friend" varchar(200) NOT NULL default '',
+  user varchar(200) NOT NULL default '',
+  friend varchar(200) NOT NULL default '',
   PRIMARY KEY (user(120),friend(120))
 ) ENGINE=MyISAM;
 
@@ -4476,9 +4476,9 @@ CREATE TABLE 'tiki_friends' (
 DROP TABLE IF EXISTS 'tiki_friendship_requests';
 
 CREATE TABLE 'tiki_friendship_requests' (
-  "userFrom" varchar(200) NOT NULL default '',
-  "userTo" varchar(200) NOT NULL default '',
-  "tstamp" timestamp(3) NOT NULL,
+  userFrom varchar(200) NOT NULL default '',
+  userTo varchar(200) NOT NULL default '',
+  tstamp timestamp(3) NOT NULL,
   PRIMARY KEY (userFrom(120),userTo(120))
 ) ENGINE=MyISAM;
 
@@ -4557,10 +4557,10 @@ INSERT INTO "tiki_score" ("event","score","expiration") VALUES ('wiki_attach_fil
 DROP TABLE IF EXISTS 'tiki_users_score';
 
 CREATE TABLE 'tiki_users_score' (
-  "user" char(200) NOT NULL default '',
-  "event_id" char(200) NOT NULL default '',
-  "expire" bigint NOT NULL default '0',
-  "tstamp" timestamp(3) NOT NULL,
+  user char(200) NOT NULL default '',
+  event_id char(200) NOT NULL default '',
+  expire bigint NOT NULL default '0',
+  tstamp timestamp(3) NOT NULL,
   PRIMARY KEY (user(110),event_id(110))
 ) ENGINE=MyISAM;
 
@@ -4569,18 +4569,18 @@ CREATE  INDEX "tiki_users_score_user" ON "tiki_users_score"("user","event_id","e
 DROP TABLE IF EXISTS 'tiki_file_handlers';
 
 CREATE TABLE 'tiki_file_handlers' (
-  "mime_type" varchar(64) default NULL,
-  "cmd" varchar(238) default NULL
+  mime_type varchar(64) default NULL,
+  cmd varchar(238) default NULL
 ) ENGINE=MyISAM;
 
 
 DROP TABLE IF EXISTS 'tiki_stats';
 
 CREATE TABLE 'tiki_stats' (
-  "object" varchar(255) NOT NULL default '',
-  "type" varchar(20) NOT NULL default '',
-  "day" bigint NOT NULL default '0',
-  "hits" bigint NOT NULL default '0',
+  object varchar(255) NOT NULL default '',
+  type varchar(20) NOT NULL default '',
+  day bigint NOT NULL default '0',
+  hits bigint NOT NULL default '0',
   PRIMARY KEY (object(200),type,day)
 ) ENGINE=MyISAM;
 
@@ -4588,12 +4588,12 @@ CREATE TABLE 'tiki_stats' (
 DROP TABLE IF EXISTS 'tiki_events';
 
 CREATE TABLE 'tiki_events' (
-  "callback_type" smallint NOT NULL default '3',
+  callback_type smallint NOT NULL default '3',
   order smallint NOT NULL default '50',
-  "event" varchar(200) NOT NULL default '',
-  "file" varchar(200) NOT NULL default '',
-  "object" varchar(200) NOT NULL default '',
-  "method" varchar(200) NOT NULL default '',
+  event varchar(200) NOT NULL default '',
+  file varchar(200) NOT NULL default '',
+  object varchar(200) NOT NULL default '',
+  method varchar(200) NOT NULL default '',
   PRIMARY KEY (callback_type,order)
 ) ENGINE=MyISAM;
 
@@ -4612,12 +4612,12 @@ INSERT INTO "tiki_events" ("callback_type","order","event","file","object","meth
 DROP TABLE IF EXISTS 'tiki_registration_fields';
 
 CREATE TABLE 'tiki_registration_fields' (
-  "id" INTEGER,
-  "field" varchar(255) NOT NULL default '',
-  "name" varchar(255) default NULL,
-  "type" varchar(255) NOT NULL default 'text',
+  id INTEGER,
+  field varchar(255) NOT NULL default '',
+  name varchar(255) default NULL,
+  type varchar(255) NOT NULL default 'text',
   show smallint NOT NULL default '1',
-  "size" varchar(10) default '10',
+  size varchar(10) default '10',
   PRIMARY KEY (id)
 ) ENGINE=MyISAM;
 
@@ -4625,12 +4625,12 @@ CREATE TABLE 'tiki_registration_fields' (
 DROP TABLE IF EXISTS 'tiki_actionlog_conf';
 
 CREATE TABLE 'tiki_actionlog_conf' (
-  "id" INTEGER,
-  "action" varchar(32) NOT NULL default '',
-  "objectType" varchar(32) NOT NULL default '',
- status char(1) default '',
-PRIMARY KEY (action, objectType),
-KEY (id)
+  id INTEGER,
+  action varchar(32) NOT NULL default '',
+  objectType varchar(32) NOT NULL default '',
+  status char(1) default '',
+  PRIMARY KEY (action, objectType),
+  KEY (id)
 ) ENGINE=MyISAM;
 
 
@@ -4712,10 +4712,10 @@ INSERT INTO "tiki_actionlog_conf" ("action","objectType","status") VALUES ('View
 DROP TABLE IF EXISTS 'tiki_freetags';
 
 CREATE TABLE 'tiki_freetags' (
-  "tagId" INTEGER,
-  "tag" varchar(30) NOT NULL default '',
-  "raw_tag" varchar(50) NOT NULL default '',
-  "lang" varchar(16) NULL,
+  tagId INTEGER,
+  tag varchar(30) NOT NULL default '',
+  raw_tag varchar(50) NOT NULL default '',
+  lang varchar(16) NULL,
   PRIMARY KEY (tagId)
 ) ENGINE=MyISAM;
 
@@ -4723,10 +4723,10 @@ CREATE TABLE 'tiki_freetags' (
 DROP TABLE IF EXISTS 'tiki_freetagged_objects';
 
 CREATE TABLE 'tiki_freetagged_objects' (
-  "tagId" INTEGER,
-  "objectId" bigint NOT NULL default 0,
-  "user" varchar(200) default '',
-  "created" bigint NOT NULL default '0',
+  tagId INTEGER,
+  objectId bigint NOT NULL default 0,
+  user varchar(200) default '',
+  created bigint NOT NULL default '0',
   PRIMARY KEY (tagId,user,objectId),
   KEY (tagId),
   KEY (user),
@@ -4737,9 +4737,9 @@ CREATE TABLE 'tiki_freetagged_objects' (
 DROP TABLE IF EXISTS 'tiki_contributions';
 
 CREATE TABLE 'tiki_contributions' (
-  "contributionId" INTEGER,
-  "name" varchar(100) default NULL,
-  "description" varchar(250) default NULL,
+  contributionId INTEGER,
+  name varchar(100) default NULL,
+  description varchar(250) default NULL,
   PRIMARY KEY (contributionId)
 ) ENGINE=MyISAM;
 
@@ -4747,8 +4747,8 @@ CREATE TABLE 'tiki_contributions' (
 DROP TABLE IF EXISTS 'tiki_contributions_assigned';
 
 CREATE TABLE 'tiki_contributions_assigned' (
-  "contributionId" bigint NOT NULL,
-  "objectId" bigint NOT NULL,
+  contributionId bigint NOT NULL,
+  objectId bigint NOT NULL,
   PRIMARY KEY (objectId, contributionId)
 ) ENGINE=MyISAM;
 
@@ -4796,11 +4796,11 @@ CREATE TABLE tiki_pages_translation_bits (
 DROP TABLE IF EXISTS 'tiki_pages_changes';
 
 CREATE TABLE 'tiki_pages_changes' (
-  "page_id" bigint,
-  "version" bigint,
-  "segments_added" bigint,
-  "segments_removed" bigint,
-  "segments_total" bigint,
+  page_id bigint,
+  version bigint,
+  segments_added bigint,
+  segments_removed bigint,
+  segments_total bigint,
   PRIMARY KEY(page_id, version)
 );
 
@@ -4822,13 +4822,13 @@ CREATE TABLE tiki_minichat (
 DROP TABLE IF EXISTS 'tiki_profile_symbols';
 
 CREATE TABLE 'tiki_profile_symbols' (
-	domain VARCHAR(50) NOT NULL,
-	profile VARCHAR(50) NOT NULL,
-	object VARCHAR(50) NOT NULL,
-	type VARCHAR(20) NOT NULL,
-	value VARCHAR(50) NOT NULL,
-	named ENUM('y','n') NOT NULL,
-	creation_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  domain VARCHAR(50) NOT NULL,
+  profile VARCHAR(50) NOT NULL,
+  object VARCHAR(50) NOT NULL,
+  type VARCHAR(20) NOT NULL,
+  value VARCHAR(50) NOT NULL,
+  named ENUM('y','n') NOT NULL,
+  creation_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY ( domain, profile, object ),
   "INDEX"(named)
 );
@@ -4858,17 +4858,17 @@ CREATE TABLE tiki_feature (
 DROP TABLE IF EXISTS 'tiki_schema';
 
 CREATE TABLE 'tiki_schema' (
-  "patch_name" VARCHAR(100) PRIMARY KEY,
-  "install_date" TIMESTAMP
+  patch_name VARCHAR(100) PRIMARY KEY,
+  install_date TIMESTAMP
 ) ENGINE=MyISAM;
 
 
 DROP TABLE IF EXISTS 'tiki_semantic_tokens';
 
 CREATE TABLE 'tiki_semantic_tokens' (
-  "token" VARCHAR(15) PRIMARY KEY,
-  "label" VARCHAR(25) NOT NULL,
-  "invert_token" VARCHAR(15)
+  token VARCHAR(15) PRIMARY KEY,
+  label VARCHAR(25) NOT NULL,
+  invert_token VARCHAR(15)
 ) ENGINE=MyISAM ;
 
 
@@ -4879,23 +4879,23 @@ INSERT INTO "tiki_semantic_tokens" ("token","label") VALUES ('alias', 'Page Alia
 DROP TABLE IF EXISTS 'tiki_webservice';
 
 CREATE TABLE 'tiki_webservice' (
-  "service" VARCHAR(25) NOT NULL PRIMARY KEY,
-  "url" VARCHAR(250),
-  "body" TEXT,
-  "schema_version" VARCHAR(5),
-  "schema_documentation" VARCHAR(250)
+  service VARCHAR(25) NOT NULL PRIMARY KEY,
+  url VARCHAR(250),
+  body TEXT,
+  schema_version VARCHAR(5),
+  schema_documentation VARCHAR(250)
 ) ENGINE=MyISAM ;
 
 
 DROP TABLE IF EXISTS 'tiki_webservice_template';
 
 CREATE TABLE 'tiki_webservice_template' (
-  "service" VARCHAR(25) NOT NULL,
-  "template" VARCHAR(25) NOT NULL,
-  "engine" VARCHAR(15) NOT NULL,
-  "output" VARCHAR(15) NOT NULL,
-  "content" TEXT NOT NULL,
-  "last_modif" INT,
+  service VARCHAR(25) NOT NULL,
+  template VARCHAR(25) NOT NULL,
+  engine VARCHAR(15) NOT NULL,
+  output VARCHAR(15) NOT NULL,
+  content TEXT NOT NULL,
+  last_modif INT,
   PRIMARY KEY( service, template )
 ) ENGINE=MyISAM ;
 
@@ -4904,10 +4904,10 @@ DROP TABLE IF EXISTS 'tiki_groupalert';
 
 
 CREATE TABLE 'tiki_groupalert' (
-  "groupName" varchar(255) NOT NULL default '',
-  "objectType" varchar( 20 ) NOT NULL default '',
-  "objectId"  varchar(10) NOT NULL default '',
-  "displayEachuser"  char( 1 ) default NULL ,
+  groupName varchar(255) NOT NULL default '',
+  objectType varchar( 20 ) NOT NULL default '',
+  objectId varchar(10) NOT NULL default '',
+  displayEachuser char( 1 ) default NULL ,
   PRIMARY KEY ( objectType,objectId )
 ) ENGINE=MyISAM ;
 
@@ -4925,6 +4925,7 @@ CREATE TABLE tiki_sent_newsletters_files (
   KEY editionId (editionId)
 );
 
+
 DROP TABLE IF EXISTS 'tiki_sefurl_regex_out';
 
 CREATE TABLE tiki_sefurl_regex_out (
@@ -4937,9 +4938,10 @@ CREATE TABLE tiki_sefurl_regex_out (
   comment varchar(256),
   order bigint NULL default 0,
   PRIMARY KEY(id),
-  UNIQUE KEY left (left(256)),
+  UNIQUE KEY left (left(128)),
   "INDEX" idx1 (silent, type, feature(30))
 );
+
 
 INSERT INTO "," ("left","right","type","feature") VALUES ('tiki-index.php\\?page=(.+)', '$1', 'wiki', 'feature_wiki');
 
@@ -5096,12 +5098,12 @@ UPDATE tiki_menus SET use_items_icons='y' WHERE menuId=42;
 DROP TABLE IF EXISTS 'tiki_plugin_security';
 
 CREATE TABLE 'tiki_plugin_security' (
-  "fingerprint" VARCHAR(200) NOT NULL PRIMARY KEY,
-  "status" VARCHAR(10) NOT NULL,
-  "approval_by" VARCHAR(200) NULL,
-  "last_update" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  "last_objectType" VARCHAR(20) NOT NULL,
-  "last_objectId" VARCHAR(200) NOT NULL
+  fingerprint VARCHAR(200) NOT NULL PRIMARY KEY,
+  status VARCHAR(10) NOT NULL,
+  approval_by VARCHAR(200) NULL,
+  last_update TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  last_objectType VARCHAR(20) NOT NULL,
+  last_objectId VARCHAR(200) NOT NULL
 );
 
 CREATE  INDEX "tiki_plugin_security_last_object" ON "tiki_plugin_security"("last_objectType" "last_objectId");
@@ -5133,17 +5135,21 @@ CREATE TABLE 'IF' NOT EXISTS tiki_user_reports_cache (
 ) ENGINE=MyISAM;
 
 
+DROP TABLE IF EXISTS 'tiki_perspectives';
+
 CREATE TABLE 'tiki_perspectives' (
-  "perspectiveId" int NOT NULL AUTO_INCREMENT,
-  "name" varchar(100) NOT NULL,
+  perspectiveId int NOT NULL AUTO_INCREMENT,
+  name varchar(100) NOT NULL,
   PRIMARY KEY( perspectiveId )
 ) ENGINE=MyISAM;
 
 
+DROP TABLE IF EXISTS 'tiki_perspective_preferences';
+
 CREATE TABLE 'tiki_perspective_preferences' (
-  "perspectiveId" int NOT NULL,
-  "pref" varchar(40) NOT NULL,
-  "value" text,
+  perspectiveId int NOT NULL,
+  pref varchar(40) NOT NULL,
+  value text,
   PRIMARY KEY( perspectiveId, pref )
 ) ENGINE=MyISAM;
 

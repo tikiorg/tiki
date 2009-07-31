@@ -21,5 +21,9 @@ function smarty_block_wiki($params, $content, &$smarty)
 		} else {
 		  $isHtml = false;
 		}
-		return $tikilib->parse_data($content, array('is_html' => $isHtml));
+		$ret = $tikilib->parse_data($content, array('is_html' => $isHtml));
+		if (isset($params['line']) && $params['line'] == 1) {
+			$ret = preg_replace('/<br \/>$/', '', $ret);
+		}
+		return $ret;
 }
