@@ -5,8 +5,13 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id: /cvsroot/tikiwiki/tiki/tiki-newsletters.php,v 1.27 2007-10-12 07:55:29 nyloth Exp $
 require_once ('tiki-setup.php');
-global $nllib;
-include_once ('lib/newsletters/nllib.php');
+if ($tiki_p_list_newsletters != 'y') {
+	$smarty->assign('errortype', 401);
+	$smarty->assign('msg', tra('Permission denied'));
+	$smarty->display("error.tpl");
+	die;
+}
+global $nllib; include_once ('lib/newsletters/nllib.php');
 if ($prefs['feature_newsletters'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled") . ": feature_newsletters");
 	$smarty->display("error.tpl");
