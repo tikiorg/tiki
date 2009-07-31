@@ -88,9 +88,15 @@ if (isset($_REQUEST["remove"])) {
 		key_get($area);
 	}
 }
+// wysiwyg decision
+include 'tiki-parsemode_setup.php';
+
 if (isset($_REQUEST["templateId"]) && $_REQUEST["templateId"] > 0 && (!isset($_REQUEST['previousTemplateId']) || $_REQUEST['previousTemplateId'] != $_REQUEST['templateId'])) {
 	$template_data = $tikilib->get_template($_REQUEST["templateId"]);
 	$_REQUEST["data"] = $template_data["content"];
+	if (isset($_SESSION['wysiwyg']) && $_SESSION['wysiwyg'] == 'y') {
+		$_REQUEST['data'] = $tikilib->parse_data($_REQUEST['data'], array('is_html'=>true));
+	}
 	$_REQUEST["preview"] = 1;
 	$smarty->assign("templateId", $_REQUEST["templateId"]);
 }

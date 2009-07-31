@@ -122,6 +122,13 @@
 		<h2>{tr}Prepare a newsletter to be sent{/tr}</h2>
 		<form action="tiki-send_newsletters.php" method="post" id='editpageform' enctype='multipart/form-data'>
 			<input type="hidden" name="editionId" value="{$info.editionId}"/>
+			{if $prefs.feature_wysiwyg eq 'y' and $prefs.wysiwyg_optional eq 'y'}
+				{if $wysiwyg ne 'y'}
+					<input type="submit" class="wikiaction" onmouseover="return overlib('{tr}Switch to WYSIWYG editor.{/tr}');" onmouseout="nd();" name="mode_wysiwyg" value="{tr}Use wysiwyg editor{/tr}" onclick="needToConfirm=false;" />
+				{else}
+					<input type="submit" class="wikiaction" onmouseover="return overlib('{tr}Switch to normal (wiki) editor.{/tr}');" onmouseout="nd();" name="mode_normal" value="{tr}Use normal editor{/tr}" onclick="needToConfirm=false;" />
+				{/if}
+			{/if}
 			<table class="normal" id="newstable">
 				<tr class="formcolor">
 					<td class="formcolor">{tr}Subject{/tr}:</td>
@@ -174,6 +181,7 @@
 				{/if}
 
 				<tr class="formcolor">
+					{if $wysiwyg ne 'y' or $prefs.javascript_enabled ne 'y'}
 					<td class="formcolor">
 						{tr}Data HTML{/tr}:
 						<br /><br />
@@ -193,6 +201,13 @@
 						<br />
 						{tr}Must be wiki parsed{/tr}: <input type="checkbox" name="wikiparse" {if empty($info.wikiparse) or $info.wikiparse eq 'y'} checked="checked"{/if} />
 					</td>
+					{else}
+						<td class="formcolor" colspan="2">
+							{tr}Data HTML{/tr}<br />
+							{editform InstanceName='data' ToolbarSet="Tiki" Meat=$info.data}
+							<input type="hidden" name="wysiwyg" value="y" />
+						</td>
+					{/if}
 				</tr>
 
 				<tr class="formcolor">
