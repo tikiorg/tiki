@@ -30,6 +30,6 @@ function wikiplugin_kaltura($data, $params) {
 			 <param name="movie" value="http://www.kaltura.com/index.php/kwidget/wid/_23929/uiconf_id/48411/entry_id/'.$id.'}"/>
 			 <param name="flashVars" value=""/>
 			 <param name="wmode" value="opaque"/>
-			 </object>'
+			 </object>';
      return '~np~'.$code.'~/np~';
 }
