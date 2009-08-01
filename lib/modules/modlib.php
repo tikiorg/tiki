@@ -502,7 +502,7 @@ class ModLib extends TikiLib {
 					include $phpfile;
 				}
 			} elseif( $info['type'] == 'function' ) {
-				$function = 'modules_' . $mod_reference['name'];
+				$function = 'module_' . $mod_reference['name'];
 
 				if( function_exists( $function ) ) {
 					$function( $mod_reference, $module_params );
@@ -581,6 +581,7 @@ class ModLib extends TikiLib {
 		return $cachefile;
 	}
 
+	// Returns whether $cachefile needs to be [re]built
 	function require_cache_build( $mod_reference, $cachefile ) {
 		global $tikilib;
 		return ! file_exists( $cachefile )
