@@ -24,10 +24,10 @@
 	</form>
 	
 	<br/>
-	<form action='tiki-upload_video.php' method='post'>
+	<form action='tiki-kaltura_video.php' method='post'>
 	<input type="hidden" id="action" name="action" value="" />
 	<input type="submit" name="remix" value="{tr}Create Remix{/tr}" onClick="document.getElementById('action').value='remix';"/>
-	<input type="submit" name="delete" value="{tr}Delete{/tr}" onClick="document.getElementById('action').value='delete';alert(getElementById('action').value);"/>
+	<input type="submit" name="delete" value="{tr}Delete{/tr}" onClick="document.getElementById('action').value='delete';"/>
 	<br><br>
 	
 	<table class="normal">
