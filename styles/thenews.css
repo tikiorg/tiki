@@ -946,6 +946,38 @@ div.help_section {
 	color: black;
 }
 
+#site_report {text-align: center}
+
+#site_report a {
+	border-left: 1px solid #696969;
+	border-right: 1px solid #696969;
+	padding: 0 5px;
+	font-size: smaller}
+	
+.plugin-desc {padding: 5px}
+
+.plugin-sample {
+	padding: 5px;
+	font-family: monospace}
+
+.plugin-sample .plugin-param {padding-left: 15px}
+
+.plugin-form-float {
+	position: fixed;
+	left: 5%;
+	right: 365px;
+	top: 5%;
+	max-height: 90%;
+	overflow: auto;
+	background: white;
+	color: black;
+	padding: 10px;
+	border: solid 2px black;
+	z-index: 1000}
+
+.icon_edit_section {
+	float: right;
+	margin-top: 1em}
 
 /** Admin pages **/
 /* overrides inline css */
