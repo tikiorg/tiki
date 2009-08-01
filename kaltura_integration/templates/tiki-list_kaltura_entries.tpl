@@ -54,25 +54,25 @@
 
           			{if $tiki_p_view_kaltura_entry eq 'y' or $tiki_p_admin_kaltura eq 'y' or $tiki_p_admin}
            				 
-           				 <a href="tiki-upload_video.php?videoId={$item.id}"><div class ="iconmenu" ><img src="pics/icons/application_form_magnify.png" class="icon" />View</div></a>
+           				 <a href="tiki-kaltura_video.php?videoId={$item.id}"><div class ="iconmenu" ><img src="pics/icons/application_form_magnify.png" class="icon" />View</div></a>
           			{/if}
            			{if $tiki_p_edit_kaltura_entry eq 'y' or $tiki_p_admin_kaltura eq 'y' or $tiki_p_admin}
            				 
-           				 <a href="tiki-upload_video.php?videoId={$item.id}&action=edit"><div class ="iconmenu" ><img src="pics/icons/page_edit.png" class="icon"/>Edit</div></a>
+           				 <a href="tiki-kaltura_video.php?videoId={$item.id}&action=edit"><div class ="iconmenu" ><img src="pics/icons/page_edit.png" class="icon"/>Edit</div></a>
           			{/if}
           			{if $tiki_p_remix_kaltura_entry eq 'y' or $tiki_p_admin_kaltura eq 'y' or $tiki_p_admin}
-           				 <a href="tiki-upload_video.php?videoId={$item.id}&action=remix"><div class ="iconmenu" ><img src="pics/icons/layers.png" class="icon"/>Remix</div></a>
+           				 <a href="tiki-kaltura_video.php?videoId={$item.id}&action=remix"><div class ="iconmenu" ><img src="pics/icons/layers.png" class="icon"/>Remix</div></a>
            				 {if $item.mediaType == 6}
-           				 <a href="tiki-upload_video.php?videoId={$item.id}&action=dupl"><div class ="iconmenu" ><img src="pics/icons/layers.png" class="icon"/>Duplicate</div></a>
+           				 <a href="tiki-kaltura_video.php?videoId={$item.id}&action=dupl"><div class ="iconmenu" ><img src="pics/icons/layers.png" class="icon"/>Duplicate</div></a>
           				 {/if}
           			{/if}
           			{if $tiki_p_download_kaltura_entry eq 'y' or $tiki_p_admin_kaltura eq 'y' or $tiki_p_admin}
            				
-           				 <a href="{if $item.downloadUrl ne ''}{$item.downloadUrl}"><div class ="iconmenu" ><img src="pics/icons/disk.png" class="icon"/>Download{else}tiki-upload_video.php?videoId={$item.id}&action=download"><div class ="iconmenu" ><img src="pics/icons/disk.png" class="icon"/>Add Download{/if}</div></a>
+           				 <a href="{if $item.downloadUrl ne ''}{$item.downloadUrl}"><div class ="iconmenu" ><img src="pics/icons/disk.png" class="icon"/>Download{else}tiki-kaltura_video.php?videoId={$item.id}&action=download"><div class ="iconmenu" ><img src="pics/icons/disk.png" class="icon"/>Add Download{/if}</div></a>
           			{/if}
           			{if $tiki_p_delete_kaltura_entry eq 'y' or $tiki_p_admin_kaltura eq 'y' or $tiki_p_admin}
            				
-           				 <a href="tiki-upload_video.php?videoId={$item.id}&action=delete"><div class ="iconmenu" ><img src="pics/icons/cross.png" class="icon"/>Delete</div></a>
+           				 <a href="tiki-kaltura_video.php?videoId={$item.id}&action=delete"><div class ="iconmenu" ><img src="pics/icons/cross.png" class="icon"/>Delete</div></a>
           			{/if}
             	</div>
 			</div>
