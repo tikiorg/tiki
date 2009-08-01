@@ -40,6 +40,12 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
     var $attachmentsDestDir = '';
 
     /**
+     * Text_Wiki object to handle Mediawiki
+     * syntax parsing
+     */
+    var $parser = '';
+
+    /**
      * Start the importing process by loading the XML file.
      * 
      * @see lib/importer/TikiImporter_Wiki#import()
@@ -63,11 +69,38 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
         $this->dom = new DOMDocument;
         $this->dom->load($filePath);
 
+        $this->configureParser();
+
         if (!empty($_POST['importAttachments']) && $_POST['importAttachments'] == 'on') {
             $this->downloadAttachments();
         }
 
         parent::import();
+    }
+
+    /**
+     * Create a Text_Wiki object to handle the parsing
+     * of Mediawiki syntax and define some configuration
+     * option
+     */
+    function configureParser()
+    {
+        $this->parser = Text_Wiki::factory('Mediawiki');
+
+        // do not replace space by underscore in wikilinks
+        $this->parser->setParseConf('Wikilink', 'spaceUnderscore', false);
+
+        // define possible localized namespace for image and files in the wikilink syntax
+        $namespaces = $this->dom->getElementsByTagName('namespace');
+        $prefix = array('Image', 'image');
+        if ($namespaces->length > 0) {
+            foreach ($namespaces as $namespace) {
+                if ($namespace->getAttribute('key') == '-2' || $namespace->getAttribute('key') == '6') {
+                    $prefix[] = $namespace->nodeValue;
+                }
+            }
+        }
+        $this->parser->setParseConf('Image', 'prefix', $prefix);
     }
 
     /**
@@ -332,12 +365,7 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
      */
     function convertMarkup($mediawikiText) {
         if (!empty($mediawikiText)) {
-            $parser = Text_Wiki::factory('Mediawiki');
-
-            // do not replace space by underscore in wikilinks
-            $parser->setParseConf('Wikilink', 'spaceUnderscore', false);
-
-            $tikiText = $parser->transform($mediawikiText, 'Tiki');
+            $tikiText = $this->parser->transform($mediawikiText, 'Tiki');
             return $tikiText;
         }
     }

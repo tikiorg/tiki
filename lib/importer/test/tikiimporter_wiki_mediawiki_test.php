@@ -66,6 +66,14 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
         $this->obj->import(dirname(__FILE__) . '/fixtures/mediawiki_sample.xml');
     }
 
+    public function testConfigureParser()
+    {
+        $this->obj->dom = new DOMDocument;
+        $this->obj->dom->load(dirname(__FILE__) . '/fixtures/mediawiki_sample.xml');
+        $this->obj->configureParser();
+        $this->assertEquals('Text_Wiki_Mediawiki', get_class($this->obj->parser));
+    }
+
     public function testValidateInput()
     {
         $this->obj->dom = new DOMDocument;
@@ -273,14 +281,17 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
     // TODO: find a way to mock the Text_Wiki object inside convertMakup()
     public function testConvertMarkup()
     {
+        $this->obj->dom = new DOMDocument;
+        $this->obj->configureParser();
         $mediawikiText = '[[someWikiLink]]';
         $expectedResult = "((someWikiLink))\n\n";
-
         $this->assertEquals($expectedResult, $this->obj->convertMarkup($mediawikiText));
     }
 
     public function testConvertMarkupShouldReturnNullIfEmptyMediawikiText()
     {
+        $this->obj->dom = new DOMDocument;
+        $this->obj->configureParser();
         $mediawikiText = '';
         $this->assertNull($this->obj->convertMarkup($mediawikiText));
     }
