@@ -33,7 +33,7 @@
         <input type="hidden" name="importerClassName" value="{$importerClassName}"/>
         {foreach from=$importerOptions item=option}
             {if $option.type eq 'checkbox'}
-                <input type="checkbox" name="{$option.name}"/><label for="{$options.name}">{tr}{$option.label}{/tr}</label><br />
+                <input type="checkbox" name="{$option.name}" id="{$option.name}"/><label for="{$option.name}">{tr}{$option.label}{/tr}</label><br />
             {elseif $option.type eq 'text'}
                 {tr}{$option.label}{/tr}: <input type="text" name="{$option.name}"/><br />
             {elseif $option.type eq 'select'}

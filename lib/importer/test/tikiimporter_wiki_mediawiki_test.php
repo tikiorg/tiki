@@ -43,16 +43,17 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
         $this->assertEquals($expectedImportFeedback, $_SESSION['tiki_importer_feedback']);
     }
 
-    public function testImportShouldCallCheckRequirementsForAttachments()
+    public function testImportShouldHandleAttachments()
     {
         $parsedData = 'Some text';
 
-        $obj = $this->getMock('TikiImporter_Wiki_Mediawiki', array('validateInput', 'parseData', 'insertData', 'checkRequirementsForAttachments'));
+        $obj = $this->getMock('TikiImporter_Wiki_Mediawiki', array('validateInput', 'parseData', 'insertData', 'checkRequirementsForAttachments', 'downloadAttachments'));
         $obj->expects($this->once())->method('validateInput');
         $obj->expects($this->once())->method('parseData')->will($this->returnValue($parsedData));
         $obj->expects($this->once())->method('insertData')->with($parsedData);
         $obj->expects($this->once())->method('checkRequirementsForAttachments');
-        $_POST['importAttachments'] = 1;
+        $obj->expects($this->once())->method('downloadAttachments');
+        $_POST['importAttachments'] = 'on';
 
         $obj->import(dirname(__FILE__) . '/fixtures/mediawiki_sample.xml');
     }
@@ -80,7 +81,7 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
         $this->obj->validateInput();
     }
 
-   public function testParseData()
+    public function testParseData()
     {
         $obj = $this->getMock('TikiImporter_Wiki_Mediawiki', array('extractInfo', 'downloadAttachment'));
         $obj->dom = new DOMDocument;
@@ -103,9 +104,8 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
 
     public function testParseDataHandleDifferentlyPagesAndFilePages()
     {
-        $obj = $this->getMock('TikiImporter_Wiki_Mediawiki', array('extractInfo', 'saveAndDisplayLog', 'downloadAttachment'));
+        $obj = $this->getMock('TikiImporter_Wiki_Mediawiki', array('extractInfo', 'saveAndDisplayLog'));
         $obj->expects($this->exactly(4))->method('extractInfo')->will($this->returnValue(array()));
-        $obj->expects($this->exactly(2))->method('downloadAttachment')->will($this->returnValue(array()));
         $obj->importAttachments = true;
 
         $obj->dom = new DOMDocument;
@@ -116,14 +116,46 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
     public function testDownloadAttachment()
     {
         $this->obj->attachmentsDestDir = dirname(__FILE__) . '/fixtures/';
-        $dom = new DOMDocument;
-        $dom->load(dirname(__FILE__) . '/fixtures/mediawiki_upload.xml');
-        $upload = $dom->getElementsByTagName('upload')->item(0);
-        $filePath = $this->obj->attachmentsDestDir . $upload->getElementsByTagName('filename')->item(0)->nodeValue;
-        $this->expectOutputString("File Qlandkartegt-0.11.1.tar.gz sucessfully imported!\n");
-        $this->obj->downloadAttachment($upload);
-        $this->assertFileExists($filePath);
-        unlink($filePath);
+        $this->obj->dom = new DOMDocument;
+        $this->obj->dom->load(dirname(__FILE__) . '/fixtures/mediawiki_upload.xml');
+        $attachments = $this->obj->dom->getElementsByTagName('upload');
+        $this->obj->downloadAttachments();
+
+        $this->expectOutputString("\n\nStarting to import attachments:\nFile Qlandkartegt-0.11.1.tar.gz sucessfully imported!\nFile Passelivre.jpg sucessfully imported!\n");
+
+        foreach ($attachments as $attachment) {
+            $filePath = $this->obj->attachmentsDestDir . $attachment->getElementsByTagName('filename')->item(0)->nodeValue;
+            $this->assertFileExists($filePath);
+            unlink($filePath);
+        }
+    }
+
+    public function testDownloadAttachmentShouldNotImportIfFileAlreadyExist()
+    {
+        $this->obj->attachmentsDestDir = dirname(__FILE__) . '/fixtures/';
+        $this->obj->dom = new DOMDocument;
+        $this->obj->dom->load(dirname(__FILE__) . '/fixtures/mediawiki_upload.xml');
+        $attachments = $this->obj->dom->getElementsByTagName('upload');
+
+        foreach ($attachments as $attachment) {
+            $filePath = $this->obj->attachmentsDestDir . $attachment->getElementsByTagName('filename')->item(0)->nodeValue;
+            fopen($filePath, 'w');
+        }
+
+        $this->obj->downloadAttachments();
+        $this->expectOutputString("\n\nStarting to import attachments:\nNOT importing file Qlandkartegt-0.11.1.tar.gz as there is already a file with the same name in the destination directory (" . $this->obj->attachmentsDestDir . ")\nNOT importing file Passelivre.jpg as there is already a file with the same name in the destination directory (" . $this->obj->attachmentsDestDir . ")\n");
+       
+        foreach ($attachments as $attachment) {
+            $filePath = $this->obj->attachmentsDestDir . $attachment->getElementsByTagName('filename')->item(0)->nodeValue;
+            unlink($filePath);
+        }
+    }
+
+    public function testDownloadAttachmentsShouldDisplayMessageIfNoAttachments()
+    {
+        $this->obj->dom = new DOMDocument;
+        $this->expectOutputString("\n\nNo attachments found to import! Make sure you have created your XML file with the dumpDump.php script and with the option --uploads. This is the only way to import attachment.\n");
+        $this->obj->downloadAttachments(); 
     }
 
     public function testExtractInfo()
