@@ -1,1 +1,0 @@
-{tr}New user registration{/tr} {tr}at{/tr} {$mail_site}

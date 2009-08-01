@@ -1,1 +1,0 @@
-<li class="toclevel"><a href="tiki-index.php?page={$that.pageName|escape:'url'}&amp;structure={$structurePageName|escape:'url'}" class="link">{$that.pageName}</a>{if $showdesc}{$that.description}{/if}</li>{if $that.sub}<ul>{section name=xitem loop=$that.sub}{include file="structures_toc_level.tpl" that=$that.sub[xitem]}{/section}</ul>{/if}
