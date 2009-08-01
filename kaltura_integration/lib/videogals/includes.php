@@ -14,7 +14,7 @@ $subp_id = 25000;
 
 require_once ( "kalturaapi_php5_lib.php");
 require_once ( "kaltura_helpers.php");
-require_once ( "kaltura_client.php4");
+require_once ( "kaltura_client.php");
 header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
 header("Expires: Mon, 26 Jul 1997 05:00:00 GMT"); // Date in the past
 

@@ -11,9 +11,16 @@ include_once ("lib/videogals/videogallib.php");
 
 global $user;
 
+if ($tiki_p_list_kaltura_entries != 'y' && $tiki_p_admin != 'y') {
+	$smarty->assign('errortype', 401);
+	$smarty->assign('msg', tra("Permission denied: You cannot view this section"));
+	$smarty->display('error.tpl');
+	die;
+}
+
 $kaltura_conf = kaltura_init_config();
 $kuser = new KalturaSessionUser();
-$kuser->userId = "123";$user;
+$kuser->userId = $user;
 $kaltura_client = new KalturaClient($kaltura_conf);
 $kres =$kaltura_client->startSession($kuser, $kaltura_conf->secret,false,"");
 $kaltura_client->setKS($kres["result"]["ks"]);
@@ -22,13 +29,12 @@ $filter = new KalturaEntryFilter();
 $sort_mode = '';
 if($_REQUEST['sort_mode']){
 	$sort_mode = $_REQUEST['sort_mode'];
-	$smarty->assign_by_ref('sort_mode',$sort_mode);
-	$sort_mode = preg_replace('/desc_/','-',$sort_mode);
-	$sort_mode = preg_replace('/asc_/','+',$sort_mode);
 }else{
-	$sort_mode = "-created_at";
-	$filter->orderBy = $sort_mode;
+	$sort_mode = "desc_created_at";
 }
+$smarty->assign_by_ref('sort_mode',$sort_mode);
+$sort_mode = preg_replace('/desc_/','-',$sort_mode);
+$sort_mode = preg_replace('/asc_/','+',$sort_mode);
 $filter->orderBy = $sort_mode;
 
 if (isset($_REQUEST["find"])) {
@@ -69,5 +75,3 @@ $smarty->assign_by_ref('maxRecords',$res['result']['page_size']);
 // Display the template
 	$smarty->assign('mid', 'tiki-list_kaltura_entries.tpl');
 	$smarty->display("tiki.tpl");
-	
-?>

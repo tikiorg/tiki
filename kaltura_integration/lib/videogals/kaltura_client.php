@@ -24,7 +24,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 Generated at 24/12 13:29:20
 **/
 
-require_once("kaltura_client_base.php4");
+require_once("kaltura_client_base.php");
 
 class KalturaEntry
 {
@@ -1694,7 +1694,7 @@ class KalturaClient extends KalturaClientBase
 		return $result;
 	}
 	
-	function startAdminSession($kalturaSessionUser, $secret, $admin = "yes", $privileges = null, $expiry = 86400)
+	function startAdminSession($kalturaSessionUser, $admin_secret, $admin = "yes", $privileges = null, $expiry = 86400)
 	{
 		$params = array();
 		$params["secret"] = $admin_secret;
