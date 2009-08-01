@@ -64,6 +64,9 @@ function parse($stmt)
 	// Replace `with " – these mark table- and columnames
 	$stmt=preg_replace('/`/', '"', $stmt);
 	
+	// record table names
+	$stmt=preg_replace("/(DROP TABLE IF EXISTS |DROP TABLE |CREATE TABLE )([a-zA-Z0-9_]+) \(/e", 'record_tablename("$2")', $stmt);
+	
 	// in key declarations, remove length if there
 	//  PRIMARY KEY (`roleId`, `user`)
 	$stmt = preg_replace(
@@ -110,15 +113,11 @@ function parse($stmt)
 		"FOREIGN KEY ('$2') REFERENCES $3 ($4)",
 		$stmt);
 	
-	// quote and record table names
-	$stmt=preg_replace("/(DROP TABLE IF EXISTS |DROP TABLE |CREATE TABLE )([a-zA-Z0-9_]+)( \()/e", "record_tablename('$1','$2','$3')", $stmt);
+	
 	
 	// quote column names in primary keys
 	//$stmt=preg_replace("/\n[ \t]+(PRIMARY KEY) *\((.+)\)/e","quote_prim_cols('$1','$2')",$stmt);
 	
-	// create indexes from KEY …
-	$stmt=preg_replace("/,\n[ \t]+KEY ([a-zA-Z0-9_]+) \((.+)\)/e","create_index('$1','$2')",$stmt);
-
 	// Postgres does not support FULLTEXT indexing.
 	// Work arounds for this include adding the tsearch2 module to postgres and other drastic changes.
 	//$stmt=preg_replace("/,\n[ \t]+FULLTEXT KEY ([a-zA-Z0-9_]+) \((.+)\)/e","create_index('$1','$2')",$stmt);
@@ -130,12 +129,16 @@ function parse($stmt)
 		"/,\n([ \t]+)UNIQUE KEY (\"[a-zA-Z0-9_]+\" )?\((.*)\)/e",
 		'",\n$1UNIQUE (".strip_paranthesisWithNumbers("$3").")"',
 		$stmt);
-	//$stmt = preg_replace("/,\n([ \t]+)UNIQUE \((.*)\(.*\)(.*)\)/e", ',\n$1UNIQUE ($2$3\)', $stmt);
-	//$stmt = preg_replace("/,\n[ \t]+(UNIQUE) KEY ([a-zA-Z0-9_]+) \((.+)\)/e", "create_index('$2','$3','$1')", $stmt);
-	//$stmt = preg_replace("/,\n[ \t]+(UNIQUE) *\((.+)\)/e", "create_index('unknown','$2','$1')", $stmt);
+	
+	// TODO: move this above unique to ensure index?
+	// create indexes from KEY …
+	$stmt=preg_replace("/,\n[ \t]+KEY \"?([a-zA-Z0-9_]+)?\"? ?\((.+)\)/e", "create_index('$1','$2')", $stmt);
 	
 	// explicit create index
-	$stmt=preg_replace("/CREATE *(UNIQUE)* *INDEX *([a-z0-9_]+) *ON *([a-z0-9_]+) *\((.*)\)/ei","create_explicit_index('$2','$3','$4','$1')",$stmt);
+	$stmt=preg_replace(
+		"/CREATE INDEX \"?([a-z0-9_]+)\"? ON \"?([a-z0-9_]+)\"? \((.*)\)/ei",
+		"create_explicit_index('$1','$2','$3')",
+		$stmt);
 	
 	// convert inserts
 	$stmt=preg_replace("/INSERT INTO ([a-zA-Z0-9_]*).*\(([^\)]+)\) VALUES *(.*)/ie","do_inserts('$1','$2','$3')",$stmt);
@@ -156,14 +159,13 @@ function strip_paranthesisWithNumbers($txt)
 	return $txt;
 }
 
-function record_tablename($prefix,$tabnam,$tail)
+function record_tablename($tabnam)
 {
 	global $table_name;
-	$table_name=$tabnam;
-	return($prefix."\"".$tabnam."\"".$tail);
+	$table_name = $tabnam;
 }
 
-function create_explicit_index($name,$table_name,$content,$type)
+function create_explicit_index($name,$table_name,$content,$type='')
 {
 	$cols=split(",",$content);
 	$allvals="";
@@ -180,10 +182,10 @@ function create_explicit_index($name,$table_name,$content,$type)
 	$allvals=preg_replace("/\"substr/","\",substr",$allvals);
 	$allvals=preg_replace("/(substr\(.*\))\"/","$1,\",substr",$allvals);
 
-	return("CREATE $type INDEX \"" . $name . "\" ON \"" . $table_name . "\" (" . $allvals . ");\n");
+	return("CREATE " . ( !empty($type)?$type.' ' : '' ) . "INDEX \"" . $name . "\" ON \"" . $table_name . "\" (" . $allvals . ");\n");
 }
 
-function create_index($name,$content,$type="")
+function create_index($name, $content, $type='')
 {
 	global $table_name;
 	global $poststmt;
@@ -191,9 +193,9 @@ function create_index($name,$content,$type="")
 	$cols=split(",",$content);
 	$allvals="";
 	foreach ($cols as $vals) {
-		$vals=preg_replace("/^ */","",$vals);
-		$vals=preg_replace("/ *$/","",$vals);
-		$vals=preg_replace("/([a-z0-9_]+)/i","\"$1\"",$vals);
+		$vals=preg_replace("/^ */", '', $vals);
+		$vals=preg_replace("/ *$/", '', $vals);
+		$vals=preg_replace("/([a-z0-9_]+)/i", '"$1"', $vals);
 
 		// Do var(val) conversion to substr(var, 0, val); since that's what is expected for these indexes
 		$vals=preg_replace("/([\"a-z0-9_]+) *\(\"([0-9]+)\"\)/i","substr($1, 0, $2)",$vals);

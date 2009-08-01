@@ -155,10 +155,10 @@ CREATE TABLE "messu_messages" (
   "isReplied" char(1) default NULL,
   "isFlagged" char(1) default NULL,
   "priority" smallint default NULL,
-  PRIMARY KEY ("msgId"),
-  KEY "userIsRead" (user, isRead)
+  PRIMARY KEY ("msgId")
 ) ;
 
+CREATE INDEX "_userIsRead" ON ""("user","isRead");
 
 DROP TABLE IF EXISTS "messu_archive";
 
@@ -211,10 +211,10 @@ CREATE TABLE sessions(
   "expiry" bigint NOT NULL,
   "expireref" varchar(64),
   "data" text NOT NULL,
-  PRIMARY KEY ("sesskey"),
-  KEY "expiry" ("expiry")
+  PRIMARY KEY ("sesskey")
 );
 
+CREATE INDEX "_expiry" ON ""(\","expiry"\");
 
 DROP TABLE IF EXISTS "tiki_actionlog";
 
@@ -228,22 +228,22 @@ CREATE TABLE "tiki_actionlog" (
   "ip" varchar(15) default NULL,
   "comment" varchar(200) default NULL,
   "categId" bigint NOT NULL default '0',
-  PRIMARY KEY ("actionId"),
-  KEY "lastModif" ("lastModif"),
-  KEY "object" ("object"(100), "objectType", "action"(100))
+  PRIMARY KEY ("actionId")
 );
 
+CREATE INDEX "_lastModif" ON ""(\","lastModif"\");
+CREATE INDEX "_object" ON ""(\","object"\substr(", 0, 100)\","objectType"\"\","action"\substr(", 0, 100));
 
 DROP TABLE IF EXISTS "tiki_actionlog_params";
 
 CREATE TABLE "tiki_actionlog_params" (
   "actionId" integer NOT NULL,
   "name" varchar(40) NOT NULL,
-  "value" text,
-  KEY "actionIDIndex" ("actionId"),
-  KEY "nameValue" ("name", "value"(200))
+  "value" text
 );
 
+CREATE INDEX "_actionIDIndex" ON ""(\","actionId"\");
+CREATE INDEX "_nameValue" ON ""(\","name"\"\","value"\substr(", 0, 200));
 
 DROP TABLE IF EXISTS "tiki_articles";
 
@@ -280,18 +280,18 @@ CREATE TABLE "tiki_articles" (
   "type" varchar(50) default NULL,
   "rating" decimal(3,2) default NULL,
   "isfloat" char(1) default NULL,
-  PRIMARY KEY ("articleId"),
-  KEY "title" ("title"),
-  KEY "heading" ("heading"(255)),
-  KEY "body" ("body"(255)),
-  KEY "nbreads" ("nbreads"),
-  KEY "author" ("author"(32)),
-  KEY "topicId" ("topicId"),
-  KEY "publishDate" ("publishDate"),
-  KEY "expireDate" ("expireDate"),
-  KEY "type" ("type")
+  PRIMARY KEY ("articleId")
 ) ;
 
+CREATE INDEX "_title" ON ""(\","title"\");
+CREATE INDEX "_heading" ON ""(\","heading"\substr(", 0, 255));
+CREATE INDEX "_body" ON ""(\","body"\substr(", 0, 255));
+CREATE INDEX "_nbreads" ON ""(\","nbreads"\");
+CREATE INDEX "_author" ON ""(\","author"\substr(", 0, 32));
+CREATE INDEX "_topicId" ON ""(\","topicId"\");
+CREATE INDEX "_publishDate" ON ""(\","publishDate"\");
+CREATE INDEX "_expireDate" ON ""(\","expireDate"\");
+CREATE INDEX "_type" ON ""(\","type"\");
 
 DROP TABLE IF EXISTS "tiki_article_types";
 
@@ -316,11 +316,11 @@ CREATE TABLE "tiki_article_types" (
   "show_lang" varchar(1) default 'n',
   "creator_edit" varchar(1) default NULL,
   "comment_can_rate_article" char(1) default NULL,
-  PRIMARY KEY ("type"),
-  KEY "show_pre_publ" ("show_pre_publ"),
-  KEY "show_post_expire" ("show_post_expire")
+  PRIMARY KEY ("type")
 ) ;
 
+CREATE INDEX "_show_pre_publ" ON ""(\","show_pre_publ"\");
+CREATE INDEX "_show_post_expire" ON ""(\","show_post_expire"\");
 
 INSERT INTO "tiki_article_types" ("type") VALUES ('Article');
 
@@ -422,12 +422,12 @@ CREATE TABLE "tiki_blog_posts" (
   "trackbacks_from" text,
   "title" varchar(255) default NULL,
   "priv" varchar(1) default NULL,
-  PRIMARY KEY ("postId"),
-  KEY "data" ("data"(255)),
-  KEY "blogId" ("blogId"),
-  KEY "created" ("created")
+  PRIMARY KEY ("postId")
 ) ;
 
+CREATE INDEX "_data" ON ""(\","data"\substr(", 0, 255));
+CREATE INDEX "_blogId" ON ""(\","blogId"\");
+CREATE INDEX "_created" ON ""(\","created"\");
 
 DROP TABLE IF EXISTS "tiki_blog_posts_images";
 
@@ -463,12 +463,12 @@ CREATE TABLE "tiki_blogs" (
   "add_poster" char(1) default NULL,
   "allow_comments" char(1) default NULL,
   "show_avatar" char(1) default NULL,
-  PRIMARY KEY ("blogId"),
-  KEY "title" ("title"),
-  KEY "description" ("description"(255)),
-  KEY "hits" ("hits")
+  PRIMARY KEY ("blogId")
 ) ;
 
+CREATE INDEX "_title" ON ""(\","title"\");
+CREATE INDEX "_description" ON ""(\","description"\substr(", 0, 255));
+CREATE INDEX "_hits" ON ""(\","hits"\");
 
 DROP TABLE IF EXISTS "tiki_calendar_categories";
 
@@ -510,10 +510,10 @@ CREATE TABLE "tiki_calendar_recurrence" (
   "user" varchar(200) default '',
   "created" bigint NOT NULL default '0',
   "lastmodif" bigint NOT NULL default '0',
-  PRIMARY KEY ("recurrenceId"),
-  KEY "calendarId" ("calendarId")
+  PRIMARY KEY ("recurrenceId")
 ) ;
 
+CREATE INDEX "_calendarId" ON ""(\","calendarId"\");
 
 DROP TABLE IF EXISTS "tiki_calendar_items";
 
@@ -538,12 +538,12 @@ CREATE TABLE "tiki_calendar_items" (
   "lastmodif" bigint NOT NULL default '0',
   "allday" smallint NOT NULL default '0',
   PRIMARY KEY ("calitemId"),
-  KEY "calendarId" ("calendarId"),
   CONSTRAINT "fk_calitems_recurrence"
 	FOREIGN KEY ("recurrenceId") REFERENCES "tiki_calendar_recurrence"("recurrenceId")
 	ON UPDATE CASCADE ON DELETE SET NULL
 ) ;
 
+CREATE INDEX "_calendarId" ON ""(\","calendarId"\");
 
 DROP TABLE IF EXISTS "tiki_calendar_locations";
 
@@ -622,11 +622,11 @@ CREATE TABLE "tiki_objects" (
   "href" varchar(200) default NULL,
   "hits" integer default NULL,
   "comments_locked" char(1) NOT NULL default 'n',
-  PRIMARY KEY ("objectId"),
-  KEY ("type", "objectId"),
-  KEY ("itemId", "type")
+  PRIMARY KEY ("objectId")
 ) ;
 
+CREATE INDEX "_" ON ""(\","type"\"\","objectId"\");
+CREATE INDEX "_" ON ""(\","itemId"\"\","type"\");
 
 DROP TABLE IF EXISTS "tiki_categorized_objects";
 
@@ -794,16 +794,16 @@ CREATE TABLE "tiki_comments" (
   "approved" char(1) NOT NULL default 'y',
   "locked" char(1) NOT NULL default 'n',
   PRIMARY KEY ("threadId"),
-  UNIQUE (parentId, userName, title, commentDate, message_id, in_reply_to),
-  KEY "title" (title),
-  KEY "data" (data(255)),
-  KEY "hits" (hits),
-  KEY "tc_pi" (parentId),
-  KEY "objectType" (object, objectType),
-  KEY "commentDate" (commentDate),
-  KEY "threaded" (message_id, in_reply_to, parentId)
+  UNIQUE (parentId, userName, title, commentDate, message_id, in_reply_to)
 ) ;
 
+CREATE INDEX "_title" ON ""("title");
+CREATE INDEX "_data" ON ""(substr("data", 0, 255));
+CREATE INDEX "_hits" ON ""("hits");
+CREATE INDEX "_tc_pi" ON ""("parentId");
+CREATE INDEX "_objectType" ON ""("object","objectType");
+CREATE INDEX "_commentDate" ON ""("commentDate");
+CREATE INDEX "_threaded" ON ""("message_id","in_reply_to","parentId");
 
 DROP TABLE IF EXISTS "tiki_content";
 
@@ -899,11 +899,11 @@ CREATE TABLE "tiki_directory_sites" (
   "lastModif" bigint default NULL,
   "cache" bytea,
   "cache_timestamp" bigint default NULL,
-  PRIMARY KEY ("siteId"),
-  KEY (isValid),
-  KEY (url)
+  PRIMARY KEY ("siteId")
 ) ;
 
+CREATE INDEX "_" ON ""("isValid");
+CREATE INDEX "_" ON ""("url");
 
 DROP TABLE IF EXISTS "tiki_drawings";
 
@@ -956,12 +956,12 @@ CREATE TABLE "tiki_faq_questions" (
   "position" smallint default NULL,
   "question" text,
   "answer" text,
-  PRIMARY KEY ("questionId"),
-  KEY "faqId" (faqId),
-  KEY "question" (question(255)),
-  KEY "answer" (answer(255))
+  PRIMARY KEY ("questionId")
 ) ;
 
+CREATE INDEX "_faqId" ON ""("faqId");
+CREATE INDEX "_question" ON ""(substr("question", 0, 255));
+CREATE INDEX "_answer" ON ""(substr("answer", 0, 255));
 
 DROP TABLE IF EXISTS "tiki_faqs";
 
@@ -973,12 +973,12 @@ CREATE TABLE "tiki_faqs" (
   "questions" integer default NULL,
   "hits" integer default NULL,
   "canSuggest" char(1) default NULL,
-  PRIMARY KEY ("faqId"),
-  KEY "title" (title),
-  KEY "description" (description(255)),
-  KEY "hits" (hits)
+  PRIMARY KEY ("faqId")
 ) ;
 
+CREATE INDEX "_title" ON ""("title");
+CREATE INDEX "_description" ON ""(substr("description", 0, 255));
+CREATE INDEX "_hits" ON ""("hits");
 
 DROP TABLE IF EXISTS "tiki_featured_links";
 
@@ -1064,15 +1064,15 @@ CREATE TABLE "tiki_files" (
   "lockedby" varchar(200) default '',
   "comment" varchar(200) default NULL,
   "archiveId" bigint default 0,
-  PRIMARY KEY ("fileId"),
-  KEY "name" (name),
-  KEY "description" (description(255)),
-  KEY "created" (created),
-  KEY "archiveId" (archiveId),
-  KEY "galleryId" (galleryId),
-  KEY "hits" (hits)
+  PRIMARY KEY ("fileId")
 ) ;
 
+CREATE INDEX "_name" ON ""("name");
+CREATE INDEX "_description" ON ""(substr("description", 0, 255));
+CREATE INDEX "_created" ON ""("created");
+CREATE INDEX "_archiveId" ON ""("archiveId");
+CREATE INDEX "_galleryId" ON ""("galleryId");
+CREATE INDEX "_hits" ON ""("hits");
 
 DROP TABLE IF EXISTS "tiki_forum_attachments";
 
@@ -1088,10 +1088,10 @@ CREATE TABLE "tiki_forum_attachments" (
   "dir" varchar(200) default NULL,
   "created" bigint default NULL,
   "path" varchar(250) default NULL,
-  PRIMARY KEY ("attId"),
-  KEY "threadId" (threadId)
+  PRIMARY KEY ("attId")
 ) ;
 
+CREATE INDEX "_threadId" ON ""("threadId");
 
 DROP TABLE IF EXISTS "tiki_forum_reads";
 
@@ -1237,14 +1237,14 @@ CREATE TABLE "tiki_galleries" (
   "showfilename" char(1) NOT NULL default 'n',
   "defaultscale" varchar(10) NOT NULL DEFAULT 'o',
   "showcategories" char(1) NOT NULL default 'n', 
-  PRIMARY KEY ("galleryId"),
-  KEY "name" (name),
-  KEY "description" (description(255)),
-  KEY "hits" (hits),
-  KEY "parentgallery" (parentgallery),
-  KEY "visibleUser" (visible, user)
+  PRIMARY KEY ("galleryId")
 ) ;
 
+CREATE INDEX "_name" ON ""("name");
+CREATE INDEX "_description" ON ""(substr("description", 0, 255));
+CREATE INDEX "_hits" ON ""("hits");
+CREATE INDEX "_parentgallery" ON ""("parentgallery");
+CREATE INDEX "_visibleUser" ON ""("visible","user");
 
 DROP TABLE IF EXISTS "tiki_galleries_scales";
 
@@ -1285,10 +1285,10 @@ CREATE TABLE "tiki_group_watches" (
   "title" varchar(250) default NULL,
   "type" varchar(200) default NULL,
   "url" varchar(250) default NULL,
-  KEY "watchId" (watchId),
   PRIMARY KEY ("group",event,object)
 );
 
+CREATE INDEX "_watchId" ON ""("watchId");
 
 DROP TABLE IF EXISTS "tiki_history";
 
@@ -1306,10 +1306,10 @@ CREATE TABLE "tiki_history" (
   "type" varchar(50) default NULL,
   "is_html" TINYINT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY ("pageName","version"),
-  KEY "user" ("user"),
   KEY(historyId)
 );
 
+CREATE INDEX "_user" ON ""(\","user"\");
 
 DROP TABLE IF EXISTS "tiki_hotwords";
 
@@ -1356,15 +1356,15 @@ CREATE TABLE "tiki_images" (
   "user" varchar(200) default '',
   "hits" bigint default NULL,
   "path" varchar(255) default NULL,
-  PRIMARY KEY ("imageId"),
-  KEY "name" (name),
-  KEY "description" (description(255)),
-  KEY "hits" (hits),
-  KEY "ti_gId" (galleryId),
-  KEY "ti_cr" (created),
-  KEY "ti_us" (user)
+  PRIMARY KEY ("imageId")
 ) ;
 
+CREATE INDEX "_name" ON ""("name");
+CREATE INDEX "_description" ON ""(substr("description", 0, 255));
+CREATE INDEX "_hits" ON ""("hits");
+CREATE INDEX "_ti_gId" ON ""("galleryId");
+CREATE INDEX "_ti_cr" ON ""("created");
+CREATE INDEX "_ti_us" ON ""("user");
 
 DROP TABLE IF EXISTS "tiki_images_data";
 
@@ -1378,10 +1378,10 @@ CREATE TABLE "tiki_images_data" (
   "filename" varchar(80) default NULL,
   "data" bytea,
   "etag" varchar(32) default NULL,
-  PRIMARY KEY ("imageId","xsize","ysize","type"),
-  KEY "t_i_d_it" (imageId,type)
+  PRIMARY KEY ("imageId","xsize","ysize","type")
 );
 
+CREATE INDEX "_t_i_d_it" ON ""("imageId","type");
 
 DROP TABLE IF EXISTS "tiki_language";
 
@@ -1412,11 +1412,11 @@ CREATE TABLE "tiki_link_cache" (
   "url" varchar(250) default NULL,
   "data" bytea,
   "refresh" bigint default NULL,
-  PRIMARY KEY ("cacheId"),
-  KEY "url" (url)
+  PRIMARY KEY ("cacheId")
 ) ;
 
-CREATE  INDEX "urlindex" ON "tiki_link_cache" (substr("url", 0, 250));
+CREATE INDEX "_url" ON ""("url");
+CREATE INDEX "urlindex" ON "tiki_link_cache" (substr("url", 0, 250));
 ;
 
 
@@ -1426,10 +1426,10 @@ CREATE TABLE "tiki_links" (
   "fromPage" varchar(160) NOT NULL default '',
   "toPage" varchar(160) NOT NULL default '',
   "reltype" varchar(50),
-  PRIMARY KEY ("fromPage","toPage"),
-  KEY "toPage" (toPage)
+  PRIMARY KEY ("fromPage","toPage")
 );
 
+CREATE INDEX "_toPage" ON ""("toPage");
 
 DROP TABLE IF EXISTS "tiki_live_support_events";
 
@@ -1548,10 +1548,10 @@ CREATE TABLE "tiki_logs" (
   "logip" varchar(200),
   "logclient" text NOT NULL,
   "logtime" bigint NOT NULL,
-  PRIMARY KEY ("logId"),
-  KEY "logtype" (logtype)
+  PRIMARY KEY ("logId")
 );
 
+CREATE INDEX "_logtype" ON ""("logtype");
 
 DROP TABLE IF EXISTS "tiki_mail_events";
 
@@ -2060,11 +2060,11 @@ CREATE TABLE "tiki_modules" (
   "rows" smallint default NULL,
   "params" varchar(255) default NULL,
   "groups" text,
-  PRIMARY KEY ("name", "position", "ord", "params"),
-  KEY "positionType" (position, type),
-  KEY "moduleId" (moduleId)
+  PRIMARY KEY ("name", "position", "ord", "params")
 );
 
+CREATE INDEX "_positionType" ON ""("position","type");
+CREATE INDEX "_moduleId" ON ""("moduleId");
 
 INSERT INTO "tiki_modules" ("name","position","ord","cache_time","params","groups") VALUES ('mnu_application_menu','l',30,0,'flip=y','a:1:{i:0;s:10:"Registered";}');
 
@@ -2186,12 +2186,12 @@ CREATE TABLE "tiki_pages" (
   "wysiwyg" char(1) default NULL,
   "wiki_authors_style" varchar(20) default '',
   PRIMARY KEY ("page_id"),
-  UNIQUE (pageName),
-  KEY "data" (data(255)),
-  KEY "pageRank" (pageRank),
-  KEY "lastModif"(lastModif)
+  UNIQUE (pageName)
 );
 
+CREATE INDEX "_data" ON ""(substr("data", 0, 255));
+CREATE INDEX "_pageRank" ON ""("pageRank");
+CREATE INDEX "_lastModif" ON ""("lastModif");
 
 DROP TABLE IF EXISTS "tiki_page_drafts";
 
@@ -2268,11 +2268,11 @@ CREATE TABLE "tiki_private_messages" (
   "timestamp" bigint default NULL,
   "received" smallint not null default 0,
   "message" varchar(255) default NULL,
-  PRIMARY KEY ("messageId"),
-  KEY ("received"),
-  KEY ("timestamp")
+  PRIMARY KEY ("messageId")
 ) ;
 
+CREATE INDEX "_" ON ""(\","received"\");
+CREATE INDEX "_" ON ""(\","timestamp"\");
 
 DROP TABLE IF EXISTS "tiki_programmed_content";
 
@@ -2437,10 +2437,10 @@ CREATE TABLE "tiki_received_pages" (
   "parentName" varchar(250) default NULL,
   "page_alias" varchar(250) default '',
   "pos" smallint default NULL,
-  PRIMARY KEY ("receivedPageId"),
-  KEY "structureName" (structureName)
+  PRIMARY KEY ("receivedPageId")
 ) ;
 
+CREATE INDEX "_structureName" ON ""("structureName");
 
 DROP TABLE IF EXISTS "tiki_referer_stats";
 
@@ -2473,10 +2473,10 @@ CREATE TABLE "tiki_rss_modules" (
   "showTitle" char(1) default 'n',
   "showPubDate" char(1) default 'n',
   "content" bytea,
-  PRIMARY KEY ("rssId"),
-  KEY "name" (name)
+  PRIMARY KEY ("rssId")
 ) ;
 
+CREATE INDEX "_name" ON ""("name");
 
 DROP TABLE IF EXISTS "tiki_rss_feeds";
 
@@ -2498,11 +2498,11 @@ CREATE TABLE tiki_searchindex(
   "page" varchar(255) NOT NULL default '',
   "count" bigint NOT NULL default '1',
   "last_update" bigint NOT NULL default '0',
-  PRIMARY KEY ("searchword","location","page"),
-  KEY "last_update" (last_update),
-  KEY "location" (location(50), page(200))
+  PRIMARY KEY ("searchword","location","page")
 );
 
+CREATE INDEX "_last_update" ON ""("last_update");
+CREATE INDEX "_location" ON ""(substr("location", 0, 50)substr("page", 0, 200));
 
 -- LRU (last recently used) list for searching parts of words
 DROP TABLE IF EXISTS "tiki_searchsyllable";
@@ -2511,10 +2511,10 @@ CREATE TABLE tiki_searchsyllable(
   "syllable" varchar(80) NOT NULL default '',
   "lastUsed" bigint NOT NULL default '0',
   "lastUpdated" bigint NOT NULL default '0',
-  PRIMARY KEY ("syllable"),
-  KEY "lastUsed" (lastUsed)
+  PRIMARY KEY ("syllable")
 );
 
+CREATE INDEX "_lastUsed" ON ""("lastUsed");
 
 -- searchword caching table for search syllables
 DROP TABLE IF EXISTS "tiki_searchwords";
@@ -2542,10 +2542,10 @@ CREATE TABLE tiki_secdb(
   "filename" varchar(250) NOT NULL,
   "tiki_version" varchar(60) NOT NULL,
   "severity" smallint NOT NULL default '0',
-  PRIMARY KEY ("md5_value","filename","tiki_version"),
-  KEY "sdb_fn" (filename)
+  PRIMARY KEY ("md5_value","filename","tiki_version")
 );
 
+CREATE INDEX "_sdb_fn" ON ""("filename");
 
 DROP TABLE IF EXISTS "tiki_semaphores";
 
@@ -2578,10 +2578,10 @@ CREATE TABLE "tiki_sent_newsletters_errors" (
   "editionId" bigint,
   "email" varchar(255),
   "login" varchar(40) default '',
-  "error" char(1) default '',
-  KEY (editionId)
+  "error" char(1) default ''
 ) ;
 
+CREATE INDEX "_" ON ""("editionId");
 
 DROP TABLE IF EXISTS "tiki_sessions";
 
@@ -2590,11 +2590,11 @@ CREATE TABLE "tiki_sessions" (
   "user" varchar(200) default '',
   "timestamp" bigint default NULL,
   "tikihost" varchar(200) default NULL,
-  PRIMARY KEY ("sessionId"),
-  KEY "user" (user),
-  KEY "timestamp" ("timestamp")
+  PRIMARY KEY ("sessionId")
 );
 
+CREATE INDEX "_user" ON ""("user");
+CREATE INDEX "_timestamp" ON ""(\","timestamp"\");
 
 DROP TABLE IF EXISTS "tiki_sheet_layout";
 
@@ -2623,10 +2623,10 @@ CREATE TABLE "tiki_sheet_values" (
   "height" smallint NOT NULL default '1',
   "format" varchar(255) default NULL,
   "user" varchar(200) default '',
-  UNIQUE (sheetId,begin,rowIndex,columnIndex),
-  KEY "sheetId_2" (sheetId,rowIndex,columnIndex)
+  UNIQUE (sheetId,begin,rowIndex,columnIndex)
 );
 
+CREATE INDEX "_sheetId_2" ON ""("sheetId","rowIndex","columnIndex");
 
 DROP TABLE IF EXISTS "tiki_sheets";
 
@@ -2679,11 +2679,11 @@ CREATE TABLE "tiki_structures" (
   "page_version" integer default NULL,
   "page_alias" varchar(240) NOT NULL default '',
   "pos" smallint default NULL,
-  PRIMARY KEY ("page_ref_id"),
-  KEY "pidpaid" (page_id,parent_id),
-  KEY "page_id" (page_id)
+  PRIMARY KEY ("page_ref_id")
 ) ;
 
+CREATE INDEX "_pidpaid" ON ""("page_id","parent_id");
+CREATE INDEX "_page_id" ON ""("page_id");
 
 DROP TABLE IF EXISTS "tiki_submissions";
 
@@ -2971,10 +2971,10 @@ CREATE TABLE "tiki_untranslated" (
   "source" bytea NOT NULL,
   "lang" char(16) NOT NULL default '',
   PRIMARY KEY ("source","lang"),
-  UNIQUE (id),
-  KEY "id_2" (id)
+  UNIQUE (id)
 ) ;
 
+CREATE INDEX "_id_2" ON ""("id");
 
 DROP TABLE IF EXISTS "tiki_user_answers";
 
@@ -3200,12 +3200,12 @@ CREATE TABLE "tiki_user_votings" (
   "ip" varchar(15) default NULL,
   "id" varchar(255) NOT NULL default '',
   "optionId" bigint NOT NULL default 0,
-  "time" bigint NOT NULL default 0,
-  KEY ("user",id),
-  KEY "ip" ("ip"),
-  KEY "id" ("id")
+  "time" bigint NOT NULL default 0
 );
 
+CREATE INDEX "_" ON ""(\","user"\","id");
+CREATE INDEX "_ip" ON ""(\","ip"\");
+CREATE INDEX "_id" ON ""(\","id"\");
 
 DROP TABLE IF EXISTS "tiki_user_watches";
 
@@ -3218,10 +3218,10 @@ CREATE TABLE "tiki_user_watches" (
   "type" varchar(200) default NULL,
   "url" varchar(250) default NULL,
   "email" varchar(200) default NULL,
-  KEY "watchId" (watchId),
   PRIMARY KEY ("user",event,object,email)
 );
 
+CREATE INDEX "_watchId" ON ""("watchId");
 
 DROP TABLE IF EXISTS "tiki_userfiles";
 
@@ -3311,10 +3311,10 @@ CREATE TABLE "tiki_wiki_attachments" (
   "hits" bigint default NULL,
   "created" bigint default NULL,
   "comment" varchar(250) default NULL,
-  PRIMARY KEY ("attId"),
-  KEY "page" (page)
+  PRIMARY KEY ("attId")
 ) ;
 
+CREATE INDEX "_page" ON ""("page");
 
 DROP TABLE IF EXISTS "tiki_zones";
 
@@ -3333,13 +3333,13 @@ CREATE TABLE "tiki_download" (
   "type" varchar(20) NOT NULL default '',
   "date" bigint NOT NULL default '0',
   "IP" varchar(50) NOT NULL default '',
-  PRIMARY KEY ("id"),
-  KEY "object" (object,userId,type),
-  KEY "userId" (userId),
-  KEY "type" (type),
-  KEY "date" (date)
+  PRIMARY KEY ("id")
 );
 
+CREATE INDEX "_object" ON ""("object","userId","type");
+CREATE INDEX "_userId" ON ""("userId");
+CREATE INDEX "_type" ON ""("type");
+CREATE INDEX "_date" ON ""("date");
 
 DROP TABLE IF EXISTS "users_grouppermissions";
 
@@ -3397,10 +3397,10 @@ CREATE TABLE "users_permissions" (
   "type" varchar(20) default NULL,
   "admin" varchar(1) default NULL,
   "feature_check" VARCHAR(50) NULL,
-  PRIMARY KEY ("permName"),
-  KEY "type" (type)
+  PRIMARY KEY ("permName")
 );
 
+CREATE INDEX "_type" ON ""("type");
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_calendar', 'Can create/admin calendars', 'admin', 'calendar', 'y');
 
@@ -4023,13 +4023,13 @@ CREATE TABLE "users_users" (
   "unsuccessful_logins" bigint default 0,
   "openid_url" varchar(255) default NULL,
   "waiting" char(1) default NULL,
-  PRIMARY KEY ("userId"),
-  KEY "score" (score),
-  KEY "login" (login),
-  KEY "registrationDate" (registrationDate),
-  KEY "openid_url" (openid_url)
+  PRIMARY KEY ("userId")
 ) ;
 
+CREATE INDEX "_score" ON ""("score");
+CREATE INDEX "_login" ON ""("login");
+CREATE INDEX "_registrationDate" ON ""("registrationDate");
+CREATE INDEX "_openid_url" ON ""("openid_url");
 
 -- Administrator account
 INSERT INTO "users_users" ("email","login","password","hash") VALUES ('','admin','admin','f6fdffe48c908deb0f4c3bd36c032e72');
@@ -4075,10 +4075,10 @@ CREATE TABLE "tiki_integrator_rules" (
   "rxmod" varchar(20) NOT NULL default '',
   "enabled" char(1) NOT NULL default 'n',
   "description" text NOT NULL,
-  PRIMARY KEY ("ruleID"),
-  KEY "repID" (repID)
+  PRIMARY KEY ("ruleID")
 );
 
+CREATE INDEX "_repID" ON ""("repID");
 
 INSERT INTO tiki_integrator_rules VALUES ('1','1','1','.*<body[^>]*?>(.*?)</body.*','\1','y','n','i','y','Extract code between <body> and </body> tags');
 
@@ -4095,11 +4095,11 @@ CREATE TABLE "tiki_quicktags" (
   "taginsert" text,
   "tagicon" varchar(255) default NULL,
   "tagcategory" varchar(255) default NULL,
-  PRIMARY KEY ("tagId"),
-  KEY "tagcategory" (tagcategory),
-  KEY "taglabel" (taglabel)
+  PRIMARY KEY ("tagId")
 ) ;
 
+CREATE INDEX "_tagcategory" ON ""("tagcategory");
+CREATE INDEX "_taglabel" ON ""("taglabel");
 
 -- wiki
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('  text, bold','__text__','pics/icons/text_bold.png','wiki');
@@ -4447,10 +4447,10 @@ CREATE TABLE "tiki_translated_objects" (
   "type" varchar(50) NOT NULL,
   "objId" varchar(255) NOT NULL,
   "lang" varchar(16) default NULL,
-  PRIMARY KEY ("type", "objId"),
-  KEY "traId" ( traId )
+  PRIMARY KEY ("type", "objId")
 );
 
+CREATE INDEX "_traId" ON ""("traId");
 
 DROP TABLE IF EXISTS "tiki_friends";
 
@@ -4549,10 +4549,10 @@ CREATE TABLE "tiki_users_score" (
   "event_id" char(200) NOT NULL default '',
   "expire" bigint NOT NULL default '0',
   "tstamp" timestamp(3) NOT NULL,
-  PRIMARY KEY ("user","event_id"),
-  KEY "user" (user(110),event_id(110),expire)
+  PRIMARY KEY ("user","event_id")
 );
 
+CREATE INDEX "_user" ON ""(substr("user", 0, 110)substr("event_id", 0, 110),",substrexpire");
 
 DROP TABLE IF EXISTS "tiki_file_handlers";
 
@@ -4617,10 +4617,10 @@ CREATE TABLE "tiki_actionlog_conf" (
   "action" varchar(32) NOT NULL default '',
   "objectType" varchar(32) NOT NULL default '',
   "status" char(1) default '',
-  PRIMARY KEY ("action", "objectType"),
-  KEY (id)
+  PRIMARY KEY ("action", "objectType")
 );
 
+CREATE INDEX "_" ON ""("id");
 
 INSERT INTO "tiki_actionlog_conf" ("action","objectType","status") VALUES ('Created', 'wiki page', 'y');
 
@@ -4715,12 +4715,12 @@ CREATE TABLE "tiki_freetagged_objects" (
   "objectId" bigint NOT NULL default 0,
   "user" varchar(200) default '',
   "created" bigint NOT NULL default '0',
-  PRIMARY KEY ("tagId","user","objectId"),
-  KEY (tagId),
-  KEY (user),
-  KEY (objectId)
+  PRIMARY KEY ("tagId","user","objectId")
 );
 
+CREATE INDEX "_" ON ""("tagId");
+CREATE INDEX "_" ON ""("user");
+CREATE INDEX "_" ON ""("objectId");
 
 DROP TABLE IF EXISTS "tiki_contributions";
 
@@ -4747,10 +4747,10 @@ CREATE TABLE "tiki_webmail_contacts_ext" (
   "contactId" bigint NOT NULL,
   "value" varchar(255) NOT NULL,
   "hidden" smallint NOT NULL,
-  "fieldId" bigint NOT NULL,
-  KEY "contactId" ("contactId")
+  "fieldId" bigint NOT NULL
 );
 
+CREATE INDEX "_contactId" ON ""(\","contactId"\");
 
 DROP TABLE IF EXISTS "tiki_webmail_contacts_fields";
 
@@ -4802,10 +4802,10 @@ CREATE TABLE "tiki_minichat" (
   "user" varchar(31) default NULL,
   "nick" varchar(31) default NULL,
   "msg" varchar(255) NOT NULL,
-  PRIMARY KEY ("id"),
-  KEY "channel" ("channel")
+  PRIMARY KEY ("id")
 );
 
+CREATE INDEX "_channel" ON ""(\","channel"\");
 
 DROP TABLE IF EXISTS "tiki_profile_symbols";
 
@@ -4909,10 +4909,10 @@ CREATE TABLE "tiki_sent_newsletters_files" (
   "type" varchar(64) NOT NULL,
   "size" bigint NOT NULL,
   "filename" varchar(256) NOT NULL,
-  PRIMARY KEY  ("id"),
-  KEY "editionId" ("editionId")
+  PRIMARY KEY  ("id")
 );
 
+CREATE INDEX "_editionId" ON ""(\","editionId"\");
 
 DROP TABLE IF EXISTS "tiki_sefurl_regex_out";
 
@@ -5091,10 +5091,10 @@ CREATE TABLE "tiki_plugin_security" (
   "approval_by" VARCHAR(200) NULL,
   "last_update" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   "last_objectType" VARCHAR(20) NOT NULL,
-  "last_objectId" VARCHAR(200) NOT NULL,
-  KEY "last_object" (last_objectType, last_objectId)
+  "last_objectId" VARCHAR(200) NOT NULL
 );
 
+CREATE INDEX "_last_object" ON ""("last_objectType","last_objectId");
 
 DROP TABLE IF EXISTS "tiki_user_reports";
 
