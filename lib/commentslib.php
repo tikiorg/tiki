@@ -970,61 +970,60 @@ class Comments extends TikiLib {
 	}
 
 	$query = "select * from `tiki_forums` $mid order by `section` asc,".$this->convertSortMode($sort_mode);
-	$result = $this->query($query,$bindvars);
+	$result = $this->fetchAll($query,$bindvars);
+	$result = Perms::filter( array( 'type' => 'forum' ), 'object', $result, array( 'object' => 'forumId' ), 'forum_read' );
 	$ret = array();
 	$count = 0;
 	$cant = 0;
 	$off = 0;
-	while ( $res = $result->fetchRow() ) {
-	    $objperm = $this->get_perm_object($res['forumId'], 'forum', '', false);
-	    if ( $res['forumId'] != '' && $objperm['tiki_p_forum_read'] == 'y' ) {
-		    $cant++; // Count the whole number of forums the user has access to
-		    if ( ( $maxRecords > -1 && $count >= $maxRecords ) || $off++ < $offset ) continue;
+	foreach( $result as $res ) {
+		$cant++; // Count the whole number of forums the user has access to
 
-		    $forum_age = ceil(($this->now - $res["created"]) / (24 * 3600));
+		if ( ( $maxRecords > -1 && $count >= $maxRecords ) || $off++ < $offset ) continue;
 
-		    // Get number of topics on this forum
-		    $res['threads'] = $this->count_comments_threads('forum:'.$res['forumId']);
+		$forum_age = ceil(($this->now - $res["created"]) / (24 * 3600));
 
-		    // Get number of posts on this forum
-		    $res['comments'] = $this->count_comments('forum:'.$res['forumId']);
+		// Get number of topics on this forum
+		$res['threads'] = $this->count_comments_threads('forum:'.$res['forumId']);
 
-		    // Get number of users that posted at least one comment on this forum
-		    $res['users'] = $this->getOne(
-			'select count(distinct `userName`) from `tiki_comments` where `object`=? and `objectType`=?',
-			array($res['forumId'], 'forum')
-		    );
+		// Get number of posts on this forum
+		$res['comments'] = $this->count_comments('forum:'.$res['forumId']);
 
-		    // Get lock status
-		    $res['is_locked'] = $this->is_object_locked('forum:'.$res['forumId']) ? 'y' : 'n';
+		// Get number of users that posted at least one comment on this forum
+		$res['users'] = $this->getOne(
+		'select count(distinct `userName`) from `tiki_comments` where `object`=? and `objectType`=?',
+		array($res['forumId'], 'forum')
+		);
 
-		    // Get data of the last post of this forum
-		    if ( $res['comments'] > 0 ) {
-			    $result2 = $this->query(
-				'select * from `tiki_comments` where `object`= ? and `objectType` = ? order by commentDate desc',
-				array($res['forumId'], 'forum'));
+		// Get lock status
+		$res['is_locked'] = $this->is_object_locked('forum:'.$res['forumId']) ? 'y' : 'n';
+
+		// Get data of the last post of this forum
+		if ( $res['comments'] > 0 ) {
+			$result2 = $this->query(
+			'select * from `tiki_comments` where `object`= ? and `objectType` = ? order by commentDate desc',
+			array($res['forumId'], 'forum'));
 
 
-			    $res['lastPostData'] = $result2->fetchRow();
-			    $res['lastPost'] = $res['lastPostData']['commentDate'];
-		    } else {
-			    unset($res['lastPost']);
-		    }
-
-		    // Generate stats based on this forum's age
-		    if ( $forum_age > 0 ) {
-			$res['age'] = $forum_age;
-			$res['posts_per_day'] = $res['comments'] / $forum_age;
-			$res['users_per_day'] = $res['users'] / $forum_age;
-		    } else {
-			$res['age'] = 0;
-			$res['posts_per_day'] = 0;
-			$res['users_per_day'] = 0;
-		    }
-
-		    $ret[] = $res;
-		    ++$count;
+			$res['lastPostData'] = $result2->fetchRow();
+			$res['lastPost'] = $res['lastPostData']['commentDate'];
+		} else {
+			unset($res['lastPost']);
 		}
+
+		// Generate stats based on this forum's age
+		if ( $forum_age > 0 ) {
+		$res['age'] = $forum_age;
+		$res['posts_per_day'] = $res['comments'] / $forum_age;
+		$res['users_per_day'] = $res['users'] / $forum_age;
+		} else {
+		$res['age'] = 0;
+		$res['posts_per_day'] = 0;
+		$res['users_per_day'] = 0;
+		}
+
+		$ret[] = $res;
+		++$count;
 	}
 
 	$retval = array();
@@ -1284,14 +1283,8 @@ class Comments extends TikiLib {
     }
 	$query = "select a.`threadId`, a.`object`, a.`title`, a.`parentId`, a.`commentDate` $parentinfo from `tiki_comments` a $mid ORDER BY a.`commentDate` desc";
 	
-	$result = $this->query($query,array($user),$max);
-	$ret = array();
-	
-	while ($res = $result->fetchRow()) {
-		if ($this->user_has_perm_on_object($user, $res['forumId'], 'forum', 'tiki_p_forum_read')) {
-			$ret[] = $res;
-		}
-	}
+	$result = $this->fetchAll($query,array($user),$max);
+	$ret = Perms::filter( array( 'type' => 'forum' ), 'object', $data, array( 'object' => 'forumId', 'creator' => 'userName' ), 'forum_read' );
 	
 	return $ret;
     }

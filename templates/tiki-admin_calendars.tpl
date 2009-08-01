@@ -78,7 +78,7 @@
 <form action="tiki-admin_calendars.php" method="post">
 <input type="hidden" name="calendarId" value="{$calendarId|escape}" />
 <table class="normal">
-{if $tiki_p_view_categories eq 'y'}
+{if $tiki_p_modify_object_categories eq 'y'}
 {include file='categorize.tpl'}
 {/if}
 <tr class="formcolor"><td>{tr}Name{/tr}:</td><td><input type="text" name="name" value="{$name|escape}" />

@@ -80,6 +80,7 @@ if(!isset($quickperms_['editors']))
 if(!isset($quickperms_['admin']))
 $quickperms_['admin'] = array();
 
+$perms = array();
 $perms['basic']['name'] = "basic";
 $perms['basic']['data'] = array_merge($quickperms_['basic']);
 $perms['registered']['name'] = "registered";

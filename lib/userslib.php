@@ -1868,7 +1868,7 @@ function get_included_groups($group, $recur=true) {
 		$values = array();
 		$sort_mode = $this->convertSortMode($sort_mode);
 		$mid = '';
-		if ($type) {
+		if ($type && $type != 'all') {
 			$mid = ' where `type`= ? ';
 			$values[] = $type;
 		}

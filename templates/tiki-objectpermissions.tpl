@@ -130,14 +130,15 @@
 <div class="input_submit_container" style="text-align: center">
 	<input type="submit" name="assign" value="{tr}Assign{/tr}" />
 </div>
-
 <table class="normal">
 	<tr>
 		<th>{tr}Permissions{/tr}</th>
 		<th>{tr}Groups{/tr}</th>
 	</tr>
 <tr>
-<td><table width="100%">
+<td>
+<input id="perm-filter" type="text"/>
+<table width="100%" class="assign-perm">
 {cycle print=false values="even,odd"}
 {section name=prm loop=$perms}
 <tr class="{cycle advance=true}">
@@ -152,7 +153,28 @@
   </td>
   </tr>
 {/section}
-</table></td>
+</table>
+
+{jq}{literal}
+$jq('#perm-filter').keyup( function() {
+	var criterias = this.value.split( /\s+/ );
+
+	$jq('.assign-perm tr').each( function() {
+		var text = $jq(this).text();
+		for( i = 0; criterias.length > i; ++i ) {
+			word = criterias[i];
+			if( word.length > 0 && text.indexOf( word ) == -1 ) {
+				$jq(this).hide();
+				return;
+			}
+		}
+
+		$jq(this).show();
+	} );
+} );
+{/literal}{/jq}
+
+</td>
 <td><table width="100%">
 {cycle print=false values="even,odd"}
 {section name=grp loop=$groups}

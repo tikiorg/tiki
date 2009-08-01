@@ -4022,7 +4022,13 @@ class TikiLib extends TikiDb_Bridge {
 		$cant = 0;
 		$n = -1;
 		$ret = array();
+		$raw = array();
 		while ($res = $result->fetchRow()) {
+			$raw[] = $res;
+		}
+		$raw = Perms::filter( array( 'type' => 'wiki page' ), 'object', $raw, array( 'object' => 'pageName', 'creator' => 'creator' ), 'view' );
+
+		foreach( $raw as $res ) {
 			if( $initial ) {
 				$valid = false;
 				foreach( (array) $initial as $candidate ) {
@@ -4037,7 +4043,6 @@ class TikiLib extends TikiDb_Bridge {
 			}
 			//WYSIWYCA
 			$res['perms'] = $this->get_perm_object($res['pageName'], 'wiki page', $res, false);
-			if ( $res['perms']['tiki_p_view'] != 'y' ) continue;
 
 			$n++;
 			if ( ! $need_everything && $offset != -1 && $n < $offset ) continue;
@@ -4091,83 +4096,12 @@ class TikiLib extends TikiDb_Bridge {
 	// if O.K. this function shall replace similar constructs in list_pages and other functions above.
 	// $categperm is the category permission that should grant $perm. if none, pass 0
 	function user_has_perm_on_object($user,$object,$objtype,$perm,$categperm='tiki_p_view_categorized') {
-		global $prefs, $userlib;
-		static $cacheUserPerm;
-		$keyCache = "$user/$object/$objtype/$perm";
-		if (!empty($cacheUserPerm[$keyCache])) {
-			return $cacheUserPerm[$keyCache];
-		}
-		// superadmin
-		if($userlib->user_has_permission($user, 'tiki_p_admin') || $user == 'admin') {
-			$cacheUserPerm[$keyCache] = true;
-			return(TRUE);
-		}
-		if ($userlib->object_has_one_permission($object, $objtype)) {
-			// wiki permissions override category permissions
-			//handle multiple permissions
-			if(is_array($perm)) {
-				foreach($perm as $p) {
-					if(!$userlib->object_has_permission($user, $object, $objtype,$p)) {
-						$cacheUserPerm[$keyCache] = false;
-						return(FALSE);
-					}
-				}
-			} else {
-				if (!$userlib->object_has_permission($user, $object, $objtype,$perm)) {
-					$cacheUserPerm[$keyCache] = false;
-					return(FALSE);
-				}
-			}
-			$cacheUserPerm[$keyCache] = true;
-			return (TRUE);
-		} elseif ($prefs['feature_categories'] == 'y' && $categperm !== 0) {
-			// no wiki permissions so now we check category permissions
-			global $categlib;
-			if (!is_object($categlib)) {
-				include_once('lib/categories/categlib.php');
-			}
-			unset($tiki_p_view_categorized); // unset this var in case it was set previously
-			$perms_array = $categlib->get_object_categories_perms($user, $objtype, $object);
-			if ($perms_array) {
-				$is_categorized = TRUE;
-				foreach ($perms_array as $p => $value) {
-					$$p = $value;
-				}
-				if ($tiki_p_admin_categories == 'y' && $tiki_p_view_categorized == 'n')
-					$tiki_p_view_categorized = 'y';
-			} else {
-				$is_categorized = FALSE;
-			}
-			if ($is_categorized && !empty($categperm) && $$categperm != 'y') {
-				$cacheUserPerm[$keyCache] = false;
-				return (FALSE);
-			}
-			// Proposed by sewilco: Put this block into a comment 
-			// if you want Do not ignore Group perm on categorized object.
-			if ($is_categorized && !empty($categperm) && $$categperm == 'y') {
-				$cacheUserPerm[$keyCache] = true;
-				return (TRUE);
-			}
-			
-			// if it has no category perms or the user does not have
-			// the perms, continue to check individual perms!
-		}
-		// no individual and no category perms. So has the user the perm itself?
-		if (is_array($perm)) {
-			foreach($perm as $p) {
-				if(!$userlib->user_has_permission($user, $p)) {
-					$cacheUserPerm[$keyCache] = false;
-					return(FALSE);
-				}
-			}
-		} else {
-			if(!$userlib->user_has_permission($user, $perm)) {
-				$cacheUserPerm[$keyCache] = false;
-				return(FALSE);
-			}
-		}
-		$cacheUserPerm[$keyCache] = true;
-		return(TRUE);
+		global $userlib;
+		$groups = $userlib->get_groups();
+		$accessor = Perms::get( array( 'type' => $objtype, 'object' => $object ) );
+		$accessor->setGroups( $groups );
+
+		return $accessor->$perm;
 	}
 
 	/* get all the perm of an object either in a table or global+smarty set
@@ -4177,95 +4111,22 @@ class TikiLib extends TikiDb_Bridge {
 	 * global = true set the global perm and smarty var, otherwise return an array of perms
 	 */
 	function get_perm_object($objectId, $objectType, $info='', $global=true) {
-		global $tiki_p_admin, $user, $prefs, $userlib, $smarty;
+		global $smarty, $userlib;
+		$perms = Perms::get( array( 'type' => $objectType, 'object' => $objectId ) );
+		$permDescs = $userlib->get_permissions(0, -1, 'permName_desc', '', $this->get_permGroup_from_objectType($objectType));
+
 		$ret = array();
-		if (empty($objectId)) {
-			if (!$global) {
-				$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', $this->get_permGroup_from_objectType($objectType));
-				foreach ($perms['data'] as $perm) {
-					$ret[$perm['permName']] = 'y';
-				}
+		foreach( $permDescs['data'] as $perm ) {
+			$perm = $perm['permName'];
+
+			$ret[$perm] = $perms->$perm ? 'y' : 'n';
+
+			if( $global ) {
+				$smarty->assign( $perm, $ret[$perm] );
+				$GLOBALS[ $perm ] = $ret[$perm];
 			}
-			return $ret;
 		}
 
-		if ($tiki_p_admin == 'y') {
-			if (!$global) {
-				$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', $this->get_permGroup_from_objectType($objectType));
-				foreach ($perms['data'] as $perm) {
-					$ret[$perm['permName']] = 'y';
-				}
-				global $categlib; include_once('lib/categories/categlib.php');
-				if ($userlib->object_has_one_permission($objectId, $objectType) || ($prefs['feature_categories'] == 'y' && $categlib->get_object_categories_perms($user, $objectType, $objectId))) {
-					$ret['has_special_perm'] = 'y';
-				}
-			}
-			return $ret;
-			/* else : all the perms have already been set in tiki-setup_base */
-		} elseif ($perms = $this->get_local_perms($user, $objectId, $objectType, $info, $global)) {
-			return $ret;
-		} elseif ($userlib->object_has_one_permission($objectId, $objectType)) {
-			$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', $this->get_permGroup_from_objectType($objectType));
-			$userPerms = $userlib->get_object_permissions_for_user($objectId, $objectType, $user);
-
-			$permAdmin = $this->get_adminPerm_from_objectType($objectType);
-			if (in_array($permAdmin, $userPerms)) { // has perm admin - so inherit all the perms
-				foreach ($perms['data'] as $perm) {
-					$perm = $perm['permName'];
-					$ret[$perm] = 'y';
-					if ($global) {
-						global $$perm;
-						$$perm = 'y';
-						$smarty->assign("$perm", 'y');
-					}
-				}
-				return $ret;
-			}
-			foreach ($perms['data'] as $perm) { // foreach perm of the same group of perms
-				$permName = $perm['permName'];
-				global $$permName;
-				$permAdmin = $this->get_adminPerm_from_objectType($objectType);
-				if (in_array($permName, $userPerms)) {
-					$ret[$permName] = 'y';
-					if ($global) {
-						$$permName = 'y';
-						$smarty->assign("$permName", 'y');
-					}
-				} else {
-					$ret[$permName] = 'n';
-					if ($global) {
-						$$permName = 'n';
-						$smarty->assign("$permName", 'n');
-					}
-				}
-			}
-			$ret['has_special_perm'] = 'y';
-			return $ret; // special perms - do not look further
-		} elseif ($prefs['feature_categories'] == 'y') {
-			global $categlib; include_once('lib/categories/categlib.php');
-			$perms = $categlib->get_object_categories_perms($user, $objectType, $objectId);
-			if (!empty($perms)) {
-				$result = $this->get_perm_from_categPerms($perms, $objectType);
-				foreach ($result as $perm=>$value) {
-					if ($global) {
-						global $$perm;
-						$$perm = $value;
-						$smarty->assign($perm, $value);
-					} else {
-						$ret[$perm] = $value;
-					}
-				}
-				$ret['has_special_perm'] = 'y';
-				return $ret; // categ perm - do not look further
-			}
-		}
-		if (!$global) {
-			$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', $this->get_permGroup_from_objectType($objectType));
-			foreach ($perms['data'] as $perm) {
-				global $$perm['permName'];
-				$ret[$perm['permName']] = $$perm['permName'];
-			}
-		}
 		return $ret;
 	}
 
@@ -4335,177 +4196,6 @@ class TikiLib extends TikiDb_Bridge {
 			default:
 				return "tiki_p_admin_$objectType";
 		}
-	}
-
-	/* this function will change if we got a table categ<->perm
-	 */
-	function get_perm_from_categPerms($categPerms, $objectType, $global=true) {
-		global $userlib;
-		$ret = array();
-		$perms = $userlib->get_permissions(0, -1, 'permName_asc', '', $this->get_permGroup_from_objectType($objectType));
-		if ($global) {
-			foreach ($perms['data'] as $perm) {
-				global $$perm['permName'];
-				$ret[$perm['permName']] = $$perm['permName'];
-			}
-		}
-		if (empty($categPerms['tiki_p_view_categorized'])) {
-			$categPerms['tiki_p_view_categorized'] = 'n';
-		}
-		if (empty($categPerms['tiki_p_edit_categorized'])) {
-			$categPerms['tiki_p_edit_categorized'] = 'n';
-		}
-		if (empty($categPerms['tiki_p_admin_categories'])) {
-			$categPerms['tiki_p_admin_categories'] = 'n';
-		}
-		switch ($objectType) {
-			case 'tracker':
-				if ($categPerms['tiki_p_view_categorized'] == 'y' || $categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
-					$ret['tiki_p_view_trackers'] = 'y';
-				} else {
-					$ret['tiki_p_view_trackers'] = 'n';
-				}
-				if ($categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
-					$ret['tiki_p_modify_tracker_items'] = 'y';
-					$ret['tiki_p_modify_tracker_items_pending'] = 'y';
-					$ret['tiki_p_modify_tracker_items_closed'] = 'y';
-					$ret['tiki_p_create_tracker_items'] = 'y';
-				} else {
-					$ret['tiki_p_modify_tracker_items'] = 'n';
-					$ret['tiki_p_modify_tracker_items_pending'] = 'n';
-					$ret['tiki_p_modify_tracker_items_closed'] = 'n';
-					$ret['tiki_p_create_tracker_items'] = 'n';
-				}
-				break;
-			case 'image gallery':
-			case 'image':
-				if ($categPerms['tiki_p_view_categorized'] == 'y' || $categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
-					$ret['tiki_p_view_image_gallery'] = 'y';
-					$ret['tiki_p_download_files'] = 'y';
-				} else {
-					$ret['tiki_p_view_image_gallery'] = 'n';
-					$ret['tiki_p_download_files'] = 'n';
-				}
-				if ($categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
-					$ret['tiki_p_upload_images'] = 'y';
-				} else {
-					$ret['tiki_p_upload_images'] = 'n';
-				}
-				break;
-			case 'file gallery':
-			case 'file':
-				if ($categPerms['tiki_p_view_categorized'] == 'y' || $categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
-					$ret['tiki_p_view_file_gallery'] = 'y';
-					$ret['tiki_p_view_fgal_explorer'] = 'y';
-					$ret['tiki_p_view_fgal_path'] = 'y';
-				} else {
-					$ret['tiki_p_view_file_gallery'] = 'n';
-				}
-				if ($categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
-					$ret['tiki_p_upload_files'] = 'y';
-				} else {
-					$ret['tiki_p_upload_files'] = 'n';
-				}
-				break;
-			case 'article':
-			case 'submission':
-				if ($categPerms['tiki_p_view_categorized'] == 'y' || $categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
-					$ret['tiki_p_read_article'] = 'y';
-				} else {
-					$ret['tiki_p_read_article'] = 'n';
-				}
-				if ($categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
-					$ret['tiki_p_edit_article'] = 'y';
-					$ret['tiki_p_submit_article'] = 'y';
-				} else {
-					$ret['tiki_p_edit_article'] = 'n';
-					$ret['tiki_p_submit_article'] = 'n';
-				}
-				break;
-			case 'forum':
-				if ($categPerms['tiki_p_view_categorized'] == 'y' || $categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
-					$ret['tiki_p_forum_read'] = 'y';
-				} else {
-					$ret['tiki_p_forum_read'] = 'n';
-				}
-				if ($categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
-					$ret['tiki_p_forum_post_topic'] = 'y';
-					$ret['tiki_p_forum_post'] = 'y';
-				} else {
-					$ret['tiki_p_forum_post_topic'] = 'n';
-					$ret['tiki_p_forum_post'] = 'n';
-				}
-				break;
-			case 'blog':
-			case 'blog post':
-				if ($categPerms['tiki_p_view_categorized'] == 'y' || $categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
-					$ret['tiki_p_read_blog'] = 'y';
-				} else {
-					$ret['tiki_p_read_blog'] = 'n';
-				}
-				if ($categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
-					$ret['tiki_p_create_blogs'] = 'y';
-					$ret['tiki_p_blog_post'] = 'y';
-				} else {
-					$ret['tiki_p_create_blogs'] = 'n';
-					$ret['tiki_p_blog_post'] = 'n';
-				}
-				break;
-			case 'wiki page':
-			case 'history':
-				if ($categPerms['tiki_p_view_categorized'] == 'y' || $categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
-					$ret['tiki_p_view'] = 'y';
-					global $tiki_p_wiki_view_source; $ret['tiki_p_wiki_view_source'] = $tiki_p_wiki_view_source;
-					global $tiki_p_wiki_view_comments; $ret['tiki_p_wiki_view_comments'] = $tiki_p_wiki_view_comments;
-					global $tiki_p_wiki_view_attachments; $ret['tiki_p_wiki_view_attachments'] = $tiki_p_wiki_view_attachments;
-				} else {
-					foreach($perms['data'] as $p) {
-						if ($p['permName'] != 'tiki_p_use_as_template')
-							$ret[$p['permName']] = 'n';
-					}
-				}
-				if ($categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
-					$ret['tiki_p_edit'] = 'y';
-					$ret['tiki_p_remove'] = 'y';
-					$ret['tiki_p_wiki_attach_files'] = 'y';
-				} else {
-					$ret['tiki_p_edit'] = 'n';
-					$ret['tiki_p_remove'] = 'n';
-					$ret['tiki_p_wiki_attach_files'] = 'n';
-				}
-				break;
-			case 'faq':
-				if ($categPerms['tiki_p_view_categorized'] == 'y' || $categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
-					$ret['tiki_p_view_faqs'] = 'y';
-				} else {
-					$ret['tiki_p_view_faqs'] = 'n';
-				}
-				break;
-			case 'survey':
-				break;
-			case 'newsletter':
-				if ($categPerms['tiki_p_view_categorized'] == 'y' || $categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
-					$ret['tiki_p_subscribe_newsletters'] = 'y';
-				} else {
-					$ret['tiki_p_subscribe_newsletters'] = 'n';
-				}
-				break;
-
-				/* TODO */
-			default:
-				if ($categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
-					$ret["tiki_p_edit_$objectType"] = 'y';
-				} else {
-					$ret["tiki_p_edit_$objectType"] = 'n';
-				}
-				if ($categPerms['tiki_p_view_categorized'] == 'y' || $categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
-					$ret["tiki_p_view_$objectType"] = 'y';
-				} else {
-					$ret["tiki_p_view_$objectType"] = 'n';
-				}
-				break;
-		}
-		return $ret;
 	}
 
 	/* deal all the special perm */

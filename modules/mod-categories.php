@@ -13,7 +13,7 @@ if (!function_exists("categories_help")) {
 	}
 }
 
-global $prefs, $tiki_p_view_categories, $smarty;
+global $prefs, $smarty;
 
 if ($prefs['feature_categories'] != 'y') {
 	$module_params['error'] = tra("This feature is disabled").": feature_categories";
@@ -34,7 +34,7 @@ if ($prefs['feature_categories'] != 'y') {
 	$urlEnd .= "&amp;deep=$deep";
 	$name = "";
 
-	$categories = $categlib->get_all_categories_respect_perms($user, 'tiki_p_view_categories');
+	$categories = $categlib->get_all_categories_respect_perms(null, 'view_category');
 
 	if ( empty($categories) ) {
 		$module_params['error'] = tra("You do not have permission to use this feature");

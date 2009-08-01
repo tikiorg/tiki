@@ -344,50 +344,7 @@ if (isset($_SESSION["$user_cookie_site"])) {
 	// }
 	
 }
-// --------------------------------------------------------------
-if (!$cachelib->isCached("allperms")) {
-	$allperms = $userlib->get_permissions(0, -1, 'permName_desc', '', '');
-	$cachelib->cacheItem("allperms", serialize($allperms));
-} else {
-	$allperms = unserialize($cachelib->getCached("allperms"));
-}
-$allperms = $allperms["data"];
-// Initializes permissions
-$admin_perms = array();
-foreach($allperms as $vperm) {
-	$perm = $vperm["permName"];
-	$$perm = 'n';
-	$smarty->assign("$perm", 'n');
-	if ($vperm['admin'] == 'y') {
-		$admin_perms[] = $perm;
-	}
-}
-// Permissions
-// Ensure admins with tiki_p_admin get all permissions
-// Ensure user 'admin' gets all permissions unless admin wishes to emulate not being admin with module groups_emulation
-if ($user && (($user == 'admin' && $_SESSION["groups_are_emulated"] != "y") || $userlib->user_has_permission($user, 'tiki_p_admin'))) {
-	// Gives admins all permissions
-	foreach($allperms as $vperm) {
-		$perm = $vperm['permName'];
-		$$perm = 'y';
-		$smarty->assign($perm, 'y');
-	}
-} else {
-	$perms = $userlib->get_user_detailled_permissions($user);
-	foreach($perms as $perm) {
-		$smarty->assign($perm['permName'], 'y');
-		$$perm['permName'] = 'y';
-		if (in_array($perm['permName'], $admin_perms)) { // assign all perms of the perm type
-			$ps = $userlib->get_permissions(0, -1, 'permName_desc', '', $perm['type']);
-			foreach($ps['data'] as $p) {
-				$$p['permName'] = 'y';
-				$smarty->assign($p['permName'], 'y');
-			}
-		}
-	}
-}
-unset($admin_perms);
-unset($allperms);
+require 'lib/setup/perms.php';
 // --------------------------------------------------------------
 $magic_quotes_gpc = get_magic_quotes_gpc();
 $clean_xss = ($tiki_p_trust_input != 'y');

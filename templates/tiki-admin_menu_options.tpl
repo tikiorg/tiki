@@ -135,7 +135,7 @@
 										<option value=",,,">{tr}Choose{/tr} ...</option>
 										{if $prefs.feature_stats eq 'y'}<option value="tiki-stats.php,{tr}Stats{/tr},feature_stats,tiki_p_view_stats">{tr}Stats{/tr}</option>{/if}
 										{if $prefs.feature_games eq 'y'}<option value="tiki-list_games.php,{tr}Games{/tr},feature_games,tiki_p_play_games">{tr}Games{/tr}</option>{/if}
-										{if $prefs.feature_categories eq 'y'}<option value="tiki-browse_categories.php,{tr}Categories{/tr},feature_categories,tiki_p_view_categories">{tr}Categories{/tr}</option>{/if}
+										{if $prefs.feature_categories eq 'y'}<option value="tiki-browse_categories.php,{tr}Categories{/tr},feature_categories,tiki_p_view_category">{tr}Categories{/tr}</option>{/if}
 										{if $prefs.feature_userPreferences eq 'y'}<option value="tiki-user_preferences.php,{tr}User preferences{/tr}">{tr}User prefs{/tr}</option>{/if}
 									</select>
 								</td>
