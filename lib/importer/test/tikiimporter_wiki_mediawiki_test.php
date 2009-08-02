@@ -15,10 +15,11 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
     {
         $parsedData = 'Some text';
 
-        $obj = $this->getMock('TikiImporter_Wiki_Mediawiki', array('validateInput', 'parseData', 'insertData'));
+        $obj = $this->getMock('TikiImporter_Wiki_Mediawiki', array('validateInput', 'parseData', 'insertData', 'configureParser'));
         $obj->expects($this->once())->method('validateInput');
         $obj->expects($this->once())->method('parseData')->will($this->returnValue($parsedData));
         $obj->expects($this->once())->method('insertData')->with($parsedData);
+        $obj->expects($this->once())->method('configureParser');
 
         $this->expectOutputString("Loading and validating the XML file\n\nImportation completed!\n\n<b><a href=\"tiki-importer.php\">Click here</a> to finish the import process</b>");
         $obj->import(dirname(__FILE__) . '/fixtures/mediawiki_sample.xml');
@@ -47,12 +48,13 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
     {
         $parsedData = 'Some text';
 
-        $obj = $this->getMock('TikiImporter_Wiki_Mediawiki', array('validateInput', 'parseData', 'insertData', 'checkRequirementsForAttachments', 'downloadAttachments'));
+        $obj = $this->getMock('TikiImporter_Wiki_Mediawiki', array('validateInput', 'parseData', 'insertData', 'checkRequirementsForAttachments', 'downloadAttachments', 'configureParser'));
         $obj->expects($this->once())->method('validateInput');
         $obj->expects($this->once())->method('parseData')->will($this->returnValue($parsedData));
         $obj->expects($this->once())->method('insertData')->with($parsedData);
         $obj->expects($this->once())->method('checkRequirementsForAttachments');
         $obj->expects($this->once())->method('downloadAttachments');
+        $obj->expects($this->once())->method('configureParser');
         $_POST['importAttachments'] = 'on';
 
         $obj->import(dirname(__FILE__) . '/fixtures/mediawiki_sample.xml');
@@ -95,6 +97,7 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
         $obj->dom = new DOMDocument;
         $obj->dom->load(dirname(__FILE__) . '/fixtures/mediawiki_sample.xml');
         $obj->expects($this->exactly(4))->method('extractInfo')->will($this->returnValue(array()));
+        $this->expectOutputString("\nStarting to parse pages:\n");
         $this->assertEquals(4, count($obj->parseData()));
     }
 

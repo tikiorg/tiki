@@ -162,7 +162,7 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
         $parsedData = array();
         $pages = $this->dom->getElementsByTagName('page');
 
-        $this->saveAndDisplayLog("\nStarting to parse " . $pages->length . " pages:\n");
+        $this->saveAndDisplayLog("\nStarting to parse pages:\n");
 
         foreach ($pages as $page) {
             // is a wiki page and not an attachment
