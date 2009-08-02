@@ -34,7 +34,7 @@ if (!isset($_REQUEST["blogId"])) {
 	$smarty->display("error.tpl");
 	die;
 }
-$tikilib->get_object_perm( $_REQUEST["blogId"], 'blog' ); 
+$tikilib->get_perm_object( $_REQUEST["blogId"], 'blog' ); 
 
 if ($tiki_p_read_blog != 'y') {
 	$smarty->assign('errortype', 401);
