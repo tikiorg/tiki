@@ -14,7 +14,7 @@ $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
 global $usermoduleslib; include_once ('lib/usermodules/usermoduleslib.php');
 include_once('tiki-module_controls.php');
-global $prefs, $user, $userlib, $tiki_p_admin, $tiki_p_configure_modules, $smarty, $tikidomain, $tikilib, $section, $page;
+global $prefs, $user, $userlib, $tiki_p_admin, $tiki_p_configure_modules, $smarty, $tikidomain, $tikilib, $section, $page, $user_groups;
 
 clearstatcache();
 
