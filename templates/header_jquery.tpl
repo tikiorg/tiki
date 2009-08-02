@@ -45,6 +45,9 @@
 {if $prefs.feature_jquery_cycle eq 'y'}
 <script type="text/javascript" src="lib/jquery/malsup-cycle/jquery.cycle.all{$minified}.js"></script>
 {/if}
+{if $prefs.feature_jquery_treetable eq 'y'}
+<script type="text/javascript" src="lib/jquery/treeTable/src/javascripts/jquery.treeTable.{$minified}.js"></script>
+{/if}
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--
 // Restore $
