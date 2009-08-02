@@ -1319,7 +1319,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'thumbSizeYGalleries' => '',
 		'wiki_3d_adjust_camera' => 'true',
 		'wiki_3d_autoload' => '',
-		'feature_mootools' => 'y', // Needed for shadowbox
+		'feature_mootools' => 'n',
 		'javascript_enabled' => 'n',
 		'feature_comments_post_as_anonymous' => 'n',
 		'feature_comments_moderation' => 'n',
