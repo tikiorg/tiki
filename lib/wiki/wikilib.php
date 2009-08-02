@@ -407,7 +407,7 @@ class WikiLib extends TikiLib {
 	function wiki_attach_file($page, $name, $type, $size, $data, $comment, $user, $fhash) {
 		$comment = strip_tags($comment);
 		$query = "insert into `tiki_wiki_attachments`(`page`,`filename`,`filesize`,`filetype`,`data`,`created`,`hits`,`user`,`comment`,`path`) values(?,?,?,?,?,?,0,?,?,?)";
-		$this->blob_encode($data);
+		//$this->blob_encode($data);
 		$result = $this->query($query,array("$page","$name", (int) $size,"$type","$data", (int) $this->now,"$user","$comment","$fhash"));
 
 		global $prefs;
