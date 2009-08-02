@@ -239,16 +239,14 @@ class HistLib extends TikiLib {
 			left join `tiki_history` th on  ta.`object`=th.`pageName` and ta.`lastModif`=th.`lastModif` 
 			left join `tiki_pages` tp on ta.`object`=tp.`pageName` and ta.`lastModif`=tp.`lastModif` " . $where;
 
-		$result = $this->query($query,$bindvars,$limit,$offset);
+		$result = $this->fetchAll($query,$bindvars,$limit,$offset);
+		$result = Perms::filter( array( 'type' => 'wiki page' ), 'object', $result, 'object' );
 		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 		$retval = array();
-		while ($res = $result->fetchRow()) {
-		   //WYSIWYCA hack: the $limit will not be respected
-		   if($this->user_has_perm_on_object($user,$res['object'],'wiki page','tiki_p_view')) {
+		foreach( $result as $res ) {
 			$res['pageName'] = $res['object'];
 			$ret[] = $res;
-		   }
 		}
 		$retval["data"] = $ret;
 		$retval["cant"] = $cant;
