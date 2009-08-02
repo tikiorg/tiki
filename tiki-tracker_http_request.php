@@ -23,6 +23,7 @@ $arrayFilterfield = explode(',', $_GET["filterfield"]);
 $arrayStatus = explode(',', $_GET["status"]);
 $sort_mode = 'f_' . $arrayFieldlist[0] . '_asc';
 header('Cache-Control: no-cache');
+Perms::bulk( array( 'type' => 'tracker' ), 'object', $arrayTrackerId );
 for ($index = 0; $index < count($arrayTrackerId); $index++) {
 	$tikilib->get_perm_object( $arrayTrackerId[$index], 'tracker' );
 

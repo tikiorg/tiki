@@ -26,22 +26,8 @@ if (!$trackerId) {
 }
 $smarty->assign('trackerId', $trackerId);
 $smarty->assign('individual', 'n');
-if ($userlib->object_has_one_permission($trackerId, 'tracker')) {
-	$smarty->assign('individual', 'y');
-	if ($tiki_p_admin != 'y') {
-		$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'trackers');
-		foreach($perms["data"] as $perm) {
-			$permName = $perm["permName"];
-			if ($userlib->object_has_permission($user, $trackerId, 'tracker', $permName)) {
-				$$permName = 'y';
-				$smarty->assign("$permName", 'y');
-			} else {
-				$$permName = 'n';
-				$smarty->assign("$permName", 'n');
-			}
-		}
-	}
-}
+$tikilib->object_has_one_permission($trackerId, 'tracker');
+
 if ($tiki_p_view_trackers != 'y') {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
