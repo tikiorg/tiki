@@ -379,7 +379,7 @@ class TikiAccessLib extends TikiLib {
 				require_once( 'Horde/Yaml/Exception.php' );
 
 				header( "Content-Type: $full" );
-				echo Horde_Yaml::dump($value);
+				echo Horde_Yaml::dump($data);
 				return;
 			}
 		}
