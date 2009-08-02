@@ -22,23 +22,9 @@ if ($prefs['feature_groupalert'] == 'y') {
 if ($prefs['feature_ajax'] == "y") {
 	require_once ('lib/ajax/ajaxlib.php');
 }
-/*
-if (isset($_REQUEST['calendarId']) and $userlib->object_has_one_permission($_REQUEST['calendarId'],'calendar')) {
-  if ($tiki_p_admin != 'y') {
-    $perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'calendar');
-    foreach ($perms["data"] as $perm) {
-      $permName = $perm["permName"];
-      if ($userlib->object_has_permission($user, $calendarId, 'calendar', $permName)) {
-        $$permName = 'y';
-        $smarty->assign("$permName", 'y');
-      } else {
-        $$permName = 'n';
-        $smarty->assign("$permName", 'n');
-      }
-    }
-  }
+if (isset($_REQUEST['calendarId']) ) {
+	$tikilib->get_perm_object($_REQUEST['calendarId'],'calendar');
 }
-*/
 
 $daysnames = array("Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Satursday");
 $monthnames = array("","January","February","March","April","May","June","July","August","September","October","November","December");
@@ -48,17 +34,6 @@ $smarty->assign('monthnames',$monthnames);
 $smarty->assign('edit',false);
 $smarty->assign('recurrent', '');
 $hours_minmax = '';
-
-if ($tiki_p_admin_calendar == 'y') {
-  $tiki_p_add_events = 'y';
-  $smarty->assign('tiki_p_add_events','y');
-  $tiki_p_change_events = 'y';
-  $smarty->assign('tiki_p_change_events','y');
-  $tiki_p_view_events = 'y';
-  $smarty->assign('tiki_p_view_events','y');
-  $tiki_p_view_calendar = 'y';
-  $smarty->assign('tiki_p_view_calendar','y');
-}
 
 $caladd = array();
 $rawcals = $calendarlib->list_calendars();
