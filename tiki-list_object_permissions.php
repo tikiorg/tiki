@@ -31,6 +31,7 @@ function list_perms($objectId, $objectType) {
 				if (!empty($category_perms)) {
 					foreach($category_perms as $category_perm) {
 						$config[$category_perm['groupName']][$category_perm['permName']] = 'y';
+						$ret[] = array('group' => $category_perm['groupName'], 'perm' => $category_perm['permName'], 'reason' => 'Category');
 					}
 				}
 			}
