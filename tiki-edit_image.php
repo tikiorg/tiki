@@ -33,6 +33,8 @@ if (!$_REQUEST['edit'] or !$_REQUEST['galleryId']) {
 	die;
 }
 
+$tikilib->get_perm_object( $_REQUEST['galleryId'], 'image gallery' );
+
 // Now check permissions to access this page
 if ($tiki_p_upload_images != 'y') {
 	$smarty->assign('errortype', 401);
@@ -55,8 +57,6 @@ if (!isset($_REQUEST['sort_mode'])) {
 	$sort_mode = $gal_info['sortorder'].'_'.$gal_info['sortdirection'];
 } else $sort_mode = $_REQUEST['sort_mode'];
 $smarty->assign('sort_mode', $sort_mode);
-
-$tikilib->get_perm_object( $_REQUEST['galleryId'], 'image gallery' );
 
 if (isset($_REQUEST["editimage"]) || isset($_REQUEST["editimage_andgonext"])) {
 	check_ticket('edit-image');
