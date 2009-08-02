@@ -130,13 +130,14 @@ class TikiAccessLib extends TikiLib {
 		);
 
 		if ( !isset($errortitle) ) {
-			$detail['message'] = tra('unknown error');
-			$detail['errortitle'] = $detail['message'];
+			$detail['errortitle'] = tra('unknown error');
+		}
+
+		if ( empty($message)) {
+			$detail['message'] = $detail['errortitle'];
 		}
 
 		// Display the template		
-		$smarty->assign('msg', $detail['message']);
-		$smarty->assign('errortitle', $detail['errortitle']);
 		switch( $errortype ) {
 		case '404':
 			header ("HTTP/1.0 404 Not Found");
