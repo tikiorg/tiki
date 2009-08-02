@@ -1,15 +1,11 @@
 <?php
 
+require_once(dirname(__FILE__) . '/../TikiTestCase.php');
+
 ini_set( 'display_errors', 'on' );
 error_reporting( E_ALL );
 
-if (strtoupper(substr(PHP_OS, 0, 3)) == 'WIN') {
-	$separator = ';';
-} else {
-	$separator = ':';
-}
-
-ini_set( 'include_path', ini_get('include_path') . "{$separator}.{$separator}../lib{$separator}../../.." );
+ini_set( 'include_path', ini_get('include_path') . PATH_SEPARATOR . "." . PATH_SEPARATOR . "../../core/lib" . PATH_SEPARATOR . "../../.." );
 
 function tra( $string ) {
 	return $string;

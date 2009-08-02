@@ -5,7 +5,7 @@ require_once 'tikiimporter_test.php';
 require_once 'tikiimporter_wiki_test.php';
 require_once 'tikiimporter_wiki_mediawiki_test.php';
  
-class Framework_AllTests
+class TikiImporter_AllTests
 {
     public static function suite()
     {

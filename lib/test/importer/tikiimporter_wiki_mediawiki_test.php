@@ -1,7 +1,7 @@
 <?php
 
 require_once(dirname(__FILE__) . '/tikiimporter_testcase.php');
-require_once(dirname(__FILE__) . '/../tikiimporter_wiki_mediawiki.php');
+require_once(dirname(__FILE__) . '/../../importer/tikiimporter_wiki_mediawiki.php');
 
 class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase 
 {

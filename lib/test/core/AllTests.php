@@ -1,6 +1,8 @@
 <?php
 
-class AllTests
+require_once('Multilingual/AllTests.php');
+
+class Core_AllTests
 {
     public static function main()
     {
