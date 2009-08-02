@@ -96,18 +96,7 @@
 					<td class="form">{tr}Description{/tr}:</td>
 					<td class="form"><textarea rows="2" cols="40" name="description">{$description|escape}</textarea></td>
 				</tr>
-				{if $categId <= 0}
-					<tr class="formcolor">
-						<td class="form">
-							<label for="assign_perms" title="{tr}Perms inherited from closest parent if possible or from global perms{/tr}">
-								{tr}Assign permissions automatically{/tr}:<br /><i>({tr}recommended for best performance{/tr})</i>
-							</label>
-						</td>
-						<td class="form">
-							<input type="checkbox" name="assign_perms" id="assign_perms" checked="{$assign_perms}" />
-						</td>
-					</tr>
-				{else}
+				{if $categId > 0}
 					<tr class="formcolor">
 						<td class="form" colspan="2">
 							<a href="tiki-categpermissions.php?categId={$categId}">{tr}Edit permissions for this category{/tr}</a>
