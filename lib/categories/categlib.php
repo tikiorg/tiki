@@ -789,6 +789,7 @@ class CategLib extends ObjectLib {
 			global $commentslib;
 			if (!is_object($commentslib)) {
 				require_once('lib/commentslib.php');
+				$commentslib = new Comments;
 			}
 			// The page is not cateorized
 			$info = $commentslib->get_forum($forumId);
