@@ -1,5 +1,5 @@
 {* $Id$ *}
-{if !isset($tpl_module_title)}{eval assign=tpl_module_title var="{tr}Tikiwiki Assistant{/tr}"}{/if}
+{if !isset($tpl_module_title)}{eval assign=tpl_module_title var="{tr}TikiWiki Assistant{/tr}"}{/if}
 {tikimodule error=$module_params.error title=$tpl_module_title name="assistant" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 	<div align="center">
 		<strong>{tr}Thank you for installing Tikiwiki{/tr}!</strong>
@@ -29,7 +29,7 @@
 	<hr />
 	{else}
 	<p>
-		<a href="tiki-login.php" title="{tr}Login{/tr}"><img src="pics/icons/accept.png" alt="{tr}Login{/tr}" style="border:0;margin-right:2px;vertical-align:middle" align="left" /></a>{tr}To begin configuring Tiki, please{/tr} <a href="tiki-login.php" title="{tr}Login{/tr}">{tr}login{/tr}</a> {tr}as the Admin{/tr}.
+		<a href="tiki-login.php" title="{tr}Login{/tr}"><img src="pics/icons/accept.png" alt="{tr}Login{/tr}" style="border:0;margin-right:2px;vertical-align:middle" align="left" /></a>{tr}To begin configuring Tiki, please{/tr} <a href="tiki-login.php" title="{tr}Login{/tr}">{tr}login{/tr}</a> {tr}as admin{/tr}.
 	</p>
 	{/if}
 	<p>
