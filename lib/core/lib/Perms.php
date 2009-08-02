@@ -121,6 +121,10 @@ class Perms
 		return $accessor;
 	}
 
+	public static function getInstance() {
+		return self::$instance;
+	}
+
 	/**
 	 * Sets the global Perms instance to use when obtaining accessors.
 	 */

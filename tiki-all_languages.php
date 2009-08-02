@@ -3,8 +3,6 @@
 global $prefs;
 
 require 'tiki-setup.php';
-ini_set('display_errors', 'on');
-error_reporting(E_ALL);
 include_once('lib/multilingual/multilinguallib.php');
 include_once('lib/wiki/wikilib.php');
 include_once('lib/wiki/renderlib.php');
