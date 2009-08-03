@@ -3964,11 +3964,7 @@ class TikiLib extends TikiDb_Bridge {
 			$tmp_mid = array();
 			foreach ($filter as $type=>$val) {
 				if ($type == 'categId') {
-					$categories = (array) $val;
-
-					if( ! empty( $category_jails ) ) {
-						$categories = array_intersect( $categories, $category_jails );
-					}
+					$categories = $categlib->get_jailed( (array) $val );
 
 					$cat_count = count( $categories );
 					$join_tables .= " inner join `tiki_objects` as tob on (tob.`itemId`= tp.`pageName` and tob.`type`= ?) inner join `tiki_category_objects` as tc on (tc.`catObjectId`=tob.`objectId` and tc.`categId` IN(" . implode(', ', array_fill(0, $cat_count, '?')) . ")) ";

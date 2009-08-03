@@ -350,6 +350,7 @@ class CategLib extends ObjectLib {
 	    // Build the condition to restrict which categories objects must be in to be returned.
 	    $join = '';
 	    if (is_array($categId) && $and) {
+			$categId = $this->get_jailed( $categId );
 			$i = count($categId);
 			$bindWhere = $categId;
 			foreach ($categId as $c) {
@@ -364,11 +365,15 @@ class CategLib extends ObjectLib {
 					$bindWhere = array_merge($bindWhere, $this->get_category_descendants($c));
 				}				
 			}
+
+			$bindWhere = $this->get_jailed( $bindWhere );
+
 			$where = " AND c.`categId` IN (".str_repeat("?,",count($bindWhere)-1)."?)";
 	    } else {
 			if ($deep) {
 				$bindWhere = $this->get_category_descendants($categId);
 				$bindWhere[] = $categId;
+				$bindWhere = $this->get_jailed( $bindWhere );
 				$where = " AND c.`categId` IN (".str_repeat("?,",count($bindWhere)-1)."?)";
 			} else {
 				$bindWhere = array($categId);
@@ -1547,6 +1552,14 @@ class CategLib extends ObjectLib {
 		}
 
 		return array_keys( $candidates );
+	}
+
+	function get_jailed( $categories ) {
+		if( $jail = $this->get_jail() ) {
+			return array_intersect( $categories, $jail );
+		} else {
+			return $categories;
+		}
 	}
 
 	function get_default_categories() {
