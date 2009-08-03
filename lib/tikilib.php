@@ -8119,7 +8119,7 @@ class TikiLib extends TikiDb_Bridge {
 			return substr($data, 0, $length);
 	}
 
-	function htmldecode($string, $quote_style = ENT_COMPAT, $translation_table = HTML_ENTITIES) {
+	static function htmldecode($string, $quote_style = ENT_COMPAT, $translation_table = HTML_ENTITIES) {
 		if ( $translation_table == HTML_ENTITIES && version_compare(phpversion(), '5', '>=') ) {
 			// Use html_entity_decode with UTF-8 only with PHP 5.0 or later, since
 			//   this function was available in PHP4 but _without_ multi-byte charater sets support
