@@ -24,6 +24,7 @@ class Tiki_Profile_Installer
 		'forum' => 'Tiki_Profile_InstallHandler_Forum',
 		'template' => 'Tiki_Profile_InstallHandler_Template',
 		'perspective' => 'Tiki_Profile_InstallHandler_Perspective',
+		'users' => 'Tiki_Profile_UsersHandler',
 	);
 
 	private static $typeMap = array(
@@ -1994,3 +1995,51 @@ class Tiki_Profile_ValueMapConverter // {{{
 		}
 	}
 } // }}}
+
+//THIS HANDLER IS ONLY FOR TESTING PURPOSES!!! So don't use it in a production server. 
+class Tiki_Profile_UsersHandler extends Tiki_Profile_InstallHandler
+{
+	function getData()
+	{
+		if( $this->data )
+			return $this->data;
+
+		return $this->data = $this->obj->getData();
+	}
+	
+	function canInstall()
+	{
+		$data = $this->getData();
+		
+		if (isset($data)) return true;
+		else return false;
+	}
+	
+	function _install()
+	{
+		if ($this->canInstall())
+		{
+			global $userlib; if (!$userlib) require_once 'lib/userlib.php';
+
+			$data = $this->getData();
+			
+			foreach ($data as $user)
+			{
+				if (!$userlib->user_exists($user['name']))
+				{
+					$pass = isset($user['pass']) ? $user['pass'] : $user['name'];
+					$userlib->add_user($user['name'], $pass, '');
+				}
+				
+				if (isset($users['groups']))
+					foreach ($user['groups'] as $group) 
+					{
+						$userlib->add_group($group);
+						$userlib->assign_user_to_group($user['name'], $group);
+					}
+			}
+			
+			return 1;
+		}
+	}
+}

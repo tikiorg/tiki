@@ -786,8 +786,9 @@ class CategLib extends ObjectLib {
 	function categorize_forum($forumId, $categId) {
 		// Check if we already have this object in the tiki_categorized_objects page
 		$catObjectId = $this->is_categorized('forum', $forumId);
-
+				
 		if (!$catObjectId) {
+
 			global $commentslib;
 			if (!is_object($commentslib)) {
 				require_once('lib/commentslib.php');
@@ -800,7 +801,7 @@ class CategLib extends ObjectLib {
 			$catObjectId = $this->add_categorized_object('forum', $forumId, $info["description"], $info["name"], $href);
 		}
 
-		$this->categorize($catObjectId, $categId);
+		var_dump( $this->categorize($catObjectId, $categId) );
 		return $catObjectId;
 	}
 
