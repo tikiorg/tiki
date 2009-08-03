@@ -1231,6 +1231,7 @@ class CategLib extends ObjectLib {
 		$whereSql .= " AND co.`type`=? AND co.`itemId`= $sqlObj ";
 		$bind = array($objType);
 		if (is_array($categId['AND'])) {
+			$categId['AND'] = $this->get_jailed( $categId['AND'] );
 			$i = 0;
 			foreach ($categId['AND'] as $c) {
 				$fromSql .= ", `tiki_category_objects` tco$i ";
@@ -1239,6 +1240,7 @@ class CategLib extends ObjectLib {
 			}
 			$bind = array_merge($bind, $categId['AND']);
 		} elseif (is_array($categId)) {
+			$categId = $this->get_jailed( $categId );
 			$fromSql .= ", `tiki_category_objects` tco ";
 			$whereSql .= " AND co.`objectId`=tco.`catObjectId` ";
 			$whereSql .= 'AND tco.`categId` IN ('.implode(',',array_fill(0,count($categId),'?')).')';

@@ -3066,8 +3066,12 @@ class TikiLib extends TikiDb_Bridge {
 			$bindvars[] = $max_rating;
 		}
 
+		global $categlib; require_once('lib/categories/categlib.php');
+		if( empty( $categId ) ) {
+			$categId = $categlib->get_jail();
+		}
+
 		if ($categId) {
-			global $categlib; require_once('lib/categories/categlib.php');
 			$categlib->getSqlJoin($categId, 'article', '`tiki_articles`.`articleId`', $fromSql, $mid2, $bindvars);
 		}
 		
