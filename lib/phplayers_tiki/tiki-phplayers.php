@@ -33,7 +33,7 @@ class TikiPhplayers extends TikiLib {
 			}
 			return array($back, $total);
 		} elseif( $categId == 0 ) {
-			$roots = $this->findRoots( $categories );
+			$roots = $categlib->findRoots( $categories );
 			$out = '';
 			$count = 0;
 
@@ -47,21 +47,6 @@ class TikiPhplayers extends TikiLib {
 		} else {
 			return array('', 0);
 		}
-	}
-
-	private function findRoots( $categories ) {
-		$candidates = array();
-
-		foreach( $categories as $cat ) {
-			$id = $cat['parentId'];
-			$candidates[$id] = true;
-		}
-
-		foreach( $categories as $cat ) {
-			unset( $candidates[ $cat['categId'] ] );
-		}
-
-		return array_keys( $candidates );
 	}
 
 	function mkMenuEntry($idMenu, &$curOption, $sectionLevel='', $translate='y', &$use_items_icons = null) {

@@ -25,7 +25,11 @@ if ($prefs['feature_categories'] == 'y' && isset($cat_type) && isset($cat_objid)
 		$smarty->assign('cat_categorize', 'y');
 	}
 
-	$cats = $categlib->get_object_categories($cat_type, $cat_objid);
+	if( ! isset( $cat_object_exists ) || $cat_object_exists ) {
+		$cats = $categlib->get_object_categories($cat_type, $cat_objid);
+	} else {
+		$cats = $categlib->get_default_categories();
+	}
 	
 	if ($prefs['feature_wikiapproval'] == 'y' && $prefs['wikiapproval_sync_categories'] == 'y' && !$cats
 	 && $cat_type == 'wiki page' && substr($cat_objid, 0, strlen($prefs['wikiapproval_prefix'])) == $prefs['wikiapproval_prefix']
@@ -82,6 +86,7 @@ if ($prefs['feature_categories'] == 'y' && isset($cat_type) && isset($cat_objid)
 
 	include_once ('lib/tree/categ_picker_tree.php');
 	$tree_nodes = array();
+	$roots = $categlib->findRoots( $categories );
 	foreach ($categories as $c) {
 		if (isset($c['name']) || $c['parentId'] != 0) {
 			$smarty->assign( 'category_data', $c );
@@ -90,13 +95,16 @@ if ($prefs['feature_categories'] == 'y' && isset($cat_type) && isset($cat_objid)
 				'parent' => $c['parentId'],
 				'data' => $smarty->fetch( 'category_tree_entry.tpl' ),
 			);
-			if ($c['parentId'] == 0) {
+			if (in_array( $c['parentId'], $roots )) {
 				$tree_nodes[count($tree_nodes) - 1]['data'] = '<strong>'.$tree_nodes[count($tree_nodes) - 1]['data'].'</strong>';
 			}
 		}
 	}
 	$tm = new CatPickerTreeMaker("categorize");
-	$res = $tm->make_tree(0, $tree_nodes);
+	$res = '';
+	foreach( $roots as $root ) {
+		$res .= $tm->make_tree($root, $tree_nodes);
+	}
 	$smarty->assign('cat_tree', $res);
 	
 	if (!empty($cats))

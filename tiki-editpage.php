@@ -1010,6 +1010,7 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
 	$cat_name = $_REQUEST["page"];
 	$cat_href="tiki-index.php?page=".urlencode($cat_objid);
 	$cat_lang = $_REQUEST['lang'];
+	$cat_object_exists = $tikilib->page_exists( $_REQUEST['page'] );
 	include_once("categorize.php");
 	include_once("poll_categorize.php");
 	include_once("freetag_apply.php");
@@ -1286,6 +1287,7 @@ if ($prefs['feature_multilingual'] == 'y') {
 $cat_type = 'wiki page';
 $cat_objid = $_REQUEST["page"];
 $cat_lang = $pageLang;
+$cat_object_exists = $tikilib->page_exists( $_REQUEST['page'] );
 $smarty->assign('section',$section);
 include_once ('tiki-section_options.php');
 if ($prefs['feature_freetags'] == 'y') {

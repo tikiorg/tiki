@@ -18,11 +18,8 @@ class CategLib extends ObjectLib {
 
 	function list_categs($categId=0) {
 		global $cachelib; include_once('lib/cache/cachelib.php');
-		if (!$cachelib->isCached('allcategs')) {
-			$back = $this->build_cache();
-		} else {
-			$back = unserialize($cachelib->getCached('allcategs'));
-		}
+		$back = $this->get_all_categories_ext();
+
 		if ($categId > 0) {
 			$path = '';
 			$back2 = array();
@@ -1534,6 +1531,30 @@ class CategLib extends ObjectLib {
 			}
 
 			return explode( ',', $prefs['expanded_category_jail'] );
+		}
+	}
+
+	function findRoots( $categories ) {
+		$candidates = array();
+
+		foreach( $categories as $cat ) {
+			$id = $cat['parentId'];
+			$candidates[$id] = true;
+		}
+
+		foreach( $categories as $cat ) {
+			unset( $candidates[ $cat['categId'] ] );
+		}
+
+		return array_keys( $candidates );
+	}
+
+	function get_default_categories() {
+		global $prefs;
+		if( ! empty( $prefs['category_jail'] ) ) {
+			return explode( ',', $prefs['category_jail'] );
+		} else {
+			return array();
 		}
 	}
 }
