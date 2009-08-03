@@ -1518,7 +1518,7 @@ class CategLib extends ObjectLib {
 			$key = $prefs['category_jail'];
 			$categories = explode( ',', $prefs['category_jail'] );
 
-			if( $prefs['expanded_category_jail'] != $key ) {
+			if( $prefs['expanded_category_jail_key'] != $key ) {
 				$additional = array();
 
 				foreach( $categories as $categId ) {
