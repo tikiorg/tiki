@@ -2340,6 +2340,9 @@ ul.catfeatures li {
 ul.catitems li {
 	display: inline;
 	margin-right: 7px;
+}
+
+ul.catitems li a {
 	white-space: nowrap;
 }
 
