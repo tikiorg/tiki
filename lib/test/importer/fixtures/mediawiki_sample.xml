@@ -190,6 +190,17 @@
       </contributor>
       <comment>adsfasdf</comment>
       <filename>Qlandkartegt-0.11.1.tar.gz</filename>
+      <src>http://localhost/mediawiki/images/a/af/archive/20060920074037Qlandkartegt-0.11.1.tar.gz</src>
+      <size>3252598</size>
+    </upload>
+    <upload>
+      <timestamp>2009-07-22T21:56:45Z</timestamp>
+      <contributor>
+        <username>Admin</username>
+        <id>1</id>
+      </contributor>
+      <comment>adsfasdf</comment>
+      <filename>Qlandkartegt-0.11.1.tar.gz</filename>
       <src>http://localhost/mediawiki/images/a/af/Qlandkartegt-0.11.1.tar.gz</src>
       <size>3252598</size>
     </upload>
@@ -200,6 +211,15 @@
     <revision>
       <id>4</id>
       <timestamp>2009-07-22T21:50:42Z</timestamp>
+      <contributor>
+        <username>Admin</username>
+        <id>1</id>
+      </contributor>
+      <text xml:space="preserve" />
+    </revision>
+    <revision>
+      <id>5</id>
+      <timestamp>2009-07-22T21:55:42Z</timestamp>
       <contributor>
         <username>Admin</username>
         <id>1</id>

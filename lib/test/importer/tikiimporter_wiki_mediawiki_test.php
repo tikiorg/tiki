@@ -128,14 +128,14 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
     {
         $this->obj->attachmentsDestDir = dirname(__FILE__) . '/fixtures/';
         $this->obj->dom = new DOMDocument;
-        $this->obj->dom->load(dirname(__FILE__) . '/fixtures/mediawiki_upload.xml');
-        $attachments = $this->obj->dom->getElementsByTagName('upload');
+        $this->obj->dom->load(dirname(__FILE__) . '/fixtures/mediawiki_sample.xml');
+        $attachments = array('Qlandkartegt-0.11.1.tar.gz', 'Passelivre.jpg');
         $this->obj->downloadAttachments();
 
         $this->expectOutputString("\n\nStarting to import attachments:\nFile Qlandkartegt-0.11.1.tar.gz sucessfully imported!\nFile Passelivre.jpg sucessfully imported!\n");
 
         foreach ($attachments as $attachment) {
-            $filePath = $this->obj->attachmentsDestDir . $attachment->getElementsByTagName('filename')->item(0)->nodeValue;
+            $filePath = $this->obj->attachmentsDestDir . $attachment;
             $this->assertFileExists($filePath);
             unlink($filePath);
         }
@@ -145,11 +145,11 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
     {
         $this->obj->attachmentsDestDir = dirname(__FILE__) . '/fixtures/';
         $this->obj->dom = new DOMDocument;
-        $this->obj->dom->load(dirname(__FILE__) . '/fixtures/mediawiki_upload.xml');
-        $attachments = $this->obj->dom->getElementsByTagName('upload');
+        $this->obj->dom->load(dirname(__FILE__) . '/fixtures/mediawiki_sample.xml');
+        $attachments = array('Qlandkartegt-0.11.1.tar.gz', 'Passelivre.jpg');
 
         foreach ($attachments as $attachment) {
-            $filePath = $this->obj->attachmentsDestDir . $attachment->getElementsByTagName('filename')->item(0)->nodeValue;
+            $filePath = $this->obj->attachmentsDestDir . $attachment;
             fopen($filePath, 'w');
         }
 
@@ -157,7 +157,7 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
         $this->expectOutputString("\n\nStarting to import attachments:\nNOT importing file Qlandkartegt-0.11.1.tar.gz as there is already a file with the same name in the destination directory (" . $this->obj->attachmentsDestDir . ")\nNOT importing file Passelivre.jpg as there is already a file with the same name in the destination directory (" . $this->obj->attachmentsDestDir . ")\n");
        
         foreach ($attachments as $attachment) {
-            $filePath = $this->obj->attachmentsDestDir . $attachment->getElementsByTagName('filename')->item(0)->nodeValue;
+            $filePath = $this->obj->attachmentsDestDir . $attachment;
             unlink($filePath);
         }
     }
@@ -167,6 +167,16 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
         $this->obj->dom = new DOMDocument;
         $this->expectOutputString("\n\nNo attachments found to import! Make sure you have created your XML file with the dumpDump.php script and with the option --uploads. This is the only way to import attachment.\n");
         $this->obj->downloadAttachments(); 
+    }
+
+    public function testDownloadAttachmentsShouldDisplayMessageIfUnableToDownloadFile()
+    {
+        $this->obj->attachmentsDestDir = dirname(__FILE__) . '/fixtures/';
+        $this->obj->dom = new DOMDocument;
+        $this->obj->dom->load(dirname(__FILE__) . '/fixtures/mediawiki_invalid_upload.xml');
+        $this->obj->downloadAttachments();
+
+        $this->expectOutputString("\n\nStarting to import attachments:\nUnable to download file Qlandkartegt-0.11.1.tar.gz. Error message was: file_get_contents(): php_network_getaddresses: getaddrinfo failed: Name or service not known\nUnable to download file Passelivre.jpg. Error message was: file_get_contents(): php_network_getaddresses: getaddrinfo failed: Name or service not known\n");
     }
 
     public function testExtractInfo()

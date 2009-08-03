@@ -165,8 +165,9 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
         $this->saveAndDisplayLog("\nStarting to parse pages:\n");
 
         foreach ($pages as $page) {
+            $isAttachment = $page->getElementsByTagName('upload');
             // is a wiki page and not an attachment
-            if ($page->childNodes->item(7)->nodeName != 'upload') {
+            if ($isAttachment->length == 0) {
                 try {
                     $parsedData[] = $this->extractInfo($page);
                 } catch (ImporterParserException $e) {
@@ -179,9 +180,8 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
     }
 
     /**
-     * Searches for all <upload> tags in the XML file
-     * and try to download them to the 
-     * img/wiki_up/ directory
+     * Searches for the last version of each attachments in the XML file
+     * and try to download it to the img/wiki_up/ directory
      *
      * Note: it is not possible to generate the Mediawiki
      * XML file with the <upload> tag through the web interface
@@ -192,30 +192,39 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
      * @return void
      */
     function downloadAttachments() {
-        $attachments = $this->dom->getElementsByTagName('upload');
+        $pages = $this->dom->getElementsByTagName('page');
 
-        if ($attachments->length > 0) {
-            $this->saveAndDisplayLog("\n\nStarting to import attachments:\n");
+        if ($this->dom->getElementsByTagName('upload')->length == 0) {
+            $this->saveAndDisplayLog("\n\nNo attachments found to import! Make sure you have created your XML file with the dumpDump.php script and with the option --uploads. This is the only way to import attachment.\n");
+            return;
+        }
 
-            foreach ($attachments as $attachment) {
-                $fileName = $attachment->getElementsByTagName('filename')->item(0)->nodeValue;
-                $fileUrl = $attachment->getElementsByTagName('src')->item(0)->nodeValue;
+        $this->saveAndDisplayLog("\n\nStarting to import attachments:\n");
+
+        foreach ($pages as $page) {
+            $attachments = $page->getElementsByTagName('upload');
+
+            if ($attachments->length > 0) {
+                $i = $attachments->length - 1;
+                $lastVersion = $attachments->item($i);
+
+                $fileName = $lastVersion->getElementsByTagName('filename')->item(0)->nodeValue;
+                $fileUrl = $lastVersion->getElementsByTagName('src')->item(0)->nodeValue;
 
                 if (file_exists($this->attachmentsDestDir . $fileName)) {
                     $this->saveAndDisplayLog("NOT importing file $fileName as there is already a file with the same name in the destination directory ($this->attachmentsDestDir)\n");
                     continue;
                 }
 
-                if ($attachmentContent = file_get_contents($fileUrl)) {
+                try {
+                    $attachmentContent = file_get_contents($fileUrl);
                     $newFile = fopen($this->attachmentsDestDir . $fileName, 'w');
                     fwrite($newFile, $attachmentContent);
                     $this->saveAndDisplayLog("File $fileName sucessfully imported!\n");
-                } else {
-                    $this->saveAndDisplayLog("Unable to import file $fileName\n");
+                } catch (Exception $e) {
+                    $this->saveAndDisplayLog("Unable to download file $fileName. Error message was: " . $e->getMessage() . "\n");
                 }
             }
-        } else {
-            $this->saveAndDisplayLog("\n\nNo attachments found to import! Make sure you have created your XML file with the dumpDump.php script and with the option --uploads. This is the only way to import attachment.\n");
         }
     }
 
