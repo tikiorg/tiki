@@ -992,6 +992,9 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_category_use_phplayers' => 'y',
 		'categorypath_excluded' => '',
 		'categories_used_in_tpl' => 'n',
+		'category_jail' => '',
+		'expanded_category_jail' => '',
+		'expanded_category_jail_key' => '',
 
 		// games
 		'feature_games' => 'n',

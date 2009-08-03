@@ -921,6 +921,18 @@ class CategLib extends ObjectLib {
 		} else {
 			$ret = unserialize($cachelib->getCached("allcategs"));
 		}
+
+		if( $jail = $this->get_jail() ) {
+			$prefilter = $ret;
+			$ret = array();
+
+			foreach( $prefilter as $res ) {
+				if( in_array( $res['categId'], $jail ) ) {
+					$ret[] = $res;
+				}
+			}
+		}
+
 		return $ret;
 	}
 
@@ -1500,5 +1512,29 @@ class CategLib extends ObjectLib {
 		}
 	}
 	
+	function get_jail() {
+		global $prefs;
+		if( $prefs['feature_categories'] == 'y' && ! empty( $prefs['category_jail'] ) ) {
+			$key = $prefs['category_jail'];
+			$categories = explode( ',', $prefs['category_jail'] );
+
+			if( $prefs['expanded_category_jail'] != $key ) {
+				$additional = array();
+
+				foreach( $categories as $categId ) {
+					$desc = $this->get_category_descendants( $categId );
+					$additional = array_merge( $additional, $desc );
+				}
+
+				$prefs['expanded_category_jail'] =
+					$_SESSION['s_prefs']['expanded_category_jail'] = implode( ',', $additional );
+				$_SESSION['s_prefs']['expanded_category_jail_key'] = $key;
+
+				return $additional;
+			}
+
+			return explode( ',', $prefs['expanded_category_jail'] );
+		}
+	}
 }
 $categlib = new CategLib;

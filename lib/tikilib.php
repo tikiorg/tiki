@@ -3952,19 +3952,32 @@ class TikiLib extends TikiDb_Bridge {
 			$mid = '';
 		}
 
+		global $categlib; require_once( 'lib/categories/categlib.php' );
+		$category_jails = $categlib->get_jail();
+
+		if( ! isset( $filter['categId'] ) && ! empty( $category_jails ) ) {
+			$filter['categId'] = $category_jails;
+		}
+
 		$distinct = '';
 		if (!empty($filter)) {
 			$tmp_mid = array();
 			foreach ($filter as $type=>$val) {
 				if ($type == 'categId') {
-					$cat_count = count( (array) $val );
+					$categories = (array) $val;
+
+					if( ! empty( $category_jails ) ) {
+						$categories = array_intersect( $categories, $category_jails );
+					}
+
+					$cat_count = count( $categories );
 					$join_tables .= " inner join `tiki_objects` as tob on (tob.`itemId`= tp.`pageName` and tob.`type`= ?) inner join `tiki_category_objects` as tc on (tc.`catObjectId`=tob.`objectId` and tc.`categId` IN(" . implode(', ', array_fill(0, $cat_count, '?')) . ")) ";
 
 					if( $cat_count > 1 ) {
 						$distinct = ' DISTINCT ';
 					}
 
-					$join_bindvars = array_merge(array('wiki page'), (array) $val);
+					$join_bindvars = array_merge(array('wiki page'), $categories);
 				} elseif ($type == 'lang') {
 					$tmp_mid[] = 'tp.`lang`=?';
 					$bindvars[] = $val;
