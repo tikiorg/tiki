@@ -19,6 +19,7 @@ if (ini_get('session.use_cookies') == 1 && !isset($_COOKIE['PHPSESSID'])) {
 	$smarty->display('error.tpl');
 	exit;
 }
+
 // Redirect to HTTPS if we are not in HTTPS but we require HTTPS login
 if (!$https_mode && $prefs['https_login'] == 'required') {
 	header('location: ' . $base_url_https . $prefs['login_url']);
@@ -220,8 +221,17 @@ if ($isvalid) {
 				break;
 
 			default:
-				// Go to the group page ?
-				if ($prefs['useGroupHome'] == 'y') {
+				if (!empty($_REQUEST['url'])) {
+					global $cachelib; include_once('lib/cache/cachelib.php');
+					preg_match('/(.*)\?cache=(.*)/', $_REQUEST['url'], $matches);
+					if (!empty($matches[2]) && $cachelib->isCached($matches[2], 'edit')) {
+						if (!empty($matches[1])) {
+							$url = $matches[1].'?'.$cachelib->getCached($matches[2], 'edit');
+							$cachelib->invalidate($matches[2], 'edit');
+						}
+						$cachelib->invalidate($matches[2], 'edit');
+					}
+				} elseif ($prefs['useGroupHome'] == 'y') { // Go to the group page ?
 					if ($prefs['limitedGoGroupHome'] == 'y') {
 						// Handle spaces (that could be written as '%20' in referer, but are generated as '+' with urlencode)
 						$url = str_replace('%20', '+', $url);
@@ -282,6 +292,9 @@ if ($isvalid) {
 			}
 		}
 	} else {
+		if (isset($_REQUEST['url'])) {
+			$smarty->assign('url', $_REQUEST['url']);
+		}
 		if ($error == PASSWORD_INCORRECT && $prefs['unsuccessful_logins'] >= 0) {
 			if (($nb_bad_logins = $userlib->unsuccessful_logins($user)) >= $prefs['unsuccessful_logins']) {
 				$msg = sprintf(tra('More than %d unsuccessful login attempts have been made.'), $prefs['unsuccessful_logins']);

@@ -47,15 +47,6 @@ if ($prefs['feature_wiki'] != 'y') {
 	$smarty->display('error.tpl');
 	die;
 }
-// Anti-bot feature: if enabled, anon user must type in a code displayed in an image
-if (isset($_REQUEST['save']) && (!$user || $user == 'anonymous') && $prefs['feature_antibot'] == 'y') {
-	if((!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
-		$smarty->assign('msg',tra("You have mistyped the anti-bot verification code; please try again."));
-		$smarty->display("error.tpl");
-		die;
-	}
-}
-
 make_sure_page_to_be_created_is_not_an_alias();
 
 $smarty->assign( 'translation_mode', (isNewTranslationMode() || isUpdateTranslationMode()) ?'y':'n' );
@@ -71,18 +62,33 @@ if (empty($_REQUEST["page"])) {
 if ($prefs['feature_wikiapproval'] == 'y' && substr($_REQUEST['page'], 0, strlen($prefs['wikiapproval_prefix'])) != $prefs['wikiapproval_prefix'] && !empty($prefs['wikiapproval_master_group']) && !in_array($prefs['wikiapproval_master_group'], $tikilib->get_user_groups($user))) {
 	$_REQUEST['page'] = $prefs['wikiapproval_prefix'] . $_REQUEST['page'];
 }
+// wysiwyg decision
+include 'tiki-parsemode_setup.php';
 
 $page = $_REQUEST["page"];
 $smarty->assign_by_ref('page', $_REQUEST["page"]);
-
 // Permissions
 $info = $tikilib->get_page_info($page);
 $tikilib->get_perm_object($page, 'wiki page', $info, true);
 if ($tiki_p_edit != 'y') {
+	if (empty($user)) {
+		global $cachelib; include_once('lib/cache/cachelib.php');
+		$cacheName = $tikilib->get_ip_address().$tikilib->now;
+		$cachelib->cacheItem($cacheName, http_build_query($_REQUEST, '', '&'), 'edit');
+		$smarty->assign('url', "tiki-editpage.php?cache=$cacheName");
+	}
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
 	$smarty->display("error.tpl");
 	die;
+}
+// Anti-bot feature: if enabled, anon user must type in a code displayed in an image
+if (isset($_REQUEST['save']) && (!$user || $user == 'anonymous') && $prefs['feature_antibot'] == 'y') {
+	if((!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
+		$smarty->assign('msg',tra("You have mistyped the anti-bot verification code; please try again."));
+		$smarty->display("error.tpl");
+		die;
+	}
 }
 
 $page_ref_id = '';
@@ -709,8 +715,6 @@ $smarty->assign('editable','y');
 $smarty->assign('show_page','n');
 $smarty->assign('comments_show','n');
 
-// wysiwyg decision
-include 'tiki-parsemode_setup.php';
 $smarty->assign_by_ref('data', $info);
 $smarty->assign('footnote', '');
 $smarty->assign('has_footnote', 'n');
