@@ -5607,6 +5607,11 @@ go
 
 
 
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_perspective_view', 'Can view the perspective', 'basic', 'perspective')
+go
+
+
+
 UPDATE users_permissions SET feature_check = 'feature_wiki' WHERE permName IN(
 	'tiki_p_admin_wiki',
 	'tiki_p_assign_perm_wiki_page',
