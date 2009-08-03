@@ -10,6 +10,14 @@ if (!isset($_REQUEST['objectName']) || empty($_REQUEST['objectType']) || empty($
 	$smarty->display("error.tpl");
 	die;
 }
+$auto_query_args = array(
+	'referer',
+	'reloff',
+	'objectName',
+	'objectType',
+	'permType',
+	'objectId',
+);
 $perm = 'tiki_p_assign_perm_' . str_replace(' ', '_', $_REQUEST['objectType']);
 if ($_REQUEST['objectType'] == 'wiki page') {
 	if ($tiki_p_admin_wiki == 'y') {
@@ -204,15 +212,6 @@ if (isset($_REQUEST['delsel_x']) && isset($_REQUEST['checked'])) {
 			}
 		}
 	}
-}
-if (isset($_REQUEST['quick_perms'])) {
-		$cookietab = 3;
-		setcookie('tab',$cookietab);
-		$smarty->assign_by_ref('cookietab',$cookietab);
-} elseif ((isset($_REQUEST['delsel_x']) || isset($_REQUEST['action']) || isset($_REQUEST['assign']))) {
-	$cookietab = 2;
-	setcookie('tab', $cookietab);
-	$smarty->assign_by_ref('cookietab', $cookietab);
 }
 // Now we have to get the individual page permissions if any
 $page_perms = $userlib->get_object_permissions($_REQUEST["objectId"], $_REQUEST["objectType"]);

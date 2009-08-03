@@ -21,11 +21,12 @@
  * 	...)
  * 
  * _columns	: array of columns and headers array('permName' => tra('Permission Name'), 'permDesc' => tra('Permission Description'), etc
+ * 				or a string like: '"permName"="Permission Name", "permDesc"="Description", etc'
  * 				if undefined it tries to guess (?)
  * 
  * _valueColumnIndex = 0	:	 index of the col in the array above to use as the unique index
  * 
- * _treeColumn	: col to nest trees by
+ * _sortColumn = ''	:	column to organise tree by (actually row key = e.g. 'type')
  * 
  * _checkbox = 'treechecks_1'	: name of checkbox (auto-incrementing)
  * 
@@ -42,7 +43,6 @@
  * 
  * _emptyDataMessage = tra('No rows found')	: message if there are no rows
  * 
- * _treeColumn = ''	:	column to organise tree by (actually row key = e.g. 'type')
  */
 
 //this script may only be included - so its better to die if called directly.
@@ -96,12 +96,24 @@ function smarty_function_treetable($params, &$smarty) {
 				$_columns[$key] = htmlentities($key);
 			}
 		}
+	} else if (is_string($_columns)) {
+		$ar = split(',', $_columns);
+		$_columns = array();
+		foreach ($ar as $str) {
+			$ar2 = split('=', trim($str));
+			$_columns[trim($ar2[0],' "')] = trim($ar2[1],' "');
+		}
+		unset($ar, $ar2);
 	}
-	$_valueColumnIndex = empty($_valueColumnIndex) ? 0 : $_valueColumnIndex;
-	$_treeColumn = empty($_treeColumn) ? '' : $_treeColumn;
 	
-	if ($_treeColumn) {
-		$headerlib->add_jq_onready('$jq("#'.$id.'").treeTable({clickableNodeNames:true});');	// {treeColumn:3}
+	$_valueColumnIndex = empty($_valueColumnIndex) ? 0 : $_valueColumnIndex;
+	$_sortColumn = empty($_sortColumn) ? '' : $_sortColumn;
+	
+	if ($_sortColumn) {
+		sort2d($_data, $_sortColumn);
+		$headerlib->add_jq_onready('$jq("#'.$id.'").treeTable({clickableNodeNames:true, initialState: "expanded"});');
+		// TODO refilter when .parent is opened
+		//$headerlib->add_jq_onready('$jq("tr.parent").click(function() { $jq("#'.$id.'_filter").trigger("keyup");});');	// $jq(this).trigger("click")
 	}
 	
 	$class = empty($class) ? '' : $class;	// treetable
@@ -113,7 +125,7 @@ function smarty_function_treetable($params, &$smarty) {
 	
 	if ($_listFilter == 'y' && count($_data) > $_filterMinRows) {
 		include_once('lib/smarty_tiki/function.listfilter.php');
-		$html .= smarty_function_listfilter(array('selectors' => "#$id tr"));
+		$html .= smarty_function_listfilter(array('id' => $id.'_filter', 'selectors' => "#$id tbody tr:not(.parent)"), $smarty);
 	}
 	
 	// start writing the table
@@ -123,7 +135,7 @@ function smarty_function_treetable($params, &$smarty) {
 	$html .= '<thead><tr>';
 	$html .= '<th>';
 	include_once('lib/smarty_tiki/function.select_all.php');
-	$html .= smarty_function_select_all(array('checkbox_names'=>$_checkbox));
+	$html .= smarty_function_select_all(array('checkbox_names'=>$_checkbox.'[]'), $smarty);
 	$html .= '</th>';
 	
 	foreach ($_columns as $column => $columnName) {
@@ -139,16 +151,18 @@ function smarty_function_treetable($params, &$smarty) {
 		// for each row
 	foreach ($_data as &$row) {
 		// set up tree hierarchy
-		if ($_treeColumn) {
-			$treeType = htmlentities($row[$_treeColumn]);
-			if (!in_array($treeType, $treeColumnsAdded)) {
-				$html .= '<tr id="'.$id.'_'.$treeType.'"><td>';	//  colspan="'.(count($_columns) + 1).'"
-				$html .= $treeType.'</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>'.$nl;
-				$treeColumnsAdded[] = $treeType;
+		if ($_sortColumn) {
+			$treeType = htmlentities($row[$_sortColumn]);
+			$treeTypeId = preg_replace('/\s+/', '_', $treeType);
+			if (!in_array($treeTypeId, $treeColumnsAdded)) {
+				$html .= '<tr id="'.$id.'_'.$treeTypeId.'"><td colspan="'.(count($_columns) + 1).'">';
+				$html .= $treeType.'</td></tr>'.$nl;
+				$treeColumnsAdded[] = $treeTypeId;
 			}
-			$childRowClass = ' child-of-'.$id.'_'.$treeType;
+			$childRowClass = ' child-of-'.$id.'_'.$treeTypeId;
 		} else {
 			$rowId = '';
+			$childRowClass = '';
 		}
 		
 		// work out row class (odd/even etc)
@@ -160,12 +174,12 @@ function smarty_function_treetable($params, &$smarty) {
 			$rowClass = ' class="'.$childRowClass.'"';
 		}
 		// get row's "value"
-		$rowVal = htmlentities($row[$_columns[$_valueColumnIndex]]);
+		$rowVal = htmlentities($row[$_valueColumnIndex]);
 		
 		$html .= '<tr'.$rowClass.'>';
 		// add the checkbox
 		$html .= '<td'.$rowClass.'>';
-		$html .= '<input type="checkbox" name="'.$_checkbox.'" value="'.$rowVal.'" title="'.$rowVal.'"/>';
+		$html .= '<input type="checkbox" name="'.$_checkbox.'[]" value="'.$rowVal.'" title="'.$rowVal.'"/>';
 		$html .= '</td>';
 		
 		foreach ($_columns as $column => $columnName) {
@@ -178,22 +192,26 @@ function smarty_function_treetable($params, &$smarty) {
 	$html .= '</tbody></table>'.$nl;
 		
 	return $html;
-	
-//
-//{cycle print=false values="even,odd"}
-//{section name=prm loop=$perms}
-//<tr class="{cycle advance=true}">
-//  <td class="{cycle advance=false}" title="{$perms[prm].permName|escape}">
-//    <input type="checkbox" name="perm[]" value="{$perms[prm].permName|escape}" title="{$perms[prm].permName|escape}"/>
-//  </td>
-//  <td class="{cycle advance=false}">
-//    {$perms[prm].permName|escape}
-//  </td>
-//  <td class="{cycle advance=false}">
-//    <div class="subcomment">{tr}{$perms[prm].permDesc|escape}{/tr}</div>
-//  </td>
-//  </tr>
-//{/section}
-//</table>
-	
+
+}
+
+
+// TODO - move this somewhere sensible
+// from http://uk.php.net/sort?
+
+// $sort used as variable function--can be natcasesort, for example
+// WARNING: $sort must be associative
+function sort2d( &$arrIn, $index = null, $sort = 'asort') {
+	// pseudo-secure--never allow user input into $sort
+	if (strpos($sort, 'sort') === false) {$sort = 'asort';}
+	$arrTemp = Array();
+	$arrOut = Array();
+	foreach ( $arrIn as $key=>$value ) {
+		$arrTemp[$key] = is_null($index) ? reset($value) : $value[$index];
+	}
+	$sort($arrTemp);
+	foreach ( $arrTemp as $key=>$value ) {
+		$arrOut[$key] = $arrIn[$key];
+	}
+	$arrIn = $arrOut;
 }

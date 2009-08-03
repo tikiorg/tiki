@@ -1354,7 +1354,6 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_jquery_sheet' => 'n',			// spreadsheet TODO: implement
 		'feature_jquery_tablesorter' => 'n',	// sortable tables ([will] override existing)
 		'feature_jquery_cycle' => 'y',			// slideshow lib
-		'feature_jquery_treetable' => 'y',	//Cool stuff to make trees 
 
 		// SefUrl
 		'feature_sefurl' => 'n',
