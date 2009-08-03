@@ -31,7 +31,7 @@
 					{if $prefs.site_language eq $languages[ix].value}selected="selected"{/if}>{$languages[ix].name}</option>
 			{/section}
 		</select>
-		<input type="hidden" name="install_step" value="1" />
+		<input type="hidden" name="install_step" value="0" />
 		{if $multi}		<input type="hidden" name="multi" value="{$multi}" />{/if}
 	</form>
 </div>
