@@ -34,7 +34,7 @@
  * 
  * _filterMinRows = 12	: don't show filter box if less than this number of rows
  * 
- * class = 'treetable'	: class of the table - will add 'sortable' if feature_jquery_sortable = y
+ * class = 'treeTable'	: class of the table - will add 'sortable' if feature_jquery_sortable = y
  * id = 'treetable1'	: id of the table (auto-incrementing)
  * 
  * _rowClasses = array('odd','even')	:	classes to cycle through for rows (tr's and td's)
@@ -111,12 +111,19 @@ function smarty_function_treetable($params, &$smarty) {
 	
 	if ($_sortColumn) {
 		sort2d($_data, $_sortColumn);
-		$headerlib->add_jq_onready('$jq("#'.$id.'").treeTable({clickableNodeNames:true, initialState: "expanded"});');
+		$headerlib->add_jq_onready('$jq("#'.$id.'").treeTable({clickableNodeNames:true});');
 		// TODO refilter when .parent is opened
-		//$headerlib->add_jq_onready('$jq("tr.parent").click(function() { $jq("#'.$id.'_filter").trigger("keyup");});');	// $jq(this).trigger("click")
+//		$headerlib->add_jq_onready('$jq("tr.parent").click(function(event) {
+//if ($jq("#'.$id.'_filter").val()) {
+//	$jq("#'.$id.'_filter").trigger("keyup");
+//	if (event.isPropagationStopped() || event.isImmediatePropagationStopped()) {
+//		$jq(this).trigger("click");
+//	}
+//}
+//		});');
 	}
 	
-	$class = empty($class) ? '' : $class;	// treetable
+	$class = empty($class) ? 'treeTable' : $class;	// treetable
 	
 	if ($prefs['feature_jquery_tablesorter'] == 'y' && strpos($class, 'sortable') === false) {
 		 //$class .= ' sortable';

@@ -210,8 +210,6 @@
 		<div class="input_submit_container" style="text-align: center">
 			<input type="submit" name="assign" value="{tr}Assign{/tr}" />
 		</div>
-
-	</fieldset>
 		{/tab}
 </form>
 	{/if}
