@@ -53,10 +53,10 @@ class WikiRenderer
 	function applyPermissions() // {{{
 	{
 		global $userlib;
-		$permDescs = $userlib->get_permissions( 0, -1, 'permName_desc', '', 'wiki page' );
+		$permDescs = $userlib->get_permissions( 0, -1, 'permName_desc', '', 'wiki' );
 		$objectperms = Perms::get( array( 'type' => 'wiki page', 'object' => $this->page ) );
 
-		foreach( $permissionList as $name ) {
+		foreach( $permDescs['data'] as $name ) {
 			$name = $name['permName'];
 			$this->setGlobal( $name, $objectperms->$name ? 'y' : 'n' );
 		}
