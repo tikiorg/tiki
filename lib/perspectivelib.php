@@ -62,7 +62,10 @@ class PerspectiveLib
 	function list_perspectives() {
 		$db = TikiDb::get();
 
-		return $db->fetchAll( "SELECT perspectiveId, name FROM tiki_perspectives" );
+		$list = $db->fetchAll( "SELECT perspectiveId, name FROM tiki_perspectives" );
+
+		$list = Perms::filter( array( 'type' => 'perspective' ), 'object', $list, array( 'object' => 'perspectiveId' ), 'perspective_view' );
+		return $list;
 	}
 }
 
