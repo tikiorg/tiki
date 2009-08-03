@@ -10,7 +10,7 @@ require_once 'lib/core/lib/Perms/Resolver.php';
  * The globalize() method also allows to deploy the permissions
  * in their global variables.
  */
-class Perms_Accessor
+class Perms_Accessor implements ArrayAccess
 {
 	private $resolver;
 	private $prefix = '';
@@ -95,6 +95,20 @@ class Perms_Accessor
 		} else {
 			return $name;
 		}
+	}
+
+	public function offsetGet( $name ) {
+		return $this->__get( $name );
+	}
+
+	public function offsetSet( $name, $value ) {
+	}
+
+	public function offsetUnset( $name ) {
+	}
+
+	public function offsetExists( $name ) {
+		return true;
 	}
 }
 

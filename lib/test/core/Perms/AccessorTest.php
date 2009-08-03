@@ -96,5 +96,19 @@ class Perms_AccessorTest extends TikiTestCase
 		$this->assertEquals( 'y', $tiki_p_comment );
 		$this->assertEquals( 'n', $tiki_p_view_history );
 	}
+
+	function testArrayAccess() {
+		$accessor = new Perms_Accessor;
+		$accessor->setGroups( array( 'Anonymous' ) );
+		$accessor->setPrefix( 'tiki_p_' );
+
+		$accessor->setResolver( new Perms_Resolver_Static( array( 
+			'Anonymous' => array( 'view', 'edit' ),
+		) ) );
+
+		$this->assertTrue( $accessor['view'] );
+		$this->assertTrue( $accessor['tiki_p_view'] );
+		$this->assertFalse( $accessor['tiki_p_view_history'] );
+	}
 }
 
