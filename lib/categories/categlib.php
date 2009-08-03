@@ -1231,7 +1231,7 @@ class CategLib extends ObjectLib {
 		$fromSql .= ",`tiki_objects` co";
 		$whereSql .= " AND co.`type`=? AND co.`itemId`= $sqlObj ";
 		$bind = array($objType);
-		if (is_array($categId['AND'])) {
+		if (isset( $categId['AND'] ) && is_array($categId['AND'])) {
 			$categId['AND'] = $this->get_jailed( $categId['AND'] );
 			$i = 0;
 			foreach ($categId['AND'] as $c) {

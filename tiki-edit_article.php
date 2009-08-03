@@ -473,7 +473,7 @@ if ($prefs['feature_multilingual'] == 'y') {
 
 $cat_type = 'article';
 $cat_objid = $articleId;
-$cat_object_exists = (bool) $artid;
+$cat_object_exists = (bool) $articleId;
 include_once ("categorize_list.php");
 
 if ($prefs['feature_freetags'] == 'y') {

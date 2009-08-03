@@ -44,7 +44,7 @@ if (!$blog_data) {
 	die;
 }
 
-$tikilib->get_perm_object($blogId, 'blog')) {
+$tikilib->get_perm_object($blogId, 'blog');
 
 if ($tiki_p_read_blog != 'y') {
 	$smarty->assign('errortype', 401);
