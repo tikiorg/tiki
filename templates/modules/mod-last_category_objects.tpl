@@ -6,7 +6,7 @@ type is the type of object to list. default is 'wiki page' and * get all types
 maxlen is the number of characters after which labels are truncated
 note : lists the objects from a given category not a recursive tree
 *}
-{if $prefs.feature_categories eq 'y'}
+{if $prefs.feature_categories eq 'y' and $mod_can_view}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Last{/tr} {tr}$type{/tr}"}{/if}
 {tikimodule error=$module_params.error title=$tpl_module_title name="last_category_objects" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 {section name=ix loop=$last}
