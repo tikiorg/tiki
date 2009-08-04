@@ -2802,7 +2802,7 @@ class TikiLib extends TikiDb_Bridge {
 		$bindvars = array();
 
 		if( $jail = $categlib->get_jail() ) {
-			$categlib->getSqlJoin($jail, 'blogs', '`tiki_blogs`.`blogId`', $join, $where, $bindvars);
+			$categlib->getSqlJoin($jail, 'blog', '`tiki_blogs`.`blogId`', $join, $where, $bindvars);
 		} else {
 			$join = '';
 			$where = '';
@@ -2846,10 +2846,20 @@ class TikiLib extends TikiDb_Bridge {
 
 	/*shared*/
 	function get_blog($blogId) {
-		global $prefs, $user;
+		global $prefs, $user, $categlib; if (!$categlib) require_once 'lib/categories/categlib.php'; 
 
-		$query = "select * from `tiki_blogs` where `blogId`=?";
-		$result = $this->query($query,array((int)$blogId));
+		$bindvars = array();
+
+		if( $jail = $categlib->get_jail() ) {
+			$categlib->getSqlJoin($jail, 'blog', '`tiki_blogs`.`blogId`', $join, $where, $bindvars);
+		} else {
+			$join = '';
+			$where = '';
+		}
+		
+		array_push( $bindvars );
+		$query = "select * from `tiki_blogs` $join where `blogId`=$blogId $where";
+		$result = $this->query($query, $bindvars);
 		if ($result->numRows()) {
 			$res = $result->fetchRow();
 		} else {
