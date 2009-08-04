@@ -169,17 +169,24 @@ class Tiki_Profile_Installer
 		global $cachelib;
 		require_once 'lib/cache/cachelib.php';
 
-		if( ! $profiles = $this->getInstallOrder( $profile ) )
-			return false;
-
-		foreach( $profiles as $p )
-			$this->doInstall( $p );
+		try {
+			if( ! $profiles = $this->getInstallOrder( $profile ) )
+				return false;
+	
+			foreach( $profiles as $p )
+				$this->doInstall( $p );
+			
+			if (count($this->getFeedback()) == count($profiles)) {
+				$this->setFeedback(tra('Nothing was installed, check profile for errors'));
+			}
+			$cachelib->empty_full_cache();
+			return true;
 		
-		if (count($this->getFeedback()) == count($profiles)) {
-			$this->setFeedback(tra('Nothing was installed, check profile for errors'));
+		} catch(Exception $e) {
+			$this->setFeedback(tra('An error occurred: ') . $e->getMessage());
+			return false;
 		}
-		$cachelib->empty_full_cache();
-		return true;
+
 	} // }}}
 
 	function isInstalled( Tiki_Profile $profile ) // {{{
