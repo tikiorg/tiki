@@ -58,6 +58,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			}
 		}
 	} // }}}
+	if (isset($_POST['test'], $_POST['profile_tester'], $_POST['profile_tester_name'])) { // {{{
+		$installer = new Tiki_Profile_Installer;
+		$profile = Tiki_Profile::fromString($_POST['profile_tester'], $_POST['profile_tester_name']);
+		$profile->removeSymbols();
+		$installer->install($profile);
+		if ($target = $profile->getInstructionPage()) {
+			global $wikilib;
+			require_once 'lib/wiki/wikilib.php';
+			$target = $wikilib->sefurl($target);
+			header('Location: ' . $target);
+			exit;
+		} else {
+			if (count($installer->getFeedback()) > 0) {
+				$smarty->assign_by_ref('profilefeedback', $installer->getFeedback());
+			}
+		}
+	} // }}}
 	if (isset($_GET['refresh'])) { // {{{
 		$toRefresh = (int)$_GET['refresh'];
 		if (isset($sources[$toRefresh])) {

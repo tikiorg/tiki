@@ -310,6 +310,7 @@ function get_default_prefs() {
 		'wikiplugininline_cookie' => 'n',
 		'wikiplugininline_copyright' => 'n',
 		'wikiplugininline_countdown' => 'n',
+		'wikiplugininline_datachannel' => 'n',
 		'wikiplugininline_dbreport' => 'n',
 		'wikiplugininline_div' => 'n',
 		'wikiplugininline_dl' => 'n',
@@ -1129,6 +1130,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 
 		// dev
 		'feature_experimental' => 'n',
+		'feature_profile_tester' => 'n',
 
 		// Action logs
 		'feature_actionlog' => 'n',

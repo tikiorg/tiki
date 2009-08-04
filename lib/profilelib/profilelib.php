@@ -166,6 +166,20 @@ class Tiki_Profile
 		return $profile;
 	} // }}}
 
+	public static function fromString( $string, $name = '' ) // {{{
+	{
+		$profile = new self;
+		$profile->domain = 'tiki://local';
+		$profile->profile = $name;
+		$profile->pageUrl = $name;
+		$profile->url = 'tiki://local/' . $name;
+
+		$content = html_entity_decode( $string );
+		$profile->loadYaml( $content );
+
+		return $profile;
+	} // }}}
+
 	private function __construct() // {{{
 	{
 	} // }}}
