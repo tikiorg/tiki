@@ -1224,13 +1224,6 @@ h3.box-title {
 	color: #3f6383;
 }
 
-.moduleflip {
-	display: none;
-	position: absolute;
-	right: 0;
-	top: 0;
-}
-
 .box:hover .moduleflip {
 	display: block;
 }
