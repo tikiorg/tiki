@@ -668,7 +668,6 @@ div.help_section {
 
 .icon_edit_section {
 	float: right;
-	margin-top: 1em;
 }
 
 /***** Boxes *****/
@@ -2033,11 +2032,6 @@ div.messureadbody {
 	padding: 10px;
 	border: solid 2px #000;
 	z-index: 1000;
-}
-
-.icon_edit_section {
-	float: right;
-	margin-top: 1em;
 }
 
 table.default thead td,
