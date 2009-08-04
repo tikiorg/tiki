@@ -14,18 +14,17 @@
 		{tab name="{tr}General Settings{/tr}"}
 			<fieldset><legend>{tr}Search type{/tr}{if $prefs.feature_help eq 'y'} {help url="Search+Admin"}{/if}</legend>
 				<div class="adminoptionbox">
-					<div class="adminoption"><input type="checkbox" id="feature_search_fulltext" name="feature_search_fulltext" {if $prefs.feature_search_fulltext eq 'y'}checked="checked" {/if}onclick="flip('searchrefresh');flip('autosearchrefresh');" /></div>
+					<div class="adminoption"><input type="checkbox" id="feature_search_fulltext" name="feature_search_fulltext" {if $prefs.feature_search_fulltext eq 'y'}checked="checked" {/if} /></div>
 					<div class="adminoptionlabel"><label for="feature_search_fulltext">{tr}Database search{/tr}</label>{if $prefs.feature_help eq 'y'} {help url="Search"}{/if}
-						<br /><em>{tr}This search uses the MySQL Full-Text feature{/tr}.</em>
+						<br /><em>{tr}This search uses the MySQL Full-Text feature{/tr}. {tr}The indexation is always updated.{/tr}</em>
 					</div>
 				</div>
 				<div class="adminoptionbox">
-					<div class="adminoption"><input type="checkbox" checked="checked" disabled="disabled" /></div>
+					<div class="adminoption"><input type="checkbox"{if $prefs.feature_search eq 'y'} checked="checked"{/if} onclick="flip('searchrefresh');flip('autosearchrefresh');"/></div>
 					<div class="adminoptionlabel"><label>{tr}Tiki search{/tr}</label>
-						<br /><em>{tr}This database-independent search is always enabled{/tr}.</em>
 					</div>
 
-					<div class="adminoptionboxchild" id="autosearchrefresh" style="display:{if $prefs.feature_search_fulltext eq 'y'}none{else}block{/if};">
+					<div class="adminoptionboxchild" id="autosearchrefresh" style="display:{if $prefs.feature_search eq 'y'}block{else}none{/if};">
 						<div class="adminoptionbox">
 							<div>{tr}Specify the Tiki search settings{/tr}:</div>
 						</div>
@@ -63,9 +62,9 @@
 						</div>
 					</div>	
 						
-					<div class="adminoptionboxchild" id="searchrefresh" style="display:{if $prefs.feature_search_fulltext eq 'y'}block{else}none{/if};">
+					<div class="adminoptionboxchild" id="searchrefresh">
 						<div class="adminoptionbox">
-							<div>{tr}When the Database search is enabled, you must manually refresh the Tiki search indexes{/tr}:</div>
+							<div><em>{tr}The Tiki search indexes must be refreshed if you turn the Tiki search on{/tr}:</em></div>
 							<div>
 								{if $refresh_index_all_now neq 'y'}
 									<br /><a href="tiki-admin.php?page=search&amp;refresh_index_all_now=y" class="button" title="{tr}Refresh all search index now{/tr}">{tr}Refresh all search index now{/tr}</a>
