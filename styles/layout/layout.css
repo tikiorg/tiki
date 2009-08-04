@@ -251,7 +251,6 @@ div#sitead {
 	overflow: hidden;
 }
 
-a.phplmselected:hover {}
 .imgs {
 	border: 0;
 	width: 16px;
@@ -865,6 +864,7 @@ td.heading,
 tr.diffheader {
 	text-align: center;
 }
+
 td.form {
 	padding: 0.2em;
 }
@@ -1436,7 +1436,8 @@ body.tiki_forums table.normal {
 .nb_replies {
 	white-space: nowrap;
 }
-.post_preview, .top_post {
+.post_preview,
+.top_post {
 	margin-bottom: 15px;
 }
 
