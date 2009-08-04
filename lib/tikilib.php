@@ -2204,7 +2204,7 @@ class TikiLib extends TikiDb_Bridge {
 				'tf.`filetype`' => "tfg.`type` as `filetype`", /// use 'type' instead
 				'tf.`user`' => 'tfg.`user`', /// use 'creator' instead	
 				'tf.`lastModifUser`' => "'' as `lastModifUser`" /// use 'last_user' instead
-					);
+		);
 		if ( $with_files_data ) {
 			$f2g_corresp['tf.`data`'] = "'' as `data`";
 		}
@@ -2230,174 +2230,173 @@ class TikiLib extends TikiDb_Bridge {
 		$galleryId_str = '';
 		if ( is_array($galleryId) ) {
 			$galleryId_str = ' in ('.implode(',', array_fill(0, count($galleryId),'?')).')';
-					$bindvars = array_merge($galleryId, $bindvars);
-					} elseif ( $galleryId >= -1 && ! $recursive ) {
-					$galleryId_str = '=?';
-					if ( $with_subgals ) array_unshift($bindvars, $galleryId);
-					if ( $with_files ) array_unshift($bindvars, $galleryId);
-					}
-					if ( $galleryId_str != '' ) {
-					$f_query .= ' AND tf.`galleryId`'.$galleryId_str;
-					}
+			$bindvars = array_merge($galleryId, $bindvars);
+		} elseif ( $galleryId >= -1 && ! $recursive ) {
+			$galleryId_str = '=?';
+			if ( $with_subgals ) array_unshift($bindvars, $galleryId);
+			if ( $with_files ) array_unshift($bindvars, $galleryId);
+		}
+		if ( $galleryId_str != '' ) {
+			$f_query .= ' AND tf.`galleryId`'.$galleryId_str;
+		}
 
-					if ( $with_subgals ) {
+		if ( $with_subgals ) {
 
-					$g_mid = '';
-					$g_join = '';
-					$g_group_by = '';
+			$g_mid = '';
+			$g_join = '';
+			$g_group_by = '';
 
-					$join = '';
-					$select = 'tab.*';
+			$join = '';
+			$select = 'tab.*';
 
-					if ( $with_files_count ) {
-						$g_join = ' LEFT JOIN `tiki_files` tfc ON (tfg.`galleryId` = tfc.`galleryId`)';
-						$g_group_by = ' GROUP BY tfg.`galleryId`'; 
-					}
+			if ( $with_files_count ) {
+				$g_join = ' LEFT JOIN `tiki_files` tfc ON (tfg.`galleryId` = tfc.`galleryId`)';
+				$g_group_by = ' GROUP BY tfg.`galleryId`'; 
+			}
 
-					// If $user is admin then get ALL galleries, if not only user galleries are shown
-					// If the user is not admin then select it's own galleries or public galleries
-					if ( $tiki_p_admin_file_galleries != 'y' && $my_user != 'admin' && ! $parentId ) {
-						$g_mid = " WHERE (tfg.`user`='$my_user' OR tfg.`visible`='y' OR tfg.`public`='y')"; /// FIXME: use bindvars
-					}
+			// If $user is admin then get ALL galleries, if not only user galleries are shown
+			// If the user is not admin then select it's own galleries or public galleries
+			if ( $tiki_p_admin_file_galleries != 'y' && $my_user != 'admin' && ! $parentId ) {
+				$g_mid = " WHERE (tfg.`user`='$my_user' OR tfg.`visible`='y' OR tfg.`public`='y')"; /// FIXME: use bindvars
+			}
 
-					$g_query = 'SELECT '.implode(', ', array_values($f2g_corresp)).' FROM '.$g_table.$g_join.$g_mid;
+			$g_query = 'SELECT '.implode(', ', array_values($f2g_corresp)).' FROM '.$g_table.$g_join.$g_mid;
 
-					if ( $galleryId_str != '' ) {
-						$g_query .= ( $g_mid == '' ? ' WHERE' : ' AND' ).' tfg.`parentId`'.$galleryId_str;
-					}
+			if ( $galleryId_str != '' ) {
+				$g_query .= ( $g_mid == '' ? ' WHERE' : ' AND' ).' tfg.`parentId`'.$galleryId_str;
+			}
 
-					if ( $with_parent_name ) {
-						$select .= ', tfgp.`name` as `parentName`';
-						$join .= ' LEFT OUTER JOIN `tiki_file_galleries` tfgp ON (tab.`parentId` = tfgp.`galleryId`)';
-					}
+			if ( $with_parent_name ) {
+				$select .= ', tfgp.`name` as `parentName`';
+				$join .= ' LEFT OUTER JOIN `tiki_file_galleries` tfgp ON (tab.`parentId` = tfgp.`galleryId`)';
+			}
 
-					if ( $with_files ) {
-						$query = "SELECT $select FROM (($f_query $f_group_by) UNION ($g_query $g_group_by)) as tab".$join;
-					} else {
-						$query = "SELECT $select FROM ($g_query $g_group_by) as tab".$join;
-					}
-					if ( $mid != '' ) $query .= ' WHERE'.$mid;
-					if ( $orderby != '' ) $orderby = 'tab.'.$orderby;
+			if ( $with_files ) {
+				$query = "SELECT $select FROM (($f_query $f_group_by) UNION ($g_query $g_group_by)) as tab".$join;
+			} else {
+				$query = "SELECT $select FROM ($g_query $g_group_by) as tab".$join;
+			}
+			if ( $mid != '' ) $query .= ' WHERE'.$mid;
+			if ( $orderby != '' ) $orderby = 'tab.'.$orderby;
 
-					} else {
-						$query = $f_query;
-						if ( $mid != '' ) $query .= ' AND'.$mid;
-						$query .= $f_group_by;
-					}
+		} else {
+			$query = $f_query;
+			if ( $mid != '' ) $query .= ' AND'.$mid;
+			$query .= $f_group_by;
+		}
 
-					if ( $keep_subgals_together ) {
-						$query .= ' ORDER BY `isgal` desc'.($orderby == '' ? '' : ', '.$orderby);
-					} elseif ( $orderby != '' ) {
-						$query .= ' ORDER BY '.$orderby;
-					}
-					$result = $this->query($query, $bindvars);
+		if ( $keep_subgals_together ) {
+			$query .= ' ORDER BY `isgal` desc'.($orderby == '' ? '' : ', '.$orderby);
+		} elseif ( $orderby != '' ) {
+			$query .= ' ORDER BY '.$orderby;
+		}
+		$result = $this->query($query, $bindvars);
 
-					if ( $with_subgals_size ) {
-						if (!function_exists('galsize')) {
-						function galsize($id, &$db) {
-							$return = 0;
+		if ( $with_subgals_size ) {
+			if (!function_exists('galsize')) {
+				function galsize($id, &$db) {
+					$return = 0;
 
-							$result = $db->query('SELECT `fileId`,`filesize` FROM tiki_files WHERE `galleryId`=?', array($id));
-							while ( $res = $result->fetchRow() ) {
-								$return += $res['filesize'];
-							}
-							unset($result);
-
-							$result = $db->query('SELECT `galleryId` FROM `tiki_file_galleries` WHERE `parentId`=?', array($id));
-							while ( $res = $result->fetchRow() ) {
-								$return += galsize($res['galleryId'], $db);
-							}
-							unset($result);
-
-							return $return;
-						}
-						}
-					}
-
-					$ret = array();
-					$gal_size_order = array();
-					$cant = 0;
-					$n = -1;
-					$need_everything = ( $with_subgals_size && ( $sort_mode == 'size_asc' || $sort_mode == 'filesize_asc' ) );
-					global $cachelib; include_once('lib/cache/cachelib.php');
-				  $cacheName = md5("group:".implode("\n", $this->get_user_groups($user)));
-  				$cacheType = 'fgals_perms_'.$galleryId."_";
-					if ($galleryId > 0 && $cachelib->isCached($cacheName, $cacheType)) {
-						$fgal_perms = unserialize($cachelib->getCached($cacheName, $cacheType));
-					} else {
-						$fgal_perms = array();
-					}
+					$result = $db->query('SELECT `fileId`,`filesize` FROM tiki_files WHERE `galleryId`=?', array($id));
 					while ( $res = $result->fetchRow() ) {
-						$object_type = ( $res['isgal'] == 1 ? 'file gallery' : 'file');
-						if (isset($fgal_perms[$res['id']])) {
-							$res['perms'] = $fgal_perms[$res['id']];
-						} else {
-							$fgal_perms[$res['id']] = $res['perms'] = $this->get_perm_object($res['id'], $object_type, array(), false);
-						}
-						if ($galleryId <=0) {
-							$cachelib->cacheItem($cacheName, serialize($fgal_perms), 'fgals_perms_'.$res['id'].'_');
-						}
-						// Don't return the current item, if :
-						//  the user has no rights to view the file gallery AND no rights to list all galleries (in case it's a gallery)
-						if ( $res['perms']['tiki_p_view_file_gallery'] != 'y'
-								&& ( $res['isgal'] == 0 || $res['perms']['tiki_p_list_file_gallery'] != 'y' )
-							 ) continue;
-
-						$n++;
-						if ( ! $need_everything && $offset != -1 && $n < $offset ) continue;
-
-						if ( $need_everything || $maxRecords == -1 || $cant < $maxRecords ) {
-							$ret[$cant] = $res;
-							if ( $with_subgals_size && $res['isgal'] == 1 ) {
-								$ret[$cant]['size'] = (string)galsize($res['id'], $this);
-								$ret[$cant]['filesize'] = $ret[$cant]['size']; /// Obsolete
-								if ( $keep_subgals_together ) {
-									$gal_size_order[$cant] = $ret[$cant]['size'];
-								}
-							}
-							if ( $with_subgals_size && ! $keep_subgals_together ) {
-								$gal_size_order[$cant] = $ret[$cant]['size'];
-							}
-							// generate link for podcasts
-							$ret[$cant]['podcast_filename'] = $res['path'];
-						}
-
-						$cant++;
+						$return += $res['filesize'];
 					}
-					if ($galleryId > 0)
-						$cachelib->cacheItem($cacheName, serialize($fgal_perms), $cacheType);
-					if ( ! $need_everything ) $cant += $offset;
+					unset($result);
 
-
-					if ( count($gal_size_order) > 0 ) {
-						if ( $sort_mode == 'size_asc' || $sort_mode == 'filesize_asc' ) {
-							asort($gal_size_order, SORT_NUMERIC);
-						} elseif ( $sort_mode == 'size_desc' || $sort_mode == 'filesize_desc' ) {
-							arsort($gal_size_order, SORT_NUMERIC);
-						}
-						$ret2 = array();
-						foreach ( $gal_size_order as $k => $v ) {
-							$ret2[] = $ret[$k];
-							unset($ret[$k]);
-						}
-						if ( count($ret) > 0 ) {
-							foreach ( $ret as $k => $v ) {
-								$ret2[] = $v;
-							}
-						}
-						unset($ret);
-						$ret =& $ret2;
+					$result = $db->query('SELECT `galleryId` FROM `tiki_file_galleries` WHERE `parentId`=?', array($id));
+					while ( $res = $result->fetchRow() ) {
+						$return += galsize($res['galleryId'], $db);
 					}
+					unset($result);
 
-					if ( $need_everything && ( $offset > 0 || $maxRecords != -1 ) ) {
-						if ( $maxRecords == -1 ) {
-							$ret = array_slice($ret, $offset);
-						} else {
-							$ret = array_slice($ret, $offset, $maxRecords);
-						}
+					return $return;
+				}
+			}
+		}
+
+		$ret = array();
+		$gal_size_order = array();
+		$cant = 0;
+		$n = -1;
+		$need_everything = ( $with_subgals_size && ( $sort_mode == 'size_asc' || $sort_mode == 'filesize_asc' ) );
+		global $cachelib; include_once('lib/cache/cachelib.php');
+		$cacheName = md5("group:".implode("\n", $this->get_user_groups($user)));
+		$cacheType = 'fgals_perms_'.$galleryId."_";
+		if ($galleryId > 0 && $cachelib->isCached($cacheName, $cacheType)) {
+			$fgal_perms = unserialize($cachelib->getCached($cacheName, $cacheType));
+		} else {
+			$fgal_perms = array();
+		}
+		while ( $res = $result->fetchRow() ) {
+			$object_type = ( $res['isgal'] == 1 ? 'file gallery' : 'file');
+			if (isset($fgal_perms[$res['id']])) {
+				$res['perms'] = $fgal_perms[$res['id']];
+			} else {
+				$fgal_perms[$res['id']] = $res['perms'] = $this->get_perm_object($res['id'], $object_type, array(), false);
+			}
+			if ($galleryId <=0) {
+				$cachelib->cacheItem($cacheName, serialize($fgal_perms), 'fgals_perms_'.$res['id'].'_');
+			}
+			// Don't return the current item, if :
+			//  the user has no rights to view the file gallery AND no rights to list all galleries (in case it's a gallery)
+			if ( $res['perms']['tiki_p_view_file_gallery'] != 'y'
+					&& ( $res['isgal'] == 0 || $res['perms']['tiki_p_list_file_gallery'] != 'y' )
+			   ) continue;
+
+			$n++;
+			if ( ! $need_everything && $offset != -1 && $n < $offset ) continue;
+
+			if ( $need_everything || $maxRecords == -1 || $cant < $maxRecords ) {
+				$ret[$cant] = $res;
+				if ( $with_subgals_size && $res['isgal'] == 1 ) {
+					$ret[$cant]['size'] = (string)galsize($res['id'], $this);
+					$ret[$cant]['filesize'] = $ret[$cant]['size']; /// Obsolete
+					if ( $keep_subgals_together ) {
+						$gal_size_order[$cant] = $ret[$cant]['size'];
 					}
+				}
+				if ( $with_subgals_size && ! $keep_subgals_together ) {
+					$gal_size_order[$cant] = $ret[$cant]['size'];
+				}
+				// generate link for podcasts
+				$ret[$cant]['podcast_filename'] = $res['path'];
+			}
 
-					return array('data' => $ret, 'cant' => $cant);
+			$cant++;
+		}
+		if ($galleryId > 0)
+			$cachelib->cacheItem($cacheName, serialize($fgal_perms), $cacheType);
+		if ( ! $need_everything ) $cant += $offset;
+
+		if ( count($gal_size_order) > 0 ) {
+			if ( $sort_mode == 'size_asc' || $sort_mode == 'filesize_asc' ) {
+				asort($gal_size_order, SORT_NUMERIC);
+			} elseif ( $sort_mode == 'size_desc' || $sort_mode == 'filesize_desc' ) {
+				arsort($gal_size_order, SORT_NUMERIC);
+			}
+			$ret2 = array();
+			foreach ( $gal_size_order as $k => $v ) {
+				$ret2[] = $ret[$k];
+				unset($ret[$k]);
+			}
+			if ( count($ret) > 0 ) {
+				foreach ( $ret as $k => $v ) {
+					$ret2[] = $v;
+				}
+			}
+			unset($ret);
+			$ret =& $ret2;
+		}
+
+		if ( $need_everything && ( $offset > 0 || $maxRecords != -1 ) ) {
+			if ( $maxRecords == -1 ) {
+				$ret = array_slice($ret, $offset);
+			} else {
+				$ret = array_slice($ret, $offset, $maxRecords);
+			}
+		}
+
+		return array('data' => $ret, 'cant' => $cant);
 	}
 
 	function list_file_galleries($offset = 0, $maxRecords = -1, $sort_mode = 'name_desc', $user='', $find='', $parentId=-1,
