@@ -286,9 +286,9 @@ class FileGalLib extends TikiLib {
 		return $galleryId;
 	}
 	function get_all_galleries_cache_name($user) {
-		global $tikilib;
+		global $tikilib, $categlib; require_once 'lib/categories/categlib.php';
 		$gs = $tikilib->get_user_groups($user);
-		$cacheName = md5(implode("\n", $gs));
+		$cacheName = md5( implode("\n", $gs) . '----' . implode( "\n", $categlib->get_jail() ) );
 		return $cacheName;
 	}
 	function get_all_galleries_cache_type() {
