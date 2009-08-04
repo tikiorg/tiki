@@ -1894,10 +1894,19 @@ class Comments extends TikiLib {
 			$join = ' left join `tiki_comments` tc2 on(tc2.`threadId`=tc.`parentId`)';
 		}
 
-		$query = "select tc.*, tc2.`title` as parentTitle from `tiki_comments` tc $join where $mid order by ".$this->convertSortMode($sort_mode);
-		$result = $this->query($query, $bindvars, $maxRecords, $offset);
-		$query = "select count(*) from `tiki_comments` tc where $mid";
-		$cant = $this->getOne($query, $bindvars);
+		global $categlib; require_once 'lib/categories/categlib.php';
+		if( $jail = $categlib->get_jail() ) {
+			$categlib->getSqlJoin( $jail, '`objectType`', '`object`', $jail_join, $jail_where, $jail_bind, '`objectType`' );
+		} else {
+			$jail_join = '';
+			$jail_where = '';
+			$jail_bind = array();
+		}
+
+		$query = "select tc.*, tc.`title` as parentTitle from `tiki_comments` tc $join $jail_join where $mid $jail_where order by ".$this->convertSortMode($sort_mode);
+		$result = $this->query($query, array_merge( $bindvars, $jail_bind ), $maxRecords, $offset);
+		$query = "select count(*) from `tiki_comments` tc $jail_join where $mid $jail_where";
+		$cant = $this->getOne($query, array_merge( $bindvars, $jail_bind ));
 		$ret = array();
 		while ($res = $result->fetchRow()) {
 			switch ($res['objectType']) {

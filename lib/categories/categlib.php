@@ -1227,12 +1227,16 @@ class CategLib extends ObjectLib {
 	/* build the portion of list join if filter by category
 	 * categId can be a simple value, a list of values=>or between categ, array('AND'=>list values) for an AND
 	 */
-	function getSqlJoin($categId, $objType, $sqlObj, &$fromSql, &$whereSql, &$bindVars) {
+	function getSqlJoin($categId, $objType, $sqlObj, &$fromSql, &$whereSql, &$bindVars, $type = '?') {
 		static $callno = 0;
 		$callno++;
 		$fromSql .= ",`tiki_objects` co$callno";
-		$whereSql .= " AND co$callno.`type`=? AND co$callno.`itemId`= $sqlObj ";
-		$bind = array($objType);
+		$whereSql .= " AND co$callno.`type`=$type AND co$callno.`itemId`= $sqlObj ";
+		if( $type == '?' ) {
+			$bind = array($objType);
+		} else {
+			$bind = array();
+		}
 		if (isset( $categId['AND'] ) && is_array($categId['AND'])) {
 			$categId['AND'] = $this->get_jailed( $categId['AND'] );
 			$i = 0;

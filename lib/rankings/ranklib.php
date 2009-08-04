@@ -206,33 +206,27 @@ class RankLib extends TikiLib {
 	}
 
 	function forums_ranking_last_posts($limit) {
-		global $user;
+		global $user, $commentslib; require_once 'lib/commentslib.php';
+		if( ! $commentslib ) {
+			$commentslib = new Comments;
+		}
 		$offset=0;
 		$count = 0;
 		$ret = array();
-		while( $count < $limit) {
-			$query = "select `name`, `title`, `commentDate`, `parentId`, `threadId`, `forumId`, `userName` from
-				`tiki_comments`,`tiki_forums` where
-				`object`=".$this->cast("`forumId`","string")." and `objectType` = 'forum'
-				order by `commentDate` desc"; 
-			$result = $this->query($query,array(),1,$offset);
-			$offset++;
-			if( ($res = $result->fetchRow()) ) {
-				if ($this->user_has_perm_on_object($user, $res['forumId'], 'forum', 'tiki_p_forum_read')) {
-					$aux['name'] = $res['name'] . ': ' . $res['title'];
-					$aux['title'] = $res['title'];
-					$aux['hits'] = $this->get_long_datetime($res['commentDate']);
-					$tmp = $res['parentId'];
-					if ($tmp == 0) $tmp = $res['threadId'];
-					$aux['href'] = 'tiki-view_forum_thread.php?forumId=' . $res['forumId'] . '&amp;comments_parentId=' . $tmp;
-					$aux['date'] = $res['commentDate'];
-					$aux['user'] = $res['userName'];
-					$ret[] = $aux;
-					++$count;
-				}
-			} else {
-				break;
-			}
+		$result = $commentslib->get_all_comments( 'forum', 0, $limit, 'commentDate_desc' );
+		$result['data'] = Perms::filter( array( 'type' => 'forum' ), 'object', $result['data'], array( 'object' => 'forumId', 'forum_read' ) );
+		foreach( $result['data'] as $res ) {
+			$aux['name'] = $res['name'] . ': ' . $res['title'];
+			$aux['title'] = $res['title'];
+			$tmp = $res['parentId'];
+			if ($tmp == 0) $tmp = $res['threadId'];
+			$aux['href'] = 'tiki-view_forum_thread.php?forumId=' . $res['forumId'] . '&amp;comments_parentId=' . $tmp;
+			$aux['hits'] = $this->get_long_datetime($res['commentDate']);
+			$tmp = $res['parentId'];
+			if ($tmp == 0) $tmp = $res['threadId'];
+			$aux['date'] = $res['commentDate'];
+			$aux['user'] = $res['userName'];
+			$ret[] = $aux;
 		}
 		$retval["data"] = $ret;
 		$retval["title"] = tra("Forums last posts");
