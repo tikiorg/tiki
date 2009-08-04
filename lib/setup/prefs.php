@@ -193,6 +193,7 @@ function get_default_prefs() {
 		'wikiplugin_cookie' => 'n',
 		'wikiplugin_copyright' => 'y',
 		'wikiplugin_countdown' => 'n',
+		'wikiplugin_datachannel' => 'n',
 		'wikiplugin_dbreport' => 'n',
 		'wikiplugin_div' => 'n',
 		'wikiplugin_dl' => 'y',

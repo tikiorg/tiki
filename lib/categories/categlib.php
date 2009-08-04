@@ -467,7 +467,7 @@ class CategLib extends ObjectLib {
 		while ($res = $result->fetchRow()) {
 			$ret[] = $res["categId"];
 		}
-		return $ret;
+		return $this->get_jailed( $ret );
 	}
 	
 	// get the permissions assigned to the parent categories of an object
