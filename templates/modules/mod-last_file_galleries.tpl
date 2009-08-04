@@ -12,7 +12,7 @@
 {if $nonums != 'y'}<ol>{else}<ul>{/if}
    {section name=ix loop=$modLastFileGalleries}
      <li>
-        <a class="linkmodule" href="tiki-list_file_gallery.php?galleryId={$modLastFileGalleries[ix].galleryId}">
+        <a class="linkmodule" href="tiki-list_file_gallery.php?galleryId={$modLastFileGalleries[ix].id}">
             {$modLastFileGalleries[ix].name}
           </a>
         </li>

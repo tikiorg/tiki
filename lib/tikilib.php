@@ -2317,7 +2317,7 @@ class TikiLib extends TikiDb_Bridge {
 		} elseif ( $orderby != '' ) {
 			$query .= ' ORDER BY '.$orderby;
 		}
-		$result = $this->query($query, $bindvars);
+		$result = $this->fetchAll($query, $bindvars);
 
 		if ( $with_subgals_size ) {
 			if (!function_exists('galsize')) {
@@ -2354,7 +2354,7 @@ class TikiLib extends TikiDb_Bridge {
 		} else {
 			$fgal_perms = array();
 		}
-		while ( $res = $result->fetchRow() ) {
+		foreach( $result as $res ) {
 			$object_type = ( $res['isgal'] == 1 ? 'file gallery' : 'file');
 			if (isset($fgal_perms[$res['id']])) {
 				$res['perms'] = $fgal_perms[$res['id']];
