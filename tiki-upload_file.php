@@ -304,6 +304,7 @@ if (isset($_REQUEST["upload"])) {
 					$cat_desc = substr($_REQUEST["description"][$key], 0, 200);
 					$cat_name = empty($_REQUEST['name'][$key]) ? $name : $_REQUEST['name'][$key];
 					$cat_href = $aux['dllink'];
+					$cat_object_exists = (bool) $fileId;
 					if ($prefs['feature_groupalert'] == 'y' && isset($_REQUEST['listtoalert'])) {
 						$groupalertlib->Notify($_REQUEST['listtoalert'], "tiki-download_file.php?fileId=" . $fileId);
 					}
@@ -338,6 +339,7 @@ if (isset($_REQUEST["upload"])) {
 		$cat_desc = substr($_REQUEST["description"][0], 0, 200);
 		$cat_name = empty($fileInfo['name']) ? $fileInfo['filename'] : $fileInfo['name'];
 		$cat_href = $podCastGallery ? $podcast_url . $fhash : "$url_browse?fileId=" . $editFileId;
+		$cat_object_exists = (bool) $cat_objid;
 		if ($prefs['fgal_limit_hits_per_file'] == 'y') {
 			$filegallib->set_download_limit($editFileId, $_REQUEST['hit_limit'][0]);
 		}
@@ -403,6 +405,7 @@ if ($prefs['fgal_limit_hits_per_file'] == 'y') {
 }
 $cat_type = 'file';
 $cat_objid = empty($_REQUEST['fileId']) ? 0 : $_REQUEST['fileId'];
+$cat_object_exists = (bool) $cat_objid;
 include_once ('categorize_list.php');
 include_once ('tiki-section_options.php');
 ask_ticket('upload-file');

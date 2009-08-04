@@ -2142,6 +2142,9 @@ class TikiLib extends TikiDb_Bridge {
 	 */
 	function get_files($offset, $maxRecords, $sort_mode, $find, $galleryId=-1, $with_archive=false, $with_subgals=false, $with_subgals_size=true, $with_files=true, $with_files_data=false, $with_parent_name=false, $with_files_count=true, $recursive=false, $my_user='', $keep_subgals_together=true, $parent_is_file=false) {
 		global $user, $tiki_p_admin_file_galleries;
+		$f_jail_bind = array();
+		$g_jail_bind = array();
+		$bindvars = array();
 
 		if ( ( ! $with_files && ! $with_subgals ) || ( $parent_is_file && $galleryId <= 0 ) ) return array();
 
@@ -2170,14 +2173,6 @@ class TikiLib extends TikiDb_Bridge {
 		$orderby = $this->convertSortMode($sort_mode);
 
 		global $categlib; require_once 'lib/categories/categlib.php';
-		if( $jail = $categlib->get_jail() ) {
-			$categlib->getSqlJoin( $jail, 'file gallery', '`tfg`.`galleryId`', $jail_join, $jail_where, $jail_bind );
-		} else {
-			$jail_join = '';
-			$jail_where = '';
-			$jail_bind = array();
-		}
-
 		$f2g_corresp = array(
 				'0 as `isgal`' => '1 as `isgal`',
 				'tf.`fileId` as `id`' => 'tfg.`galleryId` as `id`',
@@ -2226,7 +2221,15 @@ class TikiLib extends TikiDb_Bridge {
 			$f_group_by = ' GROUP BY tf.`fileId`';
 		}
 
-		$f_query = 'SELECT '.implode(', ', array_keys($f2g_corresp)).' FROM '.$f_table.' WHERE tf.`archiveId`='.( $parent_is_file ? $fileId : '0' );
+		if( $jail = $categlib->get_jail() ) {
+			$categlib->getSqlJoin( $jail, 'file', 'tf.`fileId`', $f_jail_join, $f_jail_where, $f_jail_bind );
+		} else {
+			$f_jail_join = '';
+			$f_jail_where = '';
+			$f_jail_bind = array();
+		}
+
+		$f_query = 'SELECT '.implode(', ', array_keys($f2g_corresp)).' FROM '.$f_table.$f_jail_join.' WHERE tf.`archiveId`='.( $parent_is_file ? $fileId : '0' ) . $f_jail_where;
 		$bindvars = array();
 
 		$mid = '';
@@ -2266,18 +2269,27 @@ class TikiLib extends TikiDb_Bridge {
 			// If $user is admin then get ALL galleries, if not only user galleries are shown
 			// If the user is not admin then select it's own galleries or public galleries
 			if ( $tiki_p_admin_file_galleries != 'y' && $my_user != 'admin' && ! $parentId ) {
-				$g_mid = " AND (tfg.`user`='$my_user' OR tfg.`visible`='y' OR tfg.`public`='y')"; /// FIXME: use bindvars
+				$g_mid = " AND (tfg.`user`=? OR tfg.`visible`='y' OR tfg.`public`='y')";
+				$bindvars[] = $my_user;
 			}
 
-			$g_query = 'SELECT '.implode(', ', array_values($f2g_corresp)).' FROM '.$g_table.$g_join.$jail_join;
+			if( $jail = $categlib->get_jail() ) {
+				$categlib->getSqlJoin( $jail, 'file gallery', '`tfg`.`galleryId`', $g_jail_join, $g_jail_where, $g_jail_bind );
+			} else {
+				$g_jail_join = '';
+				$g_jail_where = '';
+				$g_jail_bind = array();
+			}
+
+			$g_query = 'SELECT '.implode(', ', array_values($f2g_corresp)).' FROM '.$g_table.$g_join.$g_jail_join;
 			$g_query .= " WHERE 1=1 $gmid ";
 
 			if ( $galleryId_str != '' ) {
 				$g_query .= ' AND tfg.`parentId`'.$galleryId_str;
 			}
 
-			$g_query .= $jail_where;
-			$bindvars = array_merge( $bindvars, $jail_bind );
+			$g_query .= $g_jail_where;
+			$bindvars = array_merge( $bindvars, $g_jail_bind );
 
 			if ( $with_parent_name ) {
 				$select .= ', tfgp.`name` as `parentName`';
@@ -2286,6 +2298,7 @@ class TikiLib extends TikiDb_Bridge {
 
 			if ( $with_files ) {
 				$query = "SELECT $select FROM (($f_query $f_group_by) UNION ($g_query $g_group_by)) as tab".$join;
+				$bindvars = array_merge( $f_jail_bind, $bindvars );
 			} else {
 				$query = "SELECT $select FROM ($g_query $g_group_by) as tab".$join;
 			}
@@ -2294,6 +2307,7 @@ class TikiLib extends TikiDb_Bridge {
 
 		} else {
 			$query = $f_query;
+			$bindvars = $f_jail_bind;
 			if ( $mid != '' ) $query .= ' AND'.$mid;
 			$query .= $f_group_by;
 		}

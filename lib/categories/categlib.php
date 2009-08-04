@@ -1228,28 +1228,30 @@ class CategLib extends ObjectLib {
 	 * categId can be a simple value, a list of values=>or between categ, array('AND'=>list values) for an AND
 	 */
 	function getSqlJoin($categId, $objType, $sqlObj, &$fromSql, &$whereSql, &$bindVars) {
-		$fromSql .= ",`tiki_objects` co";
-		$whereSql .= " AND co.`type`=? AND co.`itemId`= $sqlObj ";
+		static $callno = 0;
+		$callno++;
+		$fromSql .= ",`tiki_objects` co$callno";
+		$whereSql .= " AND co$callno.`type`=? AND co$callno.`itemId`= $sqlObj ";
 		$bind = array($objType);
 		if (isset( $categId['AND'] ) && is_array($categId['AND'])) {
 			$categId['AND'] = $this->get_jailed( $categId['AND'] );
 			$i = 0;
 			foreach ($categId['AND'] as $c) {
-				$fromSql .= ", `tiki_category_objects` tco$i ";
-				$whereSql .= " AND tco$i.`categId`= ?  AND co.`objectId`=tco$i.`catObjectId` ";
+				$fromSql .= ", `tiki_category_objects` t{$callno}co$i ";
+				$whereSql .= " AND t{$callno}co$i.`categId`= ?  AND co$callno.`objectId`=t{$callno}co$i.`catObjectId` ";
 				++$i;
 			}
 			$bind = array_merge($bind, $categId['AND']);
 		} elseif (is_array($categId)) {
 			$categId = $this->get_jailed( $categId );
-			$fromSql .= ", `tiki_category_objects` tco ";
-			$whereSql .= " AND co.`objectId`=tco.`catObjectId` ";
-			$whereSql .= 'AND tco.`categId` IN ('.implode(',',array_fill(0,count($categId),'?')).')';
+			$fromSql .= ", `tiki_category_objects` tco$callno ";
+			$whereSql .= " AND co$callno.`objectId`=tco$callno.`catObjectId` ";
+			$whereSql .= "AND tco$callno.`categId` IN (".implode(',',array_fill(0,count($categId),'?')).')';
 			$bind = array_merge($bind, $categId);
 		} else {
-			$fromSql .= ", `tiki_category_objects` tco ";
-			$whereSql .= " AND co.`objectId`=tco.`catObjectId` ";
-			$whereSql .= " AND tco.`categId`= ? ";
+			$fromSql .= ", `tiki_category_objects` tco$callno ";
+			$whereSql .= " AND co.$callno`objectId`=tco.$callno`catObjectId` ";
+			$whereSql .= " AND tco.$callno`categId`= ? ";
 			$bind[] = $categId;
 		}
 		if (is_array($bindVars))
