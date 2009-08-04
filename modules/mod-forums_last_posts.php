@@ -8,7 +8,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 global $smarty;
 global $ranklib; include_once ('lib/rankings/ranklib.php');
 
-$ranking = $ranklib->forums_ranking_last_posts($module_rows);
+$ranking = $ranklib->forums_ranking_last_posts($module_rows, isset($module_params['topics']) && $module_params['topics'] == 'y');
 
 $replyprefix = tra("Re:");
 
