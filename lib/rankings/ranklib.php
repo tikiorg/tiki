@@ -176,37 +176,23 @@ class RankLib extends TikiLib {
 		return $retval;
 	}
 
-	function forums_ranking_most_read_topics($limit, $forumId='') {
-		global $user;
-		if (is_array($forumId)) {
-			$bindvars = $forumId;
-			$mid = ' and tf.`forumId` in ('.implode(',',array_fill(0,count($forumId),'?')).')';
-		} elseif (!empty($forumId)) {
-			$bindvars=array((int) $forumId);
-		    $mid = ' and tf.`forumId`=?';
-		} else {
-			$bindvars = array();
-			$mid = '';
+	function forums_ranking_most_read_topics($limit) {
+		global $commentslib;
+		if( ! $commentslib ) {
+			require_once 'lib/commentslib.php';
+			$commentslib = new Comments;
 		}
-		$query = "select
-		tc.`hits`,tc.`title`,tf.`name`,tf.`forumId`,tc.`threadId`,tc.`object`
-		from `tiki_comments` tc,`tiki_forums` tf where
-		`object`=`forumId` and `objectType` = 'forum' and
-		`parentId`=0 $mid order by tc.`hits` desc";
 
-		$result = $this->query($query, $bindvars);
+		$result = $commentslib->get_all_comments( 'forum', 0, $limit, 'hits_desc', '', '', '', true );
+
 		$ret = array();
-		$count = 0;
-		while (($res = $result->fetchRow()) && $count < $limit) {
-                 if ($this->user_has_perm_on_object($user, $res['forumId'], 'forum', 'tiki_p_forum_read')) {
+		foreach( $result['data'] as $res ) {
 				$aux['name'] = $res['name'] . ': ' . $res['title'];
 				$aux['title'] = $res['title'];
 				$aux['hits'] = $res['hits'];
 				$aux['href'] = 'tiki-view_forum_thread.php?forumId=' . $res['forumId'] . '&amp;comments_parentId=' . $res['threadId'];
 				$ret[] = $aux;
-				++$count;
 			}
-		}
 
 		$retval["data"] = $ret;
 		$retval["title"] = tra("Forums most read topics");
@@ -258,20 +244,20 @@ class RankLib extends TikiLib {
 	}
 
 	function forums_ranking_most_visited_forums($limit) {
-		global $user;
-		$query = "select * from `tiki_forums` order by `hits` desc";
+		global $commentslib;
+		if( ! $commentslib ) {
+			require_once 'lib/commentslib.php';
+			$commentslib = new Comments;
+		}
 
-		$result = $this->query($query,array());
+		$result = $commentslib->list_forums( 0, $limit, 'hits_desc' );
 		$ret = array();
 		$count = 0;
-		while (($res = $result->fetchRow()) && $count < $limit) {
-			if ($this->user_has_perm_on_object($user, $res['forumId'], 'forum', 'tiki_p_forum_read')) {
-				$aux['name'] = $res['name'];				
-				$aux['hits'] = $res['hits'];
-				$aux['href'] = 'tiki-view_forum.php?forumId=' . $res['forumId'];
-				$ret[] = $aux;
-				++$count;
-			}
+		foreach( $result['data'] as $res ) {
+			$aux['name'] = $res['name'];				
+			$aux['hits'] = $res['hits'];
+			$aux['href'] = 'tiki-view_forum.php?forumId=' . $res['forumId'];
+			$ret[] = $aux;
 		}
 
 		$retval["data"] = $ret;
