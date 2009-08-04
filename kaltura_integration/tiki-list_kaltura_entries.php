@@ -7,16 +7,16 @@ if ($prefs['feature_kaltura'] != 'y') {
 	die;
 }
 
-include_once ("lib/videogals/videogallib.php");
-
-global $user;
-
-if ($tiki_p_list_kaltura_entries != 'y' && $tiki_p_admin != 'y') {
+if ($tiki_p_list_videos != 'y' && $tiki_p_admin_kaltura != 'y' && $tiki_p_admin != 'y') {
 	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied: You cannot view this section"));
+	$smarty->assign('msg', tra("Permission denied: You cannot view this page"));
 	$smarty->display('error.tpl');
 	die;
 }
+
+include_once ("lib/videogals/videogallib.php");
+
+global $user;
 
 $kaltura_conf = kaltura_init_config();
 $kuser = new KalturaSessionUser();

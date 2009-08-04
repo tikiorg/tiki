@@ -10,7 +10,7 @@ if ($prefs['feature_kaltura'] != 'y') {
 
 include_once ("lib/videogals/videogallib.php");
 
-if ((empty($_REQUEST['videoId']) || isset($_REQUEST["kcw"]))&& $tiki_p_upload_videos != 'y' && $tiki_p_admin_video_galleries != 'y' && $tiki_p_admin != 'y') {
+if ((empty($_REQUEST['videoId']) || isset($_REQUEST["kcw"]))&& $tiki_p_upload_videos != 'y' && $tiki_p_admin_kaltura != 'y' && $tiki_p_admin != 'y') {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied: You cannot upload videos"));
 	$smarty->display('error.tpl');
@@ -34,7 +34,7 @@ if (isset($_REQUEST["kcw"])) {
 }
 
 if (isset($_REQUEST["update"])){
-	if($tiki_p_edit_videos == 'y' || $tiki_p_admin_video_galleries == 'y' || $tiki_p_admin == 'y'){
+	if($tiki_p_edit_videos == 'y' || $tiki_p_admin_kaltura == 'y' || $tiki_p_admin == 'y'){
 		$videogallib->edit_video($_REQUEST['videoId'], $_REQUEST['name'], $_REQUEST['description'], $_REQUEST['tags']);
 		header ('Location: tiki-list_kaltura_entries.php');
 		die;
@@ -45,6 +45,8 @@ if (isset($_REQUEST["update"])){
 		die;
 	}
 }
+
+$videoId = array();
 
 if(!empty($_REQUEST['videoId']) && isset($_REQUEST['action'])){
 	$mode = $_REQUEST['action'];
@@ -60,7 +62,7 @@ if(!empty($_REQUEST['videoId']) && isset($_REQUEST['action'])){
 	
 	case 'remix':
 	case 'dupl':
-		if( $tiki_p_remix_videos != 'y' && $tiki_p_admin_video_galleries != 'y' && $tiki_p_admin != 'y' ){
+		if( $tiki_p_remix_videos != 'y' && $tiki_p_admin_kaltura != 'y' && $tiki_p_admin != 'y' ){
 			$smarty->assign('errortype', 401);
 			$smarty->assign('msg', tra("Permission denied: You cannot remix videos"));
 			$smarty->display('error.tpl');
@@ -90,17 +92,16 @@ if(!empty($_REQUEST['videoId']) && isset($_REQUEST['action'])){
 					}else{
 						$kres = $kaltura_client->addRoughcutEntry($kuser,-2);
 						$roughcutId = $kres['result']['entry']['id'];
-						$kres = $kaltura_client->appendentrytoroughcut($kuser,$videoId[0],'entry-'.$roughcutId,$roughcutId);
+						$kres = $kaltura_client->appendEntryToRoughcut($kuser,$videoId[0],'entry-'.$roughcutId,$roughcutId);
 						$seflashVars = $seflashVars.
 							'&kshow_id=entry-' . $roughcutId.
-							'&entry_id='. $roughcutId;			
+							'&entry_id='. $roughcutId;		
 					}
 				}else{
 					$kres = $kaltura_client->addRoughcutEntry($kuser,-2);
 					$roughcutId = $kres['result']['entry']['id'];
-					
-					for ($i=0;$i < count($videoId); $i++){
-						$kres = $kaltura_client->appendentrytoroughcut($kuser,$videoId[$i],'entry-'.$roughcutId,$roughcutId);	
+					for ($i=0; $i < count($videoId); $i++){
+						$kres = $kaltura_client->appendEntryToRoughcut($kuser,$videoId[$i],'entry-'.$roughcutId,$roughcutId);
 					}
 					
 					$seflashVars = $seflashVars.
@@ -109,9 +110,10 @@ if(!empty($_REQUEST['videoId']) && isset($_REQUEST['action'])){
 				}			
 		}
 		$smarty->assign_by_ref('seflashVars',$seflashVars);
+		$smarty->assign_by_ref('videoId',$roughcutId);
 		break;
 	case 'edit':
-		if($tiki_p_edit_videos != 'y' && $tiki_p_admin_video_galleries != 'y' && $tiki_p_admin != 'y' ){
+		if($tiki_p_edit_videos != 'y' && $tiki_p_admin_kaltura != 'y' && $tiki_p_admin != 'y' ){
 			$smarty->assign('errortype', 401);
 			$smarty->assign('msg', tra("Permission denied: You cannot edit video information"));
 			$smarty->display('error.tpl');
@@ -123,12 +125,12 @@ if(!empty($_REQUEST['videoId']) && isset($_REQUEST['action'])){
 					$smarty->display('error.tpl');
 					die;
 				}
-
+				$smarty->assign_by_ref('videoId',$videoId[0]);
 				$smarty->assign_by_ref('videoInfo',$videoInfo);
 		}
 		break;
 	case 'delete':
-		if($tiki_p_delete_videos != 'y' && $tiki_p_admin_video_galleries != 'y' && $tiki_p_admin != 'y' ){
+		if($tiki_p_delete_videos != 'y' && $tiki_p_admin_kaltura != 'y' && $tiki_p_admin != 'y' ){
 			$smarty->assign('errortype', 401);
 			$smarty->assign('msg', tra("Permission denied: You cannot delete kaltura video"));
 			$smarty->display('error.tpl');
@@ -148,7 +150,7 @@ if(!empty($_REQUEST['videoId']) && isset($_REQUEST['action'])){
 		}
 		break;
 	case 'download':
-		if($tiki_p_delete_videos != 'y' && $tiki_p_admin_video_galleries != 'y' && $tiki_p_admin != 'y' ){
+		if($tiki_p_download_videos != 'y' && $tiki_p_admin_kaltura != 'y' && $tiki_p_admin != 'y' ){
 			$smarty->assign('errortype', 401);
 			$smarty->assign('msg', tra("Permission denied: You cannot download kaltura video"));
 			$smarty->display('error.tpl');
@@ -171,13 +173,18 @@ if(!empty($_REQUEST['videoId']) && isset($_REQUEST['action'])){
 	}
 		
 } else {
-	
-	if(!empty($_REQUEST['videoId']) && $tiki_p_view_videos != 'y' && $tiki_p_admin_video_galleries != 'y' && $tiki_p_admin != 'y' ){
+	$videoId[] = $_REQUEST['videoId'];
+	if(!empty($_REQUEST['videoId']) && $tiki_p_view_videos != 'y' && $tiki_p_admin_kaltura != 'y' && $tiki_p_admin != 'y' ){
 		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra("Permission denied: You cannot view video"));
 		$smarty->display('error.tpl');
 		die;
 	}
+	
+	$smarty->assign('mode', 'view');
+	$videoInfo = $videogallib->get_video_info($videoId[0],$kaltura_client);
+	$smarty->assign_by_ref('videoId',$videoId[0]);
+	$smarty->assign_by_ref('videoInfo',$videoInfo);
 }
 
 $cwflashVars = 'userId=' .$kuser->userId.
