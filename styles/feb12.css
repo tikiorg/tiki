@@ -188,10 +188,10 @@ small {
 label {
 	margin: 0 2px;
 }
-
+/*
 ul span, ol span {
 	color: #333;
-}
+}*/
 
 /***** Page Layout *****/
 #tiki-clean {
@@ -536,7 +536,7 @@ a.phplmselected:hover {
 	margin-left: 20px;
 }
 
-#tiki-top > .cssmenu_horiz > li > a {
+#tiki-top .cssmenu_horiz li.menuLevel0 a {
 	padding: 8px 1em;
 	text-decoration: none;
 	font: 14px Verdana, Helvetica, Arial, Sans-Serif;
@@ -544,19 +544,23 @@ a.phplmselected:hover {
 	margin: 0;
 }
 
-#tiki-top > .cssmenu_horiz > li.menusection > a {
+#tiki-top .cssmenu_horiz li.menuSection0 a {
 	padding-right: 2.6em;
 }
 
-#tiki-top .cssmenu_horiz li.menulevel0:hover {
+#tiki-top .cssmenu_horiz li.menuLevel0:hover {
 	background: url(feb12/header.jpg) repeat-x 0 100%;
 	color: #eee !important;
 	text-decoration: none;
 }
-
-#tiki-top .cssmenu_horiz li ul a {
+#tiki-top .cssmenu_horiz li.menuLevel1 a {
 	color: #000;
+	padding: 4px 1em;
 }
+/*
+#tiki-top .cssmenu_horiz li ul a .menuText {
+	color: #000;
+}*/
 
 #tiki-top .cssmenu_horiz ul li a:hover {
 	color: #993300;
