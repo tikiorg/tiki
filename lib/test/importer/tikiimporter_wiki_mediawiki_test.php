@@ -192,6 +192,7 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
         $i = 0;
         foreach ($pages as $page) {
             $obj = $this->getMock('TikiImporter_Wiki_Mediawiki', array('extractRevision'));
+            $obj->revisionsNumber = 0;
             $obj->expects($this->atLeastOnce())->method('extractRevision')->will($this->returnValue('revision'));
 
             $return = $obj->extractInfo($page);
@@ -200,9 +201,82 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
         }
     }
 
+    public function testExtractInfoShouldNotParseMoreThanFiveRevisions()
+    {
+        $dom = new DOMDocument;
+        $dom->load(dirname(__FILE__) . '/fixtures/mediawiki_page.xml');
+        $expectedNames = array('Redes de ensino', 'Academia Colarossi');
+        $expectedCalls = array(5, 2);
+
+        $pages = $dom->getElementsByTagName('page');
+
+        $this->expectOutputString("Page \"Redes de ensino\" succesfully parsed with 5 revisions (from a total of 8 revisions).\nPage \"Academia Colarossi\" succesfully parsed with 2 revisions (from a total of 2 revisions).\n");
+
+        $i = 0;
+        foreach ($pages as $page) {
+            $obj = $this->getMock('TikiImporter_Wiki_Mediawiki', array('extractRevision'));
+            $obj->revisionsNumber = 5;
+            $obj->expects($this->exactly($expectedCalls[$i]))->method('extractRevision')->will($this->returnValue('revision'));
+
+            $return = $obj->extractInfo($page);
+            $this->assertEquals($expectedNames[$i], $return['name']);
+            $this->assertEquals($expectedCalls[$i], count($return['revisions']));
+            $i++;
+        }
+    }
+
+    public function testExtractInfoShouldParseAllRevisions()
+    {
+        $dom = new DOMDocument;
+        $dom->load(dirname(__FILE__) . '/fixtures/mediawiki_page.xml');
+        $expectedNames = array('Redes de ensino', 'Academia Colarossi');
+        $expectedCalls = array(8, 2);
+
+        $pages = $dom->getElementsByTagName('page');
+
+        $this->expectOutputString("Page \"Redes de ensino\" succesfully parsed with 8 revisions (from a total of 8 revisions).\nPage \"Academia Colarossi\" succesfully parsed with 2 revisions (from a total of 2 revisions).\n");
+
+        $i = 0;
+        foreach ($pages as $page) {
+            $obj = $this->getMock('TikiImporter_Wiki_Mediawiki', array('extractRevision'));
+            $obj->revisionsNumber = 0;
+            $obj->expects($this->exactly($expectedCalls[$i]))->method('extractRevision')->will($this->returnValue('revision'));
+
+            $return = $obj->extractInfo($page);
+            $this->assertEquals($expectedNames[$i], $return['name']);
+            $this->assertEquals($expectedCalls[$i], count($return['revisions']));
+            $i++;
+        }
+    }
+
+    public function testExtractInfoShouldAlsoParseAllRevisions()
+    {
+        $dom = new DOMDocument;
+        $dom->load(dirname(__FILE__) . '/fixtures/mediawiki_page.xml');
+        $expectedNames = array('Redes de ensino', 'Academia Colarossi');
+        $expectedCalls = array(8, 2);
+
+        $pages = $dom->getElementsByTagName('page');
+
+        $this->expectOutputString("Page \"Redes de ensino\" succesfully parsed with 8 revisions (from a total of 8 revisions).\nPage \"Academia Colarossi\" succesfully parsed with 2 revisions (from a total of 2 revisions).\n");
+
+        $i = 0;
+        foreach ($pages as $page) {
+            $obj = $this->getMock('TikiImporter_Wiki_Mediawiki', array('extractRevision'));
+            $obj->revisionsNumber = 15;
+            $obj->expects($this->exactly($expectedCalls[$i]))->method('extractRevision')->will($this->returnValue('revision'));
+
+            $return = $obj->extractInfo($page);
+            $this->assertEquals($expectedNames[$i], $return['name']);
+            $this->assertEquals($expectedCalls[$i], count($return['revisions']));
+            $i++;
+        }
+    }
+
     public function testExtractInfoShouldPrintErrorMessageIfProblemWithRevision()
     {
         $obj = $this->getMock('TikiImporter_Wiki_Mediawiki', array('extractRevision'));
+        $obj->revisionsNumber = 0;
         $obj->expects($this->exactly(10))->method('extractRevision')->will($this->onConsecutiveCalls(array(), array(), $this->throwException(new ImporterParserException)));
 
         $dom = new DOMDocument;
@@ -219,6 +293,7 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
     public function testExtractInfoShouldThrowExceptionIfUnableToParseAllRevisionsOfPage()
     {
         $obj = $this->getMock('TikiImporter_Wiki_Mediawiki', array('extractRevision', 'saveAndDisplayLog'));
+        $obj->revisionsNumber = 0;
         $obj->expects($this->exactly(8))->method('extractRevision')->will($this->throwException(new ImporterParserException));
         $obj->expects($this->exactly(8))->method('saveAndDisplayLog')->will($this->returnValue(''));
 

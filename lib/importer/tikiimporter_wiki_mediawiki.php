@@ -230,7 +230,9 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
 
     /**
      * Parse an DOM representation of a Mediawiki page and return all the values
-     * that will be imported (page name, page content for all revisions)
+     * that will be imported (page name, page content for all revisions). The 
+     * property TikiImporter_Wiki::revisionsNumber define how many wiki page
+     * revisions are parsed.
      * 
      * Note: the names of the keys are changed to reflected the names used by
      * Tiki builtin function (i.e. 'title' is changed to 'name' as used in 
@@ -245,6 +247,11 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
         $data = array();
         $data['revisions'] = array();
 
+        $totalRevisions = $page->getElementsByTagName('revision')->length;
+        if ($this->revisionsNumber != 0 && $totalRevisions > $this->revisionsNumber) {
+            $j = true;
+        }
+
         $i = 0;
         foreach ($page->childNodes as $node) {
             if ($node instanceof DOMElement) {
@@ -257,10 +264,12 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
                     break;
                 case 'revision':
                     $i++;
-                    try {
-                        $data['revisions'][] = $this->extractRevision($node);
-                    } catch (ImporterParserException $e) {
-                        $this->saveAndDisplayLog('Error while parsing revision ' . $i . ' of the page "' . $data['name'] . '". Or there is a problem on the page syntax or on the Text_Wiki parser (the parser used by the importer).' . "\n");
+                    if (!isset($j) || ($i > ($totalRevisions - $this->revisionsNumber))) {
+                        try {
+                            $data['revisions'][] = $this->extractRevision($node);
+                        } catch (ImporterParserException $e) {
+                            $this->saveAndDisplayLog('Error while parsing revision ' . $i . ' of the page "' . $data['name'] . '". Or there is a problem on the page syntax or on the Text_Wiki parser (the parser used by the importer).' . "\n");
+                        }
                     }
                     break;
                 default:
@@ -270,7 +279,7 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
         }
 
         if (count($data['revisions']) > 0) {
-            $msg = 'Page "' . $data['name'] . '" succesfully parsed with ' . count($data['revisions']) . " revisions (from a total of $i revisions).\n";
+            $msg = 'Page "' . $data['name'] . '" succesfully parsed with ' . count($data['revisions']) . " revisions (from a total of $totalRevisions revisions).\n";
             $this->saveAndDisplayLog($msg);
             return $data;
         } else {

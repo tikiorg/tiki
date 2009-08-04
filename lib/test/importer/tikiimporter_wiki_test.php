@@ -115,28 +115,6 @@ class TikiImporter_Wiki_InsertPage_Test extends TikiImporter_TestCase
         $this->assertTrue($this->obj->insertPage($page));
     }
 
-    public function testInsertPageRevisionNumberDefinedToThree()
-    {
-        global $tikilib, $page;
-        $tikilib->expects($this->once())->method('page_exists')->with($page['name'])->will($this->returnValue(false));
-        $tikilib->expects($this->once())->method('create_page')->with($page['name'], 0, $page['revisions'][5]['data'], $page['revisions'][5]['lastModif'], $page['revisions'][5]['comment'], $page['revisions'][5]['user'], $page['revisions'][5]['ip']);
-        // TODO: how to test parameters for update_page for the 2 different calls
-        $tikilib->expects($this->exactly(2))->method('update_page')->with($page['name']);
-        
-        $this->obj->revisionsNumber = 3;
-        $this->assertTrue($this->obj->insertPage($page));
-    }
-
-    public function testInsertPageRevisionNumberDefinedToTwo()
-    {
-        global $tikilib, $page;
-        $tikilib->expects($this->once())->method('page_exists')->with($page['name'])->will($this->returnValue(false));
-        $tikilib->expects($this->once())->method('create_page')->with($page['name'], 0, $page['revisions'][6]['data'], $page['revisions'][6]['lastModif'], $page['revisions'][6]['comment'], $page['revisions'][6]['user'], $page['revisions'][6]['ip']);
-        $tikilib->expects($this->once())->method('update_page')->with($page['name'], $page['revisions'][7]['data'], $page['revisions'][7]['comment'], $page['revisions'][7]['user'], $page['revisions'][7]['ip'], '', $page['revisions'][7]['minor'], '', false, null, $page['revisions'][7]['lastModif']);
-        $this->obj->revisionsNumber = 2;
-        $this->assertTrue($this->obj->insertPage($page));
-    }
-
     public function testInsertPageAlreadyExistentPageNameOverride()
     {
         global $tikilib, $page;
