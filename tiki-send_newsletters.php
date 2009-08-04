@@ -235,6 +235,13 @@ if (isset($_REQUEST["send"])) {
 	} else {
 		$html = $_REQUEST["dataparsed"];
 	}
+	if (stristr($html, '<base') === false) {
+		if (stristr($html, '<header') === false) {
+			$html = str_ireplace('<html>', "<html><header><base href=\"$base_host\" /></header>", $html);
+		} else {
+			$html = str_ireplace('<header>', "<header><base href=\"$base_host\" />", $html);
+		}
+	}
 	$sent = array();
 	$unsubmsg = '';
 	$errors = array();
