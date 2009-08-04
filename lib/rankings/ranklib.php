@@ -268,20 +268,20 @@ class RankLib extends TikiLib {
 	}
 
 	function forums_ranking_most_commented_forum($limit) {
-		global $user;
-		$query = "select * from `tiki_forums` order by `comments` desc";
+		global $commentslib;
+		if( ! $commentslib ) {
+			require_once 'lib/commentslib.php';
+			$commentslib = new Comments;
+		}
 
-		$result = $this->query($query,array());
+		$result = $commentslib->list_forums( 0, $limit, 'comments_desc' );
 		$ret = array();
 		$count = 0;
-		while (($res = $result->fetchRow()) && $count < $limit) {
-			if ($this->user_has_perm_on_object($user, $res['forumId'], 'forum', 'tiki_p_forum_read')) {
-				$aux['name'] = $res['name'];				
-				$aux['hits'] = $res['comments'];
-				$aux['href'] = 'tiki-view_forum.php?forumId=' . $res['forumId'];
-				$ret[] = $aux;
-				++$count;
-			}
+		foreach( $result['data'] as $res ) {
+			$aux['name'] = $res['name'];				
+			$aux['hits'] = $res['hits'];
+			$aux['href'] = 'tiki-view_forum.php?forumId=' . $res['forumId'];
+			$ret[] = $aux;
 		}
 
 		$retval["data"] = $ret;
