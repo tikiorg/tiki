@@ -2038,10 +2038,10 @@ class Tiki_Profile_UsersHandler extends Tiki_Profile_InstallHandler
 					$userlib->add_user($user['name'], $pass, '');
 				}
 				
-				if (isset($users['groups']))
+				if (isset($user['groups']))
 					foreach ($user['groups'] as $group) 
 					{
-						$userlib->add_group($group);
+						//if ($userlib->add_group($group));
 						$userlib->assign_user_to_group($user['name'], $group);
 					}
 			}

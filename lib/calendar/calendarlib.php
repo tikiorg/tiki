@@ -23,10 +23,43 @@ class CalendarLib extends TikiLib {
 		$res = array();
 		$bindvars = array();
 		if ($find) {
-			$mid = "where `name` like ?";
+			$mid = "where tcal.`name` like ?";
 			$bindvars[] = '%'.$find.'%';
 		}
-		$query = "select * from `tiki_calendars` $mid order by ".$this->convertSortMode($sort_mode);
+		// Use perspectives
+		global $categlib; require_once( 'lib/categories/categlib.php' );
+		$category_jails = $categlib->get_jail();
+
+		if( ! isset( $filter['categId'] ) && ! empty( $category_jails ) ) {
+			$filter['categId'] = $category_jails;
+		}
+		
+		$distinct = '';
+		if (!empty($filter)) {
+			$tmp_mid = array();
+			foreach ($filter as $type=>$val) {
+				if ($type == 'categId') {
+					$categories = $categlib->get_jailed( (array) $val );
+
+					$cat_count = count( $categories );
+					$join_tables .= " inner join `tiki_objects` as tob on (tob.`itemId`= tcal.`calendarId` and tob.`type`= ?) inner join `tiki_category_objects` as tc on (tc.`catObjectId`=tob.`objectId` and tc.`categId` IN(" . implode(', ', array_fill(0, $cat_count, '?')) . ")) ";
+
+					if( $cat_count > 1 ) {
+						$distinct = ' DISTINCT ';
+					}
+
+					$join_bindvars = array_merge(array('calendar'), $categories);
+				} 
+			}
+			if (!empty($tmp_mid)) {
+				$mid .= empty($mid) ? ' where (' : ' and (';
+				$mid .= implode( ' and ', $tmp_mid ) . ')';
+			}
+		}
+		
+		$bindvars = array_merge($bindvars, $join_bindvars);
+
+		$query = "select $distinct * from `tiki_calendars` as tcal $join_tables $mid order by tcal.".$this->convertSortMode($sort_mode);
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$query_cant = "select count(*) from `tiki_calendars` $mid";
 		$cant = $this->getOne($query_cant,$bindvars);
