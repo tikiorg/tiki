@@ -111,7 +111,7 @@
 
 {/if}
 
-{if $edit_mode neq 'y' and $fgal_options.show_slideshow.value eq 'y'}
+{if $edit_mode neq 'y' and $prefs.fgal_show_slideshow eq 'y' and $gal_info.show_slideshow.value eq 'y'}
   {button _text="{tr}SlideShow{/tr}" href="#" _onclick="javascript:window.open('tiki-list_file_gallery.php?galleryId=$galleryId&amp;slideshow','','menubar=no,width=600,height=500,resizable=yes');"}
 {/if}
 

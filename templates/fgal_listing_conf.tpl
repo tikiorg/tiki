@@ -15,7 +15,8 @@
 		{else}
 <tr class="formcolor">
 	<td><label for="fgal_{$key}">{$item.name}:</label></td>
-	<td><input type="checkbox" id="fgal_{$key}" name="fgal_{$key}" {if $item.value eq 'y'}checked="checked"{/if}/></td>
+	{assign var='pref_name' value="fgal_$key"}
+	<td><input type="checkbox" id="fgal_{$key}" name="fgal_{$key}" {if $item.value eq 'y'}checked="checked"{/if}{if $edit_mode eq 'y' and $prefs.$pref_name neq 'y'} disabled="disabled"{/if}/></td>
 </tr>
 		{/if}
 	{/foreach}
