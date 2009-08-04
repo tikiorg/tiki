@@ -27,10 +27,6 @@ $dbTiki = new PDO("$db_tiki:host=$host_tiki;dbname=$dbs_tiki", $user_tiki, $pass
 $dbTiki->setAttribute(PDO::ATTR_CASE,PDO::CASE_NATURAL);
 $dbTiki->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_WARNING);
 $dbTiki->setAttribute(PDO::ATTR_ORACLE_NULLS,PDO::NULL_EMPTY_STRING);
-if ($dbTiki->getAttribute(PDO::ATTR_DRIVER_NAME) == 'mysql') {
-	$dbTiki->exec("SET CHARACTER SET utf8");
-}
-
 
 $pq = $dbTiki->prepare('select `login` from `users_users` limit 1');
 $result = $pq->execute();
