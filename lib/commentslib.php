@@ -687,7 +687,15 @@ class Comments extends TikiLib {
 		$time_cond .= ' and a.`type` = ? ';
 		$bind_time[] = $type;
 	}
-		
+
+	global $categlib; require_once 'lib/categories/categlib.php';
+	if( $jail = $categlib->get_jail() ) {
+		$categlib->getSqlJoin( $jail, 'forum', '`a`.`object`', $join, $where, $bind_vars );
+	} else {
+		$join = '';
+		$where = '';
+	}
+
 	$ret = array();
 	$query = "select a.`threadId`,a.`object`,a.`objectType`,a.`parentId`,
 	    a.`userName`,a.`commentDate`,a.`hits`,a.`type`,a.`points`,
@@ -698,8 +706,8 @@ class Comments extends TikiLib {
 	    $this->ifNull("a.`type`='s'", 'false')." as `sticky`,
 	    count(b.`threadId`) as `replies`
 		from `tiki_comments` a left join `tiki_comments` b 
-		on b.`parentId`=a.`threadId`
-		where a.`object`=?"
+		on b.`parentId`=a.`threadId` $join
+		where 1 = 1 $where" . ( $forumId ? 'AND a.`object`=?' : '' )
 		.(( $include_archived ) ? '' : ' and (a.`archived` is null or a.`archived`=?)')
 		." and a.`objectType` = 'forum'
 		and a.`parentId` = ? $time_cond group by a.`threadId`";
@@ -710,7 +718,9 @@ class Comments extends TikiLib {
 	}
 	$query .="order by `sticky` desc, ".$this->convertSortMode($sort_mode).", `threadId`";
 
-	$bind_vars = array((string) $forumId);
+	if( $forumId ) {
+		$bind_vars[] = (string) $forumId;
+	}
 	if ( ! $include_archived ) $bind_vars[] = 'n';
 	$bind_vars[] = 0;
 

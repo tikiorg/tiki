@@ -298,25 +298,21 @@ class RankLib extends TikiLib {
 
 
 	function forums_ranking_top_topics($limit) {
-		global $user;
-		$query = "select
-		tc.`average`,tc.`title`,tf.`name`,tf.`forumId`,tc.`threadId`,tc.`object`
-		from `tiki_comments` tc,`tiki_forums` tf where
-		`object`=`forumId` and `objectType` = 'forum' and
-		`parentId`=0 order by tc.`average` desc";
+		global $commentslib;
+		if( ! $commentslib ) {
+			require_once 'lib/commentslib.php';
+			$commentslib = new Comments;
+		}
 
-		$result = $this->query($query,array());
 		$ret = array();
-		$count = 0;
-		while (($res = $result->fetchRow()) && $count < $limit) {
-			if ($this->user_has_perm_on_object($user, $res['forumId'], 'forum', 'tiki_p_forum_read')) {
-				$aux['name'] = $res['name'] . ': ' . $res['title'];
-				$aux['title'] = $res['title'];
-				$aux['hits'] = $res['average'];
-				$aux['href'] = 'tiki-view_forum_thread.php?forumId=' . $res['forumId'] . '&amp;comments_parentId=' . $res['threadId'];
-				$ret[] = $aux;
-				++$count;
-			}
+		$comments = $commentslib->get_forum_topics( null, 0, $limit, 'average_desc' );
+		foreach( $comments as $res ) {
+			$aux = array();
+			$aux['name'] = $res['name'] . ': ' . $res['title'];
+			$aux['title'] = $res['title'];
+			$aux['hits'] = $res['average'];
+			$aux['href'] = 'tiki-view_forum_thread.php?forumId=' . $res['forumId'] . '&amp;comments_parentId=' . $res['threadId'];
+			$ret[] = $aux;
 		}
 
 		$retval["data"] = $ret;
