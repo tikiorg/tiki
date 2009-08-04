@@ -12,12 +12,15 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  * 
  * Params
  * 
- * @id			id of the input field
- * @size		size of the input field
- * @maxlength	max length of the input field in characters
- * @prefix		prefix text to be put before the input field
- * @selectors	CSS selector(s)
+ * @id				id of the input field
+ * @size			size of the input field
+ * @maxlength		max length of the input field in characters
+ * @prefix			prefix text to be put before the input field
+ * @selectors		CSS (jQuery) selector(s) for what to filter
  * 
+ * Mainly for treetable lists...
+ * @parentSelector	CSS (jQuery) selector(s) for parent nodes of what to filter
+ * @childPrefix = 'child-of-'	prefix for child class (to hide parent if all children are hidden by the filter)
  */
 
 
@@ -28,6 +31,7 @@ function smarty_function_listfilter($params, &$smarty) {
 		return '';
 	} else {
 		extract($params);
+		$childPrefix = isset($childPrefix) ? $childPrefix : 'child-of-';
 
 		if (!isset($prefix)) {
 			$input = tra("Filter:");
@@ -52,22 +56,35 @@ function smarty_function_listfilter($params, &$smarty) {
 		
 		if (!isset($selectors)) $selectors = ".$id table tr";
 			
-		$content = "\$jq('#$id').keyup( function() {
-		var criterias = this.value.toLowerCase().split( /\s+/ );
-
-		\$jq('$selectors').each( function() {
-			var text = \$jq(this).text().toLowerCase();
-			for( i = 0; criterias.length > i; ++i ) {
-				word = criterias[i];
-				if( word.length > 0 && text.indexOf( word ) == -1 ) {
-					\$jq(this).hide();
-					return;
-				}
+		$content = "
+\$jq('#$id').keyup( function() {
+	var criterias = this.value.toLowerCase().split( /\s+/ );
+	
+	\$jq('$selectors').each( function() {
+		var text = \$jq(this).text().toLowerCase();
+		for( i = 0; criterias.length > i; ++i ) {
+			word = criterias[i];
+			if( word.length > 0 && text.indexOf( word ) == -1 ) {
+				\$jq(this).hide();
+				return;
 			}
-
-			\$jq(this).show();
-		} );
-	} );";
+		}
+		\$jq(this).show();
+	} );
+";
+		if ($parentSelector) {
+			$content .= "
+	\$jq('$parentSelector').show().each( function() {
+		var cl = '.$childPrefix' + \$jq(this).attr('id');
+		if (\$jq(cl + ':visible').length == 0) {
+			\$jq(this).hide();
+		}
+	});
+";
+		}
+		$content .= "
+} );	// end keyup
+		";
 	
 		$headerlib->add_jq_onready($content);
 		return $input;

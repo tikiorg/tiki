@@ -28,7 +28,7 @@
  * 
  * _sortColumn = ''	:	column to organise tree by (actually row key = e.g. 'type')
  * 
- * _checkbox = 'treechecks_1'	: name of checkbox (auto-incrementing)
+ * _checkbox = ''	: name of checkbox (auto-incrementing) - no checkboxes if not set
  * 
  * _listFilter = 'y'	: include dynamic text filter
  * 
@@ -128,11 +128,13 @@ function smarty_function_treetable($params, &$smarty) {
 	if ($prefs['feature_jquery_tablesorter'] == 'y' && strpos($class, 'sortable') === false) {
 		 //$class .= ' sortable';
 	}
-	$_checkbox = empty($_checkbox) ? 'treechecks_'. $tree_table_id : $_checkbox;
 	
 	if ($_listFilter == 'y' && count($_data) > $_filterMinRows) {
 		include_once('lib/smarty_tiki/function.listfilter.php');
-		$html .= smarty_function_listfilter(array('id' => $id.'_filter', 'selectors' => "#$id tbody tr:not(.parent)"), $smarty);
+		$html .= smarty_function_listfilter(
+			array('id' => $id.'_filter',
+					'selectors' => "#$id tbody tr:not(.parent)",
+					'parentSelector' => "#$id tbody .parent"), $smarty);
 	}
 	
 	// start writing the table
@@ -140,10 +142,12 @@ function smarty_function_treetable($params, &$smarty) {
 	
 	// write the table header
 	$html .= '<thead><tr>';
-	$html .= '<th>';
-	include_once('lib/smarty_tiki/function.select_all.php');
-	$html .= smarty_function_select_all(array('checkbox_names'=>$_checkbox.'[]'), $smarty);
-	$html .= '</th>';
+	if (!empty($_checkbox)) {
+		$html .= '<th>';
+		include_once('lib/smarty_tiki/function.select_all.php');
+		$html .= smarty_function_select_all(array('checkbox_names'=>$_checkbox.'[]'), $smarty);
+		$html .= '</th>';
+	}
 	
 	foreach ($_columns as $column => $columnName) {
 		$html .= '<th>';
@@ -162,7 +166,7 @@ function smarty_function_treetable($params, &$smarty) {
 			$treeType = htmlentities($row[$_sortColumn]);
 			$treeTypeId = preg_replace('/\s+/', '_', $treeType);
 			if (!in_array($treeTypeId, $treeColumnsAdded)) {
-				$html .= '<tr id="'.$id.'_'.$treeTypeId.'"><td colspan="'.(count($_columns) + 1).'">';
+				$html .= '<tr id="'.$id.'_'.$treeTypeId.'"><td colspan="'.(count($_columns) + (!empty($_checkbox) ? 1 : 0)).'">';
 				$html .= $treeType.'</td></tr>'.$nl;
 				$treeColumnsAdded[] = $treeTypeId;
 			}
@@ -185,9 +189,11 @@ function smarty_function_treetable($params, &$smarty) {
 		
 		$html .= '<tr'.$rowClass.'>';
 		// add the checkbox
-		$html .= '<td'.$rowClass.'>';
-		$html .= '<input type="checkbox" name="'.$_checkbox.'[]" value="'.$rowVal.'" title="'.$rowVal.'"/>';
-		$html .= '</td>';
+		if (!empty($_checkbox)) {
+			$html .= '<td'.$rowClass.'>';
+			$html .= '<input type="checkbox" name="'.$_checkbox.'[]" value="'.$rowVal.'" title="'.$rowVal.'"/>';
+			$html .= '</td>';
+		}
 		
 		foreach ($_columns as $column => $columnName) {
 			$html .= '<td>';
