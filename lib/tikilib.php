@@ -2771,17 +2771,30 @@ class TikiLib extends TikiDb_Bridge {
 	// BLOG METHODS ////
 	function list_blogs($offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '') {
 
+		global $categlib; if (!$categlib) require_once 'lib/categories/categlib.php';
+
+		$bindvars = array();
+
+		if( $jail = $categlib->get_jail() ) {
+			$categlib->getSqlJoin($jail, 'blogs', '`tiki_blogs`.`blogId`', $join, $where, $bindvars);
+		} else {
+			$join = '';
+			$where = '';
+		}	
+
 		if ($find) {
 			$findesc = '%' . $find . '%';
 
-			$mid = ' where (`title` like ? or `description` like ?) ';
+			$mid = ' and (`title` like ? or `description` like ?) ';
 			$bindvars = array($findesc, $findesc);
 		} else {
 			$mid = '';
-			$bindvars = array();
 		}
-		$query = "select * from `tiki_blogs` $mid order by " . $this->convertSortMode($sort_mode);
+
+		$query = "select * from `tiki_blogs` $join WHERE 1=1 $where $mid order by `tiki_blogs`." . $this->convertSortMode($sort_mode); 
+		
 		$result = $this->query($query, $bindvars);
+
 		$ret = array();
 		$cant = 0;
 		$nb = 0;
