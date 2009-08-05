@@ -425,12 +425,12 @@ a.flipmodtitle:hover img {
 /** Other boxes **/
 
 div.cbox {
-	border: 1px solid #212121;
+	border: 1px solid #444;
 }
 
 .cbox-title {
 	color: #ebebeb;
-	background: #212121;
+	background: #666;
 }
 
 .cbox-title a:link,
@@ -497,7 +497,7 @@ td.third {}
 th,
 table.normal td.heading {
 	color: #ebebeb;
-	background: #212121;
+	background: #444;
 }
 
 th a:link,
