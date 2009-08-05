@@ -887,7 +887,7 @@ td.form {
 }
 	
 .tabmark a {
-	border-bottom :0;
+	border-bottom: 0;
 	padding: 1px 5px;
 	text-decoration: none;
 }
@@ -903,7 +903,6 @@ td.form {
 [class].tabactive {
 	top: -1px;
 }
-
 
 .tabinactive {
 	border-bottom: none/* !important*/;
@@ -1135,6 +1134,7 @@ ul.toc * {
 .diffdeleted {
 	background: #ffcccc;
 	color: #000;
+	text-decoration: line-through;
 }
 
 .diffinldel {
@@ -2022,20 +2022,6 @@ div.messureadbody {
 	padding-left: 15px;
 }
 
-.plugin-form-float {
-	position: fixed;
-	left: 5%;
-	right: 365px;
-	top: 5%;
-	max-height: 90%;
-	overflow: auto;
-	background: #fff;
-	color: #000;
-	padding: 10px;
-	border: solid 2px #000;
-	z-index: 1000;
-}
-
 table.default thead td,
 table.default tfoot td {}
 
@@ -2044,12 +2030,12 @@ table.default td {}
 /***** Calendar *****/
 
 /***** Admin *****/
-.highlight_word_0{
+.highlight_word_0 {
 	color: #ffff66;
 	background: #666;
 }
 
-.highlight_word_1{
+.highlight_word_1 {
 	color: #ff9999;
 	background: #666;
 }
