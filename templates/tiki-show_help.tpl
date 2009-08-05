@@ -9,7 +9,7 @@
 			<div class="help_close_icon">
 				<a href="#" onclick="javascript:hide('help_sections'); return false">{icon _id="cross" alt="{tr}Close{/tr}"}</a>
 			</div>
-			{if $prefs.feature_shadowbox eq 'y' and ($prefs.feature_jquery eq 'y' or $prefs.feature_mootools eq 'y')}
+			{if $prefs.feature_shadowbox eq 'y' and $prefs.feature_jquery eq 'y'}
 			<div class="help_fullscreen_icon">
 				<a href="#{$help.id}" onclick="javascript:flip('help_sections'); return false" rel="shadowbox[help];title={tr}Help{/tr}: {$help.title}">{icon _id="arrow_out" alt="{tr}Fullscreen{/tr}"}</a>
 			</div>

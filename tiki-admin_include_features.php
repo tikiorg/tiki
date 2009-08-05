@@ -92,7 +92,6 @@ if (isset($_REQUEST["features"])) {
 		"feature_copyright",
 		"feature_multimedia",
 		"feature_userlevels",
-		"feature_mootools",
 		"feature_jquery",
 		"feature_shadowbox",
 		"feature_swfobj",

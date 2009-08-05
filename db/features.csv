@@ -36,7 +36,6 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 35,Workflow Engine,15,developer,feature_workflow,feature,tiki-g-admin_processes,tiki_p_admin,,,Workflow,,, 
 36,Live Support System,15,,feature_live_support,feature,tiki-live_support_admin,tiki_p_admin,,,Live+Support,,, 
 37,Javascript Tools,3,,,configurationgroup,,tiki_p_admin,60,,,,, 
-38,Mootools,37,experimental,feature_mootools,feature,,tiki_p_admin,,,,,, 
 39,Ajax,37,experimental,feature_ajax,feature,,tiki_p_admin,,,,,, 
 40,Dynamic Menus,45,,,configurationgroup,,tiki_p_admin,58,,Menu,,, 
 41,PHP Layers Dynamic Menus,911,,feature_phplayers,feature,,tiki_p_admin,,,Menu,,, 

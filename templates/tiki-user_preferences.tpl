@@ -14,9 +14,7 @@
 {/if}
 
 {if $userwatch eq $user or $userwatch eq ""}
-  {if $prefs.feature_ajax ne 'y' && $prefs.feature_mootools ne 'y'}
     {include file='tiki-mytiki_bar.tpl'}
-  {/if}
   <br />
 {/if}
 

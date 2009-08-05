@@ -5369,29 +5369,6 @@ class TikiLib extends TikiDb_Bridge {
 		}
 	} );
 	" );
-								} else if ($prefs['feature_mootools'] == 'y') {
-									$headerlib->add_js( "
-	window.addEvent('domready', function() {
-		if( $('$id') ) {
-			show('$id');
-			$('$id').addEvent( 'click', function(event) {
-				popup_plugin_form("
-					. json_encode('editwiki')
-					. ', '
-					. json_encode($plugin_name) 
-					. ', ' 
-					. json_encode($current_index) 
-					. ', ' 
-					. json_encode($page) 
-					. ', ' 
-					. json_encode($arguments) 
-					. ', ' 
-					. json_encode(TikiLib::htmldecode($plugin_data_saved)) 
-					. ", event.target);
-			} );
-		}
-	} );
-	" );
 								}
 								$ret = $ret.'~np~<a id="' .$id. '" href="javascript:void(1)" class="editplugin">'.smarty_function_icon(array('_id'=>'shape_square_edit', 'alt'=>tra('Edit Plugin').':'.$plugin_name), $smarty)."</a>~/np~";
 							}

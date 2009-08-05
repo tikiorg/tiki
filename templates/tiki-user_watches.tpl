@@ -40,9 +40,7 @@
 
 <h2>Sites you are watching</h2>
 
-{if $prefs.feature_ajax ne 'y' && $prefs.feature_mootools ne 'y'}
   {include file='tiki-mytiki_bar.tpl'}
-{/if}
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use "watches" to monitor wiki pages or other objects.{/tr} {tr}Watch new items by clicking the {icon _id=eye} button on specific pages.{/tr}{/remarksbox}
 

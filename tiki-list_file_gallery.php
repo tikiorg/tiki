@@ -558,12 +558,7 @@ if (isset($_GET['slideshow'])) {
 	$smarty->assign('firstId', current($filesid));
 	$smarty->assign('show_find', 'n');
 	$smarty->assign('direct_pagination', 'y');
-	//if ($prefs['feature_mootools'] == 'y') {
 	$smarty->display('file_gallery_slideshow.tpl');
-	//} else if ($prefs['feature_jquery'] == 'y') {
-	// commented out for release 3.0 as it's not ready yet - TODO for 3.1 or 4
-	//	$smarty->display('tiki-file_gallery_slideshow.tpl');
-	//}
 	die();
 } else {
 	if (!isset($_REQUEST["edit_mode"]) && !isset($_REQUEST["edit"])) {

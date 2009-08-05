@@ -256,7 +256,7 @@ if (!empty($multiprint_pages)) {
 	// disallow robots to index page:
 	$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 	if ($access->is_serializable_request()) {
-		if (isset($_REQUEST['listonly']) && ($prefs['feature_mootools'] == 'y' || ($prefs['feature_jquery'] == 'y' && $prefs['feature_jquery_autocomplete'] == 'y'))) {
+		if (isset($_REQUEST['listonly']) && ($prefs['feature_jquery'] == 'y' && $prefs['feature_jquery_autocomplete'] == 'y')) {
 			$pages = array();
 			foreach($listpages['data'] as $page) $pages[] = $page['pageName'];
 			$access->output_serialized($pages);
