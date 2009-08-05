@@ -123,7 +123,6 @@ Add a value in first check when you create a new admin page. *}
 	<a href="tiki-admin_quicktags.php">{tr}QuickTags{/tr}</a> 
 	<a href="tiki-admin_content_templates.php">{tr}Content Templates{/tr}</a> 
 	<a href="tiki-admin_dsn.php">{tr}DSN{/tr}</a> 
-	{if $prefs.feature_drawings eq 'y'}<a href="tiki-admin_drawings.php">{tr}Drawings{/tr}</a> {/if}
 	{if $prefs.feature_dynamic_content eq 'y'}<a href="tiki-list_contents.php">{tr}Dynamic Content{/tr}</a> {/if}
 	<a href="tiki-admin_external_wikis.php">{tr}External Wikis{/tr}</a> 
 	{if $prefs.feature_mailin eq 'y'}<a href="tiki-admin_mailin.php">{tr}Mail-in{/tr}</a> {/if}

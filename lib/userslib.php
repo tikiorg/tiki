@@ -1425,7 +1425,6 @@ function get_included_groups($group, $recur=true) {
 			$this->query("update `tiki_files` set `lastModifUser`=? where `lastModifUser`=?", array($to,$from));
 			$this->query("update `tiki_files` set `lockedby`=? where `lockedby`=?", array($to,$from));
 			$this->query("update `tiki_file_galleries` set `user`=? where `user`=?", array($to,$from));
-			$this->query("update `tiki_drawings` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_copyrights` set `userName`=? where `userName`=?", array($to,$from));
 			$this->query("update `tiki_comments` set `userName`=? where `userName`=?", array($to,$from));
 			$this->query("update `tiki_chat_users` set `nickname`=? where `nickname`=?", array($to,$from));

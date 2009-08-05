@@ -285,10 +285,6 @@
 					<legend class="heading">{icon _id="information_gray"}<span>{tr}Neglected{/tr}</span></legend>
 					<span class="description">{tr}Old features no longer maintained{/tr}</span>
 					<div class="half_width">
-						<span class="checkbox"><input type="checkbox" name="feature_drawings" {if $prefs.feature_drawings eq 'y'}checked="checked"{/if}/></span>
-						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Drawings" target="tikihelp" class="tikihelp" title="{tr}Drawings{/tr}">{/if} {tr}Drawings{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-					</div>
-					<div class="half_width">
 						<span class="checkbox"><input type="checkbox" name="feature_friends" {if $prefs.feature_friends eq 'y'}checked="checked"{/if}/></span>
 						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Friendship" target="tikihelp" class="tikihelp" title="{tr}Friendship{/tr}: {tr}Friendship Network{/tr}">{/if} {tr}Friendship Network{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
 					</div>

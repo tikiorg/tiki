@@ -1138,24 +1138,6 @@ go
 
 
 
--- DROP TABLE `tiki_drawings`
-go
-
-
-CREATE TABLE `tiki_drawings` (
-  `drawId numeric(12 ,0) identity,
-  `version` numeric(8,0) default NULL NULL,
-  `name` varchar(250) default NULL NULL,
-  `filename_draw` varchar(250) default NULL NULL,
-  `filename_pad` varchar(250) default NULL NULL,
-  `timestamp` numeric(14,0) default NULL NULL,
-  `user` varchar(200) default '',
-  PRIMARY KEY (`drawId`)
-) ENGINE=MyISAM  
-go
-
-
-
 -- DROP TABLE `tiki_dsn`
 go
 
@@ -2535,10 +2517,6 @@ INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","
 go
 
 
-INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_drawings','',0)
-go
-
-
 INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_shoutbox','',0)
 go
 
@@ -2672,10 +2650,6 @@ go
 
 
 INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Edit CSS','tiki-edit_css.php',1158,'feature_editcss','tiki_p_create_css','',2)
-go
-
-
-INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Drawings','tiki-admin_drawings.php',1160,'feature_drawings','tiki_p_admin_drawings','',0)
 go
 
 
@@ -4682,15 +4656,6 @@ go
 
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_directory', 'Can use the directory', 'basic', 'directory')
-go
-
-
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_drawings', 'Can admin drawings', 'editors', 'drawings', 'y')
-go
-
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_drawings', 'Can edit drawings', 'basic', 'drawings')
 go
 
 

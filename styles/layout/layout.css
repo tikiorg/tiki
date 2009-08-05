@@ -261,7 +261,7 @@ div#sitead {
 
 .linkmenu,
 .linkmenu:visited {
-	display: block;
+	/*display: block;*/
 }
 
 /***** Misc. *****/

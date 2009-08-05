@@ -63,9 +63,6 @@
 {/if}{* wysiwyg *}
 
 <tr><td class="{cycle}"><strong>{tr}Line break{/tr}</strong> <br/>%%% {tr}(very useful especially in tables){/tr}</td></tr>
-{if $prefs.feature_drawings eq 'y'}
-<tr><td class="{cycle}"><strong>{tr}Drawings{/tr}</strong> <br/> {literal}{{/literal}draw name=foo} {tr}creates the editable drawing foo{/tr}</td></tr>
-{/if}
 <tr><td class="{cycle}"><strong>{tr}Multi-page pages{/tr}</strong> <br/>{tr}Use{/tr} ...page... {tr}to separate pages{/tr}</td></tr>
 
 <tr><td class="{cycle}"><strong>{tr}Non parsed sections{/tr}</strong> <br/> ~np~ {tr}data{/tr} ~/np~ {tr}Prevents wiki parsing of the enclosed data.{/tr}</td></tr>
