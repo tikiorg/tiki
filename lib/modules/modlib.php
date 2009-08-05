@@ -538,13 +538,12 @@ class ModLib extends TikiLib {
 	function get_user_module_content( $name ) {
 		global $tikilib, $smarty;
 
+		$smarty->assign('module_type','module');
 		$info = $tikilib->get_user_module( $name );
 		if (!empty($info)) {
 			// test if we have a menu
 			if (strpos($info['data'],'{menu ') === 0 and strpos($info['data'],"css=y")) {
 				$smarty->assign('module_type','cssmenu');
-			} else {
-				$smarty->assign('module_type','module');
 			}
 
 			$smarty->assign('user_title', tra($info['title']));
