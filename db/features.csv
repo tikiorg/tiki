@@ -89,7 +89,6 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 90,User Watches,6,,feature_user_watches,feature,,tiki_p_admin,,,,,, 
 91,User Preferences,6,,feature_userPreferences,feature,,tiki_p_admin,,,,,, 
 92,User Messages,6,,feature_messages,feature,,tiki_p_admin,,,Inter-User+Messages,,, 
-93,News Reader,6,,feature_newsreader,feature,,tiki_p_admin,,,,,, 
 94,User Notepad,6,,feature_notepad,feature,,tiki_p_admin,,,,,, 
 95,User Translation Watches,6,,feature_user_watches_translations,feature,,tiki_p_admin,,,,,, 
 96,Mini Calendar,6,,feature_minical,feature,,tiki_p_admin,,,,,, 

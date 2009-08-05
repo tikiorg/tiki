@@ -219,7 +219,7 @@ function wikiplugin_image_info() {
  *			- blogs, calendar, categories, cms, directory, faqs,
  *				featured_links, file_galleries, forums, freetags, friends,
  *				galleries, html_pages, livesupport, maps, mytiki,
- *				newsletters, newsreader, poll, quizzes, sheet, surveys,
+ *				newsletters, poll, quizzes, sheet, surveys,
  *				trackers, user_messages, users, webmail, wiki page
  * 
  * The parameter is the name of any IMAGE option (id, scalesize, width, ...).

@@ -723,9 +723,6 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'allowmsg_by_default' => 'y',
 		'allowmsg_is_optional' => 'y',
 
-		// newsreader
-		'feature_newsreader' => 'n',
-
 		// freetags
 		'feature_freetags' => 'n',
 		'freetags_browse_show_cloud' => 'y',

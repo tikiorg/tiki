@@ -2091,10 +2091,6 @@ INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","
 go
 
 
-INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Newsreader','tiki-newsreader_servers.php',80,'feature_mytiki,feature_newsreader','tiki_p_newsreader','Registered',0)
-go
-
-
 INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Webmail','tiki-webmail.php',85,'feature_mytiki,feature_webmail','tiki_p_use_webmail','Registered',0)
 go
 
@@ -2938,38 +2934,6 @@ CREATE TABLE `tiki_newsletters` (
   `allowTxt` char(1) default 'y',
   `author` varchar(200) default NULL NULL,
   PRIMARY KEY (`nlId`)
-) ENGINE=MyISAM  
-go
-
-
-
--- DROP TABLE `tiki_newsreader_marks`
-go
-
-
-CREATE TABLE `tiki_newsreader_marks` (
-  `user` varchar(200) default '' NOT NULL,
-  `serverId` numeric(12,0) default '0' NOT NULL,
-  `groupName` varchar(255) default '' NOT NULL,
-  `timestamp` numeric(14,0) default '0' NOT NULL,
-  PRIMARY KEY (`user`(100),serverId,groupName(100))
-) ENGINE=MyISAM
-go
-
-
-
--- DROP TABLE `tiki_newsreader_servers`
-go
-
-
-CREATE TABLE `tiki_newsreader_servers` (
-  `user` varchar(200) default '' NOT NULL,
-  `serverId numeric(12 ,0) identity,
-  `server` varchar(250) default NULL NULL,
-  `port` numeric(4,0) default NULL NULL,
-  `username` varchar(200) default NULL NULL,
-  `password` varchar(200) default NULL NULL,
-  PRIMARY KEY (`serverId`)
 ) ENGINE=MyISAM  
 go
 
@@ -5367,10 +5331,6 @@ go
 
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_minical', 'Can use the mini event calendar', 'registered', 'user')
-go
-
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_newsreader', 'Can use the newsreader', 'registered', 'user')
 go
 
 

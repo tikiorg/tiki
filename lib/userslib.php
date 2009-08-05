@@ -1405,8 +1405,6 @@ function get_included_groups($group, $recur=true) {
 			$this->query("update `tiki_pages` set `creator`=? where `creator`=?", array($to,$from));
 			$this->query("update `tiki_page_footnotes` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_newsletters` set `author`=? where `author`=?", array($to,$from));
-			$this->query("update `tiki_newsreader_servers` set `user`=? where `user`=?", array($to,$from));
-			$this->query("update `tiki_newsreader_marks` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_minical_events` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_minical_topics` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_mailin_accounts` set `user`=? where `user`=?", array($to,$from));
@@ -1494,7 +1492,6 @@ function get_included_groups($group, $recur=true) {
 	$query[] = "delete from `users_grouppermissions` where `groupName` = ?";
 	$query[] = "delete from `users_objectpermissions` where `groupName` = ?";
 	$query[] = "delete from `tiki_newsletter_groups` where `groupName` = ?";
-	$query[] = "delete from `tiki_newsreader_marks` where `groupName` = ?";
 	$query[] = "delete from `tiki_group_watches` where `group` = ?";
 	foreach ( $query as $q )
 		$this->query($q, array($group));
@@ -2532,7 +2529,6 @@ function get_included_groups($group, $recur=true) {
 			$query[] = "update `users_objectpermissions` set `groupName`=? where `groupName`=?";
 			$query[] = "update `tiki_group_inclusion` set `groupName`=? where `groupName`=?";
 			$query[] = "update `tiki_group_inclusion` set `includeGroup`=? where `includeGroup`=?";
-			$query[] = "update `tiki_newsreader_marks` set `groupName`=? where `groupName`=?";
 			$query[] = "update `tiki_newsletter_groups` set `groupName`=? where `groupName`=?";
 			foreach ( $query as $q ) $this->query($q, array($group, $olgroup));
 

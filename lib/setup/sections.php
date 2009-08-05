@@ -84,11 +84,6 @@ $sections = array(
 		'key' => 'msgId',
 		'itemkey' => '',
 	),
-	'newsreader' => array(
-		'feature' => 'feature_newsreader',
-		'key' => 'serverId',
-		'itemkey' => 'id',
-	),
 	'webmail' => array(
 		'feature' => 'feature_webmail',
 		'key' => 'msgId',

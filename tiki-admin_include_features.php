@@ -55,7 +55,6 @@ if (isset($_REQUEST["features"])) {
 		"feature_mobile",
 		"feature_morcego",
 		"feature_newsletters",
-		"feature_newsreader",
 		"feature_notepad",
 		"feature_phplayers",
 		"feature_cssmenus",

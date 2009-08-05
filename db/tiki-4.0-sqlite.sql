@@ -1652,8 +1652,6 @@ INSERT INTO "," ("menuId","type","name","url","position","section","perm","group
 
 INSERT INTO "," ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'o','Modules','tiki-user_assigned_modules.php',75,'feature_mytiki,user_assigned_modules','tiki_p_configure_modules','Registered',0);
 
-INSERT INTO "," ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'o','Newsreader','tiki-newsreader_servers.php',80,'feature_mytiki,feature_newsreader','tiki_p_newsreader','Registered',0);
-
 INSERT INTO "," ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'o','Webmail','tiki-webmail.php',85,'feature_mytiki,feature_webmail','tiki_p_use_webmail','Registered',0);
 
 INSERT INTO "," ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'o','Contacts','tiki-contacts.php',87,'feature_mytiki,feature_contacts','','Registered',0);
@@ -2121,30 +2119,6 @@ CREATE TABLE tiki_newsletters (
   allowTxt char(1) default 'y',
   author varchar(200) default NULL,
   PRIMARY KEY (nlId)
-) ENGINE=MyISAM ;
-
-
-DROP TABLE IF EXISTS 'tiki_newsreader_marks';
-
-CREATE TABLE tiki_newsreader_marks (
-  user varchar(200) NOT NULL default '',
-  serverId bigint NOT NULL default '0',
-  groupName varchar(255) NOT NULL default '',
-  timestamp bigint NOT NULL default '0',
-  PRIMARY KEY (user(100),serverId,groupName(100))
-) ENGINE=MyISAM;
-
-
-DROP TABLE IF EXISTS 'tiki_newsreader_servers';
-
-CREATE TABLE tiki_newsreader_servers (
-  user varchar(200) NOT NULL default '',
-  serverId INTEGER,
-  server varchar(250) default NULL,
-  port smallint default NULL,
-  username varchar(200) default NULL,
-  password varchar(200) default NULL,
-  PRIMARY KEY (serverId)
 ) ENGINE=MyISAM ;
 
 
@@ -3812,8 +3786,6 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_create_bookmarks', 'Can create user bookmarks', 'registered', 'user');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_minical', 'Can use the mini event calendar', 'registered', 'user');
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_newsreader', 'Can use the newsreader', 'registered', 'user');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_notepad', 'Can use the notepad', 'registered', 'user');
 
