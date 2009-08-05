@@ -29,13 +29,13 @@
  * _sortColumn = ''			:	column to organise tree by (actually row key = e.g. 'type')
  * 
  * _checkbox = ''			: 	name of checkbox (auto-incrementing) - no checkboxes if not set
- * 								if comma delimted list then makes multiple checkboxes
+ * 								if comma delimited list (or array) then makes multiple checkboxes
  * 
  * _checkboxColumnIndex = 0	:	index of the col in the _data array above to use as the checkbox value
- * 								comma delimeted list (of ints) for multiple checkboxes as set above
+ * 								comma delimeted list (or array - of ints) for multiple checkboxes as set above
  * 								if set needs to match number of checkboxes defines in _checkbox (or if not set uses 0,1,2 etc)
  * 
- * _checkboxTitles = ''		:	Comma delimited list of header titles for checkboxes (optional, but needs to match number of checkboxes above)
+ * _checkboxTitles = ''		:	Comma delimited list (or array) of header titles for checkboxes (optional, but needs to match number of checkboxes above)
  * 
  * _listFilter = 'y'		:	include dynamic text filter
  * 
@@ -71,23 +71,23 @@ function smarty_function_treetable($params, &$smarty) {
 	$_checkbox = empty($_checkbox) ? '' : $_checkbox;
 	$_checkboxTitles = empty($_checkboxTitles) ? '' : $_checkboxTitles;
 	
-	if (strpos($_checkbox, ',') !== false) {
+	if (is_string($_checkbox) && strpos($_checkbox, ',') !== false) {
 		$_checkbox = split(',', trim($_checkbox));
-		if (isset($_checkboxColumnIndex)) {
-			if (is_string($_checkboxColumnIndex) && strpos($_checkboxColumnIndex, ',') !== false) {
-				$_checkboxColumnIndex = split(',', trim($_checkboxColumnIndex));
-			}
-			if (count($_checkbox) != count($_checkboxColumnIndex)) {
-				return tra('{treetable}: Number of items in _checkboxColumnIndex doesn not match items in _checkbox');
-			}
+	}
+	if (!empty($_checkboxColumnIndex)) {
+		if (is_string($_checkboxColumnIndex) && strpos($_checkboxColumnIndex, ',') !== false) {
+			$_checkboxColumnIndex = split(',', trim($_checkboxColumnIndex));
 		}
-		if (!empty($_checkboxTitles)) {
-			if (strpos($_checkboxTitles, ',') !== false) {
-				$_checkboxTitles = split(',', trim($_checkboxTitles));
-			}
-			if (count($_checkbox) != count($_checkboxTitles)) {
-				return tra('{treetable}: Number of items in _checkboxTitles doesn not match items in _checkbox');
-			}
+		if (count($_checkbox) != count($_checkboxColumnIndex)) {
+			return tra('{treetable}: Number of items in _checkboxColumnIndex doesn not match items in _checkbox');
+		}
+	}
+	if (!empty($_checkboxTitles)) {
+		if (is_string($_checkboxTitles) && strpos($_checkboxTitles, ',') !== false) {
+			$_checkboxTitles = split(',', trim($_checkboxTitles));
+		}
+		if (count($_checkbox) != count($_checkboxTitles)) {
+			return tra('{treetable}: Number of items in _checkboxTitles doesn not match items in _checkbox');
 		}
 	}
 	$_checkboxColumnIndex = empty($_checkboxColumnIndex) ? 0 : $_checkboxColumnIndex;
@@ -250,8 +250,9 @@ function smarty_function_treetable($params, &$smarty) {
 				// get checkbox's "value"
 				$cbxVal = htmlentities($row[$_checkboxColumnIndex[$i]]);
 				$rowVal = htmlentities($row[$_valueColumnIndex]);
+				$cbxTit = empty($_checkboxTitles) ? $cbxVal : $_checkboxTitles[$i];
 				$html .= '<td class="checkBoxCell">';
-				$html .= '<input type="checkbox" name="'.$_checkbox[$i].'[]" value="'.$rowVal.'"'.($cbxVal=='y' ? ' checked=checked' : '').' title="'.$_checkbox[$i].'" />';
+				$html .= '<input type="checkbox" name="'.$_checkbox[$i].'[]" value="'.$rowVal.'"'.($cbxVal=='y' ? ' checked=checked' : '').' title="'.$cbxTit.'" />';
 				if ($cbxVal == 'y') {
 					$html .= '<input type="hidden" name="old_'.$_checkbox[$i].'[]" value="'.$rowVal.'" />';
 				}
