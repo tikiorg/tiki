@@ -186,9 +186,6 @@ if ($offset > 0) {
 include_once ('tiki-section_options.php');
 
 ask_ticket('contacts');
-if ($prefs['feature_ajax'] == "y") {
-	$smarty->assign("mootab",'y');
-}
 $smarty->assign('myurl', 'tiki-contacts.php');
 
 $smarty->assign('mid','tiki-contacts.tpl');

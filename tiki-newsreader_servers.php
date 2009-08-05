@@ -103,7 +103,6 @@ if ($prefs['feature_ajax'] == "y") {
 		$ajaxlib->processRequests();
 	}
 	user_newsreaders_ajax();
-	$smarty->assign("mootab", 'y');
 }
 $smarty->assign('mid', 'tiki-newsreader_servers.tpl');
 $smarty->display("tiki.tpl");
