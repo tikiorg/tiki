@@ -1556,21 +1556,6 @@ go
 
 
 
--- DROP TABLE `tiki_games`
-go
-
-
-CREATE TABLE `tiki_games` (
-  `gameName` varchar(200) default '' NOT NULL,
-  `hits` numeric(8,0) default NULL NULL,
-  `votes` numeric(8,0) default NULL NULL,
-  `points` numeric(8,0) default NULL NULL,
-  PRIMARY KEY (`gameName`)
-) ENGINE=MyISAM
-go
-
-
-
 -- DROP TABLE `tiki_group_inclusion`
 go
 
@@ -2055,10 +2040,6 @@ go
 
 
 INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Freetags','tiki-browse_freetags.php',27,'feature_freetags','tiki_p_view_freetags','',0)
-go
-
-
-INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Games','tiki-list_games.php',30,'feature_games','tiki_p_play_games','',0)
 go
 
 
@@ -5033,15 +5014,6 @@ go
 
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_image_gallery', 'Can view image galleries', 'basic', 'image galleries')
-go
-
-
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_games', 'Can admin games', 'editors', 'games', 'y')
-go
-
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_play_games', 'Can play games', 'basic', 'games')
 go
 
 

@@ -1265,17 +1265,6 @@ CREATE TABLE tiki_galleries_scales (
 ) ENGINE=MyISAM;
 
 
-DROP TABLE IF EXISTS 'tiki_games';
-
-CREATE TABLE tiki_games (
-  gameName varchar(200) NOT NULL default '',
-  hits integer default NULL,
-  votes integer default NULL,
-  points integer default NULL,
-  PRIMARY KEY (gameName)
-) ENGINE=MyISAM;
-
-
 DROP TABLE IF EXISTS 'tiki_group_inclusion';
 
 CREATE TABLE tiki_group_inclusion (
@@ -1638,8 +1627,6 @@ INSERT INTO "," ("menuId","type","name","url","position","section","perm","group
 INSERT INTO "," ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'o','Categories','tiki-browse_categories.php',25,'feature_categories','tiki_p_view_categories','',0);
 
 INSERT INTO "," ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'o','Freetags','tiki-browse_freetags.php',27,'feature_freetags','tiki_p_view_freetags','',0);
-
-INSERT INTO "," ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'o','Games','tiki-list_games.php',30,'feature_games','tiki_p_play_games','',0);
 
 INSERT INTO "," ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'o','Calendar','tiki-calendar.php',35,'feature_calendar','tiki_p_view_calendar','',0);
 
@@ -3642,11 +3629,6 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_freetags', 'Can browse freetags', 'basic', 'freetags');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_image_gallery', 'Can view image galleries', 'basic', 'image galleries');
-
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_games', 'Can admin games', 'editors', 'games', 'y');
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_play_games', 'Can play games', 'basic', 'games');
 
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_newsletters', 'Can admin newsletters', 'admin', 'newsletters', 'y');
