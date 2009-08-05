@@ -288,8 +288,15 @@ class FileGalLib extends TikiLib {
 	function get_all_galleries_cache_name($user) {
 		global $tikilib, $categlib; require_once 'lib/categories/categlib.php';
 		$gs = $tikilib->get_user_groups($user);
-		$cacheName = md5( implode("\n", $gs) . '----' . implode( "\n", $categlib->get_jail() ) );
-		return $cacheName;
+		$tmp = "";
+		if ( is_array($gs) ) {
+			$tmp .= implode("\n", $gs); 
+		}
+		$tmp .= '----'; 
+		if ( $jail = $categlib->get_jail() ) {
+			$tmp .= implode("\n",$jail);
+		}
+		return md5($tmp);
 	}
 	function get_all_galleries_cache_type() {
 		return 'fgals_';
@@ -768,7 +775,7 @@ class FileGalLib extends TikiLib {
 		return $info;
 	}
 	// Build galleries browsing tree and current gallery path array
-	function add2tree(&$tree, &$galleries, &$gallery_id, &$gallery_path, &$expanded, $link, $cur_id = - 1) {
+	function add2tree(&$tree, &$galleries, &$gallery_id, &$gallery_path, &$expanded, $link = "", $cur_id = - 1) {
 		static $total = 1;
 		static $nb_galleries = 0;
 		$i = 0;
