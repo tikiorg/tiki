@@ -11,8 +11,9 @@
 {/if}
 
 <form method="post" action="tiki-admin.php?page=cms">
-<div class="cbox">
-<div style="padding:1em" align="center"><input type="submit" value="{tr}Change preferences{/tr}" /></div>
+<div class="input_submit_container clear" style="text-align: right;">
+	<input type="submit" value="{tr}Change preferences{/tr}" />
+</div>
 
 {tabset name="admin_cms"}
 	{tab name="{tr}General Settings{/tr}"}
@@ -199,8 +200,9 @@
 </div>
 	{/tab}
 {/tabset}
-<div style="padding:1em" align="center"><input type="submit" value="{tr}Change preferences{/tr}" /></div>
-	
+<div class="input_submit_container clear" style="text-align: center;">
+	<input type="submit" value="{tr}Change preferences{/tr}" />
 </div>
+	
 </form>
 

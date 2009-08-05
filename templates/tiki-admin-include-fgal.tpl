@@ -1,6 +1,5 @@
 {* $Id$ *}
 
-
 {remarksbox type="tip" title="{tr}Tip{/tr}"}
 {tr}To create or remove file galleries, select{/tr} <a class="rbox-link" href="tiki-list_file_gallery.php">{tr}File Galleries{/tr}</a> {tr}from the application menu{/tr}.
 <hr />
@@ -9,9 +8,10 @@
 {tr}To configure the directory path use UNIX like paths for example files/ or c:/foo/files or /www/files/{/tr}
 {/remarksbox}
 
-<div class="cbox">
 <form action="tiki-admin.php?page=fgal" method="post">
-<div align="center" style="padding:1em"><input type="submit" name="filegalhandlers" value="{tr}Change preferences{/tr}" /></div>
+<div class="heading input_submit_container" style="text-align: right">
+	<input type="submit" name="filegalhandlers" value="{tr}Change preferences{/tr}" />
+</div>
 
 {tabset name="fgal_admin"}
 	{tab name="{tr}General Settings{/tr}"}
@@ -215,7 +215,7 @@
 	{/tab}
 {/tabset}
 
-<div align="center" style="padding:1em"><input type="submit" name="filegalhandlers" value="{tr}Change preferences{/tr}" /></div>
-</form>
+<div class="input_submit_container clear" style="text-align: center">
+	<input type="submit" name="filegalhandlers" value="{tr}Change preferences{/tr}" />
 </div>
-
+</form>

@@ -6,9 +6,9 @@
 
 <form action="tiki-admin.php?page=category" method="post">
 <input type="hidden" name="categorysetup" />
-<div class="cbox">
-<table class="admin"><tr><td>
-<div style="padding:1em;" align="center"><input type="submit" value="{tr}Change preferences{/tr}" /></div>
+<div class="input_submit_container clear" style="text-align: right;">
+	<input type="submit" value="{tr}Change preferences{/tr}" />
+</div>
 
 <fieldset><legend>{tr}Features{/tr}{if $prefs.feature_help eq 'y'} {help url="Category"}{/if}</legend>
 <div class="adminoptionbox">
@@ -46,7 +46,7 @@
 </div>
 </fieldset>
 
-<div style="padding:1em;" align="center"><input type="submit" value="{tr}Change preferences{/tr}" /></div>
-</td></tr></table>
+<div class="input_submit_container clear" style="text-align: center;">
+	<input type="submit" value="{tr}Change preferences{/tr}" />
 </div>
 </form>

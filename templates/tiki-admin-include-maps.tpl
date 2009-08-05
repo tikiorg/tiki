@@ -1,10 +1,9 @@
-<div class="cbox">
-<div class="cbox-title">
-  {tr}{$crumbs[$crumb]->title}{/tr}
-  {help crumb=$crumbs[$crumb]}
-</div>
-<div class="cbox-data">
 <form action="tiki-admin.php?page=maps" method="post">
+	<div class="heading input_submit_container" style="text-align: right">
+		<input type="submit" name="mapsset" value="{tr}Change preferences{/tr}" />
+	</div>
+<fieldset class="admin">
+<legend>{tr}Settings{/tr}</legend>
 <table class="admin">
 <tr><td align="center" colspan="2"><font color="red">{$map_error}</font></td></tr>
 <tr><td class="form">{tr}full path to mapfiles{/tr}:</td><td><input type="text" name="map_path" value="{$prefs.map_path|escape}" size="50" /></td></tr>
@@ -16,11 +15,12 @@
 <tr><td class="form">{tr}Map Zone{/tr}:</td><td>
 {html_radios name="mapzone" options=$checkboxes_mapzone selected=$prefs.mapzone separator="  "}
 </td></tr>
-<tr><td colspan="2" class="input_submit_container"><input type="submit" name="mapsset" value="{tr}Change preferences{/tr}" /></td></tr> 
-<tr><td colspan="2" class="input_submit_container"><input type="submit" name="mapuser" value="{tr}Generate User Map{/tr}" /></td></tr> 
 {if $map_error neq ''}
 {/if}   
 </table>
+		<div class="heading input_submit_container" style="text-align: center">
+			<input type="submit" name="mapsset" value="{tr}Change preferences{/tr}" />
+			<input type="submit" name="mapuser" value="{tr}Generate User Map{/tr}" />
+		</div>
+	</fieldset>
 </form>
-</div>
-</div>

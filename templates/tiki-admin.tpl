@@ -14,7 +14,7 @@
 	{tr}Your database requires an update to match the current TikiWiki version. Please proceed to <a href="tiki-install.php">the installer</a>. Using Tiki with an incorrect database version usually provoke errors.{/tr}
 	{/remarksbox}
 {/if}
-{tr}{$description}{/tr}
+{*{tr}{$description}{/tr}*}
 </div>
 {* The rest determines which page to include using "page" GET parameter. Default : list-sections
 Add a value in first check when you create a new admin page. *}

@@ -1,5 +1,6 @@
 {* $Id: tiki-admin-include-ads.tpl 12802 2008-05-12 11:06:16Z sylvieg $ *}
 <script type="text/javascript">
+<!--//--><![CDATA[//><!--
 var baseURI = '{$smarty.server.REQUEST_URI}';
 {literal}
 function refreshCache( entry ) { // {{{
@@ -228,34 +229,29 @@ function showDetails( id, domain, profile ) { // {{{
 	req.send('');
 } // }}}
 {/literal}
+//--><!]]>
 </script>
 {remarksbox type="tip" title="{tr}Tip{/tr}"}<a class="rbox-link" href="http://profiles.tikiwiki.org">{tr}TikiWiki Profiles{/tr}</a>{/remarksbox}
 
-
-
-
-<div class="cbox">
-<table class="admin"><tr><td>
-
+<fieldset class="admin">
+<legend>{tr}Status{/tr}</legend>
 <div class="adminoptionbox">
-	<div class="adminoptionlabel">{tr}Status{/tr}:</div>
-	<div>
 	<table class="normal">
+		<tr>
+			<th>{tr}Profile repository{/tr}</th>
+			<th>{tr}Status{/tr}</th>
+			<th>{tr}Last update{/tr}</th>
+		</tr>
+		{foreach key=k item=entry from=$sources}
 			<tr>
-				<th>{tr}Profile repository{/tr}</th>
-				<th>{tr}Status{/tr}</th>
-				<th>{tr}Last update{/tr}</th>
+				<td>{$entry.short}</td>
+				<td><img id="profile-status-{$k}" alt="{tr}Status{/tr}" src="img/icons2/status_{$entry.status}.gif"/></td>
+				<td><span id="profile-date-{$k}">{$entry.formatted}</span> <a href="javascript:refreshCache({$k})" class="icon"><img src="pics/icons/arrow_refresh.png" class="icon" alt="{tr}Refresh{/tr}"/></a></td>
 			</tr>
-			{foreach key=k item=entry from=$sources}
-				<tr>
-					<td>{$entry.short}</td>
-					<td><img id="profile-status-{$k}" src="img/icons2/status_{$entry.status}.gif"/></td>
-					<td><span id="profile-date-{$k}">{$entry.formatted}</span> <a href="javascript:refreshCache({$k})" class="icon"><img src="pics/icons/arrow_refresh.png" class="icon" alt="{tr}Refresh{/tr}"/></a></td>
-				</tr>
-			{/foreach}
-		</table>
-	</div>
+		{/foreach}
+	</table>
 </div>
+</fieldset>
 
 <a name='profile-results'></a>
 {if $profilefeedback}
@@ -329,7 +325,7 @@ function showDetails( id, domain, profile ) { // {{{
 
 <div class="adminoptionbox">
 	<div class="adminoptionlabel"><label for="profile_channels">{tr}Data Channels{/tr}</label>:</div>
-	<div><textarea id="profile_channels" name="profile_channels" rows="5" rows="60" style="width:95%;">{$prefs.profile_channels|escape}</textarea>
+	<div><textarea id="profile_channels" name="profile_channels" rows="5" cols="80" style="width:95%;">{$prefs.profile_channels|escape}</textarea>
 	<br /><em>{tr}Data channels create a named pipe to run profiles from user space. One channel per line. Each line is comma delimited and contain <strong>channel name, domain, profile, allowed groups</strong>. {/tr}</em>
 	<small><a href="http://profiles.tikiwiki.org/Data+Channels">{tr}More information{/tr}</a></small>
 	</div>
@@ -359,10 +355,6 @@ function showDetails( id, domain, profile ) { // {{{
 		</form>
 	</fieldset>
 {/if}
-
-
-</td></tr></table>
-</div>
 
 <script type="text/javascript">
 {foreach item=k from=$oldSources}

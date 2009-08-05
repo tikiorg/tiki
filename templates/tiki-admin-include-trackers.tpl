@@ -1,9 +1,7 @@
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}To configure your trackers, look for "Admin trackers" under "Trackers" on the application menu, or{/tr} <a class="rbox-link" href="tiki-admin_trackers.php">{tr}Click Here{/tr}</a>.{/remarksbox}
 
-<div class="cbox">
-  <div class="cbox-title">{tr}Tracker attachment preferences{/tr}</div>
-
-  <div class="cbox-data">
+<fieldset class="admin">
+  <legend>{tr}Tracker attachment preferences{/tr}</legend>
     <form action="tiki-admin.php?page=trackers" method="post">
       <table class="admin">
         <tr>
@@ -25,20 +23,16 @@
           </td>
         </tr>
 
-        <tr>
-          <td colspan="2" class="input_submit_container">
-            <input type="submit" name="trkset" value="{tr}Change preferences{/tr}" />
-          </td>
-        </tr>
       </table>
+			<div class="heading input_submit_container" style="text-align: right">
+        <input type="submit" name="trkset" value="{tr}Change preferences{/tr}" />
+			</div>
     </form>
-  </div>
-</div>
+</fieldset>
 
 
-<div class="cbox">
-  <div class="cbox-title">{tr}Tracker attachments{/tr}</div>
-  <div class="cbox-data">
+<fieldset class="admin">
+  <legend>{tr}Tracker attachments{/tr}</legend>
     <div class="admin">
 {if $attachments}
       <form action="tiki-admin.php?page=trackers" method="post">
@@ -115,14 +109,11 @@
       </tr>
     </table>
 {/if}
-<br />
-  </div>
-</div>
+</fieldset>
 
 
-<div class="cbox">
-  <div class="cbox-title">{tr}Trackers with mirror tables{/tr}</div>
-  <div class="cbox-data">
+<fieldset class="admin">
+  <legend>{tr}Trackers with mirror tables{/tr}</legend>
     <form action="tiki-admin.php?page=trackers" method="post">
       <table class="admin">
         <tr>
@@ -143,6 +134,8 @@
           </td>
         </tr>
       </table>
+			<div class="heading input_submit_container" style="text-align: right">
+				<input type="submit" name="trkMirrorTables" value="{tr}Validate choice{/tr}" />
+			</div>
     </form>
-  </div>
-</div>
+</fieldset>
