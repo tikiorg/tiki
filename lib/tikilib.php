@@ -2307,7 +2307,7 @@ class TikiLib extends TikiDb_Bridge {
 
 		} else {
 			$query = $f_query;
-			$bindvars = $f_jail_bind;
+			$bindvars = array_merge( $f_jail_bind, $bindvars );
 			if ( $mid != '' ) $query .= ' AND'.$mid;
 			$query .= $f_group_by;
 		}
