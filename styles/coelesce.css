@@ -2877,6 +2877,14 @@ div.questionblock {
 
 div.quizquestion {
 	margin-bottom: 5px;
+	background: #C3D3E5 none repeat scroll 0 0;
+	font-size: 1em;
+	font-weight: bold;
+	padding: 5px;
+}
+
+div.quizoptions input[type=text] {
+	width: 500px;
 }
 
 div.quizdescription {
