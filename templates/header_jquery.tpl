@@ -3,6 +3,41 @@
 <!--  start jquery-tiki -->
 <script type="text/javascript" src="lib/jquery/jquery{$minified}.js"></script>
 <script type="text/javascript" src="lib/jquery_tiki/tiki-jquery.js"></script>
+<script type="text/javascript" src="lib/jquery/colorbox/jquery.colorbox{$minified}.js"></script>
+<!-- Includes for Colorbox script -->
+
+		<script type="text/javascript" src="lib/jquery/colorbox/jquery.colorbox.js" charset="utf-8"></script>
+		<link type="text/css" media="screen" rel="stylesheet" href="lib/jquery/colorbox/styles/colorbox.css" />
+		<script type="text/javascript">
+		<!--//--><![CDATA[//><!--
+		{literal}
+		$jq(document).ready(function(){
+			$jq("a[rel*='shadowbox']").colorbox({
+				current: "{{/literal}current{literal}} / {{/literal}total{literal}}"
+			});		
+		});
+		{/literal}
+		//--><!]]>
+		</script>
+
+{* fade out remark boxes on a click to save user space *}
+		<script type="text/javascript">
+		<!--//--><![CDATA[//><!--
+		{literal}
+			$jq(document.body).ready(function() {
+      			$jq(".rbox").hover(function() {
+      				$jq(this).css("cursor","crosshair");
+      				$jq(this).attr("title","{/literal}{tr}Click to fade this out{/tr}{literal}");
+      				$jq(this).click(function() {
+      					$jq(this).fadeOut(1000);
+      					$jq(this).css("cursor","pointer");
+      				});
+      			});
+    		});
+		{/literal}
+		//--><!]]>
+		</script>
+
 {if $prefs.feature_jquery_ui eq 'y' or $prefs.feature_jquery_tooltips eq 'y' or $prefs.feature_jquery_autocomplete eq 'y' or $prefs.feature_jquery_superfish eq 'y' or $prefs.feature_jquery_reflection eq 'y' or $prefs.feature_jquery_cycle eq 'y'}
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--
@@ -66,6 +101,7 @@ jqueryTiki.superfish = {if $prefs.feature_jquery_superfish eq 'y'}true{else}fals
 jqueryTiki.replection = {if $prefs.feature_jquery_reflection eq 'y'}true{else}false{/if};
 jqueryTiki.tablesorter = {if $prefs.feature_jquery_tablesorter eq 'y'}true{else}false{/if};
 jqueryTiki.cycle = {if $prefs.feature_jquery_cycle eq 'y'}true{else}false{/if};
+jqueryTiki.colorbox = {if $prefs.feature_shadowbox eq 'y'}true{else}false{/if};
 
 jqueryTiki.effect = "{$prefs.jquery_effect}";				// Default effect
 jqueryTiki.effect_direction = "{$prefs.jquery_effect_direction}";	// 'horizontal' | 'vertical' etc
