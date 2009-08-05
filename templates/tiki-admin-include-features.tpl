@@ -293,10 +293,6 @@
 						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Friendship" target="tikihelp" class="tikihelp" title="{tr}Friendship{/tr}: {tr}Friendship Network{/tr}">{/if} {tr}Friendship Network{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
 					</div>
 					<div class="half_width">
-						<span class="checkbox"><input type="checkbox" name="feature_games" {if $prefs.feature_games eq 'y'}checked="checked"{/if}/></span>
-						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Games" target="tikihelp" class="tikihelp" title="{tr}Games{/tr}">{/if} {tr}Games{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-					</div>
-					<div class="half_width">
 						<span class="checkbox"><input type="checkbox" name="feature_swfobj" {if $prefs.feature_swfobj eq 'y'}checked="checked"{/if}/></span>
 						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}SWFObject" target="tikihelp" class="tikihelp" title="{tr}SWFObject{/tr}">{/if} {tr}SwfObject{/tr} <i>{tr}Used to embed Flash content in wiki pages, banners etc.{/tr}</i>{if $prefs.feature_help eq 'y'}</a>{/if}</span>
 					</div>

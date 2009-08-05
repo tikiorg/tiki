@@ -1282,33 +1282,6 @@ class TikiLib extends TikiDb_Bridge {
 	// templates ////
 
 	/*shared*/
-	function list_games($offset, $maxRecords, $sort_mode, $find) {
-		$bindvars = array();
-		if ($find) {
-			$findesc = '%'.$find.'%';
-			$mid = " where (`gameName` like ?)";
-			$bindvars[] = $findesc;
-		} else {
-			$mid = "";
-		}
-		$query = "select * from `tiki_games` $mid order by ".$this->convertSortMode($sort_mode);
-		$query_cant = "select count(*) from `tiki_games` $mid";
-		$result = $this->query($query,$bindvars,$maxRecords,$offset);
-		$cant = $this->getOne($query_cant,$bindvars);
-		$ret = array();
-		while ($res = $result->fetchRow()) {
-			$parts = explode('.', $res["gameName"]);
-
-			$res["thumbName"] = $parts[0];
-			$ret[] = $res;
-		}
-		$retval = array();
-		$retval["data"] = $ret;
-		$retval["cant"] = $cant;
-		return $retval;
-	}
-
-	/*shared*/
 	function pick_cookie() {
 		$cant = $this->getOne("select count(*) from `tiki_cookies`",array());
 		if (!$cant) return '';
@@ -1386,8 +1359,6 @@ class TikiLib extends TikiDb_Bridge {
 		$data['xdata'][] = tra('forums');
 		$data['ydata'][] = $this->getOne('select sum(`hits`) from `tiki_forums`',array());
 
-		$data['xdata'][] = tra('games');
-		$data['ydata'][] = $this->getOne('select sum(`hits`) from `tiki_games`',array());
 		return $data;
 	}
 

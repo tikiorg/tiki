@@ -83,7 +83,6 @@ Add a value in first check when you create a new admin page. *}
 	{if $prefs.feature_workflow eq 'y'} <a href="tiki-g-admin_processes.php">{tr}Workflow{/tr}</a> {/if}
 	{* TODO: to be fixed {if $prefs.feature_debug_console eq 'y'} <a href="javascript:toggle("debugconsole")">{tr}(debug){/tr}</a> 
 	{/if} *}
-	{if $prefs.feature_games eq 'y'} <a href="tiki-list_games.php">{tr}Games{/tr}</a> {/if}
 	{if $prefs.feature_contact eq 'y'} <a href="tiki-contact.php">{tr}Contact us{/tr}</a> {/if}
 	<hr />
 

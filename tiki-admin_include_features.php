@@ -41,7 +41,6 @@ if (isset($_REQUEST["features"])) {
 		"feature_friends",
 		"feature_fullscreen",
 		"feature_galleries",
-		"feature_games",
 		"feature_gmap",
 		"feature_purifier",
 		"feature_html_pages",

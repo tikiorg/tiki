@@ -175,11 +175,6 @@ $sections = array(
 		'key' => 'categId',
 		'itemkey' => '',
 	),
-	'games' => array(
-		'feature' => 'feature_games',
-		'key' => 'gameId',
-		'itemkey' => '',
-	),
 	// tra('Html Page')
 	'html_pages' => array(
 		'feature' => 'feature_html_pages',

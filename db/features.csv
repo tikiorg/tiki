@@ -226,7 +226,6 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 236,User Translation Watches,76,,feature_user_watches_translations,flag,,tiki_p_admin,,,,,, 
 239,user_assigned_modules,91,,user_assigned_modules,flag,,tiki_p_admin,,,,,, 
 258,layout_section,3,,layout_section,flag,,tiki_p_admin,39,,,,, 
-264,Games,15,experimental,feature_games,feature,tiki-list_games,tiki_p_admin,8,,Games,,, 
 277,user_flip_modules,91,,user_flip_modules,byref,,tiki_p_admin,,,,,, 
 280,feature_events,44,,feature_events,feature,,tiki_p_admin,7,,,,,Is this used?
 285,Smarty Template Editing,1014,risky,feature_edit_templates,flag,,tiki_p_admin,40,,,,, 

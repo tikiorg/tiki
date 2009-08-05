@@ -998,9 +998,6 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'expanded_category_jail' => '',
 		'expanded_category_jail_key' => '',
 
-		// games
-		'feature_games' => 'n',
-
 		// html pages
 		'feature_html_pages' => 'n',
 

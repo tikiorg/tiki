@@ -170,7 +170,6 @@ $vartype['actpass'] = '+string'; // remind password page
 $vartype['user'] = '+string'; // remind password page
 $vartype['remind'] = 'string'; // remind password page
 $vartype['url'] = 'url';
-$vartype['game'] = 'string'; // from games
 // galaxia
 $vartype['aid'] = '+int';
 $vartype['description'] = 'string';
