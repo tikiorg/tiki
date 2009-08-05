@@ -2282,7 +2282,7 @@ class TikiLib extends TikiDb_Bridge {
 			}
 
 			$g_query = 'SELECT '.implode(', ', array_values($f2g_corresp)).' FROM '.$g_table.$g_join.$g_jail_join;
-			$g_query .= " WHERE 1=1 $gmid ";
+			$g_query .= " WHERE 1=1 $g_mid ";
 
 			if ( $galleryId_str != '' ) {
 				$g_query .= ' AND tfg.`parentId`'.$galleryId_str;
