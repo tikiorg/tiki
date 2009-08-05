@@ -185,7 +185,7 @@
 			<tr>
 				<td class="formcolor">{tr}Groups{/tr}</td>
 				<td class="formcolor">
-					{remarksbox type="tip" title="Tip"}{tr}Use Ctrl+Click to select multiple groups.{/tr}{/remarksbox}
+					{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple groups.{/tr}{/remarksbox}
 					<select multiple="multiple" name="groups[]">
 						{section name=ix loop=$groups}
 							<option value="{$groups[ix].groupName|escape}" {if $groups[ix].selected eq 'y'}selected="selected"{/if}>{$groups[ix].groupName|escape}</option>
