@@ -90,7 +90,7 @@ function capLock(e){
      <input type="hidden" name="challenge" value="{$challenge|escape}" />
      <input type="hidden" name="response" value="" />
      {/if}
-	 {if !empty($url)}<input type="hidden" name="url" value="{$url|escape}" />{/if}
+	 {if !empty($urllogin)}<input type="hidden" name="url" value="{$urllogin|escape}" />{/if}
         <fieldset>
           <legend>{tr}Login as{/tr}&hellip;</legend>
             <div><label for="login-user">{if $prefs.login_is_email eq 'y'}{tr}Email{/tr}{else}{tr}User{/tr}{/if}:</label><br />

@@ -75,7 +75,7 @@ if ($tiki_p_edit != 'y') {
 		global $cachelib; include_once('lib/cache/cachelib.php');
 		$cacheName = $tikilib->get_ip_address().$tikilib->now;
 		$cachelib->cacheItem($cacheName, http_build_query($_REQUEST, '', '&'), 'edit');
-		$smarty->assign('url', "tiki-editpage.php?cache=$cacheName");
+		$smarty->assign('urllogin', "tiki-editpage.php?cache=$cacheName");
 	}
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
