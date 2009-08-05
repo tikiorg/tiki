@@ -3644,6 +3644,7 @@ CREATE TABLE `tiki_webmail_contacts_fields` (
   `order` int(2) NOT NULL default '0',
   `show` char(1) NOT NULL default 'n',
   `fieldId` int(10) unsigned NOT NULL auto_increment,
+  `flagsPublic` CHAR( 1 ) NOT NULL DEFAULT 'n',
   PRIMARY KEY ( `fieldId` ),
   INDEX ( `user` )
 ) ENGINE = MyISAM ;
