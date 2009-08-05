@@ -190,8 +190,13 @@ if (isset($_REQUEST["save"])) {
 	$smarty->assign('data', $_REQUEST["data"]);
 	$smarty->assign('datatxt', $_REQUEST["datatxt"]);
 	$parsed = '';
-	if (isset($_REQUEST['wikiparse']) && $_REQUEST['wikiparse'] == 'on') $wikiparse = 'y';
-	else $wikiparse = 'n';
+	if (isset($_REQUEST['wikiparse']) && $_REQUEST['wikiparse'] == 'on') {
+		$wikiparse = 'y';
+	} elseif ($_SESSION['wysiwyg'] == 'y' && $prefs['wysiwyg_wiki_parsed'] == 'y') {
+		$wikiparse = 'y';
+	} else {
+		$wikiparse = 'n';
+	}
 	if (!empty($_REQUEST["usedTpl"])) {
 		$smarty->assign('dataparsed', (($wikiparse == 'y') ? $tikilib->parse_data($_REQUEST["data"], array('absolute_links' => true)) : $_REQUEST['data']));
 		$smarty->assign('subject', $_REQUEST["subject"]);
