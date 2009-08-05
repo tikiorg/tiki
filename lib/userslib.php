@@ -1862,7 +1862,7 @@ function get_included_groups($group, $recur=true) {
 		return $utr;
 	}
 
-	function get_permissions($offset = 0, $maxRecords = -1, $sort_mode = 'permName_asc', $find = '', $type = '', $group = '', $enabledOnly = false) {
+	function get_permissions($offset = 0, $maxRecords = -1, $sort_mode = 'permName_asc', $find = '', $type = '', $group = '', $enabledOnly = false) {	// TODO enabledOnly doesn't seem to do anything - KIL?
 		global $prefs;
 
 		$values = array();
@@ -1898,10 +1898,26 @@ function get_included_groups($group, $recur=true) {
 				continue;
 
 			$cant++;
-			if ($group && $this->group_has_permission($group, $res['permName'])) {
-				$res['hasPerm'] = 'y';
-			} else {
-				$res['hasPerm'] = 'n';
+			if ($group) {
+				if (is_string($group)) {
+					if ($this->group_has_permission($group, $res['permName'])) {
+						$res['hasPerm'] = 'y';
+						$res[count($res)/2] = 'y';	// keep indexed key too
+					} else {
+						$res['hasPerm'] = 'n';
+						$res[count($res)/2] = 'n';
+					}
+				} else if (is_array($group)) {
+					foreach( $group as $groupName) {
+						if ($this->group_has_permission($groupName, $res['permName'])) {
+							$res[$groupName.'_hasPerm'] = 'y';
+							$res[count($res)/2] = 'y';
+						} else {
+							$res[$groupName.'_hasPerm'] = 'n';
+							$res[count($res)/2] = 'n';
+						}
+					}
+				}
 			}
 
 			$ret[] = $res;

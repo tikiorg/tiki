@@ -17,6 +17,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  * @maxlength		max length of the input field in characters
  * @prefix			prefix text to be put before the input field
  * @selectors		CSS (jQuery) selector(s) for what to filter
+ * @exclude			selector(s) for what to exclude from the text filter
+ * 						(but still hide when parent is empty)
  * 
  * Mainly for treetable lists...
  * @parentSelector	CSS (jQuery) selector(s) for parent nodes of what to filter
@@ -65,7 +67,7 @@ function smarty_function_listfilter($params, &$smarty) {
 		for( i = 0; criterias.length > i; ++i ) {
 			word = criterias[i];
 			if( word.length > 0 && text.indexOf( word ) == -1 ) {
-				\$jq(this).hide();
+				\$jq(this).not('$exclude').hide();	// don't search within excluded elements
 				return;
 			}
 		}
@@ -76,8 +78,9 @@ function smarty_function_listfilter($params, &$smarty) {
 			$content .= "
 	\$jq('$parentSelector').show().each( function() {
 		var cl = '.$childPrefix' + \$jq(this).attr('id');
-		if (\$jq(cl + ':visible').length == 0) {
+		if (\$jq(cl + ':visible:not(\"$exclude\")').length == 0) {	// excluded things don't count
 			\$jq(this).hide();
+			\$jq(cl + '$exclude').hide();							// but need hiding if the parent is 'empty'
 		}
 	});
 ";
