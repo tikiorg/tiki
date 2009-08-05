@@ -8,11 +8,13 @@
 	{if $tiki_p_remix_videos eq 'y' or $tiki_p_admin_video_galleries eq 'y' or $tiki_p_admin eq 'y'}
 	{button _text="{tr}List Entries{/tr}" href="tiki-list_kaltura_entries.php" }
 	{/if}
+	{if $mode ne '' and $mode ne 'new_entries'}
 	{if $mode ne 'edit' and ($tiki_p_edit_videos eq 'y' or $tiki_p_admin_video_galleries eq 'y' or $tiki_p_admin eq 'y')}
 	{button _text="{tr}Edit{/tr}" href="tiki-kaltura_video.php?videoId=$videoId&action=edit" }
 	{/if}
 	{if $mode ne 'remix' and ($tiki_p_remix_videos eq 'y' or $tiki_p_admin_video_galleries eq 'y' or $tiki_p_admin eq 'y')}
 	{button _text="{tr}Remix{/tr}" href="tiki-kaltura_video.php?videoId=$videoId&action=remix" }
+	{/if}
 	{/if}
 </div>
 
@@ -152,7 +154,7 @@
 	<div>	
 	{if $mode eq 'edit'}
 	<div id="form">
-	<form  action='tiki-upload_video.php' enctype='multipart/form-data' method='post' style='margin:0px; padding:0px'>
+	<form  action='tiki-kaltura_video.php' enctype='multipart/form-data' method='post' style='margin:0px; padding:0px'>
 	{$edit_info}
 	<input name="update" type="submit" value="{tr}Save{/tr}"/>
 	</form>

@@ -172,21 +172,23 @@ if(!empty($_REQUEST['videoId']) && isset($_REQUEST['action'])){
 		
 	}
 		
-} else {
-	$videoId[] = $_REQUEST['videoId'];
-	if(!empty($_REQUEST['videoId']) && $tiki_p_view_videos != 'y' && $tiki_p_admin_kaltura != 'y' && $tiki_p_admin != 'y' ){
-		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra("Permission denied: You cannot view video"));
-		$smarty->display('error.tpl');
-		die;
-	}
+}else{
+
+	if(!empty($_REQUEST['videoId'])){
+		$videoId[] = $_REQUEST['videoId'];
+		if(!empty($_REQUEST['videoId']) && $tiki_p_view_videos != 'y' && $tiki_p_admin_kaltura != 'y' && $tiki_p_admin != 'y' ){
+			$smarty->assign('errortype', 401);
+			$smarty->assign('msg', tra("Permission denied: You cannot view video"));
+			$smarty->display('error.tpl');
+			die;
+		}
 	
 	$smarty->assign('mode', 'view');
 	$videoInfo = $videogallib->get_video_info($videoId[0],$kaltura_client);
 	$smarty->assign_by_ref('videoId',$videoId[0]);
 	$smarty->assign_by_ref('videoInfo',$videoInfo);
+	}
 }
-
 $cwflashVars = 'userId=' .$kuser->userId.
 	'&sessionId=' .$kres["result"]["ks"]. 
 	'&partnerId=' . $kaltura_conf->partnerId .
