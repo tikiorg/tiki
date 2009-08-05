@@ -1626,7 +1626,9 @@ CREATE TABLE `tiki_menu_options` (
 -- when adding new inserts, order commands by position
 INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Home','./',10,'','','',0);
 
-INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Search','tiki-searchresults.php',13,'feature_search','tiki_p_search','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Search','tiki-searchresults.php',13,'feature_search_fulltext','tiki_p_search','',0);
+
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Search','tiki-searchindex.php',13,'feature_search','tiki_p_search','',0);
 
 INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Contact Us','tiki-contact.php',20,'feature_contact,feature_messages','','',0);
 
@@ -4771,6 +4773,7 @@ CREATE TABLE `tiki_webmail_contacts_fields` (
   `order` number(2) default '0' NOT NULL,
   `show` char(1) default 'n' NOT NULL,
   `fieldId` number(10) NOT NULL auto_increment,
+  `flagsPublic` CHAR( 1 ) DEFAULT 'n' NOT NULL,
   PRIMARY KEY ( `fieldId` ),
   "INDEX" ( `user` )
 ) ENGINE = MyISAM ;

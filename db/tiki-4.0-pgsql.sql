@@ -1617,7 +1617,9 @@ CREATE TABLE "tiki_menu_options" (
 -- when adding new inserts, order commands by position
 INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Home','./',10,'','','',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Search','tiki-searchresults.php',13,'feature_search','tiki_p_search','',0);
+INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Search','tiki-searchresults.php',13,'feature_search_fulltext','tiki_p_search','',0);
+
+INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Search','tiki-searchindex.php',13,'feature_search','tiki_p_search','',0);
 
 INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Contact Us','tiki-contact.php',20,'feature_contact,feature_messages','','',0);
 
@@ -4767,6 +4769,7 @@ CREATE TABLE "tiki_webmail_contacts_fields" (
   "order" smallint NOT NULL default '0',
   "show" char(1) NOT NULL default 'n',
   "fieldId" bigserial,
+  "flagsPublic" CHAR( 1 ) NOT NULL DEFAULT 'n',
   PRIMARY KEY ( "fieldId" ),
   INDEX ( "user" )
 ) ENGINE = MyISAM ;

@@ -2034,7 +2034,11 @@ INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","
 go
 
 
-INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Search','tiki-searchresults.php',13,'feature_search','tiki_p_search','',0)
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Search','tiki-searchresults.php',13,'feature_search_fulltext','tiki_p_search','',0)
+go
+
+
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Search','tiki-searchindex.php',13,'feature_search','tiki_p_search','',0)
 go
 
 
@@ -7054,6 +7058,7 @@ CREATE TABLE `tiki_webmail_contacts_fields` (
   `order` numeric(2,0) default '0' NOT NULL,
   `show` char(1) default 'n' NOT NULL,
   `fieldId numeric(10 ,0) identity,
+  `flagsPublic` CHAR( 1 ) DEFAULT 'n' NOT NULL,
   PRIMARY KEY ( `fieldId` ),
   "INDEX" ( `user` )
 ) ENGINE = MyISAM 
