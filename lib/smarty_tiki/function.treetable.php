@@ -74,7 +74,7 @@ function smarty_function_treetable($params, &$smarty) {
 	if (strpos($_checkbox, ',') !== false) {
 		$_checkbox = split(',', trim($_checkbox));
 		if (isset($_checkboxColumnIndex)) {
-			if (strpos($_checkboxColumnIndex, ',') !== false) {
+			if (is_string($_checkboxColumnIndex) && strpos($_checkboxColumnIndex, ',') !== false) {
 				$_checkboxColumnIndex = split(',', trim($_checkboxColumnIndex));
 			}
 			if (count($_checkbox) != count($_checkboxColumnIndex)) {
@@ -171,8 +171,7 @@ function smarty_function_treetable($params, &$smarty) {
 			array('id' => $id.'_filter',
 				  'selectors' => "#$id tbody tr:not(.parent)",
 				  'parentSelector' => "#$id tbody .parent",
-				  'exclude' => ".subHeader",
-				  $smarty));
+				  'exclude' => ".subHeader"),  $smarty);
 	}
 	
 	// start writing the table
