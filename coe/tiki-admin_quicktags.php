@@ -18,11 +18,7 @@ $access->check_permission('tiki_p_admin');
 
 if ($prefs['feature_jquery'] == 'y') {
 	if ($prefs['feature_jquery_ui'] != 'y' && $prefs['feature_mootools'] != 'y') {
-		include_once('lib/smarty_tiki/block.self_link.php');
-		$button = smarty_block_self_link(array('_script'=>'tiki-admin.php', 'page'=>'look', 'cookietab'=>'3', '_icon'=>'arrow_right'), tra('Enable feature'), $smarty);
-		$smarty->assign('msg', tra("This feature is disabled"). ' ' . $button . ": feature_jquery_ui");
-		$smarty->display("error.tpl");
-		die;
+		$headerlib->add_jsfile('lib/jquery/jquery-ui/ui/minified/jquery-ui.min.js');
 	}
 } else if ($prefs['feature_mootools'] != 'y') {	// jquery not assumed as enabled (yet)
 	include_once('lib/smarty_tiki/block.self_link.php');
