@@ -587,65 +587,6 @@ CREATE TABLE `tiki_category_sites` (
   PRIMARY KEY (`categId`,`siteId`)
 ) ENGINE=MyISAM;
 
-DROP TABLE IF EXISTS `tiki_chart_items`;
-CREATE TABLE `tiki_chart_items` (
-  `itemId` int(14) NOT NULL auto_increment,
-  `title` varchar(250) default NULL,
-  `description` text,
-  `chartId` int(14) NOT NULL default '0',
-  `created` int(14) default NULL,
-  `URL` varchar(250) default NULL,
-  `votes` int(14) default NULL,
-  `points` int(14) default NULL,
-  `average` decimal(4,2) default NULL,
-  PRIMARY KEY (`itemId`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-
-DROP TABLE IF EXISTS `tiki_charts`;
-CREATE TABLE `tiki_charts` (
-  `chartId` int(14) NOT NULL auto_increment,
-  `title` varchar(250) default NULL,
-  `description` text,
-  `hits` int(14) default NULL,
-  `singleItemVotes` char(1) default NULL,
-  `singleChartVotes` char(1) default NULL,
-  `suggestions` char(1) default NULL,
-  `autoValidate` char(1) default NULL,
-  `topN` int(6) default NULL,
-  `maxVoteValue` int(4) default NULL,
-  `frequency` int(14) default NULL,
-  `showAverage` char(1) default NULL,
-  `isActive` char(1) default NULL,
-  `showVotes` char(1) default NULL,
-  `useCookies` char(1) default NULL,
-  `lastChart` int(14) default NULL,
-  `voteAgainAfter` int(14) default NULL,
-  `created` int(14) default NULL,
-  PRIMARY KEY (`chartId`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-
-DROP TABLE IF EXISTS `tiki_charts_rankings`;
-CREATE TABLE `tiki_charts_rankings` (
-  `chartId` int(14) NOT NULL default '0',
-  `itemId` int(14) NOT NULL default '0',
-  `position` int(14) NOT NULL default '0',
-  `timestamp` int(14) NOT NULL default '0',
-  `lastPosition` int(14) NOT NULL default '0',
-  `period` int(14) NOT NULL default '0',
-  `rvotes` int(14) NOT NULL default '0',
-  `raverage` decimal(4,2) NOT NULL default '0.00',
-  PRIMARY KEY (`chartId`,`itemId`,`period`)
-) ENGINE=MyISAM;
-
-DROP TABLE IF EXISTS `tiki_charts_votes`;
-CREATE TABLE `tiki_charts_votes` (
-  `user` varchar(200) NOT NULL default '',
-  `itemId` int(14) NOT NULL default '0',
-  `timestamp` int(14) default NULL,
-  `chartId` int(14) default NULL,
-  PRIMARY KEY (`user`,`itemId`)
-) ENGINE=MyISAM;
-
 DROP TABLE IF EXISTS `tiki_chat_channels`;
 CREATE TABLE `tiki_chat_channels` (
   `channelId` int(8) NOT NULL auto_increment,
@@ -1299,7 +1240,6 @@ INSERT INTO tiki_live_support_modules(name) VALUES('image galleries');
 INSERT INTO tiki_live_support_modules(name) VALUES('file galleries');
 INSERT INTO tiki_live_support_modules(name) VALUES('directory');
 INSERT INTO tiki_live_support_modules(name) VALUES('workflow');
-INSERT INTO tiki_live_support_modules(name) VALUES('charts');
 
 DROP TABLE IF EXISTS `tiki_live_support_operators`;
 CREATE TABLE `tiki_live_support_operators` (
@@ -1521,8 +1461,6 @@ INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `s
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'s','Newsletters','tiki-newsletters.php',900,'feature_newsletters','tiki_p_list_newsletters','',0);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Send Newsletters','tiki-send_newsletters.php',905,'feature_newsletters','tiki_p_send_newsletters','',0);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Admin Newsletters','tiki-admin_newsletters.php',910,'feature_newsletters','tiki_p_admin_newsletters','',0);
-INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'s','Charts','tiki-charts.php',1000,'feature_charts','tiki_p_view_chart','',0);
-INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Admin Charts','tiki-admin_charts.php',1005,'feature_charts','tiki_p_admin_charts','',0);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin','',0);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_categories','',0);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_banners','',0);
@@ -2791,12 +2729,6 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_events', 'Can view events details', 'registered', 'calendar');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_tiki_calendar', 'Can view Tikiwiki tools calendar', 'basic', 'calendar');
 
-INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('tiki_p_admin_charts', 'Can admin charts', 'admin', 'charts', 'y');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_autoval_chart_suggestio', 'Autovalidate suggestions', 'editors', 'charts');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_suggest_chart_item', 'Can suggest items', 'basic', 'charts');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_chart', 'Can view charts', 'basic', 'charts');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_vote_chart', 'Can vote', 'basic', 'charts');
-
 INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('tiki_p_admin_chat', 'Administrator, can create channels remove channels etc', 'editors', 'chat', 'y');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_chat', 'Can use the chat system', 'registered', 'chat');
 
@@ -3745,7 +3677,6 @@ INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`) VALUES(
 INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`) VALUES('tiki-view_blog.php\\?blogId=(\\d+)', 'blog$1', 'blog', 'feature_blogs');
 INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`) VALUES('tiki-view_blog_post.php\\?postId=(\\d+)', 'blogpost$1', 'blogpost', 'feature_blogs');
 INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`) VALUES('tiki-browse_image.php\\?imageId=(\\d+)', 'browseimage$1', 'image', 'feature_galleries');
-INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`) VALUES('tiki-view_chart.php\\?chartId=(\\d+)', 'chart$1', 'chart', 'feature_charts');
 INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`) VALUES('tiki-directory_browse.php\\?parent=(\\d+)', 'directory$1', 'directory', 'feature_directory');
 INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`) VALUES('tiki-view_faq.php\\?faqId=(\\d+)', 'faq$1', 'faq', 'feature_faqs');
 INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`) VALUES('tiki-list_file_gallery.php\\?galleryId=(\\d+)', 'file$1', 'file', 'feature_file_galleries');
@@ -3775,7 +3706,6 @@ INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`, `order`
 INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`, `order`) VALUES('tiki-view_articles.php', 'articles', '', 'feature_articles', 200);
 INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`, `order`) VALUES('tiki-list_blogs.php', 'blogs', '', 'feature_blogs', 200);
 INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`, `order`) VALUES('tiki-browse_categories.php', 'categories', '', 'feature_categories', 200);
-INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`, `order`) VALUES('tiki-list_charts.php', 'charts', '', 'feature_charts', 200);
 INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`, `order`) VALUES('tiki-contact.php', 'contact', '', 'feature_contact', 200);
 INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`, `order`) VALUES('tiki-directory_browse.php', 'directories', '', 'feature_directory', 200);
 INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`, `order`) VALUES('tiki-list_faqs.php', 'faqs', '', 'feature_faqs', 200);
@@ -3812,7 +3742,6 @@ UPDATE tiki_menu_options SET icon = '' WHERE name = 'Quizzes';
 UPDATE tiki_menu_options SET icon = '' WHERE name = 'Surveys';
 UPDATE tiki_menu_options SET icon = '' WHERE name = 'TikiSheet';
 UPDATE tiki_menu_options SET icon = '' WHERE name = 'Workflow';
-UPDATE tiki_menu_options SET icon = '' WHERE name = 'Charts';
 UPDATE tiki_menus SET use_items_icons='y' WHERE menuId=42;
 
 DROP TABLE IF EXISTS `tiki_plugin_security`;

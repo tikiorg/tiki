@@ -148,11 +148,6 @@ $sections = array(
 		'key' => '',
 		'itemkey' => '',
 	),
-	'charts' => array(
-		'feature' => 'feature_charts',
-		'key' => '',
-		'itemkey' => '',
-	),
 	// tra('Map')
 	'maps' => array(
 		'feature' => 'feature_maps',

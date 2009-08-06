@@ -63,7 +63,7 @@ function convert_formula( $formula )
 
 // Now check permissions to access this page
 if ($prefs['feature_sheet'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_sheets, feature_charts");
+	$smarty->assign('msg', tra("This feature is disabled").": feature_sheets");
 
 	$smarty->display("error.tpl");
 	die;

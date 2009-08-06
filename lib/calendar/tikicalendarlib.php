@@ -95,7 +95,6 @@ class TikiCalendarLib extends CalendarLib {
 		switch ( $type ) {
 			case 'art': $query = 'select `articleId` as `id`, `title` as `name`, `heading` as `description`, `authorName` as `user`, `topicName` as `parent`, `publishDate` as `start` from `tiki_articles` where (`publishDate`>? and `publishDate`<?)'; break;
 			case 'blog': $query = 'select p.`created` as `start`, p.`user` as `user`, p.`title` as `name`, b.`title` as `parent`, b.`blogId` as `id` from `tiki_blog_posts` as p left join `tiki_blogs` as b on p.`blogId`=b.`blogId` where (p.`created`>? and p.`created`<?)'; break;
-			case 'chart': $query = 'select `chartId` as `id`, `created` as `start`, `title` as `name`, `description` from `tiki_charts` where (`created`>? and `created`<?)'; break;
 			case 'dir': $query = 'select `siteId` as `id`, `created` as `start`, `name`, `description`, `url` as `dir_url` from `tiki_directory_sites` where (`created`>? and `created`<?)'; break;
 			case 'faq': $query = 'select `faqId` as `id`, `created` as `start`, `title` as `name`, `description` from `tiki_faqs` where (`created`>? and `created`<?)'; break;
 			case 'fgal': $query = 'select f.`created` as `start`, f.`user` as `user`, f.`name` as `name`, f.`description` as `description`, g.`galleryId` as `id`, g.`name` as `parent` from `tiki_files` as f left join `tiki_file_galleries` as g on f.`galleryId`=g.`galleryId` where (f.`created`>? and f.`created`<?)'; break;
@@ -156,8 +155,7 @@ class TikiCalendarLib extends CalendarLib {
 			"quiz" => array( "label" => tra("Quizzes"), "feature" => ''.$prefs['feature_quizzes'], "right" => $tiki_p_take_quiz),
 			"track" => array( "label" => tra("Trackers"), "feature" => ''.$prefs['feature_trackers'], "right" => "$tiki_p_view_trackers"),
 			"surv" => array( "label" => tra("Survey"), "feature" => ''.$prefs['feature_surveys'], "right" => "$tiki_p_take_survey"),
-			"nl" => array( "label" => tra("Newsletter"), "feature" => ''.$prefs['feature_newsletters'], "right" => "$tiki_p_subscribe_newsletters"),
-			"chart" => array( "label" => tra("Charts"), "feature" => ''.$prefs['feature_charts'], "right" => "$tiki_p_view_chart")
+			"nl" => array( "label" => tra("Newsletter"), "feature" => ''.$prefs['feature_newsletters'], "right" => "$tiki_p_subscribe_newsletters")
 		);
 		return ( $with_infos ? $return : array_keys($return) );
 	}

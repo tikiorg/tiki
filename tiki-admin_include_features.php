@@ -22,7 +22,6 @@ if (isset($_REQUEST["features"])) {
 		"feature_blogs",
 		"feature_calendar",
 		"feature_categories",
-		"feature_charts",
 		"feature_comm",
 		"feature_contact",
 		"feature_contacts",

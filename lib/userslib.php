@@ -1430,7 +1430,6 @@ function get_included_groups($group, $recur=true) {
 			$this->query("update `tiki_chat_users` set `nickname`=? where `nickname`=?", array($to,$from));
 			$this->query("update `tiki_chat_messages` set `poster`=? where `poster`=?", array($to,$from));
 			$this->query("update `tiki_chat_channels` set `moderator`=? where `moderator`=?", array($to,$from));
-			$this->query("update `tiki_charts_votes` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_calendars` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_calendar_roles` set `username`=? where `username`=?", array($to,$from));
 			$this->query("update `tiki_calendar_items` set `user`=? where `user`=?", array($to,$from));

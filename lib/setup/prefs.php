@@ -837,9 +837,6 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'short_time_format' => '%H:%M %Z',
 		'display_field_order' => 'MDY',
 
-		// charts
-		'feature_charts' => 'n',
-
 		// rss
 		'rss_forums' => 'n',
 		'rss_forum' => 'n',
