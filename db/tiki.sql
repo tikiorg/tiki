@@ -2994,6 +2994,12 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_perspective_view', 'Can view the perspective', 'basic', 'perspective');
 
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_group_view', 'Can view the group', 'basic', 'group');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_group_view_members', 'Can view the group members', 'basic', 'group');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_group_add_member', 'Can add group members', 'admin', 'group');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_group_remove_member', 'Can remove group members', 'admin', 'group');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_group_join', 'Can join or leave the group', 'admin', 'group');
+
 UPDATE users_permissions SET feature_check = 'feature_wiki' WHERE permName IN(
 	'tiki_p_admin_wiki',
 	'tiki_p_assign_perm_wiki_page',

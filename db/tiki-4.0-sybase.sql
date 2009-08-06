@@ -830,89 +830,6 @@ go
 
 
 
--- DROP TABLE `tiki_chart_items`
-go
-
-
-CREATE TABLE `tiki_chart_items` (
-  `itemId numeric(14 ,0) identity,
-  `title` varchar(250) default NULL NULL,
-  `description` text,
-  `chartId` numeric(14,0) default '0' NOT NULL,
-  `created` numeric(14,0) default NULL NULL,
-  `URL` varchar(250) default NULL NULL,
-  `votes` numeric(14,0) default NULL NULL,
-  `points` numeric(14,0) default NULL NULL,
-  `average` decimal(4,2) default NULL NULL,
-  PRIMARY KEY (`itemId`)
-) ENGINE=MyISAM  
-go
-
-
-
--- DROP TABLE `tiki_charts`
-go
-
-
-CREATE TABLE `tiki_charts` (
-  `chartId numeric(14 ,0) identity,
-  `title` varchar(250) default NULL NULL,
-  `description` text,
-  `hits` numeric(14,0) default NULL NULL,
-  `singleItemVotes` char(1) default NULL NULL,
-  `singleChartVotes` char(1) default NULL NULL,
-  `suggestions` char(1) default NULL NULL,
-  `autoValidate` char(1) default NULL NULL,
-  `topN` numeric(6,0) default NULL NULL,
-  `maxVoteValue` numeric(4,0) default NULL NULL,
-  `frequency` numeric(14,0) default NULL NULL,
-  `showAverage` char(1) default NULL NULL,
-  `isActive` char(1) default NULL NULL,
-  `showVotes` char(1) default NULL NULL,
-  `useCookies` char(1) default NULL NULL,
-  `lastChart` numeric(14,0) default NULL NULL,
-  `voteAgainAfter` numeric(14,0) default NULL NULL,
-  `created` numeric(14,0) default NULL NULL,
-  PRIMARY KEY (`chartId`)
-) ENGINE=MyISAM  
-go
-
-
-
--- DROP TABLE `tiki_charts_rankings`
-go
-
-
-CREATE TABLE `tiki_charts_rankings` (
-  `chartId` numeric(14,0) default '0' NOT NULL,
-  `itemId` numeric(14,0) default '0' NOT NULL,
-  `position` numeric(14,0) default '0' NOT NULL,
-  `timestamp` numeric(14,0) default '0' NOT NULL,
-  `lastPosition` numeric(14,0) default '0' NOT NULL,
-  `period` numeric(14,0) default '0' NOT NULL,
-  `rvotes` numeric(14,0) default '0' NOT NULL,
-  `raverage` decimal(4,2) default '0.00' NOT NULL,
-  PRIMARY KEY (`chartId`,`itemId`,`period`)
-) ENGINE=MyISAM
-go
-
-
-
--- DROP TABLE `tiki_charts_votes`
-go
-
-
-CREATE TABLE `tiki_charts_votes` (
-  `user` varchar(200) default '' NOT NULL,
-  `itemId` numeric(14,0) default '0' NOT NULL,
-  `timestamp` numeric(14,0) default NULL NULL,
-  `chartId` numeric(14,0) default NULL NULL,
-  PRIMARY KEY (`user`,`itemId`)
-) ENGINE=MyISAM
-go
-
-
-
 -- DROP TABLE `tiki_chat_channels`
 go
 
@@ -1848,10 +1765,6 @@ INSERT INTO tiki_live_support_modules(name) VALUES('workflow')
 go
 
 
-INSERT INTO tiki_live_support_modules(name) VALUES('charts')
-go
-
-
 
 -- DROP TABLE `tiki_live_support_operators`
 go
@@ -2466,14 +2379,6 @@ go
 
 
 INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Admin Newsletters','tiki-admin_newsletters.php',910,'feature_newsletters','tiki_p_admin_newsletters','',0)
-go
-
-
-INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'s','Charts','tiki-charts.php',1000,'feature_charts','tiki_p_view_chart','',0)
-go
-
-
-INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Admin Charts','tiki-admin_charts.php',1005,'feature_charts','tiki_p_admin_charts','',0)
 go
 
 
@@ -4543,27 +4448,6 @@ go
 
 
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_charts', 'Can admin charts', 'admin', 'charts', 'y')
-go
-
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_autoval_chart_suggestio', 'Autovalidate suggestions', 'editors', 'charts')
-go
-
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_suggest_chart_item', 'Can suggest items', 'basic', 'charts')
-go
-
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_chart', 'Can view charts', 'basic', 'charts')
-go
-
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_vote_chart', 'Can vote', 'basic', 'charts')
-go
-
-
-
 INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_chat', 'Administrator, can create channels remove channels etc', 'editors', 'chat', 'y')
 go
 
@@ -5509,6 +5393,27 @@ go
 
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_perspective_view', 'Can view the perspective', 'basic', 'perspective')
+go
+
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_group_view', 'Can view the group', 'basic', 'group')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_group_view_members', 'Can view the group members', 'basic', 'group')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_group_add_member', 'Can add group members', 'admin', 'group')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_group_remove_member', 'Can remove group members', 'admin', 'group')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_group_join', 'Can join or leave the group', 'admin', 'group')
 go
 
 
@@ -7207,10 +7112,6 @@ INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`) VALUES(
 go
 
 
-INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`) VALUES('tiki-view_chart.php\\?chartId=(\\d+)', 'chart$1', 'chart', 'feature_charts')
-go
-
-
 INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`) VALUES('tiki-directory_browse.php\\?parent=(\\d+)', 'directory$1', 'directory', 'feature_directory')
 go
 
@@ -7324,10 +7225,6 @@ go
 
 
 INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`, `order`) VALUES('tiki-browse_categories.php', 'categories', '', 'feature_categories', 200)
-go
-
-
-INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`, `order`) VALUES('tiki-list_charts.php', 'charts', '', 'feature_charts', 200)
 go
 
 
@@ -7469,10 +7366,6 @@ go
 
 
 UPDATE tiki_menu_options SET icon = '' WHERE name = 'Workflow'
-go
-
-
-UPDATE tiki_menu_options SET icon = '' WHERE name = 'Charts'
 go
 
 
