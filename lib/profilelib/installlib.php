@@ -24,7 +24,8 @@ class Tiki_Profile_Installer
 		'forum' => 'Tiki_Profile_InstallHandler_Forum',
 		'template' => 'Tiki_Profile_InstallHandler_Template',
 		'perspective' => 'Tiki_Profile_InstallHandler_Perspective',
-		'users' => 'Tiki_Profile_UsersHandler',
+		'users' => 'Tiki_Profile_InstallHandler_User',
+		'datachannel' => 'Tiki_Profile_InstallHandler_DataChannel',
 	);
 
 	private static $typeMap = array(
@@ -1900,6 +1901,56 @@ class Tiki_Profile_InstallHandler_Template extends Tiki_Profile_InstallHandler /
 	}
 } // }}}
 
+class Tiki_Profile_InstallHandler_DataChannel extends Tiki_Profile_InstallHandler // {{{
+{
+	function getData()
+	{
+		if( $this->data )
+			return $this->data;
+
+		$defaults = array(
+			'domain' => 'tiki://local',
+			'groups' => array( 'Admins' ),
+		);
+
+		$data = array_merge(
+			$defaults,
+			$this->obj->getData()
+		);
+
+		return $this->data = $data;
+	}
+
+	function canInstall()
+	{
+		$data = $this->getData();
+		if( ! isset( $data['name'], $data['profile'] ) )
+			return false;
+		if( ! is_array( $data['groups'] ) )
+			return false;
+		if( ! is_string( $data['domain'] ) )
+			return false;
+
+		return true;
+	}
+
+	function _install()
+	{
+		global $tikilib;
+		require_once 'lib/profilelib/channellib.php';
+		$channels = Tiki_Profile_ChannelList::fromConfiguration( $prefs['profile_channels'] );
+
+		$data = $this->getData();
+
+		$this->replaceReferences( $data );
+
+		$channels->addChannel( $data['name'], $data['domain'], $data['profile'], $data['groups'] );
+		$tikilib->set_preference( 'profile_channels', $channels->getConfiguration() );
+
+		return $data['name'];
+	}
+} // }}}
+
 class Tiki_Profile_InstallHandler_Perspective extends Tiki_Profile_InstallHandler // {{{
 {
 	function getData()
@@ -1949,6 +2000,54 @@ class Tiki_Profile_InstallHandler_Perspective extends Tiki_Profile_InstallHandle
 		}
 
 		return $persp;
+	}
+} // }}}
+
+//THIS HANDLER IS ONLY FOR TESTING PURPOSES!!! So don't use it in a production server. 
+class Tiki_Profile_InstallHandler_User extends Tiki_Profile_InstallHandler // {{{
+{
+	function getData()
+	{
+		if( $this->data )
+			return $this->data;
+
+		return $this->data = $this->obj->getData();
+	}
+	
+	function canInstall()
+	{
+		$data = $this->getData();
+		
+		if (isset($data)) return true;
+		else return false;
+	}
+	
+	function _install()
+	{
+		if ($this->canInstall())
+		{
+			global $userlib; if (!$userlib) require_once 'lib/userlib.php';
+
+			$data = $this->getData();
+			
+			foreach ($data as $user)
+			{
+				if (!$userlib->user_exists($user['name']))
+				{
+					$pass = isset($user['pass']) ? $user['pass'] : $user['name'];
+					$userlib->add_user($user['name'], $pass, '');
+				}
+				
+				if (isset($user['groups']))
+					foreach ($user['groups'] as $group) 
+					{
+						//if ($userlib->add_group($group));
+						$userlib->assign_user_to_group($user['name'], $group);
+					}
+			}
+			
+			return 1;
+		}
 	}
 } // }}}
 
@@ -2002,51 +2101,3 @@ class Tiki_Profile_ValueMapConverter // {{{
 		}
 	}
 } // }}}
-
-//THIS HANDLER IS ONLY FOR TESTING PURPOSES!!! So don't use it in a production server. 
-class Tiki_Profile_UsersHandler extends Tiki_Profile_InstallHandler
-{
-	function getData()
-	{
-		if( $this->data )
-			return $this->data;
-
-		return $this->data = $this->obj->getData();
-	}
-	
-	function canInstall()
-	{
-		$data = $this->getData();
-		
-		if (isset($data)) return true;
-		else return false;
-	}
-	
-	function _install()
-	{
-		if ($this->canInstall())
-		{
-			global $userlib; if (!$userlib) require_once 'lib/userlib.php';
-
-			$data = $this->getData();
-			
-			foreach ($data as $user)
-			{
-				if (!$userlib->user_exists($user['name']))
-				{
-					$pass = isset($user['pass']) ? $user['pass'] : $user['name'];
-					$userlib->add_user($user['name'], $pass, '');
-				}
-				
-				if (isset($user['groups']))
-					foreach ($user['groups'] as $group) 
-					{
-						//if ($userlib->add_group($group));
-						$userlib->assign_user_to_group($user['name'], $group);
-					}
-			}
-			
-			return 1;
-		}
-	}
-}
