@@ -1322,19 +1322,23 @@ div.cbox {
 	border: none;
 	float: left;
 	font-size: 1em;
-	padding: 0.2em 0.8em;
+	padding: 0 0.4em 0 0.2em;
 	line-height: 1.4em;
 	position: relative;
 	top: 1px;
 	z-index: 2;
-	background: #cce5ff;
+	background-color: #fff;
+	border-top: 1px #077AA7 solid;
+	border-right: 1px #077AA7 solid;
+	border-left: 1px #077AA7 solid;
+	border-bottom: none;
 }
 
 .rbox-data {
-	border: solid 1px #cce5ff;
+	border: solid 1px #077AA7;
 	clear: left;
 	margin: 0;
-	padding: 6px 2px 2px 2px;
+	padding: .4em .4em .2em;
 	background: #fff;
 }
 
