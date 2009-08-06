@@ -547,6 +547,7 @@ class Tiki_Profile
 				'theme' => '',
 				'registration_fields' => array(),
 				'include' => array(),
+				'autojoin' => 'n',
 			);
 			foreach( $defaultInfo as $key => $value )
 				if( array_key_exists( $key, $data ) )

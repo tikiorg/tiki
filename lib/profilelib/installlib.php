@@ -298,6 +298,11 @@ class Tiki_Profile_Installer
 				else
 					$userlib->remove_object_permission( $groupName, $data['id'], $data['type'], $perm );
 			}
+
+		global $user;
+		if( $info['autojoin'] == 'y' && $user ) {
+			$userlib->assign_user_to_group( $user, $groupName );
+		}
 	} // }}}
 
 	function forget( Tiki_Profile $profile ) // {{{
