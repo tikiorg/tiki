@@ -112,7 +112,6 @@ if ($prefs['feature_ajax'] == "y") {
 		$ajaxlib->processRequests();
 	}
 	user_bookmarks_ajax();
-	$smarty->assign("mootab", 'y');
 }
 // Display the template
 $smarty->assign('mid', 'tiki-user_bookmarks.tpl');

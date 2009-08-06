@@ -186,6 +186,7 @@ class TikiDb_LegacyErrorHandler implements TikiDb_ErrorHandler
 			if ( $smarty ) {
 				$smarty->assign('msg', $outp);
 				$_SESSION['fatal_error'] = 'y';
+				$smarty->assign('errortype', 'no_redirect_login');
 				$smarty->display('error.tpl');
 				unset($_SESSION['fatal_error']);
 			} else {

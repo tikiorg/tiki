@@ -17,7 +17,6 @@ if (!$user) {
 	$smarty->display("error.tpl");
 	die;
 }
-$smarty->assign("mootab", 'y');
 $userwatch = $user;
 if (isset($_REQUEST["view_user"])) {
 	if ($_REQUEST["view_user"] <> $user) {

@@ -42,43 +42,9 @@ if (!$id) {
 }
 
 $galleryId = $imagegallib->get_gallery_from_image($id);
+$galperms = Perns::get( array( 'type' => 'image gallery', 'object' => $galleryId ) );
 
-if ($userlib->object_has_one_permission($galleryId, 'image gallery')) {
-	if ($tiki_p_admin != 'y') {
-		// Now get all the permissions that are set for this type of permissions 'image gallery'
-		$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'image galleries');
-
-		foreach ($perms["data"] as $perm) {
-			$permName = $perm["permName"];
-
-			if ($userlib->object_has_permission($user, $galleryId, 'image gallery', $permName)) {
-				$$permName = 'y';
-			} else {
-				$$permName = 'n';
-			}
-		}
-	}
-} elseif ($tiki_p_admin != 'y' && $prefs['feature_categories'] == 'y') {
-	global $categlib;
-	if (!is_object($categlib)) {
-		include_once('lib/categories/categlib.php');
-	}
-	$perms_array = $categlib->get_object_categories_perms($user, 'image gallery', $galleryId);
-   	if ($perms_array) {
-   		$is_categorized = TRUE;
-    	foreach ($perms_array as $perm => $value) {
-    		$$perm = $value;
-    	}
-   	} else {
-   		$is_categorized = FALSE;
-   	}
-	if ($is_categorized && isset($tiki_p_view_categorized) && $tiki_p_view_categorized != 'y') {
-        header("HTTP/1.0 404 Not Found");
-        die;
-	}
-}
-
-if ($tiki_p_view_image_gallery != 'y' && $tiki_p_admin_galleries != 'y') {
+if ( ! $galperms->view_image_gallery ) {
     header("HTTP/1.0 404 Not Found");
     die;
 }

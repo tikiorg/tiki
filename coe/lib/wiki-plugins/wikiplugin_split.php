@@ -133,7 +133,7 @@ function wikiplugin_split($data, $params, $pos) {
 		$percent = true;	
 	}
 	if (!isset($edit)) $edit = 'n';
-	$result = "<table border='0' cellpadding='0' cellspacing='0' class='wikiplugin-split".($percent ? " normal" : "").($customclass ? " $customclass" : "")."'>";
+	$result = "<table border='0' cellpadding='0' cellspacing='0' class='wikiplugin-split".($percent ? " normal" : "").( !empty($customclass) ? " $customclass" : "")."'>";
 
     // Attention: Dont forget to remove leading empty line in section ...
     //            it should remain from previous '---' line...

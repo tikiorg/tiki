@@ -14,15 +14,17 @@ if ($prefs['rss_forum'] != 'y') {
         require_once ('tiki-rss_error.php');
 }
 
-if ($tiki_p_forum_read != 'y' or !$tikilib->user_has_perm_on_object($user,$_REQUEST['forumId'],'forum','tiki_p_forum_read')) {
-	$smarty->assign('errortype', 401);
-	$errmsg=tra("Permission denied you cannot view this section");
-	require_once ('tiki-rss_error.php');
-}
-
 if(!isset($_REQUEST["forumId"])) {
         $errmsg=tra("No forumId specified");
         require_once ('tiki-rss_error.php');
+}
+
+$tikilib->get_perm_object( $_REQUEST['forumId'], 'forum' );
+
+if ($tiki_p_forum_read != 'y') {
+	$smarty->assign('errortype', 401);
+	$errmsg=tra("Permission denied you cannot view this section");
+	require_once ('tiki-rss_error.php');
 }
 
 require_once('lib/commentslib.php');

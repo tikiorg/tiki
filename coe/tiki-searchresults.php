@@ -11,7 +11,7 @@ require_once ('lib/search/searchlib-mysql.php');
 $auto_query_args = array('highlight', 'where', 'initial', 'maxRecords', 'sort_mode', 'find', 'lang', 'words', 'boolean');
 $searchlib = new SearchLib;
 $smarty->assign('headtitle', tra('Search'));
-if ($prefs['feature_search'] != 'y') {
+if ($prefs['feature_search_fulltext'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled") . ": feature_search");
 	$smarty->display("error.tpl");
 	die;

@@ -1,398 +1,326 @@
 -- --------------------------------------------------------
 -- Database : tikiwiki
 -- --------------------------------------------------------
-DROP TABLE "galaxia_activities";
+DROP TABLE `galaxia_activities`;
 
-CREATE SEQUENCE "galaxia_activities_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "galaxia_activities" (
-  "activityId" number(14) NOT NULL,
-  "name" varchar(80) default NULL,
-  "normalized_name" varchar(80) default NULL,
-  "pId" number(14) default '0' NOT NULL,
-  "type" varchar(12) default NULL CHECK ("type" IN ('start','end','split','switch','join','activity','standalone')),
-  "isAutoRouted" char(1) default NULL,
-  "flowNum" number(10) default NULL,
-  "isInteractive" char(1) default NULL,
-  "lastModif" number(14) default NULL,
-  "description" clob,
-  "expirationTime" number(6) default '0' NOT NULL,
-  PRIMARY KEY (activityId)
+CREATE TABLE `galaxia_activities` (
+  `activityId` number(14) NOT NULL auto_increment,
+  `name` varchar(80) default NULL,
+  `normalized_name` varchar(80) default NULL,
+  `pId` number(14) default '0' NOT NULL,
+  `type` enum('start','end','split','switch','join','activity','standalone') default NULL,
+  `isAutoRouted` char(1) default NULL,
+  `flowNum` number(10) default NULL,
+  `isInteractive` char(1) default NULL,
+  `lastModif` number(14) default NULL,
+  `description` clob,
+  `expirationTime` number(6) default '0' NOT NULL,
+  PRIMARY KEY (`activityId`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "galaxia_activities_trig" BEFORE INSERT ON "galaxia_activities" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "galaxia_activities_sequ".nextval into :NEW."activityId" FROM DUAL;
-END;
-/
 
-DROP TABLE "galaxia_activity_roles";
+DROP TABLE `galaxia_activity_roles`;
 
-CREATE TABLE "galaxia_activity_roles" (
-  "activityId" number(14) default '0' NOT NULL,
-  "roleId" number(14) default '0' NOT NULL,
-  PRIMARY KEY (activityId,roleId)
+CREATE TABLE `galaxia_activity_roles` (
+  `activityId` number(14) default '0' NOT NULL,
+  `roleId` number(14) default '0' NOT NULL,
+  PRIMARY KEY (`activityId`,`roleId`)
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "galaxia_instance_activities";
+DROP TABLE `galaxia_instance_activities`;
 
-CREATE TABLE "galaxia_instance_activities" (
-  "instanceId" number(14) default '0' NOT NULL,
-  "activityId" number(14) default '0' NOT NULL,
-  "started" number(14) default '0' NOT NULL,
-  "ended" number(14) default '0' NOT NULL,
-  "user" varchar(200) default '',
-  "status" varchar(11) default NULL CHECK ("status" IN ('running','completed')),
-  PRIMARY KEY (instanceId,activityId)
+CREATE TABLE `galaxia_instance_activities` (
+  `instanceId` number(14) default '0' NOT NULL,
+  `activityId` number(14) default '0' NOT NULL,
+  `started` number(14) default '0' NOT NULL,
+  `ended` number(14) default '0' NOT NULL,
+  `user` varchar(200) default '',
+  `status` enum('running','completed') default NULL,
+  PRIMARY KEY (`instanceId`,`activityId`)
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "galaxia_instance_comments";
+DROP TABLE `galaxia_instance_comments`;
 
-CREATE SEQUENCE "galaxia_instance_comments_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "galaxia_instance_comments" (
-  "cId" number(14) NOT NULL,
-  "instanceId" number(14) default '0' NOT NULL,
-  "user" varchar(200) default '',
-  "activityId" number(14) default NULL,
-  "hash" varchar(34) default NULL,
-  "title" varchar(250) default NULL,
-  "comment" clob,
-  "activity" varchar(80) default NULL,
-  "timestamp" number(14) default NULL,
-  PRIMARY KEY (cId)
+CREATE TABLE `galaxia_instance_comments` (
+  `cId` number(14) NOT NULL auto_increment,
+  `instanceId` number(14) default '0' NOT NULL,
+  `user` varchar(200) default '',
+  `activityId` number(14) default NULL,
+  `hash` varchar(34) default NULL,
+  `title` varchar(250) default NULL,
+  `comment` clob,
+  `activity` varchar(80) default NULL,
+  `timestamp` number(14) default NULL,
+  PRIMARY KEY (`cId`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "galaxia_instance_comments_trig" BEFORE INSERT ON "galaxia_instance_comments" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "galaxia_instance_comments_sequ".nextval into :NEW."cId" FROM DUAL;
-END;
-/
 
-DROP TABLE "galaxia_instances";
+DROP TABLE `galaxia_instances`;
 
-CREATE SEQUENCE "galaxia_instances_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "galaxia_instances" (
-  "instanceId" number(14) NOT NULL,
-  "pId" number(14) default '0' NOT NULL,
-  "started" number(14) default NULL,
-  "name" varchar(200) default 'No Name' NOT NULL,
-  "owner" varchar(200) default NULL,
-  "nextActivity" number(14) default NULL,
-  "nextUser" varchar(200) default NULL,
-  "ended" number(14) default NULL,
-  "status" varchar(11) default NULL CHECK ("status" IN ('active','exception','aborted','completed')),
-  "properties" blob,
-  PRIMARY KEY (instanceId)
+CREATE TABLE `galaxia_instances` (
+  `instanceId` number(14) NOT NULL auto_increment,
+  `pId` number(14) default '0' NOT NULL,
+  `started` number(14) default NULL,
+  `name` varchar(200) default 'No Name' NOT NULL,
+  `owner` varchar(200) default NULL,
+  `nextActivity` number(14) default NULL,
+  `nextUser` varchar(200) default NULL,
+  `ended` number(14) default NULL,
+  `status` enum('active','exception','aborted','completed') default NULL,
+  `properties` blob,
+  PRIMARY KEY (`instanceId`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "galaxia_instances_trig" BEFORE INSERT ON "galaxia_instances" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "galaxia_instances_sequ".nextval into :NEW."instanceId" FROM DUAL;
-END;
-/
 
-DROP TABLE "galaxia_processes";
+DROP TABLE `galaxia_processes`;
 
-CREATE SEQUENCE "galaxia_processes_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "galaxia_processes" (
-  "pId" number(14) NOT NULL,
-  "name" varchar(80) default NULL,
-  "isValid" char(1) default NULL,
-  "isActive" char(1) default NULL,
-  "version" varchar(12) default NULL,
-  "description" clob,
-  "lastModif" number(14) default NULL,
-  "normalized_name" varchar(80) default NULL,
-  PRIMARY KEY (pId)
+CREATE TABLE `galaxia_processes` (
+  `pId` number(14) NOT NULL auto_increment,
+  `name` varchar(80) default NULL,
+  `isValid` char(1) default NULL,
+  `isActive` char(1) default NULL,
+  `version` varchar(12) default NULL,
+  `description` clob,
+  `lastModif` number(14) default NULL,
+  `normalized_name` varchar(80) default NULL,
+  PRIMARY KEY (`pId`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "galaxia_processes_trig" BEFORE INSERT ON "galaxia_processes" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "galaxia_processes_sequ".nextval into :NEW."pId" FROM DUAL;
-END;
-/
 
-DROP TABLE "galaxia_roles";
+DROP TABLE `galaxia_roles`;
 
-CREATE SEQUENCE "galaxia_roles_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "galaxia_roles" (
-  "roleId" number(14) NOT NULL,
-  "pId" number(14) default '0' NOT NULL,
-  "lastModif" number(14) default NULL,
-  "name" varchar(80) default NULL,
-  "description" clob,
-  PRIMARY KEY (roleId)
+CREATE TABLE `galaxia_roles` (
+  `roleId` number(14) NOT NULL auto_increment,
+  `pId` number(14) default '0' NOT NULL,
+  `lastModif` number(14) default NULL,
+  `name` varchar(80) default NULL,
+  `description` clob,
+  PRIMARY KEY (`roleId`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "galaxia_roles_trig" BEFORE INSERT ON "galaxia_roles" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "galaxia_roles_sequ".nextval into :NEW."roleId" FROM DUAL;
-END;
-/
 
-DROP TABLE "galaxia_transitions";
+DROP TABLE `galaxia_transitions`;
 
-CREATE TABLE "galaxia_transitions" (
-  "pId" number(14) default '0' NOT NULL,
-  "actFromId" number(14) default '0' NOT NULL,
-  "actToId" number(14) default '0' NOT NULL,
-  PRIMARY KEY (actFromId,actToId)
+CREATE TABLE `galaxia_transitions` (
+  `pId` number(14) default '0' NOT NULL,
+  `actFromId` number(14) default '0' NOT NULL,
+  `actToId` number(14) default '0' NOT NULL,
+  PRIMARY KEY (`actFromId`,`actToId`)
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "galaxia_user_roles";
+DROP TABLE `galaxia_user_roles`;
 
-CREATE SEQUENCE "galaxia_user_roles_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "galaxia_user_roles" (
-  "pId" number(14) default '0' NOT NULL,
-  "roleId" number(14) NOT NULL,
-  "user" varchar(200) default '' NOT NULL,
-  PRIMARY KEY (roleId,user)
+CREATE TABLE `galaxia_user_roles` (
+  `pId` number(14) default '0' NOT NULL,
+  `roleId` number(14) NOT NULL auto_increment,
+  `user` varchar(200) default '' NOT NULL,
+  PRIMARY KEY (`roleId`, `user`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "galaxia_user_roles_trig" BEFORE INSERT ON "galaxia_user_roles" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "galaxia_user_roles_sequ".nextval into :NEW."roleId" FROM DUAL;
-END;
-/
 
-DROP TABLE "galaxia_workitems";
+DROP TABLE `galaxia_workitems`;
 
-CREATE SEQUENCE "galaxia_workitems_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "galaxia_workitems" (
-  "itemId" number(14) NOT NULL,
-  "instanceId" number(14) default '0' NOT NULL,
-  "orderId" number(14) default '0' NOT NULL,
-  "activityId" number(14) default '0' NOT NULL,
-  "properties" blob,
-  "started" number(14) default NULL,
-  "ended" number(14) default NULL,
-  "user" varchar(200) default '',
-  PRIMARY KEY (itemId)
+CREATE TABLE `galaxia_workitems` (
+  `itemId` number(14) NOT NULL auto_increment,
+  `instanceId` number(14) default '0' NOT NULL,
+  `orderId` number(14) default '0' NOT NULL,
+  `activityId` number(14) default '0' NOT NULL,
+  `properties` blob,
+  `started` number(14) default NULL,
+  `ended` number(14) default NULL,
+  `user` varchar(200) default '',
+  PRIMARY KEY (`itemId`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "galaxia_workitems_trig" BEFORE INSERT ON "galaxia_workitems" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "galaxia_workitems_sequ".nextval into :NEW."itemId" FROM DUAL;
-END;
-/
 
-DROP TABLE "messu_messages";
+DROP TABLE `messu_messages`;
 
-CREATE SEQUENCE "messu_messages_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "messu_messages" (
-  "msgId" number(14) NOT NULL,
-  "user" varchar(200) default '' NOT NULL,
-  "user_from" varchar(200) default '' NOT NULL,
-  "user_to" clob,
-  "user_cc" clob,
-  "user_bcc" clob,
-  "subject" varchar(255) default NULL,
-  "body" clob,
-  "hash" varchar(32) default NULL,
-  "replyto_hash" varchar(32) default NULL,
-  "date" number(14) default NULL,
-  "isRead" char(1) default NULL,
-  "isReplied" char(1) default NULL,
-  "isFlagged" char(1) default NULL,
-  "priority" number(2) default NULL,
-  PRIMARY KEY (msgId)
+CREATE TABLE `messu_messages` (
+  `msgId` number(14) NOT NULL auto_increment,
+  `user` varchar(200) default '' NOT NULL,
+  `user_from` varchar(200) default '' NOT NULL,
+  `user_to` clob,
+  `user_cc` clob,
+  `user_bcc` clob,
+  `subject` varchar(255) default NULL,
+  `body` clob,
+  `hash` varchar(32) default NULL,
+  `replyto_hash` varchar(32) default NULL,
+  `date` number(14) default NULL,
+  `isRead` char(1) default NULL,
+  `isReplied` char(1) default NULL,
+  `isFlagged` char(1) default NULL,
+  `priority` number(2) default NULL,
+  PRIMARY KEY (`msgId`),
+  KEY `userIsRead` (user, isRead)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "messu_messages_trig" BEFORE INSERT ON "messu_messages" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "messu_messages_sequ".nextval into :NEW."msgId" FROM DUAL;
-END;
-/
-CREATE  INDEX "messu_messages_userIsRead" ON "messu_messages"("user" "isRead");
 
-DROP TABLE "messu_archive";
+DROP TABLE `messu_archive`;
 
-CREATE SEQUENCE "messu_archive_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "messu_archive" (
-  "msgId" number(14) NOT NULL,
-  "user" varchar(40) default '' NOT NULL,
-  "user_from" varchar(40) default '' NOT NULL,
-  "user_to" clob,
-  "user_cc" clob,
-  "user_bcc" clob,
-  "subject" varchar(255) default NULL,
-  "body" clob,
-  "hash" varchar(32) default NULL,
-  "replyto_hash" varchar(32) default NULL,
-  "date" number(14) default NULL,
-  "isRead" char(1) default NULL,
-  "isReplied" char(1) default NULL,
-  "isFlagged" char(1) default NULL,
-  "priority" number(2) default NULL,
-  PRIMARY KEY (msgId)
+CREATE TABLE `messu_archive` (
+  `msgId` number(14) NOT NULL auto_increment,
+  `user` varchar(40) default '' NOT NULL,
+  `user_from` varchar(40) default '' NOT NULL,
+  `user_to` clob,
+  `user_cc` clob,
+  `user_bcc` clob,
+  `subject` varchar(255) default NULL,
+  `body` clob,
+  `hash` varchar(32) default NULL,
+  `replyto_hash` varchar(32) default NULL,
+  `date` number(14) default NULL,
+  `isRead` char(1) default NULL,
+  `isReplied` char(1) default NULL,
+  `isFlagged` char(1) default NULL,
+  `priority` number(2) default NULL,
+  PRIMARY KEY (`msgId`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "messu_archive_trig" BEFORE INSERT ON "messu_archive" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "messu_archive_sequ".nextval into :NEW."msgId" FROM DUAL;
-END;
-/
 
-DROP TABLE "messu_sent";
+DROP TABLE `messu_sent`;
 
-CREATE SEQUENCE "messu_sent_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "messu_sent" (
-  "msgId" number(14) NOT NULL,
-  "user" varchar(40) default '' NOT NULL,
-  "user_from" varchar(40) default '' NOT NULL,
-  "user_to" clob,
-  "user_cc" clob,
-  "user_bcc" clob,
-  "subject" varchar(255) default NULL,
-  "body" clob,
-  "hash" varchar(32) default NULL,
-  "replyto_hash" varchar(32) default NULL,
-  "date" number(14) default NULL,
-  "isRead" char(1) default NULL,
-  "isReplied" char(1) default NULL,
-  "isFlagged" char(1) default NULL,
-  "priority" number(2) default NULL,
-  PRIMARY KEY (msgId)
+CREATE TABLE `messu_sent` (
+  `msgId` number(14) NOT NULL auto_increment,
+  `user` varchar(40) default '' NOT NULL,
+  `user_from` varchar(40) default '' NOT NULL,
+  `user_to` clob,
+  `user_cc` clob,
+  `user_bcc` clob,
+  `subject` varchar(255) default NULL,
+  `body` clob,
+  `hash` varchar(32) default NULL,
+  `replyto_hash` varchar(32) default NULL,
+  `date` number(14) default NULL,
+  `isRead` char(1) default NULL,
+  `isReplied` char(1) default NULL,
+  `isFlagged` char(1) default NULL,
+  `priority` number(2) default NULL,
+  PRIMARY KEY (`msgId`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "messu_sent_trig" BEFORE INSERT ON "messu_sent" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "messu_sent_sequ".nextval into :NEW."msgId" FROM DUAL;
-END;
-/
 
-DROP TABLE "sessions";
+DROP TABLE `sessions`;
 
 CREATE TABLE "sessions"(
-  "sesskey" char(32) NOT NULL,
-  "expiry" number(11) NOT NULL,
-  "expireref" varchar(64),
-  "data" clob NOT NULL,
-  PRIMARY KEY (sesskey)
+  `sesskey` char(32) NOT NULL,
+  `expiry` number(11) NOT NULL,
+  `expireref` varchar(64),
+  `data` clob NOT NULL,
+  PRIMARY KEY (`sesskey`),
+  KEY `expiry` (`expiry`)
 ) ENGINE=MyISAM;
 
-CREATE  INDEX "sessions_expiry" ON "sessions"("expiry");
 
-DROP TABLE "tiki_actionlog";
+DROP TABLE `tiki_actionlog`;
 
-CREATE SEQUENCE "tiki_actionlog_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_actionlog" (
-  "actionId" number(8) NOT NULL,
-  "action" varchar(255) default '' NOT NULL,
-  "lastModif" number(14) default NULL,
-  "object" varchar(255) default NULL,
-  "objectType" varchar(32) default '' NOT NULL,
-  "user" varchar(200) default '',
-  "ip" varchar(15) default NULL,
-  "comment" varchar(200) default NULL,
-  "categId" number(12) default '0' NOT NULL,
-  PRIMARY KEY (actionId),
-  KEY lastModif(lastModif),
-  KEY object(object(100), objectType, action(100))
+CREATE TABLE `tiki_actionlog` (
+  `actionId` number(8) NOT NULL auto_increment,
+  `action` varchar(255) default '' NOT NULL,
+  `lastModif` number(14) default NULL,
+  `object` varchar(255) default NULL,
+  `objectType` varchar(32) default '' NOT NULL,
+  `user` varchar(200) default '',
+  `ip` varchar(15) default NULL,
+  `comment` varchar(200) default NULL,
+  `categId` number(12) default '0' NOT NULL,
+  PRIMARY KEY (`actionId`),
+  KEY `lastModif` (`lastModif`),
+  KEY `object` (`object`(100), `objectType`, `action`(100))
 ) ENGINE=MyISAM;
 
-CREATE TRIGGER "tiki_actionlog_trig" BEFORE INSERT ON "tiki_actionlog" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_actionlog_sequ".nextval into :NEW."actionId" FROM DUAL;
-END;
-/
 
-DROP TABLE "tiki_actionlog_params";
+DROP TABLE `tiki_actionlog_params`;
 
-CREATE TABLE "tiki_actionlog_params" (
-  "actionId" number(8) NOT NULL,
-  "name" varchar(40) NOT NULL,
-  "value" clob,
-  KEY (actionId)
+CREATE TABLE `tiki_actionlog_params` (
+  `actionId` number(8) NOT NULL,
+  `name` varchar(40) NOT NULL,
+  `value` clob,
+  KEY `actionIDIndex` (`actionId`),
+  KEY `nameValue` (`name`, `value`(200))
 ) ENGINE=MyISAM;
 
-CREATE  INDEX "tiki_actionlog_params_nameValue" ON "tiki_actionlog_params"("name" "value");
 
-DROP TABLE "tiki_articles";
+DROP TABLE `tiki_articles`;
 
-CREATE SEQUENCE "tiki_articles_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_articles" (
-  "articleId" number(8) NOT NULL,
-  "topline" varchar(255) default NULL,
-  "title" varchar(255) default NULL,
-  "subtitle" varchar(255) default NULL,
-  "linkto" varchar(255) default NULL,
-  "lang" varchar(16) default NULL,
-  "state" char(1) default 's',
-  "authorName" varchar(60) default NULL,
-  "topicId" number(14) default NULL,
-  "topicName" varchar(40) default NULL,
-  "size" number(12) default NULL,
-  "useImage" char(1) default NULL,
-  "image_name" varchar(80) default NULL,
-  "image_caption" clob default NULL,
-  "image_type" varchar(80) default NULL,
-  "image_size" number(14) default NULL,
-  "image_x" number(4) default NULL,
-  "image_y" number(4) default NULL,
-  "image_data" blob,
-  "publishDate" number(14) default NULL,
-  "expireDate" number(14) default NULL,
-  "created" number(14) default NULL,
-  "heading" clob,
-  "body" clob,
-  "hash" varchar(32) default NULL,
-  "author" varchar(200) default NULL,
-  "nbreads" number(14) default NULL,
-  "votes" number(8) default NULL,
-  "points" number(14) default NULL,
-  "type" varchar(50) default NULL,
-  "rating" decimal(3,2) default NULL,
-  "isfloat" char(1) default NULL,
-  PRIMARY KEY (articleId)
+CREATE TABLE `tiki_articles` (
+  `articleId` number(8) NOT NULL auto_increment,
+  `topline` varchar(255) default NULL,
+  `title` varchar(255) default NULL,
+  `subtitle` varchar(255) default NULL,
+  `linkto` varchar(255) default NULL,
+  `lang` varchar(16) default NULL,
+  `state` char(1) default 's',
+  `authorName` varchar(60) default NULL,
+  `topicId` number(14) default NULL,
+  `topicName` varchar(40) default NULL,
+  `size` number(12) default NULL,
+  `useImage` char(1) default NULL,
+  `image_name` varchar(80) default NULL,
+  `image_caption` clob default NULL,
+  `image_type` varchar(80) default NULL,
+  `image_size` number(14) default NULL,
+  `image_x` number(4) default NULL,
+  `image_y` number(4) default NULL,
+  `image_data` blob,
+  `publishDate` number(14) default NULL,
+  `expireDate` number(14) default NULL,
+  `created` number(14) default NULL,
+  `heading` clob,
+  `body` clob,
+  `hash` varchar(32) default NULL,
+  `author` varchar(200) default NULL,
+  `nbreads` number(14) default NULL,
+  `votes` number(8) default NULL,
+  `points` number(14) default NULL,
+  `type` varchar(50) default NULL,
+  `rating` decimal(3,2) default NULL,
+  `isfloat` char(1) default NULL,
+  PRIMARY KEY (`articleId`),
+  KEY `title` (`title`),
+  KEY `heading` (`heading`(255)),
+  KEY `body` (`body`(255)),
+  KEY `nbreads` (`nbreads`),
+  KEY `author` (`author`(32)),
+  KEY `topicId` (`topicId`),
+  KEY `publishDate` (`publishDate`),
+  KEY `expireDate` (`expireDate`),
+  KEY `type` (`type`),
+  FULLTEXT KEY `ft` (`title`, `heading`, `body`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_articles_trig" BEFORE INSERT ON "tiki_articles" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_articles_sequ".nextval into :NEW."articleId" FROM DUAL;
-END;
-/
-CREATE  INDEX "tiki_articles_title" ON "tiki_articles"("title");
-CREATE  INDEX "tiki_articles_heading" ON "tiki_articles"("heading");
-CREATE  INDEX "tiki_articles_body" ON "tiki_articles"("body");
-CREATE  INDEX "tiki_articles_nbreads" ON "tiki_articles"("nbreads");
-CREATE  INDEX "tiki_articles_author" ON "tiki_articles"("author");
-CREATE  INDEX "tiki_articles_topicId" ON "tiki_articles"("topicId");
-CREATE  INDEX "tiki_articles_publishDate" ON "tiki_articles"("publishDate");
-CREATE  INDEX "tiki_articles_expireDate" ON "tiki_articles"("expireDate");
-CREATE  INDEX "tiki_articles_type" ON "tiki_articles"("type");
-CREATE  INDEX "tiki_articles_ft" ON "tiki_articles"("title","heading","body");
 
-DROP TABLE "tiki_article_types";
+DROP TABLE `tiki_article_types`;
 
-CREATE TABLE "tiki_article_types" (
-  "type" varchar(50) NOT NULL,
-  "use_ratings" varchar(1) default NULL,
-  "show_pre_publ" varchar(1) default NULL,
-  "show_post_expire" varchar(1) default 'y',
-  "heading_only" varchar(1) default NULL,
-  "allow_comments" varchar(1) default 'y',
-  "show_image" varchar(1) default 'y',
-  "show_avatar" varchar(1) default NULL,
-  "show_author" varchar(1) default 'y',
-  "show_pubdate" varchar(1) default 'y',
-  "show_expdate" varchar(1) default NULL,
-  "show_reads" varchar(1) default 'y',
-  "show_size" varchar(1) default 'n',
-  "show_topline" varchar(1) default 'n',
-  "show_subtitle" varchar(1) default 'n',
-  "show_linkto" varchar(1) default 'n',
-  "show_image_caption" varchar(1) default 'n',
-  "show_lang" varchar(1) default 'n',
-  "creator_edit" varchar(1) default NULL,
-  "comment_can_rate_article" char(1) default NULL,
-  PRIMARY KEY (type)
+CREATE TABLE `tiki_article_types` (
+  `type` varchar(50) NOT NULL,
+  `use_ratings` varchar(1) default NULL,
+  `show_pre_publ` varchar(1) default NULL,
+  `show_post_expire` varchar(1) default 'y',
+  `heading_only` varchar(1) default NULL,
+  `allow_comments` varchar(1) default 'y',
+  `show_image` varchar(1) default 'y',
+  `show_avatar` varchar(1) default NULL,
+  `show_author` varchar(1) default 'y',
+  `show_pubdate` varchar(1) default 'y',
+  `show_expdate` varchar(1) default NULL,
+  `show_reads` varchar(1) default 'y',
+  `show_size` varchar(1) default 'n',
+  `show_topline` varchar(1) default 'n',
+  `show_subtitle` varchar(1) default 'n',
+  `show_linkto` varchar(1) default 'n',
+  `show_image_caption` varchar(1) default 'n',
+  `show_lang` varchar(1) default 'n',
+  `creator_edit` varchar(1) default NULL,
+  `comment_can_rate_article` char(1) default NULL,
+  PRIMARY KEY (`type`),
+  KEY `show_pre_publ` (`show_pre_publ`),
+  KEY `show_post_expire` (`show_post_expire`)
 ) ENGINE=MyISAM ;
 
-CREATE  INDEX "tiki_article_types_show_pre_publ" ON "tiki_article_types"("show_pre_publ");
-CREATE  INDEX "tiki_article_types_show_post_expire" ON "tiki_article_types"("show_post_expire");
 
 INSERT INTO "tiki_article_types" ("type") VALUES ('Article');
 
@@ -403,377 +331,305 @@ INSERT INTO "tiki_article_types" ("type","show_post_expire") VALUES ('Event','n'
 INSERT INTO "tiki_article_types" ("type","show_post_expire","heading_only","allow_comments") VALUES ('Classified','n','y','n');
 
 
-DROP TABLE "tiki_banners";
+DROP TABLE `tiki_banners`;
 
-CREATE SEQUENCE "tiki_banners_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_banners" (
-  "bannerId" number(12) NOT NULL,
-  "client" varchar(200) default '' NOT NULL,
-  "url" varchar(255) default NULL,
-  "title" varchar(255) default NULL,
-  "alt" varchar(250) default NULL,
-  "which" varchar(50) default NULL,
-  "imageData" blob,
-  "imageType" varchar(200) default NULL,
-  "imageName" varchar(100) default NULL,
-  "HTMLData" clob,
-  "fixedURLData" varchar(255) default NULL,
-  "textData" clob,
-  "fromDate" number(14) default NULL,
-  "toDate" number(14) default NULL,
-  "useDates" char(1) default NULL,
-  "mon" char(1) default NULL,
-  "tue" char(1) default NULL,
-  "wed" char(1) default NULL,
-  "thu" char(1) default NULL,
-  "fri" char(1) default NULL,
-  "sat" char(1) default NULL,
-  "sun" char(1) default NULL,
-  "hourFrom" varchar(4) default NULL,
-  "hourTo" varchar(4) default NULL,
-  "created" number(14) default NULL,
-  "maxImpressions" number(8) default NULL,
-  "impressions" number(8) default NULL,
-  "maxUserImpressions" number(8) default -1,
-  "maxClicks" number(8) default NULL,
-  "clicks" number(8) default NULL,
-  "zone" varchar(40) default NULL,
-  PRIMARY KEY (bannerId),
+CREATE TABLE `tiki_banners` (
+  `bannerId` number(12) NOT NULL auto_increment,
+  `client` varchar(200) default '' NOT NULL,
+  `url` varchar(255) default NULL,
+  `title` varchar(255) default NULL,
+  `alt` varchar(250) default NULL,
+  `which` varchar(50) default NULL,
+  `imageData` blob,
+  `imageType` varchar(200) default NULL,
+  `imageName` varchar(100) default NULL,
+  `HTMLData` clob,
+  `fixedURLData` varchar(255) default NULL,
+  `textData` clob,
+  `fromDate` number(14) default NULL,
+  `toDate` number(14) default NULL,
+  `useDates` char(1) default NULL,
+  `mon` char(1) default NULL,
+  `tue` char(1) default NULL,
+  `wed` char(1) default NULL,
+  `thu` char(1) default NULL,
+  `fri` char(1) default NULL,
+  `sat` char(1) default NULL,
+  `sun` char(1) default NULL,
+  `hourFrom` varchar(4) default NULL,
+  `hourTo` varchar(4) default NULL,
+  `created` number(14) default NULL,
+  `maxImpressions` number(8) default NULL,
+  `impressions` number(8) default NULL,
+  `maxUserImpressions` number(8) default -1,
+  `maxClicks` number(8) default NULL,
+  `clicks` number(8) default NULL,
+  `zone` varchar(40) default NULL,
+  PRIMARY KEY (`bannerId`),
   "INDEX" ban1(zone,useDates,impressions,maxImpressions,hourFrom,hourTo,fromDate,toDate,mon,tue,wed,thu,fri,sat,sun)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_banners_trig" BEFORE INSERT ON "tiki_banners" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_banners_sequ".nextval into :NEW."bannerId" FROM DUAL;
-END;
-/
 
-DROP TABLE "tiki_banning";
+DROP TABLE `tiki_banning`;
 
-CREATE SEQUENCE "tiki_banning_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_banning" (
-  "banId" number(12) NOT NULL,
-  "mode" varchar(6) default NULL CHECK ("mode" IN ('user','ip')),
-  "title" varchar(200) default NULL,
-  "ip1" char(3) default NULL,
-  "ip2" char(3) default NULL,
-  "ip3" char(3) default NULL,
-  "ip4" char(3) default NULL,
-  "user" varchar(200) default '',
-  "date_from" timestamp(3) NOT NULL,
-  "date_to" timestamp(3) NOT NULL,
-  "use_dates" char(1) default NULL,
-  "created" number(14) default NULL,
-  "message" clob,
-  PRIMARY KEY (banId)
+CREATE TABLE `tiki_banning` (
+  `banId` number(12) NOT NULL auto_increment,
+  `mode` enum('user','ip') default NULL,
+  `title` varchar(200) default NULL,
+  `ip1` char(3) default NULL,
+  `ip2` char(3) default NULL,
+  `ip3` char(3) default NULL,
+  `ip4` char(3) default NULL,
+  `user` varchar(200) default '',
+  `date_from` timestamp(3) NOT NULL,
+  `date_to` timestamp(3) NOT NULL,
+  `use_dates` char(1) default NULL,
+  `created` number(14) default NULL,
+  `message` clob,
+  PRIMARY KEY (`banId`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_banning_trig" BEFORE INSERT ON "tiki_banning" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_banning_sequ".nextval into :NEW."banId" FROM DUAL;
-END;
-/
 
-DROP TABLE "tiki_banning_sections";
+DROP TABLE `tiki_banning_sections`;
 
-CREATE TABLE "tiki_banning_sections" (
-  "banId" number(12) default '0' NOT NULL,
-  "section" varchar(100) default '' NOT NULL,
-  PRIMARY KEY (banId,section)
+CREATE TABLE `tiki_banning_sections` (
+  `banId` number(12) default '0' NOT NULL,
+  `section` varchar(100) default '' NOT NULL,
+  PRIMARY KEY (`banId`,`section`)
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_blog_activity";
+DROP TABLE `tiki_blog_activity`;
 
-CREATE TABLE "tiki_blog_activity" (
-  "blogId" number(8) default '0' NOT NULL,
-  "day" number(14) default '0' NOT NULL,
-  "posts" number(8) default NULL,
-  PRIMARY KEY (blogId,day)
+CREATE TABLE `tiki_blog_activity` (
+  `blogId` number(8) default '0' NOT NULL,
+  `day` number(14) default '0' NOT NULL,
+  `posts` number(8) default NULL,
+  PRIMARY KEY (`blogId`,`day`)
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_blog_posts";
+DROP TABLE `tiki_blog_posts`;
 
-CREATE SEQUENCE "tiki_blog_posts_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_blog_posts" (
-  "postId" number(8) NOT NULL,
-  "blogId" number(8) default '0' NOT NULL,
-  "data" clob,
-  "data_size" number(11) default '0' NOT NULL,
-  "created" number(14) default NULL,
-  "user" varchar(200) default '',
-  "trackbacks_to" clob,
-  "trackbacks_from" clob,
-  "title" varchar(255) default NULL,
-  "priv" varchar(1) default NULL,
-  PRIMARY KEY (postId)
+CREATE TABLE `tiki_blog_posts` (
+  `postId` number(8) NOT NULL auto_increment,
+  `blogId` number(8) default '0' NOT NULL,
+  `data` clob,
+  `data_size` number(11) default '0' NOT NULL,
+  `created` number(14) default NULL,
+  `user` varchar(200) default '',
+  `trackbacks_to` clob,
+  `trackbacks_from` clob,
+  `title` varchar(255) default NULL,
+  `priv` varchar(1) default NULL,
+  PRIMARY KEY (`postId`),
+  KEY `data` (`data`(255)),
+  KEY `blogId` (`blogId`),
+  KEY `created` (`created`),
+  FULLTEXT KEY `ft` (`data`, `title`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_blog_posts_trig" BEFORE INSERT ON "tiki_blog_posts" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_blog_posts_sequ".nextval into :NEW."postId" FROM DUAL;
-END;
-/
-CREATE  INDEX "tiki_blog_posts_data" ON "tiki_blog_posts"("data");
-CREATE  INDEX "tiki_blog_posts_blogId" ON "tiki_blog_posts"("blogId");
-CREATE  INDEX "tiki_blog_posts_created" ON "tiki_blog_posts"("created");
-CREATE  INDEX "tiki_blog_posts_ft" ON "tiki_blog_posts"("data","title");
 
-DROP TABLE "tiki_blog_posts_images";
+DROP TABLE `tiki_blog_posts_images`;
 
-CREATE SEQUENCE "tiki_blog_posts_images_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_blog_posts_images" (
-  "imgId" number(14) NOT NULL,
-  "postId" number(14) default '0' NOT NULL,
-  "filename" varchar(80) default NULL,
-  "filetype" varchar(80) default NULL,
-  "filesize" number(14) default NULL,
-  "data" blob,
-  PRIMARY KEY (imgId)
+CREATE TABLE `tiki_blog_posts_images` (
+  `imgId` number(14) NOT NULL auto_increment,
+  `postId` number(14) default '0' NOT NULL,
+  `filename` varchar(80) default NULL,
+  `filetype` varchar(80) default NULL,
+  `filesize` number(14) default NULL,
+  `data` blob,
+  PRIMARY KEY (`imgId`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_blog_posts_images_trig" BEFORE INSERT ON "tiki_blog_posts_images" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_blog_posts_images_sequ".nextval into :NEW."imgId" FROM DUAL;
-END;
-/
 
-DROP TABLE "tiki_blogs";
+DROP TABLE `tiki_blogs`;
 
-CREATE SEQUENCE "tiki_blogs_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_blogs" (
-  "blogId" number(8) NOT NULL,
-  "created" number(14) default NULL,
-  "lastModif" number(14) default NULL,
-  "title" varchar(200) default NULL,
-  "description" clob,
-  "user" varchar(200) default '',
-  "public" char(1) default NULL,
-  "posts" number(8) default NULL,
-  "maxPosts" number(8) default NULL,
-  "hits" number(8) default NULL,
-  "activity" decimal(4,2) default NULL,
-  "heading" clob,
-  "use_find" char(1) default NULL,
-  "use_title" char(1) default NULL,
-  "add_date" char(1) default NULL,
-  "add_poster" char(1) default NULL,
-  "allow_comments" char(1) default NULL,
-  "show_avatar" char(1) default NULL,
-  PRIMARY KEY (blogId)
+CREATE TABLE `tiki_blogs` (
+  `blogId` number(8) NOT NULL auto_increment,
+  `created` number(14) default NULL,
+  `lastModif` number(14) default NULL,
+  `title` varchar(200) default NULL,
+  `description` clob,
+  `user` varchar(200) default '',
+  `public` char(1) default NULL,
+  `posts` number(8) default NULL,
+  `maxPosts` number(8) default NULL,
+  `hits` number(8) default NULL,
+  `activity` decimal(4,2) default NULL,
+  `heading` clob,
+  `use_find` char(1) default NULL,
+  `use_title` char(1) default NULL,
+  `add_date` char(1) default NULL,
+  `add_poster` char(1) default NULL,
+  `allow_comments` char(1) default NULL,
+  `show_avatar` char(1) default NULL,
+  PRIMARY KEY (`blogId`),
+  KEY `title` (`title`),
+  KEY `description` (`description`(255)),
+  KEY `hits` (`hits`),
+  FULLTEXT KEY `ft` (`title`, `description`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_blogs_trig" BEFORE INSERT ON "tiki_blogs" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_blogs_sequ".nextval into :NEW."blogId" FROM DUAL;
-END;
-/
-CREATE  INDEX "tiki_blogs_title" ON "tiki_blogs"("title");
-CREATE  INDEX "tiki_blogs_description" ON "tiki_blogs"("description");
-CREATE  INDEX "tiki_blogs_hits" ON "tiki_blogs"("hits");
-CREATE  INDEX "tiki_blogs_ft" ON "tiki_blogs"("title","description");
 
-DROP TABLE "tiki_calendar_categories";
+DROP TABLE `tiki_calendar_categories`;
 
-CREATE SEQUENCE "tiki_calendar_categories_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_calendar_categories" (
-  "calcatId" number(11) NOT NULL,
-  "calendarId" number(14) default '0' NOT NULL,
-  "name" varchar(255) default '' NOT NULL,
-  PRIMARY KEY (calcatId)
+CREATE TABLE `tiki_calendar_categories` (
+  `calcatId` number(11) NOT NULL auto_increment,
+  `calendarId` number(14) default '0' NOT NULL,
+  `name` varchar(255) default '' NOT NULL,
+  PRIMARY KEY (`calcatId`),
+  UNIQUE KEY `catname` (`calendarId`, `name`(16))
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_calendar_categories_trig" BEFORE INSERT ON "tiki_calendar_categories" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_calendar_categories_sequ".nextval into :NEW."calcatId" FROM DUAL;
-END;
-/
-CREATE UNIQUE INDEX "tiki_calendar_categories_catname" ON "tiki_calendar_categories"("calendarId","name");
 
-DROP TABLE "tiki_calendar_recurrence";
+DROP TABLE `tiki_calendar_recurrence`;
 
-CREATE SEQUENCE "tiki_calendar_recurrence_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_calendar_recurrence" (
-  "recurrenceId" number(14) NOT NULL,
-  "calendarId" number(14) default '0' NOT NULL,
-  "start" number(4) default '0' NOT NULL,
-  "end" number(4) default '2359' NOT NULL,
-  "allday" number(1) default '0' NOT NULL,
-  "locationId" number(14) default NULL,
-  "categoryId" number(14) default NULL,
-  "nlId" number(12) default '0' NOT NULL,
-  "priority" varchar(3) default '1' NOT NULL CHECK ("priority" IN ('1','2','3','4','5','6','7','8','9')),
-  "status" varchar(3) default '0' NOT NULL CHECK ("status" IN ('0','1','2')),
-  "url" varchar(255) default NULL,
-  "lang" char(16) default 'en' NOT NULL,
-  "name" varchar(255) default '' NOT NULL,
-  "description" blob,
-  "weekly" number(1) default '0',
-  "weekday" number(1),
-  "monthly" number(1) default '0',
-  "dayOfMonth" number(2),
-  "yearly" number(1) default '0',
-  "dateOfYear" number(4),
-  "nbRecurrences" number(8),
-  "startPeriod" number(14),
-  "endPeriod" number(14),
-  "user" varchar(200) default '',
-  "created" number(14) default '0' NOT NULL,
-  "lastmodif" number(14) default '0' NOT NULL,
-  PRIMARY KEY (recurrenceId)
+CREATE TABLE `tiki_calendar_recurrence` (
+  `recurrenceId` number(14) NOT NULL auto_increment,
+  `calendarId` number(14) default '0' NOT NULL,
+  `start` number(4) default '0' NOT NULL,
+  `end` number(4) default '2359' NOT NULL,
+  `allday` number(1) default '0' NOT NULL,
+  `locationId` number(14) default NULL,
+  `categoryId` number(14) default NULL,
+  `nlId` number(12) default '0' NOT NULL,
+  `priority` enum('1','2','3','4','5','6','7','8','9') default '1' NOT NULL,
+  `status` enum('0','1','2') default '0' NOT NULL,
+  `url` varchar(255) default NULL,
+  `lang` char(16) default 'en' NOT NULL,
+  `name` varchar(255) default '' NOT NULL,
+  `description` blob,
+  `weekly` number(1) default '0',
+  `weekday` number(1),
+  `monthly` number(1) default '0',
+  `dayOfMonth` number(2),
+  `yearly` number(1) default '0',
+  `dateOfYear` number(4),
+  `nbRecurrences` number(8),
+  `startPeriod` number(14),
+  `endPeriod` number(14),
+  `user` varchar(200) default '',
+  `created` number(14) default '0' NOT NULL,
+  `lastmodif` number(14) default '0' NOT NULL,
+  PRIMARY KEY (`recurrenceId`),
+  KEY `calendarId` (`calendarId`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_calendar_recurrence_trig" BEFORE INSERT ON "tiki_calendar_recurrence" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_calendar_recurrence_sequ".nextval into :NEW."recurrenceId" FROM DUAL;
-END;
-/
-CREATE  INDEX "tiki_calendar_recurrence_calendarId" ON "tiki_calendar_recurrence"("calendarId");
 
-DROP TABLE "tiki_calendar_items";
+DROP TABLE `tiki_calendar_items`;
 
-CREATE SEQUENCE "tiki_calendar_items_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_calendar_items" (
-  "calitemId" number(14) NOT NULL,
-  "calendarId" number(14) default '0' NOT NULL,
-  "start" number(14) default '0' NOT NULL,
-  "end" number(14) default '0' NOT NULL,
-  "locationId" number(14) default NULL,
-  "categoryId" number(14) default NULL,
-  "nlId" number(12) default '0' NOT NULL,
-  "priority" varchar(4) default '0' CHECK ("priority" IN ('0', '1','2','3','4','5','6','7','8','9')),
-  "status" varchar(3) default '0' NOT NULL CHECK ("status" IN ('0','1','2')),
-  "url" varchar(255) default NULL,
-  "lang" char(16) default 'en' NOT NULL,
-  "name" varchar(255) default '' NOT NULL,
-  "description" clob,
-  "recurrenceId" number(14),
-  "changed" number(1) DEFAULT '0',
-  "user" varchar(200) default '',
-  "created" number(14) default '0' NOT NULL,
-  "lastmodif" number(14) default '0' NOT NULL,
-  "allday" number(1) default '0' NOT NULL,
-  PRIMARY KEY (calitemId),
-  "CONSTRAINT" fk_calitems_recurrence
-  "FOREIGN" KEY (recurrenceId) REFERENCES tiki_calendar_recurrence(recurrenceId)
+CREATE TABLE `tiki_calendar_items` (
+  `calitemId` number(14) NOT NULL auto_increment,
+  `calendarId` number(14) default '0' NOT NULL,
+  `start` number(14) default '0' NOT NULL,
+  `end` number(14) default '0' NOT NULL,
+  `locationId` number(14) default NULL,
+  `categoryId` number(14) default NULL,
+  `nlId` number(12) default '0' NOT NULL,
+  `priority` enum('0', '1','2','3','4','5','6','7','8','9') default '0',
+  `status` enum('0','1','2') default '0' NOT NULL,
+  `url` varchar(255) default NULL,
+  `lang` char(16) default 'en' NOT NULL,
+  `name` varchar(255) default '' NOT NULL,
+  `description` clob,
+  `recurrenceId` number(14),
+  `changed` number(1) DEFAULT '0',
+  `user` varchar(200) default '',
+  `created` number(14) default '0' NOT NULL,
+  `lastmodif` number(14) default '0' NOT NULL,
+  `allday` number(1) default '0' NOT NULL,
+  PRIMARY KEY (`calitemId`),
+  KEY `calendarId` (`calendarId`),
+  FULLTEXT KEY `ft` (`name`,`description`),
+  "CONSTRAINT" `fk_calitems_recurrence`
+  "FOREIGN" KEY (`recurrenceId`) REFERENCES `tiki_calendar_recurrence`(`recurrenceId`)
   "ON" UPDATE CASCADE ON DELETE SET NULL
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_calendar_items_trig" BEFORE INSERT ON "tiki_calendar_items" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_calendar_items_sequ".nextval into :NEW."calitemId" FROM DUAL;
-END;
-/
-CREATE  INDEX "tiki_calendar_items_calendarId" ON "tiki_calendar_items"("calendarId");
-CREATE  INDEX "tiki_calendar_items_ft" ON "tiki_calendar_items"("name","description");
 
-DROP TABLE "tiki_calendar_locations";
+DROP TABLE `tiki_calendar_locations`;
 
-CREATE SEQUENCE "tiki_calendar_locations_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_calendar_locations" (
-  "callocId" number(14) NOT NULL,
-  "calendarId" number(14) default '0' NOT NULL,
-  "name" varchar(255) default '' NOT NULL,
-  "description" blob,
-  PRIMARY KEY (callocId)
+CREATE TABLE `tiki_calendar_locations` (
+  `callocId` number(14) NOT NULL auto_increment,
+  `calendarId` number(14) default '0' NOT NULL,
+  `name` varchar(255) default '' NOT NULL,
+  `description` blob,
+  PRIMARY KEY (`callocId`),
+  UNIQUE KEY `locname` (`calendarId`, `name`(16))
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_calendar_locations_trig" BEFORE INSERT ON "tiki_calendar_locations" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_calendar_locations_sequ".nextval into :NEW."callocId" FROM DUAL;
-END;
-/
-CREATE UNIQUE INDEX "tiki_calendar_locations_locname" ON "tiki_calendar_locations"("calendarId","name");
 
-DROP TABLE "tiki_calendar_roles";
+DROP TABLE `tiki_calendar_roles`;
 
-CREATE TABLE "tiki_calendar_roles" (
-  "calitemId" number(14) default '0' NOT NULL,
-  "username" varchar(200) default '' NOT NULL,
-  "role" varchar(3) default '0' NOT NULL CHECK ("role" IN ('0','1','2','3','6')),
-  PRIMARY KEY (calitemId,username(16),role)
+CREATE TABLE `tiki_calendar_roles` (
+  `calitemId` number(14) default '0' NOT NULL,
+  `username` varchar(200) default '' NOT NULL,
+  `role` enum('0','1','2','3','6') default '0' NOT NULL,
+  PRIMARY KEY (`calitemId`,`username`(16),`role`)
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_calendars";
+DROP TABLE `tiki_calendars`;
 
-CREATE SEQUENCE "tiki_calendars_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_calendars" (
-  "calendarId" number(14) NOT NULL,
-  "name" varchar(80) default '' NOT NULL,
-  "description" varchar(255) default NULL,
-  "user" varchar(200) default '' NOT NULL,
-  "customlocations" varchar(3) default 'n' NOT NULL CHECK ("customlocations" IN ('n','y')),
-  "customcategories" varchar(3) default 'n' NOT NULL CHECK ("customcategories" IN ('n','y')),
-  "customlanguages" varchar(3) default 'n' NOT NULL CHECK ("customlanguages" IN ('n','y')),
-  "custompriorities" varchar(3) default 'n' NOT NULL CHECK ("custompriorities" IN ('n','y')),
-  "customparticipants" varchar(3) default 'n' NOT NULL CHECK ("customparticipants" IN ('n','y')),
-  "customsubscription" varchar(3) default 'n' NOT NULL CHECK ("customsubscription" IN ('n','y')),
-  "customstatus" varchar(3) default 'y' NOT NULL CHECK ("customstatus" IN ('n','y')),
-  "created" number(14) default '0' NOT NULL,
-  "lastmodif" number(14) default '0' NOT NULL,
-  "personal" enum ('n', 'y') default 'n' NOT NULL,
-  PRIMARY KEY (calendarId)
+CREATE TABLE `tiki_calendars` (
+  `calendarId` number(14) NOT NULL auto_increment,
+  `name` varchar(80) default '' NOT NULL,
+  `description` varchar(255) default NULL,
+  `user` varchar(200) default '' NOT NULL,
+  `customlocations` enum('n','y') default 'n' NOT NULL,
+  `customcategories` enum('n','y') default 'n' NOT NULL,
+  `customlanguages` enum('n','y') default 'n' NOT NULL,
+  `custompriorities` enum('n','y') default 'n' NOT NULL,
+  `customparticipants` enum('n','y') default 'n' NOT NULL,
+  `customsubscription` enum('n','y') default 'n' NOT NULL,
+  `customstatus` enum('n','y') default 'y' NOT NULL,
+  `created` number(14) default '0' NOT NULL,
+  `lastmodif` number(14) default '0' NOT NULL,
+  `personal` enum ('n', 'y') default 'n' NOT NULL,
+  PRIMARY KEY (`calendarId`)
 ) ENGINE=MyISAM ;
 
-CREATE TRIGGER "tiki_calendars_trig" BEFORE INSERT ON "tiki_calendars" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_calendars_sequ".nextval into :NEW."calendarId" FROM DUAL;
-END;
-/
 
-DROP TABLE "tiki_calendar_options";
+DROP TABLE `tiki_calendar_options`;
 
-CREATE TABLE "tiki_calendar_options" (
+CREATE TABLE `tiki_calendar_options` (
   "calendarId" number(14) default 0 NOT NULL,
   "optionName" varchar(120) default '' NOT NULL,
   "value" varchar(255),
-  PRIMARY KEY (calendarId,optionName)
+  PRIMARY KEY (`calendarId`,`optionName`)
 ) ENGINE=MyISAM ;
 
 
-DROP TABLE "tiki_categories";
+DROP TABLE `tiki_categories`;
 
-CREATE SEQUENCE "tiki_categories_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_categories" (
-  "categId" number(12) NOT NULL,
-  "name" varchar(100) default NULL,
-  "description" varchar(250) default NULL,
-  "parentId" number(12) default NULL,
-  "hits" number(8) default NULL,
-  PRIMARY KEY (categId)
+CREATE TABLE `tiki_categories` (
+  `categId` number(12) NOT NULL auto_increment,
+  `name` varchar(100) default NULL,
+  `description` varchar(250) default NULL,
+  `parentId` number(12) default NULL,
+  `hits` number(8) default NULL,
+  PRIMARY KEY (`categId`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_categories_trig" BEFORE INSERT ON "tiki_categories" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_categories_sequ".nextval into :NEW."categId" FROM DUAL;
-END;
-/
 
-DROP TABLE "tiki_objects";
+DROP TABLE `tiki_objects`;
 
-CREATE SEQUENCE "tiki_objects_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_objects" (
-  "objectId" number(12) NOT NULL,
-  "type" varchar(50) default NULL,
-  "itemId" varchar(255) default NULL,
-  "description" clob,
-  "created" number(14) default NULL,
-  "name" varchar(200) default NULL,
-  "href" varchar(200) default NULL,
-  "hits" number(8) default NULL,
-  "comments_locked" char(1) default 'n' NOT NULL,
-  PRIMARY KEY (objectId),
-  KEY (type, objectId),
-  KEY (itemId, type)
+CREATE TABLE `tiki_objects` (
+  `objectId` number(12) NOT NULL auto_increment,
+  `type` varchar(50) default NULL,
+  `itemId` varchar(255) default NULL,
+  `description` clob,
+  `created` number(14) default NULL,
+  `name` varchar(200) default NULL,
+  `href` varchar(200) default NULL,
+  `hits` number(8) default NULL,
+  `comments_locked` char(1) default 'n' NOT NULL,
+  PRIMARY KEY (`objectId`),
+  KEY (`type`, `objectId`),
+  KEY (`itemId`, `type`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_objects_trig" BEFORE INSERT ON "tiki_objects" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_objects_sequ".nextval into :NEW."objectId" FROM DUAL;
-END;
-/
 
 DROP TABLE `tiki_categorized_objects`;
 
@@ -783,1039 +639,834 @@ CREATE TABLE `tiki_categorized_objects` (
 ) ENGINE=MyISAM ;
 
 
-DROP TABLE "tiki_category_objects";
+DROP TABLE `tiki_category_objects`;
 
-CREATE TABLE "tiki_category_objects" (
-  "catObjectId" number(12) default '0' NOT NULL,
-  "categId" number(12) default '0' NOT NULL,
-  PRIMARY KEY (catObjectId,categId)
+CREATE TABLE `tiki_category_objects` (
+  `catObjectId` number(12) default '0' NOT NULL,
+  `categId` number(12) default '0' NOT NULL,
+  PRIMARY KEY (`catObjectId`,`categId`)
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_object_ratings";
+DROP TABLE `tiki_object_ratings`;
 
-CREATE TABLE "tiki_object_ratings" (
-  "catObjectId" number(12) default '0' NOT NULL,
-  "pollId" number(12) default '0' NOT NULL,
-  PRIMARY KEY (catObjectId,pollId)
+CREATE TABLE `tiki_object_ratings` (
+  `catObjectId` number(12) default '0' NOT NULL,
+  `pollId` number(12) default '0' NOT NULL,
+  PRIMARY KEY (`catObjectId`,`pollId`)
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_category_sites";
+DROP TABLE `tiki_category_sites`;
 
-CREATE TABLE "tiki_category_sites" (
-  "categId" number(10) default '0' NOT NULL,
-  "siteId" number(14) default '0' NOT NULL,
-  PRIMARY KEY (categId,siteId)
+CREATE TABLE `tiki_category_sites` (
+  `categId` number(10) default '0' NOT NULL,
+  `siteId` number(14) default '0' NOT NULL,
+  PRIMARY KEY (`categId`,`siteId`)
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_chart_items";
+DROP TABLE `tiki_chart_items`;
 
-CREATE SEQUENCE "tiki_chart_items_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_chart_items" (
-  "itemId" number(14) NOT NULL,
-  "title" varchar(250) default NULL,
-  "description" clob,
-  "chartId" number(14) default '0' NOT NULL,
-  "created" number(14) default NULL,
-  "URL" varchar(250) default NULL,
-  "votes" number(14) default NULL,
-  "points" number(14) default NULL,
-  "average" decimal(4,2) default NULL,
-  PRIMARY KEY (itemId)
+CREATE TABLE `tiki_chart_items` (
+  `itemId` number(14) NOT NULL auto_increment,
+  `title` varchar(250) default NULL,
+  `description` clob,
+  `chartId` number(14) default '0' NOT NULL,
+  `created` number(14) default NULL,
+  `URL` varchar(250) default NULL,
+  `votes` number(14) default NULL,
+  `points` number(14) default NULL,
+  `average` decimal(4,2) default NULL,
+  PRIMARY KEY (`itemId`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_chart_items_trig" BEFORE INSERT ON "tiki_chart_items" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_chart_items_sequ".nextval into :NEW."itemId" FROM DUAL;
-END;
-/
 
-DROP TABLE "tiki_charts";
+DROP TABLE `tiki_charts`;
 
-CREATE SEQUENCE "tiki_charts_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_charts" (
-  "chartId" number(14) NOT NULL,
-  "title" varchar(250) default NULL,
-  "description" clob,
-  "hits" number(14) default NULL,
-  "singleItemVotes" char(1) default NULL,
-  "singleChartVotes" char(1) default NULL,
-  "suggestions" char(1) default NULL,
-  "autoValidate" char(1) default NULL,
-  "topN" number(6) default NULL,
-  "maxVoteValue" number(4) default NULL,
-  "frequency" number(14) default NULL,
-  "showAverage" char(1) default NULL,
-  "isActive" char(1) default NULL,
-  "showVotes" char(1) default NULL,
-  "useCookies" char(1) default NULL,
-  "lastChart" number(14) default NULL,
-  "voteAgainAfter" number(14) default NULL,
-  "created" number(14) default NULL,
-  PRIMARY KEY (chartId)
+CREATE TABLE `tiki_charts` (
+  `chartId` number(14) NOT NULL auto_increment,
+  `title` varchar(250) default NULL,
+  `description` clob,
+  `hits` number(14) default NULL,
+  `singleItemVotes` char(1) default NULL,
+  `singleChartVotes` char(1) default NULL,
+  `suggestions` char(1) default NULL,
+  `autoValidate` char(1) default NULL,
+  `topN` number(6) default NULL,
+  `maxVoteValue` number(4) default NULL,
+  `frequency` number(14) default NULL,
+  `showAverage` char(1) default NULL,
+  `isActive` char(1) default NULL,
+  `showVotes` char(1) default NULL,
+  `useCookies` char(1) default NULL,
+  `lastChart` number(14) default NULL,
+  `voteAgainAfter` number(14) default NULL,
+  `created` number(14) default NULL,
+  PRIMARY KEY (`chartId`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_charts_trig" BEFORE INSERT ON "tiki_charts" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_charts_sequ".nextval into :NEW."chartId" FROM DUAL;
-END;
-/
 
-DROP TABLE "tiki_charts_rankings";
+DROP TABLE `tiki_charts_rankings`;
 
-CREATE TABLE "tiki_charts_rankings" (
-  "chartId" number(14) default '0' NOT NULL,
-  "itemId" number(14) default '0' NOT NULL,
-  "position" number(14) default '0' NOT NULL,
-  "timestamp" number(14) default '0' NOT NULL,
-  "lastPosition" number(14) default '0' NOT NULL,
-  "period" number(14) default '0' NOT NULL,
-  "rvotes" number(14) default '0' NOT NULL,
-  "raverage" decimal(4,2) default '0.00' NOT NULL,
-  PRIMARY KEY (chartId,itemId,period)
+CREATE TABLE `tiki_charts_rankings` (
+  `chartId` number(14) default '0' NOT NULL,
+  `itemId` number(14) default '0' NOT NULL,
+  `position` number(14) default '0' NOT NULL,
+  `timestamp` number(14) default '0' NOT NULL,
+  `lastPosition` number(14) default '0' NOT NULL,
+  `period` number(14) default '0' NOT NULL,
+  `rvotes` number(14) default '0' NOT NULL,
+  `raverage` decimal(4,2) default '0.00' NOT NULL,
+  PRIMARY KEY (`chartId`,`itemId`,`period`)
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_charts_votes";
+DROP TABLE `tiki_charts_votes`;
 
-CREATE TABLE "tiki_charts_votes" (
-  "user" varchar(200) default '' NOT NULL,
-  "itemId" number(14) default '0' NOT NULL,
-  "timestamp" number(14) default NULL,
-  "chartId" number(14) default NULL,
-  PRIMARY KEY (user,itemId)
+CREATE TABLE `tiki_charts_votes` (
+  `user` varchar(200) default '' NOT NULL,
+  `itemId` number(14) default '0' NOT NULL,
+  `timestamp` number(14) default NULL,
+  `chartId` number(14) default NULL,
+  PRIMARY KEY (`user`,`itemId`)
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_chat_channels";
+DROP TABLE `tiki_chat_channels`;
 
-CREATE SEQUENCE "tiki_chat_channels_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_chat_channels" (
-  "channelId" number(8) NOT NULL,
-  "name" varchar(30) default NULL,
-  "description" varchar(250) default NULL,
-  "max_users" number(8) default NULL,
-  "mode" char(1) default NULL,
-  "moderator" varchar(200) default NULL,
-  "active" char(1) default NULL,
-  "refresh" number(6) default NULL,
-  PRIMARY KEY (channelId)
+CREATE TABLE `tiki_chat_channels` (
+  `channelId` number(8) NOT NULL auto_increment,
+  `name` varchar(30) default NULL,
+  `description` varchar(250) default NULL,
+  `max_users` number(8) default NULL,
+  `mode` char(1) default NULL,
+  `moderator` varchar(200) default NULL,
+  `active` char(1) default NULL,
+  `refresh` number(6) default NULL,
+  PRIMARY KEY (`channelId`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_chat_channels_trig" BEFORE INSERT ON "tiki_chat_channels" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_chat_channels_sequ".nextval into :NEW."channelId" FROM DUAL;
-END;
-/
 
-DROP TABLE "tiki_chat_messages";
+DROP TABLE `tiki_chat_messages`;
 
-CREATE SEQUENCE "tiki_chat_messages_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_chat_messages" (
-  "messageId" number(8) NOT NULL,
-  "channelId" number(8) default '0' NOT NULL,
-  "data" varchar(255) default NULL,
-  "poster" varchar(200) default 'anonymous' NOT NULL,
-  "timestamp" number(14) default NULL,
-  PRIMARY KEY (messageId)
+CREATE TABLE `tiki_chat_messages` (
+  `messageId` number(8) NOT NULL auto_increment,
+  `channelId` number(8) default '0' NOT NULL,
+  `data` varchar(255) default NULL,
+  `poster` varchar(200) default 'anonymous' NOT NULL,
+  `timestamp` number(14) default NULL,
+  PRIMARY KEY (`messageId`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_chat_messages_trig" BEFORE INSERT ON "tiki_chat_messages" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_chat_messages_sequ".nextval into :NEW."messageId" FROM DUAL;
-END;
-/
 
-DROP TABLE "tiki_chat_users";
+DROP TABLE `tiki_chat_users`;
 
-CREATE TABLE "tiki_chat_users" (
-  "nickname" varchar(200) default '' NOT NULL,
-  "channelId" number(8) default '0' NOT NULL,
-  "timestamp" number(14) default NULL,
-  PRIMARY KEY (nickname,channelId)
+CREATE TABLE `tiki_chat_users` (
+  `nickname` varchar(200) default '' NOT NULL,
+  `channelId` number(8) default '0' NOT NULL,
+  `timestamp` number(14) default NULL,
+  PRIMARY KEY (`nickname`,`channelId`)
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_comments";
+DROP TABLE `tiki_comments`;
 
-CREATE SEQUENCE "tiki_comments_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_comments" (
-  "threadId" number(14) NOT NULL,
-  "object" varchar(255) default '' NOT NULL,
-  "objectType" varchar(32) default '' NOT NULL,
-  "parentId" number(14) default NULL,
-  "userName" varchar(200) default '',
-  "commentDate" number(14) default NULL,
-  "hits" number(8) default NULL,
-  "type" char(1) default NULL,
-  "points" decimal(8,2) default NULL,
-  "votes" number(8) default NULL,
-  "average" decimal(8,4) default NULL,
-  "title" varchar(255) default NULL,
-  "data" clob,
-  "hash" varchar(32) default NULL,
-  "user_ip" varchar(15) default NULL,
-  "summary" varchar(240) default NULL,
-  "smiley" varchar(80) default NULL,
-  "message_id" varchar(128) default NULL,
-  "in_reply_to" varchar(128) default NULL,
-  "comment_rating" number(2) default NULL,
-  "archived" char(1) default NULL,
-  "approved" char(1) default 'y' NOT NULL,
-  "locked" char(1) default 'n' NOT NULL,
-  PRIMARY KEY (threadId)
+CREATE TABLE `tiki_comments` (
+  `threadId` number(14) NOT NULL auto_increment,
+  `object` varchar(255) default '' NOT NULL,
+  `objectType` varchar(32) default '' NOT NULL,
+  `parentId` number(14) default NULL,
+  `userName` varchar(200) default '',
+  `commentDate` number(14) default NULL,
+  `hits` number(8) default NULL,
+  `type` char(1) default NULL,
+  `points` decimal(8,2) default NULL,
+  `votes` number(8) default NULL,
+  `average` decimal(8,4) default NULL,
+  `title` varchar(255) default NULL,
+  `data` clob,
+  `hash` varchar(32) default NULL,
+  `user_ip` varchar(15) default NULL,
+  `summary` varchar(240) default NULL,
+  `smiley` varchar(80) default NULL,
+  `message_id` varchar(128) default NULL,
+  `in_reply_to` varchar(128) default NULL,
+  `comment_rating` number(2) default NULL,
+  `archived` char(1) default NULL,
+  `approved` char(1) default 'y' NOT NULL,
+  `locked` char(1) default 'n' NOT NULL,
+  PRIMARY KEY (`threadId`),
+  UNIQUE KEY `no_repeats` (parentId, userName(40), title(100), commentDate, message_id(40), in_reply_to(40)),
+  KEY `title` (title),
+  KEY `data` (data(255)),
+  KEY `hits` (hits),
+  KEY `tc_pi` (parentId),
+  KEY `objectType` (object, objectType),
+  KEY `commentDate` (commentDate),
+  KEY `threaded` (message_id, in_reply_to, parentId),
+  FULLTEXT KEY `ft` (title,data)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_comments_trig" BEFORE INSERT ON "tiki_comments" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_comments_sequ".nextval into :NEW."threadId" FROM DUAL;
-END;
-/
-CREATE  INDEX "tiki_comments_title" ON "tiki_comments"("title");
-CREATE  INDEX "tiki_comments_data" ON "tiki_comments"("data");
-CREATE  INDEX "tiki_comments_hits" ON "tiki_comments"("hits");
-CREATE  INDEX "tiki_comments_tc_pi" ON "tiki_comments"("parentId");
-CREATE  INDEX "tiki_comments_objectType" ON "tiki_comments"("object" "objectType");
-CREATE  INDEX "tiki_comments_commentDate" ON "tiki_comments"("commentDate");
-CREATE  INDEX "tiki_comments_threaded" ON "tiki_comments"("message_id" "in_reply_to" "parentId");
-CREATE  INDEX "tiki_comments_ft" ON "tiki_comments"("title","data");
-CREATE UNIQUE INDEX "tiki_comments_no_repeats" ON "tiki_comments"("parentId" "userName" "title" "commentDate" "message_id" "in_reply_to");
 
-DROP TABLE "tiki_content";
+DROP TABLE `tiki_content`;
 
-CREATE SEQUENCE "tiki_content_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_content" (
-  "contentId" number(8) NOT NULL,
-  "description" clob,
-  "contentLabel" varchar(255) default '' NOT NULL,
-  PRIMARY KEY (contentId)
+CREATE TABLE `tiki_content` (
+  `contentId` number(8) NOT NULL auto_increment,
+  `description` clob,
+  `contentLabel` varchar(255) default '' NOT NULL,
+  PRIMARY KEY (`contentId`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_content_trig" BEFORE INSERT ON "tiki_content" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_content_sequ".nextval into :NEW."contentId" FROM DUAL;
-END;
-/
 
-DROP TABLE "tiki_content_templates";
+DROP TABLE `tiki_content_templates`;
 
-CREATE SEQUENCE "tiki_content_templates_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_content_templates" (
-  "templateId" number(10) NOT NULL,
-  "content" blob,
-  "name" varchar(200) default NULL,
-  "created" number(14) default NULL,
-  PRIMARY KEY (templateId)
+CREATE TABLE `tiki_content_templates` (
+  `templateId` number(10) NOT NULL auto_increment,
+  `content` blob,
+  `name` varchar(200) default NULL,
+  `created` number(14) default NULL,
+  PRIMARY KEY (`templateId`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_content_templates_trig" BEFORE INSERT ON "tiki_content_templates" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_content_templates_sequ".nextval into :NEW."templateId" FROM DUAL;
-END;
-/
 
-DROP TABLE "tiki_content_templates_sections";
+DROP TABLE `tiki_content_templates_sections`;
 
-CREATE TABLE "tiki_content_templates_sections" (
-  "templateId" number(10) default '0' NOT NULL,
-  "section" varchar(250) default '' NOT NULL,
-  PRIMARY KEY (templateId,section)
+CREATE TABLE `tiki_content_templates_sections` (
+  `templateId` number(10) default '0' NOT NULL,
+  `section` varchar(250) default '' NOT NULL,
+  PRIMARY KEY (`templateId`,`section`)
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_cookies";
+DROP TABLE `tiki_cookies`;
 
-CREATE SEQUENCE "tiki_cookies_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_cookies" (
-  "cookieId" number(10) NOT NULL,
-  "cookie" clob,
-  PRIMARY KEY (cookieId)
+CREATE TABLE `tiki_cookies` (
+  `cookieId` number(10) NOT NULL auto_increment,
+  `cookie` clob,
+  PRIMARY KEY (`cookieId`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_cookies_trig" BEFORE INSERT ON "tiki_cookies" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_cookies_sequ".nextval into :NEW."cookieId" FROM DUAL;
-END;
-/
 
-DROP TABLE "tiki_copyrights";
+DROP TABLE `tiki_copyrights`;
 
-CREATE SEQUENCE "tiki_copyrights_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_copyrights" (
-  "copyrightId" number(12) NOT NULL,
-  "page" varchar(200) default NULL,
-  "title" varchar(200) default NULL,
-  "year" number(11) default NULL,
-  "authors" varchar(200) default NULL,
-  "copyright_order" number(11) default NULL,
-  "userName" varchar(200) default '',
-  PRIMARY KEY (copyrightId)
+CREATE TABLE `tiki_copyrights` (
+  `copyrightId` number(12) NOT NULL auto_increment,
+  `page` varchar(200) default NULL,
+  `title` varchar(200) default NULL,
+  `year` number(11) default NULL,
+  `authors` varchar(200) default NULL,
+  `copyright_order` number(11) default NULL,
+  `userName` varchar(200) default '',
+  PRIMARY KEY (`copyrightId`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_copyrights_trig" BEFORE INSERT ON "tiki_copyrights" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_copyrights_sequ".nextval into :NEW."copyrightId" FROM DUAL;
-END;
-/
 
-DROP TABLE "tiki_directory_categories";
+DROP TABLE `tiki_directory_categories`;
 
-CREATE SEQUENCE "tiki_directory_categories_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_directory_categories" (
-  "categId" number(10) NOT NULL,
-  "parent" number(10) default NULL,
-  "name" varchar(240) default NULL,
-  "description" clob,
-  "childrenType" char(1) default NULL,
-  "sites" number(10) default NULL,
-  "viewableChildren" number(4) default NULL,
-  "allowSites" char(1) default NULL,
-  "showCount" char(1) default NULL,
-  "editorGroup" varchar(200) default NULL,
-  "hits" number(12) default NULL,
-  PRIMARY KEY (categId)
+CREATE TABLE `tiki_directory_categories` (
+  `categId` number(10) NOT NULL auto_increment,
+  `parent` number(10) default NULL,
+  `name` varchar(240) default NULL,
+  `description` clob,
+  `childrenType` char(1) default NULL,
+  `sites` number(10) default NULL,
+  `viewableChildren` number(4) default NULL,
+  `allowSites` char(1) default NULL,
+  `showCount` char(1) default NULL,
+  `editorGroup` varchar(200) default NULL,
+  `hits` number(12) default NULL,
+  PRIMARY KEY (`categId`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_directory_categories_trig" BEFORE INSERT ON "tiki_directory_categories" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_directory_categories_sequ".nextval into :NEW."categId" FROM DUAL;
-END;
-/
 
-DROP TABLE "tiki_directory_search";
+DROP TABLE `tiki_directory_search`;
 
-CREATE TABLE "tiki_directory_search" (
-  "term" varchar(250) default '' NOT NULL,
-  "hits" number(14) default NULL,
-  PRIMARY KEY (term)
+CREATE TABLE `tiki_directory_search` (
+  `term` varchar(250) default '' NOT NULL,
+  `hits` number(14) default NULL,
+  PRIMARY KEY (`term`)
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_directory_sites";
+DROP TABLE `tiki_directory_sites`;
 
-CREATE SEQUENCE "tiki_directory_sites_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_directory_sites" (
-  "siteId" number(14) NOT NULL,
-  "name" varchar(240) default NULL,
-  "description" clob,
-  "url" varchar(255) default NULL,
-  "country" varchar(255) default NULL,
-  "hits" number(12) default NULL,
-  "isValid" char(1) default NULL,
-  "created" number(14) default NULL,
-  "lastModif" number(14) default NULL,
-  "cache" blob,
-  "cache_timestamp" number(14) default NULL,
-  PRIMARY KEY (siteId),
+CREATE TABLE `tiki_directory_sites` (
+  `siteId` number(14) NOT NULL auto_increment,
+  `name` varchar(240) default NULL,
+  `description` clob,
+  `url` varchar(255) default NULL,
+  `country` varchar(255) default NULL,
+  `hits` number(12) default NULL,
+  `isValid` char(1) default NULL,
+  `created` number(14) default NULL,
+  `lastModif` number(14) default NULL,
+  `cache` blob,
+  `cache_timestamp` number(14) default NULL,
+  PRIMARY KEY (`siteId`),
   KEY (isValid),
-  KEY (url)
+  KEY (url),
+  FULLTEXT KEY `ft` (name,description)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_directory_sites_trig" BEFORE INSERT ON "tiki_directory_sites" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_directory_sites_sequ".nextval into :NEW."siteId" FROM DUAL;
-END;
-/
-CREATE  INDEX "tiki_directory_sites_ft" ON "tiki_directory_sites"("name","description");
 
-DROP TABLE "tiki_drawings";
+DROP TABLE `tiki_dsn`;
 
-CREATE SEQUENCE "tiki_drawings_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_drawings" (
-  "drawId" number(12) NOT NULL,
-  "version" number(8) default NULL,
-  "name" varchar(250) default NULL,
-  "filename_draw" varchar(250) default NULL,
-  "filename_pad" varchar(250) default NULL,
-  "timestamp" number(14) default NULL,
-  "user" varchar(200) default '',
-  PRIMARY KEY (drawId)
+CREATE TABLE `tiki_dsn` (
+  `dsnId` number(12) NOT NULL auto_increment,
+  `name` varchar(200) default '' NOT NULL,
+  `dsn` varchar(255) default NULL,
+  PRIMARY KEY (`dsnId`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_drawings_trig" BEFORE INSERT ON "tiki_drawings" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_drawings_sequ".nextval into :NEW."drawId" FROM DUAL;
-END;
-/
 
-DROP TABLE "tiki_dsn";
+DROP TABLE `tiki_dynamic_variables`;
 
-CREATE SEQUENCE "tiki_dsn_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_dsn" (
-  "dsnId" number(12) NOT NULL,
-  "name" varchar(200) default '' NOT NULL,
-  "dsn" varchar(255) default NULL,
-  PRIMARY KEY (dsnId)
-) ENGINE=MyISAM  ;
-
-CREATE TRIGGER "tiki_dsn_trig" BEFORE INSERT ON "tiki_dsn" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_dsn_sequ".nextval into :NEW."dsnId" FROM DUAL;
-END;
-/
-
-DROP TABLE "tiki_dynamic_variables";
-
-CREATE TABLE "tiki_dynamic_variables" (
-  "name" varchar(40) NOT NULL,
-  "data" clob,
-  PRIMARY KEY (name)
+CREATE TABLE `tiki_dynamic_variables` (
+  `name` varchar(40) NOT NULL,
+  `data` clob,
+  PRIMARY KEY (`name`)
 );
 
 
-DROP TABLE "tiki_extwiki";
+DROP TABLE `tiki_extwiki`;
 
-CREATE SEQUENCE "tiki_extwiki_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_extwiki" (
-  "extwikiId" number(12) NOT NULL,
-  "name" varchar(200) default '' NOT NULL,
-  "extwiki" varchar(255) default NULL,
-  PRIMARY KEY (extwikiId)
+CREATE TABLE `tiki_extwiki` (
+  `extwikiId` number(12) NOT NULL auto_increment,
+  `name` varchar(200) default '' NOT NULL,
+  `extwiki` varchar(255) default NULL,
+  PRIMARY KEY (`extwikiId`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_extwiki_trig" BEFORE INSERT ON "tiki_extwiki" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_extwiki_sequ".nextval into :NEW."extwikiId" FROM DUAL;
-END;
-/
 
-DROP TABLE "tiki_faq_questions";
+DROP TABLE `tiki_faq_questions`;
 
-CREATE SEQUENCE "tiki_faq_questions_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_faq_questions" (
-  "questionId" number(10) NOT NULL,
-  "faqId" number(10) default NULL,
-  "position" number(4) default NULL,
-  "question" clob,
-  "answer" clob,
-  PRIMARY KEY (questionId)
+CREATE TABLE `tiki_faq_questions` (
+  `questionId` number(10) NOT NULL auto_increment,
+  `faqId` number(10) default NULL,
+  `position` number(4) default NULL,
+  `question` clob,
+  `answer` clob,
+  PRIMARY KEY (`questionId`),
+  KEY `faqId` (faqId),
+  KEY `question` (question(255)),
+  KEY `answer` (answer(255)),
+  FULLTEXT KEY `ft` (question,answer)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_faq_questions_trig" BEFORE INSERT ON "tiki_faq_questions" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_faq_questions_sequ".nextval into :NEW."questionId" FROM DUAL;
-END;
-/
-CREATE  INDEX "tiki_faq_questions_faqId" ON "tiki_faq_questions"("faqId");
-CREATE  INDEX "tiki_faq_questions_question" ON "tiki_faq_questions"("question");
-CREATE  INDEX "tiki_faq_questions_answer" ON "tiki_faq_questions"("answer");
-CREATE  INDEX "tiki_faq_questions_ft" ON "tiki_faq_questions"("question","answer");
 
-DROP TABLE "tiki_faqs";
+DROP TABLE `tiki_faqs`;
 
-CREATE SEQUENCE "tiki_faqs_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_faqs" (
-  "faqId" number(10) NOT NULL,
-  "title" varchar(200) default NULL,
-  "description" clob,
-  "created" number(14) default NULL,
-  "questions" number(5) default NULL,
-  "hits" number(8) default NULL,
-  "canSuggest" char(1) default NULL,
-  PRIMARY KEY (faqId)
+CREATE TABLE `tiki_faqs` (
+  `faqId` number(10) NOT NULL auto_increment,
+  `title` varchar(200) default NULL,
+  `description` clob,
+  `created` number(14) default NULL,
+  `questions` number(5) default NULL,
+  `hits` number(8) default NULL,
+  `canSuggest` char(1) default NULL,
+  PRIMARY KEY (`faqId`),
+  KEY `title` (title),
+  KEY `description` (description(255)),
+  KEY `hits` (hits),
+  FULLTEXT KEY `ft` (title,description)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_faqs_trig" BEFORE INSERT ON "tiki_faqs" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_faqs_sequ".nextval into :NEW."faqId" FROM DUAL;
-END;
-/
-CREATE  INDEX "tiki_faqs_title" ON "tiki_faqs"("title");
-CREATE  INDEX "tiki_faqs_description" ON "tiki_faqs"("description");
-CREATE  INDEX "tiki_faqs_hits" ON "tiki_faqs"("hits");
-CREATE  INDEX "tiki_faqs_ft" ON "tiki_faqs"("title","description");
 
-DROP TABLE "tiki_featured_links";
+DROP TABLE `tiki_featured_links`;
 
-CREATE TABLE "tiki_featured_links" (
-  "url" varchar(200) default '' NOT NULL,
-  "title" varchar(200) default NULL,
-  "description" clob,
-  "hits" number(8) default NULL,
-  "position" number(6) default NULL,
-  "type" char(1) default NULL,
-  PRIMARY KEY (url)
+CREATE TABLE `tiki_featured_links` (
+  `url` varchar(200) default '' NOT NULL,
+  `title` varchar(200) default NULL,
+  `description` clob,
+  `hits` number(8) default NULL,
+  `position` number(6) default NULL,
+  `type` char(1) default NULL,
+  PRIMARY KEY (`url`)
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_file_galleries";
+DROP TABLE `tiki_file_galleries`;
 
-CREATE SEQUENCE "tiki_file_galleries_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_file_galleries" (
-  "galleryId" number(14) NOT NULL,
-  "name" varchar(80) default '' NOT NULL,
-  "type" varchar(20) default 'default' NOT NULL,
-  "description" clob,
-  "created" number(14) default NULL,
-  "visible" char(1) default NULL,
-  "lastModif" number(14) default NULL,
-  "user" varchar(200) default '',
-  "hits" number(14) default NULL,
-  "votes" number(8) default NULL,
-  "points" decimal(8,2) default NULL,
-  "maxRows" number(10) default NULL,
-  "public" char(1) default NULL,
-  "show_id" char(1) default NULL,
-  "show_icon" char(1) default NULL,
-  "show_name" char(1) default NULL,
-  "show_size" char(1) default NULL,
-  "show_description" char(1) default NULL,
-  "max_desc" number(8) default NULL,
-  "show_created" char(1) default NULL,
-  "show_hits" char(1) default NULL,
-  "parentId" number(14) default -1 NOT NULL,
-  "lockable" char(1) default 'n',
-  "show_lockedby" char(1) default NULL,
-  "archives" number(4) default -1,
-  "sort_mode" char(20) default NULL,
-  "show_modified" char(1) default NULL,
-  "show_author" char(1) default NULL,
-  "show_creator" char(1) default NULL,
-  "subgal_conf" varchar(200) default NULL,
-  "show_last_user" char(1) default NULL,
-  "show_comment" char(1) default NULL,
-  "show_files" char(1) default NULL,
-  "show_explorer" char(1) default NULL,
-  "show_path" char(1) default NULL,
-  "show_slideshow" char(1) default NULL,
-  "default_view" varchar(20) default NULL,
-  PRIMARY KEY (galleryId)
+CREATE TABLE `tiki_file_galleries` (
+  `galleryId` number(14) NOT NULL auto_increment,
+  `name` varchar(80) default '' NOT NULL,
+  `type` varchar(20) default 'default' NOT NULL,
+  `description` clob,
+  `created` number(14) default NULL,
+  `visible` char(1) default NULL,
+  `lastModif` number(14) default NULL,
+  `user` varchar(200) default '',
+  `hits` number(14) default NULL,
+  `votes` number(8) default NULL,
+  `points` decimal(8,2) default NULL,
+  `maxRows` number(10) default NULL,
+  `public` char(1) default NULL,
+  `show_id` char(1) default NULL,
+  `show_icon` char(1) default NULL,
+  `show_name` char(1) default NULL,
+  `show_size` char(1) default NULL,
+  `show_description` char(1) default NULL,
+  `max_desc` number(8) default NULL,
+  `show_created` char(1) default NULL,
+  `show_hits` char(1) default NULL,
+  `parentId` number(14) default -1 NOT NULL,
+  `lockable` char(1) default 'n',
+  `show_lockedby` char(1) default NULL,
+  `archives` number(4) default -1,
+  `sort_mode` char(20) default NULL,
+  `show_modified` char(1) default NULL,
+  `show_author` char(1) default NULL,
+  `show_creator` char(1) default NULL,
+  `subgal_conf` varchar(200) default NULL,
+  `show_last_user` char(1) default NULL,
+  `show_comment` char(1) default NULL,
+  `show_files` char(1) default NULL,
+  `show_explorer` char(1) default NULL,
+  `show_path` char(1) default NULL,
+  `show_slideshow` char(1) default NULL,
+  `default_view` varchar(20) default NULL,
+  PRIMARY KEY (`galleryId`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_file_galleries_trig" BEFORE INSERT ON "tiki_file_galleries" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_file_galleries_sequ".nextval into :NEW."galleryId" FROM DUAL;
-END;
-/
 
-DROP TABLE "tiki_files";
+DROP TABLE `tiki_files`;
 
-CREATE SEQUENCE "tiki_files_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_files" (
-  "fileId" number(14) NOT NULL,
-  "galleryId" number(14) default '0' NOT NULL,
-  "name" varchar(200) default '' NOT NULL,
-  "description" clob,
-  "created" number(14) default NULL,
-  "filename" varchar(80) default NULL,
-  "filesize" number(14) default NULL,
-  "filetype" varchar(250) default NULL,
-  "data" blob,
-  "user" varchar(200) default '',
-  "author" varchar(40) default NULL,
-  "hits" number(14) default NULL,
-  "votes" number(8) default NULL,
-  "points" decimal(8,2) default NULL,
-  "path" varchar(255) default NULL,
-  "reference_url" varchar(250) default NULL,
-  "is_reference" char(1) default NULL,
-  "hash" varchar(32) default NULL,
-  "search_data" longtext,
-  "lastModif" integer(14) DEFAULT NULL,
-  "lastModifUser" varchar(200) DEFAULT NULL,
-  "lockedby" varchar(200) default '',
-  "comment" varchar(200) default NULL,
-  "archiveId" number(14) default 0,
-  PRIMARY KEY (fileId)
+CREATE TABLE `tiki_files` (
+  `fileId` number(14) NOT NULL auto_increment,
+  `galleryId` number(14) default '0' NOT NULL,
+  `name` varchar(200) default '' NOT NULL,
+  `description` clob,
+  `created` number(14) default NULL,
+  `filename` varchar(80) default NULL,
+  `filesize` number(14) default NULL,
+  `filetype` varchar(250) default NULL,
+  `data` blob,
+  `user` varchar(200) default '',
+  `author` varchar(40) default NULL,
+  `hits` number(14) default NULL,
+  `votes` number(8) default NULL,
+  `points` decimal(8,2) default NULL,
+  `path` varchar(255) default NULL,
+  `reference_url` varchar(250) default NULL,
+  `is_reference` char(1) default NULL,
+  `hash` varchar(32) default NULL,
+  `search_data` longtext,
+  `lastModif` integer(14) DEFAULT NULL,
+  `lastModifUser` varchar(200) DEFAULT NULL,
+  `lockedby` varchar(200) default '',
+  `comment` varchar(200) default NULL,
+  `archiveId` number(14) default 0,
+  PRIMARY KEY (`fileId`),
+  KEY `name` (name),
+  KEY `description` (description(255)),
+  KEY `created` (created),
+  KEY `archiveId` (archiveId),
+  KEY `galleryId` (galleryId),
+  KEY `hits` (hits),
+  FULLTEXT KEY `ft` (name,description,search_data,filename)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_files_trig" BEFORE INSERT ON "tiki_files" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_files_sequ".nextval into :NEW."fileId" FROM DUAL;
-END;
-/
-CREATE  INDEX "tiki_files_name" ON "tiki_files"("name");
-CREATE  INDEX "tiki_files_description" ON "tiki_files"("description");
-CREATE  INDEX "tiki_files_created" ON "tiki_files"("created");
-CREATE  INDEX "tiki_files_archiveId" ON "tiki_files"("archiveId");
-CREATE  INDEX "tiki_files_galleryId" ON "tiki_files"("galleryId");
-CREATE  INDEX "tiki_files_hits" ON "tiki_files"("hits");
-CREATE  INDEX "tiki_files_ft" ON "tiki_files"("name","description","search_data","filename");
 
-DROP TABLE "tiki_forum_attachments";
+DROP TABLE `tiki_forum_attachments`;
 
-CREATE SEQUENCE "tiki_forum_attachments_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_forum_attachments" (
-  "attId" number(14) NOT NULL,
-  "threadId" number(14) default '0' NOT NULL,
-  "qId" number(14) default '0' NOT NULL,
-  "forumId" number(14) default NULL,
-  "filename" varchar(250) default NULL,
-  "filetype" varchar(250) default NULL,
-  "filesize" number(12) default NULL,
-  "data" blob,
-  "dir" varchar(200) default NULL,
-  "created" number(14) default NULL,
-  "path" varchar(250) default NULL,
-  PRIMARY KEY (attId)
+CREATE TABLE `tiki_forum_attachments` (
+  `attId` number(14) NOT NULL auto_increment,
+  `threadId` number(14) default '0' NOT NULL,
+  `qId` number(14) default '0' NOT NULL,
+  `forumId` number(14) default NULL,
+  `filename` varchar(250) default NULL,
+  `filetype` varchar(250) default NULL,
+  `filesize` number(12) default NULL,
+  `data` blob,
+  `dir` varchar(200) default NULL,
+  `created` number(14) default NULL,
+  `path` varchar(250) default NULL,
+  PRIMARY KEY (`attId`),
+  KEY `threadId` (threadId)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_forum_attachments_trig" BEFORE INSERT ON "tiki_forum_attachments" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_forum_attachments_sequ".nextval into :NEW."attId" FROM DUAL;
-END;
-/
-CREATE  INDEX "tiki_forum_attachments_threadId" ON "tiki_forum_attachments"("threadId");
 
-DROP TABLE "tiki_forum_reads";
+DROP TABLE `tiki_forum_reads`;
 
-CREATE TABLE "tiki_forum_reads" (
-  "user" varchar(200) default '' NOT NULL,
-  "threadId" number(14) default '0' NOT NULL,
-  "forumId" number(14) default NULL,
-  "timestamp" number(14) default NULL,
-  PRIMARY KEY (user,threadId)
+CREATE TABLE `tiki_forum_reads` (
+  `user` varchar(200) default '' NOT NULL,
+  `threadId` number(14) default '0' NOT NULL,
+  `forumId` number(14) default NULL,
+  `timestamp` number(14) default NULL,
+  PRIMARY KEY (`user`,`threadId`)
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_forums";
+DROP TABLE `tiki_forums`;
 
-CREATE SEQUENCE "tiki_forums_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_forums" (
-  "forumId" number(8) NOT NULL,
-  "name" varchar(255) default NULL,
-  "description" clob,
-  "created" number(14) default NULL,
-  "lastPost" number(14) default NULL,
-  "threads" number(8) default NULL,
-  "comments" number(8) default NULL,
-  "controlFlood" char(1) default NULL,
-  "floodInterval" number(8) default NULL,
-  "moderator" varchar(200) default NULL,
-  "hits" number(8) default NULL,
-  "mail" varchar(200) default NULL,
-  "useMail" char(1) default NULL,
-  "section" varchar(200) default NULL,
-  "usePruneUnreplied" char(1) default NULL,
-  "pruneUnrepliedAge" number(8) default NULL,
-  "usePruneOld" char(1) default NULL,
-  "pruneMaxAge" number(8) default NULL,
-  "topicsPerPage" number(6) default NULL,
-  "topicOrdering" varchar(100) default NULL,
-  "threadOrdering" varchar(100) default NULL,
-  "att" varchar(80) default NULL,
-  "att_store" varchar(4) default NULL,
-  "att_store_dir" varchar(250) default NULL,
-  "att_max_size" number(12) default NULL,
-  "ui_level" char(1) default NULL,
-  "forum_password" varchar(32) default NULL,
-  "forum_use_password" char(1) default NULL,
-  "moderator_group" varchar(200) default NULL,
-  "approval_type" varchar(20) default NULL,
-  "outbound_address" varchar(250) default NULL,
-  "outbound_mails_for_inbound_mails" char(1) default NULL,
-  "outbound_mails_reply_link" char(1) default NULL,
-  "outbound_from" varchar(250) default NULL,
-  "inbound_pop_server" varchar(250) default NULL,
-  "inbound_pop_port" number(4) default NULL,
-  "inbound_pop_user" varchar(200) default NULL,
-  "inbound_pop_password" varchar(80) default NULL,
-  "topic_smileys" char(1) default NULL,
-  "ui_avatar" char(1) default NULL,
-  "ui_flag" char(1) default NULL,
-  "ui_posts" char(1) default NULL,
-  "ui_email" char(1) default NULL,
-  "ui_online" char(1) default NULL,
-  "topic_summary" char(1) default NULL,
-  "show_description" char(1) default NULL,
-  "topics_list_replies" char(1) default NULL,
-  "topics_list_reads" char(1) default NULL,
-  "topics_list_pts" char(1) default NULL,
-  "topics_list_lastpost" char(1) default NULL,
-  "topics_list_author" char(1) default NULL,
-  "vote_threads" char(1) default NULL,
-  "forum_last_n" number(2) default 0,
-  "threadStyle" varchar(100) default NULL,
-  "commentsPerPage" varchar(100) default NULL,
-  "is_flat" char(1) default NULL,
-  "mandatory_contribution" char(1) default NULL,
-  PRIMARY KEY (forumId)
+CREATE TABLE `tiki_forums` (
+  `forumId` number(8) NOT NULL auto_increment,
+  `name` varchar(255) default NULL,
+  `description` clob,
+  `created` number(14) default NULL,
+  `lastPost` number(14) default NULL,
+  `threads` number(8) default NULL,
+  `comments` number(8) default NULL,
+  `controlFlood` char(1) default NULL,
+  `floodInterval` number(8) default NULL,
+  `moderator` varchar(200) default NULL,
+  `hits` number(8) default NULL,
+  `mail` varchar(200) default NULL,
+  `useMail` char(1) default NULL,
+  `section` varchar(200) default NULL,
+  `usePruneUnreplied` char(1) default NULL,
+  `pruneUnrepliedAge` number(8) default NULL,
+  `usePruneOld` char(1) default NULL,
+  `pruneMaxAge` number(8) default NULL,
+  `topicsPerPage` number(6) default NULL,
+  `topicOrdering` varchar(100) default NULL,
+  `threadOrdering` varchar(100) default NULL,
+  `att` varchar(80) default NULL,
+  `att_store` varchar(4) default NULL,
+  `att_store_dir` varchar(250) default NULL,
+  `att_max_size` number(12) default NULL,
+  `ui_level` char(1) default NULL,
+  `forum_password` varchar(32) default NULL,
+  `forum_use_password` char(1) default NULL,
+  `moderator_group` varchar(200) default NULL,
+  `approval_type` varchar(20) default NULL,
+  `outbound_address` varchar(250) default NULL,
+  `outbound_mails_for_inbound_mails` char(1) default NULL,
+  `outbound_mails_reply_link` char(1) default NULL,
+  `outbound_from` varchar(250) default NULL,
+  `inbound_pop_server` varchar(250) default NULL,
+  `inbound_pop_port` number(4) default NULL,
+  `inbound_pop_user` varchar(200) default NULL,
+  `inbound_pop_password` varchar(80) default NULL,
+  `topic_smileys` char(1) default NULL,
+  `ui_avatar` char(1) default NULL,
+  `ui_flag` char(1) default NULL,
+  `ui_posts` char(1) default NULL,
+  `ui_email` char(1) default NULL,
+  `ui_online` char(1) default NULL,
+  `topic_summary` char(1) default NULL,
+  `show_description` char(1) default NULL,
+  `topics_list_replies` char(1) default NULL,
+  `topics_list_reads` char(1) default NULL,
+  `topics_list_pts` char(1) default NULL,
+  `topics_list_lastpost` char(1) default NULL,
+  `topics_list_author` char(1) default NULL,
+  `vote_threads` char(1) default NULL,
+  `forum_last_n` number(2) default 0,
+  `threadStyle` varchar(100) default NULL,
+  `commentsPerPage` varchar(100) default NULL,
+  `is_flat` char(1) default NULL,
+  `mandatory_contribution` char(1) default NULL,
+  PRIMARY KEY (`forumId`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_forums_trig" BEFORE INSERT ON "tiki_forums" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_forums_sequ".nextval into :NEW."forumId" FROM DUAL;
-END;
-/
 
-DROP TABLE "tiki_forums_queue";
+DROP TABLE `tiki_forums_queue`;
 
-CREATE SEQUENCE "tiki_forums_queue_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_forums_queue" (
-  "qId" number(14) NOT NULL,
-  "object" varchar(32) default NULL,
-  "parentId" number(14) default NULL,
-  "forumId" number(14) default NULL,
-  "timestamp" number(14) default NULL,
-  "user" varchar(200) default '',
-  "title" varchar(240) default NULL,
-  "data" clob,
-  "type" varchar(60) default NULL,
-  "hash" varchar(32) default NULL,
-  "topic_smiley" varchar(80) default NULL,
-  "topic_title" varchar(240) default NULL,
-  "summary" varchar(240) default NULL,
-  "in_reply_to" varchar(128) default NULL,
-  "tags" varchar(255) default NULL,
-  "email" varchar(255) default NULL,
-  PRIMARY KEY (qId)
+CREATE TABLE `tiki_forums_queue` (
+  `qId` number(14) NOT NULL auto_increment,
+  `object` varchar(32) default NULL,
+  `parentId` number(14) default NULL,
+  `forumId` number(14) default NULL,
+  `timestamp` number(14) default NULL,
+  `user` varchar(200) default '',
+  `title` varchar(240) default NULL,
+  `data` clob,
+  `type` varchar(60) default NULL,
+  `hash` varchar(32) default NULL,
+  `topic_smiley` varchar(80) default NULL,
+  `topic_title` varchar(240) default NULL,
+  `summary` varchar(240) default NULL,
+  `in_reply_to` varchar(128) default NULL,
+  `tags` varchar(255) default NULL,
+  `email` varchar(255) default NULL,
+  PRIMARY KEY (`qId`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_forums_queue_trig" BEFORE INSERT ON "tiki_forums_queue" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_forums_queue_sequ".nextval into :NEW."qId" FROM DUAL;
-END;
-/
 
-DROP TABLE "tiki_forums_reported";
+DROP TABLE `tiki_forums_reported`;
 
-CREATE TABLE "tiki_forums_reported" (
-  "threadId" number(12) default '0' NOT NULL,
-  "forumId" number(12) default '0' NOT NULL,
-  "parentId" number(12) default '0' NOT NULL,
-  "user" varchar(200) default '',
-  "timestamp" number(14) default NULL,
-  "reason" varchar(250) default NULL,
-  PRIMARY KEY (threadId)
+CREATE TABLE `tiki_forums_reported` (
+  `threadId` number(12) default '0' NOT NULL,
+  `forumId` number(12) default '0' NOT NULL,
+  `parentId` number(12) default '0' NOT NULL,
+  `user` varchar(200) default '',
+  `timestamp` number(14) default NULL,
+  `reason` varchar(250) default NULL,
+  PRIMARY KEY (`threadId`)
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_galleries";
+DROP TABLE `tiki_galleries`;
 
-CREATE SEQUENCE "tiki_galleries_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_galleries" (
-  "galleryId" number(14) NOT NULL,
-  "name" varchar(80) default '' NOT NULL,
-  "description" clob,
-  "created" number(14) default NULL,
-  "lastModif" number(14) default NULL,
-  "visible" char(1) default NULL,
-  "geographic" char(1) default NULL,
-  "theme" varchar(60) default NULL,
-  "user" varchar(200) default '',
-  "hits" number(14) default NULL,
-  "maxRows" number(10) default NULL,
-  "rowImages" number(10) default NULL,
-  "thumbSizeX" number(10) default NULL,
-  "thumbSizeY" number(10) default NULL,
-  "public" char(1) default NULL,
-  "sortorder" varchar(20) default 'created' NOT NULL,
-  "sortdirection" varchar(4) default 'desc' NOT NULL,
-  "galleryimage" varchar(20) default 'first' NOT NULL,
-  "parentgallery" number(14) default -1 NOT NULL,
-  "showname" char(1) default 'y' NOT NULL,
-  "showimageid" char(1) default 'n' NOT NULL,
-  "showdescription" char(1) default 'n' NOT NULL,
-  "showcreated" char(1) default 'n' NOT NULL,
-  "showuser" char(1) default 'n' NOT NULL,
-  "showhits" char(1) default 'y' NOT NULL,
-  "showxysize" char(1) default 'y' NOT NULL,
-  "showfilesize" char(1) default 'n' NOT NULL,
-  "showfilename" char(1) default 'n' NOT NULL,
-  "defaultscale" varchar(10) DEFAULT 'o' NOT NULL,
-  "showcategories" char(1) default 'n' NOT NULL, 
-  PRIMARY KEY (galleryId)
+CREATE TABLE `tiki_galleries` (
+  `galleryId` number(14) NOT NULL auto_increment,
+  `name` varchar(80) default '' NOT NULL,
+  `description` clob,
+  `created` number(14) default NULL,
+  `lastModif` number(14) default NULL,
+  `visible` char(1) default NULL,
+  `geographic` char(1) default NULL,
+  `theme` varchar(60) default NULL,
+  `user` varchar(200) default '',
+  `hits` number(14) default NULL,
+  `maxRows` number(10) default NULL,
+  `rowImages` number(10) default NULL,
+  `thumbSizeX` number(10) default NULL,
+  `thumbSizeY` number(10) default NULL,
+  `public` char(1) default NULL,
+  `sortorder` varchar(20) default 'created' NOT NULL,
+  `sortdirection` varchar(4) default 'desc' NOT NULL,
+  `galleryimage` varchar(20) default 'first' NOT NULL,
+  `parentgallery` number(14) default -1 NOT NULL,
+  `showname` char(1) default 'y' NOT NULL,
+  `showimageid` char(1) default 'n' NOT NULL,
+  `showdescription` char(1) default 'n' NOT NULL,
+  `showcreated` char(1) default 'n' NOT NULL,
+  `showuser` char(1) default 'n' NOT NULL,
+  `showhits` char(1) default 'y' NOT NULL,
+  `showxysize` char(1) default 'y' NOT NULL,
+  `showfilesize` char(1) default 'n' NOT NULL,
+  `showfilename` char(1) default 'n' NOT NULL,
+  `defaultscale` varchar(10) DEFAULT 'o' NOT NULL,
+  `showcategories` char(1) default 'n' NOT NULL, 
+  PRIMARY KEY (`galleryId`),
+  KEY `name` (name),
+  KEY `description` (description(255)),
+  KEY `hits` (hits),
+  KEY `parentgallery` (parentgallery),
+  KEY `visibleUser` (visible, user),
+  FULLTEXT KEY `ft` (name,description)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_galleries_trig" BEFORE INSERT ON "tiki_galleries" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_galleries_sequ".nextval into :NEW."galleryId" FROM DUAL;
-END;
-/
-CREATE  INDEX "tiki_galleries_name" ON "tiki_galleries"("name");
-CREATE  INDEX "tiki_galleries_description" ON "tiki_galleries"("description");
-CREATE  INDEX "tiki_galleries_hits" ON "tiki_galleries"("hits");
-CREATE  INDEX "tiki_galleries_parentgallery" ON "tiki_galleries"("parentgallery");
-CREATE  INDEX "tiki_galleries_visibleUser" ON "tiki_galleries"("visible" "user");
-CREATE  INDEX "tiki_galleries_ft" ON "tiki_galleries"("name","description");
 
-DROP TABLE "tiki_galleries_scales";
+DROP TABLE `tiki_galleries_scales`;
 
-CREATE TABLE "tiki_galleries_scales" (
-  "galleryId" number(14) default '0' NOT NULL,
-  "scale" number(11) default '0' NOT NULL,
-  PRIMARY KEY (galleryId,scale)
+CREATE TABLE `tiki_galleries_scales` (
+  `galleryId` number(14) default '0' NOT NULL,
+  `scale` number(11) default '0' NOT NULL,
+  PRIMARY KEY (`galleryId`,`scale`)
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_games";
+DROP TABLE `tiki_group_inclusion`;
 
-CREATE TABLE "tiki_games" (
-  "gameName" varchar(200) default '' NOT NULL,
-  "hits" number(8) default NULL,
-  "votes" number(8) default NULL,
-  "points" number(8) default NULL,
-  PRIMARY KEY (gameName)
+CREATE TABLE `tiki_group_inclusion` (
+  `groupName` varchar(255) default '' NOT NULL,
+  `includeGroup` varchar(255) default '' NOT NULL,
+  PRIMARY KEY (`groupName`(30),`includeGroup`(30))
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_group_inclusion";
+DROP TABLE `tiki_group_watches`;
 
-CREATE TABLE "tiki_group_inclusion" (
-  "groupName" varchar(255) default '' NOT NULL,
-  "includeGroup" varchar(255) default '' NOT NULL,
-  PRIMARY KEY (groupName(30),includeGroup(30))
-) ENGINE=MyISAM;
-
-
-DROP TABLE "tiki_group_watches";
-
-CREATE SEQUENCE "tiki_group_watches_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_group_watches" (
-  "watchId" number(12) NOT NULL,
+CREATE TABLE `tiki_group_watches` (
+  `watchId` number(12) NOT NULL auto_increment,
   `group` varchar(200) default '' NOT NULL,
-  "event" varchar(40) default '' NOT NULL,
-  "object" varchar(200) default '' NOT NULL,
-  "title" varchar(250) default NULL,
-  "type" varchar(200) default NULL,
-  "url" varchar(250) default NULL,
+  `event` varchar(40) default '' NOT NULL,
+  `object` varchar(200) default '' NOT NULL,
+  `title` varchar(250) default NULL,
+  `type` varchar(200) default NULL,
+  `url` varchar(250) default NULL,
+  KEY `watchId` (watchId),
   PRIMARY KEY (`group`(50),event,object(100))
 ) ENGINE=MyISAM;
 
-CREATE TRIGGER "tiki_group_watches_trig" BEFORE INSERT ON "tiki_group_watches" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_group_watches_sequ".nextval into :NEW."watchId" FROM DUAL;
-END;
-/
-CREATE  INDEX "tiki_group_watches_watchId" ON "tiki_group_watches"("watchId");
 
-DROP TABLE "tiki_history";
+DROP TABLE `tiki_history`;
 
-CREATE SEQUENCE "tiki_history_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_history" (
-  "historyId" number(12) NOT NULL,
-  "pageName" varchar(160) default '' NOT NULL,
-  "version" number(8) default '0' NOT NULL,
-  "version_minor" number(8) default '0' NOT NULL,
-  "lastModif" number(14) default NULL,
-  "description" varchar(200) default NULL,
-  "user" varchar(200) default '' not null,
-  "ip" varchar(15) default NULL,
-  "comment" varchar(200) default NULL,
-  "data" blob,
-  "type" varchar(50) default NULL,
-  "is_html" TINYINT(1) DEFAULT 0 NOT NULL,
-  PRIMARY KEY (pageName,version),
+CREATE TABLE `tiki_history` (
+  `historyId` number(12) NOT NULL auto_increment,
+  `pageName` varchar(160) default '' NOT NULL,
+  `version` number(8) default '0' NOT NULL,
+  `version_minor` number(8) default '0' NOT NULL,
+  `lastModif` number(14) default NULL,
+  `description` varchar(200) default NULL,
+  `user` varchar(200) default '' not null,
+  `ip` varchar(15) default NULL,
+  `comment` varchar(200) default NULL,
+  `data` blob,
+  `type` varchar(50) default NULL,
+  `is_html` TINYINT(1) DEFAULT 0 NOT NULL,
+  PRIMARY KEY (`pageName`,`version`),
   KEY `user` (`user`),
   KEY(historyId)
 ) ENGINE=MyISAM;
 
-CREATE TRIGGER "tiki_history_trig" BEFORE INSERT ON "tiki_history" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_history_sequ".nextval into :NEW."historyId" FROM DUAL;
-END;
-/
 
-DROP TABLE "tiki_hotwords";
+DROP TABLE `tiki_hotwords`;
 
-CREATE TABLE "tiki_hotwords" (
-  "word" varchar(40) default '' NOT NULL,
-  "url" varchar(255) default '' NOT NULL,
-  PRIMARY KEY (word)
+CREATE TABLE `tiki_hotwords` (
+  `word` varchar(40) default '' NOT NULL,
+  `url` varchar(255) default '' NOT NULL,
+  PRIMARY KEY (`word`)
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_html_pages";
+DROP TABLE `tiki_html_pages`;
 
-CREATE TABLE "tiki_html_pages" (
-  "pageName" varchar(200) default '' NOT NULL,
-  "content" blob,
-  "refresh" number(10) default NULL,
-  "type" char(1) default NULL,
-  "created" number(14) default NULL,
-  PRIMARY KEY (pageName)
+CREATE TABLE `tiki_html_pages` (
+  `pageName` varchar(200) default '' NOT NULL,
+  `content` blob,
+  `refresh` number(10) default NULL,
+  `type` char(1) default NULL,
+  `created` number(14) default NULL,
+  PRIMARY KEY (`pageName`)
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_html_pages_dynamic_zones";
+DROP TABLE `tiki_html_pages_dynamic_zones`;
 
-CREATE TABLE "tiki_html_pages_dynamic_zones" (
-  "pageName" varchar(40) default '' NOT NULL,
-  "zone" varchar(80) default '' NOT NULL,
-  "type" char(2) default NULL,
-  "content" clob,
-  PRIMARY KEY (pageName,zone)
+CREATE TABLE `tiki_html_pages_dynamic_zones` (
+  `pageName` varchar(40) default '' NOT NULL,
+  `zone` varchar(80) default '' NOT NULL,
+  `type` char(2) default NULL,
+  `content` clob,
+  PRIMARY KEY (`pageName`,`zone`)
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_images";
+DROP TABLE `tiki_images`;
 
-CREATE SEQUENCE "tiki_images_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_images" (
-  "imageId" number(14) NOT NULL,
-  "galleryId" number(14) default '0' NOT NULL,
-  "name" varchar(200) default '' NOT NULL,
-  "description" clob,
-  "lon" float default NULL,
-  "lat" float default NULL,
-  "created" number(14) default NULL,
-  "user" varchar(200) default '',
-  "hits" number(14) default NULL,
-  "path" varchar(255) default NULL,
-  PRIMARY KEY (imageId)
+CREATE TABLE `tiki_images` (
+  `imageId` number(14) NOT NULL auto_increment,
+  `galleryId` number(14) default '0' NOT NULL,
+  `name` varchar(200) default '' NOT NULL,
+  `description` clob,
+  `lon` float default NULL,
+  `lat` float default NULL,
+  `created` number(14) default NULL,
+  `user` varchar(200) default '',
+  `hits` number(14) default NULL,
+  `path` varchar(255) default NULL,
+  PRIMARY KEY (`imageId`),
+  KEY `name` (name),
+  KEY `description` (description(255)),
+  KEY `hits` (hits),
+  KEY `ti_gId` (galleryId),
+  KEY `ti_cr` (created),
+  KEY `ti_us` (user),
+  FULLTEXT KEY `ft` (name,description)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_images_trig" BEFORE INSERT ON "tiki_images" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_images_sequ".nextval into :NEW."imageId" FROM DUAL;
-END;
-/
-CREATE  INDEX "tiki_images_name" ON "tiki_images"("name");
-CREATE  INDEX "tiki_images_description" ON "tiki_images"("description");
-CREATE  INDEX "tiki_images_hits" ON "tiki_images"("hits");
-CREATE  INDEX "tiki_images_ti_gId" ON "tiki_images"("galleryId");
-CREATE  INDEX "tiki_images_ti_cr" ON "tiki_images"("created");
-CREATE  INDEX "tiki_images_ti_us" ON "tiki_images"("user");
-CREATE  INDEX "tiki_images_ft" ON "tiki_images"("name","description");
 
-DROP TABLE "tiki_images_data";
+DROP TABLE `tiki_images_data`;
 
-CREATE TABLE "tiki_images_data" (
-  "imageId" number(14) default '0' NOT NULL,
-  "xsize" number(8) default '0' NOT NULL,
-  "ysize" number(8) default '0' NOT NULL,
-  "type" char(1) default '' NOT NULL,
-  "filesize" number(14) default NULL,
-  "filetype" varchar(80) default NULL,
-  "filename" varchar(80) default NULL,
-  "data" blob,
-  "etag" varchar(32) default NULL,
-  PRIMARY KEY (imageId,xsize,ysize,type)
-) ENGINE=MyISAM;
-
-CREATE  INDEX "tiki_images_data_t_i_d_it" ON "tiki_images_data"("imageId","type");
-
-DROP TABLE "tiki_language";
-
-CREATE TABLE "tiki_language" (
-  "source" blob NOT NULL,
-  "lang" char(16) default '' NOT NULL,
-  "tran" blob,
-  PRIMARY KEY (source(255),lang)
+CREATE TABLE `tiki_images_data` (
+  `imageId` number(14) default '0' NOT NULL,
+  `xsize` number(8) default '0' NOT NULL,
+  `ysize` number(8) default '0' NOT NULL,
+  `type` char(1) default '' NOT NULL,
+  `filesize` number(14) default NULL,
+  `filetype` varchar(80) default NULL,
+  `filename` varchar(80) default NULL,
+  `data` blob,
+  `etag` varchar(32) default NULL,
+  PRIMARY KEY (`imageId`,`xsize`,`ysize`,`type`),
+  KEY `t_i_d_it` (imageId,type)
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_languages";
+DROP TABLE `tiki_language`;
 
-CREATE TABLE "tiki_languages" (
-  "lang" char(16) default '' NOT NULL,
-  "language" varchar(255) default NULL,
-  PRIMARY KEY (lang)
+CREATE TABLE `tiki_language` (
+  `source` blob NOT NULL,
+  `lang` char(16) default '' NOT NULL,
+  `tran` blob,
+  PRIMARY KEY (`source`(255),`lang`)
+) ENGINE=MyISAM;
+
+
+DROP TABLE `tiki_languages`;
+
+CREATE TABLE `tiki_languages` (
+  `lang` char(16) default '' NOT NULL,
+  `language` varchar(255) default NULL,
+  PRIMARY KEY (`lang`)
 ) ENGINE=MyISAM;
 
 
 INSERT INTO tiki_languages(lang, language) VALUES('en','English');
 
 
-DROP TABLE "tiki_link_cache";
+DROP TABLE `tiki_link_cache`;
 
-CREATE SEQUENCE "tiki_link_cache_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_link_cache" (
-  "cacheId" number(14) NOT NULL,
-  "url" varchar(250) default NULL,
-  "data" blob,
-  "refresh" number(14) default NULL,
-  PRIMARY KEY (cacheId)
+CREATE TABLE `tiki_link_cache` (
+  `cacheId` number(14) NOT NULL auto_increment,
+  `url` varchar(250) default NULL,
+  `data` blob,
+  `refresh` number(14) default NULL,
+  PRIMARY KEY (`cacheId`),
+  KEY `url` (url)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_link_cache_trig" BEFORE INSERT ON "tiki_link_cache" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_link_cache_sequ".nextval into :NEW."cacheId" FROM DUAL;
-END;
-/
-CREATE  INDEX "tiki_link_cache_url" ON "tiki_link_cache"("url");
 CREATE INDEX urlindex ON tiki_link_cache (url(250));
 
 
-DROP TABLE "tiki_links";
+DROP TABLE `tiki_links`;
 
-CREATE TABLE "tiki_links" (
-  "fromPage" varchar(160) default '' NOT NULL,
-  "toPage" varchar(160) default '' NOT NULL,
-  "reltype" varchar(50),
-  PRIMARY KEY (fromPage,toPage)
+CREATE TABLE `tiki_links` (
+  `fromPage` varchar(160) default '' NOT NULL,
+  `toPage` varchar(160) default '' NOT NULL,
+  `reltype` varchar(50),
+  PRIMARY KEY (`fromPage`,`toPage`),
+  KEY `toPage` (toPage)
 ) ENGINE=MyISAM;
 
-CREATE  INDEX "tiki_links_toPage" ON "tiki_links"("toPage");
 
-DROP TABLE "tiki_live_support_events";
+DROP TABLE `tiki_live_support_events`;
 
-CREATE SEQUENCE "tiki_live_support_events_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_live_support_events" (
-  "eventId" number(14) NOT NULL,
-  "reqId" varchar(32) default '' NOT NULL,
-  "type" varchar(40) default NULL,
-  "seqId" number(14) default NULL,
-  "senderId" varchar(32) default NULL,
-  "data" clob,
-  "timestamp" number(14) default NULL,
-  PRIMARY KEY (eventId)
+CREATE TABLE `tiki_live_support_events` (
+  `eventId` number(14) NOT NULL auto_increment,
+  `reqId` varchar(32) default '' NOT NULL,
+  `type` varchar(40) default NULL,
+  `seqId` number(14) default NULL,
+  `senderId` varchar(32) default NULL,
+  `data` clob,
+  `timestamp` number(14) default NULL,
+  PRIMARY KEY (`eventId`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_live_support_events_trig" BEFORE INSERT ON "tiki_live_support_events" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_live_support_events_sequ".nextval into :NEW."eventId" FROM DUAL;
-END;
-/
 
-DROP TABLE "tiki_live_support_message_comments";
+DROP TABLE `tiki_live_support_message_comments`;
 
-CREATE SEQUENCE "tiki_live_support_message_comments_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_live_support_message_comments" (
-  "cId" number(12) NOT NULL,
-  "msgId" number(12) default NULL,
-  "data" clob,
-  "timestamp" number(14) default NULL,
-  PRIMARY KEY (cId)
+CREATE TABLE `tiki_live_support_message_comments` (
+  `cId` number(12) NOT NULL auto_increment,
+  `msgId` number(12) default NULL,
+  `data` clob,
+  `timestamp` number(14) default NULL,
+  PRIMARY KEY (`cId`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_live_support_message_comments_trig" BEFORE INSERT ON "tiki_live_support_message_comments" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_live_support_message_comments_sequ".nextval into :NEW."cId" FROM DUAL;
-END;
-/
 
-DROP TABLE "tiki_live_support_messages";
+DROP TABLE `tiki_live_support_messages`;
 
-CREATE SEQUENCE "tiki_live_support_messages_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_live_support_messages" (
-  "msgId" number(12) NOT NULL,
-  "data" clob,
-  "timestamp" number(14) default NULL,
-  "user" varchar(200) default '' not null,
-  "username" varchar(200) default NULL,
-  "priority" number(2) default NULL,
-  "status" char(1) default NULL,
-  "assigned_to" varchar(200) default NULL,
-  "resolution" varchar(100) default NULL,
-  "title" varchar(200) default NULL,
-  "module" number(4) default NULL,
-  "email" varchar(250) default NULL,
-  PRIMARY KEY (msgId)
+CREATE TABLE `tiki_live_support_messages` (
+  `msgId` number(12) NOT NULL auto_increment,
+  `data` clob,
+  `timestamp` number(14) default NULL,
+  `user` varchar(200) default '' not null,
+  `username` varchar(200) default NULL,
+  `priority` number(2) default NULL,
+  `status` char(1) default NULL,
+  `assigned_to` varchar(200) default NULL,
+  `resolution` varchar(100) default NULL,
+  `title` varchar(200) default NULL,
+  `module` number(4) default NULL,
+  `email` varchar(250) default NULL,
+  PRIMARY KEY (`msgId`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_live_support_messages_trig" BEFORE INSERT ON "tiki_live_support_messages" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_live_support_messages_sequ".nextval into :NEW."msgId" FROM DUAL;
-END;
-/
 
-DROP TABLE "tiki_live_support_modules";
+DROP TABLE `tiki_live_support_modules`;
 
-CREATE SEQUENCE "tiki_live_support_modules_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_live_support_modules" (
-  "modId" number(4) NOT NULL,
-  "name" varchar(90) default NULL,
-  PRIMARY KEY (modId)
+CREATE TABLE `tiki_live_support_modules` (
+  `modId` number(4) NOT NULL auto_increment,
+  `name` varchar(90) default NULL,
+  PRIMARY KEY (`modId`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_live_support_modules_trig" BEFORE INSERT ON "tiki_live_support_modules" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_live_support_modules_sequ".nextval into :NEW."modId" FROM DUAL;
-END;
-/
 
 INSERT INTO tiki_live_support_modules(name) VALUES('wiki');
 
@@ -1832,396 +1483,389 @@ INSERT INTO tiki_live_support_modules(name) VALUES('workflow');
 INSERT INTO tiki_live_support_modules(name) VALUES('charts');
 
 
-DROP TABLE "tiki_live_support_operators";
+DROP TABLE `tiki_live_support_operators`;
 
-CREATE TABLE "tiki_live_support_operators" (
-  "user" varchar(200) default '' NOT NULL,
-  "accepted_requests" number(10) default NULL,
-  "status" varchar(20) default NULL,
-  "longest_chat" number(10) default NULL,
-  "shortest_chat" number(10) default NULL,
-  "average_chat" number(10) default NULL,
-  "last_chat" number(14) default NULL,
-  "time_online" number(10) default NULL,
-  "votes" number(10) default NULL,
-  "points" number(10) default NULL,
-  "status_since" number(14) default NULL,
-  PRIMARY KEY (user)
+CREATE TABLE `tiki_live_support_operators` (
+  `user` varchar(200) default '' NOT NULL,
+  `accepted_requests` number(10) default NULL,
+  `status` varchar(20) default NULL,
+  `longest_chat` number(10) default NULL,
+  `shortest_chat` number(10) default NULL,
+  `average_chat` number(10) default NULL,
+  `last_chat` number(14) default NULL,
+  `time_online` number(10) default NULL,
+  `votes` number(10) default NULL,
+  `points` number(10) default NULL,
+  `status_since` number(14) default NULL,
+  PRIMARY KEY (`user`)
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_live_support_requests";
+DROP TABLE `tiki_live_support_requests`;
 
-CREATE TABLE "tiki_live_support_requests" (
-  "reqId" varchar(32) default '' NOT NULL,
-  "user" varchar(200) default '' NOT NULL,
-  "tiki_user" varchar(200) default NULL,
-  "email" varchar(200) default NULL,
-  "operator" varchar(200) default NULL,
-  "operator_id" varchar(32) default NULL,
-  "user_id" varchar(32) default NULL,
-  "reason" clob,
-  "req_timestamp" number(14) default NULL,
-  "timestamp" number(14) default NULL,
-  "status" varchar(40) default NULL,
-  "resolution" varchar(40) default NULL,
-  "chat_started" number(14) default NULL,
-  "chat_ended" number(14) default NULL,
-  PRIMARY KEY (reqId)
+CREATE TABLE `tiki_live_support_requests` (
+  `reqId` varchar(32) default '' NOT NULL,
+  `user` varchar(200) default '' NOT NULL,
+  `tiki_user` varchar(200) default NULL,
+  `email` varchar(200) default NULL,
+  `operator` varchar(200) default NULL,
+  `operator_id` varchar(32) default NULL,
+  `user_id` varchar(32) default NULL,
+  `reason` clob,
+  `req_timestamp` number(14) default NULL,
+  `timestamp` number(14) default NULL,
+  `status` varchar(40) default NULL,
+  `resolution` varchar(40) default NULL,
+  `chat_started` number(14) default NULL,
+  `chat_ended` number(14) default NULL,
+  PRIMARY KEY (`reqId`)
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_logs";
+DROP TABLE `tiki_logs`;
 
-CREATE SEQUENCE "tiki_logs_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_logs" (
-  "logId" number(8) NOT NULL,
-  "logtype" varchar(20) NOT NULL,
-  "logmessage" clob NOT NULL,
-  "loguser" varchar(40) NOT NULL,
-  "logip" varchar(200),
-  "logclient" clob NOT NULL,
-  "logtime" number(14) NOT NULL,
-  PRIMARY KEY (logId)
-) ENGINE=MyISAM;
-
-CREATE TRIGGER "tiki_logs_trig" BEFORE INSERT ON "tiki_logs" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_logs_sequ".nextval into :NEW."logId" FROM DUAL;
-END;
-/
-CREATE  INDEX "tiki_logs_logtype" ON "tiki_logs"("logtype");
-
-DROP TABLE "tiki_mail_events";
-
-CREATE TABLE "tiki_mail_events" (
-  "event" varchar(200) default NULL,
-  "object" varchar(200) default NULL,
-  "email" varchar(200) default NULL
+CREATE TABLE `tiki_logs` (
+  `logId` number(8) NOT NULL auto_increment,
+  `logtype` varchar(20) NOT NULL,
+  `logmessage` clob NOT NULL,
+  `loguser` varchar(40) NOT NULL,
+  `logip` varchar(200),
+  `logclient` clob NOT NULL,
+  `logtime` number(14) NOT NULL,
+  PRIMARY KEY (`logId`),
+  KEY `logtype` (logtype)
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_mailin_accounts";
+DROP TABLE `tiki_mail_events`;
 
-CREATE SEQUENCE "tiki_mailin_accounts_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_mailin_accounts" (
-  "accountId" number(12) NOT NULL,
-  "user" varchar(200) default '' NOT NULL,
-  "account" varchar(50) default '' NOT NULL,
-  "pop" varchar(255) default NULL,
-  "port" number(4) default NULL,
-  "username" varchar(100) default NULL,
-  "pass" varchar(100) default NULL,
-  "active" char(1) default NULL,
-  "type" varchar(40) default NULL,
-  "smtp" varchar(255) default NULL,
-  "useAuth" char(1) default NULL,
-  "smtpPort" number(4) default NULL,
-  "anonymous" char(1) default 'y' NOT NULL,
-  "attachments" char(1) default 'n' NOT NULL,
-  "article_topicId" number(4) default NULL,
-  "article_type" varchar(50) default NULL,
-  "discard_after" varchar(255) default NULL,
-  PRIMARY KEY (accountId)
+CREATE TABLE `tiki_mail_events` (
+  `event` varchar(200) default NULL,
+  `object` varchar(200) default NULL,
+  `email` varchar(200) default NULL
+) ENGINE=MyISAM;
+
+
+DROP TABLE `tiki_mailin_accounts`;
+
+CREATE TABLE `tiki_mailin_accounts` (
+  `accountId` number(12) NOT NULL auto_increment,
+  `user` varchar(200) default '' NOT NULL,
+  `account` varchar(50) default '' NOT NULL,
+  `pop` varchar(255) default NULL,
+  `port` number(4) default NULL,
+  `username` varchar(100) default NULL,
+  `pass` varchar(100) default NULL,
+  `active` char(1) default NULL,
+  `type` varchar(40) default NULL,
+  `smtp` varchar(255) default NULL,
+  `useAuth` char(1) default NULL,
+  `smtpPort` number(4) default NULL,
+  `anonymous` char(1) default 'y' NOT NULL,
+  `attachments` char(1) default 'n' NOT NULL,
+  `article_topicId` number(4) default NULL,
+  `article_type` varchar(50) default NULL,
+  `discard_after` varchar(255) default NULL,
+  PRIMARY KEY (`accountId`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_mailin_accounts_trig" BEFORE INSERT ON "tiki_mailin_accounts" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_mailin_accounts_sequ".nextval into :NEW."accountId" FROM DUAL;
-END;
-/
 
-DROP TABLE "tiki_menu_languages";
+DROP TABLE `tiki_menu_languages`;
 
-CREATE SEQUENCE "tiki_menu_languages_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_menu_languages" (
-  "menuId" number(8) NOT NULL,
-  "language" char(16) default '' NOT NULL,
-  PRIMARY KEY (menuId,language)
+CREATE TABLE `tiki_menu_languages` (
+  `menuId` number(8) NOT NULL auto_increment,
+  `language` char(16) default '' NOT NULL,
+  PRIMARY KEY (`menuId`,`language`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_menu_languages_trig" BEFORE INSERT ON "tiki_menu_languages" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_menu_languages_sequ".nextval into :NEW."menuId" FROM DUAL;
-END;
-/
 
-DROP TABLE "tiki_menu_options";
+DROP TABLE `tiki_menu_options`;
 
-CREATE SEQUENCE "tiki_menu_options_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_menu_options" (
-  "optionId" number(8) NOT NULL,
-  "menuId" number(8) default NULL,
-  "type" char(1) default NULL,
-  "name" varchar(200) default NULL,
-  "url" varchar(255) default NULL,
-  "position" number(4) default NULL,
-  "section" clob default NULL,
-  "perm" clob default NULL,
-  "groupname" clob default NULL,
-  "userlevel" number(4) default 0,
-  "icon" varchar(200),
-  PRIMARY KEY (optionId)
+CREATE TABLE `tiki_menu_options` (
+  `optionId` number(8) NOT NULL auto_increment,
+  `menuId` number(8) default NULL,
+  `type` char(1) default NULL,
+  `name` varchar(200) default NULL,
+  `url` varchar(255) default NULL,
+  `position` number(4) default NULL,
+  `section` clob default NULL,
+  `perm` clob default NULL,
+  `groupname` clob default NULL,
+  `userlevel` number(4) default 0,
+  `icon` varchar(200),
+  PRIMARY KEY (`optionId`),
+  UNIQUE KEY `uniq_menu` (menuId,name(30),url(50),position,section(60),perm(50),groupname(50))
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_menu_options_trig" BEFORE INSERT ON "tiki_menu_options" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_menu_options_sequ".nextval into :NEW."optionId" FROM DUAL;
-END;
-/
-CREATE UNIQUE INDEX "tiki_menu_options_uniq_menu" ON "tiki_menu_options"("menuId","name","url","position","section","perm","groupname");
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (1,42,'o','Home','./',10,'','','',0);
+-- when adding new inserts, order commands by position
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Home','./',10,'','','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (3,42,'o','Contact Us','tiki-contact.php',20,'feature_contact,feature_messages','','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Search','tiki-searchresults.php',13,'feature_search_fulltext','tiki_p_search','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (4,42,'o','Stats','tiki-stats.php',23,'feature_stats','tiki_p_view_stats','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Search','tiki-searchindex.php',13,'feature_search','tiki_p_search','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (5,42,'o','Categories','tiki-browse_categories.php',25,'feature_categories','tiki_p_view_categories','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Contact Us','tiki-contact.php',20,'feature_contact,feature_messages','','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (6,42,'o','Games','tiki-list_games.php',30,'feature_games','tiki_p_play_games','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Stats','tiki-stats.php',23,'feature_stats','tiki_p_view_stats','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (7,42,'o','Calendar','tiki-calendar.php',35,'feature_calendar','tiki_p_view_calendar','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Categories','tiki-browse_categories.php',25,'feature_categories','tiki_p_view_categories','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (8,42,'o','Users Map','tiki-gmap_usermap.php',36,'feature_gmap','','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Freetags','tiki-browse_freetags.php',27,'feature_freetags','tiki_p_view_freetags','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (9,42,'o','Mobile','tiki-mobile.php',37,'feature_mobile','','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Calendar','tiki-calendar.php',35,'feature_calendar','tiki_p_view_calendar','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (10,42,'o','(debug)','javascript:toggle(\'debugconsole\')',40,'feature_debug_console','tiki_p_admin','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Users Map','tiki-gmap_usermap.php',36,'feature_gmap','','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (11,42,'s','MyTiki','tiki-my_tiki.php',50,'feature_mytiki','','Registered',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Tiki Calendar','tiki-action_calendar.php',37,'feature_action_calendar','tiki_p_view_tiki_calendar','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (12,42,'o','MyTiki Home','tiki-my_tiki.php',51,'feature_mytiki','','Registered',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Mobile','tiki-mobile.php',37,'feature_mobile','','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (13,42,'o','Preferences','tiki-user_preferences.php',55,'feature_mytiki,feature_userPreferences','','Registered',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','(debug)','javascript:toggle(\'debugconsole\')',40,'feature_debug_console','tiki_p_admin','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (14,42,'o','Messages','messu-mailbox.php',60,'feature_mytiki,feature_messages','tiki_p_messages','Registered',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'s','MyTiki','tiki-my_tiki.php',50,'feature_mytiki','','Registered',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (15,42,'o','Tasks','tiki-user_tasks.php',65,'feature_mytiki,feature_tasks','tiki_p_tasks','Registered',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','MyTiki Home','tiki-my_tiki.php',51,'feature_mytiki','','Registered',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (16,42,'o','Bookmarks','tiki-user_bookmarks.php',70,'feature_mytiki,feature_user_bookmarks','tiki_p_create_bookmarks','Registered',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Preferences','tiki-user_preferences.php',55,'feature_mytiki,feature_userPreferences','','Registered',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (17,42,'o','Modules','tiki-user_assigned_modules.php',75,'feature_mytiki,user_assigned_modules','tiki_p_configure_modules','Registered',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Messages','messu-mailbox.php',60,'feature_mytiki,feature_messages','tiki_p_messages','Registered',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (18,42,'o','Newsreader','tiki-newsreader_servers.php',80,'feature_mytiki,feature_newsreader','tiki_p_newsreader','Registered',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Tasks','tiki-user_tasks.php',65,'feature_mytiki,feature_tasks','tiki_p_tasks','Registered',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (19,42,'o','Webmail','tiki-webmail.php',85,'feature_mytiki,feature_webmail','tiki_p_use_webmail','Registered',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Bookmarks','tiki-user_bookmarks.php',70,'feature_mytiki,feature_user_bookmarks','tiki_p_create_bookmarks','Registered',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (20,42,'o','Notepad','tiki-notepad_list.php',90,'feature_mytiki,feature_notepad','tiki_p_notepad','Registered',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Modules','tiki-user_assigned_modules.php',75,'feature_mytiki,user_assigned_modules','tiki_p_configure_modules','Registered',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (21,42,'o','My Files','tiki-userfiles.php',95,'feature_mytiki,feature_userfiles','tiki_p_userfiles','Registered',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Webmail','tiki-webmail.php',85,'feature_mytiki,feature_webmail','tiki_p_use_webmail','Registered',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (22,42,'o','User Menu','tiki-usermenu.php',100,'feature_mytiki,feature_usermenu','tiki_p_usermenu','Registered',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Contacts','tiki-contacts.php',87,'feature_mytiki,feature_contacts','','Registered',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (23,42,'o','Mini Calendar','tiki-minical.php',105,'feature_mytiki,feature_minical','tiki_p_minical','Registered',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Notepad','tiki-notepad_list.php',90,'feature_mytiki,feature_notepad','tiki_p_notepad','Registered',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (24,42,'o','My Watches','tiki-user_watches.php',110,'feature_mytiki,feature_user_watches','','Registered',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','My Files','tiki-userfiles.php',95,'feature_mytiki,feature_userfiles','tiki_p_userfiles','Registered',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (25,42,'s','Workflow','tiki-g-user_processes.php',150,'feature_workflow','tiki_p_use_workflow','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','User Menu','tiki-usermenu.php',100,'feature_mytiki,feature_usermenu','tiki_p_usermenu','Registered',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (26,42,'o','Admin Processes','tiki-g-admin_processes.php',155,'feature_workflow','tiki_p_admin_workflow','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Mini Calendar','tiki-minical.php',105,'feature_mytiki,feature_minical','tiki_p_minical','Registered',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (27,42,'o','Monitor Processes','tiki-g-monitor_processes.php',160,'feature_workflow','tiki_p_admin_workflow','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','My Watches','tiki-user_watches.php',110,'feature_mytiki,feature_user_watches','','Registered',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (28,42,'o','Monitor Activities','tiki-g-monitor_activities.php',165,'feature_workflow','tiki_p_admin_workflow','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'s','Workflow','tiki-g-user_processes.php',150,'feature_workflow','tiki_p_use_workflow','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (29,42,'o','Monitor Instances','tiki-g-monitor_instances.php',170,'feature_workflow','tiki_p_admin_workflow','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Admin Processes','tiki-g-admin_processes.php',155,'feature_workflow','tiki_p_admin_workflow','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (30,42,'o','User Processes','tiki-g-user_processes.php',175,'feature_workflow','tiki_p_use_workflow','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Monitor Processes','tiki-g-monitor_processes.php',160,'feature_workflow','tiki_p_admin_workflow','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (31,42,'o','User activities','tiki-g-user_activities.php',180,'feature_workflow','tiki_p_use_workflow','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Monitor Activities','tiki-g-monitor_activities.php',165,'feature_workflow','tiki_p_admin_workflow','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (32,42,'o','User instances','tiki-g-user_instances.php',185,'feature_workflow','tiki_p_use_workflow','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Monitor Instances','tiki-g-monitor_instances.php',170,'feature_workflow','tiki_p_admin_workflow','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (33,42,'s','Community','tiki-list_users.php',187,'feature_friends','tiki_p_list_users','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','User Processes','tiki-g-user_processes.php',175,'feature_workflow','tiki_p_use_workflow','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (34,42,'o','User List','tiki-list_users.php',188,'feature_friends','tiki_p_list_users','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','User activities','tiki-g-user_activities.php',180,'feature_workflow','tiki_p_use_workflow','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (35,42,'o','Friendship Network','tiki-friends.php',189,'feature_friends','','Registered',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','User instances','tiki-g-user_instances.php',185,'feature_workflow','tiki_p_use_workflow','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (36,42,'s','Wiki','tiki-index.php',200,'feature_wiki','tiki_p_view','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'s','Community','tiki-list_users.php',187,'feature_friends','tiki_p_list_users','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (37,42,'o','Wiki Home','tiki-index.php',202,'feature_wiki','tiki_p_view','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','User List','tiki-list_users.php',188,'feature_friends','tiki_p_list_users','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (38,42,'o','Last Changes','tiki-lastchanges.php',205,'feature_wiki,feature_lastChanges','tiki_p_view','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Friendship Network','tiki-friends.php',189,'feature_friends','','Registered',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (39,42,'o','Dump','dump/new.tar',210,'feature_wiki,feature_dump','tiki_p_view','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'s','Wiki','tiki-index.php',200,'feature_wiki','tiki_p_view','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (40,42,'o','Rankings','tiki-wiki_rankings.php',215,'feature_wiki,feature_wiki_rankings','tiki_p_view','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Wiki Home','tiki-index.php',202,'feature_wiki','tiki_p_view','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (41,42,'o','List Pages','tiki-listpages.php',220,'feature_wiki,feature_listPages','tiki_p_view','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Last Changes','tiki-lastchanges.php',205,'feature_wiki,feature_lastChanges','tiki_p_view','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,42,'o','Orphan Pages','tiki-orphan_pages.php',225,'feature_wiki,feature_listorphanPages','tiki_p_view','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Dump','dump/new.tar',210,'feature_wiki,feature_dump','tiki_p_view','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (43,42,'o','Sandbox','tiki-editpage.php?page=sandbox',230,'feature_wiki,feature_sandbox','tiki_p_view','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Rankings','tiki-wiki_rankings.php',215,'feature_wiki,feature_wiki_rankings','tiki_p_view','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (44,42,'o','Multiple Print','tiki-print_pages.php',235,'feature_wiki,feature_wiki_multiprint','tiki_p_view','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','List Pages','tiki-listpages.php',220,'feature_wiki,feature_listPages','tiki_p_view','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (45,42,'o','Send Pages','tiki-send_objects.php',240,'feature_wiki,feature_comm','tiki_p_view,tiki_p_send_pages','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Orphan Pages','tiki-orphan_pages.php',225,'feature_wiki,feature_listorphanPages','tiki_p_view','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (46,42,'o','Received Pages','tiki-received_pages.php',245,'feature_wiki,feature_comm','tiki_p_view,tiki_p_admin_received_pages','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Sandbox','tiki-editpage.php?page=sandbox',230,'feature_wiki,feature_sandbox','tiki_p_view','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (47,42,'o','Structures','tiki-admin_structures.php',250,'feature_wiki,feature_wiki_structure','tiki_p_view','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Multiple Print','tiki-print_pages.php',235,'feature_wiki,feature_wiki_multiprint','tiki_p_view','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (197,42,'o','Mind Map','tiki-mindmap.php',255,'feature_wiki_mindmap','tiki_p_view','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Send Pages','tiki-send_objects.php',240,'feature_wiki,feature_comm','tiki_p_view,tiki_p_send_pages','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (48,42,'s','Image Galleries','tiki-galleries.php',300,'feature_galleries','tiki_p_view_image_gallery','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Received Pages','tiki-received_pages.php',245,'feature_wiki,feature_comm','tiki_p_view,tiki_p_admin_received_pages','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (49,42,'o','Galleries','tiki-galleries.php',305,'feature_galleries','tiki_p_list_image_galleries','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Structures','tiki-admin_structures.php',250,'feature_wiki,feature_wiki_structure','tiki_p_view','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (50,42,'o','Rankings','tiki-galleries_rankings.php',310,'feature_galleries,feature_gal_rankings','tiki_p_list_image_galleries','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Mind Map','tiki-mindmap.php',255,'feature_wiki_mindmap','tiki_p_view','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (51,42,'o','Upload Image','tiki-upload_image.php',315,'feature_galleries','tiki_p_upload_images','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'s','Image Galleries','tiki-galleries.php',300,'feature_galleries','tiki_p_view_image_gallery','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (52,42,'o','Directory Batch','tiki-batch_upload.php',318,'feature_galleries,feature_gal_batch','tiki_p_batch_upload','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Galleries','tiki-galleries.php',305,'feature_galleries','tiki_p_list_image_galleries','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (53,42,'o','System Gallery','tiki-list_gallery.php?galleryId=0',320,'feature_galleries','tiki_p_admin_galleries','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Rankings','tiki-galleries_rankings.php',310,'feature_galleries,feature_gal_rankings','tiki_p_list_image_galleries','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (54,42,'s','Articles','tiki-view_articles.php',350,'feature_articles','tiki_p_read_article','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Upload Image','tiki-upload_image.php',315,'feature_galleries','tiki_p_upload_images','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (55,42,'o','Articles Home','tiki-view_articles.php',355,'feature_articles','tiki_p_read_article','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Directory Batch','tiki-batch_upload.php',318,'feature_galleries,feature_gal_batch','tiki_p_batch_upload','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (56,42,'o','List Articles','tiki-list_articles.php',360,'feature_articles','tiki_p_read_article','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','System Gallery','tiki-list_gallery.php?galleryId=0',320,'feature_galleries','tiki_p_admin_galleries','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (57,42,'o','Rankings','tiki-cms_rankings.php',365,'feature_articles,feature_cms_rankings','tiki_p_read_article','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'s','Articles','tiki-view_articles.php',350,'feature_articles','tiki_p_read_article','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (58,42,'o','Submit Article','tiki-edit_submission.php',370,'feature_articles,feature_submissions','tiki_p_read_article,tiki_p_submit_article','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'s','Articles','tiki-view_articles.php',350,'feature_articles','tiki_p_articles_read_heading','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (59,42,'o','View submissions','tiki-list_submissions.php',375,'feature_articles,feature_submissions','tiki_p_read_article,tiki_p_submit_article','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Articles Home','tiki-view_articles.php',355,'feature_articles','tiki_p_read_article','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (60,42,'o','View submissions','tiki-list_submissions.php',375,'feature_articles,feature_submissions','tiki_p_read_article,tiki_p_approve_submission','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Articles Home','tiki-view_articles.php',355,'feature_articles','tiki_p_articles_read_heading','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (61,42,'o','View Submissions','tiki-list_submissions.php',375,'feature_articles,feature_submissions','tiki_p_read_article,tiki_p_remove_submission','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','List Articles','tiki-list_articles.php',360,'feature_articles','tiki_p_read_article','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (62,42,'o','New Article','tiki-edit_article.php',380,'feature_articles','tiki_p_read_article,tiki_p_edit_article','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','List Articles','tiki-list_articles.php',360,'feature_articles','tiki_p_articles_read_heading','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (63,42,'o','Send Articles','tiki-send_objects.php',385,'feature_articles,feature_comm','tiki_p_read_article,tiki_p_send_articles','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Rankings','tiki-cms_rankings.php',365,'feature_articles,feature_cms_rankings','tiki_p_read_article','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (64,42,'o','Received Articles','tiki-received_articles.php',385,'feature_articles,feature_comm','tiki_p_read_article,tiki_p_admin_received_articles','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Submit Article','tiki-edit_submission.php',370,'feature_articles,feature_submissions','tiki_p_read_article,tiki_p_submit_article','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (196,42,'o','Admin Types','tiki-article_types.php',395,'feature_articles','tiki_p_articles_admin_types','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','View submissions','tiki-list_submissions.php',375,'feature_articles,feature_submissions','tiki_p_read_article,tiki_p_submit_article','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (195,42,'o','Admin Topics','tiki-admin_topics.php',390,'feature_articles','tiki_p_articles_admin_topics','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','View submissions','tiki-list_submissions.php',375,'feature_articles,feature_submissions','tiki_p_read_article,tiki_p_approve_submission','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (67,42,'s','Blogs','tiki-list_blogs.php',450,'feature_blogs','tiki_p_read_blog','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','View Submissions','tiki-list_submissions.php',375,'feature_articles,feature_submissions','tiki_p_read_article,tiki_p_remove_submission','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (68,42,'o','List Blogs','tiki-list_blogs.php',455,'feature_blogs','tiki_p_read_blog','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','New Article','tiki-edit_article.php',380,'feature_articles','tiki_p_read_article,tiki_p_edit_article','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (69,42,'o','Rankings','tiki-blog_rankings.php',460,'feature_blogs,feature_blog_rankings','tiki_p_read_blog','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Send Articles','tiki-send_objects.php',385,'feature_articles,feature_comm','tiki_p_read_article,tiki_p_send_articles','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (70,42,'o','Create/Edit Blog','tiki-edit_blog.php',465,'feature_blogs','tiki_p_read_blog,tiki_p_create_blogs','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Received Articles','tiki-received_articles.php',385,'feature_articles,feature_comm','tiki_p_read_article,tiki_p_admin_received_articles','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (71,42,'o','Post','tiki-blog_post.php',470,'feature_blogs','tiki_p_read_blog,tiki_p_blog_post','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Admin Types','tiki-article_types.php',395,'feature_articles','tiki_p_articles_admin_types','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (72,42,'o','Admin Posts','tiki-list_posts.php',475,'feature_blogs','tiki_p_read_blog,tiki_p_blog_admin','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Admin Topics','tiki-admin_topics.php',390,'feature_articles','tiki_p_articles_admin_topics','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (73,42,'s','Forums','tiki-forums.php',500,'feature_forums','tiki_p_forum_read','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'s','Blogs','tiki-list_blogs.php',450,'feature_blogs','tiki_p_read_blog','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (74,42,'o','List Forums','tiki-forums.php',505,'feature_forums','tiki_p_forum_read','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','List Blogs','tiki-list_blogs.php',455,'feature_blogs','tiki_p_read_blog','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (75,42,'o','Rankings','tiki-forum_rankings.php',510,'feature_forums,feature_forum_rankings','tiki_p_forum_read','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Rankings','tiki-blog_rankings.php',460,'feature_blogs,feature_blog_rankings','tiki_p_read_blog','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (76,42,'o','Admin Forums','tiki-admin_forums.php',515,'feature_forums','tiki_p_forum_read,tiki_p_admin_forum','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Create/Edit Blog','tiki-edit_blog.php',465,'feature_blogs','tiki_p_read_blog,tiki_p_create_blogs','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (77,42,'s','Directory','tiki-directory_browse.php',550,'feature_directory','tiki_p_view_directory','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Post','tiki-blog_post.php',470,'feature_blogs','tiki_p_read_blog,tiki_p_blog_post','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (78,42,'o','Submit a new link','tiki-directory_add_site.php',555,'feature_directory','tiki_p_submit_link','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Admin Posts','tiki-list_posts.php',475,'feature_blogs','tiki_p_read_blog,tiki_p_blog_admin','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (79,42,'o','Browse Directory','tiki-directory_browse.php',560,'feature_directory','tiki_p_view_directory','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'s','Forums','tiki-forums.php',500,'feature_forums','tiki_p_forum_read','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (80,42,'o','Admin Directory','tiki-directory_admin.php',565,'feature_directory','tiki_p_view_directory,tiki_p_admin_directory_cats','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','List Forums','tiki-forums.php',505,'feature_forums','tiki_p_forum_read','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (81,42,'o','Admin Directory','tiki-directory_admin.php',565,'feature_directory','tiki_p_view_directory,tiki_p_admin_directory_sites','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Rankings','tiki-forum_rankings.php',510,'feature_forums,feature_forum_rankings','tiki_p_forum_read','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (82,42,'o','Admin Directory','tiki-directory_admin.php',565,'feature_directory','tiki_p_view_directory,tiki_p_validate_links','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Admin Forums','tiki-admin_forums.php',515,'feature_forums','tiki_p_forum_read,tiki_p_admin_forum','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (83,42,'s','File Galleries','tiki-list_file_gallery.php',600,'feature_file_galleries','tiki-list_file_gallery.php|tiki_p_view_file_gallery|tiki_p_upload_files','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'s','Directory','tiki-directory_browse.php',550,'feature_directory','tiki_p_view_directory','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (84,42,'o','List Galleries','tiki-list_file_gallery.php',605,'feature_file_galleries','tiki_p_list_file_galleries','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Submit a new link','tiki-directory_add_site.php',555,'feature_directory','tiki_p_submit_link','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (85,42,'o','Rankings','tiki-file_galleries_rankings.php',610,'feature_file_galleries,feature_file_galleries_rankings','tiki_p_list_file_galleries','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Browse Directory','tiki-directory_browse.php',560,'feature_directory','tiki_p_view_directory','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (86,42,'o','Upload File','tiki-upload_file.php',615,'feature_file_galleries','tiki_p_upload_files','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Admin Directory','tiki-directory_admin.php',565,'feature_directory','tiki_p_view_directory,tiki_p_admin_directory_cats','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (87,42,'s','FAQs','tiki-list_faqs.php',650,'feature_faqs','tiki_p_view_faqs','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Admin Directory','tiki-directory_admin.php',565,'feature_directory','tiki_p_view_directory,tiki_p_admin_directory_sites','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (88,42,'o','List FAQs','tiki-list_faqs.php',665,'feature_faqs','tiki_p_view_faqs','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Admin Directory','tiki-directory_admin.php',565,'feature_directory','tiki_p_view_directory,tiki_p_validate_links','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (89,42,'o','Admin FAQs','tiki-list_faqs.php',660,'feature_faqs','tiki_p_admin_faqs','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'s','File Galleries','tiki-list_file_gallery.php',600,'feature_file_galleries','tiki-list_file_gallery.php|tiki_p_view_file_gallery|tiki_p_upload_files','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (90,42,'s','Maps','tiki-map.php',700,'feature_maps','tiki_p_map_view','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','List Galleries','tiki-list_file_gallery.php',605,'feature_file_galleries','tiki_p_list_file_galleries','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (91,42,'o','Mapfiles','tiki-map_edit.php',705,'feature_maps','tiki_p_map_view','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Rankings','tiki-file_galleries_rankings.php',610,'feature_file_galleries,feature_file_galleries_rankings','tiki_p_list_file_galleries','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (92,42,'o','Layer Management','tiki-map_upload.php',710,'feature_maps','tiki_p_map_edit','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Upload File','tiki-upload_file.php',615,'feature_file_galleries','tiki_p_upload_files','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (93,42,'s','Quizzes','tiki-list_quizzes.php',750,'feature_quizzes','tiki_p_take_quiz','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Directory batch','tiki-batch_upload_files.php',617,'feature_file_galleries_batch','tiki_p_batch_upload_file_dir','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (94,42,'o','List Quizzes','tiki-list_quizzes.php',755,'feature_quizzes','tiki_p_take_quiz','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'s','FAQs','tiki-list_faqs.php',650,'feature_faqs','tiki_p_view_faqs','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (95,42,'o','Quiz Stats','tiki-quiz_stats.php',760,'feature_quizzes','tiki_p_view_quiz_stats','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','List FAQs','tiki-list_faqs.php',665,'feature_faqs','tiki_p_view_faqs','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (96,42,'o','Admin Quizzes','tiki-edit_quiz.php',765,'feature_quizzes','tiki_p_admin_quizzes','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Admin FAQs','tiki-list_faqs.php',660,'feature_faqs','tiki_p_admin_faqs','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (97,42,'s','TikiSheet','tiki-sheets.php',780,'feature_sheet','tiki_p_view_sheet','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'s','Maps','tiki-map.php',700,'feature_maps','tiki_p_map_view','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (98,42,'s','Trackers','tiki-list_trackers.php',800,'feature_trackers','tiki_p_view_trackers','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Mapfiles','tiki-map_edit.php',705,'feature_maps','tiki_p_map_view','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (99,42,'o','List Trackers','tiki-list_trackers.php',805,'feature_trackers','tiki_p_view_trackers','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Layer Management','tiki-map_upload.php',710,'feature_maps','tiki_p_map_edit','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (100,42,'o','Admin Trackers','tiki-admin_trackers.php',810,'feature_trackers','tiki_p_admin_trackers','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'s','Quizzes','tiki-list_quizzes.php',750,'feature_quizzes','tiki_p_take_quiz','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (101,42,'s','Surveys','tiki-list_surveys.php',850,'feature_surveys','tiki_p_take_survey','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','List Quizzes','tiki-list_quizzes.php',755,'feature_quizzes','tiki_p_take_quiz','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (102,42,'o','List Surveys','tiki-list_surveys.php',855,'feature_surveys','tiki_p_take_survey','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Quiz Stats','tiki-quiz_stats.php',760,'feature_quizzes','tiki_p_view_quiz_stats','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (103,42,'o','Stats','tiki-survey_stats.php',860,'feature_surveys','tiki_p_view_survey_stats','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Admin Quizzes','tiki-edit_quiz.php',765,'feature_quizzes','tiki_p_admin_quizzes','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (104,42,'o','Admin Surveys','tiki-admin_surveys.php',865,'feature_surveys','tiki_p_admin_surveys','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'s','TikiSheet','tiki-sheets.php',780,'feature_sheet','tiki_p_view_sheet','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (105,42,'s','Newsletters','tiki-newsletters.php',900,'feature_newsletters','tiki_p_subscribe_newsletters','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','List TikiSheets','tiki-sheets.php',782,'feature_sheet','tiki_p_view_sheet','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (106,42,'s','Newsletters','tiki-newsletters.php',900,'feature_newsletters','tiki_p_send_newsletters','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'s','Trackers','tiki-list_trackers.php',800,'feature_trackers','tiki_p_view_trackers','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (107,42,'s','Newsletters','tiki-newsletters.php',900,'feature_newsletters','tiki_p_admin_newsletters','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','List Trackers','tiki-list_trackers.php',805,'feature_trackers','tiki_p_view_trackers','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (108,42,'o','Send Newsletters','tiki-send_newsletters.php',905,'feature_newsletters','tiki_p_send_newsletters','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Admin Trackers','tiki-admin_trackers.php',810,'feature_trackers','tiki_p_admin_trackers','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (109,42,'o','Admin Newsletters','tiki-admin_newsletters.php',910,'feature_newsletters','tiki_p_admin_newsletters','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'s','Surveys','tiki-list_surveys.php',850,'feature_surveys','tiki_p_take_survey','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (112,42,'s','Charts','tiki-charts.php',1000,'feature_charts','tiki_p_view_chart','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','List Surveys','tiki-list_surveys.php',855,'feature_surveys','tiki_p_take_survey','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (113,42,'o','Admin Charts','tiki-admin_charts.php',1005,'feature_charts','tiki_p_admin_charts','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Stats','tiki-survey_stats.php',860,'feature_surveys','tiki_p_view_survey_stats','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (114,42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Admin Surveys','tiki-admin_surveys.php',865,'feature_surveys','tiki_p_admin_surveys','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (116,42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_categories','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'s','Newsletters','tiki-newsletters.php',900,'feature_newsletters','tiki_p_subscribe_newsletters','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (117,42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_banners','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'s','Newsletters','tiki-newsletters.php',900,'feature_newsletters','tiki_p_send_newsletters','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (118,42,'r','Admin','tiki-admin.php',1050,'','tiki_p_edit_templates','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'s','Newsletters','tiki-newsletters.php',900,'feature_newsletters','tiki_p_admin_newsletters','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (119,42,'r','Admin','tiki-admin.php',1050,'','tiki_p_edit_cookies','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'s','Newsletters','tiki-newsletters.php',900,'feature_newsletters','tiki_p_list_newsletters','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (120,42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_dynamic','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Send Newsletters','tiki-send_newsletters.php',905,'feature_newsletters','tiki_p_send_newsletters','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (121,42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_mailin','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Admin Newsletters','tiki-admin_newsletters.php',910,'feature_newsletters','tiki_p_admin_newsletters','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (122,42,'r','Admin','tiki-admin.php',1050,'','tiki_p_edit_content_templates','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'s','Charts','tiki-charts.php',1000,'feature_charts','tiki_p_view_chart','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (123,42,'r','Admin','tiki-admin.php',1050,'','tiki_p_edit_html_pages','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Admin Charts','tiki-admin_charts.php',1005,'feature_charts','tiki_p_admin_charts','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (124,42,'r','Admin','tiki-admin.php',1050,'','tiki_p_view_referer_stats','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (125,42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_drawings','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_categories','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (126,42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_shoutbox','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_banners','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (127,42,'r','Admin','tiki-admin.php',1050,'','tiki_p_live_support_admin','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_edit_templates','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (128,42,'r','Admin','tiki-admin.php',1050,'','user_is_operator','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_edit_cookies','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (129,42,'r','Admin','tiki-admin.php',1050,'feature_integrator','tiki_p_admin_integrator','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_dynamic','',0);
+
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_mailin','',0);
+
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_edit_content_templates','',0);
+
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_edit_html_pages','',0);
+
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_view_referer_stats','',0);
+
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_shoutbox','',0);
+
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_live_support_admin','',0);
+
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'r','Admin','tiki-admin.php',1050,'','user_is_operator','',0);
+
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'r','Admin','tiki-admin.php',1050,'feature_integrator','tiki_p_admin_integrator','',0);
 
 INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'r','Admin','tiki-admin.php',1050,'feature_edit_templates','tiki_p_edit_templates','',0);
 
@@ -2229,391 +1873,304 @@ INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","
 
 INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'r','Admin','tiki-admin.php',1050,'feature_editcss','tiki_p_create_css','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (130,42,'o','Admin Home','tiki-admin.php',1051,'','tiki_p_admin','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_contribution','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (131,42,'o','Live Support','tiki-live_support_admin.php',1055,'feature_live_support','tiki_p_live_support_admin','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_users','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (132,42,'o','Live Support','tiki-live_support_admin.php',1055,'feature_live_support','user_is_operator','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_quicktags','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (133,42,'o','Banning','tiki-admin_banning.php',1060,'feature_banning','tiki_p_admin_banning','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_edit_menu','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (134,42,'o','Calendar','tiki-admin_calendars.php',1065,'feature_calendar','tiki_p_admin_calendar','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_clean_cache','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (135,42,'o','Users','tiki-adminusers.php',1070,'','tiki_p_admin_users','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Admin Home','tiki-admin.php',1051,'','tiki_p_admin','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (136,42,'o','Groups','tiki-admingroups.php',1075,'','tiki_p_admin','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Live Support','tiki-live_support_admin.php',1055,'feature_live_support','tiki_p_live_support_admin','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (189,42,'o','Wiki Cache','tiki-list_cache.php',1080,'cachepages','tiki_p_admin','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Live Support','tiki-live_support_admin.php',1055,'feature_live_support','user_is_operator','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (138,42,'o','Modules','tiki-admin_modules.php',1085,'','tiki_p_admin','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Banning','tiki-admin_banning.php',1060,'feature_banning','tiki_p_admin_banning','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (139,42,'o','Hotwords','tiki-admin_hotwords.php',1095,'feature_hotwords','tiki_p_admin','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Calendar','tiki-admin_calendars.php',1065,'feature_calendar','tiki_p_admin_calendar','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (140,42,'o','RSS Modules','tiki-admin_rssmodules.php',1100,'','tiki_p_admin_rssmodules','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Users','tiki-adminusers.php',1070,'','tiki_p_admin_users','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (141,42,'o','Menus','tiki-admin_menus.php',1105,'','tiki_p_edit_menu','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Groups','tiki-admingroups.php',1075,'','tiki_p_admin','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (142,42,'o','Polls','tiki-admin_polls.php',1110,'feature_polls','tiki_p_admin_polls','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Wiki Cache','tiki-list_cache.php',1080,'cachepages','tiki_p_admin','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (143,42,'o','Mail Notifications','tiki-admin_notifications.php',1120,'','tiki_p_admin_notifications','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Modules','tiki-admin_modules.php',1085,'','tiki_p_admin','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (182,42,'o','Search Stats','tiki-search_stats.php',1125,'feature_search_stats','tiki_p_admin','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Hotwords','tiki-admin_hotwords.php',1095,'feature_hotwords','tiki_p_admin','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (145,42,'o','Theme Control','tiki-theme_control.php',1130,'feature_theme_control','tiki_p_admin','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','RSS Modules','tiki-admin_rssmodules.php',1100,'','tiki_p_admin_rssmodules','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (183,42,'o','QuickTags','tiki-admin_quicktags.php',1135,'','tiki_p_admin_quicktags','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Menus','tiki-admin_menus.php',1105,'','tiki_p_edit_menu','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (148,42,'o','Categories','tiki-admin_categories.php',1145,'feature_categories','tiki_p_admin_categories','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Polls','tiki-admin_polls.php',1110,'feature_polls','tiki_p_admin_polls','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (149,42,'o','Banners','tiki-list_banners.php',1150,'feature_banners','tiki_p_admin_banners','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Mail Notifications','tiki-admin_notifications.php',1120,'','tiki_p_admin_notifications','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (150,42,'o','Edit Templates','tiki-edit_templates.php',1155,'feature_edit_templates','tiki_p_edit_templates','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Search Stats','tiki-search_stats.php',1125,'feature_search_stats','tiki_p_admin','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (147,42,'o','View Templates','tiki-edit_templates.php',1155,'feature_view_tpl','tiki_p_edit_templates','',2);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Theme Control','tiki-theme_control.php',1130,'feature_theme_control','tiki_p_admin','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (146,42,'o','Edit CSS','tiki-edit_css.php',1158,'feature_editcss','tiki_p_create_css','',2);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','QuickTags','tiki-admin_quicktags.php',1135,'','tiki_p_admin_quicktags','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (151,42,'o','Drawings','tiki-admin_drawings.php',1160,'feature_drawings','tiki_p_admin_drawings','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Categories','tiki-admin_categories.php',1145,'feature_categories','tiki_p_admin_categories','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (152,42,'o','Dynamic content','tiki-list_contents.php',1165,'feature_dynamic_content','tiki_p_admin_dynamic','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Banners','tiki-list_banners.php',1150,'feature_banners','tiki_p_admin_banners','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (153,42,'o','Mail-in','tiki-admin_mailin.php',1175,'feature_mailin','tiki_p_admin_mailin','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Edit Templates','tiki-edit_templates.php',1155,'feature_edit_templates','tiki_p_edit_templates','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (154,42,'o','HTML Pages','tiki-admin_html_pages.php',1185,'feature_html_pages','tiki_p_edit_html_pages','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','View Templates','tiki-edit_templates.php',1155,'feature_view_tpl','tiki_p_edit_templates','',2);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (155,42,'o','Shoutbox','tiki-shoutbox.php',1190,'feature_shoutbox','tiki_p_admin_shoutbox','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Edit CSS','tiki-edit_css.php',1158,'feature_editcss','tiki_p_create_css','',2);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (156,42,'o','Shoutbox Words','tiki-admin_shoutbox_words.php',1191,'feature_shoutbox','tiki_p_admin_shoutbox','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Dynamic content','tiki-list_contents.php',1165,'feature_dynamic_content','tiki_p_admin_dynamic','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (157,42,'o','Referer Stats','tiki-referer_stats.php',1195,'feature_referer_stats','tiki_p_view_referer_stats','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Mail-in','tiki-admin_mailin.php',1175,'feature_mailin','tiki_p_admin_mailin','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (158,42,'o','Integrator','tiki-admin_integrator.php',1205,'feature_integrator','tiki_p_admin_integrator','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','HTML Pages','tiki-admin_html_pages.php',1185,'feature_html_pages','tiki_p_edit_html_pages','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (159,42,'o','phpinfo','tiki-phpinfo.php',1215,'','tiki_p_admin','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Shoutbox','tiki-shoutbox.php',1190,'feature_shoutbox','tiki_p_admin_shoutbox','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (163,42,'o','Tiki Logs','tiki-syslog.php',1245,'','tiki_p_admin','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Shoutbox Words','tiki-admin_shoutbox_words.php',1191,'feature_shoutbox','tiki_p_admin_shoutbox','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (164,42,'o','Security Admin','tiki-admin_security.php',1250,'','tiki_p_admin','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Referer Stats','tiki-referer_stats.php',1195,'feature_referer_stats','tiki_p_view_referer_stats','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (165,42,'o','Action Log','tiki-admin_actionlog.php',1255,'feature_actionlog','tiki_p_admin','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Integrator','tiki-admin_integrator.php',1205,'feature_integrator','tiki_p_admin_integrator','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (166,42,'o','Comments','tiki-list_comments.php',1260,'feature_wiki_comments','tiki_p_admin','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','phpinfo','tiki-phpinfo.php',1215,'','tiki_p_admin','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (167,42,'o','Comments','tiki-list_comments.php',1260,'feature_article_comments','tiki_p_admin','',0);
-
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (168,42,'o','Comments','tiki-list_comments.php',1260,'feature_blog_comments','tiki_p_admin','',0);
-
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (169,42,'o','Comments','tiki-list_comments.php',1260,'feature_file_galleries_comments','tiki_p_admin','',0);
-
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (170,42,'o','Comments','tiki-list_comments.php',1260,'feature_image_galleries_comments','tiki_p_admin','',0);
-
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (171,42,'o','Comments','tiki-list_comments.php',1260,'feature_poll_comments','tiki_p_admin','',0);
-
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (172,42,'o','Comments','tiki-list_comments.php',1260,'feature_faq_comments','tiki_p_admin','',0);
-
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (173,42,'o','Freetags','tiki-browse_freetags.php',27,'feature_freetags','tiki_p_view_freetags','',0);
-
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (174,42,'r','Admin','',1050,'','tiki_p_admin_contribution','',0);
-
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (175,42,'o','Contribution','tiki-admin_contribution.php',1265,'feature_contribution','tiki_p_admin_contribution','',0);
-
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (176,42,'o','List TikiSheets','tiki-sheets.php',782,'feature_sheet','tiki_p_view_sheet','',0);
-
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (177,42,'o','Directory batch','tiki-batch_upload_files.php',617,'feature_file_galleries_batch','tiki_p_batch_upload_file_dir','',0);
-
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (178,42,'o','Contacts','tiki-contacts.php',87,'feature_mytiki,feature_contacts','','Registered',0);
-
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (179,42,'o','Tiki Calendar','tiki-action_calendar.php',36,'feature_action_calendar','tiki_p_view_tiki_calendar','',0);
-
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (180,42,'r','Admin','',1050,'','tiki_p_admin_users','',0);
-
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES 
-(187,42,'o','Search','tiki-searchresults.php',13,'feature_search','tiki_p_search','',0);
-
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (184,42,'r','Admin','',1050,'','tiki_p_admin_quicktags','',0);
-
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (185,42,'r','Admin','',1050,'','tiki_p_edit_menu','',0);
-
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (188,42,'o','Tiki Cache/Sys Admin','tiki-admin_system.php',1230,'','tiki_p_clean_cache','',0);
-
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (186,42,'r','Admin','',1050,'','tiki_p_clean_cache','',0);
-
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (190,42,'s','Articles','tiki-view_articles.php',350,'feature_articles','tiki_p_articles_read_heading','',0);
-
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (191,42,'o','Articles Home','tiki-view_articles.php',355,'feature_articles','tiki_p_articles_read_heading','',0);
-
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (192,42,'o','List Articles','tiki-list_articles.php',360,'feature_articles','tiki_p_articles_read_heading','',0);
-
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (193,42,'o','Action Log','tiki-admin_actionlog.php',1255,'feature_actionlog','tiki_p_view_actionlog','',0);
-
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (194,42,'o','Action Log','tiki-admin_actionlog.php',1255,'feature_actionlog','tiki_p_view_actionlog_owngroups','',0);
-
-INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Content Templates','tiki-admin_content_templates.php',1256,'','tiki_p_edit_content_templates','',0);
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Tiki Cache/Sys Admin','tiki-admin_system.php',1230,'','tiki_p_clean_cache','',0);
 
 INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Tiki Importer','tiki-importer.php',1240,'','tiki_p_admin_importer','',0);
 
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Tiki Logs','tiki-syslog.php',1245,'','tiki_p_admin','',0);
 
-DROP TABLE "tiki_menus";
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Security Admin','tiki-admin_security.php',1250,'','tiki_p_admin','',0);
 
-CREATE SEQUENCE "tiki_menus_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_menus" (
-  "menuId" number(8) NOT NULL,
-  "name" varchar(200) default '' NOT NULL,
-  "description" clob,
-  "type" char(1) default NULL,
-  "icon" varchar(200) default NULL,
-  "use_items_icons" char(1) DEFAULT 'n' NOT NULL,
-  PRIMARY KEY (menuId)
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Action Log','tiki-admin_actionlog.php',1255,'feature_actionlog','tiki_p_admin','',0);
+
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Action Log','tiki-admin_actionlog.php',1255,'feature_actionlog','tiki_p_view_actionlog','',0);
+
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Action Log','tiki-admin_actionlog.php',1255,'feature_actionlog','tiki_p_view_actionlog_owngroups','',0);
+
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Content Templates','tiki-admin_content_templates.php',1256,'','tiki_p_edit_content_templates','',0);
+
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Comments','tiki-list_comments.php',1260,'feature_wiki_comments','tiki_p_admin','',0);
+
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Comments','tiki-list_comments.php',1260,'feature_article_comments','tiki_p_admin','',0);
+
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Comments','tiki-list_comments.php',1260,'feature_blog_comments','tiki_p_admin','',0);
+
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Comments','tiki-list_comments.php',1260,'feature_file_galleries_comments','tiki_p_admin','',0);
+
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Comments','tiki-list_comments.php',1260,'feature_image_galleries_comments','tiki_p_admin','',0);
+
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Comments','tiki-list_comments.php',1260,'feature_poll_comments','tiki_p_admin','',0);
+
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Comments','tiki-list_comments.php',1260,'feature_faq_comments','tiki_p_admin','',0);
+
+INSERT INTO "," ("`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (42,'o','Contribution','tiki-admin_contribution.php',1265,'feature_contribution','tiki_p_admin_contribution','',0);
+
+
+DROP TABLE `tiki_menus`;
+
+CREATE TABLE `tiki_menus` (
+  `menuId` number(8) NOT NULL auto_increment,
+  `name` varchar(200) default '' NOT NULL,
+  `description` clob,
+  `type` char(1) default NULL,
+  `icon` varchar(200) default NULL,
+  `use_items_icons` char(1) DEFAULT 'n' NOT NULL,
+  PRIMARY KEY (`menuId`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_menus_trig" BEFORE INSERT ON "tiki_menus" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_menus_sequ".nextval into :NEW."menuId" FROM DUAL;
-END;
-/
 
 INSERT INTO "tiki_menus" ("menuId","name","description","type") VALUES ('42','Application menu','Main extensive navigation menu','d');
 
 
-DROP TABLE "tiki_minical_events";
+DROP TABLE `tiki_minical_events`;
 
-CREATE SEQUENCE "tiki_minical_events_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_minical_events" (
-  "user" varchar(200) default '',
-  "eventId" number(12) NOT NULL,
-  "title" varchar(250) default NULL,
-  "description" clob,
-  "start" number(14) default NULL,
-  "end" number(14) default NULL,
-  "security" char(1) default NULL,
-  "duration" number(3) default NULL,
-  "topicId" number(12) default NULL,
-  "reminded" char(1) default NULL,
-  PRIMARY KEY (eventId)
+CREATE TABLE `tiki_minical_events` (
+  `user` varchar(200) default '',
+  `eventId` number(12) NOT NULL auto_increment,
+  `title` varchar(250) default NULL,
+  `description` clob,
+  `start` number(14) default NULL,
+  `end` number(14) default NULL,
+  `security` char(1) default NULL,
+  `duration` number(3) default NULL,
+  `topicId` number(12) default NULL,
+  `reminded` char(1) default NULL,
+  PRIMARY KEY (`eventId`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_minical_events_trig" BEFORE INSERT ON "tiki_minical_events" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_minical_events_sequ".nextval into :NEW."eventId" FROM DUAL;
-END;
-/
 
-DROP TABLE "tiki_minical_topics";
+DROP TABLE `tiki_minical_topics`;
 
-CREATE SEQUENCE "tiki_minical_topics_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_minical_topics" (
-  "user" varchar(200) default '',
-  "topicId" number(12) NOT NULL,
-  "name" varchar(250) default NULL,
-  "filename" varchar(200) default NULL,
-  "filetype" varchar(200) default NULL,
-  "filesize" varchar(200) default NULL,
-  "data" blob,
-  "path" varchar(250) default NULL,
-  "isIcon" char(1) default NULL,
-  PRIMARY KEY (topicId)
+CREATE TABLE `tiki_minical_topics` (
+  `user` varchar(200) default '',
+  `topicId` number(12) NOT NULL auto_increment,
+  `name` varchar(250) default NULL,
+  `filename` varchar(200) default NULL,
+  `filetype` varchar(200) default NULL,
+  `filesize` varchar(200) default NULL,
+  `data` blob,
+  `path` varchar(250) default NULL,
+  `isIcon` char(1) default NULL,
+  PRIMARY KEY (`topicId`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_minical_topics_trig" BEFORE INSERT ON "tiki_minical_topics" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_minical_topics_sequ".nextval into :NEW."topicId" FROM DUAL;
-END;
-/
 
-DROP TABLE "tiki_modules";
+DROP TABLE `tiki_modules`;
 
-CREATE SEQUENCE "tiki_modules_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_modules" (
-  "moduleId" number(8) NOT NULL,
-  "name" varchar(200) default '' NOT NULL,
-  "position" char(1) default NULL,
-  "ord" number(4) default NULL,
-  "type" char(1) default NULL,
-  "title" varchar(255) default NULL,
-  "cache_time" number(14) default NULL,
-  "rows" number(4) default NULL,
-  "params" varchar(255) default NULL,
-  "groups" clob,
-  PRIMARY KEY (name(100), position, ord, params(140))
+CREATE TABLE `tiki_modules` (
+  `moduleId` number(8) NOT NULL auto_increment,
+  `name` varchar(200) default '' NOT NULL,
+  `position` char(1) default NULL,
+  `ord` number(4) default NULL,
+  `type` char(1) default NULL,
+  `title` varchar(255) default NULL,
+  `cache_time` number(14) default NULL,
+  `rows` number(4) default NULL,
+  `params` varchar(255) default NULL,
+  `groups` clob,
+  PRIMARY KEY (`name`(100), `position`, `ord`, `params`(140)),
+  KEY `positionType` (position, type),
+  KEY `moduleId` (moduleId)
 ) ENGINE=MyISAM;
 
-CREATE TRIGGER "tiki_modules_trig" BEFORE INSERT ON "tiki_modules" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_modules_sequ".nextval into :NEW."moduleId" FROM DUAL;
-END;
-/
-CREATE  INDEX "tiki_modules_positionType" ON "tiki_modules"("position" "type");
-CREATE  INDEX "tiki_modules_moduleId" ON "tiki_modules"("moduleId");
 
 INSERT INTO "tiki_modules" ("name","position","ord","cache_time","params","groups") VALUES ('mnu_application_menu','l',30,0,'flip=y','a:1:{i:0;s:10:"Registered";}');
 
 
-DROP TABLE "tiki_newsletter_subscriptions";
+DROP TABLE `tiki_newsletter_subscriptions`;
 
-CREATE TABLE "tiki_newsletter_subscriptions" (
-  "nlId" number(12) default '0' NOT NULL,
-  "email" varchar(255) default '' NOT NULL,
-  "code" varchar(32) default NULL,
-  "valid" char(1) default NULL,
-  "subscribed" number(14) default NULL,
-  "isUser" char(1) default 'n' NOT NULL,
-  "included" char(1) default 'n' NOT NULL,
-  PRIMARY KEY (nlId,email,isUser)
+CREATE TABLE `tiki_newsletter_subscriptions` (
+  `nlId` number(12) default '0' NOT NULL,
+  `email` varchar(255) default '' NOT NULL,
+  `code` varchar(32) default NULL,
+  `valid` char(1) default NULL,
+  `subscribed` number(14) default NULL,
+  `isUser` char(1) default 'n' NOT NULL,
+  `included` char(1) default 'n' NOT NULL,
+  PRIMARY KEY (`nlId`,`email`,`isUser`)
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_newsletter_groups";
+DROP TABLE `tiki_newsletter_groups`;
 
-CREATE TABLE "tiki_newsletter_groups" (
-  "nlId" number(12) default '0' NOT NULL,
-  "groupName" varchar(255) default '' NOT NULL,
-  "code" varchar(32) default NULL,
-  PRIMARY KEY (nlId,groupName)
+CREATE TABLE `tiki_newsletter_groups` (
+  `nlId` number(12) default '0' NOT NULL,
+  `groupName` varchar(255) default '' NOT NULL,
+  `code` varchar(32) default NULL,
+  PRIMARY KEY (`nlId`,`groupName`)
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_newsletter_included";
+DROP TABLE `tiki_newsletter_included`;
 
-CREATE TABLE "tiki_newsletter_included" (
-  "nlId" number(12) default '0' NOT NULL,
-  "includedId" number(12) default '0' NOT NULL,
-  PRIMARY KEY (nlId,includedId)
+CREATE TABLE `tiki_newsletter_included` (
+  `nlId` number(12) default '0' NOT NULL,
+  `includedId` number(12) default '0' NOT NULL,
+  PRIMARY KEY (`nlId`,`includedId`)
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_newsletters";
+DROP TABLE `tiki_newsletters`;
 
-CREATE SEQUENCE "tiki_newsletters_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_newsletters" (
-  "nlId" number(12) NOT NULL,
-  "name" varchar(200) default NULL,
-  "description" clob,
-  "created" number(14) default NULL,
-  "lastSent" number(14) default NULL,
-  "editions" number(10) default NULL,
-  "users" number(10) default NULL,
-  "allowUserSub" char(1) default 'y',
-  "allowAnySub" char(1) default NULL,
-  "unsubMsg" char(1) default 'y',
-  "validateAddr" char(1) default 'y',
-  "frequency" number(14) default NULL,
-  "allowTxt" char(1) default 'y',
-  "author" varchar(200) default NULL,
-  PRIMARY KEY (nlId)
+CREATE TABLE `tiki_newsletters` (
+  `nlId` number(12) NOT NULL auto_increment,
+  `name` varchar(200) default NULL,
+  `description` clob,
+  `created` number(14) default NULL,
+  `lastSent` number(14) default NULL,
+  `editions` number(10) default NULL,
+  `users` number(10) default NULL,
+  `allowUserSub` char(1) default 'y',
+  `allowAnySub` char(1) default NULL,
+  `unsubMsg` char(1) default 'y',
+  `validateAddr` char(1) default 'y',
+  `frequency` number(14) default NULL,
+  `allowTxt` char(1) default 'y',
+  `author` varchar(200) default NULL,
+  PRIMARY KEY (`nlId`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_newsletters_trig" BEFORE INSERT ON "tiki_newsletters" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_newsletters_sequ".nextval into :NEW."nlId" FROM DUAL;
-END;
-/
 
-DROP TABLE "tiki_newsreader_marks";
+DROP TABLE `tiki_page_footnotes`;
 
-CREATE TABLE "tiki_newsreader_marks" (
-  "user" varchar(200) default '' NOT NULL,
-  "serverId" number(12) default '0' NOT NULL,
-  "groupName" varchar(255) default '' NOT NULL,
-  "timestamp" number(14) default '0' NOT NULL,
-  PRIMARY KEY (`user`(100),serverId,groupName(100))
-) ENGINE=MyISAM;
-
-
-DROP TABLE "tiki_newsreader_servers";
-
-CREATE SEQUENCE "tiki_newsreader_servers_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_newsreader_servers" (
-  "user" varchar(200) default '' NOT NULL,
-  "serverId" number(12) NOT NULL,
-  "server" varchar(250) default NULL,
-  "port" number(4) default NULL,
-  "username" varchar(200) default NULL,
-  "password" varchar(200) default NULL,
-  PRIMARY KEY (serverId)
-) ENGINE=MyISAM  ;
-
-CREATE TRIGGER "tiki_newsreader_servers_trig" BEFORE INSERT ON "tiki_newsreader_servers" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_newsreader_servers_sequ".nextval into :NEW."serverId" FROM DUAL;
-END;
-/
-
-DROP TABLE "tiki_page_footnotes";
-
-CREATE TABLE "tiki_page_footnotes" (
-  "user" varchar(200) default '' NOT NULL,
-  "pageName" varchar(250) default '' NOT NULL,
-  "data" clob,
+CREATE TABLE `tiki_page_footnotes` (
+  `user` varchar(200) default '' NOT NULL,
+  `pageName` varchar(250) default '' NOT NULL,
+  `data` clob,
   PRIMARY KEY (`user`(150),pageName(100))
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_pages";
+DROP TABLE `tiki_pages`;
 
-CREATE SEQUENCE "tiki_pages_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_pages" (
-  "page_id" number(14) NOT NULL,
-  "pageName" varchar(160) default '' NOT NULL,
-  "hits" number(8) default NULL,
-  "data" mediumtext,
-  "description" varchar(200) default NULL,
-  "lastModif" number(14) default NULL,
-  "comment" varchar(200) default NULL,
-  "version" number(8) default '0' NOT NULL,
-  "user" varchar(200) default '',
-  "ip" varchar(15) default NULL,
-  "flag" char(1) default NULL,
-  "points" number(8) default NULL,
-  "votes" number(8) default NULL,
-  "cache" longtext,
-  "wiki_cache" number(10) default NULL,
-  "cache_timestamp" number(14) default NULL,
-  "pageRank" decimal(4,3) default NULL,
-  "creator" varchar(200) default NULL,
-  "page_size" number(10) default '0',
-  "lang" varchar(16) default NULL,
-  "lockedby" varchar(200) default NULL,
-  "is_html" number(1) default 0,
-  "created" number(14),
-  "wysiwyg" char(1) default NULL,
-  "wiki_authors_style" varchar(20) default '',
-  PRIMARY KEY (page_id),
-  KEY lastModif(lastModif)
+CREATE TABLE `tiki_pages` (
+  `page_id` number(14) NOT NULL auto_increment,
+  `pageName` varchar(160) default '' NOT NULL,
+  `hits` number(8) default NULL,
+  `data` mediumtext,
+  `description` varchar(200) default NULL,
+  `lastModif` number(14) default NULL,
+  `comment` varchar(200) default NULL,
+  `version` number(8) default '0' NOT NULL,
+  `user` varchar(200) default '',
+  `ip` varchar(15) default NULL,
+  `flag` char(1) default NULL,
+  `points` number(8) default NULL,
+  `votes` number(8) default NULL,
+  `cache` longtext,
+  `wiki_cache` number(10) default NULL,
+  `cache_timestamp` number(14) default NULL,
+  `pageRank` decimal(4,3) default NULL,
+  `creator` varchar(200) default NULL,
+  `page_size` number(10) default '0',
+  `lang` varchar(16) default NULL,
+  `lockedby` varchar(200) default NULL,
+  `is_html` number(1) default 0,
+  `created` number(14),
+  `wysiwyg` char(1) default NULL,
+  `wiki_authors_style` varchar(20) default '',
+  PRIMARY KEY (`page_id`),
+  UNIQUE KEY `pageName` (pageName),
+  KEY `data` (data(255)),
+  KEY `pageRank` (pageRank),
+  FULLTEXT KEY `ft` (pageName,description,data),
+  KEY `lastModif`(lastModif)
 ) ENGINE=MyISAM ;
 
-CREATE TRIGGER "tiki_pages_trig" BEFORE INSERT ON "tiki_pages" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_pages_sequ".nextval into :NEW."page_id" FROM DUAL;
-END;
-/
-CREATE  INDEX "tiki_pages_data" ON "tiki_pages"("data");
-CREATE  INDEX "tiki_pages_pageRank" ON "tiki_pages"("pageRank");
-CREATE  INDEX "tiki_pages_ft" ON "tiki_pages"("pageName","description","data");
-CREATE UNIQUE INDEX "tiki_pages_pageName" ON "tiki_pages"("pageName");
 
-DROP TABLE "tiki_page_drafts";
+DROP TABLE `tiki_page_drafts`;
 
-CREATE TABLE "tiki_page_drafts" (
-  "user" varchar(200) default '',
-  "pageName" varchar(255) NOT NULL,
-  "data" mediumtext,
-  "description" varchar(200) default NULL,
-  "comment" varchar(200) default NULL,
-  "lastModif" number(14) default NULL,
-  PRIMARY KEY (pageName(120), `user`(120))
+CREATE TABLE `tiki_page_drafts` (
+  `user` varchar(200) default '',
+  `pageName` varchar(255) NOT NULL,
+  `data` mediumtext,
+  `description` varchar(200) default NULL,
+  `comment` varchar(200) default NULL,
+  `lastModif` number(14) default NULL,
+  PRIMARY KEY (`pageName`(120), `user`(120))
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_pageviews";
+DROP TABLE `tiki_pageviews`;
 
-CREATE TABLE "tiki_pageviews" (
-  "day" number(14) default '0' NOT NULL,
-  "pageviews" number(14) default NULL,
-  PRIMARY KEY (day)
+CREATE TABLE `tiki_pageviews` (
+  `day` number(14) default '0' NOT NULL,
+  `pageviews` number(14) default NULL,
+  PRIMARY KEY (`day`)
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_poll_objects";
+DROP TABLE `tiki_poll_objects`;
 
 CREATE TABLE `tiki_poll_objects` (
   `catObjectId` number(11) default '0' NOT NULL,
@@ -2623,1430 +2180,1182 @@ CREATE TABLE `tiki_poll_objects` (
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_poll_options";
+DROP TABLE `tiki_poll_options`;
 
-CREATE SEQUENCE "tiki_poll_options_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_poll_options" (
-  "pollId" number(8) default '0' NOT NULL,
-  "optionId" number(8) NOT NULL,
-  "title" varchar(200) default NULL,
-  "position" number(4) default '0' NOT NULL,
-  "votes" number(8) default NULL,
-  PRIMARY KEY (optionId)
+CREATE TABLE `tiki_poll_options` (
+  `pollId` number(8) default '0' NOT NULL,
+  `optionId` number(8) NOT NULL auto_increment,
+  `title` varchar(200) default NULL,
+  `position` number(4) default '0' NOT NULL,
+  `votes` number(8) default NULL,
+  PRIMARY KEY (`optionId`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_poll_options_trig" BEFORE INSERT ON "tiki_poll_options" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_poll_options_sequ".nextval into :NEW."optionId" FROM DUAL;
-END;
-/
 
-DROP TABLE "tiki_polls";
+DROP TABLE `tiki_polls`;
 
-CREATE SEQUENCE "tiki_polls_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_polls" (
-  "pollId" number(8) NOT NULL,
-  "title" varchar(200) default NULL,
-  "votes" number(8) default NULL,
-  "active" char(1) default NULL,
-  "publishDate" number(14) default NULL,
-  "voteConsiderationSpan" number(4) default 0,
-  PRIMARY KEY (pollId)
+CREATE TABLE `tiki_polls` (
+  `pollId` number(8) NOT NULL auto_increment,
+  `title` varchar(200) default NULL,
+  `votes` number(8) default NULL,
+  `active` char(1) default NULL,
+  `publishDate` number(14) default NULL,
+  `voteConsiderationSpan` number(4) default 0,
+  PRIMARY KEY (`pollId`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_polls_trig" BEFORE INSERT ON "tiki_polls" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_polls_sequ".nextval into :NEW."pollId" FROM DUAL;
-END;
-/
 
-DROP TABLE "tiki_preferences";
+DROP TABLE `tiki_preferences`;
 
-CREATE TABLE "tiki_preferences" (
-  "name" varchar(40) default '' NOT NULL,
-  "value" clob,
-  PRIMARY KEY (name)
+CREATE TABLE `tiki_preferences` (
+  `name` varchar(40) default '' NOT NULL,
+  `value` clob,
+  PRIMARY KEY (`name`)
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_private_messages";
+DROP TABLE `tiki_private_messages`;
 
-CREATE SEQUENCE "tiki_private_messages_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_private_messages" (
-  "messageId" number(8) NOT NULL,
-  "toNickname" varchar(200) default '' NOT NULL,
-  "poster" varchar(200) default 'anonymous' NOT NULL,
-  "timestamp" number(14) default NULL,
-  "received" number(1) default 0 not null,
-  "message" varchar(255) default NULL,
-  "key"(received),
-  "key"(timestamp),
-  PRIMARY KEY (messageId)
+CREATE TABLE `tiki_private_messages` (
+  `messageId` number(8) NOT NULL auto_increment,
+  `toNickname` varchar(200) default '' NOT NULL,
+  `poster` varchar(200) default 'anonymous' NOT NULL,
+  `timestamp` number(14) default NULL,
+  `received` number(1) default 0 not null,
+  `message` varchar(255) default NULL,
+  PRIMARY KEY (`messageId`),
+  KEY (`received`),
+  KEY (`timestamp`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_private_messages_trig" BEFORE INSERT ON "tiki_private_messages" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_private_messages_sequ".nextval into :NEW."messageId" FROM DUAL;
-END;
-/
 
-DROP TABLE "tiki_programmed_content";
+DROP TABLE `tiki_programmed_content`;
 
-CREATE SEQUENCE "tiki_programmed_content_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_programmed_content" (
-  "pId" number(8) NOT NULL,
-  "contentId" number(8) default '0' NOT NULL,
-  "publishDate" number(14) default '0' NOT NULL,
-  "data" clob,
-  PRIMARY KEY (pId)
+CREATE TABLE `tiki_programmed_content` (
+  `pId` number(8) NOT NULL auto_increment,
+  `contentId` number(8) default '0' NOT NULL,
+  `publishDate` number(14) default '0' NOT NULL,
+  `data` clob,
+  PRIMARY KEY (`pId`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_programmed_content_trig" BEFORE INSERT ON "tiki_programmed_content" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_programmed_content_sequ".nextval into :NEW."pId" FROM DUAL;
-END;
-/
 
-DROP TABLE "tiki_quiz_question_options";
+DROP TABLE `tiki_quiz_question_options`;
 
-CREATE SEQUENCE "tiki_quiz_question_options_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_quiz_question_options" (
-  "optionId" number(10) NOT NULL,
-  "questionId" number(10) default NULL,
-  "optionText" clob,
-  "points" number(4) default NULL,
-  PRIMARY KEY (optionId)
+CREATE TABLE `tiki_quiz_question_options` (
+  `optionId` number(10) NOT NULL auto_increment,
+  `questionId` number(10) default NULL,
+  `optionText` clob,
+  `points` number(4) default NULL,
+  PRIMARY KEY (`optionId`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_quiz_question_options_trig" BEFORE INSERT ON "tiki_quiz_question_options" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_quiz_question_options_sequ".nextval into :NEW."optionId" FROM DUAL;
-END;
-/
 
-DROP TABLE "tiki_quiz_questions";
+DROP TABLE `tiki_quiz_questions`;
 
-CREATE SEQUENCE "tiki_quiz_questions_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_quiz_questions" (
-  "questionId" number(10) NOT NULL,
-  "quizId" number(10) default NULL,
-  "question" clob,
-  "position" number(4) default NULL,
-  "type" char(1) default NULL,
-  "maxPoints" number(4) default NULL,
-  PRIMARY KEY (questionId)
+CREATE TABLE `tiki_quiz_questions` (
+  `questionId` number(10) NOT NULL auto_increment,
+  `quizId` number(10) default NULL,
+  `question` clob,
+  `position` number(4) default NULL,
+  `type` char(1) default NULL,
+  `maxPoints` number(4) default NULL,
+  PRIMARY KEY (`questionId`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_quiz_questions_trig" BEFORE INSERT ON "tiki_quiz_questions" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_quiz_questions_sequ".nextval into :NEW."questionId" FROM DUAL;
-END;
-/
 
-DROP TABLE "tiki_quiz_results";
+DROP TABLE `tiki_quiz_results`;
 
-CREATE SEQUENCE "tiki_quiz_results_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_quiz_results" (
-  "resultId" number(10) NOT NULL,
-  "quizId" number(10) default NULL,
-  "fromPoints" number(4) default NULL,
-  "toPoints" number(4) default NULL,
-  "answer" clob,
-  PRIMARY KEY (resultId)
+CREATE TABLE `tiki_quiz_results` (
+  `resultId` number(10) NOT NULL auto_increment,
+  `quizId` number(10) default NULL,
+  `fromPoints` number(4) default NULL,
+  `toPoints` number(4) default NULL,
+  `answer` clob,
+  PRIMARY KEY (`resultId`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_quiz_results_trig" BEFORE INSERT ON "tiki_quiz_results" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_quiz_results_sequ".nextval into :NEW."resultId" FROM DUAL;
-END;
-/
 
-DROP TABLE "tiki_quiz_stats";
+DROP TABLE `tiki_quiz_stats`;
 
-CREATE TABLE "tiki_quiz_stats" (
-  "quizId" number(10) default '0' NOT NULL,
-  "questionId" number(10) default '0' NOT NULL,
-  "optionId" number(10) default '0' NOT NULL,
-  "votes" number(10) default NULL,
-  PRIMARY KEY (quizId,questionId,optionId)
+CREATE TABLE `tiki_quiz_stats` (
+  `quizId` number(10) default '0' NOT NULL,
+  `questionId` number(10) default '0' NOT NULL,
+  `optionId` number(10) default '0' NOT NULL,
+  `votes` number(10) default NULL,
+  PRIMARY KEY (`quizId`,`questionId`,`optionId`)
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_quiz_stats_sum";
+DROP TABLE `tiki_quiz_stats_sum`;
 
-CREATE TABLE "tiki_quiz_stats_sum" (
-  "quizId" number(10) default '0' NOT NULL,
-  "quizName" varchar(255) default NULL,
-  "timesTaken" number(10) default NULL,
-  "avgpoints" decimal(5,2) default NULL,
-  "avgavg" decimal(5,2) default NULL,
-  "avgtime" decimal(5,2) default NULL,
-  PRIMARY KEY (quizId)
+CREATE TABLE `tiki_quiz_stats_sum` (
+  `quizId` number(10) default '0' NOT NULL,
+  `quizName` varchar(255) default NULL,
+  `timesTaken` number(10) default NULL,
+  `avgpoints` decimal(5,2) default NULL,
+  `avgavg` decimal(5,2) default NULL,
+  `avgtime` decimal(5,2) default NULL,
+  PRIMARY KEY (`quizId`)
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_quizzes";
+DROP TABLE `tiki_quizzes`;
 
-CREATE SEQUENCE "tiki_quizzes_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_quizzes" (
-  "quizId" number(10) NOT NULL,
-  "name" varchar(255) default NULL,
-  "description" clob,
-  "canRepeat" char(1) default NULL,
-  "storeResults" char(1) default NULL,
-  "questionsPerPage" number(4) default NULL,
-  "timeLimited" char(1) default NULL,
-  "timeLimit" number(14) default NULL,
-  "created" number(14) default NULL,
-  "taken" number(10) default NULL,
-  "immediateFeedback" char(1) default NULL,
-  "showAnswers" char(1) default NULL,
-  "shuffleQuestions" char(1) default NULL,
-  "shuffleAnswers" char(1) default NULL,
-  "publishDate" number(14) default NULL,
-  "expireDate" number(14) default NULL,
-  "bDeleted" char(1) default NULL,
-  "nVersion" number(4) NOT NULL,
-  "nAuthor" number(4) default NULL,
-  "bOnline" char(1) default NULL,
-  "bRandomQuestions" char(1) default NULL,
-  "nRandomQuestions" number(4) default NULL,
-  "bLimitQuestionsPerPage" char(1) default NULL,
-  "nLimitQuestionsPerPage" number(4) default NULL,
-  "bMultiSession" char(1) default NULL,
-  "nCanRepeat" number(4) default NULL,
-  "sGradingMethod" varchar(80) default NULL,
-  "sShowScore" varchar(80) default NULL,
-  "sShowCorrectAnswers" varchar(80) default NULL,
-  "sPublishStats" varchar(80) default NULL,
-  "bAdditionalQuestions" char(1) default NULL,
-  "bForum" char(1) default NULL,
-  "sForum" varchar(80) default NULL,
-  "sPrologue" clob,
-  "sData" clob,
-  "sEpilogue" clob,
-  "passingperct" number(4) default 0,
-  PRIMARY KEY (quizId, nVersion)
+CREATE TABLE `tiki_quizzes` (
+  `quizId` number(10) NOT NULL auto_increment,
+  `name` varchar(255) default NULL,
+  `description` clob,
+  `canRepeat` char(1) default NULL,
+  `storeResults` char(1) default NULL,
+  `questionsPerPage` number(4) default NULL,
+  `timeLimited` char(1) default NULL,
+  `timeLimit` number(14) default NULL,
+  `created` number(14) default NULL,
+  `taken` number(10) default NULL,
+  `immediateFeedback` char(1) default NULL,
+  `showAnswers` char(1) default NULL,
+  `shuffleQuestions` char(1) default NULL,
+  `shuffleAnswers` char(1) default NULL,
+  `publishDate` number(14) default NULL,
+  `expireDate` number(14) default NULL,
+  `bDeleted` char(1) default NULL,
+  `nVersion` number(4) NOT NULL,
+  `nAuthor` number(4) default NULL,
+  `bOnline` char(1) default NULL,
+  `bRandomQuestions` char(1) default NULL,
+  `nRandomQuestions` number(4) default NULL,
+  `bLimitQuestionsPerPage` char(1) default NULL,
+  `nLimitQuestionsPerPage` number(4) default NULL,
+  `bMultiSession` char(1) default NULL,
+  `nCanRepeat` number(4) default NULL,
+  `sGradingMethod` varchar(80) default NULL,
+  `sShowScore` varchar(80) default NULL,
+  `sShowCorrectAnswers` varchar(80) default NULL,
+  `sPublishStats` varchar(80) default NULL,
+  `bAdditionalQuestions` char(1) default NULL,
+  `bForum` char(1) default NULL,
+  `sForum` varchar(80) default NULL,
+  `sPrologue` clob,
+  `sData` clob,
+  `sEpilogue` clob,
+  `passingperct` number(4) default 0,
+  PRIMARY KEY (`quizId`, `nVersion`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_quizzes_trig" BEFORE INSERT ON "tiki_quizzes" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_quizzes_sequ".nextval into :NEW."quizId" FROM DUAL;
-END;
-/
 
-DROP TABLE "tiki_received_articles";
+DROP TABLE `tiki_received_articles`;
 
-CREATE SEQUENCE "tiki_received_articles_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_received_articles" (
-  "receivedArticleId" number(14) NOT NULL,
-  "receivedFromSite" varchar(200) default NULL,
-  "receivedFromUser" varchar(200) default NULL,
-  "receivedDate" number(14) default NULL,
-  "title" varchar(80) default NULL,
-  "authorName" varchar(60) default NULL,
-  "size" number(12) default NULL,
-  "useImage" char(1) default NULL,
-  "image_name" varchar(80) default NULL,
-  "image_type" varchar(80) default NULL,
-  "image_size" number(14) default NULL,
-  "image_x" number(4) default NULL,
-  "image_y" number(4) default NULL,
-  "image_data" blob,
-  "publishDate" number(14) default NULL,
-  "expireDate" number(14) default NULL,
-  "created" number(14) default NULL,
-  "heading" clob,
-  "body" blob,
-  "hash" varchar(32) default NULL,
-  "author" varchar(200) default NULL,
-  "type" varchar(50) default NULL,
-  "rating" decimal(3,2) default NULL,
-  PRIMARY KEY (receivedArticleId)
+CREATE TABLE `tiki_received_articles` (
+  `receivedArticleId` number(14) NOT NULL auto_increment,
+  `receivedFromSite` varchar(200) default NULL,
+  `receivedFromUser` varchar(200) default NULL,
+  `receivedDate` number(14) default NULL,
+  `title` varchar(80) default NULL,
+  `authorName` varchar(60) default NULL,
+  `size` number(12) default NULL,
+  `useImage` char(1) default NULL,
+  `image_name` varchar(80) default NULL,
+  `image_type` varchar(80) default NULL,
+  `image_size` number(14) default NULL,
+  `image_x` number(4) default NULL,
+  `image_y` number(4) default NULL,
+  `image_data` blob,
+  `publishDate` number(14) default NULL,
+  `expireDate` number(14) default NULL,
+  `created` number(14) default NULL,
+  `heading` clob,
+  `body` blob,
+  `hash` varchar(32) default NULL,
+  `author` varchar(200) default NULL,
+  `type` varchar(50) default NULL,
+  `rating` decimal(3,2) default NULL,
+  PRIMARY KEY (`receivedArticleId`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_received_articles_trig" BEFORE INSERT ON "tiki_received_articles" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_received_articles_sequ".nextval into :NEW."receivedArticleId" FROM DUAL;
-END;
-/
 
-DROP TABLE "tiki_received_pages";
+DROP TABLE `tiki_received_pages`;
 
-CREATE SEQUENCE "tiki_received_pages_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_received_pages" (
-  "receivedPageId" number(14) NOT NULL,
-  "pageName" varchar(160) default '' NOT NULL,
-  "data" blob,
-  "description" varchar(200) default NULL,
-  "comment" varchar(200) default NULL,
-  "receivedFromSite" varchar(200) default NULL,
-  "receivedFromUser" varchar(200) default NULL,
-  "receivedDate" number(14) default NULL,
-  "parent" varchar(255) default NULL,
-  "position" number(3) unsigned default NULL,
-  "alias" varchar(255) default NULL,
-  "structureName" varchar(250) default NULL,
-  "parentName" varchar(250) default NULL,
-  "page_alias" varchar(250) default '',
-  "pos" number(4) default NULL,
-  PRIMARY KEY (receivedPageId)
+CREATE TABLE `tiki_received_pages` (
+  `receivedPageId` number(14) NOT NULL auto_increment,
+  `pageName` varchar(160) default '' NOT NULL,
+  `data` blob,
+  `description` varchar(200) default NULL,
+  `comment` varchar(200) default NULL,
+  `receivedFromSite` varchar(200) default NULL,
+  `receivedFromUser` varchar(200) default NULL,
+  `receivedDate` number(14) default NULL,
+  `parent` varchar(255) default NULL,
+  `position` number(3) unsigned default NULL,
+  `alias` varchar(255) default NULL,
+  `structureName` varchar(250) default NULL,
+  `parentName` varchar(250) default NULL,
+  `page_alias` varchar(250) default '',
+  `pos` number(4) default NULL,
+  PRIMARY KEY (`receivedPageId`),
+  KEY `structureName` (structureName)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_received_pages_trig" BEFORE INSERT ON "tiki_received_pages" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_received_pages_sequ".nextval into :NEW."receivedPageId" FROM DUAL;
-END;
-/
-CREATE  INDEX "tiki_received_pages_structureName" ON "tiki_received_pages"("structureName");
 
-DROP TABLE "tiki_referer_stats";
+DROP TABLE `tiki_referer_stats`;
 
-CREATE TABLE "tiki_referer_stats" (
-  "referer" varchar(255) default '' NOT NULL,
-  "hits" number(10) default NULL,
-  "last" number(14) default NULL,
-  PRIMARY KEY (referer)
+CREATE TABLE `tiki_referer_stats` (
+  `referer` varchar(255) default '' NOT NULL,
+  `hits` number(10) default NULL,
+  `last` number(14) default NULL,
+  PRIMARY KEY (`referer`)
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_related_categories";
+DROP TABLE `tiki_related_categories`;
 
-CREATE TABLE "tiki_related_categories" (
-  "categId" number(10) default '0' NOT NULL,
-  "relatedTo" number(10) default '0' NOT NULL,
-  PRIMARY KEY (categId,relatedTo)
+CREATE TABLE `tiki_related_categories` (
+  `categId` number(10) default '0' NOT NULL,
+  `relatedTo` number(10) default '0' NOT NULL,
+  PRIMARY KEY (`categId`,`relatedTo`)
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_rss_modules";
+DROP TABLE `tiki_rss_modules`;
 
-CREATE SEQUENCE "tiki_rss_modules_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_rss_modules" (
-  "rssId" number(8) NOT NULL,
-  "name" varchar(30) default '' NOT NULL,
-  "description" clob,
-  "url" varchar(255) default '' NOT NULL,
-  "refresh" number(8) default NULL,
-  "lastUpdated" number(14) default NULL,
-  "showTitle" char(1) default 'n',
-  "showPubDate" char(1) default 'n',
-  "content" blob,
-  PRIMARY KEY (rssId)
+CREATE TABLE `tiki_rss_modules` (
+  `rssId` number(8) NOT NULL auto_increment,
+  `name` varchar(30) default '' NOT NULL,
+  `description` clob,
+  `url` varchar(255) default '' NOT NULL,
+  `refresh` number(8) default NULL,
+  `lastUpdated` number(14) default NULL,
+  `showTitle` char(1) default 'n',
+  `showPubDate` char(1) default 'n',
+  `content` blob,
+  PRIMARY KEY (`rssId`),
+  KEY `name` (name)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_rss_modules_trig" BEFORE INSERT ON "tiki_rss_modules" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_rss_modules_sequ".nextval into :NEW."rssId" FROM DUAL;
-END;
-/
-CREATE  INDEX "tiki_rss_modules_name" ON "tiki_rss_modules"("name");
 
-DROP TABLE "tiki_rss_feeds";
+DROP TABLE `tiki_rss_feeds`;
 
-CREATE TABLE "tiki_rss_feeds" (
-  "name" varchar(30) default '' NOT NULL,
-  "rssVer" char(1) default '1' NOT NULL,
-  "refresh" number(8) default '300',
-  "lastUpdated" number(14) default NULL,
-  "cache" blob,
-  PRIMARY KEY (name,rssVer)
+CREATE TABLE `tiki_rss_feeds` (
+  `name` varchar(30) default '' NOT NULL,
+  `rssVer` char(1) default '1' NOT NULL,
+  `refresh` number(8) default '300',
+  `lastUpdated` number(14) default NULL,
+  `cache` blob,
+  PRIMARY KEY (`name`,`rssVer`)
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_searchindex";
+DROP TABLE `tiki_searchindex`;
 
 CREATE TABLE "tiki_searchindex"(
-  "searchword" varchar(80) default '' NOT NULL,
-  "location" varchar(80) default '' NOT NULL,
-  "page" varchar(255) default '' NOT NULL,
-  "count" number(11) default '1' NOT NULL,
-  "last_update" number(11) default '0' NOT NULL,
-  PRIMARY KEY (searchword,location,page(80))
+  `searchword` varchar(80) default '' NOT NULL,
+  `location` varchar(80) default '' NOT NULL,
+  `page` varchar(255) default '' NOT NULL,
+  `count` number(11) default '1' NOT NULL,
+  `last_update` number(11) default '0' NOT NULL,
+  PRIMARY KEY (`searchword`,`location`,`page`(80)),
+  KEY `last_update` (last_update),
+  KEY `location` (location(50), page(200))
 ) ENGINE=MyISAM;
 
-CREATE  INDEX "tiki_searchindex_last_update" ON "tiki_searchindex"("last_update");
-CREATE  INDEX "tiki_searchindex_location" ON "tiki_searchindex"("location" "page");
 
 -- LRU (last recently used) list for searching parts of words
-DROP TABLE "tiki_searchsyllable";
+DROP TABLE `tiki_searchsyllable`;
 
 CREATE TABLE "tiki_searchsyllable"(
-  "syllable" varchar(80) default '' NOT NULL,
-  "lastUsed" number(11) default '0' NOT NULL,
-  "lastUpdated" number(11) default '0' NOT NULL,
-  PRIMARY KEY (syllable)
+  `syllable` varchar(80) default '' NOT NULL,
+  `lastUsed` number(11) default '0' NOT NULL,
+  `lastUpdated` number(11) default '0' NOT NULL,
+  PRIMARY KEY (`syllable`),
+  KEY `lastUsed` (lastUsed)
 ) ENGINE=MyISAM;
 
-CREATE  INDEX "tiki_searchsyllable_lastUsed" ON "tiki_searchsyllable"("lastUsed");
 
 -- searchword caching table for search syllables
-DROP TABLE "tiki_searchwords";
+DROP TABLE `tiki_searchwords`;
 
 CREATE TABLE "tiki_searchwords"(
-  "syllable" varchar(80) default '' NOT NULL,
-  "searchword" varchar(80) default '' NOT NULL,
-  PRIMARY KEY (syllable,searchword)
+  `syllable` varchar(80) default '' NOT NULL,
+  `searchword` varchar(80) default '' NOT NULL,
+  PRIMARY KEY (`syllable`,`searchword`)
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_search_stats";
+DROP TABLE `tiki_search_stats`;
 
-CREATE TABLE "tiki_search_stats" (
-  "term" varchar(50) default '' NOT NULL,
-  "hits" number(10) default NULL,
-  PRIMARY KEY (term)
+CREATE TABLE `tiki_search_stats` (
+  `term` varchar(50) default '' NOT NULL,
+  `hits` number(10) default NULL,
+  PRIMARY KEY (`term`)
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_secdb";
+DROP TABLE `tiki_secdb`;
 
 CREATE TABLE "tiki_secdb"(
-  "md5_value" varchar(32) NOT NULL,
-  "filename" varchar(250) NOT NULL,
-  "tiki_version" varchar(60) NOT NULL,
-  "severity" number(4) default '0' NOT NULL,
-  PRIMARY KEY (md5_value,filename(100),tiki_version)
-) ENGINE=MyISAM;
-
-CREATE  INDEX "tiki_secdb_sdb_fn" ON "tiki_secdb"("filename");
-
-DROP TABLE "tiki_semaphores";
-
-CREATE TABLE "tiki_semaphores" (
-  "semName" varchar(250) default '' NOT NULL,
-  "objectType" varchar(20) default 'wiki page',
-  "user" varchar(200) default '' NOT NULL,
-  "timestamp" number(14) default NULL,
-  PRIMARY KEY (semName)
+  `md5_value` varchar(32) NOT NULL,
+  `filename` varchar(250) NOT NULL,
+  `tiki_version` varchar(60) NOT NULL,
+  `severity` number(4) default '0' NOT NULL,
+  PRIMARY KEY (`md5_value`,`filename`(100),`tiki_version`),
+  KEY `sdb_fn` (filename)
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_sent_newsletters";
+DROP TABLE `tiki_semaphores`;
 
-CREATE SEQUENCE "tiki_sent_newsletters_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_sent_newsletters" (
-  "editionId" number(12) NOT NULL,
-  "nlId" number(12) default '0' NOT NULL,
-  "users" number(10) default NULL,
-  "sent" number(14) default NULL,
-  "subject" varchar(200) default NULL,
-  "data" blob,
-  "datatxt" blob,
-  PRIMARY KEY (editionId)
+CREATE TABLE `tiki_semaphores` (
+  `semName` varchar(250) default '' NOT NULL,
+  `objectType` varchar(20) default 'wiki page',
+  `user` varchar(200) default '' NOT NULL,
+  `timestamp` number(14) default NULL,
+  PRIMARY KEY (`semName`)
+) ENGINE=MyISAM;
+
+
+DROP TABLE `tiki_sent_newsletters`;
+
+CREATE TABLE `tiki_sent_newsletters` (
+  `editionId` number(12) NOT NULL auto_increment,
+  `nlId` number(12) default '0' NOT NULL,
+  `users` number(10) default NULL,
+  `sent` number(14) default NULL,
+  `subject` varchar(200) default NULL,
+  `data` blob,
+  `datatxt` blob,
+  PRIMARY KEY (`editionId`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_sent_newsletters_trig" BEFORE INSERT ON "tiki_sent_newsletters" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_sent_newsletters_sequ".nextval into :NEW."editionId" FROM DUAL;
-END;
-/
 
-DROP TABLE "tiki_sent_newsletters_errors";
+DROP TABLE `tiki_sent_newsletters_errors`;
 
-CREATE TABLE "tiki_sent_newsletters_errors" (
-  "editionId" number(12),
-  "email" varchar(255),
-  "login" varchar(40) default '',
-  "error" char(1) default '',
+CREATE TABLE `tiki_sent_newsletters_errors` (
+  `editionId` number(12),
+  `email` varchar(255),
+  `login` varchar(40) default '',
+  `error` char(1) default '',
   KEY (editionId)
 ) ENGINE=MyISAM ;
 
 
-DROP TABLE "tiki_sessions";
+DROP TABLE `tiki_sessions`;
 
-CREATE TABLE "tiki_sessions" (
-  "sessionId" varchar(32) default '' NOT NULL,
-  "user" varchar(200) default '',
-  "timestamp" number(14) default NULL,
-  "tikihost" varchar(200) default NULL,
-  PRIMARY KEY (sessionId)
-) ENGINE=MyISAM;
-
-CREATE  INDEX "tiki_sessions_user" ON "tiki_sessions"("user");
-CREATE  INDEX "tiki_sessions_timestamp" ON "tiki_sessions"("timestamp");
-
-DROP TABLE "tiki_sheet_layout";
-
-CREATE TABLE "tiki_sheet_layout" (
-  "sheetId" number(8) default '0' NOT NULL,
-  "begin" number(10) default '0' NOT NULL,
-  "end" number(10) default NULL,
-  "headerRow" number(4) default '0' NOT NULL,
-  "footerRow" number(4) default '0' NOT NULL,
-  "className" varchar(64) default NULL
-) ENGINE=MyISAM;
-
-CREATE UNIQUE INDEX "tiki_sheet_layout_sheetId" ON "tiki_sheet_layout"("sheetId","begin");
-
-DROP TABLE "tiki_sheet_values";
-
-CREATE TABLE "tiki_sheet_values" (
-  "sheetId" number(8) default '0' NOT NULL,
-  "begin" number(10) default '0' NOT NULL,
-  "end" number(10) default NULL,
-  "rowIndex" number(4) default '0' NOT NULL,
-  "columnIndex" number(4) default '0' NOT NULL,
-  "value" varchar(255) default NULL,
-  "calculation" varchar(255) default NULL,
-  "width" number(4) default '1' NOT NULL,
-  "height" number(4) default '1' NOT NULL,
-  "format" varchar(255) default NULL,
-  "user" varchar(200) default ''
-) ENGINE=MyISAM;
-
-CREATE  INDEX "tiki_sheet_values_sheetId_2" ON "tiki_sheet_values"("sheetId","rowIndex","columnIndex");
-CREATE UNIQUE INDEX "tiki_sheet_values_sheetId" ON "tiki_sheet_values"("sheetId","begin","rowIndex","columnIndex");
-
-DROP TABLE "tiki_sheets";
-
-CREATE SEQUENCE "tiki_sheets_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_sheets" (
-  "sheetId" number(8) NOT NULL,
-  "title" varchar(200) default '' NOT NULL,
-  "description" clob,
-  "author" varchar(200) default '' NOT NULL,
-  PRIMARY KEY (sheetId)
-) ENGINE=MyISAM;
-
-CREATE TRIGGER "tiki_sheets_trig" BEFORE INSERT ON "tiki_sheets" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_sheets_sequ".nextval into :NEW."sheetId" FROM DUAL;
-END;
-/
-
-DROP TABLE "tiki_shoutbox";
-
-CREATE SEQUENCE "tiki_shoutbox_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_shoutbox" (
-  "msgId" number(10) NOT NULL,
-  "message" varchar(255) default NULL,
-  "timestamp" number(14) default NULL,
-  "user" varchar(200) NULL default '',
-  "hash" varchar(32) default NULL,
-  PRIMARY KEY (msgId)
-) ENGINE=MyISAM  ;
-
-CREATE TRIGGER "tiki_shoutbox_trig" BEFORE INSERT ON "tiki_shoutbox" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_shoutbox_sequ".nextval into :NEW."msgId" FROM DUAL;
-END;
-/
-
-DROP TABLE "tiki_shoutbox_words";
-
-CREATE TABLE "tiki_shoutbox_words" (
-  "word" VARCHAR( 40 ) NOT NULL ,
-  "qty" INT DEFAULT '0' NOT NULL ,
-  PRIMARY KEY (word)
+CREATE TABLE `tiki_sessions` (
+  `sessionId` varchar(32) default '' NOT NULL,
+  `user` varchar(200) default '',
+  `timestamp` number(14) default NULL,
+  `tikihost` varchar(200) default NULL,
+  PRIMARY KEY (`sessionId`),
+  KEY `user` (user),
+  KEY `timestamp` (`timestamp`)
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_structure_versions";
+DROP TABLE `tiki_sheet_layout`;
 
-CREATE SEQUENCE "tiki_structure_versions_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_structure_versions" (
-  "structure_id" number(14) NOT NULL,
-  "version" number(14) default NULL,
-  PRIMARY KEY (structure_id)
-) ENGINE=MyISAM  ;
-
-CREATE TRIGGER "tiki_structure_versions_trig" BEFORE INSERT ON "tiki_structure_versions" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_structure_versions_sequ".nextval into :NEW."structure_id" FROM DUAL;
-END;
-/
-
-DROP TABLE "tiki_structures";
-
-CREATE SEQUENCE "tiki_structures_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_structures" (
-  "page_ref_id" number(14) NOT NULL,
-  "structure_id" number(14) NOT NULL,
-  "parent_id" number(14) default NULL,
-  "page_id" number(14) NOT NULL,
-  "page_version" number(8) default NULL,
-  "page_alias" varchar(240) default '' NOT NULL,
-  "pos" number(4) default NULL,
-  PRIMARY KEY (page_ref_id)
-) ENGINE=MyISAM  ;
-
-CREATE TRIGGER "tiki_structures_trig" BEFORE INSERT ON "tiki_structures" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_structures_sequ".nextval into :NEW."page_ref_id" FROM DUAL;
-END;
-/
-CREATE  INDEX "tiki_structures_pidpaid" ON "tiki_structures"("page_id","parent_id");
-CREATE  INDEX "tiki_structures_page_id" ON "tiki_structures"("page_id");
-
-DROP TABLE "tiki_submissions";
-
-CREATE SEQUENCE "tiki_submissions_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_submissions" (
-  "subId" number(8) NOT NULL,
-  "topline" varchar(255) default NULL,
-  "title" varchar(255) default NULL,
-  "subtitle" varchar(255) default NULL,
-  "linkto" varchar(255) default NULL,
-  "lang" varchar(16) default NULL,
-  "authorName" varchar(60) default NULL,
-  "topicId" number(14) default NULL,
-  "topicName" varchar(40) default NULL,
-  "size" number(12) default NULL,
-  "useImage" char(1) default NULL,
-  "image_name" varchar(80) default NULL,
-  "image_caption" clob default NULL,
-  "image_type" varchar(80) default NULL,
-  "image_size" number(14) default NULL,
-  "image_x" number(4) default NULL,
-  "image_y" number(4) default NULL,
-  "image_data" blob,
-  "publishDate" number(14) default NULL,
-  "expireDate" number(14) default NULL,
-  "created" number(14) default NULL,
-  "bibliographical_references" clob,
-  "resume" clob,
-  "heading" clob,
-  "body" clob,
-  "hash" varchar(32) default NULL,
-  "author" varchar(200) default '' NOT NULL,
-  "nbreads" number(14) default NULL,
-  "votes" number(8) default NULL,
-  "points" number(14) default NULL,
-  "type" varchar(50) default NULL,
-  "rating" decimal(3,2) default NULL,
-  "isfloat" char(1) default NULL,
-  PRIMARY KEY (subId)
-) ENGINE=MyISAM  ;
-
-CREATE TRIGGER "tiki_submissions_trig" BEFORE INSERT ON "tiki_submissions" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_submissions_sequ".nextval into :NEW."subId" FROM DUAL;
-END;
-/
-
-DROP TABLE "tiki_suggested_faq_questions";
-
-CREATE SEQUENCE "tiki_suggested_faq_questions_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_suggested_faq_questions" (
-  "sfqId" number(10) NOT NULL,
-  "faqId" number(10) default '0' NOT NULL,
-  "question" clob,
-  "answer" clob,
-  "created" number(14) default NULL,
-  "user" varchar(200) default '' NOT NULL,
-  PRIMARY KEY (sfqId)
-) ENGINE=MyISAM  ;
-
-CREATE TRIGGER "tiki_suggested_faq_questions_trig" BEFORE INSERT ON "tiki_suggested_faq_questions" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_suggested_faq_questions_sequ".nextval into :NEW."sfqId" FROM DUAL;
-END;
-/
-
-DROP TABLE "tiki_survey_question_options";
-
-CREATE SEQUENCE "tiki_survey_question_options_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_survey_question_options" (
-  "optionId" number(12) NOT NULL,
-  "questionId" number(12) default '0' NOT NULL,
-  "qoption" clob,
-  "votes" number(10) default NULL,
-  PRIMARY KEY (optionId)
-) ENGINE=MyISAM  ;
-
-CREATE TRIGGER "tiki_survey_question_options_trig" BEFORE INSERT ON "tiki_survey_question_options" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_survey_question_options_sequ".nextval into :NEW."optionId" FROM DUAL;
-END;
-/
-
-DROP TABLE "tiki_survey_questions";
-
-CREATE SEQUENCE "tiki_survey_questions_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_survey_questions" (
-  "questionId" number(12) NOT NULL,
-  "surveyId" number(12) default '0' NOT NULL,
-  "question" clob,
-  "options" clob,
-  "type" char(1) default NULL,
-  "position" number(5) default NULL,
-  "votes" number(10) default NULL,
-  "value" number(10) default NULL,
-  "average" decimal(4,2) default NULL,
-  "mandatory" char(1) default 'n' NOT NULL,
-  "max_answers" number(5) default 0 NOT NULL,
-  "min_answers" number(5) default 0 NOT NULL,
-  PRIMARY KEY (questionId)
-) ENGINE=MyISAM  ;
-
-CREATE TRIGGER "tiki_survey_questions_trig" BEFORE INSERT ON "tiki_survey_questions" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_survey_questions_sequ".nextval into :NEW."questionId" FROM DUAL;
-END;
-/
-
-DROP TABLE "tiki_surveys";
-
-CREATE SEQUENCE "tiki_surveys_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_surveys" (
-  "surveyId" number(12) NOT NULL,
-  "name" varchar(200) default NULL,
-  "description" clob,
-  "taken" number(10) default NULL,
-  "lastTaken" number(14) default NULL,
-  "created" number(14) default NULL,
-  "status" char(1) default NULL,
-  PRIMARY KEY (surveyId)
-) ENGINE=MyISAM  ;
-
-CREATE TRIGGER "tiki_surveys_trig" BEFORE INSERT ON "tiki_surveys" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_surveys_sequ".nextval into :NEW."surveyId" FROM DUAL;
-END;
-/
-
-DROP TABLE "tiki_tags";
-
-CREATE TABLE "tiki_tags" (
-  "tagName" varchar(80) default '' NOT NULL,
-  "pageName" varchar(160) default '' NOT NULL,
-  "hits" number(8) default NULL,
-  "description" varchar(200) default NULL,
-  "data" blob,
-  "lastModif" number(14) default NULL,
-  "comment" varchar(200) default NULL,
-  "version" number(8) default '0' NOT NULL,
-  "user" varchar(200) default '' NOT NULL,
-  "ip" varchar(15) default NULL,
-  "flag" char(1) default NULL,
-  PRIMARY KEY (tagName,pageName)
+CREATE TABLE `tiki_sheet_layout` (
+  `sheetId` number(8) default '0' NOT NULL,
+  `begin` number(10) default '0' NOT NULL,
+  `end` number(10) default NULL,
+  `headerRow` number(4) default '0' NOT NULL,
+  `footerRow` number(4) default '0' NOT NULL,
+  `className` varchar(64) default NULL,
+  UNIQUE KEY `sheetId` (`sheetId`, `begin`)
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_theme_control_categs";
+DROP TABLE `tiki_sheet_values`;
 
-CREATE TABLE "tiki_theme_control_categs" (
-  "categId" number(12) default '0' NOT NULL,
-  "theme" varchar(250) default '' NOT NULL,
-  PRIMARY KEY (categId)
+CREATE TABLE `tiki_sheet_values` (
+  `sheetId` number(8) default '0' NOT NULL,
+  `begin` number(10) default '0' NOT NULL,
+  `end` number(10) default NULL,
+  `rowIndex` number(4) default '0' NOT NULL,
+  `columnIndex` number(4) default '0' NOT NULL,
+  `value` varchar(255) default NULL,
+  `calculation` varchar(255) default NULL,
+  `width` number(4) default '1' NOT NULL,
+  `height` number(4) default '1' NOT NULL,
+  `format` varchar(255) default NULL,
+  `user` varchar(200) default '',
+  UNIQUE KEY `sheetId` (sheetId,begin,rowIndex,columnIndex),
+  KEY `sheetId_2` (sheetId,rowIndex,columnIndex)
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_theme_control_objects";
+DROP TABLE `tiki_sheets`;
 
-CREATE TABLE "tiki_theme_control_objects" (
-  "objId" varchar(250) default '' NOT NULL,
-  "type" varchar(250) default '' NOT NULL,
-  "name" varchar(250) default '' NOT NULL,
-  "theme" varchar(250) default '' NOT NULL,
-  PRIMARY KEY (objId(100), type(100))
+CREATE TABLE `tiki_sheets` (
+  `sheetId` number(8) NOT NULL auto_increment,
+  `title` varchar(200) default '' NOT NULL,
+  `description` clob,
+  `author` varchar(200) default '' NOT NULL,
+  PRIMARY KEY (`sheetId`)
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_theme_control_sections";
+DROP TABLE `tiki_shoutbox`;
 
-CREATE TABLE "tiki_theme_control_sections" (
-  "section" varchar(250) default '' NOT NULL,
-  "theme" varchar(250) default '' NOT NULL,
-  PRIMARY KEY (section)
-) ENGINE=MyISAM;
-
-
-DROP TABLE "tiki_topics";
-
-CREATE SEQUENCE "tiki_topics_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_topics" (
-  "topicId" number(14) NOT NULL,
-  "name" varchar(40) default NULL,
-  "image_name" varchar(80) default NULL,
-  "image_type" varchar(80) default NULL,
-  "image_size" number(14) default NULL,
-  "image_data" blob,
-  "active" char(1) default NULL,
-  "created" number(14) default NULL,
-  PRIMARY KEY (topicId)
+CREATE TABLE `tiki_shoutbox` (
+  `msgId` number(10) NOT NULL auto_increment,
+  `message` varchar(255) default NULL,
+  `timestamp` number(14) default NULL,
+  `user` varchar(200) NULL default '',
+  `hash` varchar(32) default NULL,
+  PRIMARY KEY (`msgId`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_topics_trig" BEFORE INSERT ON "tiki_topics" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_topics_sequ".nextval into :NEW."topicId" FROM DUAL;
-END;
-/
 
-DROP TABLE "tiki_tracker_fields";
+DROP TABLE `tiki_shoutbox_words`;
 
-CREATE SEQUENCE "tiki_tracker_fields_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_tracker_fields" (
-  "fieldId" number(12) NOT NULL,
-  "trackerId" number(12) default '0' NOT NULL,
-  "name" varchar(255) default NULL,
-  "options" clob,
-  "type" varchar(15) default NULL,
-  "isMain" char(1) default NULL,
-  "isTblVisible" char(1) default NULL,
-  "position" number(4) default NULL,
-  "isSearchable" char(1) default 'y' NOT NULL,
-  "isPublic" char(1) default 'n' NOT NULL,
-  "isHidden" char(1) default 'n' NOT NULL,
-  "isMandatory" char(1) default 'n' NOT NULL,
-  "description" clob,
-  "isMultilingual" char(1) default 'n',
-  "itemChoices" clob,
-  "errorMsg" clob,
-  "visibleBy" clob,
-  "editableBy" clob,
-  "descriptionIsParsed" char(1) default 'n',
-  PRIMARY KEY (fieldId),
+CREATE TABLE `tiki_shoutbox_words` (
+  `word` VARCHAR( 40 ) NOT NULL ,
+  `qty` INT DEFAULT '0' NOT NULL ,
+  PRIMARY KEY (`word`)
+) ENGINE=MyISAM;
+
+
+DROP TABLE `tiki_structure_versions`;
+
+CREATE TABLE `tiki_structure_versions` (
+  `structure_id` number(14) NOT NULL auto_increment,
+  `version` number(14) default NULL,
+  PRIMARY KEY (`structure_id`)
+) ENGINE=MyISAM  ;
+
+
+DROP TABLE `tiki_structures`;
+
+CREATE TABLE `tiki_structures` (
+  `page_ref_id` number(14) NOT NULL auto_increment,
+  `structure_id` number(14) NOT NULL,
+  `parent_id` number(14) default NULL,
+  `page_id` number(14) NOT NULL,
+  `page_version` number(8) default NULL,
+  `page_alias` varchar(240) default '' NOT NULL,
+  `pos` number(4) default NULL,
+  PRIMARY KEY (`page_ref_id`),
+  KEY `pidpaid` (page_id,parent_id),
+  KEY `page_id` (page_id)
+) ENGINE=MyISAM  ;
+
+
+DROP TABLE `tiki_submissions`;
+
+CREATE TABLE `tiki_submissions` (
+  `subId` number(8) NOT NULL auto_increment,
+  `topline` varchar(255) default NULL,
+  `title` varchar(255) default NULL,
+  `subtitle` varchar(255) default NULL,
+  `linkto` varchar(255) default NULL,
+  `lang` varchar(16) default NULL,
+  `authorName` varchar(60) default NULL,
+  `topicId` number(14) default NULL,
+  `topicName` varchar(40) default NULL,
+  `size` number(12) default NULL,
+  `useImage` char(1) default NULL,
+  `image_name` varchar(80) default NULL,
+  `image_caption` clob default NULL,
+  `image_type` varchar(80) default NULL,
+  `image_size` number(14) default NULL,
+  `image_x` number(4) default NULL,
+  `image_y` number(4) default NULL,
+  `image_data` blob,
+  `publishDate` number(14) default NULL,
+  `expireDate` number(14) default NULL,
+  `created` number(14) default NULL,
+  `bibliographical_references` clob,
+  `resume` clob,
+  `heading` clob,
+  `body` clob,
+  `hash` varchar(32) default NULL,
+  `author` varchar(200) default '' NOT NULL,
+  `nbreads` number(14) default NULL,
+  `votes` number(8) default NULL,
+  `points` number(14) default NULL,
+  `type` varchar(50) default NULL,
+  `rating` decimal(3,2) default NULL,
+  `isfloat` char(1) default NULL,
+  PRIMARY KEY (`subId`)
+) ENGINE=MyISAM  ;
+
+
+DROP TABLE `tiki_suggested_faq_questions`;
+
+CREATE TABLE `tiki_suggested_faq_questions` (
+  `sfqId` number(10) NOT NULL auto_increment,
+  `faqId` number(10) default '0' NOT NULL,
+  `question` clob,
+  `answer` clob,
+  `created` number(14) default NULL,
+  `user` varchar(200) default '' NOT NULL,
+  PRIMARY KEY (`sfqId`)
+) ENGINE=MyISAM  ;
+
+
+DROP TABLE `tiki_survey_question_options`;
+
+CREATE TABLE `tiki_survey_question_options` (
+  `optionId` number(12) NOT NULL auto_increment,
+  `questionId` number(12) default '0' NOT NULL,
+  `qoption` clob,
+  `votes` number(10) default NULL,
+  PRIMARY KEY (`optionId`)
+) ENGINE=MyISAM  ;
+
+
+DROP TABLE `tiki_survey_questions`;
+
+CREATE TABLE `tiki_survey_questions` (
+  `questionId` number(12) NOT NULL auto_increment,
+  `surveyId` number(12) default '0' NOT NULL,
+  `question` clob,
+  `options` clob,
+  `type` char(1) default NULL,
+  `position` number(5) default NULL,
+  `votes` number(10) default NULL,
+  `value` number(10) default NULL,
+  `average` decimal(4,2) default NULL,
+  `mandatory` char(1) default 'n' NOT NULL,
+  `max_answers` number(5) default 0 NOT NULL,
+  `min_answers` number(5) default 0 NOT NULL,
+  PRIMARY KEY (`questionId`)
+) ENGINE=MyISAM  ;
+
+
+DROP TABLE `tiki_surveys`;
+
+CREATE TABLE `tiki_surveys` (
+  `surveyId` number(12) NOT NULL auto_increment,
+  `name` varchar(200) default NULL,
+  `description` clob,
+  `taken` number(10) default NULL,
+  `lastTaken` number(14) default NULL,
+  `created` number(14) default NULL,
+  `status` char(1) default NULL,
+  PRIMARY KEY (`surveyId`)
+) ENGINE=MyISAM  ;
+
+
+DROP TABLE `tiki_tags`;
+
+CREATE TABLE `tiki_tags` (
+  `tagName` varchar(80) default '' NOT NULL,
+  `pageName` varchar(160) default '' NOT NULL,
+  `hits` number(8) default NULL,
+  `description` varchar(200) default NULL,
+  `data` blob,
+  `lastModif` number(14) default NULL,
+  `comment` varchar(200) default NULL,
+  `version` number(8) default '0' NOT NULL,
+  `user` varchar(200) default '' NOT NULL,
+  `ip` varchar(15) default NULL,
+  `flag` char(1) default NULL,
+  PRIMARY KEY (`tagName`,`pageName`)
+) ENGINE=MyISAM;
+
+
+DROP TABLE `tiki_theme_control_categs`;
+
+CREATE TABLE `tiki_theme_control_categs` (
+  `categId` number(12) default '0' NOT NULL,
+  `theme` varchar(250) default '' NOT NULL,
+  PRIMARY KEY (`categId`)
+) ENGINE=MyISAM;
+
+
+DROP TABLE `tiki_theme_control_objects`;
+
+CREATE TABLE `tiki_theme_control_objects` (
+  `objId` varchar(250) default '' NOT NULL,
+  `type` varchar(250) default '' NOT NULL,
+  `name` varchar(250) default '' NOT NULL,
+  `theme` varchar(250) default '' NOT NULL,
+  PRIMARY KEY (`objId`(100), `type`(100))
+) ENGINE=MyISAM;
+
+
+DROP TABLE `tiki_theme_control_sections`;
+
+CREATE TABLE `tiki_theme_control_sections` (
+  `section` varchar(250) default '' NOT NULL,
+  `theme` varchar(250) default '' NOT NULL,
+  PRIMARY KEY (`section`)
+) ENGINE=MyISAM;
+
+
+DROP TABLE `tiki_topics`;
+
+CREATE TABLE `tiki_topics` (
+  `topicId` number(14) NOT NULL auto_increment,
+  `name` varchar(40) default NULL,
+  `image_name` varchar(80) default NULL,
+  `image_type` varchar(80) default NULL,
+  `image_size` number(14) default NULL,
+  `image_data` blob,
+  `active` char(1) default NULL,
+  `created` number(14) default NULL,
+  PRIMARY KEY (`topicId`)
+) ENGINE=MyISAM  ;
+
+
+DROP TABLE `tiki_tracker_fields`;
+
+CREATE TABLE `tiki_tracker_fields` (
+  `fieldId` number(12) NOT NULL auto_increment,
+  `trackerId` number(12) default '0' NOT NULL,
+  `name` varchar(255) default NULL,
+  `options` clob,
+  `type` varchar(15) default NULL,
+  `isMain` char(1) default NULL,
+  `isTblVisible` char(1) default NULL,
+  `position` number(4) default NULL,
+  `isSearchable` char(1) default 'y' NOT NULL,
+  `isPublic` char(1) default 'n' NOT NULL,
+  `isHidden` char(1) default 'n' NOT NULL,
+  `isMandatory` char(1) default 'n' NOT NULL,
+  `description` clob,
+  `isMultilingual` char(1) default 'n',
+  `itemChoices` clob,
+  `errorMsg` clob,
+  `visibleBy` clob,
+  `editableBy` clob,
+  `descriptionIsParsed` char(1) default 'n',
+  PRIMARY KEY (`fieldId`),
   "INDEX" trackerId (trackerId)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_tracker_fields_trig" BEFORE INSERT ON "tiki_tracker_fields" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_tracker_fields_sequ".nextval into :NEW."fieldId" FROM DUAL;
-END;
-/
 
-DROP TABLE "tiki_tracker_item_attachments";
+DROP TABLE `tiki_tracker_item_attachments`;
 
-CREATE SEQUENCE "tiki_tracker_item_attachments_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_tracker_item_attachments" (
-  "attId" number(12) NOT NULL,
-  "itemId" number(12) default 0 NOT NULL,
-  "filename" varchar(80) default NULL,
-  "filetype" varchar(80) default NULL,
-  "filesize" number(14) default NULL,
-  "user" varchar(200) default NULL,
-  "data" blob,
-  "path" varchar(255) default NULL,
-  "hits" number(10) default NULL,
-  "created" number(14) default NULL,
-  "comment" varchar(250) default NULL,
-  "longdesc" blob,
-  "version" varchar(40) default NULL,
-  PRIMARY KEY (attId),
+CREATE TABLE `tiki_tracker_item_attachments` (
+  `attId` number(12) NOT NULL auto_increment,
+  `itemId` number(12) default 0 NOT NULL,
+  `filename` varchar(80) default NULL,
+  `filetype` varchar(80) default NULL,
+  `filesize` number(14) default NULL,
+  `user` varchar(200) default NULL,
+  `data` blob,
+  `path` varchar(255) default NULL,
+  `hits` number(10) default NULL,
+  `created` number(14) default NULL,
+  `comment` varchar(250) default NULL,
+  `longdesc` blob,
+  `version` varchar(40) default NULL,
+  PRIMARY KEY (`attId`),
   "INDEX" itemId (itemId)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_tracker_item_attachments_trig" BEFORE INSERT ON "tiki_tracker_item_attachments" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_tracker_item_attachments_sequ".nextval into :NEW."attId" FROM DUAL;
-END;
-/
 
-DROP TABLE "tiki_tracker_item_comments";
+DROP TABLE `tiki_tracker_item_comments`;
 
-CREATE SEQUENCE "tiki_tracker_item_comments_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_tracker_item_comments" (
-  "commentId" number(12) NOT NULL,
-  "itemId" number(12) default '0' NOT NULL,
-  "user" varchar(200) default NULL,
-  "data" clob,
-  "title" varchar(200) default NULL,
-  "posted" number(14) default NULL,
-  PRIMARY KEY (commentId)
+CREATE TABLE `tiki_tracker_item_comments` (
+  `commentId` number(12) NOT NULL auto_increment,
+  `itemId` number(12) default '0' NOT NULL,
+  `user` varchar(200) default NULL,
+  `data` clob,
+  `title` varchar(200) default NULL,
+  `posted` number(14) default NULL,
+  PRIMARY KEY (`commentId`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_tracker_item_comments_trig" BEFORE INSERT ON "tiki_tracker_item_comments" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_tracker_item_comments_sequ".nextval into :NEW."commentId" FROM DUAL;
-END;
-/
 
-DROP TABLE "tiki_tracker_item_fields";
+DROP TABLE `tiki_tracker_item_fields`;
 
-CREATE TABLE "tiki_tracker_item_fields" (
-  "itemId" number(12) default '0' NOT NULL,
-  "fieldId" number(12) default '0' NOT NULL,
-  "value" clob,
-  "lang" char(16) default NULL,
-  PRIMARY KEY (itemId,fieldId,lang),
+CREATE TABLE `tiki_tracker_item_fields` (
+  `itemId` number(12) default '0' NOT NULL,
+  `fieldId` number(12) default '0' NOT NULL,
+  `value` clob,
+  `lang` char(16) default NULL,
+  PRIMARY KEY (`itemId`,`fieldId`,`lang`),
   "INDEX" fieldId (fieldId),
   "INDEX" value (value(250)),
-  "INDEX" lang (lang)
+  "INDEX" lang (lang),
+  FULLTEXT KEY `ft` (value)
 ) ENGINE=MyISAM;
 
-CREATE  INDEX "tiki_tracker_item_fields_ft" ON "tiki_tracker_item_fields"("value");
 
-DROP TABLE "tiki_tracker_items";
+DROP TABLE `tiki_tracker_items`;
 
-CREATE SEQUENCE "tiki_tracker_items_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_tracker_items" (
-  "itemId" number(12) NOT NULL,
-  "trackerId" number(12) default '0' NOT NULL,
-  "created" number(14) default NULL,
-  "status" char(1) default NULL,
-  "lastModif" number(14) default NULL,
-  PRIMARY KEY (itemId),
+CREATE TABLE `tiki_tracker_items` (
+  `itemId` number(12) NOT NULL auto_increment,
+  `trackerId` number(12) default '0' NOT NULL,
+  `created` number(14) default NULL,
+  `status` char(1) default NULL,
+  `lastModif` number(14) default NULL,
+  PRIMARY KEY (`itemId`),
   "INDEX" trackerId (trackerId)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_tracker_items_trig" BEFORE INSERT ON "tiki_tracker_items" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_tracker_items_sequ".nextval into :NEW."itemId" FROM DUAL;
-END;
-/
 
-DROP TABLE "tiki_tracker_options";
+DROP TABLE `tiki_tracker_options`;
 
-CREATE TABLE "tiki_tracker_options" (
-  "trackerId" number(12) default '0' NOT NULL,
-  "name" varchar(80) default '' NOT NULL,
-  "value" clob default NULL,
-  PRIMARY KEY (trackerId,name(30))
+CREATE TABLE `tiki_tracker_options` (
+  `trackerId` number(12) default '0' NOT NULL,
+  `name` varchar(80) default '' NOT NULL,
+  `value` clob default NULL,
+  PRIMARY KEY (`trackerId`,`name`(30))
 ) ENGINE=MyISAM ;
 
 
-DROP TABLE "tiki_trackers";
+DROP TABLE `tiki_trackers`;
 
-CREATE SEQUENCE "tiki_trackers_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_trackers" (
-  "trackerId" number(12) NOT NULL,
-  "name" varchar(255) default NULL,
-  "description" clob,
-  "descriptionIsParsed" varchar(1) NULL default '0',
-  "created" number(14) default NULL,
-  "lastModif" number(14) default NULL,
-  "showCreated" char(1) default NULL,
-  "showStatus" char(1) default NULL,
-  "showLastModif" char(1) default NULL,
-  "useComments" char(1) default NULL,
-  "useAttachments" char(1) default NULL,
-  "showAttachments" char(1) default NULL,
-  "items" number(10) default NULL,
-  "showComments" char(1) default NULL,
-  "orderAttachments" varchar(255) default 'filename,created,filesize,hits,desc' NOT NULL,
-  PRIMARY KEY (trackerId)
+CREATE TABLE `tiki_trackers` (
+  `trackerId` number(12) NOT NULL auto_increment,
+  `name` varchar(255) default NULL,
+  `description` clob,
+  `descriptionIsParsed` varchar(1) NULL default '0',
+  `created` number(14) default NULL,
+  `lastModif` number(14) default NULL,
+  `showCreated` char(1) default NULL,
+  `showStatus` char(1) default NULL,
+  `showLastModif` char(1) default NULL,
+  `useComments` char(1) default NULL,
+  `useAttachments` char(1) default NULL,
+  `showAttachments` char(1) default NULL,
+  `items` number(10) default NULL,
+  `showComments` char(1) default NULL,
+  `orderAttachments` varchar(255) default 'filename,created,filesize,hits,desc' NOT NULL,
+  PRIMARY KEY (`trackerId`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_trackers_trig" BEFORE INSERT ON "tiki_trackers" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_trackers_sequ".nextval into :NEW."trackerId" FROM DUAL;
-END;
-/
 
-DROP TABLE "tiki_untranslated";
+DROP TABLE `tiki_untranslated`;
 
-CREATE SEQUENCE "tiki_untranslated_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_untranslated" (
-  "id" number(14) NOT NULL,
-  "source" blob NOT NULL,
-  "lang" char(16) default '' NOT NULL,
-  PRIMARY KEY (source(255),lang)
+CREATE TABLE `tiki_untranslated` (
+  `id` number(14) NOT NULL auto_increment,
+  `source` blob NOT NULL,
+  `lang` char(16) default '' NOT NULL,
+  PRIMARY KEY (`source`(255),`lang`),
+  UNIQUE KEY `id` (id),
+  KEY `id_2` (id)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_untranslated_trig" BEFORE INSERT ON "tiki_untranslated" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_untranslated_sequ".nextval into :NEW."id" FROM DUAL;
-END;
-/
-CREATE  INDEX "tiki_untranslated_id_2" ON "tiki_untranslated"("id");
-CREATE UNIQUE INDEX "tiki_untranslated_id" ON "tiki_untranslated"("id");
 
-DROP TABLE "tiki_user_answers";
+DROP TABLE `tiki_user_answers`;
 
-CREATE TABLE "tiki_user_answers" (
-  "userResultId" number(10) default '0' NOT NULL,
-  "quizId" number(10) default '0' NOT NULL,
-  "questionId" number(10) default '0' NOT NULL,
-  "optionId" number(10) default '0' NOT NULL,
-  PRIMARY KEY (userResultId,quizId,questionId,optionId)
+CREATE TABLE `tiki_user_answers` (
+  `userResultId` number(10) default '0' NOT NULL,
+  `quizId` number(10) default '0' NOT NULL,
+  `questionId` number(10) default '0' NOT NULL,
+  `optionId` number(10) default '0' NOT NULL,
+  PRIMARY KEY (`userResultId`,`quizId`,`questionId`,`optionId`)
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_user_answers_uploads";
+DROP TABLE `tiki_user_answers_uploads`;
 
-CREATE SEQUENCE "tiki_user_answers_uploads_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_user_answers_uploads" (
-  "answerUploadId" number(4) NOT NULL,
-  "userResultId" number(11) default '0' NOT NULL,
-  "questionId" number(11) default '0' NOT NULL,
-  "filename" varchar(255) default '' NOT NULL,
-  "filetype" varchar(64) default '' NOT NULL,
-  "filesize" varchar(255) default '' NOT NULL,
-  "filecontent" blob NOT NULL,
-  PRIMARY KEY (answerUploadId)
-) ENGINE=MyISAM;
-
-CREATE TRIGGER "tiki_user_answers_uploads_trig" BEFORE INSERT ON "tiki_user_answers_uploads" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_user_answers_uploads_sequ".nextval into :NEW."answerUploadId" FROM DUAL;
-END;
-/
-
-DROP TABLE "tiki_user_assigned_modules";
-
-CREATE TABLE "tiki_user_assigned_modules" (
-  "moduleId" number(8) NOT NULL,
-  "name" varchar(200) default '' NOT NULL,
-  "position" char(1) default NULL,
-  "ord" number(4) default NULL,
-  "type" char(1) default NULL,
-  "user" varchar(200) default '' NOT NULL,
-  PRIMARY KEY (name(30),user,position, ord)
+CREATE TABLE `tiki_user_answers_uploads` (
+  `answerUploadId` number(4) NOT NULL auto_increment,
+  `userResultId` number(11) default '0' NOT NULL,
+  `questionId` number(11) default '0' NOT NULL,
+  `filename` varchar(255) default '' NOT NULL,
+  `filetype` varchar(64) default '' NOT NULL,
+  `filesize` varchar(255) default '' NOT NULL,
+  `filecontent` blob NOT NULL,
+  PRIMARY KEY (`answerUploadId`)
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_user_bookmarks_folders";
+DROP TABLE `tiki_user_assigned_modules`;
 
-CREATE SEQUENCE "tiki_user_bookmarks_folders_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_user_bookmarks_folders" (
-  "folderId" number(12) NOT NULL,
-  "parentId" number(12) default NULL,
-  "user" varchar(200) default '' NOT NULL,
-  "name" varchar(30) default NULL,
-  PRIMARY KEY (user,folderId)
+CREATE TABLE `tiki_user_assigned_modules` (
+  `moduleId` number(8) NOT NULL,
+  `name` varchar(200) default '' NOT NULL,
+  `position` char(1) default NULL,
+  `ord` number(4) default NULL,
+  `type` char(1) default NULL,
+  `user` varchar(200) default '' NOT NULL,
+  PRIMARY KEY (`name`(30),`user`,`position`, `ord`)
+) ENGINE=MyISAM;
+
+
+DROP TABLE `tiki_user_bookmarks_folders`;
+
+CREATE TABLE `tiki_user_bookmarks_folders` (
+  `folderId` number(12) NOT NULL auto_increment,
+  `parentId` number(12) default NULL,
+  `user` varchar(200) default '' NOT NULL,
+  `name` varchar(30) default NULL,
+  PRIMARY KEY (`user`,`folderId`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_user_bookmarks_folders_trig" BEFORE INSERT ON "tiki_user_bookmarks_folders" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_user_bookmarks_folders_sequ".nextval into :NEW."folderId" FROM DUAL;
-END;
-/
 
-DROP TABLE "tiki_user_bookmarks_urls";
+DROP TABLE `tiki_user_bookmarks_urls`;
 
-CREATE SEQUENCE "tiki_user_bookmarks_urls_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_user_bookmarks_urls" (
-  "urlId" number(12) NOT NULL,
-  "name" varchar(30) default NULL,
-  "url" varchar(250) default NULL,
-  "data" blob,
-  "lastUpdated" number(14) default NULL,
-  "folderId" number(12) default '0' NOT NULL,
-  "user" varchar(200) default '' NOT NULL,
-  PRIMARY KEY (urlId)
+CREATE TABLE `tiki_user_bookmarks_urls` (
+  `urlId` number(12) NOT NULL auto_increment,
+  `name` varchar(30) default NULL,
+  `url` varchar(250) default NULL,
+  `data` blob,
+  `lastUpdated` number(14) default NULL,
+  `folderId` number(12) default '0' NOT NULL,
+  `user` varchar(200) default '' NOT NULL,
+  PRIMARY KEY (`urlId`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_user_bookmarks_urls_trig" BEFORE INSERT ON "tiki_user_bookmarks_urls" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_user_bookmarks_urls_sequ".nextval into :NEW."urlId" FROM DUAL;
-END;
-/
 
-DROP TABLE "tiki_user_mail_accounts";
+DROP TABLE `tiki_user_mail_accounts`;
 
-CREATE SEQUENCE "tiki_user_mail_accounts_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_user_mail_accounts" (
-  "accountId" number(12) NOT NULL,
-  "user" varchar(200) default '' NOT NULL,
-  "account" varchar(50) default '' NOT NULL,
-  "pop" varchar(255) default NULL,
-  "current" char(1) default NULL,
-  "port" number(4) default NULL,
-  "username" varchar(100) default NULL,
-  "pass" varchar(100) default NULL,
-  "msgs" number(4) default NULL,
-  "smtp" varchar(255) default NULL,
-  "useAuth" char(1) default NULL,
-  "smtpPort" number(4) default NULL,
-  "flagsPublic" char(1) default 'n',				-- COMMENT 'MatWho - Shared Group Mail box if y',
-  "autoRefresh" number(4) default 0,		-- COMMENT 'seconds for mail list to refresh, 0 = none' NOT NULL,
-  "imap" varchar( 255 ) default NULL,
-  "mbox" varchar( 255 ) default NULL,
-  "maildir" varchar( 255 ) default NULL,
-  "useSSL" char( 1 ) default 'n' NOT NULL,
-  PRIMARY KEY (accountId)
+CREATE TABLE `tiki_user_mail_accounts` (
+  `accountId` number(12) NOT NULL auto_increment,
+  `user` varchar(200) default '' NOT NULL,
+  `account` varchar(50) default '' NOT NULL,
+  `pop` varchar(255) default NULL,
+  `current` char(1) default NULL,
+  `port` number(4) default NULL,
+  `username` varchar(100) default NULL,
+  `pass` varchar(100) default NULL,
+  `msgs` number(4) default NULL,
+  `smtp` varchar(255) default NULL,
+  `useAuth` char(1) default NULL,
+  `smtpPort` number(4) default NULL,
+  `flagsPublic` char(1) default 'n',				-- COMMENT 'MatWho - Shared Group Mail box if y',
+  `autoRefresh` number(4) default 0,		-- COMMENT 'seconds for mail list to refresh, 0 = none' NOT NULL,
+  `imap` varchar( 255 ) default NULL,
+  `mbox` varchar( 255 ) default NULL,
+  `maildir` varchar( 255 ) default NULL,
+  `useSSL` char( 1 ) default 'n' NOT NULL,
+  PRIMARY KEY (`accountId`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_user_mail_accounts_trig" BEFORE INSERT ON "tiki_user_mail_accounts" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_user_mail_accounts_sequ".nextval into :NEW."accountId" FROM DUAL;
-END;
-/
 
-DROP TABLE "tiki_user_menus";
+DROP TABLE `tiki_user_menus`;
 
-CREATE SEQUENCE "tiki_user_menus_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_user_menus" (
-  "user" varchar(200) default '' NOT NULL,
-  "menuId" number(12) NOT NULL,
-  "url" varchar(250) default NULL,
-  "name" varchar(40) default NULL,
-  "position" number(4) default NULL,
-  "mode" char(1) default NULL,
-  PRIMARY KEY (menuId)
+CREATE TABLE `tiki_user_menus` (
+  `user` varchar(200) default '' NOT NULL,
+  `menuId` number(12) NOT NULL auto_increment,
+  `url` varchar(250) default NULL,
+  `name` varchar(40) default NULL,
+  `position` number(4) default NULL,
+  `mode` char(1) default NULL,
+  PRIMARY KEY (`menuId`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_user_menus_trig" BEFORE INSERT ON "tiki_user_menus" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_user_menus_sequ".nextval into :NEW."menuId" FROM DUAL;
-END;
-/
 
-DROP TABLE "tiki_user_modules";
+DROP TABLE `tiki_user_modules`;
 
-CREATE TABLE "tiki_user_modules" (
-  "name" varchar(200) default '' NOT NULL,
-  "title" varchar(40) default NULL,
-  "data" blob,
-  "parse" char(1) default NULL,
-  PRIMARY KEY (name)
+CREATE TABLE `tiki_user_modules` (
+  `name` varchar(200) default '' NOT NULL,
+  `title` varchar(40) default NULL,
+  `data` blob,
+  `parse` char(1) default NULL,
+  PRIMARY KEY (`name`)
 ) ENGINE=MyISAM;
 
 
 INSERT INTO "tiki_user_modules" ("name","title","data","parse") VALUES ('mnu_application_menu', 'Menu', '{menu id=42}', 'n');
 
 
-DROP TABLE "tiki_user_notes";
+DROP TABLE `tiki_user_notes`;
 
-CREATE SEQUENCE "tiki_user_notes_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_user_notes" (
-  "user" varchar(200) default '' NOT NULL,
-  "noteId" number(12) NOT NULL,
-  "created" number(14) default NULL,
-  "name" varchar(255) default NULL,
-  "lastModif" number(14) default NULL,
-  "data" clob,
-  "size" number(14) default NULL,
-  "parse_mode" varchar(20) default NULL,
-  PRIMARY KEY (noteId)
-) ENGINE=MyISAM  ;
-
-CREATE TRIGGER "tiki_user_notes_trig" BEFORE INSERT ON "tiki_user_notes" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_user_notes_sequ".nextval into :NEW."noteId" FROM DUAL;
-END;
-/
-
-DROP TABLE "tiki_user_postings";
-
-CREATE TABLE "tiki_user_postings" (
-  "user" varchar(200) default '' NOT NULL,
-  "posts" number(12) default NULL,
-  "last" number(14) default NULL,
-  "first" number(14) default NULL,
-  "level" number(8) default NULL,
-  PRIMARY KEY (user)
-) ENGINE=MyISAM;
-
-
-DROP TABLE "tiki_user_preferences";
-
-CREATE TABLE "tiki_user_preferences" (
-  "user" varchar(200) default '' NOT NULL,
-  "prefName" varchar(40) default '' NOT NULL,
-  "value" varchar(250) default NULL,
-  PRIMARY KEY (user,prefName)
-) ENGINE=MyISAM;
-
-
-DROP TABLE "tiki_user_quizzes";
-
-CREATE SEQUENCE "tiki_user_quizzes_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_user_quizzes" (
-  "user" varchar(200) default '',
-  "quizId" number(10) default NULL,
-  "timestamp" number(14) default NULL,
-  "timeTaken" number(14) default NULL,
-  "points" number(12) default NULL,
-  "maxPoints" number(12) default NULL,
-  "resultId" number(10) default NULL,
-  "userResultId" number(10) NOT NULL,
-  PRIMARY KEY (userResultId)
-) ENGINE=MyISAM  ;
-
-CREATE TRIGGER "tiki_user_quizzes_trig" BEFORE INSERT ON "tiki_user_quizzes" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_user_quizzes_sequ".nextval into :NEW."userResultId" FROM DUAL;
-END;
-/
-
-DROP TABLE "tiki_user_taken_quizzes";
-
-CREATE TABLE "tiki_user_taken_quizzes" (
-  "user" varchar(200) default '' NOT NULL,
-  "quizId" varchar(255) default '' NOT NULL,
-  PRIMARY KEY (user,quizId(50))
-) ENGINE=MyISAM;
-
-
-DROP TABLE "tiki_user_tasks_history";
-
-CREATE TABLE "tiki_user_tasks_history" (
-  "belongs_to" integer(14) NOT NULL,                   -- the first task in a history it has the same id as the task id
-  "task_version" integer(4) DEFAULT 0 NOT NULL,        -- version number for the history it starts with 0
-  "title" varchar(250) NOT NULL,                       -- title
-  "description" clob DEFAULT NULL,                     -- description
-  "start" integer(14) DEFAULT NULL,                    -- date of the starting, if it is not set than there is no starting date
-  "end" integer(14) DEFAULT NULL,                      -- date of the end, if it is not set than there is not dealine
-  "lasteditor" varchar(200) NOT NULL,                  -- lasteditor: username of last editior
-  "lastchanges" integer(14) NOT NULL,                  -- date of last changes
-  "priority" integer(2) DEFAULT 3 NOT NULL,                     -- priority
-  "completed" integer(14) DEFAULT NULL,                -- date of the completation if it is null it is not yet completed
-  "deleted" integer(14) DEFAULT NULL,                  -- date of the deleteation it it is null it is not deleted
-  "status" char(1) DEFAULT NULL,                       -- null := waiting,
-                                                     -- o := open / in progress,
-                                                     -- c := completed -> (percentage = 100)
-  "percentage" number(4) DEFAULT NULL,
-  "accepted_creator" char(1) DEFAULT NULL,             -- y - yes, n - no, null - waiting
-  "accepted_user" char(1) DEFAULT NULL,                -- y - yes, n - no, null - waiting
-  PRIMARY KEY (belongs_to, task_version)
+CREATE TABLE `tiki_user_notes` (
+  `user` varchar(200) default '' NOT NULL,
+  `noteId` number(12) NOT NULL auto_increment,
+  `created` number(14) default NULL,
+  `name` varchar(255) default NULL,
+  `lastModif` number(14) default NULL,
+  `data` clob,
+  `size` number(14) default NULL,
+  `parse_mode` varchar(20) default NULL,
+  PRIMARY KEY (`noteId`)
 ) ENGINE=MyISAM  ;
 
 
-DROP TABLE "tiki_user_tasks";
+DROP TABLE `tiki_user_postings`;
 
-CREATE TABLE "tiki_user_tasks" (
-  "taskId" integer(14) NOT NULL auto_increment,        -- task id
-  "last_version" integer(4) DEFAULT 0 NOT NULL,        -- last version of the task starting with 0
-  "user" varchar(200) DEFAULT '' NOT NULL,              -- task user
-  "creator" varchar(200) NOT NULL,                     -- username of creator
-  "public_for_group" varchar(30) DEFAULT NULL,         -- this group can also view the task, if it is null it is not public
-  "rights_by_creator" char(1) DEFAULT NULL,            -- null the user can delete the task,
-  "created" integer(14) NOT NULL,                      -- date of the creation
-  "status" char(1) default NULL,
-  "priority" number(2) default NULL,
-  "completed" number(14) default NULL,
-  "percentage" number(4) default NULL,
-  PRIMARY KEY (taskId),
+CREATE TABLE `tiki_user_postings` (
+  `user` varchar(200) default '' NOT NULL,
+  `posts` number(12) default NULL,
+  `last` number(14) default NULL,
+  `first` number(14) default NULL,
+  `level` number(8) default NULL,
+  PRIMARY KEY (`user`)
+) ENGINE=MyISAM;
+
+
+DROP TABLE `tiki_user_preferences`;
+
+CREATE TABLE `tiki_user_preferences` (
+  `user` varchar(200) default '' NOT NULL,
+  `prefName` varchar(40) default '' NOT NULL,
+  `value` varchar(250) default NULL,
+  PRIMARY KEY (`user`,`prefName`)
+) ENGINE=MyISAM;
+
+
+DROP TABLE `tiki_user_quizzes`;
+
+CREATE TABLE `tiki_user_quizzes` (
+  `user` varchar(200) default '',
+  `quizId` number(10) default NULL,
+  `timestamp` number(14) default NULL,
+  `timeTaken` number(14) default NULL,
+  `points` number(12) default NULL,
+  `maxPoints` number(12) default NULL,
+  `resultId` number(10) default NULL,
+  `userResultId` number(10) NOT NULL auto_increment,
+  PRIMARY KEY (`userResultId`)
+) ENGINE=MyISAM  ;
+
+
+DROP TABLE `tiki_user_taken_quizzes`;
+
+CREATE TABLE `tiki_user_taken_quizzes` (
+  `user` varchar(200) default '' NOT NULL,
+  `quizId` varchar(255) default '' NOT NULL,
+  PRIMARY KEY (`user`,`quizId`(50))
+) ENGINE=MyISAM;
+
+
+DROP TABLE `tiki_user_tasks_history`;
+
+CREATE TABLE `tiki_user_tasks_history` (
+  `belongs_to` integer(14) NOT NULL,                   -- the first task in a history it has the same id as the task id
+  `task_version` integer(4) DEFAULT 0 NOT NULL,        -- version number for the history it starts with 0
+  `title` varchar(250) NOT NULL,                       -- title
+  `description` clob DEFAULT NULL,                     -- description
+  `start` integer(14) DEFAULT NULL,                    -- date of the starting, if it is not set than there is no starting date
+  `end` integer(14) DEFAULT NULL,                      -- date of the end, if it is not set than there is not dealine
+  `lasteditor` varchar(200) NOT NULL,                  -- lasteditor: username of last editior
+  `lastchanges` integer(14) NOT NULL,                  -- date of last changes
+  `priority` integer(2) DEFAULT 3 NOT NULL,                     -- priority
+  `completed` integer(14) DEFAULT NULL,                -- date of the completation if it is null it is not yet completed
+  `deleted` integer(14) DEFAULT NULL,                  -- date of the deleteation it it is null it is not deleted
+  `status` char(1) DEFAULT NULL,                       -- null := waiting, o := open / in progress, c := completed -> (percentage = 100)
+  `percentage` number(4) DEFAULT NULL,
+  `accepted_creator` char(1) DEFAULT NULL,             -- y - yes, n - no, null - waiting
+  `accepted_user` char(1) DEFAULT NULL,                -- y - yes, n - no, null - waiting
+  PRIMARY KEY (`belongs_to`, `task_version`)
+) ENGINE=MyISAM  ;
+
+
+DROP TABLE `tiki_user_tasks`;
+
+CREATE TABLE `tiki_user_tasks` (
+  `taskId` integer(14) NOT NULL auto_increment,        -- task id
+  `last_version` integer(4) DEFAULT 0 NOT NULL,        -- last version of the task starting with 0
+  `user` varchar(200) DEFAULT '' NOT NULL,              -- task user
+  `creator` varchar(200) NOT NULL,                     -- username of creator
+  `public_for_group` varchar(30) DEFAULT NULL,         -- this group can also view the task, if it is null it is not public
+  `rights_by_creator` char(1) DEFAULT NULL,            -- null the user can delete the task,
+  `created` integer(14) NOT NULL,                      -- date of the creation
+  `status` char(1) default NULL,
+  `priority` number(2) default NULL,
+  `completed` number(14) default NULL,
+  `percentage` number(4) default NULL,
+  PRIMARY KEY (`taskId`),
   UNIQUE(creator, created)
 ) ENGINE=MyISAM ;
 
 
-DROP TABLE "tiki_user_votings";
+DROP TABLE `tiki_user_votings`;
 
-CREATE TABLE "tiki_user_votings" (
-  "user" varchar(200) default '',
-  "ip" varchar(15) default NULL,
-  "id" varchar(255) default '' NOT NULL,
-  "optionId" number(10) default 0 NOT NULL,
-  "time" number(14) default 0 NOT NULL,
-  KEY (`user`(100),id(100))
+CREATE TABLE `tiki_user_votings` (
+  `user` varchar(200) default '',
+  `ip` varchar(15) default NULL,
+  `id` varchar(255) default '' NOT NULL,
+  `optionId` number(10) default 0 NOT NULL,
+  `time` number(14) default 0 NOT NULL,
+  KEY (`user`(100),id(100)),
+  KEY `ip` (`ip`),
+  KEY `id` (`id`)
 ) ENGINE=MyISAM;
 
-CREATE  INDEX "tiki_user_votings_ip" ON "tiki_user_votings"(`"ip"`);
-CREATE  INDEX "tiki_user_votings_id" ON "tiki_user_votings"(`"id"`);
 
-DROP TABLE "tiki_user_watches";
+DROP TABLE `tiki_user_watches`;
 
-CREATE SEQUENCE "tiki_user_watches_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_user_watches" (
-  "watchId" number(12) NOT NULL,
-  "user" varchar(200) default '' NOT NULL,
-  "event" varchar(40) default '' NOT NULL,
-  "object" varchar(200) default '' NOT NULL,
-  "title" varchar(250) default NULL,
-  "type" varchar(200) default NULL,
-  "url" varchar(250) default NULL,
-  "email" varchar(200) default NULL,
+CREATE TABLE `tiki_user_watches` (
+  `watchId` number(12) NOT NULL auto_increment,
+  `user` varchar(200) default '' NOT NULL,
+  `event` varchar(40) default '' NOT NULL,
+  `object` varchar(200) default '' NOT NULL,
+  `title` varchar(250) default NULL,
+  `type` varchar(200) default NULL,
+  `url` varchar(250) default NULL,
+  `email` varchar(200) default NULL,
+  KEY `watchId` (watchId),
   PRIMARY KEY (`user`(50),event,object(100),email(50))
 ) ENGINE=MyISAM;
 
-CREATE TRIGGER "tiki_user_watches_trig" BEFORE INSERT ON "tiki_user_watches" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_user_watches_sequ".nextval into :NEW."watchId" FROM DUAL;
-END;
-/
-CREATE  INDEX "tiki_user_watches_watchId" ON "tiki_user_watches"("watchId");
 
-DROP TABLE "tiki_userfiles";
+DROP TABLE `tiki_userfiles`;
 
-CREATE SEQUENCE "tiki_userfiles_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_userfiles" (
-  "user" varchar(200) default '' NOT NULL,
-  "fileId" number(12) NOT NULL,
-  "name" varchar(200) default NULL,
-  "filename" varchar(200) default NULL,
-  "filetype" varchar(200) default NULL,
-  "filesize" varchar(200) default NULL,
-  "data" blob,
-  "hits" number(8) default NULL,
-  "isFile" char(1) default NULL,
-  "path" varchar(255) default NULL,
-  "created" number(14) default NULL,
-  PRIMARY KEY (fileId)
+CREATE TABLE `tiki_userfiles` (
+  `user` varchar(200) default '' NOT NULL,
+  `fileId` number(12) NOT NULL auto_increment,
+  `name` varchar(200) default NULL,
+  `filename` varchar(200) default NULL,
+  `filetype` varchar(200) default NULL,
+  `filesize` varchar(200) default NULL,
+  `data` blob,
+  `hits` number(8) default NULL,
+  `isFile` char(1) default NULL,
+  `path` varchar(255) default NULL,
+  `created` number(14) default NULL,
+  PRIMARY KEY (`fileId`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_userfiles_trig" BEFORE INSERT ON "tiki_userfiles" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_userfiles_sequ".nextval into :NEW."fileId" FROM DUAL;
-END;
-/
 
-DROP TABLE "tiki_userpoints";
+DROP TABLE `tiki_userpoints`;
 
-CREATE TABLE "tiki_userpoints" (
-  "user" varchar(200) default '' NOT NULL,
-  "points" decimal(8,2) default NULL,
-  "voted" number(8) default NULL
+CREATE TABLE `tiki_userpoints` (
+  `user` varchar(200) default '' NOT NULL,
+  `points` decimal(8,2) default NULL,
+  `voted` number(8) default NULL
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_users";
+DROP TABLE `tiki_users`;
 
-CREATE TABLE "tiki_users" (
-  "user" varchar(200) default '' NOT NULL,
-  "password" varchar(40) default NULL,
-  "email" varchar(200) default NULL,
-  "lastLogin" number(14) default NULL,
-  PRIMARY KEY (user)
+CREATE TABLE `tiki_users` (
+  `user` varchar(200) default '' NOT NULL,
+  `password` varchar(40) default NULL,
+  `email` varchar(200) default NULL,
+  `lastLogin` number(14) default NULL,
+  PRIMARY KEY (`user`)
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_webmail_contacts";
+DROP TABLE `tiki_webmail_contacts`;
 
-CREATE SEQUENCE "tiki_webmail_contacts_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_webmail_contacts" (
-  "contactId" number(12) NOT NULL,
-  "firstName" varchar(80) default NULL,
-  "lastName" varchar(80) default NULL,
-  "email" varchar(250) default NULL,
-  "nickname" varchar(200) default NULL,
-  "user" varchar(200) default '' NOT NULL,
-  PRIMARY KEY (contactId)
+CREATE TABLE `tiki_webmail_contacts` (
+  `contactId` number(12) NOT NULL auto_increment,
+  `firstName` varchar(80) default NULL,
+  `lastName` varchar(80) default NULL,
+  `email` varchar(250) default NULL,
+  `nickname` varchar(200) default NULL,
+  `user` varchar(200) default '' NOT NULL,
+  PRIMARY KEY (`contactId`)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_webmail_contacts_trig" BEFORE INSERT ON "tiki_webmail_contacts" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_webmail_contacts_sequ".nextval into :NEW."contactId" FROM DUAL;
-END;
-/
 
-DROP TABLE "tiki_webmail_contacts_groups";
+DROP TABLE `tiki_webmail_contacts_groups`;
 
-CREATE TABLE "tiki_webmail_contacts_groups" (
-  "contactId" number(12) NOT NULL,
-  "groupName" varchar(255) NOT NULL,
-  PRIMARY KEY (contactId,groupName(200))
+CREATE TABLE `tiki_webmail_contacts_groups` (
+  `contactId` number(12) NOT NULL,
+  `groupName` varchar(255) NOT NULL,
+  PRIMARY KEY (`contactId`,`groupName`(200))
 ) ENGINE=MyISAM ;
 
 
-DROP TABLE "tiki_webmail_messages";
+DROP TABLE `tiki_webmail_messages`;
 
-CREATE TABLE "tiki_webmail_messages" (
-  "accountId" number(12) default '0' NOT NULL,
-  "mailId" varchar(255) default '' NOT NULL,
-  "user" varchar(200) default '' NOT NULL,
-  "isRead" char(1) default NULL,
-  "isReplied" char(1) default NULL,
-  "isFlagged" char(1) default NULL,
-  "flaggedMsg" varchar(50) default '',
-  PRIMARY KEY (accountId,mailId)
+CREATE TABLE `tiki_webmail_messages` (
+  `accountId` number(12) default '0' NOT NULL,
+  `mailId` varchar(255) default '' NOT NULL,
+  `user` varchar(200) default '' NOT NULL,
+  `isRead` char(1) default NULL,
+  `isReplied` char(1) default NULL,
+  `isFlagged` char(1) default NULL,
+  `flaggedMsg` varchar(50) default '',
+  PRIMARY KEY (`accountId`,`mailId`)
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_wiki_attachments";
+DROP TABLE `tiki_wiki_attachments`;
 
-CREATE SEQUENCE "tiki_wiki_attachments_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_wiki_attachments" (
-  "attId" number(12) NOT NULL,
-  "page" varchar(200) default '' NOT NULL,
-  "filename" varchar(80) default NULL,
-  "filetype" varchar(80) default NULL,
-  "filesize" number(14) default NULL,
-  "user" varchar(200) default '' NOT NULL,
-  "data" blob,
-  "path" varchar(255) default NULL,
-  "hits" number(10) default NULL,
-  "created" number(14) default NULL,
-  "comment" varchar(250) default NULL,
-  PRIMARY KEY (attId)
+CREATE TABLE `tiki_wiki_attachments` (
+  `attId` number(12) NOT NULL auto_increment,
+  `page` varchar(200) default '' NOT NULL,
+  `filename` varchar(80) default NULL,
+  `filetype` varchar(80) default NULL,
+  `filesize` number(14) default NULL,
+  `user` varchar(200) default '' NOT NULL,
+  `data` blob,
+  `path` varchar(255) default NULL,
+  `hits` number(10) default NULL,
+  `created` number(14) default NULL,
+  `comment` varchar(250) default NULL,
+  PRIMARY KEY (`attId`),
+  KEY `page` (page)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_wiki_attachments_trig" BEFORE INSERT ON "tiki_wiki_attachments" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_wiki_attachments_sequ".nextval into :NEW."attId" FROM DUAL;
-END;
-/
-CREATE  INDEX "tiki_wiki_attachments_page" ON "tiki_wiki_attachments"("page");
 
-DROP TABLE "tiki_zones";
+DROP TABLE `tiki_zones`;
 
-CREATE TABLE "tiki_zones" (
-  "zone" varchar(40) default '' NOT NULL,
-  PRIMARY KEY (zone)
+CREATE TABLE `tiki_zones` (
+  `zone` varchar(40) default '' NOT NULL,
+  PRIMARY KEY (`zone`)
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_download";
+DROP TABLE `tiki_download`;
 
-CREATE SEQUENCE "tiki_download_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_download" (
-  "id" number(11) NOT NULL,
-  "object" varchar(255) default '' NOT NULL,
-  "userId" number(8) default '0' NOT NULL,
-  "type" varchar(20) default '' NOT NULL,
-  "date" number(14) default '0' NOT NULL,
-  "IP" varchar(50) default '' NOT NULL,
-  PRIMARY KEY (id)
+CREATE TABLE `tiki_download` (
+  `id` number(11) NOT NULL auto_increment,
+  `object` varchar(255) default '' NOT NULL,
+  `userId` number(8) default '0' NOT NULL,
+  `type` varchar(20) default '' NOT NULL,
+  `date` number(14) default '0' NOT NULL,
+  `IP` varchar(50) default '' NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `object` (object,userId,type),
+  KEY `userId` (userId),
+  KEY `type` (type),
+  KEY `date` (date)
 ) ENGINE=MyISAM;
 
-CREATE TRIGGER "tiki_download_trig" BEFORE INSERT ON "tiki_download" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_download_sequ".nextval into :NEW."id" FROM DUAL;
-END;
-/
-CREATE  INDEX "tiki_download_object" ON "tiki_download"("object","userId","type");
-CREATE  INDEX "tiki_download_userId" ON "tiki_download"("userId");
-CREATE  INDEX "tiki_download_type" ON "tiki_download"("type");
-CREATE  INDEX "tiki_download_date" ON "tiki_download"("date");
 
-DROP TABLE "users_grouppermissions";
+DROP TABLE `users_grouppermissions`;
 
-CREATE TABLE "users_grouppermissions" (
-  "groupName" varchar(255) default '' NOT NULL,
-  "permName" varchar(40) default '' NOT NULL,
-  "value" char(1) default '',
-  PRIMARY KEY (groupName(30),permName)
+CREATE TABLE `users_grouppermissions` (
+  `groupName` varchar(255) default '' NOT NULL,
+  `permName` varchar(40) default '' NOT NULL,
+  `value` char(1) default '',
+  PRIMARY KEY (`groupName`(30),`permName`)
 ) ENGINE=MyISAM;
 
 
 INSERT INTO users_grouppermissions (groupName,permName) VALUES('Anonymous','tiki_p_view');
 
 
-DROP TABLE "users_groups";
+DROP TABLE `users_groups`;
 
-CREATE SEQUENCE "users_groups_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "users_groups" (
-  "id" number(11) NOT NULL,
-  "groupName" varchar(255) default '' NOT NULL,
-  "groupDesc" varchar(255) default NULL,
-  "groupHome" varchar(255),
-  "usersTrackerId" number(11),
-  "groupTrackerId" number(11),
-  "usersFieldId" number(11),
-  "groupFieldId" number(11),
-  "registrationChoice" char(1) default NULL,
-  "registrationUsersFieldIds" clob,
-  "userChoice" char(1) default NULL,
-  "groupDefCat" number(12) default 0,
-  "groupTheme" varchar(255) default '',
-  "isExternal" char(1) default 'n',
-  PRIMARY KEY (id)
+CREATE TABLE `users_groups` (
+  `id` number(11) NOT NULL auto_increment,
+  `groupName` varchar(255) default '' NOT NULL,
+  `groupDesc` varchar(255) default NULL,
+  `groupHome` varchar(255),
+  `usersTrackerId` number(11),
+  `groupTrackerId` number(11),
+  `usersFieldId` number(11),
+  `groupFieldId` number(11),
+  `registrationChoice` char(1) default NULL,
+  `registrationUsersFieldIds` clob,
+  `userChoice` char(1) default NULL,
+  `groupDefCat` number(12) default 0,
+  `groupTheme` varchar(255) default '',
+  `isExternal` char(1) default 'n',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `groupName` (groupName)
 ) ENGINE=MyISAM ;
 
-CREATE TRIGGER "users_groups_trig" BEFORE INSERT ON "users_groups" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "users_groups_sequ".nextval into :NEW."id" FROM DUAL;
-END;
-/
-CREATE UNIQUE INDEX "users_groups_groupName" ON "users_groups"("groupName");
 
-DROP TABLE "users_objectpermissions";
+DROP TABLE `users_objectpermissions`;
 
-CREATE TABLE "users_objectpermissions" (
-  "groupName" varchar(255) default '' NOT NULL,
-  "permName" varchar(40) default '' NOT NULL,
-  "objectType" varchar(20) default '' NOT NULL,
-  "objectId" varchar(32) default '' NOT NULL,
-  PRIMARY KEY (objectId, objectType, groupName(30),permName)
+CREATE TABLE `users_objectpermissions` (
+  `groupName` varchar(255) default '' NOT NULL,
+  `permName` varchar(40) default '' NOT NULL,
+  `objectType` varchar(20) default '' NOT NULL,
+  `objectId` varchar(32) default '' NOT NULL,
+  PRIMARY KEY (`objectId`, `objectType`, `groupName`(30),`permName`)
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "users_permissions";
+DROP TABLE `users_permissions`;
 
-CREATE TABLE "users_permissions" (
-  "permName" varchar(40) default '' NOT NULL,
-  "permDesc" varchar(250) default NULL,
-  "level" varchar(80) default NULL,
-  "type" varchar(20) default NULL,
-  "admin" varchar(1) default NULL,
-  "feature_check" VARCHAR(50) NULL,
-  PRIMARY KEY (permName)
+CREATE TABLE `users_permissions` (
+  `permName` varchar(40) default '' NOT NULL,
+  `permDesc` varchar(250) default NULL,
+  `level` varchar(80) default NULL,
+  `type` varchar(20) default NULL,
+  `admin` varchar(1) default NULL,
+  `feature_check` VARCHAR(50) NULL,
+  PRIMARY KEY (`permName`),
+  KEY `type` (type)
 ) ENGINE=MyISAM;
 
-CREATE  INDEX "users_permissions_type" ON "users_permissions"("type");
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_calendar', 'Can create/admin calendars', 'admin', 'calendar', 'y');
 
@@ -4059,17 +3368,6 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_events', 'Can view events details', 'registered', 'calendar');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_tiki_calendar', 'Can view Tikiwiki tools calendar', 'basic', 'calendar');
-
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_categories', 'Can admin categories', 'editors', 'category', 'y');
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_categorized', 'Can edit items in categories', 'registered', 'category');
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_categories', 'Can view categories', 'basic', 'category');
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_categorized', 'Can view categorized items', 'basic', 'category');
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_search_categorized', 'Can search on objects of this category', 'basic', 'category');
 
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_charts', 'Can admin charts', 'admin', 'charts', 'y');
@@ -4131,11 +3429,6 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_validate_links', 'Can validate submited links', 'editors', 'directory');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_directory', 'Can use the directory', 'basic', 'directory');
-
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_drawings', 'Can admin drawings', 'editors', 'drawings', 'y');
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_drawings', 'Can edit drawings', 'basic', 'drawings');
 
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_faqs', 'Can admin faqs', 'editors', 'faqs', 'y');
@@ -4285,11 +3578,6 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_image_gallery', 'Can view image galleries', 'basic', 'image galleries');
 
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_games', 'Can admin games', 'editors', 'games', 'y');
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_play_games', 'Can play games', 'basic', 'games');
-
-
 INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_newsletters', 'Can admin newsletters', 'admin', 'newsletters', 'y');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_batch_subscribe_email', 'Can subscribe many e-mails at once (requires tiki_p_subscribe email)', 'editors', 'newsletters');
@@ -4299,6 +3587,8 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_subscribe_email', 'Can subscribe any email to newsletters', 'editors', 'newsletters');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_subscribe_newsletters', 'Can subscribe to newsletters', 'basic', 'newsletters');
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_list_newsletters', 'Can list newsletters', 'basic', 'newsletters');
 
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_polls','Can admin polls', 'admin', 'polls', 'y');
@@ -4470,8 +3760,6 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_minical', 'Can use the mini event calendar', 'registered', 'user');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_newsreader', 'Can use the newsreader', 'registered', 'user');
-
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_notepad', 'Can use the notepad', 'registered', 'user');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_tasks_admin', 'Can admin public tasks', 'admin', 'user');
@@ -4568,6 +3856,22 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_importer', 'Can use the Tiki Importer', 'admin', 'tiki', 'y');
 
+ 
+  "INSERT" INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('tiki_p_admin_categories', 'Can admin categories', 'editors', 'category', 'y');
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_category', 'Can see the category in a listing', 'basic', 'category');
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_modify_object_categories', 'Can change the categories on the object', 'editors', 'tiki');
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_add_object', 'Can add objects in the category', 'editors', 'category');
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_remove_object', 'Can remove objects from the category', 'editors', 'category');
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_create_category', 'Can create new categories', 'admin', 'category');
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_perspective_view', 'Can view the perspective', 'basic', 'perspective');
+
 
 UPDATE users_permissions SET feature_check = 'feature_wiki' WHERE permName IN(
 	'tiki_p_admin_wiki',
@@ -4619,12 +3923,12 @@ UPDATE users_permissions SET feature_check = 'feature_wiki_ratings' WHERE permNa
 UPDATE users_permissions SET feature_check = 'feature_source' WHERE permName = 'tiki_p_wiki_view_source';
 
 
-DROP TABLE "users_usergroups";
+DROP TABLE `users_usergroups`;
 
-CREATE TABLE "users_usergroups" (
-  "userId" number(8) default '0' NOT NULL,
-  "groupName" varchar(255) default '' NOT NULL,
-  PRIMARY KEY (userId,groupName(30))
+CREATE TABLE `users_usergroups` (
+  `userId` number(8) default '0' NOT NULL,
+  `groupName` varchar(255) default '' NOT NULL,
+  PRIMARY KEY (`userId`,`groupName`(30))
 ) ENGINE=MyISAM;
 
 
@@ -4635,47 +3939,41 @@ INSERT INTO "users_groups" ("groupName","groupDesc") VALUES ('Registered','Users
 INSERT INTO "users_groups" ("groupName","groupDesc") VALUES ('Admins','Administrator and accounts managers.');
 
 
-DROP TABLE "users_users";
+DROP TABLE `users_users`;
 
-CREATE SEQUENCE "users_users_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "users_users" (
-  "userId" number(8) NOT NULL,
-  "email" varchar(200) default NULL,
-  "login" varchar(200) default '' NOT NULL,
-  "password" varchar(30) default '',
-  "provpass" varchar(30) default NULL,
-  "default_group" varchar(255),
-  "lastLogin" number(14) default NULL,
-  "currentLogin" number(14) default NULL,
-  "registrationDate" number(14) default NULL,
-  "challenge" varchar(32) default NULL,
-  "pass_confirm" number(14) default NULL,
-  "email_confirm" number(14) default NULL,
-  "hash" varchar(34) default NULL,
-  "created" number(14) default NULL,
-  "avatarName" varchar(80) default NULL,
-  "avatarSize" number(14) default NULL,
-  "avatarFileType" varchar(250) default NULL,
-  "avatarData" blob,
-  "avatarLibName" varchar(200) default NULL,
-  "avatarType" char(1) default NULL,
-  "score" number(11) default 0 NOT NULL,
-  "valid" varchar(32) default NULL,
-  "unsuccessful_logins" number(14) default 0,
-  "openid_url" varchar(255) default NULL,
-  "waiting" char(1) default NULL,
-  PRIMARY KEY (userId)
+CREATE TABLE `users_users` (
+  `userId` number(8) NOT NULL auto_increment,
+  `email` varchar(200) default NULL,
+  `login` varchar(200) default '' NOT NULL,
+  `password` varchar(30) default '',
+  `provpass` varchar(30) default NULL,
+  `default_group` varchar(255),
+  `lastLogin` number(14) default NULL,
+  `currentLogin` number(14) default NULL,
+  `registrationDate` number(14) default NULL,
+  `challenge` varchar(32) default NULL,
+  `pass_confirm` number(14) default NULL,
+  `email_confirm` number(14) default NULL,
+  `hash` varchar(34) default NULL,
+  `created` number(14) default NULL,
+  `avatarName` varchar(80) default NULL,
+  `avatarSize` number(14) default NULL,
+  `avatarFileType` varchar(250) default NULL,
+  `avatarData` blob,
+  `avatarLibName` varchar(200) default NULL,
+  `avatarType` char(1) default NULL,
+  `score` number(11) default 0 NOT NULL,
+  `valid` varchar(32) default NULL,
+  `unsuccessful_logins` number(14) default 0,
+  `openid_url` varchar(255) default NULL,
+  `waiting` char(1) default NULL,
+  PRIMARY KEY (`userId`),
+  KEY `score` (score),
+  KEY `login` (login),
+  KEY `registrationDate` (registrationDate),
+  KEY `openid_url` (openid_url)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "users_users_trig" BEFORE INSERT ON "users_users" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "users_users_sequ".nextval into :NEW."userId" FROM DUAL;
-END;
-/
-CREATE  INDEX "users_users_score" ON "users_users"("score");
-CREATE  INDEX "users_users_login" ON "users_users"("login");
-CREATE  INDEX "users_users_registrationDate" ON "users_users"("registrationDate");
-CREATE  INDEX "users_users_openid_url" ON "users_users"("openid_url");
 
 -- Administrator account
 INSERT INTO "users_users" ("email","login","password","hash") VALUES ('','admin','admin','f6fdffe48c908deb0f4c3bd36c032e72');
@@ -4689,54 +3987,42 @@ INSERT INTO users_usergroups (userId, groupName) VALUES(1,'Admins');
 INSERT INTO "users_grouppermissions" ("groupName","permName") VALUES ('Admins','tiki_p_admin');
 
 
-DROP TABLE "tiki_integrator_reps";
+DROP TABLE `tiki_integrator_reps`;
 
-CREATE SEQUENCE "tiki_integrator_reps_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_integrator_reps" (
-  "repID" number(11) NOT NULL,
-  "name" varchar(255) default '' NOT NULL,
-  "path" varchar(255) default '' NOT NULL,
-  "start_page" varchar(255) default '' NOT NULL,
-  "css_file" varchar(255) default '' NOT NULL,
-  "visibility" char(1) default 'y' NOT NULL,
-  "cacheable" char(1) default 'y' NOT NULL,
-  "expiration" number(11) default '0' NOT NULL,
-  "description" clob NOT NULL,
-  PRIMARY KEY (repID)
+CREATE TABLE `tiki_integrator_reps` (
+  `repID` number(11) NOT NULL auto_increment,
+  `name` varchar(255) default '' NOT NULL,
+  `path` varchar(255) default '' NOT NULL,
+  `start_page` varchar(255) default '' NOT NULL,
+  `css_file` varchar(255) default '' NOT NULL,
+  `visibility` char(1) default 'y' NOT NULL,
+  `cacheable` char(1) default 'y' NOT NULL,
+  `expiration` number(11) default '0' NOT NULL,
+  `description` clob NOT NULL,
+  PRIMARY KEY (`repID`)
 ) ENGINE=MyISAM;
 
-CREATE TRIGGER "tiki_integrator_reps_trig" BEFORE INSERT ON "tiki_integrator_reps" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_integrator_reps_sequ".nextval into :NEW."repID" FROM DUAL;
-END;
-/
 
 INSERT INTO tiki_integrator_reps VALUES ('1','Doxygened (1.3.4) Documentation','','index.html','doxygen.css','n','y','0','Use this repository as rule source for all your repositories based on doxygened docs. To setup yours just add new repository and copy rules from this repository :)');
 
 
-DROP TABLE "tiki_integrator_rules";
+DROP TABLE `tiki_integrator_rules`;
 
-CREATE SEQUENCE "tiki_integrator_rules_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_integrator_rules" (
-  "ruleID" number(11) NOT NULL,
-  "repID" number(11) default '0' NOT NULL,
-  "ord" number(2) default '0' NOT NULL,
-  "srch" blob NOT NULL,
-  "repl" blob NOT NULL,
-  "type" char(1) default 'n' NOT NULL,
-  "casesense" char(1) default 'y' NOT NULL,
-  "rxmod" varchar(20) default '' NOT NULL,
-  "enabled" char(1) default 'n' NOT NULL,
-  "description" clob NOT NULL,
-  PRIMARY KEY (ruleID)
+CREATE TABLE `tiki_integrator_rules` (
+  `ruleID` number(11) NOT NULL auto_increment,
+  `repID` number(11) default '0' NOT NULL,
+  `ord` number(2) default '0' NOT NULL,
+  `srch` blob NOT NULL,
+  `repl` blob NOT NULL,
+  `type` char(1) default 'n' NOT NULL,
+  `casesense` char(1) default 'y' NOT NULL,
+  `rxmod` varchar(20) default '' NOT NULL,
+  `enabled` char(1) default 'n' NOT NULL,
+  `description` clob NOT NULL,
+  PRIMARY KEY (`ruleID`),
+  KEY `repID` (repID)
 ) ENGINE=MyISAM;
 
-CREATE TRIGGER "tiki_integrator_rules_trig" BEFORE INSERT ON "tiki_integrator_rules" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_integrator_rules_sequ".nextval into :NEW."ruleID" FROM DUAL;
-END;
-/
-CREATE  INDEX "tiki_integrator_rules_repID" ON "tiki_integrator_rules"("repID");
 
 INSERT INTO tiki_integrator_rules VALUES ('1','1','1','.*<body[^>]*?>(.*?)</body.*','\1','y','n','i','y','Extract code between <body> and </body> tags');
 
@@ -4745,25 +4031,19 @@ INSERT INTO tiki_integrator_rules VALUES ('2','1','2','img src=(\"|\')(?!http://
 INSERT INTO tiki_integrator_rules VALUES ('3','1','3','href=(\"|\')(?!(--|(http|ftp)://))','href=\1tiki-integrator.php?repID={repID}&file=','y','n','i','y','Replace internal links to integrator. Don\'t touch an external link.');
 
 
-DROP TABLE "tiki_quicktags";
+DROP TABLE `tiki_quicktags`;
 
-CREATE SEQUENCE "tiki_quicktags_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_quicktags" (
-  "tagId" number(4) NOT NULL,
-  "taglabel" varchar(255) default NULL,
-  "taginsert" clob,
-  "tagicon" varchar(255) default NULL,
-  "tagcategory" varchar(255) default NULL,
-  PRIMARY KEY (tagId)
+CREATE TABLE `tiki_quicktags` (
+  `tagId` number(4) NOT NULL auto_increment,
+  `taglabel` varchar(255) default NULL,
+  `taginsert` clob,
+  `tagicon` varchar(255) default NULL,
+  `tagcategory` varchar(255) default NULL,
+  PRIMARY KEY (`tagId`),
+  KEY `tagcategory` (tagcategory),
+  KEY `taglabel` (taglabel)
 ) ENGINE=MyISAM  ;
 
-CREATE TRIGGER "tiki_quicktags_trig" BEFORE INSERT ON "tiki_quicktags" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_quicktags_sequ".nextval into :NEW."tagId" FROM DUAL;
-END;
-/
-CREATE  INDEX "tiki_quicktags_tagcategory" ON "tiki_quicktags"("tagcategory");
-CREATE  INDEX "tiki_quicktags_taglabel" ON "tiki_quicktags"("taglabel");
 
 -- wiki
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('  text, bold','__text__','pics/icons/text_bold.png','wiki');
@@ -5104,50 +4384,44 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 
 
 -- Translated objects table
-DROP TABLE "tiki_translated_objects";
+DROP TABLE `tiki_translated_objects`;
 
-CREATE SEQUENCE "tiki_translated_objects_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_translated_objects" (
-  "traId" number(14) NOT NULL,
-  "type" varchar(50) NOT NULL,
-  "objId" varchar(255) NOT NULL,
-  "lang" varchar(16) default NULL,
-  PRIMARY KEY (type, objId)
+CREATE TABLE `tiki_translated_objects` (
+  `traId` number(14) NOT NULL auto_increment,
+  `type` varchar(50) NOT NULL,
+  `objId` varchar(255) NOT NULL,
+  `lang` varchar(16) default NULL,
+  PRIMARY KEY (`type`, `objId`),
+  KEY `traId` ( traId )
 ) ENGINE=MyISAM ;
 
-CREATE TRIGGER "tiki_translated_objects_trig" BEFORE INSERT ON "tiki_translated_objects" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_translated_objects_sequ".nextval into :NEW."traId" FROM DUAL;
-END;
-/
-CREATE  INDEX "tiki_translated_objects_traId" ON "tiki_translated_objects"( "traId" );
 
-DROP TABLE "tiki_friends";
+DROP TABLE `tiki_friends`;
 
-CREATE TABLE "tiki_friends" (
-  "user" varchar(200) default '' NOT NULL,
-  "friend" varchar(200) default '' NOT NULL,
+CREATE TABLE `tiki_friends` (
+  `user` varchar(200) default '' NOT NULL,
+  `friend` varchar(200) default '' NOT NULL,
   PRIMARY KEY (`user`(120),friend(120))
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_friendship_requests";
+DROP TABLE `tiki_friendship_requests`;
 
-CREATE TABLE "tiki_friendship_requests" (
-  "userFrom" varchar(200) default '' NOT NULL,
-  "userTo" varchar(200) default '' NOT NULL,
-  "tstamp" timestamp(3) NOT NULL,
-  PRIMARY KEY (userFrom(120),userTo(120))
+CREATE TABLE `tiki_friendship_requests` (
+  `userFrom` varchar(200) default '' NOT NULL,
+  `userTo` varchar(200) default '' NOT NULL,
+  `tstamp` timestamp(3) NOT NULL,
+  PRIMARY KEY (`userFrom`(120),`userTo`(120))
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_score";
+DROP TABLE `tiki_score`;
 
-CREATE TABLE "tiki_score" (
+CREATE TABLE `tiki_score` (
   "event" varchar(40) default '' NOT NULL,
   "score" number(11) default '0' NOT NULL,
   "expiration" number(11) default '0' NOT NULL,
-  PRIMARY KEY (event)
+  PRIMARY KEY (`event`)
 ) ENGINE=MyISAM;
 
 
@@ -5212,47 +4486,47 @@ INSERT INTO "tiki_score" ("event","score","expiration") VALUES ('wiki_edit',5,0)
 INSERT INTO "tiki_score" ("event","score","expiration") VALUES ('wiki_attach_file',3,0);
 
 
-DROP TABLE "tiki_users_score";
+DROP TABLE `tiki_users_score`;
 
-CREATE TABLE "tiki_users_score" (
-  "user" char(200) default '' NOT NULL,
-  "event_id" char(200) default '' NOT NULL,
-  "expire" number(14) default '0' NOT NULL,
-  "tstamp" timestamp(3) NOT NULL,
-  PRIMARY KEY (user(110),event_id(110))
-) ENGINE=MyISAM;
-
-CREATE  INDEX "tiki_users_score_user" ON "tiki_users_score"("user","event_id","expire");
-
-DROP TABLE "tiki_file_handlers";
-
-CREATE TABLE "tiki_file_handlers" (
-  "mime_type" varchar(64) default NULL,
-  "cmd" varchar(238) default NULL
+CREATE TABLE `tiki_users_score` (
+  `user` char(200) default '' NOT NULL,
+  `event_id` char(200) default '' NOT NULL,
+  `expire` number(14) default '0' NOT NULL,
+  `tstamp` timestamp(3) NOT NULL,
+  PRIMARY KEY (`user`(110),`event_id`(110)),
+  KEY `user` (user(110),event_id(110),expire)
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_stats";
+DROP TABLE `tiki_file_handlers`;
 
-CREATE TABLE "tiki_stats" (
-  "object" varchar(255) default '' NOT NULL,
-  "type" varchar(20) default '' NOT NULL,
-  "day" number(14) default '0' NOT NULL,
-  "hits" number(14) default '0' NOT NULL,
-  PRIMARY KEY (object(200),type,day)
+CREATE TABLE `tiki_file_handlers` (
+  `mime_type` varchar(64) default NULL,
+  `cmd` varchar(238) default NULL
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_events";
+DROP TABLE `tiki_stats`;
 
-CREATE TABLE "tiki_events" (
-  "callback_type" number(1) default '3' NOT NULL,
+CREATE TABLE `tiki_stats` (
+  `object` varchar(255) default '' NOT NULL,
+  `type` varchar(20) default '' NOT NULL,
+  `day` number(14) default '0' NOT NULL,
+  `hits` number(14) default '0' NOT NULL,
+  PRIMARY KEY (`object`(200),`type`,`day`)
+) ENGINE=MyISAM;
+
+
+DROP TABLE `tiki_events`;
+
+CREATE TABLE `tiki_events` (
+  `callback_type` number(1) default '3' NOT NULL,
   `order` number(2) default '50' NOT NULL,
-  "event" varchar(200) default '' NOT NULL,
-  "file" varchar(200) default '' NOT NULL,
-  "object" varchar(200) default '' NOT NULL,
-  "method" varchar(200) default '' NOT NULL,
-  PRIMARY KEY (callback_type,`order`)
+  `event` varchar(200) default '' NOT NULL,
+  `file` varchar(200) default '' NOT NULL,
+  `object` varchar(200) default '' NOT NULL,
+  `method` varchar(200) default '' NOT NULL,
+  PRIMARY KEY (`callback_type`,`order`)
 ) ENGINE=MyISAM;
 
 
@@ -5267,34 +4541,28 @@ INSERT INTO "tiki_events" ("callback_type","`order`","event","file","object","me
 INSERT INTO "tiki_events" ("callback_type","`order`","event","file","object","method") VALUES ('5', '30', 'user_registers', 'lib/registration/registrationlib.php', 'registrationlib', 'callback_tikimail_user_registers');
 
 
-DROP TABLE "tiki_registration_fields";
+DROP TABLE `tiki_registration_fields`;
 
-CREATE SEQUENCE "tiki_registration_fields_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_registration_fields" (
-  "id" number(11) NOT NULL,
-  "field" varchar(255) default '' NOT NULL,
-  "name" varchar(255) default NULL,
-  "type" varchar(255) default 'text' NOT NULL,
+CREATE TABLE `tiki_registration_fields` (
+  `id` number(11) NOT NULL auto_increment,
+  `field` varchar(255) default '' NOT NULL,
+  `name` varchar(255) default NULL,
+  `type` varchar(255) default 'text' NOT NULL,
   `show` number(1) default '1' NOT NULL,
-  "size" varchar(10) default '10',
-  PRIMARY KEY (id)
+  `size` varchar(10) default '10',
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
 
-CREATE TRIGGER "tiki_registration_fields_trig" BEFORE INSERT ON "tiki_registration_fields" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_registration_fields_sequ".nextval into :NEW."id" FROM DUAL;
-END;
-/
 
-DROP TABLE "tiki_actionlog_conf";
+DROP TABLE `tiki_actionlog_conf`;
 
-CREATE TABLE "tiki_actionlog_conf" (
-  "id" number(11) NOT NULL auto_increment,
-  "action" varchar(32) default '' NOT NULL,
-  "objectType" varchar(32) default '' NOT NULL,
- `status` char(1) default '',
-PRIMARY KEY (action, objectType),
-KEY (id)
+CREATE TABLE `tiki_actionlog_conf` (
+  `id` number(11) NOT NULL auto_increment,
+  `action` varchar(32) default '' NOT NULL,
+  `objectType` varchar(32) default '' NOT NULL,
+  `status` char(1) default '',
+  PRIMARY KEY (`action`, `objectType`),
+  KEY (id)
 ) ENGINE=MyISAM;
 
 
@@ -5373,69 +4641,51 @@ INSERT INTO "tiki_actionlog_conf" ("action","objectType","status") VALUES ('Remo
 INSERT INTO "tiki_actionlog_conf" ("action","objectType","status") VALUES ('Viewed', 'article', 'n');
 
 
-DROP TABLE "tiki_freetags";
+DROP TABLE `tiki_freetags`;
 
-CREATE SEQUENCE "tiki_freetags_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_freetags" (
-  "tagId" number(10) NOT NULL,
-  "tag" varchar(30) default '' NOT NULL,
-  "raw_tag" varchar(50) default '' NOT NULL,
-  "lang" varchar(16) NULL,
-  PRIMARY KEY (tagId)
+CREATE TABLE `tiki_freetags` (
+  `tagId` number(10) NOT NULL auto_increment,
+  `tag` varchar(30) default '' NOT NULL,
+  `raw_tag` varchar(50) default '' NOT NULL,
+  `lang` varchar(16) NULL,
+  PRIMARY KEY (`tagId`)
 ) ENGINE=MyISAM;
 
-CREATE TRIGGER "tiki_freetags_trig" BEFORE INSERT ON "tiki_freetags" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_freetags_sequ".nextval into :NEW."tagId" FROM DUAL;
-END;
-/
 
-DROP TABLE "tiki_freetagged_objects";
+DROP TABLE `tiki_freetagged_objects`;
 
-CREATE SEQUENCE "tiki_freetagged_objects_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_freetagged_objects" (
-  "tagId" number(12) NOT NULL,
-  "objectId" number(11) default 0 NOT NULL,
-  "user" varchar(200) default '',
-  "created" number(14) default '0' NOT NULL,
-  PRIMARY KEY (tagId,user,objectId),
+CREATE TABLE `tiki_freetagged_objects` (
+  `tagId` number(12) NOT NULL auto_increment,
+  `objectId` number(11) default 0 NOT NULL,
+  `user` varchar(200) default '',
+  `created` number(14) default '0' NOT NULL,
+  PRIMARY KEY (`tagId`,`user`,`objectId`),
   KEY (tagId),
   KEY (user),
   KEY (objectId)
 ) ENGINE=MyISAM;
 
-CREATE TRIGGER "tiki_freetagged_objects_trig" BEFORE INSERT ON "tiki_freetagged_objects" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_freetagged_objects_sequ".nextval into :NEW."tagId" FROM DUAL;
-END;
-/
 
-DROP TABLE "tiki_contributions";
+DROP TABLE `tiki_contributions`;
 
-CREATE SEQUENCE "tiki_contributions_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_contributions" (
-  "contributionId" number(12) NOT NULL,
-  "name" varchar(100) default NULL,
-  "description" varchar(250) default NULL,
-  PRIMARY KEY (contributionId)
-) ENGINE=MyISAM;
-
-CREATE TRIGGER "tiki_contributions_trig" BEFORE INSERT ON "tiki_contributions" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_contributions_sequ".nextval into :NEW."contributionId" FROM DUAL;
-END;
-/
-
-DROP TABLE "tiki_contributions_assigned";
-
-CREATE TABLE "tiki_contributions_assigned" (
-  "contributionId" number(12) NOT NULL,
-  "objectId" number(12) NOT NULL,
-  PRIMARY KEY (objectId, contributionId)
+CREATE TABLE `tiki_contributions` (
+  `contributionId` number(12) NOT NULL auto_increment,
+  `name` varchar(100) default NULL,
+  `description` varchar(250) default NULL,
+  PRIMARY KEY (`contributionId`)
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_webmail_contacts_ext";
+DROP TABLE `tiki_contributions_assigned`;
+
+CREATE TABLE `tiki_contributions_assigned` (
+  `contributionId` number(12) NOT NULL,
+  `objectId` number(12) NOT NULL,
+  PRIMARY KEY (`objectId`, `contributionId`)
+) ENGINE=MyISAM;
+
+
+DROP TABLE `tiki_webmail_contacts_ext`;
 
 CREATE TABLE `tiki_webmail_contacts_ext` (
   `contactId` number(11) NOT NULL,
@@ -5446,7 +4696,7 @@ CREATE TABLE `tiki_webmail_contacts_ext` (
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_webmail_contacts_fields";
+DROP TABLE `tiki_webmail_contacts_fields`;
 
 CREATE TABLE `tiki_webmail_contacts_fields` (
   `user` VARCHAR( 200 ) NOT NULL ,
@@ -5454,12 +4704,13 @@ CREATE TABLE `tiki_webmail_contacts_fields` (
   `order` number(2) default '0' NOT NULL,
   `show` char(1) default 'n' NOT NULL,
   `fieldId` number(10) NOT NULL auto_increment,
+  `flagsPublic` CHAR( 1 ) DEFAULT 'n' NOT NULL,
   PRIMARY KEY ( `fieldId` ),
   "INDEX" ( `user` )
 ) ENGINE = MyISAM ;
 
 
-DROP TABLE "tiki_pages_translation_bits";
+DROP TABLE `tiki_pages_translation_bits`;
 
 CREATE TABLE `tiki_pages_translation_bits` (
   `translation_bit_id` number(14) NOT NULL auto_increment,
@@ -5475,19 +4726,19 @@ CREATE TABLE `tiki_pages_translation_bits` (
 );
 
 
-DROP TABLE "tiki_pages_changes";
+DROP TABLE `tiki_pages_changes`;
 
-CREATE TABLE "tiki_pages_changes" (
-  "page_id" number(14),
-  "version" number(10),
-  "segments_added" number(10),
-  "segments_removed" number(10),
-  "segments_total" number(10),
+CREATE TABLE `tiki_pages_changes` (
+  `page_id` number(14),
+  `version` number(10),
+  `segments_added` number(10),
+  `segments_removed` number(10),
+  `segments_total` number(10),
   PRIMARY KEY(page_id, version)
 );
 
 
-DROP TABLE "tiki_minichat";
+DROP TABLE `tiki_minichat`;
 
 CREATE TABLE `tiki_minichat` (
   `id` number(10) NOT NULL auto_increment,
@@ -5501,22 +4752,22 @@ CREATE TABLE `tiki_minichat` (
 );
 
 
-DROP TABLE "tiki_profile_symbols";
+DROP TABLE `tiki_profile_symbols`;
 
-CREATE TABLE "tiki_profile_symbols" (
-	`domain` VARCHAR(50) NOT NULL,
-	`profile` VARCHAR(50) NOT NULL,
-	`object` VARCHAR(50) NOT NULL,
-	`type` VARCHAR(20) NOT NULL,
-	`value` VARCHAR(50) NOT NULL,
-	`named` ENUM('y','n') NOT NULL,
-	`creation_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+CREATE TABLE `tiki_profile_symbols` (
+  `domain` VARCHAR(50) NOT NULL,
+  `profile` VARCHAR(50) NOT NULL,
+  `object` VARCHAR(50) NOT NULL,
+  `type` VARCHAR(20) NOT NULL,
+  `value` VARCHAR(50) NOT NULL,
+  `named` ENUM('y','n') NOT NULL,
+  `creation_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
   PRIMARY KEY ( `domain`, `profile`, `object` ),
   "INDEX"(`named`)
 );
 
 
-DROP TABLE "tiki_feature";
+DROP TABLE `tiki_feature`;
 
 CREATE TABLE `tiki_feature` (
   `feature_id` mediumnumber(9) NOT NULL auto_increment,
@@ -5537,59 +4788,59 @@ CREATE TABLE `tiki_feature` (
 ) ENGINE=MyISAM ;
 
 
-DROP TABLE "tiki_schema";
+DROP TABLE `tiki_schema`;
 
-CREATE TABLE "tiki_schema" (
-  "patch_name" VARCHAR(100) PRIMARY KEY,
-  "install_date" TIMESTAMP
+CREATE TABLE `tiki_schema` (
+  `patch_name` VARCHAR(100) PRIMARY KEY,
+  `install_date` TIMESTAMP
 ) ENGINE=MyISAM;
 
 
-DROP TABLE "tiki_semantic_tokens";
+DROP TABLE `tiki_semantic_tokens`;
 
-CREATE TABLE "tiki_semantic_tokens" (
-  "token" VARCHAR(15) PRIMARY KEY,
-  "label" VARCHAR(25) NOT NULL,
-  "invert_token" VARCHAR(15)
+CREATE TABLE `tiki_semantic_tokens` (
+  `token` VARCHAR(15) PRIMARY KEY,
+  `label` VARCHAR(25) NOT NULL,
+  `invert_token` VARCHAR(15)
 ) ENGINE=MyISAM ;
 
 
 INSERT INTO tiki_semantic_tokens (token, label) VALUES('alias', 'Page Alias');
 
 
-DROP TABLE "tiki_webservice";
+DROP TABLE `tiki_webservice`;
 
-CREATE TABLE "tiki_webservice" (
-  "service" VARCHAR(25) NOT NULL PRIMARY KEY,
-  "url" VARCHAR(250),
-  "body" TEXT,
-  "schema_version" VARCHAR(5),
-  "schema_documentation" VARCHAR(250)
+CREATE TABLE `tiki_webservice` (
+  `service` VARCHAR(25) NOT NULL PRIMARY KEY,
+  `url` VARCHAR(250),
+  `body` TEXT,
+  `schema_version` VARCHAR(5),
+  `schema_documentation` VARCHAR(250)
 ) ENGINE=MyISAM ;
 
 
-DROP TABLE "tiki_webservice_template";
+DROP TABLE `tiki_webservice_template`;
 
-CREATE TABLE "tiki_webservice_template" (
-  "service" VARCHAR(25) NOT NULL,
-  "template" VARCHAR(25) NOT NULL,
-  "engine" VARCHAR(15) NOT NULL,
-  "output" VARCHAR(15) NOT NULL,
-  "content" TEXT NOT NULL,
-  "last_modif" INT,
+CREATE TABLE `tiki_webservice_template` (
+  `service` VARCHAR(25) NOT NULL,
+  `template` VARCHAR(25) NOT NULL,
+  `engine` VARCHAR(15) NOT NULL,
+  `output` VARCHAR(15) NOT NULL,
+  `content` TEXT NOT NULL,
+  `last_modif` INT,
   PRIMARY KEY( service, template )
 ) ENGINE=MyISAM ;
 
 
-DROP TABLE "tiki_groupalert";
+DROP TABLE `tiki_groupalert`;
 
 
-CREATE TABLE "tiki_groupalert" (
-  "groupName" varchar(255) default '' NOT NULL,
-  "objectType" varchar( 20 ) default '' NOT NULL,
-  "objectId"  varchar(10) default '' NOT NULL,
-  "displayEachuser"  char( 1 ) default NULL ,
-  PRIMARY KEY ( objectType,objectId )
+CREATE TABLE `tiki_groupalert` (
+  `groupName` varchar(255) default '' NOT NULL,
+  `objectType` varchar( 20 ) default '' NOT NULL,
+  `objectId` varchar(10) default '' NOT NULL,
+  `displayEachuser` char( 1 ) default NULL ,
+  PRIMARY KEY ( `objectType`, `objectId` )
 ) ENGINE=MyISAM ;
 
 
@@ -5619,6 +4870,7 @@ CREATE TABLE `tiki_sefurl_regex_out` (
   `comment` varchar(256),
   `order` number(11) NULL default 0,
   PRIMARY KEY(`id`),
+  UNIQUE KEY `left` (`left`(128)),
   "INDEX" `idx1` (silent, type, feature(30))
 );
 
@@ -5775,18 +5027,18 @@ UPDATE tiki_menu_options SET icon = '' WHERE name = 'Charts';
 UPDATE tiki_menus SET use_items_icons='y' WHERE menuId=42;
 
 
-DROP TABLE "tiki_plugin_security";
+DROP TABLE `tiki_plugin_security`;
 
-CREATE TABLE "tiki_plugin_security" (
-  "fingerprint" VARCHAR(200) NOT NULL PRIMARY KEY,
-  "status" VARCHAR(10) NOT NULL,
-  "approval_by" VARCHAR(200) NULL,
-  "last_update" TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-  "last_objectType" VARCHAR(20) NOT NULL,
-  "last_objectId" VARCHAR(200) NOT NULL
+CREATE TABLE `tiki_plugin_security` (
+  `fingerprint` VARCHAR(200) NOT NULL PRIMARY KEY,
+  `status` VARCHAR(10) NOT NULL,
+  `approval_by` VARCHAR(200) NULL,
+  `last_update` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  `last_objectType` VARCHAR(20) NOT NULL,
+  `last_objectId` VARCHAR(200) NOT NULL,
+  KEY `last_object` (last_objectType, last_objectId)
 );
 
-CREATE  INDEX "tiki_plugin_security_last_object" ON "tiki_plugin_security"("last_objectType" "last_objectId");
 
 DROP TABLE `tiki_user_reports`;
 
@@ -5817,19 +5069,19 @@ CREATE TABLE "IF" NOT EXISTS `tiki_user_reports_cache` (
 
 DROP TABLE `tiki_perspectives`;
 
-CREATE TABLE "tiki_perspectives" (
-  "perspectiveId" int NOT NULL AUTO_INCREMENT,
-  "name" varchar(100) NOT NULL,
+CREATE TABLE `tiki_perspectives` (
+  `perspectiveId` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
   PRIMARY KEY( perspectiveId )
 ) ENGINE=MyISAM;
 
 
 DROP TABLE `tiki_perspective_preferences`;
 
-CREATE TABLE "tiki_perspective_preferences" (
-  "perspectiveId" int NOT NULL,
-  "pref" varchar(40) NOT NULL,
-  "value" clob,
+CREATE TABLE `tiki_perspective_preferences` (
+  `perspectiveId` int NOT NULL,
+  `pref` varchar(40) NOT NULL,
+  `value` clob,
   PRIMARY KEY( perspectiveId, pref )
 ) ENGINE=MyISAM;
 

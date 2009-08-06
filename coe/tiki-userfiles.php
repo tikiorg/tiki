@@ -129,7 +129,6 @@ if ($prefs['feature_ajax'] == "y") {
 		$ajaxlib->processRequests();
 	}
 	user_files_ajax();
-	$smarty->assign("mootab", 'y');
 }
 $smarty->assign('mid', 'tiki-userfiles.tpl');
 $smarty->display("tiki.tpl");
