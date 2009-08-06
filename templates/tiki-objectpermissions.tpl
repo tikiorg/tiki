@@ -47,7 +47,7 @@
 					<input type="checkbox" name="checked[]" value="{$page_perms[pg].permName|cat:' '|cat:$page_perms[pg].groupName|escape}" />
 				</td>
 				<td class="{cycle advance=false}">
-				{$page_perms[pg].permName|escape}<br /><em>{tr}{$page_perms[pg].permDesc|escape}{/tr}</em>
+				{$page_perms[pg].permName|escape}<br /><em>{if isset($page_perms[pg].permDesc)}{tr}{$page_perms[pg].permDesc|escape}{/tr}{/if}</em>
 				</td>
 				<td class="{cycle advance=false}">
 				{if $page_perms[pg].groupName eq $prefs.trackerCreatorGroupName}<i>{tr}Creator Group{/tr}</i>{else}{$page_perms[pg].groupName|escape}{/if}
@@ -139,6 +139,9 @@
 		<input type="hidden" name="objectType" value="{$objectType|escape}" />
 		<input type="hidden" name="objectId" value="{$objectId|escape}" />
 		<input type="hidden" name="permType" value="{$permType|escape}" />
+		
+		<label for="show_disabled_features">{tr}Show permissions for disabled features{/tr}</label>
+		<input type="checkbox" name="show_disabled_features" id="show_disabled_features" {if isset($show_disabled_features) and $show_disabled_features}checked="checked"{/if} onchange="this.form.submit();" />
 
 		<div class="input_submit_container" style="text-align: center">
 			<input type="submit" name="assign" value="{tr}Assign{/tr}" />

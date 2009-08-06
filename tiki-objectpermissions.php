@@ -18,6 +18,7 @@ $auto_query_args = array(
 	'permType',
 	'objectId',
 	'filegals_manager',
+	'show_disabled_features',
 );
 $perm = 'tiki_p_assign_perm_' . str_replace(' ', '_', $_REQUEST['objectType']);
 if ($_REQUEST['objectType'] == 'wiki page') {
@@ -280,7 +281,13 @@ foreach($groups['data'] as $row) {
 }
 
 // Get a list of permissions
-$perms = $userlib->get_permissions(0, -1, 'permName_asc', '', $_REQUEST["permType"], $groupNames, true);	// TODO enabledOnly doesn't seem to do anything - KIL
+if (isset($_REQUEST['show_disabled_features']) && $_REQUEST['show_disabled_features'] == 'on') {
+	$show_disabled_features = true;
+} else {
+	$show_disabled_features = false;
+}
+$smarty->assign('show_disabled_features', $show_disabled_features);
+$perms = $userlib->get_permissions(0, -1, 'permName_asc', '', $_REQUEST["permType"], $groupNames, !$show_disabled_features);
 $perms = $perms['data'];
 
 $smarty->assign('permGroups', implode(',', $permGroups));

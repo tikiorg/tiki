@@ -1857,7 +1857,7 @@ function get_included_groups($group, $recur=true) {
 		return $utr;
 	}
 
-	function get_permissions($offset = 0, $maxRecords = -1, $sort_mode = 'permName_asc', $find = '', $type = '', $group = '', $enabledOnly = false) {	// TODO enabledOnly doesn't seem to do anything - KIL?
+	function get_permissions($offset = 0, $maxRecords = -1, $sort_mode = 'permName_asc', $find = '', $type = '', $group = '', $enabledOnly = false) {
 		global $prefs;
 
 		$values = array();
@@ -1889,8 +1889,18 @@ function get_included_groups($group, $recur=true) {
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
-			if( $res['feature_check'] && $prefs[ $res['feature_check'] ] != 'y' )
-				continue;
+			if( $enabledOnly && $res['feature_check'] ) {	// only list enabled features
+				$feats = split(',', $res['feature_check']);
+				$got_one = false;
+				foreach ($feats as $feat) {
+					if ( $prefs[ trim($feat) ] == 'y') {
+						$got_one = true;
+					}
+				}
+				if (!$got_one) {
+					continue;
+				}
+			}
 
 			$cant++;
 			if ($group) {
