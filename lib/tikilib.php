@@ -796,16 +796,20 @@ class TikiLib extends TikiDb_Bridge {
 	/*shared*/
 
 	function list_trackers($offset=0, $maxRecords=-1, $sort_mode='name_asc', $find='') {
+		global $categlib; require_once('lib/categories/categlib.php');
+		$join = '';
+		$where = '';
+		$bindvars = array();
+		if( $jail = $categlib->get_jail() ) {
+			$categlib->getSqlJoin($jail, 'tracker', '`tiki_trackers`.`trackerId`', $join, $where, $bindvars);
+		}	
 		if ($find) {
 			$findesc = '%' . $find . '%';
-			$mid = " where (`name` like ? or `description` like ?)";
-			$bindvars=array($findesc,$findesc);
-		} else {
-			$mid = "";
-			$bindvars=array();
+			$where .= ' and (`tiki_trackers`.`name` like ? or `tiki_trackers`.`description` like ?)';
+			$bindvars = array_merge($bindvars, array($findesc, $findesc));
 		}
-		$query = "select * from `tiki_trackers` $mid order by ".$this->convertSortMode($sort_mode);
-		$query_cant = "select count(*) from `tiki_trackers` $mid";
+		$query = "select * from `tiki_trackers` $join where 1=1 $where order by `tiki_trackers`.".$this->convertSortMode($sort_mode);
+		$query_cant = "select count(*) from `tiki_trackers` $join where 1=1 $where";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
@@ -2767,29 +2771,22 @@ class TikiLib extends TikiDb_Bridge {
 
 	// BLOG METHODS ////
 	function list_blogs($offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '') {
-
 		global $categlib; if (!$categlib) require_once 'lib/categories/categlib.php';
-
 		$bindvars = array();
+		$join = '';
+		$where = '';
 
 		if( $jail = $categlib->get_jail() ) {
 			$categlib->getSqlJoin($jail, 'blog', '`tiki_blogs`.`blogId`', $join, $where, $bindvars);
-		} else {
-			$join = '';
-			$where = '';
 		}	
 
 		if ($find) {
 			$findesc = '%' . $find . '%';
-
-			$mid = ' and (`title` like ? or `description` like ?) ';
-			$bindvars = array($findesc, $findesc);
-		} else {
-			$mid = '';
+			$where .= ' and (`tiki_blogs`.`title` like ? or `tiki_blogs`.`description` like ?) ';
+			$bindvars = array_merge($bindvars, array($findesc, $findesc));
 		}
 
-		$query = "select * from `tiki_blogs` $join WHERE 1=1 $where $mid order by `tiki_blogs`." . $this->convertSortMode($sort_mode); 
-		
+		$query = "select * from `tiki_blogs` $join WHERE 1=1 $where order by `tiki_blogs`." . $this->convertSortMode($sort_mode); 
 		$result = $this->query($query, $bindvars);
 
 		$ret = array();
