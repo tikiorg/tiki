@@ -922,7 +922,7 @@ if ( $_REQUEST['general_settings'] == 'y' ) {
 
 include "lib/headerlib.php";
 $headerlib->add_cssfile('styles/strasa.css');
-$headerlib->add_cssfile('styles/strasa/options/cold.css');
+$headerlib->add_cssfile('styles/strasa/options/cool.css');
 $headerlib->add_css('
 html {
 	background-color: #fff;

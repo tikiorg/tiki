@@ -62,21 +62,21 @@ span.button input,
 	color: #4c4c4c;
 	font-weight: bold;
 	border: 1px solid #acacac;
-	background: #f5f5f5 url(cold/headerbg.jpg) repeat-x 0 100%}
+	background: #f5f5f5 url(cool/headerbg.jpg) repeat-x 0 100%}
 
 * html input[type=reset],
 * html input[type=submit] {
 	color: #4c4c4c;
 	font-weight: bold;
 	border: 1px solid #acacac;
-	background: #f5f5f5 url(cold/headerbg.jpg) repeat-x 0 100%}
+	background: #f5f5f5 url(cool/headerbg.jpg) repeat-x 0 100%}
 
 .button a:hover,
 button:hover,
 input[type=reset]:hover,
 input[type=submit]:hover,
 .button input:hover {
-	background: #f5f5f5 url(cold/headerbg.jpg) repeat-x 0 100%;
+	background: #f5f5f5 url(cool/headerbg.jpg) repeat-x 0 100%;
 	background-position: 105%;
 	color: #757575}
 		
@@ -99,11 +99,11 @@ ul.jumplinks a:active {
 }
 
 #c1c2 #col2 {
-	background: url(cold/box_top.gif) no-repeat 100% 0;
+	background: url(cool/box_top.gif) no-repeat 100% 0;
 }
 
 #c1c2 #col2 .content {
-	background: url(cold/box_bottom.gif) no-repeat 0 100%;
+	background: url(cool/box_bottom.gif) no-repeat 0 100%;
 }
 
 #col3 .content {
@@ -159,20 +159,20 @@ div#sioptions,
 #sioptionscentered,
 #customcode,
 #customcodewith_ad {
-	background: #f5f5f5 url(cold/headerbg.jpg) repeat-x 0 100%;
+	background: #f5f5f5 url(cool/headerbg.jpg) repeat-x 0 100%;
 }
 
 #siteloginbar {
-	background: url(cold/login.jpg) 0 0 no-repeat;
+	background: url(cool/login.jpg) 0 0 no-repeat;
 }
 
 * html #siteloginbar {
 	text-align: right;
 	width: 100%;
-	background: #fff url(cold/loginlong.jpg) 0 0 no-repeat}
+	background: #fff url(cool/loginlong.jpg) 0 0 no-repeat}
 
 #siteloginbar .register {
-	background: url(cold/register.jpg) no-repeat;
+	background: url(cool/register.jpg) no-repeat;
 }
 
 #siteloginbar input.wikiaction {
@@ -210,7 +210,7 @@ a.flip:hover {color: #006699}
 
 .tellafriend a,
 .tellafriend a:visited {
-	background: transparent url(cold/fold-topright.jpg) 0 0 no-repeat;
+	background: transparent url(cool/fold-topright.jpg) 0 0 no-repeat;
 	color: #fff;
 }
 
@@ -244,7 +244,7 @@ a.flip:hover {color: #006699}
 }
 
 #header .horbaritem a:hover {
-	background: url('cold/headermenuitem-hover.png') bottom center repeat-x;
+	background: url('cool/headermenuitem-hover.png') bottom center repeat-x;
 	border-color: #336699;
 	color: #fff;
 }
@@ -259,7 +259,7 @@ a.flip:hover {color: #006699}
 }
 
 .mdkitem a:hover {
-	background: transparent url('styles/cold/headerbg.jpg') repeat-x;
+	background: transparent url('styles/cool/headerbg.jpg') repeat-x;
 	color: #fff;
 }
 
@@ -439,7 +439,7 @@ div.cbox {
 
 .cbox-title {
 	color: black;
-	background: #f5f5f5 url(cold/headerbg.jpg) repeat-x 0 100%;
+	background: #f5f5f5 url(cool/headerbg.jpg) repeat-x 0 100%;
 }
 
 .cbox-title a:link,
@@ -510,7 +510,7 @@ td.third {}
 th,
 table.normal td.heading {
 	color: black;
-	background: #f5f5f5 url(cold/headerbg.jpg) repeat-x 0 100%;
+	background: #f5f5f5 url(cool/headerbg.jpg) repeat-x 0 100%;
 }
 
 th a:link,
@@ -729,7 +729,7 @@ div.articlesubtitle {
 	color: #000}
 	
 div.articletitle h2 {
-	background: #f5f5f5 url(cold/headerbg.jpg) repeat-x 0 100%;
+	background: #f5f5f5 url(cool/headerbg.jpg) repeat-x 0 100%;
 	color: #000;
 	padding: 10px 5px;
 	margin: 0}
@@ -766,7 +766,7 @@ body.tiki_blogs .author_actions .actions {
 
 body.tiki_blogs .postbody-title,
 .post .postbody-title {
-	background: #f5f5f5 url(cold/headerbg.jpg) repeat-x 0 100%;
+	background: #f5f5f5 url(cool/headerbg.jpg) repeat-x 0 100%;
 	
 }
 
@@ -786,7 +786,7 @@ body.tiki_blogs .postbody-title,
 
 .post .author_info {
 	color: #000;
-	background: url(cold/login.jpg) 0 0 no-repeat;
+	background: url(cool/login.jpg) 0 0 no-repeat;
 }
 
 .post .postbody .attachments {
