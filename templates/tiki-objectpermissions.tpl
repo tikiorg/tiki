@@ -119,9 +119,15 @@
 		{/if}
 	<form method="post" action="tiki-objectpermissions.php{if !empty($filegals_manager)}?filegals_manager={$filegals_manager|escape}{/if}">
 		{if empty($filegals_manager)}
-			{if !empty($page_perms) or !empty($categ_perms)}
-				{remarksbox type="warning" title="{tr}Warning{/tr}"}{tr}These permissions override any global permissions or category permissions affecting this object.{/tr}<br />
+			{if !empty($page_perms)}
+				{remarksbox type="warning" title="{tr}Warning{/tr}"}
+					{tr}These permissions override any global permissions or category permissions affecting this object.{/tr}<br />
 					{if $tiki_p_admin eq 'y'}{tr}To edit global permissions <a class="rbox-link" href="tiki-admingroups.php">click here</a>.{/tr}{/if}
+				{/remarksbox}
+			{elseif  !empty($categ_perms)}
+				{remarksbox type="warning" title="{tr}Warning{/tr}"}
+					{tr}No permissions yet applied to this object but category permissions affect this object.{/tr}<br />
+					{if $tiki_p_admin eq 'y'}{tr}To edit category permissions <a class="rbox-link" href="tiki-admin_categories.php">click here</a>.{/tr}{/if}
 				{/remarksbox}
 			{else}
 				{remarksbox type="note" title="{tr}Note{/tr}"}

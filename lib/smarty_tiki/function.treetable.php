@@ -41,6 +41,8 @@
  * 
  * _filterMinRows = 12		:	don't show filter box if less than this number of rows
  * 
+ * _collapseMaxSections = 4 :	collapse tree sections of more than this number of sections showing on page load
+ * 
  * class = 'treeTable'		:	class of the table - will add 'sortable' if feature_jquery_sortable = y
  * id = 'treetable1'		:	id of the table (auto-incrementing)
  * 
@@ -104,6 +106,8 @@ function smarty_function_treetable($params, &$smarty) {
 	// some defaults
 	$_listFilter = empty($_listFilter) ? 'y' : $_listFilter;
 	$_filterMinRows = empty($_filterMinRows) ? 12 : $_filterMinRows;
+	$_collapseMaxSections = empty($_collapseMaxSections) ? 4 : $_collapseMaxSections;
+	
 	$_rowClasses = !isset($_rowClasses) ? array('odd','even') : 
 		(is_array($_rowClasses) ? $_rowClasses : array($_rowClasses));
 	
@@ -147,16 +151,6 @@ function smarty_function_treetable($params, &$smarty) {
 	
 	if ($_sortColumn) {
 		sort2d($_data, $_sortColumn);
-		$headerlib->add_jq_onready('$jq("#'.$id.'").treeTable({clickableNodeNames:true});');
-		// TODO refilter when .parent is opened - seems to prevent the click propagating
-//		$headerlib->add_jq_onready('$jq("tr.parent").click(function(event) {
-//if ($jq("#'.$id.'_filter").val()) {
-//	$jq("#'.$id.'_filter").trigger("keyup");
-//	if (event.isPropagationStopped() || event.isImmediatePropagationStopped()) {
-//		$jq(this).trigger("click");
-//	}
-//}
-//		});');
 	}
 	
 	$class = empty($class) ? 'treeTable' : $class;	// treetable
@@ -198,7 +192,7 @@ function smarty_function_treetable($params, &$smarty) {
 	$html .= '</tr></thead>'.$nl;
 	$html .= '<tbody>'.$nl;
 	
-	$treeColumnsAdded = array();
+	$treeSectionsAdded = array();
 	
 		// for each row
 	foreach ($_data as &$row) {
@@ -208,10 +202,10 @@ function smarty_function_treetable($params, &$smarty) {
 			$treeTypeId = preg_replace('/\s+/', '_', $treeType);
 			$childRowClass = ' child-of-'.$id.'_'.$treeTypeId;
 			
-			if (!in_array($treeTypeId, $treeColumnsAdded)) {
+			if (!in_array($treeTypeId, $treeSectionsAdded)) {
 				$html .= '<tr id="'.$id.'_'.$treeTypeId.'"><td colspan="'.(count($_columns) + count($_checkbox)).'">';
 				$html .= $treeType.'</td></tr>'.$nl;
-				$treeColumnsAdded[] = $treeTypeId;
+				$treeSectionsAdded[] = $treeTypeId;
 				
 				// write a sub-header
 				$html .= '<tr class="subHeader'.$childRowClass.'">';
@@ -268,6 +262,22 @@ function smarty_function_treetable($params, &$smarty) {
 		$html .= '</tr>'.$nl;					
 	}
 	$html .= '</tbody></table>'.$nl;
+	
+	// add jq code to initial treeetable
+	if (count($treeSectionsAdded) < $_collapseMaxSections) {
+		$headerlib->add_jq_onready('$jq("#'.$id.'").treeTable({clickableNodeNames:true,initialState: "expanded"});');
+	} else {
+		$headerlib->add_jq_onready('$jq("#'.$id.'").treeTable({clickableNodeNames:true,initialState: "collapsed"});');
+	}
+	// TODO refilter when .parent is opened - seems to prevent the click propagating
+//		$headerlib->add_jq_onready('$jq("tr.parent").click(function(event) {
+//if ($jq("#'.$id.'_filter").val()) {
+//	$jq("#'.$id.'_filter").trigger("keyup");
+//	if (event.isPropagationStopped() || event.isImmediatePropagationStopped()) {
+//		$jq(this).trigger("click");
+//	}
+//}
+//		});');
 		
 	return $html;
 
