@@ -240,7 +240,7 @@ class HistLib extends TikiLib {
 			left join `tiki_pages` tp on ta.`object`=tp.`pageName` and ta.`lastModif`=tp.`lastModif` " . $where;
 
 		$result = $this->fetchAll($query,$bindvars,$limit,$offset);
-		$result = Perms::filter( array( 'type' => 'wiki page' ), 'object', $result, 'object' );
+		$result = Perms::filter( array( 'type' => 'wiki page' ), 'object', $result, array( 'object' => 'object' ), 'view' );
 		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 		$retval = array();

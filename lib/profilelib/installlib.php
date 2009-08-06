@@ -53,8 +53,8 @@ class Tiki_Profile_Installer
 	 * @param $index - (int) index of feedback string to return if present
 	 * @return string or whole array if no index specified 
 	 */
-	function getFeedback( $index ) {
-		if (isset( $index ) && $index < count($this->feedback) ) {
+	function getFeedback( $index = null ) {
+		if (! is_null( $index ) && $index < count($this->feedback) ) {
 			return $this->feedback[ $index ];
 		} else {
 			return $this->feedback;
@@ -69,14 +69,21 @@ class Tiki_Profile_Installer
 			return $type;
 	} // }}}
 
-	public static function convertObject( $type, $id ) // {{{
+	public static function convertObject( $type, $id, $contextualizedInfo = array() ) // {{{
 	{
 		global $tikilib;
 
-		if( $type == 'wiki page' && is_numeric( $id ) )
+		if( $type == 'wiki page' && is_numeric( $id ) ) {
 			return $tikilib->get_page_name_from_id( $id );
-		else
+		} elseif( $type == 'group' && isset( $contextualizedInfo['groupMap'] ) ) {
+			if( isset( $contextualizedInfo['groupMap'][$id] ) ) {
+				return $contextualizedInfo['groupMap'][$id];
+			} else {
+				return $id;
+			}
+		} else {
 			return $id;
+		}
 	} // }}}
 
 	function __construct() // {{{
@@ -239,22 +246,25 @@ class Tiki_Profile_Installer
 			$this->setFeedback(tra('Installed').': '.$object->getDescription());
 		}
 		$preferences = $profile->getPreferences();
-		$profile->replaceReferences( $preferences, $thus->userData );
+		$profile->replaceReferences( $preferences, $this->userData );
 		foreach( $preferences as $pref => $value ) {
 			if ($prefs[$pref] != $value) {
 				$this->setFeedback(tra('Preference set').': '.$pref.'='.$value);
 			}
 			$tikilib->set_preference( $pref, $value );
 		}
-		$permissions = $profile->getPermissions();
-		$profile->replaceReferences( $permissions, $thus->userData );
+		$groupMap = $profile->getGroupMap();
+		$profile->replaceReferences( $groupMap, $this->userData );
+
+		$permissions = $profile->getPermissions( $groupMap );
+		$profile->replaceReferences( $permissions, $this->userData );
 		foreach( $permissions as $groupName => $info ) {
 			$this->setFeedback(tra('Group changed (or modified)').': '.$groupName);
-			$this->setupGroup( $groupName, $info['general'], $info['permissions'], $info['objects'] );
+			$this->setupGroup( $groupName, $info['general'], $info['permissions'], $info['objects'], $groupMap );
 		}
 	} // }}}
 
-	private function setupGroup( $groupName, $info, $permissions, $objects ) // {{{
+	private function setupGroup( $groupName, $info, $permissions, $objects, $groupMap ) // {{{
 	{
 		global $userlib;
 
@@ -279,7 +289,9 @@ class Tiki_Profile_Installer
 			foreach( $data['permissions'] as $perm => $v )
 			{
 				$data['type'] = self::convertType( $data['type'] );
-				$data['id'] = Tiki_Profile_Installer::convertObject( $data['type'], $data['id'] );
+				$data['id'] = Tiki_Profile_Installer::convertObject( $data['type'], $data['id'], array(
+					'groupMap' => $groupMap,
+				) );
 
 				if( $v == 'y' )
 					$userlib->assign_object_permission( $groupName, $data['id'], $data['type'], $perm );
@@ -300,6 +312,7 @@ abstract class Tiki_Profile_InstallHandler // {{{
 {
 	protected $obj;
 	private $userData;
+	protected $data;
 
 	function __construct( Tiki_Profile_Object $obj, $userData )
 	{
@@ -329,8 +342,6 @@ abstract class Tiki_Profile_InstallHandler // {{{
 
 class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler // {{{
 {
-	private $data;
-
 	private function getData() // {{{
 	{
 		if( $this->data )

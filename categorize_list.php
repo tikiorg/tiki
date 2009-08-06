@@ -25,7 +25,11 @@ if ($prefs['feature_categories'] == 'y' && isset($cat_type) && isset($cat_objid)
 		$smarty->assign('cat_categorize', 'y');
 	}
 
-	if( ! isset( $cat_object_exists ) || $cat_object_exists ) {
+	if( ! isset( $cat_object_exists ) ) {
+		$cat_object_exists = false;
+	}
+
+	if( $cat_object_exists ) {
 		$cats = $categlib->get_object_categories($cat_type, $cat_objid);
 	} else {
 		$cats = $categlib->get_default_categories();
@@ -67,7 +71,7 @@ if ($prefs['feature_categories'] == 'y' && isset($cat_type) && isset($cat_objid)
 
 		if (!empty($cats) && in_array($categories[$i]["categId"], $cats)) {
 			$categories[$i]["incat"] = 'y';
-			$categories[$i]['canchange'] = $can && $catperms->remove_object;
+			$categories[$i]['canchange'] = ! $cat_object_exists || ( $can && $catperms->remove_object );
 		} else {
 			$categories[$i]["incat"] = 'n';
 			$categories[$i]['canchange'] = $can && $catperms->add_object;
