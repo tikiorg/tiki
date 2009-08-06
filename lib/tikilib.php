@@ -3989,6 +3989,7 @@ class TikiLib extends TikiDb_Bridge {
 			foreach ($filter as $type=>$val) {
 				if ($type == 'categId') {
 					$categories = $categlib->get_jailed( (array) $val );
+					$categories[] = -1;
 
 					$cat_count = count( $categories );
 					$join_tables .= " inner join `tiki_objects` as tob on (tob.`itemId`= tp.`pageName` and tob.`type`= ?) inner join `tiki_category_objects` as tc on (tc.`catObjectId`=tob.`objectId` and tc.`categId` IN(" . implode(', ', array_fill(0, $cat_count, '?')) . ")) ";
