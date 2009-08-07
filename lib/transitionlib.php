@@ -76,6 +76,10 @@ class TransitionLib
 	private function getTransitionsFromStates( $states ) {
 		$db = TikiDb::get();
 
+		if( empty( $states ) ) {
+			return array();
+		}
+
 		$bindvars = array( $this->transitionType );
 		$query = "SELECT `transitionId`, `preserve`, `name`, `from`, `to` FROM `tiki_transitions` WHERE `type` = ? AND " . $db->in( 'from', $states, $bindvars ) . ' AND NOT (' . $db->in( 'to', $states, $bindvars ) . ')';
 
@@ -93,14 +97,14 @@ class TransitionLib
 
 	// The following functions vary depending on the transition type
 
-	private function getCurrentStates( $object ) {
+	private function getCurrentStates( $object, $type ) {
 		switch( $this->transitionType ) {
 		case 'group':
 			global $userlib;
 			return $userlib->get_user_groups( $object );
 		case 'category':
 			global $categlib; require_once 'lib/categories/categlib.php';
-			return $categlib->get_object_categories( $type, $itemId );
+			return $categlib->get_object_categories( $type, $object );
 		}
 	}
 
