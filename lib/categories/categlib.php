@@ -1573,6 +1573,7 @@ class CategLib extends ObjectLib {
 		}
 	}
 
+	// Returns the categories a new object should be in by default, that is none in general, or the perspective categories if the user is in a perspective.
 	function get_default_categories() {
 		global $prefs;
 		if( ! empty( $prefs['category_jail'] ) ) {
@@ -1580,6 +1581,17 @@ class CategLib extends ObjectLib {
 		} else {
 			return array();
 		}
+	}
+
+	// Returns an array containing the ids of the passed $objects present in any of the passed $categories.
+	function filter_objects_categories($objects, $categories) {
+		$query="SELECT `catObjectId` from `tiki_category_objects` where `categId` in (".implode(',', array_fill(0,count($categories),'?')).") AND `catObjectId` in (".implode(',', array_fill(0,count($objects),'?')).")";
+		$result = $this->query($query, array_merge($categories, $objects));
+		$ret = array();
+		while ($res = $result->fetchRow()) {
+			$ret[]=$res["catObjectId"];
+		}
+		return $ret;
 	}
 }
 $categlib = new CategLib;
