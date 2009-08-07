@@ -16,6 +16,7 @@ function wikiplugin_memberlist_info() {
 }
 
 function wikiplugin_memberlist( $data, $params ) {
+	global $prefs;
 	static $execution = 0;
 	$key = 'memberlist-execution-' . ++ $execution;
 
@@ -45,8 +46,21 @@ function wikiplugin_memberlist( $data, $params ) {
 			wikiplugin_memberlist_add( $validGroups, $_POST['add'] );
 		}
 		header( 'Location: ' . $_SERVER['REQUEST_URI'] );
-		header( 'Location: ' . $_SERVER['REQUEST_URI'] );
 		exit;
+	}
+
+	if( isset( $_REQUEST['transition'], $_REQUEST['member'] ) ) {
+		if( $prefs['feature_group_transition'] == 'y' ) {
+			require_once 'lib/transitionlib.php';
+			$transitionlib = new TransitionLib( 'group' );
+			$transitionlib->triggerTransition( $_REQUEST['transition'], $_REQUEST['member'] );
+
+			$url = $_SERVER['REQUEST_URI'];
+			$url = str_replace( 'transition=', 'x=', $url );
+			$url = str_replace( 'member=', 'x=', $url );
+			header( 'Location: ' . $url );
+			exit;
+		}
 	}
 
 	$canApply = false;
@@ -78,7 +92,7 @@ function wikiplugin_memberlist_get_members( $groupName ) {
 }
 
 function wikiplugin_memberlist_get_group_details( $groups ) {
-	global $user;
+	global $user, $prefs;
 	$validGroups = array();
 	foreach( $groups as $groupName ) {
 		$perms = Perms::get( array( 'type' => 'group', 'object' => $groupName ) );
@@ -96,6 +110,15 @@ function wikiplugin_memberlist_get_group_details( $groups ) {
 
 			if( $perms->group_view_members ) {
 				$validGroups[$groupName]['members'] = wikiplugin_memberlist_get_members( $groupName );
+
+				if( $prefs['feature_group_transition'] ) {
+					require_once 'lib/transitionlib.php';
+					$transitionlib = new TransitionLib( 'group' );
+					$validGroups[$groupName]['transitions'] = array();
+					foreach( $validGroups[$groupName]['members'] as $username ) {
+						$validGroups[$groupName]['transitions'][$username] = $transitionlib->getAvailableTransitionsFromState( $groupName, $username );
+					}
+				}
 			}
 		}
 	}

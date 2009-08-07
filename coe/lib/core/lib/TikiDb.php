@@ -299,7 +299,7 @@ abstract class TikiDb
 	{
 		$bindvars = array_merge( $bindvars, $values );
 		$values = rtrim( str_repeat( '?,', count( $values ) ), ',' );
-		return " $field IN( $values ) ";
+		return " `$field` IN( $values ) ";
 	} // }}}
 
 	function concat() // {{{

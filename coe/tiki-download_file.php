@@ -323,9 +323,11 @@ if ( isset($_GET['preview']) || isset($_GET['thumbnail']) || isset($_GET['displa
 	}
 }
 
-if ( empty($info['filetype']) ) $info['filetype'] = 'application/x-octetstream';
+if ( empty($info['filetype']) || $info['filetype'] == 'application/x-octetstream' || $info['filetype'] == 'application/octet-stream' ) {
+	include_once('lib/mime/mimelib.php');
+	$info['filetype'] = tiki_get_mime($info['filename'], 'application/octet-stream');
+}
 header('Content-type: '.$info['filetype']);
-
 
 // IE6 can not download file with / in the name (the / can be there from a previous bug)
 $file = basename($info['filename']);

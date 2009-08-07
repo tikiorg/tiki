@@ -3767,6 +3767,9 @@ INSERT INTO "," ("permName","permDesc","level","type","admin","feature_check") V
 INSERT INTO "," ("permName","permDesc","level","type","admin","feature_check") VALUES ('tiki_p_group_join', 'Can join or leave the group', 'admin', 'group', NULL, NULL);
 
 
+INSERT INTO "," ("permName","permDesc","level","type","admin","feature_check") VALUES ('tiki_p_trigger_transition', 'Can trigger the transition between two states', 'admin', 'transition', NULL, 'feature_group_transition,feature_category_transition');
+
+
 
 
 DROP TABLE IF EXISTS 'users_usergroups';
@@ -4924,6 +4927,20 @@ CREATE TABLE tiki_perspective_preferences (
   pref varchar(40) NOT NULL,
   value text,
   PRIMARY KEY ( perspectiveId, pref )
+) ENGINE=MyISAM;
+
+
+DROP TABLE IF EXISTS 'tiki_transitions';
+
+CREATE TABLE tiki_transitions (
+	transitionId int NOT NULL AUTO_INCREMENT,
+	preserve smallint NOT NULL DEFAULT 0,
+	name varchar(50),
+	type varchar(20) NOT NULL,
+	from varchar(255) NOT NULL,
+	to varchar(255) NOT NULL,
+  PRIMARY KEY(transitionId),
+  KEY transition_lookup (type, from)
 ) ENGINE=MyISAM;
 
 

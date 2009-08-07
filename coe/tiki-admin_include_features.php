@@ -90,7 +90,6 @@ if (isset($_REQUEST["features"])) {
 		"feature_userlevels",
 		"feature_jquery",
 		"feature_shadowbox",
-		"feature_swfobj",
 		"feature_tikitests",
 		"feature_magic",
 		"feature_minichat",
