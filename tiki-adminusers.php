@@ -54,7 +54,11 @@ function batchImportUsers() {
 		$smarty->assign('msg', tra("No records were found. Check the file please!"));
 		$smarty->display("error.tpl");
 		die;
-	}
+    }
+
+    // wheter to force password change on first login or not
+    $pass_first_login = (isset($_REQUEST['forcePasswordChange']) && $_REQUEST['forcePasswordChange'] == 'on');
+
 	$added = 0;
 	$errors = array();
 	$discarded = array();
@@ -96,7 +100,6 @@ function batchImportUsers() {
 			continue;
 		}
 		if (!$exist) {
-			$pass_first_login = (isset($_REQUEST['pass_first_login']) && $_REQUEST['pass_first_login'] == 'on');
 			$userlib->add_user($u['login'], $u['password'], $u['email'], '', $pass_first_login);
 			$logslib->add_log('users', sprintf(tra("Created account %s <%s>") , $u['login'], $u['email']));
 		}
