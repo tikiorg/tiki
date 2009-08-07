@@ -175,10 +175,6 @@
 {* ---------- User interface enhancement features ------------ *}
 {tab name="{tr}User interface enhancement features{/tr}"}
 			<div class="admin">
-					<div class="half_width">
-						<span class="checkbox"><input type="checkbox" name="feature_jquery" {if $prefs.feature_jquery eq 'y'}checked="checked"{/if}/></span>
-						<span class="label"> <a href="{$prefs.helpurl}JQuery" target="tikihelp" class="tikihelp" title="{tr}JQuery: JavaScript UI effects{/tr}"> {tr}JQuery{/tr}</a></span>
-					</div>
 				<div class="half_width">
 					<span class="checkbox"><input type="checkbox" name="feature_jscalendar" {if $prefs.feature_jscalendar eq 'y'}checked="checked"{/if}/></span>
 					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Js+Calendar" target="tikihelp" class="tikihelp" title="{tr}JsCalendar{/tr}">{/if} {tr}JavaScript popup date selector{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
@@ -197,7 +193,7 @@
 				</div>
 				<div class="half_width">
 					<span class="checkbox"><input type="checkbox" name="feature_shadowbox"{if $prefs.feature_shadowbox eq 'y'} checked="checked"{/if}/></span>
-					<span class="label"><a href="{$prefs.helpurl}Shadowbox" target="tikihelp" class="tikihelp" title="{tr}Shadowbox{/tr}"> {tr}Shadowbox{/tr}</a>{if $prefs.feature_jquery neq 'y'} ({tr}required{/tr}: {tr}jQuery{/tr}){/if}</span>
+					<span class="label"><a href="{$prefs.helpurl}Shadowbox" target="tikihelp" class="tikihelp" title="{tr}Shadowbox{/tr}"> {tr}Shadowbox{/tr}</a></span>
 				</div>
 				<div class="half_width">
 					<span class="checkbox"><input type="checkbox" name="feature_quick_object_perms" {if $prefs.feature_quick_object_perms eq 'y'}checked="checked"{/if}/></span>

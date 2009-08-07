@@ -1328,7 +1328,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'debug_ignore_xdebug' => 'n',
 		
 		// JQuery
-		'feature_jquery' => 'y',			// Alternative lib for shadowbox etc
+		'feature_jquery' => 'y',			// Default JS lib for - now "hard-wired" on if javascript_enabled
 		'jquery_effect' => '',				// Default effect for general show/hide: ['' | 'slide' | 'fade' | and
 											// see http://docs.jquery.com/UI/Effects: 'blind' | 'clip' | 'explode' etc]
 		'jquery_effect_direction' => 'vertical', 	// ['horizontal' | 'vertical' | 'left' | 'right' | 'up' | 'down' ]
