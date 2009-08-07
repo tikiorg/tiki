@@ -323,7 +323,9 @@ if ( isset($_GET['preview']) || isset($_GET['thumbnail']) || isset($_GET['displa
 	}
 }
 
-if ( empty($info['filetype']) ) $info['filetype'] = 'application/x-octetstream';
+if ( empty($info['filetype']) || $info['filetype'] == 'application/x-octetstream' ) {
+	$info['filetype'] = tiki_get_mime($info['filename'], 'application/x-octetstream');
+}
 header('Content-type: '.$info['filetype']);
 
 
