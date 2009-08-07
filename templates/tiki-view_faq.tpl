@@ -35,7 +35,7 @@
 				{if $prefs.faq_prefix neq 'none'}
 					<span class="faq_question_prefix">
 						{if $prefs.faq_prefix eq 'QA'}
-							{tr}Q{/tr}:
+							{tr}Question:{/tr}
 						{elseif $prefs.faq_prefix eq 'question_id'}
 							{$smarty.section.ix.index_next}.&nbsp;
 						{/if}
@@ -45,7 +45,7 @@
 			</div>
 			<div class="faqanswer">
 				{if $prefs.faq_prefix eq 'QA'}
-					<span class="faq_answer_prefix">{tr}A{/tr}:&nbsp;</span>
+					<span class="faq_answer_prefix">{tr}Answer{/tr}&nbsp;</span>
 				{/if}
 				{$channels[ix].parsed}
 			</div>
