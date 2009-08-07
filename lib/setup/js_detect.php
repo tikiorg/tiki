@@ -34,6 +34,8 @@ if ( $prefs['javascript_enabled'] != 'y' ) {
 	
 } else {	// we have JavaScript
 
+	$prefs['feature_jquery'] = 'y';	// just in case
+	
 	/** Use custom.js in styles or options dir if there **/
 	$custom_js = $tikilib->get_style_path($prefs['style'], $prefs['style_option'], 'custom.js');
 	if (!empty($custom_js)) {
