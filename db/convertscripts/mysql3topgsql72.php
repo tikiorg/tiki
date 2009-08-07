@@ -1,5 +1,4 @@
 <?php
-/* $Id$ */
 
 // Set tikiversion variable
 $tikiversion='4.0';
@@ -58,14 +57,14 @@ function parse($stmt)
 {
 	// variable for statements that have to be appended
 	global $poststmt;
-	$poststmt="\n\n";
+	$poststmt = "\n";
 
 
-	// Replace `with " – these mark table- and columnames
-	$stmt=preg_replace('/`/', '"', $stmt);
+	// Replace MySQL specific quotes with SQL quotes (`with ") – these mark table- and columnames
+	$stmt = preg_replace('/`/', '"', $stmt);
 	
 	// record table names
-	$stmt=preg_replace("/(DROP TABLE IF EXISTS |DROP TABLE |CREATE TABLE )([a-zA-Z0-9_]+) \(/e", 'record_tablename("$2")', $stmt);
+	$stmt = preg_replace('/(DROP TABLE IF EXISTS |DROP TABLE |CREATE TABLE )"?([a-zA-Z0-9_]+)"? \(/e', 'sprintf("%s \"%s\" (", "$1", record_tablename("$2"))', $stmt);
 	
 	// in key declarations, remove length if there
 	//  PRIMARY KEY (`roleId`, `user`)
@@ -78,15 +77,11 @@ function parse($stmt)
 	$stmt=preg_replace('/ ENGINE=MyISAM/', '', $stmt);
 	$stmt=preg_replace('/ AUTO_INCREMENT=1/', '', $stmt);
 	
-	// TODO: this should not be necessary. If works, remove
-	//postgres cannot DROP TABLE IF EXISTS
-	//$stmt=preg_replace("/DROP TABLE IF EXISTS/","DROP TABLE",$stmt);
-	
-	// TODO: make * to ? and test when it actually works
 	//auto_increment things
-	$stmt=preg_replace("/int(eger)* NOT NULL auto_increment/i", "bigserial", $stmt);
-	$stmt=preg_replace("/int(eger)*\(\d\) (unsigned )*NOT NULL auto_increment/i","serial",$stmt);
-	$stmt=preg_replace("/int(eger)*\(\d\d\) (unsigned )*NOT NULL auto_increment/i","bigserial",$stmt);
+	$stmt=preg_replace("/int(eger)? NOT NULL auto_increment/i", "bigserial", $stmt);
+	$stmt=preg_replace("/int(eger)?\(\d\) (unsigned )*NOT NULL auto_increment/i","serial",$stmt);
+	$stmt=preg_replace("/int(eger)?\(\d\d\) (unsigned )*NOT NULL auto_increment/i","bigserial",$stmt);
+	
 	
 	// integer types
 	$stmt=preg_replace("/tinyint\([1-4]\)/","smallint",$stmt);
@@ -103,6 +98,7 @@ function parse($stmt)
 	// text fields
 	$stmt=preg_replace("/longtext/","text",$stmt);
 	
+	
 	// convert enums
 	$stmt=preg_replace("/\n[ \t]+([a-zA-Z0-9_]+) enum *\(([^\)]+)\)/e","convert_enums('$1','$2')",$stmt);
 	
@@ -114,31 +110,27 @@ function parse($stmt)
 		$stmt);
 	
 	
-	
-	// quote column names in primary keys
-	//$stmt=preg_replace("/\n[ \t]+(PRIMARY KEY) *\((.+)\)/e","quote_prim_cols('$1','$2')",$stmt);
-	
-	// Postgres does not support FULLTEXT indexing.
+	// TODO: Postgres does support FULLTEXT indexing since recent version. Add it here later…
 	// Work arounds for this include adding the tsearch2 module to postgres and other drastic changes.
 	//$stmt=preg_replace("/,\n[ \t]+FULLTEXT KEY ([a-zA-Z0-9_]+) \((.+)\)/e","create_index('$1','$2')",$stmt);
 	// remove text indices
 	$stmt = preg_replace("/,\n[ \t]+FULLTEXT KEY (\"[a-zA-Z0-9_]+\" )?\((.+)\)/", '', $stmt);
 	
-	// convert UNIQUE KEY to UNIQUE
+	// convert UNIQUE KEY to UNIQUE		// TODO: is unique automatically indexed in pgsql? Maybe add index as well.
 	$stmt = preg_replace(
 		"/,\n([ \t]+)UNIQUE KEY (\"[a-zA-Z0-9_]+\" )?\((.*)\)/e",
 		'",\n$1UNIQUE (".strip_paranthesisWithNumbers("$3").")"',
 		$stmt);
-	
-	// TODO: move this above unique to ensure index?
-	// create indexes from KEY …
-	$stmt=preg_replace("/,\n[ \t]+KEY \"?([a-zA-Z0-9_]+)?\"? ?\((.+)\)/e", "create_index('$1','$2')", $stmt);
 	
 	// explicit create index
 	$stmt=preg_replace(
 		"/CREATE INDEX \"?([a-z0-9_]+)\"? ON \"?([a-z0-9_]+)\"? \((.*)\)/ei",
 		"create_explicit_index('$1','$2','$3')",
 		$stmt);
+	
+	// create indexes from KEY …
+	$stmt=preg_replace("/,\n[ \t]*KEY \"?([a-zA-Z0-9_]+)?\"? ?\((.+)\)/e", "create_index('$1','$2')", $stmt);
+	
 	
 	// convert inserts
 	$stmt=preg_replace("/INSERT INTO ([a-zA-Z0-9_]*).*\(([^\)]+)\) VALUES *(.*)/ie","do_inserts('$1','$2','$3')",$stmt);
@@ -150,6 +142,8 @@ function parse($stmt)
 	
 	// clean cases where UNIQUE was alone at the end: remove commas at the end of table definition
 	$stmt=preg_replace("/,( *)\)/","$1)",$stmt);
+	
+	$poststmt .= "\n";
 	return $stmt.";".$poststmt;
 }
 
@@ -163,6 +157,7 @@ function record_tablename($tabnam)
 {
 	global $table_name;
 	$table_name = $tabnam;
+	return $tabnam;
 }
 
 function create_explicit_index($name,$table_name,$content,$type='')
@@ -185,29 +180,45 @@ function create_explicit_index($name,$table_name,$content,$type='')
 	return("CREATE " . ( !empty($type)?$type.' ' : '' ) . "INDEX \"" . $name . "\" ON \"" . $table_name . "\" (" . $allvals . ");\n");
 }
 
-function create_index($name, $content, $type='')
+/**
+ * create an index
+ * SQL command will be added to global $poststmt
+ * @param $name name of index
+ * @param $content comma-seperated list of columns the index is created for
+ * @param $type optional: index type
+ */
+function create_index($name, $columnlist, $type='')
 {
 	global $table_name;
 	global $poststmt;
-	$poststmt.="CREATE " . ( !empty($type)?$type.' ' : '' ) . "INDEX \"".$table_name."_".$name."\" ON \"".$table_name."\"(";
-	$cols=split(",",$content);
-	$allvals="";
-	foreach ($cols as $vals) {
-		$vals=preg_replace("/^ */", '', $vals);
-		$vals=preg_replace("/ *$/", '', $vals);
-		$vals=preg_replace("/([a-z0-9_]+)/i", '"$1"', $vals);
-
+	$poststmt .= 'CREATE ' . ( !empty($type)?$type.' ' : '' ) . 'INDEX "'.$table_name.'_'.$name.'" ON "'.$table_name.'" (';
+	$cols = split(',', $columnlist);
+	
+	// trim column names and add quotes
+	$allvals = '';
+	foreach ($cols as $col) {
+		// strip whitespaces
+		$col = trim($col);
+		
+		// add quotes if column is not quoted
+		if($col[0] != '"')
+		{
+			$col = preg_replace('/([a-zA-Z0-9_]+)/', '"$1"', $col);
+		}
+		
+		// TODO: index textlengths were removed above. Is it possible to use it this way, with the pgsql substr method? Does it remember it's a fn and use it when building indices?
 		// Do var(val) conversion to substr(var, 0, val); since that's what is expected for these indexes
-		$vals=preg_replace("/([\"a-z0-9_]+) *\(\"([0-9]+)\"\)/i","substr($1, 0, $2)",$vals);
-
-		$allvals.=$vals;
+		// $col = preg_replace("/([\"a-z0-9_]+) *\(\"([0-9]+)\"\)/i","substr($1, 0, $2)",$col);
+		$allvals .= $col;
 	}
+	echo $allvals."\n";
 	// Put commas between elements.
-	$allvals=preg_replace("/\"\"/","\",\"",$allvals);
-	$allvals=preg_replace("/\"substr/","\",substr",$allvals);
-	$allvals=preg_replace("/(substr\(.*\))\"/","$1,\",substr",$allvals);
+	$allvals = preg_replace('/""/', '","', $allvals);
+	//$allvals = preg_replace('/"substr/', '",substr', $allvals);
+	//$allvals = preg_replace("/(substr\(.*\))\"/", "$1,\",substr", $allvals);
 
-	$poststmt.=$allvals.");\n";
+	$poststmt .= $allvals . ");\n";
+	echo $allvals."\n";
 }
 
 function do_updates($tab,$content)

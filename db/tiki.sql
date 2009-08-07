@@ -179,7 +179,7 @@ CREATE TABLE `messu_sent` (
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `sessions`;
-CREATE TABLE sessions(
+CREATE TABLE `sessions` (
   `sesskey` char(32) NOT NULL,
   `expiry` int(11) unsigned NOT NULL,
   `expireref` varchar(64),
