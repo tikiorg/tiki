@@ -10,12 +10,6 @@ FCKConfig.BodyClass = 'wikitext';
 FCKConfig.FontNames = 'sans serif;serif;monospace;Arial;Comic Sans MS;Courier New;Tahoma;Times New Roman;Verdana' ;
 
 FCKConfig.ToolbarSets["Tiki"] = [ 
-{if $prefs.wysiwyg_htmltowiki eq 'y'}
-	['Source'],
-{/if}
-{if $prefs.feature_ajax_autosave eq 'y'}
-	['ajaxAutoSave'],
-{/if}
 {foreach item=it from=$toolbar name=lines}
   {foreach item=i from=$it name=item}
   [{foreach item=m from=$i name=im}'{$m}'{if $smarty.foreach.im.index+1 ne $smarty.foreach.im.total},{/if}{/foreach}]{if $smarty.foreach.lines.index+1 ne $smarty.foreach.lines.total},{/if}

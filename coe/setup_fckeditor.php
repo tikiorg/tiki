@@ -11,9 +11,16 @@ $fckstyle = 'styles/'.$prefs['style'];
 $smarty->assign('fckstyle',$fckstyle);
 
 $section = isset($_GET['section']) ? $_GET['section'] : 'wiki page';
-
 $quicktags = QuicktagsList::fromPreference( $section );
-file_put_contents('temp/cache/foo', print_r($quicktags->getWysiwygArray(), true));
-$smarty->assign('toolbar', $quicktags->getWysiwygArray() );
 
+if ( $prefs['wysiwyg_htmltowiki'] == 'y' ) {
+	$quicktags->insertTag('source', true);
+}
+if ( $prefs['feature_ajax_autosave'] == 'y' ) {
+	$quicktags->insertTag('autosave', true);
+}
+
+$toolbar = $quicktags->getWysiwygArray();
+//file_put_contents('temp/cache/foo', print_r($toolbar, true));
+$smarty->assign('toolbar', $toolbar );
 $smarty->display('setup_fckeditor.tpl', null, null, 'application/javascript');
