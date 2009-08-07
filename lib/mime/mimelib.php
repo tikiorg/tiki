@@ -10,6 +10,8 @@ include_once('lib/mime/mimetypes.php');
 
 // returns mimetypes of files
 function tiki_get_mime($filename, $fallback = '') {
+	global $mimetypes;
+	
 	if (function_exists("mime_content_type")) {
 		//notice: this is the better way. 
 		//Compile php with --enable-mime-magic
