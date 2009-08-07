@@ -172,9 +172,6 @@ $sections = array(
 		'itemkey' => '',
 		'objectType' => 'html page',
 	),
-	'swfobj' => array(
-		'feature' => 'feature_swfobj',
-	),
 	// tra('Newsletter')
 	'newsletters' => array(
 		'feature' => 'feature_newsletters',

@@ -1140,9 +1140,6 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_copyright' => 'n',
 		'feature_multimedia' => 'n',
 
-		// swfobj
-		'feature_swfobj' => 'n',
-
 		// textarea
 		'feature_smileys' => 'n',
 		'popupLinks' => 'y',

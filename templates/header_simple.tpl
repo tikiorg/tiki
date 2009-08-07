@@ -51,10 +51,6 @@
 	{include file='header_jquery.tpl'}
 {/if}
 
-{if $prefs.feature_swfobj eq "y"}
-<script type="text/javascript" src="lib/swfobject/swfobject.js"></script>
-{/if}
-
 {if $headerlib}{$headerlib->output_headers()}{/if}
 {if ($mid eq 'tiki-editpage.tpl')}
 <script type="text/javascript">
