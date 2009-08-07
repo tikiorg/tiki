@@ -127,9 +127,10 @@ function parse($stmt)
 		"/CREATE INDEX \"?([a-z0-9_]+)\"? ON \"?([a-z0-9_]+)\"? \((.*)\)/ei",
 		"create_explicit_index('$1','$2','$3')",
 		$stmt);
+	
 	// create indexes from KEY …
 	$stmt = preg_replace("/,\n[ \t]*KEY \"?([a-zA-Z0-9_]+)\"? \((.+)\)/e", 'create_index("$1", "$2")', $stmt);
-	$stmt = preg_replace("/,\n[ \t]*KEY \((.+)\)/e", 'create_index("", "$1")', $stmt);
+	$stmt = preg_replace("/,\n[ \t]*KEY ?\((.+)\)/e", 'create_index("", "$1")', $stmt);
 	
 	
 	// convert inserts
