@@ -468,6 +468,8 @@
 					<input type="radio" name="overwrite" value="n" />&nbsp;{tr}Don't overwrite{/tr}
 					<br />
 					{tr}Overwrite groups:{/tr} <input type="checkbox" name="overwriteGroup" />
+                    <br />
+                    {tr}User must change password at first login{/tr}: <input type="checkbox" name="forcePasswordChange" />
 				</td>
 			</tr>
 			<tr class="formcolor">
