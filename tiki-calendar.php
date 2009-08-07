@@ -42,7 +42,8 @@ $minHourOfDay = 12;
 $maxHourOfDay = 12;
 $manyEvents = array();
 
-foreach ($rawcals["data"] as $cal_id=>$cal_data) {
+foreach ($rawcals["data"] as $cal_data) {
+	$cal_id = $cal_data['calendarId'];
 	$minHourOfDay = min($minHourOfDay,intval($cal_data['startday']/3600));
 	$maxHourOfDay = max($maxHourOfDay,intval(($cal_data['endday']+1)/3600));
 	if ($tiki_p_admin == 'y') {
