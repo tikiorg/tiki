@@ -33,4 +33,3 @@ function smarty_function_quicktags($params, $content, &$smarty, $repeat)
 	return $list->getWikiHtml( $params['area_name'] );
 }
 
-?>
