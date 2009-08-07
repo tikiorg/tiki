@@ -1,10 +1,8 @@
 {* $Id$ *}
 
-<div class="cbox">
 		<form action="tiki-admin.php?page=general" class="admin" method="post">
 		<input type="hidden" name="new_prefs" />
-		
-			<div class="heading input_submit_container" style="text-align: center;padding:1em;">
+			<div class="heading input_submit_container" style="text-align: right;">
 				<input type="submit" value="{tr}Change preferences{/tr}" />
 			</div>
 {tabset name="admin_general"}
@@ -449,9 +447,8 @@
 </div>
 	{/tab}
 {/tabset}
-			<div class="heading input_submit_container" style="text-align: center;padding:1em;">
+			<div class="heading input_submit_container" style="text-align: center;">
 				<input type="submit" value="{tr}Change preferences{/tr}" />
 			</div>
     
     </form>
-</div>

@@ -3,9 +3,9 @@
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Copyright allows to determine a copyright for all the objects of tikiwiki{/tr}.{/remarksbox}
 
 <form action="tiki-admin.php?page=copyright" method="post">
-<div class="cbox">
-<table class="admin"><tr><td>
-<div style="padding:1em;" align="center"><input type="submit" value="{tr}Change preferences{/tr}" /></div>
+<div class="input_submit_container clear" style="text-align: right;">
+	<input type="submit" value="{tr}Change preferences{/tr}" />
+</div>
 <input type="hidden" name="setcopyright" />
 
 <fieldset><legend>{tr}Copyright management{/tr}</legend>
@@ -50,8 +50,8 @@
 </fieldset>
 
 
-<div style="padding:1em;" align="center"><input type="submit" value="{tr}Change preferences{/tr}" /></div>
-</td></tr></table>
+<div class="input_submit_container clear" style="text-align: center;">
+	<input type="submit" value="{tr}Change preferences{/tr}" />
 </div>
 </form>
 

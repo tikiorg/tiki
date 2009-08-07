@@ -43,23 +43,23 @@
   <input type="hidden" name="siteId" value="{$siteId|escape}" />
   <table class="normal">
             <tr>
-      <td class="formcolor">{tr}Name{/tr}:</td>
-      <td class="formcolor"><input type="text" name="name" value="{$info.name|escape}" />
+      <td class="formcolor"><label for="name">{tr}Name{/tr}:</label></td>
+      <td class="formcolor"><input type="text" id="name" name="name" value="{$info.name|escape}" />
               </td>
     </tr>
             <tr>
-      <td class="formcolor">{tr}Description:{/tr}</td>
-      <td class="formcolor"><textarea rows="5" cols="60" name="description">{$info.description|escape}</textarea>
+      <td class="formcolor"><label for="description">{tr}Description:{/tr}</label></td>
+      <td class="formcolor"><textarea rows="5" cols="60" id="description" name="description">{$info.description|escape}</textarea>
               </td>
     </tr>
             <tr>
-      <td class="formcolor">{tr}URL:{/tr}</td>
-      <td class="formcolor"><input type="text" size="60" name="url" value="{if $info.url ne ""}{$info.url|escape}{else}http://{/if}" />
+      <td class="formcolor"><label for="url">{tr}URL:{/tr}</label></td>
+      <td class="formcolor"><input type="text" size="60" id="url" name="url" value="{if $info.url ne ""}{$info.url|escape}{else}http://{/if}" />
               </td>
     </tr>
             <tr>
-      <td class="formcolor">{tr}Directory Categories:{/tr}</td>
-      <td class="formcolor"><select name="siteCats[]" multiple="multiple" size="4">
+      <td class="formcolor"><label for="siteCats">{tr}Directory Categories:{/tr}</label></td>
+      <td class="formcolor"><select id="siteCats" name="siteCats[]" multiple="multiple" size="4">
           
 					    {section name=ix loop=$categs}
 					      
@@ -76,8 +76,8 @@
     </tr>
             {if $prefs.directory_country_flag eq 'y'}
             <tr>
-      <td class="formcolor">{tr}Country{/tr}:</td>
-      <td class="formcolor"><select name="country">
+      <td class="formcolor"><label for="country">{tr}Country{/tr}:</label></td>
+      <td class="formcolor"><select id="country" name="country">
           
 				        {section name=ux loop=$countries}
 					        

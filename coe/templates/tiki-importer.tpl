@@ -12,7 +12,7 @@
         {/remarksbox}
     {/if}
     {remarksbox type="note" title="{tr}Note:{/tr}"}
-        {tr}Depending on the size of the file from the source software the import process may take a while to complete. This migth be a problem according to your PHP and web server settings. This script tries to change the relevant settings but there are some settings that the script cannot change. So if you are having problems with the script try to increase the value of the following settings: max_input_time, post_max_size, upload_max_filesize. It is recommended that you run this script in a server where you can change the values of those settings if needed.{/tr}
+        {tr}Depending on the size of the file from the source software the import process may take a while to complete. This migth be a problem according to your PHP and web server settings. This script tries to change the relevant settings but there are some settings that the script cannot change. So if you are having problems with the script try to increase the value of the following settings: max_input_time, post_max_size, upload_max_filesize, memory_limit. It is recommended that you run this script in a server where you can change the values of those settings if needed.{/tr}
     {/remarksbox}
        
     <br />
@@ -33,7 +33,7 @@
         <input type="hidden" name="importerClassName" value="{$importerClassName}"/>
         {foreach from=$importerOptions item=option}
             {if $option.type eq 'checkbox'}
-                <input type="checkbox" name="{$option.name}"/><label for="{$options.name}">{tr}{$option.label}{/tr}</label><br />
+                <input type="checkbox" name="{$option.name}" id="{$option.name}"/><label for="{$option.name}">{tr}{$option.label}{/tr}</label><br />
             {elseif $option.type eq 'text'}
                 {tr}{$option.label}{/tr}: <input type="text" name="{$option.name}"/><br />
             {elseif $option.type eq 'select'}

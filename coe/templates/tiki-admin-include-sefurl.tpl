@@ -6,6 +6,11 @@
 {/if}
 
 <form class="admin" method="post" action="tiki-admin.php?page=sefurl">
+<div class="heading input_submit_container" style="text-align: right;">
+	 <input type="submit" name="save" value="{tr}Change preferences{/tr}" />
+</div>
+<fieldset class="admin">
+<legend>{tr}Settings{/tr}</legend>
 <div style="padding:0.5em;clear:both">
 	<div style="float:left;margin-right:1em;">
 		<input type="checkbox" id="feature_sefurl" name="feature_sefurl" {if $prefs.feature_sefurl eq 'y'}checked="checked"{/if} />
@@ -54,6 +59,7 @@
 		<label for="feature_sefurl_title_blog">{tr}Display blog title in the sefurl{/tr}</label>
 	</div>
 </div>
+</fieldset>
 <div class="heading input_submit_container" style="text-align: center;padding:1em;">
 	 <input type="submit" name="save" value="{tr}Change preferences{/tr}" />
 </div>

@@ -12,25 +12,7 @@
 {/if}
   <div class="multiselect">
   {if count($categories) gt 0}
-{strip}
-	{if isset($cat_tree) }
-		{$cat_tree}
-	{else}
-    <div id="categories_select" {*onmouseover="show('categories_select');" onmouseout="hide('categories_select');"*} class="selection">
-      {cycle values="odd,even" print=false}
-      {section name=ix loop=$categories}
-      {if $categories[ix].incat eq 'y'}
-				<div class="{cycle} option"><input type="checkbox" name="cat_categories[]" value="{$categories[ix].categId|escape}" checked="checked"/>{if $categories[ix].categpath}{$categories[ix].categpath}{else}{$categories[ix].name}{/if}</div>
-			{/if}
-      {/section}
-      {section name=ix loop=$categories}
-      {if $categories[ix].incat neq 'y'}
-				<div class="{cycle} option"><input type="checkbox" name="cat_categories[]" value="{$categories[ix].categId|escape}"/>{if $categories[ix].categpath}{$categories[ix].categpath}{else}{$categories[ix].name}{/if}</div>
-			{/if}
-      {/section}
-    </div>
-	 {/if}
-{/strip}
+	{$cat_tree}
     <input type="hidden" name="cat_categorize" value="on" />
 	<div class="clear">
 	{if $tiki_p_admin_categories eq 'y'}

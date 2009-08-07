@@ -14,7 +14,7 @@
 	{tr}Your database requires an update to match the current TikiWiki version. Please proceed to <a href="tiki-install.php">the installer</a>. Using Tiki with an incorrect database version usually provoke errors.{/tr}
 	{/remarksbox}
 {/if}
-{tr}{$description}{/tr}
+{*{tr}{$description}{/tr}*}
 </div>
 {* The rest determines which page to include using "page" GET parameter. Default : list-sections
 Add a value in first check when you create a new admin page. *}
@@ -82,7 +82,6 @@ Add a value in first check when you create a new admin page. *}
 	{if $prefs.feature_workflow eq 'y'} <a href="tiki-g-admin_processes.php">{tr}Workflow{/tr}</a> {/if}
 	{* TODO: to be fixed {if $prefs.feature_debug_console eq 'y'} <a href="javascript:toggle("debugconsole")">{tr}(debug){/tr}</a> 
 	{/if} *}
-	{if $prefs.feature_games eq 'y'} <a href="tiki-list_games.php">{tr}Games{/tr}</a> {/if}
 	{if $prefs.feature_contact eq 'y'} <a href="tiki-contact.php">{tr}Contact us{/tr}</a> {/if}
 	<hr />
 
@@ -123,7 +122,6 @@ Add a value in first check when you create a new admin page. *}
 	<a href="tiki-admin_quicktags.php">{tr}QuickTags{/tr}</a> 
 	<a href="tiki-admin_content_templates.php">{tr}Content Templates{/tr}</a> 
 	<a href="tiki-admin_dsn.php">{tr}DSN{/tr}</a> 
-	{if $prefs.feature_drawings eq 'y'}<a href="tiki-admin_drawings.php">{tr}Drawings{/tr}</a> {/if}
 	{if $prefs.feature_dynamic_content eq 'y'}<a href="tiki-list_contents.php">{tr}Dynamic Content{/tr}</a> {/if}
 	<a href="tiki-admin_external_wikis.php">{tr}External Wikis{/tr}</a> 
 	{if $prefs.feature_mailin eq 'y'}<a href="tiki-admin_mailin.php">{tr}Mail-in{/tr}</a> {/if}

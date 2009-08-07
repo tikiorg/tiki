@@ -14,7 +14,6 @@
  $tiki_p_edit_content_templates eq 'y' or
  $tiki_p_edit_html_pages eq 'y' or
  $tiki_p_view_referer_stats eq 'y' or
- $tiki_p_admin_drawings eq 'y' or
  $tiki_p_admin_shoutbox eq 'y'
  }
 		{if $prefs.feature_live_support eq 'y' and ($tiki_p_live_support_admin eq 'y' or $user_is_operator eq 'y')}
@@ -50,9 +49,6 @@
 		{/if}
 		{if $tiki_p_edit_templates eq 'y'}
 			<a href="tiki-edit_templates.php" class="linkmenu">{tr}Edit Templates{/tr}</a>
-		{/if}
-		{if $tiki_p_admin_drawings eq 'y'}
-			<a href="tiki-admin_drawings.php" class="linkmenu">{tr}Admin Drawings{/tr}</a>
 		{/if}
 		{if $tiki_p_admin_dynamic eq 'y'}
 			<a href="tiki-list_contents.php" class="linkmenu">{tr}Dynamic Content{/tr}</a>

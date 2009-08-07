@@ -15,7 +15,17 @@
 		{else}
 <tr class="formcolor">
 	<td><label for="fgal_{$key}">{$item.name}:</label></td>
-	<td><input type="checkbox" id="fgal_{$key}" name="fgal_{$key}" {if $item.value eq 'y'}checked="checked"{/if}/></td>
+	{assign var='pref_name' value="fgal_$key"}
+	<td><input type="checkbox" id="fgal_{$key}" name="fgal_{$key}" {if $item.value eq 'y'}checked="checked"{/if}{if $edit_mode eq 'y' and $prefs.$pref_name neq 'y'} disabled="disabled"{/if} />
+		{if $edit_mode eq 'y' and $prefs.$pref_name neq 'y'}
+			<em>{tr}The checkbox is disabled because this preference is disabled globally.{/tr}</em>
+			{if $tiki_p_admin eq 'y' or $tiki_p_admin_file_galleries eq 'y'}
+			<a href="tiki-admin.php?page=fgal">{tr}Please, enable the preference globally first.{/tr}</a>
+			{else}
+				{tr}You can ask your site Admin to enable the preference.{/tr}
+			{/if}
+		{/if}
+	</td>
 </tr>
 		{/if}
 	{/foreach}

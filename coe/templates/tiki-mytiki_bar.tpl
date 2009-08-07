@@ -30,10 +30,6 @@
 	{button _icon="img/mytiki/modules.gif" _text="{tr}Modules{/tr}" href="tiki-user_assigned_modules.php" _menu_text="y}
 {/if}
 
-{if $prefs.feature_newsreader eq 'y' and $tiki_p_newsreader eq 'y'}
-	{button _icon="img/mytiki/news.gif" _text="{tr}Newsreader{/tr}" href="tiki-newsreader_servers.php" _menu_text="y}
-{/if}
-
 {if $prefs.feature_webmail eq 'y' and $tiki_p_use_webmail eq 'y'}
 	{button _icon="img/mytiki/webmail.gif" _text="{tr}Webmail{/tr}" href="tiki-webmail.php" _menu_text="y}
 {/if}

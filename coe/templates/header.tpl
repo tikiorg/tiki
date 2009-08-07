@@ -92,22 +92,8 @@
 {if ($prefs.feature_jquery neq "y" or $prefs.feature_jquery_tablesorter neq "y") and $prefs.javascript_enabled eq "y"}
 	<script type="text/javascript" src="lib/tiki-js-sorttable.js"></script>
 {/if}
-{if $prefs.feature_mootools eq "y"}
-		<script type="text/javascript" src="lib/mootools/mootools-1.2-core.js"></script>
-		<script type="text/javascript" src="lib/mootools/mootools-1.2-more.js"></script>
-	{if $mootools_windoo eq "y"}
-		<script type="text/javascript" src="lib/mootools/extensions/windoo/windoo.js"></script>
-	{/if}
-	{if $mootab eq "y"}
-		<script src="lib/mootools/extensions/tabs/SimpleTabs.js" type="text/javascript" ></script> 
-	{/if}
-{/if}
 {if $prefs.feature_jquery eq "y"}
 	{include file='header_jquery.tpl'}
-{/if}
-
-{if $prefs.feature_swfobj eq "y"}
-		<script type="text/javascript" src="lib/swfobject/swfobject.js"></script>
 {/if}
 
 {if $headerlib}		{$headerlib->output_headers()}{/if}
@@ -126,63 +112,5 @@
 	{/literal}
 		//--><!]]>
 		</script>
-{/if}
-
-{if $prefs.feature_shadowbox eq 'y' and ($prefs.feature_mootools eq "y" or $prefs.feature_jquery eq "y")}
-
-<!-- Includes for Shadowbox script -->
-		<link rel="stylesheet" type="text/css" href="lib/shadowbox/build/css/shadowbox.css" />
-
-	{if $prefs.feature_jquery eq "y"}
-		<script type="text/javascript" src="lib/shadowbox/build/js/adapter/shadowbox-jquery.js" charset="utf-8"></script>
-	{elseif $prefs.feature_mootools eq "y"}
-		<script type="text/javascript" src="lib/shadowbox/build/js/adapter/shadowbox-mootools.js" charset="utf-8"></script>
-	{/if}
-
-		<script type="text/javascript" src="lib/shadowbox/build/js/shadowbox.js" charset="utf-8"></script>
-
-		<script type="text/javascript">
-		<!--//--><![CDATA[//><!--
-	{if $prefs.feature_mootools eq "y"}
-		{literal}
-		window.addEvent('domready', function() {
-		{/literal}
-	{elseif $prefs.feature_jquery eq "y"}
-		{literal}
-		$jq(document).ready(function() {
-		{/literal}
-	{/if}
-	{literal}
-			var options = {
-				ext: {
-					img:        ['png', 'jpg', 'jpeg', 'gif', 'bmp'],
-					qt:         ['dv', 'mov', 'moov', 'movie', 'mp4'],
-					wmp:        ['asf', 'wm', 'wmv'],
-					qtwmp:      ['avi', 'mpg', 'mpeg'],
-					iframe: ['asp', 'aspx', 'cgi', 'cfm', 'doc', 'htm', 'html', 'pdf', 'pl', 'php', 'php3', 'php4', 'php5', 'phtml', 'rb', 'rhtml', 'shtml', 'txt', 'vbs', 'xls']
-				},
-				handleUnsupported: 'remove',
-				loadingImage: 'lib/shadowbox/images/loading.gif',
-				overlayBgImage: 'lib/shadowbox/images/overlay-85.png',
-				handleLgImages:     'resize',
-				text: {
-	{/literal}
-					cancel:   '{tr}Cancel{/tr}',
-					loading:  '{tr}Loading{/tr}',
-					close:    '{tr}\074span class="shortcut"\076C\074/span\076lose{/tr}',
-					next:     '{tr}\074span class="shortcut"\076N\074/span\076ext{/tr}',
-					prev:     '{tr}\074span class="shortcut"\076P\074/span\076revious{/tr}'
-	{literal}
-				},
-				keysClose:          ['c', 27], // c OR esc
-				keysNext:           ['n', 39], // n OR arrow right
-				keysPrev:           ['p', 37]  // p OR arrow left
-			};
-
-			Shadowbox.init(options);
-		});
-//--><!]]>
-		</script>
-	{/literal}
 {/if}
 {* END of html head content *}

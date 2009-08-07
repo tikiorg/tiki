@@ -263,6 +263,12 @@ window.onload = timeIt;
 {/if}
 </td></tr>
 {/if}
+{if $prefs.feature_smileys eq 'y' && $wysiwyg neq 'y'}
+<tr class="formcolor"><td>{tr}Smileys{/tr}:</td><td>
+{include file='tiki-smileys.tpl' area_name='editwiki'}
+</td>
+</tr>
+{/if}
 {if $prefs.feature_wiki_description eq 'y' or $prefs.metatag_pagedesc eq 'y'}
   <tr class="formcolor">
 {if $prefs.metatag_pagedesc eq 'y'} <td>{tr}Description (used for metatags){/tr}:</td>
@@ -279,7 +285,7 @@ window.onload = timeIt;
 <input type="hidden" name="cols" value="{$cols}"/>
 <input type="hidden" name="wysiwyg" value="n" />
 {else}
-{capture name=autosave}{if $prefs.feature_ajax eq 'y' and $prefs.feature_ajax_autosave eq 'y' and $noautosave neq 'y'}{autosave test='n' id='edit' default=$pagedata preview=$preview mode='fck'}{else}{$pagedata}{/if}{/capture}
+{capture name=autosave}{if $prefs.feature_ajax eq 'y' and $prefs.feature_ajax_autosave eq 'y' and $noautosave neq 'y'}{autosave test='n' id='edit' default=$pagedata preview=$preview}{else}{$pagedata}{/if}{/capture}
   {if $prefs.feature_ajax eq 'y' and $prefs.feature_ajax_autosave eq 'y' and $noautosave neq 'y' and $has_autosave eq 'y'}
   {remarksbox type="warning" title="{tr}AutoSave{/tr}"}
   {tr}If you want the saved version instead of the autosaved one{/tr}&nbsp;{self_link noautosave='y' _ajax='n'}{tr}Click Here{/tr}{/self_link}
@@ -289,7 +295,7 @@ window.onload = timeIt;
 </tr>
 <tr><td colspan="2">
 {editform Meat=$smarty.capture.autosave InstanceName='edit' ToolbarSet="Tiki"}
-		<input type="hidden" name="wysiwyg" value="y" />
+<input type="hidden" name="wysiwyg" value="y" />
 {/if}
 </td></tr>
 

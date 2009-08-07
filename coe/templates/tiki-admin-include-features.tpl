@@ -193,7 +193,7 @@
 				</div>
 				<div class="half_width">
 					<span class="checkbox"><input type="checkbox" name="feature_shadowbox"{if $prefs.feature_shadowbox eq 'y'} checked="checked"{/if}/></span>
-					<span class="label"><a href="{$prefs.helpurl}Shadowbox" target="tikihelp" class="tikihelp" title="{tr}Shadowbox{/tr}"> {tr}Shadowbox{/tr}</a>{if $prefs.feature_jquery neq 'y'} ({tr}required{/tr}: {tr}jQuery{/tr}){/if}</span>
+					<span class="label"><a href="{$prefs.helpurl}Shadowbox" target="tikihelp" class="tikihelp" title="{tr}Shadowbox{/tr}"> {tr}Shadowbox{/tr}</a></span>
 				</div>
 				<div class="half_width">
 					<span class="checkbox"><input type="checkbox" name="feature_quick_object_perms" {if $prefs.feature_quick_object_perms eq 'y'}checked="checked"{/if}/></span>
@@ -217,10 +217,6 @@
 						<span class="label"> <a href="{$prefs.helpurl}Purifier" target="tikihelp" class="tikihelp" title="{tr}HTML Purifier{/tr}"> {tr}HTML Purifier (Content is cleaned to XHTML 1.1 Strict on each save){/tr}</a> </span>
 					</div>					
 					<div class="half_width">
-						<span class="checkbox"><input type="checkbox" name="feature_jquery" {if $prefs.feature_jquery eq 'y'}checked="checked"{/if}/></span>
-						<span class="label"> <a href="{$prefs.helpurl}JQuery" target="tikihelp" class="tikihelp" title="{tr}JQuery: JavaScript UI effects{/tr}"> {tr}JQuery{/tr}</a></span>
-					</div>
-					<div class="half_width">
 						<span class="checkbox"><input type="checkbox" name="feature_mobile" {if $prefs.feature_mobile eq 'y'}checked="checked"{/if}/></span>
 						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="http://mobile.tikiwiki.org/" target="tikihelp" class="tikihelp" title="{tr}Mobile{/tr}: {tr}Mobile{/tr}">{/if} {tr}Mobile{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
 					</div>
@@ -228,6 +224,10 @@
 						<span class="checkbox"><input type="checkbox" name="feature_morcego" {if $prefs.feature_morcego eq 'y'}checked="checked"{/if}/></span>
 						<span class="label">{if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Wiki+3D" target="tikihelp" class="tikihelp" title="{tr}Morcego 3D browser{/tr}: {tr}Morcego 3D browser{/tr}">{/if}{tr}Morcego 3D browser{/tr}{if $prefs.feature_help eq 'y'}</a>{/if}</span>
 					 </div>
+					<div class="half_width">
+						<span class="checkbox"><input type="checkbox" name="feature_webmail" {if $prefs.feature_webmail eq 'y'}checked="checked"{/if}/></span>
+						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Webmail" target="tikihelp" class="tikihelp" title="{tr}Webmail{/tr}">{/if} {tr}Webmail{/tr} {if $prefs.feature_help eq 'y'}</a>{/if} </span>
+					</div>
 				</fieldset>
 				<fieldset>
 					<legend class="heading">{icon _id="error"}<span>{tr}Need polish{/tr}</span></legend>
@@ -257,10 +257,6 @@
 						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Spreadsheet" target="tikihelp" class="tikihelp" title="{tr}Spreadsheet{/tr}: {tr}TikiSheet{/tr}">{/if} {tr}Tiki Sheet{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
 					</div>
 					<div class="half_width">
-						<span class="checkbox"><input type="checkbox" name="feature_webmail" {if $prefs.feature_webmail eq 'y'}checked="checked"{/if}/></span>
-						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Webmail" target="tikihelp" class="tikihelp" title="{tr}Webmail{/tr}">{/if} {tr}Webmail{/tr} {if $prefs.feature_help eq 'y'}</a>{/if} </span>
-					</div>
-					<div class="half_width">
 						<span class="checkbox"><input type="checkbox" name="feature_wysiwyg" {if $prefs.feature_wysiwyg eq 'y'}checked="checked"{/if}/></span>
 						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Wysiwyg+Editor" target="tikihelp" class="tikihelp" title="{tr}Wysiwyg editor{/tr}: {tr}Wysiwyg editor{/tr}">{/if} {tr}Wysiwyg editor{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
 					</div>
@@ -283,10 +279,6 @@
 					<div class="half_width">
 						<span class="checkbox"><input type="checkbox" name="feature_friends" {if $prefs.feature_friends eq 'y'}checked="checked"{/if}/></span>
 						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Friendship" target="tikihelp" class="tikihelp" title="{tr}Friendship{/tr}: {tr}Friendship Network{/tr}">{/if} {tr}Friendship Network{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-					</div>
-					<div class="half_width">
-						<span class="checkbox"><input type="checkbox" name="feature_swfobj" {if $prefs.feature_swfobj eq 'y'}checked="checked"{/if}/></span>
-						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}SWFObject" target="tikihelp" class="tikihelp" title="{tr}SWFObject{/tr}">{/if} {tr}SwfObject{/tr} <i>{tr}Used to embed Flash content in wiki pages, banners etc.{/tr}</i>{if $prefs.feature_help eq 'y'}</a>{/if}</span>
 					</div>
 				</fieldset>
 			</div>

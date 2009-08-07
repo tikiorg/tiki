@@ -3,8 +3,9 @@
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}To add/remove blogs, go to "Create/Edit Blog" under "Blogs" on the application menu, or{/tr} <a class="rbox-link" href="tiki-edit_blog.php">{tr}Click Here{/tr}</a>.{/remarksbox}
 
 <form action="tiki-admin.php?page=blogs" method="post">
-<div class="cbox">
-<div style="padding:1em;" align="center"><input type="submit" value="{tr}Change preferences{/tr}" /></div>
+<div class="heading input_submit_container" style="text-align: right">
+	<input type="submit" value="{tr}Change preferences{/tr}" />
+</div>
 
 {tabset name="admin_blogs"}
 	{tab name="{tr}General Settings{/tr}"}
@@ -146,12 +147,14 @@
 	<div class="adminoptionlabel"><label for="blogs-visits">{tr}Visits{/tr}</label></div>
 </div>
 <div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" name="blog_list_activity" id="blogs-activity"
-              {if $prefs.blog_list_activity eq 'y'}checked="checked"{/if} /></div>
+	<div class="adminoption">
+		<input type="checkbox" name="blog_list_activity" id="blogs-activity" {if $prefs.blog_list_activity eq 'y'}checked="checked"{/if} />
+	</div>
 	<div class="adminoptionlabel"><label for="blogs-activity">{tr}Activity{/tr}</label></div>
 </div>
 	{/tab}
 {/tabset}
-<div style="padding:1em;" align="center"><input type="submit" value="{tr}Change preferences{/tr}" /></div>
+<div class="heading input_submit_container" style="text-align: center">
+	<input type="submit" value="{tr}Change preferences{/tr}" />
 </div>
 </form>

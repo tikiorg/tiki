@@ -3,8 +3,9 @@
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use the 'Quick Edit' module to easily create or edit wiki pages.{/tr} {tr}Select <a class="rbox-link" href="tiki-admin_modules.php">Admin &gt; Modules</a> to add this (or other) modules.{/tr}{/remarksbox}
 
 <form action="tiki-admin.php?page=wiki" method="post">
-<div class="cbox">
-<div align="center" style="padding:1em;"><input type="submit" name="wikisetprefs" value="{tr}Change preferences{/tr}" /></div>
+<div class="heading input_submit_container" style="text-align: right">
+	<input type="submit" name="wikisetprefs" value="{tr}Change preferences{/tr}" />
+</div>
 
 	{tabset name="admin_wiki"}
 		{tab name="{tr}General Preferences{/tr}"}
@@ -841,7 +842,8 @@ name="w_displayed_default" {if $prefs.w_displayed_default eq 'y'} checked="check
 </div>
 		{/tab}
 	{/tabset}
-<div align="center" style="padding:1em;"><input type="submit" name="wikisetprefs" value="{tr}Change preferences{/tr}" /></div>
+<div class="heading input_submit_container" style="text-align: center">
+	<input type="submit" name="wikisetprefs" value="{tr}Change preferences{/tr}" />
 </div>
 </form>
 

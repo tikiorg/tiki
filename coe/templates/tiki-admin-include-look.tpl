@@ -1,13 +1,12 @@
 {* $Id$ *}
-<div class="cbox">
 	<form action="tiki-admin.php?page=look"  id="look" name="look" onreset="return(confirm('{tr}Cancel Edit{/tr}'))"  class="admin" method="post">
 		<div class="heading input_submit_container" style="text-align: right">
 			<input type="submit" name="looksetup" value="{tr}Apply{/tr}" />
 			<input type="reset" name="looksetupreset" value="{tr}Reset{/tr}" />
 		</div>
 
-{tabset name="admin_look"}
-	{tab name="{tr}Theme{/tr}"}
+		{tabset name="admin_look"}
+			{tab name="{tr}Theme{/tr}"}
 				<table class="admin">
 					{if isset($thumbfile)}<tr>
 						<td colspan="2">
@@ -152,7 +151,7 @@
 	{/tab}
 
 	{tab name="{tr}General Layout options{/tr}"}
-{* --- General Layout options --- *}
+	{* --- General Layout options --- *}
 				<table class="admin" width="100%">
 				<tr>
 					<td class="form" colspan="5">
@@ -680,7 +679,7 @@
 	{/tab}
 		
 	{tab name="{tr}UI Effects{/tr}"}
-{* --- UI Effects (JQuery) --- *}
+	{* --- UI Effects (JQuery) --- *}
 			<fieldset class="admin">
 				<legend>
 					<a href="#"><span>{tr}JQuery plugins and add-ons{/tr}</span></a>
@@ -954,7 +953,7 @@
 	{/tab}
 
 	{tab name="{tr}Other options{/tr}"}
-{* --- Other --- *}
+	{* --- Other --- *}
 			<fieldset class="admin">
 				<legend>
 					<a><span>{tr}Miscellaneous{/tr}</span></a>
@@ -1075,6 +1074,7 @@
 			</fieldset>
 	{/tab}
 {/tabset}
-		<div class="input_submit_container clear" style="text-align: center"><input type="submit" name="looksetup" value="{tr}Apply{/tr}" /></div>
+		<div class="input_submit_container clear" style="text-align: center">
+			<input type="submit" name="looksetup" value="{tr}Apply{/tr}" />
+		</div>
 	</form>
-</div><!-- cbox end -->

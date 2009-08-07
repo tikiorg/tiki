@@ -4,10 +4,9 @@
 	{button href="tiki-adminusers.php" _text="{tr}Admin Users{/tr}"}
 </div>
 
-<div class="cbox">
 	<form action="tiki-admin.php?page=login" class="admin" method="post">
 		<input type="hidden" name="loginprefs" />
-		<div class="heading input_submit_container" style="text-align: center;padding:1em;">
+		<div class="heading input_submit_container" style="text-align: right">
 			<input type="submit" value="{tr}Change preferences{/tr}" />
 		</div>
 
@@ -624,10 +623,9 @@
 				</fieldset>	 
 			{/tab}
 		{/tabset}
-		<div class="heading input_submit_container" style="text-align: center;padding:1em;">
+		<div class="heading input_submit_container" style="text-align: center">
 			<input type="submit" value="{tr}Change preferences{/tr}" />
 		</div>
 	</form>
-</div>
 
 

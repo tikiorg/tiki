@@ -1,8 +1,6 @@
 {title help="UserAssignedModules"}{tr}User assigned modules{/tr}{/title}
 
-{if $prefs.feature_ajax ne 'y' && $prefs.feature_mootools ne 'y'}
   {include file='tiki-mytiki_bar.tpl'}
-{/if}
 
 <div class="navbar">
 	{button href="tiki-user_assigned_modules.php?recreate=1" _text="{tr}Restore defaults{/tr}"}
