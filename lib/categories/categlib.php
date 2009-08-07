@@ -304,7 +304,7 @@ class CategLib extends ObjectLib {
 		}
 
 		$ret = array_unique($ret);
-		return $ret;
+		return array_values( $ret );
 	}
 
 	// Returns a hash indicating which permission is needed for viewing an object of desired type.
