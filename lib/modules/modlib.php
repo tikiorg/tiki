@@ -54,6 +54,7 @@ class ModLib extends TikiLib {
 		return true;
 	}
 
+	/* Returns the requested module assignation. A module assignation is represented by an array similar to a tiki_modules record. The groups field is unserialized in the module_groups key, a spaces-separated list of groups. */
 	function get_assigned_module($moduleId) {
 		$query = "select * from `tiki_modules` where `moduleId`=?";
 		$result = $this->query($query,array($moduleId));

@@ -3360,6 +3360,10 @@ class TikiLib extends TikiDb_Bridge {
 	}
 
 	/*shared*/
+	/* Returns all module assignations for a certain position, or all positions (by default). A module assignation
+	is represented by an array similar to a tiki_modules record. The groups field is unserialized in the module_groups key, a spaces-separated list of groups.
+	If asking for a specific position, returns an array of module assignations. If not, returns an array of arrays of modules assignations indexed by positions. For example: array("l" -> array("module assignation"))
+	TODO: Document $displayed's effect */
 	function get_assigned_modules($position = null, $displayed="n") {
 		$filter = '';
 		$bindvars = array();
@@ -4595,6 +4599,7 @@ class TikiLib extends TikiDb_Bridge {
 
 	// This implements all the functions needed to use Tiki
 	/*shared*/
+	// Returns whether a page named $pageName exists. Unless $casesensitive is set to true, the check is case-insensitive.
 	function page_exists($pageName, $casesensitive = false) {
 		$page_info = $this->get_page_info($pageName, false);
 		return ( $page_info !== false && ( ! $casesensitive || $page_info['pageName'] == $pageName ) ) ? 1 : 0;
