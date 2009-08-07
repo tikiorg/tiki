@@ -28,3 +28,7 @@ if (extension_loaded("pdo") and $api_tiki == 'pdo' ) {
 $db = TikiDb::get();
 $db->setServerType( $db_tiki );
 
+$pwd = getcwd();
+chdir('../../../');
+require_once 'lib/cache/cachelib.php';
+chdir($pwd);

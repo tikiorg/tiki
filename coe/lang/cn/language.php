@@ -7163,8 +7163,6 @@ $lang=Array(
 "tikiwiki.org" => "tikiwiki.org",
 "pvs" => "pvs",
 "Mb" => "Mb",
-"Q" => "Q",
-"A" => "A",
 "tiki-mobile.php" => "tiki-mobile.php",
 // ###
 // ### end of possibly untranslated words

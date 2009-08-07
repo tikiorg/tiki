@@ -303,7 +303,7 @@ class Tiki_Profile_Installer
 		global $user;
 		if( $info['autojoin'] == 'y' && $user ) {
 			$userlib->assign_user_to_group( $user, $groupName );
-			$this->setFeedback( tr('User %1 was added to %2', $user, $groupName) );
+			$this->setFeedback( tr('User %0 was added to %1', $user, $groupName) );
 		}
 	} // }}}
 

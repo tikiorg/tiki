@@ -7025,8 +7025,6 @@ $lang=Array(
 "Mb" => "Mb",
 "Pre" => "Pre",
 "chg" => "chg",
-"Q" => "Q",
-"A" => "A",
 // ###
 // ### end of possibly untranslated words
 // ###
