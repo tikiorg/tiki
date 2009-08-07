@@ -1384,6 +1384,10 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'zend_mail_smtp_pass' => '',
 		'zend_mail_smtp_port' => 25,
 		'zend_mail_smtp_security' => '',
+
+		// Transitions
+		'feature_group_transition' => 'n',
+		'feature_category_transition' => 'n',
 	);
 
 	// spellcheck

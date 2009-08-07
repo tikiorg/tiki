@@ -3755,6 +3755,9 @@ INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","
 INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_group_join\', \'Can join or leave the group\', \'admin\', \'group\', NULL, NULL);
 
 
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_trigger_transition\', \'Can trigger the transition between two states\', \'admin\', \'transition\', NULL, \'feature_group_transition,feature_category_transition\');
+
+
 
 
 DROP TABLE IF EXISTS "users_usergroups";
@@ -4913,6 +4916,20 @@ CREATE TABLE  "tiki_perspective_preferences" (
   "value" text,
   PRIMARY KEY ( perspectiveId, pref )
 );
+
+
+DROP TABLE IF EXISTS "tiki_transitions";
+
+CREATE TABLE  "tiki_transitions" (
+	"transitionId" bigserial,
+	"preserve" smallint NOT NULL DEFAULT 0,
+	"name" varchar(50),
+	"type" varchar(20) NOT NULL,
+	"from" varchar(255) NOT NULL,
+	"to" varchar(255) NOT NULL,
+	PRIMARY KEY("transitionId")
+);
+CREATE INDEX "tiki_transitions_transition_lookup" ON "tiki_transitions" ("type","from");
 
 
 ;

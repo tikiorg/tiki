@@ -26,6 +26,7 @@ class Tiki_Profile_Installer
 		'perspective' => 'Tiki_Profile_InstallHandler_Perspective',
 		'users' => 'Tiki_Profile_InstallHandler_User',
 		'datachannel' => 'Tiki_Profile_InstallHandler_DataChannel',
+		'transition' => 'Tiki_Profile_InstallHandler_Transition',
 	);
 
 	private static $typeMap = array(
@@ -2017,6 +2018,51 @@ class Tiki_Profile_InstallHandler_Perspective extends Tiki_Profile_InstallHandle
 		}
 
 		return $persp;
+	}
+} // }}}
+
+class Tiki_Profile_InstallHandler_Transition extends Tiki_Profile_InstallHandler // {{{
+{
+	function getData()
+	{
+		if( $this->data )
+			return $this->data;
+
+		$defaults = array(
+			'preserve' => 'n',
+		);
+
+		$data = array_merge(
+			$defaults,
+			$this->obj->getData()
+		);
+
+		$data = Tiki_Profile::convertYesNo( $data );
+
+		return $this->data = $data;
+	}
+
+	function canInstall()
+	{
+		$data = $this->getData();
+		if( ! isset( $data['type'], $data['name'], $data['from'], $data['to'] ) )
+			return false;
+
+		return true;
+	}
+
+	function _install()
+	{
+		require_once 'lib/transitionlib.php';
+
+		$data = $this->getData();
+
+		$this->replaceReferences( $data );
+
+		$transitionlib = new TransitionLib( $data['type'] );
+		$id = $transitionlib->addTransition( $data['from'], $data['to'], $data['name'], $data['preserve'] == 'y' );
+
+		return $id;
 	}
 } // }}}
 

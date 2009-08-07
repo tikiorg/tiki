@@ -205,13 +205,13 @@ CREATE TABLE `messu_sent` (
 
 DROP TABLE `sessions`;
 
-CREATE TABLE "sessions"(
+CREATE TABLE `sessions` (
   `sesskey` char(32) NOT NULL,
   `expiry` number(11) NOT NULL,
   `expireref` varchar(64),
   `data` clob NOT NULL,
   PRIMARY KEY (`sesskey`),
-  KEY `expiry` (`expiry`)
+  KEY `expiry` (expiry)
 ) ENGINE=MyISAM;
 
 
@@ -1224,7 +1224,7 @@ CREATE TABLE `tiki_history` (
   `is_html` TINYINT(1) DEFAULT 0 NOT NULL,
   PRIMARY KEY (`pageName`,`version`),
   KEY `user` (`user`),
-  KEY(historyId)
+  KEY (historyId)
 ) ENGINE=MyISAM;
 
 
@@ -1320,7 +1320,7 @@ CREATE TABLE `tiki_languages` (
 ) ENGINE=MyISAM;
 
 
-INSERT INTO tiki_languages(lang, language) VALUES('en','English');
+INSERT INTO "tiki_languages" ("lang","language") VALUES ('en','English');
 
 
 DROP TABLE `tiki_link_cache`;
@@ -3763,6 +3763,9 @@ INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin
 INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_group_join', 'Can join or leave the group', 'admin', 'group', NULL, NULL);
 
 
+INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_trigger_transition', 'Can trigger the transition between two states', 'admin', 'transition', NULL, 'feature_group_transition,feature_category_transition');
+
+
 DROP TABLE `users_usergroups`;
 
 CREATE TABLE `users_usergroups` (
@@ -4560,9 +4563,9 @@ CREATE TABLE `tiki_pages_translation_bits` (
   `original_translation_bit` number(10) NULL,
   `flags` SET('critical') NULL DEFAULT '',
   PRIMARY KEY (`translation_bit_id`),
-  KEY(`page_id`),
-  KEY(`original_translation_bit`),
-  KEY(`source_translation_bit`)
+  KEY (`page_id`),
+  KEY (`original_translation_bit`),
+  KEY (`source_translation_bit`)
 );
 
 
@@ -4574,7 +4577,7 @@ CREATE TABLE `tiki_pages_changes` (
   `segments_added` number(10),
   `segments_removed` number(10),
   `segments_total` number(10),
-  PRIMARY KEY(page_id, version)
+  PRIMARY KEY (page_id, version)
 );
 
 
@@ -4668,7 +4671,7 @@ CREATE TABLE `tiki_webservice_template` (
   `output` VARCHAR(15) NOT NULL,
   `content` TEXT NOT NULL,
   `last_modif` INT,
-  PRIMARY KEY( service, template )
+  PRIMARY KEY ( service, template )
 ) ENGINE=MyISAM ;
 
 
@@ -4709,7 +4712,7 @@ CREATE TABLE `tiki_sefurl_regex_out` (
   `feature` varchar(256) NULL default NULL,
   `comment` varchar(256),
   `order` number(11) NULL default 0,
-  PRIMARY KEY(`id`),
+  PRIMARY KEY (`id`),
   UNIQUE KEY `left` (`left`(128)),
   "INDEX" `idx1` (silent, type, feature(30))
 );
@@ -4906,7 +4909,7 @@ DROP TABLE `tiki_perspectives`;
 CREATE TABLE `tiki_perspectives` (
   `perspectiveId` int NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
-  PRIMARY KEY( perspectiveId )
+  PRIMARY KEY ( perspectiveId )
 ) ENGINE=MyISAM;
 
 
@@ -4916,7 +4919,21 @@ CREATE TABLE `tiki_perspective_preferences` (
   `perspectiveId` int NOT NULL,
   `pref` varchar(40) NOT NULL,
   `value` clob,
-  PRIMARY KEY( perspectiveId, pref )
+  PRIMARY KEY ( perspectiveId, pref )
+) ENGINE=MyISAM;
+
+
+DROP TABLE `tiki_transitions`;
+
+CREATE TABLE `tiki_transitions` (
+	`transitionId` int NOT NULL AUTO_INCREMENT,
+	`preserve` number(1) DEFAULT 0 NOT NULL,
+	`name` varchar(50),
+	`type` varchar(20) NOT NULL,
+	`from` varchar(255) NOT NULL,
+	`to` varchar(255) NOT NULL,
+  PRIMARY KEY(`transitionId`),
+  KEY `transition_lookup` (`type`, `from`)
 ) ENGINE=MyISAM;
 
 
