@@ -3896,6 +3896,7 @@ class TikiLib extends TikiDb_Bridge {
 		return $retval;
 	}
 
+	// Deprecated in favor of list_pages
 	function last_pages($maxRecords = -1) {
 		global $user;
 		$query = "select `pageName`,`lastModif`,`user` from `tiki_pages` order by ".$this->convertSortMode('lastModif_desc');
@@ -3910,7 +3911,7 @@ class TikiLib extends TikiDb_Bridge {
 		return $ret;
 	}
 
-
+	// Deprecated in favor of list_pages
 	function last_major_pages($maxRecords = -1) {
 		global $user;
 		$query = "select distinct(tp.`pageName`),tp.`lastModif`,tp.`user` from `tiki_pages` tp left join `tiki_actionlog` ta
@@ -7434,10 +7435,10 @@ class TikiLib extends TikiDb_Bridge {
 		// This if no longer checks for minor-ness of the change; sendWikiEmailNotification does that.
 		if( $prefs['feature_wiki_history_full'] == 'y' || $data != $edit_data || $description != $edit_description || $comment != $edit_comment ) {
 			if (strtolower($pageName) != 'sandbox') {
-				$query = "insert into `tiki_history`(`pageName`, `version`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`,`is_html`)
-					values(?,?,?,?,?,?,?,?,?)";
+				$query = "insert into `tiki_history`(`pageName`, `version`, `version_minor`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`,`is_html`)
+					values(?,?,?,?,?,?,?,?,?,?)";
 # echo "<pre>";print_r(get_defined_vars());echo "</pre>";die();
-				$result = $this->query($query,array($pageName,(int) $old_version,(int) $lastModif,$user,$ip,$comment,$data,$description,(int)$info['is_html']));
+				$result = $this->query($query,array($pageName,(int) $old_version, (int) $minor, (int) $lastModif,$user,$ip,$comment,$data,$description,(int)$info['is_html']));
 
 				if ($prefs['feature_contribution'] == 'y') {// transfer page contributions to the history
 					global $contributionlib; include_once('lib/contribution/contributionlib.php');
