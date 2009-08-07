@@ -453,12 +453,6 @@ for ($i = 0; $i < $temp_max; $i++) {
 		$mainfield = $fields["data"][$i]["value"];
 	}
 }
-if ($textarea_options) {	// TODO check in template
-//	global $quicktagslib;
-//	include_once ('lib/quicktags/quicktagslib.php');
-//	$quicktags = $quicktagslib->list_quicktags(0, -1, 'taglabel_asc', '', 'trackers');
-//	$smarty->assign_by_ref('quicktags', $quicktags["data"]);
-}
 if (!empty($_REQUEST['remove'])) {
 	$item_info = $trklib->get_item_info($_REQUEST['remove']);
 	if ($tiki_p_admin_trackers == 'y' || ($tiki_p_modify_tracker_items == 'y' && $item_info['status'] != 'p' && $item_info['status'] != 'c') || ($tiki_p_modify_tracker_items_pending == 'y' && $item_info['status'] == 'p') || ($tiki_p_modify_tracker_items_closed == 'y' && $item_info['status'] == 'c')) {

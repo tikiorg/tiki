@@ -326,6 +326,15 @@ if (isset($_REQUEST['edit'])) {
 	} else {
 		$old_gal_info = $filegallib->get_file_gallery_info($galleryId);
 		$gal_info = array('galleryId' => $galleryId, 'name' => $_REQUEST['name'], 'description' => $_REQUEST['description'], 'user' => $_REQUEST['user'], 'maxRows' => $_REQUEST['maxRows'], 'public' => $public, 'visible' => $visible, 'show_id' => $_REQUEST['fgal_list_id'], 'show_icon' => $_REQUEST['fgal_list_type'], 'show_name' => $_REQUEST['fgal_list_name'], 'show_size' => $_REQUEST['fgal_list_size'], 'show_description' => $_REQUEST['fgal_list_description'], 'show_created' => $_REQUEST['fgal_list_created'], 'show_hits' => $_REQUEST['fgal_list_hits'], 'max_desc' => $_REQUEST['max_desc'], 'type' => $_REQUEST['fgal_type'], 'parentId' => $_REQUEST['parentId'], 'lockable' => $lockable, 'show_lockedby' => $_REQUEST['fgal_list_lockedby'], 'archives' => $_REQUEST['archives'], 'sort_mode' => $_REQUEST['sortorder'] . '_' . $_REQUEST['sortdirection'], 'show_modified' => $_REQUEST['fgal_list_lastmodif'], 'show_creator' => $_REQUEST['fgal_list_creator'], 'show_author' => $_REQUEST['fgal_list_author'], 'subgal_conf' => $_REQUEST['subgal_conf'], 'show_last_user' => $_REQUEST['fgal_list_last_user'], 'show_comment' => $_REQUEST['fgal_list_comment'], 'show_files' => $_REQUEST['fgal_list_files'], 'show_explorer' => (isset($_REQUEST['fgal_show_explorer']) ? 'y' : 'n'), 'show_path' => (isset($_REQUEST['fgal_show_path']) ? 'y' : 'n'), 'show_slideshow' => (isset($_REQUEST['fgal_show_slideshow']) ? 'y' : 'n'), 'default_view' => $_REQUEST['fgal_default_view']);
+		if ($prefs['fgal_show_slideshow'] != 'y') {
+			$gal_info['show_slideshow'] = $old_gal_info['show_slideshow'];
+		}
+		if ($prefs['fgal_show_explorer'] != 'y') {
+			$gal_info['show_show_explorer'] = $old_gal_info['show_show_explorer'];
+		}
+		if ($prefs['fgal_show_path'] != 'y') {
+			$gal_info['show_path'] = $old_gal_info['show_path'];
+		}
 		$fgal_diff = array_diff_assoc($gal_info, $old_gal_info);
 		unset($fgal_diff['created']);
 		unset($fgal_diff['lastModif']);
@@ -549,12 +558,7 @@ if (isset($_GET['slideshow'])) {
 	$smarty->assign('firstId', current($filesid));
 	$smarty->assign('show_find', 'n');
 	$smarty->assign('direct_pagination', 'y');
-	//if ($prefs['feature_mootools'] == 'y') {
 	$smarty->display('file_gallery_slideshow.tpl');
-	//} else if ($prefs['feature_jquery'] == 'y') {
-	// commented out for release 3.0 as it's not ready yet - TODO for 3.1 or 4
-	//	$smarty->display('tiki-file_gallery_slideshow.tpl');
-	//}
 	die();
 } else {
 	if (!isset($_REQUEST["edit_mode"]) && !isset($_REQUEST["edit"])) {
@@ -617,34 +621,7 @@ if ($prefs['feature_user_watches'] == 'y') {
 		}
 	}
 }
-// Build galleries browsing tree and current gallery path array
-//
-function add2tree(&$tree, &$galleries, &$gallery_id, &$gallery_path, &$expanded, $cur_id = - 1) {
-	static $total = 1;
-	static $nb_galleries = 0;
-	$i = 0;
-	$current_path = array();
-	$path_found = false;
-	if ($nb_galleries == 0) $nb_galleries = count($galleries);
-	for ($gk = 0; $gk < $nb_galleries; $gk++) {
-		$gv = & $galleries[$gk];
-		if ($gv['parentId'] == $cur_id && $gv['id'] != $cur_id) {
-			$tree[$i] = & $galleries[$gk];
-			$tree[$i]['link_var'] = 'galleryId';
-			$tree[$i]['link_id'] = $gv['id'];
-			$tree[$i]['pos'] = $total++;
-			add2tree($tree[$i]['data'], $galleries, $gallery_id, $gallery_path, $expanded, $gv['id']);
-			if (!$path_found && $gv['id'] == $gallery_id) {
-				if ($_REQUEST['galleryId'] == $gv['id']) $tree[$i]['current'] = 1;
-				array_unshift($gallery_path, array($gallery_id, $gv['name']));
-				$expanded[] = $tree[$i]['pos'] + 1;
-				$gallery_id = $cur_id;
-				$path_found = true;
-			}
-			$i++;
-		}
-	}
-}
+
 if ($prefs['fgal_show_explorer'] == 'y' || $prefs['fgal_show_path'] == 'y' || isset($_REQUEST['movesel'])) {
 	global $cachelib;
 	include_once ('lib/cache/cachelib.php');
@@ -661,7 +638,7 @@ if ($prefs['fgal_show_explorer'] == 'y' || $prefs['fgal_show_path'] == 'y' || is
 		$tree = array('name' => tra('File Galleries'), 'data' => array(), 'link_var' => 'galleryId', 'link_id' => 0);
 		$gallery_path = array();
 		$expanded = array('1');
-		add2tree($tree['data'], $all_galleries['data'], $galleryId, $gallery_path, $expanded);
+		$filegallib->add2tree($tree['data'], $all_galleries['data'], $galleryId, $gallery_path, $expanded);
 		if ($prefs['fgal_show_path'] == 'y') {
 			array_unshift($gallery_path, array(0, $tree['name']));
 			$gallery_path_str = '';

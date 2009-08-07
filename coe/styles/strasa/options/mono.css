@@ -443,12 +443,12 @@ div.cbox {
 }
 
 .rbox-title {
-	background-color: #e5e5e5;
+	border-color: #ccc;
 }
 
 .rbox-data {
 	background-color: #fff;
-	border: solid 1px #e5e5e5;
+	border: solid 1px #ccc;
 }
 
 

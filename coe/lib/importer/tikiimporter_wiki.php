@@ -129,10 +129,6 @@ class TikiImporter_Wiki extends TikiImporter
     {
         global $tikilib;
         
-        // remove revisions that are not going to be imported
-        if ($this->revisionsNumber > 0)
-            $page['revisions'] = array_slice($page['revisions'], -$this->revisionsNumber);
-        
         if ($tikilib->page_exists($page['name'])) {
             switch ($this->alreadyExistentPageName) {
                 case 'override':

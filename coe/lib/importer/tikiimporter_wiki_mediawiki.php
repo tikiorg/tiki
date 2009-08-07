@@ -30,7 +30,7 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
      * @see lib/importer/TikiImporter#importOptions
      */
     static public $importOptions = array(
-        array('name' => 'importAttachments', 'type' => 'checkbox', 'label' => 'Import images and attachments'),
+        array('name' => 'importAttachments', 'type' => 'checkbox', 'label' => 'Import images and attachments (see documentation for more information)'),
     );    
 
     /**
@@ -40,11 +40,10 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
     var $attachmentsDestDir = '';
 
     /**
-     * Wheter to import or not the attachments if the option has been
-     * marked by the user and if it is possible to write in the
-     * destination dir
+     * Text_Wiki object to handle Mediawiki
+     * syntax parsing
      */
-    var $importAttachments = false;
+    var $parser = '';
 
     /**
      * Start the importing process by loading the XML file.
@@ -52,7 +51,7 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
      * @see lib/importer/TikiImporter_Wiki#import()
      *
      * @param string $filePath path to the XML file
-     * @return parent::import()
+     * @return void 
      * @throws UnexpectedValueException if invalid file mime type
      */
     function import($filePath)
@@ -69,7 +68,39 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
 
         $this->dom = new DOMDocument;
         $this->dom->load($filePath);
-        return parent::import();
+
+        $this->configureParser();
+
+        if (!empty($_POST['importAttachments']) && $_POST['importAttachments'] == 'on') {
+            $this->downloadAttachments();
+        }
+
+        parent::import();
+    }
+
+    /**
+     * Create a Text_Wiki object to handle the parsing
+     * of Mediawiki syntax and define some configuration
+     * option
+     */
+    function configureParser()
+    {
+        $this->parser = Text_Wiki::factory('Mediawiki');
+
+        // do not replace space by underscore in wikilinks
+        $this->parser->setParseConf('Wikilink', 'spaceUnderscore', false);
+
+        // define possible localized namespace for image and files in the wikilink syntax
+        $namespaces = $this->dom->getElementsByTagName('namespace');
+        $prefix = array('Image', 'image');
+        if ($namespaces->length > 0) {
+            foreach ($namespaces as $namespace) {
+                if ($namespace->getAttribute('key') == '-2' || $namespace->getAttribute('key') == '6') {
+                    $prefix[] = $namespace->nodeValue;
+                }
+            }
+        }
+        $this->parser->setParseConf('Image', 'prefix', $prefix);
     }
 
     /**
@@ -91,7 +122,6 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
      * Check for all the requirements to import attachments
      * and also set the $this->attachmentsDestDir.
      * If one of them is not satisfied the script will die.
-     * Otherwise set $this->importAttachments to true
      *
      * @returns void
      */
@@ -115,8 +145,6 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
             $this->saveAndDisplayLog("ABORTING: destination directory for attachments ($this->attachmentsDestDir) is not writable. Fix the problem or try to import without attachments.\n");
             die;
         }
-
-        $this->importAttachments = true;
     }
 
     /**
@@ -134,18 +162,12 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
         $parsedData = array();
         $pages = $this->dom->getElementsByTagName('page');
 
-        $this->saveAndDisplayLog("\nStarting to parse " . $pages->length . " pages:\n");
+        $this->saveAndDisplayLog("\nStarting to parse pages:\n");
 
         foreach ($pages as $page) {
-            // TODO: discover if there is a better to to check if $page has 'upload' element
-            $upload = $page->getElementsByTagName('upload');
-
-            if ($upload->length >= 1) {
-                // is a reference to a wiki page attachment
-                if ($this->importAttachments)
-                    $this->downloadAttachment($upload->item(0));
-            } else {
-                // is a wiki page
+            $isAttachment = $page->getElementsByTagName('upload');
+            // is a wiki page and not an attachment
+            if ($isAttachment->length == 0) {
                 try {
                     $parsedData[] = $this->extractInfo($page);
                 } catch (ImporterParserException $e) {
@@ -158,34 +180,59 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
     }
 
     /**
-     * Receive an DOMElement page with the attribute 'upload'
-     * and try to download the file to the 
-     * img/wiki_up/ directory
+     * Searches for the last version of each attachments in the XML file
+     * and try to download it to the img/wiki_up/ directory
      *
-     * @param DOMElement $upload
+     * Note: it is not possible to generate the Mediawiki
+     * XML file with the <upload> tag through the web interface
+     * (Special:Export). This is only possible through the Mediawiki
+     * script maintanance/dumpBackup.php with the experimental option
+     * --uploads
+     *
      * @return void
      */
-    function downloadAttachment(DOMElement $upload) {
-        $fileName = $upload->getElementsByTagName('filename')->item(0)->nodeValue;
-        $fileUrl = $upload->getElementsByTagName('src')->item(0)->nodeValue;
+    function downloadAttachments() {
+        $pages = $this->dom->getElementsByTagName('page');
 
-        if ($attachmentContent = file_get_contents($fileUrl)) {
-            $newFile = fopen($this->attachmentsDestDir . $fileName, 'w');
-            fwrite($newFile, $attachmentContent);
-            $this->saveAndDisplayLog("File $fileName sucessfully imported!\n");
-        } else {
-            $this->saveAndDisplayLog("Unable to import file $fileName\n");
+        if ($this->dom->getElementsByTagName('upload')->length == 0) {
+            $this->saveAndDisplayLog("\n\nNo attachments found to import! Make sure you have created your XML file with the dumpDump.php script and with the option --uploads. This is the only way to import attachment.\n");
+            return;
         }
-        // check if is possible to download file
-        // download file
-        // save it on img/wiki_up/$domain
-        // print message to the user
-        // what to do with conflicting names?
+
+        $this->saveAndDisplayLog("\n\nStarting to import attachments:\n");
+
+        foreach ($pages as $page) {
+            $attachments = $page->getElementsByTagName('upload');
+
+            if ($attachments->length > 0) {
+                $i = $attachments->length - 1;
+                $lastVersion = $attachments->item($i);
+
+                $fileName = $lastVersion->getElementsByTagName('filename')->item(0)->nodeValue;
+                $fileUrl = $lastVersion->getElementsByTagName('src')->item(0)->nodeValue;
+
+                if (file_exists($this->attachmentsDestDir . $fileName)) {
+                    $this->saveAndDisplayLog("NOT importing file $fileName as there is already a file with the same name in the destination directory ($this->attachmentsDestDir)\n");
+                    continue;
+                }
+
+                try {
+                    $attachmentContent = file_get_contents($fileUrl);
+                    $newFile = fopen($this->attachmentsDestDir . $fileName, 'w');
+                    fwrite($newFile, $attachmentContent);
+                    $this->saveAndDisplayLog("File $fileName sucessfully imported!\n");
+                } catch (Exception $e) {
+                    $this->saveAndDisplayLog("Unable to download file $fileName. Error message was: " . $e->getMessage() . "\n");
+                }
+            }
+        }
     }
 
     /**
      * Parse an DOM representation of a Mediawiki page and return all the values
-     * that will be imported (page name, page content for all revisions)
+     * that will be imported (page name, page content for all revisions). The 
+     * property TikiImporter_Wiki::revisionsNumber define how many wiki page
+     * revisions are parsed.
      * 
      * Note: the names of the keys are changed to reflected the names used by
      * Tiki builtin function (i.e. 'title' is changed to 'name' as used in 
@@ -200,6 +247,11 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
         $data = array();
         $data['revisions'] = array();
 
+        $totalRevisions = $page->getElementsByTagName('revision')->length;
+        if ($this->revisionsNumber != 0 && $totalRevisions > $this->revisionsNumber) {
+            $j = true;
+        }
+
         $i = 0;
         foreach ($page->childNodes as $node) {
             if ($node instanceof DOMElement) {
@@ -212,10 +264,12 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
                     break;
                 case 'revision':
                     $i++;
-                    try {
-                        $data['revisions'][] = $this->extractRevision($node);
-                    } catch (ImporterParserException $e) {
-                        $this->saveAndDisplayLog('Error while parsing revision ' . $i . ' of the page "' . $data['name'] . '". Or there is a problem on the page syntax or on the Text_Wiki parser (the parser used by the importer).' . "\n");
+                    if (!isset($j) || ($i > ($totalRevisions - $this->revisionsNumber))) {
+                        try {
+                            $data['revisions'][] = $this->extractRevision($node);
+                        } catch (ImporterParserException $e) {
+                            $this->saveAndDisplayLog('Error while parsing revision ' . $i . ' of the page "' . $data['name'] . '". Or there is a problem on the page syntax or on the Text_Wiki parser (the parser used by the importer).' . "\n");
+                        }
                     }
                     break;
                 default:
@@ -225,7 +279,7 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
         }
 
         if (count($data['revisions']) > 0) {
-            $msg = 'Page "' . $data['name'] . '" succesfully parsed with ' . count($data['revisions']) . " revisions (from a total of $i revisions).\n";
+            $msg = 'Page "' . $data['name'] . '" succesfully parsed with ' . count($data['revisions']) . " revisions (from a total of $totalRevisions revisions).\n";
             $this->saveAndDisplayLog($msg);
             return $data;
         } else {
@@ -329,12 +383,7 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
      */
     function convertMarkup($mediawikiText) {
         if (!empty($mediawikiText)) {
-            $parser = Text_Wiki::factory('Mediawiki');
-
-            // do not replace space by underscore in wikilinks
-            $parser->setParseConf('Wikilink', 'spaceUnderscore', false);
-
-            $tikiText = $parser->transform($mediawikiText, 'Tiki');
+            $tikiText = $this->parser->transform($mediawikiText, 'Tiki');
             return $tikiText;
         }
     }

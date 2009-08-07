@@ -19,6 +19,15 @@ if ($prefs['feature_quizzes'] != 'y') {
 	die;
 }
 
+if (!isset($_REQUEST["quizId"])) {
+	$smarty->assign('msg', tra("No quiz indicated"));
+
+	$smarty->display("error.tpl");
+	die;
+}
+
+$tikilib->get_perm_object($_REQUEST["quizId"], 'quiz');
+
 if ($tiki_p_admin_quizzes != 'y') {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You don't have permission to use this feature"));
@@ -27,38 +36,9 @@ if ($tiki_p_admin_quizzes != 'y') {
 	die;
 }
 
-if (!isset($_REQUEST["quizId"])) {
-	$smarty->assign('msg', tra("No quiz indicated"));
-
-	$smarty->display("error.tpl");
-	die;
-}
-
 $smarty->assign('quizId', $_REQUEST["quizId"]);
 
 $smarty->assign('individual', 'n');
-
-if ($userlib->object_has_one_permission($_REQUEST["quizId"], 'quiz')) {
-	$smarty->assign('individual', 'y');
-
-	if ($tiki_p_admin != 'y') {
-		$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'quizzes');
-
-		foreach ($perms["data"] as $perm) {
-			$permName = $perm["permName"];
-
-			if ($userlib->object_has_permission($user, $_REQUEST["quizId"], 'quiz', $permName)) {
-				$$permName = 'y';
-
-				$smarty->assign("$permName", 'y');
-			} else {
-				$$permName = 'n';
-
-				$smarty->assign("$permName", 'n');
-			}
-		}
-	}
-}
 
 $quiz_info = $quizlib->get_quiz($_REQUEST["quizId"]);
 $smarty->assign('quiz_info', $quiz_info);

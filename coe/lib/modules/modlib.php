@@ -54,6 +54,7 @@ class ModLib extends TikiLib {
 		return true;
 	}
 
+	/* Returns the requested module assignation. A module assignation is represented by an array similar to a tiki_modules record. The groups field is unserialized in the module_groups key, a spaces-separated list of groups. */
 	function get_assigned_module($moduleId) {
 		$query = "select * from `tiki_modules` where `moduleId`=?";
 		$result = $this->query($query,array($moduleId));
@@ -359,7 +360,7 @@ class ModLib extends TikiLib {
 	private function get_raw_module_list_for_user( $user, array $module_zones ) {
 		global $prefs, $tiki_p_configure_modules, $usermoduleslib;
 
-		$out = array_fill_keys( array_values( $module_zones ), array() );
+		$out = array_fill_keys( array_values($module_zones), array() );
 
 		if( $prefs['user_assigned_modules'] == 'y' 
 			&& $tiki_p_configure_modules == 'y' 
@@ -502,7 +503,7 @@ class ModLib extends TikiLib {
 					include $phpfile;
 				}
 			} elseif( $info['type'] == 'function' ) {
-				$function = 'modules_' . $mod_reference['name'];
+				$function = 'module_' . $mod_reference['name'];
 
 				if( function_exists( $function ) ) {
 					$function( $mod_reference, $module_params );
@@ -538,13 +539,12 @@ class ModLib extends TikiLib {
 	function get_user_module_content( $name ) {
 		global $tikilib, $smarty;
 
+		$smarty->assign('module_type','module');
 		$info = $tikilib->get_user_module( $name );
 		if (!empty($info)) {
 			// test if we have a menu
 			if (strpos($info['data'],'{menu ') === 0 and strpos($info['data'],"css=y")) {
 				$smarty->assign('module_type','cssmenu');
-			} else {
-				$smarty->assign('module_type','module');
 			}
 
 			$smarty->assign('user_title', tra($info['title']));
@@ -581,6 +581,7 @@ class ModLib extends TikiLib {
 		return $cachefile;
 	}
 
+	// Returns whether $cachefile needs to be [re]built
 	function require_cache_build( $mod_reference, $cachefile ) {
 		global $tikilib;
 		return ! file_exists( $cachefile )

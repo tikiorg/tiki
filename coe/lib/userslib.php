@@ -1405,8 +1405,6 @@ function get_included_groups($group, $recur=true) {
 			$this->query("update `tiki_pages` set `creator`=? where `creator`=?", array($to,$from));
 			$this->query("update `tiki_page_footnotes` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_newsletters` set `author`=? where `author`=?", array($to,$from));
-			$this->query("update `tiki_newsreader_servers` set `user`=? where `user`=?", array($to,$from));
-			$this->query("update `tiki_newsreader_marks` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_minical_events` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_minical_topics` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_mailin_accounts` set `user`=? where `user`=?", array($to,$from));
@@ -1427,13 +1425,11 @@ function get_included_groups($group, $recur=true) {
 			$this->query("update `tiki_files` set `lastModifUser`=? where `lastModifUser`=?", array($to,$from));
 			$this->query("update `tiki_files` set `lockedby`=? where `lockedby`=?", array($to,$from));
 			$this->query("update `tiki_file_galleries` set `user`=? where `user`=?", array($to,$from));
-			$this->query("update `tiki_drawings` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_copyrights` set `userName`=? where `userName`=?", array($to,$from));
 			$this->query("update `tiki_comments` set `userName`=? where `userName`=?", array($to,$from));
 			$this->query("update `tiki_chat_users` set `nickname`=? where `nickname`=?", array($to,$from));
 			$this->query("update `tiki_chat_messages` set `poster`=? where `poster`=?", array($to,$from));
 			$this->query("update `tiki_chat_channels` set `moderator`=? where `moderator`=?", array($to,$from));
-			$this->query("update `tiki_charts_votes` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_calendars` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_calendar_roles` set `username`=? where `username`=?", array($to,$from));
 			$this->query("update `tiki_calendar_items` set `user`=? where `user`=?", array($to,$from));
@@ -1494,7 +1490,6 @@ function get_included_groups($group, $recur=true) {
 	$query[] = "delete from `users_grouppermissions` where `groupName` = ?";
 	$query[] = "delete from `users_objectpermissions` where `groupName` = ?";
 	$query[] = "delete from `tiki_newsletter_groups` where `groupName` = ?";
-	$query[] = "delete from `tiki_newsreader_marks` where `groupName` = ?";
 	$query[] = "delete from `tiki_group_watches` where `group` = ?";
 	foreach ( $query as $q )
 		$this->query($q, array($group));
@@ -1868,7 +1863,7 @@ function get_included_groups($group, $recur=true) {
 		$values = array();
 		$sort_mode = $this->convertSortMode($sort_mode);
 		$mid = '';
-		if ($type) {
+		if ($type && $type != 'all') {
 			$mid = ' where `type`= ? ';
 			$values[] = $type;
 		}
@@ -1894,14 +1889,40 @@ function get_included_groups($group, $recur=true) {
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
-			if( $res['feature_check'] && $prefs[ $res['feature_check'] ] != 'y' )
-				continue;
+			if( $enabledOnly && $res['feature_check'] ) {	// only list enabled features
+				$feats = split(',', $res['feature_check']);
+				$got_one = false;
+				foreach ($feats as $feat) {
+					if ( $prefs[ trim($feat) ] == 'y') {
+						$got_one = true;
+					}
+				}
+				if (!$got_one) {
+					continue;
+				}
+			}
 
 			$cant++;
-			if ($group && $this->group_has_permission($group, $res['permName'])) {
-				$res['hasPerm'] = 'y';
-			} else {
-				$res['hasPerm'] = 'n';
+			if ($group) {
+				if (is_string($group)) {
+					if ($this->group_has_permission($group, $res['permName'])) {
+						$res['hasPerm'] = 'y';
+						$res[count($res)/2] = 'y';	// keep indexed key too
+					} else {
+						$res['hasPerm'] = 'n';
+						$res[count($res)/2] = 'n';
+					}
+				} else if (is_array($group)) {
+					foreach( $group as $groupName) {
+						if ($this->group_has_permission($groupName, $res['permName'])) {
+							$res[$groupName.'_hasPerm'] = 'y';
+							$res[count($res)/2] = 'y';
+						} else {
+							$res[$groupName.'_hasPerm'] = 'n';
+							$res[count($res)/2] = 'n';
+						}
+					}
+				}
 			}
 
 			$ret[] = $res;
@@ -2516,7 +2537,6 @@ function get_included_groups($group, $recur=true) {
 			$query[] = "update `users_objectpermissions` set `groupName`=? where `groupName`=?";
 			$query[] = "update `tiki_group_inclusion` set `groupName`=? where `groupName`=?";
 			$query[] = "update `tiki_group_inclusion` set `includeGroup`=? where `includeGroup`=?";
-			$query[] = "update `tiki_newsreader_marks` set `groupName`=? where `groupName`=?";
 			$query[] = "update `tiki_newsletter_groups` set `groupName`=? where `groupName`=?";
 			foreach ( $query as $q ) $this->query($q, array($group, $olgroup));
 

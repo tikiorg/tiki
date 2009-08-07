@@ -161,7 +161,6 @@ if ($prefs['feature_ajax'] == "y") {
 		$ajaxlib->processRequests();
 	}
 	user_messages_ajax();
-	$smarty->assign("mootab", 'y');
 }
 $smarty->assign('mid', 'messu-mailbox.tpl');
 $smarty->display("tiki.tpl");

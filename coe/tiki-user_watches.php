@@ -144,7 +144,6 @@ if ($prefs['feature_ajax'] == "y") {
 		$ajaxlib->processRequests();
 	}
 	user_watches_ajax();
-	$smarty->assign("mootab", 'y');
 }
 $smarty->assign_by_ref('report_preferences', $reportslib->get_report_preferences_by_user($user));
 $smarty->assign('mid', 'tiki-user_watches.tpl');

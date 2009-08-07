@@ -28,7 +28,6 @@ if ( $prefs['javascript_enabled'] != 'y' ) {
 
 	$prefs['feature_tabs'] = 'n';
 	$prefs['feature_jquery'] = 'n';
-	$prefs['feature_mootools'] = 'n';
 	$prefs['feature_shadowbox'] = 'n';
 	$prefs['feature_wysiwyg'] = 'n';
 	$prefs['feature_ajax'] = 'n';

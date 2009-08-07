@@ -5,9 +5,18 @@ var $jq = jQuery.noConflict();
 
 $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 	
-	var jqNoAnimElements = ['help_sections', 'ajaxLoading'];
+	// Check / Uncheck all Checkboxes - overriden from tiki-js.js
+	switchCheckboxes = function (tform, elements_name, state) {
+	  // checkboxes need to have the same name elements_name
+	  // e.g. <input type="checkbox" name="my_ename[]">, will arrive as Array in php.
+		$jq(tform).contents().find('input[name="' + elements_name + '"]:visible').attr('checked', state);
+	}
+
 
 	// override existing show/hide routines here
+
+	var jqNoAnimElements = ['help_sections', 'ajaxLoading'];
+
 	show = function (foo,f,section) {
 		if (jQuery.inArray(foo, jqNoAnimElements) > -1) {		// exceptions that don't animate reliably
 			$jq("#" + foo).show();
@@ -186,6 +195,40 @@ $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 //			widgets: ['zebra'],							// stripes (coming soon)
 		});
 	}
+	
+	// colorbox setup (shadowbox replacement)
+	if (jqueryTiki.colorbox) {
+		// for every link containing 'shadowbox'
+		$jq("a[rel*='shadowbox']").colorbox({
+			transition:"elastic",
+			height:"95%",
+			overlayClose: true,
+			title: true				
+		});
+		// rel containg type=img
+		$jq("a[rel*='shadowbox'][rel*='type=img']").colorbox({
+			photo: true				
+		});
+		// rel containg type=flash
+		$jq("a[rel*='shadowbox'][rel*='type=flash']").colorbox({
+			flash: true,				
+		});
+		// rel containg slideshow
+		$jq("a[rel*='shadowbox'][rel*='slideshow']").colorbox({
+			slideshow: true
+		});
+		// href starting with http(s)
+		$jq("a[rel*='shadowbox'][href^='http://'], a[rel*='shadowbox'][href^='https://']").colorbox({
+			iframe: true,
+			width: "95%"
+		});
+		// href starting with ftp(s)
+		$jq("a[rel*='shadowbox'][href^='ftp://'], a[rel*='shadowbox'][href^='ftps://']").colorbox({
+			iframe: true,
+			width: "95%"
+		});
+	}
+	
 });		// end $jq(document).ready
 
 

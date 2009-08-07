@@ -166,6 +166,20 @@ class Tiki_Profile
 		return $profile;
 	} // }}}
 
+	public static function fromString( $string, $name = '' ) // {{{
+	{
+		$profile = new self;
+		$profile->domain = 'tiki://local';
+		$profile->profile = $name;
+		$profile->pageUrl = $name;
+		$profile->url = 'tiki://local/' . $name;
+
+		$content = html_entity_decode( $string );
+		$profile->loadYaml( $content );
+
+		return $profile;
+	} // }}}
+
 	private function __construct() // {{{
 	{
 	} // }}}
@@ -494,7 +508,16 @@ class Tiki_Profile
 		return $prefs;
 	} // }}}
 
-	function getPermissions() // {{{
+	function getGroupMap() // {{{
+	{
+		if( ! isset( $this->data['mappings'] ) ) {
+			return array();
+		}
+
+		return $this->data['mappings'];
+	} // }}}
+
+	function getPermissions( $groupMap = array() ) // {{{
 	{
 		if( ! array_key_exists( 'permissions', $this->data ) )
 			return array();
@@ -502,6 +525,10 @@ class Tiki_Profile
 		$groups = array();
 		foreach( $this->data['permissions'] as $groupName => $data )
 		{
+			if( isset( $groupMap[ $groupName ] ) ) {
+				$groupName = $groupMap[$groupName];
+			}
+
 			$permissions = Tiki_Profile::convertLists( $data, array( 'allow' => 'y', 'deny' => 'n' ), 'tiki_p_' );
 			$permissions = Tiki_Profile::convertYesNo( $permissions );
 			foreach( array_keys( $permissions ) as $key )
@@ -520,6 +547,7 @@ class Tiki_Profile
 				'theme' => '',
 				'registration_fields' => array(),
 				'include' => array(),
+				'autojoin' => 'n',
 			);
 			foreach( $defaultInfo as $key => $value )
 				if( array_key_exists( $key, $data ) )

@@ -64,7 +64,7 @@ if ($prefs['feature_categories'] == 'y' && $catobjperms->modify_object_categorie
 
 		if (in_array($categories[$iCat]["categId"], $cats)) {
 			$categories[$iCat]["incat"] = 'y';
-			$categories[$i]['canchange'] = $can && $catperms->remove_object;
+			$categories[$i]['canchange'] = ($can && $catperms->remove_object) || isset($cat_object_exists) && ! $cat_object_exists;
 		} else {
 			$categories[$iCat]["incat"] = 'n';
 			$categories[$i]['canchange'] = $can && $catperms->add_object;

@@ -79,7 +79,6 @@ Add a value in first check when you create a new admin page. *}
 		<a href="tiki-admin_shoutbox_words.php">{tr}Shoutbox Words{/tr}</a> 
 	{/if}
 	{if $prefs.feature_live_support eq 'y'} <a href="tiki-live_support_admin.php">{tr}Live Support{/tr}</a> {/if}
-	{if $prefs.feature_charts eq 'y'} <a href="tiki-admin_charts.php">{tr}Charts{/tr}</a> {/if}
 	{if $prefs.feature_workflow eq 'y'} <a href="tiki-g-admin_processes.php">{tr}Workflow{/tr}</a> {/if}
 	{* TODO: to be fixed {if $prefs.feature_debug_console eq 'y'} <a href="javascript:toggle("debugconsole")">{tr}(debug){/tr}</a> 
 	{/if} *}

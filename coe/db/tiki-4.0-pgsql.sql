@@ -4,7 +4,7 @@
 
 DROP TABLE IF EXISTS "galaxia_activities";
 
-CREATE TABLE "galaxia_activities" (
+CREATE TABLE  "galaxia_activities" (
   "activityId" bigserial,
   "name" varchar(80) default NULL,
   "normalized_name" varchar(80) default NULL,
@@ -22,7 +22,7 @@ CREATE TABLE "galaxia_activities" (
 
 DROP TABLE IF EXISTS "galaxia_activity_roles";
 
-CREATE TABLE "galaxia_activity_roles" (
+CREATE TABLE  "galaxia_activity_roles" (
   "activityId" bigint NOT NULL default '0',
   "roleId" bigint NOT NULL default '0',
   PRIMARY KEY ("activityId","roleId")
@@ -31,7 +31,7 @@ CREATE TABLE "galaxia_activity_roles" (
 
 DROP TABLE IF EXISTS "galaxia_instance_activities";
 
-CREATE TABLE "galaxia_instance_activities" (
+CREATE TABLE  "galaxia_instance_activities" (
   "instanceId" bigint NOT NULL default '0',
   "activityId" bigint NOT NULL default '0',
   "started" bigint NOT NULL default '0',
@@ -44,7 +44,7 @@ CREATE TABLE "galaxia_instance_activities" (
 
 DROP TABLE IF EXISTS "galaxia_instance_comments";
 
-CREATE TABLE "galaxia_instance_comments" (
+CREATE TABLE  "galaxia_instance_comments" (
   "cId" bigserial,
   "instanceId" bigint NOT NULL default '0',
   "user" varchar(200) default '',
@@ -60,7 +60,7 @@ CREATE TABLE "galaxia_instance_comments" (
 
 DROP TABLE IF EXISTS "galaxia_instances";
 
-CREATE TABLE "galaxia_instances" (
+CREATE TABLE  "galaxia_instances" (
   "instanceId" bigserial,
   "pId" bigint NOT NULL default '0',
   "started" bigint default NULL,
@@ -77,7 +77,7 @@ CREATE TABLE "galaxia_instances" (
 
 DROP TABLE IF EXISTS "galaxia_processes";
 
-CREATE TABLE "galaxia_processes" (
+CREATE TABLE  "galaxia_processes" (
   "pId" bigserial,
   "name" varchar(80) default NULL,
   "isValid" char(1) default NULL,
@@ -92,7 +92,7 @@ CREATE TABLE "galaxia_processes" (
 
 DROP TABLE IF EXISTS "galaxia_roles";
 
-CREATE TABLE "galaxia_roles" (
+CREATE TABLE  "galaxia_roles" (
   "roleId" bigserial,
   "pId" bigint NOT NULL default '0',
   "lastModif" bigint default NULL,
@@ -104,7 +104,7 @@ CREATE TABLE "galaxia_roles" (
 
 DROP TABLE IF EXISTS "galaxia_transitions";
 
-CREATE TABLE "galaxia_transitions" (
+CREATE TABLE  "galaxia_transitions" (
   "pId" bigint NOT NULL default '0',
   "actFromId" bigint NOT NULL default '0',
   "actToId" bigint NOT NULL default '0',
@@ -114,7 +114,7 @@ CREATE TABLE "galaxia_transitions" (
 
 DROP TABLE IF EXISTS "galaxia_user_roles";
 
-CREATE TABLE "galaxia_user_roles" (
+CREATE TABLE  "galaxia_user_roles" (
   "pId" bigint NOT NULL default '0',
   "roleId" bigserial,
   "user" varchar(200) NOT NULL default '',
@@ -124,7 +124,7 @@ CREATE TABLE "galaxia_user_roles" (
 
 DROP TABLE IF EXISTS "galaxia_workitems";
 
-CREATE TABLE "galaxia_workitems" (
+CREATE TABLE  "galaxia_workitems" (
   "itemId" bigserial,
   "instanceId" bigint NOT NULL default '0',
   "orderId" bigint NOT NULL default '0',
@@ -139,7 +139,7 @@ CREATE TABLE "galaxia_workitems" (
 
 DROP TABLE IF EXISTS "messu_messages";
 
-CREATE TABLE "messu_messages" (
+CREATE TABLE  "messu_messages" (
   "msgId" bigserial,
   "user" varchar(200) NOT NULL default '',
   "user_from" varchar(200) NOT NULL default '',
@@ -157,12 +157,12 @@ CREATE TABLE "messu_messages" (
   "priority" smallint default NULL,
   PRIMARY KEY ("msgId")
 ) ;
+CREATE INDEX "messu_messages_userIsRead" ON "messu_messages" ("user","isRead");
 
-CREATE INDEX "_userIsRead" ON ""("user","isRead");
 
 DROP TABLE IF EXISTS "messu_archive";
 
-CREATE TABLE "messu_archive" (
+CREATE TABLE  "messu_archive" (
   "msgId" bigserial,
   "user" varchar(40) NOT NULL default '',
   "user_from" varchar(40) NOT NULL default '',
@@ -184,7 +184,7 @@ CREATE TABLE "messu_archive" (
 
 DROP TABLE IF EXISTS "messu_sent";
 
-CREATE TABLE "messu_sent" (
+CREATE TABLE  "messu_sent" (
   "msgId" bigserial,
   "user" varchar(40) NOT NULL default '',
   "user_from" varchar(40) NOT NULL default '',
@@ -206,19 +206,19 @@ CREATE TABLE "messu_sent" (
 
 DROP TABLE IF EXISTS "sessions";
 
-CREATE TABLE sessions(
+CREATE TABLE  "sessions" (
   "sesskey" char(32) NOT NULL,
   "expiry" bigint NOT NULL,
   "expireref" varchar(64),
   "data" text NOT NULL,
   PRIMARY KEY ("sesskey")
 );
+CREATE INDEX "sessions_expiry" ON "sessions" ("expiry");
 
-CREATE INDEX "_expiry" ON ""(\","expiry"\");
 
 DROP TABLE IF EXISTS "tiki_actionlog";
 
-CREATE TABLE "tiki_actionlog" (
+CREATE TABLE  "tiki_actionlog" (
   "actionId" serial,
   "action" varchar(255) NOT NULL default '',
   "lastModif" bigint default NULL,
@@ -230,24 +230,24 @@ CREATE TABLE "tiki_actionlog" (
   "categId" bigint NOT NULL default '0',
   PRIMARY KEY ("actionId")
 );
+CREATE INDEX "tiki_actionlog_lastModif" ON "tiki_actionlog" ("lastModif");
+CREATE INDEX "tiki_actionlog_object" ON "tiki_actionlog" ("object"(100)"objectType","action"(100));
 
-CREATE INDEX "_lastModif" ON ""(\","lastModif"\");
-CREATE INDEX "_object" ON ""(\","object"\substr(", 0, 100)\","objectType"\"\","action"\substr(", 0, 100));
 
 DROP TABLE IF EXISTS "tiki_actionlog_params";
 
-CREATE TABLE "tiki_actionlog_params" (
+CREATE TABLE  "tiki_actionlog_params" (
   "actionId" integer NOT NULL,
   "name" varchar(40) NOT NULL,
   "value" text
 );
+CREATE INDEX "tiki_actionlog_params_actionIDIndex" ON "tiki_actionlog_params" ("actionId");
+CREATE INDEX "tiki_actionlog_params_nameValue" ON "tiki_actionlog_params" ("name","value"(200));
 
-CREATE INDEX "_actionIDIndex" ON ""(\","actionId"\");
-CREATE INDEX "_nameValue" ON ""(\","name"\"\","value"\substr(", 0, 200));
 
 DROP TABLE IF EXISTS "tiki_articles";
 
-CREATE TABLE "tiki_articles" (
+CREATE TABLE  "tiki_articles" (
   "articleId" serial,
   "topline" varchar(255) default NULL,
   "title" varchar(255) default NULL,
@@ -282,20 +282,20 @@ CREATE TABLE "tiki_articles" (
   "isfloat" char(1) default NULL,
   PRIMARY KEY ("articleId")
 ) ;
+CREATE INDEX "tiki_articles_title" ON "tiki_articles" ("title");
+CREATE INDEX "tiki_articles_heading" ON "tiki_articles" ("heading"(255));
+CREATE INDEX "tiki_articles_body" ON "tiki_articles" ("body"(255));
+CREATE INDEX "tiki_articles_nbreads" ON "tiki_articles" ("nbreads");
+CREATE INDEX "tiki_articles_author" ON "tiki_articles" ("author"(32));
+CREATE INDEX "tiki_articles_topicId" ON "tiki_articles" ("topicId");
+CREATE INDEX "tiki_articles_publishDate" ON "tiki_articles" ("publishDate");
+CREATE INDEX "tiki_articles_expireDate" ON "tiki_articles" ("expireDate");
+CREATE INDEX "tiki_articles_type" ON "tiki_articles" ("type");
 
-CREATE INDEX "_title" ON ""(\","title"\");
-CREATE INDEX "_heading" ON ""(\","heading"\substr(", 0, 255));
-CREATE INDEX "_body" ON ""(\","body"\substr(", 0, 255));
-CREATE INDEX "_nbreads" ON ""(\","nbreads"\");
-CREATE INDEX "_author" ON ""(\","author"\substr(", 0, 32));
-CREATE INDEX "_topicId" ON ""(\","topicId"\");
-CREATE INDEX "_publishDate" ON ""(\","publishDate"\");
-CREATE INDEX "_expireDate" ON ""(\","expireDate"\");
-CREATE INDEX "_type" ON ""(\","type"\");
 
 DROP TABLE IF EXISTS "tiki_article_types";
 
-CREATE TABLE "tiki_article_types" (
+CREATE TABLE  "tiki_article_types" (
   "type" varchar(50) NOT NULL,
   "use_ratings" varchar(1) default NULL,
   "show_pre_publ" varchar(1) default NULL,
@@ -318,9 +318,9 @@ CREATE TABLE "tiki_article_types" (
   "comment_can_rate_article" char(1) default NULL,
   PRIMARY KEY ("type")
 ) ;
+CREATE INDEX "tiki_article_types_show_pre_publ" ON "tiki_article_types" ("show_pre_publ");
+CREATE INDEX "tiki_article_types_show_post_expire" ON "tiki_article_types" ("show_post_expire");
 
-CREATE INDEX "_show_pre_publ" ON ""(\","show_pre_publ"\");
-CREATE INDEX "_show_post_expire" ON ""(\","show_post_expire"\");
 
 INSERT INTO "tiki_article_types" ("type") VALUES ('Article');
 
@@ -333,7 +333,7 @@ INSERT INTO "tiki_article_types" ("type","show_post_expire","heading_only","allo
 
 DROP TABLE IF EXISTS "tiki_banners";
 
-CREATE TABLE "tiki_banners" (
+CREATE TABLE  "tiki_banners" (
   "bannerId" bigserial,
   "client" varchar(200) NOT NULL default '',
   "url" varchar(255) default NULL,
@@ -372,7 +372,7 @@ CREATE TABLE "tiki_banners" (
 
 DROP TABLE IF EXISTS "tiki_banning";
 
-CREATE TABLE "tiki_banning" (
+CREATE TABLE  "tiki_banning" (
   "banId" bigserial,
   "mode" enum('user','ip') default NULL,
   "title" varchar(200) default NULL,
@@ -392,7 +392,7 @@ CREATE TABLE "tiki_banning" (
 
 DROP TABLE IF EXISTS "tiki_banning_sections";
 
-CREATE TABLE "tiki_banning_sections" (
+CREATE TABLE  "tiki_banning_sections" (
   "banId" bigint NOT NULL default '0',
   "section" varchar(100) NOT NULL default '',
   PRIMARY KEY ("banId","section")
@@ -401,7 +401,7 @@ CREATE TABLE "tiki_banning_sections" (
 
 DROP TABLE IF EXISTS "tiki_blog_activity";
 
-CREATE TABLE "tiki_blog_activity" (
+CREATE TABLE  "tiki_blog_activity" (
   "blogId" integer NOT NULL default '0',
   "day" bigint NOT NULL default '0',
   "posts" integer default NULL,
@@ -411,7 +411,7 @@ CREATE TABLE "tiki_blog_activity" (
 
 DROP TABLE IF EXISTS "tiki_blog_posts";
 
-CREATE TABLE "tiki_blog_posts" (
+CREATE TABLE  "tiki_blog_posts" (
   "postId" serial,
   "blogId" integer NOT NULL default '0',
   "data" text,
@@ -424,14 +424,14 @@ CREATE TABLE "tiki_blog_posts" (
   "priv" varchar(1) default NULL,
   PRIMARY KEY ("postId")
 ) ;
+CREATE INDEX "tiki_blog_posts_data" ON "tiki_blog_posts" ("data"(255));
+CREATE INDEX "tiki_blog_posts_blogId" ON "tiki_blog_posts" ("blogId");
+CREATE INDEX "tiki_blog_posts_created" ON "tiki_blog_posts" ("created");
 
-CREATE INDEX "_data" ON ""(\","data"\substr(", 0, 255));
-CREATE INDEX "_blogId" ON ""(\","blogId"\");
-CREATE INDEX "_created" ON ""(\","created"\");
 
 DROP TABLE IF EXISTS "tiki_blog_posts_images";
 
-CREATE TABLE "tiki_blog_posts_images" (
+CREATE TABLE  "tiki_blog_posts_images" (
   "imgId" bigserial,
   "postId" bigint NOT NULL default '0',
   "filename" varchar(80) default NULL,
@@ -444,7 +444,7 @@ CREATE TABLE "tiki_blog_posts_images" (
 
 DROP TABLE IF EXISTS "tiki_blogs";
 
-CREATE TABLE "tiki_blogs" (
+CREATE TABLE  "tiki_blogs" (
   "blogId" serial,
   "created" bigint default NULL,
   "lastModif" bigint default NULL,
@@ -465,14 +465,14 @@ CREATE TABLE "tiki_blogs" (
   "show_avatar" char(1) default NULL,
   PRIMARY KEY ("blogId")
 ) ;
+CREATE INDEX "tiki_blogs_title" ON "tiki_blogs" ("title");
+CREATE INDEX "tiki_blogs_description" ON "tiki_blogs" ("description"(255));
+CREATE INDEX "tiki_blogs_hits" ON "tiki_blogs" ("hits");
 
-CREATE INDEX "_title" ON ""(\","title"\");
-CREATE INDEX "_description" ON ""(\","description"\substr(", 0, 255));
-CREATE INDEX "_hits" ON ""(\","hits"\");
 
 DROP TABLE IF EXISTS "tiki_calendar_categories";
 
-CREATE TABLE "tiki_calendar_categories" (
+CREATE TABLE  "tiki_calendar_categories" (
   "calcatId" bigserial,
   "calendarId" bigint NOT NULL default '0',
   "name" varchar(255) NOT NULL default '',
@@ -483,7 +483,7 @@ CREATE TABLE "tiki_calendar_categories" (
 
 DROP TABLE IF EXISTS "tiki_calendar_recurrence";
 
-CREATE TABLE "tiki_calendar_recurrence" (
+CREATE TABLE  "tiki_calendar_recurrence" (
   "recurrenceId" bigserial,
   "calendarId" bigint NOT NULL default '0',
   "start" smallint NOT NULL default '0',
@@ -512,12 +512,12 @@ CREATE TABLE "tiki_calendar_recurrence" (
   "lastmodif" bigint NOT NULL default '0',
   PRIMARY KEY ("recurrenceId")
 ) ;
+CREATE INDEX "tiki_calendar_recurrence_calendarId" ON "tiki_calendar_recurrence" ("calendarId");
 
-CREATE INDEX "_calendarId" ON ""(\","calendarId"\");
 
 DROP TABLE IF EXISTS "tiki_calendar_items";
 
-CREATE TABLE "tiki_calendar_items" (
+CREATE TABLE  "tiki_calendar_items" (
   "calitemId" bigserial,
   "calendarId" bigint NOT NULL default '0',
   "start" bigint NOT NULL default '0',
@@ -542,12 +542,12 @@ CREATE TABLE "tiki_calendar_items" (
 	FOREIGN KEY ("recurrenceId") REFERENCES "tiki_calendar_recurrence"("recurrenceId")
 	ON UPDATE CASCADE ON DELETE SET NULL
 ) ;
+CREATE INDEX "tiki_calendar_items_calendarId" ON "tiki_calendar_items" ("calendarId");
 
-CREATE INDEX "_calendarId" ON ""(\","calendarId"\");
 
 DROP TABLE IF EXISTS "tiki_calendar_locations";
 
-CREATE TABLE "tiki_calendar_locations" (
+CREATE TABLE  "tiki_calendar_locations" (
   "callocId" bigserial,
   "calendarId" bigint NOT NULL default '0',
   "name" varchar(255) NOT NULL default '',
@@ -559,7 +559,7 @@ CREATE TABLE "tiki_calendar_locations" (
 
 DROP TABLE IF EXISTS "tiki_calendar_roles";
 
-CREATE TABLE "tiki_calendar_roles" (
+CREATE TABLE  "tiki_calendar_roles" (
   "calitemId" bigint NOT NULL default '0',
   "username" varchar(200) NOT NULL default '',
   "role" enum('0','1','2','3','6') NOT NULL default '0',
@@ -569,7 +569,7 @@ CREATE TABLE "tiki_calendar_roles" (
 
 DROP TABLE IF EXISTS "tiki_calendars";
 
-CREATE TABLE "tiki_calendars" (
+CREATE TABLE  "tiki_calendars" (
   "calendarId" bigserial,
   "name" varchar(80) NOT NULL default '',
   "description" varchar(255) default NULL,
@@ -590,7 +590,7 @@ CREATE TABLE "tiki_calendars" (
 
 DROP TABLE IF EXISTS "tiki_calendar_options";
 
-CREATE TABLE "tiki_calendar_options" (
+CREATE TABLE  "tiki_calendar_options" (
 	calendarId bigint NOT NULL default 0,
 	optionName varchar(120) NOT NULL default '',
 	value varchar(255),
@@ -600,7 +600,7 @@ CREATE TABLE "tiki_calendar_options" (
 
 DROP TABLE IF EXISTS "tiki_categories";
 
-CREATE TABLE "tiki_categories" (
+CREATE TABLE  "tiki_categories" (
   "categId" bigserial,
   "name" varchar(100) default NULL,
   "description" varchar(250) default NULL,
@@ -612,7 +612,7 @@ CREATE TABLE "tiki_categories" (
 
 DROP TABLE IF EXISTS "tiki_objects";
 
-CREATE TABLE "tiki_objects" (
+CREATE TABLE  "tiki_objects" (
   "objectId" bigserial,
   "type" varchar(50) default NULL,
   "itemId" varchar(255) default NULL,
@@ -624,13 +624,13 @@ CREATE TABLE "tiki_objects" (
   "comments_locked" char(1) NOT NULL default 'n',
   PRIMARY KEY ("objectId")
 ) ;
+CREATE INDEX "tiki_objects_" ON "tiki_objects" ("type","objectId");
+CREATE INDEX "tiki_objects_" ON "tiki_objects" ("itemId","type");
 
-CREATE INDEX "_" ON ""(\","type"\"\","objectId"\");
-CREATE INDEX "_" ON ""(\","itemId"\"\","type"\");
 
 DROP TABLE IF EXISTS "tiki_categorized_objects";
 
-CREATE TABLE "tiki_categorized_objects" (
+CREATE TABLE  "tiki_categorized_objects" (
   "catObjectId" bigint NOT NULL default '0',
   PRIMARY KEY ("catObjectId")
 ) ;
@@ -638,7 +638,7 @@ CREATE TABLE "tiki_categorized_objects" (
 
 DROP TABLE IF EXISTS "tiki_category_objects";
 
-CREATE TABLE "tiki_category_objects" (
+CREATE TABLE  "tiki_category_objects" (
   "catObjectId" bigint NOT NULL default '0',
   "categId" bigint NOT NULL default '0',
   PRIMARY KEY ("catObjectId","categId")
@@ -647,7 +647,7 @@ CREATE TABLE "tiki_category_objects" (
 
 DROP TABLE IF EXISTS "tiki_object_ratings";
 
-CREATE TABLE "tiki_object_ratings" (
+CREATE TABLE  "tiki_object_ratings" (
   "catObjectId" bigint NOT NULL default '0',
   "pollId" bigint NOT NULL default '0',
   PRIMARY KEY ("catObjectId","pollId")
@@ -656,83 +656,16 @@ CREATE TABLE "tiki_object_ratings" (
 
 DROP TABLE IF EXISTS "tiki_category_sites";
 
-CREATE TABLE "tiki_category_sites" (
+CREATE TABLE  "tiki_category_sites" (
   "categId" bigint NOT NULL default '0',
   "siteId" bigint NOT NULL default '0',
   PRIMARY KEY ("categId","siteId")
 );
 
 
-DROP TABLE IF EXISTS "tiki_chart_items";
-
-CREATE TABLE "tiki_chart_items" (
-  "itemId" bigserial,
-  "title" varchar(250) default NULL,
-  "description" text,
-  "chartId" bigint NOT NULL default '0',
-  "created" bigint default NULL,
-  "URL" varchar(250) default NULL,
-  "votes" bigint default NULL,
-  "points" bigint default NULL,
-  "average" decimal(4,2) default NULL,
-  PRIMARY KEY ("itemId")
-) ;
-
-
-DROP TABLE IF EXISTS "tiki_charts";
-
-CREATE TABLE "tiki_charts" (
-  "chartId" bigserial,
-  "title" varchar(250) default NULL,
-  "description" text,
-  "hits" bigint default NULL,
-  "singleItemVotes" char(1) default NULL,
-  "singleChartVotes" char(1) default NULL,
-  "suggestions" char(1) default NULL,
-  "autoValidate" char(1) default NULL,
-  "topN" integer default NULL,
-  "maxVoteValue" smallint default NULL,
-  "frequency" bigint default NULL,
-  "showAverage" char(1) default NULL,
-  "isActive" char(1) default NULL,
-  "showVotes" char(1) default NULL,
-  "useCookies" char(1) default NULL,
-  "lastChart" bigint default NULL,
-  "voteAgainAfter" bigint default NULL,
-  "created" bigint default NULL,
-  PRIMARY KEY ("chartId")
-) ;
-
-
-DROP TABLE IF EXISTS "tiki_charts_rankings";
-
-CREATE TABLE "tiki_charts_rankings" (
-  "chartId" bigint NOT NULL default '0',
-  "itemId" bigint NOT NULL default '0',
-  "position" bigint NOT NULL default '0',
-  "timestamp" bigint NOT NULL default '0',
-  "lastPosition" bigint NOT NULL default '0',
-  "period" bigint NOT NULL default '0',
-  "rvotes" bigint NOT NULL default '0',
-  "raverage" decimal(4,2) NOT NULL default '0.00',
-  PRIMARY KEY ("chartId","itemId","period")
-);
-
-
-DROP TABLE IF EXISTS "tiki_charts_votes";
-
-CREATE TABLE "tiki_charts_votes" (
-  "user" varchar(200) NOT NULL default '',
-  "itemId" bigint NOT NULL default '0',
-  "timestamp" bigint default NULL,
-  "chartId" bigint default NULL,
-  PRIMARY KEY ("user","itemId")
-);
-
-
 DROP TABLE IF EXISTS "tiki_chat_channels";
 
-CREATE TABLE "tiki_chat_channels" (
+CREATE TABLE  "tiki_chat_channels" (
   "channelId" serial,
   "name" varchar(30) default NULL,
   "description" varchar(250) default NULL,
@@ -747,7 +680,7 @@ CREATE TABLE "tiki_chat_channels" (
 
 DROP TABLE IF EXISTS "tiki_chat_messages";
 
-CREATE TABLE "tiki_chat_messages" (
+CREATE TABLE  "tiki_chat_messages" (
   "messageId" serial,
   "channelId" integer NOT NULL default '0',
   "data" varchar(255) default NULL,
@@ -759,7 +692,7 @@ CREATE TABLE "tiki_chat_messages" (
 
 DROP TABLE IF EXISTS "tiki_chat_users";
 
-CREATE TABLE "tiki_chat_users" (
+CREATE TABLE  "tiki_chat_users" (
   "nickname" varchar(200) NOT NULL default '',
   "channelId" integer NOT NULL default '0',
   "timestamp" bigint default NULL,
@@ -769,7 +702,7 @@ CREATE TABLE "tiki_chat_users" (
 
 DROP TABLE IF EXISTS "tiki_comments";
 
-CREATE TABLE "tiki_comments" (
+CREATE TABLE  "tiki_comments" (
   "threadId" bigserial,
   "object" varchar(255) NOT NULL default '',
   "objectType" varchar(32) NOT NULL default '',
@@ -796,18 +729,18 @@ CREATE TABLE "tiki_comments" (
   PRIMARY KEY ("threadId"),
   UNIQUE (parentId, userName, title, commentDate, message_id, in_reply_to)
 ) ;
+CREATE INDEX "tiki_comments_title" ON "tiki_comments" ("title");
+CREATE INDEX "tiki_comments_data" ON "tiki_comments" ("data"("255"));
+CREATE INDEX "tiki_comments_hits" ON "tiki_comments" ("hits");
+CREATE INDEX "tiki_comments_tc_pi" ON "tiki_comments" ("parentId");
+CREATE INDEX "tiki_comments_objectType" ON "tiki_comments" ("object","objectType");
+CREATE INDEX "tiki_comments_commentDate" ON "tiki_comments" ("commentDate");
+CREATE INDEX "tiki_comments_threaded" ON "tiki_comments" ("message_id","in_reply_to","parentId");
 
-CREATE INDEX "_title" ON ""("title");
-CREATE INDEX "_data" ON ""(substr("data", 0, 255));
-CREATE INDEX "_hits" ON ""("hits");
-CREATE INDEX "_tc_pi" ON ""("parentId");
-CREATE INDEX "_objectType" ON ""("object","objectType");
-CREATE INDEX "_commentDate" ON ""("commentDate");
-CREATE INDEX "_threaded" ON ""("message_id","in_reply_to","parentId");
 
 DROP TABLE IF EXISTS "tiki_content";
 
-CREATE TABLE "tiki_content" (
+CREATE TABLE  "tiki_content" (
   "contentId" serial,
   "description" text,
   "contentLabel" varchar(255) NOT NULL default '',
@@ -817,7 +750,7 @@ CREATE TABLE "tiki_content" (
 
 DROP TABLE IF EXISTS "tiki_content_templates";
 
-CREATE TABLE "tiki_content_templates" (
+CREATE TABLE  "tiki_content_templates" (
   "templateId" bigserial,
   "content" bytea,
   "name" varchar(200) default NULL,
@@ -828,7 +761,7 @@ CREATE TABLE "tiki_content_templates" (
 
 DROP TABLE IF EXISTS "tiki_content_templates_sections";
 
-CREATE TABLE "tiki_content_templates_sections" (
+CREATE TABLE  "tiki_content_templates_sections" (
   "templateId" bigint NOT NULL default '0',
   "section" varchar(250) NOT NULL default '',
   PRIMARY KEY ("templateId","section")
@@ -837,7 +770,7 @@ CREATE TABLE "tiki_content_templates_sections" (
 
 DROP TABLE IF EXISTS "tiki_cookies";
 
-CREATE TABLE "tiki_cookies" (
+CREATE TABLE  "tiki_cookies" (
   "cookieId" bigserial,
   "cookie" text,
   PRIMARY KEY ("cookieId")
@@ -846,7 +779,7 @@ CREATE TABLE "tiki_cookies" (
 
 DROP TABLE IF EXISTS "tiki_copyrights";
 
-CREATE TABLE "tiki_copyrights" (
+CREATE TABLE  "tiki_copyrights" (
   "copyrightId" bigserial,
   "page" varchar(200) default NULL,
   "title" varchar(200) default NULL,
@@ -860,7 +793,7 @@ CREATE TABLE "tiki_copyrights" (
 
 DROP TABLE IF EXISTS "tiki_directory_categories";
 
-CREATE TABLE "tiki_directory_categories" (
+CREATE TABLE  "tiki_directory_categories" (
   "categId" bigserial,
   "parent" bigint default NULL,
   "name" varchar(240) default NULL,
@@ -878,7 +811,7 @@ CREATE TABLE "tiki_directory_categories" (
 
 DROP TABLE IF EXISTS "tiki_directory_search";
 
-CREATE TABLE "tiki_directory_search" (
+CREATE TABLE  "tiki_directory_search" (
   "term" varchar(250) NOT NULL default '',
   "hits" bigint default NULL,
   PRIMARY KEY ("term")
@@ -887,7 +820,7 @@ CREATE TABLE "tiki_directory_search" (
 
 DROP TABLE IF EXISTS "tiki_directory_sites";
 
-CREATE TABLE "tiki_directory_sites" (
+CREATE TABLE  "tiki_directory_sites" (
   "siteId" bigserial,
   "name" varchar(240) default NULL,
   "description" text,
@@ -901,13 +834,13 @@ CREATE TABLE "tiki_directory_sites" (
   "cache_timestamp" bigint default NULL,
   PRIMARY KEY ("siteId")
 ) ;
+CREATE INDEX "tiki_directory_sites_" ON "tiki_directory_sites" ("isValid");
+CREATE INDEX "tiki_directory_sites_" ON "tiki_directory_sites" ("url");
 
-CREATE INDEX "_" ON ""("isValid");
-CREATE INDEX "_" ON ""("url");
 
 DROP TABLE IF EXISTS "tiki_dsn";
 
-CREATE TABLE "tiki_dsn" (
+CREATE TABLE  "tiki_dsn" (
   "dsnId" bigserial,
   "name" varchar(200) NOT NULL default '',
   "dsn" varchar(255) default NULL,
@@ -917,7 +850,7 @@ CREATE TABLE "tiki_dsn" (
 
 DROP TABLE IF EXISTS "tiki_dynamic_variables";
 
-CREATE TABLE "tiki_dynamic_variables" (
+CREATE TABLE  "tiki_dynamic_variables" (
   "name" varchar(40) NOT NULL,
   "data" text,
   PRIMARY KEY ("name")
@@ -926,7 +859,7 @@ CREATE TABLE "tiki_dynamic_variables" (
 
 DROP TABLE IF EXISTS "tiki_extwiki";
 
-CREATE TABLE "tiki_extwiki" (
+CREATE TABLE  "tiki_extwiki" (
   "extwikiId" bigserial,
   "name" varchar(200) NOT NULL default '',
   "extwiki" varchar(255) default NULL,
@@ -936,7 +869,7 @@ CREATE TABLE "tiki_extwiki" (
 
 DROP TABLE IF EXISTS "tiki_faq_questions";
 
-CREATE TABLE "tiki_faq_questions" (
+CREATE TABLE  "tiki_faq_questions" (
   "questionId" bigserial,
   "faqId" bigint default NULL,
   "position" smallint default NULL,
@@ -944,14 +877,14 @@ CREATE TABLE "tiki_faq_questions" (
   "answer" text,
   PRIMARY KEY ("questionId")
 ) ;
+CREATE INDEX "tiki_faq_questions_faqId" ON "tiki_faq_questions" ("faqId");
+CREATE INDEX "tiki_faq_questions_question" ON "tiki_faq_questions" ("question"("255"));
+CREATE INDEX "tiki_faq_questions_answer" ON "tiki_faq_questions" ("answer"("255"));
 
-CREATE INDEX "_faqId" ON ""("faqId");
-CREATE INDEX "_question" ON ""(substr("question", 0, 255));
-CREATE INDEX "_answer" ON ""(substr("answer", 0, 255));
 
 DROP TABLE IF EXISTS "tiki_faqs";
 
-CREATE TABLE "tiki_faqs" (
+CREATE TABLE  "tiki_faqs" (
   "faqId" bigserial,
   "title" varchar(200) default NULL,
   "description" text,
@@ -961,14 +894,14 @@ CREATE TABLE "tiki_faqs" (
   "canSuggest" char(1) default NULL,
   PRIMARY KEY ("faqId")
 ) ;
+CREATE INDEX "tiki_faqs_title" ON "tiki_faqs" ("title");
+CREATE INDEX "tiki_faqs_description" ON "tiki_faqs" ("description"("255"));
+CREATE INDEX "tiki_faqs_hits" ON "tiki_faqs" ("hits");
 
-CREATE INDEX "_title" ON ""("title");
-CREATE INDEX "_description" ON ""(substr("description", 0, 255));
-CREATE INDEX "_hits" ON ""("hits");
 
 DROP TABLE IF EXISTS "tiki_featured_links";
 
-CREATE TABLE "tiki_featured_links" (
+CREATE TABLE  "tiki_featured_links" (
   "url" varchar(200) NOT NULL default '',
   "title" varchar(200) default NULL,
   "description" text,
@@ -981,7 +914,7 @@ CREATE TABLE "tiki_featured_links" (
 
 DROP TABLE IF EXISTS "tiki_file_galleries";
 
-CREATE TABLE "tiki_file_galleries" (
+CREATE TABLE  "tiki_file_galleries" (
   "galleryId" bigserial,
   "name" varchar(80) NOT NULL default '',
   "type" varchar(20) NOT NULL default 'default',
@@ -1025,7 +958,7 @@ CREATE TABLE "tiki_file_galleries" (
 
 DROP TABLE IF EXISTS "tiki_files";
 
-CREATE TABLE "tiki_files" (
+CREATE TABLE  "tiki_files" (
   "fileId" bigserial,
   "galleryId" bigint NOT NULL default '0',
   "name" varchar(200) NOT NULL default '',
@@ -1052,17 +985,17 @@ CREATE TABLE "tiki_files" (
   "archiveId" bigint default 0,
   PRIMARY KEY ("fileId")
 ) ;
+CREATE INDEX "tiki_files_name" ON "tiki_files" ("name");
+CREATE INDEX "tiki_files_description" ON "tiki_files" ("description"("255"));
+CREATE INDEX "tiki_files_created" ON "tiki_files" ("created");
+CREATE INDEX "tiki_files_archiveId" ON "tiki_files" ("archiveId");
+CREATE INDEX "tiki_files_galleryId" ON "tiki_files" ("galleryId");
+CREATE INDEX "tiki_files_hits" ON "tiki_files" ("hits");
 
-CREATE INDEX "_name" ON ""("name");
-CREATE INDEX "_description" ON ""(substr("description", 0, 255));
-CREATE INDEX "_created" ON ""("created");
-CREATE INDEX "_archiveId" ON ""("archiveId");
-CREATE INDEX "_galleryId" ON ""("galleryId");
-CREATE INDEX "_hits" ON ""("hits");
 
 DROP TABLE IF EXISTS "tiki_forum_attachments";
 
-CREATE TABLE "tiki_forum_attachments" (
+CREATE TABLE  "tiki_forum_attachments" (
   "attId" bigserial,
   "threadId" bigint NOT NULL default '0',
   "qId" bigint NOT NULL default '0',
@@ -1076,12 +1009,12 @@ CREATE TABLE "tiki_forum_attachments" (
   "path" varchar(250) default NULL,
   PRIMARY KEY ("attId")
 ) ;
+CREATE INDEX "tiki_forum_attachments_threadId" ON "tiki_forum_attachments" ("threadId");
 
-CREATE INDEX "_threadId" ON ""("threadId");
 
 DROP TABLE IF EXISTS "tiki_forum_reads";
 
-CREATE TABLE "tiki_forum_reads" (
+CREATE TABLE  "tiki_forum_reads" (
   "user" varchar(200) NOT NULL default '',
   "threadId" bigint NOT NULL default '0',
   "forumId" bigint default NULL,
@@ -1092,7 +1025,7 @@ CREATE TABLE "tiki_forum_reads" (
 
 DROP TABLE IF EXISTS "tiki_forums";
 
-CREATE TABLE "tiki_forums" (
+CREATE TABLE  "tiki_forums" (
   "forumId" serial,
   "name" varchar(255) default NULL,
   "description" text,
@@ -1156,7 +1089,7 @@ CREATE TABLE "tiki_forums" (
 
 DROP TABLE IF EXISTS "tiki_forums_queue";
 
-CREATE TABLE "tiki_forums_queue" (
+CREATE TABLE  "tiki_forums_queue" (
   "qId" bigserial,
   "object" varchar(32) default NULL,
   "parentId" bigint default NULL,
@@ -1179,7 +1112,7 @@ CREATE TABLE "tiki_forums_queue" (
 
 DROP TABLE IF EXISTS "tiki_forums_reported";
 
-CREATE TABLE "tiki_forums_reported" (
+CREATE TABLE  "tiki_forums_reported" (
   "threadId" bigint NOT NULL default '0',
   "forumId" bigint NOT NULL default '0',
   "parentId" bigint NOT NULL default '0',
@@ -1192,7 +1125,7 @@ CREATE TABLE "tiki_forums_reported" (
 
 DROP TABLE IF EXISTS "tiki_galleries";
 
-CREATE TABLE "tiki_galleries" (
+CREATE TABLE  "tiki_galleries" (
   "galleryId" bigserial,
   "name" varchar(80) NOT NULL default '',
   "description" text,
@@ -1225,16 +1158,16 @@ CREATE TABLE "tiki_galleries" (
   "showcategories" char(1) NOT NULL default 'n', 
   PRIMARY KEY ("galleryId")
 ) ;
+CREATE INDEX "tiki_galleries_name" ON "tiki_galleries" ("name");
+CREATE INDEX "tiki_galleries_description" ON "tiki_galleries" ("description"("255"));
+CREATE INDEX "tiki_galleries_hits" ON "tiki_galleries" ("hits");
+CREATE INDEX "tiki_galleries_parentgallery" ON "tiki_galleries" ("parentgallery");
+CREATE INDEX "tiki_galleries_visibleUser" ON "tiki_galleries" ("visible","user");
 
-CREATE INDEX "_name" ON ""("name");
-CREATE INDEX "_description" ON ""(substr("description", 0, 255));
-CREATE INDEX "_hits" ON ""("hits");
-CREATE INDEX "_parentgallery" ON ""("parentgallery");
-CREATE INDEX "_visibleUser" ON ""("visible","user");
 
 DROP TABLE IF EXISTS "tiki_galleries_scales";
 
-CREATE TABLE "tiki_galleries_scales" (
+CREATE TABLE  "tiki_galleries_scales" (
   "galleryId" bigint NOT NULL default '0',
   "scale" bigint NOT NULL default '0',
   PRIMARY KEY ("galleryId","scale")
@@ -1243,7 +1176,7 @@ CREATE TABLE "tiki_galleries_scales" (
 
 DROP TABLE IF EXISTS "tiki_group_inclusion";
 
-CREATE TABLE "tiki_group_inclusion" (
+CREATE TABLE  "tiki_group_inclusion" (
   "groupName" varchar(255) NOT NULL default '',
   "includeGroup" varchar(255) NOT NULL default '',
   PRIMARY KEY ("groupName","includeGroup")
@@ -1252,7 +1185,7 @@ CREATE TABLE "tiki_group_inclusion" (
 
 DROP TABLE IF EXISTS "tiki_group_watches";
 
-CREATE TABLE "tiki_group_watches" (
+CREATE TABLE  "tiki_group_watches" (
   "watchId" bigserial,
   "group" varchar(200) NOT NULL default '',
   "event" varchar(40) NOT NULL default '',
@@ -1262,12 +1195,12 @@ CREATE TABLE "tiki_group_watches" (
   "url" varchar(250) default NULL,
   PRIMARY KEY ("group",event,object)
 );
+CREATE INDEX "tiki_group_watches_watchId" ON "tiki_group_watches" ("watchId");
 
-CREATE INDEX "_watchId" ON ""("watchId");
 
 DROP TABLE IF EXISTS "tiki_history";
 
-CREATE TABLE "tiki_history" (
+CREATE TABLE  "tiki_history" (
   "historyId" bigserial,
   "pageName" varchar(160) NOT NULL default '',
   "version" integer NOT NULL default '0',
@@ -1280,15 +1213,15 @@ CREATE TABLE "tiki_history" (
   "data" bytea,
   "type" varchar(50) default NULL,
   "is_html" TINYINT(1) NOT NULL DEFAULT 0,
-  PRIMARY KEY ("pageName","version"),
-  KEY(historyId)
+  PRIMARY KEY ("pageName","version")
 );
+CREATE INDEX "tiki_history_user" ON "tiki_history" ("user");
+CREATE INDEX "tiki_history_" ON "tiki_history" ("historyId");
 
-CREATE INDEX "_user" ON ""(\","user"\");
 
 DROP TABLE IF EXISTS "tiki_hotwords";
 
-CREATE TABLE "tiki_hotwords" (
+CREATE TABLE  "tiki_hotwords" (
   "word" varchar(40) NOT NULL default '',
   "url" varchar(255) NOT NULL default '',
   PRIMARY KEY ("word")
@@ -1297,7 +1230,7 @@ CREATE TABLE "tiki_hotwords" (
 
 DROP TABLE IF EXISTS "tiki_html_pages";
 
-CREATE TABLE "tiki_html_pages" (
+CREATE TABLE  "tiki_html_pages" (
   "pageName" varchar(200) NOT NULL default '',
   "content" bytea,
   "refresh" bigint default NULL,
@@ -1309,7 +1242,7 @@ CREATE TABLE "tiki_html_pages" (
 
 DROP TABLE IF EXISTS "tiki_html_pages_dynamic_zones";
 
-CREATE TABLE "tiki_html_pages_dynamic_zones" (
+CREATE TABLE  "tiki_html_pages_dynamic_zones" (
   "pageName" varchar(40) NOT NULL default '',
   "zone" varchar(80) NOT NULL default '',
   "type" char(2) default NULL,
@@ -1320,7 +1253,7 @@ CREATE TABLE "tiki_html_pages_dynamic_zones" (
 
 DROP TABLE IF EXISTS "tiki_images";
 
-CREATE TABLE "tiki_images" (
+CREATE TABLE  "tiki_images" (
   "imageId" bigserial,
   "galleryId" bigint NOT NULL default '0',
   "name" varchar(200) NOT NULL default '',
@@ -1333,17 +1266,17 @@ CREATE TABLE "tiki_images" (
   "path" varchar(255) default NULL,
   PRIMARY KEY ("imageId")
 ) ;
+CREATE INDEX "tiki_images_name" ON "tiki_images" ("name");
+CREATE INDEX "tiki_images_description" ON "tiki_images" ("description"("255"));
+CREATE INDEX "tiki_images_hits" ON "tiki_images" ("hits");
+CREATE INDEX "tiki_images_ti_gId" ON "tiki_images" ("galleryId");
+CREATE INDEX "tiki_images_ti_cr" ON "tiki_images" ("created");
+CREATE INDEX "tiki_images_ti_us" ON "tiki_images" ("user");
 
-CREATE INDEX "_name" ON ""("name");
-CREATE INDEX "_description" ON ""(substr("description", 0, 255));
-CREATE INDEX "_hits" ON ""("hits");
-CREATE INDEX "_ti_gId" ON ""("galleryId");
-CREATE INDEX "_ti_cr" ON ""("created");
-CREATE INDEX "_ti_us" ON ""("user");
 
 DROP TABLE IF EXISTS "tiki_images_data";
 
-CREATE TABLE "tiki_images_data" (
+CREATE TABLE  "tiki_images_data" (
   "imageId" bigint NOT NULL default '0',
   "xsize" integer NOT NULL default '0',
   "ysize" integer NOT NULL default '0',
@@ -1355,12 +1288,12 @@ CREATE TABLE "tiki_images_data" (
   "etag" varchar(32) default NULL,
   PRIMARY KEY ("imageId","xsize","ysize","type")
 );
+CREATE INDEX "tiki_images_data_t_i_d_it" ON "tiki_images_data" ("imageId","type");
 
-CREATE INDEX "_t_i_d_it" ON ""("imageId","type");
 
 DROP TABLE IF EXISTS "tiki_language";
 
-CREATE TABLE "tiki_language" (
+CREATE TABLE  "tiki_language" (
   "source" bytea NOT NULL,
   "lang" char(16) NOT NULL default '',
   "tran" bytea,
@@ -1370,45 +1303,45 @@ CREATE TABLE "tiki_language" (
 
 DROP TABLE IF EXISTS "tiki_languages";
 
-CREATE TABLE "tiki_languages" (
+CREATE TABLE  "tiki_languages" (
   "lang" char(16) NOT NULL default '',
   "language" varchar(255) default NULL,
   PRIMARY KEY ("lang")
 );
 
 
-INSERT INTO "tiki_languages" ("lang","language") VALUES ('en','English');
+INSERT INTO "tiki_languages" ("lang","language") VALUES (\'en\',\'English\');
 
 
 DROP TABLE IF EXISTS "tiki_link_cache";
 
-CREATE TABLE "tiki_link_cache" (
+CREATE TABLE  "tiki_link_cache" (
   "cacheId" bigserial,
   "url" varchar(250) default NULL,
   "data" bytea,
   "refresh" bigint default NULL,
   PRIMARY KEY ("cacheId")
 ) ;
+CREATE INDEX "tiki_link_cache_url" ON "tiki_link_cache" ("url");
 
-CREATE INDEX "_url" ON ""("url");
 CREATE INDEX "urlindex" ON "tiki_link_cache" (substr("url", 0, 250));
 ;
 
 
 DROP TABLE IF EXISTS "tiki_links";
 
-CREATE TABLE "tiki_links" (
+CREATE TABLE  "tiki_links" (
   "fromPage" varchar(160) NOT NULL default '',
   "toPage" varchar(160) NOT NULL default '',
   "reltype" varchar(50),
   PRIMARY KEY ("fromPage","toPage")
 );
+CREATE INDEX "tiki_links_toPage" ON "tiki_links" ("toPage");
 
-CREATE INDEX "_toPage" ON ""("toPage");
 
 DROP TABLE IF EXISTS "tiki_live_support_events";
 
-CREATE TABLE "tiki_live_support_events" (
+CREATE TABLE  "tiki_live_support_events" (
   "eventId" bigserial,
   "reqId" varchar(32) NOT NULL default '',
   "type" varchar(40) default NULL,
@@ -1422,7 +1355,7 @@ CREATE TABLE "tiki_live_support_events" (
 
 DROP TABLE IF EXISTS "tiki_live_support_message_comments";
 
-CREATE TABLE "tiki_live_support_message_comments" (
+CREATE TABLE  "tiki_live_support_message_comments" (
   "cId" bigserial,
   "msgId" bigint default NULL,
   "data" text,
@@ -1433,7 +1366,7 @@ CREATE TABLE "tiki_live_support_message_comments" (
 
 DROP TABLE IF EXISTS "tiki_live_support_messages";
 
-CREATE TABLE "tiki_live_support_messages" (
+CREATE TABLE  "tiki_live_support_messages" (
   "msgId" bigserial,
   "data" text,
   "timestamp" bigint default NULL,
@@ -1452,31 +1385,29 @@ CREATE TABLE "tiki_live_support_messages" (
 
 DROP TABLE IF EXISTS "tiki_live_support_modules";
 
-CREATE TABLE "tiki_live_support_modules" (
+CREATE TABLE  "tiki_live_support_modules" (
   "modId" serial,
   "name" varchar(90) default NULL,
   PRIMARY KEY ("modId")
 ) ;
 
 
-INSERT INTO "tiki_live_support_modules" ("name") VALUES ('wiki');
+INSERT INTO "tiki_live_support_modules" ("name") VALUES (\'wiki\');
 
-INSERT INTO "tiki_live_support_modules" ("name") VALUES ('forums');
+INSERT INTO "tiki_live_support_modules" ("name") VALUES (\'forums\');
 
-INSERT INTO "tiki_live_support_modules" ("name") VALUES ('image galleries');
+INSERT INTO "tiki_live_support_modules" ("name") VALUES (\'image galleries\');
 
-INSERT INTO "tiki_live_support_modules" ("name") VALUES ('file galleries');
+INSERT INTO "tiki_live_support_modules" ("name") VALUES (\'file galleries\');
 
-INSERT INTO "tiki_live_support_modules" ("name") VALUES ('directory');
+INSERT INTO "tiki_live_support_modules" ("name") VALUES (\'directory\');
 
-INSERT INTO "tiki_live_support_modules" ("name") VALUES ('workflow');
-
-INSERT INTO "tiki_live_support_modules" ("name") VALUES ('charts');
+INSERT INTO "tiki_live_support_modules" ("name") VALUES (\'workflow\');
 
 
 DROP TABLE IF EXISTS "tiki_live_support_operators";
 
-CREATE TABLE "tiki_live_support_operators" (
+CREATE TABLE  "tiki_live_support_operators" (
   "user" varchar(200) NOT NULL default '',
   "accepted_requests" bigint default NULL,
   "status" varchar(20) default NULL,
@@ -1494,7 +1425,7 @@ CREATE TABLE "tiki_live_support_operators" (
 
 DROP TABLE IF EXISTS "tiki_live_support_requests";
 
-CREATE TABLE "tiki_live_support_requests" (
+CREATE TABLE  "tiki_live_support_requests" (
   "reqId" varchar(32) NOT NULL default '',
   "user" varchar(200) NOT NULL default '',
   "tiki_user" varchar(200) default NULL,
@@ -1515,7 +1446,7 @@ CREATE TABLE "tiki_live_support_requests" (
 
 DROP TABLE IF EXISTS "tiki_logs";
 
-CREATE TABLE "tiki_logs" (
+CREATE TABLE  "tiki_logs" (
   "logId" serial,
   "logtype" varchar(20) NOT NULL,
   "logmessage" text NOT NULL,
@@ -1525,12 +1456,12 @@ CREATE TABLE "tiki_logs" (
   "logtime" bigint NOT NULL,
   PRIMARY KEY ("logId")
 );
+CREATE INDEX "tiki_logs_logtype" ON "tiki_logs" ("logtype");
 
-CREATE INDEX "_logtype" ON ""("logtype");
 
 DROP TABLE IF EXISTS "tiki_mail_events";
 
-CREATE TABLE "tiki_mail_events" (
+CREATE TABLE  "tiki_mail_events" (
   "event" varchar(200) default NULL,
   "object" varchar(200) default NULL,
   "email" varchar(200) default NULL
@@ -1539,7 +1470,7 @@ CREATE TABLE "tiki_mail_events" (
 
 DROP TABLE IF EXISTS "tiki_mailin_accounts";
 
-CREATE TABLE "tiki_mailin_accounts" (
+CREATE TABLE  "tiki_mailin_accounts" (
   "accountId" bigserial,
   "user" varchar(200) NOT NULL default '',
   "account" varchar(50) NOT NULL default '',
@@ -1563,7 +1494,7 @@ CREATE TABLE "tiki_mailin_accounts" (
 
 DROP TABLE IF EXISTS "tiki_menu_languages";
 
-CREATE TABLE "tiki_menu_languages" (
+CREATE TABLE  "tiki_menu_languages" (
   "menuId" serial,
   "language" char(16) NOT NULL default '',
   PRIMARY KEY ("menuId","language")
@@ -1572,7 +1503,7 @@ CREATE TABLE "tiki_menu_languages" (
 
 DROP TABLE IF EXISTS "tiki_menu_options";
 
-CREATE TABLE "tiki_menu_options" (
+CREATE TABLE  "tiki_menu_options" (
   "optionId" serial,
   "menuId" integer default NULL,
   "type" char(1) default NULL,
@@ -1590,388 +1521,384 @@ CREATE TABLE "tiki_menu_options" (
 
 
 -- when adding new inserts, order commands by position
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Home','./',10,'','','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Home\',\'./\',10,\'\',\'\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Search','tiki-searchresults.php',13,'feature_search_fulltext','tiki_p_search','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Search\',\'tiki-searchresults.php\',13,\'feature_search_fulltext\',\'tiki_p_search\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Search','tiki-searchindex.php',13,'feature_search','tiki_p_search','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Search\',\'tiki-searchindex.php\',13,\'feature_search\',\'tiki_p_search\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Contact Us','tiki-contact.php',20,'feature_contact,feature_messages','','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Contact Us\',\'tiki-contact.php\',20,\'feature_contact,feature_messages\',\'\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Stats','tiki-stats.php',23,'feature_stats','tiki_p_view_stats','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Stats\',\'tiki-stats.php\',23,\'feature_stats\',\'tiki_p_view_stats\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Categories','tiki-browse_categories.php',25,'feature_categories','tiki_p_view_categories','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Categories\',\'tiki-browse_categories.php\',25,\'feature_categories\',\'tiki_p_view_categories\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Freetags','tiki-browse_freetags.php',27,'feature_freetags','tiki_p_view_freetags','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Freetags\',\'tiki-browse_freetags.php\',27,\'feature_freetags\',\'tiki_p_view_freetags\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Calendar','tiki-calendar.php',35,'feature_calendar','tiki_p_view_calendar','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Calendar\',\'tiki-calendar.php\',35,\'feature_calendar\',\'tiki_p_view_calendar\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Users Map','tiki-gmap_usermap.php',36,'feature_gmap','','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Users Map\',\'tiki-gmap_usermap.php\',36,\'feature_gmap\',\'\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Tiki Calendar','tiki-action_calendar.php',37,'feature_action_calendar','tiki_p_view_tiki_calendar','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Tiki Calendar\',\'tiki-action_calendar.php\',37,\'feature_action_calendar\',\'tiki_p_view_tiki_calendar\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Mobile','tiki-mobile.php',37,'feature_mobile','','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Mobile\',\'tiki-mobile.php\',37,\'feature_mobile\',\'\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','(debug)','javascript:toggle(\'debugconsole\')',40,'feature_debug_console','tiki_p_admin','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'(debug)\',\'javascript:toggle(\\'debugconsole\\')\',40,\'feature_debug_console\',\'tiki_p_admin\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'s','MyTiki','tiki-my_tiki.php',50,'feature_mytiki','','Registered',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'s\',\'MyTiki\',\'tiki-my_tiki.php\',50,\'feature_mytiki\',\'\',\'Registered\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','MyTiki Home','tiki-my_tiki.php',51,'feature_mytiki','','Registered',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'MyTiki Home\',\'tiki-my_tiki.php\',51,\'feature_mytiki\',\'\',\'Registered\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Preferences','tiki-user_preferences.php',55,'feature_mytiki,feature_userPreferences','','Registered',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Preferences\',\'tiki-user_preferences.php\',55,\'feature_mytiki,feature_userPreferences\',\'\',\'Registered\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Messages','messu-mailbox.php',60,'feature_mytiki,feature_messages','tiki_p_messages','Registered',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Messages\',\'messu-mailbox.php\',60,\'feature_mytiki,feature_messages\',\'tiki_p_messages\',\'Registered\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Tasks','tiki-user_tasks.php',65,'feature_mytiki,feature_tasks','tiki_p_tasks','Registered',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Tasks\',\'tiki-user_tasks.php\',65,\'feature_mytiki,feature_tasks\',\'tiki_p_tasks\',\'Registered\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Bookmarks','tiki-user_bookmarks.php',70,'feature_mytiki,feature_user_bookmarks','tiki_p_create_bookmarks','Registered',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Bookmarks\',\'tiki-user_bookmarks.php\',70,\'feature_mytiki,feature_user_bookmarks\',\'tiki_p_create_bookmarks\',\'Registered\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Modules','tiki-user_assigned_modules.php',75,'feature_mytiki,user_assigned_modules','tiki_p_configure_modules','Registered',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Modules\',\'tiki-user_assigned_modules.php\',75,\'feature_mytiki,user_assigned_modules\',\'tiki_p_configure_modules\',\'Registered\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Webmail','tiki-webmail.php',85,'feature_mytiki,feature_webmail','tiki_p_use_webmail','Registered',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Webmail\',\'tiki-webmail.php\',85,\'feature_mytiki,feature_webmail\',\'tiki_p_use_webmail\',\'Registered\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Contacts','tiki-contacts.php',87,'feature_mytiki,feature_contacts','','Registered',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Contacts\',\'tiki-contacts.php\',87,\'feature_mytiki,feature_contacts\',\'\',\'Registered\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Notepad','tiki-notepad_list.php',90,'feature_mytiki,feature_notepad','tiki_p_notepad','Registered',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Notepad\',\'tiki-notepad_list.php\',90,\'feature_mytiki,feature_notepad\',\'tiki_p_notepad\',\'Registered\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','My Files','tiki-userfiles.php',95,'feature_mytiki,feature_userfiles','tiki_p_userfiles','Registered',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'My Files\',\'tiki-userfiles.php\',95,\'feature_mytiki,feature_userfiles\',\'tiki_p_userfiles\',\'Registered\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','User Menu','tiki-usermenu.php',100,'feature_mytiki,feature_usermenu','tiki_p_usermenu','Registered',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'User Menu\',\'tiki-usermenu.php\',100,\'feature_mytiki,feature_usermenu\',\'tiki_p_usermenu\',\'Registered\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Mini Calendar','tiki-minical.php',105,'feature_mytiki,feature_minical','tiki_p_minical','Registered',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Mini Calendar\',\'tiki-minical.php\',105,\'feature_mytiki,feature_minical\',\'tiki_p_minical\',\'Registered\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','My Watches','tiki-user_watches.php',110,'feature_mytiki,feature_user_watches','','Registered',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'My Watches\',\'tiki-user_watches.php\',110,\'feature_mytiki,feature_user_watches\',\'\',\'Registered\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'s','Workflow','tiki-g-user_processes.php',150,'feature_workflow','tiki_p_use_workflow','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'s\',\'Workflow\',\'tiki-g-user_processes.php\',150,\'feature_workflow\',\'tiki_p_use_workflow\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Admin Processes','tiki-g-admin_processes.php',155,'feature_workflow','tiki_p_admin_workflow','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Admin Processes\',\'tiki-g-admin_processes.php\',155,\'feature_workflow\',\'tiki_p_admin_workflow\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Monitor Processes','tiki-g-monitor_processes.php',160,'feature_workflow','tiki_p_admin_workflow','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Monitor Processes\',\'tiki-g-monitor_processes.php\',160,\'feature_workflow\',\'tiki_p_admin_workflow\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Monitor Activities','tiki-g-monitor_activities.php',165,'feature_workflow','tiki_p_admin_workflow','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Monitor Activities\',\'tiki-g-monitor_activities.php\',165,\'feature_workflow\',\'tiki_p_admin_workflow\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Monitor Instances','tiki-g-monitor_instances.php',170,'feature_workflow','tiki_p_admin_workflow','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Monitor Instances\',\'tiki-g-monitor_instances.php\',170,\'feature_workflow\',\'tiki_p_admin_workflow\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','User Processes','tiki-g-user_processes.php',175,'feature_workflow','tiki_p_use_workflow','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'User Processes\',\'tiki-g-user_processes.php\',175,\'feature_workflow\',\'tiki_p_use_workflow\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','User activities','tiki-g-user_activities.php',180,'feature_workflow','tiki_p_use_workflow','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'User activities\',\'tiki-g-user_activities.php\',180,\'feature_workflow\',\'tiki_p_use_workflow\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','User instances','tiki-g-user_instances.php',185,'feature_workflow','tiki_p_use_workflow','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'User instances\',\'tiki-g-user_instances.php\',185,\'feature_workflow\',\'tiki_p_use_workflow\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'s','Community','tiki-list_users.php',187,'feature_friends','tiki_p_list_users','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'s\',\'Community\',\'tiki-list_users.php\',187,\'feature_friends\',\'tiki_p_list_users\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','User List','tiki-list_users.php',188,'feature_friends','tiki_p_list_users','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'User List\',\'tiki-list_users.php\',188,\'feature_friends\',\'tiki_p_list_users\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Friendship Network','tiki-friends.php',189,'feature_friends','','Registered',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Friendship Network\',\'tiki-friends.php\',189,\'feature_friends\',\'\',\'Registered\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'s','Wiki','tiki-index.php',200,'feature_wiki','tiki_p_view','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'s\',\'Wiki\',\'tiki-index.php\',200,\'feature_wiki\',\'tiki_p_view\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Wiki Home','tiki-index.php',202,'feature_wiki','tiki_p_view','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Wiki Home\',\'tiki-index.php\',202,\'feature_wiki\',\'tiki_p_view\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Last Changes','tiki-lastchanges.php',205,'feature_wiki,feature_lastChanges','tiki_p_view','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Last Changes\',\'tiki-lastchanges.php\',205,\'feature_wiki,feature_lastChanges\',\'tiki_p_view\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Dump','dump/new.tar',210,'feature_wiki,feature_dump','tiki_p_view','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Dump\',\'dump/new.tar\',210,\'feature_wiki,feature_dump\',\'tiki_p_view\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Rankings','tiki-wiki_rankings.php',215,'feature_wiki,feature_wiki_rankings','tiki_p_view','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Rankings\',\'tiki-wiki_rankings.php\',215,\'feature_wiki,feature_wiki_rankings\',\'tiki_p_view\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','List Pages','tiki-listpages.php',220,'feature_wiki,feature_listPages','tiki_p_view','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'List Pages\',\'tiki-listpages.php\',220,\'feature_wiki,feature_listPages\',\'tiki_p_view\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Orphan Pages','tiki-orphan_pages.php',225,'feature_wiki,feature_listorphanPages','tiki_p_view','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Orphan Pages\',\'tiki-orphan_pages.php\',225,\'feature_wiki,feature_listorphanPages\',\'tiki_p_view\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Sandbox','tiki-editpage.php?page=sandbox',230,'feature_wiki,feature_sandbox','tiki_p_view','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Sandbox\',\'tiki-editpage.php?page=sandbox\',230,\'feature_wiki,feature_sandbox\',\'tiki_p_view\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Multiple Print','tiki-print_pages.php',235,'feature_wiki,feature_wiki_multiprint','tiki_p_view','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Multiple Print\',\'tiki-print_pages.php\',235,\'feature_wiki,feature_wiki_multiprint\',\'tiki_p_view\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Send Pages','tiki-send_objects.php',240,'feature_wiki,feature_comm','tiki_p_view,tiki_p_send_pages','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Send Pages\',\'tiki-send_objects.php\',240,\'feature_wiki,feature_comm\',\'tiki_p_view,tiki_p_send_pages\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Received Pages','tiki-received_pages.php',245,'feature_wiki,feature_comm','tiki_p_view,tiki_p_admin_received_pages','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Received Pages\',\'tiki-received_pages.php\',245,\'feature_wiki,feature_comm\',\'tiki_p_view,tiki_p_admin_received_pages\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Structures','tiki-admin_structures.php',250,'feature_wiki,feature_wiki_structure','tiki_p_view','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Structures\',\'tiki-admin_structures.php\',250,\'feature_wiki,feature_wiki_structure\',\'tiki_p_view\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Mind Map','tiki-mindmap.php',255,'feature_wiki_mindmap','tiki_p_view','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Mind Map\',\'tiki-mindmap.php\',255,\'feature_wiki_mindmap\',\'tiki_p_view\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'s','Image Galleries','tiki-galleries.php',300,'feature_galleries','tiki_p_view_image_gallery','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'s\',\'Image Galleries\',\'tiki-galleries.php\',300,\'feature_galleries\',\'tiki_p_view_image_gallery\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Galleries','tiki-galleries.php',305,'feature_galleries','tiki_p_list_image_galleries','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Galleries\',\'tiki-galleries.php\',305,\'feature_galleries\',\'tiki_p_list_image_galleries\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Rankings','tiki-galleries_rankings.php',310,'feature_galleries,feature_gal_rankings','tiki_p_list_image_galleries','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Rankings\',\'tiki-galleries_rankings.php\',310,\'feature_galleries,feature_gal_rankings\',\'tiki_p_list_image_galleries\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Upload Image','tiki-upload_image.php',315,'feature_galleries','tiki_p_upload_images','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Upload Image\',\'tiki-upload_image.php\',315,\'feature_galleries\',\'tiki_p_upload_images\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Directory Batch','tiki-batch_upload.php',318,'feature_galleries,feature_gal_batch','tiki_p_batch_upload','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Directory Batch\',\'tiki-batch_upload.php\',318,\'feature_galleries,feature_gal_batch\',\'tiki_p_batch_upload\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','System Gallery','tiki-list_gallery.php?galleryId=0',320,'feature_galleries','tiki_p_admin_galleries','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'System Gallery\',\'tiki-list_gallery.php?galleryId=0\',320,\'feature_galleries\',\'tiki_p_admin_galleries\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'s','Articles','tiki-view_articles.php',350,'feature_articles','tiki_p_read_article','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'s\',\'Articles\',\'tiki-view_articles.php\',350,\'feature_articles\',\'tiki_p_read_article\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'s','Articles','tiki-view_articles.php',350,'feature_articles','tiki_p_articles_read_heading','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'s\',\'Articles\',\'tiki-view_articles.php\',350,\'feature_articles\',\'tiki_p_articles_read_heading\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Articles Home','tiki-view_articles.php',355,'feature_articles','tiki_p_read_article','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Articles Home\',\'tiki-view_articles.php\',355,\'feature_articles\',\'tiki_p_read_article\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Articles Home','tiki-view_articles.php',355,'feature_articles','tiki_p_articles_read_heading','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Articles Home\',\'tiki-view_articles.php\',355,\'feature_articles\',\'tiki_p_articles_read_heading\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','List Articles','tiki-list_articles.php',360,'feature_articles','tiki_p_read_article','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'List Articles\',\'tiki-list_articles.php\',360,\'feature_articles\',\'tiki_p_read_article\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','List Articles','tiki-list_articles.php',360,'feature_articles','tiki_p_articles_read_heading','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'List Articles\',\'tiki-list_articles.php\',360,\'feature_articles\',\'tiki_p_articles_read_heading\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Rankings','tiki-cms_rankings.php',365,'feature_articles,feature_cms_rankings','tiki_p_read_article','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Rankings\',\'tiki-cms_rankings.php\',365,\'feature_articles,feature_cms_rankings\',\'tiki_p_read_article\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Submit Article','tiki-edit_submission.php',370,'feature_articles,feature_submissions','tiki_p_read_article,tiki_p_submit_article','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Submit Article\',\'tiki-edit_submission.php\',370,\'feature_articles,feature_submissions\',\'tiki_p_read_article,tiki_p_submit_article\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','View submissions','tiki-list_submissions.php',375,'feature_articles,feature_submissions','tiki_p_read_article,tiki_p_submit_article','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'View submissions\',\'tiki-list_submissions.php\',375,\'feature_articles,feature_submissions\',\'tiki_p_read_article,tiki_p_submit_article\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','View submissions','tiki-list_submissions.php',375,'feature_articles,feature_submissions','tiki_p_read_article,tiki_p_approve_submission','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'View submissions\',\'tiki-list_submissions.php\',375,\'feature_articles,feature_submissions\',\'tiki_p_read_article,tiki_p_approve_submission\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','View Submissions','tiki-list_submissions.php',375,'feature_articles,feature_submissions','tiki_p_read_article,tiki_p_remove_submission','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'View Submissions\',\'tiki-list_submissions.php\',375,\'feature_articles,feature_submissions\',\'tiki_p_read_article,tiki_p_remove_submission\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','New Article','tiki-edit_article.php',380,'feature_articles','tiki_p_read_article,tiki_p_edit_article','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'New Article\',\'tiki-edit_article.php\',380,\'feature_articles\',\'tiki_p_read_article,tiki_p_edit_article\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Send Articles','tiki-send_objects.php',385,'feature_articles,feature_comm','tiki_p_read_article,tiki_p_send_articles','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Send Articles\',\'tiki-send_objects.php\',385,\'feature_articles,feature_comm\',\'tiki_p_read_article,tiki_p_send_articles\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Received Articles','tiki-received_articles.php',385,'feature_articles,feature_comm','tiki_p_read_article,tiki_p_admin_received_articles','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Received Articles\',\'tiki-received_articles.php\',385,\'feature_articles,feature_comm\',\'tiki_p_read_article,tiki_p_admin_received_articles\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Admin Types','tiki-article_types.php',395,'feature_articles','tiki_p_articles_admin_types','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Admin Types\',\'tiki-article_types.php\',395,\'feature_articles\',\'tiki_p_articles_admin_types\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Admin Topics','tiki-admin_topics.php',390,'feature_articles','tiki_p_articles_admin_topics','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Admin Topics\',\'tiki-admin_topics.php\',390,\'feature_articles\',\'tiki_p_articles_admin_topics\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'s','Blogs','tiki-list_blogs.php',450,'feature_blogs','tiki_p_read_blog','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'s\',\'Blogs\',\'tiki-list_blogs.php\',450,\'feature_blogs\',\'tiki_p_read_blog\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','List Blogs','tiki-list_blogs.php',455,'feature_blogs','tiki_p_read_blog','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'List Blogs\',\'tiki-list_blogs.php\',455,\'feature_blogs\',\'tiki_p_read_blog\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Rankings','tiki-blog_rankings.php',460,'feature_blogs,feature_blog_rankings','tiki_p_read_blog','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Rankings\',\'tiki-blog_rankings.php\',460,\'feature_blogs,feature_blog_rankings\',\'tiki_p_read_blog\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Create/Edit Blog','tiki-edit_blog.php',465,'feature_blogs','tiki_p_read_blog,tiki_p_create_blogs','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Create/Edit Blog\',\'tiki-edit_blog.php\',465,\'feature_blogs\',\'tiki_p_read_blog,tiki_p_create_blogs\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Post','tiki-blog_post.php',470,'feature_blogs','tiki_p_read_blog,tiki_p_blog_post','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Post\',\'tiki-blog_post.php\',470,\'feature_blogs\',\'tiki_p_read_blog,tiki_p_blog_post\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Admin Posts','tiki-list_posts.php',475,'feature_blogs','tiki_p_read_blog,tiki_p_blog_admin','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Admin Posts\',\'tiki-list_posts.php\',475,\'feature_blogs\',\'tiki_p_read_blog,tiki_p_blog_admin\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'s','Forums','tiki-forums.php',500,'feature_forums','tiki_p_forum_read','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'s\',\'Forums\',\'tiki-forums.php\',500,\'feature_forums\',\'tiki_p_forum_read\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','List Forums','tiki-forums.php',505,'feature_forums','tiki_p_forum_read','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'List Forums\',\'tiki-forums.php\',505,\'feature_forums\',\'tiki_p_forum_read\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Rankings','tiki-forum_rankings.php',510,'feature_forums,feature_forum_rankings','tiki_p_forum_read','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Rankings\',\'tiki-forum_rankings.php\',510,\'feature_forums,feature_forum_rankings\',\'tiki_p_forum_read\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Admin Forums','tiki-admin_forums.php',515,'feature_forums','tiki_p_forum_read,tiki_p_admin_forum','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Admin Forums\',\'tiki-admin_forums.php\',515,\'feature_forums\',\'tiki_p_forum_read,tiki_p_admin_forum\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'s','Directory','tiki-directory_browse.php',550,'feature_directory','tiki_p_view_directory','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'s\',\'Directory\',\'tiki-directory_browse.php\',550,\'feature_directory\',\'tiki_p_view_directory\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Submit a new link','tiki-directory_add_site.php',555,'feature_directory','tiki_p_submit_link','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Submit a new link\',\'tiki-directory_add_site.php\',555,\'feature_directory\',\'tiki_p_submit_link\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Browse Directory','tiki-directory_browse.php',560,'feature_directory','tiki_p_view_directory','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Browse Directory\',\'tiki-directory_browse.php\',560,\'feature_directory\',\'tiki_p_view_directory\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Admin Directory','tiki-directory_admin.php',565,'feature_directory','tiki_p_view_directory,tiki_p_admin_directory_cats','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Admin Directory\',\'tiki-directory_admin.php\',565,\'feature_directory\',\'tiki_p_view_directory,tiki_p_admin_directory_cats\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Admin Directory','tiki-directory_admin.php',565,'feature_directory','tiki_p_view_directory,tiki_p_admin_directory_sites','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Admin Directory\',\'tiki-directory_admin.php\',565,\'feature_directory\',\'tiki_p_view_directory,tiki_p_admin_directory_sites\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Admin Directory','tiki-directory_admin.php',565,'feature_directory','tiki_p_view_directory,tiki_p_validate_links','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Admin Directory\',\'tiki-directory_admin.php\',565,\'feature_directory\',\'tiki_p_view_directory,tiki_p_validate_links\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'s','File Galleries','tiki-list_file_gallery.php',600,'feature_file_galleries','tiki-list_file_gallery.php|tiki_p_view_file_gallery|tiki_p_upload_files','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'s\',\'File Galleries\',\'tiki-list_file_gallery.php\',600,\'feature_file_galleries\',\'tiki-list_file_gallery.php|tiki_p_view_file_gallery|tiki_p_upload_files\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','List Galleries','tiki-list_file_gallery.php',605,'feature_file_galleries','tiki_p_list_file_galleries','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'List Galleries\',\'tiki-list_file_gallery.php\',605,\'feature_file_galleries\',\'tiki_p_list_file_galleries\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Rankings','tiki-file_galleries_rankings.php',610,'feature_file_galleries,feature_file_galleries_rankings','tiki_p_list_file_galleries','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Rankings\',\'tiki-file_galleries_rankings.php\',610,\'feature_file_galleries,feature_file_galleries_rankings\',\'tiki_p_list_file_galleries\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Upload File','tiki-upload_file.php',615,'feature_file_galleries','tiki_p_upload_files','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Upload File\',\'tiki-upload_file.php\',615,\'feature_file_galleries\',\'tiki_p_upload_files\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Directory batch','tiki-batch_upload_files.php',617,'feature_file_galleries_batch','tiki_p_batch_upload_file_dir','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Directory batch\',\'tiki-batch_upload_files.php\',617,\'feature_file_galleries_batch\',\'tiki_p_batch_upload_file_dir\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'s','FAQs','tiki-list_faqs.php',650,'feature_faqs','tiki_p_view_faqs','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'s\',\'FAQs\',\'tiki-list_faqs.php\',650,\'feature_faqs\',\'tiki_p_view_faqs\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','List FAQs','tiki-list_faqs.php',665,'feature_faqs','tiki_p_view_faqs','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'List FAQs\',\'tiki-list_faqs.php\',665,\'feature_faqs\',\'tiki_p_view_faqs\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Admin FAQs','tiki-list_faqs.php',660,'feature_faqs','tiki_p_admin_faqs','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Admin FAQs\',\'tiki-list_faqs.php\',660,\'feature_faqs\',\'tiki_p_admin_faqs\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'s','Maps','tiki-map.php',700,'feature_maps','tiki_p_map_view','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'s\',\'Maps\',\'tiki-map.php\',700,\'feature_maps\',\'tiki_p_map_view\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Mapfiles','tiki-map_edit.php',705,'feature_maps','tiki_p_map_view','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Mapfiles\',\'tiki-map_edit.php\',705,\'feature_maps\',\'tiki_p_map_view\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Layer Management','tiki-map_upload.php',710,'feature_maps','tiki_p_map_edit','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Layer Management\',\'tiki-map_upload.php\',710,\'feature_maps\',\'tiki_p_map_edit\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'s','Quizzes','tiki-list_quizzes.php',750,'feature_quizzes','tiki_p_take_quiz','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'s\',\'Quizzes\',\'tiki-list_quizzes.php\',750,\'feature_quizzes\',\'tiki_p_take_quiz\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','List Quizzes','tiki-list_quizzes.php',755,'feature_quizzes','tiki_p_take_quiz','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'List Quizzes\',\'tiki-list_quizzes.php\',755,\'feature_quizzes\',\'tiki_p_take_quiz\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Quiz Stats','tiki-quiz_stats.php',760,'feature_quizzes','tiki_p_view_quiz_stats','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Quiz Stats\',\'tiki-quiz_stats.php\',760,\'feature_quizzes\',\'tiki_p_view_quiz_stats\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Admin Quizzes','tiki-edit_quiz.php',765,'feature_quizzes','tiki_p_admin_quizzes','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Admin Quizzes\',\'tiki-edit_quiz.php\',765,\'feature_quizzes\',\'tiki_p_admin_quizzes\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'s','TikiSheet','tiki-sheets.php',780,'feature_sheet','tiki_p_view_sheet','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'s\',\'TikiSheet\',\'tiki-sheets.php\',780,\'feature_sheet\',\'tiki_p_view_sheet\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','List TikiSheets','tiki-sheets.php',782,'feature_sheet','tiki_p_view_sheet','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'List TikiSheets\',\'tiki-sheets.php\',782,\'feature_sheet\',\'tiki_p_view_sheet\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'s','Trackers','tiki-list_trackers.php',800,'feature_trackers','tiki_p_view_trackers','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'s\',\'Trackers\',\'tiki-list_trackers.php\',800,\'feature_trackers\',\'tiki_p_view_trackers\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','List Trackers','tiki-list_trackers.php',805,'feature_trackers','tiki_p_view_trackers','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'List Trackers\',\'tiki-list_trackers.php\',805,\'feature_trackers\',\'tiki_p_view_trackers\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Admin Trackers','tiki-admin_trackers.php',810,'feature_trackers','tiki_p_admin_trackers','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Admin Trackers\',\'tiki-admin_trackers.php\',810,\'feature_trackers\',\'tiki_p_admin_trackers\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'s','Surveys','tiki-list_surveys.php',850,'feature_surveys','tiki_p_take_survey','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'s\',\'Surveys\',\'tiki-list_surveys.php\',850,\'feature_surveys\',\'tiki_p_take_survey\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','List Surveys','tiki-list_surveys.php',855,'feature_surveys','tiki_p_take_survey','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'List Surveys\',\'tiki-list_surveys.php\',855,\'feature_surveys\',\'tiki_p_take_survey\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Stats','tiki-survey_stats.php',860,'feature_surveys','tiki_p_view_survey_stats','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Stats\',\'tiki-survey_stats.php\',860,\'feature_surveys\',\'tiki_p_view_survey_stats\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Admin Surveys','tiki-admin_surveys.php',865,'feature_surveys','tiki_p_admin_surveys','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Admin Surveys\',\'tiki-admin_surveys.php\',865,\'feature_surveys\',\'tiki_p_admin_surveys\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'s','Newsletters','tiki-newsletters.php',900,'feature_newsletters','tiki_p_subscribe_newsletters','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'s\',\'Newsletters\',\'tiki-newsletters.php\',900,\'feature_newsletters\',\'tiki_p_subscribe_newsletters\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'s','Newsletters','tiki-newsletters.php',900,'feature_newsletters','tiki_p_send_newsletters','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'s\',\'Newsletters\',\'tiki-newsletters.php\',900,\'feature_newsletters\',\'tiki_p_send_newsletters\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'s','Newsletters','tiki-newsletters.php',900,'feature_newsletters','tiki_p_admin_newsletters','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'s\',\'Newsletters\',\'tiki-newsletters.php\',900,\'feature_newsletters\',\'tiki_p_admin_newsletters\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'s','Newsletters','tiki-newsletters.php',900,'feature_newsletters','tiki_p_list_newsletters','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'s\',\'Newsletters\',\'tiki-newsletters.php\',900,\'feature_newsletters\',\'tiki_p_list_newsletters\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Send Newsletters','tiki-send_newsletters.php',905,'feature_newsletters','tiki_p_send_newsletters','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Send Newsletters\',\'tiki-send_newsletters.php\',905,\'feature_newsletters\',\'tiki_p_send_newsletters\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Admin Newsletters','tiki-admin_newsletters.php',910,'feature_newsletters','tiki_p_admin_newsletters','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Admin Newsletters\',\'tiki-admin_newsletters.php\',910,\'feature_newsletters\',\'tiki_p_admin_newsletters\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'s','Charts','tiki-charts.php',1000,'feature_charts','tiki_p_view_chart','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'r\',\'Admin\',\'tiki-admin.php\',1050,\'\',\'tiki_p_admin\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Admin Charts','tiki-admin_charts.php',1005,'feature_charts','tiki_p_admin_charts','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'r\',\'Admin\',\'tiki-admin.php\',1050,\'\',\'tiki_p_admin_categories\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'r\',\'Admin\',\'tiki-admin.php\',1050,\'\',\'tiki_p_admin_banners\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_categories','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'r\',\'Admin\',\'tiki-admin.php\',1050,\'\',\'tiki_p_edit_templates\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_banners','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'r\',\'Admin\',\'tiki-admin.php\',1050,\'\',\'tiki_p_edit_cookies\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_edit_templates','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'r\',\'Admin\',\'tiki-admin.php\',1050,\'\',\'tiki_p_admin_dynamic\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_edit_cookies','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'r\',\'Admin\',\'tiki-admin.php\',1050,\'\',\'tiki_p_admin_mailin\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_dynamic','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'r\',\'Admin\',\'tiki-admin.php\',1050,\'\',\'tiki_p_edit_content_templates\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_mailin','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'r\',\'Admin\',\'tiki-admin.php\',1050,\'\',\'tiki_p_edit_html_pages\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_edit_content_templates','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'r\',\'Admin\',\'tiki-admin.php\',1050,\'\',\'tiki_p_view_referer_stats\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_edit_html_pages','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'r\',\'Admin\',\'tiki-admin.php\',1050,\'\',\'tiki_p_admin_shoutbox\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_view_referer_stats','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'r\',\'Admin\',\'tiki-admin.php\',1050,\'\',\'tiki_p_live_support_admin\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_shoutbox','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'r\',\'Admin\',\'tiki-admin.php\',1050,\'\',\'user_is_operator\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_live_support_admin','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'r\',\'Admin\',\'tiki-admin.php\',1050,\'feature_integrator\',\'tiki_p_admin_integrator\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'r','Admin','tiki-admin.php',1050,'','user_is_operator','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'r\',\'Admin\',\'tiki-admin.php\',1050,\'feature_edit_templates\',\'tiki_p_edit_templates\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'r','Admin','tiki-admin.php',1050,'feature_integrator','tiki_p_admin_integrator','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'r\',\'Admin\',\'tiki-admin.php\',1050,\'feature_view_tpl\',\'tiki_p_edit_templates\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'r','Admin','tiki-admin.php',1050,'feature_edit_templates','tiki_p_edit_templates','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'r\',\'Admin\',\'tiki-admin.php\',1050,\'feature_editcss\',\'tiki_p_create_css\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'r','Admin','tiki-admin.php',1050,'feature_view_tpl','tiki_p_edit_templates','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'r\',\'Admin\',\'tiki-admin.php\',1050,\'\',\'tiki_p_admin_contribution\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'r','Admin','tiki-admin.php',1050,'feature_editcss','tiki_p_create_css','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'r\',\'Admin\',\'tiki-admin.php\',1050,\'\',\'tiki_p_admin_users\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_contribution','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'r\',\'Admin\',\'tiki-admin.php\',1050,\'\',\'tiki_p_admin_quicktags\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_users','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'r\',\'Admin\',\'tiki-admin.php\',1050,\'\',\'tiki_p_edit_menu\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_quicktags','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'r\',\'Admin\',\'tiki-admin.php\',1050,\'\',\'tiki_p_clean_cache\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_edit_menu','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Admin Home\',\'tiki-admin.php\',1051,\'\',\'tiki_p_admin\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_clean_cache','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Live Support\',\'tiki-live_support_admin.php\',1055,\'feature_live_support\',\'tiki_p_live_support_admin\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Admin Home','tiki-admin.php',1051,'','tiki_p_admin','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Live Support\',\'tiki-live_support_admin.php\',1055,\'feature_live_support\',\'user_is_operator\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Live Support','tiki-live_support_admin.php',1055,'feature_live_support','tiki_p_live_support_admin','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Banning\',\'tiki-admin_banning.php\',1060,\'feature_banning\',\'tiki_p_admin_banning\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Live Support','tiki-live_support_admin.php',1055,'feature_live_support','user_is_operator','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Calendar\',\'tiki-admin_calendars.php\',1065,\'feature_calendar\',\'tiki_p_admin_calendar\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Banning','tiki-admin_banning.php',1060,'feature_banning','tiki_p_admin_banning','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Users\',\'tiki-adminusers.php\',1070,\'\',\'tiki_p_admin_users\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Calendar','tiki-admin_calendars.php',1065,'feature_calendar','tiki_p_admin_calendar','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Groups\',\'tiki-admingroups.php\',1075,\'\',\'tiki_p_admin\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Users','tiki-adminusers.php',1070,'','tiki_p_admin_users','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Wiki Cache\',\'tiki-list_cache.php\',1080,\'cachepages\',\'tiki_p_admin\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Groups','tiki-admingroups.php',1075,'','tiki_p_admin','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Modules\',\'tiki-admin_modules.php\',1085,\'\',\'tiki_p_admin\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Wiki Cache','tiki-list_cache.php',1080,'cachepages','tiki_p_admin','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Hotwords\',\'tiki-admin_hotwords.php\',1095,\'feature_hotwords\',\'tiki_p_admin\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Modules','tiki-admin_modules.php',1085,'','tiki_p_admin','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'RSS Modules\',\'tiki-admin_rssmodules.php\',1100,\'\',\'tiki_p_admin_rssmodules\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Hotwords','tiki-admin_hotwords.php',1095,'feature_hotwords','tiki_p_admin','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Menus\',\'tiki-admin_menus.php\',1105,\'\',\'tiki_p_edit_menu\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','RSS Modules','tiki-admin_rssmodules.php',1100,'','tiki_p_admin_rssmodules','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Polls\',\'tiki-admin_polls.php\',1110,\'feature_polls\',\'tiki_p_admin_polls\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Menus','tiki-admin_menus.php',1105,'','tiki_p_edit_menu','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Mail Notifications\',\'tiki-admin_notifications.php\',1120,\'\',\'tiki_p_admin_notifications\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Polls','tiki-admin_polls.php',1110,'feature_polls','tiki_p_admin_polls','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Search Stats\',\'tiki-search_stats.php\',1125,\'feature_search_stats\',\'tiki_p_admin\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Mail Notifications','tiki-admin_notifications.php',1120,'','tiki_p_admin_notifications','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Theme Control\',\'tiki-theme_control.php\',1130,\'feature_theme_control\',\'tiki_p_admin\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Search Stats','tiki-search_stats.php',1125,'feature_search_stats','tiki_p_admin','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'QuickTags\',\'tiki-admin_quicktags.php\',1135,\'\',\'tiki_p_admin_quicktags\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Theme Control','tiki-theme_control.php',1130,'feature_theme_control','tiki_p_admin','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Categories\',\'tiki-admin_categories.php\',1145,\'feature_categories\',\'tiki_p_admin_categories\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','QuickTags','tiki-admin_quicktags.php',1135,'','tiki_p_admin_quicktags','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Banners\',\'tiki-list_banners.php\',1150,\'feature_banners\',\'tiki_p_admin_banners\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Categories','tiki-admin_categories.php',1145,'feature_categories','tiki_p_admin_categories','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Edit Templates\',\'tiki-edit_templates.php\',1155,\'feature_edit_templates\',\'tiki_p_edit_templates\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Banners','tiki-list_banners.php',1150,'feature_banners','tiki_p_admin_banners','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'View Templates\',\'tiki-edit_templates.php\',1155,\'feature_view_tpl\',\'tiki_p_edit_templates\',\'\',2);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Edit Templates','tiki-edit_templates.php',1155,'feature_edit_templates','tiki_p_edit_templates','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Edit CSS\',\'tiki-edit_css.php\',1158,\'feature_editcss\',\'tiki_p_create_css\',\'\',2);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','View Templates','tiki-edit_templates.php',1155,'feature_view_tpl','tiki_p_edit_templates','',2);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Dynamic content\',\'tiki-list_contents.php\',1165,\'feature_dynamic_content\',\'tiki_p_admin_dynamic\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Edit CSS','tiki-edit_css.php',1158,'feature_editcss','tiki_p_create_css','',2);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Mail-in\',\'tiki-admin_mailin.php\',1175,\'feature_mailin\',\'tiki_p_admin_mailin\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Dynamic content','tiki-list_contents.php',1165,'feature_dynamic_content','tiki_p_admin_dynamic','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'HTML Pages\',\'tiki-admin_html_pages.php\',1185,\'feature_html_pages\',\'tiki_p_edit_html_pages\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Mail-in','tiki-admin_mailin.php',1175,'feature_mailin','tiki_p_admin_mailin','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Shoutbox\',\'tiki-shoutbox.php\',1190,\'feature_shoutbox\',\'tiki_p_admin_shoutbox\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','HTML Pages','tiki-admin_html_pages.php',1185,'feature_html_pages','tiki_p_edit_html_pages','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Shoutbox Words\',\'tiki-admin_shoutbox_words.php\',1191,\'feature_shoutbox\',\'tiki_p_admin_shoutbox\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Shoutbox','tiki-shoutbox.php',1190,'feature_shoutbox','tiki_p_admin_shoutbox','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Referer Stats\',\'tiki-referer_stats.php\',1195,\'feature_referer_stats\',\'tiki_p_view_referer_stats\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Shoutbox Words','tiki-admin_shoutbox_words.php',1191,'feature_shoutbox','tiki_p_admin_shoutbox','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Integrator\',\'tiki-admin_integrator.php\',1205,\'feature_integrator\',\'tiki_p_admin_integrator\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Referer Stats','tiki-referer_stats.php',1195,'feature_referer_stats','tiki_p_view_referer_stats','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'phpinfo\',\'tiki-phpinfo.php\',1215,\'\',\'tiki_p_admin\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Integrator','tiki-admin_integrator.php',1205,'feature_integrator','tiki_p_admin_integrator','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Tiki Cache/Sys Admin\',\'tiki-admin_system.php\',1230,\'\',\'tiki_p_clean_cache\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','phpinfo','tiki-phpinfo.php',1215,'','tiki_p_admin','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Tiki Importer\',\'tiki-importer.php\',1240,\'\',\'tiki_p_admin_importer\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Tiki Cache/Sys Admin','tiki-admin_system.php',1230,'','tiki_p_clean_cache','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Tiki Logs\',\'tiki-syslog.php\',1245,\'\',\'tiki_p_admin\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Tiki Importer','tiki-importer.php',1240,'','tiki_p_admin_importer','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Security Admin\',\'tiki-admin_security.php\',1250,\'\',\'tiki_p_admin\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Tiki Logs','tiki-syslog.php',1245,'','tiki_p_admin','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Action Log\',\'tiki-admin_actionlog.php\',1255,\'feature_actionlog\',\'tiki_p_admin\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Security Admin','tiki-admin_security.php',1250,'','tiki_p_admin','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Action Log\',\'tiki-admin_actionlog.php\',1255,\'feature_actionlog\',\'tiki_p_view_actionlog\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Action Log','tiki-admin_actionlog.php',1255,'feature_actionlog','tiki_p_admin','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Action Log\',\'tiki-admin_actionlog.php\',1255,\'feature_actionlog\',\'tiki_p_view_actionlog_owngroups\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Action Log','tiki-admin_actionlog.php',1255,'feature_actionlog','tiki_p_view_actionlog','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Content Templates\',\'tiki-admin_content_templates.php\',1256,\'\',\'tiki_p_edit_content_templates\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Action Log','tiki-admin_actionlog.php',1255,'feature_actionlog','tiki_p_view_actionlog_owngroups','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Comments\',\'tiki-list_comments.php\',1260,\'feature_wiki_comments\',\'tiki_p_admin\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Content Templates','tiki-admin_content_templates.php',1256,'','tiki_p_edit_content_templates','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Comments\',\'tiki-list_comments.php\',1260,\'feature_article_comments\',\'tiki_p_admin\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Comments','tiki-list_comments.php',1260,'feature_wiki_comments','tiki_p_admin','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Comments\',\'tiki-list_comments.php\',1260,\'feature_blog_comments\',\'tiki_p_admin\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Comments','tiki-list_comments.php',1260,'feature_article_comments','tiki_p_admin','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Comments\',\'tiki-list_comments.php\',1260,\'feature_file_galleries_comments\',\'tiki_p_admin\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Comments','tiki-list_comments.php',1260,'feature_blog_comments','tiki_p_admin','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Comments\',\'tiki-list_comments.php\',1260,\'feature_image_galleries_comments\',\'tiki_p_admin\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Comments','tiki-list_comments.php',1260,'feature_file_galleries_comments','tiki_p_admin','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Comments\',\'tiki-list_comments.php\',1260,\'feature_poll_comments\',\'tiki_p_admin\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Comments','tiki-list_comments.php',1260,'feature_image_galleries_comments','tiki_p_admin','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Comments\',\'tiki-list_comments.php\',1260,\'feature_faq_comments\',\'tiki_p_admin\',\'\',0);
 
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Comments','tiki-list_comments.php',1260,'feature_poll_comments','tiki_p_admin','',0);
-
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Comments','tiki-list_comments.php',1260,'feature_faq_comments','tiki_p_admin','',0);
-
-INSERT INTO "," ("\"menuId\",""\"type\",""\"name\",""\"url\",""\"position\",""\"section\",""\"perm\",""\"groupname\",""\"userlevel\",") VALUES (42,'o','Contribution','tiki-admin_contribution.php',1265,'feature_contribution','tiki_p_admin_contribution','',0);
+INSERT INTO "," (","menuId","","type","","name","","url","","position","","section","","perm","","groupname","","userlevel",") VALUES (42,\'o\',\'Contribution\',\'tiki-admin_contribution.php\',1265,\'feature_contribution\',\'tiki_p_admin_contribution\',\'\',0);
 
 
 
 
 DROP TABLE IF EXISTS "tiki_menus";
 
-CREATE TABLE "tiki_menus" (
+CREATE TABLE  "tiki_menus" (
   "menuId" serial,
   "name" varchar(200) NOT NULL default '',
   "description" text,
@@ -1982,12 +1909,12 @@ CREATE TABLE "tiki_menus" (
 ) ;
 
 
-INSERT INTO "tiki_menus" ("menuId","name","description","type") VALUES ('42','Application menu','Main extensive navigation menu','d');
+INSERT INTO "tiki_menus" ("menuId","name","description","type") VALUES (\'42\',\'Application menu\',\'Main extensive navigation menu\',\'d\');
 
 
 DROP TABLE IF EXISTS "tiki_minical_events";
 
-CREATE TABLE "tiki_minical_events" (
+CREATE TABLE  "tiki_minical_events" (
   "user" varchar(200) default '',
   "eventId" bigserial,
   "title" varchar(250) default NULL,
@@ -2004,7 +1931,7 @@ CREATE TABLE "tiki_minical_events" (
 
 DROP TABLE IF EXISTS "tiki_minical_topics";
 
-CREATE TABLE "tiki_minical_topics" (
+CREATE TABLE  "tiki_minical_topics" (
   "user" varchar(200) default '',
   "topicId" bigserial,
   "name" varchar(250) default NULL,
@@ -2020,7 +1947,7 @@ CREATE TABLE "tiki_minical_topics" (
 
 DROP TABLE IF EXISTS "tiki_modules";
 
-CREATE TABLE "tiki_modules" (
+CREATE TABLE  "tiki_modules" (
   "moduleId" serial,
   "name" varchar(200) NOT NULL default '',
   "position" char(1) default NULL,
@@ -2033,16 +1960,16 @@ CREATE TABLE "tiki_modules" (
   "groups" text,
   PRIMARY KEY ("name", "position", "ord", "params")
 );
+CREATE INDEX "tiki_modules_positionType" ON "tiki_modules" ("position","type");
+CREATE INDEX "tiki_modules_moduleId" ON "tiki_modules" ("moduleId");
 
-CREATE INDEX "_positionType" ON ""("position","type");
-CREATE INDEX "_moduleId" ON ""("moduleId");
 
-INSERT INTO "tiki_modules" ("name","position","ord","cache_time","params","groups") VALUES ('mnu_application_menu','l',30,0,'flip=y','a:1:{i:0;s:10:"Registered";}');
+INSERT INTO "tiki_modules" ("name","position","ord","cache_time","params","groups") VALUES (\'mnu_application_menu\',\'l\',30,0,\'flip=y\',\'a:1:{i:0;s:10:"Registered";}\');
 
 
 DROP TABLE IF EXISTS "tiki_newsletter_subscriptions";
 
-CREATE TABLE "tiki_newsletter_subscriptions" (
+CREATE TABLE  "tiki_newsletter_subscriptions" (
   "nlId" bigint NOT NULL default '0',
   "email" varchar(255) NOT NULL default '',
   "code" varchar(32) default NULL,
@@ -2056,7 +1983,7 @@ CREATE TABLE "tiki_newsletter_subscriptions" (
 
 DROP TABLE IF EXISTS "tiki_newsletter_groups";
 
-CREATE TABLE "tiki_newsletter_groups" (
+CREATE TABLE  "tiki_newsletter_groups" (
   "nlId" bigint NOT NULL default '0',
   "groupName" varchar(255) NOT NULL default '',
   "code" varchar(32) default NULL,
@@ -2066,7 +1993,7 @@ CREATE TABLE "tiki_newsletter_groups" (
 
 DROP TABLE IF EXISTS "tiki_newsletter_included";
 
-CREATE TABLE "tiki_newsletter_included" (
+CREATE TABLE  "tiki_newsletter_included" (
   "nlId" bigint NOT NULL default '0',
   "includedId" bigint NOT NULL default '0',
   PRIMARY KEY ("nlId","includedId")
@@ -2075,7 +2002,7 @@ CREATE TABLE "tiki_newsletter_included" (
 
 DROP TABLE IF EXISTS "tiki_newsletters";
 
-CREATE TABLE "tiki_newsletters" (
+CREATE TABLE  "tiki_newsletters" (
   "nlId" bigserial,
   "name" varchar(200) default NULL,
   "description" text,
@@ -2096,7 +2023,7 @@ CREATE TABLE "tiki_newsletters" (
 
 DROP TABLE IF EXISTS "tiki_page_footnotes";
 
-CREATE TABLE "tiki_page_footnotes" (
+CREATE TABLE  "tiki_page_footnotes" (
   "user" varchar(200) NOT NULL default '',
   "pageName" varchar(250) NOT NULL default '',
   "data" text,
@@ -2106,7 +2033,7 @@ CREATE TABLE "tiki_page_footnotes" (
 
 DROP TABLE IF EXISTS "tiki_pages";
 
-CREATE TABLE "tiki_pages" (
+CREATE TABLE  "tiki_pages" (
   "page_id" bigserial,
   "pageName" varchar(160) NOT NULL default '',
   "hits" integer default NULL,
@@ -2133,16 +2060,16 @@ CREATE TABLE "tiki_pages" (
   "wysiwyg" char(1) default NULL,
   "wiki_authors_style" varchar(20) default '',
   PRIMARY KEY ("page_id"),
-  UNIQUE (pageName)
+  UNIQUE (pageName),
+  KEY "lastModif"(lastModif)
 );
+CREATE INDEX "tiki_pages_data" ON "tiki_pages" ("data"("255"));
+CREATE INDEX "tiki_pages_pageRank" ON "tiki_pages" ("pageRank");
 
-CREATE INDEX "_data" ON ""(substr("data", 0, 255));
-CREATE INDEX "_pageRank" ON ""("pageRank");
-CREATE INDEX "_lastModif" ON ""("lastModif");
 
 DROP TABLE IF EXISTS "tiki_page_drafts";
 
-CREATE TABLE "tiki_page_drafts" (
+CREATE TABLE  "tiki_page_drafts" (
   "user" varchar(200) default '',
   "pageName" varchar(255) NOT NULL,
   "data" mediumtext,
@@ -2155,7 +2082,7 @@ CREATE TABLE "tiki_page_drafts" (
 
 DROP TABLE IF EXISTS "tiki_pageviews";
 
-CREATE TABLE "tiki_pageviews" (
+CREATE TABLE  "tiki_pageviews" (
   "day" bigint NOT NULL default '0',
   "pageviews" bigint default NULL,
   PRIMARY KEY ("day")
@@ -2164,7 +2091,7 @@ CREATE TABLE "tiki_pageviews" (
 
 DROP TABLE IF EXISTS "tiki_poll_objects";
 
-CREATE TABLE "tiki_poll_objects" (
+CREATE TABLE  "tiki_poll_objects" (
   "catObjectId" bigint NOT NULL default '0',
   "pollId" bigint NOT NULL default '0',
   "title" varchar(255) default NULL,
@@ -2174,7 +2101,7 @@ CREATE TABLE "tiki_poll_objects" (
 
 DROP TABLE IF EXISTS "tiki_poll_options";
 
-CREATE TABLE "tiki_poll_options" (
+CREATE TABLE  "tiki_poll_options" (
   "pollId" integer NOT NULL default '0',
   "optionId" serial,
   "title" varchar(200) default NULL,
@@ -2186,7 +2113,7 @@ CREATE TABLE "tiki_poll_options" (
 
 DROP TABLE IF EXISTS "tiki_polls";
 
-CREATE TABLE "tiki_polls" (
+CREATE TABLE  "tiki_polls" (
   "pollId" serial,
   "title" varchar(200) default NULL,
   "votes" integer default NULL,
@@ -2199,7 +2126,7 @@ CREATE TABLE "tiki_polls" (
 
 DROP TABLE IF EXISTS "tiki_preferences";
 
-CREATE TABLE "tiki_preferences" (
+CREATE TABLE  "tiki_preferences" (
   "name" varchar(40) NOT NULL default '',
   "value" text,
   PRIMARY KEY ("name")
@@ -2208,7 +2135,7 @@ CREATE TABLE "tiki_preferences" (
 
 DROP TABLE IF EXISTS "tiki_private_messages";
 
-CREATE TABLE "tiki_private_messages" (
+CREATE TABLE  "tiki_private_messages" (
   "messageId" serial,
   "toNickname" varchar(200) NOT NULL default '',
   "poster" varchar(200) NOT NULL default 'anonymous',
@@ -2217,13 +2144,13 @@ CREATE TABLE "tiki_private_messages" (
   "message" varchar(255) default NULL,
   PRIMARY KEY ("messageId")
 ) ;
+CREATE INDEX "tiki_private_messages_" ON "tiki_private_messages" ("received");
+CREATE INDEX "tiki_private_messages_" ON "tiki_private_messages" ("timestamp");
 
-CREATE INDEX "_" ON ""(\","received"\");
-CREATE INDEX "_" ON ""(\","timestamp"\");
 
 DROP TABLE IF EXISTS "tiki_programmed_content";
 
-CREATE TABLE "tiki_programmed_content" (
+CREATE TABLE  "tiki_programmed_content" (
   "pId" serial,
   "contentId" integer NOT NULL default '0',
   "publishDate" bigint NOT NULL default '0',
@@ -2234,7 +2161,7 @@ CREATE TABLE "tiki_programmed_content" (
 
 DROP TABLE IF EXISTS "tiki_quiz_question_options";
 
-CREATE TABLE "tiki_quiz_question_options" (
+CREATE TABLE  "tiki_quiz_question_options" (
   "optionId" bigserial,
   "questionId" bigint default NULL,
   "optionText" text,
@@ -2245,7 +2172,7 @@ CREATE TABLE "tiki_quiz_question_options" (
 
 DROP TABLE IF EXISTS "tiki_quiz_questions";
 
-CREATE TABLE "tiki_quiz_questions" (
+CREATE TABLE  "tiki_quiz_questions" (
   "questionId" bigserial,
   "quizId" bigint default NULL,
   "question" text,
@@ -2258,7 +2185,7 @@ CREATE TABLE "tiki_quiz_questions" (
 
 DROP TABLE IF EXISTS "tiki_quiz_results";
 
-CREATE TABLE "tiki_quiz_results" (
+CREATE TABLE  "tiki_quiz_results" (
   "resultId" bigserial,
   "quizId" bigint default NULL,
   "fromPoints" smallint default NULL,
@@ -2270,7 +2197,7 @@ CREATE TABLE "tiki_quiz_results" (
 
 DROP TABLE IF EXISTS "tiki_quiz_stats";
 
-CREATE TABLE "tiki_quiz_stats" (
+CREATE TABLE  "tiki_quiz_stats" (
   "quizId" bigint NOT NULL default '0',
   "questionId" bigint NOT NULL default '0',
   "optionId" bigint NOT NULL default '0',
@@ -2281,7 +2208,7 @@ CREATE TABLE "tiki_quiz_stats" (
 
 DROP TABLE IF EXISTS "tiki_quiz_stats_sum";
 
-CREATE TABLE "tiki_quiz_stats_sum" (
+CREATE TABLE  "tiki_quiz_stats_sum" (
   "quizId" bigint NOT NULL default '0',
   "quizName" varchar(255) default NULL,
   "timesTaken" bigint default NULL,
@@ -2294,7 +2221,7 @@ CREATE TABLE "tiki_quiz_stats_sum" (
 
 DROP TABLE IF EXISTS "tiki_quizzes";
 
-CREATE TABLE "tiki_quizzes" (
+CREATE TABLE  "tiki_quizzes" (
   "quizId" bigserial,
   "name" varchar(255) default NULL,
   "description" text,
@@ -2338,7 +2265,7 @@ CREATE TABLE "tiki_quizzes" (
 
 DROP TABLE IF EXISTS "tiki_received_articles";
 
-CREATE TABLE "tiki_received_articles" (
+CREATE TABLE  "tiki_received_articles" (
   "receivedArticleId" bigserial,
   "receivedFromSite" varchar(200) default NULL,
   "receivedFromUser" varchar(200) default NULL,
@@ -2368,7 +2295,7 @@ CREATE TABLE "tiki_received_articles" (
 
 DROP TABLE IF EXISTS "tiki_received_pages";
 
-CREATE TABLE "tiki_received_pages" (
+CREATE TABLE  "tiki_received_pages" (
   "receivedPageId" bigserial,
   "pageName" varchar(160) NOT NULL default '',
   "data" bytea,
@@ -2386,12 +2313,12 @@ CREATE TABLE "tiki_received_pages" (
   "pos" smallint default NULL,
   PRIMARY KEY ("receivedPageId")
 ) ;
+CREATE INDEX "tiki_received_pages_structureName" ON "tiki_received_pages" ("structureName");
 
-CREATE INDEX "_structureName" ON ""("structureName");
 
 DROP TABLE IF EXISTS "tiki_referer_stats";
 
-CREATE TABLE "tiki_referer_stats" (
+CREATE TABLE  "tiki_referer_stats" (
   "referer" varchar(255) NOT NULL default '',
   "hits" bigint default NULL,
   "last" bigint default NULL,
@@ -2401,7 +2328,7 @@ CREATE TABLE "tiki_referer_stats" (
 
 DROP TABLE IF EXISTS "tiki_related_categories";
 
-CREATE TABLE "tiki_related_categories" (
+CREATE TABLE  "tiki_related_categories" (
   "categId" bigint NOT NULL default '0',
   "relatedTo" bigint NOT NULL default '0',
   PRIMARY KEY ("categId","relatedTo")
@@ -2410,7 +2337,7 @@ CREATE TABLE "tiki_related_categories" (
 
 DROP TABLE IF EXISTS "tiki_rss_modules";
 
-CREATE TABLE "tiki_rss_modules" (
+CREATE TABLE  "tiki_rss_modules" (
   "rssId" serial,
   "name" varchar(30) NOT NULL default '',
   "description" text,
@@ -2422,12 +2349,12 @@ CREATE TABLE "tiki_rss_modules" (
   "content" bytea,
   PRIMARY KEY ("rssId")
 ) ;
+CREATE INDEX "tiki_rss_modules_name" ON "tiki_rss_modules" ("name");
 
-CREATE INDEX "_name" ON ""("name");
 
 DROP TABLE IF EXISTS "tiki_rss_feeds";
 
-CREATE TABLE "tiki_rss_feeds" (
+CREATE TABLE  "tiki_rss_feeds" (
   "name" varchar(30) NOT NULL default '',
   "rssVer" char(1) NOT NULL default '1',
   "refresh" integer default '300',
@@ -2447,9 +2374,9 @@ CREATE TABLE tiki_searchindex(
   "last_update" bigint NOT NULL default '0',
   PRIMARY KEY ("searchword","location","page")
 );
+CREATE INDEX "tiki_rss_feeds_last_update" ON "tiki_rss_feeds" ("last_update");
+CREATE INDEX "tiki_rss_feeds_location" ON "tiki_rss_feeds" ("location"("50")"page"("200"));
 
-CREATE INDEX "_last_update" ON ""("last_update");
-CREATE INDEX "_location" ON ""(substr("location", 0, 50)substr("page", 0, 200));
 
 -- LRU (last recently used) list for searching parts of words
 DROP TABLE IF EXISTS "tiki_searchsyllable";
@@ -2460,8 +2387,8 @@ CREATE TABLE tiki_searchsyllable(
   "lastUpdated" bigint NOT NULL default '0',
   PRIMARY KEY ("syllable")
 );
+CREATE INDEX "tiki_rss_feeds_lastUsed" ON "tiki_rss_feeds" ("lastUsed");
 
-CREATE INDEX "_lastUsed" ON ""("lastUsed");
 
 -- searchword caching table for search syllables
 DROP TABLE IF EXISTS "tiki_searchwords";
@@ -2475,7 +2402,7 @@ CREATE TABLE tiki_searchwords(
 
 DROP TABLE IF EXISTS "tiki_search_stats";
 
-CREATE TABLE "tiki_search_stats" (
+CREATE TABLE  "tiki_search_stats" (
   "term" varchar(50) NOT NULL default '',
   "hits" bigint default NULL,
   PRIMARY KEY ("term")
@@ -2491,12 +2418,12 @@ CREATE TABLE tiki_secdb(
   "severity" smallint NOT NULL default '0',
   PRIMARY KEY ("md5_value","filename","tiki_version")
 );
+CREATE INDEX "tiki_search_stats_sdb_fn" ON "tiki_search_stats" ("filename");
 
-CREATE INDEX "_sdb_fn" ON ""("filename");
 
 DROP TABLE IF EXISTS "tiki_semaphores";
 
-CREATE TABLE "tiki_semaphores" (
+CREATE TABLE  "tiki_semaphores" (
   "semName" varchar(250) NOT NULL default '',
   "objectType" varchar(20) default 'wiki page',
   "user" varchar(200) NOT NULL default '',
@@ -2507,7 +2434,7 @@ CREATE TABLE "tiki_semaphores" (
 
 DROP TABLE IF EXISTS "tiki_sent_newsletters";
 
-CREATE TABLE "tiki_sent_newsletters" (
+CREATE TABLE  "tiki_sent_newsletters" (
   "editionId" bigserial,
   "nlId" bigint NOT NULL default '0',
   "users" bigint default NULL,
@@ -2521,31 +2448,31 @@ CREATE TABLE "tiki_sent_newsletters" (
 
 DROP TABLE IF EXISTS "tiki_sent_newsletters_errors";
 
-CREATE TABLE "tiki_sent_newsletters_errors" (
+CREATE TABLE  "tiki_sent_newsletters_errors" (
   "editionId" bigint,
   "email" varchar(255),
   "login" varchar(40) default '',
   "error" char(1) default ''
 ) ;
+CREATE INDEX "tiki_sent_newsletters_errors_" ON "tiki_sent_newsletters_errors" ("editionId");
 
-CREATE INDEX "_" ON ""("editionId");
 
 DROP TABLE IF EXISTS "tiki_sessions";
 
-CREATE TABLE "tiki_sessions" (
+CREATE TABLE  "tiki_sessions" (
   "sessionId" varchar(32) NOT NULL default '',
   "user" varchar(200) default '',
   "timestamp" bigint default NULL,
   "tikihost" varchar(200) default NULL,
   PRIMARY KEY ("sessionId")
 );
+CREATE INDEX "tiki_sessions_user" ON "tiki_sessions" ("user");
+CREATE INDEX "tiki_sessions_timestamp" ON "tiki_sessions" ("timestamp");
 
-CREATE INDEX "_user" ON ""("user");
-CREATE INDEX "_timestamp" ON ""(\","timestamp"\");
 
 DROP TABLE IF EXISTS "tiki_sheet_layout";
 
-CREATE TABLE "tiki_sheet_layout" (
+CREATE TABLE  "tiki_sheet_layout" (
   "sheetId" integer NOT NULL default '0',
   "begin" bigint NOT NULL default '0',
   "end" bigint default NULL,
@@ -2558,7 +2485,7 @@ CREATE TABLE "tiki_sheet_layout" (
 
 DROP TABLE IF EXISTS "tiki_sheet_values";
 
-CREATE TABLE "tiki_sheet_values" (
+CREATE TABLE  "tiki_sheet_values" (
   "sheetId" integer NOT NULL default '0',
   "begin" bigint NOT NULL default '0',
   "end" bigint default NULL,
@@ -2572,12 +2499,12 @@ CREATE TABLE "tiki_sheet_values" (
   "user" varchar(200) default '',
   UNIQUE (sheetId,begin,rowIndex,columnIndex)
 );
+CREATE INDEX "tiki_sheet_values_sheetId_2" ON "tiki_sheet_values" ("sheetId","rowIndex","columnIndex");
 
-CREATE INDEX "_sheetId_2" ON ""("sheetId","rowIndex","columnIndex");
 
 DROP TABLE IF EXISTS "tiki_sheets";
 
-CREATE TABLE "tiki_sheets" (
+CREATE TABLE  "tiki_sheets" (
   "sheetId" serial,
   "title" varchar(200) NOT NULL default '',
   "description" text,
@@ -2588,7 +2515,7 @@ CREATE TABLE "tiki_sheets" (
 
 DROP TABLE IF EXISTS "tiki_shoutbox";
 
-CREATE TABLE "tiki_shoutbox" (
+CREATE TABLE  "tiki_shoutbox" (
   "msgId" bigserial,
   "message" varchar(255) default NULL,
   "timestamp" bigint default NULL,
@@ -2600,7 +2527,7 @@ CREATE TABLE "tiki_shoutbox" (
 
 DROP TABLE IF EXISTS "tiki_shoutbox_words";
 
-CREATE TABLE "tiki_shoutbox_words" (
+CREATE TABLE  "tiki_shoutbox_words" (
   "word" VARCHAR( 40 ) NOT NULL ,
   "qty" INT DEFAULT '0' NOT NULL ,
   PRIMARY KEY ("word")
@@ -2609,7 +2536,7 @@ CREATE TABLE "tiki_shoutbox_words" (
 
 DROP TABLE IF EXISTS "tiki_structure_versions";
 
-CREATE TABLE "tiki_structure_versions" (
+CREATE TABLE  "tiki_structure_versions" (
   "structure_id" bigserial,
   "version" bigint default NULL,
   PRIMARY KEY ("structure_id")
@@ -2618,7 +2545,7 @@ CREATE TABLE "tiki_structure_versions" (
 
 DROP TABLE IF EXISTS "tiki_structures";
 
-CREATE TABLE "tiki_structures" (
+CREATE TABLE  "tiki_structures" (
   "page_ref_id" bigserial,
   "structure_id" bigint NOT NULL,
   "parent_id" bigint default NULL,
@@ -2628,13 +2555,13 @@ CREATE TABLE "tiki_structures" (
   "pos" smallint default NULL,
   PRIMARY KEY ("page_ref_id")
 ) ;
+CREATE INDEX "tiki_structures_pidpaid" ON "tiki_structures" ("page_id","parent_id");
+CREATE INDEX "tiki_structures_page_id" ON "tiki_structures" ("page_id");
 
-CREATE INDEX "_pidpaid" ON ""("page_id","parent_id");
-CREATE INDEX "_page_id" ON ""("page_id");
 
 DROP TABLE IF EXISTS "tiki_submissions";
 
-CREATE TABLE "tiki_submissions" (
+CREATE TABLE  "tiki_submissions" (
   "subId" serial,
   "topline" varchar(255) default NULL,
   "title" varchar(255) default NULL,
@@ -2674,7 +2601,7 @@ CREATE TABLE "tiki_submissions" (
 
 DROP TABLE IF EXISTS "tiki_suggested_faq_questions";
 
-CREATE TABLE "tiki_suggested_faq_questions" (
+CREATE TABLE  "tiki_suggested_faq_questions" (
   "sfqId" bigserial,
   "faqId" bigint NOT NULL default '0',
   "question" text,
@@ -2687,7 +2614,7 @@ CREATE TABLE "tiki_suggested_faq_questions" (
 
 DROP TABLE IF EXISTS "tiki_survey_question_options";
 
-CREATE TABLE "tiki_survey_question_options" (
+CREATE TABLE  "tiki_survey_question_options" (
   "optionId" bigserial,
   "questionId" bigint NOT NULL default '0',
   "qoption" text,
@@ -2698,7 +2625,7 @@ CREATE TABLE "tiki_survey_question_options" (
 
 DROP TABLE IF EXISTS "tiki_survey_questions";
 
-CREATE TABLE "tiki_survey_questions" (
+CREATE TABLE  "tiki_survey_questions" (
   "questionId" bigserial,
   "surveyId" bigint NOT NULL default '0',
   "question" text,
@@ -2717,7 +2644,7 @@ CREATE TABLE "tiki_survey_questions" (
 
 DROP TABLE IF EXISTS "tiki_surveys";
 
-CREATE TABLE "tiki_surveys" (
+CREATE TABLE  "tiki_surveys" (
   "surveyId" bigserial,
   "name" varchar(200) default NULL,
   "description" text,
@@ -2731,7 +2658,7 @@ CREATE TABLE "tiki_surveys" (
 
 DROP TABLE IF EXISTS "tiki_tags";
 
-CREATE TABLE "tiki_tags" (
+CREATE TABLE  "tiki_tags" (
   "tagName" varchar(80) NOT NULL default '',
   "pageName" varchar(160) NOT NULL default '',
   "hits" integer default NULL,
@@ -2749,7 +2676,7 @@ CREATE TABLE "tiki_tags" (
 
 DROP TABLE IF EXISTS "tiki_theme_control_categs";
 
-CREATE TABLE "tiki_theme_control_categs" (
+CREATE TABLE  "tiki_theme_control_categs" (
   "categId" bigint NOT NULL default '0',
   "theme" varchar(250) NOT NULL default '',
   PRIMARY KEY ("categId")
@@ -2758,7 +2685,7 @@ CREATE TABLE "tiki_theme_control_categs" (
 
 DROP TABLE IF EXISTS "tiki_theme_control_objects";
 
-CREATE TABLE "tiki_theme_control_objects" (
+CREATE TABLE  "tiki_theme_control_objects" (
   "objId" varchar(250) NOT NULL default '',
   "type" varchar(250) NOT NULL default '',
   "name" varchar(250) NOT NULL default '',
@@ -2769,7 +2696,7 @@ CREATE TABLE "tiki_theme_control_objects" (
 
 DROP TABLE IF EXISTS "tiki_theme_control_sections";
 
-CREATE TABLE "tiki_theme_control_sections" (
+CREATE TABLE  "tiki_theme_control_sections" (
   "section" varchar(250) NOT NULL default '',
   "theme" varchar(250) NOT NULL default '',
   PRIMARY KEY ("section")
@@ -2778,7 +2705,7 @@ CREATE TABLE "tiki_theme_control_sections" (
 
 DROP TABLE IF EXISTS "tiki_topics";
 
-CREATE TABLE "tiki_topics" (
+CREATE TABLE  "tiki_topics" (
   "topicId" bigserial,
   "name" varchar(40) default NULL,
   "image_name" varchar(80) default NULL,
@@ -2793,7 +2720,7 @@ CREATE TABLE "tiki_topics" (
 
 DROP TABLE IF EXISTS "tiki_tracker_fields";
 
-CREATE TABLE "tiki_tracker_fields" (
+CREATE TABLE  "tiki_tracker_fields" (
   "fieldId" bigserial,
   "trackerId" bigint NOT NULL default '0',
   "name" varchar(255) default NULL,
@@ -2820,7 +2747,7 @@ CREATE TABLE "tiki_tracker_fields" (
 
 DROP TABLE IF EXISTS "tiki_tracker_item_attachments";
 
-CREATE TABLE "tiki_tracker_item_attachments" (
+CREATE TABLE  "tiki_tracker_item_attachments" (
   "attId" bigserial,
   "itemId" bigint NOT NULL default 0,
   "filename" varchar(80) default NULL,
@@ -2841,7 +2768,7 @@ CREATE TABLE "tiki_tracker_item_attachments" (
 
 DROP TABLE IF EXISTS "tiki_tracker_item_comments";
 
-CREATE TABLE "tiki_tracker_item_comments" (
+CREATE TABLE  "tiki_tracker_item_comments" (
   "commentId" bigserial,
   "itemId" bigint NOT NULL default '0',
   "user" varchar(200) default NULL,
@@ -2854,7 +2781,7 @@ CREATE TABLE "tiki_tracker_item_comments" (
 
 DROP TABLE IF EXISTS "tiki_tracker_item_fields";
 
-CREATE TABLE "tiki_tracker_item_fields" (
+CREATE TABLE  "tiki_tracker_item_fields" (
   "itemId" bigint NOT NULL default '0',
   "fieldId" bigint NOT NULL default '0',
   "value" text,
@@ -2868,7 +2795,7 @@ CREATE TABLE "tiki_tracker_item_fields" (
 
 DROP TABLE IF EXISTS "tiki_tracker_items";
 
-CREATE TABLE "tiki_tracker_items" (
+CREATE TABLE  "tiki_tracker_items" (
   "itemId" bigserial,
   "trackerId" bigint NOT NULL default '0',
   "created" bigint default NULL,
@@ -2881,7 +2808,7 @@ CREATE TABLE "tiki_tracker_items" (
 
 DROP TABLE IF EXISTS "tiki_tracker_options";
 
-CREATE TABLE "tiki_tracker_options" (
+CREATE TABLE  "tiki_tracker_options" (
   "trackerId" bigint NOT NULL default '0',
   "name" varchar(80) NOT NULL default '',
   "value" text default NULL,
@@ -2891,7 +2818,7 @@ CREATE TABLE "tiki_tracker_options" (
 
 DROP TABLE IF EXISTS "tiki_trackers";
 
-CREATE TABLE "tiki_trackers" (
+CREATE TABLE  "tiki_trackers" (
   "trackerId" bigserial,
   "name" varchar(255) default NULL,
   "description" text,
@@ -2913,19 +2840,19 @@ CREATE TABLE "tiki_trackers" (
 
 DROP TABLE IF EXISTS "tiki_untranslated";
 
-CREATE TABLE "tiki_untranslated" (
+CREATE TABLE  "tiki_untranslated" (
   "id" bigserial,
   "source" bytea NOT NULL,
   "lang" char(16) NOT NULL default '',
   PRIMARY KEY ("source","lang"),
   UNIQUE (id)
 ) ;
+CREATE INDEX "tiki_untranslated_id_2" ON "tiki_untranslated" ("id");
 
-CREATE INDEX "_id_2" ON ""("id");
 
 DROP TABLE IF EXISTS "tiki_user_answers";
 
-CREATE TABLE "tiki_user_answers" (
+CREATE TABLE  "tiki_user_answers" (
   "userResultId" bigint NOT NULL default '0',
   "quizId" bigint NOT NULL default '0',
   "questionId" bigint NOT NULL default '0',
@@ -2936,7 +2863,7 @@ CREATE TABLE "tiki_user_answers" (
 
 DROP TABLE IF EXISTS "tiki_user_answers_uploads";
 
-CREATE TABLE "tiki_user_answers_uploads" (
+CREATE TABLE  "tiki_user_answers_uploads" (
   "answerUploadId" serial,
   "userResultId" bigint NOT NULL default '0',
   "questionId" bigint NOT NULL default '0',
@@ -2950,7 +2877,7 @@ CREATE TABLE "tiki_user_answers_uploads" (
 
 DROP TABLE IF EXISTS "tiki_user_assigned_modules";
 
-CREATE TABLE "tiki_user_assigned_modules" (
+CREATE TABLE  "tiki_user_assigned_modules" (
   "moduleId" integer NOT NULL,
   "name" varchar(200) NOT NULL default '',
   "position" char(1) default NULL,
@@ -2963,7 +2890,7 @@ CREATE TABLE "tiki_user_assigned_modules" (
 
 DROP TABLE IF EXISTS "tiki_user_bookmarks_folders";
 
-CREATE TABLE "tiki_user_bookmarks_folders" (
+CREATE TABLE  "tiki_user_bookmarks_folders" (
   "folderId" bigserial,
   "parentId" bigint default NULL,
   "user" varchar(200) NOT NULL default '',
@@ -2974,7 +2901,7 @@ CREATE TABLE "tiki_user_bookmarks_folders" (
 
 DROP TABLE IF EXISTS "tiki_user_bookmarks_urls";
 
-CREATE TABLE "tiki_user_bookmarks_urls" (
+CREATE TABLE  "tiki_user_bookmarks_urls" (
   "urlId" bigserial,
   "name" varchar(30) default NULL,
   "url" varchar(250) default NULL,
@@ -2988,7 +2915,7 @@ CREATE TABLE "tiki_user_bookmarks_urls" (
 
 DROP TABLE IF EXISTS "tiki_user_mail_accounts";
 
-CREATE TABLE "tiki_user_mail_accounts" (
+CREATE TABLE  "tiki_user_mail_accounts" (
   "accountId" bigserial,
   "user" varchar(200) NOT NULL default '',
   "account" varchar(50) NOT NULL default '',
@@ -3013,7 +2940,7 @@ CREATE TABLE "tiki_user_mail_accounts" (
 
 DROP TABLE IF EXISTS "tiki_user_menus";
 
-CREATE TABLE "tiki_user_menus" (
+CREATE TABLE  "tiki_user_menus" (
   "user" varchar(200) NOT NULL default '',
   "menuId" bigserial,
   "url" varchar(250) default NULL,
@@ -3026,7 +2953,7 @@ CREATE TABLE "tiki_user_menus" (
 
 DROP TABLE IF EXISTS "tiki_user_modules";
 
-CREATE TABLE "tiki_user_modules" (
+CREATE TABLE  "tiki_user_modules" (
   "name" varchar(200) NOT NULL default '',
   "title" varchar(40) default NULL,
   "data" bytea,
@@ -3035,12 +2962,12 @@ CREATE TABLE "tiki_user_modules" (
 );
 
 
-INSERT INTO "tiki_user_modules" ("name","title","data","parse") VALUES ('mnu_application_menu', 'Menu', '{menu id=42}', 'n');
+INSERT INTO "tiki_user_modules" ("name","title","data","parse") VALUES (\'mnu_application_menu\', \'Menu\', \'{menu id=42}\', \'n\');
 
 
 DROP TABLE IF EXISTS "tiki_user_notes";
 
-CREATE TABLE "tiki_user_notes" (
+CREATE TABLE  "tiki_user_notes" (
   "user" varchar(200) NOT NULL default '',
   "noteId" bigserial,
   "created" bigint default NULL,
@@ -3055,7 +2982,7 @@ CREATE TABLE "tiki_user_notes" (
 
 DROP TABLE IF EXISTS "tiki_user_postings";
 
-CREATE TABLE "tiki_user_postings" (
+CREATE TABLE  "tiki_user_postings" (
   "user" varchar(200) NOT NULL default '',
   "posts" bigint default NULL,
   "last" bigint default NULL,
@@ -3067,7 +2994,7 @@ CREATE TABLE "tiki_user_postings" (
 
 DROP TABLE IF EXISTS "tiki_user_preferences";
 
-CREATE TABLE "tiki_user_preferences" (
+CREATE TABLE  "tiki_user_preferences" (
   "user" varchar(200) NOT NULL default '',
   "prefName" varchar(40) NOT NULL default '',
   "value" varchar(250) default NULL,
@@ -3077,7 +3004,7 @@ CREATE TABLE "tiki_user_preferences" (
 
 DROP TABLE IF EXISTS "tiki_user_quizzes";
 
-CREATE TABLE "tiki_user_quizzes" (
+CREATE TABLE  "tiki_user_quizzes" (
   "user" varchar(200) default '',
   "quizId" bigint default NULL,
   "timestamp" bigint default NULL,
@@ -3092,7 +3019,7 @@ CREATE TABLE "tiki_user_quizzes" (
 
 DROP TABLE IF EXISTS "tiki_user_taken_quizzes";
 
-CREATE TABLE "tiki_user_taken_quizzes" (
+CREATE TABLE  "tiki_user_taken_quizzes" (
   "user" varchar(200) NOT NULL default '',
   "quizId" varchar(255) NOT NULL default '',
   PRIMARY KEY ("user","quizId")
@@ -3101,7 +3028,7 @@ CREATE TABLE "tiki_user_taken_quizzes" (
 
 DROP TABLE IF EXISTS "tiki_user_tasks_history";
 
-CREATE TABLE "tiki_user_tasks_history" (
+CREATE TABLE  "tiki_user_tasks_history" (
   "belongs_to" bigint NOT NULL,                   -- the first task in a history it has the same id as the task id
   "task_version" smallint NOT NULL DEFAULT 0,        -- version number for the history it starts with 0
   "title" varchar(250) NOT NULL,                       -- title
@@ -3123,7 +3050,7 @@ CREATE TABLE "tiki_user_tasks_history" (
 
 DROP TABLE IF EXISTS "tiki_user_tasks";
 
-CREATE TABLE "tiki_user_tasks" (
+CREATE TABLE  "tiki_user_tasks" (
   "taskId" bigserial,        -- task id
   "last_version" smallint NOT NULL DEFAULT 0,        -- last version of the task starting with 0
   "user" varchar(200) NOT NULL DEFAULT '',              -- task user
@@ -3142,21 +3069,21 @@ CREATE TABLE "tiki_user_tasks" (
 
 DROP TABLE IF EXISTS "tiki_user_votings";
 
-CREATE TABLE "tiki_user_votings" (
+CREATE TABLE  "tiki_user_votings" (
   "user" varchar(200) default '',
   "ip" varchar(15) default NULL,
   "id" varchar(255) NOT NULL default '',
   "optionId" bigint NOT NULL default 0,
   "time" bigint NOT NULL default 0
 );
+CREATE INDEX "tiki_user_votings_ip" ON "tiki_user_votings" ("ip");
+CREATE INDEX "tiki_user_votings_id" ON "tiki_user_votings" ("id");
+CREATE INDEX "tiki_user_votings_" ON "tiki_user_votings" ("user","id");
 
-CREATE INDEX "_" ON ""(\","user"\","id");
-CREATE INDEX "_ip" ON ""(\","ip"\");
-CREATE INDEX "_id" ON ""(\","id"\");
 
 DROP TABLE IF EXISTS "tiki_user_watches";
 
-CREATE TABLE "tiki_user_watches" (
+CREATE TABLE  "tiki_user_watches" (
   "watchId" bigserial,
   "user" varchar(200) NOT NULL default '',
   "event" varchar(40) NOT NULL default '',
@@ -3167,12 +3094,12 @@ CREATE TABLE "tiki_user_watches" (
   "email" varchar(200) default NULL,
   PRIMARY KEY ("user",event,object,email)
 );
+CREATE INDEX "tiki_user_watches_watchId" ON "tiki_user_watches" ("watchId");
 
-CREATE INDEX "_watchId" ON ""("watchId");
 
 DROP TABLE IF EXISTS "tiki_userfiles";
 
-CREATE TABLE "tiki_userfiles" (
+CREATE TABLE  "tiki_userfiles" (
   "user" varchar(200) NOT NULL default '',
   "fileId" bigserial,
   "name" varchar(200) default NULL,
@@ -3190,7 +3117,7 @@ CREATE TABLE "tiki_userfiles" (
 
 DROP TABLE IF EXISTS "tiki_userpoints";
 
-CREATE TABLE "tiki_userpoints" (
+CREATE TABLE  "tiki_userpoints" (
   "user" varchar(200) NOT NULL default '',
   "points" decimal(8,2) default NULL,
   "voted" integer default NULL
@@ -3199,7 +3126,7 @@ CREATE TABLE "tiki_userpoints" (
 
 DROP TABLE IF EXISTS "tiki_users";
 
-CREATE TABLE "tiki_users" (
+CREATE TABLE  "tiki_users" (
   "user" varchar(200) NOT NULL default '',
   "password" varchar(40) default NULL,
   "email" varchar(200) default NULL,
@@ -3210,7 +3137,7 @@ CREATE TABLE "tiki_users" (
 
 DROP TABLE IF EXISTS "tiki_webmail_contacts";
 
-CREATE TABLE "tiki_webmail_contacts" (
+CREATE TABLE  "tiki_webmail_contacts" (
   "contactId" bigserial,
   "firstName" varchar(80) default NULL,
   "lastName" varchar(80) default NULL,
@@ -3223,7 +3150,7 @@ CREATE TABLE "tiki_webmail_contacts" (
 
 DROP TABLE IF EXISTS "tiki_webmail_contacts_groups";
 
-CREATE TABLE "tiki_webmail_contacts_groups" (
+CREATE TABLE  "tiki_webmail_contacts_groups" (
   "contactId" bigint NOT NULL,
   "groupName" varchar(255) NOT NULL,
   PRIMARY KEY ("contactId","groupName")
@@ -3232,7 +3159,7 @@ CREATE TABLE "tiki_webmail_contacts_groups" (
 
 DROP TABLE IF EXISTS "tiki_webmail_messages";
 
-CREATE TABLE "tiki_webmail_messages" (
+CREATE TABLE  "tiki_webmail_messages" (
   "accountId" bigint NOT NULL default '0',
   "mailId" varchar(255) NOT NULL default '',
   "user" varchar(200) NOT NULL default '',
@@ -3246,7 +3173,7 @@ CREATE TABLE "tiki_webmail_messages" (
 
 DROP TABLE IF EXISTS "tiki_wiki_attachments";
 
-CREATE TABLE "tiki_wiki_attachments" (
+CREATE TABLE  "tiki_wiki_attachments" (
   "attId" bigserial,
   "page" varchar(200) NOT NULL default '',
   "filename" varchar(80) default NULL,
@@ -3260,12 +3187,12 @@ CREATE TABLE "tiki_wiki_attachments" (
   "comment" varchar(250) default NULL,
   PRIMARY KEY ("attId")
 ) ;
+CREATE INDEX "tiki_wiki_attachments_page" ON "tiki_wiki_attachments" ("page");
 
-CREATE INDEX "_page" ON ""("page");
 
 DROP TABLE IF EXISTS "tiki_zones";
 
-CREATE TABLE "tiki_zones" (
+CREATE TABLE  "tiki_zones" (
   "zone" varchar(40) NOT NULL default '',
   PRIMARY KEY ("zone")
 );
@@ -3273,7 +3200,7 @@ CREATE TABLE "tiki_zones" (
 
 DROP TABLE IF EXISTS "tiki_download";
 
-CREATE TABLE "tiki_download" (
+CREATE TABLE  "tiki_download" (
   "id" bigserial,
   "object" varchar(255) NOT NULL default '',
   "userId" integer NOT NULL default '0',
@@ -3282,15 +3209,15 @@ CREATE TABLE "tiki_download" (
   "IP" varchar(50) NOT NULL default '',
   PRIMARY KEY ("id")
 );
+CREATE INDEX "tiki_download_object" ON "tiki_download" ("object","userId","type");
+CREATE INDEX "tiki_download_userId" ON "tiki_download" ("userId");
+CREATE INDEX "tiki_download_type" ON "tiki_download" ("type");
+CREATE INDEX "tiki_download_date" ON "tiki_download" ("date");
 
-CREATE INDEX "_object" ON ""("object","userId","type");
-CREATE INDEX "_userId" ON ""("userId");
-CREATE INDEX "_type" ON ""("type");
-CREATE INDEX "_date" ON ""("date");
 
 DROP TABLE IF EXISTS "users_grouppermissions";
 
-CREATE TABLE "users_grouppermissions" (
+CREATE TABLE  "users_grouppermissions" (
   "groupName" varchar(255) NOT NULL default '',
   "permName" varchar(40) NOT NULL default '',
   "value" char(1) default '',
@@ -3299,12 +3226,12 @@ CREATE TABLE "users_grouppermissions" (
 
 
 
-INSERT INTO "users_grouppermissions" ("groupName","permName") VALUES ('Anonymous','tiki_p_view');
+INSERT INTO "users_grouppermissions" ("groupName","permName") VALUES (\'Anonymous\',\'tiki_p_view\');
 
 
 DROP TABLE IF EXISTS "users_groups";
 
-CREATE TABLE "users_groups" (
+CREATE TABLE  "users_groups" (
   "id" bigserial,
   "groupName" varchar(255) NOT NULL default '',
   "groupDesc" varchar(255) default NULL,
@@ -3326,7 +3253,7 @@ CREATE TABLE "users_groups" (
 
 DROP TABLE IF EXISTS "users_objectpermissions";
 
-CREATE TABLE "users_objectpermissions" (
+CREATE TABLE  "users_objectpermissions" (
   "groupName" varchar(255) NOT NULL default '',
   "permName" varchar(40) NOT NULL default '',
   "objectType" varchar(20) NOT NULL default '',
@@ -3337,607 +3264,518 @@ CREATE TABLE "users_objectpermissions" (
 
 DROP TABLE IF EXISTS "users_permissions";
 
-CREATE TABLE "users_permissions" (
+CREATE TABLE  "users_permissions" (
   "permName" varchar(40) NOT NULL default '',
   "permDesc" varchar(250) default NULL,
   "level" varchar(80) default NULL,
   "type" varchar(20) default NULL,
   "admin" varchar(1) default NULL,
-  "feature_check" VARCHAR(50) NULL,
-  PRIMARY KEY ("permName")
+  "feature_check" varchar(255) default NULL,
+  PRIMARY KEY  ("permName")
 );
+CREATE INDEX "users_permissions_type" ON "users_permissions" ("type");
 
-CREATE INDEX "_type" ON ""("type");
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_calendar', 'Can create/admin calendars', 'admin', 'calendar', 'y');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_admin_calendar\', \'Can create/admin calendars\', \'admin\', \'calendar\', \'y\', \'feature_calendar\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_add_events', 'Can add events in the calendar', 'registered', 'calendar');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_add_events\', \'Can add events in the calendar\', \'registered\', \'calendar\', NULL, \'feature_calendar\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_change_events', 'Can change events in the calendar', 'registered', 'calendar');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_change_events\', \'Can change events in the calendar\', \'registered\', \'calendar\', NULL, \'feature_calendar\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_calendar', 'Can browse the calendar', 'basic', 'calendar');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_view_calendar\', \'Can browse the calendar\', \'basic\', \'calendar\', NULL, \'feature_calendar\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_events', 'Can view events details', 'registered', 'calendar');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_view_events\', \'Can view events details\', \'registered\', \'calendar\', NULL, \'feature_calendar\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_tiki_calendar', 'Can view Tikiwiki tools calendar', 'basic', 'calendar');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_view_tiki_calendar\', \'Can view Tikiwiki tools calendar\', \'basic\', \'calendar\', NULL, \'feature_calendar\');
 
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_admin_chat\', \'Administrator, can create channels remove channels etc\', \'editors\', \'chat\', \'y\', \'feature_minichat,feature_live_support\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_charts', 'Can admin charts', 'admin', 'charts', 'y');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_chat\', \'Can use the chat system\', \'registered\', \'chat\', NULL, \'feature_minichat,feature_live_support\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_autoval_chart_suggestio', 'Autovalidate suggestions', 'editors', 'charts');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_admin_cms\', \'Can admin the cms\', \'editors\', \'cms\', \'y\', \'feature_articles\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_suggest_chart_item', 'Can suggest items', 'basic', 'charts');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_approve_submission\', \'Can approve submissions\', \'editors\', \'cms\', NULL, \'feature_articles\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_chart', 'Can view charts', 'basic', 'charts');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_articles_admin_topics\', \'Can admin article topics\', \'editors\', \'cms\', NULL, \'feature_articles\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_vote_chart', 'Can vote', 'basic', 'charts');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_articles_admin_types\', \'Can admin article types\', \'editors\', \'cms\', NULL, \'feature_articles\');
 
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_articles_read_heading\', \'Can read article headings\', \'basic\', \'cms\', NULL, \'feature_articles\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_chat', 'Administrator, can create channels remove channels etc', 'editors', 'chat', 'y');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_autoapprove_submission\', \'Submited articles automatically approved\', \'editors\', \'cms\', NULL, \'feature_articles\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_chat', 'Can use the chat system', 'registered', 'chat');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_edit_article\', \'Can edit articles\', \'editors\', \'cms\', NULL, \'feature_articles\');
 
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_edit_submission\', \'Can edit submissions\', \'editors\', \'cms\', NULL, \'feature_articles\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_cms', 'Can admin the cms', 'editors', 'cms', 'y');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_read_article\', \'Can read articles\', \'basic\', \'cms\', NULL, \'feature_articles\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_approve_submission', 'Can approve submissions', 'editors', 'cms');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_remove_article\', \'Can remove articles\', \'editors\', \'cms\', NULL, \'feature_articles\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_articles_admin_topics', 'Can admin article topics', 'editors', 'cms');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_remove_submission\', \'Can remove submissions\', \'editors\', \'cms\', NULL, \'feature_articles\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_articles_admin_types', 'Can admin article types', 'editors', 'cms');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_submit_article\', \'Can submit articles\', \'basic\', \'cms\', NULL, \'feature_articles\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_articles_read_heading', 'Can read article headings', 'basic', 'cms');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_topic_read\', \'Can read a topic (Applies only to individual topic perms)\', \'basic\', \'cms\', NULL, \'feature_articles\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_autoapprove_submission', 'Submited articles automatically approved', 'editors', 'cms');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_admin_contribution\', \'Can admin contributions\', \'admin\', \'contribution\', \'y\', \'feature_contribution\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_article', 'Can edit articles', 'editors', 'cms');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_admin_directory\', \'Can admin the directory\', \'editors\', \'directory\', \'y\', \'feature_directory\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_submission', 'Can edit submissions', 'editors', 'cms');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_admin_directory_cats\', \'Can admin directory categories\', \'editors\', \'directory\', NULL, \'feature_directory\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_read_article', 'Can read articles', 'basic', 'cms');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_admin_directory_sites\', \'Can admin directory sites\', \'editors\', \'directory\', NULL, \'feature_directory\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_remove_article', 'Can remove articles', 'editors', 'cms');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_autosubmit_link\', \'Submited links are valid\', \'editors\', \'directory\', NULL, \'feature_directory\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_remove_submission', 'Can remove submissions', 'editors', 'cms');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_submit_link\', \'Can submit sites to the directory\', \'basic\', \'directory\', NULL, \'feature_directory\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_submit_article', 'Can submit articles', 'basic', 'cms');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_validate_links\', \'Can validate submited links\', \'editors\', \'directory\', NULL, \'feature_directory\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_topic_read', 'Can read a topic (Applies only to individual topic perms)', 'basic', 'cms');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_view_directory\', \'Can use the directory\', \'basic\', \'directory\', NULL, \'feature_directory\');
 
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_admin_faqs\', \'Can admin faqs\', \'editors\', \'faqs\', \'y\', \'feature_faqs\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_contribution', 'Can admin contributions', 'admin', 'contribution', 'y');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_suggest_faq\', \'Can suggest faq questions\', \'basic\', \'faqs\', NULL, \'feature_faqs\');
 
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_view_faqs\', \'Can view faqs\', \'basic\', \'faqs\', NULL, \'feature_faqs\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_directory', 'Can admin the directory', 'editors', 'directory', 'y');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_admin\', \'Administrator, can manage users groups and permissions, Hotwords and all the weblog features\', \'admin\', \'tiki\', \'y\', NULL);
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_directory_cats', 'Can admin directory categories', 'editors', 'directory');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_admin_users\', \'Can admin users\', \'admin\', \'tiki\', NULL, NULL);
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_directory_sites', 'Can admin directory sites', 'editors', 'directory');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_access_closed_site\', \'Can access site when closed\', \'admin\', \'tiki\', NULL, NULL);
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_autosubmit_link', 'Submited links are valid', 'editors', 'directory');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_admin_banners\', \'Administrator, can admin banners\', \'admin\', \'tiki\', NULL, NULL);
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_submit_link', 'Can submit sites to the directory', 'basic', 'directory');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_admin_banning\', \'Can ban users or ips\', \'admin\', \'tiki\', NULL, NULL);
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_validate_links', 'Can validate submited links', 'editors', 'directory');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_admin_dynamic\', \'Can admin the dynamic content system\', \'editors\', \'tiki\', NULL, NULL);
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_directory', 'Can use the directory', 'basic', 'directory');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_admin_integrator\', \'Can admin integrator repositories and rules\', \'admin\', \'tiki\', NULL, NULL);
 
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_admin_mailin\', \'Can admin mail-in accounts\', \'admin\', \'tiki\', NULL, NULL);
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_faqs', 'Can admin faqs', 'editors', 'faqs', 'y');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_admin_objects\', \'Can edit object permissions\', \'admin\', \'tiki\', NULL, NULL);
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_suggest_faq', 'Can suggest faq questions', 'basic', 'faqs');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_admin_rssmodules\', \'Can admin rss modules\', \'admin\', \'tiki\', NULL, NULL);
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_faqs', 'Can view faqs', 'basic', 'faqs');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_clean_cache\', \'Can clean cache\', \'editors\', \'tiki\', NULL, NULL);
 
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_create_css\', \'Can create new css suffixed with -user\', \'registered\', \'tiki\', NULL, NULL);
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin', 'Administrator, can manage users groups and permissions, Hotwords and all the weblog features', 'admin', 'tiki', 'y');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_detach_translation\', \'Can remove association between two pages in a translation set\', \'registered\', \'tiki\', NULL, NULL);
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_users', 'Can admin users', 'admin', 'tiki');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_edit_cookies\', \'Can admin cookies\', \'editors\', \'tiki\', NULL, NULL);
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_access_closed_site', 'Can access site when closed', 'admin', 'tiki');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_edit_languages\', \'Can edit translations and create new languages\', \'editors\', \'tiki\', NULL, NULL);
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_banners', 'Administrator, can admin banners', 'admin', 'tiki');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_edit_menu\', \'Can edit menu\', \'admin\', \'menus\', NULL, NULL);
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_banning', 'Can ban users or ips', 'admin', 'tiki');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_edit_menu_option\', \'Can edit menu option\', \'admin\', \'menus\', NULL, NULL);
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_dynamic', 'Can admin the dynamic content system', 'editors', 'tiki');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_edit_templates\', \'Can edit site templates\', \'admin\', \'tiki\', NULL, NULL);
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_integrator', 'Can admin integrator repositories and rules', 'admin', 'tiki');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_search\', \'Can search\', \'basic\', \'tiki\', NULL, NULL);
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_mailin', 'Can admin mail-in accounts', 'admin', 'tiki');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_site_report\', \'Can report a link to the webmaster\', \'basic\', \'tiki\', NULL, NULL);
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_objects','Can edit object permissions', 'admin', 'tiki');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_subscribe_groups\', \'Can subscribe to groups\', \'registered\', \'tiki\', NULL, NULL);
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_rssmodules','Can admin rss modules', 'admin', 'tiki');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_tell_a_friend\', \'Can send a link to a friend\', \'Basic\', \'tiki\', NULL, NULL);
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_clean_cache', 'Can clean cache', 'editors', 'tiki');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_use_HTML\', \'Can use HTML in pages\', \'editors\', \'tiki\', NULL, NULL);
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_create_css', 'Can create new css suffixed with -user', 'registered', 'tiki');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_view_actionlog\', \'Can view action log\', \'registered\', \'tiki\', NULL, NULL);
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_detach_translation', 'Can remove association between two pages in a translation set', 'registered', 'tiki');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_view_actionlog_owngroups\', \'Can view action log for users of his own groups\', \'registered\', \'tiki\', NULL, NULL);
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_cookies', 'Can admin cookies', 'editors', 'tiki');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_view_integrator\', \'Can view integrated repositories\', \'basic\', \'tiki\', NULL, NULL);
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_languages', 'Can edit translations and create new languages', 'editors', 'tiki');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_view_referer_stats\', \'Can view referer stats\', \'editors\', \'tiki\', NULL, NULL);
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_menu', 'Can edit menu', 'admin', 'menus');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_view_stats\', \'Can view site stats\', \'basic\', \'tiki\', NULL, NULL);
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_menu_option', 'Can edit menu option', 'admin', 'menus');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_view_templates\', \'Can view site templates\', \'admin\', \'tiki\', NULL, NULL);
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_templates', 'Can edit site templates', 'admin', 'tiki');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_blog_admin\', \'Can admin blogs\', \'editors\', \'blogs\', \'y\', \'feature_blogs\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_search', 'Can search', 'basic', 'tiki');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_assign_perm_blog\', \'Can assign perms to blog\', \'admin\', \'blogs\', NULL, \'feature_blogs\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_site_report', 'Can report a link to the webmaster', 'basic', 'tiki');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_blog_post\', \'Can post to a blog\', \'registered\', \'blogs\', NULL, \'feature_blogs\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_subscribe_groups', 'Can subscribe to groups', 'registered', 'tiki');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_create_blogs\', \'Can create a blog\', \'editors\', \'blogs\', NULL, \'feature_blogs\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_tell_a_friend', 'Can send a link to a friend', 'Basic', 'tiki');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_read_blog\', \'Can read blogs\', \'basic\', \'blogs\', NULL, \'feature_blogs\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_use_HTML', 'Can use HTML in pages', 'editors', 'tiki');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_admin_file_galleries\', \'Can admin file galleries\', \'editors\', \'file galleries\', \'y\', \'feature_file_galleries\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_actionlog', 'Can view action log', 'registered', 'tiki');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_assign_perm_file_gallery\', \'Can assign perms to file gallery\', \'admin\', \'file galleries\', NULL, \'feature_file_galleries\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_actionlog_owngroups', 'Can view action log for users of his own groups', 'registered', 'tiki');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_batch_upload_file_dir\', \'Can use Directory Batch Load\', \'editors\', \'file galleries\', NULL, \'feature_file_galleries\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_integrator', 'Can view integrated repositories', 'basic', 'tiki');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_batch_upload_files\', \'Can upload zip files with files\', \'editors\', \'file galleries\', NULL, \'feature_file_galleries\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_referer_stats', 'Can view referer stats', 'editors', 'tiki');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_create_file_galleries\', \'Can create file galleries\', \'editors\', \'file galleries\', NULL, \'feature_file_galleries\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_stats', 'Can view site stats', 'basic', 'tiki');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_download_files\', \'Can download files\', \'basic\', \'file galleries\', NULL, \'feature_file_galleries\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_templates', 'Can view site templates', 'admin', 'tiki');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_edit_gallery_file\', \'Can edit a gallery file\', \'editors\', \'file galleries\', NULL, \'feature_file_galleries\');
 
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_list_file_galleries\', \'Can list file galleries\', \'basic\', \'file galleries\', NULL, \'feature_file_galleries\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_blog_admin', 'Can admin blogs', 'editors', 'blogs', 'y');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_upload_files\', \'Can upload files\', \'registered\', \'file galleries\', NULL, \'feature_file_galleries\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_assign_perm_blog', 'Can assign perms to blog', 'admin', 'blogs');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_view_fgal_explorer\', \'Can view file galleries explorer\', \'basic\', \'file galleries\', NULL, \'feature_file_galleries\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_blog_post', 'Can post to a blog', 'registered', 'blogs');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_view_fgal_path\', \'Can view file galleries path\', \'basic\', \'file galleries\', NULL, \'feature_file_galleries\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_create_blogs', 'Can create a blog', 'editors', 'blogs');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_view_file_gallery\', \'Can view file galleries\', \'basic\', \'file galleries\', NULL, \'feature_file_galleries\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_read_blog', 'Can read blogs', 'basic', 'blogs');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_admin_forum\', \'Can admin forums\', \'editors\', \'forums\', \'y\', \'feature_forums\');
 
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_forum_attach\', \'Can attach to forum posts\', \'registered\', \'forums\', NULL, \'feature_forums\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_file_galleries', 'Can admin file galleries', 'editors', 'file galleries', 'y');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_forum_autoapp\', \'Auto approve forum posts\', \'editors\', \'forums\', NULL, \'feature_forums\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_assign_perm_file_gallery', 'Can assign perms to file gallery', 'admin', 'file galleries');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_forum_edit_own_posts\', \'Can edit own forum posts\', \'registered\', \'forums\', NULL, \'feature_forums\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_batch_upload_file_dir', 'Can use Directory Batch Load', 'editors', 'file galleries');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_forum_post\', \'Can post in forums\', \'registered\', \'forums\', NULL, \'feature_forums\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_batch_upload_files', 'Can upload zip files with files', 'editors', 'file galleries');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_forum_post_topic\', \'Can start threads in forums\', \'registered\', \'forums\', NULL, \'feature_forums\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_create_file_galleries', 'Can create file galleries', 'editors', 'file galleries');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_forum_read\', \'Can read forums\', \'basic\', \'forums\', NULL, \'feature_forums\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_download_files', 'Can download files', 'basic', 'file galleries');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_forums_report\', \'Can report msgs to moderator\', \'registered\', \'forums\', NULL, \'feature_forums\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_gallery_file', 'Can edit a gallery file', 'editors', 'file galleries');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_forum_vote\', \'Can vote comments in forums\', \'registered\', \'forums\', NULL, \'feature_forums\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_list_file_galleries', 'Can list file galleries', 'basic', 'file galleries');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_admin_freetags\', \'Can admin freetags\', \'admin\', \'freetags\', \'y\', \'feature_freetags\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_upload_files', 'Can upload files', 'registered', 'file galleries');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_admin_galleries\', \'Can admin Image Galleries\', \'editors\', \'image galleries\', \'y\', \'feature_galleries\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_fgal_explorer', 'Can view file galleries explorer', 'basic', 'file galleries');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_assign_perm_image_gallery\', \'Can assign perms to image gallery\', \'admin\', \'image galleries\', NULL, \'feature_galleries\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_fgal_path', 'Can view file galleries path', 'basic', 'file galleries');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_batch_upload_image_dir\', \'Can use Directory Batch Load\', \'editors\', \'image galleries\', NULL, \'feature_galleries\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_file_gallery', 'Can view file galleries', 'basic', 'file galleries');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_batch_upload_images\', \'Can upload zip files with images\', \'editors\', \'image galleries\', NULL, \'feature_galleries\');
 
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_create_galleries\', \'Can create image galleries\', \'editors\', \'image galleries\', NULL, \'feature_galleries\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_forum', 'Can admin forums', 'editors', 'forums', 'y');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_freetags_tag\', \'Can tag objects\', \'registered\', \'freetags\', NULL, \'feature_freetags\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_forum_attach', 'Can attach to forum posts', 'registered', 'forums');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_list_image_galleries\', \'Can list image galleries\', \'basic\', \'image galleries\', NULL, \'feature_galleries\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_forum_autoapp', 'Auto approve forum posts', 'editors', 'forums');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_unassign_freetags\', \'Can unassign tags from an object\', \'basic\', \'freetags\', NULL, \'feature_freetags\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_forum_edit_own_posts', 'Can edit own forum posts', 'registered', 'forums');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_upload_images\', \'Can upload images\', \'registered\', \'image galleries\', NULL, \'feature_galleries\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_forum_post', 'Can post in forums', 'registered', 'forums');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_view_freetags\', \'Can browse freetags\', \'basic\', \'freetags\', NULL, \'feature_freetags\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_forum_post_topic', 'Can start threads in forums', 'registered', 'forums');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_view_image_gallery\', \'Can view image galleries\', \'basic\', \'image galleries\', NULL, \'feature_galleries\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_forum_read', 'Can read forums', 'basic', 'forums');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_admin_newsletters\', \'Can admin newsletters\', \'admin\', \'newsletters\', \'y\', \'feature_newsletters\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_forums_report', 'Can report msgs to moderator', 'registered', 'forums');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_batch_subscribe_email\', \'Can subscribe many e-mails at once (requires tiki_p_subscribe email)\', \'editors\', \'newsletters\', NULL, \'feature_newsletters\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_forum_vote', 'Can vote comments in forums', 'registered', 'forums');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_send_newsletters\', \'Can send newsletters\', \'editors\', \'newsletters\', NULL, \'feature_newsletters\');
 
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_subscribe_email\', \'Can subscribe any email to newsletters\', \'editors\', \'newsletters\', NULL, \'feature_newsletters\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_freetags', 'Can admin freetags', 'admin', 'freetags', 'y');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_subscribe_newsletters\', \'Can subscribe to newsletters\', \'basic\', \'newsletters\', NULL, \'feature_newsletters\');
 
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_list_newsletters\', \'Can list newsletters\', \'basic\', \'newsletters\', NULL, \'feature_newsletters\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_galleries', 'Can admin Image Galleries', 'editors', 'image galleries', 'y');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_admin_polls\', \'Can admin polls\', \'admin\', \'polls\', \'y\', \'feature_polls\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_assign_perm_image_gallery', 'Can assign perms to image gallery', 'admin', 'image galleries');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_view_poll_results\', \'Can view poll results\', \'basic\', \'polls\', NULL, \'feature_polls\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_batch_upload_image_dir', 'Can use Directory Batch Load', 'editors', 'image galleries');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_vote_poll\', \'Can vote polls\', \'basic\', \'polls\', NULL, \'feature_polls\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_batch_upload_images', 'Can upload zip files with images', 'editors', 'image galleries');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_view_poll_voters\', \'Can view poll voters\', \'basic\', \'polls\', NULL, \'feature_polls\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_create_galleries', 'Can create image galleries', 'editors', 'image galleries');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_admin_quicktags\', \'Can admin quicktags\', \'admin\', \'quicktags\', \'y\', NULL);
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_freetags_tag', 'Can tag objects', 'registered', 'freetags');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_admin_quizzes\', \'Can admin quizzes\', \'editors\', \'quizzes\', \'y\', \'feature_quizzes\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_list_image_galleries', 'Can list image galleries', 'basic', 'image galleries');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_take_quiz\', \'Can take quizzes\', \'basic\', \'quizzes\', NULL, \'feature_quizzes\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_unassign_freetags', 'Can unassign tags from an object', 'basic', 'freetags');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_view_quiz_stats\', \'Can view quiz stats\', \'basic\', \'quizzes\', NULL, \'feature_quizzes\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_upload_images', 'Can upload images', 'registered', 'image galleries');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_view_user_results\', \'Can view user quiz results\', \'editors\', \'quizzes\', NULL, \'feature_quizzes\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_freetags', 'Can browse freetags', 'basic', 'freetags');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_admin_sheet\', \'Can admin sheet\', \'admin\', \'sheet\', \'y\', \'feature_sheet\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_image_gallery', 'Can view image galleries', 'basic', 'image galleries');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_edit_sheet\', \'Can create and edit sheets\', \'editors\', \'sheet\', NULL, \'feature_sheet\');
 
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_view_sheet\', \'Can view sheet\', \'basic\', \'sheet\', NULL, \'feature_sheet\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_newsletters', 'Can admin newsletters', 'admin', 'newsletters', 'y');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_view_sheet_history\', \'Can view sheet history\', \'admin\', \'sheet\', NULL, \'feature_sheet\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_batch_subscribe_email', 'Can subscribe many e-mails at once (requires tiki_p_subscribe email)', 'editors', 'newsletters');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_admin_shoutbox\', \'Can admin shoutbox (Edit/remove msgs)\', \'editors\', \'shoutbox\', \'y\', \'feature_shoutbox\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_send_newsletters', 'Can send newsletters', 'editors', 'newsletters');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_post_shoutbox\', \'Can post messages in shoutbox\', \'basic\', \'shoutbox\', NULL, \'feature_shoutbox\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_subscribe_email', 'Can subscribe any email to newsletters', 'editors', 'newsletters');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_view_shoutbox\', \'Can view shoutbox\', \'basic\', \'shoutbox\', NULL, \'feature_shoutbox\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_subscribe_newsletters', 'Can subscribe to newsletters', 'basic', 'newsletters');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_admin_surveys\', \'Can admin surveys\', \'editors\', \'surveys\', \'y\', \'feature_surveys\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_list_newsletters', 'Can list newsletters', 'basic', 'newsletters');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_take_survey\', \'Can take surveys\', \'basic\', \'surveys\', NULL, \'feature_surveys\');
 
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_view_survey_stats\', \'Can view survey stats\', \'basic\', \'surveys\', NULL, \'feature_surveys\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_polls','Can admin polls', 'admin', 'polls', 'y');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_admin_trackers\', \'Can admin trackers\', \'editors\', \'trackers\', \'y\', \'feature_trackers\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_poll_results', 'Can view poll results', 'basic', 'polls');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_attach_trackers\', \'Can attach files to tracker items\', \'registered\', \'trackers\', NULL, \'feature_trackers\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_vote_poll', 'Can vote polls', 'basic', 'polls');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_comment_tracker_items\', \'Can insert comments for tracker items\', \'basic\', \'trackers\', NULL, \'feature_trackers\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_poll_voters', 'Can view poll voters', 'basic', 'polls');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_tracker_view_comments\', \'Can view tracker items comments\', \'basic\', \'trackers\', NULL, \'feature_trackers\');
 
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_create_tracker_items\', \'Can create new items for trackers\', \'registered\', \'trackers\', NULL, \'feature_trackers\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_quicktags', 'Can admin quicktags', 'admin', 'quicktags', 'y');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_list_trackers\', \'Can list trackers\', \'basic\', \'trackers\', NULL, \'feature_trackers\');
 
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_modify_tracker_items\', \'Can change tracker items\', \'registered\', \'trackers\', NULL, \'feature_trackers\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_quizzes', 'Can admin quizzes', 'editors', 'quizzes', 'y');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_modify_tracker_items_pending\', \'Can change tracker pending items\', \'registered\', \'trackers\', NULL, \'feature_trackers\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_take_quiz', 'Can take quizzes', 'basic', 'quizzes');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_modify_tracker_items_closed\', \'Can change tracker closed items\', \'registered\', \'trackers\', NULL, \'feature_trackers\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_quiz_stats', 'Can view quiz stats', 'basic', 'quizzes');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_tracker_view_ratings\', \'Can view rating result for tracker items\', \'basic\', \'trackers\', NULL, \'feature_trackers\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_user_results', 'Can view user quiz results', 'editors', 'quizzes');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_tracker_vote_ratings\', \'Can vote a rating for tracker items\', \'registered\', \'trackers\', NULL, \'feature_trackers\');
 
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_view_trackers\', \'Can view trackers\', \'basic\', \'trackers\', NULL, \'feature_trackers\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_sheet', 'Can admin sheet', 'admin', 'sheet', 'y');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_view_trackers_closed\', \'Can view trackers closed items\', \'registered\', \'trackers\', NULL, \'feature_trackers\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_sheet', 'Can create and edit sheets', 'editors', 'sheet');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_view_trackers_pending\', \'Can view trackers pending items\', \'editors\', \'trackers\', NULL, \'feature_trackers\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_sheet', 'Can view sheet', 'basic', 'sheet');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_watch_trackers\', \'Can watch tracker\', \'registered\', \'trackers\', NULL, \'feature_trackers\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_sheet_history', 'Can view sheet history', 'admin', 'sheet');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_export_tracker\', \'Can export tracker items\', \'registered\', \'trackers\', NULL, \'feature_trackers\');
 
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_admin_wiki\', \'Can admin the wiki\', \'editors\', \'wiki\', \'y\', \'feature_wiki\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_shoutbox', 'Can admin shoutbox (Edit/remove msgs)', 'editors', 'shoutbox', 'y');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_assign_perm_wiki_page\', \'Can assign perms to wiki pages\', \'admin\', \'wiki\', NULL, \'feature_wiki\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_post_shoutbox', 'Can post messages in shoutbox', 'basic', 'shoutbox');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_edit\', \'Can edit pages\', \'registered\', \'wiki\', NULL, \'feature_wiki\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_shoutbox', 'Can view shoutbox', 'basic', 'shoutbox');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_edit_copyrights\', \'Can edit copyright notices\', \'editors\', \'wiki\', NULL, \'wiki_feature_copyrights\');
 
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_edit_dynvar\', \'Can edit dynamic variables\', \'editors\', \'wiki\', NULL, \'feature_wiki\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_surveys', 'Can admin surveys', 'editors', 'surveys', 'y');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_edit_structures\', \'Can create and edit structures\', \'editors\', \'wiki\', NULL, \'feature_wiki_structure\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_take_survey', 'Can take surveys', 'basic', 'surveys');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_export_wiki\', \'Can export wiki pages using the export feature\', \'admin\', \'wiki\', NULL, \'feature_wiki_export\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_survey_stats', 'Can view survey stats', 'basic', 'surveys');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_lock\', \'Can lock pages\', \'editors\', \'wiki\', NULL, \'feature_wiki\');
 
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_minor\', \'Can save as minor edit\', \'registered\', \'wiki\', NULL, \'feature_wiki\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_trackers', 'Can admin trackers', 'editors', 'trackers', 'y');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_remove\', \'Can remove\', \'editors\', \'wiki\', NULL, \'feature_wiki\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_attach_trackers', 'Can attach files to tracker items', 'registered', 'trackers');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_rename\', \'Can rename pages\', \'editors\', \'wiki\', NULL, \'feature_wiki\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_comment_tracker_items', 'Can insert comments for tracker items', 'basic', 'trackers');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_rollback\', \'Can rollback pages\', \'editors\', \'wiki\', NULL, \'feature_wiki\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_tracker_view_comments', 'Can view tracker items comments', 'basic', 'trackers');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_upload_picture\', \'Can upload pictures to wiki pages\', \'registered\', \'wiki\', NULL, \'feature_wiki_pictures\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_create_tracker_items', 'Can create new items for trackers', 'registered', 'trackers');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_use_as_template\', \'Can use the page as a tracker template\', \'basic\', \'wiki\', NULL, \'feature_wiki_templates\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_list_trackers', 'Can list trackers', 'basic', 'trackers');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_view\', \'Can view page/pages\', \'basic\', \'wiki\', NULL, \'feature_wiki\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_modify_tracker_items', 'Can change tracker items', 'registered', 'trackers');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_watch_structure\', \'Can watch structure\', \'registered\', \'wiki\', NULL, \'feature_wiki_structure\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_modify_tracker_items_pending', 'Can change tracker pending items', 'registered', 'trackers');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_wiki_admin_attachments\', \'Can admin attachments to wiki pages\', \'editors\', \'wiki\', NULL, \'feature_wiki_attachments\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_modify_tracker_items_closed', 'Can change tracker closed items', 'registered', 'trackers');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_wiki_admin_ratings\', \'Can add and change ratings on wiki pages\', \'admin\', \'wiki\', NULL, \'feature_wiki_ratings\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_tracker_view_ratings', 'Can view rating result for tracker items', 'basic', 'trackers');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_wiki_attach_files\', \'Can attach files to wiki pages\', \'registered\', \'wiki\', NULL, \'feature_wiki_attachments\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_tracker_vote_ratings', 'Can vote a rating for tracker items', 'registered', 'trackers');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_wiki_view_attachments\', \'Can view wiki attachments and download\', \'registered\', \'wiki\', NULL, \'feature_wiki_attachments\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_trackers', 'Can view trackers', 'basic', 'trackers');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_wiki_view_comments\', \'Can view wiki comments\', \'basic\', \'wiki\', NULL, \'feature_wiki_comments\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_trackers_closed', 'Can view trackers closed items', 'registered', 'trackers');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_wiki_view_history\', \'Can view wiki history\', \'basic\', \'wiki\', NULL, \'feature_history\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_trackers_pending', 'Can view trackers pending items', 'editors', 'trackers');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_wiki_view_ratings\', \'Can view rating of wiki pages\', \'basic\', \'wiki\', NULL, \'feature_wiki_ratings\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_watch_trackers', 'Can watch tracker', 'registered', 'trackers');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_wiki_view_source\', \'Can view source of wiki pages\', \'basic\', \'wiki\', NULL, \'feature_source\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_export_tracker', 'Can export tracker items', 'registered', 'trackers');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_wiki_vote_ratings\', \'Can participate to rating of wiki pages\', \'registered\', \'wiki\', NULL, \'feature_wiki_ratings\');
 
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_wiki_view_similar\', \'Can view similar wiki pages\', \'registered\', \'wiki\', NULL, \'feature_wiki\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_wiki', 'Can admin the wiki', 'editors', 'wiki', 'y');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_admin_workflow\', \'Can admin workflow processes\', \'admin\', \'workflow\', \'y\', \'feature_workflow\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_assign_perm_wiki_page', 'Can assign perms to wiki pages', 'admin', 'wiki');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_abort_instance\', \'Can abort a process instance\', \'editors\', \'workflow\', NULL, \'feature_workflow\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit', 'Can edit pages', 'registered', 'wiki');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_exception_instance\', \'Can declare an instance as exception\', \'registered\', \'workflow\', NULL, \'feature_workflow\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_copyrights', 'Can edit copyright notices', 'editors', 'wiki');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_send_instance\', \'Can send instances after completion\', \'registered\', \'workflow\', NULL, \'feature_workflow\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_dynvar', 'Can edit dynamic variables', 'editors', 'wiki');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_use_workflow\', \'Can execute workflow activities\', \'registered\', \'workflow\', NULL, \'feature_workflow\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_structures', 'Can create and edit structures', 'editors', 'wiki');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_admin_received_articles\', \'Can admin received articles\', \'editors\', \'comm\', NULL, \'feature_comm\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_export_wiki', 'Can export wiki pages using the export feature', 'admin', 'wiki');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_admin_received_pages\', \'Can admin received pages\', \'editors\', \'comm\', NULL, \'feature_comm\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_lock', 'Can lock pages', 'editors', 'wiki');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_send_articles\', \'Can send articles to other sites\', \'editors\', \'comm\', NULL, \'feature_comm\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_minor', 'Can save as minor edit', 'registered', 'wiki');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_sendme_articles\', \'Can send articles to this site\', \'registered\', \'comm\', NULL, \'feature_comm\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_remove', 'Can remove', 'editors', 'wiki');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_sendme_pages\', \'Can send pages to this site\', \'registered\', \'comm\', NULL, \'feature_comm\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_rename', 'Can rename pages', 'editors', 'wiki');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_send_pages\', \'Can send pages to other sites\', \'registered\', \'comm\', NULL, \'feature_comm\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_rollback', 'Can rollback pages', 'editors', 'wiki');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_admin_tikitests\', \'Can admin the TikiTests\', \'admin\', \'tikitests\', NULL, \'feature_tikitests\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_upload_picture', 'Can upload pictures to wiki pages', 'registered', 'wiki');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_edit_tikitests\', \'Can edit TikiTests\', \'editors\', \'tikitests\', NULL, \'feature_tikitests\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_use_as_template', 'Can use the page as a tracker template', 'basic', 'wiki');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_play_tikitests\', \'Can replay the TikiTests\', \'registered\', \'tikitests\', NULL, \'feature_tikitests\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view', 'Can view page/pages', 'basic', 'wiki');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_cache_bookmarks\', \'Can cache user bookmarks\', \'admin\', \'user\', NULL, \'feature_user_bookmarks\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_watch_structure', 'Can watch structure', 'registered', 'wiki');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_configure_modules\', \'Can configure modules\', \'registered\', \'user\', NULL, \'feature_modulecontrols\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_wiki_admin_attachments', 'Can admin attachments to wiki pages', 'editors', 'wiki');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_create_bookmarks\', \'Can create user bookmarks\', \'registered\', \'user\', NULL, \'feature_user_bookmarks\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_wiki_admin_ratings', 'Can add and change ratings on wiki pages', 'admin', 'wiki');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_minical\', \'Can use the mini event calendar\', \'registered\', \'user\', NULL, \'feature_minical\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_wiki_attach_files', 'Can attach files to wiki pages', 'registered', 'wiki');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_notepad\', \'Can use the notepad\', \'registered\', \'user\', NULL, \'feature_notepad\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_wiki_view_attachments', 'Can view wiki attachments and download', 'registered', 'wiki');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_tasks_admin\', \'Can admin public tasks\', \'admin\', \'user\', NULL, \'feature_tasks\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_wiki_view_comments', 'Can view wiki comments', 'basic', 'wiki');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_tasks\', \'Can use tasks\', \'registered\', \'user\', NULL, \'feature_tasks\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_wiki_view_history', 'Can view wiki history', 'basic', 'wiki');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_tasks_receive\', \'Can receive tasks from other users\', \'registered\', \'user\', NULL, \'feature_tasks\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_wiki_view_ratings', 'Can view rating of wiki pages', 'basic', 'wiki');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_tasks_send\', \'Can send tasks to other users\', \'registered\', \'user\', NULL, \'feature_tasks\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_wiki_view_source', 'Can view source of wiki pages', 'basic', 'wiki');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_userfiles\', \'Can upload personal files\', \'registered\', \'user\', NULL, \'feature_userfiles\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_wiki_vote_ratings', 'Can participate to rating of wiki pages', 'registered', 'wiki');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_usermenu\', \'Can create items in personal menu\', \'registered\', \'user\', NULL, \'feature_usermenu\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_wiki_view_similar', 'Can view similar wiki pages', 'registered', 'wiki');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_broadcast_all\', \'Can broadcast messages to all user\', \'admin\', \'messu\', NULL, \'feature_messages\');
 
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_broadcast\', \'Can broadcast messages to groups\', \'admin\', \'messu\', NULL, \'feature_messages\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_workflow', 'Can admin workflow processes', 'admin', 'workflow', 'y');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_messages\', \'Can use the messaging system\', \'registered\', \'messu\', NULL, \'feature_messages\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_abort_instance', 'Can abort a process instance', 'editors', 'workflow');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_admin_comments\', \'Can admin comments\', \'admin\', \'comments\', \'y\', \'feature_wiki_comments,feature_blog_comments,feature_blogposts_comments,feature_file_galleries_comments,feature_image_galleries_comments,feature_article_comments,feature_faq_comments,feature_poll_comments,map_comments\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_exception_instance', 'Can declare an instance as exception', 'registered', 'workflow');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_edit_comments\', \'Can edit all comments\', \'editors\', \'comments\', NULL, \'feature_wiki_comments,feature_blog_comments,feature_blogposts_comments,feature_file_galleries_comments,feature_image_galleries_comments,feature_article_comments,feature_faq_comments,feature_poll_comments,map_comments\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_send_instance', 'Can send instances after completion', 'registered', 'workflow');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_post_comments\', \'Can post new comments\', \'registered\', \'comments\', NULL, \'feature_wiki_comments,feature_blog_comments,feature_blogposts_comments,feature_file_galleries_comments,feature_image_galleries_comments,feature_article_comments,feature_faq_comments,feature_poll_comments,map_comments\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_use_workflow', 'Can execute workflow activities', 'registered', 'workflow');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_read_comments\', \'Can read comments\', \'basic\', \'comments\', NULL, \'feature_wiki_comments,feature_blog_comments,feature_blogposts_comments,feature_file_galleries_comments,feature_image_galleries_comments,feature_article_comments,feature_faq_comments,feature_poll_comments,map_comments\');
 
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_remove_comments\', \'Can delete comments\', \'editors\', \'comments\', NULL, \'feature_wiki_comments,feature_blog_comments,feature_blogposts_comments,feature_file_galleries_comments,feature_image_galleries_comments,feature_article_comments,feature_faq_comments,feature_poll_comments,map_comments\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_received_articles', 'Can admin received articles', 'editors', 'comm');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_vote_comments\', \'Can vote comments\', \'registered\', \'comments\', NULL, \'feature_wiki_comments,feature_blog_comments,feature_blogposts_comments,feature_file_galleries_comments,feature_image_galleries_comments,feature_article_comments,feature_faq_comments,feature_poll_comments,map_comments\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_received_pages', 'Can admin received pages', 'editors', 'comm');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_admin_content_templates\', \'Can admin content templates\', \'admin\', \'content templates\', \'y\', \'feature_wiki_templates,feature_cms_templates\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_send_articles', 'Can send articles to other sites', 'editors', 'comm');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_edit_content_templates\', \'Can edit content templates\', \'editors\', \'content templates\', NULL, \'feature_wiki_templates,feature_cms_templates\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_sendme_articles', 'Can send articles to this site', 'registered', 'comm');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_use_content_templates\', \'Can use content templates\', \'registered\', \'content templates\', NULL, \'feature_wiki_templates,feature_cms_templates\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_sendme_pages', 'Can send pages to this site', 'registered', 'comm');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_edit_html_pages\', \'Can edit HTML pages\', \'editors\', \'html pages\', NULL, \'feature_html_pages\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_send_pages', 'Can send pages to other sites', 'registered', 'comm');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_view_html_pages\', \'Can view HTML pages\', \'basic\', \'html pages\', NULL, \'feature_html_pages\');
 
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_list_users\', \'Can list registered users\', \'registered\', \'community\', NULL, \'feature_friends\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_tikitests', 'Can admin the TikiTests', 'admin', 'tikitests');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_live_support_admin\', \'Admin live support system\', \'admin\', \'support\', \'y\', \'feature_live_support\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_tikitests', 'Can edit TikiTests', 'editors', 'tikitests');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_live_support\', \'Can use live support system\', \'basic\', \'support\', NULL, \'feature_live_support\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_play_tikitests', 'Can replay the TikiTests', 'registered', 'tikitests');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_map_create\', \'Can create new mapfile\', \'admin\', \'maps\', NULL, \'feature_maps\');
 
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_map_delete\', \'Can delete mapfiles\', \'admin\', \'maps\', NULL, \'feature_maps\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_cache_bookmarks', 'Can cache user bookmarks', 'admin', 'user');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_map_edit\', \'Can edit mapfiles\', \'editors\', \'maps\', NULL, \'feature_maps\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_configure_modules', 'Can configure modules', 'registered', 'user');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_map_view\', \'Can view mapfiles\', \'basic\', \'maps\', NULL, \'feature_maps\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_create_bookmarks', 'Can create user bookmarks', 'registered', 'user');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_map_view_mapfiles\', \'Can view contents of mapfiles\', \'registered\', \'maps\', NULL, \'feature_maps\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_minical', 'Can use the mini event calendar', 'registered', 'user');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_use_webmail\', \'Can use webmail\', \'registered\', \'webmail\', NULL, \'feature_webmail,feature_contacts\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_notepad', 'Can use the notepad', 'registered', 'user');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_use_group_webmail\', \'Can use group webmail\', \'registered\', \'webmail\', NULL, \'feature_webmail,feature_contacts\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_tasks_admin', 'Can admin public tasks', 'admin', 'user');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_admin_group_webmail\', \'Can administrate group webmail accounts\', \'registered\', \'webmail\', NULL, \'feature_webmail,feature_contacts\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_tasks', 'Can use tasks', 'registered', 'user');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_use_personal_webmail\', \'Can use personal webmail accounts\', \'registered\', \'webmail\', NULL, \'feature_webmail,feature_contacts\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_tasks_receive', 'Can receive tasks from other users', 'registered', 'user');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_admin_personal_webmail\', \'Can administrate personal webmail accounts\', \'registered\', \'webmail\', NULL, \'feature_webmail,feature_contacts\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_tasks_send', 'Can send tasks to other users', 'registered', 'user');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_plugin_viewdetail\', \'Can view unapproved plugin details\', \'registered\', \'wiki\', NULL, \'feature_wiki\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_userfiles', 'Can upload personal files', 'registered', 'user');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_plugin_preview\', \'Can execute unapproved plugin\', \'registered\', \'wiki\', NULL, \'feature_wiki\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_usermenu', 'Can create items in personal menu', 'registered', 'user');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_plugin_approve\', \'Can approve plugin execution\', \'editors\', \'wiki\', NULL, \'feature_wiki\');
 
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_trust_input\', \'Trust all user inputs (no security checks)\', \'admin\', \'tiki\', NULL, NULL);
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_broadcast_all', 'Can broadcast messages to all user', 'admin', 'messu');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_view_backlink\', \'View page backlinks\', \'basic\', \'wiki\', NULL, \'feature_wiki\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_broadcast', 'Can broadcast messages to groups', 'admin', 'messu');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_admin_notifications\', \'Can admin mail notifications\', \'editors\', \'mail notifications\', NULL, NULL);
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_messages', 'Can use the messaging system', 'registered', 'messu');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_invite\', \'Can invite user in groups\', \'editors\', \'tiki\', NULL, NULL);
 
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_delete_account\', \'Can delete his own account\', \'admin\', \'tiki\', NULL, NULL);
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_comments', 'Can admin comments', 'admin', 'comments', 'y');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_admin_importer\', \'Can use the Tiki Importer\', \'admin\', \'tiki\', \'y\', NULL);
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_comments', 'Can edit all comments', 'editors', 'comments');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_admin_categories\', \'Can admin categories\', \'editors\', \'category\', \'y\', \'feature_categories\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_post_comments', 'Can post new comments', 'registered', 'comments');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_view_category\', \'Can see the category in a listing\', \'basic\', \'category\', NULL, \'feature_categories\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_read_comments', 'Can read comments', 'basic', 'comments');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_modify_object_categories\', \'Can change the categories on the object\', \'editors\', \'tiki\', NULL, NULL);
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_remove_comments', 'Can delete comments', 'editors', 'comments');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_add_object\', \'Can add objects in the category\', \'editors\', \'category\', NULL, \'feature_categories\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_vote_comments', 'Can vote comments', 'registered', 'comments');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_remove_object\', \'Can remove objects from the category\', \'editors\', \'category\', NULL, \'feature_categories\');
 
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_create_category\', \'Can create new categories\', \'admin\', \'category\', NULL, \'feature_categories\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_content_templates', 'Can admin content templates', 'admin', 'content templates', 'y');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_perspective_view\', \'Can view the perspective\', \'basic\', \'perspective\', NULL, \'feature_perspective\');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_content_templates', 'Can edit content templates', 'editors', 'content templates');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_group_view\', \'Can view the group\', \'basic\', \'group\', NULL, NULL);
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_use_content_templates', 'Can use content templates', 'registered', 'content templates');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_group_view_members\', \'Can view the group members\', \'basic\', \'group\', NULL, NULL);
 
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_group_add_member\', \'Can add group members\', \'admin\', \'group\', NULL, NULL);
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_html_pages', 'Can edit HTML pages', 'editors', 'html pages');
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_group_remove_member\', \'Can remove group members\', \'admin\', \'group\', NULL, NULL);
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_html_pages', 'Can view HTML pages', 'basic', 'html pages');
-
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_list_users', 'Can list registered users', 'registered', 'community');
-
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_live_support_admin', 'Admin live support system', 'admin', 'support', 'y');
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_live_support', 'Can use live support system', 'basic', 'support');
-
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_map_create', 'Can create new mapfile', 'admin', 'maps');
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_map_delete', 'Can delete mapfiles', 'admin', 'maps');
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_map_edit', 'Can edit mapfiles', 'editors', 'maps');
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_map_view', 'Can view mapfiles', 'basic', 'maps');
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_map_view_mapfiles', 'Can view contents of mapfiles', 'registered', 'maps');
-
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_use_webmail', 'Can use webmail', 'registered', 'webmail');
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_use_group_webmail', 'Can use group webmail', 'registered', 'webmail');
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_group_webmail', 'Can administrate group webmail accounts', 'registered', 'webmail');
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_use_personal_webmail', 'Can use personal webmail accounts', 'registered', 'webmail');
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_personal_webmail', 'Can administrate personal webmail accounts', 'registered', 'webmail');
-
-
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_plugin_viewdetail', 'Can view unapproved plugin details', 'registered', 'wiki');
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_plugin_preview', 'Can execute unapproved plugin', 'registered', 'wiki');
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_plugin_approve', 'Can approve plugin execution', 'editors', 'wiki');
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_trust_input', 'Trust all user inputs (no security checks)', 'admin', 'tiki');
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_backlink', 'View page backlinks', 'basic', 'wiki');
-
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_notifications', 'Can admin mail notifications', 'editors', 'mail notifications');
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_invite', 'Can invite user in groups', 'editors', 'tiki');
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_delete_account', 'Can delete his own account', 'admin', 'tiki');
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_importer', 'Can use the Tiki Importer', 'admin', 'tiki', 'y');
-
- 
- INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_categories', 'Can admin categories', 'editors', 'category', 'y');
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_category', 'Can see the category in a listing', 'basic', 'category');
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_modify_object_categories', 'Can change the categories on the object', 'editors', 'tiki');
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_add_object', 'Can add objects in the category', 'editors', 'category');
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_remove_object', 'Can remove objects from the category', 'editors', 'category');
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_create_category', 'Can create new categories', 'admin', 'category');
-
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_perspective_view', 'Can view the perspective', 'basic', 'perspective');
-
-
-UPDATE users_permissions SET feature_check = 'feature_wiki' WHERE permName IN(
-	'tiki_p_admin_wiki',
-	'tiki_p_assign_perm_wiki_page',
-	'tiki_p_edit',
-	'tiki_p_lock',
-	'tiki_p_minor',
-	'tiki_p_remove',
-	'tiki_p_rename',
-	'tiki_p_rollback',
-	'tiki_p_view'
-);
-
-
-UPDATE users_permissions SET feature_check = 'wiki_feature_copyrights' WHERE permName = 'tiki_p_edit_copyrights';
-
-UPDATE users_permissions SET feature_check = 'feature_wiki_structure' WHERE permName = 'tiki_p_edit_structures';
-
-UPDATE users_permissions SET feature_check = 'feature_wiki_structure' WHERE permName = 'tiki_p_watch_structure';
-
-UPDATE users_permissions SET feature_check = 'feature_wiki_pictures' WHERE permName = 'tiki_p_upload_picture';
-
-UPDATE users_permissions SET feature_check = 'feature_wiki_templates' WHERE permName = 'tiki_p_use_as_template';
-
-UPDATE users_permissions SET feature_check = 'feature_wiki_attachments' WHERE permName = 'tiki_p_admin_attachments';
-
-UPDATE users_permissions SET feature_check = 'feature_wiki_attachments' WHERE permName = 'tiki_p_attach_files';
-
-UPDATE users_permissions SET feature_check = 'feature_wiki_attachments' WHERE permName = 'tiki_p_wiki_view_attachments';
-
-UPDATE users_permissions SET feature_check = 'feature_wiki_ratings' WHERE permName = 'tiki_p_admin_ratings';
-
-UPDATE users_permissions SET feature_check = 'feature_wiki_ratings' WHERE permName = 'tiki_p_wiki_view_ratings';
-
-UPDATE users_permissions SET feature_check = 'feature_wiki_ratings' WHERE permName = 'tiki_p_wiki_vote_ratings';
-
-UPDATE users_permissions SET feature_check = 'feature_wiki_comments' WHERE permName = 'tiki_p_wiki_view_comments';
-
-UPDATE users_permissions SET feature_check = 'feature_wiki_export' WHERE permName = 'tiki_p_export_wiki';
-
-UPDATE users_permissions SET feature_check = 'feature_history' WHERE permName = 'tiki_p_wiki_view_history';
-
-UPDATE users_permissions SET feature_check = 'feature_wiki_attachments' WHERE permName = 'tiki_p_wiki_attach_files';
-
-UPDATE users_permissions SET feature_check = 'feature_wiki_attachments' WHERE permName = 'tiki_p_wiki_admin_attachments';
-
-UPDATE users_permissions SET feature_check = 'feature_wiki_ratings' WHERE permName = 'tiki_p_wiki_admin_ratings';
-
-UPDATE users_permissions SET feature_check = 'feature_source' WHERE permName = 'tiki_p_wiki_view_source';
-
+INSERT INTO "," (","permName","","permDesc","","level","","type","","admin","","feature_check",") VALUES (\'tiki_p_group_join\', \'Can join or leave the group\', \'admin\', \'group\', NULL, NULL);
 
 
 
 
 DROP TABLE IF EXISTS "users_usergroups";
 
-CREATE TABLE "users_usergroups" (
+CREATE TABLE  "users_usergroups" (
   "userId" integer NOT NULL default '0',
   "groupName" varchar(255) NOT NULL default '',
   PRIMARY KEY ("userId","groupName")
 );
 
 
-INSERT INTO "users_groups" ("groupName","groupDesc") VALUES ('Anonymous','Public users not logged');
+INSERT INTO "users_groups" ("groupName","groupDesc") VALUES (\'Anonymous\',\'Public users not logged\');
 
-INSERT INTO "users_groups" ("groupName","groupDesc") VALUES ('Registered','Users logged into the system');
+INSERT INTO "users_groups" ("groupName","groupDesc") VALUES (\'Registered\',\'Users logged into the system\');
 
-INSERT INTO "users_groups" ("groupName","groupDesc") VALUES ('Admins','Administrator and accounts managers.');
+INSERT INTO "users_groups" ("groupName","groupDesc") VALUES (\'Admins\',\'Administrator and accounts managers.\');
 
 
 DROP TABLE IF EXISTS "users_users";
 
-CREATE TABLE "users_users" (
+CREATE TABLE  "users_users" (
   "userId" serial,
   "email" varchar(200) default NULL,
   "login" varchar(200) NOT NULL default '',
@@ -3965,27 +3803,27 @@ CREATE TABLE "users_users" (
   "waiting" char(1) default NULL,
   PRIMARY KEY ("userId")
 ) ;
+CREATE INDEX "users_users_score" ON "users_users" ("score");
+CREATE INDEX "users_users_login" ON "users_users" ("login");
+CREATE INDEX "users_users_registrationDate" ON "users_users" ("registrationDate");
+CREATE INDEX "users_users_openid_url" ON "users_users" ("openid_url");
 
-CREATE INDEX "_score" ON ""("score");
-CREATE INDEX "_login" ON ""("login");
-CREATE INDEX "_registrationDate" ON ""("registrationDate");
-CREATE INDEX "_openid_url" ON ""("openid_url");
 
 -- Administrator account
-INSERT INTO "users_users" ("email","login","password","hash") VALUES ('','admin','admin','f6fdffe48c908deb0f4c3bd36c032e72');
+INSERT INTO "users_users" ("email","login","password","hash") VALUES (\'\',\'admin\',\'admin\',md5(\'adminadmin\'));
 
 UPDATE "users_users" SET "currentLogin"="lastLogin","registrationDate"="lastLogin";
 
-INSERT INTO "tiki_user_preferences" ("user","prefName","value") VALUES ('admin','realName','System Administrator');
+INSERT INTO "tiki_user_preferences" ("user","prefName","value") VALUES (\'admin\',\'realName\',\'System Administrator\');
 
-INSERT INTO "users_usergroups" ("userId","groupName") VALUES (1,'Admins');
+INSERT INTO "users_usergroups" ("userId","groupName") VALUES (1,\'Admins\');
 
-INSERT INTO "users_grouppermissions" ("groupName","permName") VALUES ('Admins','tiki_p_admin');
+INSERT INTO "users_grouppermissions" ("groupName","permName") VALUES (\'Admins\',\'tiki_p_admin\');
 
 
 DROP TABLE IF EXISTS "tiki_integrator_reps";
 
-CREATE TABLE "tiki_integrator_reps" (
+CREATE TABLE  "tiki_integrator_reps" (
   "repID" bigserial,
   "name" varchar(255) NOT NULL default '',
   "path" varchar(255) NOT NULL default '',
@@ -4004,7 +3842,7 @@ INSERT INTO tiki_integrator_reps VALUES ('1','Doxygened (1.3.4) Documentation','
 
 DROP TABLE IF EXISTS "tiki_integrator_rules";
 
-CREATE TABLE "tiki_integrator_rules" (
+CREATE TABLE  "tiki_integrator_rules" (
   "ruleID" bigserial,
   "repID" bigint NOT NULL default '0',
   "ord" smallint NOT NULL default '0',
@@ -4017,8 +3855,8 @@ CREATE TABLE "tiki_integrator_rules" (
   "description" text NOT NULL,
   PRIMARY KEY ("ruleID")
 );
+CREATE INDEX "tiki_integrator_rules_repID" ON "tiki_integrator_rules" ("repID");
 
-CREATE INDEX "_repID" ON ""("repID");
 
 INSERT INTO tiki_integrator_rules VALUES ('1','1','1','.*<body[^>]*?>(.*?)</body.*','\1','y','n','i','y','Extract code between <body> and </body> tags');
 
@@ -4029,7 +3867,7 @@ INSERT INTO tiki_integrator_rules VALUES ('3','1','3','href=(\"|\')(?!(#|(http|f
 
 DROP TABLE IF EXISTS "tiki_quicktags";
 
-CREATE TABLE "tiki_quicktags" (
+CREATE TABLE  "tiki_quicktags" (
   "tagId" serial,
   "taglabel" varchar(255) default NULL,
   "taginsert" text,
@@ -4037,364 +3875,364 @@ CREATE TABLE "tiki_quicktags" (
   "tagcategory" varchar(255) default NULL,
   PRIMARY KEY ("tagId")
 ) ;
+CREATE INDEX "tiki_quicktags_tagcategory" ON "tiki_quicktags" ("tagcategory");
+CREATE INDEX "tiki_quicktags_taglabel" ON "tiki_quicktags" ("taglabel");
 
-CREATE INDEX "_tagcategory" ON ""("tagcategory");
-CREATE INDEX "_taglabel" ON ""("taglabel");
 
 -- wiki
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('  text, bold','__text__','pics/icons/text_bold.png','wiki');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'  text, bold\',\'__text__\',\'pics/icons/text_bold.png\',\'wiki\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('  text, italic','\'\'text\'\'','pics/icons/text_italic.png','wiki');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'  text, italic\',\'\\'\\'text\\'\\'\',\'pics/icons/text_italic.png\',\'wiki\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('  text, underline','===text===','pics/icons/text_underline.png','wiki');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'  text, underline\',\'===text===\',\'pics/icons/text_underline.png\',\'wiki\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('table new','||r1c1|r1c2|r1c3\nr2c1|r2c2|r2c3\nr3c1|r3c2|r3c3||','pics/icons/table.png','wiki');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'table new\',\'||r1c1|r1c2|r1c3\nr2c1|r2c2|r2c3\nr3c1|r3c2|r3c3||\',\'pics/icons/table.png\',\'wiki\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('link, external','[http://example.com|text]','pics/icons/world_link.png','wiki');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'link, external\',\'[http://example.com|text]\',\'pics/icons/world_link.png\',\'wiki\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('link, wiki','((text))','pics/icons/page_link.png','wiki');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'link, wiki\',\'((text))\',\'pics/icons/page_link.png\',\'wiki\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' heading1','!text','pics/icons/text_heading_1.png','wiki');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\' heading1\',\'!text\',\'pics/icons/text_heading_1.png\',\'wiki\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' heading2','!!text','pics/icons/text_heading_2.png','wiki');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\' heading2\',\'!!text\',\'pics/icons/text_heading_2.png\',\'wiki\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' heading3','!!!text','pics/icons/text_heading_3.png','wiki');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\' heading3\',\'!!!text\',\'pics/icons/text_heading_3.png\',\'wiki\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('title bar','-=text=-','pics/icons/text_padding_top.png','wiki');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'title bar\',\'-=text=-\',\'pics/icons/text_padding_top.png\',\'wiki\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('box','^text^','pics/icons/box.png','wiki');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'box\',\'^text^\',\'pics/icons/box.png\',\'wiki\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' horizontal rule','---','pics/icons/page.png','wiki');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\' horizontal rule\',\'---\',\'pics/icons/page.png\',\'wiki\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('center text','::text::','pics/icons/text_align_center.png','wiki');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'center text\',\'::text::\',\'pics/icons/text_align_center.png\',\'wiki\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' colored text','~~#FF0000:text~~','pics/icons/palette.png','wiki');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\' colored text\',\'~~#FF0000:text~~\',\'pics/icons/palette.png\',\'wiki\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('dynamic variable','%text%','pics/icons/database_gear.png','wiki');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'dynamic variable\',\'%text%\',\'pics/icons/database_gear.png\',\'wiki\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('image','popup_plugin_form("img")','pics/icons/picture.png','wiki');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'image\',\'popup_plugin_form("img")\',\'pics/icons/picture.png\',\'wiki\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('list bullets', '*text', 'pics/icons/text_list_bullets.png', 'wiki');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'list bullets\', \'*text\', \'pics/icons/text_list_bullets.png\', \'wiki\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('list numbers', '#text', 'pics/icons/text_list_numbers.png', 'wiki');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'list numbers\', \'#text\', \'pics/icons/text_list_numbers.png\', \'wiki\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' deleted','--text--','pics/icons/text_strikethrough.png','wiki');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\' deleted\',\'--text--\',\'pics/icons/text_strikethrough.png\',\'wiki\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('quote','popup_plugin_form("quote")','pics/icons/quotes.png','wiki');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'quote\',\'popup_plugin_form("quote")\',\'pics/icons/quotes.png\',\'wiki\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('code','popup_plugin_form("code")','pics/icons/page_white_code.png','wiki');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'code\',\'popup_plugin_form("code")\',\'pics/icons/page_white_code.png\',\'wiki\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('flash','popup_plugin_form("flash")','pics/icons/page_white_actionscript.png','wiki');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'flash\',\'popup_plugin_form("flash")\',\'pics/icons/page_white_actionscript.png\',\'wiki\');
 
 
 -- maps
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New wms Metadata','METADATA\r\n		\"wms_name\" \"myname\"\r\n 	"wms_srs" "EPSG:4326"\r\n 	"wms_server_version" " "\r\n 	"wms_layers" "mylayers"\r\n 	"wms_request" "myrequest"\r\n 	"wms_format" " "\r\n 	"wms_time" " "\r\n END', 'pics/icons/tag_blue_add.png','maps');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'New wms Metadata\',\'METADATA\r\n		"wms_name" "myname"\r\n 	"wms_srs" "EPSG:4326"\r\n 	"wms_server_version" " "\r\n 	"wms_layers" "mylayers"\r\n 	"wms_request" "myrequest"\r\n 	"wms_format" " "\r\n 	"wms_time" " "\r\n END\', \'pics/icons/tag_blue_add.png\',\'maps\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New Class', 'CLASS\r\n EXPRESSION ()\r\n SYMBOL 0\r\n OUTLINECOLOR\r\n COLOR\r\n NAME "myclass" \r\nEND #end of class', 'pics/icons/application_add.png','maps');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'New Class\', \'CLASS\r\n EXPRESSION ()\r\n SYMBOL 0\r\n OUTLINECOLOR\r\n COLOR\r\n NAME "myclass" \r\nEND #end of class\', \'pics/icons/application_add.png\',\'maps\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New Projection','PROJECTION\r\n "init=epsg:4326"\r\nEND','pics/icons/image_add.png','maps');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'New Projection\',\'PROJECTION\r\n "init=epsg:4326"\r\nEND\',\'pics/icons/image_add.png\',\'maps\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New Query','#\r\n# Start of query definitions\r\n#\r\n QUERYMAP\r\n STATUS ON\r\n STYLE HILITE\r\nEND','pics/icons/database_gear.png','maps');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'New Query\',\'#\r\n# Start of query definitions\r\n#\r\n QUERYMAP\r\n STATUS ON\r\n STYLE HILITE\r\nEND\',\'pics/icons/database_gear.png\',\'maps\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New Scalebar','#\r\n# Start of scalebar\r\n#\r\nSCALEBAR\r\n IMAGECOLOR 255 255 255\r\n STYLE 1\r\n SIZE 400 2\r\n COLOR 0 0 0\r\n UNITS KILOMETERS\r\n INTERVALS 5\r\n STATUS ON\r\nEND','pics/icons/layout_add.png','maps');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'New Scalebar\',\'#\r\n# Start of scalebar\r\n#\r\nSCALEBAR\r\n IMAGECOLOR 255 255 255\r\n STYLE 1\r\n SIZE 400 2\r\n COLOR 0 0 0\r\n UNITS KILOMETERS\r\n INTERVALS 5\r\n STATUS ON\r\nEND\',\'pics/icons/layout_add.png\',\'maps\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New Layer','LAYER\r\n NAME\r\n TYPE\r\n STATUS ON\r\n DATA "mydata"\r\nEND #end of layer', 'pics/icons/layers.png', 'maps');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'New Layer\',\'LAYER\r\n NAME\r\n TYPE\r\n STATUS ON\r\n DATA "mydata"\r\nEND #end of layer\', \'pics/icons/layers.png\', \'maps\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New Label','LABEL\r\n COLOR\r\n ANGLE\r\n FONT arial\r\n TYPE TRUETYPE\r\n POSITION\r\n PARTIALS TRUE\r\n SIZE 6\r\n BUFFER 0\r\n OUTLINECOLOR \r\nEND #end of label', 'pics/icons/comment_add.png', 'maps');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'New Label\',\'LABEL\r\n COLOR\r\n ANGLE\r\n FONT arial\r\n TYPE TRUETYPE\r\n POSITION\r\n PARTIALS TRUE\r\n SIZE 6\r\n BUFFER 0\r\n OUTLINECOLOR \r\nEND #end of label\', \'pics/icons/comment_add.png\', \'maps\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New Reference','#\r\n#start of reference\r\n#\r\n REFERENCE\r\n SIZE 120 60\r\n STATUS ON\r\n EXTENT -180 -90 182 88\r\n OUTLINECOLOR 255 0 0\r\n IMAGE "myimagedata"\r\n COLOR -1 -1 -1\r\nEND','pics/icons/picture_add.png','maps');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'New Reference\',\'#\r\n#start of reference\r\n#\r\n REFERENCE\r\n SIZE 120 60\r\n STATUS ON\r\n EXTENT -180 -90 182 88\r\n OUTLINECOLOR 255 0 0\r\n IMAGE "myimagedata"\r\n COLOR -1 -1 -1\r\nEND\',\'pics/icons/picture_add.png\',\'maps\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New Legend','#\r\n#start of Legend\r\n#\r\n LEGEND\r\n KEYSIZE 18 12\r\n POSTLABELCACHE TRUE\r\n STATUS ON\r\nEND','pics/icons/note_add.png','maps');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'New Legend\',\'#\r\n#start of Legend\r\n#\r\n LEGEND\r\n KEYSIZE 18 12\r\n POSTLABELCACHE TRUE\r\n STATUS ON\r\nEND\',\'pics/icons/note_add.png\',\'maps\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New Web','#\r\n# Start of web interface definition\r\n#\r\nWEB\r\n TEMPLATE "myfile/url"\r\n MINSCALE 1000\r\n MAXSCALE 40000\r\n IMAGEPATH "myimagepath"\r\n IMAGEURL "mypath"\r\nEND', 'pics/icons/world_link.png', 'maps');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'New Web\',\'#\r\n# Start of web interface definition\r\n#\r\nWEB\r\n TEMPLATE "myfile/url"\r\n MINSCALE 1000\r\n MAXSCALE 40000\r\n IMAGEPATH "myimagepath"\r\n IMAGEURL "mypath"\r\nEND\', \'pics/icons/world_link.png\', \'maps\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New Outputformat','OUTPUTFORMAT\r\n NAME\r\n DRIVER " "\r\n MIMETYPE "myimagetype"\r\n IMAGEMODE RGB\r\n EXTENSION "png"\r\nEND','pics/icons/newspaper_go.png','maps');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'New Outputformat\',\'OUTPUTFORMAT\r\n NAME\r\n DRIVER " "\r\n MIMETYPE "myimagetype"\r\n IMAGEMODE RGB\r\n EXTENSION "png"\r\nEND\',\'pics/icons/newspaper_go.png\',\'maps\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New Mapfile','#\r\n# Start of mapfile\r\n#\r\nNAME MYMAPFLE\r\n STATUS ON\r\nSIZE \r\nEXTENT\r\nUNITS \r\nSHAPEPATH " "\r\nIMAGETYPE " "\r\nFONTSET " "\r\nIMAGECOLOR -1 -1 -1\r\n\r\n#remove this text and add objects here\r\n\r\nEND # end of mapfile','pics/icons/world_add.png','maps');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'New Mapfile\',\'#\r\n# Start of mapfile\r\n#\r\nNAME MYMAPFLE\r\n STATUS ON\r\nSIZE \r\nEXTENT\r\nUNITS \r\nSHAPEPATH " "\r\nIMAGETYPE " "\r\nFONTSET " "\r\nIMAGECOLOR -1 -1 -1\r\n\r\n#remove this text and add objects here\r\n\r\nEND # end of mapfile\',\'pics/icons/world_add.png\',\'maps\');
 
 
 -- newsletters
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('  text, bold','__text__','pics/icons/text_bold.png','newsletters');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'  text, bold\',\'__text__\',\'pics/icons/text_bold.png\',\'newsletters\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('  text, italic','\'\'text\'\'','pics/icons/text_italic.png','newsletters');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'  text, italic\',\'\\'\\'text\\'\\'\',\'pics/icons/text_italic.png\',\'newsletters\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('  text, underline','===text===','pics/icons/text_underline.png','newsletters');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'  text, underline\',\'===text===\',\'pics/icons/text_underline.png\',\'newsletters\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('external link','[http://example.com|text|nocache]','pics/icons/world_link.png','newsletters');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'external link\',\'[http://example.com|text|nocache]\',\'pics/icons/world_link.png\',\'newsletters\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' heading1','!text','pics/icons/text_heading_1.png','newsletters');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\' heading1\',\'!text\',\'pics/icons/text_heading_1.png\',\'newsletters\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' heading2','!!text','pics/icons/text_heading_2.png','newsletters');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\' heading2\',\'!!text\',\'pics/icons/text_heading_2.png\',\'newsletters\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' heading3','!!!text','pics/icons/text_heading_3.png','newsletters');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\' heading3\',\'!!!text\',\'pics/icons/text_heading_3.png\',\'newsletters\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' horizontal rule', '---', 'pics/icons/page.png', 'newsletters');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\' horizontal rule\', \'---\', \'pics/icons/page.png\', \'newsletters\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('center text','::text::','pics/icons/text_align_center.png','newsletters');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'center text\',\'::text::\',\'pics/icons/text_align_center.png\',\'newsletters\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' colored text','~~#FF0000:text~~','pics/icons/palette.png','newsletters');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\' colored text\',\'~~#FF0000:text~~\',\'pics/icons/palette.png\',\'newsletters\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('image','popup_plugin_form("img")','pics/icons/picture.png','newsletters');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'image\',\'popup_plugin_form("img")\',\'pics/icons/picture.png\',\'newsletters\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' deleted','--text--','pics/icons/text_strikethrough.png','newsletters');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\' deleted\',\'--text--\',\'pics/icons/text_strikethrough.png\',\'newsletters\');
 
 
 -- trackers
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('  text, bold','__text__','pics/icons/text_bold.png','trackers');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'  text, bold\',\'__text__\',\'pics/icons/text_bold.png\',\'trackers\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('  text, italic','\'\'text\'\'','pics/icons/text_italic.png','trackers');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'  text, italic\',\'\\'\\'text\\'\\'\',\'pics/icons/text_italic.png\',\'trackers\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('  text, underline','===text===','pics/icons/text_underline.png','trackers');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'  text, underline\',\'===text===\',\'pics/icons/text_underline.png\',\'trackers\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('table new','||r1c1|r1c2|r1c3\nr2c1|r2c2|r2c3\nr3c1|r3c2|r3c3||','pics/icons/table.png','trackers');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'table new\',\'||r1c1|r1c2|r1c3\nr2c1|r2c2|r2c3\nr3c1|r3c2|r3c3||\',\'pics/icons/table.png\',\'trackers\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('external link','[http://example.com|text]','pics/icons/world_link.png','trackers');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'external link\',\'[http://example.com|text]\',\'pics/icons/world_link.png\',\'trackers\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('wiki link','((text))','pics/icons/page_link.png','trackers');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'wiki link\',\'((text))\',\'pics/icons/page_link.png\',\'trackers\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' heading1','!text','pics/icons/text_heading_1.png','trackers');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\' heading1\',\'!text\',\'pics/icons/text_heading_1.png\',\'trackers\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' heading2','!!text','pics/icons/text_heading_2.png','trackers');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\' heading2\',\'!!text\',\'pics/icons/text_heading_2.png\',\'trackers\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' heading3','!!!text','pics/icons/text_heading_3.png','trackers');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\' heading3\',\'!!!text\',\'pics/icons/text_heading_3.png\',\'trackers\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('title bar','-=text=-','pics/icons/text_padding_top.png','trackers');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'title bar\',\'-=text=-\',\'pics/icons/text_padding_top.png\',\'trackers\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('box','^text^','pics/icons/box.png','trackers');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'box\',\'^text^\',\'pics/icons/box.png\',\'trackers\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' horizontal rule','---','pics/icons/page.png','trackers');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\' horizontal rule\',\'---\',\'pics/icons/page.png\',\'trackers\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('center text','::text::','pics/icons/text_align_center.png','trackers');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'center text\',\'::text::\',\'pics/icons/text_align_center.png\',\'trackers\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' colored text','~~#FF0000:text~~','pics/icons/palette.png','trackers');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\' colored text\',\'~~#FF0000:text~~\',\'pics/icons/palette.png\',\'trackers\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('dynamic variable','%text%','pics/icons/database_gear.png','trackers');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'dynamic variable\',\'%text%\',\'pics/icons/database_gear.png\',\'trackers\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('image','popup_plugin_form("img")','pics/icons/picture.png','trackers');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'image\',\'popup_plugin_form("img")\',\'pics/icons/picture.png\',\'trackers\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' deleted','--text--','pics/icons/text_strikethrough.png','trackers');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\' deleted\',\'--text--\',\'pics/icons/text_strikethrough.png\',\'trackers\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('quote','popup_plugin_form("quote")','pics/icons/quotes.png','trackers');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'quote\',\'popup_plugin_form("quote")\',\'pics/icons/quotes.png\',\'trackers\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('code','popup_plugin_form("code")','pics/icons/page_white_code.png','trackers');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'code\',\'popup_plugin_form("code")\',\'pics/icons/page_white_code.png\',\'trackers\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('flash','popup_plugin_form("flash")','pics/icons/page_white_actionscript.png','trackers');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'flash\',\'popup_plugin_form("flash")\',\'pics/icons/page_white_actionscript.png\',\'trackers\');
 
 
 -- blogs
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('  text, bold','__text__','pics/icons/text_bold.png','blogs');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'  text, bold\',\'__text__\',\'pics/icons/text_bold.png\',\'blogs\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('  text, italic','\'\'text\'\'','pics/icons/text_italic.png','blogs');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'  text, italic\',\'\\'\\'text\\'\\'\',\'pics/icons/text_italic.png\',\'blogs\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('  text, underline','===text===','pics/icons/text_underline.png','blogs');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'  text, underline\',\'===text===\',\'pics/icons/text_underline.png\',\'blogs\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('table new','||r1c1|r1c2|r1c3\nr2c1|r2c2|r2c3\nr3c1|r3c2|r3c3||','pics/icons/table.png','blogs');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'table new\',\'||r1c1|r1c2|r1c3\nr2c1|r2c2|r2c3\nr3c1|r3c2|r3c3||\',\'pics/icons/table.png\',\'blogs\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('external link','[http://example.com|text]','pics/icons/world_link.png','blogs');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'external link\',\'[http://example.com|text]\',\'pics/icons/world_link.png\',\'blogs\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('wiki link','((text))','pics/icons/page_link.png','blogs');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'wiki link\',\'((text))\',\'pics/icons/page_link.png\',\'blogs\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' heading1','!text','pics/icons/text_heading_1.png','blogs');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\' heading1\',\'!text\',\'pics/icons/text_heading_1.png\',\'blogs\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' heading2','!!text','pics/icons/text_heading_2.png','blogs');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\' heading2\',\'!!text\',\'pics/icons/text_heading_2.png\',\'blogs\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' heading3','!!!text','pics/icons/text_heading_3.png','blogs');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\' heading3\',\'!!!text\',\'pics/icons/text_heading_3.png\',\'blogs\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('title bar','-=text=-','pics/icons/text_padding_top.png','blogs');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'title bar\',\'-=text=-\',\'pics/icons/text_padding_top.png\',\'blogs\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('box','^text^','pics/icons/box.png','blogs');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'box\',\'^text^\',\'pics/icons/box.png\',\'blogs\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' horizontal rule','---','pics/icons/page.png','blogs');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\' horizontal rule\',\'---\',\'pics/icons/page.png\',\'blogs\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('center text','::text::','pics/icons/text_align_center.png','blogs');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'center text\',\'::text::\',\'pics/icons/text_align_center.png\',\'blogs\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' colored text','~~#FF0000:text~~','pics/icons/palette.png','blogs');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\' colored text\',\'~~#FF0000:text~~\',\'pics/icons/palette.png\',\'blogs\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('dynamic variable','%text%','pics/icons/database_gear.png','blogs');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'dynamic variable\',\'%text%\',\'pics/icons/database_gear.png\',\'blogs\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('image','popup_plugin_form("img")','pics/icons/picture.png','blogs');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'image\',\'popup_plugin_form("img")\',\'pics/icons/picture.png\',\'blogs\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' deleted','--text--','pics/icons/text_strikethrough.png','blogs');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\' deleted\',\'--text--\',\'pics/icons/text_strikethrough.png\',\'blogs\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('quote','popup_plugin_form("quote")','pics/icons/quotes.png','blogs');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'quote\',\'popup_plugin_form("quote")\',\'pics/icons/quotes.png\',\'blogs\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('code','popup_plugin_form("code")','pics/icons/page_white_code.png','blogs');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'code\',\'popup_plugin_form("code")\',\'pics/icons/page_white_code.png\',\'blogs\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('flash','popup_plugin_form("flash")','pics/icons/page_white_actionscript.png','blogs');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'flash\',\'popup_plugin_form("flash")\',\'pics/icons/page_white_actionscript.png\',\'blogs\');
 
 
 -- calendar
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('  text, bold','__text__','pics/icons/text_bold.png','calendar');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'  text, bold\',\'__text__\',\'pics/icons/text_bold.png\',\'calendar\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('  text, italic','\'\'text\'\'','pics/icons/text_italic.png','calendar');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'  text, italic\',\'\\'\\'text\\'\\'\',\'pics/icons/text_italic.png\',\'calendar\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('  text, underline','===text===','pics/icons/text_underline.png','calendar');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'  text, underline\',\'===text===\',\'pics/icons/text_underline.png\',\'calendar\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('table new','||r1c1|r1c2|r1c3\nr2c1|r2c2|r2c3\nr3c1|r3c2|r3c3||','pics/icons/table.png','calendar');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'table new\',\'||r1c1|r1c2|r1c3\nr2c1|r2c2|r2c3\nr3c1|r3c2|r3c3||\',\'pics/icons/table.png\',\'calendar\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('external link','[http://example.com|text]','pics/icons/world_link.png','calendar');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'external link\',\'[http://example.com|text]\',\'pics/icons/world_link.png\',\'calendar\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('wiki link','((text))','pics/icons/page_link.png','calendar');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'wiki link\',\'((text))\',\'pics/icons/page_link.png\',\'calendar\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' heading1','!text','pics/icons/text_heading_1.png','calendar');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\' heading1\',\'!text\',\'pics/icons/text_heading_1.png\',\'calendar\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' heading2','!!text','pics/icons/text_heading_2.png','calendar');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\' heading2\',\'!!text\',\'pics/icons/text_heading_2.png\',\'calendar\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' heading3','!!!text','pics/icons/text_heading_3.png','calendar');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\' heading3\',\'!!!text\',\'pics/icons/text_heading_3.png\',\'calendar\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('title bar','-=text=-','pics/icons/text_padding_top.png','calendar');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'title bar\',\'-=text=-\',\'pics/icons/text_padding_top.png\',\'calendar\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('box','^text^','pics/icons/box.png','calendar');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'box\',\'^text^\',\'pics/icons/box.png\',\'calendar\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' horizontal rule','---','pics/icons/page.png','calendar');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\' horizontal rule\',\'---\',\'pics/icons/page.png\',\'calendar\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('center text','::text::','pics/icons/text_align_center.png','calendar');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'center text\',\'::text::\',\'pics/icons/text_align_center.png\',\'calendar\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' colored text','~~#FF0000:text~~','pics/icons/palette.png','calendar');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\' colored text\',\'~~#FF0000:text~~\',\'pics/icons/palette.png\',\'calendar\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('dynamic variable','%text%','pics/icons/database_gear.png','calendar');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'dynamic variable\',\'%text%\',\'pics/icons/database_gear.png\',\'calendar\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('image','popup_plugin_form("img")','pics/icons/picture.png','calendar');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'image\',\'popup_plugin_form("img")\',\'pics/icons/picture.png\',\'calendar\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' deleted','--text--','pics/icons/text_strikethrough.png','calendar');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\' deleted\',\'--text--\',\'pics/icons/text_strikethrough.png\',\'calendar\');
 
 
 -- articles
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('  text, bold','__text__','pics/icons/text_bold.png','articles');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'  text, bold\',\'__text__\',\'pics/icons/text_bold.png\',\'articles\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('  text, italic','\'\'text\'\'','pics/icons/text_italic.png','articles');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'  text, italic\',\'\\'\\'text\\'\\'\',\'pics/icons/text_italic.png\',\'articles\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('  text, underline','===text===','pics/icons/text_underline.png','articles');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'  text, underline\',\'===text===\',\'pics/icons/text_underline.png\',\'articles\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('table new','||r1c1|r1c2|r1c3\nr2c1|r2c2|r2c3\nr3c1|r3c2|r3c3||','pics/icons/table.png','articles');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'table new\',\'||r1c1|r1c2|r1c3\nr2c1|r2c2|r2c3\nr3c1|r3c2|r3c3||\',\'pics/icons/table.png\',\'articles\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('external link','[http://example.com|text]','pics/icons/world_link.png','articles');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'external link\',\'[http://example.com|text]\',\'pics/icons/world_link.png\',\'articles\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('wiki link','((text))','pics/icons/page_link.png','articles');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'wiki link\',\'((text))\',\'pics/icons/page_link.png\',\'articles\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' heading1','!text','pics/icons/text_heading_1.png','articles');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\' heading1\',\'!text\',\'pics/icons/text_heading_1.png\',\'articles\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' heading2','!!text','pics/icons/text_heading_2.png','articles');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\' heading2\',\'!!text\',\'pics/icons/text_heading_2.png\',\'articles\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' heading3','!!!text','pics/icons/text_heading_3.png','articles');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\' heading3\',\'!!!text\',\'pics/icons/text_heading_3.png\',\'articles\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('title bar','-=text=-','pics/icons/text_padding_top.png','articles');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'title bar\',\'-=text=-\',\'pics/icons/text_padding_top.png\',\'articles\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('box','^text^','pics/icons/box.png','articles');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'box\',\'^text^\',\'pics/icons/box.png\',\'articles\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' horizontal rule','---','pics/icons/page.png','articles');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\' horizontal rule\',\'---\',\'pics/icons/page.png\',\'articles\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('center text','::text::','pics/icons/text_align_center.png','articles');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'center text\',\'::text::\',\'pics/icons/text_align_center.png\',\'articles\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' colored text','~~#FF0000:text~~','pics/icons/palette.png','articles');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\' colored text\',\'~~#FF0000:text~~\',\'pics/icons/palette.png\',\'articles\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('dynamic variable','%text%','pics/icons/database_gear.png','articles');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'dynamic variable\',\'%text%\',\'pics/icons/database_gear.png\',\'articles\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('image','popup_plugin_form("img")','pics/icons/picture.png','articles');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'image\',\'popup_plugin_form("img")\',\'pics/icons/picture.png\',\'articles\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' deleted','--text--','pics/icons/text_strikethrough.png','articles');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\' deleted\',\'--text--\',\'pics/icons/text_strikethrough.png\',\'articles\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('quote','popup_plugin_form("quote")','pics/icons/quotes.png','articles');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'quote\',\'popup_plugin_form("quote")\',\'pics/icons/quotes.png\',\'articles\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('code','popup_plugin_form("code")','pics/icons/page_white_code.png','articles');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'code\',\'popup_plugin_form("code")\',\'pics/icons/page_white_code.png\',\'articles\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('flash','popup_plugin_form("flash")','pics/icons/page_white_actionscript.png','articles');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'flash\',\'popup_plugin_form("flash")\',\'pics/icons/page_white_actionscript.png\',\'articles\');
 
 
 -- faqs
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('  text, bold','__text__','pics/icons/text_bold.png','faqs');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'  text, bold\',\'__text__\',\'pics/icons/text_bold.png\',\'faqs\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('  text, italic','\'\'text\'\'','pics/icons/text_italic.png','faqs');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'  text, italic\',\'\\'\\'text\\'\\'\',\'pics/icons/text_italic.png\',\'faqs\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('  text, underline','===text===','pics/icons/text_underline.png','faqs');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'  text, underline\',\'===text===\',\'pics/icons/text_underline.png\',\'faqs\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('table new','||r1c1|r1c2|r1c3\nr2c1|r2c2|r2c3\nr3c1|r3c2|r3c3||','pics/icons/table.png','faqs');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'table new\',\'||r1c1|r1c2|r1c3\nr2c1|r2c2|r2c3\nr3c1|r3c2|r3c3||\',\'pics/icons/table.png\',\'faqs\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('external link','[http://example.com|text]','pics/icons/world_link.png','faqs');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'external link\',\'[http://example.com|text]\',\'pics/icons/world_link.png\',\'faqs\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('wiki link','((text))','pics/icons/page_link.png','faqs');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'wiki link\',\'((text))\',\'pics/icons/page_link.png\',\'faqs\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' heading1','!text','pics/icons/text_heading_1.png','faqs');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\' heading1\',\'!text\',\'pics/icons/text_heading_1.png\',\'faqs\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' heading2','!!text','pics/icons/text_heading_2.png','faqs');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\' heading2\',\'!!text\',\'pics/icons/text_heading_2.png\',\'faqs\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' heading3','!!!text','pics/icons/text_heading_3.png','faqs');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\' heading3\',\'!!!text\',\'pics/icons/text_heading_3.png\',\'faqs\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('title bar','-=text=-','pics/icons/text_padding_top.png','faqs');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'title bar\',\'-=text=-\',\'pics/icons/text_padding_top.png\',\'faqs\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('box','^text^','pics/icons/box.png','faqs');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'box\',\'^text^\',\'pics/icons/box.png\',\'faqs\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' horizontal rule','---','pics/icons/page.png','faqs');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\' horizontal rule\',\'---\',\'pics/icons/page.png\',\'faqs\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('center text','::text::','pics/icons/text_align_center.png','faqs');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'center text\',\'::text::\',\'pics/icons/text_align_center.png\',\'faqs\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' colored text','~~#FF0000:text~~','pics/icons/palette.png','faqs');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\' colored text\',\'~~#FF0000:text~~\',\'pics/icons/palette.png\',\'faqs\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('dynamic variable','%text%','pics/icons/database_gear.png','faqs');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'dynamic variable\',\'%text%\',\'pics/icons/database_gear.png\',\'faqs\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('image','popup_plugin_form("img")','pics/icons/picture.png','faqs');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'image\',\'popup_plugin_form("img")\',\'pics/icons/picture.png\',\'faqs\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' deleted','--text--','pics/icons/text_strikethrough.png','faqs');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\' deleted\',\'--text--\',\'pics/icons/text_strikethrough.png\',\'faqs\');
 
 
 -- forums
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('  text, bold','__text__','pics/icons/text_bold.png','forums');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'  text, bold\',\'__text__\',\'pics/icons/text_bold.png\',\'forums\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('  text, italic','\'\'text\'\'','pics/icons/text_italic.png','forums');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'  text, italic\',\'\\'\\'text\\'\\'\',\'pics/icons/text_italic.png\',\'forums\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('  text, underline','===text===','pics/icons/text_underline.png','forums');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'  text, underline\',\'===text===\',\'pics/icons/text_underline.png\',\'forums\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('table new','||r1c1|r1c2|r1c3\nr2c1|r2c2|r2c3\nr3c1|r3c2|r3c3||','pics/icons/table.png','forums');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'table new\',\'||r1c1|r1c2|r1c3\nr2c1|r2c2|r2c3\nr3c1|r3c2|r3c3||\',\'pics/icons/table.png\',\'forums\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('external link','[http://example.com|text]','pics/icons/world_link.png','forums');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'external link\',\'[http://example.com|text]\',\'pics/icons/world_link.png\',\'forums\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('wiki link','((text))','pics/icons/page_link.png','forums');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'wiki link\',\'((text))\',\'pics/icons/page_link.png\',\'forums\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' heading1','!text','pics/icons/text_heading_1.png','forums');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\' heading1\',\'!text\',\'pics/icons/text_heading_1.png\',\'forums\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' heading2','!!text','pics/icons/text_heading_2.png','forums');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\' heading2\',\'!!text\',\'pics/icons/text_heading_2.png\',\'forums\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' heading3','!!!text','pics/icons/text_heading_3.png','forums');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\' heading3\',\'!!!text\',\'pics/icons/text_heading_3.png\',\'forums\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('title bar','-=text=-','pics/icons/text_padding_top.png','forums');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'title bar\',\'-=text=-\',\'pics/icons/text_padding_top.png\',\'forums\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('box','^text^','pics/icons/box.png','forums');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'box\',\'^text^\',\'pics/icons/box.png\',\'forums\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' horizontal rule','---','pics/icons/page.png','forums');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\' horizontal rule\',\'---\',\'pics/icons/page.png\',\'forums\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('center text','::text::','pics/icons/text_align_center.png','forums');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'center text\',\'::text::\',\'pics/icons/text_align_center.png\',\'forums\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' colored text','~~#FF0000:text~~','pics/icons/palette.png','forums');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\' colored text\',\'~~#FF0000:text~~\',\'pics/icons/palette.png\',\'forums\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('dynamic variable','%text%','pics/icons/database_gear.png','forums');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'dynamic variable\',\'%text%\',\'pics/icons/database_gear.png\',\'forums\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('image','popup_plugin_form("img")','pics/icons/picture.png','forums');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'image\',\'popup_plugin_form("img")\',\'pics/icons/picture.png\',\'forums\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' deleted','--text--','pics/icons/text_strikethrough.png','forums');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\' deleted\',\'--text--\',\'pics/icons/text_strikethrough.png\',\'forums\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('quote','popup_plugin_form("quote")','pics/icons/quotes.png','forums');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'quote\',\'popup_plugin_form("quote")\',\'pics/icons/quotes.png\',\'forums\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('code','popup_plugin_form("code")','pics/icons/page_white_code.png','forums');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'code\',\'popup_plugin_form("code")\',\'pics/icons/page_white_code.png\',\'forums\');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('flash','popup_plugin_form("flash")','pics/icons/page_white_actionscript.png','forums');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (\'flash\',\'popup_plugin_form("flash")\',\'pics/icons/page_white_actionscript.png\',\'forums\');
 
 
 -- Translated objects table
 DROP TABLE IF EXISTS "tiki_translated_objects";
 
-CREATE TABLE "tiki_translated_objects" (
+CREATE TABLE  "tiki_translated_objects" (
   "traId" bigserial,
   "type" varchar(50) NOT NULL,
   "objId" varchar(255) NOT NULL,
   "lang" varchar(16) default NULL,
   PRIMARY KEY ("type", "objId")
 );
+CREATE INDEX "tiki_translated_objects_traId" ON "tiki_translated_objects" ("traId");
 
-CREATE INDEX "_traId" ON ""("traId");
 
 DROP TABLE IF EXISTS "tiki_friends";
 
-CREATE TABLE "tiki_friends" (
+CREATE TABLE  "tiki_friends" (
   "user" varchar(200) NOT NULL default '',
   "friend" varchar(200) NOT NULL default '',
   PRIMARY KEY ("user",friend)
@@ -4403,7 +4241,7 @@ CREATE TABLE "tiki_friends" (
 
 DROP TABLE IF EXISTS "tiki_friendship_requests";
 
-CREATE TABLE "tiki_friendship_requests" (
+CREATE TABLE  "tiki_friendship_requests" (
   "userFrom" varchar(200) NOT NULL default '',
   "userTo" varchar(200) NOT NULL default '',
   "tstamp" timestamp(3) NOT NULL,
@@ -4413,7 +4251,7 @@ CREATE TABLE "tiki_friendship_requests" (
 
 DROP TABLE IF EXISTS "tiki_score";
 
-CREATE TABLE "tiki_score" (
+CREATE TABLE  "tiki_score" (
   event varchar(40) NOT NULL default '',
   score bigint NOT NULL default '0',
   expiration bigint NOT NULL default '0',
@@ -4421,82 +4259,82 @@ CREATE TABLE "tiki_score" (
 );
 
 
-INSERT INTO "tiki_score" ("event","score","expiration") VALUES ('login',1,0);
+INSERT INTO "tiki_score" ("event","score","expiration") VALUES (\'login\',1,0);
 
-INSERT INTO "tiki_score" ("event","score","expiration") VALUES ('login_remain',2,60);
+INSERT INTO "tiki_score" ("event","score","expiration") VALUES (\'login_remain\',2,60);
 
-INSERT INTO "tiki_score" ("event","score","expiration") VALUES ('profile_fill',10,0);
+INSERT INTO "tiki_score" ("event","score","expiration") VALUES (\'profile_fill\',10,0);
 
-INSERT INTO "tiki_score" ("event","score","expiration") VALUES ('profile_see',2,0);
+INSERT INTO "tiki_score" ("event","score","expiration") VALUES (\'profile_see\',2,0);
 
-INSERT INTO "tiki_score" ("event","score","expiration") VALUES ('profile_is_seen',1,0);
+INSERT INTO "tiki_score" ("event","score","expiration") VALUES (\'profile_is_seen\',1,0);
 
-INSERT INTO "tiki_score" ("event","score","expiration") VALUES ('friend_new',10,0);
+INSERT INTO "tiki_score" ("event","score","expiration") VALUES (\'friend_new\',10,0);
 
-INSERT INTO "tiki_score" ("event","score","expiration") VALUES ('message_receive',1,0);
+INSERT INTO "tiki_score" ("event","score","expiration") VALUES (\'message_receive\',1,0);
 
-INSERT INTO "tiki_score" ("event","score","expiration") VALUES ('message_send',2,0);
+INSERT INTO "tiki_score" ("event","score","expiration") VALUES (\'message_send\',2,0);
 
-INSERT INTO "tiki_score" ("event","score","expiration") VALUES ('article_read',2,0);
+INSERT INTO "tiki_score" ("event","score","expiration") VALUES (\'article_read\',2,0);
 
-INSERT INTO "tiki_score" ("event","score","expiration") VALUES ('article_comment',5,0);
+INSERT INTO "tiki_score" ("event","score","expiration") VALUES (\'article_comment\',5,0);
 
-INSERT INTO "tiki_score" ("event","score","expiration") VALUES ('article_new',20,0);
+INSERT INTO "tiki_score" ("event","score","expiration") VALUES (\'article_new\',20,0);
 
-INSERT INTO "tiki_score" ("event","score","expiration") VALUES ('article_is_read',1,0);
+INSERT INTO "tiki_score" ("event","score","expiration") VALUES (\'article_is_read\',1,0);
 
-INSERT INTO "tiki_score" ("event","score","expiration") VALUES ('article_is_commented',2,0);
+INSERT INTO "tiki_score" ("event","score","expiration") VALUES (\'article_is_commented\',2,0);
 
-INSERT INTO "tiki_score" ("event","score","expiration") VALUES ('fgallery_new',10,0);
+INSERT INTO "tiki_score" ("event","score","expiration") VALUES (\'fgallery_new\',10,0);
 
-INSERT INTO "tiki_score" ("event","score","expiration") VALUES ('fgallery_new_file',10,0);
+INSERT INTO "tiki_score" ("event","score","expiration") VALUES (\'fgallery_new_file\',10,0);
 
-INSERT INTO "tiki_score" ("event","score","expiration") VALUES ('fgallery_download',5,0);
+INSERT INTO "tiki_score" ("event","score","expiration") VALUES (\'fgallery_download\',5,0);
 
-INSERT INTO "tiki_score" ("event","score","expiration") VALUES ('fgallery_is_downloaded',5,0);
+INSERT INTO "tiki_score" ("event","score","expiration") VALUES (\'fgallery_is_downloaded\',5,0);
 
-INSERT INTO "tiki_score" ("event","score","expiration") VALUES ('igallery_new',10,0);
+INSERT INTO "tiki_score" ("event","score","expiration") VALUES (\'igallery_new\',10,0);
 
-INSERT INTO "tiki_score" ("event","score","expiration") VALUES ('igallery_new_img',6,0);
+INSERT INTO "tiki_score" ("event","score","expiration") VALUES (\'igallery_new_img\',6,0);
 
-INSERT INTO "tiki_score" ("event","score","expiration") VALUES ('igallery_see_img',3,0);
+INSERT INTO "tiki_score" ("event","score","expiration") VALUES (\'igallery_see_img\',3,0);
 
-INSERT INTO "tiki_score" ("event","score","expiration") VALUES ('igallery_img_seen',1,0);
+INSERT INTO "tiki_score" ("event","score","expiration") VALUES (\'igallery_img_seen\',1,0);
 
-INSERT INTO "tiki_score" ("event","score","expiration") VALUES ('blog_new',20,0);
+INSERT INTO "tiki_score" ("event","score","expiration") VALUES (\'blog_new\',20,0);
 
-INSERT INTO "tiki_score" ("event","score","expiration") VALUES ('blog_post',5,0);
+INSERT INTO "tiki_score" ("event","score","expiration") VALUES (\'blog_post\',5,0);
 
-INSERT INTO "tiki_score" ("event","score","expiration") VALUES ('blog_read',2,0);
+INSERT INTO "tiki_score" ("event","score","expiration") VALUES (\'blog_read\',2,0);
 
-INSERT INTO "tiki_score" ("event","score","expiration") VALUES ('blog_comment',2,0);
+INSERT INTO "tiki_score" ("event","score","expiration") VALUES (\'blog_comment\',2,0);
 
-INSERT INTO "tiki_score" ("event","score","expiration") VALUES ('blog_is_read',3,0);
+INSERT INTO "tiki_score" ("event","score","expiration") VALUES (\'blog_is_read\',3,0);
 
-INSERT INTO "tiki_score" ("event","score","expiration") VALUES ('blog_is_commented',3,0);
+INSERT INTO "tiki_score" ("event","score","expiration") VALUES (\'blog_is_commented\',3,0);
 
-INSERT INTO "tiki_score" ("event","score","expiration") VALUES ('wiki_new',10,0);
+INSERT INTO "tiki_score" ("event","score","expiration") VALUES (\'wiki_new\',10,0);
 
-INSERT INTO "tiki_score" ("event","score","expiration") VALUES ('wiki_edit',5,0);
+INSERT INTO "tiki_score" ("event","score","expiration") VALUES (\'wiki_edit\',5,0);
 
-INSERT INTO "tiki_score" ("event","score","expiration") VALUES ('wiki_attach_file',3,0);
+INSERT INTO "tiki_score" ("event","score","expiration") VALUES (\'wiki_attach_file\',3,0);
 
 
 DROP TABLE IF EXISTS "tiki_users_score";
 
-CREATE TABLE "tiki_users_score" (
+CREATE TABLE  "tiki_users_score" (
   "user" char(200) NOT NULL default '',
   "event_id" char(200) NOT NULL default '',
   "expire" bigint NOT NULL default '0',
   "tstamp" timestamp(3) NOT NULL,
   PRIMARY KEY ("user","event_id")
 );
+CREATE INDEX "tiki_users_score_user" ON "tiki_users_score" ("user"("110")"event_id"("110")"expire");
 
-CREATE INDEX "_user" ON ""(substr("user", 0, 110)substr("event_id", 0, 110),",substrexpire");
 
 DROP TABLE IF EXISTS "tiki_file_handlers";
 
-CREATE TABLE "tiki_file_handlers" (
+CREATE TABLE  "tiki_file_handlers" (
   "mime_type" varchar(64) default NULL,
   "cmd" varchar(238) default NULL
 );
@@ -4504,7 +4342,7 @@ CREATE TABLE "tiki_file_handlers" (
 
 DROP TABLE IF EXISTS "tiki_stats";
 
-CREATE TABLE "tiki_stats" (
+CREATE TABLE  "tiki_stats" (
   "object" varchar(255) NOT NULL default '',
   "type" varchar(20) NOT NULL default '',
   "day" bigint NOT NULL default '0',
@@ -4515,7 +4353,7 @@ CREATE TABLE "tiki_stats" (
 
 DROP TABLE IF EXISTS "tiki_events";
 
-CREATE TABLE "tiki_events" (
+CREATE TABLE  "tiki_events" (
   "callback_type" smallint NOT NULL default '3',
   "order" smallint NOT NULL default '50',
   "event" varchar(200) NOT NULL default '',
@@ -4539,7 +4377,7 @@ INSERT INTO "tiki_events" ("callback_type","\"order\",""event","file","object","
 
 DROP TABLE IF EXISTS "tiki_registration_fields";
 
-CREATE TABLE "tiki_registration_fields" (
+CREATE TABLE  "tiki_registration_fields" (
   "id" bigserial,
   "field" varchar(255) NOT NULL default '',
   "name" varchar(255) default NULL,
@@ -4552,15 +4390,15 @@ CREATE TABLE "tiki_registration_fields" (
 
 DROP TABLE IF EXISTS "tiki_actionlog_conf";
 
-CREATE TABLE "tiki_actionlog_conf" (
+CREATE TABLE  "tiki_actionlog_conf" (
   "id" bigserial,
   "action" varchar(32) NOT NULL default '',
   "objectType" varchar(32) NOT NULL default '',
   "status" char(1) default '',
   PRIMARY KEY ("action", "objectType")
 );
+CREATE INDEX "tiki_actionlog_conf_" ON "tiki_actionlog_conf" ("id");
 
-CREATE INDEX "_" ON ""("id");
 
 INSERT INTO "tiki_actionlog_conf" ("action","objectType","status") VALUES ('Created', 'wiki page', 'y');
 
@@ -4639,7 +4477,7 @@ INSERT INTO "tiki_actionlog_conf" ("action","objectType","status") VALUES ('View
 
 DROP TABLE IF EXISTS "tiki_freetags";
 
-CREATE TABLE "tiki_freetags" (
+CREATE TABLE  "tiki_freetags" (
   "tagId" bigserial,
   "tag" varchar(30) NOT NULL default '',
   "raw_tag" varchar(50) NOT NULL default '',
@@ -4650,21 +4488,21 @@ CREATE TABLE "tiki_freetags" (
 
 DROP TABLE IF EXISTS "tiki_freetagged_objects";
 
-CREATE TABLE "tiki_freetagged_objects" (
+CREATE TABLE  "tiki_freetagged_objects" (
   "tagId" bigserial,
   "objectId" bigint NOT NULL default 0,
   "user" varchar(200) default '',
   "created" bigint NOT NULL default '0',
   PRIMARY KEY ("tagId","user","objectId")
 );
+CREATE INDEX "tiki_freetagged_objects_" ON "tiki_freetagged_objects" ("tagId");
+CREATE INDEX "tiki_freetagged_objects_" ON "tiki_freetagged_objects" ("user");
+CREATE INDEX "tiki_freetagged_objects_" ON "tiki_freetagged_objects" ("objectId");
 
-CREATE INDEX "_" ON ""("tagId");
-CREATE INDEX "_" ON ""("user");
-CREATE INDEX "_" ON ""("objectId");
 
 DROP TABLE IF EXISTS "tiki_contributions";
 
-CREATE TABLE "tiki_contributions" (
+CREATE TABLE  "tiki_contributions" (
   "contributionId" bigserial,
   "name" varchar(100) default NULL,
   "description" varchar(250) default NULL,
@@ -4674,7 +4512,7 @@ CREATE TABLE "tiki_contributions" (
 
 DROP TABLE IF EXISTS "tiki_contributions_assigned";
 
-CREATE TABLE "tiki_contributions_assigned" (
+CREATE TABLE  "tiki_contributions_assigned" (
   "contributionId" bigint NOT NULL,
   "objectId" bigint NOT NULL,
   PRIMARY KEY ("objectId", "contributionId")
@@ -4683,18 +4521,18 @@ CREATE TABLE "tiki_contributions_assigned" (
 
 DROP TABLE IF EXISTS "tiki_webmail_contacts_ext";
 
-CREATE TABLE "tiki_webmail_contacts_ext" (
+CREATE TABLE  "tiki_webmail_contacts_ext" (
   "contactId" bigint NOT NULL,
   "value" varchar(255) NOT NULL,
   "hidden" smallint NOT NULL,
   "fieldId" bigint NOT NULL
 );
+CREATE INDEX "tiki_webmail_contacts_ext_contactId" ON "tiki_webmail_contacts_ext" ("contactId");
 
-CREATE INDEX "_contactId" ON ""(\","contactId"\");
 
 DROP TABLE IF EXISTS "tiki_webmail_contacts_fields";
 
-CREATE TABLE "tiki_webmail_contacts_fields" (
+CREATE TABLE  "tiki_webmail_contacts_fields" (
   "user" VARCHAR( 200 ) NOT NULL ,
   "fieldname" VARCHAR( 255 ) NOT NULL ,
   "order" smallint NOT NULL default '0',
@@ -4708,35 +4546,35 @@ CREATE TABLE "tiki_webmail_contacts_fields" (
 
 DROP TABLE IF EXISTS "tiki_pages_translation_bits";
 
-CREATE TABLE "tiki_pages_translation_bits" (
+CREATE TABLE  "tiki_pages_translation_bits" (
   "translation_bit_id" bigserial,
   "page_id" bigint NOT NULL,
   "version" integer NOT NULL,
   "source_translation_bit" bigint NULL,
   "original_translation_bit" bigint NULL,
   "flags" SET('critical') NULL DEFAULT '',
-  PRIMARY KEY ("translation_bit_id"),
-  KEY("page_id"),
-  KEY("original_translation_bit"),
-  KEY("source_translation_bit")
+  PRIMARY KEY ("translation_bit_id")
 );
+CREATE INDEX "tiki_pages_translation_bits_" ON "tiki_pages_translation_bits" ("page_id");
+CREATE INDEX "tiki_pages_translation_bits_" ON "tiki_pages_translation_bits" ("original_translation_bit");
+CREATE INDEX "tiki_pages_translation_bits_" ON "tiki_pages_translation_bits" ("source_translation_bit");
 
 
 DROP TABLE IF EXISTS "tiki_pages_changes";
 
-CREATE TABLE "tiki_pages_changes" (
+CREATE TABLE  "tiki_pages_changes" (
   "page_id" bigint,
   "version" bigint,
   "segments_added" bigint,
   "segments_removed" bigint,
   "segments_total" bigint,
-  PRIMARY KEY(page_id, version)
+  PRIMARY KEY (page_id, version)
 );
 
 
 DROP TABLE IF EXISTS "tiki_minichat";
 
-CREATE TABLE "tiki_minichat" (
+CREATE TABLE  "tiki_minichat" (
   "id" bigserial,
   "channel" varchar(31),
   "ts" bigint NOT NULL,
@@ -4745,12 +4583,12 @@ CREATE TABLE "tiki_minichat" (
   "msg" varchar(255) NOT NULL,
   PRIMARY KEY ("id")
 );
+CREATE INDEX "tiki_minichat_channel" ON "tiki_minichat" ("channel");
 
-CREATE INDEX "_channel" ON ""(\","channel"\");
 
 DROP TABLE IF EXISTS "tiki_profile_symbols";
 
-CREATE TABLE "tiki_profile_symbols" (
+CREATE TABLE  "tiki_profile_symbols" (
   "domain" VARCHAR(50) NOT NULL,
   "profile" VARCHAR(50) NOT NULL,
   "object" VARCHAR(50) NOT NULL,
@@ -4765,7 +4603,7 @@ CREATE TABLE "tiki_profile_symbols" (
 
 DROP TABLE IF EXISTS "tiki_feature";
 
-CREATE TABLE "tiki_feature" (
+CREATE TABLE  "tiki_feature" (
   "feature_id" mediumserial,
   "feature_name" varchar(150) NOT NULL,
   "parent_id" mediuminteger NOT NULL,
@@ -4786,7 +4624,7 @@ CREATE TABLE "tiki_feature" (
 
 DROP TABLE IF EXISTS "tiki_schema";
 
-CREATE TABLE "tiki_schema" (
+CREATE TABLE  "tiki_schema" (
   "patch_name" VARCHAR(100) PRIMARY KEY,
   "install_date" TIMESTAMP
 );
@@ -4794,20 +4632,20 @@ CREATE TABLE "tiki_schema" (
 
 DROP TABLE IF EXISTS "tiki_semantic_tokens";
 
-CREATE TABLE "tiki_semantic_tokens" (
+CREATE TABLE  "tiki_semantic_tokens" (
   "token" VARCHAR(15) PRIMARY KEY,
   "label" VARCHAR(25) NOT NULL,
   "invert_token" VARCHAR(15)
 ) ;
 
 
-INSERT INTO "tiki_semantic_tokens" ("token","label") VALUES ('alias', 'Page Alias');
+INSERT INTO "tiki_semantic_tokens" ("token","label") VALUES (\'alias\', \'Page Alias\');
 
 
 
 DROP TABLE IF EXISTS "tiki_webservice";
 
-CREATE TABLE "tiki_webservice" (
+CREATE TABLE  "tiki_webservice" (
   "service" VARCHAR(25) NOT NULL PRIMARY KEY,
   "url" VARCHAR(250),
   "body" TEXT,
@@ -4818,21 +4656,21 @@ CREATE TABLE "tiki_webservice" (
 
 DROP TABLE IF EXISTS "tiki_webservice_template";
 
-CREATE TABLE "tiki_webservice_template" (
+CREATE TABLE  "tiki_webservice_template" (
   "service" VARCHAR(25) NOT NULL,
   "template" VARCHAR(25) NOT NULL,
   "engine" VARCHAR(15) NOT NULL,
   "output" VARCHAR(15) NOT NULL,
   "content" TEXT NOT NULL,
   "last_modif" INT,
-  PRIMARY KEY( service, template )
+  PRIMARY KEY ( service, template )
 ) ;
 
 
 DROP TABLE IF EXISTS "tiki_groupalert";
 
 
-CREATE TABLE "tiki_groupalert" (
+CREATE TABLE  "tiki_groupalert" (
   "groupName" varchar(255) NOT NULL default '',
   "objectType" varchar( 20 ) NOT NULL default '',
   "objectId" varchar(10) NOT NULL default '',
@@ -4843,7 +4681,7 @@ CREATE TABLE "tiki_groupalert" (
 
 DROP TABLE IF EXISTS "tiki_sent_newsletters_files";
 
-CREATE TABLE "tiki_sent_newsletters_files" (
+CREATE TABLE  "tiki_sent_newsletters_files" (
   "id" bigserial,
   "editionId" bigint NOT NULL,
   "name" varchar(256) NOT NULL,
@@ -4852,12 +4690,12 @@ CREATE TABLE "tiki_sent_newsletters_files" (
   "filename" varchar(256) NOT NULL,
   PRIMARY KEY  ("id")
 );
+CREATE INDEX "tiki_sent_newsletters_files_editionId" ON "tiki_sent_newsletters_files" ("editionId");
 
-CREATE INDEX "_editionId" ON ""(\","editionId"\");
 
 DROP TABLE IF EXISTS "tiki_sefurl_regex_out";
 
-CREATE TABLE "tiki_sefurl_regex_out" (
+CREATE TABLE  "tiki_sefurl_regex_out" (
   "id" bigserial,
   "left" varchar(256) NOT NULL,
   "right" varchar(256) NULL default NULL,
@@ -4866,117 +4704,113 @@ CREATE TABLE "tiki_sefurl_regex_out" (
   "feature" varchar(256) NULL default NULL,
   "comment" varchar(256),
   "order" bigint NULL default 0,
-  PRIMARY KEY("id"),
+  PRIMARY KEY ("id"),
   UNIQUE ("left"),
   INDEX "idx1" (silent, type, feature(30))
 );
 
 
-INSERT INTO "," ("\"left\",""\"right\",""\"type\",""\"feature\",") VALUES ('tiki-index.php\\?page=(.+)', '$1', 'wiki', 'feature_wiki');
+INSERT INTO "," (","left","","right","","type","","feature",") VALUES (\'tiki-index.php\\?page=(.+)\', \'$1\', \'wiki\', \'feature_wiki\');
 
-INSERT INTO "," ("\"left\",""\"right\",""\"type\",""\"feature\",") VALUES ('tiki-slideshow.php\\?page=(.+)', 'show:$1', '', 'feature_wiki');
+INSERT INTO "," (","left","","right","","type","","feature",") VALUES (\'tiki-slideshow.php\\?page=(.+)\', \'show:$1\', \'\', \'feature_wiki\');
 
-INSERT INTO "," ("\"left\",""\"right\",""\"type\",""\"feature\",") VALUES ('tiki-read_article.php\\?articleId=(\\d+)', 'article$1', 'article', 'feature_articles');
+INSERT INTO "," (","left","","right","","type","","feature",") VALUES (\'tiki-read_article.php\\?articleId=(\\d+)\', \'article$1\', \'article\', \'feature_articles\');
 
-INSERT INTO "," ("\"left\",""\"right\",""\"type\",""\"feature\",") VALUES ('tiki-browse_categories.php\\?parentId=(\\d+)', 'cat$1', 'category', 'feature_categories');
+INSERT INTO "," (","left","","right","","type","","feature",") VALUES (\'tiki-browse_categories.php\\?parentId=(\\d+)\', \'cat$1\', \'category\', \'feature_categories\');
 
-INSERT INTO "," ("\"left\",""\"right\",""\"type\",""\"feature\",") VALUES ('tiki-view_blog.php\\?blogId=(\\d+)', 'blog$1', 'blog', 'feature_blogs');
+INSERT INTO "," (","left","","right","","type","","feature",") VALUES (\'tiki-view_blog.php\\?blogId=(\\d+)\', \'blog$1\', \'blog\', \'feature_blogs\');
 
-INSERT INTO "," ("\"left\",""\"right\",""\"type\",""\"feature\",") VALUES ('tiki-view_blog_post.php\\?postId=(\\d+)', 'blogpost$1', 'blogpost', 'feature_blogs');
+INSERT INTO "," (","left","","right","","type","","feature",") VALUES (\'tiki-view_blog_post.php\\?postId=(\\d+)\', \'blogpost$1\', \'blogpost\', \'feature_blogs\');
 
-INSERT INTO "," ("\"left\",""\"right\",""\"type\",""\"feature\",") VALUES ('tiki-browse_image.php\\?imageId=(\\d+)', 'browseimage$1', 'image', 'feature_galleries');
+INSERT INTO "," (","left","","right","","type","","feature",") VALUES (\'tiki-browse_image.php\\?imageId=(\\d+)\', \'browseimage$1\', \'image\', \'feature_galleries\');
 
-INSERT INTO "," ("\"left\",""\"right\",""\"type\",""\"feature\",") VALUES ('tiki-view_chart.php\\?chartId=(\\d+)', 'chart$1', 'chart', 'feature_charts');
+INSERT INTO "," (","left","","right","","type","","feature",") VALUES (\'tiki-directory_browse.php\\?parent=(\\d+)\', \'directory$1\', \'directory\', \'feature_directory\');
 
-INSERT INTO "," ("\"left\",""\"right\",""\"type\",""\"feature\",") VALUES ('tiki-directory_browse.php\\?parent=(\\d+)', 'directory$1', 'directory', 'feature_directory');
+INSERT INTO "," (","left","","right","","type","","feature",") VALUES (\'tiki-view_faq.php\\?faqId=(\\d+)\', \'faq$1\', \'faq\', \'feature_faqs\');
 
-INSERT INTO "," ("\"left\",""\"right\",""\"type\",""\"feature\",") VALUES ('tiki-view_faq.php\\?faqId=(\\d+)', 'faq$1', 'faq', 'feature_faqs');
+INSERT INTO "," (","left","","right","","type","","feature",") VALUES (\'tiki-list_file_gallery.php\\?galleryId=(\\d+)\', \'file$1\', \'file\', \'feature_file_galleries\');
 
-INSERT INTO "," ("\"left\",""\"right\",""\"type\",""\"feature\",") VALUES ('tiki-list_file_gallery.php\\?galleryId=(\\d+)', 'file$1', 'file', 'feature_file_galleries');
+INSERT INTO "," (","left","","right","","type","","feature",") VALUES (\'tiki-download_file.php\\?fileId=(\\d+)\', \'dl$1\', \'file\', \'feature_file_galleries\');
 
-INSERT INTO "," ("\"left\",""\"right\",""\"type\",""\"feature\",") VALUES ('tiki-download_file.php\\?fileId=(\\d+)', 'dl$1', 'file', 'feature_file_galleries');
+INSERT INTO "," (","left","","right","","type","","feature",") VALUES (\'tiki-download_file.php\\?fileId=(\\d+)&amp;thumbnail\', \'thumbnail$1\', \'thumbnail\', \'feature_file_galleries\');
 
-INSERT INTO "," ("\"left\",""\"right\",""\"type\",""\"feature\",") VALUES ('tiki-download_file.php\\?fileId=(\\d+)&amp;thumbnail', 'thumbnail$1', 'thumbnail', 'feature_file_galleries');
+INSERT INTO "," (","left","","right","","type","","feature",") VALUES (\'tiki-download_file.php\\?fileId=(\\d+)&amp;display\', \'display$1\', \'display\', \'feature_file_galleries\');
 
-INSERT INTO "," ("\"left\",""\"right\",""\"type\",""\"feature\",") VALUES ('tiki-download_file.php\\?fileId=(\\d+)&amp;display', 'display$1', 'display', 'feature_file_galleries');
+INSERT INTO "," (","left","","right","","type","","feature",") VALUES (\'tiki-download_file.php\\?fileId=(\\d+)&amp;preview\', \'preview$1\', \'preview\', \'feature_file_galleries\');
 
-INSERT INTO "," ("\"left\",""\"right\",""\"type\",""\"feature\",") VALUES ('tiki-download_file.php\\?fileId=(\\d+)&amp;preview', 'preview$1', 'preview', 'feature_file_galleries');
+INSERT INTO "," (","left","","right","","type","","feature",") VALUES (\'tiki-view_forum.php\\?forumId=(\\d+)\', \'forum$1\', \'forum\', \'feature_forums\');
 
-INSERT INTO "," ("\"left\",""\"right\",""\"type\",""\"feature\",") VALUES ('tiki-view_forum.php\\?forumId=(\\d+)', 'forum$1', 'forum', 'feature_forums');
+INSERT INTO "," (","left","","right","","type","","feature",") VALUES (\'tiki-browse_gallery.php\\?galleryId=(\\d+)\', \'gallery$1\', \'gallery\', \'feature_galleries\');
 
-INSERT INTO "," ("\"left\",""\"right\",""\"type\",""\"feature\",") VALUES ('tiki-browse_gallery.php\\?galleryId=(\\d+)', 'gallery$1', 'gallery', 'feature_galleries');
+INSERT INTO "," (","left","","right","","type","","feature",") VALUES (\'show_image.php\\?id=(\\d+)\', \'image$1\', \'image\', \'feature_galleries\');
 
-INSERT INTO "," ("\"left\",""\"right\",""\"type\",""\"feature\",") VALUES ('show_image.php\\?id=(\\d+)', 'image$1', 'image', 'feature_galleries');
+INSERT INTO "," (","left","","right","","type","","feature",") VALUES (\'show_image.php\\?id=(\\d+)&scalesize=(\\d+)\', \'imagescale$1/$2\', \'image\', \'feature_galleries\');
 
-INSERT INTO "," ("\"left\",""\"right\",""\"type\",""\"feature\",") VALUES ('show_image.php\\?id=(\\d+)&scalesize=(\\d+)', 'imagescale$1/$2', 'image', 'feature_galleries');
+INSERT INTO "," (","left","","right","","type","","feature",") VALUES (\'tiki-newsletters.php\\?nlId=(\\d+)\', \'newsletter$1\', \'newsletter\', \'feature_newsletters\');
 
-INSERT INTO "," ("\"left\",""\"right\",""\"type\",""\"feature\",") VALUES ('tiki-newsletters.php\\?nlId=(\\d+)', 'newsletter$1', 'newsletter', 'feature_newsletters');
+INSERT INTO "," (","left","","right","","type","","feature",") VALUES (\'tiki-take_quiz.php\\?quizId=(\\d+)\', \'quiz$1\', \'quiz\', \'feature_quizzes\');
 
-INSERT INTO "," ("\"left\",""\"right\",""\"type\",""\"feature\",") VALUES ('tiki-take_quiz.php\\?quizId=(\\d+)', 'quiz$1', 'quiz', 'feature_quizzes');
+INSERT INTO "," (","left","","right","","type","","feature",") VALUES (\'tiki-take_survey.php\\?surveyId=(\\d+)\', \'survey$1\', \'survey\', \'feature_surveys\');
 
-INSERT INTO "," ("\"left\",""\"right\",""\"type\",""\"feature\",") VALUES ('tiki-take_survey.php\\?surveyId=(\\d+)', 'survey$1', 'survey', 'feature_surveys');
+INSERT INTO "," (","left","","right","","type","","feature",") VALUES (\'tiki-view_tracker.php\\?trackerId=(\\d+)\', \'tracker$1\', \'tracker\', \'feature_trackers\');
 
-INSERT INTO "," ("\"left\",""\"right\",""\"type\",""\"feature\",") VALUES ('tiki-view_tracker.php\\?trackerId=(\\d+)', 'tracker$1', 'tracker', 'feature_trackers');
+INSERT INTO "," (","left","","right","","type","","feature",") VALUES (\'tiki-integrator.php\\?repID=(\\d+)\', \'int$1\', \'\', \'feature_integrator\');
 
-INSERT INTO "," ("\"left\",""\"right\",""\"type\",""\"feature\",") VALUES ('tiki-integrator.php\\?repID=(\\d+)', 'int$1', '', 'feature_integrator');
+INSERT INTO "," (","left","","right","","type","","feature",") VALUES (\'tiki-view_sheets.php\\?sheetId=(\\d+)\', \'sheet$1\', \'sheet\', \'feature_sheet\');
 
-INSERT INTO "," ("\"left\",""\"right\",""\"type\",""\"feature\",") VALUES ('tiki-view_sheets.php\\?sheetId=(\\d+)', 'sheet$1', 'sheet', 'feature_sheet');
+INSERT INTO "," (","left","","right","","type","","feature",") VALUES (\'tiki-directory_redirect.php\\?siteId=(\\d+)\', \'dirlink$1\', \'directory\', \'feature_directory\');
 
-INSERT INTO "," ("\"left\",""\"right\",""\"type\",""\"feature\",") VALUES ('tiki-directory_redirect.php\\?siteId=(\\d+)', 'dirlink$1', 'directory', 'feature_directory');
+INSERT INTO "," (","left","","right","","comment","","type","","feature","","order",") VALUES (\'tiki-calendar.php\\?calIds\\[\\]=(\\d+)\&calIds\\[\\]=(\\d+)\&callIds\\[\\](\\d+)\&callIds\\[\\](\\d+)\&callIds\\[\\](\\d+)\&callIds\\[\\](\\d+)\&callIds\\[\\](\\d+)\', \'cal$1,$2,$3,$4,$5,$6,$7\', \'7\', \'calendar\', \'feature_calendar\', 100);
 
-INSERT INTO "," ("\"left\",""\"right\",""\"comment\",""\"type\",""\"feature\",""\"order\",") VALUES ('tiki-calendar.php\\?calIds\\[\\]=(\\d+)\&calIds\\[\\]=(\\d+)\&callIds\\[\\](\\d+)\&callIds\\[\\](\\d+)\&callIds\\[\\](\\d+)\&callIds\\[\\](\\d+)\&callIds\\[\\](\\d+)', 'cal$1,$2,$3,$4,$5,$6,$7', '7', 'calendar', 'feature_calendar', 100);
+INSERT INTO "," (","left","","right","","comment","","type","","feature","","order",") VALUES (\'tiki-calendar.php\\?calIds\\[\\]=(\\d+)\&calIds\\[\\]=(\\d+)\&callIds\\[\\](\\d+)\&callIds\\[\\](\\d+)\&callIds\\[\\](\\d+)\&callIds\\[\\](\\d+)\', \'cal$1,$2,$3,$4,$5,$6\', \'6\', \'calendar\', \'feature_calendar\', 101);
 
-INSERT INTO "," ("\"left\",""\"right\",""\"comment\",""\"type\",""\"feature\",""\"order\",") VALUES ('tiki-calendar.php\\?calIds\\[\\]=(\\d+)\&calIds\\[\\]=(\\d+)\&callIds\\[\\](\\d+)\&callIds\\[\\](\\d+)\&callIds\\[\\](\\d+)\&callIds\\[\\](\\d+)', 'cal$1,$2,$3,$4,$5,$6', '6', 'calendar', 'feature_calendar', 101);
+INSERT INTO "," (","left","","right","","comment","","type","","feature","","order",") VALUES (\'tiki-calendar.php\\?calIds\\[\\]=(\\d+)\&calIds\\[\\]=(\\d+)\&callIds\\[\\](\\d+)\&callIds\\[\\](\\d+)\&callIds\\[\\](\\d+)\', \'cal$1,$2,$3,$4,$5\', \'5\', \'calendar\', \'feature_calendar\', 102);
 
-INSERT INTO "," ("\"left\",""\"right\",""\"comment\",""\"type\",""\"feature\",""\"order\",") VALUES ('tiki-calendar.php\\?calIds\\[\\]=(\\d+)\&calIds\\[\\]=(\\d+)\&callIds\\[\\](\\d+)\&callIds\\[\\](\\d+)\&callIds\\[\\](\\d+)', 'cal$1,$2,$3,$4,$5', '5', 'calendar', 'feature_calendar', 102);
+INSERT INTO "," (","left","","right","","comment","","type","","feature","","order",") VALUES (\'tiki-calendar.php\\?calIds\\[\\]=(\\d+)\&calIds\\[\\]=(\\d+)\&callIds\\[\\](\\d+)\&callIds\\[\\](\\d+)\', \'cal$1,$2,$3,$4\', \'4\', \'calendar\', \'feature_calendar\', 103);
 
-INSERT INTO "," ("\"left\",""\"right\",""\"comment\",""\"type\",""\"feature\",""\"order\",") VALUES ('tiki-calendar.php\\?calIds\\[\\]=(\\d+)\&calIds\\[\\]=(\\d+)\&callIds\\[\\](\\d+)\&callIds\\[\\](\\d+)', 'cal$1,$2,$3,$4', '4', 'calendar', 'feature_calendar', 103);
+INSERT INTO "," (","left","","right","","comment","","type","","feature","","order",") VALUES (\'tiki-calendar.php\\?calIds\\[\\]=(\\d+)\&calIds\\[\\]=(\\d+)\&callIds\\[\\](\\d+)\', \'cal$1,$2,$3\', \'3\', \'calendar\', \'feature_calendar\', 104);
 
-INSERT INTO "," ("\"left\",""\"right\",""\"comment\",""\"type\",""\"feature\",""\"order\",") VALUES ('tiki-calendar.php\\?calIds\\[\\]=(\\d+)\&calIds\\[\\]=(\\d+)\&callIds\\[\\](\\d+)', 'cal$1,$2,$3', '3', 'calendar', 'feature_calendar', 104);
+INSERT INTO "," (","left","","right","","comment","","type","","feature","","order",") VALUES (\'tiki-calendar.php\\?calIds\\[\\]=(\\d+)&calIds\\[\\]=(\\d+)\', \'cal$1,$2\', \'2\', \'calendar\', \'feature_calendar\', 105);
 
-INSERT INTO "," ("\"left\",""\"right\",""\"comment\",""\"type\",""\"feature\",""\"order\",") VALUES ('tiki-calendar.php\\?calIds\\[\\]=(\\d+)&calIds\\[\\]=(\\d+)', 'cal$1,$2', '2', 'calendar', 'feature_calendar', 105);
+INSERT INTO "," (","left","","right","","comment","","type","","feature","","order",") VALUES (\'tiki-calendar.php\\?calIds\\[\\]=(\\d+)\', \'cal$1\', \'1\', \'calendar\', \'feature_calendar\', 106);
 
-INSERT INTO "," ("\"left\",""\"right\",""\"comment\",""\"type\",""\"feature\",""\"order\",") VALUES ('tiki-calendar.php\\?calIds\\[\\]=(\\d+)', 'cal$1', '1', 'calendar', 'feature_calendar', 106);
+INSERT INTO "," (","left","","right","","type","","feature","","order",") VALUES (\'tiki-calendar.php\', \'calendar\', \'calendar\', \'feature_calendar\', 200);
 
-INSERT INTO "," ("\"left\",""\"right\",""\"type\",""\"feature\",""\"order\",") VALUES ('tiki-calendar.php', 'calendar', 'calendar', 'feature_calendar', 200);
+INSERT INTO "," (","left","","right","","type","","feature","","order",") VALUES (\'tiki-view_articles.php\', \'articles\', \'\', \'feature_articles\', 200);
 
-INSERT INTO "," ("\"left\",""\"right\",""\"type\",""\"feature\",""\"order\",") VALUES ('tiki-view_articles.php', 'articles', '', 'feature_articles', 200);
+INSERT INTO "," (","left","","right","","type","","feature","","order",") VALUES (\'tiki-list_blogs.php\', \'blogs\', \'\', \'feature_blogs\', 200);
 
-INSERT INTO "," ("\"left\",""\"right\",""\"type\",""\"feature\",""\"order\",") VALUES ('tiki-list_blogs.php', 'blogs', '', 'feature_blogs', 200);
+INSERT INTO "," (","left","","right","","type","","feature","","order",") VALUES (\'tiki-browse_categories.php\', \'categories\', \'\', \'feature_categories\', 200);
 
-INSERT INTO "," ("\"left\",""\"right\",""\"type\",""\"feature\",""\"order\",") VALUES ('tiki-browse_categories.php', 'categories', '', 'feature_categories', 200);
+INSERT INTO "," (","left","","right","","type","","feature","","order",") VALUES (\'tiki-contact.php\', \'contact\', \'\', \'feature_contact\', 200);
 
-INSERT INTO "," ("\"left\",""\"right\",""\"type\",""\"feature\",""\"order\",") VALUES ('tiki-list_charts.php', 'charts', '', 'feature_charts', 200);
+INSERT INTO "," (","left","","right","","type","","feature","","order",") VALUES (\'tiki-directory_browse.php\', \'directories\', \'\', \'feature_directory\', 200);
 
-INSERT INTO "," ("\"left\",""\"right\",""\"type\",""\"feature\",""\"order\",") VALUES ('tiki-contact.php', 'contact', '', 'feature_contact', 200);
+INSERT INTO "," (","left","","right","","type","","feature","","order",") VALUES (\'tiki-list_faqs.php\', \'faqs\', \'\', \'feature_faqs\', 200);
 
-INSERT INTO "," ("\"left\",""\"right\",""\"type\",""\"feature\",""\"order\",") VALUES ('tiki-directory_browse.php', 'directories', '', 'feature_directory', 200);
+INSERT INTO "," (","left","","right","","type","","feature","","order",") VALUES (\'tiki-file_galleries.php\', \'files\', \'\', \'feature_file_galleries\', 200);
 
-INSERT INTO "," ("\"left\",""\"right\",""\"type\",""\"feature\",""\"order\",") VALUES ('tiki-list_faqs.php', 'faqs', '', 'feature_faqs', 200);
+INSERT INTO "," (","left","","right","","type","","feature","","order",") VALUES (\'tiki-forums.php\', \'forums\', \'\', \'feature_forums\', 200);
 
-INSERT INTO "," ("\"left\",""\"right\",""\"type\",""\"feature\",""\"order\",") VALUES ('tiki-file_galleries.php', 'files', '', 'feature_file_galleries', 200);
+INSERT INTO "," (","left","","right","","type","","feature","","order",") VALUES (\'tiki-galleries.php\', \'galleries\', \'\', \'feature_galleries\', 200);
 
-INSERT INTO "," ("\"left\",""\"right\",""\"type\",""\"feature\",""\"order\",") VALUES ('tiki-forums.php', 'forums', '', 'feature_forums', 200);
+INSERT INTO "," (","left","","right","","type","","feature","","order",") VALUES (\'tiki-login_scr.php\', \'login\', \'\', \'\', 200);
 
-INSERT INTO "," ("\"left\",""\"right\",""\"type\",""\"feature\",""\"order\",") VALUES ('tiki-galleries.php', 'galleries', '', 'feature_galleries', 200);
+INSERT INTO "," (","left","","right","","type","","feature","","order",") VALUES (\'tiki-my_tiki.php\', \'my\', \'\', \'\', 200);
 
-INSERT INTO "," ("\"left\",""\"right\",""\"type\",""\"feature\",""\"order\",") VALUES ('tiki-login_scr.php', 'login', '', '', 200);
+INSERT INTO "," (","left","","right","","type","","feature","","order",") VALUES (\'tiki-newsletters.php\', \'newsletters\', \'newsletter\', \'feature_newsletters\', 200);
 
-INSERT INTO "," ("\"left\",""\"right\",""\"type\",""\"feature\",""\"order\",") VALUES ('tiki-my_tiki.php', 'my', '', '', 200);
+INSERT INTO "," (","left","","right","","type","","feature","","order",") VALUES (\'tiki-list_quizzes.php\', \'quizzes\', \'\', \'feature_quizzes\', 200);
 
-INSERT INTO "," ("\"left\",""\"right\",""\"type\",""\"feature\",""\"order\",") VALUES ('tiki-newsletters.php', 'newsletters', 'newsletter', 'feature_newsletters', 200);
+INSERT INTO "," (","left","","right","","type","","feature","","order",") VALUES (\'tiki-stats.php\', \'stats\', \'\', \'feature_stats\', 200);
 
-INSERT INTO "," ("\"left\",""\"right\",""\"type\",""\"feature\",""\"order\",") VALUES ('tiki-list_quizzes.php', 'quizzes', '', 'feature_quizzes', 200);
+INSERT INTO "," (","left","","right","","type","","feature","","order",") VALUES (\'tiki-list_surveys.php\', \'surveys\', \'\', \'feature_surveys\', 200);
 
-INSERT INTO "," ("\"left\",""\"right\",""\"type\",""\"feature\",""\"order\",") VALUES ('tiki-stats.php', 'stats', '', 'feature_stats', 200);
+INSERT INTO "," (","left","","right","","type","","feature","","order",") VALUES (\'tiki-list_trackers.php\', \'trackers\', \'\', \'feature_trackers\', 200);
 
-INSERT INTO "," ("\"left\",""\"right\",""\"type\",""\"feature\",""\"order\",") VALUES ('tiki-list_surveys.php', 'surveys', '', 'feature_surveys', 200);
+INSERT INTO "," (","left","","right","","type","","feature","","order",") VALUES (\'tiki-mobile.php\', \'mobile\', \'\', \'feature_mobile\', 200);
 
-INSERT INTO "," ("\"left\",""\"right\",""\"type\",""\"feature\",""\"order\",") VALUES ('tiki-list_trackers.php', 'trackers', '', 'feature_trackers', 200);
-
-INSERT INTO "," ("\"left\",""\"right\",""\"type\",""\"feature\",""\"order\",") VALUES ('tiki-mobile.php', 'mobile', '', 'feature_mobile', 200);
-
-INSERT INTO "," ("\"left\",""\"right\",""\"type\",""\"feature\",""\"order\",") VALUES ('tiki-sheets.php', 'sheets', '', 'feature_sheet', 200);
+INSERT INTO "," (","left","","right","","type","","feature","","order",") VALUES (\'tiki-sheets.php\', \'sheets\', \'\', \'feature_sheet\', 200);
 
 
 UPDATE tiki_menu_options SET icon = 'icon-configuration48x48' WHERE name = 'Admin';
@@ -5019,14 +4853,12 @@ UPDATE tiki_menu_options SET icon = '' WHERE name = 'TikiSheet';
 
 UPDATE tiki_menu_options SET icon = '' WHERE name = 'Workflow';
 
-UPDATE tiki_menu_options SET icon = '' WHERE name = 'Charts';
-
 UPDATE tiki_menus SET use_items_icons='y' WHERE menuId=42;
 
 
 DROP TABLE IF EXISTS "tiki_plugin_security";
 
-CREATE TABLE "tiki_plugin_security" (
+CREATE TABLE  "tiki_plugin_security" (
   "fingerprint" VARCHAR(200) NOT NULL PRIMARY KEY,
   "status" VARCHAR(10) NOT NULL,
   "approval_by" VARCHAR(200) NULL,
@@ -5034,17 +4866,17 @@ CREATE TABLE "tiki_plugin_security" (
   "last_objectType" VARCHAR(20) NOT NULL,
   "last_objectId" VARCHAR(200) NOT NULL
 );
+CREATE INDEX "tiki_plugin_security_last_object" ON "tiki_plugin_security" ("last_objectType","last_objectId");
 
-CREATE INDEX "_last_object" ON ""("last_objectType","last_objectId");
 
 DROP TABLE IF EXISTS "tiki_user_reports";
 
 CREATE TABLE IF NOT EXISTS "tiki_user_reports" (
   "id" bigserial,
-  "user" varchar(200) COLLATE latin1_general_ci NOT NULL,
-  "interval" varchar(20) COLLATE latin1_general_ci NOT NULL,
-  "view" varchar(8) COLLATE latin1_general_ci NOT NULL,
-  "type" varchar(5) COLLATE latin1_general_ci NOT NULL,
+  "user" varchar(200) NOT NULL,
+  "interval" varchar(20) NOT NULL,
+  "view" varchar(8) NOT NULL,
+  "type" varchar(5) NOT NULL,
   "time_to_send" datetime NOT NULL,
   "always_email" smallint NOT NULL,
   "last_report" datetime NOT NULL,
@@ -5056,9 +4888,9 @@ DROP TABLE IF EXISTS "tiki_user_reports_cache";
 
 CREATE TABLE IF NOT EXISTS "tiki_user_reports_cache" (
   "id" bigserial,
-  "user" varchar(200) COLLATE latin1_general_ci NOT NULL,
-  "event" varchar(200) COLLATE latin1_general_ci NOT NULL,
-  "data" text COLLATE latin1_general_ci NOT NULL,
+  "user" varchar(200) NOT NULL,
+  "event" varchar(200) NOT NULL,
+  "data" text NOT NULL,
   "time" datetime NOT NULL,
   PRIMARY KEY ("id")
 );
@@ -5066,20 +4898,20 @@ CREATE TABLE IF NOT EXISTS "tiki_user_reports_cache" (
 
 DROP TABLE IF EXISTS "tiki_perspectives";
 
-CREATE TABLE "tiki_perspectives" (
+CREATE TABLE  "tiki_perspectives" (
   "perspectiveId" bigserial,
   "name" varchar(100) NOT NULL,
-  PRIMARY KEY( perspectiveId )
+  PRIMARY KEY ( perspectiveId )
 );
 
 
 DROP TABLE IF EXISTS "tiki_perspective_preferences";
 
-CREATE TABLE "tiki_perspective_preferences" (
+CREATE TABLE  "tiki_perspective_preferences" (
   "perspectiveId" int NOT NULL,
   "pref" varchar(40) NOT NULL,
   "value" text,
-  PRIMARY KEY( perspectiveId, pref )
+  PRIMARY KEY ( perspectiveId, pref )
 );
 
 

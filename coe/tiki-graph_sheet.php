@@ -32,7 +32,7 @@ function handle_series( $serie, &$sheet )
 
 // Now check permissions to access this page
 if ($prefs['feature_sheet'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_sheet, feature_charts");
+	$smarty->assign('msg', tra("This feature is disabled").": feature_sheet");
 
 	$smarty->display("error.tpl");
 	die;

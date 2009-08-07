@@ -215,19 +215,17 @@ class HeaderLib {
 			$back.= "//--><!]]>\n</script>\n\n";
 		}
 		
-		if ($prefs['feature_jquery'] == 'y') {
-			if (count($this->jq_onready)) {
-				$back .= "<script type=\"text/javascript\">\n<!--//--><![CDATA[//><!--\n";
-				$back .= '$jq("document").ready(function(){'."\n";
-				foreach ($this->jq_onready as $x=>$js) {
-					$back.= "// jq_onready $x \n";
-					foreach ($js as $j) {
-						$back.= "$j\n";
-					}
+		if (count($this->jq_onready)) {
+			$back .= "<script type=\"text/javascript\">\n<!--//--><![CDATA[//><!--\n";
+			$back .= '$jq("document").ready(function(){'."\n";
+			foreach ($this->jq_onready as $x=>$js) {
+				$back.= "// jq_onready $x \n";
+				foreach ($js as $j) {
+					$back.= "$j\n";
 				}
-				$back .= "});\n";
-				$back.= "//--><!]]>\n</script>\n";
 			}
+			$back .= "});\n";
+			$back.= "//--><!]]>\n</script>\n";
 		}
 		
 		return $back;
@@ -247,12 +245,10 @@ class HeaderLib {
 				}
 			}
 		}
-		if ($prefs['feature_jquery'] == 'y') {
-			if (count($this->jq_onready)) {
-				foreach ($this->jq_onready as $x=>$js) {
-					foreach ($js as $j) {
-						$out[] = "$j\n";
-					}
+		if (count($this->jq_onready)) {
+			foreach ($this->jq_onready as $x=>$js) {
+				foreach ($js as $j) {
+					$out[] = "$j\n";
 				}
 			}
 		}

@@ -10,6 +10,16 @@ if (!isset($_REQUEST['objectName']) || empty($_REQUEST['objectType']) || empty($
 	$smarty->display("error.tpl");
 	die;
 }
+$auto_query_args = array(
+	'referer',
+	'reloff',
+	'objectName',
+	'objectType',
+	'permType',
+	'objectId',
+	'filegals_manager',
+	'show_disabled_features',
+);
 $perm = 'tiki_p_assign_perm_' . str_replace(' ', '_', $_REQUEST['objectType']);
 if ($_REQUEST['objectType'] == 'wiki page') {
 	if ($tiki_p_admin_wiki == 'y') {
@@ -80,6 +90,7 @@ if(!isset($quickperms_['editors']))
 if(!isset($quickperms_['admin']))
 $quickperms_['admin'] = array();
 
+$perms = array();
 $perms['basic']['name'] = "basic";
 $perms['basic']['data'] = array_merge($quickperms_['basic']);
 $perms['registered']['name'] = "registered";
@@ -156,28 +167,46 @@ if (isset($_REQUEST['assign']) && isset($_REQUEST['quick_perms'])) {
 //Quickperm END
 
 // Process the form to assign a new permission to this page
-elseif (isset($_REQUEST['assign']) && isset($_REQUEST['group']) && isset($_REQUEST['perm'])) {
+elseif (isset($_REQUEST['assign'])) {
 	check_ticket('object-perms');
-	foreach($_REQUEST['perm'] as $perm) {
-		if ($tiki_p_admin_objects != 'y' && !$userlib->user_has_permission($user, $perm)) {
-			$smarty->assign('errortype', 401);
-			$smarty->assign('msg', tra('Permission denied'));
-			$smarty->display('error.tpl');
-			die;
+	foreach($_REQUEST['perm'] as $group => $perms) {
+		foreach($perms as $perm) {
+			if ($tiki_p_admin_objects != 'y' && !$userlib->user_has_permission($user, $perm)) {
+				$smarty->assign('errortype', 401);
+				$smarty->assign('msg', tra('Permission denied'));
+				$smarty->display('error.tpl');
+				die;
+			}
 		}
 	}
 	if (!empty($_REQUEST['assignstructure']) && $_REQUEST['assignstructure'] == 'on' && !empty($pageInfoTree)) {
 		foreach($pageInfoTree as $subPage) {
-			foreach($_REQUEST['perm'] as $perm) {
-				foreach($_REQUEST['group'] as $group) {
+			foreach($_REQUEST['perm'] as $group => $perms) {
+				foreach($perms as $perm) {
 					$userlib->assign_object_permission($group, $subPage["pageName"], 'wiki page', $perm);
 				}
 			}
 		}
 	} else {
-		foreach($_REQUEST['perm'] as $perm) {
-			foreach($_REQUEST['group'] as $group) {
+		// set new perms
+		foreach($_REQUEST['perm'] as $group => $perms) {
+			foreach($perms as $perm) {
 				$userlib->assign_object_permission($group, $_REQUEST["objectId"], $_REQUEST["objectType"], $perm);
+			}
+		}
+		// remove unchecked ones
+		foreach($_REQUEST['old_perm'] as $group => $perms) {
+			foreach($perms as $perm) {
+				$stillChecked = false;
+				foreach ($_REQUEST['perm'][$group] as $new_perm) {
+					if ($new_perm == $perm) {	// still checked
+						$stillChecked = true;
+						continue;
+					}
+				}
+				if (!$stillChecked) {
+					$userlib->remove_object_permission($group, $_REQUEST["objectId"], $_REQUEST["objectType"], $perm);
+				}
 			}
 		}
 	}
@@ -203,15 +232,6 @@ if (isset($_REQUEST['delsel_x']) && isset($_REQUEST['checked'])) {
 			}
 		}
 	}
-}
-if (isset($_REQUEST['quick_perms'])) {
-		$cookietab = 3;
-		setcookie('tab',$cookietab);
-		$smarty->assign_by_ref('cookietab',$cookietab);
-} elseif ((isset($_REQUEST['delsel_x']) || isset($_REQUEST['action']) || isset($_REQUEST['assign']))) {
-	$cookietab = 2;
-	setcookie('tab', $cookietab);
-	$smarty->assign_by_ref('cookietab', $cookietab);
 }
 // Now we have to get the individual page permissions if any
 $page_perms = $userlib->get_object_permissions($_REQUEST["objectId"], $_REQUEST["objectType"]);
@@ -247,22 +267,45 @@ foreach($groups['data'] as $key=>$group) {
 //Quickperm END
 
 $smarty->assign_by_ref('groups', $groups["data"]);
+
+// get groupNames etc
+$permGroups = array();
+$groupNames = array();
+$groupIndices = array();
+$groupIndex = 6;	// yuk!
+foreach($groups['data'] as $row) {
+	$groupNames[] = $row['groupName'];
+	$permGroups[] = 'perm['.$row['groupName'].']';
+	$groupIndices[] = $groupIndex;
+	$groupIndex++;
+}
+
 // Get a list of permissions
-$perms = $userlib->get_permissions(0, -1, 'permName_asc', '', $_REQUEST["permType"], '', true);
+if (isset($_REQUEST['show_disabled_features']) && $_REQUEST['show_disabled_features'] == 'on') {
+	$show_disabled_features = true;
+} else {
+	$show_disabled_features = false;
+}
+$smarty->assign('show_disabled_features', $show_disabled_features);
+$perms = $userlib->get_permissions(0, -1, 'permName_asc', '', $_REQUEST["permType"], $groupNames, !$show_disabled_features);
+$perms = $perms['data'];
+
+$smarty->assign('permGroups', implode(',', $permGroups));
+$smarty->assign('permGroupCols', $groupIndices);
+$smarty->assign('groupNames', implode(',', $groupNames));
 
 if ($tiki_p_admin_objects != 'y') {
 	$userPerms = array();
-	foreach($perms['data'] as $perm) {
+	foreach($perms as $perm) {
 		if ($userlib->user_has_permission($user, $perm['permName'])) {
 			$userPerms[] = $perm;
 		}
 	}
-	$smarty->assign_by_ref('perms', $userPerms);
-} else {
-	$smarty->assign_by_ref('perms', $perms['data']);
+	$perms = $userPerms;
 }
+
 foreach($page_perms as $i => $pp) {
-	foreach($perms['data'] as $p) {
+	foreach($perms as $p) {
 		if ($pp['permName'] == $p['permName']) {
 			$page_perms[$i]['permDesc'] = $p['permDesc'];
 			break;
@@ -276,7 +319,7 @@ if ($prefs['feature_categories'] == 'y') {
 	// Get the permissions of the categories that this object belongs to,
 	$categ_perms = array();
 	$parents = $categlib->get_object_categories($_REQUEST['objectType'], $_REQUEST['objectId']);
-	$perms_categ = $userlib->get_permissions(0, -1, 'permName_asc', '', 'category');
+	$perms_categ = $userlib->get_permissions(0, -1, 'permName_asc', '', 'category', $groupNames);
 	foreach($parents as $categId) {
 		if ($userlib->object_has_one_permission($categId, 'category')) {
 			$categ_perm = $userlib->get_object_permissions($categId, 'category');
@@ -308,6 +351,25 @@ if ($prefs['feature_categories'] == 'y') {
 	}
 	$smarty->assign_by_ref('categ_perms', $categ_perms);
 }
+// blend the perms from object onto the big perm list
+
+foreach ($page_perms as $page_perm) {
+	foreach ($perms as &$perm) {
+		if ($perm['permName'] == $page_perm['permName']) {
+			break;
+		}
+	}
+	for( $i = 0; $i < count($groupNames); $i++) {
+		if ($page_perm['groupName'] == $groupNames[$i]) {
+			$perm[$groupNames[$i] . '_hasPerm'] = 'y';
+			$perm[$groupIndices[$i]] = 'y';
+		}
+	}
+}
+
+
+$smarty->assign_by_ref('perms', $perms);
+
 ask_ticket('object-perms');
 // Display the template
 $smarty->assign('mid', 'tiki-objectpermissions.tpl');
