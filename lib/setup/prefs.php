@@ -1149,7 +1149,16 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'default_rows_textarea_comment' => '6',
 		'default_rows_textarea_forum' => '20',
 		'default_rows_textarea_forumthread' => '10',
-
+		
+		'toolbar_global' => '
+			bold, italic, strike, - , color, bgcolor, - , sub, sup,
+			- , tikilink, image, link, unlink, -, undo, redo, 
+			- , find, replace,-,  removeformat, specialchar
+			/
+			templates, -, style, -,  h1, h2, h3, left, center, -, list, numlist, outdent, indent, 
+			- , table, -, source, showblocks, fullscreen, enlarge, reduce
+		',
+	
 		// pagination
 		'direct_pagination' => 'y',
 		'nextprev_pagination' => 'y',

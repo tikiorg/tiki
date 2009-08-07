@@ -128,3 +128,92 @@ a.admbox.off:hover, a.admbox.off:focus, a.admbox.off:active {
 }
 
 div.adminanchors a {float: left}
+
+/* from ui-revamp branch, via coe branch - jb july 2009 */
+
+.quicktags-admin .full {
+	border: solid thin gray;
+	float: left;
+	height: 478px;
+	width: 200px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	margin: 0;
+}
+
+.quicktags-admin .rows {
+	min-height: 490px;
+	float: left;
+	padding: 1em 2em 1em 0;
+}
+
+.quicktags-admin .selectDiv {
+	float: left;
+	clear: left;
+}
+
+.quicktags-admin .li {
+	display: block;
+}
+
+.quicktag img.icon {
+	vertical-align: middle;
+	margin-right: 4px;
+}
+
+.quicktags-admin .quicktag {
+	cursor: pointer;
+	height: 1.5em;
+	line-height: 1.2em;
+}
+
+.quicktags-admin .rows .row {
+	height: 20px;
+	min-width: 500px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	border: solid thin gray;
+	margin: 0;
+	padding: 2px 4px 0;
+}
+
+.quicktags-admin .row li.quicktag {
+	list-style-type: none;
+	float: left;
+	width: 18px;
+	overflow: hidden;
+}
+
+.quicktags-admin .row li.qt-plugin {
+	width: auto;
+	background-color: #9C0;
+	border: thin #690 solid;
+	margin: 0 .4em 0 0;
+	padding: 2px .4em 0 .2em;
+	color: #030;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 10px;
+}
+
+.qt-wys {
+	font-style: italic;
+}
+
+.qt-wiki {
+	font-weight: bold;
+}
+
+#qt_filter_div {
+	background-color: #fff;
+	border-top: thin gray solid;
+	border-right: thin gray solid;
+	border-bottom: none;
+	border-left: thin gray solid;
+	padding-left: .5em;
+}
+
+#qt_filter_div a {
+	
+}
+/* end from ui-revamp branch */

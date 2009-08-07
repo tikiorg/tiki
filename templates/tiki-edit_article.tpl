@@ -223,12 +223,12 @@
 				{tr}Heading{/tr}
 				<br />
 				{if $prefs.quicktags_over_textarea neq 'y'}
-					{include file='tiki-edit_help_tool.tpl' area_name='heading'}
+					{quicktags area_name='heading'}
 				{/if}
 			</td>
 			<td>
 				{if $prefs.quicktags_over_textarea eq 'y'}
-					{include file='tiki-edit_help_tool.tpl' area_name='heading'}
+					{quicktags area_name='heading'}
 				{/if}
 				<textarea class="wikiedit" name="heading" rows="5" cols="80" id='subheading' wrap="virtual">{$heading|escape}</textarea>
 			</td>
@@ -241,13 +241,12 @@
 				<br />
 				{include file='textareasize.tpl' area_name='body' formId='editpageform'}
 				{if $prefs.quicktags_over_textarea neq 'y'}
-					<br />
-					{include file='tiki-edit_help_tool.tpl' area_name='body' qtnum='2'}
+					{quicktags area_name='body'}
 				{/if}
 			</td>
 			<td>
 				{if $prefs.quicktags_over_textarea eq 'y'}
-					{include file='tiki-edit_help_tool.tpl' area_name='body'}
+					{quicktags area_name='body'}
 				{/if}
 				<textarea class="wikiedit" id="body" name="body" rows="{$rows}" cols="{$cols}" wrap="virtual">{$body|escape}</textarea>
 				<input type="hidden" name="rows" value="{$rows}"/>

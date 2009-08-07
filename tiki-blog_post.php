@@ -242,9 +242,6 @@ global $wikilib;
 include_once ('lib/wiki/wikilib.php');
 $plugins = $wikilib->list_plugins(true, 'blogedit');
 $smarty->assign_by_ref('plugins', $plugins);
-include_once ('lib/quicktags/quicktagslib.php');
-$quicktags = $quicktagslib->list_quicktags(0, -1, 'taglabel_asc', '', 'blogs');
-$smarty->assign_by_ref('quicktags', $quicktags["data"]);
 if ($prefs['feature_contribution'] == 'y') {
 	include_once ('contribution.php');
 }

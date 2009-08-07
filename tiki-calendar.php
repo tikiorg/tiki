@@ -717,9 +717,6 @@ include_once ('tiki-section_options.php');
 setcookie('tab',$cookietab);
 $smarty->assign('cookietab',$cookietab);
 
-include_once ('lib/quicktags/quicktagslib.php');
-$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_asc','','calendar');
-$smarty->assign_by_ref('quicktags', $quicktags["data"]);
 include_once("textareasize.php");
 
 ask_ticket('calendar');

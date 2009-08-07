@@ -45,10 +45,6 @@ $smarty->assign('comp_array_p', $comp_array_p);
 if (!isset($_REQUEST['taskId'])) {
 	$_REQUEST['taskId'] = 0;
 }
-include_once ('lib/quicktags/quicktagslib.php');
-// The quicktags presented in the user tasks are the wiki-quicktags !
-$quicktags = $quicktagslib->list_quicktags(0, -1, 'taglabel_asc', '', 'wiki');
-$smarty->assign_by_ref('quicktags', $quicktags["data"]);
 $smarty->assign('quicktagscant', $quicktags["cant"]);
 //default values for show options
 if (!isset($_SESSION['show_trash'])) $_SESSION['show_trash'] = false;

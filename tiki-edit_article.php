@@ -497,10 +497,6 @@ global $wikilib; include_once('lib/wiki/wikilib.php');
 $plugins = $wikilib->list_plugins(true, 'body');
 $smarty->assign_by_ref('plugins', $plugins);
 
-include_once ('lib/quicktags/quicktagslib.php');
-$quicktags = $quicktagslib->list_quicktags(0,100,'taglabel_asc','','articles');
-$smarty->assign_by_ref('quicktags', $quicktags["data"]);
-
 ask_ticket('edit-article');
 
 // disallow robots to index page:

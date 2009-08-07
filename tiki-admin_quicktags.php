@@ -1,114 +1,198 @@
 <?php
-// (c) Copyright 2002-2009 by authors of the Tiki Wiki/CMS/Groupware Project
-// 
-// All Rights Reserved. See copyright.txt for details and a complete list of authors.
-// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-admin_quicktags.php,v 1.22.2.1 2008-01-29 12:38:33 nyloth Exp $
-require_once ('tiki-setup.php');
-include_once ('lib/quicktags/quicktagslib.php');
-if ($tiki_p_admin_quicktags != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
+
+/*$inputConfiguration = array( array(
+	'staticKeyFilters' => array(
+		'save' => 'alpha',
+		'load' => 'alpha',
+		'pref' => 'striptags',
+		'section' => 'striptags',
+	),
+	'catchAllUnset' => null,
+) );*/
+/* disabled for now, was stopping js detect */
+
+require_once 'tiki-setup.php';
+require_once 'lib/quicktags/quicktagslib.php';
+
+$access->check_permission('tiki_p_admin');
+
+if ($prefs['javascript_enabled'] != 'y') {
+	$smarty->assign('msg', tra("JavaScript is required for this page"));
 	$smarty->display("error.tpl");
 	die;
 }
-$auto_query_args = array(
-	'tagId',
-	'category',
-	'sort_mode'
-);
-if (!isset($_REQUEST["tagId"])) {
-	$_REQUEST["tagId"] = 0;
+
+
+if ($prefs['feature_jquery_ui'] != 'y') {
+	$headerlib->add_jsfile('lib/jquery/jquery-ui/ui/minified/jquery-ui.min.js');
 }
-$smarty->assign('tagId', $_REQUEST["tagId"]);
-$smarty->assign('table_headers', array(
-	'taglabel' => tra('Label') ,
-	'taginsert' => tra('Insert') ,
-	'tagicon' => tra('Icon') ,
-	'tagcategory' => tra('Category') ,
-));
-if ($_REQUEST["tagId"]) {
-	$info = $quicktagslib->get_quicktag($_REQUEST["tagId"]);
+
+$sections = array( 'global', 'wiki page', 'trackers', 'blogs', 'calendar', 'cms', 'faqs', 'newsletters', 'forums', 'maps');
+
+if( isset($_REQUEST['section']) && in_array($_REQUEST['section'], $sections) ) {
+	$section = $_REQUEST['section'];
 } else {
-	$info = array();
-	$info['taglabel'] = '';
-	$info['taginsert'] = '';
-	$info['tagicon'] = '';
+	$section = reset($sections);
 }
-if (isset($_REQUEST["remove"])) {
-	$area = "delquicktag";
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$quicktagslib->remove_quicktag($_REQUEST["remove"]);
+if( isset($_REQUEST['comments']) && $_REQUEST['comments'] == 'on') {
+	$comments = true;
+} else {
+	$comments = false;
+}
+
+$auto_query_args = array('section', 'comments');
+
+if( isset($_REQUEST['save'], $_REQUEST['pref']) ) {
+	$prefName = 'toolbar_' . $section . ($comments ? '_comments' : '');
+	$tikilib->set_preference( $prefName, $_REQUEST['pref'] );
+}
+
+$current = $tikilib->get_preference( 'toolbar_' . $section . ($comments ? '_comments' : '') );
+if (!empty($current)) {
+	$current = preg_replace( '/\s+/', '', $current );
+	$current = trim( $current, '/' );
+	$current = explode( '/', $current );
+	$loadedRows = count($current);
+	foreach( $current as & $line ) {
+		$line = explode( ',', $line );
+	}
+
+	$rowCount = max($loadedRows, 1) + 1;
+} else {
+	$rowCount = 1;
+}
+$init = '';
+$setup = '';
+$map = array();
+foreach( Quicktag::getList() as $name ) {
+	$used = false;
+	foreach( $current as & $line ) {
+		if (in_array($name, $line) && $name != '-') {
+			$used = true;
+			break;
+		}
+	}
+	$tag = Quicktag::getTag($name);
+	if( ! $tag ) {
+		continue;
+	}
+	$wys = strlen($tag->getWysiwygToken()) ? 'qt-wys' : '';
+	$wiki = strlen($tag->getWikiHtml('')) ? 'qt-wiki' : '';
+	if (strpos($name, 'wikiplugin_') !== false) {
+		$plug =  'qt-plugin';
+		$label = substr($name, 11);
 	} else {
-		key_get($area);
+		$plug =  '';
+		$label = $name;
+	}
+	$icon = $tag->getIconHtml();
+	$map[$name] = <<<JS
+item = document.createElement('li');
+item.className = 'quicktag qt-$name $wys $wiki $plug';
+item.innerHTML = '$icon$label';
+JS;
+	if (!$used) {
+
+		$init .= $map[$name];
+		$init .= "list.append(item);\n";
 	}
 }
-if (isset($_REQUEST["save"])) {
-	$quicktagslib->replace_quicktag($_REQUEST["tagId"], $_REQUEST["taglabel"], $_REQUEST['taginsert'], $_REQUEST['tagicon'], $_REQUEST['tagcategory']);
-	$info = array();
-	$info['taglabel'] = '';
-	$info['taginsert'] = '';
-	$info['tagicon'] = '';
-	$info['tagcategory'] = '';
-	$smarty->assign('name', '');
+
+foreach( $current as $k => $l ) {
+	foreach( $l as $name ) {
+		if( isset($map[$name]) ) {
+			$init .= $map[$name];
+			$init .= "\$jq('#row-$k').append(item);";
+		}
+	}
 }
-$smarty->assign('info', $info);
-if (!isset($_REQUEST["sort_mode"])) {
-	$sort_mode = 'tagId_desc';
-} else {
-	$sort_mode = $_REQUEST["sort_mode"];
+$rowStr = '';
+for( $i = 0; $rowCount > $i; ++$i ) {
+	$rowStr .= !empty($rowStr) && $i < $rowCount ? ',' : '';
+	$rowStr .= "#row-$i";
 }
-$smarty->assign_by_ref('sort_mode', $sort_mode);
-if (!isset($_REQUEST["offset"])) {
-	$offset = 0;
-} else {
-	$offset = $_REQUEST["offset"];
+$headerlib->add_jq_onready( <<<JS
+
+var list = \$jq('#full-list');
+var item;
+$init
+
+\$jq('$rowStr').sortable({
+	connectWith: '#full-list, .row',
+	forcePlaceholderSize: true,
+	forceHelperSize: true
+});
+\$jq('#full-list').sortable({
+	connectWith: '.row',
+	forcePlaceholderSize: true,
+	forceHelperSize: true,
+	remove: function(event, ui) {	// special handling for separator to allow duplicates
+		if (\$jq(ui.item).text() == '-') {
+			\$jq(this).prepend(\$jq(ui.item).clone());	// leave a copy at the top of the full list
+		}
+	},
+	receive: function(event, ui) {
+		if (\$jq(ui.item).text() == '-') {
+			\$jq(this).children().remove('.qt--');		// remove all seps
+			\$jq(this).prepend(\$jq(ui.item).clone());	// put one back at the top
+		}
+	}
+}); 							//.disableSelection();
+
+window.quicktags_sortable = Object();
+window.quicktags_sortable.saveRows = function() {
+	var lists = [];
+	var ser = \$jq('.row').map(function(){				/* do this on everything of class 'row' */
+		return \$jq(this).children().map(function(){	/* do this on each child node */
+			return \$jq(this).hasClass('qt-plugin') ?	/* put back label prefix for plugins */
+				'wikiplugin_' + \$jq(this).text() : \$jq(this).text();
+		}).get().join(",")								/* put commas inbetween */
+	});
+	if (typeof(ser) == 'object' && ser.length > 1) {
+		ser = \$jq.makeArray(ser).join('/');			// row separators
+	} else {
+		ser = ser[0];
+	}
+	\$jq('#qt-form-field').val(ser);
 }
-$smarty->assign_by_ref('offset', $offset);
-if (isset($_REQUEST["find"])) {
-	$find = $_REQUEST["find"];
-} else {
-	$find = '';
-}
-$smarty->assign('find', $find);
-if (isset($_REQUEST["category"])) {
-	$category = $_REQUEST["category"];
-	if ($category == 'All') $category = '';
-	elseif ($category == 'wiki page') $category = 'wiki';
-	elseif ($category == 'cms') $category = 'articles';
-} else {
-	$category = '';
-}
-$smarty->assign('category', $category);
-$list_categories = array();
-foreach($sections as $k => $v) {
-	if ($prefs[$v['feature']] != 'y' || !isset($v['objectType'])) continue;
-	if ($k == 'wiki page') $k = 'wiki';
-	elseif ($k == 'cms') $k = 'articles';
-	$list_categories[$k] = tra(ucwords($v['objectType']));
-}
-asort($list_categories);
-$smarty->assign_by_ref('list_categories', $list_categories);
-$quicktags = $quicktagslib->list_quicktags($offset, $maxRecords, $sort_mode, $find, ($category == '' ? array_keys($list_categories) : $category));
-$smarty->assign_by_ref('quicktags', $quicktags["data"]);
-$smarty->assign('cant', $quicktags['cant']);
-$icon_path = array(
-	"images",
-	"img/icons",
-	"img/icn",
-	"pics/icons"
+
+\$jq('.qt-filter').click( function () {
+
+	var showwiki = \$jq('#qt-wiki-filter').attr('checked');
+	var showwys = \$jq('#qt-wys-filter').attr('checked');
+	var showplugin = \$jq('#qt-plugin-filter').attr('checked');
+	
+	\$jq('#full-list').children().hide();		// reset
+	
+	\$jq('#full-list').children().each( function() {
+		
+		var haswiki = \$jq(this).hasClass('qt-wiki');
+		var haswys = \$jq(this).hasClass('qt-wys');
+		var hasplugin = \$jq(this).hasClass('qt-plugin');
+		
+		if (showplugin) {
+			if ((showwiki && haswiki) || (showwys && haswys) || (!showwys && !showwiki && hasplugin)) {
+				\$jq(this).show();	
+			}
+		} else {
+			if (!hasplugin && ((showwiki && haswiki) || (showwys && haswys))) {
+				\$jq(this).show();	
+			}
+		}
+	});
+});
+
+JS
 );
-$list_icons = $quicktagslib->list_icons($icon_path);
-$smarty->assign_by_ref('list_icons', $list_icons);
-// disallow robots to index page:
-$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
-if ($prefs['feature_ajax'] == 'y') {
-	global $ajaxlib;
-	require_once ('lib/ajax/ajaxlib.php');
-	$ajaxlib->registerTemplate('tiki-admin_quicktags_content.tpl');
-	$ajaxlib->registerTemplate('tiki-admin_quicktags_edit.tpl');
-}
-// Display the template
-$smarty->assign('mid', 'tiki-admin_quicktags.tpl');
-$smarty->display("tiki.tpl");
+	
+
+$headerlib->add_cssfile('css/admin.css');
+
+$smarty->assign('comments', $comments);
+$smarty->assign( 'loaded', $section );
+$smarty->assign( 'rows', range( 0, $rowCount - 1 ) );
+$smarty->assign( 'sections', $sections );
+$smarty->assign( 'mid', 'tiki-admin_quicktags.tpl' );
+$smarty->display( 'tiki.tpl' );
+
+?>

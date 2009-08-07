@@ -11,9 +11,9 @@ function wikiplugin_groupmailcore_help() {
 
 function wikiplugin_groupmailcore_info() {
 	return array(
-		'name' => tra('GroupMail'),
+		'name' => tra('GroupMailCore'),
 		'documentation' => '',
-		'description' => tra('Displays GroupMail functions on a wiki page'),
+		'description' => tra('Displays GroupMail functions on a wiki page. Usually set up using a plugin alias created by the GroupMail profile.'),
 		'prefs' => array('wikiplugin_groupmailcore', 'feature_trackers'),
 		//'extraparams' => true,
 		'params' => array(

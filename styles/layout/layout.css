@@ -570,6 +570,54 @@ ul.categories li{
 	padding: 0;
 }
 
+/* New Quicktags (toolbars) */
+
+a.quicktag {
+	padding: 0 .5em 0 0;
+}
+
+a.qt-plugin {
+}
+
+a.qt-plugin div {
+	/* .iconmenu */
+	background-color: #CD8;
+	border: thin #690 solid;
+	margin: 0 .4em 0 0;
+	padding: 2px .4em 0 .2em;
+	color: #030;
+	font-size: 10px;
+}
+
+a.qt-plugin:hover {
+	text-decoration: none;
+}
+
+a.qt-plugin div img { /* div.iconmenu img.icon */
+	margin-bottom: 4px;
+}
+
+span.quicktag-list {
+	padding: 0 0 0 .5em;
+	line-height: 20px;
+	border-left: medium double lightgray;
+}
+
+.helptool-admin {
+	float: right;
+	border-left: medium double lightgrey;
+	padding-left:8px;
+	margin-left:8px;
+}
+
+.quicktags-picker {
+	position: absolute;
+	width: 300px;
+	background-color: white;
+	border: thin solid black;
+	z-index: 300;
+}
+
 /* New Help section */
 div#tikihelp {
 	position: fixed;
