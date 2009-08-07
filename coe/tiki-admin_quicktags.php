@@ -16,16 +16,15 @@ require_once 'lib/quicktags/quicktagslib.php';
 
 $access->check_permission('tiki_p_admin');
 
-if ($prefs['feature_jquery'] == 'y') {
-	if ($prefs['feature_jquery_ui'] != 'y' && $prefs['feature_mootools'] != 'y') {
-		$headerlib->add_jsfile('lib/jquery/jquery-ui/ui/minified/jquery-ui.min.js');
-	}
-} else if ($prefs['feature_mootools'] != 'y') {	// jquery not assumed as enabled (yet)
-	include_once('lib/smarty_tiki/block.self_link.php');
-	$button = smarty_block_self_link(array('_script'=>'tiki-admin.php', 'page'=>'features', 'cookietab'=>'5', '_icon'=>'arrow_right'), tra('Enable feature'), $smarty);
-	$smarty->assign('msg', tra("This feature is disabled"). ' ' . $button . ": feature_jquery");
+if ($prefs['javascript_enabled'] != 'y') {
+	$smarty->assign('msg', tra("JavaScript is required for this page"));
 	$smarty->display("error.tpl");
 	die;
+}
+
+
+if ($prefs['feature_jquery_ui'] != 'y') {
+	$headerlib->add_jsfile('lib/jquery/jquery-ui/ui/minified/jquery-ui.min.js');
 }
 
 $sections = array( 'global', 'wiki page', 'trackers', 'blogs', 'calendar', 'cms', 'faqs', 'newsletters', 'forums', 'maps');
@@ -95,30 +94,24 @@ JS;
 	if (!$used) {
 
 		$init .= $map[$name];
-		if ($prefs['feature_jquery'] == 'y') {
-			$init .= "list.append(item);\n";
-		} else {
-			$init .= 'list.adopt(item);';
-		}
+		$init .= "list.append(item);\n";
 	}
 }
 
-if ($prefs['feature_jquery'] == 'y' && $prefs['feature_jquery_ui'] == 'y') {	// would be nice to lose all this soon :)
-
-	foreach( $current as $k => $l ) {
-		foreach( $l as $name ) {
-			if( isset($map[$name]) ) {
-				$init .= $map[$name];
-				$init .= "\$jq('#row-$k').append(item);";
-			}
+foreach( $current as $k => $l ) {
+	foreach( $l as $name ) {
+		if( isset($map[$name]) ) {
+			$init .= $map[$name];
+			$init .= "\$jq('#row-$k').append(item);";
 		}
 	}
-	$rowStr = '';
-	for( $i = 0; $rowCount > $i; ++$i ) {
-		$rowStr .= !empty($rowStr) && $i < $rowCount ? ',' : '';
-		$rowStr .= "#row-$i";
-	}
-	$headerlib->add_jq_onready( <<<JS
+}
+$rowStr = '';
+for( $i = 0; $rowCount > $i; ++$i ) {
+	$rowStr .= !empty($rowStr) && $i < $rowCount ? ',' : '';
+	$rowStr .= "#row-$i";
+}
+$headerlib->add_jq_onready( <<<JS
 
 var list = \$jq('#full-list');
 var item;
@@ -190,64 +183,8 @@ window.quicktags_sortable.saveRows = function() {
 });
 
 JS
-	);
+);
 	
-}	// end jq
-
-if ($prefs['feature_mootools'] == 'y' && ($prefs['feature_jquery'] != 'y' || $prefs['feature_jquery_ui'] != 'y')) {
-	
-	foreach( $current as $k => $l ) {
-		foreach( $l as $name ) {
-			if( isset($map[$name]) ) {
-				$init .= $map[$name];
-				$init .= "\$('row-$k').adopt(item);";
-			}
-		}
-	}
-	
-	for( $i = 0; $rowCount > $i; ++$i )
-		$setup .= <<<JS
-window.quicktags_sortable.addLists( $('row-$i') );
-JS;
-
-	$headerlib->add_js( <<<JS
-window.addEvent( 'domready', function(event) {
-	var item;
-	var list = $('full-list');
-	$init
-	window.quicktags_sortable = new Sortables( $('full-list'), {
-		constrain: false,
-		clone: true,
-		revert: true
-	} );
-
-	$setup
-
-	var seri = function(element) {
-		if (element.hasChildNodes()) {
-			return element.lastChild.nodeValue;
-		} else {
-			return element.innerHTML;
-		}
-	};
-
-	window.quicktags_sortable.saveRows = function() {
-		window.quicktags_sortable.removeLists($('full-list'));
-		var lists = [];
-		var ser = window.quicktags_sortable.serialize(false, seri );
-		if (typeof(ser[0]) == 'object' && (ser[0] instanceof Array)) {
-			for( var i = 0; ser.length > i; ++i )
-				lists.push( ser[i].join(',') );
-		} else {
-			lists.push( ser.join(',') );
-		}
-
-		$('qt-form-field').value = lists.join('/');
-	}
-} );
-JS
-	);
-}	// end if mootools
 
 $headerlib->add_cssfile('css/admin.css');
 
