@@ -42,7 +42,11 @@ class CalendarLib extends TikiLib {
 					$categories = $categlib->get_jailed( (array) $val );
 
 					$cat_count = count( $categories );
-					$join_tables .= " inner join `tiki_objects` as tob on (tob.`itemId`= tcal.`calendarId` and tob.`type`= ?) inner join `tiki_category_objects` as tc on (tc.`catObjectId`=tob.`objectId` and tc.`categId` IN(" . implode(', ', array_fill(0, $cat_count, '?')) . ")) ";
+					$join_tables .= " inner join `tiki_objects` as tob on (tob.`itemId`= tcal.`calendarId` and tob.`type`= ?) inner join `tiki_category_objects` as tc on (tc.`catObjectId`=tob.`objectId` and tc.`categId` IN(" . implode(', ', array_fill(0, $cat_count, '?')) . "))";
+					if ($mid = "")
+						$getUncategorized = " where (tob.`itemId`=tcal.`calendarId` and )";
+					else
+						$getUncategorized = "and (tob.`itemId`!=tcal.`calendarId` and tob.`type`='calendar')";
 
 					if( $cat_count > 1 ) {
 						$distinct = ' DISTINCT ';

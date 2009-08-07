@@ -48,7 +48,7 @@
 		{$calendar.name|escape}<br />{tr}or{/tr}&nbsp;
 		<input type="submit" name="changeCal" value="{tr}Go to{/tr}" />
 	{/if}
-		<select name="save[calendarId]" id="calid" onchange="javascript:document.getElementById('editcalitem').submit();">
+		<select name="save[calendarId]" id="calid">
 			{foreach item=it key=itid from=$listcals}
 				<option value="{$it.calendarId}" style="background-color:#{$it.custombgcolor};color:#{$it.customfgcolor};"
 				{if $calitem.calendarId}

@@ -77,7 +77,7 @@
   <tr>
     <td class="editblogform"><label>{tr}Quicktags{/tr}</label></td>
     <td class="editblogform">
-      {include file='tiki-edit_help_tool.tpl' area_name='blogedit'}
+      {quicktags area_name='blogedit'}
     </td>
   </tr>
 {/if}
@@ -87,12 +87,12 @@
   <tr>
     <td class="editblogform">
       <br />
-      {include file='textareasize.tpl' area_name='blogedit' formId='editpageform'}
+      {quicktags area_name='blogedit'}{* used to be also: formId='editpageform' *}
       <br />
 
       {if $prefs.quicktags_over_textarea neq 'y'}
         <br /><br />
-        {include file='tiki-edit_help_tool.tpl' area_name="blogedit"}
+        {quicktags area_name="blogedit"}
       {/if}
     </td>
     

@@ -259,6 +259,8 @@ class QuicktagFckOnly extends Quicktag
 			return new self( 'FontSize' );
 		case 'source':
 			return new self( 'Source' );
+		case 'autosave':
+			return new self( 'ajaxAutoSave' );
 		}
 	} // }}}
 
@@ -773,6 +775,22 @@ class QuicktagsList
 
 		return $list;
 	} // }}}
+
+	public	function addTag ( $name, $unique = false ) {
+		if ( $unique && $this->contains($name) ) {
+			return false;
+		}
+		array_push($this->lines[0][sizeof($this->lines)-1], Quicktag::getTag( $name ));
+		return true;
+	}
+
+	public	function insertTag ( $name, $unique = false ) {
+		if ( $unique && $this->contains($name) ) {
+			return false;
+		}
+		array_unshift($this->lines[0][0], Quicktag::getTag( $name ));	
+		return true;
+	}
 
 	private function addLine( array $tags ) // {{{
 	{

@@ -14,6 +14,12 @@
 		</div>
 	</form>
 	<div class="rows">
+		{foreach from=$rows item=i}
+			<label for="row-{$i|escape}">{tr}Row{/tr}&nbsp;{$i}:</label>
+			<ul id="row-{$i|escape}" class="row"></ul>
+		{/foreach}
+	</div>
+	<div class="rows">
 		<label for="#full-list">{tr}All Quicktags:{/tr}</label><br/>
 		{if $prefs.feature_jquery eq 'y'}<div id="qt_filter_div">
 			{tr}Filters{/tr}:
@@ -22,12 +28,6 @@
 			<input id="qt-plugin-filter" class="qt-filter" type="checkbox" checked /><label>{tr}Plugins{/tr}</label>
 		</div>{/if}
 		<ul id="full-list" class="full"></ul>
-	</div>
-	<div class="rows">
-		{foreach from=$rows item=i}
-			<label for="row-{$i|escape}">{tr}Row{/tr}&nbsp;{$i}:</label>
-			<ul id="row-{$i|escape}" class="row"></ul>
-		{/foreach}
 	</div>
 	<form method="post" action="tiki-admin_quicktags.php" onsubmit="return window.quicktags_sortable.saveRows()">
 		<div class="selectDiv">

@@ -45,7 +45,8 @@ if ($rawcals['cant'] == 0 && $tiki_p_admin_calendar == 'y') {
 
 $rawcals['data'] = Perms::filter( array( 'type' => 'calendar' ), 'object', $rawcals['data'], array( 'object' => 'calendarId' ), 'view_calendar' );
 
-foreach ($rawcals["data"] as $cal_id=>$cal_data) {
+foreach ($rawcals["data"] as $cal_data) {
+  $cal_id = $cal_data['calendarId'];
   $calperms = Perms::get( array( 'type' => 'calendar', 'object' => $cal_id ) );
   if ($cal_data["personal"] == "y") {
     if ($user) {
@@ -60,12 +61,13 @@ foreach ($rawcals["data"] as $cal_id=>$cal_data) {
       $cal_data["tiki_p_change_events"] = 'n';
     }
   } else {
-      $cal_data["tiki_p_view_calendar"] = $calperms->view_calendar ? 'y' : 'n';
-      $cal_data["tiki_p_view_events"] = $calperms->view_events ? 'y' : 'n';
-      $cal_data["tiki_p_add_events"] = $calperms->add_events ? 'y' : 'n';
-      $cal_data["tiki_p_change_events"] = $calperms->change_events ? 'y' : 'n';
+      $cal_data["tiki_p_view_calendar"] = $calperms->view_calendar;
+      $cal_data["tiki_p_view_events"] = $calperms->view_events;
+      $cal_data["tiki_p_add_events"] = $calperms->add_events;
+      $cal_data["tiki_p_change_events"] = $calperms->change_events;
   }
 	$caladd["$cal_id"] = $cal_data;
+
 }
 $smarty->assign('listcals',$caladd);
 
@@ -183,7 +185,6 @@ if (isset($save['start']) && isset($save['end'])) {
 if (isset($_POST['act'])) {
 	if (empty($save['user'])) $save['user'] = $user;
 	$newcalid = $save['calendarId'];
-
 	if ((empty($save['calitemId']) and $caladd["$newcalid"]['tiki_p_add_events'])
 	or (!empty($save['calitemId']) and $caladd["$newcalid"]['tiki_p_change_events'])) {
 		if (empty($save['name'])) $save['name'] = tra("event without name");
@@ -195,7 +196,7 @@ if (isset($_POST['act'])) {
 				$save['status'] = $calendar['defaulteventstatus'];
 			}
 		}
-
+		
 		if (array_key_exists('recurrent',$_POST) && ($_POST['recurrent'] == 1) && $_POST['affect']!='event') {
 			$impossibleDates = false;
 			if ($_POST['end_Hour'] < $_POST['start_Hour']) {

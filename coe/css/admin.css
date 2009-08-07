@@ -141,9 +141,14 @@ div.adminanchors a {float: left}
 	margin: 0;
 }
 
+.quicktags-admin #qt_filter_div {
+	width: 240px;
+}
+
 .quicktags-admin .rows {
-	min-height: 490px;
+	width: 95%;
 	float: left;
+	clear: both;
 	padding: 1em 2em 1em 0;
 }
 
@@ -168,7 +173,8 @@ div.adminanchors a {float: left}
 }
 
 .quicktags-admin .rows .row {
-	height: 20px;
+	width: 95%;
+	min-height: 20px;
 	min-width: 500px;
 	overflow-y: auto;
 	overflow-x: hidden;
