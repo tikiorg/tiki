@@ -185,7 +185,7 @@ CREATE TABLE `sessions` (
   `expireref` varchar(64),
   `data` text NOT NULL,
   PRIMARY KEY (`sesskey`),
-  KEY `expiry` (`expiry`)
+  KEY `expiry` (expiry)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_actionlog`;
@@ -1086,7 +1086,7 @@ CREATE TABLE `tiki_history` (
   `is_html` TINYINT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`pageName`,`version`),
   KEY `user` (`user`),
-  KEY(historyId)
+  KEY (historyId)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_hotwords`;
@@ -3474,9 +3474,9 @@ CREATE TABLE `tiki_pages_translation_bits` (
   `original_translation_bit` int(10) NULL,
   `flags` SET('critical') NULL DEFAULT '',
   PRIMARY KEY (`translation_bit_id`),
-  KEY(`page_id`),
-  KEY(`original_translation_bit`),
-  KEY(`source_translation_bit`)
+  KEY (`page_id`),
+  KEY (`original_translation_bit`),
+  KEY (`source_translation_bit`)
 );
 
 DROP TABLE IF EXISTS `tiki_pages_changes`;
@@ -3486,7 +3486,7 @@ CREATE TABLE `tiki_pages_changes` (
   `segments_added` int(10),
   `segments_removed` int(10),
   `segments_total` int(10),
-  PRIMARY KEY(page_id, version)
+  PRIMARY KEY (page_id, version)
 );
 
 DROP TABLE IF EXISTS `tiki_minichat`;
@@ -3566,7 +3566,7 @@ CREATE TABLE `tiki_webservice_template` (
   `output` VARCHAR(15) NOT NULL,
   `content` TEXT NOT NULL,
   `last_modif` INT,
-  PRIMARY KEY( service, template )
+  PRIMARY KEY ( service, template )
 ) ENGINE=MyISAM ;
 
 DROP TABLE IF EXISTS `tiki_groupalert`;
@@ -3601,7 +3601,7 @@ CREATE TABLE `tiki_sefurl_regex_out` (
   `feature` varchar(256) NULL default NULL,
   `comment` varchar(256),
   `order` int(11) NULL default 0,
-  PRIMARY KEY(`id`),
+  PRIMARY KEY (`id`),
   UNIQUE KEY `left` (`left`(128)),
   INDEX `idx1` (silent, type, feature(30))
 );
@@ -3718,7 +3718,7 @@ DROP TABLE IF EXISTS `tiki_perspectives`;
 CREATE TABLE `tiki_perspectives` (
   `perspectiveId` int NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
-  PRIMARY KEY( perspectiveId )
+  PRIMARY KEY ( perspectiveId )
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_perspective_preferences`;
@@ -3726,6 +3726,6 @@ CREATE TABLE `tiki_perspective_preferences` (
   `perspectiveId` int NOT NULL,
   `pref` varchar(40) NOT NULL,
   `value` text,
-  PRIMARY KEY( perspectiveId, pref )
+  PRIMARY KEY ( perspectiveId, pref )
 ) ENGINE=MyISAM;
 

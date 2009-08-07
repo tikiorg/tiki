@@ -31,15 +31,20 @@ if NOT "%2" == "" (
 rem tiki.sql actually is MySQL code (our DB codebase) so just copy it for finished mysql scripts
 cp ../tiki.sql ../tiki-%VERSION%-mysql.sql
 cp ../tiki.sql ../tiki-%VERSION%-mysqli.sql
+echo mysql scripts converted
 
 rem do convert
 if %TIKISERVER% == "" (
 	rem convert locally
 	echo Local run of php ...
 	php -f mysql3topgsql72.php > pgsql72.sql.tmp
-	php -f mysql3tosybase.php > sybase.sql.tmp
+	echo pgsql scripts converted
 	php -f mysql3tosqlite.php > sqlite.sql.tmp
-	php -f mysql3tooci8.php > oci8.sql.tmp
+	echo sqlite scripts converted
+rem	php -f mysql3tosybase.php > sybase.sql.tmp
+rem	echo sybase scripts converted
+rem	php -f mysql3tooci8.php > oci8.sql.tmp
+rem	echo oracle scripts converted
 ) else (
 	rem convert remotely and download
 	echo Running remote scripts and downloading script files ...
@@ -59,6 +64,7 @@ mv %VERSION%.to_pgsql72.sql ../tiki-%VERSION%-pgsql.sql
 mv %VERSION%.to_sybase.sql ../tiki-%VERSION%-sybase.sql
 mv %VERSION%.to_sqlite.sql ../tiki-%VERSION%-sqlite.sql
 mv %VERSION%.to_oci8.sql ../tiki-%VERSION%-oci8.sql
+echo moved the converted scripts
 
 echo Done.
 

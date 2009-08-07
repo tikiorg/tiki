@@ -127,9 +127,9 @@ function parse($stmt)
 		"/CREATE INDEX \"?([a-z0-9_]+)\"? ON \"?([a-z0-9_]+)\"? \((.*)\)/ei",
 		"create_explicit_index('$1','$2','$3')",
 		$stmt);
-	
 	// create indexes from KEY …
-	$stmt=preg_replace("/,\n[ \t]*KEY \"?([a-zA-Z0-9_]+)?\"? ?\((.+)\)/e", "create_index('$1','$2')", $stmt);
+	$stmt = preg_replace("/,\n[ \t]*KEY \"?([a-zA-Z0-9_]+)\"? \((.+)\)/e", 'create_index("$1", "$2")', $stmt);
+	$stmt = preg_replace("/,\n[ \t]*KEY \((.+)\)/e", 'create_index("", "$1")', $stmt);
 	
 	
 	// convert inserts
@@ -191,8 +191,17 @@ function create_index($name, $columnlist, $type='')
 {
 	global $table_name;
 	global $poststmt;
-	$poststmt .= 'CREATE ' . ( !empty($type)?$type.' ' : '' ) . 'INDEX "'.$table_name.'_'.$name.'" ON "'.$table_name.'" (';
+	
 	$cols = split(',', $columnlist);
+	// if the index has no name, give it one – based on columns
+	/*if(empty($name))
+	{
+		$name = $cols[0];
+		for($i=1; $i<count($cols); $i++)
+		{
+			$name .= '_' . $cols[$i];
+		}
+	}*/
 	
 	// trim column names and add quotes
 	$allvals = '';
@@ -211,14 +220,13 @@ function create_index($name, $columnlist, $type='')
 		// $col = preg_replace("/([\"a-z0-9_]+) *\(\"([0-9]+)\"\)/i","substr($1, 0, $2)",$col);
 		$allvals .= $col;
 	}
-	echo $allvals."\n";
 	// Put commas between elements.
 	$allvals = preg_replace('/""/', '","', $allvals);
 	//$allvals = preg_replace('/"substr/', '",substr', $allvals);
 	//$allvals = preg_replace("/(substr\(.*\))\"/", "$1,\",substr", $allvals);
-
+	
+	$poststmt .= 'CREATE ' . ( !empty($type)?$type.' ' : '' ) . 'INDEX "'.$table_name.'_'.$name.'" ON "'.$table_name.'" (';
 	$poststmt .= $allvals . ");\n";
-	echo $allvals."\n";
 }
 
 function do_updates($tab,$content)
