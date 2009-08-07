@@ -206,7 +206,7 @@ CREATE TABLE messu_sent (
 
 DROP TABLE IF EXISTS 'sessions';
 
-CREATE TABLE 'sessions'(
+CREATE TABLE sessions (
   sesskey char(32) NOT NULL,
   expiry bigint unsigned NOT NULL,
   expireref varchar(64),
@@ -1225,7 +1225,7 @@ CREATE TABLE tiki_history (
   is_html TINYINT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (pageName,version),
   KEY user (user),
-  KEY(historyId)
+  KEY (historyId)
 ) ENGINE=MyISAM;
 
 
@@ -4566,9 +4566,9 @@ CREATE TABLE tiki_pages_translation_bits (
   original_translation_bit bigint NULL,
   flags SET('critical') NULL DEFAULT '',
   PRIMARY KEY (translation_bit_id),
-  KEY(page_id),
-  KEY(original_translation_bit),
-  KEY(source_translation_bit)
+  KEY (page_id),
+  KEY (original_translation_bit),
+  KEY (source_translation_bit)
 );
 
 
@@ -4580,7 +4580,7 @@ CREATE TABLE tiki_pages_changes (
   segments_added bigint,
   segments_removed bigint,
   segments_total bigint,
-  PRIMARY KEY(page_id, version)
+  PRIMARY KEY (page_id, version)
 );
 
 
@@ -4675,7 +4675,7 @@ CREATE TABLE tiki_webservice_template (
   output VARCHAR(15) NOT NULL,
   content TEXT NOT NULL,
   last_modif INT,
-  PRIMARY KEY( service, template )
+  PRIMARY KEY ( service, template )
 ) ENGINE=MyISAM ;
 
 
@@ -4716,7 +4716,7 @@ CREATE TABLE tiki_sefurl_regex_out (
   feature varchar(256) NULL default NULL,
   comment varchar(256),
   order bigint NULL default 0,
-  PRIMARY KEY(id),
+  PRIMARY KEY (id),
   UNIQUE KEY left (left(128)),
   "INDEX" idx1 (silent, type, feature(30))
 );
@@ -4913,7 +4913,7 @@ DROP TABLE IF EXISTS 'tiki_perspectives';
 CREATE TABLE tiki_perspectives (
   perspectiveId int NOT NULL AUTO_INCREMENT,
   name varchar(100) NOT NULL,
-  PRIMARY KEY( perspectiveId )
+  PRIMARY KEY ( perspectiveId )
 ) ENGINE=MyISAM;
 
 
@@ -4923,7 +4923,7 @@ CREATE TABLE tiki_perspective_preferences (
   perspectiveId int NOT NULL,
   pref varchar(40) NOT NULL,
   value text,
-  PRIMARY KEY( perspectiveId, pref )
+  PRIMARY KEY ( perspectiveId, pref )
 ) ENGINE=MyISAM;
 
 

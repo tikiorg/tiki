@@ -134,8 +134,8 @@ function parse($stmt)
 	
 	
 	// convert inserts
-	$stmt=preg_replace("/INSERT INTO ([a-zA-Z0-9_]*).*\(([^\)]+)\) VALUES *(.*)/ie","do_inserts('$1','$2','$3')",$stmt);
-	$stmt=preg_replace("/INSERT IGNORE INTO ([a-zA-Z0-9_]*).*\(([^\)]+)\) VALUES *(.*)/ie","do_inserts('$1','$2','$3')",$stmt);
+	$stmt=preg_replace("/INSERT INTO ([a-zA-Z0-9_]*).*\(([^\)]+)\) VALUES[ \t\n]*(.*)/ie", 'do_inserts("$1", "$2", "$3")', $stmt);
+	$stmt=preg_replace("/INSERT IGNORE INTO ([a-zA-Z0-9_]*).*\(([^\)]+)\) VALUES *(.*)/ie", "do_inserts('$1','$2','$3')", $stmt);
 	
 	// convert updates
 	$stmt=preg_replace("/update ([a-zA-Z0-9_]+) set (.*)/e","do_updates('$1','$2')",$stmt);
@@ -242,11 +242,12 @@ function do_updates($tab,$content)
 	return($ret);
 }
 
-function do_inserts($tab,$content,$tail)
+function do_inserts($tab, $content, $tail)
 {
 	// for some reason are the quotes in $tail addslashed. i dont know why
-	$tail=preg_replace('/\\\"/','"',$tail);
-	//  echo "tail: $tail :tail";
+	$tail = preg_replace('/\\\"/', '"', $tail);
+	$tail = preg_replace('/\\\'/', '\'', $tail);
+	
 	$ret="INSERT INTO \"".$tab."\" (";
 	$cols=split(",",$content);
 	foreach ($cols as $vals) {

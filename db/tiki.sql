@@ -1167,7 +1167,7 @@ CREATE TABLE `tiki_languages` (
   PRIMARY KEY (`lang`)
 ) ENGINE=MyISAM;
 
-INSERT INTO tiki_languages(lang, language) VALUES('en','English');
+INSERT INTO tiki_languages (lang, language) VALUES ('en','English');
 
 DROP TABLE IF EXISTS `tiki_link_cache`;
 CREATE TABLE `tiki_link_cache` (
