@@ -1,25 +1,24 @@
 {* $Id$ *}
-{foreach from=$stat key=type item=typeStat}
-	{if count($stat) > 1}<h3>{$type|escape}</h3>{/if}
-	<table class="normal">
-		<tr>
-		{foreach from=$typeStat key=when item=item}
-			<th>
-				{if $when eq 'lastday'}{tr}Last Day{/tr}
-				{elseif $when eq 'day'}{tr}Day{/tr}
-				{elseif $when eq 'lastweek'}{tr}Last Week{/tr}
-				{elseif $when eq 'week'}{tr}Week{/tr}
-				{elseif $when eq 'lastmonth'}{tr}Last Month{/tr}
-				{elseif $when eq 'month'}{tr}Month{/tr}
-				{elseif $when eq 'lastyear'}{tr}Last Year{/tr}
-				{elseif $when eq 'year'}{tr}Year{/tr}{/if}
-			</th>
-		{/foreach}
-		</tr>
-		<tr>
-		{foreach from=$typeStat item=when}
-			 <td style="text-align:center;">{tr}{$when.added}{/tr}</td>
-		{/foreach}
-		</tr>
-	</table>
-{/foreach}
+{tabset}
+	{foreach from=$stat key=when item=typeStat}
+		{capture name='tabtitle'}
+			{if $when eq 'lastday'}{tr}Last Day{/tr}
+			{elseif $when eq 'day'}{tr}Day{/tr}
+			{elseif $when eq 'lastweek'}{tr}Last Week{/tr}
+			{elseif $when eq 'week'}{tr}Week{/tr}
+			{elseif $when eq 'lastmonth'}{tr}Last Month{/tr}
+			{elseif $when eq 'month'}{tr}Month{/tr}
+			{elseif $when eq 'lastyear'}{tr}Last Year{/tr}
+			{elseif $when eq 'year'}{tr}Year{/tr}{/if}
+		{/capture}	
+		{tab name=$smarty.capture.tabtitle}
+			 <ul>
+			{foreach from=$typeStat key=type item=list}
+				{foreach from=$list key=what item=nb} 
+					<li>{tr}{$what}{/tr}: {$nb}</li>
+				{/foreach}
+			{/foreach}
+			</ul>
+		{/tab}
+	{/foreach}
+{/tabset}
