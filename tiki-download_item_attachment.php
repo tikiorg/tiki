@@ -42,8 +42,12 @@ session_write_close();
 //print("File:$file<br />");
 //die;
 header ("Content-type: $type");
-header( "Content-Disposition: attachment; filename=\"$file\"" );
-//header ("Content-Disposition: inline; filename=\"".urlencode($file)."\"");
+if (isset($_REQUEST["display"])) {
+//die;
+	header ("Content-Disposition: inline; filename=\"".urlencode($file)."\"");
+} else {
+	header( "Content-Disposition: attachment; filename=\"$file\"" );
+}
 header("Expires: 0");
 header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 header("Pragma: public");
