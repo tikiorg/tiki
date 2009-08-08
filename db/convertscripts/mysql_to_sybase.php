@@ -1,14 +1,13 @@
 <?php
-// This file is not used since r20702. 20090808
 
 // Set tikiversion variable
-$tikiversion='4.0';
+require 'tikiversion.php';
 if(!isset($_GET['version'])) {
-   echo "version not given. Using default $tikiversion.<br />";
+	echo "version not given. Using default $tikiversion.<br />";
 } else {
-   if(preg_match('/\d\.\d/',$_GET['version'])) {
-      $tikiversion=$_GET['version'];
-   }
+	if(preg_match('/\d\.\d/',$_GET['version'])) {
+		$tikiversion=$_GET['version'];
+	}
 }
 
 

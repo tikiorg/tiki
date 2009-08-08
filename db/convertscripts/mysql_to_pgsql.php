@@ -1,7 +1,7 @@
 <?php
 
 // Set tikiversion variable
-$tikiversion='4.0';
+require 'tikiversion.php';
 if(!isset($_GET['version'])) {
 	echo "version not given. Using default $tikiversion.<br />";
 } else {
@@ -33,7 +33,7 @@ echo "<br />\n";
 $statements = preg_split("#(;\n)|(;\r\n)#", $data);
 
 // step though statements
-$fp=fopen($tikiversion.".to_pgsql72.sql","w");
+$fp=fopen($tikiversion.".to_pgsql.sql","w");
 foreach ($statements as $statement)
 {
 	$parsed = parse($statement);

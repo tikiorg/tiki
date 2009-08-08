@@ -1,12 +1,10 @@
 <?php
-// This file is not used since r20702. 20090808
-
 
 // Set tikiversion variable
 if (array_key_exists('SHELL', $_ENV)) {
 	$tikiversion='4.0';
 } else {
-	$tikiversion='4.0';
+	require 'tikiversion.php';
 	if(!isset($_GET['version'])) {
 		echo "version not given. Using default $tikiversion.<br />";
 	} else {
