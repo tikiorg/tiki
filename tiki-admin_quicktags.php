@@ -47,6 +47,11 @@ if( isset($_REQUEST['save'], $_REQUEST['pref']) ) {
 	$tikilib->set_preference( $prefName, $_REQUEST['pref'] );
 }
 
+if( isset($_REQUEST['reset'])  and $section != 'global' ) {
+	$prefName = 'toolbar_' . $section . ($comments ? '_comments' : '');
+	$tikilib->set_preference( $prefName, '');
+}
+
 $current = $tikilib->get_preference( 'toolbar_' . $section . ($comments ? '_comments' : '') );
 if (!empty($current)) {
 	$current = preg_replace( '/\s+/', '', $current );
@@ -175,6 +180,7 @@ $headerlib->add_cssfile('css/admin.css');
 $smarty->assign('comments', $comments);
 $smarty->assign( 'loaded', $section );
 $smarty->assign( 'rows', range( 0, $rowCount - 1 ) );
+$smarty->assign( 'rowCount', $rowCount );
 $smarty->assign( 'sections', $sections );
 $smarty->assign_by_ref('qtelement',$qtelement);
 $smarty->assign_by_ref('qtlist',$qtlist);

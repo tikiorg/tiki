@@ -12,6 +12,7 @@
 			<input name="comments" type="checkbox" onchange="this.form.submit()" {if $comments eq 'on'}checked{/if}/>
 			{if $prefs.javascript_enabled eq 'n'}<input name="load" type="submit" value="{tr}Load{/tr}"/>{/if}
 			<input type="submit" name="save" value="{tr}Save{/tr}"/>
+			{if $loaded neq 'global' }<input type="submit" name="reset" value="{tr}Reset to Global{/tr}"/>{/if}
 		</div>
 	<div class="rows">
 		{foreach from=$current item=line name=line}
@@ -21,7 +22,7 @@
 				<li class="{$qtelement[$tool].class}">{$qtelement[$tool].html}</li>
 			{/foreach}
 			</ul>
-			{if $smarty.foreach.line.last}
+			{if $smarty.foreach.line.last and $rowCount gt 1}
 				{assign var=total value=`$smarty.foreach.line.total+1`}
 			<label for="row-{$total|escape}">{tr}Row{/tr}&nbsp;{$total}:</label>
 				<ul id="row-{$total|escape}" class="row">
