@@ -64,7 +64,7 @@ function parse($stmt)
 	$stmt = preg_replace('/`/', '"', $stmt);
 	
 	// record table names
-	$stmt = preg_replace('/(DROP TABLE IF EXISTS |DROP TABLE |CREATE TABLE )"?([a-zA-Z0-9_]+)"? \(/e', 'sprintf("%s \"%s\" (", "$1", record_tablename("$2"))', $stmt);
+	$stmt = preg_replace('/(DROP TABLE IF EXISTS |DROP TABLE |CREATE TABLE )"?([a-zA-Z0-9_]+)"? \(/e', 'sprintf("%s\"%s\" (", "$1", record_tablename("$2"))', $stmt);
 	
 	// in key declarations, remove length if there
 	$stmt = preg_replace(
@@ -100,7 +100,7 @@ function parse($stmt)
 	
 	
 	// convert enums
-	$stmt=preg_replace("/\n[ \t]+([a-zA-Z0-9_]+) enum *\(([^\)]+)\)/e", "convert_enums('$1','$2')", $stmt);
+	$stmt=preg_replace("/\n[ \t]*\"?([a-zA-Z0-9_]+)\"? enum ?\((.*)\)/e", "convert_enums('$1','$2')", $stmt);
 	
 	// foreign keys
 	//	before: CONSTRAINT tablename \n FOREIGN KEY (colname) REFERENCES tablename(colname) \n ON UPDATE CASCADE ON DELETE SET NULL
@@ -155,6 +155,14 @@ function strip_paranthesisWithNumbers($txt)
 	return $txt;
 }
 
+function replace_apostroph_in_string($str){
+	//$str = preg_replace("/'(.*)\\\\'(.*)\\\\'(.*)'/U", "'$1''$2''$3'", $str);
+	// \\ regex, \\ in "-quoted string. Thus \\\\
+	$str = preg_replace("/\\\\'/U", "''", $str);
+	$str = preg_replace('/\\\\"/U', '"', $str);
+	return $str;
+}
+
 function record_tablename($tabnam)
 {
 	global $table_name;
@@ -162,7 +170,7 @@ function record_tablename($tabnam)
 	return $tabnam;
 }
 
-function create_explicit_index($name,$table_name,$content,$type='')
+function create_explicit_index($name, $table_name, $content, $type='')
 {
 	$cols=split(",",$content);
 	$allvals="";
@@ -196,14 +204,14 @@ function create_index($name, $columnlist, $type='')
 	
 	$cols = split(',', $columnlist);
 	// if the index has no name, give it one – based on columns
-	/*if(empty($name))
+	if(empty($name))
 	{
 		$name = $cols[0];
 		for($i=1; $i<count($cols); $i++)
 		{
 			$name .= '_' . $cols[$i];
 		}
-	}*/
+	}
 	
 	// trim column names and add quotes
 	$allvals = '';
@@ -252,9 +260,17 @@ function do_inserts($tablename, $columnlist, $values)
 	$cols = split(",", $columnlist);
 	foreach ($cols as $col) {
 		$col = trim($col);
-		$ret .= '"$col"';
+		// add quotes if column is not quoted yet
+		if (strpos($col, '"') === false) {
+			$ret .= '"'.$col.'"';
+		} else {
+			$ret .= $col;
+		}
 	}
-	//$ret = preg_replace("/\"\"/", "\",\"", $ret);
+	// seperate columnnames with commas
+	$ret = preg_replace('/""/', '","', $ret);
+	// do it the correct SQL standard way: use '' (2 apostr.) in strings instead of escaping with \'
+	$values = replace_apostroph_in_string($values);
 	$ret .= ') VALUES (' . $values . ')';
 
 	//$tail = preg_replace("/md5\(\'(.+)\'\)/e", "quotemd5('$1')", $tail);		// md5() does work, at least on pg 8.3
@@ -279,24 +295,37 @@ function quote_prim_cols($key,$content)
 	return $ret;
 }
 
-function convert_enums($colname,$content)
+/**
+ * @param $colname column name that has the enum as datatype
+ * @param $values list of values
+ * @return column definition
+ */
+function convert_enums($colname, $values)
 {
-	$enumvals=split(",",$content);
-	$isnum=true;
-	$length=0;
-	$colname=stripslashes($colname);
-	$ret="\n  $colname ";
-	foreach ($enumvals as $vals) {
-		if (!is_int($vals)) $isnum=false;
-		if (strlen($vals)>$length) $length=strlen($vals);
+	$enumvals = split(",", $values);
+	$isnum = true;
+	$maxlength = 0;
+	//$colname = stripslashes($colname);
+	$ret="\n\t" . $colname .' ';
+	foreach ($enumvals AS $val) {
+		if (!is_int($val)) {
+			$isnum = false;
+		}
+		if (strlen($val) > $maxlength){
+			$maxlength = strlen($val);
+		}
 	}
 	if ($isnum) {
-		if ($length < 4) $ret.="smallint ";
-		elseif ($length < 9) $ret.="integer ";
-		else $ret.="bigint ";
+		if ($maxlength < 4){
+			$ret .= 'smallint ';
+		} elseif ($maxlength < 9){
+			$ret .= 'integer ';
+		} else {
+			$ret .= 'bigint ';
+		}
 	} else {
-	$ret.="varchar($length) ";
+		$ret .= "varchar($maxlength) ";
 	}
-	$ret.="CHECK ($colname IN ($content))";
+	$ret .= 'CHECK ( "' . $colname . '" IN (' . $values . ') )';
 	return $ret;
 }
