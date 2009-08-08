@@ -67,15 +67,15 @@ function parse($stmt)
 	$stmt = preg_replace('/(DROP TABLE IF EXISTS |DROP TABLE |CREATE TABLE )"?([a-zA-Z0-9_]+)"? \(/e', 'sprintf("%s \"%s\" (", "$1", record_tablename("$2"))', $stmt);
 	
 	// in key declarations, remove length if there
-	//  PRIMARY KEY (`roleId`, `user`)
 	$stmt = preg_replace(
-		"/ KEY \((.*)\)/e",
-		'\' KEY (\' . strip_paranthesisWithNumbers("$1") . \')\'',
+		"/ KEY (\"[a-zA-Z0-9_]+\" )?\((.*)\)/e",
+		'\' KEY (\' . strip_paranthesisWithNumbers("$2") . \')\'',
 		$stmt);
 	
 	// drop ENGINE=MyISAM and AUTO_INCREMENT=1
-	$stmt=preg_replace('/ ENGINE=MyISAM/', '', $stmt);
+	$stmt=preg_replace('/ ENGINE ?= ?MyISAM/', '', $stmt);
 	$stmt=preg_replace('/ AUTO_INCREMENT=1/', '', $stmt);
+	
 	
 	//auto_increment things
 	$stmt=preg_replace("/int(eger)? NOT NULL auto_increment/i", "bigserial", $stmt);
@@ -84,23 +84,23 @@ function parse($stmt)
 	
 	
 	// integer types
-	$stmt=preg_replace("/tinyint\([1-4]\)/","smallint",$stmt);
-	$stmt=preg_replace("/int(eger)*\([1-4]\)( unsigned)*/","smallint",$stmt);
-	$stmt=preg_replace("/int(eger)*\([5-9]\)( unsigned)*/","integer",$stmt);
-	$stmt=preg_replace("/int(eger)*\(\d\d\)( unsigned)*/","bigint",$stmt);
+	$stmt=preg_replace("/tinyint\([1-4]\)( unsigned)?/", "smallint", $stmt);
+	$stmt=preg_replace("/int(eger)?\([1-4]\)( unsigned)?/","smallint",$stmt);
+	$stmt=preg_replace("/int(eger)?\([5-9]\)( unsigned)?/","integer",$stmt);
+	$stmt=preg_replace("/int(eger)?\(\d\d\)( unsigned)?/","bigint",$stmt);
 	
 	// timestamps
 	$stmt=preg_replace("/timestamp\([^\)]+\)/","timestamp(3)",$stmt);
 	
 	// blobs
-	$stmt=preg_replace("/longblob|tinyblob|blob/","bytea",$stmt);
+	$stmt=preg_replace("/longblob|tinyblob|blob/", "bytea", $stmt);
 	
 	// text fields
-	$stmt=preg_replace("/longtext/","text",$stmt);
+	$stmt=preg_replace("/longtext/", "text", $stmt);
 	
 	
 	// convert enums
-	$stmt=preg_replace("/\n[ \t]+([a-zA-Z0-9_]+) enum *\(([^\)]+)\)/e","convert_enums('$1','$2')",$stmt);
+	$stmt=preg_replace("/\n[ \t]+([a-zA-Z0-9_]+) enum *\(([^\)]+)\)/e", "convert_enums('$1','$2')", $stmt);
 	
 	// foreign keys
 	//	before: CONSTRAINT tablename \n FOREIGN KEY (colname) REFERENCES tablename(colname) \n ON UPDATE CASCADE ON DELETE SET NULL
@@ -129,13 +129,14 @@ function parse($stmt)
 		$stmt);
 	
 	// create indexes from KEY …
-	$stmt = preg_replace("/,\n[ \t]*KEY \"?([a-zA-Z0-9_]+)\"? \((.+)\)/e", 'create_index("$1", "$2")', $stmt);
-	$stmt = preg_replace("/,\n[ \t]*KEY ?\((.+)\)/e", 'create_index("", "$1")', $stmt);
+	$stmt = preg_replace("/,\n[ \t]*INDEX \"?([a-zA-Z0-9_]+)\"? ?\((.+)\)/e", 'create_index("$1", "$2")', $stmt);
+	$stmt = preg_replace("/,\n[ \t]*INDEX ?\((.+)\)/e",                       'create_index("", "$1")', $stmt);
+	$stmt = preg_replace("/,\n[ \t]*KEY \"?([a-zA-Z0-9_]+)\"? ?\((.+)\)/e",   'create_index("$1", "$2")', $stmt);
+	$stmt = preg_replace("/,\n[ \t]*KEY ?\((.+)\)/e",                         'create_index("", "$1")', $stmt);
 	
 	
 	// convert inserts
-	$stmt=preg_replace("/INSERT INTO ([a-zA-Z0-9_]*).*\(([^\)]+)\) VALUES[ \t\n]*(.*)/ie", 'do_inserts("$1", "$2", "$3")', $stmt);
-	$stmt=preg_replace("/INSERT IGNORE INTO ([a-zA-Z0-9_]*).*\(([^\)]+)\) VALUES *(.*)/ie", "do_inserts('$1','$2','$3')", $stmt);
+	$stmt = preg_replace("/INSERT (IGNORE )?INTO \"?([a-zA-Z0-9_]*)\"? ?\((.*)\) ?VALUES ?\((.*)\)/ie", "do_inserts('$2', \"$3\", '$4')", $stmt);
 	
 	// convert updates
 	$stmt=preg_replace("/update ([a-zA-Z0-9_]+) set (.*)/e","do_updates('$1','$2')",$stmt);
@@ -206,14 +207,14 @@ function create_index($name, $columnlist, $type='')
 	
 	// trim column names and add quotes
 	$allvals = '';
-	foreach ($cols as $col) {
+	foreach ($cols AS $col) {
 		// strip whitespaces
 		$col = trim($col);
 		
 		// add quotes if column is not quoted
-		if($col[0] != '"')
+		if(substr($col, 0, 1) != '"')
 		{
-			$col = preg_replace('/([a-zA-Z0-9_]+)/', '"$1"', $col);
+			$col = preg_replace('/\"?([a-zA-Z0-9_]+)\"?/', '"$1"', $col);
 		}
 		
 		// TODO: index textlengths were removed above. Is it possible to use it this way, with the pgsql substr method? Does it remember it's a fn and use it when building indices?
@@ -223,8 +224,6 @@ function create_index($name, $columnlist, $type='')
 	}
 	// Put commas between elements.
 	$allvals = preg_replace('/""/', '","', $allvals);
-	//$allvals = preg_replace('/"substr/', '",substr', $allvals);
-	//$allvals = preg_replace("/(substr\(.*\))\"/", "$1,\",substr", $allvals);
 	
 	$poststmt .= 'CREATE ' . ( !empty($type)?$type.' ' : '' ) . 'INDEX "'.$table_name.'_'.$name.'" ON "'.$table_name.'" (';
 	$poststmt .= $allvals . ");\n";
@@ -235,30 +234,31 @@ function do_updates($tab,$content)
 	$ret="UPDATE \"".$tab."\" SET ";
 	$cols=split(",",$content);
 	foreach ($cols as $vals) {
-		$vals=preg_replace("/([a-zA-Z0-9_]+)=([a-zA-Z0-9_]+)/","\"$1\"=\"$2\"",$vals);
+		$vals=preg_replace("/([a-zA-Z0-9_]+)=([a-zA-Z0-9_]+)/", "\"$1\"=\"$2\"", $vals);
 		$ret.=$vals;
 	}
 	$ret=preg_replace("/\" *\"/","\",\"",$ret);
 	return($ret);
 }
 
-function do_inserts($tab, $content, $tail)
+function do_inserts($tablename, $columnlist, $values)
 {
 	// for some reason are the quotes in $tail addslashed. i dont know why
-	$tail = preg_replace('/\\\"/', '"', $tail);
-	$tail = preg_replace('/\\\'/', '\'', $tail);
+	//$tail = preg_replace('/\\\"/', '"', $tail);
+	//$tail = preg_replace('/\\\'/', '\'', $tail);
 	
-	$ret="INSERT INTO \"".$tab."\" (";
-	$cols=split(",",$content);
-	foreach ($cols as $vals) {
-		$vals=preg_replace("/ /","",$vals);
-		$ret.="\"$vals\"";
+	$ret = 'INSERT INTO "'.$tablename.'" (';
+	//$ret .= $columnlist;
+	$cols = split(",", $columnlist);
+	foreach ($cols as $col) {
+		$col = trim($col);
+		$ret .= '"$col"';
 	}
-	$ret=preg_replace("/\"\"/","\",\"",$ret);
-	$ret.=")";
+	//$ret = preg_replace("/\"\"/", "\",\"", $ret);
+	$ret .= ') VALUES (' . $values . ')';
 
-	$tail=preg_replace("/md5\(\'(.+)\'\)/e","quotemd5('$1')",$tail);
-	return $ret." VALUES ".$tail;
+	//$tail = preg_replace("/md5\(\'(.+)\'\)/e", "quotemd5('$1')", $tail);		// md5() does work, at least on pg 8.3
+	return $ret;
 }
 
 function quotemd5($a)

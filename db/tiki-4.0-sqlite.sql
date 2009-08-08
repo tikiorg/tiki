@@ -4886,7 +4886,7 @@ CREATE TABLE tiki_plugin_security (
 
 DROP TABLE IF EXISTS 'tiki_user_reports';
 
-CREATE TABLE 'IF' NOT EXISTS tiki_user_reports (
+CREATE TABLE tiki_user_reports (
   id bigint NOT NULL AUTO_INCREMENT,
   user varchar(200) NOT NULL,
   interval varchar(20) NOT NULL,
@@ -4901,7 +4901,7 @@ CREATE TABLE 'IF' NOT EXISTS tiki_user_reports (
 
 DROP TABLE IF EXISTS 'tiki_user_reports_cache';
 
-CREATE TABLE 'IF' NOT EXISTS tiki_user_reports_cache (
+CREATE TABLE tiki_user_reports_cache (
   id bigint NOT NULL AUTO_INCREMENT,
   user varchar(200) NOT NULL,
   event varchar(200) NOT NULL,
