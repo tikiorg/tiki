@@ -8,14 +8,17 @@
 	</p>
 </form>
 {if $lm_searchresults}
-	<div>
+	<form method="post" action="">
 		<hr class="clear"/>
 		{foreach from=$lm_searchresults item=prefName}
 			{preference name=$prefName}
 		{/foreach}
+		<input type="submit" value="{tr}Change{/tr}" class="clear"/>
+		<input type="hidden" name="lm_criteria" value="{$lm_criteria|escape}"/>
 		<hr class="clear"/>
-	</div>
+	</form>
 {/if}
+</form>
 <div id="pageheader">
 {* bother to display this only when breadcrumbs are on *}
 {*

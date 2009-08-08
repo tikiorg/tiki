@@ -8,4 +8,5 @@
 			</a>
 		{/if}
 	</span>
+	<input type="hidden" name="lm_preference[]" value="{$p.preference|escape}"/>
 </div>

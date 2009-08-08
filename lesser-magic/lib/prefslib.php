@@ -38,6 +38,22 @@ class PreferencesLib
 		return $prefs;
 	}
 
+	function applyChanges( $handled, $data, $limitation = null ) {
+		global $tikilib;
+
+		if( is_array( $limitation ) ) {
+			$handled = array_intersect( $handled, $limitation );
+		}
+
+		foreach( $handled as $pref ) {
+			$info = $this->getPreference( $pref );
+			$function = '_get' . ucfirst( $info['type'] ) . 'Value';
+			$value = $this->$function( $info, $data );
+
+			$tikilib->set_preference( $pref, $value );
+		}
+	}
+
 	private function loadData( $name ) {
 		if( false !== $pos = strpos( $name, '_' ) ) {
 			$file = substr( $name, 0, $pos );
@@ -94,6 +110,12 @@ class PreferencesLib
 		$doc->addField( Zend_Search_Lucene_Field::Text('description', $info['description']) );
 
 		return $doc;
+	}
+
+	private function _getFlagValue( $info, $data ) {
+		$name = $info['preference'];
+
+		return isset( $data[$name] ) ? 'y' : 'n';
 	}
 }
 

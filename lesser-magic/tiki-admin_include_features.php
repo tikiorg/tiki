@@ -81,7 +81,6 @@ if (isset($_REQUEST["features"])) {
 		"feature_userfiles",
 		"feature_usermenu",
 		"feature_webmail",
-		"feature_wiki",
 		"feature_workflow",
 		"feature_wysiwyg",
 		"feature_xmlrpc",
