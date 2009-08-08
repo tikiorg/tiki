@@ -1,4 +1,5 @@
 <?php
+// This file is not used since r20702. 20090808
 
 // Set tikiversion variable
 $tikiversion='4.0';
