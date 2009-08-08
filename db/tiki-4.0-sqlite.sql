@@ -595,9 +595,9 @@ CREATE TABLE tiki_calendars (
 DROP TABLE IF EXISTS 'tiki_calendar_options';
 
 CREATE TABLE tiki_calendar_options (
-  "calendarId" bigint NOT NULL default 0,
-  "optionName" varchar(120) NOT NULL default '',
-  "value" varchar(255),
+	calendarId bigint NOT NULL default 0,
+	optionName varchar(120) NOT NULL default '',
+	value varchar(255),
   PRIMARY KEY (calendarId,optionName)
 ) ENGINE=MyISAM ;
 

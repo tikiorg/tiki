@@ -56,10 +56,21 @@ function parse($stmt)
 	$stmt = preg_replace('/`/', '"', $stmt);
 	
 	// add missing quotation
+	$stmt = preg_replace('/TABLE ([a-z0-9_]+) ?\(/i', 'TABLE "$1" (', $stmt);
 	//$stmt = preg_replace('/(UNIQUE \()(.*)(\))/e', 'add_quotation("$1", "$2", "$3")', $stmt);
 	// unique
 	$stmt = preg_replace('/UNIQUE (KEY )? ?"?[a-z0-9_]*"? ?\((.*)\)/ie', 'stripParanthesisWithNumbers("UNIQUE (", "$2", ")")', $stmt);
 	$stmt = preg_replace('/UNIQUE (KEY )? ?"?[a-z0-9_]*"? ?\((.*)\)/ie', 'add_quotation("UNIQUE (", "$2", ")")', $stmt);
+	// index
+	$stmt = preg_replace('/(\n[ \t]*)INDEX ("?[a-z0-9_]*"? ?)?\((.*)\)/ie', 'stripParanthesisWithNumbers("$1INDEX $2(", "$3", ")")', $stmt);
+	$stmt = preg_replace('/(\n[ \t]*)INDEX ("?[a-z0-9_]*"? ?)?\((.*)\)/ie', 'add_quotation("$1INDEX $2(", "$3", ")")', $stmt);
+	// key
+	$stmt = preg_replace('/(^PRIMARY |^FOREIGN )KEY ("?([a-z0-9_]+)"? )?\((.*)\)/ie', 'stripParanthesisWithNumbers("KEY \"$2\"(", "$3", ")")', $stmt);
+	$stmt = preg_replace('/(^PRIMARY |^FOREIGN )KEY ("[a-z0-9_]+" )?\((.*)\)/ie', 'add_quotation("KEY $1(", "$2", ")")', $stmt);
+	$stmt = preg_replace('/PRIMARY KEY ?\((.*)\)/ie', 'stripParanthesisWithNumbers("PRIMARY KEY (", "$1", ")")', $stmt);
+	$stmt = preg_replace('/PRIMARY KEY ?\((.*)\)/ie', 'add_quotation("PRIMARY KEY (", "$1", ")")', $stmt);
+	
+	$stmt = preg_replace('/WHERE "?([a-z0-9_]+)"?/i', 'WHERE "$1"', $stmt);
 	
 	
 	
@@ -78,31 +89,37 @@ function parse($stmt)
 	
 	
 	//auto_increment things
+	$stmt=preg_replace("/mediumint\(\d\) (unsigned )?NOT NULL auto_increment/i", "serial", $stmt);
 	$stmt=preg_replace("/int(eger)? NOT NULL auto_increment/i", "bigserial", $stmt);
-	$stmt=preg_replace("/int(eger)?\(\d\) (unsigned )*NOT NULL auto_increment/i","serial",$stmt);
-	$stmt=preg_replace("/int(eger)?\(\d\d\) (unsigned )*NOT NULL auto_increment/i","bigserial",$stmt);
+	$stmt=preg_replace("/int(eger)?\(\d\) (unsigned )?NOT NULL auto_increment/i", "serial", $stmt);
+	$stmt=preg_replace("/int(eger)?\(\d\d\) (unsigned )?NOT NULL auto_increment/i", "bigserial", $stmt);
 	
 	
 	// integer types
 	$stmt=preg_replace("/tinyint\([1-4]\)( unsigned)?/i", "smallint", $stmt);
+	$stmt=preg_replace("/mediumint\([5-9]\)( unsigned)?/i", "integer", $stmt);
 	$stmt=preg_replace("/int(eger)?\([1-4]\)( unsigned)?/i","smallint",$stmt);
 	$stmt=preg_replace("/int(eger)?\([5-9]\)( unsigned)?/i","integer",$stmt);
 	$stmt=preg_replace("/int(eger)?\(\d\d\)( unsigned)?/i","bigint",$stmt);
 	
 	// timestamps
-	$stmt=preg_replace("/timestamp\([^\)]+\)/","timestamp(3)",$stmt);
+	$stmt=preg_replace("/timestamp\([^\)]+\)/", 'timestamp(3)', $stmt);
+	$stmt=preg_replace("/(\n[ \t]*)\"?([a-zA-Z0-9_]+)\"? datetime/", '$1"$2" timestamp(3)', $stmt);
 	
 	// blobs
 	$stmt=preg_replace("/longblob|tinyblob|blob/", "bytea", $stmt);
 	
 	// text fields
-	$stmt=preg_replace("/tinytext/i", "text", $stmt);
-	$stmt=preg_replace("/mediumtext/i", "text", $stmt);
-	$stmt=preg_replace("/longtext/i", "text", $stmt);
+	$stmt = preg_replace("/tinytext/i", "text", $stmt);
+	$stmt = preg_replace("/mediumtext/i", "text", $stmt);
+	$stmt = preg_replace("/longtext/i", "text", $stmt);
 	
+	// todo: do this in a check constraint, similiar to enums
+	$stmt = preg_replace("/SET ?\(.*\)/i", "text", $stmt);
 	
 	// convert enums
-	$stmt=preg_replace("/\n[ \t]*\"?([a-zA-Z0-9_]+)\"? enum ?\((.*)\)/e", "convert_enums('$1','$2')", $stmt);
+	$stmt=preg_replace("/\n[ \t]*\"?([a-zA-Z0-9_]+)\"? enum ?\((.*)\)/ie", "convert_enums('$1','$2')", $stmt);
+	
 	
 	// foreign keys
 	//	before: CONSTRAINT tablename \n FOREIGN KEY (colname) REFERENCES tablename(colname) \n ON UPDATE CASCADE ON DELETE SET NULL
@@ -132,9 +149,9 @@ function parse($stmt)
 	
 	// create indexes from KEY …
 	$stmt = preg_replace("/,\n[ \t]*INDEX \"?([a-zA-Z0-9_]+)\"? ?\((.+)\)/e", 'create_index("$1", "$2")', $stmt);
-	$stmt = preg_replace("/,\n[ \t]*INDEX ?\((.+)\)/e",                       "", $stmt);
+	$stmt = preg_replace("/,\n[ \t]*INDEX ?\((.+)\)/e",                       'create_index("", "$1")', $stmt);
 	$stmt = preg_replace("/,\n[ \t]*KEY \"?([a-zA-Z0-9_]+)\"? ?\((.+)\)/e",   'create_index("$1", "$2")', $stmt);
-	$stmt = preg_replace("/,\n[ \t]*KEY ?\((.+)\)/e",                         "", $stmt);
+	$stmt = preg_replace("/,\n[ \t]*KEY ?\((.+)\)/e",                         'create_index("", "$1")', $stmt);
 	
 	
 	// convert inserts
@@ -153,7 +170,7 @@ function parse($stmt)
 
 function stripParanthesisWithNumbers($pre, $txt, $post)
 {
-	$txt = preg_replace("/\(\d+\)/", '', $txt);
+	$txt = preg_replace("/\(\d+\)/U", '', $txt);
 	return $pre.$txt.$post;
 }
 function strip_paranthesisWithNumbers($txt)
@@ -232,12 +249,14 @@ function create_index($name, $columnlist, $type='')
 	global $table_name;
 	global $poststmt;
 	
+	$columnlist = str_replace('"', '', $columnlist);
 	$cols = split(',', $columnlist);
+	
 	// if the index has no name, give it one – based on columns
 	if(empty($name))
 	{
-		$name = $cols[0];
-		for($i=1; $i<count($cols); $i++)
+		$name = $table_name;
+		for($i=0; $i<count($cols); $i++)
 		{
 			$name .= '_' . $cols[$i];
 		}
