@@ -80,6 +80,12 @@ class PreferencesLib
 
 	private function getIndex() {
 		global $prefs;
+		if( $prefs['language'] == 'en' ) {
+			require_once 'StandardAnalyzer/Analyzer/Standard/English.php';
+			Zend_Search_Lucene_Analysis_Analyzer::setDefault(
+				new StandardAnalyzer_Analyzer_Standard_English() );
+		}
+
 		$file = 'temp/cache/preference-index-' . $prefs['language'];
 
 		require_once 'Zend/Search/Lucene.php';

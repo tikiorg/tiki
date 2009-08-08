@@ -8,6 +8,18 @@ function prefs_feature_list() {
 			'type' => 'flag',
 			'help' => 'Wiki',
 		),
+		'feature_blogs' => array(
+			'name' => tra('Blogs'),
+			'description' => tra('Enables the creation of multiple blogs in which the users can publish.'),
+			'type' => 'flag',
+			'help' => 'Blogs',
+		),
+		'feature_galleries' => array(
+			'name' => tra('Image Galleries'),
+			'description' => tra('Enables the creation of galleries in which pictures can be stored. Also see file galleries.'),
+			'type' => 'flag',
+			'help' => 'Image+Galleries',
+		),
 	);
 }
 
