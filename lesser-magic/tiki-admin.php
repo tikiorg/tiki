@@ -100,6 +100,14 @@ $helpUrl = 'Admin+Home';
 $helpDescription = $description = '';
 $url = 'tiki-admin.php';
 $adminPage = '';
+
+if( isset( $_REQUEST['lm_criteria'] ) ) {
+	global $prefslib; require_once 'lib/prefslib.php';
+
+	$results = $prefslib->getMatchingPreferences( $_REQUEST['lm_criteria'] );
+	$smarty->assign( 'lm_searchresults', $results );
+}
+
 if (isset($_REQUEST["page"])) {
 	$adminPage = $_REQUEST["page"];
 	if ($adminPage == "features") {

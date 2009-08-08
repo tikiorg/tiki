@@ -1,6 +1,21 @@
 {* $Id$ *}
 {popup_init src="lib/overlib.js"}
 {title help="$helpUrl"}{tr}{$admintitle}{/tr}{/title}
+<form method="post" action="">
+	<p>
+		Confriguration search: <input type="text" name="lm_criteria" value="{$lm_criteria|escape}"/>
+		<input type="submit" value="{tr}Search{/tr}"/>
+	</p>
+</form>
+{if $lm_searchresults}
+	<div>
+		<hr class="clear"/>
+		{foreach from=$lm_searchresults item=prefName}
+			{preference name=$prefName}
+		{/foreach}
+		<hr class="clear"/>
+	</div>
+{/if}
 <div id="pageheader">
 {* bother to display this only when breadcrumbs are on *}
 {*
