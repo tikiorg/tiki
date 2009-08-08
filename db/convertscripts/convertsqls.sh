@@ -18,6 +18,11 @@ if [ "$1" = "-h" ]; then
 	exit 0
 fi
 
+if [ ! -f "convertsqls.sh" ]; then
+	echo "Error: this script needs to be executed from its directory, db/convertscripts/"
+	exit 0
+fi
+
 # set tikiserver for remote conversation/download if specified as parameter
 TIKISERVER=""
 if [ -z $1]; then
