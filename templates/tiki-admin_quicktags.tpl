@@ -14,9 +14,18 @@
 			<input type="submit" name="save" value="{tr}Save{/tr}"/>
 		</div>
 	<div class="rows">
-		{foreach from=$rows item=i}
-			<label for="row-{$i|escape}">{tr}Row{/tr}&nbsp;{$i}:</label>
-			<ul id="row-{$i|escape}" class="row"></ul>
+		{foreach from=$current item=line name=line}
+			<label for="row-{$smarty.foreach.line.iteration|escape}">{tr}Row{/tr}&nbsp;{$smarty.foreach.line.iteration}:</label>
+			<ul id="row-{$smarty.foreach.line.iteration|escape}" class="row">
+			{foreach from=$line item=tool}
+				<li class="{$qtelement[$tool].class}">{$qtelement[$tool].html}</li>
+			{/foreach}
+			</ul>
+			{if $smarty.foreach.line.last}
+				{assign var=total value=`$smarty.foreach.line.total+1`}
+			<label for="row-{$total|escape}">{tr}Row{/tr}&nbsp;{$total}:</label>
+				<ul id="row-{$total|escape}" class="row">
+			{/if}
 		{/foreach}
 	</div>
 	<input id="qt-form-field" type="hidden" name="pref" value=""/>
@@ -28,7 +37,11 @@
 			<input id="qt-wys-filter" class="qt-filter" type="checkbox" checked /><label>{tr}WYSIWYG{/tr}</label>
 			<input id="qt-plugin-filter" class="qt-filter" type="checkbox" checked /><label>{tr}Plugins{/tr}</label>
 		</div>{/if}
-		<ul id="full-list" class="full"></ul>
+		<ul id="full-list" class="full">
+		{foreach from=$displayedqt item=tool}
+			<li class="{$qtelement[$tool].class}">{$qtelement[$tool].html}</li>
+		{/foreach}
+		</ul>
 	</div>
 	</form>
 </div>

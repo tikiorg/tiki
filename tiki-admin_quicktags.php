@@ -64,15 +64,17 @@ if (!empty($current)) {
 $init = '';
 $setup = '';
 $map = array();
-foreach( Quicktag::getList() as $name ) {
+
+$qtlist = Quicktag::getList();
+$usedqt = array();
+foreach( $current as &$line ) {
+	$usedqt = array_merge($usedqt,$line);
+}
+
+foreach( $qtlist as $name ) {
 	$used = false;
-	if ( is_array($current) ) {
-		foreach( $current as & $line ) {
-			if (in_array($name, $line) && $name != '-') {
-				$used = true;
-				break;
-			}
-		}
+	if (in_array($name, $usedqt) && $name != '-') {
+		$used = true;
 	}
 	$tag = Quicktag::getTag($name);
 	if( ! $tag ) {
@@ -88,38 +90,15 @@ foreach( Quicktag::getList() as $name ) {
 		$label = $name;
 	}
 	$icon = $tag->getIconHtml();
-	$map[$name] = <<<JS
-item = document.createElement('li');
-item.className = 'quicktag qt-$name $wys $wiki $plug';
-item.innerHTML = '$icon$label';
-JS;
-	if (!$used) {
-
-		$init .= $map[$name];
-		$init .= "list.append(item);\n";
-	}
+	$qtelement[$name] = array( 'name' => $name, 'class' => "quicktag qt-$name $wys $wiki $plug", 'html' => "$icon$label" );
 }
 
-if ( is_array($current) ) {
-	foreach( $current as $k => $l ) {
-		foreach( $l as $name ) {
-			if( isset($map[$name]) ) {
-				$init .= $map[$name];
-				$init .= "\$jq('#row-$k').append(item);";
-			}
-		}
-	}
-}
-$rowStr = '';
-for( $i = 0; $rowCount > $i; ++$i ) {
-	$rowStr .= !empty($rowStr) && $i < $rowCount ? ',' : '';
-	$rowStr .= "#row-$i";
-}
+$rowStr = substr(implode(",#row-",range(0,$rowCount)),2);
+
 $headerlib->add_jq_onready( <<<JS
 
 var list = \$jq('#full-list');
 var item;
-$init
 
 \$jq('$rowStr').sortable({
 	connectWith: '#full-list, .row',
@@ -197,6 +176,10 @@ $smarty->assign('comments', $comments);
 $smarty->assign( 'loaded', $section );
 $smarty->assign( 'rows', range( 0, $rowCount - 1 ) );
 $smarty->assign( 'sections', $sections );
+$smarty->assign_by_ref('qtelement',$qtelement);
+$smarty->assign_by_ref('qtlist',$qtlist);
+$smarty->assign_by_ref('displayedqt',array_diff($qtlist,$usedqt));
+$smarty->assign_by_ref('current',$current);
 $smarty->assign( 'mid', 'tiki-admin_quicktags.tpl' );
 $smarty->display( 'tiki.tpl' );
 
