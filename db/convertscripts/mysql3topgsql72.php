@@ -12,7 +12,7 @@ if(!isset($_GET['version'])) {
 
 
 // read file
-$file="../tiki-$tikiversion-mysql.sql";
+$file="../tiki.sql";
 @$fp = fopen($file,"r");
 if(!$fp)
 {
@@ -32,22 +32,14 @@ echo "<br />\n";
 // split into statements
 $statements = preg_split("#(;\n)|(;\r\n)#", $data);
 
-echo "<table>\n";
-
 // step though statements
 $fp=fopen($tikiversion.".to_pgsql72.sql","w");
 foreach ($statements as $statement)
 {
-	echo "<tr><td><pre>\n";
-	echo $statement.";";
-	echo "\n</pre></td><td><pre>\n";
 	$parsed = parse($statement);
 	fwrite($fp, $parsed);
-	echo $parsed;
-	echo "\n</pre></td></tr>\n";
 }
 fclose($fp);
-echo "</table>\n";
 
 
 /** parse MySQL statements and convert to PostgreSQL statements
@@ -58,10 +50,18 @@ function parse($stmt)
 	// variable for statements that have to be appended
 	global $poststmt;
 	$poststmt = "\n";
-
-
+	
+	
 	// Replace MySQL specific quotes with SQL quotes (`with ") – these mark table- and columnames
 	$stmt = preg_replace('/`/', '"', $stmt);
+	
+	// add missing quotation
+	//$stmt = preg_replace('/(UNIQUE \()(.*)(\))/e', 'add_quotation("$1", "$2", "$3")', $stmt);
+	// unique
+	$stmt = preg_replace('/UNIQUE (KEY )? ?"?[a-z0-9_]*"? ?\((.*)\)/ie', 'stripParanthesisWithNumbers("UNIQUE (", "$2", ")")', $stmt);
+	$stmt = preg_replace('/UNIQUE (KEY )? ?"?[a-z0-9_]*"? ?\((.*)\)/ie', 'add_quotation("UNIQUE (", "$2", ")")', $stmt);
+	
+	
 	
 	// record table names
 	$stmt = preg_replace('/(DROP TABLE IF EXISTS |DROP TABLE |CREATE TABLE )"?([a-zA-Z0-9_]+)"? \(/e', 'sprintf("%s\"%s\" (", "$1", record_tablename("$2"))', $stmt);
@@ -84,10 +84,10 @@ function parse($stmt)
 	
 	
 	// integer types
-	$stmt=preg_replace("/tinyint\([1-4]\)( unsigned)?/", "smallint", $stmt);
-	$stmt=preg_replace("/int(eger)?\([1-4]\)( unsigned)?/","smallint",$stmt);
-	$stmt=preg_replace("/int(eger)?\([5-9]\)( unsigned)?/","integer",$stmt);
-	$stmt=preg_replace("/int(eger)?\(\d\d\)( unsigned)?/","bigint",$stmt);
+	$stmt=preg_replace("/tinyint\([1-4]\)( unsigned)?/i", "smallint", $stmt);
+	$stmt=preg_replace("/int(eger)?\([1-4]\)( unsigned)?/i","smallint",$stmt);
+	$stmt=preg_replace("/int(eger)?\([5-9]\)( unsigned)?/i","integer",$stmt);
+	$stmt=preg_replace("/int(eger)?\(\d\d\)( unsigned)?/i","bigint",$stmt);
 	
 	// timestamps
 	$stmt=preg_replace("/timestamp\([^\)]+\)/","timestamp(3)",$stmt);
@@ -96,7 +96,9 @@ function parse($stmt)
 	$stmt=preg_replace("/longblob|tinyblob|blob/", "bytea", $stmt);
 	
 	// text fields
-	$stmt=preg_replace("/longtext/", "text", $stmt);
+	$stmt=preg_replace("/tinytext/i", "text", $stmt);
+	$stmt=preg_replace("/mediumtext/i", "text", $stmt);
+	$stmt=preg_replace("/longtext/i", "text", $stmt);
 	
 	
 	// convert enums
@@ -130,9 +132,9 @@ function parse($stmt)
 	
 	// create indexes from KEY …
 	$stmt = preg_replace("/,\n[ \t]*INDEX \"?([a-zA-Z0-9_]+)\"? ?\((.+)\)/e", 'create_index("$1", "$2")', $stmt);
-	$stmt = preg_replace("/,\n[ \t]*INDEX ?\((.+)\)/e",                       'create_index("", "$1")', $stmt);
+	$stmt = preg_replace("/,\n[ \t]*INDEX ?\((.+)\)/e",                       "", $stmt);
 	$stmt = preg_replace("/,\n[ \t]*KEY \"?([a-zA-Z0-9_]+)\"? ?\((.+)\)/e",   'create_index("$1", "$2")', $stmt);
-	$stmt = preg_replace("/,\n[ \t]*KEY ?\((.+)\)/e",                         'create_index("", "$1")', $stmt);
+	$stmt = preg_replace("/,\n[ \t]*KEY ?\((.+)\)/e",                         "", $stmt);
 	
 	
 	// convert inserts
@@ -149,10 +151,38 @@ function parse($stmt)
 	return $stmt.";".$poststmt;
 }
 
+function stripParanthesisWithNumbers($pre, $txt, $post)
+{
+	$txt = preg_replace("/\(\d+\)/", '', $txt);
+	return $pre.$txt.$post;
+}
 function strip_paranthesisWithNumbers($txt)
 {
 	$txt = preg_replace("/\(\d+\)/", '', $txt);
 	return $txt;
+}
+
+/**
+ * @param $pre prefix – preceding text
+ * @param $str list of columns or table name
+ * @param $post postfix – text behind
+ * @return complete string with quoted columns/tablename
+ */
+function add_quotation($pre, $str, $post)
+{
+	$cols = split(',', $str);
+	$str = '';
+	foreach($cols AS $col)
+	{
+		$col = trim($col);
+		if(substr($col, 0, 1) != '"')
+		{
+			$col = '"'.$col.'"';
+		}
+		$str .= $col;
+	}
+	$str = preg_replace('/""/', '","', $str);
+	return $pre.$str.$post;
 }
 
 function replace_apostroph_in_string($str){
@@ -222,7 +252,8 @@ function create_index($name, $columnlist, $type='')
 		// add quotes if column is not quoted
 		if(substr($col, 0, 1) != '"')
 		{
-			$col = preg_replace('/\"?([a-zA-Z0-9_]+)\"?/', '"$1"', $col);
+			//$col = preg_replace('/\"?([a-zA-Z0-9_]+)\"?/', '"$1"', $col);
+			$col = '"'.$col.'"';
 		}
 		
 		// TODO: index textlengths were removed above. Is it possible to use it this way, with the pgsql substr method? Does it remember it's a fn and use it when building indices?
