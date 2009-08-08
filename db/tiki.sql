@@ -1657,6 +1657,7 @@ CREATE TABLE `tiki_pages` (
   `lastModif` int(14) default NULL,
   `comment` varchar(200) default NULL,
   `version` int(8) NOT NULL default '0',
+  `version_minor` int(8) NOT NULL default '0',
   `user` varchar(200) default '',
   `ip` varchar(15) default NULL,
   `flag` char(1) default NULL,

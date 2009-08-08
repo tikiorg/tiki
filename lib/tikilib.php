@@ -3897,34 +3897,18 @@ class TikiLib extends TikiDb_Bridge {
 	}
 
 	// Deprecated in favor of list_pages
-	function last_pages($maxRecords = -1) {
-		global $user;
-		$query = "select `pageName`,`lastModif`,`user` from `tiki_pages` order by ".$this->convertSortMode('lastModif_desc');
-		$result = $this->query($query,array(),$maxRecords,0);
-		$ret = array();
-		while ($res = $result->fetchRow()) {
-			//WYSIWYCA hack: the $maxRecords will not be respected
-			if($this->user_has_perm_on_object($user,$res["pageName"],'wiki page','tiki_p_view')) {
-				$ret[] = $res;
-			}
-		}
-		return $ret;
+	function last_pages($maxRecords = -1, $categories='') {
+		if (is_array($categories))
+			$filter=array("categId" => $categories);
+		else
+			$filter=array();
+
+		return $this->list_pages(0, $maxRecords, "lastModif_desc", '', '', true, true, false, false, $filter);
 	}
 
-	// Deprecated in favor of list_pages
+	// Broken. Equivalent to last_pages($maxRecords)
 	function last_major_pages($maxRecords = -1) {
-		global $user;
-		$query = "select distinct(tp.`pageName`),tp.`lastModif`,tp.`user` from `tiki_pages` tp left join `tiki_actionlog` ta
-			on tp.`pageName`= ta.`object` and ta.`objectType`= 'wiki page' where ta.`action`!='' and ta.`objectType`= 'wiki page' order by tp.".$this->convertSortMode('lastModif_desc');
-		$result = $this->query($query,array(),$maxRecords,0);
-		$ret = array();
-		while ($res = $result->fetchRow()) {
-			//WYSIWYCA hack: the $maxRecords will not be respected
-			if($this->user_has_perm_on_object($user,$res["pageName"],'wiki page','tiki_p_view')) {
-				$ret[] = $res;
-			}
-		}
-		return $ret;
+		return $this->list_pages(0, $maxRecords, "lastModif_desc");
 	}
 	// use this function to speed up when pagename is only needed (the 3 getOne can killed tikiwith more that 3000 pages)
 	function list_pageNames($offset = 0, $maxRecords = -1, $sort_mode = 'pageName_asc', $find = '') {
@@ -4665,7 +4649,7 @@ class TikiLib extends TikiDb_Bridge {
 	/** Create a wiki page
 		@param array $hash- lock_it,contributions, contributors
 	 **/
-	function create_page($name, $hits, $data, $lastModif, $comment, $user = 'admin', $ip = '0.0.0.0', $description = '', $lang='', $is_html = false, $hash=null, $wysiwyg=NULL, $wiki_authors_style='') {
+	function create_page($name, $hits, $data, $lastModif, $comment, $user = 'admin', $ip = '0.0.0.0', $description = '', $lang='', $is_html = false, $hash=null, $wysiwyg=NULL, $wiki_authors_style='', $minor=false) {
 		global $smarty, $prefs, $dbTiki, $quantifylib;
 		include_once ("lib/commentslib.php");
 
@@ -4701,7 +4685,7 @@ class TikiLib extends TikiDb_Bridge {
 			$edit_data = HTMLPurifier($edit_data);
 		}
 		$mid = ''; $midvar = '';
-		$bindvars = array($name, (int)$hits, $data, (int)$lastModif, $comment, 1, $user, $ip, $description, $user, (int)strlen($data), $html, $this->now, $wysiwyg, $wiki_authors_style);
+		$bindvars = array($name, (int)$hits, $data, (int)$lastModif, $comment, 1, $minor, $user, $ip, $description, $user, (int)strlen($data), $html, $this->now, $wysiwyg, $wiki_authors_style);
 		if ($lang) {
 			$mid .= ',`lang`';
 			$midvar .= ',?';
@@ -4729,7 +4713,7 @@ class TikiLib extends TikiDb_Bridge {
 				$hash2[] = $hash3;
 			}
 		}
-		$query = "insert into `tiki_pages`(`pageName`,`hits`,`data`,`lastModif`,`comment`,`version`,`user`,`ip`,`description`,`creator`,`page_size`,`is_html`,`created`, `wysiwyg`, `wiki_authors_style` $mid) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,? $midvar)";
+		$query = "insert into `tiki_pages`(`pageName`,`hits`,`data`,`lastModif`,`comment`,`version`,`version_minor`,`user`,`ip`,`description`,`creator`,`page_size`,`is_html`,`created`, `wysiwyg`, `wiki_authors_style` $mid) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? $midvar)";
 		$result = $this->query($query, $bindvars);
 
 		$page_id = $this->get_page_id_from_name( $name );
@@ -4818,7 +4802,7 @@ class TikiLib extends TikiDb_Bridge {
 		if ( $retrieve_datas ) {
 			$query = "SELECT * FROM `tiki_pages` WHERE `pageName`=?";
 		} else {
-			$query = "SELECT `page_id`, `pageName`, `hits`, `description`, `lastModif`, `comment`, `version`, `user`, `ip`, `flag`, `points`, `votes`, `wiki_cache`, `cache_timestamp`, `pageRank`, `creator`, `page_size`, `lang`, `lockedby`, `is_html`, `created`, `wysiwyg`, `wiki_authors_style` FROM `tiki_pages` WHERE `pageName`=?";
+			$query = "SELECT `page_id`, `pageName`, `hits`, `description`, `lastModif`, `comment`, `version`, `version_minor`, `user`, `ip`, `flag`, `points`, `votes`, `wiki_cache`, `cache_timestamp`, `pageRank`, `creator`, `page_size`, `lang`, `lockedby`, `is_html`, `created`, `wysiwyg`, `wiki_authors_style` FROM `tiki_pages` WHERE `pageName`=?";
 		}
 		$result = $this->query($query, array($pageName));
 
@@ -7315,7 +7299,7 @@ class TikiLib extends TikiDb_Bridge {
 	/** Update a wiki page
 		@param array $hash- lock_it,contributions, contributors
 	 **/
-	function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip, $edit_description = '', $minor = false, $lang='', $is_html=false, $hash=null, $saveLastModif=null, $wysiwyg='', $wiki_authors_style) {
+	function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip, $edit_description = '', $edit_minor = false, $lang='', $is_html=false, $hash=null, $saveLastModif=null, $wysiwyg='', $wiki_authors_style) {
 		global $smarty, $prefs, $dbTiki, $histlib, $quantifylib;
 		include_once ("lib/wiki/histlib.php");
 		include_once ("lib/commentslib.php");
@@ -7356,6 +7340,7 @@ class TikiLib extends TikiDb_Bridge {
 		if (!$user) $user = 'anonymous';
 		$ip = $info["ip"];
 		$comment = $info["comment"];
+		$minor=$info["version_minor"];
 		$description = $info['description'];
 		$data = $info["data"];
 		$version = $old_version + 1;
@@ -7376,7 +7361,7 @@ class TikiLib extends TikiDb_Bridge {
 			$saveLastModif = $this->now;
 		}
 
-		$bindvars = array($edit_description,$edit_data,$edit_comment,(int) $saveLastModif,$version,$edit_user,$edit_ip,(int)strlen($data),$html,$wysiwyg, $wiki_authors_style);
+		$bindvars = array($edit_description,$edit_data,$edit_comment,(int) $saveLastModif,$version,$edit_minor,$edit_user,$edit_ip,(int)strlen($data),$html,$wysiwyg, $wiki_authors_style);
 		if ($lang) {
 			$mid .= ', `lang`=? ';
 			$bindvars[] = $lang;
@@ -7402,7 +7387,7 @@ class TikiLib extends TikiDb_Bridge {
 			}
 		}
 		$bindvars[] = $pageName;
-		$query = "update `tiki_pages` set `description`=?, `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=?, `page_size`=?, `is_html`=?, `wysiwyg`=?, `wiki_authors_style`=?  $mid where `pageName`=?";
+		$query = "update `tiki_pages` set `description`=?, `data`=?, `comment`=?, `lastModif`=?, `version`=?, `version_minor`=?, `user`=?, `ip`=?, `page_size`=?, `is_html`=?, `wysiwyg`=?, `wiki_authors_style`=?  $mid where `pageName`=?";
 		$result = $this->query($query,$bindvars);
 
 		// Parse edit_data updating the list of links from this page
@@ -7413,7 +7398,7 @@ class TikiLib extends TikiDb_Bridge {
 			$this->replace_link($pageName, $page, $types);
 		}
 
-		if (strtolower($pageName) != 'sandbox' && !$minor) {
+		if (strtolower($pageName) != 'sandbox' && !$edit_minor) {
 			$maxversions = $prefs['maxVersions'];
 
 			if ($maxversions && ($nb = $histlib->get_nb_history($pageName)) > $maxversions) {
@@ -7464,7 +7449,7 @@ class TikiLib extends TikiDb_Bridge {
 						array( $lang, $info['page_id'] ) );
 			}
 
-			if ($prefs['wiki_watch_minor'] != 'n' || !$minor) {
+			if ($prefs['wiki_watch_minor'] != 'n' || !$edit_minor) {
 				//  Deal with mail notifications.
 				include_once('lib/notifications/notificationemaillib.php');
 				global $histlib; include_once ("lib/wiki/histlib.php");
@@ -7473,7 +7458,7 @@ class TikiLib extends TikiDb_Bridge {
 				$machine = $this->httpPrefix(). dirname( $foo["path"] );
 				require_once('lib/diff/difflib.php');
 				$diff = diff2($old["data"] , $edit_data, "unidiff");
-				sendWikiEmailNotification('wiki_page_changed', $pageName, $edit_user, $edit_comment, $old_version, $edit_data, $machine, $diff, $minor, $hash['contributions']);
+				sendWikiEmailNotification('wiki_page_changed', $pageName, $edit_user, $edit_comment, $old_version, $edit_data, $machine, $diff, $edit_minor, $hash['contributions']);
 			}
 
 			$query = "delete from `tiki_page_drafts` where `user`=? and `pageName`=?";
