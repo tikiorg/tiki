@@ -1,4 +1,6 @@
 <?php
+// This file is not used since r20702. 20090808
+
 
 // Set tikiversion variable
 if (array_key_exists('SHELL', $_ENV)) {
