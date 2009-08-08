@@ -1,6 +1,7 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
  * Copyright (C) 2003-2007 Frederico Caldeira Knabben
+ * Copyright (C) 2008-2009 Stéphane Casset for the Tikiwiki Team
  *
  * == BEGIN LICENSE ==
  *
@@ -18,15 +19,9 @@
  *
  * == END LICENSE ==
  *
- * Main MediaWiki integration plugin.
+ * Main TikiWiki integration plugin.
+ * Based on work done by the MediaWiki Team, big thanx to them
  *
- * Wikitext syntax reference:
- *	http://meta.wikimedia.org/wiki/Help:Wikitext_examples
- *	http://meta.wikimedia.org/wiki/Help:Advanced_editing
- *
- * MediaWiki Sandbox:
- *	http://meta.wikimedia.org/wiki/Meta:Sandbox
- */
 
 // Rename the "Source" buttom to "Wikitext".
 FCKToolbarItems.RegisterItem( 'Source', new FCKToolbarButton( 'Source', 'Wikitext', null, FCK_TOOLBARITEM_ICONTEXT, true, true, 1 ) ) ;
@@ -35,60 +30,6 @@ FCKToolbarItems.RegisterItem( 'Source', new FCKToolbarButton( 'Source', 'Wikitex
 var tbButton = new FCKToolbarButton( 'MW_Template', 'Template',  FCKLang.wikiBtnTemplate || 'Insert/Edit Template') ;
 tbButton.IconPath = FCKConfig.PluginsPath + 'mediawiki/images/tb_icon_template.gif' ;
 FCKToolbarItems.RegisterItem( 'MW_Template', tbButton ) ;
-
-//Ref button
-tbButton = new FCKToolbarButton( 'MW_Ref', 'Ref', FCKLang.wikiBtnReference || 'Insert/Edit Reference' ) ;
-tbButton.IconPath = FCKConfig.PluginsPath + 'mediawiki/images/tb_icon_ref.gif' ;
-FCKToolbarItems.RegisterItem( 'MW_Ref', tbButton ) ;
-if ( !FCKConfig.showreferences ) {		//hack to disable MW_Ref  button
-	tbButton.Create = function()		{return 0;}
-	tbButton.Disable  = function()	{return 0;}
-	tbButton.RefreshState  = function()	{return 0;} 
-}
-
-//References button
-var FCKReferences = function( )	{	} ;
-FCKReferences.prototype.GetState = function()	{ return ( FCK.EditMode == FCK_EDITMODE_WYSIWYG ? FCK_TRISTATE_OFF : FCK_TRISTATE_DISABLED) } ;
-FCKCommands.RegisterCommand( 'MW_References', new FCKReferences() ) ;
-tbButton = new FCKToolbarButton( 'MW_References', 'References', FCKLang.wikiBtnReferences || 'Insert <references /> tag', FCK_TOOLBARITEM_ICONTEXT,true, true, 1  );
-tbButton.IconPath = FCKConfig.PluginsPath + 'mediawiki/images/tb_icon_ref.gif' ;
-if ( !FCKConfig.showreferences ) {		//hack to disable MW_References  button
-	tbButton.Create = function()		{return 0;}
-	tbButton.Disable  = function()	{return 0;} 
-	tbButton.RefreshState  = function()	{return 0;} 
-}
-
-FCKReferences.prototype.Execute = function()
-{
-	if ( FCK.EditMode != FCK_EDITMODE_WYSIWYG ) 
-		return ;
-	
-	FCKUndo.SaveUndoStep() ;
-
-	var e = FCK.EditorDocument.createElement( 'span' ) ;
-	e.setAttribute("_fck_mw_customtag", "true");
-	e.setAttribute("_fck_mw_tagname", "references");
-	e.className = "fck_mw_references";
-	
-	oFakeImage = FCK.InsertElement( FCKDocumentProcessor_CreateFakeImage( 'FCK__MWReferences', e ) ) ;
-}
-FCKToolbarItems.RegisterItem( 'MW_References', tbButton ) ;
-
-tbButton = new FCKToolbarButton( 'MW_Math', 'Formula', FCKLang.wikiBtnFormula || 'Insert/Edit Formula' ) ;
-tbButton.IconPath = FCKConfig.PluginsPath + 'mediawiki/images/tb_icon_math.gif' ;
-FCKToolbarItems.RegisterItem( 'MW_Math', tbButton ) ;
-
-tbButton = new FCKToolbarButton( 'MW_Special', 'Special Tag', FCKLang.wikiBtnSpecial || 'Insert/Edit Special Tag' ) ;
-tbButton.IconPath = FCKConfig.PluginsPath + 'mediawiki/images/tb_icon_special.gif' ;
-FCKToolbarItems.RegisterItem( 'MW_Special', tbButton ) ;
-
-// Override some dialogs.
-FCKCommands.RegisterCommand( 'MW_Template', new FCKDialogCommand( 'MW_Template', ( FCKLang.wikiCmdTemplate || 'Template Properties' ), FCKConfig.PluginsPath + 'mediawiki/dialogs/template.html', 400, 330 ) ) ;
-FCKCommands.RegisterCommand( 'MW_Ref', new FCKDialogCommand( 'MW_Ref', ( FCKLang.wikiCmdReference || 'Reference Properties' ), FCKConfig.PluginsPath + 'mediawiki/dialogs/ref.html', 400, 250 ) ) ;
-FCKCommands.RegisterCommand( 'MW_Math', new FCKDialogCommand( 'MW_Math', ( FCKLang.wikiCmdFormula || 'Formula' ), FCKConfig.PluginsPath + 'mediawiki/dialogs/math.html', 400, 300 ) ) ;
-FCKCommands.RegisterCommand( 'MW_Special', new FCKDialogCommand( 'MW_Special', ( FCKLang.wikiCmdSpecial || 'Special Tag Properties' ), FCKConfig.PluginsPath + 'mediawiki/dialogs/special.html', 400, 330 ) ) ;
-FCKCommands.RegisterCommand( 'Link', new FCKDialogCommand( 'Link', FCKLang.DlgLnkWindowTitle, FCKConfig.PluginsPath + 'mediawiki/dialogs/link.html', 400, 250 ) ) ;
-FCKCommands.RegisterCommand( 'Image', new FCKDialogCommand( 'Image', FCKLang.DlgImgTitle, FCKConfig.PluginsPath + 'mediawiki/dialogs/image.html', 450, 300 ) ) ;
 
 FCKToolbarItems.OldGetItem = FCKToolbarItems.GetItem;
 
@@ -143,7 +84,7 @@ FCKToolbarButton.prototype.Click = function()
 		FCK.ToolbarSet.CurrentInstance.Commands.GetCommand( oToolbarButton.CommandName ).Execute() ;
 }
 
-// MediaWiki Wikitext Data Processor implementation.
+// TikiWiki Wikitext Data Processor implementation.
 FCK.DataProcessor =
 {
 	_inPre : false,
@@ -883,104 +824,6 @@ FCK.DataProcessor =
 		}
 	}
 })() ;
-
-// MediaWiki document processor.
-FCKDocumentProcessor.AppendNew().ProcessDocument = function( document )
-{
-	// Templates and magic words.
-	var aSpans = document.getElementsByTagName( 'SPAN' ) ;
-	
-	var eSpan ;
-	var i = aSpans.length - 1 ;
-	while ( i >= 0 && ( eSpan = aSpans[i--] ) )
-	{
-		var className = null ;
-		switch ( eSpan.className )
-		{
-			case 'fck_mw_ref' :
-				className = 'FCK__MWRef' ;
-			case 'fck_mw_references' :
-				if ( className == null )
-					className = 'FCK__MWReferences' ;
-			case 'fck_mw_template' :
-				if ( className == null ) //YC
-					className = 'FCK__MWTemplate' ; //YC
-			case 'fck_mw_magic' :
-				if ( className == null )
-					className = 'FCK__MWMagicWord' ;
-			case 'fck_mw_magic' :
-				if ( className == null )
-					className = 'FCK__MWMagicWord' ;
-			case 'fck_mw_special' : //YC
-				if ( className == null )
-					className = 'FCK__MWSpecial' ;
-			case 'fck_mw_nowiki' :
-				if ( className == null )
-					className = 'FCK__MWNowiki' ;
-			case 'fck_mw_html' :
-				if ( className == null )
-					className = 'FCK__MWHtml' ;
-			case 'fck_mw_includeonly' :
-				if ( className == null )
-					className = 'FCK__MWIncludeonly' ;
-			case 'fck_mw_gallery' :
-				if ( className == null )
-					className = 'FCK__MWGallery' ;
-			case 'fck_mw_noinclude' :
-				if ( className == null )
-					className = 'FCK__MWNoinclude' ;
-			case 'fck_mw_onlyinclude' :
-				if ( className == null )
-					className = 'FCK__MWOnlyinclude' ;
-					
-				var oImg = FCKDocumentProcessor_CreateFakeImage( className, eSpan.cloneNode(true) ) ;
-				oImg.setAttribute( '_' + eSpan.className, 'true', 0 ) ;
-
-				eSpan.parentNode.insertBefore( oImg, eSpan ) ;
-				eSpan.parentNode.removeChild( eSpan ) ;
-			break ;
-		}
-	}
-
-	// Math tags without Tex.
-	var aImgs = document.getElementsByTagName( 'IMG' ) ;
-	var eImg ;
-	i = aImgs.length - 1 ;
-	while ( i >= 0 && ( eImg = aImgs[i--] ) )
-	{
-		var className = null ;
-		switch ( eImg.className )
-		{
-			case 'FCK__MWMath' :
-				eImg.src = FCKConfig.PluginsPath + 'mediawiki/images/icon_math.gif' ;
-			break ;
-		}
-	}
-	
-	// InterWiki / InterLanguage links
-	var aHrefs = document.getElementsByTagName( 'A' ) ;
-	var a ;
-	var i = aHrefs.length - 1 ;
-	while ( i >= 0 && ( a = aHrefs[i--] ) )
-	{
-		if (a.className == 'extiw')
-		{
-			 a.href = a.title ;
-			 a.setAttribute( '_fcksavedurl', a.href ) ;
-		}
-		else
-		{
-			if (a.href.toLowerCase().StartsWith( 'rtecolon' ))
-			{
-				a.href = ":" + a.href.substring(8);
-				if (a.innerHTML.toLowerCase().StartsWith( 'rtecolon' ))
-				{
-					a.innerHTML = a.innerHTML.substring(8);
-				}			
-			}			
-		}
-	}
-}
 
 function urldecode( str ) {
     // http://kevin.vanzonneveld.net

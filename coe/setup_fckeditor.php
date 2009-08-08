@@ -20,7 +20,9 @@ if ( $prefs['feature_ajax_autosave'] == 'y' ) {
 	$quicktags->insertTag('autosave', true);
 }
 
+error_reporting(E_ALL);
+
 $toolbar = $quicktags->getWysiwygArray();
 //file_put_contents('temp/cache/foo', print_r($toolbar, true));
-$smarty->assign('toolbar', $toolbar );
+$smarty->assign_by_ref('toolbar', $toolbar );
 $smarty->display('setup_fckeditor.tpl', null, null, 'application/javascript');
