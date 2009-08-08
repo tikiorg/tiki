@@ -25,8 +25,7 @@ if (!$trackerId) {
 	die;
 }
 $smarty->assign('trackerId', $trackerId);
-$smarty->assign('individual', 'n');
-$tikilib->object_has_one_permission($trackerId, 'tracker');
+$tikilib->get_perm_object($trackerId, 'tracker');
 
 if ($tiki_p_view_trackers != 'y') {
 	$smarty->assign('errortype', 401);
