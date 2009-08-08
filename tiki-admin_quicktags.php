@@ -66,10 +66,12 @@ $setup = '';
 $map = array();
 foreach( Quicktag::getList() as $name ) {
 	$used = false;
-	foreach( $current as & $line ) {
-		if (in_array($name, $line) && $name != '-') {
-			$used = true;
-			break;
+	if ( is_array($current) ) {
+		foreach( $current as & $line ) {
+			if (in_array($name, $line) && $name != '-') {
+				$used = true;
+				break;
+			}
 		}
 	}
 	$tag = Quicktag::getTag($name);
@@ -98,11 +100,13 @@ JS;
 	}
 }
 
-foreach( $current as $k => $l ) {
-	foreach( $l as $name ) {
-		if( isset($map[$name]) ) {
-			$init .= $map[$name];
-			$init .= "\$jq('#row-$k').append(item);";
+if ( is_array($current) ) {
+	foreach( $current as $k => $l ) {
+		foreach( $l as $name ) {
+			if( isset($map[$name]) ) {
+				$init .= $map[$name];
+				$init .= "\$jq('#row-$k').append(item);";
+			}
 		}
 	}
 }
@@ -139,8 +143,9 @@ $init
 	}
 }); 							//.disableSelection();
 
-window.quicktags_sortable = Object();
-window.quicktags_sortable.saveRows = function() {
+//window.quicktags_sortable = Object();
+//window.quicktags_sortable.saveRows = function() {
+saveRows = function() {
 	var lists = [];
 	var ser = \$jq('.row').map(function(){				/* do this on everything of class 'row' */
 		return \$jq(this).children().map(function(){	/* do this on each child node */
