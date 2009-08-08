@@ -38,11 +38,13 @@
 			<input id="qt-wys-filter" class="qt-filter" type="checkbox" checked /><label>{tr}WYSIWYG{/tr}</label>
 			<input id="qt-plugin-filter" class="qt-filter" type="checkbox" checked /><label>{tr}Plugins{/tr}</label>
 		</div>{/if}
-		<ul id="full-list" class="full">
-		{foreach from=$displayedqt item=tool}
-			<li class="{$qtelement[$tool].class}">{$qtelement[$tool].html}</li>
+		{foreach from=$qtlists item=displayedqt name=box}
+			<ul id="full-list-{$smarty.foreach.box.iteration}" class="full">
+			{foreach from=$displayedqt item=tool}
+				<li class="{$qtelement[$tool].class}">{$qtelement[$tool].html}</li>
+			{/foreach}
+			</ul>
 		{/foreach}
-		</ul>
 	</div>
 	</form>
 </div>

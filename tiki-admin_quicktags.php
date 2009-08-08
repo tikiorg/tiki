@@ -98,19 +98,21 @@ foreach( $qtlist as $name ) {
 	$qtelement[$name] = array( 'name' => $name, 'class' => "quicktag qt-$name $wys $wiki $plug", 'html' => "$icon$label" );
 }
 
+$nol = 1;
 $rowStr = substr(implode(",#row-",range(0,$rowCount)),2);
+$fullStr = substr(implode(",#full-list-",range(0,$nol)),2);
 
 $headerlib->add_jq_onready( <<<JS
 
-var list = \$jq('#full-list');
+var list = \$jq('$fullStr');
 var item;
 
 \$jq('$rowStr').sortable({
-	connectWith: '#full-list, .row',
+	connectWith: '$fullStr, .row',
 	forcePlaceholderSize: true,
 	forceHelperSize: true
 });
-\$jq('#full-list').sortable({
+\$jq('$fullStr').sortable({
 	connectWith: '.row',
 	forcePlaceholderSize: true,
 	forceHelperSize: true,
@@ -151,9 +153,9 @@ saveRows = function() {
 	var showwys = \$jq('#qt-wys-filter').attr('checked');
 	var showplugin = \$jq('#qt-plugin-filter').attr('checked');
 	
-	\$jq('#full-list').children().hide();		// reset
+	\$jq('$fullStr').children().hide();		// reset
 	
-	\$jq('#full-list').children().each( function() {
+	\$jq('$fullStr').children().each( function() {
 		
 		var haswiki = \$jq(this).hasClass('qt-wiki');
 		var haswys = \$jq(this).hasClass('qt-wys');
@@ -175,6 +177,9 @@ JS
 );
 	
 
+$displayedqt = array_diff($qtlist,$usedqt);
+$qtlists = array_chunk($displayedqt,ceil(sizeof($displayedqt)/$nol));
+
 $headerlib->add_cssfile('css/admin.css');
 
 $smarty->assign('comments', $comments);
@@ -183,8 +188,7 @@ $smarty->assign( 'rows', range( 0, $rowCount - 1 ) );
 $smarty->assign( 'rowCount', $rowCount );
 $smarty->assign( 'sections', $sections );
 $smarty->assign_by_ref('qtelement',$qtelement);
-$smarty->assign_by_ref('qtlist',$qtlist);
-$smarty->assign_by_ref('displayedqt',array_diff($qtlist,$usedqt));
+$smarty->assign_by_ref('qtlists',$qtlists);
 $smarty->assign_by_ref('current',$current);
 $smarty->assign( 'mid', 'tiki-admin_quicktags.tpl' );
 $smarty->display( 'tiki.tpl' );
