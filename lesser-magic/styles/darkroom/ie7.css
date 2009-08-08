@@ -1,0 +1,16 @@
+/* $Id$
+	Darkroom theme selectors for IE7.
+*/
+
+body {
+	font-size: 72% !important;
+}
+
+.post .postbody {
+	min-width: 100% !important;
+}
+
+.postbody-content {
+	min-width: 73%;
+}
+
