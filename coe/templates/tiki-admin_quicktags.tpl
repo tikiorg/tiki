@@ -1,6 +1,6 @@
 {title help="Quicktags"}{tr}Admin Quicktags{/tr}{/title}
 <div class="quicktags-admin clearfix">
-	<form method="get" action="tiki-admin_quicktags.php">
+	<form method="post" action="tiki-admin_quicktags.php" onsubmit="return saveRows()">
 		<div>
 			<label>{tr}Section{/tr}:</label>
 			<select name="section" onchange="this.form.submit()">
@@ -11,14 +11,25 @@
 			<label>{tr}Comments{/tr}:</label>
 			<input name="comments" type="checkbox" onchange="this.form.submit()" {if $comments eq 'on'}checked{/if}/>
 			{if $prefs.javascript_enabled eq 'n'}<input name="load" type="submit" value="{tr}Load{/tr}"/>{/if}
+			<input type="submit" name="save" value="{tr}Save{/tr}"/>
+			{if $loaded neq 'global' }<input type="submit" name="reset" value="{tr}Reset to Global{/tr}"/>{/if}
 		</div>
-	</form>
 	<div class="rows">
-		{foreach from=$rows item=i}
-			<label for="row-{$i|escape}">{tr}Row{/tr}&nbsp;{$i}:</label>
-			<ul id="row-{$i|escape}" class="row"></ul>
+		{foreach from=$current item=line name=line}
+			<label for="row-{$smarty.foreach.line.iteration|escape}">{tr}Row{/tr}&nbsp;{$smarty.foreach.line.iteration}:</label>
+			<ul id="row-{$smarty.foreach.line.iteration|escape}" class="row">
+			{foreach from=$line item=tool}
+				<li class="{$qtelement[$tool].class}">{$qtelement[$tool].html}</li>
+			{/foreach}
+			</ul>
+			{if $smarty.foreach.line.last and $rowCount gt 1}
+				{assign var=total value=`$smarty.foreach.line.total+1`}
+			<label for="row-{$total|escape}">{tr}Row{/tr}&nbsp;{$total}:</label>
+				<ul id="row-{$total|escape}" class="row">
+			{/if}
 		{/foreach}
 	</div>
+	<input id="qt-form-field" type="hidden" name="pref" value=""/>
 	<div class="rows">
 		<label for="#full-list">{tr}All Quicktags:{/tr}</label><br/>
 		{if $prefs.feature_jquery eq 'y'}<div id="qt_filter_div">
@@ -27,21 +38,14 @@
 			<input id="qt-wys-filter" class="qt-filter" type="checkbox" checked /><label>{tr}WYSIWYG{/tr}</label>
 			<input id="qt-plugin-filter" class="qt-filter" type="checkbox" checked /><label>{tr}Plugins{/tr}</label>
 		</div>{/if}
-		<ul id="full-list" class="full"></ul>
+		{foreach from=$qtlists item=displayedqt name=box}
+			<ul id="full-list-{$smarty.foreach.box.iteration}" class="full">
+			{foreach from=$displayedqt item=tool}
+				<li class="{$qtelement[$tool].class}">{$qtelement[$tool].html}</li>
+			{/foreach}
+			</ul>
+		{/foreach}
 	</div>
-	<form method="post" action="tiki-admin_quicktags.php" onsubmit="return window.quicktags_sortable.saveRows()">
-		<div class="selectDiv">
-			<input id="qt-form-field" type="hidden" name="pref" value=""/>
-			<label>{tr}Section{/tr}:</label>
-			<select name="section">
-				{foreach from=$sections item=name}
-					<option{if $name eq $loaded} selected="selected"{/if}>{$name|escape}</option>
-				{/foreach}
-			</select>
-			<label>{tr}Comments{/tr}:</label>
-			<input name="comments" type="checkbox" {if $comments eq 'on'}checked{/if}/>
-			<input type="submit" name="save" value="{tr}Save{/tr}"/>
-		</div>
 	</form>
 </div>
 <div class="clearfix">

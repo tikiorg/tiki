@@ -282,6 +282,10 @@ class ModLib extends TikiLib {
 
 		$params = $module['params'];
 
+		if( isset( $params['perspective'] ) && ! in_array( $_SESSION['current_perspective'], $params['perspective'] ) ) {
+			return false;
+		}
+
 		if( isset( $params["lang"] ) && ! in_array( $prefs['language'], (array) $params["lang"]) ) {
 			return false;
 		}
@@ -427,6 +431,12 @@ class ModLib extends TikiLib {
 			'decorations' => array(
 				'name' => tra('Decorations'),
 				'description' => tra('?'),
+			),
+			'perspective' => array(
+				'name' => tra('Perspective'),
+				'description' => tra('Only display the module if in one of the listed perspectives. Semi-colon separated.'),
+				'separator' => ';',
+				'filter' => 'digits',
 			),
 			'lang' => array(
 				'name' => tra('Language'),

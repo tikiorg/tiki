@@ -47,6 +47,11 @@ if( isset($_REQUEST['save'], $_REQUEST['pref']) ) {
 	$tikilib->set_preference( $prefName, $_REQUEST['pref'] );
 }
 
+if( isset($_REQUEST['reset'])  and $section != 'global' ) {
+	$prefName = 'toolbar_' . $section . ($comments ? '_comments' : '');
+	$tikilib->set_preference( $prefName, '');
+}
+
 $current = $tikilib->get_preference( 'toolbar_' . $section . ($comments ? '_comments' : '') );
 if (!empty($current)) {
 	$current = preg_replace( '/\s+/', '', $current );
@@ -64,13 +69,17 @@ if (!empty($current)) {
 $init = '';
 $setup = '';
 $map = array();
-foreach( Quicktag::getList() as $name ) {
+
+$qtlist = Quicktag::getList();
+$usedqt = array();
+foreach( $current as &$line ) {
+	$usedqt = array_merge($usedqt,$line);
+}
+
+foreach( $qtlist as $name ) {
 	$used = false;
-	foreach( $current as & $line ) {
-		if (in_array($name, $line) && $name != '-') {
-			$used = true;
-			break;
-		}
+	if (in_array($name, $usedqt) && $name != '-') {
+		$used = true;
 	}
 	$tag = Quicktag::getTag($name);
 	if( ! $tag ) {
@@ -86,43 +95,24 @@ foreach( Quicktag::getList() as $name ) {
 		$label = $name;
 	}
 	$icon = $tag->getIconHtml();
-	$map[$name] = <<<JS
-item = document.createElement('li');
-item.className = 'quicktag qt-$name $wys $wiki $plug';
-item.innerHTML = '$icon$label';
-JS;
-	if (!$used) {
-
-		$init .= $map[$name];
-		$init .= "list.append(item);\n";
-	}
+	$qtelement[$name] = array( 'name' => $name, 'class' => "quicktag qt-$name $wys $wiki $plug", 'html' => "$icon$label" );
 }
 
-foreach( $current as $k => $l ) {
-	foreach( $l as $name ) {
-		if( isset($map[$name]) ) {
-			$init .= $map[$name];
-			$init .= "\$jq('#row-$k').append(item);";
-		}
-	}
-}
-$rowStr = '';
-for( $i = 0; $rowCount > $i; ++$i ) {
-	$rowStr .= !empty($rowStr) && $i < $rowCount ? ',' : '';
-	$rowStr .= "#row-$i";
-}
+$nol = 1;
+$rowStr = substr(implode(",#row-",range(0,$rowCount)),2);
+$fullStr = substr(implode(",#full-list-",range(0,$nol)),2);
+
 $headerlib->add_jq_onready( <<<JS
 
-var list = \$jq('#full-list');
+var list = \$jq('$fullStr');
 var item;
-$init
 
 \$jq('$rowStr').sortable({
-	connectWith: '#full-list, .row',
+	connectWith: '$fullStr, .row',
 	forcePlaceholderSize: true,
 	forceHelperSize: true
 });
-\$jq('#full-list').sortable({
+\$jq('$fullStr').sortable({
 	connectWith: '.row',
 	forcePlaceholderSize: true,
 	forceHelperSize: true,
@@ -139,8 +129,9 @@ $init
 	}
 }); 							//.disableSelection();
 
-window.quicktags_sortable = Object();
-window.quicktags_sortable.saveRows = function() {
+//window.quicktags_sortable = Object();
+//window.quicktags_sortable.saveRows = function() {
+saveRows = function() {
 	var lists = [];
 	var ser = \$jq('.row').map(function(){				/* do this on everything of class 'row' */
 		return \$jq(this).children().map(function(){	/* do this on each child node */
@@ -162,9 +153,9 @@ window.quicktags_sortable.saveRows = function() {
 	var showwys = \$jq('#qt-wys-filter').attr('checked');
 	var showplugin = \$jq('#qt-plugin-filter').attr('checked');
 	
-	\$jq('#full-list').children().hide();		// reset
+	\$jq('$fullStr').children().hide();		// reset
 	
-	\$jq('#full-list').children().each( function() {
+	\$jq('$fullStr').children().each( function() {
 		
 		var haswiki = \$jq(this).hasClass('qt-wiki');
 		var haswys = \$jq(this).hasClass('qt-wys');
@@ -186,12 +177,19 @@ JS
 );
 	
 
+$displayedqt = array_diff($qtlist,$usedqt);
+$qtlists = array_chunk($displayedqt,ceil(sizeof($displayedqt)/$nol));
+
 $headerlib->add_cssfile('css/admin.css');
 
 $smarty->assign('comments', $comments);
 $smarty->assign( 'loaded', $section );
 $smarty->assign( 'rows', range( 0, $rowCount - 1 ) );
+$smarty->assign( 'rowCount', $rowCount );
 $smarty->assign( 'sections', $sections );
+$smarty->assign_by_ref('qtelement',$qtelement);
+$smarty->assign_by_ref('qtlists',$qtlists);
+$smarty->assign_by_ref('current',$current);
 $smarty->assign( 'mid', 'tiki-admin_quicktags.tpl' );
 $smarty->display( 'tiki.tpl' );
 
