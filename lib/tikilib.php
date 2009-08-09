@@ -8266,6 +8266,32 @@ JS;
 		if ( $remove_duplicates ) $bindvars = $bindvars2;
 		return ' IN (' . $query . ')';
 	}
+
+	function get_jail() {
+		global $prefs;
+		if( $prefs['feature_categories'] == 'y' && ! empty( $prefs['category_jail'] ) ) {
+			global $categlib; require_once ('lib/categories/categlib.php');
+			$key = $prefs['category_jail'];
+			$categories = explode( ',', $prefs['category_jail'] );
+
+			if( $prefs['expanded_category_jail_key'] != $key ) {
+				$additional = array();
+
+				foreach( $categories as $categId ) {
+					$desc = $categlib->get_category_descendants( $categId );
+					$additional = array_merge( $additional, $desc );
+				}
+
+				$prefs['expanded_category_jail'] =
+					$_SESSION['s_prefs']['expanded_category_jail'] = implode( ',', $additional );
+				$_SESSION['s_prefs']['expanded_category_jail_key'] = $key;
+
+				return $additional;
+			}
+
+			return explode( ',', $prefs['expanded_category_jail'] );
+		}
+	}
 }
 // end of class ------------------------------------------------------
 
