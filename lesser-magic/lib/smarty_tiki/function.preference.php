@@ -7,6 +7,10 @@ function smarty_function_preference( $params, $smarty ) {
 	}
 
 	if( $info = $prefslib->getPreference( $params['name'] ) ) {
+		if( isset($params['label']) ) {
+			$info['name'] = $params['label'];
+		}
+
 		$smarty->assign( 'p', $info );
 		return $smarty->fetch( 'prefs/' . $info['type'] . '.tpl' );
 	} else {

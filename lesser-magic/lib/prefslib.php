@@ -129,6 +129,19 @@ class PreferencesLib
 
 		return $data[$name];
 	}
+
+	private function _getListValue( $info, $data ) {
+		$name = $info['preference'];
+		$value = $data[$name];
+
+		$options = $info['options'];
+
+		if( isset( $options[$value] ) ) {
+			return $value;
+		} else {
+			return reset( array_keys( $options ) );
+		}
+	}
 }
 
 global $prefslib;
