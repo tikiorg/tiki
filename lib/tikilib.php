@@ -3629,41 +3629,6 @@ class TikiLib extends TikiDb_Bridge {
 		return $ret;
 	}
 
-	// Returns the name of "n" random pages
-	function get_random_pages($n) {
-		$query = "select count(*) from `tiki_pages`";
-
-		$cant = $this->getOne($query,array());
-
-		// Adjust the limit if there are not enough pages
-		if ($cant < $n)
-			$n = $cant;
-
-		// Now that we know the number of pages to pick select `n`  random positions from `0` to cant
-		$positions = array();
-
-		for ($i = 0; $i < $n; $i++) {
-			$pick = rand(0, $cant - 1);
-
-			if (!in_array($pick, $positions))
-				$positions[] = $pick;
-		}
-
-		// Now that we have the positions we just build the data
-		$ret = array();
-
-		$temp_max = count($positions);
-		for ($i = 0; $i < $temp_max; $i++) {
-			$index = $positions[$i];
-
-			$query = "select `pageName`  from `tiki_pages`";
-			$name = $this->getOne($query,array(),1,$index);
-			$ret[] = $name;
-		}
-
-		return $ret;
-	}
-
 	// Returns the name of all pages
 	function get_all_pages() {
 
