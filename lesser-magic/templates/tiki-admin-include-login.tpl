@@ -12,21 +12,8 @@
 
 		{tabset name="admin_login"}
 			{tab name="{tr}General Preferences{/tr}"}
-				<div class="adminoptionbox">
-					<div class="adminoptionlabel"><label for="auth_method">{tr}Authentication method{/tr}:</label>
-						<select name="auth_method" id="auth_method">
-							<option value="tiki" {if $prefs.auth_method eq 'tiki'} selected="selected"{/if}>{tr}Tiki{/tr}</option>
-							<!--option value="http" {if $prefs.auth_method eq 'http'} selected="selected"{/if}>{tr}Tiki and HTTP Auth{/tr}</option-->
-							<option value="openid" {if $prefs.auth_method eq 'openid'} selected="selected"{/if}>{tr}Tiki and OpenID{/tr}</option>
-							<option value="pam" {if $prefs.auth_method eq 'pam'} selected="selected"{/if}>{tr}Tiki and PAM{/tr}</option>
-							<option value="ldap" {if $prefs.auth_method eq 'ldap'} selected="selected"{/if}>{tr}Tiki and LDAP{/tr}</option>
-							<option value="cas" {if $prefs.auth_method eq 'cas'} selected="selected"{/if}>{tr}CAS (Central Authentication Service){/tr}</option>
-							<option value="shib" {if $prefs.auth_method eq 'shib'} selected="selected"{/if}>{tr}Shibboleth{/tr}</option>
-							<option value="ws" {if $prefs.auth_method eq 'ws'} selected="selected"{/if}>{tr}Web Server{/tr}</option>
-						</select> {if $prefs.feature_help eq 'y'} {help url="Login+Authentication+Methods"}{/if}
-					</div>
-				</div>	
-			
+				{preference name=auth_method}	
+
 				<fieldset><legend>{tr}Registration{/tr} &amp; {tr}Login{/tr}</legend>
 					<div class="adminoptionbox">
 						<div class="adminoption">
@@ -34,12 +21,7 @@
 						</div>
 						<div class="adminoptionlabel"><label for="allowRegister">{tr}Users can register{/tr}.</label></div>
 						<div id="userscanregister" style="clear:both;display:{if $prefs.allowRegister eq 'y'}block{else}none{/if};margin-left:2.5em;">
-							<div class="adminoptionbox">
-								<div class="adminoption"><input type="checkbox" id="validateUsers" name="validateUsers" {if $prefs.validateUsers eq 'y'}checked="checked"{/if} /></div>
-								<div class="adminoptionlabel"><label for="validateUsers">{tr}Validate by email{/tr}.</label>
-									{if empty($prefs.sender_email)}<br /><span class="highlight">{tr}You need to set <a href="tiki-admin.php?page=general&amp;cookietab=2">Sender Email</a>{/tr}</span>{/if}
-								</div>
-							</div>
+							{preference name=validateUsers label="{tr}Validate by email{/tr}"}
 							<div class="adminoptionbox">
 								<div class="adminoption"><input type="checkbox" id="validateEmail" name="validateEmail" {if $prefs.validateEmail eq 'y'}checked="checked"{/if} /></div>
 								<div class="adminoptionlabel"><label for="validateEmail">{tr}Validate user's email server{/tr}.</label></div>

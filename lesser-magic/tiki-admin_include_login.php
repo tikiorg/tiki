@@ -52,7 +52,6 @@ if (isset($_REQUEST["loginprefs"])) {
 	simple_set_value('cookie_name');
 	simple_set_value('cookie_domain');
 	simple_set_value('cookie_path');
-	simple_set_value('auth_method');
 	simple_set_value('highlight_group');
 	simple_set_value('user_tracker_infos');
 	simple_set_toggle('desactive_login_autocomplete');

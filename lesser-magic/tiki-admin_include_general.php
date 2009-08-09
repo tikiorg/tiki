@@ -54,7 +54,6 @@ if (isset($_REQUEST["new_prefs"])) {
 		"site_crumb_seper",
 		"site_nav_seper",
 		"contact_user",
-		"sender_email",
 		"system_os",
 		"default_mail_charset",
 		"mail_crlf",

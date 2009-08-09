@@ -6,5 +6,5 @@
 			{icon _id=help alt=$p.name}
 		</a>
 	{/if}
-	<input type="hidden" name="lm_preference[]" value="{$p.preference|escape}"/>
+	{include file=prefs/shared-dependencies.tpl}
 </div>

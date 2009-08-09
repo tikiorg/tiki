@@ -4,7 +4,7 @@ class PreferencesLib
 {
 	private $data = array();
 
-	function getPreference( $name ) {
+	function getPreference( $name, $deps = true ) {
 		static $id = 0;
 		$data = $this->loadData( $name );
 
@@ -17,6 +17,9 @@ class PreferencesLib
 			$info['id'] = 'pref-' . ++$id;
 			if( isset( $info['help'] ) && $prefs['feature_help'] == 'y' ) {
 				$info['helpurl'] = $prefs['helpurl'] . $info['help'];
+			}
+			if( $deps && isset( $info['dependencies'] ) ) {
+				$info['dependencies'] = $this->getDependencies( $info['dependencies'] );
 			}
 
 			return $info;
@@ -76,6 +79,26 @@ class PreferencesLib
 		}
 
 		return $this->files[$file];
+	}
+
+	private function getDependencies( $dependencies ) {
+		$out = array();
+
+		foreach( $dependencies as $dep ) {
+			if( $info = $this->getPreference( $dep, false ) ) {
+				$out[] = array(
+					'name' => $dep,
+					'label' => $info['name'],
+					'type' => $info['type'],
+					'link' => 'tiki-admin.php?lm_criteria=' . urlencode($info['name']),
+					'met' =>
+						( $info['type'] == 'flag' && $info['value'] == 'y' )
+						|| ( $info['type'] != 'flag' && ! empty( $info['value'] ) )
+				);
+			}
+		}
+
+		return $out;
 	}
 
 	private function getIndex() {

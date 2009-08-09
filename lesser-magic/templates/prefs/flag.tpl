@@ -8,5 +8,5 @@
 			</a>
 		{/if}
 	</span>
-	<input type="hidden" name="lm_preference[]" value="{$p.preference|escape}"/>
+	{include file=prefs/shared-dependencies.tpl}
 </div>
