@@ -149,30 +149,15 @@
 		</fieldset>
 		<fieldset class="admin">
                 <legend>{tr}Plugins{/tr}</legend>
-		{foreach from=$plugins key=plugin item=info}
-			<fieldset class="admin">
-                	<legend>{$info.name|escape}</legend>
-			<div class="adminoptionbox">	 
-			<strong>{$plugin|escape}</strong>: {$info.description|escape}{assign var=pref value=wikiplugin_$plugin} {if $prefs.feature_help eq 'y'} {help url="Plugin$plugin"}{/if}
-			</div>
-			{if in_array( $pref, $info.prefs)}
-				<div class="adminoptionbox"> 
-				{assign var=pref value=wikiplugin_$plugin}
-				{assign var=pref_inline value=wikiplugininline_$plugin}	
-					<div class="adminoption"><input type="checkbox" id="wikiplugin_{$plugin|escape}" name="wikiplugin_{$plugin|escape}" {if $prefs[$pref] eq 'y'}checked="checked" {/if}/> 
-					</div> 
-					<div class="adminoptionlabel"><label for="wikiplugin_{$plugin|escape}">{tr}Enable{/tr}</label>
-					</div> 
-				</div>	
-				<div class="adminoptionbox">
-				        {if !$plugins.$plugin.inline}<div class="adminoption"><input type="checkbox" id="wikiplugininline_{$plugin|escape}" name="wikiplugininline_{$plugin|escape}" {if $prefs[$pref_inline] eq 'y'}checked="checked" {/if}/>
-                                        </div>{/if} 
-					<div class="adminoptionlabel"><label for="wikiplugininline_{$plugin|escape}">{if $plugins.$plugin.inline}The edit plugin icon is not supported for this plugin{else}{tr}Disable edit plugin icon (make plugin inline){/tr}{/if}</label>
-					</div> 
-				</div>
-			{/if} 
-			</fieldset>
-		{/foreach}
+			{foreach from=$plugins key=plugin item=info}
+				<fieldset class="admin">
+					<legend>{$info.name|escape}</legend>
+				
+					<strong>{$plugin|escape}</strong>: {$info.description|escape}
+					{preference name=wikiplugin_$plugin label="{tr}Enable{/tr}"}
+					{preference name=wikiplugininline_$plugin label="{tr}Disable plugin icon (make plugin inline){/tr}"}
+				</fieldset>
+			{/foreach}
 		</fieldset>
 		{/tab}
 
