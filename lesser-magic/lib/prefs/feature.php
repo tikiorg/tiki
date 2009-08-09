@@ -20,6 +20,13 @@ function prefs_feature_list() {
 			'type' => 'flag',
 			'help' => 'Image+Galleries',
 		),
+		'feature_machine_translation' => array(
+			'name' => tra('Machine Translation (by Google Translate)'),
+			'description' => tra('Uses Google Translate to translate the content of wiki pages to other languages.'),
+			'help' => 'Translating+Tiki+Content',
+			'warning' => tra('Experimental. This feature is still under development.'),
+			'type' => 'flag',
+		),
 	);
 }
 
