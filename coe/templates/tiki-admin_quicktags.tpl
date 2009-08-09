@@ -1,15 +1,28 @@
 {title help="Quicktags"}{tr}Admin Quicktags{/tr}{/title}
+<script type='text/javascript'>
+<!--//--><![CDATA[//><!--
+{literal}
+	function quicktags_autoreload() {
+		if (document.forms['quicktags'].elements['autoreload'].checked) {
+			document.forms['quicktags'].submit();
+		}
+	}
+{/literal}
+//--><!]]>
+</script>
 <div class="quicktags-admin clearfix">
-	<form method="post" action="tiki-admin_quicktags.php" onsubmit="return saveRows()">
+	<form name="quicktags" method="post" action="tiki-admin_quicktags.php" onsubmit="return saveRows()">
 		<div>
 			<label>{tr}Section{/tr}:</label>
-			<select name="section" onchange="this.form.submit()">
+			<select name="section" onchange="javascript:quicktags_autoreload()">
 				{foreach from=$sections item=name}
 					<option{if $name eq $loaded} selected="selected"{/if}>{$name|escape}</option>
 				{/foreach}
 			</select>
+			<label for="autoreload">{tr}Auto Reloading{/tr}:</label>
+			<input id="autoreload" name="autoreload" type="checkbox" checked="checked"/>
 			<label>{tr}Comments{/tr}:</label>
-			<input name="comments" type="checkbox" onchange="this.form.submit()" {if $comments eq 'on'}checked{/if}/>
+			<input name="comments" type="checkbox" onchange="javascript:quicktags_autoreload()" {if $comments eq 'on'}checked="checked"{/if}/>
 			{if $prefs.javascript_enabled eq 'n'}<input name="load" type="submit" value="{tr}Load{/tr}"/>{/if}
 			<input type="submit" name="save" value="{tr}Save{/tr}"/>
 			{if $loaded neq 'global' }<input type="submit" name="reset" value="{tr}Reset to Global{/tr}"/>{/if}

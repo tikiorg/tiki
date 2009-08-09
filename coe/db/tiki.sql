@@ -3507,8 +3507,8 @@ CREATE TABLE `tiki_minichat` (
 DROP TABLE IF EXISTS `tiki_profile_symbols`;
 CREATE TABLE `tiki_profile_symbols` (
   `domain` VARCHAR(50) NOT NULL,
-  `profile` VARCHAR(50) NOT NULL,
-  `object` VARCHAR(50) NOT NULL,
+  `profile` VARCHAR(100) NOT NULL,
+  `object` VARCHAR(150) NOT NULL,
   `type` VARCHAR(20) NOT NULL,
   `value` VARCHAR(50) NOT NULL,
   `named` ENUM('y','n') NOT NULL,

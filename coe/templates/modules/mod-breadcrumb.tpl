@@ -11,7 +11,7 @@
 				{if ($maxlen > 0 && strlen($breadCrumb[ix]) > $maxlen)}
 					{$breadCrumb[ix]|truncate:$maxlen:"...":true}
 				{else}
-					{$breadCrumb[ix]|escape:'html'}
+					{$breadCrumb[ix]}
 				{/if}
 			</a>
 		</li>
