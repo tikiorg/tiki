@@ -12,11 +12,21 @@
 			<input name="comments" type="checkbox" onchange="this.form.submit()" {if $comments eq 'on'}checked{/if}/>
 			{if $prefs.javascript_enabled eq 'n'}<input name="load" type="submit" value="{tr}Load{/tr}"/>{/if}
 			<input type="submit" name="save" value="{tr}Save{/tr}"/>
+			{if $loaded neq 'global' }<input type="submit" name="reset" value="{tr}Reset to Global{/tr}"/>{/if}
 		</div>
 	<div class="rows">
-		{foreach from=$rows item=i}
-			<label for="row-{$i|escape}">{tr}Row{/tr}&nbsp;{$i}:</label>
-			<ul id="row-{$i|escape}" class="row"></ul>
+		{foreach from=$current item=line name=line}
+			<label for="row-{$smarty.foreach.line.iteration|escape}">{tr}Row{/tr}&nbsp;{$smarty.foreach.line.iteration}:</label>
+			<ul id="row-{$smarty.foreach.line.iteration|escape}" class="row">
+			{foreach from=$line item=tool}
+				<li class="{$qtelement[$tool].class}">{$qtelement[$tool].html}</li>
+			{/foreach}
+			</ul>
+			{if $smarty.foreach.line.last and $rowCount gt 1}
+				{assign var=total value=`$smarty.foreach.line.total+1`}
+			<label for="row-{$total|escape}">{tr}Row{/tr}&nbsp;{$total}:</label>
+				<ul id="row-{$total|escape}" class="row">
+			{/if}
 		{/foreach}
 	</div>
 	<input id="qt-form-field" type="hidden" name="pref" value=""/>
@@ -28,7 +38,13 @@
 			<input id="qt-wys-filter" class="qt-filter" type="checkbox" checked /><label>{tr}WYSIWYG{/tr}</label>
 			<input id="qt-plugin-filter" class="qt-filter" type="checkbox" checked /><label>{tr}Plugins{/tr}</label>
 		</div>{/if}
-		<ul id="full-list" class="full"></ul>
+		{foreach from=$qtlists item=displayedqt name=box}
+			<ul id="full-list-{$smarty.foreach.box.iteration}" class="full">
+			{foreach from=$displayedqt item=tool}
+				<li class="{$qtelement[$tool].class}">{$qtelement[$tool].html}</li>
+			{/foreach}
+			</ul>
+		{/foreach}
 	</div>
 	</form>
 </div>

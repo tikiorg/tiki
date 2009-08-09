@@ -1,16 +1,12 @@
 <?php
 
 // Set tikiversion variable
-if (array_key_exists('SHELL', $_ENV)) {
-	$tikiversion='4.0';
+require 'tikiversion.php';
+if(!isset($_GET['version'])) {
+	echo "version not given. Using default $tikiversion.<br />";
 } else {
-	$tikiversion='4.0';
-	if(!isset($_GET['version'])) {
-		echo "version not given. Using default $tikiversion.<br />";
-	} else {
-		if(preg_match('/\d\.\d/',$_GET['version'])) {
-			$tikiversion=$_GET['version'];
-		}
+	if(preg_match('/\d\.\d/',$_GET['version'])) {
+		$tikiversion=$_GET['version'];
 	}
 }
 
@@ -35,7 +31,8 @@ $statements=preg_split("#(;\n)|(;\r\n)#",$data);
 
 echo "<table>\n";
 // step though statements
-$fp=fopen($tikiversion.".to_oci8.sql","w");
+$fp=fopen($tikiversion.".to_sybase.sql","w");
+fwrite($fp,"set quoted_identifier on\ngo\n\n");
 foreach ($statements as $statement)
 {
   echo "<tr><td><pre>\n";
@@ -62,20 +59,20 @@ function parse($stmt)
   // drop TYPE=MyISAM and AUTO_INCREMENT=1
   $stmt=preg_replace("/TYPE=MyISAM/","",$stmt);
   $stmt=preg_replace("/AUTO_INCREMENT=1/","",$stmt);
-  //oracle cannot DROP TABLE IF EXISTS
-  $stmt=preg_replace("/DROP TABLE IF EXISTS/","DROP TABLE",$stmt);
+  //sybase cannot DROP TABLE IF EXISTS
+  $stmt=preg_replace("/DROP TABLE IF EXISTS/","-- DROP TABLE",$stmt);
   //auto_increment things
-  $stmt=preg_replace("/  ([a-zA-Z0-9_]+).+int\(([^\)]+)\) (unsigned )*NOT NULL auto_increment/e","create_trigger('$1','$2')",$stmt);
+  $stmt=preg_replace("/([a-zA-Z0-9_]+).+int\(([^\)]+)\) (unsigned )*NOT NULL auto_increment/","$1 numeric($2 ,0) identity",$stmt);
   // integer types
-  $stmt=preg_replace("/tinyint\(([0-9]+)\)/","number($1)",$stmt);
-  $stmt=preg_replace("/int\(([0-9]+)\) unsigned/","number($1)",$stmt);
-  $stmt=preg_replace("/int\(([0-9]+)\)/","number($1)",$stmt);
+  $stmt=preg_replace("/tinyint\(([0-9]+)\)/","numeric($1,0)",$stmt);
+  $stmt=preg_replace("/int\(([0-9]+)\) unsigned/","numeric($1,0)",$stmt);
+  $stmt=preg_replace("/int\(([0-9]+)\)/","numeric($1,0)",$stmt);
   // timestamps
-  $stmt=preg_replace("/timestamp\([^\)]+\)/","timestamp(3)",$stmt);
+  $stmt=preg_replace("/timestamp\([^\)]+\)/","timestamp",$stmt);
   // blobs
-  $stmt=preg_replace("/longblob|tinyblob|blob/","blob",$stmt);
+  $stmt=preg_replace("/longblob|tinyblob|blob/","image",$stmt);
   // text datatypes
-  $stmt=preg_replace("/\n[ \t]+(.+) (text)/","\n  $1 clob",$stmt);
+  //$stmt=preg_replace("/  (.+) (text)/","  $1 clob",$stmt);
   // quote column names
   $stmt=preg_replace("/\n[ \t]+([a-zA-Z0-9_]+)/","\n  \"$1\"",$stmt);
   // quote and record table names
@@ -86,6 +83,14 @@ function parse($stmt)
   $stmt=preg_replace("/\n[ \t]+(\"[a-zA-Z0-9_]+\") enum\(([^\)]+)\)/e","convert_enums('$1','$2')",$stmt);
   // Oracle wants to have "default ... NOT NULL" not "NOT NULL default ..."
   $stmt=preg_replace("/(.+)(NOT NULL) (default.+),/i","$1$3 $2,",$stmt);
+  // sybase is strange. a default null does not say, that you may insert
+  // null values! you have to user default null null
+  $stmt=preg_replace("/(.+)(default NULL)(.+)/i","$1$2 NULL$3",$stmt);
+  // and sybase wants default values everywhere
+  // else it will try to insert NULL values
+  // what fails if we don't have default null null set :-(
+  $stmt=preg_replace("/\n[ \t]+(\"[a-zA-Z0-9_]+\") (text|varchar\([0-9]+\)|image),/","\n  $1 $2 default '',",$stmt);
+  $stmt=preg_replace("/\n[ \t]+(\"[a-zA-Z0-9_]+\") (numeric\([0-9]+,[0-9]+\)),/","\n  $1 $2 default NULL NULL,",$stmt);
   // same with other constraints
   $stmt=preg_replace("/(.+)(CHECK.+) (default.+),/i","$1$3 $2,",$stmt);
 
@@ -105,9 +110,7 @@ function parse($stmt)
   $stmt=preg_replace("/UPDATE ([a-zA-Z0-9_]+) set (.*)/e","do_updates('$1','$2')",$stmt);
 	// clean cases where UNIQUE was alone at the end
   $stmt=preg_replace("/,(\s*)\)/","$1)",$stmt);
-  // remove blank lines. this causes errors in oracle
-  $stmt=preg_replace("/\n+/","\n",$stmt);
-  return $prestmt.$stmt.";".$poststmt;
+  return $prestmt.$stmt."\ngo\n".$poststmt;
 }
 
 function create_trigger($colname,$precision)
@@ -147,7 +150,7 @@ function create_index($name,$content,$type="")
     $allvals.=$vals;
   }
   $allvals=preg_replace("/\"\"/","\",\"",$allvals);
-  $poststmt.=$allvals.");\n";
+  $poststmt.=$allvals.")\ngo\n";
 }
 
 function do_updates($tab,$content)

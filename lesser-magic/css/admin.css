@@ -134,8 +134,13 @@ div.adminanchors a {float: left}
 .quicktags-admin .full {
 	border: solid thin gray;
 	float: left;
-	height: 478px;
-	width: 200px;
+	height: auto;
+	max-height: 400px;
+	width: 100%;
+/*
+	max-width: 26%;
+	min-width: 10em;
+*/
 	overflow-y: auto;
 	overflow-x: hidden;
 	margin: 0;
@@ -146,7 +151,7 @@ div.adminanchors a {float: left}
 }
 
 .quicktags-admin .rows {
-	width: 95%;
+	width: 100%;
 	float: left;
 	clear: both;
 	padding: 1em 2em 1em 0;
@@ -159,6 +164,15 @@ div.adminanchors a {float: left}
 
 .quicktags-admin .li {
 	display: block;
+	white-space:nowrap;
+}
+.quicktags-admin .full li {
+	display: inline-block;
+	border: 1pt solid black;
+	white-space:nowrap;
+	width: 7em;
+	padding: 1pt;
+	overflow: hidden;
 }
 
 .quicktag img.icon {
@@ -181,6 +195,12 @@ div.adminanchors a {float: left}
 	border: solid thin gray;
 	margin: 0;
 	padding: 2px 4px 0;
+}
+
+.quicktags-admin ul.full {
+	list-style-type: none;
+	display: inline;
+	padding-left: 0pt;
 }
 
 .quicktags-admin .row li.quicktag {
