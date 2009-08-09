@@ -57,7 +57,15 @@ if ( $prefs['feature_calendar'] == 'y' ) {
 		}
 	}
 	$_REQUEST['gbi'] = 'y';
-	$_REQUEST['viewlist'] = 'table';
+	if ( !empty($module_params['viewlist']) ) {
+		$_REQUEST['viewlist'] = $module_params['viewlist'];
+	} else {
+		$_REQUEST['viewlist'] = 'table';
+	}
+	if ( !empty($module_params['withviewevents']) ) {
+		$smarty->assign('withviewevents',$module_params['withviewevents']);
+	}
+
 	include('tiki-calendar_setup.php');
 
 	$tc_infos = $calendarlib->getCalendar($module_params['calIds'], $viewstart, $viewend, $group_by);
