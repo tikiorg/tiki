@@ -224,6 +224,8 @@ class WikiParser_PluginMatcher implements Iterator, Countable
 			if( $m->inside( $match ) ) {
 				$m->invalidate();
 				unset( $this->ends[$key] );
+			} elseif ( $match->inside($m) ) {
+				$m->applyEndOffset( $sizeDiff );
 			} elseif( $key > $end ) {
 				$m->applyOffset( $sizeDiff );
 			}
@@ -430,9 +432,16 @@ class WikiParser_PluginMatcher_Match
 	{
 		$this->start += $offset;
 		$this->end += $offset;
-		$this->nameEnd = false;
-		$this->bodyStart = false;
-		$this->bodyEnd = false;
+		$this->nameEnd += $offset;
+		$this->bodyStart += $offset;
+		$this->bodyEnd += $offset;
+	}
+
+	//FIXME Needed ?
+	function applyEndOffset( $offset )
+	{
+		$this->end += $offset;
+		$this->bodyEnd += $offset;
 	}
 
 	private function countUnescapedQuotes( $from, $to )
