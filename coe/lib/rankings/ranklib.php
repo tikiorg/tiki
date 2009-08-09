@@ -30,7 +30,7 @@ class RankLib extends TikiLib {
 			$bindvals[] = $prefs['wikiapproval_prefix'] . '%';
 		}
 		
-		$query = "select tp.`pageName`, tp.`hits` from `tiki_pages` tp $mid order by `hits` desc";
+		$query = "select distinct tp.`pageName`, tp.`hits` from `tiki_pages` tp $mid order by `hits` desc";
 
 		$result = $this->query($query, $bindvals);
 		$ret = array();

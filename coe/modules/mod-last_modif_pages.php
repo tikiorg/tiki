@@ -9,12 +9,9 @@ global $tikilib, $smarty;
 // Parameter absurl set if the last_modif_pages url is absolute or not [y|n].
 // If not set, default = relative
 
-if (isset($module_params["minor"]) && $module_params["minor"] == 'n')
-	$ranking = $tikilib->last_major_pages($module_rows);
-else
-	$ranking = $tikilib->last_pages($module_rows);
+$ranking = $tikilib->list_pages(0, $module_rows, "lastModif_desc");
 
-$smarty->assign('modLastModif', $ranking);
+$smarty->assign('modLastModif', $ranking["data"]);
 $smarty->assign('maxlen', isset($module_params["maxlen"]) ? $module_params["maxlen"] : 0);
 $smarty->assign('nonums', isset($module_params["nonums"]) ? $module_params["nonums"] : 'n');
 $smarty->assign('absurl', isset($module_params["absurl"]) ? $module_params["absurl"] : 'n');

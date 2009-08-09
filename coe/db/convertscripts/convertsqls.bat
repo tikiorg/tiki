@@ -37,9 +37,9 @@ rem do convert
 if %TIKISERVER% == "" (
 	rem convert locally
 	echo Local run of php ...
-	php -f mysql3topgsql72.php > pgsql72.sql.tmp
+	php -f mysql_to_pgsql.php > pgsql.sql.tmp
 	echo pgsql scripts converted
-	php -f mysql3tosqlite.php > sqlite.sql.tmp
+	php -f mysql_to_sqlite.php > sqlite.sql.tmp
 	echo sqlite scripts converted
 rem	php -f mysql3tosybase.php > sybase.sql.tmp
 rem	echo sybase scripts converted
@@ -48,22 +48,23 @@ rem	echo oracle scripts converted
 ) else (
 	rem convert remotely and download
 	echo Running remote scripts and downloading script files ...
-	wget -O pgsql72.sql.tmp "http://%TIKISERVER%/db/convertscripts/mysql3topgsql72.php?version=%VERSION%" 
-	wget -O sybase.sql.tmp "http://%TIKISERVER%/db/convertscripts/mysql3tosybase.php?version=%VERSION%" 
-	wget -O sqlite.sql.tmp "http://%TIKISERVER%/db/convertscripts/mysql3tosqlite.php?version=%VERSION%"
-	wget -O oci8.sql.tmp "http://%TIKISERVER%/db/convertscripts/mysql3tooci8.php?version=%VERSION%" 
+	wget -O pgsql.sql.tmp "http://%TIKISERVER%/db/convertscripts/mysql_to_pgsql.php?version=%VERSION%" 
+	wget -O sqlite.sql.tmp "http://%TIKISERVER%/db/convertscripts/mysql_to_sqlite.php?version=%VERSION%"
+rem	wget -O sybase.sql.tmp "http://%TIKISERVER%/db/convertscripts/mysql3tosybase.php?version=%VERSION%" 
+rem	wget -O oci8.sql.tmp "http://%TIKISERVER%/db/convertscripts/mysql3tooci8.php?version=%VERSION%" 
 )
 
 rem remove temporary output files (we don't need the output from conversion scripts)
 rm -f *.sql.tmp
 rem remove old converted scripts
-rm -f ../tiki-%VERSION%-pgsql.sql ../tiki-%VERSION%-sybase.sql ../tiki-%VERSION%-sqlite.sql ../tiki-%VERSION%-oci8.sql
+rm -f ../tiki-%VERSION%-pgsql.sql ../tiki-%VERSION%-sqlite.sql
 
 rem move the newly converted/created scripts
-mv %VERSION%.to_pgsql72.sql ../tiki-%VERSION%-pgsql.sql
-mv %VERSION%.to_sybase.sql ../tiki-%VERSION%-sybase.sql
+mv %VERSION%.to_pgsql.sql ../tiki-%VERSION%-pgsql.sql
 mv %VERSION%.to_sqlite.sql ../tiki-%VERSION%-sqlite.sql
-mv %VERSION%.to_oci8.sql ../tiki-%VERSION%-oci8.sql
+rem mv %VERSION%.to_sybase.sql ../tiki-%VERSION%-sybase.sql
+rem mv %VERSION%.to_oci8.sql ../tiki-%VERSION%-oci8.sql
+
 echo moved the converted scripts
 
 echo Done.

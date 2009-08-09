@@ -528,9 +528,9 @@ CREATE TABLE `tiki_calendars` (
 
 DROP TABLE IF EXISTS `tiki_calendar_options`;
 CREATE TABLE `tiki_calendar_options` (
-	calendarId int(14) NOT NULL default 0,
-	optionName varchar(120) NOT NULL default '',
-	value varchar(255),
+	`calendarId` int(14) NOT NULL default 0,
+	`optionName` varchar(120) NOT NULL default '',
+	`value` varchar(255),
 	PRIMARY KEY (`calendarId`,`optionName`)
 ) ENGINE=MyISAM ;
 
@@ -644,14 +644,14 @@ CREATE TABLE `tiki_comments` (
   `approved` char(1) NOT NULL default 'y',
   `locked` char(1) NOT NULL default 'n',
   PRIMARY KEY (`threadId`),
-  UNIQUE KEY `no_repeats` (parentId, userName(40), title(100), commentDate, message_id(40), in_reply_to(40)),
-  KEY `title` (title),
-  KEY `data` (data(255)),
+  UNIQUE KEY `no_repeats` (`parentId`, `userName`(40), `title`(100), `commentDate`, `message_id`(40), `in_reply_to`(40)),
+  KEY `title` (`title`),
+  KEY `data` (`data`(255)),
   KEY `hits` (hits),
-  KEY `tc_pi` (parentId),
-  KEY `objectType` (object, objectType),
+  KEY `tc_pi` (`parentId`),
+  KEY `objectType` (object, `objectType`),
   KEY `commentDate` (commentDate),
-  KEY `threaded` (message_id, in_reply_to, parentId),
+  KEY `threaded` (message_id, in_reply_to, `parentId`),
   FULLTEXT KEY `ft` (title,data)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
@@ -1339,7 +1339,7 @@ CREATE TABLE `tiki_menu_options` (
   `userlevel` int(4) default 0,
   `icon` varchar(200),
   PRIMARY KEY (`optionId`),
-  UNIQUE KEY `uniq_menu` (menuId,name(30),url(50),position,section(60),perm(50),groupname(50))
+  UNIQUE KEY `uniq_menu` (`menuId`,`name`(30),`url`(50),`position`,`section`(60),`perm`(50),`groupname`(50))
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 -- when adding new inserts, order commands by position
@@ -1644,7 +1644,7 @@ CREATE TABLE `tiki_page_footnotes` (
   `user` varchar(200) NOT NULL default '',
   `pageName` varchar(250) NOT NULL default '',
   `data` text,
-  PRIMARY KEY (`user`(150),pageName(100))
+  PRIMARY KEY (`user`(150),`pageName`(100))
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_pages`;
@@ -1657,6 +1657,7 @@ CREATE TABLE `tiki_pages` (
   `lastModif` int(14) default NULL,
   `comment` varchar(200) default NULL,
   `version` int(8) NOT NULL default '0',
+  `version_minor` int(8) NOT NULL default '0',
   `user` varchar(200) default '',
   `ip` varchar(15) default NULL,
   `flag` char(1) default NULL,
@@ -1675,11 +1676,11 @@ CREATE TABLE `tiki_pages` (
   `wysiwyg` char(1) default NULL,
   `wiki_authors_style` varchar(20) default '',
   PRIMARY KEY (`page_id`),
-  UNIQUE KEY `pageName` (pageName),
-  KEY `data` (data(255)),
-  KEY `pageRank` (pageRank),
-  FULLTEXT KEY `ft` (pageName,description,data),
-  KEY `lastModif`(lastModif)
+  UNIQUE KEY `pageName` (`pageName`),
+  KEY `data` (`data`(255)),
+  KEY `pageRank` (`pageRank`),
+  FULLTEXT KEY `ft` (`pageName`,`description`,`data`),
+  KEY `lastModif`(`lastModif`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1;
 
 DROP TABLE IF EXISTS `tiki_page_drafts`;
