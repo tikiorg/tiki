@@ -92,7 +92,7 @@ FCKConfig.mwScriptPath = '' ;
 
 {if $prefs.wysiwyg_htmltowiki eq 'y'}
 // Load the extension plugins.
-FCKConfig.Plugins.Add( 'mediawiki', 'en,pl',  _TikiRoot + 'lib/fckeditor_tiki/plugins/') ;
+FCKConfig.Plugins.Add( 'tikiwiki', 'en,pl',  _TikiRoot + 'lib/fckeditor_tiki/plugins/') ;
 
 FCKConfig.ForcePasteAsPlainText = true ;
 FCKConfig.FontFormats	= 'p;h1;h2;h3;h4;h5;h6;pre' ;

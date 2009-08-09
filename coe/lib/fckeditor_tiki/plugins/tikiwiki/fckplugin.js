@@ -21,15 +21,15 @@
  *
  * Main TikiWiki integration plugin.
  * Based on work done by the MediaWiki Team, big thanx to them
- *
+ */
 
 // Rename the "Source" buttom to "Wikitext".
 FCKToolbarItems.RegisterItem( 'Source', new FCKToolbarButton( 'Source', 'Wikitext', null, FCK_TOOLBARITEM_ICONTEXT, true, true, 1 ) ) ;
 
 // Register our toolbar buttons.
-var tbButton = new FCKToolbarButton( 'MW_Template', 'Template',  FCKLang.wikiBtnTemplate || 'Insert/Edit Template') ;
-tbButton.IconPath = FCKConfig.PluginsPath + 'mediawiki/images/tb_icon_template.gif' ;
-FCKToolbarItems.RegisterItem( 'MW_Template', tbButton ) ;
+//var tbButton = new FCKToolbarButton( 'MW_Template', 'Template',  FCKLang.wikiBtnTemplate || 'Insert/Edit Template') ;
+//tbButton.IconPath = FCKConfig.PluginsPath + 'mediawiki/images/tb_icon_template.gif' ;
+//FCKToolbarItems.RegisterItem( 'MW_Template', tbButton ) ;
 
 FCKToolbarItems.OldGetItem = FCKToolbarItems.GetItem;
 

@@ -4912,7 +4912,8 @@ class TikiLib extends TikiDb_Bridge {
 				if ( $status = $this->plugin_can_execute( $plugin->getName(), $plugin->getBody(), $arguments ) ) {
 					// We parse the body of the plugin to handle nested plugins...
 					// This should be handled by the plugin itself in the future... for better performance
-					$ret =  $this->plugin_execute( $plugin->getName(), $this->parse_data($plugin->getBody() , $options , $preparsed , $noparsed , true ) , $arguments, $plugin->getStart() );
+					//$ret =  $this->plugin_execute( $plugin->getName(), $this->parse_data($plugin->getBody() , $options , $preparsed , $noparsed , true ) , $arguments, $plugin->getStart(), false , $options );
+					$ret =  $this->plugin_execute( $plugin->getName(), $plugin->getBody() , $arguments, $plugin->getStart(), false , $options, $preparsed , $noparsed );
 					if ( $prefs['javascript_enabled'] == 'y') {
 						global $headerlib;
 						$headerlib->add_jsfile( 'tiki-jsplugin.php' );
@@ -4976,7 +4977,7 @@ JQ
 		$plugin->replaceWith($key);
 	}
 
-	function parse_first(&$data, &$preparsed, &$noparsed, $options=null, $real_start_diff='0') {
+	function parse_first(&$data, &$preparsed, &$noparsed, $options = null, $real_start_diff = '0') {
 		require_once('lib/core/lib/WikiParser/PluginMatcher.php');
 		global $smarty, $prefs, $pluginskiplist;
 		error_reporting(E_ALL);
@@ -5292,7 +5293,7 @@ JQ
 		return "$name-$bodyHash-$argsHash-$bodyLen-$argsLen";
 	}
 
-	function plugin_execute( $name, $data = '', $args = array(), $offset = 0, $validationPerformed = false, $parseOptions = array() ) {
+	function plugin_execute( $name, $data = '', $args = array(), $offset = 0, $validationPerformed = false, $parseOptions = array(), &$preparsed , &$noparsed ) {
 		global $prefs;
 		if( ! $this->plugin_exists( $name, true ) )
 			return false;
@@ -5328,7 +5329,7 @@ JQ
 		}
 
 		if ($prefs['wysiwyg_htmltowiki'] == 'y' and isset($parseOptions['fck']) and $parseOptions['fck'] == 'y' ) {
-			$fck_editor_plugin = '{'.strtoupper($name).' (';
+			$fck_editor_plugin = '{'.strtoupper($name).'(';
 			if (!empty($args)) {
 				foreach( $args as $argKey => $argValue ) {
 					$fck_editor_plugin .= $argKey.'="'.$argValue.'" ';
@@ -5338,10 +5339,11 @@ JQ
 		}
 
 		if( function_exists( $func_name ) ) {
+			$plugin_result = $func_name( $this->parse_data($data, $parseOptions , $preparsed , $noparsed , true ) , $args, $offset, $parseOptions );
 			if ($prefs['wysiwyg_htmltowiki'] == 'y' and isset($parseOptions['fck']) and $parseOptions['fck'] == 'y' ) {
-				return '~np~<span plugin="'.$func_name.'"  _plugin="'.urlencode($fck_editor_plugin).'">~/np~'.$func_name( $data, $args, $offset, $parseOptions ).'</span>';
+				return '<span plugin="'.$func_name.'"  _plugin="'.urlencode($fck_editor_plugin).'">'.$plugin_result.'</span>';
 			} else {
-				return $func_name( $data, $args, $offset, $parseOptions );
+				return $plugin_result;
 			}
 		} elseif( $info = $this->plugin_alias_info( $name ) ) {
 			$name = $info['implementation'];
@@ -5374,10 +5376,11 @@ JQ
 				}
 			}
 
+				$plugin_result = $this->plugin_execute( $name, $this->parse_data($data, $parseOptions , $preparsed , $noparsed , true ) , $params, $offset, true, $parseOptions, $preparsed , $noparsed );
 			if ($prefs['wysiwyg_htmltowiki'] == 'y' and isset($parseOptions['fck']) and $parseOptions['fck'] == 'y' ) {
-				return '~np~<span _plugin="'.urlencode($fck_editor_plugin).'">~/np~'.$this->plugin_execute( $name, $data, $params, $offset, true, $parseOptions ).'</span>';
+				return '<span _plugin="'.urlencode($fck_editor_plugin).'">'.$plugin_result.'</span>';
 			} else {
-				return $this->plugin_execute( $name, $data, $params, $offset, true, $parseOptions );
+				return $plugin_result;
 			}
 		}
 	}
@@ -5918,8 +5921,7 @@ JQ
 		$options['parseimgonly'] = isset($options['parseimgonly']) ? $options['parseimgonly'] : false;
 		$options['preview_mode'] = isset($options['preview_mode']) ? (bool)$options['preview_mode'] : false;
 		if (empty($options['fck'])) $options['fck'] = 'n';
-		
-		
+
 		// if simple_wiki is true, disable some wiki syntax
 		// basically, allow wiki plugins, wiki links and almost
 		// everything between {}
