@@ -37,7 +37,7 @@
 
     <fieldset>
 	<legend>{tr}Site Identity{/tr}</legend>
-	<div style="text-align: left"><label for="browsertitle">{tr}Browser title{/tr}:</label> <input type="text" name="browsertitle" id="browsertitle" value="{$prefs.browsertitle|escape}" size="80" /></div>
+	{preference name=browsertitle}
 	<div style="text-align: left"><label for="general-send_email">{tr}Sender email{/tr}:</label> <input type="text" name="sender_email" id="general-send_email" value="{$prefs.sender_email|escape}" size="80" /></div>
 
 	<div class="adminoptionbox">{tr}Go to <a href="tiki-admin.php?page=look" title=""><strong>Look &amp; Feel</strong></a> section for additional site related customization preferences{/tr}.</div>

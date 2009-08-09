@@ -123,6 +123,12 @@ class PreferencesLib
 
 		return isset( $data[$name] ) ? 'y' : 'n';
 	}
+
+	private function _getTextValue( $info, $data ) {
+		$name = $info['preference'];
+
+		return $data[$name];
+	}
 }
 
 global $prefslib;

@@ -53,7 +53,6 @@ if (isset($_REQUEST["new_prefs"])) {
 		simple_set_toggle($toggle);
 	}
 	$pref_simple_values = array(
-		"browsertitle",
 		"site_crumb_seper",
 		"site_nav_seper",
 		"contact_user",
