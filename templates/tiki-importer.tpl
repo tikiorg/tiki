@@ -2,7 +2,7 @@
 
 <br />
 
-{if $chooseSoftware}
+{if isset($chooseSoftware)}
     {remarksbox type="warning" title="{tr}Warning:{/tr}"}
         {tr}If you are NOT running a new Tiki installation, make a backup of your database before using this importer!{/tr}
     {/remarksbox}
@@ -27,7 +27,7 @@
         </select>
         <input type="submit" value="{tr}Ok{/tr}"/>
     </form>
-{elseif $softwareSpecificOptions}
+{elseif isset($softwareSpecificOptions)}
     <h4>Import options:</h4>
     <form method="post" enctype="multipart/form-data" action="tiki-importer.php" onsubmit="return confirm('{tr}ATTENTION: make sure to have a backup before running the script. If you do not have a backup this is the last chance to cancel the importer by clicking on the cancel button.{/tr}');";>
         <input type="hidden" name="importerClassName" value="{$importerClassName}"/>
@@ -50,7 +50,7 @@
         <input type="submit" value="{tr}Import!{/tr}"/>
     </form>
 {elseif !empty($importFeedback)}
-    <h4>{tr}Congratulations! You have successful imported your {$softwareName} data to Tikiwiki.{/tr}</h4>
+    <h4>{tr}Congratulations! You have successful imported your data to Tikiwiki.{/tr}</h4>
     <p>{$importFeedback.importedPages} {tr}pages imported from a total of{/tr} {$importFeedback.totalPages}</p>
     <p>{tr}You can see the list of wiki pages in your site{/tr} <a href="tiki-listpages.php">{tr}here{/tr}</a></p>
 
