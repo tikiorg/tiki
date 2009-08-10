@@ -1512,11 +1512,6 @@ table.galtable {
 	border: 1px solid #696969;
 }
 
-div.browsegallery {
-	text-align: center;
-	width: 100%;
-}
-
 div.thumbnailcontenerchecked div.thumbnail {
 	border-color: #a9a9a9;
 	background: #f8f8ff;
