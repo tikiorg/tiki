@@ -318,7 +318,7 @@
 //				alert(document.getElementById('file_'+n).name);
 			if (document.forms['file_'+n].elements['userfile[]'].value != '') {
 			{/literal}
-				progress(n,"<img src='lib/shadowbox/images/loading.gif'>{tr}Uploading file...{/tr}");
+				progress(n,"<img src='img/spinner.gif'>{tr}Uploading file...{/tr}");
 			{literal}
 				document.getElementById('file_'+n).submit();
 				document.getElementById('file_'+n).reset();
