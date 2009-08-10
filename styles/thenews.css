@@ -1752,14 +1752,14 @@ div.adminanchors {
 a.admbox {
 	border: 1px solid #aaa;
 	color: white;
-	background: #6c6c6c;
+	background: #6c6c6c center no-repeat;
 }
 
 a.admbox:hover,
 a.admbox:focus,
 a.admbox:active {
 	border: 1px solid #292929;
-	background: #b2b2b2;
+	background: #b2b2b2 center no-repeat;
 }
 
 a.admbox.off {
