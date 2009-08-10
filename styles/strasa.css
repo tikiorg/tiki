@@ -1955,13 +1955,13 @@ table.default td {
 /* css/admin.css overrides */
 a.admbox {
 	border: 1px solid #223845;
-	background: #f0f0f0 center no-repeat;
+	background-color: #f0f0f0;
 }
 
 a.admbox:hover,
 a.admbox:focus,
 a.admbox:active {
-	background: #dcdcdc center no-repeat;
+	background-color: #dcdcdc;
 	border: 1px solid #696969;
 }
 

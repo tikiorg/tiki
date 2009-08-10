@@ -2654,7 +2654,42 @@ table.default td {}
 
 /***** Admin *****/
 
-div.adminanchors {}
+/* Admin boxes etc (.admbox) now defined in css/admin.css *
+ * but colour info repeated here for convenience          */
+
+a.admbox {
+	border: 1px #666 solid;
+	background-color: #ccc;
+	background-repeat: no-repeat;
+	background-position: center;
+	color: #333;
+}
+
+a.admbox:hover,
+a.admbox:focus,
+a.admbox:active {
+	border: 1px solid #333;
+	background-color: #aaa;
+	color: #fff;
+}
+
+a.admbox span {}
+
+a.admbox.off {
+	border: 1px solid #a9a9a9;
+	color: #9f9f9f;
+}
+
+a.admbox.off:hover,
+a.admbox.off:focus,
+a.admbox.off:active {
+	border: 1px solid #a9a9a9;
+	color: #666;
+}
+
+div.adminanchors a {}
+
+/* Other admin etc definitions not on admin.css */
 
 .highlight_word_0{
 	color: #ffff66;
@@ -2693,36 +2728,6 @@ div.adminanchors {}
 	text-align: right;
 }
 
-a.admbox {
-	border: 1px solid #708090;
-	background: #b0c4de center no-repeat;
-}
-
-a.admbox:hover,
-a.admbox:focus,
-a.admbox:active {
-	background: #e6e6fa center no-repeat;
-	border: 1px solid #696969;
-}
-
-a.admbox.off {
-	border: 1px solid #a9a9a9;
-}
-
-a.admbox.off:hover,
-a.admbox.off:focus,
-a.admbox.off:active {
-	border: 1px solid #a9a9a9;
-}
-
-span.disabled {
-	font-style: italic;
-}
-
-#style_thumb_div {
-	text-align: center;
-}
-
 td.mods_revision {
 	background: #b5cfb5;
 	color: #000;
@@ -2745,7 +2750,7 @@ div#ajaxLoading {
 	font-family: Verdana;
 	font-size: 90%;
 	text-align: center;
-	background: transparent url(../../lib/shadowbox/images/loading-light.gif) no-repeat 50% 100%;
+	background: transparent url(../../img/spinner.gif) no-repeat 50% 100%;
 	height: 43px;
 	width: 50px;
 	padding-top: 32px;

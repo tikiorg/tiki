@@ -2048,13 +2048,13 @@ table.default td {
 
 a.admbox {
 	border: 1px solid #aaa;
-	background: #6c6c6c center no-repeat;
+	background-color: #6c6c6c;
 }
 
 a.admbox:hover,
 a.admbox:focus,
 a.admbox:active {
-	background: #b2b2b2 center no-repeat;
+	background-color: #b2b2b2;
 	border: 1px solid #292929;
 }
 

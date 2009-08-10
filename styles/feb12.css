@@ -21,13 +21,11 @@ body#fullscreen {
 a,
 a:link,
 a:visited {
-	background: inherit;
 	color: #4A6493;
 	text-decoration: none;
 }
 
 a:hover {
-	background: inherit;
 	color: #006699;
 	text-decoration: underline;
 }
@@ -1600,13 +1598,13 @@ table.default td {
 /* css/admin.css overrides */
 a.admbox {
 	border: 1px solid #AAAAAA;
-	background: #a8cce2 center no-repeat;
+	background-color: #a8cce2;
 }
 
 a.admbox:hover,
 a.admbox:focus,
 a.admbox:active {
-	background: #B2B2B2 center no-repeat;
+	background-color: #B2B2B2;
 	border: 1px solid #292929;
 }
 

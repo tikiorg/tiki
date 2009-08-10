@@ -1905,7 +1905,7 @@ table.default td {
 .admbox a,
 a.admbox {
 	border: 1px solid #708090;
-	background: #dddfdf center no-repeat;
+	background-color: #dddfdf;
 }
 
 .admbox a, 
@@ -1914,7 +1914,7 @@ a.admbox:hover,
 a.admbox:focus,
 .admbox a,
 a.admbox:active {
-	background: #f0f0f0 center no-repeat;
+	background-color: #f0f0f0;
 	border: 1px solid #696969;
 }
 

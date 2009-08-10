@@ -2201,12 +2201,12 @@ table.default td {}
 /***** Calendar *****/
 
 /***** Admin *****/
-.highlight_word_0 {
+.highlight_word_0{
 	color: #ffff66;
 	background: #666;
 }
 
-.highlight_word_1 {
+.highlight_word_1{
 	color: #ff9999;
 	background: #666;
 }
@@ -2238,36 +2238,7 @@ table.default td {}
 	text-align: right;
 }
 
-a.admbox {
-	border: 1px solid #708090;
-	background: #b0c4de center no-repeat;
-}
-
-a.admbox:hover,
-a.admbox:focus,
-a.admbox:active {
-	background: #e6e6fa center no-repeat;
-	border: 1px solid #696969;
-}
-
-a.admbox.off {
-	border: 1px solid #a9a9a9;
-}
-
-a.admbox.off:hover,
-a.admbox.off:focus,
-a.admbox.off:active {
-	border: 1px solid #a9a9a9;
-}
-
-span.disabled {
-	font-style: italic;
-}
-
-#style_thumb_div {
-	text-align: center;
-}
-
+/* admin boxes etc (.admbox) now defined in css/admin.css */
 td.mods_revision {
 	background: #b5cfb5;
 	color: #000;
@@ -2290,7 +2261,7 @@ div#ajaxLoading {
 	font-family: Verdana;
 	font-size: 90%;
 	text-align: center;
-	background: transparent url(../../lib/shadowbox/images/loading-light.gif) no-repeat 50% 100%;
+	background: transparent url(../../img/spinner.gif) no-repeat 50% 100%;
 	height: 43px;
 	width: 50px;
 	padding-top: 32px;
