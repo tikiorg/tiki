@@ -188,7 +188,7 @@ textarea,
 select {
 	color: #112233;
 	margin: 1px;
-	font: 100% !important Verdana, Helvetica, Geneva, Arial, sans-serif;
+	font: 100% Verdana, Helvetica, Geneva, Arial, sans-serif;
 }
 
 button,
