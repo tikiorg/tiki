@@ -187,7 +187,7 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
 
         $pages = $dom->getElementsByTagName('page');
 
-        $this->expectOutputString("Page \"Redes de ensino\" succesfully parsed with 8 revisions (from a total of 8 revisions).\nPage \"Academia Colarossi\" succesfully parsed with 2 revisions (from a total of 2 revisions).\n");
+        $this->expectOutputString("Page \"Redes de ensino\" successfully parsed with 8 revisions (from a total of 8 revisions).\nPage \"Academia Colarossi\" successfully parsed with 2 revisions (from a total of 2 revisions).\n");
 
         $i = 0;
         foreach ($pages as $page) {
@@ -210,7 +210,7 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
 
         $pages = $dom->getElementsByTagName('page');
 
-        $this->expectOutputString("Page \"Redes de ensino\" succesfully parsed with 5 revisions (from a total of 8 revisions).\nPage \"Academia Colarossi\" succesfully parsed with 2 revisions (from a total of 2 revisions).\n");
+        $this->expectOutputString("Page \"Redes de ensino\" successfully parsed with 5 revisions (from a total of 8 revisions).\nPage \"Academia Colarossi\" successfully parsed with 2 revisions (from a total of 2 revisions).\n");
 
         $i = 0;
         foreach ($pages as $page) {
@@ -234,7 +234,7 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
 
         $pages = $dom->getElementsByTagName('page');
 
-        $this->expectOutputString("Page \"Redes de ensino\" succesfully parsed with 8 revisions (from a total of 8 revisions).\nPage \"Academia Colarossi\" succesfully parsed with 2 revisions (from a total of 2 revisions).\n");
+        $this->expectOutputString("Page \"Redes de ensino\" successfully parsed with 8 revisions (from a total of 8 revisions).\nPage \"Academia Colarossi\" successfully parsed with 2 revisions (from a total of 2 revisions).\n");
 
         $i = 0;
         foreach ($pages as $page) {
@@ -258,7 +258,7 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
 
         $pages = $dom->getElementsByTagName('page');
 
-        $this->expectOutputString("Page \"Redes de ensino\" succesfully parsed with 8 revisions (from a total of 8 revisions).\nPage \"Academia Colarossi\" succesfully parsed with 2 revisions (from a total of 2 revisions).\n");
+        $this->expectOutputString("Page \"Redes de ensino\" successfully parsed with 8 revisions (from a total of 8 revisions).\nPage \"Academia Colarossi\" successfully parsed with 2 revisions (from a total of 2 revisions).\n");
 
         $i = 0;
         foreach ($pages as $page) {
@@ -283,7 +283,7 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
         $dom->load(dirname(__FILE__) . '/fixtures/mediawiki_page.xml');
         $pages = $dom->getElementsByTagName('page');
 
-        $this->expectOutputString("Error while parsing revision 3 of the page \"Redes de ensino\". Or there is a problem on the page syntax or on the Text_Wiki parser (the parser used by the importer).\nPage \"Redes de ensino\" succesfully parsed with 7 revisions (from a total of 8 revisions).\nPage \"Academia Colarossi\" succesfully parsed with 2 revisions (from a total of 2 revisions).\n");
+        $this->expectOutputString("Error while parsing revision 3 of the page \"Redes de ensino\". Or there is a problem on the page syntax or on the Text_Wiki parser (the parser used by the importer).\nPage \"Redes de ensino\" successfully parsed with 7 revisions (from a total of 8 revisions).\nPage \"Academia Colarossi\" successfully parsed with 2 revisions (from a total of 2 revisions).\n");
 
         foreach ($pages as $page) {
             $obj->extractInfo($page);
