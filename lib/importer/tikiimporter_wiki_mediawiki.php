@@ -279,7 +279,7 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
         }
 
         if (count($data['revisions']) > 0) {
-            $msg = 'Page "' . $data['name'] . '" succesfully parsed with ' . count($data['revisions']) . " revisions (from a total of $totalRevisions revisions).\n";
+            $msg = 'Page "' . $data['name'] . '" successfully parsed with ' . count($data['revisions']) . " revisions (from a total of $totalRevisions revisions).\n";
             $this->saveAndDisplayLog($msg);
             return $data;
         } else {
