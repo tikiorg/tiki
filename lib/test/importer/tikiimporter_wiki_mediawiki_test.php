@@ -179,7 +179,7 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
         $this->obj->dom->load(dirname(__FILE__) . '/fixtures/mediawiki_invalid_upload.xml');
         $this->obj->downloadAttachments();
 
-        $this->expectOutputString("\n\nStarting to import attachments:\nUnable to download file Qlandkartegt-0.11.1.tar.gz. Error message was: file_get_contents(): php_network_getaddresses: getaddrinfo failed: Name or service not known\nUnable to download file Passelivre.jpg. Error message was: file_get_contents(): php_network_getaddresses: getaddrinfo failed: Name or service not known\n");
+        $this->expectOutputString("\n\nStarting to import attachments:\nUnable to download file Qlandkartegt-0.11.1.tar.gz. File not found.\nUnable to download file Passelivre.jpg. File not found.\n");
     }
 
     public function testExtractInfo()
