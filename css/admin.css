@@ -150,7 +150,6 @@ div.adminanchors a {float: left}
 	float: left;
 	height: auto;
 	max-height: 400px;
-	width: 100%;
 /*
 	max-width: 26%;
 	min-width: 10em;
@@ -161,7 +160,14 @@ div.adminanchors a {float: left}
 }
 
 .quicktags-admin #qt_filter_div {
-	width: 240px;
+	width: 100%;
+}
+
+.quicktags-admin .lists {
+	padding: 1em 2em 1em 0;
+	float: left;
+	width: 40%;
+	min-height: 10em;
 }
 
 .quicktags-admin .rows {
@@ -181,12 +187,11 @@ div.adminanchors a {float: left}
 	white-space:nowrap;
 }
 .quicktags-admin .full li {
-	display: inline-block;
-	border: 1pt solid black;
-	white-space:nowrap;
-	width: 7em;
-	padding: 1pt;
+	white-space: nowrap;
+	padding: .1em .5em;
 	overflow: hidden;
+	border-top: 1px #eee solid;
+	border-bottom: 1px #ccc solid;
 }
 
 .quicktag img.icon {
@@ -215,6 +220,7 @@ div.adminanchors a {float: left}
 	list-style-type: none;
 	display: inline;
 	padding-left: 0pt;
+	width: 100%;
 }
 
 .quicktags-admin .row li.quicktag {
@@ -244,13 +250,13 @@ div.adminanchors a {float: left}
 	font-weight: bold;
 }
 
-#qt_filter_div {
+.qt_filter_div {
 	background-color: #fff;
 	border-top: thin gray solid;
 	border-right: thin gray solid;
 	border-bottom: none;
 	border-left: thin gray solid;
-	padding-left: .5em;
+	padding: 0 .5em;
 }
 
 #qt_filter_div a {

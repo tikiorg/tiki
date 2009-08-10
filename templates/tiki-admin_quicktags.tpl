@@ -13,52 +13,64 @@
 <div class="quicktags-admin clearfix">
 	<form name="quicktags" method="post" action="tiki-admin_quicktags.php" onsubmit="return saveRows()">
 		<div>
+			<div class="floatright">
+				<em><label for="autoreload">{tr}Auto Reloading{/tr}:</label></em>
+				<input id="autoreload" name="autoreload" type="checkbox" {if $autoreload eq 'on'}checked="checked"{/if}/>
+			</div>
 			<label>{tr}Section{/tr}:</label>
 			<select name="section" onchange="javascript:quicktags_autoreload()">
 				{foreach from=$sections item=name}
 					<option{if $name eq $loaded} selected="selected"{/if}>{$name|escape}</option>
 				{/foreach}
 			</select>
-			<label for="autoreload">{tr}Auto Reloading{/tr}:</label>
-			<input id="autoreload" name="autoreload" type="checkbox" checked="checked"/>
 			<label>{tr}Comments{/tr}:</label>
 			<input name="comments" type="checkbox" onchange="javascript:quicktags_autoreload()" {if $comments eq 'on'}checked="checked"{/if}/>
-			{if $prefs.javascript_enabled eq 'n'}<input name="load" type="submit" value="{tr}Load{/tr}"/>{/if}
+			<input name="load" type="submit" value="{tr}Load{/tr}"/>
 			<input type="submit" name="save" value="{tr}Save{/tr}"/>
 			{if $loaded neq 'global' }<input type="submit" name="reset" value="{tr}Reset to Global{/tr}"/>{/if}
+			<input id="qt-form-field" type="hidden" name="pref" value=""/>
 		</div>
-	<div class="rows">
-		{foreach from=$current item=line name=line}
-			<label for="row-{$smarty.foreach.line.iteration|escape}">{tr}Row{/tr}&nbsp;{$smarty.foreach.line.iteration}:</label>
-			<ul id="row-{$smarty.foreach.line.iteration|escape}" class="row">
-			{foreach from=$line item=tool}
+		<div class="rows">
+			{foreach from=$current item=line name=line}
+				<label for="row-{$smarty.foreach.line.iteration|escape}">{tr}Row{/tr}&nbsp;{$smarty.foreach.line.iteration}:</label>
+				<ul id="row-{$smarty.foreach.line.iteration|escape}" class="row">
+				{foreach from=$line item=tool}
+					<li class="{$qtelement[$tool].class}">{$qtelement[$tool].html}</li>
+				{/foreach}
+				</ul>
+				{if $smarty.foreach.line.last and $rowCount gt 1}
+					{assign var=total value=`$smarty.foreach.line.total+1`}
+				<label for="row-{$total|escape}">{tr}Row{/tr}&nbsp;{$total}:</label>
+					<ul id="row-{$total|escape}" class="row">
+				{/if}
+			{/foreach}
+		</div>
+		<div class="lists">
+			<label for="#full-list-w">{tr}Formatting Quicktags:{/tr}</label><br/>
+			<div id="qt_filter_div_w" class="qt_filter_div">
+				{tr}Filters{/tr}:
+				<input class="qt-wiki-filter"  type="checkbox" checked /><label>{tr}Wiki{/tr}</label>
+				<input class="qt-wys-filter" type="checkbox" checked /><label>{tr}WYSIWYG{/tr}</label>
+			</div>
+			<ul id="full-list-w" class="full">
+			{foreach from=$display_w item=tool}
 				<li class="{$qtelement[$tool].class}">{$qtelement[$tool].html}</li>
 			{/foreach}
 			</ul>
-			{if $smarty.foreach.line.last and $rowCount gt 1}
-				{assign var=total value=`$smarty.foreach.line.total+1`}
-			<label for="row-{$total|escape}">{tr}Row{/tr}&nbsp;{$total}:</label>
-				<ul id="row-{$total|escape}" class="row">
-			{/if}
-		{/foreach}
-	</div>
-	<input id="qt-form-field" type="hidden" name="pref" value=""/>
-	<div class="rows">
-		<label for="#full-list">{tr}All Quicktags:{/tr}</label><br/>
-		{if $prefs.feature_jquery eq 'y'}<div id="qt_filter_div">
-			{tr}Filters{/tr}:
-			<input id="qt-wiki-filter" class="qt-filter" type="checkbox" checked /><label>{tr}Wiki{/tr}</label>
-			<input id="qt-wys-filter" class="qt-filter" type="checkbox" checked /><label>{tr}WYSIWYG{/tr}</label>
-			<input id="qt-plugin-filter" class="qt-filter" type="checkbox" checked /><label>{tr}Plugins{/tr}</label>
-		</div>{/if}
-		{foreach from=$qtlists item=displayedqt name=box}
-			<ul id="full-list-{$smarty.foreach.box.iteration}" class="full">
-			{foreach from=$displayedqt item=tool}
+		</div>
+		<div class="lists">
+			<label for="#full-list-p">{tr}Plugin Quicktags:{/tr}</label><br/>
+			<div id="qt_filter_div_p" class="qt_filter_div">
+				{tr}Filters{/tr}:
+				<input class="qt-wiki-filter" type="checkbox" checked /><label>{tr}Wiki{/tr}</label>
+				<input class="qt-wys-filter" type="checkbox" checked /><label>{tr}WYSIWYG{/tr}</label>
+			</div>
+			<ul id="full-list-p" class="full">
+			{foreach from=$display_p item=tool}
 				<li class="{$qtelement[$tool].class}">{$qtelement[$tool].html}</li>
 			{/foreach}
 			</ul>
-		{/foreach}
-	</div>
+		</div>
 	</form>
 </div>
 <div class="clearfix">

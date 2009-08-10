@@ -736,6 +736,15 @@ span.quicktag-list {
 	z-index: 300;
 }
 
+.quicktags-picker a {
+	padding: 4px 2px;
+	display: inline-block;
+}
+
+.quicktags-picker a:hover {
+	background-color: #ccc;
+}
+
 /* New Help section */
 div#tikihelp {
 	position: fixed;

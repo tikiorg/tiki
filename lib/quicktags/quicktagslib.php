@@ -359,11 +359,9 @@ class QuicktagInline extends Quicktag
 
 	function getWikiHtml( $areaName ) // {{{
 	{
-		return $this->getSelfLink('needToConfirm=false;insertAt(\'' . $areaName . '\', \'' . addslashes(htmlentities($this->syntax, ENT_COMPAT, 'UTF-8')) . '\');return false;',
+		return $this->getSelfLink('insertAt(\'' . $areaName . '\', \'' . addslashes(htmlentities($this->syntax, ENT_COMPAT, 'UTF-8')) . '\');',
 							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-inline');
 
-		//return '<a href="javascript:insertAt(\'' . $areaName . '\', \'' . addslashes(htmlentities($this->syntax, ENT_COMPAT, 'UTF-8')) . 
-		//		'\'); return false;" onclick="needToConfirm=false;" title="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '" class="quicktags qt-inline">' . $this->getIconHtml() . '</a>';
 	} // }}}
 
 }
@@ -440,9 +438,8 @@ class QuicktagBlock extends QuicktagInline // Will change in the future
 
 	function getWikiHtml( $areaName ) // {{{
 	{
-		return $this->getSelfLink('needToConfirm=false;insertAt(\'' . $areaName . '\', \'' . addslashes(htmlentities($this->syntax, ENT_COMPAT, 'UTF-8')) . '\', true);return false;',
+		return $this->getSelfLink('insertAt(\'' . $areaName . '\', \'' . addslashes(htmlentities($this->syntax, ENT_COMPAT, 'UTF-8')) . '\', true);',
 							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-block');
-		//return '<a href="javascript:insertAt(\'' . $areaName . '\', \'' . addslashes(htmlentities($this->syntax, ENT_COMPAT, 'UTF-8')) . '\', true); return false;" onclick="needToConfirm=false;" title="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '" class="quicktag qt-block">' . $this->getIconHtml() . '</a>';
 	} // }}}
 }
 
@@ -480,9 +477,8 @@ class QuicktagLineBased extends QuicktagInline // Will change in the future
 
 	function getWikiHtml( $areaName ) // {{{
 	{
-		return $this->getSelfLink('needToConfirm=false;insertAt(\'' . $areaName . '\', \'' . addslashes(htmlentities($this->syntax, ENT_COMPAT, 'UTF-8')) . '\', true, true);return false;',
+		return $this->getSelfLink('insertAt(\'' . $areaName . '\', \'' . addslashes(htmlentities($this->syntax, ENT_COMPAT, 'UTF-8')) . '\', true, true);',
 							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-line');
-		//return '<a href="javascript:insertAt(\'' . $areaName . '\', \'' . addslashes(htmlentities($this->syntax, ENT_COMPAT, 'UTF-8')) . '\', true, true); return false;" onclick="needToConfirm=false;" title="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '" class="quicktag qt-line">' . $this->getIconHtml() . '</a>';
 	} // }}}
 }
 
@@ -549,7 +545,12 @@ var pickerData = [];
 var pickerDiv;
 
 function displayPicker( closeTo, list, areaname ) {
-	var pickerDiv = document.createElement('div');
+	if (pickerDiv) {
+		\$jq('div.quicktags-picker').remove();	// simple toggle
+		pickerDiv = false;
+		return;
+	}
+	pickerDiv = document.createElement('div');
 	document.body.appendChild( pickerDiv );
 
 	var coord;
@@ -568,11 +569,8 @@ function displayPicker( closeTo, list, areaname ) {
 		link.href = 'javascript:void(0)';
 		link.onclick = function() {
 			insertAt( areaname, ins );
-			if (typeof pickerDiv.dispose == 'function') {
-				pickerDiv.dispose();
-			} else if (\$jq) {
-				\$jq('div.quicktags-picker').remove();
-			}
+			\$jq('div.quicktags-picker').remove();
+			pickerDiv = false;
 		}
 	};
 
@@ -593,9 +591,8 @@ JS
 		++$index;
 		$headerlib->add_js( "pickerData.push( " . json_encode($this->list) . " );", 1 );
 
-		return $this->getSelfLink('displayPicker( this, ' . $index . ', \'' . $areaName . '\'); needToConfirm=false',
+		return $this->getSelfLink('displayPicker( this, ' . $index . ', \'' . $areaName . '\')',
 							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-picker');
-		//return '<a href="javascript:void(0)" onclick="displayPicker( this, ' . $index . ', \'' . $areaName . '\'); needToConfirm=false;" title="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '" class="quicktag qt-picker">' . $this->getIconHtml() . '</a>';
 	} // }}}
 }
 
@@ -613,7 +610,8 @@ class QuicktagFullscreen extends Quicktag
 		$name = 'zoom';
 		if( isset($_REQUEST['zoom']) )
 			$name = 'preview';
-		return '<input type="image" name="'.$name.'" alt="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '" class="quicktag qt-fullscreen" title="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '" value="wiki_edit" onclick="needToConfirm=false;" title="" class="icon" src="' . htmlentities($this->icon, ENT_QUOTES, 'UTF-8') . '"/>';
+		return '<input type="image" name="'.$name.'" alt="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '" class="quicktag qt-fullscreen" '.
+				'title="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '" value="wiki_edit" onclick="needToConfirm=false;" title="" class="icon" src="' . htmlentities($this->icon, ENT_QUOTES, 'UTF-8') . '"/>';
 	} // }}}
 }
 
@@ -643,9 +641,8 @@ class QuicktagTextareaResize extends Quicktag
 
 	function getWikiHtml( $areaName ) // {{{
 	{
-		return $this->getSelfLink('textareasize(\'' . $areaName . '\', ' . $this->diff . ', 0);needToConfirm = false;',
+		return $this->getSelfLink('textareasize(\'' . $areaName . '\', ' . $this->diff . ', 0)',
 							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-resize');
-		//return '<a href="javascript:textareasize(\'' . $areaName . '\', ' . $this->diff . ', 0)" onclick="needToConfirm = false;" title="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '" class="quicktag qt-resize">' . $this->getIconHtml() . '</a>';
 	} // }}}
 
 	function isAccessible() // {{{
@@ -673,8 +670,6 @@ class QuicktagHelptool extends Quicktag
 		$smarty->assign_by_ref('plugins', $plugins);
 		return $smarty->fetch("tiki-edit_help.tpl");
 		
-//		return $this->getSelfLink('needToConfirm=false;flip(\'help_sections\')',
-//							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-resize');
 	} // }}}
 
 	function isAccessible() // {{{
@@ -741,9 +736,8 @@ class QuicktagWikiplugin extends Quicktag
 
 	function getWikiHtml( $areaName ) // {{{
 	{
-		return $this->getSelfLink('popup_plugin_form(\'' . $areaName . '\',\'' . $this->pluginName . '\');needToConfirm=false;',
+		return $this->getSelfLink('popup_plugin_form(\'' . $areaName . '\',\'' . $this->pluginName . '\')',
 							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-plugin');
-		//return '<a href="javascript:popup_plugin_form(\'' . $this->pluginName . '\')" onclick="needToConfirm=false;" title="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '" class="quicktag">' . $this->getIconHtml() . '</a>';
 	} // }}}
 }
 

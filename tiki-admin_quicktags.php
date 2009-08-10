@@ -40,7 +40,7 @@ if( isset($_REQUEST['comments']) && $_REQUEST['comments'] == 'on') {
 	$comments = false;
 }
 
-$auto_query_args = array('section', 'comments');
+$auto_query_args = array('section', 'comments', 'autoreload');
 
 if( isset($_REQUEST['save'], $_REQUEST['pref']) ) {
 	$prefName = 'toolbar_' . $section . ($comments ? '_comments' : '');
@@ -72,6 +72,8 @@ $map = array();
 
 $qtlist = Quicktag::getList();
 $usedqt = array();
+$qt_p_list = array();
+$qt_w_list = array();
 foreach( $current as &$line ) {
 	$usedqt = array_merge($usedqt,$line);
 }
@@ -87,20 +89,22 @@ foreach( $qtlist as $name ) {
 	}
 	$wys = strlen($tag->getWysiwygToken()) ? 'qt-wys' : '';
 	$wiki = strlen($tag->getWikiHtml('')) ? 'qt-wiki' : '';
+	$icon = $tag->getIconHtml();
 	if (strpos($name, 'wikiplugin_') !== false) {
 		$plug =  'qt-plugin';
 		$label = substr($name, 11);
+		$qt_p_list[] = $name;
 	} else {
 		$plug =  '';
 		$label = $name;
+		$qt_w_list[] = $name;
 	}
-	$icon = $tag->getIconHtml();
 	$qtelement[$name] = array( 'name' => $name, 'class' => "quicktag qt-$name $wys $wiki $plug", 'html' => "$icon$label" );
 }
 
-$nol = 1;
+$nol = 2;
 $rowStr = substr(implode(",#row-",range(0,$rowCount)),2);
-$fullStr = substr(implode(",#full-list-",range(0,$nol)),2);
+$fullStr = '#full-list-w,#full-list-p';
 
 $headerlib->add_jq_onready( <<<JS
 
@@ -147,28 +151,25 @@ saveRows = function() {
 	\$jq('#qt-form-field').val(ser);
 }
 
-\$jq('.qt-filter').click( function () {
-
-	var showwiki = \$jq('#qt-wiki-filter').attr('checked');
-	var showwys = \$jq('#qt-wys-filter').attr('checked');
-	var showplugin = \$jq('#qt-plugin-filter').attr('checked');
-	
-	\$jq('$fullStr').children().hide();		// reset
-	
-	\$jq('$fullStr').children().each( function() {
-		
-		var haswiki = \$jq(this).hasClass('qt-wiki');
-		var haswys = \$jq(this).hasClass('qt-wys');
-		var hasplugin = \$jq(this).hasClass('qt-plugin');
-		
-		if (showplugin) {
-			if ((showwiki && haswiki) || (showwys && haswys) || (!showwys && !showwiki && hasplugin)) {
-				\$jq(this).show();	
-			}
+\$jq('#qt_filter_div_w input').click( function () {	// non-plugins	
+	\$jq('#full-list-w').children().each( function() {
+				
+		if (((\$jq('#qt_filter_div_w .qt-wiki-filter').attr('checked') && \$jq(this).hasClass('qt-wiki')) ||
+			 (\$jq('#qt_filter_div_w .qt-wys-filter').attr('checked') && \$jq(this).hasClass('qt-wys')))) {
+			\$jq(this).show();	
 		} else {
-			if (!hasplugin && ((showwiki && haswiki) || (showwys && haswys))) {
-				\$jq(this).show();	
-			}
+			\$jq(this).hide();	
+		}
+	});
+});
+\$jq('#qt_filter_div_p input').click( function () {	// non-plugins	
+	\$jq('#full-list-p').children().each( function() {
+				
+		if (((\$jq('#qt_filter_div_p .qt-wiki-filter').attr('checked') && \$jq(this).hasClass('qt-wiki')) ||
+			 (\$jq('#qt_filter_div_p .qt-wys-filter').attr('checked') && \$jq(this).hasClass('qt-wys')))) {
+			\$jq(this).show();	
+		} else {
+			\$jq(this).hide();	
 		}
 	});
 });
@@ -177,18 +178,26 @@ JS
 );
 	
 
-$displayedqt = array_diff($qtlist,$usedqt);
-$qtlists = array_chunk($displayedqt,ceil(sizeof($displayedqt)/$nol));
+$display_w = array_diff($qt_w_list,$usedqt);
+$display_p = array_diff($qt_p_list,$usedqt);
+//$qtlists = array_chunk($displayedqt,ceil(sizeof($displayedqt)/$nol));
 
 $headerlib->add_cssfile('css/admin.css');
 
+if (count($_REQUEST) == 0) {
+	$smarty->assign('autoreload', 'on');
+} else {
+	$smarty->assign('autoreload', isset($_REQUEST['autoreload']) ? $_REQUEST['autoreload'] : '');
+}
 $smarty->assign('comments', $comments);
 $smarty->assign( 'loaded', $section );
 $smarty->assign( 'rows', range( 0, $rowCount - 1 ) );
 $smarty->assign( 'rowCount', $rowCount );
 $smarty->assign( 'sections', $sections );
 $smarty->assign_by_ref('qtelement',$qtelement);
-$smarty->assign_by_ref('qtlists',$qtlists);
+$smarty->assign_by_ref('display_w',$display_w);
+$smarty->assign_by_ref('display_p',$display_p);
+//$smarty->assign_by_ref('qtlists',$qtlists);
 $smarty->assign_by_ref('current',$current);
 $smarty->assign( 'mid', 'tiki-admin_quicktags.tpl' );
 $smarty->display( 'tiki.tpl' );
