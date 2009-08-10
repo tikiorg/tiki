@@ -522,7 +522,11 @@ img.icon {
   margin-bottom: 10px;
  }
  
-.findtitle {
+.findtitle,
+.findexactmatch,
+.findnumrows,
+.findtypes,
+.findlang {
 	display: inline; 
 	vertical-align: middle;
 	margin: 0 1px;
@@ -1420,16 +1424,16 @@ body.tiki_forums table.normal {
 	vertical-align: text-bottom;
 }
 
+.post .postfooter {
+	float: right;
+	text-align: right;
+}
+
 .post .postfooter .actions,
 .post .postfooter .status {
 	display: inline;
 	margin-left: 5px;
 	vertical-align: top;
-}
-
-.post .postfooter {
-	float: right;
-	text-align: right;
 }
 
 .post .inner > .postfooter {
@@ -1586,6 +1590,11 @@ div.imgaldescr {
 
 div#browse_image {
 	width: 100%
+}
+
+div#random_image {
+	text-align: center;
+	margin: 1em auto;
 }
 
 /***** File Galleries *****/

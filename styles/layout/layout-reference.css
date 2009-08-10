@@ -1904,6 +1904,13 @@ div#browse_image {
 	width: 100%
 }
 
+/* Random image module - top and bottom margin better
+when module used without decorations. */
+div#random_image {
+	text-align: center;
+	margin: 1em auto;
+}
+
 /***** File Galleries *****/
 div.thumbnailcontener {}
 div.thumbnail {}
