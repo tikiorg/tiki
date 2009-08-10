@@ -66,7 +66,6 @@ Testing Tiki
 <li>Visit the <a href="tiki-forums.php" class="link">forums</a>, write a topic or reply to an existing topic if you want</li>
 <li>At the <a href="tiki-galleries.php" class="link">images galleries</a> section you can see some images try <a href="tiki-upload_image.php" class="link">uploading images</a></li>
 <li>Visit the <a href="tiki-browse_categories.php" class="link">category browser</a> to test the tiki categorizing system</li>
-<li>From the <a href="tiki-list_games.php" class="link">games</a> section you can play some flash games</li>
 <li>If you are not logged you can <a href="tiki-register.php" class="link">register</a> as a new user and test features available to registered users
 such as setting user preferences, user bookmarks or configuring modules</li>
 <li>If you are curious visit the <a href="tiki-stats.php" class="link">stats</a> page</li>

@@ -47,21 +47,8 @@
 {if ($prefs.feature_jquery neq "y" or $prefs.feature_jquery_tablesorter neq "y") and $prefs.javascript_enabled eq "y"}
 	<script type="text/javascript" src="lib/tiki-js-sorttable.js"></script>
 {/if}
-{if $prefs.feature_mootools eq "y"}
-<script type="text/javascript" src="lib/mootools/mootools.js"></script>
-{if $mootools_windoo eq "y"}
-<script type="text/javascript" src="lib/mootools/extensions/windoo/windoo.js"></script>
-{/if}
-{if $mootab eq "y"}
-<script src="lib/mootools/extensions/tabs/SimpleTabs.js" type="text/javascript" ></script> 
-{/if}
-{/if}
 {if $prefs.feature_jquery eq "y"}
 	{include file='header_jquery.tpl'}
-{/if}
-
-{if $prefs.feature_swfobj eq "y"}
-<script type="text/javascript" src="lib/swfobject/swfobject.js"></script>
 {/if}
 
 {if $headerlib}{$headerlib->output_headers()}{/if}
@@ -86,26 +73,14 @@
 <!-- Includes for Shadowbox script -->
 	<link rel="stylesheet" type="text/css" href="lib/shadowbox/build/css/shadowbox.css" />
 
-{if $prefs.feature_jquery eq "y"}
 	<script type="text/javascript" src="lib/shadowbox/build/js/adapter/shadowbox-jquery.js" charset="utf-8"></script>
-{elseif $prefs.feature_mootools eq "y"}
-	<script type="text/javascript" src="lib/shadowbox/build/js/adapter/shadowbox-mootools.js" charset="utf-8"></script>
-{/if}
 
 	<script type="text/javascript" src="lib/shadowbox/build/js/shadowbox.js" charset="utf-8"></script>
 
 	<script type="text/javascript">
 <!--//--><![CDATA[//><!--
-{if $prefs.feature_mootools eq "y"}
-	{literal}
-		window.addEvent('domready', function() {
-	{/literal}
-{else}
-	{literal}
-		$(document).ready(function() {
-	{/literal}
-{/if}
 {literal}
+		$(document).ready(function() {
 			var options = {
 				ext: {
 					img:        ['png', 'jpg', 'jpeg', 'gif', 'bmp'],
@@ -143,5 +118,3 @@
 <body {if isset($section) and $section eq 'wiki page' and $prefs.user_dbl eq 'y' and $dblclickedit eq 'y' and $tiki_p_edit eq 'y'}ondblclick="location.href='tiki-editpage.php?page={$page|escape:"url"}';"{/if}
 onload="{if $prefs.feature_tabs eq 'y'}tikitabs({if $cookietab neq ''}{$cookietab}{else}1{/if},5);{/if}{if $msgError} javascript:location.hash='msgError'{/if}"
 {if $section} class="tiki_{$section}"{/if}>
-
-{if $prefs.feature_community_mouseover eq 'y'}{popup_init src="lib/overlib.js"}{/if}

@@ -307,15 +307,6 @@ if ($tiki_p_view_trackers != 'y' and $tracker_info["writerCanModify"] != 'y' and
 	$smarty->display("error.tpl");
 	die;
 }
-if ($tiki_p_admin_trackers != 'y' && $prefs['feature_categories'] == 'y') {
-	$itemPerms = $categlib->get_object_categories_perms($user, 'tracker ' . $_REQUEST['trackerId'], $_REQUEST['itemId']);
-	if (isset($itemPerms['tiki_p_view_categorized']) && $itemPerms['tiki_p_view_categorized'] == 'n') {
-		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra("Permission denied"));
-		$smarty->display("error.tpl");
-		die;
-	}
-}
 $status_types = $trklib->status_types();
 $smarty->assign('status_types', $status_types);
 $fields = array();
@@ -629,11 +620,6 @@ if ($tiki_p_view_trackers != 'y' && !$special) {
 }
 if (!isset($mainfield)) {
 	$mainfield = 0;
-}
-if ($textarea_options) {
-	include_once ('lib/quicktags/quicktagslib.php');
-	$quicktags = $quicktagslib->list_quicktags(0, -1, 'taglabel_asc', '', 'wiki');
-	$smarty->assign('quicktags', $quicktags["data"]);
 }
 if ($tiki_p_admin_trackers == 'y' || ($tiki_p_modify_tracker_items == 'y' && $item_info['status'] != 'p' && $item_info['status'] != 'c') || ($tiki_p_modify_tracker_items_pending == 'y' && $item_info['status'] == 'p') || ($tiki_p_modify_tracker_items_closed == 'y' && $item_info['status'] == 'c')) {
 	if (isset($_REQUEST["remove"])) {

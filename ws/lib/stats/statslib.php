@@ -237,8 +237,8 @@ class StatsLib extends TikiLib {
 		}
 		return $data;
 	}
-	/* count the number of created or modified for this day, this month, this year */
-	function count_this_period($table = 'tiki_pages', $column ='created', $when='daily', $parentColumn ='', $parentId='') {
+	/* transform a last period to a 2 dates */
+	function period2dates($when) {
 		global $tikilib, $prefs;
 		$now = $tikilib->now;
 		$sec = TikiLib::date_format("%s", $now);
@@ -287,14 +287,29 @@ class StatsLib extends TikiLib {
 			$begin = $now;
 			break;
 		}
-		$bindvars = array((int)$begin, (int)$now);
+		return array((int)$begin, (int)$now);
+	}
+	/* count the number of created or modified for this day, this month, this year */
+	function count_this_period($table = 'tiki_pages', $column ='created', $when='daily', $parentColumn ='', $parentId='') {
+		$bindvars = $this->period2dates($when);
 		$where = '';
 		if (!empty($parentColumn) && !empty($parentId)) {
 			$where = " and `$parentColumn` = ?";
 			$bindvars[] = (int)$parentId;
 		}
 		$query = "select count(*) from `$table` where `$column` >= ? and `$column` <= ? $where";
-		$count = $tikilib->getOne($query, $bindvars);
+		$count = $this->getOne($query, $bindvars);
+		return $count;
+	}
+	/* count the number of viewed for this day, this month, this year */
+	function hit_this_period($type='wiki', $when='daily') {
+		$bindvars = $this->period2dates($when);
+		$bindvars[1] = $type;
+		$query = "select sum(`hits`)from `tiki_stats` where `day` >=? and `type`=?";
+		$count = $this->getOne($query, $bindvars);
+		if ($count == '')  {
+			$count = 0;
+		}
 		return $count;
 	}
 	

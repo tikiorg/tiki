@@ -88,9 +88,15 @@ if (isset($_REQUEST["remove"])) {
 		key_get($area);
 	}
 }
+// wysiwyg decision
+include 'tiki-parsemode_setup.php';
+
 if (isset($_REQUEST["templateId"]) && $_REQUEST["templateId"] > 0 && (!isset($_REQUEST['previousTemplateId']) || $_REQUEST['previousTemplateId'] != $_REQUEST['templateId'])) {
 	$template_data = $tikilib->get_template($_REQUEST["templateId"]);
 	$_REQUEST["data"] = $template_data["content"];
+	if (isset($_SESSION['wysiwyg']) && $_SESSION['wysiwyg'] == 'y') {
+		$_REQUEST['data'] = $tikilib->parse_data($_REQUEST['data'], array('is_html'=>true));
+	}
 	$_REQUEST["preview"] = 1;
 	$smarty->assign("templateId", $_REQUEST["templateId"]);
 }
@@ -184,8 +190,13 @@ if (isset($_REQUEST["save"])) {
 	$smarty->assign('data', $_REQUEST["data"]);
 	$smarty->assign('datatxt', $_REQUEST["datatxt"]);
 	$parsed = '';
-	if (isset($_REQUEST['wikiparse']) && $_REQUEST['wikiparse'] == 'on') $wikiparse = 'y';
-	else $wikiparse = 'n';
+	if (isset($_REQUEST['wikiparse']) && $_REQUEST['wikiparse'] == 'on') {
+		$wikiparse = 'y';
+	} elseif ($_SESSION['wysiwyg'] == 'y' && $prefs['wysiwyg_wiki_parsed'] == 'y') {
+		$wikiparse = 'y';
+	} else {
+		$wikiparse = 'n';
+	}
 	if (!empty($_REQUEST["usedTpl"])) {
 		$smarty->assign('dataparsed', (($wikiparse == 'y') ? $tikilib->parse_data($_REQUEST["data"], array('absolute_links' => true)) : $_REQUEST['data']));
 		$smarty->assign('subject', $_REQUEST["subject"]);
@@ -228,6 +239,13 @@ if (isset($_REQUEST["send"])) {
 		$html = "<html><body>" . $tikilib->parse_data($_REQUEST["dataparsed"], array('absolute_links' => true)) . "</body></html>";
 	} else {
 		$html = $_REQUEST["dataparsed"];
+	}
+	if (stristr($html, '<base') === false) {
+		if (stristr($html, '<header') === false) {
+			$html = str_ireplace('<html>', "<html><header><base href=\"$base_host\" /></header>", $html);
+		} else {
+			$html = str_ireplace('<header>', "<header><base href=\"$base_host\" />", $html);
+		}
 	}
 	$sent = array();
 	$unsubmsg = '';
@@ -386,9 +404,6 @@ if (count($tpls) > 0) {
 	$smarty->assign_by_ref('tpls', $tpls);
 }
 include_once ("textareasize.php");
-include_once ('lib/quicktags/quicktagslib.php');
-$quicktags = $quicktagslib->list_quicktags(0, -1, 'taglabel_asc', '', 'newsletters');
-$smarty->assign_by_ref('quicktags', $quicktags["data"]);
 include_once ('tiki-section_options.php');
 setcookie('tab', $_REQUEST['cookietab']);
 $smarty->assign('cookietab', $_REQUEST['cookietab']);

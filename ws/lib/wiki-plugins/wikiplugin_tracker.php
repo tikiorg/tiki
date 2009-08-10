@@ -17,6 +17,7 @@ function wikiplugin_tracker_info() {
 		'description' => tra("Displays an input form for tracker submit"),
 		'prefs' => array( 'feature_trackers', 'wikiplugin_tracker' ),
 		'body' => tra('Confirmation message after posting form'),
+		'icon' => 'pics/icons/database.png',
 		'params' => array(
 			'trackerId' => array(
 				'required' => true,
@@ -742,9 +743,9 @@ function wikiplugin_tracker($data, $params) {
 						}
 					} elseif ($f['type'] == 'a') {
 						if ($f['options_array'][0] == 1 && empty($quicktags)) {
-							global $quicktagslib; include_once ('lib/quicktags/quicktagslib.php');
-							$quicktags = $quicktagslib->list_quicktags(0, -1, 'taglabel_asc', '', 'trackers');
-							$smarty->assign_by_ref('quicktags', $quicktags['data']);
+							//global $quicktagslib; include_once ('lib/quicktags/quicktagslib.php');
+							//$quicktags = $quicktagslib->list_quicktags(0, -1, 'taglabel_asc', '', 'trackers');
+							//$smarty->assign_by_ref('quicktags', $quicktags['data']);
 						}
 					} elseif ($f['type'] == 'l' && isset($itemId)) {
 						$opts[1] = split(':', $f['options_array'][1]);

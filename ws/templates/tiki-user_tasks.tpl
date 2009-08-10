@@ -1,9 +1,7 @@
 {title help="User+Tasks"}{tr}Tasks{/tr}{/title}
 
-{if $prefs.feature_ajax ne 'y' && $prefs.feature_mootools ne 'y'}
   {include file='tiki-mytiki_bar.tpl'}
   <br /><br />
-{/if}
 
 <div class="navbar">
 	{button href="tiki-user_tasks.php?show_form=y" _text="{tr}New task{/tr}"}

@@ -29,7 +29,7 @@ if (isset($_SESSION['tiki_importer_feedback'])) {
 
     if ($_FILES['importFile']['error'] === UPLOAD_ERR_OK) {
         try {
-            $importFeedback = $importer->import($_FILES['importFile']['tmp_name']); 
+            $importer->import($_FILES['importFile']['tmp_name']); 
         } catch(Exception $e) {
             $smarty->assign('msg', $e->getMessage());
             $smarty->display('error.tpl');

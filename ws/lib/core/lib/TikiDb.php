@@ -295,11 +295,11 @@ abstract class TikiDb
 		return " IFNULL($field, $ifNull) "; // if MySQL
 	} // }}}
 
-	function in( $field, $values ) // {{{
+	function in( $field, $values, &$bindvars ) // {{{
 	{
-		$values = array_map( array( $this, 'qstr' ), $values );
-		$values = implode( ', ', $values );
-		return " $field IN( $values ) ";
+		$bindvars = array_merge( $bindvars, $values );
+		$values = rtrim( str_repeat( '?,', count( $values ) ), ',' );
+		return " `$field` IN( $values ) ";
 	} // }}}
 
 	function concat() // {{{

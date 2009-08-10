@@ -166,7 +166,6 @@ function write_local_php($dbb_tiki,$host_tiki,$user_tiki,$pass_tiki,$dbs_tiki,$d
 function create_dirs($domain=''){
 	global $docroot;
 	$dirs=array(
-		'backups',
 		'db',
 		'dump',
 		'img/wiki',
@@ -923,7 +922,7 @@ if ( $_REQUEST['general_settings'] == 'y' ) {
 
 include "lib/headerlib.php";
 $headerlib->add_cssfile('styles/strasa.css');
-$headerlib->add_cssfile('styles/strasa/options/cold.css');
+$headerlib->add_cssfile('styles/strasa/options/cool.css');
 $headerlib->add_css('
 html {
 	background-color: #fff;

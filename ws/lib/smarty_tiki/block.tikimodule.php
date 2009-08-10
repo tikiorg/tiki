@@ -64,7 +64,8 @@ function smarty_block_tikimodule($params, $content, &$smarty) {
 	$smarty->assign('module_nobox', $nobox);
 	$smarty->assign('module_notitle', $notitle);
 	$smarty->assign('module_decorations', $decorations);
-	if (isset($type)) $smarty->assign('module_type', $type);
+	if ( empty($type) ) $type = "module";
+	$smarty->assign('module_type', $type);
 	$smarty->assign_by_ref('module_content', $content);
 	return $smarty->fetch('module.tpl');
 }

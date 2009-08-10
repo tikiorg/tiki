@@ -38,34 +38,14 @@ if (isset($_REQUEST["find"])) {
 $smarty->assign('find', $find);
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 $channels = $quizlib->list_quizzes($offset, $maxRecords, $sort_mode, $find);
+Perms::bulk( array( 'type' => 'quiz' ), 'object', $channels['data'], 'quizId' );
 $temp_max = count($channels["data"]);
 for ($i = 0; $i < $temp_max; $i++) {
-	if ($userlib->object_has_one_permission($channels["data"][$i]["quizId"], 'quiz')) {
-		$channels["data"][$i]["individual"] = 'y';
-		if ($userlib->object_has_permission($user, $channels["data"][$i]["quizId"], 'quiz', 'tiki_p_take_quiz')) {
-			$channels["data"][$i]["individual_tiki_p_take_quiz"] = 'y';
-		} else {
-			$channels["data"][$i]["individual_tiki_p_take_quiz"] = 'n';
-		}
-		if ($userlib->object_has_permission($user, $channels["data"][$i]["quizId"], 'quiz', 'tiki_p_view_quiz_stats')) {
-			$channels["data"][$i]["individual_tiki_p_view_quiz_stats"] = 'y';
-		} else {
-			$channels["data"][$i]["individual_tiki_p_view_quiz_stats"] = 'n';
-		}
-		if ($userlib->object_has_permission($user, $channels["data"][$i]["quizId"], 'quiz', 'tiki_p_view_user_stats')) {
-			$channels["data"][$i]["individual_tiki_p_view_user_stats"] = 'y';
-		} else {
-			$channels["data"][$i]["individual_tiki_p_view_user_stats"] = 'n';
-		}
-		if ($tiki_p_admin == 'y' || $userlib->object_has_permission($user, $channels["data"][$i]["quizId"], 'quiz', 'tiki_p_admin_quizzes')) {
-			$channels["data"][$i]["individual_tiki_p_take_quiz"] = 'y';
-			$channels["data"][$i]["individual_tiki_p_view_quiz_stats"] = 'y';
-			$channels["data"][$i]["individual_tiki_p_admin_quizzes"] = 'y';
-			$channels["data"][$i]["individual_tiki_p_view_user_stats"] = 'y';
-		}
-	} else {
-		$channels["data"][$i]["individual"] = 'n';
-	}
+	$quizperms = Perms::get( array( 'type' => 'quiz', 'object' => $channels['data'][$i]['quizId'] ) );
+	$channels["data"][$i]["individual_tiki_p_take_quiz"] = $quizperms->take_quiz ? 'y' : 'n';
+	$channels["data"][$i]["individual_tiki_p_view_quiz_stats"] = $quizperms->view_quiz_stats ? 'y' : 'n';
+	$channels["data"][$i]["individual_tiki_p_view_user_stats"] = $quizperms->view_user_stats ? 'y' : 'n';
+	$channels["data"][$i]["individual_tiki_p_admin_quizzes"] = $quizperms->admin_quizzes ? 'y' : 'n';
 }
 $smarty->assign_by_ref('cant_pages', $channels["cant"]);
 $smarty->assign_by_ref('channels', $channels["data"]);

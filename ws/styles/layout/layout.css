@@ -251,7 +251,6 @@ div#sitead {
 	overflow: hidden;
 }
 
-a.phplmselected:hover {}
 .imgs {
 	border: 0;
 	width: 16px;
@@ -262,7 +261,7 @@ a.phplmselected:hover {}
 
 .linkmenu,
 .linkmenu:visited {
-	display: block;
+	/*display: block;*/
 }
 
 /***** Misc. *****/
@@ -571,6 +570,54 @@ ul.categories li{
 	padding: 0;
 }
 
+/* New Quicktags (toolbars) */
+
+a.quicktag {
+	padding: 0 .5em 0 0;
+}
+
+a.qt-plugin {
+}
+
+a.qt-plugin div {
+	/* .iconmenu */
+	background-color: #CD8;
+	border: thin #690 solid;
+	margin: 0 .4em 0 0;
+	padding: 2px .4em 0 .2em;
+	color: #030;
+	font-size: 10px;
+}
+
+a.qt-plugin:hover {
+	text-decoration: none;
+}
+
+a.qt-plugin div img { /* div.iconmenu img.icon */
+	margin-bottom: 4px;
+}
+
+span.quicktag-list {
+	padding: 0 0 0 .5em;
+	line-height: 20px;
+	border-left: medium double lightgray;
+}
+
+.helptool-admin {
+	float: right;
+	border-left: medium double lightgrey;
+	padding-left:8px;
+	margin-left:8px;
+}
+
+.quicktags-picker {
+	position: absolute;
+	width: 300px;
+	background-color: white;
+	border: thin solid black;
+	z-index: 300;
+}
+
 /* New Help section */
 div#tikihelp {
 	position: fixed;
@@ -668,7 +715,6 @@ div.help_section {
 
 .icon_edit_section {
 	float: right;
-	margin-top: 1em;
 }
 
 /***** Boxes *****/
@@ -686,7 +732,8 @@ h3.box-title {
 .moduleflip,
 .wikitext .box-title span img.flipmodimage {
 	display: none !important;
-	position: absolute;
+	float: right;
+	position: relative;
 	right: 0;
 	top: 0;
 }
@@ -866,6 +913,7 @@ td.heading,
 tr.diffheader {
 	text-align: center;
 }
+
 td.form {
 	padding: 0.2em;
 }
@@ -887,7 +935,7 @@ td.form {
 }
 	
 .tabmark a {
-	border-bottom :0;
+	border-bottom: 0;
 	padding: 1px 5px;
 	text-decoration: none;
 }
@@ -903,7 +951,6 @@ td.form {
 [class].tabactive {
 	top: -1px;
 }
-
 
 .tabinactive {
 	border-bottom: none/* !important*/;
@@ -1135,6 +1182,7 @@ ul.toc * {
 .diffdeleted {
 	background: #ffcccc;
 	color: #000;
+	text-decoration: line-through;
 }
 
 .diffinldel {
@@ -1437,7 +1485,8 @@ body.tiki_forums table.normal {
 .nb_replies {
 	white-space: nowrap;
 }
-.post_preview, .top_post {
+.post_preview,
+.top_post {
 	margin-bottom: 15px;
 }
 
@@ -2021,25 +2070,6 @@ div.messureadbody {
 	padding-left: 15px;
 }
 
-.plugin-form-float {
-	position: fixed;
-	left: 5%;
-	right: 365px;
-	top: 5%;
-	max-height: 90%;
-	overflow: auto;
-	background: #fff;
-	color: #000;
-	padding: 10px;
-	border: solid 2px #000;
-	z-index: 1000;
-}
-
-.icon_edit_section {
-	float: right;
-	margin-top: 1em;
-}
-
 table.default thead td,
 table.default tfoot td {}
 
@@ -2048,12 +2078,12 @@ table.default td {}
 /***** Calendar *****/
 
 /***** Admin *****/
-.highlight_word_0{
+.highlight_word_0 {
 	color: #ffff66;
 	background: #666;
 }
 
-.highlight_word_1{
+.highlight_word_1 {
 	color: #ff9999;
 	background: #666;
 }
@@ -2325,5 +2355,119 @@ table.webmail_message_headers th {
 }
 @media print {
 	.tikihelp, .navbar, .tabstoggle, .tabs, #show-errors-button {display:none;}
+}
+
+/* Minimize Menus */
+.minimize-modules-left #col1 {
+	margin-left: 80px !important;
+}
+
+.minimize-modules-right #col1 {
+	margin-right: 80px !important;
+}
+
+.minimize-modules-left #col2 .separatoricon-toggle,
+.minimize-modules-left #col2 .box .menuText,
+.minimize-modules-left #col2 .mdkfwdarr,
+.minimize-modules-right #col3 .separatoricon-toggle,
+.minimize-modules-right #col3 .box .menuText,
+.minimize-modules-right #col3 .mdkfwdarr {
+	display: none !important;
+}
+
+.minimize-modules-left #col2 .box .menuLevel1 .menuText,
+.minimize-modules-left #col2 .separatoricon-url,
+.minimize-modules-right #col3 .box .menuLevel1 .menuText,
+.minimize-modules-right #col3 .separatoricon-url {
+	display: inline !important;
+}
+
+.minimize-modules-left #col2 .box,
+.minimize-modules-right #col3 .box {
+	/*      overflow: hidden;*/ /* This conflicts with CSS Menus */
+}
+
+#col2 .moduleflip-vert .flipmodimage,
+.minimize-modules-right #col3 .moduleflip-vert .flipmodimage {
+	background-image: url(../../pics/icons/resultset_first.png) !important;
+}
+
+#col3 .moduleflip-vert .flipmodimage,
+.minimize-modules-left #col2 .moduleflip-vert .flipmodimage {
+	background-image: url(../../pics/icons/resultset_last.png) !important;
+}
+
+.minimize-modules-left #col2 div.separator,
+.minimize-modules-right #col3 div.separator {
+	padding: 0;
+	background: transparent;
+	border: none;
+}
+
+.minimize-modules-left #col2 div.box-shadow,
+.minimize-modules-left #col2 div.box,
+.minimize-modules-right #col3 div.box-shadow,
+.minimize-modules-right #col3 div.box {
+	width: 70px !important;
+}
+
+.minimize-modules-left #col2 .content,
+.minimize-modules-right #col3 .content {
+	margin: 0 !important;
+}
+
+.minimize-modules-left #col2 div.option,
+.minimize-modules-left #col2 div.optionline,
+.minimize-modules-right #col3 div.option,
+.minimize-modules-right #col3 div.optionline {
+	margin: 0 !important;
+	padding: 0 !important;
+}
+
+/* Minimize PHPLayers Menus */
+.mdkverbar-with-icons .mdkitem {
+	background: none;
+}
+
+.mdkverbar-with-icons .mdkitem a {
+	padding: 0;
+	width: 175px;
+}
+
+.mdkverbar-with-icons .mdkitem img {
+	vertical-align: middle;
+}
+
+.minimize-modules-left #col2 .mdkverbar-with-icons .mdkitem,
+.minimize-modules-left #col2,
+.minimize-modules-right #col3 .mdkverbar-with-icons .mdkitem,
+.minimize-modules-right #col3 {
+	width: 60px !important;
+}
+
+.minimize-modules-left #col2 .mdkverbar-with-icons .mdkitem a,
+.minimize-modules-right #col3 .mdkverbar-with-icons .mdkitem a {
+	width: 50px !important;
+	overflow: hidden;
+}
+
+/* Minimize CSS Menus */
+.minimize-modules-left #col2 .cssmenu_vert,
+.minimize-modules-left #col2 .cssmenu_vert div > ul,
+.minimize-modules-left #col2 .cssmenu_vert li.menuLevel0,
+.minimize-modules-left #col2 .cssmenu_vert li.menuLevel0 > a,
+.minimize-modules-right #col3 .cssmenu_vert,
+.minimize-modules-right #col3 .cssmenu_vert div > ul,
+.minimize-modules-right #col3 .cssmenu_vert li.menuLevel0,
+.minimize-modules-right #col3 .cssmenu_vert li.menuLevel0 > a {
+	width: 44px;
+}
+
+.minimize-modules-left #col2 .cssmenu_vert li.menuLevel0 > ul {
+	margin-left: 55px;
+}
+
+.minimize-modules-right #col3 .cssmenu_vert li.menuLevel0 > ul {
+	margin-right: 55px;
 }
 /* End of File */

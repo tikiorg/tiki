@@ -1224,13 +1224,6 @@ h3.box-title {
 	color: #3f6383;
 }
 
-.moduleflip {
-	display: none;
-	position: absolute;
-	right: 0;
-	top: 0;
-}
-
 .box:hover .moduleflip {
 	display: block;
 }
@@ -1668,10 +1661,9 @@ div.code {
 	font-family: "Courier New", Courier, monospace;
 	padding: 10px;
 	background: #F5F5F5;
-	margin: 4px;
+	margin: 4px 0;
 	border: 1px dashed #696969;
 	overflow: auto;
-	width: 95%;
 }
 
 .codecaption {
@@ -2340,6 +2332,9 @@ ul.catfeatures li {
 ul.catitems li {
 	display: inline;
 	margin-right: 7px;
+}
+
+ul.catitems li a {
 	white-space: nowrap;
 }
 
@@ -2882,6 +2877,14 @@ div.questionblock {
 
 div.quizquestion {
 	margin-bottom: 5px;
+	background: #C3D3E5 none repeat scroll 0 0;
+	font-size: 1em;
+	font-weight: bold;
+	padding: 5px;
+}
+
+div.quizoptions input[type=text] {
+	width: 500px;
 }
 
 div.quizdescription {

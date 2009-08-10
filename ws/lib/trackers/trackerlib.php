@@ -1083,6 +1083,9 @@ class TrackerLib extends TikiLib {
 			} else {
 				// -----------------------------
 				// save image on disk
+				if ( $ins_fields["data"][$i]["type"] == 'i' && empty($ins_fields["data"][$i]['value'])) {
+					continue;
+				}
 				if ( $ins_fields["data"][$i]["type"] == 'i' && isset($ins_fields["data"][$i]['value'])) {
 					$itId = $itemId ? $itemId : $new_itemId;
 					$old_file = $this->get_item_value($trackerId, $itemId, $ins_fields["data"][$i]['fieldId']);

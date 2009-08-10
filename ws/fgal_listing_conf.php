@@ -64,9 +64,12 @@ foreach ( $fgal_options as $k_gal => $v ) {
 
 	if ( $k_gal == 'default_view' ) {
 		$fgal_options[$k_gal]['value'] = ( isset($gal_info) && isset($gal_info[$k_gal]) ) ? $gal_info[$k_gal] : $prefs[$k_prefs];
+	} elseif ( !isset($_REQUEST['edit_mode']) ) {
+		// We are in the file gallery admin panel
+		$fgal_options[$k_gal]['value'] = $prefs[$k_prefs];
 	} else {
-		// Only check the current gallery value if the feature (in global prefs) is enabled
-		$fgal_options[$k_gal]['value'] = ( $prefs[$k_prefs] == 'y' && isset($gal_info) && isset($gal_info[$k_gal]) ) ? $gal_info[$k_gal] : $prefs[$k_prefs];
+		// We are in the edit file gallery page
+		$fgal_options[$k_gal]['value'] = $gal_info[$k_gal];
 	}
 }
 

@@ -1,10 +1,13 @@
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}To add/remove calendars, look for "Calendar" under "Admin" on the application menu, or{/tr} <a class="rbox-link" href="tiki-admin_calendars.php">{tr}Click Here{/tr}</a>.{/remarksbox}
 
 <form action="tiki-admin.php?page=calendar" method="post">
-<div class="cbox">
-<table class="admin"><tr><td>
-<div align="center" style="padding:1em;"><input type="submit" name="calprefs" value="{tr}Change settings{/tr}" /></div>
-<fieldset><legend>{tr}General settings{/tr}{if $prefs.feature_help eq 'y'} {help url="Calendar+Admin"}{/if}</legend>
+<div class="input_submit_container clear" style="text-align: right;">
+	<input type="submit" name="calprefs" value="{tr}Change settings{/tr}" />
+</div>
+
+{tabset name="admin_calendar"}
+{tab name="{tr}General settings{/tr}"}
+ <fieldset><legend>{tr}General settings{/tr}{if $prefs.feature_help eq 'y'} {help url="Calendar+Admin"}{/if}</legend>
 <div class="adminoptionbox">
 	<div class="adminoptionlabel">{tr}Default calendars to display{/tr}:
 	{if $rawcals|@count ge '1'}
@@ -89,9 +92,9 @@
 </div>
 </div>
 </fieldset>
+{/tab}
 
-
-<fieldset><legend>{tr}Group calendars{/tr}</legend>
+{tab name="{tr}Group calendars{/tr}"}
 <div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" id="calendar_sticky_popup" name="calendar_sticky_popup" {if $prefs.calendar_sticky_popup eq 'y'}checked="checked" {/if}/></div>
 	<div class="adminoptionlabel"><label for="calendar_sticky_popup">{tr}Sticky popup{/tr}</label></div>
@@ -100,10 +103,10 @@
 	<div class="adminoption"><input type="checkbox" id="calendar_view_tab" name="calendar_view_tab" {if $prefs.calendar_view_tab eq 'y'}checked="checked" {/if}/></div>
 	<div class="adminoptionlabel"><label for="calendar_view_tab">{tr}Item view tab{/tr}</label></div>
 </div>
-</fieldset>
-
-<div align="center" style="padding:1em;"><input type="submit" name="calprefs" value="{tr}Change settings{/tr}" /></div>
-</td></tr></table>
+{/tab}
+{/tabset}
+<div class="input_submit_container clear" style="text-align: center;">
+	<input type="submit" name="calprefs" value="{tr}Change settings{/tr}" />
 </div>
 </form>
 

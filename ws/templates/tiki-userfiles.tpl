@@ -2,10 +2,8 @@
 
 {title help="User+Files"}{tr}User Files{/tr}{/title}
 
-{if $prefs.feature_ajax ne 'y' && $prefs.feature_mootools ne 'y'}
 <!-- this bar is created by a ref to {include file=tiki-mytiki_bar.tpl} :) -->
 {include file='tiki-mytiki_bar.tpl'}
-{/if}
 
 <div style="text-align:center;">
   <div style="height:20px; width:200px; border:1px solid black; background-color:#666666; text-align:left; margin:0 auto;">

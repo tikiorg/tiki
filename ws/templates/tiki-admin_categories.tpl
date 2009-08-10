@@ -43,9 +43,9 @@
 		<a class="link" href="tiki-admin_categories.php?parentId={$catree[dx].parentId}&amp;removeCat={$catree[dx].categId}" title="{tr}Delete{/tr}">{icon _id='cross' hspace="5" vspace="1"}</a>
 		
 		{if $catree[dx].has_perm eq 'y'}
-			<a title="{tr}Edit permissions for this category{/tr}" href="tiki-categpermissions.php?categId={$catree[dx].categId}">{icon hspace="5" vspace="1" _id='key_active' alt="{tr}Edit permissions for this category{/tr}"}</a>
+			<a title="{tr}Edit permissions for this category{/tr}" href="tiki-objectpermissions.php?objectType=category&amp;objectId={$catree[dx].categId}&amp;objectName={$catree[dx].name|escape:'urlencode'}&amp;permType=all">{icon hspace="5" vspace="1" _id='key_active' alt="{tr}Edit permissions for this category{/tr}"}</a>
 		{else}
-			<a title="{tr}Assign Permissions{/tr}" href="tiki-categpermissions.php?categId={$catree[dx].categId}">{icon hspace="5" vspace="1" _id='key' alt="{tr}Assign Permissions{/tr}"}</a>
+			<a title="{tr}Assign Permissions{/tr}" href="tiki-objectpermissions.php?objectType=category&amp;objectId={$catree[dx].categId}&amp;objectName={$catree[dx].name|escape:'urlencode'}&amp;permType=all">{icon hspace="5" vspace="1" _id='key' alt="{tr}Assign Permissions{/tr}"}</a>
 		{/if}
 		
 		<div style="display: inline; padding-left:{$catree[dx].deep*30+5}px;">
@@ -96,18 +96,7 @@
 					<td class="form">{tr}Description{/tr}:</td>
 					<td class="form"><textarea rows="2" cols="40" name="description">{$description|escape}</textarea></td>
 				</tr>
-				{if $categId <= 0}
-					<tr class="formcolor">
-						<td class="form">
-							<label for="assign_perms" title="{tr}Perms inherited from closest parent if possible or from global perms{/tr}">
-								{tr}Assign permissions automatically{/tr}:<br /><i>({tr}recommended for best performance{/tr})</i>
-							</label>
-						</td>
-						<td class="form">
-							<input type="checkbox" name="assign_perms" id="assign_perms" checked="{$assign_perms}" />
-						</td>
-					</tr>
-				{else}
+				{if $categId > 0}
 					<tr class="formcolor">
 						<td class="form" colspan="2">
 							<a href="tiki-categpermissions.php?categId={$categId}">{tr}Edit permissions for this category{/tr}</a>

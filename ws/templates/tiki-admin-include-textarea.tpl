@@ -3,9 +3,9 @@
 {/remarksbox}
 
 <form action="tiki-admin.php?page=textarea" method="post">
-<div class="cbox">
-<div align="center" style="padding:1em"><input type="submit" name="textareasetup" value="{tr}Change Preferences{/tr}" /></div>
-
+<div class="heading input_submit_container" style="text-align: right">
+	<input type="submit" name="textareasetup" value="{tr}Change preferences{/tr}" />
+</div>
 	{tabset name="admin_textarea"}
 		{tab name="{tr}General Settings{/tr}"}
 <fieldset><legend>{tr}Features{/tr}{if $prefs.feature_help eq 'y'} {help url="Text+Area"}{/if}</legend>
@@ -380,7 +380,7 @@ $jq('#pluginalias_simple_new').hide();
 			<div class="adminoptionbox">
 				<div class="adminoptionlabel">
 					<label for="defaultbody">{tr}Default Content{/tr}:</label>
-					<textarea cols="60" rows="12" id=defaultbody" name="defaultbody">{$plugin_admin.body.default|escape}</textarea>
+					<textarea cols="60" rows="12" id="defaultbody" name="defaultbody">{$plugin_admin.body.default|escape}</textarea>
 				</div>
 				<div class="q1">&nbsp;</div>
 				<div class="q234">
@@ -465,7 +465,8 @@ $jq('#pluginalias_simple_new').hide();
 		</fieldset>
 		{/tab}
 	{/tabset}
-<div align="center" style="padding:1em"><input type="submit" name="textareasetup" value="{tr}Change Preferences{/tr}" /></div>
+<div class="heading input_submit_container" style="text-align: right">
+	<input type="submit" name="textareasetup" value="{tr}Change preferences{/tr}" />
 </div>
 </form>
 

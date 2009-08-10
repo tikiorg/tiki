@@ -442,9 +442,6 @@ $smarty->assign('siteTimeZone', $prefs['display_timezone']);
 
 include_once("textareasize.php");
 
-include_once ('lib/quicktags/quicktagslib.php');
-$quicktags = $quicktagslib->list_quicktags(0,100,'taglabel_asc','','articles');
-$smarty->assign_by_ref('quicktags', $quicktags["data"]);
 $smarty->assign('showtags', 'n');
 $smarty->assign('qtcycle', '');
 ask_ticket('edit-submission');

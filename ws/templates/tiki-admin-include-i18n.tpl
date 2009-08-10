@@ -23,8 +23,9 @@
   </script>
 
 <form action="tiki-admin.php?page=i18n" method="post">
-<div class="cbox">
-<div style="padding:1em;" align="center"><input type="submit" value="{tr}Change preferences{/tr}" /></div>
+	<div class="heading input_submit_container" style="text-align: right">
+		<input type="submit" value="{tr}Change preferences{/tr}" />
+	</div>
 <input type="hidden" name="i18nsetup" />
 {tabset name="admin_i18n"}
 	{tab name="{tr}Internationalization{/tr}"}
@@ -210,6 +211,7 @@
 </div>
 {/tab}
 {/tabset}
-<div style="padding:1em;" align="center"><input type="submit" value="{tr}Change preferences{/tr}" /></div>
-</div>
+	<div class="heading input_submit_container" style="text-align: center">
+		<input type="submit" value="{tr}Change preferences{/tr}" />
+	</div>
 </form>

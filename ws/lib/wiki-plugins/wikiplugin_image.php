@@ -218,8 +218,8 @@ function wikiplugin_image_info() {
  *		 - Current list of section names:
  *			- blogs, calendar, categories, cms, directory, faqs,
  *				featured_links, file_galleries, forums, freetags, friends,
- *				galleries, games, html_pages, livesupport, maps, mytiki,
- *				newsletters, newsreader, poll, quizzes, sheet, surveys,
+ *				galleries, html_pages, livesupport, maps, mytiki,
+ *				newsletters, poll, quizzes, sheet, surveys,
  *				trackers, user_messages, users, webmail, wiki page
  * 
  * The parameter is the name of any IMAGE option (id, scalesize, width, ...).

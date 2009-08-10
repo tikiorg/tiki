@@ -10,6 +10,7 @@ function wikiplugin_mediaplayer_info() {
 				 'description' => 'Simple mp3 or flv Player',
 				 'extraparams' =>true,
 				 'prefs' => array( 'wikiplugin_mediaplayer' ),
+				 'icon' => 'pics/icons/television.png',
 				 'params' => array(
 								   'mp3' => array(
 												  'required' => false,

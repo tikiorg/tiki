@@ -4,11 +4,11 @@
 {/remarksbox}
 
 <form action="tiki-admin.php?page=ads"  onreset="return(confirm('{tr}Cancel Edit{/tr}'))" class="admin" method="post">
-<div class="cbox">
-<table class="admin"><tr><td>
-<div style="padding:1em;" align="center"><input type="submit" value="{tr}Change preferences{/tr}" /></div>
+<div class="heading input_submit_container" style="text-align: right">
+	<input type="submit" value="{tr}Change preferences{/tr}" />
+</div>
 <input type="hidden" name="adssetup" />
-<fieldset><legend>{tr}Site Ads and Banners{/tr}{if $prefs.feature_help eq 'y'} {help url="Look+and+Feel+Admin"}{/if}</legend>
+<fieldset><legend>{tr}Site Ads and Banners{/tr}{if $prefs.feature_help eq 'y'} {help url="Banners"}{/if}</legend>
 <div class="adminoptionbox">
 	<div class="adminoptionlabel"><label for="sitead">{tr}Content{/tr}:</label><br /><textarea name="sitead" rows="6" style="width: 90%" id="sitead">{$prefs.sitead|escape}</textarea>
 	<br /><em>{tr}Example{/tr}: {literal}{banner zone='{/literal}{tr}Test{/tr}{literal}'}{/literal}.</em></div>
@@ -26,7 +26,7 @@
 </div>
 </fieldset>
 
-<div style="padding:1em;" align="center"><input type="submit" value="{tr}Change preferences{/tr}" /></div>
-</td></tr></table>
+<div class="input_submit_container clear" style="text-align: center">
+	<input type="submit" value="{tr}Change preferences{/tr}" />
 </div>
 </form>

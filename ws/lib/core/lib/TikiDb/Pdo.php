@@ -66,13 +66,10 @@ class TikiDb_Pdo extends TikiDb {
 			$values = array($values);
 		}
 		if ($values) {
-			$count = 1;
-			foreach($values as $value) {
-				$pq->bindValue($count++,$value,is_int($value)?(PDO::PARAM_INT):(PDO::PARAM_STR)) ;
-			}
+			$result = $pq->execute( $values );
+		} else {
+			$result = $pq->execute();
 		}
-
-		$result = $pq->execute();
 
 		$this->stopTimer($starttime);
 
@@ -94,7 +91,7 @@ class TikiDb_Pdo extends TikiDb {
 	function fetchAll($query = null, $values = null, $numrows = -1, $offset = -1, $reporterrors = true ) // {{{
 	{
 		$result = $this->_query($query,$values, $numrows, $offset);
-		if (!$result ) {
+		if (! is_array( $result ) ) {
 			if ($reporterrors) {
 				$this->handleQueryError($query, $values, $result);
 			}

@@ -2,6 +2,7 @@
 
 class PerspectiveLib
 {
+	// Returns a string-indexed array containing the preferences for the given perspective as "pref_name" => "pref_value".
 	function get_preferences( $perspectiveId ) {
 		$result = TikiDb::get()->query( "SELECT pref, value FROM tiki_perspective_preferences WHERE perspectiveId = ?", array( $perspectiveId ) );
 
@@ -14,6 +15,8 @@ class PerspectiveLib
 		return $out;
 	}
 
+	// Adds or renames a perspective. If $perspectiveId exists, rename it to $name. Otherwise, create a new perspective with id $perspectiveId named $name.
+	// Returns true if and only if the operation succeeds.
 	function replace_perspective( $perspectiveId, $name ) {
 		$db = TikiDb::get();
 
@@ -31,6 +34,7 @@ class PerspectiveLib
 		}
 	}
 
+	// Replaces all preferences from $perspectiveId with those in the provided string-indexed array (in format "pref_name" => "pref_value").
 	function replace_preferences( $perspectiveId, $preferences ) {
 		$db = TikiDb::get();
 		$db->query( 'DELETE FROM tiki_perspective_preferences WHERE perspectiveId = ?',
@@ -41,6 +45,7 @@ class PerspectiveLib
 		}
 	}
 
+	// Sets $preference's value for $perspectiveId to $value.
 	function set_preference( $perspectiveId, $preference, $value ) {
 		$db = TikiDb::get();
 
@@ -50,6 +55,7 @@ class PerspectiveLib
 			array( $perspectiveId, $preference, $value ) );
 	}
 
+	// Returns true if and only if a perspective with the given $perspectiveId exists.
 	function perspective_exists( $perspectiveId ) {
 		$db = TikiDb::get();
 
@@ -62,7 +68,10 @@ class PerspectiveLib
 	function list_perspectives() {
 		$db = TikiDb::get();
 
-		return $db->fetchAll( "SELECT perspectiveId, name FROM tiki_perspectives" );
+		$list = $db->fetchAll( "SELECT perspectiveId, name FROM tiki_perspectives" );
+
+		$list = Perms::filter( array( 'type' => 'perspective' ), 'object', $list, array( 'object' => 'perspectiveId' ), 'perspective_view' );
+		return $list;
 	}
 }
 

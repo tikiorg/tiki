@@ -6,14 +6,32 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
+include_once('lib/mime/mimetypes.php');
+
 // returns mimetypes of files
 function tiki_get_mime($filename, $fallback = '') {
+	global $mimetypes;
+	
 	if (function_exists("mime_content_type")) {
 		//notice: this is the better way. 
 		//Compile php with --enable-mime-magic
 		//to be able to use this.
 		return mime_content_type($filename);
-	} elseif ( $fallback != '' ) {
+		
+	}
+	
+	if (isset($mimetypes)) {
+		
+		$ext = pathinfo($filename);
+		$ext = isset($ext['extension']) ? $ext['extension'] : '';
+		$mimetype = isset($mimetypes[$ext]) ? $mimetypes[$ext] : '';
+		
+		if (!empty($mimetype)) {
+			return $mimetype;
+		}
+	}
+	
+	if ( $fallback != '' ) {
 		return $fallback;
 	} else {
 		//The "Microsoft Way" - just kidding

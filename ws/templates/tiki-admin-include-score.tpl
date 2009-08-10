@@ -1,13 +1,11 @@
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}You can see users rank by score in the module users_rank, for that go to{/tr} "<a class="rbox-link" href="tiki-admin_modules.php">{tr}Admin modules{/tr}</a>".{/remarksbox}
 
-<div class="cbox">
-  <div class="cbox-title">
-    {tr}{$crumbs[$crumb]->description}{/tr}
-    {help crumb=$crumbs[$crumb]}
-  </div>
-  <div class="cbox-data">
-      <form action="tiki-admin.php?page=score" method="post">
-
+<form action="tiki-admin.php?page=score" method="post">
+	<div class="heading input_submit_container" style="text-align: right">
+		<input type="submit" name="scoreevents" value="{tr}Save{/tr}" />
+	</div>
+<fieldset class="admin">
+<legend>{tr}Settings{/tr}</legend>
 <table class="admin">
 <tr>
   <td style="padding-left:5px"></td>
@@ -35,14 +33,9 @@
   </td>
 </tr>
 {/section}
-<tr>
-  <td colspan="4">
-    <input type="submit" name="scoreevents" value="{tr}Save{/tr}" />
-  </td>
-</tr>
 </table>
-
-      </form>
-  </div>
-</div>
-
+</fieldset>
+	<div class="heading input_submit_container" style="text-align: center">
+		<input type="submit" name="scoreevents" value="{tr}Save{/tr}" />
+	</div>
+</form>

@@ -52,37 +52,20 @@ class WikiRenderer
 
 	function applyPermissions() // {{{
 	{
-		global $tiki_p_admin, $tikilib, $userlib;
+		global $userlib;
+		$permDescs = $userlib->get_permissions( 0, -1, 'permName_desc', '', 'wiki' );
+		$objectperms = Perms::get( array( 'type' => 'wiki page', 'object' => $this->page ) );
 
-		if ($tiki_p_admin != 'y' && $userlib->object_has_one_permission($this->page, 'wiki page')) {
-			$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'wiki');
-			$this->hasPermissions = true;
-			if ($userlib->object_has_permission($this->user, $this->page, 'wiki page', 'tiki_p_admin_wiki')) {
-				foreach ($perms["data"] as $perm) {
-					$perm = $perm["permName"];
-
-					$this->setGlobal( $perm, 'y' );
-				}
-			} else {
-				foreach ($perms["data"] as $perm) {
-					$perm = $perm["permName"];
-					$value = $userlib->object_has_permission($this->user, $this->page, 'wiki page', $perm) ? 'y' : 'n';
-
-					$this->setGlobal( $perm, $value );
-				}
-			}
-		} else {
-			$this->hasPermissions = false;
+		foreach( $permDescs['data'] as $name ) {
+			$name = $name['permName'];
+			$this->setGlobal( $name, $objectperms->$name ? 'y' : 'n' );
 		}
 
-		$permissions = $tikilib->get_perm_object( $this->page, 'wiki page', $this->info, false );
-
-		foreach( $permissions as $name => $value )
-			$this->setGlobal( $name, $value );
-
-		$this->canView = $GLOBALS['tiki_p_view'] == 'y';
+		$this->canView = $objectperms->view;
 
 		$this->smartyassign('page_user',$this->info['user']);
+
+		return $objectperms;
 	} // }}}
 
 	function restoreAll() // {{{
@@ -326,7 +309,7 @@ class WikiRenderer
 		if ($this->content_to_render == '') {
 			$pdata = $wikilib->get_parse($this->page, $canBeRefreshed);
 		} else {
-			$pdata = $this->content_to_render;
+			$pdata = $wikilib->parse_data($this->content_to_render);
 		}
 		if ($canBeRefreshed) {
 			$this->smartyassign('cached_page','y');

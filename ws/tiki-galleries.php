@@ -49,28 +49,7 @@ if ($tiki_p_list_image_galleries != 'y') {
 // Check here for indivdual permissions the objectType is 'image galleries' and the id is galleryId
 $smarty->assign('individual', 'n');
 
-if ($userlib->object_has_one_permission($_REQUEST["galleryId"], 'image gallery')) {
-	$smarty->assign('individual', 'y');
-
-	if ($tiki_p_admin != 'y') {
-		// Now get all the permissions that are set for this type of permissions 'image gallery'
-		$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'image galleries');
-
-		foreach ($perms["data"] as $perm) {
-			$permName = $perm["permName"];
-
-			if ($userlib->object_has_permission($user, $_REQUEST["galleryId"], 'image gallery', $permName)) {
-				$$permName = 'y';
-
-				$smarty->assign("$permName", 'y');
-			} else {
-				$$permName = 'n';
-
-				$smarty->assign("$permName", 'n');
-			}
-		}
-	}
-}
+$tikilib->get_perm_object($_REQUEST["galleryId"], 'image gallery');
 
 $foo = parse_url($_SERVER["REQUEST_URI"]);
 $foo["path"] = str_replace("tiki-galleries", "tiki-browse_gallery", $foo["path"]);
@@ -420,6 +399,7 @@ if (!is_object($imagegallib)) {
 }
 
 $galleries = $imagegallib->list_galleries($offset, $maxRecords, $sort_mode, 'admin', $find);
+Perms::bulk( array( 'type' => 'image gallery' ), 'object', $galleries, 'galleryId' );
 
 $smarty->assign('filter', '');
 if (!empty($_REQUEST['filter']))
@@ -428,6 +408,7 @@ if (!empty($_REQUEST['filter']))
 
 $temp_max = count($galleries["data"]);
 for ($i = 0; $i < $temp_max; $i++) {
+	$galperms = Perms::get( array( 'type' => 'image gallery', 'object' => $galleries["data"][$i]["galleryId"] ) );
 
 	// check if top gallery (has no parents)
 	$info = $imagegallib->get_gallery_info($galleries["data"][$i]["galleryId"]);
@@ -446,35 +427,9 @@ for ($i = 0; $i < $temp_max; $i++) {
 		$galleries["data"][$i]["parentgal"] = 'n';
 	}
 
-
-	if ($userlib->object_has_one_permission($galleries["data"][$i]["galleryId"], 'image gallery')) {
-		$galleries["data"][$i]["individual"] = 'y';
-
-		$galleries["data"][$i]["individual_tiki_p_view_image_gallery"] = 'y';
-
-		if ($userlib->object_has_permission($user, $galleries["data"][$i]["galleryId"], 'image gallery', 'tiki_p_upload_images')) {
-			$galleries["data"][$i]["individual_tiki_p_upload_images"] = 'y';
-		} else {
-			$galleries["data"][$i]["individual_tiki_p_upload_images"] = 'n';
-		}
-
-		if ($userlib->object_has_permission($user, $galleries["data"][$i]["galleryId"], 'image gallery', 'tiki_p_create_galleries'))
-			{
-			$galleries["data"][$i]["individual_tiki_p_create_galleries"] = 'y';
-		} else {
-			$galleries["data"][$i]["individual_tiki_p_create_galleries"] = 'n';
-		}
-
-		if ($tiki_p_admin == 'y' || $userlib->object_has_permission($user, $galleries["data"][$i]["galleryId"], 'image gallery',
-			'tiki_p_admin_galleries')) {
-			$galleries["data"][$i]["individual_tiki_p_create_galleries"] = 'y';
-
-			$galleries["data"][$i]["individual_tiki_p_upload_images"] = 'y';
-			$galleries["data"][$i]["individual_tiki_p_view_image_gallery"] = 'y';
-		}
-	} else {
-		$galleries["data"][$i]["individual"] = 'n';
-	}
+	$galleries["data"][$i]["individual_tiki_p_view_image_gallery"] = $galperms->view_image_gallery ? 'y' : 'n';
+	$galleries["data"][$i]["individual_tiki_p_upload_images"] = $galperms->upload_images ? 'y' : 'n';
+	$galleries["data"][$i]["individual_tiki_p_create_galleries"] = $galperms->create_galleries ? 'y' : 'n';
 }
 
 $smarty->assign_by_ref('galleries', $galleries["data"]);

@@ -113,9 +113,9 @@ class TikiDb_Bridge extends TikiDb
 		return self::get()->ifNull( $field, $ifNull );
 	} // }}}
 
-	function in( $field, $values ) // {{{
+	function in( $field, $values, &$bindvars ) // {{{
 	{
-		return self::get()->in( $field, $values );
+		return self::get()->in( $field, $values, $bindvars );
 	} // }}}
 
 	function concat() // {{{

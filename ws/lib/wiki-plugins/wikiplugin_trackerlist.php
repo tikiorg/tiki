@@ -14,6 +14,7 @@ function wikiplugin_trackerlist_info() {
 		'description' => tra('Displays the output of a tracker content, fields are indicated with numeric ids.'),
 		'prefs' => array( 'feature_trackers', 'wikiplugin_trackerlist' ),
 		'body' => tra('Notice'),
+		'icon' => 'pics/icons/database_table.png',
 		'params' => array(
 			'trackerId' => array(
 				'required' => true,

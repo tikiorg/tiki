@@ -23,21 +23,10 @@ $arrayFilterfield = explode(',', $_GET["filterfield"]);
 $arrayStatus = explode(',', $_GET["status"]);
 $sort_mode = 'f_' . $arrayFieldlist[0] . '_asc';
 header('Cache-Control: no-cache');
+Perms::bulk( array( 'type' => 'tracker' ), 'object', $arrayTrackerId );
 for ($index = 0; $index < count($arrayTrackerId); $index++) {
-	if (!$userlib->object_has_one_permission($arrayTrackerId[$index], 'tracker') && ($tiki_p_admin != 'y' && $prefs['feature_categories'] == 'y')) {
-		$perms_array = $categlib->get_object_categories_perms($user, 'tracker', $arrayTrackerId[$index]);
-		if ($perms_array) {
-			$is_categorized = TRUE;
-			foreach($perms_array as $perm => $value) {
-				$$perm = $value;
-			}
-		} else {
-			$is_categorized = FALSE;
-		}
-		if ($is_categorized && isset($tiki_p_view_categorized) && $tiki_p_view_categorized != 'y') {
-			die;
-		}
-	}
+	$tikilib->get_perm_object( $arrayTrackerId[$index], 'tracker' );
+
 	if ($arrayMandatory[$index] == 'y') {
 		echo "sel[$index][0] = new Option('','');\n";
 	}

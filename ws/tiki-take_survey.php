@@ -23,39 +23,8 @@ if (!isset($_REQUEST["surveyId"])) {
 	$smarty->display("error.tpl");
 	die;
 }
-$smarty->assign('individual', 'n');
-if ($userlib->object_has_one_permission($_REQUEST["surveyId"], 'survey')) {
-	$smarty->assign('individual', 'y');
-	if ($tiki_p_admin != 'y') {
-		$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'surveys');
-		foreach($perms["data"] as $perm) {
-			$permName = $perm["permName"];
-			if ($userlib->object_has_permission($user, $_REQUEST["surveyId"], 'survey', $permName)) {
-				$$permName = 'y';
-				$smarty->assign("$permName", 'y');
-			} else {
-				$$permName = 'n';
-				$smarty->assign("$permName", 'n');
-			}
-		}
-	}
-} elseif ($tiki_p_admin != 'y' && $prefs['feature_categories'] == 'y') {
-	$perms_array = $categlib->get_object_categories_perms($user, 'survey', $_REQUEST['surveyId']);
-	if ($perms_array) {
-		$is_categorized = TRUE;
-		foreach($perms_array as $perm => $value) {
-			$$perm = $value;
-		}
-	} else {
-		$is_categorized = FALSE;
-	}
-	if ($is_categorized && isset($tiki_p_view_categorized) && $tiki_p_view_categorized != 'y') {
-		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra("Permission denied you cannot view this page"));
-		$smarty->display("error.tpl");
-		die;
-	}
-}
+$tikilib->get_perm_object( $_REQUEST["surveyId"], 'survey' );
+
 $smarty->assign('surveyId', $_REQUEST["surveyId"]);
 $survey_info = $srvlib->get_survey($_REQUEST["surveyId"]);
 $smarty->assign('survey_info', $survey_info);
@@ -83,9 +52,6 @@ if (isset($_REQUEST["ans"])) {
 }
 include_once ('tiki-section_options.php');
 include_once ('textareasize.php');
-include_once ('lib/quicktags/quicktagslib.php');
-$quicktags = $quicktagslib->list_quicktags(0, -1, 'taglabel_asc', '', 'wiki');
-$smarty->assign_by_ref('quicktags', $quicktags["data"]);
 $smarty->assign('quicktagscant', $quicktags["cant"]);
 ask_ticket('take-survey');
 // Display the template

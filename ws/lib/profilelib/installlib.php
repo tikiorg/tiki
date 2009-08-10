@@ -58,6 +58,9 @@ class Tiki_Profile_Installer
 		'template' => 'Tiki_Profile_InstallHandler_Template',
 		'ws' => 'Tiki_Profile_InstallHandler_Workspaces',
 		'perspective' => 'Tiki_Profile_InstallHandler_Perspective',
+		'users' => 'Tiki_Profile_InstallHandler_User',
+		'datachannel' => 'Tiki_Profile_InstallHandler_DataChannel',
+		'transition' => 'Tiki_Profile_InstallHandler_Transition',
 	);
 
 	private static $typeMap = array(
@@ -94,8 +97,8 @@ class Tiki_Profile_Installer
 	 * @param $index - (int) index of feedback string to return if present
 	 * @return string or whole array if no index specified 
 	 */
-	function getFeedback( $index ) {
-		if (isset( $index ) && $index < count($this->feedback) ) {
+	function getFeedback( $index = null ) {
+		if (! is_null( $index ) && $index < count($this->feedback) ) {
 			return $this->feedback[ $index ];
 		} else {
 			return $this->feedback;
@@ -110,14 +113,21 @@ class Tiki_Profile_Installer
 			return $type;
 	} // }}}
 
-	public static function convertObject( $type, $id ) // {{{
+	public static function convertObject( $type, $id, $contextualizedInfo = array() ) // {{{
 	{
 		global $tikilib;
 
-		if( $type == 'wiki page' && is_numeric( $id ) )
+		if( $type == 'wiki page' && is_numeric( $id ) ) {
 			return $tikilib->get_page_name_from_id( $id );
-		else
+		} elseif( $type == 'group' && isset( $contextualizedInfo['groupMap'] ) ) {
+			if( isset( $contextualizedInfo['groupMap'][$id] ) ) {
+				return $contextualizedInfo['groupMap'][$id];
+			} else {
+				return $id;
+			}
+		} else {
 			return $id;
+		}
 	} // }}}
 
 	function setUserData( $userData ) // {{{
@@ -203,17 +213,24 @@ class Tiki_Profile_Installer
 		global $cachelib;
 		require_once 'lib/cache/cachelib.php';
 
-		if( ! $profiles = $this->getInstallOrder( $profile ) )
-			return false;
-
-		foreach( $profiles as $p )
-			$this->doInstall( $p );
+		try {
+			if( ! $profiles = $this->getInstallOrder( $profile ) )
+				return false;
+	
+			foreach( $profiles as $p )
+				$this->doInstall( $p );
+			
+			if (count($this->getFeedback()) == count($profiles)) {
+				$this->setFeedback(tra('Nothing was installed, check profile for errors'));
+			}
+			$cachelib->empty_full_cache();
+			return true;
 		
-		if (count($this->getFeedback()) == count($profiles)) {
-			$this->setFeedback(tra('Nothing was installed, check profile for errors'));
+		} catch(Exception $e) {
+			$this->setFeedback(tra('An error occurred: ') . $e->getMessage());
+			return false;
 		}
-		$cachelib->empty_full_cache();
-		return true;
+
 	} // }}}
 
 	function isInstalled( Tiki_Profile $profile ) // {{{
@@ -272,15 +289,19 @@ class Tiki_Profile_Installer
 			}
 			$tikilib->set_preference( $pref, $value );
 		}
-		$permissions = $profile->getPermissions();
+		$groupMap = $profile->getGroupMap();
+		$profile->replaceReferences( $groupMap, $this->userData );
+
+		$permissions = $profile->getPermissions( $groupMap );
 		$profile->replaceReferences( $permissions, $this->userData );
+		
 		foreach( $permissions as $groupName => $info ) {
 			$this->setFeedback(tra('Group changed (or modified)').': '.$groupName);
-			$this->setupGroup( $groupName, $info['general'], $info['permissions'], $info['objects'] );
+			$this->setupGroup( $groupName, $info['general'], $info['permissions'], $info['objects'], $groupMap );
 		}
 	} // }}}
 
-	private function setupGroup( $groupName, $info, $permissions, $objects ) // {{{
+	private function setupGroup( $groupName, $info, $permissions, $objects, $groupMap ) // {{{
 	{
 		global $userlib;
 
@@ -305,13 +326,21 @@ class Tiki_Profile_Installer
 			foreach( $data['permissions'] as $perm => $v )
 			{
 				$data['type'] = self::convertType( $data['type'] );
-				$data['id'] = Tiki_Profile_Installer::convertObject( $data['type'], $data['id'] );
+				$data['id'] = Tiki_Profile_Installer::convertObject( $data['type'], $data['id'], array(
+					'groupMap' => $groupMap,
+				) );
 
 				if( $v == 'y' )
 					$userlib->assign_object_permission( $groupName, $data['id'], $data['type'], $perm );
 				else
 					$userlib->remove_object_permission( $groupName, $data['id'], $data['type'], $perm );
 			}
+
+		global $user;
+		if( $info['autojoin'] == 'y' && $user ) {
+			$userlib->assign_user_to_group( $user, $groupName );
+			$this->setFeedback( tr('User %0 was added to %1', $user, $groupName) );
+		}
 	} // }}}
 
 	function forget( Tiki_Profile $profile ) // {{{
@@ -326,6 +355,7 @@ abstract class Tiki_Profile_InstallHandler // {{{
 {
 	protected $obj;
 	private $userData;
+	protected $data;
 
 	function __construct( Tiki_Profile_Object $obj, $userData )
 	{
@@ -355,8 +385,6 @@ abstract class Tiki_Profile_InstallHandler // {{{
 
 class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler // {{{
 {
-	private $data;
-
 	private function getData() // {{{
 	{
 		if( $this->data )
@@ -2018,6 +2046,56 @@ class Tiki_Profile_InstallHandler_Workspaces extends Tiki_Profile_InstallHandler
     }
 }
 
+class Tiki_Profile_InstallHandler_DataChannel extends Tiki_Profile_InstallHandler // {{{
+{
+	function getData()
+	{
+		if( $this->data )
+			return $this->data;
+
+		$defaults = array(
+			'domain' => 'tiki://local',
+			'groups' => array( 'Admins' ),
+		);
+
+		$data = array_merge(
+			$defaults,
+			$this->obj->getData()
+		);
+
+		return $this->data = $data;
+	}
+
+	function canInstall()
+	{
+		$data = $this->getData();
+		if( ! isset( $data['name'], $data['profile'] ) )
+			return false;
+		if( ! is_array( $data['groups'] ) )
+			return false;
+		if( ! is_string( $data['domain'] ) )
+			return false;
+
+		return true;
+	}
+
+	function _install()
+	{
+		global $tikilib, $prefs;
+		require_once 'lib/profilelib/channellib.php';
+		$channels = Tiki_Profile_ChannelList::fromConfiguration( $prefs['profile_channels'] );
+
+		$data = $this->getData();
+
+		$this->replaceReferences( $data );
+
+		$channels->addChannel( $data['name'], $data['domain'], $data['profile'], $data['groups'] );
+		$tikilib->set_preference( 'profile_channels', $channels->getConfiguration() );
+
+		return $data['name'];
+	}
+} // }}}
+
 class Tiki_Profile_InstallHandler_Perspective extends Tiki_Profile_InstallHandler // {{{
 {
 	function getData()
@@ -2067,6 +2145,99 @@ class Tiki_Profile_InstallHandler_Perspective extends Tiki_Profile_InstallHandle
 		}
 
 		return $persp;
+	}
+} // }}}
+
+class Tiki_Profile_InstallHandler_Transition extends Tiki_Profile_InstallHandler // {{{
+{
+	function getData()
+	{
+		if( $this->data )
+			return $this->data;
+
+		$defaults = array(
+			'preserve' => 'n',
+		);
+
+		$data = array_merge(
+			$defaults,
+			$this->obj->getData()
+		);
+
+		$data = Tiki_Profile::convertYesNo( $data );
+
+		return $this->data = $data;
+	}
+
+	function canInstall()
+	{
+		$data = $this->getData();
+		if( ! isset( $data['type'], $data['name'], $data['from'], $data['to'] ) )
+			return false;
+
+		return true;
+	}
+
+	function _install()
+	{
+		require_once 'lib/transitionlib.php';
+
+		$data = $this->getData();
+
+		$this->replaceReferences( $data );
+
+		$transitionlib = new TransitionLib( $data['type'] );
+		$id = $transitionlib->addTransition( $data['from'], $data['to'], $data['name'], $data['preserve'] == 'y' );
+
+		return $id;
+	}
+} // }}}
+
+//THIS HANDLER IS ONLY FOR TESTING PURPOSES!!! So don't use it in a production server. 
+class Tiki_Profile_InstallHandler_User extends Tiki_Profile_InstallHandler // {{{
+{
+	function getData()
+	{
+		if( $this->data )
+			return $this->data;
+
+		return $this->data = $this->obj->getData();
+	}
+	
+	function canInstall()
+	{
+		$data = $this->getData();
+		
+		if (isset($data)) return true;
+		else return false;
+	}
+	
+	function _install()
+	{
+		if ($this->canInstall())
+		{
+			global $userlib; if (!$userlib) require_once 'lib/userlib.php';
+
+			$data = $this->getData();
+			
+			foreach ($data as $user)
+			{
+				if (!$userlib->user_exists($user['name']))
+				{
+					$pass = isset($user['pass']) ? $user['pass'] : $user['name'];
+					$userlib->add_user($user['name'], $pass, '');
+				}
+				
+				if (isset($user['groups']))
+					foreach ($user['groups'] as $group) 
+					{
+						//if ($userlib->add_group($group));
+						$userlib->assign_user_to_group($user['name'], $group);
+					}
+			}
+			
+			return 1;
+		}
 	}
 } // }}}
 

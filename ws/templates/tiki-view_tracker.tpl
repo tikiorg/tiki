@@ -288,7 +288,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {* --- display quicktags --- *}
   <br />
   {if $prefs.quicktags_over_textarea neq 'y'}
-    {include file='tiki-edit_help_tool.tpl' qtnum=$fid area_name=$field_value.ins_id}
+    {quicktags qtnum=$fid area_name=$field_value.ins_id}
   {/if}
 {/if}
 </td><td colspan="3" class="formcontent" >

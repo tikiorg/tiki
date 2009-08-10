@@ -132,7 +132,7 @@ function smarty_function_html_select_date($params, &$smarty)
         for ($i = 1; $i <= 12; $i++) {
 
 			// date: 2003/03/20 22:54:34;  author: ohertel;  state: Exp;  lines: +1 -1
-			// added many missing translation blocks and german translations for user admin page, newsreader, notepad and bookmarks, month from html_select_date is being translated now
+			// added many missing translation blocks and german translations for user admin page, notepad and bookmarks, month from html_select_date is being translated now
 			// -            $month_names[] = strftime($month_format, mktime(0, 0, 0, $i, 1, 2000));
 			// +            $month_names[] = tra(strftime($month_format, mktime(0, 0, 0, $i, 1, 2000)));
 

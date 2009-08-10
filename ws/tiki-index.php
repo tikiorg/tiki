@@ -27,8 +27,6 @@ $inputConfiguration = array(
 	) ),
 );
 
-
-
 // Initialization
 $section = 'wiki page';
 require_once('tiki-setup.php');
@@ -41,9 +39,6 @@ include_once('lib/stats/statslib.php');
 include_once('lib/ajax/ajaxlib.php');
 require_once ("lib/wiki/wiki-ajax.php");
 require_once ("lib/wiki/renderlib.php");
-
-error_reporting(E_ALL);
-ini_set('display_errors','on');
 
 $auto_query_args = array('page','best_lang','bl','page_id','pagenum','page_ref_id','mode','sort_mode',
                          'machine_translate_to_lang');
@@ -75,7 +70,7 @@ if (isset($_REQUEST['page_id'])) {
 $use_best_language = false;
 
 if ((!isset($_REQUEST['page']) || $_REQUEST['page'] == '') and !isset($_REQUEST['page_ref_id'])) {
-	if ($tiki_p_view == 'n') {
+	if ($objectperms->view) {
 		$access->display_error( $page, tra('Permission denied you cannot view this page'), '403');
 	} else {
 		$access->display_error( '', tra('No name indicated for wiki page'));
@@ -110,11 +105,8 @@ if( $prefs['feature_wiki_structure'] == 'y' ) {
 		}
 		//Get the structures this page is a member of
 		$structs = $structlib->get_page_structures($_REQUEST["page"],$struct);
-		foreach ($structs as $t_structs) {
-			if ($tikilib->user_has_perm_on_object($user,$t_structs['pageName'],'wiki page','tiki_p_view')) {
-				$structs_with_perm[] = $t_structs;
-			}
-		}
+		$structs_with_perms = Perms::filter( array( 'type' => 'wiki page' ), 'object', $structs, array( 'object' => 'permName' ), 'view' );
+
 		//If page is only member of one structure, display if requested
 		$single_struct = count($structs_with_perm) == 1; 
 		if ((!empty($struct) || $prefs['feature_wiki_open_as_structure'] == 'y') && $single_struct) {
@@ -191,15 +183,13 @@ $page = $info['pageName'];
 
 //Uncomment if we decide to translate wiki markup. For now we are going 
 //with translating rendered html content
-
+//$translatedWikiMarkup = '';
 //if (isset($_REQUEST['machine_translate_to_lang'])) {
-//	$translated_wiki_markup = generate_machine_translated_markup($info, $_REQUEST['machine_translate_to_lang']);
-//} else {
-//	$translated_wiki_markup = '';
-//}
+//	$translatedWikiMarkup = generate_machine_translated_markup($info, $_REQUEST['machine_translate_to_lang']);
+//} 
 
 $pageRenderer = new WikiRenderer( $info, $user);
-$pageRenderer->applyPermissions();
+$objectperms = $pageRenderer->applyPermissions();
 
 if( $page_ref_id )
 	$pageRenderer->setStructureInfo( $page_info );
@@ -247,9 +237,9 @@ if($prefs['count_admin_pvs'] == 'y' || $user!='admin') {
 // Check if we have to perform an action for this page
 // for example lock/unlock
 if ( 
-	($tiki_p_admin_wiki == 'y') 
+	$objectperms->admin_wiki
 	|| 
-	($user and ($tiki_p_lock == 'y') and ($prefs['feature_wiki_usrlock'] == 'y'))
+	($user and $objectperms->lock and ($prefs['feature_wiki_usrlock'] == 'y'))
 ) {
 	if ( isset($_REQUEST['action']) ) {
 		check_ticket('index');
@@ -262,9 +252,9 @@ if (
 }
 
 if ( 
-	($tiki_p_admin_wiki == 'y') 
+	$objectperms->admin_wiki
 	|| 
-	($user and ($user == $info['user']) and ($tiki_p_lock == 'y') and ($prefs['feature_wiki_usrlock'] == 'y'))
+	($user and ($user == $info['user']) and $objectperms->lock and ($prefs['feature_wiki_usrlock'] == 'y'))
 ) {
 	if ( isset($_REQUEST['action']) ) {
 		check_ticket('index');
@@ -279,7 +269,7 @@ if (
 
 // Save to notepad if user wants to
 if($user 
-	&& $tiki_p_notepad == 'y' 
+	&& $objectperms->notepad
 	&& $prefs['feature_notepad'] == 'y' 
 	&& isset($_REQUEST['savenotepad'])) {
     check_ticket('index');
@@ -332,7 +322,7 @@ if (isset($_SESSION['saved_msg']) && $_SESSION['saved_msg'] == $info['pageName']
 }
 
 // Comments engine!
-if ($prefs['feature_wiki_comments'] == 'y' and $tiki_p_wiki_view_comments == 'y') {
+if ($prefs['feature_wiki_comments'] == 'y' and $objectperms->wiki_view_comments ) {
     $comments_per_page = $prefs['wiki_comments_per_page'];
     $thread_sort_mode = $prefs['wiki_comments_default_ordering'];
     $comments_vars=Array('page');
@@ -345,7 +335,7 @@ if($prefs['feature_wiki_attachments'] == 'y') {
     if(isset($_REQUEST['removeattach'])) {
 	check_ticket('index');
 	$owner = $wikilib->get_attachment_owner($_REQUEST['removeattach']);
-	if( ($user && ($owner == $user) ) || ($tiki_p_wiki_admin_attachments == 'y') ) {
+	if( ($user && ($owner == $user) ) || $objectperms->wiki_admin_attachments ) {
 		$area = 'removeattach';
 	    if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
@@ -356,7 +346,7 @@ if($prefs['feature_wiki_attachments'] == 'y') {
 	}
 	$pageRenderer->setShowAttachments( 'y' );
     }
-    if(isset($_REQUEST['attach']) && ($tiki_p_wiki_admin_attachments == 'y' || $tiki_p_wiki_attach_files == 'y')) {
+    if(isset($_REQUEST['attach']) && ( $objectperms->wiki_admin_attachments || $objectperms->wiki_attach_files )) {
 	check_ticket('index');
 	// Process an attachment here
 	if(isset($_FILES['userfile1'])&&is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
@@ -385,7 +375,7 @@ if($prefs['feature_wiki_attachments'] == 'y') {
 if ($prefs['feature_user_watches'] == 'y') {
 	if($user && isset($_REQUEST['watch_event']) && !isset($_REQUEST['watch_group'])) {
 		check_ticket('index');
-		if (($_REQUEST['watch_action'] == 'add_desc' || $_REQUEST['watch_action'] == 'remove_desc') && $tiki_p_watch_structure != 'y') {
+		if (($_REQUEST['watch_action'] == 'add_desc' || $_REQUEST['watch_action'] == 'remove_desc') && $objectperms->watch_structure ) {
 			$access->display_error( $page, tra('Permission denied'), '403');
 		}
 		if($_REQUEST['watch_action']=='add') {
@@ -421,6 +411,8 @@ $smarty->assign('pdf_export', file_exists('lib/mozilla2ps/mod_urltopdf.php') ? '
 
 // Display the Index Template
 $pageRenderer->runSetups();
+
+//TRANSLATING HTML
 $page_content = $smarty->get_template_vars('parsed');
 if (!empty($_REQUEST['machine_translate_to_lang'])) {
 	$page_content = generate_machine_translated_content($page_content, $info, $_REQUEST['machine_translate_to_lang']);
@@ -444,13 +436,13 @@ function generate_machine_translated_markup($pageInfo, $targetLang) {
 function generate_machine_translated_content($pageContent, $pageInfo, $targetLang) {	
 	make_sure_machine_translation_is_enabled();	
 	$sourceLang = $pageInfo['lang'];	
-	return translate_text($pageContent, $sourceLang, $targetLang);
+	return translate_text($pageContent, $sourceLang, $targetLang, true);
 }
 
 
-function translate_text($text, $sourceLang, $targetLang) {
+function translate_text($text, $sourceLang, $targetLang, $html) {
 	require_once('lib/core/lib/Multilingual/MachineTranslation/GoogleTranslateWrapper.php');
-	$translator = new Multilingual_MachineTranslation_GoogleTranslateWrapper($sourceLang,$targetLang);
+	$translator = new Multilingual_MachineTranslation_GoogleTranslateWrapper($sourceLang,$targetLang,$html);
 	$translatedText = $translator->translateText($text);
 	return $translatedText;	
 	

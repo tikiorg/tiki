@@ -206,7 +206,6 @@ if ($prefs['feature_ajax'] == "y") {
 		$ajaxlib->processRequests();
 	}
 	user_minical_ajax();
-	$smarty->assign("mootab", 'y');
 }
 $smarty->assign('mid', 'tiki-minical.tpl');
 $smarty->display("tiki.tpl");

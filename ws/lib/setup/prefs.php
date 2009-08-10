@@ -193,6 +193,7 @@ function get_default_prefs() {
 		'wikiplugin_cookie' => 'n',
 		'wikiplugin_copyright' => 'y',
 		'wikiplugin_countdown' => 'n',
+		'wikiplugin_datachannel' => 'n',
 		'wikiplugin_dbreport' => 'n',
 		'wikiplugin_div' => 'n',
 		'wikiplugin_dl' => 'y',
@@ -212,6 +213,7 @@ function get_default_prefs() {
 		'wikiplugin_googleanalytics' => 'n',
 		'wikiplugin_googledoc' => 'n',
 		'wikiplugin_group' => 'y',
+		'wikiplugin_groupmailcore' => 'n',
 		'wikiplugin_html' => 'n',
 		'wikiplugin_iframe' => 'n',
 		'wikiplugin_img' => 'y',
@@ -227,6 +229,7 @@ function get_default_prefs() {
 		'wikiplugin_lsdir' => 'n',
 		'wikiplugin_map' => 'y',
 		'wikiplugin_mediaplayer' => 'y',
+		'wikiplugin_memberlist' => 'n',
 		'wikiplugin_miniquiz' => 'y',
 		'wikiplugin_module' => 'y',
 		'wikiplugin_mono' => 'n',
@@ -241,6 +244,7 @@ function get_default_prefs() {
 		'wikiplugin_proposal' => 'n',
 		'wikiplugin_quote' => 'y',
 		'wikiplugin_rcontent' => 'y',
+		'wikiplugin_realnamelist' => 'n',
 		'wikiplugin_redirect' => 'n',
 		'wikiplugin_regex' => 'n',
 		'wikiplugin_remarksbox' => 'y',
@@ -307,6 +311,7 @@ function get_default_prefs() {
 		'wikiplugininline_cookie' => 'n',
 		'wikiplugininline_copyright' => 'n',
 		'wikiplugininline_countdown' => 'n',
+		'wikiplugininline_datachannel' => 'n',
 		'wikiplugininline_dbreport' => 'n',
 		'wikiplugininline_div' => 'n',
 		'wikiplugininline_dl' => 'n',
@@ -319,13 +324,14 @@ function get_default_prefs() {
 		'wikiplugininline_file' => 'y',
 		'wikiplugininline_files' => 'n',
 		'wikiplugininline_flash' => 'n',
-                'wikiplugininline_footnote' => 'n',
-                'wikiplugininline_footnotearea' => 'n',
+		'wikiplugininline_footnote' => 'n',
+		'wikiplugininline_footnotearea' => 'n',
 		'wikiplugininline_ftp' => 'n',
 		'wikiplugininline_gauge' => 'n',
 		'wikiplugininline_googleanalytics' => 'n',
 		'wikiplugininline_googledoc' => 'n',
 		'wikiplugininline_group' => 'y',
+		'wikiplugininline_groupmailcore' => 'n',
 		'wikiplugininline_html' => 'n',
 		'wikiplugininline_iframe' => 'n',
 		'wikiplugininline_img' => 'n',
@@ -341,6 +347,7 @@ function get_default_prefs() {
 		'wikiplugininline_lsdir' => 'n',
 		'wikiplugininline_map' => 'n',
 		'wikiplugininline_mediaplayer' => 'n',
+		'wikiplugininline_memberlist' => 'n',
 		'wikiplugininline_miniquiz' => 'n',
 		'wikiplugininline_module' => 'n',
 		'wikiplugininline_mono' => 'n',
@@ -355,6 +362,7 @@ function get_default_prefs() {
 		'wikiplugininline_proposal' => 'n',
 		'wikiplugininline_quote' => 'n',
 		'wikiplugininline_rcontent' => 'n',
+		'wikiplugininline_realnamelist' => 'n',
 		'wikiplugininline_redirect' => 'n',
 		'wikiplugininline_regex' => 'n',
 		'wikiplugininline_remarksbox' => 'n',
@@ -369,6 +377,7 @@ function get_default_prefs() {
 		'wikiplugininline_sort' => 'n',
 		'wikiplugininline_split' => 'n',
 		'wikiplugininline_sql' => 'n',
+		'wikiplugininline_stat' => 'n',
 		'wikiplugininline_sub' => 'n',
 		'wikiplugininline_subscribegroup' => 'n',
 		'wikiplugininline_subscribegroups' => 'n',
@@ -716,9 +725,6 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'allowmsg_by_default' => 'y',
 		'allowmsg_is_optional' => 'y',
 
-		// newsreader
-		'feature_newsreader' => 'n',
-
 		// freetags
 		'feature_freetags' => 'n',
 		'freetags_browse_show_cloud' => 'y',
@@ -832,9 +838,6 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'short_date_format' => '%a %d of %b, %Y',
 		'short_time_format' => '%H:%M %Z',
 		'display_field_order' => 'MDY',
-
-		// charts
-		'feature_charts' => 'n',
 
 		// rss
 		'rss_forums' => 'n',
@@ -984,12 +987,12 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_categoryobjects' => 'n',
 		'feature_categorypath' => 'n',
 		'feature_category_reinforce' => 'y',
-		'feature_category_use_phplayers' => 'y',
+		'feature_category_use_phplayers' => 'n',
 		'categorypath_excluded' => '',
 		'categories_used_in_tpl' => 'n',
-
-		// games
-		'feature_games' => 'n',
+		'category_jail' => '',
+		'expanded_category_jail' => '',
+		'expanded_category_jail_key' => '',
 
 		// html pages
 		'feature_html_pages' => 'n',
@@ -1037,7 +1040,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 
 		// look and feel
 
-		'site_crumb_seper' => 'Â»',
+		'site_crumb_seper' => '»',
 		'site_nav_seper' => '|',
 		'feature_sitemycode' => 'y',
 		'sitemycode' => '{if $user eq "admin"}
@@ -1120,6 +1123,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 
 		// dev
 		'feature_experimental' => 'n',
+		'feature_profile_tester' => 'n',
 
 		// Action logs
 		'feature_actionlog' => 'n',
@@ -1136,9 +1140,6 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_copyright' => 'n',
 		'feature_multimedia' => 'n',
 
-		// swfobj
-		'feature_swfobj' => 'n',
-
 		// textarea
 		'feature_smileys' => 'n',
 		'popupLinks' => 'y',
@@ -1148,7 +1149,16 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'default_rows_textarea_comment' => '6',
 		'default_rows_textarea_forum' => '20',
 		'default_rows_textarea_forumthread' => '10',
-
+		
+		'toolbar_global' => '
+			bold, italic, strike, - , color, bgcolor, - , sub, sup,
+			- , tikilink, image, link, unlink, -, undo, redo, 
+			- , find, replace,-,  removeformat, specialchar
+			/
+			templates, -, style, -,  h1, h2, h3, left, center, -, list, numlist, outdent, indent, 
+			- , table, -, source, showblocks, fullscreen, enlarge, reduce
+		',
+	
 		// pagination
 		'direct_pagination' => 'y',
 		'nextprev_pagination' => 'y',
@@ -1184,7 +1194,6 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_debug_console' => 'n',
 		'feature_debugger_console' => 'n',
 		'feature_display_my_to_others' => 'n',
-		'feature_drawings' => 'n',
 		'feature_dynamic_content' => 'n',
 		'feature_edit_templates' => 'n',
 		'feature_editcss' => 'n',
@@ -1209,7 +1218,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_obzip' => 'n',
 		'feature_perspective' => 'n', // If enabling by default, update further in this file
 		'feature_phplayers' => 'y', // Enabled by default for a better file gallery tree explorer
-		'feature_cssmenus' => 'n',
+		'feature_cssmenus' => 'y',
 		'feature_projects' => 'n',
 		'feature_ranking' => 'n',
 		'feature_redirect_on_error' => 'n',
@@ -1314,7 +1323,6 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'thumbSizeYGalleries' => '',
 		'wiki_3d_adjust_camera' => 'true',
 		'wiki_3d_autoload' => '',
-		'feature_mootools' => 'y', // Needed for shadowbox
 		'javascript_enabled' => 'n',
 		'feature_comments_post_as_anonymous' => 'n',
 		'feature_comments_moderation' => 'n',
@@ -1329,7 +1337,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'debug_ignore_xdebug' => 'n',
 		
 		// JQuery
-		'feature_jquery' => 'y',			// Alternative lib for shadowbox etc
+		'feature_jquery' => 'y',			// Default JS lib for - now "hard-wired" on if javascript_enabled
 		'jquery_effect' => '',				// Default effect for general show/hide: ['' | 'slide' | 'fade' | and
 											// see http://docs.jquery.com/UI/Effects: 'blind' | 'clip' | 'explode' etc]
 		'jquery_effect_direction' => 'vertical', 	// ['horizontal' | 'vertical' | 'left' | 'right' | 'up' | 'down' ]
@@ -1385,10 +1393,14 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'zend_mail_smtp_pass' => '',
 		'zend_mail_smtp_port' => 25,
 		'zend_mail_smtp_security' => '',
-
+		
 		//workspaces
 		'feature_workspaces' => 'n',
 		'ws_container' => null,
+		
+		// Transitions
+		'feature_group_transition' => 'n',
+		'feature_category_transition' => 'n',
 	);
 
 	// spellcheck

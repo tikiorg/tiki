@@ -145,8 +145,13 @@ if (isset($_REQUEST["preview"])) {
     check_ticket('admin-modules');
     $smarty->assign('preview', 'y');
     $smarty->assign_by_ref('assign_name', $_REQUEST["assign_name"]);
-    TikiLib::parse_str($_REQUEST["assign_params"], $module_params);
+    if (!is_array($_REQUEST["assign_params"])) {
+        TikiLib::parse_str($_REQUEST["assign_params"], $module_params);
+    } else {
+        $module_params=$_REQUEST["assign_params"];
+    }
     $smarty->assign_by_ref('module_params', $module_params);
+    $smarty->assign('tpl_module_title', tra( $module_params['title'] ) );
     if ($tikilib->is_user_module($_REQUEST["assign_name"])) {
         $info = $tikilib->get_user_module($_REQUEST["assign_name"]);
         $smarty->assign_by_ref('user_title', $info["title"]);
@@ -159,11 +164,20 @@ if (isset($_REQUEST["preview"])) {
         $data = $smarty->fetch('modules/user_module.tpl');
     } else {
         $phpfile = 'modules/mod-' . $_REQUEST["assign_name"] . '.php';
+        $phpfuncfile = 'modules/mod-func-' . $_REQUEST["assign_name"] . '.php';
         $template = 'modules/mod-' . $_REQUEST["assign_name"] . '.tpl';
         if (file_exists($phpfile)) {
             $module_rows = $_REQUEST["assign_rows"];
             include ($phpfile);
+        } elseif (file_exists($phpfuncfile)) {
+            $module_rows = $_REQUEST["assign_rows"];
+            include_once ($phpfuncfile);
+            $function = 'module_' . $_REQUEST["assign_name"];
+            if( function_exists( $function ) ) {
+                $function( array("name" => $_REQUEST["assign_name"], "position" => $_REQUEST["assign_position"], "ord" => $_REQUEST["assign_order"], "cache_time" => $_REQUEST["assign_cache"], "rows" => $_REQUEST["assign_rows"]), $_REQUEST["assign_params"] ); // Warning: First argument should have all tiki_modules table fields. This is just a best effort
+            }
         }
+
         if (file_exists('templates/' . $template)) {
             $data = $smarty->fetch($template);
         } else {

@@ -159,21 +159,33 @@
 					<input type="text" name="assign_rows" value="{$assign_rows|escape}" />
 				</td>
 			</tr>
-			{foreach from=$assign_info.params key=name item=param}
+			{if $assign_info.type eq 'function'}
+				{foreach from=$assign_info.params key=name item=param}
+					<tr>
+						<td class="formcolor">{$param.name|escape}</td>
+						<td class="formcolor">
+							<input type="text" name="assign_params[{$name|escape}]" value="{$param.value|escape}"/>
+							<div class="description">
+								{$param.description|escape}
+							</div>
+						</td>
+					</tr>
+				{/foreach}
+			{else}
 				<tr>
-					<td class="formcolor">{$param.name|escape}</td>
 					<td class="formcolor">
-						<input type="text" name="assign_params[{$name|escape}]" value="{$param.value|escape}"/>
-						<div class="description">
-							{$param.description|escape}
-						</div>
+						<a {popup text="{tr}Params: specific params to the module and/or general params ('lang', 'flip', 'title', 'decorations', 'section', 'overflow', 'page', 'nobox', 'bgcolor', 'color', 'theme', 'notitle', 'nopage'). Separator between params:'&amp;'. E.g. maxlen=15&amp;nonums=y.{/tr}" width=200 center=true}>{tr}Parameters{/tr}</a>
+					</td>
+					<td class="formcolor">
+						<textarea name="assign_params" rows="1" cols="60" >{$assign_params|escape}</textarea>
+						{help url="Module+Parameters"}
 					</td>
 				</tr>
-			{/foreach}
+			{/if}
 			<tr>
 				<td class="formcolor">{tr}Groups{/tr}</td>
 				<td class="formcolor">
-					{remarksbox type="tip" title="Tip"}{tr}Use Ctrl+Click to select multiple groups.{/tr}{/remarksbox}
+					{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple groups.{/tr}{/remarksbox}
 					<select multiple="multiple" name="groups[]">
 						{section name=ix loop=$groups}
 							<option value="{$groups[ix].groupName|escape}" {if $groups[ix].selected eq 'y'}selected="selected"{/if}>{$groups[ix].groupName|escape}</option>

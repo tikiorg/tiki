@@ -22,6 +22,7 @@ function wikiplugin_quote_info() {
 		'description' => tra("Quote text by surrounding the text with a box, like the [QUOTE] BBCode"),
 		'prefs' => array( 'wikiplugin_quote' ),
 		'body' => tra('Quoted text'),
+		'icon' => 'pics/icons/quotes.png',
 		'params' => array(
 			'replyto' => array(
 				'required' => false,

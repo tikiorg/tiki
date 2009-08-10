@@ -1,6 +1,9 @@
 /* $Id$
 	Darkroom theme selectors for IE6.
 */
+body {
+	font-size: 66%;
+}
 
 .findtable input {
 	font-size: 1em;

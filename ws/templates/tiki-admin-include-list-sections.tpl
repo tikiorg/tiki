@@ -8,16 +8,7 @@
 	{tr}Enable/disable Tiki features in {/tr}<a class="rbox-link" href="tiki-admin.php?page=features">{tr}Admin{/tr}&nbsp;{$prefs.site_crumb_seper}&nbsp;{tr}Features{/tr}</a>{tr}, but configure them elsewhere{/tr}
 {/remarksbox}
 
-<div class="cbox">
-{*
- 	<div class="cbox-title">
-		{tr}{$crumbs[$crumb]->description}{/tr}
-		{help crumb=$crumbs[$crumb]}
-	</div>
-*}
-
-	<div class="clearfix cbox-data">
-
+<div class="clearfix cbox-data">
 	{self_link page="general" _class="admbox" _style="background-image: url('pics/large/icon-configuration48x48.png')" _title="{tr}General{/tr}"}<span>{tr}General{/tr}</span>{/self_link}
 
 	{self_link page="features" _class="admbox" _style="background-image: url('pics/large/boot48x48.png')" _title="{tr}Features{/tr}"}<span>{tr}Features{/tr}</span>{/self_link}
@@ -97,9 +88,4 @@
 	{self_link page="webservices" _class="admbox" _style="background-image: url('pics/large/webservices48x48.png')" _selected="'`$prefs.feature_webservices`' != 'y'" _selected_class="admbox off"}<img src="pics/trans.png" alt="{tr}Webservices{/tr}" title="{tr}Webservices{/tr}{if $prefs.feature_webservices ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Webservices{/tr}</span>{/self_link}
 
 	{self_link page="sefurl" _class="admbox" _style="background-image: url('pics/large/goto48x48.png')" _selected="'`$prefs.feature_sefurl`' != 'y'" _selected_class="admbox off"}<img src="pics/trans.png" alt="{tr}Search engine friendly url{/tr}" title="{tr}Search engine friendly url{/tr}{if $prefs.feature_sefurl ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Search engine friendly url{/tr}</span>{/self_link}
-
-	{self_link page="workspaces" _class="admbox" _style="background-image: url('pics/large/workspaces.png')" _selected="'`$prefs.feature_workspaces`' != 'y'" _selected_class="admbox off"}<img src="pics/trans.png" alt="{tr}Workspaces pre-alpha{/tr}" title="{tr}Workspaces pre-alpha{/tr}{if $prefs.feature_workspaces ne 'y'}({tr}Disabled{/tr}){/if}" /><span>{tr}Workspaces pre-alpha{/tr}</span>{/self_link}
-	</div>
 </div>
-
-{* $Id$ *}

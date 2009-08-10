@@ -1,6 +1,10 @@
 /* $Id$
 	Feb12 theme selectors for IE6.
 */
+#header-top {
+	height: 98px;
+}
+
 .wikitopline select {
 	font-size: .9em;
 }

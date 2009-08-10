@@ -261,7 +261,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
   <br />
 
   {if $prefs.quicktags_over_textarea neq 'y'}
-    {include file='tiki-edit_help_tool.tpl' qtnum=$cur_field.id area_name="area_"|cat:$cur_field.id}
+    {quicktags qtnum=$cur_field.id area_name="area_"|cat:$cur_field.id}
   {/if}
 {/if}
 </td><td colspan="3" class="formcontent" >

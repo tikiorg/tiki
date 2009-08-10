@@ -696,7 +696,6 @@ if ($prefs['feature_ajax'] == "y") {
 		$ajaxlib->processRequests();
 	}
 	user_actionlog_ajax();
-	$smarty->assign("mootab", 'y');
 }
 // Display the template
 $smarty->assign('mid', 'tiki-admin_actionlog.tpl');

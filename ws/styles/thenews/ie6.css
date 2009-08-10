@@ -95,6 +95,10 @@ td {
 	font-size: 11px;
 }
 
+.wikitext {
+	font-size: 100%;
+}
+
 .wikitopline table {
 	width: 97%;
 }

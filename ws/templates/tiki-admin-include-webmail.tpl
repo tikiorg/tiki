@@ -1,11 +1,9 @@
-<div class="cbox">
-  <div class="cbox-title">
-    {tr}{$crumbs[$crumb]->description}{/tr}
-    {help crumb=$crumbs[$crumb]}
-  </div>
-
-  <div class="cbox-data">
-    <form action="tiki-admin.php?page=webmail" method="post">
+<form action="tiki-admin.php?page=webmail" method="post">
+	<div class="heading input_submit_container" style="text-align: right">
+		<input type="submit" name="webmail" value="{tr}Change preferences{/tr}" />
+	</div>
+		<fieldset class="admin">
+			<legend>{tr}Settings{/tr}</legend>
       <table class="admin">
         <tr>
           <td class="form">{tr}Allow viewing HTML mails?{/tr}</td>
@@ -35,13 +33,9 @@
             <input type="checkbox" name="webmail_quick_flags" {if $prefs.webmail_quick_flags eq 'y'}checked="checked"{/if} />
           </td>
         </tr>
-   
-        <tr>
-          <td colspan="2" class="input_submit_container">
-            <input type="submit" name="webmail" value="{tr}Change preferences{/tr}" />
-          </td>
-        </tr>    
       </table>
-    </form>
-  </div>
-</div>
+		</fieldset>
+	<div class="heading input_submit_container" style="text-align: center">
+		<input type="submit" name="webmail" value="{tr}Change preferences{/tr}" />
+	</div>
+</form>

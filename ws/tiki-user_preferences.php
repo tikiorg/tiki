@@ -402,7 +402,6 @@ if ($prefs['feature_ajax'] == "y") {
 		$ajaxlib->processRequests();
 	}
 	user_preferences_ajax();
-	$smarty->assign("mootab", 'y');
 }
 $smarty->assign('mid', 'tiki-user_preferences.tpl');
 $smarty->display("tiki.tpl");

@@ -3297,7 +3297,7 @@ $lang=Array(
 // "You forgot your Google ad_client number " => "You forgot your Google ad_client number ",
 // "\$module_title" => "\$module_title",
 // "More.." => "More..",
-// "Tikiwiki Assistant" => "Tikiwiki Assistant",
+// "TikiWiki Assistant" => "TikiWiki Assistant",
 // "Thank you for installing Tikiwiki" => "Thank you for installing Tikiwiki",
 // "To configure your Tiki" => "To configure your Tiki",
 // "Select" => "Select",
@@ -3312,7 +3312,7 @@ $lang=Array(
 // "and edit menu ID 42" => "and edit menu ID 42",
 // "Or, create your own menu and add it to a module" => "Or, create your own menu and add it to a module",
 // "To begin configuring Tiki, please" => "To begin configuring Tiki, please",
-// "as the Admin" => "as the Admin",
+// "as admin" => "as admin",
 // "The Tikiwiki Community" => "The Tikiwiki Community",
 // "To learn more, visit: <a href=\"http://tikiwiki.org\" title=\"The Tikiwiki Community\" target=\"_blank\">http://tikiwiki.org</a>" => "To learn more, visit: <a href=\"http://tikiwiki.org\" title=\"The Tikiwiki Community\" target=\"_blank\">http://tikiwiki.org</a>",
 // "Tikiwiki Documentation" => "Tikiwiki Documentation",
@@ -7025,8 +7025,6 @@ $lang=Array(
 "Mb" => "Mb",
 "Pre" => "Pre",
 "chg" => "chg",
-"Q" => "Q",
-"A" => "A",
 // ###
 // ### end of possibly untranslated words
 // ###

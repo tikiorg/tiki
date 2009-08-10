@@ -2,10 +2,12 @@
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Wysiwyg means What You See Is What You Get, and is handled in Tikiwiki by <a href="http://fckeditor.net">FCKeditor</a>{/tr}.{/remarksbox}
 
-<div class="cbox">
-  <div class="cbox-title">{tr}Wysiwyg Editor Features{/tr}</div>
-  <div class="cbox-data">
-      <form action="tiki-admin.php?page=wysiwyg" method="post">
+<form action="tiki-admin.php?page=wysiwyg" method="post">
+	<div class="heading input_submit_container" style="text-align: right">
+		<input type="submit" name="wysiwygfeatures" value="{tr}Change preferences{/tr}" />
+		</div>
+		<fieldset class="admin">
+ 			 <legend>{tr}Wysiwyg Editor Features{/tr}</legend>
         <table class="admin">
           <tr>
             <td class="form"><label for="wysiwyg_optional">{tr}Wysiwyg Editor is optional{/tr}:</label></td>
@@ -48,14 +50,13 @@
           </tr>
           
           <tr>
-            <td colspan="2"><textarea cols="90" rows="8" name="wysiwyg_toolbar" id="wysiwyg_toolbar">{$prefs.wysiwyg_toolbar|escape}</textarea></td>
+            <td colspan="2"><textarea style="width:100%" rows="8" cols="60" name="wysiwyg_toolbar" id="wysiwyg_toolbar">{$prefs.wysiwyg_toolbar|escape}</textarea></td>
           </tr>
           
-          <tr>
-            <td colspan="2" class="input_submit_container"><input type="submit" name="wysiwygfeatures" value="{tr}Change preferences{/tr}" /></td>
-          </tr>
         </table>
-      </form>
-  </div>
-</div>
+			</fieldset>
+			<div class="heading input_submit_container" style="text-align: center">
+				<input type="submit" name="wysiwygfeatures" value="{tr}Change preferences{/tr}" />
+			</div>
+     </form>
 
