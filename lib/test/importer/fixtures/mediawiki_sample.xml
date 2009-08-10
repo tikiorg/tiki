@@ -189,8 +189,8 @@
         <id>1</id>
       </contributor>
       <comment>adsfasdf</comment>
-      <filename>Qlandkartegt-0.11.1.tar.gz</filename>
-      <src>http://localhost/mediawiki/images/a/af/archive/20060920074037Qlandkartegt-0.11.1.tar.gz</src>
+      <filename>test3.jpg</filename>
+      <src>fixtures/sourceTest3.jpg</src>
       <size>3252598</size>
     </upload>
     <upload>
@@ -200,8 +200,8 @@
         <id>1</id>
       </contributor>
       <comment>adsfasdf</comment>
-      <filename>Qlandkartegt-0.11.1.tar.gz</filename>
-      <src>http://localhost/mediawiki/images/a/af/Qlandkartegt-0.11.1.tar.gz</src>
+      <filename>test2.jpg</filename>
+      <src>fixtures/sourceTest2.jpg</src>
       <size>3252598</size>
     </upload>
   </page>
@@ -233,8 +233,8 @@
         <id>1</id>
       </contributor>
       <comment />
-      <filename>Passelivre.jpg</filename>
-      <src>http://localhost/mediawiki/images/b/bb/Passelivre.jpg</src>
+      <filename>test.jpg</filename>
+      <src>fixtures/sourceTest.jpg</src>
       <size>94751</size>
     </upload>
   </page>

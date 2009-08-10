@@ -130,18 +130,33 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
     public function testDownloadAttachment()
     {
         $this->obj->attachmentsDestDir = dirname(__FILE__) . '/fixtures/';
+
+        $sourceAttachments = array('sourceTest.jpg', 'sourceTest2.jpg');
+        $destAttachments = array('test.jpg', 'test2.jpg');
+        $i = count($sourceAttachments) - 1;
+        $cwd = getcwd();
+        chdir(dirname(__FILE__));
+
+        while ($i >= 0) {
+            fopen($this->obj->attachmentsDestDir . $sourceAttachments[$i], 'w');
+            $i--;
+        }
+ 
         $this->obj->dom = new DOMDocument;
         $this->obj->dom->load(dirname(__FILE__) . '/fixtures/mediawiki_sample.xml');
-        $attachments = array('Qlandkartegt-0.11.1.tar.gz', 'Passelivre.jpg');
         $this->obj->downloadAttachments();
 
-        $this->expectOutputString("\n\nStarting to import attachments:\nFile Qlandkartegt-0.11.1.tar.gz sucessfully imported!\nFile Passelivre.jpg sucessfully imported!\n");
+        $this->expectOutputString("\n\nStarting to import attachments:\nFile test2.jpg sucessfully imported!\nFile test.jpg sucessfully imported!\n");
 
-        foreach ($attachments as $attachment) {
-            $filePath = $this->obj->attachmentsDestDir . $attachment;
+        $i = count($sourceAttachments) - 1;
+        while ($i >= 0) {
+            $filePath = $this->obj->attachmentsDestDir . $destAttachments[$i];
             $this->assertFileExists($filePath);
             unlink($filePath);
+            unlink($this->obj->attachmentsDestDir . $sourceAttachments[$i]);
+            $i--;
         }
+        chdir($cwd);
     }
 
     public function testDownloadAttachmentShouldNotImportIfFileAlreadyExist()
@@ -149,7 +164,7 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
         $this->obj->attachmentsDestDir = dirname(__FILE__) . '/fixtures/';
         $this->obj->dom = new DOMDocument;
         $this->obj->dom->load(dirname(__FILE__) . '/fixtures/mediawiki_sample.xml');
-        $attachments = array('Qlandkartegt-0.11.1.tar.gz', 'Passelivre.jpg');
+        $attachments = array('test.jpg', 'test2.jpg');
 
         foreach ($attachments as $attachment) {
             $filePath = $this->obj->attachmentsDestDir . $attachment;
@@ -157,7 +172,7 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
         }
 
         $this->obj->downloadAttachments();
-        $this->expectOutputString("\n\nStarting to import attachments:\nNOT importing file Qlandkartegt-0.11.1.tar.gz as there is already a file with the same name in the destination directory (" . $this->obj->attachmentsDestDir . ")\nNOT importing file Passelivre.jpg as there is already a file with the same name in the destination directory (" . $this->obj->attachmentsDestDir . ")\n");
+        $this->expectOutputString("\n\nStarting to import attachments:\nNOT importing file test2.jpg as there is already a file with the same name in the destination directory (" . $this->obj->attachmentsDestDir . ")\nNOT importing file test.jpg as there is already a file with the same name in the destination directory (" . $this->obj->attachmentsDestDir . ")\n");
        
         foreach ($attachments as $attachment) {
             $filePath = $this->obj->attachmentsDestDir . $attachment;
