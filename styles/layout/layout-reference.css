@@ -2687,6 +2687,11 @@ a.admbox.off:active {
 	color: #666;
 }
 
+a.admbox.off img {
+	background-image: url('../pics/overlay-disabled_item.png');
+	opacity: .5;
+}
+
 div.adminanchors a {}
 
 /* Other admin etc definitions not on admin.css */

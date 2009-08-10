@@ -46,7 +46,17 @@ a.admbox.off:active {
 	color: #666;
 }
 
-
+a.admbox.off img {
+	border: none;
+	margin-top : 0px;
+	width: 100px;
+	height: 100px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-image: url('../pics/overlay-disabled_item.png');
+	opacity: .5;
+}
 /* Look & feel thumbnail */
 
 #style_thumb_div {
