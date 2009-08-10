@@ -2650,53 +2650,6 @@ div#cluetip-close {
 	margin: 0;
 	padding: 0;
 }
-	
-/* MyTiki Preferences Ajax */
-.tab-wrapper {
-	padding: 0;
-}
-
-.tab-menu  {
-	clear: both;
-	line-height: 17px;
-	list-style-image: none;
-	list-style-position: outside;
-	list-style-type: none;
-	padding: 2px 0;
-	margin-bottom: 6px;
-	margin-top: 2px;
-	width: 100%;
-}
-
-.tab-menu li {
-	display: inline;
-	margin: 0 2px;
-	width: 200px;
-	padding-right: 1.5em;
-}
-
-.tab-menu li img {
-	vertical-align: middle;
-}
-
-.tab-menu li a {
-	padding: 1px 5px;
-}
-
-.tab-menu li a:hover, 
-.tab-menu li a:focus { 
-	background: transparent; 
-	border-bottom-color: #f8f8ff;
-}
-
-.tab-menu li a:hover { 
-	background: #FAEC8F; 
-	border-bottom-color: #f8f8ff;
-}
- 
-.tab-menu li.tab-selected a {
-	background: #f8f8ff;
-}
 
 /***** New (unsorted) *****/
 

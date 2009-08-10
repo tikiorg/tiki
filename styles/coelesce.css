@@ -2914,14 +2914,6 @@ textarea.tshoutbox{
 	width: 162px;
 }
 
-.wiki-tr-a td {
-	border: 0;
-}
-
-.wiki-tr-b td {
-	border: 0;
-}
-
 /***** Directory *****/
 div.dircategs {
 	border: 1px solid #696969;
@@ -3077,60 +3069,6 @@ div#ajaxloading {
 	background: #f5f5f5;
 }
 
-	
-/* MyTiki Preferences Ajax */
-.tab-wrapper {
-	border: 1px solid #f5f5f5;
-	padding: 0;
-}
-
-.tab-menu {
-	clear: both;
-	line-height: 17px;
-	list-style-image: none;
-	list-style-position: outside;
-	list-style-type: none;
-	padding: 2px 0;
-	margin-bottom: 6px;
-	margin-top: 2px;
-	width: 100%;
-}
-
-.tab-menu li {
-	display: inline;
-	margin: 0 2px;
-	width: 200px;
-	padding-right: 1.5em;
-}
-
-.tab-menu li img {
-	vertical-align: middle;
-}
-
-.tab-menu li a 	{
-	padding: 1px 5px;
-	background: #f5f5f5;
-	color: #517ea7;
-	font-weight: bold;
-	text-decoration: none;
-}
-
-.tab-menu li a:hover, 
-.tab-menu li a:focus {
-	background: transparent;
-	border-bottom-color: #f8f8ff;
-}
-
-.tab-menu li a:hover {
-	background: #FAEC8F;
-	border-bottom-color: #f8f8ff;
-}
-
- 
-.tab-menu li.tab-selected a {
-	background: #f8f8ff;
-}
-
 /***** TikiSheet Default Style *****/
 table.default thead td,
 table.default tfoot td {
@@ -3180,19 +3118,6 @@ table.default td {
 
 .right {
 	text-align: right;
-}
-
-/***** mypage *****/
-.mypage_configure th {
-	width: 180px;
-}
-
-#sidebartab {
-	background: url('../img/cord.png') no-repeat;
-}
-
-#sidebarcontents {
-	background: #fff;
 }
 
 /* css/admin.css overrides */

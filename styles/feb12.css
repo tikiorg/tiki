@@ -1562,10 +1562,6 @@ div.messureadbody {
 
 /**********   Ajax   **********/
 
-.tab-wrapper {
-	border: 1px solid #EEEEEE;
-}
-
 /***** TikiSheet Default Style *****/
 table.default thead td,
 table.default tfoot td {
