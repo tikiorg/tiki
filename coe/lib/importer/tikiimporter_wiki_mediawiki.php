@@ -216,13 +216,13 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
                     continue;
                 }
 
-                try {
-                    $attachmentContent = file_get_contents($fileUrl);
+                if (@fopen($fileUrl, 'r')) {
+                    $attachmentContent = @file_get_contents($fileUrl);
                     $newFile = fopen($this->attachmentsDestDir . $fileName, 'w');
                     fwrite($newFile, $attachmentContent);
                     $this->saveAndDisplayLog("File $fileName sucessfully imported!\n");
-                } catch (Exception $e) {
-                    $this->saveAndDisplayLog("Unable to download file $fileName. Error message was: " . $e->getMessage() . "\n");
+                } else {
+                    $this->saveAndDisplayLog("Unable to download file $fileName. File not found.\n");
                 }
             }
         }
@@ -279,7 +279,7 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
         }
 
         if (count($data['revisions']) > 0) {
-            $msg = 'Page "' . $data['name'] . '" succesfully parsed with ' . count($data['revisions']) . " revisions (from a total of $totalRevisions revisions).\n";
+            $msg = 'Page "' . $data['name'] . '" successfully parsed with ' . count($data['revisions']) . " revisions (from a total of $totalRevisions revisions).\n";
             $this->saveAndDisplayLog($msg);
             return $data;
         } else {

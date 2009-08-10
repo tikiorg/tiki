@@ -9,8 +9,8 @@
 // Initialization
 require_once ('tiki-setup.php');
 
-if (!isset($prefs['email_due']) || $prefs['email_due'] < 0) {
-	$smarty->assign('msg', tra('This feature is disabled'));
+if ((isset($prefs['email_due']) && $prefs['email_due'] < 0 ) && $prefs['validateUsers'] != 'y') {
+	$smarty->assign('msg', tra('This feature is disabled'.$prefs['validateUsers']));
 	$smarty->display('error.tpl');
 	die;
 }

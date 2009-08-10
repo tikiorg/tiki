@@ -8,7 +8,7 @@
       </contributor>
       <comment>adsfasdf</comment>
       <filename>Qlandkartegt-0.11.1.tar.gz</filename>
-      <src>http://invalidSourceHopefully/mediawiki/images/a/af/Qlandkartegt-0.11.1.tar.gz</src>
+      <src>fixtures/test3.jpg</src>
       <size>3252598</size>
     </upload>
     <upload>
@@ -19,7 +19,7 @@
       </contributor>
       <comment>adsfasdf</comment>
       <filename>Qlandkartegt-0.11.1.tar.gz</filename>
-      <src>http://invalidSourceHopefully/mediawiki/images/a/af/Qlandkartegt-0.11.1.tar.gz</src>
+      <src>fixtures/test3.jpg</src>
       <size>3252598</size>
     </upload>
   </page>
@@ -32,7 +32,7 @@
       </contributor>
       <comment />
       <filename>Passelivre.jpg</filename>
-      <src>http://invalidSourceHopefully/mediawiki/images/b/bb/Passelivre.jpg</src>
+      <src>fixtures/test3.jpg</src>
       <size>94751</size>
     </upload>
   </page>

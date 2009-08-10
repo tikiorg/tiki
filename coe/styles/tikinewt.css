@@ -188,7 +188,7 @@ textarea,
 select {
 	color: #112233;
 	margin: 1px;
-	font: 100% !important Verdana, Helvetica, Geneva, Arial, sans-serif;
+	font: 100% Verdana, Helvetica, Geneva, Arial, sans-serif;
 }
 
 button,
@@ -2186,35 +2186,6 @@ div.adminanchors {
 
 /***** Ajax, jquery. etc. *****/
 /***** Ajax *****/
-.tab-wrapper {
-	border: 1px solid #eee;
-}
- 
-.tab-menu {
-	font-size: 1.1em;
-}
-
-.tab-menu li a 	{
-	padding: 1px 5px;
-	background: #f5f5f5;
-	color: #222;
-	text-decoration: none;
-}
- 
-.tab-menu li a:hover, 
-.tab-menu li a:focus {
-	background: #faec8f;
-	border-bottom-color: #999;
-}
- 
-.tab-menu li a:hover {
-	background: #faec8f;
-	border-bottom-color: #999;
-}
- 
-.tab-menu li.tab-selected a {
-	background: #bcec8f;
-}
 
 /***** New (unsorted) *****/
 /* end of file */
