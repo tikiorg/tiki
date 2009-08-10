@@ -392,7 +392,7 @@ a.linkmenu,
 
 .linkmenu,
 .linkmenu:visited {
-	display: block;
+	/*display: block;*/
 }
 
 .linkmenu:hover {}
@@ -411,6 +411,120 @@ div.menuSection div.menuSection,
 div.menuSection div.separator {}
 
 /***** Misc. *****/
+/* Minimize Menus */
+.minimize-modules-left #col1 {
+	margin-left: 80px !important;
+}
+
+.minimize-modules-right #col1 {
+	margin-right: 80px !important;
+}
+
+.minimize-modules-left #col2 .separatoricon-toggle,
+.minimize-modules-left #col2 .box .menuText,
+.minimize-modules-left #col2 .mdkfwdarr,
+.minimize-modules-right #col3 .separatoricon-toggle,
+.minimize-modules-right #col3 .box .menuText,
+.minimize-modules-right #col3 .mdkfwdarr {
+	display: none !important;
+}
+
+.minimize-modules-left #col2 .box .menuLevel1 .menuText,
+.minimize-modules-left #col2 .separatoricon-url,
+.minimize-modules-right #col3 .box .menuLevel1 .menuText,
+.minimize-modules-right #col3 .separatoricon-url {
+	display: inline !important;
+}
+
+.minimize-modules-left #col2 .box,
+.minimize-modules-right #col3 .box {
+	/*      overflow: hidden;*/ /* This conflicts with CSS Menus */
+}
+
+#col2 .moduleflip-vert .flipmodimage,
+.minimize-modules-right #col3 .moduleflip-vert .flipmodimage {
+	background-image: url(../../pics/icons/resultset_first.png) !important;
+}
+
+#col3 .moduleflip-vert .flipmodimage,
+.minimize-modules-left #col2 .moduleflip-vert .flipmodimage {
+	background-image: url(../../pics/icons/resultset_last.png) !important;
+}
+
+.minimize-modules-left #col2 div.separator,
+.minimize-modules-right #col3 div.separator {
+	padding: 0;
+	background: transparent;
+	border: none;
+}
+
+.minimize-modules-left #col2 div.box-shadow,
+.minimize-modules-left #col2 div.box,
+.minimize-modules-right #col3 div.box-shadow,
+.minimize-modules-right #col3 div.box {
+	width: 70px !important;
+}
+
+.minimize-modules-left #col2 .content,
+.minimize-modules-right #col3 .content {
+	margin: 0 !important;
+}
+
+.minimize-modules-left #col2 div.option,
+.minimize-modules-left #col2 div.optionline,
+.minimize-modules-right #col3 div.option,
+.minimize-modules-right #col3 div.optionline {
+	margin: 0 !important;
+	padding: 0 !important;
+}
+
+/* Minimize PHPLayers Menus */
+.mdkverbar-with-icons .mdkitem {
+	background: none;
+}
+
+.mdkverbar-with-icons .mdkitem a {
+	padding: 0;
+	width: 175px;
+}
+
+.mdkverbar-with-icons .mdkitem img {
+	vertical-align: middle;
+}
+
+.minimize-modules-left #col2 .mdkverbar-with-icons .mdkitem,
+.minimize-modules-left #col2,
+.minimize-modules-right #col3 .mdkverbar-with-icons .mdkitem,
+.minimize-modules-right #col3 {
+	width: 60px !important;
+}
+
+.minimize-modules-left #col2 .mdkverbar-with-icons .mdkitem a,
+.minimize-modules-right #col3 .mdkverbar-with-icons .mdkitem a {
+	width: 50px !important;
+	overflow: hidden;
+}
+
+/* Minimize CSS Menus */
+.minimize-modules-left #col2 .cssmenu_vert,
+.minimize-modules-left #col2 .cssmenu_vert div > ul,
+.minimize-modules-left #col2 .cssmenu_vert li.menuLevel0,
+.minimize-modules-left #col2 .cssmenu_vert li.menuLevel0 > a,
+.minimize-modules-right #col3 .cssmenu_vert,
+.minimize-modules-right #col3 .cssmenu_vert div > ul,
+.minimize-modules-right #col3 .cssmenu_vert li.menuLevel0,
+.minimize-modules-right #col3 .cssmenu_vert li.menuLevel0 > a {
+	width: 44px;
+}
+
+.minimize-modules-left #col2 .cssmenu_vert li.menuLevel0 > ul {
+	margin-left: 55px;
+}
+
+.minimize-modules-right #col3 .cssmenu_vert li.menuLevel0 > ul {
+	margin-right: 55px;
+}
+
 /* centercolumn */
 #showhide_columns {}
 	
@@ -738,6 +852,54 @@ ul.categories li{
 	list-style: none;
 	margin: 0;
 	padding: 0;
+}
+
+/* New Quicktags (toolbars) */
+
+a.quicktag {
+	padding: 0 .5em 0 0;
+}
+
+a.qt-plugin {
+}
+
+a.qt-plugin div {
+	/* .iconmenu */
+	background-color: #CD8;
+	border: thin #690 solid;
+	margin: 0 .4em 0 0;
+	padding: 2px .4em 0 .2em;
+	color: #030;
+	font-size: 10px;
+}
+
+a.qt-plugin:hover {
+	text-decoration: none;
+}
+
+a.qt-plugin div img { /* div.iconmenu img.icon */
+	margin-bottom: 4px;
+}
+
+span.quicktag-list {
+	padding: 0 0 0 .5em;
+	line-height: 20px;
+	border-left: medium double lightgray;
+}
+
+.helptool-admin {
+	float: right;
+	border-left: medium double lightgrey;
+	padding-left:8px;
+	margin-left:8px;
+}
+
+.quicktags-picker {
+	position: absolute;
+	width: 300px;
+	background-color: white;
+	border: thin solid black;
+	z-index: 300;
 }
 
 /* New Help section */
@@ -2480,11 +2642,6 @@ div.messureadbody {
 	z-index: 1000;
 }
 
-.icon_edit_section {
-	float: right;
-	margin-top: 1em;
-}
-
 table.default thead td,
 table.default tfoot td {}
 
@@ -2730,6 +2887,11 @@ table.webmail_message_headers th {
 	border: none;
 	background: transparent;
 }
+
+@media print {
+	.tikihelp,.navbar, .tabstoggle, .tabs, #show-errors-button {display:none;}
+}
+
 
 /***** End New (unsorted) *****/
 
