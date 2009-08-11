@@ -304,7 +304,7 @@ div#sitead {
 
 span.moduleflip-vert {
 	display: block;
-	top: 20px;
+	top: 20px !important;
 	right: 1% !important;
 }
 
