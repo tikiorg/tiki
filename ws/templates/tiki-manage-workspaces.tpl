@@ -57,7 +57,7 @@
 				<input type="radio" name="addGroupSelect" id="addNew" value="addNew" />
 				<label for="new"> Create a new group:</label> 
 					<input type="text" id="addNewGroup" name="addNewGroup" size="20" />
-				<label for="groupDescrition"> Description:</label> 
+				<label for="groupDescrition"><br />Description:</label> 
 					<textarea name="addGroupDesc" id="addGroupDesc" cols="30" rows="1"></textarea>
 				<br />
 				<input type="radio" name="addGroupSelect" id="addOld" value="addOld" checked="checked"/>
@@ -65,7 +65,7 @@
 				</label>
 					<select name="addOldGroup" id="addOldGroup">
 						{foreach from=$listGroupsforAdd.data item=group}
-							<option value={$group.groupName}>{$group.groupName}</option>
+							<option value="{$group.groupName}">{$group.groupName}</option>
 						{/foreach}
 					</select>
 			</div>
@@ -213,7 +213,7 @@
 				</label>
 					<select name="oldGroup" id="oldGroup">
 						{foreach from=$listGroups.data item=group}
-							<option value={$group.groupName}>{$group.groupName}</option>
+							<option value="{$group.groupName}">{$group.groupName}</option>
 						{/foreach}
 					</select>
 				
