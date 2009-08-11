@@ -195,7 +195,7 @@ function get_default_prefs() {
 		'wikiplugin_countdown' => 'n',
 		'wikiplugin_datachannel' => 'n',
 		'wikiplugin_dbreport' => 'n',
-		'wikiplugin_div' => 'n',
+		'wikiplugin_div' => 'y',
 		'wikiplugin_dl' => 'y',
 		'wikiplugin_draw' => 'y',
 		'wikiplugin_equation' => 'n',
