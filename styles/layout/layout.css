@@ -66,6 +66,13 @@ select[multiple] {
 	height: 10em;
 }
 
+#col2 select,
+#col3 select,
+#col3 input[type="text"],
+#col2 input[type="text"] {
+	width: 95%;
+}
+
 label {
 	cursor: pointer;
 }
@@ -293,6 +300,12 @@ div#sitead {
 .minimize-modules-left #col2 .box,
 .minimize-modules-right #col3 .box {
 	/*      overflow: hidden;*/ /* This conflicts with CSS Menus */
+}
+
+span.moduleflip-vert {
+	display: block;
+	top: 20px;
+	right: 1% !important;
 }
 
 #col2 .moduleflip-vert .flipmodimage,
@@ -856,16 +869,17 @@ h3.box-title {
 	padding-top: 0;
 }
 
-.moduleflip,
+span.moduleflip,
 .wikitext .box-title span img.flipmodimage {
 	display: none !important;
-	float: right;
-	position: relative;
-	right: 0;
+	/*float: right;
+	position: relative;*/
+	position: absolute;
+	right: 1%;
 	top: 0;
 }
 
-.box:hover .moduleflip,
+.box:hover span.moduleflip,
 .wikitext .box:hover .box-title span img.flipmodimage {
 	display: block !important;
 }
@@ -2210,12 +2224,12 @@ table.default td {}
 /***** Calendar *****/
 
 /***** Admin *****/
-.highlight_word_0{
+.highlight_word_0 {
 	color: #ffff66;
 	background: #666;
 }
 
-.highlight_word_1{
+.highlight_word_1 {
 	color: #ff9999;
 	background: #666;
 }

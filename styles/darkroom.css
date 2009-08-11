@@ -190,7 +190,6 @@ option {
 }
 
 select[name="theme"] {
-	width: 165px;
 	border-top: 1px solid #a9a9a9;
 	border-left: 1px solid #a9a9a9;
 	border-right: 1px solid #696969;
