@@ -16,7 +16,7 @@ global $nllib;
 include_once ('lib/newsletters/nllib.php');
 $auto_query_args = array(
 	'nlId',
-	'offsset',
+	'offset',
 	'sort_mode',
 	'find'
 );
