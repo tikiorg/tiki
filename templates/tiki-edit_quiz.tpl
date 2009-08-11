@@ -11,14 +11,75 @@
 	{button href="tiki-quiz_stats.php" _text="{tr}Quiz Stats{/tr}"}
 </div>
 
-<h2>{tr}Create/edit quizzes{/tr}</h2>
+{tabset}
+
+{tab name='{tr}Quizzes{/tr}'}
+
+{include file='find.tpl'}
+
+<table class="normal">
+	<tr>
+		<th>
+			{self_link _sort_arg='sort_mode' _sort_field='quizId'}{tr}ID{/tr}{/self_link}
+		</th>
+		<th>
+			{self_link _sort_arg='sort_mode' _sort_field='name'}{tr}Quiz{/tr}{/self_link}
+		</th>
+		<th>
+			{self_link _sort_arg='sort_mode' _sort_field='canRepeat'}{tr}canRepeat{/tr}{/self_link}
+		</th>
+		<th>
+			{self_link _sort_arg='sort_mode' _sort_field='timeLimit'}{tr}timeLimit{/tr}{/self_link}
+		</th>
+		<th>{tr}Questions{/tr}</th>
+		<th>{tr}Results{/tr}</th>
+		<th>{tr}Actions{/tr}</th>
+	</tr>
+
+	{cycle values="odd,even" print=false}
+	{section name=user loop=$channels}
+		<tr class="{cycle}">
+			<td>{$channels[user].quizId}</td>
+			<td>
+				{$channels[user].name}
+				<div class="subcomment">
+					{$channels[user].description}
+				</div>
+			</td>
+			<td style="text-align: center;">{$channels[user].canRepeat}</td>
+			<td style="text-align: center;">{$channels[user].timeLimited} {if $channels[user].timeLimited eq 'y'}({$channels[user].timeLimit} mins){/if}</td>
+			<td style="text-align: center;">{$channels[user].questions}</td>
+			<td style="text-align: center;">{$channels[user].results}</td>
+			<td style="text-align: right;">
+
+			{self_link _icon='page_edit' cookietab='2' _anchor='anchor2' quizId=$channels[user].quizId}{tr}Edit{/tr}{/self_link}
+				<a class="link" href="tiki-edit_quiz_questions.php?quizId={$channels[user].quizId}">{icon _id='help' alt='{tr}Questions{/tr}' title='{tr}Questions{/tr}'}</a>
+				<a class="link" href="tiki-edit_quiz_results.php?quizId={$channels[user].quizId}">{icon _id='application_form_magnify' alt='{tr}Results{/tr}' title='{tr}Results{/tr}'}</a>
+				<a class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=quiz&amp;permType=quizzes&amp;objectId={$channels[user].quizId}">
+					{if $channels[user].individual eq 'y'}
+						{icon _id='key_active' alt='{tr}Active Perms{/tr}'}
+					{else}
+						{icon _id='key' alt='{tr}Perms{/tr}'}
+					{/if}
+				</a>
+				<a class="link" href="tiki-edit_quiz.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].quizId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
+			</td>
+		</tr>
+	{/section}
+</table>
+
+{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
+
+{/tab}
+
+{tab name='{tr}Create/edit quizzes{/tr}'}
+
 {if $individual eq 'y'}
 	<a class="link" href="tiki-objectpermissions.php?objectName={$name|escape:"url"}&amp;objectType=quiz&amp;permType=quizzes&amp;objectId={$quizId}">{tr}There are individual permissions set for this quiz{/tr}</a>
 	<br />
 	<br />
 {/if}
 
-<!-- begin form to create/ edit quizzes -->
 <form action="tiki-edit_quiz.php" method="post">
 	<input type="hidden" name="quizId" value="{$quizId|escape}" />
 	<table class="normal">
@@ -109,16 +170,6 @@
 				<input type="checkbox" name="shuffleAnswers" id="shuffle-answers" {if $shuffleAnswers eq 'y'}checked="checked"{/if} />
 			</td>
 		</tr>
-			<!--Why was this quoted out? Need to investigate
-			<tr>
-				<td class="formcolor">
-					<label for="quiz-perpage">{tr}Questions per page{/tr}</label>
-				</td>
-				<td class="formcolor">
-					<select name="questionsPerPage" id="quiz-perpage">{html_options values=$qpp selected=$questionsPerPage output=$qpp}</select>
-				</td>
-			</tr>
-		-->
 		<tr>
 			<td class="formcolor">
 				<label for="quiz-timelimit">{tr}Quiz is time limited{/tr}</label>
@@ -153,72 +204,6 @@
 		</tr>
 	</table>
 </form>
+{/tab}
 
-<!-- begin form for searching quizzes -->
-
-<h2>{tr}Quizzes{/tr}</h2>
-{include file='find.tpl'}
-
-<!-- begin table for displaying quiz data -->
-<table class="normal">
-	<tr>
-		<th>
-			<a href="tiki-edit_quiz.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'quizId_desc'}quizId_asc{else}quizId_desc{/if}">{tr}ID{/tr}</a>
-		</th>
-		<th>
-			<a href="tiki-edit_quiz.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Quiz{/tr}</a>
-		</th>
-		<th>
-			<a href="tiki-edit_quiz.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'canRepeat_desc'}canRepeat_asc{else}canRepeat_desc{/if}">{tr}canRepeat{/tr}</a>
-		</th>
-		<th>
-			<a href="tiki-edit_quiz.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'timeLimit_desc'}timeLimit_asc{else}timeLimit_desc{/if}">{tr}timeLimit{/tr}</a>
-		</th>
-
-		<!-- I don't know why but these column head will not behave properly with sort -->
-		<th>{tr}Questions{/tr}</th>
-		<th>{tr}Results{/tr}</th>
-
-		{* still stuck on being able to sort by number of questions and results!
-			Results need to be sortable so as to give admin quick idea of user participation
-			<th>
-				<a href="tiki-edit_quiz.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'results_desc'}results_asc{else}results_desc{/if}">{tr}Results{/tr}</a>
-			</th>
-		*}
-
-		<th>{tr}Actions{/tr}</th>
-	</tr>
-	<!-- end header data -->
-	{cycle values="odd,even" print=false}
-	{section name=user loop=$channels}
-		<tr>
-			<td class="{cycle advance=false}">{$channels[user].quizId}</td>
-			<td class="{cycle advance=false}">
-				{$channels[user].name}
-				<div class="subcomment">
-					{$channels[user].description}
-				</div>
-			</td>
-			<td class="{cycle advance=false}">{$channels[user].canRepeat}</td>
-			<td class="{cycle advance=false}">{$channels[user].timeLimited} {if $channels[user].timeLimited eq 'y'}({$channels[user].timeLimit} mins){/if}</td>
-			<td class="{cycle advance=false}">{$channels[user].questions}</td>
-			<td class="{cycle advance=false}">{$channels[user].results}</td>
-			<td class="{cycle}">
-				<a class="link" href="tiki-edit_quiz.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;quizId={$channels[user].quizId}">{icon _id='page_edit' alt='{tr}Edit{/tr}'}</a>
-				<a class="link" href="tiki-edit_quiz_questions.php?quizId={$channels[user].quizId}">{icon _id='help' alt='{tr}Questions{/tr}' title='{tr}Questions{/tr}'}</a>
-				<a class="link" href="tiki-edit_quiz_results.php?quizId={$channels[user].quizId}">{icon _id='application_form_magnify' alt='{tr}Results{/tr}' title='{tr}Results{/tr}'}</a>
-				<a class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=quiz&amp;permType=quizzes&amp;objectId={$channels[user].quizId}">
-					{if $channels[user].individual eq 'y'}
-						{icon _id='key_active' alt='{tr}Active Perms{/tr}'}
-					{else}
-						{icon _id='key' alt='{tr}Perms{/tr}'}
-					{/if}
-				</a>
-				<a class="link" href="tiki-edit_quiz.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].quizId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
-			</td>
-		</tr>
-	{/section}
-</table>
-
-{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
-<!-- tiki-edit_quiz.tpl end -->
+{/tabset}
