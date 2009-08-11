@@ -3,6 +3,9 @@
 	{elseif $mode eq 'remix' || $mode eq 'dupl'}{tr}Remix{/tr}
 	{elseif $mode eq 'view'}{tr}View:{/tr}{$videoInfo.name}
 	{else}{tr}Upload File{/tr}{/if}{/title}
+{if $editor eq ''}
+{assign var=editor value=$prefs.default_kaltura_editor}
+{/if}
 
 <div class="navbar">
 	{if $tiki_p_remix_videos eq 'y' or $tiki_p_admin_video_galleries eq 'y' or $tiki_p_admin eq 'y'}
@@ -14,6 +17,11 @@
 	{/if}
 	{if $mode ne 'remix' and ($tiki_p_remix_videos eq 'y' or $tiki_p_admin_video_galleries eq 'y' or $tiki_p_admin eq 'y')}
 	{button _text="{tr}Remix{/tr}" href="tiki-kaltura_video.php?videoId=$videoId&action=remix" }
+	{/if}
+	{if $editor eq 'kse'}
+	{button _text="{tr}Advance Editor{/tr}" href="tiki-kaltura_video.php?videoId=$videoId&action=remix&editor=kae" }
+	{else}
+	{button _text="{tr}Simple Editor{/tr}" href="tiki-kaltura_video.php?videoId=$videoId&action=remix&editor=kse" }
 	{/if}
 	{/if}
 </div>
@@ -140,12 +148,10 @@
 	{/capture}
 	
 	{capture name=remix_video assign=edit_remix}
-		<object name="kaltura_player" id="kaltura_player" type="application/x-shockwave-flash" height="546" width="890"	data="http://www.kaltura.com/kse/ui_conf_id/36300">
+		<object name="kaltura_player" id="kaltura_player" type="application/x-shockwave-flash" data="http://www.kaltura.com/{if $editor eq 'kae'}kae/ui_conf_id/47400" height="672" width="825" {else}kse/ui_conf_id/36300" height="546" width="890"{/if}>
 			<param name="allowScriptAccess" value="always" />
 			<param name="allowNetworking" value="all" />
 			<param name="allowFullScreen" value="true" />
-			<param name="bgcolor" value="#000000" />
-			<param name="movie" value="http://www.kaltura.com/kse/ui_conf_id/36300"/>
 			<param name="flashVars" value="{$seflashVars}"/>
 			<param name="wmode" value="opaque"/>
 		</object>
@@ -199,8 +205,16 @@
 		}
 		
 		function handleGotoEditorWindow (kshowId, pd_extraData) {
-          alert('Editor');
+        	alert('Editor');
         }
+        
+        function CloseClick(isModified) {
+			window.location="./tiki-list_kaltura_entries.php";
+		}
+
+		function SaveClick() {
+			window.location="./tiki-list_kaltura_entries.php";
+		}
 {/literal}
 		</script>
 

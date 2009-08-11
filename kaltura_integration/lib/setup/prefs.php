@@ -221,7 +221,6 @@ function get_default_prefs() {
 		'wikiplugin_jabber' => 'n',
 		'wikiplugin_js' => 'n',
 		'wikiplugin_jq' => 'n',
-		'wikiplugin_kaltura' => 'y',
 		'wikiplugin_lang' => 'y',
 		'wikiplugin_lastmod' => 'n',
 		'wikiplugin_listpages' => 'n',
@@ -1160,8 +1159,8 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 
 		// kaltura
 		'feature_kaltura' => 'y',
-
-
+		'wikiplugin_kaltura' => 'y',
+		'default_kaltura_editor' => 'kse',
 
 
 
@@ -1408,15 +1407,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		$prefs['cas_port'] = '';
 		$prefs['cas_path'] = '';
 	}
-
-
-	//Kaltura Video Galleries
-
-	$prefs['maxRowsVideoGalleries'] = '';
-	$prefs['rowVideosGalleries'] = '';
-	$prefs['thumbSizeXVideoGalleries'] = '';
-	$prefs['thumbSizeYVideoGalleries'] = '';
-
+	
 	// Special default values
 
 	if ( is_file('styles/'.$tikidomain.'/'.$prefs['site_favicon']) )

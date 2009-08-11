@@ -72,8 +72,9 @@ if(!empty($_REQUEST['videoId']) && isset($_REQUEST['action'])){
 					'&ks=' .$kres["result"]["ks"]. 
 					'&partner_id=' . $kaltura_conf->partnerId .
 					'&subp_id=' . $kaltura_conf->subPartnerId .
-					'&backF=Back'.
-					'&saveF=Save';
+					'&backF=CloseClick'.
+					'&saveF=SaveClick';
+				$editor = $_REQUEST['editor'];
 
 				if(count($videoId) == 1){
 					$res = $kaltura_client->getEntry($kuser,$videoId[0],'');
@@ -111,6 +112,7 @@ if(!empty($_REQUEST['videoId']) && isset($_REQUEST['action'])){
 		}
 		$smarty->assign_by_ref('seflashVars',$seflashVars);
 		$smarty->assign_by_ref('videoId',$roughcutId);
+		$smarty->assign_by_ref('editor',$editor);
 		break;
 	case 'edit':
 		if($tiki_p_edit_videos != 'y' && $tiki_p_admin_kaltura != 'y' && $tiki_p_admin != 'y' ){
