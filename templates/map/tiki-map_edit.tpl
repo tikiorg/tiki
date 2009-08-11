@@ -89,7 +89,6 @@
 <td>
 <div id='edit-zone'>
 	<div id='textarea-toolbar' style='padding:3px; font-size:10px;'>
-		<div style='float:left; margin-right:5px'>{include file='textareasize.tpl' area_name='mapdata' formId='editpageform' ToolbarSet='Tiki'}</div>
 		{toolbars area_name='mapdata'}
 	</div>
 	<textarea id='mapdata' class='wikiedit' name='pagedata' rows='{$rows}' wrap='virtual' cols='{$cols}' style='width:99%'>{$pagedata|escape}</textarea>

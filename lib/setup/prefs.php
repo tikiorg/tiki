@@ -1148,7 +1148,8 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'default_rows_textarea_comment' => '6',
 		'default_rows_textarea_forum' => '20',
 		'default_rows_textarea_forumthread' => '10',
-		
+		'section_comments_parse' => 'y',		// parse wiki markup on comments in all sections
+	
 		'toolbar_global' => '
 			bold, italic, strike, - , color, bgcolor, - , sub, sup,
 			- , tikilink, image, link, unlink, -, undo, redo, 

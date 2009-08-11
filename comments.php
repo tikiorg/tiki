@@ -352,7 +352,7 @@ if ($_REQUEST["comments_threadId"] > 0) {
 	// check to see if QUOTE plugin or > should be used -Terence
 	global $prefs;
 	if ( $comment_info["data"] != ''  ) {
-		if ( $prefs['feature_forum_parse'] == 'y' && $prefs['feature_use_quoteplugin'] == 'y' ) {
+		if ( ($prefs['feature_forum_parse'] == 'y' || $prefs['section_comments_parse'] == 'y') && $prefs['feature_use_quoteplugin'] == 'y' ) {
 			$comment_info["data"] = "\n{QUOTE()}" . $comment_info["data"] . '{QUOTE}';
 		} else {
 			$comment_info["data"] = preg_replace( '/\n/', "\n> ", $comment_info["data"] ) ;

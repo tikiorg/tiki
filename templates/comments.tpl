@@ -315,14 +315,15 @@
 		{/if}
 		{* End: Xenfasa adding and testing article ratings in comments here *}
 
-        {assign var=toolbars_html value=true}{* can't find where this gets set in ui-revamp project *}
-        <tr>
-    		<td class="formcolor"><label>{tr}Toolbars{/tr}</label></td>
-            <td class="formcolor">
-            	{toolbars area_name='editpost2' comments='y'}
-            </td>
-        </tr>
-
+		{if $prefs.section_comments_parse eq 'y'}
+	        {assign var=toolbars_html value=true}{* can't find where this gets set in ui-revamp project *}
+	        <tr>
+	    		<td class="formcolor"><label>{tr}Toolbars{/tr}</label></td>
+	            <td class="formcolor">
+	            	{toolbars area_name='editpost2' comments='y'}
+	            </td>
+	        </tr>
+		{/if}
 		<tr>
 			<td class="formcolor">
 				<label for="editpost2">{if $forum_mode eq 'y'}{tr}Reply{/tr}{else}{tr}Comment{/tr} <span class="attention">({tr}required{/tr})</span>{/if}</label>

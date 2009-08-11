@@ -64,6 +64,13 @@
 	<div class="adminoptionlabel"><label for="feature_wiki_paragraph_formatting_add_br">{tr}...but still create line breaks within paragraphs{/tr}.</label></div>
 </div>
 </div>
+<div class="adminoptionbox">
+	<div class="adminoption"><input type="checkbox" id="section_comments_parse" name="section_comments_parse" {if $prefs.section_comments_parse eq 'y'}checked="checked"{/if}/></div>
+	<div class="adminoptionlabel">
+		<label for="section_comments_parse">{tr}Parse wiki syntax in comments in all sections apart from Forums{/tr}</em></label>{if $prefs.feature_help eq 'y'} {help url="Wiki+Syntax"}{/if}
+		{remarksbox type='tip' title='Tip'}Use 'Accept wiki syntax' for forums, currently <em>{if $prefs.feature_forum_parse eq 'y'}on{else}off{/if} {icon _id="arrow_right" href="tiki-admin.php?page=forums"}{/remarksbox}
+	</div>
+</div>
 
 <div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" id="feature_wiki_monosp" name="feature_wiki_monosp" {if $prefs.feature_wiki_monosp eq 'y'}checked="checked"{/if}/></div>
