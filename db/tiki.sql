@@ -1828,7 +1828,6 @@ CREATE TABLE `tiki_quizzes` (
   `publishDate` int(14) default NULL,
   `expireDate` int(14) default NULL,
   `bDeleted` char(1) default NULL,
-  `nVersion` int(4) NOT NULL,
   `nAuthor` int(4) default NULL,
   `bOnline` char(1) default NULL,
   `bRandomQuestions` char(1) default NULL,
@@ -1848,7 +1847,7 @@ CREATE TABLE `tiki_quizzes` (
   `sData` text,
   `sEpilogue` text,
   `passingperct` int(4) default 0,
-  PRIMARY KEY (`quizId`, `nVersion`)
+  PRIMARY KEY (`quizId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_received_articles`;
