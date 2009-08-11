@@ -15,11 +15,9 @@
 	{assign var=textarea_attributes value=" rows='$rows' cols='$cols' style='width:99%'"}
 {/if}
 <div id='edit-zone'>
-	{if $zoom_mode eq 'n' and $prefs.quicktags_over_textarea neq 'y'}<table style="border:0; width:100%"><tr><td style="border:0;">{/if}
-	<div id='textarea-toolbar' style='padding:3px; font-size:10px; {if $zoom_mode eq 'n' and $prefs.quicktags_over_textarea neq 'y'}float:left;{/if}'>
-		{quicktags area_name=$textarea_name|default:edit zoom_enable=$enlarge|default:y}
+	<div id='textarea-toolbar' style='padding:3px; font-size:10px;'>
+		{toolbars area_name=$textarea_name|default:edit zoom_enable=$enlarge|default:y}
 	</div>
-	{if $zoom_mode eq 'n' and $prefs.quicktags_over_textarea neq 'y'}</td><td style="border:0;">{/if}
 	<!--autosave -->
 	{capture name=autosave}{if $prefs.feature_ajax eq 'y' and $prefs.feature_ajax_autosave eq 'y' and $noautosave neq 'y'}{autosave id=$textarea_id|default:editwiki default=$pagedata preview=$preview}{else}{$pagedata}{/if}{/capture}
 	{if $prefs.feature_ajax eq 'y' and $prefs.feature_ajax_autosave eq 'y' and $noautosave neq 'y' and $has_autosave eq 'y'} 
@@ -38,7 +36,6 @@
 		</script>
 		<!-- autosave -->
 	{/if}
-	{if $zoom_mode eq 'n' and $prefs.quicktags_over_textarea neq 'y'}</td></tr></table>{/if}
 </div>
 
 {if $zoom_mode eq 'y'}

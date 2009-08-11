@@ -66,31 +66,22 @@
   </tr>
 {/if}
 
-{* show quicktags over textarea *}
-{if $prefs.quicktags_over_textarea eq 'y' and ($prefs.feature_wysiwyg eq 'n' or ($prefs.feature_wysiwyg eq 'y' and $prefs.wysiwyg_optional eq 'y' and $wysiwyg eq 'n') ) 
-    }
+{* show toolbars over textarea *}
+{if $prefs.feature_wysiwyg eq 'n' or ($prefs.feature_wysiwyg eq 'y' and $prefs.wysiwyg_optional eq 'y' and $wysiwyg eq 'n' )}
   <tr>
-    <td class="editblogform"><label>{tr}Quicktags{/tr}</label></td>
+    <td class="editblogform"><label>{tr}Toolbars{/tr}</label></td>
     <td class="editblogform">
-      {quicktags area_name='blogedit'}
+      {toolbars area_name='blogedit'}
     </td>
   </tr>
 {/if}
 
-{* show quickags on left side from textarea *}
+{* show textarea *}
 {if ( $prefs.feature_wysiwyg eq 'n' or ($prefs.feature_wysiwyg eq 'y' and $prefs.wysiwyg_optional eq 'y' and $wysiwyg eq 'n') )}
   <tr>
     <td class="editblogform">
-      <br />
-      {quicktags area_name='blogedit'}{* used to be also: formId='editpageform' *}
-      <br />
-
-      {if $prefs.quicktags_over_textarea neq 'y'}
-        <br /><br />
-        {quicktags area_name="blogedit"}
-      {/if}
+    	&nbsp;
     </td>
-    
     <td class="editblogform">
       <textarea id='blogedit' class="wikiedit" name="data" rows="{$rows}" cols="{$cols}" wrap="virtual">{$data|escape}</textarea>
 

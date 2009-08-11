@@ -1,5 +1,7 @@
 <?php
 
+// $Id$
+
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -8,7 +10,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 include_once('lib/smarty_tiki/block.self_link.php');
 
-abstract class Quicktag
+abstract class Toolbar
 {
 	protected $wysiwyg;
 	protected $icon;
@@ -18,28 +20,28 @@ abstract class Quicktag
 
 	public static function getTag( $tagName ) // {{{
 	{
-		if( $tag = QuicktagInline::fromName( $tagName ) )
+		if( $tag = ToolbarInline::fromName( $tagName ) )
 			return $tag;
-		elseif( $tag = QuicktagBlock::fromName( $tagName ) )
+		elseif( $tag = ToolbarBlock::fromName( $tagName ) )
 			return $tag;
-		elseif( $tag = QuicktagLineBased::fromName( $tagName ) )
+		elseif( $tag = ToolbarLineBased::fromName( $tagName ) )
 			return $tag;
-		elseif( $tag = QuicktagFckOnly::fromName( $tagName ) )
+		elseif( $tag = ToolbarFckOnly::fromName( $tagName ) )
 			return $tag;
-		elseif( $tag = QuicktagWikiplugin::fromName( $tagName ) )
+		elseif( $tag = ToolbarWikiplugin::fromName( $tagName ) )
 			return $tag;
-		elseif( $tag = QuicktagPicker::fromName( $tagName ) )
+		elseif( $tag = ToolbarPicker::fromName( $tagName ) )
 			return $tag;
 		elseif( $tagName == 'fullscreen' )
-			return new QuicktagFullscreen;
+			return new ToolbarFullscreen;
 		elseif( $tagName == 'enlarge' )
-			return new QuicktagTextareaResize( 'enlarge' );
+			return new ToolbarTextareaResize( 'enlarge' );
 		elseif( $tagName == 'reduce' )
-			return new QuicktagTextareaResize( 'reduce' );
+			return new ToolbarTextareaResize( 'reduce' );
 		elseif( $tagName == 'help' )
-			return new QuicktagHelptool;
+			return new ToolbarHelptool;
 		elseif( $tagName == '-' )
-			return new QuicktagSeparator;
+			return new ToolbarSeparator;
 	} // }}}
 
 	public static function getList() // {{{
@@ -162,7 +164,7 @@ abstract class Quicktag
 		
 		$params = array();
 		$params['_onclick'] = $click . (substr($click, strlen($click)-1) != ';' ? ';' : '') . 'return false;';
-		$params['_class'] = 'quicktag ' . (!empty($class) ? ' '.$class : '');
+		$params['_class'] = 'toolbar ' . (!empty($class) ? ' '.$class : '');
 		$params['_ajax'] = 'n';
 		$content = $title;
 		$params['_icon'] = $this->icon;
@@ -182,7 +184,7 @@ abstract class Quicktag
 
 }
 
-class QuicktagSeparator extends Quicktag
+class ToolbarSeparator extends Toolbar
 {
 	function __construct() // {{{
 	{
@@ -196,7 +198,7 @@ class QuicktagSeparator extends Quicktag
 	} // }}}
 }
 
-class QuicktagFckOnly extends Quicktag
+class ToolbarFckOnly extends Toolbar
 { 
 	private function __construct( $token, $icon = 'pics/icons/shading.png' ) // {{{
 	{
@@ -270,7 +272,7 @@ class QuicktagFckOnly extends Quicktag
 	} // }}}
 }
 
-class QuicktagInline extends Quicktag
+class ToolbarInline extends Toolbar
 {
 	protected $syntax;
 
@@ -366,7 +368,7 @@ class QuicktagInline extends Quicktag
 
 }
 
-class QuicktagBlock extends QuicktagInline // Will change in the future
+class ToolbarBlock extends ToolbarInline // Will change in the future
 {
 	protected $syntax;
 
@@ -443,7 +445,7 @@ class QuicktagBlock extends QuicktagInline // Will change in the future
 	} // }}}
 }
 
-class QuicktagLineBased extends QuicktagInline // Will change in the future
+class ToolbarLineBased extends ToolbarInline // Will change in the future
 {
 	protected $syntax;
 
@@ -482,7 +484,7 @@ class QuicktagLineBased extends QuicktagInline // Will change in the future
 	} // }}}
 }
 
-class QuicktagPicker extends Quicktag
+class ToolbarPicker extends Toolbar
 {
 	private $list;
 
@@ -546,7 +548,7 @@ var pickerDiv;
 
 function displayPicker( closeTo, list, areaname ) {
 	if (pickerDiv) {
-		\$jq('div.quicktags-picker').remove();	// simple toggle
+		\$jq('div.toolbars-picker').remove();	// simple toggle
 		pickerDiv = false;
 		return;
 	}
@@ -560,7 +562,7 @@ function displayPicker( closeTo, list, areaname ) {
 		coord = \$jq(closeTo).offset();
 		coord.bottom = coord.top + \$jq(closeTo).height();
 	}
-	pickerDiv.className = 'quicktags-picker';
+	pickerDiv.className = 'toolbars-picker';
 	pickerDiv.style.left = coord.left + 'px';
 	pickerDiv.style.top = (coord.bottom + 8) + 'px';
 
@@ -569,7 +571,7 @@ function displayPicker( closeTo, list, areaname ) {
 		link.href = 'javascript:void(0)';
 		link.onclick = function() {
 			insertAt( areaname, ins );
-			\$jq('div.quicktags-picker').remove();
+			\$jq('div.toolbars-picker').remove();
 			pickerDiv = false;
 		}
 	};
@@ -596,7 +598,7 @@ JS
 	} // }}}
 }
 
-class QuicktagFullscreen extends Quicktag
+class ToolbarFullscreen extends Toolbar
 {
 	function __construct() // {{{
 	{
@@ -610,12 +612,12 @@ class QuicktagFullscreen extends Quicktag
 		$name = 'zoom';
 		if( isset($_REQUEST['zoom']) )
 			$name = 'preview';
-		return '<input type="image" name="'.$name.'" alt="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '" class="quicktag qt-fullscreen" '.
+		return '<input type="image" name="'.$name.'" alt="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '" class="toolbar qt-fullscreen" '.
 				'title="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '" value="wiki_edit" onclick="needToConfirm=false;" title="" class="icon" src="' . htmlentities($this->icon, ENT_QUOTES, 'UTF-8') . '"/>';
 	} // }}}
 }
 
-class QuicktagTextareaResize extends Quicktag
+class ToolbarTextareaResize extends Toolbar
 {
 	private $diff;
 
@@ -651,7 +653,7 @@ class QuicktagTextareaResize extends Quicktag
 	} // }}}
 }
 
-class QuicktagHelptool extends Quicktag
+class ToolbarHelptool extends Toolbar
 {
 	function __construct() // {{{
 	{
@@ -678,7 +680,7 @@ class QuicktagHelptool extends Quicktag
 	} // }}}
 }
 
-class QuicktagWikiplugin extends Quicktag
+class ToolbarWikiplugin extends Toolbar
 {
 	private $pluginName;
 
@@ -741,7 +743,7 @@ class QuicktagWikiplugin extends Quicktag
 	} // }}}
 }
 
-class QuicktagsList
+class ToolbarsList
 {
 	private $lines = array();
 
@@ -774,7 +776,7 @@ class QuicktagsList
 		if ( $unique && $this->contains($name) ) {
 			return false;
 		}
-		array_push($this->lines[0][sizeof($this->lines)-1], Quicktag::getTag( $name ));
+		array_push($this->lines[0][sizeof($this->lines)-1], Toolbar::getTag( $name ));
 		return true;
 	}
 
@@ -782,7 +784,7 @@ class QuicktagsList
 		if ( $unique && $this->contains($name) ) {
 			return false;
 		}
-		array_unshift($this->lines[0][0], Quicktag::getTag( $name ));	
+		array_unshift($this->lines[0][0], Toolbar::getTag( $name ));	
 		return true;
 	}
 
@@ -798,7 +800,7 @@ class QuicktagsList
 					$group = array();
 				}
 			} else {
-				if( ( $tag = Quicktag::getTag( $tagName ) ) 
+				if( ( $tag = Toolbar::getTag( $tagName ) ) 
 					&& $tag->isAccessible() ) {
 
 					$group[] = $tag;
@@ -840,13 +842,13 @@ class QuicktagsList
 
 	function getWikiHtml( $areaName ) // {{{
 	{
-		global $tiki_p_admin, $tiki_p_admin_quicktags, $smarty, $section;
+		global $tiki_p_admin, $tiki_p_admin_toolbars, $smarty, $section;
 		$html = '';
 
-		if ($tiki_p_admin == 'y' or $tiki_p_admin_quicktags == 'y') {
-			$params = array('_script' => 'tiki-admin_quicktags.php', '_onclick' => 'needToConfirm = true;', '_class' => 'quicktag', '_icon' => 'wrench', '_ajax' => 'n');
+		if ($tiki_p_admin == 'y' or $tiki_p_admin_toolbars == 'y') {
+			$params = array('_script' => 'tiki-admin_toolbars.php', '_onclick' => 'needToConfirm = true;', '_class' => 'toolbar', '_icon' => 'wrench', '_ajax' => 'n');
 			if (isset($section)) { $params['section'] = $section; }
-			$content = tra('Admin Quicktags');
+			$content = tra('Admin Toolbars');
 			$html .= '<div class="helptool-admin">';
 			$html .= smarty_block_self_link($params, $content, $smarty);
 			$html .= '</div>';
@@ -862,7 +864,7 @@ class QuicktagsList
 				}
 				
 				if( ! empty($groupHtml) ) {
-					$param = empty($lineHtml) ? '' : ' class="quicktag-list"';
+					$param = empty($lineHtml) ? '' : ' class="toolbar-list"';
 					$lineHtml .= "<span$param>$groupHtml</span>";
 				}
 			}

@@ -12,7 +12,7 @@
 /* disabled for now, was stopping js detect */
 
 require_once 'tiki-setup.php';
-require_once 'lib/quicktags/quicktagslib.php';
+require_once 'lib/toolbars/toolbarslib.php';
 
 $access->check_permission('tiki_p_admin');
 
@@ -70,7 +70,7 @@ $init = '';
 $setup = '';
 $map = array();
 
-$qtlist = Quicktag::getList();
+$qtlist = Toolbar::getList();
 $usedqt = array();
 $qt_p_list = array();
 $qt_w_list = array();
@@ -83,7 +83,7 @@ foreach( $qtlist as $name ) {
 	if (in_array($name, $usedqt) && $name != '-') {
 		$used = true;
 	}
-	$tag = Quicktag::getTag($name);
+	$tag = Toolbar::getTag($name);
 	if( ! $tag ) {
 		continue;
 	}
@@ -99,7 +99,7 @@ foreach( $qtlist as $name ) {
 		$label = $name;
 		$qt_w_list[] = $name;
 	}
-	$qtelement[$name] = array( 'name' => $name, 'class' => "quicktag qt-$name $wys $wiki $plug", 'html' => "$icon$label" );
+	$qtelement[$name] = array( 'name' => $name, 'class' => "toolbar qt-$name $wys $wiki $plug", 'html' => "$icon$label" );
 }
 
 $nol = 2;
@@ -133,8 +133,6 @@ var item;
 	}
 }); 							//.disableSelection();
 
-//window.quicktags_sortable = Object();
-//window.quicktags_sortable.saveRows = function() {
 saveRows = function() {
 	var lists = [];
 	var ser = \$jq('.row').map(function(){				/* do this on everything of class 'row' */
@@ -199,7 +197,7 @@ $smarty->assign_by_ref('display_w',$display_w);
 $smarty->assign_by_ref('display_p',$display_p);
 //$smarty->assign_by_ref('qtlists',$qtlists);
 $smarty->assign_by_ref('current',$current);
-$smarty->assign( 'mid', 'tiki-admin_quicktags.tpl' );
+$smarty->assign( 'mid', 'tiki-admin_toolbars.tpl' );
 $smarty->display( 'tiki.tpl' );
 
 ?>

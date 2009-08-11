@@ -174,19 +174,12 @@
 <tr class="formcolor"><td>{tr}Field is mandatory?{/tr}</td><td><input type="checkbox" name="isMandatory" {if $isMandatory eq 'y'}checked="checked"{/if} /></td></tr>
 <tr class="formcolor"><td>{tr}Order{/tr}:</td><td><input type="text" size="5" name="position" value="{$position}" /></td></tr>
 <tr class="formcolor"><td>{tr}Description{/tr}:
-{if $prefs.quicktags_over_textarea neq 'y'}
-	<div id="zStaticTextQuicktags" {if $type neq 'S'}style="display:none;"{/if}>
-	{quicktags qtnum="staticText" area_name="staticTextArea"}
-	</div>
-{/if}
 </td><td><div id='zDescription' {if $type eq 'S'}style="display:none;"{else}style="display:block;"{/if}style="display:block;" >{if $type ne 'S'}{tr}Description text is wiki-parsed:{/tr} <input type="checkbox" name="descriptionIsParsed" {if $descriptionIsParsed eq 'y'}checked="checked"{/if} />{/if}
 <textarea style="width:95%;" rows="4" name="description">{$description|escape}</textarea></div>
 <div id='zStaticText' {if $type neq 'S'}style="display:none;"{/if}>
-{if $prefs.quicktags_over_textarea eq 'y'}
-	<div id="zStaticTextQuicktags" {if $type neq 'S'}style="display:none;"{/if}>
-	{quicktags qtnum="staticText" area_name="staticTextArea"}
-	</div>
-{/if}
+<div id="zStaticTextToolbars" {if $type neq 'S'}style="display:none;"{/if}>
+	{toolbars qtnum="staticText" area_name="staticTextArea"}
+</div>
 <textarea id="staticTextArea" name="descriptionStaticText" rows="20" cols="80" >{$description|escape}</textarea></div></td></tr>
 <tr class="formcolor"><td>{tr}Error message:{/tr}</td><td><input type="text" name="errorMsg" value="{$errorMsg|escape}" /></td></tr>
 <tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>

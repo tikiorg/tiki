@@ -52,7 +52,7 @@ if (isset($_REQUEST["ans"])) {
 }
 include_once ('tiki-section_options.php');
 include_once ('textareasize.php');
-$smarty->assign('quicktagscant', $quicktags["cant"]);
+$smarty->assign('toolbarscant', $toolbars["cant"]);
 ask_ticket('take-survey');
 // Display the template
 $smarty->assign('error_msg', $error_msg);

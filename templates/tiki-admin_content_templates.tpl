@@ -70,11 +70,11 @@
 			</td>
 		</tr>
 
-		{if ($wysiwyg eq 'n' or ($wysiwyg ne 'y' and $prefs.wysiwyg_default ne 'y')) and $prefs.quicktags_over_textarea eq 'y'}
+		{if $wysiwyg eq 'n' or ($wysiwyg ne 'y' and $prefs.wysiwyg_default ne 'y')}
 			<tr>
-				<td class="formcolor"><label>{tr}Quicktags{/tr}</label></td>
+				<td class="formcolor"><label>{tr}Toolbars{/tr}</label></td>
 				<td class="formcolor">
-					{quicktags area_name='editwiki'}
+					{toolbars area_name='editwiki'}
 				</td>
 			</tr>
 		{/if}
@@ -82,18 +82,8 @@
 		<tr>
 			{assign var=area_name value="editwiki"}
 			{if $wysiwyg eq 'n' or ($wysiwyg ne 'y' and $prefs.wysiwyg_default ne 'y')}
-				<td class="formcolor">{tr}Template{/tr}:
-					<br />
-					<br />
-					{tr}Edit{/tr}:
-					<br />
-					<br />
-					{include file='textareasize.tpl' area_name='editwiki' formId='editpageform' ToolbarSet='Tiki'}
-					<br />
-					<br />
-					{if $prefs.quicktags_over_textarea neq 'y'}
-						{quicktags area_name='editwiki'}
-					{/if}  
+				<td class="formcolor">
+					{tr}Template{/tr}:
 				</td>
 				<td class="formcolor">
 					<textarea id='editwiki' class="wikiedit" name="content" rows="{$rows}" cols="{$cols}" style="WIDTH: 100%;">{$info.content|escape}</textarea>

@@ -701,9 +701,9 @@ ul.categories li{
 	padding: 0;
 }
 
-/* New Quicktags (toolbars) */
+/* New Toolbars (toolbars) */
 
-a.quicktag {
+a.toolbar {
 	padding: 0 .5em 0 0;
 }
 
@@ -728,7 +728,7 @@ a.qt-plugin div img { /* div.iconmenu img.icon */
 	margin-bottom: 4px;
 }
 
-span.quicktag-list {
+span.toolbar-list {
 	padding: 0 0 0 .5em;
 	line-height: 20px;
 	border-left: medium double lightgray;
@@ -741,7 +741,7 @@ span.quicktag-list {
 	margin-left:8px;
 }
 
-.quicktags-picker {
+.toolbars-picker {
 	position: absolute;
 	width: 300px;
 	background-color: white;
@@ -749,12 +749,12 @@ span.quicktag-list {
 	z-index: 300;
 }
 
-.quicktags-picker a {
+.toolbars-picker a {
 	padding: 4px 2px;
 	display: inline-block;
 }
 
-.quicktags-picker a:hover {
+.toolbars-picker a:hover {
 	background-color: #ccc;
 }
 

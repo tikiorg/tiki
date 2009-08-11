@@ -24,17 +24,9 @@
 
   <tr class="formcolor">
     <td class="formcolor">{tr}Answer{/tr}:
-      <br /> 
-      {include file='textareasize.tpl' area_name='faqans' formId='editpageform'}
-      {if $prefs.quicktags_over_textarea neq 'y'}
-        <br />
-        {quicktags area_name="faqans"}
-      {/if}
     </td>
     <td class="formcolor" >
-      {if $prefs.quicktags_over_textarea eq 'y'}
-        {quicktags area_name="faqans"}
-      {/if}
+      {toolbars area_name="faqans"}
       <textarea id='faqans' type="text" rows="8" cols="80" name="answer">{$answer|escape}</textarea>
     </td>
   </tr>

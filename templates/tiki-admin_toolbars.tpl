@@ -1,30 +1,30 @@
-{title help="Quicktags"}{tr}Admin Quicktags{/tr}{/title}
+{title help="Toolbars"}{tr}Admin Toolbars{/tr}{/title}
 <script type='text/javascript'>
 <!--//--><![CDATA[//><!--
 {literal}
-	function quicktags_autoreload() {
-		if (document.forms['quicktags'].elements['autoreload'].checked) {
-			document.forms['quicktags'].submit();
+	function toolbars_autoreload() {
+		if (document.forms['toolbars'].elements['autoreload'].checked) {
+			document.forms['toolbars'].submit();
 		}
 	}
 {/literal}
 //--><!]]>
 </script>
-<div class="quicktags-admin clearfix">
-	<form name="quicktags" method="post" action="tiki-admin_quicktags.php" onsubmit="return saveRows()">
+<div class="toolbars-admin clearfix">
+	<form name="toolbars" method="post" action="tiki-admin_toolbars.php" onsubmit="return saveRows()">
 		<div>
 			<div class="floatright">
 				<em><label for="autoreload">{tr}Auto Reloading{/tr}:</label></em>
 				<input id="autoreload" name="autoreload" type="checkbox" {if $autoreload eq 'on'}checked="checked"{/if}/>
 			</div>
 			<label>{tr}Section{/tr}:</label>
-			<select name="section" onchange="javascript:quicktags_autoreload()">
+			<select name="section" onchange="javascript:toolbars_autoreload()">
 				{foreach from=$sections item=name}
 					<option{if $name eq $loaded} selected="selected"{/if}>{$name|escape}</option>
 				{/foreach}
 			</select>
 			<label>{tr}Comments{/tr}:</label>
-			<input name="comments" type="checkbox" onchange="javascript:quicktags_autoreload()" {if $comments eq 'on'}checked="checked"{/if}/>
+			<input name="comments" type="checkbox" onchange="javascript:toolbars_autoreload()" {if $comments eq 'on'}checked="checked"{/if}/>
 			<input name="load" type="submit" value="{tr}Load{/tr}"/>
 			<input type="submit" name="save" value="{tr}Save{/tr}"/>
 			{if $loaded neq 'global' }<input type="submit" name="reset" value="{tr}Reset to Global{/tr}"/>{/if}
@@ -46,7 +46,7 @@
 			{/foreach}
 		</div>
 		<div class="lists">
-			<label for="#full-list-w">{tr}Formatting Quicktags:{/tr}</label><br/>
+			<label for="#full-list-w">{tr}Formatting Toolbars:{/tr}</label><br/>
 			<div id="qt_filter_div_w" class="qt_filter_div">
 				{tr}Filters{/tr}:
 				<input class="qt-wiki-filter"  type="checkbox" checked /><label>{tr}Wiki{/tr}</label>
@@ -59,7 +59,7 @@
 			</ul>
 		</div>
 		<div class="lists">
-			<label for="#full-list-p">{tr}Plugin Quicktags:{/tr}</label><br/>
+			<label for="#full-list-p">{tr}Plugin Toolbars:{/tr}</label><br/>
 			<div id="qt_filter_div_p" class="qt_filter_div">
 				{tr}Filters{/tr}:
 				<input class="qt-wiki-filter" type="checkbox" checked /><label>{tr}Wiki{/tr}</label>

@@ -88,13 +88,6 @@
 </div>
 
 <div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" name="quicktags_over_textarea" id="quicktags_over_textarea" {if $prefs.quicktags_over_textarea eq 'y'}checked="checked"{/if}/> </div>
-	<div class="adminoptionlabel"><label for="quicktags_over_textarea">{tr}Show quicktags above textareas{/tr}.</label>{if $prefs.feature_help eq 'y'} {help url="Quicktags"}{/if}
-	<br /><em>{tr}If disabled, quicktags will be shown to the left of textareas{/tr}.</em>
-	</div>
-</div>
-
-<div class="adminoptionbox">
 	<div class="adminoption"><input onclick="flip('hotwords_nw');" type="checkbox" name="feature_hotwords" id="feature_hotwords" {if $prefs.feature_hotwords eq 'y'}checked="checked" {/if}/> </div>
 	<div class="adminoptionlabel"><label for="feature_hotwords">{tr}Hotwords{/tr} </label>{if $prefs.feature_help eq 'y'} {help url="Hotwords"}{/if}</div>
 	

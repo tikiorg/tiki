@@ -2507,10 +2507,10 @@ class TrackerLib extends TikiLib {
 			'opt'=>true,
 			'help'=>tra('<dl>
 				<dt>Function: Allows alphanumeric text input in a multi-line field of arbitrary size.
-				<dt>Usage: <strong>quicktags,width,height,max,listmax,wordmax</strong>
+				<dt>Usage: <strong>toolbars,width,height,max,listmax,wordmax</strong>
 				<dt>Example: 0,80,5,30,200
 				<dt>Description:
-				<dd><strong>[quicktags]</strong> enables quicktags if a 1 is specified;
+				<dd><strong>[toolbars]</strong> enables toolbars if a 1 is specified;
 				<dd><strong>[width]</strong> is the width of the box, in chars;
 				<dd><strong>[height]</strong> is the number of visible lines in the box;
 				<dd><strong>[max]</strong> is the maximum number of characters that can be saved;

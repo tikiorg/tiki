@@ -88,18 +88,15 @@
 <tr class="formcolor">
 <td>
 <div id='edit-zone'>
-	{if $prefs.quicktags_over_textarea neq 'y'}<table style="border:0; width:100%"><tr><td style="border:0;">{/if}
-	<div id='textarea-toolbar' style='padding:3px; font-size:10px; {if $prefs.quicktags_over_textarea neq 'y'}float:left;{/if}'>
+	<div id='textarea-toolbar' style='padding:3px; font-size:10px;'>
 		<div style='float:left; margin-right:5px'>{include file='textareasize.tpl' area_name='mapdata' formId='editpageform' ToolbarSet='Tiki'}</div>
-		{quicktags area_name='mapdata'}
+		{toolbars area_name='mapdata'}
 	</div>
-	{if $prefs.quicktags_over_textarea neq 'y'}</td><td style="border:0;">{/if}
 	<textarea id='mapdata' class='wikiedit' name='pagedata' rows='{$rows}' wrap='virtual' cols='{$cols}' style='width:99%'>{$pagedata|escape}</textarea>
 	<input type="hidden" name="rows" value="{$rows}"/>
 	<input type="hidden" name="cols" value="{$cols}"/>
 	<input type="hidden" name="mapfile" value="{$mapfile}" />
 	<input type="hidden" name="mode" value="{$mode}" />
-	{if $prefs.quicktags_over_textarea neq 'y'}</td></tr></table>{/if}
 </div>
 </td>
 </tr>

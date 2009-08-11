@@ -14,17 +14,9 @@
 <table class="normal">
 <tr class="formcolor">
   <td>{tr}Edit{/tr}:
-  <br /><br />
-  {include file='textareasize.tpl' area_name='editwiki' formId='editwikiform'}
-  <br /><br />
-  {if $quicktags and $prefs.quicktags_over_textarea neq 'y'}
-    {quicktags area_name='editwiki'}
-  {/if}
   </td>
   <td>
-    {if $quicktags and $prefs.quicktags_over_textarea eq 'y'}
-      {quicktags area_name='editwiki'}
-    {/if}
+    {toolbars area_name='editwiki'}
     <textarea class="wikiedit" id="editwiki" name="data" rows="{$rows}" cols="{$cols}">{$data|escape}</textarea>
     <input type="hidden" name="rows" value="{$rows}"/>
     <input type="hidden" name="cols" value="{$cols}"/>
