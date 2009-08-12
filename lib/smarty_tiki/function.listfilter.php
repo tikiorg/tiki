@@ -74,7 +74,7 @@ function smarty_function_listfilter($params, &$smarty) {
 		\$jq(this).show();
 	} );
 ";
-		if ($parentSelector) {
+		if (!empty($parentSelector)) {
 			$content .= "
 	\$jq('$parentSelector').show().each( function() {
 		var cl = '.$childPrefix' + \$jq(this).attr('id');
