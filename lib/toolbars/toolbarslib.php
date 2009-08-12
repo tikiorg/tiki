@@ -661,7 +661,8 @@ class ToolbarHelptool extends Toolbar
 	function __construct() // {{{
 	{
 		$this->setLabel( tra('Wiki Help') )
-			->setIcon( 'pics/icons/help.png' );
+			->setIcon( 'pics/icons/help.png' )
+				->setWysiwygToken( 'tikiimage' );
 	} // }}}
 	
 	function getWikiHtml( $areaName ) // {{{
