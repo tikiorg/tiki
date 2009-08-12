@@ -91,4 +91,3 @@
 
 	{self_link page="workpsaces" _class="admbox" _style="background-image: url('pics/large/workspaces48x48.png')" _selected="'`$prefs.feature_workspaces`' != 'y'" _selected_class="admbox off"}<img src="pics/trans.png" alt="{tr}Workspaces{/tr}" title="{tr}Workspaces{/tr}{if $prefs.feature_workspaces ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Workspaces{/tr}</span>{/self_link}
 </div>
-</div>
