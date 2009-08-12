@@ -1397,6 +1397,10 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		// Transitions
 		'feature_group_transition' => 'n',
 		'feature_category_transition' => 'n',
+
+		// Workspaces
+		'feature_workspaces' => 'n',
+		'ws_container' => null,
 	);
 
 	// spellcheck
