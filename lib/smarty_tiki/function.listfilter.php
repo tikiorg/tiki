@@ -89,7 +89,10 @@ function smarty_function_listfilter($params, &$smarty) {
 } );	// end keyup
 		";
 	
-		$headerlib->add_jq_onready($content);
+		$js = $headerlib->add_jq_onready($content);
+		if ($js) {
+			$input .= $js;
+		}
 		return $input;
 	}
 }
