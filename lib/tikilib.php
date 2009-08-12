@@ -4614,7 +4614,7 @@ class TikiLib extends TikiDb_Bridge {
 	/** Create a wiki page
 		@param array $hash- lock_it,contributions, contributors
 	 **/
-	function create_page($name, $hits, $data, $lastModif, $comment, $user = 'admin', $ip = '0.0.0.0', $description = '', $lang='', $is_html = false, $hash=null, $wysiwyg=NULL, $wiki_authors_style='', $minor=false) {
+	function create_page($name, $hits, $data, $lastModif, $comment, $user = 'admin', $ip = '0.0.0.0', $description = '', $lang='', $is_html = false, $hash=null, $wysiwyg=NULL, $wiki_authors_style='', $minor=0) {
 		global $smarty, $prefs, $dbTiki, $quantifylib;
 		include_once ("lib/commentslib.php");
 
@@ -7264,7 +7264,7 @@ class TikiLib extends TikiDb_Bridge {
 	/** Update a wiki page
 		@param array $hash- lock_it,contributions, contributors
 	 **/
-	function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip, $edit_description = '', $edit_minor = false, $lang='', $is_html=false, $hash=null, $saveLastModif=null, $wysiwyg='', $wiki_authors_style) {
+	function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip, $edit_description = '', $edit_minor = 0, $lang='', $is_html=false, $hash=null, $saveLastModif=null, $wysiwyg='', $wiki_authors_style) {
 		global $smarty, $prefs, $dbTiki, $histlib, $quantifylib;
 		include_once ("lib/wiki/histlib.php");
 		include_once ("lib/commentslib.php");
