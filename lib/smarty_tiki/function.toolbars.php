@@ -5,7 +5,7 @@
  * Smarty plugin to display content only to some groups
  */
 
-function smarty_function_toolbars($params, $content)
+function smarty_function_toolbars($params, &$smarty)
 {
 	if( ! isset( $params['section'] ) ) {
 		global $section;
