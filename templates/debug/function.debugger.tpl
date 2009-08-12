@@ -6,11 +6,11 @@
 {* Command prompt form *}
 <form method="post" action="{$console_father|escape}">
 <table border="0" >
-  <tr><td colspan="3" align="right">
+  <tr><td colspan="2">
     <b>{tr}Tiki Debugger Console{/tr}</b>
-    <a class="separator" href="javascript:toggle('debugconsole');" title="{tr}Close{/tr}">
-      <small>[x]</small>
-    </a>
+    </td>
+    <td align="right" valign="top">
+      {icon _id='img/icons/close.gif' onclick='toggle("debugconsole");' _title='{tr}Close{/tr}' width=13 height=13}
   </td></tr>
   <tr>
     <td class="formcolor"><small>{tr}Current URL{/tr}:</small></td>

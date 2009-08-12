@@ -586,16 +586,22 @@ div#debugconsole {
 	color: #fff;
 	top: 0;
 	left: 20px;
-	right: 310px;
+	width: 60%;
 	height: auto;
-	z-index: 1;
+	z-index: 1000;
 	padding: 5px;
-	border: 1px solid #996600;
+	border: 2px solid #aaa;
 	font-size: 1em;
 }
 	
-#debugconsole form {
-	color: #000;
+#debugconsole form { color: #dd6; }
+
+#debugconsole a {
+	color: #ddd;
+}
+
+#debugconsole table {
+	width: 100%;
 }
 
 #debugconsole input[type="text"] {

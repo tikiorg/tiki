@@ -45,7 +45,7 @@ class HeaderLib {
 		if ($this->hasDoneOutput) {	// if called after smarty parse header.tpl return the script so the caller can do something with it
 			return $this->wrap_js($script);
 		} else {
-			return null;
+			return '';
 		}
 	}
 
@@ -62,7 +62,7 @@ class HeaderLib {
 		if ($this->hasDoneOutput) {	// if called after smarty parse header.tpl return the script so the caller can do something with it
 			return $this->wrap_js("\$jq(\"document\").ready(function(){".$script."});\n");
 		} else {
-			return null;
+			return '';
 		}
 	}
 
