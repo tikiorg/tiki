@@ -20,9 +20,13 @@ body {
 	width: 100%;
 }
 
+/* For the edit iframe in FCKEditor          *
+ * Safari/Chrome needs body defined as block *
+ * *lite.css defines it as table-cell        */
+
 html[dir=ltr]>body {
 	display: block;
-	margin: 1em .5em;
+	padding: 1em .5em;
 }
 
 body.fullscreen {
