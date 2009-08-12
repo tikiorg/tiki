@@ -38,6 +38,8 @@ abstract class Toolbar
 			return new ToolbarTextareaResize( 'enlarge' );
 		elseif( $tagName == 'reduce' )
 			return new ToolbarTextareaResize( 'reduce' );
+		elseif( $tagName == 'tikiimage' )
+			return new ToolbarFileGallery;
 		elseif( $tagName == 'help' )
 			return new ToolbarHelptool;
 		elseif( $tagName == '-' )
@@ -107,6 +109,7 @@ abstract class Toolbar
 			'enlarge',
 			'reduce',
 			'help',
+			'tikiimage',
 		), $plugins );
 	} // }}}
 
@@ -677,6 +680,29 @@ class ToolbarHelptool extends Toolbar
 	function isAccessible() // {{{
 	{
 		return parent::isAccessible();
+	} // }}}
+}
+
+class ToolbarFileGallery extends Toolbar
+{
+	function __construct() // {{{
+	{
+		$this->setLabel( tra('Choose or upload images') )
+			->setIcon( tra('pics/icons/pictures.png') );
+	} // }}}
+
+	function getWikiHtml( $areaName ) // {{{
+	{
+		global $smarty;
+		
+		require_once $smarty->_get_plugin_filepath('function','filegal_manager_url');
+		return $this->getSelfLink('openFgalsWindow(\''.smarty_function_filegal_manager_url(array('area_name'=>$areaName), $smarty).'\');',
+							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-filegal');
+	} // }}}
+
+	function isAccessible() // {{{
+	{
+		return parent::isAccessible() && ! isset($_REQUEST['zoom']);
 	} // }}}
 }
 
