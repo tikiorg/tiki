@@ -89,5 +89,5 @@
 
 	{self_link page="sefurl" _class="admbox" _style="background-image: url('pics/large/goto48x48.png')" _selected="'`$prefs.feature_sefurl`' != 'y'" _selected_class="admbox off"}<img src="pics/trans.png" alt="{tr}Search engine friendly url{/tr}" title="{tr}Search engine friendly url{/tr}{if $prefs.feature_sefurl ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Search engine friendly url{/tr}</span>{/self_link}
 
-	{self_link page="workpsaces" _class="admbox" _style="background-image: url('pics/large/workspaces48x48.png')" _selected="'`$prefs.feature_workspaces`' != 'y'" _selected_class="admbox off"}<img src="pics/trans.png" alt="{tr}Workspaces{/tr}" title="{tr}Workspaces{/tr}{if $prefs.feature_workspaces ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Workspaces{/tr}</span>{/self_link}
+	{self_link page="workspaces" _class="admbox" _style="background-image: url('pics/large/workspaces48x48.png')" _selected="'`$prefs.feature_workspaces`' != 'y'" _selected_class="admbox off"}<img src="pics/trans.png" alt="{tr}Workspaces{/tr}" title="{tr}Workspaces{/tr}{if $prefs.feature_workspaces ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Workspaces{/tr}</span>{/self_link}
 </div>

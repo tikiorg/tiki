@@ -95,6 +95,7 @@ if (isset($_REQUEST["features"])) {
 		"feature_comments_moderation",
 		"feature_comments_locking",
 		"feature_groupalert",
+		"feature_workspaces",
 		"feature_wiki_mindmap",
 		"use_minified_scripts",
 		"feature_print_indexed",
