@@ -81,6 +81,7 @@ function showDetails( id, domain, profile ) { // {{{
 					pp.name = 'pp';
 					pp.value = profile;
 					p.appendChild(pp);
+					form.setAttribute ( "onsubmit", 'return confirm(\"{/literal}{tr}Are you sure you want to install the profile{/tr}{literal} ' + profile + '?\");' );
 
 					cell.appendChild(form);
 				}
@@ -134,6 +135,7 @@ function showDetails( id, domain, profile ) { // {{{
 					pp.name = 'pp';
 					pp.value = profile;
 					p.appendChild(pp);
+					form.setAttribute ( "onsubmit", 'return confirm(\"{/literal}{tr}Are you sure you want to install the profile{/tr}{literal} ' + profile + '?\");' );
 
 					cell.appendChild(form);
 				}
