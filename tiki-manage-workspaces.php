@@ -8,6 +8,14 @@ $smarty->assign('headtitle', tra($title));
 
 // Check if the user can admin WS
 
+
+// Check if WS Container have been set; otherwise, it will 
+if (($wslib->get_ws_container()) == NULL)
+{
+	$wslib->init_ws();
+	header("Location: ./tiki-manage-workspaces.php");
+}	 
+
 if ( isset($_REQUEST['wsName']))
 {	
 	$name = $_REQUEST['wsName'];

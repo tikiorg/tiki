@@ -2,9 +2,7 @@
 /**
  * wslib.php - TikiWiki CMS/GroupWare
  *
- * This library is our GSoC proposal. 
- * NOTE: Currently this library is not working because we need to do basic adapations
- * to work with with perspectives and more stuff modificated before in Tiki.
+ * This library enables the basic management of workspaces (WS)
  * 
  * @package	lib
  * @author	Benjamin Palacios Gonzalo (mangapower) <mangapowerx@gmail.com>
@@ -35,7 +33,7 @@ class wslib extends CategLib
     /** Stores this objectype, this is WS */
     private $objectType;
 
-    /** Constructor, set the atributes in wslib */
+    /** Constructor, give the dbtiki to its parent, this is Categlib */
     public function __construct()
     {
 	global $prefs;
@@ -78,7 +76,7 @@ class wslib extends CategLib
      * @param $additionalPerms Associative array for giving more perms than the default perm 'tiki_p_ws_view'
      * @return The ID of the WS
      */
-    public function create_ws ($name, $groups = null, $parentWS = null, $description = '')
+    public function create_ws ($name, $groups, $parentWS = null, $description = '')
     {
     	if (!$parentWS)	$parentWS = 0;
     	
@@ -87,10 +85,9 @@ class wslib extends CategLib
 	
 	$query = "select `categId` from `tiki_categories` where `name`=? and `parentId`=? and `rootCategId`=?";
 	$ws_id = $this->getOne($query, array($name, (int) $parentWS, $this->ws_container));
-
-	if ($groups){
-	    foreach ($groups as $group)
-	    {
+	
+	foreach ($groups as $group)
+	{
 		$groupName = $group["groupName"];
 		$groupDescription = $group["groupDescription"];
 		$noCreateNewGroup = $group["noCreateNewGroup"];
@@ -104,7 +101,6 @@ class wslib extends CategLib
 		}
 		else
 		    $this->add_ws_group ($ws_id, $name, $groupName, $groupDescription, $additionalPerms);
-	    }
 	}
 		
 	return $ws_id;
@@ -141,6 +137,35 @@ class wslib extends CategLib
 	    return false;
     }
 
+    /** Generate a group name specially created for WS. With this we can avoid the problems related to have two groups with the same name
+     * NOTE: For now is OK, if the future implementation of groups change, this would change!
+     *
+     * @param $id_ws The WS id
+     * @param $wsname The WS name
+     * @param $nameGroup The group name
+     * @return A string with this format: $id_ws::$wsName::$nameGroup
+     */
+    public function generate_ws_group_name ($ws_id, $wsName, $nameGroup)
+    {
+	return $name = ((string) $ws_id)."::".$wsName."::".$nameGroup;
+    }
+
+    /** Parse a group name with the form $ws_id<:>$wsName<:>$nameGroup
+     * Allowed characters in $ws_id are 0-9 with a variable length of 1 to 11 digits
+     * Allowed characters in $wsName are 0-9, A-Z, a-z, whitespace, -, < and >
+     * Allowed characters in $nameGroup are the same as above
+     * TODO: Work in progress, needs to be checked if works properly (I'm newbie to regex world :P)
+     * Yeah, I know, this exp is far from being perfect, but for testing purposes is OK
+     *
+     * @param $groupName The name of the group you want to parse
+     * @param $groupValues The values given in a reference array when you apply the function
+     * @return An array with the values in each position. If the parse was not succesful return false
+     */
+    public function parse_ws_group_name ($groupName, &$groupValues)
+    {
+	return preg_match("%\b([\d]{1,11})\b::\b([\w\-<>\s]+)\b::\b([\w\-<>\s]+[^:]{2})\b%", $groupName, $groupValues);
+    }
+    
     /** Change a WS name and description
      * 
      * @param $ws_id The WS id you want to update
@@ -185,6 +210,7 @@ class wslib extends CategLib
 
 	return parent::remove_category($ws_id);
     }
+
 
     /** Remove all WS including the Workspaces container. It's a destructive function, so use with caution
      * 
@@ -299,46 +325,26 @@ class wslib extends CategLib
 		{
 			global $trklib;
 			include_once ('lib/trackers/trackerlib.php');
-			//$tracker_options["showCreated"] = 'y';
-			$tracker_options["showCreated"] = $params["showCreated"];
-			//$tracker_options["showStatus"] = 'y';
-			$tracker_options["showStatus"] = $params["showStatus"];
-			//$tracker_options["showStatusAdminOnly"] = 'y';
-			$tracker_options["showStatusAdminOnly"] = $params["showStatusAdminOnly"];
-			//$tracker_options["simpleEmail"] = 'n';
-			$tracker_options["simpleEmail"] = $params["simpleEmail"];
-			//$tracker_options["outboundEmail"] = '';
-			$tracker_options["outboundEmail"] = $params["outboundEmail"];
-			//$tracker_options["newItemStatus"] = 'y';
-			$tracker_options["newItemStatus"] = $params["newItemStatus"];
-			//$tracker_options["useRatings"] = 'y';
-			$tracker_options["useRatings"] = $params["useRatings"];
-			//$tracker_options["showRatings"] = 'y';
-			$tracker_options["showRatings"] = $params["showRatings"];
-			//$tracker_options["useComments"] = 'y';
-			$tracker_options["useComments"] = $params["useComments"];
-			//$tracker_options["showComments"] = 'y';
-			$tracker_options["showComments"] = $params["showComments"];
-			//$tracker_options["useAttachments"] = 'y';
-			$tracker_options["useAttachments"] = $params["useAttachments"];
-			//$tracker_options["showAttachments"] = 'y';
-			$tracker_options["showAttachments"] = $params["showAttachments"];
-			//$tracker_options["showLastModif"] = 'y';
-			$tracker_options["showLastModif"] = $params["showLastModif"];
-			//$tracker_options["defaultOrderDir"] = 'asc';
-			$tracker_options["defaultOrderDir"] = $params["defaultOrderDir"];
-			//$tracker_options["newItemStatus"] = '';
-			$tracker_options["newItemStatus"] = $params["newItemStatus"];
-			//$tracker_options["modItemStatus"] = '';
-			$tracker_options["modItemStatus"] = $params["modItemStatus"];
-			//$tracker_options["defaultOrderKey"] = '';
-			$tracker_options["defaultOrderKey"] = $params["defaultOrderKey"];
-			//$tracker_options["writerCanModify"] = 'y';
-			$tracker_options["writerCanModify"] = $params["writerCanModify"];
-			//$tracker_options["writerGroupCanModify"] = 'n';
-			$tracker_options["writerGroupCanModify"] = $params["writerGroupCanModify"];
-			//$tracker_options["defaultStatus"] = 'o';
-			$tracker_options["defaultStatus"] = $params["defaultStatus"];
+			$tracker_options["showCreated"] = 'y';
+			$tracker_options["showStatus"] = 'y';
+			$tracker_options["showStatusAdminOnly"] = 'y';
+			$tracker_options["simpleEmail"] = 'n';
+			$tracker_options["outboundEmail"] = '';
+			$tracker_options["newItemStatus"] = 'y';
+			$tracker_options["useRatings"] = 'y';
+			$tracker_options["showRatings"] = 'y';
+			$tracker_options["useComments"] = 'y';
+			$tracker_options["showComments"] = 'y';
+			$tracker_options["useAttachments"] = 'y';
+			$tracker_options["showAttachments"] = 'y';
+			$tracker_options["showLastModif"] = 'y';
+			$tracker_options["defaultOrderDir"] = 'asc';
+			$tracker_options["newItemStatus"] = '';
+			$tracker_options["modItemStatus"] = '';
+			$tracker_options["defaultOrderKey"] = '';
+			$tracker_options["writerCanModify"] = 'y';
+			$tracker_options["writerGroupCanModify"] = 'n';
+			$tracker_options["defaultStatus"] = 'o';
 			$itemId = $trklib->replace_tracker(null, $name, $description,$tracker_options); 
 			$href = "tiki-view_tracker.php?trackerId=".$itemId;
 			break;
@@ -408,8 +414,7 @@ class wslib extends CategLib
 		{
 			global $commentslib;
 			include_once ("lib/commentslib.php");
-			$itemId = $commentslib->replace_forum(null,$name,$description, 'n', 120, $user, '', 'n', 'n', '2592000', 'n', '2592000', 20, 'commentDate_desc', 'commentDate_desc',
-			 '', 'y', 'y', 'y', 'y', 'y', 'y', 'y', '', 110, '', '', '', '', '', '', 'y', 'y', 'y', 'y', 'y', 'y', 'n', 'n', 'all_posted', '', '', 'n', 'att_no', 'db', '', '1000000', 'y');
+			$itemId = $commentslib->replace_forum(null, $name, $description, 'n', 120, $user);
 			$href = "./tiki-view_forum.php?forumId=".$itemId;
 			break;
 		}
@@ -445,6 +450,7 @@ class wslib extends CategLib
 			$href = "tiki-take_survey.php?surveyId=".$itemId;
 			break;
 		}
+		
     	}
     	
 	return $this->add_ws_object ($ws_id, $itemId, $type, $name, $description, $href);
@@ -702,8 +708,9 @@ class wslib extends CategLib
     {    	
 	$hashWS = md5($this->objectType . strtolower($ws_id));
 
-	$query = "select `groupName` from `users_objectpermissions` where 
-	    `objectId`=? and `permName`='tiki_p_ws_view'";
+	$query = "select t0.* from `users_groups` t0, `users_objectpermissions` t1 where
+			   t1.`objectId`=? and t1.`permName`='tiki_p_ws_view' 
+			   and t1.`groupName` = t0.`groupName`";
 	$bindvars = array($hashWS);
 	$result = $this->query($query,$bindvars,$maxRecords,$offset);
 
@@ -762,9 +769,41 @@ class wslib extends CategLib
      *
      * TODO Find a better way to explain
      */
-    public function list_all_ws ($offset, $maxRecords, $sort_mode = 'name_asc', $find, $type, $objid)
+    public function list_all_ws ($offset, $maxRecords, $sort_mode = 'name_asc')
     {
-		return parent::list_all_categories ($offset, $maxRecords, $sort_mode, $find, $type, $objid, true);
+    	$bindvals = array($this->ws_container);
+	$query = "select * from `tiki_categories` where `rootCategId`=? order by ".$this->convertSortMode($sort_mode);
+	$query_cant = "select count(*) from `tiki_categories` where `rootCategId`=?";
+	$result = $this->query($query,$bindvals,$maxRecords,$offset);
+	$cant = $this->getOne($query_cant,$bindvals);
+	$ret = array();
+
+	while ($res = $result->fetchRow())
+	{      
+		$catpath = $this->get_category_path($res["categId"]);
+		$tepath = array();	
+		foreach ($catpath as $cat) 
+		{
+			$tepath[] = $cat['name'];
+		}
+		$categpath = implode("::",$tepath);
+		$categpathforsort = implode("!!",$tepath); // needed to prevent cat::subcat to be sorted after cat2::subcat 
+		$res["categpath"] = $categpath;
+		$res["tepath"] = $tepath;
+		$res["deep"] = count($tepath);
+		$res['name'] = $this->get_category_name($res['categId']);
+		$res['href_edit'] = "tiki-manage-workspaces.php?editWS=".$res["categId"];
+		global $userlib;
+		
+		$ret["$categpathforsort"] = $res;
+	}
+
+	ksort($ret);
+		
+	$retval = array();
+	$retval["data"] = array_values($ret);
+	$retval["cant"] = $cant;
+	return $retval;
     }
 	
     /** List all WS that a user have access
@@ -772,54 +811,53 @@ class wslib extends CategLib
      * @param $user The name of the user
      * @return An associative array with the WS that the user has access
      */
-	public function list_ws_that_user_have_access ($user, $maxRecords = -1, $offset = -1)
-	{
-		require_once('lib/userslib.php');
-		global $userlib;
+     public function list_ws_that_user_have_access ($user, $maxRecords = -1, $offset = -1)
+     {
+	require_once('lib/userslib.php');
+	global $userlib;
 		
-		$ws = array();		
-		
-		$query = "select distinct t3.`objectId` from `users_objectpermissions` t3, `users_usergroups` t2, `users_users` t1
-				   where t1.`login` = ? 
-				   and (t1.`userId` = t2.`userId`) 
-				   and (t2.`groupName` = t3.`groupName`) 
-				   and t3.`permName` = 'tiki_p_ws_view'";
-		$result = $this->query($query,array($user), $maxRecords, $offset);
-		while ($res = $result->fetchRow())
-			$userWSHashes[] = $res["objectId"];
-		
-		$idws = $this->ws_container;
-		$query = "select * from `tiki_categories` where `rootCategId`= $idws";
-		$bindvars = array();
-		$listWS = $this->query($query,$bindvars);
-		
-		while ($res = $listWS->fetchRow()) 
-		{
-		    $ws_id = $res["categId"];
-		    $hashWS = md5($this->objectType . strtolower($ws_id));
+	$ws = array();		
 	
-		    if (in_array($hashWS,$userWSHashes))
-		    {
-		    	$wspath = $this->get_category_path($res["categId"]);
-			$tepath = array();	
-			foreach ($wspath as $ws)
-			{
-				$tepath[] = $ws['name'];
-			}
-			$wspath = implode("::",$tepath);
-			$wspathforsort = implode("!!",$tepath);
-			$res["wspath"] = $wspath;
-			$res["deep"] = count($tepath);
-			$res["href"] = "tiki-user_ws.php?showWS=".$ws_id;
-			
-			$listUserWS["$wspathforsort"] = $res;
-		    }
+	$query = "select distinct t3.`objectId` from `users_objectpermissions` t3, `users_usergroups` t2, `users_users` t1
+			   where t1.`login` = ? 
+			   and (t1.`userId` = t2.`userId`) 
+			   and (t2.`groupName` = t3.`groupName`) 
+			   and t3.`permName` = 'tiki_p_ws_view'";
+	$result = $this->query($query,array($user), $maxRecords, $offset);
+	while ($res = $result->fetchRow())
+		$userWSHashes[] = $res["objectId"];
+	
+	$idws = $this->ws_container;
+	$query = "select * from `tiki_categories` where `rootCategId`= $idws";
+	$bindvars = array();
+	$listWS = $this->query($query,$bindvars);
+		
+	while ($res = $listWS->fetchRow()) 
+	{
+	    $ws_id = $res["categId"];
+	    $hashWS = md5($this->objectType . strtolower($ws_id));
+	    if (in_array($hashWS,$userWSHashes))
+	    {
+	    	$wspath = $this->get_category_path($res["categId"]);
+		$tepath = array();	
+		foreach ($wspath as $ws)
+		{
+			$tepath[] = $ws['name'];
 		}
-
-		ksort($listUserWS);
-
-		return $listUserWS;
+		$wspath = implode("::",$tepath);
+		$wspathforsort = implode("!!",$tepath);
+		$res["wspath"] = $wspath;
+		$res["deep"] = count($tepath);
+		$res["href"] = "tiki-user_ws.php?showWS=".$ws_id;
+			
+		$listUserWS["$wspathforsort"] = $res;
+	    }
 	}
+
+	ksort($listUserWS);
+
+	return $listUserWS;
+     }
 	
     /** List the objects stored in a workspace
      *
@@ -842,12 +880,12 @@ class wslib extends CategLib
     }
 
     /** Get the stored perms for a object for a specific user
-    *
-    * @param $objId The object you want to check
-    * @param $objectType The type of the object
-    * @param $user The name of the user
-    * @return An array with the objects perms related to a object for a user
-    */
+     *
+     * @param $objId The object you want to check
+     * @param $objectType The type of the object
+     * @param $user The name of the user
+     * @return An array with the objects perms related to a object for a user
+     */
     public function get_object_perms_for_user ($objId, $objectType, $user)
     {
 	$objectId = md5($objectType . strtolower($objId));
@@ -957,6 +995,22 @@ class wslib extends CategLib
      {
      	$query_cant = "select count(*) from `tiki_category_objects` where `categId` = ?";
      	$bindvals = array($ws_id);
+     	
+     	return $this->getOne($query_cant,$bindvals);
+     }
+     
+     /** Count the number of groups that have access in a WS
+     *
+     * @param $ws_id The id of the ws
+     * @return $cant the number of objects stored in the WS
+     */	
+     public function count_groups_in_ws ($ws_id)
+     {
+     	$hashWS = md5($this->objectType . strtolower($ws_id));
+
+	$query_cant = "select count(*) from `users_objectpermissions` where 
+	    `objectId`=? and `permName`='tiki_p_ws_view'";
+	$bindvals = array($hashWS);
      	
      	return $this->getOne($query_cant,$bindvals);
      }
