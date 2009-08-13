@@ -1,16 +1,9 @@
-
-#header-top {
-	height: 111px;
-}
-
+/* IE7 stylesheet for Strasa theme */
 
 #siteloginbar {
-	position: absolute;
-	right: 0;
-	top: 111px;
+		background: #fff url(loginlong.jpg) 0 0 no-repeat;
 }
 
-#siteloginbar label, #siteloginbar input, #siteloginbar .pass {
-	position: relative;
-	top: -26px;
+#header-top .logged-in {
+	background: #fff url(login.jpg) 0 0 no-repeat;
 }
