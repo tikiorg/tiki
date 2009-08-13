@@ -95,7 +95,8 @@ function smarty_function_debugger($params, &$smarty) {
    		setCookie('debugconsole_poition', off.left + ',' + off.top);
 	}
 });
-debugconsole_pos = getCookie('debugconsole_poition').split(',');
+debugconsole_pos = getCookie('debugconsole_poition')
+if (debugconsole_pos) {debugconsole_pos = debugconsole_pos.split(',');}
 if (debugconsole_pos) {
 	\$jq('#debugconsole').css({'left': debugconsole_pos[0] + 'px', 'top': debugconsole_pos[1] + 'px'});
 } 
