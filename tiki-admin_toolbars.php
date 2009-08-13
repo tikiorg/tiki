@@ -22,7 +22,6 @@ if ($prefs['javascript_enabled'] != 'y') {
 	die;
 }
 
-
 if ($prefs['feature_jquery_ui'] != 'y') {
 	$headerlib->add_jsfile('lib/jquery/jquery-ui/ui/minified/jquery-ui.min.js');
 }
@@ -47,9 +46,13 @@ if( isset($_REQUEST['save'], $_REQUEST['pref']) ) {
 	$tikilib->set_preference( $prefName, $_REQUEST['pref'] );
 }
 
-if( isset($_REQUEST['reset'])  and $section != 'global' ) {
+if( isset($_REQUEST['reset']) && $section != 'global' ) {
 	$prefName = 'toolbar_' . $section . ($comments ? '_comments' : '');
 	$tikilib->set_preference( $prefName, '');
+}
+
+if ( isset($_REQUEST['save_tool'], $_REQUEST['tool_name'])) {	// input from the tool edit form
+	Toolbar::saveTool($_REQUEST['tool_name'], $_REQUEST['tool_label'], $_REQUEST['tool_icon'], $_REQUEST['tool_token'], $_REQUEST['tool_syntax']);
 }
 
 $current = $tikilib->get_preference( 'toolbar_' . $section . ($comments ? '_comments' : '') );
@@ -99,12 +102,14 @@ foreach( $qtlist as $name ) {
 		$label = $name;
 		$qt_w_list[] = $name;
 	}
-	$qtelement[$name] = array( 'name' => $name, 'class' => "toolbar qt-$name $wys $wiki $plug", 'html' => "$icon$label" );
+	$label .= '<input type="hidden" name="token" value="'.$tag->getWysiwygToken().'" />';
+	$label .= '<input type="hidden" name="syntax" value="'.$tag->getSyntax().'" />';
+	$qtelement[$name] = array( 'name' => $name, 'class' => "toolbar qt-$name $wys $wiki $plug", 'html' => "$icon$label");
 }
 
 $nol = 2;
 $rowStr = substr(implode(",#row-",range(0,$rowCount)),2);
-$fullStr = '#full-list-w,#full-list-p';
+$fullStr = '#full-list-w,#full-list-p,#full-list-c';
 
 $headerlib->add_jq_onready( <<<JS
 
@@ -117,7 +122,7 @@ var item;
 	forceHelperSize: true
 });
 \$jq('$fullStr').sortable({
-	connectWith: '.row',
+	connectWith: '.row, #full-list-c',
 	forcePlaceholderSize: true,
 	forceHelperSize: true,
 	remove: function(event, ui) {	// special handling for separator to allow duplicates
@@ -127,11 +132,31 @@ var item;
 	},
 	receive: function(event, ui) {
 		if (\$jq(ui.item).text() == '-') {
-			\$jq(this).children().remove('.qt--');		// remove all seps
-			\$jq(this).prepend(\$jq(ui.item).clone());	// put one back at the top
+			\$jq(this).children().remove('.qt--');				// remove all seps
+			\$jq(this).prepend(\$jq(ui.item).clone());			// put one back at the top
+
+		} else if (\$jq(this).attr('id') == 'full-list-c') {	// dropped in custom list
+			\$jq(ui.item).dblclick(function() { showToolEditForm(ui.item); });
+			\$jq(ui.item).trigger('dblclick');
 		}
 	}
-}); 							//.disableSelection();
+});
+\$jq('#full-list-c').sortable({	// custom tools list
+	connectWith: '.lists'
+});
+\$jq('#toolbar_edit_div #cancel_tool').click(function() {
+	\$jq('#toolbar_edit_div').hide();
+});
+
+showToolEditForm = function(item) {
+	\$jq('#toolbar_edit_div').show();
+	\$jq('#toolbar_edit_div').css({ left: \$jq(item).offset().left + 10, top:\$jq(item).offset().top + \$jq(item).height() - 4 });
+	\$jq('#toolbar_edit_div #tool_name').val(\$jq(item).text());
+	\$jq('#toolbar_edit_div #tool_label').val(\$jq(item).children('img').attr('title'));
+	\$jq('#toolbar_edit_div #tool_icon').val(\$jq(item).children('img').attr('src'));
+	\$jq('#toolbar_edit_div #tool_token').val(\$jq(item).children('input[name=token]').val());
+	\$jq('#toolbar_edit_div #tool_syntax').val(\$jq(item).children('input[name=syntax]').val());
+}
 
 saveRows = function() {
 	var lists = [];

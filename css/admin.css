@@ -166,7 +166,7 @@ div.adminanchors a {float: left}
 .toolbars-admin .lists {
 	padding: 1em 2em 1em 0;
 	float: left;
-	width: 40%;
+	width: 28%;
 	min-height: 10em;
 }
 
@@ -257,9 +257,25 @@ div.adminanchors a {float: left}
 	border-bottom: none;
 	border-left: thin gray solid;
 	padding: 0 .5em;
+	font-size: 0.9em;
 }
 
 #qt_filter_div a {
 	
 }
+
+#toolbar_edit_div {
+	z-index: 2;
+	float: left;
+	position: absolute;
+	top: 10px;
+	left: 0;
+	background-color: #fff;
+	padding: 0 .5em .5em;
+}
+
+#toolbar_edit_div .adminoptionbox {
+	text-align: right;
+}
+
 /* end from ui-revamp branch */

@@ -30,48 +30,93 @@
 			{if $loaded neq 'global' }<input type="submit" name="reset" value="{tr}Reset to Global{/tr}"/>{/if}
 			<input id="qt-form-field" type="hidden" name="pref" value=""/>
 		</div>
-		<div class="rows">
-			{foreach from=$current item=line name=line}
-				<label for="row-{$smarty.foreach.line.iteration|escape}">{tr}Row{/tr}&nbsp;{$smarty.foreach.line.iteration}:</label>
-				<ul id="row-{$smarty.foreach.line.iteration|escape}" class="row">
-				{foreach from=$line item=tool}
-					<li class="{$qtelement[$tool].class}">{$qtelement[$tool].html}</li>
-				{/foreach}
-				</ul>
-				{if $smarty.foreach.line.last and $rowCount gt 1}
-					{assign var=total value=`$smarty.foreach.line.total+1`}
-				<label for="row-{$total|escape}">{tr}Row{/tr}&nbsp;{$total}:</label>
-					<ul id="row-{$total|escape}" class="row">
-				{/if}
-			{/foreach}
-		</div>
-		<div class="lists">
-			<label for="#full-list-w">{tr}Formatting Toolbars:{/tr}</label><br/>
-			<div id="qt_filter_div_w" class="qt_filter_div">
-				{tr}Filters{/tr}:
-				<input class="qt-wiki-filter"  type="checkbox" checked /><label>{tr}Wiki{/tr}</label>
-				<input class="qt-wys-filter" type="checkbox" checked /><label>{tr}WYSIWYG{/tr}</label>
-			</div>
-			<ul id="full-list-w" class="full">
-			{foreach from=$display_w item=tool}
-				<li class="{$qtelement[$tool].class}">{$qtelement[$tool].html}</li>
-			{/foreach}
-			</ul>
-		</div>
-		<div class="lists">
-			<label for="#full-list-p">{tr}Plugin Toolbars:{/tr}</label><br/>
-			<div id="qt_filter_div_p" class="qt_filter_div">
-				{tr}Filters{/tr}:
-				<input class="qt-wiki-filter" type="checkbox" checked /><label>{tr}Wiki{/tr}</label>
-				<input class="qt-wys-filter" type="checkbox" checked /><label>{tr}WYSIWYG{/tr}</label>
-			</div>
-			<ul id="full-list-p" class="full">
-			{foreach from=$display_p item=tool}
-				<li class="{$qtelement[$tool].class}">{$qtelement[$tool].html}</li>
-			{/foreach}
-			</ul>
-		</div>
 	</form>
+	<div class="rows">
+		{foreach from=$current item=line name=line}
+			<label for="row-{$smarty.foreach.line.iteration|escape}">{tr}Row{/tr}&nbsp;{$smarty.foreach.line.iteration}:</label>
+			<ul id="row-{$smarty.foreach.line.iteration|escape}" class="row">
+			{foreach from=$line item=tool}
+				<li class="{$qtelement[$tool].class}">{$qtelement[$tool].html}</li>
+			{/foreach}
+			</ul>
+			{if $smarty.foreach.line.last and $rowCount gt 1}
+				{assign var=total value=`$smarty.foreach.line.total+1`}
+			<label for="row-{$total|escape}">{tr}Row{/tr}&nbsp;{$total}:</label>
+				<ul id="row-{$total|escape}" class="row">
+			{/if}
+		{/foreach}
+	</div>
+	<div class="lists">
+		<label for="#full-list-w">{tr}Formatting Toolbars:{/tr}</label><br/>
+		<div id="qt_filter_div_w" class="qt_filter_div">
+			{tr}Filters{/tr}:
+			<input class="qt-wiki-filter"  type="checkbox" checked /><label>{tr}Wiki{/tr}</label>
+			<input class="qt-wys-filter" type="checkbox" checked /><label>{tr}WYSIWYG{/tr}</label>
+		</div>
+		<ul id="full-list-w" class="full">
+		{foreach from=$display_w item=tool}
+			<li class="{$qtelement[$tool].class}">{$qtelement[$tool].html}</li>
+		{/foreach}
+		</ul>
+	</div>
+	<div class="lists">
+		<label for="#full-list-p">{tr}Plugin Toolbars:{/tr}</label><br/>
+		<div id="qt_filter_div_p" class="qt_filter_div">
+			{tr}Filters{/tr}:
+			<input class="qt-wiki-filter" type="checkbox" checked /><label>{tr}Wiki{/tr}</label>
+			<input class="qt-wys-filter" type="checkbox" checked /><label>{tr}WYSIWYG{/tr}</label>
+		</div>
+		<ul id="full-list-p" class="full">
+		{foreach from=$display_p item=tool}
+			<li class="{$qtelement[$tool].class}">{$qtelement[$tool].html}</li>
+		{/foreach}
+		</ul>
+	</div>
+	<div class="lists">
+		<div class="cbox" id="toolbar_edit_div" style="display:none">
+			<form name="toolbar_edit_form" method="post" action="tiki-admin_toolbars.php">
+				<h2>{tr}Edit tool{/tr} (work in progress)</h2>
+				<div class="adminoptionbox">
+					<label for="">{tr}Name{/tr}:</label>
+					<input type="text" name="tool_name" id="tool_name" />
+				</div>
+				<div class="adminoptionbox">
+					<label for="">{tr}Label{/tr}:</label>
+					<input type="text" name="tool_label" id="tool_label" />
+				</div>
+				<div class="adminoptionbox">
+					<label for="">{tr}Icon{/tr}:</label>
+					<input type="text" name="tool_icon" id="tool_icon" />
+				</div>
+				<div class="adminoptionbox">
+					<label for="">{tr}Wysiwyg Token{/tr}:</label>
+					<input type="text" name="tool_token" id="tool_token" />
+				</div>
+				<div class="adminoptionbox">
+					<label for="">{tr}Syntax{/tr}:</label>
+					<input type="text" name="tool_syntax" id="tool_syntax" />
+				</div>
+				<div align="center">
+					<input type="submit" value="Save" name="save_tool" id="save_tool">
+					<input type="button" value="Cancel" name="cancel_tool" id="cancel_tool">
+				</div>
+				<input type="hidden" name="section" value="{$loaded}"/>
+				<input type="hidden" name="comments" value="{if $comments}on{/if}"/>
+				<input type="hidden" name="autoreload" value="{if $autoreload}on{/if}"/>
+			</form>
+		</div>
+		<label for="#full-list-c">{tr}Custom Toolbars:{/tr}</label><br/>
+		<div id="qt_filter_div_c" class="qt_filter_div">
+			{tr}Filters{/tr}:
+			<input class="qt-wiki-filter" type="checkbox" checked /><label>{tr}Wiki{/tr}</label>
+			<input class="qt-wys-filter" type="checkbox" checked /><label>{tr}WYSIWYG{/tr}</label>
+		</div>
+		<ul id="full-list-c" class="full">
+		{foreach from=$display_c item=tool}
+			<li class="{$qtelement[$tool].class}">{$qtelement[$tool].html}</li>
+		{/foreach}
+		</ul>
+	</div>
 </div>
 <div class="clearfix">
 {remarksbox title='Tips'}

@@ -112,6 +112,10 @@ abstract class Toolbar
 			'tikiimage',
 		), $plugins );
 	} // }}}
+	
+	public static function saveTool($name, $label, $icon, $token, $syntax) {
+		// lots TODO ;)
+	}
 
 	abstract function getWikiHtml( $areaName );
 
@@ -124,11 +128,6 @@ abstract class Toolbar
 				return false;
 
 		return true;
-	} // }}}
-
-	function getWysiwygToken() // {{{
-	{
-		return $this->wysiwyg;
 	} // }}}
 
 	protected function addRequiredPreference( $prefName ) // {{{
@@ -157,6 +156,31 @@ abstract class Toolbar
 		return $this;
 	} // }}}
 
+	protected function setSyntax( $syntax ) // {{{
+	{
+		return $this;
+	} // }}}
+
+	function getIcon() // {{{
+	{
+		return $this->icon;
+	} // }}}
+
+	function getLabel() // {{{
+	{
+		return $this->label;
+	} // }}}
+
+	function getWysiwygToken() // {{{
+	{
+		return $this->wysiwyg;
+	} // }}}
+	
+	function getSyntax() // {{{
+	{
+		return '';
+	} // }}}
+	
 	function getIconHtml() // {{{
 	{
 		return '<img src="' . htmlentities($this->icon, ENT_QUOTES, 'UTF-8') . '" alt="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '" title="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '" class="icon"/>';
@@ -178,11 +202,6 @@ abstract class Toolbar
 		} else {
 		}
 		return smarty_block_self_link($params, $content, $smarty);
-	} // }}}
-	
-	function getLabel() // {{{
-	{
-		return $this->label;
 	} // }}}
 
 }
@@ -355,6 +374,11 @@ class ToolbarInline extends Toolbar
 		return $tag;
 	} // }}}
 
+	function getSyntax( $syntax ) // {{{
+	{
+		return $this->syntax;
+	} // }}}
+	
 	protected function setSyntax( $syntax ) // {{{
 	{
 		$this->syntax = $syntax;
@@ -368,7 +392,7 @@ class ToolbarInline extends Toolbar
 							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-inline');
 
 	} // }}}
-
+	
 }
 
 class ToolbarBlock extends ToolbarInline // Will change in the future
@@ -747,6 +771,7 @@ class ToolbarWikiplugin extends Toolbar
 		return parent::isAccessible() && $tikilib->plugin_enabled( $this->pluginName );
 	} // }}}
 
+/*	probably not need now?
 	private static function getIcon( $name ) // {{{
 	{
 		// This property could be added to the plugin definition
@@ -754,7 +779,7 @@ class ToolbarWikiplugin extends Toolbar
 		default:
 			return 'pics/icons/plugin.png';
 		}
-	} // }}}
+	} // }}} */
 
 	private static function getToken( $name ) // {{{
 	{
