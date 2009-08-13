@@ -460,7 +460,8 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 
 		// filegals
 		'feature_file_galleries' => 'y',
-		'home_file_gallery' => 0,
+		'home_file_gallery' => 1,
+		'fgal_root_id' => 1,
 		'fgal_use_db' => 'y',
 		'fgal_batch_dir' => '',
 		'fgal_match_regex' => '',

@@ -63,7 +63,7 @@ foreach($types as $type) {
 
 		case 'file galleries':
 		case 'file gallery':
-			$files = $tikilib->list_file_galleries();
+			$files = $tikilib->list_file_galleries( 0, -1, 'name_desc', '', '', $prefs['fgal_root_id'] );
 			foreach($files['data'] as $file) {
 				$res[$type]['objects'][] = list_perms($file['id'], $type);
 			}

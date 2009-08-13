@@ -8,13 +8,17 @@
       {if $galleryId eq 0}
         {tr}Create a File Gallery{/tr}
       {else}
-        {tr}Edit Gallery{/tr}: {$name}
+        {tr}Edit Gallery:{/tr} {if $galleryId eq $prefs.fgal_root_id}
+		{tr}File Galleries{/tr}
+	{else}
+		{$name}
+	{/if}
       {/if}
     {else}
-      {if $galleryId eq 0}
+      {if $galleryId eq $prefs.fgal_root_id}
         {tr}File Galleries{/tr}
       {else}
-        {tr}Gallery{/tr}: {$name}
+        {tr}Gallery:{/tr} {$name}
       {/if}
     {/if}
   {/strip}

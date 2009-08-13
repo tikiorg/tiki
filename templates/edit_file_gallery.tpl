@@ -13,14 +13,26 @@
 {tabset name="list_file_gallery"}
   {tab name="{tr}Properties{/tr}"}
       <table class="normal">
-        <tr><td class="formcolor"><label for="name">{tr}Name{/tr}:</label></td><td class="formcolor"><input type="text" size="50" id="name" name="name" value="{$gal_info.name|escape}" style="width:100%"/><br/><em>{tr}Required for podcasts{/tr}.</em></td></tr>
+        <tr><td class="formcolor"><label for="name">{tr}Name{/tr}:</label></td><td class="formcolor">
+		{if $galleryId eq $prefs.fgal_root_id}
+			<b>{tr}File Galleries{/tr}</b>
+      			<input type="hidden" name="name" value="{$gal_info.name|escape}" />
+		{else}
+			<input type="text" size="50" id="name" name="name" value="{$gal_info.name|escape}" style="width:100%"/><br/><em>{tr}Required for podcasts{/tr}.</em>
+		{/if}
+	</td></tr>
         <tr><td class="formcolor"><label for="fgal_type">{tr}Type{/tr}:</label></td><td class="formcolor">
-          <select name="fgal_type" id="fgal_type">
-            <!-- TODO: make this a configurable list read from database -->
-            <option value="default" {if $gal_info.type eq 'default'}selected="selected"{/if}>{tr}Any file{/tr}</option>
-            <option value="podcast" {if $gal_info.type eq 'podcast'}selected="selected"{/if}>{tr}Podcast (audio){/tr}</option>
-            <option value="vidcast" {if $gal_info.type eq 'vidcast'}selected="selected"{/if}>{tr}Podcast (video){/tr}</option>
-          </select>
+		{if $galleryId eq $prefs.fgal_root_id}
+			{tr}System{/tr}
+      			<input type="hidden" name="fgal_type" value="system" />
+		{else}
+			<select name="fgal_type" id="fgal_type">
+				<!-- TODO: make this a configurable list read from database -->
+				<option value="default" {if $gal_info.type eq 'default'}selected="selected"{/if}>{tr}Any file{/tr}</option>
+				<option value="podcast" {if $gal_info.type eq 'podcast'}selected="selected"{/if}>{tr}Podcast (audio){/tr}</option>
+				<option value="vidcast" {if $gal_info.type eq 'vidcast'}selected="selected"{/if}>{tr}Podcast (video){/tr}</option>
+			</select>
+		{/if}
         </td></tr>
         <tr><td class="formcolor"><label for="description">{tr}Description{/tr}:</label></td><td class="formcolor"><textarea rows="5" cols="40" id="description" name="description" style="width:100%">{$gal_info.description|escape}</textarea><br/><em>{tr}Required for podcasts{/tr}.</em></td></tr>
         <tr><td class="formcolor"><label for="visible">{tr}Gallery is visible to non-admin users{/tr}.<label></td><td class="formcolor"><input type="checkbox" id="visible" name="visible" {if $gal_info.visible eq 'y'}checked="checked"{/if} /></td></tr>
@@ -28,14 +40,14 @@
         <tr><td class="formcolor"><label for="public">{tr}Gallery is public{/tr}.</label></td><td class="formcolor"><input type="checkbox" id="public" name="public" {if $gal_info.public eq 'y'}checked="checked"{/if}/><br /><em>{tr}Any user with permission (not only the gallery owner) can upload files{/tr}.</em></td></tr>
         <tr><td class="formcolor"><label for="lockable">{tr}Files can be locked at download{/tr}.</label> </td><td class="formcolor"><input type="checkbox" id="lockable" name="lockable" {if $gal_info.lockable eq 'y'}checked="checked"{/if}/></td></tr>
         <tr><td class="formcolor"><label for="archives">{tr}Maximum number of archives for each file{/tr}:</label> </td><td class="formcolor"><input size="5" type="text" id="archives" name="archives" value="{$gal_info.archives|escape}" /><br /><em>{tr}Use{/tr} 0={tr}unlimited{/tr}, -1={tr}none{/tr}.</em>
-	{if ! isset($smarty.request.parentId)}
+	{if ! isset($smarty.request.parentId) and $galleryId neq $prefs.fgal_root_id}
         </td></tr>
         <tr><td class="formcolor"><label for="parentId">{tr}Parent gallery{/tr}:</label></td><td class="formcolor">
           <select name="parentId" id="parentId">
-            <option value="-1" {if $parentId == -1} selected="selected"{/if}>{tr}none{/tr}</option>
+            <option value="{$prefs.fgal_root_id}"{if $parentId eq $prefs.fgal_root_id} selected="selected"{/if}>{tr}none{/tr}</option>
             {foreach from=$all_galleries key=key item=item}
 							{if $galleryId neq $item.id}
-              <option value="{$item.id}" {if $parentId == $item.id} selected="selected"{/if}>{if $item.parentName}{$item.parentName|escape} &gt; {/if}{$item.name|escape}</option>
+              <option value="{$item.id}"{if $parentId eq $item.id} selected="selected"{/if}>{if $item.parentName}{$item.parentName|escape} &gt; {/if}{$item.name|escape}</option>
 							{/if}
             {/foreach}
           </select>

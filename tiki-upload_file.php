@@ -373,7 +373,7 @@ if (empty($_REQUEST['fileId'])) {
 	$cacheName = $filegallib->get_all_galleries_cache_name($user);
 	$cacheType = $filegallib->get_all_galleries_cache_type();
 	if (!$cachelib->isCached($cacheName, $cacheType)) {
-		$galleries = $filegallib->list_file_galleries(0, -1, 'name_asc', $user, '', -1, false, true, false, false, false, true, false);
+		$galleries = $filegallib->list_file_galleries(0, -1, 'name_asc', $user, '', $prefs['fgal_root_id'], false, true, false, false, false, true, false);
 		$cachelib->cacheItem($cacheName, serialize($galleries), $cacheType);
 	} else {
 		$galleries = unserialize($cachelib->getCached($cacheName, $cacheType));

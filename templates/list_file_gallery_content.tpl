@@ -45,7 +45,7 @@
 
       {if $propname eq 'name' and ( $gal_info.show_name eq 'a' or $gal_info.show_name eq 'f' ) }
         {assign var=nbCols value=`$nbCols+1`}
-        <th{$td_args}>{self_link _sort_arg=$sort_arg _sort_field='filename'}{if empty($galleryId)}{tr}Name{/tr}{else}{tr}Filename{/tr}{/if}{/self_link}</th>
+        <th{$td_args}>{self_link _sort_arg=$sort_arg _sort_field='filename'}{tr}Filename{/tr}{/self_link}</th>
       {/if}
       {if !($galleryId eq 0 and $propname eq 'lockedby') and ($propname neq 'name' or ( $gal_info.show_name eq 'a' or $gal_info.show_name eq 'n' )) }
         {assign var=nbCols value=`$nbCols+1`}

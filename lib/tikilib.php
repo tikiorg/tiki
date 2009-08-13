@@ -2077,7 +2077,8 @@ class TikiLib extends TikiDb_Bridge {
 	// FILE GALLERIES ////
 	/*shared*/
 	function list_files($offset=0, $maxRecords=-1, $sort_mode='created_desc', $find='') {
-		return $this->get_files($offset, $maxRecords, $sort_mode, $find, -1, false, false, true, true, false, false, true, true);
+		global $prefs;
+		return $this->get_files($offset, $maxRecords, $sort_mode, $find, $prefs['fgal_root_id'], false, false, true, true, false, false, true, true);
 	}
 
 	/*shared*/
@@ -2117,19 +2118,13 @@ class TikiLib extends TikiDb_Bridge {
 	 */
 	function get_files($offset, $maxRecords, $sort_mode, $find, $galleryId=-1, $with_archive=false, $with_subgals=false, $with_subgals_size=true, $with_files=true, $with_files_data=false, $with_parent_name=false, $with_files_count=true, $recursive=false, $my_user='', $keep_subgals_together=true, $parent_is_file=false) {
 		global $user, $tiki_p_admin_file_galleries;
+		global $filegallib; require_once 'lib/filegals/filegallib.php';
+
 		$f_jail_bind = array();
 		$g_jail_bind = array();
 		$bindvars = array();
 
 		if ( ( ! $with_files && ! $with_subgals ) || ( $parent_is_file && $galleryId <= 0 ) ) return array();
-
-		// galleryId == 0 is a way to get only the main galleries
-		if ( $galleryId == 0 ) {
-			$galleryId = -1;
-			$with_files = false;
-			$with_archive = false;
-			$with_subgals = true;
-		}
 
 		$fileId = -1;
 		if ( $parent_is_file ) {
@@ -2137,8 +2132,15 @@ class TikiLib extends TikiDb_Bridge {
 			$galleryId = -2;
 		}
 
-		// recursive mode is only available for the whole tree
-		$recursive = ( $recursive && $galleryId == -1 );
+		if ( $recursive && ! is_array($galleryId) ) {
+			$idTree = array();
+			$filegallib->getGalleryIds( $idTree, $galleryId, 'list' );
+			$galleryId =& $idTree;
+		} else {
+			// recursive mode is only available for one parent gallery (i.e. not implemented when $galleryId is an array of multiple ids)
+			$recursive = false;
+		}
+
 		$with_subgals_size = ( $with_subgals && $with_subgals_size );
 		if ( $my_user == '' ) $my_user = $user;
 
@@ -2218,7 +2220,7 @@ class TikiLib extends TikiDb_Bridge {
 		if ( is_array($galleryId) ) {
 			$galleryId_str = ' in ('.implode(',', array_fill(0, count($galleryId),'?')).')';
 			$bindvars = array_merge($galleryId, $bindvars);
-		} elseif ( $galleryId >= -1 && ! $recursive ) {
+		} elseif ( $galleryId >= -1 ) {
 			$galleryId_str = '=?';
 			if ( $with_subgals ) array_unshift($bindvars, $galleryId);
 			if ( $with_files ) array_unshift($bindvars, $galleryId);
@@ -2401,10 +2403,8 @@ class TikiLib extends TikiDb_Bridge {
 		return array('data' => $ret, 'cant' => $cant);
 	}
 
-	function list_file_galleries($offset = 0, $maxRecords = -1, $sort_mode = 'name_desc', $user='', $find='', $parentId=-1,
-								 $with_archive=false, $with_subgals=true, $with_subgals_size=false, $with_files=false, $with_files_data=false, $with_parent_name=true, $with_files_count=true,$recursive=true) {
-		return $this->get_files($offset, $maxRecords, $sort_mode, $find, $parentId,
-								$with_archive, $with_subgals, $with_subgals_size, $with_files, $with_files_data, $with_parent_name, $with_files_count, $recursive, $user);
+	function list_file_galleries($offset = 0, $maxRecords = -1, $sort_mode = 'name_desc', $user='', $find='', $parentId=-1, $with_archive=false, $with_subgals=true, $with_subgals_size=false, $with_files=false, $with_files_data=false, $with_parent_name=true, $with_files_count=true,$recursive=true) {
+		return $this->get_files($offset, $maxRecords, $sort_mode, $find, $parentId, $with_archive, $with_subgals, $with_subgals_size, $with_files, $with_files_data, $with_parent_name, $with_files_count, $recursive, $user);
 	}
 
 	/*shared*/
