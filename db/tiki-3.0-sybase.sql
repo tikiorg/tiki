@@ -3968,7 +3968,7 @@ CREATE TABLE "tiki_tracker_fields" (
   "trackerId" numeric(12,0) default '0' NOT NULL,
   "name" varchar(255) default NULL NULL,
   "options" text default '',
-  "type" varchar(15) default NULL NULL,
+  "type" char(15) default NULL NULL,
   "isMain" char(1) default NULL NULL,
   "isTblVisible" char(1) default NULL NULL,
   "position" numeric(4,0) default NULL NULL,
@@ -5413,7 +5413,6 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 go
 
 
-
 INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_workflow', 'Can admin workflow processes', 'admin', 'workflow', 'y')
 go
 
@@ -5728,6 +5727,8 @@ UPDATE users_permissions SET feature_check = 'feature_wiki_comments' WHERE permN
 go
 
 
+
+--Added 20081018
 UPDATE users_permissions SET feature_check = 'feature_wiki_export' WHERE permName = 'tiki_p_export_wiki'
 go
 
@@ -5826,7 +5827,7 @@ go
 CREATE  INDEX "users_users_openid_url" ON "users_users"("openid_url")
 go
 
--- Administrator account
+------ Administrator account
 INSERT INTO "users_users" ("email","login","password","hash") VALUES ('','admin','admin','f6fdffe48c908deb0f4c3bd36c032e72')
 go
 
@@ -7327,6 +7328,7 @@ CREATE TABLE `tiki_sefurl_regex_out` (
   `comment` varchar(256),
   `order` numeric(11,0) NULL default 0,
   PRIMARY KEY(`id`),
+  UNIQUE KEY `left` (`left`(256)),
   "INDEX" `idx1` (silent, type, feature(30))
 )
 go

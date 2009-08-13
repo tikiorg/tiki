@@ -1,6 +1,6 @@
--- --------------------------------------------------------
--- Database : tikiwiki
--- --------------------------------------------------------
+# --------------------------------------------------------
+# Database : tikiwiki
+# --------------------------------------------------------
 
 DROP TABLE IF EXISTS galaxia_activities;
 CREATE TABLE galaxia_activities (
@@ -2049,7 +2049,7 @@ CREATE TABLE tiki_searchindex(
   KEY location (location(50), page(200))
 ) ENGINE=MyISAM;
 
--- LRU (last recently used) list for searching parts of words
+# LRU (last recently used) list for searching parts of words
 DROP TABLE IF EXISTS tiki_searchsyllable;
 CREATE TABLE tiki_searchsyllable(
   syllable varchar(80) NOT NULL default '',
@@ -2059,7 +2059,7 @@ CREATE TABLE tiki_searchsyllable(
   KEY lastUsed (lastUsed)
 ) ENGINE=MyISAM;
 
--- searchword caching table for search syllables
+# searchword caching table for search syllables
 DROP TABLE IF EXISTS tiki_searchwords;
 CREATE TABLE tiki_searchwords(
   syllable varchar(80) NOT NULL default '',
@@ -3115,6 +3115,8 @@ UPDATE users_permissions SET feature_check = 'feature_wiki_ratings' WHERE permNa
 UPDATE users_permissions SET feature_check = 'feature_wiki_ratings' WHERE permName = 'tiki_p_wiki_view_ratings';
 UPDATE users_permissions SET feature_check = 'feature_wiki_ratings' WHERE permName = 'tiki_p_wiki_vote_ratings';
 UPDATE users_permissions SET feature_check = 'feature_wiki_comments' WHERE permName = 'tiki_p_wiki_view_comments';
+
+#Added 20081018
 UPDATE users_permissions SET feature_check = 'feature_wiki_export' WHERE permName = 'tiki_p_export_wiki';
 UPDATE users_permissions SET feature_check = 'feature_history' WHERE permName = 'tiki_p_wiki_view_history';
 UPDATE users_permissions SET feature_check = 'feature_wiki_attachments' WHERE permName = 'tiki_p_wiki_attach_files';
@@ -3170,7 +3172,7 @@ CREATE TABLE users_users (
   KEY openid_url (openid_url)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
--- Administrator account
+### Administrator account
 INSERT INTO users_users(email,login,password,hash) VALUES ('','admin','admin',md5('adminadmin'));
 UPDATE users_users set currentLogin=lastLogin, registrationDate=lastLogin;
 INSERT INTO tiki_user_preferences (user,prefName,value) VALUES ('admin','realName','System Administrator');
@@ -3225,7 +3227,7 @@ CREATE TABLE tiki_quicktags (
   KEY taglabel (taglabel)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
--- wiki
+# wiki
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('  text, bold','__text__','pics/icons/text_bold.png','wiki');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('  text, italic','\'\'text\'\'','pics/icons/text_italic.png','wiki');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('  text, underline','===text===','pics/icons/text_underline.png','wiki');
@@ -3249,7 +3251,7 @@ INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('code','popup_plugin_form("code")','pics/icons/page_white_code.png','wiki');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('flash','popup_plugin_form("flash")','pics/icons/page_white_actionscript.png','wiki');
 
--- maps
+# maps
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('New wms Metadata','METADATA\r\n		\"wms_name\" \"myname\"\r\n 	"wms_srs" "EPSG:4326"\r\n 	"wms_server_version" " "\r\n 	"wms_layers" "mylayers"\r\n 	"wms_request" "myrequest"\r\n 	"wms_format" " "\r\n 	"wms_time" " "\r\n END', 'pics/icons/tag_blue_add.png','maps');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('New Class', 'CLASS\r\n EXPRESSION ()\r\n SYMBOL 0\r\n OUTLINECOLOR\r\n COLOR\r\n NAME "myclass" \r\nEND #end of class', 'pics/icons/application_add.png','maps');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('New Projection','PROJECTION\r\n "init=epsg:4326"\r\nEND','pics/icons/image_add.png','maps');
@@ -3263,7 +3265,7 @@ INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('New Outputformat','OUTPUTFORMAT\r\n NAME\r\n DRIVER " "\r\n MIMETYPE "myimagetype"\r\n IMAGEMODE RGB\r\n EXTENSION "png"\r\nEND','pics/icons/newspaper_go.png','maps');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('New Mapfile','#\r\n# Start of mapfile\r\n#\r\nNAME MYMAPFLE\r\n STATUS ON\r\nSIZE \r\nEXTENT\r\nUNITS \r\nSHAPEPATH " "\r\nIMAGETYPE " "\r\nFONTSET " "\r\nIMAGECOLOR -1 -1 -1\r\n\r\n#remove this text and add objects here\r\n\r\nEND # end of mapfile','pics/icons/world_add.png','maps');
 
--- newsletters
+# newsletters
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('  text, bold','__text__','pics/icons/text_bold.png','newsletters');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('  text, italic','\'\'text\'\'','pics/icons/text_italic.png','newsletters');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('  text, underline','===text===','pics/icons/text_underline.png','newsletters');
@@ -3277,7 +3279,7 @@ INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('image','popup_plugin_form("img")','pics/icons/picture.png','newsletters');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES (' deleted','--text--','pics/icons/text_strikethrough.png','newsletters');
 
--- trackers
+# trackers
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('  text, bold','__text__','pics/icons/text_bold.png','trackers');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('  text, italic','\'\'text\'\'','pics/icons/text_italic.png','trackers');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('  text, underline','===text===','pics/icons/text_underline.png','trackers');
@@ -3299,7 +3301,7 @@ INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('code','popup_plugin_form("code")','pics/icons/page_white_code.png','trackers');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('flash','popup_plugin_form("flash")','pics/icons/page_white_actionscript.png','trackers');
 
--- blogs
+# blogs
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('  text, bold','__text__','pics/icons/text_bold.png','blogs');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('  text, italic','\'\'text\'\'','pics/icons/text_italic.png','blogs');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('  text, underline','===text===','pics/icons/text_underline.png','blogs');
@@ -3321,7 +3323,7 @@ INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('code','popup_plugin_form("code")','pics/icons/page_white_code.png','blogs');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('flash','popup_plugin_form("flash")','pics/icons/page_white_actionscript.png','blogs');
 
--- calendar
+# calendar
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('  text, bold','__text__','pics/icons/text_bold.png','calendar');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('  text, italic','\'\'text\'\'','pics/icons/text_italic.png','calendar');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('  text, underline','===text===','pics/icons/text_underline.png','calendar');
@@ -3340,7 +3342,7 @@ INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('image','popup_plugin_form("img")','pics/icons/picture.png','calendar');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES (' deleted','--text--','pics/icons/text_strikethrough.png','calendar');
 
--- articles
+# articles
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('  text, bold','__text__','pics/icons/text_bold.png','articles');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('  text, italic','\'\'text\'\'','pics/icons/text_italic.png','articles');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('  text, underline','===text===','pics/icons/text_underline.png','articles');
@@ -3362,7 +3364,7 @@ INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('code','popup_plugin_form("code")','pics/icons/page_white_code.png','articles');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('flash','popup_plugin_form("flash")','pics/icons/page_white_actionscript.png','articles');
 
--- faqs
+# faqs
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('  text, bold','__text__','pics/icons/text_bold.png','faqs');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('  text, italic','\'\'text\'\'','pics/icons/text_italic.png','faqs');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('  text, underline','===text===','pics/icons/text_underline.png','faqs');
@@ -3381,7 +3383,7 @@ INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('image','popup_plugin_form("img")','pics/icons/picture.png','faqs');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES (' deleted','--text--','pics/icons/text_strikethrough.png','faqs');
 
--- forums
+# forums
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('  text, bold','__text__','pics/icons/text_bold.png','forums');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('  text, italic','\'\'text\'\'','pics/icons/text_italic.png','forums');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('  text, underline','===text===','pics/icons/text_underline.png','forums');
@@ -3403,7 +3405,7 @@ INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('code','popup_plugin_form("code")','pics/icons/page_white_code.png','forums');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('flash','popup_plugin_form("flash")','pics/icons/page_white_actionscript.png','forums');
 
--- Translated objects table
+# Translated objects table
 DROP TABLE IF EXISTS tiki_translated_objects;
 CREATE TABLE tiki_translated_objects (
   traId int(14) NOT NULL auto_increment,
@@ -3760,6 +3762,7 @@ CREATE TABLE `tiki_sefurl_regex_out` (
   `comment` varchar(256),
   `order` int(11) NULL default 0,
   PRIMARY KEY(`id`),
+  UNIQUE KEY `left` (`left`(256)),
   INDEX `idx1` (silent, type, feature(30))
 );
 INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`) VALUES('tiki-index.php\\?page=(.+)', '$1', 'wiki', 'feature_wiki');
