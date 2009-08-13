@@ -81,6 +81,8 @@ foreach( $current as &$line ) {
 	$usedqt = array_merge($usedqt,$line);
 }
 
+$customqt = Toolbar::getCustomList();
+
 foreach( $qtlist as $name ) {
 	$used = false;
 	if (in_array($name, $usedqt) && $name != '-') {
@@ -143,6 +145,8 @@ var item;
 });
 \$jq('#full-list-c').sortable({	// custom tools list
 	connectWith: '.lists'
+}).children().each(function() {	// add double click action
+	\$jq(this).dblclick(function() { showToolEditForm(this); });
 });
 \$jq('#toolbar_edit_div #cancel_tool').click(function() {
 	\$jq('#toolbar_edit_div').hide();
@@ -203,7 +207,7 @@ JS
 
 $display_w = array_diff($qt_w_list,$usedqt);
 $display_p = array_diff($qt_p_list,$usedqt);
-//$qtlists = array_chunk($displayedqt,ceil(sizeof($displayedqt)/$nol));
+$display_c = array_diff($customqt,$usedqt);
 
 $headerlib->add_cssfile('css/admin.css');
 
@@ -220,6 +224,7 @@ $smarty->assign( 'sections', $sections );
 $smarty->assign_by_ref('qtelement',$qtelement);
 $smarty->assign_by_ref('display_w',$display_w);
 $smarty->assign_by_ref('display_p',$display_p);
+$smarty->assign_by_ref('display_c',$display_c);
 //$smarty->assign_by_ref('qtlists',$qtlists);
 $smarty->assign_by_ref('current',$current);
 $smarty->assign( 'mid', 'tiki-admin_toolbars.tpl' );

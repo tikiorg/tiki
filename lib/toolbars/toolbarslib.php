@@ -20,7 +20,9 @@ abstract class Toolbar
 
 	public static function getTag( $tagName ) // {{{
 	{
-		if( $tag = ToolbarInline::fromName( $tagName ) )
+		if( $tag = Toolbar::getCustomTool( $tagName ) )
+			return $tag;
+		elseif( $tag = ToolbarInline::fromName( $tagName ) )
 			return $tag;
 		elseif( $tag = ToolbarBlock::fromName( $tagName ) )
 			return $tag;
@@ -50,8 +52,13 @@ abstract class Toolbar
 	{
 		global $tikilib;
 		$plugins = $tikilib->plugin_get_list();
+		
+		$custom = Toolbar::getCustomList();
+		
 		foreach( $plugins as & $name )
 			$name = "wikiplugin_$name";
+		
+		$plugins = array_merge($plugins, $custom);
 
 		return array_merge( array(
 			'-',
@@ -113,8 +120,49 @@ abstract class Toolbar
 		), $plugins );
 	} // }}}
 	
+	public static function getCustomList()
+	{
+
+		global $prefs;
+		if( isset($prefs['toolbar_custom_list']) ) {
+			$custom = @unserialize($prefs['toolbar_custom_list']);
+		}
+		
+		sort($custom);
+
+		return $custom;
+	}
+	
+	public static function getCustomTool($name) {
+		global $prefs;
+		if( isset($prefs["toolbar_tool_$name"]) ) {
+			$data = unserialize($prefs["toolbar_tool_$name"]);
+			$tag = ToolbarInline::fromData( $name, $data );
+			return $tag;
+		} else {
+			return null;
+		}
+	
+	}
+
 	public static function saveTool($name, $label, $icon, $token, $syntax) {
-		// lots TODO ;)
+		global $prefs, $tikilib;
+		
+		$name = strtolower( $name );
+		$data = array( 'name' => $name, 'label' => $label, 'icon' => $icon, 'token' => $token, 'syntax' => $syntax);
+
+		$prefName = "toolbar_tool_$name";
+		$tikilib->set_preference( $prefName, serialize( $data ) );
+		
+		$list = array();
+		if( isset($prefs['toolbar_custom_list']) ) {
+			$list = unserialize($prefs['toolbar_custom_list']);
+		}
+		if( ! in_array( $name, $list ) ) {
+			$list[] = $name;
+			$tikilib->set_preference( 'toolbar_custom_list', serialize($list) );
+		}
+	
 	}
 
 	abstract function getWikiHtml( $areaName );
@@ -297,6 +345,17 @@ class ToolbarFckOnly extends Toolbar
 class ToolbarInline extends Toolbar
 {
 	protected $syntax;
+
+	public static function fromData( $tagName, $data ) { // {{{
+		
+		$tag = new self;
+		$tag->setLabel( $data['label'] )
+			->setWysiwygToken( $data['token'] )
+			->setIcon( !empty($data['icon']) ? $data['icon'] : 'pics/icons/shading.png' )
+			->setSyntax( $data['syntax'] );
+		
+		return $tag;
+	}	// {{{
 
 	public static function fromName( $tagName ) // {{{
 	{
@@ -822,7 +881,7 @@ class ToolbarsList
 		}
 
 		return $list;
-	} // }}}
+	} // }}}	
 
 	public	function addTag ( $name, $unique = false ) {
 		if ( $unique && $this->contains($name) ) {
