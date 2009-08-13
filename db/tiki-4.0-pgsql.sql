@@ -1893,7 +1893,8 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'o','Contribution','tiki-admin_contribution.php',1265,'feature_contribution','tiki_p_admin_contribution','',0);
 
-INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Workspaces','tiki-admin.php?page=workspaces',1270,'feature_workspaces','tiki_p_admin','',0);
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'o','Workspaces','tiki-admin.php?page=workspaces',1270,'feature_workspaces','tiki_p_admin','',0);
+
 
 
 
@@ -2241,7 +2242,6 @@ CREATE TABLE "tiki_quizzes" (
   "publishDate" bigint default NULL,
   "expireDate" bigint default NULL,
   "bDeleted" char(1) default NULL,
-  "nVersion" smallint NOT NULL,
   "nAuthor" smallint default NULL,
   "bOnline" char(1) default NULL,
   "bRandomQuestions" char(1) default NULL,
@@ -2261,7 +2261,7 @@ CREATE TABLE "tiki_quizzes" (
   "sData" text,
   "sEpilogue" text,
   "passingperct" smallint default 0,
-  PRIMARY KEY ("quizId","nVersion")
+  PRIMARY KEY ("quizId")
 ) ;
 
 
