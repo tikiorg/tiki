@@ -221,7 +221,13 @@ else
 	$maxRecords = $_REQUEST['maxRecords']; 
 	$offset = $_REQUEST['offset'];
 	
-	$listWS = $wslib->list_all_ws($offset, $maxRecords, 'name_asc', "", "", "");
+	$listWS_temp = $wslib->list_all_ws($offset, $maxRecords, 'name_asc', "", "", "");
+	$listWS = array('data' =>array(), 'cant'=>$listWS_temp['cant']);
+	foreach ($listWS_temp["data"] as $res)
+	{
+		$res['href_edit'] = "tiki-manage-workspaces.php?editWS=".$res["categId"];
+		$listWS['data'][] = $res;
+	}
 	$smarty->assign('listWS', $listWS["data"]);
 	
 	if ($offset > 0)

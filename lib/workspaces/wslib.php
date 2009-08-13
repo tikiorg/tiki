@@ -792,7 +792,6 @@ class wslib extends CategLib
 		$res["tepath"] = $tepath;
 		$res["deep"] = count($tepath);
 		$res['name'] = $this->get_category_name($res['categId']);
-		$res['href_edit'] = "tiki-manage-workspaces.php?editWS=".$res["categId"];
 		global $userlib;
 		
 		$ret["$categpathforsort"] = $res;
