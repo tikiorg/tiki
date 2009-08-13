@@ -126,9 +126,10 @@ abstract class Toolbar
 		global $prefs;
 		if( isset($prefs['toolbar_custom_list']) ) {
 			$custom = @unserialize($prefs['toolbar_custom_list']);
+			sort($custom);
+		} else {
+			$custom = array();
 		}
-		
-		sort($custom);
 
 		return $custom;
 	}
