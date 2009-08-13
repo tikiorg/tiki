@@ -2801,7 +2801,6 @@ CREATE TABLE "tiki_quizzes" (
   "publishDate" number(14) default NULL,
   "expireDate" number(14) default NULL,
   "bDeleted" char(1) default NULL,
-  "nVersion" number(4) NOT NULL,
   "nAuthor" number(4) default NULL,
   "bOnline" char(1) default NULL,
   "bRandomQuestions" char(1) default NULL,
@@ -2821,7 +2820,7 @@ CREATE TABLE "tiki_quizzes" (
   "sData" clob,
   "sEpilogue" clob,
   "passingperct" number(4) default 0,
-  PRIMARY KEY (quizId, nVersion)
+  PRIMARY KEY (quizId)
 ) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_quizzes_trig" BEFORE INSERT ON "tiki_quizzes" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
@@ -3377,7 +3376,7 @@ CREATE TABLE "tiki_tracker_fields" (
   "trackerId" number(12) default '0' NOT NULL,
   "name" varchar(255) default NULL,
   "options" clob,
-  "type" char(15) default NULL,
+  "type" varchar(15) default NULL,
   "isMain" char(1) default NULL,
   "isTblVisible" char(1) default NULL,
   "position" number(4) default NULL,
@@ -5590,7 +5589,6 @@ CREATE TABLE `tiki_sefurl_regex_out` (
   `comment` varchar(256),
   `order` number(11) NULL default 0,
   PRIMARY KEY(`id`),
-  UNIQUE KEY `left` (`left`(256)),
   "INDEX" `idx1` (silent, type, feature(30))
 );
 

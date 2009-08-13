@@ -1926,7 +1926,6 @@ CREATE TABLE tiki_quizzes (
   publishDate int(14) default NULL,
   expireDate int(14) default NULL,
   bDeleted char(1) default NULL,
-  nVersion int(4) NOT NULL,
   nAuthor int(4) default NULL,
   bOnline char(1) default NULL,
   bRandomQuestions char(1) default NULL,
@@ -1946,7 +1945,7 @@ CREATE TABLE tiki_quizzes (
   sData text,
   sEpilogue text,
   passingperct int(4) default 0,
-  PRIMARY KEY (quizId, nVersion)
+  PRIMARY KEY (quizId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS tiki_received_articles;
@@ -2346,7 +2345,7 @@ CREATE TABLE tiki_tracker_fields (
   trackerId int(12) NOT NULL default '0',
   name varchar(255) default NULL,
   options text,
-  type char(15) default NULL,
+  type varchar(15) default NULL,
   isMain char(1) default NULL,
   isTblVisible char(1) default NULL,
   position int(4) default NULL,
@@ -3763,7 +3762,6 @@ CREATE TABLE `tiki_sefurl_regex_out` (
   `comment` varchar(256),
   `order` int(11) NULL default 0,
   PRIMARY KEY(`id`),
-  UNIQUE KEY `left` (`left`(256)),
   INDEX `idx1` (silent, type, feature(30))
 );
 INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`) VALUES('tiki-index.php\\?page=(.+)', '$1', 'wiki', 'feature_wiki');
