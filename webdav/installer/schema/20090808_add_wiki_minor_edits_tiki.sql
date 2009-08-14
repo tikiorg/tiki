@@ -1,0 +1,1 @@
+alter table tiki_pages add column version_minor int(8) NOT NULL DEFAULT 0;
