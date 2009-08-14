@@ -176,16 +176,9 @@
 				<tr class="formcolor">
 					<td class="formcolor">
 						{tr}Data HTML{/tr}:
-						<br /><br />
-						{include file='textareasize.tpl' area_name='editwiki' formId='editpageform'}
-						{if $prefs.quicktags_over_textarea neq 'y'}
-							{quicktags area_name='data'}
-						{/if}
 					</td>
 					<td class="formcolor">
-						{if $prefs.quicktags_over_textarea eq 'y'}
-							{quicktags area_name='data'}
-						{/if}
+						{toolbars area_name='data'}
 						<textarea id='editwiki' name="data" rows="{$rows}" cols="{$cols}">{$info.data|escape}</textarea>
 						<input type="hidden" name="rows" value="{$rows}"/>
 						<input type="hidden" name="cols" value="{$cols}"/>

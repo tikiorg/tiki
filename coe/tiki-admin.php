@@ -29,6 +29,13 @@ function simple_set_toggle($feature) {
 				'st' => 1,
 				'name' => $feature
 			);
+			switch ($feature) {
+			    case 'feature_workspaces':
+				global $wslib; include_once ('lib/workspaces/wslib.php');
+				$wslib->init_ws();
+				break;
+			}
+				
 		}
 	} else {
 		if ((!isset($prefs[$feature]) || $prefs[$feature] != 'n')) {
@@ -307,6 +314,11 @@ if (isset($_REQUEST["page"])) {
 		$description = 'Search engine friendly url';
 		$helpUrl = "Rewrite+Rules";
 		include_once ('tiki-admin_include_sefurl.php');
+	} else if ($adminpPage == 'workspaces') {
+	    	$admintitle = 'Workspaces';
+		$description = 'Workspaces in Tiki';
+		$helpUrl = "Workspaces";
+		include_once ('tiki-admin_include_workspaces.php');
 	} else {
 		$helpUrl = '';
 	}

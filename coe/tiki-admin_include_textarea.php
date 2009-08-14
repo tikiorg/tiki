@@ -27,13 +27,13 @@ if (isset($_REQUEST["textareasetup"]) && (!isset($_COOKIE['tab']) || $_COOKIE['t
 		"feature_smileys",
 		"popupLinks",
 		"feature_autolinks",
-		"quicktags_over_textarea",
 		"feature_wiki_protect_email",
 		"feature_wiki_ext_icon",
 		"feature_wiki_paragraph_formatting",
 		"feature_wiki_paragraph_formatting_add_br",
 		"feature_wiki_monosp",
 		"wiki_edit_plugin",
+		'section_comments_parse',
 	);
 	foreach($pref_toggles as $toggle) {
 		simple_set_toggle($toggle);

@@ -257,13 +257,6 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 <td class="formlabel right" >{$cur_field.name}{if $cur_field.isMandatory eq 'y'} *{/if}</td><td >
 {else}
 <tr class="formcolor"><td class="formlabel" >{$cur_field.name}{if $cur_field.isMandatory eq 'y'} *{/if}
-{if $cur_field.type eq 'a' and $cur_field.options_array[0] eq 1}
-  <br />
-
-  {if $prefs.quicktags_over_textarea neq 'y'}
-    {quicktags qtnum=$cur_field.id area_name="area_"|cat:$cur_field.id}
-  {/if}
-{/if}
 </td><td colspan="3" class="formcontent" >
 {/if}
 {/if}

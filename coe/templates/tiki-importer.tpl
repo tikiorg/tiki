@@ -12,7 +12,7 @@
         {/remarksbox}
     {/if}
     {remarksbox type="note" title="{tr}Note:{/tr}"}
-	{tr}Depending on the size of the file from the source software, the import process may take a while to complete. This might be a problem according to your PHP and web server settings. This script tries to change the relevant settings but there are some settings that the script cannot change. So, if you are having problems with the script, please try to increase the value of the following settings: max_input_time, post_max_size, upload_max_filesize, memory_limit. It is recommended that you run this script on a server where you can change the values of those settings (if needed).{/tr}
+	{tr}Depending on the size of the file from the source software, the import process may take a while to complete. This might be a problem according to your PHP and web server settings. This script tries to change the relevant settings but there are some settings that the script cannot change. So, if you are having problems with the script, please try to increase the value of the following PHP settings: max_input_time, max_execution_time (this setting is limited by the web server setting, if you are running Apache also change its Timeout setting), post_max_size, upload_max_filesize, memory_limit. It is recommended that you run this script on a server where you can change the values of those settings (if needed).{/tr}
     {/remarksbox}
        
     <br />
@@ -29,7 +29,7 @@
     </form>
 {elseif isset($softwareSpecificOptions)}
     <h4>Import options:</h4>
-    <form method="post" enctype="multipart/form-data" action="tiki-importer.php" onsubmit="return confirm('{tr}ATTENTION: make sure to have a backup before running the script. If you do not have a backup this is the last chance to cancel the importer by clicking on the cancel button.{/tr}');";>
+    <form method="post" enctype="multipart/form-data" action="tiki-importer.php" onsubmit="return confirm('{tr}WARNING: make sure to have a backup before running the script. If you do not have a backup this is the last chance to cancel the importer by clicking on the cancel button.{/tr}');";>
         <input type="hidden" name="importerClassName" value="{$importerClassName}"/>
         {foreach from=$importerOptions item=option}
             {if $option.type eq 'checkbox'}
@@ -54,6 +54,11 @@
     <p>{$importFeedback.importedPages} {tr}pages imported from a total of{/tr} {$importFeedback.totalPages}</p>
     <p>{tr}You can see the list of wiki pages in your site{/tr} <a href="tiki-listpages.php">{tr}here{/tr}</a></p>
 
+    {if !empty($importErrors)}
+        <br /><br />
+        <p><b>{tr}Errors:{/tr}</b></p>
+        <textarea rows="15" cols="100">{$importErrors}</textarea> 
+    {/if}
     <br /><br />
     <p><b>{tr}Importer log:{/tr}</b></p>
     <textarea rows="15" cols="100">{$importLog}</textarea>

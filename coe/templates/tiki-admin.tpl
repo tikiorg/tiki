@@ -18,7 +18,14 @@
 </div>
 {* The rest determines which page to include using "page" GET parameter. Default : list-sections
 Add a value in first check when you create a new admin page. *}
-{if in_array($adminpage, array("features", "general", "login", "wiki", "gal", "fgal", "cms", "polls", "search", "blogs", "forums", "faqs", "trackers", "webmail", "rss", "directory", "userfiles", "maps", "metatags", "wikiatt","score", "community", "messages", "calendar","intertiki","freetags","gmap", "i18n","wysiwyg","copyright","category", "module", "look", "textarea", "multimedia", "ads", "profiles", "semantic", "plugins", "webservices", 'sefurl'))}
+{if in_array($adminpage, array("features", "general", "login", "wiki",
+"gal", "fgal", "cms", "polls", "search", "blogs", "forums", "faqs",
+"trackers", "webmail", "rss", "directory", "userfiles", "maps",
+"metatags", "wikiatt","score", "community", "messages",
+"calendar","intertiki","freetags","gmap",
+"i18n","wysiwyg","copyright","category", "module", "look", "textarea",
+"multimedia", "ads", "profiles", "semantic", "plugins", "webservices",
+'sefurl', 'workspaces'))}
   {assign var="include" value=$smarty.get.page}
 {else}
   {assign var="include" value="list-sections"}
@@ -119,7 +126,7 @@ Add a value in first check when you create a new admin page. *}
 	<a href="tiki-admin_cookies.php">{tr}Cookies{/tr}</a> 
 	{if $prefs.feature_hotwords eq 'y'} <a href="tiki-admin_hotwords.php">{tr}Hotwords{/tr}</a> {/if}
 	<a href="tiki-list_cache.php">{tr}Cache{/tr}</a> 
-	<a href="tiki-admin_quicktags.php">{tr}QuickTags{/tr}</a> 
+	<a href="tiki-admin_toolbars.php">{tr}Toolbars{/tr}</a> 
 	<a href="tiki-admin_content_templates.php">{tr}Content Templates{/tr}</a> 
 	<a href="tiki-admin_dsn.php">{tr}DSN{/tr}</a> 
 	{if $prefs.feature_dynamic_content eq 'y'}<a href="tiki-list_contents.php">{tr}Dynamic Content{/tr}</a> {/if}

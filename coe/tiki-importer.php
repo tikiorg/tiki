@@ -22,8 +22,10 @@ if (!empty($_POST['importerClassName'])) {
 if (isset($_SESSION['tiki_importer_feedback'])) {
     $smarty->assign('importFeedback', $_SESSION['tiki_importer_feedback']);
     $smarty->assign('importLog', $_SESSION['tiki_importer_log']);
+    $smarty->assign('importErrors', $_SESSION['tiki_importer_errors']);
     unset($_SESSION['tiki_importer_feedback']);
     unset($_SESSION['tiki_importer_log']);
+    unset($_SESSION['tiki_importer_errors']);
 } else if (!empty($_FILES['importFile'])) {
     // third step: start the importing process
 

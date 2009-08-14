@@ -208,15 +208,9 @@
 		<tr class="formcolor">
 			<td>
 				{tr}Heading{/tr}
-				<br />
-				{if $prefs.quicktags_over_textarea neq 'y'}
-					{quicktags area_name='heading' qtnum='1'}
-				{/if}
 			</td>
 			<td>
-				{if $prefs.quicktags_over_textarea eq 'y'}
-					{quicktags area_name='heading' qtnum='1'}
-				{/if}
+				{toolbars area_name='heading' qtnum='1'}
 				<textarea class="wikiedit" name="heading" rows="5" cols="80" id='subheading' wrap="virtual">{$heading|escape}</textarea>
 			</td>
 		</tr>
@@ -224,16 +218,9 @@
 		<tr id='heading_only' {if $types.$type.heading_only ne 'y'}style="display:table-row;"{else}style="display:none;"{/if} class="formcolor">
 			<td>
 				{tr}Body{/tr}
-				<br /><br />
-				{include file='textareasize.tpl' area_name='body' formId='editpageform'}
-				{if $prefs.quicktags_over_textarea neq 'y'}
-					{quicktags area_name='body' qtnum='2'}
-				{/if}
 			</td>
 			<td>
-				{if $prefs.quicktags_over_textarea eq 'y'}
-					{quicktags area_name='body' qtnum='2'}
-				{/if}
+				{toolbars area_name='body' qtnum='2'}
 				<textarea class="wikiedit" id="body" name="body" rows="{$rows}" cols="{$cols}" wrap="virtual">{$body|escape}</textarea>
 				<input type="hidden" name="rows" value="{$rows}" />
 				<input type="hidden" name="cols" value="{$cols}" />

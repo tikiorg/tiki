@@ -203,19 +203,21 @@ $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 			transition:"elastic",
 			height:"95%",
 			overlayClose: true,
-			title: true				
+			title: true
 		});
 		// rel containg type=img
 		$jq("a[rel*='shadowbox'][rel*='type=img']").colorbox({
-			photo: true				
+			photo: true
 		});
 		// rel containg type=flash
 		$jq("a[rel*='shadowbox'][rel*='type=flash']").colorbox({
-			flash: true,				
+			flash: true				
 		});
 		// rel containg slideshow
 		$jq("a[rel*='shadowbox'][rel*='slideshow']").colorbox({
-			slideshow: true
+			slideshow: true,
+			preloading: false,
+			height: "100%"
 		});
 		// href starting with http(s)
 		$jq("a[rel*='shadowbox'][href^='http://'], a[rel*='shadowbox'][href^='https://']").colorbox({

@@ -205,14 +205,6 @@ form.admin legend.heading a:hover span {
 	border-right: solid 1px #8cacbb;
 }
 
-select[name="theme"] {
-	width: 160px;
-}
-
-#col2 select[name="theme"] {
-	width: 100px;
-}
-
 small {
 	font-size: .9em;
 }

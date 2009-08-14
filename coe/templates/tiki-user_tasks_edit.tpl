@@ -117,15 +117,9 @@
     </tr>
     <tr>
       <td class="formcolor">{tr}Description{/tr}<br /><br />
-        {include file='textareasize.tpl' area_name='edittask' formId='editpageform'}<br /><br /> 
-        {if $quicktags and $prefs.quicktags_over_textarea neq 'y'}
-          {quicktags area_name='description'}
-        {/if}
       </td>
       <td colspan="3" class="formcolor">
-        {if $quicktags and $prefs.quicktags_over_textarea eq 'y'}
-          {quicktags area_name='description'}
-        {/if}
+        {toolbars area_name='description'}
         <textarea id='edittask' style="width:98%;" rows="15" cols="80" name="description">{$info.description|escape}</textarea>
       </td>
     </tr>

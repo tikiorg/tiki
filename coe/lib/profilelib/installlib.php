@@ -27,6 +27,7 @@ class Tiki_Profile_Installer
 		'users' => 'Tiki_Profile_InstallHandler_User',
 		'datachannel' => 'Tiki_Profile_InstallHandler_DataChannel',
 		'transition' => 'Tiki_Profile_InstallHandler_Transition',
+		'ws' => 'Tiki_Profile_InstallHandler_Workspaces',
 	);
 
 	private static $typeMap = array(
@@ -2113,6 +2114,81 @@ class Tiki_Profile_InstallHandler_User extends Tiki_Profile_InstallHandler // {{
 		}
 	}
 } // }}}
+
+//Working on it, probably a lot of bugs to solve
+class Tiki_Profile_InstallHandler_Workspaces extends Tiki_Profile_InstallHandler
+{
+
+    function getData()
+    {
+	if ( $this->data ) return $this->data;
+
+	$defaults = array(
+	    'parent' => null,
+	);
+
+	$data = array_merge(
+	    $defaults,
+	    $this->obj->getData()
+	);
+
+	$data['preferences'] = Tiki_Profile::convertLists( $data['preferences'], array(
+	    'enable' => 'y', 
+	    'disable' => 'n'
+	) );
+
+	$data['preferences'] = Tiki_Profile::convertYesNo( $data['preferences'] );
+
+	return $this->data = $data;
+    }
+
+    function canInstall()
+    {
+	$data = $this->getData();
+
+	if ( isset($data["name"]) && isset($data["groups"]) ) return true;
+	else return false;
+    }
+
+    function _install()
+    {
+	$data = $this->getData();
+
+	$this->replaceReferences( $data );
+
+	global $wslib; if (!$wslib) require_once 'lib/workspaces/wslib.php';
+
+	if ($this->canInstall()){
+	    $id = $wslib->create_ws($data['name'], null, $data['parent'], $data['description']);
+
+	    //With this I can obtain what objects was installed by the profile before the install of the ws profile
+	    var_dump($profile_id = Tiki_Profile::withPrefix( '' ));
+	    global $tikilib; if (!$tikilib) require_once 'lib/tikilib.php';
+	    var_dump($result = $tikilib->query( "SELECT value FROM tiki_profile_symbols WHERE profile like '%{$profile_id}%'" ));
+
+	    foreach ($data['groups'] as $group)
+	    {
+		$wslib->add_ws_group ($id, $data['name'], $group['name'], $group['description'], null);
+		    
+		global $userlib; if (!$userlib) require_once 'lib/userlib.php';
+
+		foreach ($group['members'] as $member)
+		    if ($userlib->user_exists($member))
+			$userlib->assign_user_to_group($member, $group['name']);
+
+		if ( isset($group['items']) )
+		{
+		    foreach ($group['items'] as $item)
+		    {
+			var_dump ($item);
+		    }
+		}
+	    }
+
+	    return $id;
+	}
+    }
+}
 
 interface Tiki_Profile_Converter
 {

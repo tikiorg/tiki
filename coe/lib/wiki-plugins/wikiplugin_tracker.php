@@ -742,10 +742,8 @@ function wikiplugin_tracker($data, $params) {
 							$flds['data'][$i]['info'] = $trklib->get_item_attachment($f['value']);
 						}
 					} elseif ($f['type'] == 'a') {
-						if ($f['options_array'][0] == 1 && empty($quicktags)) {
-							//global $quicktagslib; include_once ('lib/quicktags/quicktagslib.php');
-							//$quicktags = $quicktagslib->list_quicktags(0, -1, 'taglabel_asc', '', 'trackers');
-							//$smarty->assign_by_ref('quicktags', $quicktags['data']);
+						if ($f['options_array'][0] == 1 && empty($toolbars)) {
+							// all in the smarty object now
 						}
 					} elseif ($f['type'] == 'l' && isset($itemId)) {
 						$opts[1] = split(':', $f['options_array'][1]);

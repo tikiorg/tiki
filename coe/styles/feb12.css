@@ -147,7 +147,6 @@ input[type=submit]:hover,
 	text-decoration: none;
 }
 
-
 .button a:active,	
 button:active,
 input[type=reset]:active,
@@ -165,10 +164,6 @@ form.admin input[name="features"] {
 
 select {
 	font: 95% Arial, Helvetica, sans-serif;
-}
-
-select[name="theme"] {
-	width: 165px;
 }
 
 select#general-timezone {

@@ -17,7 +17,7 @@ if ($prefs['feature_newsletters'] != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
-$auto_query_args = array('nlId', 'offsset', 'sort_mode', 'find');
+$auto_query_args = array('nlId', 'offset', 'sort_mode', 'find');
 $smarty->assign('confirm', 'n');
 //TODO: memorize the charset for each subscription
 if (isset($_REQUEST["confirm_subscription"])) {

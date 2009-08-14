@@ -452,7 +452,7 @@ class FileGalLib extends TikiLib {
 		// Get the gallery id for the file and update the last modified field
 		$galleryId = $this->getOne('SELECT `galleryId` FROM `tiki_files` WHERE `fileId`=?', array($id));
 
-		if ( $galleryId ) {
+		if ( $galleryId >= 0 ) {
 			$query = 'UPDATE `tiki_file_galleries` SET `lastModif`=? WHERE `galleryId`=?';
 			$this->query($query, array($this->now, $galleryId));
 		}
@@ -774,10 +774,141 @@ class FileGalLib extends TikiLib {
 		rmdir($temp);
 		return $info;
 	}
+
+        function getGalleriesParentIds() {
+		return $this->fetchAll( 'SELECT `galleryId`, `parentId` FROM `tiki_file_galleries`' );
+	}
+
+	function _getGalleryChildrenIdsList( &$allIds, &$subtree, $parentId ) {
+		foreach ( $allIds as $k => $v ) {
+			if ( $v['parentId'] == $parentId ) {
+				$galleryId = $v['galleryId'];
+				$subtree[] = (int)$galleryId;
+				$this->_getGalleryChildrenIdsList( $allIds, $subtree, $galleryId );
+			}
+		}
+	}
+
+	function _getGalleryChildrenIdsTree( &$allIds, &$subtree, $parentId ) {
+		foreach ( $allIds as $v ) {
+			if ( $v['parentId'] == $parentId ) {
+				$galleryId = $v['galleryId'];
+				$subtree[ (int)$galleryId ] = array();
+				$this->_getGalleryChildrenIdsTree( $allIds, $subtree[$galleryId], $galleryId );
+			}
+		}
+	}
+
+	// Get a tree or a list of a gallery children ids, optionnally under a specific parentId
+	// To avoid a query to the database for each node, this function retrieves all gallery ids and recursively build the tree using this info
+	function getGalleryChildrenIds( &$subtree, $parentId = -1, $format = 'tree' ) {
+		$allIds = $this->getGalleriesParentIds();
+
+		switch ( $format ) {
+			case 'list':
+				$this->_getGalleryChildrenIdsList( $allIds, $subtree, $parentId );
+				break;
+			case 'tree': default:
+				$this->_getGalleryChildrenIdsTree( $allIds, $subtree, $parentId );
+		}
+	}
+
+	// Get a tree or a list of ids of the specified gallery and its children
+	function getGalleryIds( &$subtree, $parentId = -1, $format = 'tree' ) {
+
+		switch ( $format ) {
+			case 'list':
+				$subtree[] = $parentId;
+				$childSubtree =& $subtree;
+				break;
+			case 'tree': default:
+				$subtree[$parentId] = array();
+				$childSubtree =& $subtree[$parentId];
+		}
+
+		return $this->getGalleryChildrenIds( $childSubtree, $parentId, $format );
+	}
+
+	function getFileGalleriesData() {
+		static $return = null;
+
+		if ( $return === null ) {
+			global $prefs, $cachelib, $user;
+			$cacheName = $this->get_all_galleries_cache_name($user);
+			$cacheType = $this->get_all_galleries_cache_type();
+			if ( ! $cachelib->isCached($cacheName, $cacheType) ) {
+				$return = $this->list_file_galleries(0, -1, 'name_asc', $user, '', $prefs['fgal_root_id'], false, true, false, false,false,true, false );
+				$cachelib->cacheItem($cacheName, serialize($return), $cacheType);
+			} else {
+				$return = unserialize($cachelib->getCached($cacheName, $cacheType));
+			}
+		}
+
+		return $return;
+	}
+
+	function getFilegalsIdsTree() {
+		static $return = null;
+
+		if ( $return === null ) {
+			global $prefs;
+			$return = array();
+			$this->getGalleryIds( $return, $prefs['fgal_root_id'], 'tree' );
+		}
+
+		return $return;
+	}
+
+	// Get default phplayers tree for filegals
+	function getFilegalsTreePhplayers( $currentGalleryId = null ) {
+		return $this->getTreePhplayers( $this->getFilegalsIdsTree(), $currentGalleryId );
+	}
+
 	// Build galleries browsing tree and current gallery path array
-	function add2tree(&$tree, &$galleries, &$gallery_id, &$gallery_path, &$expanded, $link = "", $cur_id = - 1) {
+	function getTreePhplayers( $idTree, $currentGalleryId = null ) {
+		global $prefs;
+
+		$allGalleries = $this->getFileGalleriesData();
+
+		$idTreeKeys = array_keys( $idTree );
+		$rootGalleryId = $idTreeKeys[0];
+		if ( $currentGalleryId === null ) $currentGalleryId = $rootGalleryId;
+
+		$script = 'tiki-list_file_gallery.php';
+		$tree = array('name' => tra('File Galleries'), 'data' => array(), 'link' => $script);
+
+		if ( $rootGalleryId != $prefs['fgal_root_id'] ) {
+			foreach ( $allGalleries['data'] as $k => $v ) {
+				if ( $v['id'] == $rootGalleryId ) {
+					$tree['name'] = $v['name'];
+					break;
+				}
+			}
+		}
+
+		$galleryPath = array();
+		$expanded = array('1');
+		$this->_buildTreePhplayers($tree['data'], $allGalleries['data'], $currentGalleryId, $galleryPath, $expanded, $script, $rootGalleryId);
+		array_unshift($galleryPath, array($rootGalleryId, $tree['name']));
+
+		$galleryPathHtml = '';
+		foreach ( $galleryPath as $dir_id ) {
+			if ( $galleryPathHtml != '' ) $galleryPathHtml .= ' &nbsp;&gt;&nbsp;';
+			$galleryPathHtml .= '<a href="' . $script . '?galleryId=' . $dir_id[0] . ((isset($_REQUEST['filegals_manager']) && $_REQUEST['filegals_manager'] != '') ? '&amp;filegals_manager=' . urlencode($_REQUEST['filegals_manager']) : '') . '">' . $dir_id[1] . '</a>';
+		}
+
+		return array(
+			'tree' => $tree,
+			'expanded' => $expanded,
+			'path' => $galleryPathHtml,
+			'pathArray' => $galleryPath
+		);
+	}
+
+	function _buildTreePhplayers( &$tree, &$galleries, &$gallery_id, &$gallery_path, &$expanded, $link = "", $cur_id = -1 ) {
 		static $total = 1;
 		static $nb_galleries = 0;
+
 		$i = 0;
 		$current_path = array();
 		$path_found = false;
@@ -790,7 +921,7 @@ class FileGalLib extends TikiLib {
 				$tree[$i]['link_id'] = $gv['id'];
 				$tree[$i]['link'] = $link."?".$tree[$i]['link_var']."=".$tree[$i]['link_id'];
 				$tree[$i]['pos'] = $total++;
-				$this->add2tree($tree[$i]['data'], $galleries, $gallery_id, $gallery_path, $expanded, $link, $gv['id']);
+				$this->_buildTreePhplayers($tree[$i]['data'], $galleries, $gallery_id, $gallery_path, $expanded, $link, $gv['id']);
 				if (!$path_found && $gv['id'] == $gallery_id) {
 					if ($_REQUEST['galleryId'] == $gv['id']) $tree[$i]['current'] = 1;
 					array_unshift($gallery_path, array($gallery_id, $gv['name']));

@@ -38,11 +38,19 @@ if ($tiki_p_admin_forum != 'y') {
 	$smarty->display('error.tpl');
 	die;
 }
+
+$auto_query_args = array(
+			'forumId',
+			'offset',
+			'sort_mode',
+			'find',
+);
+
 include_once ("lib/commentslib.php");
 $commentslib = new Comments($dbTiki);
 if (isset($_REQUEST["remove"])) {
 	$area = 'delforum';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_REQUEST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 		key_check($area);
 		$commentslib->remove_forum($_REQUEST["remove"]);
 	} else {
@@ -251,6 +259,116 @@ if (preg_match('/^([\d\.]+)([gmk])?$/i', $maxAttachSize, $matches) && !empty($ma
 	}
 }
 $smarty->assign_by_ref('maxAttachSize', $maxAttachSize);
+
+$oneday = 60 * 60 * 24;
+
+$prune_values = array(
+	1 * $oneday => '1' . ' ' . tra('day'),
+	2 * $oneday => '2' . ' ' . tra('days'),
+	5 * $oneday => '5' . ' ' . tra('days'),
+	7 * $oneday => '7' . ' ' . tra('days'),
+	15 * $oneday => '15' . ' ' . tra('days'),
+	30 * $oneday => '30' . ' ' . tra('days'),
+	60 * $oneday => '60' . ' ' . tra('days'),
+	90 * $oneday => '90' . ' ' . tra('days'),
+);
+
+$smarty->assign('pruneUnrepliedAge_options', $prune_values);
+$smarty->assign('pruneMaxAge_options', $prune_values);
+
+$flood_values = array(
+	15 => '15' . ' ' . tra('secs'),
+	30 => '30' . ' ' . tra('secs'),
+	60 => '1' . ' ' . tra('min'),
+	120=> '2' . ' ' . tra('mins'),
+);
+
+$smarty->assign('flood_options',
+	array(
+		15 => '15' . ' ' . tra('secs'),
+		30 => '30' . ' ' . tra('secs'),
+		60 => '1' . ' ' . tra('min'),
+		120=> '2' . ' ' . tra('mins')
+	)
+);
+
+$smarty->assign('approval_options',
+	array(
+		'all_posted' => tra('All posted'),
+		'queue_anon' => tra('Queue anonymous posts'),
+		'queue_all' => tra('Queue all posts')
+	)
+);
+
+$smarty->assign('attachment_options',
+	array(
+		'att_no' => tra('No attachments'),
+		'att_all' => tra('Everybody can attach'),
+		'att_perm' => tra('Only users with attach permission'),
+		'att_admin' => tra('Moderators and admin can attach')
+	)
+);
+
+$smarty->assign('forum_use_password_options',
+	array(
+		'n' => tra('No'),
+		't' => tra('Topics only'),
+		'a' => tra('All posts')
+	)
+);
+
+$smarty->assign('forum_last_n_options',
+	array(
+		0 => tra('No display'),
+		5 => '5',
+		10 => '10',
+		20 => '20'
+	)
+);
+
+$smarty->assign('topicOrdering_options',
+	array(
+		'commentDate_desc' => tra('Date (desc)'),
+		'commentDate_asc' => tra('Date (asc)'),
+		'average_desc' => tra('Score (desc)'),
+		'replies_desc' => tra('Replies (desc)'),
+		'hits_desc' => tra('Reads (desc)'),
+		'lastPost_desc' => tra('Last post (desc)'),
+		'title_desc' => tra('Title (desc)'),
+		'title_asc' => tra('Title (asc)')
+	)
+);
+
+$smarty->assign('threadOrdering_options',
+	array(
+		'' => tra('Default'),
+		'commentDate_desc' => tra('Newest first'),
+		'commentDate_asc' => tra('Oldest first'),
+		'points_desc' => tra('Score'),
+		'title_desc' => tra('Title (desc)'),
+		'title_asc' => tra('Title (asc)')
+	)
+);
+
+$smarty->assign('threadStyle_options',
+	array(
+		'' => tra('Default'),
+		'commentStyle_plain' => tra('Plain'),
+		'commentStyle_threaded' => tra('Threaded'),
+		'commentStyle_headers' => tra('Headers Only')
+	)
+);
+
+$smarty->assign('commentsPerPage_options',
+	array(
+		'' => tra('Default'),
+		10 => '10',
+		20 => '20',
+		30 => '30',
+		999999 => tra('All')
+	)
+);
+
 $sections = $tikilib->get_forum_sections();
 $smarty->assign_by_ref('sections', $sections);
 include_once ('tiki-section_options.php');

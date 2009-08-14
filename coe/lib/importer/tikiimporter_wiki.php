@@ -70,6 +70,7 @@ class TikiImporter_Wiki extends TikiImporter
 
         $_SESSION['tiki_importer_feedback'] = $importFeedback;
         $_SESSION['tiki_importer_log'] = $this->log;
+        $_SESSION['tiki_importer_errors'] = $this->errors;
    }
 
     /**
