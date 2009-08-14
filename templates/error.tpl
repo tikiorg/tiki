@@ -31,10 +31,10 @@ close();
 				{if ($errortype eq "404")}
 					{if $prefs.feature_likePages eq 'y'}
 						{if $likepages}
-							<p>{tr}Perhaps you were looking for:{/tr}</p>
+							<p>{tr}Perhaps you are looking for:{/tr}</p>
 							<ul>
 								{section name=back loop=$likepages}
-								<li><a href="tiki-index.php?page={$likepages[back]|escape:"url"}" class="wiki">{$likepages[back]}</a></li>
+								<li><a href="tiki-index.php?page={$likepages[back]|escape:"url"}" class="wiki">{$likepages[back]|escape}</a></li>
 								{/section}
 							</ul>
 							<br />

@@ -13,7 +13,7 @@
   {if $nonums != 'y'}<ol>{else}<ul>{/if}
   {section name=ix loop=$modTopPages}
      <li>
-	<a class="linkmodule" href="tiki-index.php?page={$modTopPages[ix].name|escape:'url'}">{$modTopPages[ix].name}</a></li>
+	<a class="linkmodule" href="tiki-index.php?page={$modTopPages[ix].name|escape:'url'}">{$modTopPages[ix].name|escape}</a></li>
   {/section}
   {if $nonums != 'y'}</ol>{else}</ul>{/if}
   {/tikimodule}
