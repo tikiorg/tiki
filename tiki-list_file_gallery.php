@@ -568,6 +568,9 @@ if (isset($_GET['slideshow'])) {
 	$smarty->assign('firstId', current($filesid));
 	$smarty->assign('show_find', 'n');
 	$smarty->assign('direct_pagination', 'y');
+	if (isset($_REQUEST['slideshow_noclose'])) {
+		$smarty->assign('slideshow_noclose', 'y');
+	}
 	$smarty->display('file_gallery_slideshow.tpl');
 	die();
 } else {
