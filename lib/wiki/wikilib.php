@@ -1,5 +1,5 @@
 <?php
-// $Id: /cvsroot/tikiwiki/tiki/lib/wiki/wikilib.php,v 1.110.2.11 2008-02-27 15:18:48 nyloth Exp $
+// $Id$
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -128,8 +128,6 @@ class WikiLib extends TikiLib {
 			if (strcasecmp($oldName, $newName) <> 0) return false;
 		}
 
-		// Since page link have HTML chars fixed;
-		$newName = htmlspecialchars( $newName );
 		$tmpName = "TmP".$newName."TmP";
 
 		// 1st rename the page in tiki_pages, using a tmpname inbetween for
