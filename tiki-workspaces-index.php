@@ -19,7 +19,9 @@ require_once('lib/workspaces/wslib.php');
 $smarty->assign('headtitle', tra('Workspaces Home'));
 
 $listWS = $wslib->list_ws_that_user_have_access ($user, 10, 0);
+
 $smarty->assign('listWS',$listWS);
+$smarty->assign('wsQuantity', count($listWS));
 
 // Display the template
 $smarty->assign('mid', 'tiki-workspaces-index.tpl');

@@ -847,7 +847,7 @@ class wslib extends CategLib
 		$wspathforsort = implode("!!",$tepath);
 		$res["wspath"] = $wspath;
 		$res["deep"] = count($tepath);
-		$res["href"] = "tiki-user_ws.php?showWS=".$ws_id;
+		$res["ws_id"] = $ws_id;
 			
 		$listUserWS["$wspathforsort"] = $res;
 	    }
