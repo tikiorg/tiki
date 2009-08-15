@@ -218,7 +218,8 @@
 								<td class="form"><textarea name="box_shadow_end" id="box_shadow_end" rows="2" cols="40">{$prefs.box_shadow_end|escape}</textarea></td>
 							</tr>
 							</table>
-						</fieldset>					
+						</fieldset>
+				
 					{* --- Customize HTML Head Content --- *}
 						<fieldset class="admin">
 							<legend>
@@ -238,6 +239,8 @@
 								</td>
 							</tr>
 							</table>
+						</fieldset>
+
 					{* --- Customize Site Header --- *}
 						<fieldset class="admin">
 							<legend>
@@ -278,7 +281,7 @@
         			</table>
 						</fieldset>
 
-					{* --- Customize Site Logo and Site Titile--- *}
+					{* --- Customize Site Logo and Site Title--- *}
 						<fieldset>
 							<legend>
 								<a href="#" title="{tr}Top{/tr}"><span>{tr}Site Logo and Title{/tr}</span></a>
