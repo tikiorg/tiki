@@ -55,6 +55,7 @@ if( count($profiles) != count($channels) ) {
 
 Tiki_Profile::useUnicityPrefix(uniqid());
 $installer = new Tiki_Profile_Installer;
+$installer->limitGlobalPreferences( array() );
 
 foreach( $calls as $call ) {
 	list( $channel, $userInput ) = $call;
