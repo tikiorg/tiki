@@ -4,7 +4,7 @@
 <html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-	<title>{tr}Error: Unable to connect to the database !{/tr}</title>
+	<title>{tr}System error.{/tr}</title>
 	<link rel="stylesheet" href="styles/strasa.css" type="text/css"/>
 	<style type="text/css" media="screen">
 		html {
@@ -26,7 +26,7 @@
 		<div id="tiki-mid">
 			<div style="margin:10px 30px;">
 				<h1 class="center">
-					{tr}TikiWiki CMS/Groupware is unable to connect to the database.{/tr}
+					{tr}System error.{/tr}
 				</h1>
 				<div class="left">
 				<p>{tr}The following error message was returned:{/tr}</p>
