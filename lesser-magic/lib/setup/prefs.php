@@ -195,7 +195,7 @@ function get_default_prefs() {
 		'wikiplugin_countdown' => 'n',
 		'wikiplugin_datachannel' => 'n',
 		'wikiplugin_dbreport' => 'n',
-		'wikiplugin_div' => 'n',
+		'wikiplugin_div' => 'y',
 		'wikiplugin_dl' => 'y',
 		'wikiplugin_draw' => 'y',
 		'wikiplugin_equation' => 'n',
@@ -460,7 +460,8 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 
 		// filegals
 		'feature_file_galleries' => 'y',
-		'home_file_gallery' => 0,
+		'home_file_gallery' => 1,
+		'fgal_root_id' => 1,
 		'fgal_use_db' => 'y',
 		'fgal_batch_dir' => '',
 		'fgal_match_regex' => '',
@@ -1077,6 +1078,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_sitedesc' => 'n',
 		'feature_bot_logo' => 'n',
 		'feature_endbody_code' => '',
+		'feature_custom_html_head_content' => '',
 
 		// layout
 		'feature_left_column' => 'y',
@@ -1144,12 +1146,12 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_smileys' => 'n',
 		'popupLinks' => 'y',
 		'feature_autolinks' => 'y',
-		'quicktags_over_textarea' => 'y',
 		'default_rows_textarea_wiki' => '20',
 		'default_rows_textarea_comment' => '6',
 		'default_rows_textarea_forum' => '20',
 		'default_rows_textarea_forumthread' => '10',
-		
+		'section_comments_parse' => 'y',		// parse wiki markup on comments in all sections
+	
 		'toolbar_global' => '
 			bold, italic, strike, - , color, bgcolor, - , sub, sup,
 			- , tikilink, image, link, unlink, -, undo, redo, 
@@ -1397,6 +1399,10 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		// Transitions
 		'feature_group_transition' => 'n',
 		'feature_category_transition' => 'n',
+
+		// Workspaces
+		'feature_workspaces' => 'n',
+		'ws_container' => null,
 	);
 
 	// spellcheck

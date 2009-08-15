@@ -9,9 +9,9 @@
 		<li>
 			<a class="linkmodule" href="{$breadCrumb[ix]|sefurl}">
 				{if ($maxlen > 0 && strlen($breadCrumb[ix]) > $maxlen)}
-					{$breadCrumb[ix]|truncate:$maxlen:"...":true}
+					{$breadCrumb[ix]|truncate:$maxlen:"...":true|escape}
 				{else}
-					{$breadCrumb[ix]|escape:'html'}
+					{$breadCrumb[ix]|escape}
 				{/if}
 			</a>
 		</li>

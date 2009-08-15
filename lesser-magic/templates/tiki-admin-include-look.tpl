@@ -218,7 +218,28 @@
 								<td class="form"><textarea name="box_shadow_end" id="box_shadow_end" rows="2" cols="40">{$prefs.box_shadow_end|escape}</textarea></td>
 							</tr>
 							</table>
-						</fieldset>					
+						</fieldset>
+				
+					{* --- Customize HTML Head Content --- *}
+						<fieldset class="admin">
+							<legend>
+								<a href="#" title="{tr}Top{/tr}">
+									<span>{tr}Custom HTML &lt;head&gt; Content{/tr}</span>
+								</a>
+							</legend> 			
+							<table class="admin">
+							<tr>
+								<td class="form">
+									<label for="feature_custom_html_head_content">{tr}Content{/tr}:</label>
+								</td>
+								<td>
+									<textarea id="feature_custom_html_head_content" name="feature_custom_html_head_content" rows="6" cols="40" style="width: 90%">{$prefs.feature_custom_html_head_content|escape}</textarea>
+									<br />
+									<small><em>{tr}Example{/tr}:</em> {literal}&#123;if $page eq 'Slideshow'&#125;&#123;literal&#125;&lt;style type="text/css"&gt;.slideshow { height: 232px; width: 232px; }&lt;/style&gt;&#123;/literal&#125;&#123;/if&#125;{/literal}</small>
+								</td>
+							</tr>
+							</table>
+						</fieldset>
 
 					{* --- Customize Site Header --- *}
 						<fieldset class="admin">
@@ -260,7 +281,7 @@
         			</table>
 						</fieldset>
 
-					{* --- Customize Site Logo and Site Titile--- *}
+					{* --- Customize Site Logo and Site Title--- *}
 						<fieldset>
 							<legend>
 								<a href="#" title="{tr}Top{/tr}"><span>{tr}Site Logo and Title{/tr}</span></a>

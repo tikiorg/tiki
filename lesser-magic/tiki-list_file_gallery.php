@@ -22,23 +22,33 @@ if ($prefs['feature_groupalert'] == 'y') {
 }
 $auto_query_args = array('galleryId', 'fileId', 'offset', 'find', 'sort_mode', 'edit_mode', 'page', 'filegals_manager', 'maxRecords', 'show_fgalexplorer', 'dup_mode', 'show_details', 'view');
 $gal_info = '';
-if (!isset($_REQUEST['galleryId']) || $_REQUEST['galleryId'] == 0) {
+
+if ( empty($_REQUEST['galleryId']) && isset($_REQUEST['parentId']) ) {
+
 	$tikilib->get_perm_object('', 'file gallery');
 	$_REQUEST['galleryId'] = 0;
+
 	// Initialize listing fields with default values (used for the main gallery listing)
-	$gal_info = array('name' => '', 'show_id' => $prefs['fgal_list_id'], 'show_icon' => $prefs['fgal_list_type'], 'show_name' => 'f', //$prefs['fgal_list_name'],
-	'show_description' => $prefs['fgal_list_description'], 'show_size' => $prefs['fgal_list_size'], 'show_created' => $prefs['fgal_list_created'], 'show_modified' => $prefs['fgal_list_lastmodif'], 'show_creator' => $prefs['fgal_list_creator'], 'show_author' => $prefs['fgal_list_author'], 'show_last_user' => $prefs['fgal_list_last_user'], 'show_comment' => $prefs['fgal_list_comment'], 'show_files' => $prefs['fgal_list_files'], 'show_explorer' => $prefs['fgal_show_explorer'], 'show_path' => $prefs['fgal_show_path'], 'show_slideshow' => $prefs['fgal_show_slideshow'], 'default_view' => $prefs['fgal_default_view'], 'show_hits' => $prefs['fgal_list_hits'], 'show_lockedby' => $prefs['fgal_list_lockedby'], 'show_checked' => 'y', 'show_userlink' => 'y', 'sort_mode' => $prefs['fgal_sort_mode'], 'public' => 'y', 'lockable' => 'n', 'visible' => 'y', 'archives' => - 1, 'type' => 'default', 'description' => '',);
-} elseif ($gal_info = $tikilib->get_file_gallery($_REQUEST['galleryId'])) {
-	$tikilib->get_perm_object($_REQUEST['galleryId'], 'file gallery', $gal_info);
-	if ($userlib->object_has_one_permission($_REQUEST['galleryId'], 'file gallery')) {
-		$smarty->assign('individual', 'y');
-	}
-	$podCastGallery = $filegallib->isPodCastGallery($_REQUEST['galleryId'], $gal_info);
+	$gal_info = $tikilib->get_file_gallery();
+
 } else {
-	$smarty->assign('msg', tra('Non-existent gallery'));
-	$smarty->display('error.tpl');
-	die;
+	if ( ! isset($_REQUEST['galleryId']) ) {
+		$_REQUEST['galleryId'] = $prefs['fgal_root_id'];
+	}
+
+	if ( $gal_info = $tikilib->get_file_gallery($_REQUEST['galleryId']) ) {
+		$tikilib->get_perm_object($_REQUEST['galleryId'], 'file gallery', $gal_info);
+		if ($userlib->object_has_one_permission($_REQUEST['galleryId'], 'file gallery')) {
+			$smarty->assign('individual', 'y');
+		}
+		$podCastGallery = $filegallib->isPodCastGallery($_REQUEST['galleryId'], $gal_info);
+	} else {
+		$smarty->assign('msg', tra('Non-existent gallery'));
+		$smarty->display('error.tpl');
+		die;
+	}
 }
+
 $galleryId = $_REQUEST['galleryId'];
 if (($galleryId != 0 || $tiki_p_list_file_galleries != 'y') && ($galleryId == 0 || $tiki_p_view_file_gallery != 'y')) {
 	$smarty->assign('errortype', 401);
@@ -549,7 +559,7 @@ if (isset($_REQUEST['fileId'])) {
 if (isset($_GET['slideshow'])) {
 	$_REQUEST['maxRecords'] = $maxRecords = - 1;
 	$offset = 0;
-	$files = $tikilib->get_files(0, -1, $_REQUEST['sort_mode'], $_REQUEST['find'], $_REQUEST['galleryId'] == 0 ? -1 : $_REQUEST['galleryId'], false, false, false, true, false, false, false, true, '', false);
+	$files = $tikilib->get_files(0, -1, $_REQUEST['sort_mode'], $_REQUEST['find'], $_REQUEST['galleryId'], false, false, false, true, false, false, false, true, '', false);
 	$smarty->assign('cant', $files['cant']);
 	$i = 0;
 	$smarty->assign_by_ref('filesid', $filesid);
@@ -558,6 +568,9 @@ if (isset($_GET['slideshow'])) {
 	$smarty->assign('firstId', current($filesid));
 	$smarty->assign('show_find', 'n');
 	$smarty->assign('direct_pagination', 'y');
+	if (isset($_REQUEST['slideshow_noclose'])) {
+		$smarty->assign('slideshow_noclose', 'y');
+	}
 	$smarty->display('file_gallery_slideshow.tpl');
 	die();
 } else {
@@ -623,35 +636,21 @@ if ($prefs['feature_user_watches'] == 'y') {
 }
 
 if ($prefs['fgal_show_explorer'] == 'y' || $prefs['fgal_show_path'] == 'y' || isset($_REQUEST['movesel'])) {
-	global $cachelib;
-	include_once ('lib/cache/cachelib.php');
-	$cacheName = $filegallib->get_all_galleries_cache_name($user);
-	$cacheType = $filegallib->get_all_galleries_cache_type();
-	if (!$cachelib->isCached($cacheName, $cacheType)) {
-		$all_galleries = $filegallib->list_file_galleries(0, -1, 'name_asc', $user, '', -1, false, true, false, false, false, true, false);
-		$cachelib->cacheItem($cacheName, serialize($all_galleries), $cacheType);
-	} else {
-		$all_galleries = unserialize($cachelib->getCached($cacheName, $cacheType));
-	}
+	$all_galleries = $filegallib->getFileGalleriesData();
 	$smarty->assign_by_ref('all_galleries', $all_galleries['data']);
-	if (isset($all_galleries) && is_array($all_galleries) && count($all_galleries) > 0) {
-		$tree = array('name' => tra('File Galleries'), 'data' => array(), 'link_var' => 'galleryId', 'link_id' => 0);
-		$gallery_path = array();
-		$expanded = array('1');
-		$filegallib->add2tree($tree['data'], $all_galleries['data'], $galleryId, $gallery_path, $expanded);
-		if ($prefs['fgal_show_path'] == 'y') {
-			array_unshift($gallery_path, array(0, $tree['name']));
-			$gallery_path_str = '';
-			foreach($gallery_path as $dir_id) {
-				if ($gallery_path_str != '') $gallery_path_str.= ' &nbsp;&gt;&nbsp;';
-				$gallery_path_str.= '<a href="tiki-list_file_gallery.php?galleryId=' . $dir_id[0] . ((isset($_REQUEST['filegals_manager']) && $_REQUEST['filegals_manager'] != '') ? '&amp;filegals_manager=' . urlencode($_REQUEST['filegals_manager']) : '') . '">' . $dir_id[1] . '</a>';
-			}
-			$smarty->assign('gallery_path', $gallery_path_str);
+
+	if ( ! empty($all_galleries) && is_array($all_galleries) && $all_galleries['cant'] > 0) {
+		$phplayersTreeData = $filegallib->getFilegalsTreePhplayers( $galleryId );
+
+		if ( $prefs['fgal_show_path'] == 'y' ) {
+			$smarty->assign('gallery_path', $phplayersTreeData['path']);
 		}
-		$smarty->assign_by_ref('tree', $tree);
-		$smarty->assign_by_ref('expanded', $expanded);
+
+		$smarty->assign_by_ref('tree', $phplayersTreeData['tree']);
+		$smarty->assign_by_ref('expanded', $phplayersTreeData['expanded']);
 	}
 }
+
 ask_ticket('fgal');
 if (isset($_REQUEST['view']) && $_REQUEST['view'] == 'browse') {
 	foreach($files['data'] as $file) {
@@ -672,8 +671,10 @@ if ($_REQUEST['galleryId'] == 0) {
 		$tikilib->add_file_gallery_hit($_REQUEST['galleryId']);
 	}
 }
+
 // Get listing display config
 include_once ('fgal_listing_conf.php');
+
 $smarty->assign('view', isset($_REQUEST['view']) ? $_REQUEST['view'] : $fgal_options['default_view']['value']);
 // Display the template
 if (!empty($_REQUEST['filegals_manager'])) {

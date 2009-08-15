@@ -1,5 +1,5 @@
 <?php
-// $Id: $
+// $Id$
 
 // this script may only be included - so it's better to die if called directly
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -74,7 +74,7 @@ function smarty_function_listfilter($params, &$smarty) {
 		\$jq(this).show();
 	} );
 ";
-		if ($parentSelector) {
+		if (!empty($parentSelector)) {
 			$content .= "
 	\$jq('$parentSelector').show().each( function() {
 		var cl = '.$childPrefix' + \$jq(this).attr('id');
@@ -89,7 +89,10 @@ function smarty_function_listfilter($params, &$smarty) {
 } );	// end keyup
 		";
 	
-		$headerlib->add_jq_onready($content);
+		$js = $headerlib->add_jq_onready($content);
+		if ($js) {
+			$input .= $js;
+		}
 		return $input;
 	}
 }

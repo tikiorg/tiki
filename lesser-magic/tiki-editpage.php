@@ -311,7 +311,7 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 							}
 						}
 
-						$tikilib->update_page($pagename, $part["body"], tra('page imported'), $author, $authorid, $description, null, $pageLang, false, $hash);
+						$tikilib->update_page($pagename, $part["body"], tra('page imported'), $author, $authorid, $description, 0, $pageLang, false, $hash);
 					} else {
 						$tikilib->create_page($pagename, $hits, $part["body"], $lastmodified, tra('created from import'), $author, $authorid, $description, $pageLang, false, $hash);
 					}
@@ -1119,11 +1119,8 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
 		/*
 		   $tikilib->cache_links($links);
 		 */
-		if(isset($_REQUEST['isminor'])&&$_REQUEST['isminor']=='on') {
-			$minor=true;
-		} else {
-			$minor=false;
-		}
+		$minor=(isset($_REQUEST['isminor'])&&$_REQUEST['isminor']=='on') ? 1 : 0;
+
 		if ((isset($_REQUEST['hdr']) || (!empty($_REQUEST['pos']) && isset($_REQUEST['cell']))) && $prefs['wiki_edit_section'] == 'y') {
 			if (isset($_REQUEST['hdr'])) {
 				if ($_REQUEST['hdr'] == 0) {
@@ -1351,7 +1348,7 @@ if ($prefs['wiki_feature_copyrights'] == 'y' && $tiki_p_edit_copyrights == 'y') 
 }
 $defaultRows = $prefs['default_rows_textarea_wiki'];
 include_once("textareasize.php");
-include_once ('lib/quicktags/quicktagslib.php');
+include_once ('lib/toolbars/toolbarslib.php');
 if (!$user or $user == 'anonymous') {
 	$smarty->assign('anon_user', 'y');
 }

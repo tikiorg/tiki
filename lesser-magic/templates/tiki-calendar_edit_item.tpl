@@ -401,16 +401,11 @@
 {if $edit}
   <br /><br />
   {include file='textareasize.tpl' area_name="editwiki" formId="editcalitem"}<br /><br />
-  {if $prefs.quicktags_over_textarea neq 'y'}
-    {quicktags area_name="save[description]"}
-  {/if}
 {/if}
 
 </td><td>
 {if $edit}
-  {if $prefs.quicktags_over_textarea eq 'y'}
-    {quicktags area_name="save[description]"}
-  {/if}
+  {toolbars area_name="save[description]"}
   <textarea id='editwiki' class="wikiedit" cols="{$cols}" rows="{$rows}" name="save[description]" style="width:98%">{$calitem.description}</textarea>
   <input type="hidden" name="rows" value="{$rows}"/>
   <input type="hidden" name="cols" value="{$cols}"/>

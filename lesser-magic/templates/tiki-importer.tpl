@@ -2,7 +2,7 @@
 
 <br />
 
-{if $chooseSoftware}
+{if isset($chooseSoftware)}
     {remarksbox type="warning" title="{tr}Warning:{/tr}"}
         {tr}If you are NOT running a new Tiki installation, make a backup of your database before using this importer!{/tr}
     {/remarksbox}
@@ -12,7 +12,7 @@
         {/remarksbox}
     {/if}
     {remarksbox type="note" title="{tr}Note:{/tr}"}
-        {tr}Depending on the size of the file from the source software the import process may take a while to complete. This migth be a problem according to your PHP and web server settings. This script tries to change the relevant settings but there are some settings that the script cannot change. So if you are having problems with the script try to increase the value of the following settings: max_input_time, post_max_size, upload_max_filesize, memory_limit. It is recommended that you run this script in a server where you can change the values of those settings if needed.{/tr}
+	{tr}Depending on the size of the file from the source software, the import process may take a while to complete. This might be a problem according to your PHP and web server settings. This script tries to change the relevant settings but there are some settings that the script cannot change. So, if you are having problems with the script, please try to increase the value of the following PHP settings: max_input_time, max_execution_time (this setting is limited by the web server setting, if you are running Apache also change its Timeout setting), post_max_size, upload_max_filesize, memory_limit. It is recommended that you run this script on a server where you can change the values of those settings (if needed).{/tr}
     {/remarksbox}
        
     <br />
@@ -27,15 +27,15 @@
         </select>
         <input type="submit" value="{tr}Ok{/tr}"/>
     </form>
-{elseif $softwareSpecificOptions}
+{elseif isset($softwareSpecificOptions)}
     <h4>Import options:</h4>
-    <form method="post" enctype="multipart/form-data" action="tiki-importer.php" onsubmit="return confirm('{tr}ATTENTION: make sure to have a backup before running the script. If you do not have a backup this is the last chance to cancel the importer by clicking on the cancel button.{/tr}');";>
+    <form method="post" enctype="multipart/form-data" action="tiki-importer.php" onsubmit="return confirm('{tr}WARNING: make sure to have a backup before running the script. If you do not have a backup this is the last chance to cancel the importer by clicking on the cancel button.{/tr}');";>
         <input type="hidden" name="importerClassName" value="{$importerClassName}"/>
         {foreach from=$importerOptions item=option}
             {if $option.type eq 'checkbox'}
                 <input type="checkbox" name="{$option.name}" id="{$option.name}"/><label for="{$option.name}">{tr}{$option.label}{/tr}</label><br />
             {elseif $option.type eq 'text'}
-                {tr}{$option.label}{/tr}: <input type="text" name="{$option.name}"/><br />
+                {tr}{$option.label}{/tr}: <input type="text" name="{$option.name}" {if isset($option.value)}value="{$option.value}"{/if}/><br />
             {elseif $option.type eq 'select'}
 		        {tr}{$option.label}{/tr}<br />
 		        <select name="{$option.name}">
@@ -50,10 +50,15 @@
         <input type="submit" value="{tr}Import!{/tr}"/>
     </form>
 {elseif !empty($importFeedback)}
-    <h4>{tr}Congratulations! You have successful imported your {$softwareName} data to Tikiwiki.{/tr}</h4>
+    <h4>{tr}Congratulations! You have successful imported your data to Tikiwiki.{/tr}</h4>
     <p>{$importFeedback.importedPages} {tr}pages imported from a total of{/tr} {$importFeedback.totalPages}</p>
     <p>{tr}You can see the list of wiki pages in your site{/tr} <a href="tiki-listpages.php">{tr}here{/tr}</a></p>
 
+    {if !empty($importErrors)}
+        <br /><br />
+        <p><b>{tr}Errors:{/tr}</b></p>
+        <textarea rows="15" cols="100">{$importErrors}</textarea> 
+    {/if}
     <br /><br />
     <p><b>{tr}Importer log:{/tr}</b></p>
     <textarea rows="15" cols="100">{$importLog}</textarea>

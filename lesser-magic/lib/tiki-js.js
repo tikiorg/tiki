@@ -204,7 +204,7 @@ function chgTrkFld(f,o) {
   document.getElementById('z').style.display = "none";
   document.getElementById('zDescription').style.display = "";
   document.getElementById('zStaticText').style.display = "none";
-  document.getElementById('zStaticTextQuicktags').style.display = "none";
+  document.getElementById('zStaticTextToolbars').style.display = "none";
 
   for (var i = 0; i < f.length; i++) {
     var c = f.charAt(i);
@@ -217,7 +217,7 @@ function chgTrkFld(f,o) {
         if (c == 'S') {
           document.getElementById('zDescription').style.display = "none";
           document.getElementById('zStaticText').style.display = "";
-          document.getElementById('zStaticTextQuicktags').style.display = "";
+          document.getElementById('zStaticTextToolbars').style.display = "";
         }
         if (ichoice) {
           ichoice.style.display = "";
@@ -943,8 +943,8 @@ function confirmTheLink(theLink, theMsg)
  * \formid = form id (needs to have 2 input rows and cols
  **/
 function textareasize(elementId, height, width, formId) {
-  textarea = document.getElementById(elementId);
-  form1 = document.getElementById(formId);
+  textarea = $jq('[name=' + elementId + ']')[0];
+  form1 = textarea.form;
   if (textarea && height != 0 && textarea.rows + height > 5) {
     textarea.rows += height;
     if (form1.rows)

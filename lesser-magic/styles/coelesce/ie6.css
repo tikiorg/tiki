@@ -1,6 +1,11 @@
 /* $Id$
 	Coelesce theme selectors for IE6.
 */
+
+body {
+	font-size: 76%;
+}
+
 h1 {
 	margin-bottom: auto;
 }

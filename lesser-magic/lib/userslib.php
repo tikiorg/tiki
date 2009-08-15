@@ -1793,7 +1793,7 @@ function get_included_groups($group, $recur=true) {
 		}
 		if (!$lastRes) {
 			$groups = $this->get_user_groups($user);
-			$query = 'select `groupName`, `usersTrackerId`, `usersFieldId` from `users_groups` where `groupName` in ('.implode(',',array_fill(0,count($groups),'?')).') and `groupName` != ? and `usersTrackerId` > 0';
+			$query = 'select `groupName`, `usersTrackerId`, `usersFieldId` from `users_groups` where `groupName` in ( '.implode(' , ',array_fill(0,count($groups),'?')).' ) and `groupName` != ? and `usersTrackerId` > 0';
 			$groups[] = 'Anonymous';
 			$result = $this->query($query, $groups);
 			while ($res = $result->fetchRow()) {
@@ -2952,6 +2952,7 @@ function get_included_groups($group, $recur=true) {
 			return false;
 		}
 		if (md5($res['provpass']) == $pass){
+			$this->confirm_user($user);
 			$query = 'update `users_users` set `provpass`=?, `email_confirm`=?, `unsuccessful_logins`=?, `registrationDate`=? where `login`=? and `provpass`=?';
 			$this->query($query, array('', $tikilib->now, 0, $this->now, $user, $res['provpass']));
 			if (!empty($GLOBALS['user'])) {

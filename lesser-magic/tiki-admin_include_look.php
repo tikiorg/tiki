@@ -118,6 +118,7 @@ if (isset($_REQUEST["looksetup"])) {
 		'footer_shadow_end',
 		'box_shadow_start',
 		'box_shadow_end',
+		'feature_custom_html_head_content',
 	);
 	foreach($pref_simple_values as $svitem) {
 		simple_set_value($svitem);
@@ -182,10 +183,12 @@ if ($prefs['feature_jquery'] == 'y') {
 	}
 	$js = substr($js, 0, strlen($js) - 1);
 	$js.= '};';
-	$headerlib->add_js($js);
 	// JS to handle theme/option changes client-side
+	// the var (style_options) has to be declared in the same block for AJAX call scope 
 	$none = tr('None');
 	$headerlib->add_js(<<<JS
+$js
+
 \$jq(document).ready( function() {
 	// pick up theme drop-down change
 	\$jq('#general-theme').change( function() {

@@ -183,7 +183,7 @@ if (isset($_REQUEST["upload"])) {
 			$name = $_FILES["userfile"]["name"][$key];
 			if (isset($_REQUEST["isbatch"][$key]) && $_REQUEST["isbatch"][$key] == 'on' && strtolower(substr($name, strlen($name) - 3)) == 'zip') {
 				if ($tiki_p_batch_upload_files == 'y') {
-					$filegallib->process_batch_file_upload($_REQUEST["galleryId"][$key], $_FILES["userfile"]['tmp_name'][$key], $user, $_REQUEST["description"][$key]);
+					$filegallib->process_batch_file_upload($_REQUEST["galleryId"][$key], $_FILES["userfile"]['tmp_name'][$key], $user, isset($_REQUEST["description"][$key]) ? $_REQUEST["description"][$key] : '');
 					$batch_job = true;
 					$batch_job_galleryId = $_REQUEST["galleryId"][$key];
 					print_msg(tra('Batch file processed') . " $name", $formId);
@@ -373,7 +373,7 @@ if (empty($_REQUEST['fileId'])) {
 	$cacheName = $filegallib->get_all_galleries_cache_name($user);
 	$cacheType = $filegallib->get_all_galleries_cache_type();
 	if (!$cachelib->isCached($cacheName, $cacheType)) {
-		$galleries = $filegallib->list_file_galleries(0, -1, 'name_asc', $user, '', -1, false, true, false, false, false, true, false);
+		$galleries = $filegallib->list_file_galleries(0, -1, 'name_asc', $user, '', $prefs['fgal_root_id'], false, true, false, false, false, true, false);
 		$cachelib->cacheItem($cacheName, serialize($galleries), $cacheType);
 	} else {
 		$galleries = unserialize($cachelib->getCached($cacheName, $cacheType));

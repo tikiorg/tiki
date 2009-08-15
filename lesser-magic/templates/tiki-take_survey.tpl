@@ -27,16 +27,10 @@
           <table class="normal">
             <tr>
               <td valign="top">
-                {include file='textareasize.tpl' area_name='editwiki' formId='editpageform'}
-                <br /><br />
-                {if $prefs.quicktags_over_textarea neq 'y'}
-                  {quicktags area_name=question_$area qtnum='2'}
-                {/if}
+              	&nbsp;
               </td>
               <td valign="top">
-                {if $prefs.quicktags_over_textarea eq 'y'}
-                  {quicktags area_name=question_$area qtnum='2'}
-                {/if}
+                {toolbars area_name=question_$area qtnum='2'}
                 <textarea id='editwiki' name="question_{$questions[ix].questionId}" rows="{$rows}" cols="{$cols}"></textarea>
               </td>
             </tr>

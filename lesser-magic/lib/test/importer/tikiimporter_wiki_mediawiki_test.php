@@ -1,5 +1,8 @@
 <?php
 
+$textWikiPath = dirname(__FILE__) . '/../../pear/';
+ini_set('include_path', ini_get('include_path') . PATH_SEPARATOR . $textWikiPath);
+
 require_once(dirname(__FILE__) . '/tikiimporter_testcase.php');
 require_once(dirname(__FILE__) . '/../../importer/tikiimporter_wiki_mediawiki.php');
 
@@ -127,18 +130,33 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
     public function testDownloadAttachment()
     {
         $this->obj->attachmentsDestDir = dirname(__FILE__) . '/fixtures/';
+
+        $sourceAttachments = array('sourceTest.jpg', 'sourceTest2.jpg');
+        $destAttachments = array('test.jpg', 'test2.jpg');
+        $i = count($sourceAttachments) - 1;
+        $cwd = getcwd();
+        chdir(dirname(__FILE__));
+
+        while ($i >= 0) {
+            fopen($this->obj->attachmentsDestDir . $sourceAttachments[$i], 'w');
+            $i--;
+        }
+ 
         $this->obj->dom = new DOMDocument;
         $this->obj->dom->load(dirname(__FILE__) . '/fixtures/mediawiki_sample.xml');
-        $attachments = array('Qlandkartegt-0.11.1.tar.gz', 'Passelivre.jpg');
         $this->obj->downloadAttachments();
 
-        $this->expectOutputString("\n\nStarting to import attachments:\nFile Qlandkartegt-0.11.1.tar.gz sucessfully imported!\nFile Passelivre.jpg sucessfully imported!\n");
+        $this->expectOutputString("\n\nStarting to import attachments:\nFile test2.jpg sucessfully imported!\nFile test.jpg sucessfully imported!\n");
 
-        foreach ($attachments as $attachment) {
-            $filePath = $this->obj->attachmentsDestDir . $attachment;
+        $i = count($sourceAttachments) - 1;
+        while ($i >= 0) {
+            $filePath = $this->obj->attachmentsDestDir . $destAttachments[$i];
             $this->assertFileExists($filePath);
             unlink($filePath);
+            unlink($this->obj->attachmentsDestDir . $sourceAttachments[$i]);
+            $i--;
         }
+        chdir($cwd);
     }
 
     public function testDownloadAttachmentShouldNotImportIfFileAlreadyExist()
@@ -146,7 +164,7 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
         $this->obj->attachmentsDestDir = dirname(__FILE__) . '/fixtures/';
         $this->obj->dom = new DOMDocument;
         $this->obj->dom->load(dirname(__FILE__) . '/fixtures/mediawiki_sample.xml');
-        $attachments = array('Qlandkartegt-0.11.1.tar.gz', 'Passelivre.jpg');
+        $attachments = array('test.jpg', 'test2.jpg');
 
         foreach ($attachments as $attachment) {
             $filePath = $this->obj->attachmentsDestDir . $attachment;
@@ -154,7 +172,7 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
         }
 
         $this->obj->downloadAttachments();
-        $this->expectOutputString("\n\nStarting to import attachments:\nNOT importing file Qlandkartegt-0.11.1.tar.gz as there is already a file with the same name in the destination directory (" . $this->obj->attachmentsDestDir . ")\nNOT importing file Passelivre.jpg as there is already a file with the same name in the destination directory (" . $this->obj->attachmentsDestDir . ")\n");
+        $this->expectOutputString("\n\nStarting to import attachments:\nNOT importing file test2.jpg as there is already a file with the same name in the destination directory (" . $this->obj->attachmentsDestDir . ")\nNOT importing file test.jpg as there is already a file with the same name in the destination directory (" . $this->obj->attachmentsDestDir . ")\n");
        
         foreach ($attachments as $attachment) {
             $filePath = $this->obj->attachmentsDestDir . $attachment;
@@ -176,7 +194,7 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
         $this->obj->dom->load(dirname(__FILE__) . '/fixtures/mediawiki_invalid_upload.xml');
         $this->obj->downloadAttachments();
 
-        $this->expectOutputString("\n\nStarting to import attachments:\nUnable to download file Qlandkartegt-0.11.1.tar.gz. Error message was: file_get_contents(): php_network_getaddresses: getaddrinfo failed: Name or service not known\nUnable to download file Passelivre.jpg. Error message was: file_get_contents(): php_network_getaddresses: getaddrinfo failed: Name or service not known\n");
+        $this->expectOutputString("\n\nStarting to import attachments:\nUnable to download file Qlandkartegt-0.11.1.tar.gz. File not found.\nUnable to download file Passelivre.jpg. File not found.\n");
     }
 
     public function testExtractInfo()
@@ -187,7 +205,7 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
 
         $pages = $dom->getElementsByTagName('page');
 
-        $this->expectOutputString("Page \"Redes de ensino\" succesfully parsed with 8 revisions (from a total of 8 revisions).\nPage \"Academia Colarossi\" succesfully parsed with 2 revisions (from a total of 2 revisions).\n");
+        $this->expectOutputString("Page \"Redes de ensino\" successfully parsed with 8 revisions (from a total of 8 revisions).\nPage \"Academia Colarossi\" successfully parsed with 2 revisions (from a total of 2 revisions).\n");
 
         $i = 0;
         foreach ($pages as $page) {
@@ -210,7 +228,7 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
 
         $pages = $dom->getElementsByTagName('page');
 
-        $this->expectOutputString("Page \"Redes de ensino\" succesfully parsed with 5 revisions (from a total of 8 revisions).\nPage \"Academia Colarossi\" succesfully parsed with 2 revisions (from a total of 2 revisions).\n");
+        $this->expectOutputString("Page \"Redes de ensino\" successfully parsed with 5 revisions (from a total of 8 revisions).\nPage \"Academia Colarossi\" successfully parsed with 2 revisions (from a total of 2 revisions).\n");
 
         $i = 0;
         foreach ($pages as $page) {
@@ -234,7 +252,7 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
 
         $pages = $dom->getElementsByTagName('page');
 
-        $this->expectOutputString("Page \"Redes de ensino\" succesfully parsed with 8 revisions (from a total of 8 revisions).\nPage \"Academia Colarossi\" succesfully parsed with 2 revisions (from a total of 2 revisions).\n");
+        $this->expectOutputString("Page \"Redes de ensino\" successfully parsed with 8 revisions (from a total of 8 revisions).\nPage \"Academia Colarossi\" successfully parsed with 2 revisions (from a total of 2 revisions).\n");
 
         $i = 0;
         foreach ($pages as $page) {
@@ -258,7 +276,7 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
 
         $pages = $dom->getElementsByTagName('page');
 
-        $this->expectOutputString("Page \"Redes de ensino\" succesfully parsed with 8 revisions (from a total of 8 revisions).\nPage \"Academia Colarossi\" succesfully parsed with 2 revisions (from a total of 2 revisions).\n");
+        $this->expectOutputString("Page \"Redes de ensino\" successfully parsed with 8 revisions (from a total of 8 revisions).\nPage \"Academia Colarossi\" successfully parsed with 2 revisions (from a total of 2 revisions).\n");
 
         $i = 0;
         foreach ($pages as $page) {
@@ -283,7 +301,7 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
         $dom->load(dirname(__FILE__) . '/fixtures/mediawiki_page.xml');
         $pages = $dom->getElementsByTagName('page');
 
-        $this->expectOutputString("Error while parsing revision 3 of the page \"Redes de ensino\". Or there is a problem on the page syntax or on the Text_Wiki parser (the parser used by the importer).\nPage \"Redes de ensino\" succesfully parsed with 7 revisions (from a total of 8 revisions).\nPage \"Academia Colarossi\" succesfully parsed with 2 revisions (from a total of 2 revisions).\n");
+        $this->expectOutputString("Error while parsing revision 3 of the page \"Redes de ensino\". Or there is a problem on the page syntax or on the Text_Wiki parser (the parser used by the importer).\nPage \"Redes de ensino\" successfully parsed with 7 revisions (from a total of 8 revisions).\nPage \"Academia Colarossi\" successfully parsed with 2 revisions (from a total of 2 revisions).\n");
 
         foreach ($pages as $page) {
             $obj->extractInfo($page);

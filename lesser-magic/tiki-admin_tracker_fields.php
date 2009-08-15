@@ -25,7 +25,7 @@ if (!isset($_REQUEST["trackerId"])) {
 }
 $auto_query_args = array(
 	'trackerId',
-	'offsset',
+	'offset',
 	'sort_mode',
 	'find',
 	'max'

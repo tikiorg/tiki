@@ -1,4 +1,4 @@
-{if $close_window eq 'y'}
+{if isset($close_window) and $close_window eq 'y'}
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--
 close();
@@ -11,7 +11,7 @@ close();
  * no_redirect_login: error antibot, system...
  * login: error login
  *}
-
+{if !isset($errortype)}{assign var='errortype' value=''}{/if}
 {capture assign=mid_data}
 	{if ($errortype eq "402")}
 		{include file='tiki-login.tpl'}
@@ -20,6 +20,8 @@ close();
 	{else}
 		{if $errortype eq 401 && empty($user) and  $prefs.permission_denied_login_box eq 'y'} {* permission denied *}
 			{assign var='errortitle' value='{tr}Please login{/tr}' }
+		{else}
+			{assign var='errortitle' value='{tr}Error{/tr}' }
 		{/if}
 		<br />
 		<div class="cbox">
@@ -29,10 +31,10 @@ close();
 				{if ($errortype eq "404")}
 					{if $prefs.feature_likePages eq 'y'}
 						{if $likepages}
-							<p>{tr}Perhaps you were looking for:{/tr}</p>
+							<p>{tr}Perhaps you are looking for:{/tr}</p>
 							<ul>
 								{section name=back loop=$likepages}
-								<li><a href="tiki-index.php?page={$likepages[back]|escape:"url"}" class="wiki">{$likepages[back]}</a></li>
+								<li><a href="tiki-index.php?page={$likepages[back]|escape:"url"}" class="wiki">{$likepages[back]|escape}</a></li>
 								{/section}
 							</ul>
 							<br />

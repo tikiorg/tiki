@@ -43,7 +43,7 @@ switch ($_REQUEST['type']) {
 		break;
 
 	case 'file gallery':
-		$objects = $filegallib->list_file_galleries(0, -1, 'name_desc', 'admin', $find_objects);
+		$objects = $filegallib->list_file_galleries(0, -1, 'name_desc', 'admin', $find_objects, $prefs['fgal_root_id']);
 		$smarty->assign_by_ref('objects', $objects["data"]);
 		$objects = $objects['data'];
 		correct_array($objects, 'galleryId', 'name');

@@ -1,15 +1,12 @@
 <?php
 /*
- * $Id: function.quicktags.php 20665 2009-08-07 15:13:18Z jonnybradley $
+ * $Id: function.toolbars.php 20665 2009-08-07 15:13:18Z jonnybradley $
  *
  * Smarty plugin to display content only to some groups
  */
 
-function smarty_function_quicktags($params, $content, &$smarty, $repeat)
+function smarty_function_toolbars($params, &$smarty)
 {
-	if($repeat)
-		return;
-
 	if( ! isset( $params['section'] ) ) {
 		global $section;
 		if( ! empty($section) )
@@ -28,8 +25,8 @@ function smarty_function_quicktags($params, $content, &$smarty, $repeat)
 		$params['area_name'] = 'wikiedit';
 	}
 
-	include_once( 'lib/quicktags/quicktagslib.php' );
-	$list = QuicktagsList::fromPreference( $params['section'] . ($comments ? '_comments' : '') );
+	include_once( 'lib/toolbars/toolbarslib.php' );
+	$list = ToolbarsList::fromPreference( $params['section'] . ($comments ? '_comments' : '') );
 	return $list->getWikiHtml( $params['area_name'] );
 }
 

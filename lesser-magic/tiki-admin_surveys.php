@@ -12,6 +12,14 @@ if ($prefs['feature_surveys'] != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
+
+$auto_query_args = array(
+	'surveyId',
+	'offset',
+	'sort_mode',
+	'find'
+);
+
 if (!isset($_REQUEST["surveyId"])) {
 	$_REQUEST["surveyId"] = 0;
 }

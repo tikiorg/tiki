@@ -2077,7 +2077,8 @@ class TikiLib extends TikiDb_Bridge {
 	// FILE GALLERIES ////
 	/*shared*/
 	function list_files($offset=0, $maxRecords=-1, $sort_mode='created_desc', $find='') {
-		return $this->get_files($offset, $maxRecords, $sort_mode, $find, -1, false, false, true, true, false, false, true, true);
+		global $prefs;
+		return $this->get_files($offset, $maxRecords, $sort_mode, $find, $prefs['fgal_root_id'], false, false, true, true, false, false, true, true);
 	}
 
 	/*shared*/
@@ -2117,19 +2118,13 @@ class TikiLib extends TikiDb_Bridge {
 	 */
 	function get_files($offset, $maxRecords, $sort_mode, $find, $galleryId=-1, $with_archive=false, $with_subgals=false, $with_subgals_size=true, $with_files=true, $with_files_data=false, $with_parent_name=false, $with_files_count=true, $recursive=false, $my_user='', $keep_subgals_together=true, $parent_is_file=false) {
 		global $user, $tiki_p_admin_file_galleries;
+		global $filegallib; require_once 'lib/filegals/filegallib.php';
+
 		$f_jail_bind = array();
 		$g_jail_bind = array();
 		$bindvars = array();
 
 		if ( ( ! $with_files && ! $with_subgals ) || ( $parent_is_file && $galleryId <= 0 ) ) return array();
-
-		// galleryId == 0 is a way to get only the main galleries
-		if ( $galleryId == 0 ) {
-			$galleryId = -1;
-			$with_files = false;
-			$with_archive = false;
-			$with_subgals = true;
-		}
 
 		$fileId = -1;
 		if ( $parent_is_file ) {
@@ -2137,8 +2132,15 @@ class TikiLib extends TikiDb_Bridge {
 			$galleryId = -2;
 		}
 
-		// recursive mode is only available for the whole tree
-		$recursive = ( $recursive && $galleryId == -1 );
+		if ( $recursive && ! is_array($galleryId) ) {
+			$idTree = array();
+			$filegallib->getGalleryIds( $idTree, $galleryId, 'list' );
+			$galleryId =& $idTree;
+		} else {
+			// recursive mode is only available for one parent gallery (i.e. not implemented when $galleryId is an array of multiple ids)
+			$recursive = false;
+		}
+
 		$with_subgals_size = ( $with_subgals && $with_subgals_size );
 		if ( $my_user == '' ) $my_user = $user;
 
@@ -2218,7 +2220,7 @@ class TikiLib extends TikiDb_Bridge {
 		if ( is_array($galleryId) ) {
 			$galleryId_str = ' in ('.implode(',', array_fill(0, count($galleryId),'?')).')';
 			$bindvars = array_merge($galleryId, $bindvars);
-		} elseif ( $galleryId >= -1 && ! $recursive ) {
+		} elseif ( $galleryId >= -1 ) {
 			$galleryId_str = '=?';
 			if ( $with_subgals ) array_unshift($bindvars, $galleryId);
 			if ( $with_files ) array_unshift($bindvars, $galleryId);
@@ -2401,10 +2403,8 @@ class TikiLib extends TikiDb_Bridge {
 		return array('data' => $ret, 'cant' => $cant);
 	}
 
-	function list_file_galleries($offset = 0, $maxRecords = -1, $sort_mode = 'name_desc', $user='', $find='', $parentId=-1,
-								 $with_archive=false, $with_subgals=true, $with_subgals_size=false, $with_files=false, $with_files_data=false, $with_parent_name=true, $with_files_count=true,$recursive=true) {
-		return $this->get_files($offset, $maxRecords, $sort_mode, $find, $parentId,
-								$with_archive, $with_subgals, $with_subgals_size, $with_files, $with_files_data, $with_parent_name, $with_files_count, $recursive, $user);
+	function list_file_galleries($offset = 0, $maxRecords = -1, $sort_mode = 'name_desc', $user='', $find='', $parentId=-1, $with_archive=false, $with_subgals=true, $with_subgals_size=false, $with_files=false, $with_files_data=false, $with_parent_name=true, $with_files_count=true,$recursive=true) {
+		return $this->get_files($offset, $maxRecords, $sort_mode, $find, $parentId, $with_archive, $with_subgals, $with_subgals_size, $with_files, $with_files_data, $with_parent_name, $with_files_count, $recursive, $user);
 	}
 
 	/*shared*/
@@ -2452,10 +2452,60 @@ class TikiLib extends TikiDb_Bridge {
 	}
 
 	/*shared*/
-	function get_file_gallery($id) {
-		$query = "select * from `tiki_file_galleries` where `galleryId`=?";
-		$result = $this->query($query,array((int) $id));
-		$res = $result->fetchRow();
+	function get_file_gallery($id = -1, $defaultsFallback = true) {
+		static $defaultValues = null;
+
+		if ( $defaultValues === null && $defaultsFallback ) {
+			global $prefs;
+			$defaultValues = array(
+				'name' => '',
+				'show_id' => $prefs['fgal_list_id'],
+				'show_icon' => $prefs['fgal_list_type'],
+				'show_name' => 'f',
+				'show_description' => $prefs['fgal_list_description'],
+				'show_size' => $prefs['fgal_list_size'],
+				'show_created' => $prefs['fgal_list_created'],
+				'show_modified' => $prefs['fgal_list_lastmodif'],
+				'show_creator' => $prefs['fgal_list_creator'],
+				'show_author' => $prefs['fgal_list_author'],
+				'show_last_user' => $prefs['fgal_list_last_user'],
+				'show_comment' => $prefs['fgal_list_comment'],
+				'show_files' => $prefs['fgal_list_files'],
+				'show_explorer' => $prefs['fgal_show_explorer'],
+				'show_path' =>$prefs['fgal_show_path'],
+				'show_slideshow' => $prefs['fgal_show_slideshow'],
+				'default_view' => $prefs['fgal_default_view'],
+				'show_hits' => $prefs['fgal_list_hits'],
+				'show_lockedby' => $prefs['fgal_list_lockedby'],
+				'show_checked' => 'y',
+				'show_userlink' => 'y',
+				'sort_mode' => $prefs['fgal_sort_mode'],
+				'public' =>'y',
+				'lockable' => 'n',
+				'visible' => 'y',
+				'archives' => -1,
+				'type' => 'default',
+				'description' => ''
+			);
+		}
+
+		if ( $id > 0 ) {
+			$query = "select * from `tiki_file_galleries` where `galleryId`=?";
+			$result = $this->query($query,array((int) $id));
+			$res = $result->fetchRow();
+		} else {
+			$res = array();
+		}
+
+		// Use default values if some values are not specified
+		if ( $res !== false && $defaultsFallback ) {
+			foreach ( $defaultValues as $k => $v ) {
+				if ( $res[$k] === null ) {
+					$res[$k] = $v;
+				}
+			}
+		}
+
 		return $res;
 	}
 
@@ -3629,41 +3679,6 @@ class TikiLib extends TikiDb_Bridge {
 		return $ret;
 	}
 
-	// Returns the name of "n" random pages
-	function get_random_pages($n) {
-		$query = "select count(*) from `tiki_pages`";
-
-		$cant = $this->getOne($query,array());
-
-		// Adjust the limit if there are not enough pages
-		if ($cant < $n)
-			$n = $cant;
-
-		// Now that we know the number of pages to pick select `n`  random positions from `0` to cant
-		$positions = array();
-
-		for ($i = 0; $i < $n; $i++) {
-			$pick = rand(0, $cant - 1);
-
-			if (!in_array($pick, $positions))
-				$positions[] = $pick;
-		}
-
-		// Now that we have the positions we just build the data
-		$ret = array();
-
-		$temp_max = count($positions);
-		for ($i = 0; $i < $temp_max; $i++) {
-			$index = $positions[$i];
-
-			$query = "select `pageName`  from `tiki_pages`";
-			$name = $this->getOne($query,array(),1,$index);
-			$ret[] = $name;
-		}
-
-		return $ret;
-	}
-
 	// Returns the name of all pages
 	function get_all_pages() {
 
@@ -4649,7 +4664,7 @@ class TikiLib extends TikiDb_Bridge {
 	/** Create a wiki page
 		@param array $hash- lock_it,contributions, contributors
 	 **/
-	function create_page($name, $hits, $data, $lastModif, $comment, $user = 'admin', $ip = '0.0.0.0', $description = '', $lang='', $is_html = false, $hash=null, $wysiwyg=NULL, $wiki_authors_style='', $minor=false) {
+	function create_page($name, $hits, $data, $lastModif, $comment, $user = 'admin', $ip = '0.0.0.0', $description = '', $lang='', $is_html = false, $hash=null, $wysiwyg=NULL, $wiki_authors_style='', $minor=0) {
 		global $smarty, $prefs, $dbTiki, $quantifylib;
 		include_once ("lib/commentslib.php");
 
@@ -7299,7 +7314,7 @@ class TikiLib extends TikiDb_Bridge {
 	/** Update a wiki page
 		@param array $hash- lock_it,contributions, contributors
 	 **/
-	function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip, $edit_description = '', $edit_minor = false, $lang='', $is_html=false, $hash=null, $saveLastModif=null, $wysiwyg='', $wiki_authors_style) {
+	function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip, $edit_description = '', $edit_minor = 0, $lang='', $is_html=false, $hash=null, $saveLastModif=null, $wysiwyg='', $wiki_authors_style) {
 		global $smarty, $prefs, $dbTiki, $histlib, $quantifylib;
 		include_once ("lib/wiki/histlib.php");
 		include_once ("lib/commentslib.php");
@@ -8265,6 +8280,32 @@ JS;
 		}
 		if ( $remove_duplicates ) $bindvars = $bindvars2;
 		return ' IN (' . $query . ')';
+	}
+
+	function get_jail() {
+		global $prefs;
+		if( $prefs['feature_categories'] == 'y' && ! empty( $prefs['category_jail'] ) ) {
+			global $categlib; require_once ('lib/categories/categlib.php');
+			$key = $prefs['category_jail'];
+			$categories = explode( ',', $prefs['category_jail'] );
+
+			if( $prefs['expanded_category_jail_key'] != $key ) {
+				$additional = array();
+
+				foreach( $categories as $categId ) {
+					$desc = $categlib->get_category_descendants( $categId );
+					$additional = array_merge( $additional, $desc );
+				}
+
+				$prefs['expanded_category_jail'] =
+					$_SESSION['s_prefs']['expanded_category_jail'] = implode( ',', $additional );
+				$_SESSION['s_prefs']['expanded_category_jail_key'] = $key;
+
+				return $additional;
+			}
+
+			return explode( ',', $prefs['expanded_category_jail'] );
+		}
 	}
 }
 // end of class ------------------------------------------------------

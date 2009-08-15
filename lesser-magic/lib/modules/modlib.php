@@ -489,12 +489,12 @@ class ModLib extends TikiLib {
 	}
 
 	function execute_module( $mod_reference ) {
-		$module_rows = $mod_reference["rows"];
 		$module_params = $mod_reference['params'];
 
-		if (!$mod_reference['rows']) {
+		if ( empty($mod_reference['rows']) ) {
 			$mod_reference['rows'] = 10;
 		}
+		$module_rows = $mod_reference["rows"];
 
 		$info = $this->get_module_info( $mod_reference );
 		$cachefile = $this->get_cache_file( $mod_reference, $info );

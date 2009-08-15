@@ -263,6 +263,10 @@
 						<span class="checkbox"><input type="checkbox" name="feature_magic" {if $prefs.feature_magic eq 'y'}checked="checked"{/if}/></span>
 						<span class="label"><a>{tr}Magic Admin Panel{/tr}</a></span>
 					</div>
+					<div class="half_width">
+						<span class="checkbox"><input type="checkbox" name="feature_workspaces" {if $prefs.feature_workspaces eq 'y'}checked="checked"{/if}/></span>
+						<span class="label"><a>{tr}Workspaces{/tr}</a></span>
+					</div>
 				</fieldset>
 				<fieldset>
 					<legend class="heading">{icon _id="information_gray"}<span>{tr}Neglected{/tr}</span></legend>

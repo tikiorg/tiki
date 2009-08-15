@@ -171,7 +171,7 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
                 try {
                     $parsedData[] = $this->extractInfo($page);
                 } catch (ImporterParserException $e) {
-                    $this->saveAndDisplayLog($e->getMessage());
+                    $this->saveAndDisplayLog($e->getMessage(), true);
                 }
             }
         }
@@ -195,7 +195,7 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
         $pages = $this->dom->getElementsByTagName('page');
 
         if ($this->dom->getElementsByTagName('upload')->length == 0) {
-            $this->saveAndDisplayLog("\n\nNo attachments found to import! Make sure you have created your XML file with the dumpDump.php script and with the option --uploads. This is the only way to import attachment.\n");
+            $this->saveAndDisplayLog("\n\nNo attachments found to import! Make sure you have created your XML file with the dumpDump.php script and with the option --uploads. This is the only way to import attachment.\n", true);
             return;
         }
 
@@ -212,17 +212,17 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
                 $fileUrl = $lastVersion->getElementsByTagName('src')->item(0)->nodeValue;
 
                 if (file_exists($this->attachmentsDestDir . $fileName)) {
-                    $this->saveAndDisplayLog("NOT importing file $fileName as there is already a file with the same name in the destination directory ($this->attachmentsDestDir)\n");
+                    $this->saveAndDisplayLog("NOT importing file $fileName as there is already a file with the same name in the destination directory ($this->attachmentsDestDir)\n", true);
                     continue;
                 }
 
-                try {
-                    $attachmentContent = file_get_contents($fileUrl);
+                if (@fopen($fileUrl, 'r')) {
+                    $attachmentContent = @file_get_contents($fileUrl);
                     $newFile = fopen($this->attachmentsDestDir . $fileName, 'w');
                     fwrite($newFile, $attachmentContent);
                     $this->saveAndDisplayLog("File $fileName sucessfully imported!\n");
-                } catch (Exception $e) {
-                    $this->saveAndDisplayLog("Unable to download file $fileName. Error message was: " . $e->getMessage() . "\n");
+                } else {
+                    $this->saveAndDisplayLog("Unable to download file $fileName. File not found.\n", true);
                 }
             }
         }
@@ -268,7 +268,7 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
                         try {
                             $data['revisions'][] = $this->extractRevision($node);
                         } catch (ImporterParserException $e) {
-                            $this->saveAndDisplayLog('Error while parsing revision ' . $i . ' of the page "' . $data['name'] . '". Or there is a problem on the page syntax or on the Text_Wiki parser (the parser used by the importer).' . "\n");
+                            $this->saveAndDisplayLog('Error while parsing revision ' . $i . ' of the page "' . $data['name'] . '". Or there is a problem on the page syntax or on the Text_Wiki parser (the parser used by the importer).' . "\n", true);
                         }
                     }
                     break;
@@ -279,11 +279,11 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
         }
 
         if (count($data['revisions']) > 0) {
-            $msg = 'Page "' . $data['name'] . '" succesfully parsed with ' . count($data['revisions']) . " revisions (from a total of $totalRevisions revisions).\n";
+            $msg = 'Page "' . $data['name'] . '" successfully parsed with ' . count($data['revisions']) . " revisions (from a total of $totalRevisions revisions).\n";
             $this->saveAndDisplayLog($msg);
             return $data;
         } else {
-            throw new ImporterParserException('Page "' . $data['name'] . '" is NOT going to be imported. It was not possible to parse any of the page revisions.' . "\n");
+            throw new ImporterParserException('Page "' . $data['name'] . '" is NOT going to be imported. It was not possible to parse any of the page revisions.' . "\n", true);
         }
     }
 

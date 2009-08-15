@@ -50,6 +50,15 @@ class TikiImporter
     public $log = '';
 
     /**
+     * During the importing process all the error
+     * messagens will be appended to this property
+     * using the method saveAndDisplayLog()
+     *
+     * @var string
+     */
+    public $errors = '';
+
+    /**
      * Abstract method to start the import process and
      * call all other functions for each step of the importation
      * (validateInput(), parseData(), insertData())
@@ -159,11 +168,16 @@ class TikiImporter
      * during the execution of the script using the flush() method
      *
      * @param string $msg the log message
+     * @param bool $error if the message is a error or not
      * @return void
      */
-    function saveAndDisplayLog($msg)
+    function saveAndDisplayLog($msg, $error = false)
     {
         $this->log .= $msg;
+
+        if ($error)
+            $this->errors .= $msg;
+
         // convert \n to <br> if running script in web browser
         if (isset($_SERVER['HTTP_HOST']))
             $msg = nl2br($msg);

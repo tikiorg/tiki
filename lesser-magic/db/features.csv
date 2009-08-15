@@ -613,7 +613,7 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 708,Default number of rows (comments),113,,default_rows_textarea_comment,simple,,tiki_p_admin,,,,,, 
 709,Default number of rows (forum replies),113,,default_rows_textarea_forumthread,simple,,tiki_p_admin,,12,,,, 
 710,Use Quote plugin rather than ﾓ>ﾔ for quoting,113,,feature_use_quoteplugin,flag,,tiki_p_admin,,,,,, 
-711,Show quicktags over textareas,113,,quicktags_over_textarea,flag,,tiki_p_admin,,,Quicktags,"If disabled, Quicktags will appear to the left of the edit area. ",, 
+711,Show toolbars over textareas,113,,toolbars_over_textarea,flag,,tiki_p_admin,,,Quicktags,"If disabled, Quicktags will appear to the left of the edit area. ",, 
 712, Allow to post comments as Anonymous,113,,feature_comments_post_as_anonymous,flag,,tiki_p_admin,,28,,,, 
 713, AutoLinks,113,,feature_autolinks,flag,,tiki_p_admin,,,,,, 
 714, Hotwords in New Windows,113,,feature_hotwords_nw,flag,,tiki_p_admin,,,,,, 

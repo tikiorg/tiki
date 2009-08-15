@@ -25,7 +25,7 @@ class TikiImporter_Wiki extends TikiImporter
      * @see lib/importer/TikiImporter#importOptions
      */
 	static public $importOptions = array(
-        array('name' => 'wikiRevisions', 'type' => 'text', 'label' => 'Number of page revisions to import (0 for all revisions)'),
+        array('name' => 'wikiRevisions', 'type' => 'text', 'value' => 1, 'label' => 'Number of page revisions to import (0 for all revisions)'),
         array('name' => 'alreadyExistentPageName', 'type' => 'select', 'label' => 'What to do with page names that already exists in TikiWiki?',
             'options' => array(
                 array('name' => 'doNotImport', 'label' => 'Do not import'),
@@ -70,6 +70,7 @@ class TikiImporter_Wiki extends TikiImporter
 
         $_SESSION['tiki_importer_feedback'] = $importFeedback;
         $_SESSION['tiki_importer_log'] = $this->log;
+        $_SESSION['tiki_importer_errors'] = $this->errors;
    }
 
     /**

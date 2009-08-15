@@ -1,54 +1,68 @@
-/* $Id $ */
+/* $Id$ */
 
-.admbox a,
-.admbox a:hover,
 a.admbox {
-	border : 2px solid #89d;
-	height : 100px;
-	width : 100px;
-	text-align : center; 
-	vertical-align : middle;
-	overflow : hidden;
-	float : left; 
-	margin : 5px; 
-	background-color: #9fff9f; 
+	height: 100px;
+	width: 100px;
+	text-align: center;
+	vertical-align: middle;
+	overflow: hidden;
+	float: left;
+	margin: .4em;
+	border: 1px #666 solid;
+	background-color: #ccc;
+	background-repeat: no-repeat;
 	background-position: center;
-	background-repeat: no-repeat !important;
-	padding : 0;
-	padding-top: 0px;
+	padding: 0;
 	position: relative;
-	text-decoration : none;
-}
-.admbow a img, a.admbox img { 
-	border: none; margin-top : 0px; width: 100px; height: 100px; position: absolute; top: 0; left: 0;
-	z-index: 0;
-}
-a.admbox span { 
-	position: absolute; bottom: 0; left: 0; width: 100%; margin-bottom: 1px;
-}
-
-.admbox.off a, a.admbox.off {
-	/*background-color : #d0d0d0; */
-	border : 2px solid #9f9f9f;
-	color: #9f9f9f;
-}
-.admbox.off a img, a.admbox.off img {
-	border: none; margin-top : 0px; width: 100px; height: 100px; position: absolute; top: 0; left: 0;
-	background-image: url('../pics/overlay-disabled_item.png');
-}
-.admbox a:hover, .admbox a:focus, .admbox a:active, 
-a.admbox:hover, a.admbox:focus, a.admbox:active {
-	background-color: #9fff9f;
-	padding : 0;
-	margin : 5px;
-	border : 2px solid #c00;
-	color: #000;
-}
-.admbox.off a:hover, .admbox.off a:focus, .admbox.off a:active, 
-a.admbox.off:hover, a.admbox.off:focus, a.admbox.off:active {
-	border : 2px solid #9f9f9f;
+	text-decoration: none;
 	color: #333;
 }
+
+a.admbox:hover,
+a.admbox:focus,
+a.admbox:active {
+	border: 1px solid #333;
+	background-color: #aaa;
+	color: #fff;
+}
+
+a.admbox span { 
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	margin-bottom: .1em;
+}
+
+a.admbox.off {
+	border: 1px solid #a9a9a9;
+	color: #9f9f9f;
+}
+
+a.admbox.off:hover,
+a.admbox.off:focus,
+a.admbox.off:active {
+	border: 1px solid #a9a9a9;
+	color: #666;
+}
+
+a.admbox.off img {
+	border: none;
+	margin-top : 0px;
+	width: 100px;
+	height: 100px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-image: url('../pics/overlay-disabled_item.png');
+	opacity: .5;
+}
+/* Look & feel thumbnail */
+
+#style_thumb_div {
+	text-align: center;
+}
+
 
 /* classes for admin preferences UI */
 .adminoptionbox {
@@ -131,12 +145,11 @@ div.adminanchors a {float: left}
 
 /* from ui-revamp branch, via coe branch - jb july 2009 */
 
-.quicktags-admin .full {
+.toolbars-admin .full {
 	border: solid thin gray;
 	float: left;
 	height: auto;
 	max-height: 400px;
-	width: 100%;
 /*
 	max-width: 26%;
 	min-width: 10em;
@@ -146,47 +159,53 @@ div.adminanchors a {float: left}
 	margin: 0;
 }
 
-.quicktags-admin #qt_filter_div {
-	width: 240px;
+.toolbars-admin #qt_filter_div {
+	width: 100%;
 }
 
-.quicktags-admin .rows {
+.toolbars-admin .lists {
+	padding: 1em 2em 1em 0;
+	float: left;
+	width: 28%;
+	min-height: 10em;
+}
+
+.toolbars-admin .rows {
 	width: 100%;
 	float: left;
 	clear: both;
 	padding: 1em 2em 1em 0;
 }
 
-.quicktags-admin .selectDiv {
+.toolbars-admin .selectDiv {
 	float: left;
 	clear: left;
 }
 
-.quicktags-admin .li {
+.toolbars-admin .li {
 	display: block;
 	white-space:nowrap;
 }
-.quicktags-admin .full li {
-	display: inline-block;
-	border: 1pt solid black;
-	white-space:nowrap;
-	width: 7em;
-	padding: 1pt;
+.toolbars-admin .full li {
+	white-space: nowrap;
+	padding: .1em .5em;
 	overflow: hidden;
+	border-top: 1px #eee solid;
+	border-bottom: 1px #ccc solid;
 }
 
-.quicktag img.icon {
+.toolbar img.icon {
 	vertical-align: middle;
 	margin-right: 4px;
 }
 
-.quicktags-admin .quicktag {
+.toolbars-admin .toolbar {
 	cursor: pointer;
 	height: 1.5em;
 	line-height: 1.2em;
 }
 
-.quicktags-admin .rows .row {
+.toolbars-admin .rows .row {
 	width: 95%;
 	min-height: 20px;
 	min-width: 500px;
@@ -197,20 +216,21 @@ div.adminanchors a {float: left}
 	padding: 2px 4px 0;
 }
 
-.quicktags-admin ul.full {
+.toolbars-admin ul.full {
 	list-style-type: none;
 	display: inline;
 	padding-left: 0pt;
+	width: 100%;
 }
 
-.quicktags-admin .row li.quicktag {
+.toolbars-admin .row li.toolbar {
 	list-style-type: none;
 	float: left;
 	width: 18px;
 	overflow: hidden;
 }
 
-.quicktags-admin .row li.qt-plugin {
+.toolbars-admin .row li.qt-plugin {
 	width: auto;
 	background-color: #9C0;
 	border: thin #690 solid;
@@ -230,16 +250,32 @@ div.adminanchors a {float: left}
 	font-weight: bold;
 }
 
-#qt_filter_div {
+.qt_filter_div {
 	background-color: #fff;
 	border-top: thin gray solid;
 	border-right: thin gray solid;
 	border-bottom: none;
 	border-left: thin gray solid;
-	padding-left: .5em;
+	padding: 0 .5em;
+	font-size: 0.9em;
 }
 
 #qt_filter_div a {
 	
 }
+
+#toolbar_edit_div {
+	z-index: 2;
+	float: left;
+	position: absolute;
+	top: 10px;
+	left: 0;
+	background-color: #fff;
+	padding: 0 .5em .5em;
+}
+
+#toolbar_edit_div .adminoptionbox {
+	text-align: right;
+}
+
 /* end from ui-revamp branch */

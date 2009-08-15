@@ -216,8 +216,13 @@ class HistLib extends TikiLib {
 	function get_last_changes($days, $offset = 0, $limit = -1, $sort_mode = 'lastModif_desc', $findwhat = '') {
 	        global $user;
 
-		$where = "where (th.`version` != 0 or tp.`version` != 0) ";
-		$bindvars = array();
+		$categories = $this->get_jail();
+		if ($categories) {
+			$categjoin .= "inner join `tiki_objects` as tob on (tob.`itemId`= ta.`object` and tob.`type`= ?) inner join `tiki_category_objects` as tc on (tc.`catObjectId`=tob.`objectId` and tc.`categId` IN(" . implode(', ', array_fill(0, count($categories), '?')) . ")) ";
+			$bindvars = array_merge(array_merge(array('wiki page'), $categories));
+		}
+
+		$where = "where (th.`version` != 0 or tp.`version` != 0)";
 		if ($findwhat) {
 			$findstr='%' . $findwhat . '%';
 			$where.= " and ta.`object` like ? or ta.`user` like ? or ta.`comment` like ?";
@@ -232,12 +237,12 @@ class HistLib extends TikiLib {
 			$bindvars[] = $toTime;
 		}
 
-		$query = "select ta.`action`, ta.`lastModif`, ta.`user`, ta.`ip`, ta.`object`,th.`comment`, th.`version` as version, tp.`version` as versionlast from `tiki_actionlog` ta 
+		$query = "select distinct ta.`action`, ta.`lastModif`, ta.`user`, ta.`ip`, ta.`object`, th.`comment`, th.`version` as version, tp.`version` as versionlast from `tiki_actionlog` ta 
 			left join `tiki_history` th on  ta.`object`=th.`pageName` and ta.`lastModif`=th.`lastModif` and ta.`objectType`='wiki page'
-			left join `tiki_pages` tp on ta.`object`=tp.`pageName` and ta.`lastModif`=tp.`lastModif` " . $where . " order by ta.".$this->convertSortMode($sort_mode);
-		$query_cant = "select count(*) from `tiki_actionlog` ta 
+			left join `tiki_pages` tp on ta.`object`=tp.`pageName` and ta.`lastModif`=tp.`lastModif` " . $categjoin . $where . " order by ta.".$this->convertSortMode($sort_mode);
+		$query_cant = "select count(distinct ta.`lastModif`, ta.`object`) from `tiki_actionlog` ta 
 			left join `tiki_history` th on  ta.`object`=th.`pageName` and ta.`lastModif`=th.`lastModif` 
-			left join `tiki_pages` tp on ta.`object`=tp.`pageName` and ta.`lastModif`=tp.`lastModif` " . $where;
+			left join `tiki_pages` tp on ta.`object`=tp.`pageName` and ta.`lastModif`=tp.`lastModif` " . $categjoin . $where;
 
 		$result = $this->fetchAll($query,$bindvars,$limit,$offset);
 		$result = Perms::filter( array( 'type' => 'wiki page' ), 'object', $result, array( 'object' => 'object' ), 'view' );

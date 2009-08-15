@@ -315,7 +315,7 @@ $smarty->assign_by_ref('objects', $objects["data"]);
 $smarty->assign_by_ref('cant_pages', $objects["cant"]);
 $galleries = $tikilib->list_galleries(0, -1, 'name_desc', 'admin', $find_objects);
 $smarty->assign_by_ref('galleries', $galleries["data"]);
-$file_galleries = $filegallib->list_file_galleries(0, -1, 'name_desc', 'admin', $find_objects);
+$file_galleries = $filegallib->list_file_galleries(0, -1, 'name_desc', 'admin', $find_objects, $prefs['fgal_root_id']);
 $smarty->assign_by_ref('file_galleries', $file_galleries["data"]);
 $forums = $commentslib->list_forums(0, -1, 'name_asc', $find_objects);
 $smarty->assign_by_ref('forums', $forums["data"]);
