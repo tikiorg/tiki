@@ -47,6 +47,7 @@
 </script>
 {if $prefs.feature_jquery_ui eq 'y'}{* TODO optimise so not including all - maybe - one day *}
 <script type="text/javascript" src="lib/jquery/jquery-ui/ui/{$minidir}/jquery-ui{$minified}.js"></script>
+<link rel="stylesheet" href="lib/jquery/jquery-ui/themes/{$prefs.feature_jquery_ui_theme}/jquery-ui.css" />
 {/if}
 {if $prefs.feature_jquery_tooltips eq 'y'}
 <script type="text/javascript" src="lib/jquery/cluetip/lib/jquery.hoverIntent.js"></script>
