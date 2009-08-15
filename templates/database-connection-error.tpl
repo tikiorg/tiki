@@ -15,7 +15,7 @@
 		}
 	</style>
 </head>
-<body class="tiki_wiki" style="text-align: center;">
+<body class="tiki_wiki">
 	<div id="siteheader">
 			<div id="sitelogo" style="text-align: center; padding-left: 70px;">
 				<img style="border: medium none ;" alt="Site Logo" src="img/tiki/tiki3.png" />
@@ -25,20 +25,49 @@
 	<div id="tiki-main">
 		<div id="tiki-mid">
 			<div style="margin:10px 30px;">
-				<h1>
+				<h1 class="center">
 					{tr}TikiWiki CMS/Groupware is unable to connect to the database.{/tr}
 				</h1>
+				<div class="left">
 				<p>{tr}The following error message was returned:{/tr}</p>
 				<strong>
 					{$msg|escape}
 				</strong>
+
+				{if $requires_update}
+					<p>{tr}Database is not currently up to date! Visit <a href="tiki-install.php">Tiki Installer</a> to resolve this issue.{/tr}</p>
+				{/if}
+
+				{if $base_query}
+					<p><strong>{tr}The query was:{/tr}</strong></p>
+					<strong>{$base_query|escape}</strong>
+				{/if}
+				{if $values|@count > 0}
+					<p><strong>{tr}Values:{/tr}</strong></p>
+					<ol>
+						{foreach from=$values key=key item=value}
+							<li>{$value|escape}</li>
+						{/foreach}
+					</ol>
+				{/if}
+				{if $built_query}
+					<p><strong>{tr}The built query was likely:{/tr}</strong></p>
+					<strong>{$built_query|escape}</strong>
+				{/if}
+				{if $stacktrace}
+					<p><strong>{tr}Stacktrace:{/tr}</strong></p>
+					<div>
+						{$stacktrace}
+					</div>
+				{/if}
+				</div>
 				
 				<div class="wikitext" style="border: solid 1px #ccc; margin: 1em auto; padding: 1em; text-align: left; width: 30%;">
 				<p>Things to check:</p>
 				<ol class="fancylist">
 					<li><p>Is your database up and running?</p></li>
 					<li><p>Are your database login credentials correct?</p></li>
-					<li><p>Did you complete the <a href="tiki-install.php"> Tiki Installer?</a></p></li>
+					<li><p>Did you complete the <a href="tiki-install.php">Tiki Installer?</a></p></li>
 				</ol>
 				</div>
 
