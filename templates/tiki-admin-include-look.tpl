@@ -783,6 +783,35 @@
 					</tr>
 					<tr>
 						<td width="30%">
+							<label for="feature_jquery_ui_theme">{tr}JQuery UI Theme{/tr}</label>
+						</td>
+						<td width="2%">
+							{help url="JQuery#UI" desc="{tr}JQuery UI Theme: Themes for look and feel of JQuery UI widgets{/tr}"}
+						</td>
+						<td>
+							<select name="feature_jquery_ui_theme" id="feature_jquery_ui_theme">
+					            <option value="black-tie" {if $prefs.feature_jquery_ui_theme eq 'black-tie'}selected="selected"{/if}>black-tie</option>
+					            <option value="blitzer" {if $prefs.feature_jquery_ui_theme eq 'blitzer'}selected="selected"{/if}>blitzer</option>
+					            <option value="cupertino" {if $prefs.feature_jquery_ui_theme eq 'cupertino'}selected="selected"{/if}>cupertino</option>
+					            <option value="dot-luv" {if $prefs.feature_jquery_ui_theme eq 'dot-luv'}selected="selected"{/if}>dot-luv</option>
+					            <option value="excite-bike" {if $prefs.feature_jquery_ui_theme eq 'excite-bike'}selected="selected"{/if}>excite-bike</option>
+					            <option value="hot-sneaks" {if $prefs.feature_jquery_ui_theme eq 'hot-sneaks'}selected="selected"{/if}>hot-sneaks</option>
+					            <option value="humanity" {if $prefs.feature_jquery_ui_theme eq 'humanity'}selected="selected"{/if}>humanity</option>
+					            <option value="mint-choc" {if $prefs.feature_jquery_ui_theme eq 'mint-choc'}selected="selected"{/if}>mint-choc</option>
+					            <option value="redmond" {if $prefs.feature_jquery_ui_theme eq 'redmond'}selected="selected"{/if}>redmond</option>
+					            <option value="smoothness" {if $prefs.feature_jquery_ui_theme eq 'smoothness'}selected="selected"{/if}>smoothness</option>
+					            <option value="south-street" {if $prefs.feature_jquery_ui_theme eq 'south-street'}selected="selected"{/if}>south-street</option>
+					            <option value="start" {if $prefs.feature_jquery_ui_theme eq 'start'}selected="selected"{/if}>start</option>
+					            <option value="swanky-purse" {if $prefs.feature_jquery_ui_theme eq 'swanky-purse'}selected="selected"{/if}>swanky-purse</option>
+					            <option value="trontastic" {if $prefs.feature_jquery_ui_theme eq 'trontastic'}selected="selected"{/if}>trontastic</option>
+					            <option value="ui-darkness" {if $prefs.feature_jquery_ui_theme eq 'ui-darkness'}selected="selected"{/if}>ui-darkness</option>
+					            <option value="ui-lightness" {if $prefs.feature_jquery_ui_theme eq 'ui-lightness'}selected="selected"{/if}>ui-lightness</option>
+					            <option value="vader" {if $prefs.feature_jquery_ui_theme eq 'vader'}selected="selected"{/if}>vader</option>
+					        </select>
+						</td>
+					</tr>
+					<tr>
+						<td width="30%">
 							<label for="feature_jquery_sheet">{tr}JQuery Sheet{/tr}</label>
 						</td>
 						<td width="2%">

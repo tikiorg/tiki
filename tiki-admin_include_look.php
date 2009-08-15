@@ -103,6 +103,7 @@ if (isset($_REQUEST["looksetup"])) {
 		'jquery_effect_tabs',
 		'jquery_effect_tabs_direction',
 		'jquery_effect_tabs_speed',
+		'feature_jquery_ui_theme',
 		'available_styles',
 		'iepngfix_selectors',
 		'iepngfix_elements',
