@@ -113,4 +113,7 @@
 		//--><!]]>
 		</script>
 {/if}
+{if $prefs.feature_custom_html_head_content}
+	{eval var=$prefs.feature_custom_html_head_content}
+{/if}
 {* END of html head content *}

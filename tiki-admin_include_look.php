@@ -118,6 +118,7 @@ if (isset($_REQUEST["looksetup"])) {
 		'footer_shadow_end',
 		'box_shadow_start',
 		'box_shadow_end',
+		'feature_custom_html_head_content',
 	);
 	foreach($pref_simple_values as $svitem) {
 		simple_set_value($svitem);

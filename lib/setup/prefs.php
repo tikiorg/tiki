@@ -1078,6 +1078,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_sitedesc' => 'n',
 		'feature_bot_logo' => 'n',
 		'feature_endbody_code' => '',
+		'feature_custom_html_head_content' => '',
 
 		// layout
 		'feature_left_column' => 'y',
