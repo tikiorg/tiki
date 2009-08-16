@@ -16,6 +16,7 @@ function wikiplugin_sup_info() {
 		'description' => tra('Displays text in superscript (exponent).'),
 		'prefs' => array( 'wikiplugin_sup' ),
 		'body' => tra('text'),
+		'icon' => 'pics/icons/text_superscript.png',
 		'params' => array(
 		),
 	);
