@@ -26,7 +26,8 @@ function wikiplugin_trackerlist_info() {
 				'required' => false,
 				'name' => tra('Fields'),
 				'description' => tra('Colon-separated list of field IDs to be displayed. Example: 2:4:5'),
-				'filter' => 'alpha'
+				'filter' => 'digits',
+				'separator' => ':',
 			),
 			'sort' => array(
 				'required' => false,
@@ -38,7 +39,8 @@ function wikiplugin_trackerlist_info() {
 				'required' => false,
 				'name' => tra('Popup'),
 				'description' => tra('Colon-separated list of fields to display on click. Example: 6:7'),
-				'filter' => 'alpha'
+				'filter' => 'digits',
+				'separator' => ':',
 			),
 			'stickypopup' => array(
 				'required' => false,
@@ -116,7 +118,7 @@ function wikiplugin_trackerlist_info() {
 				'required' => false,
 				'name' => tra('Sort Mode'),
 				'description' => tra('Sort Mode'),
-				'filter' => 'alpha'
+				'filter' => 'word'
 			),
 			'max' => array(
 				'required' => false,
@@ -128,18 +130,22 @@ function wikiplugin_trackerlist_info() {
 				'required' => false,
 				'name' => tra('Filter Field'),
 				'description' => tra('Colon separated list of fields to allow filtering on.'),
-				'filter' => 'alpha'
+				'filter' => 'digits',
+				'separator' => ':',
 			),
 			'filtervalue' => array(
 				'required' => false,
 				'name' => tra('Filter Value'),
 				'description' => tra('?'),
-				'filter' => 'alpha'
+				'filter' => 'text',
+				'separator' => ':',
 			),
 			'exactvalue' => array(
 				'required' => false,
 				'name' => tra('Exact Value'),
 				'description' => tra('?'),
+				'filter' => 'text',
+				'separator' => ':',
 			),
 			'checkbox' => array(
 				'required' => false,
@@ -224,7 +230,7 @@ function wikiplugin_trackerlist_info() {
 				'required' => false,
 				'name' => tra('Compute'),
 				'description' => tra('Sum or average all the values of a field  and displays it at the bottom of the table.').' '.tra('fieldId').'/sum:'.tra('fieldId').'/avg',
-				'filter' => 'alpha'
+				'filter' => 'text'
 			),
 			'silent' => array(
 				'required' => false,
@@ -294,7 +300,7 @@ function wikiplugin_trackerlist($data, $params) {
 		
 
 		if (!empty($fields)) {
-			$listfields = split(':',$fields);
+			$listfields = $fields;
 			if ($sort == 'y') {
 				$allfields = $trklib->sort_fields($allfields, $listfields);
 			}
@@ -304,7 +310,7 @@ function wikiplugin_trackerlist($data, $params) {
 			}
 		}
 		if (!empty($popup)) {
-			$popupfields = split(':', $popup);
+			$popupfields = $popup;
 		} else {
 			$popupfields = array();
 		}
@@ -515,17 +521,16 @@ function wikiplugin_trackerlist($data, $params) {
 		if (!isset($filterfield)) {
 			$filterfield = '';
 		} else {
-			if (is_string($filterfield) && strstr($filterfield, ':') !== false) {
-				$filterfield = split(':', $filterfield);
+			if (!empty($filterfield)) {
 				if (!empty($filtervalue)) {
-					$fvs = split(':', $filtervalue);
+					$fvs = $filtervalue;
 					unset($filtervalue);
 					for ($i = 0; $i < count($filterfield); ++$i) {
 						$filtervalue[] = isset($fvs[$i])? $fvs[$i]:'';
 					}
 				}
 				if (!empty($exactvalue)) {
-					$evs = split(':', $exactvalue);
+					$evs = $exactvalue;
 					unset($exactvalue);
 					for ($i = 0; $i < count($filterfield); ++$i) {
 						$exactvalue[] = isset($evs[$i])?$evs[$i]:'';
