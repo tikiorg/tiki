@@ -79,21 +79,17 @@ class Perms_Accessor implements ArrayAccess
 		}
 	}
 
-	function globalize( $permissions, $sanitize = true ) {
+	function globalize( $permissions, $smarty = null, $sanitize = true ) {
 		foreach( $permissions as $perm ) {
 			if( $sanitize ) {
 				$perm = $this->sanitize( $perm );
 			}
-			$GLOBALS[ $this->prefix . $perm ] = $this->checkPermission( $perm ) ? 'y' : 'n';
-		}
-	}
+			$val = $this->checkPermission( $perm ) ? 'y' : 'n';
+			$GLOBALS[ $this->prefix . $perm ] = $val;
 
-	function smartify( $smarty, $permissions, $sanitize = true ) {
-		foreach( $permissions as $perm ) {
-			if( $sanitize ) {
-				$perm = $this->sanitize( $perm );
+			if( $smarty ) {
+				$smarty->assign( 'tiki_p_' . $perm, $val );
 			}
-			$smarty->assign( 'tiki_p_' . $perm, $this->checkPermission( $perm ) ? 'y' : 'n' );
 		}
 	}
 

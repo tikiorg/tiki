@@ -85,8 +85,7 @@ function remove_tiki_p_prefix( $name ) {
 
 $shortPermList = array_map( 'remove_tiki_p_prefix', $permissionList );
 
-$globalperms->globalize( $shortPermList, false );
-$globalperms->smartify( $smarty, $shortPermList, false );
+$globalperms->globalize( $shortPermList, $smarty, false );
 $smarty->assign( 'globalperms', $globalperms );
 
 unset($allperms);

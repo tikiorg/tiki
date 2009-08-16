@@ -307,8 +307,7 @@ class TikiAccessLib extends TikiLib {
 			$perms->setGroups( $groups );
 
 			$perms = Perms::get();
-			$perms->globalize( $permissionList );
-			$perms->smartify( $permissionList );
+			$perms->globalize( $permissionList, $smarty );
 
 			return true;
 		} else {
