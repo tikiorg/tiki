@@ -222,6 +222,26 @@ function prefs_feature_list() {
 			'help' => 'Comments',
 			'type' => 'flag',
 		),
+		'feature_wiki_description' => array(
+			'name' => tra('Display page description'),
+			'description' => tra('Display the page description below the heading when viewing the page.'),
+			'type' => 'flag',
+		),
+		'feature_page_title' => array(
+			'name' => tra('Display page title'),
+			'description' => tra('Display the page name at the top of each page. If not enabled, the content must be structured to contain a header.'),
+			'type' => 'flag',
+		),
+		'feature_wiki_pageid' => array(
+			'name' => tra('Display page ID'),
+			'description' => tra('Display the internal page ID when viewing the page.'),
+			'type' => 'flag',
+		),
+		'feature_wiki_icache' => array(
+			'name' => tra('Individual wiki cache'),
+			'description' => tra('Allow users to change the duration of the cache on a per-page basis.'),
+			'type' => 'flag',
+		),
 	);
 }
 

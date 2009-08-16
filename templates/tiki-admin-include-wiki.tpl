@@ -9,130 +9,31 @@
 
 	{tabset name="admin_wiki"}
 		{tab name="{tr}General Preferences{/tr}"}
-<div class="adminoptionbox">
-	<div class="adminoptionlabel"><label for="wikiHomePage">{tr}Home page{/tr}:</label><input type="text" id="wikiHomePage" name="wikiHomePage" value="{$prefs.site_wikiHomePage|escape}" size="40" /><input type="submit" name="setwikihome" value="{tr}Set{/tr}" />{if $prefs.feature_help eq 'y'} {help url="General+Admin"}{/if}
-	<br /><em>{tr}If the page does not exist, Tiki will create it{/tr}.</em></div>
-</div>
-
-<input type="hidden" name="setwikiregex" />
-
-<div class="adminoptionbox">
-	<div class="adminoptionlabel"><label for='wiki_page_regex'>{tr}Wiki link format{/tr}:</label>
-    <select name="wiki_page_regex" id="wiki_page_regex">
-    <option value='complete' {if $prefs.wiki_page_regex eq 'complete'}selected="selected"{/if}>{tr}Complete{/tr}</option>
-    <option value='full' {if $prefs.wiki_page_regex eq 'full'}selected="selected"{/if}>{tr}Latin{/tr}</option>
-    <option value='strict' {if $prefs.wiki_page_regex eq 'strict'}selected="selected"{/if}>{tr}English{/tr}</option>
-    </select>
-	<br /><em>{tr}Select the characters that can be used with Wiki link syntax: ((page name)){/tr}.</em></div>
-</div>
-
+			{preference name=wikiHomePage}
+			{preference name=wiki_page_regex}
 
 <fieldset><legend>{tr}Page display{/tr}</legend>
 
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="feature_wiki_description" name="feature_wiki_description" {if $prefs.feature_wiki_description eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="feature_wiki_description">{tr}Description{/tr}</label></div>
-</div>
+	{preference name=feature_wiki_description label="{tr}Description{/tr}"}
+	{preference name=feature_page_title label="{tr}Title{/tr}"}
+	{preference name=feature_wiki_pageid label="{tr}Page ID{/tr}"}
+	{preference name=wiki_show_version label="{tr}Page version{/tr}"}
 
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="feature_page_title" name="feature_page_title" {if $prefs.feature_page_title eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="feature_page_title">{tr}Title{/tr}</label></div>
-</div>
+	{preference name=wiki_pagename_strip}
 
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="feature_wiki_pageid" name="feature_wiki_pageid" {if $prefs.feature_wiki_pageid eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="feature_wiki_pageid">{tr}Page ID{/tr}</label></div>
-</div>
+	{preference name=wiki_authors_style label="{tr}List authors{/tr}"}
 
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="wiki_show_version" name="wiki_show_version" {if $prefs.wiki_show_version eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="wiki_show_version">{tr}Page version{/tr}</label></div>
-</div>
-
-<div class="adminoptionbox">
-	<div class="adminoptionlabel"><label for="wiki_pagename_strip">{tr}Page name display stripper{/tr}:</label>
-	<input type="text" id="wiki_pagename_strip" name="wiki_pagename_strip" value="{$prefs.wiki_pagename_strip}" size="5" /> <input type="submit" name="setwikiregex" value="{tr}Set{/tr}" />
-	<br /><em>{tr}Enter a character to use as the delimiter when displaying page titles. All characters after the delimiter will be stripped when displaying the page name.</em>{/tr}
+	<div class="adminoptionboxchild">
+		{preference name=wiki_authors_style_by_page label="{tr}Allow override per page{/tr}"}
 	</div>
-</div>
 
-{include file='wiki_authors_style.tpl' wiki_authors_style=$prefs.wiki_authors_style}
-
-<div class="adminoptionboxchild">
-	<div class="adminoption"><input type="checkbox" id="wiki_authors_style_by_page" name="wiki_authors_style_by_page" {if $prefs.wiki_authors_style_by_page eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="wiki_authors_style_by_page">{tr}Allow override per page{/tr}.</label></div>
-</div>
-
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="feature_wiki_show_hide_before" name="feature_wiki_show_hide_before" {if $prefs.feature_wiki_show_hide_before eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="feature_wiki_show_hide_before">{tr}Display show/hide icon displayed before headings{/tr}.</label></div>
-</div>
-
-<div class="adminoptionbox">
-	<div class="adminoptionlabel"><label for="wiki_actions_bar">{tr}Wiki action bar{/tr}:</label>
-	<select name="wiki_actions_bar" id="wiki_actions_bar">
-    <option value="top" {if $prefs.wiki_actions_bar eq 'top'}selected="selected"{/if}>{tr}Top bar{/tr}</option>
-    <option value="bottom" {if $prefs.wiki_actions_bar eq 'bottom'}selected="selected"{/if}>{tr}Bottom bar{/tr}</option>
-    <option value="both" {if $prefs.wiki_actions_bar eq 'both'}selected="selected"{/if}>{tr}Both{/tr}</option>
-    </select>
-	<br /><em>{tr}Buttons: Save, Preview, Cancel, ...{/tr}</em>
-	</div>
-</div>
-
-<div class="adminoptionbox">
-	<div class="adminoptionlabel"><label for="wiki_page_navigation_bar">{tr}Page navigation bar location{/tr}:</label>
-	<select name="wiki_page_navigation_bar" id="wiki_page_navigation_bar">
-    <option value="top" {if $prefs.wiki_page_navigation_bar eq 'top'}selected="selected"{/if}>{tr}Top bar{/tr}</option>
-    <option value="bottom" {if $prefs.wiki_page_navigation_bar eq 'bottom'}selected="selected"{/if}>{tr}Bottom bar{/tr}</option>
-    <option value="both" {if $prefs.wiki_page_navigation_bar eq 'both'}selected="selected"{/if}>{tr}Both{/tr}</option>
-    </select>
-	<br /><em>{tr}When using the ...page... page break wiki syntax{/tr}.</em>
-	</div>
-</div>
+	{preference name=wiki_action_bar}
+	{preference name=wiki_page_navigation_bar}
+ 	{preference name=wiki_topline_position}
+ 	{preference name=page_bar_position}
  
-<div class="adminoptionbox">
-	<div class="adminoptionlabel"><label for="wiki_topline_position">{tr}Wiki top line{/tr}: </label>
-	<select name="wiki_topline_position" id="wiki_topline_position">
-    <option value="top" {if $prefs.wiki_topline_position eq 'top'}selected="selected"{/if}>{tr}Top bar{/tr}</option>
-    <option value="bottom" {if $prefs.wiki_topline_position eq 'bottom'}selected="selected"{/if}>{tr}Bottom bar{/tr}</option>
-    <option value="both" {if $prefs.wiki_topline_position eq 'both'}selected="selected"{/if}>{tr}Both{/tr}</option>
-    <option value="none" {if $prefs.wiki_topline_position eq 'none'}selected="selected"{/if}>{tr}Neither{/tr}</option>
-    </select>
-	<br /><em>{tr}Page description, icons, backlinks, ...{/tr}</em>
-	</div>
-</div>
- 
-<div class="adminoptionbox">
-	<div class="adminoptionlabel"><label for="page_bar_position">{tr}Wiki buttons{/tr}:</label>
-	<select name="page_bar_position" id="page_bar_position">
-    <option value="top" {if $prefs.page_bar_position eq 'top'}selected="selected"{/if}>{tr}Top bar{/tr}</option>
-    <option value="bottom" {if $prefs.page_bar_position eq 'bottom'}selected="selected"{/if}>{tr}Bottom bar{/tr}</option>
-    <option value="none" {if $prefs.page_bar_position eq 'none'}selected="selected"{/if}>{tr}Neither{/tr}</option>
-    </select>
-	<br /><em>{tr}Buttons: Edit, Source, Remove, ...{/tr}</em>
-	</div>
-</div>
- 
-<div class="adminoptionbox">
-	<div class="adminoptionlabel"><label for="wiki_cache">{tr}Cache wiki pages (global):{/tr}</label>
-	<select name="wiki_cache" id="wiki_cache">
-    <option value="0" {if $prefs.wiki_cache eq 0}selected="selected"{/if}>0 ({tr}no cache{/tr})</option>
-    <option value="60" {if $prefs.wiki_cache eq 60}selected="selected"{/if}>1 {tr}minute{/tr}</option>
-    <option value="300" {if $prefs.wiki_cache eq 300}selected="selected"{/if}>5 {tr}minutes{/tr}</option>
-    <option value="600" {if $prefs.wiki_cache eq 600}selected="selected"{/if}>10 {tr}minutes{/tr}</option>
-    <option value="900" {if $prefs.wiki_cache eq 900}selected="selected"{/if}>15 {tr}minutes{/tr}</option>
-    <option value="1800" {if $prefs.wiki_cache eq 1800}selected="selected"{/if}>30 {tr}minutes{/tr}</option>
-    <option value="3600" {if $prefs.wiki_cache eq 3600}selected="selected"{/if}>1 {tr}hour{/tr}</option>
-    <option value="7200" {if $prefs.wiki_cache eq 7200}selected="selected"{/if}>2 {tr}hours{/tr}</option>
-    </select> 
-	</div>
-</div>
-
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="feature_wiki_icache" name="feature_wiki_icache" {if $prefs.feature_wiki_icache eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="feature_wiki_icache">{tr}Individual cache{/tr}</label></div>
-</div>
-
+	{preference name=wiki_cache}
+	{preference name=feature_wiki_icache}
 </fieldset>
 
 <fieldset><legend>{tr}Edit{/tr}</legend>
