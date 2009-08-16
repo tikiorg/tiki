@@ -5,11 +5,14 @@ function wikiplugin_memberlist_info() {
 		'name' => tra('Member List'),
 		'description' => tra('Lists the members of selected groups and allows to add or remove members if permissions are granted.'),
 		'prefs' => array( 'wikiplugin_memberlist' ),
+		'filter' => 'wikicontent',
 		'params' => array(
 			'groups' => array(
 				'required' => true,
 				'name' => tra('Groups'),
-				'description' => tra('List of groups to handle through the interface. Comma separated.'),
+				'description' => tra('List of groups to handle through the interface. Colon separated.'),
+				'separator' => ':',
+				'filter' => 'groupname',
 			),
 		),
 	);
@@ -24,9 +27,7 @@ function wikiplugin_memberlist( $data, $params ) {
 		return "^Missing group list^";
 	}
 
-	$groups = explode( ':', $params['groups'] );
-	$groups = array_map( 'trim', $groups );
-	$groups = array_filter( $groups );
+	$groups = $params['groups'];
 
 	Perms::bulk( array( 'type' => 'group' ), 'object', $groups );
 

@@ -183,6 +183,7 @@ function get_default_prefs() {
 		'wikiplugin_banner' => 'n',
 		'wikiplugin_bloglist' => 'n',
 		'wikiplugin_box' => 'y',
+		'wikiplugin_calendar' => 'y',
 		'wikiplugin_category' => 'y',
 		'wikiplugin_catorphans' => 'y',
 		'wikiplugin_catpath' => 'y',
@@ -228,6 +229,7 @@ function get_default_prefs() {
 		'wikiplugin_listpages' => 'n',
 		'wikiplugin_lsdir' => 'n',
 		'wikiplugin_map' => 'y',
+		'wikiplugin_mcalendar' => 'y',
 		'wikiplugin_mediaplayer' => 'y',
 		'wikiplugin_memberlist' => 'n',
 		'wikiplugin_miniquiz' => 'y',
@@ -301,6 +303,7 @@ function get_default_prefs() {
 		'wikiplugininline_banner' => 'n',
 		'wikiplugininline_bloglist' => 'n',
 		'wikiplugininline_box' => 'n',
+		'wikiplugininline_calendar' => 'n',
 		'wikiplugininline_category' => 'n',
 		'wikiplugininline_catorphans' => 'n',
 		'wikiplugininline_catpath' => 'n',
@@ -337,7 +340,7 @@ function get_default_prefs() {
 		'wikiplugininline_img' => 'n',
 		'wikiplugininline_image' => 'n',    // Experimental, may supercede img in 4.0
 		'wikiplugininline_include' => 'n',
-		'wikiplugininline invite' => 'n',
+		'wikiplugininline_invite' => 'n',
 		'wikiplugininline_jabber' => 'n',
 		'wikiplugininline_js' => 'n',
 		'wikiplugininline_jq' => 'n',
@@ -346,6 +349,7 @@ function get_default_prefs() {
 		'wikiplugininline_listpages' => 'n',
 		'wikiplugininline_lsdir' => 'n',
 		'wikiplugininline_map' => 'n',
+		'wikiplugininline_mcalendar' => 'n',
 		'wikiplugininline_mediaplayer' => 'n',
 		'wikiplugininline_memberlist' => 'n',
 		'wikiplugininline_miniquiz' => 'n',
@@ -1132,7 +1136,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_actionlog_bytes' => 'n',
 
 		// admin
-		'browsertitle' => 'Tiki 3.0',
+		'browsertitle' => '',
 		'tmpDir' => 'temp',
 
 		// tell a friend
@@ -1153,12 +1157,12 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'section_comments_parse' => 'y',		// parse wiki markup on comments in all sections
 	
 		'toolbar_global' => '
-			bold, italic, strike, - , color, bgcolor, - , sub, sup,
-			- , tikilink, image, link, unlink, -, undo, redo, 
+			bold, italic, strike, - , color, bgcolor, - ,
+			- , wikiplugin_img, tikiimage , tikilink, link, unlink, -, undo, redo, 
 			- , find, replace,-,  removeformat, specialchar
 			/
-			templates, -, style, -,  h1, h2, h3, left, center, -, list, numlist, outdent, indent, 
-			- , table, -, source, showblocks, fullscreen, enlarge, reduce
+			templates, -, style, -,  h1, h2, h3, left, center, -, list, numlist, wikiplugin_flash, wikiplugin_html, outdent, indent, 
+			- , table, -, source, showblocks, -, -, -, fullscreen, enlarge, reduce, -, -, -, help
 		',
 	
 		// pagination
@@ -1270,7 +1274,6 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'use_proxy' => 'n',
 		'user_list_order' => 'score_desc',
 		'webserverauth' => 'n',
-		'feature_purifier' => 'n',
 		'feature_shadowbox' => 'y',
 		'log_sql' => 'n',
 		'log_sql_perf_min' => '0.05',
@@ -1349,6 +1352,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'jquery_effect_tabs_speed' => 'fast',
 
 		'feature_jquery_ui' => 'n',				// include UI lib for more effects
+		'feature_jquery_ui_theme' => 'ui-darkness',	// theme for UI lib (see http://jqueryui.com/themeroller/ for list & demos)
 		'feature_jquery_tooltips' => 'y',		// use JQuery tooltips and override Overlib
 		'feature_jquery_autocomplete' => 'y',	// autocomplete on pages in QuickEdit (more coming soon)
 		'feature_jquery_superfish' => 'y',		// Effects on CSS (Suckerfish) menus

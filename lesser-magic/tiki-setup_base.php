@@ -360,7 +360,7 @@ if (ini_get('register_globals')) {
 }
 $serverFilter = new DeclFilter;
 if ($clean_xss) {
-	$serverFilter->addStaticKeyFilters(array('QUERY_STRING' => 'xss', 'REQUEST_URI' => 'xss', 'PHP_SELF' => 'xss',));
+	$serverFilter->addStaticKeyFilters(array('QUERY_STRING' => 'url', 'REQUEST_URI' => 'url', 'PHP_SELF' => 'url',));
 }
 $jitServer = new JitFilter($_SERVER);
 $_SERVER = $serverFilter->filter($_SERVER);

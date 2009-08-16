@@ -39,29 +39,34 @@ class Tiki_Profile_Installer
 	
 	private $feedback = array();	// Let users know what's happened
 
+	private $allowedGlobalPreferences = false;
+	private $allowedObjectTypes = false;
+
 	/**
 	 * @param $feed - (strings append, array replaces) lines of feedback text
 	 * @return none
 	 */
-	function setFeedback( $feed ) {
+	function setFeedback( $feed ) // {{{
+	{
 		if (is_array( $feed )) {
 			$this->feedback = $feed;
 		} else {
 			$this->feedback[] = $feed;
 		}
-	}
+	} // }}}
 	
 	/**
 	 * @param $index - (int) index of feedback string to return if present
 	 * @return string or whole array if no index specified 
 	 */
-	function getFeedback( $index = null ) {
+	function getFeedback( $index = null ) // {{{
+	{
 		if (! is_null( $index ) && $index < count($this->feedback) ) {
 			return $this->feedback[ $index ];
 		} else {
 			return $this->feedback;
 		}
-	}
+	} // }}}
 	
 	public static function convertType( $type ) // {{{
 	{
@@ -229,6 +234,10 @@ class Tiki_Profile_Installer
 		$type = $object->getType();
 		if( array_key_exists( $type, $this->handlers ) )
 		{
+			if( $this->allowedObjectTypes !== false && ! in_array( $type, $this->allowedObjectTypes ) ) {
+				return null;
+			}
+
 			$class = $this->handlers[$type];
 			if( class_exists( $class ) )
 				return new $class( $object, $this->userData );
@@ -250,10 +259,12 @@ class Tiki_Profile_Installer
 		$preferences = $profile->getPreferences();
 		$profile->replaceReferences( $preferences, $this->userData );
 		foreach( $preferences as $pref => $value ) {
-			if ($prefs[$pref] != $value) {
-				$this->setFeedback(tra('Preference set').': '.$pref.'='.$value);
+			if( $this->allowedGlobalPreferences === false || in_array( $pref, $this->allowedGlobalPreferences ) ) {
+				if ($prefs[$pref] != $value) {
+					$this->setFeedback(tra('Preference set').': '.$pref.'='.$value);
+				}
+				$tikilib->set_preference( $pref, $value );
 			}
-			$tikilib->set_preference( $pref, $value );
 		}
 		$groupMap = $profile->getGroupMap();
 		$profile->replaceReferences( $groupMap, $this->userData );
@@ -313,6 +324,16 @@ class Tiki_Profile_Installer
 		$key = $profile->getProfileKey();
 		unset($this->installed[$key]);
 		$profile->removeSymbols();
+	} // }}}
+
+	function limitGlobalPreferences( array $allowedPreferences ) // {{{
+	{
+		$this->allowedGlobalPreferences = $allowedPreferences;
+	} // }}}
+
+	function limitObjectTypes( array $objectTypes ) // {{{
+	{
+		$this->allowedObjectTypes = $objectTypes;
 	} // }}}
 }
 

@@ -4705,6 +4705,7 @@ $lang=Array(
 // "for wiki heading/anchor references" => "for wiki heading/anchor references",
 // "Indentation" => "Indentation",
 // "Creates an indentation for each plus(useful in list to continue at the same level)" => "Creates an indentation for each plus(useful in list to continue at the same level)",
+// "Creates an indentation for each plus (useful in list to continue at the same level)" => "Creates an indentation for each plus(useful in list to continue at the same level)",
 // "Monospace font" => "Monospace font",
 // "Code sample" => "Code sample",
 // "~pp~ data ~/pp~ Displays preformated text/code; no Wiki processing is done inside these sections (as with np), and the spacing is fixed (no word wrapping is done).  ~pre~ data ~/pre~ also displayes preformatted text with fixed spacing, but wiki processing still occurs on the text" => "~pp~ data ~/pp~ Displays preformated text/code; no Wiki processing is done inside these sections (as with np), and the spacing is fixed (no word wrapping is done).  ~pre~ data ~/pre~ also displayes preformatted text with fixed spacing, but wiki processing still occurs on the text",

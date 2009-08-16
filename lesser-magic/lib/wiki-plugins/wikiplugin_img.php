@@ -7,16 +7,19 @@ function wikiplugin_img_info()
 		'description' => tra( 'Displays an image.' ),
 		'prefs' => array( 'wikiplugin_img' ),
 		'icon' => 'pics/icons/picture.png',
+		'filter' => 'wikicontent',
 		'params' => array(
 			'src' => array(
 				'required' => false,
 				'name' => tra('Image Source'),
 				'description' => tra('Full URL to the image to display.'),
+				'filter' => 'url',
 			),
 			'alt' => array(
 				'required' => false,
 				'name' => tra('Alternate Text'),
 				'description' => tra('Alternate text to display if impossible to load the image.'),
+				'filter' => 'text',
 			),
 			'height' => array(
 				'required' => false,
@@ -27,46 +30,55 @@ function wikiplugin_img_info()
 				'required' => false,
 				'name' => tra('Width'),
 				'description' => tra('Width of the image to display.'),
+				'filter' => 'digits',
 			),
 			'link' => array(
 				'required' => false,
 				'name' => tra('Link'),
 				'description' => tra('Alias: lnk. Location the image should point to.'),
+				'filter' => 'url',
 			),
 			'rel' => array(
 				'required' => false,
 				'name' => tra('Link Relation'),
 				'description' => tra('"rel" attribute to add to the link.'),
+				'filter' => 'text',
 			),
 			'title' => array(
 				'required' => false,
 				'name' => tra('Link Title'),
 				'description' => tra('Description.'),
+				'filter' => 'text',
 			),
 			'align' => array(
 				'required' => false,
 				'name' => tra('Alignment'),
 				'description' => tra('Image alignment in the page. (left, right, center) Uses HTML IMG tag.'),
+				'filter' => 'alpha',
 			),
 			'imalign' => array(
 				'required' => false,
 				'name' => tra('Float Alignment'),
 				'description' => tra('Image alignment in the flow of the document. (left, right, none) Uses CSS float property.'),
+				'filter' => 'alpha',
 			),
 			'desc' => array(
 				'required' => false,
 				'name' => tra('Description'),
 				'description' => tra('Image description to display on the page.'),
+				'filter' => 'text',
 			),
 			'usemap' => array(
 				'required' => false,
 				'name' => tra('Image Map'),
 				'description' => tra('Name of the image map to use for the image.'),
+				'filter' => 'word',
 			),
 			'class' => array(
 				'required' => false,
 				'name' => tra('CSS Class'),
 				'description' => tra('Style to apply to the image.'),
+				'filter' => 'text',
 			),
 		),
 	);

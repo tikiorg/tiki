@@ -3,37 +3,85 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>{tr}Error: Unable to connect to the database !{/tr}</title>
-	<link rel="stylesheet" href="styles/thenews.css" type="text/css">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>{tr}System error.{/tr}</title>
+	<link rel="stylesheet" href="styles/strasa.css" type="text/css"/>
+	<style type="text/css" media="screen">
+		html {
+			background-color: #fff;
+		}
+		#centercolumn {
+			padding: 4em 10em;
+		}
+	</style>
 </head>
-<body >
+<body class="tiki_wiki">
+	<div id="siteheader">
+			<div id="sitelogo" style="text-align: center; padding-left: 70px;">
+				<img style="border: medium none ;" alt="Site Logo" src="img/tiki/tiki3.png" />
+			</div>
+	</div>
+
 	<div id="tiki-main">
 		<div id="tiki-mid">
 			<div style="margin:10px 30px;">
-				<h1>
-					<font color="red">{tr}TikiWiki is unable to connect to the database.{/tr}</font> 
-					<a title="help" href="http://doc.tikiwiki.org/Installation" target="help"><img border="0" src="img/icons/help.gif" alt="Help" /></a>
+				<h1 class="center">
+					{tr}System error.{/tr}
 				</h1>
-	<p>{tr}The following error message was returned:{/tr}</p>
-	<div class="simplebox">
-		{$msg|escape}
-	</div>
-	<p>{tr}Things to check:{/tr}</p>
-	<ul>
-		<li>{tr}Is your database up and running?{/tr}</li>
-		<li>{tr}Are your database login credentials correct?{/tr}</li>
-		<li>{tr}Did you complete the <a href="tiki-install.php">Tiki Installer</a>?{/tr}</li>
-	</ul>
-	<p>{tr}Please see <a href="http://doc.tikiwiki.org/">the documentation</a> for more information.{/tr}</p>
-</div>
+				<div class="left">
+				<p>{tr}The following error message was returned:{/tr}</p>
+				<strong>
+					{$msg|escape}
+				</strong>
+
+				{if $requires_update}
+					<p>{tr}Database is not currently up to date! Visit <a href="tiki-install.php">Tiki Installer</a> to resolve this issue.{/tr}</p>
+				{/if}
+
+				{if $base_query}
+					<p><strong>{tr}The query was:{/tr}</strong></p>
+					<strong>{$base_query|escape}</strong>
+				{/if}
+				{if $values|@count > 0}
+					<p><strong>{tr}Values:{/tr}</strong></p>
+					<ol>
+						{foreach from=$values key=key item=value}
+							<li>{$value|escape}</li>
+						{/foreach}
+					</ol>
+				{/if}
+				{if $built_query}
+					<p><strong>{tr}The built query was likely:{/tr}</strong></p>
+					<strong>{$built_query|escape}</strong>
+				{/if}
+				{if $stacktrace}
+					<p><strong>{tr}Stacktrace:{/tr}</strong></p>
+					<div>
+						{$stacktrace}
+					</div>
+				{/if}
+				</div>
+				
+				<div class="wikitext" style="border: solid 1px #ccc; margin: 1em auto; padding: 1em; text-align: left; width: 30%;">
+				<p>Things to check:</p>
+				<ol class="fancylist">
+					<li><p>Is your database up and running?</p></li>
+					<li><p>Are your database login credentials correct?</p></li>
+					<li><p>Did you complete the <a href="tiki-install.php">Tiki Installer?</a></p></li>
+				</ol>
+				</div>
+
+				<p>Please see <a href="http://doc.tikiwiki.org/">the documentation</a> for more information.</p>
+			</div>
+
+			<hr/>
+
+			<p align="center">
+				<a href="http://www.tikiwiki.org" title="TikiWiki CMS/Groupware">
+				<img src="img/tiki/tikibutton2.png" alt="TikiWiki CMS/Groupware" border="0" height="31" width="80"/>
+				</a>
+			</p>
 		</div>
-		<hr>
-		<p align="center">
-			<a href="http://www.tikiwiki.org" title="TikiWiki">
-  			<img src="img/tiki/tikibutton2.png" alt="TikiWiki" border="0" height="31" width="80">
-			</a>
-		</p>
 	</div>
 </body>
 </html>
