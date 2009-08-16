@@ -73,7 +73,7 @@ function simple_set_value($feature, $pref = '', $isMultiple = false) {
 		}
 	}
 	if (isset($_REQUEST[$feature]) && $old != $_REQUEST[$feature]) {
-		add_feedback( $feature, ($_REQUEST[$feature]) ? tr('%s set', $feature) : tr('%s unset', $feature), 2 );
+		add_feedback( $feature, ($_REQUEST[$feature]) ? tr('%0 set', $feature) : tr('%0 unset', $feature), 2 );
 	}
 	global $cachelib;
 	require_once ("lib/cache/cachelib.php");
