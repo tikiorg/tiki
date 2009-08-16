@@ -1136,7 +1136,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_actionlog_bytes' => 'n',
 
 		// admin
-		'browsertitle' => 'Tiki 3.0',
+		'browsertitle' => '',
 		'tmpDir' => 'temp',
 
 		// tell a friend
