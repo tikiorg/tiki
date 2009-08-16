@@ -79,8 +79,14 @@ if ($user && (($user == 'admin' && $_SESSION["groups_are_emulated"] != "y") || $
 	$globalperms = Perms::get();
 }
 
-$globalperms->globalize( $permissionList );
-$globalperms->smartify( $smarty, $permissionList );
+function remove_tiki_p_prefix( $name ) {
+	return substr( $name, 7 );
+}
+
+$shortPermList = array_map( 'remove_tiki_p_prefix', $permissionList );
+
+$globalperms->globalize( $shortPermList, false );
+$globalperms->smartify( $smarty, $shortPermList, false );
 $smarty->assign( 'globalperms', $globalperms );
 
 unset($allperms);

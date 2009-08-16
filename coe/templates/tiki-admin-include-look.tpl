@@ -218,7 +218,28 @@
 								<td class="form"><textarea name="box_shadow_end" id="box_shadow_end" rows="2" cols="40">{$prefs.box_shadow_end|escape}</textarea></td>
 							</tr>
 							</table>
-						</fieldset>					
+						</fieldset>
+				
+					{* --- Customize HTML Head Content --- *}
+						<fieldset class="admin">
+							<legend>
+								<a href="#" title="{tr}Top{/tr}">
+									<span>{tr}Custom HTML &lt;head&gt; Content{/tr}</span>
+								</a>
+							</legend> 			
+							<table class="admin">
+							<tr>
+								<td class="form">
+									<label for="feature_custom_html_head_content">{tr}Content{/tr}:</label>
+								</td>
+								<td>
+									<textarea id="feature_custom_html_head_content" name="feature_custom_html_head_content" rows="6" cols="40" style="width: 90%">{$prefs.feature_custom_html_head_content|escape}</textarea>
+									<br />
+									<small><em>{tr}Example{/tr}:</em> {literal}&#123;if $page eq 'Slideshow'&#125;&#123;literal&#125;&lt;style type="text/css"&gt;.slideshow { height: 232px; width: 232px; }&lt;/style&gt;&#123;/literal&#125;&#123;/if&#125;{/literal}</small>
+								</td>
+							</tr>
+							</table>
+						</fieldset>
 
 					{* --- Customize Site Header --- *}
 						<fieldset class="admin">
@@ -260,7 +281,7 @@
         			</table>
 						</fieldset>
 
-					{* --- Customize Site Logo and Site Titile--- *}
+					{* --- Customize Site Logo and Site Title--- *}
 						<fieldset>
 							<legend>
 								<a href="#" title="{tr}Top{/tr}"><span>{tr}Site Logo and Title{/tr}</span></a>
@@ -758,6 +779,35 @@
 						</td>
 						<td>
 							<input type="checkbox" id="feature_jquery_ui" name="feature_jquery_ui" {if $prefs.feature_jquery_ui eq 'y'}checked="checked"{/if}/>
+						</td>
+					</tr>
+					<tr>
+						<td width="30%">
+							<label for="feature_jquery_ui_theme">{tr}JQuery UI Theme{/tr}</label>
+						</td>
+						<td width="2%">
+							{help url="JQuery#UI" desc="{tr}JQuery UI Theme: Themes for look and feel of JQuery UI widgets{/tr}"}
+						</td>
+						<td>
+							<select name="feature_jquery_ui_theme" id="feature_jquery_ui_theme">
+					            <option value="black-tie" {if $prefs.feature_jquery_ui_theme eq 'black-tie'}selected="selected"{/if}>black-tie</option>
+					            <option value="blitzer" {if $prefs.feature_jquery_ui_theme eq 'blitzer'}selected="selected"{/if}>blitzer</option>
+					            <option value="cupertino" {if $prefs.feature_jquery_ui_theme eq 'cupertino'}selected="selected"{/if}>cupertino</option>
+					            <option value="dot-luv" {if $prefs.feature_jquery_ui_theme eq 'dot-luv'}selected="selected"{/if}>dot-luv</option>
+					            <option value="excite-bike" {if $prefs.feature_jquery_ui_theme eq 'excite-bike'}selected="selected"{/if}>excite-bike</option>
+					            <option value="hot-sneaks" {if $prefs.feature_jquery_ui_theme eq 'hot-sneaks'}selected="selected"{/if}>hot-sneaks</option>
+					            <option value="humanity" {if $prefs.feature_jquery_ui_theme eq 'humanity'}selected="selected"{/if}>humanity</option>
+					            <option value="mint-choc" {if $prefs.feature_jquery_ui_theme eq 'mint-choc'}selected="selected"{/if}>mint-choc</option>
+					            <option value="redmond" {if $prefs.feature_jquery_ui_theme eq 'redmond'}selected="selected"{/if}>redmond</option>
+					            <option value="smoothness" {if $prefs.feature_jquery_ui_theme eq 'smoothness'}selected="selected"{/if}>smoothness</option>
+					            <option value="south-street" {if $prefs.feature_jquery_ui_theme eq 'south-street'}selected="selected"{/if}>south-street</option>
+					            <option value="start" {if $prefs.feature_jquery_ui_theme eq 'start'}selected="selected"{/if}>start</option>
+					            <option value="swanky-purse" {if $prefs.feature_jquery_ui_theme eq 'swanky-purse'}selected="selected"{/if}>swanky-purse</option>
+					            <option value="trontastic" {if $prefs.feature_jquery_ui_theme eq 'trontastic'}selected="selected"{/if}>trontastic</option>
+					            <option value="ui-darkness" {if $prefs.feature_jquery_ui_theme eq 'ui-darkness'}selected="selected"{/if}>ui-darkness</option>
+					            <option value="ui-lightness" {if $prefs.feature_jquery_ui_theme eq 'ui-lightness'}selected="selected"{/if}>ui-lightness</option>
+					            <option value="vader" {if $prefs.feature_jquery_ui_theme eq 'vader'}selected="selected"{/if}>vader</option>
+					        </select>
 						</td>
 					</tr>
 					<tr>

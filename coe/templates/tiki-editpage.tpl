@@ -112,7 +112,7 @@ window.onload = timeIt;
 			<ul>
 				{section name=back loop=$likepages}
 					<li>
-						<a href="{$likepages[back]|sefurl}" class="wiki">{$likepages[back]}</a>
+						<a href="{$likepages[back]|sefurl}" class="wiki">{$likepages[back]|escape}</a>
 					</li>
 				{/section}
 			</ul>
@@ -120,7 +120,7 @@ window.onload = timeIt;
 			<table class="normal"><tr>
 				{cycle name=table values=',,,,</tr><tr>' print=false advance=false}
 				{section name=back loop=$likepages}
-					<td><a href="{$likepages[back]|sefurl}" class="wiki">{$likepages[back]}</a></td>{cycle name=table}
+					<td><a href="{$likepages[back]|sefurl}" class="wiki">{$likepages[back]|escape}</a></td>{cycle name=table}
 				{/section}
 			</tr></table>
 		{/if}

@@ -4695,7 +4695,7 @@ class TikiLib extends TikiDb_Bridge {
 			return false;
 
 		$html=$is_html?1:0;
-		if ($html && $prefs['feature_purifier'] != 'n') {
+		if ($html) {
 			require_once('lib/htmlpurifier_tiki/HTMLPurifier.tiki.php');
 			$edit_data = HTMLPurifier($edit_data);
 		}
@@ -5370,9 +5370,24 @@ JQ
 			// Apply filters on values individually
 			if (!empty($args)) {
 				foreach( $args as $argKey => $argValue ) {
-					$filter = isset($params[$argKey]['filter']) ? TikiFilter::get($params[$argKey]['filter']) : $default;
+					$paramInfo = $params[$argKey];
+					$filter = isset($paramInfo['filter']) ? TikiFilter::get($paramInfo['filter']) : $default;
 					$argValue = $this->htmldecode($argValue);
-					$argValue = $filter->filter($argValue);
+
+					if( isset($paramInfo['separator']) ) {
+						$vals = array();
+
+						foreach( explode( $paramInfo['separator'], $argValue ) as $val ) {
+							$vals[] = $filter->filter($val);
+						}
+
+						$vals = array_map( 'trim', $vals );
+						$vals = array_filter( $vals );
+
+						$argValue = array_values( $vals );
+					} else {
+						$argValue = $filter->filter($argValue);
+					}
 					$args[$argKey] = $argValue;
 				}
 			}
@@ -7014,7 +7029,7 @@ JQ
 		}
 
 		$html=$is_html?1:0;
-		if ($html && $prefs['feature_purifier'] != 'n') {
+		if ($html) {
 			require_once('lib/htmlpurifier_tiki/HTMLPurifier.tiki.php');
 			$edit_data = HTMLPurifier($edit_data);
 		}

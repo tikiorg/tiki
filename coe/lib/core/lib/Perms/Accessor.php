@@ -59,38 +59,46 @@ class Perms_Accessor implements ArrayAccess
 		if( $this->resolver ) {
 			$name = $this->sanitize( $name );
 			
-			if( $this->checkSequence ) {
-				foreach( $this->checkSequence as $check ) {
-					if( $check->check( $this->resolver, $this->context, $name, $this->groups ) ) {
-						return true;
-					}
-				}
-
-				return false;
-			} else {
-				return $this->resolver->check( $name, $this->groups );
-			}
+			return $this->checkPermission( $name );
 		} else {
 			return false;
 		}
 	}
 
-	function globalize( $permissions ) {
-		foreach( $permissions as $perm ) {
-			$perm = $this->sanitize( $perm );
-			$GLOBALS[ $this->prefix . $perm ] = $this->$perm ? 'y' : 'n';
+	private function checkPermission( $name ) {
+		if( $this->checkSequence ) {
+			foreach( $this->checkSequence as $check ) {
+				if( $check->check( $this->resolver, $this->context, $name, $this->groups ) ) {
+					return true;
+				}
+			}
+
+			return false;
+		} else {
+			return $this->resolver->check( $name, $this->groups );
 		}
 	}
 
-	function smartify( $smarty, $permissions ) {
+	function globalize( $permissions, $sanitize = true ) {
 		foreach( $permissions as $perm ) {
-			$perm = $this->sanitize( $perm );
-			$smarty->assign( 'tiki_p_' . $perm, $this->$perm ? 'y' : 'n' );
+			if( $sanitize ) {
+				$perm = $this->sanitize( $perm );
+			}
+			$GLOBALS[ $this->prefix . $perm ] = $this->checkPermission( $perm ) ? 'y' : 'n';
+		}
+	}
+
+	function smartify( $smarty, $permissions, $sanitize = true ) {
+		foreach( $permissions as $perm ) {
+			if( $sanitize ) {
+				$perm = $this->sanitize( $perm );
+			}
+			$smarty->assign( 'tiki_p_' . $perm, $this->checkPermission( $perm ) ? 'y' : 'n' );
 		}
 	}
 
 	private function sanitize( $name ) {
-		if( $this->prefix && strpos( $name, $this->prefix ) === 0 ) {
+		if( $this->prefix && $name{0} == $this->prefix{0} && strpos( $name, $this->prefix ) === 0 ) {
 			return substr( $name, strlen( $this->prefix ) );
 		} else {
 			return $name;

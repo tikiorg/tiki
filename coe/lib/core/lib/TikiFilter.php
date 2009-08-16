@@ -36,6 +36,9 @@ class TikiFilter
 		case 'pagename':
 		case 'topicname':
 		case 'themename':
+		case 'email':
+		case 'url':
+		case 'text':
 			// Use striptags
 		case 'striptags':
 			require_once 'Zend/Filter/StripTags.php';
@@ -53,11 +56,6 @@ class TikiFilter
 		case 'lang':
 			require_once 'Zend/Filter/PregReplace.php';
 			return new Zend_Filter_PregReplace( '/^.*([a-z]{2})(\-[a-z]{2}).*$/', '$1$2' );
-		case 'email':
-		case 'url':
-			// TODO
-			require_once 'TikiFilter/PreventXss.php';
-			return new TikiFilter_PreventXss;
 		default:
 			trigger_error( 'Filter not found: ' . $filter, E_USER_WARNING );
 			require_once 'TikiFilter/PreventXss.php';

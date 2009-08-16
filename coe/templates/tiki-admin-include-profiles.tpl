@@ -72,7 +72,7 @@ function showDetails( id, domain, profile ) { // {{{
 				if( data.already )
 				{
 					var p = document.createElement( 'p' );
-					p.innerHTML = "A version of this profile is already installed.";
+					p.innerHTML = "A version of this profile is already applied.";
 					p.style.fontWeight = 'bold';
 					cell.appendChild(p);
 
@@ -87,7 +87,7 @@ function showDetails( id, domain, profile ) { // {{{
 					form.appendChild(p);
 					submit.type = 'submit';
 					submit.name = 'forget';
-					submit.value = 'Forget and Reinstall';
+					submit.value = 'Forget and Re-apply';
 					p.appendChild(submit);
 					pd.type = 'hidden';
 					pd.name = 'pd';
@@ -98,7 +98,7 @@ function showDetails( id, domain, profile ) { // {{{
 					pp.value = profile;
 					p.appendChild(pp);
 
-					form.setAttribute ( "onsubmit", 'return confirm(\"{/literal}{tr}Are you sure you want to install the profile{/tr}{literal} ' + profile + '?\");' );
+					form.setAttribute ( "onsubmit", 'return confirm(\"{/literal}{tr}Are you sure you want to apply the profile{/tr}{literal} ' + profile + '?\");' );
 					
 					cell.appendChild(form);
 				}
@@ -142,7 +142,7 @@ function showDetails( id, domain, profile ) { // {{{
 
 					submit.type = 'submit';
 					submit.name = 'install';
-					submit.value = 'Install Now';
+					submit.value = 'Apply Now';
 					p.appendChild(submit);
 					pd.type = 'hidden';
 					pd.name = 'pd';
@@ -153,7 +153,7 @@ function showDetails( id, domain, profile ) { // {{{
 					pp.value = profile;
 					p.appendChild(pp);
 
-					form.setAttribute ( "onsubmit", 'return confirm(\"{/literal}{tr}Are you sure you want to install the profile{/tr}{literal} ' + profile + '?\");' );
+					form.setAttribute ( "onsubmit", 'return confirm(\"{/literal}{tr}Are you sure you want to apply the profile{/tr}{literal} ' + profile + '?\");' );
 
 					cell.appendChild(form);
 				}
@@ -161,14 +161,14 @@ function showDetails( id, domain, profile ) { // {{{
 				{
 					var p = document.createElement('p');
 					p.style.fontWeight = 'bold';
-					p.innerHTML = "An error occured during the profile validation. This profile cannot be installed. Message: " + data.error;
+					p.innerHTML = "An error occured during the profile validation. This profile cannot be applied. Message: " + data.error;
 					cell.appendChild(p);
 				}
 				else
 				{
 					var p = document.createElement('p');
 					p.style.fontWeight = 'bold';
-					p.innerHTML = "An error occured during the profile validation. This profile cannot be installed.";
+					p.innerHTML = "An error occured during the profile validation. This profile cannot be applied.";
 					cell.appendChild(p);
 				}
 
@@ -189,7 +189,7 @@ function showDetails( id, domain, profile ) { // {{{
 					}
 
 					var p = document.createElement( 'p' );
-					p.innerHTML = 'These profiles will be installed:';
+					p.innerHTML = 'These profiles will be applied:';
 					cell.appendChild( p );
 					cell.appendChild( ul );
 				}
@@ -302,7 +302,7 @@ function showDetails( id, domain, profile ) { // {{{
 			</tr>
 			{foreach key=k item=profile from=$result}
 				<tr id="profile-{$k}">
-					<td><a href="javascript:showDetails( 'profile-{$k}', '{$profile.domain|escape}', '{$profile.name|escape}' )">{$profile.name|escape}</a>{if $profile.installed} <em>{tr}installed{/tr}</em>{/if}</td>
+					<td><a href="javascript:showDetails( 'profile-{$k}', '{$profile.domain|escape}', '{$profile.name|escape}' )">{$profile.name|escape}</a>{if $profile.installed} <em>{tr}applied{/tr}</em>{/if}</td>
 					<td>{$profile.domain}</td>
 					<td>{$profile.category}</td>
 				</tr>

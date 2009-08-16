@@ -1,20 +1,18 @@
 <?php
- 
+//Imports 
 require_once('tiki-setup.php');
 require_once('lib/workspaces/wslib.php');
 
+//Check security
+if (!($tiki_p_admin == 'y' || $tiki_p_admin_users == 'y')) { // temporary patch: tiki_p_admin includes tiki_p_admin_users but if you don't clean the temp/cache each time you sqlupgrade the perms setting is not synchornous with the cache
+	$smarty->assign('errortype', 401);
+	$smarty->assign('msg', tra("You do not have permission to use this feature"));
+	$smarty->display("error.tpl");
+	die;
+}
+
 $title = "WorkSpace Management";
 $smarty->assign('headtitle', tra($title));
-
-// Check if the user can admin WS
-
-
-// Check if WS Container have been set; otherwise, it will 
-if (($wslib->get_ws_container()) == NULL)
-{
-	$wslib->init_ws();
-	header("Location: ./tiki-manage-workspaces.php");
-}	 
 
 if ( isset($_REQUEST['wsName']))
 {	
@@ -79,7 +77,6 @@ if ( isset($_REQUEST['wsName']))
 		header("Location: ./tiki-manage-workspaces.php");
 	}
 }
-
 // If WS Name and Description is edited
 else if ( isset($_REQUEST['editedWS']))
 {
@@ -92,7 +89,6 @@ else if ( isset($_REQUEST['editedWS']))
 	
 	header("Location: ./tiki-manage-workspaces.php?editWS=".$wsId);
 }
-
 // If an object is added in the WS
 else if ( isset($_REQUEST['addObjectinWS']))
 {
@@ -104,7 +100,6 @@ else if ( isset($_REQUEST['addObjectinWS']))
 	$wslib->create_ws_object ($wsId, $name, $type, $description);
 	header("Location: ./tiki-manage-workspaces.php?editWS=".$wsId);
 }
-
 // If a group is added in the WS
 else if ( isset($_REQUEST['addGroupinWS']))
 {
@@ -130,7 +125,6 @@ else if ( isset($_REQUEST['addGroupinWS']))
 	
 	header("Location: ./tiki-manage-workspaces.php?editWS=".$wsId);
 }
-
 else if ( isset($_REQUEST['editWS']))
 {
 	$smarty->assign('editWS', "y");	
@@ -205,7 +199,6 @@ else if ( isset($_REQUEST['editWS']))
 	$smarty->assign('mid', 'tiki-manage-workspaces.tpl');
 	$smarty->display('tiki.tpl');
 }
-
 else
 {
 	require_once 'lib/userslib.php';

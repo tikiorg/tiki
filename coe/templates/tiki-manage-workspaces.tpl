@@ -24,7 +24,7 @@
    {/tab}
    
    {tab name="{tr}Groups{/tr}"}
-   <table border='0' cellpadding='0' cellspacing='0' class='wikiplugin-split normal'>
+   <table class='wikiplugin-split normal'>
 	<tr>
 		<td valign="top" width="60%" >
 			<h2>Groups in '{$wsName}'</h2>
@@ -162,9 +162,11 @@
 			<th>Name</th>
 			<th>Description</th>
 			<th>Path</th>
+			<th>Actions</th>
 		</tr> 
+		{cycle print=false values="even,odd"}
 		{foreach from=$listWS item=data}
-			<tr>
+			<tr class="{cycle}">
 				<td><a href = {$data.href_edit}>{$data.name}</a></td>
 				<td>{$data.description}</td>
 				<td>{$data.categpath}</td>
@@ -172,12 +174,12 @@
 		{/foreach}
 	   </table>
 	</div>
-	{if not empty($prev_pageWS)}
+	{* if not empty($prev_pageWS)}
 		<a class="button" href = {$prev_pageWS}>Back</a>
 	{/if}
 	{if not empty($next_pageWS)}
 		<a class="button" href = {$next_pageWS}>Next</a>
-	{/if}
+	{/if *}
    {/tab}
    
    {tab name="{tr}Add Workspace{/tr}"}

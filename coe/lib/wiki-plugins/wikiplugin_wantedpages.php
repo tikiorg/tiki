@@ -154,10 +154,15 @@ class WikiPluginWantedPages extends PluginsLib {
 	
 		// Currently we only look in wiki pages.
 		// Wiki links in articles, blogs, etc are ignored.
-		$query = "select tl.`toPage`, tl.`fromPage` from tiki_links tl";
-		$query .= " left join tiki_pages tp on (tl.`toPage` = tp.`pageName`)";
-		$query .= " where tp.`pageName` is null;";
-		$result = $this->query($query,array());
+		$query = "select distinct tl.`toPage`, tl.`fromPage` from `tiki_links` tl";
+		$query .= " left join `tiki_pages` tp on (tl.`toPage` = tp.`pageName`)";
+
+		$categories = $this->get_jail();
+		if ($categories)
+			$query .= " inner join `tiki_objects` as tob on (tob.`itemId`= tl.`fromPage` and tob.`type`= ?) inner join `tiki_category_objects` as tc on (tc.`catObjectId`=tob.`objectId` and tc.`categId` IN(" . implode(', ', array_fill(0, count($categories), '?')) . "))";
+
+		$query .= " where tp.`pageName` is null";
+		$result = $this->query($query, $categories ? array_merge(array('wiki page'), $categories) : array());
 		$tmp = array();
 	
 		while ($row = $result->fetchRow()) {
