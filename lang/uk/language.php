@@ -6458,6 +6458,7 @@ $lang=Array(
 // "for bullet lists" => "for bullet lists",
 // "Indentation" => "Indentation",
 // "Creates an indentation for each plus(useful in list to continue at the same level)" => "Creates an indentation for each plus(useful in list to continue at the same level)",
+// "Creates an indentation for each plus (useful in list to continue at the same level)" => "Creates an indentation for each plus(useful in list to continue at the same level)",
 // "row" => "row",
 // "col" => "col",
 // "Monospace font" => "Monospace font",

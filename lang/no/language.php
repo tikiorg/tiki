@@ -6671,6 +6671,7 @@ $lang=Array(
 // "for wiki heading/anchor references" => "for wiki heading/anchor references",
 // "Indentation" => "Indentation",
 // "Creates an indentation for each plus(useful in list to continue at the same level)" => "Creates an indentation for each plus(useful in list to continue at the same level)",
+// "Creates an indentation for each plus (useful in list to continue at the same level)" => "Creates an indentation for each plus(useful in list to continue at the same level)",
 // "row" => "row",
 // "Monospace font" => "Monospace font",
 // "Code sample" => "Code sample",

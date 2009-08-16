@@ -6797,6 +6797,7 @@ $lang=Array(
 // "for definiton lists" => "for definiton lists",
 // "Indentation" => "Indentation",
 // "Creates an indentation for each plus(useful in list to continue at the same level)" => "Creates an indentation for each plus(useful in list to continue at the same level)",
+// "Creates an indentation for each plus (useful in list to continue at the same level)" => "Creates an indentation for each plus(useful in list to continue at the same level)",
 // "Tables" => "Tables",
 // "row" => "row",
 // "col" => "col",
