@@ -383,6 +383,13 @@ $jitRequest->setDefaultFilter('xss');
 $jitCookie->setDefaultFilter('xss');
 // Apply configured filters to all other input
 if (!isset($inputConfiguration)) $inputConfiguration = array();
+
+$inputConfiguration[] = array(
+	'staticKeyFilters' => array(
+		'menu' => 'striptags',
+	),
+);
+
 $inputFilter = DeclFilter::fromConfiguration($inputConfiguration, array('catchAllFilter'));
 if ($clean_xss) {
 	$inputFilter->addCatchAllFilter('xss');
