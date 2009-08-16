@@ -1153,12 +1153,12 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'section_comments_parse' => 'y',		// parse wiki markup on comments in all sections
 	
 		'toolbar_global' => '
-			bold, italic, strike, - , color, bgcolor, - , sub, sup,
-			- , tikilink, image, link, unlink, -, undo, redo, 
+			bold, italic, strike, - , color, bgcolor, - ,
+			- , wikiplugin_img, tikiimage , tikilink, link, unlink, -, undo, redo, 
 			- , find, replace,-,  removeformat, specialchar
 			/
-			templates, -, style, -,  h1, h2, h3, left, center, -, list, numlist, outdent, indent, 
-			- , table, -, source, showblocks, fullscreen, enlarge, reduce
+			templates, -, style, -,  h1, h2, h3, left, center, -, list, numlist, wikiplugin_flash, wikiplugin_html, outdent, indent, 
+			- , table, -, source, showblocks, -, -, -, fullscreen, enlarge, reduce, -, -, -, help
 		',
 	
 		// pagination
