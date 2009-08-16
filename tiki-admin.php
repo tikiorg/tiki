@@ -107,6 +107,22 @@ $helpUrl = 'Admin+Home';
 $helpDescription = $description = '';
 $url = 'tiki-admin.php';
 $adminPage = '';
+
+if( isset( $_REQUEST['lm_preference'] ) ) {
+	global $prefslib; require_once 'lib/prefslib.php';
+	
+	$prefslib->applyChanges( (array) $_REQUEST['lm_preference'], $_REQUEST );
+}
+
+if( isset( $_REQUEST['lm_criteria'] ) ) {
+	global $prefslib; require_once 'lib/prefslib.php';
+
+	$results = $prefslib->getMatchingPreferences( $_REQUEST['lm_criteria'] );
+	$results = array_slice( $results, 0, 10 );
+	$smarty->assign( 'lm_criteria', $_REQUEST['lm_criteria'] );
+	$smarty->assign( 'lm_searchresults', $results );
+}
+
 if (isset($_REQUEST["page"])) {
 	$adminPage = $_REQUEST["page"];
 	if ($adminPage == "features") {
