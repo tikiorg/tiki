@@ -1,15 +1,15 @@
 <?php
 
-/*$inputConfiguration = array( array(
+$inputConfiguration = array( array(
 	'staticKeyFilters' => array(
 		'save' => 'alpha',
 		'load' => 'alpha',
 		'pref' => 'striptags',
 		'section' => 'striptags',
 	),
-	'catchAllUnset' => null,
-) );*/
-/* disabled for now, was stopping js detect */
+) );
+
+$auto_query_args = array('section', 'comments', 'autoreload');
 
 require_once 'tiki-setup.php';
 require_once 'lib/toolbars/toolbarslib.php';
@@ -39,8 +39,6 @@ if( isset($_REQUEST['comments']) && $_REQUEST['comments'] == 'on') {
 	$comments = false;
 }
 
-$auto_query_args = array('section', 'comments', 'autoreload');
-
 if( isset($_REQUEST['save'], $_REQUEST['pref']) ) {
 	$prefName = 'toolbar_' . $section . ($comments ? '_comments' : '');
 	$tikilib->set_preference( $prefName, $_REQUEST['pref'] );
@@ -48,14 +46,25 @@ if( isset($_REQUEST['save'], $_REQUEST['pref']) ) {
 
 if( isset($_REQUEST['reset']) && $section != 'global' ) {
 	$prefName = 'toolbar_' . $section . ($comments ? '_comments' : '');
-	$tikilib->set_preference( $prefName, '');
+	$tikilib->delete_preference( $prefName);
 }
 
-if ( isset($_REQUEST['save_tool'], $_REQUEST['tool_name'])) {	// input from the tool edit form
+if ( !empty($_REQUEST['save_tool']) && !empty($_REQUEST['tool_name'])) {	// input from the tool edit form
 	Toolbar::saveTool($_REQUEST['tool_name'], $_REQUEST['tool_label'], $_REQUEST['tool_icon'], $_REQUEST['tool_token'], $_REQUEST['tool_syntax']);
 }
 
 $current = $tikilib->get_preference( 'toolbar_' . $section . ($comments ? '_comments' : '') );
+
+if ( !empty($_REQUEST['delete_tool']) && !empty($_REQUEST['tool_name'])) {	// input from the tool edit form
+	Toolbar::deleteTool($_REQUEST['tool_name']);
+	if (strpos($_REQUEST['tool_name'], $current) !== false) {
+		$current = str_replace($_REQUEST['tool_name'], '', $current);
+		$current = str_replace(',,', ',', $current);
+		$prefName = 'toolbar_' . $section . ($comments ? '_comments' : '');
+		$tikilib->set_preference( $prefName, $current );
+	}
+}
+
 if (!empty($current)) {
 	$current = preg_replace( '/\s+/', '', $current );
 	$current = trim( $current, '/' );
@@ -84,16 +93,14 @@ foreach( $current as &$line ) {
 $customqt = Toolbar::getCustomList();
 
 foreach( $qtlist as $name ) {
-	$used = false;
-	if (in_array($name, $usedqt) && $name != '-') {
-		$used = true;
-	}
+
 	$tag = Toolbar::getTag($name);
 	if( ! $tag ) {
 		continue;
 	}
 	$wys = strlen($tag->getWysiwygToken()) ? 'qt-wys' : '';
 	$wiki = strlen($tag->getWikiHtml('')) ? 'qt-wiki' : '';
+	$cust = Toolbar::isCustomTool($name) ? 'qt-custom' : '';
 	$icon = $tag->getIconHtml();
 	if (strpos($name, 'wikiplugin_') !== false) {
 		$plug =  'qt-plugin';
@@ -106,12 +113,15 @@ foreach( $qtlist as $name ) {
 	}
 	$label .= '<input type="hidden" name="token" value="'.$tag->getWysiwygToken().'" />';
 	$label .= '<input type="hidden" name="syntax" value="'.$tag->getSyntax().'" />';
-	$qtelement[$name] = array( 'name' => $name, 'class' => "toolbar qt-$name $wys $wiki $plug", 'html' => "$icon$label");
+	$label .= '<input type="hidden" name="type" value="'.$tag->getType().'" />';
+	$qtelement[$name] = array( 'name' => $name, 'class' => "toolbar qt-$name $wys $wiki $plug $cust", 'html' => "$icon$label");
 }
 
 $nol = 2;
 $rowStr = substr(implode(",#row-",range(0,$rowCount)),2);
 $fullStr = '#full-list-w,#full-list-p,#full-list-c';
+
+$delete_text = tra('Are you sure you want to delete this custom tool?');
 
 $headerlib->add_jq_onready( <<<JS
 
@@ -148,19 +158,63 @@ var item;
 }).children().each(function() {	// add double click action
 	\$jq(this).dblclick(function() { showToolEditForm(this); });
 });
-\$jq('#toolbar_edit_div #cancel_tool').click(function() {
-	\$jq('#toolbar_edit_div').hide();
-});
+\$jq('.qt-custom').dblclick(function() { showToolEditForm(this); });
+
+//\$jq('#toolbar_edit_div #cancel_tool').click(function() {
+//	\$jq('#toolbar_edit_div').hide();
+//});
+//\$jq('#toolbar_edit_div form').submit(function() {
+//});
 
 showToolEditForm = function(item) {
-	\$jq('#toolbar_edit_div').show();
-	\$jq('#toolbar_edit_div').css({ left: \$jq(item).offset().left + 10, top:\$jq(item).offset().top + \$jq(item).height() - 4 });
-	\$jq('#toolbar_edit_div #tool_name').val(\$jq(item).text());
+
+	//\$jq('#toolbar_edit_div').show();
+	//\$jq('#toolbar_edit_div').css({ left: \$jq(item).offset().left + 10, top:\$jq(item).offset().top + \$jq(item).height() - 4 });
+	\$jq('#toolbar_edit_div #tool_name').val(\$jq(item).text()); //.attr('disabled','disabled');
 	\$jq('#toolbar_edit_div #tool_label').val(\$jq(item).children('img').attr('title'));
 	\$jq('#toolbar_edit_div #tool_icon').val(\$jq(item).children('img').attr('src'));
 	\$jq('#toolbar_edit_div #tool_token').val(\$jq(item).children('input[name=token]').val());
 	\$jq('#toolbar_edit_div #tool_syntax').val(\$jq(item).children('input[name=syntax]').val());
+	\$jq('#toolbar_edit_div #tool_type').val(\$jq(item).children('input[name=type]').val());
+
+	\$jq('#toolbar_edit_div').dialog('open');
 }
+
+\$jq("#toolbar_edit_div").dialog({
+	bgiframe: true,
+	autoOpen: false,
+//	height: 300,
+	modal: true,
+	buttons: {
+		'Save': function() {
+			var bValid = true;
+//			allFields.removeClass('ui-state-error');
+//
+//			bValid = bValid && checkLength(\$jq('#toolbar_edit_div #tool_name'),"name",2,16);
+//			bValid = bValid && checkLength(\$jq('#toolbar_edit_div #tool_label'),"label",1,80);
+			
+			if (bValid) {
+				\$jq("#toolbar_edit_div #save_tool").val('Save');
+				\$jq("#toolbar_edit_div form").submit();
+			}
+			\$jq(this).dialog('close');
+		},
+		Cancel: function() {
+			\$jq(this).dialog('close');
+		},
+		Delete: function() {
+			if (confirm("$delete_text")) {
+				\$jq("#toolbar_edit_div #delete_tool").val('Delete');
+				\$jq("#toolbar_edit_div form").submit();
+			}
+			\$jq(this).dialog('close');
+		}
+	},
+	close: function() {
+		//allFields.val('').removeClass('ui-state-error');
+	}
+});
+
 
 saveRows = function() {
 	var lists = [];
@@ -206,6 +260,9 @@ JS
 	
 
 $display_w = array_diff($qt_w_list,$usedqt);
+if (!in_array('-', $display_w)) {
+	array_unshift($display_w, '-');
+}
 $display_p = array_diff($qt_p_list,$usedqt);
 $display_c = array_diff($customqt,$usedqt);
 
