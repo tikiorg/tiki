@@ -26,6 +26,7 @@ function wikiplugin_trackerlist_info() {
 				'required' => false,
 				'name' => tra('Fields'),
 				'description' => tra('Colon-separated list of field IDs to be displayed. Example: 2:4:5'),
+				'filter' => 'alpha'
 			),
 			'sort' => array(
 				'required' => false,
@@ -37,6 +38,7 @@ function wikiplugin_trackerlist_info() {
 				'required' => false,
 				'name' => tra('Popup'),
 				'description' => tra('Colon-separated list of fields to display on click. Example: 6:7'),
+				'filter' => 'alpha'
 			),
 			'stickypopup' => array(
 				'required' => false,
@@ -114,6 +116,7 @@ function wikiplugin_trackerlist_info() {
 				'required' => false,
 				'name' => tra('Sort Mode'),
 				'description' => tra('Sort Mode'),
+				'filter' => 'alpha'
 			),
 			'max' => array(
 				'required' => false,
@@ -125,11 +128,13 @@ function wikiplugin_trackerlist_info() {
 				'required' => false,
 				'name' => tra('Filter Field'),
 				'description' => tra('Colon separated list of fields to allow filtering on.'),
+				'filter' => 'alpha'
 			),
 			'filtervalue' => array(
 				'required' => false,
 				'name' => tra('Filter Value'),
 				'description' => tra('?'),
+				'filter' => 'alpha'
 			),
 			'exactvalue' => array(
 				'required' => false,
@@ -185,6 +190,7 @@ function wikiplugin_trackerlist_info() {
 				'required' => false,
 				'name' => tra('Item ID separated with :'),
 				'description' => tra('List of items Ids'),
+				'filter' => 'alpha'
 			),
 			'url' => array(
 				'required' => false,
@@ -218,6 +224,7 @@ function wikiplugin_trackerlist_info() {
 				'required' => false,
 				'name' => tra('Compute'),
 				'description' => tra('Sum or average all the values of a field  and displays it at the bottom of the table.').' '.tra('fieldId').'/sum:'.tra('fieldId').'/avg',
+				'filter' => 'alpha'
 			),
 			'silent' => array(
 				'required' => false,
