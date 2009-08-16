@@ -16,17 +16,39 @@
 {tab name="{tr}Main Features{/tr}"}
 			<div class="admin clearfix">
 {* ---------- Main features ------------ *}
-				{preference name=feature_wiki}
-				{preference name=feature_blogs}
-				{preference name=feature_galleries}
-				{preference name=feature_file_galleries}
-				{preference name=feature_articles}
-				{preference name=feature_forums}
-				{preference name=feature_trackers}
-				{preference name=feature_polls}
-				{preference name=feature_calendar}
-				{preference name=feature_newsletters}
-				{preference name=feature_banners}
+				<div class="half_width">
+					{preference name=feature_wiki}
+				</div>
+				<div class="half_width">				
+					{preference name=feature_blogs}
+				</div>
+				<div class="half_width">				
+					{preference name=feature_galleries}
+				</div>
+				<div class="half_width">				
+					{preference name=feature_file_galleries}
+				</div>
+				<div class="half_width">				
+					{preference name=feature_articles}
+				</div>
+				<div class="half_width">				
+					{preference name=feature_forums}
+				</div>
+				<div class="half_width">				
+					{preference name=feature_trackers}
+				</div>
+				<div class="half_width">				
+					{preference name=feature_polls}
+				</div>
+				<div class="half_width">				
+					{preference name=feature_calendar}
+				</div>
+				<div class="half_width">				
+					{preference name=feature_newsletters}
+				</div>
+				<div class="half_width">	
+					{preference name=feature_banners}
+				</div>
 			</div>
 {/tab}
 	
