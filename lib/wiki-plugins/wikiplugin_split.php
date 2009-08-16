@@ -124,16 +124,16 @@ function wikiplugin_split($data, $params, $pos) {
 		}
 		$tdtotaltd=floor($tdtotal/100*100);
 		if ($tdtotaltd == 100) // avoir IE to do to far
-			$class = 'class="normal split"';
+			$class = 'class="normalnoborder split"';
 		else
 			$class = 'class="split" width="'.$tdtotaltd.'%"';
 	} elseif ($fixedsize) {
 		$columnSize = floor(100 / $maxcols);
-		$class = 'class="normal split"';
+		$class = 'class="normalnoborder split"';
 		$percent = true;	
 	}
 	if (!isset($edit)) $edit = 'n';
-	$result = "<table border='0' cellpadding='0' cellspacing='0' class='wikiplugin-split".($percent ? " normal" : "").( !empty($customclass) ? " $customclass" : "")."'>";
+	$result = "<table border='0' cellpadding='0' cellspacing='0' class='wikiplugin-split".($percent ? " normalnoborder" : "").( !empty($customclass) ? " $customclass" : "")."'>";
 
     // Attention: Dont forget to remove leading empty line in section ...
     //            it should remain from previous '---' line...
