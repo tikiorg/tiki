@@ -14,50 +14,26 @@
  * sections and add a configuration icon to the sections list
  *}
 {tab name="{tr}Main Features{/tr}"}
-			<div class="admin clearfix">
+			<div class="admin clearfix featurelist">
 {* ---------- Main features ------------ *}
-				<div class="half_width">
-					{preference name=feature_wiki}
-				</div>
-				<div class="half_width">				
-					{preference name=feature_blogs}
-				</div>
-				<div class="half_width">				
-					{preference name=feature_galleries}
-				</div>
-				<div class="half_width">				
-					{preference name=feature_file_galleries}
-				</div>
-				<div class="half_width">				
-					{preference name=feature_articles}
-				</div>
-				<div class="half_width">				
-					{preference name=feature_forums}
-				</div>
-				<div class="half_width">				
-					{preference name=feature_trackers}
-				</div>
-				<div class="half_width">				
-					{preference name=feature_polls}
-				</div>
-				<div class="half_width">				
-					{preference name=feature_calendar}
-				</div>
-				<div class="half_width">				
-					{preference name=feature_newsletters}
-				</div>
-				<div class="half_width">	
-					{preference name=feature_banners}
-				</div>
+				{preference name=feature_wiki}
+				{preference name=feature_blogs}
+				{preference name=feature_galleries}
+				{preference name=feature_file_galleries}
+				{preference name=feature_articles}
+				{preference name=feature_forums}
+				{preference name=feature_trackers}
+				{preference name=feature_polls}
+				{preference name=feature_calendar}
+				{preference name=feature_newsletters}
+				{preference name=feature_banners}
 			</div>
 {/tab}
 	
 {* ---------- Global features ------------ *}
 {tab name="{tr}Site Global Features{/tr}"}
-			<div class="admin">
-				<div class="half_width">
-					{preference name=feature_categories}
-				</div>
+			<div class="admin featurelist">
+				{preference name=feature_categories}
 				<div class="half_width">
 					<span class="checkbox"><input type="checkbox" name="feature_score" {if $prefs.feature_score eq 'y'}checked="checked"{/if} /></span>
 					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Score" target="tikihelp" class="tikihelp" title="{tr}Score{/tr}: {tr}Score{/tr}">{/if} {tr}Score{/tr}{if $prefs.feature_help eq 'y'}</a>{/if}</span>
@@ -87,7 +63,7 @@
 
 {* ---------- Additional features ------------ *}
 {tab name="{tr}Additional Features{/tr}"}
-			<div class="admin">
+			<div class="admin featurelist">
 				<div class="half_width">
 					<span class="checkbox"><input type="checkbox" name="feature_faqs" {if $prefs.feature_faqs eq 'y'}checked="checked"{/if}/></span>
 					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}FAQs" target="tikihelp" class="tikihelp" title="{tr}FAQs{/tr}">{/if} {tr}FAQs{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
@@ -161,7 +137,7 @@
 
 {* ---------- User interface enhancement features ------------ *}
 {tab name="{tr}User interface enhancement features{/tr}"}
-			<div class="admin">
+			<div class="admin featurelist">
 				<div class="half_width">
 					<span class="checkbox"><input type="checkbox" name="feature_jscalendar" {if $prefs.feature_jscalendar eq 'y'}checked="checked"{/if}/></span>
 					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Js+Calendar" target="tikihelp" class="tikihelp" title="{tr}JsCalendar{/tr}">{/if} {tr}JavaScript popup date selector{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
@@ -191,7 +167,7 @@
 			
 {* ---------- Experimental features ------------ *}
 {tab name="{tr}Experimental Features{/tr}"}
-			<div class="admin">
+			<div class="admin featurelist">
 				<fieldset>
 					<legend class="heading">{icon _id="accept"}<span>{tr}Seem ok{/tr}</span></legend>
 					<span class="description">{tr}Features that may change or might be re-worked in the future{/tr}</span>
@@ -273,7 +249,7 @@
 
 {* ---------- Administration features ------------ *}
 {tab name="{tr}Administration Features{/tr}"}
-			<div class="admin">
+			<div class="admin featurelist">
 				<div class="half_width">
 					<span class="checkbox"><input type="checkbox" name="feature_banning" {if $prefs.feature_banning eq 'y'}checked="checked"{/if}/></span>
 					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Banning" target="tikihelp" class="tikihelp" title="{tr}Banning System{/tr}">{/if} {tr}Banning system{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
@@ -307,7 +283,7 @@
 			
 {* --- User Features --- *}
 {tab name="{tr}User Features{/tr}"}
-			<div class="admin">
+			<div class="admin featurelist">
 				<div style="width: 49%; text-align: left; float: left">
 					<span class="checkbox"><input type="checkbox" name="feature_mytiki" {if $prefs.feature_mytiki eq 'y'}checked="checked"{/if} /></span>
 					<span class="label"> {tr}Display 'MyTiki' in the application menu{/tr} </span>
@@ -382,7 +358,7 @@
 {/tab}
 
 {tab name="{tr}Programmer Features{/tr}"}
-			<div class="admin">
+			<div class="admin featurelist">
 				<div style="width: 49%; text-align: left; float: left">
 					<span class="checkbox"><input type="checkbox" name="feature_integrator" {if $prefs.feature_integrator eq 'y'}checked="checked"{/if}/></span>
 					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Tiki+Integrator" target="tikihelp" class="tikihelp" title="{tr}Integrator{/tr}">{/if} {tr}Integrator{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>

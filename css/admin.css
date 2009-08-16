@@ -63,11 +63,14 @@ a.admbox.off img {
 	text-align: center;
 }
 
+.featurelist .adminoptionbox {
+	float: left;
+	width: 47%;
+}
 
 /* classes for admin preferences UI */
 .adminoptionbox {
 /*overall box */
-	clear:both;
 	padding: 0.5em;
 	text-align:left;
 	}
