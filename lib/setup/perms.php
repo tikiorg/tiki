@@ -16,10 +16,25 @@ $permissionList = array();
 $adminPermissions = array();
 
 foreach( $allperms['data'] as $row ) {
-	$permissionList[] = $row['permName'];
+	$valid = false;
 
-	if( $row['admin'] == 'y' ) {
-		$adminPermissions[ $row['type'] ] = substr( $row['permName'], strlen( 'tiki_p_' ) );
+	if( ! $row['feature_check'] ) {
+		$valid = true;
+	} else {
+		foreach( explode( ',', $row['feature_check'] ) as $feature ) {
+			if( $prefs[$feature] == 'y' ) {
+				$valid = true;
+				break;
+			}
+		}
+	}
+
+	if( $valid ) {
+		$permissionList[] = $row['permName'];
+
+		if( $row['admin'] == 'y' ) {
+			$adminPermissions[ $row['type'] ] = substr( $row['permName'], strlen( 'tiki_p_' ) );
+		}
 	}
 }
 
