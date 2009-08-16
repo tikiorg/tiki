@@ -49,11 +49,23 @@ class TikiAccessLib extends TikiLib {
 	function check_feature($features, $feature_name="") {
 		global $prefs;
 		require_once ('tiki-setup.php');
+
+		$perms = Perms::get();
+		if( $perms->admin && isset($_REQUEST['check_feature']) && isset($_REQUEST['lm_preference']) ) {
+			global $prefslib; require_once 'lib/prefslib.php';
+			
+			$prefslib->applyChanges( (array) $_REQUEST['lm_preference'], $_REQUEST );
+		}
+
 		if ( ! is_array($features) ) { $features = array($features); }
 		foreach ($features as $feature) {
 			if ($prefs[$feature] != 'y') {
 				if ($feature_name != '') { $feature = $feature_name; }
-				$this->display_error('', tra("This feature is disabled").": ". $feature_name, '503' );
+				global $smarty;
+				if( $perms->admin ) {
+					$smarty->assign('required_preferences', $features);
+				}
+				$this->display_error('', tra("This feature is disabled").": ". $feature, '503' );
 			}
 		}
 	}

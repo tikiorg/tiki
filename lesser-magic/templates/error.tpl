@@ -27,6 +27,14 @@ close();
 		<div class="cbox">
 			<div class="cbox-title">{icon _id=exclamation alt={tr}Error{/tr} style=vertical-align:middle} {$errortitle|default:"{tr}Error{/tr}"}</div>
 			<div class="cbox-data">
+				{if $required_preferences}
+					<form method="post" action="">
+						{foreach from=$required_preferences item=p}
+							{preference name=$p}
+						{/foreach}
+						<input type="submit" name="check_feature" value="{tr}Set{/tr}"/>
+					</form>
+				{/if}
 				<br />
 				{if ($errortype eq "404")}
 					{if $prefs.feature_likePages eq 'y'}
