@@ -74,6 +74,12 @@ function prefs_feature_list() {
 			'description' => tra('Insert, track, and manage advertising banners.'),
 			'help' => 'Banners',
 			'type' => 'flag',
+		),
+		'feature_categories' => array(
+			'name' => tra('Category'),
+			'description' => tra('Global category system. Items of different types (wiki pages, articles, tracker items, etc) can be added to one or many categories. Categories can have permissions.'),
+			'help' => 'Category',
+			'type' => 'flag',
 		)
 	);
 }

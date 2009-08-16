@@ -17,7 +17,6 @@ if (isset($_REQUEST["features"])) {
 		"feature_ajax",
 		"feature_ajax_autosave",
 		"feature_banning",
-		"feature_categories",
 		"feature_comm",
 		"feature_contact",
 		"feature_contacts",

@@ -56,8 +56,7 @@
 {tab name="{tr}Site Global Features{/tr}"}
 			<div class="admin">
 				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_categories" {if $prefs.feature_categories eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Categories" target="tikihelp" class="tikihelp" title="{tr}Categories{/tr}">{/if} {tr}Categories{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
+					{preference name=feature_categories}
 				</div>
 				<div class="half_width">
 					<span class="checkbox"><input type="checkbox" name="feature_score" {if $prefs.feature_score eq 'y'}checked="checked"{/if} /></span>
