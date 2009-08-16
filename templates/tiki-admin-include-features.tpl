@@ -46,74 +46,23 @@
 {* ---------- Additional features ------------ *}
 {tab name="{tr}Additional Features{/tr}"}
 			<div class="admin featurelist">
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_faqs" {if $prefs.feature_faqs eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}FAQs" target="tikihelp" class="tikihelp" title="{tr}FAQs{/tr}">{/if} {tr}FAQs{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div>
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_surveys" {if $prefs.feature_surveys eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Surveys" target="tikihelp" class="tikihelp" title="{tr}Surveys{/tr}">{/if} {tr}Surveys{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div>
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_directory" {if $prefs.feature_directory eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Directory" target="tikihelp" class="tikihelp" title="{tr}Directory{/tr}">{/if} {tr}Directory{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div>
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_quizzes" {if $prefs.feature_quizzes eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Quizzes" target="tikihelp" class="tikihelp" title="{tr}Quizzes{/tr}">{/if} {tr}Quizzes{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div>
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_featuredLinks" {if $prefs.feature_featuredLinks eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Featured+Links" target="tikihelp" class="tikihelp" title="{tr}Featured Help{/tr}">{/if} {tr}Featured links{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div>
-				<div class="half_width">	 
-					<span class="checkbox"><input type="checkbox" name="feature_copyright" {if $prefs.feature_copyright eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Copyright" target="tikihelp" class="tikihelp" title="{tr}Copyright System{/tr}">{/if} {tr}Copyright system{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div>
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_multimedia" {if $prefs.feature_multimedia eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> <a href="{$prefs.helpurl}Multimedia" target="tikihelp" class="tikihelp" title="{tr}Multimedia{/tr}"> {tr}Multimedia{/tr}</a></span>
-				</div>
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_shoutbox" {if $prefs.feature_shoutbox eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Shoutbox" target="tikihelp" class="tikihelp" title="{tr}Shoutbox{/tr}">{/if} {tr}Shoutbox{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div>
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_maps" {if $prefs.feature_maps eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Maps" target="tikihelp" class="tikihelp" title="{tr}Maps{/tr}">{/if} {tr}Maps{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div>
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_gmap" {if $prefs.feature_gmap eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Gmap" target="tikihelp" class="tikihelp" title="{tr}Google Maps{/tr}: {tr}Google Maps{/tr}">{/if} {tr}Google Maps{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div>
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_live_support" {if $prefs.feature_live_support eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Live+Support" target="tikihelp" class="tikihelp" title="{tr}Live Support{/tr}">{/if} {tr}Live support system{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div>
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_tell_a_friend" {if $prefs.feature_tell_a_friend eq 'y'}checked="checked"{/if}/></span>
-					<span class="label">{if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Tell+a+Friend" target="tikihelp" class="tikihelp" title="{tr}Tell a Friend{/tr}">{/if} {tr}Tell a Friend{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div>
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_html_pages" {if $prefs.feature_html_pages eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Html+Pages" target="tikihelp" class="tikihelp" title="{tr}HTML Pages{/tr}">{/if} {tr}HTML pages{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div>
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_contact"						{if $prefs.feature_contact eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Contact+Us" target="tikihelp" class="tikihelp" title="{tr}Contact Us{/tr}">{/if} {tr}Contact Us{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div>
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_minichat" {if $prefs.feature_minichat eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Minichat" target="tikihelp" class="tikihelp" title="{tr}HTML Pages{/tr}">{/if} {tr}Minichat{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div>
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_comments_moderation" {if $prefs.feature_comments_moderation eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Comments" target="tikihelp" class="tikihelp" title="{tr}Comments Moderation{/tr}">{/if} {tr}Comments Moderation{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div>
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_comments_locking" {if $prefs.feature_comments_locking eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Comments" target="tikihelp" class="tikihelp" title="{tr}Comments Locking{/tr}">{/if} {tr}Comments Locking{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div>
+				{preference name=feature_faqs}
+				{preference name=feature_surveys}
+				{preference name=feature_directory}
+				{preference name=feature_quizzes}
+				{preference name=feature_featuredLinks}
+				{preference name=feature_copyright}
+				{preference name=feature_multimedia}
+				{preference name=feature_shoutbox}
+				{preference name=feature_maps}
+				{preference name=feature_gmap}
+				{preference name=feature_live_support}
+				{preference name=feature_tell_a_friend}
+				{preference name=feature_html_pages}
+				{preference name=feature_contact}
+				{preference name=feature_minichat}
+				{preference name=feature_comments_moderation}
+				{preference name=feature_comments_locking}
 			</div>
 {/tab}
 
