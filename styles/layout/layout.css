@@ -2434,4 +2434,21 @@ table.webmail_message_headers th {
 	.tikihelp, .navbar, .tabstoggle, .tabs, #show-errors-button {display:none;}
 }
 
+/* treeTable definitions - used in object-perms so far */
+
+table.treeTable {}
+
+table.treeTable .checkBoxHeader {
+	font-size: .8em;
+}
+
+table.treeTable .subHeader td {
+	font-weight: bold;
+}
+
+table.treeTable .parent td {
+	font-style: italic;
+}
+
+
 /* End of File */

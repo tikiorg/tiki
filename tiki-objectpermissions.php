@@ -242,7 +242,7 @@ foreach($page_perms as $perm) {
 //Quickperm END
 
 // Get a list of groups
-$groups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
+$groups = $userlib->get_groups(0, -1, 'id_asc', '', '', 'n');
 
 //Quickperm
 foreach($groups['data'] as $key=>$group) {
@@ -269,18 +269,30 @@ foreach($groups['data'] as $key=>$group) {
 $smarty->assign_by_ref('groups', $groups["data"]);
 
 // get groupNames etc
+
 $permGroups = array();
 $groupNames = array();
 $groupIndices = array();
+$groupInheritance = array();
 $groupIndex = 6;	// yuk!
 foreach($groups['data'] as $row) {
 	$groupNames[] = $row['groupName'];
 	$permGroups[] = 'perm['.$row['groupName'].']';
+	if ($row['groupName'] != 'Anonymous' && $row['groupName'] != 'Admins') {
+		$groupInheritance[] = array_merge(array('Anonymous'), $userlib->get_included_groups($row['groupName']));
+	} else {
+		$groupInheritance[] = '';
+	}
 	$groupIndices[] = $groupIndex;
 	$groupIndex++;
 }
 
-// Get a list of permissions
+$smarty->assign('permGroups', implode(',', $permGroups));
+$smarty->assign('permGroupCols', $groupIndices);
+$smarty->assign('groupNames', implode(',', $groupNames));
+
+
+// Get the big list of permissions
 if (isset($_REQUEST['show_disabled_features']) && $_REQUEST['show_disabled_features'] == 'on') {
 	$show_disabled_features = true;
 } else {
@@ -289,10 +301,9 @@ if (isset($_REQUEST['show_disabled_features']) && $_REQUEST['show_disabled_featu
 $smarty->assign('show_disabled_features', $show_disabled_features);
 $perms = $userlib->get_permissions(0, -1, 'permName_asc', '', $_REQUEST["permType"], $groupNames, !$show_disabled_features);
 $perms = $perms['data'];
-
-$smarty->assign('permGroups', implode(',', $permGroups));
-$smarty->assign('permGroupCols', $groupIndices);
-$smarty->assign('groupNames', implode(',', $groupNames));
+foreach ($perms as &$perm) {
+	$perm['label'] = $perm['permDesc'] . ' (' .  str_replace('_', ' ', substr($perm['permName'], 7,strlen($perm['permName']))) . ')';
+}
 
 if ($tiki_p_admin_objects != 'y') {
 	$userPerms = array();
@@ -351,6 +362,7 @@ if ($prefs['feature_categories'] == 'y') {
 	}
 	$smarty->assign_by_ref('categ_perms', $categ_perms);
 }
+
 // blend the perms from object onto the big perm list
 
 foreach ($page_perms as $page_perm) {
@@ -367,8 +379,51 @@ foreach ($page_perms as $page_perm) {
 	}
 }
 
-
 $smarty->assign_by_ref('perms', $perms);
+
+$js = '';
+
+for( $i = 0; $i < count($groupNames); $i++) {
+
+	$groupName = $groupNames[$i];
+	$beneficiaries = '';
+	for( $j = 0; $j < count($groupInheritance); $j++) {
+		if (in_array($groupName, $groupInheritance[$j])) {
+			$beneficiaries .= !empty($beneficiaries) ? ',' : '';
+			$beneficiaries .= 'input[name="perm['.$groupNames[$j].'][]"]';
+		}
+	}
+	
+//\$jq('input[name="perm[$groupName][]"]:checked').each( function() { 	// checked one of this group
+//	\$jq('input[value="'+\$jq(this).val()+'"]').						// other checkbxes of same value (perm)
+//		filter('$beneficiaries').
+//		attr('checked','checked').attr('disabled','disabled');							// check and disable
+//});
+	$js .= <<< JS
+\$jq('input[name="perm[$groupName][]"]').each( function() { 		// each one of this group
+	\$jq('input[value="'+\$jq(this).val()+'"]').					// other checkboxes of same value (perm)
+		filter('$beneficiaries').									// which inherit from this
+		attr('checked',\$jq(this).attr('checked')).					// check and disable
+		attr('disabled',\$jq(this).attr('checked') ? 'disabled' : '');
+	\$jq(this).click( function() {									// bind click event
+		if (\$jq(this).attr('checked')) {
+			\$jq('input[value="'+\$jq(this).val()+'"]').			// same...
+				filter('$beneficiaries').
+				attr('checked','checked').							// check?
+				attr('disabled','disabled');						// disable
+		} else {
+			\$jq('input[value="'+\$jq(this).val()+'"]').			// same...
+				filter('$beneficiaries').
+				attr('disabled','');								// disable
+}
+	});
+});
+JS;
+
+}
+$headerlib->add_jq_onready($js);
+
+
 
 ask_ticket('object-perms');
 // Display the template
