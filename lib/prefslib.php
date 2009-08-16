@@ -48,13 +48,19 @@ class PreferencesLib
 			$handled = array_intersect( $handled, $limitation );
 		}
 
+		$changes = array();
 		foreach( $handled as $pref ) {
 			$info = $this->getPreference( $pref );
 			$function = '_get' . ucfirst( $info['type'] ) . 'Value';
 			$value = $this->$function( $info, $data );
 
-			$tikilib->set_preference( $pref, $value );
+			if( $tikilib->get_preference( $pref ) != $value ) {
+				$tikilib->set_preference( $pref, $value );
+				$changes[$pref] = $value;
+			}
 		}
+
+		return $changes;
 	}
 
 	private function loadData( $name ) {
