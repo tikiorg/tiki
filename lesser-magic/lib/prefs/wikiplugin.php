@@ -9,7 +9,7 @@ function prefs_wikiplugin_list() {
 		$info = $tikilib->plugin_info( $plugin );
 
 		$prefs['wikiplugin_' . $plugin] = array(
-			'name' => tr( 'Enable wiki plugin %0', $info['name'] ),
+			'name' => tr( 'Enable plugin %0', $info['name'] ),
 			'description' => $info['description'],
 			'type' => 'flag',
 			'help' => 'Plugin' . $plugin,
