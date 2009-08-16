@@ -80,7 +80,43 @@ function prefs_feature_list() {
 			'description' => tra('Global category system. Items of different types (wiki pages, articles, tracker items, etc) can be added to one or many categories. Categories can have permissions.'),
 			'help' => 'Category',
 			'type' => 'flag',
-		)
+		),
+		'feature_score' => array(
+			'name' => tra('Score'),
+			'description' => tra('Score is a game to motivate participants to increase their contribution by comparing to other users.'),
+			'help' => 'Score',
+			'type' => 'flag',
+		),
+		'feature_search' => array(
+			'name' => tra('Search'),
+			'description' => tra('Enables searching for content on the website.'),
+			'help' => 'Search',
+			'type' => 'flag',
+		),
+		'feature_freetags' => array(
+			'name' => tra('Freetags'),
+			'description' => tra('Allows to set tags on pages and various objects within the website and generate tag cloud navigation patterns.'),
+			'help' => 'Tags',
+			'type' => 'flag',
+		),
+		'feature_actionlog' => array(
+			'name' => tra('Action Log'),
+			'description' => tra('Allows to keep track of what users are doing and produce reports on a per-user or per-category basis.'),
+			'help' => 'Action+Log',
+			'type' => 'flag',
+		),
+		'feature_contribution' => array(
+			'name' => tra('Contribution'),
+			'description' => tra('Allows users to specify the type of contribution they are making while editing objects. The contributions are then displayed as color-coded in history and other reports.'),
+			'help' => 'Contribution',
+			'type' => 'flag',
+		),
+		'feature_multilingual' => array(
+			'name' => tra('Multilingual'),
+			'description' => tra('Enables internationalization features and multilingual support for then entire site.'),
+			'help' => 'Internationalization',
+			'type' => 'flag',
+		),
 	);
 }
 
