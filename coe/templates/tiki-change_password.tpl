@@ -14,24 +14,20 @@
 <fieldset>{if $new_user_validation neq 'y'}<legend>{tr}Change your password{/tr}</legend>{/if}
 <table class="form">
 <tr>
-  <td class="formcolor">{tr}Username{/tr}:</td>
+  <td class="formcolor">{tr}Username:{/tr}</td>
   <td class="formcolor">
-	{if $new_user_validation eq 'y'}
-		<input type="hidden" name="user" value="{$userlogin|escape}" />
-		<b>{$userlogin}</b>
-	{else}
-		<input type="text" name="user" value="{$userlogin|escape}" />
-	{/if}
+	<input type="hidden" name="user" value="{$userlogin|escape}" />
+	<b>{$userlogin}</b>
   </td>
 </tr>
 {if empty($smarty.request.actpass) and $new_user_validation neq 'y'}
 <tr>
-  <td class="formcolor">{tr}Old password{/tr}:</td>
+  <td class="formcolor">{tr}Old password:{/tr}</td>
   <td class="formcolor"><input type="password" name="oldpass" value="{$oldpass|escape}" /></td>
 </tr>
 {/if}     
 <tr>
-  <td class="formcolor">{tr}New password{/tr}:</td>
+  <td class="formcolor">{tr}New password:{/tr}</td>
   <td class="formcolor">
 						<div style="float:right;width:150px;margin-left:5px;">
 							<div id="mypassword_text"></div>
@@ -48,7 +44,7 @@
   </td>
 </tr>  
 <tr>
-  <td class="formcolor">{tr}Repeat password{/tr}:</td>
+  <td class="formcolor">{tr}Repeat password:{/tr}</td>
   <td class="formcolor"><input type="password" name="pass2" /></td>
 </tr>  
 <tr>

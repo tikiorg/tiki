@@ -14,154 +14,61 @@
  * sections and add a configuration icon to the sections list
  *}
 {tab name="{tr}Main Features{/tr}"}
-			<div class="admin clearfix">
+			<div class="admin clearfix featurelist">
 {* ---------- Main features ------------ *}
-				<div class="half_width">
-					{preference name=feature_wiki}
-				</div>
-				<div class="half_width">				
-					{preference name=feature_blogs}
-				</div>
-				<div class="half_width">				
-					{preference name=feature_galleries}
-				</div>
-				<div class="half_width">				
-					{preference name=feature_file_galleries}
-				</div>
-				<div class="half_width">				
-					{preference name=feature_articles}
-				</div>
-				<div class="half_width">				
-					{preference name=feature_forums}
-				</div>
-				<div class="half_width">				
-					{preference name=feature_trackers}
-				</div>
-				<div class="half_width">				
-					{preference name=feature_polls}
-				</div>
-				<div class="half_width">				
-					{preference name=feature_calendar}
-				</div>
-				<div class="half_width">				
-					{preference name=feature_newsletters}
-				</div>
-				<div class="half_width">	
-					{preference name=feature_banners}
-				</div>
+				{preference name=feature_wiki}
+				{preference name=feature_blogs}
+				{preference name=feature_galleries}
+				{preference name=feature_file_galleries}
+				{preference name=feature_articles}
+				{preference name=feature_forums}
+				{preference name=feature_trackers}
+				{preference name=feature_polls}
+				{preference name=feature_calendar}
+				{preference name=feature_newsletters}
+				{preference name=feature_banners}
 			</div>
 {/tab}
 	
 {* ---------- Global features ------------ *}
 {tab name="{tr}Site Global Features{/tr}"}
-			<div class="admin">
-				<div class="half_width">
-					{preference name=feature_categories}
-				</div>
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_score" {if $prefs.feature_score eq 'y'}checked="checked"{/if} /></span>
-					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Score" target="tikihelp" class="tikihelp" title="{tr}Score{/tr}: {tr}Score{/tr}">{/if} {tr}Score{/tr}{if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div>
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_freetags" {if $prefs.feature_freetags eq 'y'}checked="checked"{/if}/></span>
-					<span class="label">{if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Tags" target="tikihelp" class="tikihelp" title="{tr}Freetags{/tr}: {tr}Freetags{/tr}">{/if}{tr}Freetags{/tr}{if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div>
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_search" {if $prefs.feature_search eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Search" target="tikihelp" class="tikihelp" title="{tr}Search{/tr}">{/if} {tr}Search{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div>
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_actionlog" {if $prefs.feature_actionlog eq 'y'}checked="checked"{/if}/></span>
-					<span class="label">{if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Action+Log" target="tikihelp" class="tikihelp" title="{tr}Action Log{/tr}: {tr}Action Log{/tr}">{/if}{tr}Action log setting{/tr}{if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div>
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_contribution"{if $prefs.feature_contribution eq 'y'} checked="checked"{/if}/></span>
-					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Contribution" target="tikihelp" class="tikihelp" title="{tr}Contribution{/tr}">{/if} {tr}Contribution{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div>
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_multilingual"{if $prefs.feature_multilingual eq 'y'} checked="checked"{/if}/></span>
-					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Internationalization" target="tikihelp" class="tikihelp" title="{tr}Internationalization{/tr}">{/if} {tr}Multilingual{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div>
+			<div class="admin featurelist">
+				{preference name=feature_categories}
+				{preference name=feature_score}
+				{preference name=feature_freetags}
+				{preference name=feature_search}
+				{preference name=feature_actionlog}
+				{preference name=feature_contribution}
+				{preference name=feature_multilingual}
 			</div>
 {/tab}
 
 {* ---------- Additional features ------------ *}
 {tab name="{tr}Additional Features{/tr}"}
-			<div class="admin">
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_faqs" {if $prefs.feature_faqs eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}FAQs" target="tikihelp" class="tikihelp" title="{tr}FAQs{/tr}">{/if} {tr}FAQs{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div>
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_surveys" {if $prefs.feature_surveys eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Surveys" target="tikihelp" class="tikihelp" title="{tr}Surveys{/tr}">{/if} {tr}Surveys{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div>
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_directory" {if $prefs.feature_directory eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Directory" target="tikihelp" class="tikihelp" title="{tr}Directory{/tr}">{/if} {tr}Directory{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div>
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_quizzes" {if $prefs.feature_quizzes eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Quizzes" target="tikihelp" class="tikihelp" title="{tr}Quizzes{/tr}">{/if} {tr}Quizzes{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div>
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_featuredLinks" {if $prefs.feature_featuredLinks eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Featured+Links" target="tikihelp" class="tikihelp" title="{tr}Featured Help{/tr}">{/if} {tr}Featured links{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div>
-				<div class="half_width">	 
-					<span class="checkbox"><input type="checkbox" name="feature_copyright" {if $prefs.feature_copyright eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Copyright" target="tikihelp" class="tikihelp" title="{tr}Copyright System{/tr}">{/if} {tr}Copyright system{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div>
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_multimedia" {if $prefs.feature_multimedia eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> <a href="{$prefs.helpurl}Multimedia" target="tikihelp" class="tikihelp" title="{tr}Multimedia{/tr}"> {tr}Multimedia{/tr}</a></span>
-				</div>
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_shoutbox" {if $prefs.feature_shoutbox eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Shoutbox" target="tikihelp" class="tikihelp" title="{tr}Shoutbox{/tr}">{/if} {tr}Shoutbox{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div>
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_maps" {if $prefs.feature_maps eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Maps" target="tikihelp" class="tikihelp" title="{tr}Maps{/tr}">{/if} {tr}Maps{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div>
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_gmap" {if $prefs.feature_gmap eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Gmap" target="tikihelp" class="tikihelp" title="{tr}Google Maps{/tr}: {tr}Google Maps{/tr}">{/if} {tr}Google Maps{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div>
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_live_support" {if $prefs.feature_live_support eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Live+Support" target="tikihelp" class="tikihelp" title="{tr}Live Support{/tr}">{/if} {tr}Live support system{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div>
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_tell_a_friend" {if $prefs.feature_tell_a_friend eq 'y'}checked="checked"{/if}/></span>
-					<span class="label">{if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Tell+a+Friend" target="tikihelp" class="tikihelp" title="{tr}Tell a Friend{/tr}">{/if} {tr}Tell a Friend{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div>
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_html_pages" {if $prefs.feature_html_pages eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Html+Pages" target="tikihelp" class="tikihelp" title="{tr}HTML Pages{/tr}">{/if} {tr}HTML pages{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div>
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_contact"						{if $prefs.feature_contact eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Contact+Us" target="tikihelp" class="tikihelp" title="{tr}Contact Us{/tr}">{/if} {tr}Contact Us{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div>
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_minichat" {if $prefs.feature_minichat eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Minichat" target="tikihelp" class="tikihelp" title="{tr}HTML Pages{/tr}">{/if} {tr}Minichat{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div>
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_comments_moderation" {if $prefs.feature_comments_moderation eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Comments" target="tikihelp" class="tikihelp" title="{tr}Comments Moderation{/tr}">{/if} {tr}Comments Moderation{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div>
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_comments_locking" {if $prefs.feature_comments_locking eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Comments" target="tikihelp" class="tikihelp" title="{tr}Comments Locking{/tr}">{/if} {tr}Comments Locking{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div>
+			<div class="admin featurelist">
+				{preference name=feature_faqs}
+				{preference name=feature_surveys}
+				{preference name=feature_directory}
+				{preference name=feature_quizzes}
+				{preference name=feature_featuredLinks}
+				{preference name=feature_copyright}
+				{preference name=feature_multimedia}
+				{preference name=feature_shoutbox}
+				{preference name=feature_maps}
+				{preference name=feature_gmap}
+				{preference name=feature_live_support}
+				{preference name=feature_tell_a_friend}
+				{preference name=feature_html_pages}
+				{preference name=feature_contact}
+				{preference name=feature_minichat}
+				{preference name=feature_comments_moderation}
+				{preference name=feature_comments_locking}
 			</div>
 {/tab}
 
 {* ---------- User interface enhancement features ------------ *}
 {tab name="{tr}User interface enhancement features{/tr}"}
-			<div class="admin">
+			<div class="admin featurelist">
 				<div class="half_width">
 					<span class="checkbox"><input type="checkbox" name="feature_jscalendar" {if $prefs.feature_jscalendar eq 'y'}checked="checked"{/if}/></span>
 					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Js+Calendar" target="tikihelp" class="tikihelp" title="{tr}JsCalendar{/tr}">{/if} {tr}JavaScript popup date selector{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
@@ -191,7 +98,7 @@
 			
 {* ---------- Experimental features ------------ *}
 {tab name="{tr}Experimental Features{/tr}"}
-			<div class="admin">
+			<div class="admin featurelist">
 				<fieldset>
 					<legend class="heading">{icon _id="accept"}<span>{tr}Seem ok{/tr}</span></legend>
 					<span class="description">{tr}Features that may change or might be re-worked in the future{/tr}</span>
@@ -273,7 +180,7 @@
 
 {* ---------- Administration features ------------ *}
 {tab name="{tr}Administration Features{/tr}"}
-			<div class="admin">
+			<div class="admin featurelist">
 				<div class="half_width">
 					<span class="checkbox"><input type="checkbox" name="feature_banning" {if $prefs.feature_banning eq 'y'}checked="checked"{/if}/></span>
 					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Banning" target="tikihelp" class="tikihelp" title="{tr}Banning System{/tr}">{/if} {tr}Banning system{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
@@ -307,7 +214,7 @@
 			
 {* --- User Features --- *}
 {tab name="{tr}User Features{/tr}"}
-			<div class="admin">
+			<div class="admin featurelist">
 				<div style="width: 49%; text-align: left; float: left">
 					<span class="checkbox"><input type="checkbox" name="feature_mytiki" {if $prefs.feature_mytiki eq 'y'}checked="checked"{/if} /></span>
 					<span class="label"> {tr}Display 'MyTiki' in the application menu{/tr} </span>
@@ -382,7 +289,7 @@
 {/tab}
 
 {tab name="{tr}Programmer Features{/tr}"}
-			<div class="admin">
+			<div class="admin featurelist">
 				<div style="width: 49%; text-align: left; float: left">
 					<span class="checkbox"><input type="checkbox" name="feature_integrator" {if $prefs.feature_integrator eq 'y'}checked="checked"{/if}/></span>
 					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Tiki+Integrator" target="tikihelp" class="tikihelp" title="{tr}Integrator{/tr}">{/if} {tr}Integrator{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>

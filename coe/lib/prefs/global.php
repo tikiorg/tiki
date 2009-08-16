@@ -15,6 +15,12 @@ function prefs_global_list() {
 				'sender_email',
 			),
 		),
+		'wikiHomePage' => array(
+			'name' => tra('Home page'),
+			'description' => tra('Landing page used for the wiki when no page is specified. The page will be created if it does not exist.'),
+			'type' => 'text',
+			'size' => 20,
+		),
 	);
 }
 

@@ -828,7 +828,7 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 			if( ! $this->message ) {
 				$this->message = tra('Page updated by profile installer');
 			}
-			$tikilib->update_page( $this->name, $this->content, $this->message, 'admin', '0.0.0.0', $this->description, false, $this->lang );
+			$tikilib->update_page( $this->name, $this->content, $this->message, 'admin', '0.0.0.0', $this->description, 0, $this->lang );
 		}
 
 		global $multilinguallib;

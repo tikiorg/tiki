@@ -83,12 +83,7 @@
 {* ----------------------- tab with form --------------------------------------- *}
 	<a name="2" ></a>
 
-	{if $groupname}
-		<h2>{$tabaddeditgroup_admgrp}</h2>
-		{button href="tiki-assignpermission.php?group=$groupname" _text="{tr}Assign Permissions{/tr}"}
-	{else}
-		<h2>{$tabaddeditgroup_admgrp}</h2>
-	{/if}
+	<h2>{$tabaddeditgroup_admgrp}</h2>
 
 	<form action="tiki-admingroups.php" method="post">
 		<table class="normal">
@@ -241,6 +236,14 @@
 			</tr>
 
 			{if $group ne ''}
+				<tr class="formcolor">
+					<td>
+						{tr}Assign group <em>management</em> persmissions{/tr}:
+					</td>
+					<td>
+						{icon href="tiki-objectpermissions.php?objectType=group&objectId=$groupname&objectName=$groupname&permType=group" _text="{tr}Assign Permissions{/tr}" _id="key"}
+					</td>
+				</tr>
 				<tr class="formcolor">
 					<td>
 						&nbsp;

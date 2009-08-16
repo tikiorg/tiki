@@ -6,7 +6,7 @@
 		{tr}Unless a significant amount of preferences are documented and use dynamic preferences before the 4.0 release, this search feature will become disabled by default.{/tr}
 	{/remarksbox}
 	<p>
-		Confriguration search: <input type="text" name="lm_criteria" value="{$lm_criteria|escape}"/>
+		Configuration search: <input type="text" name="lm_criteria" value="{$lm_criteria|escape}"/>
 		<input type="submit" value="{tr}Search{/tr}"/>
 	</p>
 </form>

@@ -108,7 +108,7 @@ if ($begin_version > 0) {
 			if ($version_info) {
 				$version_info['data'] = change_name_in_attach_plugin($staging_page, $page, $version_info['data']);
 				if ($info) {
-					$tikilib->update_page($page, $version_info["data"], $version_info["comment"] . " [" . tra('approved by ').$user . "]", $version_info["user"], $version_info["ip"], $version_info["description"], false, $staging_info["lang"], $staging_info["is_html"]);
+					$tikilib->update_page($page, $version_info["data"], $version_info["comment"] . " [" . tra('approved by ').$user . "]", $version_info["user"], $version_info["ip"], $version_info["description"], 0, $staging_info["lang"], $staging_info["is_html"]);
 				} else {
 					$tikilib->create_page($page, 0, $version_info["data"], $version_info['lastModif'], $version_info["comment"] . " [" . tra('approved by ').$user . "]", $version_info["user"], $version_info["ip"], $version_info["description"], $staging_info["lang"], $staging_info["is_html"]);
 					$info = $tikilib->get_page_info($page);
@@ -127,7 +127,7 @@ if ($begin_version > 0) {
 // finally approve current staging version
 $staging_info['data'] = change_name_in_attach_plugin($staging_page, $page, $staging_info['data']);
 if ($info) {
-	$tikilib->update_page($page, $staging_info["data"], $staging_info["comment"] . " [" . tra('approved by ').$user . "]", $staging_info["user"], $staging_info["ip"], $staging_info["description"], false, $staging_info["lang"], $staging_info["is_html"]);
+	$tikilib->update_page($page, $staging_info["data"], $staging_info["comment"] . " [" . tra('approved by ').$user . "]", $staging_info["user"], $staging_info["ip"], $staging_info["description"], 0, $staging_info["lang"], $staging_info["is_html"]);
 } else {
 	$tikilib->create_page($page, 0,  $staging_info["data"], $staging_info["comment"] . " [" . tra('approved by ').$user . "]", $staging_info["user"], $staging_info["ip"], $staging_info["description"], false, $staging_info["lang"], $staging_info["is_html"]);
 	$info = $tikilib->get_page_info($page);
