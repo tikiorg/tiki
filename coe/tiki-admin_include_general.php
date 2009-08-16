@@ -36,8 +36,6 @@ if (isset($_REQUEST["new_prefs"])) {
 		"contact_anon",
 		"feature_help",
 		"feature_version_checks",
-		"error_reporting_adminonly",
-		"smarty_notice_reporting",
 		"user_show_realnames",
 		"log_sql",
 		"log_mail",
@@ -53,13 +51,10 @@ if (isset($_REQUEST["new_prefs"])) {
 		simple_set_toggle($toggle);
 	}
 	$pref_simple_values = array(
-		"browsertitle",
 		"site_crumb_seper",
 		"site_nav_seper",
 		"contact_user",
-		"sender_email",
 		"system_os",
-		"error_reporting_level",
 		"default_mail_charset",
 		"mail_crlf",
 		"urlIndex",

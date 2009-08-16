@@ -37,8 +37,8 @@
 
     <fieldset>
 	<legend>{tr}Site Identity{/tr}</legend>
-	<div style="text-align: left"><label for="browsertitle">{tr}Browser title{/tr}:</label> <input type="text" name="browsertitle" id="browsertitle" value="{$prefs.browsertitle|escape}" size="80" /></div>
-	<div style="text-align: left"><label for="general-send_email">{tr}Sender email{/tr}:</label> <input type="text" name="sender_email" id="general-send_email" value="{$prefs.sender_email|escape}" size="80" /></div>
+	{preference name=browsertitle}
+	{preference name=sender_email}
 
 	<div class="adminoptionbox">{tr}Go to <a href="tiki-admin.php?page=look" title=""><strong>Look &amp; Feel</strong></a> section for additional site related customization preferences{/tr}.</div>
     </fieldset>
@@ -170,19 +170,10 @@
 
 <fieldset><legend>{tr}Logging and Reporting{/tr}</legend>
 <div class="adminoptionbox">
-	<label for="general-error">{tr}PHP error reporting level:{/tr}</label> 
-	<select name="error_reporting_level" id="general-error">
-		<option value="0" {if $prefs.error_reporting_level eq 0}selected="selected"{/if}>{tr}No error reporting{/tr}</option>
-		<option value="2047" {if $prefs.error_reporting_level eq 2047}selected="selected"{/if}>{tr}Report all PHP errors except strict{/tr}</option>
-		<option value="-1" {if $prefs.error_reporting_level eq -1}selected="selected"{/if}>{tr}Report all PHP errors{/tr}</option>
-		<option value="2039" {if $prefs.error_reporting_level eq 2039}selected="selected"{/if}>{tr}Report all errors except notices{/tr}</option>
-	</select>
+	{preference name=error_reporting_level}
 	<div class="adminoptionboxchild">
-		<div class="adminoption"><input type="checkbox" id="error_reporting_adminonly" name="error_reporting_adminonly"{if $prefs.error_reporting_adminonly eq 'y'} checked="checked"{/if} /></div>
-		<div class="adminoptionlabel"><label for="error_reporting_adminonly">{tr}Visible to Admin only{/tr}.</label></div>
-<br />
-		<div class="adminoption"><input type="checkbox" id="smarty_notice_reporting" name="smarty_notice_reporting"{if $prefs.smarty_notice_reporting eq 'y'} checked="checked"{/if} /></div>
-		<div class="adminoptionlabel"><label for="smarty_notice_reporting">{tr}Include Smarty notices{/tr}</label>.</div>
+		{preference name=error_reporting_adminonly label="{tr}Visible to admin only{/tr}"}
+		{preference name=smarty_notice_reporting label="{tr}Include Smarty notices{/tr}"}
 	</div>
 </div>
 <div class="adminoptionbox">	  
