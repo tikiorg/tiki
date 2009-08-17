@@ -14,15 +14,15 @@ if (!isset($dberror)) $dberror = false;
 if (version_compare(PHP_VERSION, '5.0.0', '<')) {
 	$title = 'PHP5 is required for Tiki 3.0';
 	$content = '<p>Please contact your system administrator ( if you are not the one ;) ).</p>';
-	createPage($title,$content);
+	createPage($title, $content);
 }
 
-if ($dberror===true) {
-	createPage($title,$content);
+if ($dberror === true) {
+	createPage($title, $content);
 }
 
 // if tiki installer is locked (probably after previous installation) display notice
-if( file_exists( 'db/lock' ) ) {
+if (file_exists('db/lock')) {
 	$title = 'Tiki Installer Disabled';
 	$content = '
 							<p>As a security precaution, the Tiki Installer has been disabled. To re-enable the installer:</p>
@@ -32,12 +32,12 @@ if( file_exists( 'db/lock' ) ) {
 									<li>Re-run <strong><a href="tiki-install.php" title="Tiki Installer">tiki-install.php</a></strong>.</li>
 								</ol>
 							</div>';
-	createPage($title,$content);
+	createPage($title, $content);
 }
 
 $tikiroot = dirname($_SERVER['PHP_SELF']);
 $session_params = session_get_cookie_params();
-session_set_cookie_params($session_params['lifetime'],$tikiroot);
+session_set_cookie_params($session_params['lifetime'], $tikiroot);
 unset($session_params);
 session_start();
 
@@ -56,14 +56,14 @@ if ( file_exists( 'db/local.php' ) ) {
 	include('db/local.php');
 	include_once('lib/adodb/adodb.inc.php');
 	$dbTiki = ADONewConnection($db_tiki);
-	$db = new TikiDb_Adodb( $dbTiki );
-	$db->setErrorHandler( new InstallerDatabaseErrorHandler );
-	TikiDb::set( $db );
+	$db = new TikiDb_Adodb($dbTiki);
+	$db->setErrorHandler(new InstallerDatabaseErrorHandler);
+	TikiDb::set($db);
 
 	// check for provided login details and check against the old, saved details that they're correct
-	if( isset( $_POST['dbuser'], $_POST['dbpass'] ) )
+	if (isset($_POST['dbuser'], $_POST['dbpass']))
 	{
-		if( $_POST['dbuser'] == $user_tiki && $_POST['dbpass'] == $pass_tiki )
+		if ( ($_POST['dbuser'] == $user_tiki) && ($_POST['dbpass'] == $pass_tiki) )
 		{
 			$_SESSION['accessible'] = true;
 		}
@@ -72,7 +72,7 @@ if ( file_exists( 'db/local.php' ) ) {
 	$_SESSION['accessible'] = true;
 }
 
-if ( installer_is_accessible() ) {
+if (installer_is_accessible()) {
 	// allowed to access installer, display it
 	$logged = true;
 	$admin_acc = 'y';
@@ -92,13 +92,12 @@ if ( installer_is_accessible() ) {
 								<p><input type="submit" value=" Validate and Continue "/></p>
 							</form>
 							<p>&nbsp;</p>';
-	createPage($title,$content);
+	createPage($title, $content);
 }
 
 function installer_is_accessible()
 {
-	if( !isset( $_SESSION['accessible'] ) )
-	{
+	if (!isset($_SESSION['accessible'])) {
 		return false;
 	} else {
 		return true;
