@@ -445,6 +445,12 @@ div.menuSection div.separator {}
 	/*      overflow: hidden;*/ /* This conflicts with CSS Menus */
 }
 
+span.moduleflip-vert {
+	display: block;
+	top: 20px !important;
+	right: 1% !important;
+}
+
 #col2 .moduleflip-vert .flipmodimage,
 .minimize-modules-right #col3 .moduleflip-vert .flipmodimage {
 	background-image: url(../../pics/icons/resultset_first.png) !important;
@@ -543,7 +549,7 @@ a.flip:hover,
 }
 
 a.flip img {
-	display: none;
+
 }
 
 .tellafriend {
@@ -2666,55 +2672,12 @@ table.default td {}
 	in theme stylesheets.  */
 
 /***** Admin *****/
-
-/* Admin boxes etc (.admbox) now defined in css/admin.css *
- * but colour info repeated here for convenience          */
-
-a.admbox {
-	border: 1px #666 solid;
-	background-color: #ccc;
-	background-repeat: no-repeat;
-	background-position: center;
-	color: #333;
-}
-
-a.admbox:hover,
-a.admbox:focus,
-a.admbox:active {
-	border: 1px solid #333;
-	background-color: #aaa;
-	color: #fff;
-}
-
-a.admbox span {}
-
-a.admbox.off {
-	border: 1px solid #a9a9a9;
-	color: #9f9f9f;
-}
-
-a.admbox.off:hover,
-a.admbox.off:focus,
-a.admbox.off:active {
-	border: 1px solid #a9a9a9;
-	color: #666;
-}
-
-a.admbox.off img {
-	background-image: url('../pics/overlay-disabled_item.png');
-	opacity: .5;
-}
-
-div.adminanchors a {}
-
-/* Other admin etc definitions not on admin.css */
-
-.highlight_word_0{
+.highlight_word_0 {
 	color: #ffff66;
 	background: #666;
 }
 
-.highlight_word_1{
+.highlight_word_1 {
 	color: #ff9999;
 	background: #666;
 }
@@ -2746,6 +2709,7 @@ div.adminanchors a {}
 	text-align: right;
 }
 
+/* admin boxes etc (.admbox) now defined in css/admin.css */
 td.mods_revision {
 	background: #b5cfb5;
 	color: #000;
@@ -2830,8 +2794,8 @@ div#cluetip-close {
 	background: #fff;
 	color: #900;
 }
-
- .cluetip-fullhtml {
+	
+.cluetip-fullhtml {
 	background: #fff;
 	color: #000;
 	margin: 0;
@@ -2864,7 +2828,7 @@ div#cluetip-close {
 }
 
 .webmail_list .button {
-	background-color: #fff;
+	background: #fff;
 	border: #666 solid 1px;
 	display: inline-block;
 	padding: 0 2px;
@@ -2881,7 +2845,7 @@ div#cluetip-close {
 }
 
 .webmail_list .webmail_taken {
-	border-color: #900;
+	border: #900;
 	color: #900;
 }
 
@@ -2912,9 +2876,24 @@ table.webmail_message_headers th {
 }
 
 @media print {
-	.tikihelp,.navbar, .tabstoggle, .tabs, #show-errors-button {display:none;}
+	.tikihelp, .navbar, .tabstoggle, .tabs, #show-errors-button {display:none;}
 }
 
+/* treeTable definitions - used in object-perms so far */
+
+table.treeTable {}
+
+table.treeTable .checkBoxHeader {
+	font-size: .8em;
+}
+
+table.treeTable .subHeader td {
+	font-weight: bold;
+}
+
+table.treeTable .parent td {
+	font-style: italic;
+}
 
 /***** End New (unsorted) *****/
 

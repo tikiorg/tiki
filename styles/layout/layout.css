@@ -404,10 +404,6 @@ a.flip:hover,
 	text-decoration: none;
 }
 
-a.flip img {
-	display: none;
-}
-
 .tellafriend {
 	text-align: right;
 }
