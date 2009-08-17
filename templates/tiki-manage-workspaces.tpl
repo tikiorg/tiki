@@ -196,9 +196,9 @@
    
    {tab name="{tr}Add Workspace{/tr}"}
 
+   <div class="cbox">	
    <h2>{tr}Add a new Workspace{/tr}</h2>
-   
-      <div class="cbox" align="left">	
+ 
 	  <form action="tiki-manage-workspaces.php" method="post">
 		<table class="normal">
 			<tr class="formcolor">
@@ -221,10 +221,9 @@
 				</td>
 			</tr>
 			<tr class="formcolor">
-				<td><input type="radio" name="groupSelect" id="new" value="new" /><label for="new">Create a new group:</label></td>
-				<td><input type="text" id="newGroup" name="newGroup" size="20" /></td>
-				<!--<td><label for="groupDescrition"> Description:</label></td>
-				<td><textarea name="groupDesc" id="groupDesc" cols="30" rows="1"></textarea></td>-->
+				<td><input type="radio" name="groupSelect" id="new" value="new" /><label for="new">Create a new group:</label><br /><br /><label for="groupDescrition">&nbsp;&nbsp;&nbsp;&nbsp;Description:</label></td>
+				<td><input type="text" id="newGroup" name="newGroup" size="20" /><br /><br /><textarea name="groupDesc" id="groupDesc" cols="30" rows="1"></textarea>
+</td>
 			</tr>
 			<tr class="formcolor">
 				<td><input type="radio" name="groupSelect" id="old" value="old" checked="checked"/><label for="old"> Select an old group:</label></td>
@@ -235,7 +234,7 @@
 					</select>
 				</td>
 			</tr>
-			<tr>
+			<tr class="formcolor">
 			    <td><label for="adminPerms">Select an admin permission for this group (optional): </label></td>
 			    <td>
 				<select name="adminPerms" id="adminPerms">
