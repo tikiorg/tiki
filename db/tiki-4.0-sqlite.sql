@@ -964,6 +964,10 @@ CREATE TABLE tiki_file_galleries (
 ) ENGINE=MyISAM ;
 
 
+INSERT INTO "," ("name","type","description","visible","user","public","parentId") VALUES ('File Galleries', 'system', '', 'y', 'admin', 'y', -1);
+
+
+
 DROP TABLE IF EXISTS 'tiki_files';
 
 CREATE TABLE tiki_files (
@@ -4593,8 +4597,6 @@ CREATE TABLE tiki_transitions (
   KEY transition_lookup (type, from)
 ) ENGINE=MyISAM;
 
-
-INSERT INTO "," ("name","type","description","visible","user","public","parentId") VALUES ('File Galleries', 'system', '', 'y', 'admin', 'y', -1);
 
 ;
 

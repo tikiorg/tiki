@@ -956,6 +956,10 @@ CREATE TABLE "tiki_file_galleries" (
 ) ;
 
 
+INSERT INTO "tiki_file_galleries" ("name","type","description","visible","user","public","parentId") VALUES ('File Galleries', 'system', '', 'y', 'admin', 'y', -1);
+
+
+
 DROP TABLE IF EXISTS "tiki_files";
 
 CREATE TABLE "tiki_files" (
@@ -4581,8 +4585,6 @@ CREATE TABLE "tiki_transitions" (
 );
 CREATE INDEX "tiki_transitions_transition_lookup" ON "tiki_transitions" ("type","from");
 
-
-INSERT INTO "tiki_file_galleries" ("name","type","description","visible","user","public","parentId") VALUES ('File Galleries', 'system', '', 'y', 'admin', 'y', -1);
 
 ;
 
