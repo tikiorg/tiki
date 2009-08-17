@@ -8,8 +8,7 @@ require_once ('tiki-setup.php');
 require_once ('lib/tikilib.php');
 require_once ('lib/blogs/bloglib.php');
 require_once ('lib/rss/rsslib.php');
-
-if ($prefs['rss_blog'] != 'y') {
+if ($prefs['rss_blogs'] != 'y') {
         $errmsg=tra("rss feed disabled");
         require_once ('tiki-rss_error.php');
 }
@@ -20,34 +19,8 @@ if (!isset($_REQUEST["blogId"])) {
 }
 
 $smarty->assign('individual', 'n');
+$tikilib->get_perm_object($_REQUEST["blogId"], 'blog');
 
-if ($userlib->object_has_one_permission($_REQUEST["blogId"], 'blog')) {
-	$smarty->assign('individual', 'y');
-
-	if ($tiki_p_admin != 'y') {
-		// Now get all the permissions that are set for this type of permissions 'image gallery'
-		$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'blogs');
-
-		foreach ($perms["data"] as $perm) {
-			$permName = $perm["permName"];
-
-			if ($userlib->object_has_permission($user, $_REQUEST["blogId"], 'blog', $permName)) {
-				$$permName = 'y';
-
-				$smarty->assign("$permName", 'y');
-			} else {
-				$$permName = 'n';
-
-				$smarty->assign("$permName", 'n');
-			}
-		}
-	}
-}
-
-if ($tiki_p_blog_admin == 'y') {
-	$tiki_p_read_blog = 'y';
-	$smarty->assign('tiki_p_read_blog', 'y');
-}
 
 if ($tiki_p_read_blog != 'y') {
 	$smarty->assign('errortype', 401);

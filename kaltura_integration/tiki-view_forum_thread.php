@@ -13,26 +13,14 @@
 $section = 'forums';
 require_once ('tiki-setup.php');
 
-if ($prefs['feature_categories'] == 'y') {
-	global $categlib;
-	if (!is_object($categlib)) {
-		include_once('lib/categories/categlib.php');
-	}
-}
-
 if ($prefs['feature_forums'] != 'y') {
     $smarty->assign('msg', tra("This feature is disabled").": feature_forums");
 
     $smarty->display("error.tpl");
     die;
 }
-
-if (!isset($_REQUEST['forumId'])) {
-    $smarty->assign('msg', tra("No forum indicated"));
-
-    $smarty->display("error.tpl");
-    die;
-}
+include_once ("lib/commentslib.php");
+$commentslib = new Comments($dbTiki);
 
 if (!isset($_REQUEST['comments_parentId'])) {
     $smarty->assign('msg', tra("No thread indicated"));
@@ -40,7 +28,18 @@ if (!isset($_REQUEST['comments_parentId'])) {
     $smarty->display("error.tpl");
     die;
 }
-
+if (empty($_REQUEST['forumId'])) {
+	$thread_info = $commentslib->get_comment($_REQUEST['comments_parentId']);
+	if (empty($thread_info['object']) || $thread_info['objectType'] != 'forum') {
+		$smarty->assign('msg', tra('Incorrect thread'));
+		$smarty->display('error.tpl');
+		die;
+	}
+	$_REQUEST['forumId'] = $thread_info['object'];
+}
+if ($prefs['feature_categories'] == 'y') {
+	global $categlib; include_once ('lib/categories/categlib.php');
+}
 if (!isset($_REQUEST['topics_offset'])) {
     $_REQUEST['topics_offset'] = 1;
 }
@@ -93,8 +92,6 @@ if( isset( $_REQUEST["comments_reply_threadId"] ) )
 }
 
 $smarty->assign('forumId', $_REQUEST["forumId"]);
-include_once ("lib/commentslib.php");
-$commentslib = new Comments($dbTiki);
 
 if ( isset($_REQUEST['lock']) ) {
 	check_ticket('view-forum');
@@ -110,45 +107,8 @@ $commentslib->mark_comment($user, $_REQUEST['forumId'], $_REQUEST["comments_pare
 
 $forum_info = $commentslib->get_forum($_REQUEST["forumId"]);
 
-$smarty->assign('individual', 'n');
+$tikilib->get_perm_object( $_REQUEST["forumId"], 'forum' );
 
-if ($userlib->object_has_one_permission($_REQUEST["forumId"], 'forum')) {
-    $smarty->assign('individual', 'y');
-
-    if ($tiki_p_admin != 'y') {
-	$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'forums');
-
-	foreach ($perms["data"] as $perm) {
-	    $permName = $perm["permName"];
-
-	    if ($userlib->object_has_permission($user, $_REQUEST["forumId"], 'forum', $permName)) {
-		$$permName = 'y';
-
-		$smarty->assign("$permName", 'y');
-	    } else {
-		$$permName = 'n';
-
-		$smarty->assign("$permName", 'n');
-	    }
-	}
-    }
-} elseif ($tiki_p_admin != 'y' && $prefs['feature_categories'] == 'y') {
-	$perms_array = $categlib->get_object_categories_perms($user, 'forum', $_REQUEST['forumId']);
-   	if ($perms_array) {
-   		$is_categorized = TRUE;
-    	foreach ($perms_array as $perm => $value) {
-    		$$perm = $value;
-    	}
-   	} else {
-   		$is_categorized = FALSE;
-   	}
-	if ($is_categorized && isset($tiki_p_view_categorized) && $tiki_p_view_categorized != 'y') {
-		$smarty->assign('errortype', 401);
-		$smarty->assign('msg',tra("Permission denied you cannot view this page"));
-	    $smarty->display("error.tpl");
-		die;
-	}
-}
 
 if ($user) {
     if ($forum_info["moderator"] == $user) {
@@ -408,11 +368,6 @@ if (isset($_SESSION['feedbacks'])) {
 $defaultRows = $prefs['default_rows_textarea_forumthread'];
 include_once("textareasize.php");
 
-if ($prefs['feature_forum_parse'] == "y") {
-	include_once ('lib/quicktags/quicktagslib.php');
-	$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_asc','','forums');
-	$smarty->assign_by_ref('quicktags', $quicktags["data"]);
-}
 $smarty->assign('forum_mode', 'y');
 
 if ($prefs['feature_mobile'] =='y' && isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile') {

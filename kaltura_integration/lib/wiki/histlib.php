@@ -219,12 +219,18 @@ class HistLib extends TikiLib {
 	function get_last_changes($days, $offset = 0, $limit = -1, $sort_mode = 'lastModif_desc', $findwhat = '') {
 	        global $user;
 
-		$where = "where (th.`version` != 0 or tp.`version` != 0) ";
 		$bindvars = array();
+		$categories = $this->get_jail();
+		if ($categories) {
+			$categjoin .= "inner join `tiki_objects` as tob on (tob.`itemId`= ta.`object` and tob.`type`= ?) inner join `tiki_category_objects` as tc on (tc.`catObjectId`=tob.`objectId` and tc.`categId` IN(" . implode(', ', array_fill(0, count($categories), '?')) . ")) ";
+			$bindvars = array_merge(array('wiki page'), $categories);
+		}
+
+		$where = "where true ";
 		if ($findwhat) {
 			$findstr='%' . $findwhat . '%';
 			$where.= " and ta.`object` like ? or ta.`user` like ? or ta.`comment` like ?";
-			$bindvars = array($findstr,$findstr,$findstr);
+			$bindvars = array_merge($bindvars, array($findstr,$findstr,$findstr));
 		}
 
 		if ($days) {
@@ -235,23 +241,20 @@ class HistLib extends TikiLib {
 			$bindvars[] = $toTime;
 		}
 
-		$query = "select ta.`action`, ta.`lastModif`, ta.`user`, ta.`ip`, ta.`object`,th.`comment`, th.`version` as version, tp.`version` as versionlast from `tiki_actionlog` ta 
-			left join `tiki_history` th on  ta.`object`=th.`pageName` and ta.`lastModif`=th.`lastModif` and ta.`objectType`='wiki page'
-			left join `tiki_pages` tp on ta.`object`=tp.`pageName` and ta.`lastModif`=tp.`lastModif` " . $where . " order by ta.".$this->convert_sortmode($sort_mode);
-		$query_cant = "select count(*) from `tiki_actionlog` ta 
-			left join `tiki_history` th on  ta.`object`=th.`pageName` and ta.`lastModif`=th.`lastModif` 
-			left join `tiki_pages` tp on ta.`object`=tp.`pageName` and ta.`lastModif`=tp.`lastModif` " . $where;
+		$query = "select distinct ta.`action`, ta.`lastModif`, ta.`user`, ta.`ip`, ta.`object`, thf.`comment`, thf.`version`, thf.`versionlast` from `tiki_actionlog` ta 
+			inner join (select NULL as version, `comment`, `pageName`, `lastModif`, '1' as versionlast from tiki_pages union select `version`, `comment`, `pageName`, `lastModif`, '0' as versionlast from `tiki_history`) as thf on ta.`object`=thf.`pageName` and ta.`lastModif`=thf.`lastModif` and ta.`objectType`='wiki page' " . $categjoin . $where . " order by ta.".$this->convertSortMode($sort_mode);
 
-		$result = $this->query($query,$bindvars,$limit,$offset);
+		$query_cant = "select count(distinct ta.`lastModif`, ta.`object`) from `tiki_actionlog` ta 
+			inner join (select `pageName`, `lastModif` from tiki_pages union select `pageName`, `lastModif` from `tiki_history`) as thf on ta.`object`=thf.`pageName` and ta.`lastModif`=thf.`lastModif` and ta.`objectType`='wiki page' " . $categjoin . $where;
+
+		$result = $this->fetchAll($query,$bindvars,$limit,$offset);
+		$result = Perms::filter( array( 'type' => 'wiki page' ), 'object', $result, array( 'object' => 'object' ), 'view' );
 		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 		$retval = array();
-		while ($res = $result->fetchRow()) {
-		   //WYSIWYCA hack: the $limit will not be respected
-		   if($this->user_has_perm_on_object($user,$res['object'],'wiki page','tiki_p_view')) {
+		foreach( $result as $res ) {
 			$res['pageName'] = $res['object'];
 			$ret[] = $res;
-		   }
 		}
 		$retval["data"] = $ret;
 		$retval["cant"] = $cant;

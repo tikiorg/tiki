@@ -187,11 +187,13 @@ include_once ('tiki-mytiki_shared.php');
 ask_ticket('messu-mailbox');
 
 if ($prefs['feature_ajax'] == "y") {
-function user_messages_ajax() {
-    global $ajaxlib, $xajax;
-    $ajaxlib->registerTemplate("messu-mailbox.tpl");
-    $ajaxlib->registerFunction("loadComponent");
-    $ajaxlib->processRequests();
+	function user_messages_ajax() {
+		global $ajaxlib, $xajax;
+		$ajaxlib->registerTemplate("messu-mailbox.tpl");
+		$ajaxlib->registerFunction("loadComponent");
+		$ajaxlib->processRequests();
+	}
+	user_messages_ajax();
 }
 user_messages_ajax();
 

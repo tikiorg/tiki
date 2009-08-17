@@ -1,4 +1,5 @@
 <?php
+// $Id$
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -48,7 +49,8 @@ class ShoutboxLib extends TikiLib {
       // if not in tag or on a space or doesn't contain a html entity we split all plain text strings longer than 25 chars using the empty span tag again
       $wrap_at = 25;
       $res["message"] = preg_replace('/(\s*)([^\;>\s]{'.$wrap_at.',})([^&]<|$)/e', "'\\1'.wordwrap('\\2', '".$wrap_at."', '<span></span>', 1).'\\3'", $res["message"]);
-      
+		// emoticons support
+		$res["message"] = $this->parse_smileys($res["message"]);
 			$ret[] = $res;
 		}
 		$retval = array();

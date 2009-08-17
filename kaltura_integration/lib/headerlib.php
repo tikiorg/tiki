@@ -14,6 +14,7 @@ class HeaderLib {
 	var $css;
 	var $rssfeeds;
 	var $metatags;
+	var $hasDoneOutput;
 	
 	function HeaderLib() {
 		$this->title = '';
@@ -24,6 +25,7 @@ class HeaderLib {
 		$this->css = array();
 		$this->rssfeeds = array();
 		$this->metatags = array();
+		$this->hasDoneOutput = false;
 	}
 
 	function set_title($string) {
@@ -40,6 +42,11 @@ class HeaderLib {
 		if (empty($this->js[$rank]) or !in_array($script,$this->js[$rank])) {
 			$this->js[$rank][] = $script;
 		}
+		if ($this->hasDoneOutput) {	// if called after smarty parse header.tpl return the script so the caller can do something with it
+			return $this->wrap_js($script);
+		} else {
+			return '';
+		}
 	}
 
 	/**
@@ -51,6 +58,11 @@ class HeaderLib {
 	function add_jq_onready($script,$rank=0) {
 		if (empty($this->jq_onready[$rank]) or !in_array($script,$this->jq_onready[$rank])) {
 			$this->jq_onready[$rank][] = $script;
+		}
+		if ($this->hasDoneOutput) {	// if called after smarty parse header.tpl return the script so the caller can do something with it
+			return $this->wrap_js("\$jq(\"document\").ready(function(){".$script."});\n");
+		} else {
+			return '';
 		}
 	}
 
@@ -181,7 +193,7 @@ class HeaderLib {
 			}
 			$back.= "\n";
 		}
-
+		$this->hasDoneOutput = true;
 		return $back;
 	}
 	
@@ -205,29 +217,26 @@ class HeaderLib {
 		}
 
 		if (count($this->js)) {
-			$back.= "<script type=\"text/javascript\">\n<!--//--><![CDATA[//><!--\n";
+			$b = '';
 			foreach ($this->js as $x=>$js) {
-				$back.= "// js $x \n";
+				$b.= "// js $x \n";
 				foreach ($js as $j) {
-					$back.= "$j\n";
+					$b.= "$j\n";
 				}
 			}
-			$back.= "//--><!]]>\n</script>\n\n";
+			$back.=  $this->wrap_js($b);
 		}
 		
-		if ($prefs['feature_jquery'] == 'y') {
-			if (count($this->jq_onready)) {
-				$back .= "<script type=\"text/javascript\">\n<!--//--><![CDATA[//><!--\n";
-				$back .= '$jq("document").ready(function(){'."\n";
-				foreach ($this->jq_onready as $x=>$js) {
-					$back.= "// jq_onready $x \n";
-					foreach ($js as $j) {
-						$back.= "$j\n";
-					}
+		if (count($this->jq_onready)) {
+			$b = '$jq("document").ready(function(){'."\n";
+			foreach ($this->jq_onready as $x=>$js) {
+				$b.= "// jq_onready $x \n";
+				foreach ($js as $j) {
+					$b.= "$j\n";
 				}
-				$back .= "});\n";
-				$back.= "//--><!]]>\n</script>\n";
 			}
+			$b .= "});\n";
+			$back .= $this->wrap_js($b);
 		}
 		
 		return $back;
@@ -247,12 +256,10 @@ class HeaderLib {
 				}
 			}
 		}
-		if ($prefs['feature_jquery'] == 'y') {
-			if (count($this->jq_onready)) {
-				foreach ($this->jq_onready as $x=>$js) {
-					foreach ($js as $j) {
-						$out[] = "$j\n";
-					}
+		if (count($this->jq_onready)) {
+			foreach ($this->jq_onready as $x=>$js) {
+				foreach ($js as $j) {
+					$out[] = "$j\n";
 				}
 			}
 		}
@@ -274,6 +281,13 @@ class HeaderLib {
 		return $out;
 	}
 
+	function wrap_js($inJs) {
+		return "<script type=\"text/javascript\">\n<!--//--><![CDATA[//><!--\n".$inJs."//--><!]]>\n</script>\n";
+	}
+	
+	function hasOutput() {
+		return $this->hasDoneOutput;
+	}
 }
 
 $headerlib = new HeaderLib();

@@ -948,7 +948,7 @@ class TrackerLib extends TikiLib {
 				}
 				break;
 			case 'A':
-				if (!empty($fopt['options_array'][0])) {
+				if (!empty($fopt['options_array'][0]) && !empty($fopt['value'])) {
 					$fopt['info'] = $this->get_item_attachment($fopt['value']);
 				}
 				break;
@@ -1072,6 +1072,9 @@ class TrackerLib extends TikiLib {
 			} else {
 				// -----------------------------
 				// save image on disk
+				if ( $ins_fields["data"][$i]["type"] == 'i' && empty($ins_fields["data"][$i]['value'])) {
+					continue;
+				}
 				if ( $ins_fields["data"][$i]["type"] == 'i' && isset($ins_fields["data"][$i]['value'])) {
 					$itId = $itemId ? $itemId : $new_itemId;
 					$old_file = $this->get_item_value($trackerId, $itemId, $ins_fields["data"][$i]['fieldId']);
@@ -2493,10 +2496,10 @@ class TrackerLib extends TikiLib {
 			'opt'=>true,
 			'help'=>tra('<dl>
 				<dt>Function: Allows alphanumeric text input in a multi-line field of arbitrary size.
-				<dt>Usage: <strong>quicktags,width,height,max,listmax,wordmax</strong>
+				<dt>Usage: <strong>toolbars,width,height,max,listmax,wordmax</strong>
 				<dt>Example: 0,80,5,30,200
 				<dt>Description:
-				<dd><strong>[quicktags]</strong> enables quicktags if a 1 is specified;
+				<dd><strong>[toolbars]</strong> enables toolbars if a 1 is specified;
 				<dd><strong>[width]</strong> is the width of the box, in chars;
 				<dd><strong>[height]</strong> is the number of visible lines in the box;
 				<dd><strong>[max]</strong> is the maximum number of characters that can be saved;
@@ -2769,6 +2772,12 @@ class TrackerLib extends TikiLib {
 				<dd><strong>[watchpending]</strong> if set to "p" will email the address every time the status of the item changes to pending;
 				<dd><strong>[watchclosed]</strong> if set to "c" will email the address every time the status of the item changes to closed;
 				<dd>multiple options must appear in the order specified, separated by commas.
+				</dl>'));
+		$type['L'] = array(
+			'label'=>tra('url'),
+			'opt'=>true,
+			'help'=>tra('<dl>
+				<dt>Function: Allows users to enter an url in a wiki syntax.
 				</dl>'));
 		$type['M'] = array(
 			'label'=>tra('multimedia'),

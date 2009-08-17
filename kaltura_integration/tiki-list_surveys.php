@@ -50,34 +50,14 @@ $smarty->assign('find', $find);
 
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 $channels = $srvlib->list_surveys($offset, $maxRecords, $sort_mode, $find);
-
+Perms::bulk( array( 'type' => 'survey' ), 'object', $channels['data'], 'surveyId' );
 $temp_max = count($channels["data"]);
 for ($i = 0; $i < $temp_max; $i++) {
-	if ($userlib->object_has_one_permission($channels["data"][$i]["surveyId"], 'survey')) {
-		$channels["data"][$i]["individual"] = 'y';
+	$survperms = Perms::get( array( 'type' => 'survey', 'object' => $channels['data'][$i]['surveyId'] ) );
+	$channels["data"][$i]["individual_tiki_p_take_survey"] = $survperms->take_survey ? 'y' : 'n';
+	$channels["data"][$i]["individual_tiki_p_view_survey_stats"] = $survperms->view_survey_stats ? 'y' : 'n';
+	$channels["data"][$i]["individual_tiki_p_admin_surveys"] = $survperms->admin_surveys ? 'y' : 'n';
 
-		if ($userlib->object_has_permission($user, $channels["data"][$i]["surveyId"], 'survey', 'tiki_p_take_survey')) {
-			$channels["data"][$i]["individual_tiki_p_take_survey"] = 'y';
-		} else {
-			$channels["data"][$i]["individual_tiki_p_take_survey"] = 'n';
-		}
-
-		if ($userlib->object_has_permission($user, $channels["data"][$i]["surveyId"], 'survey', 'tiki_p_view_survey_stats')) {
-			$channels["data"][$i]["individual_tiki_p_view_survey_stats"] = 'y';
-		} else {
-			$channels["data"][$i]["individual_tiki_p_view_survey_stats"] = 'n';
-		}
-
-		if ($tiki_p_admin
-			== 'y' || $userlib->object_has_permission($user, $channels["data"][$i]["surveyId"], 'survey', 'tiki_p_admin_surveys')) {
-			$channels["data"][$i]["individual_tiki_p_take_survey"] = 'y';
-
-			$channels["data"][$i]["individual_tiki_p_view_survey_stats"] = 'y';
-			$channels["data"][$i]["individual_tiki_p_admin_surveys"] = 'y';
-		}
-	} else {
-		$channels["data"][$i]["individual"] = 'n';
-	}
 
 	if ($tikilib->user_has_voted($user, 'survey' . $channels["data"][$i]["surveyId"])) {
 		$channels["data"][$i]["taken_survey"] = 'y';

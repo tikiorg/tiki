@@ -844,7 +844,6 @@ class HW_QuizQuestionYesNo extends HW_QuizQuestion {
 class Quiz {
 	var $id;
 	var $bDeleted;
-	var $nVersion;
 	var $timestamp;
 	var $nAuthor;
 	var $bOnline;
@@ -881,7 +880,6 @@ class Quiz {
 		global $userlib;
 		$this->dbFields = array("id",
 														"bDeleted",
-														"nVersion",
 														"timestamp",
 														"nAuthor",
 														"bOnline",
@@ -914,7 +912,6 @@ class Quiz {
 														);
 		$this->id = 0;
 		$this->bDeleted = 0;
-		$this->nVersion = 1;
 		$this->timestamp = $this->now;
 		$this->nAuthor = $userlib->get_user_id($user);
 		$this->sAuthor = $user;

@@ -25,6 +25,10 @@ if (!isset($_REQUEST["attId"])) {
 $info = $tikilib->get_wiki_attachment($_REQUEST["attId"]);
 $tikilib->add_wiki_attachment_hit($_REQUEST["attId"]);
 
+if ( empty($info['filetype']) || $info['filetype'] == 'application/x-octetstream' || $info['filetype'] == 'application/octet-stream' ) {
+	include_once('lib/mime/mimelib.php');
+	$info['filetype'] = tiki_get_mime($info['filename'], 'application/octet-stream');
+}
 $type = &$info["filetype"];
 $file = &$info["filename"];
 $content = &$info["data"];

@@ -66,6 +66,12 @@ function smarty_function_button($params, &$smarty) {
 	if (!empty($params['_class'])) {
 		$class = $params['_class'];
 	}
+	if (!empty($params['_id'])) {
+		$id = ' id="'.$params['_id'].'"';
+	} else {
+		$id = '';
+	}
+	
 	unset($params['_class']);
 
 	if (!$disabled) {
@@ -135,5 +141,5 @@ function smarty_function_button($params, &$smarty) {
 	}
 
 	$auto_query_args = $auto_query_args_orig;
-	return '<span class="button'.(!empty($class)?" $class":'').'">'.$html.'</span>';
+	return '<span class="button'.(!empty($class)?" $class":'').'"'.$id.'>'.$html.'</span>';
 }

@@ -138,4 +138,9 @@ $smarty->assign_by_ref('stats', $stats);
 ask_ticket('dir-browse');
 
 $smarty->assign('mid', 'tiki-directory_browse.tpl');
-$smarty->display("tiki.tpl");
+if (isset($_REQUEST['print'])) {
+	$smarty->display('tiki-print.tpl');
+	$smarty->assign('print', 'y');
+} else {
+	$smarty->display('tiki.tpl');
+}

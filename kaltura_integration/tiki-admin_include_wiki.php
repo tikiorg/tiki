@@ -70,21 +70,10 @@ if (isset($_REQUEST["rmvunusedpic"])) {
 	$adminlib->remove_unused_pictures();
 }
 
-if (isset($_REQUEST["setwikihome"])) {
-	check_ticket('admin-inc-wiki');
-	simple_set_value('wikiHomePage'); 
-}
-
 if (isset($_REQUEST["wikidiscussprefs"])) {
 	check_ticket('admin-inc-wiki');
 	simple_set_toggle('feature_wiki_discuss');
 	simple_set_value('wiki_forum_id'); 
-}
-
-if (isset($_REQUEST["setwikiregex"])) {
-	check_ticket('admin-inc-wiki');
-	simple_set_value('wiki_page_regex');
-	simple_set_value('wiki_pagename_strip');
 }
 
 if (isset($_REQUEST['wikilistprefs'])) {
@@ -125,75 +114,63 @@ if (isset($_REQUEST["wikifeatures"])) {
 		$backlinksChange = true;
 	}
 	$pref_toggles = array(
-	'feature_lastChanges',
-	'feature_wiki_comments',
-	'feature_wiki_pictures',
-	'feature_wiki_description',
-	'wiki_spellcheck',
-	'feature_warn_on_edit',
-	'feature_page_title',
-	'feature_wiki_pageid',
-	'feature_wikiwords',
-	'feature_wikiwords_usedash',
-	'feature_wiki_plurals',
-	'feature_dump',
-	'feature_wiki_export',
-	'feature_wiki_rankings',
-	'feature_wiki_ratings',
-	'feature_wiki_footnotes',
-	'feature_wiki_usrlock',
-	'feature_wiki_undo',
-	'feature_wiki_save_draft',
-	'feature_wiki_icache',
-	'feature_wiki_import_html',
-	'wiki_creator_admin',
-	'feature_wiki_templates',
-	'feature_wiki_multiprint',
-	// 'feature_wiki_pdf',
-	'feature_listPages',
-	'feature_listorphanPages',
-	'feature_listorphanStructure',
-	'feature_history',
-	'feature_source',
-	'feature_sandbox',
-	'feature_wiki_print',
-	'feature_wiki_replace',
-	'feature_backlinks',
-	'feature_likePages',
-	'wiki_uses_slides',
-	'feature_wiki_structure',
-	'feature_wiki_open_as_structure',
-	'feature_wiki_make_structure',
-	'feature_wiki_categorize_structure',
-	'feature_create_webhelp',
-	'page_n_times_in_a_structure',
-	'feature_wiki_userpage',
-	'feature_wiki_1like_redirection',
-	'feature_wiki_show_hide_before',
-	'feature_wiki_allowhtml',
-	'wiki_show_version',
-	'feature_wiki_import_page',
-	'wiki_edit_section',
-	'feature_actionlog_bytes',
-	'wiki_authors_style_by_page',
-	'wiki_edit_minor',
-	'feature_filegals_manager',
+		'feature_lastChanges',
+		'feature_wiki_comments',
+		'feature_wiki_pictures',
+		'wiki_spellcheck',
+		'feature_warn_on_edit',
+		'feature_wikiwords',
+		'feature_wikiwords_usedash',
+		'feature_wiki_plurals',
+		'feature_dump',
+		'feature_wiki_export',
+		'feature_wiki_rankings',
+		'feature_wiki_ratings',
+		'feature_wiki_footnotes',
+		'feature_wiki_usrlock',
+		'feature_wiki_undo',
+		'feature_wiki_save_draft',
+		'feature_wiki_import_html',
+		'wiki_creator_admin',
+		'feature_wiki_templates',
+		'feature_wiki_multiprint',
+		// 'feature_wiki_pdf',
+		'feature_listPages',
+		'feature_listorphanPages',
+		'feature_listorphanStructure',
+		'feature_history',
+		'feature_source',
+		'feature_sandbox',
+		'feature_wiki_print',
+		'feature_wiki_replace',
+		'feature_backlinks',
+		'feature_likePages',
+		'wiki_uses_slides',
+		'feature_wiki_structure',
+		'feature_wiki_open_as_structure',
+		'feature_wiki_make_structure',
+		'feature_wiki_categorize_structure',
+		'feature_create_webhelp',
+		'page_n_times_in_a_structure',
+		'feature_wiki_userpage',
+		'feature_wiki_1like_redirection',
+		'feature_wiki_show_hide_before',
+		'feature_wiki_allowhtml',
+		'feature_wiki_import_page',
+		'wiki_edit_section',
+		'feature_actionlog_bytes',
+		'wiki_edit_minor',
+		'feature_filegals_manager',
 	);
 	foreach ($pref_toggles as $toggle) {
 		simple_set_toggle($toggle);
 	}
 	
 	$pref_values = array(
-	'wiki_cache',
-	'warn_on_edit_time',
-	'feature_wiki_userpage_prefix',
-	'wiki_authors_style',
-	'feature_wiki_mandatory_category',
-	'wiki_page_navigation_bar',
-	'wiki_actions_bar',
-	'wiki_topline_position',
-	'wiki_edit_section_level',
-	'page_bar_position'
+		'warn_on_edit_time',
+		'feature_wiki_userpage_prefix',
+		'feature_wiki_mandatory_category',
+		'wiki_edit_section_level',
 	);
 	foreach ($pref_values as $value) {
 		simple_set_value($value);

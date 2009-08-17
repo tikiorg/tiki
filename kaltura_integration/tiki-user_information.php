@@ -184,12 +184,14 @@ if ( $prefs['user_tracker_infos'] ) {
 
 ask_ticket('user-information');
 if ($prefs['feature_ajax'] == "y") {
-function user_information_ajax() {
-    global $ajaxlib, $xajax;
-    $ajaxlib->registerTemplate("tiki-user_information.tpl");
-    $ajaxlib->registerTemplate("tiki-my_tiki.tpl");
-    $ajaxlib->registerFunction("loadComponent");
-    $ajaxlib->processRequests();
+	function user_information_ajax() {
+		global $ajaxlib, $xajax;
+		$ajaxlib->registerTemplate("tiki-user_information.tpl");
+		$ajaxlib->registerTemplate("tiki-my_tiki.tpl");
+		$ajaxlib->registerFunction("loadComponent");
+		$ajaxlib->processRequests();
+	}
+	user_information_ajax();
 }
 user_information_ajax();
 $smarty->assign("mootab",'y');

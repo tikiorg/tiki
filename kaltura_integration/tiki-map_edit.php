@@ -264,10 +264,7 @@ $smarty->assign('url_browse', $tikilib->httpPrefix(). $foo1);
 
 include_once("textareasize.php");
 
-include_once ('lib/quicktags/quicktagslib.php');
-$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_asc','','maps');
-$smarty->assign_by_ref('quicktags', $quicktags["data"]);
-$smarty->assign('quicktagscant', $quicktags["cant"]);
+$smarty->assign('toolbarscant', $toolbars["cant"]);
 
 ask_ticket('edit-map');
 

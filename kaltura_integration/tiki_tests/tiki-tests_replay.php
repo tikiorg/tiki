@@ -140,8 +140,8 @@ function verif_url($url, $use_tidy = TRUE) {
 		if (!$loaded) {
 			require_once('lib/htmlpurifier_tiki/HTMLPurifier.tiki.php');
 			$config = getHTMLPurifierTikiConfig();
-			$config->set('HTML', 'Doctype', 'XHTML 1.0 Transitional');
-			$config->set('HTML', 'TidyLevel', 'light');
+			$config->set('HTML.Doctype', 'XHTML 1.0 Transitional');
+			$config->set('HTML.TidyLevel', 'light');
 			$purifier = new HTMLPurifier($config);
 			$loaded = true;
 		}

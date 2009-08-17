@@ -21,7 +21,6 @@ ask_ticket('admin-inc-i18n');
     $pref_toggles = array(
 		"feature_multilingual",
 		'feature_translation',
-		'feature_machine_translation', 
 		'feature_urgent_translation',
 		"feature_multilingual_structures",
 		"feature_best_language",

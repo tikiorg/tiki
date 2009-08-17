@@ -147,7 +147,7 @@ class UserModulesLib extends TikiLib {
 	}
 	// Return the list of modules that can be assigned by the user
 	function get_user_assignable_modules($user) {
-		global $prefs;
+		global $prefs,$userlib;
 
 		$query = "select * from `tiki_modules`";
 		$result = $this->query($query,array());
@@ -158,11 +158,10 @@ class UserModulesLib extends TikiLib {
 			$mod_ok = 0;
 
 			// The module must not be assigned
-			$isas = $this->getOne(
-				"select count(*) from `tiki_user_assigned_modules` where `moduleId`=? and `user`=?",array($res['moduleId'],$user));
+			$isas = $this->getOne("select count(*) from `tiki_user_assigned_modules` where `moduleId`=? and `user`=?",array($res['moduleId'],$user));
 
 			if (!$isas) {
-				if ($res["groups"] && $prefs['modallgroups'] != 'y' && $user != 'admin') {
+				if ($res["groups"] && $prefs['modallgroups'] != 'y' && (!$userlib->user_has_permission($user,'tiki_p_admin'))) {
 					$groups = unserialize($res["groups"]);
 
 					$ins = array_intersect($groups, $user_groups);

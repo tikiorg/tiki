@@ -32,46 +32,8 @@ if (!isset($_REQUEST["quizId"])) {
 	$smarty->display("error.tpl");
 	die;
 }
+$tikilib->get_perm_object( $_REQUEST['quizId'], 'quiz' );
 
-$smarty->assign('individual', 'n');
-
-if ($userlib->object_has_one_permission($_REQUEST["quizId"], 'quiz')) {
-	$smarty->assign('individual', 'y');
-
-	if ($tiki_p_admin != 'y') {
-		$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'quizzes');
-
-		foreach ($perms["data"] as $perm) {
-			$permName = $perm["permName"];
-
-			if ($userlib->object_has_permission($user, $_REQUEST["quizId"], 'quiz', $permName)) {
-				$$permName = 'y';
-
-				$smarty->assign("$permName", 'y');
-			} else {
-				$$permName = 'n';
-
-				$smarty->assign("$permName", 'n');
-			}
-		}
-	}
-} elseif ($tiki_p_admin != 'y' && $prefs['feature_categories'] == 'y') {
-	$perms_array = $categlib->get_object_categories_perms($user, 'quiz', $_REQUEST['quizId']);
-   	if ($perms_array) {
-   		$is_categorized = TRUE;
-    	foreach ($perms_array as $perm => $value) {
-    		$$perm = $value;
-    	}
-   	} else {
-   		$is_categorized = FALSE;
-   	}
-	if ($is_categorized && isset($tiki_p_view_categorized) && $tiki_p_view_categorized != 'y') {
-		$smarty->assign('errortype', 401);
-		$smarty->assign('msg',tra("Permission denied you cannot view this page"));
-		$smarty->display("error.tpl");
-		die;
-	}
-}
 
 $smarty->assign('quizId', $_REQUEST["quizId"]);
 $quiz_info = $quizlib->get_quiz($_REQUEST["quizId"]);

@@ -16,7 +16,6 @@ $thirdpartyLibs = array(
 	'\./lib/pear.*',
 	'\./lib/Galaxia.*',
 	'\./lib/phplayers.*',
-	'\./lib/jgraphpad.*',
 	'\./lib/smarty.*',
 	'\./lib/adodb.*',
 	'\./lib/debug.*',

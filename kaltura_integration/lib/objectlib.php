@@ -51,6 +51,19 @@ class ObjectLib extends TikiLib {
 	return $this->getOne($query, array($type, $itemId));
     }
 
+	// Returns an array containing the object ids of objects of the same type. Each entry uses the item id as key and the object id as key. Items with no object id are ignored.
+	function get_object_ids($type, $itemIds) {
+	$query = "select `objectId`, `itemId` from `tiki_objects` where `type`=? and `itemId` IN (".implode(',', array_fill(0,count($itemIds),'?')).")";
+
+	$result = $this->query($query, array_merge(array($type), $itemIds));
+	$objectIds = array();
+	
+	while ($res = $result->fetchRow()) {
+		$objectIds[$res["itemId"]] = $res["objectId"];
+	}
+	return $objectIds;
+    }
+
 	function get_needed_perm($objectType, $action) {
 		switch ($objectType) {
 		case 'wiki page': case 'wiki':

@@ -11,6 +11,7 @@ class TikiPhplayers extends TikiLib {
 				$kids[] = $cat;
 			}
 		}
+
 		if (count($kids)) {
 			$total = 0;
 			foreach ($kids as $k) {
@@ -31,10 +32,23 @@ class TikiPhplayers extends TikiLib {
 				$back .= $subTree;
 			}
 			return array($back, $total);
+		} elseif( $categId == 0 ) {
+			$roots = $categlib->findRoots( $categories );
+			$out = '';
+			$count = 0;
+
+			foreach( $roots as $id ) {
+				list($subTree, $subCount) = $this->mkCatEntry($id,'','', $categories, $urlEnd, $tpl);
+				$out .= $subTree;
+				$count += $subCount;
+			}
+
+			return array( $out, $count );
 		} else {
 			return array('', 0);
 		}
 	}
+
 	function mkMenuEntry($idMenu, &$curOption, $sectionLevel='', $translate='y', &$use_items_icons = null) {
 		global $tikilib, $wikilib, $mylevel, $prefs;
 		global $menulib; include_once('lib/menubuilder/menulib.php');

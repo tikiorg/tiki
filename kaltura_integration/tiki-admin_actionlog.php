@@ -687,8 +687,7 @@ if (isset($_REQUEST['graph'])) {
 	$galleries = $imagegallib->list_visible_galleries(0, -1, 'name_asc', $user, '');
 	$smarty->assign('galleries', $galleries['data']);
 }
-
-$cookietab = 1;
+if (!isset($cookietab)) { $cookietab = '1'; }
 setcookie('tab',$cookietab);
 $smarty->assign('cookietab',$cookietab);
 
@@ -698,12 +697,14 @@ if (isset($_REQUEST['unit']))
 	$smarty->assign('unit', $_REQUEST['unit']);
 
 if ($prefs['feature_ajax'] == "y") {
-function user_actionlog_ajax() {
-    global $ajaxlib, $xajax;
-    $ajaxlib->registerTemplate("tiki-admin_actionlog.tpl");
-    $ajaxlib->registerTemplate("tiki-my_tiki.tpl");
-    $ajaxlib->registerFunction("loadComponent");
-    $ajaxlib->processRequests();
+	function user_actionlog_ajax() {
+		global $ajaxlib, $xajax;
+		$ajaxlib->registerTemplate("tiki-admin_actionlog.tpl");
+		$ajaxlib->registerTemplate("tiki-my_tiki.tpl");
+		$ajaxlib->registerFunction("loadComponent");
+		$ajaxlib->processRequests();
+	}
+	user_actionlog_ajax();
 }
 user_actionlog_ajax();
 $smarty->assign("mootab",'y');

@@ -215,48 +215,18 @@ class BlogLib extends TikiLib {
 
 		$query = "select * from `tiki_blog_posts` $mid order by ".$this->convert_sortmode($sort_mode);
 		$query_cant = "select count(*) from `tiki_blog_posts` $mid";
-		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$result = $this->fetchAll($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
-		global $prefs, $userlib, $user, $tiki_p_admin;
-		while ($res = $result->fetchRow()) {
-		    $add = TRUE;
-	
-		    if ($tiki_p_admin != 'y' && $userlib->object_has_one_permission($res['blogId'], 'blog')) {
-		    // quiz permissions override category permissions
-				if (!$userlib->object_has_permission($user, $res['blogId'], 'blog', 'tiki_p_read_blog'))
-				{
-				    $add = FALSE;
-				}
-		    } elseif ($tiki_p_admin != 'y' && $prefs['feature_categories'] == 'y') {
-		    	// no quiz permissions so now we check category permissions
-		    	global $categlib;
-				if (!is_object($categlib)) {
-					include_once('lib/categories/categlib.php');
-				}
-		    	unset($tiki_p_view_categorized); // unset this var in case it was set previously
-		    	$perms_array = $categlib->get_object_categories_perms($user, 'blog', $res['blogId']);
-		    	if ($perms_array) {
-		    		$is_categorized = TRUE;
-			    	foreach ($perms_array as $perm => $value) {
-			    		$$perm = $value;
-			    	}
-		    	} else {
-		    		$is_categorized = FALSE;
-		    	}
-	
-		    	if ($is_categorized && isset($tiki_p_view_categorized) && $tiki_p_view_categorized != 'y') {
-		    		$add = FALSE;
-		    	}
-		    }
+		$result = Perms::filter( array( 'type' => 'blog' ), 'object', $result, array( 'object' => 'blogId' ), 'read_blog' );
 
-			if ($add) {
-				$query2 = "select `title` from `tiki_blogs` where `blogId`=?";
-				$title = $this->getOne($query2,array($res["blogId"]));
-				$res["blogtitle"] = $title;
-			    $ret[] = $res;
-			}
+		global $prefs;
+		foreach( $result as $res ) {
+			$query2 = "select `title` from `tiki_blogs` where `blogId`=?";
+			$title = $this->getOne($query2,array($res["blogId"]));
+			$res["blogtitle"] = $title;
+			$ret[] = $res;
 		}
 
 		$retval = array();

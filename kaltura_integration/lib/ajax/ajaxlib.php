@@ -219,9 +219,7 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
 			$js_files = array_merge($js_files, $js);
 		}
 
-		if (preg_match('/overlib\(/Umis', $content)) {
-			array_unshift($js_files, 'lib/overlib.js');	// just for now... (it stops the JS error on rollover but the tooltip doesn't appear - TODO replace with JQuery tips)
-		}
+		array_push($js_files, 'lib/jquery_tiki/tiki-jquery.js');
 
 		// now remove all the js from the source
 		$content = preg_replace('/\s*<script.*javascript.*>.*\/script>\s*/Umis', '', $content);
@@ -265,7 +263,7 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
 
 	$objResponse->script("hide('ajaxLoading');");
 	if ($prefs['feature_shadowbox'] == 'y') {
-		$objResponse->script("Shadowbox.init({ skipSetup: true }); Shadowbox.setup();");
+		//$objResponse->script("Shadowbox.init({ skipSetup: true }); Shadowbox.setup();");
 	}
 	$objResponse->script("var xajax.config.requestURI =\"".$ajaxlib->sRequestURI."\";\n");
 	if (sizeof($js_script)) {

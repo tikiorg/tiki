@@ -497,11 +497,6 @@ if ($prefs['feature_freetags'] == 'y') {
 $defaultRows = $prefs['default_rows_textarea_forum'];
 include_once("textareasize.php");
 
-if ($prefs['feature_forum_parse'] == "y") {
-	include_once ('lib/quicktags/quicktagslib.php');
-	$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_asc','', 'forums');
-	$smarty->assign_by_ref('quicktags', $quicktags["data"]);
-}
 
 if ($prefs['feature_mobile'] =='y' && isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile') {
 	include_once ("lib/hawhaw/hawtikilib.php");

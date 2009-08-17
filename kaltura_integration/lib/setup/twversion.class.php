@@ -161,6 +161,7 @@ class TWVersion {
 	function newVersionAvailable() {
 		if (count($this->releases) == 0) {
 			$upgrade = 0;
+			$major = 0;
 		} else {
 			// Start at the VIDX index, and go through the rest of the
 			// ->releases.  Ignore releases that have a bigger a or b

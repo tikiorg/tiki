@@ -106,6 +106,90 @@ $user_tiki = NULL;
 $pass_tiki = NULL;
 $dbs_tiki = NULL;
 
+class TikiDb_LegacyErrorHandler implements TikiDb_ErrorHandler
+{
+	function handle( TikiDb $db, $query, $values, $result ) // {{{
+	{
+		global $smarty, $prefs, $ajaxlib;
+
+		$msg = $db->getErrorMessage();
+		$q=$query;
+		foreach($values as $v) {
+			if (is_null($v)) $v='NULL';
+			else $v="'".addslashes($v)."'";
+			$pos=strpos($q, '?');
+			if ($pos !== FALSE)
+				$q=substr($q, 0, $pos)."$v".substr($q, $pos+1);
+		}
+
+		if (function_exists('xdebug_get_function_stack')) {
+			function mydumpstack($stack) {
+				$o='';
+				foreach($stack as $line) {
+					$o.='* '.$line['file']." : ".$line['line']." -> ".$line['function']."(".var_export($line['params'], true).")<br />";
+				}
+				return $o;
+			}
+			$stacktrace = mydumpstack(xdebug_get_function_stack());
+		} else {
+			$stacktrace = false;
+		}
+
+
+		if ( ! isset($_SESSION['fatal_error']) ) {
+			// Do not show the error if an error has already occured during the same script execution (error.tpl already called), because tiki should have died before another error.
+			// This happens when error.tpl is called by tiki.sql... and tiki.sql is also called again in error.tpl, entering in an infinite loop.
+
+			require_once 'installer/installlib.php';
+			$installer = new Installer;
+
+			require_once('tiki-setup.php');
+			if ( ! $smarty ) {
+				require_once 'smarty_setup.php';
+			}
+
+			$smarty->assign( 'msg', $msg );
+			$smarty->assign( 'base_query', $query );
+			$smarty->assign( 'values', $values );
+			$smarty->assign( 'built_query', $q );
+			$smarty->assign( 'stacktrace', $stacktrace );
+			$smarty->assign( 'requires_update', $installer->requiresUpdate() );
+
+			if ($prefs['feature_ajax'] == 'y') {
+				global $ajaxlib;
+				include_once('lib/ajax/xajax/xajax_core/xajaxAIO.inc.php');
+				if ($ajaxlib && $ajaxlib->canProcessRequest()) {
+					// this was a xajax request -> return a xajax answer
+					$page = $smarty->fetch( 'database-connection-error.tpl' );
+					$objResponse = new xajaxResponse();
+					$page=addslashes(str_replace(array("\n", "\r"), array(' ', ' '), $page));
+					$objResponse->script("bugwin=window.open('', 'tikierror', 'width=760,height=500,scrollbars=1,resizable=1');".
+							"bugwin.document.write('$page');");
+					echo $objResponse->getOutput();
+					die();
+				}
+			}
+
+			$smarty->display('database-connection-error.tpl');
+			unset($_SESSION['fatal_error']);
+			die;
+		}
+	} // }}}
+}
+
+global $db_table_prefix, $common_users_table_prefix;
+
+$db = TikiDb::get();
+$db->setServerType( $db_tiki );
+$db->setErrorHandler( new TikiDb_LegacyErrorHandler );
+
+if( isset( $db_table_prefix ) )
+	$db->setTablePrefix( $db_table_prefix );
+
+if( isset( $common_users_table_prefix ) )
+	$db->setUsersTablePrefix( $common_users_table_prefix );
+
+
 unset ($host_map);
 unset ($db_tiki);
 unset ($host_tiki);

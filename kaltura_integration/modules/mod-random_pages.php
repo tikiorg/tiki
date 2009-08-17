@@ -6,8 +6,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 global $tikilib, $smarty;
-$ranking = $tikilib->get_random_pages($module_rows);
+$pages=$tikilib->list_pages(0, $module_rows, "random", '', '', true, true);
 
-$smarty->assign('modRandomPages', $ranking);
-
-
+$smarty->assign('modRandomPages', $pages["data"]);

@@ -26,125 +26,120 @@ if (isset($_REQUEST["looksetup"])) {
 		simple_set_value("site_style_option", "style_option");
 		simple_set_value("site_style_option", "site_style_option");
 	}
-
-    $pref_toggles = array(
-	"feature_bot_bar",
-	"feature_bot_bar_debug",
-	"feature_bot_bar_icons",
-	"feature_bot_bar_rss",
-	'feature_bot_bar_power_by_tw',
-	"feature_edit_templates",
-	"feature_editcss",
-	"feature_tabs",
-	"feature_theme_control",
-	"feature_top_bar",
-	"feature_view_tpl",
-	"layout_section",
-	"feature_sitemycode",
-	"feature_breadcrumbs",
-	"feature_siteloclabel",
-	"feature_sitelogo",
-	"feature_sitenav",
-	"feature_sitesearch",
-	"feature_site_login",
-	"feature_sitemenu",
-	"feature_topbar_version",
-	"feature_topbar_debug",
-	"sitemycode_publish",
-	"feature_bot_logo",
-	'feature_menusfolderstyle',
-	'direct_pagination',
-	"nextprev_pagination",
-	"pagination_firstlast",
-	"pagination_hide_if_one_page",
-	"pagination_icons",
-	"pagination_fastmove_links",
-	"menus_items_icons",
-	"use_context_menu_icon",
-	"use_context_menu_text",
-	"feature_site_report",
-	"feature_site_send_link",
-	"change_theme",
-	"feature_jquery_ui",
-	"feature_jquery_tooltips",
-	'feature_jquery_autocomplete',
-	'feature_jquery_superfish',
-	'feature_jquery_reflection',
-    'feature_jquery_sheet',
-	'feature_jquery_tablesorter',
-	'feature_jquery_cycle',
-	'feature_iepngfix',
-	'feature_layoutshadows',
-	'useGroupTheme'
-    );
-
-    foreach ($pref_toggles as $toggle) {
-        simple_set_toggle ($toggle);
-    }
-
-    $pref_simple_values = array(
-	"maxRecords",
-	"sitelogo_src",
-	"sitelogo_bgcolor",
-	"sitelogo_bgstyle",
-	"sitelogo_title",
-	"sitelogo_alt",
-	"sitetitle",
-	"sitesubtitle",
-	"sitemycode",
-	"site_favicon",
-	"site_favicon_type",
-	"feature_topbar_id_menu",
-	"feature_topbar_custom_code",
-	"sitenav",
-	"bot_logo_code",
-	"direct_pagination_max_middle_links",
-	"direct_pagination_max_ending_links",
-	'feature_site_report_email',
-	'feature_endbody_code',
-	'users_prefs_theme',
-	'jquery_effect',
-    'jquery_effect_direction',
-    'jquery_effect_speed',
-    'jquery_effect_tabs',
-    'jquery_effect_tabs_direction',
-    'jquery_effect_tabs_speed',
-	'available_styles',
-	'iepngfix_selectors',
-	'iepngfix_elements',
-	'main_shadow_start',
-	'main_shadow_end',
-	'header_shadow_start',
-	'header_shadow_end',
-	'middle_shadow_start',
-	'middle_shadow_end',
-	'center_shadow_start',
-	'center_shadow_end',
-	'footer_shadow_start',
-	'footer_shadow_end',
-	'box_shadow_start',
-	'box_shadow_end',
-    );
-
-    foreach ($pref_simple_values as $svitem) {
-        simple_set_value ($svitem);
-    }
-
-    $pref_byref_values = array(
-	"feature_left_column",
-	"feature_right_column",
-	"slide_style",
-	"feature_siteloc",
-        "feature_sitetitle",
-        "feature_sitedesc",
-        "sitelogo_align",
-    );
-
-    foreach ($pref_byref_values as $britem) {
-        byref_set_value ($britem);
-    }
-    
-} else {	// just changed theme menu, so refill options
+	$pref_toggles = array(
+		"feature_bot_bar",
+		"feature_bot_bar_debug",
+		"feature_bot_bar_icons",
+		"feature_bot_bar_rss",
+		'feature_bot_bar_power_by_tw',
+		"feature_edit_templates",
+		"feature_editcss",
+		"feature_tabs",
+		"feature_theme_control",
+		"feature_top_bar",
+		"feature_view_tpl",
+		"layout_section",
+		"feature_sitemycode",
+		"feature_breadcrumbs",
+		"feature_siteloclabel",
+		"feature_sitelogo",
+		"feature_sitenav",
+		"feature_sitesearch",
+		"feature_site_login",
+		"feature_sitemenu",
+		"feature_topbar_version",
+		"feature_topbar_debug",
+		"sitemycode_publish",
+		"feature_bot_logo",
+		'feature_menusfolderstyle',
+		'direct_pagination',
+		"nextprev_pagination",
+		"pagination_firstlast",
+		"pagination_hide_if_one_page",
+		"pagination_icons",
+		"pagination_fastmove_links",
+		"menus_items_icons",
+		"use_context_menu_icon",
+		"use_context_menu_text",
+		"feature_site_report",
+		"feature_site_send_link",
+		"change_theme",
+		"feature_jquery_ui",
+		"feature_jquery_tooltips",
+		'feature_jquery_autocomplete',
+		'feature_jquery_superfish',
+		'feature_jquery_reflection',
+		'feature_jquery_sheet',
+		'feature_jquery_tablesorter',
+		'feature_jquery_cycle',
+		'feature_iepngfix',
+		'feature_layoutshadows',
+		'useGroupTheme'
+	);
+	foreach($pref_toggles as $toggle) {
+		simple_set_toggle($toggle);
+	}
+	$pref_simple_values = array(
+		"maxRecords",
+		"sitelogo_src",
+		"sitelogo_bgcolor",
+		"sitelogo_bgstyle",
+		"sitelogo_title",
+		"sitelogo_alt",
+		"sitetitle",
+		"sitesubtitle",
+		"sitemycode",
+		"site_favicon",
+		"site_favicon_type",
+		"feature_topbar_id_menu",
+		"feature_topbar_custom_code",
+		"sitenav",
+		"bot_logo_code",
+		"direct_pagination_max_middle_links",
+		"direct_pagination_max_ending_links",
+		'feature_site_report_email',
+		'feature_endbody_code',
+		'users_prefs_theme',
+		'jquery_effect',
+		'jquery_effect_direction',
+		'jquery_effect_speed',
+		'jquery_effect_tabs',
+		'jquery_effect_tabs_direction',
+		'jquery_effect_tabs_speed',
+		'feature_jquery_ui_theme',
+		'available_styles',
+		'iepngfix_selectors',
+		'iepngfix_elements',
+		'main_shadow_start',
+		'main_shadow_end',
+		'header_shadow_start',
+		'header_shadow_end',
+		'middle_shadow_start',
+		'middle_shadow_end',
+		'center_shadow_start',
+		'center_shadow_end',
+		'footer_shadow_start',
+		'footer_shadow_end',
+		'box_shadow_start',
+		'box_shadow_end',
+		'feature_custom_html_head_content',
+	);
+	foreach($pref_simple_values as $svitem) {
+		simple_set_value($svitem);
+	}
+	$pref_byref_values = array(
+		"feature_left_column",
+		"feature_right_column",
+		"slide_style",
+		"feature_siteloc",
+		"feature_sitetitle",
+		"feature_sitedesc",
+		"sitelogo_align",
+	);
+	foreach($pref_byref_values as $britem) {
+		byref_set_value($britem);
+	}
+} else { // just changed theme menu, so refill options
 	if (isset($_REQUEST["site_style"]) && $_REQUEST["site_style"] != '') {
 		$a_style = $_REQUEST["site_style"];
 	}
@@ -197,11 +192,13 @@ if ($prefs['feature_jquery'] == 'y') {
 	}
 	$js = substr($js, 0, strlen($js)-1);
 	$js .= '};';
-	$headerlib->add_js($js);
 	
 	// JS to handle theme/option changes client-side
+	// the var (style_options) has to be declared in the same block for AJAX call scope 
 	$none = tr('None');
 	$headerlib->add_js(<<<JS
+$js
+
 \$jq(document).ready( function() {
 	// pick up theme drop-down change
 	\$jq('#general-theme').change( function() {

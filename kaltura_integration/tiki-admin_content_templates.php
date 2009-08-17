@@ -220,9 +220,6 @@ include 'tiki-parsemode_setup.php';
 
 $smarty->assign_by_ref('channels', $channels["data"]);
 include_once("textareasize.php");
-include_once ('lib/quicktags/quicktagslib.php');
-$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_asc','','wiki');
-$smarty->assign_by_ref('quicktags', $quicktags["data"]);
 
 ask_ticket('admin-content-templates');
 

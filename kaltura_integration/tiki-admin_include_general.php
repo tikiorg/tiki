@@ -30,25 +30,23 @@ if (isset($_REQUEST["new_prefs"])) {
 
 
 	check_ticket('admin-inc-general');
-    $pref_toggles = array(
-        "anonCanEdit",
-        "cacheimages",
-        "cachepages",
-        "count_admin_pvs",
-        "feature_obzip",
-        "site_closed",
-        "useGroupHome",
-        "limitedGoGroupHome",
-        "useUrlIndex",
-        "use_load_threshold",
-        "use_proxy",
-        "session_db",
-        "contact_anon",
-        "feature_help",
-        "feature_version_checks",
-        "error_reporting_adminonly",
-        "smarty_notice_reporting",
-        "user_show_realnames",
+	$pref_toggles = array(
+		"anonCanEdit",
+		"cacheimages",
+		"cachepages",
+		"count_admin_pvs",
+		"feature_obzip",
+		"site_closed",
+		"useGroupHome",
+		"limitedGoGroupHome",
+		"useUrlIndex",
+		"use_load_threshold",
+		"use_proxy",
+		"session_db",
+		"contact_anon",
+		"feature_help",
+		"feature_version_checks",
+		"user_show_realnames",
 		"log_sql",
 		"log_mail",
 		'log_tpl',
@@ -58,82 +56,70 @@ if (isset($_REQUEST["new_prefs"])) {
 		"feature_ticketlib",
 		"feature_ticketlib2",
 		"feature_display_my_to_others",
-    );
-
-    foreach ($pref_toggles as $toggle) {
-        simple_set_toggle ($toggle);
-    }
-
-    $pref_simple_values = array(
-        "browsertitle",
-        "site_crumb_seper",
-        "site_nav_seper",
-        "contact_user",
-        "sender_email",
-        "system_os",
-        "error_reporting_level",
-        "default_mail_charset",
-        "mail_crlf",
-        "urlIndex",
-        "proxy_host",
-        "proxy_port",
-        "ip_can_be_checked",
-        "session_lifetime",
-        "load_threshold",
-        "site_busy_msg",
-        "site_closed_msg",
-        "helpurl",
-        "tiki_version_check_frequency",
-        'log_sql_perf_min',
-        "permission_denied_url",
-        "highlight_group",
-        "user_tracker_infos",
-        'zend_mail_handler',
-        'zend_mail_smtp_server',
-        'zend_mail_smtp_auth',
-        'zend_mail_smtp_user',
-        'zend_mail_smtp_pass',
-        'zend_mail_smtp_port',
-        'zend_mail_smtp_security',
-    );
-
-    foreach ($pref_simple_values as $svitem) {
-        simple_set_value ($svitem);
-    }
-
-    $pref_byref_values = array(
-        "display_field_order",
-        "display_timezone",
-        "server_timezone",
-        "long_date_format",
-        "long_time_format",
-        "short_date_format",
-        "short_time_format",
-        "tikiIndex",
-	"users_prefs_display_timezone"
-    );
-
-    foreach ($pref_byref_values as $britem) {
-        byref_set_value ($britem);
-    }
-
-   $tikilib->set_preference ("display_timezone",$tikilib->get_preference ("server_timezone"));
-
-    // Special handling for tied fields: tikiIndex, urlIndex and useUrlIndex
-    if (!empty($_REQUEST["urlIndex"]) && isset($_REQUEST["useUrlIndex"]) && $_REQUEST["useUrlIndex"] == 'on') {
-        $_REQUEST["tikiIndex"] = $_REQUEST["urlIndex"];
-        $tikilib->set_preference("tikiIndex", $_REQUEST["tikiIndex"]);
-    }
-
-    // Special handling for tmpDir, which has a default value
-    if (isset($_REQUEST["tmpDir"])) {
-        $tikilib->set_preference("tmpDir", $_REQUEST["tmpDir"]);
-    } else {
-        $tdir = TikiSetup::tempdir();
-        $tikilib->set_preference("tmpDir", $tdir);
-    }
-    
-    $smarty->assign('pagetop_msg', "");
+	);
+	foreach($pref_toggles as $toggle) {
+		simple_set_toggle($toggle);
+	}
+	$pref_simple_values = array(
+		"site_crumb_seper",
+		"site_nav_seper",
+		"contact_user",
+		"system_os",
+		"default_mail_charset",
+		"mail_crlf",
+		"urlIndex",
+		"proxy_host",
+		"proxy_port",
+		"ip_can_be_checked",
+		"session_lifetime",
+		"load_threshold",
+		"site_busy_msg",
+		"site_closed_msg",
+		"helpurl",
+		"tiki_version_check_frequency",
+		'log_sql_perf_min',
+		"permission_denied_url",
+		"highlight_group",
+		"user_tracker_infos",
+		'zend_mail_handler',
+		'zend_mail_smtp_server',
+		'zend_mail_smtp_auth',
+		'zend_mail_smtp_user',
+		'zend_mail_smtp_pass',
+		'zend_mail_smtp_port',
+		'zend_mail_smtp_security',
+	);
+	foreach($pref_simple_values as $svitem) {
+		simple_set_value($svitem);
+	}
+	$pref_byref_values = array(
+		"display_field_order",
+		"display_timezone",
+		"server_timezone",
+		"long_date_format",
+		"long_time_format",
+		"short_date_format",
+		"short_time_format",
+		"tikiIndex",
+		"users_prefs_display_timezone"
+	);
+	foreach($pref_byref_values as $britem) {
+		byref_set_value($britem);
+	}
+	$tikilib->set_preference("display_timezone", $tikilib->get_preference("server_timezone"));
+	// Special handling for tied fields: tikiIndex, urlIndex and useUrlIndex
+	if (!empty($_REQUEST["urlIndex"]) && isset($_REQUEST["useUrlIndex"]) && $_REQUEST["useUrlIndex"] == 'on') {
+		$_REQUEST["tikiIndex"] = $_REQUEST["urlIndex"];
+		$tikilib->set_preference("tikiIndex", $_REQUEST["tikiIndex"]);
+	}
+	// Special handling for tmpDir, which has a default value
+	if (isset($_REQUEST["tmpDir"])) {
+		$tikilib->set_preference("tmpDir", $_REQUEST["tmpDir"]);
+	} else {
+		$tdir = TikiSetup::tempdir();
+		$tikilib->set_preference("tmpDir", $tdir);
+	}
+	$smarty->assign('pagetop_msg', "");
 }
 // Handle Password Change Request
 if (isset($_REQUEST["newadminpass"])) {

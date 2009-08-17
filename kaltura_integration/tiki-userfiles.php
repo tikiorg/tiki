@@ -169,12 +169,14 @@ include_once ('tiki-mytiki_shared.php');
 
 ask_ticket('user-files');
 if ($prefs['feature_ajax'] == "y") {
-function user_files_ajax() {
-    global $ajaxlib, $xajax;
-    $ajaxlib->registerTemplate("tiki-userfiles.tpl");
-    $ajaxlib->registerTemplate("tiki-my_tiki.tpl");
-    $ajaxlib->registerFunction("loadComponent");
-    $ajaxlib->processRequests();
+	function user_files_ajax() {
+		global $ajaxlib, $xajax;
+		$ajaxlib->registerTemplate("tiki-userfiles.tpl");
+		$ajaxlib->registerTemplate("tiki-my_tiki.tpl");
+		$ajaxlib->registerFunction("loadComponent");
+		$ajaxlib->processRequests();
+	}
+	user_files_ajax();
 }
 user_files_ajax();
 $smarty->assign("mootab",'y');

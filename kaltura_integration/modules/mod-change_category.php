@@ -7,7 +7,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
-global $prefs, $user, $tikilib, $smarty;
+global $prefs, $user, $tikilib, $smarty, $userlib;
 global $logslib; require_once('lib/logs/logslib.php');
 global $categlib; require_once('lib/categories/categlib.php');
   
@@ -37,16 +37,6 @@ if ($prefs['feature_categories'] == 'y' && (isset($_REQUEST['page']) || isset($_
   
   $categs = $categlib->list_categs($id);
 	global $tiki_p_admin;
-
-	if ($tiki_p_admin != 'y') {
-		$ctg = array();
-		foreach ($categs as $i=>$cat) {
-			if (!$userlib->object_has_one_permission($cat['categId'], 'category') or $userlib->object_has_permission($user, $cat['categId'], 'category', 'tiki_p_view_categories')) {
-				$ctg[] = $cat;
-			}
-		}
-		$categs = $ctg;
-	}
 
   if (!empty($module_params['group']) && $module_params['group'] == 'y') {
 	  if (!$user) {

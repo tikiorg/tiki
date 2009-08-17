@@ -31,7 +31,7 @@ RewriteRule (.*) - [L]
  
  
 # direct one-word access
-RewriteRule ^(img\/trackers\/.*)		$1		[L]
+RewriteRule ^(img\/trackers\/.*)   $1                                       [L]
 RewriteRule ^calendar$             tiki-calendar.php                        [L]
 RewriteRule ^articles$             tiki-view_articles.php                   [L]
 RewriteRule ^blogs$                tiki-list_blogs.php                      [L]
@@ -54,7 +54,6 @@ RewriteRule ^files$                tiki-list_file_gallery.php               [L]
 RewriteRule ^forums$               tiki-forums.php                          [L]
 RewriteRule ^images$               tiki-galleries.php                       [L]
 RewriteRule ^galleries$            tiki-galleries.php                       [L]
-RewriteRule ^games$                tiki-list_games.php                      [L]
 RewriteRule ^login$                tiki-login.php                           [L]
 RewriteRule ^my$                   tiki-my_tiki.php                         [L]
 RewriteRule ^newsletters$          tiki-newsletters.php                     [L]
@@ -82,7 +81,10 @@ RewriteRule ^chart([0-9]+)         tiki-view_chart.php?chartId=$1           [QSA
 RewriteRule ^directory([0-9]+)     tiki-directory_browse.php?parent=$1      [QSA,L]
 RewriteRule ^faq([0-9]+)           tiki-view_faq.php?faqId=$1               [QSA,L]
 RewriteRule ^file([0-9]+)          tiki-list_file_gallery.php?galleryId=$1  [QSA,L]
-RewriteRule ^dl([0-9]+)            tiki-download_file.php?fileId=$1         [QSA,L]
+RewriteRule ^dl([0-9]+)(.*)        tiki-download_file.php?fileId=$1$2       [QSA,L]
+RewriteRule ^thumbnail([0-9]+)     tiki-download_file.php?fileId=$1&thumbnail [QSA,L]
+RewriteRule ^display([0-9]+)(.*)   tiki-download_file.php?fileId=$1&display$2 [QSA,L]
+RewriteRule ^preview([0-9]+)(.*)   tiki-download_file.php?fileId=$1&preview$2 [QSA,L]
 RewriteRule ^forum([0-9]+)         tiki-view_forum.php?forumId=$1           [QSA,L]
 RewriteRule ^gallery([0-9]+)       tiki-browse_gallery.php?galleryId=$1     [QSA,L]
 RewriteRule ^image([0-9]+)         show_image.php?id=$1                     [QSA,L]
@@ -99,9 +101,9 @@ RewriteRule ^ws([0-9]+)            tiki-workspaces_desktop.php?workspaceId=$1   
 RewriteRule ^poll([0-9]+)          tiki-poll_form.php?pollId=$1             [QSA,L]
 RewriteRule ^wiki-([A-Za-z0-9]+)   tiki-index.php?page=$1                   [QSA,L]
 RewriteRule ^page-([A-Za-z0-9]+)   tiki-index.php?page=$1                   [QSA,L]
-RewriteRule ^show:(~?)(.+)$  tiki-slideshow.php?page=$1$2      [QSA,L]
+RewriteRule ^show:(~?)(.+)$        tiki-slideshow.php?page=$1$2             [QSA,L]
 RewriteRule ^(lib/wiki3d/.+\.jar)$ $1                                       [L]
-RewriteRule     ^(.+)$    tiki-index.php?page=$1                   [QSA,L]
+RewriteRule ^(.+)$                 tiki-index.php?page=$1                   [QSA,L]
 
 # Error pages, handled by Apache (not by TikiWiki)
 # TikiWiki can catch some errors and deal with them by redirecting to a similar page, sending you to the search, etc. However, some errors bypass TikiWiki and must be handled by Apache (ex.: impossiblepagename.php) 

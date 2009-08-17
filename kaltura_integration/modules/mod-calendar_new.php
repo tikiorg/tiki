@@ -13,6 +13,13 @@ if ( $prefs['feature_calendar'] == 'y' ) {
 	global $userlib; include_once('lib/userslib.php');
 	global $headerlib; $headerlib->add_cssfile('css/calendar.css',20);
 	global $calendarViewMode;
+	if (isset($module_params['calendarId'])) {
+		if (is_array($module_params['calendarId'])) {
+			$module_params['calIds'] = $module_params['calendarId'];
+		} else {
+			$module_params['calIds'] = array($module_params['calendarId']);
+		}
+	}
 
 	if (isset($_REQUEST['viewmode'])) $save_viewmode = $_REQUEST['viewmode'];
 	if (!empty($module_params['viewmode']))
@@ -50,7 +57,15 @@ if ( $prefs['feature_calendar'] == 'y' ) {
 		}
 	}
 	$_REQUEST['gbi'] = 'y';
-	$_REQUEST['viewlist'] = 'table';
+	if ( !empty($module_params['viewlist']) ) {
+		$_REQUEST['viewlist'] = $module_params['viewlist'];
+	} else {
+		$_REQUEST['viewlist'] = 'table';
+	}
+	if ( !empty($module_params['withviewevents']) ) {
+		$smarty->assign('withviewevents',$module_params['withviewevents']);
+	}
+
 	include('tiki-calendar_setup.php');
 
 	$tc_infos = $calendarlib->getCalendar($module_params['calIds'], $viewstart, $viewend, $group_by);

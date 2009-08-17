@@ -105,8 +105,8 @@ class StatsLib extends TikiLib {
 	function forum_stats() {
 		$stats = array();
 		$stats["forums"] = $this->getOne("select count(*) from `tiki_forums`",array());
-		$stats["topics"] = $this->getOne( "select count(*) from `tiki_comments`,`tiki_forums` where `object`=".$this->sql_cast('`forumId`','string')." and `objectType`=? and `parentId`=?",array('forum',0));
-		$stats["threads"] = $this->getOne( "select count(*) from `tiki_comments`,`tiki_forums` where `object`=".$this->sql_cast('`forumId`','string')." and `objectType`=? and `parentId`<>?",array('forum',0));
+		$stats["topics"] = $this->getOne( "select count(*) from `tiki_comments`,`tiki_forums` where `object`=".$this->cast('`forumId`','string')." and `objectType`=? and `parentId`=?",array('forum',0));
+		$stats["threads"] = $this->getOne( "select count(*) from `tiki_comments`,`tiki_forums` where `object`=".$this->cast('`forumId`','string')." and `objectType`=? and `parentId`<>?",array('forum',0));
 		$stats["tpf"] = ($stats["forums"] ? $stats["topics"] / $stats["forums"] : 0);
 		$stats["tpt"] = ($stats["topics"] ? $stats["threads"] / $stats["topics"] : 0);
 		$stats["visits"] = $this->getOne("select sum(`hits`) from `tiki_forums`",array());
@@ -241,8 +241,8 @@ class StatsLib extends TikiLib {
 		}
 		return $data;
 	}
-	/* count the number of created or modified for this day, this month, this year */
-	function count_this_period($table = 'tiki_pages', $column ='created', $when='daily', $parentColumn ='', $parentId='') {
+	/* transform a last period to a 2 dates */
+	function period2dates($when) {
 		global $tikilib, $prefs;
 		$now = $tikilib->now;
 		$sec = TikiLib::date_format("%s", $now);
@@ -291,14 +291,29 @@ class StatsLib extends TikiLib {
 			$begin = $now;
 			break;
 		}
-		$bindvars = array((int)$begin, (int)$now);
+		return array((int)$begin, (int)$now);
+	}
+	/* count the number of created or modified for this day, this month, this year */
+	function count_this_period($table = 'tiki_pages', $column ='created', $when='daily', $parentColumn ='', $parentId='') {
+		$bindvars = $this->period2dates($when);
 		$where = '';
 		if (!empty($parentColumn) && !empty($parentId)) {
 			$where = " and `$parentColumn` = ?";
 			$bindvars[] = (int)$parentId;
 		}
 		$query = "select count(*) from `$table` where `$column` >= ? and `$column` <= ? $where";
-		$count = $tikilib->getOne($query, $bindvars);
+		$count = $this->getOne($query, $bindvars);
+		return $count;
+	}
+	/* count the number of viewed for this day, this month, this year */
+	function hit_this_period($type='wiki', $when='daily') {
+		$bindvars = $this->period2dates($when);
+		$bindvars[1] = $type;
+		$query = "select sum(`hits`)from `tiki_stats` where `day` >=? and `type`=?";
+		$count = $this->getOne($query, $bindvars);
+		if ($count == '')  {
+			$count = 0;
+		}
 		return $count;
 	}
 	

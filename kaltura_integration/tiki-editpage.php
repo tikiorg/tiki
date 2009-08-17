@@ -47,15 +47,6 @@ if ($prefs['feature_wiki'] != 'y') {
 	$smarty->display('error.tpl');
 	die;
 }
-// Anti-bot feature: if enabled, anon user must type in a code displayed in an image
-if (isset($_REQUEST['save']) && (!$user || $user == 'anonymous') && $prefs['feature_antibot'] == 'y') {
-	if((!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
-		$smarty->assign('msg',tra("You have mistyped the anti-bot verification code; please try again."));
-		$smarty->display("error.tpl");
-		die;
-	}
-}
-
 make_sure_page_to_be_created_is_not_an_alias();
 
 $smarty->assign( 'translation_mode', (isNewTranslationMode() || isUpdateTranslationMode()) ?'y':'n' );
@@ -71,18 +62,33 @@ if (empty($_REQUEST["page"])) {
 if ($prefs['feature_wikiapproval'] == 'y' && substr($_REQUEST['page'], 0, strlen($prefs['wikiapproval_prefix'])) != $prefs['wikiapproval_prefix'] && !empty($prefs['wikiapproval_master_group']) && !in_array($prefs['wikiapproval_master_group'], $tikilib->get_user_groups($user))) {
 	$_REQUEST['page'] = $prefs['wikiapproval_prefix'] . $_REQUEST['page'];
 }
+// wysiwyg decision
+include 'tiki-parsemode_setup.php';
 
 $page = $_REQUEST["page"];
 $smarty->assign_by_ref('page', $_REQUEST["page"]);
-
 // Permissions
 $info = $tikilib->get_page_info($page);
 $tikilib->get_perm_object($page, 'wiki page', $info, true);
 if ($tiki_p_edit != 'y') {
+	if (empty($user)) {
+		global $cachelib; include_once('lib/cache/cachelib.php');
+		$cacheName = $tikilib->get_ip_address().$tikilib->now;
+		$cachelib->cacheItem($cacheName, http_build_query($_REQUEST, '', '&'), 'edit');
+		$smarty->assign('urllogin', "tiki-editpage.php?cache=$cacheName");
+	}
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
 	$smarty->display("error.tpl");
 	die;
+}
+// Anti-bot feature: if enabled, anon user must type in a code displayed in an image
+if (isset($_REQUEST['save']) && (!$user || $user == 'anonymous') && $prefs['feature_antibot'] == 'y') {
+	if((!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
+		$smarty->assign('msg',tra("You have mistyped the anti-bot verification code; please try again."));
+		$smarty->display("error.tpl");
+		die;
+	}
 }
 
 $page_ref_id = '';
@@ -305,7 +311,7 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 							}
 						}
 
-						$tikilib->update_page($pagename, $part["body"], tra('page imported'), $author, $authorid, $description, null, $pageLang, false, $hash);
+						$tikilib->update_page($pagename, $part["body"], tra('page imported'), $author, $authorid, $description, 0, $pageLang, false, $hash);
 					} else {
 						$tikilib->create_page($pagename, $hits, $part["body"], $lastmodified, tra('created from import'), $author, $authorid, $description, $pageLang, false, $hash);
 					}
@@ -709,8 +715,6 @@ $smarty->assign('editable','y');
 $smarty->assign('show_page','n');
 $smarty->assign('comments_show','n');
 
-// wysiwyg decision
-include 'tiki-parsemode_setup.php';
 $smarty->assign_by_ref('data', $info);
 $smarty->assign('footnote', '');
 $smarty->assign('has_footnote', 'n');
@@ -1010,6 +1014,7 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
 	$cat_name = $_REQUEST["page"];
 	$cat_href="tiki-index.php?page=".urlencode($cat_objid);
 	$cat_lang = $_REQUEST['lang'];
+	$cat_object_exists = $tikilib->page_exists( $_REQUEST['page'] );
 	include_once("categorize.php");
 	include_once("poll_categorize.php");
 	include_once("freetag_apply.php");
@@ -1114,11 +1119,8 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
 		/*
 		   $tikilib->cache_links($links);
 		 */
-		if(isset($_REQUEST['isminor'])&&$_REQUEST['isminor']=='on') {
-			$minor=true;
-		} else {
-			$minor=false;
-		}
+		$minor=(isset($_REQUEST['isminor'])&&$_REQUEST['isminor']=='on') ? 1 : 0;
+
 		if ((isset($_REQUEST['hdr']) || (!empty($_REQUEST['pos']) && isset($_REQUEST['cell']))) && $prefs['wiki_edit_section'] == 'y') {
 			if (isset($_REQUEST['hdr'])) {
 				if ($_REQUEST['hdr'] == 0) {
@@ -1286,6 +1288,7 @@ if ($prefs['feature_multilingual'] == 'y') {
 $cat_type = 'wiki page';
 $cat_objid = $_REQUEST["page"];
 $cat_lang = $pageLang;
+$cat_object_exists = $tikilib->page_exists( $_REQUEST['page'] );
 $smarty->assign('section',$section);
 include_once ('tiki-section_options.php');
 if ($prefs['feature_freetags'] == 'y') {
@@ -1345,10 +1348,7 @@ if ($prefs['wiki_feature_copyrights'] == 'y' && $tiki_p_edit_copyrights == 'y') 
 }
 $defaultRows = $prefs['default_rows_textarea_wiki'];
 include_once("textareasize.php");
-include_once ('lib/quicktags/quicktagslib.php');
-$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_asc','','wiki');
-$smarty->assign_by_ref('quicktags', $quicktags["data"]);
-$smarty->assign('quicktagscant', $quicktags["cant"]);
+include_once ('lib/toolbars/toolbarslib.php');
 if (!$user or $user == 'anonymous') {
 	$smarty->assign('anon_user', 'y');
 }

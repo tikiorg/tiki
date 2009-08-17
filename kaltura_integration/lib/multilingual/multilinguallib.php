@@ -742,14 +742,12 @@ class MultilingualLib extends TikiLib {
         */
        global $_REQUEST, $_SESSION;
        $lang = '';
-       if (!empty($_REQUEST['lang'])) {
-          $lang = $_REQUEST['lang'];
-       }
-       if ($lang == '') {
+	   if (isset($_REQUEST['lang'])) { //lang='' means all languages
+		   return $_REQUEST['lang'];
+	   }
 //          print "-- tiki-listpages.whichLangToFilterOn: looking in session array<br>\n";
-          if (array_key_exists('find_page_last_done_in_lang', $_SESSION)) {
-             $lang = $_SESSION['find_page_last_done_in_lang'];
-          }
+       if (array_key_exists('find_page_last_done_in_lang', $_SESSION)) {
+          $lang = $_SESSION['find_page_last_done_in_lang'];
        } 
        if ($lang == '') {
           $userPreferedLangs = $this->preferedLangs();

@@ -118,7 +118,7 @@ class Tiki_Profile
 		if( $profile->analyseMeta( $url ) ) {
 
 			// Obtain the page export
-			$content = tiki_get_remote_file( $url );
+			$content = TikiLib::httprequest( $url );
 			$content = html_entity_decode( $content );
 			$content = str_replace( "\r", '', $content );
 
@@ -161,6 +161,20 @@ class Tiki_Profile
 
 		$info = $tikilib->get_page_info( $pageName );
 		$content = html_entity_decode( $info['data'] );
+		$profile->loadYaml( $content );
+
+		return $profile;
+	} // }}}
+
+	public static function fromString( $string, $name = '' ) // {{{
+	{
+		$profile = new self;
+		$profile->domain = 'tiki://local';
+		$profile->profile = $name;
+		$profile->pageUrl = $name;
+		$profile->url = 'tiki://local/' . $name;
+
+		$content = html_entity_decode( $string );
 		$profile->loadYaml( $content );
 
 		return $profile;
@@ -259,7 +273,7 @@ class Tiki_Profile
 		$exportUrl = dirname( $this->url ) . '/tiki-export_wiki_pages.php?'
 			. http_build_query( array( 'page' => $pageName ) );
 
-		$content = tiki_get_remote_file( $exportUrl );
+		$content = TikiLib::httprequest( $exportUrl );
 		$content = str_replace( "\r", '', $content );
 		$begin = strpos( $content, "\n\n" );
 
@@ -494,7 +508,16 @@ class Tiki_Profile
 		return $prefs;
 	} // }}}
 
-	function getPermissions() // {{{
+	function getGroupMap() // {{{
+	{
+		if( ! isset( $this->data['mappings'] ) ) {
+			return array();
+		}
+
+		return $this->data['mappings'];
+	} // }}}
+
+	function getPermissions( $groupMap = array() ) // {{{
 	{
 		if( ! array_key_exists( 'permissions', $this->data ) )
 			return array();
@@ -502,6 +525,10 @@ class Tiki_Profile
 		$groups = array();
 		foreach( $this->data['permissions'] as $groupName => $data )
 		{
+			if( isset( $groupMap[ $groupName ] ) ) {
+				$groupName = $groupMap[$groupName];
+			}
+
 			$permissions = Tiki_Profile::convertLists( $data, array( 'allow' => 'y', 'deny' => 'n' ), 'tiki_p_' );
 			$permissions = Tiki_Profile::convertYesNo( $permissions );
 			foreach( array_keys( $permissions ) as $key )
@@ -520,6 +547,7 @@ class Tiki_Profile
 				'theme' => '',
 				'registration_fields' => array(),
 				'include' => array(),
+				'autojoin' => 'n',
 			);
 			foreach( $defaultInfo as $key => $value )
 				if( array_key_exists( $key, $data ) )

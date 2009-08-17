@@ -30,8 +30,9 @@ if($tiki_p_read_article != 'y') {
 }
 
 if (isset($_REQUEST["remove"])) {
+	$artperms = Perms::get( array( 'type' => 'article', 'object' => $_REQUEST['remove'] ) );
 
-	if ($tiki_p_remove_article != 'y') {
+	if ($artperms->remove_article != 'y') {
 		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra("Permission denied you cannot remove articles"));
 

@@ -192,25 +192,6 @@ if (isset($_REQUEST["save"]) && isset($_REQUEST["name"]) && strlen($_REQUEST["na
 		$errors[] = tra('You can not create a category with a name already existing at this level');
 	} else {
 		$newcategId = $categlib->add_category($_REQUEST["parentId"], $_REQUEST["name"], $_REQUEST["description"]);
-		if (isset($_REQUEST['assign_perms'])) {
-			if ($_REQUEST['parentId'] == 0) {
-				$userlib->inherit_global_permissions($newcategId, 'category');
-			} else {
-				$newcategpath = $categlib->get_category_path($newcategId);
-				$numcats = count($newcategpath);
-				$inherit_from_parent = FALSE;
-				for ($i = $numcats - 2; $i >= 0; $i--) {
-					if ($userlib->object_has_one_permission($newcategpath[$i]['categId'], 'category')) {
-						$userlib->copy_object_permissions($newcategpath[$i]['categId'], $newcategId, 'category');
-						$inherit_from_parent = TRUE;
-						break 1;
-					}
-				}
-				if (!$inherit_from_parent) {
-					$userlib->inherit_global_permissions($newcategId, 'category');
-				}
-			}
-		}
 	}
 	$info["name"] = '';
 	$info["description"] = '';
@@ -304,7 +285,6 @@ if (is_array($path)) {
 }
 $smarty->assign('catree', $catree['data']);
 // ---------------------------------------------------
-$smarty->assign('assign_perms', 'checked');
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'name_asc';
 } else {
@@ -335,7 +315,7 @@ $smarty->assign_by_ref('objects', $objects["data"]);
 $smarty->assign_by_ref('cant_pages', $objects["cant"]);
 $galleries = $tikilib->list_galleries(0, -1, 'name_desc', 'admin', $find_objects);
 $smarty->assign_by_ref('galleries', $galleries["data"]);
-$file_galleries = $filegallib->list_file_galleries(0, -1, 'name_desc', 'admin', $find_objects);
+$file_galleries = $filegallib->list_file_galleries(0, -1, 'name_desc', 'admin', $find_objects, $prefs['fgal_root_id']);
 $smarty->assign_by_ref('file_galleries', $file_galleries["data"]);
 $forums = $commentslib->list_forums(0, -1, 'name_asc', $find_objects);
 $smarty->assign_by_ref('forums', $forums["data"]);

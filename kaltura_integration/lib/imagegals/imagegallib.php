@@ -421,7 +421,7 @@ class ImageGalsLib extends TikiLib {
 		global $prefs;
 
 		$numimages = 0;
-		include_once ('lib/pclzip.lib.php');
+		include_once ('lib/pclzip/pclzip.lib.php');
 		$archive = new PclZip($file);
 		// Read Archive contents
 		$ziplist = $archive->listContent();
@@ -868,14 +868,14 @@ class ImageGalsLib extends TikiLib {
 		$query = "select max(`imageId`) from `tiki_images` where `created`=?";
 		$imageId = $this->getOne($query,array((int)$this->now));
 		// insert data
-		$this->blob_encode($data);
+		//$this->blob_encode($data);
 		$query = "insert into `tiki_images_data`(`imageId`,`xsize`,`ysize`, `type`,`filesize`,`filetype`,`filename`,`data`)
                         values (?,?,?,?,?,?,?,?)";
 		$result = $this->query($query,array((int)$imageId,(int)$xsize,(int)$ysize,'o',(int)$size,$filetype,$filename,$data));
 
 		// insert thumb
 		if ($t_data) {
-			$this->blob_encode($t_data['data']);
+			//$this->blob_encode($t_data['data']);
 			$query = "insert into `tiki_images_data`(`imageId`,`xsize`,`ysize`, `type`,`filesize`,`filetype`,`filename`,`data`)
                         values (?,?,?,?,?,?,?,?)";
 			$result = $this->query($query,array((int)$imageId,(int)$t_data['xsize'],(int)$t_data['ysize'],'t',(int)$size,$t_type,$filename,$t_data['data']));
@@ -1314,8 +1314,8 @@ class ImageGalsLib extends TikiLib {
     }
 
 	function list_galleries($offset = 0, $maxRecords = -1, $sort_mode = 'name_desc', $user, $find=false) {
-	    // If $user is admin then get ALL galleries, if not only user galleries are shown
-	    global $tiki_p_admin_galleries;
+		// If $user is admin then get ALL galleries, if not only user galleries are shown
+		global $tiki_p_admin_galleries, $tiki_p_admin;
 
 	    $old_sort_mode = '';
 
@@ -1332,14 +1332,14 @@ class ImageGalsLib extends TikiLib {
 		$maxRecords = -1;
 	    }
 
-	    // If the user is not admin then select `it` 's own galleries or public galleries
-	    if (($tiki_p_admin_galleries == 'y') or ($user == 'admin')) {
-		$whuser = "";
-		$bindvars=array();
-	    } else {
-		$whuser = "where g.`user`=? or g.public=?";
-		$bindvars=array($user,'y');
-	    }
+		// If the user is not admin then select `it` 's own galleries or public galleries
+		if (($tiki_p_admin_galleries == 'y') or ($tiki_p_admin == 'y') or ($user == 'admin')) {
+			$whuser = "";
+			$bindvars=array();
+		} else {
+			$whuser = "where g.`user`=? or g.public=?";
+			$bindvars=array($user,'y');
+		}
 
 	    if ($find) {
 		$findesc = '%' . $find . '%';

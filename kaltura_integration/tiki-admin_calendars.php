@@ -9,7 +9,7 @@
 // Initialization
 $section = 'calendar';
 require_once ('tiki-setup.php');
-
+require_once ('lib/categories/categlib.php');
 include_once ('lib/calendar/calendarlib.php');
 if ($prefs['feature_groupalert'] == 'y') {
 	include_once ('lib/groupalert/groupalertlib.php');
@@ -25,7 +25,28 @@ if ($tiki_p_admin_calendar != 'y' and $tiki_p_admin != 'y') {
 if (!isset($_REQUEST["calendarId"])) {
 	$_REQUEST["calendarId"] = 0;
 } else {
-	 $smarty->assign('individual', $userlib->object_has_one_permission($_REQUEST["calendarId"], 'calendar'));
+	// Check if calendar belongs to perspective
+	$category_jails = $categlib->get_jail();
+	if(!isset($filter['categId']) && !empty($category_jails))
+	{
+		$categories = $categlib->get_object_categories('calendar', $_REQUEST["calendarId"]);
+		if (empty ($categories))
+			$smarty->assign('individual', $userlib->object_has_one_permission($_REQUEST["calendarId"], 'calendar'));
+		else
+		{
+			$intersection = array_intersect($category, $category_jails);
+			if (!empty ($intersection))
+				$smarty->assign('individual', $userlib->object_has_one_permission($_REQUEST["calendarId"], 'calendar'));
+			else
+			{
+					$smarty->assign('errortype', 404);
+					$smarty->assign('msg',tra("Object doesn't exists"));
+					$smarty->display("error.tpl");
+					die;
+			}
+		}
+	}
+	
 }
 
 if (isset($_REQUEST["drop"])) {
@@ -144,7 +165,7 @@ if ($_REQUEST["calendarId"]) {
 	if (!empty($_REQUEST['show']) && $_REQUEST['show'] == 'mod') {
 		$cookietab = '2';
 	} else {
-		$cookietab = 1;
+		if (!isset($cookietab)) { $cookietab = '1'; }
 	}
 }
 if ($prefs['feature_groupalert'] == 'y') {

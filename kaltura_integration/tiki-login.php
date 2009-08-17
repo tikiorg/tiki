@@ -255,18 +255,41 @@ if ( $isvalid ) {
 					// Handle spaces (that could be written as '%20' in referer, but are generated as '+' with urlencode)
 					$url = str_replace('%20', '+', $url);
 
-					$url_vars = parse_url($url);
-					$url_path = $url_vars['path'];
-					if ( $url_vars['query'] != '' ) $url_path .= '?'.$url_vars['query'];
-
-					// Get a valid URL for anonymous group homepage
-					// It has to be rewritten when the following two syntaxes are used :
-					//  - http:tiki-something.php => tiki-something.php
-					//  - pageName => tiki-index.php?page=pageName
-					$anonymous_homepage = $userlib->get_group_home('Anonymous');
-					if ( ! ereg('^https?://', $anonymous_homepage) ) {
-						if ( substr($anonymous_homepage, 0, 5) == 'http:' ) {
-							$anonymous_homepage = substr($anonymous_homepage, 5);
+			default:
+				if (!empty($_REQUEST['url'])) {
+					global $cachelib; include_once('lib/cache/cachelib.php');
+					preg_match('/(.*)\?cache=(.*)/', $_REQUEST['url'], $matches);
+					if (!empty($matches[2]) && $cachelib->isCached($matches[2], 'edit')) {
+						if (!empty($matches[1])) {
+							$url = $matches[1].'?'.$cachelib->getCached($matches[2], 'edit');
+							$cachelib->invalidate($matches[2], 'edit');
+						}
+						$cachelib->invalidate($matches[2], 'edit');
+					}
+				} elseif ($prefs['useGroupHome'] == 'y') { // Go to the group page ?
+					if ($prefs['limitedGoGroupHome'] == 'y') {
+						// Handle spaces (that could be written as '%20' in referer, but are generated as '+' with urlencode)
+						$url = str_replace('%20', '+', $url);
+						$url_vars = parse_url($url);
+						$url_path = $url_vars['path'];
+						if ($url_vars['query'] != '') $url_path.= '?' . $url_vars['query'];
+						// Get a valid URL for anonymous group homepage
+						// It has to be rewritten when the following two syntaxes are used :
+						//  - http:tiki-something.php => tiki-something.php
+						//  - pageName => tiki-index.php?page=pageName
+						$anonymous_homepage = $userlib->get_group_home('Anonymous');
+						if (!ereg('^https?://', $anonymous_homepage)) {
+							if (substr($anonymous_homepage, 0, 5) == 'http:') {
+								$anonymous_homepage = substr($anonymous_homepage, 5);
+							} else {
+								$anonymous_homepage = 'tiki-index.php?page=' . urlencode($anonymous_homepage);
+							}
+						}
+						// Determine the complete tikiIndex URL for not logged users
+						// when tikiIndex's page has not been explicitely specified
+						//   (this only handles wiki default page for the moment)
+						if (ereg('tiki-index.php$', $prefs['site_tikiIndex']) || ereg('tiki-index.php$', $anonymous_homepage)) {
+							$tikiIndex_full = 'tiki-index.php?page=' . urlencode($prefs['site_wikiHomePage']);
 						} else {
 							$anonymous_homepage = 'tiki-index.php?page='.urlencode($anonymous_homepage);
 						}
@@ -311,22 +334,23 @@ if ( $isvalid ) {
 					if ( $groupHome != '' ) $url = ( preg_match('/^(\/|https?:)/', $groupHome) ) ? $groupHome : 'tiki-index.php?page='.urlencode($groupHome);
 				}
 			}
-	
-			// Unset session variable in case user su's
-			unset($_SESSION['loginfrom']);
-	
-			// No sense in sending user to registration page or no page at all
-			// This happens if the user has just registered and it's first login
-			if ( $url == '' || ereg('(tiki-register|tiki-login_validate|tiki-login_scr)\.php', $url) ) $url = $prefs['tikiIndex'];
-	
-			// Now if the remember me feature is on and the user checked the rememberme checkbox then ...
-			if ( $prefs['rememberme'] != 'disabled' ) {
-				if ( isset($_REQUEST['rme']) && $_REQUEST['rme'] == 'on' ) {
-					$hash = $userlib->create_user_cookie($_REQUEST['user']);
-					$time = substr($hash,strpos($hash,'.')+1);
-					setcookie($user_cookie_site, $hash.'.'.$user, $time, $cookie_path, $prefs['cookie_domain']);
-					$logslib->add_log('login','got a cookie for '.$prefs['remembertime'].' seconds');
-				}
+		}
+	} else {
+		if (isset($_REQUEST['url'])) {
+			$smarty->assign('url', $_REQUEST['url']);
+		}
+		if ($error == PASSWORD_INCORRECT && $prefs['unsuccessful_logins'] >= 0) {
+			if (($nb_bad_logins = $userlib->unsuccessful_logins($user)) >= $prefs['unsuccessful_logins']) {
+				$msg = sprintf(tra('More than %d unsuccessful login attempts have been made.'), $prefs['unsuccessful_logins']);
+				$smarty->assign('msg', $msg);
+				if ($userlib->send_confirm_email($user, 'unsuccessful_logins')) $smarty->assign('msg', $msg . ' ' . tra('An email has been sent to you with the instructions to follow.'));
+				$smarty->assign('user', '');
+				unset($user);
+				$show_history_back_link = 'y';
+				$smarty->assign_by_ref('show_history_back_link', $show_history_back_link);
+				$smarty->assign('mid', 'tiki-information.tpl');
+				$smarty->display("tiki.tpl");
+				die;
 			}
 		}
 	}

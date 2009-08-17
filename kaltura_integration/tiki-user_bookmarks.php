@@ -144,12 +144,14 @@ ask_ticket('user-bookmarks');
 
 include_once('tiki-section_options.php');
 if ($prefs['feature_ajax'] == "y") {
-function user_bookmarks_ajax() {
-    global $ajaxlib, $xajax;
-    $ajaxlib->registerTemplate("tiki-user_bookmarks.tpl");
-    $ajaxlib->registerTemplate("tiki-my_tiki.tpl");
-    $ajaxlib->registerFunction("loadComponent");
-    $ajaxlib->processRequests();
+	function user_bookmarks_ajax() {
+		global $ajaxlib, $xajax;
+		$ajaxlib->registerTemplate("tiki-user_bookmarks.tpl");
+		$ajaxlib->registerTemplate("tiki-my_tiki.tpl");
+		$ajaxlib->registerFunction("loadComponent");
+		$ajaxlib->processRequests();
+	}
+	user_bookmarks_ajax();
 }
 user_bookmarks_ajax();
 $smarty->assign("mootab",'y');

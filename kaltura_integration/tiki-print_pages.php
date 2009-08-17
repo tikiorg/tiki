@@ -28,8 +28,7 @@ if ($tiki_p_view != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
-
-$cookietab = 1;
+if (!isset($cookietab)) { $cookietab = '1'; }
 if (!isset($_REQUEST['printpages']) && !isset($_REQUEST['printstructures'])) {
 	$printpages = array();
 	$printstructures = array();

@@ -15,8 +15,7 @@ if ($tiki_p_admin != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
-
-$cookietab = "1";
+if (!isset($cookietab)) { $cookietab = '1'; }
 list($trackers,$ag_utracker,$ag_ufield,$ag_gtracker,$ag_gfield,$ag_rufields) = array(array(),0,0,0,0,'');
 
 if (isset($prefs['groupTracker']) and $prefs['groupTracker'] == 'y') {
@@ -267,7 +266,7 @@ if (!empty($_REQUEST["group"])) {
 	foreach ($allgroups as $rr) {
 		$inc["$rr"] = "n";
 	}
-	$cookietab = "1";
+	if (!isset($cookietab)) { $cookietab = '1'; }
 	$_REQUEST["group"] = 0;
 }
 if (isset($_REQUEST['add'])) {
@@ -337,7 +336,7 @@ if (!empty($_REQUEST['group']) && isset($_REQUEST['import'])) {
 
 if ($prefs['feature_categories'] == 'y') {
 	global $categlib; include_once ('lib/categories/categlib.php');
-	$categories = $categlib->get_all_categories_respect_perms($user, 'tiki_p_view_categories');
+	$categories = $categlib->get_all_categories_respect_perms($user, 'view_category');
 	$smarty->assign_by_ref('categories', $categories);
 }
 

@@ -43,23 +43,23 @@ if (!isset($_REQUEST["page"])) {
 	$smarty->assign_by_ref('page', $_REQUEST["page"]);
 }
 
+$tikilib->get_perm_object( $_REQUEST['page'], 'wiki page' );
+
 // Now check permissions to access this page
 if (!isset($_REQUEST["source"])) {
-    if (!$tikilib->user_has_perm_on_object($user, $_REQUEST["page"],'wiki page','tiki_p_view')  || (isset($tiki_p_wiki_view_history) && $tiki_p_wiki_view_history != 'y') ) {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied you cannot browse this page history"));
-
-	$smarty->display("error.tpl");
-	die;
-    }
+	if ($tiki_p_wiki_view_history != 'y') {
+		$smarty->assign('errortype', 401);
+		$smarty->assign('msg', tra("Permission denied you cannot browse this page history"));
+		$smarty->display("error.tpl");
+		die;
+	}
 } else {
-    if (!$tikilib->user_has_perm_on_object($user, $_REQUEST["page"],'wiki page','tiki_p_view')  || (isset($tiki_p_wiki_view_source) && $tiki_p_wiki_view_source != 'y') ) {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied you cannot view the source of this page"));
-
-	$smarty->display("error.tpl");
-	die;
-    }
+	if ($tiki_p_wiki_view_source != 'y') {
+		$smarty->assign('errortype', 401);
+		$smarty->assign('msg', tra("Permission denied you cannot view the source of this page"));
+		$smarty->display("error.tpl");
+		die;
+	}
 }
 
 $info = $tikilib->get_page_info($page);

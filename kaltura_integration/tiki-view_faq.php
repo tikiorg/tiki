@@ -18,34 +18,21 @@ if ($prefs['feature_faqs'] != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
+if (!isset($_REQUEST["faqId"])) {
+	$smarty->assign('msg', tra("No faq indicated"));
+	$smarty->display("error.tpl");
+	die;
+}
+
+$tikilib->get_perm_object( $_REQUEST['faqId'], 'faq' );
+
 if ($tiki_p_view_faqs != 'y') {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 	$smarty->display("error.tpl");
 	die;
 }
-if (!isset($_REQUEST["faqId"])) {
-	$smarty->assign('msg', tra("No faq indicated"));
-	$smarty->display("error.tpl");
-	die;
-}
-if ($tiki_p_admin != 'y' && $prefs['feature_categories'] == 'y') {
-	$perms_array = $categlib->get_object_categories_perms($user, 'faq', $_REQUEST['faqId']);
-	if ($perms_array) {
-		$is_categorized = TRUE;
-		foreach($perms_array as $perm => $value) {
-			$$perm = $value;
-		}
-	} else {
-		$is_categorized = FALSE;
-	}
-	if ($is_categorized && isset($tiki_p_view_categorized) && $tiki_p_view_categorized != 'y') {
-		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra("Permission denied you cannot view this page"));
-		$smarty->display("error.tpl");
-		die;
-	}
-}
+
 $faqlib->add_faq_hit($_REQUEST["faqId"]);
 $smarty->assign('faqId', $_REQUEST["faqId"]);
 $faq_info = $tikilib->get_faq($_REQUEST["faqId"]);
@@ -106,4 +93,9 @@ if ($prefs['feature_theme_control'] == 'y') {
 ask_ticket('view-faq');
 // Display the template
 $smarty->assign('mid', 'tiki-view_faq.tpl');
-$smarty->display("tiki.tpl");
+if (isset($_REQUEST['print'])) {
+	$smarty->display('tiki-print.tpl');
+	$smarty->assign('print', 'y');
+} else {
+	$smarty->display("tiki.tpl");
+}

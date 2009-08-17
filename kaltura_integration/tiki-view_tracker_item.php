@@ -304,15 +304,6 @@ if ($tiki_p_view_trackers != 'y' and $tracker_info["writerCanModify"] != 'y' and
 	$smarty->display("error.tpl");
 	die;
 }
-if ($tiki_p_admin_trackers != 'y' && $prefs['feature_categories'] == 'y') {
-	$itemPerms = $categlib->get_object_categories_perms($user, 'tracker '.$_REQUEST['trackerId'], $_REQUEST['itemId']);
-	if (isset($itemPerms['tiki_p_view_categorized']) && $itemPerms['tiki_p_view_categorized'] == 'n') {
-		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra("Permission denied"));
-		$smarty->display("error.tpl");
-		die;
-	}
-}
 
 $status_types = $trklib->status_types();
 $smarty->assign('status_types', $status_types);
@@ -399,7 +390,7 @@ foreach($xfields["data"] as $i=>$array) {
 				if ($fields["data"][$i]['options_array'][0] == 'd') {
 					$ins_fields["data"][$i]["value"] = $tikilib->make_time(0, 0, 0, $xxxm, $xxxd, $xxxy);
 				} else {
-					$ins_fields["data"][$i]["value"] = $tikilib->make_time($tikilib->hour, $tikilib->minute, 0, $xxxm, $xxxd, $xxxy);
+					$ins_fields["data"][$i]["value"] = $tikilib->make_time(date('H', $tikilib->now), date('i', $tikilib->now), 0, $xxxm, $xxxd, $xxxy);
 				}
 			}
 /********
@@ -666,12 +657,6 @@ if ($tiki_p_view_trackers != 'y' && !$special) {
 
 if (!isset($mainfield)) {
 	$mainfield = 0;
-}
-
-if ($textarea_options) {
-	include_once ('lib/quicktags/quicktagslib.php');
-	$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_asc','','wiki');
-	$smarty->assign('quicktags', $quicktags["data"]);
 }
 
 if ($tiki_p_admin_trackers == 'y'
@@ -1276,4 +1261,9 @@ if ( $prefs['feature_ajax'] == 'y' ) {
 
 // Display the template
 $smarty->assign('mid', 'tiki-view_tracker_item.tpl');
-$smarty->display("tiki.tpl");
+if (isset($_REQUEST['print'])) {
+	$smarty->display('tiki-print.tpl');
+	$smarty->assign('print', 'y');
+} else {
+	$smarty->display('tiki.tpl');
+}

@@ -159,11 +159,13 @@ include_once ('tiki-mytiki_shared.php');
 
 ask_ticket('notepad-list');
 if ($prefs['feature_ajax'] == "y") {
-function user_notepad_ajax() {
-    global $ajaxlib, $xajax;
-    $ajaxlib->registerTemplate("tiki-notepad_list.tpl");
-    $ajaxlib->registerFunction("loadComponent");
-    $ajaxlib->processRequests();
+	function user_notepad_ajax() {
+		global $ajaxlib, $xajax;
+		$ajaxlib->registerTemplate("tiki-notepad_list.tpl");
+		$ajaxlib->registerFunction("loadComponent");
+		$ajaxlib->processRequests();
+	}
+	user_notepad_ajax();
 }
 user_notepad_ajax();
 $smarty->assign("mootab",'y');

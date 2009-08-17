@@ -27,8 +27,7 @@ if ($prefs['feature_groupalert'] == 'y') {
 
 include('lib/filegals/max_upload_size.php');
 @ini_set('max_execution_time', 0); //will not work in safe_mode is on
-
-$auto_query_args = array('galleryId', 'fileId');
+$auto_query_args = array('galleryId', 'fileId', 'filegals_manager');
 
 function print_progress($msg) {
 	global $prefs;
@@ -153,25 +152,17 @@ if (!empty($_REQUEST['galleryId'][0]) && $prefs['feature_groupalert'] == 'y') {
 	$smarty->assign_by_ref('groupforalert',$groupforalert);
 	$smarty->assign_by_ref('showeachuser',$showeachuser);
 }
-
-if (isset($_REQUEST['fileId']))
-$editFileId = $_REQUEST['fileId'];
+if (isset($_REQUEST['fileId'])) {$editFileId = $_REQUEST['fileId'];} else {$editFileId = 0;}
 $editFile = false;
 if (!empty($editFileId)) {
-	if (!empty($_REQUEST['name'][0]))
-		$fileInfo['name']=$_REQUEST['name'][0];
-	if (!empty($_REQUEST['description'][0]))
-		$fileInfo['description']=$_REQUEST['description'][0];
-	if (!empty($_REQUEST['user'][0]))
-		$fileInfo['user']=$_REQUEST['user'][0];
-	if (!empty($_REQUEST['author'][0]))
-		$fileInfo['author']=$_REQUEST['author'][0];
-
-	$smarty->assign_by_ref('fileInfo',$fileInfo);
-	$smarty->assign('editFileId',$editFileId);
+	if (!empty($_REQUEST['name'][0])) $fileInfo['name'] = $_REQUEST['name'][0];
+	if (!empty($_REQUEST['description'][0])) $fileInfo['description'] = $_REQUEST['description'][0];
+	if (!empty($_REQUEST['user'][0])) $fileInfo['user'] = $_REQUEST['user'][0];
+	if (!empty($_REQUEST['author'][0])) $fileInfo['author'] = $_REQUEST['author'][0];
+	$smarty->assign_by_ref('fileInfo', $fileInfo);
 	$editFile = true;
 }
-
+$smarty->assign('editFileId', $editFileId);
 if (!empty($_REQUEST['galleryId'][0])) {
 	//$gal_info = $tikilib->get_file_gallery((int)$_REQUEST["galleryId"]);
 	$smarty->assign_by_ref('gal_info', $gal_info);
@@ -225,7 +216,7 @@ if (isset($_REQUEST["upload"])) {
 
 			if (isset($_REQUEST["isbatch"][$key]) && $_REQUEST["isbatch"][$key] == 'on' && strtolower(substr($name, strlen($name) - 3)) == 'zip') {
 				if ($tiki_p_batch_upload_files == 'y') {
-					$filegallib->process_batch_file_upload($_REQUEST["galleryId"][$key], $_FILES["userfile"]['tmp_name'][$key], $user, $_REQUEST["description"][$key]);
+					$filegallib->process_batch_file_upload($_REQUEST["galleryId"][$key], $_FILES["userfile"]['tmp_name'][$key], $user, isset($_REQUEST["description"][$key]) ? $_REQUEST["description"][$key] : '');
 					$batch_job = true;
 					$batch_job_galleryId = $_REQUEST["galleryId"][$key];
 					print_msg(tra('Batch file processed')." $name",$formId);
@@ -252,7 +243,7 @@ if (isset($_REQUEST["upload"])) {
 
 			$data = '';
 			$fhash = '';
-
+			$extension = '';
 			if (($prefs['fgal_use_db'] == 'n') || ($podCastGallery)) {
 				$fhash = md5($name = $_FILES["userfile"]['name'][$key]);
 				$extension = '';
@@ -317,12 +308,11 @@ if (isset($_REQUEST["upload"])) {
 					$errors[] = tra('Warning: Empty file:'). ' ' . $name.'. '.tra('Please re-upload your file');
 				}
 			}
-
-			if (!isset($_REQUEST['name'][$key]))
-				$_REQUEST['name'][$key] = $name;
-			if (empty($_REQUEST['user'][$key]))
-				$_REQUEST['user'][$key] = $user;
-
+			if (empty($_REQUEST['name'][$key])) $_REQUEST['name'][$key] = $name;
+			if (empty($_REQUEST['user'][$key])) $_REQUEST['user'][$key] = $user;
+			if (!isset($_REQUEST['description'][$key])) $_REQUEST['description'][$key] = '';
+			if (empty($_REQUEST['author'][$key])) $_REQUEST['author'][$key] = $user;
+			
 			$fileInfo['filename'] = $file_name;
 
 			if (isset($data)) {
@@ -362,7 +352,7 @@ if (isset($_REQUEST["upload"])) {
 					$cat_desc = substr($_REQUEST["description"][$key], 0, 200);
 					$cat_name =  empty($_REQUEST['name'][$key])? $name: $_REQUEST['name'][$key];
 					$cat_href = $aux['dllink'];
-
+					$cat_object_exists = (bool) $fileId;
 					if ($prefs['feature_groupalert'] == 'y' && isset($_REQUEST['listtoalert'])) {
 						$groupalertlib->Notify($_REQUEST['listtoalert'],"tiki-download_file.php?fileId=".$fileId);
 					}
@@ -370,11 +360,14 @@ if (isset($_REQUEST["upload"])) {
 					include_once ('categorize.php');
 					// Print progress
 					if ($prefs['javascript_enabled'] == 'y') {
-						$smarty->assign("name",$aux['name']);
-						$smarty->assign("size",$aux['size']);
-						$smarty->assign("fileId",$aux['fileId']);
-						$smarty->assign("dllink",$aux['dllink']);
-						$smarty->assign("nextFormId",$_REQUEST['formId']+1);
+						if (!empty($_REQUEST['filegals_manager'])) {
+							$smarty->assign('filegals_manager', $_REQUEST['filegals_manager']);
+						}
+						$smarty->assign("name", $aux['name']);
+						$smarty->assign("size", $aux['size']);
+						$smarty->assign("fileId", $aux['fileId']);
+						$smarty->assign("dllink", $aux['dllink']);
+						$smarty->assign("nextFormId", $_REQUEST['formId'] + 1);
 						print_progress($smarty->fetch("tiki-upload_file_progress.tpl"));
 					}
 				}
@@ -394,10 +387,11 @@ if (isset($_REQUEST["upload"])) {
 		$cat_type = 'file';
 		$cat_objid = $editFileId;
 		$cat_desc = substr($_REQUEST["description"][0], 0, 200);
-		$cat_name = empty($fileInfo['name'])?$fileInfo['filename']: $fileInfo['name'];
-		$cat_href = $podCastGallery?$podcast_url.$fhash: "$url_browse?fileId=".$editFileId;
-		if( $prefs['fgal_limit_hits_per_file'] == 'y' ) {
-			$filegallib->set_download_limit( $editFileId, $_REQUEST['hit_limit'][0] );
+		$cat_name = empty($fileInfo['name']) ? $fileInfo['filename'] : $fileInfo['name'];
+		$cat_href = $podCastGallery ? $podcast_url . $fhash : "$url_browse?fileId=" . $editFileId;
+		$cat_object_exists = (bool) $cat_objid;
+		if ($prefs['fgal_limit_hits_per_file'] == 'y') {
+			$filegallib->set_download_limit($editFileId, $_REQUEST['hit_limit'][0]);
 		}
 		include_once ('categorize.php');
 	}
@@ -413,6 +407,9 @@ if (isset($_REQUEST["upload"])) {
 		header ("location: tiki-list_file_gallery.php?galleryId=" . $_REQUEST["galleryId"][0]);
 		die;
 	}
+} else {
+	$smarty->assign('errors', array());
+	$smarty->assign('uploads', array());
 }
 
 // Get the list of galleries to display the select box in the template
@@ -429,7 +426,7 @@ if (empty($_REQUEST['fileId'])) {
 	$cacheName = $filegallib->get_all_galleries_cache_name($user);
 	$cacheType = $filegallib->get_all_galleries_cache_type();
 	if (!$cachelib->isCached($cacheName, $cacheType)) {
-		$galleries = $filegallib->list_file_galleries(0, -1, 'name_asc', $user, '', -1, false, true, false, false,false,true, false );
+		$galleries = $filegallib->list_file_galleries(0, -1, 'name_asc', $user, '', $prefs['fgal_root_id'], false, true, false, false, false, true, false);
 		$cachelib->cacheItem($cacheName, serialize($galleries), $cacheType);
 	} else {
 		$galleries = unserialize($cachelib->getCached($cacheName, $cacheType));
@@ -463,9 +460,9 @@ if( $prefs['fgal_limit_hits_per_file'] == 'y' ) {
 }
 
 $cat_type = 'file';
-$cat_objid = empty($_REQUEST['fileId'])? 0: $_REQUEST['fileId'];
-include_once('categorize_list.php');
-
+$cat_objid = empty($_REQUEST['fileId']) ? 0 : $_REQUEST['fileId'];
+$cat_object_exists = (bool) $cat_objid;
+include_once ('categorize_list.php');
 include_once ('tiki-section_options.php');
 
 ask_ticket('upload-file');
@@ -475,8 +472,8 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 // Display the template
 if ($prefs['javascript_enabled'] != 'y' or !isset($_REQUEST["upload"])) {
-	$smarty->assign('mid','tiki-upload_file.tpl');
-	if ( isset($_REQUEST['filegals_manager']) && $_REQUEST['filegals_manager'] != '' ) {
+	$smarty->assign('mid', 'tiki-upload_file.tpl');
+	if (!empty($_REQUEST['filegals_manager'])) {
 		$smarty->assign('filegals_manager', $_REQUEST['filegals_manager']);
 		$smarty->display("tiki-print.tpl");
 	}  else {

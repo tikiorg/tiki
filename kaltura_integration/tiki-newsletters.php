@@ -8,17 +8,20 @@
 
 // Initialization
 require_once ('tiki-setup.php');
-
+if ($tiki_p_list_newsletters != 'y') {
+	$smarty->assign('errortype', 401);
+	$smarty->assign('msg', tra('Permission denied'));
+	$smarty->display("error.tpl");
+	die;
+}
 global $nllib; include_once ('lib/newsletters/nllib.php');
-
 if ($prefs['feature_newsletters'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_newsletters");
 
 	$smarty->display("error.tpl");
 	die;
 }
-$auto_query_args = array('nlId','offsset', 'sort_mode', 'find');
-
+$auto_query_args = array('nlId', 'offset', 'sort_mode', 'find');
 $smarty->assign('confirm', 'n');
 
 //TODO: memorize the charset for each subscription
@@ -63,23 +66,7 @@ $foo = parse_url($_SERVER["REQUEST_URI"]);
 $smarty->assign('url_subscribe', $tikilib->httpPrefix(). $foo["path"]);
 
 if (isset($_REQUEST["nlId"])) {
-	$smarty->assign('individual', 'n');
-	if ($userlib->object_has_one_permission($_REQUEST["nlId"], 'newsletter')) {
-		$smarty->assign('individual', 'y');
-		if ($tiki_p_admin != 'y') {
-			$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'newsletters');
-			foreach ($perms["data"] as $perm) {
-				$permName = $perm["permName"];
-				if ($userlib->object_has_permission($user, $_REQUEST["nlId"], 'newsletter', $permName)) {
-					$$permName = 'y';
-					$smarty->assign("$permName", 'y');
-				} else {
-					$$permName = 'n';
-					$smarty->assign("$permName", 'n');
-				}
-			}
-		}
-	}
+	$tikilib->get_perm_object($_REQUEST["nlId"], 'newsletter');
 }
 
 if ($user) {

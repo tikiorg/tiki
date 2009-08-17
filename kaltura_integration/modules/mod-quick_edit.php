@@ -5,14 +5,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
-global $smarty;
-if( $prefs['feature_mootools'] == 'y' ) {
-	global $headerlib;
-	$headerlib->add_jsfile( 'lib/mootools/Observer.js' );
-	$headerlib->add_jsfile( 'lib/mootools/Autocompleter.js' );
-	$headerlib->add_jsfile( 'lib/mootools/Autocompleter.Request.js' );
-	$headerlib->add_cssfile( 'lib/mootools/Autocompleter.css' );
-}
+global $smarty, $prefs;
 
 $smarty->assign('module_title', isset($module_params["title"]) ? $module_params["title"] : tra("Quick Edit a Wiki Page"));
 

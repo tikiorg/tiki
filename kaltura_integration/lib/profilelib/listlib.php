@@ -35,7 +35,7 @@ class Tiki_Profile_List
 			unlink($file);
 		touch($file);
 
-		$content = tiki_get_remote_file( $path );
+		$content = TikiLib::httprequest( $path );
 
 		$parts = explode( "\n", $content );
 		$parts = array_map( 'trim', $parts );

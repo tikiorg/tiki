@@ -40,30 +40,7 @@ unset($data);
 if (isset($_REQUEST["upload"])) {
 	check_ticket('upload-image');
 	// Check here if it is an upload or an URL
-	$smarty->assign('individual', 'n');
-
-	if ($userlib->object_has_one_permission($_REQUEST["galleryId"], 'image gallery')) {
-		$smarty->assign('individual', 'y');
-
-		if ($tiki_p_admin != 'y') {
-			// Now get all the permissions that are set for this type of permissions 'image gallery'
-			$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'image galleries');
-
-			foreach ($perms["data"] as $perm) {
-				$permName = $perm["permName"];
-
-				if ($userlib->object_has_permission($user, $_REQUEST["galleryId"], 'image gallery', $permName)) {
-					$$permName = 'y';
-
-					$smarty->assign("$permName", 'y');
-				} else {
-					$$permName = 'n';
-
-					$smarty->assign("$permName", 'n');
-				}
-			}
-		}
-	}
+	$tikilib->get_perm_object($_REQUEST["galleryId"], 'image gallery');
 
 	if ($tiki_p_admin_galleries == 'y') {
 		$tiki_p_view_image_gallery = 'y';

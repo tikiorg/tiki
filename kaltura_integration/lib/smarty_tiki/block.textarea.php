@@ -10,7 +10,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  * smarty_block_textarea : add a textarea to a template.
  *
  * special params:
- *    _quicktags: if set to 'y', display quicktags above the textarea
+ *    _toolbars: if set to 'y', display toolbars above the textarea
  *    _enlarge: if set to 'y', display the enlarge buttons above the textarea
  *
  * usage: {textarea id='my_area' name='my_area'}{tr}My Text{/tr}{/textarea}
@@ -21,11 +21,11 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	global $prefs;
 	if ( $repeat ) return;
 
-	if ( ! isset($params['_quicktags']) || $prefs['javascript_enabled'] != 'y') $params['_quicktags'] = 'n';
+	if ( ! isset($params['_toolbars']) || $prefs['javascript_enabled'] != 'y') $params['_toolbars'] = 'n';
 /*
 	if ( ! isset($params['_wikiparsed']) ) {
-		// Quicktags implies wiki parsing
-		$params['_wikiparsed'] = $params['quicktags'];
+		// Toolbars implies wiki parsing
+		$params['_wikiparsed'] = $params['toolbars'];
 	}
 */
 	if ( ! isset($params['_wysiwyg']) ) $params['_wysiwyg'] = 'n';
@@ -45,14 +45,6 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 //		{editform Meat=$pagedata InstanceName='edit' ToolbarSet="Tiki"}
 //		<input type="hidden" name="wysiwyg" value="y" />
 	} else {
-		if ( $params['_quicktags'] == 'y' ) {
-			global $quicktagslib;
-			include_once ('lib/quicktags/quicktagslib.php');
-			$quicktags = $quicktagslib->list_quicktags(0, -1, 'taglabel_asc', '', $params['_section']);
-			$smarty->assign_by_ref('quicktags', $quicktags["data"]);
-		} else {
-			$smarty->clear_assign('quicktags');
-		}
 		if ( isset($params['_enlarge']) && $params['_enlarge'] == 'y' )
 			$smarty->assign_by_ref('enlarge', $params['_enlarge']);
 

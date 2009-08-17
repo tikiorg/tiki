@@ -199,7 +199,6 @@ $vartype['actpass'] = '+string'; // remind password page
 $vartype['user'] = '+string'; // remind password page
 $vartype['remind'] = 'string'; // remind password page
 $vartype['url'] = 'url';
-$vartype['game'] = 'string'; // from games
 // galaxia
 $vartype['aid'] = '+int';
 $vartype['description'] = 'string';
@@ -393,54 +392,7 @@ if (isset($_SESSION["$user_cookie_site"])) {
 	// }
 
 }
-
-// --------------------------------------------------------------
-
-if ( ! $cachelib->isCached("allperms") ) {
-	$allperms = $userlib->get_permissions(0, -1, 'permName_desc', '', '');
-	$cachelib->cacheItem("allperms",serialize($allperms));
-} else {
-	$allperms = unserialize($cachelib->getCached("allperms"));
-}
-$allperms = $allperms["data"];
-
-// Initializes permissions
-$admin_perms = array();
-foreach ( $allperms as $vperm ) {
-	$perm = $vperm["permName"];
-	$$perm = 'n';
-	$smarty->assign("$perm", 'n');
-	if ( $vperm['admin'] == 'y' ) {
-		$admin_perms[] = $perm;
-	}
-}
-
-// Permissions
-if ( $user && ( $user == 'admin' || $userlib->user_has_permission($user, 'tiki_p_admin') ) ) {
-	// Gives admins all permissions
-	foreach ($allperms as $vperm) {
-		$perm = $vperm['permName'];
-		$$perm = 'y';
-		$smarty->assign($perm, 'y');
-	}
-} else {
-	$perms = $userlib->get_user_detailled_permissions($user);
-	foreach ($perms as $perm) {
-		$smarty->assign($perm['permName'], 'y');
-		$$perm['permName'] = 'y';
-		if ( in_array($perm['permName'], $admin_perms) ) { // assign all perms of the perm type
-			$ps = $userlib->get_permissions(0, -1, 'permName_desc', '', $perm['type']);
-			foreach ($ps['data'] as $p) {
-				$$p['permName'] = 'y';
-				$smarty->assign($p['permName'], 'y');
-			}
-		}
-	}
-}
-
-unset($admin_perms);
-unset($allperms);
-
+require 'lib/setup/perms.php';
 // --------------------------------------------------------------
 $magic_quotes_gpc = get_magic_quotes_gpc();
 $clean_xss = ( $tiki_p_trust_input != 'y' );
@@ -458,12 +410,8 @@ if ( ini_get('register_globals') ) {
 }
 
 $serverFilter = new DeclFilter;
-if( $clean_xss ) {
-	$serverFilter->addStaticKeyFilters( array(
-		'QUERY_STRING' => 'xss',
-		'REQUEST_URI' => 'xss',
-		'PHP_SELF' => 'xss',
-	) );
+if ($clean_xss) {
+	$serverFilter->addStaticKeyFilters(array('QUERY_STRING' => 'url', 'REQUEST_URI' => 'url', 'PHP_SELF' => 'url',));
 }
 $jitServer = new JitFilter( $_SERVER );
 $_SERVER = $serverFilter->filter( $_SERVER );
@@ -490,9 +438,16 @@ $jitRequest->setDefaultFilter( 'xss' );
 $jitCookie->setDefaultFilter( 'xss' );
 
 // Apply configured filters to all other input
-if( ! isset( $inputConfiguration ) ) $inputConfiguration = array();
-$inputFilter = DeclFilter::fromConfiguration( $inputConfiguration, array('catchAllFilter') );
-if( $clean_xss ) {
+if (!isset($inputConfiguration)) $inputConfiguration = array();
+
+$inputConfiguration[] = array(
+	'staticKeyFilters' => array(
+		'menu' => 'striptags',
+	),
+);
+
+$inputFilter = DeclFilter::fromConfiguration($inputConfiguration, array('catchAllFilter'));
+if ($clean_xss) {
 	$inputFilter->addCatchAllFilter('xss');
 }
 
@@ -547,8 +502,3 @@ if (!isset($_SERVER['REQUEST_URI']) || empty($_SERVER['REQUEST_URI'])) {
 }
 
 $smarty->assign("tikidomain", $tikidomain);
-
-// Debug console open/close
-$smarty->assign('debugconsole_style',
-	isset($_COOKIE["debugconsole"]) && ($_COOKIE["debugconsole"] == 'o') ? 'display:block;' : 'display:none;'
-);

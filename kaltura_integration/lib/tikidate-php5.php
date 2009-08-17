@@ -163,7 +163,7 @@ class TikiDate {
 	}
 
 	static function TimezoneIsValidId($id) {
-		return empty($id) ? FALSE : timezone_open($id) !== FALSE ;
+		return in_array($id,timezone_abbreviations_list());
 	}
 
 }

@@ -39,7 +39,7 @@ function getHTMLPurifierTikiConfig() {
 		}
 	}
     $conf = HTMLPurifier_Config::createDefault();
-    $conf->set('Cache', 'SerializerPath', $d);
+    $conf->set('Cache.SerializerPath', $d);
 	return $conf;
 }
 

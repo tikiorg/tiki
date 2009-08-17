@@ -17,6 +17,7 @@ function wikiplugin_usercount_info() {
 		'description' => tra('Displays the number of registered users'),
 		'prefs' => array( 'wikiplugin_usercount' ),
 		'body' => tra('Group name'),
+		'icon' => 'pics/icons/group_gear.png',
 		'params' => array(
 		),
 	);

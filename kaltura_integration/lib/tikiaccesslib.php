@@ -54,11 +54,23 @@ class TikiAccessLib extends TikiLib {
 	function check_feature($features, $feature_name="") {
 		global $prefs;
 		require_once ('tiki-setup.php');
+
+		$perms = Perms::get();
+		if( $perms->admin && isset($_REQUEST['check_feature']) && isset($_REQUEST['lm_preference']) ) {
+			global $prefslib; require_once 'lib/prefslib.php';
+			
+			$prefslib->applyChanges( (array) $_REQUEST['lm_preference'], $_REQUEST );
+		}
+
 		if ( ! is_array($features) ) { $features = array($features); }
 		foreach ($features as $feature) {
 			if ($prefs[$feature] != 'y') {
 				if ($feature_name != '') { $feature = $feature_name; }
-				$this->display_error('', tra("This feature is disabled").": ". $feature_name, '503' );
+				global $smarty;
+				if( $perms->admin ) {
+					$smarty->assign('required_preferences', $features);
+				}
+				$this->display_error('', tra("This feature is disabled").": ". $feature, '503' );
 			}
 		}
 	}
@@ -135,13 +147,14 @@ class TikiAccessLib extends TikiLib {
 		);
 
 		if ( !isset($errortitle) ) {
-			$detail['message'] = tra('unknown error');
-			$detail['errortitle'] = $detail['message'];
+			$detail['errortitle'] = tra('unknown error');
+		}
+
+		if ( empty($message)) {
+			$detail['message'] = $detail['errortitle'];
 		}
 
 		// Display the template		
-		$smarty->assign('msg', $detail['message']);
-		$smarty->assign('errortitle', $detail['errortitle']);
 		switch( $errortype ) {
 		case '404':
 			header ("HTTP/1.0 404 Not Found");
@@ -235,18 +248,13 @@ class TikiAccessLib extends TikiLib {
 	 */
 
 	function authorize_rss($rssrights) {
-		global $tikilib, $userlib, $user, $prefs, $smarty;
+		global $tikilib, $userlib, $user, $smarty;
+		$perms = Perms::get();
 		$result=array('msg' => tra("Permission denied you cannot view this section"), 'header' => 'n');
-
-		// allow admin
-		print $tiki_p_admin;
-		if($userlib->user_has_permission($user,'tiki_p_admin')) {
-			return;
-		}
 
 		// if current user has appropriate rights, allow.
 		foreach($rssrights as $perm) {
-			if($userlib->user_has_permission($user,$perm)) {
+			if($perms->$perm) {
 				return;
 			}
 		}
@@ -266,8 +274,9 @@ class TikiAccessLib extends TikiLib {
 		}
 
 		if( $this->http_auth() ) {
+			$perms = Perms::get();
 			foreach ($rssrights as $perm) {
-				if ($GLOBALS[$perm] == 'y') {
+				if ($perms->$perm) {
 					// if user/password and the appropriate rights are correct, allow.
 					return;
 				}
@@ -281,10 +290,14 @@ class TikiAccessLib extends TikiLib {
 	{
 		global $tikidomain, $userlib, $user, $smarty;
 
+		if( ! $tikidomain ) {
+			$tikidomain = "Default";
+		}
+
 		if (! isset($_SERVER['PHP_AUTH_USER']) ) {
 			header('WWW-Authenticate: Basic realm="'.$tikidomain.'"');
 			header('HTTP/1.0 401 Unauthorized');
-			return false;
+			exit;
 		}
 		
 		$attempt = $_SERVER['PHP_AUTH_USER'] ;
@@ -292,12 +305,14 @@ class TikiAccessLib extends TikiLib {
 		list($res,$rest)=$userlib->validate_user_tiki($attempt, $pass, false, false);
 
 		if ($res==USER_VALID) {
+			global $permissionList;
 			$user = $attempt;
-			$perms = $userlib->get_user_permissions($user);
-			foreach ($perms as $perm) {
-				$GLOBALS[$perm] = 'y';
-				$smarty->assign($perm, 'y');
-			}
+			$groups = $userlib->get_user_groups( $user );
+			$perms = Perms::getInstance();
+			$perms->setGroups( $groups );
+
+			$perms = Perms::get();
+			$perms->globalize( $permissionList, $smarty );
 
 			return true;
 		} else {
@@ -381,7 +396,7 @@ class TikiAccessLib extends TikiLib {
 				require_once( 'Horde/Yaml/Exception.php' );
 
 				header( "Content-Type: $full" );
-				echo Horde_Yaml::dump($value);
+				echo Horde_Yaml::dump($data);
 				return;
 			}
 		}

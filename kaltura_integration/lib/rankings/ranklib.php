@@ -34,7 +34,7 @@ class RankLib extends TikiLib {
 			$bindvals[] = $prefs['wikiapproval_prefix'] . '%';
 		}
 		
-		$query = "select tp.`pageName`, tp.`hits` from `tiki_pages` tp $mid order by `hits` desc";
+		$query = "select distinct tp.`pageName`, tp.`hits` from `tiki_pages` tp $mid order by `hits` desc";
 
 		$result = $this->query($query, $bindvals);
 		$ret = array();
@@ -150,93 +150,28 @@ class RankLib extends TikiLib {
 		return $retval;
 	}
 	
-	function forums_ranking_last_topics($limit, $forumId='', $last_replied=false) {
-		// $last_replied == true, means that topics shown will be based on last replied, not last created.
-		global $user;
-		if (is_array($forumId)) {
-			$bindvars = $forumId;
-			$mid = ' and a.`object` in ('.implode(',',array_fill(0,count($forumId),'?')).')';
-		} elseif (!empty($forumId)) {
-			$bindvars=array((int) $forumId);
-		    $mid = ' and a.`object`=?';
-		} else {
-			$bindvars = array();
-			$mid = '';
+	function forums_ranking_last_posts($limit, $toponly) {
+		global $user, $commentslib; require_once 'lib/commentslib.php';
+		if( ! $commentslib ) {
+			$commentslib = new Comments;
 		}
-		if ($last_replied == false)
-		{		
-		$query = "select * from
-		`tiki_comments` a,`tiki_forums` tf where
-		`object`=".$this->sql_cast("`forumId`","string")." and `objectType` = 'forum' and
-		`parentId`=0 $mid order by `commentDate` desc";
-		} else {		
-		$query = "select a.*, tf.*, max(b.`commentDate`) as `lastPost` from
-		`tiki_comments` a left join `tiki_comments` b on b.`parentId`=a.`threadId` right join `tiki_forums` tf on "
-		.$this->sql_cast("tf.`forumId`","string")." = a.`object`".
-		" where	a.`objectType` = 'forum' and a.`parentId`=0 $mid group by a.`threadId` order by `lastPost` desc";
-		}
-
-		$result = $this->query($query, $bindvars);
-		$ret = array();
-		$count = 0;
-		while (($res = $result->fetchRow()) && $count < $limit) {
-			if ($this->user_has_perm_on_object($user, $res['object'], 'forum', 'tiki_p_forum_read')) {
-				if($mid == '') { // no forumId selected 
-					$aux['name'] = $res['name'] . ': ' . $res['title']; //forum name plus topic
-				} else { // forumId selected
-					$aux['name'] = $res['title']; // omit forum name
-				}
-				$aux['title'] = $res['title'];
-				$aux['href'] = 'tiki-view_forum_thread.php?forumId=' . $res['object'] . '&amp;comments_parentId=' . $res['threadId'];
-				if ($last_replied == false) {
-					$aux['date'] = $res['commentDate'];
-					// the following line is correct, the second column named hits shows date				
-					$aux['hits'] = $res['commentDate']; 				
-				} else {
-					$aux['date'] = $res['lastPost'];
-					$aux['hits'] = $res['lastPost']; 
-				}
-				$aux['user'] = $res['userName'];
-				$ret[] = $aux;
-				++$count;
-			}
-		}
-
-		$retval["data"] = $ret;
-		$retval["title"] = tra("Forums last topics");
-		$retval["y"] = tra("Topic date");
-		$retval["type"] = "date";
-		return $retval;
-	}
-
-	function forums_ranking_last_posts($limit) {
-		global $user;
 		$offset=0;
 		$count = 0;
 		$ret = array();
-		while( $count < $limit) {
-			$query = "select `name`, `title`, `commentDate`, `parentId`, `threadId`, `forumId`, `userName` from
-				`tiki_comments`,`tiki_forums` where
-				`object`=".$this->sql_cast("`forumId`","string")." and `objectType` = 'forum'
-				order by `commentDate` desc"; 
-			$result = $this->query($query,array(),1,$offset);
-			$offset++;
-			if( ($res = $result->fetchRow()) ) {
-				if ($this->user_has_perm_on_object($user, $res['forumId'], 'forum', 'tiki_p_forum_read')) {
-					$aux['name'] = $res['name'] . ': ' . $res['title'];
-					$aux['title'] = $res['title'];
-					$aux['hits'] = $this->get_long_datetime($res['commentDate']);
-					$tmp = $res['parentId'];
-					if ($tmp == 0) $tmp = $res['threadId'];
-					$aux['href'] = 'tiki-view_forum_thread.php?forumId=' . $res['forumId'] . '&amp;comments_parentId=' . $tmp;
-					$aux['date'] = $res['commentDate'];
-					$aux['user'] = $res['userName'];
-					$ret[] = $aux;
-					++$count;
-				}
-			} else {
-				break;
-			}
+		$result = $commentslib->get_all_comments( 'forum', 0, $limit, 'commentDate_desc' );
+		$result['data'] = Perms::filter( array( 'type' => 'forum' ), 'object', $result['data'], array( 'object' => 'forumId', 'forum_read' ) );
+		foreach( $result['data'] as $res ) {
+			$aux['name'] = $res['name'] . ': ' . $res['title'];
+			$aux['title'] = $res['title'];
+			$tmp = $res['parentId'];
+			if ($tmp == 0) $tmp = $res['threadId'];
+			$aux['href'] = 'tiki-view_forum_thread.php?forumId=' . $res['forumId'] . '&amp;comments_parentId=' . $tmp;
+			$aux['hits'] = $this->get_long_datetime($res['commentDate']);
+			$tmp = $res['parentId'];
+			if ($tmp == 0) $tmp = $res['threadId'];
+			$aux['date'] = $res['commentDate'];
+			$aux['user'] = $res['userName'];
+			$ret[] = $aux;
 		}
 		$retval["data"] = $ret;
 		$retval["title"] = tra("Forums last posts");
@@ -245,37 +180,23 @@ class RankLib extends TikiLib {
 		return $retval;
 	}
 
-	function forums_ranking_most_read_topics($limit, $forumId='') {
-		global $user;
-		if (is_array($forumId)) {
-			$bindvars = $forumId;
-			$mid = ' and tf.`forumId` in ('.implode(',',array_fill(0,count($forumId),'?')).')';
-		} elseif (!empty($forumId)) {
-			$bindvars=array((int) $forumId);
-		    $mid = ' and tf.`forumId`=?';
-		} else {
-			$bindvars = array();
-			$mid = '';
+	function forums_ranking_most_read_topics($limit) {
+		global $commentslib;
+		if( ! $commentslib ) {
+			require_once 'lib/commentslib.php';
+			$commentslib = new Comments;
 		}
-		$query = "select
-		tc.`hits`,tc.`title`,tf.`name`,tf.`forumId`,tc.`threadId`,tc.`object`
-		from `tiki_comments` tc,`tiki_forums` tf where
-		`object`=`forumId` and `objectType` = 'forum' and
-		`parentId`=0 $mid order by tc.`hits` desc";
 
-		$result = $this->query($query, $bindvars);
+		$result = $commentslib->get_all_comments( 'forum', 0, $limit, 'hits_desc', '', '', '', true );
+
 		$ret = array();
-		$count = 0;
-		while (($res = $result->fetchRow()) && $count < $limit) {
-                 if ($this->user_has_perm_on_object($user, $res['forumId'], 'forum', 'tiki_p_forum_read')) {
+		foreach( $result['data'] as $res ) {
 				$aux['name'] = $res['name'] . ': ' . $res['title'];
 				$aux['title'] = $res['title'];
 				$aux['hits'] = $res['hits'];
 				$aux['href'] = 'tiki-view_forum_thread.php?forumId=' . $res['forumId'] . '&amp;comments_parentId=' . $res['threadId'];
 				$ret[] = $aux;
-				++$count;
 			}
-		}
 
 		$retval["data"] = $ret;
 		$retval["title"] = tra("Forums most read topics");
@@ -302,25 +223,21 @@ class RankLib extends TikiLib {
 
 
 	function forums_ranking_top_topics($limit) {
-		global $user;
-		$query = "select
-		tc.`average`,tc.`title`,tf.`name`,tf.`forumId`,tc.`threadId`,tc.`object`
-		from `tiki_comments` tc,`tiki_forums` tf where
-		`object`=`forumId` and `objectType` = 'forum' and
-		`parentId`=0 order by tc.`average` desc";
+		global $commentslib;
+		if( ! $commentslib ) {
+			require_once 'lib/commentslib.php';
+			$commentslib = new Comments;
+		}
 
-		$result = $this->query($query,array());
 		$ret = array();
-		$count = 0;
-		while (($res = $result->fetchRow()) && $count < $limit) {
-			if ($this->user_has_perm_on_object($user, $res['forumId'], 'forum', 'tiki_p_forum_read')) {
-				$aux['name'] = $res['name'] . ': ' . $res['title'];
-				$aux['title'] = $res['title'];
-				$aux['hits'] = $res['average'];
-				$aux['href'] = 'tiki-view_forum_thread.php?forumId=' . $res['forumId'] . '&amp;comments_parentId=' . $res['threadId'];
-				$ret[] = $aux;
-				++$count;
-			}
+		$comments = $commentslib->get_forum_topics( null, 0, $limit, 'average_desc' );
+		foreach( $comments as $res ) {
+			$aux = array();
+			$aux['name'] = $res['name'] . ': ' . $res['title'];
+			$aux['title'] = $res['title'];
+			$aux['hits'] = $res['average'];
+			$aux['href'] = 'tiki-view_forum_thread.php?forumId=' . $res['forumId'] . '&amp;comments_parentId=' . $res['threadId'];
+			$ret[] = $aux;
 		}
 
 		$retval["data"] = $ret;
@@ -331,20 +248,20 @@ class RankLib extends TikiLib {
 	}
 
 	function forums_ranking_most_visited_forums($limit) {
-		global $user;
-		$query = "select * from `tiki_forums` order by `hits` desc";
+		global $commentslib;
+		if( ! $commentslib ) {
+			require_once 'lib/commentslib.php';
+			$commentslib = new Comments;
+		}
 
-		$result = $this->query($query,array());
+		$result = $commentslib->list_forums( 0, $limit, 'hits_desc' );
 		$ret = array();
 		$count = 0;
-		while (($res = $result->fetchRow()) && $count < $limit) {
-			if ($this->user_has_perm_on_object($user, $res['forumId'], 'forum', 'tiki_p_forum_read')) {
-				$aux['name'] = $res['name'];				
-				$aux['hits'] = $res['hits'];
-				$aux['href'] = 'tiki-view_forum.php?forumId=' . $res['forumId'];
-				$ret[] = $aux;
-				++$count;
-			}
+		foreach( $result['data'] as $res ) {
+			$aux['name'] = $res['name'];				
+			$aux['hits'] = $res['hits'];
+			$aux['href'] = 'tiki-view_forum.php?forumId=' . $res['forumId'];
+			$ret[] = $aux;
 		}
 
 		$retval["data"] = $ret;
@@ -355,20 +272,20 @@ class RankLib extends TikiLib {
 	}
 
 	function forums_ranking_most_commented_forum($limit) {
-		global $user;
-		$query = "select * from `tiki_forums` order by `comments` desc";
+		global $commentslib;
+		if( ! $commentslib ) {
+			require_once 'lib/commentslib.php';
+			$commentslib = new Comments;
+		}
 
-		$result = $this->query($query,array());
+		$result = $commentslib->list_forums( 0, $limit, 'comments_desc' );
 		$ret = array();
 		$count = 0;
-		while (($res = $result->fetchRow()) && $count < $limit) {
-			if ($this->user_has_perm_on_object($user, $res['forumId'], 'forum', 'tiki_p_forum_read')) {
-				$aux['name'] = $res['name'];				
-				$aux['hits'] = $res['comments'];
-				$aux['href'] = 'tiki-view_forum.php?forumId=' . $res['forumId'];
-				$ret[] = $aux;
-				++$count;
-			}
+		foreach( $result['data'] as $res ) {
+			$aux['name'] = $res['name'];				
+			$aux['hits'] = $res['hits'];
+			$aux['href'] = 'tiki-view_forum.php?forumId=' . $res['forumId'];
+			$ret[] = $aux;
 		}
 
 		$retval["data"] = $ret;

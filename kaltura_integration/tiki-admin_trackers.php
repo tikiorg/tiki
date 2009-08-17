@@ -54,7 +54,7 @@ if (!empty($_REQUEST['duplicate']) && !empty($_REQUEST['name']) && !empty($_REQU
 if (!empty($_REQUEST['show']) && $_REQUEST['show'] == 'mod') {
 	$cookietab = '2';
 } else {
-	$cookietab = '1';
+	if (!isset($cookietab)) { $cookietab = '1'; }
 }
 
 if (isset($_REQUEST["remove"])) {
@@ -598,10 +598,6 @@ $urlquery['find'] = $find;
 $urlquery['sort_mode'] = $sort_mode;
 $smarty->assign_by_ref('urlquery', $urlquery);
 $smarty->assign_by_ref('cant', $channels['cant']);
-
-include_once('lib/quicktags/quicktagslib.php');
-$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_asc','','trackers');
-$smarty->assign_by_ref('quicktags', $quicktags["data"]);
 
 $smarty->assign_by_ref('channels', $channels["data"]);
 

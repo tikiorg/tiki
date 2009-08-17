@@ -204,7 +204,7 @@ function chgTrkFld(f,o) {
   document.getElementById('z').style.display = "none";
   document.getElementById('zDescription').style.display = "";
   document.getElementById('zStaticText').style.display = "none";
-  document.getElementById('zStaticTextQuicktags').style.display = "none";
+  document.getElementById('zStaticTextToolbars').style.display = "none";
 
   for (var i = 0; i < f.length; i++) {
     var c = f.charAt(i);
@@ -217,7 +217,7 @@ function chgTrkFld(f,o) {
         if (c == 'S') {
           document.getElementById('zDescription').style.display = "none";
           document.getElementById('zStaticText').style.display = "";
-          document.getElementById('zStaticTextQuicktags').style.display = "";
+          document.getElementById('zStaticTextToolbars').style.display = "";
         }
         if (ichoice) {
           ichoice.style.display = "";
@@ -330,50 +330,77 @@ function setSelectionRange(textarea, selectionStart, selectionEnd) {
 function setCaretToPos (textarea, pos) {
   setSelectionRange(textarea, pos, pos);
 }
-function insertAt(elementId, replaceString) {
-  //inserts given text at selection or cursor position
-  textarea = getElementById(elementId);
-  var toBeReplaced = /text|page|area_name/g; //substrings in replaceString to be replaced by the selection if a selection was done
-  if (textarea.setSelectionRange) {
-    //Mozilla UserAgent Gecko-1.4
-    var selectionStart = textarea.selectionStart;
-    var selectionEnd = textarea.selectionEnd;
-    var scrollTop=textarea.scrollTop;
-    if (selectionStart != selectionEnd) { // has there been a selection
-      var newString = replaceString.replace(toBeReplaced, textarea.value.substring(selectionStart, selectionEnd));
-      textarea.value = textarea.value.substring(0, selectionStart)
-        + newString
-        + textarea.value.substring(selectionEnd);
-      setSelectionRange(textarea, selectionStart, selectionStart + newString.length);
-    }
-    else  {// set caret
-      textarea.value = textarea.value.substring(0, selectionStart)
-        + replaceString
-        + textarea.value.substring(selectionEnd);
-      setCaretToPos(textarea, selectionStart + replaceString.length);
-    }
-    textarea.scrollTop=scrollTop;
-  }
-  else if (document.selection) {
-    //UserAgent IE-6.0
-    textarea.focus();
-    var range = document.selection.createRange();
-    if (range.parentElement() == textarea) {
-      var isCollapsed = range.text == '';
-      if (! isCollapsed)  {
-        range.text = replaceString.replace(toBeReplaced, range.text);
-        range.moveStart('character', -range.text.length);
-        range.select();
-      }
-      else {
-        range.text = replaceString;
-      }
-    }
-  }
-  else { //UserAgent Gecko-1.0.1 (NN7.0)
-    setSomeElement(elementId, replaceString)
-      //alert("don't know yet how to handle insert" + document);
-  }
+function insertAt(elementId, replaceString, blockLevel, perLine) {
+	//inserts given text at selection or cursor position
+	textarea = getElementById(elementId);
+	var toBeReplaced = /text|page|area_name/g; //substrings in replaceString to be replaced by the selection if a selection was done
+	if (textarea.setSelectionRange) {
+		//Mozilla UserAgent Gecko-1.4
+		var selectionStart = textarea.selectionStart;
+		var selectionEnd = textarea.selectionEnd;
+		var scrollTop=textarea.scrollTop;
+
+		if( blockLevel ) {
+			// Block level operations apply to entire lines
+
+			// +1 and -1 to handle end of line caret position correctly
+			selectionStart = textarea.value.lastIndexOf( "\n", selectionStart - 1 ) + 1;
+			selectionEnd = textarea.value.indexOf( "\n", selectionEnd );
+
+			if( selectionEnd == -1 )
+				selectionEnd = textarea.value.length;
+		}
+
+		if (selectionStart != selectionEnd) { // has there been a selection
+			var newString = '';
+			if( perLine ) {
+				var lines = textarea.value.substring(selectionStart, selectionEnd).split("\n");
+				for( k = 0; lines.length > k; ++k ) {
+					if( lines[k].length != 0 )
+						newString += replaceString.replace(toBeReplaced, lines[k]);
+					if( k != lines.length - 1 )
+						newString += "\n";
+				}
+			} else {
+				if (replaceString.match(toBeReplaced)) {
+					newString = replaceString.replace(toBeReplaced, textarea.value.substring(selectionStart, selectionEnd));
+				} else {
+					newString = replaceString + '\n' + textarea.value.substring(selectionStart, selectionEnd);
+				}
+			}
+			textarea.value = textarea.value.substring(0, selectionStart)
+				+ newString
+				+ textarea.value.substring(selectionEnd);
+			setSelectionRange(textarea, selectionStart, selectionStart + newString.length);
+		}
+		else  {// set caret
+			textarea.value = textarea.value.substring(0, selectionStart)
+				+ replaceString
+				+ textarea.value.substring(selectionEnd);
+			setCaretToPos(textarea, selectionStart + replaceString.length);
+		}
+		textarea.scrollTop=scrollTop;
+	}
+	else if (document.selection) {
+		//UserAgent IE-6.0
+		textarea.focus();
+		var range = document.selection.createRange();
+		if (range.parentElement() == textarea) {
+			var isCollapsed = range.text == '';
+			if (! isCollapsed)  {
+				range.text = replaceString.replace(toBeReplaced, range.text);
+				range.moveStart('character', -range.text.length);
+				range.select();
+			}
+			else {
+				range.text = replaceString;
+			}
+		}
+	}
+	else { //UserAgent Gecko-1.0.1 (NN7.0)
+		setSomeElement(elementId, replaceString);
+			//alert("don't know yet how to handle insert" + document);
+	}
 }
 
 function setUserModuleFromCombo(id, textarea) {
@@ -916,8 +943,8 @@ function confirmTheLink(theLink, theMsg)
  * \formid = form id (needs to have 2 input rows and cols
  **/
 function textareasize(elementId, height, width, formId) {
-  textarea = document.getElementById(elementId);
-  form1 = document.getElementById(formId);
+  textarea = $jq('[name=' + elementId + ']')[0];
+  form1 = textarea.form;
   if (textarea && height != 0 && textarea.rows + height > 5) {
     textarea.rows += height;
     if (form1.rows)
@@ -1015,6 +1042,18 @@ function SetMyUrl(area,url) {
   str = "{img src=\""+myurl.replace(/display$/, 'thumbnail')+"\" alt=\"\" link=\""+myurl+"\" rel=\"shadowbox[g];type=img\"} ";
   insertAt(area, str);
 }
+
+if (typeof fgals_window == "undefined") {
+	var fgals_window = null;
+}
+function openFgalsWindow(filegal_manager_url, area_name) {
+	if(fgals_window && fgals_window.document) {
+		fgals_window.focus();
+	} else {
+		fgals_window=window.open(filegal_manager_url,'_blank','menubar=1,scrollbars=1,resizable=1,height=500,width=800,left=50,top=50');
+	}
+}
+
 /* Count the number of words (spearated with space) */
 function wordCount(maxSize, source, cpt, message) {
   var formcontent = source.value;

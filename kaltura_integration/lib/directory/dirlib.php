@@ -114,34 +114,9 @@ class DirLib extends TikiLib {
 
 		while ($res = $result->fetchRow()) {
 			$res["sites"] = $this->getOne("select count(*) from `tiki_category_sites` where `categId`=?",array((int)$res["categId"]));
-			//$res["path"]=$this->dir_get_path_text($res["categId"]);
 
-		    $add = TRUE;
-		    global $prefs, $userlib, $user, $tiki_p_admin;
-
-		    if ($tiki_p_admin != 'y' && $prefs['feature_categories'] == 'y') {
-		    	global $categlib;
-				if (!is_object($categlib)) {
-					include_once('lib/categories/categlib.php');
-				}
-		    	unset($tiki_p_view_categorized); // unset this var in case it was set previously
-		    	$perms_array = $categlib->get_object_categories_perms($user, 'directory', $res['categId']);
-		    	if ($perms_array) {
-		    		$is_categorized = TRUE;
-			    	foreach ($perms_array as $perm => $value) {
-			    		$$perm = $value;
-			    	}
-		    	} else {
-		    		$is_categorized = FALSE;
-		    	}
-
-		    	if ($is_categorized && isset($tiki_p_view_categorized) && $tiki_p_view_categorized != 'y') {
-		    		$add = FALSE;
-		    	}
-		    }
-		    if ($add) {
-				$ret[] = $res;
-		    }
+			// TODO : Any permission to check? Used to verify view_categorized when categorized, what is the real permission?
+			$ret[] = $res;
 		}
 
 		$retval = array();

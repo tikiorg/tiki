@@ -15,9 +15,14 @@ if ($prefs['feature_newsletters'] != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
-global $nllib; include_once ('lib/newsletters/nllib.php');
-$auto_query_args = array('nlId','offsset', 'sort_mode', 'find');
-
+global $nllib;
+include_once ('lib/newsletters/nllib.php');
+$auto_query_args = array(
+	'nlId',
+	'offset',
+	'sort_mode',
+	'find'
+);
 if (!isset($_REQUEST["nlId"])) {
 	$_REQUEST["nlId"] = 0;
 }

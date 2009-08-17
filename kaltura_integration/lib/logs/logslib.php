@@ -959,7 +959,7 @@ class LogsLib extends TikiLib {
 	}
 
 	function get_more_info($actions, $categNames) {
-		global $tikilib;
+		global $tikilib, $prefs;
 	for ($i = 0; $i < sizeof($actions); ++$i) {
 		if ($actions[$i]['categId'])
 			$actions[$i]['categName'] = $categNames[$actions[$i]['categId']];
@@ -1019,7 +1019,7 @@ class LogsLib extends TikiLib {
 				$actions[$i]['link'] = 'tiki-list_file_gallery.php?galleryId='.$actions[$i]['object'];
 			if (!isset($fileGalleryNames)) {
 				include_once('lib/filegals/filegallib.php');
-				$objects = $filegallib->list_file_galleries(0, -1, 'name_asc', 'admin', '');
+				$objects = $filegallib->list_file_galleries(0, -1, 'name_asc', 'admin', '', $prefs['fgal_root_id']);
 				foreach ($objects['data'] as $object) {
 					$fileGalleryNames[$object['galleryId']] = $object['name'];
 				}

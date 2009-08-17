@@ -45,9 +45,9 @@ $access->check_permission( 'tiki_p_view' );
 if ( !empty($_REQUEST['submit_mult']) && isset($_REQUEST["checked"]) ) {
 	$action = $_REQUEST['submit_mult'];
 	check_ticket('list-pages');
+	Perms::bulk( array( 'type' => 'wiki page' ), 'object', $_REQUEST['checked'] );
 
-	switch ( $action ) {
-
+	switch ($action) {
 		case 'remove_pages':
 			// Now check permissions to remove the selected pages
 			$access->check_permission( 'tiki_p_remove' );
@@ -62,7 +62,8 @@ if ( !empty($_REQUEST['submit_mult']) && isset($_REQUEST["checked"]) ) {
 			foreach ( $_REQUEST["checked"] as $check ) {
 				$access->check_page_exists($check);
 				// Now check permissions to access this page
-				if (!$tikilib->user_has_perm_on_object($user, $check, 'wiki page', 'tiki_p_view')) {
+				$perms = Perms::get( array( 'type' => 'wiki page', 'object' => $check ) );
+				if (! $perms->view ) {
 					$access->display_error( $check, tra("Permission denied you cannot view this page"), '403' );
 				}
 				$page_info = $tikilib->get_page_info($check);
@@ -77,7 +78,7 @@ if ( !empty($_REQUEST['submit_mult']) && isset($_REQUEST["checked"]) ) {
 			global $wikilib; include_once('lib/wiki/wikilib.php');
 			foreach ($_REQUEST["checked"] as $check) {
 				$info = $tikilib->get_page_info($check);
-				if ($info['flag'] == 'L' && ($tiki_p_admin_wiki == 'y' || ($user && ($user == $info['lockedby']) || (!$info['lockedby'] && $user == $info['user'])))) {
+				if ($info['flag'] == 'L' && ($globalperms->admin_wiki == 'y' || ($user && ($user == $info['lockedby']) || (!$info['lockedby'] && $user == $info['user'])))) {
 					$wikilib->unlock_page($check);
 					}	
 			}
@@ -87,21 +88,26 @@ if ( !empty($_REQUEST['submit_mult']) && isset($_REQUEST["checked"]) ) {
 			global $wikilib; include_once('lib/wiki/wikilib.php');
 			foreach ($_REQUEST["checked"] as $check) {
 				$info = $tikilib->get_page_info($check);
-				if ($info['flag'] != 'L' && ($tiki_p_admin_wiki == 'y' || $tikilib->user_has_perm_on_object($user, $check, 'wiki page', 'tiki_p_lock', 'tiki_p_edit_categorized'))) {
+				$perms = Perms::get( array( 'type' => 'wiki page', 'object' => $check ) );
+				if ( $info['flag'] != 'L' && ( $globalperms->admin_wiki == 'y' || $perms->lock ) ) {
 					$wikilib->lock_page($check);
 					}	
 			}
 			break;
-	case 'zip':
-		if ($tiki_p_admin == 'y') {
-			include_once('lib/wiki/xmllib.php');
-			$xmllib = new XmlLib();
-			$zipFile = 'dump/xml.zip';
-			$config['debug'] = false;
-			if ($xmllib->export_pages($_REQUEST['checked'], null, $zipFile, $config)) {
-				if (!$config['debug']) {
-					header("location: $zipFile");
-					die;
+
+		case 'zip':
+			if ($globalperms->admin == 'y') {
+				include_once ('lib/wiki/xmllib.php');
+				$xmllib = new XmlLib;
+				$zipFile = 'dump/xml.zip';
+				$config['debug'] = false;
+				if ($xmllib->export_pages($_REQUEST['checked'], null, $zipFile, $config)) {
+					if (!$config['debug']) {
+						header("location: $zipFile");
+						die;
+					}
+				} else {
+					$smarty->assign('error', $xmllib->get_error());
 				}
 			} else {
 				$smarty->assign('error', $xmllib->get_error());
@@ -262,19 +268,15 @@ if ( ! empty($multiprint_pages) ) {
 	
 	if ($prefs['feature_categories'] == 'y') {
 		global $categlib; include_once ('lib/categories/categlib.php');
-		$categories = $categlib->get_all_categories_respect_perms($user, 'tiki_p_view_categories');
+		$categories = $categlib->get_all_categories_respect_perms($user, 'view_category');
 		$smarty->assign_by_ref('categories', $categories);
 		if ((isset($prefs['wiki_list_categories']) && $prefs['wiki_list_categories'] == 'y') || (isset($prefs['wiki_list_categories_path']) && $prefs['wiki_list_categories_path'] == 'y')) {
 			foreach ($listpages['data'] as $i=>$check) {
 				$cats = $categlib->get_object_categories('wiki page',$check['pageName']);
 				foreach ($cats as $cat) {
-					if ($userlib->user_has_perm_on_object($user, $cat, 'category', 'tiki_p_view_categories')) {
-						$listpages['data'][$i]['categpath'][] = $cp = $categlib->get_category_path_string($cat);
-						if ($s = strrchr($cp, ':'))
-							$listpages['data'][$i]['categname'][] = substr($s, 1);
-						else
-							$listpages['data'][$i]['categname'][] = $cp;
-					}
+					$listpages['data'][$i]['categpath'][] = $cp = $categlib->get_category_path_string($cat);
+					if ($s = strrchr($cp, ':')) $listpages['data'][$i]['categname'][] = substr($s, 1);
+					else $listpages['data'][$i]['categname'][] = $cp;
 				}
 			}
 		}
@@ -294,10 +296,8 @@ if ( ! empty($multiprint_pages) ) {
 	
 	// disallow robots to index page:
 	$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
-
-	if( $access->is_serializable_request() ) {
-		
-		if( isset( $_REQUEST['listonly'] ) && ($prefs['feature_mootools'] == 'y' || ($prefs['feature_jquery'] == 'y' && $prefs['feature_jquery_autocomplete'] == 'y')) ) {
+	if ($access->is_serializable_request()) {
+		if (isset($_REQUEST['listonly']) && ($prefs['feature_jquery'] == 'y' && $prefs['feature_jquery_autocomplete'] == 'y')) {
 			$pages = array();
 			foreach( $listpages['data'] as $page )
 				$pages[] = $page['pageName'];

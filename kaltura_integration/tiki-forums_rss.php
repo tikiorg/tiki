@@ -37,13 +37,13 @@ $output = $rsslib->get_from_cache($uniqueid);
 if ($output["data"]=="EMPTY") {
 	$title = (!empty($title_rss_forums)) ? $title_rss_forums :  tra("Tiki RSS feed for forums");
 	$desc = (!empty($desc_rss_forums)) ? $desc_rss_forums : tra("Last topics in forums.");
-	$id = "forumId";
+	$id = 'object';
 	$param = "threadId";
 	$descId = "data";
 	$dateId = "commentDate";
 	$authorId = "userName";
 	$titleId = "title";
-	$readrepl = "tiki-view_forum_thread.php?$id=%s&comments_parentId=%s";
+	$readrepl = 'tiki-view_forum_thread.php?forumId=%s&comments_parentId=%s';
 
         $tmp = $prefs['title_rss_'.$feed];
         if ($tmp<>'') $title = $tmp;

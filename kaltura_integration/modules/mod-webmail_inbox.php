@@ -12,6 +12,7 @@ if (!$user) {
 	return;	// modules cannot "exit", they must "return" to keep tiki alive
 }
 
+global $prefs;
 if ($prefs['feature_webmail'] != 'y') {
 	$smarty->assign('tpl_module_title', tra('Webmail error'));
 	$smarty->assign('error', 'This feature is disabled');
@@ -107,6 +108,14 @@ function webmail_refresh() {	// called in ajax mode
 			$a_mail['operator'] = '';
 		}
 		
+		// check if sender is in contacts
+		$a_mail['sender']['contactId'] = $contactlib->get_contactId_email($a_mail['sender']['email'], $user);
+		// check if there's a wiki page
+		$ext = $contactlib->get_ext_by_name($user, tra('Wiki Page'), $a_mail['sender']['contactId']);
+		if ($ext) {
+			$a_mail['sender']['wikiPage'] = $contactlib->get_contact_ext_val($user, $a_mail['sender']['contactId'], $ext['fieldId']);
+		}
+				
 		$webmail_list_page[] = $a_mail;
 	}
 	

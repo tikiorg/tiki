@@ -22,21 +22,38 @@ if ($prefs['feature_contacts'] != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
-
-$cookietab = 1;
+if (!isset($cookietab)) { $cookietab = '1'; }
 
 if (isset($_REQUEST['prefs'])) {
 	$tikilib->set_user_preference($user, 'user_contacts_default_view', $_REQUEST['user_contacts_default_view']);
-	$cookietab = 1;
+	$cookietab = '1';
 }
 $smarty->assign('user_contacts_default_view', $tikilib->get_user_preference($user, 'user_contacts_default_view'), 'group');
-
-if (isset($_REQUEST['ext_remove'])) { $contactlib->remove_ext($user, $_REQUEST['ext_remove']); $cookietab = 2; }
-if (isset($_REQUEST['ext_add'])) { $contactlib->add_ext($user, $_REQUEST['ext_add']); $cookietab = 2; }
-if (isset($_REQUEST['ext_show'])) { $contactlib->modify_ext($user, $_REQUEST['ext_show'], array('show' => 'y')); $cookietab = 2; }
-if (isset($_REQUEST['ext_hide'])) { $contactlib->modify_ext($user, $_REQUEST['ext_hide'], array('show' => 'n')); $cookietab = 2; }
-
-$exts =& $contactlib->get_ext_list($user);
+if (isset($_REQUEST['ext_remove'])) {
+	$contactlib->remove_ext($user, $_REQUEST['ext_remove']);
+	$cookietab = 2;
+}
+if (isset($_REQUEST['ext_add'])) {
+	$contactlib->add_ext($user, $_REQUEST['ext_add']);
+	$cookietab = 2;
+}
+if (isset($_REQUEST['ext_show'])) {
+	$contactlib->modify_ext($user, $_REQUEST['ext_show'], array('show' => 'y'));
+	$cookietab = 2;
+}
+if (isset($_REQUEST['ext_hide'])) {
+	$contactlib->modify_ext($user, $_REQUEST['ext_hide'], array('show' => 'n'));
+	$cookietab = 2;
+}
+if (isset($_REQUEST['ext_public'])) {
+	$contactlib->modify_ext($user, $_REQUEST['ext_public'], array('flagsPublic' => 'y'));
+	$cookietab = 2;
+}
+if (isset($_REQUEST['ext_private'])) {
+	$contactlib->modify_ext($user, $_REQUEST['ext_private'], array('flagsPublic' => 'n'));
+	$cookietab = 2;
+}
+$exts = & $contactlib->get_ext_list($user);
 $nb_exts = count($exts);
 
 // consistancy check

@@ -7,7 +7,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 global $ranklib; include_once ('lib/rankings/ranklib.php');
-$ranking = $ranklib->wiki_ranking_top_pages($module_rows);
+$categs=$ranklib->get_jail();
+$ranking = $ranklib->wiki_ranking_top_pages($module_rows, $categs ? $categs : array());
 
 $smarty->assign('modTopPages', $ranking["data"]);
 $smarty->assign('nonums', isset($module_params["nonums"]) ? $module_params["nonums"] : 'n');

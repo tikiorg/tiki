@@ -23,10 +23,11 @@ $exts=$contactlib->get_ext_list($user);
 $traducted_exts=array();
 foreach($exts as $ext) {
 	$traducted_exts[$ext['fieldId']] = array(
-    		'tra' => tra($ext['fieldname']),
+    	'tra' => tra($ext['fieldname']),
 		'art' => $ext['fieldname'],
 		'id' => $ext['fieldId'],
-		'show' => $ext['show']
+		'show' => $ext['show'],
+		'public' => $ext['flagsPublic']
 	);
 }
 
@@ -34,12 +35,12 @@ if ($_REQUEST["contactId"]) {
 	$info = $contactlib->get_contact($_REQUEST["contactId"], $user);
 	foreach($info['ext'] as $k => $v) {
 	    if (!in_array($k, array_keys($exts))) {
-
-// okay, we need to grab the name from exts[], where fieldId = $k
- 		$ext = $contactlib->get_ext($k);
-		$traducted_exts[$k]['tra'] = $ext['fieldname'];
-		$traducted_exts[$k]['art'] = $ext['fieldname'];
-		$traducted_exts[$k]['id'] = $k;
+			// okay, we need to grab the name from exts[], where fieldId = $k
+ 			$ext = $contactlib->get_ext($k);
+			$traducted_exts[$k]['tra'] = $ext['fieldname'];
+			$traducted_exts[$k]['art'] = $ext['fieldname'];
+			$traducted_exts[$k]['id'] = $k;
+			$traducted_exts[$k]['public'] = $ext['flagsPublic'];
 	    }
 	}
 } else {
@@ -176,9 +177,6 @@ if ($offset > 0) {
 include_once ('tiki-section_options.php');
 
 ask_ticket('contacts');
-if ($prefs['feature_ajax'] == "y") {
-	$smarty->assign("mootab",'y');
-}
 $smarty->assign('myurl', 'tiki-contacts.php');
 
 $smarty->assign('mid','tiki-contacts.tpl');

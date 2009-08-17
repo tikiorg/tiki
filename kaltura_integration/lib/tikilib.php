@@ -20,7 +20,9 @@ if ( ! defined('DATE_FORMAT_UNIXTIME') ) define('DATE_FORMAT_UNIXTIME', 5);
 // * shared functions (marked as /*shared*/) are functions that are
 //   called from Tiki modules.
 
-class TikiLib extends TikiDB {
+require_once('lib/core/lib/TikiDb/Bridge.php');
+
+class TikiLib extends TikiDb_Bridge {
 	var $buffer;
 	var $flag;
 	var $parser;
@@ -912,16 +914,20 @@ class TikiLib extends TikiDB {
 	/*shared*/
 
 	function list_trackers($offset=0, $maxRecords=-1, $sort_mode='name_asc', $find='') {
+		global $categlib; require_once('lib/categories/categlib.php');
+		$join = '';
+		$where = '';
+		$bindvars = array();
+		if( $jail = $categlib->get_jail() ) {
+			$categlib->getSqlJoin($jail, 'tracker', '`tiki_trackers`.`trackerId`', $join, $where, $bindvars);
+		}	
 		if ($find) {
 			$findesc = '%' . $find . '%';
-			$mid = " where (`name` like ? or `description` like ?)";
-			$bindvars=array($findesc,$findesc);
-		} else {
-			$mid = "";
-			$bindvars=array();
+			$where .= ' and (`tiki_trackers`.`name` like ? or `tiki_trackers`.`description` like ?)';
+			$bindvars = array_merge($bindvars, array($findesc, $findesc));
 		}
-		$query = "select * from `tiki_trackers` $mid order by ".$this->convert_sortmode($sort_mode);
-		$query_cant = "select count(*) from `tiki_trackers` $mid";
+		$query = "select * from `tiki_trackers` $join where 1=1 $where order by `tiki_trackers`.".$this->convertSortMode($sort_mode);
+		$query_cant = "select count(*) from `tiki_trackers` $join where 1=1 $where";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
@@ -1398,33 +1404,6 @@ class TikiLib extends TikiDB {
 	// templates ////
 
 	/*shared*/
-	function list_games($offset, $maxRecords, $sort_mode, $find) {
-		$bindvars = array();
-		if ($find) {
-			$findesc = '%'.$find.'%';
-			$mid = " where (`gameName` like ?)";
-			$bindvars[] = $findesc;
-		} else {
-			$mid = "";
-		}
-		$query = "select * from `tiki_games` $mid order by ".$this->convert_sortmode($sort_mode);
-		$query_cant = "select count(*) from `tiki_games` $mid";
-		$result = $this->query($query,$bindvars,$maxRecords,$offset);
-		$cant = $this->getOne($query_cant,$bindvars);
-		$ret = array();
-		while ($res = $result->fetchRow()) {
-			$parts = explode('.', $res["gameName"]);
-
-			$res["thumbName"] = $parts[0];
-			$ret[] = $res;
-		}
-		$retval = array();
-		$retval["data"] = $ret;
-		$retval["cant"] = $cant;
-		return $retval;
-	}
-
-	/*shared*/
 	function pick_cookie() {
 		$cant = $this->getOne("select count(*) from `tiki_cookies`",array());
 		if (!$cant) return '';
@@ -1502,8 +1481,6 @@ class TikiLib extends TikiDB {
 		$data['xdata'][] = tra('forums');
 		$data['ydata'][] = $this->getOne('select sum(`hits`) from `tiki_forums`',array());
 
-		$data['xdata'][] = tra('games');
-		$data['ydata'][] = $this->getOne('select sum(`hits`) from `tiki_games`',array());
 		return $data;
 	}
 
@@ -2218,7 +2195,8 @@ class TikiLib extends TikiDB {
 	// FILE GALLERIES ////
 	/*shared*/
 	function list_files($offset=0, $maxRecords=-1, $sort_mode='created_desc', $find='') {
-		return $this->get_files($offset, $maxRecords, $sort_mode, $find, -1, false, false, true, true, false, false, true, true);
+		global $prefs;
+		return $this->get_files($offset, $maxRecords, $sort_mode, $find, $prefs['fgal_root_id'], false, false, true, true, false, false, true, true);
 	}
 
 	/*shared*/
@@ -2258,16 +2236,13 @@ class TikiLib extends TikiDB {
 	 */
 	function get_files($offset, $maxRecords, $sort_mode, $find, $galleryId=-1, $with_archive=false, $with_subgals=false, $with_subgals_size=true, $with_files=true, $with_files_data=false, $with_parent_name=false, $with_files_count=true, $recursive=false, $my_user='', $keep_subgals_together=true, $parent_is_file=false) {
 		global $user, $tiki_p_admin_file_galleries;
+		global $filegallib; require_once 'lib/filegals/filegallib.php';
+
+		$f_jail_bind = array();
+		$g_jail_bind = array();
+		$bindvars = array();
 
 		if ( ( ! $with_files && ! $with_subgals ) || ( $parent_is_file && $galleryId <= 0 ) ) return array();
-
-		// galleryId == 0 is a way to get only the main galleries
-		if ( $galleryId == 0 ) {
-			$galleryId = -1;
-			$with_files = false;
-			$with_archive = false;
-			$with_subgals = true;
-		}
 
 		$fileId = -1;
 		if ( $parent_is_file ) {
@@ -2275,8 +2250,15 @@ class TikiLib extends TikiDB {
 			$galleryId = -2;
 		}
 
-		// recursive mode is only available for the whole tree
-		$recursive = ( $recursive && $galleryId == -1 );
+		if ( $recursive && ! is_array($galleryId) ) {
+			$idTree = array();
+			$filegallib->getGalleryIds( $idTree, $galleryId, 'list' );
+			$galleryId =& $idTree;
+		} else {
+			// recursive mode is only available for one parent gallery (i.e. not implemented when $galleryId is an array of multiple ids)
+			$recursive = false;
+		}
+
 		$with_subgals_size = ( $with_subgals && $with_subgals_size );
 		if ( $my_user == '' ) $my_user = $user;
 
@@ -2285,6 +2267,7 @@ class TikiLib extends TikiDB {
 		$f_group_by = '';
 		$orderby = $this->convert_sortmode($sort_mode);
 
+		global $categlib; require_once 'lib/categories/categlib.php';
 		$f2g_corresp = array(
 				'0 as `isgal`' => '1 as `isgal`',
 				'tf.`fileId` as `id`' => 'tfg.`galleryId` as `id`',
@@ -2320,7 +2303,7 @@ class TikiLib extends TikiDB {
 				'tf.`filetype`' => "tfg.`type` as `filetype`", /// use 'type' instead
 				'tf.`user`' => 'tfg.`user`', /// use 'creator' instead
 				'tf.`lastModifUser`' => "'' as `lastModifUser`" /// use 'last_user' instead
-					);
+		);
 		if ( $with_files_data ) {
 			$f2g_corresp['tf.`data`'] = "'' as `data`";
 		}
@@ -2333,7 +2316,15 @@ class TikiLib extends TikiDB {
 			$f_group_by = ' GROUP BY tf.`fileId`';
 		}
 
-		$f_query = 'SELECT '.implode(', ', array_keys($f2g_corresp)).' FROM '.$f_table.' WHERE tf.`archiveId`='.( $parent_is_file ? $fileId : '0' );
+		if( $jail = $categlib->get_jail() ) {
+			$categlib->getSqlJoin( $jail, 'file', 'tf.`fileId`', $f_jail_join, $f_jail_where, $f_jail_bind );
+		} else {
+			$f_jail_join = '';
+			$f_jail_where = '';
+			$f_jail_bind = array();
+		}
+
+		$f_query = 'SELECT '.implode(', ', array_keys($f2g_corresp)).' FROM '.$f_table.$f_jail_join.' WHERE tf.`archiveId`='.( $parent_is_file ? $fileId : '0' ) . $f_jail_where;
 		$bindvars = array();
 
 		$mid = '';
@@ -2346,180 +2337,192 @@ class TikiLib extends TikiDB {
 		$galleryId_str = '';
 		if ( is_array($galleryId) ) {
 			$galleryId_str = ' in ('.implode(',', array_fill(0, count($galleryId),'?')).')';
-					$bindvars = array_merge($galleryId, $bindvars);
-					} elseif ( $galleryId >= -1 && ! $recursive ) {
-					$galleryId_str = '=?';
-					if ( $with_subgals ) array_unshift($bindvars, $galleryId);
-					if ( $with_files ) array_unshift($bindvars, $galleryId);
-					}
-					if ( $galleryId_str != '' ) {
-					$f_query .= ' AND tf.`galleryId`'.$galleryId_str;
-					}
+			$bindvars = array_merge($galleryId, $bindvars);
+		} elseif ( $galleryId >= -1 ) {
+			$galleryId_str = '=?';
+			if ( $with_subgals ) array_unshift($bindvars, $galleryId);
+			if ( $with_files ) array_unshift($bindvars, $galleryId);
+		}
+		if ( $galleryId_str != '' ) {
+			$f_query .= ' AND tf.`galleryId`'.$galleryId_str;
+		}
 
-					if ( $with_subgals ) {
+		if ( $with_subgals ) {
 
-					$g_mid = '';
-					$g_join = '';
-					$g_group_by = '';
+			$g_mid = '';
+			$g_join = '';
+			$g_group_by = '';
 
-					$join = '';
-					$select = 'tab.*';
+			$join = '';
+			$select = 'tab.*';
 
-					if ( $with_files_count ) {
-						$g_join = ' LEFT JOIN `tiki_files` tfc ON (tfg.`galleryId` = tfc.`galleryId`)';
-						$g_group_by = ' GROUP BY tfg.`galleryId`';
-					}
+			if ( $with_files_count ) {
+				$g_join = ' LEFT JOIN `tiki_files` tfc ON (tfg.`galleryId` = tfc.`galleryId`)';
+				$g_group_by = ' GROUP BY tfg.`galleryId`'; 
+			}
 
-					// If $user is admin then get ALL galleries, if not only user galleries are shown
-					// If the user is not admin then select it's own galleries or public galleries
-					if ( $tiki_p_admin_file_galleries != 'y' && $my_user != 'admin' && ! $parentId ) {
-						$g_mid = " WHERE (tfg.`user`='$my_user' OR tfg.`visible`='y' OR tfg.`public`='y')"; /// FIXME: use bindvars
-					}
+			// If $user is admin then get ALL galleries, if not only user galleries are shown
+			// If the user is not admin then select it's own galleries or public galleries
+			if ( $tiki_p_admin_file_galleries != 'y' && $my_user != 'admin' && ! $parentId ) {
+				$g_mid = " AND (tfg.`user`=? OR tfg.`visible`='y' OR tfg.`public`='y')";
+				$bindvars[] = $my_user;
+			}
 
-					$g_query = 'SELECT '.implode(', ', array_values($f2g_corresp)).' FROM '.$g_table.$g_join.$g_mid;
+			if( $jail = $categlib->get_jail() ) {
+				$categlib->getSqlJoin( $jail, 'file gallery', '`tfg`.`galleryId`', $g_jail_join, $g_jail_where, $g_jail_bind );
+			} else {
+				$g_jail_join = '';
+				$g_jail_where = '';
+				$g_jail_bind = array();
+			}
 
-					if ( $galleryId_str != '' ) {
-						$g_query .= ( $g_mid == '' ? ' WHERE' : ' AND' ).' tfg.`parentId`'.$galleryId_str;
-					}
+			$g_query = 'SELECT '.implode(', ', array_values($f2g_corresp)).' FROM '.$g_table.$g_join.$g_jail_join;
+			$g_query .= " WHERE 1=1 $g_mid ";
 
-					if ( $with_parent_name ) {
-						$select .= ', tfgp.`name` as `parentName`';
-						$join .= ' LEFT OUTER JOIN `tiki_file_galleries` tfgp ON (tab.`parentId` = tfgp.`galleryId`)';
-					}
+			if ( $galleryId_str != '' ) {
+				$g_query .= ' AND tfg.`parentId`'.$galleryId_str;
+			}
 
-					if ( $with_files ) {
-						$query = "SELECT $select FROM (($f_query $f_group_by) UNION ($g_query $g_group_by)) as tab".$join;
-					} else {
-						$query = "SELECT $select FROM ($g_query $g_group_by) as tab".$join;
-					}
-					if ( $mid != '' ) $query .= ' WHERE'.$mid;
-					if ( $orderby != '' ) $orderby = 'tab.'.$orderby;
+			$g_query .= $g_jail_where;
+			$bindvars = array_merge( $bindvars, $g_jail_bind );
 
-					} else {
-						$query = $f_query;
-						if ( $mid != '' ) $query .= ' AND'.$mid;
-						$query .= $f_group_by;
-					}
+			if ( $with_parent_name ) {
+				$select .= ', tfgp.`name` as `parentName`';
+				$join .= ' LEFT OUTER JOIN `tiki_file_galleries` tfgp ON (tab.`parentId` = tfgp.`galleryId`)';
+			}
 
-					if ( $keep_subgals_together ) {
-						$query .= ' ORDER BY `isgal` desc'.($orderby == '' ? '' : ', '.$orderby);
-					} elseif ( $orderby != '' ) {
-						$query .= ' ORDER BY '.$orderby;
-					}
-					$result = $this->query($query, $bindvars);
+			if ( $with_files ) {
+				$query = "SELECT $select FROM (($f_query $f_group_by) UNION ($g_query $g_group_by)) as tab".$join;
+				$bindvars = array_merge( $f_jail_bind, $bindvars );
+			} else {
+				$query = "SELECT $select FROM ($g_query $g_group_by) as tab".$join;
+			}
+			if ( $mid != '' ) $query .= ' WHERE'.$mid;
+			if ( $orderby != '' ) $orderby = 'tab.'.$orderby;
 
-					if ( $with_subgals_size ) {
-						if (!function_exists('galsize')) {
-						function galsize($id, &$db) {
-							$return = 0;
+		} else {
+			$query = $f_query;
+			$bindvars = array_merge( $f_jail_bind, $bindvars );
+			if ( $mid != '' ) $query .= ' AND'.$mid;
+			$query .= $f_group_by;
+		}
 
-							$result = $db->query('SELECT `fileId`,`filesize` FROM tiki_files WHERE `galleryId`=?', array($id));
-							while ( $res = $result->fetchRow() ) {
-								$return += $res['filesize'];
-							}
-							unset($result);
+		if ( $keep_subgals_together ) {
+			$query .= ' ORDER BY `isgal` desc'.($orderby == '' ? '' : ', '.$orderby);
+		} elseif ( $orderby != '' ) {
+			$query .= ' ORDER BY '.$orderby;
+		}
+		$result = $this->fetchAll($query, $bindvars);
 
-							$result = $db->query('SELECT `galleryId` FROM `tiki_file_galleries` WHERE `parentId`=?', array($id));
-							while ( $res = $result->fetchRow() ) {
-								$return += galsize($res['galleryId'], $db);
-							}
-							unset($result);
+		if ( $with_subgals_size ) {
+			if (!function_exists('galsize')) {
+				function galsize($id, &$db) {
+					$return = 0;
 
-							return $return;
-						}
-						}
-					}
-
-					$ret = array();
-					$gal_size_order = array();
-					$cant = 0;
-					$n = -1;
-					$need_everything = ( $with_subgals_size && ( $sort_mode == 'size_asc' || $sort_mode == 'filesize_asc' ) );
-					global $cachelib; include_once('lib/cache/cachelib.php');
-				  $cacheName = md5("group:".implode("\n", $this->get_user_groups($user)));
-  				$cacheType = 'fgals_perms_'.$galleryId."_";
-					if ($galleryId > 0 && $cachelib->isCached($cacheName, $cacheType)) {
-						$fgal_perms = unserialize($cachelib->getCached($cacheName, $cacheType));
-					} else {
-						$fgal_perms = array();
-					}
+					$result = $db->query('SELECT `fileId`,`filesize` FROM tiki_files WHERE `galleryId`=?', array($id));
 					while ( $res = $result->fetchRow() ) {
-						$object_type = ( $res['isgal'] == 1 ? 'file gallery' : 'file');
-						if (isset($fgal_perms[$res['id']])) {
-							$res['perms'] = $fgal_perms[$res['id']];
-						} else {
-							$fgal_perms[$res['id']] = $res['perms'] = $this->get_perm_object($res['id'], $object_type, array(), false);
-						}
-						if ($galleryId <=0) {
-							$cachelib->cacheItem($cacheName, serialize($fgal_perms), 'fgals_perms_'.$res['id'].'_');
-						}
-						// Don't return the current item, if :
-						//  the user has no rights to view the file gallery AND no rights to list all galleries (in case it's a gallery)
-						if ( $res['perms']['tiki_p_view_file_gallery'] != 'y'
-								&& ( $res['isgal'] == 0 || $res['perms']['tiki_p_list_file_gallery'] != 'y' )
-							 ) continue;
-
-						$n++;
-						if ( ! $need_everything && $offset != -1 && $n < $offset ) continue;
-
-						if ( $need_everything || $maxRecords == -1 || $cant < $maxRecords ) {
-							$ret[$cant] = $res;
-							if ( $with_subgals_size && $res['isgal'] == 1 ) {
-								$ret[$cant]['size'] = (string)galsize($res['id'], $this);
-								$ret[$cant]['filesize'] = $ret[$cant]['size']; /// Obsolete
-								if ( $keep_subgals_together ) {
-									$gal_size_order[$cant] = $ret[$cant]['size'];
-								}
-							}
-							if ( $with_subgals_size && ! $keep_subgals_together ) {
-								$gal_size_order[$cant] = $ret[$cant]['size'];
-							}
-							// generate link for podcasts
-							$ret[$cant]['podcast_filename'] = $res['path'];
-						}
-
-						$cant++;
+						$return += $res['filesize'];
 					}
-					if ($galleryId > 0)
-						$cachelib->cacheItem($cacheName, serialize($fgal_perms), $cacheType);
-					if ( ! $need_everything ) $cant += $offset;
+					unset($result);
 
-
-					if ( count($gal_size_order) > 0 ) {
-						if ( $sort_mode == 'size_asc' || $sort_mode == 'filesize_asc' ) {
-							asort($gal_size_order, SORT_NUMERIC);
-						} elseif ( $sort_mode == 'size_desc' || $sort_mode == 'filesize_desc' ) {
-							arsort($gal_size_order, SORT_NUMERIC);
-						}
-						$ret2 = array();
-						foreach ( $gal_size_order as $k => $v ) {
-							$ret2[] = $ret[$k];
-							unset($ret[$k]);
-						}
-						if ( count($ret) > 0 ) {
-							foreach ( $ret as $k => $v ) {
-								$ret2[] = $v;
-							}
-						}
-						unset($ret);
-						$ret =& $ret2;
+					$result = $db->query('SELECT `galleryId` FROM `tiki_file_galleries` WHERE `parentId`=?', array($id));
+					while ( $res = $result->fetchRow() ) {
+						$return += galsize($res['galleryId'], $db);
 					}
+					unset($result);
 
-					if ( $need_everything && ( $offset > 0 || $maxRecords != -1 ) ) {
-						if ( $maxRecords == -1 ) {
-							$ret = array_slice($ret, $offset);
-						} else {
-							$ret = array_slice($ret, $offset, $maxRecords);
-						}
+					return $return;
+				}
+			}
+		}
+
+		$ret = array();
+		$gal_size_order = array();
+		$cant = 0;
+		$n = -1;
+		$need_everything = ( $with_subgals_size && ( $sort_mode == 'size_asc' || $sort_mode == 'filesize_asc' ) );
+		global $cachelib; include_once('lib/cache/cachelib.php');
+		$cacheName = md5("group:".implode("\n", $this->get_user_groups($user)));
+		$cacheType = 'fgals_perms_'.$galleryId."_";
+		if ($galleryId > 0 && $cachelib->isCached($cacheName, $cacheType)) {
+			$fgal_perms = unserialize($cachelib->getCached($cacheName, $cacheType));
+		} else {
+			$fgal_perms = array();
+		}
+		foreach( $result as $res ) {
+			$object_type = ( $res['isgal'] == 1 ? 'file gallery' : 'file');
+			if (isset($fgal_perms[$res['id']])) {
+				$res['perms'] = $fgal_perms[$res['id']];
+			} else {
+				$fgal_perms[$res['id']] = $res['perms'] = $this->get_perm_object($res['id'], $object_type, array(), false);
+			}
+			if ($galleryId <=0) {
+				$cachelib->cacheItem($cacheName, serialize($fgal_perms), 'fgals_perms_'.$res['id'].'_');
+			}
+			// Don't return the current item, if :
+			//  the user has no rights to view the file gallery AND no rights to list all galleries (in case it's a gallery)
+			if ( $res['perms']['tiki_p_view_file_gallery'] != 'y'
+					&& ( $res['isgal'] == 0 || $res['perms']['tiki_p_list_file_gallery'] != 'y' )
+			   ) continue;
+
+			$n++;
+			if ( ! $need_everything && $offset != -1 && $n < $offset ) continue;
+
+			if ( $need_everything || $maxRecords == -1 || $cant < $maxRecords ) {
+				$ret[$cant] = $res;
+				if ( $with_subgals_size && $res['isgal'] == 1 ) {
+					$ret[$cant]['size'] = (string)galsize($res['id'], $this);
+					$ret[$cant]['filesize'] = $ret[$cant]['size']; /// Obsolete
+					if ( $keep_subgals_together ) {
+						$gal_size_order[$cant] = $ret[$cant]['size'];
 					}
+				}
+				if ( $with_subgals_size && ! $keep_subgals_together ) {
+					$gal_size_order[$cant] = $ret[$cant]['size'];
+				}
+				// generate link for podcasts
+				$ret[$cant]['podcast_filename'] = $res['path'];
+			}
 
-					return array('data' => $ret, 'cant' => $cant);
+			$cant++;
+		}
+		if ($galleryId > 0)
+			$cachelib->cacheItem($cacheName, serialize($fgal_perms), $cacheType);
+		if ( ! $need_everything ) $cant += $offset;
+
+		if ( count($gal_size_order) > 0 ) {
+			if ( $sort_mode == 'size_asc' || $sort_mode == 'filesize_asc' ) {
+				asort($gal_size_order, SORT_NUMERIC);
+			} elseif ( $sort_mode == 'size_desc' || $sort_mode == 'filesize_desc' ) {
+				arsort($gal_size_order, SORT_NUMERIC);
+			}
+			$ret2 = array();
+			foreach ( $gal_size_order as $k => $v ) {
+				$ret2[] = $ret[$k];
+				unset($ret[$k]);
+			}
+			if ( count($ret) > 0 ) {
+				foreach ( $ret as $k => $v ) {
+					$ret2[] = $v;
+				}
+			}
+			unset($ret);
+			$ret =& $ret2;
+		}
+
+		if ( $need_everything && ( $offset > 0 || $maxRecords != -1 ) ) {
+			if ( $maxRecords == -1 ) {
+				$ret = array_slice($ret, $offset);
+			} else {
+				$ret = array_slice($ret, $offset, $maxRecords);
+			}
+		}
+
+		return array('data' => $ret, 'cant' => $cant);
 	}
 
-	function list_file_galleries($offset = 0, $maxRecords = -1, $sort_mode = 'name_desc', $user='', $find='', $parentId=-1,
-								 $with_archive=false, $with_subgals=true, $with_subgals_size=false, $with_files=false, $with_files_data=false, $with_parent_name=true, $with_files_count=true,$recursive=true) {
-		return $this->get_files($offset, $maxRecords, $sort_mode, $find, $parentId,
-								$with_archive, $with_subgals, $with_subgals_size, $with_files, $with_files_data, $with_parent_name, $with_files_count, $recursive, $user);
+	function list_file_galleries($offset = 0, $maxRecords = -1, $sort_mode = 'name_desc', $user='', $find='', $parentId=-1, $with_archive=false, $with_subgals=true, $with_subgals_size=false, $with_files=false, $with_files_data=false, $with_parent_name=true, $with_files_count=true,$recursive=true) {
+		return $this->get_files($offset, $maxRecords, $sort_mode, $find, $parentId, $with_archive, $with_subgals, $with_subgals_size, $with_files, $with_files_data, $with_parent_name, $with_files_count, $recursive, $user);
 	}
 
 	/*shared*/
@@ -2567,10 +2570,60 @@ class TikiLib extends TikiDB {
 	}
 
 	/*shared*/
-	function get_file_gallery($id) {
-		$query = "select * from `tiki_file_galleries` where `galleryId`=?";
-		$result = $this->query($query,array((int) $id));
-		$res = $result->fetchRow();
+	function get_file_gallery($id = -1, $defaultsFallback = true) {
+		static $defaultValues = null;
+
+		if ( $defaultValues === null && $defaultsFallback ) {
+			global $prefs;
+			$defaultValues = array(
+				'name' => '',
+				'show_id' => $prefs['fgal_list_id'],
+				'show_icon' => $prefs['fgal_list_type'],
+				'show_name' => 'f',
+				'show_description' => $prefs['fgal_list_description'],
+				'show_size' => $prefs['fgal_list_size'],
+				'show_created' => $prefs['fgal_list_created'],
+				'show_modified' => $prefs['fgal_list_lastmodif'],
+				'show_creator' => $prefs['fgal_list_creator'],
+				'show_author' => $prefs['fgal_list_author'],
+				'show_last_user' => $prefs['fgal_list_last_user'],
+				'show_comment' => $prefs['fgal_list_comment'],
+				'show_files' => $prefs['fgal_list_files'],
+				'show_explorer' => $prefs['fgal_show_explorer'],
+				'show_path' =>$prefs['fgal_show_path'],
+				'show_slideshow' => $prefs['fgal_show_slideshow'],
+				'default_view' => $prefs['fgal_default_view'],
+				'show_hits' => $prefs['fgal_list_hits'],
+				'show_lockedby' => $prefs['fgal_list_lockedby'],
+				'show_checked' => 'y',
+				'show_userlink' => 'y',
+				'sort_mode' => $prefs['fgal_sort_mode'],
+				'public' =>'y',
+				'lockable' => 'n',
+				'visible' => 'y',
+				'archives' => -1,
+				'type' => 'default',
+				'description' => ''
+			);
+		}
+
+		if ( $id > 0 ) {
+			$query = "select * from `tiki_file_galleries` where `galleryId`=?";
+			$result = $this->query($query,array((int) $id));
+			$res = $result->fetchRow();
+		} else {
+			$res = array();
+		}
+
+		// Use default values if some values are not specified
+		if ( $res !== false && $defaultsFallback ) {
+			foreach ( $defaultValues as $k => $v ) {
+				if ( $res[$k] === null ) {
+					$res[$k] = $v;
+				}
+			}
+		}
+
 		return $res;
 	}
 
@@ -2886,18 +2939,24 @@ class TikiLib extends TikiDB {
 
 	// BLOG METHODS ////
 	function list_blogs($offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '') {
+		global $categlib; if (!$categlib) require_once 'lib/categories/categlib.php';
+		$bindvars = array();
+		$join = '';
+		$where = '';
+
+		if( $jail = $categlib->get_jail() ) {
+			$categlib->getSqlJoin($jail, 'blog', '`tiki_blogs`.`blogId`', $join, $where, $bindvars);
+		}	
 
 		if ($find) {
 			$findesc = '%' . $find . '%';
-
-			$mid = ' where (`title` like ? or `description` like ?) ';
-			$bindvars = array($findesc, $findesc);
-		} else {
-			$mid = '';
-			$bindvars = array();
+			$where .= ' and (`tiki_blogs`.`title` like ? or `tiki_blogs`.`description` like ?) ';
+			$bindvars = array_merge($bindvars, array($findesc, $findesc));
 		}
-		$query = "select * from `tiki_blogs` $mid order by " . $this->convert_sortmode($sort_mode);
+
+		$query = "select * from `tiki_blogs` $join WHERE 1=1 $where order by `tiki_blogs`." . $this->convertSortMode($sort_mode); 
 		$result = $this->query($query, $bindvars);
+
 		$ret = array();
 		$cant = 0;
 		$nb = 0;
@@ -2923,10 +2982,20 @@ class TikiLib extends TikiDB {
 
 	/*shared*/
 	function get_blog($blogId) {
-		global $prefs, $user;
+		global $prefs, $user, $categlib; if (!$categlib) require_once 'lib/categories/categlib.php'; 
 
-		$query = "select * from `tiki_blogs` where `blogId`=?";
-		$result = $this->query($query,array((int)$blogId));
+		$bindvars = array();
+
+		if( $jail = $categlib->get_jail() ) {
+			$categlib->getSqlJoin($jail, 'blog', '`tiki_blogs`.`blogId`', $join, $where, $bindvars);
+		} else {
+			$join = '';
+			$where = '';
+		}
+		
+		array_push( $bindvars );
+		$query = "select * from `tiki_blogs` $join where `blogId`=$blogId $where";
+		$result = $this->query($query, $bindvars);
 		if ($result->numRows()) {
 			$res = $result->fetchRow();
 		} else {
@@ -3182,8 +3251,12 @@ class TikiLib extends TikiDB {
 			$bindvars[] = $max_rating;
 		}
 
+		global $categlib; require_once('lib/categories/categlib.php');
+		if( empty( $categId ) ) {
+			$categId = $categlib->get_jail();
+		}
+
 		if ($categId) {
-			global $categlib; require_once('lib/categories/categlib.php');
 			$categlib->getSqlJoin($categId, 'article', '`tiki_articles`.`articleId`', $fromSql, $mid2, $bindvars);
 		}
 		
@@ -3455,25 +3528,27 @@ class TikiLib extends TikiDB {
 	}
 
 	/*shared*/
+	/* Returns all module assignations for a certain position, or all positions (by default). A module assignation
+	is represented by an array similar to a tiki_modules record. The groups field is unserialized in the module_groups key, a spaces-separated list of groups.
+	If asking for a specific position, returns an array of module assignations. If not, returns an array of arrays of modules assignations indexed by positions. For example: array("l" -> array("module assignation"))
+	TODO: Document $displayed's effect */
 	function get_assigned_modules($position = null, $displayed="n") {
 		$filter = '';
+		$bindvars = array();
 
 		if ( $position !== null ) {
 			$filter .= 'where `position`=?';
-			$bindvars = array($position);
+			$bindvars[] = $position;
 		}
 
 		if ( $displayed != 'n' ) {
-			$filter .= ( $filter == '' ? 'where' : 'and' ) . " (`type` is null or `type` != 'h')";
+			$filter .= ( $filter == '' ? 'where' : 'and' ) . " (`type` is null or `type` != ?)";
+			$bindvars[] = 'y';
 		}
 
 		$query = "select * from `tiki_modules` $filter order by ".$this->convert_sortmode("ord_asc");
 
-		if ( isset($bindvars) ) {
-			$result = $this->query($query, $bindvars);
-		} else {
-			$result = $this->query($query);
-		}
+		$result = $this->query($query, $bindvars);
 
 		$ret = array();
 		while ( $res = $result->fetchRow() ) {
@@ -3722,41 +3797,6 @@ class TikiLib extends TikiDB {
 		return $ret;
 	}
 
-	// Returns the name of "n" random pages
-	function get_random_pages($n) {
-		$query = "select count(*) from `tiki_pages`";
-
-		$cant = $this->getOne($query,array());
-
-		// Adjust the limit if there are not enough pages
-		if ($cant < $n)
-			$n = $cant;
-
-		// Now that we know the number of pages to pick select `n`  random positions from `0` to cant
-		$positions = array();
-
-		for ($i = 0; $i < $n; $i++) {
-			$pick = rand(0, $cant - 1);
-
-			if (!in_array($pick, $positions))
-				$positions[] = $pick;
-		}
-
-		// Now that we have the positions we just build the data
-		$ret = array();
-
-		$temp_max = count($positions);
-		for ($i = 0; $i < $temp_max; $i++) {
-			$index = $positions[$i];
-
-			$query = "select `pageName`  from `tiki_pages`";
-			$name = $this->getOne($query,array(),1,$index);
-			$ret[] = $name;
-		}
-
-		return $ret;
-	}
-
 	// Returns the name of all pages
 	function get_all_pages() {
 
@@ -3989,34 +4029,19 @@ class TikiLib extends TikiDB {
 		return $retval;
 	}
 
-	function last_pages($maxRecords = -1) {
-		global $user;
-		$query = "select `pageName`,`lastModif`,`user` from `tiki_pages` order by ".$this->convert_sortmode('lastModif_desc');
-		$result = $this->query($query,array(),$maxRecords,0);
-		$ret = array();
-		while ($res = $result->fetchRow()) {
-			//WYSIWYCA hack: the $maxRecords will not be respected
-			if($this->user_has_perm_on_object($user,$res["pageName"],'wiki page','tiki_p_view')) {
-				$ret[] = $res;
-			}
-		}
-		return $ret;
+	// Deprecated in favor of list_pages
+	function last_pages($maxRecords = -1, $categories='') {
+		if (is_array($categories))
+			$filter=array("categId" => $categories);
+		else
+			$filter=array();
+
+		return $this->list_pages(0, $maxRecords, "lastModif_desc", '', '', true, true, false, false, $filter);
 	}
 
-
+	// Broken. Equivalent to last_pages($maxRecords)
 	function last_major_pages($maxRecords = -1) {
-		global $user;
-		$query = "select distinct(tp.`pageName`),tp.`lastModif`,tp.`user` from `tiki_pages` tp left join `tiki_actionlog` ta
-			on tp.`pageName`= ta.`object` and ta.`objectType`= 'wiki page' where ta.`action`!='' and ta.`objectType`= 'wiki page' order by tp.".$this->convert_sortmode('lastModif_desc');
-		$result = $this->query($query,array(),$maxRecords,0);
-		$ret = array();
-		while ($res = $result->fetchRow()) {
-			//WYSIWYCA hack: the $maxRecords will not be respected
-			if($this->user_has_perm_on_object($user,$res["pageName"],'wiki page','tiki_p_view')) {
-				$ret[] = $res;
-			}
-		}
-		return $ret;
+		return $this->list_pages(0, $maxRecords, "lastModif_desc");
 	}
 	// use this function to speed up when pagename is only needed (the 3 getOne can killed tikiwith more that 3000 pages)
 	function list_pageNames($offset = 0, $maxRecords = -1, $sort_mode = 'pageName_asc', $find = '') {
@@ -4070,19 +4095,29 @@ class TikiLib extends TikiDB {
 			$mid = '';
 		}
 
+		global $categlib; require_once( 'lib/categories/categlib.php' );
+		$category_jails = $categlib->get_jail();
+
+		if( ! isset( $filter['categId'] ) && ! empty( $category_jails ) ) {
+			$filter['categId'] = $category_jails;
+		}
+
 		$distinct = '';
 		if (!empty($filter)) {
 			$tmp_mid = array();
 			foreach ($filter as $type=>$val) {
 				if ($type == 'categId') {
-					$cat_count = count( (array) $val );
+					$categories = $categlib->get_jailed( (array) $val );
+					$categories[] = -1;
+
+					$cat_count = count( $categories );
 					$join_tables .= " inner join `tiki_objects` as tob on (tob.`itemId`= tp.`pageName` and tob.`type`= ?) inner join `tiki_category_objects` as tc on (tc.`catObjectId`=tob.`objectId` and tc.`categId` IN(" . implode(', ', array_fill(0, $cat_count, '?')) . ")) ";
 
 					if( $cat_count > 1 ) {
 						$distinct = ' DISTINCT ';
 					}
 
-					$join_bindvars = array_merge(array('wiki page'), (array) $val);
+					$join_bindvars = array_merge(array('wiki page'), $categories);
 				} elseif ($type == 'lang') {
 					$tmp_mid[] = 'tp.`lang`=?';
 					$bindvars[] = $val;
@@ -4135,12 +4170,18 @@ class TikiLib extends TikiDB {
 			.( $onlyCant ? "tp.`pageName`" : "tp.* ".$select )
 			." from `tiki_pages` as tp $join_tables $mid order by ".$this->convert_sortmode($sort_mode);
 
-		$result = $this->query($query, $bindvars);
+		$result = $this->query($query, $bindvars, $maxrecords, $offset);
 
 		$cant = 0;
 		$n = -1;
 		$ret = array();
+		$raw = array();
 		while ($res = $result->fetchRow()) {
+			$raw[] = $res;
+		}
+		$raw = Perms::filter( array( 'type' => 'wiki page' ), 'object', $raw, array( 'object' => 'pageName', 'creator' => 'creator' ), 'view' );
+
+		foreach( $raw as $res ) {
 			if( $initial ) {
 				$valid = false;
 				foreach( (array) $initial as $candidate ) {
@@ -4155,7 +4196,6 @@ class TikiLib extends TikiDB {
 			}
 			//WYSIWYCA
 			$res['perms'] = $this->get_perm_object($res['pageName'], 'wiki page', $res, false);
-			if ( $res['perms']['tiki_p_view'] != 'y' ) continue;
 
 			$n++;
 			if ( ! $need_everything && $offset != -1 && $n < $offset ) continue;
@@ -4191,7 +4231,6 @@ class TikiLib extends TikiDB {
 				case 'backlinks_desc': usort($ret, 'compare_backlinks'); break;
 				case 'backlinks_asc': usort($ret, 'r_compare_backlinks'); break;
 			}
-			$ret = array_slice($ret, $offset, $maxRecords);
 		}
 
 		$retval = array();
@@ -4209,83 +4248,13 @@ class TikiLib extends TikiDB {
 	// if O.K. this function shall replace similar constructs in list_pages and other functions above.
 	// $categperm is the category permission that should grant $perm. if none, pass 0
 	function user_has_perm_on_object($user,$object,$objtype,$perm,$categperm='tiki_p_view_categorized') {
-		global $prefs, $userlib;
-		static $cacheUserPerm;
-		$keyCache = "$user/$object/$objtype/$perm";
-		if (!empty($cacheUserPerm[$keyCache])) {
-			return $cacheUserPerm[$keyCache];
-		}
-		// superadmin
-		if($userlib->user_has_permission($user, 'tiki_p_admin') || $user == 'admin') {
-			$cacheUserPerm[$keyCache] = true;
-			return(TRUE);
-		}
-		if ($userlib->object_has_one_permission($object, $objtype)) {
-			// wiki permissions override category permissions
-			//handle multiple permissions
-			if(is_array($perm)) {
-				foreach($perm as $p) {
-					if(!$userlib->object_has_permission($user, $object, $objtype,$p)) {
-						$cacheUserPerm[$keyCache] = false;
-						return(FALSE);
-					}
-				}
-			} else {
-				if (!$userlib->object_has_permission($user, $object, $objtype,$perm)) {
-					$cacheUserPerm[$keyCache] = false;
-					return(FALSE);
-				}
-			}
-			$cacheUserPerm[$keyCache] = true;
-			return (TRUE);
-		} elseif ($prefs['feature_categories'] == 'y' && $categperm !== 0) {
-			// no wiki permissions so now we check category permissions
-			global $categlib;
-			if (!is_object($categlib)) {
-				include_once('lib/categories/categlib.php');
-			}
-			unset($tiki_p_view_categorized); // unset this var in case it was set previously
-			$perms_array = $categlib->get_object_categories_perms($user, $objtype, $object);
-			if ($perms_array) {
-				$is_categorized = TRUE;
-				foreach ($perms_array as $p => $value) {
-					$$p = $value;
-				}
-				if ($tiki_p_admin_categories == 'y' && $tiki_p_view_categorized == 'n')
-					$tiki_p_view_categorized = 'y';
-			} else {
-				$is_categorized = FALSE;
-			}
-			if ($is_categorized && !empty($categperm) && $$categperm != 'y') {
-				$cacheUserPerm[$keyCache] = false;
-				return (FALSE);
-			}
-			// Proposed by sewilco: Put this block into a comment
-			// if you want Do not ignore Group perm on categorized object.
-			if ($is_categorized && !empty($categperm) && $$categperm == 'y') {
-				$cacheUserPerm[$keyCache] = true;
-				return (TRUE);
-			}
+		global $userlib;
+		$groups = $userlib->get_user_groups( $user );
 
-			// if it has no category perms or the user does not have
-			// the perms, continue to check individual perms!
-		}
-		// no individual and no category perms. So has the user the perm itself?
-		if (is_array($perm)) {
-			foreach($perm as $p) {
-				if(!$userlib->user_has_permission($user, $p)) {
-					$cacheUserPerm[$keyCache] = false;
-					return(FALSE);
-				}
-			}
-		} else {
-			if(!$userlib->user_has_permission($user, $perm)) {
-				$cacheUserPerm[$keyCache] = false;
-				return(FALSE);
-			}
-		}
-		$cacheUserPerm[$keyCache] = true;
-		return(TRUE);
+		$accessor = Perms::get( array( 'type' => $objtype, 'object' => $object ) );
+		$accessor->setGroups( $groups );
+
+		return $accessor->$perm;
 	}
 
 	/* get all the perm of an object either in a table or global+smarty set
@@ -4295,95 +4264,22 @@ class TikiLib extends TikiDB {
 	 * global = true set the global perm and smarty var, otherwise return an array of perms
 	 */
 	function get_perm_object($objectId, $objectType, $info='', $global=true) {
-		global $tiki_p_admin, $user, $prefs, $userlib, $smarty;
+		global $smarty, $userlib;
+		$perms = Perms::get( array( 'type' => $objectType, 'object' => $objectId ) );
+		$permDescs = $userlib->get_permissions(0, -1, 'permName_desc', '', $this->get_permGroup_from_objectType($objectType));
+
 		$ret = array();
-		if (empty($objectId)) {
-			if (!$global) {
-				$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', $this->get_permGroup_from_objectType($objectType));
-				foreach ($perms['data'] as $perm) {
-					$ret[$perm['permName']] = 'y';
-				}
+		foreach( $permDescs['data'] as $perm ) {
+			$perm = $perm['permName'];
+
+			$ret[$perm] = $perms->$perm ? 'y' : 'n';
+
+			if( $global ) {
+				$smarty->assign( $perm, $ret[$perm] );
+				$GLOBALS[ $perm ] = $ret[$perm];
 			}
-			return $ret;
 		}
 
-		if ($tiki_p_admin == 'y') {
-			if (!$global) {
-				$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', $this->get_permGroup_from_objectType($objectType));
-				foreach ($perms['data'] as $perm) {
-					$ret[$perm['permName']] = 'y';
-				}
-				global $categlib; include_once('lib/categories/categlib.php');
-				if ($userlib->object_has_one_permission($objectId, $objectType) || ($prefs['feature_categories'] == 'y' && $categlib->get_object_categories_perms($user, $objectType, $objectId))) {
-					$ret['has_special_perm'] = 'y';
-				}
-			}
-			return $ret;
-			/* else : all the perms have already been set in tiki-setup_base */
-		} elseif ($perms = $this->get_local_perms($user, $objectId, $objectType, $info, $global)) {
-			return $ret;
-		} elseif ($userlib->object_has_one_permission($objectId, $objectType)) {
-			$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', $this->get_permGroup_from_objectType($objectType));
-			$userPerms = $userlib->get_object_permissions_for_user($objectId, $objectType, $user);
-
-			$permAdmin = $this->get_adminPerm_from_objectType($objectType);
-			if (in_array($permAdmin, $userPerms)) { // has perm admin - so inherit all the perms
-				foreach ($perms['data'] as $perm) {
-					$perm = $perm['permName'];
-					$ret[$perm] = 'y';
-					if ($global) {
-						global $$perm;
-						$$perm = 'y';
-						$smarty->assign("$perm", 'y');
-					}
-				}
-				return $ret;
-			}
-			foreach ($perms['data'] as $perm) { // foreach perm of the same group of perms
-				$permName = $perm['permName'];
-				global $$permName;
-				$permAdmin = $this->get_adminPerm_from_objectType($objectType);
-				if (in_array($permName, $userPerms)) {
-					$ret[$permName] = 'y';
-					if ($global) {
-						$$permName = 'y';
-						$smarty->assign("$permName", 'y');
-					}
-				} else {
-					$ret[$permName] = 'n';
-					if ($global) {
-						$$permName = 'n';
-						$smarty->assign("$permName", 'n');
-					}
-				}
-			}
-			$ret['has_special_perm'] = 'y';
-			return $ret; // special perms - do not look further
-		} elseif ($prefs['feature_categories'] == 'y') {
-			global $categlib; include_once('lib/categories/categlib.php');
-			$perms = $categlib->get_object_categories_perms($user, $objectType, $objectId);
-			if (!empty($perms)) {
-				$result = $this->get_perm_from_categPerms($perms, $objectType);
-				foreach ($result as $perm=>$value) {
-					if ($global) {
-						global $$perm;
-						$$perm = $value;
-						$smarty->assign($perm, $value);
-					} else {
-						$ret[$perm] = $value;
-					}
-				}
-				$ret['has_special_perm'] = 'y';
-				return $ret; // categ perm - do not look further
-			}
-		}
-		if (!$global) {
-			$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', $this->get_permGroup_from_objectType($objectType));
-			foreach ($perms['data'] as $perm) {
-				global $$perm['permName'];
-				$ret[$perm['permName']] = $$perm['permName'];
-			}
-		}
 		return $ret;
 	}
 
@@ -4453,177 +4349,6 @@ class TikiLib extends TikiDB {
 			default:
 				return "tiki_p_admin_$objectType";
 		}
-	}
-
-	/* this function will change if we got a table categ<->perm
-	 */
-	function get_perm_from_categPerms($categPerms, $objectType, $global=true) {
-		global $userlib;
-		$ret = array();
-		$perms = $userlib->get_permissions(0, -1, 'permName_asc', '', $this->get_permGroup_from_objectType($objectType));
-		if ($global) {
-			foreach ($perms['data'] as $perm) {
-				global $$perm['permName'];
-				$ret[$perm['permName']] = $$perm['permName'];
-			}
-		}
-		if (empty($categPerms['tiki_p_view_categorized'])) {
-			$categPerms['tiki_p_view_categorized'] = 'n';
-		}
-		if (empty($categPerms['tiki_p_edit_categorized'])) {
-			$categPerms['tiki_p_edit_categorized'] = 'n';
-		}
-		if (empty($categPerms['tiki_p_admin_categories'])) {
-			$categPerms['tiki_p_admin_categories'] = 'n';
-		}
-		switch ($objectType) {
-			case 'tracker':
-				if ($categPerms['tiki_p_view_categorized'] == 'y' || $categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
-					$ret['tiki_p_view_trackers'] = 'y';
-				} else {
-					$ret['tiki_p_view_trackers'] = 'n';
-				}
-				if ($categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
-					$ret['tiki_p_modify_tracker_items'] = 'y';
-					$ret['tiki_p_modify_tracker_items_pending'] = 'y';
-					$ret['tiki_p_modify_tracker_items_closed'] = 'y';
-					$ret['tiki_p_create_tracker_items'] = 'y';
-				} else {
-					$ret['tiki_p_modify_tracker_items'] = 'n';
-					$ret['tiki_p_modify_tracker_items_pending'] = 'n';
-					$ret['tiki_p_modify_tracker_items_closed'] = 'n';
-					$ret['tiki_p_create_tracker_items'] = 'n';
-				}
-				break;
-			case 'image gallery':
-			case 'image':
-				if ($categPerms['tiki_p_view_categorized'] == 'y' || $categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
-					$ret['tiki_p_view_image_gallery'] = 'y';
-					$ret['tiki_p_download_files'] = 'y';
-				} else {
-					$ret['tiki_p_view_image_gallery'] = 'n';
-					$ret['tiki_p_download_files'] = 'n';
-				}
-				if ($categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
-					$ret['tiki_p_upload_images'] = 'y';
-				} else {
-					$ret['tiki_p_upload_images'] = 'n';
-				}
-				break;
-			case 'file gallery':
-			case 'file':
-				if ($categPerms['tiki_p_view_categorized'] == 'y' || $categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
-					$ret['tiki_p_view_file_gallery'] = 'y';
-					$ret['tiki_p_view_fgal_explorer'] = 'y';
-					$ret['tiki_p_view_fgal_path'] = 'y';
-				} else {
-					$ret['tiki_p_view_file_gallery'] = 'n';
-				}
-				if ($categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
-					$ret['tiki_p_upload_files'] = 'y';
-				} else {
-					$ret['tiki_p_upload_files'] = 'n';
-				}
-				break;
-			case 'article':
-			case 'submission':
-				if ($categPerms['tiki_p_view_categorized'] == 'y' || $categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
-					$ret['tiki_p_read_article'] = 'y';
-				} else {
-					$ret['tiki_p_read_article'] = 'n';
-				}
-				if ($categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
-					$ret['tiki_p_edit_article'] = 'y';
-					$ret['tiki_p_submit_article'] = 'y';
-				} else {
-					$ret['tiki_p_edit_article'] = 'n';
-					$ret['tiki_p_submit_article'] = 'n';
-				}
-				break;
-			case 'forum':
-				if ($categPerms['tiki_p_view_categorized'] == 'y' || $categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
-					$ret['tiki_p_forum_read'] = 'y';
-				} else {
-					$ret['tiki_p_forum_read'] = 'n';
-				}
-				if ($categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
-					$ret['tiki_p_forum_post_topic'] = 'y';
-					$ret['tiki_p_forum_post'] = 'y';
-				} else {
-					$ret['tiki_p_forum_post_topic'] = 'n';
-					$ret['tiki_p_forum_post'] = 'n';
-				}
-				break;
-			case 'blog':
-			case 'blog post':
-				if ($categPerms['tiki_p_view_categorized'] == 'y' || $categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
-					$ret['tiki_p_read_blog'] = 'y';
-				} else {
-					$ret['tiki_p_read_blog'] = 'n';
-				}
-				if ($categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
-					$ret['tiki_p_create_blogs'] = 'y';
-					$ret['tiki_p_blog_post'] = 'y';
-				} else {
-					$ret['tiki_p_create_blogs'] = 'n';
-					$ret['tiki_p_blog_post'] = 'n';
-				}
-				break;
-			case 'wiki page':
-			case 'history':
-				if ($categPerms['tiki_p_view_categorized'] == 'y' || $categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
-					$ret['tiki_p_view'] = 'y';
-					global $tiki_p_wiki_view_source; $ret['tiki_p_wiki_view_source'] = $tiki_p_wiki_view_source;
-					global $tiki_p_wiki_view_comments; $ret['tiki_p_wiki_view_comments'] = $tiki_p_wiki_view_comments;
-					global $tiki_p_wiki_view_attachments; $ret['tiki_p_wiki_view_attachments'] = $tiki_p_wiki_view_attachments;
-				} else {
-					foreach($perms['data'] as $p) {
-						if ($p['permName'] != 'tiki_p_use_as_template')
-							$ret[$p['permName']] = 'n';
-					}
-				}
-				if ($categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
-					$ret['tiki_p_edit'] = 'y';
-					$ret['tiki_p_remove'] = 'y';
-					$ret['tiki_p_wiki_attach_files'] = 'y';
-				} else {
-					$ret['tiki_p_edit'] = 'n';
-					$ret['tiki_p_remove'] = 'n';
-					$ret['tiki_p_wiki_attach_files'] = 'n';
-				}
-				break;
-			case 'faq':
-				if ($categPerms['tiki_p_view_categorized'] == 'y' || $categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
-					$ret['tiki_p_view_faqs'] = 'y';
-				} else {
-					$ret['tiki_p_view_faqs'] = 'n';
-				}
-				break;
-			case 'survey':
-				break;
-			case 'newsletter':
-				if ($categPerms['tiki_p_view_categorized'] == 'y' || $categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
-					$ret['tiki_p_subscribe_newsletters'] = 'y';
-				} else {
-					$ret['tiki_p_subscribe_newsletters'] = 'n';
-				}
-				break;
-
-				/* TODO */
-			default:
-				if ($categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
-					$ret["tiki_p_edit_$objectType"] = 'y';
-				} else {
-					$ret["tiki_p_edit_$objectType"] = 'n';
-				}
-				if ($categPerms['tiki_p_view_categorized'] == 'y' || $categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
-					$ret["tiki_p_view_$objectType"] = 'y';
-				} else {
-					$ret["tiki_p_view_$objectType"] = 'n';
-				}
-				break;
-		}
-		return $ret;
 	}
 
 	/* deal all the special perm */
@@ -4847,6 +4572,10 @@ class TikiLib extends TikiDB {
 		}
 
 		$cond_query = '';
+		if (empty($query_cond)) {
+			$query_cond = '1';
+		}
+		$result = null;
 		if ( is_null($bindvars) ) $bindvars = array();
 		if ( count($needed > 0 ) ) {
 			foreach ( $needed as $var => $def ) {
@@ -4861,7 +4590,7 @@ class TikiLib extends TikiDB {
 		}
 		$query = "select `$field_name`, `value` from `$table` where $query_cond $cond_query";
 		$result = $this->query($query, $bindvars);
-
+		
 		if ( $result ) {
 			while ( $res = $result->fetchRow() ) {
 				// store the db value in the global array
@@ -4987,6 +4716,7 @@ class TikiLib extends TikiDB {
 
 	// This implements all the functions needed to use Tiki
 	/*shared*/
+	// Returns whether a page named $pageName exists. Unless $casesensitive is set to true, the check is case-insensitive.
 	function page_exists($pageName, $casesensitive = false) {
 		$page_info = $this->get_page_info($pageName, false);
 		return ( $page_info !== false && ( ! $casesensitive || $page_info['pageName'] == $pageName ) ) ? 1 : 0;
@@ -5051,7 +4781,7 @@ class TikiLib extends TikiDB {
 	/** Create a wiki page
 		@param array $hash- lock_it,contributions, contributors
 	 **/
-	function create_page($name, $hits, $data, $lastModif, $comment, $user = 'admin', $ip = '0.0.0.0', $description = '', $lang='', $is_html = false, $hash=null, $wysiwyg=NULL, $wiki_authors_style='') {
+	function create_page($name, $hits, $data, $lastModif, $comment, $user = 'admin', $ip = '0.0.0.0', $description = '', $lang='', $is_html = false, $hash=null, $wysiwyg=NULL, $wiki_authors_style='', $minor=0) {
 		global $smarty, $prefs, $dbTiki, $quantifylib;
 		include_once ("lib/commentslib.php");
 
@@ -5082,12 +4812,12 @@ class TikiLib extends TikiDB {
 			return false;
 
 		$html=$is_html?1:0;
-		if ($html && $prefs['feature_purifier'] != 'n') {
+		if ($html) {
 			require_once('lib/htmlpurifier_tiki/HTMLPurifier.tiki.php');
 			$edit_data = HTMLPurifier($edit_data);
 		}
 		$mid = ''; $midvar = '';
-		$bindvars = array($name, (int)$hits, $data, (int)$lastModif, $comment, 1, $user, $ip, $description, $user, (int)strlen($data), $html, $this->now, $wysiwyg, $wiki_authors_style);
+		$bindvars = array($name, (int)$hits, $data, (int)$lastModif, $comment, 1, $minor, $user, $ip, $description, $user, (int)strlen($data), $html, $this->now, $wysiwyg, $wiki_authors_style);
 		if ($lang) {
 			$mid .= ',`lang`';
 			$midvar .= ',?';
@@ -5115,7 +4845,7 @@ class TikiLib extends TikiDB {
 				$hash2[] = $hash3;
 			}
 		}
-		$query = "insert into `tiki_pages`(`pageName`,`hits`,`data`,`lastModif`,`comment`,`version`,`user`,`ip`,`description`,`creator`,`page_size`,`is_html`,`created`, `wysiwyg`, `wiki_authors_style` $mid) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,? $midvar)";
+		$query = "insert into `tiki_pages`(`pageName`,`hits`,`data`,`lastModif`,`comment`,`version`,`version_minor`,`user`,`ip`,`description`,`creator`,`page_size`,`is_html`,`created`, `wysiwyg`, `wiki_authors_style` $mid) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? $midvar)";
 		$result = $this->query($query, $bindvars);
 
 		$page_id = $this->get_page_id_from_name( $name );
@@ -5204,7 +4934,7 @@ class TikiLib extends TikiDB {
 		if ( $retrieve_datas ) {
 			$query = "SELECT * FROM `tiki_pages` WHERE `pageName`=?";
 		} else {
-			$query = "SELECT `page_id`, `pageName`, `hits`, `description`, `lastModif`, `comment`, `version`, `user`, `ip`, `flag`, `points`, `votes`, `wiki_cache`, `cache_timestamp`, `pageRank`, `creator`, `page_size`, `lang`, `lockedby`, `is_html`, `created`, `wysiwyg`, `wiki_authors_style` FROM `tiki_pages` WHERE `pageName`=?";
+			$query = "SELECT `page_id`, `pageName`, `hits`, `description`, `lastModif`, `comment`, `version`, `version_minor`, `user`, `ip`, `flag`, `points`, `votes`, `wiki_cache`, `cache_timestamp`, `pageRank`, `creator`, `page_size`, `lang`, `lockedby`, `is_html`, `created`, `wysiwyg`, `wiki_authors_style` FROM `tiki_pages` WHERE `pageName`=?";
 		}
 		$result = $this->query($query, array($pageName));
 
@@ -5730,29 +5460,6 @@ class TikiLib extends TikiDB {
 		}
 	} );
 	" );
-								} else if ($prefs['feature_mootools'] == 'y') {
-									$headerlib->add_js( "
-	window.addEvent('domready', function() {
-		if( $('$id') ) {
-			show('$id');
-			$('$id').addEvent( 'click', function(event) {
-				popup_plugin_form("
-					. json_encode('editwiki')
-					. ', '
-					. json_encode($plugin_name)
-					. ', '
-					. json_encode($current_index)
-					. ', '
-					. json_encode($page)
-					. ', '
-					. json_encode($arguments)
-					. ', '
-					. json_encode(TikiLib::htmldecode($plugin_data_saved))
-					. ", event.target);
-			} );
-		}
-	} );
-	" );
 								}
 								$ret = $ret.'~np~<a id="' .$id. '" href="javascript:void(1)" class="editplugin">'.smarty_function_icon(array('_id'=>'shape_square_edit', 'alt'=>tra('Edit Plugin').':'.$plugin_name), $smarty)."</a>~/np~";
 							}
@@ -6132,9 +5839,24 @@ class TikiLib extends TikiDB {
 			// Apply filters on values individually
 			if (!empty($args)) {
 				foreach( $args as $argKey => &$argValue ) {
-					$filter = isset($params[$argKey]['filter']) ? TikiFilter::get($params[$argKey]['filter']) : $default;
+					$paramInfo = $params[$argKey];
+					$filter = isset($paramInfo['filter']) ? TikiFilter::get($paramInfo['filter']) : $default;
 					$argValue = $this->htmldecode($argValue);
-					$argValue = $filter->filter($argValue);
+
+					if( isset($paramInfo['separator']) ) {
+						$vals = array();
+
+						foreach( explode( $paramInfo['separator'], $argValue ) as $val ) {
+							$vals[] = $filter->filter($val);
+						}
+
+						$vals = array_map( 'trim', $vals );
+						$vals = array_filter( $vals );
+
+						$argValue = array_values( $vals );
+					} else {
+						$argValue = $filter->filter($argValue);
+					}
 				}
 			}
 		}
@@ -6418,7 +6140,7 @@ class TikiLib extends TikiDB {
 			}
 		}
 
-		global $page_regex, $slidemode, $prefs, $ownurl_father, $tiki_p_admin_drawings, $tiki_p_edit_drawings, $tiki_p_edit_dynvar, $tiki_p_upload_picture, $page, $page_ref_id, $rsslib, $dbTiki, $structlib, $user, $tikidomain, $tikiroot;
+		global $page_regex, $slidemode, $prefs, $ownurl_father, $tiki_p_edit_dynvar, $tiki_p_upload_picture, $page, $page_ref_id, $rsslib, $dbTiki, $structlib, $user, $tikidomain, $tikiroot;
 		global $wikilib; include_once('lib/wiki/wikilib.php');
 
 		// Handle parsing options
@@ -7607,7 +7329,49 @@ class TikiLib extends TikiDB {
 		global $prefs;
 
 		if ($prefs['feature_smileys'] == 'y') {
+			// Example of all Tiki Smileys (the old syntax)
+			// (:biggrin:) (:confused:) (:cool:) (:cry:) (:eek:) (:evil:) (:exclaim:) (:frown:)
+			// (:idea:) (:lol:) (:mad:) (:mrgreen:) (:neutral:) (:question:) (:razz:) (:redface:)
+			// (:rolleyes:) (:sad:) (:smile:) (:surprised:) (:twisted:) (:wink:) (:arrow:) (:santa:)
+			
 			$data = preg_replace("/\(:([^:]+):\)/", "<img alt=\"$1\" src=\"img/smiles/icon_$1.gif\" />", $data);
+
+			// Example of Tiki Smileys in the new (common chat) syntax
+			// :-D :-S B-) :'( 8-o }:( !-) >:( i-) LOL >X( |-D :-| ?-) :-p |-] :-/ :-( :-) :-o }:) ;-) ->) *<:)
+			
+			// support for common emoticons format
+			// TODO: test if it doesn't conflict, move it to a separate lib ? use pngs (not animated only) ? support emoticon themes ?
+			// replace any match starting with a space (or start of data) and the following:
+			// :) :-)
+			$data = preg_replace('/(\s|^):-?\)/', "$1<img alt=\":-)\" title=\"".tra('smiling')."\" src=\"img/smiles/icon_smile.gif\" />", $data);
+			// :( :-(
+			$data = preg_replace('/(\s|^):-?\(/', "$1<img alt=\":-(\" title=\"".tra('sad')."\" src=\"img/smiles/icon_sad.gif\" />", $data);
+			// :D :-D
+			$data = preg_replace('/(\s|^):-?D/', "$1<img alt=\":-D\" title=\"".tra('grinning')."\" src=\"img/smiles/icon_biggrin.gif\" />", $data);
+			// :S :-S :s :-s
+			$data = preg_replace('/(\s|^):-?S/i', "$1<img alt=\":-S\" title=\"".tra('confused')."\" src=\"img/smiles/icon_confused.gif\" />", $data);
+			// B) B-) 8-)
+			$data = preg_replace('/(\s|^)(B-?|8-)\)/', "$1<img alt=\"B-)\" title=\"".tra('cool')."\" src=\"img/smiles/icon_cool.gif\" />", $data);
+			// :'( :_(
+			$data = preg_replace('/(\s|^):[\'|_]\(/', "$1<img alt=\":_(\" title=\"".tra('crying')."\" src=\"img/smiles/icon_cry.gif\" />", $data);
+			// 8-o 8-O =-o =-O
+			$data = preg_replace('/(\s|^)[8=]-O/i', "$1<img alt=\"8-O\" title=\"".tra('frightened')."\" src=\"img/smiles/icon_eek.gif\" />", $data);
+			// }:( }:-(
+			$data = preg_replace('/(\s|^)\}:-?\(/', "$1<img alt=\"}:(\" title=\"".tra('evil stuff')."\" src=\"img/smiles/icon_evil.gif\" />", $data);
+			// !-) !)
+			$data = preg_replace('/(\s|^)\!-?\)/', "$1<img alt=\"(!)\" title=\"".tra('exclamation mark !')."\" src=\"img/smiles/icon_exclaim.gif\" />", $data);
+			// >:( >:-(
+			$data = preg_replace('/(\s|^)\>:-?\(/', "$1<img alt=\"}:(\" title=\"".tra('frowning')."\" src=\"img/smiles/icon_frown.gif\" />", $data);
+			// i-)
+			$data = preg_replace('/(\s|^)i-\)/', "$1<img alt=\"(".tra('light bulb').")\" title=\"".tra('idea !')."\" src=\"img/smiles/icon_idea.gif\" />", $data);
+			// LOL
+			$data = preg_replace('/(\s|^)LOL(\s|$)/', "$1<img alt=\"(".tra('LOL').")\" title=\"".tra('laughing out loud !')."\" src=\"img/smiles/icon_lol.gif\" />$2", $data);
+			// >X( >X[ >:[ >X-( >X-[ >:-[
+			$data = preg_replace('/(\s|^)\>[:X]-?\(/', "$1<img alt=\">:[\" title=\"".tra('mad')."\" src=\"img/smiles/icon_mad.gif\" />", $data);
+			// |D |-D =D =-D
+			$data = preg_replace('/(\s|^)[\|=]-?D/', "$1<img alt=\"=D\" title=\"".tra('mr. green laughing')."\" src=\"img/smiles/icon_mrgreen.gif\" />", $data);
+			
+			// to be continued...
 		}
 		return $data;
 	}
@@ -7682,7 +7446,7 @@ class TikiLib extends TikiDB {
 	/** Update a wiki page
 		@param array $hash- lock_it,contributions, contributors
 	 **/
-	function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip, $edit_description = '', $minor = false, $lang='', $is_html=false, $hash=null, $saveLastModif=null, $wysiwyg='', $wiki_authors_style) {
+	function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip, $edit_description = '', $edit_minor = 0, $lang='', $is_html=false, $hash=null, $saveLastModif=null, $wysiwyg='', $wiki_authors_style) {
 		global $smarty, $prefs, $dbTiki, $histlib, $quantifylib;
 		include_once ("lib/wiki/histlib.php");
 		include_once ("lib/commentslib.php");
@@ -7723,6 +7487,7 @@ class TikiLib extends TikiDB {
 		if (!$user) $user = 'anonymous';
 		$ip = $info["ip"];
 		$comment = $info["comment"];
+		$minor=$info["version_minor"];
 		$description = $info['description'];
 		$data = $info["data"];
 		$version = $old_version + 1;
@@ -7733,7 +7498,7 @@ class TikiLib extends TikiDB {
 		}
 
 		$html=$is_html?1:0;
-		if ($html && $prefs['feature_purifier'] != 'n') {
+		if ($html) {
 			require_once('lib/htmlpurifier_tiki/HTMLPurifier.tiki.php');
 			$edit_data = HTMLPurifier($edit_data);
 		}
@@ -7743,7 +7508,7 @@ class TikiLib extends TikiDB {
 			$saveLastModif = $this->now;
 		}
 
-		$bindvars = array($edit_description,$edit_data,$edit_comment,(int) $saveLastModif,$version,$edit_user,$edit_ip,(int)strlen($data),$html,$wysiwyg, $wiki_authors_style);
+		$bindvars = array($edit_description,$edit_data,$edit_comment,(int) $saveLastModif,$version,$edit_minor,$edit_user,$edit_ip,(int)strlen($data),$html,$wysiwyg, $wiki_authors_style);
 		if ($lang) {
 			$mid .= ', `lang`=? ';
 			$bindvars[] = $lang;
@@ -7769,7 +7534,7 @@ class TikiLib extends TikiDB {
 			}
 		}
 		$bindvars[] = $pageName;
-		$query = "update `tiki_pages` set `description`=?, `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=?, `page_size`=?, `is_html`=?, `wysiwyg`=?, `wiki_authors_style`=?  $mid where `pageName`=?";
+		$query = "update `tiki_pages` set `description`=?, `data`=?, `comment`=?, `lastModif`=?, `version`=?, `version_minor`=?, `user`=?, `ip`=?, `page_size`=?, `is_html`=?, `wysiwyg`=?, `wiki_authors_style`=?  $mid where `pageName`=?";
 		$result = $this->query($query,$bindvars);
 
 		// Parse edit_data updating the list of links from this page
@@ -7780,7 +7545,7 @@ class TikiLib extends TikiDB {
 			$this->replace_link($pageName, $page, $types);
 		}
 
-		if (strtolower($pageName) != 'sandbox' && !$minor) {
+		if (strtolower($pageName) != 'sandbox' && !$edit_minor) {
 			$maxversions = $prefs['maxVersions'];
 
 			if ($maxversions && ($nb = $histlib->get_nb_history($pageName)) > $maxversions) {
@@ -7802,10 +7567,10 @@ class TikiLib extends TikiDB {
 		// This if no longer checks for minor-ness of the change; sendWikiEmailNotification does that.
 		if( $prefs['feature_wiki_history_full'] == 'y' || $data != $edit_data || $description != $edit_description || $comment != $edit_comment ) {
 			if (strtolower($pageName) != 'sandbox') {
-				$query = "insert into `tiki_history`(`pageName`, `version`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`,`is_html`)
-					values(?,?,?,?,?,?,?,?,?)";
+				$query = "insert into `tiki_history`(`pageName`, `version`, `version_minor`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`,`is_html`)
+					values(?,?,?,?,?,?,?,?,?,?)";
 # echo "<pre>";print_r(get_defined_vars());echo "</pre>";die();
-				$result = $this->query($query,array($pageName,(int) $old_version,(int) $lastModif,$user,$ip,$comment,$data,$description,(int)$info['is_html']));
+				$result = $this->query($query,array($pageName,(int) $old_version, (int) $minor, (int) $lastModif,$user,$ip,$comment,$data,$description,(int)$info['is_html']));
 
 				if ($prefs['feature_contribution'] == 'y') {// transfer page contributions to the history
 					global $contributionlib; include_once('lib/contribution/contributionlib.php');
@@ -7831,7 +7596,7 @@ class TikiLib extends TikiDB {
 						array( $lang, $info['page_id'] ) );
 			}
 
-			if ($prefs['wiki_watch_minor'] != 'n' || !$minor) {
+			if ($prefs['wiki_watch_minor'] != 'n' || !$edit_minor) {
 				//  Deal with mail notifications.
 				include_once('lib/notifications/notificationemaillib.php');
 				global $histlib; include_once ("lib/wiki/histlib.php");
@@ -7840,7 +7605,7 @@ class TikiLib extends TikiDB {
 				$machine = $this->httpPrefix(). dirname( $foo["path"] );
 				require_once('lib/diff/difflib.php');
 				$diff = diff2($old["data"] , $edit_data, "unidiff");
-				sendWikiEmailNotification('wiki_page_changed', $pageName, $edit_user, $edit_comment, $old_version, $edit_data, $machine, $diff, $minor, $hash['contributions']);
+				sendWikiEmailNotification('wiki_page_changed', $pageName, $edit_user, $edit_comment, $old_version, $edit_data, $machine, $diff, $edit_minor, $hash['contributions']);
 			}
 
 			$query = "delete from `tiki_page_drafts` where `user`=? and `pageName`=?";
@@ -8487,7 +8252,7 @@ class TikiLib extends TikiDB {
 			return substr($data, 0, $length);
 	}
 
-	function htmldecode($string, $quote_style = ENT_COMPAT, $translation_table = HTML_ENTITIES) {
+	static function htmldecode($string, $quote_style = ENT_COMPAT, $translation_table = HTML_ENTITIES) {
 		if ( $translation_table == HTML_ENTITIES && version_compare(phpversion(), '5', '>=') ) {
 			// Use html_entity_decode with UTF-8 only with PHP 5.0 or later, since
 			//   this function was available in PHP4 but _without_ multi-byte charater sets support
@@ -8647,6 +8412,32 @@ JS;
 		}
 		if ( $remove_duplicates ) $bindvars = $bindvars2;
 		return ' IN (' . $query . ')';
+	}
+
+	function get_jail() {
+		global $prefs;
+		if( $prefs['feature_categories'] == 'y' && ! empty( $prefs['category_jail'] ) ) {
+			global $categlib; require_once ('lib/categories/categlib.php');
+			$key = $prefs['category_jail'];
+			$categories = explode( ',', $prefs['category_jail'] );
+
+			if( $prefs['expanded_category_jail_key'] != $key ) {
+				$additional = array();
+
+				foreach( $categories as $categId ) {
+					$desc = $categlib->get_category_descendants( $categId );
+					$additional = array_merge( $additional, $desc );
+				}
+
+				$prefs['expanded_category_jail'] =
+					$_SESSION['s_prefs']['expanded_category_jail'] = implode( ',', $additional );
+				$_SESSION['s_prefs']['expanded_category_jail_key'] = $key;
+
+				return $additional;
+			}
+
+			return explode( ',', $prefs['expanded_category_jail'] );
+		}
 	}
 }
 // end of class ------------------------------------------------------
@@ -8813,22 +8604,6 @@ function validate_email($email,$checkserver='n') {
 		}
 	} else {
 		return true;
-	}
-}
-
-function tiki_get_remote_file( $url ) {
-	if( ini_get( 'allow_url_fopen' ) )
-		return file_get_contents( $url );
-	elseif( function_exists( 'curl_init' ) ) {
-		$ch = curl_init( $url );
-		curl_setopt( $ch, CURLOPT_HEADER, false );
-		curl_setopt( $ch, CURLOPT_NOBODY, false );
-		curl_setopt( $ch, CURLOPT_FOLLOWLOCATION, false );
-		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-
-		return curl_exec( $ch );
-	} else {
-		return false;
 	}
 }
 /* Editor configuration

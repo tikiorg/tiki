@@ -5,30 +5,29 @@
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-
-$inputConfiguration = array( array(
-	'staticKeyFilters' => array(
-		'offset' => 'digits',
-		'maxRecords' => 'digits',
-		'removeevent' => 'digits',
-		'removetype' => 'word',
-		'daconfirm' => 'word',
-		'ticket' => 'word',
-		'sort_mode' => 'word',
-		'find' => 'striptags',
-		'login' => 'username',
-		'email' => 'email',
-		'event' => 'word',
-
-		'add' => 'alpha',
-		'delsel_x' => 'alpha',
-	),
-	'staticKeyFiltersForArrays' => array(
-		'checked' => 'alnum',
-	),
-	'catchAllUnset' => null,
-) );
-
+// $Id: /cvsroot/tikiwiki/tiki/tiki-admin_notifications.php,v 1.21.2.3 2008-03-20 16:03:30 sylvieg Exp $
+$inputConfiguration = array(
+	array(
+		'staticKeyFilters' => array(
+			'offset' => 'digits',
+			'maxRecords' => 'digits',
+			'removeevent' => 'digits',
+			'removetype' => 'word',
+			'daconfirm' => 'word',
+			'ticket' => 'word',
+			'sort_mode' => 'word',
+			'find' => 'striptags',
+			'login' => 'username',
+			'email' => 'email',
+			'event' => 'word',
+			'add' => 'alpha',
+			'delsel_x' => 'alpha',
+		) ,
+		'staticKeyFiltersForArrays' => array(
+			'checked' => 'alnum',
+		) ,
+	)
+);
 // Initialization
 require_once ('tiki-setup.php');
 include_once ('lib/notifications/notificationlib.php');

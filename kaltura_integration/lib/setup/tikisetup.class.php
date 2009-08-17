@@ -87,7 +87,6 @@ class TikiSetup extends TikiInit {
         }
 
         static $dirs = array(
-            'backups',
             'dump',
             'img/wiki',
             'img/wiki_up',

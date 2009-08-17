@@ -20,7 +20,8 @@ html>body {}
 
 html[dir=ltr]>body {
 	display: block;
-	margin: 1em .5em}
+	padding: 1em;
+}
 
 body.fullscreen {
 	text-align: left;
@@ -87,8 +88,16 @@ button:active,
 span.highlight a:link,
 span.highlight a:visited {}
 
-input[type=reset]:active,
-input[type=submit]:active {}
+#col2 select,
+#col3 select,
+#col3 input[type="text"],
+#col2 input[type="text"] {
+	width: 95%;
+}
+
+label {
+	cursor: pointer;
+}
 
 span.highlight {
 	background: aqua;
@@ -293,16 +302,6 @@ a.phplm:visited,
 a.phplm:hover,
 a.phplm:active {}
 
-a.phplm:visited {}
-a.phplm:hover {}
-a.phplm:active {}
-
-a.phplmselected:link,
-a.phplmselected:visited,
-a.phplmselected:hover,
-a.phplmselected:active {}
-
-a.phplmselected:hover {}
 .imgs {
 	border: 0;
 	width: 16px;
@@ -329,24 +328,131 @@ a.linkmenu,
 .rsslink:visited {}
 
 .linkmenu,
-.linkmenu:visited {display: block}
-
-.linkmenu:hover {}
-
-div.option a:hover,
-div.option a:active {}
-
-a.linkmodule {}
-a.linkmodule:hover {}
-.rsslist {}
-.rssitem {}
-.rssitem:first-child {}
-.rssdate {}
-
-div.menuSection div.menuSection,
-div.menuSection div.separator {}
+.linkmenu:visited {
+	/*display: block;*/
+}
 
 /***** Misc. *****/
+/* Minimize Menus */
+.minimize-modules-left #col1 {
+	margin-left: 80px !important;
+}
+
+.minimize-modules-right #col1 {
+	margin-right: 80px !important;
+}
+
+.minimize-modules-left #col2 .separatoricon-toggle,
+.minimize-modules-left #col2 .box .menuText,
+.minimize-modules-left #col2 .mdkfwdarr,
+.minimize-modules-right #col3 .separatoricon-toggle,
+.minimize-modules-right #col3 .box .menuText,
+.minimize-modules-right #col3 .mdkfwdarr {
+	display: none !important;
+}
+
+.minimize-modules-left #col2 .box .menuLevel1 .menuText,
+.minimize-modules-left #col2 .separatoricon-url,
+.minimize-modules-right #col3 .box .menuLevel1 .menuText,
+.minimize-modules-right #col3 .separatoricon-url {
+	display: inline !important;
+}
+
+.minimize-modules-left #col2 .box,
+.minimize-modules-right #col3 .box {
+	/*      overflow: hidden;*/ /* This conflicts with CSS Menus */
+}
+
+span.moduleflip-vert {
+	display: block;
+	top: 20px !important;
+	right: 1% !important;
+}
+
+#col2 .moduleflip-vert .flipmodimage,
+.minimize-modules-right #col3 .moduleflip-vert .flipmodimage {
+	background-image: url(../../pics/icons/resultset_first.png) !important;
+}
+
+#col3 .moduleflip-vert .flipmodimage,
+.minimize-modules-left #col2 .moduleflip-vert .flipmodimage {
+	background-image: url(../../pics/icons/resultset_last.png) !important;
+}
+
+.minimize-modules-left #col2 div.separator,
+.minimize-modules-right #col3 div.separator {
+	padding: 0;
+	background: transparent;
+	border: none;
+}
+
+.minimize-modules-left #col2 div.box-shadow,
+.minimize-modules-left #col2 div.box,
+.minimize-modules-right #col3 div.box-shadow,
+.minimize-modules-right #col3 div.box {
+	width: 70px !important;
+}
+
+.minimize-modules-left #col2 .content,
+.minimize-modules-right #col3 .content {
+	margin: 0 !important;
+}
+
+.minimize-modules-left #col2 div.option,
+.minimize-modules-left #col2 div.optionline,
+.minimize-modules-right #col3 div.option,
+.minimize-modules-right #col3 div.optionline {
+	margin: 0 !important;
+	padding: 0 !important;
+}
+
+/* Minimize PHPLayers Menus */
+.mdkverbar-with-icons .mdkitem {
+	background: none;
+}
+
+.mdkverbar-with-icons .mdkitem a {
+	padding: 0;
+	width: 175px;
+}
+
+.mdkverbar-with-icons .mdkitem img {
+	vertical-align: middle;
+}
+
+.minimize-modules-left #col2 .mdkverbar-with-icons .mdkitem,
+.minimize-modules-left #col2,
+.minimize-modules-right #col3 .mdkverbar-with-icons .mdkitem,
+.minimize-modules-right #col3 {
+	width: 60px !important;
+}
+
+.minimize-modules-left #col2 .mdkverbar-with-icons .mdkitem a,
+.minimize-modules-right #col3 .mdkverbar-with-icons .mdkitem a {
+	width: 50px !important;
+	overflow: hidden;
+}
+
+/* Minimize CSS Menus */
+.minimize-modules-left #col2 .cssmenu_vert,
+.minimize-modules-left #col2 .cssmenu_vert div > ul,
+.minimize-modules-left #col2 .cssmenu_vert li.menuLevel0,
+.minimize-modules-left #col2 .cssmenu_vert li.menuLevel0 > a,
+.minimize-modules-right #col3 .cssmenu_vert,
+.minimize-modules-right #col3 .cssmenu_vert div > ul,
+.minimize-modules-right #col3 .cssmenu_vert li.menuLevel0,
+.minimize-modules-right #col3 .cssmenu_vert li.menuLevel0 > a {
+	width: 44px;
+}
+
+.minimize-modules-left #col2 .cssmenu_vert li.menuLevel0 > ul {
+	margin-left: 55px;
+}
+
+.minimize-modules-right #col3 .cssmenu_vert li.menuLevel0 > ul {
+	margin-right: 55px;
+}
+
 /* centercolumn */
 #showhide_columns {}
 *:first-child+html #showhide_columns {}
@@ -502,15 +608,26 @@ div#debugconsole {
 	color: #fff;
 	top: 0;
 	left: 20px;
-	right: 310px;
+	width: 60%;
 	height: auto;
-	z-index: 1;
+	z-index: 1000;
 	padding: 5px;
-	border: 1px solid #996600;
+	border: 2px solid #aaa;
 	font-size: 1em}
 	
-#debugconsole form {color: #000}
-#debugconsole input[type="text"] {width: auto}
+#debugconsole form { color: #dd6; }
+
+#debugconsole a {
+	color: #ddd;
+}
+
+#debugconsole table {
+	width: 100%;
+}
+
+#debugconsole input[type="text"] {
+	width: auto;
+}
 
 .mini {
 	width: 100%;
@@ -548,7 +665,11 @@ img.icon {
   text-align: center;
   margin-bottom: 10px}
 
-.findtitle {
+.findtitle,
+.findexactmatch,
+.findnumrows,
+.findtypes,
+.findlang {
 	display: inline; 
 	vertical-align: middle;
 	margin: 0 1px}
@@ -587,6 +708,63 @@ ul.categories li{
 	list-style: none;
 	margin: 0;
 	padding: 0}
+
+/* New Toolbars (toolbars) */
+
+a.toolbar {
+	padding: 0 .5em 0 0;
+}
+
+a.qt-plugin {
+}
+
+a.qt-plugin div {
+	/* .iconmenu */
+	background-color: #CD8;
+	border: thin #690 solid;
+	margin: 0 .4em 0 0;
+	padding: 2px .4em 0 .2em;
+	color: #030;
+	font-size: 10px;
+}
+
+a.qt-plugin:hover {
+	text-decoration: none;
+}
+
+a.qt-plugin div img { /* div.iconmenu img.icon */
+	margin-bottom: 4px;
+}
+
+span.toolbar-list {
+	padding: 0 0 0 .5em;
+	line-height: 20px;
+	border-left: medium double lightgray;
+}
+
+.helptool-admin {
+	float: right;
+	border-left: medium double lightgrey;
+	padding-left:8px;
+	margin-left:8px;
+}
+
+.toolbars-picker {
+	position: absolute;
+	width: 300px;
+	background-color: white;
+	border: thin solid black;
+	z-index: 300;
+}
+
+.toolbars-picker a {
+	padding: 4px 2px;
+	display: inline-block;
+}
+
+.toolbars-picker a:hover {
+	background-color: #ccc;
+}
 
 /* New Help section */
 div#tikihelp {
@@ -672,7 +850,7 @@ div.help_section {
 
 .icon_edit_section {
 	float: right;
-	margin-top: 1em}
+}
 
 
 /***** Boxes *****/
@@ -686,28 +864,16 @@ h3.box-title {
 	display: block;
 	padding-top: 0}
 
-.box-title a,
-.box-title a:link {}
-
-* html h3.box-title {
-	position: static;
-	padding-right: 18px}
-
-.moduleflip,
+span.moduleflip,
 .wikitext .box-title span img.flipmodimage {
 	display: none !important;
+	/*float: right;
+	position: relative;*/
 	position: absolute;
-	right: 0;
+	right: 1%;
 	top: 0}
 
-* html .moduleflip,
-* html .wikitext .box-title span img.flipmodimage {
-	position: static;
-	float: right;
-	margin-top: -16px}
-
-* html .moduleflip,
-.box:hover .moduleflip,
+.box:hover span.moduleflip,
 .wikitext .box:hover .box-title span img.flipmodimage {display: block !important}
 
 .box:hover img.flipmodimage {border: 1px solid transparent}
@@ -900,7 +1066,13 @@ td.even {
 /* Headings */
 th,
 td.heading,
-tr.diffheader {text-align: center}
+tr.diffheader {
+	text-align: center;
+}
+
+td.form {
+	padding: 0.2em;
+}
 
 form.admin {}
 form.admin fieldset {}
@@ -931,7 +1103,7 @@ td.form {padding: 0.2em}
 	cursor: pointer}
 	
 .tabmark a {
-	border-bottom :0;
+	border-bottom: 0;
 	padding: 1px 5px;
 	text-decoration: none}
 
@@ -1143,6 +1315,25 @@ ul.toc * {border: none}
 .diffadded {background: #ccffcc; color: #000}
 .diffdeleted {background: #ffcccc; color: #000}
 
+.diff div {
+	border-top: 1px solid #696969;
+}
+
+.diffbody {
+	color: #000;
+}
+
+.diffadded {
+	background: #ccffcc;
+	color: #000;
+}
+
+.diffdeleted {
+	background: #ffcccc;
+	color: #000;
+	text-decoration: line-through;
+}
+
 .diffinldel {
 	background: #ffcccc;
 	text-decoration: line-through}
@@ -1346,17 +1537,16 @@ body.tiki_forums table.normal {margin: auto}
 
 .post .postbody .attachments img {vertical-align: text-bottom}
 
+.post .postfooter {
+	float: right;
+	text-align: right;
+}
+
 .post .postfooter .actions,
 .post .postfooter .status {
 	display: inline;
 	margin-left: 5px;
 	vertical-align: top}
-
-.post .postfooter .status {}
-
-.post .postfooter {
-	float: right;
-	text-align: right}
 
 .post .inner > .postfooter {clear: both}
 
@@ -1395,8 +1585,13 @@ body.tiki_forums table.normal {margin: auto}
 	text-align: center;
 	margin-bottom: 10px}
 
-.nb_replies {white-space: nowrap}
-.post_preview, .top_post {margin-bottom: 15px}
+.nb_replies {
+	white-space: nowrap;
+}
+.post_preview,
+.top_post {
+	margin-bottom: 15px;
+}
 
 /* Comments */
 #comzone {
@@ -1464,6 +1659,11 @@ div.imgaldescr {margin: 10px}
 .sorttitle {margin-left: 10px}
 
 div#browse_image {width: 100%}
+
+div#random_image {
+	text-align: center;
+	margin: 1em auto;
+}
 
 /***** File Galleries *****/
 div.thumbnailcontener {}
@@ -1859,23 +2059,6 @@ div.messureadbody {
 
 .plugin-sample .plugin-param {padding-left: 15px}
 
-.plugin-form-float {
-	position: fixed;
-	left: 5%;
-	right: 365px;
-	top: 5%;
-	max-height: 90%;
-	overflow: auto;
-	background: #fff;
-	color: #000;
-	padding: 10px;
-	border: solid 2px #000;
-	z-index: 1000;}
-
-.icon_edit_section {
-	float: right;
-	margin-top: 1em}
-
 table.default thead td,
 table.default tfoot td {}
 
@@ -1887,14 +2070,11 @@ table.default td {}
 	in theme stylesheets.  */
 
 /***** Admin *****/
-
-div.adminanchors {}
-
-.highlight_word_0{
+.highlight_word_0 {
 	color: #ffff66;
 	background: #666}
 
-.highlight_word_1{
+.highlight_word_1 {
 	color: #ff9999;
 	background: #666}
 
@@ -1914,25 +2094,7 @@ div.adminanchors {}
 .justify {text-align: justify}
 .right {text-align: right}
 
-a.admbox {
-	border: 1px solid #708090;
-	background: #b0c4de center no-repeat}
-
-a.admbox:hover,
-a.admbox:focus,
-a.admbox:active {
-	background: #e6e6fa center no-repeat;
-	border: 1px solid #696969}
-
-a.admbox.off {border: 1px solid #a9a9a9}
-
-a.admbox.off:hover,
-a.admbox.off:focus,
-a.admbox.off:active {border: 1px solid #a9a9a9}
-
-span.disabled {font-style: italic}
-#style_thumb_div {text-align: center}
-
+/* admin boxes etc (.admbox) now defined in css/admin.css */
 td.mods_revision {
 	background: #b5cfb5;
 	color: #000}
@@ -1953,7 +2115,7 @@ div#ajaxLoading {
 	font-family: Verdana;
 	font-size: 90%;
 	text-align: center;
-	background: transparent url(../../lib/shadowbox/images/loading-light.gif) no-repeat 50% 100%;
+	background: transparent url(../../img/spinner.gif) no-repeat 50% 100%;
 	height: 43px;
 	width: 50px;
 	padding-top: 32px}
@@ -1992,46 +2154,19 @@ div#ajaxLoading {
   
 .cluetip-default #cluetip-inner {padding: .9em}
 
-.cluetip-default div#cluetip-close { 
+div#cluetip-close { 
 	text-align: right;
-	margin: -10px 0 0 0;
+	margin: 0;
+	padding-right: .5em;
+	background: #fff;
 	color: #900}
 	
-/* MyTiki Preferences Ajax */
-.tab-wrapper {padding: 0}
-
-.tab-menu  {
-	clear: both;
-	line-height: 17px;
-	list-style-image: none;
-	list-style-position: outside;
-	list-style-type: none;
-	padding: 2px 0;
-	margin-bottom: 6px;
-	margin-top: 2px;
-	width: 100%}
-
-.tab-menu li {
-	display: inline;
-	margin: 0 2px;
-	width: 200px;
-	padding-right: 1.5em}
-
-.tab-menu li img {vertical-align: middle}
-
-.tab-menu li a 	{
-	padding: 1px 5px}
-
-.tab-menu li a:hover, 
-.tab-menu li a:focus { 
-	background: transparent; 
-	border-bottom-color: #f8f8ff}
-
-.tab-menu li a:hover { 
-	background: #FAEC8F; 
-	border-bottom-color: #f8f8ff}
- 
-.tab-menu li.tab-selected a {background: #f8f8ff}
+.cluetip-fullhtml {
+	background: #fff;
+	color: #000;
+	margin: 0;
+	padding: 0;
+}
 
 /***** New (unsorted) *****/
 
@@ -2092,6 +2227,25 @@ table.webmail_message_headers th {
 	border: none;
 	background-color: transparent}
 
-/***** End New (unsorted) *****/
+@media print {
+	.tikihelp, .navbar, .tabstoggle, .tabs, #show-errors-button {display:none;}
+}
+
+/* treeTable definitions - used in object-perms so far */
+
+table.treeTable {}
+
+table.treeTable .checkBoxHeader {
+	font-size: .8em;
+}
+
+table.treeTable .subHeader td {
+	font-weight: bold;
+}
+
+table.treeTable .parent td {
+	font-style: italic;
+}
+
 
 /* End of File */

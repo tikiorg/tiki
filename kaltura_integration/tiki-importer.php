@@ -17,9 +17,32 @@ if (!empty($_POST['importerClassName'])) {
     $importer = new $importerClassName();
 }
 
-if (!empty($_FILES['importFile'])) {
+if (isset($_SESSION['tiki_importer_feedback'])) {
+    $smarty->assign('importFeedback', $_SESSION['tiki_importer_feedback']);
+    $smarty->assign('importLog', $_SESSION['tiki_importer_log']);
+    $smarty->assign('importErrors', $_SESSION['tiki_importer_errors']);
+    unset($_SESSION['tiki_importer_feedback']);
+    unset($_SESSION['tiki_importer_log']);
+    unset($_SESSION['tiki_importer_errors']);
+} else if (!empty($_FILES['importFile'])) {
     // third step: start the importing process
-    $importer->import(); 
+
+    if ($_FILES['importFile']['error'] === UPLOAD_ERR_OK) {
+        try {
+            $importer->import($_FILES['importFile']['tmp_name']); 
+        } catch(Exception $e) {
+            $smarty->assign('msg', $e->getMessage());
+            $smarty->display('error.tpl');
+            die;
+        }
+    } else {
+        $msg = TikiImporter::displayPhpUploadError($_FILES['importFile']['error']);
+        $smarty->assign('msg', $msg);
+        $smarty->display('error.tpl');
+        die;
+    }
+
+    die;
 } else if (!empty($_POST['importerClassName'])) {
     // second step: display import options for the software previously chosen
     if (!file_exists('lib/importer/' . $importerClassName . '.php')) {

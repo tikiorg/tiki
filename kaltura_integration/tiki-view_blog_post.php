@@ -42,35 +42,8 @@ if (!$blog_data) {
 	die;
 }
 
-$smarty->assign('individual', 'n');
+$tikilib->get_perm_object($blogId, 'blog');
 
-if ($userlib->object_has_one_permission($blogId, 'blog')) {
-	$smarty->assign('individual', 'y');
-
-	if ($tiki_p_admin != 'y') {
-		// Now get all the permissions that are set for this type of permissions 'image gallery'
-		$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'blogs');
-		foreach ($perms["data"] as $perm) {
-			$permName = $perm["permName"];
-			if ($userlib->object_has_permission($user, $blogId, 'blog', $permName)) {
-				$$permName = 'y';
-				$smarty->assign("$permName", 'y');
-			} else {
-				$$permName = 'n';
-				$smarty->assign("$permName", 'n');
-			}
-		}
-	}
-}
-
-if ($tiki_p_blog_admin == 'y') {
-	$tiki_p_create_blogs = 'y';
-	$smarty->assign('tiki_p_create_blogs', 'y');
-	$tiki_p_blog_post = 'y';
-	$smarty->assign('tiki_p_blog_post', 'y');
-	$tiki_p_read_blog = 'y';
-	$smarty->assign('tiki_p_read_blog', 'y');
-}
 
 if ($tiki_p_read_blog != 'y') {
 	$smarty->assign('errortype', 401);

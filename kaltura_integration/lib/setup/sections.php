@@ -84,11 +84,6 @@ $sections = array(
 		'key' => 'msgId',
 		'itemkey' => '',
 	),
-	'newsreader' => array(
-		'feature' => 'feature_newsreader',
-		'key' => 'serverId',
-		'itemkey' => 'id',
-	),
 	'webmail' => array(
 		'feature' => 'feature_webmail',
 		'key' => 'msgId',
@@ -153,11 +148,6 @@ $sections = array(
 		'key' => '',
 		'itemkey' => '',
 	),
-	'charts' => array(
-		'feature' => 'feature_charts',
-		'key' => '',
-		'itemkey' => '',
-	),
 	// tra('Map')
 	'maps' => array(
 		'feature' => 'feature_maps',
@@ -175,20 +165,12 @@ $sections = array(
 		'key' => 'categId',
 		'itemkey' => '',
 	),
-	'games' => array(
-		'feature' => 'feature_games',
-		'key' => 'gameId',
-		'itemkey' => '',
-	),
 	// tra('Html Page')
 	'html_pages' => array(
 		'feature' => 'feature_html_pages',
 		'key' => 'pageId',
 		'itemkey' => '',
 		'objectType' => 'html page',
-	),
-	'swfobj' => array(
-		'feature' => 'feature_swfobj',
 	),
 	// tra('Newsletter')
 	'newsletters' => array(

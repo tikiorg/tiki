@@ -89,7 +89,7 @@ class WikiPluginBackLinks extends PluginsLib {
         if (!$aBackRequest) {
             return tra("No pages links to")." (($page))";
         } else {
-            $aPages = $this->list_pages(0, -1, 'pageName_desc', $aBackRequest);
+            $aPages = $this->list_pages(0, -1, 'pageName_asc', $aBackRequest);
         }
         //
         /////////////////////////////////

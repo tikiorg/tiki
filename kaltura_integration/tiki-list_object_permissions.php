@@ -27,16 +27,7 @@ function list_perms($objectId, $objectType) {
 				if (!empty($category_perms)) {
 					foreach ($category_perms as $category_perm) {
 						$config[$category_perm['groupName']][$category_perm['permName']] = 'y';
-					}
-
-					foreach ($config as $gr=>$perms) {
-						$ps = $tikilib->get_perm_from_categPerms($perms, $objectType, false);
-						foreach ($ps as $perm=>$ok) {
-							$categPerm = true;
-							if ($ok == 'y') {
-								$ret[] = array('group'=>$gr, 'perm'=>$perm, 'reason'=>'Category', 'detail'=> $categId);
-							}
-						}
+						$ret[] = array('group' => $category_perm['groupName'], 'perm' => $category_perm['permName'], 'reason' => 'Category');
 					}
 				}
 			}
@@ -70,12 +61,16 @@ foreach ($types as $type) {
 	case 'file gallery':
 		$files = $tikilib->list_file_galleries();
 
-		foreach ($files['data'] as $file) {
-			$res[$type]['objects'][] = list_perms($file['id'], $type);
-		}
-		break;
-	default:
-		break;
+		case 'file galleries':
+		case 'file gallery':
+			$files = $tikilib->list_file_galleries( 0, -1, 'name_desc', '', '', $prefs['fgal_root_id'] );
+			foreach($files['data'] as $file) {
+				$res[$type]['objects'][] = list_perms($file['id'], $type);
+			}
+			break;
+
+		default:
+			break;
 	}
 }
 

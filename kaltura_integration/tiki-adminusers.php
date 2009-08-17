@@ -62,7 +62,11 @@ function batchImportUsers() {
 		$smarty->assign('msg', tra("No records were found. Check the file please!"));
 		$smarty->display("error.tpl");
 		die;
-	}
+    }
+
+    // wheter to force password change on first login or not
+    $pass_first_login = (isset($_REQUEST['forcePasswordChange']) && $_REQUEST['forcePasswordChange'] == 'on');
+
 	$added = 0;
 	$errors = array();
 	$discarded = array();
@@ -104,7 +108,6 @@ function batchImportUsers() {
 			continue;
 		}
 		if (!$exist) {
-			$pass_first_login = ( isset($_REQUEST['pass_first_login']) && $_REQUEST['pass_first_login'] == 'on' );
 			$userlib->add_user($u['login'], $u['password'], $u['email'], '', $pass_first_login);
 			$logslib->add_log('users',sprintf(tra("Created account %s <%s>"),$u['login'], $u['email']));
 		}
@@ -147,7 +150,7 @@ function batchImportUsers() {
 	}
 }
 $auto_query_args = array('offset', 'numrows', 'find', 'filterEmail', 'sort_mode', 'initial', 'filterGroup');
-$cookietab = "1";
+if (!isset($cookietab)) { $cookietab = '1'; }
 
 if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name'])) {
 	check_ticket('admin-users');
@@ -519,7 +522,7 @@ if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
 	$userinfo['registrationDate'] = '';
 	$userinfo['age'] = '';
 	$userinfo['currentLogin'] = '';
-	$cookietab = "1";
+	if (!isset($cookietab)) { $cookietab = '1'; }
 	$_REQUEST["user"] = 0;
 }
 if (isset($_REQUEST['add'])) {

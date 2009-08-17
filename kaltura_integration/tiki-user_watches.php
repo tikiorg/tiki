@@ -158,12 +158,14 @@ if ($prefs['feature_messages'] == 'y' && $tiki_p_messages == 'y') {
 
 ask_ticket('user-watches');
 if ($prefs['feature_ajax'] == "y") {
-function user_watches_ajax() {
-    global $ajaxlib, $xajax;
-    $ajaxlib->registerTemplate("tiki-user_watches.tpl");
-    $ajaxlib->registerTemplate("tiki-my_tiki.tpl");
-    $ajaxlib->registerFunction("loadComponent");
-    $ajaxlib->processRequests();
+	function user_watches_ajax() {
+		global $ajaxlib, $xajax;
+		$ajaxlib->registerTemplate("tiki-user_watches.tpl");
+		$ajaxlib->registerTemplate("tiki-my_tiki.tpl");
+		$ajaxlib->registerFunction("loadComponent");
+		$ajaxlib->processRequests();
+	}
+	user_watches_ajax();
 }
 user_watches_ajax();
 $smarty->assign("mootab",'y');

@@ -1,5 +1,5 @@
 <?php
-// $Id: /cvsroot/tikiwiki/tiki/lib/wiki/wikilib.php,v 1.110.2.11 2008-02-27 15:18:48 nyloth Exp $
+// $Id$
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -131,8 +131,6 @@ class WikiLib extends TikiLib {
 			if (strcasecmp($oldName, $newName) <> 0) return false;
 		}
 
-		// Since page link have HTML chars fixed;
-		$newName = htmlspecialchars( $newName );
 		$tmpName = "TmP".$newName."TmP";
 
 		// 1st rename the page in tiki_pages, using a tmpname inbetween for
@@ -410,7 +408,7 @@ class WikiLib extends TikiLib {
 	function wiki_attach_file($page, $name, $type, $size, $data, $comment, $user, $fhash) {
 		$comment = strip_tags($comment);
 		$query = "insert into `tiki_wiki_attachments`(`page`,`filename`,`filesize`,`filetype`,`data`,`created`,`hits`,`user`,`comment`,`path`) values(?,?,?,?,?,?,0,?,?,?)";
-		$this->blob_encode($data);
+		//$this->blob_encode($data);
 		$result = $this->query($query,array("$page","$name", (int) $size,"$type","$data", (int) $this->now,"$user","$comment","$fhash"));
 
 		global $prefs;
@@ -661,18 +659,16 @@ class WikiLib extends TikiLib {
 	}
 	return ($info["flag"] == 'L')? $info["user"] : null;
     }
-    function is_editable($page, $user, $info=null) {
-	global $tiki_p_admin, $tiki_p_admin_wiki, $prefs;
-      if ($tiki_p_admin == 'y' || $tiki_p_admin_wiki == 'y')
-            return true;
-      else {
+	function is_editable($page, $user, $info=null) {
+		global $prefs;
+		$perms = Perms::get( array( 'type' => 'wiki page', 'object' => $page ) );
+
 		if ($prefs['feature_wiki_userpage'] == 'y' and strcasecmp(substr($page, 0, strlen($prefs['feature_wiki_userpage_prefix'])), $prefs['feature_wiki_userpage_prefix']) == 0 and strcasecmp($page, $prefs['feature_wiki_userpage_prefix'].$user) != 0)
 			return false;
-		if (!$this->user_has_perm_on_object($user,$page,'wiki page','tiki_p_edit', 'tiki_p_edit_categorized'))
+		if (!$perms->edit )
 			return false;
 		return ($this->is_locked($page, $info) == null || $user == $this->is_locked($page, $info))? true : false;
 	}
-    }
 
     function lock_page($page) {
 	global $user, $tikilib;

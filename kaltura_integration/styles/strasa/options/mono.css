@@ -425,12 +425,12 @@ a.flipmodtitle:hover img {
 /** Other boxes **/
 
 div.cbox {
-	border: 1px solid #212121;
+	border: 1px solid #444;
 }
 
 .cbox-title {
 	color: #ebebeb;
-	background: #212121;
+	background: #666;
 }
 
 .cbox-title a:link,
@@ -443,12 +443,12 @@ div.cbox {
 }
 
 .rbox-title {
-	background-color: #e5e5e5;
+	border-color: #ccc;
 }
 
 .rbox-data {
 	background-color: #fff;
-	border: solid 1px #e5e5e5;
+	border: solid 1px #ccc;
 }
 
 
@@ -497,7 +497,7 @@ td.third {}
 th,
 table.normal td.heading {
 	color: #ebebeb;
-	background: #212121;
+	background: #444;
 }
 
 th a:link,
@@ -642,7 +642,7 @@ div.split {
 }
 
 /* Needed esp. for light-on-dark theme */
-div.quicktag {
+div.toolbar {
 }
 
 /* Wiki plugins */
@@ -1179,13 +1179,13 @@ table.default tfoot td {
 /* css/admin.css overrides */
 a.admbox {
 	border: 1px solid #223845;
-	background: #f0f0f0 center no-repeat;
+	background-color: #f0f0f0;
 }
 
 a.admbox:hover,
 a.admbox:focus,
 a.admbox:active {
-	background: #dcdcdc center no-repeat;
+	background-color: #dcdcdc;
 	border: 1px solid #696969;
 }
 
