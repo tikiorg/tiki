@@ -1,4 +1,6 @@
-<h1>{$title}</h1>
+{* $Id: $ *}
+
+{title help="Workspaces+Management" admpage="login"}{tr}Workspaces Management{/tr}{/title}
 
 {tabset name="manageWS"}
 
@@ -157,6 +159,22 @@
  
    {tab name="{tr}List WorkSpaces{/tr}"}
 	<div class="cbox">
+
+	<h2>{tr}List of Workspaces{/tr}</h2>
+
+	{include file='find.tpl' find_show_num_rows='y'}
+
+	{* if $cant_pages > 1 or !empty($initial) or !empty($find) *}
+		{initials_filter_links}
+	{* /if *}
+
+	{if not empty($prev_pageWS)}
+	    <a class="button" href = {$prev_pageWS}>Back</a>
+	{/if}
+	{if not empty($next_pageWS)}
+	    <a class="button" href = {$next_pageWS}>Next</a>
+       {/if}
+
 	   <table class = admin>
 		<tr>
 			<th>Name</th>
@@ -174,17 +192,14 @@
 		{/foreach}
 	   </table>
 	</div>
-	{* if not empty($prev_pageWS)}
-		<a class="button" href = {$prev_pageWS}>Back</a>
-	{/if}
-	{if not empty($next_pageWS)}
-		<a class="button" href = {$next_pageWS}>Next</a>
-	{/if *}
    {/tab}
    
    {tab name="{tr}Add Workspace{/tr}"}
       <div class="cbox" align="left">	
 	  <form action="tiki-manage-workspaces.php" method="post">
+		<table>
+
+		</table>
 		<div>
 			<label for="wsName">Name: <br/></label>
 				<input type="text" id="wsName" name="wsName" size="20" />
