@@ -4594,5 +4594,7 @@ CREATE TABLE tiki_transitions (
 ) ENGINE=MyISAM;
 
 
+INSERT INTO "," ("name","type","description","visible","user","public","parentId") VALUES ('File Galleries', 'system', '', 'y', 'admin', 'y', -1);
+
 ;
 

@@ -3554,3 +3554,4 @@ CREATE TABLE `tiki_transitions` (
 	KEY `transition_lookup` (`type`, `from`)
 ) ENGINE=MyISAM;
 
+INSERT INTO `tiki_file_galleries` (`name`, `type`, `description`, `visible`, `user`, `public`, `parentId`) VALUES ('File Galleries', 'system', '', 'y', 'admin', 'y', -1);

@@ -10,7 +10,7 @@
 // must start with two '/' and 'stopinstall:'. (Make sure there are no spaces inbetween // and stopinstall: !)
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
@@ -47,7 +47,7 @@ if (!empty($_REQUEST['lang'])) {
 }
 include_once('lib/init/tra.php');
 
-function list_tables( $dbTiki )
+function list_tables($dbTiki)
 {
 	static $list = array();
 	if( $list ) {
@@ -67,7 +67,7 @@ function list_tables( $dbTiki )
 	return $list;
 }
 
-function has_tiki_db( $dbTiki )
+function has_tiki_db($dbTiki)
 {
 	return in_array('users_users', list_tables($dbTiki));
 }
@@ -96,45 +96,23 @@ function process_sql_file($file,$db_tiki) {
 	}
 
 	while(!feof($fp)) {
-		$command.= fread($fp,4096);
+		$command .= fread($fp,4096);
 	}
 
-	switch ( $db_tiki ) {
-	  case 'sybase': $statements = split("(\r|\n)go(\r|\n)", $command); break;
-          case 'mssql': $statements = split("(\r|\n)go(\r|\n)", $command); break;
-	  case 'oci8': $statements = preg_split("#(;\s*\n)|(\n/\n)#", $command); break;
-	  default: $statements = preg_split("#(;\s*\n)|(;\s*\r\n)#", $command); break;
+	switch ($db_tiki) {
+		case 'mssql': $statements = split("(\r|\n)go(\r|\n)", $command); break;
+		default: $statements = preg_split("#(;\s*\n)|(;\s*\r\n)#", $command); break;
 	}
-	$prestmt="";
-	$do_exec=true;
+	$prestmt = '';
+	$do_exec = true;
 	foreach ($statements as $statement) {
-		//echo "executing $statement </br>";
-			if (trim($statement)) {
-				switch ($db_tiki) {
-				case "oci8":
-					// we have to preserve the ";" in sqlplus programs (triggers)
-					if (preg_match("/BEGIN/",$statement)) {
-						$prestmt=$statement.";";
-						$do_exec=false;
-					}
-					if (preg_match("/END/",$statement)) {
-						$statement=$prestmt."\n".$statement.";";
-						$do_exec=true;
-					}
-					if($do_exec) $result = $dbTiki->Execute($statement);
-					break;
-				default:
-					$result = $dbTiki->Execute($statement);
-					break;
-			}
-
+		if (trim($statement)) {
+			$result = $dbTiki->Execute($statement);
 			if (!$result) {
-				$failedcommands[]= "Command: ".$statement."\nMessage: ".$dbTiki->ErrorMsg()."\n\n";
+				$failedcommands[] = "Command: ".$statement."\nMessage: ".$dbTiki->ErrorMsg()."\n\n";
 				//trigger_error("DB error:  " . $dbTiki->ErrorMsg(). " in query:<br /><pre>" . $command . "<pre/><br />", E_USER_WARNING);
-				// Do not die at the moment. We need some better error checking here
-				//die;
 			} else {
-				$succcommands[]=$statement;
+				$succcommands[] = $statement;
 			}
 		}
 	}
@@ -145,25 +123,26 @@ function process_sql_file($file,$db_tiki) {
 	$smarty->assign_by_ref('failedcommands', $failedcommands);
 }
 
-function write_local_php($dbb_tiki,$host_tiki,$user_tiki,$pass_tiki,$dbs_tiki,$dbversion_tiki="4.0") {
+function write_local_php($dbb_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tiki, $dbversion_tiki="4.0") {
 	global $local;
 	global $db_tiki;
-	if ($dbs_tiki and $user_tiki) {
-		$db_tiki=addslashes($dbb_tiki);
-		$host_tiki=addslashes($host_tiki);
-		$user_tiki=addslashes($user_tiki);
-		$pass_tiki=addslashes($pass_tiki);
-		$dbs_tiki=addslashes($dbs_tiki);
+	if ($dbs_tiki && $user_tiki) {
+		$db_tiki = addslashes($dbb_tiki);
+		$host_tiki = addslashes($host_tiki);
+		$user_tiki = addslashes($user_tiki);
+		$pass_tiki = addslashes($pass_tiki);
+		$dbs_tiki = addslashes($dbs_tiki);
 		$fw = fopen($local, 'w');
-		$filetowrite="<?php\n\$db_tiki='".$db_tiki."';\n";
-		$filetowrite.="\$dbversion_tiki='".$dbversion_tiki."';\n";
-		$filetowrite.="\$host_tiki='".$host_tiki."';\n";
-		$filetowrite.="\$user_tiki='".$user_tiki."';\n";
-		$filetowrite.="\$pass_tiki='".$pass_tiki."';\n";
-		$filetowrite.="\$dbs_tiki='".$dbs_tiki."';\n";
-		$filetowrite.="?>";
+		$filetowrite = "<?php\n";
+		$filetowrite .= "\$db_tiki='" . $db_tiki . "';\n";
+		$filetowrite .= "\$dbversion_tiki='" . $dbversion_tiki . "';\n";
+		$filetowrite .= "\$host_tiki='" . $host_tiki . "';\n";
+		$filetowrite .= "\$user_tiki='" . $user_tiki . "';\n";
+		$filetowrite .= "\$pass_tiki='" . $pass_tiki . "';\n";
+		$filetowrite .= "\$dbs_tiki='" . $dbs_tiki . "';\n";
+		$filetowrite .= "?>";
 		fwrite($fw, $filetowrite);
-		fclose ($fw);
+		fclose($fw);
 	}
 }
 
@@ -569,13 +548,11 @@ $smarty->assign('tiki_version_name', preg_replace('/^(\d+\.\d+)([^\d])/', '\1 \2
 
 // Available DB Servers
 $dbservers = array();
-if ( function_exists('mysqli_connect') ) $dbservers['mysqli'] = tra('MySQL Improved (mysqli). Requires MySQL 4.1+');
-if ( function_exists('mysql_connect') ) $dbservers['mysql'] = tra('MySQL classic (mysql)');
-if ( function_exists('pg_connect') ) $dbservers['pgsql'] = tra('PostgreSQL 8.3+');
-if ( function_exists('oci_connect') ) $dbservers['oci8'] = tra('Oracle');
-if ( function_exists('sybase_connect') ) $dbservers['sybase'] = tra('Sybase');
-if ( function_exists('sqlite_open') ) $dbservers['sqlite'] = tra('SQLLite');
-if ( function_exists('mssql_connect') ) $dbservers['mssql'] = tra('MSSQL');
+if (function_exists('mysqli_connect'))	$dbservers['mysqli'] = tra('MySQL Improved (mysqli). Requires MySQL 4.1+');
+if (function_exists('mysql_connect'))	$dbservers['mysql'] = tra('MySQL classic (mysql)');
+if (function_exists('pg_connect'))		$dbservers['pgsql'] = tra('PostgreSQL');
+if (function_exists('sqlite_open'))		$dbservers['sqlite'] = tra('SQLLite');
+if (function_exists('mssql_connect'))	$dbservers['mssql'] = tra('MSSQL');
 $smarty->assign_by_ref('dbservers', $dbservers);
 
 $errors = '';
@@ -610,7 +587,7 @@ if ($errors) {
 
 define('ADODB_FORCE_NULLS', 1);
 define('ADODB_ASSOC_CASE', 2);
-define('ADODB_CASE_ASSOC', 2); // typo in adodb's driver for sybase?
+define('ADODB_CASE_ASSOC', 2); // typo in adodb's driver for sybase? // so do we even need this without sybase? What's this?
 include_once ('lib/adodb/adodb.inc.php');
 
 include('lib/tikilib.php');
@@ -633,15 +610,10 @@ if (!file_exists($local)) {
 	}
 
 	if (!isset($db_tiki)) {
-		//upgrade from 2.0 : if no db is specified, use the first db that this php installation can handle
+		// if no db is specified, use the first db that this php installation can handle
 		$db_tiki = reset($dbservers);
 		write_local_php($db_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tiki);
 		$_SESSION[$cookie_name] = 'admin';
-	}
-
-	if ($db_tiki == 'sybase') {
-		// avoid database change messages
-		ini_set('sybct.min_server_severity', '11');
 	}
 
 	$ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
@@ -678,9 +650,9 @@ if ($dbcon) {
 }
 
 if ($admin_acc == 'n') {
-        $smarty->assign('noadmin', 'y');
+	$smarty->assign('noadmin', 'y');
 } else {
-        $smarty->assign('noadmin', 'n');
+	$smarty->assign('noadmin', 'n');
 }
 
 
@@ -726,9 +698,9 @@ if ($dbcon) {
 	$smarty->assign('tikidb_created', $has_tiki_db);
 	if ($install_step == '6' && $has_tiki_db) {
 		update_preferences($dbTiki, $prefs);
-		$smarty->assign('admin_email', get_admin_email( $dbTiki ));
+		$smarty->assign('admin_email', get_admin_email($dbTiki));
 	}
-	$smarty->assign('tikidb_is20',  has_tiki_db_20( $dbTiki ));
+	$smarty->assign('tikidb_is20',  has_tiki_db_20($dbTiki));
 }
 
 if (isset($_REQUEST['restart'])) {
@@ -736,27 +708,28 @@ if (isset($_REQUEST['restart'])) {
 }
 
 
-//Load SQL scripts
 load_sql_scripts();
 
 $smarty->assign('admin_acc', $admin_acc);
 
 // If no admin account then we are logged
-if ( $admin_acc == 'n' ) {
+if ($admin_acc == 'n') {
 	$_SESSION["install-logged-$multi"] = 'y';
 }
 
 $smarty->assign('dbdone', 'n');
 $smarty->assign('logged', $logged);
 
+// Profile selection- and installation steps
 if ( $install_step == '4' || $install_step == '5' ) {
 	require_once 'lib/profilelib/profilelib.php';
-	$remote_profile_test = Tiki_Profile::fromNames( 'http://profiles.tikiwiki.org', 'Small_Organization_Web_Presence' );
+	$remote_profile_test = Tiki_Profile::fromNames('http://profiles.tikiwiki.org', 'Small_Organization_Web_Presence');
 	$has_internet_connection = empty($remote_profile_test) ? 'n' : 'y';
 	$smarty->assign('has_internet_connection', $has_internet_connection);
 }
 
-if (isset($dbTiki)
+if (
+	isset($dbTiki)
 	&& is_object($dbTiki)
 	&& isset($_SESSION["install-logged-$multi"])
 	&& $_SESSION["install-logged-$multi"] == 'y'
@@ -780,7 +753,6 @@ if (isset($dbTiki)
 		$tikidate = new TikiDate();
 		
 		$installer = new Tiki_Profile_Installer;
-		//$installer->setUserData( $data ); // TODO
 
 		if ($has_internet_connection == 'y'
 			&& isset($_REQUEST['profile'])

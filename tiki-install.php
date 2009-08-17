@@ -7,17 +7,13 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 if (!isset($title)) $title = 'Tiki Installer';
-if (!isset($content)) $content = '';
+if (!isset($content)) $content = 'No content specified. Something went wrong.<br/>Please tell your administrator.<br/>If you are the administrator, you may want to check for / file a bug report.';
 if (!isset($dberror)) $dberror = false;
 
 // Check that PHP version is at least 5
 if (version_compare(PHP_VERSION, '5.0.0', '<')) {
 	$title = 'PHP5 is required for Tiki 3.0';
 	$content = '<p>Please contact your system administrator ( if you are not the one ;) ).</p>';
-	createPage($title, $content);
-}
-
-if ($dberror === true) {
 	createPage($title, $content);
 }
 
@@ -44,41 +40,33 @@ session_start();
 require_once 'lib/core/lib/TikiDb/Adodb.php';
 
 
-class InstallerDatabaseErrorHandler implements TikiDb_ErrorHandler
-{
-	function handle( TikiDb $db, $query, $values, $result ) {
-	}
-}
-
-
 // Were database details defined before? If so, load them
-if ( file_exists( 'db/local.php' ) ) {
-	include('db/local.php');
-	include_once('lib/adodb/adodb.inc.php');
+if (file_exists('db/local.php')) {
+	include 'db/local.php';
+	include_once 'lib/adodb/adodb.inc.php';
 	$dbTiki = ADONewConnection($db_tiki);
 	$db = new TikiDb_Adodb($dbTiki);
 	$db->setErrorHandler(new InstallerDatabaseErrorHandler);
 	TikiDb::set($db);
 
 	// check for provided login details and check against the old, saved details that they're correct
-	if (isset($_POST['dbuser'], $_POST['dbpass']))
-	{
-		if ( ($_POST['dbuser'] == $user_tiki) && ($_POST['dbpass'] == $pass_tiki) )
-		{
+	if (isset($_POST['dbuser'], $_POST['dbpass'])) {
+		if (($_POST['dbuser'] == $user_tiki) && ($_POST['dbpass'] == $pass_tiki)) {
 			$_SESSION['accessible'] = true;
 		}
 	}
 } else {
+	// No database info found, so it's a first-install and thus installer is accessible
 	$_SESSION['accessible'] = true;
 }
 
-if (installer_is_accessible()) {
-	// allowed to access installer, display it
+if (isset($_SESSION['accessible'])) {
+	// allowed to access installer, include it
 	$logged = true;
 	$admin_acc = 'y';
-	include_once("installer/tiki-installer.php");
+	include_once 'installer/tiki-installer.php';
 } else {
-	// Installer knows used db details but no login details were received for this script.
+	// Installer knows db details but no login details were received for this script.
 	// Thus, display a form.
 	$title = 'Tiki Installer Security Precaution';
 	$content = '
@@ -95,16 +83,17 @@ if (installer_is_accessible()) {
 	createPage($title, $content);
 }
 
-function installer_is_accessible()
+
+/**
+ * 
+ */
+class InstallerDatabaseErrorHandler implements TikiDb_ErrorHandler
 {
-	if (!isset($_SESSION['accessible'])) {
-		return false;
-	} else {
-		return true;
+	function handle(TikiDb $db, $query, $values, $result) {
 	}
 }
 
-function createPage($title,$content){
+function createPage($title, $content){
 	echo <<<END
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html 

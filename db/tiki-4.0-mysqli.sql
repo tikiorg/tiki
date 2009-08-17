@@ -541,7 +541,6 @@ CREATE TABLE `tiki_categories` (
   `description` varchar(250) default NULL,
   `parentId` int(12) default NULL,
   `hits` int(8) default NULL,
-  `rootCategId` int(12) default NULL,
   PRIMARY KEY (`categId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
@@ -1531,13 +1530,6 @@ INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `s
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Comments','tiki-list_comments.php',1260,'feature_faq_comments','tiki_p_admin','',0);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Contribution','tiki-admin_contribution.php',1265,'feature_contribution','tiki_p_admin_contribution','',0);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Workspaces','tiki-admin.php?page=workspaces',1270,'feature_workspaces','tiki_p_admin','',0);
-
-# Workspaces - only for testing, nothing more ;)
-INSERT INTO `tiki_menu_options` (`optionId`, `menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (300,42,'o','Workspaces','tiki-admin.php?page=workspaces',1270,'feature_workspaces','tiki_p_admin_ws','',0);
-INSERT INTO `tiki_menu_options` (`optionId`, `menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (301,42,'s','Workspaces','tiki-workspaces-index.php',1030,'feature_workspaces','tiki_p_view','',0);
-INSERT INTO `tiki_menu_options` (`optionId`, `menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (302,42,'o','Workspaces Home','tiki-workspaces-index.php',1035,'feature_workspaces','tiki_p_view','',0);
-INSERT INTO `tiki_menu_options` (`optionId`, `menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (303,42,'o','My Workspaces','tiki-my-workspaces.php',1040,'feature_workspaces','tiki_p_view','',0);
-INSERT INTO `tiki_menu_options` (`optionId`, `menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (304,42,'o','Manage Workspaces','tiki-manage-workspaces.php',1045,'feature_workspaces','tiki_p_admin','',0);
 
 
 
@@ -2973,13 +2965,7 @@ INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin
 
 INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_trigger_transition', 'Can trigger the transition between two states', 'admin', 'transition', NULL, 'feature_group_transition,feature_category_transition');
 
-INSERT INTO users_permissions (`permName`, `permDesc`, `level`, `type`, `admin`) VALUES ('tiki_p_ws_admin', 'Can admin all ws', 'globaladmin', 'ws', 'y');
-INSERT INTO users_permissions (`permName`, `permDesc`, `level`, `type`) VALUES ('tiki_p_ws_addws', 'Can add ws', 'globaladmin', 'ws');
-INSERT INTO users_permissions (`permName`, `permDesc`, `level`, `type`) VALUES ('tiki_p_ws_listws', 'Can list other ws', 'globaladmin', 'ws');
-INSERT INTO users_permissions (`permName`, `permDesc`, `level`, `type`) VALUES ('tiki_p_ws_adminws', 'Can admin a specific ws', 'admin', 'ws');
-INSERT INTO users_permissions (`permName`, `permDesc`, `level`, `type`) VALUES ('tiki_p_ws_adminobjects', 'Can admin objects within a ws', 'admin', 'ws');
-INSERT INTO users_permissions (`permName`, `permDesc`, `level`, `type`) VALUES ('tiki_p_ws_admingroups', 'Can admin groups within a ws', 'admin', 'ws');
-INSERT INTO users_permissions (`permName`, `permDesc`, `level`, `type`) VALUES ('tiki_p_ws_view', 'Can view a specific ws and list it', 'registered', 'ws');
+
 
 DROP TABLE IF EXISTS `users_usergroups`;
 CREATE TABLE `users_usergroups` (
@@ -3568,3 +3554,4 @@ CREATE TABLE `tiki_transitions` (
 	KEY `transition_lookup` (`type`, `from`)
 ) ENGINE=MyISAM;
 
+INSERT INTO `tiki_file_galleries` (`name`, `type`, `description`, `visible`, `user`, `public`, `parentId`) VALUES ('File Galleries', 'system', '', 'y', 'admin', 'y', -1);
