@@ -23,11 +23,13 @@ function wikiplugin_quote_info() {
 		'prefs' => array( 'wikiplugin_quote' ),
 		'body' => tra('Quoted text'),
 		'icon' => 'pics/icons/quotes.png',
+		'filter' => 'text',
 		'params' => array(
 			'replyto' => array(
 				'required' => false,
 				'name' => tra('Reply to'),
 				'description' => tra('Name of the quoted person.'),
+				'filter' => 'text',
 			),
 		),
 	);
