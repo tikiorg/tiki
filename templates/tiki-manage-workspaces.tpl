@@ -195,57 +195,60 @@
    {/tab}
    
    {tab name="{tr}Add Workspace{/tr}"}
+
+   <h2>{tr}Add a new Workspace{/tr}</h2>
+   
       <div class="cbox" align="left">	
 	  <form action="tiki-manage-workspaces.php" method="post">
-		<table>
-
-		</table>
-		<div>
-			<label for="wsName">Name: <br/></label>
-				<input type="text" id="wsName" name="wsName" size="20" />
-		</div>
-		<div>
-			<label for="wsDesc">Description: <br/></label>
-				<textarea name="wsDesc" id="wsDesc" cols="30" rows="10"></textarea>
-		</div>
-		<div>
-			<label for="parentWS">Select a Parent WS (optional): </label>
-			<select name="parentWS" id="parentWS">
-				<option value=0> </option>
-				{foreach from=$listParentWS.data item=ws}
-					<option value={$ws.categId}>{$ws.categpath}</option>
-				{/foreach}
-			</select>
-		</div>
-		<div>
-			Choose a group option: <br />
-			<input type="radio" name="groupSelect" id="new" value="new" />
-				<label for="new"> Create a new group:</label> 
-					<input type="text" id="newGroup" name="newGroup" size="20" />
-				<label for="groupDescrition"> Description:</label> 
-					<textarea name="groupDesc" id="groupDesc" cols="30" rows="1"></textarea>
-				<br />
-			<input type="radio" name="groupSelect" id="old" value="old" checked="checked"/>
-				<label for="old"> Select an old group: 
-				</label>
-					<select name="oldGroup" id="oldGroup">
+		<table class="normal">
+			<tr class="formcolor">
+				<td><label for="wsName">Name:</label></td>
+				<td><input type="text" id="wsName" name="wsName" size="20" /></td>
+			</tr>
+			<tr class="formcolor">
+				<td><label for="wsDesc">Description:</label></td>
+				<td><textarea name="wsDesc" id="wsDesc" style="width:95%"></textarea></td> 
+			</tr>
+			<tr class="formcolor">
+				<td><label for="parentWS">Select a Parent WS (optional):</label></td>
+				<td>
+				    <select name="parentWS" id="parentWS">
+					<option value=0> </option>
+					{foreach from=$listParentWS.data item=ws}
+					    <option value={$ws.categId}>{$ws.categpath}</option>
+					{/foreach}
+				    </select>
+				</td>
+			</tr>
+			<tr class="formcolor">
+				<td><input type="radio" name="groupSelect" id="new" value="new" /><label for="new">Create a new group:</label></td>
+				<td><input type="text" id="newGroup" name="newGroup" size="20" /></td>
+				<!--<td><label for="groupDescrition"> Description:</label></td>
+				<td><textarea name="groupDesc" id="groupDesc" cols="30" rows="1"></textarea></td>-->
+			</tr>
+			<tr class="formcolor">
+				<td><input type="radio" name="groupSelect" id="old" value="old" checked="checked"/><label for="old"> Select an old group:</label></td>
+				<td><select name="oldGroup" id="oldGroup">
 						{foreach from=$listGroups.data item=group}
 							<option value="{$group.groupName}">{$group.groupName}</option>
 						{/foreach}
 					</select>
-				
-		</div>
-		<div>
-			<label for="adminPerms">Select an admin permission for this group (optional): </label>
-			<select name="adminPerms" id="adminPerms">
-				<option value="tiki_p_ws_view"> </option>
-				{foreach from=$listPerms item=perm}
+				</td>
+			</tr>
+			<tr>
+			    <td><label for="adminPerms">Select an admin permission for this group (optional): </label></td>
+			    <td>
+				<select name="adminPerms" id="adminPerms">
+				    <option value="tiki_p_ws_view"> </option>
+				    {foreach from=$listPerms item=perm}
 					<option value={$perm.permName}>{$perm.permName} - {$perm.permDesc}</option>
-				{/foreach}
-			</select>
-		</div>
+				    {/foreach}
+				</select>
+			    </td>
+			</tr>
+		</table>
       </div>	
-      <input type="submit" value="Save" class="button" align="middle">
+      <input type="submit" value="Create" class="button" align="middle">
       </form>
    {/tab}
   
