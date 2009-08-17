@@ -4,15 +4,12 @@ require_once('tiki-setup.php');
 require_once('lib/workspaces/wslib.php');
 
 //Check security
-if (!($tiki_p_admin == 'y' || $tiki_p_admin_users == 'y')) { // temporary patch: tiki_p_admin includes tiki_p_admin_users but if you don't clean the temp/cache each time you sqlupgrade the perms setting is not synchornous with the cache
+if (!($tiki_p_admin == 'y' || $tiki_p_admin_users == 'y')) { 
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 	$smarty->display("error.tpl");
 	die;
 }
-
-$title = "WorkSpace Management";
-$smarty->assign('headtitle', tra($title));
 
 if ( isset($_REQUEST['wsName']))
 {	
@@ -31,34 +28,31 @@ if ( isset($_REQUEST['wsName']))
 	// else, will select a previously created group
 	else if ($_REQUEST['groupSelect'] == "old")
 	{
-		$groupName = $_REQUEST['oldGroup'];
-		$noCreate = true;
+	    $groupName = $_REQUEST['oldGroup'];
+	    $noCreate = true;
 	}
 	
 	// Check if the name and the group are written
-	if (($name == "") || ($groupName == ""))
+	if (empty($name))
 	{
-		if ($name == "")
-		{
-				$smarty->assign('msg', tra("Workspace can not be blank"));
-				$smarty->display("error.tpl");
-				die;
-		}
-		else if ($groupName == "")
-		{
-				$smarty->assign('msg', tra("Group name can not be blank"));
-				$smarty->display("error.tpl");
-				die;
-		}
+	    $smarty->assign('msg', tra("Workspace can not be blank"));
+	    $smarty->display("error.tpl");
+	    die;
 	}
-	
+	else if (empty($groupName))
+	{
+	    $smarty->assign('msg', tra("Group name can not be blank"));
+	    $smarty->display("error.tpl");
+	    die;
+	}
+		
 	// Check if a WS with the same name exists in the same level
 	$wsid = $wslib->get_ws_id($name, $parentWS);
 	if (!empty($wsid))
 	{
-			$smarty->assign('msg', tra("There already exists a Workspace with that name in the same level"));
-			$smarty->display("error.tpl");
-			die;
+	    $smarty->assign('msg', tra("There already exists a Workspace with that name in the same level"));
+	    $smarty->display("error.tpl");
+	    die;
 	}
 	
 	// If everything is ok, then the Workspace is created
@@ -250,5 +244,4 @@ else
 	$smarty->assign('mid', 'tiki-manage-workspaces.tpl');
 	$smarty->display('tiki.tpl');
 }
-
 ?>
