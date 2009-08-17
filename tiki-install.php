@@ -39,6 +39,14 @@ session_start();
 
 require_once 'lib/core/lib/TikiDb/Adodb.php';
 
+/**
+ * 
+ */
+class InstallerDatabaseErrorHandler implements TikiDb_ErrorHandler
+{
+	function handle(TikiDb $db, $query, $values, $result) {
+	}
+}
 
 // Were database details defined before? If so, load them
 if (file_exists('db/local.php')) {
@@ -84,14 +92,6 @@ if (isset($_SESSION['accessible'])) {
 }
 
 
-/**
- * 
- */
-class InstallerDatabaseErrorHandler implements TikiDb_ErrorHandler
-{
-	function handle(TikiDb $db, $query, $values, $result) {
-	}
-}
 
 function createPage($title, $content){
 	echo <<<END
