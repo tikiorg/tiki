@@ -6689,6 +6689,7 @@ $lang=Array(
 "Post new comment" => "ايراد نظر جديد",
 "Smileys" => "صورتك‌ها",
 "Quicktags" => "تگ‌هاي سريع",
+"Toolbars" => "تگ‌هاي سريع",
 "Reply to parent post" => "پاسخ به نظر مادر",
 "Post new reply" => "الصاق يك پاسخ جديد",
 "Cancel" => "لغو",

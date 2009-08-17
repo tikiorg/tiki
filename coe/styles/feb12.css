@@ -371,6 +371,11 @@ div#sitead {
 	margin-top: 4px;
 }
 
+#topbar_custom_code {
+	background: #205684;
+	color: #fff;
+}
+
 /* centercolumn */
 a.flip,
 a.flip:visited,

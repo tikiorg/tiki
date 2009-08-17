@@ -7668,6 +7668,7 @@ $lang=Array(
 "Post new comment" => "Legg opp ny kommentar",
 "Smileys" => "Smilefjes",
 "Quicktags" => "Hurtigmerker",
+"Toolbars" => "Hurtigmerker",
 "Reply to parent post" => "Svar på moder-innlegg",
 "Post new reply" => "Legg inn svar",
 "Cancel" => "Avbryt",

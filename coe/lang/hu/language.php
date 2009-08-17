@@ -5939,6 +5939,7 @@ $lang=Array(
 "required" => "szükséges",
 "Smileys" => "Mosolyok",
 "Quicktags" => "Quicktag-ek",
+"Toolbars" => "Quicktag-ek",
 "Post new reply" => "Új válasz küldése",
 "Cancel" => "Visszavonás",
 "Posting replies" => " Általános tudnivalók",

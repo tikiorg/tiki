@@ -17,11 +17,13 @@ function wikiplugin_sort_info() {
 		'description' => tra('Sorts the plugin content in the wiki page'),
 		'prefs' => array( 'wikiplugin_sort' ),
 		'body' => tra('Data to sort, one entry per line.'),
+		'filter' => 'text',
 		'params' => array(
 			'sort' => array(
 				'required' => false,
 				'name' => tra('Order'),
 				'description' => tra('asc|desc|shuffle'),
+				'filter' => 'alpha',
 			),
 		),
 	);

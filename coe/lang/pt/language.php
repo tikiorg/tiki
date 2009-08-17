@@ -6385,6 +6385,7 @@ $lang=Array(
 "Download" => "Download",
 "posts:" => "posts:",
 "Quicktags" => "Quicktags",
+"Toolbars" => "Quicktags",
 "Copyrights" => "Copyrights",
 "Total" => "Total",
 "Perms" => "Perms",

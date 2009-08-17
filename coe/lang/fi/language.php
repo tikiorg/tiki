@@ -6813,6 +6813,7 @@ $lang=Array(
 "Post new comment" => "Lähetä uusi kommentti",
 "Smileys" => "Hymiöt",
 "Quicktags" => "Pikatagit",
+"Toolbars" => "Pikatagit",
 "Reply to parent post" => "Vastaa isäntä lähetykseen",
 "Post new reply" => "Lähetä uusi vastaus",
 "Cancel" => "Peruuta",

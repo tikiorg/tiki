@@ -20,6 +20,7 @@ function wikiplugin_group_info() {
 		'body' => tra('Wiki text to display if conditions are met. The body may contain {ELSE}. Text after the marker will be displayed to users not matching the condition.'),
 		'prefs' => array('wikiplugin_group'),
 		'icon' => 'pics/icons/group.png',
+		'filter' => 'wikicontent',
 		'params' => array(
 			'friends' => array(
 				'required' => false,

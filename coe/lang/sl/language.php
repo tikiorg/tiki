@@ -1368,6 +1368,7 @@ $lang=Array(
 "Required" => "Zahtevano",
 "Smileys" => "Smejkoti",
 "Quicktags" => "Hitre značke",
+"Toolbars" => "Hitre značke",
 "Reply to parent post" => "Odgovori na starševski prispevek",
 "Post new reply" => "napiši nov odgovor",
 "Enter your name" => "Vpiši svoje ime",

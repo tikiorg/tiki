@@ -40,6 +40,7 @@ class wslib extends CategLib
 
 	$this->ws_container = (int) $prefs['ws_container'];
 	$this->objectType = 'ws';
+	$this->viewPerm = 'tiki_p_ws_view';
     }
 
     /** Initialize the Workspaces in TikiWiki setting a container in the category table and return its ID
@@ -80,6 +81,7 @@ class wslib extends CategLib
     {
     	if (!$parentWS)	$parentWS = 0;
     	
+	// ws_id = parent::add_category($parentWS, $name, $description, $this->ws_container)
 	$query = "insert into `tiki_categories`(`name`,`description`,`parentId`,`hits`,`rootCategId`) values(?,?,?,?,?)";
 	$this->query($query, array($name, $description, (int) $parentWS, 0, $this->ws_container));
 	
@@ -95,7 +97,7 @@ class wslib extends CategLib
 	
 		if ($noCreateNewGroup)
 		{
-		    $this->set_permissions_for_group_in_ws ($ws_id, $groupName, array('tiki_p_ws_view'));
+		    $this->set_permissions_for_group_in_ws ($ws_id, $groupName, array($this->viewPerm));
 		    if ($additionalPerms != null)
 			$this->set_permissions_for_group_in_ws($ws_id, $groupName, $additionalPerms);
 		}
@@ -125,7 +127,7 @@ class wslib extends CategLib
 	if ($userlib->add_group($groupName, $description)) 
 	{
     	    // It's given the tiki_p_ws_view permission to the selected group in the new ws
-	    $this->set_permissions_for_group_in_ws($ws_id,$groupName,array('tiki_p_ws_view'));
+	    $this->set_permissions_for_group_in_ws($ws_id,$groupName,array($this->viewPerm));
 	
     	    // It's given additional admin permissions to the group in the new ws
 	    if ($additionalPerms != null)
@@ -241,8 +243,8 @@ class wslib extends CategLib
     {
 	// Check if the group is included in other WS
     	$query = "select count(*) from `users_objectpermissions`
-			   where `groupName` = ? and `permName` = 'tiki_p_ws_view'";
-	$result = $this->getOne($query, array($groupName));
+			   where `groupName` = ? and `permName` = ?";
+	$result = $this->getOne($query, array($groupName, $this->viewPerm));
     	// If the group only had access to the current WS
     	if (($result == 1) && !($group == 'Anonymous' || $group == 'Registered' || $group == 'Admin'))
     	{
@@ -495,112 +497,18 @@ class wslib extends CategLib
 		// Delete all the object perms related to the object
 		$query = "delete from `users_objectpermissions` where `objectType` = ? and `objectId` = ?";
 		$this->query($query, array($type, $hashObject), -1, -1, false);
-    		
-    		// Delete the object from Tiki (TBD)
-    		switch ($type)
-    		{
-			case 'wiki page':
-			case 'wikipage':
-			case 'wiki_page':
-			{
-				global $tikilib;
-				$tikilib->remove_all_versions($itemId);
-				break;
-			}
-			case 'tracker':
-			{
-				global $trklib;
-				include_once ('lib/trackers/trackerlib.php');
-				$trklib->remove_tracker($itemId);
-				break;
-			}
-			case 'quiz':
-			{
-				global $quizlib;
-				include_once ('lib/quizzes/quizlib.php');
-				$quizlib->remove_quiz($itemId) ;
-				break;
-			}
-			case 'article':
-			{
-				global $artlib;
-				include_once ('lib/articles/artlib.php');
-				$artlib->remove_submission($itemId);
-				break;
-			}
-			case 'faq':
-			{
-				global $faqlib;
-				include_once ('lib/faqs/faqlib.php');
-				$faqlib->remove_faq($itemId);
-				break;
-			}
-			case 'blog':
-			{
-				global $bloglib;
-				include_once ('lib/blogs/bloglib.php');
-				$bloglib->remove_blog($itemId);
-				break;
-			}
-			case 'gallery':
-			case 'gal':
-			case 'image gallery':
-			{
-				global $imagegallib;
-				include_once ("lib/imagegals/imagegallib.php");
-				$imagegallib->remove_gallery($itemId);
-				break;
-			}
-			case 'file_gallery':
-			case 'file gallery':
-			case 'fgal':
-			{
-				global $filegallib;
-				include_once ('lib/filegals/filegallib.php');
-				$filegallib->remove_file_gallery($itemId);
-				break;
-			}
-			case 'forum':
-			{
-				global $commentslib;
-				include_once ("lib/commentslib.php");
-				$commentslib->remove_forum($itemId);
-				break;
-			}
-			case 'calendar':
-			{
-				global $calendarlib;
-				include_once ('lib/calendar/calendarlib.php');
-				$calendarlib->drop_calendar($itemId);
-				break;
-			}
-			case 'sheet':
-			{
-				global $sheetlib;
-				include_once ('lib/sheet/grid.php');
-				$sheetlib->remove_sheet($itemId);
-				break;
-			}
-			case 'survey':
-			{
-				global $srvlib;
-				include_once ('lib/surveys/surveylib.php');
-				$srvlib->remove_survey($itemId);
-				break;
-			}
-    		}
     	}
     	else
     	{
     		// Get the groups that only have access to the WS in which the object is stored.
     		$hashWS = md5($this->objectType . strtolower($ws_id));
     		$query = "select `groupName` from `users_objectpermissions` t1 
-    				where `permName`='tiki_p_ws_view' and `objectId`=? and 
+    				where `permName`=? and `objectId`=? and 
     				not exists (select * from `users_objectpermissions` t2 
     				where t1.`groupName`=t2.`groupName` 
-    				and `permName`='tiki_p_ws_view' 
+    				and `permName`=?
     				and not `objectId`=?)";
-    		$result = $this->query($query,array($hashWS,$hashWS));
+    		$result = $this->query($query,array($this->viewPerm, $hashWS,$this->viewPerm, $hashWS));
     		
     		while ($ret = $result->fetchRow())
 	    		$listWSUniqueGroups[] = $ret;
@@ -638,7 +546,7 @@ class wslib extends CategLib
      */
     public function get_ws_name($ws_id)
     {
-	$query = "select `name` from `tiki_categories` where `categId`=?";
+	$query = "select `name` from `tiki_categories` where `categId`=? and `rootCategId`=?";
 	$bindvars = array($ws_id);
 
 	return $this->getOne($query, $bindvars);
@@ -664,6 +572,7 @@ class wslib extends CategLib
 
 	foreach ($permList as $permName)
 	{
+	    // $userlib->assign_object_permission($groupName, $ws_id, 'category', $permName);
 	    // If already exists, overwrite 
 	    $query = "delete from `users_objectpermissions`
 		where `groupName` = ? and
@@ -709,9 +618,9 @@ class wslib extends CategLib
 	$hashWS = md5($this->objectType . strtolower($ws_id));
 
 	$query = "select t0.* from `users_groups` t0, `users_objectpermissions` t1 where
-			   t1.`objectId`=? and t1.`permName`='tiki_p_ws_view' 
+			   t1.`objectId`=? and t1.`permName`=? 
 			   and t1.`groupName` = t0.`groupName`";
-	$bindvars = array($hashWS);
+	$bindvars = array($hashWS, $this->viewPerm);
 	$result = $this->query($query,$bindvars,$maxRecords,$offset);
 
 	while ($ret = $result->fetchRow())
@@ -727,9 +636,9 @@ class wslib extends CategLib
      */
     public function list_ws_that_can_be_accessed_by_group ($groupName, $maxRecords = -1, $offset = -1)
     {	
-	$query = "select `objectId` from `users_objectpermissions` where (`groupName`=? and `permName`='tiki_p_ws_view') ";
-	$bindvars = array($groupName);
-	$result = $this->query($query,$bindvars,$maxRecords,$offset);
+	$query = "select `objectId` from `users_objectpermissions` where (`groupName`=? and `permName`=?) ";
+	$bindvars = array($groupName, $this->viewPerm);
+	$result = $this->query($query,$bindvars,$maxRecords,$offset, $this->viewPerm);
 
 	while ($res = $result->fetchRow())
 	    $groupWS[] = $res["objectId"];
@@ -821,8 +730,8 @@ class wslib extends CategLib
 			   where t1.`login` = ? 
 			   and (t1.`userId` = t2.`userId`) 
 			   and (t2.`groupName` = t3.`groupName`) 
-			   and t3.`permName` = 'tiki_p_ws_view'";
-	$result = $this->query($query,array($user), $maxRecords, $offset);
+			   and t3.`permName` = ?";
+	$result = $this->query($query,array($user), $maxRecords, $offset, $this->viewPerm);
 	while ($res = $result->fetchRow())
 		$userWSHashes[] = $res["objectId"];
 	
@@ -974,8 +883,8 @@ class wslib extends CategLib
 					     where t1.`login` = ? 
 					     and (t1.`userId` = t2.`userId`) 
 					     and (t2.`groupName` = t3.`groupName`) 
-					     and t3.`permName` = 'tiki_p_ws_view'";
-		$bindvals = array($userName);
+					     and t3.`permName` = ?";
+		$bindvals = array($userName, $this->viewPerm);
      	}
      	else
      	{
@@ -1008,8 +917,8 @@ class wslib extends CategLib
      	$hashWS = md5($this->objectType . strtolower($ws_id));
 
 	$query_cant = "select count(*) from `users_objectpermissions` where 
-	    `objectId`=? and `permName`='tiki_p_ws_view'";
-	$bindvals = array($hashWS);
+	    `objectId`=? and `type`=? `permName`=?";
+	$bindvals = array($hashWS, $this->objectType, $this->viewPerm);
      	
      	return $this->getOne($query_cant,$bindvals);
      }
@@ -1021,8 +930,8 @@ class wslib extends CategLib
      */	
      public function get_ws_adminperms ()
      {
-     	$query = "SELECT * FROM `users_permissions` where `type`='ws' and `level`='admin'";
-     	$bindvals = array();
+     	$query = "SELECT * FROM `users_permissions` where `type`=? and `level`='admin'";
+     	$bindvals = array($this->objectType);
      	$result = $this->query($query,$bindvals);
      	
      	while ($res = $result->fetchRow())

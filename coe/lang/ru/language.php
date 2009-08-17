@@ -2992,6 +2992,7 @@ $lang=Array(
 // "Comment on the selected post" => "Comment on the selected post",
 // "required" => "required",
 // "Quicktags" => "Quicktags",
+// "Toolbars" => "Quicktags",
 // "Maximum size" => "Maximum size",
 // "Enter your name" => "Enter your name",
 // "If you would like to be notified when someone replies to this topic<br />please tell us your e-mail address" => "If you would like to be notified when someone replies to this topic<br />please tell us your e-mail address",

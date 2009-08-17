@@ -4519,6 +4519,7 @@ $lang=Array(
 "required" => "obligatoire",
 "Smileys" => "Frimousses",
 "Quicktags" => "Raccourcis",
+"Toolbars" => "Raccourcis",
 "Enter your name" => "Saisir votre nom",
 "Reply to parent post" => "Répondre à un message parent",
 "Post new reply" => "Publier un nouveau message",
