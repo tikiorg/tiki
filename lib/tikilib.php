@@ -4052,7 +4052,7 @@ class TikiLib extends TikiDb_Bridge {
 			.( $onlyCant ? "tp.`pageName`" : "tp.* ".$select )
 			." from `tiki_pages` as tp $join_tables $mid order by ".$this->convertSortMode($sort_mode);
 
-		$result = $this->query($query, $bindvars);
+		$result = $this->query($query, $bindvars, $maxrecords, $offset);
 
 		$cant = 0;
 		$n = -1;
@@ -4113,7 +4113,6 @@ class TikiLib extends TikiDb_Bridge {
 				case 'backlinks_desc': usort($ret, 'compare_backlinks'); break;
 				case 'backlinks_asc': usort($ret, 'r_compare_backlinks'); break;
 			}
-			$ret = array_slice($ret, $offset, $maxRecords);
 		}
 
 		$retval = array();
