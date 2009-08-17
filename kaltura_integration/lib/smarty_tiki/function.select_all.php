@@ -15,14 +15,22 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  */
 function smarty_function_select_all($params, &$smarty) {
 	global $prefs;
+	static $checkbox_count = -1;
+	
 	if ( $prefs['javascript_enabled'] == 'n' || ! is_array($params) || empty($params['checkbox_names']) ) return;
 
+	$checkbox_count++;
+	if ($checkbox_count > 0) {
+		$id = '_'.$checkbox_count;
+	} else {
+		$id = '';
+	}
 	$onclick = '';
 	$checkbox_names = explode(',', $params['checkbox_names']);
 	foreach ( $checkbox_names as $cn ) $onclick .= "switchCheckboxes(this.form,'$cn',this.checked);";
 
 	return "<div>\n"
-		. '<input name="switcher" id="clickall" type="checkbox" onclick="' . $onclick . '"'
+		. '<input name="switcher'.$id.'" id="clickall'.$id.'" type="checkbox" onclick="' . $onclick . '"'
 		. ( empty($params['label']) ? ' title="' . tra('Select All') . '"' : '' )
 		.'/>' . "\n"
 		. ( ! empty($params['label']) ? '<label for="clickall">' . $params['label'] . "</label>\n" : '' )

@@ -466,9 +466,6 @@ a.flip:hover,
 	font-size: 80%;
 	text-decoration: none}
 
-a.flip img {display: none}
-.tellafriend {text-align: right}
-
 .fullscreen .tellafriend {
 	margin-right: 100px;
 	margin-top: 2px}
