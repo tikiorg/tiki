@@ -7798,6 +7798,7 @@ $lang=Array(
 "Post new comment" => "发表新评论",
 "Smileys" => "表情符号",
 "Quicktags" => "快捷标记",
+"Toolbars" => "快捷标记",
 "Post new reply" => "发表新回复",
 "Cancel" => "取消",
 "Posting replies" => "已发表的回复",

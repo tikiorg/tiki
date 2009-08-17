@@ -6686,6 +6686,7 @@ $lang=Array(
 "required" => "requerit",
 "Smileys" => "Emoticons",
 "Quicktags" => "Marques ràpides",
+"Toolbars" => "Marques ràpides",
 "Enter your name" => "Introdueix el teu nom",
 "Reply to parent post" => "Respon a la publicació original",
 "Post new reply" => "Publica una resposta nova",

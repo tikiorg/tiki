@@ -5823,6 +5823,7 @@ $lang=Array(
 "id" => "id",
 "RSS feed" => "RSS feed",
 "Quicktags" => "Quicktags",
+"Toolbars" => "Quicktags",
 "Use" => "Use",
 "Copyrights" => "Copyrights",
 "Total" => "Total",

@@ -6644,6 +6644,7 @@ $lang=Array(
 "Post new comment" => "Publicar novo comentario",
 "Smileys" => "Emoticonas",
 "Quicktags" => "Etiquetas rápidas",
+"Toolbars" => "Etiquetas rápidas",
 "Reply to parent post" => "Responder ao artigo pai",
 "Post new reply" => "Publicar unha resposta nova",
 "Cancel" => "Cancelar",

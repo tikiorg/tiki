@@ -8054,6 +8054,7 @@ $lang=Array(
 "Post new comment" => "Neuen Kommentar posten",
 "required" => "erforderlich",
 "Quicktags" => "Schnell-Tags",
+"Toolbars" => "Schnell-Tags",
 "Enter your name" => "Geben Sie Ihren Namen ein",
 "Reply to parent post" => "Auf Vaterpost antworten",
 "Post new reply" => "Neue Anwort schreiben",

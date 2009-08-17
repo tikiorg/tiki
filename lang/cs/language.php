@@ -5546,6 +5546,7 @@ $lang=Array(
 "Post new comment" => "Přidat nový komentář",
 "Smileys" => "Smajlíci",
 "Quicktags" => "Rychlé vkládání značek",
+"Toolbars" => "Rychlé vkládání značek",
 "Reply to parent post" => "Odpovědět na nadřazený příspěvek",
 "Post new reply" => "Zaslat novou odpověď",
 "Cancel" => "Zrušit",

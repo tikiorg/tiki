@@ -6632,6 +6632,7 @@ $lang=Array(
 "Comment on the selected post" => "Lever commentaar op het aangeduide bericht",
 "Post new comment" => "Nieuwe opmerking toevoegen",
 "Quicktags" => "SnelLabels",
+"Toolbars" => "SnelLabels",
 "Reply to parent post" => "Beantwoord bovenliggend bericht",
 "Post new reply" => "Lever nieuw antwoord aan",
 "Cancel" => "Annuleer",

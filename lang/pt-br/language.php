@@ -6521,6 +6521,7 @@ $lang=Array(
 "required" => "obrigatório",
 "Smileys" => "Emoticons",
 "Quicktags" => "Tags rápidos",
+"Toolbars" => "Tags rápidos",
 "Enter your name" => "Digite seu nome",
 "Reply to parent post" => "Responder para a mensagem principal",
 "Post new reply" => "Enviar nova resposta",
