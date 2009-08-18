@@ -64,6 +64,7 @@ if (isset($_REQUEST["features"])) {
 		"use_minified_scripts",
 		"feature_print_indexed",
 		'debug_ignore_xdebug',
+	    'feature_kaltura',
 	);
 	$pref_byref_values = array(
 		"user_flip_modules"

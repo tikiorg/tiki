@@ -1188,6 +1188,11 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'direct_pagination_max_middle_links' => 2,
 		'direct_pagination_max_ending_links' => 0,
 
+		// kaltura
+		'feature_kaltura' => 'y',
+		'wikiplugin_kaltura' => 'y',
+		'default_kaltura_editor' => 'kse',
+
 		// unsorted features
 		'anonCanEdit' => 'n',
 		'cacheimages' => 'n',

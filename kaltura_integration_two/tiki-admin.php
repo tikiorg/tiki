@@ -335,6 +335,11 @@ if (isset($_REQUEST["page"])) {
 		$description = 'Workspaces in Tiki';
 		$helpUrl = "Workspaces";
 		include_once ('tiki-admin_include_workspaces.php');
+	} else if ($adminPage == "kaltura") {
+		$admintitle = "Kaltura";//get_strings tra("Kaltura")
+		$helpUrl = "Kaltura+Config";
+		$description = "Kaltura settings";//get_strings tra("Kaltura settings")
+		include_once ('tiki-admin_include_kaltura.php');
 	} else {
 		$helpUrl = '';
 	}
