@@ -549,11 +549,13 @@ $smarty->assign('tiki_version_name', preg_replace('/^(\d+\.\d+)([^\d])/', '\1 \2
 
 // Available DB Servers
 $dbservers = array();
-if (function_exists('mysqli_connect'))	$dbservers['mysqli'] = tra('MySQL Improved (mysqli). Requires MySQL 4.1+');
-if (function_exists('mysql_connect'))	$dbservers['mysql'] = tra('MySQL classic (mysql)');
-if (function_exists('pg_connect'))		$dbservers['pgsql'] = tra('PostgreSQL');
-if (function_exists('sqlite_open'))		$dbservers['sqlite'] = tra('SQLLite');
-if (function_exists('mssql_connect'))	$dbservers['mssql'] = tra('MSSQL');
+if ( function_exists('mysqli_connect') ) $dbservers['mysqli'] = tra('MySQL Improved (mysqli). Requires MySQL 4.1+');
+if ( function_exists('mysql_connect') ) $dbservers['mysql'] = tra('MySQL classic (mysql)');
+if ( function_exists('pg_connect') ) $dbservers['pgsql'] = tra('PostgreSQL 8.3+');
+if ( function_exists('oci_connect') ) $dbservers['oci8'] = tra('Oracle');
+if ( function_exists('sybase_connect') ) $dbservers['sybase'] = tra('Sybase');
+if ( function_exists('sqlite_open') ) $dbservers['sqlite'] = tra('SQLLite');
+if ( function_exists('mssql_connect') ) $dbservers['mssql'] = tra('MSSQL');
 $smarty->assign_by_ref('dbservers', $dbservers);
 
 $errors = '';
@@ -625,9 +627,9 @@ if (!file_exists($local)) {
 		$smarty->assign('dbcon', 'n');
 	} else {
 		$dbTiki = ADONewConnection($db_tiki);
-		$db = new TikiDb_Adodb($dbTiki);
-		$db->setErrorHandler(new InstallerDatabaseErrorHandler);
-		TikiDb::set($db);
+		$db = new TikiDb_Adodb( $dbTiki );
+		$db->setErrorHandler( new InstallerDatabaseErrorHandler );
+		TikiDb::set( $db );
 
 		if (!$dbTiki->Connect($host_tiki, $user_tiki, $pass_tiki, $dbs_tiki)) {
 			$dbcon = false;
