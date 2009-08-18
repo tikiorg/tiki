@@ -179,8 +179,6 @@ else
 {
 	require_once 'lib/userslib.php';
 	
-	$smarty->assign('title', "Workspaces Management");
-	
 	// List Workspaces Tab
 	if ((!isset($_REQUEST['maxRecords'])) || ($_REQUEST['maxRecords'] < 1))
 		$_REQUEST['maxRecords'] = 15;
@@ -189,8 +187,13 @@ else
 	
 	$maxRecords = $_REQUEST['maxRecords']; 
 	$offset = $_REQUEST['offset'];
+
+	if (isset($_REQUEST['sort_mode']))
+	    $sort_mode = $_REQUEST['sort_mode'];
+	else
+	    $sort_mode = 'name_asc';
 	
-	$listWS_temp = $wslib->list_all_ws($offset, $maxRecords, 'name_asc', "", "", "");
+	$listWS_temp = $wslib->list_all_ws($offset, $maxRecords, $sort_mode, "", "", "");
 	$listWS = array('data' =>array(), 'cant'=>$listWS_temp['cant']);
 	foreach ($listWS_temp["data"] as $res)
 	{
@@ -209,7 +212,15 @@ else
 		$offset_next = (int) $offset+ (int) $maxRecords;
 		$href_next = "tiki-manage-workspaces.php?maxRecords=".$maxRecords."&offset=".$offset_next;
 	}
-	
+
+	if (isset($_REQUEST['submit_mult']) && ($_REQUEST['submit_mult'] == 'remove_workspaces'))
+	{
+	    var_dump($_REQUEST['checked']);
+	    foreach($_REQUEST["checked"] as $deleteWS)
+	    {
+		var_dump($deleteWS);
+	    }
+	}
 }
 
 $smarty->assign('prev_pageWS',$href_prev);
@@ -219,7 +230,7 @@ $smarty->assign('next_pageWS',$href_next);
 $listGroups = $userlib->get_groups();
 $smarty->assign('listGroups', $listGroups);
 	
-$listParentWS = $wslib->list_all_ws(-1,-1,'name_asc',null,'','');
+$listParentWS = $wslib->list_all_ws(-1,-1, $sort_mode, null,'','');
 $smarty->assign('listParentWS', $listParentWS);
 	
 $listPerms = $wslib->get_ws_adminperms ();
