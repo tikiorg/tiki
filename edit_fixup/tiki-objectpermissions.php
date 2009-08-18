@@ -302,7 +302,7 @@ $smarty->assign('show_disabled_features', $show_disabled_features);
 $perms = $userlib->get_permissions(0, -1, 'permName_asc', '', $_REQUEST["permType"], $groupNames, !$show_disabled_features);
 $perms = $perms['data'];
 foreach ($perms as &$perm) {
-	$perm['label'] = $perm['permDesc'] . ' (' .  str_replace('_', ' ', substr($perm['permName'], 7,strlen($perm['permName']))) . ')';
+	$perm['label'] = $perm['permDesc'] . ' (' . $perm['permName'] . ')';
 }
 
 if ($tiki_p_admin_objects != 'y') {
@@ -388,7 +388,7 @@ for( $i = 0; $i < count($groupNames); $i++) {
 	$groupName = $groupNames[$i];
 	$beneficiaries = '';
 	for( $j = 0; $j < count($groupInheritance); $j++) {
-		if (in_array($groupName, $groupInheritance[$j])) {
+		if (is_array($groupInheritance[$j]) && in_array($groupName, $groupInheritance[$j])) {
 			$beneficiaries .= !empty($beneficiaries) ? ',' : '';
 			$beneficiaries .= 'input[name="perm['.$groupNames[$j].'][]"]';
 		}
