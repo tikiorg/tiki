@@ -17,4 +17,3 @@ define( 'THIRD_PARTY_LIBS_PATTERN', '#lib/(pear|ajax|adodb)#' );
 // add a line like the following in db/local.php to use an external smarty installation: $smarty_path='/usr/share/php/smarty/'
 define('TIKI_SMARTY_DIR', 'lib/smarty_tiki/');
 if ( isset($smarty_path) && $smarty_path != '' && file_exists($smarty_path.'Smarty.class.php') ) define('SMARTY_DIR', $smarty_path);
-else define('SMARTY_DIR', 'lib/smarty/libs/');
