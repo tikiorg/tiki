@@ -10,10 +10,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 class Comments extends TikiLib {
     var $time_control = 0;
 
-    function Comments($db) {
-	$this->TikiLib($db);
-    }
-
     /* Functions for the forums */
     function report_post($forumId, $parentId, $threadId, $user, $reason = '') {
 
@@ -44,7 +40,7 @@ class Comments extends TikiLib {
 	tfr.`reason`, tfr.`user`, `title`, SUBSTRING(`data` FROM 1 FOR 100) as `snippet` from `tiki_forums_reported`
 	    tfr,  `tiki_comments` tc where tfr.`threadId` = tc.`threadId`
 	    and `forumId`=? $mid order by ".
-	    $this->convert_sortmode($sort_mode);
+	    $this->convertSortMode($sort_mode);
 	$query_cant = "select count(*) from `tiki_forums_reported` tfr,
 	`tiki_comments` tc where tfr.`threadId` = tc.`threadId` and
 	    `forumId`=? $mid";
@@ -575,7 +571,7 @@ class Comments extends TikiLib {
 	    $bindvars=array($object);
 	}
 
-	$query = "select * from `tiki_forums_queue` where `object`=? $mid order by ".$this->convert_sortmode($sort_mode);
+	$query = "select * from `tiki_forums_queue` where `object`=? $mid order by ".$this->convertSortMode($sort_mode);
 	$query_cant = "select count(*) from `tiki_forums_queue` where `object`=? $mid";
 
 	$result = $this->query($query, $bindvars,$maxRecords,$offset );
@@ -691,15 +687,7 @@ class Comments extends TikiLib {
 		$time_cond .= ' and a.`type` = ? ';
 		$bind_time[] = $type;
 	}
-
-	global $categlib; require_once 'lib/categories/categlib.php';
-	if( $jail = $categlib->get_jail() ) {
-		$categlib->getSqlJoin( $jail, 'forum', '`a`.`object`', $join, $where, $bind_vars );
-	} else {
-		$join = '';
-		$where = '';
-	}
-
+		
 	$ret = array();
 	$query = "select a.`threadId`,a.`object`,a.`objectType`,a.`parentId`,
 	    a.`userName`,a.`commentDate`,a.`hits`,a.`type`,a.`points`,
@@ -710,8 +698,8 @@ class Comments extends TikiLib {
 	    $this->ifNull("a.`type`='s'", 'false')." as `sticky`,
 	    count(b.`threadId`) as `replies`
 		from `tiki_comments` a left join `tiki_comments` b 
-		on b.`parentId`=a.`threadId` $join
-		where 1 = 1 $where" . ( $forumId ? 'AND a.`object`=?' : '' )
+		on b.`parentId`=a.`threadId`
+		where a.`object`=?"
 		.(( $include_archived ) ? '' : ' and (a.`archived` is null or a.`archived`=?)')
 		." and a.`objectType` = 'forum'
 		and a.`parentId` = ? $time_cond group by a.`threadId`";
@@ -720,11 +708,9 @@ class Comments extends TikiLib {
 	if($this->driver != 'sybase') {
 		$query .=",a.`object`,a.`objectType`,a.`parentId`,a.`userName`,a.`commentDate`,a.`hits`,a.`type`,a.`points`,a.`votes`,a.`average`,a.`title`,a.`data`,a.`hash`,a.`user_ip`,a.`summary`,a.`smiley`,a.`message_id`,a.`in_reply_to`,a.`comment_rating`,a.`locked` ";
 	}
-	$query .="order by `sticky` desc, ".$this->convert_sortmode($sort_mode).", `threadId`";
+	$query .="order by `sticky` desc, ".$this->convertSortMode($sort_mode).", `threadId`";
 
-	if( $forumId ) {
-		$bind_vars[] = (string) $forumId;
-	}
+	$bind_vars = array((string) $forumId);
 	if ( ! $include_archived ) $bind_vars[] = 'n';
 	$bind_vars[] = 0;
 
@@ -756,7 +742,7 @@ class Comments extends TikiLib {
 	$bind_mid = array('forum', $forumId);
 	$sort_mode = 'commentDate_desc';
 
-	$query = "select * from `tiki_comments` $mid order by ".$this->convert_sortmode($sort_mode);
+	$query = "select * from `tiki_comments` $mid order by ".$this->convertSortMode($sort_mode);
 	$result = $this->query($query, $bind_mid, $maxRecords, 0);
 
 	$ret = array();
@@ -970,91 +956,81 @@ class Comments extends TikiLib {
 	return true;
     }
 
-	function list_forums($offset=0, $maxRecords=-1, $sort_mode='name_asc', $find = '') {
+    function list_forums($offset=0, $maxRecords=-1, $sort_mode='name_asc', $find = '') {
 		global $user;
 
-		$bindvars=array();
+	if ($find) {
+	    $findesc = '%' . $find . '%';
 
-		global $categlib; require_once 'lib/categories/categlib.php';
-		if( $jail = $categlib->get_jail() ) {
-			$categlib->getSqlJoin($jail, 'forum', '`tiki_forums`.`forumId`', $join, $where, $bindvars);
-		} else {
-			$join = '';
-			$where = '';
-		}
-
-		if ($find) {
-			$findesc = '%' . $find . '%';
-
-			$mid = " AND `name` like ? or `description` like ? ";
-			$bindvars[] = $findesc;
-			$bindvars[] = $findesc;
-		} else {
-			$mid = "";
-		}
-
-		$query = "select * from `tiki_forums` $join WHERE 1=1 $where $mid order by `section` asc,".$this->convertSortMode('`tiki_forums`.' . $sort_mode);
-		$result = $this->fetchAll($query,$bindvars);
-		$result = Perms::filter( array( 'type' => 'forum' ), 'object', $result, array( 'object' => 'forumId' ), 'forum_read' );
-		$ret = array();
-		$count = 0;
-		$cant = 0;
-		$off = 0;
-		foreach( $result as $res ) {
-			$cant++; // Count the whole number of forums the user has access to
-
-			if ( ( $maxRecords > -1 && $count >= $maxRecords ) || $off++ < $offset ) continue;
-
-			$forum_age = ceil(($this->now - $res["created"]) / (24 * 3600));
-
-			// Get number of topics on this forum
-			$res['threads'] = $this->count_comments_threads('forum:'.$res['forumId']);
-
-			// Get number of posts on this forum
-			$res['comments'] = $this->count_comments('forum:'.$res['forumId']);
-
-			// Get number of users that posted at least one comment on this forum
-			$res['users'] = $this->getOne(
-					'select count(distinct `userName`) from `tiki_comments` where `object`=? and `objectType`=?',
-					array($res['forumId'], 'forum')
-					);
-
-			// Get lock status
-			$res['is_locked'] = $this->is_object_locked('forum:'.$res['forumId']) ? 'y' : 'n';
-
-			// Get data of the last post of this forum
-			if ( $res['comments'] > 0 ) {
-				$result2 = $this->query(
-						'select * from `tiki_comments` where `object`= ? and `objectType` = ? order by commentDate desc',
-						array($res['forumId'], 'forum'));
-
-
-				$res['lastPostData'] = $result2->fetchRow();
-				$res['lastPost'] = $res['lastPostData']['commentDate'];
-			} else {
-				unset($res['lastPost']);
-			}
-
-			// Generate stats based on this forum's age
-			if ( $forum_age > 0 ) {
-				$res['age'] = $forum_age;
-				$res['posts_per_day'] = $res['comments'] / $forum_age;
-				$res['users_per_day'] = $res['users'] / $forum_age;
-			} else {
-				$res['age'] = 0;
-				$res['posts_per_day'] = 0;
-				$res['users_per_day'] = 0;
-			}
-
-			$ret[] = $res;
-			++$count;
-		}
-
-		$retval = array();
-		$retval["data"] = $ret;
-		$retval["cant"] = $cant;
-		return $retval;
+	    $mid = " where `name` like ? or `description` like ? ";
+	    $bindvars=array($findesc,$findesc);
+	} else {
+	    $mid = "";
+	    $bindvars=array();
 	}
+
+	$query = "select * from `tiki_forums` $mid order by `section` asc,".$this->convertSortMode($sort_mode);
+	$result = $this->fetchAll($query,$bindvars);
+	$result = Perms::filter( array( 'type' => 'forum' ), 'object', $result, array( 'object' => 'forumId' ), 'forum_read' );
+	$ret = array();
+	$count = 0;
+	$cant = 0;
+	$off = 0;
+	foreach( $result as $res ) {
+		$cant++; // Count the whole number of forums the user has access to
+
+		if ( ( $maxRecords > -1 && $count >= $maxRecords ) || $off++ < $offset ) continue;
+
+		$forum_age = ceil(($this->now - $res["created"]) / (24 * 3600));
+
+		// Get number of topics on this forum
+		$res['threads'] = $this->count_comments_threads('forum:'.$res['forumId']);
+
+		// Get number of posts on this forum
+		$res['comments'] = $this->count_comments('forum:'.$res['forumId']);
+
+		// Get number of users that posted at least one comment on this forum
+		$res['users'] = $this->getOne(
+		'select count(distinct `userName`) from `tiki_comments` where `object`=? and `objectType`=?',
+		array($res['forumId'], 'forum')
+		);
+
+		// Get lock status
+		$res['is_locked'] = $this->is_object_locked('forum:'.$res['forumId']) ? 'y' : 'n';
+
+		// Get data of the last post of this forum
+		if ( $res['comments'] > 0 ) {
+			$result2 = $this->query(
+			'select * from `tiki_comments` where `object`= ? and `objectType` = ? order by commentDate desc',
+			array($res['forumId'], 'forum'));
+
+
+			$res['lastPostData'] = $result2->fetchRow();
+			$res['lastPost'] = $res['lastPostData']['commentDate'];
+		} else {
+			unset($res['lastPost']);
+		}
+
+		// Generate stats based on this forum's age
+		if ( $forum_age > 0 ) {
+		$res['age'] = $forum_age;
+		$res['posts_per_day'] = $res['comments'] / $forum_age;
+		$res['users_per_day'] = $res['users'] / $forum_age;
+		} else {
+		$res['age'] = 0;
+		$res['posts_per_day'] = 0;
+		$res['users_per_day'] = 0;
+		}
+
+		$ret[] = $res;
+		++$count;
+	}
+
+	$retval = array();
+	$retval["data"] = $ret;
+	$retval["cant"] = $cant;
+	return $retval;
+    }
 
     function list_forums_by_section($section, $offset, $maxRecords, $sort_mode, $find) {
 
@@ -1068,7 +1044,7 @@ class Comments extends TikiLib {
 	    $bindvars=array($section);
 	}
 
-	$query = "select * from `tiki_forums` $mid order by ".$this->convert_sortmode($sort_mode);
+	$query = "select * from `tiki_forums` $mid order by ".$this->convertSortMode($sort_mode);
 	$query_cant = "select count(*) from `tiki_forums`";
 	$result = $this->query($query,$bindvars,$maxRecords,$offset);
 	$cant = $this->getOne($query_cant,array());
@@ -1466,7 +1442,7 @@ class Comments extends TikiLib {
 
 	}
 
-	$query = $query . " order by " . $this->convert_sortmode($sort_mode);
+	$query = $query . " order by " . $this->convertSortMode($sort_mode);
 
 	if($sort_mode != 'commentDate_desc') {
 	    $query.=",`commentDate` desc";
@@ -1589,7 +1565,7 @@ class Comments extends TikiLib {
     function parse_comment_data($data) {
 	global $prefs, $tikilib;
 
-	if ($prefs['feature_forum_parse'] == 'y' || $prefs['section_comments_parse'] == 'y') {
+	if ($prefs['feature_forum_parse'] == 'y') {
 	    return $this->parse_data($data);
 	}
 
@@ -1711,14 +1687,14 @@ class Comments extends TikiLib {
 		$mid 
 		and (tc1.`in_reply_to` = ?
 		or (tc2.`in_reply_to` = '' or tc2.`in_reply_to` is null or tc2.`message_id` is null or tc2.`parentid` = 0))
-		$time_cond order by tc1.".$this->convert_sortmode($sort_mode).",tc1.`threadId`";
+		$time_cond order by tc1.".$this->convertSortMode($sort_mode).",tc1.`threadId`";
 		$bind_mid_cant = $bind_mid;
 		$bind_mid = array_merge(array($parentId,$parentId), $bind_mid, array($parent_message_id));
 
 		$query_cant = "select count(*) from `tiki_comments` as tc1 $mid $time_cond";
 	} else {
 	    $query_cant = "select count(*) from `tiki_comments` as tc1 $mid $time_cond";
-	    $query = "select * from `tiki_comments` as tc1 $mid $time_cond order by tc1.".$this->convert_sortmode($sort_mode).",`threadId`";
+	    $query = "select * from `tiki_comments` as tc1 $mid $time_cond order by tc1.".$this->convertSortMode($sort_mode).",`threadId`";
 	    $bind_mid_cant = $bind_mid;
 	}
 
@@ -1857,7 +1833,7 @@ class Comments extends TikiLib {
 
 	/* administrative functions to get all the comments of some types + enlarge find
 	 *  no perms checked as it is only for admin */
-	function get_all_comments($type, $offset = 0, $maxRecords = -1, $sort_mode = 'commentDate_asc', $find = '', $parent='', $approved='',$toponly=false) {
+	function get_all_comments($type, $offset = 0, $maxRecords = -1, $sort_mode = 'commentDate_asc', $find = '', $parent='', $approved='') {
 
 		$join = '';
 		if ( empty($type) ) {
@@ -1894,27 +1870,14 @@ class Comments extends TikiLib {
 			$bindvars[] = $approved;
 		}
 
-		if ($parent!='') {
+		if ($parent) {
 			$join = ' left join `tiki_comments` tc2 on(tc2.`threadId`=tc.`parentId`)';
 		}
 
-		if( $toponly ) {
-			$mid .= ' and parentId = 0 ';
-		}
-
-		global $categlib; require_once 'lib/categories/categlib.php';
-		if( $jail = $categlib->get_jail() ) {
-			$categlib->getSqlJoin( $jail, '`objectType`', '`object`', $jail_join, $jail_where, $jail_bind, '`objectType`' );
-		} else {
-			$jail_join = '';
-			$jail_where = '';
-			$jail_bind = array();
-		}
-
-		$query = "select tc.*, tc.`title` as parentTitle from `tiki_comments` tc $join $jail_join where $mid $jail_where order by ".$this->convertSortMode($sort_mode);
-		$result = $this->query($query, array_merge( $bindvars, $jail_bind ), $maxRecords, $offset);
-		$query = "select count(*) from `tiki_comments` tc $jail_join where $mid $jail_where";
-		$cant = $this->getOne($query, array_merge( $bindvars, $jail_bind ));
+		$query = "select tc.*, tc2.`title` as parentTitle from `tiki_comments` tc $join where $mid order by ".$this->convertSortMode($sort_mode);
+		$result = $this->query($query, $bindvars, $maxRecords, $offset);
+		$query = "select count(*) from `tiki_comments` tc where $mid";
+		$cant = $this->getOne($query, $bindvars);
 		$ret = array();
 		while ($res = $result->fetchRow()) {
 			switch ($res['objectType']) {

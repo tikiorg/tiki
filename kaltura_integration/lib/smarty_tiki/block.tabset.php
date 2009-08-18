@@ -10,8 +10,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 /**
  * \brief smarty_block_tabs : add tabs to a template
  *
- * params: name
- * params: toggle=y on n default
+ * params: TODO
  *
  * usage: 
  * \code
@@ -39,24 +38,21 @@ function smarty_block_tabset($params, $content, &$smarty, &$repeat) {
 		global $smarty_tabset_name, $smarty_tabset;
 		return;
 	} else {
-		$ret = '';
 		//closing
 		if ( $prefs['feature_tabs'] == 'y') {
-			if (empty($params['toggle']) || $params['toggle'] != 'n') {
-				require_once $smarty->_get_plugin_filepath('function','button');
-				if (isset($_COOKIE["tabbed_$smarty_tabset_name"]) and $_COOKIE["tabbed_$smarty_tabset_name"] == 'n') {
-					$button_params['_text'] = tra('Tab View');
-				} else {
-					$button_params['_text'] = tra('No Tab');
-				}
-				$button_params['_auto_args']='*';
-				$button_params['_onclick'] = "setCookie('tabbed_$smarty_tabset_name','".((isset($_COOKIE["tabbed_$smarty_tabset_name"]) && $_COOKIE["tabbed_$smarty_tabset_name"] == 'n') ? 'y' : 'n' )."') ;";
-				$notabs = smarty_function_button($button_params,$smarty);
-				$ret = "<div class='tabstoggle floatright'>$notabs</div><br class='clear'/>";
+			require_once $smarty->_get_plugin_filepath('function','button');
+			if (isset($_COOKIE["tabbed_$smarty_tabset_name"]) and $_COOKIE["tabbed_$smarty_tabset_name"] == 'n') {
+				$button_params['_text'] = tra('Tab View');
+			} else {
+				$button_params['_text'] = tra('No Tab');
 			}
+			$button_params['_auto_args']='*';
+			$button_params['_onclick'] = "setCookie('tabbed_$smarty_tabset_name','".((isset($_COOKIE["tabbed_$smarty_tabset_name"]) && $_COOKIE["tabbed_$smarty_tabset_name"] == 'n') ? 'y' : 'n' )."') ;";
+			$notabs = smarty_function_button($button_params,$smarty);
 		} else {
 			return $content;
 		}
+		$ret = "<div class='tabstoggle floatright'>$notabs</div><br class='clear'/>";
 		if ( isset($_COOKIE["tabbed_$smarty_tabset_name"]) && $_COOKIE["tabbed_$smarty_tabset_name"] == 'n' ) {
 			return $ret.$content;
 		}

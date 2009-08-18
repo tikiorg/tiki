@@ -11,11 +11,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 class TikiAccessLib extends TikiLib {
 
-	function TikiAccessLib() {
-		global $dbTiki;
-		$this->TikiLib($dbTiki);
-	}
-
 	// check that the user is admin or has admin permissions
 	function check_admin($user,$feature_name="") {
 		global $tiki_p_admin, $prefs;
@@ -54,23 +49,11 @@ class TikiAccessLib extends TikiLib {
 	function check_feature($features, $feature_name="") {
 		global $prefs;
 		require_once ('tiki-setup.php');
-
-		$perms = Perms::get();
-		if( $perms->admin && isset($_REQUEST['check_feature']) && isset($_REQUEST['lm_preference']) ) {
-			global $prefslib; require_once 'lib/prefslib.php';
-			
-			$prefslib->applyChanges( (array) $_REQUEST['lm_preference'], $_REQUEST );
-		}
-
 		if ( ! is_array($features) ) { $features = array($features); }
 		foreach ($features as $feature) {
 			if ($prefs[$feature] != 'y') {
 				if ($feature_name != '') { $feature = $feature_name; }
-				global $smarty;
-				if( $perms->admin ) {
-					$smarty->assign('required_preferences', $features);
-				}
-				$this->display_error('', tra("This feature is disabled").": ". $feature, '503' );
+				$this->display_error('', tra("This feature is disabled").": ". $feature_name, '503' );
 			}
 		}
 	}
@@ -147,14 +130,13 @@ class TikiAccessLib extends TikiLib {
 		);
 
 		if ( !isset($errortitle) ) {
-			$detail['errortitle'] = tra('unknown error');
-		}
-
-		if ( empty($message)) {
-			$detail['message'] = $detail['errortitle'];
+			$detail['message'] = tra('unknown error');
+			$detail['errortitle'] = $detail['message'];
 		}
 
 		// Display the template		
+		$smarty->assign('msg', $detail['message']);
+		$smarty->assign('errortitle', $detail['errortitle']);
 		switch( $errortype ) {
 		case '404':
 			header ("HTTP/1.0 404 Not Found");
@@ -312,7 +294,8 @@ class TikiAccessLib extends TikiLib {
 			$perms->setGroups( $groups );
 
 			$perms = Perms::get();
-			$perms->globalize( $permissionList, $smarty );
+			$perms->globalize( $permissionList );
+			$perms->smartify( $permissionList );
 
 			return true;
 		} else {
@@ -396,10 +379,10 @@ class TikiAccessLib extends TikiLib {
 				require_once( 'Horde/Yaml/Exception.php' );
 
 				header( "Content-Type: $full" );
-				echo Horde_Yaml::dump($data);
+				echo Horde_Yaml::dump($value);
 				return;
 			}
 		}
 	}
 }
-$access = new TikiAccessLib($dbTiki);
+$access = new TikiAccessLib;

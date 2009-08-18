@@ -24,23 +24,13 @@ if ($prefs['feature_ajax'] == 'y') {
 
 
 		/**
-		 * PHP4 constructor.
-		 *
-		 * @access   public
-		 * @return   void
-		 */
-		function TikiAjax() {
-			TikiAjax::__construct();
-		}
-
-		/**
 		 * PHP 5 constructor.
 		 *
 		 * @access   public
 		 * @return   void
 		 */
 		function __construct() {
-			xajax::xajax();
+			parent::__construct();
 
 			$this->aTemplates = array();
 			$this->deniedFunctions = array();
@@ -219,8 +209,13 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
 			$js_files = array_merge($js_files, $js);
 		}
 
-		array_push($js_files, 'lib/jquery_tiki/tiki-jquery.js');
-
+		if ($prefs['feature_jquery'] == 'y') {
+			array_push($js_files, 'lib/jquery_tiki/tiki-jquery.js');
+		} else {
+			if (preg_match('/overlib\(/Umis', $content)) {
+				array_push($js_files, 'lib/overlib.js');	// it stops the JS error on rollover but the tooltip doesn't appear - use JQuery
+			}
+		}
 		// now remove all the js from the source
 		$content = preg_replace('/\s*<script.*javascript.*>.*\/script>\s*/Umis', '', $content);
 
@@ -263,7 +258,7 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
 
 	$objResponse->script("hide('ajaxLoading');");
 	if ($prefs['feature_shadowbox'] == 'y') {
-		//$objResponse->script("Shadowbox.init({ skipSetup: true }); Shadowbox.setup();");
+		$objResponse->script("Shadowbox.init({ skipSetup: true }); Shadowbox.setup();");
 	}
 	$objResponse->script("var xajax.config.requestURI =\"".$ajaxlib->sRequestURI."\";\n");
 	if (sizeof($js_script)) {
