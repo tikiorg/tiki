@@ -175,16 +175,16 @@
 	{* /if *}
 
 	{if not empty($prev_pageWS)}
-	    <a class="button" href = {$prev_pageWS}>Back</a>
+	    <a class="button" href="{$prev_pageWS}">Back</a>
 	{/if}
 	{if not empty($next_pageWS)}
-	    <a class="button" href = {$next_pageWS}>Next</a>
+	    <a class="button" href="{$next_pageWS}">Next</a>
        {/if}
 
 	   <table class ="normal">
 		<tr>
 			<th class="auto">{select_all checkbox_names='checked[]'}</th>
-			<th>{self_link _sort_arg='sort_mode' _sort_field='wsName'}{tr}Name{/tr}{/self_link}</th>
+			<th>{self_link _sort_arg='sort_mode' _sort_field='name'}{tr}Name{/tr}{/self_link}</th>
 			<th>{tr}Description{/tr}</th>
 			<th>{tr}Path{/tr}</th>
 			<th>{tr}Actions{/tr}</th>
@@ -193,7 +193,7 @@
 		{foreach from=$listWS item=data}
 			<tr class="{cycle}">
 				<td><input type="checkbox" name="checked[]" value="{$data.name}" /></td>
-				<td><a href = {$data.href_edit}>{$data.name}</a></td>
+				<td><a href ="{$data.href_edit}">{$data.name}</a></td>
 				<td>{$data.description}</td>
 				<td>{$data.categpath}</td>
 				<td>Something</td>
@@ -201,14 +201,16 @@
 		{/foreach}
 		<tr>
 			<td class="form" colspan="18">
+				<form name="mult_edit" method="post" action="{$smarty.server.PHP_SELF}">
 				<p align="left">
 				{tr}Perform action with checked:{/tr}
 				<select name="submit_mult">
 				    <option value="" selected="selected">-</option>
-				    <option value="remove_workspaces" >{tr}Remove these Workspaces{/tr}</option>
+				    <option value="remove_workspaces" >{tr}Remove{/tr}</option>
 				</select>
 				<input type="submit" value="{tr}OK{/tr}" />
 				</p>
+				</form>
 			</td>
 		</tr>
 	   </table>
