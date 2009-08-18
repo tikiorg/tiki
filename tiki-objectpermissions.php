@@ -395,7 +395,7 @@ for( $i = 0; $i < count($groupNames); $i++) {
 	$groupName = $groupNames[$i];
 	$beneficiaries = '';
 	for( $j = 0; $j < count($groupInheritance); $j++) {
-		if (in_array($groupName, $groupInheritance[$j])) {
+		if (is_array($groupInheritance[$j]) && in_array($groupName, $groupInheritance[$j])) {
 			$beneficiaries .= !empty($beneficiaries) ? ',' : '';
 			$beneficiaries .= 'input[name="perm['.$groupNames[$j].'][]"]';
 		}
