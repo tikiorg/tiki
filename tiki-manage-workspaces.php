@@ -11,7 +11,7 @@ if (!($tiki_p_admin == 'y' || $tiki_p_admin_users == 'y')) {
 	die;
 }
 
-if ( isset($_REQUEST['wsName']))
+if ( isset($_REQUEST['create']) )
 {	
 	$name = $_REQUEST['wsName'];
 	$description = $_REQUEST["wsDesc"];
@@ -33,15 +33,9 @@ if ( isset($_REQUEST['wsName']))
 	}
 	
 	// Check if the name and the group are written
-	if (empty($name))
+	if (empty($name) || empty($groupName))
 	{
-	    $smarty->assign('msg', tra("Workspace can not be blank"));
-	    $smarty->display("error.tpl");
-	    die;
-	}
-	else if (empty($groupName))
-	{
-	    $smarty->assign('msg', tra("Group name can not be blank"));
+	    $smarty->assign('msg', tra("Workspace name or group name can not be blank."));
 	    $smarty->display("error.tpl");
 	    die;
 	}
@@ -50,26 +44,25 @@ if ( isset($_REQUEST['wsName']))
 	$wsid = $wslib->get_ws_id($name, $parentWS);
 	if (!empty($wsid))
 	{
-	    $smarty->assign('msg', tra("There already exists a Workspace with that name in the same level"));
+	    $smarty->assign('msg', tra("There already exists a Workspace with that name in the same level. Please choose another name."));
 	    $smarty->display("error.tpl");
 	    die;
 	}
 	
-	// If everything is ok, then the Workspace is created
-	else
-	{
-		$perms = array($adminPerms);
-		$groups = array();
-		$groups[] = array(
-					"groupName" => $groupName,
-					"groupDescription" => $groupDesc,
-					"noCreateNewGroup" => $noCreate,
-					"additionalPerms" => $perms
-					);
-		$wslib->create_ws ($name, $groups, $parentWS, $description);
-		
-		header("Location: ./tiki-manage-workspaces.php");
-	}
+	//If everything is ok, then we proceed to create the WS
+	$perms = array($adminPerms);
+	$groups = array();
+	$groups[] = array(
+	    "groupName" => $groupName,
+	    "groupDescription" => $groupDesc,
+	    "noCreateNewGroup" => $noCreate,
+	    "additionalPerms" => $perms
+	);
+
+	$wslib->create_ws ($name, $groups, $parentWS, $description);
+
+	$smarty->assign('type', 'note');
+	$smarty->assign('feedback', 'You have succesfully created the Workspace!');
 }
 // If WS Name and Description is edited
 else if ( isset($_REQUEST['editedWS']))
@@ -181,17 +174,6 @@ else if ( isset($_REQUEST['editWS']))
 		$offsetObj_next = (int) $offsetObj + (int) $maxRecordObj;
 		$href_next = "tiki-manage-workspaces.php?editWS=".$wsId."&maxRecordObj=".$maxRecordObj."&offsetObj=".$offsetObj_next;
 	}
-	$smarty->assign('prev_pageObj',$href_prev);
-	$smarty->assign('next_pageObj',$href_next);
-	
-	$listGroups = $userlib->get_groups();
-	$smarty->assign('listGroupsforAdd', $listGroups);
-	
-	$listPerms = $wslib->get_ws_adminperms ();
-	$smarty->assign('listPerms', $listPerms);
-	 
-	$smarty->assign('mid', 'tiki-manage-workspaces.tpl');
-	$smarty->display('tiki.tpl');
 }
 else
 {
@@ -228,20 +210,21 @@ else
 		$href_next = "tiki-manage-workspaces.php?maxRecords=".$maxRecords."&offset=".$offset_next;
 	}
 	
-	$smarty->assign('prev_pageWS',$href_prev);
-	$smarty->assign('next_pageWS',$href_next);
-	
-	// Add Workspace Tab	
-	$listGroups = $userlib->get_groups();
-	$smarty->assign('listGroups', $listGroups);
-	
-	$listParentWS = $wslib->list_all_ws(-1,-1,'name_asc',null,'','');
-	$smarty->assign('listParentWS', $listParentWS);
-	
-	$listPerms = $wslib->get_ws_adminperms ();
-	$smarty->assign('listPerms', $listPerms);
-	 
-	$smarty->assign('mid', 'tiki-manage-workspaces.tpl');
-	$smarty->display('tiki.tpl');
 }
+
+$smarty->assign('prev_pageWS',$href_prev);
+$smarty->assign('next_pageWS',$href_next);
+	
+// Add Workspace Tab	
+$listGroups = $userlib->get_groups();
+$smarty->assign('listGroups', $listGroups);
+	
+$listParentWS = $wslib->list_all_ws(-1,-1,'name_asc',null,'','');
+$smarty->assign('listParentWS', $listParentWS);
+	
+$listPerms = $wslib->get_ws_adminperms ();
+$smarty->assign('listPerms', $listPerms);
+	 
+$smarty->assign('mid', 'tiki-manage-workspaces.tpl');
+$smarty->display('tiki.tpl');
 ?>

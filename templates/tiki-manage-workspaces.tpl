@@ -2,6 +2,12 @@
 
 {title help="Workspaces+Management" admpage="login"}{tr}Workspaces Management{/tr}{/title}
 
+{if $feedback}
+    {remarksbox type="$type" title="{tr}Note{/tr}"}
+	{tr}{$feedback}{/tr}
+    {/remarksbox}
+{/if}
+
 {tabset name="manageWS"}
 
  {if $editWS == "y"}
@@ -175,21 +181,36 @@
 	    <a class="button" href = {$next_pageWS}>Next</a>
        {/if}
 
-	   <table class = admin>
+	   <table class ="normal">
 		<tr>
-			<th>Name</th>
-			<th>Description</th>
-			<th>Path</th>
-			<th>Actions</th>
+			<th class="auto">{select_all checkbox_names='checked[]'}</th>
+			<th>{self_link _sort_arg='sort_mode' _sort_field='wsName'}{tr}Name{/tr}{/self_link}</th>
+			<th>{tr}Description{/tr}</th>
+			<th>{tr}Path{/tr}</th>
+			<th>{tr}Actions{/tr}</th>
 		</tr> 
 		{cycle print=false values="even,odd"}
 		{foreach from=$listWS item=data}
 			<tr class="{cycle}">
+				<td><input type="checkbox" name="checked[]" value="{$data.name}" /></td>
 				<td><a href = {$data.href_edit}>{$data.name}</a></td>
 				<td>{$data.description}</td>
 				<td>{$data.categpath}</td>
+				<td>Something</td>
 			</tr>
 		{/foreach}
+		<tr>
+			<td class="form" colspan="18">
+				<p align="left">
+				{tr}Perform action with checked:{/tr}
+				<select name="submit_mult">
+				    <option value="" selected="selected">-</option>
+				    <option value="remove_workspaces" >{tr}Remove these Workspaces{/tr}</option>
+				</select>
+				<input type="submit" value="{tr}OK{/tr}" />
+				</p>
+			</td>
+		</tr>
 	   </table>
 	</div>
    {/tab}
@@ -247,7 +268,8 @@
 			</tr>
 		</table>
       </div>	
-      <input type="submit" value="Create" class="button" align="middle">
+      <input type="hidden" value="create" name="create" />
+      <input type="submit" value="Create" class="button" align="middle" />
       </form>
    {/tab}
   
