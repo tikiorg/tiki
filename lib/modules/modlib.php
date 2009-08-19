@@ -504,6 +504,8 @@ class ModLib extends TikiLib {
 		if( ! $cachefile || $this->require_cache_build( $mod_reference, $cachefile ) ) {
 			if( isset( $module_params['title'] ) ) { 
 				$smarty->assign('tpl_module_title', tra( $module_params['title'] ) ); 
+			} elseif ( $info['type'] == "function") { // Use the module name as default module title. A module can opt-out of this in favor of a dynamic default title using clear_assign in the main module function.
+				$smarty->assign('tpl_module_title', tra( $info['name'] ) );
 			}
 
 			if( $info['type'] == 'include' ) {

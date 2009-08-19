@@ -1,5 +1,4 @@
 {* $Id$ *}
-{if !isset($tpl_module_title)}{eval assign=tpl_module_title var="{tr}TikiWiki Assistant{/tr}"}{/if}
 {tikimodule error=$module_params.error title=$tpl_module_title name="assistant" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 	<div align="center">
 		<strong>{tr}Thank you for installing Tikiwiki{/tr}!</strong>
