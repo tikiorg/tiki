@@ -404,6 +404,11 @@ div#sitelogo {
 .sf-sub-indicator {
 	background: url(tikinewt/arrows-6d819d.png) no-repeat -10px -100px;
 }
+/* when there's superfish shadow */
+.cssmenu_horiz.sf-shadow ul li,
+.cssmenu_vert.sf-shadow ul li {
+	background-color: #fff; 
+}
 
 /** PHP Layers Menus **/
 .horbar {

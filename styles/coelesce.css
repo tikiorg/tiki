@@ -691,6 +691,11 @@ a.phplmselected:hover {
 .cssmenu_vert ul .sf-sub-indicator {
 	background: url(coelesce/arrows-467aa7.png) no-repeat;
 }
+/* when there's superfish shadow */
+.cssmenu_horiz.sf-shadow ul li {
+	background-color: #CCDCEB; 
+}
+
 
 /****** Misc. Global Classes (layout and style) ****/
 .bannertext:hover {

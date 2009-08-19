@@ -725,7 +725,13 @@ a.phplmselected:hover {
 .cssmenu_vert ul a:hover {
 	color: #000000;
 }
-
+/* when there's superfish shadow */
+.cssmenu_horiz.sf-shadow ul li {
+	background-color: #1b3a50; 
+}
+.cssmenu_vert.sf-shadow ul li {
+	background-color: #cce5ff; 
+}
 #tiki-top .cssmenu_horiz {
 	position: absolute;
 	z-index: 10;
