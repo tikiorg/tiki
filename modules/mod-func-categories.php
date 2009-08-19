@@ -7,17 +7,39 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
-if (!function_exists("categories_help")) {
-	function categories_help() {
-		return "type=wiki page|article|faq|blog|image gallery|image|file gallery|tracker|trackerItem|quiz|poll|survey|sheet|...,deep=on|off, categId=0,style=tree|vert|horiz|plain|phptree";
-	}
+
+function module_categories_info() {
+	return array(
+		'name' => tra('Categories'),
+		'description' => tra('Displays the last Wiki pages visited by the user.'),
+		'prefs' => array( 'feature_categories' ),
+		'params' => array(
+			'type' => array(
+				'name' => tra('Object type filter'),
+				'description' => tra('Object type filter to apply when accessing a linked category. Example values:') . ' wiki page, article, faq, blog, image gallery, image, file gallery, tracker, trackerItem, quiz, poll, survey, sheet',
+				'filter' => 'striptags'
+			),
+			'deep' => array(
+				'name' => tra('Deep'),
+				'description' => tra('Show subcategories objects when accessing a linked category. Possible values: on (default), off.'),
+				'filter' => 'word'
+			),
+			'style' => array(
+				'name' => tra('PHP Layers menu style'),
+				'description' => tra('Sets the menu style if PHP Layers is enabled. Possible values: tree (default), vert, horiz, plain, phptree.'),
+				'filter' => 'word'
+			),
+			'categId' => array(
+				'name' => tra('Category ID'),
+				'description' => tra('Limits displayed categories to a subtree of categories starting with the category with the given ID. Example value: 11. Default: 0 (don\'t limit display).'),
+				'filter' => 'int'
+			)
+		),
+	);
 }
 
-global $prefs, $smarty;
-
-if ($prefs['feature_categories'] != 'y') {
-	$module_params['error'] = tra("This feature is disabled").": feature_categories";
-} else {
+function module_categories( $mod_reference, $module_params ) {
+	global $smarty, $prefs;
 	global $user;
 	global $categlib; include_once ('lib/categories/categlib.php');
 	if (isset($module_params['type'])) {
@@ -78,4 +100,3 @@ if ($prefs['feature_categories'] != 'y') {
 		$smarty->assign('tree', $res);
 	}
 }
-
