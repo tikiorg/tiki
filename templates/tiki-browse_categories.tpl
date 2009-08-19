@@ -182,7 +182,7 @@
 					{section name=ix loop=$objects}
 						<tr class="{cycle}" >
 							<td>
-								<a href="{$objects[ix].href}" class="catname">{$objects[ix].name|default:'&nbsp;'}</a>
+								<a href="{$objects[ix].href}" class="catname">{$objects[ix].name|escape|default:'&nbsp;'}</a>
 								<div class="subcomment">{$objects[ix].description}</div>
 							</td>
 							<td>
@@ -192,7 +192,7 @@
 							</td>
 							{if $deep eq 'on'}
 								<td>
-									{$objects[ix].categName|tr_if}
+									{$objects[ix].categName|tr_if|escape}
 								</td>
 							{/if}
 						</tr>
