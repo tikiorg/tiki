@@ -53,7 +53,7 @@ class groupAlertLib extends TikiLib {
 		include_once ('lib/webmail/tikimaillib.php'); 
 		$mail = new TikiMail();
 		$mail->setText(tra("You are alerted by the server "). $project . "\n" . tra ("You can check the modifications at : ") .$URL );
-		$mail->setSubject(tra("You are alerted of a changement on ").$project );
+		$mail->setSubject(tra("You are alerted of a change on ").$project );
 		$mail->send(array($email));
 		}
 	}

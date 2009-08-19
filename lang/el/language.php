@@ -777,6 +777,7 @@ $lang=Array(
 // "You are alerted by the server " => "You are alerted by the server ",
 // "You can check the modifications at : " => "You can check the modifications at : ",
 // "You are alerted of a changement on " => "You are alerted of a changement on ",
+// "You are alerted of a change on " => "You are alerted of a changement on ",
 // "Blog" => "Blog",
 // "posted on" => "posted on",
 // "By" => "By",
