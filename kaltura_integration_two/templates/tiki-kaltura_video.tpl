@@ -1,5 +1,5 @@
 {title help="Kaltura" admpage="kaltura"}
-	{if $mode eq 'edit'}{tr}Edit Info:{/tr}{$videoInfo.name}
+	{if $mode eq 'edit'}{tr}Change Details:{/tr}{$videoInfo.name}
 	{elseif $mode eq 'remix' || $mode eq 'dupl'}{tr}Remix{/tr}
 	{elseif $mode eq 'view'}{tr}View:{/tr}{$videoInfo.name}
 	{else}{tr}Upload File{/tr}{/if}{/title}
@@ -13,14 +13,15 @@
 	{/if}
 	{if $mode ne '' and $mode ne 'new_entries'}
 	{if $mode ne 'edit' and ($tiki_p_edit_videos eq 'y' or $tiki_p_admin_video_galleries eq 'y' or $tiki_p_admin eq 'y')}
-	{button _text="{tr}Edit{/tr}" href="tiki-kaltura_video.php?videoId=$videoId&action=edit" }
+	{button _text="{tr}Change Details{/tr}" href="tiki-kaltura_video.php?videoId=$videoId&action=edit" }
 	{/if}
 	{if $mode ne 'remix' and ($tiki_p_remix_videos eq 'y' or $tiki_p_admin_video_galleries eq 'y' or $tiki_p_admin eq 'y')}
 	{button _text="{tr}Remix{/tr}" href="tiki-kaltura_video.php?videoId=$videoId&action=remix" }
 	{/if}
-	{if $editor eq 'kse'}
+	{if $mode eq 'remix' and $editor eq 'kse'}
 	{button _text="{tr}Advance Editor{/tr}" href="tiki-kaltura_video.php?videoId=$videoId&action=remix&editor=kae" }
-	{else}
+	{/if}
+	{if $mode eq 'remix' and $editor eq 'kae'}
 	{button _text="{tr}Simple Editor{/tr}" href="tiki-kaltura_video.php?videoId=$videoId&action=remix&editor=kse" }
 	{/if}
 	{/if}
@@ -148,7 +149,7 @@
 	{/capture}
 	
 	{capture name=remix_video assign=edit_remix}
-		<object name="kaltura_player" id="kaltura_player" type="application/x-shockwave-flash" data="http://www.kaltura.com/{if $editor eq 'kae'}kae/ui_conf_id/47400" height="672" width="825" {else}kse/ui_conf_id/36300" height="546" width="890"{/if}>
+		<object name="kaltura_player" id="kaltura_player" type="application/x-shockwave-flash" data="http://www.kaltura.com/{if $editor eq 'kae'}kae/ui_conf_id/1000865" height="672" width="825" {else}kse/ui_conf_id/36300" height="546" width="890"{/if}>
 			<param name="allowScriptAccess" value="always" />
 			<param name="allowNetworking" value="all" />
 			<param name="allowFullScreen" value="true" />
@@ -203,16 +204,16 @@
 		document.getElementById('kcw_entries').innerHTML = tmp;
 		document.kcw.submit();
 		}
-		
-		function handleGotoEditorWindow (kshowId, pd_extraData) {
-        	alert('Editor');
-        }
         
         function CloseClick(isModified) {
 			window.location="./tiki-list_kaltura_entries.php";
 		}
 
 		function SaveClick() {
+			window.location="./tiki-list_kaltura_entries.php";
+		}
+		
+		function closeEditorHandler() {
 			window.location="./tiki-list_kaltura_entries.php";
 		}
 {/literal}

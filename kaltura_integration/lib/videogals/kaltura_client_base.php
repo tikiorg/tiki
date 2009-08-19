@@ -299,6 +299,3 @@ class IKalturaLogger
 {
 	function log($msg) {}
 }
-
-
-?>

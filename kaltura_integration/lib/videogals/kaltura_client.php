@@ -2040,4 +2040,3 @@ class KalturaClient extends KalturaClientBase
 	}
 
 }
-?>
