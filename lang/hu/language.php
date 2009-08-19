@@ -1787,6 +1787,7 @@ $lang=Array(
 // "You are alerted by the server " => "You are alerted by the server ",
 // "You can check the modifications at : " => "You can check the modifications at : ",
 // "You are alerted of a changement on " => "You are alerted of a changement on ",
+// "You are alerted of a change on " => "You are alerted of a changement on ",
 // "Invalid imagename (using filters for filenames)" => "Invalid imagename (using filters for filenames)",
 // "Upload was not successful" => "Upload was not successful",
 // "unknown destination directory. Please set it up in <a href='tiki-admin.php?page=galleries'>tiki-admin.php?page=galleries</a>" => "unknown destination directory. Please set it up in <a href='tiki-admin.php?page=galleries'>tiki-admin.php?page=galleries</a>",
