@@ -117,11 +117,11 @@
 </div>
 
 <form method="post" action="tiki-browse_categories.php">
-	{tr}Find:{/tr} {$p_info.name} <input type="text" name="find" value="{$find|escape}" size="35" />
-	{tr}in the current category - and its subcategories: {/tr}<input type="checkbox" name="deep" {if $deep eq 'on'}checked="checked"{/if}/>
+	<label>{tr}Find:{/tr} {$p_info.name} <input type="text" name="find" value="{$find|escape}" size="35" /></label><input type="submit" value="{tr}Find{/tr}" name="search" />
+	<label>{tr}in the current category - and its subcategories: {/tr}<input type="checkbox" name="deep" {if $deep eq 'on'}checked="checked"{/if}/></label>
 	<input type="hidden" name="parentId" value="{$parentId|escape}" />
 	<input type="hidden" name="type" value="{$type|escape}" />
-	<input type="submit" value="{tr}Find{/tr}" name="search" />
+	
 	<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 </form>
 

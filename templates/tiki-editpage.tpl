@@ -202,9 +202,9 @@ window.onload = timeIt;
 		
 		{if $prefs.feature_wiki_templates eq 'y' and $tiki_p_use_content_templates eq 'y' and !$templateId}
 			<tr class="formcolor">
-				<td>{tr}Apply template{/tr}:</td>
+				<td><label for="templateId">{tr}Apply template{/tr}:</label></td>
 				<td>
-					<select name="templateId" onchange="javascript:document.getElementById('editpageform').submit();" onclick="needToConfirm = false;">
+					<select id="templateId" name="templateId" onchange="javascript:document.getElementById('editpageform').submit();" onclick="needToConfirm = false;">
 						<option value="0">{tr}none{/tr}</option>
 						{section name=ix loop=$templates}
 						<option value="{$templates[ix].templateId|escape}" {if $templateId eq $templates[ix].templateId}selected="selected"{/if}>{tr}{$templates[ix].name}{/tr}</option>
@@ -263,11 +263,11 @@ window.onload = timeIt;
 		{if $prefs.feature_wiki_description eq 'y' or $prefs.metatag_pagedesc eq 'y'}
 		<tr class="formcolor">
 			{if $prefs.metatag_pagedesc eq 'y'}
-				<td>{tr}Description (used for metatags){/tr}:</td>
+				<td><label for="description">{tr}Description (used for metatags){/tr}:</label></td>
 			{else}
-				<td>{tr}Description{/tr}:</td>
+				<td><label for="description">{tr}Description{/tr}:</label></td>
 			{/if}
-			<td><input style="width:98%;" type="text" name="description" value="{$description|escape}" /></td>
+			<td><input style="width:98%;" type="text" id="description" name="description" value="{$description|escape}" /></td>
 		</tr>
 		{/if}
 		<tr class="formcolor">
@@ -315,12 +315,12 @@ function searchrep() {
 //--><!]]>
 			</script>
 			<tr class="formcolor">
-				<td>{tr}Regex search {/tr}:</td>
+				<td><label for="search">{tr}Regex search {/tr}:</label></td>
 				<td>
 					<input style="width:100;" class="wikiedit" type="text" id="search"/>
-					{tr}Replace to{/tr}:
-					<input style="width:100;" class="wikiedit" type="text" id="replace"/>
-					<input type="checkbox" id="caseinsens" />{tr}Case Insensitivity{/tr}
+					<label>{tr}Replace to{/tr}:
+					<input style="width:100;" class="wikiedit" type="text" id="replace"/></label>
+					<label><input type="checkbox" id="caseinsens" />{tr}Case Insensitivity{/tr}</label>
 					<input type="button" value="{tr}Replace{/tr}" onclick="javascript:searchrep();">
 				</td>
 			</tr>
@@ -329,17 +329,17 @@ function searchrep() {
 		{if $prefs.feature_wiki_footnotes eq 'y'}
 			{if $user}
 				<tr class="formcolor">
-					<td>{tr}My Footnotes{/tr}:</td>
-					<td><textarea name="footnote" rows="8" cols="42" style="width:98%;" >{$footnote|escape}</textarea></td>
+					<td><label for="footnote">{tr}My Footnotes{/tr}:</label></td>
+					<td><textarea id="footnote" name="footnote" rows="8" cols="42" style="width:98%;" >{$footnote|escape}</textarea></td>
 				</tr>
 			{/if}
 		{/if}
 		{if $prefs.feature_multilingual eq 'y'}
 			{if not($data.page_id)}
 				<tr class="formcolor">
-					<td>{tr}Language{/tr}:</td>
+					<td><label for="lang">{tr}Language{/tr}:</label></td>
 					<td>
-						<select name="lang">
+						<select name="lang" id="lang">
 							<option value="">{tr}Unknown{/tr}</option>
 							{section name=ix loop=$languages}
 								<option value="{$languages[ix].value|escape}"{if $lang eq $languages[ix].value or (not($data.page_id) and $lang eq '' and $languages[ix].value eq $prefs.language)} selected="selected"{/if}>{$languages[ix].name}</option>
@@ -353,10 +353,10 @@ function searchrep() {
 			{else}
 				{if $trads|@count > 1}
 					<tr class="formcolor"{if $prefs.feature_urgent_translation neq 'y' or $diff_style} style="display:none;"{/if}>
-						<td>{tr}Translation request{/tr}:</td>
+						<td><label>{tr}Translation request{/tr}:</td>
 						<td>
 							<input type="hidden" name="lang" value="{$lang|escape}"/>
-							<input type="checkbox" name="translation_critical" id="translation_critical"{if $translation_critical} checked="checked"{/if}/>
+							<input type="checkbox" id="translation_critical" name="translation_critical" id="translation_critical"{if $translation_critical} checked="checked"{/if}/>
 							<label for="translation_critical">{tr}Send urgent translation request.{/tr}</label>
 							{if $diff_style}
 								<input type="hidden" name="oldver" value="{$diff_oldver|escape}"/>
@@ -371,13 +371,13 @@ function searchrep() {
 		
 		{if $page|lower neq 'sandbox'}
 			<tr class="formcolor" id="input_edit_summary" style="vertical-align: middle">
-				<td style="width: 25%">{tr}Edit Comment{/tr}:</td>
-				<td><input style="width:98%;" class="wikiedit" type="text" name="comment" value="{$commentdata|escape}" /></td>
+				<td style="width: 25%"><label for="comment">{tr}Edit Comment{/tr}:</label></td>
+				<td><input style="width:98%;" class="wikiedit" type="text" id="comment" name="comment" value="{$commentdata|escape}" /></td>
 			</tr>
 			{if $show_watch eq 'y'}
 				<tr class="formcolor">
-					<td>{tr}Monitor this page{/tr}:</td>
-					<td><input type="checkbox" name="watch" value="1"{if $watch_checked eq 'y'} checked="checked"{/if} /></td>
+					<td><label for="watch">{tr}Monitor this page{/tr}:</label></td>
+					<td><input type="checkbox" id="watch" name="watch" value="1"{if $watch_checked eq 'y'} checked="checked"{/if} /></td>
 				</tr>
 			{/if}
 			{if $prefs.wiki_feature_copyrights  eq 'y'}
@@ -386,19 +386,19 @@ function searchrep() {
 					<td>
 						<table border="0">
 							<tr class="formcolor">
-								<td>{tr}Title:{/tr}</td>
-								<td><input size="40" class="wikiedit" type="text" name="copyrightTitle" value="{$copyrightTitle|escape}" /></td>
+								<td><label for="copyrightTitle">{tr}Title:{/tr}</label></td>
+								<td><input size="40" class="wikiedit" type="text" id="copyrightTitle" name="copyrightTitle" value="{$copyrightTitle|escape}" /></td>
 								{if !empty($copyrights)}
 									<td rowspan="3"><a href="copyrights.php?page={$page|escape}">{tr}To edit the copyright notices{/tr}</a></td>
 								{/if}
 							</tr>
 							<tr class="formcolor">
-								<td>{tr}Year:{/tr}</td>
-								<td><input size="4" class="wikiedit" type="text" name="copyrightYear" value="{$copyrightYear|escape}" /></td>
+								<td><label for="copyrightYear">{tr}Year:{/tr}</label></td>
+								<td><input size="4" class="wikiedit" type="text" id="copyrightYear" name="copyrightYear" value="{$copyrightYear|escape}" /></td>
 							</tr>
 							<tr class="formcolor">
-								<td>{tr}Authors:{/tr}</td>
-								<td><input size="40" class="wikiedit" name="copyrightAuthors" type="text" value="{$copyrightAuthors|escape}" /></td>
+								<td><label for="copyrightAuthors">{tr}Authors:{/tr}</label></td>
+								<td><input size="40" class="wikiedit" id="copyrightAuthors" name="copyrightAuthors" type="text" value="{$copyrightAuthors|escape}" /></td>
 							</tr>
 						</table>
 					</td>
@@ -411,39 +411,39 @@ function searchrep() {
 		
 		{if $prefs.feature_wiki_allowhtml eq 'y' and $tiki_p_use_HTML eq 'y' and $wysiwyg neq 'y'}
 			<tr class="formcolor">
-				<td>{tr}Allow HTML{/tr}: </td>
-				<td><input type="checkbox" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if}/></td>
+				<td><label for="allowhtml">{tr}Allow HTML{/tr}:</label></td>
+				<td><input type="checkbox" id="allowhtml" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if}/></td>
 			</tr>
 		{/if}
 		{if $prefs.wiki_spellcheck eq 'y'}
 			<tr class="formcolor">
-				<td>{tr}Spellcheck{/tr}: </td>
-				<td><input type="checkbox" name="spellcheck" {if $spellcheck eq 'y'}checked="checked"{/if}/></td>
+				<td><label for="spellcheck">{tr}Spellcheck{/tr}:</label></td>
+				<td><input type="checkbox" id="spellcheck"name="spellcheck" {if $spellcheck eq 'y'}checked="checked"{/if}/></td>
 			</tr>
 		{/if}
 		{if $prefs.feature_wiki_import_html eq 'y'}
 			<tr class="formcolor">
-				<td>{tr}Import HTML{/tr}:</td>
+				<td><label for="suck_url">{tr}Import HTML{/tr}:</label></td>
 				<td>
-					<input class="wikiedit" type="text" name="suck_url" value="{$suck_url|escape}" />&nbsp;
+					<input class="wikiedit" type="text" id="suck_url" name="suck_url" value="{$suck_url|escape}" />&nbsp;
 				</td>
 			</tr>
 			<tr class="formcolor">
 				<td>&nbsp;</td>
 				<td>
 					<input type="submit" class="wikiaction" name="do_suck" value="{tr}Import{/tr}" onclick="needToConfirm=false;" />&nbsp;
-					<input type="checkbox" name="parsehtml" {if $parsehtml eq 'y'}checked="checked"{/if}/>&nbsp;
-					{tr}Try to convert HTML to wiki{/tr}
+					<label><input type="checkbox" name="parsehtml" {if $parsehtml eq 'y'}checked="checked"{/if}/>&nbsp;
+					{tr}Try to convert HTML to wiki{/tr}. </label>
 				</td>
 			</tr>
 		{/if}
 		
 		{if $tiki_p_admin_wiki eq 'y' && $prefs.feature_wiki_import_page eq 'y'}
 			<tr class="formcolor">
-				<td>{tr}Import page{/tr}:</td>
+				<td><label for="userfile1">{tr}Import page{/tr}:</label></td>
 				<td>
 					<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
-					<input name="userfile1" type="file" />
+					<input id="userfile1" name="userfile1" type="file" />
 					{if $prefs.feature_wiki_export eq 'y' and $tiki_p_admin_wiki eq 'y'}
 						<a href="tiki-export_wiki_pages.php?page={$page|escape:"url"}&amp;all=1" class="link">{tr}export all versions{/tr}</a>
 					{/if}
@@ -454,10 +454,10 @@ function searchrep() {
 		{if $wysiwyg neq 'y'}
 			{if $prefs.feature_wiki_pictures eq 'y' and $tiki_p_upload_picture eq 'y'}
 				<tr class="formcolor">
-					<td>{tr}Upload picture{/tr}:</td>
+					<td><label for="uploadpicture">{tr}Upload picture{/tr}:</label></td>
 					<td>
 						{if $prefs.feature_filegals_manager eq 'y' and $prefs.feature_file_galleries == 'y' and $tiki_p_list_file_galleries == 'y'}
-							<input type="submit" class="wikiaction" value="{tr}Add another image{/tr}" onclick="javascript:needToConfirm = false;javascript:openFgalsWindow('{filegal_manager_url area_name=editwiki}');return false;" />
+							<input type="submit" class="wikiaction" value="{tr}Add another image{/tr}" onclick="javascript:needToConfirm = false;javascript:openFgalsWindow('{filegal_manager_url area_name=editwiki}');return false;" name="uploadpicture" />
 						{else}
 							<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
 							<input type="hidden" name="hasAlreadyInserted" value="" />
@@ -472,13 +472,13 @@ function searchrep() {
 		
 			{if $prefs.feature_wiki_attachments == 'y' and ($tiki_p_wiki_attach_files eq 'y' or $tiki_p_wiki_admin_attachments eq 'y')}
 				<tr class="formcolor">
-					<td>{tr}Upload file{/tr}:</td>
+					<td<label for="page2">{tr}Upload file{/tr}:</label></td>
 					<td>
 						<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
 						<input type="hidden" name="hasAlreadyInserted2" value="" />
-						<input type="hidden" name="page2" value="{$page}" />
+						<input type="hidden" id="page2" name="page2" value="{$page}" />
 						<input name="userfile2" type="file" id="attach-upload" />
-						 {tr}Comment{/tr}:<input type="text" name="attach_comment" maxlength="250" id="attach-comment" />
+						 <label>{tr}Comment{/tr}:<input type="text" name="attach_comment" maxlength="250" id="attach-comment" /></label>
 						<input type="submit" class="wikiaction" name="attach" value="{tr}Attach{/tr}" onclick="javascript:needToConfirm=false;insertImgFile('editwiki','userfile2','hasAlreadyInserted2','file', 'page2', 'attach_comment'); return true;" />
 					</td>
 				</tr>
@@ -488,9 +488,9 @@ function searchrep() {
 		{if $page|lower ne 'sandbox'}
 			{if $prefs.feature_wiki_icache eq 'y'}
 				<tr class="formcolor">
-					<td>{tr}Cache{/tr}</td>
+					<td><label for="wiki_cache">{tr}Cache{/tr}</a></td>
 					<td>
-					    <select name="wiki_cache">
+					    <select id="wiki_cache" name="wiki_cache">
 						    <option value="0" {if $prefs.wiki_cache eq 0}selected="selected"{/if}>0 ({tr}no cache{/tr})</option>
 						    <option value="60" {if $prefs.wiki_cache eq 60}selected="selected"{/if}>1 {tr}minute{/tr}</option>
 						    <option value="300" {if $prefs.wiki_cache eq 300}selected="selected"{/if}>5 {tr}minutes{/tr}</option>
@@ -522,8 +522,8 @@ function searchrep() {
 			
 			{if $prefs.feature_wiki_usrlock eq 'y' && ($tiki_p_lock eq 'y' || $tiki_p_admin_wiki eq 'y')}
 				<tr class="formcolor">
-					<td>{tr}Lock this page{/tr}</td>
-					<td><input type="checkbox" name="lock_it" {if $lock_it eq 'y'}checked="checked"{/if}/></td>
+					<td><label for="lock_it">{tr}Lock this page{/tr}</label></td>
+					<td><input type="checkbox" id="lock_it" name="lock_it" {if $lock_it eq 'y'}checked="checked"{/if}/></td>
 				</tr>
 			{/if}
 			

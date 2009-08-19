@@ -118,9 +118,9 @@
 		{/if}
 		<table class="normal">
 			<tr>
-				<td class="formcolor">{tr}Module Name{/tr}</td>
+				<td class="formcolor"><label for="{tr}assign_name">Module Name{/tr}</label></td>
 				<td class="formcolor">
-					<select name="assign_name" onchange="this.form.preview.click()">
+					<select id="assign_name" name="assign_name" onchange="this.form.preview.click()">
 						<option value=""></option>
 						{foreach key=name item=info from=$all_modules_info}
 							<option value="{$name|escape}" {if $assign_name eq $name || $assign_selected eq $name}selected="selected"{/if}>{$info.name}</option>
@@ -129,18 +129,18 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="formcolor">{tr}Position{/tr}</td>
+				<td class="formcolor"><label for="assign_position">{tr}Position{/tr}</label></td>
 				<td class="formcolor">
-					<select name="assign_position">
+					<select id="assign_position" name="assign_position">
 						<option value="l" {if $assign_position eq 'l'}selected="selected"{/if}>{tr}Left{/tr}</option>
 						<option value="r" {if $assign_position eq 'r'}selected="selected"{/if}>{tr}Right{/tr}</option>
 					</select>
 				</td>
 			</tr>
 			<tr>
-				<td class="formcolor">{tr}Order{/tr}</td>
+				<td class="formcolor"><label for="assign_order">{tr}Order{/tr}</label></td>
 				<td class="formcolor">
-					<select name="assign_order">
+					<select id="assign_order" name="assign_order">
 						{section name=ix loop=$orders}
 							<option value="{$orders[ix]|escape}" {if $assign_order eq $orders[ix]}selected="selected"{/if}>{$orders[ix]}</option>
 						{/section}
@@ -148,23 +148,23 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="formcolor">{tr}Cache Time{/tr} ({tr}secs{/tr})</td>
+				<td class="formcolor"><label for="assign_cache">{tr}Cache Time{/tr} ({tr}secs{/tr})</label></td>
 				<td class="formcolor">
-					<input type="text" name="assign_cache" value="{$assign_cache|escape}" />
+					<input type="text" id="assign_cache" name="assign_cache" value="{$assign_cache|escape}" />
 				</td>
 			</tr>
 			<tr>
-				<td class="formcolor">{tr}Rows{/tr}</td>
+				<td class="formcolor"><label for="assign_rows">{tr}Rows{/tr}</label></td>
 				<td class="formcolor">
-					<input type="text" name="assign_rows" value="{$assign_rows|escape}" />
+					<input type="text" id="assign_rows" name="assign_rows" value="{$assign_rows|escape}" />
 				</td>
 			</tr>
 			{if $assign_info.type eq 'function'}
 				{foreach from=$assign_info.params key=name item=param}
 					<tr>
-						<td class="formcolor">{$param.name|escape}</td>
+						<td class="formcolor"><label for="assign_params[{$name|escape}]">{$param.name|escape}</label></td>
 						<td class="formcolor">
-							<input type="text" name="assign_params[{$name|escape}]" value="{$param.value|escape}"/>
+							<input type="text" id="assign_params[{$name|escape}]" name="assign_params[{$name|escape}]" value="{$param.value|escape}"/>
 							<div class="description">
 								{$param.description|escape}
 							</div>
@@ -174,19 +174,19 @@
 			{else}
 				<tr>
 					<td class="formcolor">
-						<a {popup text="{tr}Params: specific params to the module and/or general params ('lang', 'flip', 'title', 'decorations', 'section', 'overflow', 'page', 'nobox', 'bgcolor', 'color', 'theme', 'notitle', 'nopage'). Separator between params:'&amp;'. E.g. maxlen=15&amp;nonums=y.{/tr}" width=200 center=true}>{tr}Parameters{/tr}</a>
+						<a {popup text="{tr}Params: specific params to the module and/or general params ('lang', 'flip', 'title', 'decorations', 'section', 'overflow', 'page', 'nobox', 'bgcolor', 'color', 'theme', 'notitle', 'nopage'). Separator between params:'&amp;'. E.g. maxlen=15&amp;nonums=y.{/tr}" width=200 center=true}><label for="assign_params">{tr}Parameters{/tr}</label></a>
 					</td>
 					<td class="formcolor">
-						<textarea name="assign_params" rows="1" cols="60" >{$assign_params|escape}</textarea>
+						<textarea id="assign_params" name="assign_params" rows="1" cols="60" >{$assign_params|escape}</textarea>
 						{help url="Module+Parameters"}
 					</td>
 				</tr>
 			{/if}
 			<tr>
-				<td class="formcolor">{tr}Groups{/tr}</td>
+				<td class="formcolor"><label for="groups">{tr}Groups{/tr}</label></td>
 				<td class="formcolor">
 					{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple groups.{/tr}{/remarksbox}
-					<select multiple="multiple" name="groups[]">
+					<select multiple="multiple" id="groups" name="groups[]">
 						{section name=ix loop=$groups}
 							<option value="{$groups[ix].groupName|escape}" {if $groups[ix].selected eq 'y'}selected="selected"{/if}>{$groups[ix].groupName|escape}</option>
 						{/section}
@@ -284,17 +284,17 @@
 					{/if}
 					<table>
 						<tr>
-							<td class="form">{tr}Name{/tr}</td>
-							<td><input type="text" name="um_name" value="{$um_name|escape}" /></td>
+							<td class="form"><label for="um_name">{tr}Name{/tr}</label></td>
+							<td><input type="text" id="um_name" name="um_name" value="{$um_name|escape}" /></td>
 						</tr>
 						<tr>
-							<td class="form">{tr}Title{/tr}</td>
-							<td><input type="text" name="um_title" value="{$um_title|escape}" /></td>
+							<td class="form"><label for="um_title">{tr}Title{/tr}</label></td>
+							<td><input type="text" id="um_title" name="um_title" value="{$um_title|escape}" /></td>
 						</tr>
 						<tr>
 							<td class="form"></td>
 							<td class="form">
-								<input type="checkbox" name="um_parse" value="y" {if $um_parse eq "y"}checked="checked"{/if} /> {tr}Must be wiki parsed{/tr}
+								<label><input type="checkbox" name="um_parse" value="y" {if $um_parse eq "y"}checked="checked"{/if} /> {tr}Must be wiki parsed{/tr}.</label>
 							</td>
 						</tr>
 					</table>
@@ -305,7 +305,7 @@
 						{if $polls}
 							<tr>
 								<td class="form">
-									{tr}Available polls{/tr}:
+									<label for="list_polls">{tr}Available polls{/tr}:</label>
 								</td>
 								<td>
 									<select name="polls" id='list_polls'>
@@ -327,7 +327,7 @@
 						{if $galleries}
 							<tr>
 								<td class="form">
-									{tr}Random image from{/tr}:
+									<label for="list_galleries">{tr}Random image from{/tr}:</label>
 								</td>
 								<td>
 									<select name="galleries" id='list_galleries'>
@@ -348,7 +348,7 @@
 						{if $contents}
 							<tr>
 								<td class="form">
-									{tr}Dynamic content blocks{/tr}:
+									<label for="list_contents">{tr}Dynamic content blocks{/tr}:</label>
 								</td>
 								<td>
 									<select name="contents" id='list_contents'>
@@ -368,7 +368,7 @@
 						{if $rsss}
 							<tr>
 								<td class="form">
-									{tr}RSS Modules{/tr}:
+									<label for="list_rsss">{tr}RSS Modules{/tr}:</label>
 								</td>
 								<td>
 									<select name="rsss" id='list_rsss'>
@@ -389,7 +389,7 @@
 						{if $menus}
 							<tr>
 								<td class="form">
-									{tr}Menus{/tr}:
+									<label for="list_menus">{tr}Menus{/tr}:</label>
 								</td>
 								<td>
 									<select name="menus" id='list_menus'>
@@ -408,7 +408,7 @@
 							{if $prefs.feature_phplayers eq "y"}
 								<tr>
 									<td class="form">
-										{tr}phpLayersMenus{/tr}:
+										<label for="list_phpmenus">{tr}phpLayersMenus{/tr}:</label>
 									</td>
 									<td>
 										<select name="phpmenus" id='list_phpmenus'>
@@ -429,7 +429,7 @@
 						{if $banners}
 							<tr>
 								<td class="form">
-									{tr}Banner zones{/tr}:
+									<label for="list_banners">{tr}Banner zones{/tr}:</label>
 								</td>
 								<td>
 									<select name="banners" id='list_banners'>
@@ -449,7 +449,7 @@
 						{if $wikistructures}
 							<tr>
 								<td class="form">
-									{tr}Wiki{/tr} {tr}Structures{/tr}:
+									<label for="list_wikistructures">{tr}Wiki{/tr} {tr}Structures{/tr}:</label>
 								</td>
 								<td>
 									<select name="structures" id='list_wikistructures'>

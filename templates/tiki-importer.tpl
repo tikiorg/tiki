@@ -16,29 +16,28 @@
     {/remarksbox}
        
     <br />
-    
-    Please choose the software to import from:
+    <label for="importerClassName">{tr}Select the software to import from{/tr}:</label>
     <form method="post" name="chooseSoftware" action="tiki-importer.php">
-        <select name="importerClassName">
+        <select name="importerClassName" id="importerClassName">
             <option value=""></option>
             {foreach from=$availableSoftwares key=softwareClassName item=softwareName}
                 <option value="{$softwareClassName}">{$softwareName}</option>
             {/foreach}
         </select>
-        <input type="submit" value="{tr}Ok{/tr}"/>
+        <input type="submit" value="{tr}OK{/tr}"/>
     </form>
 {elseif isset($softwareSpecificOptions)}
-    <h4>Import options:</h4>
+    <h2>Options:</h2>
     <form method="post" enctype="multipart/form-data" action="tiki-importer.php" onsubmit="return confirm('{tr}WARNING: make sure to have a backup before running the script. If you do not have a backup this is the last chance to cancel the importer by clicking on the cancel button.{/tr}');";>
         <input type="hidden" name="importerClassName" value="{$importerClassName}"/>
         {foreach from=$importerOptions item=option}
             {if $option.type eq 'checkbox'}
                 <input type="checkbox" name="{$option.name}" id="{$option.name}"/><label for="{$option.name}">{tr}{$option.label}{/tr}</label><br />
             {elseif $option.type eq 'text'}
-                {tr}{$option.label}{/tr}: <input type="text" name="{$option.name}" {if isset($option.value)}value="{$option.value}"{/if}/><br />
+                <label>{tr}{$option.label}{/tr}: <input type="text" name="{$option.name}" {if isset($option.value)}value="{$option.value}"{/if}/></label><br />
             {elseif $option.type eq 'select'}
-		        {tr}{$option.label}{/tr}<br />
-		        <select name="{$option.name}">
+		        <label for="{$option.name}">{tr}{$option.label}{/tr}</label><br />
+		        <select id="{$option.name}" name="{$option.name}">
 		        {foreach from=$option.options item=selectOption}
                     <option value="{$selectOption.name}">{$selectOption.label}</option>
 		        {/foreach}
@@ -47,7 +46,7 @@
         {/foreach}
         <br /><br />
         <input type="file" name="importFile"/><br />
-        <input type="submit" value="{tr}Import!{/tr}"/>
+        <input type="submit" value="{tr}Import{/tr}"/>
     </form>
 {elseif !empty($importFeedback)}
     <h4>{tr}Congratulations! You have successful imported your data to Tikiwiki.{/tr}</h4>

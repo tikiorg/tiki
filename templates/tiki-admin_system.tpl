@@ -41,8 +41,8 @@
 {if count($dirs) && $tiki_p_admin eq 'y'}
 	<h2>{tr}Directories to save{/tr}</h2>
 	<form  method="post" action="{$smarty.server.PHP_SELF}">
-		{tr}Full Path to the Zip File:{/tr}<input type="text" name="zipPath" value="{$zipPath|escape}" />
-		<input type="submit" name="zip" value="{tr}Generate a zip of those directories{/tr}" />
+		<label>{tr}Full Path to the Zip File:{/tr}<input type="text" name="zipPath" value="{$zipPath|escape}" />
+		<input type="submit" name="zip" value="{tr}Generate a zip of those directories{/tr}" /></label>
 		{if $zipPath}
 			<div class="simplebox highlight">{tr}A zip has been written to {$zipPath}{/tr}</div>
 		{/if}
