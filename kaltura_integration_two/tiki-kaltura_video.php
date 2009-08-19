@@ -27,7 +27,9 @@ if (isset($_REQUEST["kcw"])) {
 		
 	$entries = $_REQUEST["entryId"];
 	for($i=0; $i < count($entries); $i++) {
-		$videoEntries[$i] = $videogallib->get_video_info($entries[$i],$kaltura_client);	
+		
+		$kres= $client->getEntry ( $kuser,$entries[$i],1);
+		$videoEntries[$i] = $kres['result']['entry'];	
 	}
 	$smarty->assign('mode','new_entries');
 	$smarty->assign_by_ref('entries',$videoEntries);
@@ -35,7 +37,12 @@ if (isset($_REQUEST["kcw"])) {
 
 if (isset($_REQUEST["update"])){
 	if($tiki_p_edit_videos == 'y' || $tiki_p_admin_kaltura == 'y' || $tiki_p_admin == 'y'){
-		$videogallib->edit_video($_REQUEST['videoId'], $_REQUEST['name'], $_REQUEST['description'], $_REQUEST['tags']);
+		
+		$entry = new KalturaEntry();
+		$entry->name= $_REQUEST['name'];
+		$entry->description = $_REQUEST['description'];
+		$entry->tags = $_REQUEST['tags'];
+		$kres= $kaltura_client->updateEntry($kuser,$_REQUEST['videoId'],$entry);	
 		header ('Location: tiki-list_kaltura_entries.php');
 		die;
 	}else{
@@ -121,7 +128,8 @@ if(!empty($_REQUEST['videoId']) && isset($_REQUEST['action'])){
 			$smarty->display('error.tpl');
 			die;
 		} else {		
-				$videoInfo = $videogallib->get_video_info($videoId[0],$kaltura_client);
+				$kres= $kaltura_client->getEntry($kuser,$videoId[0],1);
+				$videoInfo = $kres['result']['entry'];
 				if (!$videoInfo) {
 					$smarty->assign('msg', tra("Incorrect param"));
 					$smarty->display('error.tpl');
@@ -141,7 +149,9 @@ if(!empty($_REQUEST['videoId']) && isset($_REQUEST['action'])){
 			$area = 'delkalturaentry';
 			if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 				key_check($area);
-				$videogallib->delete_video($videoId);
+					for($i=0; $i < count($videoId); $i++) {
+						$res= $kaltura_client->deleteEntry($kuser,$videoId[$i]);
+					}
 		    } else {
 				key_get($area);
 			}
@@ -186,7 +196,8 @@ if(!empty($_REQUEST['videoId']) && isset($_REQUEST['action'])){
 		}
 	
 	$smarty->assign('mode', 'view');
-	$videoInfo = $videogallib->get_video_info($videoId[0],$kaltura_client);
+	$kres= $kaltura_client->getEntry ( $kuser,$videoId[0],1);
+	$videoInfo = $kres['result']['entry'];
 	$smarty->assign_by_ref('videoId',$videoId[0]);
 	$smarty->assign_by_ref('videoInfo',$videoInfo);
 	}
@@ -205,6 +216,5 @@ $smarty->assign_by_ref('cwflashVars',$cwflashVars);
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 // Display the template
-
 	$smarty->assign('mid','tiki-kaltura_video.tpl');
 	$smarty->display("tiki.tpl");
