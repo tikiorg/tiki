@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-{title}{if $parentId ne 0}{tr}Category{/tr} {$p_info.name}{else}{tr}Categories{/tr}{/if}{/title}
+{title}{if $parentId ne 0}{tr}Category{/tr} {$p_info.name|escape}{else}{tr}Categories{/tr}{/if}{/title}
 
 {if $parentId and $p_info.description}
 	<div class="description">{$p_info.description}</div>
@@ -117,7 +117,7 @@
 </div>
 
 <form method="post" action="tiki-browse_categories.php">
-	<label>{tr}Find:{/tr} {$p_info.name} <input type="text" name="find" value="{$find|escape}" size="35" /></label><input type="submit" value="{tr}Find{/tr}" name="search" />
+	<label>{tr}Find:{/tr} {$p_info.name|escape} <input type="text" name="find" value="{$find|escape}" size="35" /></label><input type="submit" value="{tr}Find{/tr}" name="search" />
 	<label>{tr}in the current category - and its subcategories: {/tr}<input type="checkbox" name="deep" {if $deep eq 'on'}checked="checked"{/if}/></label>
 	<input type="hidden" name="parentId" value="{$parentId|escape}" />
 	<input type="hidden" name="type" value="{$type|escape}" />
@@ -138,7 +138,7 @@
 		<a href="tiki-browse_categories.php?parentId=0&amp;deep={$deep}&amp;type={$type|escape}" class="categpath">{tr}Top{/tr}</a>
 		{section name=x loop=$path}
 			&nbsp;{$prefs.site_crumb_seper}&nbsp;
-			<a class="categpath" href="tiki-browse_categories.php?parentId={$path[x].categId}&amp;deep={$deep}&amp;type={$type|escape}">{$path[x].name|tr_if}</a>
+			<a class="categpath" href="tiki-browse_categories.php?parentId={$path[x].categId}&amp;deep={$deep}&amp;type={$type|escape}">{$path[x].name|tr_if|escape}</a>
 		{/section}
 	</div>
 
