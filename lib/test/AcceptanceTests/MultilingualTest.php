@@ -17,6 +17,7 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
    public function testHomePageIsMultilingual() {
    		$this->openTikiPage('tiki-index.php');
    		$this->logInIfNecessaryAs('admin');
+   		print "\n".$this->getHtmlSource()."\n";
    		$this->assertLanguagePicklistHasLanguages(array('English' => 'HomePage'));
    }
     

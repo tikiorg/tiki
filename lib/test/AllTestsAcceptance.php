@@ -70,7 +70,7 @@ function loadTikiLibraries() {
  	 */
 	ini_set( 'display_errors', 'on' );
 	error_reporting( E_ALL );
-	ini_set( 'include_path', ini_get('include_path') . PATH_SEPARATOR . '.' . PATH_SEPARATOR . '../lib' . PATH_SEPARATOR . '../../..' );
+	ini_set( 'include_path', ini_get('include_path') . PATH_SEPARATOR . '.' . PATH_SEPARATOR . '../../lib' . PATH_SEPARATOR . '../..' );
 
 	/*
  	* Note: Need to reset the include pathes relative to the root of tiki, because 
