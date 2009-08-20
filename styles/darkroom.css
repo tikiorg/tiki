@@ -169,8 +169,9 @@ input[type=reset]:hover,
 	text-decoration: none;
 }
 
-.button {
+span.button {
 	font-size: 0.8em;
+	padding: 0;
 }
 
 input[type=file] {
