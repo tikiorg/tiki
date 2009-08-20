@@ -894,6 +894,10 @@ table {
 	font-size: 1em;
 }
 
+table.normal, 
+table.admin {
+	border-collapse: separate;}
+
 .formcolor td,
 .galform td,
 .editblogform td,
@@ -903,11 +907,11 @@ table {
 	padding: 3px;
 }
 
-tr.odd {
+tr.odd td {
 	background: #f0f0f0;
 }
 
-tr.even {
+tr.even td {
 	background: #dcdcdc;
 }
 
@@ -927,7 +931,7 @@ td.normal,
 td.odd,
 td.even {
 	padding: 0.2em;
-	border-collapse: collapse;
+	vertical-align: top;
 }
 
  /* headings */
