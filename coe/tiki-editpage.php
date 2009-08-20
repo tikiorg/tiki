@@ -64,13 +64,14 @@ if (empty($_REQUEST["page"])) {
 if ($prefs['feature_wikiapproval'] == 'y' && substr($_REQUEST['page'], 0, strlen($prefs['wikiapproval_prefix'])) != $prefs['wikiapproval_prefix'] && !empty($prefs['wikiapproval_master_group']) && !in_array($prefs['wikiapproval_master_group'], $tikilib->get_user_groups($user))) {
 	$_REQUEST['page'] = $prefs['wikiapproval_prefix'] . $_REQUEST['page'];
 }
+
+$page = $_REQUEST["page"];
+$info = $tikilib->get_page_info($page);
 // wysiwyg decision
 include 'tiki-parsemode_setup.php';
 
-$page = $_REQUEST["page"];
 $smarty->assign_by_ref('page', $_REQUEST["page"]);
 // Permissions
-$info = $tikilib->get_page_info($page);
 $tikilib->get_perm_object($page, 'wiki page', $info, true);
 if ($tiki_p_edit != 'y') {
 	if (empty($user)) {

@@ -15,10 +15,10 @@ class AcceptanceTests_AllTests
     public static function suite()
     {
         $suite = new PHPUnit_Framework_TestSuite('AcceptanceTestsSuite');
-
+		
+		$suite->addTestSuite('AcceptanceTests_MultilingualTest');
         $suite->addTestSuite('AcceptanceTests_SearchTest');
 		$suite->addTestSuite('AcceptanceTests_ListPagesTest');
-        $suite->addTestSuite('AcceptanceTests_MultilingualTest');
         $suite->addTestSuite('AcceptanceTests_TikiLibrariesAccessTest');
         $suite->addTestSuite('AcceptanceTests_MultilinguallibTest');
         return $suite;

@@ -60,10 +60,10 @@
 </td></tr>
 {if $prefs.feature_menusfolderstyle eq 'y'}
 <tr>
-	<td class="formcolor" rowspan="2">{tr}Icons:{/tr}</td>
+	<td class="formcolor" rowspan="2"><label for="icon">{tr}Icons:{/tr}</label></td>
 	<td>
 		<div>{tr}Folder Icon{/tr}</div>
-		<input type="text" name="icon" value="{$info.icon}" style="width:95%" /><br /><em>{tr}Path and filename of closed folder icon{/tr}</em>.
+		<input type="text" id="icon" name="icon" value="{$info.icon}" style="width:95%" /><br /><em>{tr}Path and filename of closed folder icon{/tr}</em>.
 
 		{remarksbox type="tip" title="{tr}Note{/tr}"}
 			{tr}To use custom folder icons in menus, enter the path to the icon for the <strong>closed</strong> folder.{/tr} {tr}In the same directory, include an icon for the opened folder.{/tr} {tr}The "opened folder" icon name must be identical to the "closed folder" icon name, prefixed with the letter <strong>o</strong>.{/tr}<hr />

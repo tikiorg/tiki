@@ -31,9 +31,9 @@
 <input type="hidden" name="templateId" value="{$templateId|escape}" />
 	<table class="normal">
 		<tr>
-			<td class="formcolor">{tr}Name{/tr}:</td>
+			<td class="formcolor"><label for="name">{tr}Name{/tr}:</label></td>
 			<td class="formcolor">
-				<input type="text" maxlength="255" size="40" name="name" value="{$info.name|escape}" />
+				<input type="text" maxlength="255" size="40" id="name" name="name" value="{$info.name|escape}" />
 			</td>
 		</tr>
 		<tr>
@@ -45,23 +45,23 @@
 					<br />
 				{/if}
 				{if $prefs.feature_wiki_templates eq 'y'}
-					<input type="checkbox" name="section_wiki" {if $info.section_wiki eq 'y'}checked="checked"{/if} />
-					{tr}Wiki{/tr}
+					<label><input type="checkbox" name="section_wiki" {if $info.section_wiki eq 'y'}checked="checked"{/if} />
+					{tr}Wiki{/tr}</label>
 					<br />
 				{/if}
 				{if $prefs.feature_newsletters eq 'y'}
-					<input type="checkbox" name="section_newsletters" {if $info.section_newsletters eq 'y'}checked="checked"{/if} />
-					{tr}Newsletters{/tr}
+					<label><input type="checkbox" name="section_newsletters" {if $info.section_newsletters eq 'y'}checked="checked"{/if} />
+					{tr}Newsletters{/tr}</label>
 					<br />
 				{/if}
 				{if $prefs.feature_events eq 'y'}
-					<input type="checkbox" name="section_events" {if $info.section_events eq 'y'}checked="checked"{/if} />
-					{tr}Events{/tr}
+					<label><input type="checkbox" name="section_events" {if $info.section_events eq 'y'}checked="checked"{/if} />
+					{tr}Events{/tr}</label>
 					<br />
 				{/if}
 				{if $prefs.feature_html_pages eq 'y'}
-					<input type="checkbox" name="section_html" {if $info.section_html eq 'y'}checked="checked"{/if} />
-					{tr}HTML Pages{/tr}
+					<label><input type="checkbox" name="section_html" {if $info.section_html eq 'y'}checked="checked"{/if} />
+					{tr}HTML Pages{/tr}</label>
 					<br />
 				{/if}
 				{if ($prefs.feature_cms_templates ne 'y') and ($prefs.feature_wiki_templates ne 'y') and ($prefs.feature_newsletters ne 'y') and ($prefs.feature_events ne 'y') and ($prefs.feature_html_pages ne 'y')}
@@ -83,7 +83,7 @@
 			{assign var=area_name value="editwiki"}
 			{if $wysiwyg eq 'n' or ($wysiwyg ne 'y' and $prefs.wysiwyg_default ne 'y')}
 				<td class="formcolor">
-					{tr}Template{/tr}:
+					<label for="editwiki">{tr}Template{/tr}:</label>
 				</td>
 				<td class="formcolor">
 					<textarea id='editwiki' class="wikiedit" name="content" rows="{$rows}" cols="{$cols}" style="WIDTH: 100%;">{$info.content|escape}</textarea>

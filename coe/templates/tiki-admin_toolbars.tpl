@@ -10,24 +10,32 @@
 {/literal}
 //--><!]]>
 </script>
+
 <div class="toolbars-admin clearfix">
 	<form name="toolbars" method="post" action="tiki-admin_toolbars.php" onsubmit="return saveRows()">
 		<div>
-			<div class="floatright">
-				<em><label for="autoreload">{tr}Auto Reloading{/tr}:</label></em>
-				<input id="autoreload" name="autoreload" type="checkbox" {if $autoreload eq 'on'}checked="checked"{/if}/>
-			</div>
-			<label>{tr}Section{/tr}:</label>
-			<select name="section" onchange="javascript:toolbars_autoreload()">
+<div class="adminoptionbox">
+	<div class="adminoption"><input id="autoreload" name="autoreload" type="checkbox" {if $autoreload eq 'on'}checked="checked"{/if}/></div>
+	<div class="adminoptionlabel"><label for="autoreload">{tr}Auto Reloading{/tr}</label></div>
+</div>
+<div class="adminoptionbox">
+	<div class="adminoptionlabel"><label for="section">{tr}Section{/tr}:</label>
+	<select id="section" name="section" onchange="javascript:toolbars_autoreload()">
 				{foreach from=$sections item=name}
 					<option{if $name eq $loaded} selected="selected"{/if}>{$name|escape}</option>
 				{/foreach}
-			</select>
-			<label>{tr}Comments{/tr}:</label>
-			<input name="comments" type="checkbox" onchange="javascript:toolbars_autoreload()" {if $comments eq 'on'}checked="checked"{/if}/>
+	</select>
+	</div>
+</div>
+<div class="adminoptionbox">
+	<div class="adminoption"><input id="comments" name="comments" type="checkbox" onchange="javascript:toolbars_autoreload()" {if $comments eq 'on'}checked="checked" {/if}/></div>
+	<div class="adminoptionlabel"><label for="comments">{tr}Comments{/tr}</label></div>
+</div>
+<div class="adminoptionbox">
 			<input name="load" type="submit" value="{tr}Load{/tr}"/>
 			<input type="submit" name="save" value="{tr}Save{/tr}"/>
 			{if $loaded neq 'global' }<input type="submit" name="reset" value="{tr}Reset to Global{/tr}"/>{/if}
+</div>
 			<input id="qt-form-field" type="hidden" name="pref" value=""/>
 		</div>
 	</form>
@@ -47,11 +55,11 @@
 		{/foreach}
 	</div>
 	<div class="lists">
-		<label for="#full-list-w">{tr}Formatting Toolbars:{/tr}</label><br/>
+		<label for="#full-list-w">{tr}Formatting Toolbars:{/tr}</label>
 		<div id="qt_filter_div_w" class="qt_filter_div">
-			{tr}Filters{/tr}:
-			<input class="qt-wiki-filter"  type="checkbox" checked /><label>{tr}Wiki{/tr}</label>
-			<input class="qt-wys-filter" type="checkbox" checked /><label>{tr}WYSIWYG{/tr}</label>
+			{tr}Filters{/tr}:<br />
+			<label><input class="qt-wiki-filter"  type="checkbox" checked / {tr}Wiki{/tr}</label>
+			<label><input class="qt-wys-filter" type="checkbox" checked /> {tr}WYSIWYG{/tr}</label>
 		</div>
 		<ul id="full-list-w" class="full">
 		{foreach from=$display_w item=tool}
@@ -62,9 +70,9 @@
 	<div class="lists">
 		<label for="#full-list-p">{tr}Plugin Toolbars:{/tr}</label><br/>
 		<div id="qt_filter_div_p" class="qt_filter_div">
-			{tr}Filters{/tr}:
-			<input class="qt-wiki-filter" type="checkbox" checked /><label>{tr}Wiki{/tr}</label>
-			<input class="qt-wys-filter" type="checkbox" checked /><label>{tr}WYSIWYG{/tr}</label>
+			{tr}Filters{/tr}:<br />
+			<label><input class="qt-wiki-filter" type="checkbox" checked /> {tr}Wiki{/tr}</label>
+			<label><input class="qt-wys-filter" type="checkbox" checked /> {tr}WYSIWYG{/tr}</label>
 		</div>
 		<ul id="full-list-p" class="full">
 		{foreach from=$display_p item=tool}
@@ -111,9 +119,9 @@
 		</div>
 		<label for="#full-list-c">{tr}Custom Toolbars:{/tr}</label><br/>
 		<div id="qt_filter_div_c" class="qt_filter_div">
-			{tr}Filters{/tr}:
-			<input class="qt-wiki-filter" type="checkbox" checked /><label>{tr}Wiki{/tr}</label>
-			<input class="qt-wys-filter" type="checkbox" checked /><label>{tr}WYSIWYG{/tr}</label>
+			{tr}Filters{/tr}:<br />
+			<label><input class="qt-wiki-filter" type="checkbox" checked />{tr}Wiki{/tr}</label>
+			<label><input class="qt-wys-filter" type="checkbox" checked /> {tr}WYSIWYG{/tr}</label>
 		</div>
 		<ul id="full-list-c" class="full">
 		{foreach from=$display_c item=tool}

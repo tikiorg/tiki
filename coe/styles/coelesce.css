@@ -673,11 +673,11 @@ a.phplmselected:hover {
 	padding: 9px 1em 10px 1em;
 }
 
-#tiki-top .cssmenu_horiz li.menusection a {
+#tiki-top .cssmenu_horiz li.menuSection a {
 	padding-right: 2.6em;
 }
 
-#tiki-top .cssmenu_horiz li.menulevel1 a {
+#tiki-top .cssmenu_horiz li.menuLevel1 a {
 	border: 0;
 	padding: 6px 1em;
 	background: #ccdceb;
@@ -691,6 +691,11 @@ a.phplmselected:hover {
 .cssmenu_vert ul .sf-sub-indicator {
 	background: url(coelesce/arrows-467aa7.png) no-repeat;
 }
+/* when there's superfish shadow */
+.cssmenu_horiz.sf-shadow ul li {
+	background-color: #CCDCEB; 
+}
+
 
 /****** Misc. Global Classes (layout and style) ****/
 .bannertext:hover {

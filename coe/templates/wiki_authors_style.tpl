@@ -1,8 +1,8 @@
 {if $style eq 'tr'}
 <tr{if isset($tr_class)} class="{$tr_class}"{/if}>
-  <td class="form">{tr}List authors:{/tr}</td>
+  <td class="form"><label for="wiki_authors_style">{tr}List authors:{/tr}</label></td>
   <td>
-    <select name="wiki_authors_style">
+    <select id="wiki_authors_style" name="wiki_authors_style">
       {if isset($wiki_authors_style_site) && $wiki_authors_style_site eq 'y'}
       <option value="" style="font-style:italic;border-bottom:1px dashed #666;"{if $wiki_authors_style eq ''} selected="selected"{/if}>{tr}Site default{/tr}</option>
       {/if}

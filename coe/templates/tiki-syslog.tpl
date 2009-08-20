@@ -15,8 +15,8 @@
 <br /><br />
 
 <form method="get" action="tiki-syslog.php">
-  {tr}Clean logs older than{/tr}&nbsp;
-  <input type="text" name="months" size="4" /> {tr}months{/tr}
+  <label>{tr}Clean logs older than{/tr}&nbsp;
+  <input type="text" name="months" size="4" /></label> {tr}months{/tr}
   <input type="submit" value="{tr}Clean{/tr}" name="clean" />
 </form>
 

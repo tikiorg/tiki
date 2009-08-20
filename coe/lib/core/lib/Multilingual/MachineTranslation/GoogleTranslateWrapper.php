@@ -66,9 +66,9 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper {
    	var $googleAjaxUrl = "http://ajax.googleapis.com/ajax/services/language/translate?v=1.0";
 
 //wiki markup (keep this regex in case we decide to translate wiki markup and not html)    
-//	var $markup = "/<[^>]*>|[\s]?[\`\!\@\#\$\%\^\&\*\[\]\:\;\"\'\<\,\>\.\?\/\|\\\=\-\+\_\(\)]{2,}[\s]?|\{[^*]*?\}|\(\([\s\S]*?\)\)|\~[a-z]{2}\~[\s\S]*?\~\/[a-z]{2}\~|\~hs\~|\~\~[\s\S]*?\:|\~\~|[[^\|]*?\||\[[^|\]]*\]|\{[\*]?[^\}]*?[\*]?\}|\*|;/";
 
-	var $wikiMarkup = "/<[^>]*>| ?[\`\!\@\#\$\%\^\&\*\[\]\:\;\"\'\<\,\>\/\|\\\=\-\+\_\(\)]{2,} ?|\(\([\s\S]*?\)\)|\~[a-z]{2}\~[\s\S]*?\~\/[a-z]{2}\~|\~hs\~|\~\~[\s\S]*?\:|\~\~|[[^\|]*?\||\[[^|\]]*\]|\{\*[^\}\*]*?\*\}|\{[^\}]*?\}|^;|!/m";
+//	var $wikiMarkup = "/<[^>]*>| ?[\`\!\@\#\$\%\^\&\*\[\]\:\;\"\'\<\,\>\/\|\\\=\-\+\_\(\)]{2,} ?|\(\([\s\S]*?\)\)|\~[a-z]{2,3}\~[\s\S]*?\~\/[a-z]{2,3}\~|\~hs\~|\~\~[\s\S]*?\:|\~\~|[[^\|]*?\||\[[^|\]]*\]|\{\*[^\}\*]*?\*\}|\{[^\}]*?\}|^;|!/m";
+	var $wikiMarkup = "/<[^>]*>| ?[\`\!\@\#\$\%\^\&\*\[\]\:\;\"\'\<\,\>\/\|\\\=\-\+\_\(\)]{2,} ?|\(\([\s\S]*?\)\)|\~\/?[a-z]{2,3}\~|\~hs\~|\~\~[\s\S]*?\:|\~\~|[[^\|]*?\||\[[^|\]]*\]|\{\*[^\}\*]*?\*\}|\{[^\}]*?\}|^;|!/m";
 
 //Google doesn't return parens upon translation
 //Include spaces in markup (Google adds some, and they will be stripped later. Want to preserve the original ones)

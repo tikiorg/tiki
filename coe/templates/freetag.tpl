@@ -1,6 +1,6 @@
 {if $prefs.feature_freetags eq 'y' && $tiki_p_freetags_tag eq 'y'}
 	<tr class="formcolor">
-		<td>{tr}Folksonomy Tags{/tr}</td>
+		<td><label for="tagBox">{tr}Folksonomy Tags{/tr}</label></td>
 		<td{if $cols} colspan="{$cols}"{/if}>
 			<script type="text/javascript">
 				<!--//--><![CDATA[//><!--

@@ -105,7 +105,7 @@ if ($prefs['feature_phplayers'] == 'y' && $prefs['feature_category_use_phplayers
 		$tree_nodes[] = array(
 			"id" => $c["categId"],
 			"parent" => $c["parentId"],
-			"data" => '<a class="catname" href="tiki-browse_categories.php?parentId=' . $c["categId"] . '&amp;deep=' . $deep . '&amp;type=' . urlencode($type) . '">' . $c["name"] . '</a><br />'
+			"data" => '<a class="catname" href="tiki-browse_categories.php?parentId=' . $c["categId"] . '&amp;deep=' . $deep . '&amp;type=' . urlencode($type) . '">' . htmlspecialchars($c["name"]) . '</a><br />'
 		);
 	}
 	$tm = new CatBrowseTreeMaker("categ");

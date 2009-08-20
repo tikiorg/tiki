@@ -76,6 +76,7 @@ if ((!isset($_REQUEST['page']) || $_REQUEST['page'] == '') and !isset($_REQUEST[
 		$access->display_error( '', tra('No name indicated for wiki page'));
 	}
 }
+
 $use_best_language = $use_best_language || isset($_REQUEST['bl']) || isset($_REQUEST['best_lang']) || isset($_REQUEST['switchLang']);
 
 $info = null;
@@ -161,8 +162,8 @@ if(empty($info) && !($user && $prefs['feature_wiki_userpage'] == 'y' && strcasec
 		$isUserPage = false;
 	$likepages = $wikilib->get_like_pages($page);
 	/* if we have exactly one match, redirect to it */
-	if(count($likepages) == 1  && !$isUserPage) {
-		$access->redirect( "tiki-index.php?page={$likepages[0]}" );
+	if($prefs['feature_wiki_1like_redirection'] == 'y' && count($likepages) == 1  && !$isUserPage) {
+		$access->redirect( 'tiki-index.php?page='.urlencode($likepages[0]) );
 	}
 	$smarty->assign_by_ref('likepages', $likepages);
 	$smarty->assign('create', $isUserPage? 'n': 'y');

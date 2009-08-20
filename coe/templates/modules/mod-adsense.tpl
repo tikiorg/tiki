@@ -1,5 +1,4 @@
 {* $Id$ *}
-{* look comments in tikiwiki/modules/mod-adsense.php for usage *}
 <div style="text-align: center">
 {if $client}
 {capture name=disparam}

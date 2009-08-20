@@ -5637,6 +5637,7 @@ $lang=Array(
 "You are alerted by the server " => "Estàs alertat pel servidor ",
 "You can check the modifications at : " => "Pots comprovar les modificacions a : ",
 "You are alerted of a changement on " => "Està alertat de canvis sobre ",
+"You are alerted of a change on " => "Està alertat de canvis sobre ",
 "Wiki Home" => "Inici del Wiki",
 "Home" => "Inici",
 "Blog" => "Bitàcola",

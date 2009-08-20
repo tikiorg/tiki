@@ -207,7 +207,14 @@ li.sfHover > a > .sf-sub-indicator {background-position: -10px -100px; /* arrow 
 
 /*** shadows for all but IE6 ***/
 .sf-shadow ul {
-	background:	url(../lib/jquery/superfish/images/shadow.png) no-repeat bottom right}
+	background: transparent url('../lib/jquery/superfish/images/shadow.png') no-repeat bottom right !important;
+	border: none !important;
+	padding: 0 8px 8px 0 !important;/*
+	-moz-border-radius-bottomleft: 17px;
+	-moz-border-radius-topright: 17px;
+	-webkit-border-top-right-radius: 17px;
+	-webkit-border-bottom-left-radius: 17px;*/
+}
 
 .sf-shadow ul.sf-shadow-off {
 	background: transparent}
