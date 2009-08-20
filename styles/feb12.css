@@ -368,7 +368,8 @@ div#sitead {
 }
 
 #sitesearchbar {
-	margin-top: 4px;
+	height: 34px;
+	line-height: 34px;
 }
 
 #topbar_custom_code {
@@ -516,7 +517,7 @@ a.phplmselected:hover {
 
 .cssmenu_vert li ul,
 .cssmenu_horiz li ul {
-	background: #a8cce2 !important;
+	background: #a8cce2;
 }
 
 .cssmenu_horiz ul li:hover {
@@ -551,16 +552,18 @@ a.phplmselected:hover {
 	color: #eee !important;
 	text-decoration: none;
 }
+
 #tiki-top .cssmenu_horiz li.menuLevel1 a {
 	color: #000;
 	padding: 4px 1em;
 }
-/*
-#tiki-top .cssmenu_horiz li ul a .menuText {
-	color: #000;
-}*/
 
-#tiki-top .cssmenu_horiz ul li a:hover {
+#tiki-top .cssmenu_horiz li ul a {
+	color: #000;
+}
+
+#tiki-top .cssmenu_horiz ul li a:hover,
+.cssmenu_vert ul li a:hover {
 	color: #993300;
 	text-decoration: none;
 }
@@ -580,6 +583,11 @@ a.phplmselected:hover {
 
 #col2 .cssmenu_vert > li > ul {
 	margin-left: 192px;
+}
+
+.cssmenu_horiz.sf-shadow ul li,
+.cssmenu_vert.sf-shadow ul li {
+	background-color: #CCDCEB !important;
 }
 
 /** Links in other menus **/
