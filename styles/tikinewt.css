@@ -233,6 +233,10 @@ div#page-bar table, div#page-bar td, div#page-bar tr {
 	margin: 5px 0 10px 0;
 }
 
+#tiki-top .findtable {
+	margin: 0;
+}
+
 span.button a,
 span.button a:visited,
 button,
