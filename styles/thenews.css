@@ -1358,7 +1358,7 @@ body.tiki_blogs .postfooter .actions {
 }
 
 .post .postbody .attachments {
-	border-top: 1px dotted d9d9d9;
+	border-top: 1px dotted #d9d9d9;
 }
 
 .post .postfooter .status {
@@ -1366,7 +1366,7 @@ body.tiki_blogs .postfooter .actions {
 }
 
 .post .contribution {
-	border: 1px solid d7e5f3;
+	border: 1px solid #d7e5f3;
 	padding: 0 2px 0 2px;
 	background: #f0f8ff;
 }
