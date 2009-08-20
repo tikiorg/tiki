@@ -63,11 +63,11 @@
 	<form method="get" action="tiki-adminusers.php">
 		<table class="findtable">
 			<tr>
-				<td>{tr}Find{/tr}</td>
-				<td><input type="text" name="find" value="{$find|escape}" /></td>
+				<td><label for="find">{tr}Find{/tr}</label></td>
+				<td><input type="text" id="find" name="find" value="{$find|escape}" /></td>
 				<td><input type="submit" value="{tr}Find{/tr}" name="search" /></td>
-				<td>{tr}Number of displayed rows{/tr}</td>
-				<td><input type="text" size="4" name="numrows" value="{$numrows|escape}" /></td>
+				<td><label for="numrows">{tr}Number of displayed rows{/tr}</label></td>
+				<td><input type="text" size="4" id="numrows" name="numrows" value="{$numrows|escape}" /></td>
 			</tr>
 			<tr>
 				<td colspan="2"></td>
@@ -80,9 +80,9 @@
 		<div id="search" {if $filterGroup or $filterEmail}style="display:block;"{else}style="display:none;"{/if}>
 			<table class="findtable">
 				<tr>
-					<td>{tr}Group (direct){/tr}</td>
+					<td><label for="filterGroup">{tr}Group (direct){/tr}</label></td>
 					<td>
-						<select name="filterGroup">
+						<select name="filterGroup" id="filterGroup">
 							<option value=""></option>
 							{section name=ix loop=$all_groups}
 								{if $all_groups[ix] != 'Registered' && $all_groups[ix] != 'Anonymous'}
@@ -93,8 +93,8 @@
 					</td>
 				</tr>
 				<tr>
-					<td>{tr}Email{/tr}</td>
-					<td><input type="text" name="filterEmail" value="{$filterEmail}" /></td>
+					<td><label for="filterEmail">{tr}Email{/tr}</label></td>
+					<td><input type="text" id="filterEmail" name="filterEmail" value="{$filterEmail}" /></td>
 				</tr>
 			</table>
 
@@ -208,7 +208,7 @@
 					{if $users}
 						<p align="left"> {*on the left to have it close to the checkboxes*}
 							{if $group_management_mode neq 'y' && $set_default_groups_mode neq 'y' && $email_mode neq 'y'}
-								{tr}Perform action with checked:{/tr}
+								<label>{tr}Perform action with checked:{/tr}
 								<select name="submit_mult">
 									<option value="" selected="selected">-</option>
 									<option value="remove_users" >{tr}Remove{/tr}</option>
@@ -218,14 +218,14 @@
 									<option value="assign_groups" >{tr}Manage Group Assignments{/tr}</option>
 									<option value="set_default_groups">{tr}Set Default Groups{/tr}</option>
 									<option value="emailChecked">{tr}Email{/tr}</option>
-								</select>
+								</select></label>
 								<input type="submit" value="{tr}OK{/tr}" />
 							{elseif $group_management_mode eq 'y'}
 								<select name="group_management">
 									<option value="add">{tr}Assign selected to{/tr}</option>
 									<option value="remove">{tr}Remove selected from{/tr}</option>
-								</select>
-								{tr}the following groups:{/tr}
+								</select></label>
+								<label>{tr}the following groups:{/tr}
 								<br />
 								<select name="checked_groups[]" multiple="multiple" size="20">
 									{section name=ix loop=$all_groups}
@@ -233,12 +233,12 @@
 										<option value="{$all_groups[ix]|escape}">{$all_groups[ix]|escape}</option>
 										{/if}
 									{/section}
-								</select>
+								</select></label>
 								<br />
 								<input type="submit" value="{tr}OK{/tr}" />
 								<div class="simplebox">{tr}Tip: Hold down CTRL to select multiple{/tr}</div>
 							{elseif $set_default_groups_mode eq 'y'}
-								{tr}Set the default group of the selected users to{/tr}:
+								<label>{tr}Set the default group of the selected users to{/tr}:
 								<br />
 								<select name="checked_group" size="20">
 									{section name=ix loop=$all_groups}
@@ -246,16 +246,16 @@
 										<option value="{$all_groups[ix]|escape}" />{$all_groups[ix]|escape}</option>
 										{/if}
 									{/section}
-								</select>
+								</select></label>
 								<br />
 								<input type="submit" value="{tr}OK{/tr}" />
 								<input type="hidden" name="set_default_groups" value="{$set_default_groups_mode}" />
 							{elseif $email_mode eq 'y'}
-								{tr}Template wiki page{/tr} 
-								<input type="text" name="wikiTpl" />
+								<label>{tr}Template wiki page{/tr} 
+								<input type="text" name="wikiTpl" /></label>
 								<br />
-								{tr}bcc{/tr} 
-								<input type="text" name="bcc" />
+								<label>{tr}bcc{/tr} 
+								<input type="text" name="bcc" /></label>
 								<input type="submit" value="{tr}OK{/tr}" />
 								<input type="hidden" name="emailChecked" value="{$email_mode}" />
 							{/if}
@@ -296,17 +296,17 @@
 	<form action="tiki-adminusers.php" method="post" enctype="multipart/form-data" name="RegForm" autocomplete="off">
 		<table class="normal">
 			<tr class="formcolor">
-				<td>
+				<td><label for="name">
 					{if $prefs.login_is_email eq 'y'}
 						{tr}Email{/tr}
 					{else}
 						{tr}User{/tr}
 					{/if}
-					:
+					:</label>
 				</td>
 				<td>
 					{if $userinfo.login neq 'admin'}
-						<input type="text" name="name" value="{$userinfo.login|escape}" />
+						<input type="text" id="name" name="name" value="{$userinfo.login|escape}" />
 						<br /> 
 						{if $prefs.login_is_email eq 'y'}
 							<em>{tr}Use the email as username{/tr}.</em>
@@ -344,7 +344,7 @@
 				</tr>
 			{elseif empty($userinfo) || $tiki_p_admin eq 'y' || $userinfo.login eq $user}
 				<tr class="formcolor">
-					<td>{tr}Password{/tr}:</td>
+					<td><label for="pass1">{tr}Password{/tr}:</label></td>
 					<td>
 						<input type="password" name="pass" id="pass1" onKeyUp="runPassword(this.value, 'mypassword');" />
 						<div style="float:right;width:150px;margin-left:5px;">
@@ -369,15 +369,15 @@
 					</td>
 				</tr>
 				<tr class="formcolor">
-					<td>{tr}Repeat Password{/tr}:</td>
+					<td><label for="pass2">{tr}Repeat Password{/tr}:</lael></td>
 					<td><input type="password" name="pass2" id="pass2" /></td>
 				</tr>
 				{if $userinfo.login neq 'admin'}
 					<tr class="formcolor">
 						<td>&nbsp;</td>
 						<td>
-							<input type="checkbox" name="pass_first_login"{if $userinfo.pass_confirm eq '0'} checked="checked"{/if} /> 
-							{tr}User must change password at first login{/tr}.
+							<label><input type="checkbox" name="pass_first_login"{if $userinfo.pass_confirm eq '0'} checked="checked"{/if} /> 
+							{tr}User must change password at first login{/tr}.</label>
 						</td>
 					</tr>
 				{/if}
@@ -385,9 +385,9 @@
 			
 			{if $prefs.login_is_email neq 'y'}
 				<tr class="formcolor">
-					<td>{tr}Email{/tr}:</td>
+					<td><label for="email">{tr}Email{/tr}:</label></td>
 					<td>
-						<input type="text" name="email" size="30" value="{$userinfo.email|escape}" />
+						<input type="text" id="email". name="email" size="30" value="{$userinfo.email|escape}" />
 					</td>
 				</tr>
 			{/if}
@@ -395,8 +395,8 @@
 				<tr class="formcolor">
 					<td>&nbsp;</td>
 					<td>
-						<input type="checkbox" name="need_email_validation" {if ($userinfo.login eq '' and ($prefs.validateUsers eq 'y' or $prefs.validateRegistration eq 'y')) or $userinfo.provpass neq ''}checked="checked" {/if}/> 
-						{tr}Send an email to the user in order to allow him to validate his account.{/tr}
+						<label><input type="checkbox" name="need_email_validation" {if ($userinfo.login eq '' and ($prefs.validateUsers eq 'y' or $prefs.validateRegistration eq 'y')) or $userinfo.provpass neq ''}checked="checked" {/if}/> 
+						{tr}Send an email to the user in order to allow him to validate his account.{/tr}</label>
 					</td>
 				</tr>
 			{/if}
@@ -455,21 +455,21 @@
 		<table class="normal">
 			<tr class="formcolor">
 				<td>
-					{tr}CSV File:{/tr} 
+					<label for="csvlist">{tr}CSV File:{/tr} </label>
 					<a {popup text='login,password,email,groups&lt;br /&gt;user1,password1,email1,&quot;group1,group2&quot;&lt;br /&gt;user2, password2,email2'}>{icon _id='help'}</a>
 				</td>
 				<td>
-					<input type="file" name="csvlist"/>
+					<input type="file" id="csvlist" name="csvlist"/>
 					<br />
-					<input type="radio" name="overwrite" value="y" checked="checked" />&nbsp;{tr}Overwrite{/tr}
+					<label><input type="radio" name="overwrite" value="y" checked="checked" />&nbsp;{tr}Overwrite{/tr}</label>
 					<br />
-					<input type="radio" name="overwrite" value="c"/>&nbsp;{tr}Overwrite but keep the previous login if the login exists in another case{/tr}
+					<label><input type="radio" name="overwrite" value="c"/>&nbsp;{tr}Overwrite but keep the previous login if the login exists in another case{/tr}</label>
 					<br />
-					<input type="radio" name="overwrite" value="n" />&nbsp;{tr}Don't overwrite{/tr}
+					<label><input type="radio" name="overwrite" value="n" />&nbsp;{tr}Don't overwrite{/tr}</label>
 					<br />
-					{tr}Overwrite groups:{/tr} <input type="checkbox" name="overwriteGroup" />
+					<label>{tr}Overwrite groups:{/tr} <input type="checkbox" name="overwriteGroup" /></label>
                     <br />
-                    {tr}User must change password at first login{/tr}: <input type="checkbox" name="forcePasswordChange" />
+                    <label>{tr}User must change password at first login{/tr}: <input type="checkbox" name="forcePasswordChange" /></label>
 				</td>
 			</tr>
 			<tr class="formcolor">

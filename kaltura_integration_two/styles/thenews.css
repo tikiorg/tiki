@@ -874,8 +874,6 @@ tr.diffheader {
 }
 
 td.form {
-	border: 1px solid #9d9da1;
-	background: #e0dfe3;
 	padding: 3px;
 }
 
@@ -923,6 +921,8 @@ div.content .tabs {
 /* active (current) tab */
 .tabactive {
 	border: solid 1px #0a6aa6 !important;
+	border-bottom: 0 !important;
+	border-top-width: 2px !important;
 	bottom: 2px;
 	z-index: 2;
 	background: #f2f2f2 !important;
@@ -1358,7 +1358,7 @@ body.tiki_blogs .postfooter .actions {
 }
 
 .post .postbody .attachments {
-	border-top: 1px dotted d9d9d9;
+	border-top: 1px dotted #d9d9d9;
 }
 
 .post .postfooter .status {
@@ -1366,7 +1366,7 @@ body.tiki_blogs .postfooter .actions {
 }
 
 .post .contribution {
-	border: 1px solid d7e5f3;
+	border: 1px solid #d7e5f3;
 	padding: 0 2px 0 2px;
 	background: #f0f8ff;
 }

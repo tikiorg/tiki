@@ -37,7 +37,7 @@ class CategLib extends ObjectLib {
 		}
 	}
 	
-	function list_all_categories($offset, $maxRecords, $sort_mode = 'name_asc', $find, $type, $objid) {
+	function list_all_categories($offset, $maxRecords, $sort_mode = 'name_asc', $find, $type, $objid, $showWS = false) {
 		$cats = $this->get_object_categories($type, $objid);
 
 		if ($find) {
@@ -48,9 +48,12 @@ class CategLib extends ObjectLib {
       $bindvals=array();
 			$mid = "";
 		}
+		global $prefs; if(!$prefs) require_once 'lib/setup/prefs.php';
+		$exclude = $this->exclude_categs ($prefs['ws_container'], $find, $showWS);
+		if (!empty($exclude)) $bindvals[] = $prefs['ws_container'];
 
-		$query = "select * from `tiki_categories` $mid order by ".$this->convertSortMode($sort_mode);
-		$query_cant = "select count(*) from `tiki_categories` $mid";
+		$query = "select * from `tiki_categories` $mid $exclude order by ".$this->convertSortMode($sort_mode);
+		$query_cant = "select count(*) from `tiki_categories` $mid $exclude";
 		$result = $this->query($query,$bindvals,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvals);
 		$ret = array();
@@ -88,6 +91,30 @@ class CategLib extends ObjectLib {
 		$retval["data"] = array_values($ret);
 		$retval["cant"] = $cant;
 		return $retval;
+	}
+	
+	function exclude_categs ($excludeCategId, $find, $showWS = false)
+	{
+	    if ($excludeCategId)
+	    {
+	    	if ($showWS)
+			{
+				if ($find)
+					$exclude = "and `rootCategId` = ?";
+				else
+					$exclude = "where `rootCategId` = ?";
+			}
+			else
+			{
+				if ($find)
+						$exclude = "and not `categId` = ? and `rootCategId` is NULL";
+				else
+						$exclude = "where not `categId` = ? and `rootCategId` is NULL";
+			}
+	    }
+	    else
+			$exclude = "";
+	    return $exclude;
 	}
 
 	function get_category_path_string($categId) {

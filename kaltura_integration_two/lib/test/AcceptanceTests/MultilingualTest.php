@@ -10,13 +10,14 @@ require_once 'TikiSeleniumTestCase.php';
 class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
 {
 
-	public function ___testRememberToReactivateAllTestsInMultilingualTest() {
+	public function _testRememberToReactivateAllTestsInMultilingualTest() {
     	$this->fail("Don't forget to do this");
     }
         
    public function testHomePageIsMultilingual() {
    		$this->openTikiPage('tiki-index.php');
    		$this->logInIfNecessaryAs('admin');
+   		print "\n".$this->getHtmlSource()."\n";
    		$this->assertLanguagePicklistHasLanguages(array('English' => 'HomePage'));
    }
     
@@ -49,6 +50,7 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
   	public function testTranslateOptionAppearsOnlyWhenLoggedIn() {
   		$this->openTikiPage('tiki-index.php');
   		$this->logOutIfNecessary();
+//  		print "\n".$this->getHtmlSource()."\n";
   		$this->assertLanguagePicklistHasNoTranslateOption();
   		$this->logInIfNecessaryAs('admin');
   		$this->assertLanguagePicklistHasTranslateOption();
@@ -176,6 +178,14 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
     }
     
     
+    public function testMachineTranslationOfAPageCausesErrorMessageIfNotEnabled() {
+    	$this->logInIfNecessaryAs('admin');
+    	$this->_setMachineTranslationFeatureTo('n');
+		$this->openTikiPage('tiki-index.php?page=HomePage&machine_translate_to_lang=fr'); 
+		$this->assertTextPresent('Machine Translation feature is not enabled.',
+					"System should have known that MT features are not enabled.");
+		  	
+    }
     
      
     
@@ -216,5 +226,16 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
         $this->assertFalse($this->isElementPresent("xpath=//select[@name='page' and @onchange='quick_switch_language( this )']/option[@value='_translate_']",
                   "Translate option was present."));           
     }
+    
+    
+    
+    public function _setMachineTranslationFeatureTo($y_or_n) {
+   		global $tikilib, $prefs;
+   		$tikilib->set_preference('feature_machine_translation', $y_or_n);
+   		if ($prefs['feature_machine_translation'] == 'y') {
+   			print "\nfeature_machine_translation ENABLED\n";
+   		}
+    }
+    
 
 }

@@ -59,5 +59,6 @@ function module_switch_lang( $mod_reference, $module_params ) {
 		//sort($languages);
 	}
 	$smarty->assign_by_ref('languages', $languages);
+	$smarty->clear_assign('tpl_module_title'); // TPL overrides default title
 }
 

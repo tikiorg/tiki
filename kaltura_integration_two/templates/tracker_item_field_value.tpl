@@ -104,7 +104,7 @@
 	{if $list_mode eq 'y'}
 		{if $field_value.type eq 'u' }
 			{$field_value.value|username|truncate:255:"..."|escape|default:"&nbsp;"}
-		{else}			
+		{elseif !empty($field_value.value) || $is_link eq 'y'}			
 			{$field_value.value|truncate:255:"..."|escape|default:"&nbsp;"}
 		{/if}		
 	{elseif $list_mode eq 'csv'}

@@ -151,7 +151,9 @@ if (isset($_REQUEST["preview"])) {
         $module_params=$_REQUEST["assign_params"];
     }
     $smarty->assign_by_ref('module_params', $module_params);
-    $smarty->assign('tpl_module_title', tra( $module_params['title'] ) );
+	if (isset($module_params['title'])) {
+		$smarty->assign('tpl_module_title', tra( $module_params['title'] ) );
+	}
     if ($tikilib->is_user_module($_REQUEST["assign_name"])) {
         $info = $tikilib->get_user_module($_REQUEST["assign_name"]);
         $smarty->assign_by_ref('user_title', $info["title"]);

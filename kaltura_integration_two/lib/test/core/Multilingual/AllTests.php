@@ -12,7 +12,7 @@ class Multilingual_AllTests
         $suite = new PHPUnit_Framework_TestSuite('MultilingualSuite');
 
         $suite->addTest(Multilingual_Aligner_AllTests::suite());
-//        $suite->addTest(Multilingual_MachineTranslation_AllTests::suite());
+        $suite->addTest(Multilingual_MachineTranslation_AllTests::suite());
 
         return $suite;
     }

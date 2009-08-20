@@ -19,9 +19,9 @@
 	 {if $numrows ne $prefs.maxRecords and $numrows}<input type="hidden" name="numrows" value="{$numrows|escape}" />{/if}
 	<table class="normal">
 		<tr>
-			<td class="formcolor">{tr}Event{/tr}:</td>
+			<td class="formcolor"><label for="event">{tr}Event{/tr}:</label></td>
 			<td class="formcolor">
-				<select name="event">
+				<select id="event" name="event">
 					<option value="user_registers">{tr}A user registers{/tr}</option>
 					<option value="article_submitted">{tr}A user submits an article{/tr}</option>
 					<option value="article_edited">{tr}A user edits an article{/tr}</option>
@@ -34,13 +34,13 @@
 			</td>
 		</tr> 
 		<tr>
-			<td class="formcolor">{tr}User:{/tr}</td>
+			<td class="formcolor"><label for="flogin">{tr}User:{/tr}</label></td>
 			<td class="formcolor">
 				<input type="text" id="flogin" name="login" />
 			</td>
 		</tr>
 		<tr>
-			<td class="formcolor">{tr}Email:{/tr}</td>        
+			<td class="formcolor"><label for="femail">{tr}Email:{/tr}</label></td>        
 			<td class="formcolor">
 				<input type="text" id='femail' name="email" />
 				{if $admin_mail neq ''}
