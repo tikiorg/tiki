@@ -874,8 +874,6 @@ tr.diffheader {
 }
 
 td.form {
-	border: 1px solid #9d9da1;
-	background: #e0dfe3;
 	padding: 3px;
 }
 
@@ -922,7 +920,8 @@ div.content .tabs {
 
 /* active (current) tab */
 .tabactive {
-	border: solid 1px #0a6aa6 !important;
+	border: solid 1px #0a6aa6;
+	border-bottom: 0 !important;
 	bottom: 2px;
 	z-index: 2;
 	background: #f2f2f2 !important;
