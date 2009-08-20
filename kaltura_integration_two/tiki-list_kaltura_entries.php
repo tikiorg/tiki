@@ -1,4 +1,8 @@
 <?php
+// (c) Copyright 2002-2009 by authors of the Tiki Wiki/CMS/Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 require_once ('tiki-setup.php');
 
 if ($prefs['feature_kaltura'] != 'y') {
@@ -24,6 +28,12 @@ $kuser->userId = $user;
 $kaltura_client = new KalturaClient($kaltura_conf);
 $kres =$kaltura_client->startSession($kuser, $kaltura_conf->secret,false,"");
 $kaltura_client->setKS($kres["result"]["ks"]);
+
+if(!isset($kres["result"]["ks"])) {
+	$smarty->assign('msg', tra("Could not establish Kaltura session. Try again"));
+	$smarty->display('error.tpl');
+	die;
+}
 
 $filter = new KalturaEntryFilter();
 $sort_mode = '';
@@ -61,6 +71,12 @@ if($_REQUEST['offset']){
 		
 $res = $kaltura_client->listMyEntries($kuser,$filter,true,$page_size,$page,null);
 
+if(!isset($res['result']['entries'])){
+	$smarty->assign('msg', tra("Could not get required results. Try again"));
+	$smarty->display('error.tpl');
+	die;
+}
+
 $entries['cant'] = $res['result']['count'];
 
 //echo $entries['cant'];
@@ -71,7 +87,6 @@ $smarty->assign_by_ref('cant',$entries['cant']);
 $smarty->assign_by_ref('offset',$offset);
 $smarty->assign_by_ref('maxRecords',$res['result']['page_size']);
 
-//print_r($res);
 // Display the template
 	$smarty->assign('mid', 'tiki-list_kaltura_entries.tpl');
 	$smarty->display("tiki.tpl");

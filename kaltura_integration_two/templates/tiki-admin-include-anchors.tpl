@@ -43,7 +43,7 @@
 {/if}
 
 {if $prefs.feature_kaltura eq 'y'}
-{self_link page="Kaltura" _class="icon"}{icon _id="pics/large/kaltura48x48.png" alt="{tr}Kaltura{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
+{self_link page="kaltura" _class="icon"}{icon _id="pics/large/kaltura48x48.png" alt="{tr}Kaltura{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 {* TODO resize icon *}
 {/if}
 

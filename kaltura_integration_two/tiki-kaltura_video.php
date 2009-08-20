@@ -1,5 +1,8 @@
 <?php
-
+// (c) Copyright 2002-2009 by authors of the Tiki Wiki/CMS/Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 require_once ('tiki-setup.php');
 ob_start();
 if ($prefs['feature_kaltura'] != 'y') {
@@ -22,13 +25,26 @@ $kaltura_conf = kaltura_init_config();
 	$kaltura_client = new KalturaClient($kaltura_conf);
 	$kres = $kaltura_client->startSession($kuser, $kaltura_conf->secret,'',"edit:*",'');
 	$kaltura_client->setKS($kres['result']['ks']);
-		
+
+if(!isset($kres["result"]["ks"])) {
+	$smarty->assign('msg', tra("Could not establish Kaltura session. Try again"));
+	$smarty->display('error.tpl');
+	die;
+}
+	
 if (isset($_REQUEST["kcw"])) {
 		
 	$entries = $_REQUEST["entryId"];
 	for($i=0; $i < count($entries); $i++) {
 		
-		$kres= $client->getEntry ( $kuser,$entries[$i],1);
+		$kres= $kaltura_client->getEntry ( $kuser,$entries[$i],1);
+
+		
+		if(!isset($kres['result']['entry'])){
+			$smarty->assign('msg', tra("Could not get newly added media information"));
+			$smarty->display('error.tpl');
+		die;
+		}
 		$videoEntries[$i] = $kres['result']['entry'];	
 	}
 	$smarty->assign('mode','new_entries');
@@ -42,7 +58,12 @@ if (isset($_REQUEST["update"])){
 		$entry->name= $_REQUEST['name'];
 		$entry->description = $_REQUEST['description'];
 		$entry->tags = $_REQUEST['tags'];
-		$kres= $kaltura_client->updateEntry($kuser,$_REQUEST['videoId'],$entry);	
+		$kres= $kaltura_client->updateEntry($kuser,$_REQUEST['videoId'],$entry);
+		if(!isset($kres['result']['entry'])){
+			$smarty->assign('msg', tra("Failed to update information. Try again"));
+			$smarty->display('error.tpl');
+		die;
+		}	
 		header ('Location: tiki-list_kaltura_entries.php');
 		die;
 	}else{
@@ -89,16 +110,31 @@ if(!empty($_REQUEST['videoId']) && isset($_REQUEST['action'])){
 					if($mediaType == 6 ){
 						$roughcutId =$videoId[0];							
 						if($mode == 'dupl') {
-							$kres = $kaltura_client->startAdminSession($kuser, $kaltura_conf->adminSecret,'1',"edit:*",3600);
+							$kres = $kaltura_client->startAdminSession($kuser, $kaltura_conf->adminSecret,'1',"edit:*",'');
+							if(!isset($kres["result"]["ks"])) {
+								$smarty->assign('msg', tra("Could not establish Kaltura session. Try again"));
+								$smarty->display('error.tpl');
+								die;
+							}							
 							$kaltura_client->setKs($kres['result']['ks']);
 							$kres = $kaltura_client->cloneRoughcut($kuser,$videoId[0]);
-							$roughtcutId = $kres['result']['id'];							
+							if(!isset($kres["result"]["entry"]["id"])) {
+								$smarty->assign('msg', tra("Failed to duplicate the remix. Try again"));
+								$smarty->display('error.tpl');
+								die;
+							}
+							$roughtcutId = $kres['result']['result']['id'];							
 						}
 						$seflashVars = $seflashVars.
 							'&kshow_id=entry-' . $roughcutId.
 							'&entry_id='. $roughcutId;
 					}else{
 						$kres = $kaltura_client->addRoughcutEntry($kuser,-2);
+						if(!isset($kres["result"]["entry"]["id"])) {
+							$smarty->assign('msg', tra("Failed to start the remix. Try again"));
+							$smarty->display('error.tpl');
+							die;
+						}
 						$roughcutId = $kres['result']['entry']['id'];
 						$kres = $kaltura_client->appendEntryToRoughcut($kuser,$videoId[0],'entry-'.$roughcutId,$roughcutId);
 						$seflashVars = $seflashVars.
@@ -107,6 +143,11 @@ if(!empty($_REQUEST['videoId']) && isset($_REQUEST['action'])){
 					}
 				}else{
 					$kres = $kaltura_client->addRoughcutEntry($kuser,-2);
+					if(!isset($kres["result"]["id"])) {
+						$smarty->assign('msg', tra("Failed to start the remix. Try again"));
+						$smarty->display('error.tpl');
+						die;
+					}
 					$roughcutId = $kres['result']['entry']['id'];
 					for ($i=0; $i < count($videoId); $i++){
 						$kres = $kaltura_client->appendEntryToRoughcut($kuser,$videoId[$i],'entry-'.$roughcutId,$roughcutId);
@@ -129,6 +170,11 @@ if(!empty($_REQUEST['videoId']) && isset($_REQUEST['action'])){
 			die;
 		} else {		
 				$kres= $kaltura_client->getEntry($kuser,$videoId[0],1);
+				if(empty($kres["result"]["entry"])) {
+					$smarty->assign('msg', tra("Could not get media information"));
+					$smarty->display('error.tpl');
+					die;
+				}
 				$videoInfo = $kres['result']['entry'];
 				if (!$videoInfo) {
 					$smarty->assign('msg', tra("Incorrect param"));
@@ -150,9 +196,12 @@ if(!empty($_REQUEST['videoId']) && isset($_REQUEST['action'])){
 			if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 				key_check($area);
 					for($i=0; $i < count($videoId); $i++) {
-						$res= $kaltura_client->deleteEntry($kuser,$videoId[$i]);
+
+						$kres = $kaltura_client->startAdminSession($kuser, $kaltura_conf->adminSecret,1,"edit:*",null);
+						$kaltura_client->setKS($kres['result']['ks']);
+						$kres= $kaltura_client->deleteEntry($kuser,$videoId[$i]);
 					}
-		    } else {
+		        } else {
 				key_get($area);
 			}
 			
@@ -169,11 +218,8 @@ if(!empty($_REQUEST['videoId']) && isset($_REQUEST['action'])){
 			die;
 		} else {
 			$kres = $kaltura_client->addDownload($kuser,$videoId[0],'flv');
-			print_r($kres);
-			$kres = $kaltura_client->getEntry($kuser,$videoId[0],1);
-			print_r($kres);
-			//header ('Location: tiki-list_kaltura_entries.php');
-			//die;
+			header ('Location: tiki-list_kaltura_entries.php');
+			die;
 		}
 		break;
 	case 'default':
