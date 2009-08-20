@@ -765,16 +765,22 @@ tr.diffheader {
 
 /** Tabs **/
 .tabs {
-	border-bottom: solid 1px #225566 !important;
-	margin: 10px 1px 0 0 !important;
+	margin: 0 !important;
 }
+
+.tabactive,
+.tabinactive,
+[class].tabactive,
+[class].tabinactive {top: 0 !important}
+
 
 .tabactive {
 	border: solid 1px #225566 !important;
+	border-bottom-color: #f0f9ff !important;
 }
 
 .tabactive a {
-	background: #eee;
+	background: #f0f9ff;
 }
 
 .tabinactive {
@@ -791,26 +797,17 @@ tr.diffheader {
 	color: #000;
 }
 
-.tabmark a:active {
-	background: #fff;
-	color: red;
-}
-
 .tabmark a:hover {
 	color: black;
 	background: #f0f9ff;
+	text-decoration: none;
 }
 
 .tabcontent {
-	border: 1px solid #abcdef;
 	padding: 6px 2px 2px 2px;
-	margin-bottom: 25px;
+	margin: 1px 0 25px 0 !important;
 	background: #f0f9ff;
-}
-
-form fieldset.tabcontent {
 	border: 1px solid #225566;
-	border-top: none !important;
 }
 
 table.admin div#content1 div.tabcontent div.cbox {
