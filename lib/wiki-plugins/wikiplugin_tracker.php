@@ -95,7 +95,7 @@ function wikiplugin_tracker_info() {
 				'required' => false,
 				'name' => tra('itemId'),
 				'description' => tra('itemId if you want to edit an item'),
-				'filter' => 'digit'
+				'filter' => 'digits'
 			),
 			'tpl' => array(
 				'required' => false,
@@ -326,6 +326,8 @@ function wikiplugin_tracker($data, $params) {
 						} else {
 							$_REQUEST['track'][$fl['fieldId']] = $tikilib->now;
 						}
+					} elseif ($flds['data'][$cpt]['type'] == 'e') {
+						$ins_fields["data"][] = array_merge(array('value' => ''), $flds['data'][$cpt]);
 					}
 					if (isset($_REQUEST['ins_cat_'.$fl['fieldId']])) { // to remember if error
 						$_REQUEST['track'][$fl['fieldId']] = $_REQUEST['ins_cat_'.$fl['fieldId']];

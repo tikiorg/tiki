@@ -1839,6 +1839,8 @@ class TrackerLib extends TikiLib {
 				    }
 				} elseif (isset($f['type']) &&  ($f['type'] == 'u' || $f['type'] == 'g') && $f['options_array'][0] == 1) {
 					;
+				} elseif ($f['type'] == 'c' && (empty($f['value']) || $f['value'] == 'n')) {
+					$mandatory_fields[] = $f;
 				} elseif (!isset($f['value']) or strlen($f['value']) == 0) {
 					$mandatory_fields[] = $f;
 				}
