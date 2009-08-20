@@ -59,6 +59,11 @@ function wikiplugin_tracker_info() {
 				'description' => 'y|n',
 				'filter' => 'alpha'
 			),
+			'email' => array(
+				'requires' => false,
+				'name' => tra('Email'),
+				'description' => tra('from').'|'.tra('to').'|'.tra('template'),
+			),
 			'url' => array(
 				'required' => false,
 				'name' => tra('URL'),
