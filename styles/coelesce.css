@@ -631,7 +631,7 @@ a.phplmselected:hover {
 }
 
 .cssmenu_vert li a {
-	padding: 3px 6px;
+	padding: 4px 6px;
 	font-size: 1em;
 	color: #295C83;
 	font-weight: bold;
@@ -862,7 +862,7 @@ a.forumnameread {
 
 /** Tabs **/
 .tabs {
-	margin: 10px 0 -18px 0 !important;
+margin: 10px 2px -18px 2px; /* override layout */
 	background: #5a7ea2;
 	border-bottom: solid 1px #4a6a90 !important;
 	padding: 0 5px !important;
@@ -873,6 +873,7 @@ a.forumnameread {
 	font-size: 85%;
 	background: #5a7ea2;
 	margin-top: 8px;
+	padding: 0; /* override layout */
 	display: inline-block;
 	border: 0;
 }
@@ -897,6 +898,12 @@ a.forumnameread {
 
 .tabactive {
 	border: 0 !important;
+	top: 0 !important; /* override layout */
+}
+
+/* override layout */
+.tabactive[class] {
+	top: 0;
 }
 
 .tabactive a {
@@ -906,6 +913,7 @@ a.forumnameread {
 
 .tabinactive {
 	border: 0 transparent !important;
+	top: 0; /* override layout */
 }
 
 .tabinactive a {
