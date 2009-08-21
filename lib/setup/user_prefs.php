@@ -63,7 +63,7 @@ $smarty->assign('IP', $tikilib->get_ip_address());
 if ($prefs['users_prefs_display_timezone'] == 'Site' || (isset($user_preferences[$user]['display_timezone']) && $user_preferences[$user]['display_timezone'] == 'Site')) {
 	// Everybody stays in the time zone of the server
 	$prefs['display_timezone'] = $prefs['server_timezone'];
-} elseif ( ! isset($user_preferences[$user]['display_timezone']) || $user_preferences[$user]['display_timezone'] == '' ) {
+} elseif ( ! isset($user_preferences[$user]['display_timezone']) || $user_preferences[$user]['display_timezone'] == '' || $user_preferences[$user]['display_timezone'] == 'Local' ) {
 	// If the display timezone is not known ...
 	if ( isset($_COOKIE['local_tz']) && eregi('[A-Z]', $_COOKIE['local_tz']) ) {
 		//   ... we try to use the timezone detected by javascript and stored in cookies
