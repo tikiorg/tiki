@@ -7,7 +7,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 global $smarty, $prefs;
 if ($prefs['feature_minichat'] != 'y') {
-	$smarty->assign('module_error', tra("This feature is disabled").": feature_minichat");
+	$module_params['error'] = tra('This feature is disabled').': feature_minichat';
 } else {
 	if (isset($module_params["channels"])) {
 		$channels=explode(',', $module_params["channels"]);
