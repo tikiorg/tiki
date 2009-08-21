@@ -13,9 +13,9 @@
  * The following section is typically for features that act like Tikiwiki
  * sections and add a configuration icon to the sections list
  *}
+{* ---------- Main features ------------ *}
 {tab name="{tr}Main Features{/tr}"}
 			<div class="admin clearfix featurelist">
-{* ---------- Main features ------------ *}
 				{preference name=feature_wiki}
 				{preference name=feature_blogs}
 				{preference name=feature_galleries}
@@ -69,14 +69,9 @@
 {* ---------- User interface enhancement features ------------ *}
 {tab name="{tr}User interface enhancement features{/tr}"}
 			<div class="admin featurelist">
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_jscalendar" {if $prefs.feature_jscalendar eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Js+Calendar" target="tikihelp" class="tikihelp" title="{tr}JsCalendar{/tr}">{/if} {tr}JavaScript popup date selector{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div>
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_phplayers" {if $prefs.feature_phplayers eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="http://themes.tikiwiki.org/PhpLayersMenu" target="tikihelp" class="tikihelp" title="{tr}PHPLayers{/tr}">{/if} {tr}PhpLayers Dynamic menus{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div> 
+				{preference name=feature_jscalendar}
+				{preference name=feature_phplayers}
+
 				<div class="half_width">
 					<span class="checkbox"><input type="checkbox" name="feature_fullscreen" {if $prefs.feature_fullscreen eq 'y'}checked="checked"{/if}/></span>
 					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Fullscreen" target="tikihelp" class="tikihelp" title="{tr}Fullscreen{/tr}">{/if} {tr}Allow users to activate fullscreen mode{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>

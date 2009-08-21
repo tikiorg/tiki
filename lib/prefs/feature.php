@@ -242,6 +242,19 @@ function prefs_feature_list() {
 			'description' => tra('Allow users to change the duration of the cache on a per-page basis.'),
 			'type' => 'flag',
 		),
+		'feature_jscalendar' => array(
+			'name' => tra('JS Calendar'),
+			'description' => tra('JavaScript popup date selector.'),
+			'help' => 'JS+Calendar',
+			'type' => 'flag',
+		),
+		'feature_phplayers' => array(
+			'name' => tra('PHPLayers'),
+			'description' => tra('PhpLayers Dynamic menus.'),
+			'help' => 'http://themes.tikiwiki.org/PhpLayersMenu',
+			'type' => 'flag',
+		),
+
 	);
 }
 
