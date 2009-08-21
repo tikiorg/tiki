@@ -28,5 +28,5 @@ if ($prefs['feature_minichat'] != 'y') {
 	}
 
 	$smarty->assign('jscode', $jscode);
-	$smarty->assign('module_rows', $module_rows*10);
+	$smarty->assign('module_rows', $module_rows);
 }
