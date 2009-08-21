@@ -222,6 +222,8 @@
 	{if $field_value.value}
 		{if $field_value.options_array[0] eq 'd'}
 			{$field_value.value|tiki_short_date}
+		{elseif $field_value.options_array[0] eq 't'}
+			{$field_value.value|tiki_short_time}
 		{else}
 			{$field_value.value|tiki_short_datetime}
 		{/if}
