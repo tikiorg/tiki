@@ -12,7 +12,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  * Type:     modifier
  * Name:     kaltura_media_type
  * Purpose:  Maps media type id to media type name
- * Input:    string: input date string
+ * Input:    string: input media id
  *           
  * -------------------------------------------------------------
  */
