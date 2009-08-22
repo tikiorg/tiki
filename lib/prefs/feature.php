@@ -254,7 +254,30 @@ function prefs_feature_list() {
 			'help' => 'http://themes.tikiwiki.org/PhpLayersMenu',
 			'type' => 'flag',
 		),
-
+		'feature_fullscreen' => array(
+			'name' => tra('Full Screen'),
+			'description' => tra('Allow users to activate fullscreen mode.'),
+			'help' => 'Fullscreen',
+			'type' => 'flag',
+		),
+		'feature_cssmenus' => array(
+			'name' => tra('Css Menus'),
+			'description' => tra('Css Menus (suckerfish).'),
+			'help' => 'Menus',
+			'type' => 'flag',
+		),
+		'feature_shadowbox' => array(
+			'name' => tra('Shadowbox'),
+			'description' => tra('Shadowbox'),
+			'help' => 'Shadowbox',
+			'type' => 'flag',
+		),
+		'feature_quick_object_perms' => array(
+			'name' => tra('QuickPerms'),
+			'description' => tra('Quickperms'),
+			'help' => 'Quickperms',
+			'type' => 'flag',
+		),
 	);
 }
 

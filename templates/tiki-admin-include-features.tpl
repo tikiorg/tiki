@@ -71,24 +71,10 @@
 			<div class="admin featurelist">
 				{preference name=feature_jscalendar}
 				{preference name=feature_phplayers}
-
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_fullscreen" {if $prefs.feature_fullscreen eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Fullscreen" target="tikihelp" class="tikihelp" title="{tr}Fullscreen{/tr}">{/if} {tr}Allow users to activate fullscreen mode{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div>
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_cssmenus" {if $prefs.feature_cssmenus eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> <a href="{$prefs.helpurl}Menus" target="tikihelp" class="tikihelp" title="{tr}Menus{/tr}"> {tr}Css Menus (suckerfish){/tr}</a></span>
-				</div>
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_shadowbox"{if $prefs.feature_shadowbox eq 'y'} checked="checked"{/if}/></span>
-					<span class="label"><a href="{$prefs.helpurl}Shadowbox" target="tikihelp" class="tikihelp" title="{tr}Shadowbox{/tr}"> {tr}Shadowbox{/tr}</a></span>
-				</div>
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_quick_object_perms" {if $prefs.feature_quick_object_perms eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> <a href="{$prefs.helpurl}Quickperms" target="tikihelp" class="tikihelp" title="{tr}Quickperms{/tr}"> {tr}Quickperms{/tr}</a></span>
-				</div>
-			</div>
+				{preference name=feature_fullscreen}
+				{preference name=feature_cssmenus}
+				{preference name=feature_shadowbox}
+				{preference name=feature_quick_object_perms}
 {/tab}
 			
 {* ---------- Experimental features ------------ *}
