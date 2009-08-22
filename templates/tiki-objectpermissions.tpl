@@ -51,8 +51,14 @@
 		</div>
 		
 		<h3>{tr}Permissions{/tr}</h3>
-		{treetable _data=$perms _checkbox=$permGroups _checkboxTitles=$groupNames _checkboxColumnIndex=$permGroupCols _columns='"label"="Permission"' _sortColumn='type'}
 		
+		{popup_link block="column_switches_div"}{tr}Show/hide columns{/tr}{/popup_link}
+		<div id="column_switches_div" style="display: none">
+			<h3>{tr}Show/hide columns{/tr}</h3>
+			<ul id="column_switches" class="column_switcher"></ul>
+		</div>
+		{treetable _data=$perms _checkbox=$permGroups _checkboxTitles=$groupNames _checkboxColumnIndex=$permGroupCols _columns='"label"="Permission"' _sortColumn='type'}
+
 		<div class="input_submit_container" style="text-align: center">
 			<input type="submit" name="assign" value="{tr}Assign{/tr}" />
 		</div>
@@ -117,7 +123,8 @@
 		<div class="input_submit_container" style="text-align: center">
 			<input type="submit" name="assign" value="{tr}Assign{/tr}" />
 		</div>
-		{/tab}
+		
+	{/tab}
 </form>
 	{/if}
 

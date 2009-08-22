@@ -46,6 +46,10 @@ if (!($tiki_p_admin_objects == 'y' || (isset($$perm) && $$perm == 'y') || (isset
 	$smarty->display("error.tpl");
 	die;
 }
+//if ($prefs['feature_jquery_ui'] != 'y') {
+//	$headerlib->add_jsfile('lib/jquery/jquery-ui/ui/minified/jquery-ui.min.js');
+//}
+
 if (!isset($_REQUEST["referer"])) {
 	if (isset($_SERVER['HTTP_REFERER'])) {
 		$_REQUEST["referer"] = $_SERVER['HTTP_REFERER'];
@@ -426,12 +430,21 @@ for( $i = 0; $i < count($groupNames); $i++) {
 }
 	});
 });
+
 JS;
+}	// end of for $groupNames loop
 
+$maxGroupsToShow = 6;	// maybe a pref one day?
+if (count($groupNames) > $maxGroupsToShow) {
+	$hideGroups = implode(',',array_keys(array_fill($maxGroupsToShow, count($groupNames)-$maxGroupsToShow+1, 1)));
+} else {
+	$hideGroups = '';
 }
+$js .= "\$jq('#treetable_1').columnManager(".
+	"{ listTargetID:'column_switches', onClass: 'advon', offClass: 'advoff', saveState: true, ".
+	"hideInList: [".(count($groupNames) + 1)."], colsHidden: [".$hideGroups."]});\n";
+
 $headerlib->add_jq_onready($js);
-
-
 
 ask_ticket('object-perms');
 // Display the template
