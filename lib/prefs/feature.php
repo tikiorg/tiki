@@ -254,6 +254,13 @@ function prefs_feature_list() {
 			'help' => 'http://themes.tikiwiki.org/PhpLayersMenu',
 			'type' => 'flag',
 		),
+		'feature_htmlpurifier_output' => array(
+			'name' => tra('Tiki Ouput Should be HTMLPurified'),
+			'description' => tra('This enable HTPMPurifier on Tiki outputs to filter remaining security problems like XSS.'),
+			'help' => 'http://themes.tikiwiki.org/HTMLPurifier',
+			'type' => 'flag',
+			'default' => 'n',
+		),
 		'feature_fullscreen' => array(
 			'name' => tra('Full Screen'),
 			'description' => tra('Allow users to activate fullscreen mode.'),
@@ -280,5 +287,3 @@ function prefs_feature_list() {
 		),
 	);
 }
-
-?>
