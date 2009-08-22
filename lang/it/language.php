@@ -1070,6 +1070,7 @@ $lang=Array(
 "unread private messages" => "messaggi privati non letti",
 "you or someone registered this email address at" => "you or someone registered this email address at",
 "Your Tiki information registration" => "Your Tiki information registration",
+"Your registration" => "Your Tiki information registration",
 "home" => "home",
 "chat" => "chat",
 "sandbox" => "sandbox",

@@ -1550,6 +1550,7 @@ $lang=Array(
 "This module requires parameters trackerId and name set" => "Este módulo requiere parámetros trackerId y nombre llenados",
 "you or someone registered this email address at" => "usted o alguien regitró esta dirección de correo en",
 "Your Tiki information registration" => "Su información de registro en Tiki",
+"Your registration" => "Su información de registro en Tiki",
 "left/right" => "izquierda/derecha",
 "Unassign module" => "Inhabilitar módulo",
 "home" => "inicio",

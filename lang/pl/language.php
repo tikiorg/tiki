@@ -913,6 +913,7 @@ $lang=Array(
 "Search by Date" => "Szukaj wg daty",
 "you or someone registered this email address at" => "you or someone registered this email address at",
 "Your Tiki information registration" => "Your Tiki information registration",
+"Your registration" => "Your Tiki information registration",
 "debugger console" => "debugger console",
 "Admin trackers" => "Admin trackers",
 "Send newsletters" => "Send newsletters",

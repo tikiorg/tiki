@@ -1442,6 +1442,7 @@ $lang=Array(
 "This module requires parameters trackerId and name set" => "Deze module vereist de parameters trackerId en name set",
 "you or someone registered this email address at" => "uzelf of iemand anders registreerde dit e-mail adres bij",
 "Your Tiki information registration" => "Uw Tiki informatie registratie",
+"Your registration" => "Uw Tiki informatie registratie",
 "left/right" => "links/rechts",
 "Unassign module" => "Maak toewijzing module ongedaan",
 "home" => "startpagina",

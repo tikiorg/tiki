@@ -1132,6 +1132,7 @@ $lang=Array(
 "dump" => "dump",
 "you or someone registered this email address at" => "du eller noen andre registrerte denne epostadressen på",
 "Your Tiki information registration" => "Din Tiki informasjonsregistrering",
+"Your registration" => "Din Tiki informasjonsregistrering",
 "left/right" => "venstre/høyre",
 "Unassign module" => "Ta vekk modul",
 "home" => "hjem",

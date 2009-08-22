@@ -1052,6 +1052,7 @@ $lang=Array(
 "UsrMenu" => "UsrMenu",
 "you or someone registered this email address at" => "Ви або хтось інший зареєстрував цю адресу в",
 "Your Tiki information registration" => "Інформація про Вашу реєстрацію на Тікі",
+"Your registration" => "Інформація про Вашу реєстрацію на Тікі",
 "left/right" => "ліворуч/праворуч",
 "Unassign module" => "Зняти призначення з модуля",
 "home" => "домашня",

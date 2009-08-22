@@ -2593,6 +2593,7 @@ $lang=Array(
 "Remaining:" => "Queda:",
 "you or someone registered this email address at" => "tu o alguna persona ha registrat aquesta adreça de correu-e a",
 "Your Tiki information registration" => "El teu registre d'informació de Tiki",
+"Your registration" => "El teu registre d'informació de Tiki",
 "left/right" => "esquerra/dreta",
 "Unassign module" => "Mòdul no assignat",
 "home" => "inici",

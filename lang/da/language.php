@@ -1076,6 +1076,7 @@ $lang=Array(
 "UsrMenu" => "UsrMenu",
 "you or someone registered this email address at" => "du eller en anden registrerede denne email addresse på",
 "Your Tiki information registration" => "Din Tiki informations registrering",
+"Your registration" => "Din Tiki informations registrering",
 "home" => "startside",
 "contact us" => "kontakt os",
 "debugger console" => "debugger konsol",

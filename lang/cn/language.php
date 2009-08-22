@@ -1840,6 +1840,7 @@ $lang=Array(
 "unread private messages" => "未读私人消息",
 "you or someone registered this email address at" => "你或是某位注册此电子邮件地址的人",
 "Your Tiki information registration" => "您登记的Tiki信息",
+"Your registration" => "您登记的Tiki信息",
 "left/right" => "左/右",
 "home" => "主页",
 "chat" => "聊天",

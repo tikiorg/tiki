@@ -1852,6 +1852,7 @@ $lang=Array(
 "This module requires parameters trackerId and name set" => "Tämä moduuli tarvitsee kortistoId:n ja nimen",
 "you or someone registered this email address at" => "sinä tai joku muu on rekisteröitynyt tällä sähköpostiosoitteella",
 "Your Tiki information registration" => "Sinun tietosi rekisteröintiin",
+"Your registration" => "Sinun tietosi rekisteröintiin",
 "left/right" => "vasen/oikea",
 "Unassign module" => "poista moduuli",
 "home" => "koti",

@@ -1012,6 +1012,7 @@ $lang=Array(
 "unread private messages" => "непрочтённые личные сообщения",
 "you or someone registered this email address at" => "Вы или кто-то другой зарегистрировал этот адрес на",
 "Your Tiki information registration" => "Ваша регистрационная информация Tiki",
+"Your registration" => "Ваша регистрационная информация Tiki",
 "home" => "в начало",
 "chat" => "чат",
 "contact us" => "свяжитесь с нами",

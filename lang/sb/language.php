@@ -1154,6 +1154,7 @@ $lang=Array(
 "Pass" => "Pass",
 "you or someone registered this email address at" => "iu o samfala hemi registerem disfala email adres long",
 "Your Tiki information registration" => "Tiki information registration blong iu",
+"Your registration" => "Tiki information registration blong iu",
 "home" => "hom",
 "chat" => "stori",
 "contact us" => "kontaktem kam mifala",

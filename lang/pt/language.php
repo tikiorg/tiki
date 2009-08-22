@@ -1455,6 +1455,7 @@ $lang=Array(
 "(unchanged)" => "(inalterado)",
 "you or someone registered this email address at" => "alguém (possivelmente você) registrou este endereço de email em",
 "Your Tiki information registration" => "Instruções para registo no Tiki",
+"Your registration" => "Instruções para registo no Tiki",
 "left/right" => "esquerdo/direito",
 "Unassign module" => "Módulo não associado",
 "home" => "Página Inicial",

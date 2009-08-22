@@ -1259,6 +1259,7 @@ $lang=Array(
 "Ephemerides" => "Ephemerides",
 "you or someone registered this email address at" => "du eller någon registrerade denna e-mejladress på",
 "Your Tiki information registration" => "Din registreringsinformation",
+"Your registration" => "Din registreringsinformation",
 "left/right" => "vänster/höger",
 "Unassign module" => "Otilldela modul",
 "home" => "start",

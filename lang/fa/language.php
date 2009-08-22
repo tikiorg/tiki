@@ -1589,6 +1589,7 @@ $lang=Array(
 "This module requires parameters trackerId and name set" => "اين ماژول نياز به تنظيم پارامترهاي trackerid و name دارد",
 "you or someone registered this email address at" => "شما يا شخص ديگري اين آدرس پست الكترونيكي را در اين‌جا ثبت كرده است:",
 "Your Tiki information registration" => "اطلاعات ثبت‌نام تيكي شما",
+"Your registration" => "اطلاعات ثبت‌نام تيكي شما",
 "left/right" => "چپ/راست",
 "Unassign module" => "ماژول تخصيص داده نشده",
 "home" => "مبدا",

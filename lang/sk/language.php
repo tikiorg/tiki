@@ -927,6 +927,7 @@ $lang=Array(
 "theme" => "vzhľad",
 "unread private messages" => "neprečítaných súkromných správ",
 "Your Tiki information registration" => "Your Tiki information registration",
+"Your registration" => "Your Tiki information registration",
 "you or someone registered this email address at" => "vy alebo niekto iny zaregistroval tuto email adresu na",
 "home" => "úvod",
 "chat" => "pokec",

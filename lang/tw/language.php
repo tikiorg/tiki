@@ -1103,6 +1103,7 @@ $lang=Array(
 "UsrMenu" => "UsrMenu",
 "you or someone registered this email address at" => "你或是某位註冊此 email 地址的人",
 "Your Tiki information registration" => "你的 Tiki 資訊登記",
+"Your registration" => "你的 Tiki 資訊登記",
 "home" => "首頁",
 "chat" => "閒談",
 "contact us" => "連絡我們",

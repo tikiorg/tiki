@@ -999,6 +999,7 @@ $lang=Array(
 "chat" => "chat",
 "you or someone registered this email address at" => "vi ili neko drugi je registrirao ovu e-mail adresu na",
 "Your Tiki information registration" => "Registracija vaših Tiki informacija",
+"Your registration" => "Registracija vaših Tiki informacija",
 "home" => "glavna stranica",
 "contact us" => "kontaktirajte nas",
 "debugger console" => "debugger konzola",

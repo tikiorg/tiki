@@ -985,6 +985,7 @@ $lang=Array(
 "read more" => "read more",
 "you or someone registered this email address at" => "。この宛先メール・アドレスで次のサイトにユーザー登録されました：",
 "Your Tiki information registration" => "Tikiwiki Jouhou Touroku",
+"Your registration" => "Tikiwiki Jouhou Touroku",
 "Unassign module" => "モジュールの割当解除",
 "home" => "ホーム",
 "chat" => "チャット",

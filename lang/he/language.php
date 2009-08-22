@@ -687,6 +687,7 @@ $lang=Array(
 "Search by Date" => "חיפוש לפי תאריך",
 "you or someone registered this email address at" => "@you or someone registered this email address at@",
 "Your Tiki information registration" => "נתוני הרישום שלך בתיקי",
+"Your registration" => "נתוני הרישום שלך בתיקי",
 "home" => "עמוד הבית",
 "chat" => "צ'אט",
 "dump" => "הורדת תכולה - Dump",

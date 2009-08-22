@@ -1103,6 +1103,7 @@ $lang=Array(
 "chat" => "chat",
 "you or someone registered this email address at" => "vi ili neko drugi je registrovao ovu email adresu na",
 "Your Tiki information registration" => "Registracija vaših Tiki informacija",
+"Your registration" => "Registracija vaših Tiki informacija",
 "left/right" => "levo/desno ",
 "Unassign module" => "Nedodeljen modul",
 "home" => "glavna strana",

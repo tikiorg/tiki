@@ -1163,6 +1163,7 @@ $lang=Array(
 "unread private messages" => "ungelesene pers&ouml;nliche Nachrichten",
 "you or someone registered this email address at" => "Sie oder jemand anderes hat Ihre eMail-Adresse bei",
 "Your Tiki information registration" => "Ihre Tiki Registrierungsinformationen",
+"Your registration" => "Ihre Tiki Registrierungsinformationen",
 "left/right" => "links/rechts",
 "Unassign module" => "Modul wegnehmen",
 "home" => "Hauptseite",
