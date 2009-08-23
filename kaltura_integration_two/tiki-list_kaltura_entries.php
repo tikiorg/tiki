@@ -22,6 +22,7 @@ include_once ("lib/videogals/videogallib.php");
 
 global $user;
 
+// Initialize kaltura session
 $kaltura_conf = kaltura_init_config();
 $kuser = new KalturaSessionUser();
 $kuser->userId = $user;
@@ -35,6 +36,7 @@ if(!isset($kres["result"]["ks"])) {
 	die;
 }
 
+// Create kaltura filter for search
 $filter = new KalturaEntryFilter();
 $sort_mode = '';
 if($_REQUEST['sort_mode']){
@@ -68,19 +70,41 @@ if($_REQUEST['offset']){
 	$offset = 0;
 	$page = 1;
 }
-		
+
+// Get user's kaltura entries		
 $res = $kaltura_client->listMyEntries($kuser,$filter,true,$page_size,$page,null);
 
 if(!isset($res['result']['entries'])){
-	$smarty->assign('msg', tra("Could not get required results. Try again"));
+	$smarty->assign('msg', tra("No results found"));
 	$smarty->display('error.tpl');
 	die;
 }
 
 $entries['cant'] = $res['result']['count'];
-
-//echo $entries['cant'];
 $entries['data'] = $res['result']['entries'];
+
+//Prepare kaltura entries data..
+for($i =0 ; $i < count($res['result']['entries']);$i++) {
+	$entries['data'][$i]['mediaTypeAsString'] = $mediaType[(int)$res['result']['entries'][$i]['mediaType']];
+
+	$entries['data'][$i]['created'] = date('d M Y h:i A',strtotime($res['result']['entries'][$i]['createdAt']));
+	$entries['data'][$i]['modified'] = date('d M Y h:i A',strtotime($res['result']['entries'][$i]['modifiedAt']));
+
+	$modifiedBy = $entries['data'][$i]['puserId'];
+	if($entries['data'][$i]['mediaType'] == '6'){	
+		$domdoc = new DOMDocument;
+ 		$domdoc->loadXML($entries['data'][$i]['dataContent']); 
+ 		$xpath = new DOMXpath($domdoc);
+ 		$elements = $xpath->query("/xml/MetaData/PuserId");
+ 		foreach ($elements as $element) {
+    			$nodes = $element->childNodes;
+    			foreach ($nodes as $node) {
+      				$modifiedBy = $node->nodeValue;
+    			}
+		}
+	}
+	$entries['data'][$i]['modifiedBy'] = $modifiedBy;
+}
 
 $smarty->assign_by_ref('entries',$entries['data']);
 $smarty->assign_by_ref('cant',$entries['cant']);

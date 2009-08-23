@@ -14,7 +14,7 @@
 <br/>
 
 <fieldset class="admin">
-<legend>{tr}Kaltura Dynacmic Player{/tr}</legend>
+<legend>{tr}Kaltura Dynamic Player{/tr}</legend>
 <div class="adminoptionlabel">
 <label for="kdpUIConf">{tr}KDP UI Configuration Id{/tr}: </label><input type="text" name="kdpUIConf" id="kdpUIConf" value="{$kdpUIConf|escape}" /></div>
 <div class="adminoptionlabel">

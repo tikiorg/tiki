@@ -35,11 +35,11 @@
 		<tr>
 			<th>&nbsp;</th>
 			<th>&nbsp;</th>
-			<th width="200"><a href="tiki-list_kaltura_entries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq '-name'}asc_name{else}desc_name{/if}">{tr}Name{/tr}</a></th>
+			<th width="150"><a href="tiki-list_kaltura_entries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq '-name'}asc_name{else}desc_name{/if}">{tr}Name{/tr}</a></th>
 			<th width="100"><a href="tiki-list_kaltura_entries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq '-media_type'}asc_media_type{else}desc_media_type{/if}">{tr}Media Type{/tr}</a></th>
-			<th width="150"><a href="tiki-list_kaltura_entries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq '-created_at'}asc_created_at{else}desc_created_at{/if}">{tr}Created{/tr}</a></th>
+			<th width="100"><a href="tiki-list_kaltura_entries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq '-created_at'}asc_created_at{else}desc_created_at{/if}">{tr}Created{/tr}</a></th>
 			<th><a>{tr}Tags{/tr}</a></th>
-			<th width="150"><a href="tiki-list_kaltura_entries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq '-modified_at'}asc_modified{else}desc_modified_at{/if}">{tr}Modified{/tr}</a></th>
+			<th width="100"><a href="tiki-list_kaltura_entries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq '-modified_at'}asc_modified{else}desc_modified_at{/if}">{tr}Modified{/tr}</a></th>
 			<th><a>{tr}Version{/tr}</a></th>
 			<th><a href='#'{popup trigger="onClick" sticky=1 mouseoff=1 fullhtml="1" text=$smarty.capture.other_sorts|escape:"javascript"|escape:"html"} title='{tr}Other Sorts{/tr}'>{icon _id='timeline_marker' alt='{tr}Other Sorts{/tr}' title=''}</a></th>
 		</tr>
@@ -81,15 +81,11 @@
 			<td><a href="#" {popup trigger="onclick" sticky=1 fullhtml="1" text=$smarty.capture.actions|escape:"javascript"|escape:"html"}>
 			<img class="athumb" src={$item.thumbnailUrl} alt="{$item.description}"  height="80" width="120"/></a></td>
 			<td><a href={$item.downloadUrl}>{$item.name}</a></td>
-			<td>{$item.mediaType|kaltura_media_type}</td>
-			<td>{$item.createdAt|kaltura_date_format}<br/><br/>Created By: {$item.puserId}</td>
-			<td>{$item.tags}</td>
-			<td>{$item.modifiedAt|kaltura_date_format}<br/><br/>
-			{if $item.mediaType eq '1' or $item.mediaType eq '2' or $item.mediaType eq '5'}
-			Modified By: {$item.puserId}</td>
-			{else}
-			Modified By: {$item.dataContent|kaltura_remix_user}</td>
-			{/if}
+			<td>{$item.mediaTypeAsString}</td>
+			<td>{$item.created}<br/><br/>Created By: {$item.puserId}</td>
+			<td height="100">{$item.tags}</td>
+			<td>{$item.modified}<br/><br/>			
+			Modified By: {$item.modifiedBy}</td>
 			<td>{$item.version}</td>
 
 	{capture name=add_info}{strip}
