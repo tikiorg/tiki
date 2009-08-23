@@ -4489,6 +4489,7 @@ $lang=Array(
 // "eg. from \"misc/screenshots/digicam0001.jpg\" a description \"screenshots\" will be created" => "eg. from \"misc/screenshots/digicam0001.jpg\" a description \"screenshots\" will be created",
 // "Please do not use this feature to upload data into the database" => "Please do not use this feature to upload data into the database",
 // "available files" => "available files",
+// "Available Files" => "available files",
 // "Select a File Gallery" => "Select a File Gallery",
 // "Process files" => "Process files",
 // "Use Wysiwyg Editor" => "Use Wysiwyg Editor",

@@ -9492,6 +9492,7 @@ $lang=Array(
 "Browse File Gallery" => "Dateiarchiv durchsehen",
 "Please do not use this feature to upload data into the database." => "Mit dieser Funktion bitte keine Daten in die Datenbank laden.",
 "available files" => "verf&uuml;gbare Dateien",
+"Available Files" => "verf&uuml;gbare Dateien",
 "Select a File Gallery" => "Dateiarchiv ausw&auml;hlen",
 "Process files" => "Dateien verarbeiten",
 "Edit Post" => "Eintrag bearbeiten",

@@ -5435,6 +5435,7 @@ $lang=Array(
 // "Browse File Gallery" => "Browse File Gallery",
 // "Please do not use this feature to upload data into the database" => "Please do not use this feature to upload data into the database",
 // "available files" => "available files",
+// "Available Files" => "available files",
 // "Select a File Gallery" => "Select a File Gallery",
 // "Process files" => "Process files",
 // "Edit Post" => "Edit Post",

@@ -8310,6 +8310,7 @@ $lang=Array(
 "Process" => "Processo",
 "Browse File Gallery" => "Navegar na galeria de arquivos",
 "available files" => "arquivos disponíveis",
+"Available Files" => "arquivos disponíveis",
 "Select a File Gallery" => "Selecionar uma galeria de arquivos",
 "Edit Post" => "Editar Mensagem",
 "View Blog" => "Ver o blog",

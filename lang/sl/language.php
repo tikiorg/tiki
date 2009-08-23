@@ -4446,6 +4446,7 @@ $lang=Array(
 "Browse file gallery" => "Prebrskaj galerijo datotek",
 // "Please do not use this feature to upload data into the database." => "Please do not use this feature to upload data into the database.",
 // "available files" => "available files",
+// "Available Files" => "available files",
 "Select a File Gallery" => "Izberi galerijo datotek",
 // "Process files" => "Process files",
 "If you want to use images please save the post first and you will be able to edit/post images. Use the &lt;img&gt; snippet to include uploaded images in the textarea editor or use the image URL to include images using the WYSIWYG editor. " => "Če želiš uporabiti slike, prosim shrani prvo zapis in lahko boš urejal/pošiljal slike. Uporabi &lt;img&gt; delček (=majhen del kode HTML ali XML) (snippet) da bi vključil slike v besedilno področje z uporabo WYSIWYG urejevalnika.",

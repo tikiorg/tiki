@@ -6838,6 +6838,7 @@ $lang=Array(
 "Browse File Gallery" => "Parcourir la galerie de fichiers",
 "Please do not use this feature to upload data into the database." => "SVP, n'utilisez pas cette fonctionnalité pour envoyer des données dans la base de données.",
 "available files" => "fichiers disponibles",
+"Available Files" => "Fichiers disponibles",
 "Select a File Gallery" => "Sélectionner une galerie de fichiers",
 "Process files" => "Traiter les fichiers",
 "Edit Post" => "Modifier une publication",
