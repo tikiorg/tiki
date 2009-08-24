@@ -1,57 +1,55 @@
 {* $Id$ *}
-{popup_init src="lib/overlib.js"}
+
 {if $prefs.feature_ajax == 'y'}
   <script type="text/javascript" src="lib/wiki/wiki-ajax.js"></script>
 {/if}
 
 {* Display edit time out *}
 
-
-
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--
 {literal}
-function Minutes(data) {
-	for (var i = 0; i < data.length; i++)
-	if (data.substring(i, i + 1) == ":")
-	break;
-	return (data.substring(0, i));
+
+// edit timeout warnings
+function editTimerTick() {
+	editTimeElapsedSoFar++;
+	
+	var seconds = editTimeoutSeconds - editTimeElapsedSoFar;
+	
+	if (editTimerWarnings == 0 && seconds <= 60) {
+		alert("{/literal}{tr}Your edit session will expire in{/tr} 1 {tr}minute{/tr}.{tr}You must PREVIEW or SAVE your work now, to avoid losing your edits.{/tr}{literal}");
+		editTimerWarnings++;
+	} else if (editTimerWarnings == 1 && seconds <= 30) {
+		alert("{/literal}{tr}Your edit session will expire in{/tr} 30 {tr}seconds{/tr}.{tr}You must PREVIEW or SAVE your work now, to avoid losing your edits.{/tr}{literal}");
+		editTimerWarnings++;
+	} else if (editTimerWarnings == 2 && seconds <= 10) {
+		alert("{/literal}{tr}Your edit session will expire in{/tr} 10 {tr}seconds{/tr}.{tr}You must PREVIEW or SAVE your work now, to avoid losing your edits.{/tr}{literal}");
+	} else if (seconds <= 0) {
+		clearInterval(editTimeoutIntervalId);
+	}
+	
+	window.status = "{/literal}{tr}Your edit session will expire in{/tr}{literal}: " + Math.floor(seconds / 60) + ":" + ((seconds % 60 < 10) ? "0" : "") + (seconds % 60);
+	if (seconds % 60 == 0) {
+		$jq('#edittimeout').text(Math.floor(seconds / 60));
+	}
 }
 
-function Seconds(data) {
-	for (var i = 0; i < data.length; i++)
-	if (data.substring(i, i + 1) == ":")
-	break;
-	return (data.substring(i + 1, data.length));
-}
-function Display(min, sec) {
-	var disp;
-	if (min <= 9) disp = " 0";
-	else disp = " ";
-	disp += min + ":";
-	if (sec <= 9) disp += "0" + sec;
-	else disp += sec; 
-	return (disp);
-}
-function Down() { 
-	sec--;
-	if (sec == -1) { sec = 59; min--; }
-	document.editpageform.clock.value = Display(min, sec);
-	window.status = "{/literal}{tr}Your edit session will expire in{/tr}{literal}: " + Display(min, sec);
-	if (min == 1 && sec == 0) {
-		alert("{/literal}{tr}Your edit session will expire in 1 minute. You must PREVIEW or SAVE your work now, to avoid losing your edits.{/tr}{literal}");
-		// window.location.href = timedouturl;
-	}
-	else {
-		down = setTimeout("Down()", 1000);
+function confirmExit() {
+	if (needToConfirm) {
+		{/literal}return "{tr interactive='n'}You are about to leave this page. If you have made any changes without Saving, your changes will be lost.  Are you sure you want to exit this page?{/tr}";{literal}
 	}
 }
-function timeIt() {
-	min = 1 * Minutes(document.editpageform.clock.value);
-	sec = 0 + Seconds(document.editpageform.clock.value);
-	Down();
-}
-window.onload = timeIt;
+
+window.onbeforeunload = confirmExit;
+window.onload = function() { editTimeoutIntervalId = setInterval(editTimerTick, 1000) };
+
+var needToConfirm = true;
+var editTimeoutSeconds = {/literal}{$edittimeout}{literal};
+var editTimeElapsedSoFar = 0;
+var editTimeoutIntervalId;
+var editTimerWarnings = 0;
+// end edit timeout warnings
+
 {/literal}
 //--><!]]>
 </script>
@@ -153,7 +151,6 @@ window.onload = timeIt;
 		<input type="submit" class="wikiaction" onmouseover="return overlib('{tr}Change the style used to display differences to be translated.{/tr}');" onmouseout="nd();" name="preview" value="{tr}Change diff styles{/tr}" onclick="needToConfirm=false;" />
 	{/if}
 	
-	<input type="hidden" name="clock" value="{$edittimeout}" />
 	{if $page_ref_id}<input type="hidden" name="page_ref_id" value="{$page_ref_id}" />{/if}
 	{if isset($hdr)}<input type="hidden" name="hdr" value="{$hdr}" />{/if}
 	{if isset($cell)}<input type="hidden" name="cell" value="{$cell}" />{/if}
@@ -163,7 +160,7 @@ window.onload = timeIt;
 	
 	{if $page|lower neq 'sandbox'}
 		{remarksbox type='tip' title='{tr}Tip{/tr}'}
-		{tr}This edit session will expire in {$edittimeout} minutes{/tr}. {tr}<strong>Preview</strong> or <strong>Save</strong> your work to restart the edit session timer.{/tr}
+		{tr}This edit session will expire in{/tr} <span id="edittimeout">{math equation='x / y' x=$edittimeout y=60}</span> {tr}minutes{/tr}. {tr}<strong>Preview</strong> or <strong>Save</strong> your work to restart the edit session timer.{/tr}
 		{/remarksbox}
 	{/if}
 	
@@ -278,12 +275,12 @@ window.onload = timeIt;
 					<input type="hidden" name="cols" value="{$cols}"/>
 					<input type="hidden" name="wysiwyg" value="n" />
 				{else}
-					{capture name=autosave}{if $prefs.feature_ajax eq 'y' and $prefs.feature_ajax_autosave eq 'y' and $noautosave neq 'y'}{autosave test='n' id='edit' default=$pagedata preview=$preview}{else}{$pagedata}{/if}{/capture}
-					{if $prefs.feature_ajax eq 'y' and $prefs.feature_ajax_autosave eq 'y' and $noautosave neq 'y' and $has_autosave eq 'y'}
-						{remarksbox type="warning" title="{tr}AutoSave{/tr}"}
-							{tr}If you want the saved version instead of the autosaved one{/tr}&nbsp;{self_link noautosave='y' _ajax='n'}{tr}Click Here{/tr}{/self_link}
-						{/remarksbox}
-					{/if}
+							{capture name=autosave}{if $prefs.feature_ajax eq 'y' and $prefs.feature_ajax_autosave eq 'y' and $noautosave neq 'y'}{autosave test='n' id='edit' default=$pagedata preview=$preview}{else}{$pagedata}{/if}{/capture}
+							{if $prefs.feature_ajax eq 'y' and $prefs.feature_ajax_autosave eq 'y' and $noautosave neq 'y' and $has_autosave eq 'y'}
+								{remarksbox type="warning" title="{tr}AutoSave{/tr}"}
+									{tr}If you want the saved version instead of the autosaved one{/tr}&nbsp;{self_link noautosave='y' _ajax='n'}{tr}Click Here{/tr}{/self_link}
+								{/remarksbox}
+							{/if}
 						</td>
 					</tr>
 					<tr>
@@ -472,7 +469,7 @@ function searchrep() {
 		
 			{if $prefs.feature_wiki_attachments == 'y' and ($tiki_p_wiki_attach_files eq 'y' or $tiki_p_wiki_admin_attachments eq 'y')}
 				<tr class="formcolor">
-					<td<label for="page2">{tr}Upload file{/tr}:</label></td>
+					<td><label for="page2">{tr}Upload file{/tr}:</label></td>
 					<td>
 						<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
 						<input type="hidden" name="hasAlreadyInserted2" value="" />
