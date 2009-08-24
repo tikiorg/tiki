@@ -20,7 +20,7 @@
 {section name=user loop=$links}
 <tr>
 <td class="{cycle advance=false}">{$links[user].url}</td>
-<td class="{cycle advance=false}">{$links[user].title}</td>
+<td class="{cycle advance=false}">{$links[user].title|escape}</td>
 <td class="{cycle advance=false}">{$links[user].hits}</td>
 <td class="{cycle advance=false}">{$links[user].position}</td>
 <td class="{cycle advance=false}">{$links[user].type}</td>
