@@ -66,7 +66,7 @@
 		
 		<div id="column_switches_div" style="display: none">
 			<h3>{tr}Show/hide columns{/tr}</h3>
-			<ul id="column_switches" class="column_switcher"></ul>
+			<ul id="column_switches" class="column_switcher"><li></li></ul>
 		</div>
 		{treetable _data=$perms _checkbox=$permGroups _checkboxTitles=$groupNames _checkboxColumnIndex=$permGroupCols _columns='"label"="Permission"' _sortColumn='type'}
 
