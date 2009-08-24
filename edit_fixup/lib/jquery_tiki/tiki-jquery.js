@@ -104,6 +104,7 @@ $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 		$jq('.tips').cluetip({splitTitle: '|', showTitle: false, width: '150px', cluezIndex: 400, fx: {open: 'fadeIn', openSpeed: 'fast'}});
 		$jq('.titletips').cluetip({splitTitle: '|', cluezIndex: 400});
 		$jq('.tikihelp').cluetip({splitTitle: ':', width: '150px', cluezIndex: 400, fx: {open: 'fadeIn', openSpeed: 'fast'}});
+		$jq('.stickytips').cluetip({ showTitle: false, width: 'auto', cluezIndex: 400, sticky: false, local: true, hideLocal: true, activation: 'click', cluetipClass: 'fullhtml', fx: {open: 'fadeIn', openSpeed: 'fast'}});
 		
 		// override overlib - TODO optimise JQuery calls
 		convertOverlib = function (element, tip, options) {	// process overlib event fn to cluetip
@@ -133,6 +134,7 @@ $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 			options.dropShadow = true;
 			options.fx = {open: 'fadeIn', openSpeed: 'fast'};
 			options.closeText = 'x';
+			options.closePosition = 'title';
 			options.mouseOutClose = true;
 			
 			// attach new tip

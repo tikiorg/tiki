@@ -3,6 +3,8 @@
  * wslib.php - TikiWiki CMS/GroupWare
  *
  * This library enables the basic management of workspaces (WS)
+ * TODO: Probably we need to modify this to adapt it to perspectives and 
+ * new stuff added to Tiki in the last Tikifest.
  * 
  * @package	lib
  * @author	Benjamin Palacios Gonzalo (mangapower) <mangapowerx@gmail.com>
@@ -12,7 +14,10 @@
 
 //Controlling Access
 require_once 'tiki-setup.php';
-//$access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  header("location: index.php");
+  exit;
+}
 
 //Rest of Imports
 include_once 'lib/categories/categlib.php';
@@ -32,15 +37,18 @@ class wslib extends CategLib
 
     /** Stores this objectype, this is WS */
     private $objectType;
+	
+	/** Stores the view Perm */
+	private $viewPerm;
 
     /** Constructor, give the dbtiki to its parent, this is Categlib */
     public function __construct()
     {
-	global $prefs;
+		global $prefs;
 
-	$this->ws_container = (int) $prefs['ws_container'];
-	$this->objectType = 'ws';
-	$this->viewPerm = 'tiki_p_ws_view';
+		$this->ws_container = (int) $prefs['ws_container'];
+		$this->objectType = 'ws';
+		$this->viewPerm = 'tiki_p_ws_view';
     }
 
     /** Initialize the Workspaces in TikiWiki setting a container in the category table and return its ID
@@ -65,13 +73,13 @@ class wslib extends CategLib
      */
     public function get_ws_container()
     {
-	return $this->ws_container;
+		return $this->ws_container;
     }
     
     /** Create a new WS with one group inside it with the associated perm 'tiki_p_ws_view'.
      *
      * @param $name Name of the Workspace
-     * @param $parentWS Name of the ParentWS, if ParentWS is null, its default value will be ws_container
+     * @param $parentWS Name of the ParentWS, if ParentWS is null, its default value will be 0
      * @param $groups An associative array of groups in the form array("groupName" => (string) name, "groupDescription" => (string) description,
      * "noCreateNewGroup" => boolean, "additionalPerms" => array("additionalperm1", "additionalperm2", ...))
      * @param $additionalPerms Associative array for giving more perms than the default perm 'tiki_p_ws_view'
@@ -122,7 +130,7 @@ class wslib extends CategLib
 
 	if (!$wsName) $wsName = $this->get_ws_name($ws_id);
 
-	$groupName = $nameGroup;//$this->generate_ws_group_name ($id_ws, $wsName, $nameGroup); //With this you can create two groups with same name in different ws
+	$groupName = $nameGroup;
 
 	if ($userlib->add_group($groupName, $description)) 
 	{
@@ -139,35 +147,6 @@ class wslib extends CategLib
 	    return false;
     }
 
-    /** Generate a group name specially created for WS. With this we can avoid the problems related to have two groups with the same name
-     * NOTE: For now is OK, if the future implementation of groups change, this would change!
-     *
-     * @param $id_ws The WS id
-     * @param $wsname The WS name
-     * @param $nameGroup The group name
-     * @return A string with this format: $id_ws::$wsName::$nameGroup
-     */
-    public function generate_ws_group_name ($ws_id, $wsName, $nameGroup)
-    {
-	return $name = ((string) $ws_id)."::".$wsName."::".$nameGroup;
-    }
-
-    /** Parse a group name with the form $ws_id<:>$wsName<:>$nameGroup
-     * Allowed characters in $ws_id are 0-9 with a variable length of 1 to 11 digits
-     * Allowed characters in $wsName are 0-9, A-Z, a-z, whitespace, -, < and >
-     * Allowed characters in $nameGroup are the same as above
-     * TODO: Work in progress, needs to be checked if works properly (I'm newbie to regex world :P)
-     * Yeah, I know, this exp is far from being perfect, but for testing purposes is OK
-     *
-     * @param $groupName The name of the group you want to parse
-     * @param $groupValues The values given in a reference array when you apply the function
-     * @return An array with the values in each position. If the parse was not succesful return false
-     */
-    public function parse_ws_group_name ($groupName, &$groupValues)
-    {
-	return preg_match("%\b([\d]{1,11})\b::\b([\w\-<>\s]+)\b::\b([\w\-<>\s]+[^:]{2})\b%", $groupName, $groupValues);
-    }
-    
     /** Change a WS name and description
      * 
      * @param $ws_id The WS id you want to update
@@ -532,10 +511,10 @@ class wslib extends CategLib
      */
     public function get_ws_id($name, $parentWS)
     {
-	$query = "select `categId` from `tiki_categories` where `name`=? and `parentId`=? and `rootCategId`=?";
-	$bindvars = array($name, $parentWS, $this->ws_container);
+		$query = "select `categId` from `tiki_categories` where `name`=? and `parentId`=? and `rootCategId`=?";
+		$bindvars = array($name, $parentWS, $this->ws_container);
 
-	return $this->getOne($query, $bindvars);
+		return $this->getOne($query, $bindvars);
     }
 
     /** Get a WS name by its id
@@ -546,10 +525,10 @@ class wslib extends CategLib
      */
     public function get_ws_name($ws_id)
     {
-	$query = "select `name` from `tiki_categories` where `categId`=? and `rootCategId`=?";
-	$bindvars = array($ws_id);
+		$query = "select `name` from `tiki_categories` where `categId`=?";
+		$bindvars = array($ws_id);
 
-	return $this->getOne($query, $bindvars);
+		return $this->getOne($query, $bindvars);
     }
     
     public function get_ws_description($ws_id)
@@ -680,9 +659,9 @@ class wslib extends CategLib
      */
     public function list_all_ws ($offset, $maxRecords, $sort_mode = 'name_asc')
     {
-    	$bindvals = array($this->ws_container);
-	$query = "select * from `tiki_categories` where `rootCategId`=? order by ".$this->convertSortMode($sort_mode);
+	$query = "select * from `tiki_categories` where `rootCategId`=?";// order by ".$this->convertSortMode($sort_mode);
 	$query_cant = "select count(*) from `tiki_categories` where `rootCategId`=?";
+	$bindvals = array($this->ws_container);
 	$result = $this->query($query,$bindvals,$maxRecords,$offset);
 	$cant = $this->getOne($query_cant,$bindvals);
 	$ret = array();
@@ -731,7 +710,7 @@ class wslib extends CategLib
 			   and (t1.`userId` = t2.`userId`) 
 			   and (t2.`groupName` = t3.`groupName`) 
 			   and t3.`permName` = ?";
-	$result = $this->query($query,array($user), $maxRecords, $offset, $this->viewPerm);
+	$result = $this->query($query,array($user, $this->viewPerm), $maxRecords, $offset);
 	while ($res = $result->fetchRow())
 		$userWSHashes[] = $res["objectId"];
 	

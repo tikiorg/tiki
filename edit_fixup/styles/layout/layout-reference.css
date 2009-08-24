@@ -894,12 +894,12 @@ a.qt-plugin div img { /* div.iconmenu img.icon */
 span.toolbar-list {
 	padding: 0 0 0 .5em;
 	line-height: 20px;
-	border-left: medium double lightgray;
+	border-left: medium double #bfbfbf;
 }
 
 .helptool-admin {
 	float: right;
-	border-left: medium double lightgrey;
+	border-left: medium double #bfbfbf;
 	padding-left:8px;
 	margin-left:8px;
 }

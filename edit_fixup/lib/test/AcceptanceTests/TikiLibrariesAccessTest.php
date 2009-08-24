@@ -23,14 +23,14 @@ class  AcceptanceTests_TikiLibrariesAccessTest extends TikiTestCase
     }
        
     public function testAccessPreferences() {
-    	global $tikilib;
+    	global $tikilib, $prefs;
     	
     	$pref_name = 'feature_machine_translation';
 
     	$gotPreference = $tikilib->get_preference($pref_name);
-    	$this->assertEquals(NULL, $gotPreference, "get_preference() should initially have returned NULL for preference '$pref_name'");
+    	$this->assertEquals('n', $gotPreference, "get_preference() should initially have returned 'n' for preference '$pref_name'");
     	$gotPreference = $prefs[$pref_name];
-    	$this->assertEquals(NULL, $gotPreference, "\$prefs[$pref_name] should initially have been NULL");
+    	$this->assertEquals('n', $gotPreference, "\$prefs[$pref_name] should initially have been 'n'");
 
 		$tikilib->set_preference($pref_name, 'y');
     	$gotPreference = $tikilib->get_preference($pref_name);

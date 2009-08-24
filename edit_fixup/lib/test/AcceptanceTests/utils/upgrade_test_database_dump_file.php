@@ -8,7 +8,7 @@
  
 require_once 'TikiAcceptanceTestDBRestorer.php';
 
-die ("WARNING: This script will destroy the current Tiki db. Uncomment this line in the script to proceed.");
+//die ("WARNING: This script will destroy the current Tiki db. Comment out this line in the script to proceed.");
 
 if ($argc != 2) {
 	die("Missing argument. USAGE: $argv[0] <dump_filename>");
@@ -20,6 +20,7 @@ $test_TikiAcceptanceTestDBRestorer->restoreDBFromScratch($argv[1]);
 $local_php = 'db/local.php';
 
 require_once('installer/installlib.php');
+require_once('lib/core/lib/TikiDb.php');
 include_once ('lib/adodb/adodb.inc.php');
 
 include $local_php;

@@ -14,22 +14,22 @@ class  AcceptanceTests_ListPagesTest extends TikiSeleniumTestCase
         $this->openTikiPage('tiki-listpages.php');
         $this->_assertListPagesTableIsWellFormed();
         $this->_assertListedPagesWere(array(0 => "HomePage", 1 => "EnglishTestPage"), "Listed pages");  
-        $this->assertEquals("Page", $this->getTable("//div[@id='tiki-listpages-content']/table.0.0"));
-    	$this->assertEquals("Hits", $this->getTable("//div[@id='tiki-listpages-content']/table.0.1"));
-    	$this->assertEquals("Last mod", $this->getTable("//div[@id='tiki-listpages-content']/table.0.2"));
-    	$this->assertEquals("Last author", $this->getTable("//div[@id='tiki-listpages-content']/table.0.3"));
-    	$this->assertEquals("Vers.", $this->getTable("//div[@id='tiki-listpages-content']/table.0.4"));
+        $this->assertEquals("Page", $this->getTable("//div[@id='tiki-listpages-content']/form/table.0.1"));
+    	$this->assertEquals("Hits", $this->getTable("//div[@id='tiki-listpages-content']/form/table.0.2"));
+    	$this->assertEquals("Last mod", $this->getTable("//div[@id='tiki-listpages-content']/form/table.0.3"));
+    	$this->assertEquals("Last author", $this->getTable("//div[@id='tiki-listpages-content']/form/table.0.4"));
+    	$this->assertEquals("Vers.", $this->getTable("//div[@id='tiki-listpages-content']/form/table.0.5"));
     }    
     
     public function testPageSortingWorks()
     {
     	$this->open("/tiki-trunk/tiki-listpages.php");
     	$this->clickAndWait("link=Page");
-    	$this->assertEquals("EnglishTestPage", $this->getTable("//div[@id='tiki-listpages-content']/table.1.0", "Pages were not sorted out in ascending order"));
-    	$this->assertEquals("HomePage", $this->getTable("//div[@id='tiki-listpages-content']/table.2.0", "Pages were not sorted out in ascending order"));
+    	$this->assertEquals("EnglishTestPage", $this->getTable("//div[@id='tiki-listpages-content']/form/table.1.1", "Pages were not sorted out in ascending order"));
+    	$this->assertEquals("HomePage", $this->getTable("//div[@id='tiki-listpages-content']/form/table.2.1", "Pages were not sorted out in ascending order"));
     	$this->clickAndWait("link=Page");
-    	$this->assertEquals("HomePage", $this->getTable("//div[@id='tiki-listpages-content']/table.1.0", "Pages were not sorted out in descending order"));
-    	$this->assertEquals("EnglishTestPage", $this->getTable("//div[@id='tiki-listpages-content']/table.2.0", "Pages were not sorted out in descending order"));
+    	$this->assertEquals("HomePage", $this->getTable("//div[@id='tiki-listpages-content']/form/table.1.1", "Pages were not sorted out in descending order"));
+    	$this->assertEquals("EnglishTestPage", $this->getTable("//div[@id='tiki-listpages-content']/form/table.2.1", "Pages were not sorted out in descending order"));
   	}
     
     public function testDeleteAPageFromTheList() {

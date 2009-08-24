@@ -103,7 +103,7 @@ class TikiMail extends HtmlMimeMail {
 		}
 		$result = parent::send($recipients, $type);
 		$title = $result?'mail': 'mail error';
-		if (!$result || $prefs['log_mail'])
+		if (!$result || $prefs['log_mail'] == 'y')
 			foreach ($recipients as $u) {
 				$logslib->add_log($title, $u.'/'.$this->headers['Subject']);
 			}

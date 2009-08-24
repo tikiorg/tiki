@@ -2,7 +2,7 @@
 
 function module_category_transition_info() {
 	return array(
-		'name' => tra('Category Transition'),
+		'name' => tra('Category Transitions'),
 		'description' => tra('Displays controls to trigger category transitions and change the page\'s state according to predefined rules.'),
 		'prefs' => array( 'feature_category_transition' ),
 		'params' => array(

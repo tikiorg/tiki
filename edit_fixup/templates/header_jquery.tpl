@@ -81,6 +81,9 @@
 {if $prefs.feature_jquery_cycle eq 'y'}
 <script type="text/javascript" src="lib/jquery/malsup-cycle/jquery.cycle.all{$minified}.js"></script>
 {/if}
+{* small libs on by default *}
+<script type="text/javascript" src="lib/jquery/jquery.cookie.js"></script>
+<script type="text/javascript" src="lib/jquery/jquery.columnmanager/jquery.columnmanager{$minified}.js"></script>
 <script type="text/javascript" src="lib/jquery/treeTable/src/javascripts/jquery.treeTable{$minified}.js"></script>
 <link rel="stylesheet" href="lib/jquery/treeTable/src/stylesheets/jquery.treeTable.css" type="text/css" /> 
 <script type="text/javascript">

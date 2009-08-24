@@ -13,7 +13,7 @@ if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== FALSE) {
 }
 
 require_once 'lib/setup/third_party.php';
-require_once SMARTY_DIR.'Smarty.class.php';
+require_once (defined('SMARTY_DIR') ? SMARTY_DIR : 'lib/smarty/libs/') . 'Smarty.class.php';
 
 class Smarty_Tikiwiki extends Smarty {
 	
@@ -206,6 +206,21 @@ class Smarty_Tikiwiki extends Smarty {
 		return parent::clear_cache($_smarty_tpl_file, $_smarty_cache_id, $_smarty_compile_id, $_smarty_exp_time);
 	}
 	function display($resource_name, $cache_id=null, $compile_id = null, $content_type = 'text/html; charset=utf-8') {
+		
+		global $prefs;
+		if ( !empty($prefs['feature_htmlpurifier_output']) and $prefs['feature_htmlpurifier_output'] == 'y' ) {
+			static $loaded = false;
+			static $purifier = null;
+			if (!$loaded) {
+				require_once('lib/htmlpurifier_tiki/HTMLPurifier.tiki.php');
+				$config = getHTMLPurifierTikiConfig();
+				$config->set('HTML.Doctype', 'XHTML 1.0 Transitional');
+				$config->set('HTML.TidyLevel', 'light');
+				$purifier = new HTMLPurifier($config);
+				$loaded = true;
+			}
+		}
+
 		//
 		// By default, display is used with text/html content in UTF-8 encoding
 		// If you want to output other data from smarty,
@@ -215,7 +230,11 @@ class Smarty_Tikiwiki extends Smarty {
 		if ( $content_type != '' && ! headers_sent() ) {
 			header('Content-Type: '.$content_type);
 		}
-		return parent::display($resource_name, $cache_id, $compile_id);
+		if ( !empty($prefs['feature_htmlpurifier_output']) and $prefs['feature_htmlpurifier_output'] == 'y' ) {
+			return $purifier->purify(parent::display($resource_name, $cache_id, $compile_id));
+		} else {
+			return parent::display($resource_name, $cache_id, $compile_id); 
+		}
 	}
 	// Returns the file name associated to the template name
 	function get_filename($template) {

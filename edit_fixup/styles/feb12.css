@@ -368,7 +368,8 @@ div#sitead {
 }
 
 #sitesearchbar {
-	margin-top: 4px;
+	height: 34px;
+	line-height: 34px;
 }
 
 #topbar_custom_code {
@@ -516,7 +517,7 @@ a.phplmselected:hover {
 
 .cssmenu_vert li ul,
 .cssmenu_horiz li ul {
-	background: #a8cce2 !important;
+	background: #a8cce2;
 }
 
 .cssmenu_horiz ul li:hover {
@@ -551,16 +552,18 @@ a.phplmselected:hover {
 	color: #eee !important;
 	text-decoration: none;
 }
+
 #tiki-top .cssmenu_horiz li.menuLevel1 a {
 	color: #000;
 	padding: 4px 1em;
 }
-/*
-#tiki-top .cssmenu_horiz li ul a .menuText {
-	color: #000;
-}*/
 
-#tiki-top .cssmenu_horiz ul li a:hover {
+#tiki-top .cssmenu_horiz li ul a {
+	color: #000;
+}
+
+#tiki-top .cssmenu_horiz ul li a:hover,
+.cssmenu_vert ul li a:hover {
 	color: #993300;
 	text-decoration: none;
 }
@@ -580,6 +583,11 @@ a.phplmselected:hover {
 
 #col2 .cssmenu_vert > li > ul {
 	margin-left: 192px;
+}
+
+.cssmenu_horiz.sf-shadow ul li,
+.cssmenu_vert.sf-shadow ul li {
+	background-color: #CCDCEB !important;
 }
 
 /** Links in other menus **/
@@ -757,16 +765,22 @@ tr.diffheader {
 
 /** Tabs **/
 .tabs {
-	border-bottom: solid 1px #225566 !important;
-	margin: 10px 1px 0 0 !important;
+	margin: 0 !important;
 }
+
+.tabactive,
+.tabinactive,
+[class].tabactive,
+[class].tabinactive {top: 0 !important}
+
 
 .tabactive {
 	border: solid 1px #225566 !important;
+	border-bottom-color: #f0f9ff !important;
 }
 
 .tabactive a {
-	background: #eee;
+	background: #f0f9ff;
 }
 
 .tabinactive {
@@ -783,26 +797,17 @@ tr.diffheader {
 	color: #000;
 }
 
-.tabmark a:active {
-	background: #fff;
-	color: red;
-}
-
 .tabmark a:hover {
 	color: black;
 	background: #f0f9ff;
+	text-decoration: none;
 }
 
 .tabcontent {
-	border: 1px solid #abcdef;
 	padding: 6px 2px 2px 2px;
-	margin-bottom: 25px;
+	margin: 1px 0 25px 0 !important;
 	background: #f0f9ff;
-}
-
-form fieldset.tabcontent {
 	border: 1px solid #225566;
-	border-top: none !important;
 }
 
 table.admin div#content1 div.tabcontent div.cbox {
@@ -1151,7 +1156,7 @@ body.tiki_blogs .postfooter .actions {
 
 .post .postbody .content {
 	width: 100%;
-	height: 100%;
+/*	height: 100%;*/
 	color: #000000;
 }
 
@@ -1172,6 +1177,8 @@ body.tiki_blogs .postfooter .actions {
 .post .avatar {
 	border: 1px solid #ACCCDD;
 	background: #E0EAF4;
+	margin-right: 3px;
+	margin-left: 0;
 }
 
 .forum_actions .actions {

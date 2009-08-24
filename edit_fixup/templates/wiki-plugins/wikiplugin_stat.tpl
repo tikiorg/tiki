@@ -1,5 +1,5 @@
 {* $Id$ *}
-{tabset toggle='n'}
+{tabset name='stat' toggle='n'}
 	{foreach from=$stat key=when item=typeStat}
 		{capture name='tabtitle'}
 			{if $when eq 'lastday'}{tr}Last Day{/tr}

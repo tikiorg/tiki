@@ -162,7 +162,7 @@ if(empty($info) && !($user && $prefs['feature_wiki_userpage'] == 'y' && strcasec
 		$isUserPage = false;
 	$likepages = $wikilib->get_like_pages($page);
 	/* if we have exactly one match, redirect to it */
-	if(count($likepages) == 1  && !$isUserPage) {
+	if($prefs['feature_wiki_1like_redirection'] == 'y' && count($likepages) == 1  && !$isUserPage) {
 		$access->redirect( 'tiki-index.php?page='.urlencode($likepages[0]) );
 	}
 	$smarty->assign_by_ref('likepages', $likepages);

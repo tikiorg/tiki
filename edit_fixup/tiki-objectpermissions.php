@@ -5,10 +5,12 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id: /cvsroot/tikiwiki/tiki/tiki-objectpermissions.php,v 1.25.2.2 2008-03-11 15:17:54 nyloth Exp $
 include_once ("tiki-setup.php");
-if (!isset($_REQUEST['objectName']) || empty($_REQUEST['objectType']) || empty($_REQUEST['objectId']) || empty($_REQUEST['permType'])) {
-	$smarty->assign('msg', tra("Not enough information to display this page"));
-	$smarty->display("error.tpl");
-	die;
+if (empty($_REQUEST['objectType']) || $_REQUEST['objectType'] != 'global') {
+	if (!isset($_REQUEST['objectName']) || empty($_REQUEST['objectId'])) {
+		$smarty->assign('msg', tra("Not enough information to display this page"));
+		$smarty->display("error.tpl");
+		die;
+	}
 }
 $auto_query_args = array(
 	'referer',
@@ -44,6 +46,10 @@ if (!($tiki_p_admin_objects == 'y' || (isset($$perm) && $$perm == 'y') || (isset
 	$smarty->display("error.tpl");
 	die;
 }
+//if ($prefs['feature_jquery_ui'] != 'y') {
+//	$headerlib->add_jsfile('lib/jquery/jquery-ui/ui/minified/jquery-ui.min.js');
+//}
+
 if (!isset($_REQUEST["referer"])) {
 	if (isset($_SERVER['HTTP_REFERER'])) {
 		$_REQUEST["referer"] = $_SERVER['HTTP_REFERER'];
@@ -54,7 +60,7 @@ if (isset($_REQUEST["referer"])) {
 }
 $_REQUEST["objectId"] = urldecode($_REQUEST["objectId"]);
 $_REQUEST["objectType"] = urldecode($_REQUEST["objectType"]);
-$_REQUEST["permType"] = urldecode($_REQUEST["permType"]);
+$_REQUEST["permType"] = !empty($_REQUEST['permType']) ? urldecode($_REQUEST["permType"]) : 'all';
 $smarty->assign('objectName', $_REQUEST["objectName"]);
 $smarty->assign('objectId', $_REQUEST["objectId"]);
 $smarty->assign('objectType', $_REQUEST["objectType"]);
@@ -153,12 +159,12 @@ if (isset($_REQUEST['assign']) && isset($_REQUEST['quick_perms'])) {
 				//Remove all permissions of a group
 				
 				foreach($perms['admin']['data'] as $perm) {
-					$userlib->remove_object_permission($group, $_REQUEST["objectId"], $_REQUEST["objectType"], $perm);
+					remove_perm($group, $_REQUEST["objectId"], $_REQUEST["objectType"], $perm);
 				}
 				
 				//Add chosen quickperm bundle to the objcet/group
 				foreach($perms["$permission"]['data'] as $perm) {
-					$userlib->assign_object_permission($group, $_REQUEST["objectId"], $_REQUEST["objectType"], $perm);				
+					assign_perm($group, $_REQUEST["objectId"], $_REQUEST["objectType"], $perm);				
 				}
 			}
 		}
@@ -166,7 +172,8 @@ if (isset($_REQUEST['assign']) && isset($_REQUEST['quick_perms'])) {
 }
 //Quickperm END
 
-// Process the form to assign a new permission to this page
+
+// Process the form to assign a new permission to this object
 elseif (isset($_REQUEST['assign'])) {
 	check_ticket('object-perms');
 	foreach($_REQUEST['perm'] as $group => $perms) {
@@ -183,7 +190,7 @@ elseif (isset($_REQUEST['assign'])) {
 		foreach($pageInfoTree as $subPage) {
 			foreach($_REQUEST['perm'] as $group => $perms) {
 				foreach($perms as $perm) {
-					$userlib->assign_object_permission($group, $subPage["pageName"], 'wiki page', $perm);
+					assign_perm($group, $subPage["pageName"], 'wiki page', $perm);
 				}
 			}
 		}
@@ -191,7 +198,7 @@ elseif (isset($_REQUEST['assign'])) {
 		// set new perms
 		foreach($_REQUEST['perm'] as $group => $perms) {
 			foreach($perms as $perm) {
-				$userlib->assign_object_permission($group, $_REQUEST["objectId"], $_REQUEST["objectType"], $perm);
+				assign_perm($group, $_REQUEST["objectId"], $_REQUEST["objectType"], $perm);
 			}
 		}
 		// remove unchecked ones
@@ -205,7 +212,7 @@ elseif (isset($_REQUEST['assign'])) {
 					}
 				}
 				if (!$stillChecked) {
-					$userlib->remove_object_permission($group, $_REQUEST["objectId"], $_REQUEST["objectType"], $perm);
+					remove_perm($group, $_REQUEST["objectId"], $_REQUEST["objectType"], $perm);
 				}
 			}
 		}
@@ -216,7 +223,7 @@ elseif (isset($_REQUEST['assign'])) {
 if (isset($_REQUEST["action"])) {
 	check_ticket('object-perms');
 	if ($_REQUEST["action"] == 'remove') {
-		$userlib->remove_object_permission($_REQUEST["group"], $_REQUEST["objectId"], $_REQUEST["objectType"], $_REQUEST["perm"]);
+		remove_perm($_REQUEST["group"], $_REQUEST["objectId"], $_REQUEST["objectType"], $_REQUEST["perm"]);
 	}
 }
 if (isset($_REQUEST['delsel_x']) && isset($_REQUEST['checked'])) {
@@ -225,16 +232,20 @@ if (isset($_REQUEST['delsel_x']) && isset($_REQUEST['checked'])) {
 		if (preg_match('/([^ ]*) (.*)/', $perm, $matches)) {
 			if (!empty($_REQUEST['removestructure']) && $_REQUEST['removestructure'] == 'on' && !empty($pageInfoTree)) {
 				foreach($pageInfoTree as $subPage) {
-					$userlib->remove_object_permission($matches[2], $subPage['pageName'], $_REQUEST['objectType'], $matches[1]);
+					remove_perm($matches[2], $subPage['pageName'], $_REQUEST['objectType'], $matches[1]);
 				}
 			} else {
-				$userlib->remove_object_permission($matches[2], $_REQUEST['objectId'], $_REQUEST['objectType'], $matches[1]);
+				remove_perm($matches[2], $_REQUEST['objectId'], $_REQUEST['objectType'], $matches[1]);
 			}
 		}
 	}
 }
 // Now we have to get the individual page permissions if any
-$page_perms = $userlib->get_object_permissions($_REQUEST["objectId"], $_REQUEST["objectType"]);
+if ($_REQUEST['objectType'] == 'global') {
+	$page_perms = array();
+} else {
+	$page_perms = $userlib->get_object_permissions($_REQUEST["objectId"], $_REQUEST["objectType"]);
+}
 //Quickperm
 foreach($page_perms as $perm) {
 	$current_permissions[$perm['groupName']][] = $perm['permName'];
@@ -394,18 +405,18 @@ for( $i = 0; $i < count($groupNames); $i++) {
 		}
 	}
 	
-//\$jq('input[name="perm[$groupName][]"]:checked').each( function() { 	// checked one of this group
-//	\$jq('input[value="'+\$jq(this).val()+'"]').						// other checkbxes of same value (perm)
-//		filter('$beneficiaries').
-//		attr('checked','checked').attr('disabled','disabled');							// check and disable
-//});
 	$js .= <<< JS
 \$jq('input[name="perm[$groupName][]"]').each( function() { 		// each one of this group
-	\$jq('input[value="'+\$jq(this).val()+'"]').					// other checkboxes of same value (perm)
-		filter('$beneficiaries').									// which inherit from this
-		attr('checked',\$jq(this).attr('checked')).					// check and disable
-		attr('disabled',\$jq(this).attr('checked') ? 'disabled' : '');
+
+	if (\$jq(this).attr('checked')) {
+		\$jq('input[value="'+\$jq(this).val()+'"]').					// other checkboxes of same value (perm)
+			filter('$beneficiaries').									// which inherit from this
+			attr('checked',\$jq(this).attr('checked')).					// check and disable
+			attr('disabled',\$jq(this).attr('checked') ? 'disabled' : '');
+	}
+		
 	\$jq(this).click( function() {									// bind click event
+	
 		if (\$jq(this).attr('checked')) {
 			\$jq('input[value="'+\$jq(this).val()+'"]').			// same...
 				filter('$beneficiaries').
@@ -414,16 +425,26 @@ for( $i = 0; $i < count($groupNames); $i++) {
 		} else {
 			\$jq('input[value="'+\$jq(this).val()+'"]').			// same...
 				filter('$beneficiaries').
+				attr('checked','').									// check?
 				attr('disabled','');								// disable
 }
 	});
 });
+
 JS;
+}	// end of for $groupNames loop
 
+$maxGroupsToShow = 6;	// maybe a pref one day?
+if (count($groupNames) > $maxGroupsToShow) {
+	$hideGroups = implode(',',array_keys(array_fill($maxGroupsToShow, count($groupNames)-$maxGroupsToShow+1, 1)));
+} else {
+	$hideGroups = '';
 }
+$js .= "\$jq('#treetable_1').columnManager(".
+	"{ listTargetID:'column_switches', onClass: 'advon', offClass: 'advoff', saveState: true, ".
+	"hideInList: [".(count($groupNames) + 1)."], colsHidden: [".$hideGroups."]});\n";
+
 $headerlib->add_jq_onready($js);
-
-
 
 ask_ticket('object-perms');
 // Display the template
@@ -434,3 +455,23 @@ if (isset($_REQUEST['filegals_manager']) && $_REQUEST['filegals_manager'] != '')
 } else {
 	$smarty->display("tiki.tpl");
 }
+
+function assign_perm($group, $objectId, $objectType, $perm) {
+	global $userlib;
+	if ($objectType == 'global') {
+		$userlib->assign_permission_to_group($perm, $group);
+	} else {
+		$userlib->assign_object_permission($group, $objectId, $objectType, $perm);				
+	}
+}
+
+function remove_perm($group, $objectId, $objectType, $perm) {
+	global $userlib;
+	if ($objectType == 'global') {
+		$userlib->remove_permission_from_group($perm, $group);
+	} else {
+		$userlib->remove_object_permission($group, $objectId, $objectType, $perm);
+	}
+}
+
+

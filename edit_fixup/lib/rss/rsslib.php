@@ -365,7 +365,7 @@ class RSSLib extends TikiLib {
 						}
 						$epublic = $this->get_user_preference($data["$authorId"], 'email is public', 'n');
 						if ($epublic!='n') {
-							$res = $userslib->wget_user_info($data["$authorId"], false);
+							$res = $userslib->get_user_info($data["$authorId"], false);
 							if ($tmp<>"") $tmp .= ' ';
 							$tmp .= "<".scrambleEmail($res['email'], $epublic).">";
 						}

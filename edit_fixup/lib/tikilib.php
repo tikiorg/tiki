@@ -4503,7 +4503,7 @@ class TikiLib extends TikiDb_Bridge {
 		$return = $this->_get_values('tiki_user_preferences', 'prefName', $names, $global_ref, '`user`=?', array($my_user));
 
 		// Handle special display_timezone values
-		if ( isset($user_preferences[$my_user]['display_timezone'])
+		if ( isset($user_preferences[$my_user]['display_timezone']) && $user_preferences[$my_user]['display_timezone'] != 'Site' && $user_preferences[$my_user]['display_timezone'] != 'Local'
 				&& ! TikiDate::TimezoneIsValidId($user_preferences[$my_user]['display_timezone'])
 			 ) {
 			unset($user_preferences[$my_user]['display_timezone']);
@@ -6149,9 +6149,9 @@ class TikiLib extends TikiDb_Bridge {
 		// Handle ~pre~...~/pre~ sections
 		$data = preg_replace(';~pre~(.*?)~/pre~;s', '<pre>$1</pre>', $data);
 
-		// Strike-deleted text --text-- (but not in the context <!--[if IE]><--!>)
+		// Strike-deleted text --text-- (but not in the context <!--[if IE]><--!> or <!--//--<!CDATA[//><!--
 		if (!$simple_wiki) {
-			$data = preg_replace("/(?!\<\!)--(.+?)--(?!\>)/", "<del>$1</del>", $data);
+			$data = preg_replace("#(?<!<!|//)--(.+?)--#", "<del>$1</del>", $data);
 		}
 
 		// Handle comment sections

@@ -725,7 +725,13 @@ a.phplmselected:hover {
 .cssmenu_vert ul a:hover {
 	color: #000000;
 }
-
+/* when there's superfish shadow */
+.cssmenu_horiz.sf-shadow ul li {
+	background-color: #1b3a50; 
+}
+.cssmenu_vert.sf-shadow ul li {
+	background-color: #cce5ff; 
+}
 #tiki-top .cssmenu_horiz {
 	position: absolute;
 	z-index: 10;
@@ -888,6 +894,10 @@ table {
 	font-size: 1em;
 }
 
+table.normal, 
+table.admin {
+	border-collapse: separate;}
+
 .formcolor td,
 .galform td,
 .editblogform td,
@@ -897,11 +907,11 @@ table {
 	padding: 3px;
 }
 
-tr.odd {
+tr.odd td {
 	background: #f0f0f0;
 }
 
-tr.even {
+tr.even td {
 	background: #dcdcdc;
 }
 
@@ -921,7 +931,7 @@ td.normal,
 td.odd,
 td.even {
 	padding: 0.2em;
-	border-collapse: collapse;
+	vertical-align: top;
 }
 
  /* headings */

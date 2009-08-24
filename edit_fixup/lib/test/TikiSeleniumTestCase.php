@@ -30,9 +30,9 @@ class TikiSeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase {
     }
     
     public function logOutIfNecessary() {
-    	if ($this->isElementPresent("link=logout")){
-    		$this->clickAndWait("link=logout");
-    	}
+    	if ($this->isElementPresent("link=Logout")){
+    		$this->clickAndWait("link=Logout");
+    	} 
     }
     
     public function assertSelectElementContainsItems($selectElementID, $expItems, $message) {
