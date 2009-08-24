@@ -432,6 +432,10 @@ class ModLib extends TikiLib {
 				'name' => tra('Decorations'),
 				'description' => tra('?'),
 			),
+			'nonums' => array(
+				'name' => tra('No numbers'),
+				'description' => tra('If set to "y", the module will not number list items.'),
+			),
 			'perspective' => array(
 				'name' => tra('Perspective'),
 				'description' => tra('Only display the module if in one of the listed perspectives. Semi-colon separated.'),
@@ -504,6 +508,8 @@ class ModLib extends TikiLib {
 		if( ! $cachefile || $this->require_cache_build( $mod_reference, $cachefile ) ) {
 			if ( $info['type'] == "function") // Use the module name as default module title. This can be overriden later. A module can opt-out of this in favor of a dynamic default title set in the TPL using clear_assign in the main module function. It can also be overwritten in the main module function.
 				$smarty->assign('tpl_module_title', tra( $info['name'] ) );
+
+			$smarty->assign('nonums', isset( $module_params['nonums'] ) ? $module_params['nonums'] : "n" );
 
 			if( $info['type'] == 'include' ) {
 				$phpfile = 'modules/mod-' . $mod_reference['name'] . '.php';
