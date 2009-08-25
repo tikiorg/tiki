@@ -59,6 +59,11 @@ function wikiplugin_tracker_info() {
 				'description' => 'y|n',
 				'filter' => 'alpha'
 			),
+			'email' => array(
+				'requires' => false,
+				'name' => tra('Email'),
+				'description' => tra('from').'|'.tra('to').'|'.tra('template'),
+			),
 			'url' => array(
 				'required' => false,
 				'name' => tra('URL'),
@@ -95,7 +100,7 @@ function wikiplugin_tracker_info() {
 				'required' => false,
 				'name' => tra('itemId'),
 				'description' => tra('itemId if you want to edit an item'),
-				'filter' => 'digit'
+				'filter' => 'digits'
 			),
 			'tpl' => array(
 				'required' => false,
@@ -311,7 +316,7 @@ function wikiplugin_tracker($data, $params) {
 							elseif ($flds['data'][$cpt]['type'] == 'I')
 								$_REQUEST['track'][$fl['fieldId']] = $tikilib->get_ip_address();
 						}
-					} elseif ($flds['data'][$cpt]['type'] == 'C' && empty($_REQUEST['track'][$fl['fieldId']])) {
+					} elseif (($flds['data'][$cpt]['type'] == 'C' || $flds['data'][$cpt]['type'] == 'e') && empty($_REQUEST['track'][$fl['fieldId']])) {
 						$_REQUEST['track'][$fl['fieldId']] = '';
 					} elseif ($flds['data'][$cpt]['type'] == 'f') {
 						$ins_id = 'track_'.$fl['fieldId'];

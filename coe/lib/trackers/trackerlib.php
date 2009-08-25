@@ -1839,6 +1839,8 @@ class TrackerLib extends TikiLib {
 				    }
 				} elseif (isset($f['type']) &&  ($f['type'] == 'u' || $f['type'] == 'g') && $f['options_array'][0] == 1) {
 					;
+				} elseif ($f['type'] == 'c' && (empty($f['value']) || $f['value'] == 'n')) {
+					$mandatory_fields[] = $f;
 				} elseif (!isset($f['value']) or strlen($f['value']) == 0) {
 					$mandatory_fields[] = $f;
 				}
@@ -3225,6 +3227,35 @@ class TrackerLib extends TikiLib {
 	function rename_page($old, $new) {
 		$query = "update `tiki_tracker_item_fields` ttif left join `tiki_tracker_fields` ttf on (ttif.fieldId = ttf.fieldId) set ttif.`value`=? where ttif.`value`=? and ttf.`type` = ?";
 		$this->query($query, array($new, $old, 'k'));
+	}
+	function build_date($input, $field, $ins_id) {
+		global $tikilib;
+		$value = '';
+		$monthIsNull = empty($input[$ins_id.'Month']) || $input[$ins_id.'Month'] == null || $input[$ins_id.'Month'] == 'null'|| $input[$ins_id.'Month'] == '';
+		$dayIsNull = empty($input[$ins_id.'Day']) || $input[$ins_id.'Day'] == null || $input[$ins_id.'Day'] == 'null' || $input[$ins_id.'Day'] == '';
+		$yearIsNull = empty($input[$ins_id.'Year']) || $input[$ins_id.'Year'] == null || $input[$ins_id.'Year'] == 'null' || $input[$ins_id.'Year'] == '';
+		$hourIsNull = !isset($input[$ins_id.'Hour']) || $input[$ins_id.'Hour'] == null || $input[$ins_id.'Hour'] == 'null' || $input[$ins_id.'Hour'] == '';
+		$minuteIsNull = empty($input[$ins_id.'Minute']) || $input[$ins_id.'Minute'] == null || $input[$ins_id.'Minute'] == 'null' || $input[$ins_id.'Minute'] == '';
+		if ($field['options_array'][0] == 'd') {
+			if ($monthIsNull || $dayIsNull || $yearIsNull) { // all the values must be blank
+				$value = '';
+			} else {
+				$value = $tikilib->make_time(0, 0, 0, $input[$ins_id.'Month'], $input[$ins_id.'Day'], $input[$ins_id.'Year']);
+			}
+		} elseif ($field['options_array'][0] == 't') { // all the values must be blank
+			if ($hourIsNull || $minuteIsNull) {
+				$value = '';
+			} else {
+				$value = $tikilib->make_time($input[$ins_id.'Hour'], $input[$ins_id.'Minute'], 0, 0, 0, 0);
+			}
+		} else {
+			if ($monthIsNull || $dayIsNull || $yearIsNull || $hourIsNull || $minuteIsNull) { // all the values must be blank
+				$value = '';
+			} else {
+				$value = $tikilib->make_time($input[$ins_id.'Hour'], $input[$ins_id.'Minute'], 0, $input[$ins_id.'Month'], $input[$ins_id.'Day'], $input[$ins_id.'Year']);
+			}
+		}
+		return $value;
 	}
 }
 

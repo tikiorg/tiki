@@ -27,6 +27,7 @@ class Tiki_Profile_Installer
 		'users' => 'Tiki_Profile_InstallHandler_User',
 		'datachannel' => 'Tiki_Profile_InstallHandler_DataChannel',
 		'transition' => 'Tiki_Profile_InstallHandler_Transition',
+		'calendar' => 'Tiki_Profile_InstallHandler_Calendar',
 		'ws' => 'Tiki_Profile_InstallHandler_Workspaces',
 	);
 
@@ -2085,6 +2086,47 @@ class Tiki_Profile_InstallHandler_Transition extends Tiki_Profile_InstallHandler
 		$id = $transitionlib->addTransition( $data['from'], $data['to'], $data['name'], $data['preserve'] == 'y' );
 
 		return $id;
+	}
+} // }}}
+
+//THIS HANDLER STILL DON'T WORK PROPERLY. USE WITH CAUTION. 
+class Tiki_Profile_InstallHandler_Calendar extends Tiki_Profile_InstallHandler // {{{
+{
+	function getData()
+	{
+		if( $this->data )
+			return $this->data;
+
+		return $this->data = $this->obj->getData();
+	}
+	
+	function canInstall()
+	{
+		$data = $this->getData();
+		
+		if (isset($data)) return true;
+		else return false;
+	}
+	
+	function _install()
+	{
+		if ($this->canInstall())
+		{
+			global $calendarlib; if (!$calendarlib) require_once 'lib/calendar/calendarlib.php';
+			
+			$data = $this->getData();
+			
+			foreach ($data as $calendar)
+			{
+				if ((isset ($calendar['name'])) && (!empty ($calendar['name'])))
+				{
+					$customflags = isset($calendar['customflags']) ? $calendar['customflags']  : array();
+					$options = isset($calendar['options']) ? $calendar['options']  : array();
+					$calendarlib->set_calendar(null, $user, $calendar['name'], $calendar['description'], $customflags,$options);
+				}
+			}
+			return 1;
+		}
 	}
 } // }}}
 

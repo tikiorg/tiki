@@ -13,9 +13,9 @@
  * The following section is typically for features that act like Tikiwiki
  * sections and add a configuration icon to the sections list
  *}
-{tab name="{tr}Main Features{/tr}"}
-			<div class="admin clearfix featurelist">
 {* ---------- Main features ------------ *}
+{tab name="{tr}Main{/tr}"}
+			<div class="admin clearfix featurelist">
 				{preference name=feature_wiki}
 				{preference name=feature_blogs}
 				{preference name=feature_galleries}
@@ -31,7 +31,7 @@
 {/tab}
 	
 {* ---------- Global features ------------ *}
-{tab name="{tr}Site Global Features{/tr}"}
+{tab name="{tr}Site Global{/tr}"}
 			<div class="admin featurelist">
 				{preference name=feature_categories}
 				{preference name=feature_score}
@@ -44,7 +44,7 @@
 {/tab}
 
 {* ---------- Additional features ------------ *}
-{tab name="{tr}Additional Features{/tr}"}
+{tab name="{tr}Additional{/tr}"}
 			<div class="admin featurelist">
 				{preference name=feature_faqs}
 				{preference name=feature_surveys}
@@ -66,38 +66,20 @@
 			</div>
 {/tab}
 
-{* ---------- User interface enhancement features ------------ *}
-{tab name="{tr}User interface enhancement features{/tr}"}
+{* ---------- User interface enhancement ------------ *}
+{tab name="{tr}User Interface{/tr}"}
 			<div class="admin featurelist">
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_jscalendar" {if $prefs.feature_jscalendar eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Js+Calendar" target="tikihelp" class="tikihelp" title="{tr}JsCalendar{/tr}">{/if} {tr}JavaScript popup date selector{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div>
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_phplayers" {if $prefs.feature_phplayers eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="http://themes.tikiwiki.org/PhpLayersMenu" target="tikihelp" class="tikihelp" title="{tr}PHPLayers{/tr}">{/if} {tr}PhpLayers Dynamic menus{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div> 
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_fullscreen" {if $prefs.feature_fullscreen eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Fullscreen" target="tikihelp" class="tikihelp" title="{tr}Fullscreen{/tr}">{/if} {tr}Allow users to activate fullscreen mode{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div>
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_cssmenus" {if $prefs.feature_cssmenus eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> <a href="{$prefs.helpurl}Menus" target="tikihelp" class="tikihelp" title="{tr}Menus{/tr}"> {tr}Css Menus (suckerfish){/tr}</a></span>
-				</div>
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_shadowbox"{if $prefs.feature_shadowbox eq 'y'} checked="checked"{/if}/></span>
-					<span class="label"><a href="{$prefs.helpurl}Shadowbox" target="tikihelp" class="tikihelp" title="{tr}Shadowbox{/tr}"> {tr}Shadowbox{/tr}</a></span>
-				</div>
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_quick_object_perms" {if $prefs.feature_quick_object_perms eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> <a href="{$prefs.helpurl}Quickperms" target="tikihelp" class="tikihelp" title="{tr}Quickperms{/tr}"> {tr}Quickperms{/tr}</a></span>
-				</div>
+				{preference name=feature_jscalendar}
+				{preference name=feature_phplayers}
+				{preference name=feature_fullscreen}
+				{preference name=feature_cssmenus}
+				{preference name=feature_shadowbox}
+				{preference name=feature_quick_object_perms}
 			</div>
 {/tab}
 			
 {* ---------- Experimental features ------------ *}
-{tab name="{tr}Experimental Features{/tr}"}
+{tab name="{tr}Experimental{/tr}"}
 			<div class="admin featurelist">
 				<fieldset>
 					<legend class="heading">{icon _id="accept"}<span>{tr}Seem ok{/tr}</span></legend>
@@ -154,6 +136,7 @@
 						<span class="checkbox"><input type="checkbox" name="feature_ajax_autosave" {if $prefs.feature_ajax_autosave eq 'y'}checked="checked"{/if}/></span>
 						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Lost+Edit+Protection" target="tikihelp" class="tikihelp" title="{tr}Ajax{/tr}: {tr}Ajax auto-save{/tr}">{/if} {tr}Ajax auto-save{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}{if $prefs.feature_ajax neq 'y'} ({tr}required{/tr}: {tr}Ajax{/tr}){/if}</span>
 					</div>
+					{preference name='feature_htmlpurifier_output'}
 				</fieldset>
 				<fieldset>
 					<legend class="heading">{icon _id="exclamation"}<span>{tr}Malfunctioning{/tr}</span></legend>
@@ -179,7 +162,7 @@
 {/tab}
 
 {* ---------- Administration features ------------ *}
-{tab name="{tr}Administration Features{/tr}"}
+{tab name="{tr}Administration{/tr}"}
 			<div class="admin featurelist">
 				<div class="half_width">
 					<span class="checkbox"><input type="checkbox" name="feature_banning" {if $prefs.feature_banning eq 'y'}checked="checked"{/if}/></span>
@@ -213,7 +196,7 @@
 {/tab}
 			
 {* --- User Features --- *}
-{tab name="{tr}User Features{/tr}"}
+{tab name="{tr}User{/tr}"}
 			<div class="admin featurelist">
 				<div style="width: 49%; text-align: left; float: left">
 					<span class="checkbox"><input type="checkbox" name="feature_mytiki" {if $prefs.feature_mytiki eq 'y'}checked="checked"{/if} /></span>
@@ -288,7 +271,7 @@
 			</div>
 {/tab}
 
-{tab name="{tr}Programmer Features{/tr}"}
+{tab name="{tr}Programmer{/tr}"}
 			<div class="admin featurelist">
 				<div style="width: 49%; text-align: left; float: left">
 					<span class="checkbox"><input type="checkbox" name="feature_integrator" {if $prefs.feature_integrator eq 'y'}checked="checked"{/if}/></span>

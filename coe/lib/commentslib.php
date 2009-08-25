@@ -713,9 +713,7 @@ class Comments extends TikiLib {
 		and a.`parentId` = ? $time_cond group by a.`threadId`";
 		
 
-	if($this->driver != 'sybase') {
-		$query .=",a.`object`,a.`objectType`,a.`parentId`,a.`userName`,a.`commentDate`,a.`hits`,a.`type`,a.`points`,a.`votes`,a.`average`,a.`title`,a.`data`,a.`hash`,a.`user_ip`,a.`summary`,a.`smiley`,a.`message_id`,a.`in_reply_to`,a.`comment_rating`,a.`locked` ";
-	}
+	$query .=",a.`object`,a.`objectType`,a.`parentId`,a.`userName`,a.`commentDate`,a.`hits`,a.`type`,a.`points`,a.`votes`,a.`average`,a.`title`,a.`data`,a.`hash`,a.`user_ip`,a.`summary`,a.`smiley`,a.`message_id`,a.`in_reply_to`,a.`comment_rating`,a.`locked` ";
 	$query .="order by `sticky` desc, ".$this->convertSortMode($sort_mode).", `threadId`";
 
 	if( $forumId ) {

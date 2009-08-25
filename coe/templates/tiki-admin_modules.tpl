@@ -44,7 +44,7 @@
 					{if $left[0].moduleId ne $left[user].moduleId}
 						<a class="link" href="tiki-admin_modules.php?modup={$left[user].moduleId}#leftmod" title="{tr}Move Up{/tr}">{icon _id='resultset_up'}</a>
 					{/if}
-					{if $left[user.index_next].moduleId}
+					{if !$smarty.section.user.last and $left[user.index_next].moduleId}
 						<a class="link" href="tiki-admin_modules.php?moddown={$left[user].moduleId}#leftmod" title="{tr}Move Down{/tr}">{icon _id='resultset_down'}</a>
 					{/if}
 					<a class="link" href="tiki-admin_modules.php?modright={$left[user].moduleId}#rightmod" title="{tr}Move to Right Column{/tr}">{icon _id='arrow_right'}</a>
@@ -85,7 +85,7 @@
 					{if $right[0].moduleId ne $right[user].moduleId}
 						<a class="link" href="tiki-admin_modules.php?modup={$right[user].moduleId}#rightmod" title="{tr}Move Up{/tr}">{icon _id='resultset_up'}</a>
 					{/if}
-					{if $right[user.index_next].moduleId}
+					{if !$smarty.section.user.last and $right[user.index_next].moduleId}
 						<a class="link" href="tiki-admin_modules.php?moddown={$right[user].moduleId}#rightmod" title="{tr}Move Down{/tr}">{icon _id='resultset_down'}</a>
 					{/if}
 					<a class="link" href="tiki-admin_modules.php?modleft={$right[user].moduleId}#leftmod" title="{tr}Move to Left Column{/tr}">{icon _id='arrow_left'}</a>
@@ -159,7 +159,7 @@
 					<input type="text" id="assign_rows" name="assign_rows" value="{$assign_rows|escape}" />
 				</td>
 			</tr>
-			{if $assign_info.type eq 'function'}
+			{if isset($assign_info.type) and $assign_info.type eq 'function'}
 				{foreach from=$assign_info.params key=name item=param}
 					<tr>
 						<td class="formcolor"><label for="assign_params[{$name|escape}]">{$param.name|escape}</label></td>

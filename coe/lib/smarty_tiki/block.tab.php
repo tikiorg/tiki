@@ -14,7 +14,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *
  * usage: 
  * \code
- *	{tab}
+ *	{tab name=}
  *  tab content
  *	{/tab}
  * \endcode

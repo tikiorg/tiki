@@ -338,57 +338,9 @@ foreach($xfields["data"] as $i => $array) {
 		$ins_fields["data"][$i] = $xfields["data"][$i];
 		$fields["data"][$i] = $xfields["data"][$i];
 		if ($fields["data"][$i]["type"] == 'f') {
-			$fields["data"][$i]["value"] = '';
-			$ins_fields["data"][$i]["value"] = '';
-			$xxxm = $xxxd = $xxxy = null;
-			if (!isset($_REQUEST["$ins_id" . "Month"]) || empty($_REQUEST["$ins_id" . "Month"]) || $_REQUEST["$ins_id" . "Month"] == 'null') $xxxm = '00';
-			if (!isset($_REQUEST["$ins_id" . "Day"]) || empty($_REQUEST["$ins_id" . "Day"]) || $_REQUEST["$ins_id" . "Day"] == 'null') $xxxd = '00';
-			if (!isset($_REQUEST["$ins_id" . "Year"]) || empty($_REQUEST["$ins_id" . "Year"]) || $_REQUEST["$ins_id" . "Year"] == 'null') $xxxy = '00';
-			// If all date fields (month, day, year) are blank, then
-			// that's fine, otherwise, take the date the field is set to.
-			// If the individual field is blank, then set it to today.
-			// If the field is mandatory, then a blank full date is not
-			// allowed, in which case we set it to today's date.
-			if ($xxxm == $xxxd && $xxxd == $xxxy && $xxxy == '00' && ($fields["data"][$i]['isMandatory'] == 'y' || (isset($fields["data"][$i]['options_array'][0]) && $fields["data"][$i]['options_array'][0] != 'd') || ((isset($fields["data"][$i]['options_array'][0]) && $fields["data"][$i]['options_array'][0] == 'd') && (!isset($fields["data"][$i]['options_array'][3]) || $fields["data"][$i]['options_array'][3] != 'blank')))) {
-				$ins_fields["data"][$i]["value"] = $tikilib->now;
-			} elseif ($xxxm == $xxxd && $xxxd == $xxxy && $xxxy == '00') {
-				$ins_fields["data"][$i]["value"] = '';
-			} else {
-				if ($xxxm != null || $xxxm == '00' && $fields["data"][$i]['isMandatory'] == 'y') {
-					$xxxm = $tikidate->month;
-				} else {
-					$xxxm = $_REQUEST["$ins_id" . "Month"];
-				}
-				if ($xxxd != null || $xxxd == '00' && $fields["data"][$i]['isMandatory'] == 'y') {
-					$xxxd = $tikidate->day;
-				} else {
-					$xxxd = $_REQUEST["$ins_id" . "Day"];
-				}
-				if ($xxxy != null || $xxxy == '00' && $fields["data"][$i]['isMandatory'] == 'y') {
-					$xxxy = $tikidate->year;
-				} else {
-					$xxxy = $_REQUEST["$ins_id" . "Year"];
-				}
-				if ($fields["data"][$i]['options_array'][0] == 'd') {
-					$ins_fields["data"][$i]["value"] = $tikilib->make_time(0, 0, 0, $xxxm, $xxxd, $xxxy);
-				} else {
-					$ins_fields["data"][$i]["value"] = $tikilib->make_time(date('H', $tikilib->now), date('i', $tikilib->now), 0, $xxxm, $xxxd, $xxxy);
-				}
+			if (isset($_REQUEST[$ins_id.'Month']) || isset($_REQUEST[$ins_id.'Hour'])) { // new value
+				$ins_fields['data'][$i]['value'] = $trklib->build_date($_REQUEST, $fields['data'][$i], $ins_id);
 			}
-			/********
-			if (isset($_REQUEST["$ins_id" . "Day"])) {
-			if (empty($_REQUEST['$ins_id'.'Hour'])) {
-			$_REQUEST['$ins_id'.'Hour'] = 0;
-			}
-			if (empty($_REQUEST['$ins_id'.'Minute'])) {
-			$_REQUEST['$ins_id'.'Minute'] = 0;
-			}
-			$ins_fields["data"][$i]["value"] = $tikilib->make_time($_REQUEST["$ins_id" . "Hour"], $_REQUEST["$ins_id" . "Minute"],
-			0, $_REQUEST["$ins_id" . "Month"], $_REQUEST["$ins_id" . "Day"], $_REQUEST["$ins_id" . "Year"]);
-			} else {
-			$ins_fields["data"][$i]["value"] = $tikilib->now;
-			}
-			**********/
 		} elseif ($fields["data"][$i]["type"] == 'e') {
 			include_once ('lib/categories/categlib.php');
 			$k = $ins_fields["data"][$i]['options_array'][0];

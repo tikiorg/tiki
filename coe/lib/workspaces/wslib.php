@@ -14,7 +14,10 @@
 
 //Controlling Access
 require_once 'tiki-setup.php';
-//$access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  header("location: index.php");
+  exit;
+}
 
 //Rest of Imports
 include_once 'lib/categories/categlib.php';
@@ -34,15 +37,18 @@ class wslib extends CategLib
 
     /** Stores this objectype, this is WS */
     private $objectType;
+	
+	/** Stores the view Perm */
+	private $viewPerm;
 
     /** Constructor, give the dbtiki to its parent, this is Categlib */
     public function __construct()
     {
-	global $prefs;
+		global $prefs;
 
-	$this->ws_container = (int) $prefs['ws_container'];
-	$this->objectType = 'ws';
-	$this->viewPerm = 'tiki_p_ws_view';
+		$this->ws_container = (int) $prefs['ws_container'];
+		$this->objectType = 'ws';
+		$this->viewPerm = 'tiki_p_ws_view';
     }
 
     /** Initialize the Workspaces in TikiWiki setting a container in the category table and return its ID
@@ -67,13 +73,13 @@ class wslib extends CategLib
      */
     public function get_ws_container()
     {
-	return $this->ws_container;
+		return $this->ws_container;
     }
     
     /** Create a new WS with one group inside it with the associated perm 'tiki_p_ws_view'.
      *
      * @param $name Name of the Workspace
-     * @param $parentWS Name of the ParentWS, if ParentWS is null, its default value will be ws_container
+     * @param $parentWS Name of the ParentWS, if ParentWS is null, its default value will be 0
      * @param $groups An associative array of groups in the form array("groupName" => (string) name, "groupDescription" => (string) description,
      * "noCreateNewGroup" => boolean, "additionalPerms" => array("additionalperm1", "additionalperm2", ...))
      * @param $additionalPerms Associative array for giving more perms than the default perm 'tiki_p_ws_view'
@@ -505,10 +511,10 @@ class wslib extends CategLib
      */
     public function get_ws_id($name, $parentWS)
     {
-	$query = "select `categId` from `tiki_categories` where `name`=? and `parentId`=? and `rootCategId`=?";
-	$bindvars = array($name, $parentWS, $this->ws_container);
+		$query = "select `categId` from `tiki_categories` where `name`=? and `parentId`=? and `rootCategId`=?";
+		$bindvars = array($name, $parentWS, $this->ws_container);
 
-	return $this->getOne($query, $bindvars);
+		return $this->getOne($query, $bindvars);
     }
 
     /** Get a WS name by its id
@@ -519,10 +525,10 @@ class wslib extends CategLib
      */
     public function get_ws_name($ws_id)
     {
-	$query = "select `name` from `tiki_categories` where `categId`=? and `rootCategId`=?";
-	$bindvars = array($ws_id);
+		$query = "select `name` from `tiki_categories` where `categId`=?";
+		$bindvars = array($ws_id);
 
-	return $this->getOne($query, $bindvars);
+		return $this->getOne($query, $bindvars);
     }
     
     public function get_ws_description($ws_id)
@@ -653,9 +659,9 @@ class wslib extends CategLib
      */
     public function list_all_ws ($offset, $maxRecords, $sort_mode = 'name_asc')
     {
-    	$bindvals = array($this->ws_container);
-	$query = "select * from `tiki_categories` where `rootCategId`=? order by ".$this->convertSortMode($sort_mode);
+	$query = "select * from `tiki_categories` where `rootCategId`=?";// order by ".$this->convertSortMode($sort_mode);
 	$query_cant = "select count(*) from `tiki_categories` where `rootCategId`=?";
+	$bindvals = array($this->ws_container);
 	$result = $this->query($query,$bindvals,$maxRecords,$offset);
 	$cant = $this->getOne($query_cant,$bindvals);
 	$ret = array();
@@ -704,7 +710,7 @@ class wslib extends CategLib
 			   and (t1.`userId` = t2.`userId`) 
 			   and (t2.`groupName` = t3.`groupName`) 
 			   and t3.`permName` = ?";
-	$result = $this->query($query,array($user), $maxRecords, $offset, $this->viewPerm);
+	$result = $this->query($query,array($user, $this->viewPerm), $maxRecords, $offset);
 	while ($res = $result->fetchRow())
 		$userWSHashes[] = $res["objectId"];
 	

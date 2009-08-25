@@ -4052,7 +4052,7 @@ class TikiLib extends TikiDb_Bridge {
 			.( $onlyCant ? "tp.`pageName`" : "tp.* ".$select )
 			." from `tiki_pages` as tp $join_tables $mid order by ".$this->convertSortMode($sort_mode);
 
-		$result = $this->query($query, $bindvars, $maxRecords, $offset);
+		$result = $this->query($query, $bindvars);
 
 		$cant = 0;
 		$n = -1;
