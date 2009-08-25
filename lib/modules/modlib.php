@@ -455,7 +455,7 @@ class ModLib extends TikiLib {
 				'filter' => 'striptags',
 			),
 			'page' => array(
-				'name' => tra('Page'),
+				'name' => tra('Page filter'),
 				'description' => tra('Module only applicable on the specified page names. Multiple values can be separated by semi-colons.'),
 				'separator' => ';',
 				'filter' => 'pagename',
