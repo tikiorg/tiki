@@ -159,7 +159,7 @@
 					<input type="text" id="assign_rows" name="assign_rows" value="{$assign_rows|escape}" />
 				</td>
 			</tr>
-			{if $assign_info.type eq 'function'}
+			{if isset($assign_info.type) and $assign_info.type eq 'function'}
 				{foreach from=$assign_info.params key=name item=param}
 					<tr>
 						<td class="formcolor"><label for="assign_params[{$name|escape}]">{$param.name|escape}</label></td>
