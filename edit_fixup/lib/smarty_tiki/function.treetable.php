@@ -246,7 +246,7 @@ function smarty_function_treetable($params, &$smarty) {
 				$rowVal = htmlentities($row[$_valueColumnIndex]);
 				$cbxTit = empty($_checkboxTitles) ? $cbxVal : $_checkboxTitles[$i];
 				$html .= '<td class="checkBoxCell">';
-				$html .= '<input type="checkbox" name="'.$_checkbox[$i].'[]" value="'.$rowVal.'"'.($cbxVal=='y' ? ' checked=checked' : '').' title="'.$cbxTit.'" />';
+				$html .= '<input type="checkbox" name="'.$_checkbox[$i].'[]" value="'.$rowVal.'"'.($cbxVal=='y' ? ' checked="checked"' : '').' title="'.$cbxTit.'" />';
 				if ($cbxVal == 'y') {
 					$html .= '<input type="hidden" name="old_'.$_checkbox[$i].'[]" value="'.$rowVal.'" />';
 				}

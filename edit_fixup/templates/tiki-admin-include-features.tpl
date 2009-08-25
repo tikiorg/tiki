@@ -14,7 +14,7 @@
  * sections and add a configuration icon to the sections list
  *}
 {* ---------- Main features ------------ *}
-{tab name="{tr}Main Features{/tr}"}
+{tab name="{tr}Main{/tr}"}
 			<div class="admin clearfix featurelist">
 				{preference name=feature_wiki}
 				{preference name=feature_blogs}
@@ -31,7 +31,7 @@
 {/tab}
 	
 {* ---------- Global features ------------ *}
-{tab name="{tr}Site Global Features{/tr}"}
+{tab name="{tr}Site Global{/tr}"}
 			<div class="admin featurelist">
 				{preference name=feature_categories}
 				{preference name=feature_score}
@@ -44,7 +44,7 @@
 {/tab}
 
 {* ---------- Additional features ------------ *}
-{tab name="{tr}Additional Features{/tr}"}
+{tab name="{tr}Additional{/tr}"}
 			<div class="admin featurelist">
 				{preference name=feature_faqs}
 				{preference name=feature_surveys}
@@ -66,8 +66,8 @@
 			</div>
 {/tab}
 
-{* ---------- User interface enhancement features ------------ *}
-{tab name="{tr}User interface enhancement features{/tr}"}
+{* ---------- User interface enhancement ------------ *}
+{tab name="{tr}User Interface{/tr}"}
 			<div class="admin featurelist">
 				{preference name=feature_jscalendar}
 				{preference name=feature_phplayers}
@@ -75,10 +75,11 @@
 				{preference name=feature_cssmenus}
 				{preference name=feature_shadowbox}
 				{preference name=feature_quick_object_perms}
+			</div>
 {/tab}
 			
 {* ---------- Experimental features ------------ *}
-{tab name="{tr}Experimental Features{/tr}"}
+{tab name="{tr}Experimental{/tr}"}
 			<div class="admin featurelist">
 				<fieldset>
 					<legend class="heading">{icon _id="accept"}<span>{tr}Seem ok{/tr}</span></legend>
@@ -161,7 +162,7 @@
 {/tab}
 
 {* ---------- Administration features ------------ *}
-{tab name="{tr}Administration Features{/tr}"}
+{tab name="{tr}Administration{/tr}"}
 			<div class="admin featurelist">
 				<div class="half_width">
 					<span class="checkbox"><input type="checkbox" name="feature_banning" {if $prefs.feature_banning eq 'y'}checked="checked"{/if}/></span>
@@ -195,7 +196,7 @@
 {/tab}
 			
 {* --- User Features --- *}
-{tab name="{tr}User Features{/tr}"}
+{tab name="{tr}User{/tr}"}
 			<div class="admin featurelist">
 				<div style="width: 49%; text-align: left; float: left">
 					<span class="checkbox"><input type="checkbox" name="feature_mytiki" {if $prefs.feature_mytiki eq 'y'}checked="checked"{/if} /></span>
@@ -270,7 +271,7 @@
 			</div>
 {/tab}
 
-{tab name="{tr}Programmer Features{/tr}"}
+{tab name="{tr}Programmer{/tr}"}
 			<div class="admin featurelist">
 				<div style="width: 49%; text-align: left; float: left">
 					<span class="checkbox"><input type="checkbox" name="feature_integrator" {if $prefs.feature_integrator eq 'y'}checked="checked"{/if}/></span>

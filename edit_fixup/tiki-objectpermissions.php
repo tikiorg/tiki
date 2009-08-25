@@ -5,13 +5,20 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id: /cvsroot/tikiwiki/tiki/tiki-objectpermissions.php,v 1.25.2.2 2008-03-11 15:17:54 nyloth Exp $
 include_once ("tiki-setup.php");
-if (empty($_REQUEST['objectType']) || $_REQUEST['objectType'] != 'global') {
+if (!empty($_REQUEST['objectType']) && $_REQUEST['objectType'] != 'global') {
 	if (!isset($_REQUEST['objectName']) || empty($_REQUEST['objectId'])) {
 		$smarty->assign('msg', tra("Not enough information to display this page"));
 		$smarty->display("error.tpl");
 		die;
 	}
 }
+if (empty($_REQUEST['objectType'])) {
+	 $_REQUEST['objectType'] = 'global';
+	 $_REQUEST['objectName'] = '';
+	 $_REQUEST['objectId'] = '';
+}
+
+
 $auto_query_args = array(
 	'referer',
 	'reloff',
@@ -30,6 +37,13 @@ if ($_REQUEST['objectType'] == 'wiki page') {
 		$info = $tikilib->get_page_info($_REQUEST['objectName']);
 		$tikilib->get_perm_object($_REQUEST['objectId'], $_REQUEST['objectType'], $info);
 	}
+} else if ($_REQUEST['objectType'] == 'global') {
+	if ($tiki_p_admin != 'y') {						// is there a better perm for this?
+		$smarty->assign('errortype', 401);
+		$smarty->assign('msg', tra("Permission denied you cannot assign permissions for this object"));
+		$smarty->display("error.tpl");
+		die;
+	}
 } else {
 	$tikilib->get_perm_object($_REQUEST['objectId'], $_REQUEST['objectType']);
 	if ($_REQUEST['objectType'] == 'tracker') {
@@ -46,18 +60,19 @@ if (!($tiki_p_admin_objects == 'y' || (isset($$perm) && $$perm == 'y') || (isset
 	$smarty->display("error.tpl");
 	die;
 }
-//if ($prefs['feature_jquery_ui'] != 'y') {
-//	$headerlib->add_jsfile('lib/jquery/jquery-ui/ui/minified/jquery-ui.min.js');
-//}
 
 if (!isset($_REQUEST["referer"])) {
-	if (isset($_SERVER['HTTP_REFERER'])) {
+	if (isset($_SERVER['HTTP_REFERER']) && strpos($_SERVER['HTTP_REFERER'], 'tiki-objectpermissions.php') === false) {
 		$_REQUEST["referer"] = $_SERVER['HTTP_REFERER'];
+	} else {
+		unset($_REQUEST["referer"]);
 	}
 }
 if (isset($_REQUEST["referer"])) {
 	$smarty->assign('referer', $_REQUEST["referer"]);
-}
+} else {
+	$smarty->assign('referer', '');
+	}
 $_REQUEST["objectId"] = urldecode($_REQUEST["objectId"]);
 $_REQUEST["objectType"] = urldecode($_REQUEST["objectType"]);
 $_REQUEST["permType"] = !empty($_REQUEST['permType']) ? urldecode($_REQUEST["permType"]) : 'all';
@@ -435,8 +450,11 @@ JS;
 }	// end of for $groupNames loop
 
 $maxGroupsToShow = 6;	// maybe a pref one day?
-if (count($groupNames) > $maxGroupsToShow) {
-	$hideGroups = implode(',',array_keys(array_fill($maxGroupsToShow, count($groupNames)-$maxGroupsToShow+1, 1)));
+if (count($groupNames) >= $maxGroupsToShow) {
+	$hideGroups = implode(',',array_keys(array_fill($maxGroupsToShow+1, count($groupNames)-$maxGroupsToShow, 1)));
+	if (!isset($_COOKIE['columnManagerCtreetable_1'])) {
+		$smarty->assign('groupsHidden', 'y');
+	}
 } else {
 	$hideGroups = '';
 }

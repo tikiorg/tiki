@@ -21,21 +21,27 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	global $prefs;
 	if ( $repeat ) return;
 
-	if ( ! isset($params['_toolbars']) || $prefs['javascript_enabled'] != 'y') $params['_toolbars'] = 'n';
+	// some defaults
+	$params['_toolbars'] = isset($params['_toolbars']) ? $params['_toolbars'] : 'y';
+	if ( $prefs['javascript_enabled'] != 'y') $params['_toolbars'] = 'n';
 /*
 	if ( ! isset($params['_wikiparsed']) ) {
 		// Toolbars implies wiki parsing
 		$params['_wikiparsed'] = $params['toolbars'];
 	}
 */
-	if ( ! isset($params['_wysiwyg']) ) $params['_wysiwyg'] = 'n';
+	$params['_wysiwyg'] = isset($params['_wysiwyg']) ? $params['_wysiwyg'] : 'n';
+	$params['rows'] = isset($params['rows']) ? $params['rows'] : 20;
+	$params['cols'] = isset($params['cols']) ? $params['cols'] : 80;
+	$params['name'] = isset($params['name']) ? $params['name'] : 'edit';
+	
 	if ( isset($params['_zoom']) && $params['_zoom'] == 'n' ) {
 		$feature_template_zoom_orig = $prefs['feature_template_zoom'];
 		$prefs['feature_template_zoom'] = 'n';
 	}
 	if ( ! isset($params['_section']) ) {
 		global $section;
-		$params['_section'] = $section? $section: 'wiki';
+		$params['_section'] = $section ? $section: 'wiki';
 	}
 	if ( ! isset($params['style']) ) $params['style'] = 'width:99%';
 	$html = '';
