@@ -2,7 +2,7 @@
 /*
  * tiki-workspaces-index.php - TikiWiki CMS/GroupWare
  *
- * This is the index page of workspaces (WS), with it a normal user can list his WS.
+ * This is the index page of workspaces (WS), with it a normal user can list the WS he belongs to.
  * 
  * @author 	Aldo Borrero Gonzalez (axold) <axold07@gmail.com>
  * @author 	Benjamín Palacios Gonzalo (mangapower) <mangapowerx@gmail.com>
