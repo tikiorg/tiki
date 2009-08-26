@@ -207,6 +207,7 @@ if ($isvalid) {
 		die;
 	} else {
 		// User is valid and not due to change pass.. start session
+		$userlib->update_expired_groups();
 		$_SESSION[$user_cookie_site] = $user;
 		if (isset($_SESSION['openid_url'])) $userlib->assign_openid($user, $_SESSION['openid_url']);
 		$smarty->assign_by_ref('user', $user);
