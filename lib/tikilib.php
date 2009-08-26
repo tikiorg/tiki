@@ -4694,7 +4694,7 @@ class TikiLib extends TikiDb_Bridge {
 			return false;
 
 		$html=$is_html?1:0;
-		if ($html) {
+		if ($html && $prefs['feature_purifier'] != 'n') {
 			require_once('lib/htmlpurifier_tiki/HTMLPurifier.tiki.php');
 			$edit_data = HTMLPurifier($edit_data);
 		}
@@ -7380,7 +7380,7 @@ class TikiLib extends TikiDb_Bridge {
 		}
 
 		$html=$is_html?1:0;
-		if ($html) {
+		if ($html&& $prefs['feature_purifier'] != 'n') {
 			require_once('lib/htmlpurifier_tiki/HTMLPurifier.tiki.php');
 			$edit_data = HTMLPurifier($edit_data);
 		}
