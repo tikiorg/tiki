@@ -270,23 +270,30 @@ var editTimerWarnings = 0;
 		<tr class="formcolor">
 			<td colspan="2">
 				{if $wysiwyg ne 'y' or $prefs.javascript_enabled ne 'y'}
-					{include file='wiki_edit.tpl'}
-					<input type="hidden" name="rows" value="{$rows}"/>
-					<input type="hidden" name="cols" value="{$cols}"/>
-					<input type="hidden" name="wysiwyg" value="n" />
+					{*include file='wiki_edit.tpl'*}
+<!--					<input type="hidden" name="rows" value="{$rows}"/>-->
+<!--					<input type="hidden" name="cols" value="{$cols}"/>-->
+<!--					<input type="hidden" name="wysiwyg" value="n" />-->
+					{textarea _toolbars="y"}{$pagedata}{/textarea}
 				{else}
-							{capture name=autosave}{if $prefs.feature_ajax eq 'y' and $prefs.feature_ajax_autosave eq 'y' and $noautosave neq 'y'}{autosave test='n' id='edit' default=$pagedata preview=$preview}{else}{$pagedata}{/if}{/capture}
-							{if $prefs.feature_ajax eq 'y' and $prefs.feature_ajax_autosave eq 'y' and $noautosave neq 'y' and $has_autosave eq 'y'}
-								{remarksbox type="warning" title="{tr}AutoSave{/tr}"}
-									{tr}If you want the saved version instead of the autosaved one{/tr}&nbsp;{self_link noautosave='y' _ajax='n'}{tr}Click Here{/tr}{/self_link}
-								{/remarksbox}
-							{/if}
-						</td>
-					</tr>
-					<tr>
-						<td colspan="2">
-							{editform Meat=$smarty.capture.autosave InstanceName='edit' ToolbarSet="Tiki"}
-							<input type="hidden" name="wysiwyg" value="y" />
+					{capture name=autosave}
+						{if $prefs.feature_ajax eq 'y' and $prefs.feature_ajax_autosave eq 'y' and $noautosave neq 'y'}
+							{autosave test='n' id='edit' default=$pagedata preview=$preview}
+						{else}
+							{$pagedata}
+						{/if}
+					{/capture}
+					{if $prefs.feature_ajax eq 'y' and $prefs.feature_ajax_autosave eq 'y' and $noautosave neq 'y' and $has_autosave eq 'y'}
+						{remarksbox type="warning" title="{tr}AutoSave{/tr}"}
+							{tr}If you want the saved version instead of the autosaved one{/tr}&nbsp;{self_link noautosave='y' _ajax='n'}{tr}Click Here{/tr}{/self_link}
+						{/remarksbox}
+					{/if}
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					{editform Meat=$smarty.capture.autosave InstanceName='edit' ToolbarSet="Tiki"}
+					<input type="hidden" name="wysiwyg" value="y" />
 				{/if}
 			</td>
 		</tr>

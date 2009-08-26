@@ -705,6 +705,11 @@ ul.categories li{
 
 /* New Toolbars (toolbars) */
 
+.textarea-toolbar {
+	padding: .3em;
+	font-size: .9em;
+}
+
 a.toolbar {
 	padding: 0 .5em 0 0;
 }
