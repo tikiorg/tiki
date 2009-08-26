@@ -88,6 +88,8 @@ if (!empty($_REQUEST['edit_assign'])) {
 
 	$modinfo = $modlib->get_module_info( $info['name'] );
 	$modlib->dispatchValues( $info['params'], $modinfo['params'] );
+	if ($modinfo["type"] == "include")
+		$smarty->assign_by_ref('assign_params', $info["params"]); // For old-style modules
 	$smarty->assign('assign_info', $modinfo);
 }
 if (!empty($_REQUEST['unassign'])) {

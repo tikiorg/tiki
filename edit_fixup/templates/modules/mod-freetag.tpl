@@ -14,8 +14,8 @@
 <table>{include file="antibot.tpl"}</table>
 {/if}
 <input type="submit" name="Add" value="Add" />
+{help url="Tags" desc='{tr}Put tags separated by spaces. For tags with more than one word, use no spaces and put words together or enclose them with double quotes{/tr}'}
 </form>
 {/if}
-
 {/tikimodule}
 {/if}

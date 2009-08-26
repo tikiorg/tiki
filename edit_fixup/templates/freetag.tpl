@@ -13,7 +13,7 @@
 			</script>
 			<div id="freetager">
 				{if $prefs.feature_help eq 'y'}
-					{tr}Put tags separated by spaces. For tags with more than one word, use no spaces and put words together.{/tr}
+					{tr}Put tags separated by spaces. For tags with more than one word, use no spaces and put words together or enclose them with double quotes.{/tr}
 				{/if}
 
 				<input type="text" id="tagBox" name="freetag_string" value="{$taglist|escape}" style="width:98%" />

@@ -63,6 +63,7 @@
 				{preference name=feature_minichat}
 				{preference name=feature_comments_moderation}
 				{preference name=feature_comments_locking}
+				{preference name=feature_purifier}
 			</div>
 {/tab}
 
