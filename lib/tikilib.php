@@ -2874,9 +2874,9 @@ class TikiLib extends TikiDb_Bridge {
 			$join = '';
 			$where = '';
 		}
-		
-		array_push( $bindvars );
-		$query = "select * from `tiki_blogs` $join where `blogId`=$blogId $where";
+		array_push( $bindvars, $blogId );
+		if (!empty($where)) $where = '1=1 '.$where.' AND ';
+		$query = "SELECT * FROM `tiki_blogs` $join WHERE $where `blogId`=?";
 		$result = $this->query($query, $bindvars);
 		if ($result->numRows()) {
 			$res = $result->fetchRow();
