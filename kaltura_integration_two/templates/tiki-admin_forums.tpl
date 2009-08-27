@@ -56,7 +56,7 @@
 					<input type="checkbox" name="checked[]" value="{$channels[user].forumId|escape}" {if $smarty.request.checked and in_array($channels[user].forumId,$smarty.request.checked)}checked="checked"{/if} />
 				</td>
 				<td>
-					<a class="link" href="tiki-view_forum.php?forumId={$channels[user].forumId}" title="{tr}View{/tr}">{$channels[user].name}</a>
+					<a class="link" href="tiki-view_forum.php?forumId={$channels[user].forumId}" title="{tr}View{/tr}">{$channels[user].name|escape}</a>
 				</td>
 				<td style="text-align:right;">{$channels[user].threads}</td>
 				<td style="text-align:right;">{$channels[user].comments}</td>

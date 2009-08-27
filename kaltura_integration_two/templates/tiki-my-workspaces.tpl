@@ -3,9 +3,9 @@
 {if not empty($listWS) }
     <table class = admin>
     <tr>
-       <th>Name</th>
-       <th>Description</th>
-       <th>Path</th>
+       <th>{tr}Name{/tr}</th>
+       <th>{tr}Description{/tr}</th>
+       <th>{tr}Path{/tr}</th>
     </tr>
     {cycle print=false values="even,odd"}
     {foreach from=$listWS item=data}
@@ -18,11 +18,11 @@
     </table>
     <br />
     {if not empty($prev_page)}
-	    <a class="button" href = {$prev_page}>Back</a>
+	    <a class="button" href = {$prev_page}>{tr}Previous{/tr}</a>
     {/if}
     {if not empty($next_page)}
-	    <a class="button" href = {$next_page}>Next</a>
+	    <a class="button" href = {$next_page}>{tr}Next{/tr}</a>
     {/if}
 {else}
-{tr}You are not enrolled at any Workspace.{/tr}
+{tr}You do not belong to any workspace.{/tr}
 {/if}

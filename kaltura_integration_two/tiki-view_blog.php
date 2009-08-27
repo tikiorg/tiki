@@ -149,7 +149,7 @@ if ($prefs['feature_theme_control'] == 'y') {
 	$cat_objid = $_REQUEST['blogId'];
 	include ('tiki-tc.php');
 }
-if ($user && $tiki_p_notepad == 'y' && $prefs['feature_notepad'] == 'y' && isset($_REQUEST['savenotepad'])) {
+if ($user && $prefs['feature_notepad'] == 'y' && $tiki_p_notepad == 'y' && isset($_REQUEST['savenotepad'])) {
 	check_ticket('blog');
 	$post_info = $bloglib->get_post($_REQUEST['savenotepad']);
 	$tikilib->replace_note($user, 0, $post_info['title'] ? $post_info['title'] : $tikilib->date_format("%d/%m/%Y [%H:%M]", $post_info['created']) , $post_info['data']);

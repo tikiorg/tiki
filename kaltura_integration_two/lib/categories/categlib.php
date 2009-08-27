@@ -16,8 +16,13 @@ global $objectlib;require_once("lib/objectlib.php");
 
 class CategLib extends ObjectLib {
 
+	/* Returns an array of categories which are descendants of the category with the given $categId. If no category is given, all categories are returned.
+	Each category is similar to a tiki_categories record, but with the following additional fields:
+		"categpath" is a string representing the path to the category in the category tree, ordered from the ancestor to the category. Each category is separated by "::". For example, "Tiki" could have categpath "Software::Free software::Tiki". If a category is given, it is considered the root of the category tree for building categpath.
+		"tepath" is an array representing the path to the category in the category tree, ordered from the ancestor to the category. Each element is the name of the represented category.
+		"children" is the number of categories the category has as children.
+		"objects" is the number of objects directly in the category. */
 	function list_categs($categId=0) {
-		global $cachelib; include_once('lib/cache/cachelib.php');
 		$back = $this->get_all_categories_ext();
 
 		if ($categId > 0) {
@@ -27,7 +32,7 @@ class CategLib extends ObjectLib {
 				if ($cat['categId'] == $categId)
 					$path = $cat['categpath'].'::';
 				else if ($path != '' && strpos($cat['categpath'], $path) === 0) {
-					$cat['categpath'] = substr($cat['categpath'] , strlen($path));
+					$cat['categpath'] = substr($cat['categpath'], strlen($path));
 					$back2[] = $cat;
 				}
 			}
@@ -132,6 +137,9 @@ class CategLib extends ObjectLib {
 		return '';
 	}
 
+	// Returns an array of ancestors of the category with the given $categId and the given category itself.
+	// The path is ordered starting from the category tree root and ending with the given category.
+	// Each category is represented by an array with the category ID at index "categId" and the name at index "name".
 	function get_category_path($categId) {
 		$info = $this->get_category($categId);
 		$i=999999;
@@ -614,18 +622,26 @@ class CategLib extends ObjectLib {
 		return $ret;
 	}
 
+	// Removes the object with the given identifer from the category with the given identifier
 	function remove_object_from_category($catObjectId, $categId) {
-		global $cachelib; include_once('lib/cache/cachelib.php');
-		$query = "delete from `tiki_category_objects` where `catObjectId`=? and `categId`=?";
-		$result = $this->query($query,array($catObjectId,$categId));
-		$query = "select count(*) from `tiki_category_objects` where `catObjectId`=?";
-		$cant = $this->getOne($query,array((int) $catObjectId));
-		if (!$cant) {
-			$query = "delete from `tiki_categorized_objects` where `catObjectId`=?";
-			$result = $this->query($query,array((int) $catObjectId));
+		$this->remove_object_from_categories($catObjectId, array($categId));
+	}
+
+	// Removes the object with the given identifer from the categories specified in the $categIds array. The array contains category identifiers.
+	function remove_object_from_categories($catObjectId, $categIds) {
+		if (!empty($categIds)) {
+			global $cachelib; include_once('lib/cache/cachelib.php');
+			$query = "delete from `tiki_category_objects` where `catObjectId`=? and `categId` in (".implode(',',array_fill(0,count($categIds),'?')).")";
+			$result = $this->query($query,array_merge(array($catObjectId), $categIds));
+			$query = "select count(*) from `tiki_category_objects` where `catObjectId`=?";
+			$cant = $this->getOne($query,array((int) $catObjectId));
+			if (!$cant) {
+				$query = "delete from `tiki_categorized_objects` where `catObjectId`=?";
+				$result = $this->query($query,array((int) $catObjectId));
+			}
+			$cachelib->invalidate('allcategs');
+			$cachelib->empty_type_cache('fgals_perms');
 		}
-		$cachelib->invalidate('allcategs');
-		$cachelib->empty_type_cache('fgals_perms');
 	}
 
 	// FUNCTIONS TO CATEGORIZE SPECIFIC OBJECTS ////
@@ -665,7 +681,8 @@ class CategLib extends ObjectLib {
 		}
 	}
 
-	function categorize_page($pageName, $categId) {
+	// Categorize the Wiki page with the given name in the categories specified in the second parameter. $categIds can be a category ID or an array of category IDs.
+	function categorize_page($pageName, $categIds) {
 		// Check if we already have this object in the tiki_categorized_objects page
 
 		$catObjectId = $this->is_categorized('wiki page', $pageName);
@@ -678,7 +695,11 @@ class CategLib extends ObjectLib {
 			$catObjectId = $this->add_categorized_object('wiki page', $pageName, substr($info["description"], 0, 200), $pageName, $href);
 		}
 
-		$this->categorize($catObjectId, $categId);
+		if (!is_array($categIds)) $categIds=array($categIds);
+		foreach($categIds as $categId) {
+			$this->categorize($catObjectId, $categId);
+		}
+
 		return $catObjectId;
 	}
 	
@@ -916,7 +937,13 @@ class CategLib extends ObjectLib {
 	*/
 		return $this->get_all_categories_ext();
 	}
-	/* build the cache with the categpath and the count */
+
+	/* Returns an array of categories and caches it in cache item "allcategs".
+	Each category is similar to a tiki_categories record, but with the following additional fields:
+		"categpath" is a string representing the path to the category in the category tree, ordered from the ancestor to the category. Each category is separated by "::". For example, "Tiki" could have categpath "Software::Free software::Tiki".
+		"tepath" is an array representing the path to the category in the category tree, ordered from the ancestor to the category. Each element is the name of the represented category.
+		"children" is the number of categories the category has as children.
+		"objects" is the number of objects directly in the category. */
 	function build_cache() {
 		global $cachelib; include_once('lib/cache/cachelib.php');
 		$ret = array();

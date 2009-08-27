@@ -126,7 +126,7 @@ function wikiplugin_trackerstat($data, $params) {
 		if ($i < 0 ) {
 			return tra("incorrect fieldId")." ".$fieldId;
 		}
-		if ($allFields["data"][$i]['type'] == 'u' || $allFields["data"][$i]['type'] == 'I' || $allFields["data"][$i]['type'] == 'g' || $allFields["data"][$i]['type'] == 's') {
+		if ($allFields["data"][$i]['type'] == 'u' || $allFields["data"][$i]['type'] == 'I' || $allFields["data"][$i]['type'] == 's') {
 			continue;
 		}
 		if (!($allFields["data"][$i]['isHidden'] == 'n' || $allFields["data"][$i]['isHidden'] == 'p' || ($allFields["data"][$i]['isHidden'] == 'y' && $tiki_p_admin_trackers == 'y'))) {

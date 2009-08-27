@@ -11,7 +11,7 @@
     
 {section name=ix loop=$categs}
 
-    <option value="{$categs[ix].categId|escape}" {if $parent eq $categs[ix].categId}selected="selected"{/if}>{$categs[ix].path}</option>
+    <option value="{$categs[ix].categId|escape}" {if $parent eq $categs[ix].categId}selected="selected"{/if}>{$categs[ix].path|escape}</option>
     
 {/section}
 
@@ -103,7 +103,7 @@
   {cycle values="odd,even" print=false}
   {section name=user loop=$items}
   <tr>
-    <td class="{cycle advance=false}"><a class="tablename" href="tiki-directory_admin_categories.php?parent={$items[user].categId}">{$items[user].name}</a></td>
+    <td class="{cycle advance=false}"><a class="tablename" href="tiki-directory_admin_categories.php?parent={$items[user].categId}">{$items[user].name|escape}</a></td>
     <td class="{cycle advance=false}">{$items[user].childrenType}</td>
     <td class="{cycle advance=false}">{$items[user].viewableChildren}</td>
     <td class="{cycle advance=false}">{$items[user].allowSites}{if $items[user].allowSites eq 'y'} ({$items[user].sites}) {/if}</td>

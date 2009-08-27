@@ -25,22 +25,15 @@ function smarty_block_popup_link($params, $content, &$smarty, $repeat) {
 	\$jq('#$linkId').click( function() {
 		var block = \$jq('#$block');
 		if( block.css('display') == 'none' ) {
-			var coord = \$jq(this).offset();
+			//var coord = \$jq(this).offset();
 			block.css( 'position', 'absolute' );
-			block.css( 'left', coord.left);
-			block.css( 'top', coord.top + \$jq(this).height() );
+			//block.css( 'left', coord.left);
+			//block.css( 'top', coord.top + \$jq(this).height() );
 			show( '$block' );
 		} else {
 			hide( '$block' );
 		}
 	});
-} );
-JS
-			);
-		}
-
-		window.popup_link = block;
-	} );
 } );
 JS
 			);

@@ -26,7 +26,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function smarty_block_tabset($params, $content, &$smarty, &$repeat) {
 	global $prefs, $smarty_tabset_name, $smarty_tabset;
-
+	static $i_tabset;
 
 	if ( $repeat ) {
 		// opening 
@@ -63,11 +63,13 @@ function smarty_block_tabset($params, $content, &$smarty, &$repeat) {
 		$ret .= '<div class="tabs">
 			';
 		$max = sizeof($smarty_tabset);
-		$i = 1;
+		if (empty($i_tabset)) {
+			$i_tabset = 1;
+		}
 		foreach ($smarty_tabset as $value) {
-			$ret .= '	<span id="tab'.$i.'" class="tabmark tabinactive"><a href="#content'.$i.'" onclick="javascript:tikitabs('.$i.','.$max.'); return false;">'.$value.'</a></span>
+			$ret .= '	<span id="tab'.$i_tabset.'" class="tabmark tabinactive"><a href="#content'.$i_tabset.'" onclick="javascript:tikitabs('.$i_tabset.','.$max.'); return false;">'.$value.'</a></span>
 				';
-			$i++;
+			$i_tabset++;
 		}
 		//$ret .= '<span class="tabmark tabinactive"><a href="#">'.$notabs.'</a></span></div>'.$content;
 		$ret .= "</div>$content";

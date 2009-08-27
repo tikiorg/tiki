@@ -249,7 +249,7 @@
 		{assign var=start value=$prefs.calendar_start_year}
 	{else}
 		{assign var=start value=-4}
-	{/if}	
+	{/if}
 	{if $field_value.year > 0 and $field_value.year < $start}
 			{assign var=start value=$field_value.year}
 	{/if}
@@ -278,8 +278,15 @@
 			{html_select_date prefix=$field_value.ins_id time=$time start_year=$start end_year=$end field_order=$prefs.display_field_order}
 		{/if}
 	{/if}
+	{if $field_value.options_array[0] eq 'dt'}
+		{tr}at{/tr} 
+	{/if}
 	{if $field_value.options_array[0] ne 'd'}
-		{tr}at{/tr} {html_select_time prefix=$field_value.ins_id time=$time display_seconds=false}
+		{if $field_value.isMandatory ne 'y' and (isset($field_value.options_array[3]) and $field_value.options_array[3] eq 'blank')}
+			{html_select_time prefix=$field_value.ins_id time=$time display_seconds=false all_empty=" "}
+		{else}
+			{html_select_time prefix=$field_value.ins_id time=$time display_seconds=false}
+		{/if}
 	{/if}
 
 {* -------------------- drop down -------------------- *}

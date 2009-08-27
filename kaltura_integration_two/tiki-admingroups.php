@@ -12,14 +12,7 @@ if ($tiki_p_admin != 'y') {
 	die;
 }
 if (!isset($cookietab)) { $cookietab = '1'; }
-list($trackers, $ag_utracker, $ag_ufield, $ag_gtracker, $ag_gfield, $ag_rufields) = array(
-	array() ,
-	0,
-	0,
-	0,
-	0,
-	''
-);
+list($trackers, $ag_utracker, $ag_ufield, $ag_gtracker, $ag_gfield, $ag_rufields) = array(array() ,	0, 0, 0, 0, '');
 if (isset($prefs['groupTracker']) and $prefs['groupTracker'] == 'y') {
 	$trackerlist = $tikilib->list_trackers(0, -1, 'name_asc', '');
 	$trackers = $trackerlist['list'];
@@ -66,7 +59,8 @@ if (isset($_REQUEST["newgroup"])) {
 		die;
 	} else {
 		$_REQUEST['userChoice'] = (isset($_REQUEST['userChoice']) && $_REQUEST['userChoice'] == 'on') ? 'y' : '';
-		$userlib->add_group($_REQUEST["name"], $_REQUEST["desc"], $ag_home, $ag_utracker, $ag_gtracker, '', $_REQUEST['userChoice'], $ag_defcat, $ag_theme);
+		if (empty($_REQUEST['expireAfter'])) $_REQUEST['expireAfter'] = 0;
+		$userlib->add_group($_REQUEST['name'], $_REQUEST['desc'], $ag_home, $ag_utracker, $ag_gtracker, '', $_REQUEST['userChoice'], $ag_defcat, $ag_theme, 0, 0, 'n', $_REQUEST['expireAfter']);
 		if (isset($_REQUEST["include_groups"])) {
 			foreach($_REQUEST["include_groups"] as $include) {
 				if ($_REQUEST["name"] != $include) {
@@ -101,7 +95,8 @@ if (isset($_REQUEST["save"]) and isset($_REQUEST["olgroup"]) and !empty($_REQUES
 	} else {
 		$_REQUEST['userChoice'] = '';
 	}
-	$userlib->change_group($_REQUEST['olgroup'], $_REQUEST['name'], $_REQUEST['desc'], $ag_home, $ag_utracker, $ag_gtracker, $ag_ufield, $ag_gfield, $ag_rufields, $_REQUEST['userChoice'], $ag_defcat, $ag_theme);
+	if (empty($_REQUEST['expireAfter'])) $_REQUEST['expireAfter'] = 0;
+	$userlib->change_group($_REQUEST['olgroup'], $_REQUEST['name'], $_REQUEST['desc'], $ag_home, $ag_utracker, $ag_gtracker, $ag_ufield, $ag_gfield, $ag_rufields, $_REQUEST['userChoice'], $ag_defcat, $ag_theme, 'n', $_REQUEST['expireAfter']);
 	$userlib->remove_all_inclusions($_REQUEST["name"]);
 	if (isset($_REQUEST["include_groups"]) and is_array($_REQUEST["include_groups"])) {
 		foreach($_REQUEST["include_groups"] as $include) {
@@ -176,23 +171,7 @@ if (isset($_REQUEST["find"])) {
 $smarty->assign('find', $find);
 $users = $userlib->get_groups($offset, $numrows, $sort_mode, $find, $initial);
 $inc = array();
-list($groupname, $groupdesc, $grouphome, $userstrackerid, $usersfieldid, $grouptrackerid, $groupfieldid, $defcatfieldid, $themefieldid, $groupperms, $trackerinfo, $memberslist, $userChoice, $groupdefcat, $grouptheme) = array(
-	'',
-	'',
-	'',
-	'',
-	'',
-	'',
-	'',
-	'',
-	'',
-	'',
-	'',
-	'',
-	'',
-	'',
-	''
-);
+list($groupname, $groupdesc, $grouphome, $userstrackerid, $usersfieldid, $grouptrackerid, $groupfieldid, $defcatfieldid, $themefieldid, $groupperms, $trackerinfo, $memberslist, $userChoice, $groupdefcat, $grouptheme, $expireAfter) = array('', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
 if (!empty($_REQUEST["group"])) {
 	$re = $userlib->get_group_info($_REQUEST["group"]);
 	if (isset($re["groupName"])) $groupname = $re["groupName"];
@@ -201,6 +180,7 @@ if (!empty($_REQUEST["group"])) {
 	if (isset($re["groupDefCat"])) $groupdefcat = $re["groupDefCat"];
 	if (isset($re["groupHome"])) $grouptheme = $re["groupTheme"];
 	if (isset($re['userChoice'])) $userChoice = $re['userChoice'];
+	if (isset($re['expireAfter'])) $expireAfter = $re['expireAfter'];
 	if ($prefs['userTracker'] == 'y') {
 		if (isset($re["usersTrackerId"]) and $re["usersTrackerId"]) {
 			include_once ('lib/trackers/trackerlib.php');
@@ -335,6 +315,7 @@ $smarty->assign('grouptheme', $grouptheme);
 $smarty->assign('groupperms', $groupperms);
 $smarty->assign_by_ref('userChoice', $userChoice);
 $smarty->assign_by_ref('cant_pages', $users["cant"]);
+$smarty->assign_by_ref('expireAfter', $expireAfter);
 setcookie('tab', $cookietab);
 $smarty->assign('cookietab', $cookietab);
 ask_ticket('admin-groups');

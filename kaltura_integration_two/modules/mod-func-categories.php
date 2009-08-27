@@ -11,7 +11,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 function module_categories_info() {
 	return array(
 		'name' => tra('Categories'),
-		'description' => tra('Displays the last Wiki pages visited by the user.'),
+		'description' => tra('Displays links to categories as a tree.'),
 		'prefs' => array( 'feature_categories' ),
 		'params' => array(
 			'type' => array(

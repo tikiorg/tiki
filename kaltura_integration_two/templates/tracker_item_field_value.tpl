@@ -156,7 +156,9 @@
 
 {* -------------------- file -------------------- *}
 {elseif $field_value.type eq 'A'}
-	{if $list_mode eq 'y' and !empty($field_value.options_array[0])}
+	{if $list_mode eq 'csv'}
+		{$field_value.value}
+	{else if $list_mode eq 'y' and !empty($field_value.options_array[0])}
 		{if strstr($field_value.options_array[0], 'n')}
 			{$field_value.info.filename|escape}&nbsp;
 		{/if}
@@ -170,13 +172,7 @@
 			{if $field_value.value ne ''}
 				{wiki}{literal}{MEDIAPLAYER(mp3="tiki-download_item_attachment.php?attId={/literal}{$field_value.value}",style="max")}{/literal}{/wiki}
 			{/if}
-		{/if}
-														 
-	{/if}
-	{if $list_mode eq 'csv'}
-		{$field_value.value}
-	{else} 
-		{if !strstr($field_value.options_array[0], 'm')}
+		{else}
 			<a href="tiki-download_item_attachment.php?attId={$field_value.value}" title="{tr}Download{/tr}">{icon _id='disk' alt="{tr}Download{/tr}"}</a>
 		{/if}
 	{/if}
@@ -222,6 +218,8 @@
 	{if $field_value.value}
 		{if $field_value.options_array[0] eq 'd'}
 			{$field_value.value|tiki_short_date}
+		{elseif $field_value.options_array[0] eq 't'}
+			{$field_value.value|tiki_short_time}
 		{else}
 			{$field_value.value|tiki_short_datetime}
 		{/if}

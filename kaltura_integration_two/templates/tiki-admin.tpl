@@ -21,7 +21,6 @@
 		<hr class="clear"/>
 	</form>
 {/if}
-</form>
 <div id="pageheader">
 {* bother to display this only when breadcrumbs are on *}
 {*

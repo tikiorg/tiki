@@ -64,7 +64,7 @@
 					    {section name=ix loop=$categs}
 					      
           <option value="{$categs[ix].categId|escape}" {if $categs[ix].belongs eq 'y' or $categs[ix].categId eq $addtocat}selected="selected"{/if}>
-          {$categs[ix].path}
+          {$categs[ix].path|escape}
           </option>
           
 					    {/section}

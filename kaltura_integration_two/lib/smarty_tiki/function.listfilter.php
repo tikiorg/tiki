@@ -34,6 +34,7 @@ function smarty_function_listfilter($params, &$smarty) {
 	} else {
 		extract($params);
 		$childPrefix = isset($childPrefix) ? $childPrefix : 'child-of-';
+		$exclude = isset($exclude) ? $exclude : '';
 
 		if (!isset($prefix)) {
 			$input = tra("Filter:");

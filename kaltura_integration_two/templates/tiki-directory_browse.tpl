@@ -42,7 +42,7 @@
 <div class="dircategs">
   <table  >
     <tr> {section name=numloop loop=$categs}
-      <td><a class="dirlink" href="tiki-directory_browse.php?parent={$categs[numloop].categId}">{$categs[numloop].name}</a> {if $categs[numloop].showCount eq 'y'}
+      <td><a class="dirlink" href="tiki-directory_browse.php?parent={$categs[numloop].categId}">{$categs[numloop].name|escape}</a> {if $categs[numloop].showCount eq 'y'}
         ({$categs[numloop].sites})
         {/if} <br />
         {* Now display subcats if any *}
@@ -93,7 +93,7 @@
   </form>
   </div>
   {section name=ix loop=$items}
-  <div class="dirsite"> {if $prefs.directory_country_flag eq 'y'} <img alt="flag" src="img/flags/{$items[ix].country}.gif" /> {/if} <a class="dirsitelink" href="tiki-directory_redirect.php?siteId={$items[ix].siteId}" {if $prefs.directory_open_links eq 'n'}target='_blank'{/if}>{$items[ix].name}</a> {if $tiki_p_admin_directory_sites eq 'y'} 
+  <div class="dirsite"> {if $prefs.directory_country_flag eq 'y'} <img alt="flag" src="img/flags/{$items[ix].country}.gif" /> {/if} <a class="dirsitelink" href="tiki-directory_redirect.php?siteId={$items[ix].siteId}" {if $prefs.directory_open_links eq 'n'}target='_blank'{/if}>{$items[ix].name|escape}</a> {if $tiki_p_admin_directory_sites eq 'y'} 
     [<a class="dirsitelink" href="tiki-directory_admin_sites.php?parent={$parent}&amp;siteId={$items[ix].siteId}">{tr}Edit{/tr}</a>]
     {/if} 
     {if $prefs.cachepages eq 'y'}
@@ -104,7 +104,7 @@
     {section name=ii loop=$items[ix].cats}
     {if $fsfs}
     {assign var=fsfs value=0}{else},&nbsp;
-    {/if} <a class="dirsublink" href="tiki-directory_browse.php?parent={$items[ix].cats[ii].categId}">{$items[ix].cats[ii].path}</a> {/section} </span> <br />
+    {/if} <a class="dirsublink" href="tiki-directory_browse.php?parent={$items[ix].cats[ii].categId}">{$items[ix].cats[ii].path|escape}</a> {/section} </span> <br />
     <span class="dirsitetrail"> {tr}Added{/tr}: {$items[ix].created|tiki_short_date} {tr}Last updated{/tr}: {$items[ix].lastModif|tiki_short_date} {tr}Hits{/tr}: {$items[ix].hits} </span> </div>
   {/section} </div>
 {pagination_links cant=$cant_pages step=$prefs.directory_links_per_page offset=$offset}{/pagination_links}
