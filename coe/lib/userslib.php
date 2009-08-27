@@ -2077,11 +2077,8 @@ function get_included_groups($group, $recur=true) {
 	$userid = $this->get_user_id($user);
 
 	if ( $userid > 0 ){
-	    $query = "insert into `users_usergroups`(`userId`,`groupName`) values(?,?)";
-	    $result = $this->query($query, array(
-		    $userid,
-		    $group
-		    ), -1, -1, false);
+	    $query = "insert into `users_usergroups`(`userId`,`groupName`, `created`) values(?,?,?)";
+	    $result = $this->query($query, array($userid, $group, $tikilib->now), -1, -1, false);
 	    $group_ret = true;
 	}
 	return $group_ret;
@@ -2499,12 +2496,13 @@ function get_included_groups($group, $recur=true) {
 	return true;
 	}
 
-	function add_group($group, $desc='', $home='', $utracker=0, $gtracker=0, $rufields='', $userChoice='', $defcat=0, $theme='', $ufield=0, $gfield=0,$isexternal='n') {
+	function add_group($group, $desc='', $home='', $utracker=0, $gtracker=0, $rufields='', $userChoice='', $defcat=0, $theme='', $ufield=0, $gfield=0,$isexternal='n', $expireAfter=0) {
+		global $tikilib;
 		$group = trim($group);
 		if ( $this->group_exists($group) ) return false;
 
-		$query = "insert into `users_groups` (`groupName`, `groupDesc`, `groupHome`,`groupDefCat`,`groupTheme`,`usersTrackerId`,`groupTrackerId`, `registrationUsersFieldIds`, `userChoice`, `usersFieldId`, `groupFieldId`,`isExternal`) values(?,?,?,?,?,?,?,?,?,?,?,?)";
-		$this->query($query, array($group, $desc, $home, $defcat, $theme, (int)$utracker, (int)$gtracker, $rufields, $userChoice, (int)$ufield, (int)$gfield,$isexternal) );
+		$query = "insert into `users_groups` (`groupName`, `groupDesc`, `groupHome`,`groupDefCat`,`groupTheme`,`usersTrackerId`,`groupTrackerId`, `registrationUsersFieldIds`, `userChoice`, `usersFieldId`, `groupFieldId`,`isExternal`, `expireAfter`) values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		$this->query($query, array($group, $desc, $home, $defcat, $theme, (int)$utracker, (int)$gtracker, $rufields, $userChoice, (int)$ufield, (int)$gfield,$isexternal, $expireAfter) );
 
 		global $cachelib;
 		$cachelib->invalidate('grouplist');
@@ -2514,7 +2512,7 @@ function get_included_groups($group, $recur=true) {
 		return $this->getOne($query, array($group));
 	}
 
-	function change_group($olgroup,$group,$desc,$home,$utracker=0,$gtracker=0,$ufield=0,$gfield=0,$rufields='',$userChoice='',$defcat=0,$theme='',$isexternal='n') {
+	function change_group($olgroup,$group,$desc,$home,$utracker=0,$gtracker=0,$ufield=0,$gfield=0,$rufields='',$userChoice='',$defcat=0,$theme='',$isexternal='n', $expireAfter=0) {
 
 		if ( $olgroup == 'Anonymous' || $olgroup == 'Registered' ) {
 			// Changing group name of 'Anonymous' and 'Registered' is not allowed.
@@ -2522,13 +2520,13 @@ function get_included_groups($group, $recur=true) {
 		}
 
 		if ( ! $this->group_exists($olgroup) ) {
-			return $this->add_group($group, $desc, $home, $utracker,$gtracker, $userChoice, $defcat, $theme);
+			return $this->add_group($group, $desc, $home, $utracker,$gtracker, $userChoice, $defcat, $theme, $isExternal, $expireAfter);
 		}
 
 		global $cachelib;
 
-		$query = "update `users_groups` set `groupName`=?, `groupDesc`=?, `groupHome`=?, `groupDefCat`=?, `groupTheme`=?, `usersTrackerId`=?, `groupTrackerId`=?, `usersFieldId`=?, `groupFieldId`=? , `registrationUsersFieldIds`=?, `userChoice`=?, `isExternal`=? where `groupName`=?";
-		$result = $this->query($query, array($group, $desc, $home, $defcat, $theme, (int)$utracker, (int)$gtracker, (int)$ufield, (int)$gfield, $rufields, $userChoice, $isexternal, $olgroup));
+		$query = "update `users_groups` set `groupName`=?, `groupDesc`=?, `groupHome`=?, `groupDefCat`=?, `groupTheme`=?, `usersTrackerId`=?, `groupTrackerId`=?, `usersFieldId`=?, `groupFieldId`=? , `registrationUsersFieldIds`=?, `userChoice`=?, `isExternal`=?, `expireAfter`=? where `groupName`=?";
+		$result = $this->query($query, array($group, $desc, $home, $defcat, $theme, (int)$utracker, (int)$gtracker, (int)$ufield, (int)$gfield, $rufields, $userChoice, $isexternal, $expireAfter, $olgroup));
 
 		if ( $olgroup != $group ) {
 			$query = array();
@@ -2588,6 +2586,8 @@ function get_included_groups($group, $recur=true) {
 
 	$query = "delete from `tiki_group_inclusion` where `groupName` = ?";
 	$result = $this->query($query, array($group));
+	global $cachelib; require_once('lib/cache/cachelib.php');
+	$cachelib->empty_type_cache('group_inclusion_'.$group);
 	$this->groupinclude_cache = array();
 	return true;
     }
@@ -3108,6 +3108,15 @@ function get_included_groups($group, $recur=true) {
 					 ));
 		$result = $client->send($msg);
 		return $result;
+	}
+	function update_expired_groups() {
+		global $tikilib;
+		$query = 'SELECT uu.* FROM `users_usergroups` uu, `users_groups` ug WHERE uu.`groupName`= ug.`groupName` AND ug.`expireAfter` > 0 AND uu.`created` IS NOT NULL AND uu.`created` + ug.`expireAfter`*24*60*60 < ?';
+		$result = $this->query($query, array($tikilib->now));
+		$query = 'DELETE FROM `users_usergroups` WHERE `groupName`=? AND `userId`=?';
+		while ($res = $result->fetchrow()) {
+			$this->query($query, array($res['groupName'], $res['userId']));
+		}
 	}
 
 }

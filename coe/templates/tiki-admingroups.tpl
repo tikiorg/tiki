@@ -235,6 +235,11 @@
 				<td><input type="checkbox" name="userChoice"{if $userChoice eq 'y'} checked="checked"{/if}/></td>
 			</tr>
 
+			<tr class="formcolor">
+				<td>{tr}Users are automatically unassigned from the group after{/tr}</td>
+				<td><input type="text" name="expireAfter" value="{$expireAfter|escape}" />{tr}Days{/tr}<br /><i>{tr}0 or empty for never{/tr}</i></td>
+			</tr>
+
 			{if $group ne ''}
 				<tr class="formcolor">
 					<td>

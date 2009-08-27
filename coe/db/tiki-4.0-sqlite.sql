@@ -1743,11 +1743,11 @@ INSERT INTO "," ("menuId","type","name","url","position","section","perm","group
 
 INSERT INTO "," ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'s','TikiSheet','tiki-sheets.php',780,'feature_sheet','tiki_p_view_sheet','',0);
 
-INSERT INTO "," ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'o','List TikiSheets','tiki-sheets.php',782,'feature_sheet','tiki_p_view_sheet','',0);
+INSERT INTO "," ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'o','List Sheets','tiki-sheets.php',782,'feature_sheet','tiki_p_view_sheet','',0);
 
-INSERT INTO "," ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'s','Trackers','tiki-list_trackers.php',800,'feature_trackers','tiki_p_view_trackers','',0);
+INSERT INTO "," ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'s','Trackers','tiki-list_trackers.php',800,'feature_trackers','tiki_p_list_trackers','',0);
 
-INSERT INTO "," ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'o','List Trackers','tiki-list_trackers.php',805,'feature_trackers','tiki_p_view_trackers','',0);
+INSERT INTO "," ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'o','List Trackers','tiki-list_trackers.php',805,'feature_trackers','tiki_p_list_trackers','',0);
 
 INSERT INTO "," ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'o','Admin Trackers','tiki-admin_trackers.php',810,'feature_trackers','tiki_p_admin_trackers','',0);
 
@@ -1770,14 +1770,6 @@ INSERT INTO "," ("menuId","type","name","url","position","section","perm","group
 INSERT INTO "," ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'o','Send Newsletters','tiki-send_newsletters.php',905,'feature_newsletters','tiki_p_send_newsletters','',0);
 
 INSERT INTO "," ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'o','Admin Newsletters','tiki-admin_newsletters.php',910,'feature_newsletters','tiki_p_admin_newsletters','',0);
-
-INSERT INTO "," ("menuId", "type", "name", "url", "position", "section", "perm", "groupname", "userlevel") VALUES (42,'s','Workspaces', 'tiki-workspaces-index.php',920, 'feature_workspaces','','',0); 
-
-INSERT INTO "," ("menuId", "type", "name", "url", "position", "section", "perm", "groupname", "userlevel") VALUES (42,'o','Workspaces Home', 'tiki-workspaces-index.php',925, 'feature_workspaces','','',0); 
-
-INSERT INTO "," ("menuId", "type", "name", "url", "position", "section", "perm", "groupname", "userlevel") VALUES (42,'o','My Workspaces', 'tiki-my-workspaces.php',930, 'feature_workspaces','','',0); 
-
-INSERT INTO "," ("menuId", "type", "name", "url", "position", "section", "perm", "groupname", "userlevel") VALUES (42,'o','Manage Workspaces', 'tiki-manage-workspaces.php',935, 'feature_workspaces','tiki_p_ws_admin','',0);
 
 INSERT INTO "," ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin','',0);
 
@@ -3272,8 +3264,10 @@ CREATE TABLE users_groups (
   groupDefCat bigint default 0,
   groupTheme varchar(255) default '',
   isExternal char(1) default 'n',
+  expireAfter bigint default 0,
   PRIMARY KEY (id),
-  UNIQUE KEY groupName (groupName)
+  UNIQUE KEY groupName (groupName),
+  KEY expireAfter (expireAfter)
 ) ENGINE=MyISAM;
 
 
@@ -3791,6 +3785,7 @@ DROP TABLE IF EXISTS 'users_usergroups';
 CREATE TABLE users_usergroups (
   userId integer NOT NULL default '0',
   groupName varchar(255) NOT NULL default '',
+  created bigint default NULL,
   PRIMARY KEY (userId,groupName(30))
 ) ENGINE=MyISAM;
 

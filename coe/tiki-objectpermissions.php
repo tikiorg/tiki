@@ -389,6 +389,18 @@ if ($prefs['feature_categories'] == 'y') {
 	$smarty->assign_by_ref('categ_perms', $categ_perms);
 }
 
+// object perms override globals (TODO - indicate globals somehow on the object perms list)
+if ($objectType != 'global') {
+	foreach ($perms as &$perm) {
+		for( $i = 0; $i < count($groupNames); $i++) {
+			if ($perm[$groupNames[$i] . '_hasPerm'] == 'y') {
+				$perm[$groupNames[$i] . '_hasPerm'] = 'n';
+				$perm[$groupIndices[$i]] = 'n';
+			}
+		}
+	}
+}
+
 // blend the perms from object onto the big perm list
 
 foreach ($page_perms as $page_perm) {

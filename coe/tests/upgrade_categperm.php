@@ -62,12 +62,20 @@ $view[] = 'tiki_p_view_category';
 
 $query = 'SELECT * FROM `users_objectpermissions` WHERE `permName` = ?';
 $insert = 'INSERT into `users_objectpermissions` (`groupName`, `permName`, `objectType`, `objectId`) values (?,?,?,?)';
+$test = 'SELECT COUNT(*) FROM `users_objectpermissions` WHERE `permName` = ? AND `groupName`=? AND `objectType`=? AND `objectId`=?';
 $result = $tikilib->query($query, array('tiki_p_view_categorized'));
 while ($res = $result->fetchRow() ) {
 	foreach ($view as $perm) {
-		echo "INSERT into `users_objectpermissions` (`groupName`, `permName`, `objectType`, `objectId`) values ('".$res['groupName']."','$perm','category','".$res['objectId']."')<br />";
+		if (!$tikilib->getOne($test, array($perm, $res['groupName'], $res['objectType'], $res['objectId']))) {
+			echo "INSERT into `users_objectpermissions` (`groupName`, `permName`, `objectType`, `objectId`) values ('".$res['groupName']."','$perm','category','".$res['objectId']."');<br />";
+		}
 	}
-		foreach ($edit as $perm) {
-		echo "INSERT into `users_objectpermissions` (`groupName`, `permName`, `objectType`, `objectId`) values ('".$res['groupName']."','$perm','category','".$res['objectId']."')<br />";
+}
+$result = $tikilib->query($query, array('tiki_p_edit_categorized'));
+while ($res = $result->fetchRow() ) {
+	foreach ($edit as $perm) {
+		if (!$tikilib->getOne($test, array($perm, $res['groupName'], $res['objectType'], $res['objectId']))) {
+			echo "INSERT into `users_objectpermissions` (`groupName`, `permName`, `objectType`, `objectId`) values ('".$res['groupName']."','$perm','category','".$res['objectId']."');<br />";
+		}
 	}
 }

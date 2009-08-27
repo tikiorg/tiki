@@ -285,5 +285,11 @@ function prefs_feature_list() {
 			'help' => 'Quickperms',
 			'type' => 'flag',
 		),
+		'feature_purifier' => array(
+			'name' => tra('HTML Purifier'),
+			'description' => tra('HTML Purifier'),
+			'help' => 'HTML Purifier',
+			'type' => 'flag',
+		),
 	);
 }

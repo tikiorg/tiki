@@ -35,10 +35,10 @@ class DirLib extends TikiLib {
 		global $prefs;
 		$path = '';
 		$info = $this->dir_get_category($categId);
-		$path = '<a class="dirlink" href="tiki-directory_browse.php?parent=' . $info["categId"] . '">' . $info["name"] . '</a>';
+		$path = '<a class="dirlink" href="tiki-directory_browse.php?parent=' . $info["categId"] . '">' . htmlspecialchars($info["name"]) . '</a>';
 		while ($info["parent"] != 0) {
 			$info = $this->dir_get_category($info["parent"]);
-			$path = '<a class="dirlink" href="tiki-directory_browse.php?parent=' . $info["categId"] . '">' . $info["name"] . '</a> ' . $prefs['site_crumb_seper'] . ' ' . $path;
+			$path = '<a class="dirlink" href="tiki-directory_browse.php?parent=' . $info["categId"] . '">' . htmlspecialchars($info["name"]) . '</a> ' . $prefs['site_crumb_seper'] . ' ' . $path;
 		}
 
 		return $path;
