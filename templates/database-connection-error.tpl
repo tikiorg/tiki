@@ -66,6 +66,7 @@
 				<p>Things to check:</p>
 				<ol class="fancylist">
 					<li><p>Is your database up and running?</p></li>
+					<li><p>Is your database corrupt? Please see <a href="http://doc.tikiwiki.org/Repair+Database">How to repair your database</a></p></li>					
 					<li><p>Are your database login credentials correct?</p></li>
 					<li><p>Did you complete the <a href="tiki-install.php">Tiki Installer?</a></p></li>
 				</ol>
