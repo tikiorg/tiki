@@ -2500,7 +2500,7 @@ class TikiLib extends TikiDb_Bridge {
 		// Use default values if some values are not specified
 		if ( $res !== false && $defaultsFallback ) {
 			foreach ( $defaultValues as $k => $v ) {
-				if ( $res[$k] === null ) {
+				if ( !isset($res[$k]) || $res[$k] === null ) {
 					$res[$k] = $v;
 				}
 			}
