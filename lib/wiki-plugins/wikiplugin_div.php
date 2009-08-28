@@ -24,6 +24,11 @@ function wikiplugin_div_info() {
 		'prefs' => array('wikiplugin_div'),
 		'body' => tra('text'),
 		'params' => array(
+			'type' => array(
+				'required' => false,
+				'name' => tra('Type'),
+				'description' => tra('div|span|pre|i|b|tt|blockquote'),
+			),
 			'bg' => array(
 				'required' => false,
 				'name' => tra('Background color'),
