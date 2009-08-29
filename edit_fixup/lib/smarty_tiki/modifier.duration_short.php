@@ -25,7 +25,7 @@ function smarty_modifier_duration_short($string) {
   } elseif ($string > 60) {
     $mins = floor($string/(60));
     $result = "$mins minutes";
-  } elseif ($string > 0) {
+  } else {
     $result = "$string seconds";
   }
   return $result;

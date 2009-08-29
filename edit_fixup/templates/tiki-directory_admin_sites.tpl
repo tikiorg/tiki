@@ -10,7 +10,7 @@
     
 		{section name=ix loop=$categs}
 			
-    <option value="{$categs[ix].categId|escape}" {if $parent eq $categs[ix].categId}selected="selected"{/if}>{$categs[ix].path}</option>
+    <option value="{$categs[ix].categId|escape}" {if $parent eq $categs[ix].categId}selected="selected"{/if}>{$categs[ix].path|escape}</option>
     
 		{/section}
 	
@@ -41,7 +41,7 @@
           
 			    {section name=ix loop=$categs}
 			      
-          <option value="{$categs[ix].categId|escape}" {if $categs[ix].belongs eq 'y'}selected="selected"{/if}>{$categs[ix].path}</option>
+          <option value="{$categs[ix].categId|escape}" {if $categs[ix].belongs eq 'y'}selected="selected"{/if}>{$categs[ix].path|escape}</option>
           
 					{/section}
 				
@@ -96,7 +96,7 @@
     <tr>
       <td class="{cycle advance=false}"><input type="checkbox" name="remove[]" value="{$items[user].siteId}" />
       </td>
-      <td class="{cycle advance=false}">{$items[user].name}</td>
+      <td class="{cycle advance=false}">{$items[user].name|escape}</td>
       <td class="{cycle advance=false}"><a href="{$items[user].url}" target="_new">{$items[user].url}</a></td>
       {if $prefs.directory_country_flag eq 'y'}
       <td class="{cycle advance=false}"><img src='img/flags/{$items[user].country}.gif' alt='{$items[user].country}'/> </td>
@@ -110,7 +110,7 @@
       <td class="{cycle}" colspan="6"><i> {tr}Directory Categories{/tr}:{assign var=fsfs value=1}
         {section name=ii loop=$items[user].cats}
         {if $fsfs}{assign var=fsfs value=0}{else}, {/if}
-        {$items[user].cats[ii].path}
+        {$items[user].cats[ii].path|escape}
         {/section} </i> </td>
     </tr>
     {sectionelse}

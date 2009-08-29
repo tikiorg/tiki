@@ -144,7 +144,7 @@ if (!empty($multiprint_pages)) {
 	}
 	$smarty->assign('find', $find);
 	$filter = '';
-	if ($prefs['feature_multilingual'] == 'y') {
+	if ($prefs['feature_multilingual'] == 'y' && !(isset($_REQUEST['lang']) && $_REQUEST['lang'] == '')) {
 		$filter = setLangFilter($filter);
 	}
 	if (!empty($_REQUEST['langOrphan'])) {

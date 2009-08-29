@@ -42,13 +42,13 @@
 				<td class="{cycle}">
 					<a class="link" href="tiki-admin_modules.php?edit_assign={$left[user].moduleId}#assign" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
 					{if $left[0].moduleId ne $left[user].moduleId}
-						<a class="link" href="tiki-admin_modules.php?modup={$left[user].moduleId}#leftmod" title="{tr}Move Up{/tr}">{icon _id='resultset_up'}</a>
+						<a class="link" href="tiki-admin_modules.php?modup={$left[user].moduleId}" title="{tr}Move Up{/tr}">{icon _id='resultset_up'}</a>
 					{/if}
 					{if !$smarty.section.user.last and $left[user.index_next].moduleId}
-						<a class="link" href="tiki-admin_modules.php?moddown={$left[user].moduleId}#leftmod" title="{tr}Move Down{/tr}">{icon _id='resultset_down'}</a>
+						<a class="link" href="tiki-admin_modules.php?moddown={$left[user].moduleId}" title="{tr}Move Down{/tr}">{icon _id='resultset_down'}</a>
 					{/if}
-					<a class="link" href="tiki-admin_modules.php?modright={$left[user].moduleId}#rightmod" title="{tr}Move to Right Column{/tr}">{icon _id='arrow_right'}</a>
-					<a class="link" href="tiki-admin_modules.php?unassign={$left[user].moduleId}#leftmod" title="{tr}Unassign{/tr}">{icon _id='cross' alt='{tr}x{/tr}'}</a>
+					<a class="link" href="tiki-admin_modules.php?modright={$left[user].moduleId}" title="{tr}Move to Right Column{/tr}">{icon _id='arrow_right'}</a>
+					<a class="link" href="tiki-admin_modules.php?unassign={$left[user].moduleId}" title="{tr}Unassign{/tr}">{icon _id='cross' alt='{tr}x{/tr}'}</a>
 				</td>
 			</tr>
 		{sectionelse}
@@ -83,13 +83,13 @@
 				<td class="{cycle}">
 					<a class="link" href="tiki-admin_modules.php?edit_assign={$right[user].moduleId}#assign" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
 					{if $right[0].moduleId ne $right[user].moduleId}
-						<a class="link" href="tiki-admin_modules.php?modup={$right[user].moduleId}#rightmod" title="{tr}Move Up{/tr}">{icon _id='resultset_up'}</a>
+						<a class="link" href="tiki-admin_modules.php?modup={$right[user].moduleId}" title="{tr}Move Up{/tr}">{icon _id='resultset_up'}</a>
 					{/if}
 					{if !$smarty.section.user.last and $right[user.index_next].moduleId}
-						<a class="link" href="tiki-admin_modules.php?moddown={$right[user].moduleId}#rightmod" title="{tr}Move Down{/tr}">{icon _id='resultset_down'}</a>
+						<a class="link" href="tiki-admin_modules.php?moddown={$right[user].moduleId}" title="{tr}Move Down{/tr}">{icon _id='resultset_down'}</a>
 					{/if}
-					<a class="link" href="tiki-admin_modules.php?modleft={$right[user].moduleId}#leftmod" title="{tr}Move to Left Column{/tr}">{icon _id='arrow_left'}</a>
-					<a class="link" href="tiki-admin_modules.php?unassign={$right[user].moduleId}#rightmod" title="{tr}Unassign{/tr}">{icon _id='cross' alt='{tr}x{/tr}'}</a>
+					<a class="link" href="tiki-admin_modules.php?modleft={$right[user].moduleId}" title="{tr}Move to Left Column{/tr}">{icon _id='arrow_left'}</a>
+					<a class="link" href="tiki-admin_modules.php?unassign={$right[user].moduleId}" title="{tr}Unassign{/tr}">{icon _id='cross' alt='{tr}x{/tr}'}</a>
 				</td>
 			</tr>
 		{sectionelse}
