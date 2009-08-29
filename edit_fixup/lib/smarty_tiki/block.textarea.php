@@ -24,12 +24,7 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	// some defaults
 	$params['_toolbars'] = isset($params['_toolbars']) ? $params['_toolbars'] : 'y';
 	if ( $prefs['javascript_enabled'] != 'y') $params['_toolbars'] = 'n';
-/*
-	if ( ! isset($params['_wikiparsed']) ) {
-		// Toolbars implies wiki parsing
-		$params['_wikiparsed'] = $params['toolbars'];
-	}
-*/
+
 	$params['_wysiwyg'] = isset($params['_wysiwyg']) ? $params['_wysiwyg'] : 'n';
 	$params['rows'] = isset($params['rows']) ? $params['rows'] : 20;
 	$params['cols'] = isset($params['cols']) ? $params['cols'] : 80;
@@ -75,15 +70,6 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 			."\n".'<input type="hidden" name="cols" value="'.$params['cols'].'"/>'
 			."\n".'<input type="hidden" name="wysiwyg" value="'.$params['_wysiwyg'].'" />';
 
-/* Commented because wiki may have to be supported everywhere and is not a user choice. IMO, It complexify the user interface for no good reason.
-		if ( $params['_wikiparsed'] == 'optional_on' || $params['_wikiparsed'] == 'optional_off' ) {
-			$html .= '<input type="checkbox" name="'.$params['name'].'IsParsed"'
-				. ( $params['_wikiparsed'] == 'optional_on' ? ' checked="checked"' : '' )
-				. ' onclick="toggleBlock(\'qt'.$params['name'].'\');" /> '
-				. tra('Allow wiki syntax')
-				. '<br />';
-		}
-*/
 
 		if ( isset($params['_zoom']) && $params['_zoom'] == 'n' ) {
 			$prefs['feature_template_zoom'] = $feature_template_zoom_orig;
@@ -92,11 +78,6 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 		if ($prefs['feature_ajax'] == 'y' && $prefs['feature_ajax_autosave'] == 'y') {
 			$headerlib->add_js("register_id('$textarea_id');auto_save();");
 		}
-//		if ($prefs['feature_template_zoom'] == 'y' && isset($_REQUSET['zoom']) && $_REQUSET['zoom'].'.php' == $_SERVER['SCRIPT_NAME']) {	// was $smarty.template
-//			$smarty->assign('zoom_mode', 'y');
-//		} else {
-//			$smarty->assign('zoom_mode', 'n');
-//		}
 		
 	}
 
