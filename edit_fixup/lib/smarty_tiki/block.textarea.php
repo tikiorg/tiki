@@ -18,7 +18,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  */
 
 function smarty_block_textarea($params, $content, &$smarty, $repeat) {
-	global $prefs;
+	global $prefs, $headerlib, $smarty;
 	if ( $repeat ) return;
 
 	// some defaults
@@ -34,6 +34,7 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	$params['rows'] = isset($params['rows']) ? $params['rows'] : 20;
 	$params['cols'] = isset($params['cols']) ? $params['cols'] : 80;
 	$params['name'] = isset($params['name']) ? $params['name'] : 'edit';
+	$params['id'] = isset($params['id']) ? $params['id'] : 'editwiki';
 	
 	if ( isset($params['_zoom']) && $params['_zoom'] == 'n' ) {
 		$feature_template_zoom_orig = $prefs['feature_template_zoom'];
@@ -51,9 +52,9 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 //		{editform Meat=$pagedata InstanceName='edit' ToolbarSet="Tiki"}
 //		<input type="hidden" name="wysiwyg" value="y" />
 	} else {
-		if ( isset($params['_enlarge']) && $params['_enlarge'] == 'y' )
-			$smarty->assign_by_ref('enlarge', $params['_enlarge']);
-
+		
+		// setup for wiki editor
+		
 		$textarea_attributes = '';
 		foreach ( $params as $k => $v ) {
 			if ( $k == 'id' || $k == 'name' || $k == 'class' ) {
@@ -87,6 +88,16 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 		if ( isset($params['_zoom']) && $params['_zoom'] == 'n' ) {
 			$prefs['feature_template_zoom'] = $feature_template_zoom_orig;
 		}
+		
+		if ($prefs['feature_ajax'] == 'y' && $prefs['feature_ajax_autosave'] == 'y') {
+			$headerlib->add_js("register_id('$textarea_id');auto_save();");
+		}
+//		if ($prefs['feature_template_zoom'] == 'y' && isset($_REQUSET['zoom']) && $_REQUSET['zoom'].'.php' == $_SERVER['SCRIPT_NAME']) {	// was $smarty.template
+//			$smarty->assign('zoom_mode', 'y');
+//		} else {
+//			$smarty->assign('zoom_mode', 'n');
+//		}
+		
 	}
 
 	return $html;

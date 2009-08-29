@@ -1,3 +1,4 @@
+{* $Id$ *}
 {if $prefs.feature_template_zoom eq 'y' && isset($smarty.request.zoom) && $smarty.request.zoom|cat:'.tpl' eq $smarty.template}
 	{assign var=zoom_mode value='y'}
 {else}
@@ -15,32 +16,22 @@
 {/if}
 <div id='edit-zone'>
 	<div class='textarea-toolbar' id='{$textarea_id|default:editwiki}_toolbar'>
-		{toolbars area_name=$textarea_name|default:edit zoom_enable=$enlarge|default:y}
+		{toolbars area_name=$textarea_name|default:edit}
 	</div>
-	<!--autosave -->
-	{capture name=autosave}
+	<!--autosave - TODO - move to PHP -->
+	{capture name=autosave}{strip}
 		{if $prefs.feature_ajax eq 'y' and $prefs.feature_ajax_autosave eq 'y' and $noautosave neq 'y'}
 			{autosave id=$textarea_id|default:editwiki default=$pagedata preview=$preview}
 		{else}
 			{$pagedata}
 		{/if}
-	{/capture}
+	{/strip}{/capture}
 	{if $prefs.feature_ajax eq 'y' and $prefs.feature_ajax_autosave eq 'y' and $noautosave neq 'y' and $has_autosave eq 'y'} 
-	{remarksbox type="warning" title="{tr}AutoSave{/tr}"}
-	{tr}If you want the saved version instead of the autosaved one{/tr}&nbsp;{self_link noautosave='y' _ajax='n'}{tr}Click Here{/tr}{/self_link}
-	{/remarksbox}
+		{remarksbox type="warning" title="{tr}AutoSave{/tr}"}
+			{tr}If you want the saved version instead of the autosaved one{/tr}&nbsp;{self_link noautosave='y' _ajax='n'}{tr}Click Here{/tr}{/self_link}
+		{/remarksbox}
 	{/if} 
 	<textarea id="{$textarea_id|default:editwiki}" class="{$textarea_class|default:wikiedit}" name="{$textarea_name|default:edit}"{$textarea_attributes}>{$smarty.capture.autosave|escape}</textarea>
-	{if $prefs.feature_ajax eq 'y' && $prefs.feature_ajax_autosave eq 'y'}
-		<!-- autosave -->
-		<script type='text/javascript'>
-		<!--//--><![CDATA[//><!--
-			register_id('{$textarea_id|default:editwiki}');
-			auto_save();
-		//--><!]]>
-		</script>
-		<!-- autosave -->
-	{/if}
 </div>
 
 {if $zoom_mode eq 'y'}
