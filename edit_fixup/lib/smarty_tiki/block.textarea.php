@@ -25,7 +25,11 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	$params['_toolbars'] = isset($params['_toolbars']) ? $params['_toolbars'] : 'y';
 	if ( $prefs['javascript_enabled'] != 'y') $params['_toolbars'] = 'n';
 
-	$params['_wysiwyg'] = isset($params['_wysiwyg']) ? $params['_wysiwyg'] : 'n';
+	if (!isset($params['_wysiwyg'])) {	// should not be set usually(?)
+		include_once 'tiki-parsemode_setup.php';
+		$params['_wysiwyg'] = $_SESSION['wysiwyg'];
+	}
+	
 	$params['rows'] = isset($params['rows']) ? $params['rows'] : 20;
 	$params['cols'] = isset($params['cols']) ? $params['cols'] : 80;
 	$params['name'] = isset($params['name']) ? $params['name'] : 'edit';
@@ -43,9 +47,33 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	$html = '';
 
 	if ( $params['_wysiwyg'] == 'y' ) {
-// TODO
 //		{editform Meat=$pagedata InstanceName='edit' ToolbarSet="Tiki"}
-//		<input type="hidden" name="wysiwyg" value="y" />
+		global $url_path;
+		include_once 'lib/tikifck.php';
+		if (!isset($params['name']))       $params['name'] = 'fckedit';
+		$fcked = new TikiFCK($params['name']);
+		
+		if (isset($content))			$fcked->Meat = $content;
+		if (isset($params['Width']))	$fcked->Width = $params['Width'];
+		if (isset($params['Height']))	$fcked->Height = $params['Height'];
+		if ($prefs['feature_ajax'] == 'y' && $prefs['feature_ajax_autosave'] == 'y') {
+			$fcked->Config['autoSaveSelf'] = htmlentities($_SERVER['REQUEST_URI']);
+		}
+		if (isset($params['ToolbarSet'])) {
+			$fcked->ToolbarSet = $params['ToolbarSet'];
+		} else {
+			$fcked->ToolbarSet = 'Tiki';
+		}
+		if ($prefs['feature_detect_language'] == 'y') {
+			$fcked->Config['AutoDetectLanguage'] = true;
+		} else {
+			$fcked->Config['AutoDetectLanguage'] = false;
+		}
+		$fcked->Config['DefaultLanguage'] = $prefs['language'];
+		$fcked->Config['CustomConfigurationsPath'] = $url_path.'setup_fckeditor.php';
+		$html .= $fcked->CreateHtml();
+		
+		$html .= '<input type="hidden" name="wysiwyg" value="y" />';
 	} else {
 		
 		// setup for wiki editor
@@ -125,3 +153,36 @@ var editTimerWarnings = 0;
 
 	return $html;
 }
+
+
+/*** removed from tiki-editpage.tpl for safe keeping
+ * TODO - move to PHP above...
+
+				{*if $wysiwyg ne 'y' or $prefs.javascript_enabled ne 'y'*}
+					{*include file='wiki_edit.tpl'*}
+<!--					<input type="hidden" name="rows" value="{$rows}"/>-->
+<!--					<input type="hidden" name="cols" value="{$cols}"/>-->
+<!--					<input type="hidden" name="wysiwyg" value="n" />-->
+					{*textarea _toolbars="y"}{$pagedata}{/textarea}
+				{else}
+					{capture name=autosave}
+						{if $prefs.feature_ajax eq 'y' and $prefs.feature_ajax_autosave eq 'y' and $noautosave neq 'y'}
+							{autosave test='n' id='edit' default=$pagedata preview=$preview}
+						{else}
+							{$pagedata}
+						{/if}
+					{/capture}
+					{if $prefs.feature_ajax eq 'y' and $prefs.feature_ajax_autosave eq 'y' and $noautosave neq 'y' and $has_autosave eq 'y'}
+						{remarksbox type="warning" title="{tr}AutoSave{/tr}"}
+							{tr}If you want the saved version instead of the autosaved one{/tr}&nbsp;{self_link noautosave='y' _ajax='n'}{tr}Click Here{/tr}{/self_link}
+						{/remarksbox}
+					{/if*}
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					{editform Meat=$smarty.capture.autosave InstanceName='edit' ToolbarSet="Tiki"}
+					<input type="hidden" name="wysiwyg" value="y" />
+				{/if}
+*/
+
