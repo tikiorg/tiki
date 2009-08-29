@@ -1322,6 +1322,10 @@ ul.toc * {
 	color: #000;
 }
 
+.diffadded > .diffchar {
+	color: blue;
+}
+
 .diffdeleted {
 	background: #ffcccc;
 	color: #000;
