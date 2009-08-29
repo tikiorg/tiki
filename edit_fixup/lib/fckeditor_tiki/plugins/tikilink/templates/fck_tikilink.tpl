@@ -1,4 +1,4 @@
-﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+﻿﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
 <title>{tr}Tiki Link - Insert internal link{/tr}</title>
@@ -33,7 +33,7 @@ function LoadSelected()	{
 		document.getElementById( 'txtPage' ).value = oLink.getAttribute( '_wikilink' ) ;
 		document.getElementById( 'txtTitle' ).value = oLink.getAttribute( 'innerHTML' ) ;
 	} else {
-		if ( oEditor.FCKBrowserInfo.IsGecko ) {
+		if ( !oEditor.FCKBrowserInfo.IsIE ) {
 			sSelected = FCK.EditorWindow.getSelection();
 		} else {
 			sSelected = FCK.EditorDocument.selection.createRange().text;

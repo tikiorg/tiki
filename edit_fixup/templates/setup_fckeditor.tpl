@@ -52,14 +52,9 @@ FCKConfig.LinkBrowser = false;
 FCKConfig.LinkUpload = false;
 FCKConfig.ProcessHTMLEntities = false;
 
-{if $prefs.feature_filegals_manager eq 'y'}
-FCKConfig.ImageDlgHideAdvanced = true ;
-FCKConfig.ImageDlgHideLink = true ;
-{else}
 FCKConfig.Plugins.Add( 'tikiimage', null, _TikiRoot + 'lib/fckeditor_tiki/plugins/' ) ;
 FCKConfig.tikiimageBtn = "{tr}Insert an image{/tr}" ;
 FCKConfig.tikiimageDlgTitle = "{tr}Tiki Image - Insert an image{/tr}" ;
-{/if}
 FCKConfig.ImageUpload = false ;
 
 FCKConfig.Plugins.Add( 'CleanHTML', null, _TikiRoot + 'lib/fckeditor_tiki/plugins/' );
