@@ -4,56 +4,6 @@
   <script type="text/javascript" src="lib/wiki/wiki-ajax.js"></script>
 {/if}
 
-{* Display edit time out *}
-
-<script type="text/javascript">
-<!--//--><![CDATA[//><!--
-{literal}
-
-// edit timeout warnings
-function editTimerTick() {
-	editTimeElapsedSoFar++;
-	
-	var seconds = editTimeoutSeconds - editTimeElapsedSoFar;
-	
-	if (editTimerWarnings == 0 && seconds <= 60) {
-		alert("{/literal}{tr}Your edit session will expire in{/tr} 1 {tr}minute{/tr}.{tr}You must PREVIEW or SAVE your work now, to avoid losing your edits.{/tr}{literal}");
-		editTimerWarnings++;
-	} else if (editTimerWarnings == 1 && seconds <= 30) {
-		alert("{/literal}{tr}Your edit session will expire in{/tr} 30 {tr}seconds{/tr}.{tr}You must PREVIEW or SAVE your work now, to avoid losing your edits.{/tr}{literal}");
-		editTimerWarnings++;
-	} else if (editTimerWarnings == 2 && seconds <= 10) {
-		alert("{/literal}{tr}Your edit session will expire in{/tr} 10 {tr}seconds{/tr}.{tr}You must PREVIEW or SAVE your work now, to avoid losing your edits.{/tr}{literal}");
-	} else if (seconds <= 0) {
-		clearInterval(editTimeoutIntervalId);
-	}
-	
-	window.status = "{/literal}{tr}Your edit session will expire in{/tr}{literal}: " + Math.floor(seconds / 60) + ":" + ((seconds % 60 < 10) ? "0" : "") + (seconds % 60);
-	if (seconds % 60 == 0) {
-		$jq('#edittimeout').text(Math.floor(seconds / 60));
-	}
-}
-
-function confirmExit() {
-	if (needToConfirm) {
-		{/literal}return "{tr interactive='n'}You are about to leave this page. If you have made any changes without Saving, your changes will be lost.  Are you sure you want to exit this page?{/tr}";{literal}
-	}
-}
-
-window.onbeforeunload = confirmExit;
-window.onload = function() { editTimeoutIntervalId = setInterval(editTimerTick, 1000) };
-
-var needToConfirm = true;
-var editTimeoutSeconds = {/literal}{$edittimeout}{literal};
-var editTimeElapsedSoFar = 0;
-var editTimeoutIntervalId;
-var editTimerWarnings = 0;
-// end edit timeout warnings
-
-{/literal}
-//--><!]]>
-</script>
-
 {if $translation_mode eq 'n'}
 	{if $beingStaged eq 'y' and $prefs.wikiapproval_hideprefix == 'y'}{assign var=pp value=$approvedPageName}{else}{assign var=pp value=$page}{/if}
 	{title}{if isset($hdr) && $prefs.wiki_edit_section eq 'y'}{tr}Edit Section{/tr}{else}{tr}Edit{/tr}{/if}: {$pp|escape}{if $pageAlias ne ''}&nbsp;({$pageAlias|escape}){/if}{/title}

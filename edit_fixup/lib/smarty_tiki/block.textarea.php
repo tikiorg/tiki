@@ -79,7 +79,49 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 			$headerlib->add_js("register_id('$textarea_id');auto_save();");
 		}
 		
+	}	// wiki
+	
+// Display edit time out
+
+	$js = "
+// edit timeout warnings
+function editTimerTick() {
+	editTimeElapsedSoFar++;
+	
+	var seconds = editTimeoutSeconds - editTimeElapsedSoFar;
+	
+	if (editTimerWarnings == 0 && seconds <= 60) {
+		alert('".tra('Your edit session will expire in').' 1 '.tra('minute').'.'.
+				tra('You must PREVIEW or SAVE your work now, to avoid losing your edits.')."');
+		editTimerWarnings++;
+	} else if (seconds <= 0) {
+		clearInterval(editTimeoutIntervalId);
 	}
+	
+	window.status = '".tra('Your edit session will expire in:')."' + Math.floor(seconds / 60) + ': ' + ((seconds % 60 < 10) ? '0' : '') + (seconds % 60);
+	if (seconds % 60 == 0 && \$jq('#edittimeout')) {
+		\$jq('#edittimeout').text(Math.floor(seconds / 60));
+	}
+}
+
+function confirmExit() {
+	if (needToConfirm) {
+		return '".tra('You are about to leave this page. If you have made any changes without Saving, your changes will be lost.  Are you sure you want to exit this page?')."';
+	}
+}
+
+window.onbeforeunload = confirmExit;
+\$jq('document').ready( function() { editTimeoutIntervalId = setInterval(editTimerTick, 1000); });
+//window.onload = editTimerStart;
+
+var needToConfirm = true;
+var editTimeoutSeconds = ".ini_get('session.gc_maxlifetime').";
+var editTimeElapsedSoFar = 0;
+var editTimeoutIntervalId;
+var editTimerWarnings = 0;
+// end edit timeout warnings
+";
+	$headerlib->add_js($js);
 
 	return $html;
 }
