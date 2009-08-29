@@ -1350,7 +1350,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_template_zoom' => 'y',
 		'menus_items_icons' => 'n',
 		'feature_iepngfix' => 'n',
-		'iepngfix_selectors' => '#sitelogo a',
+		'iepngfix_selectors' => '#sitelogo a img',
 		'iepngfix_elements' => '',
 		'use_minified_scripts' => 'y',		// for debugging
 		'valid_email_regex' => '^[_a-z0-9\+\.\-]+@[_a-z0-9\.\-]+\.[a-z]{2,4}$',
