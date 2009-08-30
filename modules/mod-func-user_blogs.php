@@ -23,6 +23,6 @@ function module_user_blogs( $mod_reference, $module_params ) {
 		$ranking = $tikilib->list_user_blogs($user, false);
 		
 		$smarty->assign('modUserBlogs', $ranking);
-		$smarty->assign('tpl_module_title', "My blogs");
+		$smarty->assign('tpl_module_title', tra("My blogs"));
 	}
 }

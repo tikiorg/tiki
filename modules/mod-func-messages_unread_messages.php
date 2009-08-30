@@ -23,6 +23,6 @@ function module_messages_unread_messages( $mod_reference, $module_params ) {
 		$modUnread = $tikilib->user_unread_messages($user);
 	
 		$smarty->assign('modUnread', $modUnread);
-		$smarty->assign('tpl_module_title', "Messages");
+		$smarty->assign('tpl_module_title', tra("Messages"));
 	}
 }

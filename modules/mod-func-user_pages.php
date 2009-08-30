@@ -22,6 +22,6 @@ function module_user_pages( $mod_reference, $module_params ) {
 		$ranking = $tikilib->get_user_pages($user, $mod_reference["rows"]);
 		
 		$smarty->assign('modUserPages', $ranking);
-		$smarty->assign('tpl_module_title', "My Pages");
+		$smarty->assign('tpl_module_title', tra("My Pages"));
 	}
 }
