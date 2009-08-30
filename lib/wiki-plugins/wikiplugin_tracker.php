@@ -60,7 +60,7 @@ function wikiplugin_tracker_info() {
 				'filter' => 'alpha'
 			),
 			'email' => array(
-				'requires' => false,
+				'required' => false,
 				'name' => tra('Email'),
 				'description' => tra('from').'|'.tra('to').'|'.tra('template'),
 			),
