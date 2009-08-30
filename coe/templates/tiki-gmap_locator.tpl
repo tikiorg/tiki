@@ -9,6 +9,8 @@
 </div>
 
 <form action="tiki-gmap_locator.php{$extraquery}" method="post">
+<input type="text" size="60" name="address" value="{tr}enter address{/tr}" />
+<input type="button" value="{tr}Find address{/tr}" onclick="showAddress(this.form.address.value)"/><br />
 <input type="text" name="point[x]" value="{$pointx}" id="pointx" size="16" />
 <input type="text" name="point[y]" value="{$pointy}" id="pointy" size="16" />
 <input type="text" name="point[z]" value="{$pointz}" id="pointz" size="2" />
@@ -36,12 +38,15 @@
 <div id="map" style="width: 500px; height: 400px;border: 1px solid #000;"></div>
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--
+var map = null;
+var geocoder = null;
 function load() {literal}{{/literal}
-  var map = new GMap2(document.getElementById("map"));
+  map = new GMap2(document.getElementById("map"));
   map.addControl(new GLargeMapControl());
   map.addControl(new GMapTypeControl());
   map.addControl(new GScaleControl());
   map.setCenter(new GLatLng({$pointy}, {$pointx}), {$pointz});
+  geocoder = new GClientGeocoder();
 
 {if $input eq 'y'}
 {if $pointx and $pointy}
@@ -72,6 +77,25 @@ function load() {literal}{{/literal}
 
 {literal}}{/literal}
 //load();
+
+function showAddress(address) {literal}{{/literal}
+  if (geocoder) {literal}{{/literal}
+    geocoder.getLatLng(
+      address,
+      function(point) {literal}{{/literal}
+        if (!point) {literal}{{/literal}
+          alert(address + " not found!");
+        {literal}} else {{/literal}
+          map.setCenter(point,14);
+          var marker = new GMarker(point);
+          map.addOverlay(marker);
+          marker.openInfoWindowHtml(address);
+        {literal}}{/literal}
+      {literal}}{/literal}
+    );
+  {literal}}{/literal}
+{literal}}{/literal}
+
 //--><!]]>
 window.onload=load;
 </script>

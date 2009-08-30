@@ -13,7 +13,7 @@
  * 
  */
 function wikiplugin_div_help() {
-	return tra("Insert a division block on wiki page").":<br />~np~{DIV(class=>class, type=>div|span|pre|i|b|tt|blockquote, align=>left|right|center|justify, bg=>color, width=>num[%], float=>left|right])}".tra("text")."{DIV}~/np~";
+	return tra("Insert a division block on wiki page").":<br />~np~{DIV(class=>class, type=>div|span|pre|b|i|tt|p|blockquote, align=>left|right|center|justify, bg=>color, width=>num[%], float=>left|right])}".tra("text")."{DIV}~/np~";
 }
 
 function wikiplugin_div_info() {
@@ -24,6 +24,12 @@ function wikiplugin_div_info() {
 		'prefs' => array('wikiplugin_div'),
 		'body' => tra('text'),
 		'params' => array(
+			'type' => array(
+				'required' => false,
+				'name' => tra('Type'),
+				'description' => tra('div|span|pre|b|i|tt|p|blockquote'),
+				'filter' => 'alpha',
+			),
 			'bg' => array(
 				'required' => false,
 				'name' => tra('Background color'),
@@ -38,11 +44,13 @@ function wikiplugin_div_info() {
 				'required' => false,
 				'name' => tra('Text Alignment'),
 				'description' => tra('left|right|center|justify'),
+				'filter' => 'alpha',
 			),
 			'float' => array(
 				'required' => false,
 				'name' => tra('Float Position'),
 				'description' => tra('left|right, for box with width lesser than 100%, make text wrap around the box.'),
+				'filter' => 'alpha',
 			),
 			'class' => array(
 				'required' => false,

@@ -32,7 +32,7 @@
 	{if !empty($headtitle)} : {$headtitle}
 	{elseif !empty($page)} : {if $beingStaged eq 'y' and $prefs.wikiapproval_hideprefix == 'y'}{$approvedPageName|escape}{else}{$page|escape}{/if} {* add $description|escape if you want to put the description + update breadcrumb_build replace return $crumbs->title; with return empty($crumbs->description)? $crumbs->title: $crumbs->description; *}
 	{elseif !empty($arttitle)} : {$arttitle}
-	{elseif !empty($title)} : {$title}
+	{elseif !empty($title)} : {$title|escape}
 	{elseif !empty($thread_info.title)} : {$thread_info.title|escape}
 	{elseif !empty($post_info.title)} : {$post_info.title}
 	{elseif !empty($forum_info.name)} : {$forum_info.name|escape}

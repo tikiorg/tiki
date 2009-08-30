@@ -1445,7 +1445,7 @@ class TikiLib extends TikiDb_Bridge {
 			if (isset($_SESSION["groups_are_emulated"]) && $_SESSION["groups_are_emulated"]=="y"){
 				$ret = array_intersect($ret,unserialize($_SESSION['groups_emulated']));
 			}
-			$ret = array_unique($ret);
+			$ret = array_values(array_unique($ret));
 			$this->usergroups_cache[$user] = $ret;
 			return $ret;
 		} else {
@@ -2500,7 +2500,7 @@ class TikiLib extends TikiDb_Bridge {
 		// Use default values if some values are not specified
 		if ( $res !== false && $defaultsFallback ) {
 			foreach ( $defaultValues as $k => $v ) {
-				if ( $res[$k] === null ) {
+				if ( !isset($res[$k]) || $res[$k] === null ) {
 					$res[$k] = $v;
 				}
 			}

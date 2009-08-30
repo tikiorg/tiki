@@ -390,7 +390,7 @@ if ($prefs['feature_categories'] == 'y') {
 }
 
 // object perms override globals (TODO - indicate globals somehow on the object perms list)
-if ($objectType != 'global') {
+if ($_REQUEST["objectType"] != 'global') {
 	foreach ($perms as &$perm) {
 		for( $i = 0; $i < count($groupNames); $i++) {
 			if ($perm[$groupNames[$i] . '_hasPerm'] == 'y') {

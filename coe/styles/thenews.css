@@ -1129,10 +1129,6 @@ ul.toc {
 	width: 50%;
 }
 
-.diffadded > .diffchar {
-	color: blue;
-}
-
 /***** Articles ****/
 
 .wikitext .article {
