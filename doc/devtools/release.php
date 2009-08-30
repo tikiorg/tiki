@@ -622,7 +622,7 @@ http://dev.tikiwiki.org/SocialContract
 
 List of members of the Community
 As of $now, the community has:
-  * $totalContributors members on Sourceforge,
+  * $totalContributors members on SourceForge.net,
   * $nbCommiters of those people who made at least one code commit
 
 This list is automatically generated and alphabetically sorted
