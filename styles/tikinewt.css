@@ -1023,7 +1023,7 @@ td.third {
 }
 
 [class].tabactive {
-	top: -1px;
+	top: 1px;
 }
 
 .tabactive a {
@@ -1038,7 +1038,7 @@ td.third {
 }
 
 [class].tabinactive {
-	top: -2px !important;
+	top: 0px !important;
 }
 
 .tabcontent {
