@@ -219,6 +219,7 @@ function get_default_prefs() {
 		'wikiplugin_iframe' => 'n',
 		'wikiplugin_img' => 'y',
 		'wikiplugin_image' => 'n',    // Experimental, may supercede img in 4.0
+		'wikiplugin_imgnew' => 'y',
 		'wikiplugin_include' => 'y',
 		'wikiplugin_invite' => 'y',
 		'wikiplugin_jabber' => 'n',
@@ -1385,9 +1386,6 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 
 		// TikiTests
 		'feature_tikitests' => 'n',
-
-		// Magic Admin Panel
-		'feature_magic' => 'n',
 
 		// Tiki Profiles
 		'profile_sources' => 'http://profiles.tikiwiki.org/profiles',
