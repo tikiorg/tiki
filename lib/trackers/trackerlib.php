@@ -998,11 +998,6 @@ class TrackerLib extends TikiLib {
 					);
 					$fopt = $this->set_default_dropdown_option($fopt);
 				} elseif ( $fopt['type'] == 'd' || $fopt['type'] == 'D' ) {
-					if ( $prefs['feature_multilingual'] == 'y' ) {
-						foreach ( $fopt['options_array'] as $key => $l ) {
-							$fopt['options_array'][$key] = tra($l);
-						}
-					}
 					$fopt = $this->set_default_dropdown_option($fopt);
 				}
 			}
