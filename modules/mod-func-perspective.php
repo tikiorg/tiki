@@ -4,11 +4,19 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-global $perspectivelib; require_once 'lib/perspectivelib.php';
-global $smarty;
-global $prefs;
+function module_perspective_info() {
+	return array(
+		'name' => tra('Perspective'),
+		'description' => tra('Enables to change current perspective.'),
+		'prefs' => array( 'feature_perspective' ),
+		'params' => array()
+	);
+}
 
-if( $prefs['feature_perspective'] == 'y' ) {
+function module_perspective( $mod_reference, $module_params ) {
+	global $perspectivelib; require_once 'lib/perspectivelib.php';
+	global $smarty;
+	
 	$perspectives = $perspectivelib->list_perspectives();
 	$smarty->assign( 'perspectives', $perspectives );
 
