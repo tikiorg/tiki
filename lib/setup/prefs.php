@@ -1387,9 +1387,6 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		// TikiTests
 		'feature_tikitests' => 'n',
 
-		// Magic Admin Panel
-		'feature_magic' => 'n',
-
 		// Tiki Profiles
 		'profile_sources' => 'http://profiles.tikiwiki.org/profiles',
 		'profile_channels' => '',

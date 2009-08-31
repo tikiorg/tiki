@@ -143,10 +143,6 @@
 					<legend class="heading">{icon _id="exclamation"}<span>{tr}Malfunctioning{/tr}</span></legend>
 					<span class="description">{tr}These features have critical faults - not recommended{/tr}</span>
 					<div class="half_width">
-						<span class="checkbox"><input type="checkbox" name="feature_magic" {if $prefs.feature_magic eq 'y'}checked="checked"{/if}/></span>
-						<span class="label"><a>{tr}Magic Admin Panel{/tr}</a></span>
-					</div>
-					<div class="half_width">
 						<span class="checkbox"><input type="checkbox" name="feature_workspaces" {if $prefs.feature_workspaces eq 'y'}checked="checked"{/if}/></span>
 						<span class="label"><a>{tr}Workspaces{/tr}</a></span>
 					</div>
