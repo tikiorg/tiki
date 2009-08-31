@@ -40,6 +40,9 @@
 	</select>
 	</div>
 </div>
+
+{preference name=wiki_page_regex}
+
 <div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" name="feature_multilingual" onclick="flip('usemultilingual');" id="feature_multilingual"
 			{if $prefs.feature_multilingual eq 'y'}checked="checked"{/if}/></div>
