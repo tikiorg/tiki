@@ -774,7 +774,7 @@ tr.diffheader {
 .tabactive,
 .tabinactive,
 [class].tabactive,
-[class].tabinactive {top: 0 !important}
+[class].tabinactive {top: 1px !important}
 
 
 .tabactive {
