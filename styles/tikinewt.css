@@ -742,13 +742,8 @@ div.simplebox {
 
 .rbox-title,
 .warning .rbox-title {
-	border: 0;
 	font-size: .95em;
-	padding: 0 10px;
-	padding-bottom: 0.35em;
-	position: relative;
-	display: inline;
-	margin: 0;
+	line-height: 1em;
 	font-weight: bold;
 	background: #eeee99;
 }
