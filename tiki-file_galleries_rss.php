@@ -20,16 +20,6 @@ if ($prefs['rss_file_galleries'] != 'y') {
         require_once ('tiki-rss_error.php');
 }
 
-$res=$access->authorize_rss(array('tiki_p_view_file_gallery','tiki_p_admin_file_galleries'));
-if($res) {
-   if($res['header'] == 'y') {
-      header('WWW-Authenticate: Basic realm="'.$tikidomain.'"');
-      header('HTTP/1.0 401 Unauthorized');
-   }
-   $errmsg=$res['msg'];
-   require_once ('tiki-rss_error.php');
-}
-
 $feed = "filegals";
 $uniqueid = $feed;
 $output = $rsslib->get_from_cache($uniqueid);
