@@ -59,8 +59,8 @@ function wikiplugin_div_info() {
 			),
 			'id' => array(
 				'required' => false,
-				'name' => tra('CSS Id'),
-				'description' => tra('Apply custom CSS id to the div.'),
+				'name' => tra('HTML id'),
+				'description' => tra('Sets the div\'s id attribute, as defined by HTML.'),
 			),
 		),
 	);
@@ -78,7 +78,6 @@ function wikiplugin_div($data, $params) {
 	$al   = (isset($align) && ($align == 'right' || $align == "center" || $align == "justify")) ? " text-align: $align;" : " text-align: left;";
 	$fl   = (isset($float) && ($float == 'left' || $float == 'right')) ? " float: $float;"  : " float: none;";
 	$cl   = (isset($clear) && ($clear == 'left' || $clear == 'right' || $clear == 'both')) ? " clear: $clear;"  : " clear: none;";
-//	$id    = (isset($id)) ? "id='$id'"  : "";
 
 	$begin  = "<$t style=\"$bg$al$w$fl$cl\"$c $id>";
 	$end = "</$t>";
