@@ -26,7 +26,7 @@
 	{section name=user loop=$channels}
 		<tr class="{cycle}">
 			<td>
-				<a class="tablename" href="tiki-view_faq.php?faqId={$channels[user].faqId}">{$channels[user].title}</a>
+				<a class="tablename" href="tiki-view_faq.php?faqId={$channels[user].faqId}">{$channels[user].title|escape}</a>
 				<div class="subcomment">
 					{$channels[user].description|escape|nl2br}
 				</div>
