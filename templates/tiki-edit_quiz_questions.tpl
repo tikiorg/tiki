@@ -14,7 +14,7 @@
 	{button href="tiki-edit_quiz.php" _text="{tr}Admin Quizzes{/tr}"}
 </div>
 
-<h2>{tr}Create/edit questions for quiz{/tr}: <a href="tiki-edit_quiz.php?quizId={$quiz_info.quizId}" >{$quiz_info.name}</a></h2>
+<h2>{tr}Create/edit questions for quiz{/tr}: <a href="tiki-edit_quiz.php?quizId={$quiz_info.quizId}" >{$quiz_info.name|escape}</a></h2>
 
 <form action="tiki-edit_quiz_questions.php" method="post">
 	<input type="hidden" name="quizId" value="{$quizId|escape}" />
@@ -102,7 +102,7 @@
 		<tr>
 			<td class="{cycle advance=false}">{$channels[user].questionId}</td>
 			<td class="{cycle advance=false}">{$channels[user].position}</td>
-			<td class="{cycle advance=false}">{$channels[user].question}</td>
+			<td class="{cycle advance=false}">{$channels[user].question|escape}</td>
 			<td class="{cycle advance=false}">{$channels[user].options}</td>
 			<td class="{cycle advance=false}">{$channels[user].maxPoints}</td>
 			<td class="{cycle}">

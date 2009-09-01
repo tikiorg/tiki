@@ -27,15 +27,15 @@ settimeleft(itid);
 {/if}
 {/if}
 
-<h2>{$quiz_info.name}</h2>
+<h2>{$quiz_info.name|escape}</h2>
 <div class="description">{$quiz_info.description|escape}</div>
 {if $ans eq 'n'}
 {section name=ix loop=$questions}
 <div class="questionblock">
-<div class="quizquestion">{$questions[ix].question}</div>
+<div class="quizquestion">{$questions[ix].question|escape}</div>
 <div class="quizoptions">
   {section name=jx loop=$questions[ix].options}
-  <input type="radio" value="{$questions[ix].options[jx].optionId|escape}" name="question_{$questions[ix].questionId}" />{$questions[ix].options[jx].optionText}<br />
+  <input type="radio" value="{$questions[ix].options[jx].optionId|escape}" name="question_{$questions[ix].questionId}" />{$questions[ix].options[jx].optionText|escape}<br />
   {/section}
 </div>  
 {if $questions[ix].type eq "f" }
