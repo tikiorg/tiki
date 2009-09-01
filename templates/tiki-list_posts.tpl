@@ -34,7 +34,7 @@
 			<td class="{cycle advance=false}">&nbsp;{$listpages[changes].postId}&nbsp;</td>
 			<td class="{cycle advance=false}">
 				&nbsp;
-				<a class="blogname" href="tiki-edit_blog.php?blogId={$listpages[changes].blogId}" title="{$listpages[changes].blogTitle}">{$listpages[changes].blogTitle|truncate:$prefs.blog_list_title_len:"...":true}</a>
+				<a class="blogname" href="tiki-edit_blog.php?blogId={$listpages[changes].blogId}" title="{$listpages[changes].blogTitle}">{$listpages[changes].blogTitle|truncate:$prefs.blog_list_title_len:"...":true|escape}</a>
 				&nbsp;
 			</td>
 			<td class="{cycle advance=false}">&nbsp;{$listpages[changes].created|tiki_short_datetime}&nbsp;</td>
