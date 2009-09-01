@@ -399,6 +399,9 @@
 	<input type="hidden" name="{$field_value.ins_id}" value="{$field_field.value|escape}" />
 	{include file='tracker_item_field_value.tpl'}
 
+{* -------------------- in group -------------------- *}
+{elseif $field_value.type eq 'N'}
+	{include file='tracker_item_field_value.tpl'}
 {/if}
 
 {if $field_value.isMandatory eq 'y' and $showmandatory eq 'y'}

@@ -958,6 +958,12 @@ class TrackerLib extends TikiLib {
 					$fopt['value'] = $userlib->get_user_preference($itemUser, $fopt['options_array'][0]);
 				}
 				break;
+			case 'N':
+				if (empty($itemUser)) {
+					$itemUser = $this->get_item_creator($trackerId, $itemId);
+				}
+				$fopt['value'] = $this->in_group_value($fopt, $itemUser);
+				break;
 			case 'A':
 				if (!empty($fopt['options_array'][0]) && !empty($fopt['value'])) {
 					$fopt['info'] = $this->get_item_attachment($fopt['value']);
@@ -1004,6 +1010,29 @@ class TrackerLib extends TikiLib {
 			$fields[] = $fopt;
 		}
 		return($fields);
+	}
+	function in_group_value($field, $itemUser) {
+		if (empty($itemUser)) {
+			return '';
+		}
+		if (!isset($this->tracker_infocache['users_group'][$field['options_array'][0]])) {
+			global $userlib;
+			$this->tracker_infocache['users_group'][$field['options_array'][0]] = $userlib->get_users_created_group($field['options_array'][0]);
+		}
+		if (isset($this->tracker_infocache['users_group'][$field['options_array'][0]][$itemUser])) {
+			if ($field['options_array'][1] == 'date') {
+				$value = $this->tracker_infocache['users_group'][$field['options_array'][0]][$itemUser];
+			} else {
+				$value = 'Yes';
+			}
+		} else {
+			if ($field['options_array'][1] == 'date') {
+				$value = '';
+			} else {
+				$value = 'No';
+			}
+		}
+		return $value;
 	}
 
 	function replace_item($trackerId, $itemId, $ins_fields, $status = '', $ins_categs = array(), $bulk_import = false, $tracker_info='') {
@@ -2874,6 +2903,18 @@ class TrackerLib extends TikiLib {
 				note that this option will cost an extra query to the database for each attachment and can severely impact performance with several attachments.
 				<dd>
 				</dl>'));
+		$type['N'] = array(
+			'label'=>tra('in group'),
+			'opt'=>true,
+			'help'=>tra('<dl>
+				<dt>Function: Allows to display if a item user is in a group and when he was assigned to the group (needs a user selector field)
+				<dt>Usage: <strong>groupName,date</strong>
+				<dt>Example: Members,date
+				<dt>Description:
+				<dd><strong>GroupName</strong> Group to test. <strong>date</strong> displays the date the user was assigned in the group (if known), otherwise will display yes/no.
+				<dd>
+				</dl>'));
+
 		return $type;
 	}
 
