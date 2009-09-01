@@ -9,7 +9,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 function module_top_active_blogs_info() {
 	return array(
 		'name' => tra('Most Active blogs'),
-		'description' => tra('Displays the specified number of blogs with links to them, starting with the most active one to the least.') . tra('Blog activity measurement can be more or less accurate.'),
+		'description' => tra('Displays the specified number of blogs with links to them, from the most active one to the least.') . tra('Blog activity measurement can be more or less accurate.'),
 		'prefs' => array( 'feature_blogs' ),
 		'params' => array(),
 		'common_params' => array('nonums', 'rows')
