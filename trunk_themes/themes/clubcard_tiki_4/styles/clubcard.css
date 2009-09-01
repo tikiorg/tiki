@@ -204,7 +204,8 @@ input[type=submit]:hover,
 
 #header-top {
 	min-height: 100px;
-	}
+	position: relative;
+}
 
 * html #header-top {
 	height: 100px
@@ -243,6 +244,7 @@ input[type=submit]:hover,
 }
 
 #siteloginbar {
+	position: absolute;
 	bottom: 3px;
 	right: 155px;
 }
@@ -273,7 +275,7 @@ input[type=submit]:hover,
 	color: #FFFFFF;
 }
 
-#tiki-top ul.cssmenu_horiz li ul,
+#tiki-top ul.cssmenu_horiz li ul li,
 .mdksubframe {
 	background: #5b5b5b;
 }
@@ -284,7 +286,25 @@ input[type=submit]:hover,
 	padding: 5px 20px;
 }
 
-.cssmenu_vert li ul,
+.cssmenu_vert li ul li,
+.mdkverbar .mdksubframe {
+	background: #95c72a;
+}
+
+.cssmenu_vert li ul li {
+	border: 1px dashed #678b1d;
+	border-top: 0;
+	margin-bottom: -1px;
+}
+/*
+.cssmenu_vert li ul {
+	background: #95c72a;
+}*/
+
+.cssmenu_vert li ul li:first-child {
+	border-top: 1px dashed #678b1d;
+}
+
 .mdkverbar .mdksubframe {
 	background: #95c72a;
 	border: 1px dashed #678b1d;
@@ -631,7 +651,3 @@ a.admbox:hover span {
 /***** End New (unsorted) *****/
 
 /* End of File */
-
-
-
-
