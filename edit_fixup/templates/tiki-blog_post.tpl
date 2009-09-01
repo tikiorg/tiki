@@ -56,8 +56,6 @@
 <table class="normal">
 {/if}
 
-{assign var=area_name value="blogedit"}
-
 {if $blog_data.use_title eq 'y' || !$blogId}
   <tr>
     <td class="editblogform">{tr}Title{/tr}</td><td class="editblogform">
@@ -66,32 +64,14 @@
   </tr>
 {/if}
 
-{* show toolbars over textarea *}
-{if $prefs.feature_wysiwyg eq 'n' or ($prefs.feature_wysiwyg eq 'y' and $prefs.wysiwyg_optional eq 'y' and $wysiwyg eq 'n' )}
-  <tr>
-    <td class="editblogform"><label>{tr}Toolbars{/tr}</label></td>
-    <td class="editblogform">
-      {toolbars area_name='blogedit'}
-    </td>
-  </tr>
-{/if}
-
 {* show textarea *}
-{if ( $prefs.feature_wysiwyg eq 'n' or ($prefs.feature_wysiwyg eq 'y' and $prefs.wysiwyg_optional eq 'y' and $wysiwyg eq 'n') )}
   <tr>
     <td class="editblogform">
     	&nbsp;
     </td>
     <td class="editblogform">
-      <textarea id='blogedit' class="wikiedit" name="data" rows="{$rows}" cols="{$cols}" wrap="virtual">{$data|escape}</textarea>
-
-{else}  {* show textarea with wysiwyg editor *}
-  <td class="editblogform" colspan="2">
-    {editform Meat=$data InstanceName='data' ToolbarSet="Tiki"}
-{/if}
-    <input type="hidden" name="rows" value="{$rows}"/>
-    <input type="hidden" name="cols" value="{$cols}"/>
-  </td>
+      {textarea id='blogedit' class="wikiedit" name="data"}{$data}{/textarea}
+	</td>
 </tr>
 
 {if $postId > 0 && $wysiwyg ne 'y'}

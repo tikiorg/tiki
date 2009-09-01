@@ -74,6 +74,10 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 		$html .= $fcked->CreateHtml();
 		
 		$html .= '<input type="hidden" name="wysiwyg" value="y" />';
+		
+		// unpleasant hack for Safari which refuses to make the edit box 100% height
+		$h = str_replace('px','', $fcked->Height);
+		if ($h) { $headerlib->add_jq_onready('if (jQuery.browser.safari) { $jq("#xEditingArea").height("'.$h.'"); }'); }
 	} else {
 		
 		// setup for wiki editor
