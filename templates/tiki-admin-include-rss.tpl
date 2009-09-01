@@ -140,7 +140,7 @@
 	<div class="adminoptionlabel"><label for="rss_forums">{tr}Forums{/tr}</label>{if $prefs.rss_forums eq 'y'} <a href="tiki-forums_rss.php" title="{tr}Feed for forums{/tr}.">{icon _id=feed}</a>{/if} {if $prefs.feature_forums ne 'y'}&nbsp;({tr}Feature is disabled.{/tr} <a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}</a>.){/if}
 	<div id="forumsrss" class="adminoptionboxchild" style="display:{if ($prefs.rss_forums eq 'y') and ($prefs.feature_forums eq 'y')}block{else}none{/if};">
 	<div class="adminoptionbox">
-	{tr}Title{/tr}: <input type="text" name="title_rss_forum" size="20" maxlength="255" style="width:95%" value='{$prefs.title_rss_forums|escape}' /><br />
+	{tr}Title{/tr}: <input type="text" name="title_rss_forums" size="20" maxlength="255" style="width:95%" value='{$prefs.title_rss_forums|escape}' /><br />
 	{tr}Description{/tr}: <textarea name="desc_rss_forums" style="width:95%" cols="20" rows="2">{$prefs.desc_rss_forums|escape}</textarea><br />
 	{tr}Maximum number of items to display{/tr}:<input type="text" name="max_rss_forums" size="5" value="{$prefs.max_rss_forums|escape}" /><br />
 	{tr}Show Author{/tr}: <input type="checkbox" name="showAuthor_rss_forums" {if $prefs.showAuthor_rss_forums eq 'y'} checked="checked"{/if}/><br />
