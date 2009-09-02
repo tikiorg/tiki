@@ -310,14 +310,23 @@ function get_objects_with_tag_combo($tagArray, $type='', $thisUser = '', $offset
 	$ret = array();
 	$permMap = $categlib->map_object_type_to_permission();
 	while ($row = $result->fetchRow()) {
-		if ($tiki_p_admin == 'y' || $this->user_has_perm_on_object($user, $row['itemId'], $row['type'], $permMap[$row['type']])) {
+		if ($tiki_p_admin == 'y') { 
+			$ret[] = $row;
+		} elseif ($row['type'] == 'blog post') {
+			global $bloglig; include_once('lib/blogs/bloglib.php');
+			$post_info = $bloglib->get_post($row['itemId']);
+			if ($this->user_has_perm_on_object($user, $post_info['blogId'], 'blog', 'tiki_p_read_blog')) {
+				$ret[] = $row;
+			} else {
+				--$cant;
+			}
+		} elseif ($this->user_has_perm_on_object($user, $row['itemId'], $row['type'], $permMap[$row['type']])) {
 			$ret[] = $row;
 		} else {
 			--$cant;
-		}
+		}       
 	}
-	
-	
+
 	return array('data' => $ret,
 		     'cant' => $cant);
     }
