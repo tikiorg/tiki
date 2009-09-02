@@ -1004,9 +1004,12 @@ a.forumnameread {
 
 .tabactive {
 	border: solid 1px #1d9ccf !important;
-	bottom: 0;
 	z-index: 2;
 	background: #cce5ff !important;
+}
+
+[class].tabactive {/* override layout.css */
+	top: 1px;
 }
 
 .tabactive a {

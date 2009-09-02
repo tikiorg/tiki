@@ -41,7 +41,7 @@
 		<tr class="{cycle}">
 			<td>{$channels[user].quizId}</td>
 			<td>
-				{$channels[user].name}
+				{$channels[user].name|escape}
 				<div class="subcomment">
 					{$channels[user].description}
 				</div>

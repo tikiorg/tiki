@@ -51,7 +51,6 @@ if (isset($_REQUEST["features"])) {
 		"feature_xmlrpc",
 		"feature_userlevels",
 		"feature_tikitests",
-		"feature_magic",
 		"feature_groupalert",
 		"feature_workspaces",
 		"feature_wiki_mindmap",

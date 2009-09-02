@@ -18,7 +18,7 @@
       {if $galleryId eq $prefs.fgal_root_id}
         {tr}File Galleries{/tr}
       {else}
-        {tr}Gallery:{/tr} {$name}
+        {tr}Gallery:{/tr} {$name|escape}
       {/if}
     {/if}
   {/strip}

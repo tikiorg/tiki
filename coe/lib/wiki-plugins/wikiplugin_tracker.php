@@ -331,6 +331,11 @@ function wikiplugin_tracker($data, $params) {
 						} else {
 							$_REQUEST['track'][$fl['fieldId']] = $tikilib->now;
 						}
+					} elseif ($f['type'] == 'N' && !empty($itemId)) {
+						if (empty($itemUser)) {
+							$itemUser = $this->get_item_creator($trackerId, $itemId);
+						}
+						$flds['data'][$i]['value'] = $trklib->in_group_value($flds['data'][$i], $itemUser);
 					}
 					if (isset($_REQUEST['ins_cat_'.$fl['fieldId']])) { // to remember if error
 						$_REQUEST['track'][$fl['fieldId']] = $_REQUEST['ins_cat_'.$fl['fieldId']];
