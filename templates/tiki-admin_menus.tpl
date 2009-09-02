@@ -1,5 +1,11 @@
 {title help="Menus"}{tr}Admin Menus{/tr}{/title}
 
+{if $tiki_p_admin eq 'y'}
+	<div class="navbar">
+		{button href="tiki-admin_modules.php" _text="{tr}Admin Modules{/tr}"}
+	</div>
+{/if}
+
 {tabset name="admin_menus"}
 {tab name="{tr}Menus{/tr}"}
 {include file='find.tpl'}
