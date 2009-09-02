@@ -900,6 +900,15 @@ ul.floatleft li {
 	margin-top: 8px;
 }
 
+/* mouseover plugin */
+
+.plugin-mouseover {
+	position: absolute;
+	z-index: 500;
+	display:none;
+	padding: .4em;
+}
+
 /** Wiki tocs **/
 div.tocnav {
 	margin-bottom: 4px;

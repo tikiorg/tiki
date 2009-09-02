@@ -63,22 +63,28 @@ function wikiplugin_mouseover_info() {
 				'description' => tra('y|n, parse the body of the plugin as wiki content. (Default to y)'),
 				'filter' => 'alpha',
 			),
+			'class' => array(
+				'required' => false,
+				'name' => tra('CSS Class'),
+				'description' => 'Default: plugin-mouseover',
+				'filter' => 'alpha',
+			),
 			'bgcolor' => array(
 				'required' => false,
-				'name' => tra('Color of the inside popup'),
-				'description' => tra('Default: #F5F5F5'),
+				'name' => tra('Background color of the popup'),
+				'description' => tra(''),
 				'filter' => 'striptags',
 			),
 			'textcolor' => array(
 				'required' => false,
-				'name' => tra('Text popup color'),
-				'description' => tra('#FFFFFF'),
+				'name' => tra('Text color in the popup'),
+				'description' => tra(''),
 				'filter' => 'striptags',
 			),
 			'sticky' => array(
 				'required' => false,
 				'name' => tra('Sticky'),
-				'description' => 'y|n, when enabled, popup stays visible until an other one is displayed or it is clicked.',
+				'description' => 'y|n, when enabled, popup stays visible until it is clicked.',
 				'filter' => 'alpha',
 			),				
 			'padding' => array(
@@ -86,6 +92,18 @@ function wikiplugin_mouseover_info() {
 				'name' => tra('Padding'),
 				'description' => 'Default: 5px',
 				'filter' => 'digits',
+			),
+			'effect' => array(
+				'required' => false,
+				'name' => tra('Effect'),
+				'description' => 'Options: None|Default|Slide|Fade (and with jQuery UI enabled: Blind|Clip|Drop|Explode|Fold|Puff|Slide)',
+				'filter' => 'alpha',
+			),
+			'speed' => array(
+				'required' => false,
+				'name' => tra('Effect speed'),
+				'description' => 'Options: Fast|Normal|Slow',
+				'filter' => 'alpha',
 			),
 		),
 	);
@@ -106,7 +124,9 @@ function wikiplugin_mouseover( $data, $params ) {
 	$offsety = isset( $params['offsety'] ) ? (int) $params['offsety'] : 0;
 	$parse = ! isset($params['parse']) || $params['parse'] != 'n';
 	$sticky = isset($params['sticky']) && $params['sticky'] == 'y';
-	$padding = isset( $params['padding'] ) ? (int) $params['padding'] : 5;
+	$padding = isset( $params['padding'] ) ? 'padding: '.$params['padding'].'px;' : '';
+	$effect = !isset( $params['effect'] ) || $params['effect'] == 'Default' ? '' : strtolower($params['effect']);
+	$speed = !isset( $params['speed'] ) ? 'normal' : strtolower($params['speed']);
 	
 	if (empty($params['label']) && empty($params['text'])) {
 		$label = tra('No label specified');
@@ -129,31 +149,21 @@ function wikiplugin_mouseover( $data, $params ) {
 
 	global $headerlib;
 
-	$headerlib->add_js( "
-window.addEvent('domready', function() {
-	$('$id-link').addEvent( 'mouseover', function(event) {
-		if( window.wikiplugin_mouseover )
-			window.wikiplugin_mouseover.setStyle('display', 'none');
-
-		window.wikiplugin_mouseover = $('$id');
-		window.wikiplugin_mouseover.setStyle('left', (event.page.x + $offsetx) + 'px');
-		window.wikiplugin_mouseover.setStyle('top', (event.page.y + $offsety) + 'px');
-		window.wikiplugin_mouseover.setStyle('display','block');
-
-		window.wikiplugin_mouseover.addEvent( 'click', function(event) {
-			window.wikiplugin_mouseover.setStyle( 'display', 'none' );
-		} );
-	} );
-	" . ( $sticky ? '' : "
-	$('$id-link').addEvent( 'mouseout', function(event) {
-		$('$id').setStyle('display','none');
-	} ); " ) . "
-} );
-" );
-	$bgcolor = "background-color: " . ( isset($params['bgcolor']) ? $params['bgcolor'] : '#F5F5F5' ) . ';';
-	$textcolor = isset($params['textcolor']) ? ("color:" . $params['textcolor'] . ';') : '';
-
-	$html = "~np~<a id=\"$id-link\" href=\"$url\">$label</a><div id=\"$id\" style=\"width: {$width}px; " . (isset($params['height']) ? "height: {$height}px; " : "") . "{$bgcolor} {$textcolor} display:none; padding: {$padding}px ;position: absolute; z-index: 500;\">$text</div>~/np~";
+	$js = "\$jq('#$id-link').mouseover(function(event) {
+	\$jq('#$id').css('left', event.pageX + $offsetx).css('top', event.pageY + $offsety); showJQ('#$id', '$effect', '$speed'); });";
+	if ($sticky) {
+		$js .= "\$jq('#$id').click(function(event) { hideJQ('#$id', '$effect', '$speed'); }).css('cursor','pointer');\n";
+	} else {
+		$js .= "\$jq('#$id-link').mouseout(function(event) { setTimeout(function() {hideJQ('#$id', '$effect', '$speed')}, 250); });";
+	}
+	$headerlib->add_jq_onready($js);
+	
+	$bgcolor   =  isset($params['bgcolor'])   ? ("background-color: " . $params['bgcolor'] . ';') : '';
+	$textcolor =  isset($params['textcolor']) ? ("color:" . $params['textcolor'] . ';') : '';
+	$class     = !isset( $params['class'] )   ? 'class="plugin-mouseover"' : 'class="'.$params['class'].'"';
+	
+	$html = "~np~<a id=\"$id-link\" href=\"$url\">$label</a>".
+		"<span id=\"$id\" $class style=\"width: {$width}px; " . (isset($params['height']) ? "height: {$height}px; " : "") ."{$bgcolor} {$textcolor} {$padding} \">$text</span>~/np~";
 
 	return $html;
 }
