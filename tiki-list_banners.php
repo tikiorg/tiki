@@ -57,7 +57,7 @@ if (isset($_REQUEST["find"])) {
 }
 $smarty->assign('find', $find);
 // Get a list of last changes to the Wiki database
-if ($tiki_p_admin == 'y') {
+if ($tiki_p_admin_banners == 'y') {
 	$who = 'admin';
 } else {
 	$who = $user;
