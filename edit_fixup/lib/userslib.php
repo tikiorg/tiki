@@ -3118,6 +3118,21 @@ function get_included_groups($group, $recur=true) {
 			$this->query($query, array($res['groupName'], $res['userId']));
 		}
 	}
+	function get_users_created_group($group, $user=null) {
+		if (!empty($user)) {
+			$query = 'SELECT `users_usergroups`.`created` FROM `users_usergroups` LEFT JOIN `users_users` on (`users_users`.`userId`=`users_usergroups`.`userId`) WHERE `groupName`=? AND `user`=?';
+			$bindvars = array($group, $user);
+		} else {
+			$query = 'SELECT `login`, `users_usergroups`.`created` FROM `users_usergroups` LEFT JOIN `users_users` on (`users_users`.`userId`=`users_usergroups`.`userId`) WHERE `groupName`=?';
+			$bindvars = array($group);
+		}
+		$result = $this->query($query, $bindvars);
+		$ret = array();
+		while($res = $result->fetchRow()) {
+			$ret[$res['login']]= $res['created'];
+		}
+		return $ret;
+	}
 
 }
 

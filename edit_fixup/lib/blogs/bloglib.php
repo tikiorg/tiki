@@ -165,7 +165,8 @@ class BlogLib extends TikiLib {
 		$query = "SELECT b.`title`, b.`postId`, c.`threadId`, c.`title` as commentTitle, `commentDate`, `userName` FROM `tiki_comments` c, `tiki_blog_posts` b WHERE `objectType`='post' AND b.`postId`=c.`object`";
 
 		$bindvars = array();
-		if ( $tiki_p_admin_comments != 'y' ) {
+		$globalperms = Perms::get();
+		if ( !$globalperms->admin_comment ) {
 			$query .= ' AND `approved`=?';
 			$bindvars[] = $approved;
 		} else {

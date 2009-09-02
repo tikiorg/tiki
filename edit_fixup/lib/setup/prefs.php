@@ -219,6 +219,7 @@ function get_default_prefs() {
 		'wikiplugin_iframe' => 'n',
 		'wikiplugin_img' => 'y',
 		'wikiplugin_image' => 'n',    // Experimental, may supercede img in 4.0
+		'wikiplugin_imgnew' => 'y',
 		'wikiplugin_include' => 'y',
 		'wikiplugin_invite' => 'y',
 		'wikiplugin_jabber' => 'n',
@@ -1350,7 +1351,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_template_zoom' => 'y',
 		'menus_items_icons' => 'n',
 		'feature_iepngfix' => 'n',
-		'iepngfix_selectors' => '#sitelogo a',
+		'iepngfix_selectors' => '#sitelogo a img',
 		'iepngfix_elements' => '',
 		'use_minified_scripts' => 'y',		// for debugging
 		'valid_email_regex' => '^[_a-z0-9\+\.\-]+@[_a-z0-9\.\-]+\.[a-z]{2,4}$',
@@ -1385,9 +1386,6 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 
 		// TikiTests
 		'feature_tikitests' => 'n',
-
-		// Magic Admin Panel
-		'feature_magic' => 'n',
 
 		// Tiki Profiles
 		'profile_sources' => 'http://profiles.tikiwiki.org/profiles',

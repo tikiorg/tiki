@@ -1132,9 +1132,8 @@ function get_objects_with_tag_combo($tagArray, $type='', $thisUser = '', $offset
 					cnt >= ?
 				ORDER BY
 					cnt DESC, RAND()
-				LIMIT ?
 				";
-			
+			break;
 		// }}}
 
 		case 'weighted': // {{{
@@ -1157,16 +1156,14 @@ function get_objects_with_tag_combo($tagArray, $type='', $thisUser = '', $offset
 					having_cnt >= ?
 				ORDER BY					
 					sort_cnt DESC, RAND()
-				LIMIT ?
 				";	
 			// Sort based on the global popularity of all tags in common
 		// }}}
 		}
 		
 		$bindvals[] = $minCommon;
-		$bindvals[] = $maxResults;
 		
-		$result = $this->query( $query, $bindvals );
+		$result = $this->query( $query, $bindvals, $maxResults );
 		$tags = array();
 		while( $row = $result->fetchRow() )
 			$tags[] = $row;
