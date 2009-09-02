@@ -113,7 +113,7 @@ function wikiplugin_mouseover( $data, $params ) {
 	global $smarty, $tikilib;
 
 	if( ! isset($params['url']) ) {
-		$url = 'javascript:void()';
+		$url = 'javascript:void(0)';
 	} else {
 		$url = $params['url'];
 	}
