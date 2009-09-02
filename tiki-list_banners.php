@@ -15,13 +15,7 @@ if ($prefs['feature_banners'] != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
-// IF NOT LOGGED aND NOT ADMIN BAIL OUT
-if ($tiki_p_admin != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied"));
-	$smarty->display("error.tpl");
-	die;
-}
+
 if (isset($_REQUEST["remove"])) {
 	if ($tiki_p_admin_banners != 'y') {
 		$smarty->assign('errortype', 401);
@@ -63,7 +57,11 @@ if (isset($_REQUEST["find"])) {
 }
 $smarty->assign('find', $find);
 // Get a list of last changes to the Wiki database
-$who = 'admin';
+if ($tiki_p_admin == 'y') {
+	$who = 'admin';
+} else {
+	$who = $user;
+}
 $listpages = $bannerlib->list_banners($offset, $maxRecords, $sort_mode, $find, $who);
 $smarty->assign_by_ref('cant_pages', $listpages["cant"]);
 $smarty->assign_by_ref('listpages', $listpages["data"]);
