@@ -5,7 +5,8 @@
 <div class="navbar">
 	{button href="tiki-newsletters.php" _text="{tr}List Newsletters{/tr}"}
 	{assign var="nlid_encod" value=$nlId|urlencode}
-	{button href="tiki-admin_newsletters.php?nlId=$nlid_encod" _text="{tr}Admin Newsletters{/tr}"}
+	{button href="tiki-admin_newsletters.php?nlId=$nlid_encod" _text="{tr}Edit Newsletter{/tr}"}
+	{button href="tiki-admin_newsletters.php" _text="{tr}Admin Newsletters{/tr}"}
 	{button href="tiki-send_newsletters.php?nlId=$nlid_encod" _text="{tr}Send Newsletters{/tr}"}
 </div>
 
