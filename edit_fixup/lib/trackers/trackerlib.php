@@ -1872,6 +1872,12 @@ class TrackerLib extends TikiLib {
 			if (!empty($f['value']) && isset($f['type'])) {
 
 				switch ($f['type']) {
+				// IP address (only for IPv4)
+				case 'I':
+					if (!$this->isValidIP($f['value'])) {
+						$erroneous_values[] = $f;
+					}
+					break;
 				// numeric
 				case 'n':
 					if(!is_numeric($f['value'])) {

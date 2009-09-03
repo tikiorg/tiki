@@ -60,8 +60,9 @@ class CalendarLib extends TikiLib {
 				$mid .= implode( ' and ', $tmp_mid ) . ')';
 			}
 		}
-		
-		$bindvars = array_merge($bindvars, $join_bindvars);
+		if (is_array($join_bindvars)) {
+			$bindvars = array_merge($bindvars, $join_bindvars);
+		}
 
 		$query = "select $distinct * from `tiki_calendars` as tcal $join_tables $mid order by tcal.".$this->convertSortMode($sort_mode);
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);

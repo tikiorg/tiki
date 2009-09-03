@@ -1133,7 +1133,7 @@ function wikiplugin_imgnew_info() {
 
 	// If mouseover settings are set, create java script and get original image dimensions
 	if (!empty($javaset)) {
-		$link = 'javascript:void()';
+		$link = 'javascript:void(0)';
 		$script = "\r\t" . '<script type="text/javascript" src="lib/overlib.js"></script>';
 		$mouseover = " onmouseover=\"return overlib('$data',BACKGROUND,'$browse_full_image',WIDTH,'$fwidth',HEIGHT,'$fheight'";
 		if ($imgdata['thumb'] == 'mousesticky') {
