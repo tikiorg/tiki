@@ -477,7 +477,7 @@ class ToolbarInline extends Toolbar
 		return $tag;
 	} // }}}
 
-	function getSyntax( $syntax ) // {{{
+	function getSyntax() // {{{
 	{
 		return $this->syntax;
 	} // }}}
@@ -546,7 +546,7 @@ class ToolbarBlock extends ToolbarInline // Will change in the future
 		case 'image':
 			$label = tra('Image');
 			$icon = tra('pics/icons/picture.png');
-			$wysiwyg = 'tikiimage';
+			$wysiwyg = '';
 			$syntax = '{img src= width= height= link= }';
 			break;
 		case 'toc':
