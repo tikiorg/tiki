@@ -3,7 +3,7 @@
 
 <div class="navbar">
 	{button href="tiki-admin_newsletters.php" _text="{tr}Create Newsletter{/tr}"}
-	{button href="tiki-send_newsletters.php" _text="{tr}Send Newsletters{/tr}"}
+	{button href="tiki-newsletters.php" _text="{tr}List Newsletters{/tr}"}
 	{button href="tiki-send_newsletters.php" _text="{tr}Send Newsletters{/tr}"}
 </div>
 
