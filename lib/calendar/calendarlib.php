@@ -35,6 +35,7 @@ class CalendarLib extends TikiLib {
 		}
 		
 		$distinct = '';
+		$join_tables = '';
 		if (!empty($filter)) {
 			$tmp_mid = array();
 			foreach ($filter as $type=>$val) {
@@ -60,7 +61,7 @@ class CalendarLib extends TikiLib {
 				$mid .= implode( ' and ', $tmp_mid ) . ')';
 			}
 		}
-		if (is_array($join_bindvars)) {
+		if (!empty($join_bindvars)) {
 			$bindvars = array_merge($bindvars, $join_bindvars);
 		}
 
