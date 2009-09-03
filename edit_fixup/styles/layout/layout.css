@@ -15,20 +15,8 @@ html[dir=ltr]>body {
 	padding: 1em;
 }
 
-body.fullscreen {
-	text-align: left;
-	background: #fff;
-}
-
-fieldset {
-	margin-bottom: 2px;
-	padding: 0.3em;
-}
-
 span.button {
 	display: inline-block;
-	margin: 1px 2px;
-	padding: 2px;
 }
 
 span.button a,
@@ -36,8 +24,6 @@ span.button a:visited,
 button,
 span.button input,
 .calbuttonBox a {
-	padding: 1px 4px;
-	margin-right: 1px;
 	text-decoration: none;
 	white-space: nowrap;
 	cursor: pointer;
@@ -45,19 +31,11 @@ span.button input,
 
 input[type=reset],
 input[type=submit] {
-	padding: 1px 4px;
-	margin-right: 1px;
 	text-decoration: none;
 	white-space: nowrap;
 	cursor: pointer;
 }
 	
-span.highlight {
-	background: aqua;
-	padding: 0 !important;
-	margin: 0;
-}
-
 div.iconmenu {
 	display: inline;
 }
@@ -77,11 +55,6 @@ label {
 	cursor: pointer;
 }
 
-input[type=checkbox],
-input[type=radio] {
-	border: 0;
-}
-
 form {
 	margin: 0;
 	padding: 0;
@@ -99,21 +72,11 @@ img {
 }
 
 /***** Site Header & Identity *****/
-#header-top {
-	position: relative;
-}
-
 #siteheader {
 	text-align: left;
-	background: transparent;
 	vertical-align: middle;
 	padding: 0;
 	margin: 0;
-}
-
-#customcode {  }
-#customcodewith_ad {
-	width: 400px;
 }
 
 #sioptionscentered {
@@ -130,50 +93,12 @@ div.floatleft {
 	clear: none;
 }
 
-div#sitelogo {
-	margin: auto;
-	padding: 1em;
-}
-
 div#sitead {
 	margin: auto;
 }
 
-#sitead.floatright {
-	padding-right: 40px;
-}
-
-#sitead.floatleft {
-	padding-left: 40px;
-}
-
-#sioptionscentered #sitead.floatleft {
-	padding-left: 10px;
-}
-
-#bannertopright {
-	padding-right: 4px;
-}
-
-#sitelocbar {
-	float: left;
-	padding: 2px 2px 3px 10px;
-}
-
-#siteloginbar {
-	text-align: right;
-	position: absolute;
-	bottom: 3px;
-	right: 10px;
-	font-size: 90%;
-}
-	
-#siteloginbar #register{
-	float: right;
-	padding-left: 5px;
-}
-
-#siteloginbar #pass{
+#siteloginbar #register,
+#siteloginbar #pass {
 	float: right;
 	padding-left: 5px;
 }
@@ -186,11 +111,6 @@ div#sitead {
 	padding-right: 0;
 }
 
-#tiki-top table {
-	width: auto;
-	white-space: nowrap;
-}
-
 #sitesearchbar {
 	float: right;
 	clear: none;
@@ -198,6 +118,16 @@ div#sitead {
 	text-align: right;
 	display: block;
 	margin: 0;
+}
+
+#tiki-top form.findtable {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+#tiki-top table {
+	width: auto;
+	white-space: nowrap;
 }
 
 /****** Menus_links ******/
@@ -394,20 +324,6 @@ span.moduleflip-vert {
 
 /* centercolumn */
 	
-a.flip,
-a.flip:visited,
-.tellafriend a,
-.tellafriend a:visited,
-a.flip:hover,
-.tellafriend a:hover {
-	font-size: 80%;
-	text-decoration: none;
-}
-
-.tellafriend {
-	text-align: right;
-}
-
 .fullscreen .tellafriend {
 	margin-right: 100px;
 	margin-top: 2px;
@@ -419,7 +335,6 @@ a.flip:hover,
 
 #power {
 	padding: 0 1em 1em;
-	font-size: .9em;
 }
 	
 #credits {
@@ -524,15 +439,12 @@ div#edithelpzone {
 	display: none
 }
 
-#edithelpzone code {
-	font-size: 1.2em;
-}
-
 #rules-copy-panel {
 	display: none;
 }
 
-.clear, #clear {
+.clear,
+#clear {
 	clear: both;
 }
 
@@ -558,44 +470,19 @@ div#edithelpzone {
 	width: auto !important;
 }
 
-.attention {
-	color: red;
-}
-
-.openid_url {
-	background: #fff url(../../img/icons/login-OpenID-bg.gif) no-repeat;
-	padding-left: 18px;
-}
-
-.bannertext {
-	font-size: .95em;
-	text-decoration: none;
-}
-
 div.imagerank {
 	margin: 10px 5px;
 }
 
 div#debugconsole {
 	position: absolute;
-	background: #333;
-	color: #fff;
 	top: 0;
 	left: 20px;
 	width: 60%;
 	height: auto;
 	z-index: 1000;
-	padding: 5px;
-	border: 2px solid #aaa;
-	font-size: 1em;
 }
 	
-#debugconsole form { color: #dd6; }
-
-#debugconsole a {
-	color: #ddd;
-}
-
 #debugconsole table {
 	width: 100%;
 }
@@ -607,14 +494,8 @@ div#debugconsole {
 .mini {
 	width: 100%;
 	text-align: center;
-	font-size: .9em;
 	margin-left: auto;
 	margin-right: auto;
-}
-
-.prevnext {
-	font-size: 1em;
-	padding: 1px 6px;
 }
 
 a.tikihelp,
@@ -630,10 +511,6 @@ a.tikihelp:hover {
 
 #rss img {
 	vertical-align: middle;
-}
-
-#rss small {
-	font-size: 1em;
 }
 
 a.icon,
@@ -658,14 +535,6 @@ img.icon {
 .findlang {
 	display: inline; 
 	vertical-align: middle;
-	margin: 0 1px;
-}
-
-.findtitle input {
-	margin-left: 2px;
-}
-.findtable ul {
-	list-style: none;
 }
 
 .findtable ul li {
@@ -678,91 +547,29 @@ img.icon {
 	text-align: center;
 }
 
-.alphafilter a {
-	font-size: 120%;
-}
-
-.alphafilter .highlight {
-	font-weight: bold;
-	font-size: 130%;
-}
-
-.top_actions {
-	text-align: right;
-	margin-top: 5px;
-}
-
-ul.categories{
-	margin: 0;
-	padding: 0;
-}
-
-ul.categories li{
-	list-style: none;
-	margin: 0;
-	padding: 0;
-}
-
-/* New Toolbars (toolbars) */
-
-.textarea-toolbar {
-	padding: .3em;
-	font-size: .9em;
-}
-
-a.toolbar {
-	padding: 0 .5em 0 0;
-}
-
-a.qt-plugin {
-}
+/* New Toolbars */
 
 a.qt-plugin div {
 	/* .iconmenu */
-	background-color: #CD8;
-	border: thin #690 solid;
 	margin: 0 .4em 0 0;
 	padding: 2px .4em 0 .2em;
-	color: #030;
-	font-size: 10px;
-}
-
-a.qt-plugin:hover {
-	text-decoration: none;
-}
-
-a.qt-plugin div img { /* div.iconmenu img.icon */
-	margin-bottom: 4px;
-}
-
-span.toolbar-list {
-	padding: 0 0 0 .5em;
-	line-height: 20px;
-	border-left: medium double #bfbfbf;
 }
 
 .helptool-admin {
 	float: right;
-	border-left: medium double #bfbfbf;
 	padding-left: 8px;
-	margin-left:8px;
+	margin-left: 8px;
 }
 
 .toolbars-picker {
 	position: absolute;
 	width: 300px;
-	background-color: white;
-	border: thin solid black;
 	z-index: 300;
 }
 
 .toolbars-picker a {
 	padding: 4px 2px;
 	display: inline-block;
-}
-
-.toolbars-picker a:hover {
-	background-color: #ccc;
 }
 
 /* New Help section */
@@ -790,60 +597,19 @@ div#tikihelp {
 	vertical-align: middle;
 }
 
-.help_fullscreen_icon {
-	margin-right: 8px;
-}
-
-.help_close_icon {
-	margin-right: 20px;
-}
-
 div.help_section_select {
-	font-weight : bold;
-	font-size: 120%;
-	background: #e7e9ea;
-	color: #000;
 	width: 100%;
 	padding: 2px;
 }
 
 div.help_sections {
 	width: 360px;
-	padding:  2px;
-	background: #aac9e9;
 	overflow: auto;
 	height: 100%;
 }
 
-div.help_section {
-	margin: 5px;
-	padding: 5px;
-	background: #fff;
-	color: #000;
-}
-	
 #site_report {
 	text-align: center;
-}
-
-#site_report a {
-	border-left: 1px solid #696969;
-	border-right: 1px solid #696969;
-	padding: 0 5px;
-	font-size: smaller;
-}
-
-.plugin-desc {
-	padding: 5px;
-}
-
-.plugin-sample {
-	padding: 5px;
-	font-family: monospace;
-}
-
-.plugin-sample .plugin-param {
-	padding-left: 15px;
 }
 
 .plugin-form-float {
@@ -853,10 +619,6 @@ div.help_section {
 	top: 5%;
 	max-height: 90%;
 	overflow: auto;
-	background: white;
-	color: black;
-	padding: 10px;
-	border: solid 2px black;
 	z-index: 1000;
 }
 
@@ -866,7 +628,7 @@ div.help_section {
 
 /***** Boxes *****/
 /** Modules **/
-div.box {
+.box {
 	overflow: hidden;
 }
 
@@ -919,17 +681,13 @@ span.moduleflip,
 	height: 16px;
 }
 	
-div.box-minichat {
+.box-minichat {
 	width: 100%;
 }
 
-div.minichatdiv {
-	font-size: .9em;
-}
-
-div.minichat,
-div.minichatdiv,
-div.minichatchan {
+.minichat,
+.minichatdiv,
+.minichatchan {
 	overflow: auto;
 }
 
@@ -938,48 +696,11 @@ div.minichatchan {
 	vertical-align: middle;
 }
 
-.box-switch_lang .box-data img.highlight {
-	padding: .1em;
-	border: .1em solid #f00;
-}
-
-.box-switch_lang .box-data span.highlight {
-	border: .1em solid #f00;
-}
-
-.box-switch_lang li {
-	list-style: none;
-}
-
-.box-switch_lang .box-data a.highlight {
-	font-weight: bold;
-}
-
-.box-switch_lang ul {
-	padding: 0 1em;
-}
-
-.cbox {
-	overflow: hidden;
-}
-
-.cbox-title {
-	padding: 3px 3px 0 3px;
-}
-
-.cbox-data {
-	overflow: hidden;
-	padding: 0 3px 3px 3px;
-}
-
-.rbox {
-	margin: 1em .3em 2em .3em;
-}
-	
+.cbox,
+.cbox-data,
 .rbox-title,
 .rbox-data {
 	overflow: hidden;
-	padding: 1px 3px;
 }
 
 .rbox-title {
@@ -988,39 +709,25 @@ div.minichatchan {
 	z-index: 1;
 	position: relative;
 	bottom: -1px;
-	padding: 3px;
 }
 	
 .rbox img {
-	padding-right: 3px;
 	vertical-align: middle;
 }
 	
 .rbox-data {
 	position: relative;
 	z-index: 0;
-	padding: 0 3px 3px 3px;
-}
-
-div.simplebox {
-	padding: 3px;
 }
 
 /***** Tables, Tabs ****/
 /** Tables **/
-table {
-	font-size: inherit;
-}
 
-table.normal, 
+table.normal,
+table.normalnoborder, 
 table.admin {
 	padding: 0;
 	margin: 0;
-	border-collapse: collapse;
-	width: 100%;
-}
-
-table.normalnoborder {
 	width: 100%;
 }
 
@@ -1028,42 +735,11 @@ td {
 	vertical-align: top;
 }
 
-td.normal,
-.normal td,
-.wikitable td,
-td.odd,
-td.even,
-td.form,
-.formcolor td,
-.editblogform td {
-	margin: 0;
-	padding: 3px;
-	vertical-align: top;
-}
-
-td.third {
-	text-align: center;
-}
-
-.normal td,
-td.normal,
-.wikitable td,
-td.odd,
-td.even {
-	margin: 0;
-	padding: 0.2em;
-	vertical-align: top;
-	border-collapse: collapse;
-}
-
+td.third,
 th,
 td.heading,
 tr.diffheader {
 	text-align: center;
-}
-
-td.form {
-	padding: 0.2em;
 }
 
 /** Tabs **/
@@ -1089,7 +765,6 @@ td.form {
 }
 
 .tabactive {
-	border: solid 1px /*#696969*/ !important;
 	border-bottom: none;
 	border-top-width: 2px;
 	position: relative;
@@ -1147,23 +822,14 @@ div.description {
 
 #cachedpage {
 	float: right;
-	font-size: small;
 }
 
 .wikiactions {
 	white-space: nowrap !important;
 }
 
-body.tiki_wiki #comments {
-	padding: 1em;
-}
-
 div.split {
 	clear: both;
-}
-
-.editdate {
-	padding-bottom: 5px;
 }
 
 div#page-bar {
@@ -1177,14 +843,6 @@ div#page-bar {
 
 .wiki-edithelp {
 	display: none;
-}
-
-#wikihelp-tab table td {
-	padding: 2px;
-}
-
-p.editdate {
-	padding-top: 10px;
 }
 
 /* Wiki plugins */
@@ -1201,31 +859,6 @@ table.wikiplugin-split .codelisting {
 .footnotearea {
 	margin-top: 2em;
 	font-size: 0.9em;
-}
-
-/* wikiplugin_fancylist */
-.wikitext .fancylist {
-	margin: .5em 0;
-	padding: 0;
-}
-
-.wikitext .fancylist li {
-	font: italic 2em Verdana, Geneva, Arial, Helvetica, sans-serif;
-	line-height: 27px;
-	list-style-position: inside;
-	margin-left: 10px;
-	padding: 6px 0 7px 15px;
-}
-
-.wikitext .fancylist li p {
-	display: inline;
-	font-size: 50%;
-	font-style: normal;
-	margin-left: 12px;
-}
-
-[class].wikitext .fancylist li p {
-	margin-left: -3px;
 }
 
 /* Versions plugin */
@@ -1249,12 +882,6 @@ table.wikiplugin-split .codelisting {
 	height: 150px;
 }
 
-/* wikiplugin tracker */
-.mandatory_star {
-	font-weight: bold;
-	color: red;
-}
-
 ul.floatleft {
 	display: block;
 	list-style: none;
@@ -1271,15 +898,6 @@ ul.floatleft li {
 	
 .editdate ul.floatleft {
 	margin-top: 8px;
-}
-	
-/* mouseover plugin */
-
-.plugin-mouseover {
-	position: absolute;
-	z-index: 500;
-	display:none;
-	padding: .4em;
 }
 
 /** Wiki tocs **/
@@ -1302,61 +920,6 @@ div.tocnav {
 
 .fancytoclevel {
 	list-style-image: url(../../img/icons/footprint.gif);
-}
-
-li.toclevel {}
-
-/* TOC */
-ul.toc {
-	padding-left: 2em;
-	border-top: 1px dotted #a9a9a9;
-	border-bottom: 1px dotted #a9a9a9;
-	margin-bottom: 4px;
-}
-
-ul.toc * {
-	border: none;
-}
-
-/* Wiki diff styles */
-.diff td {
-	border: 1px solid #696969;
-}
-
-.diff div {
-	border-top: 1px solid #696969;
-}
-
-.diffbody {
-	color: #000;
-}
-
-.diffadded {
-	background: #ccffcc;
-	color: #000;
-}
-
-.diffdeleted {
-	background: #ffcccc;
-	color: #000;
-	text-decoration: line-through;
-}
-
-.diffinldel {
-	background: #ffcccc;
-	text-decoration: line-through;
-}
-
-.diffbody {
-	background: #f2f4f5;
-}
-
-.diffchar {
-	color: red;
-}
-
-.plugin-desc {
-	padding: 5px;
 }
 
 /***** Articles ****/
@@ -1417,17 +980,7 @@ div.article .actions {
 	top: 0;
 }
 
-div.articlesource {
-	margin-top: 5px;
-	font-style: italic;
-	font-size: 90%;
-}
-
 /***** Blogs *****/
-div.breadcrumbs {
-	font-size: 90%;
-	font-style: italic;
-}
 
 div.blogheading {
 	display: block;
@@ -1438,28 +991,14 @@ div.blogheading {
 div.blogdesc {
 	display: block;
 	width: 40%;
-	padding: 8px;
-	margin-top: 8px;
-	margin-left: 6px;
 }
 
 div.bloginfo {
 	display: block;
 }
 
-div.blogtools {
-	padding: 3px;
-	text-align: right
-}
-	
 .blogactions {
 	float: right;
-}
-
-a.blogt,
-a.blog:visited {
-	border: 0;
-	text-decoration: none;
 }
 
 .postinfo {
@@ -1473,8 +1012,6 @@ a.blog:visited {
 
 small.description {
 	display: block;
-	font-size: .95em;
-	font-style: italic;
 }
 
 div.posthead {
@@ -1486,14 +1023,9 @@ span.posthead {
 	display: block;
 }
 
-body.tiki_blogs .post .title {
-	margin-top: 0;
-}
-
 body.tiki_blogs .post .postfooter {
 	clear: both;
 	float: right;
-	margin-bottom: 2em;
 }
 
 /***** Forums *****/
@@ -1717,15 +1249,6 @@ img.athumb {
 	margin: auto
 }
 
-p.norecords {
-	font-weight: bold;
-}
-
-div.imagetitle {
-	font-weight: bold;
-	font-size: 200%;
-}
-
 div.showimage {
 	margin: 5px 0;
 	width: 100%;
@@ -1755,25 +1278,10 @@ div#random_image {
 	padding-left: 2px;
 	padding-right: 2px;
 }
-	
-.opaque {
-	border: 1px solid yellow;
-	background: white;
-	color: black;
-}
 
 opaque .box-title,
 .opaque .box-data {
 	width: auto;
-}
-
-.opaque .box-title {
-	border-bottom: 1px solid yellow;
-	padding: 3px 3px 0 3px;
-}
-
-.opaque .box-data {
-	padding: 0 3px 3px 3px;
 }
 
 .opaque .iconmenu {
@@ -1816,33 +1324,6 @@ div.multiselect div.selection span {
 	display: inline;
 }
 
-div.multiselect li.odd,
-div.multiselect div.odd {
-	color: black;
-	background: #F4F6F7;
-}
-
-div.multiselect li.odd:hover,
-div.multiselect div.odd:hover {
-	background: #FFF7E6;
-}
-
-div.multiselect li.even,
-div.multiselect div.even {
-	color: black;
-	background: #E7E9EA;
-}
-
-div.multiselect div.even:hover,
-div.multiselect div.even:hover {
-	background: #F0F2F3;
-}
-
-div.multiselect div.odd,
-div.multiselect div.even {
-	border: 1px solid #80B1E2;
-}
-
 div.multiselect ul {
 	list-style-image: none;
 	list-style-position: outside;
@@ -1876,18 +1357,11 @@ div.multiselect div.selection {
 	z-index: 1000;
 	width: 100%;
 	left: -1px;
-	border: 1px solid #80B1E2;
-	background: #fff;
 	float: left;
 	margin: 0;
 	padding: 0;
 }
 
-div.multiselect:hover,
-div.multiselect div.selection:hover {
-	border: 1px solid #80B1E2;
-}
-	
 /***** Categories, Tags *****/
 span.categpath {
 	display: block;
@@ -1900,25 +1374,15 @@ a.categpath {
 .catfeatures {
 	margin-left: 0;
 	padding: 0;
-	font-weight: bold;
-	list-style: none
 }
 
 .catfeatures li {
 	display: inline;
 	margin-right: 7px;
-	text-transform: capitalize;
-}
-
-.catitems {
-	margin-left: 15px;
-	padding: 0;
-	list-style: none;
 }
 
 .catitems li {
 	display: inline;
-	margin-right: 7px;
 }
 
 /***** Tags (freetags) *****/
@@ -1934,10 +1398,6 @@ a.categpath {
 
 .freetagskeywords {
 	margin: 10px 0;
-}
-
-.freetaglist a {
-	text-decoration: none;
 }
 
 .freetagsort {
@@ -1973,15 +1433,11 @@ a.categpath {
 }
 
 .freetagitemlist div.type {
-	font-weight: bold;
-	font-size: 0.8em;
 	margin-left: 10px;
 }
 
 a.freetag,
 a.freetag:hover {
-	background: none;
-	border: 0;
 	margin: auto;
 }
 
@@ -1999,41 +1455,6 @@ ul.freetag {
 }
 
 .freetag a {display: inline !important}
-
-a.freetag_1 {
-	text-decoration: none;
-	font-size: .8em;
-}
-
-a.freetag_2 {
-	text-decoration: none;
-	font-size: .9em;
-}
-	
-a.freetag_3 {
-	text-decoration: none;
-	font-size: 1em;
-}
-
-a.freetag_4 {
-	text-decoration: none;
-	font-size: 1.2em
-}
-
-a.freetag_5 {
-	text-decoration: none;
-	font-size: 1.4em;
-}
-
-a.freetag_6 {
-	text-decoration: none;
-	font-size: 1.6em;
-}
-
-a.freetag_7 {
-	text-decoration: none;
-	font-size: 1.8em;
-}
 
 div.freetagObjectOdd {
 	margin: 2px;
@@ -2070,11 +1491,6 @@ div.freetagObjectName a {
 	text-align: right;
 }
 
-.morcego_embedded {
-	border: 1px solid yellow;
-	text-align: center;
-}
-
 /*****  Polls  *****/
 table.pollresults {
 	width: 100%;
@@ -2093,130 +1509,11 @@ table.pollresults {
 }
 
 /***** FAQs *****/
-div.faqlistquestions {
-	margin-bottom: 20px;
-}
-
-div.faqqa {
-	margin-bottom: 20px;
-}
-
-div.faqquestion {
-	font-weight: bold;
-	padding: 2px 12px 0 12px;
-}
-
-div.faqanswer {
-	padding: 0 12px 4px 12px;
-}
 
 /***** Quizzes *****/
-div.questionblock {
-	margin-bottom: 10px;
-}
-
-div.quizquestion {
-	margin-bottom: 5px;
-}
-
-div.quizdescription {
-	margin-bottom: 10px;
-}
-
-div.quizanswer {
-	margin-bottom: 10px;
-}
-
 /***** Shoutbox *****/
-div.shoutboxmsg {
-	margin-bottom: 0;
-	padding: 4px;
-	padding-bottom: 1px;
-}
-
-div.shoutboxmodmsg {
-	font-size: .95em;
-	margin: 0 5px 4px 5px;
-	padding-top: 5px;
-	padding-bottom: 1px
-}
-
-textarea.tshoutbox{
-	font-size: .95em;
-	width: 90%;
-}
-
 /***** Directory *****/
-div.dircategs {
-	font-size: 95%;
-}
-
-.dirsublink {
-	font-size: .95em;
-}
-
-div.dirsite {
-	margin-bottom: 10px;
-	padding: 4px;
-}
-
-span.dirsitetrail {
-	font-size: 95%;
-}
-
-span.dirsitecats {
-	font-size: 95%;
-}
-
 /***** Messages *****/
-td.prio1,
-td.prio2,
-td.prio3,
-td.prio4,
-td.prio5 {
-	border: 1px solid #a9a9a9;
-	padding-left: 2px;
-}
-
-td.prio1 {
-	background: #f7f9ca
-}
-
-td.prio2 {
-	background: #f7f9ea;
-}
-
-td.prio3 {
-	background: #f7f9fa;
-}
-
-td.prio4 {
-	background: #f7f9fd;
-}
-
-td.prio5 {
-	background: #f7f9ff;
-}
-
-div.messureadflag {
-	background: #a9a9a9;
-	padding-left: 5px;
-}
-
-div.messureadhead {
-	background: #dcdcdc;
-	margin-top: 2px;
-}
-
-div.messureadbody {
-	margin-top: 5px;
-	background: #dcdcdc;
-}
-
-.readlink {
-	font-size: .95em;
-	color: black;
-}
 
 /***** TikiSheets *****/
 .plugin-desc {
@@ -2232,38 +1529,9 @@ div.messureadbody {
 	padding-left: 15px;
 }
 
-table.default thead td,
-table.default tfoot td {}
-
-table.default td {}
-
 /***** Calendar *****/
 
 /***** Admin *****/
-.highlight_word_0 {
-	color: #ffff66;
-	background: #666;
-}
-
-.highlight_word_1 {
-	color: #ff9999;
-	background: #666;
-}
-
-.highlight_word_2 {
-	color: #A0FFFF;
-	background: #666;
-}
-
-.highlight_word_3 {
-	color: #ff66ff;
-	background: #666;
-}
-
-.highlight_word_4 {
-	color: #99ff99;
-	background: #666;
-}
 
 .center {
 	text-align: center;
@@ -2278,15 +1546,6 @@ table.default td {}
 }
 
 /* admin boxes etc (.admbox) now defined in css/admin.css */
-td.mods_revision {
-	background: #b5cfb5;
-	color: #000;
-}
-
-td.mods_update {
-	background:#dcdeac;
-	color: #000;
-}
 
 /***** Ajax, jquery. etc. *****/
 /***** Ajax *****/
@@ -2333,39 +1592,14 @@ div#ajaxLoading {
 /* Cluetip - JQuery tooltips
    =cluetipClass: 'default' */
 
-.cluetip-default {
-	background: #BED8F1;
-	color: #000;
-}
-
-.cluetip-default #cluetip-outer {
-	background: #BED8F1;
-}
-.cluetip-default h3#cluetip-title {
-	background: #1B3A50;
-	color: #fff;
-}
-
-.cluetip-default #cluetip-title a {
-	color: #BED8F1;
-	font-size: 0.95em;
-}
-  
-.cluetip-default #cluetip-inner {
-	padding: .9em;
-}
 
 div#cluetip-close { 
 	text-align: right;
 	margin: 0;
 	padding-right: .5em;
-	background: #fff;
-	color: #900;
 }
 	
 .cluetip-fullhtml {
-	background: #fff;
-	color: #000;
 	margin: 0;
 	padding: 0;
 }
@@ -2378,114 +1612,20 @@ div#cluetip-close {
 	vertical-align: middle;
 }
 
-.webmail_item {
-	font-size: .9em;
-	border: #999 solid 1px;
-	margin: 1px 0;
-	padding: 0 1px;
-}
-
-.webmail_refresh_message {
-	font-size: .8em;
-}
-
-.webmail_list .even {}
-
-.webmail_list .odd {
-	background: #eee;
-}
-
 .webmail_list .button {
-	background: #fff;
-	border: #666 solid 1px;
 	display: inline-block;
-	padding: 0 2px;
-}
-
-.webmail_list .webmail_read {
-	background: #aaa;
-}
-
-.webmail_list .webmail_flagged {}
-
-.webmail_list .webmail_replied {
-	background: #888;
-}
-
-.webmail_list .webmail_taken {
-	border: #900;
-	color: #900;
-}
-
-.webmail_message {
-	background: #fff;
-}
-
-.webmail_mono {
-	font-size: 1.1em;
-	font-family: "Courier New", Courier, monospace;
 }
 
 table.webmail_message_headers {
-	background: #fff;
 	width: 100%;
-	padding: 0 5em .5em 0;
 }
 
 table.webmail_message_headers th {
 	width: 6em;
-	font-style: italic;
-	text-align: right;
-	border: none;
-	background: transparent;
 }
 
 @media print {
 	.tikihelp, .navbar, .tabstoggle, .tabs, #show-errors-button {display:none;}
-}
-
-/* treeTable definitions - used in object-perms so far */
-
-table.treeTable {}
-
-table.treeTable .checkBoxHeader {
-	font-size: .8em;
-}
-
-table.treeTable .subHeader td {
-	font-weight: bold;
-}
-
-table.treeTable .parent td {
-	font-style: italic;
-}
-
-/* column manager list styles */
-div#column_switches_div {
-	border: 1px solid gray;
-	background-color: #eee;
-	width: 12em;
-}
-ul.column_switcher {
-	margin: 0;
-	padding: 0;
-}
-.column_switcher li {
-	font-weight: bold;
-	cursor: pointer;
-	padding-left: 20px;
-	list-style: none;
-}
-.column_switcher li.advon {
-	color: #080;
-	background: url(../../pics/icons/tick.png) no-repeat 0 50%;
-}
-.column_switcher li.advoff {
-	color: #d00;
-	background: url(../../pics/icons/cross.png) no-repeat 0 50%;
-}
-.column_switcher li:hover {
-	background-color: #ccc;
 }
 
 /* End of File */

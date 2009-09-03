@@ -1,4 +1,4 @@
-/* $Id: design-reference.css 21224 2009-09-02 13:46:44Z jonnybradley $
+/* $Id: design-reference.css 21167 2009-08-31 06:37:48Z chibaguy $
 	This file is the fully-commented reference version
 	of the design.css file. 
 	This TikiWiki CMS/Groupware file contains common design
@@ -472,13 +472,6 @@ p.editdate {
 .mandatory_star {
 	font-weight: bold;
 	color: red;
-}
-
-/* mouseover plugin */
-
-.plugin-mouseover {
-	background-color: #F5F5F5;
-	border: 1px solid #bbb;
 }
 
 /* TOC */
