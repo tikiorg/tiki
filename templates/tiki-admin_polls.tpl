@@ -111,7 +111,9 @@
 <option value="{$channels[ix].pollId|escape}"{if $smarty.section.ix.first} selected="selected"{/if}>{tr}{$channels[ix].title}{/tr}</option>
 {/if}
 {/section}
-</select></td></tr>
+</select>
+{remarksbox type="tip" title="Tip"}{tr}This menu shows only Polls with 'status': "template"{/tr}{/remarksbox}
+</td></tr>
 <tr><td class="formcolor">{tr}Title{/tr}</td><td class="formcolor"><input type="text" name="poll_title" /></td></tr>
 <tr><td class="formcolor">
 {tr}Wiki pages{/tr}</td><td class="formcolor">
