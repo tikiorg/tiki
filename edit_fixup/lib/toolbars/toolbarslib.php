@@ -45,6 +45,8 @@ abstract class Toolbar
 			return new ToolbarFileGallery;
 		elseif( $tagName == 'help' )
 			return new ToolbarHelptool;
+		elseif( $tagName == 'switcheditor' )
+			return new ToolbarSwitchEditor;
 		elseif( $tagName == '-' )
 			return new ToolbarSeparator;
 	} // }}}
@@ -118,6 +120,7 @@ abstract class Toolbar
 			'reduce',
 			'help',
 			'tikiimage',
+			'switcheditor',
 		), $plugins ));
 	} // }}}
 	
@@ -863,6 +866,37 @@ class ToolbarFileGallery extends Toolbar
 	{
 		return parent::isAccessible() && ! isset($_REQUEST['zoom']);
 	} // }}}
+}
+
+class ToolbarSwitchEditor extends Toolbar
+{
+	function __construct() // {{{
+	{
+		$this->setLabel( tra('Switch Editor (wiki or WYSIWYG)') )
+			->setIcon( tra('pics/icons/pencil_go.png') )
+				->setWysiwygToken( 'tikiswitch' )
+					->setType('SwitchEditor');
+	} // }}}
+
+	function getWikiHtml( $areaName ) // {{{
+	{
+		global $smarty;
+		
+		return $this->getSelfLink('switchEditor(\'wysiwyg\', $jq(event.currentTarget).parents(\'form\')[0]);',
+							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-switcheditor');
+	} // }}}
+
+	function isAccessible() // {{{
+	{
+		return parent::isAccessible() && ! isset($_REQUEST['zoom']);
+	} // }}}
+	
+/*	function getLabel() // {{{
+	{
+		return $this->label;
+	} // }}}
+*/
+	
 }
 
 class ToolbarWikiplugin extends Toolbar

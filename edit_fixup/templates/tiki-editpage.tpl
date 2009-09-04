@@ -120,14 +120,6 @@
 		</div>
 	{/if}
 	
-	{if $prefs.feature_wysiwyg eq 'y' and $prefs.wysiwyg_optional eq 'y' and !isset($hdr)}
-		{if $wysiwyg ne 'y'}
-			<input type="submit" class="wikiaction" onmouseover="return overlib('{tr}Switch to WYSIWYG editor.{/tr}');" onmouseout="nd();" name="mode_wysiwyg" value="{tr}Use wysiwyg editor{/tr}" onclick="needToConfirm=false;" />
-		{else}
-			<input type="submit" class="wikiaction" onmouseover="return overlib('{tr}Switch to normal (wiki) editor.{/tr}');" onmouseout="nd();" name="mode_normal" value="{tr}Use normal editor{/tr}" onclick="needToConfirm=false;" />
-		{/if}
-	{/if}
-	
 	<table class="normal">
 		{if $categIds}
 			{section name=o loop=$categIds}

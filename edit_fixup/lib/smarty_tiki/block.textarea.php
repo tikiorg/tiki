@@ -41,10 +41,12 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	}
 	if ( ! isset($params['_section']) ) {
 		global $section;
-		$params['_section'] = $section ? $section: 'wiki';
+		$params['_section'] = $section ? $section: 'wiki page';
 	}
 	if ( ! isset($params['style']) ) $params['style'] = 'width:99%';
 	$html = '';
+	$html .= '<input type="hidden" name="mode_wysiwyg" value="" /><input type="hidden" name="mode_normal" value="" />';
+		
 
 	if ( $params['_wysiwyg'] == 'y' ) {
 //		{editform Meat=$pagedata InstanceName='edit' ToolbarSet="Tiki"}
@@ -70,14 +72,22 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 			$fcked->Config['AutoDetectLanguage'] = false;
 		}
 		$fcked->Config['DefaultLanguage'] = $prefs['language'];
-		$fcked->Config['CustomConfigurationsPath'] = $url_path.'setup_fckeditor.php';
+		$fcked->Config['CustomConfigurationsPath'] = $url_path.'setup_fckeditor.php'.(isset($params['_section']) ? '?section='.urlencode($params['_section']) : '');
 		$html .= $fcked->CreateHtml();
 		
 		$html .= '<input type="hidden" name="wysiwyg" value="y" />';
 		
-		// unpleasant hack for Safari which refuses to make the edit box 100% height
+		// fix for Safari which refuses to make the edit box 100% height - still needs a kludgey delay as the iframe isn't loaded yet...
 		$h = str_replace('px','', $fcked->Height);
-		if ($h) { $headerlib->add_jq_onready('if (jQuery.browser.safari) { $jq("#xEditingArea").height("'.$h.'"); }'); }
+		if ($h) { $headerlib->add_js('
+$jq("#data___Frame").contents().find("body").ready(function() {
+	if (jQuery.browser.safari) {
+		setTimeout(function() {
+			var fckbod = $jq("#data___Frame").contents().find("body");
+			var h = '.$h.' - fckbod.find("#xToolbar").height() - 5;
+			fckbod.find("#xEditingArea").height(h);}, 500);
+	}
+});'); }
 	} else {
 		
 		// setup for wiki editor
@@ -100,7 +110,7 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 
 		$html .= "\n".'<input type="hidden" name="rows" value="'.$params['rows'].'"/>'
 			."\n".'<input type="hidden" name="cols" value="'.$params['cols'].'"/>'
-			."\n".'<input type="hidden" name="wysiwyg" value="'.$params['_wysiwyg'].'" />';
+			."\n".'<input type="hidden" name="wysiwyg" value="n" />';
 
 
 		if ( isset($params['_zoom']) && $params['_zoom'] == 'n' ) {
@@ -154,6 +164,18 @@ var editTimerWarnings = 0;
 // end edit timeout warnings
 ";
 	$headerlib->add_js($js);
+	$headerlib->add_js('function switchEditor(mode, form) {
+	needToConfirm=false;
+	var w;
+	if (mode=="wysiwyg") {
+		$jq(form).find("input[name=mode_wysiwyg]").val("y");
+		$jq(form).find("input[name=wysiwyg]").val("y");
+	} else {
+		$jq(form).find("input[name=mode_normal]").val("y");
+		$jq(form).find("input[name=wysiwyg]").val("n");
+	}
+	form.submit();
+}');
 
 	return $html;
 }

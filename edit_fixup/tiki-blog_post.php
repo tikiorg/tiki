@@ -8,6 +8,7 @@ $section = 'blogs';
 require_once ('tiki-setup.php');
 include_once ('lib/categories/categlib.php');
 include_once ('lib/blogs/bloglib.php');
+include_once ('lib/wiki/editlib.php');
 $smarty->assign('headtitle', tra('Edit Post'));
 if ($prefs['feature_freetags'] == 'y') {
 	include_once ('lib/freetag/freetaglib.php');
@@ -136,6 +137,20 @@ if (isset($_REQUEST["data"])) {
 		$blogpriv = $data["priv"];
 	}
 }
+// Handles switching editor modes
+if (isset($_REQUEST['mode_normal']) && $_REQUEST['mode_normal']=='y') {
+	// Parsing page data as first time seeing html page in normal editor
+	$smarty->assign('msg', "Parsing html to wiki");
+	$parsed = $editlib->parseToWiki($edit_data);
+	$smarty->assign('data', $parsed);
+	
+} elseif (isset($_REQUEST['mode_wysiwyg']) && $_REQUEST['mode_wysiwyg']=='y') {
+	// Parsing page data as first time seeing wiki page in wysiwyg editor
+	$smarty->assign('msg', "Parsing wiki to html");
+	$parsed = $editlib->parseToWysiwyg($edit_data);
+	$smarty->assign('data', $parsed);
+}
+
 if (isset($_REQUEST["blogpriv"]) && $_REQUEST["blogpriv"] == 'on') {
 	$smarty->assign('blogpriv', 'y');
 	$blogpriv = 'y';

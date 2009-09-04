@@ -656,18 +656,16 @@ if( isset( $_REQUEST['translation_critical'] ) ) {
 
 // Parse (or not) $edit_data into $parsed
 // Handles switching editor modes
-if (isset($_REQUEST['mode_normal'])) {
+if (isset($_REQUEST['mode_normal']) && $_REQUEST['mode_normal']=='y') {
 	// Parsing page data as first time seeing html page in normal editor
 	$smarty->assign('msg', "Parsing html to wiki");
-	$parsed = '';
-	$parsed = $editlib->parse_html($edit_data);
-	$parsed = preg_replace('/\{img src=.*?img\/smiles\/.*? alt=([\w\-]*?)\}/im','(:$1:)', $parsed);	// "unfix" smilies
-	$parsed = preg_replace('/%%%/m',"\n", $parsed);													// newlines
+	$parsed = $editlib->parseToWiki($edit_data);
 	$is_html = false;
 	$info['is_html'] = false;
 	$info['wysiwyg'] = false;
 	$smarty->assign('allowhtml','n');
-} elseif (isset($_REQUEST['mode_wysiwyg'])) {
+	
+} elseif (isset($_REQUEST['mode_wysiwyg']) && $_REQUEST['mode_wysiwyg']=='y') {
 	// Parsing page data as first time seeing wiki page in wysiwyg editor
 	$smarty->assign('msg', "Parsing wiki to html");
 	$secedit = $prefs['wiki_edit_section'];
@@ -676,14 +674,7 @@ if (isset($_REQUEST['mode_normal'])) {
 	$prefs['feature_wiki_ext_icon'] = 'n';		// and the external link icons
 	$editplugin = $prefs['wiki_edit_plugin'];
 	$prefs['wiki_edit_plugin'] = 'n';		// and the external link icons
-	$edit_data = preg_replace('/(!!*)[\+\-]/m','$1', $edit_data);		// remove show/hide headings
-	$parsed = $tikilib->parse_data($edit_data,array('absolute_links'=>true, 'parseimgonly'=>true,'noheaderinc'=>true));
-	$parsed = preg_replace('/<span class=\"img\">(.*?)<\/span>/im','$1', $parsed);					// remove spans round img's
-	$parsed = preg_replace("/src=\"img\/smiles\//im","src=\"".$tikiroot."img/smiles/", $parsed);	// fix smiley src's
-	$parsed = str_replace( 
-		array( '{SUP()}', '{SUP}', '{SUB()}', '{SUB}', '<table' ),
-		array( '<sup>', '</sup>', '<sub>', '</sub>', '<table border="1"' ),
-		$parsed );
+	$parsed = $editlib->parseToWysiwyg($edit_data);
 	$smarty->assign('pagedata', $parsed);
 	$prefs['wiki_edit_section'] = $secedit;
 	$prefs['feature_wiki_ext_icon'] = $exticons;
