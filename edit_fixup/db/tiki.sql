@@ -2008,6 +2008,7 @@ CREATE TABLE `tiki_sent_newsletters` (
   `subject` varchar(200) default NULL,
   `data` longblob,
   `datatxt` longblob,
+  `wysiwyg` char(1) default NULL,
   PRIMARY KEY (`editionId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
