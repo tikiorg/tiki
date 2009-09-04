@@ -1,9 +1,11 @@
 <?php
+// $Id$
+
 // (c) Copyright 2002-2009 by authors of the Tiki Wiki/CMS/Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-parsemode_setup.php,v 1.5.2.1 2008-01-15 21:06:59 nkoth Exp $
+// $Id$
 if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) != FALSE) {
 	header('location: index.php');
 	exit;

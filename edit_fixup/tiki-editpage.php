@@ -53,7 +53,7 @@ if ($prefs['feature_wikiapproval'] == 'y' && substr($_REQUEST['page'], 0, strlen
 $page = $_REQUEST["page"];
 $info = $tikilib->get_page_info($page);
 // wysiwyg decision
-include 'tiki-parsemode_setup.php';
+include 'lib/setup/editmode.php';
 
 $smarty->assign_by_ref('page', $_REQUEST["page"]);
 // Permissions

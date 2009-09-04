@@ -26,7 +26,7 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	if ( $prefs['javascript_enabled'] != 'y') $params['_toolbars'] = 'n';
 
 	if (!isset($params['_wysiwyg'])) {	// should not be set usually(?)
-		include_once 'tiki-parsemode_setup.php';
+		include_once 'lib/setup/editmode.php';
 		$params['_wysiwyg'] = $_SESSION['wysiwyg'];
 	}
 	

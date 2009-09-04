@@ -171,7 +171,7 @@ $smarty->assign_by_ref('sort_mode', $sort_mode);
 $channels = $templateslib->list_all_templates($offset, $maxRecords, $sort_mode, $find);
 $smarty->assign_by_ref('cant_pages', $channels["cant"]);
 // wysiwyg decision
-include 'tiki-parsemode_setup.php';
+include 'lib/setup/editmode.php';
 $smarty->assign_by_ref('channels', $channels["data"]);
 include_once ("textareasize.php");
 ask_ticket('admin-content-templates');
