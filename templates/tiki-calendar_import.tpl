@@ -2,6 +2,11 @@
 
 {title}{tr}Calendar import{/tr}{/title}
 
+<div class="navbar">
+{button _text="{tr}View Calendars{/tr}" href="tiki-calendar.php"}
+{button _text="{tr}Admin Calendars{/tr}" href="tiki-admin_calendars.php"}
+</div>
+
 {if $updated}
   {tr}Calendar has been updated{/tr}
 {/if}
@@ -21,7 +26,7 @@
     <tr>
       <td class="formcolor">
         {tr}CSV File{/tr}
-        <a {popup text='name|subject,description,(start date,start time)|start,(end date,end time)|end,status,lang,categoryId,locationId,priority,url,categoryId'}>{icon _id='help'}</a>
+        <a {popup text='name|subject,description,start date,start time,end date,end time,status,lang,categoryId,locationId,priority,url,categoryId'}>{icon _id='help'}</a>
       </td>
       <td class="formcolor">
         <input type="file" name="fileCSV" size="50" />
