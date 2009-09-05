@@ -875,7 +875,8 @@ class ToolbarSwitchEditor extends Toolbar
 		$this->setLabel( tra('Switch Editor (wiki or WYSIWYG)') )
 			->setIcon( tra('pics/icons/pencil_go.png') )
 				->setWysiwygToken( 'tikiswitch' )
-					->setType('SwitchEditor');
+					->setType('SwitchEditor')
+						->addRequiredPreference('feature_wysiwyg');
 	} // }}}
 
 	function getWikiHtml( $areaName ) // {{{

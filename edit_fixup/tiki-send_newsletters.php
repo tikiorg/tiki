@@ -42,7 +42,6 @@ if ($_REQUEST["nlId"]) {
 	$smarty->assign('allowTxt', $nl_info['allowTxt']);
 	if ($_REQUEST["editionId"]) {
 		$info = $nllib->get_edition($_REQUEST["editionId"]);
-		echo 'fff';print_r($info);
 	} else {
 		$info = array();
 		$info["data"] = '';
@@ -221,7 +220,6 @@ if (isset($_REQUEST["save"])) {
 		$smarty->assign('replyto', $_REQUEST['replyto']);
 	}
 }
-echo 'ee'; print_r($nllib->get_all_subscribers($_REQUEST["nlId"], ''));
 $smarty->assign('emited', 'n');
 if (!empty($_REQUEST['datatxt'])) $txt = $_REQUEST['datatxt'];
 if (empty($txt) && !empty($_REQUEST["data"])) {
