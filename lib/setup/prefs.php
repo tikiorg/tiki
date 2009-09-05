@@ -1135,6 +1135,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'footer_shadow_end' => '',
 		'box_shadow_start' => '',
 		'box_shadow_end' => '',
+		'feature_custom_center_column_header' => '',
 
 		// mods
 		'feature_mods_provider' => 'n',
