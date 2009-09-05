@@ -260,8 +260,6 @@ function wikiplugin_imgnew_info() {
 		} elseif (!$imgdata['desc']) {
 			$repl = '<span class="img">' . $repl . "</span>";
 		}
-		$debug = 1;
-		$repl .= $debug;
 		return $repl;
 	//end of old IMG code//
 	} else {
@@ -734,7 +732,6 @@ function wikiplugin_imgnew_info() {
 			$styleboxplus = $descdef . ' width:' . $boxwidth . 'px;';
 			}
 		}
-	//	$repl .= var_dump($params);
 		if ( !empty($styleboxplus)) {
 			$repl = "\r" . '<div class="img" style="' . $styleboxplus . '">' . $repl . "\r</div>";
 		}	
