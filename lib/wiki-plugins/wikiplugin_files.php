@@ -169,17 +169,18 @@ function wikiplugin_files($data, $params) {
 		}
 		$find = isset($_REQUEST['find'])?  $_REQUEST['find']: '';
 		$fs = $tikilib->get_files(0, -1, $sort, $find, $galleryId, false, true);
+		if (isset($categId)) {
+			$objects = $categlib->list_category_objects($categId, 0, -1, 'itemId_asc', 'file');
+			$objects_in_categs = array();
+			foreach($objects['data'] as $o) {
+				$objects_in_categs[] = $o['itemId'];
+			}
+		}
 		for ($i = 0; $i < $fs['cant']; ++$i) {
 			if (isset($categId)) { // filter the files
-				$cats = $categlib->get_object_categories('file', $fs['data'][$i]['fileId']);
-				if (is_array($categId)) {
-					if (!array_intersect($categId, $cats)) {
-						continue;
-					}
-				} else {
-					if (!in_array($categId, $cats))
-						continue;
-				}	
+				if (!in_array($fs['data'][$i]['fileId'], $objects_in_categs)) {
+					continue;
+				}
 			}
 			$fs['data'][$i]['p_download_files'] = $p_download_files;
 			$fs['data'][$i]['p_view_file_gallery'] = $p_view_file_gallery;
