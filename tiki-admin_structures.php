@@ -128,7 +128,7 @@ if ($tiki_p_edit_structures == 'y') {
 			die;
 		}
 		//try to add a new structure
-		$structure_id = $structlib->s_create_page(null, null, $_REQUEST["name"], $_REQUEST["alias"]);
+		$structure_id = $structlib->s_create_page(null, null, $_REQUEST['name'], $_REQUEST['alias'], null);
 		//Cannot create a structure if a structure already exists
 		if (!isset($structure_id)) {
 			$smarty->assign('msg', $_REQUEST['name'] . " " . tra("page not added (Exists)"));
@@ -172,7 +172,7 @@ if ($tiki_p_edit_structures == 'y') {
 						$alert_in_st[] = trim($line);
 					}
 				}
-				$new_page_ref_id = $structlib->s_create_page($parent_id, $last_page, trim($line) , trim($alias));
+				$new_page_ref_id = $structlib->s_create_page($parent_id, $last_page, trim($line) , trim($alias), $structure_id);
 				if (isset($new_page_ref_id)) {
 					$parents[$tabs + 1] = $new_page_ref_id;
 					$last_pages[$tabs] = $new_page_ref_id;

@@ -183,17 +183,20 @@ class StructLib extends TikiLib {
       \param alias An alias for the wiki page name.
       \return the new entries page_ref_id or null if not created.
   */
-  function s_create_page($parent_id, $after_ref_id, $name, $alias='') {
-	  global $prefs;
-    $ret = null;
-    // If the page doesn't exist then create a new wiki page!
-	$newpagebody = tra("Table of contents") . ":" . "{toc}"; 
-	$created = $this->create_page($name, 0, $newpagebody, $this->now, tra('created from structure'), 'system', '0.0.0.0', '', false, '', array('parent_id'=>$parent_id));
-		// if were not trying to add a duplicate structure head
-		if ($created or isset($parent_id)) {
-            //Get the page Id
-		    $query = 'select `page_id` from `tiki_pages` where `pageName`=?';
-			$page_id = $this->getOne($query,array($name));
+	function s_create_page($parent_id, $after_ref_id, $name, $alias='', $structure_id=null) {
+		global $prefs;
+		$ret = null;
+		// If the page doesn't exist then create a new wiki page!
+		$newpagebody = tra("Table of contents") . ":" . "{toc}"; 
+		$created = $this->create_page($name, 0, $newpagebody, $this->now, tra('created from structure'), 'system', '0.0.0.0', '', false, '', array('parent_id'=>$parent_id));
+		
+		//Get the page Id
+		$query = 'select `page_id` from `tiki_pages` where `pageName`=?';
+		$page_id = $this->getOne($query,array($name));
+		if (!$created) { // if were not trying to add a duplicate structure head
+			$created = $this->s_get_parent_info($page_ref_id) == null? true: false ;
+	}
+		if ($created || empty($parent_id)) {
 			if (isset($after_ref_id)) {
 				$max = $this->getOne('select `pos` from `tiki_structures` where `page_ref_id`=?',array((int)$after_ref_id));
 			} else {
@@ -207,8 +210,8 @@ class StructLib extends TikiLib {
 			}
             //Create a new structure entry
 			$max++;
-			$query = 'insert into `tiki_structures`(`parent_id`,`page_id`,`page_alias`,`pos`) values(?,?,?,?)';
-			$result = $this->query($query,array((int)$parent_id,(int)$page_id,$alias,(int)$max));
+			$query = 'insert into `tiki_structures`(`parent_id`,`page_id`,`page_alias`,`pos`, `structure_id`) values(?,?,?,?,?)';
+			$result = $this->query($query,array((int)$parent_id, (int)$page_id, $alias, (int)$max, (int)$structure_id));
 			//Get the page_ref_id just created
 			if (isset($parent_id)) {
 				$parent_check = ' and `parent_id`=?';
@@ -221,6 +224,10 @@ class StructLib extends TikiLib {
 			$query .= 'where `page_id`=? and `page_alias`=? and `pos`=?';
 			$query .= $parent_check;
 			$ret = $this->getOne($query,$attributes);
+			if (empty($parent_id)) {
+				$query = 'update `tiki_structures` set `structure_id`=? where `page_ref_id`=?';
+				$this->query($query, array($ret, $ret));
+			}
 			if ($prefs['feature_user_watches'] == 'y') {
 				include_once('lib/notifications/notificationemaillib.php');
 				sendStructureEmailNotification(array('action'=>'add', 'page_ref_id'=>$ret, 'name'=>$name));
@@ -422,7 +429,7 @@ class StructLib extends TikiLib {
 	function s_get_page_info($page_ref_id) {
 		if( empty( $this->displayLanguageOrder ) )
 		{
-			$query =  'select `pos`, `page_ref_id`, `parent_id`, ts.`page_id`, `pageName`, `page_alias` ';
+			$query =  'select `pos`, `page_ref_id`, `parent_id`, ts.`page_id`, `pageName`, `page_alias`, `structure_id` ';
 			$query .= 'from `tiki_structures` ts, `tiki_pages` tp ';
 			$query .= 'where ts.`page_id`=tp.`page_id` and `page_ref_id`=?';
 			$result = $this->query($query,array((int)$page_ref_id));
@@ -438,7 +445,8 @@ class StructLib extends TikiLib {
 					`parent_id`, 
 					ts.`page_id`, 
 					`pageName`, 
-					`page_alias`
+					`page_alias`,
+					`structure_id`
 				FROM
 					`tiki_structures` ts
 					LEFT JOIN tiki_translated_objects a ON a.type = 'wiki page' AND a.objId = ts.page_id
