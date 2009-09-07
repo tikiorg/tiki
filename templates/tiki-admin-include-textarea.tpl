@@ -67,7 +67,7 @@
 <div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" id="section_comments_parse" name="section_comments_parse" {if $prefs.section_comments_parse eq 'y'}checked="checked"{/if}/></div>
 	<div class="adminoptionlabel">
-		<label for="section_comments_parse">{tr}Parse wiki syntax in comments in all sections apart from Forums{/tr}</em></label>{if $prefs.feature_help eq 'y'} {help url="Wiki+Syntax"}{/if}
+		<label for="section_comments_parse">{tr}Parse wiki syntax in comments in all sections apart from Forums{/tr}</label>{if $prefs.feature_help eq 'y'} {help url="Wiki+Syntax"}{/if}
 		{remarksbox type='tip' title='Tip'}Use 'Accept wiki syntax' for forums, currently <em>{if $prefs.feature_forum_parse eq 'y'}on{else}off{/if}</em> {icon _id="arrow_right" href="tiki-admin.php?page=forums"}{/remarksbox}
 	</div>
 </div>
@@ -144,11 +144,14 @@
 		<legend>{tr}Edit plugin icons{/tr}</legend>
 		<div class="adminoptionbox">
 			<div class="adminoption"><input type="checkbox" id="wiki_edit_plugin" name="wiki_edit_plugin" {if $prefs.wiki_edit_plugin eq 'y'}checked="checked"{/if}/></div> 
-				<div class="adminoptionlabel"><label for="wiki_edit_plugin">{tr}Enable edit plugin icons{/tr} {tr}(experimental - not comprehensively tested and requires new JQuery feature){/tr}</label></div>
+				<div class="adminoptionlabel"><label for="wiki_edit_plugin">{tr}Enable edit plugin icons{/tr} {tr}(experimental - not comprehensively tested and requires javascript){/tr}</label></div>
 		</div>
 		</fieldset>
 		<fieldset class="admin">
                 <legend>{tr}Plugins{/tr}</legend>
+				<fieldset class="admin">
+					{listfilter selectors='#content2 .admin fieldset'}
+				</fieldset>
 		{foreach from=$plugins key=plugin item=info}
 			<fieldset class="admin">
                 	<legend>{$info.name|escape}</legend>
