@@ -149,8 +149,8 @@
 		</fieldset>
 		<fieldset class="admin">
                 <legend>{tr}Plugins{/tr}</legend>
-				<fieldset class="admin">
-					{listfilter selectors='#content2 .admin fieldset'}
+				<fieldset class="admin donthide">
+					{listfilter selectors='#content2 .admin fieldset' exclude=".donthide"}
 				</fieldset>
 		{foreach from=$plugins key=plugin item=info}
 			<fieldset class="admin">
@@ -168,9 +168,9 @@
 					</div> 
 				</div>	
 				<div class="adminoptionbox">
-				        {if !$plugins.$plugin.inline}<div class="adminoption"><input type="checkbox" id="wikiplugininline_{$plugin|escape}" name="wikiplugininline_{$plugin|escape}" {if $prefs[$pref_inline] eq 'y'}checked="checked" {/if}/>
+				        {if !isset($plugins.$plugin.inline)}<div class="adminoption"><input type="checkbox" id="wikiplugininline_{$plugin|escape}" name="wikiplugininline_{$plugin|escape}" {if $prefs[$pref_inline] eq 'y'}checked="checked" {/if}/>
                          </div>{/if} 
-					<div class="adminoptionlabel">{if !$plugins.$plugin.inline}<label for="wikiplugininline_{$plugin|escape}">{/if}{if $plugins.$plugin.inline}The edit plugin icon is not supported for this plugin{else}{tr}Disable edit plugin icon (make plugin inline){/tr}{/if}{if !$plugins.$plugin.inline}</label>{/if}
+					<div class="adminoptionlabel">{if !isset($plugins.$plugin.inline)}<label for="wikiplugininline_{$plugin|escape}">{/if}{if isset($plugins.$plugin.inline)}The edit plugin icon is not supported for this plugin{else}{tr}Disable edit plugin icon (make plugin inline){/tr}{/if}{if !isset($plugins.$plugin.inline)}</label>{/if}
 					</div> 
 				</div>
 			{/if} 
@@ -283,7 +283,7 @@ if (window.location.href.indexOf('plugin_alias_new=true') > -1) {
 					<label for="implementation">{tr}Base Plugin{/tr}:</label>
 					<select name="implementation" id="implementation">
 						{foreach from=$plugins_real item=base}
-							<option value="{$base|escape}" {if $plugin_admin.implementation eq $base}selected="selected"{/if}>{$base|escape}</option>
+							<option value="{$base|escape}" {if isset($plugin_admin.implementation) and $plugin_admin.implementation eq $base}selected="selected"{/if}>{$base|escape}</option>
 						{/foreach}
 					</select>
 				</div>
@@ -298,7 +298,7 @@ if (window.location.href.indexOf('plugin_alias_new=true') > -1) {
 					<label for="plugin_body">{tr}Body Label{/tr}:</label> <input type="text" name="body" id="plugin_body" value="{$plugin_admin.description.body|escape}"/>
 			</div></div>
 			<div class="adminoptionbox"><div class="adminoptionlabel">
-					<label for="plugin_deps">{tr}Dependencies{/tr}:</label> <input type="text" name="prefs" id="plugin_deps" value="{','|implode:$plugin_admin.description.prefs}"/>
+					<label for="plugin_deps">{tr}Dependencies{/tr}:</label> <input type="text" name="prefs" id="plugin_deps" value="{if !empty($plugin_admin.description.prefs)}{','|implode:$plugin_admin.description.prefs}{/if}"/>
 			</div></div>
 			<div class="adminoptionbox"><div class="adminoptionlabel">
 					<label for="filter">{tr}Filter{/tr}:</label> <input type="text" id="filter" name="filter" value="{$plugin_admin.description.filter|default:'xss'|escape}"/>
