@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /* Insert the bookmark button from ShareThis (www.sharethis.com). ShareThis account is not necessary.
 // Developed by Andrew Hafferman for Tiki CMS
 //

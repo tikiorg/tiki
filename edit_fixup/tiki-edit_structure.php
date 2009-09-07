@@ -144,12 +144,12 @@ if (isset($_REQUEST["create"])) {
 		if ($tikilib->page_exists($_REQUEST["name"])) {
 			$smarty->assign('alert_exists', 'y');
 		}
-		$structlib->s_create_page($_REQUEST["page_ref_id"], $after, $_REQUEST["name"], '');
+		$structlib->s_create_page($_REQUEST['page_ref_id'], $after, $_REQUEST['name'], '', $structure_info['page_ref_id']);
 		$userlib->copy_object_permissions($page_info["pageName"], $_REQUEST["name"],'wiki page');
 	} 
 	elseif(!empty($_REQUEST['name2'])) {
 		foreach ($_REQUEST['name2'] as $name) {
-			$new_page_ref_id = $structlib->s_create_page($_REQUEST["page_ref_id"], $after, $name, '');
+			$new_page_ref_id = $structlib->s_create_page($_REQUEST['page_ref_id'], $after, $name, '', $structure_info['page_ref_id']);
       $after = $new_page_ref_id;      
 		}	
 	}

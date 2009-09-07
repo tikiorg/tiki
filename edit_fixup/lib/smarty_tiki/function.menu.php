@@ -82,7 +82,9 @@ function smarty_function_menu($params, &$smarty)
 
 	$smarty->assign('menu_channels',$channels['data']);
 	$smarty->assign('menu_info',$menu_info);
-	return $smarty->fetch($tpl);
+	$data = $smarty->fetch($tpl);
+	$data = preg_replace('/<ul>\s*<\/ul>/', '', $data);
+	return $data;
 }
 
 function compare_menu_options($a, $b) { return strcmp(tra($a['name']), tra($b['name'])); }

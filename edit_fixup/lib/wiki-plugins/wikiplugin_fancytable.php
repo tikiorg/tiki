@@ -11,7 +11,7 @@
 //   separated by ~|~.
 //
 // Example:
-// {FANCYTABLE( head => header column 1 ~|~ header column 2 ~|~ header column 3, headclass=>xx )}
+// {FANCYTABLE( head=" header column 1 ~|~ header column 2 ~|~ header column 3", headclass=xx )}
 // row 1 column 1 ~|~ row 1 column 2 ~|~ row 1 column 3
 // row 2 column 1 ~|~ row 2 column 2 ~|~ row 2 column 3
 // {FANCYTABLE}
