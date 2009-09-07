@@ -30,7 +30,7 @@ class TWVersion {
 		$this->branch 	= 'stable';
 
 		// Set everything else, including defaults.
-		$this->version 	= '3.0';
+		$this->version 	= '3.1';
 		$this->star	= 'Betelgeuse';
 		$this->release 	= $this->version;
 		$this->releases	= array();
@@ -66,7 +66,7 @@ class TWVersion {
 				);
 	}
 
-	// Returns an array of all valid versions of Tikiwiki.
+	// Returns an array of all valid versions of Tiki.
 	function tikiVersions() {
 		// These are all the valid release versions of Tiki.
 		// Newest version goes at the end.
@@ -98,7 +98,8 @@ class TWVersion {
 				23=>'3.0beta4',
 				24=>'3.0rc1',
 				25=>'3.0rc2',
-				26=>'3.0'
+				26=>'3.0',
+				27=>'3.1'
 				);
 	}
 
@@ -110,7 +111,7 @@ class TWVersion {
 		return $star;
 	}
 
-	// Determines the currently-running version of Tikiwiki.
+	// Determines the currently-running version of Tiki.
 	function getVersion() {
 		$versions = $this->tikiVersions();
 		$version = $versions[count($versions)];
@@ -118,7 +119,7 @@ class TWVersion {
 		return $version;
 	}
 
-	// Pulls the list of releases in the current branch of Tikiwiki from
+	// Pulls the list of releases in the current branch of Tiki from
 	// a central site.
 	function pollVersion() {
 		$fp = fsockopen("tikiwiki.org", 80, $errno, $errstr, 10);
