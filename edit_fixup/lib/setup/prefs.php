@@ -425,13 +425,6 @@ function get_default_prefs() {
 		'wysiwyg_wiki_parsed' => 'y',
 		'wysiwyg_wiki_semi_parsed' => 'n',
 		'wysiwyg_toolbar_skin' => 'default',
-		'wysiwyg_toolbar' =>"FitWindow,Templates,-,Cut,Copy,Paste,PasteText,PasteWord,Print,SpellCheck
-Undo,Redo,-,Find,Replace,SelectAll,RemoveFormat,-,Table,Rule,Smiley,SpecialChar,PageBreak,ShowBlocks
-/
-JustifyLeft,JustifyCenter,JustifyRight,JustifyFull,-,OrderedList,UnorderedList,Outdent,Indent,Blockquote
-Bold,Italic,Underline,StrikeThrough,-,Subscript,Superscript,-,tikilink,Link,Unlink,Anchor,-,tikiimage,Flash
-/
-Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 
 		// wiki3d
 		'wiki_feature_3d' => 'n',
