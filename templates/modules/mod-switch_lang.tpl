@@ -51,7 +51,7 @@
        <select name="language" size="1" onchange="this.form.submit();">
         {section name=ix loop=$languages}
         <option value="{$languages[ix].value|escape}"
-          {if $prefs.language eq $languages[ix].value}selected="selected"{/if}>
+          {if $prefs.language eq $languages[ix].value} selected="selected"{/if}>
           {$languages[ix].name}
         </option>
         {/section}
