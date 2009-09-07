@@ -190,13 +190,9 @@ class StructLib extends TikiLib {
 		$newpagebody = tra("Table of contents") . ":" . "{toc}"; 
 		$created = $this->create_page($name, 0, $newpagebody, $this->now, tra('created from structure'), 'system', '0.0.0.0', '', false, '', array('parent_id'=>$parent_id));
 		
-		//Get the page Id
-		$query = 'select `page_id` from `tiki_pages` where `pageName`=?';
-		$page_id = $this->getOne($query,array($name));
-		if (!$created) { // if were not trying to add a duplicate structure head
-			$created = $this->s_get_parent_info($page_ref_id) == null? true: false ;
-	}
-		if ($created || empty($parent_id)) {
+		if (!empty($parent_id) || $created || ! $this->page_is_in_structure($name)) { // if were not trying to add a duplicate structure head
+			$query = 'select `page_id` from `tiki_pages` where `pageName`=?';
+			$page_id = $this->getOne($query,array($name));
 			if (isset($after_ref_id)) {
 				$max = $this->getOne('select `pos` from `tiki_structures` where `page_ref_id`=?',array((int)$after_ref_id));
 			} else {

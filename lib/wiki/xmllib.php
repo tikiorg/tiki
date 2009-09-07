@@ -328,8 +328,8 @@ class XmlLib extends TikiLib {
 			//TODO alias
 			if ($info['structure'] == 1) {
 				$this->structureStack[$info['structure']] = $structlib->s_create_page(null, null , $info['name'], '');
-			} else {
-				$this->structureStack[$info['structure']] = $structlib->s_create_page($this->structureStack[$info['structure'] - 1], $this->structureStack[$info['structure']], $info['name'], '', $this->structureStack[1]);
+			} elseif (!empty($info['structure'])) {
+				$this->structureStack[$info['structure']] = $structlib->s_create_page($this->structureStack[$info['structure'] - 1], isset($this->structureStack[$info['structure']])?$this->structureStack[$info['structure']]:'', $info['name'], '', $this->structureStack[1]);
 			}
 		}
 		return true;
