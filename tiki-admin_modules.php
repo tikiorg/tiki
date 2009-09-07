@@ -248,13 +248,12 @@ if (isset($_REQUEST["um_edit"])) {
 $user_modules = $modlib->list_user_modules();
 $smarty->assign_by_ref('user_modules', $user_modules["data"]);
 $all_modules = $modlib->get_all_modules();
-#sort($all_modules);
+sort($all_modules);
 $smarty->assign_by_ref('all_modules', $all_modules);
 $all_modules_info = array_combine( 
 	$all_modules, 
 	array_map( array( $modlib, 'get_module_info' ), $all_modules ) 
 ) ;
-sort($all_modules_info);
 $smarty->assign( 'all_modules_info', $all_modules_info);
 $orders = array();
 for ($i = 1;$i < 50;$i++) {
