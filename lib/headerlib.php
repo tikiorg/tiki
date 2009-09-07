@@ -242,6 +242,10 @@ class HeaderLib {
 		return $back;
 	}
 	
+	/**
+	 * Gets JavaScript and jQuery scripts as an array (for AJAX)
+	 * @return array[strings]
+	 */
 	function getJs() {
 		global $prefs;
 		
@@ -257,15 +261,23 @@ class HeaderLib {
 			}
 		}
 		if (count($this->jq_onready)) {
+			$b = '$jq("document").ready(function(){'."\n";
 			foreach ($this->jq_onready as $x=>$js) {
+				$b.= "// jq_onready $x \n";
 				foreach ($js as $j) {
-					$out[] = "$j\n";
+					$b.= "$j\n";
 				}
 			}
+			$b .= "});\n";
+			$out[] = $b;
 		}
 		return $out;
 	}
 
+	/**
+	 * Gets included JavaScript files (for AJAX)
+	 * @return array[strings]
+	 */
 	function getJsfiles() {
 		
 		ksort($this->jsfiles);
