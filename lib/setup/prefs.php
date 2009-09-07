@@ -1112,7 +1112,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_actionlog_bytes' => 'n',
 
 		// admin
-		'browsertitle' => 'Tiki 3.0',
+		'browsertitle' => 'Tiki 3.1 SVN (proposed branch)',
 		'tmpDir' => 'temp',
 
 		// tell a friend
