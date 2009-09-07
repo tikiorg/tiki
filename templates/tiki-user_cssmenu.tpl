@@ -2,6 +2,7 @@
 {if count($menu_channels) > 0}
 	{assign var=opensec value='0'}
 	{assign var=sep value=''}
+	{strip}
 
 	<ul id="cssmenu{$idCssmenu}" class="cssmenu{if $menu_type}_{$menu_type}{/if} menu{$menu_info.menuId}">
 
@@ -24,16 +25,14 @@
 			{/if}
 			
 			<li class="option{$chdata.optionId} menuSection menuSection{$opensec} menuLevel{$opensec}{if isset($chdata.selected) and $chdata.selected} selected{/if}{if isset($chdata.selectedAscendant) and $chdata.selectedAscendant} selectedAscendant{/if}">
-			{strip}
-				{if $link_on_section ne 'n'}<a href="{if $prefs.feature_sefurl eq 'y' and $chdata.sefurl}{$chdata.sefurl}{else}{$chdata.url}{/if}">{/if}
-					{if $menu_type eq 'vert' and $prefs.menus_items_icons eq 'y' and $menu_info.use_items_icons eq 'y' and $opensec eq 0}
-						{icon _id=$chdata.icon alt='' _defaultdir='pics/large'}
-					{elseif isset($icon) and $icon}
-						{icon _id='folder' align="left"}
-					{/if}
-					<span class="menuText">{if $translate eq 'n'}{$chdata.name|escape}{else}{tr}{$chdata.name}{/tr}{/if}</span>
-				{if $link_on_section ne 'n'}</a>{/if}
-			{/strip}
+			{if $link_on_section ne 'n'}<a href="{if $prefs.feature_sefurl eq 'y' and $chdata.sefurl}{$chdata.sefurl}{else}{$chdata.url}{/if}">{/if}
+				{if $menu_type eq 'vert' and $prefs.menus_items_icons eq 'y' and $menu_info.use_items_icons eq 'y' and $opensec eq 0}
+					{icon _id=$chdata.icon alt='' _defaultdir='pics/large'}
+				{elseif isset($icon) and $icon}
+					{icon _id='folder' align="left"}
+				{/if}
+				<span class="menuText">{if $translate eq 'n'}{$chdata.name|escape}{else}{tr}{$chdata.name}{/tr}{/if}</span>
+			{if $link_on_section ne 'n'}</a>{/if}
 			{assign var=opensec value=$opensec+1}
 			<ul>
 			
@@ -41,14 +40,13 @@
 		{elseif $chdata.type eq 'o'}
 			<li class="option{$chdata.optionId} menuOption menuLevel{$opensec}{if isset($chdata.selected) and $chdata.selected} selected{/if}{if isset($chdata.selectedAscendant) and $chdata.selectedAscendant} selectedAscendant{/if}">
 				<a href="{if $prefs.feature_sefurl eq 'y' and $chdata.sefurl}{$chdata.sefurl}{else}{$chdata.url}{/if}">
-				{strip}
 					{if $menu_type eq 'vert' and $prefs.menus_items_icons eq 'y' and $menu_info.use_items_icons eq 'y' and $opensec eq 0}
 						{icon _id=$chdata.icon alt='' _defaultdir='pics/large'}
 					{/if}
 					<span class="menuText">{if $translate eq 'n'}{$chdata.name|escape}{else}{tr}{$chdata.name}{/tr}{/if}</span>
 				</a>
-				{/strip}</li>
-				{if $sep eq 'line'}{assign var=sep value=''}{/if}
+			</li>
+			{if $sep eq 'line'}{assign var=sep value=''}{/if}
 			
 		{* ----------------------------- separator *}
 		{elseif $chdata.type eq '-'}
@@ -64,4 +62,5 @@
 	{/if}
 	
 	</ul>
+	{/strip}
 {/if}
