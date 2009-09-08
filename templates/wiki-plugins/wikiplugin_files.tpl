@@ -20,4 +20,6 @@
 {if $show_find eq 'y'}
 	{include file="find.tpl"}
 {/if}
+{popup_init src='lib/overlib.js'}
+
 {include file="list_file_gallery_content.tpl"}
