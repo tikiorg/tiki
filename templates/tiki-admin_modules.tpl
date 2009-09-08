@@ -156,7 +156,7 @@
 					<input type="text" id="assign_cache" name="assign_cache" value="{$assign_cache|escape}" />
 				</td>
 			</tr>
-			{if isset($assign_info.type) and $assign_info.type eq 'include'}
+			{if !isset($assign_info.type) or $assign_info.type neq 'function'}
 				<tr>
 						<td class="formcolor"><label for="assign_rows">{tr}Rows{/tr}</label></td>
 						<td class="formcolor">

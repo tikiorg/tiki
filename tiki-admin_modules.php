@@ -48,6 +48,7 @@ $smarty->assign('assign_name', '');
 $smarty->assign('assign_position', '');
 $smarty->assign('assign_order', '');
 $smarty->assign('assign_cache', 0);
+$smarty->assign('assign_rows', 10);
 $smarty->assign('assign_params', '');
 if (isset($_REQUEST["clear_cache"])) {
     check_ticket('admin-modules');
@@ -86,7 +87,7 @@ if (!empty($_REQUEST['edit_assign'])) {
 
 	$modinfo = $modlib->get_module_info( $info['name'] );
 	$modlib->dispatchValues( $info['params'], $modinfo['params'] );
-	if ($modinfo["type"] == "include") {
+	if ($modinfo["type"] != "function") {
 		$smarty->assign_by_ref('assign_rows', $info["rows"]);
 		$smarty->assign_by_ref('assign_params', $info["params"]); // For old-style modules
 	} else {
