@@ -19,6 +19,7 @@ function module_breadcrumb_info() {
 				'filter' => 'int'
 			),
 		),
+		'common_params' => array('nonums', 'rows')
 	);
 }
 

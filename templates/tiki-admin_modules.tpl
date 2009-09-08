@@ -156,12 +156,14 @@
 					<input type="text" id="assign_cache" name="assign_cache" value="{$assign_cache|escape}" />
 				</td>
 			</tr>
-			<tr>
-				<td class="formcolor"><label for="assign_rows">{tr}Rows{/tr}</label></td>
-				<td class="formcolor">
-					<input type="text" id="assign_rows" name="assign_rows" value="{$assign_rows|escape}" />
-				</td>
-			</tr>
+			{if isset($assign_info.type) and $assign_info.type eq 'include'}
+				<tr>
+						<td class="formcolor"><label for="assign_rows">{tr}Rows{/tr}</label></td>
+						<td class="formcolor">
+								<input type="text" id="assign_rows" name="assign_rows" value="{$assign_rows|escape}" />
+						</td>
+				</tr>
+			{/if}
 			{if isset($assign_info.type) and $assign_info.type eq 'function'}
 				{foreach from=$assign_info.params key=name item=param}
 					<tr>

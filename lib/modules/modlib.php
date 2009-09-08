@@ -414,6 +414,7 @@ class ModLib extends TikiLib {
 			'cachekeygen' => array( $this, 'createDefaultCacheKey' ),
 			'prefs' => array(),
 			'params' => array(),
+			'common_params' => array()
 		);
 
 		$info = array_merge( $defaults, $info );
@@ -431,10 +432,6 @@ class ModLib extends TikiLib {
 			'decorations' => array(
 				'name' => tra('Decorations'),
 				'description' => tra('?'),
-			),
-			'nonums' => array(
-				'name' => tra('No numbers'),
-				'description' => tra('If set to "y", the module will not number list items.'),
 			),
 			'perspective' => array(
 				'name' => tra('Perspective'),
@@ -483,6 +480,22 @@ class ModLib extends TikiLib {
 				'filter' => 'alpha',
 			),
 		) );
+
+		// Parameters common to several modules, but not all
+		$common_params = array(
+			'nonums' => array(
+				'name' => tra('No numbers'),
+				'description' => tra('If set to "y", the module will not number list items.'),
+			),
+			'rows' => array(
+				'name' => tra('Rows'),
+				'description' => tra('Number of rows, or items, to display.') . ' ' . tra('Default: 10.'),
+			)
+		);
+
+		if ($info['type'] == 'function')
+			foreach($info['common_params'] as $common_param)
+				$info['params'][$common_param] = $common_params[$common_param];
 
 		return $info;
 	}
