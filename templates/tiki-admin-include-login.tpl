@@ -74,24 +74,6 @@
 								</div>
 			
 								<div class="adminoptionbox">
-									<div class="adminoption"><input id="userTracker" type="checkbox" name="userTracker" {if $prefs.userTracker eq 'y'}checked="checked"{/if} {if $prefs.feature_trackers ne 'y'}disabled="disabled" {/if}/></div>
-									<div class="adminoptionlabel"><label for="userTracker">{tr}Use tracker to collect more user information{/tr}.</label> {if $prefs.feature_help eq 'y'} {help url="User+Tracker"}{/if} <br />
-										{if $prefs.feature_trackers ne 'y'}<span>{icon _id=information} {tr}Feature is disabled{/tr}. <a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}.</a></span>
-										{else}<em>{tr}Use the <strong><a href="tiki-admingroups.php" title="Admin Groups">Admin: Groups</a></strong> page to select which tracker and fields to display{/tr}.</em>
-										{/if}
-									</div>
-								</div>
-			
-								<div class="adminoptionbox">
-									<div class="adminoption"><input type="checkbox" id="groupTracker" name="groupTracker" {if $prefs.groupTracker eq 'y'}checked="checked"{/if} {if $prefs.userTracker eq 'y'}checked="checked"{/if} {if $prefs.feature_trackers ne 'y'}disabled="disabled" {/if}/></div>
-									<div class="adminoptionlabel"><label for="groupTracker">{tr}Use tracker to collect more group information{/tr}.</label> {if $prefs.feature_help eq 'y'} {help url="User+Tracker"}{/if} <br />
-										{if $prefs.feature_trackers ne 'y'}<span>{icon _id=information} {tr}Feature is disabled{/tr}. <a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}.</a></span>
-										{else}<em>{tr}Use the <strong><a href="tiki-admingroups.php" title="Admin Groups">Admin: Groups</a></strong> page to select which tracker and fields to display{/tr}.</em>
-										{/if}
-									</div>
-								</div>
-			
-								<div class="adminoptionbox">
 									<div class="adminoptionlabel"><label for="registration_choices">{tr}Users can select a group to join at registration{/tr}:</label>
 										<br /><em>{tr}By default, new users automatically join the Registered group{/tr}.</em>
 									</div>
@@ -104,6 +86,24 @@
 											{/foreach}
 										</select>
 									</div>
+								</div>
+							</div>
+			
+							<div class="adminoptionbox">
+								<div class="adminoption"><input id="userTracker" type="checkbox" name="userTracker" {if $prefs.userTracker eq 'y'}checked="checked"{/if} {if $prefs.feature_trackers ne 'y'}disabled="disabled" {/if}/></div>
+								<div class="adminoptionlabel"><label for="userTracker">{tr}Use tracker to collect more user information{/tr}.</label> {if $prefs.feature_help eq 'y'} {help url="User+Tracker"}{/if} <br />
+									{if $prefs.feature_trackers ne 'y'}<span>{icon _id=information} {tr}Feature is disabled{/tr}. <a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}.</a></span>
+									{else}<em>{tr}Use the <strong><a href="tiki-admingroups.php" title="Admin Groups">Admin: Groups</a></strong> page to select which tracker and fields to display{/tr}.</em>
+									{/if}
+								</div>
+							</div>
+			
+							<div class="adminoptionbox">
+								<div class="adminoption"><input type="checkbox" id="groupTracker" name="groupTracker" {if $prefs.groupTracker eq 'y'}checked="checked"{/if} {if $prefs.userTracker eq 'y'}checked="checked"{/if} {if $prefs.feature_trackers ne 'y'}disabled="disabled" {/if}/></div>
+								<div class="adminoptionlabel"><label for="groupTracker">{tr}Use tracker to collect more group information{/tr}.</label> {if $prefs.feature_help eq 'y'} {help url="User+Tracker"}{/if} <br />
+									{if $prefs.feature_trackers ne 'y'}<span>{icon _id=information} {tr}Feature is disabled{/tr}. <a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}.</a></span>
+									{else}<em>{tr}Use the <strong><a href="tiki-admingroups.php" title="Admin Groups">Admin: Groups</a></strong> page to select which tracker and fields to display{/tr}.</em>
+									{/if}
 								</div>
 							</div>
 			
