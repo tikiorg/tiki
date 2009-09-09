@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 function wikiplugin_imgnew_info() {
 	return array(
