@@ -146,6 +146,15 @@ if (isset($_REQUEST["um_update"])) {
 if (!isset($_REQUEST["groups"])) {
     $_REQUEST["groups"] = array();
 }
+if (isset($_REQUEST["assign"]) || isset($_REQUEST["preview"])) { // Verify that required parameters are present
+	$missing_params = array();
+	$modinfo = $modlib->get_module_info( $_REQUEST['assign_name'] );
+	foreach($modinfo["params"] as $pname => $param) {
+		if ($param["required"] && empty($_REQUEST["assign_params"][$pname]))
+			$missing_params[] = $param["name"];
+	}
+	$smarty->assign('missing_params', $missing_params);
+}
 $smarty->assign('preview', 'n');
 if (isset($_REQUEST["preview"])) {
     check_ticket('admin-modules');
@@ -175,10 +184,12 @@ if (isset($_REQUEST["preview"])) {
         $phpfuncfile = 'modules/mod-func-' . $_REQUEST["assign_name"] . '.php';
         $template = 'modules/mod-' . $_REQUEST["assign_name"] . '.tpl';
         if (file_exists($phpfile)) {
-            $module_rows = $_REQUEST["assign_rows"];
             include ($phpfile);
         } elseif (file_exists($phpfuncfile)) {
-            $module_rows = $_REQUEST['assign_params']["rows"];
+			if (isset($_REQUEST["assign_params"]["rows"]))
+				$module_rows = $_REQUEST["assign_params"]["rows"];
+			else
+				$module_rows = 10;
             include_once ($phpfuncfile);
             $function = 'module_' . $_REQUEST["assign_name"];
             if( function_exists( $function ) ) {
@@ -210,7 +221,6 @@ if (isset($_REQUEST["preview"])) {
     $smarty->assign('module_groups', $grps);
     $smarty->assign_by_ref('preview_data', $data);
 
-	$modinfo = $modlib->get_module_info( $_REQUEST['assign_name'] );
 	$modlib->dispatchValues( $_REQUEST['assign_params'], $modinfo['params'] );
 	$smarty->assign( 'assign_info', $modinfo );
 }
@@ -220,7 +230,6 @@ if (isset($_REQUEST["assign"])) {
     $smarty->assign_by_ref('assign_name', $_REQUEST["assign_name"]);
     $smarty->assign_by_ref('assign_position', $_REQUEST["assign_position"]);
     $smarty->assign_by_ref('assign_params', $_REQUEST["assign_params"]);
-	$modinfo = $modlib->get_module_info( $_REQUEST['assign_name'] );
     $smarty->assign_by_ref('assign_order', $_REQUEST["assign_order"]);
     $smarty->assign_by_ref('assign_cache', $_REQUEST["assign_cache"]);
 
@@ -238,10 +247,16 @@ if (isset($_REQUEST["assign"])) {
         $grps = $grps . " $amodule ";
     }
     $smarty->assign('module_groups', $grps);
-    $modlib->assign_module(isset($_REQUEST['moduleId']) ? $_REQUEST['moduleId'] : 0, $_REQUEST["assign_name"], '', $_REQUEST["assign_position"], $_REQUEST["assign_order"], $_REQUEST["assign_cache"], $module_rows, serialize($module_groups) , $_REQUEST["assign_params"], $_REQUEST["assign_type"]);
-    $logslib->add_log('adminmodules', 'assigned module ' . $_REQUEST["assign_name"]);
-    header("location: tiki-admin_modules.php");
+	if (empty($missing_params)) {
+		$modlib->assign_module(isset($_REQUEST['moduleId']) ? $_REQUEST['moduleId'] : 0, $_REQUEST["assign_name"], '', $_REQUEST["assign_position"], $_REQUEST["assign_order"], $_REQUEST["assign_cache"], $module_rows, serialize($module_groups) , $_REQUEST["assign_params"], $_REQUEST["assign_type"]);
+		$logslib->add_log('adminmodules', 'assigned module ' . $_REQUEST["assign_name"]);
+		header("location: tiki-admin_modules.php");
+	} else {
+		$modlib->dispatchValues( $_REQUEST['assign_params'], $modinfo['params'] );
+		$smarty->assign( 'assign_info', $modinfo );
+	}
 }
+
 if (isset($_REQUEST["um_remove"])) {
     check_ticket('admin-modules');
     $_REQUEST["um_remove"] = urldecode($_REQUEST["um_remove"]);

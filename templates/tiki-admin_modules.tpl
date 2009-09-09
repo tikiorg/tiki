@@ -10,6 +10,18 @@
 	{/if}
 </div>
 
+{if !empty($missing_params)}
+<div class="simplebox highlight">
+	{tr}The following required parameters are missing:{/tr}
+	<br/>
+	{section name=ix loop=$missing_params}
+		{$missing_params[ix]}
+		{if !$smarty.section.ix.last},&nbsp;{/if}
+	{/section}
+</div>
+<br />
+{/if}
+
 {tabset name='tabs_adminmodules'}
 
 {tab name='{tr}Assign/Edit modules{/tr}'}
@@ -167,7 +179,7 @@
 			{if isset($assign_info.type) and $assign_info.type eq 'function'}
 				{foreach from=$assign_info.params key=name item=param}
 					<tr>
-						<td class="formcolor"><label for="assign_params[{$name|escape}]">{$param.name|escape}</label></td>
+						<td class="formcolor"><label for="assign_params[{$name|escape}]">{$param.name|escape}{if $param.required} <span class="attention">({tr}required{/tr})</span>{/if}</label></td>
 						<td class="formcolor">
 							<input type="text" id="assign_params[{$name|escape}]" name="assign_params[{$name|escape}]" value="{$param.value|escape}"/>
 							<div class="description">

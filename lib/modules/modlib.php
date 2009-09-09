@@ -497,6 +497,11 @@ class ModLib extends TikiLib {
 			foreach($info['common_params'] as $common_param)
 				$info['params'][$common_param] = $common_params[$common_param];
 
+		// Parameters are not required, unless specified.
+		foreach ($info["params"] as &$param)
+			if (!isset($param["required"]))
+				$param["required"] = false;
+
 		return $info;
 	}
 
