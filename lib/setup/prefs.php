@@ -722,6 +722,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'users_prefs_mailCharset' => 'utf-8',
 		'users_prefs_mailCurrentAccount' => '0',
 		'validateRegistration' => 'n',
+		'url_after_validation' => '',
 
 		// user messages
 		'feature_messages' => 'n',
