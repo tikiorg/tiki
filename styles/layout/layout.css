@@ -50,8 +50,6 @@ span.button {
 span.button a,
 span.button a:visited,
 button,
-input[type=reset],
-input[type=submit],
 span.button input,
 .calbuttonBox a {
 	padding: 1px 4px;
@@ -59,9 +57,10 @@ span.button input,
 	text-decoration: none;
 	white-space: nowrap;
 	cursor: pointer}
-	
-* html input[type=submit],
-* html input[type=reset] {
+
+/* Definitions below are the same as above, but are separated to make those above work in IE6 */
+input[type=reset],
+input[type=submit] {
 	padding: 1px 4px;
 	margin-right: 1px;
 	text-decoration: none;
@@ -76,18 +75,20 @@ span.button input,
 	
 .button a:hover,
 button:hover,
-input[type=reset]:hover,
-input[type=submit]:hover,
 .button input:hover,
 .calbuttonBox:hover {}
 
+input[type=reset]:hover,
+input[type=submit]:hover {}
+
 .button a:active,
 button:active,
-input[type=reset]:active,
-input[type=submit]:active,
 .button input:active,
 span.highlight a:link,
-span.highlight a:visited {  }
+span.highlight a:visited {}
+
+input[type=reset]:active,
+input[type=submit]:active {}
 
 div.iconmenu {display: inline}
 select[multiple] {height: 10em}

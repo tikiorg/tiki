@@ -109,10 +109,22 @@ span.button {
 span.button a,
 span.button a:visited,
 button,
-input[type=reset],
-input[type=submit],
 span.button input,
 .calbuttonBox a {
+	font-family: Verdana, Helvetica, Geneva, Arial, sans-serif;
+	font-size: .95em;
+	font-weight: bold;
+	color: #449cd0;
+	background: #ededed;
+	border: 1px solid #c5c5c5;
+	padding: 1px 4px;
+	margin-right: 1px;
+	text-decoration: none;
+	white-space: nowrap;
+	cursor: pointer}
+
+input[type=reset],
+input[type=submit] {
 	font-family: Verdana, Helvetica, Geneva, Arial, sans-serif;
 	font-size: .95em;
 	font-weight: bold;
@@ -138,18 +150,23 @@ span.button input,
 
 .button a:hover,
 button:hover,
-input[type=reset]:hover,
-input[type=submit]:hover,
 .button input:hover,
 .calbuttonBox a:hover {background: white}
 
+input[type=reset]:hover,
+input[type=submit]:hover {background: white}
+
 .button a:active,	
 button:active,
-input[type=reset]:active,
-input[type=submit]:active,
 .button input:active,
 span.highlight a:link,
 span.highlight a:visited {
+	color: #449cd0;
+	background: #dbdbdb;
+	border: 1px solid #527ca6;}
+
+input[type=reset]:active,
+input[type=submit]:active {
 	color: #449cd0;
 	background: #dbdbdb;
 	border: 1px solid #527ca6;}
