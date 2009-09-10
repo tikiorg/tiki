@@ -322,6 +322,7 @@ class CategLib extends ObjectLib {
 			 'file gallery' => 'tiki_p_view_file_gallery',
 			 'tracker' => 'tiki_p_view_trackers',
 			 'blog' => 'tiki_p_read_blog',
+			 'blog post' => 'tiki_p_read_blog',
 			 'quiz' => 'tiki_p_take_quiz',
 
 			 // overhead - we are checking individual permission on types below, but they
