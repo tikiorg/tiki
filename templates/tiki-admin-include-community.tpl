@@ -267,7 +267,7 @@
 {if $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y'}
 <div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" id="users_prefs_mytiki_msgs" name="users_prefs_mytiki_msgs" {if $prefs.users_prefs_mytiki_msgs eq 'y'}checked="checked"{/if} /></div>
-	<div class="adminoptionlabel"><label for="users_prefs_mytiki_msgs>"{tr}My messages{/tr}</label></div>
+	<div class="adminoptionlabel"><label for="users_prefs_mytiki_msgs">{tr}My messages{/tr}</label></div>
 </div>
 {/if}
 {if $prefs.feature_tasks eq 'y' and $tiki_p_tasks eq 'y'}
