@@ -41,6 +41,7 @@ $langmapping = array(
     'ru' => array(  'Русский',      tra("Russian")      ),
     'sb' => array(  'Pijin Solomon', tra("Pijin Solomon")    ),
     'sk' => array(   'Slovenský',  tra("Slovak")       ),
+    'sl' => array(   'Slovenščina', tra('Slovene')       ),
     'sr' => array(   'Српски',  tra("Serbian")       ),
     'sr-latn' => array(   'Srpski',  tra("Serbian Latin")       ),
     'sv' => array(  'Svenska',      tra("Swedish")      ),
