@@ -663,21 +663,26 @@ h3.box-title {
 .box-title a,
 .box-title a:link {}
 
-* html h3.box-title {position: static}
+* html h3.box-title {
+	position: static;
+	padding-right: 18px}
 
-.moduleflip {
+.moduleflip,
+.wikitext .box-title span img.flipmodimage {
 	display: none !important;
 	position: absolute;
 	right: 0;
 	top: 0}
 
-* html .moduleflip {
+* html .moduleflip,
+* html .wikitext .box-title span img.flipmodimage {
 	position: static;
 	float: right;
 	margin-top: -16px}
 
 * html .moduleflip,
-.box:hover .moduleflip {display: block !important}
+.box:hover .moduleflip,
+.wikitext .box:hover .box-title span img.flipmodimage {display: block !important}
 
 .box:hover img.flipmodimage {border: 1px solid transparent}
 * html img.flipmodimage {border: none}
