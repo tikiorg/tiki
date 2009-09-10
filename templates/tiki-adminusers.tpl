@@ -217,8 +217,11 @@
 									{/if}
 									<option value="assign_groups" >{tr}Manage Group Assignments{/tr}</option>
 									<option value="set_default_groups">{tr}Set Default Groups{/tr}</option>
-									<option value="emailChecked">{tr}Email{/tr}</option>
-								</select></label>
+									{if $prefs.feature_wiki == 'y'}
+										<option value="emailChecked">{tr}Send a wiki page by Email{/tr}</option>
+									{/if}
+								</select>
+								</label>
 								<input type="submit" value="{tr}OK{/tr}" />
 							{elseif $group_management_mode eq 'y'}
 								<select name="group_management">
