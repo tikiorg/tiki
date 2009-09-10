@@ -12,11 +12,9 @@ if ($prefs['feature_wysiwyg'] != 'y') {
 	die;
 }
 
-$fckstyle = 'styles/'.$prefs['style'];
-if ( $tikidomain and is_file('styles/'.$tikidomain.'/'.$prefs['style']) ) {
-	$fckstyle = 'styles/'.$tikidomain.'/'.$prefs['style'];
-}
-$smarty->assign('fckstyle',$fckstyle);
+global $tikilib;
+$smarty->assign('fckstyle',$tikilib->get_style_path('', '', $prefs['style']));
+$smarty->assign('fckstyleoption',$tikilib->get_style_path($prefs['style'], $prefs['style_option'], $prefs['style_option']));
 
 $tools = split("\r\n|\n",$prefs['wysiwyg_toolbar']);
 $line = 0;
