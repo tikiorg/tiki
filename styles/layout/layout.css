@@ -840,7 +840,6 @@ td.form,
 	vertical-align: top}
 
 * html td {font-size: 11px}
-th {}
 
 table.email {}
 table.email td.body {}
@@ -1009,7 +1008,7 @@ div.cachedpage {}
 #wikihelp-tab table td {}
 
 #wikihelp-tab table td {padding: 2px}
-textarea.wikiedit {font-size: 1.0em}
+textarea.wikiedit {}
 p.editdate {padding-top: 10px}
 img.externallink {}
 
@@ -1101,7 +1100,7 @@ div.tocnav {
 #tocnavicons {float: left}
 #tocnavaddpage {float: right}
 #tocnavlinks {clear: both}
-.fancytoclevel {list-style-image: url(../img/icons/footprint.gif)}
+.fancytoclevel {list-style-image: url(../../img/icons/footprint.gif)}
 li.toclevel {}
 
 /* TOC */
@@ -1117,8 +1116,8 @@ ul.toc * {border: none}
 .diff td {border: 1px solid #696969}
 .diff div {border-top: 1px solid #696969}
 .diffheader {background: #696969; font-weight: bold}
-.diffadded {background: #ccffcc}
-.diffdeleted {background: #ffcccc}
+.diffadded {background: #ccffcc; color: #000}
+.diffdeleted {background: #ffcccc; color: #000}
 
 .diffinldel {
 	background: #ffcccc;
@@ -1497,7 +1496,6 @@ opaque .box-title,
 div.multiselect {
 	vertical-align: middle;
 	padding: 0;
-	border:1px solid #80B1E2;
 	height: auto;
 	overflow: visible}
 
@@ -1602,10 +1600,11 @@ td.categobjectsdataodd {}
 
 .catfeatures li {
 	display: inline;
-	margin-right: 7px}
+	margin-right: 7px;
+	text-transform: capitalize;}
 
 .catitems {
-	margin-left: 0;
+	margin-left: 15px;
 	padding: 0;
 	list-style: none}
 
@@ -1906,6 +1905,7 @@ td.mods_update {
 /***** Ajax, jquery. etc. *****/
 /***** Ajax *****/
 div#ajaxLoading {
+	z-index: 10000;
 	display: none;
 	position: absolute;
 	top: 50px;
@@ -1914,7 +1914,7 @@ div#ajaxLoading {
 	font-family: Verdana;
 	font-size: 90%;
 	text-align: center;
-	background: transparent url(../lib/shadowbox/images/loading-light.gif) no-repeat 50% 100%;
+	background: transparent url(../../lib/shadowbox/images/loading-light.gif) no-repeat 50% 100%;
 	height: 43px;
 	width: 50px;
 	padding-top: 32px}
