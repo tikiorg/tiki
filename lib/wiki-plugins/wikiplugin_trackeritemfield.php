@@ -187,8 +187,6 @@ function wikiplugin_trackeritemfield($data, $params) {
 				$smarty->assign('showlinks', 'n');
 				return $smarty->fetch('tracker_item_field_value.tpl');
 			}
-		} else {
-			return tra('Incorrect param').': fieldId';
 		}
 	}
 	return $data;
