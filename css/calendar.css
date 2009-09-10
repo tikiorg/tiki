@@ -559,3 +559,8 @@ a.next img {
 	vertical-align: middle;  
 }
 
+/* Smaller icons inside calendar headers, in order to have no impact on the position of items on the week and day views */
+.calHeading a img {
+	height: 14px;
+	width: 14px;
+}
