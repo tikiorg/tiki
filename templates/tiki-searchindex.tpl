@@ -46,8 +46,6 @@
   <input type="submit" class="wikiaction" name="search" value="{tr}Go{/tr}"/>
 </form>
 
-<br />
-
 {if $words neq '' and !$searchNoResults}
 	{tr}Found{/tr} "{$words}" {tr}in{/tr} {$cant_results} {$where2}
 	<div class="searchresults">
