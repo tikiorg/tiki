@@ -2420,23 +2420,23 @@ td.prio5 {
 	border: 1px solid #999999;
 	padding-left: 2px}
 
-td.prio1 {background: #F7F9CA}
-td.prio2 {background: #F7F9EA}
-td.prio3 {background: #F7F9FA}
-td.prio4 {background: #F7F9FD}
-td.prio5 {background: #F7F9FF}
+td.prio1 {background: #696969}
+td.prio2 {background: #3f3f3f}
+td.prio3 {background: #474747}
+td.prio4 {background: #292929}
+td.prio5 {background: #000}
 
 div.messureadflag {
-	background: #CCCCCC;
+	background: inherit;
 	padding-left: 5px}
 
 div.messureadhead {
-	background: #DEDEDE;
+	background: #3f3f3f;
 	margin-top: 2px}
 
 div.messureadbody {
 	margin-top: 5px;
-	background: #DEDEDE}
+	background: #3f3f3f}
 
 .readlink {
 	font-size: .95em;
