@@ -98,14 +98,14 @@
 
 <div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" name="show_available_translations" id="show_available_translations"
-			{if $prefs.show_available_translations eq 'y'}checked="checked" {/if}onclick="flip('langsync');" /></div>
-	<div class="adminoptionlabel"><label for="show_available_translations">{tr}Display available translations{/tr}.</label>
-<div class="adminoptionboxchild" id="langsync" style="display:{if $prefs.show_available_translations eq 'y'}block{else}none{/if};">
+			{if $prefs.show_available_translations eq 'y'}checked="checked" {/if} /></div>
+	<div class="adminoptionlabel"><label for="show_available_translations">{tr}Display available translations{/tr}.</label></div>
+</div>
+
+<div class="adminoptionbox" id="langsync" style="display:{if $prefs.show_available_translations eq 'y'}block{else}none{/if};">
 	<div class="adminoption"><input type="checkbox" name="feature_sync_language" id="feature_sync_language"
 			{if $prefs.feature_sync_language eq 'y'}checked="checked"{/if}/></div>
 	<div class="adminoptionlabel"><label for="feature_sync_language">{tr}Changing page language will also change the site language{/tr}</label></div>
-</div>
-	</div>
 </div>
 
 <div class="adminoptionbox">
