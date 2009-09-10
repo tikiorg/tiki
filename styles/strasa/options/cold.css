@@ -769,7 +769,8 @@ body.tiki_blogs .postbody-title,
 	
 }
 
-.post .postbody-title .title {
+.post .postbody-title .title,
+.post .postbody-title .actions {
 	color: #000;
 }
 
