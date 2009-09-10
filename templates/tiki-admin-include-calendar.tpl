@@ -20,7 +20,7 @@
 		</div>
 	{/foreach}
 	</div>
-	{else}{tr}None{/tr} <a href="tiki-admin_calendars.php" class="button" title="{tr}Create calendar{/tr}.">{tr}Create calendar{/tr}.</a>
+	{else}{tr}None{/tr} {button href="tiki-admin_calendars.php?show=mod" _text="{tr}Create calendar{/tr}"}
 	{/if}
 </div>
 </div>
