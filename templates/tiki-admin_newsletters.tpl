@@ -2,12 +2,19 @@
 {title help="Newsletters"}{tr}Admin newsletters{/tr}{/title}
 
 <div class="navbar">
-	{button href="tiki-admin_newsletters.php" _text="{tr}Create Newsletter{/tr}"}
+	{if $info.nlId}
+		{button href="tiki-admin_newsletters.php" _text="{tr}Create Newsletter{/tr}"}
+	{/if}
 	{button href="tiki-newsletters.php" _text="{tr}List Newsletters{/tr}"}
 	{button href="tiki-send_newsletters.php" _text="{tr}Send Newsletters{/tr}"}
 </div>
 
-<h2>{tr}Create/Edit Newsletters{/tr}</h2>
+{if $info.nlId}
+	<h2>{tr}Edit Newsletter{/tr}</h2>
+{else}
+	<h2>{tr}Create Newsletter{/tr}</h2>
+{/if}
+
 {if $individual eq 'y'}
 	<a class="link" href="tiki-objectpermissions.php?objectName={$info.name|escape:"url"}&amp;objectType=newsletter&amp;permType=newsletters&amp;objectId={$info.nlId}">{tr}There are individual permissions set for this newsletter{/tr}</a><br /><br />
 {/if}
