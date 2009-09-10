@@ -6,7 +6,8 @@
 	<div class="heading">{tr}Tags This Page Has{/tr}</div>
 	{section name=ix loop=$modFreetagsCurrent.data}
      <div class="module">
-     <a class="linkmodule" href="tiki-browse_freetags.php?tag={$modFreetagsCurrent.data[ix].tag|escape:'url'}">{$modFreetagsCurrent.data[ix].tag|escape}</a>
+	 {capture name=tagurl}{if (strstr($modFreetagsCurrent.data[ix].tag, ' '))}"{$modFreetagsCurrent.data[ix].tag}"{else}{$modFreetagsCurrent.data[ix].tag}{/if}{/capture}
+     <a class="linkmodule" href="tiki-browse_freetags.php?tag={$smarty.capture.tagurl|escape:'url'}">{$modFreetagsCurrent.data[ix].tag|escape}</a>
 	 </div>
 	{/section}
 	{/if}
