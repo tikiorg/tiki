@@ -1,3 +1,4 @@
+{if empty($sort_arg)}{assign var='sort_arg' value='sort_mode'}{/if}
 <table class="normal">
   <tr>
   {if $gal_info.show_checked ne 'n' and ($tiki_p_admin_file_galleries eq 'y' or $tiki_p_upload_files eq 'y')}
@@ -9,7 +10,7 @@
     <th style="width:1%">&nbsp;</th>
   {/if}
       
-  {if $show_parentName eq 'y'}<th>{self_link _sort_arg="sort_mode" _sort_field='parentName'}{tr}Gallery{/tr}{/self_link}</th>{/if}
+  {if $show_parentName eq 'y'}<th>{self_link _sort_arg=$sort_arg _sort_field='parentName'}{tr}Gallery{/tr}{/self_link}</th>{/if}
   {foreach from=$fgal_listing_conf item=item key=propname}
     {if isset($item.key)}
       {assign var=key_name value=$item.key}
@@ -44,12 +45,12 @@
 
       {if $propname eq 'name' and ( $gal_info.show_name eq 'a' or $gal_info.show_name eq 'f' ) }
         {assign var=nbCols value=`$nbCols+1`}
-        <th{$td_args}>{self_link _sort_arg="sort_mode" _sort_field='filename'}{if empty($galleryId)}{tr}Name{/tr}{else}{tr}Filename{/tr}{/if}{/self_link}</th>
+        <th{$td_args}>{self_link _sort_arg=$sort_arg _sort_field='filename'}{if empty($galleryId)}{tr}Name{/tr}{else}{tr}Filename{/tr}{/if}{/self_link}</th>
       {/if}
       {if !($galleryId eq 0 and $propname eq 'lockedby') and ($propname neq 'name' or ( $gal_info.show_name eq 'a' or $gal_info.show_name eq 'n' )) }
         {assign var=nbCols value=`$nbCols+1`}
         <th{$td_args}>
-           {self_link _sort_arg="sort_mode" _sort_field=$propname _title=$link_title}
+           {self_link _sort_arg=$sort_arg _sort_field=$propname _title=$link_title}
              {if $propicon}{icon _id=$propicon alt=$link_title}{else}{$propval}{/if}
 		   {/self_link}
         </th>
@@ -75,7 +76,7 @@
   {if $other_columns_selected neq ''}
     {assign var=nbCols value=`$nbCols+1`}
     <th>
-    {self_link _sort_arg='sort_mode' _sort_field=$other_columns_selected _title=$fgal_listing_conf.$other_columns_selected.name}{$fgal_listing_conf.$other_columns_selected.name}{/self_link}
+    {self_link _sort_arg=$sort_arg _sort_field=$other_columns_selected _title=$fgal_listing_conf.$other_columns_selected.name}{$fgal_listing_conf.$other_columns_selected.name}{/self_link}
     </th>
   {/if}
       
