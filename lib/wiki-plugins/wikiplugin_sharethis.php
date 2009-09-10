@@ -1,16 +1,15 @@
-<?php
-/* Insert the Bookmark button from ShareThis (www.sharethis.com). Sharethis account is optional.
+﻿<?php
+/* Insert the bookmark button from ShareThis (www.sharethis.com). ShareThis account is not necessary.
 // Developed by Andrew Hafferman for Tiki CMS
-// Usage:
-// {SHARETHIS(<options="values">) /}
-// If Tabs are not specified, all tabs will be displayed by default.
-// If only ONE TAB is specified, only ONE TAB will be displayed.
 //
 // 2008-11-25 SEWilco
 //   Convert comments to WikiSyntax comments.
+// 2009-07-11 lindon
+//   Update for changes in ShareThis and fix bugs
+//
 */
 function wikiplugin_sharethis_help() {
-	return tra("Insert a ShareThis Button from www.sharethis.com").":<br />~np~{SHARETHIS(publisher='varchar',webtab=y|n,posttab=y|n,emailtab=y|n,rotateimage=y|n,inactivebg='varchar',inactivefg='varchar',headerbg='varchar',linkfg='varchar',offsetTop='int',offsetLeft='int',popup=true|false,embed=true|false)}{SHARETHIS}<br />A ShareThis account is optional and is to be passed via the 'publisher' parameter or hardcoded into the wiki-plugin.~/np~";
+	return tra("Insert a ShareThis button from www.sharethis.com").":<br />~np~{SHARETHIS(sendsvcs=> , postfirst=> ,  rotateimage=> y|n, buttontext=> , headertitle=> , headerbg=> , headertxtcolor=> , linkfg=> , popup=> true|false, embed=> true|false)}{SHARETHIS} ~/np~ <br /> ";
 }
 function wikiplugin_sharethis_info() {
 	return array(
@@ -19,64 +18,51 @@ function wikiplugin_sharethis_info() {
 		'description' => tra("Display a social networking tool."),
 		'prefs' => array( 'wikiplugin_sharethis' ),
 		'params' => array(
-			'publisher' => array(
+			'sendsvcs' => array(
 				'required' => false,
-				'name' => 'publisher',
+				'name' => 'sendsvcs',
+				'description' => 'By default, email, aim and sms are available. Input one or two of the services separated by a | to limit the choice of send services.',
 			),
-			'webtab' => array(
+			'postfirst' => array(
 				'required' => false,
-				'name' => 'webtab',
-				'description' => 'y|n',
+				'name' => 'postfirst',
+				'description' => 'Input a list of post services (like facebook, myspace, digg, etc.) separated by a | to customize the services that are shown in the opening panel of the widget.',
 			),
-			'posttab' => array(
+			'rotateimage' => array(
 				'required' => false,
-				'name' => 'postab',
-				'description' => 'y|n',
+				'name' => 'rotateimage',
+				'description' => 'A value of y will cause the button icon to rotate every 3 seconds between a few icons, cycling through twice before stopping.',
 			),
-			'emailtab' => array(
+			'buttontext' => array(
 				'required' => false,
-				'name' => 'emailtab',
-				'description' => 'y|n',
+				'name' => 'buttontext',
+				'description' => 'Custom link text for the button.',
 			),
-			'rotateimageb' => array(
+			'headertitle' => array(
 				'required' => false,
-				'name' => 'rotateimageb',
-				'description' => 'y|n',
-			),
-			'inactivebg' => array(
-				'required' => false,
-				'name' => 'inactivebg',
-				'description' => 'y|n',
-			),
-			'inactivefg' => array(
-				'required' => false,
-				'name' => 'inactivefg',
+				'name' => 'Optional header title text for the widget.',
 			),
 			'headerbg' => array(
 				'required' => false,
-				'name' => 'headerbg',
+				'name' => 'HTML color code (not color name) for the background color for the header if an optional header title is used.',
+			),
+			'headertxtcolor' => array(
+				'required' => false,
+				'name' => 'HTML color code (not color name) for the header text if an optional header title is used.',
 			),
 			'linkfg' => array(
 				'required' => false,
-				'name' => 'linkfg',
-			),
-			'offsetTop' => array(
-				'required' => false,
-				'name' => 'offsetTop',
-			),
-			'offsetLeft' => array(
-				'required' => false,
-				'name' => 'offsetLeft',
+				'name' => 'HTML color code (not color name) for the link text for all send and post services shown in the widget',
 			),
 			'popup' => array(
 				'required' => false,
 				'name' => 'popup',
-				'description' => 'true|false',
+				'description' => 'A value of true will cause the widget to show in a pop-up window.',
 			),
 			'embed' => array(
 				'required' => false,
 				'name' => 'embed',
-				'description' => 'true|false',
+				'description' => 'A value of true will allow embedded elements (like flash) to be seen while iframe is loading.',
 			),		)
 	);
 }
@@ -87,70 +73,63 @@ function wikiplugin_sharethis($data, $params) {
 	$sep = '&amp;';
 	$comma = '%2C';
 	$lb = '%23';
+	$sp = '%20';
 
 	// The following is the array that holds the default options for the plugin.
-	// Add your publisher to the variable below to be used by default.
-	$sharethis_options['publisher'] = '';
-	$sharethis_options['style'] = 'default';
-	$sharethis_options['charset'] = 'utf-8';
-	$sharethis_options['services'] = '';
-	$sharethis_options['headerbg'] = '333333';
-	$sharethis_options['inactivebg'] = 'cccccc';
-	$sharethis_options['inactivefg'] = '000000';
-	$sharethis_options['linkfg'] = 'CF000D';
-	$sharethis_options['offsetLeft'] = '0';
-	$sharethis_options['offsetTop'] = '0';
+	$sharethis_options['type'] = 'website';
+	$sharethis_options['sendsvcs'] = '';
+	$sharethis_options['style'] = '';
+	$sharethis_options['buttontext'] = '';
+	$sharethis_options['postfirst'] = '';
+	$sharethis_options['headertitle'] = '';
+	$sharethis_options['headerbg'] = '';
+	$sharethis_options['headertxtcolor'] = '';
+	$sharethis_options['linkfg'] = '';
 	$sharethis_options['popup'] = '';
-	$sharethis_options['embed'] = 'true';
+	$sharethis_options['embed'] = '';
 
 	// load setting options from $params
 
-	// set plugin services
-	if($services)
+	// set post services that appear upon widget opening
+	if($postfirst)
 	{
-		$sharethis_options['services'] = str_replace(',',$comma,$services);
+		$sharethis_options['postfirst'] = str_replace('|',$comma,$postfirst);
 	}
-	// set plugin publisher (sharethis account identifier)
-	if($publisher)
+	// limit send services that will appear
+	if($sendsvcs)
 	{
-		$sharethis_options['publisher'] = $publisher;
+		$sharethis_options['sendsvcs'] = str_replace('|',$comma,$sendsvcs);
 	}
 	// set icon style
 	if($rotateimage)
 	{
-		if($rotateimage==y){
+		if($rotateimage == 'y'){
 			$sharethis_options['style'] = 'rotate';
 		}
 	}
-	// set headerbg
-	if($headerbg)
+	// set button text
+	if($buttontext)
 	{
-		$sharethis_options['headerbg'] = $headerbg;
+		$sharethis_options['buttontext'] = $buttontext;
 	}
-	// set link link color
+	// set header title text, background color and text color
+	if($headertitle)
+	{
+		$sharethis_options['headertitle'] = str_replace(' ',$sp,$headertitle);
+			if($headerbg) {
+			$sharethis_options['headerbg'] = $headerbg;
+			}
+			if($headertxtcolor) {
+			$sharethis_options['headertxtcolor'] = $headertxtcolor;
+			}
+		} else {
+			$sharethis_options['headerbg'] = '';
+			$sharethis_options['headertxtcolor'] = '';
+		}
+	// set link text color for services shown in popup
 	if($linkfg)
 	{
 		$sharethis_options['linkfg'] = $linkfg;
-	}
-	// set inactive bg
-	if($inactivebg)
-	{
-		$sharethis_options['inactivebg'] = $inactivebg;
-	}
-	// set inactive link color
-	if($inactivefg)
-	{
-		$sharethis_options['inactivefg'] = $inactivefg;
-	}
-	// set offset left
-	if($offsetleft)
-	{
-		$sharethis_options['offsetLeft'] = $offsetleft;
-	}
-	// set offset top
-	if($offsettop)
-	{
-		$sharethis_options['offsetTop'] = $offsettop;
 	}
 	// set popup
 	if($popup)
@@ -162,74 +141,29 @@ function wikiplugin_sharethis($data, $params) {
 	{
 		$sharethis_options['embed'] = $embed;
 	}
-	// set charset
-	if($charset)
-	{
-		$sharethis_options['charset'] = $charset;
-	}
-	// compile tab selection
-	if(!$tabs) {
-		if(isset($webtab)==true || isset($emailtab)==true || isset($posttab)==true) {
-			$tabs = '';
-			if(isset($webtab)) {
-				if($webtab === 'y') {
-					if($tabs == '') {
-						$tabs = "web";	
-					} else {
-						$tabs .= $comma."web";
-					}
-				}
-			}
-			if(isset($posttab)) {
-				if($posttab === 'y') {
-					if($tabs == '') {
-						$tabs = "post";	
-					} else {
-						$tabs .= $comma."post";
-					}
-				}
-			}
-			if(isset($emailtab)) {
-				if($emailtab === 'y') {
-					if($tabs == '') {
-						$tabs = "email";	
-					} else {
-						$tabs .= $comma."email";
-					}
-				}
-			}
-		} else {
-			$tabs = "web".$comma."post".$comma."email";
-		}
-	}
-	
+
 	// put all the options together
 
-	$sharethiscode = "~hc~ ShareThis Bookmark Button BEGIN ~/hc~";
-	$sharethiscode .= '<script type="text/javascript" src="http://w.sharethis.com/widget/?';
-
-	$sharethiscode .= "tabs=".$tabs;
-	if(!empty($sharethis_options['headerbg'])) $sharethiscode .= $sep."headerbg=".$lb.$sharethis_options['headerbg'];
-	if(!empty($sharethis_options['linkfg'])) $sharethiscode .= $sep."linkfg=".$lb.$sharethis_options['linkfg'];
-	if(!empty($sharethis_options['inactivefg'])) $sharethiscode .= $sep."inactivefg=".$lb.$sharethis_options['inactivefg'];
-	if(!empty($sharethis_options['inactivebg'])) $sharethiscode .= $sep."inactivebg=".$lb.$sharethis_options['inactivebg'];
-	if(!empty($sharethis_options['offsetLeft'])) $sharethiscode .= $sep."offsetLeft=".$sharethis_options['offsetLeft'];
-	if(!empty($sharethis_options['offsetTop'])) $sharethiscode .= $sep."offsetTop=".$sharethis_options['offsetTop'];
-	if(!empty($sharethis_options['charset'])) $sharethiscode .= $sep."charset=".$sharethis_options['charset'];
-	if(!empty($sharethis_options['publisher'])) $sharethiscode .= $sep."publisher=".$sharethis_options['publisher'];
-	if(!empty($sharethis_options['services'])) $sharethiscode .= $sep."services=".$sharethis_options['services'];
+	$sharethiscode = "~hc~ ))ShareThis(( Bookmark Button BEGIN ~/hc~";
+	$sharethiscode .= '<script type="text/javascript" src="http://w.sharethis.com/button/sharethis.js#';
+	$sharethiscode .= "type=".$sharethis_options['type'];
+	
+	if(!empty($sharethis_options['buttontext'])) $sharethiscode .= $sep."buttonText=".$sharethis_options['buttontext'];
 	if(!empty($sharethis_options['popup'])) $sharethiscode .= $sep."popup=".$sharethis_options['popup'];
-	if(!empty($sharethis_options['embed'])) $sharethiscode .= $sep."embed=".$sharethis_options['embed'];
-
-	if($rotateimage) $sharethiscode .= $sep."style=".$sharethis_options['style'];
+	if(!empty($sharethis_options['embed'])) $sharethiscode .= $sep."embeds=".$sharethis_options['embed'];
+	if(!empty($sharethis_options['style'])) $sharethiscode .= $sep."style=".$sharethis_options['style'];
+	if(!empty($sharethis_options['sendsvcs'])) $sharethiscode .= $sep."send_services=".$sharethis_options['sendsvcs'];
+	if(!empty($sharethis_options['postfirst'])) $sharethiscode .= $sep."post_services=".$sharethis_options['postfirst'];
+	if(!empty($sharethis_options['headertxtcolor'])) $sharethiscode .= $sep."headerfg=".$lb.$sharethis_options['headertxtcolor'];	
+	if(!empty($sharethis_options['headerbg'])) $sharethiscode .= $sep."headerbg=".$lb.$sharethis_options['headerbg'];	
+	if(!empty($sharethis_options['linkfg'])) $sharethiscode .= $sep."linkfg=".$lb.$sharethis_options['linkfg'];
+	if(!empty($sharethis_options['headertitle'])) $sharethiscode .= $sep."headerTitle=".$sharethis_options['headertitle'];
 
 	$sharethiscode .= "\"></script>";
-	$sharethiscode .= "~hc~ ShareThis Bookmark Button END ~/hc~";
+	$sharethiscode .= "~hc~ ))ShareThis(( Bookmark Button END ~/hc~";
 
 $result = $sharethiscode;
 
 return $result;
 
 }
-
-?>
