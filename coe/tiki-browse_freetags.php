@@ -37,6 +37,9 @@ if (!isset($_REQUEST['tag']) && $prefs['freetags_preload_random_search'] == 'y')
 	$tag = $freetaglib->get_tag_suggestion('', 1);
 	if (!empty($tag[0])) {
 		$_REQUEST['tag'] = $tag[0];
+		if (strstr($tag[0], ' ')) {
+			$_REQUEST['tag'] = '"'.$_REQUEST['tag'].'"';
+		}
 	}
 }
 if (!isset($_REQUEST["sort_mode"])) {

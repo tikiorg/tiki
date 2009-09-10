@@ -9,6 +9,7 @@
 	{button _text="{tr}Create Calendar{/tr}" href="tiki-admin_calendars.php?show=mod"}
 {/if}
 {button _text="{tr}View Calendars{/tr}" href="tiki-calendar.php"}
+{button _text="{tr}Import{/tr}" href="tiki-calendar_import.php"}
 </div>
 
 {tabset name='tabs_admin_calendars'}

@@ -25,7 +25,7 @@ function module_directory_last_sites_info() {
 				'description' => tra('If set to "y", displays a button labelled "More" that links to the directory.') . " " . tr('Not set by default.')
 			)
 		),
-		'common_params' => array('nonums')
+		'common_params' => array('nonums', 'rows')
 	);
 }
 

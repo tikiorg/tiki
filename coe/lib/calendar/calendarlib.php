@@ -35,6 +35,7 @@ class CalendarLib extends TikiLib {
 		}
 		
 		$distinct = '';
+		$join_tables = '';
 		if (!empty($filter)) {
 			$tmp_mid = array();
 			foreach ($filter as $type=>$val) {
@@ -60,8 +61,9 @@ class CalendarLib extends TikiLib {
 				$mid .= implode( ' and ', $tmp_mid ) . ')';
 			}
 		}
-		
-		$bindvars = array_merge($bindvars, $join_bindvars);
+		if (!empty($join_bindvars)) {
+			$bindvars = array_merge($bindvars, $join_bindvars);
+		}
 
 		$query = "select $distinct * from `tiki_calendars` as tcal $join_tables $mid order by tcal.".$this->convertSortMode($sort_mode);
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
@@ -615,33 +617,48 @@ class CalendarLib extends TikiLib {
 	}
 	
 	function importCSV($fname, $calendarId) {
-		global $user;
-		$fhandle = fopen($fname, "r");
-		$fields = fgetcsv($fhandle, 1000);
+		global $user, $smarty;
+		$fields = false;
+		if ($fhandle = fopen($fname, 'r')) {
+			$fields = fgetcsv($fhandle, 1000);
+		}
 		if ($fields === false) {
 			$smarty->assign('msg', tra("The file is not a CSV file or has not a correct syntax"));
 			$smarty->display("error.tpl");
 			die;
 		}
-
-		while (!feof($fhandle)) {
-			$data = fgetcsv($fhandle, 1000);
+		$nb = 0;
+		while (($data = fgetcsv($fhandle, 1000)) !== FALSE) {
 			$d = array("calendarId"=>$calendarId, "calitemId"=>"0", "name"=>"", "description" =>"", "locationId"=>"", 
-					"organizers"=>"", "participants"=>"","status"=>"0","priority"=>"5","categoryId"=>"0","newloc"=>"0","newcat"=>"","nlId"=>"","lang"=>"");
+					   "organizers"=>"", "participants"=>"","status"=>"0","priority"=>"5","categoryId"=>"0","newloc"=>"0","newcat"=>"","nlId"=>"","lang"=>"", 'start'=>'', 'end'=>'');
 			foreach ($fields as $field) {
-				$d[strtolower($field)] = $data[array_search($field, $fields)];
+				$d[$field] = $data[array_search($field, $fields)];
 			}
 			if (isset($d["subject"]) && empty($d["name"]))
 				$d["name"] = $d["subject"];
-			if (isset($d["start date"]) && isset($d["start time"]))
-				$d["start"] = strtotime($d["start time"], strtotime($d["start date"]));
-			if (isset($d["end date"]) && isset($d["end time"]))
-				$d["end"] = strtotime($d["end time"], strtotime($d["end date"]));
+			if (isset($d['start date'])) {
+				if (isset($d['start time'])) {
+					$d['start'] = strtotime($d['start time'], strtotime($d['start date']));
+				} else {
+					$d['start'] = strtotime($d['start date']);
+				}
+			}
+			if (isset($d['end date'])) {
+				echo 'fff';
+				if (isset($d['end time'])) {
+					$d['end'] = strtotime($d['end time'], strtotime($d['end date']));
+				} else {
+					$d['end'] = strtotime($d['end date']);
+				}
+			}
 // TODO do a replace if name, calendarId, start, end exists
-			$this->set_item($user, 0, $d);
+			if (!empty($d['start']) && !empty($d['end'])) {		
+				$this->set_item($user, 0, $d);
+				++$nb;
+			}
 		}
 		fclose ($fhandle);
-		return true;
+		return $nb;
 	}
 
 	function upcoming_events($maxrows = -1, $calendarId = 0, $maxDays = -1, $order = 'start_asc', $priorDays = 0) {

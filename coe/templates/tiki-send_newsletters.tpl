@@ -62,6 +62,7 @@
 			<input type="hidden" name="cookietab" value="3" />
 			<input type="hidden" name="datatxt" value="{$datatxt|escape}" />
 			<input type="hidden" name="replyto" value="{$replyto|escape}" />
+			<input type="hidden" name="wysiwyg" value="{$wysiwyg|escape}" />
 			<input type="submit" name="send" value="{tr}Send{/tr}" />
 			<input type="submit" name="preview" value="{tr}Cancel{/tr}" />
 			{foreach from=$info.files item=newsletterfile key=fileid}

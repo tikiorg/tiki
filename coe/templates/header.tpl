@@ -37,7 +37,7 @@
 	{elseif !empty($post_info.title)} : {$post_info.title}
 	{elseif !empty($forum_info.name)} : {$forum_info.name|escape}
 	{elseif !empty($categ_info.name)} : {$categ_info.name}
-	{elseif !empty($userinfo.login)} : {$userinfo.login}
+	{elseif !empty($userinfo.login)} : {$userinfo.login|escape}
 	{elseif !empty($tracker_item_main_value)} : {$tracker_item_main_value}
 	{elseif !empty($tracker_info.name)} : {$tracker_info.name}
 	{/if}

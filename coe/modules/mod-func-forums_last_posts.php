@@ -17,7 +17,7 @@ function module_forums_last_posts_info() {
 				'description' => tra('If set to "y", only displays topics.') . " " . tr('Not set by default.')
 			)
 		),
-		'common_params' => array('nonums')
+		'common_params' => array('nonums', 'rows')
 	);
 }
 

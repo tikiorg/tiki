@@ -58,6 +58,7 @@ if (isset($_REQUEST["loginprefs"])) {
 	simple_set_toggle('desactive_login_autocomplete');
 	simple_set_toggle('permission_denied_login_box');
 	simple_set_value('permission_denied_url');
+	simple_set_value('url_after_validation');
 	if (isset($_REQUEST['registration_choices'])) {
 		$listgroups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
 		$in = array();

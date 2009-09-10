@@ -6,6 +6,9 @@ if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== false) {
   exit;
 }
 
+// Set the host string for PDO dsn.
+$db_hoststring = "host=$host_tiki";
+
 switch ($db_tiki) {
 	case 'postgres7':
 	case 'postgres8':
@@ -13,6 +16,14 @@ switch ($db_tiki) {
 		break;
 	case 'mysqli':
 		$db_tiki = 'mysql';
+
+		// If using mysql and it is set to use sockets instead of hostname,
+		// you can only use one method to connect, not both.  If $socket_tiki
+		// is set in local.php, then it will override the hostname method
+		// of connecting to the database.
+		if (isset($socket_tiki)) {
+			$db_hoststring = "unix_socket=$socket_tiki";
+		}
 		break;
 	case 'oracle':
 		$db_tiki = 'oci';
@@ -24,7 +35,8 @@ if ($db_tiki == 'sybase') {
 }
 
 try {
-	$dbTiki = new PDO("$db_tiki:host=$host_tiki;dbname=$dbs_tiki", $user_tiki, $pass_tiki);
+	//$dbTiki = new PDO("$db_tiki:host=$host_tiki;dbname=$dbs_tiki", $user_tiki, $pass_tiki);
+	$dbTiki = new PDO("$db_tiki:$db_hoststring;dbname=$dbs_tiki", $user_tiki, $pass_tiki);
 	$dbTiki->setAttribute(PDO::ATTR_CASE,PDO::CASE_NATURAL);
 	$dbTiki->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_WARNING);
 	$dbTiki->setAttribute(PDO::ATTR_ORACLE_NULLS,PDO::NULL_EMPTY_STRING);

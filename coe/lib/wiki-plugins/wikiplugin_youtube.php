@@ -16,6 +16,24 @@ function wikiplugin_youtube_info() {
 				'name' => 'Movie',
 				'description' => tra('URL to the Youtube video'),
 			),
+			'width' => array(
+				'required' => false,
+				'name' => tra('width'),
+				'description' => tra('Width in pixels'),
+				'default' => 425,
+			),
+			'height' => array(
+				'required' => false,
+				'name' => tra('height'),
+				'description' => tra('Height in pixels'),
+				'default' => 350,
+			),
+			'quality' => array(
+				'required' => false,
+				'name' => tra('quality'),
+				'description' => tra('quality'),
+				'default' => 'high',
+			),
 		),
 	);
 }

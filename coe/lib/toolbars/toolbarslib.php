@@ -818,8 +818,7 @@ class ToolbarHelptool extends Toolbar
 	{
 		$this->setLabel( tra('Wiki Help') )
 			->setIcon( 'pics/icons/help.png' )
-				->setWysiwygToken( 'help' )
-					->setType('Helptool');
+				->setType('Helptool');
 	} // }}}
 	
 	function getWikiHtml( $areaName ) // {{{

@@ -377,4 +377,4 @@
 {if $checkboxes_on eq 'y'}
 </form>
 {/if}
-{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
+{pagination_links cant=$cant step=$maxRecords offset=$offset clean=$clean}{/pagination_links}

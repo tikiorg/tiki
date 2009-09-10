@@ -73,14 +73,16 @@ if ($isvalid) {
 		} else {
 			$user = $_REQUEST['user'];
 			$_SESSION["$user_cookie_site"] = $user;
-			header('Location: tiki-information.php?msg=' . urlencode('Account validated successfully.'));
-			die;
 		}
 	}
-	$smarty->assign('msg', tra("Account validated successfully."));
-	$smarty->assign('mid', 'tiki-information.tpl');
-	$smarty->display("tiki.tpl");
-	die;
+	if (!empty($prefs['url_after_validation'])) {
+		header('Location: '.$prefs['url_after_validation']);
+	} else {
+		$smarty->assign('msg', tra("Account validated successfully."));
+		$smarty->assign('mid', 'tiki-information.tpl');
+		$smarty->display("tiki.tpl");
+		die;
+	}
 } else {
 	if ($error == PASSWORD_INCORRECT) $error = tra("Invalid password");
 	else if ($error == USER_NOT_FOUND) $error = tra("Invalid username");

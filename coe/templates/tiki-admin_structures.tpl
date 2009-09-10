@@ -1,6 +1,10 @@
 {* $Id$ *}
 {title help="Structures"}{tr}Structures{/tr}{/title}
 
+{if $tiki_p_admin eq 'y'}
+	{button href='tiki-import_xml_zip.php' _text='{tr}XML Zip Import{/tr}'}
+{/if}
+
 {if $just_created neq 'n' && $tiki_p_edit_structures == 'y'}
 <br />
 {tr}The structure{/tr} <a class='tablename' href='tiki-edit_structure.php?page_ref_id={$just_created}'>{$just_created_name|escape}</a>&nbsp;&nbsp;<a class='link' href='tiki-index.php?page={$just_created_name|escape:"url"}' title="{tr}View{/tr}">{icon _id='magnifier' alt="{tr}View{/tr}"}</a>&nbsp;&nbsp;{tr}has just been created.{/tr}
@@ -10,9 +14,9 @@
 {if $askremove eq 'y'}
 <div class="simplebox highlight">
 {tr}You will remove structure{/tr}: {$removename|escape}<br />
-<a class="link" href="tiki-admin_structures.php?rremove={$remove|escape:"url"}&amp;page={$removename|escape:"url"}">{tr}Destroy the structure leaving the wiki pages{/tr}</a>
+{button href="?rremove=$remove&amp;page=$removename" _text='{tr}Destroy the structure leaving the wiki pages{/tr}'}
 {if $tiki_p_remove == 'y'}
-<br /><a class="link" href="tiki-admin_structures.php?rremovex={$remove|escape:"url"}&amp;page={$removename|escape:"url"}">{tr}Destroy the structure and remove the pages{/tr}</a>
+{button href="?rremovex=$remove&amp;page=$removename" _text='{tr}Destroy the structure and remove the pages{/tr}'}
 </div>
 {/if}
 {/if}
@@ -83,7 +87,7 @@
   <a title="{tr}View WebHelp{/tr}" class="link" href="whelp/{$channels[ix].pageName}/index.html">{icon _id='book_open' alt="{tr}View WebHelp{/tr}"}</a>
   {/if}
   {if $tiki_p_admin eq 'y'}
-    <a title="{tr}Xml Zip{/tr}" class="link" href="tiki-admin_structures.php?zip={$channels[ix].page_ref_id|escape:"url"}">{icon _id='pics/icons/mime/zip.png' alt="{tr}Xml Zip{/tr}"}</a>
+    <a title="{tr}XML Zip{/tr}" class="link" href="tiki-admin_structures.php?zip={$channels[ix].page_ref_id|escape:"url"}">{icon _id='pics/icons/mime/zip.png' alt="{tr}XML Zip{/tr}"}</a>
   {/if}
   </td>
 </tr>

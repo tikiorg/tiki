@@ -5371,6 +5371,9 @@ JQ
 			// Apply filters on values individually
 			if (!empty($args)) {
 				foreach( $args as $argKey => $argValue ) {
+					if (!isset($params[$argKey])) {
+						continue;// extra params
+					}
 					$paramInfo = $params[$argKey];
 					$filter = isset($paramInfo['filter']) ? TikiFilter::get($paramInfo['filter']) : $default;
 					$argValue = $this->htmldecode($argValue);
@@ -7971,6 +7974,26 @@ JS;
 			return explode( ',', $prefs['expanded_category_jail'] );
 		}
 	}
+
+	// Determine if the provided IP address is valid or not.
+	// Currently only supports IPV4.
+	function isValidIP($ip, $ver = 4) {
+		$result = false;
+	
+		$octets = split("\.", $ip);
+		if (count($octets) == 4) {
+			for ($c = 0; $c < 4; $c++) {
+				if ($octets[$c] < 0 || $octets[$c] > 255) {
+					$result = false;
+					break;
+				} else {
+					$result = true;
+				}
+			}
+		}
+
+		return $result;
+	}
 }
 // end of class ------------------------------------------------------
 
@@ -8130,6 +8153,7 @@ function validate_email($email,$checkserver='n') {
 		return true;
 	}
 }
+
 /* Editor configuration
 	 Local Variables:
 	 tab-width: 4

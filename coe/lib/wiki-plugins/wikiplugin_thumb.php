@@ -85,7 +85,7 @@ function wikiplugin_thumb($data, $params) {
 		$float = "none";
 	}
 	if (!isset($url)) {
-		$url = "javascript:void()";
+		$url = "javascript:void(0)";
 	}
 
 	if( isset($file) && !empty($file) ) {

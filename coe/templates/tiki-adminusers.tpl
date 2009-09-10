@@ -217,8 +217,11 @@
 									{/if}
 									<option value="assign_groups" >{tr}Manage Group Assignments{/tr}</option>
 									<option value="set_default_groups">{tr}Set Default Groups{/tr}</option>
-									<option value="emailChecked">{tr}Email{/tr}</option>
-								</select></label>
+									{if $prefs.feature_wiki == 'y'}
+										<option value="emailChecked">{tr}Send a wiki page by Email{/tr}</option>
+									{/if}
+								</select>
+								</label>
 								<input type="submit" value="{tr}OK{/tr}" />
 							{elseif $group_management_mode eq 'y'}
 								<select name="group_management">
@@ -342,7 +345,7 @@
 						<i>{tr}Tikiwiki is configured to delegate the password managment to LDAP through PEAR Auth.{/tr}</i>
 					</td>
 				</tr>
-			{elseif empty($userinfo) || $tiki_p_admin eq 'y' || $userinfo.login eq $user}
+			{elseif empty($userinfo) || $tiki_p_admin_users eq 'y' || $userinfo.login eq $user}
 				<tr class="formcolor">
 					<td><label for="pass1">{tr}Password{/tr}:</label></td>
 					<td>

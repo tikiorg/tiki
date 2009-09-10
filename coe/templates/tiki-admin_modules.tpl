@@ -5,7 +5,22 @@
 
 <div class="navbar">
 	{button href="tiki-admin_modules.php?clear_cache=1" _text="{tr}Clear Cache{/tr}"}
+	{if $tiki_p_edit_menu eq 'y'}
+		{button href="tiki-admin_menus.php" _text="{tr}Admin Menus{/tr}"}
+	{/if}
 </div>
+
+{if !empty($missing_params)}
+<div class="simplebox highlight">
+	{tr}The following required parameters are missing:{/tr}
+	<br/>
+	{section name=ix loop=$missing_params}
+		{$missing_params[ix]}
+		{if !$smarty.section.ix.last},&nbsp;{/if}
+	{/section}
+</div>
+<br />
+{/if}
 
 {tabset name='tabs_adminmodules'}
 
@@ -153,16 +168,18 @@
 					<input type="text" id="assign_cache" name="assign_cache" value="{$assign_cache|escape}" />
 				</td>
 			</tr>
-			<tr>
-				<td class="formcolor"><label for="assign_rows">{tr}Rows{/tr}</label></td>
-				<td class="formcolor">
-					<input type="text" id="assign_rows" name="assign_rows" value="{$assign_rows|escape}" />
-				</td>
-			</tr>
+			{if !isset($assign_info.type) or $assign_info.type neq 'function'}
+				<tr>
+						<td class="formcolor"><label for="assign_rows">{tr}Rows{/tr}</label></td>
+						<td class="formcolor">
+								<input type="text" id="assign_rows" name="assign_rows" value="{$assign_rows|escape}" />
+						</td>
+				</tr>
+			{/if}
 			{if isset($assign_info.type) and $assign_info.type eq 'function'}
 				{foreach from=$assign_info.params key=name item=param}
 					<tr>
-						<td class="formcolor"><label for="assign_params[{$name|escape}]">{$param.name|escape}</label></td>
+						<td class="formcolor"><label for="assign_params[{$name|escape}]">{$param.name|escape}{if $param.required} <span class="attention">({tr}required{/tr})</span>{/if}</label></td>
 						<td class="formcolor">
 							<input type="text" id="assign_params[{$name|escape}]" name="assign_params[{$name|escape}]" value="{$param.value|escape}"/>
 							<div class="description">

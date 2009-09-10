@@ -146,7 +146,7 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
         $this->obj->dom->load(dirname(__FILE__) . '/fixtures/mediawiki_sample.xml');
         $this->obj->downloadAttachments();
 
-        $this->expectOutputString("\n\nStarting to import attachments:\nFile test2.jpg sucessfully imported!\nFile test.jpg sucessfully imported!\n");
+        $this->expectOutputString("\n\nStarting to import attachments:\nFile test2.jpg successfully imported!\nFile test.jpg successfully imported!\n");
 
         $i = count($sourceAttachments) - 1;
         while ($i >= 0) {

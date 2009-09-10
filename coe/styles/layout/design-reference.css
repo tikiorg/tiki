@@ -474,6 +474,13 @@ p.editdate {
 	color: red;
 }
 
+/* mouseover plugin */
+
+.plugin-mouseover {
+	background-color: #F5F5F5;
+	border: 1px solid #bbb;
+}
+
 /* TOC */
 ul.toc {
 	padding-left: 2em;

@@ -26,6 +26,6 @@
 		</div>
 		<p>
 	{/if}
-	{include file='tiki-listpages_content.tpl'}
+	{include file='tiki-listpages_content.tpl' clean='n'}
 </div>
 
