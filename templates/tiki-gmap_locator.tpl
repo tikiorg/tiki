@@ -34,7 +34,6 @@
 {/if}
 
 <div id="map" style="width: 500px; height: 400px;border: 1px solid #000;"></div>
-</div>
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--
 function load() {literal}{{/literal}
