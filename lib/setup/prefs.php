@@ -230,7 +230,7 @@ function get_default_prefs() {
 		'wikiplugin_listpages' => 'n',
 		'wikiplugin_lsdir' => 'n',
 		'wikiplugin_map' => 'y',
-		'wikiplugin_mcalendar' => 'y',
+		'wikiplugin_mcalendar' => 'n',
 		'wikiplugin_mediaplayer' => 'y',
 		'wikiplugin_memberlist' => 'n',
 		'wikiplugin_miniquiz' => 'y',
