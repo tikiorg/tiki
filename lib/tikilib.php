@@ -5665,6 +5665,11 @@ class TikiLib extends TikiDb_Bridge {
 		return $list;
 	}
 
+	function approve_all_pending_plugins($fp) {
+	// Update all pending plugins to accept
+	$this->query("UPDATE tiki_plugin_security SET status='accept', approval_by='admin' WHERE status='pending'");  
+	}
+
 	function plugin_fingerprint( $name, $meta, $data, $args ) {
 		$validate = $meta['validate'];
 		if( $validate == 'all' || $validate == 'body' )

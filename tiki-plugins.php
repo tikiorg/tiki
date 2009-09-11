@@ -12,6 +12,10 @@ if (isset($_POST['clear']) && is_array($_POST['clear'])) {
 		$tikilib->plugin_clear_fingerprint($fp);
 	}
 }
+
+if (isset($_POST['approveall'])) {
+	$tikilib->approve_all_pending_plugins();
+}
 $smarty->assign('plugin_list', $tikilib->list_plugins_pending_approval());
 $smarty->assign('mid', 'tiki-plugins.tpl');
 $smarty->display("tiki.tpl");
