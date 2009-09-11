@@ -719,7 +719,6 @@ class TrackerLib extends TikiLib {
 					$ev = $exactvalue[$i];
 					$fv = $filtervalue[$i];
 				}
-
 				$filter = $this->get_tracker_field($ff);
 
 				$j = ( $i > 0 ) ? '0' : '';
@@ -777,6 +776,9 @@ class TrackerLib extends TikiLib {
 						}
 					}
 					$mid .= ')';
+				} elseif (empty($ev) && empty($fv)) { // test null value
+					$mid.= " AND ttif$i.`value`=? ";
+					$bindvars[] = $ev;
 				}
 			}
 		} else {
