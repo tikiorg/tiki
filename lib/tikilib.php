@@ -5674,9 +5674,14 @@ class TikiLib extends TikiDb_Bridge {
 		return $list;
 	}
 
-	function approve_all_pending_plugins($fp) {
+	function approve_all_pending_plugins() {
 	// Update all pending plugins to accept
 	$this->query("UPDATE tiki_plugin_security SET status='accept', approval_by='admin' WHERE status='pending'");  
+	}
+
+	function approve_selected_pending_plugings($fp) {
+	// Update selected pending plugins to accept
+	$this->query("UPDATE tiki_plugin_security SET status='accept', approval_by='admin' WHERE fingerprint = ?", array( $fp ));  
 	}
 
 	function plugin_fingerprint( $name, $meta, $data, $args ) {
