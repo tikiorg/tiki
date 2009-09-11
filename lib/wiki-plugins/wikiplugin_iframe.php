@@ -31,6 +31,12 @@ function wikiplugin_iframe_info() {
 				'name' => tra('Name'),
 				'description' => tra('name'),
 			),
+			'title' => array(
+				'safe' => true,
+				'required' => false,
+				'name' => tra('Title'),
+				'description' => tra('Frame title'),
+			),
 			'width' => array(
 				'safe' => true,
 				'required' => false,
@@ -89,6 +95,9 @@ function wikiplugin_iframe($data, $params) {
 
 	if (isset($name)) {
 		$ret .= " name=\"$name\"";
+	}
+	if (isset($title)) {
+		$ret .= " title=\"$title\"";
 	}
 	if (isset($width)) {
 		$ret .= " width=\"$width\"";
