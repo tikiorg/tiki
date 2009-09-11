@@ -2944,7 +2944,7 @@ class TikiLib extends TikiDb_Bridge {
 		return $ret;
 	}
 
-	function list_posts($offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '', $filterByBlogId = -1) {
+	function list_posts($offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '', $filterByBlogId = -1, $author='') {
 
 		$authorized_blogs = $this->list_blogs();
 		$permit_blogs = array();
@@ -2971,6 +2971,15 @@ class TikiLib extends TikiDb_Bridge {
 			}
 			$mid .= " ( `data` like ? ) ";
 			$bindvars[] = $findesc;
+		}
+		if (!empty($author)) {
+			if ($mid == '') {
+				$mid = ' where ';
+			} else {
+				$mid .= ' and ';
+			}
+			$mid .= 'user =?';
+			$bindvars[] = $author;
 		}
 
 		$query = "select * from `tiki_blog_posts` $mid order by ".$this->convertSortMode($sort_mode);
