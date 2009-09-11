@@ -757,8 +757,12 @@ function wikiplugin_tracker($data, $params) {
 				}
 				if (in_array($f['fieldId'],$outf)) {
 
+					if ($showmandatory == 'y' and $f['isMandatory'] == 'y') {
+						$onemandatory = true;
+					}
 					if (!empty($tpl) || !empty($wiki)) {
 						$smarty->assign_by_ref('field_value', $f);
+						$smarty->assign('showmandatory', $showmandatory);
 						$smarty->assign('f_'.$f['fieldId'], $smarty->fetch('tracker_item_field_input.tpl'));
 					} else {
 						if (in_array($f['fieldId'], $optional)) {
@@ -772,7 +776,6 @@ function wikiplugin_tracker($data, $params) {
 						$back .= ">".wikiplugin_tracker_name($f['fieldId'], $f['name'], $field_errors);
 						if ($showmandatory == 'y' and $f['isMandatory'] == 'y') {
 							$back.= "&nbsp;<strong class='mandatory_star'>*</strong>&nbsp;";
-							$onemandatory = true;
 						}
 						$back.= "</td><td>";
 						} else {
