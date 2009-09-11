@@ -26,7 +26,6 @@ $inputConfiguration = array( array(
 	'staticKeyFiltersForArrays' => array(
 		'checked' => 'alnum',
 	),
-	'catchAllUnset' => null,
 ) );
 
 // Initialization
