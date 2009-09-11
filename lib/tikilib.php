@@ -6696,7 +6696,7 @@ class TikiLib extends TikiDb_Bridge {
 				$line = '<hr />';
 			} else {
 				$litype = substr($line, 0, 1);
-				if ($litype == '*' || $litype == '#') {
+				if (($litype == '*' || $litype == '#') && !(!count($listbeg) && preg_match('/^\*+$/', $line))) {
 					// Close open paragraph, but not lists or div's
 					$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 0, 0);
 					$listlevel = $this->how_many_at_start($line, $litype);
