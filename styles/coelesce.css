@@ -1509,10 +1509,10 @@ div.code {
 	font-family: "Courier New", Courier, monospace;
 	padding: 10px;
 	background: #F5F5F5;
-	margin: 4px;
+	margin: 4px 0;
 	border: 1px dashed #696969;
-	overflow: auto; 
-	width: 95%}
+	overflow: auto;
+}
 
 .codecaption {
 	font-size: 90%;
