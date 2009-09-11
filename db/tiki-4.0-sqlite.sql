@@ -2459,6 +2459,7 @@ CREATE TABLE tiki_sent_newsletters (
   subject varchar(200) default NULL,
   data bytea,
   datatxt bytea,
+  wysiwyg char(1) default NULL,
   PRIMARY KEY (editionId)
 ) ENGINE=MyISAM ;
 
@@ -2817,8 +2818,10 @@ CREATE TABLE tiki_tracker_items (
   itemId INTEGER,
   trackerId bigint NOT NULL default '0',
   created bigint default NULL,
+  createdBy varchar(200) default NULL,
   status char(1) default NULL,
   lastModif bigint default NULL,
+  lastModifBy varchar(200) default NULL,
   PRIMARY KEY (itemId),
   "INDEX" trackerId (trackerId)
 ) ENGINE=MyISAM ;

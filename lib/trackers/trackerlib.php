@@ -1061,11 +1061,11 @@ class TrackerLib extends TikiLib {
 			$new_itemId = 0;
 			$oldStatus = $this->getOne("select `status` from `tiki_tracker_items` where `itemId`=?", array($itemId));
 			if ($status) {
-				$query = "update `tiki_tracker_items` set `status`=?,`lastModif`=? where `itemId`=?";
-				$result = $this->query($query,array($status,(int) $this->now,(int) $itemId));
+				$query = "update `tiki_tracker_items` set `status`=?,`lastModif`=?,`lastModifBy`=? where `itemId`=?";
+				$result = $this->query($query,array($status,(int) $this->now,$user,(int) $itemId));
 			} else {
-				$query = "update `tiki_tracker_items` set `lastModif`=? where `itemId`=?";
-				$result = $this->query($query,array((int) $this->now,(int) $itemId));
+				$query = "update `tiki_tracker_items` set `lastModif`=?, `lastModifBy`=? where `itemId`=?";
+				$result = $this->query($query,array((int) $this->now,$user,(int) $itemId));
 				$status = $oldStatus;
 			}
 		} else {
@@ -1073,8 +1073,8 @@ class TrackerLib extends TikiLib {
 				$status = $this->getOne("select `value` from `tiki_tracker_options` where `trackerId`=? and `name`=?",array((int) $trackerId,'newItemStatus'));
 			}
 			if (empty($status)) { $status = 'o'; }
-			$query = "insert into `tiki_tracker_items`(`trackerId`,`created`,`lastModif`,`status`) values(?,?,?,?)";
-			$result = $this->query($query,array((int) $trackerId,(int) $this->now,(int) $this->now,$status));
+			$query = "insert into `tiki_tracker_items`(`trackerId`,`created`,`createdBy`,`lastModif`,`lastModifBy`,`status`) values(?,?,?,?,?,?)";
+			$result = $this->query($query,array((int) $trackerId,(int) $this->now,$user,(int) $this->now,$user,$status));
 			$new_itemId = $this->getOne("select max(`itemId`) from `tiki_tracker_items` where `created`=? and `trackerId`=?",array((int) $this->now,(int) $trackerId));
 		}
 

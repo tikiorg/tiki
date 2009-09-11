@@ -120,8 +120,18 @@
 	{/if}
   {/if}
 {/foreach}
-{if $tracker_info.showCreatedView eq 'y'}<tr class="formcolor"><td class="formlabel">{tr}Created{/tr}</td><td colspan="3" class="formcontent">{$info.created|tiki_long_datetime}</td></tr>{/if}
-{if $tracker_info.showLastModifView eq 'y'}<tr class="formcolor"><td class="formlabel">{tr}LastModif{/tr}</td><td colspan="3" class="formcontent">{$info.lastModif|tiki_long_datetime}</td></tr>{/if}
+{if $tracker_info.showCreatedView eq 'y'}
+	<tr class="formcolor">
+		<td class="formlabel">{tr}Created{/tr}</td>
+		<td colspan="3" class="formcontent">{$info.created|tiki_long_datetime}{if $tracker_info.showCreatedBy eq 'y'}<br>by {if empty($info.createdBy)}Unknown{else}{$info.createdBy}{/if}{/if}</td>
+	</tr>
+{/if}
+{if $tracker_info.showLastModifView eq 'y'}
+	<tr class="formcolor">
+		<td class="formlabel">{tr}LastModif{/tr}</td>
+		<td colspan="3" class="formcontent">{$info.lastModif|tiki_long_datetime}{if $tracker_info.showLastModifBy eq 'y'}<br>by {if empty($info.lastModifBy)}Unknown{else}{$info.lastModifBy}{/if}{/if}</td>
+	</tr>
+{/if}
 </table>
 {/tab}
 
