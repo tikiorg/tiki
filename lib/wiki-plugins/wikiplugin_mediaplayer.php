@@ -59,7 +59,8 @@ function wikiplugin_mediaplayer($data, $params) {
 	}
 	$code = '<object type="application/x-shockwave-flash" data="'.$params['where'].$player.'" width="'.$params['width'].'" height="'.$params['height'].'">';
 	$code .= '<param name="movie" value="'.$params['where'].$player.'" />';
-	$code .= '<param name="FlashVars" value="mp3='.$params['mp3'].'" />';
+	if (empty($params['flv']) && !empty($params['mp3'])) 
+		$code .= '<param name="FlashVars" value="mp3='.$params['mp3'].'" />';
 	unset($params['width']); unset($params['height']); unset($params['where']); unset($params['player']);unset($params['mp3']); unset($params['style']);
 	foreach ($params as $key=>$value) {
 		$code .= '<param name="FlashVars" value="'.$key.'='.$value.'" />';
