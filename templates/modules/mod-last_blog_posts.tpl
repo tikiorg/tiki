@@ -13,7 +13,7 @@
 	{if $module_params.nonums neq 'y'}<ol>{else}<ul>{/if}
 		{section name=ix loop=$modLastBlogPosts}
 			<li>
-				<a class="linkmodule" href="{$modLastBlogPosts[ix].postId|sefurl:blogpost}" title="{$modLastBlogPosts[ix].created|tiki_short_datetime}, {tr}by{/tr} {if $modLastBlogPosts[ix].user ne ''}{$modLastBlogPosts[ix].user}{else}{tr}Anonymous{/tr}{/if}">
+				<a class="linkmodule" href="{$modLastBlogPosts[ix].postId|sefurl:blogpost}" title="{$modLastBlogPosts[ix].created|tiki_short_datetime}, {tr}by{/tr} {if $modLastBlogPosts[ix].user ne ''}{$modLastBlogPosts[ix].user|username}{else}{tr}Anonymous{/tr}{/if}">
 					{if $module_params.blogid eq ''}{$modLastBlogPosts[ix].blogTitle}: {/if}
 					{$modLastBlogPosts[ix].title}
 					{if $module_params.nodate neq 'y'}
