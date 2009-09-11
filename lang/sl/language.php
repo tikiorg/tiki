@@ -5057,7 +5057,6 @@ $lang=Array(
 "Upload File" => "Naloži datoteko",
 // "File Galleries tpl" => "File Galleries tpl",
 // "Be carefull to set the right permissions on the files you link to" => "Be carefull to set the right permissions on the files you link to",
-// "Be careful to set the right permissions on the files you link to" => "Be carefull to set the right permissions on the files you link to",
 "Browse Gallery" => "Prebrskaj galerijo",
 "Create New File Gallery" => "Ustvari novo galerijo datotek",
 "You can access the file gallery using the following URL" => "Lahko dostopš do galerije datotek z uporabo sledečega URL",
