@@ -16,8 +16,9 @@
 				<th>{select_all checkbox_names='clear[]'}</th>
 				<th>{tr}Plugin{/tr} </th>
 				<th>{tr}Location{/tr} </th>
+				<th>{tr}Actions{/tr} </th>
 			</tr>
-{foreach from=$plugin_list item=plugin}
+{foreach name=foo from=$plugin_list item=plugin}
 			<tr class="{cycle}">
 				<td style="text-align:center"><input type="checkbox" name="clear[]" value="{$plugin.fingerprint|escape}" id="{$plugin.fingerprint|escape}"/></td>
 				<td><label for="{$plugin.fingerprint|escape}"><strong>{$plugin.fingerprint|substring:0:20|escape|replace:"-":"</strong> <br />{tr}Signature{/tr}: "}...</label>
@@ -27,6 +28,12 @@
 					{tr}Unknown{/tr}
 					{/if}
 				</td>
+				<td>
+					<a href="tiki-plugins.php?approveone={$plugin.fingerprint}">{icon _id='accept' alt='{tr}Approve{/tr}'}</a>
+					<a href="tiki-plugins.php?clearone={$plugin.fingerprint}">{icon _id='delete' alt='{tr}Clear{/tr}'}</a>
+{if $plugin.last_objectType eq 'wiki page'}
+{tr 0=$plugin.last_objectId|sefurl:'wiki page' 1=$plugin.last_objectId|escape }<a href="%0#{$plugin.fingerprint}" title="{tr}View this page{/tr}.">{icon _id='page'}</a>{/tr}	
+{/if}	
 {/foreach}
 			</tr>
 		</table>

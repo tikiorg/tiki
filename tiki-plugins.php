@@ -21,6 +21,18 @@ if (($_POST['submit_mult'] == 'approve') & is_array($_POST['clear'])) {
 	}
 }
 
+if (isset($_REQUEST['approveone'])) {
+	$tikilib->approve_selected_pending_plugings($_REQUEST['approveone']);
+}
+
+if (isset($_REQUEST['clearone'])) {
+	$tikilib->plugin_clear_fingerprint($_REQUEST['clearone']);
+}
+
+
+
+
+
 if (isset($_POST['approveall'])) {
 	$tikilib->approve_all_pending_plugins();
 }
