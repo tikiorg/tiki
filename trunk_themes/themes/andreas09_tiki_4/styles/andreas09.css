@@ -274,9 +274,32 @@ ul, ol {text-align: left}
 
 /****** Menus, Links ******/
 /** CSS (suckerfish) menus **/
-.cssmenu li ul,
-.cssmenu_horiz li ul,
-.cssmenu_vert li ul {background: 0}
+
+/* left column width */
+#col2 .cssmenu_vert,
+#col2 .cssmenu_vert li {
+	width: 160px;
+}
+
+/* offset from left column (matches above) */
+#col2 .cssmenu_vert li:hover ul,
+#col2 .cssmenu_vert li.sfHover ul {
+	left: 160px;
+}
+
+/* return ul ul ... to default */
+#col2 .cssmenu_vert li:hover ul,
+#col2 .cssmenu_vert li.sfHover ul,
+#col2 .cssmenu_vert li:hover ul li,
+#col2 .cssmenu_vert li.sfHover ul li {
+	width: 10em;
+}
+
+/* return ul ul ... to default */
+#col2 .cssmenu_vert li li:hover ul,
+#col2 .cssmenu_vert li li.sfHover ul {
+	left: 10em;
+}
 
 .cssmenu_horiz li ul li a,
 .cssmenu_vert li a  {
@@ -287,11 +310,10 @@ ul, ol {text-align: left}
 	text-transform: uppercase;
 	padding: 6px 4px}
 	
-/*.cssmenu_horiz li ul li {margin-top: 3px}*/
+.cssmenu_horiz li ul li {margin-top: 4px}
 #tiki-top .cssmenu_horiz li ul li a {padding: 4px 4px}
 
 .cssmenu_vert li {padding-bottom: 4px}
-.cssmenu_vert li a ul {border: 0}
 
 .cssmenu_horiz li ul li a:hover,
 .cssmenu_vert li a:hover {
@@ -300,31 +322,65 @@ ul, ol {text-align: left}
 	color: #303030;
 	text-decoration: none}
 
-.sf-sub-indicator {background: url(andreas09/arrows-000.png) no-repeat -10px -100px}
-li.menuSection a .sf-sub-indicator {top: 1.3em}
-#tiki-top > .cssmenu_horiz > li {margin-top: 2px}
+#tiki-top > .cssmenu_horiz > li {
+	margin-top: 2px;
+}
 
 #tiki-top .cssmenu_horiz li a {
 	border-right: 1px solid #b0b0b0;
 	color: #606060;
-	display: block;
 	font-size: 10px;
 	padding: 12px 10px;
-	text-transform: uppercase}
+	text-transform: uppercase;
+}
 	
-#tiki-top .cssmenu_horiz li.menuSection a {padding-right: 20px}
-#tiki-top .cssmenu_horiz li.menuSection a ul li a {padding-right: 10px}
+#tiki-top .cssmenu_horiz li.menuSection a {
+	padding-right: 20px;
+}
+
+#tiki-top .cssmenu_horiz li.menuSection a ul li a {
+	padding-right: 10px;
+}
+
+#tiki-top .cssmenu_horiz li ul li a {
+	padding: 6px 1em;
+}
+
 #tiki-top .cssmenu_horiz li a:hover {
 	background: url(andreas09/options/black/menuhover.jpg);
-	text-decoration: none}
+	text-decoration: none;
+}
 
-#tiki-top .cssmenu_horiz li.menuSection a .sf-sub-indicator {top: 1.8em}
-#tiki-top .cssmenu_horiz li.menuSection ul li.menuSection a .sf-sub-indicator {top: 1.0em}
+#tiki-top .cssmenu_horiz li ul {
+	top: 40px;
+}
 
-#tiki-top .cssmenu_horiz li ul {padding-top: 2px}
+#tiki-top .cssmenu_horiz li ul li ul {
+	top: 4px;;
+}
+
+#tiki-top .cssmenu_horiz li ul li:first-child {
+	margin-top: -4px;
+}
 
 * html .cssmenu_horiz li ul li {margin-top: 0}
 * html .cssmenu_vert li ul li {padding-bottom: 0}
+
+.sf-sub-indicator {
+	background: url(andreas09/arrows-000.png) no-repeat -10px -100px;
+}
+
+a .sf-sub-indicator {
+	top: .7em;
+}
+
+#tiki-top .cssmenu_horiz li a .sf-sub-indicator {
+	top: 1.3em;
+}
+
+#tiki-top .cssmenu_horiz li ul li a .sf-sub-indicator {
+	top: .6em;
+}
 
 /** PHP Layers Menus **/
 .horbar {

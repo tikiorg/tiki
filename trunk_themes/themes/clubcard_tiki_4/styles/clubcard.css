@@ -264,6 +264,24 @@ input[type=submit]:hover,
 /****** Menus, Links ******/
 /** CSS (suckerfish) menus and PHPL menus **/
 
+.cssmenu_horiz a,
+.cssmenu_vert a {
+	padding: .35em 1em;
+	text-decoration: none;
+}
+
+/* less padding so move ul ul up */
+#tiki-top ul.cssmenu_horiz li:hover ul,
+#tiki-top ul.cssmenu_horiz li.sfHover ul {
+	top: 4.2em;
+}
+
+/* but not ul ul ul */
+#tiki-top ul.cssmenu_horiz li li:hover ul,
+#tiki-top ul.cssmenu_horiz li li.sfHover ul {
+	top: 0;
+}
+
 #tiki-top ul.cssmenu_horiz li.menuLevel0 a,
 .horbar a {
 	display: block;
@@ -310,37 +328,16 @@ input[type=submit]:hover,
 	border: 1px dashed #678b1d;
 }
 
+/* special arrows and arrow top padding */
 #tiki-top .cssmenu_horiz li.menuSection a .sf-sub-indicator {top: 1.8em}
 #tiki-top .cssmenu_horiz li.menuSection ul li a .sf-sub-indicator {top: 1em}
+
+a > .sf-sub-indicator {
+	top: .4em;
+}
+
 /** PHP Layers Menus **/
-#menu ul {
-	margin: 0;
-	padding: 0;
-	list-style: none;
-}
 
-#menu li {
-	float: left;
-	height: 50px;
-}
-
-#menu a {
-	display: block;
-	padding: 10px 20px 0px 20px;
-	background: url(images/img03.jpg) no-repeat right 18px;
-	text-decoration: none;
-	text-transform: uppercase;
-	font-size: 11px;
-	color: #FFFFFF;
-}
-
-#menu a:hover { 
-	color: #FFFFFF;
-}
-
-#menu .current_page_item a {
-	color: #FFFFFF;
-}
 
 /** Links in other menus **/
 .separator,

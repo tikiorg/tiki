@@ -8,14 +8,6 @@
 	for more information. Released under GPL license.
 	Please respect the request of the original author and display
 	the Demus Design credit/link in the page footer.
- 
-	faulkner.css is comprised of these sections:
-	XHTML elements, Siteheader & Identity; Menus, Links;
-	Misc. Center Col.; Misc. Global; Boxes; Tables, Tabs;
-	Wiki (inc. plugins, etc.); Articles; Blogs; Forums;
-	Galleries; Trackers; Categories, Tags; Polls; FAQs;
-	Quizzes;	Shoutbox; Directory; Messages; TikiSheets;
-	Calendar; Admin; and Ajax, jquery, etc.
 */
  
 /* Import the default layout properties file: */
@@ -340,21 +332,12 @@ input[id="sl-login-pass"] {font-size: 90%}
 	padding: 0 0 14px 0}
 	
 .cssmenu_vert li ul {
-	margin-left: 11.05em !important;
-	margin-top: -1.35em;
 	padding-bottom: 1px}
 
 .cssmenu_horiz li,
 .cssmenu_vert li ul li,
 .cssmenu li {background: url(faulkner/parchment.jpg)}
 	
-.cssmenu_horiz li:hover > a,
-.cssmenu_vert li:hover > a,
-.cssmenu li:hover > a {
-	background: #ECCAA3 url(faulkner/menu.gif) no-repeat -360px 50%;
-	color: #880000}
-
-.cssmenu a,	
 .cssmenu_horiz a,
 .cssmenu_vert a {
 	display: block;
@@ -365,8 +348,16 @@ input[id="sl-login-pass"] {font-size: 90%}
 	text-decoration: none}
 	
 .cssmenu_vert a:link,
-.cssmenu_vert a:visited {color: #660000}
-
+.cssmenu_vert a:visited {
+	color: #660000;
+}
+	
+.cssmenu_horiz a:hover,
+.cssmenu_vert a:hover {
+	background: #ECCAA3 url(faulkner/menu.gif) no-repeat -360px 50%;
+	color: #880000;
+}
+	
 .cssmenu_vert a:hover {
 	color: #880000;
 	text-decoration: none}
@@ -387,7 +378,45 @@ input[id="sl-login-pass"] {font-size: 90%}
 	text-decoration: none;
 	background: url(faulkner/menuhover.jpg) repeat-x bottom left}
 
-.sf-sub-indicator {background: url(faulkner/arrows-600.png) no-repeat -10px -100px; /* 8-bit indexed alpha png. IE6 gets solid image only; */}
+/* left column width */
+td#leftcolumn .cssmenu_vert,
+td#leftcolumn .cssmenu_vert li {
+	width: 170px;
+}
+
+/* offset from left column (matches above) */
+td#leftcolumn .cssmenu_vert li:hover ul,
+td#leftcolumn .cssmenu_vert li.sfHover ul {
+	left: 170px;
+}
+
+/* return ul ul ... to default */
+td#leftcolumn .cssmenu_vert li:hover ul,
+td#leftcolumn .cssmenu_vert li.sfHover ul,
+td#leftcolumn .cssmenu_vert li:hover ul li,
+td#leftcolumn .cssmenu_vert li.sfHover ul li {
+	width: 10em;
+}
+
+/* return ul ul ... to default */
+td#leftcolumn .cssmenu_vert li li:hover ul,
+td#leftcolumn .cssmenu_vert li li.sfHover ul {
+	left: 10em;
+}
+	
+a .sf-sub-indicator {
+	background: url(faulkner/arrows-600.png) no-repeat -10px -100px;
+	top: .5em;
+}
+
+#tiki-top .cssmenu_horiz li a .sf-sub-indicator {
+	top: 0.7em;
+}
+
+#tiki-top .cssmenu_horiz li ul li a .sf-sub-indicator {
+	top: .5em;
+}
+
 
 /** PHP Layers Menus **/
 .horbar {

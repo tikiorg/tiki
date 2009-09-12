@@ -274,51 +274,63 @@ div#sitead {margin: auto}
 
 /****** Menus, Links ******/
 /** CSS (suckerfish) menus **/
-.cssmenu ul,
-.cssmenu_vert li ul,
-.cssmenu_horiz li ul {
-	border: 1px solid #696969;
+
+.cssmenu_vert li,
+.cssmenu_horiz li {
+	padding: .5em 1em;
 }
-	
-.cssmenu_vert li ul {
-	margin-left: 11.05em;
-	margin-top: -1.35em;
-	padding-bottom: 1px;
-	border: 1px solid #333}
-	
-.cssmenu ul li,
+
 .cssmenu_vert li ul li,
 .cssmenu_horiz li ul li {
-	background: #313131}
+	border: 1px solid #313131;
+	background: #000;
+	margin-bottom: -1px;
+}
+	
+.cssmenu_vert li ul li:first-child {
+	border-top: 1px solid #313131;
+}
 
-.cssmenu a, .cssmenu .menuSection {border: 0}
-.cssmenu_vert li a {padding: 3px 6px}
-.cssmenu_vert li a {
-	font-weight: normal;
-	text-decoration: none;
-	background: #030511;
-	border: 0} 
-	
-.cssmenu_vert ul a:hover {
-	color: #f4f4f4;
-	text-decoration: none;
-	background: #030511}
-	
-.cssmenu a,	
-.cssmenu_horiz a,
-.cssmenu_vert a {
-	text-decoration: none;
-	display: block;
-	text-decoration: none;
-	padding: 3px 0 3px 6px;
-	color: #fd0006}
-	
-.cssmenu a:hover,	
-.cssmenu_horiz a:hover,
-.cssmenu_vert a:hover {
-	color: #f4f4f4;
-	text-decoration: underline;
-	background: #030511}
+/* for wider menu in left col */
+#col2 ul.cssmenu_vert {
+	padding-left: 0;
+}
+
+#col2 .cssmenu_vert,
+#col2 .cssmenu_vert li {
+	width: 175px;
+}
+
+#col2 .cssmenu_vert li:hover ul,
+#col2 .cssmenu_vert li.sfHover ul {
+	left: 175px;
+}
+
+#col2 .cssmenu_vert ul,
+#col2 .cssmenu_vert ul li {
+	width: 11em;
+}
+
+/* back to default */
+#col2 .cssmenu_vert li li:hover ul,
+#col2 .cssmenu_vert li li.sfHover ul {
+	left: 11em;
+}
+
+/* ul ul top compensation for padding */
+#header .cssmenu_horiz li:hover ul,
+#header .cssmenu_horiz li.sfHover ul {
+	top: 2.25em;
+}
+
+#header .cssmenu_horiz li li:hover ul,
+#header .cssmenu_horiz li li.sfHover ul {
+	top: 0;
+}
+
+a .sf-sub-indicator {
+	top: .2em;
+}
 
 /** PHP Layers Menus **/
 .horbar {width: 100%} 

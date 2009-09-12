@@ -1,14 +1,6 @@
 /* Greenblog stylesheet template (greenblog.css) for Tikiwiki CMS/Groupware.
 	Compatible with Tiki version 3. 
 	Visit http://themes.tikiwiki.org for more information.
-
-	Theme CSS is comprised of these sections:
-	XHTML elements, Siteheader & Identity; Menus, Links;
-	Misc. Center Col.; Misc. Global; Boxes; Tables, Tabs;
-	Wiki (inc. plugins, etc.); Articles; Blogs; Forums;
-	Galleries; Trackers; Categories, Tags; Polls; FAQs;
-	Quizzes;	Shoutbox; Directory; Messages; TikiSheets;
-	Calendar; Admin; and Ajax, jquery, etc.
 */
  
 /* Import layout foundation CSS file. */
@@ -16,7 +8,7 @@
 @import "lite/lite.css";
 
 /* Then import the default layout properties file: */
- @import "layout/layout-only.css";
+ @import "layout/layout.css";
 
 /* And design defaults: */
 @import "layout/design.css";
@@ -213,11 +205,11 @@ span.highlight {background: inherit; border: 1px solid yellow}
 
 /***** Site Header & Identity *****/
 #tiki-top {
-	height: 59px;	
+	height: 59px;
 	margin: 0 auto;
 	padding: 0 0 0 30px;
 	color: #fff;
-	background:  url(greenblog/menu_panel_bg.jpg) no-repeat}
+	background:  url(greenblog/menu_panel_bg.jpg) no-repeat 0 100%;}
 
 #sitesearchbar {
 	margin-top: 3px;
@@ -243,10 +235,94 @@ span.highlight {background: inherit; border: 1px solid yellow}
 
 #tiki-top .horbar {padding-top: 18px}
 
+/* default link padding */
+.cssmenu_horiz a,
+.cssmenu_vert a {
+	padding: .75em 1em;
+}
+
+#tiki-top .cssmenu_horiz li a {
+	padding: 14px 1em;
+	font-size: 12px;
+	font-weight: bold;
+	text-decoration: none;
+	color: #fbe270;
+	border-right: 1px solid #5f3b11}
+	
+#tiki-top .cssmenu_horiz li.menuSection0 a {
+	padding-right: 2.5em;
+}
+
+#tiki-top .cssmenu_horiz li a:hover {
+	color: #fff;
+	text-decoration: none;
+}
+/* ul ul top compensation for padding */
+.cssmenu_horiz li:hover ul,
+.cssmenu_horiz li.sfHover ul {
+	top: 4.2em;
+}
+
+#tiki-top .cssmenu_horiz li ul li a:hover {
+	text-decoration: underline;
+	color: #ffff00;
+}
+
+#tiki-top .cssmenu_horiz li ul li a {
+	padding: .5em 1em;
+	border-right: 0;
+}
+
+.cssmenu_horiz li.selected > a:link,
+.cssmenu_vert li.selected > a:link,
+.cssmenu_horiz li.selected > a:visited,
+.cssmenu_vert li.selected > a:visited {color: #fff}
+
+.cssmenu li ul,
+.cssmenu_horiz li ul,
+.cssmenu_vert li ul,
+.mdksubframe {
+	background: #0b0c04 url(greenblog/right_section_bg.jpg) top center no-repeat !important;	
+	border: 1px solid #5f3b11}
+
+/* left column width */
+#col2 .cssmenu_vert,
+#col2 .cssmenu_vert li {
+	width: 170px;
+}
+
+/* offset from left column (matches above) */
+#col2 .cssmenu_vert li:hover ul,
+#col2 .cssmenu_vert li.sfHover ul {
+	left: 170px;
+}
+
+/* return ul ul ... to default */
+#col2 .cssmenu_vert li:hover ul,
+#col2 .cssmenu_vert li.sfHover ul,
+#col2 .cssmenu_vert li:hover ul li,
+#col2 .cssmenu_vert li.sfHover ul li {
+	width: 10em;
+}
+
+/* return ul ul ... to default */
+#col2 .cssmenu_vert li li:hover ul,
+#col2 .cssmenu_vert li li.sfHover ul {
+	left: 10.5em;
+}
+	
+#tiki-top .cssmenu_horiz {
+	margin-left: 30px;
+	margin-right: 80px;
+	padding-top: 8px;
+}
+	
+#tiki-top .cssmenu_horiz li.menuSection a .sf-sub-indicator {top: 1.4em}
+#tiki-top .cssmenu_horiz li ul li.menuSection a .sf-sub-indicator {top: .8em}
+
 .horbaritem a,
 .horbaritem a:link,
-.horbaritem a:visited,
-#tiki-top .cssmenu_horiz > li > a {
+.horbaritem a:visited {
 	width: 110px;
 	padding: 14px 0;
 	margin-right: 5px;
@@ -257,29 +333,6 @@ span.highlight {background: inherit; border: 1px solid yellow}
 	color: #fbe270;
 	border-right: 1px solid #5f3b11}
 
-.cssmenu_horiz li.selected > a:link,
-.cssmenu_vert li.selected > a:link,
-.cssmenu_horiz li.selected > a:visited,
-.cssmenu_vert li.selected > a:visited {color: #fff !important}
-
-ul.cssmenu li ul,
-ul.cssmenu_horiz li ul,
-ul.cssmenu_vert li ul,
-.mdksubframe {
-	background: #0b0c04 url(greenblog/right_section_bg.jpg) top center no-repeat !important;	
-	border: 1px solid #5f3b11}
-	
-#tiki-top .cssmenu_horiz {
-	margin-left: 30px;
-	margin-right: 80px;
-	padding-top: 17px}
-	
-#tiki-top .cssmenu_horiz li ul li ul { 
-	margin-left: 10em;
-	margin-top: -1em}
-	
-#tiki-top .cssmenu_horiz li.menuSection a .sf-sub-indicator {top: 1.4em}
-#tiki-top .cssmenu_horiz li ul li.menuSection a .sf-sub-indicator {top: .8em}
 
 /** Links in other menus **/
 .menuSection .linkmenu {padding-left: 20px}

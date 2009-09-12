@@ -242,28 +242,18 @@ input[name="search"] {
 /****** Menus, Links ******/
 /** CSS (suckerfish) menus **/
 
-.cssmenu,
-.cssmenu_horiz,
-.cssmenu_vert {background: #a7e6ff}
-
-.cssmenu_vert ul {
-	margin-left: 10.9em !important;
-	/*background: none !important;*/
-}
-
+/* typography, colors */
 .cssmenu_horiz li ul li,
 .cssmenu_vert li {
-	background-color: #A7E6FF;
+	background-color: #a7e6ff;
 }
 
 .cssmenu_vert li a   {
-	position: relative;
-	display: block;
-	background: #A7E6FF;
+	background: #a7e6ff;
 	color: #0076A3;
 	text-decoration: none;
 	padding: 5px 30px 5px 10px;
-	border-bottom: 1px solid #FFCCE2}
+	border-bottom: 1px solid #ffcce2}
 
 .cssmenu_vert li.selected > a {
 	background: #FFCCE2 url(candiiclouds/star.gif) no-repeat;
@@ -273,11 +263,50 @@ input[name="search"] {
 	padding-right: 10px}
 	
 .cssmenu_vert li a:hover  {
-	background: #FFCCE2 url(candiiclouds/star.gif) no-repeat;
+	background: #ffcce2 url(candiiclouds/star.gif) no-repeat;
 	background-position: 7px center;
 	color: #f06ea9;
 	padding-left: 30px;
 	padding-right: 10px}
+	
+/* default link padding */
+.cssmenu_horiz a,
+.cssmenu_vert a {
+	padding: 5px 30px 5px 10px;
+}
+
+/* ul ul top compensation for padding */
+.cssmenu_horiz li:hover ul,
+.cssmenu_horiz li.sfHover ul {
+	top: 2em;
+}
+	
+/* left column width */
+td#leftcolumn .cssmenu_vert,
+td#leftcolumn .cssmenu_vert li {
+	width: 170px;
+}
+
+/* offset from left column (matches above) */
+td#leftcolumn .cssmenu_vert li:hover ul,
+td#leftcolumn .cssmenu_vert li.sfHover ul {
+	left: 170px;
+}
+
+/* return ul ul ... to default */
+td#leftcolumn .cssmenu_vert li:hover ul,
+td#leftcolumn .cssmenu_vert li.sfHover ul,
+td#leftcolumn .cssmenu_vert li:hover ul li,
+td#leftcolumn .cssmenu_vert li.sfHover ul li {
+	width: 10em;
+}
+
+/* return ul ul ... to default */
+td#leftcolumn .cssmenu_vert li li:hover ul,
+td#leftcolumn .cssmenu_vert li li.sfHover ul {
+	left: 10em;
+}
+
 
 .sf-sub-indicator {background: url(candiiclouds/arrows-00adef.png) no-repeat -10px -100px; /* 8-bit indexed alpha png. IE6 gets solid image only; */}
 

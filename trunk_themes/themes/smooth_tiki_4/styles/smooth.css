@@ -5,14 +5,6 @@
 	to Free CSS Templates in the footer.
 	For more information on the Tiki implementation of this theme, please
 	visit http://zukakakina.com or http://themes.tikiwiki.org. 
-
-	smooth.css is comprised of these sections:
-	XHTML elements, Siteheader & Identity; Menus, Links;
-	Misc. Center Col.; Misc. Global; Boxes; Tables, Tabs;
-	Wiki (inc. plugins, etc.); Articles; Blogs; Forums;
-	Galleries; Trackers; Categories, Tags; Polls; FAQs;
-	Quizzes;	Shoutbox; Directory; Messages; TikiSheets;
-	Calendar; Admin; and Ajax, jquery, etc.
 */
  
 /* Import layout foundation CSS file. */
@@ -264,6 +256,11 @@ select[name="where"] option {padding: 0}
 /****** Menus, Links ******/
 /** CSS (suckerfish) menus **/
 /*#header .cssmenu_horiz ul {text-align: left}*/
+/* default link padding */
+.cssmenu_horiz a,
+.cssmenu_vert a {
+	padding: .3em 1em;
+}
 
 .cssmenu_horiz ul li,
 .cssmenu_vert ul li {
@@ -272,31 +269,36 @@ select[name="where"] option {padding: 0}
 
 .cssmenu_vert li a {
 	font-weight: normal;
-	text-decoration: none} 
+	text-decoration: none}
+	
+#tiki-top .cssmenu_horiz li a {
+	border: 1px solid #e431d0;
+	border-bottom-color: #f4abec;
+	bottom: -2px;
+}
+
+#tiki-top .cssmenu_horiz li ul li a {
+	border: 0;
+}
 
 #tiki-top .cssmenu_horiz li.menuLevel0 a,
 #tiki-top .cssmenu_horiz li.menuLevel0 a:visited {
 	background: #fce7fa url(smooth/img02.gif) no-repeat;
 	color: #000;
-	display: block;
 	font-size: 14px !important;
 	font-weight: normal;
-	height: 30px;
+	padding-top: 13px;
+	padding-bottom: 13px;
 	margin-right: 4px;
-	padding-top: 10px;
-	padding-left: 14px;
-	padding-right: 14px;
 	text-align: center;
 	text-decoration: none;
 	white-space: nowrap}
 	
 #tiki-top .cssmenu_horiz li.menuLevel0 a:hover,
 #tiki-top .cssmenu_horiz li.selected a {
-	background: url(smooth/img03.gif) repeat-x;
+	background: #b2d48b url(smooth/img03.gif) repeat-x;
 	color: #000;
 	text-decoration: none}
-	
-#tiki-top .cssmenu_horiz li.menuSection0 a {padding-right: 20px !important}
 
 #tiki-top .cssmenu_horiz li.menuLevel1 a,
 #tiki-top .cssmenu_horiz li.menuLevel1 a:visited {
@@ -304,21 +306,36 @@ select[name="where"] option {padding: 0}
 	color: #3e9722;
 	font-size: 1em;
 	font-weight: normal;
-	height: auto;
-	padding: 3px 0 3px 6px;
-	background: none;
 	text-align: left;
-	white-space: normal}
+	bottom: 0;
+}
+/*
+#tiki-top .cssmenu_horiz li ul li a {
+	text-align: left;
+	bottom: 0;
+}
+*/
+/* ul ul top compensation for padding */
+.cssmenu_horiz li:hover ul,
+.cssmenu_horiz li.sfHover ul {
+	top: 3.2em;
+}
 
-#tiki-top .cssmenu_horiz li.menuLevel1,
-#tiki-top .cssmenu_horiz li ul li a {/*width: 11em*/}
+#tiki-top .cssmenu_horiz li ul li a .sf-sub-indicator {
+	top: 1em;
+}
 
-#tiki-top .cssmenu_horiz li ul {
+.cssmenu_horiz li ul li,
+.cssmenu_vert li ul li {
 	border: 1px solid #e431d0;
-	border-top: 1px solid #fff;
-	/*padding: 0 1px 1px 1px*/}
-	
-#tiki-top .cssmenu_horiz li ul li ul {border: 1px solid #e431d0}
+	border-top: 0;
+	margin-bottom: -1px
+}
+
+.cssmenu_horiz li ul li:first-child,
+.cssmenu_vert li ul li:first-child {
+	border-top: 1px solid #e431d0;
+}
 
 .cssmenu_vert li a:hover,
 #tiki-top .cssmenu_horiz li.menuSection0 ul li a:hover {
@@ -327,6 +344,51 @@ select[name="where"] option {padding: 0}
 	background: #fff url(smooth/img06.gif) repeat-x;
 } 
 
+/* left column width */
+#col2 ul.cssmenu_vert {
+	padding-left: 0;
+}
+
+#col2 .cssmenu_vert,
+#col2 .cssmenu_vert li {
+	width: 170px;
+}
+
+/* offset from left column (matches above) */
+#col2 .cssmenu_vert li:hover ul,
+#col2 .cssmenu_vert li.sfHover ul {
+	left: 160px;
+}
+
+/* return ul ul ... to default */
+#col2 .cssmenu_vert li:hover ul,
+#col2 .cssmenu_vert li.sfHover ul,
+#col2 .cssmenu_vert li:hover ul li,
+#col2 .cssmenu_vert li.sfHover ul li {
+	width: 10em;
+}
+
+/* return ul ul ... to default */
+#col2 .cssmenu_vert li li:hover ul,
+#col2 .cssmenu_vert li li.sfHover ul {
+	left: 10em;
+}
+
+a .sf-sub-indicator {
+	background-image: url(smooth/arrows-6700c8.png);
+}
+
+#tiki-top .cssmenu_horiz li a .sf-sub-indicator {
+	top: 1.1em;
+}
+
+#tiki-top .cssmenu_horiz li ul li a .sf-sub-indicator {
+	top: 1.1em;
+}
+
+.cssmenu_vert li a .sf-sub-indicator {
+	top: .4em;
+}
 /** PHP Layers Menus **/
 .horbar {} 
 

@@ -16,7 +16,7 @@
 @import "lite/lite.css";
 
 /* Then import the default layout properties file: */
- @import "layout/layout.css";
+@import "layout/layout.css";
 
 /* And design defaults: */
 @import "layout/design.css";
@@ -82,7 +82,7 @@ body {
 #squeeze .right-corner .left-corner {
   padding: 60px 25px 5em 35px;
   background: transparent url(judy/bg-content-left.png) no-repeat;
-  margin-right: 10px
+  margin-right: 10px;
   min-height: 400px;
 }
 
@@ -146,7 +146,7 @@ h6 {
 }
 
 legend {
-	color: 494949;
+	color: #494949;
 }
 
 quote, code, fieldset {
@@ -216,12 +216,12 @@ hr {
   height: 1px;
   background: #5294c1;
 }
-/*
+
+ol,
 ul {
-  margin: 0.5em 0 1em;
-  padding: 0;
+	list-style-position: inside;
 }
-*/
+
 ol {
   margin: 0.75em 0 1.25em;
   padding: 0;
@@ -296,10 +296,22 @@ ol li/*, ul li*/ {
 
 /****** Menus, Links ******/
 /** CSS (suckerfish) menus **/
+
+.cssmenu_horiz a,
+.cssmenu_vert a {
+	padding: .5em 1em;
+	text-decoration: none;
+}
+
 #header .cssmenu_horiz {
 	position: static;
 	float: right;
 	padding-top: 12px
+}
+
+.cssmenu_horiz li,
+.cssmenu_vert li ul li {
+	background: #fff url(judy/gradient-inner.png) repeat-x;
 }
 
 #tiki-top .cssmenu_horiz li {
@@ -318,17 +330,9 @@ ol li/*, ul li*/ {
 	padding-top: 10px;
 }
 
-#tiki-top .cssmenu_horiz li.menuLevel0:hover ul,
-.cssmenu li ul,
-.cssmenu_horiz li ul,
-.cssmenu_vert li ul {
-	border: 1px solid #ccc;
-	background: #fff url(judy/gradient-inner.png) repeat-x;
-}
-
-#tiki-top .cssmenu_horiz li.menuLevel0:hover ul li,
+#tiki-top .cssmenu_horiz li ul li,
 .cssmenu_vert li.menuLevel0:hover ul li  {
-	background: #fff !important;
+	background: #fff;
 }
 
 #tiki-top .cssmenu_horiz li ul li.menuLevel1 a,
@@ -338,31 +342,53 @@ ol li/*, ul li*/ {
 	padding-bottom: 0;*/
 }
 
-.cssmenu_horiz > li,
-.cssmenu_vert > li {
-	margin-top: 0;
-	margin-bottom: 0;
+#col2 .cssmenu_vert li ul li a:hover, 
+#tiki-top .cssmenu_horiz li ul li a:hover {
+	text-decoration: underline;
 }
 
-#col2 .cssmenu_vert > li {
+/* left column width */
+#col2 .cssmenu_vert {
+	padding-left: 0;
+}
+
+#col2 .cssmenu_vert,
+#col2 .cssmenu_vert li {
 	width: 192px;
-	padding: 0 !important}
-	
+}
+
+/* offset from left column (matches above) */
+#col2 .cssmenu_vert li:hover ul,
+#col2 .cssmenu_vert li.sfHover ul {
+	left: 192px;
+}
+
+/* return ul ul ... to default */
+#col2 .cssmenu_vert li:hover ul,
+#col2 .cssmenu_vert li.sfHover ul,
+#col2 .cssmenu_vert li:hover ul li,
+#col2 .cssmenu_vert li.sfHover ul li {
+	width: 10em;
+}
+
+/* return ul ul ... to default */
+#col2 .cssmenu_vert li li:hover ul,
+#col2 .cssmenu_vert li li.sfHover ul {
+	left: 10em;
+}
+
 #col2 .cssmenu_vert > li:hover {background: #97c0da}
-#col2 .cssmenu_vert li {padding: 0}
-.cssmenu_vert li ul {margin-left: 192px !important}
-.cssmenu_vert li ul li ul {margin-left: 10.9em !important;}
 
 .cssmenu_horiz ul .sf-sub-indicator,
 .cssmenu_vert .sf-sub-indicator {
 	background: url(coelesce/arrows-467aa7.png) no-repeat;
-
+}
 
 /** PHP Layers Menus **/
 .horbar table {
 	position: static;
 	float: right;
-	padding-top: 7px
+	padding-top: 7px;
 }
 
 .horbar table {
@@ -401,11 +427,12 @@ a.flip:hover {color: #027ac6;font-size: 90%}
 .highlight {
 	background: #6ac4fd;
 }
+
 /***** Boxes *****/
 /** Modules **/
 
 .box {
-	margin: 0 0 1.5em;
+	margin-bottom: 2em;
 }
 
 #col2 .box {

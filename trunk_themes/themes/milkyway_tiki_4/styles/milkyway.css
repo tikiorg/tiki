@@ -2,17 +2,8 @@
 	MilkyWay stylesheet (milkyway.css) for TikiWiki CMS/Groupware.
 	This is an implementation of the GPL Joomla theme by Rhuk.
 	
-	milkyway.css is comprised of these sections:
-	XHTML elements, Siteheader & Identity; Menus, Links;
-	Misc. Center Col.; Misc. Global; Boxes; Tables, Tabs;
-	Wiki (inc. plugins, etc.); Articles; Blogs; Forums;
-	Galleries; Trackers; Categories, Tags; Polls; FAQs;
-	Quizzes;	Shoutbox; Directory; Messages; TikiSheets;
-	Calendar; Admin; and Ajax, jquery, etc.
-*/
- 
 /* Import the default layout properties file: */
- @import "layout/layout.css";
+@import "layout/layout.css";
 
 /* And design defaults: */
 @import "layout/design.css";
@@ -364,14 +355,38 @@ td.pill_r {
 
 /** CSS (suckerfish) menus **/
 
-.cssmenu_horiz li:hover ul
-.cssmenu_vert li:hover ul {
-	border: 1px solid #dfdfdf;
+.cssmenu_vert li {
+	padding: .3em 1em;
 }
 
-.cssmenu_horiz li:hover ul li,	
-.cssmenu_vert li:hover ul li {
-	background: #f9f9f9 !important;
+/* left column width */
+td#leftcolumn ul.cssmenu_vert {
+	padding-left: 0;
+}
+
+td#leftcolumn .cssmenu_vert,
+td#leftcolumn .cssmenu_vert li {
+	width: 165px;
+}
+
+/* offset from left column (matches above) */
+td#leftcolumn .cssmenu_vert li:hover ul,
+td#leftcolumn .cssmenu_vert li.sfHover ul {
+	left: 170px;
+}
+
+/* return ul ul ... to default */
+td#leftcolumn .cssmenu_vert li:hover ul,
+td#leftcolumn .cssmenu_vert li.sfHover ul,
+td#leftcolumn .cssmenu_vert li:hover ul li,
+td#leftcolumn .cssmenu_vert li.sfHover ul li {
+	width: 10em;
+}
+
+/* return ul ul ... to default */
+td#leftcolumn .cssmenu_vert li li:hover ul,
+td#leftcolumn .cssmenu_vert li li.sfHover ul {
+	left: 10em;
 }
 
 .cssmenu_vert li a,
@@ -380,31 +395,82 @@ td.pill_r {
 	font-size: 12px;
 	font-weight: bold;
 	color: #000;
-	text-decoration: none} 
-
-.cssmenu_vert li a:hover {
-	background: black url(milkyway/options/white/mw_menu_active_bg.png) 0 0 repeat-x;
-	color: #fff;
 	text-decoration: none}
-	
-#tiki-top .cssmenu_horiz {text-align: left; margin-top: 1px}
-#tiki-top .cssmenu_horiz li a {padding: 6px 1em}
-#tiki-top .cssmenu_horiz ul li a {padding-top: 4px; padding-bottom: 4px}
-#tiki-top .cssmenu_horiz li {background: url(milkyway/mw_menu_separator.png) 100% 0 no-repeat}
-	
-#tiki-top .cssmenu_horiz li.menuSection a {padding-right: 2.6em}
-#tiki-top .cssmenu_horiz li.menuLevel0 a:hover {background: url(milkyway/options/white/mw_menu_active_bg.png) repeat-x}
 
-#col2 .cssmenu_vert > li > ul {
-	margin-left: 10.9em !important;
-	margin-top: -1.5em;
+.cssmenu_horiz li ul li,
+.cssmenu_vert li ul li {
+	border: 1px solid #dfdfdf;
+	background: #fff;
+	border-top: 0;
+	margin-bottom: -1px;
+}
+
+.cssmenu_horiz li ul li:first-child,
+.cssmenu_vert li ul li:first-child {
+	border-top: 1px solid #dfdfdf;
+}
+
+/* compensate for 1px border */
+.cssmenu_horiz li ul li ul,
+.cssmenu_vert li ul li ul {
+	top: -1px !important;
+}
+
+.cssmenu_vert li a {
+	font-weight: normal;
+	color: #135cae; 
+}
+
+#tiki-top .cssmenu_horiz {
+	text-align: left;
+	margin-top: 1px;
+}
+
+#tiki-top .cssmenu_horiz li ul li {
+	background: #fff;
+}
+
+#tiki-top .cssmenu_horiz li a {
+	padding: 6px 1em;
+}
+
+#tiki-top .cssmenu_horiz ul li a {
+	padding-top: 4px;
+	padding-bottom: 4px;
+}
+
+#tiki-top .cssmenu_horiz li.menuSection a {
+	padding-right: 2.6em;
+}
+
+#tiki-top .cssmenu_horiz li.menuLevel0:hover {
+	background: #fff url(milkyway/options/white/mw_menu_active_bg.png) repeat-x;
+}
+
+#tiki-top .cssmenu_horiz li.menuLevel0:hover {
+	background: #fff url(milkyway/options/white/mw_menu_active_bg.png) repeat-x;
+}
+
+#tiki-top .cssmenu_horiz li ul {
+	top: 2em;	
+}
+
+#tiki-top .cssmenu_horiz li ul li ul {
+	top: 0;	
 }
 
 .cssmenu_horiz .sf-sub-indicator,
 .cssmenu_vert .sf-sub-indicator {
-	background: url(milkyway/arrows-000.png) no-repeat -10px -100px;
+	background: url(milkyway/arrows-000000.png) no-repeat -10px -100px;
 }
 
+a .sf-sub-indicator {
+	top: .5em;
+}
+
+.cssmenu_vert li a .sf-sub-indicator {
+	top: .2em;
+}
 
 /*.cssmenu_horiz ul .sf-sub-indicator,
 .cssmenu_vert .sf-sub-indicator {
@@ -605,7 +671,7 @@ h3.box-title {
 	color: #000;
 	font-size: 1em}
 
-.box a.flipmodtitle img {display: 0}
+.box a.flipmodtitle img {display: none}
 
 * html .box a.flipmodtitle img,
 .box:hover a.flipmodtitle img {

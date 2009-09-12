@@ -2,18 +2,10 @@
 	contributed for downloading at http://themes.tikiwiki.org.
 	The Twist theme has been updated For TikiWiki version 2.0 and
 	committed to the Tiki Mods Subversion repository by Gary Cunningham-Lee (chibaguy). 
-
-	twist.css is comprised of these sections:
-	XHTML elements, Siteheader & Identity; Menus, Links;
-	Misc. Center Col.; Misc. Global; Boxes; Tables, Tabs;
-	Wiki (inc. plugins, etc.); Articles; Blogs; Forums;
-	Galleries; Trackers; Categories, Tags; Polls; FAQs;
-	Quizzes;	Shoutbox; Directory; Messages; TikiSheets;
-	Calendar; Admin; and Ajax, jquery, etc.
 */
- 
+
 /* Import the default layout properties file: */
- @import "layout/layout.css";
+@import "layout/layout.css";
 
 /* And design defaults: */
 @import "layout/design.css";
@@ -244,6 +236,14 @@ div#tiki-top {
 
 /****** Menus, Links ******/
 /** CSS (suckerfish) menus **/
+
+/* default link padding */
+.cssmenu_horiz a,
+.cssmenu_vert a {
+	padding: .25em 1em;
+}
+
+/* typography, colors */
 .cssmenu_horiz li a:hover,
 .cssmenu_horiz li.menuSection:hover {
 	color: #fff;
@@ -255,20 +255,14 @@ div#tiki-top {
 	color: #000;
 	background: #fefefe}
 
-.cssmenu_horiz ul,
-.cssmenu_vert ul {
-	border: #fdfefd 2px outset;
-}
-	
 .cssmenu_horiz ul li,
 .cssmenu_vert ul li {
-	background: #efefef	
+	border: #fdfefd 2px outset;
+	background: #efefef;
+	border-top: 0;
+	margin-bottom: -2px;
 }
 	
-.cssmenu_vert ul {
-	margin-left: 10.9em !important;
-}
-
 #tiki-top .cssmenu_horiz {
 	text-align: left;
 	color: black;
@@ -277,7 +271,42 @@ div#tiki-top {
 	background: #efefef;
 	white-space: nowrap}
 	
+#tiki-top .cssmenu_horiz li a {
+	padding-top: 7px;
+	padding-bottom: 7px;
+}
+	
+/* left column width */
+td#leftcolumn .cssmenu_vert,
+td#leftcolumn .cssmenu_vert li {
+	width: 146px;
+}
+
+/* offset from left column (matches above) */
+td#leftcolumn .cssmenu_vert li:hover ul,
+td#leftcolumn .cssmenu_vert li.sfHover ul {
+	left: 146px;
+}
+
+/* return ul ul ... to default */
+td#leftcolumn .cssmenu_vert li:hover ul,
+td#leftcolumn .cssmenu_vert li.sfHover ul,
+td#leftcolumn .cssmenu_vert li:hover ul li,
+td#leftcolumn .cssmenu_vert li.sfHover ul li {
+	width: 10em;
+}
+
+/* return ul ul ... to default */
+td#leftcolumn .cssmenu_vert li li:hover ul,
+td#leftcolumn .cssmenu_vert li li.sfHover ul {
+	left: 10em;
+}
+
 .sf-sub-indicator {background: url(twist/arrows-000.png) no-repeat -10px -100px; /* 8-bit indexed alpha png. IE6 gets solid image only; */}
+
+td#leftcolumn a .sf-sub-indicator {
+	top: .3em;
+}
 
 /** PHP Layers Menus **/
 .horbar table {

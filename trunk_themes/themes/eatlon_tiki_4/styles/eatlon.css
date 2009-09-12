@@ -5,14 +5,6 @@
 	does not support display:table, minimal HTML tables are needed for
 	graphic treatment and column integrity. For more information, please visit
 	http://themes.tikiwiki.org	or http://zukakakina.com.
- 
-	eatlon.css is comprised of these sections:
-	XHTML elements, Siteheader & Identity; Menus, Links;
-	Misc. Center Col.; Misc. Global; Boxes; Tables, Tabs;
-	Wiki (inc. plugins, etc.); Articles; Blogs; Forums;
-	Galleries; Trackers; Categories, Tags; Polls; FAQs;
-	Quizzes;	Shoutbox; Directory; Messages; TikiSheets;
-	Calendar; Admin; and Ajax, jquery, etc.
 */
  
 /* Import the default layout properties file: */
@@ -273,32 +265,74 @@ input#fuser,
 
 /****** Menus, Links ******/
 /** CSS (suckerfish) menus **/
+
+.cssmenu_horiz a,
+.cssmenu_vert a {
+	padding: 4px 9px;
+	text-decoration: none;
+}
+
+/* left column width */
+td#leftcolumn ul.cssmenu_vert {
+	padding-left: 0;
+}
+
+td#leftcolumn .cssmenu_vert,
+td#leftcolumn .cssmenu_vert li {
+	width: 170px;
+}
+
+/* offset from left column (matches above) */
+td#leftcolumn .cssmenu_vert li:hover ul,
+td#leftcolumn .cssmenu_vert li.sfHover ul {
+	left: 170px;
+}
+
+/* return ul ul ... to default */
+td#leftcolumn .cssmenu_vert li:hover ul,
+td#leftcolumn .cssmenu_vert li.sfHover ul,
+td#leftcolumn .cssmenu_vert li:hover ul li,
+td#leftcolumn .cssmenu_vert li.sfHover ul li {
+	width: 10em;
+}
+
+/* return ul ul ... to default */
+td#leftcolumn .cssmenu_vert li li:hover ul,
+td#leftcolumn .cssmenu_vert li li.sfHover ul {
+	left: 10em;
+}
+
 #tiki-top ul.cssmenu_horiz {margin-left: 30px}
 	
-#tiki-top ul.cssmenu_horiz li.menuSection0 a,
-#tiki-top ul.cssmenu_horiz li.menuLevel0 a {
-	padding-top: 12px;
-	padding-bottom: 12px;
+#tiki-top .cssmenu_horiz a {
+	padding: 12px 1em;
 	font-weight: bold;
 	color: #fff}
 	
-* html #tiki-top ul.cssmenu_horiz li.menuSection0 a,
-* html #tiki-top ul.cssmenu_horiz li.menuLevel0 a {
+#tiki-top .cssmenu_horiz li.menuSection0 a {
+	padding-right: 2.0em;
+}
+	
+* html #tiki-top .cssmenu_horiz li.menuSection0 a,
+* html #tiki-top .cssmenu_horiz li.menuLevel0 a {
 	border-bottom: none}
 	
-#tiki-top ul.cssmenu_horiz li.menuSection0 a:hover,
-ul.cssmenu_vert ul li a:link,
-ul.cssmenu_vert ul li a:visited {
-	color: #d7e5f3 !important;
+.cssmenu_horiz li a:hover,
+.cssmenu_vert ul li a:link,
+.cssmenu_vert ul li a:visited,
+#tiki-top .cssmenu_horiz li ul li a {
+	color: #fff;
 	text-decoration: none}
 
-#tiki-top ul.cssmenu_horiz li.menuLevel1 a {
+#tiki-top .cssmenu_horiz li.menuLevel1 a {
 	font-weight: normal;
 	padding-top: 3px;
 	padding-bottom: 3px}
-	
-ul.cssmenu_vert ul li a:hover {color: #d7e5f3}
-.cssmenu_vert ul {margin-left: 10.9em !important}
+
+.cssmenu_vert li ul li a:hover,
+#tiki-top .cssmenu_horiz li a:hover {
+	color: #d7e5f3
+}
 
 .cssmenu li ul li,
 .cssmenu_horiz li ul li,
@@ -307,7 +341,28 @@ ul.cssmenu_vert ul li a:hover {color: #d7e5f3}
 .cssmenu_vert .sf-sub-indicator {background: url(eatlon/arrows-6d819d.png) no-repeat 10px 0}
 * html .cssmenu_vert ul .sf-sub-indicator {background: url(eatlon/arrows-6d819d.png) no-repeat -10px 0}
 
-#tiki-top .cssmenu_horiz li.menuSection a .sf-sub-indicator {top: 1em}
+.cssmenu_vert li ul li a .sf-sub-indicator {
+	background: url(../lib/jquery/superfish/images/arrows-ffffff.png);
+}
+
+#tiki-top .cssmenu_horiz li a .sf-sub-indicator {top: 1.3em}
+
+#tiki-top .cssmenu_horiz li ul li a .sf-sub-indicator,
+.cssmenu_vert li a .sf-sub-indicator {
+	top: 0.3em;
+}
+
+/* less padding so move ul ul up */
+#tiki-top ul.cssmenu_horiz li:hover ul,
+#tiki-top ul.cssmenu_horiz li.sfHover ul {
+	top: 3.2em;
+}
+
+/* but not ul ul ul */
+#tiki-top ul.cssmenu_horiz li li:hover ul,
+#tiki-top ul.cssmenu_horiz li li.sfHover ul {
+	top: 0;
+}
 
 /** PHP Layers Menus **/
 .horbar {

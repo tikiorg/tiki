@@ -10,14 +10,6 @@
 	layout solution by luci (http://www.ground.cz/luci/css/lite).
 	For more information, please visit http://themes.tikiwiki.org
 	or http://zukakakina.com.
- 
-	fluidindex.css is comprised of these sections:
-	XHTML elements, Siteheader & Identity; Menus, Links;
-	Misc. Center Col.; Misc. Global; Boxes; Tables, Tabs;
-	Wiki (inc. plugins, etc.); Articles; Blogs; Forums;
-	Galleries; Trackers; Categories, Tags; Polls; FAQs;
-	Quizzes;	Shoutbox; Directory; Messages; TikiSheets;
-	Calendar; Admin; and Ajax, jquery, etc.
 */
  
 /* Import layout foundation CSS file. */
@@ -327,42 +319,61 @@ div#sioptions {
 
 /****** Menus, Links ******/
 /** CSS (suckerfish) menus **/
-.cssmenu ul,
-.cssmenu_vert li ul,
-.cssmenu_horiz li ul li ul {
-	border: 1px solid #8c9eaa;
-	margin-top: -1.05em !important;
-}
-	
-.cssmenu ul li,
-.cssmenu_vert li ul li,
-.cssmenu_horiz li ul li {
-	background: #E9E7DB !important;
+
+/* left column width */
+#col2 .cssmenu_vert {
+	padding-left: 0;
 }
 
+#col2 .cssmenu_vert,
+#col2 .cssmenu_vert li {
+	width: 180px;
+}
 
-.cssmenu_vert ul {
-	margin-left: 10.05em;
-	padding-bottom: 1px}
-	
-ul.cssmenu a,	
-ul.cssmenu_horiz a,
-ul.cssmenu_vert a {
+/* offset from left column (matches above) */
+#col2 .cssmenu_vert li:hover ul,
+#col2 .cssmenu_vert li.sfHover ul {
+	left: 180px;
+}
+
+/* return ul ul ... to default */
+#col2 .cssmenu_vert li:hover ul,
+#col2 .cssmenu_vert li.sfHover ul,
+#col2 .cssmenu_vert li:hover ul li,
+#col2 .cssmenu_vert li.sfHover ul li {
+	width: 10em;
+}
+
+/* return ul ul ... to default */
+#col2 .cssmenu_vert li li:hover ul,
+#col2 .cssmenu_vert li li.sfHover ul {
+	left: 10em;
+}
+
+ul.cssmenu_vert li ul li,
+ul.cssmenu_horiz li ul li {
+	background: #e9e7db !important;
+	margin-left: 0;
+}
+
+.cssmenu_horiz a,
+.cssmenu_vert a {
 	font-size: .95em;
-	color: #6D809F !important;
+	color: #6d809f !important;
 	text-decoration: none;
-	display: block;
-	position: relative;
-	padding: 2px 0 2px 10px;
+	padding: .5em 1em;
 	margin-left: 5px;
-	text-align: left;
-	background: url(fluidindex/star.gif) no-repeat 0 4px}
-
-ul.cssmenu_vert li ul li {
-	margin-left: 0 !important;
+	background: url(fluidindex/star.gif) no-repeat 0 4px;
 }
 
-.sf-sub-indicator {background: url(fluidindex/arrows-6d809f.png) no-repeat -10px -100px; /* 8-bit indexed alpha png. IE6 gets solid image only; */}
+.cssmenu_horiz a:hover,
+.cssmenu_vert a:hover {
+	text-decoration: underline !important;
+}
+
+.sf-sub-indicator {
+	background: url(fluidindex/arrows-6d809f.png) no-repeat -10px -100px;
+}
 
 /** PHP Layers Menus **/
 .horbar {

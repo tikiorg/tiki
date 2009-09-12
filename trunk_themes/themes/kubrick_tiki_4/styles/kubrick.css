@@ -6,18 +6,10 @@
 	version for use with TikiWiki 1.10 and above. For updates
 	and other information on this theme, please visit
 	http://themes.tikiwiki.org. or http://zukakakina.com. 
-
-	kubrick.css is comprised of these sections:
-	XHTML elements, Siteheader & Identity; Menus, Links;
-	Misc. Center Col.; Misc. Global; Boxes; Tables, Tabs;
-	Wiki (inc. plugins, etc.); Articles; Blogs; Forums;
-	Galleries; Trackers; Categories, Tags; Polls; FAQs;
-	Quizzes;	Shoutbox; Directory; Messages; TikiSheets;
-	Calendar; Admin; and Ajax, jquery, etc.
 */
  
 /* Import the default layout properties file: */
- @import "layout/layout.css";
+@import "layout/layout.css";
 
 /* And design defaults: */
 @import "layout/design.css";
@@ -301,30 +293,29 @@ div#sioptions  {margin-left: 40px}
 
 /****** Menus, Links ******/
 /** CSS (suckerfish) menus **/
-.cssmenu ul,
-.cssmenu_vert li ul,
-.cssmenu_horiz li ul {
+
+/* colors */
+.cssmenu_horiz li ul li,
+.cssmenu_vert li ul li {
+	background:	#578bb8;
 	border: 1px solid #8cacbb;
+	border-top: 0;
+	margin-bottom: -1px
+}
+
+.cssmenu_horiz li ul li:first-child,
+.cssmenu_vert li ul li:first-child {
+	border-top: 1px solid #8cacbb;
 }
 	
-.cssmenu ul li,
 .cssmenu_vert li ul li,
 .cssmenu_horiz li ul li {
 	background: #fff;
 }
-	
-.cssmenu_vert li ul {
-	margin-left: 10.9em !important;
-	padding-bottom: 1px;}
 
-.cssmenu ul li,
 .cssmenu_vert li ul li,
 .cssmenu_horiz li ul li {border-top: 1px solid #DEDEDE}
-
-/*.cssmenu_horiz li:hover,
-.cssmenu_ver li:hover {background: 0}*/
 	
-.cssmenu a,	
 .cssmenu_horiz a,
 .cssmenu_vert a,
 #tiki-top .cssmenu_horiz li a {color: #006699}
@@ -342,7 +333,11 @@ div#sioptions  {margin-left: 40px}
 .cssmenu_horiz ul a:hover,
 .cssmenu_vert ul a:hover {color: #000}
 
-#tiki-top .cssmenu_horiz {text-align: left; margin-left: 40px}
+#tiki-top .cssmenu_horiz {
+	text-align: left;
+	margin-left: 40px;
+}
+
 #tiki-top .cssmenu_horiz li.menuSection a {padding-right: 20px}
 #tiki-top .cssmenu_horiz li a {color: #fff}
 #tiki-top .cssmenu_horiz li ul li a {color: #006699}
@@ -350,9 +345,52 @@ div#sioptions  {margin-left: 40px}
 #tiki-top .cssmenu_horiz li ul li:hover {background: #fff}
 #tiki-top .cssmenu_horiz li ul a:hover {color: #000}
 
-.cssmenu_vert .sf-sub-indicator/*,
-#tiki-top .cssmenu_horiz li:hover ul li .sf-sub-indicator*/ {background: url(kubrick/arrows-2277DD.png) no-repeat -10px -100px}
+/* ul ul top compensation for padding */
+.cssmenu_horiz li:hover ul,
+.cssmenu_horiz li.sfHover ul {
+	top: 1.9em;
+}
 
+/* default link padding */
+.cssmenu_horiz a,
+.cssmenu_vert a {
+	padding: .4em 1em;
+}
+
+/* left column width */
+td#leftcolumn .cssmenu_vert,
+td#leftcolumn .cssmenu_vert li {
+	width: 160px;
+}
+
+/* offset from left column (matches above) */
+td#leftcolumn .cssmenu_vert li:hover ul,
+td#leftcolumn .cssmenu_vert li.sfHover ul {
+	left: 155px;
+}
+
+/* return ul ul ... to default */
+td#leftcolumn .cssmenu_vert li:hover ul,
+td#leftcolumn .cssmenu_vert li.sfHover ul,
+td#leftcolumn .cssmenu_vert li:hover ul li,
+td#leftcolumn .cssmenu_vert li.sfHover ul li {
+	width: 10em;
+}
+
+/* return ul ul ... to default */
+td#leftcolumn .cssmenu_vert li li:hover ul,
+td#leftcolumn .cssmenu_vert li li.sfHover ul {
+	left: 10em;
+}
+
+.cssmenu_vert .sf-sub-indicator,
+#tiki-top .cssmenu_horiz li:hover ul li .sf-sub-indicator {
+	background: url(kubrick/arrows-2277DD.png);
+}
+
+a .sf-sub-indicator {
+	top: 0.5em;
+}
 /** PHP Layers Menus **/
 .horbar table {
 	white-space: nowrap;

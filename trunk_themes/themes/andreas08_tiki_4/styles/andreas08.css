@@ -257,51 +257,100 @@ input#fuser {line-height: 90%}
 
 /****** Menus, Links ******/
 /** CSS (suckerfish) menus **/
-.cssmenu_vert {background: #fff}
-.cssmenu_vert li a {color: #467AA7}
 
-.cssmenu ul,
-.cssmenu_vert li ul,
-.cssmenu_horiz li ul {
-	border: 1px solid #fff;
-/*	padding-top: 1px !important;
-	padding-bottom: 1px !important;*/
+/* typography, colors */
+.cssmenu_horiz a {
+	color: #fff;
+	border-right: 1px solid #fff;
+	font-size: .9em;
 }
 
-.cssmenu ul li,
-.cssmenu_vert li ul li,
-.cssmenu_horiz li ul li {
-	background: #578bb8 !important}
-	
-.cssmenu_vert ul {margin-left: 10.9em !important}
-.cssmenu_vert li a ul {border: 0}
-	
-.cssmenu_horiz li a {
-	border-right: 1px solid #fff;
-	display: block;
-	padding: 6px 10px;
-	font-weight: normal;
-	text-transform: uppercase;
-	text-decoration: none;
-	background: inherit;
+.cssmenu_horiz ul li a {
+	border-right: 0;
+}
+
+.cssmenu_horiz li ul li a,
+.cssmenu_vert li a {
+	color: #467aa7
+}
+
+.cssmenu_vert li ul li a {
 	color: #fff;
-	font-size: .9em}
-	
-.cssmenu_horiz li ul a:hover {text-decoration: underline}
+}
 
-.cssmenu_vert li a  {
-	padding: 3px 10px;
-	position: relative;
-	display: block;
-	text-decoration: none;
-	font-weight: normal}
+.cssmenu_horiz li ul li,
+.cssmenu_vert li ul li {
+	background: #578bb8;
+}
 
-.cssmenu_vert li a:hover  {text-decoration: underline}
-.cssmenu_vert li ul li a {color: #fff}
-.cssmenu_vert li a .sf-sub-indicator {background: url(andreas08/arrows-467aa7.png) no-repeat;}
-.cssmenu_vert li ul li a .sf-sub-indicator {background: url(andreas08/arrows-ffffff.png) no-repeat;}
+.cssmenu_horiz li ul li,
+.cssmenu_vert li ul li {
+	background:	#578bb8;
+	border: 1px solid #fff;
+	border-top: 0;
+	margin-bottom: -1px
+}
 
-/*.cssmenu_vert li ul li ul {margin-left: 10.9em !important;}*/
+.cssmenu_horiz li ul li:first-child,
+.cssmenu_vert li ul li:first-child {
+	border-top: 1px solid #fff;
+}
+
+/* default link padding */
+.cssmenu_horiz a,
+.cssmenu_vert a {
+	padding: .75em 1em;
+}
+
+/* ul ul top compensation for padding */
+.cssmenu_horiz li:hover ul,
+.cssmenu_horiz li.sfHover ul {
+	top: 2.3em;
+}
+
+#leftcolumn .cssmenu_vert a {
+	padding: .3em 1em;
+	font-weight: normal;
+}
+
+/* left column width */
+td#leftcolumn .cssmenu_vert,
+td#leftcolumn .cssmenu_vert li {
+	width: 170px;
+}
+
+/* offset from left column (matches above) */
+td#leftcolumn .cssmenu_vert li:hover ul,
+td#leftcolumn .cssmenu_vert li.sfHover ul {
+	left: 170px;
+}
+
+/* return ul ul ... to default */
+td#leftcolumn .cssmenu_vert li:hover ul,
+td#leftcolumn .cssmenu_vert li.sfHover ul,
+td#leftcolumn .cssmenu_vert li:hover ul li,
+td#leftcolumn .cssmenu_vert li.sfHover ul li {
+	width: 10em;
+}
+
+/* return ul ul ... to default */
+td#leftcolumn .cssmenu_vert li li:hover ul,
+td#leftcolumn .cssmenu_vert li li.sfHover ul {
+	left: 10em;
+}
+
+/* special arrows and arrow top padding */
+.cssmenu_vert li a .sf-sub-indicator {
+	background: url(andreas08/arrows-467aa7.png) no-repeat 0 0;
+}
+
+.cssmenu_vert li ul li a .sf-sub-indicator {
+	background: url(../lib/jquery/superfish/images/arrows-ffffff.png) no-repeat 0 0;
+}
+
+.cssmenu_vert li a .sf-sub-indicator {
+	top: .3em;
+}
 
 /** PHP Layers Menus **/
 .horbar {

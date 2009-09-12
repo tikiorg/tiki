@@ -244,8 +244,34 @@ div#tiki-top {
 .cssmenu_horiz li ul li {
 	background: #f3f3f3}
 	
-.cssmenu_vert ul {
-	margin-left: 10.9em !important;
+/* left column width */
+td#leftcolumn ul.cssmenu_vert {
+	padding-left: 0;
+}
+
+td#leftcolumn .cssmenu_vert,
+td#leftcolumn .cssmenu_vert li {
+	width: 160px;
+}
+
+/* offset from left column (matches above) */
+td#leftcolumn .cssmenu_vert li:hover ul,
+td#leftcolumn .cssmenu_vert li.sfHover ul {
+	left: 160px;
+}
+
+/* return ul ul ... to default */
+td#leftcolumn .cssmenu_vert li:hover ul,
+td#leftcolumn .cssmenu_vert li.sfHover ul,
+td#leftcolumn .cssmenu_vert li:hover ul li,
+td#leftcolumn .cssmenu_vert li.sfHover ul li {
+	width: 10em;
+}
+
+/* return ul ul ... to default */
+td#leftcolumn .cssmenu_vert li li:hover ul,
+td#leftcolumn .cssmenu_vert li li.sfHover ul {
+	left: 10em;
 }
 
 #tiki-top ul.cssmenu_horiz li a,
@@ -270,7 +296,18 @@ div#tiki-top {
 
 #tiki-top ul.cssmenu_horiz li.menuSection a {padding-right: 20px}
 #tiki-top .cssmenu_horiz li.menuSection a .sf-sub-indicator {top: 1.8em}
-.box-data .cssmenu_vert li.menuSection a .sf-sub-indicator {top: 1.2em}
+td#leftcolumn .cssmenu_vert a .sf-sub-indicator {top: 0.6em}
+
+/* special arrows and arrow top padding */
+.cssmenu_vert li a .sf-sub-indicator {
+	background: url(darkshine/arrows-000000.png) no-repeat 0 0;
+}
+
+/* ul ul top compensation for padding */
+.cssmenu_horiz li:hover ul,
+.cssmenu_horiz li.sfHover ul {
+	top: 3.2em;
+}
 
 /** PHP Layers Menus **/
 .horbar {

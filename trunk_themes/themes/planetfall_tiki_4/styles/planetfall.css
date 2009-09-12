@@ -2,18 +2,10 @@
 	This is an adaptation of the original GPL-licensed theme by Rhuk.
 	See http://zukakakina.com or http://themes.tikiwiki.org for further
 	information about and upgrades for this theme.
-
-	planetfall.css is comprised of these sections:
-	XHTML elements, Siteheader & Identity; Menus, Links;
-	Misc. Center Col.; Misc. Global; Boxes; Tables, Tabs;
-	Wiki (inc. plugins, etc.); Articles; Blogs; Forums;
-	Galleries; Trackers; Categories, Tags; Polls; FAQs;
-	Quizzes;	Shoutbox; Directory; Messages; TikiSheets;
-	Calendar; Admin; and Ajax, jquery, etc.
 */
- 
+
 /* Import the default layout properties file: */
- @import "layout/layout.css";
+@import "layout/layout.css";
 
 /* And design defaults: */
 @import "layout/design.css";
@@ -325,89 +317,123 @@ div#sitead {margin: auto}
 /****** Menus, Links ******/
 /** CSS (suckerfish) menus **/
 
-.cssmenu_vert ul {
-	margin-left: 10.9em !important;
+/* default link padding */
+.cssmenu_horiz li a,
+.cssmenu_vert li a {
+	padding: 2px 5px;
 }
 
-.cssmenu ul li ul,
-li.menuSection ul,
-.cssmenu_vert ul li ul {
-	/*border: 1px solid #999;*/
-	background: #2E4452 url(planetfall/menu2_fade.jpg) repeat-x !important}
+/* typography, colors, etc. */
+.cssmenu_horiz li a,
+.cssmenu_vert li a {
+	color: #ccc;
+}
 
-
-.cssmenu_vert li a,
-ul.cssmenu li a,
-ul.cssmenu li a:visited {
-	padding: 2px 5px;
-	position: relative;
-	display: block;
-	color: #ccc !important;
-	background: 0}
-	
 .cssmenu_vert li a:hover {
-	color: #ff6600 !important;
-}
-/*
-li.menuSection ul {
-	border: 1px solid #999;
-	background: #2E4452 url(planetfall/menu2_fade.jpg) repeat-x}
-*/	
-.cssmenu_vert ul li a {background: 0}
-
-.cssmenu_vert li a:hover,
-.cssmenu a:hover,
-.cssmenu h2:hover,
-li.menuSection:hover a {
-	color: #9AB6C2;
-	background: 0}
-	
-.cssmenu_vert li.selected > a {background: transparent}
-ul.cssmenu_vert {width: 172px}
-
-.cssmenu li,
-.cssmenu a {
-	background: #2e4452;
-	border: 0}
-
-.cssmenu_vert li a,
-.cssmenu_vert li a:visited {
-	padding: 2px 5px;
-	background: 0;
-	border: 0}
-	
-li.menuSection0:hover a {
-	color: #9AB6C2;
-	background: none;
+	color: #ff6600;
 }
 
-li.menuoption {
-	background: #2e4452;
-	border: 0}
+td#leftcolumn .cssmenu_vert li a {
+	color: #ff6600;
+}
 
-	
-/* for using DIV(class="cssmenu_vert") in wikiplugin */ 
-.cssmenu_vert a.wiki,
-.cssmenu_vert a.wiki:hover {font-weight: bold}
+td#leftcolumn .cssmenu_vert li a:hover {
+	color: #9AB6C2;
+}
 
-.cssmenu_vert li ul li ul,
-.cssmenu_vert li ul {
-	margin-left: 114px;
-	padding-left: 0;
-	width: 11em}
-
-#header .cssmenu_horiz .menuLevel0 a {
+td#leftcolumn .cssmenu_vert li ul li a {
 	color: #304651;
+}
+
+/* #header (topbar) menu top level */
+#header .cssmenu_horiz li a {
 	padding-top: 5px;
 	padding-bottom: 6px;
 	font-size: 12px;
-	border-right: 1px solid #9DA6B3}
-	
-#header .cssmenu_horiz .menuLevel1 a {
-	border: 0;
+	color: #293c43;
+	border-right: 1px solid #9DA6B3;
 }
-	
-#header .cssmenu_horiz .menuLevel0 a:hover {color: #ff6600} 
+
+#header .cssmenu_horiz li a:hover {
+	color: #9ab6c2;
+}
+
+#header .cssmenu_horiz ul li a,
+td#leftcolumn .cssmenu_vert li ul li a {
+	border-right: 0;
+	color: #ccc;
+}
+
+/* No shadow in planetfall since bg is dark */
+.cssmenu_horiz li ul,
+.cssmenu_vert li ul {
+	background: #2E4452 url(planetfall/menu2_fade.jpg) repeat-x;
+	border: 1px solid #999;
+}
+
+/* default link padding */
+.cssmenu_horiz a,
+.cssmenu_vert a {
+	padding: .75em 1em;
+}
+
+/* ul ul top compensation for padding */
+.cssmenu_horiz li:hover ul,
+.cssmenu_horiz li.sfHover ul {
+	top: 2.3em;
+}
+
+/* compensate for 1px border */
+.cssmenu_horiz li ul li:hover ul,
+.cssmenu_horiz li ul li.sfHover ul,
+.cssmenu_vert li ul li:hover ul,
+.cssmenu_vert li ul li.sfHover ul {
+	top: -1px;
+}
+
+/* left column width */
+td#leftcolumn .cssmenu_vert,
+td#leftcolumn .cssmenu_vert li {
+	width: 170px;
+}
+
+/* offset from left column (matches above) */
+td#leftcolumn .cssmenu_vert li:hover ul,
+td#leftcolumn .cssmenu_vert li.sfHover ul {
+	left: 170px;
+}
+
+/* return ul ul ... to default */
+td#leftcolumn .cssmenu_vert li:hover ul,
+td#leftcolumn .cssmenu_vert li.sfHover ul,
+td#leftcolumn .cssmenu_vert li:hover ul li,
+td#leftcolumn .cssmenu_vert li.sfHover ul li {
+	width: 10em;
+}
+
+/* return ul ul ... to default */
+td#leftcolumn .cssmenu_vert li li:hover ul,
+td#leftcolumn .cssmenu_vert li li.sfHover ul {
+	left: 10em;
+}
+
+#leftcolumn .cssmenu_vert a {
+	padding: .3em 1em;
+	font-weight: normal;
+}
+
+/* special arrows and arrow top padding */
+.cssmenu_vert li a .sf-sub-indicator {
+	background: url(andreas08/arrows-467aa7.png) no-repeat 0 0;
+}
+
+.cssmenu_vert li ul li a .sf-sub-indicator {
+	background: url(../lib/jquery/superfish/images/arrows-ffffff.png) no-repeat 0 0;
+}
+
+.cssmenu_vert li a .sf-sub-indicator {
+	top: .5em;
+}
 
 /** PHP Layers Menus **/
 .horbaritem {

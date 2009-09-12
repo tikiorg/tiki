@@ -6,14 +6,6 @@
 	structural aspects based on the default TikiWiki components are
 	licensed GNU/LGPL. Please retain the link to styleshout.com in the
 	page footer to be in compliance with the CCA 2.4 license.
- 
-	underground.css is comprised of these sections:
-	XHTML elements, Siteheader & Identity; Menus, Links;
-	Misc. Center Col.; Misc. Global; Boxes; Tables, Tabs;
-	Wiki (inc. plugins, etc.); Articles; Blogs; Forums;
-	Galleries; Trackers; Categories, Tags; Polls; FAQs;
-	Quizzes;	Shoutbox; Directory; Messages; TikiSheets;
-	Calendar; Admin; and Ajax, jquery, etc.
 */
  
 /* Import layout foundation CSS file. */
@@ -21,11 +13,11 @@
 @import "lite/lite.css";
 
 /* Then import the default layout properties file: */
- @import "layout/layout.css";
- 
+@import "layout/layout.css";
+
 /* And design defaults: */
 @import "layout/design.css";
- 
+
 /***** XHTML Elements (body tag here,
 			others follow Layout) *****/ 
 body {
@@ -316,40 +308,58 @@ input.wikiaction {
 
 /****** Menus, Links ******/
 /** CSS (suckerfish) menus **/
-.cssmenu ul,
-.cssmenu_vert li ul,
-.cssmenu_horiz li ul {
-	border: 1px solid #d0d0d0}
-	
-.cssmenu_vert li ul {/* second-level lists */
-	margin-left: 11.05em;
-	margin-top: -1.35em;
-}
-	
-.cssmenu ul li,
-.cssmenu_vert li ul li,
-.cssmenu_horiz li ul li {
-	background: #F4F4F4;
-}
 
-.cssmenu_vert li a:hover,
-.cssmenu_vert li ul li a:hover {
-	color: #cc0000;
-	background: 0}
-	
-.cssmenu_vert li ul li {padding: 2px 5px}
-
-.cssmenu a,	
+/* default link padding */
 .cssmenu_horiz a,
+.cssmenu_vert a {
+	padding: .75em 1em;
+}
+
+/* typography, colors */
+.cssmenu_horiz a,
+#tiki-top .cssmenu_horiz li.menuLevel0 ul li a,
 .cssmenu_vert a {
 	text-decoration: none;
 	font-weight: bold;
-	display: block;
-	text-decoration: none;
-	padding: 3px 0 3px 6px;
-	border: none;
-	color: #303030}
-	
+/*	padding: 3px 0 3px 6px;*/
+	color: #303030;
+}
+
+.cssmenu_vert li a:hover,
+.cssmenu_vert li ul li a:hover,
+#tiki-top .cssmenu_horiz li.menuLevel0 ul li a:hover {
+	color: #cc0000;
+	background: 0}
+
+/* left column width */
+#col2 .cssmenu_vert,
+#col2 .cssmenu_vert li {
+	width: 170px;
+}
+
+/* offset from left column (matches above) */
+#col2 .cssmenu_vert li:hover ul,
+#col2 .cssmenu_vert li.sfHover ul {
+	left: 170px;
+}
+
+/* return ul ul ... to default */
+#col2 .cssmenu_vert li:hover ul,
+#col2 .cssmenu_vert li.sfHover ul,
+#col2 .cssmenu_vert li:hover ul li,
+#col2 .cssmenu_vert li.sfHover ul li {
+	width: 10em;
+}
+
+/* return ul ul ... to default */
+#col2 .cssmenu_vert li li:hover ul,
+#col2 .cssmenu_vert li li.sfHover ul {
+	left: 11em;
+}
+
+.cssmenu_vert li ul li,
+#tiki-top .cssmenu_horiz li ul li {padding: 2px 5px}
+
 .cssmenu_vert li ul li a {background: 0}
 
 #tiki-top .cssmenu_horiz {
@@ -358,10 +368,12 @@ input.wikiaction {
 	bottom: 0;
 	font: bold 13px 'Trebuchet MS', Arial, Sans-serif}
 
+/* top menu tabs */
 #tiki-top .cssmenu_horiz li.menuLevel0 {
 	float: left;
    background: url(underground/tableft.gif) no-repeat left top;
    margin: 0;
+   margin-right: 4px;
    padding: 0 0 0 4px;
    text-decoration: none}
 
@@ -374,17 +386,47 @@ input.wikiaction {
 #tiki-top .cssmenu_horiz li.menuLevel0:hover,
 #tiki-top .cssmenu_horiz li.menuLevel0 a:hover {
 	background-position: 0% -42px
-} 
-  
-#tiki-top .cssmenu_horiz ul {
-	background: #F4F4F4;
-	border: 1px solid #d0d0d0}
+}
 	
-#tiki-top .cssmenu_horiz ul li {background: 0}
 #tiki-top .cssmenu_horiz ul li a {font-size: 11px}	
 
-.cssmenu_vert .sf-sub-indicator {
+.cssmenu_vert li ul li,
+.cssmenu_horiz li ul li,
+#tiki-top .cssmenu_horiz li.menuLevel1 li {
+	background: #f4f4f4;
+	border: 1px solid #d0d0d0;
+	border-top: 0;
+	margin-bottom: -1px;
+}
+
+.cssmenu_horiz li ul li:first-child,
+.cssmenu_vert li ul li:first-child,
+#tiki-top .cssmenu_horiz li.menuLevel1 li:first-child {
+	border-top: 1px solid #d0d0d0;
+}
+
+#tiki-top .cssmenu_horiz li.menuLevel1 a {
+	background: none;
+}
+
+/* ul ul top compensation for padding */
+#tiki-top .cssmenu_horiz ul {
+	top: 2.1em;
+}
+
+#tiki-top .cssmenu_horiz ul ul {
+	top: 0em;
+}
+
+/* special arrows */
+.cssmenu_vert .sf-sub-indicator,
+#tiki-top .cssmenu_horiz ul .sf-sub-indicator {
 	background: url(underground/arrows-000.png) no-repeat -10px -100px;
+}
+
+
+#tiki-top .cssmenu_horiz ul .sf-sub-indicator {
+	background-position: 0 0;
 }
 
 /** PHP Layers Menus **/

@@ -2,14 +2,6 @@
 	theme released under the LGPL license by author and maintainer
 	Gary Cunningham-Lee (http://zukakakina.com). Visit zukakakina.com or themes.tikiwiki.org for
 	updates and other information about this theme.
-
-	Snow.css is comprised of these sections:
-	XHTML elements, Siteheader & Identity; Menus, Links;
-	Misc. Center Col.; Misc. Global; Boxes; Tables, Tabs;
-	Wiki (inc. plugins, etc.); Articles; Blogs; Forums;
-	Galleries; Trackers; Categories, Tags; Polls; FAQs;
-	Quizzes;	Shoutbox; Directory; Messages; TikiSheets;
-	Calendar; Admin; and Ajax, jquery, etc.
 */
  
 /* Import layout foundation CSS file. */
@@ -17,7 +9,7 @@
 @import "lite/lite.css";
 
 /* Then import the default layout properties file: */
- @import "layout/layout.css";
+@import "layout/layout.css";
 
 /* And design defaults: */
 @import "layout/design.css";
@@ -76,7 +68,6 @@ body.fullscreen #col1 {
 
 /***** XHTML Elements (other than body tag) ******/
 a,
-a:link,
 a:visited {
 	color: #393e51;
 	font-weight: bold;
@@ -274,43 +265,109 @@ div#siteloginbar {
 
 /****** Menus, Links ******/
 /** CSS (suckerfish) menus **/
-.cssmenu ul,
-.cssmenu_vert li ul,
-.cssmenu_horiz li ul {
-	border: 1px solid #6A6A6A;
-	background: url(snow/flakesptn2.jpg)}
-	
-.cssmenu li,
-.cssmenu_horiz li,
-.cssmenu_vert li {
-	background: url(snow/flakesptn2.jpg);
-	border: 0}
 
-.cssmenu li:hover,
+/* default link padding */
+.cssmenu_horiz a,
+.cssmenu_vert a {
+	padding: .3em 1em;
+}
+
+.cssmenu_horiz a,
+.cssmenu_horiz a:visited,
+.cssmenu_vert a,
+.cssmenu_vert a:visited {
+	color: #393e51;
+	font-weight: bold;
+	text-decoration: none}
+
+.cssmenu_horiz a:hover,
+.cssmenu_vert a:hover {
+	color: #6c7b8c;
+	text-decoration: underline}
+}
+
+/* typography, colors */
+.cssmenu_horiz a,
+.cssmenu_vert a {
+	font-size: 12px;
+	/*color: #393e51;*/
+}
+
+.cssmenu_vert li ul li,
+.cssmenu_horiz li ul li {
+	border: 1px solid #6a6a6a;
+	background: url(snow/flakesptn2.jpg);
+	border-top: 0;
+	margin-bottom: -1px;
+}
+
+.cssmenu_horiz li ul li:first-child,
+.cssmenu_vert li ul li:first-child {
+	border-top: 1px solid #6a6a6a;
+}
+	
 .cssmenu_horiz li:hover,
 .cssmenu_vert li:hover {
 	color: black;
 	background: url(snow/flakesptn.jpg)}
 	
-.cssmenu a,	
-.cssmenu_horiz a,
-.cssmenu_vert a {
-	text-decoration: none;
-	display: block;
-	text-decoration: none;
-	font-size: 12px;
-	/*padding: 4px;*/
-	color: #393e51}
-
 #tiki-top .cssmenu_horiz > li > a {
 	font-size: 12px;
 	font-weight: bold;
 	color: #393e51;
 	margin-top: 1px;
-	padding: 11px 3px 10px 1em;
-	display: block;
+	padding-top: 11px;
+	padding-bottom: 10px;
 	background:  url(snow/pagetitle-bg.jpg) repeat-x;
 	border-right: 1px solid #6A6A6A}
+
+#tiki-top .cssmenu_horiz > li > a:hover {
+	color: #6c7b8c;
+	text-decoration: none;
+} 	
+
+#tiki-top .cssmenu_horiz li ul {
+	top: 3em;
+}
+
+#tiki-top .cssmenu_horiz li ul li ul {
+	top: -1px;
+}
+	
+/* left column width */
+#col2 ul.cssmenu_vert {
+	padding-left: 0;
+}
+
+#col2 .cssmenu_vert,
+#col2 .cssmenu_vert li {
+	width: 170px;
+}
+
+/* offset from left column (matches above) */
+#col2 .cssmenu_vert li:hover ul,
+#col2 .cssmenu_vert li.sfHover ul {
+	left: 170px;
+}
+
+/* return ul ul ... to default */
+#col2 .cssmenu_vert li:hover ul,
+#col2 .cssmenu_vert li.sfHover ul,
+#col2 .cssmenu_vert li:hover ul li,
+#col2 .cssmenu_vert li.sfHover ul li {
+	width: 10em;
+}
+
+/* return ul ul ... to default */
+#col2 .cssmenu_vert li li:hover ul,
+#col2 .cssmenu_vert li li.sfHover ul {
+	left: 10em;
+}
+
+.cssmenu_vert li a .sf-sub-indicator,
+.cssmenu_horiz li ul li a .sf-sub-indicator {
+	top: .3em;
+}
 
 /** PHP Layers Menus **/
 .horbar {

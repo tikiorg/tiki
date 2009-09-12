@@ -215,62 +215,62 @@ div#sitead {margin: auto}
 
 /****** Menus, Links ******/
 /** CSS (suckerfish) menus **/
-.cssmenu ul,
-.cssmenu_vert li ul,
-.cssmenu_horiz li ul {
-	border-bottom: 1px #aaa solid;
-	border-left: 1px #999 solid}
 	
-.cssmenu ul li,
 .cssmenu_vert li ul li,
 .cssmenu_horiz li ul li {
 	background: #818181;
 }
-	/*
-.cssmenu_vert ul {
-	margin-left: 10.9em !important;
-}*/
 
 .cssmenu_horiz li:hover,
 .cssmenu_vert li:hover {
 	background: #104a91;
  	color: #fff;
-	text-decoration: none}
+	text-decoration: none;
+}
 	
-.cssmenu a,	
 .cssmenu_horiz a,
 .cssmenu_vert a {
 	font: 12px Verdana, Geneva, Arial, Helvetica, sans-serif;
 	text-decoration: none;
-	display: block;
-	text-decoration: none;
-	padding: 3px 0 3px 6px;
-	color: #fff}
+	padding: 0 .75em 0 1em;
+	color: #fff;
+}
 
-#tiki-top .cssmenu_horiz li a {
+.cssmenu_vert a {
+	padding: 3px .75em 3px 1em;
+}
+
+#tiki-top .cssmenu_horiz li {
 	text-decoration: none;
 	color: white;
 	background: url(litejazz/menu-div.png) 100% 0 no-repeat;
 	border-right: #999 solid 1px;
-	margin: 0;
-	display: block;
-	padding: 8px 1em}
+	padding-top: 8px;
+	padding-bottom: 8px}
 
-#tiki-top .cssmenu_horiz li:hover a {
+#tiki-top .cssmenu_horiz li:hover {
 	color: #fff;
 	background: #818181 url(litejazz/menubg-over.png) repeat-x;
 	text-decoration: none;
 	border-right: #999 solid 1px}
 	
 #tiki-top .cssmenu_horiz li.menuSection a {padding-right: 20px}
-#tiki-top .cssmenu_horiz ul li a {background: #818181 !important}
+#tiki-top .cssmenu_horiz ul li {background: #818181}
 
-#tiki-top .cssmenu_horiz ul li:hover a {
-	background: #104a91 !important;
+#tiki-top .cssmenu_horiz li ul li:hover,
+.cssmenu_vert li ul li:hover,
+.cssmenu_vert li ul li.sfHover {
+	background: #104a91;
  	color: #fff;
 	text-decoration: none}
 	
-#tiki-top .cssmenu_horiz ul li a .sf-sub-indicator {top: 1.2em}
+#tiki-top .cssmenu_horiz li ul {
+	top: 2.7em;
+}
+
+#tiki-top .cssmenu_horiz li ul li ul {
+	top: 0;
+}
 	
 .box-data .cssmenu_vert a {
 	color: #104A91;
@@ -287,6 +287,52 @@ div#sitead {margin: auto}
 
 .cssmenu_vert .sf-sub-indicator {
 	background: url(litejazz/arrows-467aa7.png) no-repeat;
+}
+
+#tiki-top .cssmenu_horiz a .sf-sub-indicator {
+	top: 0;
+}
+
+#tiki-top .cssmenu_horiz li ul li a .sf-sub-indicator {
+	top: 0;
+}
+
+/* left column width */
+td#leftcolumn ul.cssmenu_vert {
+	padding-left: 0;
+}
+
+td#leftcolumn .cssmenu_vert,
+td#leftcolumn .cssmenu_vert li {
+	width: 170px;
+}
+
+/* offset from left column (matches above) */
+td#leftcolumn .cssmenu_vert li:hover ul,
+td#leftcolumn .cssmenu_vert li.sfHover ul {
+	left: 170px;
+}
+
+/* return ul ul ... to default */
+td#leftcolumn .cssmenu_vert li:hover ul,
+td#leftcolumn .cssmenu_vert li.sfHover ul,
+td#leftcolumn .cssmenu_vert li:hover ul li,
+td#leftcolumn .cssmenu_vert li.sfHover ul li {
+	width: 10em;
+}
+
+/* return ul ul ... to default */
+td#leftcolumn .cssmenu_vert li li:hover ul,
+td#leftcolumn .cssmenu_vert li li.sfHover ul {
+	left: 10em;
+}
+	
+#tiki-top .cssmenu_horiz ul li a .sf-sub-indicator {
+	top: 0.9em;
+}
+
+.cssmenu_vert a .sf-sub-indicator {
+	top: 0.5em;
 }
 
 /** PHP Layers Menus **/

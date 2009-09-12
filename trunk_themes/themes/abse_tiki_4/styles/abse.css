@@ -310,6 +310,12 @@ div#sioptions {
 /****** Menus, Links ******/
 /** CSS (suckerfish) menus **/
 
+/* default link padding */
+.cssmenu_horiz a,
+.cssmenu_vert a {
+	padding: .3em 1em;
+}
+
 .cssmenu li ul,
 .cssmenu_horiz li ul,
 .cssmenu_vert li ul {background: #010101 url(abse/menubg.jpg) repeat-y}
@@ -319,7 +325,7 @@ div#sioptions {
 .cssmenu_vert li {background: 0}
 
 .cssmenu_vert li a {
-	color: #fff;
+	color: #bdcec3;
 	text-decoration: none}
 	
 .cssmenu li a:hover,
@@ -333,6 +339,39 @@ div#sioptions {
 .cssmenu_ver li a ul {border: 0}
 .cssmenu_vert li.selected > a {background: #86a48a url(abse/menubg.jpg) repeat-y}
 
+/* left column width */
+#col2 ul.cssmenu_vert {
+	padding-left: 0;
+}
+
+#col2 .cssmenu_vert,
+#col2 .cssmenu_vert li {
+	width: 170px;
+}
+
+/* offset from left column (matches above) */
+#col2 .cssmenu_vert li:hover ul,
+#col2 .cssmenu_vert li.sfHover ul {
+	left: 170px;
+}
+
+/* return ul ul ... to default */
+#col2 .cssmenu_vert li:hover ul,
+#col2 .cssmenu_vert li.sfHover ul,
+#col2 .cssmenu_vert li:hover ul li,
+#col2 .cssmenu_vert li.sfHover ul li {
+	width: 10em;
+}
+
+/* return ul ul ... to default */
+#col2 .cssmenu_vert li li:hover ul,
+#col2 .cssmenu_vert li li.sfHover ul {
+	left: 10em;
+}
+
+a .sf-sub-indicator {
+	top: .3em;
+}
 /* PHP Layers menus */
 .horbar {margin-left: 10px}
 

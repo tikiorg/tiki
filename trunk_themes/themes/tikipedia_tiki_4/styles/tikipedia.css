@@ -3,14 +3,6 @@
 	and (from TikiWiki 1.10 and after) uses the *litecss layout method.
 	See http://zukakakina.com or themes.tikiwiki.org for further information
 	about this theme.
-	
-	tikipedia.css is comprised of these sections:
-	XHTML elements, Siteheader & Identity; Menus, Links;
-	Misc. Center Col.; Misc. Global; Boxes; Tables, Tabs;
-	Wiki (inc. plugins, etc.); Articles; Blogs; Forums;
-	Galleries; Trackers; Categories, Tags; Polls; FAQs;
-	Quizzes;	Shoutbox; Directory; Messages; TikiSheets;
-	Calendar; Admin; and Ajax, jquery, etc.
 */
  
 /* Import layout foundation CSS file. */
@@ -436,45 +428,63 @@ div#sitelogo {
 /****** Menus, Links ******/
 /** CSS (suckerfish) menus **/
 
-.cssmenu li ul,
-.cssmenu_vert li ul,
-.cssmenu_horiz li ul {
-	border: 1px #aaa solid;
-	background-color: red;
-	padding-top: 1px !important;
-	padding-left: 1px !important;
+/* default link padding */
+.cssmenu_horiz a,
+.cssmenu_vert a {
+	padding: .25em 1em;
 }
 
-ul.cssmenu ul li ,
-ul.cssmenu_vert ul li,
-ul.cssmenu_horiz ul li {
+/* typography, colors */
+.cssmenu_vert ul li,
+.cssmenu_horiz ul li {
 	background: #fff;
 	padding: 1px;
+	border: 1px solid #aaa;
+	border-top: 0;
+	margin-bottom: -1px;
 }
-/*
-ul.cssmenu ul li a,
-ul.cssmenu_vert ul li a,
-ul.cssmenu_horiz ul li a {
-	border-right: 1px solid #aaa;
-}*/
 
-/*
-.cssmenu_vert li a {
-	font-weight: normal;
-	text-decoration: none;
-} 
+.cssmenu_horiz li ul li:first-child,
+.cssmenu_vert li ul li:first-child {
+	border-top: 1px solid #aaa;
+}
 
-.cssmenu_vert li a:hover {
-	text-decoration: underline;
-} 
-	
-.cssmenu_vert .sf-sub-indicator,
-.cssmenu_horiz ul .sf-sub-indicator {
-	margin-top:-5px;
-}*/
+/* left column width */
+#col2 ul.cssmenu_vert {
+	padding-left: 0;
+}
+
+#col2 .cssmenu_vert,
+#col2 .cssmenu_vert li {
+	width: 160px;
+}
+
+/* offset from left column (matches above) */
+#col2 .cssmenu_vert li:hover ul,
+#col2 .cssmenu_vert li.sfHover ul {
+	left: 160px;
+}
+
+/* return ul ul ... to default */
+#col2 .cssmenu_vert li:hover ul,
+#col2 .cssmenu_vert li.sfHover ul,
+#col2 .cssmenu_vert li:hover ul li,
+#col2 .cssmenu_vert li.sfHover ul li {
+	width: 10em;
+}
+
+/* return ul ul ... to default */
+#col2 .cssmenu_vert li li:hover ul,
+#col2 .cssmenu_vert li li.sfHover ul {
+	left: 10em;
+}
 
 .sf-sub-indicator {
 	background: url(tikipedia/arrows-6d819d.png) no-repeat -10px -100px;
+}
+
+a .sf-sub-indicator {
+	top: 0.3em;
 }
 
 /** PHP Layers Menus **/
