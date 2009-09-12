@@ -302,16 +302,16 @@ a.phplmselected:hover {
 }
 
 /** CSS (suckerfish) menus **/
-.cssmenu ul,
-.cssmenu_vert li ul,
-.cssmenu_horiz li ul {
-	border: 1px solid #a9a9a9;
-	background: #4c4c4c;
+
+.cssmenu_horiz li ul li,
+.cssmenu_vert li ul li {
+	border: 1px solid #233039;
+	background: #e5e5e5;
 }
 
-.cssmenu_vert li ul {
-	background: #e5e5e5;
-	border: 1px solid #233039;
+.cssmenu_horiz li ul li:first-child,
+.cssmenu_vert li ul li:first-child {
+	border-top: 1px solid #233039;
 }
 
 .cssmenu_horiz li:hover {
@@ -322,7 +322,6 @@ a.phplmselected:hover {
 	background: none;
 }
 
-.cssmenu a,	
 .cssmenu_horiz a,
 .cssmenu_vert a {
 	color: #666666;
@@ -345,6 +344,38 @@ a.phplmselected:hover {
 
 .cssmenu_vert ul a:hover {
 	color: #000000;
+}
+
+#tiki-top .cssmenu_horiz a,
+#tiki-top .cssmenu_horiz a:visited {
+	background: none;
+	border: none;
+	color: #fff;
+	padding: 3px 5px 6px 
+}
+
+#tiki-top .cssmenu_horiz a:hover {
+	background: #000;
+	border: none;
+	color: #fff;
+}
+
+#tiki-top .cssmenu_horiz li ul li {
+	border: 1px solid #a9a9a9;
+	background: #4c4c4c;
+}
+
+#tiki-top .cssmenu_horiz li ul li:first-child,
+.cssmenu_vert li ul li:first-child {
+	border-top: 1px solid #a9a9a9;
+}
+
+#tiki-top .cssmenu_horiz li ul li a:hover {
+	background: #000;
+}
+
+.cssmenu_vert li a .sf-sub-indicator {
+	background: url(mono/arrows-000000.png) no-repeat 0 0;
 }
 
 /** Links in other menus **/
