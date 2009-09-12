@@ -107,7 +107,7 @@
 			{foreach item=permgroup from=$quickperms}
 				<th>{$permgroup.name}</th>
 			{/foreach}
-				<th onmouseover="return overlib('A couple of userdefined permissions are currently assigned (See tab Assign Permissions)');" onmouseout="nd();">Advanced</th>
+				<th class="tips" title="{tr}A couple of userdefined permissions are currently assigned (See tab Assign Permissions){/tr}">Advanced</th>
 			</tr>
 			{cycle print=false values="even,odd"}
 			{section name=grp loop=$groups}

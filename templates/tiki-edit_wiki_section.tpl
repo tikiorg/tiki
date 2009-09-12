@@ -30,9 +30,9 @@
 {if isset($pos)}<input type="hidden" name="pos" value="{$pos}" />{/if}
 {if isset($cell)}<input type="hidden" name="cell" value="{$cell}" />{/if}
 {if isset($hdr)}<input type="hidden" name="hdr" value="{$hdr}" />{/if}
-<input type="submit" onmouseover="return overlib('{tr}Preview your changes.{/tr}');" onmouseout="nd();" class="wikiaction" name="preview" value="{tr}Preview{/tr}" />&nbsp;&nbsp;
-<input type="submit"  onmouseover="return overlib('{tr}Save the page.{/tr}');" onmouseout="nd();" class="wikiaction" name="save" value="{tr}Save{/tr}" />&nbsp;&nbsp;
-<input type="submit" onmouseover="return overlib('{tr}Cancel the edit, you will lose your changes.{/tr}');" onmouseout="nd();" class="wikiaction" name="cancel_edit" value="{tr}Cancel Edit{/tr}" />
+<input type="submit" title="{tr}Preview your changes.{/tr}" class="wikiaction tips" name="preview" value="{tr}Preview{/tr}" />&nbsp;&nbsp;
+<input type="submit"  title="{tr}Save the page.{/tr}" class="wikiaction tips" name="save" value="{tr}Save{/tr}" />&nbsp;&nbsp;
+<input type="submit" title="{tr}Cancel the edit, you will lose your changes.{/tr}" class="wikiaction tips" name="cancel_edit" value="{tr}Cancel Edit{/tr}" />
 </td></tr>
 </table>
 </form>

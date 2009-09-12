@@ -58,8 +58,8 @@
         {/strip}{/capture}
 	    {* Show user message in style according to 'tooltip' module parameter *}
 	    {assign var=cdate value=$smarty.capture.date}
-	    {if 0 and $tooltip == 1}{* TODO: Improve $userlink modifier one day to handle other attibutes better? *}
-          <b>{strip}{$userlink|replace:" class=":" onmouseover='return overlib(\"$cdate\");' onmouseout='nd();' class="}{/strip}</b>:
+	    {if $tooltip == 1}{* TODO: Improve $userlink modifier one day to handle other attibutes better? *}
+          <b>{strip}{$userlink|replace:"\" href=":"<br /><em>{tr}Shout date:{/tr} `$cdate`</em>\" href="}{/strip}</b>:
         {else}
           <b>{strip}{$userlink}{/strip}</b>, {$cdate}:
         {/if}
