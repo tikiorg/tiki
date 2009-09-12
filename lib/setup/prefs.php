@@ -1355,9 +1355,9 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_iepngfix' => 'n',
 		'iepngfix_selectors' => '#sitelogo a img',
 		'iepngfix_elements' => '',
-		'use_minified_scripts' => 'y',		// for debugging
+		'feature_use_minified_scripts' => 'y',		// for debugging
 		'valid_email_regex' => '^[_a-z0-9\+\.\-]+@[_a-z0-9\.\-]+\.[a-z]{2,4}$',
-		'debug_ignore_xdebug' => 'n',
+		'feature_debug_ignore_xdebug' => 'n',
 		
 		// JQuery
 		'feature_jquery' => 'y',			// Default JS lib for - now "hard-wired" on if javascript_enabled

@@ -531,10 +531,46 @@ function prefs_feature_list() {
 			'help' => 'Group+Alert',
 			'type' => 'flag',
 		),
-		'feature_' => array(
-			'name' => tra(''),
-			'description' => tra(''),
+		'feature_integrator' => array(
+			'name' => tra('Integrator'),
+			'description' => tra('Integrator'),
+			'help' => 'Tiki+Integrator',
+			'type' => 'flag',
+		),
+		'feature_xmlrpc' => array(
+			'name' => tra('XMLRPC API'),
+			'description' => tra('XMLRPC API'),
+			'help' => 'Xmlrpc',
+			'type' => 'flag',
+		),
+		'feature_debug_console' => array(
+			'name' => tra('Debugger Console'),
+			'description' => tra('Debugger Console'),
+			'help' => 'Debugger+Console',
+			'type' => 'flag',
+		),
+		'feature_tikitests' => array(
+			'name' => tra('Tikitests (requires PHP5 or above)'),
+			'description' => tra('Tikitests (requires PHP5 or above)'),
 			'help' => '',
+			'type' => 'flag',
+		),
+		'feature_workflow' => array(
+			'name' => tra('Workflow engine'),
+			'description' => tra('Workflow engine'),
+			'help' => 'Workflow',
+			'type' => 'flag',
+		),
+		'feature_use_minified_scripts' => array(
+			'name' => tra('Use Minified Scripts'),
+			'description' => tra('Use Minified Scripts'),
+			'help' => 'MinifiedScripts',
+			'type' => 'flag',
+		),
+		'feature_debug_ignore_xdebug' => array(
+			'name' => tra('Ignore XDebug'),
+			'description' => tra("Ignore XDebug: Don't use XDebug debugging info if installed. Try this if you use xdebug and are geting blank pages."),
+			'help' => 'DebugIgnoreXDebug',
 			'type' => 'flag',
 		),
 	);

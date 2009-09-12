@@ -156,34 +156,13 @@
 
 {tab name="{tr}Programmer{/tr}"}
 			<div class="admin featurelist">
-				<div style="width: 49%; text-align: left; float: left">
-					<span class="checkbox"><input type="checkbox" name="feature_integrator" {if $prefs.feature_integrator eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Tiki+Integrator" target="tikihelp" class="tikihelp" title="{tr}Integrator{/tr}">{/if} {tr}Integrator{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div>
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_xmlrpc"	{if $prefs.feature_xmlrpc eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Xmlrpc" target="tikihelp" class="tikihelp" title="{tr}XMLRPC API{/tr}">{/if} {tr}XMLRPC API{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div>
-				<div style="width: 49%; text-align: left; float: left">
-					<span class="checkbox"><input type="checkbox" name="feature_debug_console" {if $prefs.feature_debug_console eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Debugger+Console" target="tikihelp" class="tikihelp" title="{tr}Debugger Console{/tr}">{/if} {tr}Debugger Console{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div>
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_tikitests"{if $php_major_version lt 5} disabled="disabled"{/if}{if $prefs.feature_tikitests eq 'y'} checked="checked"{/if}/></span>
-					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}TikiTests" target="tikihelp" class="tikihelp" title="{tr}TikiTests{/tr}">{/if} {tr}TikiTests{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}{if $php_major_version lt 5} ({tr}requires PHP5 or more{/tr}) {/if}</span>
-				</div>
-				<div style="width: 49%; text-align: left; float: left">
-					<span class="checkbox"><input type="checkbox" name="feature_workflow" {if $prefs.feature_workflow eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Workflow" target="tikihelp" class="tikihelp" title="{tr}Workflow{/tr}">{/if} {tr}Workflow engine{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div>
-				<div style="width: 49%; text-align: left; float: left">
-					<span class="checkbox"><input type="checkbox" name="use_minified_scripts" {if $prefs.use_minified_scripts eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}MinifiedScripts" target="tikihelp" class="tikihelp" title="{tr}Use Minified Scripts{/tr}">{/if} {tr}Use Minified Scripts{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div>
-				<div style="width: 49%; text-align: left; float: left">
-					<span class="checkbox"><input type="checkbox" name="debug_ignore_xdebug" {if $prefs.debug_ignore_xdebug eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}DebugIgnoreXDebug" target="tikihelp" class="tikihelp" title="{tr}Ignore XDebug: Don't use XDebug debugging info if installed. Try this if you use xdebug and are geting blank pages.{/tr}">{/if} {tr}Ignore XDebug{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div>
+				{preference name=feature_integrator}
+				{preference name=feature_xmlrpc}
+				{preference name=feature_debug_console}
+				{preference name=feature_tikitests}
+				{preference name=feature_workflow}
+				{preference name=feature_use_minified_scripts}
+				{preference name=feature_debug_ignore_xdebug}
 			</div>
 {/tab}
 {/tabset}

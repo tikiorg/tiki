@@ -58,7 +58,7 @@ if ( $prefs['javascript_enabled'] != 'y' ) {
 			if (($fixondom = $prefs['iepngfix_elements']) != '') {
 				$fixondom = "DD_belatedPNG.fixPng($fixondom); // list of HTMLDomElements to fix separated by commas (default is none)";
 			}
-			if ($prefs['use_minified_scripts'] != 'n') {
+			if ($prefs['feature_use_minified_scripts'] != 'n') {
 				$scriptpath = 'lib/iepngfix/DD_belatedPNG.js';
 			} else {
 				$scriptpath = 'lib/iepngfix/DD_belatedPNG-min.js';
