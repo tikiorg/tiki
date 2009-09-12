@@ -401,8 +401,8 @@ function prefs_feature_list() {
 		),
 		'feature_redirect_on_error' => array(
 			'name' => tra('Redirect On Error'),
-			'description' => tra('Redirect On Error'),
-			'help' => '',
+			'description' => tra('Redirect to a similar wiki page if an exact match is not found.'),
+			'help' => 'Redirect+On+Error',
 			'type' => 'flag',
 		),
 		'feature_comm' => array(
