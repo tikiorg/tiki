@@ -85,75 +85,36 @@
 				<fieldset>
 					<legend class="heading">{icon _id="accept"}<span>{tr}Seem ok{/tr}</span></legend>
 					<span class="description">{tr}Features that may change or might be re-worked in the future{/tr}</span>
-					<div class="half_width">
-						<span class="checkbox"><input type="checkbox" name="feature_ajax" {if $prefs.feature_ajax eq 'y'}checked="checked"{/if}/></span>
-						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Ajax" target="tikihelp" class="tikihelp" title="{tr}Ajax{/tr}: {tr}Ajax{/tr}">{/if} {tr}Ajax{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-					</div>
-					<div class="half_width">
-						<span class="checkbox"><input type="checkbox" name="feature_mobile" {if $prefs.feature_mobile eq 'y'}checked="checked"{/if}/></span>
-						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="http://mobile.tikiwiki.org/" target="tikihelp" class="tikihelp" title="{tr}Mobile{/tr}: {tr}Mobile{/tr}">{/if} {tr}Mobile{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-					</div>
-					<div class="half_width">
-						<span class="checkbox"><input type="checkbox" name="feature_morcego" {if $prefs.feature_morcego eq 'y'}checked="checked"{/if}/></span>
-						<span class="label">{if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Wiki+3D" target="tikihelp" class="tikihelp" title="{tr}Morcego 3D browser{/tr}: {tr}Morcego 3D browser{/tr}">{/if}{tr}Morcego 3D browser{/tr}{if $prefs.feature_help eq 'y'}</a>{/if}</span>
-					 </div>
-					<div class="half_width">
-						<span class="checkbox"><input type="checkbox" name="feature_webmail" {if $prefs.feature_webmail eq 'y'}checked="checked"{/if}/></span>
-						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Webmail" target="tikihelp" class="tikihelp" title="{tr}Webmail{/tr}">{/if} {tr}Webmail{/tr} {if $prefs.feature_help eq 'y'}</a>{/if} </span>
-					</div>
+						{preference name=feature_ajax}
+						{preference name=feature_mobile}
+						{preference name=feature_morcego}
+						{preference name=feature_webmail}
 				</fieldset>
+
 				<fieldset>
 					<legend class="heading">{icon _id="error"}<span>{tr}Need polish{/tr}</span></legend>
 					<span class="description">{tr}Features that need admin help and user patience to work well{/tr}</span>
-					<div class="half_width">
-						<span class="checkbox"><input type="checkbox" name="feature_intertiki" {if $prefs.feature_intertiki eq 'y'}checked="checked"{/if}/></span>
-						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}InterTiki" target="tikihelp" class="tikihelp" title="{tr}Intertiki{/tr}: {tr}Intertiki{/tr}">{/if} {tr}Intertiki{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-					</div>
-					<div class="half_width">
-						<span class="checkbox"><input type="checkbox" name="feature_mailin" {if $prefs.feature_mailin eq 'y'}checked="checked"{/if}/></span>
-						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Mail-in" target="tikihelp" class="tikihelp" title="{tr}Mail-in{/tr}">{/if} {tr}Mail-in{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-					</div>
-					<div class="half_width">
-						<span class="checkbox"><input type="checkbox" name="feature_wiki_mindmap" {if $prefs.feature_wiki_mindmap eq 'y'}checked="checked"{/if}/></span>
-						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}MindMap" target="tikihelp" class="tikihelp" title="{tr}Mindmap{/tr}">{/if} {tr}Mindmap{/tr} {if $prefs.feature_help eq 'y'}</a>{/if} </span>
-					</div>
-					<div class="half_width">
-						<span class="checkbox"><input type="checkbox" name="feature_print_indexed" {if $prefs.feature_print_indexed eq 'y'}checked="checked"{/if}/></span>
-						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Print+Indexed" target="tikihelp" class="tikihelp" title="{tr}Print Indexed{/tr}: {tr}Print Indexed{/tr}">{/if} {tr}Print Indexed{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-					</div>
-					<div class="half_width">
-						 <span class="checkbox"><input type="checkbox" name="feature_sefurl" {if $prefs.feature_sefurl eq 'y'}checked="checked"{/if}/></span>
-						 <span class="label">{if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Rewrite+Rules" target="tikihelp" class="tikihelp" title="{tr}SEFURL{/tr}">{/if} {tr}Search engine friendly url{/tr}{if $prefs.feature_help eq 'y'}</a>{/if}</span>
-					</div>
-					<div class="half_width">
-						<span class="checkbox"><input type="checkbox" name="feature_sheet" {if $prefs.feature_sheet eq 'y'}checked="checked"{/if}/></span>
-						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Spreadsheet" target="tikihelp" class="tikihelp" title="{tr}Spreadsheet{/tr}: {tr}TikiSheet{/tr}">{/if} {tr}Tiki Sheet{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-					</div>
-					<div class="half_width">
-						<span class="checkbox"><input type="checkbox" name="feature_wysiwyg" {if $prefs.feature_wysiwyg eq 'y'}checked="checked"{/if}/></span>
-						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Wysiwyg+Editor" target="tikihelp" class="tikihelp" title="{tr}Wysiwyg editor{/tr}: {tr}Wysiwyg editor{/tr}">{/if} {tr}Wysiwyg editor{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-					</div>
-					<div class="half_width">
-						<span class="checkbox"><input type="checkbox" name="feature_ajax_autosave" {if $prefs.feature_ajax_autosave eq 'y'}checked="checked"{/if}/></span>
-						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Lost+Edit+Protection" target="tikihelp" class="tikihelp" title="{tr}Ajax{/tr}: {tr}Ajax auto-save{/tr}">{/if} {tr}Ajax auto-save{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}{if $prefs.feature_ajax neq 'y'} ({tr}required{/tr}: {tr}Ajax{/tr}){/if}</span>
-					</div>
-					{preference name='feature_htmlpurifier_output'}
+						{preference name=feature_intertiki}
+						{preference name=feature_mailin}
+						{preference name=feature_wiki_mindmap}
+						{preference name=feature_print_indexed}
+						{preference name=feature_sefurl}
+						{preference name=feature_sheet}
+						{preference name=feature_wysiwyg}
+						{preference name=feature_ajax_autosave}
+						{preference name='feature_htmlpurifier_output'}
 				</fieldset>
+
 				<fieldset>
 					<legend class="heading">{icon _id="exclamation"}<span>{tr}Malfunctioning{/tr}</span></legend>
 					<span class="description">{tr}These features have critical faults - not recommended{/tr}</span>
-					<div class="half_width">
-						<span class="checkbox"><input type="checkbox" name="feature_workspaces" {if $prefs.feature_workspaces eq 'y'}checked="checked"{/if}/></span>
-						<span class="label"><a>{tr}Workspaces{/tr}</a></span>
-					</div>
+						{preference name=feature_workspaces}
 				</fieldset>
+
 				<fieldset>
 					<legend class="heading">{icon _id="information_gray"}<span>{tr}Neglected{/tr}</span></legend>
 					<span class="description">{tr}Old features no longer maintained{/tr}</span>
-					<div class="half_width">
-						<span class="checkbox"><input type="checkbox" name="feature_friends" {if $prefs.feature_friends eq 'y'}checked="checked"{/if}/></span>
-						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Friendship" target="tikihelp" class="tikihelp" title="{tr}Friendship{/tr}: {tr}Friendship Network{/tr}">{/if} {tr}Friendship Network{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-					</div>
+						{preference name=feature_friends}
 				</fieldset>
 			</div>
 {/tab}
