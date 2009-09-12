@@ -1020,13 +1020,13 @@ class TrackerLib extends TikiLib {
 			$this->tracker_infocache['users_group'][$field['options_array'][0]] = $userlib->get_users_created_group($field['options_array'][0]);
 		}
 		if (isset($this->tracker_infocache['users_group'][$field['options_array'][0]][$itemUser])) {
-			if ($field['options_array'][1] == 'date') {
+			if (isset($field['options_array'][1]) && $field['options_array'][1] == 'date') {
 				$value = $this->tracker_infocache['users_group'][$field['options_array'][0]][$itemUser];
 			} else {
 				$value = 'Yes';
 			}
 		} else {
-			if ($field['options_array'][1] == 'date') {
+			if (isset($field['options_array'][1]) && $field['options_array'][1] == 'date') {
 				$value = '';
 			} else {
 				$value = 'No';

@@ -7,8 +7,9 @@
 //   headclass -- css class to apply on head row
 //
 // Usage:
-//   The data (and the head paramter) is given one row per line, with columns
-//   separated by ~|~.
+//   - The data (and the head paramter) is given one row per line, with columns
+//   separated by | or ~|~.
+//   - In any cell, indicate number of columns to span with forward slashes at the beginning, number of rows to span with backslashes.	
 //
 // Example:
 // {FANCYTABLE( head=" header column 1 ~|~ header column 2 ~|~ header column 3", headclass=xx )}
@@ -25,7 +26,7 @@ function wikiplugin_fancytable_info() {
 		'documentation' => 'PluginFancyTable',
 		'description' => tra("Displays the data using the Tikiwiki odd/even table style"),
 		'prefs' => array('wikiplugin_fancytable'),
-		'body' => tra('One row per line, cells separated by ~|~.'),
+		'body' => tra('One row per line, cells separated by | or ~|~.'),
 		'params' => array(
 			'head' => array(
 				'required' => false,
@@ -45,29 +46,45 @@ function wikiplugin_fancytable($data, $params) {
 	global $tikilib;
 
 	// Start the table
-	$wret = "<table class=\"normal\">";
+	$wret = '<table class="normal">';
 
-	$tdend = "</td>";
-	$trbeg = "<tr>";
-	$trend = "</tr>";
+	$tdend = '</td>';
+	$trbeg = '<tr>';
+	$trend = '</tr>';
 
 	// Parse the parameters
 	extract ($params,EXTR_SKIP);
 
 	if (isset($headclass)) {
 		if (strpos($headclass,'"')) $headclass = str_replace('"',"'",$class);
-		$tdhdr = "<td class=\"heading $headclass\">";
+		$tdhdr = "<td class=\"heading $headclass\"";
 	} else {
-		$tdhdr = "<td class=\"heading\">";
+		$tdhdr = '<td class="heading"';
 	}
 
 	if (isset($head)) {
-		$parts = explode("~|~", $head);
+		if (strpos($head, '~|~') !== FALSE) {
+			$separator = '~|~'; 
+		} elseif (strpos($head, '|') !== FALSE) {
+			$separator = '|';
+		}
+		
+		$parts = explode($separator, $head);
 
-		$row = "";
+		$row = '';
 
 		foreach ($parts as $column) {
-			$row .= $tdhdr . $column . $tdend;
+			$tdhdrmid = '';
+			if (preg_match_all("/^[\/]+/", $column, $matches)) {
+				$tdhdrmid = ' colspan="' . strlen($matches[0][0]) . '">';
+				$column = substr($column, strlen($matches[0][0]));
+			} elseif (preg_match_all("/^[\\\\]+/", $column, $matches)) {
+				$tdhdrmid = ' rowspan="' . strlen($matches[0][0]) . '">';
+				$column = substr($column, strlen($matches[0][0]));
+			} else {
+				$tdhdrmid = '>';
+			}
+			$row .= $tdhdr . $tdhdrmid . $column . $tdend;
 		}
 
 		$wret .= $trbeg . $row . $trend;
@@ -76,29 +93,45 @@ function wikiplugin_fancytable($data, $params) {
 	// Each line of the data is a row, the first line is the header
 	$row_is_odd = true;
 	$lines = split("\n", $data);
+	if (strpos($data, '~|~') !== FALSE) {
+		$separator = '~|~'; 
+	} elseif (strpos($data, '|') !== FALSE) {
+		$separator = '|';
+	}
 
 	foreach ($lines as $line) {
 		$line = trim($line);
 
 		if (strlen($line) > 0) {
 			if ($row_is_odd) {
-				$tdbeg = "<td class=\"odd\">";
+				$tdbeg = '<td class="odd"';
 
 				$row_is_odd = false;
 			} else {
-				$tdbeg = "<td class=\"even\">";
+				$tdbeg = '<td class="even"';
 
 				$row_is_odd = true;
 			}
-
-			$parts = explode("~|~", $line);
-			$row = "";
+			
+			$parts = explode($separator, $line);
+			$row = '';
 
 			foreach ($parts as $column) {
-				if (strcmp(trim($column), "~blank~") == 0) {
-					$row .= $tdbeg . "&nbsp;" . $tdend;
+				$tdmid = '';
+				if (preg_match_all("/^[\/]+/", $column, $matches)) {
+					$tdmid = ' colspan="' . strlen($matches[0][0]) . '">';
+					$column = substr($column, strlen($matches[0][0]));
+				} elseif (preg_match_all("/^[\\\\]+/", $column, $matches)) {
+					$tdmid = ' rowspan="' . strlen($matches[0][0]) . '">';
+					$column = substr($column, strlen($matches[0][0]));
 				} else {
-					$row .= $tdbeg . $column . $tdend;
+					$tdmid = '>';
+				}
+				
+				if (strcmp(trim($column), '~blank~') == 0) {
+					$row .= $tdbeg . '&nbsp;' . $tdend;
+				} else {
+					$row .= $tdbeg . $tdmid . $column . $tdend;
 				}
 			}
 
@@ -107,7 +140,7 @@ function wikiplugin_fancytable($data, $params) {
 	}
 
 	// End the table
-	$wret .= "</table>";
+	$wret .= '</table>';
 
 	return $wret;
 }

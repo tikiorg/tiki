@@ -12,7 +12,7 @@ function module_forums_most_read_topics_info() {
 		'description' => tra('Displays the specified number of the forum topics with the most reads.'),
 		'prefs' => array( 'feature_forums' ),
 		'params' => array(),
-		'common_params' => array('nonums')
+		'common_params' => array('nonums', 'rows')
 	);
 }
 

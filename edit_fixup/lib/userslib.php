@@ -2264,7 +2264,7 @@ function get_included_groups($group, $recur=true) {
 	}
     }
 
-    function change_user_email($user, $email, $pass) {
+    function change_user_email($user, $email, $pass=null) {
     // Need to change the email-address for notifications, too
 	global $notificationlib; include_once('lib/notifications/notificationlib.php');
     $oldMail = $this->get_user_email($user);

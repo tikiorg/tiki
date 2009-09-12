@@ -5723,6 +5723,9 @@ class TikiLib extends TikiDb_Bridge {
 			// Apply filters on values individually
 			if (!empty($args)) {
 				foreach( $args as $argKey => &$argValue ) {
+					if (!isset($params[$argKey])) {
+						continue;// extra params
+					}
 					$paramInfo = $params[$argKey];
 					$filter = isset($paramInfo['filter']) ? TikiFilter::get($paramInfo['filter']) : $default;
 					$argValue = $this->htmldecode($argValue);

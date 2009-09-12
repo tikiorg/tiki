@@ -259,7 +259,7 @@ function searchrep() {
 							{/if}
 							{if $prefs.feature_freetags eq 'y' and $tiki_p_freetags_tag eq 'y'}
 								<fieldset>
-									<legend>{tr}Freetags{/tr}</a></legend>
+									<legend>{tr}Freetags{/tr}</legend>
 									<table>
 										{include file='freetag.tpl'}
 									</table>
@@ -267,7 +267,7 @@ function searchrep() {
 							{/if}
 							{if $prefs.feature_wiki_icache eq 'y'}
 								<fieldset>
-									<legend>{tr}Cache{/tr}</a></legend>
+									<legend>{tr}Cache{/tr}</legend>
 								    <select id="wiki_cache" name="wiki_cache">
 									    <option value="0" {if $prefs.wiki_cache eq 0}selected="selected"{/if}>0 ({tr}no cache{/tr})</option>
 									    <option value="60" {if $prefs.wiki_cache eq 60}selected="selected"{/if}>1 {tr}minute{/tr}</option>
@@ -282,7 +282,7 @@ function searchrep() {
 							{/if}
 							{if $prefs.feature_contribution eq 'y'}
 								<fieldset>
-									<legend>{tr}Contributions{/tr}</a></legend>
+									<legend>{tr}Contributions{/tr}</legend>
 									<table>
 										{include file='contribution.tpl'}
 									</table>
