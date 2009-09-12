@@ -12,20 +12,13 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 // Process Features form(s)
 if (isset($_REQUEST["features"])) {
 	$features_toggles = array(
-		"feature_action_calendar",
-		"feature_banning",
-		"feature_comm",
 		"feature_contacts",
-		"feature_custom_home",
 		"feature_debug_console",
 		"feature_events", //2009-04-29 marclaporte: can we remove this?
 		"feature_integrator",
 		"feature_messages",
 		"feature_minical",
 		"feature_notepad",
-		"feature_redirect_on_error",
-		"feature_referer_stats",
-		"feature_stats",
 		"feature_tasks",
 		"feature_mytiki",
 		"feature_userPreferences",

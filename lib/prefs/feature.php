@@ -393,6 +393,48 @@ function prefs_feature_list() {
 			'help' => 'Friendship',
 			'type' => 'flag',
 		),
+		'feature_banning' => array(
+			'name' => tra('Banning system'),
+			'description' => tra('Banning system'),
+			'help' => 'Banning',
+			'type' => 'flag',
+		),
+		'feature_stats' => array(
+			'name' => tra('Stats'),
+			'description' => tra('Stats'),
+			'help' => 'Stats',
+			'type' => 'flag',
+		),
+		'feature_action_calendar' => array(
+			'name' => tra('Tiki action calendar'),
+			'description' => tra('Tiki action calendar'),
+			'help' => 'Action+Calendar',
+			'type' => 'flag',
+		),
+		'feature_referer_stats' => array(
+			'name' => tra('Referer Stats'),
+			'description' => tra('Referer Stats'),
+			'help' => 'Stats',
+			'type' => 'flag',
+		),
+		'feature_redirect_on_error' => array(
+			'name' => tra('Redirect On Error'),
+			'description' => tra('Redirect On Error'),
+			'help' => '',
+			'type' => 'flag',
+		),
+		'feature_comm' => array(
+			'name' => tra('Communications (send/receive objects)'),
+			'description' => tra('Communications (send/receive objects)'),
+			'help' => 'Communication+Center',
+			'type' => 'flag',
+		),
+		'feature_custom_home' => array(
+			'name' => tra('Custom Home'),
+			'description' => tra('Custom Home'),
+			'help' => 'Custom+Home',
+			'type' => 'flag',
+		),
 		'feature_' => array(
 			'name' => tra(''),
 			'description' => tra(''),

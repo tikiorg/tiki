@@ -122,34 +122,13 @@
 {* ---------- Administration features ------------ *}
 {tab name="{tr}Administration{/tr}"}
 			<div class="admin featurelist">
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_banning" {if $prefs.feature_banning eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Banning" target="tikihelp" class="tikihelp" title="{tr}Banning System{/tr}">{/if} {tr}Banning system{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div>
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_stats" {if $prefs.feature_stats eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Stats" target="tikihelp" class="tikihelp" title="{tr}Stats{/tr}">{/if} {tr}Stats{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div>
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_action_calendar" {if $prefs.feature_action_calendar eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Action+Calendar" target="tikihelp" class="tikihelp" title="{tr}Action Calendar{/tr}: {tr}Action Calendar{/tr}">{/if} {tr}Tiki action calendar{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div>
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_referer_stats"					{if $prefs.feature_referer_stats eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Stats" target="tikihelp" class="tikihelp" title="{tr}Referer Stats{/tr}">{/if} {tr}Referer Stats{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div>
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_redirect_on_error"			{if $prefs.feature_redirect_on_error eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> {tr}Redirect On Error{/tr} </span>
-				</div>
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_comm" {if $prefs.feature_comm eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Communication+Center" target="tikihelp" class="tikihelp" title="{tr}Communications (send/receive objects){/tr}">{/if} {tr}Communications (send/receive objects){/tr} {if $prefs.feature_help eq 'y'}</a>{/if} </span>
-				</div>
-				<div class="half_width">
-					<span class="checkbox"><input type="checkbox" name="feature_custom_home" {if $prefs.feature_custom_home eq 'y'}checked="checked"{/if}/></span>
-					<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Custom+Home" target="tikihelp" class="tikihelp" title="{tr}Custom Home{/tr}">{/if} {tr}Custom Home{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-				</div>
+				{preference name=feature_banning}
+				{preference name=feature_stats}
+				{preference name=feature_action_calendar}
+				{preference name=feature_referer_stats}
+				{preference name=feature_redirect_on_error}
+				{preference name=feature_comm}
+				{preference name=feature_custom_home}
 			</div>
 {/tab}
 			
