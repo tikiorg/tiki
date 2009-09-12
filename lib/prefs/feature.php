@@ -23,7 +23,7 @@ function prefs_feature_list() {
 		'feature_machine_translation' => array(
 			'name' => tra('Machine Translation (by Google Translate)'),
 			'description' => tra('Uses Google Translate to translate the content of wiki pages to other languages.'),
-			'help' => 'Translating+Tiki+Content',
+			'help' => 'Translating+Content',
 			'warning' => tra('Experimental. This feature is still under development.'),
 			'type' => 'flag',
 		),	
@@ -175,7 +175,7 @@ function prefs_feature_list() {
 		),
 		'feature_gmap' => array(
 			'name' => tra('Google Maps'),
-			'description' => tra('Use of Google Maps interactively inside Tiki'),
+			'description' => tra('Interactive use of Google Maps'),
 			'help' => 'GMap',
 			'type' => 'flag',
 		),
@@ -255,9 +255,9 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),
 		'feature_htmlpurifier_output' => array(
-			'name' => tra('Tiki Ouput Should be HTMLPurified'),
-			'description' => tra('This enable HTPMPurifier on Tiki outputs to filter remaining security problems like XSS.'),
-			'help' => 'http://themes.tikiwiki.org/HTMLPurifier',
+			'name' => tra('Ouput Should be HTMLPurified'),
+			'description' => tra('This enable HTPMPurifier on outputs to filter remaining security problems like XSS.'),
+			'help' => 'http://doc.tikiwiki.org/HTMLPurifier',
 			'type' => 'flag',
 			'default' => 'n',
 		),
@@ -297,12 +297,6 @@ function prefs_feature_list() {
 			'help' => 'Ajax',
 			'type' => 'flag',
 		),
-		'feature_' => array(
-			'name' => tra(''),
-			'description' => tra(''),
-			'help' => '',
-			'type' => 'flag',
-		),
 		'feature_mobile' => array(
 			'name' => tra('Mobile'),
 			'description' => tra('Mobile'),
@@ -318,7 +312,7 @@ function prefs_feature_list() {
 		'feature_webmail' => array(
 			'name' => tra('Webmail'),
 			'description' => tra('Webmail'),
-			'help' => 'WEbmail',
+			'help' => 'Webmail',
 			'type' => 'flag',
 		),
 		'feature_intertiki' => array(
@@ -345,18 +339,6 @@ function prefs_feature_list() {
 			'help' => 'Print+Indexed',
 			'type' => 'flag',
 		),
-		'feature_' => array(
-			'name' => tra(''),
-			'description' => tra(''),
-			'help' => '',
-			'type' => 'flag',
-		),
-		'feature_' => array(
-			'name' => tra(''),
-			'description' => tra(''),
-			'help' => '',
-			'type' => 'flag',
-		),
 		'feature_sefurl' => array(
 			'name' => tra('Search engine friendly url'),
 			'description' => tra('Search engine friendly url'),
@@ -364,15 +346,15 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),
 		'feature_sheet' => array(
-			'name' => tra('Tiki Sheet'),
-			'description' => tra('Tiki Sheet'),
-			'help' => 'Spreadsheet',
+			'name' => tra('SpreadSheet'),
+			'description' => tra('SpreadSheet'),
+			'help' => 'SpreadSheet',
 			'type' => 'flag',
 		),
 		'feature_wysiwyg' => array(
 			'name' => tra('Wysiwyg editor'),
 			'description' => tra('Wysiwyg editor'),
-			'help' => 'Wysiwyg+Editor',
+			'help' => 'Wysiwyg',
 			'type' => 'flag',
 		),
 		'feature_ajax_autosave' => array(
@@ -383,8 +365,8 @@ function prefs_feature_list() {
 		),
 		'feature_workspaces' => array(
 			'name' => tra('Workspaces'),
-			'description' => tra('Worksapces'),
-			'help' => '',
+			'description' => tra('Workspace'),
+			'help' => 'Workspace',
 			'type' => 'flag',
 		),
 		'feature_friends' => array(
@@ -406,8 +388,8 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),
 		'feature_action_calendar' => array(
-			'name' => tra('Tiki action calendar'),
-			'description' => tra('Tiki action calendar'),
+			'name' => tra('Action calendar'),
+			'description' => tra('Action calendar'),
 			'help' => 'Action+Calendar',
 			'type' => 'flag',
 		),
@@ -448,8 +430,8 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),
 		'feature_userPreferences' => array(
-			'name' => tra('User Preferenes Screen'),
-			'description' => tra('User Preferenes Screen'),
+			'name' => tra('User Preferences Screen'),
+			'description' => tra('User Preferences Screen'),
 			'help' => 'User+Preferences',
 			'type' => 'flag',
 		),
@@ -534,7 +516,7 @@ function prefs_feature_list() {
 		'feature_integrator' => array(
 			'name' => tra('Integrator'),
 			'description' => tra('Integrator'),
-			'help' => 'Tiki+Integrator',
+			'help' => 'Integrator',
 			'type' => 'flag',
 		),
 		'feature_xmlrpc' => array(
@@ -550,9 +532,9 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),
 		'feature_tikitests' => array(
-			'name' => tra('Tikitests (requires PHP5 or above)'),
-			'description' => tra('Tikitests (requires PHP5 or above)'),
-			'help' => '',
+			'name' => tra('TikiTests'),
+			'description' => tra('TikiTests'),
+			'help' => 'TikiTests',
 			'type' => 'flag',
 		),
 		'feature_workflow' => array(
@@ -570,7 +552,7 @@ function prefs_feature_list() {
 		'feature_debug_ignore_xdebug' => array(
 			'name' => tra('Ignore XDebug'),
 			'description' => tra("Ignore XDebug: Don't use XDebug debugging info if installed. Try this if you use xdebug and are geting blank pages."),
-			'help' => 'DebugIgnoreXDebug',
+			'help' => '',
 			'type' => 'flag',
 		),
 	);

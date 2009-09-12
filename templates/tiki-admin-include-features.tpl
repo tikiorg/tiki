@@ -102,7 +102,7 @@
 						{preference name=feature_sheet}
 						{preference name=feature_wysiwyg}
 						{preference name=feature_ajax_autosave}
-						{preference name='feature_htmlpurifier_output'}
+						{preference name=feature_htmlpurifier_output}
 				</fieldset>
 
 				<fieldset>
