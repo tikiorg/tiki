@@ -4210,7 +4210,15 @@ class TikiLib extends TikiDB {
 			return $ret;
 			/* else : all the perms have already been set in tiki-setup_base */
 		} elseif ($perms = $this->get_local_perms($user, $objectId, $objectType, $info, $global)) {
-			return $ret;
+			if ($global) {
+				foreach ($perms as $perm) {
+					global $$perm;
+					$$perm = 'y';
+					$smarty->assign("$perm", 'y');
+				}
+			} else {
+				return $perms;
+			}
 		} elseif ($userlib->object_has_one_permission($objectId, $objectType)) {
 			$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', $this->get_permGroup_from_objectType($objectType));
 			$userPerms = $userlib->get_object_permissions_for_user($objectId, $objectType, $user);
