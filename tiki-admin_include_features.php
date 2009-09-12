@@ -12,28 +12,12 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 // Process Features form(s)
 if (isset($_REQUEST["features"])) {
 	$features_toggles = array(
-		"feature_contacts",
 		"feature_debug_console",
 		"feature_events", //2009-04-29 marclaporte: can we remove this?
 		"feature_integrator",
-		"feature_messages",
-		"feature_minical",
-		"feature_notepad",
-		"feature_tasks",
-		"feature_mytiki",
-		"feature_userPreferences",
-		"feature_user_bookmarks",
-		"feature_user_watches",
-		"feature_group_watches",
-		"feature_daily_report_watches",
-		"feature_user_watches_translations",
-		"feature_userfiles",
-		"feature_usermenu",
 		"feature_workflow",
 		"feature_xmlrpc",
-		"feature_userlevels",
 		"feature_tikitests",
-		"feature_groupalert",
 		"use_minified_scripts",
 		'debug_ignore_xdebug',
 		'feature_purifier',
