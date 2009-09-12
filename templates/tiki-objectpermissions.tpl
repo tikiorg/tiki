@@ -63,7 +63,7 @@
 			{/remarksbox}
 		{/if}
 
-		{popup_link block="column_switches_div"}{tr}Show/hide columns{/tr}{/popup_link}
+		{popup_link block="column_switches_div"}{tr}Show/hide Group List{/tr}{/popup_link}
 		
 		<div id="column_switches_div" style="display: none">
 			<h3>{tr}Show/hide columns{/tr}</h3>
