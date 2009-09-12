@@ -1,4 +1,4 @@
-<div class="cbox">
+<div class="cbox" id="{$plugin_fingerprint|escape}">
 <div class="cbox-title">
 	{icon _id=error style="vertical-align:middle"}
 	{if $plugin_status eq 'rejected'}

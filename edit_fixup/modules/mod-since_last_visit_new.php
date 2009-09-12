@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 	exit;
 }
 global $smarty;
-require_once('lib/smarty_tiki/modifier.userlink.php');
+require_once('lib/smarty_tiki/modifier.username.php');
 
 if (!function_exists('mod_since_last_visit_new_help')) {
 	function mod_since_last_visit_new_help() {
@@ -104,7 +104,7 @@ function since_last_visit_new($user, $params = null) {
 			if (isset($ret["items"]["comments"]["list"][$count]["href"])) {
 				$ret["items"]["comments"]["list"][$count]["href"] .= '&comzone=show#threadId'.$res['threadId'];
 			}
-			$ret["items"]["comments"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["commentDate"]) ." ". tra("by") ." ". $res["userName"];
+			$ret["items"]["comments"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["commentDate"]) ." ". tra("by") ." ". smarty_modifier_username($res["userName"]);
 			$ret["items"]["comments"]["list"][$count]["label"] = $res["title"]; 
 			$count++;
 		}

@@ -163,12 +163,12 @@ $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 			$jq(element).cluetip(options);
 		}
 		
-		$jq("[onmouseover*='overlib(']").each(function() {
+		$jq("a[onmouseover*='overlib('], input[onmouseover*='overlib(']").each(function() {
 			tip = $jq(this)[0].getAttribute('onmouseover');			// use the html call to get the text, not the fn
 			convertOverlib(this, tip, {});
 		});
 		
-		$jq("[onclick*='overlib(']").each(function() {			// TODO refactor!!!!
+		$jq("a[onclick*='overlib('], input[onclick*='overlib(']").each(function() {			// TODO refactor!!!!
 			tip = $jq(this)[0].getAttribute('onclick');			// use the html call to get the text, not the fn
 			convertOverlib(this, tip, {activation: 'click'});
 		});

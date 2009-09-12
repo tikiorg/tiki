@@ -2944,7 +2944,7 @@ class TikiLib extends TikiDb_Bridge {
 		return $ret;
 	}
 
-	function list_posts($offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '', $filterByBlogId = -1) {
+	function list_posts($offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '', $filterByBlogId = -1, $author='') {
 
 		$authorized_blogs = $this->list_blogs();
 		$permit_blogs = array();
@@ -2971,6 +2971,15 @@ class TikiLib extends TikiDb_Bridge {
 			}
 			$mid .= " ( `data` like ? ) ";
 			$bindvars[] = $findesc;
+		}
+		if (!empty($author)) {
+			if ($mid == '') {
+				$mid = ' where ';
+			} else {
+				$mid .= ' and ';
+			}
+			$mid .= 'user =?';
+			$bindvars[] = $author;
 		}
 
 		$query = "select * from `tiki_blog_posts` $mid order by ".$this->convertSortMode($sort_mode);
@@ -5665,6 +5674,16 @@ class TikiLib extends TikiDb_Bridge {
 		return $list;
 	}
 
+	function approve_all_pending_plugins() {
+	// Update all pending plugins to accept
+	$this->query("UPDATE tiki_plugin_security SET status='accept', approval_by='admin' WHERE status='pending'");  
+	}
+
+	function approve_selected_pending_plugings($fp) {
+	// Update selected pending plugins to accept
+	$this->query("UPDATE tiki_plugin_security SET status='accept', approval_by='admin' WHERE fingerprint = ?", array( $fp ));  
+	}
+
 	function plugin_fingerprint( $name, $meta, $data, $args ) {
 		$validate = $meta['validate'];
 		if( $validate == 'all' || $validate == 'body' )
@@ -6682,7 +6701,7 @@ class TikiLib extends TikiDb_Bridge {
 				$line = '<hr />';
 			} else {
 				$litype = substr($line, 0, 1);
-				if ($litype == '*' || $litype == '#') {
+				if (($litype == '*' || $litype == '#') && !(!count($listbeg) && preg_match('/^\*+$/', $line))) {
 					// Close open paragraph, but not lists or div's
 					$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 0, 0);
 					$listlevel = $this->how_many_at_start($line, $litype);

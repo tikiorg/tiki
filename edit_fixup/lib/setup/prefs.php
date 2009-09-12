@@ -86,7 +86,7 @@ function get_default_prefs() {
 		'feature_wiki_templates' => 'n',
 		'feature_wiki_undo' => 'n',
 		'feature_wiki_userpage' => 'y',
-		'feature_wiki_userpage_prefix' => 'UserPage',
+		'feature_wiki_userpage_prefix' => 'User:',
 		'feature_wiki_usrlock' => 'n',
 		'feature_wiki_feedback_polls' => array(),
 		'feature_wiki_save_draft' => 'n',
@@ -230,7 +230,7 @@ function get_default_prefs() {
 		'wikiplugin_listpages' => 'n',
 		'wikiplugin_lsdir' => 'n',
 		'wikiplugin_map' => 'y',
-		'wikiplugin_mcalendar' => 'y',
+		'wikiplugin_mcalendar' => 'n',
 		'wikiplugin_mediaplayer' => 'y',
 		'wikiplugin_memberlist' => 'n',
 		'wikiplugin_miniquiz' => 'y',
@@ -715,6 +715,7 @@ function get_default_prefs() {
 		'users_prefs_mailCharset' => 'utf-8',
 		'users_prefs_mailCurrentAccount' => '0',
 		'validateRegistration' => 'n',
+		'url_after_validation' => '',
 
 		// user messages
 		'feature_messages' => 'n',
@@ -1347,9 +1348,9 @@ function get_default_prefs() {
 		'feature_iepngfix' => 'n',
 		'iepngfix_selectors' => '#sitelogo a img',
 		'iepngfix_elements' => '',
-		'use_minified_scripts' => 'y',		// for debugging
+		'feature_use_minified_scripts' => 'y',		// for debugging
 		'valid_email_regex' => '^[_a-z0-9\+\.\-]+@[_a-z0-9\.\-]+\.[a-z]{2,4}$',
-		'debug_ignore_xdebug' => 'n',
+		'feature_debug_ignore_xdebug' => 'n',
 		
 		// JQuery
 		'feature_jquery' => 'y',			// Default JS lib for - now "hard-wired" on if javascript_enabled

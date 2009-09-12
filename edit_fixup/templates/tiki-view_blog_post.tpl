@@ -1,5 +1,5 @@
-{title help="Blogs"}{$blog_data.title}{/title}
-<a class="link" href="tiki-list_blogs.php">{tr}Blogs{/tr}</a> {$prefs.site_crumb_seper} <a class="link" href="tiki-view_blog.php?blogId={$post_info.blogId}">{$blog_data.title}</a> {$prefs.site_crumb_seper} {$post_info.title}
+{title help='Blogs' url="tiki-view_blog.php?blogId=$blogId"}{$blog_data.title|escape}{/title}
+<a class="link" href="tiki-list_blogs.php">{tr}Blogs{/tr}</a> {$prefs.site_crumb_seper} <a class="link" href="tiki-view_blog.php?blogId={$post_info.blogId}">{$blog_data.title|escape}</a> {$prefs.site_crumb_seper} {$post_info.title|escape}
 
 <div class="post">
 	<div class="postbody">
@@ -9,7 +9,8 @@
   {if $tags.data|@count >0}
     <div class="freetaglist">
       {foreach from=$tags.data item=tag}
-  	    <a class="freetag" href="tiki-browse_freetags.php?tag={$tag.tag}">{$tag.tag}</a> 
+	  {capture name=tagurl}{if (strstr($tag.tag, ' '))}"{$tag.tag}"{else}{$tag.tag}{/if}{/capture}
+  	  <a class="freetag" href="tiki-browse_freetags.php?tag={$smarty.capture.tagurl|escape:'url'}">{$tag.tag}</a> 
       {/foreach}
     </div>
   {/if}
@@ -26,16 +27,16 @@
 			</div>
 		<div class="author_info">
 			{if $blog_data.use_title eq 'y'}
-				{tr}By{/tr} {$post_info.user} {tr}on{/tr} {$post_info.created|tiki_short_datetime}
+				{tr}By{/tr} {$post_info.user|userlink} {tr}on{/tr} {$post_info.created|tiki_short_datetime}
 			{else}
-				{tr}By{/tr} {$post_info.user}
+				{tr}By{/tr} {$post_info.user|userlink}
 			{/if}
 		</div>
 	</div>
 	<div class="clearfix postbody-title">
 		<div class="title">
 			{if $blog_data.use_title eq 'y'}
-				<h2>{$post_info.title}</h2>
+				<h2>{$post_info.title|escape}</h2>
 			{else}
 				<h2>{$post_info.created|tiki_short_datetime}</h2>
 			{/if}
@@ -44,7 +45,8 @@
 		{if $tags.data|@count >0}
 			<div class="freetaglist">
     			{foreach from=$tags.data item=tag}
-					<a class="freetag" href="tiki-browse_freetags.php?tag={$tag.tag}">{$tag.tag}</a> 
+					{capture name=tagurl}{if (strstr($tag.tag, ' '))}"{$tag.tag}"{else}{$tag.tag}{/if}{/capture}
+					<a class="freetag" href="tiki-browse_freetags.php?tag={$smarty.capture.tagurl|escape:'url'}">{$tag.tag}</a> 
 				{/foreach}
 			</div>
 		{/if}

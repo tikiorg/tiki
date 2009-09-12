@@ -36,7 +36,7 @@
     <tr>
       <td class="{cycle advance=false}">{tr}User{/tr}:</td>
       <td class="{cycle}">
-        {$userinfo.login}
+        {$userinfo.login|escape}
         {if $prefs.login_is_email eq 'y' and $userinfo.login neq 'admin'} 
           <i>({tr}Use the email as username{/tr})</i>
         {/if}
@@ -49,7 +49,7 @@
       </td>
       <td class="{cycle}">
         {if $prefs.auth_ldap_nameattr eq '' || $prefs.auth_method ne 'ldap'}
-          <input type="text" name="realName" value="{$user_prefs.realName|escape}" />{else}{$user_prefs.realName}
+          <input type="text" name="realName" value="{$user_prefs.realName|escape}" />{else}{$user_prefs.realName|escape}
         {/if}
       </td>
     </tr>
@@ -121,10 +121,10 @@
         <td class="{cycle advance=false}">{tr}Your personal Wiki Page{/tr}:</td>
         <td class="{cycle}">
           {if $userPageExists eq 'y'}
-            <a class="link" href="tiki-index.php?page={$prefs.feature_wiki_userpage_prefix}{$userinfo.login}" title="{tr}View{/tr}">{$prefs.feature_wiki_userpage_prefix}{$userinfo.login}</a> 
+            <a class="link" href="tiki-index.php?page={$prefs.feature_wiki_userpage_prefix}{$userinfo.login}" title="{tr}View{/tr}">{$prefs.feature_wiki_userpage_prefix}{$userinfo.login|escape}</a> 
 	    (<a class="link" href="tiki-editpage.php?page={$prefs.feature_wiki_userpage_prefix}{$userinfo.login}">{tr}Edit{/tr}</a>)
           {else}
-            {$prefs.feature_wiki_userpage_prefix}{$userinfo.login} (<a class="link" href="tiki-editpage.php?page={$prefs.feature_wiki_userpage_prefix}{$userinfo.login}">{tr}Create{/tr}</a>)
+            {$prefs.feature_wiki_userpage_prefix}{$userinfo.login|escape} (<a class="link" href="tiki-editpage.php?page={$prefs.feature_wiki_userpage_prefix}{$userinfo.login}">{tr}Create{/tr}</a>)
           {/if}
         </td>
       </tr>

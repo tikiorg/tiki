@@ -6,7 +6,8 @@
 		{if $tags.data|@count >0}
 			<div class="freetaglist">
     			{foreach from=$tags.data item=tag}
-					<a class="freetag" href="tiki-browse_freetags.php?tag={$tag.tag}">{$tag.tag}</a> 
+					{capture name=tagurl}{if (strstr($tag.tag, ' '))}"{$tag.tag}"{else}{$tag.tag}{/if}{/capture}
+					<a class="freetag" href="tiki-browse_freetags.php?tag={$smarty.capture.tagurl|escape:'url'}">{$tag.tag}</a> 
 				{/foreach}
 			</div>
 		{/if}
