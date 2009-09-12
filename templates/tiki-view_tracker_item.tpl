@@ -123,13 +123,13 @@
 {if $tracker_info.showCreatedView eq 'y'}
 	<tr class="formcolor">
 		<td class="formlabel">{tr}Created{/tr}</td>
-		<td colspan="3" class="formcontent">{$info.created|tiki_long_datetime}{if $tracker_info.showCreatedBy eq 'y'}<br>by {if empty($info.createdBy)}Unknown{else}{$info.createdBy}{/if}{/if}</td>
+		<td colspan="3" class="formcontent">{$info.created|tiki_long_datetime}{if $tracker_info.showCreatedBy eq 'y'}<br>by {if $prefs.user_show_realnames eq 'y'}{if empty($info.createdByReal)}Unknown{else}{$info.createdByReal}{/if}{else}{if empty($info.createdBy)}Unknown{else}{$info.createdBy}{/if}{/if}{/if}</td>
 	</tr>
 {/if}
 {if $tracker_info.showLastModifView eq 'y'}
 	<tr class="formcolor">
 		<td class="formlabel">{tr}LastModif{/tr}</td>
-		<td colspan="3" class="formcontent">{$info.lastModif|tiki_long_datetime}{if $tracker_info.showLastModifBy eq 'y'}<br>by {if empty($info.lastModifBy)}Unknown{else}{$info.lastModifBy}{/if}{/if}</td>
+		<td colspan="3" class="formcontent">{$info.lastModif|tiki_long_datetime}{if $tracker_info.showLastModifBy eq 'y'}<br>by {if $prefs.user_show_realnames eq 'y'}{if empty($info.lastModifByReal)}Unknown{else}{$info.lastModifByReal}{/if}{else}{if empty($info.lastModifBy)}Unknown{else}{$info.lastModifBy}{/if}{/if}{/if}</td>
 	</tr>
 {/if}
 </table>
