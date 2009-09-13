@@ -178,7 +178,14 @@ tt {font-size: 110%}
 #header-top {
 	height: 101px;
 	margin-top: 66px;
-	text-align: center}
+	text-align: center;
+	color: #fe9b27;}
+	
+#header-top a,
+#header-top a:visited {
+	color: #fff;
+	text-decoration: none;
+}
 
 div#sitelogo {/*width: 33%*/}
 #sitead.floatright {padding-right: 100px}
