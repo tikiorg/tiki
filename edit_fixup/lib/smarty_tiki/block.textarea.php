@@ -121,10 +121,10 @@ function FCKeditor_OnComplete( editorInstance ) {
 		}
 		
 		if ($prefs['feature_ajax'] == 'y' && $prefs['feature_ajax_autosave'] == 'y') {
-			$headerlib->add_js("register_id('$textarea_id');auto_save();");
+			$headerlib->add_jq_onready("register_id('$textarea_id');auto_save();");
 		}
 		
-	}	// wiki
+	}	// wiki or wysiwyg
 
 
 // Display edit time out
@@ -195,36 +195,3 @@ var editTimerWarnings = 0;
 
 	return $html;
 }
-
-
-/*** removed from tiki-editpage.tpl for safe keeping
- * TODO - move to PHP above...
-
-				{*if $wysiwyg ne 'y' or $prefs.javascript_enabled ne 'y'*}
-					{*include file='wiki_edit.tpl'*}
-<!--					<input type="hidden" name="rows" value="{$rows}"/>-->
-<!--					<input type="hidden" name="cols" value="{$cols}"/>-->
-<!--					<input type="hidden" name="wysiwyg" value="n" />-->
-					{*textarea _toolbars="y"}{$pagedata}{/textarea}
-				{else}
-					{capture name=autosave}
-						{if $prefs.feature_ajax eq 'y' and $prefs.feature_ajax_autosave eq 'y' and $noautosave neq 'y'}
-							{autosave test='n' id='edit' default=$pagedata preview=$preview}
-						{else}
-							{$pagedata}
-						{/if}
-					{/capture}
-					{if $prefs.feature_ajax eq 'y' and $prefs.feature_ajax_autosave eq 'y' and $noautosave neq 'y' and $has_autosave eq 'y'}
-						{remarksbox type="warning" title="{tr}AutoSave{/tr}"}
-							{tr}If you want the saved version instead of the autosaved one{/tr}&nbsp;{self_link noautosave='y' _ajax='n'}{tr}Click Here{/tr}{/self_link}
-						{/remarksbox}
-					{/if*}
-				</td>
-			</tr>
-			<tr>
-				<td colspan="2">
-					{editform Meat=$smarty.capture.autosave InstanceName='edit' ToolbarSet="Tiki"}
-					<input type="hidden" name="wysiwyg" value="y" />
-				{/if}
-*/
-
