@@ -192,7 +192,6 @@ hr {
 
 /***** Site Header & Identity *****/
 #header {
-	background: url(business/header.gif) repeat-x;
 	color: #91bef5;
 }
 
@@ -202,8 +201,9 @@ hr {
 }
 
 #header-top {
-	height: 72px;
+	min-height: 72px;
 	position: relative;
+	background: #003371 url(business/header.png) repeat-x bottom;
 }
 
 	
@@ -245,7 +245,8 @@ hr {
 }
 
 #tiki-top {
-	background: #003371 url(business/header.gif) repeat-x 0 -72px;
+	background: #003371 url(business/header.png) repeat-x 0 0;
+	position: relative;
 }
 
 #sitesearchbar {
@@ -257,9 +258,11 @@ hr {
 	margin: 0;
 	margin-top: -10px;
 	margin-right: 0 !important;
-	background: url(business/magnify.gif) no-repeat;
+	background: url(business/magnify.gif) no-repeat 0 -1px;
 	padding-left: 29px;
 	color: #fff;
+	position: relative;
+	z-index: 2;
 }
 
 #sitesearchbar form {
@@ -293,7 +296,7 @@ hr {
 
 .cssmenu_horiz li ul li:hover,
 .cssmenu_vert li:hover {
-	background: #003371 url(business/header.gif) repeat-x 0 -72px;
+	background: #003371 url(business/header.png) repeat-x;
 	color: #003371;
 	text-decoration: none;
 }
@@ -572,7 +575,7 @@ h3.box-title a:visited {
 }
 
 .rbox-title {
-	background: #003371 url(business/header.gif) repeat-x 0 -72px;
+	background: #003371 url(business/header.png) repeat-x;
 	color: #fff;
 }
 
@@ -620,7 +623,9 @@ table.normal th a:visited,
 th a,
 th a:visited,
 td.heading a,
-td.heading a:visited {
+td.heading a:visited,
+th a.sortheader,
+th a.sortheader:visited {
 	color: #fff;
 }
 
