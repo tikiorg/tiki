@@ -108,6 +108,12 @@
 	{if $current_page_id}<input type="hidden" name="current_page_id" value="{$current_page_id}" />{/if}
 	{if $add_child}<input type="hidden" name="add_child" value="true" />{/if}
 	
+	{if $page|lower neq 'sandbox'}
+		{remarksbox type='tip' title='{tr}Tip{/tr}'}
+		{tr}This edit session will expire in{/tr} <span id="edittimeout">{math equation='x / y' x=$edittimeout y=60}</span> {tr}minutes{/tr}. {tr}<strong>Preview</strong> or <strong>Save</strong> your work to restart the edit session timer.{/tr}
+		{/remarksbox}
+	{/if}
+	
 	{if ( $preview && $staging_preview neq 'y' ) or $prefs.wiki_actions_bar eq 'top' or $prefs.wiki_actions_bar eq 'both'}
 		<div class='top_actions'>
 			{include file='wiki_edit_actions.tpl'}
@@ -116,32 +122,40 @@
 	
 	<table class="normal">
 		
-		{include file='structures.tpl'}
 		
 		<tr class="formcolor">
 			<td colspan="2">
-				{textarea}{$pagedata}{/textarea}
-			</td>
-		</tr>
-		<tr class="formcolor">
-			<td colspan="2">
-				{if $page|lower neq 'sandbox'}
-					{remarksbox type='tip' title='{tr}Tip{/tr}'}
-					{tr}This edit session will expire in{/tr} <span id="edittimeout">{math equation='x / y' x=$edittimeout y=60}</span> {tr}minutes{/tr}. {tr}<strong>Preview</strong> or <strong>Save</strong> your work to restart the edit session timer.{/tr}
-					{/remarksbox}
-				{/if}
-			</td>
-		</tr>
-		{if $prefs.wiki_actions_bar neq 'top'}
-			<tr class="formcolor">
-				<td colspan="2" style="text-align:center;">
-					{include file='wiki_edit_actions.tpl'}
-				</td>
-			</tr>
-		{/if}
-		<tr class="formcolor">
-			<td colspan="2">
 				{tabset name='tabs_editpage'}
+					{tab name='{tr}Edit page{/tr}'}
+						{textarea}{$pagedata}{/textarea}
+						{if $page|lower neq 'sandbox'}
+							<fieldset>
+								<label for="comment">{tr}Edit Comment{/tr}: {if $prefs.feature_help eq 'y'}{help url='Editing+Wiki+Pages' desc='{tr}Edit comment: Enter some text to describe the changes you are currently making{/tr}'}{/if}</label>
+								<input style="width:98%;" class="wikiedit" type="text" id="comment" name="comment" value="{$commentdata|escape}" />
+								{if $show_watch eq 'y'}
+									<label for="watch">{tr}Monitor this page{/tr}:</label>
+									<input type="checkbox" id="watch" name="watch" value="1"{if $watch_checked eq 'y'} checked="checked"{/if} />
+								{/if}						
+							</fieldset>
+						{/if}
+					{/tab}
+					{tab name='{tr}Categories{/tr}'}
+						{if $categIds}
+							{section name=o loop=$categIds}
+								<input type="hidden" name="cat_categories[]" value="{$categIds[o]}" />
+							{/section}
+							<input type="hidden" name="categId" value="{$categIdstr}" />
+							<input type="hidden" name="cat_categorize" value="on" />
+							
+							{if $prefs.feature_wiki_categorize_structure eq 'y'}
+								{tr}Categories will be inherited from the structure top page{/tr}
+							{/if}
+						{else}
+							{if $page|lower ne 'sandbox'}
+								{include file='categorize.tpl' notable='y'}
+							{/if}{* sandbox *}
+						{/if}
+					{/tab}
 					{tab name='{tr}Tools{/tr}'}
 						{if $prefs.feature_wiki_templates eq 'y' and $tiki_p_use_content_templates eq 'y'}
 							<fieldset>
@@ -157,16 +171,6 @@
 								{/if}
 							</fieldset>
 						{/if}
-	
-						{if $page|lower neq 'sandbox'}
-							{if $show_watch eq 'y'}
-								<fieldset>
-									<legend>{tr}Monitor this page{/tr}:</legend>
-									<input type="checkbox" id="watch" name="watch" value="1"{if $watch_checked eq 'y'} checked="checked"{/if} />
-								</fieldset>
-							{/if}
-						{/if}
-						
 						{if $prefs.feature_wiki_usrlock eq 'y' && ($tiki_p_lock eq 'y' || $tiki_p_admin_wiki eq 'y')}
 							<fieldset>
 								<legend>{tr}Lock this page{/tr}</legend>
@@ -209,32 +213,65 @@ function searchrep() {
 								<input type="checkbox" id="spellcheck"name="spellcheck" {if $spellcheck eq 'y'}checked="checked"{/if}/>
 							</fieldset>
 						{/if}
-					{/tab}
-					{tab name='{tr}Categories{/tr}'}
-						{if $categIds}
-							{section name=o loop=$categIds}
-								<input type="hidden" name="cat_categories[]" value="{$categIds[o]}" />
-							{/section}
-							<input type="hidden" name="categId" value="{$categIdstr}" />
-							<input type="hidden" name="cat_categorize" value="on" />
-							
-							{if $prefs.feature_wiki_categorize_structure eq 'y'}
-								<tr class="formcolor"><td colspan="2">{tr}Categories will be inherited from the structure top page{/tr}</td></tr>
+						{if $prefs.feature_wiki_allowhtml eq 'y' and $tiki_p_use_HTML eq 'y' and $wysiwyg neq 'y'}
+							<fieldset>
+								<legend>{tr}Allow HTML{/tr}:</legend>
+								<input type="checkbox" id="allowhtml" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if}/>
+							</fieldset>
+						{/if}
+						{if $prefs.feature_wiki_import_html eq 'y'}
+							<fieldset>
+								<legend>{tr}Import HTML{/tr}:</legend>
+								<input class="wikiedit" type="text" id="suck_url" name="suck_url" value="{$suck_url|escape}" />&nbsp;
+								<input type="submit" class="wikiaction" name="do_suck" value="{tr}Import{/tr}" onclick="needToConfirm=false;" />&nbsp;
+								<label><input type="checkbox" name="parsehtml" {if $parsehtml eq 'y'}checked="checked"{/if}/>&nbsp;
+								{tr}Try to convert HTML to wiki{/tr}. </label>
+							</fieldset>
+						{/if}
+						
+						{if $tiki_p_admin_wiki eq 'y' && $prefs.feature_wiki_import_page eq 'y'}
+							<fieldset>
+								<legend>{tr}Import page{/tr}:</legend>
+								<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
+								<input id="userfile1" name="userfile1" type="file" />
+								{if $prefs.feature_wiki_export eq 'y' and $tiki_p_admin_wiki eq 'y'}
+									<a href="tiki-export_wiki_pages.php?page={$page|escape:"url"}&amp;all=1" class="link">{tr}export all versions{/tr}</a>
+								{/if}
+							</fieldset>
+						{/if}
+						
+						{if $wysiwyg neq 'y'}
+							{if $prefs.feature_wiki_pictures eq 'y' and $tiki_p_upload_picture eq 'y'}
+								<fieldset>
+									<legend>{tr}Upload picture{/tr}:</legend>
+									{if $prefs.feature_filegals_manager eq 'y' and $prefs.feature_file_galleries == 'y' and $tiki_p_list_file_galleries == 'y'}
+										<input type="submit" class="wikiaction" value="{tr}Add another image{/tr}" onclick="javascript:needToConfirm = false;javascript:openFgalsWindow('{filegal_manager_url area_name=editwiki}');return false;" name="uploadpicture" />
+									{else}
+										<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
+										<input type="hidden" name="hasAlreadyInserted" value="" />
+										<input type="hidden" name="prefix" value="/img/wiki_up/{if $tikidomain}{$tikidomain}/{/if}" />
+										<input name="picfile1" type="file" onchange="javascript:insertImgFile('editwiki','picfile1','hasAlreadyInserted','img')"/>
+										<div id="new_img_form"></div>
+										<a href="javascript:addImgForm()" onclick="needToConfirm = false;">{tr}Add another image{/tr}</a>
+									{/if}
+								</fieldset>
 							{/if}
-						{else}
-							{if $page|lower ne 'sandbox'}
-								<table>
-									{include file='categorize.tpl'}
-								</table>
-							{/if}{* sandbox *}
+						
+							{if $prefs.feature_wiki_attachments == 'y' and ($tiki_p_wiki_attach_files eq 'y' or $tiki_p_wiki_admin_attachments eq 'y')}
+								<fieldset>
+									<legend>{tr}Upload file{/tr}:</legend>
+									<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
+									<input type="hidden" name="hasAlreadyInserted2" value="" />
+									<input type="hidden" id="page2" name="page2" value="{$page}" />
+									<input name="userfile2" type="file" id="attach-upload" />
+									 <label>{tr}Comment{/tr}:<input type="text" name="attach_comment" maxlength="250" id="attach-comment" /></label>
+									<input type="submit" class="wikiaction" name="attach" value="{tr}Attach{/tr}" onclick="javascript:needToConfirm=false;insertImgFile('editwiki','userfile2','hasAlreadyInserted2','file', 'page2', 'attach_comment'); return true;" />
+								</fieldset>
+							{/if}
 						{/if}
 					{/tab}
 					{tab name='{tr}Properties{/tr}'}
 						{if $page|lower neq 'sandbox'}
-							<fieldset>
-								<legend>{tr}Edit Comment{/tr}: {if $prefs.feature_help eq 'y'}{help url='Editing+Wiki+Pages' desc='{tr}Edit comment: Enter some text to describe the changes you are currently making{/tr}'}{/if}</legend>
-								<input style="width:98%;" class="wikiedit" type="text" id="comment" name="comment" value="{$commentdata|escape}" />
-							</fieldset>
 							{if $prefs.wiki_feature_copyrights  eq 'y'}
 								<fieldset>
 									<legend>{tr}Copyright{/tr}:</legend>
@@ -288,7 +325,22 @@ function searchrep() {
 									</table>
 								</fieldset>
 							{/if}
-			
+							<fieldset>
+								<legend>{tr}Structures{/tr}</legend>
+									<div id="showstructs">
+										{if $showstructs|@count gt 0}
+											<ul>
+												{foreach from=$showstructs item=page_info }
+													<li>{$page_info.pageName}{if !empty($page_info.page_alias)}({$page_info.page_alias}){/if}</li>
+												{/foreach}  
+											</ul>
+										{/if}
+									  
+										{if $tiki_p_edit_structures eq 'y'}
+											<a href="tiki-admin_structures.php">{tr}Manage structures{/tr} {icon _id='wrench'}</a>
+										{/if}
+									</div>
+							</fieldset>	
 						{/if}{*end if sandbox *}
 						{if $prefs.feature_wiki_description eq 'y' or $prefs.metatag_pagedesc eq 'y'}
 							<fieldset>
@@ -348,64 +400,6 @@ function searchrep() {
 									{/if}
 								{/if}
 							</fieldset>
-						{/if}
-					{/tab}
-					{tab name='{tr}Files etc.{/tr}'}
-						{if $prefs.feature_wiki_allowhtml eq 'y' and $tiki_p_use_HTML eq 'y' and $wysiwyg neq 'y'}
-							<fieldset>
-								<legend>{tr}Allow HTML{/tr}:</legend>
-								<input type="checkbox" id="allowhtml" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if}/>
-							</fieldset>
-						{/if}
-						{if $prefs.feature_wiki_import_html eq 'y'}
-							<fieldset>
-								<legend>{tr}Import HTML{/tr}:</legend>
-								<input class="wikiedit" type="text" id="suck_url" name="suck_url" value="{$suck_url|escape}" />&nbsp;
-								<input type="submit" class="wikiaction" name="do_suck" value="{tr}Import{/tr}" onclick="needToConfirm=false;" />&nbsp;
-								<label><input type="checkbox" name="parsehtml" {if $parsehtml eq 'y'}checked="checked"{/if}/>&nbsp;
-								{tr}Try to convert HTML to wiki{/tr}. </label>
-							</fieldset>
-						{/if}
-						
-						{if $tiki_p_admin_wiki eq 'y' && $prefs.feature_wiki_import_page eq 'y'}
-							<fieldset>
-								<legend>{tr}Import page{/tr}:</legend>
-								<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
-								<input id="userfile1" name="userfile1" type="file" />
-								{if $prefs.feature_wiki_export eq 'y' and $tiki_p_admin_wiki eq 'y'}
-									<a href="tiki-export_wiki_pages.php?page={$page|escape:"url"}&amp;all=1" class="link">{tr}export all versions{/tr}</a>
-								{/if}
-							</fieldset>
-						{/if}
-						
-						{if $wysiwyg neq 'y'}
-							{if $prefs.feature_wiki_pictures eq 'y' and $tiki_p_upload_picture eq 'y'}
-								<fieldset>
-									<legend>{tr}Upload picture{/tr}:</legend>
-									{if $prefs.feature_filegals_manager eq 'y' and $prefs.feature_file_galleries == 'y' and $tiki_p_list_file_galleries == 'y'}
-										<input type="submit" class="wikiaction" value="{tr}Add another image{/tr}" onclick="javascript:needToConfirm = false;javascript:openFgalsWindow('{filegal_manager_url area_name=editwiki}');return false;" name="uploadpicture" />
-									{else}
-										<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
-										<input type="hidden" name="hasAlreadyInserted" value="" />
-										<input type="hidden" name="prefix" value="/img/wiki_up/{if $tikidomain}{$tikidomain}/{/if}" />
-										<input name="picfile1" type="file" onchange="javascript:insertImgFile('editwiki','picfile1','hasAlreadyInserted','img')"/>
-										<div id="new_img_form"></div>
-										<a href="javascript:addImgForm()" onclick="needToConfirm = false;">{tr}Add another image{/tr}</a>
-									{/if}
-								</fieldset>
-							{/if}
-						
-							{if $prefs.feature_wiki_attachments == 'y' and ($tiki_p_wiki_attach_files eq 'y' or $tiki_p_wiki_admin_attachments eq 'y')}
-								<fieldset>
-									<legend>{tr}Upload file{/tr}:</legend>
-									<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
-									<input type="hidden" name="hasAlreadyInserted2" value="" />
-									<input type="hidden" id="page2" name="page2" value="{$page}" />
-									<input name="userfile2" type="file" id="attach-upload" />
-									 <label>{tr}Comment{/tr}:<input type="text" name="attach_comment" maxlength="250" id="attach-comment" /></label>
-									<input type="submit" class="wikiaction" name="attach" value="{tr}Attach{/tr}" onclick="javascript:needToConfirm=false;insertImgFile('editwiki','userfile2','hasAlreadyInserted2','file', 'page2', 'attach_comment'); return true;" />
-								</fieldset>
-							{/if}
 						{/if}
 					{/tab}
 					{if $prefs.feature_multilingual eq 'y'}

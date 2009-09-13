@@ -1086,6 +1086,7 @@ $smarty->assign_by_ref('plugins', $plugins);
 $smarty->assign('showstructs', array());
 if ($structlib->page_is_in_structure($_REQUEST["page"])) {
 	$structs = $structlib->get_page_structures($_REQUEST["page"]);
+	$smarty->assign('showstructs', $structs);
 }
 // Flag for 'page bar' that currently 'Edit' mode active
 // so no need to show comments & attachments, but need
@@ -1106,7 +1107,6 @@ if ($prefs['wiki_feature_copyrights'] == 'y' && $tiki_p_edit_copyrights == 'y') 
 	$smarty->assign_by_ref('copyrights', $copyrights['data']);
 }
 $defaultRows = $prefs['default_rows_textarea_wiki'];
-include_once("textareasize.php");
 include_once ('lib/toolbars/toolbarslib.php');
 if (!$user or $user == 'anonymous') {
 	$smarty->assign('anon_user', 'y');

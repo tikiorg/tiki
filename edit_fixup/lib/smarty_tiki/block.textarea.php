@@ -77,17 +77,18 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 		
 		$html .= '<input type="hidden" name="wysiwyg" value="y" />';
 		
-		// fix for Safari which refuses to make the edit box 100% height - still needs a kludgey delay as the iframe isn't loaded yet...
+		// fix for Safari which refuses to make the edit box 100% height
 		$h = str_replace('px','', $fcked->Height);
 		if ($h) { $headerlib->add_js('
-$jq("#data___Frame").contents().find("body").ready(function() {
+var fckEditorInstances = new Array();
+function FCKeditor_OnComplete( editorInstance ) {
+	fckEditorInstances[fckEditorInstances.length] = editorInstance;
 	if (jQuery.browser.safari) {
-		setTimeout(function() {
-			var fckbod = $jq("#data___Frame").contents().find("body");
-			var h = '.$h.' - fckbod.find("#xToolbar").height() - 5;
-			fckbod.find("#xEditingArea").height(h);}, 500);
+		var fckbod = $jq("#'.$params['name'].'___Frame").contents().find("body");
+		var h = '.$h.' - fckbod.find("#xToolbar").height() - 5;
+		fckbod.find("#xEditingArea").height(h);
 	}
-});'); }
+};'); }
 	} else {
 		
 		// setup for wiki editor
@@ -105,6 +106,8 @@ $jq("#data___Frame").contents().find("body").ready(function() {
 			$smarty->assign('textarea_attributes', $textarea_attributes);
 		}
 		$smarty->assign_by_ref('pagedata', $content);
+		
+		if (!$textarea_id) { $textarea_id = $params['id']; }
 
 		$html .= $smarty->fetch('wiki_edit.tpl');
 
@@ -122,7 +125,8 @@ $jq("#data___Frame").contents().find("body").ready(function() {
 		}
 		
 	}	// wiki
-	
+
+
 // Display edit time out
 
 	$js = "
@@ -147,16 +151,28 @@ function editTimerTick() {
 }
 
 function confirmExit() {
-	if (needToConfirm) {
+	if (typeof fckEditorInstances != 'undefined' && fckEditorInstances.length > 0) {
+		for(ed in fckEditorInstances) {
+			if (fckEditorInstances[ed].IsDirty()) {
+				editorDirty = true;
+				break;
+			}
+		}
+	}
+	if (needToConfirm && editorDirty) {
 		return '".tra('You are about to leave this page. If you have made any changes without Saving, your changes will be lost.  Are you sure you want to exit this page?')."';
 	}
 }
 
 window.onbeforeunload = confirmExit;
-\$jq('document').ready( function() { editTimeoutIntervalId = setInterval(editTimerTick, 1000); });
-//window.onload = editTimerStart;
+\$jq('document').ready( function() {
+	editTimeoutIntervalId = setInterval(editTimerTick, 1000);
+	\$jq('fieldset.tabcontent input, fieldset.tabcontent textarea, fieldset.tabcontent select').change( function () { if (!editorDirty) { editorDirty = true; } });
+	
+});
 
 var needToConfirm = true;
+var editorDirty = false;
 var editTimeoutSeconds = ".ini_get('session.gc_maxlifetime').";
 var editTimeElapsedSoFar = 0;
 var editTimeoutIntervalId;
