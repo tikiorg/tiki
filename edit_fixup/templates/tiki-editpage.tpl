@@ -401,39 +401,34 @@ function searchrep() {
 								{/if}
 							</fieldset>
 						{/if}
-					{/tab}
-					{if $prefs.feature_multilingual eq 'y'}
-						{tab name='{tr}Language{/tr}'}
-							{if not($data.page_id)}
-								<fieldset>
-									<legend>{tr}Language{/tr}:</legend>
-									<select name="lang" id="lang">
-										<option value="">{tr}Unknown{/tr}</option>
-										{section name=ix loop=$languages}
-											<option value="{$languages[ix].value|escape}"{if $lang eq $languages[ix].value or (not($data.page_id) and $lang eq '' and $languages[ix].value eq $prefs.language)} selected="selected"{/if}>{$languages[ix].name}</option>
-										{/section}
-									</select>
-									{if $translationOf}
-										<input type="hidden" name="translationOf" value="{$translationOf|escape}"/>
+						{if $prefs.feature_multilingual eq 'y'}
+							<fieldset>
+								<legend>{tr}Language{/tr}:</legend>
+								<select name="lang" id="lang">
+									<option value="">{tr}Unknown{/tr}</option>
+									{section name=ix loop=$languages}
+										<option value="{$languages[ix].value|escape}"{if $lang eq $languages[ix].value or (not($data.page_id) and $lang eq '' and $languages[ix].value eq $prefs.language)} selected="selected"{/if}>{$languages[ix].name}</option>
+									{/section}
+								</select>
+								{if $translationOf}
+									<input type="hidden" name="translationOf" value="{$translationOf|escape}"/>
+								{/if}
+							</fieldset>
+							{if $trads|@count > 1}
+								<fieldset {if $prefs.feature_urgent_translation neq 'y' or $diff_style} style="display:none;"{/if}>
+									<legend>{tr}Translation request{/tr}:</legend>
+									<input type="hidden" name="lang" value="{$lang|escape}"/>
+									<input type="checkbox" id="translation_critical" name="translation_critical" id="translation_critical"{if $translation_critical} checked="checked"{/if}/>
+									<label for="translation_critical">{tr}Send urgent translation request.{/tr}</label>
+									{if $diff_style}
+										<input type="hidden" name="oldver" value="{$diff_oldver|escape}"/>
+										<input type="hidden" name="newver" value="{$diff_newver|escape}"/>
+										<input type="hidden" name="source_page" value="{$source_page|escape}"/>
 									{/if}
 								</fieldset>
-							{else}
-								{if $trads|@count > 1}
-									<fieldset {if $prefs.feature_urgent_translation neq 'y' or $diff_style} style="display:none;"{/if}>
-										<legend>{tr}Translation request{/tr}:</legend>
-										<input type="hidden" name="lang" value="{$lang|escape}"/>
-										<input type="checkbox" id="translation_critical" name="translation_critical" id="translation_critical"{if $translation_critical} checked="checked"{/if}/>
-										<label for="translation_critical">{tr}Send urgent translation request.{/tr}</label>
-										{if $diff_style}
-											<input type="hidden" name="oldver" value="{$diff_oldver|escape}"/>
-											<input type="hidden" name="newver" value="{$diff_newver|escape}"/>
-											<input type="hidden" name="source_page" value="{$source_page|escape}"/>
-										{/if}
-									</fieldset>
-								{/if}
 							{/if}
-						{/tab}
-					{/if}
+						{/if}
+					{/tab}
 				{/tabset}
 			</td>
 		</tr>
