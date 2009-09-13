@@ -843,7 +843,7 @@ body.tiki_blogs .postbody-title,
 }
 
 .post-approved-r .content * {
-	background: url(../../img/icons2/dots.gif);
+	background: url(../../../img/icons2/dots.gif);
 }
 
 /* Help box*/
