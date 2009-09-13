@@ -4,6 +4,12 @@
   <script type="text/javascript" src="lib/wiki/wiki-ajax.js"></script>
 {/if}
 
+{if $page|lower neq 'sandbox'}
+	{remarksbox type='tip' title='{tr}Tip{/tr}'}
+	{tr}This edit session will expire in{/tr} <span id="edittimeout">{math equation='x / y' x=$edittimeout y=60}</span> {tr}minutes{/tr}. {tr}<strong>Preview</strong> or <strong>Save</strong> your work to restart the edit session timer.{/tr}
+	{/remarksbox}
+{/if}
+	
 {if $translation_mode eq 'n'}
 	{if $beingStaged eq 'y' and $prefs.wikiapproval_hideprefix == 'y'}{assign var=pp value=$approvedPageName}{else}{assign var=pp value=$page}{/if}
 	{title}{if isset($hdr) && $prefs.wiki_edit_section eq 'y'}{tr}Edit Section{/tr}{else}{tr}Edit{/tr}{/if}: {$pp|escape}{if $pageAlias ne ''}&nbsp;({$pageAlias|escape}){/if}{/title}
@@ -107,12 +113,6 @@
 	{if isset($pos)}<input type="hidden" name="pos" value="{$pos}" />{/if}
 	{if $current_page_id}<input type="hidden" name="current_page_id" value="{$current_page_id}" />{/if}
 	{if $add_child}<input type="hidden" name="add_child" value="true" />{/if}
-	
-	{if $page|lower neq 'sandbox'}
-		{remarksbox type='tip' title='{tr}Tip{/tr}'}
-		{tr}This edit session will expire in{/tr} <span id="edittimeout">{math equation='x / y' x=$edittimeout y=60}</span> {tr}minutes{/tr}. {tr}<strong>Preview</strong> or <strong>Save</strong> your work to restart the edit session timer.{/tr}
-		{/remarksbox}
-	{/if}
 	
 	{if ( $preview && $staging_preview neq 'y' ) or $prefs.wiki_actions_bar eq 'top' or $prefs.wiki_actions_bar eq 'both'}
 		<div class='top_actions'>

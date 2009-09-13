@@ -172,7 +172,7 @@ window.onbeforeunload = confirmExit;
 });
 
 var needToConfirm = true;
-var editorDirty = false;
+var editorDirty = ".(isset($_REQUEST["preview"]) ? 'true' : 'false').";
 var editTimeoutSeconds = ".ini_get('session.gc_maxlifetime').";
 var editTimeElapsedSoFar = 0;
 var editTimeoutIntervalId;

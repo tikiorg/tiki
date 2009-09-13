@@ -11,11 +11,11 @@
 		<input type="submit" class="wikiaction tips" title="{tr}Edit wiki page{/tr}|{tr}Save the page.{/tr}" name="save" value="{tr}Save{/tr}" onclick="needToConfirm=false;" />
 
 		{if $prefs.feature_ajax eq 'y' && $prefs.feature_wiki_save_draft eq 'y'}
-		<input type="submit" class="wikiaction tips" title="{tr}Edit wiki page{/tr}|{tr}Save the page as a draft.{/tr}" value="{tr}Save Draft{/tr}" onclick="save_draft()" />
+		<input type="submit" class="wikiaction tips" title="{tr}Edit wiki page{/tr}|{tr}Save the page as a draft.{/tr}" value="{tr}Save Draft{/tr}" onclick="needToConfirm=false;save_draft();return false;" />
 		{/if}
 	{/if}
 
 	{if $page|lower ne 'sandbox'}
-	<input type="submit" class="wikiaction tips" title="{tr}Edit wiki page{/tr}|{tr}Cancel the edit, you will lose your changes.{/tr}" name="cancel_edit" value="{tr}Cancel Edit{/tr}" onclick="needToConfirm = false;" />
+	<input type="submit" class="wikiaction tips" title="{tr}Edit wiki page{/tr}|{tr}Cancel the edit, you will lose your changes.{/tr}" name="cancel_edit" value="{tr}Cancel Edit{/tr}" onclick="needToConfirm=false;" />
 	{/if}
 {/if}
