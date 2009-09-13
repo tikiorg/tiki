@@ -52,7 +52,6 @@
 				{preference name=feature_quizzes}
 				{preference name=feature_featuredLinks}
 				{preference name=feature_copyright}
-				{preference name=feature_multimedia}
 				{preference name=feature_shoutbox}
 				{preference name=feature_maps}
 				{preference name=feature_gmap}
@@ -102,7 +101,8 @@
 						{preference name=feature_sheet}
 						{preference name=feature_wysiwyg}
 						{preference name=feature_ajax_autosave}
-						{preference name='feature_htmlpurifier_output'}
+						{preference name=feature_htmlpurifier_output}
+						{preference name=feature_multimedia}
 				</fieldset>
 
 				<fieldset>

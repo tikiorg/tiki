@@ -1295,6 +1295,7 @@ opaque .box-title,
 
 .opaque .iconmenu {
 	display: block;
+	white-space: nowrap;
 }
 
 /***** Trackers (etc.) *****/

@@ -512,18 +512,25 @@ a.phplmselected:hover {
 }
 
 /** CSS (suckerfish) menus **/
+.cssmenu_horiz li,
+.cssmenu_vert li {
+	background:	inherit;
+}
+
 .csmenu ul li,
 .cssmenu_horiz ul li,
 .cssmenu_vert ul li {
 	border-top: 1px solid #57A5D0;
 }
 
-.cssmenu_vert li ul,
-.cssmenu_horiz li ul {
+.cssmenu_vert li ul li,
+.cssmenu_horiz li ul li{
 	background: #a8cce2;
 }
 
-.cssmenu_horiz ul li:hover {
+.cssmenu_horiz li:hover,
+.cssmenu_horiz ul li:hover,
+.cssmenu_horiz a:hover {
 	background: none;
 }
 
@@ -532,6 +539,17 @@ a.phplmselected:hover {
 .cssmenu_vert ul a {
 	padding: 6px;
 	color: #487384;
+}
+
+cssmenu_horiz a,
+.cssmenu_vert a {
+	border-left: 0;
+	border-top:	0;
+	text-decoration: none;
+}
+
+.cssmenu_vert a {
+	padding: .2em 1em;
 }
 
 #tiki-top > .cssmenu_horiz {
@@ -571,9 +589,33 @@ a.phplmselected:hover {
 	text-decoration: none;
 }
 
-#col2 .cssmenu_vert > li {
+/* compensate for 1px border */
+.cssmenu_horiz li ul li ul,
+.cssmenu_vert li ul li ul {
+	top: -1px !important;
+}
+
+/* Special to match #col2 width */
+#col2 .cssmenu_vert,
+#col2 .cssmenu_vert li {
 	width: 192px;
 	padding: 0 !important;
+}
+
+/* offset to match width of #col2 */
+#col2 .cssmenu_vert li:hover ul,
+#col2 .cssmenu_vert li.sfHover ul {
+	left: 192px;
+}
+
+/* return to default offset */
+#col2 .cssmenu_vert li li:hover ul,
+#col2 .cssmenu_vert li li.sfHover ul {
+	left: 10em;
+}
+
+#col2 .cssmenu_vert ul li {
+	width: 10em;
 }
 
 #col2 .cssmenu_vert > li:hover {
@@ -583,14 +625,20 @@ a.phplmselected:hover {
 #col2 .cssmenu_vert li {
 	padding: 0;
 }
-
-#col2 .cssmenu_vert > li > ul {
-	margin-left: 192px;
-}
-
+/*
 .cssmenu_horiz.sf-shadow ul li,
 .cssmenu_vert.sf-shadow ul li {
 	background-color: #CCDCEB !important;
+}*/
+
+#tiki-top .cssmenu_horiz li a .sf-sub-indicator {
+	top: 0.7em;
+}
+
+#tiki-top .cssmenu_horiz li ul li a .sf-sub-indicator,
+.cssmenu_horiz li a .sf-sub-indicator,
+.cssmenu_vert li a .sf-sub-indicator {
+	top: .4em;
 }
 
 /** Links in other menus **/

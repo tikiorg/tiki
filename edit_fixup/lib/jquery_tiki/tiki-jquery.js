@@ -101,35 +101,50 @@ $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 	
 	// tooltip functions and setup
 	if (jqueryTiki.tooltips) {	// apply "cluetips" to all .tips class anchors
+	
 		$jq('.tips').cluetip({splitTitle: '|', showTitle: false, width: '150px', cluezIndex: 400, fx: {open: 'fadeIn', openSpeed: 'fast'}});
 		$jq('.titletips').cluetip({splitTitle: '|', cluezIndex: 400});
 		$jq('.tikihelp').cluetip({splitTitle: ':', width: '150px', cluezIndex: 400, fx: {open: 'fadeIn', openSpeed: 'fast'}});
 		$jq('.stickytips').cluetip({ showTitle: false, width: 'auto', cluezIndex: 400, sticky: false, local: true, hideLocal: true, activation: 'click', cluetipClass: 'fullhtml', fx: {open: 'fadeIn', openSpeed: 'fast'}});
 		
-		// override overlib - TODO optimise JQuery calls
-		convertOverlib = function (element, tip, options) {	// process overlib event fn to cluetip
+		// override overlib
+		convertOverlib = function (element, tip, params) {	// process modified overlib event fn to cluetip from {popup} smarty func
 			
-			tip = tip.replace(/return overlib\((.*)\).*/gi, '$1');	// remove function wrapper 
-			var prefix = "";
-			var strStart = 0;
-			var strEnd = tip.length;
+			if (element.processed) { return; }
 			
-			if (tip.substring(0,1) == "'") {				// overlib is called with a string, then a few "constant" params
-				strStart = 1;								// this bit extracts the first string (couldn't get a regexp to work reliably)
-				strEnd = tip.lastIndexOf("'");
-			} else if (tip.substring(0,1) == '"') {
-				strStart = 1;
-				strEnd = tip.lastIndexOf('"');
+			var options = new Object();
+			for (param in params) {
+				var val = "";
+				if (params[param].indexOf("=") > -1) {
+					var arr = param.split("=");
+					pam = arr[0].toLowerCase();
+					val = arr[1];
+				} else {
+					pam = params[param].toLowerCase();
+				}
+				switch (pam) {
+					case "sticky":
+						options.sticky = true;
+						break;
+					case "fullhtml":
+						options.cluetipClass = 'fullhtml';
+						break;
+					case "onclick":
+						options.activation = 'click';
+						break;
+					case "width":
+						options.width = val;
+						break;
+					case "height":
+						options.height = val;
+						break;
+					default:
+						break;
+				}
 			}
 			
-			// process parameters
-			params = tip.substring(strEnd-1, tip.length).toLowerCase();	// possibly: sticky,autostatus,autostatuscap,fullhtml,hauto,vauto,closeclick,wrap,followmouse,mouseoff,compatmode
-			if (params.indexOf('sticky') > -1) { options.sticky = true; } else { options.sticky = false; }
-			//if (params.indexOf('mouseoff') > -1) {}	// TODO?
-			if (params.indexOf('fullhtml') > -1) { options.cluetipClass = 'fullhtml'; } else { options.cluetipClass = 'default'; }
 			options.splitTitle = '|';
 			options.showTitle = false;
-			options.width = 'auto';		// this don't work :(
 			options.cluezIndex = 400;
 			options.dropShadow = true;
 			options.fx = {open: 'fadeIn', openSpeed: 'fast'};
@@ -138,45 +153,45 @@ $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 			options.mouseOutClose = true;
 			
 			// attach new tip
-			tip = tip.substring(strStart, strEnd);		// trim quotes
+			//tip = tip.substring(strStart, strEnd);		// trim quotes
 			tip = tip.replace(/\\n/g, '');			// remove newlines
 			tip = tip.replace(/\\/g, '');				// remove backslashes
 			
-			// hack to calculate div width
-			var el = document.createElement('DIV');
-			$jq(el).css('position', 'absolute').css('visibility', 'hidden');
-			document.body.appendChild(el);
-			if (tip.length > 1500) {
-				tip = tip.substring(0, 1500);	// setting html to anything bigger seems to blow jquery away :(
+			if (element.tipWidth) {
+				options.width = element.tipWidth;
+			} else if (!options.width) {
+				// hack to calculate div width
+				var el = document.createElement('DIV');
+				$jq(el).css('position', 'absolute').css('visibility', 'hidden');
+				document.body.appendChild(el);
+				if (tip.length > 2000) {
+					tip = tip.substring(0, 2000); // setting html to anything bigger seems to blow jquery away :(
+				}
+				$jq(el).html(tip);
+				if ($jq(el).width() > $jq(window).width()) {
+					$jq(el).width($jq(window).width() * 0.8);
+				}
+				options.width = $jq(el).width();
+				document.body.removeChild(el);
+				
+				element.tipWidth = options.width;
 			}
-			$jq(el).html(tip);
-			if ($jq(el).width() > $jq(window).width()) {
-				$jq(el).width($jq(window).width() * 0.8);
-			}
-			options.width = $jq(el).width();
-			document.body.removeChild(el);
-
+			
 			prefix = "|";
 			$jq(element).attr('title', prefix + tip);
 			
+			element.processed = true;
+			
 			// options.sticky = true; useful for css work
 			$jq(element).cluetip(options);
+			
+			if (options.activation == "click") {
+				$jq(element).trigger('click');
+			} else {
+				$jq(element).trigger('mouseover');
+			}
 		}
-		
-		$jq("a[onmouseover*='overlib('], input[onmouseover*='overlib(']").each(function() {
-			tip = $jq(this)[0].getAttribute('onmouseover');			// use the html call to get the text, not the fn
-			convertOverlib(this, tip, {});
-		});
-		
-		$jq("a[onclick*='overlib('], input[onclick*='overlib(']").each(function() {			// TODO refactor!!!!
-			tip = $jq(this)[0].getAttribute('onclick');			// use the html call to get the text, not the fn
-			convertOverlib(this, tip, {activation: 'click'});
-		});
-		
-		// nobble overlib funcs
-		overlib = function() {};
-		nd = function() {};
-	}
+	}	// end cluetip setup
 	
 	// superfish setup (CSS menu effects)
 	if (jqueryTiki.superfish) {

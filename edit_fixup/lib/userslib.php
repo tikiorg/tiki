@@ -2847,7 +2847,7 @@ function get_included_groups($group, $recur=true) {
 	function send_validation_email($name, $apass, $email, $again='', $second='', $chosenGroup='', $mailTemplate = '', $pass = '') {
 		global $tikilib, $prefs, $smarty;
 		$foo = parse_url($_SERVER['REQUEST_URI']);
-		$foo1 = str_replace(array('tiki-register', 'tiki-remind_password', 'tiki-adminusers'), 'tiki-login_validate', $foo['path']);
+		$foo1 = str_replace(array('tiki-send_mail', 'tiki-register', 'tiki-remind_password', 'tiki-adminusers'), 'tiki-login_validate', $foo['path']);
 		$machine = $tikilib->httpPrefix() . $foo1;
 		$smarty->assign('mail_machine',$machine);
 		$smarty->assign('mail_site', $_SERVER['SERVER_NAME']);
@@ -3132,6 +3132,10 @@ function get_included_groups($group, $recur=true) {
 			$ret[$res['login']]= $res['created'];
 		}
 		return $ret;
+	}
+	function nb_users_in_group($group) {
+		$query = 'SELECT count(*) FROM `users_usergroups` WHERE `groupName`=?';
+		return $this->getOne($query, array($group));
 	}
 
 }

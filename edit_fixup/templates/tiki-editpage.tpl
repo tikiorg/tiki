@@ -98,7 +98,7 @@
 				<option value="inlinediff">text</option>
 			{/if}   
 		</select>
-		<input type="submit" class="wikiaction" onmouseover="return overlib('{tr}Change the style used to display differences to be translated.{/tr}');" onmouseout="nd();" name="preview" value="{tr}Change diff styles{/tr}" onclick="needToConfirm=false;" />
+		<input type="submit" class="wikiaction tips" title="{tr}Edit wiki page{/tr}|{tr}Change the style used to display differences to be translated.{/tr}" name="preview" value="{tr}Change diff styles{/tr}" onclick="needToConfirm=false;" />
 	{/if}
 	
 	{if $page_ref_id}<input type="hidden" name="page_ref_id" value="{$page_ref_id}" />{/if}

@@ -674,22 +674,26 @@ a.phplmselected:hover {
 }
 
 /** CSS (suckerfish) menus **/
-.cssmenu ul,
-.cssmenu_vert li ul,
-.cssmenu_horiz li ul {
-	border: 1px solid #08698f;
-	background: #1b3a50;
+
+/* default link padding */
+.cssmenu_horiz a,
+.cssmenu_vert a {
+	padding: .75em 1em;
 }
 
-.cssmenu_vert li ul {
-	margin-left: 11.05em; /* second-level lists */
-	margin-top: -1.35em;
-	padding-bottom: 1px; /*enable border to show */
-}
+/* typography, colors */
 
-.cssmenu_vert li ul {
+.cssmenu_horiz li ul li,
+.cssmenu_vert li ul li {
 	background: #cce5ff;
 	border: 1px solid #233039;
+	border-top: 0;
+	margin-bottom: -1px;
+}
+
+.cssmenu_horiz li ul li:first-child,
+.cssmenu_vert li ul li:first-child {
+	border-top: 1px solid #233039;
 }
 
 .cssmenu_horiz li:hover {
@@ -700,12 +704,8 @@ a.phplmselected:hover {
 	background: none;
 }
 
-.cssmenu a,	
 .cssmenu_horiz a,
 .cssmenu_vert a {
-	text-decoration: none;
-	display: block;
-	text-decoration: none;
 	padding: 3px 0 3px 6px;
 	color: #006699;
 }
@@ -728,13 +728,42 @@ a.phplmselected:hover {
 .cssmenu_vert ul a:hover {
 	color: #000000;
 }
-/* when there's superfish shadow */
+
+/* left column width */
+
+#col2 .cssmenu_vert,
+#col2 .cssmenu_vert li {
+	width: 160px;
+}
+
+/* offset from left column (matches above) */
+#col2 .cssmenu_vert li:hover ul,
+#col2 .cssmenu_vert li.sfHover ul {
+	left: 155px;
+}
+
+/* return ul ul ... to default */
+#col2 .cssmenu_vert li:hover ul,
+#col2 .cssmenu_vert li.sfHover ul,
+#col2 .cssmenu_vert li:hover ul li,
+#col2 .cssmenu_vert li.sfHover ul li {
+	width: 10em;
+}
+
+/* return ul ul ... to default */
+#col2 .cssmenu_vert li li:hover ul,
+#col2 .cssmenu_vert li li.sfHover ul {
+	left: 10em;
+}
+
+/* when there's superfish shadow 
 .cssmenu_horiz.sf-shadow ul li {
 	background-color: #1b3a50; 
 }
 .cssmenu_vert.sf-shadow ul li {
 	background-color: #cce5ff; 
-}
+}*/
+
 #tiki-top .cssmenu_horiz {
 	position: absolute;
 	z-index: 10;
@@ -744,8 +773,73 @@ a.phplmselected:hover {
 	text-align: left;
 }
 
+#tiki-top .cssmenu_horiz a,
+#tiki-top .cssmenu_horiz a:visited {
+	padding: 3px 3px 6px 3px;
+	text-decoration: none;
+	font: normal 1em Verdana, Helvetica, Arial, Sans-Serif;
+	margin: 0;
+	border-color: transparent;
+	border-style: solid;
+	border-width: 0 1px;
+	color: #5ae0ff;
+	text-align: center;
+}
+
+#tiki-top .cssmenu_horiz li.menuSection a {
+	padding-right: 2em;
+}
+
+#tiki-top .cssmenu_horiz a:hover {
+	text-decoration: none;
+	background: url(strasa/headermenuitem-hover.png) bottom center repeat-x;
+	border-color: #336699;
+	border-style: solid;
+	border-width: 0 1px;
+	color: #fff;
+}
+
+#tiki-top .cssmenu_horiz li ul li a:hover {
+	background: none;	
+}
+
+#tiki-top .cssmenu_horiz li ul li,
+#tiki-top .cssmenu_vert li ul li {
+	border: 1px solid #08698f;
+	background: #1b3a50;
+	border-top: 0;
+	margin-bottom: -1px
+}
+
+#tiki-top .cssmenu_horiz li ul li:first-child,
+#tiki-top .cssmenu_vert li ul li:first-child {
+	border-top: 1px solid #08698f;
+}
+
+#tiki-top .cssmenu_horiz li ul {
+	top: 2em;
+}
+
+#tiki-top .cssmenu_horiz li ul ul,
+.cssmenu_vert li ul ul {
+	top: -0.1em;
+}
+
+#tiki-top .cssmenu_horiz li a .sf-sub-indicator {
+	top: .4em;
+}
+
+.cssmenu_vert li a .sf-sub-indicator {
+	top: .3em;
+}
+
+
 .cssmenu_horiz > li.menusection > a {
 	padding-right: 2.6em;
+}
+
+.cssmenu_vert li a .sf-sub-indicator {
+	background: url(strasa/arrows-467aa7.png);
 }
 
 /** Links in other menus **/

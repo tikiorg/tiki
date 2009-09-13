@@ -542,62 +542,69 @@ a.phplmselected:hover {
 }
 
 /** CSS (suckerfish) menus **/
-.cssmenu_vert,
-.cssmenu_vert ul,
-.cssmenu li,
-.cssmenu_horiz ul li,
-.cssmenu_vert li,
-.cssmenu li ul,
-.cssmenu_vert li ul,
-.cssmenu_horiz li ul {
+.cssmenu_horiz ul,
+.cssmenu_vert ul {
 	width: 11em;
-	background: #fff;
 }
 
-[class].cssmenu_horiz li ul {
-	width: auto;
-	min-width: 11em;
+.cssmenu_horiz li li:hover ul,
+.cssmenu_horiz li li.sfHover ul,
+.cssmenu_vert li li:hover ul,
+.cssmenu_vert li li.sfHover ul {
+	left:	11em;
+}
+
+.cssmenu_horiz li,
+.cssmenu_vert li {
+	background:	#fff;
+}
+
+.cssmenu_horiz li:hover,
+.cssmenu_horiz li.sfHover,
+.cssmenu_horiz a:focus,
+.cssmenu_horiz a:hover,
+.cssmenu_horiz a:active,
+.cssmenu_vert li:hover,
+.cssmenu_vert li.sfHover,
+.cssmenu_vert a:focus,
+.cssmenu_vert a:hover,
+.cssmenu_vert a:active {
+	background:	#fff;
 }
 
 #col2 .cssmenu_vert,
 #col2 .cssmenu_vert li {
-	width: 180px;
-	padding: 0 !important;
+	width: 175px;
+}
+
+/* for wider menu in left col */
+#col2 .cssmenu_vert li:hover ul,
+#col2 .cssmenu_vert li.sfHover ul {
+	left: 175px;
 }
 
 #col2 .cssmenu_vert ul,
-#col2 .cssmenu_vert li ul li {
+#col2 .cssmenu_vert ul li {
 	width: 11em;
 }
 
-.cssmenu li ul,
-.cssmenu_horiz li ul,
-.cssmenu_vert li ul {
+/* back to default */
+#col2 .cssmenu_vert li li:hover ul,
+#col2 .cssmenu_vert li li.sfHover ul {
+	left: 11em;
+}
+
+.cssmenu_horiz li ul li,
+.cssmenu_vert li ul li {
 	border: 1px solid #d3d3d3;
+	border-top: 0;
+	margin-bottom: -1px;
 }
 
-.cssmenu_vert li ul,
-.cssmenu_vert li.sfhover ul {
-	margin-top: -1.3em;
+.cssmenu_vert li ul li:first-child {
+	border-top: 1px solid #d3d3d3;
 }
 
-.cssmenu_vert li ul {
-	margin-left: 11em;
-}
-
-#col2 .cssmenu_vert li ul {
-	margin-left: 175px;
-}
-
-#col2 .cssmenu_vert li ul li ul {
-	margin-left: 11em;
-}
-
-.cssmenu_horiz li ul ul {
-	margin: -1em 0 0 11em;
-}
-
-.cssmenu a,	
 .cssmenu_horiz a,
 .cssmenu_vert a {
 	text-decoration: none;
@@ -605,7 +612,6 @@ a.phplmselected:hover {
 	padding: 5px 6px;
 }
 
-.cssmenu a:hover,	
 .cssmenu_horiz a:hover,
 .cssmenu_vert a:hover {
 	text-decoration: underline;
@@ -633,6 +639,10 @@ a.phplmselected:hover {
 
 .sf-sub-indicator {
 	background: url(thenews/arrows-005faa.png) no-repeat -10px -100px; /* 8-bit indexed alpha png. IE6 gets solid image only; */
+}
+
+#col2 a .sf-sub-indicator {
+	top: 0.5em;
 }
 
 /** Links in other menus **/
