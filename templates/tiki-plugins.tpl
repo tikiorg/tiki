@@ -16,6 +16,7 @@
 				<th>{select_all checkbox_names='clear[]'}</th>
 				<th>{tr}Plugin{/tr} </th>
 				<th>{tr}Location{/tr} </th>
+				<th>{tr}Added By{/tr} </th>
 				<th>{tr}Actions{/tr} </th>
 			</tr>
 {foreach name=foo from=$plugin_list item=plugin}
@@ -27,6 +28,8 @@
 					{else}
 					{tr}Unknown{/tr}
 					{/if}
+				</td>
+				<td>{if $plugin.added_by}{$plugin.added_by|userlink}{else}{tr}Unknown{/tr}{/if}
 				</td>
 				<td>
 					<a href="tiki-plugins.php?approveone={$plugin.fingerprint}">{icon _id='accept' alt='{tr}Approve{/tr}'}</a>

@@ -5608,6 +5608,7 @@ class TikiLib extends TikiDb_Bridge {
 	}
 
 	function plugin_fingerprint_check( $fp ) {
+		global $user;
 		$limit = date( 'Y-m-d H:i:s', time() - 15*24*3600 );
 		$result = $this->query( "SELECT status, IF(status='pending' AND last_update < ?, 'old', '') flag FROM tiki_plugin_security WHERE fingerprint = ?",
 			array( $limit, $fp ) );
@@ -5637,9 +5638,12 @@ class TikiLib extends TikiDb_Bridge {
 				$objectId = '';
 			}
 
+			if (!$user) {
+				$user = tra('Anonymous');
+			}
 			$this->query( "DELETE FROM tiki_plugin_security WHERE fingerprint = ?", array( $fp ) );
-			$this->query( "INSERT INTO tiki_plugin_security (fingerprint, status, last_objectType, last_objectId) VALUES(?, ?, ?, ?)",
-				array( $fp, 'pending', $objectType, $objectId ) );
+			$this->query( "INSERT INTO tiki_plugin_security (fingerprint, status, added_by, last_objectType, last_objectId) VALUES(?, ?, ?, ?, ?)",
+				array( $fp, 'pending', $user, $objectType, $objectId ) );
 		}
 
 		return '';
@@ -5665,7 +5669,7 @@ class TikiLib extends TikiDb_Bridge {
 	}
 
 	function list_plugins_pending_approval() {
-		$result = $this->query("SELECT fingerprint, last_update, last_objectType, last_objectId FROM tiki_plugin_security WHERE status = 'pending' ORDER BY last_update DESC");
+		$result = $this->query("SELECT fingerprint, added_by, last_update, last_objectType, last_objectId FROM tiki_plugin_security WHERE status = 'pending' ORDER BY last_update DESC");
 
 		$list = array();
 		while( $row = $result->fetchRow() )
