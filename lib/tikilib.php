@@ -5324,7 +5324,7 @@ class TikiLib extends TikiDB {
 		// Handle parameters one by one
 		while( false !== $pos = strpos( $params_string, '=' ) ) {
 			$name = substr( $params_string, 0, $pos );
-			$name = ltrim( $name, ', ' );
+			$name = trim(ltrim( $name, ', ' ));
 			$value = '';
 
 			// Consider =>
