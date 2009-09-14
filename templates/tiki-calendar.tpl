@@ -30,8 +30,8 @@
 				{button href="tiki-admin_calendars.php" _text="{tr}Admin Calendar{/tr}"}
 			{/if}
 		{/if}
-{* avoid Add Event being shown if no calendar is displayed *}
-		{if $tiki_p_add_events eq 'y' and $displayedcals|@count >0}
+
+		{if $tiki_p_add_events eq 'y'}
 			{button href="tiki-calendar_edit_item.php" _text="{tr}Add Event{/tr}"}
 		{/if}
 
@@ -65,14 +65,7 @@
 				{button href="" _style="background-color:#fff;padding:0 4px;" _text="{tr}None{/tr}"}
 			{/if}
 		{/if}
-{* show jscalendar if set *}
-{if $prefs.feature_jscalendar eq 'y'}
-<div class="jscalrow">
-<form action="{$myurl}" method="post" name="f">
-{jscalendar date="$focusdate" id="trig" goto="$jscal_url" align="Bc"}
-</form>
-</div>
-{/if}
+
 	</div>
 
 

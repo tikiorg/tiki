@@ -1,5 +1,5 @@
 {strip}
-{title}{tr}Advanced parameters for iCal export{/tr}{/title}
+{title}{tr}Avanced parameters for iCal export{/tr}{/title}
 
 {if $tiki_p_view_calendar eq 'y'}
 	<div class="navbar">
