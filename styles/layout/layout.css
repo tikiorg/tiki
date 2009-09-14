@@ -1041,7 +1041,7 @@ table.wikiplugin-split .codelisting {width: 95%}
 	padding: 0}
 
 .wikitext .fancylist li {
-	background: transparent url(strasa/list_icon.png) top left no-repeat;
+	background: transparent url(../strasa/list_icon.png) top left no-repeat;
 	color: #f90;
 	font: italic 2em Verdana, Geneva, Arial, Helvetica, sans-serif;
 	line-height: 27px;
