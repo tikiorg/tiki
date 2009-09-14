@@ -1353,7 +1353,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 
 		'feature_bidi' => 'n',
 		'feature_lastup' => 'y',
-		'transition_style_ver' => '2.0',
+		'transition_style_ver' => 'none',
 
 		'magic_last_load' => 0,
 
