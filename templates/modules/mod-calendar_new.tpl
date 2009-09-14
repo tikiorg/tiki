@@ -32,7 +32,7 @@
 {if $month_cursor neq $focusmonth }
 <span style="color:lightgrey">{$day_cursor}</span>
 {elseif isset($cell[w][d].items[0]) and ($cell[w][d].items[0].modifiable eq "y" || $cell[w][d].items[0].visible eq 'y')}
-<a style="text-decoration: underline; font-weight: bold" href="{$myurl}?todate={$cell[w][d].day}&amp;viewmode=day"
+<a style="text-decoration: underline; font-weight: bold" href="{$myurl}?todate={$cell[w][d].day}&amp;viewmode=week"
 {if $prefs.calendar_sticky_popup eq "y" and $cell[w][d].items[0].calitemId}{popup sticky=true fullhtml="1" text=$over|escape:"javascript"|escape:"html"}{else}{popup fullhtml="1" text=$over|escape:"javascript"|escape:"html"}{/if}
 >{$day_cursor}</a>
 {else}
