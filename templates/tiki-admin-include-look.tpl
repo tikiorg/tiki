@@ -192,9 +192,61 @@
 				<tr>
 					<td class="form" colspan="5">
 
-						<input class="checkbox" type="checkbox" name="feature_layoutshadows" id="feature_layoutshadows"{if $prefs.feature_layoutshadows eq 'y'} checked="checked"{/if} />
-						<label for="feature_layoutshadows">{tr}Enable additional general layout layers for shadows, rounded corners or other decorative styling{/tr}</label>
-					
+					{* --- Shadow layer --- *}
+						<fieldset class="admin">
+							<legend>{tr}Shadow layer{/tr}</legend>
+							<div>{tr}Enable additional general layout layers for shadows, rounded corners or other decorative styling{/tr}</div>
+							<table class="admin">
+							<tr>
+								<td class="form">
+									<label for="feature_layoutshadows">{tr}Activate{/tr}:</label>
+								</td>
+								<td>				
+									<input class="checkbox" type="checkbox" name="feature_layoutshadows" id="feature_layoutshadows"{if $prefs.feature_layoutshadows eq 'y'} checked="checked"{/if} onclick="toggleTrTd('shd1');toggleTrTd('shd2');toggleTrTd('shd3');toggleTrTd('shd4');toggleTrTd('shd5');toggleTrTd('shd6');toggleTrTd('shd7');toggleTrTd('shd8');toggleTrTd('shd9');toggleTrTd('shd10');"  />
+								</td>
+							</tr>
+							<tr id="shd1" {if $prefs.feature_layoutshadows ne 'y' and $prefs.javascript_enabled eq 'y'} style="display:none;"{/if}>
+								<td class="form"><label for="main_shadow_start">{tr}Main shadow start{/tr}</label></td>
+								<td class="form"><textarea name="main_shadow_start" id="main_shadow_start" rows="2" cols="40">{$prefs.main_shadow_start|escape}</textarea></td>
+							</tr>
+							<tr id="shd2" {if $prefs.feature_layoutshadows ne 'y' and $prefs.javascript_enabled eq 'y'} style="display:none;"{/if}>
+								<td class="form"><label for="main_shadow_end">{tr}Main shadow end{/tr}</label></td>
+								<td class="form"><textarea name="main_shadow_end" id="main_shadow_end" rows="2" cols="40">{$prefs.main_shadow_end|escape}</textarea></td>
+							</tr>
+							<tr id="shd3" {if $prefs.feature_layoutshadows ne 'y' and $prefs.javascript_enabled eq 'y'} style="display:none;"{/if}>
+								<td class="form"><label for="header_shadow_start">{tr}Header shadow start{/tr}</label></td>
+								<td class="form"><textarea name="header_shadow_start" id="header_shadow_start" rows="2" cols="40">{$prefs.header_shadow_start|escape}</textarea></td>
+							</tr>
+							<tr id="shd4" {if $prefs.feature_layoutshadows ne 'y' and $prefs.javascript_enabled eq 'y'} style="display:none;"{/if}>
+								<td class="form"><label for="header_shadow_end">{tr}Header shadow end{/tr}</label></td>
+								<td class="form"><textarea name="header_shadow_end" id="header_shadow_end" rows="2" cols="40">{$prefs.header_shadow_end|escape}</textarea></td>
+							</tr>
+							<tr id="shd5" {if $prefs.feature_layoutshadows ne 'y' and $prefs.javascript_enabled eq 'y'} style="display:none;"{/if}>
+								<td class="form"><label for="middle_shadow_start">{tr}Middle shadow start{/tr}</label></td>
+								<td class="form"><textarea name="middle_shadow_start" id="middle_shadow_start" rows="2" cols="40">{$prefs.middle_shadow_start|escape}</textarea></td>
+							</tr>
+							<tr id="shd6" {if $prefs.feature_layoutshadows ne 'y' and $prefs.javascript_enabled eq 'y'} style="display:none;"{/if}>
+								<td class="form"><label for="middle_shadow_end">{tr}Middle shadow end{/tr}</label></td>
+								<td class="form"><textarea name="middle_shadow_end" id="middle_shadow_end" rows="2" cols="40">{$prefs.middle_shadow_end|escape}</textarea></td>
+							</tr>
+							<tr id="shd7" {if $prefs.feature_layoutshadows ne 'y' and $prefs.javascript_enabled eq 'y'} style="display:none;"{/if}>
+								<td class="form"><label for="center_shadow_start">{tr}Center shadow start{/tr}</label></td>
+								<td class="form"><textarea name="center_shadow_start" id="center_shadow_start" rows="2" cols="40">{$prefs.center_shadow_start|escape}</textarea></td>
+							</tr>
+							<tr id="shd8" {if $prefs.feature_layoutshadows ne 'y' and $prefs.javascript_enabled eq 'y'} style="display:none;"{/if}>
+								<td class="form"><label for="center_shadow_end">{tr}Center shadow end{/tr}</label></td>
+								<td class="form"><textarea name="center_shadow_end" id="center_shadow_end" rows="2" cols="40">{$prefs.center_shadow_end|escape}</textarea></td>
+							</tr>
+							<tr id="shd9" {if $prefs.feature_layoutshadows ne 'y' and $prefs.javascript_enabled eq 'y'} style="display:none;"{/if}>
+								<td class="form"><label for="footer_shadow_start">{tr}Footer shadow start{/tr}</label></td>
+								<td class="form"><textarea name="footer_shadow_start" id="footer_shadow_start" rows="2" cols="40">{$prefs.footer_shadow_start|escape}</textarea></td>
+							</tr>
+							<tr id="shd10" {if $prefs.feature_layoutshadows ne 'y' and $prefs.javascript_enabled eq 'y'} style="display:none;"{/if}>
+								<td class="form"><label for="footer_shadow_end">{tr}Footer shadow end{/tr}</label></td>
+								<td class="form"><textarea name="footer_shadow_end" id="footer_shadow_end" rows="2" cols="40">{$prefs.footer_shadow_end|escape}</textarea></td>
+							</tr>
+							</table>
+						</fieldset>					
 
 					{* --- Customize Site Header --- *}
 						<fieldset class="admin">
