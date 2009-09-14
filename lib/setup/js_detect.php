@@ -19,12 +19,11 @@ if ( isset($_COOKIE['javascript_enabled']) ) {
 } else {
 	// Set the cookie to 'n', through PHP / HTTP headers
 	$prefs['javascript_enabled'] = 'n';
-	setcookie('javascript_enabled', 'n');
 }
 
 if ( $prefs['javascript_enabled'] != 'y' ) {
-	// Set the cookie to 'y', through javascript (will override the above cookie set to 'n' and sent by PHP / HTTP headers)
-	$headerlib->add_js("setCookieBrowser('javascript_enabled','y');");
+	// Set the cookie to 'y', through javascript (will override the above cookie set to 'n' and sent by PHP / HTTP headers) - duration: approx. 1 year
+	$headerlib->add_js("var jsedate = new Date();\njsedate.setTime(" . ( 1000 * ( $tikilib->now + 365 * 24 * 3600 ) ) . ");\nsetCookieBrowser('javascript_enabled', 'y', null, jsedate);");
 
 	$prefs['feature_tabs'] = 'n';
 	$prefs['feature_jquery'] = 'n';
