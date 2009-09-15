@@ -21,7 +21,19 @@ function prefs_global_list() {
 			'type' => 'text',
 			'size' => 20,
 		),
+		'useGroupHome' => array(
+			'name' => tra('Use group homepages'),
+			'description' => tra('Use group homepages'),
+			'type' => 'flag',
+			'help' => 'Group',
+		),
+		'limitedGoGroupHome' => array(
+			'name' => tra('Go to group homepage only if login from default homepage'),
+			'description' => tra('Go to group homepage only if login from default homepage'),
+			'type' => 'flag',
+			'dependencies' => array(
+				'useGroupHome',
+			),
+		),
 	);
 }
-
-?>
