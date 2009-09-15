@@ -87,8 +87,10 @@ while ($res = $result->fetchRow() ) {
 	}
 }
 
-//rename tii_p_view_categories to tiki_p_view_category
+//rename tiki_p_view_categories to tiki_p_view_category
 $query = 'UPDATE  `users_objectpermissions` SET `permName`=? WHERE `permName`=?';
+$tikilib->query($query, array('tiki_p_view_category', 'tiki_p_view_categories'));
+$query = 'UPDATE  `tiki_menu_options` SET `perm`=? WHERE `perm`=?';
 $tikilib->query($query, array('tiki_p_view_category', 'tiki_p_view_categories'));
 
 
