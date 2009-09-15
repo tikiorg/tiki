@@ -777,7 +777,7 @@ class TrackerLib extends TikiLib {
 					}
 					$mid .= ')';
 				} elseif (empty($ev) && empty($fv)) { // test null value
-					$mid.= " AND ttif$i.`value`=? ";
+					$mid.= " AND ttif$i.`value`=? OR ttif$i.`value` IS NULL";
 					$bindvars[] = '';
 				}
 			}
