@@ -11,13 +11,13 @@ function register_id(id) {
     
 function auto_save() {
 	if (submit == 0) {
-		if (typeof tikiPageName == 'undefined') { tikiPageName = ''; }
+		if (typeof autoSaveId == 'undefined') { autoSaveId = ''; }
 		for(var id in auto_save_id) {
 			if (document.getElementById(id)) {
 				var data = $jq('#' + id).val();
 				if (auto_save_data[id] != data) {
 					auto_save_data[id] = data;
-					xajax_auto_save(id, encodeURIComponent(data), tikiPageName);
+					xajax_auto_save(id, encodeURIComponent(data), autoSaveId);
 				}
 			}
 		}
@@ -35,10 +35,10 @@ $jq('document').ready( function () {
 
 function remove_save() {
 	submit = 1;
-	if (typeof tikiPageName == 'undefined') { tikiPageName = ''; }
+	if (typeof autoSaveId == 'undefined') { autoSaveId = ''; }
 	for(var id in auto_save_id) {
 		if (document.getElementById(id)) {	// not moo artifacts
-			xajax_remove_save(id, tikiPageName);
+			xajax_remove_save(id, autoSaveId);
 		}
 	}
 }

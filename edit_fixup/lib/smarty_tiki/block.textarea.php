@@ -18,7 +18,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  */
 
 function smarty_block_textarea($params, $content, &$smarty, $repeat) {
-	global $prefs, $headerlib, $smarty, $page;
+	global $prefs, $headerlib, $smarty;
 	
 	if ( $repeat ) return;
 
@@ -48,6 +48,7 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	$html = '';
 	$html .= '<input type="hidden" name="mode_wysiwyg" value="" /><input type="hidden" name="mode_normal" value="" />';
 	
+	$auto_save_referrer = ensureReferrer();
 	$auto_save_warning = '';
 	if ($prefs['feature_ajax'] == 'y' && $prefs['feature_ajax_autosave'] == 'y') {	// retrieve autosaved content
 		if ($params['_wysiwyg'] != 'y') {
@@ -56,8 +57,8 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 			$as_id = $params['name'];	// this is stupid
 		}
 		if (empty($_REQUEST['noautosave']) || $_REQUEST['noautosave'] != 'y') {
-			if (has_autosave($as_id, $page)) {		//  and $params['preview'] == 0 -  why not?
-				$auto_saved = str_replace("\n","\r\n", get_autosave($as_id, $page));
+			if (has_autosave($as_id, $auto_save_referrer)) {		//  and $params['preview'] == 0 -  why not?
+				$auto_saved = str_replace("\n","\r\n", get_autosave($as_id, $auto_save_referrer));
 				
 				if ( strcmp($auto_saved, $content) != 0 ) {
 					$content = $auto_saved;
@@ -82,7 +83,7 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 		if (isset($params['Height']))	$fcked->Height = $params['Height'];
 		
 		if ($prefs['feature_ajax'] == 'y' && $prefs['feature_ajax_autosave'] == 'y') {
-			$fcked->Config['autoSaveSelf'] = $page;		//htmlentities($_SERVER['REQUEST_URI']);
+			$fcked->Config['autoSaveSelf'] = $auto_save_referrer;		//htmlentities($_SERVER['REQUEST_URI']);
 		}
 		if (isset($params['ToolbarSet'])) {
 			$fcked->ToolbarSet = $params['ToolbarSet'];
@@ -134,7 +135,7 @@ function FCKeditor_OnComplete( editorInstance ) {
 		
 		if ($prefs['feature_ajax'] == 'y' && $prefs['feature_ajax_autosave'] == 'y') {
 			$headerlib->add_jq_onready("register_id('$textarea_id'); auto_save();");
-			$headerlib->add_js("var tikiPageName = '$page';");	// onready is too late...
+			$headerlib->add_js("var autoSaveId = '$auto_save_referrer';");	// onready is too late...
 		}
 
 		$smarty->assign_by_ref('pagedata', $content);

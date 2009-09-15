@@ -5,7 +5,7 @@ if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== false) {
   exit;
 }
 
-global $prefs;
+global $prefs, $smarty;
 if ($prefs['feature_ajax'] != 'y' || $prefs['feature_ajax_autosave'] != 'y') {
 	return;
 }
@@ -18,9 +18,8 @@ if (isset($_REQUEST['noautosave'])) {
 
 function auto_save_name($id, $referer = '', $only_md5 = false) {
 	global $user;
-	$user_agent = $_SERVER['HTTP_USER_AGENT'];
 	$referer = preg_replace('/(\?|\&)noautosave=y/','', ensureReferrer($referer));
-	return ($only_md5 ? '' : 'temp/cache/auto_save-').md5("$user:$referer:$id:$user_agent");
+	return ($only_md5 ? '' : 'temp/cache/auto_save-').md5("$user:$referer:$id");
 }
 function auto_save_log($id, $referer = '', $action = '') {
 	global $user;
@@ -28,14 +27,14 @@ function auto_save_log($id, $referer = '', $action = '') {
 }
 
 function auto_save($id, $data, $referer = '') {
-	//auto_save_log($id, $referer, 'auto_save');
+	auto_save_log($id, $referer, 'auto_save');
 	file_put_contents(auto_save_name($id, $referer), rawurldecode($data));
 	return new xajaxResponse();
 }
 
 function remove_save($id, $referer = '') {
 	$referer = ensureReferrer($referer);
-	//auto_save_log($id, $referer, 'remove_save');
+	auto_save_log($id, $referer, 'remove_save');
 	$file_name = auto_save_name($id, $referer);
 	if (file_exists($file_name)) {
 		unlink($file_name);
@@ -57,5 +56,21 @@ function get_autosave($id, $referer = '') {
 }
 
 function ensureReferrer($referer = '') {	// should be page name, but use URI if not?
-	return !empty($referer) ? $referer : $_SERVER['REQUEST_URI'];
+	
+	if (empty($referer)) {
+		global $section;
+		if ($section == 'wiki page') {
+			if (isset($_REQUEST['page'])) {
+				$referer = 'wiki_page:' . $_REQUEST['page'];
+			}
+		} else if ($section == 'blogs') {
+			if (isset($_REQUEST['postId'])) {
+				$referer = 'blog:' . $_REQUEST['postId'];
+			}
+		}
+	}
+	if (empty($referer)) {
+		$referer = $_SERVER['REQUEST_URI'];
+	}
+	return $referer;
 }
