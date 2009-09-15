@@ -871,12 +871,15 @@ class TrackerLib extends TikiLib {
 					$zcats = $categlib->get_object_categories('tracker '.$trackerId, $itemId);
 				}
 				$cats = array();
+				$catIds = array();
 				foreach ( $mycats as $m ) {
 					if ( in_array($m['categId'], $zcats) ) {
 						$cats[] = $m;
+						$catIds[] = $m['categId'];
 					}
 				}
 				$fopt['categs'] = $cats;
+				$fopt['value'] = $catIds;
 				break;
 			case 'l':
 				if ( isset($fopt['options_array'][2]) && isset($fil[$fopt['options_array'][2]]) && ($lst = $fil[$fopt['options_array'][2]]) && isset($fopt['options_array'][3])) {
