@@ -671,7 +671,7 @@ class TrackerLib extends TikiLib {
 		}
 		if ( ! $sort_mode ) $sort_mode = 'lastModif_desc';
 
-		if ( substr($sort_mode, 0, 2) == 'f_' or $filtervalue or $exactvalue ) {
+		if ( substr($sort_mode, 0, 2) == 'f_' or !empty($filterfield) ) {
 			$cat_table = '';
 			if ( substr($sort_mode, 0, 2) == 'f_' ) {
 				$csort_mode = 'sttif.`value` ';
@@ -778,7 +778,7 @@ class TrackerLib extends TikiLib {
 					$mid .= ')';
 				} elseif (empty($ev) && empty($fv)) { // test null value
 					$mid.= " AND ttif$i.`value`=? ";
-					$bindvars[] = $ev;
+					$bindvars[] = '';
 				}
 			}
 		} else {
