@@ -5,16 +5,6 @@
 	<div class="postbody">
 		<div class="author_actions clearfix">
 			<div class="actions">
-{if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y'}
-  {if $tags.data|@count >0}
-    <div class="freetaglist">
-      {foreach from=$tags.data item=tag}
-	  {capture name=tagurl}{if (strstr($tag.tag, ' '))}"{$tag.tag}"{else}{$tag.tag}{/if}{/capture}
-  	  <a class="freetag" href="tiki-browse_freetags.php?tag={$smarty.capture.tagurl|escape:'url'}">{$tag.tag}</a> 
-      {/foreach}
-    </div>
-  {/if}
-{/if}
 {if ($ownsblog eq 'y') or ($user and $post_info.user eq $user) or $tiki_p_blog_admin eq 'y'}
 <a class="blogt" href="tiki-blog_post.php?blogId={$post_info.blogId}&amp;postId={$post_info.postId}">{icon _id='page_edit'}</a>
 <a class="blogt" href="tiki-view_blog.php?blogId={$post_info.blogId}&amp;remove={$post_info.postId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
@@ -44,6 +34,7 @@
 	{if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y'}
 		{if $tags.data|@count >0}
 			<div class="freetaglist">
+				 {tr}Tags:{/tr}&nbsp;
     			{foreach from=$tags.data item=tag}
 					{capture name=tagurl}{if (strstr($tag.tag, ' '))}"{$tag.tag}"{else}{$tag.tag}{/if}{/capture}
 					<a class="freetag" href="tiki-browse_freetags.php?tag={$smarty.capture.tagurl|escape:'url'}">{$tag.tag}</a> 

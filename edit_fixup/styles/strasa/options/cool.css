@@ -244,7 +244,7 @@ a.flip:hover {color: #006699}
 }
 
 #header .horbaritem a:hover {
-	background: url('cool/headermenuitem-hover.png') bottom center repeat-x;
+	background: url(cool/headermenuitem-hover.png) bottom center repeat-x;
 	border-color: #336699;
 	color: #fff;
 }
@@ -259,7 +259,7 @@ a.flip:hover {color: #006699}
 }
 
 .mdkitem a:hover {
-	background: transparent url('styles/cool/headerbg.jpg') repeat-x;
+	background: transparent url(cool/headerbg.jpg) repeat-x;
 	color: #fff;
 }
 
@@ -648,7 +648,7 @@ a.pagetitle:hover {
 }
 
 .wikitext .fancylist li {
-	background: transparent url('strasa/list_icon.png') top left no-repeat;
+	background: transparent url(../list_icon.png) top left no-repeat;
 	color: #f90;
 }
 
@@ -766,7 +766,7 @@ div.articletitle h2 a:visited {
 }
 
 body.tiki_blogs .author_actions .actions {
-	background: url(strasa/login.jpg) no-repeat 100% 0;
+	background: url(cool/login.jpg) no-repeat 100% 0;
 }
 
 /***** Forums *****/
@@ -843,7 +843,7 @@ body.tiki_blogs .postbody-title,
 }
 
 .post-approved-r .content * {
-	background: url(../../img/icons2/dots.gif);
+	background: url(../../../img/icons2/dots.gif);
 }
 
 /* Help box*/

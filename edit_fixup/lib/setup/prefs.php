@@ -1275,7 +1275,6 @@ function get_default_prefs() {
 		'session_lifetime' => 0,
 		'shoutbox_autolink' => 'n',
 		'show_comzone' => 'n',
-		'system_os' => class_exists('TikiSetup') ? TikiSetup::os() : 'unix',
 		'tikiIndex' => 'tiki-index.php',
 		'urlIndex' => '',
 		'useGroupHome' => 'n',
@@ -1350,7 +1349,6 @@ function get_default_prefs() {
 		'iepngfix_elements' => '',
 		'feature_use_minified_scripts' => 'y',		// for debugging
 		'valid_email_regex' => '^[_a-z0-9\+\.\-]+@[_a-z0-9\.\-]+\.[a-z]{2,4}$',
-		'feature_debug_ignore_xdebug' => 'n',
 		
 		// JQuery
 		'feature_jquery' => 'y',			// Default JS lib for - now "hard-wired" on if javascript_enabled

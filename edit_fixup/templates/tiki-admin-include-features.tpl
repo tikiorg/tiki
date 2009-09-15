@@ -162,7 +162,6 @@
 				{preference name=feature_tikitests}
 				{preference name=feature_workflow}
 				{preference name=feature_use_minified_scripts}
-				{preference name=feature_debug_ignore_xdebug}
 			</div>
 {/tab}
 {/tabset}

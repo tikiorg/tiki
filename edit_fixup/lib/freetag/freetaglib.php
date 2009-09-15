@@ -189,7 +189,7 @@ class FreetagLib extends ObjectLib {
     
 function get_objects_with_tag_combo($tagArray, $type='', $thisUser = '', $offset = 0, $maxRecords = -1, $sort_mode = 'name_asc', $find = '', $broaden = 'n') {
 	global $categlib; include_once('lib/categories/categlib.php');
-	global $tiki_p_admin, $user;
+	global $tiki_p_admin, $user, $smarty;
 	if (!isset($tagArray) || !is_array($tagArray)) {
 	    return false;
 	}
@@ -310,21 +310,32 @@ function get_objects_with_tag_combo($tagArray, $type='', $thisUser = '', $offset
 	$ret = array();
 	$permMap = $categlib->map_object_type_to_permission();
 	while ($row = $result->fetchRow()) {
+		$ok = false;
 		if ($tiki_p_admin == 'y') { 
-			$ret[] = $row;
+			$ok = true;
 		} elseif ($row['type'] == 'blog post') {
 			global $bloglib; include_once('lib/blogs/bloglib.php');
 			$post_info = $bloglib->get_post($row['itemId']);
 			if ($this->user_has_perm_on_object($user, $post_info['blogId'], 'blog', 'tiki_p_read_blog')) {
-				$ret[] = $row;
-			} else {
-				--$cant;
+				$ok = true;
 			}
 		} elseif ($this->user_has_perm_on_object($user, $row['itemId'], $row['type'], $permMap[$row['type']])) {
+			$ok = true;
+		}
+		if ($ok) {
+			if ($prefs['feature_sefurl'] == 'y') {
+				include_once('tiki-sefurl.php');
+				if ($row['type'] == 'blog post' && !empty($post_info)) {
+					$row['href'] = filter_out_sefurl($row['href'], $smarty, 'blogpost', $post_info['title']);
+				} else {
+					$type = ($row['type'] == 'wiki page')?'wiki':($row['type'] == 'blog post'? 'blogpost': $row['type']);
+					$row['href'] = filter_out_sefurl($row['href'], $smarty, $type);
+				}
+			}
 			$ret[] = $row;
 		} else {
-			--$cant;
-		}       
+			-- $cant;
+		}
 	}
 
 	return array('data' => $ret,
