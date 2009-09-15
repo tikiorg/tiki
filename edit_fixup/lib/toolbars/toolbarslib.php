@@ -121,6 +121,7 @@ abstract class Toolbar
 			'help',
 			'tikiimage',
 			'switcheditor',
+			'autosave',
 		), $plugins ));
 	} // }}}
 	
@@ -318,7 +319,8 @@ class ToolbarFckOnly extends Toolbar
 	{
 		$this->setWysiwygToken( $token )
 			->setIcon($icon)
-				->setType('FckOnly');
+				->setType('FckOnly')
+					->setLabel( $token );
 	} // }}}
 	
 	public static function fromName( $name ) // {{{
@@ -377,7 +379,7 @@ class ToolbarFckOnly extends Toolbar
 		case 'source':
 			return new self( 'Source' );
 		case 'autosave':
-			return new self( 'ajaxAutoSave' );
+			return new self( 'ajaxAutoSave', 'lib/fckeditor_tiki/plugins/ajaxAutoSave/images/ajaxAutoSaveDirty.gif' );
 		}
 	} // }}}
 

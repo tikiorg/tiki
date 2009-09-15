@@ -13,11 +13,6 @@
 	<div class='textarea-toolbar' id='{$textarea_id|default:editwiki}_toolbar'>
 		{toolbars area_name=$textarea_name|default:edit}
 	</div>
-	{if isset($noautosave) and $noautosave neq 'y' and $has_autosave eq 'y'} 
-		{remarksbox type="warning" title="{tr}AutoSave{/tr}"}
-			{tr}If you want the saved version instead of the autosaved one{/tr}&nbsp;{self_link noautosave='y' _ajax='n'}{tr}Click Here{/tr}{/self_link}
-		{/remarksbox}
-	{/if} 
 	<textarea id="{$textarea_id|default:editwiki}" class="{$textarea_class|default:wikiedit}" name="{$textarea_name|default:edit}" {$textarea_attributes}>{$pagedata}</textarea>
 </div>
 

@@ -18,7 +18,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  */
 
 function smarty_block_textarea($params, $content, &$smarty, $repeat) {
-	global $prefs, $headerlib, $smarty;
+	global $prefs, $headerlib, $smarty, $page;
+	
 	if ( $repeat ) return;
 
 	// some defaults
@@ -46,10 +47,31 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	if ( ! isset($params['style']) ) $params['style'] = 'width:99%';
 	$html = '';
 	$html .= '<input type="hidden" name="mode_wysiwyg" value="" /><input type="hidden" name="mode_normal" value="" />';
-		
+	
+	$auto_save_warning = '';
+	if ($prefs['feature_ajax'] == 'y' && $prefs['feature_ajax_autosave'] == 'y') {	// retrieve autosaved content
+		if ($params['_wysiwyg'] != 'y') {
+			$as_id = $params['id'];
+		} else {
+			$as_id = $params['name'];	// this is stupid
+		}
+		if (empty($_REQUEST['noautosave']) || $_REQUEST['noautosave'] != 'y') {
+			if (has_autosave($as_id, $page)) {		//  and $params['preview'] == 0 -  why not?
+				$auto_saved = str_replace("\n","\r\n", get_autosave($as_id, $page));
+				
+				if ( strcmp($auto_saved, $content) != 0 ) {
+					$content = $auto_saved;
+					$msg = tra('If you want the saved version instead of this autosaved one').'&nbsp;'.smarty_block_self_link( array( 'noautosave'=>'y', '_ajax'=>'n'), tra('Click Here'), $smarty);
+					$auto_save_warning = smarty_block_remarksbox( array( 'type'=>'warning', 'title'=>tra('AutoSave')), $msg, $smarty)."\n";
+				}
+			}
+		}
+	}
+
+
 
 	if ( $params['_wysiwyg'] == 'y' ) {
-//		{editform Meat=$pagedata InstanceName='edit' ToolbarSet="Tiki"}
+
 		global $url_path;
 		include_once 'lib/tikifck.php';
 		if (!isset($params['name']))       $params['name'] = 'fckedit';
@@ -58,8 +80,9 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 		if (isset($content))			$fcked->Meat = $content;
 		if (isset($params['Width']))	$fcked->Width = $params['Width'];
 		if (isset($params['Height']))	$fcked->Height = $params['Height'];
+		
 		if ($prefs['feature_ajax'] == 'y' && $prefs['feature_ajax_autosave'] == 'y') {
-			$fcked->Config['autoSaveSelf'] = htmlentities($_SERVER['REQUEST_URI']);
+			$fcked->Config['autoSaveSelf'] = $page;		//htmlentities($_SERVER['REQUEST_URI']);
 		}
 		if (isset($params['ToolbarSet'])) {
 			$fcked->ToolbarSet = $params['ToolbarSet'];
@@ -110,31 +133,8 @@ function FCKeditor_OnComplete( editorInstance ) {
 		}
 		
 		if ($prefs['feature_ajax'] == 'y' && $prefs['feature_ajax_autosave'] == 'y') {
-			global $page;
 			$headerlib->add_jq_onready("register_id('$textarea_id'); auto_save();");
 			$headerlib->add_js("var tikiPageName = '$page';");	// onready is too late...
-			
-			if ($_REQUEST['noautosave'] != 'y') {
-				//{autosave id=$textarea_id|default:editwiki default=$pagedata preview=$preview}
-				
-				if (has_autosave($textarea_id, $page)) {		//  and $params['preview'] == 0 -  why not?
-				
-					$auto_saved = str_replace("\n","\r\n", get_autosave($textarea_id, $page));
-					
-					if ( strcmp($auto_saved, $content) == 0 ) {
-						$smarty->assign('has_autosave','n');
-					} else {
-						$smarty->assign('has_autosave','y');
-						$content = $auto_saved;
-					}
-				} else {
-					$smarty->assign('has_autosave','n');
-				}
-				$smarty->assign('noautosave','n');
-			} else {
-				$smarty->assign('noautosave','y');
-			}
-
 		}
 
 		$smarty->assign_by_ref('pagedata', $content);
@@ -214,5 +214,5 @@ var editTimerWarnings = 0;
 	form.submit();
 }');
 
-	return $html;
+	return $auto_save_warning.$html;
 }
