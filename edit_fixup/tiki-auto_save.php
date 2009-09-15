@@ -1,4 +1,8 @@
 <?php
+// $Id$
+//
+// Called by FCKEditor and defined in setup_fckeditor.tpl - FCKConfig.ajaxAutoSaveTargetUrl
+
 require_once('tiki-setup.php');
 
 if ($prefs['feature_ajax'] != 'y' || $prefs['feature_ajax_autosave'] != 'y') {

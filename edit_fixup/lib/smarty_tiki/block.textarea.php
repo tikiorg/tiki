@@ -101,14 +101,43 @@ function FCKeditor_OnComplete( editorInstance ) {
 				$textarea_attributes .= ' '.$k.'="'.$v.'"';
 			}
 		}
-
+		if (!$textarea_id) { $textarea_id = $params['id']; }
 		if ( $textarea_attributes != '' ) {
 			$smarty->assign('textarea_attributes', $textarea_attributes);
 		}
-		$smarty->assign_by_ref('pagedata', $content);
+		if ( isset($params['_zoom']) && $params['_zoom'] == 'n' ) {
+			$prefs['feature_template_zoom'] = $feature_template_zoom_orig;
+		}
 		
-		if (!$textarea_id) { $textarea_id = $params['id']; }
+		if ($prefs['feature_ajax'] == 'y' && $prefs['feature_ajax_autosave'] == 'y') {
+			global $page;
+			$headerlib->add_jq_onready("register_id('$textarea_id'); auto_save();");
+			$headerlib->add_js("var tikiPageName = '$page';");	// onready is too late...
+			
+			if ($_REQUEST['noautosave'] != 'y') {
+				//{autosave id=$textarea_id|default:editwiki default=$pagedata preview=$preview}
+				
+				if (has_autosave($textarea_id, $page)) {		//  and $params['preview'] == 0 -  why not?
+				
+					$auto_saved = str_replace("\n","\r\n", get_autosave($textarea_id, $page));
+					
+					if ( strcmp($auto_saved, $content) == 0 ) {
+						$smarty->assign('has_autosave','n');
+					} else {
+						$smarty->assign('has_autosave','y');
+						$content = $auto_saved;
+					}
+				} else {
+					$smarty->assign('has_autosave','n');
+				}
+				$smarty->assign('noautosave','n');
+			} else {
+				$smarty->assign('noautosave','y');
+			}
 
+		}
+
+		$smarty->assign_by_ref('pagedata', $content);
 		$html .= $smarty->fetch('wiki_edit.tpl');
 
 		$html .= "\n".'<input type="hidden" name="rows" value="'.$params['rows'].'"/>'
@@ -116,14 +145,6 @@ function FCKeditor_OnComplete( editorInstance ) {
 			."\n".'<input type="hidden" name="wysiwyg" value="n" />';
 
 
-		if ( isset($params['_zoom']) && $params['_zoom'] == 'n' ) {
-			$prefs['feature_template_zoom'] = $feature_template_zoom_orig;
-		}
-		
-		if ($prefs['feature_ajax'] == 'y' && $prefs['feature_ajax_autosave'] == 'y') {
-			$headerlib->add_jq_onready("register_id('$textarea_id');auto_save();");
-		}
-		
 	}	// wiki or wysiwyg
 
 

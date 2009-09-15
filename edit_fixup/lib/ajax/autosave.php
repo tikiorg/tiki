@@ -1,7 +1,7 @@
 <?php
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
-  header("location: index.php");
+if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== false) {
+  header('location: index.php');
   exit;
 }
 
@@ -16,42 +16,46 @@ if (isset($_REQUEST['noautosave'])) {
 	$smarty->assign('noautosave',$_REQUEST['noautosave']=='y');
 }
 
-function auto_save_name($id, $request = "") {
+function auto_save_name($id, $referer = '', $only_md5 = false) {
 	global $user;
 	$user_agent = $_SERVER['HTTP_USER_AGENT'];
-	$referer = preg_replace("/(\?|\&)noautosave=y/","",$request != "" ? $request : $_SERVER['REQUEST_URI']);
-	return "temp/cache/wiki-".md5("$user:$referer:$id");
+	$referer = preg_replace('/(\?|\&)noautosave=y/','', ensureReferrer($referer));
+	return ($only_md5 ? '' : 'temp/cache/auto_save-').md5("$user:$referer:$id:$user_agent");
 }
-function auto_save_log($id, $request = "") {
+function auto_save_log($id, $referer = '', $action = '') {
 	global $user;
-	$user_agent = $_SERVER['HTTP_USER_AGENT'];
-	$referer = preg_replace("/(\?|\&)noautosave=y/","",$request != "" ? $request : $_SERVER['REQUEST_URI']);
-	file_put_contents("temp/cache/log-".md5("$user:$referer:$id"),"$user:$referer:$id");
+	file_put_contents('temp/cache/auto_save-log-'.(auto_save_name($id, $referer, true)), $user.' : '.ensureReferrer($referer)." : $id : $action\n", FILE_APPEND);
 }
 
-function auto_save($id, $data, $referer = "") {
-	//auto_save_log($id, $referer);
-	file_put_contents(auto_save_name($id, $referer),rawurldecode($data));
+function auto_save($id, $data, $referer = '') {
+	//auto_save_log($id, $referer, 'auto_save');
+	file_put_contents(auto_save_name($id, $referer), rawurldecode($data));
 	return new xajaxResponse();
 }
 
-function remove_save($id) {
-	$file_name = auto_save_name($id);
+function remove_save($id, $referer = '') {
+	$referer = ensureReferrer($referer);
+	//auto_save_log($id, $referer, 'remove_save');
+	$file_name = auto_save_name($id, $referer);
 	if (file_exists($file_name)) {
 		unlink($file_name);
 	}
 	return new xajaxResponse();
 }
 
-function has_autosave($id) {
-	return file_exists(auto_save_name($id));
+function has_autosave($id, $referer = '') {
+	return file_exists(auto_save_name($id, ensureReferrer($referer)));
 }
 
-function get_autosave($id) {
-	$file_name = auto_save_name($id);
+function get_autosave($id, $referer = '') {
+	$file_name = auto_save_name($id, $referer);
 	if (file_exists($file_name)) {
 		return file_get_contents($file_name);
 	} else {
-		return "";
+		return '';
 	}
+}
+
+function ensureReferrer($referer = '') {	// should be page name, but use URI if not?
+	return !empty($referer) ? $referer : $_SERVER['REQUEST_URI'];
 }
