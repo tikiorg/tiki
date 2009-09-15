@@ -96,18 +96,9 @@
 </fieldset>
 
 <fieldset><legend>{tr}Miscellaneous{/tr}</legend>
-<div class="adminoptionbox"><label for="general-os">{tr}Server OS{/tr}</label>:<select name="system_os" id="general-os">
-            <option value="unix"
-              {if $prefs.system_os eq 'unix'}selected="selected"{/if}>{tr}Unix{/tr}</option>
-            <option value="windows"
-              {if $prefs.system_os eq 'windows'}selected="selected"{/if}>{tr}Windows{/tr}</option>
-            <option value="unknown"
-              {if $prefs.system_os eq 'unknown'}selected="selected"{/if}>{tr}Unknown/Other{/tr}</option>
-            </select>
-</div>
-<div class="adminoptionbox">	  
 
-{preference name=smarty_security}
+<div class="adminoptionbox">	  
+	{preference name=smarty_security}
 
 <div class="adminoptionbox">	  
 	<div class="adminoption"><input type="checkbox" id="feature_pear_date" name="feature_pear_date"{if $prefs.feature_pear_date eq 'y'} checked="checked"{/if} /></div>

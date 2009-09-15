@@ -549,11 +549,5 @@ function prefs_feature_list() {
 			'help' => 'MinifiedScripts',
 			'type' => 'flag',
 		),
-		'feature_debug_ignore_xdebug' => array(
-			'name' => tra('Ignore XDebug'),
-			'description' => tra("Ignore XDebug: Don't use XDebug debugging info if installed. Try this if you use xdebug and are geting blank pages."),
-			'help' => '',
-			'type' => 'flag',
-		),
 	);
 }
