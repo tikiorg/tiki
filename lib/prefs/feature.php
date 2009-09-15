@@ -552,7 +552,6 @@ function prefs_feature_list() {
 		'feature_version_checks' => array(
 			'name' => tra('Check for updates automatically'),
 			'description' => tra('TikiWiki will check for updates when you access the main Administration page'),
-			'help' => 'MinifiedScripts',
 			'type' => 'flag',
 		),
 	);
