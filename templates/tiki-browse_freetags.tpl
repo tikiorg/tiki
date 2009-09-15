@@ -66,7 +66,8 @@
 
 		<div class="freetaglist"> 
 			{foreach from=$most_popular_tags item=popular_tag}
-				<a class="freetag_{$popular_tag.size}" href="tiki-browse_freetags.php?tag={$popular_tag.tag}" onclick="javascript:addTag('{$popular_tag.tag|escape:'javascript'}');return false;" ondblclick="location.href=this.href;"{if $popular_tag.color} style="color:{$popular_tag.color}"{/if}>{$popular_tag.tag}</a> 
+				{capture name=tagurl}{if (strstr($popular_tag.tag, ' '))}"{$popular_tag.tag}"{else}{$popular_tag.tag}{/if}{/capture}
+				<a class="freetag_{$popular_tag.size}" href="tiki-browse_freetags.php?tag={$smarty.capture.tagurl|escape:'url'}" onclick="javascript:addTag('{$popular_tag.tag|escape:'javascript'}');return false;" ondblclick="location.href=this.href;"{if $popular_tag.color} style="color:{$popular_tag.color}"{/if}>{$popular_tag.tag}</a> 
 			{/foreach}
 		</div>
 
