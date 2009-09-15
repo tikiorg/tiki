@@ -8,53 +8,38 @@
 {tabset name="admin_general"}
 	{tab name="{tr}General Preferences{/tr}"}
 
-    <fieldset>
-	<legend>{tr}Release Check{/tr}</legend>
-
-	<div class="adminoptionbox">{tr}Tiki version{/tr}: <strong>{$tiki_version}</strong> 
-	    {button href="tiki-install.php" _text="{tr}Reset or upgrade your database{/tr}"}
-	</div>
+		<fieldset>
+			<legend>{tr}Release Check{/tr}</legend>
+			<div class="adminoptionbox">{tr}Tiki version{/tr}: <strong>{$tiki_version}</strong> 
+				{button href="tiki-install.php" _text="{tr}Reset or upgrade your database{/tr}"}
+			</div>
 	
-	<div class="adminoptionbox">
-	    <div class="adminoption"><input type="checkbox" id="general-versioncheck" name="feature_version_checks" {if $prefs.feature_version_checks eq 'y'}checked="checked" {/if}onclick="flip('check_for_updates');" /></div>
-	    <div class="adminoptionlabel"><label for="general-versioncheck">{tr}Check for updates automatically{/tr}.</label></div>
-	    <div class="adminoptionboxchild" id="check_for_updates" style="display:{if $prefs.feature_version_checks eq 'y'}block{else}none{/if};">
-		<div>{tr}Check frequency{/tr}: 
-		<select name="tiki_version_check_frequency">
-        <option value="86400"{if $prefs.tiki_version_check_frequency eq 86400} selected="selected"{/if}>{tr}Each day{/tr}</option>
-        <option value="604800"{if $prefs.tiki_version_check_frequency eq 604800} selected="selected"{/if}>{tr}Each week{/tr}</option>
-        <option value="2592000"{if $prefs.tiki_version_check_frequency eq 2592000} selected="selected"{/if}>{tr}Each month{/tr}</option>
-        </select>		
-		</div>
-		<em>{tr}TikiWiki will check for updates when you access the main Administration page{/tr}.</em>
-	</div>	
-</div>
-
-        <div class="adminoptionbox">
-{button href="tiki-admin.php?page=general&amp;forcecheck=1" _text="{tr}Check for updates now{/tr}."}
-	</div>
-    </fieldset>
+			<div class="adminoptionbox">
+				{preference name=feature_version_checks}
+				{preference name=tiki_version_check_frequency}
+				{button href="tiki-admin.php?page=general&amp;forcecheck=1" _text="{tr}Check for updates now{/tr}."}
+			</div>
+		</fieldset>
 
     <fieldset>
-	<legend>{tr}Site Identity{/tr}</legend>
-	{preference name=browsertitle}
-	{preference name=sender_email}
+			<legend>{tr}Site Identity{/tr}</legend>
+			{preference name=browsertitle}
+			{preference name=sender_email}
 
-	<div class="adminoptionbox">{tr}Go to <a href="tiki-admin.php?page=look" title=""><strong>Look &amp; Feel</strong></a> section for additional site related customization preferences{/tr}.</div>
-    </fieldset>
+			<div class="adminoptionbox">
+				{tr}Go to <a href="tiki-admin.php?page=look" title=""><strong>Look &amp; Feel</strong></a> section for additional site related customization preferences{/tr}.
+			</div>
+		</fieldset>
     
-<fieldset><legend>{tr}Home Page{/tr}</legend>
-<div class="adminoptionbox">	  
-<div class="adminoption"><input type="checkbox" name="useGroupHome" id="general-homepages"{if $prefs.useGroupHome eq 'y'} checked="checked"{/if} onclick="flip('group_homepages');" /></div>
-<div class="adminoptionlabel"><label for="general-homepages">{tr}Use group homepages{/tr}.</label>{if $prefs.feature_help eq 'y'} {help url="Groups"}{/if}</div>
-<div id="group_homepages" style="display:{if $prefs.useGroupHome eq 'y'}block{else}none{/if};" class="adminoptionboxchild">
-	<div class="adminoption"><input type="checkbox" name="limitedGoGroupHome" id="general-gogrouphome" {if $prefs.limitedGoGroupHome eq 'y'}checked="checked" {/if}/></div>
-	<div class="adminoptionlabel"><label for="general-gogrouphome">{tr}Go to group homepage only if login from default homepage{/tr}.</label></div>
-</div>
-</div>
-<div class="adminoptionbox">
-<div id="tiki_home_page" style="display:{if $prefs.useUrlIndex eq 'y'}none{else}block{/if};">{tr}Use TikiWiki feature as homepage{/tr}: 
-		<select name="tikiIndex" id="general-homepage">
+		<fieldset>
+			<legend>{tr}Home Page{/tr}</legend>
+			<div class="adminoptionbox">	  
+				{preference name=useGroupHome}
+				{preference name=limitedGoGroupHome}
+				
+			<div class="adminoptionbox">
+				<div id="tiki_home_page" style="display:{if $prefs.useUrlIndex eq 'y'}none{else}block{/if};">{tr}Use TikiWiki feature as homepage{/tr}: 
+					<select name="tikiIndex" id="general-homepage">
             <option value="tiki-index.php"
               {if $prefs.site_tikiIndex eq 'tiki-index.php'}selected="selected"{/if}>
               {tr}Wiki{/tr}</option>
@@ -87,13 +72,18 @@
               <option value="tiki-custom_home.php"
                 {if $prefs.site_tikiIndex eq 'tiki-custom_home.php'}selected="selected"{/if}>{tr}Custom home{/tr}</option>
             {/if}
-		</select>
-<br />{tr}or{/tr}<br /></div>
-	<div class="adminoption"><input type="checkbox" name="useUrlIndex" id="general-uri" {if $prefs.useUrlIndex eq 'y'}checked="checked" {/if}onclick="flip('tiki_home_page');" /></div>
-	<div><label for="general-uri">{tr}Use different URL as home page{/tr}</label>:<br /><input type="text" name="urlIndex" value="{$prefs.urlIndex|escape}" size="50" /></div>
-</div>
+					</select>
+					<br />{tr}or{/tr}<br />
+				</div>
+				<div class="adminoption">
+					<input type="checkbox" name="useUrlIndex" id="general-uri" {if $prefs.useUrlIndex eq 'y'}checked="checked" {/if}onclick="flip('tiki_home_page');" />
+				</div>
+				<div>
+					<label for="general-uri">{tr}Use different URL as home page{/tr}</label>:<br /><input type="text" name="urlIndex" value="{$prefs.urlIndex|escape}" size="50" />
+				</div>
+			</div>
 
-</fieldset>
+		</fieldset>
 
 <fieldset><legend>{tr}Miscellaneous{/tr}</legend>
 
