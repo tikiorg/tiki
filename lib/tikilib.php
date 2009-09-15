@@ -5883,6 +5883,7 @@ class TikiLib extends TikiDB {
 	}
 
 	function plugin_fingerprint_check( $fp ) {
+		global $user;
 		$limit = date( 'Y-m-d H:i:s', time() - 15*24*3600 );
 		$result = $this->query( "SELECT status, IF(status='pending' AND last_update < ?, 'old', '') flag FROM tiki_plugin_security WHERE fingerprint = ?",
 			array( $limit, $fp ) );
@@ -5912,9 +5913,12 @@ class TikiLib extends TikiDB {
 				$objectId = '';
 			}
 
+			if (!$user) {
+				$user = tra('Anonymous');
+			}
 			$this->query( "DELETE FROM tiki_plugin_security WHERE fingerprint = ?", array( $fp ) );
-			$this->query( "INSERT INTO tiki_plugin_security (fingerprint, status, last_objectType, last_objectId) VALUES(?, ?, ?, ?)",
-				array( $fp, 'pending', $objectType, $objectId ) );
+			$this->query( "INSERT INTO tiki_plugin_security (fingerprint, status, added_by, last_objectType, last_objectId) VALUES(?, ?, ?, ?, ?)",
+				array( $fp, 'pending', $user, $objectType, $objectId ) );
 		}
 
 		return '';
@@ -5940,13 +5944,23 @@ class TikiLib extends TikiDB {
 	}
 
 	function list_plugins_pending_approval() {
-		$result = $this->query("SELECT fingerprint, last_update, last_objectType, last_objectId FROM tiki_plugin_security WHERE status = 'pending' ORDER BY last_update DESC");
+		$result = $this->query("SELECT fingerprint, added_by, last_update, last_objectType, last_objectId FROM tiki_plugin_security WHERE status = 'pending' ORDER BY last_update DESC");
 
 		$list = array();
 		while( $row = $result->fetchRow() )
 			$list[] = $row;
 
 		return $list;
+	}
+
+	function approve_all_pending_plugins() {
+	// Update all pending plugins to accept
+	$this->query("UPDATE tiki_plugin_security SET status='accept', approval_by='admin' WHERE status='pending'");  
+	}
+
+	function approve_selected_pending_plugings($fp) {
+	// Update selected pending plugins to accept
+	$this->query("UPDATE tiki_plugin_security SET status='accept', approval_by='admin' WHERE fingerprint = ?", array( $fp ));  
 	}
 
 	function plugin_fingerprint( $name, $meta, $data, $args ) {
