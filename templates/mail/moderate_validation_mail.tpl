@@ -16,7 +16,6 @@
 
 
 {tr}best regards{/tr},
-{tr}your Tikiwiki{/tr}
 
 {if isset($item)}
 {tr}User Tracker{/tr}
