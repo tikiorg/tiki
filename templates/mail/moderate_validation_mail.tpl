@@ -15,7 +15,7 @@
 {tr}Assign to a group:{/tr} http://{$mail_site}/tiki/tiki-assignuser.php?assign_user={$mail_user|escape:'url'}
 
 
-{tr}best regards{/tr},
+{tr}Best regards,/tr}
 
 {if isset($item)}
 {tr}User Tracker{/tr}
