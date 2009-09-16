@@ -14,10 +14,10 @@
 {/if}
 {/if}
 {if $prefs.feature_sitemenu eq 'y'}
-	{if $prefs.feature_phplayers eq 'y'}
-		{phplayers id=$prefs.feature_topbar_id_menu type=horiz}
-	{else}
+	{if $prefs.feature_cssmenus eq 'y'}
 		{menu id=$prefs.feature_topbar_id_menu type=horiz css=y}
+	{elseif $prefs.feature_phplayers eq 'y'}
+		{phplayers id=$prefs.feature_topbar_id_menu type=horiz}
 	{/if}
 {/if}
 {if $prefs.feature_siteloc eq 'y' and $prefs.feature_breadcrumbs eq 'y'}

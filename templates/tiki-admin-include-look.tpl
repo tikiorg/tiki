@@ -417,7 +417,7 @@
 								</td>
 								<td>
 									<input type="checkbox" name="feature_sitemenu" id="feature_sitemenu"{if $prefs.feature_sitemenu eq 'y'} checked="checked"{/if} />
-									{tr}Note: Needs feature PHPLayers on(default), or feature CSS Menu on  {/tr}{tr}Admin{/tr}&nbsp;{$prefs.site_crumb_seper}&nbsp;{tr}Features{/tr}
+									{tr}Note: Needs feature CSS Menus or feature PHPLayers activated on  {/tr}{tr}Admin{/tr}&nbsp;{$prefs.site_crumb_seper}&nbsp;{tr}Features{/tr}
 								</td>
 							</tr>
 							<tr> 
