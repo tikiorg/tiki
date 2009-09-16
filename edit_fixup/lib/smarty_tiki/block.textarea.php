@@ -189,8 +189,8 @@ function confirmExit() {
 window.onbeforeunload = confirmExit;
 \$jq('document').ready( function() {
 	editTimeoutIntervalId = setInterval(editTimerTick, 1000);
-	\$jq('fieldset.tabcontent input, fieldset.tabcontent textarea, fieldset.tabcontent select').change( function () { if (!editorDirty) { editorDirty = true; } });
-	
+	// attach dirty function to all relevant inputs etc
+	\$jq(\$jq('#$textarea_id').attr('form')).find('input, textarea, select').change( function () { if (!editorDirty) { editorDirty = true; } });
 });
 
 var needToConfirm = true;
