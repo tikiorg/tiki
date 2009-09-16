@@ -1,5 +1,32 @@
 {* $Id$ *}
 {* site identity options: logo, site title and subtitle, banner ad, custom code *}
+<div id="login_search">
+	<div class="wrapper">
+		{if $filegals_manager eq '' and $print_page ne 'y'}
+		{if $prefs.feature_site_login eq 'y'}
+			{include file="tiki-site_header_login.tpl"}
+		{/if}
+		{/if}
+		<div id="login_language"> | language</div>
+	</div>	
+	{if $filegals_manager eq '' and $print_page ne 'y'}
+	{if $prefs.feature_sitesearch eq 'y' and $prefs.feature_search eq 'y' and $tiki_p_search eq 'y'}
+		<div id="sitesearchbar"{if $prefs.feature_sitemycode neq 'y' and $prefs.feature_sitelogo neq 'y' and $prefs.feature_sitead neq 'y' and $prefs.feature_fullscreen eq 'y' and $filegals_manager eq '' and $print_page ne 'y'}{if $smarty.session.fullscreen neq 'y'}style="margin-right: 80px"{/if}{/if}>
+			<div class="wrapper">
+		{if $prefs.feature_search_fulltext eq 'y'}
+		{include file="tiki-searchresults.tpl"
+									searchNoResults="false"
+									searchStyle="menu"
+									searchOrientation="horiz"}{else}
+		{include file="tiki-searchindex.tpl"
+									searchNoResults="false"
+									searchStyle="menu"
+									searchOrientation="horiz"}{/if}
+			</div>
+		</div>{* search the site *}
+	{/if}
+	{/if}
+</div>
 	{* No site logo but custom code *}
 	{if $prefs.feature_sitemycode eq 'y' && ($prefs.sitemycode_publish eq 'y' or $tiki_p_admin eq 'y')}
 		{if $prefs.feature_sitelogo neq 'y' &&  $prefs.feature_sitead eq 'y' && ($prefs.sitead_publish eq 'y' or $tiki_p_admin eq 'y')}
