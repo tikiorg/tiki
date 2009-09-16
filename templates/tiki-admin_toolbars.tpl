@@ -14,28 +14,28 @@
 <div class="toolbars-admin clearfix">
 	<form name="toolbars" method="post" action="tiki-admin_toolbars.php" onsubmit="return saveRows()">
 		<div>
-<div class="adminoptionbox">
-	<div class="adminoption"><input id="autoreload" name="autoreload" type="checkbox" {if $autoreload eq 'on'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="autoreload">{tr}Auto Reloading{/tr}</label></div>
-</div>
-<div class="adminoptionbox">
-	<div class="adminoptionlabel"><label for="section">{tr}Section{/tr}:</label>
-	<select id="section" name="section" onchange="javascript:toolbars_autoreload()">
-				{foreach from=$sections item=name}
-					<option{if $name eq $loaded} selected="selected"{/if}>{$name|escape}</option>
-				{/foreach}
-	</select>
-	</div>
-</div>
-<div class="adminoptionbox">
-	<div class="adminoption"><input id="comments" name="comments" type="checkbox" onchange="javascript:toolbars_autoreload()" {if $comments eq 'on'}checked="checked" {/if}/></div>
-	<div class="adminoptionlabel"><label for="comments">{tr}Comments{/tr}</label></div>
-</div>
-<div class="adminoptionbox">
-			<input name="load" type="submit" value="{tr}Load{/tr}"/>
-			<input type="submit" name="save" value="{tr}Save{/tr}"/>
-			{if $loaded neq 'global' }<input type="submit" name="reset" value="{tr}Reset to Global{/tr}"/>{/if}
-</div>
+			<div class="adminoptionbox">
+			</div>
+			<div class="adminoptionbox">
+				<div class="adminoptionlabel"><label for="section">{tr}Section{/tr}:</label>
+				<select id="section" name="section" onchange="javascript:toolbars_autoreload()">
+					{foreach from=$sections item=name}
+						<option{if $name eq $loaded} selected="selected"{/if}>{$name|escape}</option>
+					{/foreach}
+				</select>
+				</div>
+			</div>
+			<div class="adminoptionbox">
+				<label for="comments">{tr}Comments{/tr}</label>
+				<input id="comments" name="comments" type="checkbox" onchange="javascript:toolbars_autoreload()" {if $comments eq 'on'}checked="checked" {/if}/>
+			</div>
+			<div class="adminoptionbox">
+				<input name="load" type="submit" value="{tr}Load{/tr}"/>
+				<input type="submit" name="save" value="{tr}Save{/tr}"/>
+				{if $loaded neq 'global' }<input type="submit" name="reset" value="{tr}Reset to Global{/tr}"/>{/if}
+				<label for="autoreload">{tr}Auto Reloading{/tr}</label>
+				<input id="autoreload" name="autoreload" type="checkbox" {if $autoreload eq 'on'}checked="checked"{/if}/>
+			</div>
 			<input id="qt-form-field" type="hidden" name="pref" value=""/>
 		</div>
 	</form>
@@ -58,7 +58,7 @@
 		<label for="#full-list-w">{tr}Formatting Toolbars:{/tr}</label>
 		<div id="qt_filter_div_w" class="qt_filter_div">
 			{tr}Filters{/tr}:<br />
-			<label><input class="qt-wiki-filter"  type="checkbox" checked / {tr}Wiki{/tr}</label>
+			<label><input class="qt-wiki-filter"  type="checkbox" checked /> {tr}Wiki{/tr}</label>
 			<label><input class="qt-wys-filter" type="checkbox" checked /> {tr}WYSIWYG{/tr}</label>
 		</div>
 		<ul id="full-list-w" class="full">
