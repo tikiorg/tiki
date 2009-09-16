@@ -139,23 +139,25 @@
 							</fieldset>
 						{/if}
 					{/tab}
-					{tab name='{tr}Categories{/tr}'}
-						{if $categIds}
-							{section name=o loop=$categIds}
-								<input type="hidden" name="cat_categories[]" value="{$categIds[o]}" />
-							{/section}
-							<input type="hidden" name="categId" value="{$categIdstr}" />
-							<input type="hidden" name="cat_categorize" value="on" />
-							
-							{if $prefs.feature_wiki_categorize_structure eq 'y'}
-								{tr}Categories will be inherited from the structure top page{/tr}
+					{if $prefs.feature_categories eq 'y' and $tiki_p_modify_object_categories eq 'y'}
+						{tab name='{tr}Categories{/tr}'}
+							{if $categIds}
+								{section name=o loop=$categIds}
+									<input type="hidden" name="cat_categories[]" value="{$categIds[o]}" />
+								{/section}
+								<input type="hidden" name="categId" value="{$categIdstr}" />
+								<input type="hidden" name="cat_categorize" value="on" />
+								
+								{if $prefs.feature_wiki_categorize_structure eq 'y'}
+									{tr}Categories will be inherited from the structure top page{/tr}
+								{/if}
+							{else}
+								{if $page|lower ne 'sandbox'}
+									{include file='categorize.tpl' notable='y'}
+								{/if}{* sandbox *}
 							{/if}
-						{else}
-							{if $page|lower ne 'sandbox'}
-								{include file='categorize.tpl' notable='y'}
-							{/if}{* sandbox *}
-						{/if}
-					{/tab}
+						{/tab}
+					{/if}
 					{tab name='{tr}Tools{/tr}'}
 						{if $prefs.feature_wiki_templates eq 'y' and $tiki_p_use_content_templates eq 'y'}
 							<fieldset>
