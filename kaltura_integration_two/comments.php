@@ -31,25 +31,6 @@ require_once ('lib/tikilib.php'); # httpScheme()
 // user requests that could be used to change thread display settings
 $handled_requests = array('comments_per_page', 'thread_style', 'thread_sort_mode');
 
-// Set global site prefs to initialize vars
-foreach ( $handled_requests as $request_name ) {
-        if ( isset($prefs['forum_'.$request_name]) ) {
-                $$request_name = $prefs['forum_'.$request_name];
-        }
-}
-
-// First override existing values (e.g. coming from forum specific settings) by user specific requests if we allow them
-//   (we empty those user specific requests if they are denied)
-if ( $prefs['forum_thread_user_settings'] == 'y' ) {
-	foreach ( $handled_requests as $request_name ) {
-		if ( isset($_REQUEST[$request_name]) ) {
-			$$request_name = $_REQUEST[$request_name];
-			$smarty->assign($request_name.'_param', '&amp;'.$request_name.'='.$_REQUEST[$request_name]);
-			if ( $prefs['forum_thread_user_settings_keep'] == 'y' ) $_SESSION['forums_'.$request_name] = $_REQUEST[$request_name];
-		}
-	}
-} else foreach ( $handled_requests as $request_name ) unset($_REQUEST[$request_name]);
-
 // Then determine the final value for thread display settings
 if ( isset($forum_mode) && $forum_mode == 'y' ) {
 	// If we are in a forum thread

@@ -560,51 +560,13 @@ a.phplmselected:hover {
 }
 
 /** CSS (suckerfish) menus **/
-.cssmenu li ul,
-.cssmenu_horiz li ul,
-.cssmenu_vert li ul {
-	border: 1px solid #5a7ea2;
-}
 
-.cssmenu_vert li ul {
-	margin-left: 11em;
-}
-
-.cssmenu_horiz li:hover ul,
-.cssmenu_vert li:hover ul,
-.cssmenu_horiz li.sfhover ul,
-.cssmenu_vert li.sfhover ul {
-	background: #ccdceb;
-	color: #5a7ea2;
-}
-
-#col2 .cssmenu_vert {
-	width: 180px;
-}
-
-#col2 .cssmenu_vert li ul {
-	margin-left: 177px;
-}
-
-#col2 .cssmenu_vert li ul li ul {
-	margin-left: 11em;
-}
-
-.cssmenu_vert,
+/* typography, colors */
 .cssmenu_vert li {
 	background: #ccdceb !important;
 }
 
-#col2 .cssmenu_vert li {
-	width: 180px;
-}
-
-#col2 .cssmenu_vert li ul li {
-	width: 11em;
-}
-
 .cssmenu_horiz ul li {
-	text-align: left;
 	color: #5a7ea2;
 }
 
@@ -616,18 +578,12 @@ a.phplmselected:hover {
 
 .cssmenu_horiz li a:link,
 .cssmenu_horiz li a:visited {
-	white-space: nowrap;
-	display: block;
 	padding: 6px 1em;
 	font-weight: bold;
 	text-decoration: none;
 	background: inherit;
 	color: #cfe3fb;
 	font-size: 12px;
-}
-
-.cssmenu_horiz li.selected > a {
-	background: inherit;
 }
 
 .cssmenu_vert li a {
@@ -637,9 +593,24 @@ a.phplmselected:hover {
 	font-weight: bold;
 	text-decoration: none;
 }
- 
-.sf-sub-indicator {
-	background: url(coelesce/arrows-295c8e.png) no-repeat -10px -100px; /* 8-bit indexed alpha png. IE6 gets solid image only; */
+
+.cssmenu_horiz li ul li,
+.cssmenu_vert li ul li {
+	background:	#ccdceb;
+	border: 1px solid #5a7ea2;
+	border-top: 0;
+	margin-bottom: -1px
+}
+
+.cssmenu_horiz li ul li:first-child,
+.cssmenu_vert li ul li:first-child {
+	border-top: 1px solid #5a7ea2;
+}
+
+/* compensate for 1px border */
+.cssmenu_horiz li ul li ul,
+.cssmenu_vert li ul li ul {
+	top: -1px !important;
 }
 
 .cssmenu_vert li a:hover {
@@ -647,24 +618,10 @@ a.phplmselected:hover {
 	text-decoration: none;
 }
 
-#tiki-top .cssmenu_horiz li:hover,
-#tiki-top .cssmenu_horiz li.sfhover {
-	background: url(coelesce/pagebg.jpg) 0 -2px repeat-x;
-}
-
 #tiki-top > .cssmenu_horiz {
 	padding-left: 20px;
 	border-left: 1px solid #2e5276;
 	border-right: 1px solid #acc4e0;
-}
-
-#tiki-top .cssmenu_horiz ul li:hover,
-#tiki-top .cssmenu_horiz ul li.sfhover {
-	background: #ecf5ff;
-}
-
-#tiki-top .cssmenu_horiz ul li a {
-	color: #5a7ea2;
 }
 
 #tiki-top .cssmenu_horiz li a {
@@ -677,6 +634,20 @@ a.phplmselected:hover {
 	padding-right: 2.6em;
 }
 
+#tiki-top .cssmenu_horiz li:hover,
+#tiki-top .cssmenu_horiz li.sfhover {
+	background: url(coelesce/pagebg.jpg) 0 -2px repeat-x;
+}
+
+#tiki-top .cssmenu_horiz ul li:hover,
+#tiki-top .cssmenu_horiz ul li.sfhover {
+	background: #ecf5ff;
+}
+
+#tiki-top .cssmenu_horiz ul li a {
+	color: #295c83;
+}
+
 #tiki-top .cssmenu_horiz li.menuLevel1 a {
 	border: 0;
 	padding: 6px 1em;
@@ -687,13 +658,61 @@ a.phplmselected:hover {
 	color: #fff;
 }
 
-.cssmenu_horiz ul .sf-sub-indicator,
-.cssmenu_vert ul .sf-sub-indicator {
+#tiki-top .cssmenu_horiz li ul li a:hover {
+	color: #82a7c8
+}
+
+/* left column width */
+#col2 .cssmenu_vert,
+#col2 .cssmenu_vert li {
+	width: 180px;
+}
+
+/* offset from left column (matches above) */
+#col2 .cssmenu_vert li:hover ul,
+#col2 .cssmenu_vert li.sfHover ul {
+	left: 170px;
+}
+
+/* return ul ul ... to default */
+#col2 .cssmenu_vert li:hover ul,
+#col2 .cssmenu_vert li.sfHover ul,
+#col2 .cssmenu_vert li:hover ul li,
+#col2 .cssmenu_vert li.sfHover ul li {
+	width: 10em;
+}
+
+/* return ul ul ... to default */
+#col2 .cssmenu_vert li li:hover ul,
+#col2 .cssmenu_vert li li.sfHover ul {
+	left: 10em;
+}
+
+/* less padding so move ul ul up */
+#tiki-top ul.cssmenu_horiz li:hover ul,
+#tiki-top ul.cssmenu_horiz li.sfHover ul {
+	top: 2.4em;
+}
+
+/* but not ul ul ul */
+#tiki-top ul.cssmenu_horiz li li:hover ul,
+#tiki-top ul.cssmenu_horiz li li.sfHover ul {
+	top: 0;
+}
+
+/* special arrows and arrow top padding */
+.cssmenu_horiz .sf-sub-indicator {
+	background: url(coelesce/arrows-295c8e.png) no-repeat -10px -100px; /* 8-bit indexed alpha png. IE6 gets solid image only; */
+}
+
+/*.cssmenu_horiz .sf-sub-indicator,*/
+.cssmenu_vert .sf-sub-indicator {
 	background: url(coelesce/arrows-467aa7.png) no-repeat;
 }
-/* when there's superfish shadow */
-.cssmenu_horiz.sf-shadow ul li {
-	background-color: #CCDCEB; 
+
+.cssmenu_horiz ul .sf-sub-indicator,
+.cssmenu_vert .sf-sub-indicator {
+	top: .5em;
 }
 
 

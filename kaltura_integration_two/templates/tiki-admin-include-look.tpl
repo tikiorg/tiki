@@ -417,7 +417,7 @@
 								</td>
 								<td>
 									<input type="checkbox" name="feature_sitemenu" id="feature_sitemenu"{if $prefs.feature_sitemenu eq 'y'} checked="checked"{/if} />
-									{tr}Note: Needs feature PHPLayers on(default), or feature CSS Menu on  {/tr}{tr}Admin{/tr}&nbsp;{$prefs.site_crumb_seper}&nbsp;{tr}Features{/tr}
+									{tr}Note: Needs feature CSS Menus or feature PHPLayers activated on  {/tr}{tr}Admin{/tr}&nbsp;{$prefs.site_crumb_seper}&nbsp;{tr}Features{/tr}
 								</td>
 							</tr>
 							<tr> 
@@ -453,7 +453,28 @@
 								</td>
 							</tr>
 							</table>
-						</fieldset>                                
+						</fieldset>
+                         
+					{* --- Custom Center Column Header --- *}
+						<fieldset class="admin">
+							<legend>
+								<a href="#" title="{tr}Top{/tr}">
+									<span>{tr}Custom Center Column Header{/tr}</span>
+								</a>
+							</legend> 			
+							<table class="admin">
+							<tr>
+								<td class="form">
+									<label for="feature_custom_center_column_header">{tr}Content{/tr}:</label>
+								</td>
+								<td>
+									<textarea id="feature_custom_center_column_header" name="feature_custom_center_column_header" rows="6" cols="40" style="width: 90%">{$prefs.feature_custom_center_column_header|escape}</textarea>
+									<br />
+									<small><em>{tr}Example{/tr}:</em> {literal}&#123;if $page eq 'Travel'&#125; &#123;banner zone=5&#125;&#123;/if&#125;{/literal}</small>
+								</td>
+							</tr>
+							</table>
+						</fieldset>
 	       	</td>
 				</tr>      
 				<tr>

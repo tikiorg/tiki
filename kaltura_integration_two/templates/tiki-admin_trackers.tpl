@@ -304,7 +304,13 @@
 			<tr class="formcolor">
 				<td>{tr}Show creation date when viewing tracker item?{/tr}</td>
 				<td>
-					<input type="checkbox" name="showCreatedView" {if $showCreatedView eq 'y'}checked="checked"{/if} />
+					<input type="checkbox" name="showCreatedView" {if $showCreatedView eq 'y'}checked="checked"{/if} onclick="toggleTrTd('showCreatedUser') "/>
+				</td>
+			</tr>
+			<tr class="formcolor" id="showCreatedUser" {if $showCreatedView ne 'y'}style="display:none;"{/if}>
+				<td class="sub" colspan="2">
+					{tr}Identify creation user in tracker item?{/tr}
+					<input type="checkbox" name="showCreatedBy" {if $showCreatedBy eq 'y'}checked="checked"{/if} "/>
 				</td>
 			</tr>
 
@@ -325,7 +331,13 @@
 			<tr class="formcolor">
 				<td>{tr}Show lastModif date when viewing tracker item?{/tr}</td>
 				<td>
-					<input type="checkbox" name="showLastModifView" {if $showLastModifView eq 'y'}checked="checked"{/if} />
+					<input type="checkbox" name="showLastModifView" {if $showLastModifView eq 'y'}checked="checked"{/if} onclick="toggleTrTd('showLastModifUser') "/>
+				</td>
+			</tr>
+			<tr class="formcolor" id="showLastModifUser" {if $showLastModifView ne 'y'}style="display:none;"{/if}>
+				<td class="sub" colspan="2">
+					{tr}Identify lastModif user in tracker item?{/tr}
+					<input type="checkbox" name="showLastModifBy" {if $showLastModifBy eq 'y'}checked="checked"{/if} "/>
 				</td>
 			</tr>
 			<tr class="formcolor">

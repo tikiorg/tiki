@@ -328,6 +328,7 @@ if ($isvalid) {
 
 			case ACCOUNT_WAITING_USER:
 				$error = 'You did not validate your account';
+				$extraButton = array('href'=>'tiki-send_mail.php?user='.$_REQUEST['user'], 'text'=>tra('Resend'), 'comment'=>tra('You should have received an email. Check your mailbox and your spam box.Otherwise click on the button to resend the email')); 
 				break;
 
 			case USER_AMBIGOUS:
@@ -342,6 +343,7 @@ if ($isvalid) {
 				$error = 'Invalid username or password';
 		}
 		if (isset($user) and $prefs['feature_score'] == 'y') $tikilib->score_event($user, 'login');
+		if (isset($extraButton)) $smarty->assign_by_ref('extraButton', $extraButton);
 		$smarty->assign('msg', tra($error));
 		$smarty->display('error.tpl');
 		exit;

@@ -84,6 +84,11 @@ if (isset($_REQUEST["save"])) {
 	} else {
 		$tracker_options["showCreatedView"] = 'n';
 	}
+	if (isset($_REQUEST["showCreatedBy"]) && ($_REQUEST["showCreatedBy"] == 'on' or $_REQUEST["showCreatedBy"] == 'y')) {
+		$tracker_options["showCreatedBy"] = 'y';
+	} else {
+		$tracker_options["showCreatedBy"] = 'n';
+	}
 	if (isset($_REQUEST["showStatus"]) && ($_REQUEST["showStatus"] == 'on' or $_REQUEST["showStatus"] == 'y')) {
 		$tracker_options["showStatus"] = 'y';
 	} else {
@@ -167,6 +172,11 @@ if (isset($_REQUEST["save"])) {
 		$tracker_options["showLastModifView"] = 'y';
 	} else {
 		$tracker_options["showLastModifView"] = 'n';
+	}
+	if (isset($_REQUEST["showLastModifBy"]) && ($_REQUEST["showLastModifBy"] == 'on' or $_REQUEST["showLastModifBy"] == 'y')) {
+		$tracker_options["showLastModifBy"] = 'y';
+	} else {
+		$tracker_options["showLastModifBy"] = 'n';
 	}
 	if (isset($_REQUEST["defaultOrderDir"]) && ($_REQUEST["defaultOrderDir"] == 'asc' or $_REQUEST["defaultOrderDir"] == 'desc')) {
 		$tracker_options["defaultOrderDir"] = $_REQUEST["defaultOrderDir"];
@@ -306,7 +316,7 @@ if (isset($_REQUEST["save"])) {
 		$tracker_options['descriptionIsParsed'] = 'n';
 	}
 	$_REQUEST["trackerId"] = $trklib->replace_tracker($_REQUEST['trackerId'], $_REQUEST['name'], $_REQUEST['description'], $tracker_options, isset($_REQUEST['descriptionIsParsed']) ? 'y' : '');
-	$groupalertlib->AddGroup('tracker', $_REQUEST['trackerId'], $_REQUEST['groupforAlert'], !empty($_REQUEST['showeachuser']) ? $_REQUEST['showeachuser'] : 'n');
+	$groupalertlib->AddGroup('tracker', $_REQUEST['trackerId'], !empty($_REQUEST['groupforAlert'])?$_REQUEST['groupforAlert']:'', !empty($_REQUEST['showeachuser']) ? $_REQUEST['showeachuser'] : 'n');
 	$logslib->add_log('admintrackers', 'changed or created tracker ' . $_REQUEST["name"]);
 	$cat_desc = $_REQUEST["description"];
 	$cat_name = $_REQUEST["name"];
@@ -327,6 +337,7 @@ $info['descriptionIsParsed'] = '';
 $info["showCreated"] = '';
 $info['showCreatedFormat'] = '';
 $info["showCreatedView"] = '';
+$info["showCreatedBy"] = '';
 $info["useExplicitNames"] = '';
 $info['doNotShowEmptyField'] = '';
 $info['showPopup'] = '';
@@ -338,6 +349,7 @@ $info["newItemStatus"] = '';
 $info["showLastModif"] = '';
 $info["showLastModifFormat"] = '';
 $info["showLastModifView"] = '';
+$info["showLastModifBy"] = '';
 $info["useRatings"] = '';
 $info["ratingOptions"] = '';
 $info["showRatings"] = '';
@@ -392,6 +404,7 @@ $smarty->assign('descriptionIsParsed', $info["descriptionIsParsed"]);
 $smarty->assign('showCreated', $info["showCreated"]);
 $smarty->assign('showCreatedFormat', $info['showCreatedFormat']);
 $smarty->assign('showCreatedView', $info["showCreatedView"]);
+$smarty->assign('showCreatedBy', $info["showCreatedBy"]);
 $smarty->assign('useExplicitNames', $info["useExplicitNames"]);
 $smarty->assign('doNotShowEmptyField', $info['doNotShowEmptyField']);
 $smarty->assign('showPopup', $info['showPopup']);
@@ -403,6 +416,7 @@ $smarty->assign('newItemStatus', $info["newItemStatus"]);
 $smarty->assign('showLastModif', $info["showLastModif"]);
 $smarty->assign('showLastModifFormat', $info["showLastModifFormat"]);
 $smarty->assign('showLastModifView', $info["showLastModifView"]);
+$smarty->assign('showLastModifBy', $info["showLastModifBy"]);
 $smarty->assign('useRatings', $info["useRatings"]);
 $smarty->assign('ratingOptions', $info["ratingOptions"]);
 $smarty->assign('showRatings', $info["showRatings"]);

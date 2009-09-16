@@ -26,7 +26,7 @@ if ($prefs['feature_jquery_ui'] != 'y') {
 	$headerlib->add_jsfile('lib/jquery/jquery-ui/ui/minified/jquery-ui.min.js');
 }
 
-$sections = array( 'global', 'wiki page', 'trackers', 'blogs', 'calendar', 'cms', 'faqs', 'newsletters', 'forums', 'maps');
+$sections = array( 'global', 'wiki page', 'trackers', 'blogs', 'calendar', 'cms', 'faqs', 'newsletters', 'forums', 'maps', 'admin');
 
 if( isset($_REQUEST['section']) && in_array($_REQUEST['section'], $sections) ) {
 	$section = $_REQUEST['section'];

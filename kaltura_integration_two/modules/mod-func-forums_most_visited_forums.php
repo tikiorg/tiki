@@ -12,7 +12,7 @@ function module_forums_most_visited_forums_info() {
 		'description' => tra('Displays the specified number of the forums with the most visits.'),
 		'prefs' => array( 'feature_forums' ),
 		'params' => array(),
-		'common_params' => array('nonums')
+		'common_params' => array('nonums', 'rows')
 	);
 }
 

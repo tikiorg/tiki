@@ -42,7 +42,7 @@
 				{/add_help}
 				<label class="searchdate" for="date">
 					{tr}Date Search:{/tr}
-					<select name="date" onchange="javascript:submit()">
+					<select id="date" name="date" onchange="javascript:submit()">
 						{section name=date start=0 loop=12 step=1}	
 							<option value="{$smarty.section.date.index}" {if $smarty.section.date.index eq $date}selected="selected"{/if}>
 								{if $smarty.section.date.index eq 0}

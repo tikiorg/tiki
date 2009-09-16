@@ -10,7 +10,7 @@
 	{/if}
 {/if}
 {if $online_user.user_information eq 'public'}
-    {$online_user.user|userlink:"link":"not_set":$online_user.realName|escape}<br />
+    {$online_user.user|userlink:"link":"not_set":$online_user.realName}<br />
 {else}
     {$online_user.realName|default:$online_user.user|escape}<br />
 {/if}

@@ -16,8 +16,28 @@
 * html #col2 .box {width: 158px}
 * html #col3 .box { width: 300px}
 	
-#col2 .cssmenu_vert > li {
+/* left column width */
+#col2 .cssmenu_vert,
+#col2 .cssmenu_vert li {
 	width: 130px;
-	padding: 0 !important}
-	
-#col2 .cssmenu_vert li ul {margin-left: 130px}
+}
+
+/* offset from left column (matches above) */
+#col2 .cssmenu_vert li:hover ul,
+#col2 .cssmenu_vert li.sfHover ul {
+	left: 130px;
+}
+
+/* return ul ul ... to default */
+#col2 .cssmenu_vert li:hover ul,
+#col2 .cssmenu_vert li.sfHover ul,
+#col2 .cssmenu_vert li:hover ul li,
+#col2 .cssmenu_vert li.sfHover ul li {
+	width: 10em;
+}
+
+/* return ul ul ... to default */
+#col2 .cssmenu_vert li li:hover ul,
+#col2 .cssmenu_vert li li.sfHover ul {
+	left: 10em;
+}

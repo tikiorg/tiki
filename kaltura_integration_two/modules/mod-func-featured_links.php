@@ -12,7 +12,7 @@ function module_featured_links_info() {
 		'description' => tra('Displays the site\'s first featured links.'),
 		'prefs' => array( 'feature_featuredLinks' ),
 		'params' => array(),
-		'common_params' => array('nonums')
+		'common_params' => array('nonums', 'rows')
 	);
 }
 

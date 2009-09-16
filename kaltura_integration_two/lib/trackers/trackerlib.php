@@ -671,7 +671,7 @@ class TrackerLib extends TikiLib {
 		}
 		if ( ! $sort_mode ) $sort_mode = 'lastModif_desc';
 
-		if ( substr($sort_mode, 0, 2) == 'f_' or $filtervalue or $exactvalue ) {
+		if ( substr($sort_mode, 0, 2) == 'f_' or !empty($filterfield) ) {
 			$cat_table = '';
 			if ( substr($sort_mode, 0, 2) == 'f_' ) {
 				$csort_mode = 'sttif.`value` ';
@@ -719,7 +719,6 @@ class TrackerLib extends TikiLib {
 					$ev = $exactvalue[$i];
 					$fv = $filtervalue[$i];
 				}
-
 				$filter = $this->get_tracker_field($ff);
 
 				$j = ( $i > 0 ) ? '0' : '';
@@ -777,6 +776,9 @@ class TrackerLib extends TikiLib {
 						}
 					}
 					$mid .= ')';
+				} elseif (empty($ev) && empty($fv)) { // test null value
+					$mid.= " AND ttif$i.`value`=? OR ttif$i.`value` IS NULL";
+					$bindvars[] = '';
 				}
 			}
 		} else {
@@ -958,6 +960,12 @@ class TrackerLib extends TikiLib {
 					$fopt['value'] = $userlib->get_user_preference($itemUser, $fopt['options_array'][0]);
 				}
 				break;
+			case 'N':
+				if (empty($itemUser)) {
+					$itemUser = $this->get_item_creator($trackerId, $itemId);
+				}
+				$fopt['value'] = $this->in_group_value($fopt, $itemUser);
+				break;
 			case 'A':
 				if (!empty($fopt['options_array'][0]) && !empty($fopt['value'])) {
 					$fopt['info'] = $this->get_item_attachment($fopt['value']);
@@ -998,17 +1006,35 @@ class TrackerLib extends TikiLib {
 					);
 					$fopt = $this->set_default_dropdown_option($fopt);
 				} elseif ( $fopt['type'] == 'd' || $fopt['type'] == 'D' ) {
-					if ( $prefs['feature_multilingual'] == 'y' ) {
-						foreach ( $fopt['options_array'] as $key => $l ) {
-							$fopt['options_array'][$key] = tra($l);
-						}
-					}
 					$fopt = $this->set_default_dropdown_option($fopt);
 				}
 			}
 			$fields[] = $fopt;
 		}
 		return($fields);
+	}
+	function in_group_value($field, $itemUser) {
+		if (empty($itemUser)) {
+			return '';
+		}
+		if (!isset($this->tracker_infocache['users_group'][$field['options_array'][0]])) {
+			global $userlib;
+			$this->tracker_infocache['users_group'][$field['options_array'][0]] = $userlib->get_users_created_group($field['options_array'][0]);
+		}
+		if (isset($this->tracker_infocache['users_group'][$field['options_array'][0]][$itemUser])) {
+			if (isset($field['options_array'][1]) && $field['options_array'][1] == 'date') {
+				$value = $this->tracker_infocache['users_group'][$field['options_array'][0]][$itemUser];
+			} else {
+				$value = 'Yes';
+			}
+		} else {
+			if (isset($field['options_array'][1]) && $field['options_array'][1] == 'date') {
+				$value = '';
+			} else {
+				$value = 'No';
+			}
+		}
+		return $value;
 	}
 
 	function replace_item($trackerId, $itemId, $ins_fields, $status = '', $ins_categs = array(), $bulk_import = false, $tracker_info='') {
@@ -1035,11 +1061,11 @@ class TrackerLib extends TikiLib {
 			$new_itemId = 0;
 			$oldStatus = $this->getOne("select `status` from `tiki_tracker_items` where `itemId`=?", array($itemId));
 			if ($status) {
-				$query = "update `tiki_tracker_items` set `status`=?,`lastModif`=? where `itemId`=?";
-				$result = $this->query($query,array($status,(int) $this->now,(int) $itemId));
+				$query = "update `tiki_tracker_items` set `status`=?,`lastModif`=?,`lastModifBy`=? where `itemId`=?";
+				$result = $this->query($query,array($status,(int) $this->now,$user,(int) $itemId));
 			} else {
-				$query = "update `tiki_tracker_items` set `lastModif`=? where `itemId`=?";
-				$result = $this->query($query,array((int) $this->now,(int) $itemId));
+				$query = "update `tiki_tracker_items` set `lastModif`=?, `lastModifBy`=? where `itemId`=?";
+				$result = $this->query($query,array((int) $this->now,$user,(int) $itemId));
 				$status = $oldStatus;
 			}
 		} else {
@@ -1047,8 +1073,8 @@ class TrackerLib extends TikiLib {
 				$status = $this->getOne("select `value` from `tiki_tracker_options` where `trackerId`=? and `name`=?",array((int) $trackerId,'newItemStatus'));
 			}
 			if (empty($status)) { $status = 'o'; }
-			$query = "insert into `tiki_tracker_items`(`trackerId`,`created`,`lastModif`,`status`) values(?,?,?,?)";
-			$result = $this->query($query,array((int) $trackerId,(int) $this->now,(int) $this->now,$status));
+			$query = "insert into `tiki_tracker_items`(`trackerId`,`created`,`createdBy`,`lastModif`,`lastModifBy`,`status`) values(?,?,?,?,?,?)";
+			$result = $this->query($query,array((int) $trackerId,(int) $this->now,$user,(int) $this->now,$user,$status));
 			$new_itemId = $this->getOne("select max(`itemId`) from `tiki_tracker_items` where `created`=? and `trackerId`=?",array((int) $this->now,(int) $trackerId));
 		}
 
@@ -1848,6 +1874,12 @@ class TrackerLib extends TikiLib {
 			if (!empty($f['value']) && isset($f['type'])) {
 
 				switch ($f['type']) {
+				// IP address (only for IPv4)
+				case 'I':
+					if (!$this->isValidIP($f['value'])) {
+						$erroneous_values[] = $f;
+					}
+					break;
 				// numeric
 				case 'n':
 					if(!is_numeric($f['value'])) {
@@ -2879,6 +2911,18 @@ class TrackerLib extends TikiLib {
 				note that this option will cost an extra query to the database for each attachment and can severely impact performance with several attachments.
 				<dd>
 				</dl>'));
+		$type['N'] = array(
+			'label'=>tra('in group'),
+			'opt'=>true,
+			'help'=>tra('<dl>
+				<dt>Function: Allows to display if a item user is in a group and when he was assigned to the group (needs a user selector field)
+				<dt>Usage: <strong>groupName,date</strong>
+				<dt>Example: Members,date
+				<dt>Description:
+				<dd><strong>GroupName</strong> Group to test. <strong>date</strong> displays the date the user was assigned in the group (if known), otherwise will display yes/no.
+				<dd>
+				</dl>'));
+
 		return $type;
 	}
 

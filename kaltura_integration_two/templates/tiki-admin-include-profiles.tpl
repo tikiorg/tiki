@@ -339,7 +339,7 @@ function showDetails( id, domain, profile ) { // {{{
 	<fieldset><legend>{tr}Profile tester{/tr}</legend>
 		<form action="tiki-admin.php?page=profiles" method="post">
 		{remarksbox type="warning" title="{tr}Warning{/tr}"}
-			Paste or type wiki markup and YAML (including the {CODE} tags) into the text area below<br />
+			Paste or type wiki markup and YAML (including the {literal}{CODE}{/literal} tags) into the text area below<br />
 			<em><strong>{tr}This will run the profile and make potentially unrecoverable changes in your database!{/tr}</strong></em>
 			<div class="adminoptionbox">
 				<div class="adminoptionlabel">

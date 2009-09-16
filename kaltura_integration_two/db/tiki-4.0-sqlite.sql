@@ -1545,7 +1545,7 @@ INSERT INTO "," ("menuId","type","name","url","position","section","perm","group
 
 INSERT INTO "," ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'o','Stats','tiki-stats.php',23,'feature_stats','tiki_p_view_stats','',0);
 
-INSERT INTO "," ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'o','Categories','tiki-browse_categories.php',25,'feature_categories','tiki_p_view_categories','',0);
+INSERT INTO "," ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'o','Categories','tiki-browse_categories.php',25,'feature_categories','tiki_p_view_category','',0);
 
 INSERT INTO "," ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'o','Freetags','tiki-browse_freetags.php',27,'feature_freetags','tiki_p_view_freetags','',0);
 
@@ -2472,6 +2472,7 @@ CREATE TABLE tiki_sent_newsletters (
   subject varchar(200) default NULL,
   data bytea,
   datatxt bytea,
+  wysiwyg char(1) default NULL,
   PRIMARY KEY (editionId)
 ) ENGINE=MyISAM ;
 
@@ -2830,8 +2831,10 @@ CREATE TABLE tiki_tracker_items (
   itemId INTEGER,
   trackerId bigint NOT NULL default '0',
   created bigint default NULL,
+  createdBy varchar(200) default NULL,
   status char(1) default NULL,
   lastModif bigint default NULL,
+  lastModifBy varchar(200) default NULL,
   PRIMARY KEY (itemId),
   "INDEX" trackerId (trackerId)
 ) ENGINE=MyISAM ;

@@ -31,7 +31,7 @@
 			{/if}
 		{/if}
 {* avoid Add Event being shown if no calendar is displayed *}
-		{if $tiki_p_add_events eq 'y' and $displayedcals|@count >0}
+		{if $tiki_p_add_events eq 'y'}
 			{button href="tiki-calendar_edit_item.php" _text="{tr}Add Event{/tr}"}
 		{/if}
 

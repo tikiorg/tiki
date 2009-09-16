@@ -129,41 +129,31 @@ if ($broaden == 'last') {
 	);
 }
 $objects = $freetaglib->get_objects_with_tag_combo($tagArray, $type, $view_user, $offset, $maxRecords, $sort_mode, $find, $broaden);
+
 $smarty->assign_by_ref('objects', $objects["data"]);
 $smarty->assign_by_ref('cantobjects', $objects["cant"]);
-$cant_pages = ceil($objects["cant"] / $maxRecords);
-$smarty->assign_by_ref('cant_pages', $cant_pages);
-$smarty->assign('actual_page', 1 + ($offset / $maxRecords));
-if ($objects["cant"] > ($offset + $maxRecords)) {
-	$smarty->assign('next_offset', $offset + $maxRecords);
-} else {
-	$smarty->assign('next_offset', -1);
-}
 $cant = $objects['cant'];
-$smarty->assign('cant', $cant);
-// If offset is > 0 then prev_offset
-if ($offset > 0) {
-	$smarty->assign('prev_offset', $offset - $maxRecords);
-} else {
-	$smarty->assign('prev_offset', -1);
-}
+$smarty->assign('cant', $objects['cant']);
+
 include_once ('tiki-section_options.php');
 ask_ticket('browse-freetags');
-// Display the template
-$smarty->assign('objects_with_freetags', array(
-	'wiki page',
-	'blog post',
-	'article',
-	'directory',
-	'faq',
-	'file gallery',
-	'image gallery',
-	'image',
-	'poll',
-	'quiz',
-	'survey',
-	'tracker',
-	'tracker %d'
-));
+
+$smarty->assign('objects_with_freetags',
+			array (
+				'wiki page',
+				'blog post',
+				'article',
+				'directory',
+				'faq',
+				'file gallery',
+				'image gallery',
+				'image',
+				'poll',
+				'quiz',
+				'survey',
+				'tracker',
+				'tracker %d'
+			)
+	);
 $smarty->assign('mid', 'tiki-browse_freetags.tpl');
 $smarty->display("tiki.tpl");

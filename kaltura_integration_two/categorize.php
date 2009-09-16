@@ -60,14 +60,14 @@ if ($prefs['feature_categories'] == 'y' && $catobjperms->modify_object_categorie
  	$can = $catobjperms->modify_object_categories;
 
 	for ($iCat = 0; $iCat < $num_categories; $iCat++) {
-		$catperms = Perms::get( array( 'type' => 'category', 'object' => $categories[$i]['categId'] ) );
+		$catperms = Perms::get( array( 'type' => 'category', 'object' => $categories[$iCat]['categId'] ) );
 
 		if (in_array($categories[$iCat]["categId"], $cats)) {
 			$categories[$iCat]["incat"] = 'y';
-			$categories[$i]['canchange'] = ($can && $catperms->remove_object) || isset($cat_object_exists) && ! $cat_object_exists;
+			$categories[$iCat]['canchange'] = ($can && $catperms->remove_object) || isset($cat_object_exists) && ! $cat_object_exists;
 		} else {
 			$categories[$iCat]["incat"] = 'n';
-			$categories[$i]['canchange'] = $can && $catperms->add_object;
+			$categories[$iCat]['canchange'] = $can && $catperms->add_object;
 		}
 	}
 	$smarty->assign_by_ref('categories', $categories["data"]);

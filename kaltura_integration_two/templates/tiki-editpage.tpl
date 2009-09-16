@@ -150,7 +150,7 @@ window.onload = timeIt;
 				<option value="inlinediff">text</option>
 			{/if}   
 		</select>
-		<input type="submit" class="wikiaction" onmouseover="return overlib('{tr}Change the style used to display differences to be translated.{/tr}');" onmouseout="nd();" name="preview" value="{tr}Change diff styles{/tr}" onclick="needToConfirm=false;" />
+		<input type="submit" class="wikiaction tips" title="{tr}Edit wiki page{/tr}|{tr}Change the style used to display differences to be translated.{/tr}" name="preview" value="{tr}Change diff styles{/tr}" onclick="needToConfirm=false;" />
 	{/if}
 	
 	<input type="hidden" name="clock" value="{$edittimeout}" />
@@ -175,9 +175,9 @@ window.onload = timeIt;
 	
 	{if $prefs.feature_wysiwyg eq 'y' and $prefs.wysiwyg_optional eq 'y' and !isset($hdr)}
 		{if $wysiwyg ne 'y'}
-			<input type="submit" class="wikiaction" onmouseover="return overlib('{tr}Switch to WYSIWYG editor.{/tr}');" onmouseout="nd();" name="mode_wysiwyg" value="{tr}Use wysiwyg editor{/tr}" onclick="needToConfirm=false;" />
+			<input type="submit" class="wikiaction tips" title="{tr}Edit wiki page{/tr}|{tr}Switch to WYSIWYG editor.{/tr}" name="mode_wysiwyg" value="{tr}Use wysiwyg editor{/tr}" onclick="needToConfirm=false;" />
 		{else}
-			<input type="submit" class="wikiaction" onmouseover="return overlib('{tr}Switch to normal (wiki) editor.{/tr}');" onmouseout="nd();" name="mode_normal" value="{tr}Use normal editor{/tr}" onclick="needToConfirm=false;" />
+			<input type="submit" class="wikiaction tips" title="{tr}Edit wiki page{/tr}|{tr}Switch to normal (wiki) editor.{/tr}" name="mode_normal" value="{tr}Use normal editor{/tr}" onclick="needToConfirm=false;" />
 		{/if}
 	{/if}
 	

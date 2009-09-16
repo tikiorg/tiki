@@ -46,7 +46,7 @@ function prefs_wiki_list() {
 			'description' => tra('Buttons: Save, Preview, Cancel, ...'),
 			'type' => 'list',
 			'options' => array(
-				'top' => tra('Top '),
+				'top' => tra('Top'),
 				'bottom' => tra('Bottom'),
 				'both' => tra('Both'),
 			),
@@ -56,7 +56,7 @@ function prefs_wiki_list() {
 			'description' => tra('When using the ...page... page break wiki syntax'),
 			'type' => 'list',
 			'options' => array(
-				'top' => tra('Top '),
+				'top' => tra('Top'),
 				'bottom' => tra('Bottom'),
 				'both' => tra('Both'),
 			),
@@ -66,7 +66,7 @@ function prefs_wiki_list() {
 			'description' => tra('Page description, icons, backlinks, ...'),
 			'type' => 'list',
 			'options' => array(
-				'top' => tra('Top '),
+				'top' => tra('Top'),
 				'bottom' => tra('Bottom'),
 				'both' => tra('Both'),
 				'none' => tra('Neither'),

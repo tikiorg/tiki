@@ -932,6 +932,11 @@ foreach($ins_fields['data'] as $sid => $onefield) {
 		$ins_fields['data'][$sid]['filter_value'] = $ins_fields['data'][$id_fields[$ins_fields['data'][$sid]['options_array'][2]]]['value'];
 	}
 }
+
+// Pull realname for user.
+$info["createdByReal"] = $tikilib->get_user_preference($info["createdBy"], 'realName', '');
+$info["lastModifByReal"] = $tikilib->get_user_preference($info["lastModifBy"], 'realName', '');
+
 $smarty->assign('id_fields', $id_fields);
 $smarty->assign('trackerId', $_REQUEST["trackerId"]);
 $smarty->assign('tracker_info', $tracker_info);

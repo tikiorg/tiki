@@ -51,14 +51,16 @@ if ($_REQUEST["nlId"]) {
 	$info = $nllib->get_newsletter($_REQUEST["nlId"]);
 	$update = "";
 } else {
-	$info = array();
-	$info["name"] = '';
-	$info["description"] = '';
-	$info["allowUserSub"] = 'y';
-	$info["allowAnySub"] = 'n';
-	$info["unsubMsg"] = 'y';
-	$info["validateAddr"] = 'y';
-	$info["allowTxt"] = 'y';
+	$info = array(
+		'nlId' => 0,
+		'name' => '',
+		'description' => '',
+		'allowUserSub' => 'y',
+		'allowAnySub' => 'n',
+		'unsubMsg' => 'y',
+		'validateAddr' => 'y',
+		'allowTxt' => 'y'
+	);
 	$update = "y";
 }
 $smarty->assign('info', $info);
@@ -98,14 +100,18 @@ if (isset($_REQUEST["save"])) {
 	} else {
 		$_REQUEST["allowTxt"] = 'n';
 	}
-	$sid = $nllib->replace_newsletter($_REQUEST["nlId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST["allowUserSub"], $_REQUEST["allowAnySub"], $_REQUEST["unsubMsg"], $_REQUEST["validateAddr"], $_REQUEST["allowTxt"], $_REQUEST["frequency"], $_REQUEST["author"]);
-	$info["name"] = '';
-	$info["description"] = '';
-	$info["allowUserSub"] = 'y';
-	$info["allowAnySub"] = 'n';
-	$info["unsubMsg"] = 'y';
-	$info["validateAddr"] = 'y';
-	$info["allowTxt"] = 'y';
+	$sid = $nllib->replace_newsletter($_REQUEST["nlId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST["allowUserSub"], $_REQUEST["allowAnySub"], $_REQUEST["unsubMsg"], $_REQUEST["validateAddr"],$_REQUEST["allowTxt"],$_REQUEST["frequency"],$_REQUEST["author"]);
+	
+	$info = array(
+		'nlId' => 0,
+		'name' => '',
+		'description' => '',
+		'allowUserSub' => 'y',
+		'allowAnySub' => 'n',
+		'unsubMsg' => 'y',
+		'validateAddr' => 'y',
+		'allowTxt' => 'y'
+	);
 	$smarty->assign('nlId', 0);
 	$smarty->assign('info', $info);
 }

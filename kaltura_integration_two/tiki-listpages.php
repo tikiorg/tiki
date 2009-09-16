@@ -279,10 +279,12 @@ if (!empty($multiprint_pages)) {
 	}
 }
 function setLangFilter($filter) {
-	global $smarty;
-	global $multilinguallib;
+	global $smarty, $prefs, $multilinguallib;
 	include_once ('lib/multilingual/multilinguallib.php');
 	$lang = $multilinguallib->currentSearchLanguage(false);
+	if (isset($_REQUEST['listonly']) && $prefs['feature_jquery_autocomplete'] == 'y' && strlen($lang) > 2) {
+		$lang = substr($lang, 0, 2);		// for autocomplete - use only language filter, not culture as well
+	}
 	$filter['lang'] = $lang;
 	$smarty->assign_by_ref('find_lang', $lang);
 	return $filter;

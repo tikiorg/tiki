@@ -49,7 +49,7 @@
 </div>
 
 <div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" name="feature_comments_post_as_anonymous" id="feature_comments_post_as_anonymous"{if $prefs.feature_comments_post_as_anonymous eq 'y'}checked="checked" {/if}/> </div>
+	<div class="adminoption"><input type="checkbox" name="feature_comments_post_as_anonymous" id="feature_comments_post_as_anonymous"{if $prefs.feature_comments_post_as_anonymous eq 'y'} checked="checked" {/if}/> </div>
 	<div class="adminoptionlabel"><label for="feature_comments_post_as_anonymous">{tr}Allow to post comments as Anonymous{/tr} </label>{if $prefs.feature_help eq 'y'} {help url="Post+Comments+as+Anonymous"}{/if}</div>
 </div>
 </fieldset>
@@ -67,8 +67,8 @@
 <div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" id="section_comments_parse" name="section_comments_parse" {if $prefs.section_comments_parse eq 'y'}checked="checked"{/if}/></div>
 	<div class="adminoptionlabel">
-		<label for="section_comments_parse">{tr}Parse wiki syntax in comments in all sections apart from Forums{/tr}</em></label>{if $prefs.feature_help eq 'y'} {help url="Wiki+Syntax"}{/if}
-		{remarksbox type='tip' title='Tip'}Use 'Accept wiki syntax' for forums, currently <em>{if $prefs.feature_forum_parse eq 'y'}on{else}off{/if} {icon _id="arrow_right" href="tiki-admin.php?page=forums"}{/remarksbox}
+		<label for="section_comments_parse">{tr}Parse wiki syntax in comments in all sections apart from Forums{/tr}</label>{if $prefs.feature_help eq 'y'} {help url="Wiki+Syntax"}{/if}
+		{remarksbox type='tip' title='Tip'}Use 'Accept wiki syntax' for forums, currently <em>{if $prefs.feature_forum_parse eq 'y'}on{else}off{/if}</em> {icon _id="arrow_right" href="tiki-admin.php?page=forums"}{/remarksbox}
 	</div>
 </div>
 
@@ -144,11 +144,14 @@
 		<legend>{tr}Edit plugin icons{/tr}</legend>
 		<div class="adminoptionbox">
 			<div class="adminoption"><input type="checkbox" id="wiki_edit_plugin" name="wiki_edit_plugin" {if $prefs.wiki_edit_plugin eq 'y'}checked="checked"{/if}/></div> 
-				<div class="adminoptionlabel"><label for="wiki_edit_plugin">{tr}Enable edit plugin icons{/tr} {tr}(experimental - not comprehensively tested and requires new JQuery feature){/tr}</label></div>
+				<div class="adminoptionlabel"><label for="wiki_edit_plugin">{tr}Enable edit plugin icons{/tr} {tr}(experimental - not comprehensively tested and requires javascript){/tr}</label></div>
 		</div>
 		</fieldset>
 		<fieldset class="admin">
                 <legend>{tr}Plugins{/tr}</legend>
+				<fieldset class="admin donthide">
+					{listfilter selectors='#content2 .admin fieldset' exclude=".donthide"}
+				</fieldset>
 		{foreach from=$plugins key=plugin item=info}
 			<fieldset class="admin">
                 	<legend>{$info.name|escape}</legend>
@@ -165,9 +168,9 @@
 					</div> 
 				</div>	
 				<div class="adminoptionbox">
-				        {if !$plugins.$plugin.inline}<div class="adminoption"><input type="checkbox" id="wikiplugininline_{$plugin|escape}" name="wikiplugininline_{$plugin|escape}" {if $prefs[$pref_inline] eq 'y'}checked="checked" {/if}/>
-                                        </div>{/if} 
-					<div class="adminoptionlabel"><label for="wikiplugininline_{$plugin|escape}">{if $plugins.$plugin.inline}The edit plugin icon is not supported for this plugin{else}{tr}Disable edit plugin icon (make plugin inline){/tr}{/if}</label>
+				        {if !isset($plugins.$plugin.inline)}<div class="adminoption"><input type="checkbox" id="wikiplugininline_{$plugin|escape}" name="wikiplugininline_{$plugin|escape}" {if $prefs[$pref_inline] eq 'y'}checked="checked" {/if}/>
+                         </div>{/if} 
+					<div class="adminoptionlabel">{if !isset($plugins.$plugin.inline)}<label for="wikiplugininline_{$plugin|escape}">{/if}{if isset($plugins.$plugin.inline)}The edit plugin icon is not supported for this plugin{else}{tr}Disable edit plugin icon (make plugin inline){/tr}{/if}{if !isset($plugins.$plugin.inline)}</label>{/if}
 					</div> 
 				</div>
 			{/if} 
@@ -268,41 +271,41 @@ if (window.location.href.indexOf('plugin_alias_new=true') > -1) {
 				<div class="adminoptionlabel">
 					<label for="plugin_alias">{tr}Plugin Name{/tr}:</label>
 					{if $plugin_admin}
-						<input type="hidden" name="plugin_alias" value="{$plugin_admin.plugin_name|escape}"/>
+						<input type="hidden" name="plugin_alias" id="plugin_alias" value="{$plugin_admin.plugin_name|escape}"/>
 						<strong>{$plugin_admin.plugin_name|escape}</strong>
 					{else}
-						<input type="text" name="plugin_alias"/>
+						<input type="text" name="plugin_alias" id="plugin_alias" />
 					{/if}
 				</div>
 			</div>
 			<div class="adminoptionbox">
 				<div class="adminoptionlabel">
 					<label for="implementation">{tr}Base Plugin{/tr}:</label>
-					<select name="implementation">
+					<select name="implementation" id="implementation">
 						{foreach from=$plugins_real item=base}
-							<option value="{$base|escape}" {if $plugin_admin.implementation eq $base}selected="selected"{/if}>{$base|escape}</option>
+							<option value="{$base|escape}" {if isset($plugin_admin.implementation) and $plugin_admin.implementation eq $base}selected="selected"{/if}>{$base|escape}</option>
 						{/foreach}
 					</select>
 				</div>
 			</div>
 			<div class="adminoptionbox"><div class="adminoptionlabel">
-					<label for="implementation">{tr}Name{/tr}:</label> <input type="text" name="name" value="{$plugin_admin.description.name|escape}"/>
+					<label for="plugin_name">{tr}Name{/tr}:</label> <input type="text" name="name" id="plugin_name" value="{$plugin_admin.description.name|escape}"/>
 			</div></div>
 			<div class="adminoptionbox"><div class="adminoptionlabel">
-					<label for="description">{tr}Description{/tr}:</label> <input type="text" name="description" value="{$plugin_admin.description.description|escape}" class="width_40em"/>
+					<label for="plugin_description">{tr}Description{/tr}:</label> <input type="text" name="description" id="plugin_description" value="{$plugin_admin.description.description|escape}" class="width_40em"/>
 			</div></div>
 			<div class="adminoptionbox"><div class="adminoptionlabel">
-					<label for="prefs">{tr}Body Label{/tr}:</label> <input type="text" name="body" value="{$plugin_admin.description.body|escape}"/>
+					<label for="plugin_body">{tr}Body Label{/tr}:</label> <input type="text" name="body" id="plugin_body" value="{$plugin_admin.description.body|escape}"/>
 			</div></div>
 			<div class="adminoptionbox"><div class="adminoptionlabel">
-					<label for="prefs">{tr}Dependencies{/tr}:</label> <input type="text" name="prefs" value="{','|implode:$plugin_admin.description.prefs}"/>
+					<label for="plugin_deps">{tr}Dependencies{/tr}:</label> <input type="text" name="prefs" id="plugin_deps" value="{if !empty($plugin_admin.description.prefs)}{','|implode:$plugin_admin.description.prefs}{/if}"/>
 			</div></div>
 			<div class="adminoptionbox"><div class="adminoptionlabel">
 					<label for="filter">{tr}Filter{/tr}:</label> <input type="text" id="filter" name="filter" value="{$plugin_admin.description.filter|default:'xss'|escape}"/>
 			</div></div>
 			<div class="adminoptionbox"><div class="adminoptionlabel">
 					<label for="validate">{tr}Validation{/tr}:</label> 
-					<select name="validate">
+					<select name="validate" id="validate">
 						{foreach from=','|explode:'none,all,body,arguments' item=val}
 							<option value="{$val|escape}" {if $plugin_admin.description.validate eq $val}selected="selected"{/if}>{$val|escape}</option>
 						{/foreach}
@@ -325,18 +328,18 @@ $jq('#pluginalias_simple_new').hide();
 				{if ! $value|is_array}
 					<div class="admingroup adminoptionbox">
 						<div class="adminoptionlabel">
-							<label for="sparams[{$token|escape}][token]">{tr}Argument{/tr}:</label> <input type="text" name="sparams[{$token|escape}][token]" value="{$token|escape}"/>
-							<label for="sparams[{$token|escape}][default]" style="float:none;display:inline">{tr}Default{/tr}:</label> <input type="text" name="sparams[{$token|escape}][default]" value="{$value|escape}"/>
+							<label for="sparams_{$token|escape}_token">{tr}Argument{/tr}:</label> <input type="text" name="sparams[{$token|escape}][token]" id="sparams_{$token|escape}_token" value="{$token|escape}"/>
+							<label for="sparams_{$token|escape}_default" style="float:none;display:inline">{tr}Default{/tr}:</label> <input type="text" name="sparams[{$token|escape}][default]" id="sparams_{$token|escape}_default" value="{$value|escape}"/>
 						</div>
 					</div>
 				{/if}
 			{/foreach}
 			<div class="admingroup adminoptionbox hidefirst" id="pluginalias_simple_new">
 				<div class="adminoptionlabel">
-					<label for="sparams[__NEW__][token]">{tr}New Argument{/tr}:</label>
-					<input type="text" name="sparams[__NEW__][token]" value=""/>
-					<label for="sparams[__NEW__][default]" style="float:none;display:inline">{tr}Default{/tr}:</label>
-					<input type="text" name="sparams[__NEW__][default]" value=""/>
+					<label for="sparams__NEW__token">{tr}New Argument{/tr}:</label>
+					<input type="text" name="sparams[__NEW__][token]" id="sparams__NEW__token" value=""/>
+					<label for="sparams__NEW__default" style="float:none;display:inline">{tr}Default{/tr}:</label>
+					<input type="text" name="sparams[__NEW__][default]" id="sparams__NEW__default" value=""/>
 				</div>
 			</div>
 		</fieldset>
@@ -374,7 +377,7 @@ $jq('#pluginalias_simple_new').hide();
 
 			<div class="adminoptionbox">
 				<div class="adminoptionlabel">
-					<label for="ignorebody">{tr}Ignore User Input{/tr}:</label> <input type="checkbox" name="ignorebody" value="y" {if $plugin_admin.body.input eq 'ignore'}checked="checked"{/if}/>
+					<label for="ignorebody">{tr}Ignore User Input{/tr}:</label> <input type="checkbox" name="ignorebody" id="ignorebody" value="y" {if $plugin_admin.body.input eq 'ignore'}checked="checked"{/if}/>
 				</div>
 			</div>
 			<div class="adminoptionbox">

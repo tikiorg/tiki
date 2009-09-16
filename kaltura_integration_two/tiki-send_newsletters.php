@@ -49,6 +49,7 @@ if ($_REQUEST["nlId"]) {
 		$info["subject"] = '';
 		$info["editionId"] = 0;
 		$info["files"] = array();
+		$info['wysiwyg'] = false;
 	}
 	$smarty->assign('info', $info);
 } else {
@@ -310,7 +311,7 @@ if (isset($_REQUEST["send"])) {
 	if (count($errors) > 0) {
 		$smarty->assign_by_ref('errors', $errors);
 	}
-	$editionId = $nllib->replace_edition($_REQUEST["nlId"], $_REQUEST["subject"], $_REQUEST["data"], count($sent), $editionId, false, !empty($_REQUEST['datatxt']) ? $txt : '', $info['files']);
+	$editionId = $nllib->replace_edition($_REQUEST["nlId"], $_REQUEST["subject"], $_REQUEST["data"], count($sent), $editionId, false, !empty($_REQUEST['datatxt']) ? $txt : '', $info['files'], $_REQUEST['wysiwyg']);
 	foreach($info['files'] as $k => $f) {
 		if ($f['savestate'] == 'tikitemp') {
 			$newpath = $prefs['tmpDir'] . '/newsletterfile-' . $f['filename'];
@@ -324,7 +325,7 @@ if (isset($_REQUEST["send"])) {
 if (isset($_REQUEST["save_only"])) {
 	if (!isset($txt) || empty($_REQUEST['datatxt'])) $txt = "";
 	$smarty->assign('nlId', $_REQUEST['nlId']);
-	$editionId = $nllib->replace_edition($_REQUEST['nlId'], $_REQUEST['subject'], $_REQUEST['data'], -1, $_REQUEST['editionId'], true, $txt, $info['files']);
+	$editionId = $nllib->replace_edition($_REQUEST['nlId'], $_REQUEST['subject'], $_REQUEST['data'], -1, $_REQUEST['editionId'], true, $txt, $info['files'], $_REQUEST['wysiwyg']);
 	foreach($info['files'] as $k => $f) {
 		if ($f['savestate'] == 'tikitemp') {
 			$newpath = $prefs['tmpDir'] . '/newsletterfile-' . $f['filename'];
