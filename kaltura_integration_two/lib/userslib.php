@@ -3118,9 +3118,14 @@ function get_included_groups($group, $recur=true) {
 			$this->query($query, array($res['groupName'], $res['userId']));
 		}
 	}
-	function nb_users_in_group($group) {
-		$query = 'SELECT count(*) FROM `users_usergroups` WHERE `groupName`=?';
-		return $this->getOne($query, array($group));
+	function nb_users_in_group($group=null) {
+		if (!empty($group)) {
+			$query = 'SELECT count(*) FROM `users_usergroups` WHERE `groupName`=?';
+			return $this->getOne($query, array($group));
+		} else {
+			$query = 'SELECT count(*) FROM `users_users`';
+			return $this->getOne($query, array());
+		}
 	}
 
 }
