@@ -4,13 +4,6 @@
 	Compatible with TikiWiki version 3.
 	Visit http://themes.tikiwiki.org for more information.
 
-	Business.css is comprised of these sections:
-	XHTML elements, Siteheader & Identity; Menus, Links; Misc. Center Col.;
-	Misc. Global; Boxes; Tables, Tabs; Wiki (inc. plugins, etc.);
-	Articles; Blogs; Forums; Galleries; Trackers; Categories, Tags;
-	Polls; FAQs; Quizzes; Shoutbox; Directory; Messages; TikiSheets;
-	Calendar; Admin; and Ajax, jquery, etc. */
-
 /* Import basic layout file: */
 @import "lite/lite.css";
 
@@ -265,8 +258,13 @@ hr {
 	z-index: 2;
 }
 
-#sitesearchbar form {
+#tiki-top #sitesearchbar form.findtable {
 	margin-top: 16px;
+	margin-left: -2px;
+}
+
+#tiki-top #sitesearchbar form input {
+	border: none !important;
 }
 
 #sitesearchbar input#fuser {
