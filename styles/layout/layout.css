@@ -776,13 +776,13 @@ tr.diffheader {
 }
 
 .tabinactive {
-	border-bottom: none/* !important*/;
-	position: relative/* !important*/;
-	top: -3px/* !important*/;
+	border-bottom: none;
+	position: relative;
+	top: -3px;
 }
 	
 [class].tabinactive {
-	top: -2px !important;
+	top: -2px;
 }
 
 .tabcontent {
