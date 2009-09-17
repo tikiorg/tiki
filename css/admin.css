@@ -153,6 +153,7 @@ div.adminanchors a {float: left}
 	float: left;
 	height: auto;
 	max-height: 400px;
+	min-height: 16px;
 /*
 	max-width: 26%;
 	min-width: 10em;

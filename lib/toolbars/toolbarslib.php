@@ -139,7 +139,7 @@ abstract class Toolbar
 		global $prefs;
 		if( isset($prefs["toolbar_tool_$name"]) ) {
 			$data = unserialize($prefs["toolbar_tool_$name"]);
-			$tag = ToolbarInline::fromData( $name, $data );
+			$tag = Toolbar::fromData( $name, $data );
 			return $tag;
 		} else {
 			return null;
@@ -152,13 +152,13 @@ abstract class Toolbar
 		return isset($prefs["toolbar_tool_$name"]);	
 	}
 
-	public static function saveTool($name, $label, $icon = 'pics/icons/shading.png', $token = '', $syntax = '', $type = 'Inline') {
+	public static function saveTool($name, $label, $icon = 'pics/icons/shading.png', $token = '', $syntax = '', $type = 'Inline', $plugin = '') {
 		global $prefs, $tikilib;
 		
-		$name = strtolower( $name );
+		$name = strtolower( preg_replace('/[\s,\/]+/', '_', $name) );
 
 		$prefName = "toolbar_tool_$name";
-		$data = array('name'=>$name, 'label'=>$label, 'icon'=>$icon, 'token'=>$token, 'syntax'=>$syntax, 'type'=>$type);
+		$data = array('name'=>$name, 'label'=>$label, 'icon'=>$icon, 'token'=>$token, 'syntax'=>$syntax, 'type'=>$type, 'plugin'=>$plugin);
 		
 		$tikilib->set_preference( $prefName, serialize( $data ) );
 		
@@ -192,6 +192,62 @@ abstract class Toolbar
 	
 		}
 	}
+
+	public static function fromData( $tagName, $data ) { // {{{
+		
+		$tag = null;
+		
+		switch ($data['type']) {
+			case 'Inline':
+				$tag = new ToolbarInline();
+				$tag->setSyntax( $data['syntax'] );
+				break;
+			case 'Block':
+				$tag = new ToolbarBlock();
+				$tag->setSyntax( $data['syntax'] );
+				break;
+			case 'LineBased':
+				$tag = new ToolbarLineBased();
+				$tag->setSyntax( $data['syntax'] );
+				break;
+			case 'Picker':
+				$tag = new ToolbarPicker();
+				break;
+			case 'Separator':
+				$tag = new ToolbarSeparator();
+				break;
+			case 'FckOnly':
+				$tag = new ToolbarFckOnly();
+				break;
+			case 'Fullscreen':
+				$tag = new ToolbarFullscreen();
+				break;
+			case 'TextareaResize':
+				$tag = new ToolbarTextareaResize();
+				break;
+			case 'Helptool':
+				$tag = new ToolbarHelptool();
+				break;
+			case 'FileGallery':
+				$tag = new ToolbarFileGallery();
+				break;
+			case 'Wikiplugin':
+				if (!isset($data['plugin'])) { $data['plugin'] = ''; }
+				$tag = ToolbarWikiplugin::fromName('wikiplugin_' . $data['plugin']);
+				if (empty($tag)) { $tag = new ToolbarWikiplugin(); }
+				break;
+			default:
+				$tag = new ToolbarInline();
+				break;
+		}
+
+		$tag->setLabel( $data['label'] )
+			->setWysiwygToken( $data['token'] )
+				->setIcon( !empty($data['icon']) ? $data['icon'] : 'pics/icons/shading.png' )
+						->setType($data['type']);
+		
+		return $tag;
+	}	// {{{
 
 	abstract function getWikiHtml( $areaName );
 
@@ -387,18 +443,6 @@ class ToolbarFckOnly extends Toolbar
 class ToolbarInline extends Toolbar
 {
 	protected $syntax;
-
-	public static function fromData( $tagName, $data ) { // {{{
-		
-		$tag = new self;
-		$tag->setLabel( $data['label'] )
-			->setWysiwygToken( $data['token'] )
-				->setIcon( !empty($data['icon']) ? $data['icon'] : 'pics/icons/shading.png' )
-					->setSyntax( $data['syntax'] )
-						->setType('Inline');
-		
-		return $tag;
-	}	// {{{
 
 	public static function fromName( $tagName ) // {{{
 	{
@@ -898,6 +942,11 @@ class ToolbarWikiplugin extends Toolbar
 		$this->pluginName = $name;
 
 		return $this;
+	} // }}}
+
+	function getPluginName() // {{{
+	{
+		return $this->pluginName;
 	} // }}}
 
 	function isAccessible() // {{{

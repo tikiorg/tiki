@@ -55,7 +55,7 @@ if( isset($_REQUEST['reset_global']) && $section == 'global' ) {
 }
 
 if ( !empty($_REQUEST['save_tool']) && !empty($_REQUEST['tool_name'])) {	// input from the tool edit form
-	Toolbar::saveTool($_REQUEST['tool_name'], $_REQUEST['tool_label'], $_REQUEST['tool_icon'], $_REQUEST['tool_token'], $_REQUEST['tool_syntax']);
+	Toolbar::saveTool($_REQUEST['tool_name'], $_REQUEST['tool_label'], $_REQUEST['tool_icon'], $_REQUEST['tool_token'], $_REQUEST['tool_syntax'], $_REQUEST['tool_type'], $_REQUEST['tool_plugin']);
 }
 
 $current = $tikilib->get_preference( 'toolbar_' . $section . ($comments ? '_comments' : '') );
@@ -119,6 +119,9 @@ foreach( $qtlist as $name ) {
 	$label .= '<input type="hidden" name="token" value="'.$tag->getWysiwygToken().'" />';
 	$label .= '<input type="hidden" name="syntax" value="'.$tag->getSyntax().'" />';
 	$label .= '<input type="hidden" name="type" value="'.$tag->getType().'" />';
+	if ($tag->getType() == 'Wikiplugin') {
+		$label .= '<input type="hidden" name="plugin" value="'.$tag->getPluginName().'" />';
+	}
 	$qtelement[$name] = array( 'name' => $name, 'class' => "toolbar qt-$name $wys $wiki $plug $cust", 'html' => "$icon$label");
 }
 
@@ -171,6 +174,7 @@ var item;
 //\$jq('#toolbar_edit_div form').submit(function() {
 //});
 
+// show edit form dialogue
 showToolEditForm = function(item) {
 
 	//\$jq('#toolbar_edit_div').show();
@@ -181,9 +185,22 @@ showToolEditForm = function(item) {
 	\$jq('#toolbar_edit_div #tool_token').val(\$jq(item).children('input[name=token]').val());
 	\$jq('#toolbar_edit_div #tool_syntax').val(\$jq(item).children('input[name=syntax]').val());
 	\$jq('#toolbar_edit_div #tool_type').val(\$jq(item).children('input[name=type]').val());
+	if (\$jq(item).children('input[name=type]').val() == 'Wikiplugin') {
+		\$jq('#toolbar_edit_div #tool_plugin').val(\$jq(item).children('input[name=plugin]').val());
+	} else {
+		\$jq('#toolbar_edit_div #tool_plugin').attr('disabled', 'disabled');
+	}
 
 	\$jq('#toolbar_edit_div').dialog('open');
 }
+// handle plugin select on edit dialogue
+\$jq('#toolbar_edit_div #tool_type').change( function () {
+	if (\$jq('#toolbar_edit_div #tool_type').val() == 'Wikiplugin') {
+		\$jq('#toolbar_edit_div #tool_plugin').removeAttr('disabled');
+	} else {
+		\$jq('#toolbar_edit_div #tool_plugin').attr('disabled', 'disabled').val("");
+	}
+});
 
 \$jq("#toolbar_edit_div").dialog({
 	bgiframe: true,
@@ -191,6 +208,9 @@ showToolEditForm = function(item) {
 //	height: 300,
 	modal: true,
 	buttons: {
+		Cancel: function() {
+			\$jq(this).dialog('close');
+		},
 		'Save': function() {
 			var bValid = true;
 //			allFields.removeClass('ui-state-error');
@@ -202,9 +222,6 @@ showToolEditForm = function(item) {
 				\$jq("#toolbar_edit_div #save_tool").val('Save');
 				\$jq("#toolbar_edit_div form").submit();
 			}
-			\$jq(this).dialog('close');
-		},
-		Cancel: function() {
 			\$jq(this).dialog('close');
 		},
 		Delete: function() {
@@ -220,7 +237,7 @@ showToolEditForm = function(item) {
 	}
 });
 
-
+// save toolbars
 saveRows = function() {
 	var lists = [];
 	var ser = \$jq('.row').map(function(){				/* do this on everything of class 'row' */
@@ -234,12 +251,11 @@ saveRows = function() {
 	} else {
 		ser = ser[0];
 	}
-	\$jq('#qt-form-field').val(ser);
+	\$jq('#qt-form-field').val(ser.replace(',,', ','));
 }
 
 \$jq('#qt_filter_div_w input').click( function () {	// non-plugins	
-	\$jq('#full-list-w').children().each( function() {
-				
+	\$jq('#full-list-w').children().each( function() {	
 		if (((\$jq('#qt_filter_div_w .qt-wiki-filter').attr('checked') && \$jq(this).hasClass('qt-wiki')) ||
 			 (\$jq('#qt_filter_div_w .qt-wys-filter').attr('checked') && \$jq(this).hasClass('qt-wys')))) {
 			\$jq(this).show();	
@@ -278,6 +294,14 @@ if (count($_REQUEST) == 0) {
 } else {
 	$smarty->assign('autoreload', isset($_REQUEST['autoreload']) ? $_REQUEST['autoreload'] : '');
 }
+
+$plugins = array();
+foreach($tikilib->plugin_get_list() as $name) {
+	$info = $tikilib->plugin_info($name);
+	if (isset($info['prefs']) && is_array($info['prefs']) && count($info['prefs']) > 0) $plugins[$name] = $info;
+}
+$smarty->assign('plugins', $plugins);
+
 $smarty->assign('comments', $comments);
 $smarty->assign( 'loaded', $section );
 $smarty->assign( 'rows', range( 0, $rowCount - 1 ) );
