@@ -33,6 +33,7 @@
 				<input name="load" type="submit" value="{tr}Load{/tr}"/>
 				<input type="submit" name="save" value="{tr}Save{/tr}"/>
 				{if $loaded neq 'global' }<input type="submit" name="reset" value="{tr}Reset to Global{/tr}"/>{/if}
+				{if $loaded eq 'global' }<input type="submit" name="reset_global" value="{tr}Reset to defaults{/tr}"/>{/if}
 				<label for="autoreload">{tr}Auto Reloading{/tr}</label>
 				<input id="autoreload" name="autoreload" type="checkbox" {if $autoreload eq 'on'}checked="checked"{/if}/>
 			</div>
