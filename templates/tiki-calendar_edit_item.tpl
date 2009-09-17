@@ -632,4 +632,6 @@ onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 </div>
 {/strip}
 
+{if $edit}
 {include file=tiki-edit_help.tpl}
+{/if}
