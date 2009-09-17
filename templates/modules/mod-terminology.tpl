@@ -12,7 +12,7 @@
        </b>
        <p>
     {/if}
-    {tr}<b>Find term</b>{/tr}:<br>
+    <b>{tr}Find term{/tr}:</b><br>
 	<div id="mod-search_wiki_pager1" style="display: block" class="clearfix box-data">
       <form class="forms" method="post" action="tiki-listpages.php">
         <input name="find" size="14" type="text" accesskey="s" value=""/>
