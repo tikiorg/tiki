@@ -169,7 +169,13 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
 
 	} elseif ( $ajaxlib->templateIsRegistered($template) ) {
 
-		$content = $smarty->fetch($template);
+		$content = '';
+		if ($smarty->get_template_vars('mid') == $template) {
+			$content = $smarty->get_template_vars('mid_data');
+		}
+		if (empty($content)) {
+			$content = $smarty->fetch($template);
+		}
 		// Help
 		require_once $smarty->_get_plugin_filepath('function', 'show_help');
 		$content .= smarty_function_show_help(null,$smarty); 

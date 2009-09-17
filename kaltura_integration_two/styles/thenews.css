@@ -4,11 +4,14 @@
  * For more information, please visit http://themes.tikiwiki.org or http://zukakakina.com.
  * Released under LPGL license. */
 
-/* import *lite as the base: */
+/* Import *lite as the base: */
 @import "lite/lite.css"; 
 
 /* Then import the default layout properties file: */
 @import "layout/layout.css";
+
+/* And design defaults: */
+@import "layout/design.css";
 
 /***** XHTML Elements ******/
 body {
@@ -1137,10 +1140,6 @@ ul.toc {
 	background: #a9b8c2;
 	font-weight: bold;
 	width: 50%;
-}
-
-.diffadded > .diffchar {
-	color: blue;
 }
 
 /***** Articles ****/

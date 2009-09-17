@@ -1445,7 +1445,7 @@ class TikiLib extends TikiDb_Bridge {
 			if (isset($_SESSION["groups_are_emulated"]) && $_SESSION["groups_are_emulated"]=="y"){
 				$ret = array_intersect($ret,unserialize($_SESSION['groups_emulated']));
 			}
-			$ret = array_unique($ret);
+			$ret = array_values(array_unique($ret));
 			$this->usergroups_cache[$user] = $ret;
 			return $ret;
 		} else {
@@ -2122,7 +2122,6 @@ class TikiLib extends TikiDb_Bridge {
 
 		$f_jail_bind = array();
 		$g_jail_bind = array();
-		$bindvars = array();
 
 		if ( ( ! $with_files && ! $with_subgals ) || ( $parent_is_file && $galleryId <= 0 ) ) return array();
 
@@ -2259,11 +2258,12 @@ class TikiLib extends TikiDb_Bridge {
 			}
 
 			$g_query = 'SELECT '.implode(', ', array_values($f2g_corresp)).' FROM '.$g_table.$g_join.$g_jail_join;
-			$g_query .= " WHERE 1=1 $g_mid ";
+			$g_query .= " WHERE 1=1 ";
 
 			if ( $galleryId_str != '' ) {
 				$g_query .= ' AND tfg.`parentId`'.$galleryId_str;
 			}
+			$g_query .= $g_mid;
 
 			$g_query .= $g_jail_where;
 			$bindvars = array_merge( $bindvars, $g_jail_bind );
@@ -2500,7 +2500,7 @@ class TikiLib extends TikiDb_Bridge {
 		// Use default values if some values are not specified
 		if ( $res !== false && $defaultsFallback ) {
 			foreach ( $defaultValues as $k => $v ) {
-				if ( $res[$k] === null ) {
+				if ( !isset($res[$k]) || $res[$k] === null ) {
 					$res[$k] = $v;
 				}
 			}
@@ -2910,7 +2910,8 @@ class TikiLib extends TikiDb_Bridge {
 		return false;
 	}
 
-	/*shared*/
+	// Returns an array of blogs that belong to the user with the given name, or which are public, if $include_public is set to true.
+	// A blog is represented by an array like a tiki_blogs record.
 	function list_user_blogs($user, $include_public = false) {
 		$query = "select * from `tiki_blogs` where `user`=? ";
 		$bindvars=array($user);
@@ -3400,6 +3401,7 @@ class TikiLib extends TikiDb_Bridge {
 		return true;
 	}
 
+	// Returns the number of registered users which logged in or were active in the last 5 minutes.
 	function count_sessions() {
 		$this->update_session();
 		$query = "select count(*) from `tiki_sessions`";

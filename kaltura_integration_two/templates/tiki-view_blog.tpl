@@ -1,4 +1,4 @@
-<div class="breadcrumbs"><a class="link" href="tiki-list_blogs.php">{tr}Blogs{/tr}</a> {$prefs.site_crumb_seper} {$title}</div>
+<div class="breadcrumbs"><a class="link" href="tiki-list_blogs.php">{tr}Blogs{/tr}</a> {$prefs.site_crumb_seper} {$title|escape}</div>
 {if strlen($heading) > 0}
   {eval var=$heading}
 {else}
@@ -58,7 +58,7 @@
 		<div class="clearfix postbody-title">
 			<div class="title"> {* because used in forums, but I don't know purpose *}
 				{if $use_title eq 'y'}
-					<h2>{$listpages[ix].title}</h2>
+					<h2>{$listpages[ix].title|escape}</h2>
 				{else}
 					<h2>{$listpages[ix].created|tiki_short_datetime}</h2>
 				{/if}

@@ -11,6 +11,12 @@
 	{button href="?do=temp_cache&amp;group=$escgroup" _text="{tr}Clear Cache{/tr}"}
 </div>
 
+{remarksbox type='note' title='New feature'}
+	{tr}This page will be replaced with the Object Permissions page although currently it does not support the "advanced" mode of this page.<br />Please try it out and feedback with any improvements or problems.{/tr}
+	<br /><br />
+	{tr}Click this button to try it now:{/tr} {button href="tiki-objectpermissions.php" _text="{tr}Global object permissions{/tr}"}
+{/remarksbox}
+
 <h2>{tr}Group Information{/tr}</h2>
 <table class="normal" id="groupinformation">
 	<tr>

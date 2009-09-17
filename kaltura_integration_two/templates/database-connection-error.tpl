@@ -66,18 +66,19 @@
 				<p>Things to check:</p>
 				<ol class="fancylist">
 					<li><p>Is your database up and running?</p></li>
-					<li><p>Are your database login credentials correct?</p></li>
+					<li><p>Is your database corrupt? Please see <a target="_blank" href="http://doc.tikiwiki.org/Repair+Database">how to repair your database</a></p></li>					
+					<li><p>Are your database credentials (username, database name, etc) accurate?</p></li>
 					<li><p>Did you complete the <a href="tiki-install.php">Tiki Installer?</a></p></li>
 				</ol>
 				</div>
 
-				<p>Please see <a href="http://doc.tikiwiki.org/">the documentation</a> for more information.</p>
+				<p>Please see <a target="_blank" href="http://doc.tikiwiki.org/">the documentation</a> for more information.</p>
 			</div>
 
 			<hr/>
 
 			<p align="center">
-				<a href="http://www.tikiwiki.org" title="TikiWiki CMS/Groupware">
+				<a target="_blank" href="http://www.tikiwiki.org" title="TikiWiki CMS/Groupware">
 				<img src="img/tiki/tikibutton2.png" alt="TikiWiki CMS/Groupware" border="0" height="31" width="80"/>
 				</a>
 			</p>

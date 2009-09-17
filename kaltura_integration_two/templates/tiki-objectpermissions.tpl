@@ -14,17 +14,17 @@
 		{if $prefs.feature_tabs neq 'y'}
 	<h2>{tr}Edit Permissions{/tr}</h2>
 		{/if}
-	<form method="post" action="tiki-objectpermissions.php{if !empty($filegals_manager)}?filegals_manager={$filegals_manager|escape}{/if}">
+	<form method="post" action="{$smarty.server.PHP_SELF}?{query}">
 		{if empty($filegals_manager)}
 			{if !empty($page_perms)}
 				{remarksbox type="warning" title="{tr}Warning{/tr}"}
 					{tr}These permissions override any global permissions or category permissions affecting this object.{/tr}<br />
-					{if $tiki_p_admin eq 'y'}{tr}To edit global permissions <a class="rbox-link" href="tiki-objectpermissions.php?objectType=global">click here</a>.{/tr}{/if}
+					{if $tiki_p_admin eq 'y'}{tr}To edit global permissions{/tr} {self_link objectType='global' permType=$permType}{tr}click here{/tr}{/self_link}.{/if}
 				{/remarksbox}
-			{elseif  !empty($categ_perms)}
+			{elseif !empty($categ_perms)}
 				{remarksbox type="warning" title="{tr}Warning{/tr}"}
 					{tr}No permissions yet applied to this object but category permissions affect this object.{/tr}<br />
-					{if $tiki_p_admin eq 'y'}{tr}To edit category permissions <a class="rbox-link" href="tiki-admin_categories.php">click here</a>.{/tr}{/if}
+					{if $tiki_p_admin eq 'y'}{tr}To edit category permissions{/tr} {self_link _script='tiki-admin_categories.php'}{tr}click here{/tr}{/self_link}.{/if}
 				{/remarksbox}
 			{elseif $objectType eq 'global'}
 				{remarksbox type="note" title="{tr}Note{/tr}"}
@@ -32,7 +32,8 @@
 				{/remarksbox}
 			{else}
 				{remarksbox type="note" title="{tr}Note{/tr}"}
-					{tr}No permissions yet applied to this object. Global permissions currently shown below.{/tr}
+					{tr}No permissions yet applied to this object. Global permissions apply.{/tr}<br />
+					{if $tiki_p_admin eq 'y'}{tr}To edit global permissions{/tr} {self_link objectType='global' permType=$permType}{tr}click here{/tr}{/self_link}.{/if}
 				{/remarksbox}
 			{/if}
 		{/if}
@@ -82,7 +83,7 @@
 	{* Quickperms *}
 
 	{if $prefs.feature_quick_object_perms eq 'y'}
-	<form name="allperms" method="post" action="tiki-objectpermissions.php{if !empty($filegals_manager)}?filegals_manager={$filegals_manager|escape}{/if}">
+	<form name="allperms" method="post" action="{$smarty.server.PHP_SELF}?{query}">
 		<input type="hidden" name="quick_perms" value="true"/>
 
 		{tab name='{tr}Quick Permissions{/tr}'}

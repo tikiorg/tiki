@@ -1,4 +1,4 @@
-{title help="FAQs"}{tr}{$faq_info.title}{/tr}{/title}
+{title help="FAQs"}{tr}{$faq_info.title|escape}{/tr}{/title}
 <div class="description">{$faq_info.description|escape}</div>
 
 <div class="navbar">
@@ -21,7 +21,7 @@
 		<ol>
 			{section name=ix loop=$channels}
 				<li>
-					<a class="link" href="#q{$channels[ix].questionId}">{$channels[ix].question}</a>
+					<a class="link" href="#q{$channels[ix].questionId}">{$channels[ix].question|escape}</a>
 				</li>
 			{/section}
 		</ol>
@@ -41,7 +41,7 @@
 						{/if}
 					</span>
 				{/if}
-				{$channels[ix].question}
+				{$channels[ix].question|escape}
 			</div>
 			<div class="faqanswer">
 				{if $prefs.faq_prefix eq 'QA'}

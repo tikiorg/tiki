@@ -47,7 +47,7 @@
 			<a class="blogname" href="{$listpages[changes].blogId|sefurl:blog}" title="{$listpages[changes].title}">
 		{/if}
 		{if $listpages[changes].title}
-			{$listpages[changes].title|truncate:$prefs.blog_list_title_len:"...":true}
+			{$listpages[changes].title|truncate:$prefs.blog_list_title_len:"...":true|escape}
 		{else}
 			&nbsp;
 		{/if}

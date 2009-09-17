@@ -220,7 +220,7 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
                     $attachmentContent = @file_get_contents($fileUrl);
                     $newFile = fopen($this->attachmentsDestDir . $fileName, 'w');
                     fwrite($newFile, $attachmentContent);
-                    $this->saveAndDisplayLog("File $fileName sucessfully imported!\n");
+                    $this->saveAndDisplayLog("File $fileName successfully imported!\n");
                 } else {
                     $this->saveAndDisplayLog("Unable to download file $fileName. File not found.\n", true);
                 }

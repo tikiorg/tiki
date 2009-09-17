@@ -1,11 +1,16 @@
 /* 
  * Coelesce theme (coelesce.css) for TikiWiki CMS/Groupware,
  * original design by Patrick Allard. Distributed under the LGPL license. 
- * This is a *litecss-based theme, so import lite/lite.css. */
+ */
  
-@import "lite/lite.css"; 
+/* Import *lite as the base: */ 
+@import "lite/lite.css";
 
-@import "layout/layout.css"; 
+/* Then import the default layout properties file: */
+@import "layout/layout.css";
+
+/* And design defaults: */
+@import "layout/design.css";
  
 /***** XHTML Elements ******/
 body {
@@ -249,6 +254,7 @@ body.tiki_wiki_page #c1c2 #wrapper #col1 #tiki-center {
 #header-top {
 	background: url(coelesce/pagebg.jpg) repeat-x bottom;
 	height: 80px;
+	position: relative;
 }
 
 #header-top[id] {

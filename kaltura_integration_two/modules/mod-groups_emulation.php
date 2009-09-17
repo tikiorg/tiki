@@ -6,10 +6,12 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-global $tikilib, $smarty, $tiki_p_admin;
+global $tikilib, $smarty, $tiki_p_admin, $userlib;
 
-$smarty->assign('groups_are_emulated', $_SESSION["groups_are_emulated"]);
-$smarty->assign_by_ref('groups_emulated', unserialize($_SESSION['groups_emulated']));
+if (isset($_SESSION['groups_are_emulated']))
+	$smarty->assign('groups_are_emulated', $_SESSION['groups_are_emulated']);
+if (isset($_SESSION['groups_emulated']))
+	$smarty->assign_by_ref('groups_emulated', unserialize($_SESSION['groups_emulated']));
 
 // Admins can see all existing groups
 if ($tiki_p_admin == 'y') {
@@ -24,7 +26,7 @@ if ($tiki_p_admin == 'y') {
 // Extract list of groups of user, including included groups
 $userGroups = $userlib->get_user_groups_inclusion($user);
 // If group Anonymous was absent, still add it so it is displayed as a reminder that its perms apply
-if( !$userGroups["Anonymous"] ) {
+if( isset($userGroups['Anonymous']) && !$userGroups['Anonymous'] ) {
 	$userGroups["Anonymous"] = "included";
 }
 $chooseGroups = $userGroups;

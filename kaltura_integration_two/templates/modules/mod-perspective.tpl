@@ -1,7 +1,4 @@
-{if !isset($tpl_module_title)}
-	{eval var="{tr}Perspectives{/tr}" assign="tpl_module_title"}
-{/if}
-{if $prefs.feature_perspective eq 'y' && $perspectives|@count gt 0}
+{if $perspectives|@count gt 0}
 	{tikimodule error=$module_params.error title=$tpl_module_title name="perspective" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 		<form method="get" action="tiki-switch_perspective.php">
 			<select name="perspective">

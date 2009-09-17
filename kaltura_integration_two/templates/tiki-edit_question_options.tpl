@@ -8,7 +8,7 @@
 	{button href="tiki-edit_quiz.php" _text="{tr}Admin Quizzes{/tr}"}
 </div>
 
-<h2>{tr}Create/edit options for question{/tr}: <a  href="tiki-edit_quiz_questions.php?quizId={$question_info.quizId}&amp;questionId={$question_info.questionId}">{$question_info.question}</a></h2>
+<h2>{tr}Create/edit options for question{/tr}: <a  href="tiki-edit_quiz_questions.php?quizId={$question_info.quizId}&amp;questionId={$question_info.questionId}">{$question_info.question|escape}</a></h2>
 <form action="tiki-edit_question_options.php" method="post">
 <input type="hidden" name="optionId" value="{$optionId|escape}" />
 <input type="hidden" name="questionId" value="{$questionId|escape}" />
@@ -35,7 +35,7 @@
 {section name=user loop=$channels}
 <tr>
 <td class="{cycle advance=false}">{$channels[user].optionId}</td>
-<td class="{cycle advance=false}">{$channels[user].optionText}</td>
+<td class="{cycle advance=false}">{$channels[user].optionText|escape}</td>
 <td class="{cycle advance=false}">{$channels[user].points}</td>
 <td class="{cycle}">
    <a class="link" href="tiki-edit_question_options.php?questionId={$questionId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;optionId={$channels[user].optionId}">{icon _id='page_edit' alt='{tr}Edit{/tr}'}</a>
