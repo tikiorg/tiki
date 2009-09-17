@@ -28,12 +28,13 @@ $jq(document).ready(function(){
 <!--//--><![CDATA[//><!--
 {literal}
 	$jq(document.body).ready(function() {
-		$jq(".rbox").hover(function() {
+		$jq("div.rbox").css("position","relative");
+		$jq("div.rbox").append('{/literal}{icon _id='cross' alt='{tr}Close{/tr}' title='{tr}Click to fade this out{/tr}' style='position: absolute; top: 0; right: 0'}{literal}');
+		$jq("div.rbox img.icon").hover(function() {
 			$jq(this).css("cursor","crosshair");
 			$jq(this).attr("title","{/literal}{tr}Click to fade this out{/tr}{literal}");
 			$jq(this).click(function() {
-				$jq(this).fadeOut(1000);
-				$jq(this).css("cursor","pointer");
+				$jq(this).parent().fadeOut(1000);
 			});
 		});
 	});
