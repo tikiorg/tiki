@@ -34,7 +34,7 @@
 <fieldset class="admin">
   <legend>{tr}Tracker attachments{/tr}</legend>
     <div class="admin">
-{if $attachments}
+{if $attachements}
       <form action="tiki-admin.php?page=trackers" method="post">
         <input type="text" name="find" value="{$find|escape}" />
         <input type="submit" name="action" value="{tr}Find{/tr}" />
@@ -91,7 +91,7 @@
       
 			{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
     </div>
-{if $attachments}
+{if $attachements}
     <table>
       <tr>
         <td>
