@@ -49,6 +49,11 @@ if( isset($_REQUEST['reset']) && $section != 'global' ) {
 	$tikilib->delete_preference( $prefName);
 }
 
+if( isset($_REQUEST['reset_global']) && $section == 'global' ) {
+	$prefName = 'toolbar_' . $section . ($comments ? '_comments' : '');
+	$tikilib->delete_preference( $prefName);
+}
+
 if ( !empty($_REQUEST['save_tool']) && !empty($_REQUEST['tool_name'])) {	// input from the tool edit form
 	Toolbar::saveTool($_REQUEST['tool_name'], $_REQUEST['tool_label'], $_REQUEST['tool_icon'], $_REQUEST['tool_token'], $_REQUEST['tool_syntax']);
 }

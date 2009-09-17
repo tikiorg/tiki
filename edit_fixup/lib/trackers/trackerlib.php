@@ -671,7 +671,7 @@ class TrackerLib extends TikiLib {
 		}
 		if ( ! $sort_mode ) $sort_mode = 'lastModif_desc';
 
-		if ( substr($sort_mode, 0, 2) == 'f_' or $filtervalue or $exactvalue ) {
+		if ( substr($sort_mode, 0, 2) == 'f_' or !empty($filterfield) ) {
 			$cat_table = '';
 			if ( substr($sort_mode, 0, 2) == 'f_' ) {
 				$csort_mode = 'sttif.`value` ';
@@ -777,8 +777,8 @@ class TrackerLib extends TikiLib {
 					}
 					$mid .= ')';
 				} elseif (empty($ev) && empty($fv)) { // test null value
-					$mid.= " AND ttif$i.`value`=? ";
-					$bindvars[] = $ev;
+					$mid.= " AND ttif$i.`value`=? OR ttif$i.`value` IS NULL";
+					$bindvars[] = '';
 				}
 			}
 		} else {
@@ -2526,7 +2526,7 @@ class TrackerLib extends TikiLib {
 			),
 			'help'=>tra('<dl>
 				<dt>Function: Allows alphanumeric text input in a one-line field of arbitrary size.
-				<dt>Usage: <strong>samerow,size,prepend,append,max</strong>
+				<dt>Usage: <strong>samerow,size,prepend,append,max,autocomplete</strong>
 				<dt>Example: 0,80,$,,80
 				<dt>Description:
 				<dd><strong>[samerow]</strong> will display the next field or checkbox in the same row if a 1 is specified;
@@ -2534,6 +2534,7 @@ class TrackerLib extends TikiLib {
 				<dd><strong>[prepend]</strong> is text that will be displayed before the field;
 				<dd><strong>[append]</strong> is text that will be displayed just after the field;
 				<dd><strong>[max]</strong> is the maximum number of characters that can be saved;
+				<dd><strong>[autocomplete]</strong> if y autocomplete while typing;
 				<dd>multiple options must appear in the order specified, separated by commas.
 				</dl>'));
 		$type['a'] = array(
@@ -2968,13 +2969,18 @@ class TrackerLib extends TikiLib {
 	}
 	/* list all the values of a field
 	 */
-	function list_tracker_field_values($trackerId, $fieldId, $status='o', $distinct='y') {
+	function list_tracker_field_values($trackerId, $fieldId, $status='o', $distinct='y', $lang='') {
 		$mid = '';
 		$bindvars[] = (int)$fieldId;
-		if (!$this->getSqlStatus($status, $mid, $bindvars, $trackerId))
+		if (!$this->getSqlStatus($status, $mid, $bindvars, $trackerId)) {
 			return null;
+		}
 		$sort_mode = "value_asc";
 		$distinct = $distinct == 'y'?'distinct': '';
+		if ($lang) {
+			$mid .= ' and `lang`=? ';
+			$bindvars[] = $lang;
+		}
 		$query = "select $distinct(ttif.`value`) from `tiki_tracker_item_fields` ttif, `tiki_tracker_items` tti where tti.`itemId`= ttif.`itemId`and ttif.`fieldId`=? $mid order by ".$this->convertSortMode($sort_mode);
 		$result = $this->query( $query, $bindvars);
 		$ret = array();

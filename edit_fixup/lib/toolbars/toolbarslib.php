@@ -288,7 +288,7 @@ abstract class Toolbar
 		$content = $title;
 		$params['_icon'] = $this->icon;
 			
-		if (strpos($class, 'qt-plugin') !== false) {
+		if (strpos($class, 'qt-plugin') !== false && !empty($title)) {
 			$params['_menu_text'] = 'y';
 			$params['_menu_icon'] = 'y';
 		} else {
@@ -962,8 +962,13 @@ class ToolbarWikiplugin extends Toolbar
 
 	function getWikiHtml( $areaName ) // {{{
 	{
+		if ($this->icon != 'pics/icons/plugin.png') {
+			$label = '';
+		} else {
+			$label = htmlentities($this->label, ENT_QUOTES, 'UTF-8');
+		}
 		return $this->getSelfLink('popup_plugin_form(\'' . $areaName . '\',\'' . $this->pluginName . '\')',
-							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-plugin');
+							$label, 'qt-plugin');
 	} // }}}
 }
 

@@ -812,6 +812,9 @@ function wikiplugin_tracker($data, $params) {
 					if (!empty($tpl) || !empty($wiki)) {
 						$smarty->assign_by_ref('field_value', $f);
 						$smarty->assign('showmandatory', $showmandatory);
+						if (isset($item)) {
+							$smarty->assign_by_ref('item', $item);
+						}
 						$smarty->assign('f_'.$f['fieldId'], $smarty->fetch('tracker_item_field_input.tpl'));
 					} else {
 						if (in_array($f['fieldId'], $optional)) {
