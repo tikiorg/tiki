@@ -1177,11 +1177,11 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'toolbar_global' => '
 			bold, italic, strike, - , color, bgcolor, - ,
 			- , wikiplugin_img, tikiimage , tikilink, link, unlink, -, undo, redo, 
-			- , find, replace,-,  removeformat, specialchar
+			- , find, replace,-,  removeformat, specialchar | help
 			/
 			templates, -, style, -,  h1, h2, h3, left, center, -, list, numlist, wikiplugin_flash, wikiplugin_html, outdent, indent, 
-			- , table, -, source, showblocks, -, -, -, fullscreen, enlarge, reduce, -, -, -, help
-		',
+			- , table, -, source, showblocks, -, -, - | fullscreen, enlarge, reduce
+		',										// comma delimited items, / delimited row and | denote items right justified in toolbar
 	
 		// pagination
 		'direct_pagination' => 'y',

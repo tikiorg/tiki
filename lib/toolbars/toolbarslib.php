@@ -155,7 +155,7 @@ abstract class Toolbar
 	public static function saveTool($name, $label, $icon = 'pics/icons/shading.png', $token = '', $syntax = '', $type = 'Inline', $plugin = '') {
 		global $prefs, $tikilib;
 		
-		$name = strtolower( preg_replace('/[\s,\/]+/', '_', $name) );
+		$name = strtolower( preg_replace('/[\s,\/\|]+/', '_', $name) );
 
 		$prefName = "toolbar_tool_$name";
 		$data = array('name'=>$name, 'label'=>$label, 'icon'=>$icon, 'token'=>$token, 'syntax'=>$syntax, 'type'=>$type, 'plugin'=>$plugin);
@@ -327,7 +327,7 @@ abstract class Toolbar
 	
 	function getIconHtml() // {{{
 	{
-		return '<img src="' . htmlentities($this->icon, ENT_QUOTES, 'UTF-8') . '" alt="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '" title="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '" class="icon"/>';
+		return '<img src="' . htmlentities($this->icon, ENT_QUOTES, 'UTF-8') . '" alt="' . htmlentities($this->getLabel(), ENT_QUOTES, 'UTF-8') . '" title="' . htmlentities($this->getLabel(), ENT_QUOTES, 'UTF-8') . '" class="icon"/>';
 	} // }}}
 	
 	function getSelfLink( $click, $title, $class ) { // {{{
@@ -437,6 +437,11 @@ class ToolbarFckOnly extends Toolbar
 	function getWikiHtml( $areaName ) // {{{
 	{
 		return null;
+	} // }}}
+	
+	function getLabel( $areaName ) // {{{
+	{
+		return $this->wysiwyg;
 	} // }}}
 }
 
@@ -1007,7 +1012,12 @@ class ToolbarsList
 		$string = preg_replace( '/\s+/', '', $string );
 
 		foreach( explode( '/', $string ) as $line ) {
-			$list->addLine( explode( ',', $line ) );
+			$bits = explode('|', $line);
+			if (count($bits) > 1) {
+				$list->addLine( explode( ',', $bits[0] ), explode( ',', $bits[1] ) );
+			} else {
+				$list->addLine( explode( ',', $bits[0] ) );
+			}
 		}
 
 		return $list;
@@ -1029,29 +1039,39 @@ class ToolbarsList
 		return true;
 	}
 
-	private function addLine( array $tags ) // {{{
+	private function addLine( array $tags, array $rtags = array() ) // {{{
 	{
 		$elements = array();
-		$group = array();
-
-		foreach( $tags as $tagName ) {
-			if( $tagName == '-' ) {
-				if( count($group) ) {
-					$elements[] = $group;
-					$group = array();
-				}
+		$j = count($rtags) > 1 ? 2 : 1;
+		
+		for ($i = 0; $i <  $j; $i++) {
+			$group = array();
+			$elements[$i] = array();
+			
+			if ($i == 0) {
+				$thetags = $tags;
 			} else {
-				if( ( $tag = Toolbar::getTag( $tagName ) ) 
-					&& $tag->isAccessible() ) {
-
-					$group[] = $tag;
+				$thetags = $rtags;
+			}
+			foreach( $thetags as $tagName ) {
+				if( $tagName == '-' ) {
+					if( count($group) ) {
+						$elements[$i][] = $group;
+						$group = array();
+					}
+				} else {
+					if( ( $tag = Toolbar::getTag( $tagName ) ) 
+						&& $tag->isAccessible() ) {
+	
+						$group[] = $tag;
+					}
 				}
 			}
+	
+			if( count($group) ) {
+				$elements[$i][] = $group;
+			}
 		}
-
-		if( count($group) )
-			$elements[] = $group;
-
 		if( count( $elements ) )
 			$this->lines[] = $elements;
 	} // }}}
@@ -1086,35 +1106,56 @@ class ToolbarsList
 		global $tiki_p_admin, $tiki_p_admin_toolbars, $smarty, $section;
 		$html = '';
 
-		if ($tiki_p_admin == 'y' or $tiki_p_admin_toolbars == 'y') {
-			$params = array('_script' => 'tiki-admin_toolbars.php', '_onclick' => 'needToConfirm = true;', '_class' => 'toolbar', '_icon' => 'wrench', '_ajax' => 'n');
-			if (isset($section)) { $params['section'] = $section; }
-			$content = tra('Admin Toolbars');
-			$html .= '<div class="helptool-admin">';
-			$html .= smarty_block_self_link($params, $content, $smarty);
-			$html .= '</div>';
-		}
-		
+		$c = 0;
 		foreach( $this->lines as $line ) {
 			$lineHtml = '';
-
-			foreach( $line as $group ) {
-				$groupHtml = '';
-				foreach( $group as $tag ) {
-					$groupHtml .= $tag->getWikiHtml( $areaName );
-				}
-				
-				if( ! empty($groupHtml) ) {
-					$param = empty($lineHtml) ? '' : ' class="toolbar-list"';
-					$lineHtml .= "<span$param>$groupHtml</span>";
-				}
+			$right = '';
+			if (count($line) == 1) {
+				$line[1] = array();
 			}
-			if( ! empty($lineHtml) ) {
+			
+			// $line[0] is left part, $line[1] right floated section
+			for ($bitx = 0; $bitx < count($line); $bitx++ ) {
+				$lineBit = '';
+				
+				if ($c == 0 && $bitx == 1 && ($tiki_p_admin == 'y' or $tiki_p_admin_toolbars == 'y')) {
+					$params = array('_script' => 'tiki-admin_toolbars.php', '_onclick' => 'needToConfirm = true;', '_class' => 'toolbar', '_icon' => 'wrench', '_ajax' => 'n');
+					if (isset($section)) { $params['section'] = $section; }
+					$content = tra('Admin Toolbars');
+					$right .= smarty_block_self_link($params, $content, $smarty);
+				}
+			
+				foreach( $line[$bitx] as $group ) {
+					$groupHtml = '';
+					foreach( $group as $tag ) {
+						$groupHtml .= $tag->getWikiHtml( $areaName );
+					}
+					
+					if( !empty($groupHtml) ) {
+						$param = empty($lineBit) ? '' : ' class="toolbar-list"';
+						$lineBit .= "<span$param>$groupHtml</span>";
+					}
+					if ($bitx == 1) {
+						if (!empty($right)) {
+							$right = '<span class="toolbar-list">' . $right . '</span>';
+						}
+						$lineHtml .= "<div class='helptool-admin'>$lineBit $right</div>";
+					} else {
+						$lineHtml = $lineBit;
+					}
+				}
+				// adding admin icon if no right part - messy - TODO better
+				if ($c == 0 && empty($lineBit) && !empty($right)) {
+					$lineHtml .= "<div class='helptool-admin'>$right</div>";
+				} 
+			}
+			if( !empty($lineHtml) ) {
 				$html .= "<div>$lineHtml</div>";
 			}
+			$c++;
 		}
 
-		return $html;
+		return $right . $html;
 	} // }}}
 	
 	function contains($name) { // {{{

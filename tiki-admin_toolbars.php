@@ -75,10 +75,13 @@ if (!empty($current)) {
 	$current = trim( $current, '/' );
 	$current = explode( '/', $current );
 	$loadedRows = count($current);
-	foreach( $current as & $line ) {
-		$line = explode( ',', $line );
+	foreach( $current as &$line ) {
+		$bits = explode( '|', $line );
+		$line = array();
+		foreach($bits as $bit) {
+			$line[] = explode( ',', $bit );
+		}
 	}
-
 	$rowCount = max($loadedRows, 1) + 1;
 } else {
 	$rowCount = 1;
@@ -92,7 +95,9 @@ $usedqt = array();
 $qt_p_list = array();
 $qt_w_list = array();
 foreach( $current as &$line ) {
-	$usedqt = array_merge($usedqt,$line);
+	foreach($line as $bit) {
+		$usedqt = array_merge($usedqt,$bit);
+	}
 }
 
 $customqt = Toolbar::getCustomList();
@@ -139,7 +144,16 @@ var item;
 \$jq('$rowStr').sortable({
 	connectWith: '$fullStr, .row',
 	forcePlaceholderSize: true,
-	forceHelperSize: true
+	forceHelperSize: true,
+	receive: function(event, ui) {
+		var x = $jq(ui.item).parent().offset().left + $jq(ui.item).parent().width() - ui.offset.left;
+		//alert(x);
+		if (x < 32) {
+			\$jq(ui.item).css("float", "right");
+		} else {
+			\$jq(ui.item).css("float", "left");
+		}
+	}
 });
 \$jq('$fullStr').sortable({
 	connectWith: '.row, #full-list-c',
@@ -241,10 +255,20 @@ showToolEditForm = function(item) {
 saveRows = function() {
 	var lists = [];
 	var ser = \$jq('.row').map(function(){				/* do this on everything of class 'row' */
+		var right_section = false;
 		return \$jq(this).children().map(function(){	/* do this on each child node */
-			return \$jq(this).hasClass('qt-plugin') ?	/* put back label prefix for plugins */
-				'wikiplugin_' + \$jq(this).text() : \$jq(this).text();
-		}).get().join(",")								/* put commas inbetween */
+			var text = "";
+			if (\$jq(this).text() == "help") {
+				var a = 1;
+			}
+			if ( !right_section && \$jq(this).css("float") == "right") {
+				text = "|";
+				right_section = true;
+			}
+			if (\$jq(this).hasClass('qt-plugin')) { text += 'wikiplugin_'; }
+			text += \$jq(this).text();
+			return text;
+		}).get().join(",").replace(",|", "|");								/* put commas inbetween */
 	});
 	if (typeof(ser) == 'object' && ser.length > 1) {
 		ser = \$jq.makeArray(ser).join('/');			// row separators

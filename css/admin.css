@@ -220,6 +220,14 @@ div.adminanchors a {float: left}
 	padding: 2px 4px 0;
 }
 
+.toolbars-admin .rows .row-right {
+	float: right;
+	border: none;
+	padding: 0;
+	min-width: 16px;
+	width: auto;
+}
+
 .toolbars-admin ul.full {
 	list-style-type: none;
 	display: inline;
