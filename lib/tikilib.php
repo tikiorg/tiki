@@ -1882,6 +1882,9 @@ class TikiLib extends TikiDb_Bridge {
 			if (preg_match('|^\(\((.+?)\)\)$|', $res['url'], $matches)) {
 				$res['url'] = 'tiki-index.php?page='.$matches[1];
 				$res['sefurl'] = $wikilib->sefurl($matches[1]);
+				if (!$this->user_has_perm_on_object($user, $matches[1], 'wiki page', 'tiki_p_view')) {
+					continue;
+				}
 			}
 			if (!$full) {
 				$display = true;
