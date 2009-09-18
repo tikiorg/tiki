@@ -73,15 +73,27 @@ if (!isset($_REQUEST["try"]))
 $editstyle = preg_replace("/[^-_a-z\d]/i","",$_REQUEST["editstyle"]);
 $styledir = "styles";
 
-if (isset($_REQUEST["edit"])and $_REQUEST["edit"]) {
-	$action = 'edit';
-
-	//	$data = implode("",file("$styledir/$editstyle.css"));
+function get_style_path($editstyle, $styledir) {
+    global $tikidomain;
 	if ($tikidomain and is_file("$styledir/$tikidomain/$editstyle.css")) {
-		$data = load_css2_file("$styledir/$tikidomain/$editstyle.css", $styledir);
+		return "$styledir/$tikidomain/$editstyle.css";
 	} else {
-		$data = load_css2_file("$styledir/$editstyle.css", $styledir);
-	}
+		return "$styledir/$editstyle.css";
+	}    
+}
+
+function get_style_mod($editstyle, $styledir) {
+	$style=get_style_path($editstyle, $styledir);
+	$stat=stat($style);
+	var_dump($stat);
+	return $stat['mode'] & 0666;
+}
+
+if (isset($_REQUEST["edit"])and $_REQUEST["edit"]) {
+
+	$action = 'edit';
+	$data = load_css2_file(get_style_path($editstyle, $styledir), $styledir);
+
 } elseif ((isset($_REQUEST["save"]) and $_REQUEST["save"]) or (isset($_REQUEST["save2"]) and $_REQUEST["save2"])) {
 	check_ticket('edit-css');
 	$action = 'edit';
@@ -93,6 +105,8 @@ if (isset($_REQUEST["edit"])and $_REQUEST["edit"]) {
 		$style = "$styledir/$editstyle.css";
 	}
 
+	$mod=NULL;
+	$mod = get_style_mod($editstyle, $styledir);
 	$fp = fopen($style, "w");
 	if (!$fp) {
 		$smarty->assign('errortype', 401);
@@ -104,6 +118,11 @@ if (isset($_REQUEST["edit"])and $_REQUEST["edit"]) {
 
 	fwrite($fp, $_REQUEST["data"]);
 	fclose ($fp);
+	echo "<p>setting mode: $mod</p>";
+	if ($mod !== NULL) {
+		chmod($style, $mod);
+	}
+
 	if ($_REQUEST["save2"]) {
 		$action = 'display';
 		header("location: tiki-edit_css.php?editstyle=$editstyle");
