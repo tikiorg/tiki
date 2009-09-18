@@ -85,7 +85,6 @@ function get_style_path($editstyle, $styledir) {
 function get_style_mod($editstyle, $styledir) {
 	$style=get_style_path($editstyle, $styledir);
 	$stat=stat($style);
-	var_dump($stat);
 	return $stat['mode'] & 0666;
 }
 
@@ -118,7 +117,6 @@ if (isset($_REQUEST["edit"])and $_REQUEST["edit"]) {
 
 	fwrite($fp, $_REQUEST["data"]);
 	fclose ($fp);
-	echo "<p>setting mode: $mod</p>";
 	if ($mod !== NULL) {
 		chmod($style, $mod);
 	}
