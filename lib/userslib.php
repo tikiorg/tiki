@@ -1441,12 +1441,6 @@ function get_included_groups($group, $recur=true) {
 			$this->query("update `tiki_actionlog` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `messu_messages` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `messu_messages` set `user_from`=? where `user_from`=?", array($to,$from));
-			$this->query("update `galaxia_workitems` set `user`=? where `user`=?", array($to,$from));
-			$this->query("update `galaxia_user_roles` set `user`=? where `user`=?", array($to,$from));
-			$this->query("update `galaxia_instances` set `owner`=? where `owner`=?", array($to,$from));
-			$this->query("update `galaxia_instances` set `nextUser`=? where `nextUser`=?", array($to,$from));
-			$this->query("update `galaxia_instance_comments` set `user`=? where `user`=?", array($to,$from));
-			$this->query("update `galaxia_instance_activities` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_newsletter_subscriptions` set `email`=? where `email`=? and `isUser`=?", array($to,$from, 'y'));
 			$this->query("update `tiki_friends` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_friends` set `friend`=? where `friend`=?", array($to,$from));

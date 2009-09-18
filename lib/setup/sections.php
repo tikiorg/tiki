@@ -143,11 +143,6 @@ $sections = array(
 		'itemkey' => 'calitmId',
 		'objectType' => 'calendar',
 	),
-	'workflow' => array(
-		'feature' => 'feature_workflow',
-		'key' => '',
-		'itemkey' => '',
-	),
 	// tra('Map')
 	'maps' => array(
 		'feature' => 'feature_maps',

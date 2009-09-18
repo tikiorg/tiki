@@ -292,13 +292,6 @@
     </div>
   {/if}
 
-  {if $prefs.feature_workflow eq 'y' && $tiki_p_use_workflow eq 'y' && $mytiki_workflow eq 'y'}
-    <div id="content7" class="content">
-      {include file='tiki-g-my_activities.tpl'}
-      <br /><br />
-      {include file='tiki-g-my_instances.tpl'}
-    </div>
-  {/if}
   {/capture}
 
   {$smarty.capture.my}

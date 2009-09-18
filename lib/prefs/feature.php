@@ -537,12 +537,6 @@ function prefs_feature_list() {
 			'help' => 'TikiTests',
 			'type' => 'flag',
 		),
-		'feature_workflow' => array(
-			'name' => tra('Workflow engine'),
-			'description' => tra('Workflow engine'),
-			'help' => 'Workflow',
-			'type' => 'flag',
-		),
 		'feature_use_minified_scripts' => array(
 			'name' => tra('Use Minified Scripts'),
 			'description' => tra('Use Minified Scripts'),

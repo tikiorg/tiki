@@ -168,7 +168,6 @@ abstract class TikiDb
 			$query = str_replace("`tiki_", "`".$db_table_prefix."tiki_", $query);
 			$query = str_replace("`messu_", "`".$db_table_prefix."messu_", $query);
 			$query = str_replace("`sessions", "`".$db_table_prefix."sessions", $query);
-			$query = str_replace("`galaxia_", "`".$db_table_prefix."galaxia_", $query);
 		}
 	} // }}}
 

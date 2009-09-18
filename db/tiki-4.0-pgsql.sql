@@ -2,141 +2,6 @@
 -- Database : tikiwiki
 -- --------------------------------------------------------
 
-DROP TABLE IF EXISTS "galaxia_activities";
-
-CREATE TABLE "galaxia_activities" (
-  "activityId" bigserial,
-  "name" varchar(80) default NULL,
-  "normalized_name" varchar(80) default NULL,
-  "pId" bigint NOT NULL default '0',
-	type varchar(12) CHECK ( "type" IN ('start','end','split','switch','join','activity','standalone') ) default NULL,
-  "isAutoRouted" char(1) default NULL,
-  "flowNum" bigint default NULL,
-  "isInteractive" char(1) default NULL,
-  "lastModif" bigint default NULL,
-  "description" text,
-  "expirationTime" integer NOT NULL default '0',
-  PRIMARY KEY ("activityId")
-) ;
-
-
-DROP TABLE IF EXISTS "galaxia_activity_roles";
-
-CREATE TABLE "galaxia_activity_roles" (
-  "activityId" bigint NOT NULL default '0',
-  "roleId" bigint NOT NULL default '0',
-  PRIMARY KEY ("activityId","roleId")
-);
-
-
-DROP TABLE IF EXISTS "galaxia_instance_activities";
-
-CREATE TABLE "galaxia_instance_activities" (
-  "instanceId" bigint NOT NULL default '0',
-  "activityId" bigint NOT NULL default '0',
-  "started" bigint NOT NULL default '0',
-  "ended" bigint NOT NULL default '0',
-  "user" varchar(200) default '',
-	status varchar(11) CHECK ( "status" IN ('running','completed') ) default NULL,
-  PRIMARY KEY ("instanceId","activityId")
-);
-
-
-DROP TABLE IF EXISTS "galaxia_instance_comments";
-
-CREATE TABLE "galaxia_instance_comments" (
-  "cId" bigserial,
-  "instanceId" bigint NOT NULL default '0',
-  "user" varchar(200) default '',
-  "activityId" bigint default NULL,
-  "hash" varchar(34) default NULL,
-  "title" varchar(250) default NULL,
-  "comment" text,
-  "activity" varchar(80) default NULL,
-  "timestamp" bigint default NULL,
-  PRIMARY KEY ("cId")
-) ;
-
-
-DROP TABLE IF EXISTS "galaxia_instances";
-
-CREATE TABLE "galaxia_instances" (
-  "instanceId" bigserial,
-  "pId" bigint NOT NULL default '0',
-  "started" bigint default NULL,
-  "name" varchar(200) NOT NULL default 'No Name',
-  "owner" varchar(200) default NULL,
-  "nextActivity" bigint default NULL,
-  "nextUser" varchar(200) default NULL,
-  "ended" bigint default NULL,
-	status varchar(11) CHECK ( "status" IN ('active','exception','aborted','completed') ) default NULL,
-  "properties" bytea,
-  PRIMARY KEY ("instanceId")
-) ;
-
-
-DROP TABLE IF EXISTS "galaxia_processes";
-
-CREATE TABLE "galaxia_processes" (
-  "pId" bigserial,
-  "name" varchar(80) default NULL,
-  "isValid" char(1) default NULL,
-  "isActive" char(1) default NULL,
-  "version" varchar(12) default NULL,
-  "description" text,
-  "lastModif" bigint default NULL,
-  "normalized_name" varchar(80) default NULL,
-  PRIMARY KEY ("pId")
-) ;
-
-
-DROP TABLE IF EXISTS "galaxia_roles";
-
-CREATE TABLE "galaxia_roles" (
-  "roleId" bigserial,
-  "pId" bigint NOT NULL default '0',
-  "lastModif" bigint default NULL,
-  "name" varchar(80) default NULL,
-  "description" text,
-  PRIMARY KEY ("roleId")
-) ;
-
-
-DROP TABLE IF EXISTS "galaxia_transitions";
-
-CREATE TABLE "galaxia_transitions" (
-  "pId" bigint NOT NULL default '0',
-  "actFromId" bigint NOT NULL default '0',
-  "actToId" bigint NOT NULL default '0',
-  PRIMARY KEY ("actFromId","actToId")
-);
-
-
-DROP TABLE IF EXISTS "galaxia_user_roles";
-
-CREATE TABLE "galaxia_user_roles" (
-  "pId" bigint NOT NULL default '0',
-  "roleId" bigserial,
-  "user" varchar(200) NOT NULL default '',
-  PRIMARY KEY ("roleId","user")
-) ;
-
-
-DROP TABLE IF EXISTS "galaxia_workitems";
-
-CREATE TABLE "galaxia_workitems" (
-  "itemId" bigserial,
-  "instanceId" bigint NOT NULL default '0',
-  "orderId" bigint NOT NULL default '0',
-  "activityId" bigint NOT NULL default '0',
-  "properties" bytea,
-  "started" bigint default NULL,
-  "ended" bigint default NULL,
-  "user" varchar(200) default '',
-  PRIMARY KEY ("itemId")
-) ;
-
-
 DROP TABLE IF EXISTS "messu_messages";
 
 CREATE TABLE "messu_messages" (
@@ -1406,8 +1271,6 @@ INSERT INTO "tiki_live_support_modules" ("name") VALUES ('file galleries');
 
 INSERT INTO "tiki_live_support_modules" ("name") VALUES ('directory');
 
-INSERT INTO "tiki_live_support_modules" ("name") VALUES ('workflow');
-
 
 DROP TABLE IF EXISTS "tiki_live_support_operators";
 
@@ -1576,22 +1439,6 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'o','Mini Calendar','tiki-minical.php',105,'feature_mytiki,feature_minical','tiki_p_minical','Registered',0);
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'o','My Watches','tiki-user_watches.php',110,'feature_mytiki,feature_user_watches','','Registered',0);
-
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'s','Workflow','tiki-g-user_processes.php',150,'feature_workflow','tiki_p_use_workflow','',0);
-
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'o','Admin Processes','tiki-g-admin_processes.php',155,'feature_workflow','tiki_p_admin_workflow','',0);
-
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'o','Monitor Processes','tiki-g-monitor_processes.php',160,'feature_workflow','tiki_p_admin_workflow','',0);
-
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'o','Monitor Activities','tiki-g-monitor_activities.php',165,'feature_workflow','tiki_p_admin_workflow','',0);
-
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'o','Monitor Instances','tiki-g-monitor_instances.php',170,'feature_workflow','tiki_p_admin_workflow','',0);
-
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'o','User Processes','tiki-g-user_processes.php',175,'feature_workflow','tiki_p_use_workflow','',0);
-
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'o','User activities','tiki-g-user_activities.php',180,'feature_workflow','tiki_p_use_workflow','',0);
-
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'o','User instances','tiki-g-user_instances.php',185,'feature_workflow','tiki_p_use_workflow','',0);
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'s','Community','tiki-list_users.php',187,'feature_friends','tiki_p_list_users','',0);
 
@@ -3618,16 +3465,6 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin","f
 INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin","feature_check") VALUES ('tiki_p_wiki_vote_ratings', 'Can participate to rating of wiki pages', 'registered', 'wiki', NULL, 'feature_wiki_ratings');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin","feature_check") VALUES ('tiki_p_wiki_view_similar', 'Can view similar wiki pages', 'registered', 'wiki', NULL, 'feature_wiki');
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin","feature_check") VALUES ('tiki_p_admin_workflow', 'Can admin workflow processes', 'admin', 'workflow', 'y', 'feature_workflow');
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin","feature_check") VALUES ('tiki_p_abort_instance', 'Can abort a process instance', 'editors', 'workflow', NULL, 'feature_workflow');
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin","feature_check") VALUES ('tiki_p_exception_instance', 'Can declare an instance as exception', 'registered', 'workflow', NULL, 'feature_workflow');
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin","feature_check") VALUES ('tiki_p_send_instance', 'Can send instances after completion', 'registered', 'workflow', NULL, 'feature_workflow');
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin","feature_check") VALUES ('tiki_p_use_workflow', 'Can execute workflow activities', 'registered', 'workflow', NULL, 'feature_workflow');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin","feature_check") VALUES ('tiki_p_admin_received_articles', 'Can admin received articles', 'editors', 'comm', NULL, 'feature_comm');
 

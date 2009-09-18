@@ -107,14 +107,6 @@ if ($prefs['feature_messages'] == 'y' && $tiki_p_messages == 'y') {
 		$smarty->assign('mytiki_msgs', 'y');
 	}
 }
-if ($prefs['feature_workflow'] == 'y' && $tiki_p_use_workflow == 'y') {
-	$mytiki_workflow = $tikilib->get_user_preference($user, 'mytiki_workflow', 'y');
-	if ($mytiki_workflow == 'y') {
-		include_once ('tiki-g-my_activities.php');
-		include_once ('tiki-g-my_instances.php');
-		$smarty->assign('mytiki_workflow', 'y');
-	}
-}
 if ($prefs['feature_articles'] == 'y') {
 	$mytiki_articles = $tikilib->get_user_preference($user, 'mytiki_articles', 'y');
 	if ($mytiki_articles == 'y') {

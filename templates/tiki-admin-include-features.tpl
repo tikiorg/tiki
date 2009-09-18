@@ -160,7 +160,6 @@
 				{preference name=feature_xmlrpc}
 				{preference name=feature_debug_console}
 				{preference name=feature_tikitests}
-				{preference name=feature_workflow}
 				{preference name=feature_use_minified_scripts}
 			</div>
 {/tab}

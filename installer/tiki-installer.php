@@ -162,9 +162,6 @@ function create_dirs($domain=''){
 		'styles',
 		'whelp');
 
-  if (file_exists('lib/Galaxia'))
-    array_push($dirs, 'lib/Galaxia/processes');
-
 	$ret = "";
   foreach ($dirs as $dir) {
 		$dir = $dir.'/'.$domain;

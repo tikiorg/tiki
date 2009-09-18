@@ -195,7 +195,6 @@ if (isset($_REQUEST['register']) && !empty($_REQUEST['name']) && (isset($_REQUES
 		$tikilib->set_user_preference($_REQUEST['name'], 'mytiki_msgs', $prefs['users_prefs_mytiki_msgs']);
 		$tikilib->set_user_preference($_REQUEST['name'], 'mytiki_tasks', $prefs['users_prefs_mytiki_tasks']);
 		$tikilib->set_user_preference($_REQUEST['name'], 'mytiki_items', $prefs['users_prefs_mytiki_items']);
-		$tikilib->set_user_preference($_REQUEST['name'], 'mytiki_workflow', $prefs['users_prefs_mytiki_workflow']);
 		$tikilib->set_user_preference($_REQUEST['name'], 'tasks_maxRecords', $prefs['users_prefs_tasks_maxRecords']);
 		// Custom fields
 		foreach($customfields as $custpref => $prefvalue) {
