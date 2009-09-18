@@ -4587,6 +4587,7 @@ CREATE TABLE "tiki_transitions" (
 	"type" varchar(20) NOT NULL,
 	"from" varchar(255) NOT NULL,
 	"to" varchar(255) NOT NULL,
+	"guards" varchar(1024) NOT NULL DEFAULT '[]',
 	PRIMARY KEY ("transitionId")
 );
 CREATE INDEX "tiki_transitions_transition_lookup" ON "tiki_transitions" ("type","from");
