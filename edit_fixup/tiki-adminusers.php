@@ -248,6 +248,14 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 			key_get($area);
 		}
 	}
+	if ($_REQUEST['action'] == 'email_due' && isset($_REQUEST['user'])) {
+		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_REQUEST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+			key_check($area);
+			$userlib->reset_email_due($_REQUEST['user']);
+		} else {
+			key_get($area);
+		}
+	}
 	$_REQUEST["user"] = '';
 	if (isset($tikifeedback[0]['msg'])) {
 		$logslib->add_log('adminusers', '', $tikifeedback[0]['msg']);

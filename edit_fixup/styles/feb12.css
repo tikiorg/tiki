@@ -528,12 +528,6 @@ a.phplmselected:hover {
 	background: #a8cce2;
 }
 
-.cssmenu_horiz li:hover,
-.cssmenu_horiz ul li:hover,
-.cssmenu_horiz a:hover {
-	background: none;
-}
-
 .cssmenu ul a,	
 .cssmenu_horiz ul a,
 .cssmenu_vert ul a {

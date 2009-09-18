@@ -2943,6 +2943,10 @@ function get_included_groups($group, $recur=true) {
 		$query = "select `registrationChoice` from `users_groups` where `groupName` = ?";
 		return ($this->getOne($query, array($group)));
 	}
+	function reset_email_due($user) {
+		$query = 'update `users_users` set `email_confirm`=?, `waiting`=? where `login`=?';
+		$this->query($query, array(0, 'u', $user));
+	}
 
 	function confirm_email($user, $pass) {
 		global $prefs, $tikilib;

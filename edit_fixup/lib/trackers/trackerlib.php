@@ -1165,8 +1165,13 @@ class TrackerLib extends TikiLib {
 								$smarty->display("error.tpl");
 								die;
 							}
-							fwrite($fw, $ins_fields['data'][$i]['value']);
+							if (fwrite($fw, $ins_fields['data'][$i]['value']) === false) {
+								$smarty->assign('msg', tra('Cannot write to this file:'). $fhash);
+								$smarty->display("error.tpl");
+								die;
+							}								
 							fclose($fw);
+							$ins_fields['data'][$i]['value'] = '';
 						} else {
 							$fhash = 0;
 						}

@@ -34,7 +34,7 @@
 <fieldset class="admin">
   <legend>{tr}Tracker attachments{/tr}</legend>
     <div class="admin">
-{if $attachments}
+{if $attachements}
       <form action="tiki-admin.php?page=trackers" method="post">
         <input type="text" name="find" value="{$find|escape}" />
         <input type="submit" name="action" value="{tr}Find{/tr}" />
@@ -67,7 +67,7 @@
           <th>
             <a href="tiki-admin.php?page=trackers&amp;sort_mode=created_{if $sort_mode eq 'created'}asc{else}desc{/if}">{tr}Created{/tr}</a>
           </th>
-          <th>&nbsp;</th>
+          <th>{tr}Switch storage{/tr}</th>
         </tr>
         
         {section name=x loop=$attachements}
@@ -81,7 +81,7 @@
           <td>{if $attachements[x].path}file{else}db{/if}</td>
           <td>{$attachements[x].created|tiki_short_date}</td>
           <td>
-            <a href="tiki-admin.php?page=trackers&amp;attId={$attachements[x].attId}&amp;action={if $attachements[x].path}move2db{else}move2file{/if}">{tr}Change{/tr}</a>
+            <a href="tiki-admin.php?page=trackers&amp;attId={$attachements[x].attId}&amp;action={if $attachements[x].path}move2db{else}move2file{/if}">{icon _id='arrow_refresh' title='{tr}Switch storage{/tr}'}</a>
           </td>
         </tr>
 {sectionelse}
@@ -91,7 +91,7 @@
       
 			{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
     </div>
-{if $attachments}
+{if $attachements}
     <table>
       <tr>
         <td>

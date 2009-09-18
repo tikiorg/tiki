@@ -44,15 +44,18 @@
 		{foreach from=$current item=line name=line}
 			<label for="row-{$smarty.foreach.line.iteration|escape}">{tr}Row{/tr}&nbsp;{$smarty.foreach.line.iteration}:</label>
 			<ul id="row-{$smarty.foreach.line.iteration|escape}" class="row">
-			{foreach from=$line item=tool}
-				<li class="{$qtelement[$tool].class}">{$qtelement[$tool].html}</li>
+			{foreach from=$line item=bit name=bit}
+				{foreach from=$bit item=tool name=tool}
+					<li class="{$qtelement[$tool].class}" {if $smarty.foreach.bit.index eq 1}style="float:right;"{/if}>{$qtelement[$tool].html}</li>
+				{/foreach}
 			{/foreach}
-			</ul>
 			{if $smarty.foreach.line.last and $rowCount gt 1}
 				{assign var=total value=`$smarty.foreach.line.total+1`}
-			<label for="row-{$total|escape}">{tr}Row{/tr}&nbsp;{$total}:</label>
-				<ul id="row-{$total|escape}" class="row">
+				</ul>
+				<label for="row-{$total|escape}">{tr}Row{/tr}&nbsp;{$total}:</label>
+					<ul id="row-{$total|escape}" class="row">
 			{/if}
+			</ul>
 		{/foreach}
 	</div>
 	<div class="lists">
@@ -97,7 +100,7 @@
 					<label for="tool_syntax">{tr}Syntax{/tr}:</label>
 					<input type="text" name="tool_syntax" id="tool_syntax" class="text ui-widget-content ui-corner-all" />
 					<label for="tool_type">{tr}Type{/tr}:</label>
-					<select type="text" name="tool_type" id="tool_type" class="text ui-widget-content ui-corner-all">
+					<select type="text" name="tool_type" id="tool_type" class="select ui-widget-content ui-corner-all">
 						<option value="Inline">Inline</option>
 						<option value="Block">Block</option>
 						<option value="LineBased">LineBased</option>
@@ -109,6 +112,13 @@
 						<option value="Helptool">Helptool</option>
 						<option value="FileGallery">FileGallery</option>
 						<option value="Wikiplugin">Wikiplugin</option>
+					</select>
+					<label for="tool_plugin">{tr}Plugin name{/tr}:</label>
+					<select name="tool_plugin" id="tool_plugin" class="select ui-widget-content ui-corner-all">
+						<option value="">{tr}None{/tr}</option>
+						{foreach from=$plugins key=plugin item=info}
+							<option value="{$plugin|escape}">{$info.name|escape}</option>
+						{/foreach}
 					</select>
 					<input type="hidden" value="" name="save_tool" id="save_tool">
 					<input type="hidden" value="" name="delete_tool" id="delete_tool">

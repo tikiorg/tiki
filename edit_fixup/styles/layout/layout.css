@@ -53,11 +53,20 @@ select[multiple] {
 
 label {
 	cursor: pointer;
+	vertical-align: middle;
+}
+
+em {
+	vertical-align: middle;
 }
 
 form {
 	margin: 0;
 	padding: 0;
+}
+
+input, legend {
+	vertical-align: middle;
 }
 
 hr {
@@ -517,6 +526,7 @@ a.icon,
 img.icon {
 	border: 0 !important;
 	background: transparent;
+	vertical-align: middle;
 }
 
 .iconmenutext {
@@ -776,13 +786,13 @@ tr.diffheader {
 }
 
 .tabinactive {
-	border-bottom: none/* !important*/;
-	position: relative/* !important*/;
-	top: -3px/* !important*/;
+	border-bottom: none;
+	position: relative;
+	top: -3px;
 }
 	
 [class].tabinactive {
-	top: -2px !important;
+	top: -2px;
 }
 
 .tabcontent {
