@@ -359,7 +359,7 @@ class ToolbarSeparator extends Toolbar
 	function __construct() // {{{
 	{
 		$this->setWysiwygToken('-')
-			->setIcon('pics/icons/tree_vertline.png')
+			->setIcon('img/separator.gif')
 				->setType('Separator');
 	} // }}}
 
@@ -371,8 +371,17 @@ class ToolbarSeparator extends Toolbar
 
 class ToolbarFckOnly extends Toolbar
 { 
-	private function __construct( $token, $icon = 'pics/icons/shading.png' ) // {{{
+	private function __construct( $token, $icon = '' ) // {{{
 	{
+		$fck_icon_path = 'lib/fckeditor_tiki/fckeditor-icons/';
+		if (empty($icon)) {
+			$img_path = 'lib/fckeditor_tiki/fckeditor-icons/' . $token . '.gif';
+			if (is_file($img_path)) {
+				$icon = $img_path;
+			} else {
+				$icon = 'pics/icons/shading.png';
+			}
+		}
 		$this->setWysiwygToken( $token )
 			->setIcon($icon)
 				->setType('FckOnly');
@@ -382,13 +391,13 @@ class ToolbarFckOnly extends Toolbar
 	{
 		switch( $name ) {
 		case 'templates':
-			return new self( 'Templates', 'pics/icons/page_white_stack.png' );
+			return new self( 'Templates' );
 		case 'cut':
-			return new self( 'Cut', 'pics/icons/cut.png' );
+			return new self( 'Cut' );
 		case 'copy':
-			return new self( 'Copy', 'pics/icons/page_copy.png' );
+			return new self( 'Copy' );
 		case 'paste':
-			return new self( 'Paste', 'pics/icons/page_paste.png' );
+			return new self( 'Paste' );
 		case 'pastetext':
 			return new self( 'PasteText' );
 		case 'pasteword':
@@ -674,6 +683,7 @@ static $toolbarPickerIndex = -1;
 class ToolbarPicker extends Toolbar
 {
 	private $list;
+	private $index;
 	
 	public static function fromName( $tagName ) // {{{
 	{
@@ -718,6 +728,7 @@ class ToolbarPicker extends Toolbar
 
 		global $toolbarPickerIndex;
 		++$toolbarPickerIndex;
+		$tag->index = $toolbarPickerIndex;
 		ToolbarPicker::setupJs();
 
 		return $tag;
@@ -738,8 +749,7 @@ class ToolbarPicker extends Toolbar
 	} // }}}
 	
 	public function getSyntax( $areaName = '$areaName' ) {
-		global $toolbarPickerIndex;
-		return 'displayPicker( this, ' . $toolbarPickerIndex . ', \'' . $areaName . '\')';
+		return 'displayPicker( this, ' . $this->index . ', \'' . $areaName . '\')';
 	}
 	
 	static private function setupJs() {

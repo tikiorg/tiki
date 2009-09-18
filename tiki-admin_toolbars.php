@@ -119,7 +119,9 @@ foreach( $qtlist as $name ) {
 	} else {
 		$plug =  '';
 		$label = $name;
-		$qt_w_list[] = $name;
+		if (empty($cust)) {
+			$qt_w_list[] = $name;
+		}
 	}
 	$label .= '<input type="hidden" name="token" value="'.$tag->getWysiwygToken().'" />';
 	$label .= '<input type="hidden" name="syntax" value="'.$tag->getSyntax().'" />';
@@ -127,7 +129,7 @@ foreach( $qtlist as $name ) {
 	if ($tag->getType() == 'Wikiplugin') {
 		$label .= '<input type="hidden" name="plugin" value="'.$tag->getPluginName().'" />';
 	}
-	$qtelement[$name] = array( 'name' => $name, 'class' => "toolbar qt-$name $wys $wiki $plug $cust", 'html' => "$icon$label");
+	$qtelement[$name] = array( 'name' => $name, 'class' => "toolbar qt-$name $wys $wiki $plug $cust", 'html' => "$icon<span>$label</span>");
 }
 
 $nol = 2;

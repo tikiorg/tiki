@@ -1166,16 +1166,24 @@ function get_default_prefs() {
 		'default_rows_textarea_forum' => '20',
 		'default_rows_textarea_forumthread' => '10',
 		'section_comments_parse' => 'y',		// parse wiki markup on comments in all sections
-	
+
+		// toolbars
+		// comma delimited items, / delimited rows and | denotes items right justified in toolbar (in reverse order)
+		// full list in lib/toolbars/toolbarslib.php Toolbar::getList()
+		// cannot contain spaces, commas, forward-slash or pipe chars
 		'toolbar_global' => '
 			bold, italic, strike, - , color, bgcolor, - ,
-			- , wikiplugin_img, tikiimage , tikilink, link, unlink, -, undo, redo, 
-			- , find, replace,-,  removeformat, specialchar | help
+			wikiplugin_img, tikiimage , tikilink, link, unlink, -, undo, redo, - ,
+			find, replace,-,  removeformat, specialchar, smiley | help, switcheditor
 			/
 			templates, -, style, -,  h1, h2, h3, left, center, -, list, numlist, wikiplugin_flash, wikiplugin_html, outdent, indent, 
-			- , table, -, source, showblocks, -, -, - | fullscreen, enlarge, reduce
-		',										// comma delimited items, / delimited row and | denote items right justified in toolbar
-	
+			- , table, -, source, showblocks | fullscreen, enlarge, reduce
+		',
+		'toolbar_global_comments' => '
+			bold, italic, strike, - , color, bgcolor, - ,
+			link, smiley | help
+		',
+
 		// pagination
 		'direct_pagination' => 'y',
 		'nextprev_pagination' => 'y',
