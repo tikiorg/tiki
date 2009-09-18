@@ -3,14 +3,6 @@
 {title url="tiki-blog_post.php?blogId=$blogId&postId=$postId"}{if $postId gt 0}{tr}Edit Post{/tr}{else}{tr}Post{/tr}{/if} - {$blog_data.title|escape}{/title}
 
 <div class="navbar">
-	{if $prefs.feature_wysiwyg eq 'y' and $prefs.wysiwyg_optional eq 'y'}
-		{if $wysiwyg ne 'y'}
-			{button href="tiki-blog_post.php?wysiwyg=y" _auto_args='blogId,postId' _text="{tr}Use Wysiwyg Editor{/tr}"}
-		{else}
-			{button href="tiki-blog_post.php?wysiwyg=n" _auto_args='blogId,postId' _text="{tr}Use Normal Editor{/tr}"}
-		{/if}
-	{/if}
-
 	{if $blogId gt 0 }
 		{assign var=thisblog value=$blogId|sefurl:blog}
 		{button href=$thisblog _text="{tr}View Blog{/tr}"}
@@ -56,8 +48,6 @@
 <table class="normal">
 {/if}
 
-{assign var=area_name value="blogedit"}
-
 {if $blog_data.use_title eq 'y' || !$blogId}
   <tr>
     <td class="editblogform">{tr}Title{/tr}</td><td class="editblogform">
@@ -66,32 +56,14 @@
   </tr>
 {/if}
 
-{* show toolbars over textarea *}
-{if $prefs.feature_wysiwyg eq 'n' or ($prefs.feature_wysiwyg eq 'y' and $prefs.wysiwyg_optional eq 'y' and $wysiwyg eq 'n' )}
-  <tr>
-    <td class="editblogform"><label>{tr}Toolbars{/tr}</label></td>
-    <td class="editblogform">
-      {toolbars area_name='blogedit'}
-    </td>
-  </tr>
-{/if}
-
 {* show textarea *}
-{if ( $prefs.feature_wysiwyg eq 'n' or ($prefs.feature_wysiwyg eq 'y' and $prefs.wysiwyg_optional eq 'y' and $wysiwyg eq 'n') )}
   <tr>
     <td class="editblogform">
-    	&nbsp;
+    	{tr}Body{/tr}
     </td>
     <td class="editblogform">
-      <textarea id='blogedit' class="wikiedit" name="data" rows="{$rows}" cols="{$cols}" wrap="virtual">{$data|escape}</textarea>
-
-{else}  {* show textarea with wysiwyg editor *}
-  <td class="editblogform" colspan="2">
-    {editform Meat=$data InstanceName='data' ToolbarSet="Tiki"}
-{/if}
-    <input type="hidden" name="rows" value="{$rows}"/>
-    <input type="hidden" name="cols" value="{$cols}"/>
-  </td>
+      {textarea id='blogedit' class="wikiedit" name="data"}{$data}{/textarea}
+	</td>
 </tr>
 
 {if $postId > 0 && $wysiwyg ne 'y'}
@@ -135,11 +107,11 @@
 {include file='contribution.tpl'}
 {/if}
 <tr><td class="editblogform">&nbsp;</td><td class="editblogform">
-<input type="submit" class="wikiaction" name="preview" value="{tr}Preview{/tr}" />
-<input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" />
-<input type="submit" class="wikiaction" name="save_exit" value="{tr}Save and Exit{/tr}" />
+<input type="submit" class="wikiaction" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false" />
+<input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" onclick="needToConfirm=false" />
+<input type="submit" class="wikiaction" name="save_exit" value="{tr}Save and Exit{/tr}" onclick="needToConfirm=false" />
 <input type="hidden" name="referer" value="{$referer|escape}" />
-&nbsp;&nbsp;&nbsp;<input type="submit" name="cancel" onclick='document.location="{$referer|escape:'html'}";return false;' value="{tr}Cancel{/tr}"/>
+&nbsp;&nbsp;&nbsp;<input type="submit" name="cancel" onclick='document.location="{$referer|escape:'html'}";needToConfirm=false;return false;' value="{tr}Cancel{/tr}"/>
 </td></tr>
 </table>
 </form>

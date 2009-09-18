@@ -45,6 +45,8 @@ abstract class Toolbar
 			return new ToolbarFileGallery;
 		elseif( $tagName == 'help' )
 			return new ToolbarHelptool;
+		elseif( $tagName == 'switcheditor' )
+			return new ToolbarSwitchEditor;
 		elseif( $tagName == '-' )
 			return new ToolbarSeparator;
 	} // }}}
@@ -118,6 +120,8 @@ abstract class Toolbar
 			'reduce',
 			'help',
 			'tikiimage',
+			'switcheditor',
+			'autosave',
 		), $plugins ));
 	} // }}}
 	
@@ -430,7 +434,7 @@ class ToolbarFckOnly extends Toolbar
 		case 'source':
 			return new self( 'Source' );
 		case 'autosave':
-			return new self( 'ajaxAutoSave' );
+			return new self( 'ajaxAutoSave', 'lib/fckeditor_tiki/plugins/ajaxAutoSave/images/ajaxAutoSaveDirty.gif' );
 		}
 	} // }}}
 
@@ -526,7 +530,7 @@ class ToolbarInline extends Toolbar
 		return $tag;
 	} // }}}
 
-	function getSyntax( $syntax ) // {{{
+	function getSyntax() // {{{
 	{
 		return $this->syntax;
 	} // }}}
@@ -595,7 +599,7 @@ class ToolbarBlock extends ToolbarInline // Will change in the future
 		case 'image':
 			$label = tra('Image');
 			$icon = tra('pics/icons/picture.png');
-			$wysiwyg = 'tikiimage';
+			$wysiwyg = '';
 			$syntax = '{img src= width= height= link= }';
 			break;
 		case 'toc':
@@ -914,6 +918,38 @@ class ToolbarFileGallery extends Toolbar
 	} // }}}
 }
 
+class ToolbarSwitchEditor extends Toolbar
+{
+	function __construct() // {{{
+	{
+		$this->setLabel( tra('Switch Editor (wiki or WYSIWYG)') )
+			->setIcon( tra('pics/icons/pencil_go.png') )
+				->setWysiwygToken( 'tikiswitch' )
+					->setType('SwitchEditor')
+						->addRequiredPreference('feature_wysiwyg');
+	} // }}}
+
+	function getWikiHtml( $areaName ) // {{{
+	{
+		global $smarty;
+		
+		return $this->getSelfLink('switchEditor(\'wysiwyg\', $jq(event.currentTarget).parents(\'form\')[0]);',
+							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-switcheditor');
+	} // }}}
+
+	function isAccessible() // {{{
+	{
+		return parent::isAccessible() && ! isset($_REQUEST['zoom']);
+	} // }}}
+	
+/*	function getLabel() // {{{
+	{
+		return $this->label;
+	} // }}}
+*/
+	
+}
+
 class ToolbarWikiplugin extends Toolbar
 {
 	private $pluginName;
@@ -1082,14 +1118,16 @@ class ToolbarsList
 		foreach( $this->lines as $line ) {
 			$lineOut = array();
 
-			foreach( $line as $group ) {
-				foreach( $group as $tag ) {
-
-					if( $token = $tag->getWysiwygToken() )
-						$lineOut[] = $token;
+			foreach( $line as $bit ) {
+				foreach( $bit as $group) {
+					foreach( $group as $tag ) {
+	
+						if( $token = $tag->getWysiwygToken() )
+							$lineOut[] = $token;
+					}
+	
+					$lineOut[] = '-';
 				}
-
-				$lineOut[] = '-';
 			}
 
 			$lineOut = array_slice( $lineOut, 0, -1 );

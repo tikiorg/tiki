@@ -13,7 +13,7 @@ $smarty->assign('fckstyle',$fckstyle);
 $section = isset($_GET['section']) ? $_GET['section'] : 'wiki page';
 
 $toolbars = ToolbarsList::fromPreference( $section );
-file_put_contents('temp/cache/foo', print_r($toolbars->getWysiwygArray(), true));
+//file_put_contents('temp/cache/foo', print_r($toolbars->getWysiwygArray(), true));
 $smarty->assign('toolbar', $toolbars->getWysiwygArray() );
 
 $smarty->display('setup_fckeditor.tpl', null, null, 'application/javascript');

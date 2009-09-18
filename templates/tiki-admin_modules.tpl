@@ -135,7 +135,7 @@
 			<tr>
 				<td class="formcolor"><label for="{tr}assign_name">Module Name{/tr}</label></td>
 				<td class="formcolor">
-					<select id="assign_name" name="assign_name" onchange="this.form.preview.click()">
+					<select id="assign_name" name="assign_name" onchange="needToConfirm=false;this.form.preview.click()">
 						<option value=""></option>
 						{foreach key=name item=info from=$all_modules_info}
 							<option value="{$name|escape}" {if $assign_name eq $name || $assign_selected eq $name}selected="selected"{/if}>{$info.name}</option>
@@ -243,8 +243,8 @@
 			<tr>
 				<td class="formcolor">&nbsp;</td>
 				<td class="formcolor">
-					<input type="submit" name="preview" value="{tr}Preview{/tr}" />
-					<input type="submit" name="assign" value="{tr}Assign{/tr}" />
+					<input type="submit" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;" />
+					<input type="submit" name="assign" value="{tr}Assign{/tr}" onclick="needToConfirm=false;" />
 				</td>
 			</tr>
 		</table>

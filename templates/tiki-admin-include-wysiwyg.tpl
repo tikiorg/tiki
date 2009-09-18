@@ -45,18 +45,10 @@
             </td>
           </tr>
           
-          <tr>
-            <td class="form"><label for="wysiwyg_toolbar">{tr}Toolbar content{/tr}:</label></td><td>{tr}Restore defaults{/tr} <input type="checkbox" name="restore" /></td>
-          </tr>
-          
-          <tr>
-            <td colspan="2"><textarea style="width:100%" rows="8" cols="60" name="wysiwyg_toolbar" id="wysiwyg_toolbar">{$prefs.wysiwyg_toolbar|escape}</textarea></td>
-          </tr>
-          
         </table>
-			</fieldset>
-			<div class="heading input_submit_container" style="text-align: center">
-				<input type="submit" name="wysiwygfeatures" value="{tr}Change preferences{/tr}" />
-			</div>
+		</fieldset>
+		<div class="heading input_submit_container" style="text-align: center">
+			<input type="submit" name="wysiwygfeatures" value="{tr}Change preferences{/tr}" />
+		</div>
      </form>
 
