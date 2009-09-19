@@ -7,14 +7,6 @@
 	minimal HTML tables are needed for graphic treatment and column integrity.
 	For more information, visit http://themes.tikiwiki.org or
 	http://zukakakina.com.
- 
-	litejazz.css is comprised of these sections:
-	XHTML elements, Siteheader & Identity; Menus, Links;
-	Misc. Center Col.; Misc. Global; Boxes; Tables, Tabs;
-	Wiki (inc. plugins, etc.); Articles; Blogs; Forums;
-	Galleries; Trackers; Categories, Tags; Polls; FAQs;
-	Quizzes;	Shoutbox; Directory; Messages; TikiSheets;
-	Calendar; Admin; and Ajax, jquery, etc.
 */
  
 /* Import the default layout properties file: */
@@ -173,12 +165,18 @@ pre {padding: 0.75em 1.5em}
 /***** Site Header & Identity *****/
 #header-top {
 	margin-right: 15px;
-	min-height: 78px}
+	min-height: 78px;
+	color: #fff;
+}
+	
+#header-top a,
+#header-top a:visited {
+	color: #f5f5f5
+}
 
 div#sioptions {width: 100%}
 
 div#sitelogo {
-	width: 33%;
 	margin: auto}
 
 div#sitead {margin: auto}

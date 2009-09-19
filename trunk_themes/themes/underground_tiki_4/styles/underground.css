@@ -23,7 +23,7 @@
 body {
 	font: 70%/1.5 Verdana, Tahoma, Arial, Helvetica, sans-serif;
 	color: #333; 
-	background: #FFF url(underground/bg.gif) repeat-x}
+	background: #FFF}
 
 html>body {font-size: 0.7em !important}
 *:first-child+html body {font-size: 75% !important}
@@ -195,9 +195,20 @@ label {
 
 /***** Site Header & Identity *****/
 #siteheader {
-	padding: 0 60px 0 100px;
 	min-height: 90px;
-	color: #fff}
+}
+	
+#header-top {
+	background: #000 url(underground/headertopbg.png) repeat-x 0 100%;
+	position: relative;
+	padding: 0 60px 0 100px;
+	color: #fff
+}
+
+#header-top a,
+#header-top a:visited {
+	color: #f2f2f2;
+}
 
 #siteheader h1,
 h1#logo,
@@ -219,7 +230,16 @@ h1#logo,
 	padding: 0;	
 	top: 75px}
 
-#header-bottom {position: relative}
+#header-bottom {
+	position: relative;
+	background: url(underground/headerbottombg.png) repeat-x;
+	min-height: 51px;
+	padding: 0 60px 0 100px;
+}
+
+* html #header-bottom {
+	height: 51px;
+}
 
 #sitetitle {
 	font: bold 30px "trebuchet MS", Arial, Tahoma, Sans-Serif;

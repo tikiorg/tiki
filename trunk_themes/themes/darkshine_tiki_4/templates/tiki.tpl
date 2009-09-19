@@ -30,11 +30,6 @@
 			<tr id="cols">
 				<td rowspan="3" id="leftmargin">&nbsp;</td>
 				<td colspan="5{* changed from 3 since the 2 border tds are used *}" id="main-header">
-					{if $prefs.feature_top_bar eq 'y'}
-						<div class="clearfix" id="tiki-top">
-							{include file="tiki-top_bar.tpl"}
-						</div>
-					{/if}
 					{* Site identity header section *}
 					<div class="clearfix" id="siteheader">
 						{include file="tiki-site_header.tpl"}
