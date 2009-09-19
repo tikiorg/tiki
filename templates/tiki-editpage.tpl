@@ -327,22 +327,24 @@ function searchrep() {
 									</table>
 								</fieldset>
 							{/if}
-							<fieldset>
-								<legend>{tr}Structures{/tr}</legend>
-									<div id="showstructs">
-										{if $showstructs|@count gt 0}
-											<ul>
-												{foreach from=$showstructs item=page_info }
-													<li>{$page_info.pageName}{if !empty($page_info.page_alias)}({$page_info.page_alias}){/if}</li>
-												{/foreach}  
-											</ul>
-										{/if}
-									  
-										{if $tiki_p_edit_structures eq 'y'}
-											<a href="tiki-admin_structures.php">{tr}Manage structures{/tr} {icon _id='wrench'}</a>
-										{/if}
-									</div>
-							</fieldset>	
+							{if $prefs.feature_wiki_structure eq 'y'}
+								<fieldset>
+									<legend>{tr}Structures{/tr}</legend>
+										<div id="showstructs">
+											{if $showstructs|@count gt 0}
+												<ul>
+													{foreach from=$showstructs item=page_info }
+														<li>{$page_info.pageName}{if !empty($page_info.page_alias)}({$page_info.page_alias}){/if}</li>
+													{/foreach}  
+												</ul>
+											{/if}
+										  
+											{if $tiki_p_edit_structures eq 'y'}
+												<a href="tiki-admin_structures.php">{tr}Manage structures{/tr} {icon _id='wrench'}</a>
+											{/if}
+										</div>
+								</fieldset>	
+							{/if}
 						{/if}{*end if sandbox *}
 						{if $prefs.feature_wiki_description eq 'y' or $prefs.metatag_pagedesc eq 'y'}
 							<fieldset>
