@@ -1,6 +1,8 @@
 {* $Id: tiki-site_header.tpl 12554 2008-04-15 23:03:57Z luciash $ *}
 {* site header login form *}
 {strip}
+<div id="login_search">
+	<div class="wrapper">
 {if $filegals_manager eq '' and $print_page ne 'y'}
 	{if $prefs.feature_site_login eq 'y'}
 		{if $user}
@@ -41,4 +43,26 @@
 </div>
 	{/if}
 {/if}
+		<div id="login_language"> | language</div>
+		</div>	
+		{*if $filegals_manager eq '' and $print_page ne 'y'*}
+			{if $prefs.feature_sitesearch eq 'y' and $prefs.feature_search eq 'y' and $tiki_p_search eq 'y'}
+				<div id="sitesearchbar"{if $prefs.feature_sitemycode neq 'y' and $prefs.feature_sitelogo neq 'y' and $prefs.feature_sitead neq 'y' and $prefs.feature_fullscreen eq 'y' and $filegals_manager eq '' and $print_page ne 'y'}{if $smarty.session.fullscreen neq 'y'}style="margin-right: 80px"{/if}{/if}>
+					<div class="wrapper">
+						{if $prefs.feature_search_fulltext eq 'y'}
+							{include file="tiki-searchresults.tpl"
+									searchNoResults="false"
+									searchStyle="menu"
+									searchOrientation="horiz"}
+						{else}
+							{include file="tiki-searchindex.tpl"
+									searchNoResults="false"
+									searchStyle="menu"
+									searchOrientation="horiz"}
+						{/if}
+					</div>
+				</div>{* search the site *}
+			{/if}
+		{*/if*}
+	</div>
 {/strip}
