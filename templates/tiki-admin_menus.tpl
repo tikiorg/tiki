@@ -97,7 +97,7 @@
 </tr>
 </table>
 {remarksbox type="tip" title="{tr}Tip{/tr}"}
-	{tr}To use menus in a <a href="tiki-admin_modules.php">module</a>, <a href="tiki-admin.php?page=siteid">Site identity</a> or a template, use {literal}{menu id=x}{/literal}, where x is the ID of the menu.{/tr}
+	{tr}To use menus in a <a href="tiki-admin_modules.php">module</a>, <a href="tiki-admin.php?page=look">Look and Feel</a> or a template, use {literal}{menu id=x}{/literal}, where x is the ID of the menu.{/tr}
 	<hr />
 	{if $prefs.feature_phplayers eq 'y'}
 	{tr}To use <a target="tikihelp" href="http://phplayersmenu.sourceforge.net/">phplayersmenu</a>, you can use one of the three following syntaxes:{/tr}

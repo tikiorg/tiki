@@ -3,7 +3,7 @@
 
 <div class="navbar">
 	{button href="tiki-admin_menus.php" _text="{tr}List menus{/tr}"}
-	{button href="tiki-admin_menus.php?menuId=$menuId" _text="{tr}Edit this menu{/tr}"}
+	{button href="tiki-admin_menus.php?menuId=$menuId&cookietab=2" _text="{tr}Edit this menu{/tr}"}
 	{button href="#export" _text="{tr}Export{/tr}"}
 	{button href="#import" _text="{tr}Import{/tr}"}
 </div>
