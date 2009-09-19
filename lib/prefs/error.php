@@ -13,7 +13,7 @@ function prefs_error_list() {
 			'type' => 'list',
 			'options' => array(
 				0 => tra('No error reporting'),
-				-2047 => tra('Report all PHP errors except strict'),
+				2047 => tra('Report all PHP errors except strict'),
 				-1 => tra('Report all PHP errors'),
 				2039 => tra('Report all PHP errors except notices'),
 			),
