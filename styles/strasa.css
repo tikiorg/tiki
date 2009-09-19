@@ -200,8 +200,8 @@ label {
 }
 
 #header {
-	min-height: 121px;
-	position: relative;
+/*	min-height: 121px;
+	position: relative;*/
 }
 
 #middle {
@@ -340,16 +340,17 @@ div#tiki-main {
 /* Site Header & Identity */
 #header-top {
 	color: #fff;
-	position: static;
+	background: #214d68 url(strasa/headerbg.jpg) repeat-x 0 100%;
+/*	position: static;*/
 }
 
 #siteheader {
 	background: #fff;
+	position: relative;
 }
 
 #customcode,
 #customcodewith_ad {
-	background: #214d68 url(strasa/headerbg.jpg) repeat-x 0 100%;
 	width: auto;
 }
 
@@ -358,13 +359,11 @@ div#tiki-main {
 }
 
 div#sioptions {
-	background: #214d68 url(strasa/headerbg.jpg) repeat-x 0 100%;
 	padding: 0 58px;
 }
 
 #sioptionscentered {
 	text-align: center;
-	background: #214d68 url(strasa/headerbg.jpg) repeat-x 0 100%;
 }
 
 div#sitelogo {
@@ -490,8 +489,8 @@ div.logged-in {
 }
 
 #tiki-top {
-	text-align: right;
-	margin-right: 40px;
+	white-space: nowrap;
+	text-align: left;
 }
 
 #tiki-top a,
@@ -508,9 +507,10 @@ div.logged-in {
 	float: none;
 	position: absolute;
 	right: 10px;
-	top: 65px;
+	top: 30px;
 	color: #fff;
 	font-size: 93%;
+	z-index: 10;
 }
 
 #topbar_custom_code {
@@ -766,9 +766,9 @@ a.phplmselected:hover {
 
 #tiki-top .cssmenu_horiz {
 	position: absolute;
-	z-index: 10;
 	top: 10px;
 	right: 100px;
+	z-index: 10;
 	white-space: nowrap;
 	text-align: left;
 }
