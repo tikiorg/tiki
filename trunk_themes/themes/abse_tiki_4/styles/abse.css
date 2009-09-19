@@ -303,9 +303,13 @@ div#sioptions {
 	padding-left: 3em}
 
 #sitesearchbar {
-	max-width: 300px;
+/*	max-width: 300px;*/
 	margin-right: 10px;
 	font-size: 90%}
+	
+#tiki-top form.findtable {
+	vertical-align: bottom;
+}
 
 /****** Menus, Links ******/
 /** CSS (suckerfish) menus **/
