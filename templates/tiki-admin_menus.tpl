@@ -22,7 +22,7 @@
 <tr>
 <td class="{cycle advance=false}">{$channels[user].menuId}</td>
 <td class="{cycle advance=false}">
-{self_link menuId=$channels[user].menuId cookietab="2" _title="{tr}Edit{/tr}"} {$channels[user].name}{/self_link}
+{if $tiki_p_edit_menu_option eq 'y'}	<a class="link" href="tiki-admin_menu_options.php?menuId={$channels[user].menuId}" title="{tr}Configure/Options{/tr}">{$channels[user].name}</a>{/if}
 <br />{$channels[user].description}</td>
 <td class="{cycle advance=false}" style="text-align:center">{$channels[user].type}</td>
 <td class="{cycle advance=false}" style="text-align:right;">{$channels[user].options}&nbsp;</td>
