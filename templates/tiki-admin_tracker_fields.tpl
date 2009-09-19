@@ -41,11 +41,11 @@
 <th>{self_link _sort_arg='sort_mode' _sort_field='options'}{tr}Options{/tr}{/self_link}</th>
 <th>{self_link _sort_arg='sort_mode' _sort_field='position'}{tr}Position{/tr}{/self_link}</th>
 <th>{self_link _sort_arg='sort_mode' _sort_field='isMandatory'}{tr}Mandatory{/tr}{/self_link}</th>
-<th>{self_link _sort_arg='sort_mode' _sort_field='isTblVisible'}{tr}Tbl vis{/tr}{/self_link}</th>
-<th>{self_link _sort_arg='sort_mode' _sort_field='isMain'}{tr}isMain{/tr}{/self_link}</th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='isTblVisible' _title='{tr}Is column visible when listing tracker items?{/tr}'}{tr}Tbl vis{/tr}{/self_link}</th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='isMain' _title='{tr}Column links to edit/view item?{/tr}'}{tr}isMain{/tr}{/self_link}</th>
 <th>{self_link _sort_arg='sort_mode' _sort_field='isMultilingual'}{tr}Multilingual{/tr}{/self_link}</th>
 <th>{self_link _sort_arg='sort_mode' _sort_field='isSearchable'}{tr}Searchable{/tr}{/self_link}</th>
-<th>{self_link _sort_arg='sort_mode' _sort_field='isPublic'}{tr}Public{/tr}{/self_link}</th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='isPublic' _title='{tr}Field is public? (viewed in trackerlist plugin){/tr}'}{tr}Public{/tr}{/self_link}</th>
 <th>{self_link _sort_arg='sort_mode' _sort_field='isHidden'}{tr}Hidden{/tr}{/self_link}</th>
 <th>{self_link _sort_arg='sort_mode' _sort_field='description'}{tr}Description{/tr}{/self_link}</th>
 <th>&nbsp;</th>
@@ -63,7 +63,7 @@
 <td>{$channels[user].options|truncate:42:"..."|escape}</td>
 <td>{$channels[user].position}</td>
 <td>{if $channels[user].isMandatory eq 'y'}<a title="{tr}Mandatory{/tr}">*</a>{else}-{/if}</td>
-<td>{if $channels[user].isTblVisible eq 'y'}{icon _id='table' title='{tr}Tbl vis{/tr}'}{else}-{/if}</td>
+<td>{if $channels[user].isTblVisible eq 'y'}{icon _id='table' title='{tr}Is column visible when listing tracker items?{/tr}'}{else}-{/if}</td>
 <td>{$channels[user].isMain}</td>
 <td>{$channels[user].isMultilingual}</td>
 <td>{if $channels[user].isSearchable eq 'y'}{icon _id='magnifier' title='{tr}Searchable{/tr}'}{else}-{/if}</td>
