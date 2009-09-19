@@ -48,9 +48,11 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	$html = '';
 	$html .= '<input type="hidden" name="mode_wysiwyg" value="" /><input type="hidden" name="mode_normal" value="" />';
 	
-	$auto_save_referrer = ensureReferrer();
+	$auto_save_referrer = '';
 	$auto_save_warning = '';
 	if ($prefs['feature_ajax'] == 'y' && $prefs['feature_ajax_autosave'] == 'y') {	// retrieve autosaved content
+		$auto_save_referrer = ensureReferrer();
+
 		if ($params['_wysiwyg'] != 'y') {
 			$as_id = $params['id'];
 		} else {
