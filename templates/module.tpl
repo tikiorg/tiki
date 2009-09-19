@@ -4,7 +4,7 @@
 {if $prefs.feature_layoutshadows}<div class="box-shadow">{$prefs.box_shadow_start}{/if}
 	<div class="box box-{$module_name|escape}{if $module_type eq 'cssmenu'} cssmenubox{/if}"{if $module_params.overflow == 'y'} style="overflow:visible !important"{/if}>
 	{if $module_decorations ne 'n'}
-		<h3 class="box-title clearfix"{if !empty($module_params.bgcolor)} style="background-color:{$module_params.bgcolor};"{/if}>
+		<h3 class="box-title boxtitle-{$module_name|escape} clearfix"{if !empty($module_params.bgcolor)} style="background-color:{$module_params.bgcolor};"{/if}>
 		{if $user and $prefs.user_assigned_modules == 'y' and $prefs.feature_modulecontrols eq 'y'}
 			<span class="modcontrols">
 			<a title="{tr}Move module up{/tr}" href="{$current_location|escape}{$mpchar|escape}mc_up={$module_name|escape}">
@@ -45,9 +45,9 @@
 		<!--[if IE]><br class="clear" style="height: 1px !important" /><![endif]--></h3>
 	{elseif $module_notitle ne 'y' }
 		{if $module_flip eq 'y' and $prefs.javascript_enabled ne 'n'}
-			<h3 class="box-title" ondblclick="javascript:icntoggle('mod-{$module_name|cat:$module_position|cat:$module_ord|escape}','module.png');"{if !empty($module_params.color)} style="color:{$module_params.color};"{/if}>
+			<h3 class="box-title boxtitle-{$module_name|escape}" ondblclick="javascript:icntoggle('mod-{$module_name|cat:$module_position|cat:$module_ord|escape}','module.png');"{if !empty($module_params.color)} style="color:{$module_params.color};"{/if}>
 		{else}
-			<h3 class="box-title"{if !empty($module_params.color)} style="color:{$module_params.color};"{/if}>
+			<h3 class="box-title boxtitle-{$module_name|escape}"{if !empty($module_params.color)} style="color:{$module_params.color};"{/if}>
 		{/if}
 		{$module_title}
 		{if $module_flip eq 'y' and $prefs.javascript_enabled ne 'n'}
