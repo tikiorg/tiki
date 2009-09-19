@@ -1157,7 +1157,7 @@ function get_default_prefs() {
 		'feature_multimedia' => 'n',
 
 		// textarea
-		'feature_smileys' => 'n',
+		'feature_smileys' => 'y',
 		'popupLinks' => 'y',
 		'feature_autolinks' => 'y',
 		'default_rows_textarea_wiki' => '20',
