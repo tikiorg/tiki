@@ -219,8 +219,7 @@ function get_default_prefs() {
 		'wikiplugin_html' => 'n',
 		'wikiplugin_iframe' => 'n',
 		'wikiplugin_img' => 'y',
-		'wikiplugin_image' => 'n',    // Experimental, may supercede img in 4.0
-		'wikiplugin_imgnew' => 'y',
+		'wikiplugin_image' => 'n',    // Experimental, intended to be phased out with new img
 		'wikiplugin_include' => 'y',
 		'wikiplugin_invite' => 'y',
 		'wikiplugin_jabber' => 'n',
