@@ -548,5 +548,20 @@ function prefs_feature_list() {
 			'description' => tra('TikiWiki will check for updates when you access the main Administration page'),
 			'type' => 'flag',
 		),
+		'feature_pear_date' => array(
+			'name' => tra('Use PEAR::Date library'),
+			'description' => tra('Use PEAR::Date library'),
+			'type' => 'flag',
+		),
+		'feature_ticketlib' => array(
+			'name' => tra('Require confirmation if possible CSRF detected'),
+			'description' => tra('Require confirmation if possible CSRF detected'),
+			'type' => 'flag',
+		),
+		'feature_ticketlib2' => array(
+			'name' => tra('Protect against CSRF with a ticket'),
+			'description' => tra('Protect against CSRF with a ticket'),
+			'type' => 'flag',
+		),
 	);
 }

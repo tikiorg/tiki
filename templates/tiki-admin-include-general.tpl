@@ -85,111 +85,93 @@
 
 		</fieldset>
 
-<fieldset><legend>{tr}Miscellaneous{/tr}</legend>
+		<fieldset>
+			<legend>{tr}Miscellaneous{/tr}</legend>
+			{preference name=smarty_security}
+			{preference name=feature_pear_date}
+		</fieldset>
 
-<div class="adminoptionbox">	  
-	{preference name=smarty_security}
+		<fieldset>
+			<legend>{tr}Mail{/tr}</legend>
+			{preference name=default_mail_charset}
+			{preference name=mail_crlf}
 
-<div class="adminoptionbox">	  
-	<div class="adminoption"><input type="checkbox" id="feature_pear_date" name="feature_pear_date"{if $prefs.feature_pear_date eq 'y'} checked="checked"{/if} /></div>
-	<div class="adminoptionlabel"><label for="feature_pear_date">{tr}Use PEAR::Date library{/tr}.</label></div>
-</div>
-</fieldset>
+			<div class="adminoptionbox">
+				<label for="zend_mail_handler">Mail Sender</label>
+				<select name="zend_mail_handler" id="zend_mail_handler" onchange="if( this.value == 'smtp' ) show('smtp_options'); else hide('smtp_options');">
+					<option value="sendmail" {if $prefs.zend_mail_handler eq 'sendmail'}selected="selected"{/if}>{tr}Sendmail{/tr}</option>
+					<option value="smtp" {if $prefs.zend_mail_handler eq 'smtp'}selected="selected"{/if}>{tr}SMTP{/tr}</option>
+				</select>
+			</div>
+			<div class="adminoptionboxchild" id="smtp_options" {if $prefs.zend_mail_handler neq 'smtp'} style="display: none;" {/if}>
+				<div class="adminoptionbox">
+					<label for="zend_mail_smtp_server">SMTP Server</label>
+					<input type="text" name="zend_mail_smtp_server" id="zend_mail_smtp_server" value="{$prefs.zend_mail_smtp_server|escape}"/>
+				</div>
+				<div class="adminoptionbox">
+					<label for="zend_mail_smtp_auth">Authentication</label>
+					<select name="zend_mail_smtp_auth" id="zend_mail_smtp_auth" onchange="if( this.value == '' ) hide('smtp_auth_options'); else show('smtp_auth_options');">
+						<option value="" {if $prefs.zend_mail_smtp_auth eq ''}selected="selected"{/if}>{tr}None{/tr}</option>
+						<option value="login" {if $prefs.zend_mail_smtp_auth eq 'login'}selected="selected"{/if}>LOGIN</option>
+						<option value="plain" {if $prefs.zend_mail_smtp_auth eq 'plain'}selected="selected"{/if}>PLAIN</option>
+						<option value="crammd5" {if $prefs.zend_mail_smtp_auth eq 'crammd5'}selected="selected"{/if}>CRAM-MD5</option>
+					</select>
+				</div>
+				<div class="adminoptionboxchild" id="smtp_auth_options" {if $prefs.zend_mail_smtp_auth eq ''} style="display: none;" {/if}>
+					<p>{tr}These values will be stored in plain text in the database.{/tr}</p>
+					<div class="adminoptionbox">
+						<label for="zend_mail_smtp_user">Username</label>
+						<input type="text" name="zend_mail_smtp_user" id="zend_mail_smtp_user" value="{$prefs.zend_mail_smtp_user|escape}"/>
+					</div>
+					<div class="adminoptionbox">
+						<label for="zend_mail_smtp_pass">Password</label>
+							<input type="password" name="zend_mail_smtp_pass" id="zend_mail_smtp_pass" value="{$prefs.zend_mail_smtp_pass|escape}"/>
+					</div>
+				</div>
+				<div class="adminoptionbox">
+					<label for="zend_mail_smtp_port">{tr}Port{/tr}</label>
+					<input type="text" name="zend_mail_smtp_port" id="zend_mail_smtp_port" value="{$prefs.zend_mail_smtp_port|escape}"/>
+				</div>
+				<div class="adminoptionbox">
+					<label for="zend_mail_smtp_security">{tr}Security{/tr}</label>
+					<select name="zend_mail_smtp_security" id="zend_mail_smtp_security">
+						<option value="" {if $prefs.zend_mail_smtp_security eq ''}selected="selected"{/if}>{tr}None{/tr}</option>
+						<option value="ssl" {if $prefs.zend_mail_smtp_security eq 'ssl'}selected="selected"{/if}>SSL</option>
+						<option value="tls" {if $prefs.zend_mail_smtp_security eq 'tls'}selected="selected"{/if}>TLS</option>
+					</select>
+				</div>
+			</div>
+		</fieldset>
 
-<fieldset><legend>{tr}Mail{/tr}</legend>
-<div class="adminoptionbox"><label for="general-charset">{tr}Default charset for sending mail{/tr}:</label> 
-	<select name="default_mail_charset" id="general-charset">
-		<option value="utf-8" {if $prefs.default_mail_charset eq "utf-8"}selected="selected"{/if}>utf-8</option>
-		<option value="iso-8859-1" {if $prefs.default_mail_charset eq "iso-8859-1"}selected="selected"{/if}>iso-8859-1</option>
-	</select>
-</div>
-<div class="adminoptionbox"><label for="mail_crlf">{tr}Mail end of line{/tr}:</label> 
-	<select name="mail_crlf" id="mail_crlf">
-		<option value="CRLF" {if $prefs.mail_crlf eq "CRLF"}selected="selected"{/if}>CRLF {tr}(standard){/tr}</option>
-		<option value="LF" {if $prefs.mail_crlf eq "LF"}selected="selected"{/if}>LF {tr}(some Unix MTA){/tr}</option>
-	</select>
-</div>
-<div class="adminoptionbox"><label for="zend_mail_handler">Mail Sender</label>
-	<select name="zend_mail_handler" id="zend_mail_handler" onchange="if( this.value == 'smtp' ) show('smtp_options'); else hide('smtp_options');">
-		<option value="sendmail" {if $prefs.zend_mail_handler eq 'sendmail'}selected="selected"{/if}>{tr}Sendmail{/tr}</option>
-		<option value="smtp" {if $prefs.zend_mail_handler eq 'smtp'}selected="selected"{/if}>{tr}SMTP{/tr}</option>
-	</select>
-</div>
-<div class="adminoptionboxchild" id="smtp_options" {if $prefs.zend_mail_handler neq 'smtp'} style="display: none;" {/if}>
-	<div class="adminoptionbox"><label for="zend_mail_smtp_server">SMTP Server</label>
-		<input type="text" name="zend_mail_smtp_server" id="zend_mail_smtp_server" value="{$prefs.zend_mail_smtp_server|escape}"/>
-	</div>
-	<div class="adminoptionbox"><label for="zend_mail_smtp_auth">Authentication</label>
-		<select name="zend_mail_smtp_auth" id="zend_mail_smtp_auth" onchange="if( this.value == '' ) hide('smtp_auth_options'); else show('smtp_auth_options');">
-			<option value="" {if $prefs.zend_mail_smtp_auth eq ''}selected="selected"{/if}>{tr}None{/tr}</option>
-			<option value="login" {if $prefs.zend_mail_smtp_auth eq 'login'}selected="selected"{/if}>LOGIN</option>
-			<option value="plain" {if $prefs.zend_mail_smtp_auth eq 'plain'}selected="selected"{/if}>PLAIN</option>
-			<option value="crammd5" {if $prefs.zend_mail_smtp_auth eq 'crammd5'}selected="selected"{/if}>CRAM-MD5</option>
-		</select>
-	</div>
-	<div class="adminoptionboxchild" id="smtp_auth_options" {if $prefs.zend_mail_smtp_auth eq ''} style="display: none;" {/if}>
-		<p>{tr}These values will be stored in plain text in the database.{/tr}</p>
-		<div class="adminoptionbox"><label for="zend_mail_smtp_user">Username</label>
-			<input type="text" name="zend_mail_smtp_user" id="zend_mail_smtp_user" value="{$prefs.zend_mail_smtp_user|escape}"/>
-		</div>
-		<div class="adminoptionbox"><label for="zend_mail_smtp_pass">Password</label>
-			<input type="password" name="zend_mail_smtp_pass" id="zend_mail_smtp_pass" value="{$prefs.zend_mail_smtp_pass|escape}"/>
-		</div>
-	</div>
-	<div class="adminoptionbox"><label for="zend_mail_smtp_port">{tr}Port{/tr}</label>
-		<input type="text" name="zend_mail_smtp_port" id="zend_mail_smtp_port" value="{$prefs.zend_mail_smtp_port|escape}"/>
-	</div>
-	<div class="adminoptionbox"><label for="zend_mail_smtp_security">{tr}Security{/tr}</label>
-		<select name="zend_mail_smtp_security" id="zend_mail_smtp_security">
-			<option value="" {if $prefs.zend_mail_smtp_security eq ''}selected="selected"{/if}>{tr}None{/tr}</option>
-			<option value="ssl" {if $prefs.zend_mail_smtp_security eq 'ssl'}selected="selected"{/if}>SSL</option>
-			<option value="tls" {if $prefs.zend_mail_smtp_security eq 'tls'}selected="selected"{/if}>TLS</option>
-		</select>
-	</div>
-</div>
-</fieldset>
+		<fieldset>
+			<legend>{tr}Logging and Reporting{/tr}</legend>
+			<div class="adminoptionbox">
+				{preference name=error_reporting_level}
+				<div class="adminoptionboxchild">
+					{preference name=error_reporting_adminonly label="{tr}Visible to admin only{/tr}"}
+					{preference name=smarty_notice_reporting label="{tr}Include Smarty notices{/tr}"}
+				</div>
+			</div>
 
-<fieldset><legend>{tr}Logging and Reporting{/tr}</legend>
-<div class="adminoptionbox">
-	{preference name=error_reporting_level}
-	<div class="adminoptionboxchild">
-		{preference name=error_reporting_adminonly label="{tr}Visible to admin only{/tr}"}
-		{preference name=smarty_notice_reporting label="{tr}Include Smarty notices{/tr}"}
-	</div>
-</div>
-<div class="adminoptionbox">	  
-	<div class="adminoption"><input type="checkbox" id="log_mail" name="log_mail"{if $prefs.log_mail eq 'y'} checked="checked"{/if} /></div>
-	<div class="adminoptionlabel"><label for="log_mail">{tr}Log mail in Tiki logs{/tr}.</label>{if $prefs.feature_help eq 'y'}{help url="System+Log"}{/if}</div>
-</div>
-<div class="adminoptionbox">	  
-	<div class="adminoption"><input type="checkbox" id="log_sql" name="log_sql"{if $prefs.log_sql eq 'y'} checked="checked"{/if} onclick="flip('log_sql_queries');" /></div>
-	<div class="adminoptionlabel"><label for="log_sql">{tr}Log SQL{/tr}.</label>
-<div id="log_sql_queries" class="adminoptionboxchild" style="display:{if $prefs.log_sql eq 'y'}display{else}none{/if};">
-{tr}Log queries using more than{/tr} <input type="text" name="log_sql_perf_min" value="{$prefs.log_sql_perf_min}" size="5" /> {tr}seconds{/tr}<br /><em>{tr}This may impact performance{/tr}.</em>
-</div>
-	</div>
-</div>
-<div class="adminoptionbox">	  
-	<div class="adminoption"><input type="checkbox" id="log_tpl" name="log_tpl"{if $prefs.log_tpl eq 'y'} checked="checked"{/if} /></div>
-	<div class="adminoptionlabel"><label for="log_tpl">{tr}Add HTML comment at start and end of each Smarty template (TPL){/tr}.</label></div>
-</div>
-</fieldset>
+			{preference name=log_mail}
+			{preference name=log_sql}
+			<div class="adminoptionboxchild">
+				{preference name=log_sql_perf_min}
+			</div>
+			{preference name=log_tpl}
+		</fieldset>
 
-<fieldset><legend>{tr}CSRF Security{/tr} {if $prefs.feature_help eq 'y'} {help url="Security"}{/if}</legend>
-<div class="adminoptionbox">{tr}Use these options to protect against cross-site request forgeries (CSRF){/tr}.</div>
-
-<div class="adminoptionbox">	  
-	<div class="adminoption"><input type="checkbox" name="feature_ticketlib" id="feature_ticketlib" {if $prefs.feature_ticketlib eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="feature_ticketlib">{tr}Require confirmation if possible CSRF detected{/tr}.</label></div>
-</div>
-
-<div class="adminoptionbox">	  
-	<div class="adminoption"><input type="checkbox" name="feature_ticketlib2" id="feature_ticketlib2" {if $prefs.feature_ticketlib2 eq 'y'}checked="checked"{/if} /></div>
-	<div class="adminoptionlabel"><label for="feature_ticketlib2">{tr}Protect against CSRF with a ticket{/tr}.</label></div>
-</div>
-
-<div class="adminoptionbox">{tr}See <a href="tiki-admin_security.php" title="Security"><strong>Admin &gt; Security Admin</strong></a> for additional security settings{/tr}.</div>
-</fieldset>
+		<fieldset>
+			<legend>{tr}CSRF Security{/tr} {if $prefs.feature_help eq 'y'} {help url="Security"}{/if}</legend>
+			<div class="adminoptionbox">
+				{tr}Use these options to protect against cross-site request forgeries (CSRF){/tr}.
+			</div>
+			{preference name=feature_ticketlib}
+			{preference name=feature_ticketlib2}
+			<div class="adminoptionbox">
+				{tr}See <a href="tiki-admin_security.php" title="Security"><strong>Admin &gt; Security Admin</strong></a> for additional security settings{/tr}.
+			</div>
+		</fieldset>
 	{/tab}
 
 	{tab name="{tr}General Settings{/tr}"}
