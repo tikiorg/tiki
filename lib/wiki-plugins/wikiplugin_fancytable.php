@@ -17,7 +17,7 @@
 // row 2 column 1 | row 2 column 2 | row 2 column 3
 // {FANCYTABLE}
 function wikiplugin_fancytable_help() {
-	return tra("Displays the data using the Tikiwiki odd/even table style").":<br />~np~{FANCYTABLE(head=" ",headclass=>)}".tra("cells")."{FANCYTABLE}~/np~ - ''".tra("heads and cells separated by |")."''";
+	return tra("Displays the data using the Tikiwiki odd/even table style").":<br />~np~{FANCYTABLE(head=>,headclass=>)}".tra("cells")."{FANCYTABLE}~/np~ - ''".tra("heads and cells separated by |")."''";
 }
 
 function wikiplugin_fancytable_info() {
