@@ -8,7 +8,7 @@
 //
 // Usage:
 //   - The data (and the head paramter) is given one row per line, with columns
-//   separated by | or ~|~.
+//   separated by |. (~|~ was used as a separator before 4.0 and is also accepted)
 //   - In any cell, indicate number of columns to span with forward slashes at the beginning, number of rows to span with backslashes.	
 //
 // Example:
@@ -17,7 +17,7 @@
 // row 2 column 1 | row 2 column 2 | row 2 column 3
 // {FANCYTABLE}
 function wikiplugin_fancytable_help() {
-	return tra("Displays the data using the Tikiwiki odd/even table style").":<br />~np~{FANCYTABLE(head=>,headclass=>)}".tra("cells")."{FANCYTABLE}~/np~ - ''".tra("heads and cells separated by | or ~|~")."''";
+	return tra("Displays the data using the Tikiwiki odd/even table style").":<br />~np~{FANCYTABLE(head=" ",headclass=>)}".tra("cells")."{FANCYTABLE}~/np~ - ''".tra("heads and cells separated by |")."''";
 }
 
 function wikiplugin_fancytable_info() {
@@ -26,7 +26,7 @@ function wikiplugin_fancytable_info() {
 		'documentation' => 'PluginFancyTable',
 		'description' => tra("Displays the data using the Tikiwiki odd/even table style"),
 		'prefs' => array('wikiplugin_fancytable'),
-		'body' => tra('One row per line, cells separated by | or ~|~.'),
+		'body' => tra('One row per line, cells separated by |.'),
 		'params' => array(
 			'head' => array(
 				'required' => false,
