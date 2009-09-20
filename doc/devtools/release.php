@@ -888,7 +888,7 @@ function display_howto() {
    In case of a major version (x.0), you need at least 3 installations from 3 different people
 
 6/ When the "tarballs" are tested, follow the steps to upload on SourceForge:
-   http://tinyurl.com/59uubv
+   http://sourceforge.net/apps/trac/sourceforge/wiki/Release%20files%20for%20download
 
 7/ Announce the good news on devel mailing-list
    and ask the TAG (TikiWiki Admin Group) through the admin mailing-list
