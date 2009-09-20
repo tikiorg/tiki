@@ -592,13 +592,14 @@ function wikiplugin_img_info() {
 				$link = 'tiki-browse_image.php?imageId=' . $imgdata['id'];
 			} elseif (($imgdata['thumb'] == 'mouseover') || ($imgdata['thumb'] == 'mousesticky')) {
 				$javaset = 'true';
-				$link = 'javascript:void()';
-				$script = "\r\t" . '<script type="text/javascript" src="lib/overlib.js"></script>';
-				$mouseover = " onmouseover=\"return overlib('$data',BACKGROUND,'$browse_full_image',WIDTH,'$fwidth',HEIGHT,'$fheight'";
+				$link = 'javascript:void(0)';
+				$popup_params = array( 'text'=>$data, 'width'=>$fwidth, 'height'=>$fheight, 'background'=>$browse_full_image);
 				if ($imgdata['thumb'] == 'mousesticky') {
-					$mouseover .= ',STICKY';
+					$popup_params['sticky'] = true;
 				}
-				$mouseover .= ");\" onmouseout=\"nd();\"";
+				require_once $smarty->_get_plugin_filepath('function', 'popup');
+				$mouseover = ' ' . smarty_function_popup($popup_params, $smarty);
+				
 			} else {
 				$link = $browse_full_image;
 			}	
