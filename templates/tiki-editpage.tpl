@@ -180,7 +180,7 @@
 							</fieldset>
 						{/if}
 			
-						{if $prefs.feature_wiki_replace eq 'y'}
+						{if $prefs.feature_wiki_replace eq 'y' and $wysiwyg neq 'y'}
 							<script type="text/javascript">
 <!--//--><![CDATA[//><!--
 {literal}
