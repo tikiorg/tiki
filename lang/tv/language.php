@@ -3885,6 +3885,7 @@ $lang=Array(
 // "Theme not saved yet - click \"Apply\"" => "Theme not saved yet - click \"Apply\"",
 // "Theme options" => "Theme options",
 // "Reg users can change theme" => "Reg users can change theme",
+// "Users can change theme" => "Reg users can change theme",
 // "Restrict available themes" => "Restrict available themes",
 // "Available styles" => "Available styles",
 // "Each group can have its theme" => "Each group can have its theme",

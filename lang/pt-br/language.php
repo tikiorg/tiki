@@ -7420,6 +7420,7 @@ $lang=Array(
 "Version 2.0" => "Versão 2.0",
 "General Layout" => "Layout do site",
 "Reg users can change theme" => "Usuários comuns podem alterar tema",
+"Users can change theme" => "Usuários comuns podem alterar tema",
 "Restrict available themes" => "Restringir temas disponíveis",
 "Available styles:" => "Estilos disponíveis:",
 "Slideshows theme" => "Tema para slides",

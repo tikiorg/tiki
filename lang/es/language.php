@@ -7424,6 +7424,7 @@ $lang=Array(
 "Version 1.0" => "Versión 1.0",
 "Version 2.0" => "Versión 2.0",
 "Reg users can change theme" => "Usuarios registrados pueden cambiar tema",
+"Users can change theme" => "Usuarios registrados pueden cambiar tema",
 "Restrict available themes" => "Restringir temas disponibles",
 "Available styles:" => "Estilos disponibles:",
 "Slideshows theme" => "Tema para diapositivas",

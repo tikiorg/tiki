@@ -8187,6 +8187,7 @@ $lang=Array(
 "Use challenge/response authentication" => "Iusim challenge/response authentication",
 "Method" => "Wei",
 "Reg users can change theme" => "Olketa reg user save senisim theme",
+"Users can change theme" => "Olketa reg user save senisim theme",
 "Slideshows theme" => "Olketa Slideshow theme",
 "Edit CSS" => "Mekem senis long CSS",
 "Theme Control" => "Theme control",

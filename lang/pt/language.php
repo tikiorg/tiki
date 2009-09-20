@@ -7733,6 +7733,7 @@ $lang=Array(
 "Version 1.0" => "Versão 1.0",
 "Version 2.0" => "Versão 2.0",
 "Reg users can change theme" => "Utilizadores registados podem alterar tema",
+"Users can change theme" => "Utilizadores registados podem alterar tema",
 "Restrict available themes" => "Restringir temas disponíveis",
 "Available styles:" => "Estilos disponíveis:",
 "Slideshows theme" => "Tema para slideshow",

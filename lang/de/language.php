@@ -7311,6 +7311,7 @@ $lang=Array(
 "You also need to upload the <a target=\"_blank\" href=\"http://esup-phpcas.sourceforge.net/\">phpCAS library</a> separately to lib/phpcas/." => "<a target=\"_blank\" href=\"http://esup-phpcas.sourceforge.net/\">phpCAS library</a> mu&szlig; zuvor nach lib/phpcas/ installiert werden.",
 "CAS server version" => "CAS Serverversion",
 "Reg users can change theme" => "Reg. Benutzer k&ouml;nnen Theme &auml;ndern",
+"Users can change theme" => "Reg. Benutzer k&ouml;nnen Theme &auml;ndern",
 "Restrict available themes" => "Verf&uuml;gbare Themes einschr&auml;nken",
 "Available styles:" => "Verf&uuml;gbare Styles:",
 "Slideshows theme" => "Diaschau-Theme",

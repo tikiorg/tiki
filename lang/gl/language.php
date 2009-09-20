@@ -7359,6 +7359,7 @@ $lang=Array(
 "Version 1.0" => "Versión 1.0",
 "Version 2.0" => "Versión 2.0",
 "Reg users can change theme" => "Os usuarios rexistrados poden cambiar de decoración",
+"Users can change theme" => "Os usuarios rexistrados poden cambiar de decoración",
 "Restrict available themes" => "Restrinxir decoracións dispoñibles",
 "Available styles:" => "Estilos dispoñibles:",
 "Slideshows theme" => "Decoración para diapositivas",

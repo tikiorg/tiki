@@ -7983,6 +7983,7 @@ $lang=Array(
 "Method" => "Метод",
 "Duration" => "Длительность",
 "Reg users can change theme" => "Пользователи могут менять цветовую тему",
+"Users can change theme" => "Пользователи могут менять цветовую тему",
 "Slideshows theme" => "Тема для слайд-шоу",
 "Edit CSS" => "Редактировать CSS",
 "Theme Control" => "Управление темами",

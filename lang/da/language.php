@@ -7918,6 +7918,7 @@ $lang=Array(
 "Method" => "Metode",
 "Duration" => "Varighed",
 "Reg users can change theme" => "Registrerede brugere kan ændre tema",
+"Users can change theme" => "Registrerede brugere kan ændre tema",
 "Slideshows theme" => "Lysbilledshow tema",
 "Edit CSS" => "Rediger CSS",
 "Theme Control" => "Temastyring",

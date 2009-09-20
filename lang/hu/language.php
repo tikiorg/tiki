@@ -6801,6 +6801,7 @@ $lang=Array(
 "Theme not saved yet - click \"Apply\"" => "A stílus még nincs elmentve - kattintani kell az \"Alkalmazás\" gombra",
 "Theme options" => "Stílus opciók",
 "Reg users can change theme" => "Regisztrált felhasználók megváltoztathatják a stílust",
+"Users can change theme" => "Regisztrált felhasználók megváltoztathatják a stílust",
 "Restrict available themes" => "Rendelkezésre álló stílusok korlátozása",
 "Available styles:" => "Rendelkezésre álló stílusok:",
 "Each group can have its theme" => "Minden csoportnak saját stílusa lehet",

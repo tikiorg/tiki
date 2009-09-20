@@ -7431,6 +7431,7 @@ $lang=Array(
 "Version 1.0" => "نسخه‌ي 1.0",
 "Version 2.0" => "نسخه‌ي 2.0",
 "Reg users can change theme" => "كاربران ثبت‌نام كرده، مي‌توانند قيافه(theme)ي خود را تغيير دهند",
+"Users can change theme" => "كاربران ثبت‌نام كرده، مي‌توانند قيافه(theme)ي خود را تغيير دهند",
 "Restrict available themes" => "قيافه(theme)هاي موجود را محدود كن",
 "Available styles:" => "شيوه‌هاي موجود:",
 "Slideshows theme" => "قيافه(Theme) نمايش اسلايدها",

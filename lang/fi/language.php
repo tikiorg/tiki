@@ -7590,6 +7590,7 @@ $lang=Array(
 "Version 1.0" => "Versio 1.0",
 "Version 2.0" => "Versio 2.0",
 "Reg users can change theme" => "Rekisteröityneet käyttäjät voivat vaihtaa teemaa",
+"Users can change theme" => "Rekisteröityneet käyttäjät voivat vaihtaa teemaa",
 "Restrict available themes" => "Rajoita saatavilla olevia teemoja",
 "Available styles:" => "Saatavilla olevat tyylit:",
 "Slideshows theme" => "Kuvaesityksen teema",
