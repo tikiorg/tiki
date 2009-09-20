@@ -225,7 +225,7 @@
 	<div class="adminoptionlabel"><label for="sitelogo_bgcolor">{tr}Logo background color{/tr}:</label> <input type="text" name="sitelogo_bgcolor" id="sitelogo_bgcolor" value="{$prefs.sitelogo_bgcolor}" size="15" maxlength="15" /></div>
 </div>
 <div class="adminoptionbox">
-	<div class="adminoptionlabel"><label for="sitelogo_bgstyle">{tr}Logo ackground style{/tr}:</label> <input type="text" name="sitelogo_bgstyle" id="sitelogo_bgstyle" value="{$prefs.sitelogo_bgstyle}" /><br /><em>{tr}Example{/tr}:</em> silver url(myStyle/img.gif) repeat</div>
+	<div class="adminoptionlabel"><label for="sitelogo_bgstyle">{tr}Logo background style{/tr}:</label> <input type="text" name="sitelogo_bgstyle" id="sitelogo_bgstyle" value="{$prefs.sitelogo_bgstyle}" /><br /><em>{tr}Example{/tr}:</em> silver url(myStyle/img.gif) repeat</div>
 </div>
 <div class="adminoptionbox">
 	<div class="adminoptionlabel"><label for="sitelogo_align">{tr}Logo alignment{/tr}:</label> 
@@ -316,7 +316,7 @@
 	</div>
 </div>
 <div class="adminoptionbox">
-	<div class="adminoptionlabel"><label for="feature_Right_column">{tr}Right columnn{/tr}</label>: 
+	<div class="adminoptionlabel"><label for="feature_Right_column">{tr}Right column{/tr}</label>: 
 		<select name="feature_Right_column" id="feature_Right_column">
 								<option value="y" {if $prefs.feature_right_column eq 'y'}selected="selected"{/if}>{tr}only if module{/tr}</option>
 								<option value="fixed" {if $prefs.feature_right_column eq 'fixed'}selected="selected"{/if}>{tr}always{/tr}</option>
@@ -491,104 +491,63 @@
 </fieldset>
 </div>
 
-<div class="adminoptionbox">
-	<div class="adminoption"></div>
-	<div class="adminoptionlabel"><label for=""></label></div>
-</div>
-
 {/tab}
 		
 	{tab name="{tr}UI Effects{/tr}"}
 	{* --- UI Effects (JQuery) --- *}
+<div class="adminoptionbox">	
 			<fieldset class="admin">
 				<legend>
 					<a href="#"><span>{tr}JQuery plugins and add-ons{/tr}</span></a>
-				</legend>
+				</legend>	
 				{if $prefs.feature_jquery eq 'n'}
 				 	 {remarksbox type="warning" title="{tr}Warning{/tr}"}{tr}Requires jquery feature{/tr}</em>{icon _id="arrow_right" href="tiki-admin.php?page=features"}{/remarksbox}
 				{/if}
-				<table>
-					<tr>
-						<td width="30%">
-							<label for="feature_jquery_tooltips">{tr}JQuery Tooltips{/tr}</label>
-						</td>
-						<td width="2%">
-							{help url="JQuery#Tooltips" desc="{tr}JQuery Tooltips: Customisable help tips{/tr}"}
-						</td>
-						<td>
-							<input type="checkbox" id="feature_jquery_tooltips" name="feature_jquery_tooltips" {if $prefs.feature_jquery_tooltips eq 'y'}checked="checked"{/if}/>
-						</td>
-					</tr>
-					<tr>
-						<td width="30%">
-							<label for="feature_jquery_autocomplete">{tr}JQuery Autocomplete{/tr}</label>
-						</td>
-						<td width="2%">
-							{help url="JQuery#Autocomplete" desc="{tr}JQuery Autocomplete{/tr}"}
-						</td>
-						<td>
-							<input type="checkbox" id="feature_jquery_autocomplete" name="feature_jquery_autocomplete" {if $prefs.feature_jquery_autocomplete eq 'y'}checked="checked"{/if}/>
-						</td>
-					</tr>
-					<tr>
-						<td width="30%">
-							<label for="feature_jquery_superfish">{tr}JQuery Superfish{/tr}</label>
-						</td>
-						<td width="2%">
-							{help url="JQuery#Superfish" desc="{tr}JQuery Superfish (effects on CSS menus){/tr}"}
-						</td>
-						<td>
-							<input type="checkbox" id="feature_jquery_superfish" name="feature_jquery_superfish" {if $prefs.feature_jquery_superfish eq 'y'}checked="checked"{/if}/>
-						</td>
-					</tr>
-					<tr>
-						<td width="30%">
-							<label for="feature_jquery_reflection">{tr}JQuery Reflection{/tr}</label>
-						</td>
-						<td width="2%">
-							{help url="JQuery#Reflection" desc="{tr}JQuery Reflection (reflection effect on images){/tr}"}
-						</td>
-						<td>
-							<input type="checkbox" id="feature_jquery_reflection" name="feature_jquery_reflection" {if $prefs.feature_jquery_reflection eq 'y'}checked="checked"{/if}/>
-						</td>
-					</tr>
-					<tr>
-						<td width="30%">
-							<label for="feature_jquery_cycle">{tr}JQuery Cycle (slideshow){/tr}</label>
-						</td>
-						<td width="2%">
-							{help url="JQuery#Cycle" desc="{tr}JQuery Cycle (slideshow){/tr}"}
-						</td>
-						<td>
-							<input type="checkbox" id="feature_jquery_cycle" name="feature_jquery_cycle" {if $prefs.feature_jquery_cycle eq 'y'}checked="checked"{/if}/>
-						</td>
-					</tr>
-					<tr>
-						<td colspan="3">
-							<hr />
-							<em>{tr}For future use{/tr}</em>
-						</td>
-					</tr>
-					<tr>
-						<td width="30%">
-							<label for="feature_jquery_ui">{tr}JQuery UI{/tr}</label>
-						</td>
-						<td width="2%">
-							{help url="JQuery#UI" desc="{tr}JQuery UI: More JQuery functionality{/tr}"}
-						</td>
-						<td>
-							<input type="checkbox" id="feature_jquery_ui" name="feature_jquery_ui" {if $prefs.feature_jquery_ui eq 'y'}checked="checked"{/if}/>
-						</td>
-					</tr>
-					<tr>
-						<td width="30%">
-							<label for="feature_jquery_ui_theme">{tr}JQuery UI Theme{/tr}</label>
-						</td>
-						<td width="2%">
-							{help url="JQuery#UI" desc="{tr}JQuery UI Theme: Themes for look and feel of JQuery UI widgets{/tr}"}
-						</td>
-						<td>
-							<select name="feature_jquery_ui_theme" id="feature_jquery_ui_theme">
+
+<div class="adminoptionbox">
+	<div class="adminoption"><input type="checkbox" id="feature_jquery_tooltips" name="feature_jquery_tooltips" {if $prefs.feature_jquery_tooltips eq 'y'}checked="checked"{/if}/></div>
+	<div class="adminoptionlabel"><label for="feature_jquery_tooltips">{tr}Tooltips{/tr}</label>
+	{if $prefs.feature_help eq 'y'} {help url="JQuery#Tooltips" desc="{tr}JQuery Tooltips: Customisable help tips{/tr}"}{/if}
+	</div>
+</div>
+<div class="adminoptionbox">
+	<div class="adminoption"><input type="checkbox" id="feature_jquery_autocomplete" name="feature_jquery_autocomplete" {if $prefs.feature_jquery_autocomplete eq 'y'}checked="checked"{/if}/></div>
+	<div class="adminoptionlabel"><label for="feature_jquery_autocomplete">{tr}Autocomplete{/tr}</label>
+	{if $prefs.feature_help eq 'y'} {help url="JQuery#Autocomplete" desc="{tr}JQuery Autocomplete{/tr}"}{/if}
+	</div>
+</div>
+<div class="adminoptionbox">
+	<div class="adminoption"><input type="checkbox" id="feature_jquery_superfish" name="feature_jquery_superfish" {if $prefs.feature_jquery_superfish eq 'y'}checked="checked"{/if}/></div>
+	<div class="adminoptionlabel"><label for="feature_jquery_superfish">{tr}Superfish{/tr}</label>
+	{if $prefs.feature_help eq 'y'} {help url="JQuery#Superfish" desc="{tr}JQuery Superfish (effects on CSS menus){/tr}"}{/if}
+	</div>
+</div>
+<div class="adminoptionbox">
+	<div class="adminoption"><input type="checkbox" id="feature_jquery_reflection" name="feature_jquery_reflection" {if $prefs.feature_jquery_reflection eq 'y'}checked="checked"{/if}/></div>
+	<div class="adminoptionlabel"><label for="feature_jquery_reflection">{tr}Reflection{/tr}</label>
+	{if $prefs.feature_help eq 'y'} {help url="JQuery#Reflection" desc="{tr}JQuery Reflection (reflection effect on images){/tr}"}{/if}
+	</div>
+</div>
+<div class="adminoptionbox">
+	<div class="adminoption"><input type="checkbox" id="feature_jquery_cycle" name="feature_jquery_cycle" {if $prefs.feature_jquery_cycle eq 'y'}checked="checked"{/if}/></div>
+	<div class="adminoptionlabel"><label for="feature_jquery_cycle">{tr}Cycle{/tr} ({tr}slideshow{/tr})</label>
+	{if $prefs.feature_help eq 'y'} {help url="JQuery#Cycle" desc="{tr}JQuery Cycle (slideshow){/tr}"}{/if}</div>
+</div>
+
+
+<div class="adminoptionbox">
+	<div class="adminoptionlabel">{icon _id=information} <em>{tr}For future use{/tr}:</em>
+
+<div class="adminoptionboxchild">	
+
+<div class="adminoptionbox">
+	<div class="adminoption"><input type="checkbox" id="feature_jquery_ui" name="feature_jquery_ui" {if $prefs.feature_jquery_ui eq 'y'}checked="checked"{/if}/></div>
+	<div class="adminoptionlabel"><label for="feature_jquery_ui">{tr}JQuery UI{/tr}</label>
+	{if $prefs.feature_help eq 'y'} {help url="JQuery#UI" desc="{tr}JQuery UI: More JQuery functionality{/tr}"}{/if}</div>
+</div>
+<div class="adminoptionbox">
+	<div class="adminoptionlabel"><label for="feature_jquery_ui_theme">{tr}JQuery UI Theme{/tr}: </label>
+	<select name="feature_jquery_ui_theme" id="feature_jquery_ui_theme">
 					            <option value="black-tie" {if $prefs.feature_jquery_ui_theme eq 'black-tie'}selected="selected"{/if}>black-tie</option>
 					            <option value="blitzer" {if $prefs.feature_jquery_ui_theme eq 'blitzer'}selected="selected"{/if}>blitzer</option>
 					            <option value="cupertino" {if $prefs.feature_jquery_ui_theme eq 'cupertino'}selected="selected"{/if}>cupertino</option>
@@ -606,47 +565,40 @@
 					            <option value="ui-darkness" {if $prefs.feature_jquery_ui_theme eq 'ui-darkness'}selected="selected"{/if}>ui-darkness</option>
 					            <option value="ui-lightness" {if $prefs.feature_jquery_ui_theme eq 'ui-lightness'}selected="selected"{/if}>ui-lightness</option>
 					            <option value="vader" {if $prefs.feature_jquery_ui_theme eq 'vader'}selected="selected"{/if}>vader</option>
-					        </select>
-						</td>
-					</tr>
-					<tr>
-						<td width="30%">
-							<label for="feature_jquery_sheet">{tr}JQuery Sheet{/tr}</label>
-						</td>
-						<td width="2%">
-							{help url="JQuery#Sheet" desc="{tr}JQuery Spreadsheet{/tr}"}
-						</td>
-						<td>
-							<input type="checkbox" id="feature_jquery_sheet" name="feature_jquery_sheet" {if $prefs.feature_jquery_sheet eq 'y'}checked="checked"{/if}/>
-						</td>
-					</tr>
-					<tr>
-						<td width="30%">
-							<label for="feature_jquery_tablesorter">{tr}JQuery Sortable Tables{/tr}</label>
-						</td>
-						<td width="2%">
-							{help url="JQuery#TableSorter" desc="{tr}JQuery Sortable Tables{/tr}"}
-						</td>
-						<td>
-							<input type="checkbox" id="feature_jquery_tablesorter" name="feature_jquery_tablesorter" {if $prefs.feature_jquery_tablesorter eq 'y'}checked="checked"{/if}/>
-						</td>
-					</tr>
-				</table>
+	</select>
+	{if $prefs.feature_help eq 'y'} {help url="JQuery#UI" desc="{tr}JQuery UI Theme: Themes for look and feel of JQuery UI widgets{/tr}"}{/if}</div>
+</div>
+<div class="adminoptionbox">
+	<div class="adminoption"><input type="checkbox" id="feature_jquery_sheet" name="feature_jquery_sheet" {if $prefs.feature_jquery_sheet eq 'y'}checked="checked"{/if}/></div>
+	<div class="adminoptionlabel"><label for="feature_jquery_sheet">{tr}JQuery Sheet{/tr}</label>
+	{if $prefs.feature_help eq 'y'} {help url="JQuery#Sheet" desc="{tr}JQuery Spreadsheet{/tr}"}{/if}</div>
+</div>
+<div class="adminoptionbox">
+	<div class="adminoption"><input type="checkbox" id="feature_jquery_tablesorter" name="feature_jquery_tablesorter" {if $prefs.feature_jquery_tablesorter eq 'y'}checked="checked"{/if}/></div>
+	<div class="adminoptionlabel"><label for="feature_jquery_tablesorter">{tr}JQuery Sortable Tables{/tr}</label>
+	{if $prefs.feature_help eq 'y'} {help url="JQuery#TableSorter" desc="{tr}JQuery Sortable Tables{/tr}"}{/if}</div>
+</div>
+<div class="adminoptionbox">
+	<div class="adminoption"></div>
+	<div class="adminoptionlabel"><label for=""></label>
+	{if $prefs.feature_help eq 'y'} {/if}</div>
+</div>
+	
+</div>
+
+	</div>
+</div>
 			</fieldset>
+</div>
+<div class="adminoptionbox">
 			<fieldset class="admin">
 				<legend>
 					<a><span>{tr}Standard UI effects{/tr}</span></a>
 				</legend>
-				<table>
-					<tr>
-						<td width="30%">
-							<label for="jquery_effect">{tr}Effect for modules etc{/tr}</label>
-						</td>
-						<td width="2%">
-					        {help url="JQuery#Effects" desc="{tr}Main JQuery effect{/tr}"}
-						</td>
-						<td>
-							<select name="jquery_effect" id="jquery_effect">
+<div class="adminoptionbox">
+	<div class="adminoption"></div>
+	<div class="adminoptionlabel"><label for="jquery_effect">{tr}Effect for modules{/tr}:</label> 
+		<select name="jquery_effect" id="jquery_effect">
 					            <option value="none" {if $prefs.jquery_effect_tabs eq 'none'}selected="selected"{/if}>
 					              {tr}None{/tr}</option>
 					            <option value="" {if $prefs.jquery_effect eq ''}selected="selected"{/if}>
@@ -671,34 +623,26 @@
 					            <option value="slide_ui" {if $prefs.jquery_effect eq 'slide_ui'}selected="selected"{/if}>
 					              {tr}Slide (UI){/tr}</option>
 					            {/if}
-					         </select>
-						</td>
-					</tr>
-					<tr>
-						<td width="30%">
-							<label for="jquery_effect_speed">{tr}Effect speed{/tr}</label>
-						</td>
-						<td width="2%">
-						</td>
-						<td>
-							<select name="jquery_effect_speed" id="jquery_effect_speed">
+		</select>
+	{if $prefs.feature_help eq 'y'} {help url="JQuery#Effects" desc="{tr}Main JQuery effect{/tr}"}{/if}</div>
+</div>
+<div class="adminoptionbox">
+	<div class="adminoption"></div>
+	<div class="adminoptionlabel"><label for="jquery_effect_speed">{tr}Speed{/tr} :</label> 
+		<select name="jquery_effect_speed" id="jquery_effect_speed">
 					            <option value="fast" {if $prefs.jquery_effect_speed eq 'fast'}selected="selected"{/if}>
 					              {tr}Fast{/tr}</option>
 					            <option value="normal" {if $prefs.jquery_effect_speed eq 'normal'}selected="selected"{/if}>
 					              {tr}Normal{/tr}</option>
 					            <option value="slow" {if $prefs.jquery_effect_speed eq 'slow'}selected="selected"{/if}>
 					              {tr}Slow{/tr}</option>
-					         </select>
-						</td>
-					</tr>
-					<tr>
-						<td width="30%">
-							<label for="jquery_effect_direction">{tr}Effect direction{/tr}</label>
-						</td>
-						<td width="2%">
-						</td>
-						<td>
-							<select name="jquery_effect_direction" id="jquery_effect_direction">
+		</select>
+	</div>
+</div>
+<div class="adminoptionbox">
+	<div class="adminoption"></div>
+	<div class="adminoptionlabel"><label for="jquery_effect_direction">{tr}Direction{/tr} :</label> 
+		<select name="jquery_effect_direction" id="jquery_effect_direction">
 					            <option value="vertical" {if $prefs.jquery_effect_direction eq 'vertical'}selected="selected"{/if}>
 					              {tr}Vertical{/tr}</option>
 					            <option value="horizontal" {if $prefs.jquery_effect_direction eq 'horizontal'}selected="selected"{/if}>
@@ -711,25 +655,21 @@
 					              {tr}Up{/tr}</option>
 					            <option value="down" {if $prefs.jquery_effect_direction eq 'down'}selected="selected"{/if}>
 					              {tr}Down{/tr}</option>
-					         </select>
-						</td>
-					</tr>
-				</table>
+		</select>
+	</div>
+</div>
 			</fieldset>
+</div>
+<div class="adminoptionbox">			
 			<fieldset class="admin">
 				<legend>
 					<a><span>{tr}Tab UI effects{/tr}</span></a>
 				</legend>
-				<table>
-					<tr>
-						<td width="30%">
-							<label for="jquery_effect_tabs">{tr}Effect for tabs{/tr}</label>
-						</td>
-						<td width="2%">
-							{help url="JQuery#Effects" desc="{tr}JQuery effect for tabs{/tr}"}
-						</td>
-						<td>
-							<select name="jquery_effect_tabs" id="jquery_effect_tabs">
+				
+<div class="adminoptionbox">
+	<div class="adminoption"></div>
+	<div class="adminoptionlabel"><label for="jquery_effect_tabs">{tr}Effect for tabs{/tr}:</label> 
+		<select name="jquery_effect_tabs" id="jquery_effect_tabs">
 					            <option value="none" {if $prefs.jquery_effect_tabs eq 'none'}selected="selected"{/if}>
 					              {tr}None{/tr}</option>
 					            <option value="normal" {if $prefs.jquery_effect_tabs eq 'normal'}selected="selected"{/if}>
@@ -754,34 +694,24 @@
 					            <option value="slide_ui" {if $prefs.jquery_effect_tabs eq 'slide_ui'}selected="selected"{/if}>
 					              {tr}Slide (UI){/tr}</option>
 					            {/if}
-					         </select>
-						</td>
-					</tr>
-					<tr>
-						<td width="30%">
-							<label for="jquery_effect_tabs_speed">{tr}Effect speed for tabs{/tr}</label>
-						</td>
-						<td width="2%">
-						</td>
-						<td>
-							<select name="jquery_effect_tabs_speed" id="jquery_effect_tabs_speed">
+		</select>
+	{if $prefs.feature_help eq 'y'} {help url="JQuery#Effects" desc="{tr}JQuery effect for tabs{/tr}"}{/if}</div>
+</div>
+<div class="adminoptionbox">
+	<div class="adminoptionlabel"><label for="jquery_effect_tabs_speed">{tr}Speed{/tr}</label>: 
+		<select name="jquery_effect_tabs_speed" id="jquery_effect_tabs_speed">
 					            <option value="fast" {if $prefs.jquery_effect_tabs_speed eq 'fast'}selected="selected"{/if}>
 					              {tr}Fast{/tr}</option>
 					            <option value="normal" {if $prefs.jquery_effect_tabs_speed eq 'normal'}selected="selected"{/if}>
 					              {tr}Normal{/tr}</option>
 					            <option value="slow" {if $prefs.jquery_effect_tabs_speed eq 'slow'}selected="selected"{/if}>
 					              {tr}Slow{/tr}</option>
-					         </select>
-						</td>
-					</tr>
-					<tr>
-						<td width="30%">
-							<label for="jquery_effect_tabs_direction">{tr}Effect direction for tabs{/tr}</label>
-						</td>
-						<td width="2%">
-						</td>
-						<td>
-							<select name="jquery_effect_tabs_direction" id="jquery_effect_tabs_direction">
+		</select>
+	</div>
+</div>
+<div class="adminoptionbox">
+	<div class="adminoptionlabel"><label for="jquery_effect_tabs_direction">{tr}Direction{/tr}: </label>
+		<select name="jquery_effect_tabs_direction" id="jquery_effect_tabs_direction">
 					            <option value="vertical" {if $prefs.jquery_effect_tabs_direction eq 'vertical'}selected="selected"{/if}>
 					              {tr}Vertical{/tr}</option>
 					            <option value="horizontal" {if $prefs.jquery_tabs_effect_direction eq 'horizontal'}selected="selected"{/if}>
@@ -794,133 +724,95 @@
 					              {tr}Up{/tr}</option>
 					            <option value="down" {if $prefs.jquery_effect_tabs_direction eq 'down'}selected="selected"{/if}>
 					              {tr}Down{/tr}</option>
-					         </select>
-						</td>
-					</tr>
-				</table>
+		</select>
+	</div>
+</div>
 			</fieldset>
+		</div>
 	{/tab}
 
-	{tab name="{tr}Other options{/tr}"}
+	{tab name="{tr}Miscellaneous{/tr}"}
 	{* --- Other --- *}
-			<fieldset class="admin">
-				<legend>
-					<a><span>{tr}Miscellaneous{/tr}</span></a>
-				</legend>
-				<table>
-					<tr>
-						<td width="30%">
-							<label for="general-feature_tabs">{tr}Use Tabs{/tr}</label>
-						</td>
-						<td width="2%">
-						</td>
-						<td>
-							<input type="checkbox" name="feature_tabs" id="general-feature_tabs" {if $prefs.feature_tabs eq 'y'}checked="checked"{/if}/>
-						</td>
-					</tr>
-					<tr>
-						<td width="30%">
-			        		<label for="general-menu_folders">{tr}Display menus as folders{/tr}</label>
-						</td>
-						<td width="2%">
-						</td>
-						<td>
-							<input type="checkbox" name="feature_menusfolderstyle" id="general-menu_folders" {if $prefs.feature_menusfolderstyle eq 'y'}checked="checked"{/if}/>
-						</td>
-					</tr>
-					<tr>
-						<td width="30%">
-							<label for="general-layout_section">{tr}Layout per section{/tr}</label>
-						</td>
-						<td width="2%">
-						</td>
-						<td>
-							<input type="checkbox" name="layout_section" id="general-layout_section" {if $prefs.layout_section eq 'y'}checked="checked"{/if}/>
-							{if $prefs.layout_section eq 'y'}<a href="tiki-admin_layout.php" class="linkbut link">{else}<span class="linkbut disabled">{/if}
-							{tr}Admin layout per section{/tr}
-							{if $prefs.layout_section eq 'y'}</a>{else}</span>{/if}
-						</td>
-					</tr>
-					<tr>
-						<td width="30%">
-							<label for="site_favicon">{tr}Favicon icon file name:{/tr}</label>
-						</td>
-						<td width="2%">
-						</td>
-						<td>
-							<input type="text" name="site_favicon" id="site_favicon" value="{$prefs.site_favicon}" size="12" maxlength="32" />
-						</td>
-					</tr>
-					<tr>
-						<td width="30%">
-							<label for="site_favicon_type">{tr}Favicon icon MIME type:{/tr}</label>
-						</td>
-						<td width="2%">
-						</td>
-						<td>
-							<select name="site_favicon_type" id="site_favicon_type">
+
+<div class="adminoptionbox">
+	<div class="adminoption"><input type="checkbox" name="feature_tabs" id="general-feature_tabs" {if $prefs.feature_tabs eq 'y'}checked="checked"{/if}/></div>
+	<div class="adminoptionlabel"><label for="general-feature_tabs">{tr}Use Tabs{/tr}</label></div>
+</div>
+<div class="adminoptionbox">
+	<div class="adminoption"><input type="checkbox" name="feature_menusfolderstyle" id="general-menu_folders" {if $prefs.feature_menusfolderstyle eq 'y'}checked="checked"{/if}/></div>
+	<div class="adminoptionlabel"><label for="general-menu_folders">{tr}Display menus as folders{/tr}</label></div>
+</div>
+<div class="adminoptionbox">
+	<div class="adminoption"><input type="checkbox" name="layout_section" id="general-layout_section" {if $prefs.layout_section eq 'y'}checked="checked"{/if}/></div>
+	<div class="adminoptionlabel"><label for="general-layout_section">{tr}Layout per section{/tr}</label>
+	{if $prefs.layout_section eq 'y'}<br />{button _text="{tr}Admin layout per section{/tr}" href="tiki-admin_layout.php"}{/if}
+	</div>
+</div>
+
+<div class="adminoptionbox">
+	<div class="adminoption"><input type="checkbox" name="feature_iepngfix" id="feature_iepngfix"{if $prefs.feature_iepngfix eq 'y'} checked="checked"{/if} onclick="flip('iepngfix');" /></div>
+	<div class="adminoptionlabel"><label for="feature_iepngfix">{tr}Correct PNG images alpha transparency in IE6 (experimental){/tr}</label>
+								<div id="iepngfix" class="adminoptionboxchild" style="display:{if $prefs.feature_iepngfix eq 'y'}block{else}none{/if};">
+<div class="adminoptionbox">
+	<div class="adminoptionlabel"><label class="above" for="iepngfix_selectors">{tr}CSS selectors to be fixed{/tr}:</label>
+		<input id="iepngfix_selectors" type="text" name="iepngfix_selectors" size="32" value="{$prefs.iepngfix_selectors}" />
+		<br /><em>{tr}Separate multiple elements with a comma (&nbsp;,&nbsp;){/tr}.</em></div>
+</div>
+<div class="adminoptionbox">
+	<div class="adminoptionlabel"><label class="above" for="iepngfix_elements">{tr}HTMLDomElements to be fixed{/tr}:</label> 
+		<input id="iepngfix_elements" type="text" name="iepngfix_elements" size="32" value="{$prefs.iepngfix_elements}" />
+		<br /><em>{tr}Separate multiple elements with a comma (&nbsp;,&nbsp;){/tr}.</em></div>
+</div>
+								</div>
+	</div>
+</div>
+
+<div class="adminoptionbox">
+	<div class="adminoption"><input type="checkbox" name="menus_items_icons" id="menus_items_icons" {if $prefs.menus_items_icons eq 'y'}checked="checked"{/if}/></div>
+	<div class="adminoptionlabel"><label for="menus_items_icons">{tr}Allow users to define icons for menus entries{/tr}</label>.</div>
+</div>
+
+<div class="adminoptionbox">
+<fieldset><legend>{tr}Favicon{/tr}</legend>
+
+<div class="adminoptionbox">
+	<div class="adminoptionlabel"><label for="site_favicon">{tr}Favicon icon file name:{/tr}</label> <input type="text" name="site_favicon" id="site_favicon" value="{$prefs.site_favicon}" size="12" maxlength="32" /></div>
+</div>
+<div class="adminoptionbox">
+	<div class="adminoptionlabel"><label for="site_favicon_type">{tr}Favicon icon MIME type:{/tr}</label> 
+	<select name="site_favicon_type" id="site_favicon_type">
 								<option value="image/png" {if $prefs.site_favicon_type eq 'image/png'}selected="selected"{/if}>{tr}image/png{/tr}</option>
 								<option value="image/bmp" {if $prefs.site_favicon_type eq 'image/bmp'}selected="selected"{/if}>{tr}image/bmp{/tr}</option>
 								<option value="image/x-icon" {if $prefs.site_favicon_type eq 'image/x-icon'}selected="selected"{/if}>{tr}image/x-icon{/tr}</option>
-							</select>
-						</td>
-					</tr>
-					<tr>
-						<td colspan="3">
-							<div class="adminoptionbox">	  
-								<div class="checkbox">
-									<input type="checkbox" name="feature_iepngfix" id="feature_iepngfix"{if $prefs.feature_iepngfix eq 'y'} checked="checked"{/if} onclick="flip('iepngfix');" />
-								</div>
-								<label for="feature_iepngfix">{tr}Correct PNG images alpha transparency in IE6 (experimental){/tr}</label>
-								
-								<div id="iepngfix" class="adminoptionboxchild" style="display:{if $prefs.feature_iepngfix eq 'y'}block{else}none{/if};">
-									<label class="above" for="iepngfix_selectors">{tr}List of CSS selectors to be fixed, each selector separated by comma{/tr}</label>
-									<input class="fullwidth" id="iepngfix_selectors" type="text" name="iepngfix_selectors" size="32" value="{$prefs.iepngfix_selectors}" />
-									<label class="above" for="iepngfix_elements">{tr}List of HTMLDomElements to be fixed, each element separated by comma{/tr}</label>
-									<input class="fullwidth" id="iepngfix_elements" type="text" name="iepngfix_elements" size="32" value="{$prefs.iepngfix_elements}" />
-								</div>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td width="30%">
-			        		<label for="menus_items_icons">{tr}Allow users to define icons for menus entries{/tr}</label>
-						</td>
-						<td width="2%">
-						</td>
-						<td>
-							<input type="checkbox" name="menus_items_icons" id="menus_items_icons" {if $prefs.menus_items_icons eq 'y'}checked="checked"{/if}/>
-						</td>
-					</tr>
-				</table>
-				<fieldset>
-					<legend>
-						<span>{tr}Context Menus (only in file galleries so far){/tr}</span>
-					</legend>
-					<table>
-						<tr>
-							<td width="40%">
-								<label for="use_context_menu_icon">{tr}Use context menus for actions (icons){/tr}</label>
-							</td>
-							<td width="2%">
-							</td>
-							<td>
-								<input type="checkbox" id="use_context_menu_icon" name="use_context_menu_icon" {if $prefs.use_context_menu_icon eq 'y'}checked="checked"{/if} />
-							</td>
-						</tr>
-						<tr>
-							<td width="40%">
-								<label for="use_context_menu_text">{tr}Use context menus for actions (text){/tr}</label>
-							</td>
-							<td width="2%">
-							</td>
-							<td>
-								<input type="checkbox" id="use_context_menu_text" name="use_context_menu_text" {if $prefs.use_context_menu_text eq 'y'}checked="checked"{/if}/>
-							</td>
-						</tr>
-					</table>
-				</fieldset>
-			</fieldset>
+	</select>
+	</div>
+</div>
+
+</fieldset>
+</div>
+
+<div class="adminoptionbox">
+<fieldset class="admin">
+	<legend>
+		<span>{tr}Context Menus{/tr}</span>
+	</legend>
+	<em>{tr}Currently used in File Galleries only{/tr}.</em>
+<div class="adminoptionbox">
+	<div class="adminoption"><input type="checkbox" id="use_context_menu_icon" name="use_context_menu_icon" {if $prefs.use_context_menu_icon eq 'y'}checked="checked"{/if} /></div>
+	<div class="adminoptionlabel"><label for="use_context_menu_icon">{tr}Use context menus for actions (icons){/tr}</label></div>
+</div>
+<div class="adminoptionbox">
+	<div class="adminoption"><input type="checkbox" id="use_context_menu_text" name="use_context_menu_text" {if $prefs.use_context_menu_text eq 'y'}checked="checked"{/if}/></div>
+	<div class="adminoptionlabel"><label for="use_context_menu_text">{tr}Use context menus for actions (text){/tr}</label>.</div>
+</div>
+<div class="adminoptionbox">
+	<div class="adminoption"></div>
+	<div class="adminoptionlabel"><label for=""></label>
+	{if $prefs.feature_help eq 'y'} {/if}</div>
+</div>
+</fieldset>
+</div>
+
 	{/tab}
 {/tabset}
 		<div class="input_submit_container clear" style="text-align: center">
