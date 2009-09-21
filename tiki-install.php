@@ -101,7 +101,7 @@ html {
 	<body class="tiki_wiki" style="text-align: center;">
 		<div id="siteheader">
 			<div id="sitelogo" style="text-align: center; padding-left: 70px;">
-				<img style="border: medium none ;" alt="Site Logo" src="img/tiki/tiki3.png" />
+				<img style="border: medium none ;" alt="Site Logo" src="img/tiki/tikisitelogo.png" />
 			</div>
 		</div>
 		<div id="tiki-main">
