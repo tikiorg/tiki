@@ -43,8 +43,8 @@ class HistLib extends TikiLib {
 		    $comment = $info["comment"];
 		    $data = $info["data"];
 		    $description = $info["description"];
-				$query = "insert into `tiki_history`(`pageName`, `version`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`) values(?,?,?,?,?,?,?,?)";
-		    $this->query($query,array($page,(int) $old_version,(int) $lastModif,$user,$ip,$comment,$data,$description));
+			$query = "insert into `tiki_history`(`pageName`, `version`, `version_minor`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`,`is_html`) values(?,?,?,?,?,?,?,?,?,?)";
+		    $this->query($query,array($page,(int) $old_version, (int) $info["version_minor"],(int) $lastModif,$user,$ip,$comment,$data,$description, $info["is_html"]));
 		}
 		
 		$query = "select * from `tiki_history` where `pageName`=? and `version`=?";
@@ -60,10 +60,31 @@ class HistLib extends TikiLib {
 			// for approval and staging feature to work properly, one has to use real commit time of rollbacks
 			//TODO: make this feature to set rollback time as current time as more general optional feature
 			$res["lastModif"] = time();
-			$res["comment"] = $res["comment"] . " [" . tra("rollback version ") . $version . "]"; 		
 		}
-		$query = "update `tiki_pages` set `data`=?,`lastModif`=?,`user`=?,`comment`=?,`version`=`version`+1,`ip`=?, `description`=? where `pageName`=?";
-		$result = $this->query($query,array($res['data'], $res['lastModif'], $res['user'], $res['comment'], $res['ip'], $res['description'], $page));
+		// add rollback comment to existing one (after truncating if needed)
+		$ver_comment = " [" . tra("rollback version ") . $version . "]";
+		$too_long = 200 - strlen($res["comment"] . $ver_comment);
+		if ($too_long < 0) {
+			$too_long -= 4;
+			$res["comment"] = substr($res["comment"], 0, $too_long) . '...';
+		}
+		$res["comment"] = $res["comment"] . $ver_comment; 		
+		
+		$query = "update `tiki_pages` set `data`=?,`lastModif`=?,`user`=?,`comment`=?,`version`=`version`+1,`ip`=?, `description`=?, `is_html`=?";
+		$bindvars = array($res['data'], $res['lastModif'], $res['user'], $res['comment'], $res['ip'], $res['description'], $res['is_html']);
+		
+		// handle rolling back once page has been edited in a different editor (wiki or wysiwyg) based on is_html in history
+		if ($prefs['feature_wysiwyg'] == 'y' && $prefs['wysiwyg_optional'] == 'y' && $prefs['wysiwyg_memo'] == 'y') {
+			if ($res['is_html'] == 1) {
+				$bindvars[] = 'y';
+			} else {
+				$bindvars[] = 'n';
+			}
+			$query .= ', `wysiwyg`=?';
+		}
+		$query .= ' where `pageName`=?';
+		$bindvars[] = $page;
+		$result = $this->query($query, $bindvars);
 		$query = "delete from `tiki_links` where `fromPage` = ?";
 		$result = $this->query($query,array($page));
 		$this->clear_links($page);
