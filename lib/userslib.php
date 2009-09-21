@@ -2974,6 +2974,8 @@ function get_included_groups($group, $recur=true) {
 		$apass = $this->renew_user_password($user);
 		$apass = md5($apass);
 		$smarty->assign('mail_apass',$apass);
+		$smarty->assign('mail_pass', $_REQUEST['pass']);
+		$smarty->assign('mail_ip', $tikilib->get_ip_address()); 
 		$smarty->assign('user', $user);
 		$mail = new TikiMail();
 		$mail_data = $smarty->fetchLang($languageEmail, "mail/$tpl"."_subject.tpl");
