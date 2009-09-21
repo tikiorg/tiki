@@ -471,7 +471,7 @@ CREATE TABLE "tiki_categories" (
   "description" varchar(250) default NULL,
   "parentId" bigint default NULL,
   "hits" integer default NULL,
-  "rootCategId" integer default NULL,
+  "rootCategId" bigint default NULL,
   PRIMARY KEY ("categId")
 ) ;
 
