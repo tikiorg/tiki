@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-{title help="Shoutbox"}{tr}Tiki Shoutbox{/tr}{/title}
+{title help="Shoutbox"}{tr}Shoutbox{/tr}{/title}
 
 {if $tiki_p_admin_shoutbox eq 'y'}
 <h2>{tr}Change shoutbox general settings{/tr}</h2>
