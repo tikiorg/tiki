@@ -7330,6 +7330,7 @@ $lang=Array(
 "Version 1.0" => "Versie 1.0",
 "Version 2.0" => "Versie 2.0",
 "Reg users can change theme" => "Gereg. gebruikers kunnen thema wijzigen",
+"Users can change theme" => "Gereg. gebruikers kunnen thema wijzigen",
 "Restrict available themes" => "Beperk beschikbare thema's",
 "Available styles:" => "Beschikbare stijlen:",
 "Slideshows theme" => "Thema voor diavoorstellingen",

@@ -6915,6 +6915,7 @@ $lang=Array(
 "HTTPS port" => "HTTPS port",
 "Method" => "Method",
 "Reg users can change theme" => "Reg users can change theme",
+"Users can change theme" => "Reg users can change theme",
 "General Layout options" => "General Layout options",
 "Left column" => "Left column",
 "Right column" => "Right column",

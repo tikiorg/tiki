@@ -49,7 +49,7 @@
 
 <div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" id="change_theme" name="change_theme" {if $prefs.change_theme eq 'y'}checked="checked"{/if} onclick="flip('restrictthemes');" /></div>
-	<div class="adminoptionlabel"><label for="change_theme">{tr}Registered users can change theme{/tr}.</label>
+	<div class="adminoptionlabel"><label for="change_theme">{tr}Users can change theme{/tr}.</label>
 
 <div class="adminoptionboxchild" id="restrictthemes" style="display:{if $prefs.change_theme eq 'y'}block{else}none{/if};">
 

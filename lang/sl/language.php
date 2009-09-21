@@ -2898,6 +2898,7 @@ $lang=Array(
 // "tikihash (old)" => "tikihash (old)",
 // "Reg users can change password" => "Reg users can change password",
 // "Reg users can change theme" => "Reg users can change theme",
+// "Users can change theme" => "Reg users can change theme",
 // "Restrict available themes" => "Restrict available themes",
 // "Available styles:" => "Available styles:",
 // "Reg users can change language" => "Reg users can change language",

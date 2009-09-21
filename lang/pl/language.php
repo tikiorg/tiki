@@ -8449,6 +8449,7 @@ $lang=Array(
 "HTTP port" => "Port HTTP",
 "HTTPS port" => "Port HTTPS",
 "Reg users can change theme" => "Zarejestrowani użytkownicy mogą zmienić motyw",
+"Users can change theme" => "Zarejestrowani użytkownicy mogą zmienić motyw",
 "Slideshows theme" => "Motyw Slideshows",
 "Edit CSS" => "Edytuj CSS",
 "Theme Control" => "Kontrola motywów",

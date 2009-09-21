@@ -8055,6 +8055,7 @@ $lang=Array(
 "Method" => "Metode",
 "Duration" => "Varighet",
 "Reg users can change theme" => "Registrerte brukere kan endre stil",
+"Users can change theme" => "Registrerte brukere kan endre stil",
 "Slideshows theme" => "Slideshow-stil",
 "Edit CSS" => "Rediger CSS",
 "Theme Control" => "Stilkontroll",
