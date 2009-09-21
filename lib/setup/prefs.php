@@ -1033,6 +1033,7 @@ function get_default_prefs() {
 		'quantify_changes' => 'n',
 		'feature_sync_language' => 'n',
 		'show_available_translations' =>'y',
+		'language_inclusion_threshold' => 0,
 
 		// html header
 		'metatag_keywords' => '',
