@@ -659,39 +659,39 @@ class wslib extends CategLib
      */
     public function list_all_ws ($offset, $maxRecords, $sort_mode = 'name_asc')
     {
-	$query = "select * from `tiki_categories` where `rootCategId`=?";// order by ".$this->convertSortMode($sort_mode);
-	$query_cant = "select count(*) from `tiki_categories` where `rootCategId`=?";
-	$bindvals = array($this->ws_container);
-	$result = $this->query($query,$bindvals,$maxRecords,$offset);
-	$cant = $this->getOne($query_cant,$bindvals);
-	$ret = array();
+		$query = "select * from `tiki_categories` where `rootCategId`=?";// order by ".$this->convertSortMode($sort_mode);
+		$query_cant = "select count(*) from `tiki_categories` where `rootCategId`=?";
+		$bindvals = array($this->ws_container);
+		$result = $this->query($query,$bindvals,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvals);
+		$ret = array();
 
-	while ($res = $result->fetchRow())
-	{      
-		$catpath = $this->get_category_path($res["categId"]);
-		$tepath = array();	
-		foreach ($catpath as $cat) 
-		{
-			$tepath[] = $cat['name'];
+		while ($res = $result->fetchRow())
+		{      
+			$catpath = $this->get_category_path($res["categId"]);
+			$tepath = array();	
+			foreach ($catpath as $cat) 
+			{
+				$tepath[] = $cat['name'];
+			}
+			$categpath = implode("::",$tepath);
+			$categpathforsort = implode("!!",$tepath); // needed to prevent cat::subcat to be sorted after cat2::subcat 
+			$res["categpath"] = $categpath;
+			$res["tepath"] = $tepath;
+			$res["deep"] = count($tepath);
+			$res['name'] = $this->get_category_name($res['categId']);
+			global $userlib;
+			
+			$ret["$categpathforsort"] = $res;
 		}
-		$categpath = implode("::",$tepath);
-		$categpathforsort = implode("!!",$tepath); // needed to prevent cat::subcat to be sorted after cat2::subcat 
-		$res["categpath"] = $categpath;
-		$res["tepath"] = $tepath;
-		$res["deep"] = count($tepath);
-		$res['name'] = $this->get_category_name($res['categId']);
-		global $userlib;
-		
-		$ret["$categpathforsort"] = $res;
-	}
 
-	ksort($ret);
-		
-	$retval = array();
-	$retval["data"] = array_values($ret);
-	$retval["cant"] = $cant;
-	return $retval;
-    }
+		ksort($ret);
+			
+		$retval = array();
+		$retval["data"] = array_values($ret);
+		$retval["cant"] = $cant;
+		return $retval;
+	}
 	
     /** List all WS that a user have access
      *
