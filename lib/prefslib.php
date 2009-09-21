@@ -180,6 +180,16 @@ class PreferencesLib
 			return reset( array_keys( $options ) );
 		}
 	}
+
+	private function _getMultilistValue( $info, $data ) {
+		$name = $info['preference'];
+		$value = (array) $data[$name];
+
+		$options = $info['options'];
+		$options = array_keys( $options );
+
+		return array_intersect( $value, $options );
+	}
 }
 
 global $prefslib;

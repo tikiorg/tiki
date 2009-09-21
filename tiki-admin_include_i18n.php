@@ -34,8 +34,6 @@ if (isset($_REQUEST["i18nsetup"])) {
 	foreach($pref_toggles as $toggle) {
 		simple_set_toggle($toggle);
 	}
-	simple_set_value('language');
-	simple_set_value('available_languages', '', true);
 }
 if (!empty($_REQUEST['custom']) && !empty($_REQUEST['custom_lang'])) {
 	ask_ticket('admin-inc-i18n');

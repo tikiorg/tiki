@@ -1,6 +1,14 @@
 <?php
 
 function prefs_global_list() {
+	global $tikilib;
+	$languages = $tikilib->list_languages( false, null, true);
+	$map = array();
+	
+	foreach( $languages as $lang ) {
+		$map[ $lang['value'] ] = $lang['name'];
+	}
+
 	return array(
 		'browsertitle' => array(
 			'name' => tra('Browser title'),
@@ -34,6 +42,14 @@ function prefs_global_list() {
 			'dependencies' => array(
 				'useGroupHome',
 			),
+		),
+		'language' => array(
+			'name' => tra('Default language'),
+			'description' => tra('Site language used when no other language is specified by the user.'),
+			'filter' => 'lang',
+			'help' => 'Internationalization',
+			'type' => 'list',
+			'options' => $map,
 		),
 	);
 }

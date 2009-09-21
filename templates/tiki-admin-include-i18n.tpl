@@ -30,17 +30,7 @@
 {tabset name="admin_i18n"}
 	{tab name="{tr}Internationalization{/tr}"}
 
-<div class="adminoptionbox">
-	<div class="adminoptionlabel"><label for="general-lang">{tr}Default language{/tr}:</label>
-	<select name="language" id="general-lang">
-					{section name=ix loop=$languages}
-					<option value="{$languages[ix].value|escape}"
-					{if $prefs.site_language eq $languages[ix].value}selected="selected"{/if}>{$languages[ix].name}</option>
-					{/section}
-	</select>
-	</div>
-</div>
-
+{preference name=language}
 {preference name=wiki_page_regex}
 
 <div class="adminoptionbox">
@@ -72,16 +62,8 @@
 	<div class="adminoptionlabel"><label for="restrict_language">{tr}Restrict supported languages{/tr}.</label>
 	
 	<div class="adminoptionboxchild" id="available_languages" {if count($prefs.available_languages) == 0}style="display:none;"{else}style="display:block;"{/if}>
-					{tr}Available languages{/tr}:<br /> 
-					<select name="available_languages[]" multiple="multiple" size="5" id="available_languages_select">
-						{section name=ix loop=$languages}
-						<option value="{$languages[ix].value|escape}"
-							{if in_array($languages[ix].value, $prefs.available_languages)}selected="selected"{/if}>
-							{$languages[ix].name}
-						</option>
-					{/section}
-					</select>
-					<br /><em>{tr}Use Ctrl+Click to select multiple languages{/tr}.</em>
+					{preference name=available_languages}
+					{preference name=language_inclusion_threshold}
 	</div>
 	
 	</div>
