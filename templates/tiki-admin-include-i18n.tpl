@@ -34,110 +34,35 @@
 {preference name=wiki_page_regex}
 
 <div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" name="feature_multilingual" onclick="flip('usemultilingual');" id="feature_multilingual"
-			{if $prefs.feature_multilingual eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="feature_multilingual">{tr}Multilingual{/tr}</label>{if $prefs.feature_help eq 'y'} {help url="i18n+Admin"}{/if}
+	{preference name=feature_multilingual}
 <div class="adminoptionboxchild" id="usemultilingual" style="display:{if $prefs.feature_multilingual eq 'y'}block{else}none{/if};">	
 
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" name="feature_detect_language" id="feature_detect_language"
-			{if $prefs.feature_detect_language eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="feature_detect_language">{tr}Detect browser language{/tr}.</label></div>
-</div>
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" name="feature_best_language" id="feature_best_language"
-			{if $prefs.feature_best_language eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="feature_best_language">{tr}Show pages in user's preferred language{/tr}.</label>
-	{if $prefs.feature_userPreferences ne 'y'}<br />{icon _id=information} <em>{tr}User preferences are disabled{/tr}. <a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}</a>. </em>{/if}
-	</div>
-</div>
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" name="change_language" id="change_language"{if $prefs.change_language eq 'y'} checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="change_language">{tr}Users can change site language{/tr}.</label></div>
-</div>
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" name="restrict_language" id="restrict_language"
-				{if count($prefs.available_languages) > 0}checked="checked"{/if} 
-				onclick="updateList( this.checked )"/></div>
-	<div class="adminoptionlabel"><label for="restrict_language">{tr}Restrict supported languages{/tr}.</label>
+	{preference name=feature_detect_language}
+	{preference name=feature_best_language}
+	{preference name=change_language}
+	{preference name=restrict_language}
 	
 	<div class="adminoptionboxchild" id="available_languages" {if count($prefs.available_languages) == 0}style="display:none;"{else}style="display:block;"{/if}>
-					{preference name=available_languages}
-					{preference name=language_inclusion_threshold}
+		{preference name=available_languages}
+		{preference name=language_inclusion_threshold}
 	</div>
+
+	{preference name=show_available_translations}
+	{preference name=feature_sync_language}
+	{preference name=feature_translation}
+	{preference name=feature_urgent_translation}
+	{preference name=feature_multilingual_one_page}
+	{preference name=quantify_changes}
+	{preference name=feature_multilingual_structures}
+</div>
+
+{preference name=lang_use_db}
+<div class="adminoptionlabel"><a class="button" href="tiki-edit_languages.php">{tr}Edit or export/import Languages{/tr}</a></div>
+
+{preference name=record_untranslated}
 	
-	</div>
-</div>
-
-
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" name="show_available_translations" id="show_available_translations"
-			{if $prefs.show_available_translations eq 'y'}checked="checked" {/if} /></div>
-	<div class="adminoptionlabel"><label for="show_available_translations">{tr}Display available translations{/tr}.</label></div>
-</div>
-
-<div class="adminoptionbox" id="langsync" style="display:{if $prefs.show_available_translations eq 'y'}block{else}none{/if};">
-	<div class="adminoption"><input type="checkbox" name="feature_sync_language" id="feature_sync_language"
-			{if $prefs.feature_sync_language eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="feature_sync_language">{tr}Changing page language will also change the site language{/tr}</label></div>
-</div>
-
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" name="feature_translation" id="feature_translation"
-			{if $prefs.feature_translation eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="feature_translation">{tr}Translation assistant{/tr}</label>{if $prefs.feature_help eq 'y'} {help url="Translating+Tiki+content"}{/if}</div>
-</div>
-
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" name="feature_urgent_translation" id="feature_urgent_translation"
-			{if $prefs.feature_urgent_translation eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel">
-	<label for="feature_urgent_translation">{tr}Urgent translation notifications{/tr}</label>
-	</div>
-</div>
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" name="quantify_changes" id="quantify_changes"
-			{if $prefs.quantify_changes eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="quantify_changes">{tr}Quantify change size{/tr}</label></div>
-</div>
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" name="feature_multilingual_structures" id="feature_multilingual_structures"
-			{if $prefs.feature_multilingual_structures eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel">	<label for="feature_multilingual_structures">{tr}Multilingual structures{/tr}</label>{if $prefs.feature_help eq 'y'} {help url="Structure"}{/if}
-	{if $prefs.feature_wiki_structure ne 'y'}<br />{icon _id=information} <em>{tr}Structures are disabled{/tr}. <a href="tiki-admin.php?page=wiki" title="{tr}Wiki{/tr}">{tr}Enable now{/tr}</a>.</em>{/if}
-	</div>
-</div>
-
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" name="lang_use_db" id="lang_use_db"
-			{if $prefs.lang_use_db eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="lang_use_db">{tr}Use database for translation{/tr}.</label>{if $prefs.feature_help eq 'y'} {help url="Translating+Tiki+interface"}{/if}
-{if $prefs.lang_use_db eq 'y'}
-<div class="adminoptionboxchild">
-<div class="adminoptionbox">
-	<div class="adminoptionlabel"><a class="button" href="tiki-edit_languages.php">{tr}Edit or ex/import Languages{/tr}</a></div>
-</div>
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" name="record_untranslated" id="record_untranslated"
-			{if $prefs.record_untranslated eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="record_untranslated">{tr}Record untranslated{/tr}.</label></div>
-</div>
-</div>
-{/if}	
-	
-	</div>
-	<div class="adminoption"><input type="checkbox" name="feature_multilingual_one_page" id="feature_multilingual_one_page"{if $prefs.feature_multilingual_one_page eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel">
-		<label for="feature_multilingual_one_page">{tr}Multilingual One Page feature{/tr}.
-		{icon _id="error"} <em>{tr}Experimental{/tr}</em></label>{if $prefs.feature_help eq 'y'} {help url="Multilingual+One+Page"}{/if}</div>
-</div>
-
 {preference name=feature_machine_translation}
 
-
-</div>
-	</div>
-</div>
 
 {/tab}
 

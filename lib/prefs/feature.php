@@ -563,5 +563,47 @@ function prefs_feature_list() {
 			'description' => tra('Protect against CSRF with a ticket'),
 			'type' => 'flag',
 		),
+		'feature_detect_language' => array(
+			'name' => tra('Detect browser language'),
+			'description' => tra('Lookup the user\'s preferred language through browser preferences.'),
+			'type' => 'flag',
+		),
+		'feature_best_language' => array(
+			'name' => tra('Show pages in user\'s preferred language'),
+			'description' => tra('When accessing a page which has an equivalent in the user\'s preferred language, favor the translated page.'),
+			'type' => 'flag',
+			'dependencies' => array(
+				'feature_userPreferences',
+			),
+		),
+		'feature_sync_language' => array(
+			'name' => tra('Changing the page language also changes the site language'),
+			'description' => tra(''),
+			'type' => 'flag',
+		),
+		'feature_translation' => array(
+			'name' => tra('Translation assistant'),
+			'description' => tra('Track translation operations between pages.'),
+			'help' => 'Translating+Tiki+content',
+			'type' => 'flag',
+		),
+		'feature_urgent_translation' => array(
+			'name' => tra('Urgent translation notifications'),
+			'description' => tra('Allow to flag changes as urgent, leading translations to be marked with a notice visible to all users.'),
+			'type' => 'flag',
+		),
+		'feature_multilingual_structures' => array(
+			'name' => tra('Multilingual structures'),
+			'description' => tra('Structures to lookup equivalent pages in other languages. May cause performance problems on larger structures.'),
+			'type' => 'flag',
+			'dependencies' => array(
+				'feature_wiki_structure',
+			),
+		),
+		'feature_multilingual_one_page' => array(
+			'name' => tra('Display all languages in a single page'),
+			'description' => tra('List all languages as a language option in the page language drop list to see all languages at once.'),
+			'type' => 'flag',
+		),
 	);
 }
