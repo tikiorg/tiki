@@ -17,9 +17,7 @@
 
 	{include file='find.tpl' find_show_num_rows='y'}
 
-	{* if $cant_pages > 1 or !empty($initial) or !empty($find) *}
-		{*initials_filter_links*}
-	{* /if *}
+	{initials_filter_links}
 
 	<form name="mult_edit" method="post" action="{$smarty.server.PHP_SELF}">
 	   <table class ="normal">
@@ -38,8 +36,8 @@
 				<td>{$data.description}</td>
 				<td>{$data.categpath}</td>
 				<td>
-					{self_link _class="link" editWS=$data.id _icon="page_edit" _title="{tr}Edit Workspace Settings{/tr}: `$data.name`"}{/self_link}
-					{self_link _class="link" deleteWS=$data.id _icon="cross" _title="{tr}Remove this Workspace and its childrens (if apply){/tr}"}{/self_link}
+					{self_link _class="link" editWS=$data.categId _icon="page_edit" _title="{tr}Edit Workspace Settings{/tr}: `$data.name`"}{/self_link}
+					{self_link _class="link" deleteWS=$data.categId _icon="cross" _title="{tr}Remove this Workspace and its childrens (if apply){/tr}"}{/self_link}
 				</td>
 			</tr>
 		{/foreach}

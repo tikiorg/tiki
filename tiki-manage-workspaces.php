@@ -1,7 +1,20 @@
 <?php
+/**
+ * tiki-manage-workspaces.php - TikiWiki CMS/GroupWare
+ *
+ * PHP file that allows to the user manage ws with the gui
+ * @author	Benjamin Palacios Gonzalo (mangapower) <mangapowerx@gmail.com>
+ * @author	Aldo Borrero Gonzalez (axold) <axold07@gmail.com>
+ * @license	http://www.opensource.org/licenses/lgpl-2.1.php
+ */
+
+//UNDER HEAVY DEVELOPMENT!!!
+// CLEANING SOME THINGS
+
 //Imports 
-require_once('tiki-setup.php');
-require_once('lib/workspaces/wslib.php');
+require_once 'tiki-setup.php';
+if (!$wslib) require_once 'lib/workspaces/wslib.php';
+require_once 'lib/userslib.php';
 
 //Check security
 if (!($tiki_p_admin == 'y' || $tiki_p_admin_users == 'y')) { 
@@ -10,6 +23,8 @@ if (!($tiki_p_admin == 'y' || $tiki_p_admin_users == 'y')) {
 	$smarty->display("error.tpl");
 	die;
 }
+
+//Checking the parameters sent to the url
 
 if ( isset($_REQUEST['create']) )
 {	
@@ -64,77 +79,12 @@ if ( isset($_REQUEST['create']) )
 	$smarty->assign('type', 'note');
 	$smarty->assign('feedback', 'You have succesfully created the Workspace!');
 }
-else if ( isset($_REQUEST['editWS']))
-{
-	$smarty->assign('editWS', "y");	
-	
-	$wsId = $_REQUEST['editWS'];
-	$smarty->assign('wsId', $wsId);
-	
-	$wsName = $wslib->get_ws_name($wsId);
-	$smarty->assign('wsName', $wsName);
-	
-	$smarty->assign('title', "Edit '".$wsName."'");
-	
-	$wsDesc = $wslib->get_ws_description($wsId);
-	$smarty->assign('wsDesc',$wsDesc);
-	
-	// Get maxRecord and offset for groups
-	if ((!isset($_REQUEST['maxRecordGroup'])) || ($_REQUEST['maxRecordGroup'] < 1))
-		$_REQUEST['maxRecordGroup'] = 10;
-	if ((!isset($_REQUEST['offsetGroup'])) || ($_REQUEST['offsetGroup'] < 0))
-		$_REQUEST['offsetGroup'] = 0;
-	$maxRecordGroup = $_REQUEST['maxRecordGroup'];
-	$offsetGroup = $_REQUEST['offsetGroup'];
-	// List the groups that have access in the WS
-	$listWSGroups = $wslib->list_groups_that_can_access_in_ws ($wsId,$maxRecordGroup,$offsetGroup);
-	$numGroups = $wslib->count_groups_in_ws ($wsId);
-	$smarty->assign('groups',$listWSGroups);
-	// Set Back and Next buttons for groups
-	if ($offsetGroup > 0)
-	{
-		$offsetGroup_prev = (int) $offsetGroup- (int) $maxRecordGroup;
-		$href_prev = "tiki-manage-workspaces.php?editWS=".$wsId."&maxRecordGroup=".$maxRecordGroup."&offsetGroup=".$offsetGroup_prev;
-	}
-	if (((int) $offsetGroup + (int) $maxRecordGroup) < (int) $numGroups)
-	{
-		$offsetGroup_next = (int) $offsetGroup + (int) $maxRecordGroup;
-		$href_next = "tiki-manage-workspaces.php?editWS=".$wsId."&maxRecordGroup=".$maxRecordGroup."&offsetGroup=".$offsetGroup_next;
-	}
-	$smarty->assign('prev_pageGroup',$href_prev);
-	$smarty->assign('next_pageGroup',$href_next);
-	
-	// Get maxRecord and offset for objects
-	if ((!isset($_REQUEST['maxRecordObj'])) || ($_REQUEST['maxRecordObj'] < 1))
-		$_REQUEST['maxRecordObj'] = 10;
-	if ((!isset($_REQUEST['offsetObj'])) || ($_REQUEST['offsetObj'] < 0))
-		$_REQUEST['offsetObj'] = 0;
-	$maxRecordObj = $_REQUEST['maxRecordObj'];
-	$offsetObj = $_REQUEST['offsetObj'];
-	// List the objects that the user has access within the WS
-	$listWSObjects = $wslib->list_ws_objects ($wsId, $maxRecordObj, $offsetObj);
-	$numObjects = $wslib->count_objects_in_ws ($wsId);
-	$smarty->assign('resources',$listWSObjects);
-	// Set Back and Next buttons for objects
-	if ($offsetObj > 0)
-	{
-		$offsetObj_prev = (int) $offsetObj- (int) $maxRecordObj;
-		$href_prev = "tiki-manage-workspaces.php?editWS=".$wsId."&maxRecordObj=".$maxRecordObj."&offsetObj=".$offsetObj_prev;
-	}
-	if (((int) $offsetObj + (int) $maxRecordObj) < (int) $numObjects)
-	{
-		$offsetObj_next = (int) $offsetObj + (int) $maxRecordObj;
-		$href_next = "tiki-manage-workspaces.php?editWS=".$wsId."&maxRecordObj=".$maxRecordObj."&offsetObj=".$offsetObj_next;
-	}
-}
 
-require_once 'lib/userslib.php';
-	
-// List Workspaces Tab
-
+//Remove one WS - TODO: Show a confirmation dialog
 if (isset($_REQUEST['deleteWS']))
     $wslib->remove_ws($_REQUEST['deleteWS']);
 
+//Remove multiple WS - TODO: Show a confirmation dialog
 if (isset($_REQUEST['submit_mult']) && ($_REQUEST['submit_mult'] == 'remove_workspaces'))
 {
     foreach($_REQUEST["checked"] as $deleteWS)
@@ -143,8 +93,9 @@ if (isset($_REQUEST['submit_mult']) && ($_REQUEST['submit_mult'] == 'remove_work
     }
 }
 
+//Displayed rows
 if ((!isset($_REQUEST['maxRecords'])) || ($_REQUEST['maxRecords'] < 1))
-    $_REQUEST['maxRecords'] = 15;
+    $_REQUEST['maxRecords'] = 25;
 
 if ((!isset($_REQUEST['offset'])) || ($_REQUEST['offset'] < 0))
     $_REQUEST['offset'] = 0;
@@ -156,30 +107,14 @@ if (isset($_REQUEST['sort_mode']))
     $sort_mode = $_REQUEST['sort_mode'];
 else
     $sort_mode = 'name_asc';
-	
+
+//Display the basic list of Workspaces
+
+//Display ws - TODO: Needs to be more restrictive depending on the user
 $listWS_temp = $wslib->list_all_ws($offset, $maxRecords, $sort_mode, "", "", "");
-$listWS = array('data' =>array(), 'cant'=>$listWS_temp['cant']);
-foreach ($listWS_temp["data"] as $res)
-{
-    $res['id'] = $res["categId"];
-    $listWS['data'][] = $res;
-}
-
+$listWS = array('data' =>$listWS_temp['data'], 'cant'=>$listWS_temp['cant']);
 $smarty->assign('listWS', $listWS["data"]);
-if ($offset > 0)
-{
-	$offset_prev = (int) $offset- (int) $maxRecords;
-	$href_prev = "tiki-manage-workspaces.php?maxRecords=".$maxRecords."&offset=".$offset_prev;
-}
-if (((int) $offset + (int) $maxRecords) < (int) $listWS["cant"])
-{
-	$offset_next = (int) $offset+ (int) $maxRecords;
-	$href_next = "tiki-manage-workspaces.php?maxRecords=".$maxRecords."&offset=".$offset_next;
-}
 
-$smarty->assign('prev_pageWS',$href_prev);
-$smarty->assign('next_pageWS',$href_next);
-	
 // Add Workspace Tab	
 $listGroups = $userlib->get_groups();
 $smarty->assign('listGroups', $listGroups);
