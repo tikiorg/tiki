@@ -4,10 +4,21 @@
 {if $side_by_side}
 	<table>
 		<tr>
-			{foreach item=body from=$content}
-				<td>{$body}</td>
+			{foreach item=body from=$content key=k}
+				{if $k == 0 || $k == 1}
+					<td>{$body}</td>
+				{/if}
 			{/foreach}
 		</tr>
+		{if $content|@count > 2}
+			{foreach item=body from=$content key=k}
+				{if $k > 1}
+					<tr>
+						<td colspan="2">{$body}</td>
+					</tr>
+				{/if}
+			{/foreach}
+		{/if}
 	</table>
 {else}
 	{foreach item=body from=$content}
