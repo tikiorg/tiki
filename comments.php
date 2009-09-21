@@ -171,7 +171,8 @@ if( ! isset( $comments_objectId ) ) {
 
 $feedbacks = array();
 $errors = array();
-if (isset($_REQUEST['comments_postComment']) || isset($_REQUEST['comments_postComment_anonymous'])) {
+if ( $_REQUEST['comments_objectId'] == $comments_objectId
+	&& (isset($_REQUEST['comments_postComment']) || isset($_REQUEST['comments_postComment_anonymous']) )) {
 	if (isset($forum_mode) && $forum_mode == 'y') {
 		$forum_info = $commentslib->get_forum($_REQUEST['forumId']);
 		$threadId = $commentslib->post_in_forum($forum_info, $_REQUEST, $feedbacks, $errors);
@@ -502,4 +503,6 @@ if ($prefs['feature_contribution'] == 'y') {
 	include_once('contribution.php');
 }
 
+
+$smarty->assign('comments_objectId', $comments_objectId);
 $smarty->assign('comments_show', $comments_show);

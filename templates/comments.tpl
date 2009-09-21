@@ -54,6 +54,7 @@
 	<input type="hidden" name="comments_parentId" value="{$comments_parentId|escape}" />    
 	<input type="hidden" name="comments_grandParentId" value="{$comments_grandParentId|escape}" />    
 	<input type="hidden" name="comments_reply_threadId" value="{$comments_reply_threadId|escape}" />    
+	<input type="hidden" name="comments_objectId" value="{$comments_objectId|escape}" />
 	<input type="hidden" name="comments_offset" value="0" />
 	{if $smarty.request.topics_offset}<input type="hidden" name="topics_offset" value="{$smarty.request.topics_offset|escape}" />{/if}
 	{if $smarty.request.topics_find}<input type="hidden" name="topics_find" value="{$smarty.request.topics_find|escape}" />{/if}
@@ -275,6 +276,7 @@
 	<input type="hidden" name="comments_threadId" value="{$comments_threadId|escape}" />
 	<input type="hidden" name="comments_threshold" value="{$comments_threshold|escape}" />
 	<input type="hidden" name="thread_sort_mode" value="{$thread_sort_mode|escape}" />
+	<input type="hidden" name="comments_objectId" value="{$comments_objectId|escape}" />
 
 	{* Traverse request variables that were set to this page adding them as hidden data *}
 	{section name=i loop=$comments_request_data}
