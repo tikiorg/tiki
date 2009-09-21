@@ -98,6 +98,7 @@ class CategLib extends ObjectLib {
 		return $retval;
 	}
 	
+	//With this you can exclude certain types of categories (i.e ws)
 	function exclude_categs ($excludeCategId, $find, $showWS = false)
 	{
 	    if ($excludeCategId)

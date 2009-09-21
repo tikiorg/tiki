@@ -265,7 +265,6 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 		$area = 'batchdeluser';
 		if ($prefs['feature_ticketlib2'] == 'n' or (isset($_REQUEST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
-			var_dump($_REQUEST['checked']);
 			foreach($_REQUEST["checked"] as $deleteuser) if ($deleteuser != 'admin') {
 				$userlib->remove_user($deleteuser);
 				$logslib->add_log('users', sprintf(tra("Deleted account %s") , $deleteuser));

@@ -64,54 +64,6 @@ if ( isset($_REQUEST['create']) )
 	$smarty->assign('type', 'note');
 	$smarty->assign('feedback', 'You have succesfully created the Workspace!');
 }
-// If WS Name and Description is edited
-else if ( isset($_REQUEST['editedWS']))
-{
-	$wsId = $_REQUEST['editedWS'];
-	
-	$wsName = $_REQUEST['wsNewName'];	
-	$wsDesc = $_REQUEST['wsNewDesc'];
-	
-	$wslib->update_ws_data($wsId, $wsName, $wsDesc);
-	
-	header("Location: ./tiki-manage-workspaces.php?editWS=".$wsId);
-}
-// If an object is added in the WS
-else if ( isset($_REQUEST['addObjectinWS']))
-{
-	$wsId = $_REQUEST['addObjectinWS'];
-	$name = $_REQUEST['objectName'];
-	$type = $_REQUEST['selectType'];
-	$description = $_REQUEST['objectDesc'];
-	
-	$wslib->create_ws_object ($wsId, $name, $type, $description);
-	header("Location: ./tiki-manage-workspaces.php?editWS=".$wsId);
-}
-// If a group is added in the WS
-else if ( isset($_REQUEST['addGroupinWS']))
-{
-	$wsId = $_REQUEST['addGroupinWS'];
-	if ($_REQUEST['addAdminPerms'] != '')
-		$additionalPerms = array($_REQUEST['addAdminPerms']);
-	
-	// If selected, create a new group
-	if ($_REQUEST['addGroupSelect'] == "addNew")
-	{
-		$groupName = $_REQUEST['addNewGroup'];
-		$groupDesc = $_REQUEST["addGroupDesc"];
-		$wslib->add_ws_group ($wsId, null, $groupName, $groupDesc, $additionalPerms);
-	} 
-	// else, will select a previously created group
-	else if ($_REQUEST['addGroupSelect'] == "addOld")
-	{
-		$groupName = $_REQUEST['addOldGroup'];
-		$wslib->set_permissions_for_group_in_ws ($wsId, $groupName, array('tiki_p_ws_view'));
-	    	if ($additionalPerms != null)
-			$wslib->set_permissions_for_group_in_ws($wsId, $groupName, $additionalPerms);
-	}
-	
-	header("Location: ./tiki-manage-workspaces.php?editWS=".$wsId);
-}
 else if ( isset($_REQUEST['editWS']))
 {
 	$smarty->assign('editWS', "y");	
@@ -175,52 +127,54 @@ else if ( isset($_REQUEST['editWS']))
 		$href_next = "tiki-manage-workspaces.php?editWS=".$wsId."&maxRecordObj=".$maxRecordObj."&offsetObj=".$offsetObj_next;
 	}
 }
-else
+
+require_once 'lib/userslib.php';
+	
+// List Workspaces Tab
+
+if (isset($_REQUEST['deleteWS']))
+    $wslib->remove_ws($_REQUEST['deleteWS']);
+
+if (isset($_REQUEST['submit_mult']) && ($_REQUEST['submit_mult'] == 'remove_workspaces'))
 {
-	require_once 'lib/userslib.php';
-	
-	// List Workspaces Tab
-	if ((!isset($_REQUEST['maxRecords'])) || ($_REQUEST['maxRecords'] < 1))
-		$_REQUEST['maxRecords'] = 15;
-	if ((!isset($_REQUEST['offset'])) || ($_REQUEST['offset'] < 0))
-		$_REQUEST['offset'] = 0;
-	
-	$maxRecords = $_REQUEST['maxRecords']; 
-	$offset = $_REQUEST['offset'];
+    foreach($_REQUEST["checked"] as $deleteWS)
+    {
+	$wslib->remove_ws($deleteWS);
+    }
+}
 
-	if (isset($_REQUEST['sort_mode']))
-	    $sort_mode = $_REQUEST['sort_mode'];
-	else
-	    $sort_mode = 'name_asc';
-	
-	$listWS_temp = $wslib->list_all_ws($offset, $maxRecords, $sort_mode, "", "", "");
-	$listWS = array('data' =>array(), 'cant'=>$listWS_temp['cant']);
-	foreach ($listWS_temp["data"] as $res)
-	{
-		$res['href_edit'] = "tiki-manage-workspaces.php?editWS=".$res["categId"];
-		$listWS['data'][] = $res;
-	}
-	$smarty->assign('listWS', $listWS["data"]);
-	
-	if ($offset > 0)
-	{
-		$offset_prev = (int) $offset- (int) $maxRecords;
-		$href_prev = "tiki-manage-workspaces.php?maxRecords=".$maxRecords."&offset=".$offset_prev;
-	}
-	if (((int) $offset + (int) $maxRecords) < (int) $listWS["cant"])
-	{
-		$offset_next = (int) $offset+ (int) $maxRecords;
-		$href_next = "tiki-manage-workspaces.php?maxRecords=".$maxRecords."&offset=".$offset_next;
-	}
+if ((!isset($_REQUEST['maxRecords'])) || ($_REQUEST['maxRecords'] < 1))
+    $_REQUEST['maxRecords'] = 15;
 
-	if (isset($_REQUEST['submit_mult']) && ($_REQUEST['submit_mult'] == 'remove_workspaces'))
-	{
-	    var_dump($_REQUEST['checked']);
-	    foreach($_REQUEST["checked"] as $deleteWS)
-	    {
-		var_dump($deleteWS);
-	    }
-	}
+if ((!isset($_REQUEST['offset'])) || ($_REQUEST['offset'] < 0))
+    $_REQUEST['offset'] = 0;
+	
+$maxRecords = $_REQUEST['maxRecords']; 
+$offset = $_REQUEST['offset'];
+
+if (isset($_REQUEST['sort_mode']))
+    $sort_mode = $_REQUEST['sort_mode'];
+else
+    $sort_mode = 'name_asc';
+	
+$listWS_temp = $wslib->list_all_ws($offset, $maxRecords, $sort_mode, "", "", "");
+$listWS = array('data' =>array(), 'cant'=>$listWS_temp['cant']);
+foreach ($listWS_temp["data"] as $res)
+{
+    $res['id'] = $res["categId"];
+    $listWS['data'][] = $res;
+}
+
+$smarty->assign('listWS', $listWS["data"]);
+if ($offset > 0)
+{
+	$offset_prev = (int) $offset- (int) $maxRecords;
+	$href_prev = "tiki-manage-workspaces.php?maxRecords=".$maxRecords."&offset=".$offset_prev;
+}
+if (((int) $offset + (int) $maxRecords) < (int) $listWS["cant"])
+{
+	$offset_next = (int) $offset+ (int) $maxRecords;
+	$href_next = "tiki-manage-workspaces.php?maxRecords=".$maxRecords."&offset=".$offset_next;
 }
 
 $smarty->assign('prev_pageWS',$href_prev);
