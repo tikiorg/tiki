@@ -1069,7 +1069,7 @@ function get_default_prefs() {
 		'sitelogo_bgstyle' => '',
 		'sitelogo_align' => 'left',
 		'sitelogo_title' => 'Tikiwiki powered site',
-		'sitelogo_src' => 'img/tiki/tiki3.png',
+		'sitelogo_src' => 'img/tiki/tikisitelogo.png',
 		'sitelogo_alt' => 'Site Logo',
 		'feature_siteloc' => 'y',
 		'feature_sitenav' => 'n',
