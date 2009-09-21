@@ -33,23 +33,23 @@
   <td class="formcolor">{tr}Username:{/tr}</td>
   <td class="formcolor">
 	<input type="hidden" name="user" value="{$userlogin|escape}" />
-	<b>{$userlogin}</b>
+	<strong>{$userlogin}</strong>
   </td>
 </tr>
 {if empty($smarty.request.actpass) and $new_user_validation neq 'y'}
 <tr>
-  <td class="formcolor">{tr}Old password:{/tr}</td>
-  <td class="formcolor"><input type="password" name="oldpass" value="{$oldpass|escape}" /></td>
+  <td class="formcolor"><label for="oldpass">{tr}Old password:{/tr}</label></td>
+  <td class="formcolor"><input type="password" name="oldpass" id="oldpass" value="{$oldpass|escape}" /></td>
 </tr>
 {/if}     
 <tr>
-  <td class="formcolor">{tr}New password:{/tr}</td>
+  <td class="formcolor"><label for="pass">{tr}New password:{/tr}</label></td>
   <td class="formcolor">
 						<div style="float:right;width:150px;margin-left:5px;">
 							<div id="mypassword_text"></div>
 							<div id="mypassword_bar" style="font-size: 5px; height: 2px; width: 0px;"></div> 
 						</div>
-  <input type="password" name="pass" onkeypress="regCapsLock(event)" onkeyup="runPassword(this.value, 'mypassword');{if $prefs.feature_ajax eq 'y'}check_pass();{/if}" />
+  <input type="password" name="pass" id="pass" onkeypress="regCapsLock(event)" onkeyup="runPassword(this.value, 'mypassword');{if $prefs.feature_ajax eq 'y'}check_pass();{/if}" />
 	{if $prefs.feature_ajax ne 'y'}
 		{if $prefs.min_pass_length > 1}
 								<div class="highlight"><em>{tr}Minimum {$prefs.min_pass_length} characters long{/tr}</em></div>{/if}
@@ -60,13 +60,13 @@
   </td>
 </tr>  
 <tr>
-  <td class="formcolor">{tr}Repeat password:{/tr}</td>
-  <td class="formcolor"><input type="password" name="pass2" /></td>
+  <td class="formcolor"><label for="pass2">{tr}Repeat password:{/tr}</label></td>
+  <td class="formcolor"><input type="password" name="pass2" id="pass2" /></td>
 </tr>  
 <tr>
   <td class="formcolor">&nbsp;</td>
   <td class="formcolor"><input type="submit" name="change" value="{tr}Change{/tr}" /></td>
 </tr>  
 </table>
-</form>
 </fieldset>
+</form>
