@@ -896,7 +896,7 @@ class wslib extends CategLib
      	$hashWS = md5($this->objectType . strtolower($ws_id));
 
 	$query_cant = "select count(*) from `users_objectpermissions` where 
-	    `objectId`=? and `type`=? `permName`=?";
+	    `objectId`=? and `objectType`=? and `permName`=?";
 	$bindvals = array($hashWS, $this->objectType, $this->viewPerm);
      	
      	return $this->getOne($query_cant,$bindvals);
