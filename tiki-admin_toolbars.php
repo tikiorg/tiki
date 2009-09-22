@@ -24,6 +24,7 @@ if ($prefs['javascript_enabled'] != 'y') {
 
 if ($prefs['feature_jquery_ui'] != 'y') {
 	$headerlib->add_jsfile('lib/jquery/jquery-ui/ui/minified/jquery-ui.min.js');
+	$headerlib->add_cssfile('lib/jquery/jquery-ui/themes/'.$prefs['feature_jquery_ui_theme'].'/jquery-ui.css');
 }
 
 $sections = array( 'global', 'wiki page', 'trackers', 'blogs', 'calendar', 'cms', 'faqs', 'newsletters', 'forums', 'maps', 'admin');
@@ -47,11 +48,15 @@ if( isset($_REQUEST['save'], $_REQUEST['pref']) ) {
 if( isset($_REQUEST['reset']) && $section != 'global' ) {
 	$prefName = 'toolbar_' . $section . ($comments ? '_comments' : '');
 	$tikilib->delete_preference( $prefName);
+	require_once($smarty->_get_plugin_filepath('function', 'query'));
+	header('location: ?'. smarty_function_query(array(), $smarty));
 }
 
 if( isset($_REQUEST['reset_global']) && $section == 'global' ) {
 	$prefName = 'toolbar_' . $section . ($comments ? '_comments' : '');
 	$tikilib->delete_preference( $prefName);
+	require_once($smarty->_get_plugin_filepath('function', 'query'));
+	header('location: ?'. smarty_function_query(array(), $smarty));
 }
 
 if ( !empty($_REQUEST['save_tool']) && !empty($_REQUEST['tool_name'])) {	// input from the tool edit form
@@ -59,6 +64,9 @@ if ( !empty($_REQUEST['save_tool']) && !empty($_REQUEST['tool_name'])) {	// inpu
 }
 
 $current = $tikilib->get_preference( 'toolbar_' . $section . ($comments ? '_comments' : '') );
+if (empty($current)) {
+	$current = $tikilib->get_preference( 'toolbar_global' . ($comments ? '_comments' : '') );
+}
 
 if ( !empty($_REQUEST['delete_tool']) && !empty($_REQUEST['tool_name'])) {	// input from the tool edit form
 	Toolbar::deleteTool($_REQUEST['tool_name']);
