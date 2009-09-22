@@ -27,14 +27,14 @@ function auto_save_log($id, $referer = '', $action = '') {
 }
 
 function auto_save($id, $data, $referer = '') {
-	auto_save_log($id, $referer, 'auto_save');
+//	auto_save_log($id, $referer, 'auto_save');
 	file_put_contents(auto_save_name($id, $referer), rawurldecode($data));
 	return new xajaxResponse();
 }
 
 function remove_save($id, $referer = '') {
 	$referer = ensureReferrer($referer);
-	auto_save_log($id, $referer, 'remove_save');
+//	auto_save_log($id, $referer, 'remove_save');
 	$file_name = auto_save_name($id, $referer);
 	if (file_exists($file_name)) {
 		unlink($file_name);

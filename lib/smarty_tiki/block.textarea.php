@@ -50,14 +50,14 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	
 	$auto_save_referrer = '';
 	$auto_save_warning = '';
+	if ($params['_wysiwyg'] != 'y') {
+		$as_id = $params['id'];
+	} else {
+		$as_id = $params['name'];
+	}
 	if ($prefs['feature_ajax'] == 'y' && $prefs['feature_ajax_autosave'] == 'y') {	// retrieve autosaved content
 		$auto_save_referrer = ensureReferrer();
 
-		if ($params['_wysiwyg'] != 'y') {
-			$as_id = $params['id'];
-		} else {
-			$as_id = $params['name'];	// this is stupid
-		}
 		if (empty($_REQUEST['noautosave']) || $_REQUEST['noautosave'] != 'y') {
 			if (has_autosave($as_id, $auto_save_referrer)) {		//  and $params['preview'] == 0 -  why not?
 				$auto_saved = str_replace("\n","\r\n", get_autosave($as_id, $auto_save_referrer));
@@ -79,13 +79,14 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 		include_once 'lib/tikifck.php';
 		if (!isset($params['name']))       $params['name'] = 'fckedit';
 		$fcked = new TikiFCK($params['name']);
-		
+	
 		if (isset($content))			$fcked->Meat = $content;
 		if (isset($params['Width']))	$fcked->Width = $params['Width'];
 		if (isset($params['Height']))	$fcked->Height = $params['Height'];
 		
 		if ($prefs['feature_ajax'] == 'y' && $prefs['feature_ajax_autosave'] == 'y') {
-			$fcked->Config['autoSaveSelf'] = $auto_save_referrer;		//htmlentities($_SERVER['REQUEST_URI']);
+			$fcked->Config['autoSaveSelf'] = $auto_save_referrer;		// this doesn't need to be the 'self' URI - just a unique reference for each page set up in ensureReferrer();
+			$fcked->Config['autoSaveEditorId'] = $as_id;
 		}
 		if (isset($params['ToolbarSet'])) {
 			$fcked->ToolbarSet = $params['ToolbarSet'];
@@ -115,6 +116,8 @@ function FCKeditor_OnComplete( editorInstance ) {
 		fckbod.find("#xEditingArea").height(h);
 	}
 };'); }
+
+
 	} else {
 		
 		// setup for wiki editor
@@ -146,7 +149,6 @@ function FCKeditor_OnComplete( editorInstance ) {
 		$html .= "\n".'<input type="hidden" name="rows" value="'.$params['rows'].'"/>'
 			."\n".'<input type="hidden" name="cols" value="'.$params['cols'].'"/>'
 			."\n".'<input type="hidden" name="wysiwyg" value="n" />';
-
 
 	}	// wiki or wysiwyg
 
@@ -192,7 +194,7 @@ window.onbeforeunload = confirmExit;
 \$jq('document').ready( function() {
 	editTimeoutIntervalId = setInterval(editTimerTick, 1000);
 	// attach dirty function to all relevant inputs etc
-	\$jq(\$jq('#$textarea_id').attr('form')).find('input, textarea, select').change( function () { if (!editorDirty) { editorDirty = true; } });
+	\$jq(\$jq('#$as_id').attr('form')).find('input, textarea, select').change( function () { if (!editorDirty) { editorDirty = true; } });
 });
 
 var needToConfirm = true;
