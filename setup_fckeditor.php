@@ -7,8 +7,9 @@ $force_no_compression = true;
 include('tiki-setup.php');
 include_once 'lib/toolbars/toolbarslib.php';
 
-$fckstyle = 'styles/'.$prefs['style'];
-$smarty->assign('fckstyle',$fckstyle);
+global $tikilib;
+$smarty->assign('fckstyle',$tikilib->get_style_path('', '', $prefs['style']));
+$smarty->assign('fckstyleoption',$tikilib->get_style_path($prefs['style'], $prefs['style_option'], $prefs['style_option']));
 
 $section = isset($_GET['section']) ? $_GET['section'] : 'wiki page';
 
