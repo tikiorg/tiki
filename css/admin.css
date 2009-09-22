@@ -264,6 +264,10 @@ div.adminanchors a {float: left}
 	background-color: #ff9;
 }
 
+.qt-noaccess {
+	opacity: .4;
+}
+
 .qt_filter_div {
 	background-color: #fff;
 	border-top: thin gray solid;

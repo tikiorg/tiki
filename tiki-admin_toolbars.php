@@ -111,6 +111,7 @@ foreach( $qtlist as $name ) {
 	$wys = strlen($tag->getWysiwygToken()) ? 'qt-wys' : '';
 	$wiki = strlen($tag->getWikiHtml('')) ? 'qt-wiki' : '';
 	$cust = Toolbar::isCustomTool($name) ? 'qt-custom' : '';
+	$avail = $tag->isAccessible() ? '' : 'qt-noaccess';
 	$icon = $tag->getIconHtml();
 	if (strpos($name, 'wikiplugin_') !== false) {
 		$plug =  'qt-plugin';
@@ -129,7 +130,7 @@ foreach( $qtlist as $name ) {
 	if ($tag->getType() == 'Wikiplugin') {
 		$label .= '<input type="hidden" name="plugin" value="'.$tag->getPluginName().'" />';
 	}
-	$qtelement[$name] = array( 'name' => $name, 'class' => "toolbar qt-$name $wys $wiki $plug $cust", 'html' => "$icon<span>$label</span>");
+	$qtelement[$name] = array( 'name' => $name, 'class' => "toolbar qt-$name $wys $wiki $plug $cust $avail", 'html' => "$icon<span>$label</span>");
 }
 
 $nol = 2;
