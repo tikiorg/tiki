@@ -276,6 +276,21 @@ function wikiplugin_tracker($data, $params) {
 			if ((!empty($tracker['start']) && $tikilib->now < $tracker['start']) || (!empty($tracker['end']) && $tikilib->now > $tracker['end']))
 				return;
 			$flds = $trklib->list_tracker_fields($trackerId,0,-1,"position_asc","");
+			if (empty($fields) && (!empty($wiki) || !empty($tpl))) {
+				if (!empty($wiki)) {
+					$outf = $trklib->get_pretty_fieldIds($wiki, 'wiki');
+				} else {
+					$outf = $trklib->get_pretty_fieldIds($tpl, 'tpl');
+				}
+				$ret = array();
+				foreach($flds['data'] as $field) {
+					if ($field['type'] == 'u' || $field['type'] == 'g' || in_array($field['fieldId'], $outf)) {
+						$ret[] = $field;
+					}
+				}
+				$flds['cant'] = sizeof($ret);
+				$flds['data'] = $ret;
+			}
 			$bad = array();
 			$embeddedId = false;
 			$onemandatory = false;
