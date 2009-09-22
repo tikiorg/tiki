@@ -49,14 +49,14 @@ if( isset($_REQUEST['reset']) && $section != 'global' ) {
 	$prefName = 'toolbar_' . $section . ($comments ? '_comments' : '');
 	$tikilib->delete_preference( $prefName);
 	require_once($smarty->_get_plugin_filepath('function', 'query'));
-	header('location: ?'. smarty_function_query(array(), $smarty));
+	header('location: ?'. smarty_function_query(array('_urlencode'=>'n'), $smarty));
 }
 
 if( isset($_REQUEST['reset_global']) && $section == 'global' ) {
 	$prefName = 'toolbar_' . $section . ($comments ? '_comments' : '');
 	$tikilib->delete_preference( $prefName);
 	require_once($smarty->_get_plugin_filepath('function', 'query'));
-	header('location: ?'. smarty_function_query(array(), $smarty));
+	header('location: ?'. smarty_function_query(array('_urlencode'=>'n'), $smarty));
 }
 
 if ( !empty($_REQUEST['save_tool']) && !empty($_REQUEST['tool_name'])) {	// input from the tool edit form
