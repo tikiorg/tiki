@@ -18,18 +18,17 @@ fieldset {
 	padding: 0.3em;
 }
 
-span.button {
+/* margin and padding for span surrounding the "button" links, same definition for button form element */
+span.button, button {
 	margin: 1px 2px;
 	padding: 2px;
 }
 
 span.button a,
 span.button a:visited,
-button,
 span.button input,
 .calbuttonBox a {
 	padding: 1px 4px;
-	margin-right: 1px;
 }
 
 input[type=reset],
