@@ -28,7 +28,7 @@ function module_change_category_info() {
 			),
 			'multiple' => array(
 				'name' => tra('Multiple categories'),
-				'description' => tra('If set to "y", allows categorizing in several categories.') . " " . tra('Not set by default.'),
+				'description' => tra('If set to "n", only allows categorizing in one category (from those displayed).') . " " . tra('Not set by default.'),
 			),
 			'categorize' => array(
 				'name' => tra('Categorize'),
@@ -86,7 +86,7 @@ function module_change_category( $mod_reference, $module_params ) {
 		$add = isset($module_params['add']) ? $module_params['add'] : "y";
 		$smarty->assign('add', $add);
 	
-		$multiple = isset($module_params['multiple']) ? $module_params['multiple'] : "n";
+		$multiple = isset($module_params['multiple']) ? $module_params['multiple'] : "y";
 		$smarty->assign('multiple', $multiple);
 	
 	
