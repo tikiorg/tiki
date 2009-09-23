@@ -93,6 +93,12 @@ textarea {
 	line-height: 20px;
 }
 
+/* "button" links wrappers */
+span.button {
+	padding-left: 0;
+	padding-right: 0;
+}
+
 /* Links in buttons */
 span.button a,
 span.button a:visited,
