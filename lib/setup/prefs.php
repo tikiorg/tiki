@@ -85,7 +85,7 @@ function get_default_prefs() {
 		'feature_wiki_tables' => 'new',
 		'feature_wiki_templates' => 'n',
 		'feature_wiki_undo' => 'n',
-		'feature_wiki_userpage' => 'y',
+		'feature_wiki_userpage' => 'n',
 		'feature_wiki_userpage_prefix' => 'User:',
 		'feature_wiki_usrlock' => 'n',
 		'feature_wiki_feedback_polls' => array(),
