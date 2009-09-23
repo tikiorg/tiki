@@ -3337,7 +3337,6 @@ CREATE TABLE "tiki_quizzes" (
   "publishDate" numeric(14,0) default NULL NULL,
   "expireDate" numeric(14,0) default NULL NULL,
   "bDeleted" char(1) default NULL NULL,
-  "nVersion" numeric(4,0) NOT NULL,
   "nAuthor" numeric(4,0) default NULL NULL,
   "bOnline" char(1) default NULL NULL,
   "bRandomQuestions" char(1) default NULL NULL,
@@ -3357,7 +3356,7 @@ CREATE TABLE "tiki_quizzes" (
   "sData" text default '',
   "sEpilogue" text default '',
   "passingperct" numeric(4,0) default 0,
-  PRIMARY KEY (quizId, nVersion)
+  PRIMARY KEY (quizId)
 ) ENGINE=MyISAM  
 go
 
@@ -7329,7 +7328,6 @@ CREATE TABLE `tiki_sefurl_regex_out` (
   `comment` varchar(256),
   `order` numeric(11,0) NULL default 0,
   PRIMARY KEY(`id`),
-  UNIQUE KEY `left` (`left`(256)),
   "INDEX" `idx1` (silent, type, feature(30))
 )
 go

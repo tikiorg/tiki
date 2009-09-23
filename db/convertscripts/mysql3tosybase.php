@@ -1,6 +1,6 @@
 <?php
 
-$tikiversion='3.1';
+$tikiversion='3.2';
 if(!isset($_GET['version'])) {
    echo "version not given. Using default $tikiversion.<br />";
 } else {

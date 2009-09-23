@@ -2369,7 +2369,6 @@ CREATE TABLE 'tiki_quizzes' (
   "publishDate" bigint default NULL,
   "expireDate" bigint default NULL,
   "bDeleted" char(1) default NULL,
-  "nVersion" smallint NOT NULL,
   "nAuthor" smallint default NULL,
   "bOnline" char(1) default NULL,
   "bRandomQuestions" char(1) default NULL,
@@ -2389,7 +2388,7 @@ CREATE TABLE 'tiki_quizzes' (
   "sData" text,
   "sEpilogue" text,
   "passingperct" smallint default 0,
-  PRIMARY KEY (quizId, nVersion)
+  PRIMARY KEY (quizId)
 ) ENGINE=MyISAM ;
 
 
@@ -4913,7 +4912,6 @@ CREATE TABLE tiki_sefurl_regex_out (
   comment varchar(256),
   order bigint NULL default 0,
   PRIMARY KEY(id),
-  UNIQUE KEY left (left(256)),
   "INDEX" idx1 (silent, type, feature(30))
 );
 

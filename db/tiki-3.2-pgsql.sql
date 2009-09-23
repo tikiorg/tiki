@@ -2358,7 +2358,6 @@ CREATE TABLE "tiki_quizzes" (
   "publishDate" bigint default NULL,
   "expireDate" bigint default NULL,
   "bDeleted" char(1) default NULL,
-  "nVersion" smallint NOT NULL,
   "nAuthor" smallint default NULL,
   "bOnline" char(1) default NULL,
   "bRandomQuestions" char(1) default NULL,
@@ -2378,7 +2377,7 @@ CREATE TABLE "tiki_quizzes" (
   "sData" text,
   "sEpilogue" text,
   "passingperct" smallint default 0,
-  PRIMARY KEY ("quizId","nVersion")
+  PRIMARY KEY ("quizId")
 ) ENGINE=MyISAM  ;
 
 
@@ -4904,7 +4903,6 @@ CREATE TABLE "tiki_sefurl_regex_out" (
   "INDEX" idx1 (silent, type, feature(30))
 );
 
-CREATE UNIQUE INDEX "tiki_sefurl_regex_out_left" ON "tiki_sefurl_regex_out"(substr("left", 0, 256));
 INSERT INTO "tiki_sefurl_regex_out" ("left","right","type","feature") VALUES ('tiki-index.php\\?page=(.+)', '$1', 'wiki', 'feature_wiki');
 
 INSERT INTO "tiki_sefurl_regex_out" ("left","right","type","feature") VALUES ('tiki-slideshow.php\\?page=(.+)', 'show:$1', '', 'feature_wiki');
