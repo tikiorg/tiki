@@ -23,6 +23,7 @@ function wikiplugin_div_info() {
 		'description' => tra("Insert a division block on wiki page"),
 		'prefs' => array('wikiplugin_div'),
 		'body' => tra('text'),
+		'filter' => 'text',
 		'params' => array(
 			'type' => array(
 				'required' => false,
@@ -56,6 +57,7 @@ function wikiplugin_div_info() {
 				'required' => false,
 				'name' => tra('CSS Class'),
 				'description' => tra('Apply custom CSS class to the div.'),
+				'filter' => 'text',
 			),
 			'id' => array(
 				'required' => false,
