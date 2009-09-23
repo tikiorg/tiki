@@ -54,9 +54,14 @@ class EditLib {
 	}
 
 	function parseToWiki(&$inData) {
+		global $prefs;
+		if ($prefs['wysiwyg_htmltowiki'] == 'y') {
+			$parsed = $inData;
+		} else {
 		// Parsing page data as first time seeing html page in normal editor
-		$parsed = '';
-		$parsed = $this->parse_html($inData);
+			$parsed = '';
+			$parsed = $this->parse_html($inData);
+		}
 		$parsed = preg_replace('/\{img src=.*?img\/smiles\/.*? alt=([\w\-]*?)\}/im','(:$1:)', $parsed);	// "unfix" smilies
 		$parsed = preg_replace('/%%%/m',"\n", $parsed);													// newlines
 		return $parsed;
