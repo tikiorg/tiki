@@ -110,11 +110,7 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 var fckEditorInstances = new Array();
 function FCKeditor_OnComplete( editorInstance ) {
 	fckEditorInstances[fckEditorInstances.length] = editorInstance;
-	if (jQuery.browser.safari) {
-		var fckbod = $jq("#'.$params['name'].'___Frame").contents().find("body");
-		var h = '.$h.' - fckbod.find("#xToolbar").height() - 5;
-		fckbod.find("#xEditingArea").height(h);
-	}
+	editorInstance.ResetIsDirty();
 };'); }
 
 
@@ -177,7 +173,7 @@ function editTimerTick() {
 }
 
 function confirmExit() {
-	if (typeof fckEditorInstances != 'undefined' && fckEditorInstances.length > 0) {
+	if (needToConfirm && typeof fckEditorInstances != 'undefined' && fckEditorInstances.length > 0) {
 		for(ed in fckEditorInstances) {
 			if (fckEditorInstances[ed].IsDirty()) {
 				editorDirty = true;
@@ -186,7 +182,7 @@ function confirmExit() {
 		}
 	}
 	if (needToConfirm && editorDirty) {
-		return '".tra('You are about to leave this page. If you have made any changes without Saving, your changes will be lost.  Are you sure you want to exit this page?')."';
+		return '".tra('You are about to leave this page. Changes since your last save will be lost. Are you sure you want to exit this page?')."';
 	}
 }
 
