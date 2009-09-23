@@ -78,18 +78,23 @@ class Installer
 
 		$pre = "pre_$patch";
 		$post = "post_$patch";
+		$standalone = "upgrade_$patch";
 
 		if( file_exists( $script ) ) {
 			require $script;
 		}
 
-		if( function_exists( $pre ) )
-			$pre( $this );
-
-		$this->runFile( $schema );
-
-		if( function_exists( $post ) )
-			$post( $this );
+		if( function_exists( $standalone ) )
+			$standalone( $this );
+		else {
+			if( function_exists( $pre ) )
+				$pre( $this );
+	
+			$this->runFile( $schema );
+	
+			if( function_exists( $post ) )
+				$post( $this );
+		}
 
 		$this->installed[] = $patch;
 		$this->recordPatch( $patch );
@@ -198,6 +203,14 @@ class Installer
 		foreach( $files as $file ) {
 			$filename = basename( $file );
 			$this->patches[] = substr( $filename, 0, -4 );
+		}
+
+		// Add standalone PHP scripts
+		$files = glob( dirname(__FILE__) . '/schema/*_*.php' );
+		foreach( $files as $file ) {
+			$filename = basename( $file );
+			$patch = substr( $filename, 0, -4 );
+			if (!in_array($patch)) $this->patches[] = $patch;
 		}
 
 		$installed = array();
