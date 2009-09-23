@@ -839,10 +839,11 @@ class TrackerLib extends TikiLib {
 		$query2 = 'SELECT ttf.`fieldId`, `value`, `isPublic`'
 			.' FROM `tiki_tracker_item_fields` ttif INNER JOIN `tiki_tracker_fields` ttf ON ttif.`fieldId` = ttf.`fieldId`'
 			." WHERE (`lang` = ? or `lang` is null or `lang` = '') AND `itemId` = ?"
+			." AND " . $this->in('ttif`.`fieldId', array_keys($listfields), $bindvars)
 			.' ORDER BY `position` ASC, `lang` DESC';
-		$result2 = $this->query($query2, $bindvars);
+		$result2 = $this->fetchAll($query2, $bindvars);
 
-		while ( $res1 = $result2->fetchRow() ) {
+		foreach( $result2 as $res1 ) {
 			$fil[$res1['fieldId']] = $res1['value'];
 		}
 
