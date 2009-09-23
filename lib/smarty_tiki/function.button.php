@@ -16,6 +16,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *	- _flip_id: id HTML atribute of the element to show/hide (for type 'flip'). This will automatically generate an 'onclick' attribute that will use tiki javascript function flip() to show/hide some content.
  *	- _flip_hide_text: if set to 'n', do not display a '(Hide)' suffix after _text when status is not 'hidden'
  *	- _flip_default_open: if set to 'y', the flip is open by default (if no cookie jar)
+ *	- _escape: if set to 'y', will escape the apostrophes in onclick
  */
 function smarty_function_button($params, &$smarty) {
 	if ( ! is_array($params) || ! isset($params['_text']) ) return;
@@ -82,6 +83,9 @@ function smarty_function_button($params, &$smarty) {
 				. "');flip('"
 				. $params['_flip_id']
 				. "_close','inline');return false;";
+			if ( ! empty($params['_escape']) ) {
+				$params['_onclick'] = addslashes($params['_onclick']);
+			}
 			if ( ! isset($params['_flip_hide_text']) || $params['_flip_hide_text'] != 'n' ) {
 				$cookie_key = 'show_' . $params['_flip_id'];
 				$params['_text'] .= '<span id="'.$params['_flip_id'].'_close" style="display:'
