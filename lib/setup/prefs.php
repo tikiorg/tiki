@@ -1179,8 +1179,7 @@ function get_default_prefs() {
 			- , table, -, source, showblocks | fullscreen, enlarge, reduce
 		',
 		'toolbar_global_comments' => '
-			bold, italic, strike, - , color, bgcolor, - ,
-			link, smiley | help
+			bold, italic, strike , - , link, smiley | help
 		',
 
 		// pagination
