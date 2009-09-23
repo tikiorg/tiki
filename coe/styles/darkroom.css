@@ -534,95 +534,72 @@ a.phplmselected:hover {
 }
 
 /** CSS (suckerfish) menus **/
-.cssmenu li,
+
+/* typography, colors */
 .cssmenu_horiz li,
-.cssmenu_vert li,
-.cssmenu li ul,
-.cssmenu_horiz li ul,
-.cssmenu_vert li ul {
+.cssmenu_vert li {
 	background: #474747;
 }
 
-.box-data ul.cssmenu_vert {
-	padding-left: 0;
-}
-
-#col2 .cssmenu_vert > li {
-	width: 172px;
-	padding: 0 !important;
-}
-
-#col2 .cssmenu_vert li {
-	padding: 0;
-}
-
-.cssmenu_vert li ul {
-	margin-top: -1em !important;
-	padding-bottom: 1px;
-}
-
-#col2 .cssmenu_vert > li > ul {
-	margin-left: 172px;
-}
-
-.cssmenu li ul,
-.cssmenu_horiz li ul,
-.cssmenu_vert li ul {
+.cssmenu_horiz li ul li,
+.cssmenu_vert li ul li {
 	border: 1px solid #6a6a6a;
-	padding: 0;
+	border-top: 0;
+	margin-bottom: -1px;
 }
 
-.cssmenu a,	
+.cssmenu_horiz li ul li:first-child,
+.cssmenu_vert li ul li:first-child {
+	border-top: 1px solid #6a6a6a;
+}
+
 .cssmenu_horiz a,
 .cssmenu_vert a {
 	text-decoration: none;
 	font-weight: bold;
-	color: #a6a68d;
-	display: block;
+	color: #d8d8d8;
 	text-decoration: none;
-	padding: 3px 0 3px 6px;
 }
 
-.cssmenu_vert a {
-	padding: 3px 2px 3px 8px;
-}
-
-.cssmenu a:hover,
 .cssmenu_vert a:hover,	
-.cssmenu_horiz a:hover {
-	color: #f5f5f5;
+.cssmenu_horiz a:hover,
+#tiki-top .cssmenu_horiz li ul li a:hover {
+	color: #3f3f3f;
 }
 
-.cssmenu li:hover,
 .cssmenu_horiz li:hover,
 .cssmenu_vert li:hover,
-.cssmenu li.sfhover,
 .cssmenu_horiz li.sfhover,
 .cssmenu_vert li.sfhover {
 	background: #b2b2b2;
 }
 
-.cssmenu_vert li:hover {
-	background: #b2b2b2;
-}
-
-.cssmenu li:hover > a,
-.cssmenu_horiz li:hover > a,
-.cssmenu_vert li:hover > a {
-	color: #303030;
+#tiki-top .cssmenu_horiz li a:hover {
+	border: 1px solid #909090;
+	color: #909090;
 }
 
 #tiki-top > .cssmenu_horiz > li {
 	background: url(darkroom/button.png) repeat-x;
 }
 
-#tiki-top > .cssmenu_horiz > li > a {
+#tiki-top .cssmenu_horiz li a {
 	border: 1px solid transparent;
 	border-right: 1px solid #6a6a6a;
 	color: #a6a68d;
 	font-weight: bold;
 	font-size: 12px;
 	padding: 6px 1em;
+}
+
+/* default link padding */
+.cssmenu_horiz a,
+.cssmenu_vert a {
+	padding: .75em 1em;
+}
+
+#tiki-top .cssmenu_horiz li ul li a {
+	padding: 4px 1em;
 }
 
 #tiki-top .cssmenu_horiz li.menuSection0 a {
@@ -633,9 +610,60 @@ a.phplmselected:hover {
 	padding-right: 1em;
 }
 
-#tiki-top > .cssmenu_horiz > li > a:hover {
-	border: 1px solid #909090;
-	color: #909090 !important;
+.cssmenu_vert a {
+	padding: 3px 2px 3px 8px;
+}
+
+/* left column width */
+#col2 ul.cssmenu_vert {
+	padding-left: 0;
+}
+
+#col2 .cssmenu_vert,
+#col2 .cssmenu_vert li {
+	width: 166px;
+}
+
+/* offset from left column (matches above) */
+#col2 .cssmenu_vert li:hover ul,
+#col2 .cssmenu_vert li.sfHover ul {
+	left: 166px;
+}
+
+/* return ul ul ... to default */
+#col2 .cssmenu_vert li:hover ul,
+#col2 .cssmenu_vert li.sfHover ul,
+#col2 .cssmenu_vert li:hover ul li,
+#col2 .cssmenu_vert li.sfHover ul li {
+	width: 10em;
+}
+
+/* return ul ul ... to default */
+#col2 .cssmenu_vert li li:hover ul,
+#col2 .cssmenu_vert li li.sfHover ul {
+	left: 10em;
+}
+
+/* less padding in topbar so move ul ul up */
+#tiki-top ul.cssmenu_horiz li:hover ul,
+#tiki-top ul.cssmenu_horiz li.sfHover ul {
+	top: 2.2em;
+}
+
+/* but not ul ul ul */
+#tiki-top ul.cssmenu_horiz li li:hover ul,
+#tiki-top ul.cssmenu_horiz li li.sfHover ul {
+	top: 0;
+}
+
+/* special arrow top padding */
+#tiki-top .cssmenu_horiz li a > .sf-sub-indicator {
+	top: 1em;
+}
+
+#tiki-top .cssmenu_horiz li ul li a .sf-sub-indicator,
+.cssmenu_vert li a > .sf-sub-indicator {
+	top: .4em;
 }
 
 /** Links in other menus **/
@@ -1081,7 +1109,7 @@ td.wikicell {
 	padding-bottom: 5px;
 }
 
-#textarea-toolbar {
+.textarea-toolbar {
 	background: #e4e4e4;
 }
 

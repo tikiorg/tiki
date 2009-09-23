@@ -1882,6 +1882,9 @@ class TikiLib extends TikiDb_Bridge {
 			if (preg_match('|^\(\((.+?)\)\)$|', $res['url'], $matches)) {
 				$res['url'] = 'tiki-index.php?page='.$matches[1];
 				$res['sefurl'] = $wikilib->sefurl($matches[1]);
+				if (!$this->user_has_perm_on_object($user, $matches[1], 'wiki page', 'tiki_p_view')) {
+					continue;
+				}
 			}
 			if (!$full) {
 				$display = true;
@@ -2944,7 +2947,7 @@ class TikiLib extends TikiDb_Bridge {
 		return $ret;
 	}
 
-	function list_posts($offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '', $filterByBlogId = -1) {
+	function list_posts($offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '', $filterByBlogId = -1, $author='') {
 
 		$authorized_blogs = $this->list_blogs();
 		$permit_blogs = array();
@@ -2971,6 +2974,15 @@ class TikiLib extends TikiDb_Bridge {
 			}
 			$mid .= " ( `data` like ? ) ";
 			$bindvars[] = $findesc;
+		}
+		if (!empty($author)) {
+			if ($mid == '') {
+				$mid = ' where ';
+			} else {
+				$mid .= ' and ';
+			}
+			$mid .= 'user =?';
+			$bindvars[] = $author;
 		}
 
 		$query = "select * from `tiki_blog_posts` $mid order by ".$this->convertSortMode($sort_mode);
@@ -5245,6 +5257,7 @@ JQ
 	}
 
 	function plugin_fingerprint_check( $fp ) {
+		global $user;
 		$limit = date( 'Y-m-d H:i:s', time() - 15*24*3600 );
 		$result = $this->query( "SELECT status, IF(status='pending' AND last_update < ?, 'old', '') flag FROM tiki_plugin_security WHERE fingerprint = ?",
 			array( $limit, $fp ) );
@@ -5274,9 +5287,12 @@ JQ
 				$objectId = '';
 			}
 
+			if (!$user) {
+				$user = tra('Anonymous');
+			}
 			$this->query( "DELETE FROM tiki_plugin_security WHERE fingerprint = ?", array( $fp ) );
-			$this->query( "INSERT INTO tiki_plugin_security (fingerprint, status, last_objectType, last_objectId) VALUES(?, ?, ?, ?)",
-				array( $fp, 'pending', $objectType, $objectId ) );
+			$this->query( "INSERT INTO tiki_plugin_security (fingerprint, status, added_by, last_objectType, last_objectId) VALUES(?, ?, ?, ?, ?)",
+				array( $fp, 'pending', $user, $objectType, $objectId ) );
 		}
 
 		return '';
@@ -5302,13 +5318,23 @@ JQ
 	}
 
 	function list_plugins_pending_approval() {
-		$result = $this->query("SELECT fingerprint, last_update, last_objectType, last_objectId FROM tiki_plugin_security WHERE status = 'pending' ORDER BY last_update DESC");
+		$result = $this->query("SELECT fingerprint, added_by, last_update, last_objectType, last_objectId FROM tiki_plugin_security WHERE status = 'pending' ORDER BY last_update DESC");
 
 		$list = array();
 		while( $row = $result->fetchRow() )
 			$list[] = $row;
 
 		return $list;
+	}
+
+	function approve_all_pending_plugins() {
+	// Update all pending plugins to accept
+	$this->query("UPDATE tiki_plugin_security SET status='accept', approval_by='admin' WHERE status='pending'");  
+	}
+
+	function approve_selected_pending_plugings($fp) {
+	// Update selected pending plugins to accept
+	$this->query("UPDATE tiki_plugin_security SET status='accept', approval_by='admin' WHERE fingerprint = ?", array( $fp ));  
 	}
 
 	function plugin_fingerprint( $name, $meta, $data, $args ) {
@@ -6313,7 +6339,7 @@ JQ
 				$line = '<hr />';
 			} else {
 				$litype = substr($line, 0, 1);
-				if ($litype == '*' || $litype == '#') {
+				if (($litype == '*' || $litype == '#') && !(!count($listbeg) && preg_match('/^\*+$/', $line))) {
 					// Close open paragraph, but not lists or div's
 					$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 0, 0);
 					$listlevel = $this->how_many_at_start($line, $litype);

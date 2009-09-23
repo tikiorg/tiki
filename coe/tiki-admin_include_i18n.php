@@ -12,31 +12,6 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 $languages = array();
 $languages = $tikilib->list_languages(false, null, true);
 $smarty->assign_by_ref("languages", $languages);
-if (isset($_REQUEST["i18nsetup"])) {
-	ask_ticket('admin-inc-i18n');
-	$pref_toggles = array(
-		"feature_multilingual",
-		'feature_translation',
-		'feature_urgent_translation',
-		"feature_multilingual_structures",
-		"feature_best_language",
-		'feature_sync_language',
-		"feature_detect_language",
-		"change_language",
-		"quantify_changes",
-		"lang_use_db",
-		"record_untranslated",
-		"feature_babelfish",
-		"feature_babelfish_logo",
-		'show_available_translations',
-		'feature_multilingual_one_page',
-	);
-	foreach($pref_toggles as $toggle) {
-		simple_set_toggle($toggle);
-	}
-	simple_set_value('language');
-	simple_set_value('available_languages', '', true);
-}
 if (!empty($_REQUEST['custom']) && !empty($_REQUEST['custom_lang'])) {
 	ask_ticket('admin-inc-i18n');
 	$custom_file = 'lang/' . $_REQUEST['custom_lang'] . '/';

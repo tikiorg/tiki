@@ -86,6 +86,11 @@ ajaxAutoSaveToolbarCommand.prototype.onSave = function()
 {
 	FCK_ajaxAutoSaveIsDirty = false;
 	FCKConfig.ajaxAutoSaveBeforeUpdateEnabled = false;
+	// added by jonnyb for tiki 4 - remove draft when page saved
+	//var n = ajaxAutoSaveObject.editorInstance.Name;
+	if (parent && typeof parent.xajax_remove_save == 'function') {
+		parent.xajax_remove_save(FCKConfig.autoSaveEditorId, FCKConfig.autoSaveSelf);
+	}
 	return true;
 	
 }
@@ -126,17 +131,20 @@ function callOnSelectionChange(editorInstance){
 	}
 }
 
-        
+FCK.LinkedField.form.onsubmit = ajaxAutoSaveToolbarCommand.prototype.onSave;
+
 window.onbeforeunload = confirmExit;
 
 function confirmExit() {
 
 	if (FCKConfig.ajaxAutoSaveBeforeUpdateEnabled) {
 		if (FCK_ajaxAutoSaveDraftSaved) {
-			return FCKLang.ajaxAutoSaveBeforeUpdateDraft;
+			return "";	//FCKLang.ajaxAutoSaveBeforeUpdateDraft;
 		} else {
 			if (FCK_ajaxAutoSaveCounter > FCKConfig.ajaxAutoSaveSensitivity) {
-				return FCKLang.ajaxAutoSaveBeforeUpdate;
+				// save
+				ajaxAutoSaveToolbarCommand.prototype.Execute();
+				return "";	// FCKLang.ajaxAutoSaveBeforeUpdate;
 			}
 		}
 	}

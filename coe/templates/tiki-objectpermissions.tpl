@@ -63,7 +63,7 @@
 			{/remarksbox}
 		{/if}
 
-		{popup_link block="column_switches_div"}{tr}Show/hide columns{/tr}{/popup_link}
+		{popup_link block="column_switches_div"}{tr}Show/hide Group List{/tr}{/popup_link}
 		
 		<div id="column_switches_div" style="display: none">
 			<h3>{tr}Show/hide columns{/tr}</h3>
@@ -107,7 +107,7 @@
 			{foreach item=permgroup from=$quickperms}
 				<th>{$permgroup.name}</th>
 			{/foreach}
-				<th onmouseover="return overlib('A couple of userdefined permissions are currently assigned (See tab Assign Permissions)');" onmouseout="nd();">Advanced</th>
+				<th class="tips" title="{tr}A couple of userdefined permissions are currently assigned (See tab Assign Permissions){/tr}">Advanced</th>
 			</tr>
 			{cycle print=false values="even,odd"}
 			{section name=grp loop=$groups}

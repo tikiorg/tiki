@@ -27,7 +27,7 @@
 		{preference name=wiki_authors_style_by_page label="{tr}Allow override per page{/tr}"}
 	</div>
 
-	{preference name=wiki_action_bar}
+	{preference name=wiki_actions_bar}
 	{preference name=wiki_page_navigation_bar}
  	{preference name=wiki_topline_position}
  	{preference name=page_bar_position}

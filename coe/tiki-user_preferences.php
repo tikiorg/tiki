@@ -243,11 +243,6 @@ if ($prefs['feature_userPreferences'] == 'y' && isset($_REQUEST["new_prefs"])) {
 	} else {
 		$tikilib->set_user_preference($userwatch, 'mytiki_items', 'n');
 	}
-	if (isset($_REQUEST['mytiki_workflow']) && $_REQUEST['mytiki_workflow'] == 'on') {
-		$tikilib->set_user_preference($userwatch, 'mytiki_workflow', 'y');
-	} else {
-		$tikilib->set_user_preference($userwatch, 'mytiki_workflow', 'n');
-	}
 	if (isset($_REQUEST['mytiki_articles']) && $_REQUEST['mytiki_articles'] == 'on') {
 		$tikilib->set_user_preference($userwatch, 'mytiki_articles', 'y');
 	} else {
@@ -312,7 +307,6 @@ $tikilib->get_user_preference($userwatch, 'mytiki_gals', 'y');
 $tikilib->get_user_preference($userwatch, 'mytiki_items', 'y');
 $tikilib->get_user_preference($userwatch, 'mytiki_msgs', 'y');
 $tikilib->get_user_preference($userwatch, 'mytiki_tasks', 'y');
-$tikilib->get_user_preference($userwatch, 'mytiki_workflow', 'y');
 $tikilib->get_user_preference($userwatch, 'mylevel', '1');
 $tikilib->get_user_preference($userwatch, 'tasks_maxRecords');
 $tikilib->get_user_preference($userwatch, 'mess_maxRecords', 20);

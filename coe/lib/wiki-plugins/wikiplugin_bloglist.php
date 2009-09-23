@@ -25,6 +25,12 @@ function wikiplugin_bloglist_info() {
 				'name' => tra('Items'),
 				'description' => tra('Maximum amount of entries to list.'),
 			),
+			'author' => array(
+				'required' => false,
+				'name' => tra('Author'),
+				'description' => tra('Author'),
+			),
+				
 		),
 	);
 }
@@ -42,8 +48,9 @@ function wikiplugin_bloglist($data, $params) {
 	if (!isset($params['offset'])) $params['offset'] = 0;
 	if (!isset($params['sort_mode'])) $params['sort_mode'] = 'created_desc';
 	if (!isset($params['find'])) $params['find'] = '';
+	if (!isset($params['author'])) $params['author'] = '';
 
-	$blogItems = $tikilib->list_posts($params['offset'], $params['max'], $params['sort_mode'], $params['find'], $params['Id']);
+	$blogItems = $tikilib->list_posts($params['offset'], $params['max'], $params['sort_mode'], $params['find'], $params['Id'], $params['author']);
 	$smarty->assign_by_ref('blogItems', $blogItems['data']);
 	$ret = $smarty->fetch('wiki-plugins/wikiplugin_bloglist.tpl');
 	return '~np~'.$ret.'~/np~';

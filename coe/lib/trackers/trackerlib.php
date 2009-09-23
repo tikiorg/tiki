@@ -671,7 +671,7 @@ class TrackerLib extends TikiLib {
 		}
 		if ( ! $sort_mode ) $sort_mode = 'lastModif_desc';
 
-		if ( substr($sort_mode, 0, 2) == 'f_' or $filtervalue or $exactvalue ) {
+		if ( substr($sort_mode, 0, 2) == 'f_' or !empty($filterfield) ) {
 			$cat_table = '';
 			if ( substr($sort_mode, 0, 2) == 'f_' ) {
 				$csort_mode = 'sttif.`value` ';
@@ -719,7 +719,6 @@ class TrackerLib extends TikiLib {
 					$ev = $exactvalue[$i];
 					$fv = $filtervalue[$i];
 				}
-
 				$filter = $this->get_tracker_field($ff);
 
 				$j = ( $i > 0 ) ? '0' : '';
@@ -777,6 +776,9 @@ class TrackerLib extends TikiLib {
 						}
 					}
 					$mid .= ')';
+				} elseif (empty($ev) && empty($fv)) { // test null value
+					$mid.= " AND ttif$i.`value`=? OR ttif$i.`value` IS NULL";
+					$bindvars[] = '';
 				}
 			}
 		} else {
@@ -1059,11 +1061,11 @@ class TrackerLib extends TikiLib {
 			$new_itemId = 0;
 			$oldStatus = $this->getOne("select `status` from `tiki_tracker_items` where `itemId`=?", array($itemId));
 			if ($status) {
-				$query = "update `tiki_tracker_items` set `status`=?,`lastModif`=? where `itemId`=?";
-				$result = $this->query($query,array($status,(int) $this->now,(int) $itemId));
+				$query = "update `tiki_tracker_items` set `status`=?,`lastModif`=?,`lastModifBy`=? where `itemId`=?";
+				$result = $this->query($query,array($status,(int) $this->now,$user,(int) $itemId));
 			} else {
-				$query = "update `tiki_tracker_items` set `lastModif`=? where `itemId`=?";
-				$result = $this->query($query,array((int) $this->now,(int) $itemId));
+				$query = "update `tiki_tracker_items` set `lastModif`=?, `lastModifBy`=? where `itemId`=?";
+				$result = $this->query($query,array((int) $this->now,$user,(int) $itemId));
 				$status = $oldStatus;
 			}
 		} else {
@@ -1071,8 +1073,8 @@ class TrackerLib extends TikiLib {
 				$status = $this->getOne("select `value` from `tiki_tracker_options` where `trackerId`=? and `name`=?",array((int) $trackerId,'newItemStatus'));
 			}
 			if (empty($status)) { $status = 'o'; }
-			$query = "insert into `tiki_tracker_items`(`trackerId`,`created`,`lastModif`,`status`) values(?,?,?,?)";
-			$result = $this->query($query,array((int) $trackerId,(int) $this->now,(int) $this->now,$status));
+			$query = "insert into `tiki_tracker_items`(`trackerId`,`created`,`createdBy`,`lastModif`,`lastModifBy`,`status`) values(?,?,?,?,?,?)";
+			$result = $this->query($query,array((int) $trackerId,(int) $this->now,$user,(int) $this->now,$user,$status));
 			$new_itemId = $this->getOne("select max(`itemId`) from `tiki_tracker_items` where `created`=? and `trackerId`=?",array((int) $this->now,(int) $trackerId));
 		}
 
@@ -1163,8 +1165,13 @@ class TrackerLib extends TikiLib {
 								$smarty->display("error.tpl");
 								die;
 							}
-							fwrite($fw, $ins_fields['data'][$i]['value']);
+							if (fwrite($fw, $ins_fields['data'][$i]['value']) === false) {
+								$smarty->assign('msg', tra('Cannot write to this file:'). $fhash);
+								$smarty->display("error.tpl");
+								die;
+							}								
 							fclose($fw);
+							$ins_fields['data'][$i]['value'] = '';
 						} else {
 							$fhash = 0;
 						}
@@ -2524,7 +2531,7 @@ class TrackerLib extends TikiLib {
 			),
 			'help'=>tra('<dl>
 				<dt>Function: Allows alphanumeric text input in a one-line field of arbitrary size.
-				<dt>Usage: <strong>samerow,size,prepend,append,max</strong>
+				<dt>Usage: <strong>samerow,size,prepend,append,max,autocomplete</strong>
 				<dt>Example: 0,80,$,,80
 				<dt>Description:
 				<dd><strong>[samerow]</strong> will display the next field or checkbox in the same row if a 1 is specified;
@@ -2532,6 +2539,7 @@ class TrackerLib extends TikiLib {
 				<dd><strong>[prepend]</strong> is text that will be displayed before the field;
 				<dd><strong>[append]</strong> is text that will be displayed just after the field;
 				<dd><strong>[max]</strong> is the maximum number of characters that can be saved;
+				<dd><strong>[autocomplete]</strong> if y autocomplete while typing;
 				<dd>multiple options must appear in the order specified, separated by commas.
 				</dl>'));
 		$type['a'] = array(
@@ -2966,13 +2974,18 @@ class TrackerLib extends TikiLib {
 	}
 	/* list all the values of a field
 	 */
-	function list_tracker_field_values($trackerId, $fieldId, $status='o', $distinct='y') {
+	function list_tracker_field_values($trackerId, $fieldId, $status='o', $distinct='y', $lang='') {
 		$mid = '';
 		$bindvars[] = (int)$fieldId;
-		if (!$this->getSqlStatus($status, $mid, $bindvars, $trackerId))
+		if (!$this->getSqlStatus($status, $mid, $bindvars, $trackerId)) {
 			return null;
+		}
 		$sort_mode = "value_asc";
 		$distinct = $distinct == 'y'?'distinct': '';
+		if ($lang) {
+			$mid .= ' and `lang`=? ';
+			$bindvars[] = $lang;
+		}
 		$query = "select $distinct(ttif.`value`) from `tiki_tracker_item_fields` ttif, `tiki_tracker_items` tti where tti.`itemId`= ttif.`itemId`and ttif.`fieldId`=? $mid order by ".$this->convertSortMode($sort_mode);
 		$result = $this->query( $query, $bindvars);
 		$ret = array();
@@ -3008,8 +3021,19 @@ class TrackerLib extends TikiLib {
 		return $ret;
 	}
 	/* look if a tracker has only one item per user and if an item has already being created for the user  or the IP*/
-	function get_user_item($trackerId, $trackerOptions,$userparam=null) {
-		global $user, $IP;
+	function get_user_item(&$trackerId, $trackerOptions, $userparam=null, $user= null) {
+		global $IP, $prefs;
+		if (empty($user)) {
+			$user = $GLOBALS['user'];
+		}
+		if ($empty($trackerId) && $prefs['userTracker'] == 'y') {
+			$utid = $userlib->get_tracker_usergroup($user);
+			if (!empty($utid['usersTrackerId'])) {
+				$trackerId = $utid['usersTrackerId'];
+				$itemId = $this->get_item_id($trackerId, $utid['usersFieldId'], $user);
+			}
+			return $itemId;
+		}
 		if (empty($trackerOptions['oneUserItem']) || $trackerOptions['oneUserItem'] != 'y') {
 			return 0;
 		}
@@ -3299,6 +3323,25 @@ class TrackerLib extends TikiLib {
 		}
 		return $value;
 	}
+	/* get the fields from the pretty tracker template 
+	* return a list of fieldIds */
+	function get_pretty_fieldIds($resource, $type='wiki') {
+		global $tikilib, $smarty;
+		if ($type == 'wiki') {
+			$wiki_info = $tikilib->get_page_info($resource);
+			if (!empty($wiki_info)) {
+				$f = $wiki_info['data'];
+			}
+		} else {
+			$f = $smarty->get_filename($tpl);
+		}
+		if (!empty($f)) {
+			preg_match_all('/\$f_([0-9]+)/', $f, $matches);
+			return $matches[1];
+		}
+		return array();
+	}
+
 }
 
 global $dbTiki, $tikilib, $prefs;

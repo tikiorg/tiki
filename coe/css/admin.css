@@ -153,10 +153,7 @@ div.adminanchors a {float: left}
 	float: left;
 	height: auto;
 	max-height: 400px;
-/*
-	max-width: 26%;
-	min-width: 10em;
-*/
+	min-height: 16px;
 	overflow-y: auto;
 	overflow-x: hidden;
 	margin: 0;
@@ -212,11 +209,19 @@ div.adminanchors a {float: left}
 	width: 95%;
 	min-height: 20px;
 	min-width: 500px;
-	overflow-y: auto;
+	overflow-y: hidden;
 	overflow-x: hidden;
 	border: solid thin gray;
 	margin: 0;
 	padding: 2px 4px 0;
+}
+
+.toolbars-admin .rows .row-right {
+	float: right;
+	border: none;
+	padding: 0;
+	min-width: 16px;
+	width: auto;
 }
 
 .toolbars-admin ul.full {
@@ -229,8 +234,10 @@ div.adminanchors a {float: left}
 .toolbars-admin .row li.toolbar {
 	list-style-type: none;
 	float: left;
-	width: 18px;
-	overflow: hidden;
+}
+
+.toolbars-admin .row li.toolbar span {
+	display: none;
 }
 
 .toolbars-admin .row li.qt-plugin {
@@ -255,6 +262,10 @@ div.adminanchors a {float: left}
 
 .qt-custom {
 	background-color: #ff9;
+}
+
+.qt-noaccess {
+	opacity: .4;
 }
 
 .qt_filter_div {

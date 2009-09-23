@@ -610,15 +610,15 @@ function update_copyright_file($newVersion) {
 Tiki Copyright
 ----------------
 
-The following list attempts to gather the copyright holders for tikiwiki
+The following list attempts to gather the copyright holders for Tiki
 as of version $newVersion.
 
 Accounts listed below with commits have contributed source code to CVS or SVN. 
 Please note that even more people contributed on various other aspects (documentation, 
 bug reporting, testing, etc.)
 
-This is how we implement the Tikiwiki Social Contract.
-http://dev.tikiwiki.org/SocialContract
+This is how we implement the Tiki Social Contract.
+http://tikiwiki.org/Social+Contract
 
 List of members of the Community
 As of $now, the community has:
@@ -888,7 +888,7 @@ function display_howto() {
    In case of a major version (x.0), you need at least 3 installations from 3 different people
 
 6/ When the "tarballs" are tested, follow the steps to upload on SourceForge:
-   http://tinyurl.com/59uubv
+   http://sourceforge.net/apps/trac/sourceforge/wiki/Release%20files%20for%20download
 
 7/ Announce the good news on devel mailing-list
    and ask the TAG (TikiWiki Admin Group) through the admin mailing-list

@@ -1,6 +1,14 @@
 <?php
 
 function prefs_global_list() {
+	global $tikilib;
+	$languages = $tikilib->list_languages( false, null, true);
+	$map = array();
+	
+	foreach( $languages as $lang ) {
+		$map[ $lang['value'] ] = $lang['name'];
+	}
+
 	return array(
 		'browsertitle' => array(
 			'name' => tra('Browser title'),
@@ -21,7 +29,27 @@ function prefs_global_list() {
 			'type' => 'text',
 			'size' => 20,
 		),
+		'useGroupHome' => array(
+			'name' => tra('Use group homepages'),
+			'description' => tra('Use group homepages'),
+			'type' => 'flag',
+			'help' => 'Group',
+		),
+		'limitedGoGroupHome' => array(
+			'name' => tra('Go to group homepage only if login from default homepage'),
+			'description' => tra('Go to group homepage only if login from default homepage'),
+			'type' => 'flag',
+			'dependencies' => array(
+				'useGroupHome',
+			),
+		),
+		'language' => array(
+			'name' => tra('Default language'),
+			'description' => tra('Site language used when no other language is specified by the user.'),
+			'filter' => 'lang',
+			'help' => 'Internationalization',
+			'type' => 'list',
+			'options' => $map,
+		),
 	);
 }
-
-?>

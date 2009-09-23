@@ -9,10 +9,6 @@
 
 DIRS="backups db dump img/wiki img/wiki_up img/trackers modules/cache temp temp/cache templates_c templates styles maps whelp mods files tiki_tests/tests"
 
-if [ -d 'lib/Galaxia' ]; then
-	DIRS=$DIRS" lib/Galaxia/processes"
-fi
-
 AUSER=nobody
 AGROUP=nobody
 VIRTUALS=""

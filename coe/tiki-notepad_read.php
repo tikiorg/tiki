@@ -73,7 +73,7 @@ if ($info['parse_mode'] == 'raw') {
 	$info['parsed'] = nl2br(htmlspecialchars($info['data']));
 	$smarty->assign('wysiwyg', 'n');
 } else {
-	include 'tiki-parsemode_setup.php';
+	include 'lib/setup/editmode.php';
 	$info['parsed'] = $tikilib->parse_data($info['data'], array('is_html' => $is_html));
 }
 $smarty->assign('noteId', $_REQUEST["noteId"]);

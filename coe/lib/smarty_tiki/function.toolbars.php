@@ -22,7 +22,7 @@ function smarty_function_toolbars($params, &$smarty)
 	}
 	
 	if( ! isset( $params['area_name'] ) ) {
-		$params['area_name'] = 'wikiedit';
+		$params['area_name'] = 'edit';
 	}
 
 	include_once( 'lib/toolbars/toolbarslib.php' );

@@ -36,7 +36,7 @@ function prefs_wiki_list() {
 				'none' => tra('none (disabled)'),
 			),
 		),
-		'wiki_autors_style_by_page' => array(
+		'wiki_authors_style_by_page' => array(
 			'name' => tra('Specify wiki author list style per page'),
 			'description' => tra('Allows to modify the style in which the author list is displayed on a per-page basis.'),
 			'type' => 'flag',
@@ -46,7 +46,7 @@ function prefs_wiki_list() {
 			'description' => tra('Buttons: Save, Preview, Cancel, ...'),
 			'type' => 'list',
 			'options' => array(
-				'top' => tra('Top '),
+				'top' => tra('Top'),
 				'bottom' => tra('Bottom'),
 				'both' => tra('Both'),
 			),
@@ -56,7 +56,7 @@ function prefs_wiki_list() {
 			'description' => tra('When using the ...page... page break wiki syntax'),
 			'type' => 'list',
 			'options' => array(
-				'top' => tra('Top '),
+				'top' => tra('Top'),
 				'bottom' => tra('Bottom'),
 				'both' => tra('Both'),
 			),
@@ -66,7 +66,7 @@ function prefs_wiki_list() {
 			'description' => tra('Page description, icons, backlinks, ...'),
 			'type' => 'list',
 			'options' => array(
-				'top' => tra('Top '),
+				'top' => tra('Top'),
 				'bottom' => tra('Bottom'),
 				'both' => tra('Both'),
 				'none' => tra('Neither'),

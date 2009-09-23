@@ -19,12 +19,6 @@ if (isset($_REQUEST["wysiwygfeatures"])) {
 		"wysiwyg_wiki_semi_parsed",
 		"wysiwyg_htmltowiki",
 	);
-	if (isset($_REQUEST['restore']) && $_REQUEST['restore'] == 'on') {
-		$tikilib->delete_preference('wysiwyg_toolbar');
-	} else {
-		$_REQUEST['wysiwyg_toolbar'] = str_replace("\r", '', $_REQUEST['wysiwyg_toolbar']);
-		simple_set_value('wysiwyg_toolbar');
-	}
 	foreach($pref_toggles as $toggle) {
 		simple_set_toggle($toggle);
 	}

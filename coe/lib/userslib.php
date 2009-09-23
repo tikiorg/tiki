@@ -1441,12 +1441,6 @@ function get_included_groups($group, $recur=true) {
 			$this->query("update `tiki_actionlog` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `messu_messages` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `messu_messages` set `user_from`=? where `user_from`=?", array($to,$from));
-			$this->query("update `galaxia_workitems` set `user`=? where `user`=?", array($to,$from));
-			$this->query("update `galaxia_user_roles` set `user`=? where `user`=?", array($to,$from));
-			$this->query("update `galaxia_instances` set `owner`=? where `owner`=?", array($to,$from));
-			$this->query("update `galaxia_instances` set `nextUser`=? where `nextUser`=?", array($to,$from));
-			$this->query("update `galaxia_instance_comments` set `user`=? where `user`=?", array($to,$from));
-			$this->query("update `galaxia_instance_activities` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_newsletter_subscriptions` set `email`=? where `email`=? and `isUser`=?", array($to,$from, 'y'));
 			$this->query("update `tiki_friends` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_friends` set `friend`=? where `friend`=?", array($to,$from));
@@ -2847,7 +2841,7 @@ function get_included_groups($group, $recur=true) {
 	function send_validation_email($name, $apass, $email, $again='', $second='', $chosenGroup='', $mailTemplate = '', $pass = '') {
 		global $tikilib, $prefs, $smarty;
 		$foo = parse_url($_SERVER['REQUEST_URI']);
-		$foo1 = str_replace(array('tiki-register', 'tiki-remind_password', 'tiki-adminusers'), 'tiki-login_validate', $foo['path']);
+		$foo1 = str_replace(array('tiki-send_mail', 'tiki-register', 'tiki-remind_password', 'tiki-adminusers'), 'tiki-login_validate', $foo['path']);
 		$machine = $tikilib->httpPrefix() . $foo1;
 		$smarty->assign('mail_machine',$machine);
 		$smarty->assign('mail_site', $_SERVER['SERVER_NAME']);
@@ -2943,6 +2937,10 @@ function get_included_groups($group, $recur=true) {
 		$query = "select `registrationChoice` from `users_groups` where `groupName` = ?";
 		return ($this->getOne($query, array($group)));
 	}
+	function reset_email_due($user) {
+		$query = 'update `users_users` set `email_confirm`=?, `waiting`=? where `login`=?';
+		$this->query($query, array(0, 'u', $user));
+	}
 
 	function confirm_email($user, $pass) {
 		global $prefs, $tikilib;
@@ -2976,6 +2974,8 @@ function get_included_groups($group, $recur=true) {
 		$apass = $this->renew_user_password($user);
 		$apass = md5($apass);
 		$smarty->assign('mail_apass',$apass);
+		$smarty->assign('mail_pass', $_REQUEST['pass']);
+		$smarty->assign('mail_ip', $tikilib->get_ip_address()); 
 		$smarty->assign('user', $user);
 		$mail = new TikiMail();
 		$mail_data = $smarty->fetchLang($languageEmail, "mail/$tpl"."_subject.tpl");
@@ -3132,6 +3132,15 @@ function get_included_groups($group, $recur=true) {
 			$ret[$res['login']]= $res['created'];
 		}
 		return $ret;
+	}
+	function nb_users_in_group($group=null) {
+		if (!empty($group)) {
+			$query = 'SELECT count(*) FROM `users_usergroups` WHERE `groupName`=?';
+			return $this->getOne($query, array($group));
+		} else {
+			$query = 'SELECT count(*) FROM `users_users`';
+			return $this->getOne($query, array());
+		}
 	}
 
 }

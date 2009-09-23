@@ -53,7 +53,7 @@ AxpObject.prototype.post = function ()
 	// make request
 	requestObject.open('POST', this.FCKConfig.ajaxAutoSaveTargetUrl, true);
 	requestObject.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-	requestObject.send('script=' + this.FCKConfig.autoSaveSelf + '&id='+this.editorInstance.Name+'&data=' + encodeURIComponent(this.editorInstance.GetXHTML()));
+	requestObject.send('script=' + this.FCKConfig.autoSaveSelf + '&editor_id='+this.editorInstance.Name+'&data=' + encodeURIComponent(this.editorInstance.GetXHTML()));
 }
 
 
@@ -62,7 +62,7 @@ AxpObject.prototype.onReadyStateChange = function ()
 {
 	if (requestObject.readyState == 4)
 	{
-		if (requestObject.status == 200)
+		if (requestObject.status == 200 && requestObject.responseXML)
 		{
 			// error node available?
 			if (errorNode = requestObject.responseXML.getElementsByTagName('error')[0])
@@ -96,11 +96,11 @@ AxpObject.prototype.feedback = function (errorNumber, errorData)
 	{
 		if (parseInt(errorNumber) > 0)
 		{
-			this.toolbarButtonIcon.src = this.toolbarButtonIcon.src.replace(/[^/]*$/, 'cross_animated.gif');
+			this.toolbarButtonIcon.src = this.toolbarButtonIcon.src.replace(/[^\/]*$/, 'cross_animated.gif');
 		}
 		else
 		{
-			this.toolbarButtonIcon.src = this.toolbarButtonIcon.src.replace(/[^/]*$/, 'tick_animated.gif');
+			this.toolbarButtonIcon.src = this.toolbarButtonIcon.src.replace(/[^\/]*$/, 'tick_animated.gif');
 		}
 	}
 
@@ -170,7 +170,7 @@ AxpObject.prototype.resetToolbarButton = function ()
 
 	if (!FCK_ajaxAutoSaveIsDirty) {
 
-		this.toolbarButtonIcon.src = this.toolbarButtonIcon.src.replace(/[^/]*$/, 'ajaxAutoSaveClean.gif');
+		this.toolbarButtonIcon.src = this.toolbarButtonIcon.src.replace(/[^\/]*$/, 'ajaxAutoSaveClean.gif');
 		//this.toolbarButtonIcon.title = this.toolbarButtonIcon.alt = this.FCKLang.ajaxAutoSaveButtonTitle;
 	}
 
@@ -199,7 +199,7 @@ AxpObject.prototype.setIsDirty = function ()
 	if (!this.IsDirty) {
 		this.IsDirty = true;
 
-		this.toolbarButtonIcon.src = this.toolbarButtonIcon.src.replace(/[^/]*$/, 'ajaxAutoSaveDirty.gif');
+		this.toolbarButtonIcon.src = this.toolbarButtonIcon.src.replace(/[^\/]*$/, 'ajaxAutoSaveDirty.gif');
 	}
 }
 

@@ -61,7 +61,7 @@ foreach( $prefered_langs as $lang )
 $contents = array();
 
 $show_langs_side_by_side = false;
-if (count($pages) == 2) {
+if (count($pages) >= 2) {
    // If only two languages, its best to show 
    // them side by side for easier comparison
    // (as opposed to one on top of the other).
@@ -84,14 +84,10 @@ foreach( array_reverse( $pages ) as $id => $info )
     $thread_sort_mode = $prefs['wiki_comments_default_ordering'];
     $comments_vars=Array('page');
 	$comments_objectId = 'wiki page:' . $info['pageName'];
+	$_REQUEST['page'] = $info['pageName'];
     include('comments.php');
 
 	$contents[] = $smarty->fetch('tiki-show_page.tpl');
-	if ($show_langs_side_by_side) {
-	   // Enclose this language inside a table cell
-	   $curr_content_index = count($contents) - 1;
-	   $contents[$curr_content_index] = "\n<TD>\n$contents[$curr_content_index]\n</TD>\n";
-	}
 
 	if( $id === count($pages) - 1 )
 		$renderer->restoreAll();
@@ -99,13 +95,7 @@ foreach( array_reverse( $pages ) as $id => $info )
 
 $contents = array_reverse( $contents );
 
-if ($show_langs_side_by_side) {
-	// Put the two languages side by side in a table 
-	// for easier comparison
-	array_unshift($contents, "<TABLE>\n");
-	$contents[] = "</TABLE>\n";
-}
-
+$smarty->assign( 'side_by_side', $show_langs_side_by_side );
 $smarty->assign( 'excluded', $excluded );
 $smarty->assign( 'content', $contents);
 $smarty->assign( 'mid', 'tiki-all_languages.tpl' );

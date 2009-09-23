@@ -24,9 +24,10 @@ if ($prefs['javascript_enabled'] != 'y') {
 
 if ($prefs['feature_jquery_ui'] != 'y') {
 	$headerlib->add_jsfile('lib/jquery/jquery-ui/ui/minified/jquery-ui.min.js');
+	$headerlib->add_cssfile('lib/jquery/jquery-ui/themes/'.$prefs['feature_jquery_ui_theme'].'/jquery-ui.css');
 }
 
-$sections = array( 'global', 'wiki page', 'trackers', 'blogs', 'calendar', 'cms', 'faqs', 'newsletters', 'forums', 'maps');
+$sections = array( 'global', 'wiki page', 'trackers', 'blogs', 'calendar', 'cms', 'faqs', 'newsletters', 'forums', 'maps', 'admin');
 
 if( isset($_REQUEST['section']) && in_array($_REQUEST['section'], $sections) ) {
 	$section = $_REQUEST['section'];
@@ -47,13 +48,25 @@ if( isset($_REQUEST['save'], $_REQUEST['pref']) ) {
 if( isset($_REQUEST['reset']) && $section != 'global' ) {
 	$prefName = 'toolbar_' . $section . ($comments ? '_comments' : '');
 	$tikilib->delete_preference( $prefName);
+	require_once($smarty->_get_plugin_filepath('function', 'query'));
+	header('location: ?'. smarty_function_query(array('_urlencode'=>'n'), $smarty));
+}
+
+if( isset($_REQUEST['reset_global']) && $section == 'global' ) {
+	$prefName = 'toolbar_' . $section . ($comments ? '_comments' : '');
+	$tikilib->delete_preference( $prefName);
+	require_once($smarty->_get_plugin_filepath('function', 'query'));
+	header('location: ?'. smarty_function_query(array('_urlencode'=>'n'), $smarty));
 }
 
 if ( !empty($_REQUEST['save_tool']) && !empty($_REQUEST['tool_name'])) {	// input from the tool edit form
-	Toolbar::saveTool($_REQUEST['tool_name'], $_REQUEST['tool_label'], $_REQUEST['tool_icon'], $_REQUEST['tool_token'], $_REQUEST['tool_syntax']);
+	Toolbar::saveTool($_REQUEST['tool_name'], $_REQUEST['tool_label'], $_REQUEST['tool_icon'], $_REQUEST['tool_token'], $_REQUEST['tool_syntax'], $_REQUEST['tool_type'], $_REQUEST['tool_plugin']);
 }
 
 $current = $tikilib->get_preference( 'toolbar_' . $section . ($comments ? '_comments' : '') );
+if (empty($current)) {
+	$current = $tikilib->get_preference( 'toolbar_global' . ($comments ? '_comments' : '') );
+}
 
 if ( !empty($_REQUEST['delete_tool']) && !empty($_REQUEST['tool_name'])) {	// input from the tool edit form
 	Toolbar::deleteTool($_REQUEST['tool_name']);
@@ -70,10 +83,13 @@ if (!empty($current)) {
 	$current = trim( $current, '/' );
 	$current = explode( '/', $current );
 	$loadedRows = count($current);
-	foreach( $current as & $line ) {
-		$line = explode( ',', $line );
+	foreach( $current as &$line ) {
+		$bits = explode( '|', $line );
+		$line = array();
+		foreach($bits as $bit) {
+			$line[] = explode( ',', $bit );
+		}
 	}
-
 	$rowCount = max($loadedRows, 1) + 1;
 } else {
 	$rowCount = 1;
@@ -87,7 +103,9 @@ $usedqt = array();
 $qt_p_list = array();
 $qt_w_list = array();
 foreach( $current as &$line ) {
-	$usedqt = array_merge($usedqt,$line);
+	foreach($line as $bit) {
+		$usedqt = array_merge($usedqt,$bit);
+	}
 }
 
 $customqt = Toolbar::getCustomList();
@@ -101,6 +119,7 @@ foreach( $qtlist as $name ) {
 	$wys = strlen($tag->getWysiwygToken()) ? 'qt-wys' : '';
 	$wiki = strlen($tag->getWikiHtml('')) ? 'qt-wiki' : '';
 	$cust = Toolbar::isCustomTool($name) ? 'qt-custom' : '';
+	$avail = $tag->isAccessible() ? '' : 'qt-noaccess';
 	$icon = $tag->getIconHtml();
 	if (strpos($name, 'wikiplugin_') !== false) {
 		$plug =  'qt-plugin';
@@ -109,12 +128,17 @@ foreach( $qtlist as $name ) {
 	} else {
 		$plug =  '';
 		$label = $name;
-		$qt_w_list[] = $name;
+		if (empty($cust)) {
+			$qt_w_list[] = $name;
+		}
 	}
 	$label .= '<input type="hidden" name="token" value="'.$tag->getWysiwygToken().'" />';
 	$label .= '<input type="hidden" name="syntax" value="'.$tag->getSyntax().'" />';
 	$label .= '<input type="hidden" name="type" value="'.$tag->getType().'" />';
-	$qtelement[$name] = array( 'name' => $name, 'class' => "toolbar qt-$name $wys $wiki $plug $cust", 'html' => "$icon$label");
+	if ($tag->getType() == 'Wikiplugin') {
+		$label .= '<input type="hidden" name="plugin" value="'.$tag->getPluginName().'" />';
+	}
+	$qtelement[$name] = array( 'name' => $name, 'class' => "toolbar qt-$name $wys $wiki $plug $cust $avail", 'html' => "$icon<span>$label</span>");
 }
 
 $nol = 2;
@@ -131,7 +155,16 @@ var item;
 \$jq('$rowStr').sortable({
 	connectWith: '$fullStr, .row',
 	forcePlaceholderSize: true,
-	forceHelperSize: true
+	forceHelperSize: true,
+	receive: function(event, ui) {
+		var x = $jq(ui.item).parent().offset().left + $jq(ui.item).parent().width() - ui.offset.left;
+		//alert(x);
+		if (x < 32) {
+			\$jq(ui.item).css("float", "right");
+		} else {
+			\$jq(ui.item).css("float", "left");
+		}
+	}
 });
 \$jq('$fullStr').sortable({
 	connectWith: '.row, #full-list-c',
@@ -166,6 +199,7 @@ var item;
 //\$jq('#toolbar_edit_div form').submit(function() {
 //});
 
+// show edit form dialogue
 showToolEditForm = function(item) {
 
 	//\$jq('#toolbar_edit_div').show();
@@ -176,9 +210,22 @@ showToolEditForm = function(item) {
 	\$jq('#toolbar_edit_div #tool_token').val(\$jq(item).children('input[name=token]').val());
 	\$jq('#toolbar_edit_div #tool_syntax').val(\$jq(item).children('input[name=syntax]').val());
 	\$jq('#toolbar_edit_div #tool_type').val(\$jq(item).children('input[name=type]').val());
+	if (\$jq(item).children('input[name=type]').val() == 'Wikiplugin') {
+		\$jq('#toolbar_edit_div #tool_plugin').val(\$jq(item).children('input[name=plugin]').val());
+	} else {
+		\$jq('#toolbar_edit_div #tool_plugin').attr('disabled', 'disabled');
+	}
 
 	\$jq('#toolbar_edit_div').dialog('open');
 }
+// handle plugin select on edit dialogue
+\$jq('#toolbar_edit_div #tool_type').change( function () {
+	if (\$jq('#toolbar_edit_div #tool_type').val() == 'Wikiplugin') {
+		\$jq('#toolbar_edit_div #tool_plugin').removeAttr('disabled');
+	} else {
+		\$jq('#toolbar_edit_div #tool_plugin').attr('disabled', 'disabled').val("");
+	}
+});
 
 \$jq("#toolbar_edit_div").dialog({
 	bgiframe: true,
@@ -186,6 +233,9 @@ showToolEditForm = function(item) {
 //	height: 300,
 	modal: true,
 	buttons: {
+		Cancel: function() {
+			\$jq(this).dialog('close');
+		},
 		'Save': function() {
 			var bValid = true;
 //			allFields.removeClass('ui-state-error');
@@ -197,9 +247,6 @@ showToolEditForm = function(item) {
 				\$jq("#toolbar_edit_div #save_tool").val('Save');
 				\$jq("#toolbar_edit_div form").submit();
 			}
-			\$jq(this).dialog('close');
-		},
-		Cancel: function() {
 			\$jq(this).dialog('close');
 		},
 		Delete: function() {
@@ -215,26 +262,35 @@ showToolEditForm = function(item) {
 	}
 });
 
-
+// save toolbars
 saveRows = function() {
 	var lists = [];
 	var ser = \$jq('.row').map(function(){				/* do this on everything of class 'row' */
+		var right_section = false;
 		return \$jq(this).children().map(function(){	/* do this on each child node */
-			return \$jq(this).hasClass('qt-plugin') ?	/* put back label prefix for plugins */
-				'wikiplugin_' + \$jq(this).text() : \$jq(this).text();
-		}).get().join(",")								/* put commas inbetween */
+			var text = "";
+			if (\$jq(this).text() == "help") {
+				var a = 1;
+			}
+			if ( !right_section && \$jq(this).css("float") == "right") {
+				text = "|";
+				right_section = true;
+			}
+			if (\$jq(this).hasClass('qt-plugin')) { text += 'wikiplugin_'; }
+			text += \$jq(this).text();
+			return text;
+		}).get().join(",").replace(",|", "|");								/* put commas inbetween */
 	});
 	if (typeof(ser) == 'object' && ser.length > 1) {
 		ser = \$jq.makeArray(ser).join('/');			// row separators
 	} else {
 		ser = ser[0];
 	}
-	\$jq('#qt-form-field').val(ser);
+	\$jq('#qt-form-field').val(ser.replace(',,', ','));
 }
 
 \$jq('#qt_filter_div_w input').click( function () {	// non-plugins	
-	\$jq('#full-list-w').children().each( function() {
-				
+	\$jq('#full-list-w').children().each( function() {	
 		if (((\$jq('#qt_filter_div_w .qt-wiki-filter').attr('checked') && \$jq(this).hasClass('qt-wiki')) ||
 			 (\$jq('#qt_filter_div_w .qt-wys-filter').attr('checked') && \$jq(this).hasClass('qt-wys')))) {
 			\$jq(this).show();	
@@ -273,6 +329,14 @@ if (count($_REQUEST) == 0) {
 } else {
 	$smarty->assign('autoreload', isset($_REQUEST['autoreload']) ? $_REQUEST['autoreload'] : '');
 }
+
+$plugins = array();
+foreach($tikilib->plugin_get_list() as $name) {
+	$info = $tikilib->plugin_info($name);
+	if (isset($info['prefs']) && is_array($info['prefs']) && count($info['prefs']) > 0) $plugins[$name] = $info;
+}
+$smarty->assign('plugins', $plugins);
+
 $smarty->assign('comments', $comments);
 $smarty->assign( 'loaded', $section );
 $smarty->assign( 'rows', range( 0, $rowCount - 1 ) );

@@ -276,14 +276,6 @@
 	<div class="adminoptionlabel"><label for="users_prefs_mytiki_items">{tr}My items{/tr}</label></div>
 </div>
 {/if}
-{if $prefs.feature_workflow eq 'y'}
-  {if $tiki_p_use_workflow eq 'y'}
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="users_prefs_mytiki_workflow" name="users_prefs_mytiki_workflow" {if $prefs.users_prefs_mytiki_workflow eq 'y'}checked="checked"{/if} /></div>
-	<div class="adminoptionlabel"><label for="users_prefs_mytiki_workflow">{tr}My workflow{/tr}</label></div>
-</div>
-  {/if}
-{/if}
 </fieldset>
 	{/tab}
 

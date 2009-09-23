@@ -97,22 +97,7 @@
 {/if}
 
 {if $headerlib}		{$headerlib->output_headers()}{/if}
-{if ($mid eq 'tiki-editpage.tpl')}
-		<script type="text/javascript">
-		<!--//--><![CDATA[//><!--
-	{literal}
-			var needToConfirm = true;
 
-			window.onbeforeunload = confirmExit;
-			function confirmExit()
-			{
-				if (needToConfirm)
-	{/literal}			return "{tr interactive='n'}You are about to leave this page. If you have made any changes without Saving, your changes will be lost.  Are you sure you want to exit this page?{/tr}";{literal}
-			}
-	{/literal}
-		//--><!]]>
-		</script>
-{/if}
 {if $prefs.feature_custom_html_head_content}
 	{eval var=$prefs.feature_custom_html_head_content}
 {/if}

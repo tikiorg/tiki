@@ -285,6 +285,10 @@ function setLangFilter($filter) {
 	if (isset($_REQUEST['listonly']) && $prefs['feature_jquery_autocomplete'] == 'y' && strlen($lang) > 2) {
 		$lang = substr($lang, 0, 2);		// for autocomplete - use only language filter, not culture as well
 	}
+	// Without this condition, default listing is empty and language filter shows any language
+	if ($lang == 'en-us') {
+		$lang = 'en';
+	}
 	$filter['lang'] = $lang;
 	$smarty->assign_by_ref('find_lang', $lang);
 	return $filter;

@@ -376,38 +376,67 @@ div#sitelogo {
 
 /****** Menus, Links ******/
 /** CSS (suckerfish) menus **/
-.cssmenu li,
 .cssmenu_horiz li,
 .cssmenu_vert li {
 	border-top: 1px solid #dedede;
+	background: #c7d0d9;
 }
 
-.cssmenu li:hover,
+.cssmenu_vert li {
+	background: white;
+}
+
 .cssmenu_horiz li:hover,
+.cssmenu_horiz li.sfHover,
+.cssmenu_horiz a:focus,
+.cssmenu_horiz a:hover,
+.cssmenu_horiz a:active,
 .cssmenu_vert li:hover,
-.cssmenu li.sfhover,
-.cssmenu_horiz li.sfhover,
-.cssmenu_vert li.sfhover {
+.cssmenu_vert li.sfHover,
+.cssmenu_vert a:focus,
+.cssmenu_vert a:hover,
+.cssmenu_vert a:active {
 	background: #e9ecef;
 }
 
-.cssmenu li ul,
-.cssmenu_horiz li ul,
-.cssmenu_vert li ul {
-	border: 1px solid #acccdd;
+.cssmenu_horiz a,
+.cssmenu_vert a {
+	padding: .3em 1em;
 }
 
-.cssmenu_horiz li ul ul {
-	margin: -1em 0 0 11em;
+/* less padding so move ul ul up */
+.cssmenu_horiz li:hover ul,
+.cssmenu_horiz li.sfHover ul {
+	top: 1.6em;
+}
+
+/* adjust ul ul top to smaller padding */
+.cssmenu_vert li:hover ul,
+.cssmenu_vert li.sfHover ul {
+	top: 0em;
+}
+
+.cssmenu_horiz a,
+.cssmenu_horiz a:visited,
+.cssmenu_vert a,
+.cssmenu_vert a:visited {
+	color: inherit;
 }
 
 #tiki-top > ul.cssmenu_horiz > li > a {
 	font-weight: bold;
+	border-top: 0;
+	border-left: 0;
 }
 
 .sf-sub-indicator {
 	background: url(tikinewt/arrows-6d819d.png) no-repeat -10px -100px;
 }
+
+a > .sf-sub-indicator {
+	top: .4em;
+}
+
 /* when there's superfish shadow */
 .cssmenu_horiz.sf-shadow ul li,
 .cssmenu_vert.sf-shadow ul li {
@@ -916,10 +945,6 @@ a.forumname {
 a.forumnameread {
 	letter-spacing: 1px;
 	color: #000;
-}
-
-.findtitle, .findsubmit {
-	float: left;
 }
 
 tr.odd {

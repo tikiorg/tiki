@@ -1,6 +1,9 @@
 {* $Id: tiki-site_header.tpl 12554 2008-04-15 23:03:57Z luciash $ *}
+{* site header login form *}
 {strip}
-{if $user}
+{if $filegals_manager eq '' and $print_page ne 'y'}
+	{if $prefs.feature_site_login eq 'y'}
+		{if $user}
 <div id="siteloginbar" class="logged-in">
 	{$user|userlink} | <a href="tiki-logout.php" title="{tr}Logout{/tr}">{tr}Logout{/tr}</a>
 {else}
@@ -36,4 +39,6 @@
 	{/if}
 {/if}
 </div>
+	{/if}
+{/if}
 {/strip}

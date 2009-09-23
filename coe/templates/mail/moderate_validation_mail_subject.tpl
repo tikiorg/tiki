@@ -1,2 +1,2 @@
 {* -*- coding:utf-8 -*- *}
-{tr}Tiki User Registration Request{/tr}
+{tr}User Registration Request{/tr}
