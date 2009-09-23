@@ -18,6 +18,1814 @@ When possible, it's also nice to indicate what feature is concerned by the chang
 Before 2.0, there was only [MOD] for both [ENH] and [MOD]:
 
 ----------------------------------------------------------------------
+Version 3.2
+<http://tikiwiki.org/ReleaseNotes32>
+------------------
+
+----------------------------------------------
+r21705 | nyloth | 2009-09-23 19:12:29 +0200 (mer. 23 sept. 2009) | 1 line
+
+[SVN] Fix subversion merges of Jyhem's commits for changes on language files - SVN is a very bad tool for merges and apparently don't finish some merges correctly :[
+----------------------------------------------
+r21703 | nyloth | 2009-09-23 18:21:37 +0200 (mer. 23 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r21693 | changi67 | 2009-09-23 17:02:50 +0200 (mer. 23 sept. 2009) | 1 line
+[MOD] ReRemove the dot zero in tiki3.gif (not in trunk because rename in tikisitelogo.gif) thx Nyloth
+
+
+----------------------------------------------
+r21700 | nyloth | 2009-09-23 18:18:11 +0200 (mer. 23 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r21668 | pkdille | 2009-09-23 14:03:53 +0200 (mer. 23 sept. 2009) | 1 line
+[bp/r21667][FIX] freetags-most-popular: The wrapping of the tags was broken (all on one line) due to the effects of the html stripping (smarty strip plugin)
+
+
+----------------------------------------------
+r21699 | nyloth | 2009-09-23 18:17:31 +0200 (mer. 23 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r21649 | Jyhem | 2009-09-22 14:53:48 +0200 (mar. 22 sept. 2009) | 1 line
+[FIX] Let header strings be translated in coelesce, too (was done in other styles in #20119) (issue does not exist in trunk)
+
+
+----------------------------------------------
+r21698 | nyloth | 2009-09-23 18:14:38 +0200 (mer. 23 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r21640 | Jyhem | 2009-09-21 18:35:44 +0200 (lun. 21 sept. 2009) | 1 line
+[FIX] Remove Tiki reference from user text and associated mass language corrections (trunk #21639) 
+
+
+----------------------------------------------
+r21686 | nyloth | 2009-09-23 15:40:29 +0200 (mer. 23 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r21632 | sylvieg | 2009-09-21 16:40:25 +0200 (lun. 21 sept. 2009) | 1 line
+[bp/ r 21631][MOD]login: add detail about last login attempt in the unsuccessful attempt
+
+
+----------------------------------------------
+r21685 | nyloth | 2009-09-23 15:39:45 +0200 (mer. 23 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r21629 | Jyhem | 2009-09-21 16:09:34 +0200 (lun. 21 sept. 2009) | 1 line
+[FIX] Remove Tiki reference from user text (trunk #21628) 
+
+
+----------------------------------------------
+r21684 | nyloth | 2009-09-23 15:39:07 +0200 (mer. 23 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r21559 | sylvieg | 2009-09-17 18:47:23 +0200 (jeu. 17 sept. 2009) | 1 line
+[bp/ r 17325 partiel] in tiki-login.php  can be set to a table
+
+
+----------------------------------------------
+r21683 | nyloth | 2009-09-23 15:38:32 +0200 (mer. 23 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r21583 | sylvieg | 2009-09-18 22:25:42 +0200 (ven. 18 sept. 2009) | 1 line
+[bp/ r21578][FIX]menu: take away the option (()) when user do not have perm on the page (avoid to sync the menu options perm) - it can break the menu if the options have less perm than the section but it is wyswyg
+
+
+----------------------------------------------
+r21682 | nyloth | 2009-09-23 15:37:53 +0200 (mer. 23 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r21585 | sylvieg | 2009-09-18 22:55:48 +0200 (ven. 18 sept. 2009) | 1 line
+[bp/ r21584] [FIX]tracker: we can admin the fields of a tracker if you have a local tiki_p_admiN_trackers on this tracker
+
+
+----------------------------------------------
+r21681 | nyloth | 2009-09-23 15:37:19 +0200 (mer. 23 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r21564 | sylvieg | 2009-09-17 20:17:13 +0200 (jeu. 17 sept. 2009) | 1 line
+[FIX] do not show the big blue hlap button if not in the edit mode (no more in trunk)
+
+
+----------------------------------------------
+r21680 | nyloth | 2009-09-23 15:34:56 +0200 (mer. 23 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r21635 | Jyhem | 2009-09-21 17:29:01 +0200 (lun. 21 sept. 2009) | 1 line
+[FIX] Remove Tiki reference from user text (trunk #21630) 
+
+
+----------------------------------------------
+r21673 | nyloth | 2009-09-23 15:14:47 +0200 (mer. 23 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r21621 | Jyhem | 2009-09-20 22:21:15 +0200 (dim. 20 sept. 2009) | 1 line
+[FIX] Correct misleading text, plus mass correction of translations
+
+
+----------------------------------------------
+r21671 | nyloth | 2009-09-23 14:54:48 +0200 (mer. 23 sept. 2009) | 1 line
+
+[SVN] remove wrong svn:mime-type property on lang/hr/language.php, which causes merge problems to backport fixes from proposed branch
+----------------------------------------------
+r21670 | nyloth | 2009-09-23 14:33:55 +0200 (mer. 23 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r21548 | sylvieg | 2009-09-17 00:09:00 +0200 (jeu. 17 sept. 2009) | 1 line
+[bp/ r21546 21547] [FIX]tracker: default value was overwritting an existing value
+
+
+----------------------------------------------
+r21508 | nyloth | 2009-09-15 12:03:38 +0200 (mar. 15 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r21491 | chibaguy | 2009-09-14 17:36:29 +0200 (lun. 14 sept. 2009) | 1 line
+[FIX] Wrong background image url (already correct in trunk).
+
+
+----------------------------------------------
+r21507 | nyloth | 2009-09-15 12:03:02 +0200 (mar. 15 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r21487 | ricks99 | 2009-09-14 16:56:24 +0200 (lun. 14 sept. 2009) | 2 lines
+[ENH]corrected filename. see 2147 and 21485
+
+
+----------------------------------------------
+r21506 | nyloth | 2009-09-15 12:02:26 +0200 (mar. 15 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r21484 | sylvieg | 2009-09-14 16:36:44 +0200 (lun. 14 sept. 2009) | 1 line
+[bp/ r 20133][FIX]tracker: to have categ field working for TRACKER on an existing item
+
+
+----------------------------------------------
+r21505 | nyloth | 2009-09-15 12:01:48 +0200 (mar. 15 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r21477 | Jyhem | 2009-09-14 15:20:14 +0200 (lun. 14 sept. 2009) | 1 line
+[FIX] Now the pop-ups in the calendar and active calendar modules do not extend outside of the page any more and everything can be read (trunk #21476)
+
+
+----------------------------------------------
+r21504 | nyloth | 2009-09-15 12:01:13 +0200 (mar. 15 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r21474 | ricks99 | 2009-09-14 15:01:10 +0200 (lun. 14 sept. 2009) | 1 line
+[ENH]better ui layout for plugin approval. allow admin to approve/clear selected plugins, or *all* pending plugins at once. use anchor to link to specific plugin location in wiki page. show who (user) added plugin. will be *very* helpful for admins upgrading from 2.x -> 3.x. in trunk as #21409
+
+
+----------------------------------------------
+r21503 | nyloth | 2009-09-15 12:00:21 +0200 (mar. 15 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r21472 | Jyhem | 2009-09-14 12:00:32 +0200 (lun. 14 sept. 2009) | 1 line
+[FIX] Oops, second file of commit proposed #21469: Lets calendar modules in month view instead of breaking them when main calendar view mode changes to week, year, etc. (in trunk #19102)
+
+
+----------------------------------------------
+r21502 | nyloth | 2009-09-15 11:59:46 +0200 (mar. 15 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r21469 | Jyhem | 2009-09-14 11:17:13 +0200 (lun. 14 sept. 2009) | 1 line
+[FIX] Lets calendar modules in month view instead of breaking them when main calendar view mode changes to week, year, etc (in trunk #19102)
+
+
+----------------------------------------------
+r21501 | nyloth | 2009-09-15 11:59:10 +0200 (mar. 15 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r21452 | chibaguy | 2009-09-13 17:00:35 +0200 (dim. 13 sept. 2009) | 2 lines
+[bp/r21451][FIX] Wrong background image url.
+
+
+----------------------------------------------
+r21500 | nyloth | 2009-09-15 11:58:31 +0200 (mar. 15 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r21450 | chibaguy | 2009-09-13 16:55:32 +0200 (dim. 13 sept. 2009) | 2 lines
+[bp/r21449] [FIX] Wrong background image url.
+
+
+----------------------------------------------
+r21499 | nyloth | 2009-09-15 11:57:51 +0200 (mar. 15 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r21448 | chibaguy | 2009-09-13 16:45:00 +0200 (dim. 13 sept. 2009) | 2 lines
+[bp/r21447][FIX] Wrong background image url.
+
+
+----------------------------------------------
+r21498 | nyloth | 2009-09-15 11:57:11 +0200 (mar. 15 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r21340 | sylvieg | 2009-09-10 19:25:20 +0200 (jeu. 10 sept. 2009) | 1 line
+[bp/ r21233 21259 21327] quote freetag with space
+
+
+----------------------------------------------
+r21468 | nyloth | 2009-09-14 10:02:34 +0200 (lun. 14 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r21432 | sylvieg | 2009-09-12 22:28:28 +0200 (sam. 12 sept. 2009) | 1 line
+[FIX]perms: was not possible to include a page your were creator
+
+
+----------------------------------------------
+r21467 | nyloth | 2009-09-14 10:01:07 +0200 (lun. 14 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r21404 | pkdille | 2009-09-11 16:13:47 +0200 (ven. 11 sept. 2009) | 1 line
+[bp/r21403][FIX] javascript detextion: set one year lifetime for the javascript_enabled cookie in order to keep the right value when opening a new session (we can assume that this value should not change for the same pc/browser between two sessions)
+
+
+----------------------------------------------
+r21466 | nyloth | 2009-09-14 10:00:12 +0200 (lun. 14 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r21339 | sylvieg | 2009-09-10 19:07:07 +0200 (jeu. 10 sept. 2009) | 1 line
+[bp/ r 21026] [FIX]tracker: fix memo time when modifying + deduplicate code
+
+
+----------------------------------------------
+r21465 | nyloth | 2009-09-14 09:58:21 +0200 (lun. 14 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r21332 | pkdille | 2009-09-10 15:22:34 +0200 (jeu. 10 sept. 2009) | 1 line
+[bp/r21331][FIX] admin newsletters: resetting nlId when saving a newsletter. This fixes the creation of a new newsletter immediately after saving a change of an existing one.
+
+
+----------------------------------------------
+r21464 | nyloth | 2009-09-14 09:55:27 +0200 (lun. 14 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r21330 | pkdille | 2009-09-10 15:16:54 +0200 (jeu. 10 sept. 2009) | 1 line
+[FIX] admin newsletters : do not show "Create newsletter" button if already in creation mode. Changing the subtitle. Not commited to trunk because the page is using tabs there and the ergonomy is different (following r/21236)
+
+
+----------------------------------------------
+r21463 | nyloth | 2009-09-14 09:53:47 +0200 (lun. 14 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r21329 | pkdille | 2009-09-10 14:40:43 +0200 (jeu. 10 sept. 2009) | 1 line
+[br/r21328][FIX] adminusers: "Email" option should not appear if wiki feature is not active. Also, changing the label
+
+
+----------------------------------------------
+r21462 | nyloth | 2009-09-14 09:52:31 +0200 (lun. 14 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r21325 | marclaporte | 2009-09-09 22:58:46 +0200 (mer. 09 sept. 2009) | 1 line
+[MOD] On clean install, do not use transition style, which was causing file not found error anyway. Transitions have been removed from 4.0 so this is not a backport.
+
+
+----------------------------------------------
+r21461 | nyloth | 2009-09-14 09:51:20 +0200 (lun. 14 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r21307 | sylvieg | 2009-09-09 15:21:29 +0200 (mer. 09 sept. 2009) | 1 line
+[bp/r 21396] [FIX]YOUTUBE: just add the missing param declaration
+
+
+----------------------------------------------
+r21460 | nyloth | 2009-09-14 09:50:17 +0200 (lun. 14 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r21302 | sylvieg | 2009-09-08 22:46:58 +0200 (mar. 08 sept. 2009) | 1 line
+[FIX - do not exist in trunk] missing popup_init
+
+
+----------------------------------------------
+r21459 | nyloth | 2009-09-14 09:48:44 +0200 (lun. 14 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r21299 | sylvieg | 2009-09-08 19:35:00 +0200 (mar. 08 sept. 2009) | 1 line
+[bp/ r 21277] [FIX]plugin: to be able to write a plugin param with a space between the name and = - and even more it is a regression as you can no more put the plugin params on multiple lines
+
+
+----------------------------------------------
+r21458 | nyloth | 2009-09-14 09:46:40 +0200 (lun. 14 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19778 | sylvieg | 2009-06-24 21:23:36 +0200 (mer. 24 juin 2009) | 1 line
+[bp/r 19069][FIX]layout: useful prefs in shadow layout that were not in a panel
+
+
+----------------------------------------------
+r21399 | nyloth | 2009-09-11 12:08:44 +0200 (ven. 11 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r21268 | luciash | 2009-09-07 03:24:38 +0200 (lun. 07 sept. 2009) | 1 line
+[bp/r21267][FIX] module Since last visit (new): correct (aka working) URL param to display wiki comments is &comzone=show
+
+
+----------------------------------------------
+r21398 | nyloth | 2009-09-11 12:07:59 +0200 (ven. 11 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r21236 | pkdille | 2009-09-03 16:09:07 +0200 (jeu. 03 sept. 2009) | 1 line
+[bp/r21234][FIX] admin newsletters: give a more intuitive way to switch between admin_newsletters and admin_newsletters_subscriptions (it was very difficult to create a new newsletter instead of editing the current one)
+
+
+----------------------------------------------
+r21397 | nyloth | 2009-09-11 12:07:07 +0200 (ven. 11 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r21214 | pkdille | 2009-09-02 09:43:29 +0200 (mer. 02 sept. 2009) | 1 line
+[bp/r21213][FIX] user admin: tiki_p_admin_users should be enough to create e new user with password and mail validation (this fixes the template file. The php code was already allowing this action)
+
+
+----------------------------------------------
+r21396 | nyloth | 2009-09-11 12:06:29 +0200 (ven. 11 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r21048 | luciash | 2009-08-22 22:36:12 +0200 (sam. 22 août 2009) | 1 line
+[bp/r20365][FIX] wikiplugin_tracker (pretty tracker) input: when there is no showmandatory=n param, mark mandatory fields and display the notice (same as for non-wiki/tpl tracker input)
+
+
+----------------------------------------------
+r21395 | nyloth | 2009-09-11 12:05:52 +0200 (ven. 11 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r21032 | Jyhem | 2009-08-21 20:53:21 +0200 (ven. 21 août 2009) | 1 line
+[FIX] Link syntax was invalid for text mails (trunk #21031)
+
+
+----------------------------------------------
+r21394 | nyloth | 2009-09-11 12:05:11 +0200 (ven. 11 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r21017 | chealer | 2009-08-21 03:08:37 +0200 (ven. 21 août 2009) | 2 lines
+[bp/r21016] [FIX] Fatal error: Call to undefined method UsersLib::wget_user_info()
+
+
+----------------------------------------------
+r21393 | nyloth | 2009-09-11 11:20:11 +0200 (ven. 11 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r20915 | chibaguy | 2009-08-17 14:59:50 +0200 (lun. 17 août 2009) | 1 line
+[bp/r20863][ENH] Switch table class from normal to normalnoborder, since content-layout columns don't usually have borders.
+
+
+----------------------------------------------
+r21392 | nyloth | 2009-09-11 11:19:34 +0200 (ven. 11 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r20914 | chibaguy | 2009-08-17 14:56:58 +0200 (lun. 17 août 2009) | 2 lines
+[bp/r20870][FIX] .flv files weren't playing in Opera and IE. Thanks to luci for the fix.
+
+
+----------------------------------------------
+r21391 | nyloth | 2009-09-11 11:18:57 +0200 (ven. 11 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r20913 | ricks99 | 2009-08-17 14:37:57 +0200 (lun. 17 août 2009) | 1 line
+[ENH]added support for TITLE attribute of IFRAME element (required for WCAG 1.0 Priority 1)
+
+
+----------------------------------------------
+r21390 | nyloth | 2009-09-11 11:18:20 +0200 (ven. 11 sept. 2009) | 7 lines
+
+[QT] Quality Team Backport
+
+r20825 | jonnybradley | 2009-08-13 14:21:03 +0200 (jeu. 13 août 2009) | 3 lines
+[FIX] JS Confirm dialogue to check install
+[bp/r19269] But only one part of that commit - the part with least possibility of regression and most usefulness (imho)
+
+
+----------------------------------------------
+r21389 | nyloth | 2009-09-11 11:17:45 +0200 (ven. 11 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r20823 | jonnybradley | 2009-08-13 14:01:24 +0200 (jeu. 13 août 2009) | 1 line
+[QT][SQL] convertsqls
+
+
+----------------------------------------------
+r21388 | nyloth | 2009-09-11 11:16:50 +0200 (ven. 11 sept. 2009) | 7 lines
+
+[QT] Quality Team Backport
+
+r20822 | jonnybradley | 2009-08-13 13:59:50 +0200 (jeu. 13 août 2009) | 3 lines
+[QT][bp/r20412][FIX] remove UNIQUE KEY on tiki_sefurl_regex_out
+The important part of r20415 - fixes wish2559 (Error installing into UTF-8 MySQL database)
+
+
+----------------------------------------------
+r21387 | nyloth | 2009-09-11 11:16:13 +0200 (ven. 11 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r20791 | pkdille | 2009-08-11 18:11:45 +0200 (mar. 11 août 2009) | 1 line
+[bp/r20790][FIX] admin_quizzes: remove nVersion field which was unused and, as declared as NOT NULL, gave some problems during quizzes saving
+
+
+----------------------------------------------
+r21385 | nyloth | 2009-09-11 11:02:35 +0200 (ven. 11 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r20632 | ricks99 | 2009-08-06 22:49:37 +0200 (jeu. 06 août 2009) | 1 line
+[ENH] adding label elements to form fields. see 20432 from 3.0 branch. my bad.
+
+
+----------------------------------------------
+r21384 | nyloth | 2009-09-11 10:59:27 +0200 (ven. 11 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r20582 | Jyhem | 2009-08-05 14:38:09 +0200 (mer. 05 août 2009) | 1 line
+[FIX] Don't lose the value of javascript_enabled in order to have 'check all' checkbox again (backport trunk #20581) 
+
+
+----------------------------------------------
+r21383 | nyloth | 2009-09-11 10:58:44 +0200 (ven. 11 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r20579 | Jyhem | 2009-08-05 14:22:28 +0200 (mer. 05 août 2009) | 1 line
+[ENH] Better visibility of survey queries, and more in tune with the general coelesce theme (backport from trunk #20578)
+
+
+----------------------------------------------
+r21382 | nyloth | 2009-09-11 10:57:59 +0200 (ven. 11 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r20558 | pkdille | 2009-08-04 15:11:10 +0200 (mar. 04 août 2009) | 1 line
+[bp/r20522] [FIX] coelesce: catlists for IE (keep them in the page width)
+
+
+----------------------------------------------
+r21381 | nyloth | 2009-09-11 10:57:14 +0200 (ven. 11 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r20542 | pkdille | 2009-08-04 12:00:42 +0200 (mar. 04 août 2009) | 1 line
+[bp/r20541][FIX] coelesce: Fix the code caption plugin look (no left margin in order to be aligned with title)
+
+
+----------------------------------------------
+r21376 | nyloth | 2009-09-11 00:32:35 +0200 (ven. 11 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r20491 | chibaguy | 2009-08-02 15:23:37 +0200 (dim. 02 août 2009) | 1 line
+[bp/r20490][FIX] Extra </div> tag broke page columns on Google Map Locator (tiki-gmap_locator.php).
+
+
+----------------------------------------------
+r21375 | nyloth | 2009-09-11 00:28:02 +0200 (ven. 11 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r20455 | chibaguy | 2009-08-01 06:11:26 +0200 (sam. 01 août 2009) | 1 line
+[bp/r20454][FIX] Correct location of plugin help popup. (Already in coelesce.css, strasa.css and layout.css but should be in these themes also until they import layout.css.)
+
+
+----------------------------------------------
+r21374 | nyloth | 2009-09-11 00:18:17 +0200 (ven. 11 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r20417 | sylvieg | 2009-07-30 14:15:21 +0200 (jeu. 30 juil. 2009) | 1 line
+[bp/r20332] [FIX] smarty query: do not try to use only anchor when there is no explicit script specified but URL arguments specified - this fixes more correctly replies on forums and comments
+
+
+----------------------------------------------
+r21372 | nyloth | 2009-09-11 00:00:10 +0200 (ven. 11 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r20099 | lindonb | 2009-07-14 05:00:20 +0200 (mar. 14 juil. 2009) | 1 line
+[FIX} To add tra's to plugin info function (thanks sylvieg!). Same was committed to trunk in revision 20098.
+
+
+----------------------------------------------
+r21371 | nyloth | 2009-09-10 23:51:31 +0200 (jeu. 10 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r20167 | jonnybradley | 2009-07-15 20:26:39 +0200 (mer. 15 juil. 2009) | 1 line
+[bp/r20163][FIX] Make WYSIWYG editor use style-option (theme-option) if set
+
+
+----------------------------------------------
+r21370 | nyloth | 2009-09-10 23:46:35 +0200 (jeu. 10 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r20140 | chibaguy | 2009-07-15 13:12:15 +0200 (mer. 15 juil. 2009) | 1 line
+[FIX] br tag causes a problem because it adds space below the search form. This causes a gap between the #tiki-top and #middle divs when the search form is in the menu bar, exposing the page background, and breaking the layout of menu items, depending on the theme. (Not a backport, because this file in trunk doesn't have the br tag.)
+
+
+----------------------------------------------
+r21369 | nyloth | 2009-09-10 23:42:31 +0200 (jeu. 10 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r20135 | Jyhem | 2009-07-15 11:12:16 +0200 (mer. 15 juil. 2009) | 1 line
+[ENH] created_desc order makes no sense in the context of lists of FAQs, title_asc is less confusing (#20134 in trunk)
+
+
+----------------------------------------------
+r21368 | nyloth | 2009-09-10 23:39:08 +0200 (jeu. 10 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r20119 | Jyhem | 2009-07-14 15:53:15 +0200 (mar. 14 juil. 2009) | 1 line
+[ENH] Make header multilingual, too (#20118 in trunk)
+
+
+----------------------------------------------
+r21367 | nyloth | 2009-09-10 23:36:04 +0200 (jeu. 10 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r20105 | chibaguy | 2009-07-14 09:01:27 +0200 (mar. 14 juil. 2009) | 2 lines
+[bp/r20104][MOD] Organized minichat selectors. (In branch 3, they were entered twice, so one set removed.)
+
+
+----------------------------------------------
+r21366 | nyloth | 2009-09-10 23:32:06 +0200 (jeu. 10 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19628 | nyloth | 2009-06-16 18:45:42 +0200 (mar. 16 juin 2009) | 2 lines
+[bp/r19301][FIX] calendars: remove CSS used for event status that does not work in IE6 and that is not displaying well with the new calendars
+
+
+----------------------------------------------
+r21365 | nyloth | 2009-09-10 23:26:03 +0200 (jeu. 10 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r20103 | chibaguy | 2009-07-14 08:00:46 +0200 (mar. 14 juil. 2009) | 1 line
+[bp/r20075][MOD (actually FIX)] Added height property (height:auto) to #shadowbox_toolbar and #shadowbox_toolbar_inner following eromneg's lead (allow height to increase when narrow image causes navigation text to wrap).
+
+
+----------------------------------------------
+r21364 | nyloth | 2009-09-10 23:14:08 +0200 (jeu. 10 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19899 | sylvieg | 2009-07-02 12:34:47 +0200 (jeu. 02 juil. 2009) | 1 line
+[bp /r1988][FIX]FILES: each plugin must have its own sort_mode not to interfer with other FILES and with tiki attachments
+
+
+----------------------------------------------
+r21363 | nyloth | 2009-09-10 23:07:07 +0200 (jeu. 10 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19629 | nyloth | 2009-06-16 18:47:28 +0200 (mar. 16 juin 2009) | 2 lines
+[bp/r19309][FIX] calendar css: smaller icons inside calendar headers, in order to have no impact on the position of items on the week and day views
+
+
+----------------------------------------------
+r21362 | nyloth | 2009-09-10 23:03:20 +0200 (jeu. 10 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19625 | nyloth | 2009-06-16 18:08:18 +0200 (mar. 16 juin 2009) | 2 lines
+[bp/r19429][FIX] coelesce theme: remove padding-left on top horizontal menu bar to avoid the whole page to be 20px too large (which was the cause of the horizontal scrollbar)
+
+
+----------------------------------------------
+r21361 | nyloth | 2009-09-10 22:58:55 +0200 (jeu. 10 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19623 | nyloth | 2009-06-16 18:02:03 +0200 (mar. 16 juin 2009) | 2 lines
+[bp/r19305][FIX] coelesce: remove IE hack for phplayers menus items, which should have the same CSS definitions in all browsers. This was the cause of a small text for the second menu item of the top vertical menu + typo in comment
+
+
+----------------------------------------------
+r21360 | nyloth | 2009-09-10 22:55:04 +0200 (jeu. 10 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19622 | nyloth | 2009-06-16 17:58:47 +0200 (mar. 16 juin 2009) | 2 lines
+[bp/r19428][FIX] css: fix some css to be compliant with IE6 that completely ignores css all css definitions of some selectors when one of these selectors is not supported by IE6 (e.g. input[type=submit]). This allows those CSS definitions to work in IE6 for other selectors, supported by this browser
+
+
+----------------------------------------------
+r21359 | nyloth | 2009-09-10 22:48:38 +0200 (jeu. 10 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19621 | nyloth | 2009-06-16 17:51:03 +0200 (mar. 16 juin 2009) | 2 lines
+[bp/r19607][FIX] calendars: do not badly display the width of an event that was wrongly be set with the same start and end
+
+
+----------------------------------------------
+r21358 | nyloth | 2009-09-10 22:44:53 +0200 (jeu. 10 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19619 | nyloth | 2009-06-16 17:47:39 +0200 (mar. 16 juin 2009) | 2 lines
+[bp/r19609][FIX] calendars layout: add 1px of padding around the calendar viewmode bar
+
+
+----------------------------------------------
+r21357 | nyloth | 2009-09-10 22:41:43 +0200 (jeu. 10 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19616 | nyloth | 2009-06-16 17:15:29 +0200 (mar. 16 juin 2009) | 2 lines
+[bp/r19304][FIX] coelesce: add a clear:both to tiki-top, to avoid problems if above elements are floating
+
+
+----------------------------------------------
+r21356 | nyloth | 2009-09-10 22:38:58 +0200 (jeu. 10 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19615 | nyloth | 2009-06-16 17:12:42 +0200 (mar. 16 juin 2009) | 2 lines
+[bp/r19302][FIX] coelesce: do not hardcode the width of top login bar, which should expand itself when needed
+
+
+----------------------------------------------
+r21355 | nyloth | 2009-09-10 22:36:04 +0200 (jeu. 10 sept. 2009) | 13 lines
+
+[QT] Quality Team Backport
+
+r20102 | chibaguy | 2009-07-14 07:53:58 +0200 (mar. 14 juil. 2009) | 9 lines
+[FIX] Misc. improvements from trunk.
+- Features in category block capitalized
+- Category block items given left margin
+- th listed twice so one time removed
+- border removed from div.multiselect
+- .fancytoclevel and .ajaxloading bg image paths corrected
+- wiki diff style color added where background is specified
+- textarea.wikiedit font size removed 
+
+
+----------------------------------------------
+r21354 | nyloth | 2009-09-10 22:33:05 +0200 (jeu. 10 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r20101 | chibaguy | 2009-07-14 07:29:43 +0200 (mar. 14 juil. 2009) | 1 line
+[FIX] Show/hide module flipping icon when module is in wikitext.
+
+
+----------------------------------------------
+r21353 | nyloth | 2009-09-10 22:18:32 +0200 (jeu. 10 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r20090 | chibaguy | 2009-07-13 15:45:32 +0200 (lun. 13 juil. 2009) | 2 lines
+[bp/r20088, r20089][FIX] .postbody-title .actions ("Watched by categories" text) in forum titles had bad contrast. Thanks to xavi.
+
+
+----------------------------------------------
+r21352 | nyloth | 2009-09-10 22:16:44 +0200 (jeu. 10 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r20074 | lindonb | 2009-07-12 22:35:10 +0200 (dim. 12 juil. 2009) | 1 line
+[MOD] Modified to match changes in ShareThis and fix small bug keeping rotateimage from working. Same committed in trunk revision 20073.
+
+
+----------------------------------------------
+r21351 | nyloth | 2009-09-10 22:13:58 +0200 (jeu. 10 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r20052 | sampaioprimo | 2009-07-10 17:40:06 +0200 (ven. 10 juil. 2009) | 1 line
+[bp/r20048][NEW] slovenian language file thanks to Ales Cerin
+
+
+----------------------------------------------
+r21350 | nyloth | 2009-09-10 22:10:45 +0200 (jeu. 10 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19936 | pkdille | 2009-07-04 16:13:15 +0200 (sam. 04 juil. 2009) | 1 line
+[bp/r19935] [FIX] admin community: xhtml
+
+
+----------------------------------------------
+r21349 | nyloth | 2009-09-10 22:08:02 +0200 (jeu. 10 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19900 | sylvieg | 2009-07-02 12:36:53 +0200 (jeu. 02 juil. 2009) | 1 line
+[bp/ r19853][FIX]multiling: 'Changing page language will also change the site language' has nothing to do with 'Display available translations'
+
+
+----------------------------------------------
+r21348 | nyloth | 2009-09-10 22:05:21 +0200 (jeu. 10 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19898 | sylvieg | 2009-07-02 12:31:31 +0200 (jeu. 02 juil. 2009) | 1 line
+[bp/ r1987][FIX]fgal: can show last editor as column
+
+
+----------------------------------------------
+r21347 | nyloth | 2009-09-10 22:03:07 +0200 (jeu. 10 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19892 | chibaguy | 2009-07-02 04:32:25 +0200 (jeu. 02 juil. 2009) | 1 line
+[bp/r19891][FIX] Bad contrast (light on light) fixed in messages table on messu-mailbox.php. Thanks to Wim Vincken for pointing out the problem.
+
+
+----------------------------------------------
+r21346 | nyloth | 2009-09-10 22:00:28 +0200 (jeu. 10 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19815 | sylvieg | 2009-06-26 15:36:43 +0200 (ven. 26 juin 2009) | 1 line
+[bp / r19814][FIX]freetag: to be able as a non admin to see the blog posts when browsing the freetags
+
+
+----------------------------------------------
+r21345 | nyloth | 2009-09-10 21:58:31 +0200 (jeu. 10 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19801 | sylvieg | 2009-06-26 00:50:59 +0200 (ven. 26 juin 2009) | 1 line
+[bp / r19415, r19798]ANSI_QUOTES compliance + [FIX]search: fix perm checking on categ for faq
+
+
+----------------------------------------------
+r21344 | nyloth | 2009-09-10 21:34:49 +0200 (jeu. 10 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19669 | nkoth | 2009-06-17 22:17:39 +0200 (mer. 17 juin 2009) | 2 lines
+[bp/r19667][FIX] realpath may not work with non-existent files in later PHP (see http://us3.php.net/manual/en/function.realpath.php#82770) - needed to make web services work
+
+
+----------------------------------------------
+r21343 | nyloth | 2009-09-10 21:31:23 +0200 (jeu. 10 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19627 | pkdille | 2009-06-16 18:42:16 +0200 (mar. 16 juin 2009) | 1 line
+[bp/r19626][MOD] coelesce: give some padding and margin to wikitext titles. Give a differet style to the showhide_heading links
+
+
+----------------------------------------------
+r21342 | nyloth | 2009-09-10 21:28:37 +0200 (jeu. 10 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19620 | nyloth | 2009-06-16 17:49:19 +0200 (mar. 16 juin 2009) | 2 lines
+[bp/r19608][FIX] calendars: display 'Add Event' instead of '+' when the cursor is over the icon used to add an event, in the week mode
+
+
+----------------------------------------------
+r21341 | nyloth | 2009-09-10 21:24:21 +0200 (jeu. 10 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19618 | nyloth | 2009-06-16 17:34:07 +0200 (mar. 16 juin 2009) | 2 lines
+[bp/r19103][FIX] admin calendars: Do not use A tag and 'button' class directly... smarty button plugin are made for that + fix 'Create calendar' link to go on the correct tab
+
+
+----------------------------------------------
+r21304 | pkdille | 2009-09-09 10:11:10 +0200 (mer. 09 sept. 2009) | 1 line
+
+[LANG] homogenize the french translation of Ascending and ascending (same for Descending)
+----------------------------------------------
+r21029 | Jyhem | 2009-08-21 19:42:18 +0200 (ven. 21 août 2009) | 1 line
+
+[FIX] Same syntax as everywhere else (bug not trunk)
+----------------------------------------------
+r20978 | Jyhem | 2009-08-19 21:44:54 +0200 (mer. 19 août 2009) | 1 line
+
+[FIX] Incorrect language (thanks Marc) (trunk #20977)
+----------------------------------------------
+r20874 | Jyhem | 2009-08-16 14:04:35 +0200 (dim. 16 août 2009) | 1 line
+
+[FIX] Correct typo: missing space (thanks, Marc Laporte) (trunk #20872)
+----------------------------------------------
+r20820 | jonnybradley | 2009-08-13 13:28:30 +0200 (jeu. 13 août 2009) | 2 lines
+
+[bp/r19722][FIX] IE7 needs same wide background image as IE6 for #siteloginbar. Thanks again to Eric Kelner.
+[QT] Should have been in 3.1 but was missed
+----------------------------------------------
+r20631 | ricks99 | 2009-08-06 22:49:00 +0200 (jeu. 06 août 2009) | 1 line
+
+rolling back to 17630. will instead commit to the PROPOSED branch. sorry!
+----------------------------------------------
+r20432 | ricks99 | 2009-07-30 22:40:26 +0200 (jeu. 30 juil. 2009) | 1 line
+
+[UI] adding label elements to form fields, backport from trunk
+----------------------------------------------
+r20420 | sylvieg | 2009-07-30 14:26:35 +0200 (jeu. 30 juil. 2009) | 1 line
+
+[bp/r20150][bp/r20148][FIX] Conditional comment with br for IE can't have space between comment tags, to have 0 height.
+----------------------------------------------
+r20418 | sylvieg | 2009-07-30 14:20:07 +0200 (jeu. 30 juil. 2009) | 1 line
+
+[bp/r20299][bp/r20298][FIX]forum: fix the forumId not affected in the IRC message - that was creating a logging error on tw.org
+----------------------------------------------
+r20094 | Jyhem | 2009-07-13 22:21:52 +0200 (lun. 13 juil. 2009) | 1 line
+
+[ENH] A logo for tiki 3.x which does not require updating at every release
+----------------------------------------------
+r19870 | wikiman | 2009-06-30 21:15:00 +0200 (mar. 30 juin 2009) | 1 line
+
+[FIX] Added str_replace to fix email link issue w/msg broadcast
+----------------------------------------------
+r19824 | sylvieg | 2009-06-26 21:46:04 +0200 (ven. 26 juin 2009) | 4 lines
+
+[QT] Quality Team Backport
+r19790
+[bp/r19789][FIX] Removing 100% widths and min-widths in forum posts. No need for these properties here, which tended to cause too-wide divs, etc. Also, min-width can't be overridden with nonspecific value (auto) in theme stylesheet.
+
+----------------------------------------------
+Version 3.1
+<http://tikiwiki.org/ReleaseNotes31>
+------------------
+
+----------------------------------------------
+r19703 | nyloth | 2009-06-19 16:28:22 +0200 (ven. 19 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19648 | xavidp | 2009-06-17 14:43:52 +0200 (mer. 17 juin 2009) | 1 line
+[bp/r19645][bp/r19644][FIX] topic image is shown when articles have a topic with a default image selected. Thanks sylvieg for fixing! :-)
+
+
+----------------------------------------------
+r19702 | nyloth | 2009-06-19 16:16:30 +0200 (ven. 19 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19673 | nyloth | 2009-06-18 11:53:46 +0200 (jeu. 18 juin 2009) | 2 lines
+[bp/r19672][FIX] release script: fix changelog generated for minor versions + remove useless comment
+
+
+----------------------------------------------
+r19697 | sylvieg | 2009-06-19 14:06:15 +0200 (ven. 19 juin 2009) | 4 lines
+
+[QT] Quality Team Backport
+
+[bp /r19655] clean some Ids for permission issue
+
+----------------------------------------------
+r19696 | sylvieg | 2009-06-19 13:59:58 +0200 (ven. 19 juin 2009) | 4 lines
+
+[QT] Quality Team Backport
+
+[FIX]incomplete proposed 19449 that breaks user tracker perm
+
+----------------------------------------------
+r19695 | nyloth | 2009-06-19 06:56:33 +0200 (ven. 19 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19662 | Jyhem | 2009-06-17 20:43:09 +0200 (mer. 17 juin 2009) | 1 line
+[FIX] Now new installs show the full list of category permissions when assigning category permissions again (rev 19660)
+
+
+----------------------------------------------
+r19614 | nyloth | 2009-06-16 17:07:44 +0200 (mar. 16 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19602 | sylvieg | 2009-06-16 14:26:29 +0200 (mar. 16 juin 2009) | 1 line
+[b 19601] register: reintroduce the <br> as a div with a class thathas been deleted in 16521
+
+
+----------------------------------------------
+r19612 | nyloth | 2009-06-16 17:00:38 +0200 (mar. 16 juin 2009) | 6 lines
+
+[QT] Quality Team Backport - missing parts of revision 19610, due to SF.net connexion break during merge
+
+r19550 | Jyhem | 2009-06-14 17:45:38 +0200 (dim. 14 juin 2009) | 1 line
+[FIX] Mass-typo correction (thanks chibaguy)
+
+
+----------------------------------------------
+r19611 | nyloth | 2009-06-16 16:42:04 +0200 (mar. 16 juin 2009) | 7 lines
+
+[QT] Quality Team Backport
+
+r19566 | pkdille | 2009-06-15 18:03:49 +0200 (lun. 15 juin 2009) | 2 lines
+[partial bp/19382][FIX] Fix the position of the searchbox (findtable) in the header for darkroom and coelesce. Fix the behaviour of the login box in the header with IE6 (tested with IE6 + IE7 + FF3 + Konqueror). Fix the look of the findtitle input field in the header (no border).
+[partial bp/r19099][FIX] coelesce theme: IE6 was freezing due to top search bar '.nohighlight' CSS definition
+
+
+----------------------------------------------
+r19610 | nyloth | 2009-06-16 16:29:50 +0200 (mar. 16 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19550 | Jyhem | 2009-06-14 17:45:38 +0200 (dim. 14 juin 2009) | 1 line
+[FIX] Mass-typo correction (thanks chibaguy)
+
+
+----------------------------------------------
+r19595 | nyloth | 2009-06-16 11:14:49 +0200 (mar. 16 juin 2009) | 2 lines
+
+[QT] Quality Team Backport - Fix missing file from the backport merge, initially done by revision 19548
+
+----------------------------------------------
+r19591 | nyloth | 2009-06-16 10:47:42 +0200 (mar. 16 juin 2009) | 1 line
+
+[QT] Rollback commit on stable branch that was not proposed to the Quality Team. See http://dev.tikiwiki.org/Quality+Team for more info.
+----------------------------------------------
+r19587 | chealer | 2009-06-16 09:59:57 +0200 (mar. 16 juin 2009) | 3 lines
+
+Translate "System" and "System Gallery".
+Fixes: 2534 (fran_gm)
+
+----------------------------------------------
+r19582 | martincomeau | 2009-06-16 05:16:16 +0200 (mar. 16 juin 2009) | 1 line
+
+[FIX] Typo and some grammar corrections to the French lang file
+----------------------------------------------
+r19581 | nyloth | 2009-06-16 00:03:57 +0200 (mar. 16 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19414 | sylvieg | 2009-06-10 21:57:30 +0200 (mer. 10 juin 2009) | 1 line
+[partial b 19405] [FIX]structure: use the page alias in the menu
+
+
+----------------------------------------------
+r19580 | nyloth | 2009-06-16 00:00:48 +0200 (mar. 16 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19481 | chibaguy | 2009-06-13 08:29:35 +0200 (sam. 13 juin 2009) | 2 lines
+[bp/r19480] [FIX] IE7: Scroll down needed to see last line in .codelisting, so padding-bottom added to display it without scrolling.
+
+
+----------------------------------------------
+r19579 | nyloth | 2009-06-15 23:55:25 +0200 (lun. 15 juin 2009) | 11 lines
+
+[QT] Quality Team Backport
+
+r19557 | pkdille | 2009-06-15 11:27:38 +0200 (lun. 15 juin 2009) | 11 lines
+[bp/r19213][MOD] smarty plugin select_all: add label param in order to be able to change the text near the checkbox
+           [FIX] deploy select_all to some templates which fixes bug #2531
+[bp/r19219][MOD] deploy select_all to some templates
+[bp/r19224][MOD] deploy select_all to some templates
+[bp/r19225][MOD] deploy select_all to some templates
+[bp/r19235][MOD] deploy select_all and remove categSelectAll which is now useless
+
+
+----------------------------------------------
+r19578 | nyloth | 2009-06-15 23:45:53 +0200 (lun. 15 juin 2009) | 12 lines
+
+[QT] Quality Team Backport
+
+r18984 | nyloth | 2009-05-21 19:33:04 +0200 (jeu. 21 mai 2009) | 8 lines
+[bp/r17882][NEW] admin users: new checkbox 'Must Validate Email' to precise if an e-mail has to be sent to ask the user to validate its account
+[FIX] mail: fix Tiki mail send() function when called for only one e-mail as a string and not as an array (like in tiki-adminusers, action 'Email' for selected users)
+[bp/r18415][ENH][FIX] send email to validate account when creating new users:
+  * New mail templates, more appropriated
+  * If user has also to change its password, don't send temporary passwords by mail but ask him to choose a new password as soon as his account is validated
+  * Do not consider that the password is wrong when user has refreshed the validation page by mistake
+  * Fix checkbox status for 'must change password' and 'send email to validate...' when editing existing users
+
+
+----------------------------------------------
+r19548 | nyloth | 2009-06-14 10:38:31 +0200 (dim. 14 juin 2009) | 9 lines
+
+[QT] Quality Team Backport
+
+r19458 | nyloth | 2009-06-13 00:12:37 +0200 (sam. 13 juin 2009) | 5 lines
+[bp/r19058][FIX] initlib: now handle new PHP5 errors (E_STRICT, E_RECOVERABLE_ERROR, E_DEPRECATED, E_USER_DEPRECATED) + add the 'static' keyword for static functions to avoid warnings + remove PHP closing tag
+[bp/r19104][MOD] error notices: do not display notices / warnings for third party libs. To achieve this, 'lib/setup/third_party.php' was added to define a pattern that should match third party directories. This was already done for the release.php script, this is why it's in a separated script to avoid code duplication. SMARTY_DIR constant was also moved into this new setup file + fix some typos
+[bp/r19166][FIX] smarty: fix SMARTY_DIR when setup_smarty.php is included in a script without calling tiki-setup.php before
+[bp/r19262][MOD]error: option to not print E_STRICT error
+
+
+----------------------------------------------
+r19547 | nyloth | 2009-06-14 10:30:19 +0200 (dim. 14 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19455 | jonnybradley | 2009-06-12 19:11:21 +0200 (ven. 12 juin 2009) | 1 line
+[bp/r19394][MOD] Installer now logs you out before entering tiki (should reduce re-installation session issues)
+
+
+----------------------------------------------
+r19546 | nyloth | 2009-06-14 10:29:15 +0200 (dim. 14 juin 2009) | 7 lines
+
+[QT] Quality Team Backport
+
+r19454 | jonnybradley | 2009-06-12 19:07:01 +0200 (ven. 12 juin 2009) | 3 lines
+[bp/r19395][FIX] Settings often not getting set when installing from profile or updating
+(also some sort of issue with executing multiple statements in one string resolved/avoided)
+
+
+----------------------------------------------
+r19545 | nyloth | 2009-06-14 10:28:25 +0200 (dim. 14 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19453 | sylvieg | 2009-06-12 18:58:57 +0200 (ven. 12 juin 2009) | 1 line
+[b 19452][FIX]tracker: dynamic items list was only working in the tracker if the last field
+
+
+----------------------------------------------
+r19544 | nyloth | 2009-06-14 10:27:31 +0200 (dim. 14 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19449 | sylvieg | 2009-06-12 16:27:23 +0200 (ven. 12 juin 2009) | 1 line
+[b 19448][FIX]tracker: redirect on permission denied if the tracker has been set as 'can be modify by creator' but has no user/group selector field
+
+
+----------------------------------------------
+r19543 | nyloth | 2009-06-14 10:26:40 +0200 (dim. 14 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19446 | chibaguy | 2009-06-12 14:43:47 +0200 (ven. 12 juin 2009) | 1 line
+[bp/r19208][FIX](part of r19439) check if module is menu and with css='y' so no need to add overflow=y parameter to CSS menu modules.) 
+
+
+----------------------------------------------
+r19542 | nyloth | 2009-06-14 10:25:49 +0200 (dim. 14 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19441 | chibaguy | 2009-06-12 07:36:38 +0200 (ven. 12 juin 2009) | 1 line
+[bp/r18966][FIX] To display links in page-top category path inline.
+
+
+----------------------------------------------
+r19541 | nyloth | 2009-06-14 10:24:54 +0200 (dim. 14 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19440 | chibaguy | 2009-06-12 07:03:50 +0200 (ven. 12 juin 2009) | 1 line
+[bp/r19208][FIX](part of r19439) check if module is menu and with css='y' so no need to add overflow=y parameter to CSS menu modules.)
+
+
+----------------------------------------------
+r19540 | nyloth | 2009-06-14 10:23:58 +0200 (dim. 14 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19439 | chibaguy | 2009-06-12 06:35:10 +0200 (ven. 12 juin 2009) | 1 line
+[bp/r19208 and r19242][FIX]check if module is menu and with css='y', move div.cssmenubox from layout.css to cssmenus.css (and thanks to sept_7 for the fix - so no need to add overflow=y parameter to CSS menu modules.)
+
+
+----------------------------------------------
+r19539 | nyloth | 2009-06-14 10:22:55 +0200 (dim. 14 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19427 | chibaguy | 2009-06-11 17:12:55 +0200 (jeu. 11 juin 2009) | 2 lines
+[bp/r19389] (partial)[FIX] Fancylist shouldn't specify a text color when background color is unspecified/unknown. The commit in trunk also removed the strasa/list_icon.png bg, but maybe that should be kept.
+
+
+----------------------------------------------
+r19538 | nyloth | 2009-06-14 10:21:53 +0200 (dim. 14 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19413 | pkdille | 2009-06-10 21:54:17 +0200 (mer. 10 juin 2009) | 1 line
+[bp/r19412][FIX] add group: respect column type of data. Issue occurs only if mysql is in strict mode. Bug #2467.
+
+
+----------------------------------------------
+r19537 | nyloth | 2009-06-14 10:20:58 +0200 (dim. 14 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19411 | pkdille | 2009-06-10 20:55:31 +0200 (mer. 10 juin 2009) | 1 line
+[bp/r19403][FIX] highlight: fix the highlight in search which seems to be broken since litecss.
+
+
+----------------------------------------------
+r19536 | nyloth | 2009-06-14 10:19:53 +0200 (dim. 14 juin 2009) | 7 lines
+
+[QT] Quality Team Backport
+
+r19410 | jonnybradley | 2009-06-10 18:27:04 +0200 (mer. 10 juin 2009) | 4 lines
+[bp/r19409][FIX] smarty_block_self_link() no longer works where the href is the same as PHP_SELF because it wrongly assumes it is an AJAX call.
+Ideally smarty_block_self_link() should be fixed (in trunk) as i'm sure this isn't the only place a {button} uses an href on it's own page!
+
+
+----------------------------------------------
+r19535 | nyloth | 2009-06-14 10:18:59 +0200 (dim. 14 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19408 | pkdille | 2009-06-10 18:09:38 +0200 (mer. 10 juin 2009) | 1 line
+[bp/r19407][FIX] admin general: changing admin password works again. Btw, fixing the message displayed when the password is changed
+
+
+----------------------------------------------
+r19534 | nyloth | 2009-06-14 10:17:48 +0200 (dim. 14 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19398 | pkdille | 2009-06-09 22:30:20 +0200 (mar. 09 juin 2009) | 1 line
+[partial bp/19373] [FIX] search box : show title in the right context. This commit is not a strict backport from trunk because the files in trunk are too different now as I reviewed them
+
+
+----------------------------------------------
+r19533 | nyloth | 2009-06-14 10:16:10 +0200 (dim. 14 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19384 | pkdille | 2009-06-08 23:39:20 +0200 (lun. 08 juin 2009) | 1 line
+[bp r/19383] [FIX] admin wiki: Discuss pages on forums feature setting/unsetting was not working. Btw indenting that section. Bug 2558
+
+
+----------------------------------------------
+r19532 | nyloth | 2009-06-14 10:15:06 +0200 (dim. 14 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19380 | jonnybradley | 2009-06-08 18:28:23 +0200 (lun. 08 juin 2009) | 1 line
+[bp/r19163] [ENH] Allow profiles to set user and group trackers and fields (new groups only)
+
+
+----------------------------------------------
+r19531 | nyloth | 2009-06-14 10:13:44 +0200 (dim. 14 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19344 | sylvieg | 2009-06-05 14:43:46 +0200 (ven. 05 juin 2009) | 1 line
+[b 19339]shoutbox: to avoid to have the login name changed when editing a shoutbox message
+
+
+----------------------------------------------
+r19528 | martincomeau | 2009-06-14 04:24:16 +0200 (dim. 14 juin 2009) | 1 line
+
+[FIX] typo correction to French My first commit at TikiFest Qc 09
+----------------------------------------------
+r19525 | nyloth | 2009-06-13 21:03:39 +0200 (sam. 13 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19337 | changi67 | 2009-06-05 11:40:31 +0200 (ven. 05 juin 2009) | 1 line
+[bp/r19335][MOD] Remove unnecessary mysql request when editing and saving the gallery preferences
+
+
+----------------------------------------------
+r19524 | nyloth | 2009-06-13 21:01:43 +0200 (sam. 13 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19318 | chibaguy | 2009-06-04 13:24:34 +0200 (jeu. 04 juin 2009) | 1 line
+[bp/r19317][FIX] Opera-specific debugging code removed.
+
+
+----------------------------------------------
+r19523 | nyloth | 2009-06-13 20:59:34 +0200 (sam. 13 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19246 | chibaguy | 2009-05-31 17:02:45 +0200 (dim. 31 mai 2009) | 1 line
+[bp/19245][ENH] Article title text size should be smaller than page title text size (div.articletitle h2 text size reduced when in module in wikitext).
+
+
+----------------------------------------------
+r19522 | nyloth | 2009-06-13 20:57:18 +0200 (sam. 13 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19241 | chibaguy | 2009-05-31 11:23:18 +0200 (dim. 31 mai 2009) | 1 line
+[bp/r19239 and r19240][FIX] Mistakenly placed height property on div#rss caused only the first RSS feed to show in the rsslist module.
+
+
+----------------------------------------------
+r19520 | nyloth | 2009-06-13 11:33:49 +0200 (sam. 13 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19227 | chibaguy | 2009-05-30 11:08:23 +0200 (sam. 30 mai 2009) | 1 line
+[bp/r19226][FIX] 1) Topbar suckerfish menu should have same san-serif font as php layers menu. 2) Menu preview on admin > menus is messed up without override of general #tiki-center div padding. 
+
+
+----------------------------------------------
+r19519 | nyloth | 2009-06-13 11:32:37 +0200 (sam. 13 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19223 | sylvieg | 2009-05-29 21:33:43 +0200 (ven. 29 mai 2009) | 1 line
+[bp/19177: [FIX] same some queries for the first user acces. get_included_groups exists in tikilib and userlib - only the one in userlib has a cache
+
+
+----------------------------------------------
+r19518 | nyloth | 2009-06-13 11:31:44 +0200 (sam. 13 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19222 | sylvieg | 2009-05-29 21:30:52 +0200 (ven. 29 mai 2009) | 1 line
+[bp 19179][FIX]save queries: the included groups cache was not working( need to save the cache when we are recurring - not in the first level) - creating a lot of queries specially for people who give all the included groups at the first level
+
+
+----------------------------------------------
+r19517 | nyloth | 2009-06-13 11:29:50 +0200 (sam. 13 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19202 | nyloth | 2009-05-29 12:02:19 +0200 (ven. 29 mai 2009) | 2 lines
+[bp/r19200][FIX] prefs cache: regenerate all prefs if the cache content/file is broken
+
+
+----------------------------------------------
+r19516 | nyloth | 2009-06-13 11:23:53 +0200 (sam. 13 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19201 | nyloth | 2009-05-29 12:01:54 +0200 (ven. 29 mai 2009) | 1 line
+[bp/r19167][FIX] listpages: fix typo in html entity
+
+
+----------------------------------------------
+r19515 | nyloth | 2009-06-13 11:21:58 +0200 (sam. 13 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19197 | marclaporte | 2009-05-29 06:48:36 +0200 (ven. 29 mai 2009) | 1 line
+[bp/r19136] [MOD] Apply content fetching on the entire profile to allow wikicontent: in preferences
+
+
+----------------------------------------------
+r19514 | nyloth | 2009-06-13 11:08:26 +0200 (sam. 13 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19191 | nkoth | 2009-05-28 23:03:13 +0200 (jeu. 28 mai 2009) | 2 lines
+[bp/r19190][FIX] Make proper XHTML in category picker (previously bad XHTML actually caused trailing slash to enter into array causing category picker to exhibit non-refreshing of proper categories after saving in calendar/structures categorization and maybe more)
+
+
+----------------------------------------------
+r19513 | nyloth | 2009-06-13 11:07:25 +0200 (sam. 13 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19175 | chibaguy | 2009-05-28 17:46:28 +0200 (jeu. 28 mai 2009) | 1 line
+[bp/19172][FIX]Unneeded </div> tag (no opening <div> present) broke page layout (caused mislocated columns - this and bad TikiSheet cell contrast reported in bug 2529 by xavi)
+
+
+----------------------------------------------
+r19512 | nyloth | 2009-06-13 11:05:56 +0200 (sam. 13 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19174 | chibaguy | 2009-05-28 17:40:17 +0200 (jeu. 28 mai 2009) | 1 line
+[bp/r19171] [FIX] Incorrect td background color caused black-on-black text contrast in TikiSheets cells. (strasa.css cell bg color is ok so no need to override by (incorrect) theme option color.)
+
+
+----------------------------------------------
+r19511 | nyloth | 2009-06-13 11:03:12 +0200 (sam. 13 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19159 | marclaporte | 2009-05-28 06:27:19 +0200 (jeu. 28 mai 2009) | 1 line
+[bp/r19139][FIX] Mindmap was broken by changes to the flash plugin
+
+
+----------------------------------------------
+r19510 | nyloth | 2009-06-13 11:00:19 +0200 (sam. 13 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19157 | nkoth | 2009-05-28 02:36:11 +0200 (jeu. 28 mai 2009) | 2 lines
+[FIX] Avoid pages ending up in both Staging and Approved categories at the same time
+
+
+----------------------------------------------
+r19509 | nyloth | 2009-06-13 10:45:21 +0200 (sam. 13 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19155 | nkoth | 2009-05-28 02:12:20 +0200 (jeu. 28 mai 2009) | 2 lines
+[MOD] Be clear that setting of "Approved" category is needed for staging and approval to work
+
+
+----------------------------------------------
+r19508 | nyloth | 2009-06-13 10:41:25 +0200 (sam. 13 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19153 | nkoth | 2009-05-28 01:59:23 +0200 (jeu. 28 mai 2009) | 2 lines
+[FIX] Wrong encoding for page name in title
+
+
+----------------------------------------------
+r19507 | nyloth | 2009-06-13 10:40:27 +0200 (sam. 13 juin 2009) | 9 lines
+
+[QT] Quality Team Backport
+
+r19151 | pkdille | 2009-05-28 01:55:05 +0200 (jeu. 28 mai 2009) | 6 lines
+[bp/r18794][MOD] removing button2 and button3 (!) css classes in stylesheets. Btw, removing also submitbutton class which was useless (there is, anyway, 
+a selector) and used in just 2 templates.
+       This should be the final commit of many others which where the deployment of button plugin.
+       Special thanks to nyloth for his help and time during that work !
+
+
+----------------------------------------------
+r19506 | nyloth | 2009-06-13 10:33:20 +0200 (sam. 13 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19150 | nkoth | 2009-05-28 01:48:19 +0200 (jeu. 28 mai 2009) | 2 lines
+[FIX] Link to approve staging page was not appearing if out-of-sync category is set, pages in approved category were not being automatically redirected to staging page when edited
+
+
+----------------------------------------------
+r19505 | nyloth | 2009-06-13 10:28:44 +0200 (sam. 13 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19147 | pkdille | 2009-05-28 01:38:16 +0200 (jeu. 28 mai 2009) | 1 line
+[bp/r18715][MOD] un-deploy button2 css class..... put smarty plugin initials_filter_links in trackerlist plugin and replace button2 class on selected letter with highlight in the plugin (this can change the look of the selected item in some themes)
+
+
+----------------------------------------------
+r19504 | nyloth | 2009-06-13 10:27:45 +0200 (sam. 13 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19146 | pkdille | 2009-05-28 01:31:21 +0200 (jeu. 28 mai 2009) | 1 line
+[bp/r18691][KIL] show_calendar: remove some obviously unused files
+
+
+----------------------------------------------
+r19503 | nyloth | 2009-06-13 10:26:35 +0200 (sam. 13 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19145 | pkdille | 2009-05-28 01:10:56 +0200 (jeu. 28 mai 2009) | 1 line
+[bp/r18693] [MOD] deploy button plugin to 2 more templates
+
+
+----------------------------------------------
+r19502 | nyloth | 2009-06-13 10:25:32 +0200 (sam. 13 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19144 | pkdille | 2009-05-28 01:06:16 +0200 (jeu. 28 mai 2009) | 1 line
+[bp/r18660][MOD] replace some of the last button2 by button plugin
+
+
+----------------------------------------------
+r19501 | nyloth | 2009-06-13 10:24:28 +0200 (sam. 13 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19142 | nkoth | 2009-05-28 00:58:59 +0200 (jeu. 28 mai 2009) | 2 lines
+[FIX] Redirecting to staging page was happening all the time when staging and approval was turned on, even if the "Always redirect to edit staging page if not in the following group" feature was set to blank. Blank setting should turn this feature off.
+
+
+----------------------------------------------
+r19500 | nyloth | 2009-06-13 10:22:49 +0200 (sam. 13 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19094 | Jyhem | 2009-05-26 15:03:45 +0200 (mar. 26 mai 2009) | 1 line
+[FIX] Avoid error NOTICEs
+
+
+----------------------------------------------
+r19499 | nyloth | 2009-06-13 10:21:21 +0200 (sam. 13 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19090 | Jyhem | 2009-05-26 11:56:23 +0200 (mar. 26 mai 2009) | 1 line
+[ENH] tab preference in admin_features is now maintained over session
+
+
+----------------------------------------------
+r19498 | nyloth | 2009-06-13 10:20:16 +0200 (sam. 13 juin 2009) | 7 lines
+
+[QT] Quality Team Backport
+
+r19087 | sept_7 | 2009-05-26 10:25:59 +0200 (mar. 26 mai 2009) | 4 lines
+[bp/r18833][FIX] delete useless title duplication in the feature and look and
+feel admin panel
+
+
+----------------------------------------------
+r19497 | nyloth | 2009-06-13 10:18:54 +0200 (sam. 13 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19082 | chibaguy | 2009-05-26 05:28:33 +0200 (mar. 26 mai 2009) | 2 lines
+[bp/r19049] Correct vertical position of siteloginbar to be at bottom of header background regardless of header content height (accommodating any logo size or no logo, site title text, etc.). (Also [bp/r19048] Fix bad blog title text/background contrast in theme option by using correct 'cold' background image.) 
+
+
+----------------------------------------------
+r19496 | nyloth | 2009-06-13 10:17:48 +0200 (sam. 13 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19081 | pkdille | 2009-05-25 22:24:08 +0200 (lun. 25 mai 2009) | 1 line
+[bp/r19080][FIX] coelesce: give to catblock (below wiki pages) some styling + remove blue background colour on treemenu in filegal list
+
+
+----------------------------------------------
+r19495 | nyloth | 2009-06-13 10:16:29 +0200 (sam. 13 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19067 | nyloth | 2009-05-24 23:24:08 +0200 (dim. 24 mai 2009) | 2 lines
+[bp/r19056][FIX] tikisheets: fix button by removing brackets that breaks the smarty template
+
+
+----------------------------------------------
+r19494 | nyloth | 2009-06-13 10:14:40 +0200 (sam. 13 juin 2009) | 8 lines
+
+[QT] Quality Team Backport
+
+r19066 | nyloth | 2009-05-24 23:22:00 +0200 (dim. 24 mai 2009) | 4 lines
+[bp/r19057][FIX] tra: remove PHP closing tag
+[bp/r19059][FIX] smarty plugins: remove php tags when there was a white space after them, causing unwanted output when loading those plugins + use the old 'strpos' way to test direct access to the script instead of accesslib because accesslib is not loaded in every cases + include tra.php for the tr prefilter which needs it and may be called without a previous script that has already loaded it
+[bp/r19060][FIX] ajax autosave: use the old 'strpos' way to test direct access to the script instead of accesslib because accesslib is not loaded in every cases
+
+
+----------------------------------------------
+r19493 | nyloth | 2009-06-13 10:09:09 +0200 (sam. 13 juin 2009) | 16 lines
+
+[QT] Quality Team Backport
+
+r19065 | nyloth | 2009-05-24 23:17:46 +0200 (dim. 24 mai 2009) | 12 lines
+[bp/r19064][ENH] release script:
+  * new smarty templates syntax check
+      - this new feature can be disabled with the 'no-check-smarty' option
+  * php syntax check: display php warnings and notices (but still only die on fatal errors)
+      - note that warnings and notices are not displayed for some files matching a specific pattern which mainly targets third party libs
+      - this new feature can be disabled with the 'no-check-php-warnings' option
+  * now dynamically generates the release notes URL, to avoid changing the release script at each releases
+  * some small fixes for the 'display_progress_percentage' function
+  * define the error reporting level as a constant, set to all errors and warnings, including strict level
+  * define the temporary directory as a constant
+  * fix php warning when handling ENV vars
+
+
+----------------------------------------------
+r19492 | nyloth | 2009-06-13 10:07:41 +0200 (sam. 13 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19052 | nyloth | 2009-05-24 21:25:08 +0200 (dim. 24 mai 2009) | 2 lines
+[bp/r19051][FIX] installer: force 'lang_use_db' pref to 'n' when upgrading, because this feature can't work at this stage and because the installer should use the official translations (at least to keep consistency between upgrade and install) - thanx Bernd Prager for the bug report
+
+
+----------------------------------------------
+r19491 | nyloth | 2009-06-13 10:06:06 +0200 (sam. 13 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19044 | chibaguy | 2009-05-23 09:45:46 +0200 (sam. 23 mai 2009) | 1 line
+[bp/r10943][FIX] Tab text contrast problem in IE6 ('visited' state) corrected. IE6 didn't use the correct text color on "visited" tabs. Addition of a:visited property was also checked in other browsers and no bad effects noticed.
+
+
+----------------------------------------------
+r19490 | nyloth | 2009-06-13 10:04:29 +0200 (sam. 13 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19041 | nyloth | 2009-05-22 21:23:17 +0200 (ven. 22 mai 2009) | 2 lines
+[bp/r19038][FIX] tiki.sql was not updated when new db schema patches has been added in revision 18746
+
+
+----------------------------------------------
+r19489 | nyloth | 2009-06-13 10:02:56 +0200 (sam. 13 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19040 | nyloth | 2009-05-22 21:21:28 +0200 (ven. 22 mai 2009) | 2 lines
+[bp/r19039][FIX] db schema patches, located in installer/schema/, must have a name that ends with '_tiki.sql' to be considered as tiki official patches. Instead, they will be applied after a fresh install too and it conflicts with tiki.sql content that already contains the up-to-date schema.
+
+
+----------------------------------------------
+r19488 | nyloth | 2009-06-13 10:00:40 +0200 (sam. 13 juin 2009) | 9 lines
+
+[QT] Quality Team Backport
+
+r19037 | nyloth | 2009-05-22 21:10:51 +0200 (ven. 22 mai 2009) | 5 lines
+[bp/r18704][FIX] Displaying name of user instead of login based on the user_show_realnames preference.
+[bp/r19035][FIX] Displaying name of user instead of login based on the user_show_realnames preference.
+Validating type before trying to bind to the username
+[bp/r19036][FIX] 'username' smarty modifier should be used before escape 'modifier' + do not try to translate the real user name + add missing 'escape' modifiers
+
+
+----------------------------------------------
+r19487 | nyloth | 2009-06-13 09:59:21 +0200 (sam. 13 juin 2009) | 10 lines
+
+[QT] Quality Team Backport
+
+r19030 | nyloth | 2009-05-22 17:32:34 +0200 (ven. 22 mai 2009) | 6 lines
+[bp/r18688][MOD] button: deploy button in comment-footer + Fix button plugin with _auto_args param + add _anchor param in query plugin + deploy auto_query_args in tiki-index.php (thks nyloth)
+[bp/r18717]notice
+[bp/r19018][FIX] remove empty _auto_args params for button, since its already the default behaviour
+[bp/r19019][FIX] smarty button: update comments
+[bp/r19020]some comment
+
+
+----------------------------------------------
+r19486 | nyloth | 2009-06-13 09:58:03 +0200 (sam. 13 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19022 | nyloth | 2009-05-22 15:50:36 +0200 (ven. 22 mai 2009) | 2 lines
+[bp/r19017] Remove unused/confusing code of smarty button, also removed in trunk
+
+
+----------------------------------------------
+r19485 | nyloth | 2009-06-13 09:56:44 +0200 (sam. 13 juin 2009) | 7 lines
+
+[QT] Quality Team Backport
+
+r19021 | nyloth | 2009-05-22 15:47:59 +0200 (ven. 22 mai 2009) | 3 lines
+[bp/r18835][ENH] Filgal manager : put relative path instead of absolute path in the {img}
+tag, as a vast puplic request ! ;p
+
+
+----------------------------------------------
+r19484 | nyloth | 2009-06-13 09:55:24 +0200 (sam. 13 juin 2009) | 7 lines
+
+[QT] Quality Team Backport
+
+r19005 | nyloth | 2009-05-21 22:28:53 +0200 (jeu. 21 mai 2009) | 3 lines
+[bp/r18934][FIX] Tracker items with trackerId=0 caused major error
+(unfinished profile created them during development)
+
+
+----------------------------------------------
+r19483 | nyloth | 2009-06-13 09:53:42 +0200 (sam. 13 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19004 | nyloth | 2009-05-21 22:26:42 +0200 (jeu. 21 mai 2009) | 2 lines
+[bp/r18924][FIX]ajax: message to say ajax_autosave needs ajax
+
+
+----------------------------------------------
+r19482 | nyloth | 2009-06-13 09:51:14 +0200 (sam. 13 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19003 | nyloth | 2009-05-21 22:23:48 +0200 (jeu. 21 mai 2009) | 2 lines
+[bp/r18409][ENH] email syntax: first step to move email syntax as a pref instead of an hardcoded value
+
+
+----------------------------------------------
+r19478 | nyloth | 2009-06-13 02:47:08 +0200 (sam. 13 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19001 | nyloth | 2009-05-21 22:16:25 +0200 (jeu. 21 mai 2009) | 2 lines
+[bp/r18882][FIX]tracker: do not look for the item value of fields that are only searcheable
+
+
+----------------------------------------------
+r19477 | nyloth | 2009-06-13 02:43:51 +0200 (sam. 13 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r19000 | nyloth | 2009-05-21 22:15:15 +0200 (jeu. 21 mai 2009) | 2 lines
+[bp/r18810][FIX] Now handles '(', ')' and '|' in strings
+
+
+----------------------------------------------
+r19476 | nyloth | 2009-06-13 02:41:30 +0200 (sam. 13 juin 2009) | 7 lines
+
+[QT] Quality Team Backport
+
+r18999 | nyloth | 2009-05-21 22:12:31 +0200 (jeu. 21 mai 2009) | 3 lines
+[bp/r18779][MOD] button plugin......end of the deployment.
+[bp/r18886][FIX] mod last articles: remove offset param from smarty to avoid some bad side effects on all pagination_links when ajax is active (broken in r17911)
+
+
+----------------------------------------------
+r19475 | nyloth | 2009-06-13 02:36:48 +0200 (sam. 13 juin 2009) | 8 lines
+
+[QT] Quality Team Backport
+
+r18997 | nyloth | 2009-05-21 22:05:50 +0200 (jeu. 21 mai 2009) | 4 lines
+[bp/r18745][ENH]wiki: Created the view similar wiki page permission.
+[bp/r18746][ENH]wiki: Created the view similar wiki page permission.
+[bp/r18764][FIX]perm: tiki_p_wiki_view_similar must be creaetd on particular tiki_p_view
+
+
+----------------------------------------------
+r19474 | nyloth | 2009-06-13 02:34:15 +0200 (sam. 13 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r18996 | nyloth | 2009-05-21 21:56:47 +0200 (jeu. 21 mai 2009) | 2 lines
+[bp/r18721][FIX]tracker: update nb of items and date when importing items
+
+
+----------------------------------------------
+r19473 | nyloth | 2009-06-13 02:31:27 +0200 (sam. 13 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r18995 | nyloth | 2009-05-21 21:50:55 +0200 (jeu. 21 mai 2009) | 2 lines
+[bp/r18714][FIX]calendar: priority can be null and cause on error on some mysql - bug 1988
+
+
+----------------------------------------------
+r19472 | nyloth | 2009-06-13 02:28:56 +0200 (sam. 13 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r18994 | nyloth | 2009-05-21 21:20:12 +0200 (jeu. 21 mai 2009) | 2 lines
+[bp/r18992][FIX] homepage infinite loop: there was an infinite redirection loop making site inaccessible to anonymous users. It occured (for example) when feature_redirect_on_error was enabled, anonymous user trying to access the site homepage and the site homepage configured to be forbidden to anonymous users.
+
+
+----------------------------------------------
+r19471 | nyloth | 2009-06-13 02:26:41 +0200 (sam. 13 juin 2009) | 7 lines
+
+[QT] Quality Team Backport
+
+r18993 | nyloth | 2009-05-21 21:02:38 +0200 (jeu. 21 mai 2009) | 3 lines
+[bp/r18555][FIX] Displaying the parentName for a gallery in the parentName select. If there were 2 or more galleries with the same name the user couldn't knows which one to choose.
+[bp/r18991][FIX] edit file gallery: xhtml validation
+
+
+----------------------------------------------
+r19470 | nyloth | 2009-06-13 02:23:26 +0200 (sam. 13 juin 2009) | 7 lines
+
+[QT] Quality Team Backport
+
+r18990 | nyloth | 2009-05-21 20:33:15 +0200 (jeu. 21 mai 2009) | 3 lines
+[bp/r18297][FIX]Show checkbox and help icon for advanced search in mod-search_box and leave it checked by default, to improve usability of search and help users know about this nice feature including boolean search, etc. 
+[bp/r18989][FIX]Replace < > by their html entities &lt; &gt; (thanks Nyloth for your patience teaching me where was the issue ;-) 
+
+
+----------------------------------------------
+r19469 | nyloth | 2009-06-13 02:21:28 +0200 (sam. 13 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r18988 | nyloth | 2009-05-21 19:54:51 +0200 (jeu. 21 mai 2009) | 2 lines
+[bp/r18256][FIX] list forum topics + list blogs: fix the item count in this function (cant did not check the perms). Replace user_has_perm_on_object with new function get_perm_object.
+
+
+----------------------------------------------
+r19468 | nyloth | 2009-06-13 02:19:51 +0200 (sam. 13 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r18987 | nyloth | 2009-05-21 19:52:33 +0200 (jeu. 21 mai 2009) | 2 lines
+[bp/r18232][FIX] list_surveys: fix the item count in this function (cant did not check the perms). Replace user_has_perm_on_object with new function get_perm_object.
+
+
+----------------------------------------------
+r19467 | nyloth | 2009-06-13 02:18:06 +0200 (sam. 13 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r18986 | nyloth | 2009-05-21 19:50:41 +0200 (jeu. 21 mai 2009) | 2 lines
+[bp/r18224][FIX] list_quiz: fix the item count in this function (cant did not check the perms). Replace user_has_perm_on_object with new function get_perm_object.
+
+
+----------------------------------------------
+r19466 | nyloth | 2009-06-13 02:15:14 +0200 (sam. 13 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r18985 | nyloth | 2009-05-21 19:46:49 +0200 (jeu. 21 mai 2009) | 2 lines
+[bp/r18204][FIX] histlib: remove unused parameter in function histlib->remove_version
+
+
+----------------------------------------------
+r19465 | nyloth | 2009-06-13 02:09:34 +0200 (sam. 13 juin 2009) | 9 lines
+
+[QT] Quality Team Backport
+
+r18982 | nyloth | 2009-05-21 19:02:20 +0200 (jeu. 21 mai 2009) | 5 lines
+[bp/r17224][MOD] deploy find.tpl to some templates (should be the last ones) and auto_query_args to the related php files
+[bp/r17581][FIX] quto_query_args: only the non-action arguments are needed (folowing my commit 17224)
+[bp/r18495][FIX]listpage: memo orphan choice
+[bp/r18981][FIX] admin menu options: auto_query_args was declared two times + missing maxRecords in the last definition
+
+
+----------------------------------------------
+r19464 | nyloth | 2009-06-13 02:06:57 +0200 (sam. 13 juin 2009) | 7 lines
+
+[QT] Quality Team Backport
+
+r18977 | nyloth | 2009-05-21 16:10:39 +0200 (jeu. 21 mai 2009) | 3 lines
+[bp/r17275][FIX]tracker: check categ perm on item when view item (TODO: check also on list)                                                  
+[bp/r18948][FIX]categ: check feature
+
+
+----------------------------------------------
+r19463 | nyloth | 2009-06-13 02:05:33 +0200 (sam. 13 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r18975 | nyloth | 2009-05-21 15:49:48 +0200 (jeu. 21 mai 2009) | 2 lines
+[bp/r18954][FIX] Displaying name of user instead of login based on the user_show_realnames preference.
+
+
+----------------------------------------------
+r19462 | nyloth | 2009-06-13 02:03:02 +0200 (sam. 13 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r18974 | nyloth | 2009-05-21 15:46:10 +0200 (jeu. 21 mai 2009) | 2 lines
+[bp/r18955][FIX] Displaying name of user instead of login based on the user_show_realnames preference.
+
+
+----------------------------------------------
+r19461 | nyloth | 2009-06-13 01:26:50 +0200 (sam. 13 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r18972 | sacra | 2009-05-21 15:12:49 +0200 (jeu. 21 mai 2009) | 1 line
+[ENH] Adds two more fields to fetch from LDAP to Tiki: country and e-mail
+
+
+----------------------------------------------
+r19460 | nyloth | 2009-06-13 01:14:32 +0200 (sam. 13 juin 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r18971 | nyloth | 2009-05-21 14:48:17 +0200 (jeu. 21 mai 2009) | 2 lines
+[bp/r18919][FIX] wikiplugin CODE: fix data input of this plugin when the wiki content is not supposed to allow HTML, by decoding it in order to have a clean input for the plugin (which was too much encoded)
+
+
+----------------------------------------------
+r19404 | pkdille | 2009-06-10 15:45:52 +0200 (mer. 10 juin 2009) | 1 line
+
+[bp/r19403] [FIX] highlight: fix the highlight in search which seems to be broken since litecss.
+----------------------------------------------
+r19299 | sylvieg | 2009-06-03 13:21:26 +0200 (mer. 03 juin 2009) | 1 line
+
+spelling
+----------------------------------------------
+r19133 | xavidp | 2009-05-27 20:47:30 +0200 (mer. 27 mai 2009) | 1 line
+
+couple of fixes from tiny (but annoying) details
+----------------------------------------------
+r19131 | lphuberdeau | 2009-05-27 20:25:09 +0200 (mer. 27 mai 2009) | 1 line
+
+[FIX] Unapply automatic convertion of y/n made by YAML
+----------------------------------------------
+r19077 | marcoaasilva | 2009-05-25 20:13:37 +0200 (lun. 25 mai 2009) | 2 lines
+
+pt-br translations
+
+----------------------------------------------
+r19068 | xavidp | 2009-05-24 23:51:43 +0200 (dim. 24 mai 2009) | 1 line
+
+Some more strings translated (calendars, ...)
+----------------------------------------------
+r19026 | sampaioprimo | 2009-05-22 16:45:01 +0200 (ven. 22 mai 2009) | 2 lines
+
+translation fix
+
+----------------------------------------------
 Version 3.0
 <http://tikiwiki.org/ReleaseNotes30>
 ------------------
