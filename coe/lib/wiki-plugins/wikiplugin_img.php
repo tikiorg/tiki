@@ -524,14 +524,14 @@ function wikiplugin_img_info() {
 		//set entire style string
 		if( !empty($imgdata['styleimage']) || !empty($imalign)) {
 			if ( !empty($imgdata['styleimage'])) {
+				if (!empty($imalign)) {
+					if ((strpos(trim($imgdata['styleimage'],' '),'float:') > 0) || (strpos(trim($imgdata['styleimage'],' '),'display:') > 0)) {
+						$imalign = '';			//override imalign setting is style image contains alignment syntax
+					}
+				}
 				if ($imgdata['styleimage'] == 'border') {
 					$border = $borderdef;
-					if (!empty($imalign)) {
-						if ((strpos(trim($imgdata['styleimage'],' '),'float:') > 0) || (strpos(trim($imgdata['styleimage'],' '),'display:') > 0)) {
-							$imalign = '';			//override imalign setting is style image contains alignment syntax
-						}
-					}
-				} else {
+				} else if (strpos($imgdata['styleimage'],'hidden') < 0 && strpos($imgdata['styleimage'],'position') < 0) {	// quick filter for dangerous styles
 					$style = $imgdata['styleimage'];
 				}
 			}

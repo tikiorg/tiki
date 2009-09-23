@@ -16,18 +16,16 @@ fieldset {
 	padding: 0.3em;
 }
 
-span.button {
+span.button, button {
 	margin: 1px 2px;
 	padding: 2px;
 }
 
 span.button a,
 span.button a:visited,
-button,
 span.button input,
 .calbuttonBox a {
 	padding: 1px 4px;
-	margin-right: 1px;
 }
 
 input[type=reset],
@@ -36,10 +34,9 @@ input[type=submit] {
 	margin-right: 1px;
 }
 	
-span.highlight {
-	background: aqua;
-	padding: 0 !important;
-	margin: 0;
+.highlight {
+	background: #FC0;
+	color: #000;
 }
 
 input[type=checkbox],

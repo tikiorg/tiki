@@ -56,6 +56,7 @@ function wikiplugin_div_info() {
 				'required' => false,
 				'name' => tra('CSS Class'),
 				'description' => tra('Apply custom CSS class to the div.'),
+				'filter' => 'text',
 			),
 			'id' => array(
 				'required' => false,
