@@ -61,7 +61,7 @@
 <h1>{tr}Review the System Requirements{/tr}</h1>
 <div style="float:left;width:60px"><img src="img/webmail/compose.gif" alt="{tr}Review{/tr}" /></div>
 <div class="clearfix">
-	<p>{tr}Before installing Tiki, <a href="http://doc.tikiwiki.org/tiki-index.php?page=Requirements+and+Setup&bl=y" target="_blank">review the documentation</a> and confirm that your system meets the minimum requirements.{/tr}</p>
+	<p>{tr}Before installing Tiki, <a href="http://doc.tikiwiki.org/Requirements+and+Setup" target="_blank">review the documentation</a> and confirm that your system meets the minimum requirements.{/tr}</p>
 	<p>{tr}This installer will perform some basic checks automatically.{/tr}</p>
 	<br />
 	<h2>{tr}Memory{/tr}</h2>
@@ -480,7 +480,7 @@
 <div style="float:left; width:60px"><img src="pics/large/stock_quit48x48.png" alt="{tr}Login{/tr}" /></div>
 <div class="clearfix">
 	<p>{tr}The installation is complete!{/tr} {tr}Your database has been configured and Tiki is ready to run.{/tr} </p>
-	<p>{tr}Tiki is an open source project, <em>you</em> can <a href='http://info.tikiwiki.org/Join+the+Community' target='_blank'>join the community</a> and help <a href='http://info.tikiwiki.org/tiki-index.php?page=Develop+Tiki' target='_blank'>develop Tiki</a>.{/tr} </p>
+	<p>{tr}Tiki is an open source project, <em>you</em> can <a href='http://info.tikiwiki.org/Join+the+Community' target='_blank'>join the community</a> and help <a href='http://info.tikiwiki.org/Develop+Tiki' target='_blank'>develop Tiki</a>.{/tr} </p>
 	<p>
 {if isset($smarty.post.scratch)}	{tr}If this is your first install, your admin password is <strong>admin</strong>.{/tr} 
 {/if} 
