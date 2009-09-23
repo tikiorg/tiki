@@ -1073,7 +1073,7 @@ class ToolbarsList
 		if ( $unique && $this->contains($name) ) {
 			return false;
 		}
-		array_push($this->lines[0][sizeof($this->lines)-1], Toolbar::getTag( $name ));
+		$this->lines[sizeof($this->lines)-1][0][0][] = Toolbar::getTag( $name );
 		return true;
 	}
 
@@ -1081,7 +1081,7 @@ class ToolbarsList
 		if ( $unique && $this->contains($name) ) {
 			return false;
 		}
-		array_unshift($this->lines[0][0], Toolbar::getTag( $name ));	
+		array_unshift($this->lines[0][0][0], Toolbar::getTag( $name ));	
 		return true;
 	}
 
@@ -1209,9 +1209,11 @@ class ToolbarsList
 	function contains($name) { // {{{
 		foreach( $this->lines as $line ) {
 			foreach( $line as $group ) {
-				foreach( $group as $tag ) {
-					if ($tag->getLabel() == $name) {
-						return true;
+				foreach( $group as $tags ) {
+					foreach($tags as $tag) {
+						if ($tag->getLabel() == $name) {
+							return true;
+						}
 					}
 				}
 			}
