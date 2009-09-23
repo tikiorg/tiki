@@ -1171,7 +1171,7 @@ function get_default_prefs() {
 		// full list in lib/toolbars/toolbarslib.php Toolbar::getList()
 		// cannot contain spaces, commas, forward-slash or pipe chars
 		'toolbar_global' => '
-			bold, italic, strike, - , color, bgcolor, - ,
+			bold, italic, strike, - , color, - ,
 			wikiplugin_img, tikiimage , tikilink, link, unlink, -, undo, redo, - ,
 			find, replace,-,  removeformat, specialchar, smiley | help, switcheditor
 			/
