@@ -9259,6 +9259,7 @@ $lang=Array(
 "HTTPS port" => "פורט HTTPS",
 "Method" => "שיטה",
 "Reg users can change theme" => "משתמשים רגילים יכולים לשנות ערכת תצוגה",
+"Users can change theme" => "משתמשים רגילים יכולים לשנות ערכת תצוגה",
 "Slideshows theme" => "ערכת תצוגה לשיקופיות",
 "General Layout options" => "אפשרויות סידור כלליות",
 "logged as" => "מחובר כמשתמש",

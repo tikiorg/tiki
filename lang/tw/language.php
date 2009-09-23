@@ -9133,6 +9133,7 @@ $lang=Array(
 "Method" => "方法",
 "Duration" => "期間",
 "Reg users can change theme" => "允許註冊使用者更改佈景",
+"Users can change theme" => "允許註冊使用者更改佈景",
 "Slideshows theme" => "幻燈片主題",
 "Edit CSS" => "編輯 CSS",
 "Theme Control" => "佈景主題控制",

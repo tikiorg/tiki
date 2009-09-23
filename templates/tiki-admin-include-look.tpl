@@ -62,7 +62,7 @@
 						</td>
 					</tr>
 					<tr>					
-  						<td class="form">{tr}Reg users can change theme{/tr}:</td>
+  						<td class="form">{tr}Users can change theme{/tr}:</td>
 						<td>
 						    <table><tr>
 						    <td style="width: 20px"><input type="checkbox" name="change_theme" {if $prefs.change_theme eq 'y'}checked="checked"{/if}/></td>

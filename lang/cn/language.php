@@ -9458,6 +9458,7 @@ $lang=Array(
 "Version 1.0" => "版本 1.0",
 "Version 2.0" => "版本 2.0",
 "Reg users can change theme" => "允许注册用户更改布景",
+"Users can change theme" => "允许注册用户更改布景",
 "Restrict available themes" => "限制有效布景主题",
 "Available styles:" => "可用样式:",
 "Slideshows theme" => "幻灯片主题",

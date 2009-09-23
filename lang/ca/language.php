@@ -8776,6 +8776,7 @@ $lang=Array(
 "Version 2.0" => "Versió 2.0",
 "General Layout" => "Disposició General",
 "Reg users can change theme" => " Els usuaris registrats poden canviar el tema",
+"Users can change theme" => " Els usuaris registrats poden canviar el tema",
 "Restrict available themes" => "Restringeix els temes d'estètica disponibles",
 "Available styles:" => "Estils disponibles:",
 "Slideshows theme" => "Tema dels passis de diapositives",

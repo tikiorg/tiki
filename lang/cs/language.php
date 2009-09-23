@@ -7377,6 +7377,7 @@ $lang=Array(
 "Method" => "Metoda",
 "Duration" => "Trvání",
 "Reg users can change theme" => "Reg. uživatelé mohou změnit vzhled",
+"Users can change theme" => "Reg. uživatelé mohou změnit vzhled",
 "Restrict available themes" => "Omezit výběr dostupných vzhledů",
 "Slideshows theme" => "Téma pro slideshow",
 "Edit CSS" => "Upravit CSS",
