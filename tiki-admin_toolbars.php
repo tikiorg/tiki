@@ -191,6 +191,7 @@ var item;
 		}
 	},
 	receive: function(event, ui) {
+		\$jq(ui.item).css('float', '');
 		if (\$jq(ui.item).text() == '-') {
 			\$jq(this).children().remove('.qt--');				// remove all seps
 			\$jq(this).prepend(\$jq(ui.item).clone());			// put one back at the top
@@ -199,8 +200,26 @@ var item;
 			\$jq(ui.item).dblclick(function() { showToolEditForm(ui.item); });
 			\$jq(ui.item).trigger('dblclick');
 		}
+		sortList(this);
+	},
+	stop: function (event, ui) {
+		sortList(this);
 	}
 });
+sortList = function (list) {
+	var arr = \$jq(list).children().get();
+	arr.sort( function(a, b) {
+		var labelA = \$jq(a).text().toUpperCase();
+		var labelB = \$jq(b).text().toUpperCase();
+		if (labelA < labelB) { return -1 }
+		if (labelA > labelB) { return 1 }
+		return 0;
+	});
+	\$jq(list).empty();
+	for (item in arr) {
+		\$jq(list).append(arr[item]);
+	}
+}
 \$jq('#full-list-c').sortable({	// custom tools list
 	connectWith: '.lists'
 }).children().each(function() {	// add double click action
@@ -329,6 +348,10 @@ if (!in_array('-', $display_w)) {
 }
 $display_p = array_diff($qt_p_list,$usedqt);
 $display_c = array_diff($customqt,$usedqt);
+
+sort($display_c);
+sort($display_p);
+sort($display_w);
 
 $headerlib->add_cssfile('css/admin.css');
 
