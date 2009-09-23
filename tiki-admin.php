@@ -33,13 +33,12 @@ function simple_set_toggle($feature) {
 			// not yet set at all or not set to y
 			$tikilib->set_preference($feature, 'y');
 			add_feedback( $feature, tr('%0 enabled', $feature), 1, 1 );
-			switch ($feature) {
+		}
+		switch ($feature) {
 			    case 'feature_workspaces':
-				global $wslib; include_once ('lib/workspaces/wslib.php');
+				global $wslib; require_once ('lib/workspaces/wslib.php');
 				$wslib->init_ws();
 				break;
-			}
-				
 		}
 	} else {
 		if ((!isset($prefs[$feature]) || $prefs[$feature] != 'n')) {

@@ -1619,11 +1619,11 @@ INSERT INTO "," ("menuId","type","name","url","position","section","perm","group
 
 INSERT INTO "," ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'o','Admin Newsletters','tiki-admin_newsletters.php',910,'feature_newsletters','tiki_p_admin_newsletters','',0);
 
-INSERT INTO "," ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'s','Workspaces','tiki-workspaces-index.php',920,'feature_workspaces','tiki_p_view_ws','',0);
+INSERT INTO "," ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'s','Workspaces','tiki-workspaces-index.php',920,'feature_workspaces','','',0);
 
-INSERT INTO "," ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'o','Workspaces Home','tiki-workspaces-index.php',925,'feature_workspaces','tiki_p_view_ws','',0);
+INSERT INTO "," ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'o','Workspaces Home','tiki-workspaces-index.php',925,'feature_workspaces','','',0);
 
-INSERT INTO "," ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'o','My Workspaces','tiki-my-workspaces.php',930,'feature_workspaces','tiki_p_view_ws','',0);
+INSERT INTO "," ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'o','My Workspaces','tiki-my-workspaces.php',930,'feature_workspaces','','',0);
 
 INSERT INTO "," ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'o','Manage Workspaces','tiki-manage-workspaces.php',935,'feature_workspaces','tiki_p_admin_ws.php','',0);
 
