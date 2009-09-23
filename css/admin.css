@@ -159,10 +159,6 @@ div.adminanchors a {float: left}
 	margin: 0;
 }
 
-.toolbars-admin #qt_filter_div {
-	width: 100%;
-}
-
 .toolbars-admin .lists {
 	padding: 1em 2em 1em 0;
 	float: left;
@@ -266,20 +262,6 @@ div.adminanchors a {float: left}
 
 .qt-noaccess {
 	opacity: .4;
-}
-
-.qt_filter_div {
-	background-color: #fff;
-	border-top: thin gray solid;
-	border-right: thin gray solid;
-	border-bottom: none;
-	border-left: thin gray solid;
-	padding: 0 .5em;
-	font-size: 0.9em;
-}
-
-#qt_filter_div a {
-	
 }
 
 #toolbar_edit_div {
