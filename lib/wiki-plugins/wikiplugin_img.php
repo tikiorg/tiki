@@ -3,8 +3,9 @@
 function wikiplugin_img_info() {
 	return array(
 		'name' => tra('Image'),
-		'description' => tra('Display images (experimental - possible successor to img in 4.0)'),
+		'description' => tra('Display images'),
 		'prefs' => array( 'wikiplugin_img'),
+		'icon' => 'pics/icons/picture.png',
 		'params' => array(
 			'id' => array(
 				'required' => false,
