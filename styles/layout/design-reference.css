@@ -37,11 +37,11 @@ input[type=submit] {
 	padding: 1px 4px;
 	margin-right: 1px;
 }
-	
-span.highlight {
-	background: aqua;
-	padding: 0 !important;
-	margin: 0;
+
+/* highlight on "button" links, e.g. if there are some comments it highlights the "button" link in #page-bar under the content of the wiki pages */
+.highlight {
+	background: #FC0;
+	color: #000;
 }
 
 input[type=checkbox],

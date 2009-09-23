@@ -36,10 +36,9 @@ input[type=submit] {
 	margin-right: 1px;
 }
 	
-span.highlight {
-	background: aqua;
-	padding: 0 !important;
-	margin: 0;
+.highlight {
+	background: #FC0;
+	color: #000;
 }
 
 input[type=checkbox],
