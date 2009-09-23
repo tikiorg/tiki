@@ -10,6 +10,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 include_once('lib/smarty_tiki/block.self_link.php');
 
+$toolbarPickerIndex = -1;
+
 abstract class Toolbar
 {
 	protected $wysiwyg;
@@ -678,7 +680,6 @@ class ToolbarLineBased extends ToolbarInline // Will change in the future
 	} // }}}
 }
 
-static $toolbarPickerIndex = -1;
 
 class ToolbarPicker extends Toolbar
 {
@@ -1041,18 +1042,25 @@ class ToolbarsList
 
 	private function __construct() {}
 	
-	public static function fromPreference( $section ) // {{{
+	public static function fromPreference( $section, $tags_to_hide = array() ) // {{{
 	{
 		global $tikilib;
 
 		$global = $tikilib->get_preference( 'toolbar_global' . (strpos($section, '_comments') !== false ? '_comments' : ''));
 		$local = $tikilib->get_preference( 'toolbar_'.$section, $global );
 
+		foreach($tags_to_hide as $name) {
+			$local = str_replace($name, '', $local);
+		}
+		$local = str_replace(array(',,', '|,', ',|', ',/', '/,'), array(',', '|', '|', '/', '/'), $local);
+
 		return self::fromPreferenceString( $local );
 	} // }}}
 
 	public static function fromPreferenceString( $string ) // {{{
 	{
+		global $toolbarPickerIndex;
+		$toolbarPickerIndex = -1;
 		$list = new self;
 
 		$string = preg_replace( '/\s+/', '', $string );
