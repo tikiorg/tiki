@@ -33,7 +33,7 @@
     </a>	
 	
     <a href="tiki-admin.php?page=look" class="admbox" style="background-image: url('pics/large/gnome-settings-background48x48.png')">
-      <img src="pics/trans.png" alt="{tr}Look &amp; Feel{/tr}" title="{tr}Customize look and feel of your Tiki{/tr}" /><span>{tr}Look &amp; Feel{/tr}</span>
+      <img src="pics/trans.png" alt="{tr}Look and Feel{/tr}" title="{tr}Customize look and feel of your Tiki{/tr}" /><span>{tr}Look and Feel{/tr}</span>
     </a>
 
     <a href="tiki-admin.php?page=i18n" class="admbox" style="background-image: url('pics/large/i18n48x48.png')">

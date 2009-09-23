@@ -33,7 +33,7 @@
 	  
 <div class="adminoptionbox">
 	<div class="adminoptionlabel"><label for="wikiHomePage">{tr}Home page{/tr}:</label><input type="text" id="wikiHomePage" name="wikiHomePage" value="{$prefs.site_wikiHomePage|escape}" size="40" /><input type="submit" name="setwikihome" value="{tr}Set{/tr}" />{if $prefs.feature_help eq 'y'} {help url="General+Admin"}{/if}
-	<br /><em>{tr}If the page does not exist, Tiki will create it{/tr}.</em></div>
+	<br /><em>{tr}If the page does not exist, it will be created{/tr}.</em></div>
 </div>
 
 <input type="hidden" name="setwikiregex" />
