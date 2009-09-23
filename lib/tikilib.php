@@ -7359,18 +7359,10 @@ class TikiLib extends TikiDb_Bridge {
 	/** Update a wiki page
 		@param array $hash- lock_it,contributions, contributors
 	 **/
-	function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip, $edit_description = '', $edit_minor = 0, $lang='', $is_html=false, $hash=null, $saveLastModif=null, $wysiwyg='', $wiki_authors_style) {
+	function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip, $edit_description = '', $edit_minor = 0, $lang='', $is_html=null, $hash=null, $saveLastModif=null, $wysiwyg='', $wiki_authors_style) {
 		global $smarty, $prefs, $dbTiki, $histlib, $quantifylib;
 		include_once ("lib/wiki/histlib.php");
 		include_once ("lib/commentslib.php");
-
-		if( $wysiwyg == 'y' ) {
-			$is_html = 1;
-		}
-
-		if( ! $is_html ) {
-			$edit_data = str_replace( '&lt;x&gt;', '', $edit_data );
-		}
 
 		$commentslib = new Comments($dbTiki);
 
@@ -7410,8 +7402,24 @@ class TikiLib extends TikiDb_Bridge {
 			$quantifylib->recordChangeSize( $info['page_id'], $version, $info['data'], $edit_data );
 		}
 
-		$html=$is_html?1:0;
-		if ($html&& $prefs['feature_purifier'] != 'n') {
+		if ($is_html === null) {
+			$html = $info['is_html'];
+		} else {
+			$html = $is_html ? 1 : 0;
+		}
+		if ($wysiwyg == '') {
+			$wysiwyg = $info['wysiwyg'];
+		}
+		
+		if( $wysiwyg == 'y' && $html != 1 ) {	// correct for html only wysiwyg
+			$html = 1;
+		}
+
+		if( $html == 0 ) {
+			$edit_data = str_replace( '&lt;x&gt;', '', $edit_data );
+		}
+
+		if ($html == 1 && $prefs['feature_purifier'] != 'n') {
 			require_once('lib/htmlpurifier_tiki/HTMLPurifier.tiki.php');
 			$edit_data = HTMLPurifier($edit_data);
 		}
