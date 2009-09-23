@@ -77,11 +77,11 @@ function smarty_function_button($params, &$smarty) {
 	if (!$disabled) {
 		$flip_id = '';
 		if ( ! empty($params['_flip_id']) ) {
-			$params['_onclick'] = "javascript:flip('"
+			$params['_onclick'] = "javascript:flip(\'"
 				. $params['_flip_id']
-				. "');flip('"
+				. "\');flip(\'"
 				. $params['_flip_id']
-				. "_close','inline');return false;";
+				. "_close\',\'inline\');return false;";
 			if ( ! isset($params['_flip_hide_text']) || $params['_flip_hide_text'] != 'n' ) {
 				$cookie_key = 'show_' . $params['_flip_id'];
 				$params['_text'] .= '<span id="'.$params['_flip_id'].'_close" style="display:'
