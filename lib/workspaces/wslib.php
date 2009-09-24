@@ -111,7 +111,10 @@ class wslib extends CategLib
 	}
 
 	//We create the perspective for the WS
-	$perspectivelib->replace_perspective(null, $name);
+	$pspId = $perspectivelib->replace_perspective(null, $name);
+	//I set this for the ws identificacion, because we can have two ws with the same name and for psp
+	//this could be a problem in order to get the psp from the db
+	$perspectivelib->replace_preferences($pspId, array('wsId' => $ws_id, 'wsName' => $name)); 
 		
 	return $ws_id;
     }
@@ -894,11 +897,19 @@ class wslib extends CategLib
      /** Allows set options in a determined perspective of the WS
       * return true
       */
-     public function set_ws_perspective_options($wsId, $options)
+     public function set_ws_perspective_options($wsId, $wsName, $pref, $value)
      {
 	 global $perspectivelib; if (!$perspectivelib) require_once 'lib/perspectivelib.php';
 
+	 $list = $perspectivelib->get_perspectives_with_given_name($wsName);
 
+	 //Searching for the matching ws
+	 foreach ($list as $perspective)
+	 {
+	     var_dump($pespective);
+	 }
+
+	 //Replace preferences in the perspective
      }
 }
 
