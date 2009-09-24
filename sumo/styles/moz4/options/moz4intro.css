@@ -1,0 +1,12 @@
+
+/* And design defaults: */
+@import "moz4.css";
+
+html,
+body {
+	background-position: center top;
+}
+
+.wikitext {
+	padding-top: 38px;
+}
