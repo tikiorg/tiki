@@ -210,7 +210,7 @@ class Installer
 		foreach( $files as $file ) {
 			$filename = basename( $file );
 			$patch = substr( $filename, 0, -4 );
-			if (!in_array($patch)) $this->patches[] = $patch;
+			if (!in_array($patch, $this->patches)) $this->patches[] = $patch;
 		}
 
 		$installed = array();
