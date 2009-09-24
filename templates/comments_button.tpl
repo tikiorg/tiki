@@ -16,21 +16,20 @@
 {else}
 	{assign var=thisflipid value="comzone"}
 {/if}
-{assign var=selflink value=$smarty.server.SCRIPT_NAME}
 {if $comments_show eq 'y'}
 	{assign var=flip_open value='y'}
 <noscript>
-	{button href="$selflink?comzone=hide#comments" _auto_args="*" _class=$thisbuttonclass _text=$thistext _flip_default_open=$flip_open}
+	{button comzone="hide" _anchor="comments" _auto_args="comzone,*" _class=$thisbuttonclass _text=$thistext _flip_hide_text='y' _flip_default_open=$flip_open}
 </noscript>
 {elseif $comments_show eq 'n'}
 	{assign var=flip_open value='n'}
 <noscript>
-	{button href="$selflink?comzone=show#comments" _auto_args="*" _class=$thisbuttonclass _text=$thistext _flip_hide_text='n' _flip_default_open=$flip_open}
+	{button comzone="show" _anchor="comments" _auto_args="comzone,*" _class=$thisbuttonclass _text=$thistext _flip_hide_text='n' _flip_default_open=$flip_open}
 </noscript>
 {else}
 	{assign var=flip_open value=$prefs.wiki_comments_displayed_default}
 <noscript>
-	{button href="$selflink?comzone=show#comments" _auto_args="*" _class=$thisbuttonclass _text=$thistext _flip_hide_text='n' _flip_default_open=$flip_open}
+	{button comzone="show" _anchor="comments" _auto_args="comzone,*" _class=$thisbuttonclass _text=$thistext _flip_hide_text='n' _flip_default_open=$flip_open}
 </noscript>
 {/if}
 <script type="text/javascript"><!--
