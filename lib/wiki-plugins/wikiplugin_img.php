@@ -31,11 +31,25 @@ function wikiplugin_img_info() {
 				'required' => false,
 				'name' => tra('Thumbnail'),
 				'description' => tra('Makes the image a thumbnail. Will link to the full size image unless "link" is set. Parameter options indicate how the full image will be displayed: "shadowbox", "mouseover", "mousesticky", "popup", "browse" and "browsepopup" (only works with image gallery) and "plain". '),
+				'options' => array(
+					array('text' => tra('None'), 'value' => ''), 
+					array('text' => tra('Shadowbox'), 'value' => 'shadowbox', 'description' => tra('')), 
+					array('text' => tra('Mouse Over'), 'value' => 'mouseover', 'description' => tra('')), 
+					array('text' => tra('Mouse Over (Sticky)'), 'value' => 'mousesticky', 'description' => tra('')), 
+					array('text' => tra('Popup'), 'value' => 'popup', 'description' => tra('')), 
+					array('text' => tra('Browse'), 'value' => 'browse', 'description' => tra('Image gallery only')), 
+					array('text' => tra('Browse Popup'), 'value' => 'browsepopup', 'description' => tra('Image gallery only')), 
+					array('text' => tra('Plain'), 'value' => 'plain', 'description' => tra('')), 
+				),
 			),
 			'button' => array(
 				'required' => false,
 				'name' => tra('Enlarge button'),
 				'description' => tra('Button for enlarging image. Set to "y" for it to appear. If thumb is set, then same method as thumb will be used to enlarge, except if mouseover or mousesticky is used. If thumb is not set or set to mouseover or mousesticky, then choice of "shadowbox", "popup", "browse" and "browsepopup" (for image gallery), and "plain".'),
+				'options' => array(
+					array('text' => tra('None'), 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+				),
 			),
 			'link' => array(
 				'required' => false,
@@ -86,6 +100,12 @@ function wikiplugin_img_info() {
 				'required' => false,
 				'name' => tra('Alignment'),
 				'description' => tra('Whether to block items from flowing next to image from the top or bottom. (top,bottom,both,none)'),
+				'options' => array(
+					array('text' => tra('None'), 'value' => ''), 
+					array('text' => tra('Top'), 'value' => 'top'), 
+					array('text' => tra('Bottom'), 'value' => 'bottom'), 
+					array('text' => tra('Both'), 'value' => 'both'), 
+				),
 			),
 			'class' => array(
 				'required' => false,
@@ -111,11 +131,23 @@ function wikiplugin_img_info() {
 				'required' => false,
 				'name' => tra('Align image block'),
 				'description' => tra('Enter right, left or center to align the box containing the image.'),
+				'options' => array(
+					array('text' => tra('None'), 'value' => ''), 
+					array('text' => tra('Right'), 'value' => 'right'), 
+					array('text' => tra('Left'), 'value' => 'left'), 
+					array('text' => tra('Center'), 'value' => 'center'), 
+				),
 			),
 			'imalign' => array(
 				'required' => false,
 				'name' => tra('Align image'),
 				'description' => tra('Enter right, left or center to align the image itself. If the image is inside a box (because stylebox, desc or button has been set), then you should align the box using the align parameter.'),
+				'options' => array(
+					array('text' => tra('None'), 'value' => ''), 
+					array('text' => tra('Right'), 'value' => 'right'), 
+					array('text' => tra('Left'), 'value' => 'left'), 
+					array('text' => tra('Center'), 'value' => 'center'), 
+				),
 			),
 		),
 	);
