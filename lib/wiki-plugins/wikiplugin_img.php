@@ -298,7 +298,8 @@ function wikiplugin_img_info() {
 		$imagegalpath = 'show_image.php?id=';
 		$filegalpath = 'tiki-download_file.php?fileId=';
 		$attachpath = 'tiki-download_wiki_attachment.php?attId=';
-		
+		$repl = '';
+
 	/////////////////////////////////////////////// Label images and set id variable based on location////////////////////////////
 		// Set id's if user set path in src instead of id for images in file galleries, image galleries and attachments 
 		//This is so we can get db info
@@ -445,8 +446,8 @@ function wikiplugin_img_info() {
 			//Set variables for height, width and iptc data from image data
 			$fwidth = $imagesize[0];
 			$fheight = $imagesize[1];
-			$idesc = trim($iptc['2#120'][0]);		//description from image iptc
-			$ititle = trim($iptc['2#005'][0]);		//title from image iptc
+			$idesc = isset($iptc['2#120'][0]) ? trim($iptc['2#120'][0]) : '';		//description from image iptc
+			$ititle = isset($iptc['2#005'][0]) ? trim($iptc['2#005'][0]) : '';		//title from image iptc
 			
 
 		// URL of original image
@@ -754,7 +755,7 @@ function wikiplugin_img_info() {
 			} 
 		} 
 		// Mobile
-		if($_REQUEST['mode'] == 'mobile') {
+		if(isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile') {
 			$repl = '{img src=' . $imgdata['src'] . "\"}\n<p>" . $imgdata['desc'] . '</p>'; 
 		}
 		return $repl;
