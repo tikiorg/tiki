@@ -87,6 +87,8 @@ class wslib extends CategLib
      */
     public function create_ws ($name, $groups, $parentWS = null, $description = '')
     {
+	global $perspectivelib; if (!$perspectivelib) require_once 'lib/perspectivelib.php';  
+
     	if (!$parentWS)	$parentWS = 0;
     	
 	$ws_id = parent::add_category($parentWS, $name, $description, $this->ws_container);
@@ -107,6 +109,9 @@ class wslib extends CategLib
 		else
 		    $this->add_ws_group ($ws_id, $name, $groupName, $groupDescription, $additionalPerms);
 	}
+
+	//We create the perspective for the WS
+	$perspectivelib->replace_perspective(null, $name);
 		
 	return $ws_id;
     }
@@ -720,7 +725,7 @@ class wslib extends CategLib
      */
     public function list_ws_objects ($ws_id, $maxRecords = -1, $offset = -1)
     {
-	$query = "select * from `tiki_objects` t0, `tiki_category_objects` t1 
+	/*$query = "select * from `tiki_objects` t0, `tiki_category_objects` t1 
 			   where t1.`categId`=? and t1.`catObjectId`=t0.`objectId`";
 	$bindvars = array($ws_id);
 	$result = $this->query($query,$bindvars, $maxRecords, $offset);
@@ -730,7 +735,8 @@ class wslib extends CategLib
 		$listWSObjects["$valforsort"] = $res;
 	}
 	ksort($listWSObjects);
-	return $listWSObjects;
+	return $listWSObjects;*/
+	return parent::list_category_objects($ws_id, $offset, $maxRecords);
     }
 
     /** Get the stored perms for a object for a specific user
@@ -883,6 +889,16 @@ class wslib extends CategLib
      	while ($res = $result->fetchRow())
 		$wsPerms[] = $res;
 	return $wsPerms;
+     }
+
+     /** Allows set options in a determined perspective of the WS
+      * return true
+      */
+     public function set_ws_perspective_options($wsId, $options)
+     {
+	 global $perspectivelib; if (!$perspectivelib) require_once 'lib/perspectivelib.php';
+
+
      }
 }
 
