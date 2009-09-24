@@ -102,11 +102,8 @@
 						{preference name=feature_wysiwyg}
 						{preference name=feature_ajax_autosave}
 						{preference name=feature_htmlpurifier_output}
+						{preference name=feature_kaltura}
 						{preference name=feature_multimedia}
-						<div class="half_width">
-							<span class="checkbox"><input type="checkbox" name="feature_kaltura" {if $prefs.feature_kaltura eq 'y'}checked="checked"{/if}/></span>
-							<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Kaltura+Video" target="tikihelp" class="tikihelp" title="{tr}Kaltura{/tr}: {tr}Kaltura{/tr}">{/if} {tr}Kaltura{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
-						</div>
 				</fieldset>
 
 				<fieldset>

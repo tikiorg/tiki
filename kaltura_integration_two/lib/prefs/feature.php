@@ -369,6 +369,13 @@ function prefs_feature_list() {
 			'help' => 'Workspace',
 			'type' => 'flag',
 		),
+		'feature_kaltura' => array(
+			'name' => tra('Kaltura'),
+			'description' => tra('Kaltura'),
+			'help' => 'Kaltura',
+			'type' => 'flag',
+		),
+
 		'feature_friends' => array(
 			'name' => tra('Friendship Network'),
 			'description' => tra('Friendship Network'),
