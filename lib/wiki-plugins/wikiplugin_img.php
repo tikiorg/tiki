@@ -620,6 +620,7 @@ function wikiplugin_img_info() {
 	////////////////////////////////////////// Create the HTML link ////////////////////////////////////////////////////////////////////////
 		// Set link to user setting or to image itself if thumb is set
 		if (!empty($imgdata['link']) || !empty($imgdata['thumb'])) {
+			$mouseover = '';
 			if (!empty($imgdata['link'])) {
 				$link = $imgdata['link'];
 			} elseif ((($imgdata['thumb'] == 'browse') || ($imgdata['thumb'] == 'browsepopup')) && !empty($imgdata['id'])) {
@@ -652,6 +653,8 @@ function wikiplugin_img_info() {
 				$linkrel = ' rel="'.$imgdata['rel'].'"';
 			} elseif ($imgdata['thumb'] == 'shadowbox') {
 				$linkrel = ' rel="shadowbox; type=img"';
+			} else {
+				$linkrel = '';
 			}
 			// title
 			if ( !empty($imgtitle) ) {
@@ -660,7 +663,7 @@ function wikiplugin_img_info() {
 				$linktitle = '';
 			}
 			//Final link string
-			$replimg = $script . "\r\t" . '<a href="' . $link . '" class="internal"' . $linkrel . $imgtarget . $linktitle . $mouseover . $sticky . '>' . $replimg . '</a>';
+			$replimg = '<a href="' . $link . '" class="internal"' . $linkrel . $imgtarget . $linktitle . $mouseover . '>' . $replimg . '</a>';
 		}
 		
 		//Add link string to rest of string
