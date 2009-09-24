@@ -37,7 +37,7 @@
 			<div class="adminoptionbox">
 				{preference name=useGroupHome}
 				{preference name=limitedGoGroupHome}
-				
+			</div>
 			<div class="adminoptionbox">
 				<div id="tiki_home_page" style="display:{if $prefs.useUrlIndex eq 'y'}none{else}block{/if};">{tr}Use TikiWiki feature as homepage{/tr}:
 					<select name="tikiIndex" id="general-homepage">

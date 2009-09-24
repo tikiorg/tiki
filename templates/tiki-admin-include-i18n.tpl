@@ -63,7 +63,7 @@
 	
 {preference name=feature_machine_translation}
 
-
+</div>
 {/tab}
 
 {tab name="{tr}Babelfish links{/tr}"}
