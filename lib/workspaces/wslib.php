@@ -804,13 +804,14 @@ class wslib extends CategLib
      */	
      public function get_ws_childs ($ws_id)
      {
-     	$query = "select `categId` from `tiki_categories` where `parentId`= ?";
+     	/*$query = "select `categId` from `tiki_categories` where `parentId`= ?";
      	$bindvars = array($ws_id);
      	$result = $this->query($query,$bindvars);
 	while ($res = $result->fetchRow())
 		$wsChilds[] = $res["categId"];
 
-     	return $wsChilds;
+	return $wsChilds;*/
+	return parent::get_child_categories($ws_id);
      }	
      
       /** Add a user in a group
@@ -882,6 +883,7 @@ class wslib extends CategLib
      *
      * @param $ws_id The id of the ws
      * @return $cant the number of objects stored in the WS
+     * TODO: Use perms take2
      */	
      public function get_ws_adminperms ()
      {
@@ -895,6 +897,7 @@ class wslib extends CategLib
      }
 
      /** Allows set options in a determined perspective of the WS
+      * Incomplete!!!
       * return true
       */
      public function set_ws_perspective_options($wsId, $wsName, $pref, $value)
