@@ -3027,7 +3027,7 @@ class TrackerLib extends TikiLib {
 		if (empty($user)) {
 			$user = $GLOBALS['user'];
 		}
-		if ($empty($trackerId) && $prefs['userTracker'] == 'y') {
+		if (empty($trackerId) && $prefs['userTracker'] == 'y') {
 			$utid = $userlib->get_tracker_usergroup($user);
 			if (!empty($utid['usersTrackerId'])) {
 				$trackerId = $utid['usersTrackerId'];
