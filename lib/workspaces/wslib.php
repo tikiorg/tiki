@@ -89,12 +89,7 @@ class wslib extends CategLib
     {
     	if (!$parentWS)	$parentWS = 0;
     	
-	// ws_id = parent::add_category($parentWS, $name, $description, $this->ws_container)
-	$query = "insert into `tiki_categories`(`name`,`description`,`parentId`,`hits`,`rootCategId`) values(?,?,?,?,?)";
-	$this->query($query, array($name, $description, (int) $parentWS, 0, $this->ws_container));
-	
-	$query = "select `categId` from `tiki_categories` where `name`=? and `parentId`=? and `rootCategId`=?";
-	$ws_id = $this->getOne($query, array($name, (int) $parentWS, $this->ws_container));
+	$ws_id = parent::add_category($parentWS, $name, $description, $this->ws_container);
 	
 	foreach ($groups as $group)
 	{
@@ -154,15 +149,16 @@ class wslib extends CategLib
      * @param $wsDesc The new description for the WS
      * @return true
      */
-    public function update_ws_data ($ws_id, $wsName, $wsDesc)
+    public function update_ws_data ($ws_id, $wsParentId, $wsName, $wsDesc)
     {
-    	$query = "update `tiki_categories` set `name`=?, `description`=? where `categId` = ?";
-    	$bindvars = array($wsName, $wsDesc, $ws_id);
-    	$this->query($query, $bindvars);
+	 parent::update_category($ws_id, $wsName, $wsDesc, $wsParentId);
+    	//$query = "update `tiki_categories` set `name`=?, `description`=? where `categId` = ?";
+    	//$bindvars = array($wsName, $wsDesc, $ws_id);
+    	//$this->query($query, $bindvars);
     	return true; 
     }
 	
-    /** Remove a WS and it childs
+    /** Remove a WS and its childs
      * 
      * @param $ws_id The WS id you want to delete
      * @return true
@@ -612,6 +608,7 @@ class wslib extends CategLib
      *
      * @param $groupName The name of the group
      * @return An associative array with the WS that the group have access
+     * TODO: Clean this function using the other API
      */
     public function list_ws_that_can_be_accessed_by_group ($groupName, $maxRecords = -1, $offset = -1)
     {	
@@ -659,44 +656,14 @@ class wslib extends CategLib
      */
     public function list_all_ws ($offset, $maxRecords, $sort_mode = 'name_asc')
     {
-		$query = "select * from `tiki_categories` where `rootCategId`=?";// order by ".$this->convertSortMode($sort_mode);
-		$query_cant = "select count(*) from `tiki_categories` where `rootCategId`=?";
-		$bindvals = array($this->ws_container);
-		$result = $this->query($query,$bindvals,$maxRecords,$offset);
-		$cant = $this->getOne($query_cant,$bindvals);
-		$ret = array();
-
-		while ($res = $result->fetchRow())
-		{      
-			$catpath = $this->get_category_path($res["categId"]);
-			$tepath = array();	
-			foreach ($catpath as $cat) 
-			{
-				$tepath[] = $cat['name'];
-			}
-			$categpath = implode("::",$tepath);
-			$categpathforsort = implode("!!",$tepath); // needed to prevent cat::subcat to be sorted after cat2::subcat 
-			$res["categpath"] = $categpath;
-			$res["tepath"] = $tepath;
-			$res["deep"] = count($tepath);
-			$res['name'] = $this->get_category_name($res['categId']);
-			global $userlib;
-			
-			$ret["$categpathforsort"] = $res;
-		}
-
-		ksort($ret);
-			
-		$retval = array();
-		$retval["data"] = array_values($ret);
-		$retval["cant"] = $cant;
-		return $retval;
-	}
+	return parent::list_all_categories($offset, $maxRecords, $sort_mode, 0, 'ws', 0, false, true);
+    }
 	
     /** List all WS that a user have access
      *
      * @param $user The name of the user
      * @return An associative array with the WS that the user has access
+     * TODO: Think about if we can re-write this using others libraries
      */
      public function list_ws_that_user_have_access ($user, $maxRecords = -1, $offset = -1)
      {

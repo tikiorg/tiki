@@ -111,7 +111,7 @@ else
 //Display the basic list of Workspaces
 
 //Display ws - TODO: Needs to be more restrictive depending on the user
-$listWS_temp = $wslib->list_all_ws($offset, $maxRecords, $sort_mode, "", "", "");
+$listWS_temp = $wslib->list_all_ws($offset, $maxRecords, $sort_mode);
 $listWS = array('data' =>$listWS_temp['data'], 'cant'=>$listWS_temp['cant']);
 $smarty->assign('listWS', $listWS["data"]);
 
