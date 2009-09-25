@@ -169,7 +169,7 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" alt="{tr}List
 				{set var=f_created value=$items[user].created}
 			{/if}
 			{if $showlastmodif eq 'y'}
-				{set var=f_lastmodif value=$items[user].lastmodif}
+				{set var=f_lastmodif value=$items[user].lastModif}
 			{/if}
 {* ------------------------------------ *}
 			{include file="$tpl" item=$items[user]}
