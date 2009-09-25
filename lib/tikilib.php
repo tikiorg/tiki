@@ -4686,6 +4686,7 @@ class TikiLib extends TikiDb_Bridge {
 		if( ! $is_html ) {
 			$data = str_replace( '<x>', '', $data );
 		}
+		$name = trim($name); // to avoid pb with trailing space http://dev.mysql.com/doc/refman/5.1/en/char.html
 
 		if (!$user) $user = 'anonymous';
 		if (empty($wysiwyg)) $wysiwyg = $prefs['wysiwyg_default'];
