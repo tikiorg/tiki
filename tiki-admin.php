@@ -10,7 +10,7 @@ include_once ('lib/admin/adminlib.php');
 $tikifeedback = array();
 $auto_query_args = array(
 	'page'
-);
+    );
 if ($tiki_p_admin != 'y') {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));

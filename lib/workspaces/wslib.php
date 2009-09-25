@@ -73,7 +73,7 @@ class wslib extends CategLib
      */
     public function get_ws_container()
     {
-		return $this->ws_container;
+	return $this->ws_container;
     }
     
     /** Create a new WS with one group inside it with the associated perm 'tiki_p_ws_view'.
@@ -156,6 +156,7 @@ class wslib extends CategLib
      * @param $wsName The new name for the WS
      * @param $wsDesc The new description for the WS
      * @return true
+     * TODO: Update the perspective name, and its preferences
      */
     public function update_ws_data ($ws_id, $wsParentId, $wsName, $wsDesc)
     {
@@ -170,6 +171,7 @@ class wslib extends CategLib
      * 
      * @param $ws_id The WS id you want to delete
      * @return true
+     * TODO: Remove the perspective associated to the ws
      */
     public function remove_ws ($ws_id)
     {	
@@ -182,6 +184,9 @@ class wslib extends CategLib
 	$listWSObjects = $this->list_ws_objects($ws_id);
 	foreach ($listWSObjects as $object)
 		$this->remove_object_from_ws ($ws_id,$object["objectId"],$object["itemId"],$object["type"]);
+
+	//Remove the perspective associated to the ws
+	// TODO!!!
     	
     	// Remove perms assigned to the WS
     	$hashWS = md5($this->objectType . strtolower($ws_id));
@@ -200,6 +205,7 @@ class wslib extends CategLib
     /** Remove all WS including the Workspaces container. It's a destructive function, so use with caution
      * 
      * @return True
+     * TODO: Use categlib function instead of this adding the rootCategId support!
      */
     public function remove_all_ws ()
     {
@@ -221,6 +227,8 @@ class wslib extends CategLib
      * @param $ws_id The id of the WS where the group will be removed from
      * @param $groupName The name of the group you want to remove
      * @return true
+     *
+     * TODO: Try to obtain the same using categlib functions. DRY Ben
      */
     public function remove_group_from_ws ($ws_id,$groupName)
     {
@@ -285,6 +293,8 @@ class wslib extends CategLib
      * @param $itemId The id of the item (in wikis it's equal to its name)
      * @param $type The type of the object
      * @return -
+     *
+     * TODO: Get this function working as I said in the email, Ben
      */    
     public function create_ws_object ($ws_id, $name, $type, $description='', $params = array())
     {
@@ -463,6 +473,8 @@ class wslib extends CategLib
      * @param $itemId The id of the item you want to delete
      * @param $type The type of the object you want to delete
      * @return true
+     *
+     * TODO: Try to use the categlib function if is possible
      */
     public function remove_object_from_ws ($ws_id,$objectId,$itemId,$type)
     {
@@ -616,7 +628,8 @@ class wslib extends CategLib
      *
      * @param $groupName The name of the group
      * @return An associative array with the WS that the group have access
-     * TODO: Clean this function using the other API
+     *
+     * TODO: Clean this function using the categlib API
      */
     public function list_ws_that_can_be_accessed_by_group ($groupName, $maxRecords = -1, $offset = -1)
     {	
@@ -660,7 +673,6 @@ class wslib extends CategLib
 
     /** List all WS stored in TikiWiki
      *
-     * TODO Find a better way to explain
      */
     public function list_all_ws ($offset, $maxRecords, $sort_mode = 'name_asc')
     {
@@ -671,7 +683,7 @@ class wslib extends CategLib
      *
      * @param $user The name of the user
      * @return An associative array with the WS that the user has access
-     * TODO: Think about if we can re-write this using others libraries
+     * TODO: The same I said before, use categlib!! This functions is an exact copy of the another one ...
      */
      public function list_ws_that_user_have_access ($user, $maxRecords = -1, $offset = -1)
      {
@@ -725,6 +737,9 @@ class wslib extends CategLib
      *
      * @param $ws_id The id of the WS
      * @return An associative array of objects related to a single WS
+     *
+     * TODO: Try if this function is working properly, if not, fix it, I leave the old code commented because you could
+     * need to see what is wrong.
      */
     public function list_ws_objects ($ws_id, $maxRecords = -1, $offset = -1)
     {
@@ -771,6 +786,8 @@ class wslib extends CategLib
      * @param $ws_id The id of the WS
      * @param $user The username
      * @return Associative array with the objects that a user have access from a WS
+     *
+     * TODO: The same, you know, try use categlib
      */
     public function list_ws_objects_for_user ($ws_id, $user, $maxRecords = -1, $offset = -1)
     {
@@ -801,6 +818,8 @@ class wslib extends CategLib
      *
      * @param $ws_id The id of the WS
      * @return Associative array with the WS childs
+     *
+     * TODO: Try if it's working properly, if not, fix it
      */	
      public function get_ws_childs ($ws_id)
      {
@@ -898,9 +917,22 @@ class wslib extends CategLib
 
      /** Allows set options in a determined perspective of the WS
       * Incomplete!!!
-      * return true
+      * @return true
       */
      public function set_ws_perspective_options($wsId, $wsName, $pref, $value)
+     {
+	 global $perspectivelib; if (!$perspectivelib) require_once 'lib/perspectivelib.php';
+
+	 //Get the ID of the perspective with get_ws_associed_perspective_id function
+
+	 //Replace preferences in the perspective
+     }
+
+     /** Get the ID of a determined ws perspective 
+      * Incomplete!!
+      * @return The ID of the perspective if found
+      */
+     public function get_ws_associed_perspective_id($wsName, $wsId)
      {
 	 global $perspectivelib; if (!$perspectivelib) require_once 'lib/perspectivelib.php';
 
@@ -911,8 +943,6 @@ class wslib extends CategLib
 	 {
 	     var_dump($pespective);
 	 }
-
-	 //Replace preferences in the perspective
      }
 }
 
