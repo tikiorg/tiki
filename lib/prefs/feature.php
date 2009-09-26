@@ -605,5 +605,11 @@ function prefs_feature_list() {
 			'description' => tra('List all languages as a language option in the page language drop list to see all languages at once.'),
 			'type' => 'flag',
 		),
+		'feature_obzip' => array(
+			'name' => tra('GZip output'),
+			'description' => tra('GZip output'),
+			'help' => 'Compression',
+			'type' => 'flag',
+		),
 	);
 }

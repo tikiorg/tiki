@@ -181,60 +181,22 @@
 	{tab name="{tr}General Settings{/tr}"}
 		<fieldset>
 			<legend>{tr}Site Access{/tr}</legend>
-			<div class="adminoptionbox">
-				<div class="adminoption">
-					<input type="checkbox" name="site_closed" id="general-access" {if $prefs.site_closed eq 'y'}checked="checked" {/if}onclick="flip('close_site_message');" />
-				</div>
-				<div class="adminoptionlabel">
-					<label for="general-access">{tr}Close site (except for those with permission){/tr}.</label>
-				</div>
-				<div align="left" id="close_site_message" style="display:{if $prefs.site_closed eq 'y'}block{else}none{/if};" class="adminoptionboxchild">
-					<div class="adminoptionlabel">
-						<label for="general-site_closed">{tr}Message to display{/tr}:</label>
-						<br />
-						<input type="text" name="site_closed_msg" id="general-site_closed" value="{$prefs.site_closed_msg}" size="60" />
-					</div>
-				</div>
+
+			{preference name=site_closed}
+			<div class="adminoptionboxchild">
+				{preference name=site_closed_msg}
 			</div>
 
-			<div class="adminoptionbox">
-				<div class="adminoption">
-					<input type="checkbox" name="use_load_threshold" id="general-load" {if $prefs.use_load_threshold eq 'y'}checked="checked" {/if}onclick="flip('close_threshold_message');" />
-				</div>
-				<div class="adminoptionlabel">
-					<label for="general-load">{tr}Close site when server load is above the threshold  (except for those with permission){/tr}.</label>
-				</div>
-				<div align="left" id="close_threshold_message" style="display:{if $prefs.use_load_threshold eq 'y'}block{else}none{/if};" class="adminoptionboxchild">
-					<div class="adminoptionlabel">
-						<label for="general-max_load">{tr}Maximum average server load threshold in the last minute{/tr}:</label>
-						<input type="text" name="load_threshold" id="general-max_load" value="{$prefs.load_threshold}" size="5" />
-					</div>
-
-					<div class="adminoptionlabel">
-						<label for="general-load_mess">{tr}Message to display{/tr}:</label>
-						<br />
-						<input type="text" name="site_busy_msg" id="general-load_mess" value="{$prefs.site_busy_msg}" size="60" />
-					</div>
-				</div>
+			{preference name=use_load_threshold}
+			<div class="adminoptionboxchild">
+				{preference name=load_threshold}
+				{preference name=site_busy_msg}
 			</div>
 
-			<div class="adminoptionbox">
-				<div class="adminoption">
-					<input type="checkbox" name="use_proxy" id="general-proxy" {if $prefs.use_proxy eq 'y'}checked="checked" {/if}onclick="flip('use_proxy_settings');" />
-				</div>
-				<div class="adminoptionlabel">
-					<label for="general-proxy">{tr}Use proxy{/tr}.</label>
-				</div>
-				<div class="adminoptionboxchild" id="use_proxy_settings" style="display:{if $prefs.use_proxy eq 'y'}block{else}none{/if};">
-					<div class="adminoptionlabel">
-						<label for="general-proxy_host">{tr}Host{/tr}:</label>
-						<input type="text" name="proxy_host" id="general-proxy_host" value="{$prefs.proxy_host|escape}" size="40" />
-					</div>
-					<div class="adminoptionlabel">
-						<label for="general-proxy_port">{tr}Port{/tr}:</label>
-						<input size="5" type="text" name="proxy_port" id="general-proxy_port" value="{$prefs.proxy_port|escape}" />
-					</div>
-				</div>
+			{preference name=use_proxy}
+			<div class="adminoptionboxchild">
+				{preference name=proxy_host}
+				{preference name=proxy_port}
 			</div>
 
 			<div class="adminoptionbox">
@@ -258,40 +220,17 @@
 
 		<fieldset>
 			<legend>{tr}Performance{/tr}</legend>
-			<div class="adminoptionbox">
-				<div class="adminoption">
-					<input type="checkbox" name="cachepages" id="general-cache_ext_pages" {if $prefs.cachepages eq 'y'}checked="checked" {/if}/>
-				</div>
-				<div class="adminoptionlabel">
-					<label for="general-cache_ext_pages">{tr}Cache external pages{/tr}</label>.
-				</div>
-			</div>
-			<div class="adminoptionbox">
-				<div class="adminoption">
-					<input type="checkbox" name="cacheimages" id="general-cache_ext_imgs" {if $prefs.cacheimages eq 'y'}checked="checked" {/if}/>
-				</div>
-				<div class="adminoptionlabel">
-					<label for="general-cache_ext_imgs">{tr}Cache external images{/tr}</label>.
-				</div>
-			</div>
-			<div class="adminoptionbox">
-				<div class="adminoption">
-					<input type="checkbox" name="feature_obzip" id="general-gzip" {if $prefs.feature_obzip eq 'y'}checked="checked" {/if}/>
-				</div>
-				<div class="adminoptionlabel">
-					<label for="general-gzip">{tr}GZip output{/tr}</label>.
-					{if $prefs.feature_help eq 'y'}
-						<a href="{$prefs.helpurl}Compression" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}:">{icon _id=help}</a>
-					{/if}
-					{if $gzip_handler ne 'none'}
+			{preference name=cachepages}
+			{preference name=cacheimages}
+			{preference name=feature_obzip}
+			<div class="adminoptionboxchild">
+				{if $gzip_handler ne 'none'}
+					<div class="highlight" style="margin-left:30px;">
+						{tr}Output compression is active.{/tr}
 						<br />
-						<div class="highlight" style="margin-left:30px;">
-							{tr}Output compression is active.{/tr}
-							<br />
-							{tr}Compression is handled by{/tr}: {$gzip_handler}.
-						</div>
-					{/if}
-				</div>
+						{tr}Compression is handled by{/tr}: {$gzip_handler}.
+					</div>
+				{/if}
 			</div>
 		</fieldset>
 

@@ -51,5 +51,15 @@ function prefs_global_list() {
 			'type' => 'list',
 			'options' => $map,
 		),
+		'cachepages' => array(
+			'name' => tra('Cache external pages'),
+			'description' => tra('Cache external pages'),
+			'type' => 'flag',
+		),
+		'cacheimages' => array(
+			'name' => tra('Cache external images'),
+			'description' => tra('Cache external images'),
+			'type' => 'flag',
+		),
 	);
 }
