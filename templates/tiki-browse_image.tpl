@@ -162,14 +162,14 @@
     <small>
     {tr}You can include the image in a tiki page using one of these lines{/tr}:<br /><br />
     {if $resultscale == $defaultscale}
-    {literal}{{/literal}img src=show_image.php?id={$imageId} {literal}}{/literal}<br />
-    {literal}{{/literal}img src=show_image.php?name={$name|escape}&amp;galleryId={$galleryId} {literal}}{/literal}<br />
+    {literal}{{/literal}IMG id={$imageId} {literal}}{/literal}<br />
+    {literal}{{/literal}IMG src=show_image.php?name={$name|escape}&amp;galleryId={$galleryId} {literal}}{/literal}<br />
     {elseif !$resultscale}
-    {literal}{{/literal}img src=show_image.php?id={$imageId}&amp;scalesize=0 {literal}}{/literal}<br />
-    {literal}{{/literal}img src=show_image.php?name={$name|escape}&amp;galleryId={$galleryId}&amp;scalesize=0 {literal}}{/literal}<br />
+    {literal}{{/literal}IMG src=show_image.php?id={$imageId}&amp;scalesize=0 {literal}}{/literal}<br />
+    {literal}{{/literal}IMG src=show_image.php?name={$name|escape}&amp;galleryId={$galleryId}&amp;scalesize=0 {literal}}{/literal}<br />
     {else}
-    {literal}{{/literal}img src={$url_show}?id={$imageId}&amp;scaled&amp;scalesize={$resultscale} {literal}}{/literal}<br />
-    {literal}{{/literal}img src={$url_show}?name={$name|escape}&amp;galleryId={$galleryId}&amp;scalesize={$resultscale} {literal}}{/literal}<br />
+    {literal}{{/literal}IMG src={$url_show}?id={$imageId}&amp;scaled&amp;scalesize={$resultscale} {literal}}{/literal}<br />
+    {literal}{{/literal}IMG src={$url_show}?name={$name|escape}&amp;galleryId={$galleryId}&amp;scalesize={$resultscale} {literal}}{/literal}<br />
     {/if}
     </small>
     </td>
