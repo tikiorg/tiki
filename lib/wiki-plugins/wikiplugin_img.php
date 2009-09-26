@@ -793,7 +793,7 @@ function wikiplugin_img_info() {
 		if(isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile') {
 			$repl = '{img src=' . $imgdata['src'] . "\"}\n<p>" . $imgdata['desc'] . '</p>'; 
 		}
-		return $repl;
+		return '~np~'.$repl.'~/np~';
 	}
 }
 ?>
