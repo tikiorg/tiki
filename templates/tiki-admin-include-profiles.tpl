@@ -1,4 +1,4 @@
-{* $Id: tiki-admin-include-ads.tpl 12802 2008-05-12 11:06:16Z sylvieg $ *}
+{* $Id$ *}
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--
 var baseURI = '{$smarty.server.REQUEST_URI}';
