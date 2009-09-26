@@ -244,88 +244,27 @@
 					{icon _id=information style="vertical-align:middle"} {tr}Enabling this feature will immediately log you out when you save this preference.{/tr} {if $prefs.forgotPass ne 'y'}If there is a chance you have forgotten your password, enable "Forget password" feature.<a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}</a>.{/if}
 				</div>
 			{/if}
-			<div class="adminoptionbox">
-				<div class="adminoption">
-					<input type="checkbox" name="session_db" id="general-session_db" {if $prefs.session_db eq 'y'}checked="checked" {/if}/>
-				</div>
-				<div class="adminoptionlabel">
-					<label for="general-session_db">{tr}Store session data in database{/tr}.</label>
-				</div>
-			</div>
-			<div class="adminoptionbox">
-				<div class="adminoptionlabel">
-					<label for="general-session_life">{tr}Session lifetime{/tr}:</label>
-					<input size="5" type="text" name="session_lifetime" id="general-session_life" value="{$prefs.session_lifetime|escape}" /> {tr}minutes{/tr}
-				</div>
-			</div>
+			{preference name=session_db}
+			{preference name=session_lifetime}
 		</fieldset>
 
 		<fieldset>
 			<legend>{tr}Contact{/tr}</legend>
-			{if $prefs.feature_contact ne 'y'}
-				<div style="padding:.5em;" align="left">{icon _id=information style="vertical-align:middle"} {tr}The "Contact Us" feature is disabled.{/tr} <a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}</a>.
-				</div>
-			{/if}
-			<div class="adminoptionbox">
-				<div class="adminoption">
-					<input type="checkbox" name="contact_anon" id="contact_anon" {if $prefs.contact_anon eq 'y'}checked="checked" {/if}{if $prefs.feature_contact ne 'y'}disabled="disabled" {/if}/>
-				</div>
-				<div class="adminoptionlabel">
-					<label for="contact_anon">{tr}Allow anonymous visitors to use the "Contact Us"{/tr} feature.</label>
-					{if $prefs.feature_help eq 'y'}{help url="Contact+Us"}{/if}
-				</div>
-			</div>
-			<div class="adminoptionbox">
-				<div class="adminoptionlabel">
-					<label for="general-contact">{tr}Contact user{/tr}</label>:
-					<br />
-					<input type="text" name="contact_user" id="general-contact" value="{$prefs.contact_user|escape}" size="40" {if $prefs.feature_contact ne 'y'}disabled="disabled" {/if}/>
-				</div>
-			</div>
+			{preference name=contact_anon}
+			{preference name=contact_user}
 		</fieldset>
 
 		<fieldset>
 			<legend>{tr}Miscellaneous{/tr}</legend>
-			<div class="adminoptionbox">
-				<div class="adminoption">
-					<input type="checkbox" name="count_admin_pvs" id="general-pageviews" {if $prefs.count_admin_pvs eq 'y'}checked="checked" {/if}/>
+				{preference name=count_admin_pvs}
+				{preference name=tmpDir}
+
+				{preference name=feature_help}
+				<div class="adminoptionboxchild">
+					{preference name=helpurl}
 				</div>
-				<div class="adminoptionlabel">
-					<label for="general-pageviews">{tr}Count admin pageviews{/tr}</label>.
-				</div>
-			</div>
-			<div class="adminoptionbox">
-				<div class="adminoptionlabel">
-					<label for="general-temp">{tr}Temporary directory{/tr}:</label>
-					<br />
-					<input type="text" name="tmpDir" id="general-temp" value="{$prefs.tmpDir|escape}" size="50" />
-				</div>
-			</div>
-			<div class="adminoptionbox">
-				<div class="adminoption">
-					<input type="checkbox" name="feature_help" id="feature_help" {if $prefs.feature_help eq 'y'}checked="checked" {/if}onclick="flip('use_help_system');" />
-				</div>
-				<div class="adminoptionlabel">
-					<label for="feature_help">{tr}Help System{/tr}:</label>
-					{if $prefs.feature_help eq 'y'}{help url="Documentation"}{/if}
-				</div>
-				<div align="left" id="use_help_system" style="display:{if $prefs.feature_help eq 'y'}block{else}none{/if};" class="adminoptionboxchild">
-					<div>
-						<label for="general-helpurl">{tr}Help URL{/tr}:</label>
-						<input type="text" name="helpurl" id="general-helpurl" value="{$prefs.helpurl|escape}" size="40" />
-						<br />
-						<em>{tr}The default help system may not be complete.{/tr} {tr}You can help with the TikiWiki documentation.{/tr}</em>{help url="Welcome+Authors"}
-					</div>
-				</div>	
-			</div>
-			<div class="adminoptionbox">
-				<div class="adminoption">
-					<input type="checkbox" name="user_show_realnames" id="user_show_realnames" {if $prefs.user_show_realnames eq 'y'}checked="checked"{/if}/>
-				</div>
-				<div class="adminoptionlabel">
-					<label for="user_show_realnames">{tr}Show user's real name instead of login (when possible){/tr}.</label>{if $prefs.feature_help eq 'y'} {help url="User+Preferences"}{/if}
-				</div>
-			</div>
+				{preference name=user_show_realnames}
+
 			<div class="adminoptionbox">
 				<div class="adminoptionlabel">
 					<label for="highlight_group">{tr}Highlight group{/tr}:</label>
@@ -339,48 +278,23 @@
 				</div>
 			</div>
 
-			<div class="adminoptionbox">
-				<div class="adminoption">
-					<input type="checkbox" id="feature_display_my_to_others" name="feature_display_my_to_others" {if $prefs.feature_display_my_to_others eq 'y'}checked="checked"{/if} />
-				</div>
-				<div class="adminoptionlabel">
-					<label for="feature_display_my_to_others">{tr}Show user's contribution on the user information page{/tr}.</label>
-					{if $prefs.feature_help eq 'y'} {help url="User+Preferences"}{/if}
-				</div>
-			</div>
-
-			<div class="adminoptionbox">
-				<div class="adminoptionlabel">
-					<label for="user_tracker_infos">{tr}Display UserTracker information on the user information page{/tr}:</label>
-					{if $prefs.feature_help eq 'y'} {help url="User+Tracker"}{/if}
-					<input type="text" id="user_tracker_infos" name="user_tracker_infos" value="{$prefs.user_tracker_infos|escape}" size="50" {if $prefs.userTracker ne 'y'}disabled="disabled" {/if}/>
-					<br />
-					{if $prefs.userTracker ne 'y'}
-						<span>{icon _id=information} {tr}Feature is disabled{/tr}. <a href="tiki-admin.php?page=login" title="{tr}Login{/tr}">{tr}Enable now{/tr}.</a></span>
-					{else}
-						<em>{tr}Use the format: trackerId, fieldId1, fieldId2, ...{/tr}</em>
-					{/if}
-				</div>
-			</div>
+			{preference name=feature_display_my_to_others}
+			
+			{preference name=user_tracker_infos}
+			<em>{tr}Use the format: trackerId, fieldId1, fieldId2, ...{/tr}</em>
 		</fieldset>
 		
 		<fieldset>
 			<legend>{tr}Separators{/tr}</legend>
-			<div class="adminoptionbox">
-				<div class="adminoptionlabel">
-					<label for="site_crumb_seper">{tr}Locations (breadcrumbs){/tr}:</label>
-					<input type="text" name="site_crumb_seper" id="site_crumb_seper" value="{$prefs.site_crumb_seper}" size="5" maxlength="8" />
-					<br />
-					<em>{tr}Examples{/tr}: &nbsp; &raquo; &nbsp; / &nbsp; &gt; &nbsp; : &nbsp; -> &nbsp; &#8594;</em>
-				</div>
+
+			{preference name=site_crumb_seper}
+			<div class="adminoptionboxchild">
+				<em>{tr}Examples{/tr}: &nbsp; &raquo; &nbsp; / &nbsp; &gt; &nbsp; : &nbsp; -> &nbsp; &#8594;</em>
 			</div>
-			<div class="adminoptionbox">
-				<div class="adminoptionlabel">
-					<label for="site_nav_seper">{tr}Choices{/tr}:</label>
-					<input type="text" name="site_nav_seper" id="site_nav_seper" value="{$prefs.site_nav_seper}" size="5" maxlength="8" />
-					<br />
-					<em>{tr}Examples{/tr}: &nbsp; | &nbsp; / &nbsp; &brvbar; &nbsp; :</em>
-				</div>
+
+			{preference name=site_nav_seper}
+			<div class="adminoptionboxchild">
+				<em>{tr}Examples{/tr}: &nbsp; | &nbsp; / &nbsp; &brvbar; &nbsp; :</em>
 			</div>
 		</fieldset>
 	{/tab}

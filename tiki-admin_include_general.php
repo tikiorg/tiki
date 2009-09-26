@@ -22,29 +22,17 @@ if (isset($_REQUEST["new_prefs"])) {
 	check_ticket('admin-inc-general');
 	$pref_toggles = array(
 		"anonCanEdit",
-		"count_admin_pvs",
 		"useUrlIndex",
-		"session_db",
-		"contact_anon",
-		"feature_help",
-		"user_show_realnames",
 		"permission_denied_login_box",
-		"feature_display_my_to_others",
 	);
 	foreach($pref_toggles as $toggle) {
 		simple_set_toggle($toggle);
 	}
 	$pref_simple_values = array(
-		"site_crumb_seper",
-		"site_nav_seper",
-		"contact_user",
 		"urlIndex",
 		"ip_can_be_checked",
-		"session_lifetime",
-		"helpurl",
 		"permission_denied_url",
 		"highlight_group",
-		"user_tracker_infos",
 		'zend_mail_handler',
 		'zend_mail_smtp_server',
 		'zend_mail_smtp_auth',
@@ -75,13 +63,6 @@ if (isset($_REQUEST["new_prefs"])) {
 	if (!empty($_REQUEST["urlIndex"]) && isset($_REQUEST["useUrlIndex"]) && $_REQUEST["useUrlIndex"] == 'on') {
 		$_REQUEST["tikiIndex"] = $_REQUEST["urlIndex"];
 		$tikilib->set_preference("tikiIndex", $_REQUEST["tikiIndex"]);
-	}
-	// Special handling for tmpDir, which has a default value
-	if (isset($_REQUEST["tmpDir"])) {
-		$tikilib->set_preference("tmpDir", $_REQUEST["tmpDir"]);
-	} else {
-		$tdir = TikiSetup::tempdir();
-		$tikilib->set_preference("tmpDir", $tdir);
 	}
 	$smarty->assign('pagetop_msg', "");
 }

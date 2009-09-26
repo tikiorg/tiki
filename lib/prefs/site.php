@@ -23,5 +23,16 @@ function prefs_site_list() {
 				'use_load_threshold',
 			),
 		),
+		'site_crumb_seper' => array(
+			'name' => tra('Locations (breadcrumbs)'),
+			'description' => tra('Locations (breadcrumbs)'),
+			'type' => 'text',
+			'size' => '5',
+			),
+		'site_nav_seper' => array(
+			'name' => tra('Choices'),
+			'type' => 'text',
+			'size' => '5',
+			),
 	);
 }

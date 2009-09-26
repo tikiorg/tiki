@@ -611,5 +611,17 @@ function prefs_feature_list() {
 			'help' => 'Compression',
 			'type' => 'flag',
 		),
+		'feature_help' => array(
+			'name' => tra('Help System'),
+			'description' => tra('Help System'),
+			'help' => 'Documentation',
+			'type' => 'flag',
+		),
+		'feature_display_my_to_others' => array(
+			'name' => tra("Show user's contribution on the user information page"),
+			'description' => tra("Show user's contribution on the user information page"),
+			'help' => 'User+Preferences',
+			'type' => 'flag',
+		),
 	);
 }
