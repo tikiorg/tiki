@@ -24,7 +24,7 @@ function wikiplugin_img_info() {
 			),
 			'src' => array(
 				'required' => false,
-				'name' => tra('Image Source'),
+				'name' => tra('Image source'),
 				'description' => tra('Full URL to the image to display. "id", "fileId", "attId" or "src" required.'),
 			),
 			'thumb' => array(
@@ -58,12 +58,12 @@ function wikiplugin_img_info() {
 			),
 			'rel' => array(
 				'required' => false,
-				'name' => tra('Link Relation'),
+				'name' => tra('Link relation'),
 				'description' => tra('"rel" attribute to add to the link. Overrides any shadowbox settings from the thumb or button parameters'),
 			),
 			'usemap' => array(
 				'required' => false,
-				'name' => tra('Image Map'),
+				'name' => tra('Image map'),
 				'description' => tra('Name of the image map to use for the image.'),
 			),
 			'height' => array(
@@ -81,10 +81,32 @@ function wikiplugin_img_info() {
 				'name' => tra('Maximum image size'),
 				'description' => tra('Maximum height or width in pixels (largest dimension is scaled). Overrides height and width settings.'),
 			),
+			'imalign' => array(
+				'required' => false,
+				'name' => tra('Align image'),
+				'description' => tra('Enter right, left or center to align the image itself. If the image is inside a box (because stylebox, desc or button has been set), then you should align the box using the align parameter.'),
+				'options' => array(
+					array('text' => tra('None'), 'value' => ''), 
+					array('text' => tra('Right'), 'value' => 'right'), 
+					array('text' => tra('Left'), 'value' => 'left'), 
+					array('text' => tra('Center'), 'value' => 'center'), 
+				),
+			),
 			'styleimage' => array(
 				'required' => false,
 				'name' => tra('Image style'),
 				'description' => tra('Enter "border" to place a dark gray border around the image. Otherwise enter CSS styling syntax for other style effects.'),
+			),
+			'align' => array(
+				'required' => false,
+				'name' => tra('Align image block'),
+				'description' => tra('Enter right, left or center to align the box containing the image.'),
+				'options' => array(
+					array('text' => tra('None'), 'value' => ''), 
+					array('text' => tra('Right'), 'value' => 'right'), 
+					array('text' => tra('Left'), 'value' => 'left'), 
+					array('text' => tra('Center'), 'value' => 'center'), 
+				),
 			),
 			'stylebox' => array(
 				'required' => false,
@@ -109,7 +131,7 @@ function wikiplugin_img_info() {
 			),
 			'class' => array(
 				'required' => false,
-				'name' => tra('CSS Class'),
+				'name' => tra('CSS class'),
 				'description' => tra('CSS class to apply to the image'."'".'s img tag. (Usually used in configuration rather than on individual images.)'),
 			),
 			'desc' => array(
@@ -126,28 +148,6 @@ function wikiplugin_img_info() {
 				'required' => false,
 				'name' => tra('Image alt text'),
 				'description' => tra('Alternate text to display if impossible to load the image.'),
-			),
-			'align' => array(
-				'required' => false,
-				'name' => tra('Align image block'),
-				'description' => tra('Enter right, left or center to align the box containing the image.'),
-				'options' => array(
-					array('text' => tra('None'), 'value' => ''), 
-					array('text' => tra('Right'), 'value' => 'right'), 
-					array('text' => tra('Left'), 'value' => 'left'), 
-					array('text' => tra('Center'), 'value' => 'center'), 
-				),
-			),
-			'imalign' => array(
-				'required' => false,
-				'name' => tra('Align image'),
-				'description' => tra('Enter right, left or center to align the image itself. If the image is inside a box (because stylebox, desc or button has been set), then you should align the box using the align parameter.'),
-				'options' => array(
-					array('text' => tra('None'), 'value' => ''), 
-					array('text' => tra('Right'), 'value' => 'right'), 
-					array('text' => tra('Left'), 'value' => 'left'), 
-					array('text' => tra('Center'), 'value' => 'center'), 
-				),
 			),
 		),
 	);
@@ -187,7 +187,9 @@ function wikiplugin_img_info() {
 	$imgdata['height'] = '';
 	$imgdata['width'] = '';
 	$imgdata['max'] = '';
+	$imgdata['imalign'] = '';
 	$imgdata['styleimage'] = '';
+	$imgdata['align'] = '';	
 	$imgdata['stylebox'] = '';
 	$imgdata['styledesc'] = '';
 	$imgdata['block'] = '';
@@ -195,8 +197,6 @@ function wikiplugin_img_info() {
 	$imgdata['desc'] = '';
 	$imgdata['title'] = '';
 	$imgdata['alt'] = '';
-	$imgdata['align'] = '';	
-	$imgdata['imalign'] = '';
 	
 	$imgdata = array_merge( $imgdata, $params );
 
