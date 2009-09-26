@@ -219,12 +219,6 @@
 			<br /><em>{tr}Enter the name of the database that Tiki will use.{/tr}</em> 
 			<div style="margin-left:1em;display:none;" id="name_help">
 				<p>{tr}The database must already exist. You can create the database using mysqladmin, PHPMyAdmin, cPanel, or ask your hosting provider.  Normally Tiki tables won't conflict with other product names.{/tr}</p>
-				<p>{tr}For Oracle:{/tr}
-				<ul>
-					<li>{tr}Enter your TNS Name here and leave Host empty.{/tr}<br />
-					{tr}or{/tr}</li>
-					<li>{tr}Override tnsnames.ora and put your SID here and enter your hostname:port in the Host field.{/tr}</li>
-				</ul></p>
 			</div>
 			</div>
 		</div>
