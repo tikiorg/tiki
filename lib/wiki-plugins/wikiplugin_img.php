@@ -33,13 +33,13 @@ function wikiplugin_img_info() {
 				'description' => tra('Makes the image a thumbnail. Will link to the full size image unless "link" is set. Parameter options indicate how the full image will be displayed: "shadowbox", "mouseover", "mousesticky", "popup", "browse" and "browsepopup" (only works with image gallery) and "plain". '),
 				'options' => array(
 					array('text' => tra('None'), 'value' => ''), 
-					array('text' => tra('Shadowbox'), 'value' => 'shadowbox', 'description' => tra('')), 
-					array('text' => tra('Mouse Over'), 'value' => 'mouseover', 'description' => tra('')), 
-					array('text' => tra('Mouse Over (Sticky)'), 'value' => 'mousesticky', 'description' => tra('')), 
-					array('text' => tra('Popup'), 'value' => 'popup', 'description' => tra('')), 
-					array('text' => tra('Browse'), 'value' => 'browse', 'description' => tra('Image gallery only')), 
-					array('text' => tra('Browse Popup'), 'value' => 'browsepopup', 'description' => tra('Image gallery only')), 
-					array('text' => tra('Plain'), 'value' => 'plain', 'description' => tra('')), 
+					array('text' => tra('Shadowbox'), 'value' => 'shadowbox', 'description' => tra('Full size image will open in a shadowbox when thumbnail is clicked.')), 
+					array('text' => tra('Mouse Over'), 'value' => 'mouseover', 'description' => tra('Full size image will pop up while cursor is over the thumbnail (and disappear when not).')), 
+					array('text' => tra('Mouse Over (Sticky)'), 'value' => 'mousesticky', 'description' => tra('Full size image will pop up once cursor passes over thumbnail and will remain up unless cursor passes over full size popup.')), 
+					array('text' => tra('Popup'), 'value' => 'popup', 'description' => tra('Full size image will open in a separate winow or tab (depending on browser settings) when thumbnail is clicked.')), 
+					array('text' => tra('Browse'), 'value' => 'browse', 'description' => tra('Image gallery browse window for the image will open when the thumbnail is clicked if the image is in a Tiki image gallery')), 
+					array('text' => tra('Browse Popup'), 'value' => 'browsepopup', 'description' => tra('Same as "browse" except that the page opens in a new window or tab.')), 
+					array('text' => tra('Plain'), 'value' => 'plain', 'description' => tra('Full size image appears on a new blank page when thumbnail is clicked.')), 
 				),
 			),
 			'button' => array(
@@ -298,7 +298,7 @@ function wikiplugin_img_info() {
 	} else {
 	////////////////////////////////////////////// Default parameter and variable settings.//////////////////////////////////////////////	
 		// Set styling defaults
-		$thumbdef = 100;                          //Thumbnail height max when none is set
+		$thumbdef = 84;                          //Thumbnail height max when none is set
 		$descdef = 'font-size:12px; line-height:1.5em;';		//default text style for description
 		$descheightdef = 'height:15px';           //To set room for enlarge button under image if there is no description
 		$borderdef = 'border:1px solid darkgray;';   //default border when styleimage set to border
