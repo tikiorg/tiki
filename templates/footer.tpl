@@ -13,12 +13,11 @@
 
 	{if $tiki_p_admin eq 'y' and $prefs.feature_debug_console eq 'y'}
 		{* Include debugging console.*}
-		{debugger}
+		{debug}
 	{/if}
-	
+
 	{if $prefs.feature_phplayers eq 'y' and isset($phplayers_LayersMenu)}
 		{$phplayers_LayersMenu->printHeader()}
 		{$phplayers_LayersMenu->printFooter()}
 	{/if}
 {/if}
-
