@@ -549,7 +549,6 @@ if (function_exists('mysqli_connect'))	$dbservers['mysqli'] = tra('MySQL Improve
 if (function_exists('mysql_connect'))	$dbservers['mysql'] = tra('MySQL classic (mysql)');
 if (function_exists('pg_connect'))		$dbservers['pgsql'] = tra('PostgreSQL');
 if (function_exists('sqlite_open'))		$dbservers['sqlite'] = tra('SQLLite');
-if (function_exists('mssql_connect'))	$dbservers['mssql'] = tra('MSSQL');
 $smarty->assign_by_ref('dbservers', $dbservers);
 
 $errors = '';
