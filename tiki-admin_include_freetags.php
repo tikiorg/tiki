@@ -13,7 +13,6 @@ if (isset($_REQUEST["freetagsfeatures"])) {
 	simple_set_toggle('freetags_browse_show_cloud');
 	simple_set_toggle('freetags_lowercase_only');
 	simple_set_toggle('freetags_preload_random_search');
-	simple_set_toggle('freetags_multilingual');
 	simple_set_value('freetags_browse_amount_tags_in_cloud');
 	simple_set_value('freetags_browse_amount_tags_suggestion');
 	simple_set_value('freetags_normalized_valid_chars');
