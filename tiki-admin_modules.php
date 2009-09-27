@@ -169,6 +169,15 @@ if (isset($_REQUEST["preview"])) {
 	if (isset($module_params['title'])) {
 		$smarty->assign('tpl_module_title', tra( $module_params['title'] ) );
 	}
+
+	if (isset($_REQUEST["assign_rows"])) {
+		$module_rows = $_REQUEST["assign_rows"];
+		$smarty->assign_by_ref('assign_rows', $_REQUEST["assign_rows"]);
+	} elseif (isset($_REQUEST["assign_params"]["rows"]))
+		$module_rows = $_REQUEST["assign_params"]["rows"];
+	else
+		$module_rows = 10;
+
     if ($tikilib->is_user_module($_REQUEST["assign_name"])) {
         $info = $tikilib->get_user_module($_REQUEST["assign_name"]);
         $smarty->assign_by_ref('user_title', $info["title"]);
@@ -211,8 +220,6 @@ if (isset($_REQUEST["preview"])) {
     $smarty->assign_by_ref('assign_position', $_REQUEST["assign_position"]);
     $smarty->assign_by_ref('assign_order', $_REQUEST["assign_order"]);
     $smarty->assign_by_ref('assign_cache', $_REQUEST["assign_cache"]);
-	if (isset($_REQUEST["assign_rows"]))
-		$smarty->assign_by_ref('assign_rows', $_REQUEST["assign_rows"]);
     $module_groups = $_REQUEST["groups"];
     $grps = '';
     foreach($module_groups as $amodule) {
