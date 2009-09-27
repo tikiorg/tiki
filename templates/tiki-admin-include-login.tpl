@@ -228,6 +228,9 @@
 							</div>
 						</div>
 					</div>
+
+					{preference name=feature_banning}
+
 				</fieldset>
 	
 				<fieldset><legend>{tr}Username{/tr}</legend>

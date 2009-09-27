@@ -122,7 +122,6 @@
 {* ---------- Administration features ------------ *}
 {tab name="{tr}Administration{/tr}"}
 			<div class="admin featurelist">
-				{preference name=feature_banning}
 				{preference name=feature_stats}
 				{preference name=feature_action_calendar}
 				{preference name=feature_referer_stats}
