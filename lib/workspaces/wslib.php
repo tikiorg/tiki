@@ -73,7 +73,7 @@ class wslib extends CategLib
      */
     public function get_ws_container()
     {
-	return $this->ws_container;
+		return $this->ws_container;
     }
     
     /** Create a new WS with one group inside it with the associated perm 'tiki_p_ws_view'.
@@ -87,36 +87,37 @@ class wslib extends CategLib
      */
     public function create_ws ($name, $groups, $parentWS = null, $description = '')
     {
-	global $perspectivelib; if (!$perspectivelib) require_once 'lib/perspectivelib.php';  
-
-    	if (!$parentWS)	$parentWS = 0;
-    	
-	$ws_id = parent::add_category($parentWS, $name, $description, $this->ws_container);
-	
-	foreach ($groups as $group)
-	{
-		$groupName = $group["groupName"];
-		$groupDescription = $group["groupDescription"];
-		$noCreateNewGroup = $group["noCreateNewGroup"];
-		$additionalPerms = $group["additionalPerms"];
-	
-		if ($noCreateNewGroup)
-		{
-		    $this->set_permissions_for_group_in_ws ($ws_id, $groupName, array($this->viewPerm));
-		    if ($additionalPerms != null)
-			$this->set_permissions_for_group_in_ws($ws_id, $groupName, $additionalPerms);
-		}
-		else
-		    $this->add_ws_group ($ws_id, $name, $groupName, $groupDescription, $additionalPerms);
-	}
-
-	//We create the perspective for the WS
-	$pspId = $perspectivelib->replace_perspective(null, $name);
-	//I set this for the ws identificacion, because we can have two ws with the same name and for psp
-	//this could be a problem in order to get the psp from the db
-	$perspectivelib->replace_preferences($pspId, array('wsId' => $ws_id, 'wsName' => $name)); 
+		global $perspectivelib; if (!$perspectivelib) require_once 'lib/perspectivelib.php';  
 		
-	return $ws_id;
+		if (!$parentWS)	$parentWS = 0;
+			
+		$ws_id = parent::add_category($parentWS, $name, $description, $this->ws_container);
+		
+		foreach ($groups as $group)
+		{
+			$groupName = $group["groupName"];
+			$groupDescription = $group["groupDescription"];
+			$noCreateNewGroup = $group["noCreateNewGroup"];
+			$additionalPerms = $group["additionalPerms"];
+		
+			if ($noCreateNewGroup)
+			{
+				$this->set_permissions_for_group_in_ws ($ws_id, $groupName, array($this->viewPerm));
+				if ($additionalPerms != null)
+					$this->set_permissions_for_group_in_ws($ws_id, $groupName, $additionalPerms);
+			}
+			else
+				$this->add_ws_group ($ws_id, $name, $groupName, $groupDescription, $additionalPerms);
+		}
+
+		//We create the perspective for the WS
+		$wsValue = $this->get_ws_perspective_value ($ws_id);
+		$pspId = $perspectivelib->replace_perspective(null, $wsValue);
+		//I set this for the ws identificacion, because we can have two ws with the same name and for psp
+		//this could be a problem in order to get the psp from the db
+		$perspectivelib->replace_preferences($pspId, array('wsId' => $ws_id, 'wsName' => $name)); 
+			
+		return $ws_id;
     }
 
     /** Add new group to a WS
@@ -129,25 +130,25 @@ class wslib extends CategLib
      */
     public function add_ws_group ($ws_id, $wsName = null, $nameGroup, $description, $additionalPerms = null) 
     {
-	global $userlib; require_once 'lib/userslib.php';
+		global $userlib; require_once 'lib/userslib.php';
 
-	if (!$wsName) $wsName = $this->get_ws_name($ws_id);
+		if (!$wsName) $wsName = $this->get_ws_name($ws_id);
 
-	$groupName = $nameGroup;
+		$groupName = $nameGroup;
 
-	if ($userlib->add_group($groupName, $description)) 
-	{
-    	    // It's given the tiki_p_ws_view permission to the selected group in the new ws
-	    $this->set_permissions_for_group_in_ws($ws_id,$groupName,array($this->viewPerm));
-	
-    	    // It's given additional admin permissions to the group in the new ws
-	    if ($additionalPerms != null)
-		$this->set_permissions_for_group_in_ws($ws_id,$groupName,$additionalPerms);
+		if ($userlib->add_group($groupName, $description)) 
+		{
+				// It's given the tiki_p_ws_view permission to the selected group in the new ws
+			$this->set_permissions_for_group_in_ws($ws_id,$groupName,array($this->viewPerm));
+		
+				// It's given additional admin permissions to the group in the new ws
+			if ($additionalPerms != null)
+			$this->set_permissions_for_group_in_ws($ws_id,$groupName,$additionalPerms);
 
-	    return true;
-	}
-	else
-	    return false;
+			return true;
+		}
+		else
+			return false;
     }
 
     /** Change a WS name and description
@@ -156,49 +157,57 @@ class wslib extends CategLib
      * @param $wsName The new name for the WS
      * @param $wsDesc The new description for the WS
      * @return true
-     * TODO: Update the perspective name, and its preferences
      */
     public function update_ws_data ($ws_id, $wsParentId, $wsName, $wsDesc)
     {
-	 parent::update_category($ws_id, $wsName, $wsDesc, $wsParentId);
-    	//$query = "update `tiki_categories` set `name`=?, `description`=? where `categId` = ?";
-    	//$bindvars = array($wsName, $wsDesc, $ws_id);
-    	//$this->query($query, $bindvars);
-    	return true; 
+		global $perspectivelib; if (!$perspectivelib) require_once 'lib/perspectivelib.php';
+		 
+		parent::update_category($ws_id, $wsName, $wsDesc, $wsParentId);
+		$pspId = $perspectivelib->get_ws_associated_perspective_id($wsId);
+		$perspectivelib->replace_preferences( $pspId, array('wsName' => $wsName) );
+		 
+		//$query = "update `tiki_categories` set `name`=?, `description`=? where `categId` = ?";
+		//$bindvars = array($wsName, $wsDesc, $ws_id);
+		//$this->query($query, $bindvars);
+		
+		return true; 
     }
 	
     /** Remove a WS and its childs
      * 
      * @param $ws_id The WS id you want to delete
      * @return true
-     * TODO: Remove the perspective associated to the ws
      */
     public function remove_ws ($ws_id)
     {	
-    	// Remove the WS groups
-	$listWSGroups = $this->list_groups_that_can_access_in_ws ($ws_id);
-	foreach ($listWSGroups as $group)
-		$this->remove_group_from_ws ($ws_id,$group["groupName"]);
-	
-	// Remove the WS objects
-	$listWSObjects = $this->list_ws_objects($ws_id);
-	foreach ($listWSObjects as $object)
-		$this->remove_object_from_ws ($ws_id,$object["objectId"],$object["itemId"],$object["type"]);
-
-	//Remove the perspective associated to the ws
-	// TODO!!!
-    	
-    	// Remove perms assigned to the WS
-    	$hashWS = md5($this->objectType . strtolower($ws_id));
-	$query = "delete from `users_objectpermissions` where `objectType` = ? and `objectId` = ?";
-	$this->query($query, array($this->objectType, $hashWS), -1, -1, false);
+		global $perspectivelib; if (!$perspectivelib) require_once 'lib/perspectivelib.php';
 		
-	// Remove WS recursively
-	$wsChilds = $this->get_ws_childs ($ws_id);
-	foreach ($wsChilds as $child)
-		$this->remove_ws($child);
+		// Remove the WS groups
+		$listWSGroups = $this->list_groups_that_can_access_in_ws ($ws_id);
+		foreach ($listWSGroups as $group)
+			$this->remove_group_from_ws ($ws_id,$group["groupName"]);
+		
+		// Remove the WS objects
+		$listWSObjects = $this->list_ws_objects($ws_id);
+		foreach ($listWSObjects as $object)
+			$this->remove_object_from_ws ($ws_id,$object["objectId"],$object["itemId"],$object["type"]);
 
-	return parent::remove_category($ws_id);
+		//Remove the perspective associated to the ws
+		$pspId = $perspectivelib->get_ws_associated_perspective_id($wsId);
+		$perspectivelib->remove_perspective($pspid);
+		
+			
+		// Remove perms assigned to the WS
+		$hashWS = md5($this->objectType . strtolower($ws_id));
+		$query = "delete from `users_objectpermissions` where `objectType` = ? and `objectId` = ?";
+		$this->query($query, array($this->objectType, $hashWS), -1, -1, false);
+			
+		// Remove WS recursively
+		$wsChilds = $this->get_ws_childs ($ws_id);
+		foreach ($wsChilds as $child)
+			$this->remove_ws($child);
+
+		return parent::remove_category($ws_id);
     }
 
 
@@ -209,17 +218,17 @@ class wslib extends CategLib
      */
     public function remove_all_ws ()
     {
-    	// First, delete all WS parents
-    	$query = "select `categId` from `tiki_categories` where `parentId`=0 and `rootCategId`=?";
-    	$bindvars = array($this->ws_container);
-    	$result = $this->query($query,$bindvars); 
-    	while ($ret = $result->fetchRow())
+		// First, delete all WS parents
+		$query = "select `categId` from `tiki_categories` where `parentId`=0 and `rootCategId`=?";
+		$bindvars = array($this->ws_container);
+		$result = $this->query($query,$bindvars); 
+		while ($ret = $result->fetchRow())
 		$this->remove_ws($ret["categId"]);
-    	
-	// In the end, delete the WS Container
-	$this->remove_ws($this->ws_container);
+			
+		// In the end, delete the WS Container
+		$this->remove_ws($this->ws_container);
 	
-	return true;
+		return true;
     }
     
     /** Remove a group from a WS
@@ -228,25 +237,24 @@ class wslib extends CategLib
      * @param $groupName The name of the group you want to remove
      * @return true
      *
-     * TODO: Try to obtain the same using categlib functions. DRY Ben
      */
     public function remove_group_from_ws ($ws_id,$groupName)
     {
-	// Check if the group is included in other WS
-    	$query = "select count(*) from `users_objectpermissions`
-			   where `groupName` = ? and `permName` = ?";
-	$result = $this->getOne($query, array($groupName, $this->viewPerm));
+		// Check if the group is included in other WS
+		$query = "select count(*) from `users_objectpermissions`
+				  where `groupName` = ? and `permName` = ?";
+		$result = $this->getOne($query, array($groupName, $this->viewPerm));
     	// If the group only had access to the current WS
     	if (($result == 1) && !($group == 'Anonymous' || $group == 'Registered' || $group == 'Admin'))
     	{
-		// Delete the group
-		global $userlib; require_once 'lib/userslib.php';
-		$userlib->remove_group($groupName);		
+			// Delete the group
+			global $userlib; require_once 'lib/userslib.php';
+			$userlib->remove_group($groupName);		
     	}    	
     	// If the group has access to other WS
     	else
     	{
-    	    	$hashWS = md5($this->objectType . strtolower($ws_id));
+    	    $hashWS = md5($this->objectType . strtolower($ws_id));
     	  
     		// Delete all perms added for the WS related to this group
     		$query = "delete from `users_objectpermissions`
@@ -282,9 +290,9 @@ class wslib extends CategLib
      */
     public function add_ws_object ($ws_id, $itemId, $type, $name = '', $description = '', $href = '')
     {
-	$id = parent::add_categorized_object($type, $itemId, $description, $name, $href);
-	parent::categorize($id,$ws_id);
-	return true;
+		$id = parent::add_categorized_object($type, $itemId, $description, $name, $href);
+		parent::categorize($id,$ws_id);
+		return true;
     } 
 
     /** Create a new object (it can be a wiki page, file gal, etc)
@@ -294,7 +302,7 @@ class wslib extends CategLib
      * @param $type The type of the object
      * @return -
      *
-     * TODO: Get this function working as I said in the email, Ben
+     * TODO: Get this function working so every object can be customized
      */    
     public function create_ws_object ($ws_id, $name, $type, $description='', $params = array())
     {
@@ -320,26 +328,26 @@ class wslib extends CategLib
 		{
 			global $trklib;
 			include_once ('lib/trackers/trackerlib.php');
-			$tracker_options["showCreated"] = 'y';
-			$tracker_options["showStatus"] = 'y';
-			$tracker_options["showStatusAdminOnly"] = 'y';
-			$tracker_options["simpleEmail"] = 'n';
-			$tracker_options["outboundEmail"] = '';
-			$tracker_options["newItemStatus"] = 'y';
-			$tracker_options["useRatings"] = 'y';
-			$tracker_options["showRatings"] = 'y';
-			$tracker_options["useComments"] = 'y';
-			$tracker_options["showComments"] = 'y';
-			$tracker_options["useAttachments"] = 'y';
-			$tracker_options["showAttachments"] = 'y';
-			$tracker_options["showLastModif"] = 'y';
-			$tracker_options["defaultOrderDir"] = 'asc';
-			$tracker_options["newItemStatus"] = '';
-			$tracker_options["modItemStatus"] = '';
-			$tracker_options["defaultOrderKey"] = '';
-			$tracker_options["writerCanModify"] = 'y';
-			$tracker_options["writerGroupCanModify"] = 'n';
-			$tracker_options["defaultStatus"] = 'o';
+			$tracker_options["showCreated"] = $params["showCreated"];
+			$tracker_options["showStatus"] = $params["showStatus"];
+			$tracker_options["showStatusAdminOnly"] = $params["showStatusAdminOnly"];
+			$tracker_options["simpleEmail"] = $params["simpleEmail"];
+			$tracker_options["outboundEmail"] = $params["outboundEmail"];
+			$tracker_options["newItemStatus"] = $params["newItemStatus"];
+			$tracker_options["useRatings"] = $params["useRatings"];
+			$tracker_options["showRatings"] = $params["showRatings"];
+			$tracker_options["useComments"] = $params["useComments"];
+			$tracker_options["showComments"] = $params["showComments"];
+			$tracker_options["useAttachments"] = $params["useAttachments"];
+			$tracker_options["showAttachments"] = $params["showAttachments"];
+			$tracker_options["showLastModif"] = $params["showLastModif"];
+			$tracker_options["defaultOrderDir"] = $params["defaultOrderDir"];
+			$tracker_options["newItemStatus"] = $params["newItemStatus"];
+			$tracker_options["modItemStatus"] = $params["modItemStatus"];
+			$tracker_options["defaultOrderKey"] = $params["defaultOrderKey"];
+			$tracker_options["writerCanModify"] = $params["writerCanModify"];
+			$tracker_options["writerGroupCanModify"] = $params["writerGroupCanModify"];
+			$tracker_options["defaultStatus"] = $params["defaultStatus"];
 			$itemId = $trklib->replace_tracker(null, $name, $description,$tracker_options); 
 			$href = "tiki-view_tracker.php?trackerId=".$itemId;
 			break;
@@ -448,7 +456,7 @@ class wslib extends CategLib
 		
     	}
     	
-	return $this->add_ws_object ($ws_id, $itemId, $type, $name, $description, $href);
+		return $this->add_ws_object ($ws_id, $itemId, $type, $name, $description, $href);
     }
     
     /** Check if an object belong to a WS or not
@@ -458,12 +466,12 @@ class wslib extends CategLib
      */
     public function is_object_in_ws($objectId)
     {
-	$query = "select count(t0.`categId`) from `tiki_categories` t0, `tiki_category_objects` t1 
-			   where t1.`catObjectId` = ? and t1.`categId`= t0.`categId` 
-			   and t0.`rootCategId`=?";
-	$bindvars = array($objectId, $this->ws_container);
-	$num = $this->getOne($query,$bindvars);
-	return ($num >= 1);
+		$query = "select count(t0.`categId`) from `tiki_categories` t0, `tiki_category_objects` t1 
+				   where t1.`catObjectId` = ? and t1.`categId`= t0.`categId` 
+				   and t0.`rootCategId`=?";
+		$bindvars = array($objectId, $this->ws_container);
+		$num = $this->getOne($query,$bindvars);
+		return ($num >= 1);
     }
 	
     /** Remove an object inside in a WS
@@ -474,7 +482,6 @@ class wslib extends CategLib
      * @param $type The type of the object you want to delete
      * @return true
      *
-     * TODO: Try to use the categlib function if is possible
      */
     public function remove_object_from_ws ($ws_id,$objectId,$itemId,$type)
     {
@@ -516,7 +523,7 @@ class wslib extends CategLib
     		}
     	}
     	
-	return true;
+		return true;
     }
 
     /** Get the WS id
@@ -549,10 +556,10 @@ class wslib extends CategLib
     
     public function get_ws_description($ws_id)
     {
-	$query = "select `description` from `tiki_categories` where `categId`=?";
-	$bindvars = array($ws_id);
+		$query = "select `description` from `tiki_categories` where `categId`=?";
+		$bindvars = array($ws_id);
 
-	return $this->getOne($query, $bindvars);
+		return $this->getOne($query, $bindvars);
     }
 	
     /** Give a set of permissions to a group for a specific WS (view, addresources, addgroups,...)
@@ -563,44 +570,43 @@ class wslib extends CategLib
      */
     public function set_permissions_for_group_in_ws ($ws_id,$groupName,$permList)
     {
-	$hashWS = md5($this->objectType . strtolower($ws_id));
-
-	foreach ($permList as $permName)
-	{
-	    // $userlib->assign_object_permission($groupName, $ws_id, 'category', $permName);
-	    // If already exists, overwrite 
-	    $query = "delete from `users_objectpermissions`
-		where `groupName` = ? and
-		`permName` = ? and
-		`objectId` = ?";
-	    $this->query($query, array($groupName, $permName,$hashWS), -1, -1, false);
-	
-	    $query = "insert into `users_objectpermissions`(`groupName`,
-		`objectId`, `objectType`, `permName`)
-		values(?, ?, ?, ?)";		
-	    $this->query($query, array($groupName, $hashWS, $this->objectType, $permName));
-	}	
-
-	return true;
+		$hashWS = md5($this->objectType . strtolower($ws_id));
+		foreach ($permList as $permName)
+		{
+			// $userlib->assign_object_permission($groupName, $ws_id, 'category', $permName);
+			// If already exists, overwrite 
+			$query = "delete from `users_objectpermissions`
+			where `groupName` = ? and
+			`permName` = ? and
+			`objectId` = ?";
+			$this->query($query, array($groupName, $permName,$hashWS), -1, -1, false);
+		
+			$query = "insert into `users_objectpermissions`(`groupName`,
+			`objectId`, `objectType`, `permName`)
+			values(?, ?, ?, ?)";		
+			$this->query($query, array($groupName, $hashWS, $this->objectType, $permName));
+		}	
+		return true;
     }
     
     /** Give a set of permissions to a set of groups for a specific object (view, edit, comment...)
      *
      * @param $ws_id The id of the WS
      * @param $groupSet an asociative array in the form array("groupName" => (string) name,  "permList" => array("perm1", "perm2", ...) 
+	 * NOTE: Maybe with the new object permission GUI this function isn't neccesary.
      */
     public function set_permissions_for_groups_in_object ($itemId, $objectType, $groupSet)
     {
     	global $userlib; require_once 'lib/userslib.php';
     	
-	foreach ($groupSet as $group)
-	{
-		$groupName = $group["groupName"];
-		$permList = $group["permList"];
-		foreach ($permList as $permName)
-		    $userlib->assign_object_permission($groupName, $itemId, $objectType, $permName);
-	}	
-	return true;
+		foreach ($groupSet as $group)
+		{
+			$groupName = $group["groupName"];
+			$permList = $group["permList"];
+			foreach ($permList as $permName)
+				$userlib->assign_object_permission($groupName, $itemId, $objectType, $permName);
+		}	
+		return true;
     }
 	
     /** List the groups that have access to a WS
@@ -610,18 +616,18 @@ class wslib extends CategLib
      */
     public function list_groups_that_can_access_in_ws ($ws_id, $maxRecords = -1, $offset = -1)
     {    	
-	$hashWS = md5($this->objectType . strtolower($ws_id));
+		$hashWS = md5($this->objectType . strtolower($ws_id));
 
-	$query = "select t0.* from `users_groups` t0, `users_objectpermissions` t1 where
-			   t1.`objectId`=? and t1.`permName`=? 
-			   and t1.`groupName` = t0.`groupName`";
-	$bindvars = array($hashWS, $this->viewPerm);
-	$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$query = "select t0.* from `users_groups` t0, `users_objectpermissions` t1 where
+				   t1.`objectId`=? and t1.`permName`=? 
+				   and t1.`groupName` = t0.`groupName`";
+		$bindvars = array($hashWS, $this->viewPerm);
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 
-	while ($ret = $result->fetchRow())
-	    $listWSGroups[] = $ret;
+		while ($ret = $result->fetchRow())
+			$listWSGroups[] = $ret;
 
-	return $listWSGroups;
+		return $listWSGroups;
     }
     	
     /** List all WS that a group have access
@@ -633,42 +639,43 @@ class wslib extends CategLib
      */
     public function list_ws_that_can_be_accessed_by_group ($groupName, $maxRecords = -1, $offset = -1)
     {	
-	$query = "select `objectId` from `users_objectpermissions` where (`groupName`=? and `permName`=?) ";
-	$bindvars = array($groupName, $this->viewPerm);
-	$result = $this->query($query,$bindvars,$maxRecords,$offset, $this->viewPerm);
+		$query = "select `objectId` from `users_objectpermissions` where (`groupName`=? and `permName`=?) ";
+		$bindvars = array($groupName, $this->viewPerm);
+		$result = $this->query($query,$bindvars,$maxRecords,$offset, $this->viewPerm);
 
-	while ($res = $result->fetchRow())
-	    $groupWS[] = $res["objectId"];
+		while ($res = $result->fetchRow())
+			$groupWS[] = $res["objectId"];
+			
+		var_dump($listWS = list_all_ws_ext());
 		
-	$idws = $this->ws_container;
-	$query = "select * from `tiki_categories` where `rootCategId`= $idws";
-	$bindvars = array();
-	$listWS = $this->query($query,$bindvars);
 		
-	while ($res = $listWS->fetchRow()) 
-	{
-	    $ws_id = $res["categId"];
-	    $hashWS = md5($this->objectType . strtolower($ws_id));
+		/*
+			
+		while ($res = $listWS->fetchRow()) 
+		{
+			$ws_id = $res["categId"];
+			$hashWS = md5($this->objectType . strtolower($ws_id));
 
-	    if (in_array($hashWS,$groupWS))
-	    {
-	    	$wspath = $this->get_category_path($res["categId"]);
-		$tepath = array();	
-		foreach ($wspath as $ws) {
-			$tepath[] = $ws['name'];
+			if (in_array($hashWS,$groupWS))
+			{
+				$wspath = $this->get_category_path($res["categId"]);
+			$tepath = array();	
+			foreach ($wspath as $ws) {
+				$tepath[] = $ws['name'];
+			}
+			$wspath = implode("::",$tepath);
+			$wspathforsort = implode("!!",$tepath);
+			$res["wspath"] = $wspath;
+			$res["deep"] = count($tepath);
+			
+			$listGroupWS["$wspathforsort"] = $res;
+			}
 		}
-		$wspath = implode("::",$tepath);
-		$wspathforsort = implode("!!",$tepath);
-		$res["wspath"] = $wspath;
-		$res["deep"] = count($tepath);
 		
-		$listGroupWS["$wspathforsort"] = $res;
-	    }
-	}
-	
-	ksort($listGroupWS);
+		ksort($listGroupWS);
+		*/
 
-	return $listGroupWS;
+		return $listGroupWS;
     }
 
     /** List all WS stored in TikiWiki
@@ -676,8 +683,16 @@ class wslib extends CategLib
      */
     public function list_all_ws ($offset, $maxRecords, $sort_mode = 'name_asc')
     {
-	return parent::list_all_categories($offset, $maxRecords, $sort_mode, 0, 'ws', 0, false, true);
+		return parent::list_all_categories($offset, $maxRecords, $sort_mode, 0, 'ws', 0, false, true);
     }
+	
+	/** List all WS stored in TikiWiki and also get info about count of objects (uses cache)
+	*
+	*/
+	public function list_all_ws_ext ()
+	{
+		return parent::get_all_categories(true);
+	}
 	
     /** List all WS that a user have access
      *
@@ -686,52 +701,52 @@ class wslib extends CategLib
      * TODO: The same I said before, use categlib!! This functions is an exact copy of the another one ...
      */
      public function list_ws_that_user_have_access ($user, $maxRecords = -1, $offset = -1)
-     {
-	require_once('lib/userslib.php');
-	global $userlib;
-		
-	$ws = array();		
-	
-	$query = "select distinct t3.`objectId` from `users_objectpermissions` t3, `users_usergroups` t2, `users_users` t1
-			   where t1.`login` = ? 
-			   and (t1.`userId` = t2.`userId`) 
-			   and (t2.`groupName` = t3.`groupName`) 
-			   and t3.`permName` = ?";
-	$result = $this->query($query,array($user, $this->viewPerm), $maxRecords, $offset);
-	while ($res = $result->fetchRow())
-		$userWSHashes[] = $res["objectId"];
-	
-	$idws = $this->ws_container;
-	$query = "select * from `tiki_categories` where `rootCategId`= $idws";
-	$bindvars = array();
-	$listWS = $this->query($query,$bindvars);
-		
-	while ($res = $listWS->fetchRow()) 
-	{
-	    $ws_id = $res["categId"];
-	    $hashWS = md5($this->objectType . strtolower($ws_id));
-	    if (in_array($hashWS,$userWSHashes))
-	    {
-	    	$wspath = $this->get_category_path($res["categId"]);
-		$tepath = array();	
-		foreach ($wspath as $ws)
-		{
-			$tepath[] = $ws['name'];
-		}
-		$wspath = implode("::",$tepath);
-		$wspathforsort = implode("!!",$tepath);
-		$res["wspath"] = $wspath;
-		$res["deep"] = count($tepath);
-		$res["ws_id"] = $ws_id;
+    {
+		require_once('lib/userslib.php');
+		global $userlib;
 			
-		$listUserWS["$wspathforsort"] = $res;
-	    }
-	}
+		$ws = array();		
+		
+		$query = "select distinct t3.`objectId` from `users_objectpermissions` t3, `users_usergroups` t2, `users_users` t1
+				   where t1.`login` = ? 
+				   and (t1.`userId` = t2.`userId`) 
+				   and (t2.`groupName` = t3.`groupName`) 
+				   and t3.`permName` = ?";
+		$result = $this->query($query,array($user, $this->viewPerm), $maxRecords, $offset);
+		while ($res = $result->fetchRow())
+			$userWSHashes[] = $res["objectId"];
+		
+		$idws = $this->ws_container;
+		$query = "select * from `tiki_categories` where `rootCategId`= $idws";
+		$bindvars = array();
+		$listWS = $this->query($query,$bindvars);
+			
+		while ($res = $listWS->fetchRow()) 
+		{
+			$ws_id = $res["categId"];
+			$hashWS = md5($this->objectType . strtolower($ws_id));
+			if (in_array($hashWS,$userWSHashes))
+			{
+				$wspath = $this->get_category_path($res["categId"]);
+			$tepath = array();	
+			foreach ($wspath as $ws)
+			{
+				$tepath[] = $ws['name'];
+			}
+			$wspath = implode("::",$tepath);
+			$wspathforsort = implode("!!",$tepath);
+			$res["wspath"] = $wspath;
+			$res["deep"] = count($tepath);
+			$res["ws_id"] = $ws_id;
+				
+			$listUserWS["$wspathforsort"] = $res;
+			}
+		}
 
-	ksort($listUserWS);
+		ksort($listUserWS);
 
-	return $listUserWS;
-     }
+		return $listUserWS;
+    }
 	
     /** List the objects stored in a workspace
      *
@@ -743,18 +758,18 @@ class wslib extends CategLib
      */
     public function list_ws_objects ($ws_id, $maxRecords = -1, $offset = -1)
     {
-	/*$query = "select * from `tiki_objects` t0, `tiki_category_objects` t1 
-			   where t1.`categId`=? and t1.`catObjectId`=t0.`objectId`";
-	$bindvars = array($ws_id);
-	$result = $this->query($query,$bindvars, $maxRecords, $offset);
-	while ($res = $result->fetchRow())
-	{
-		$valforsort = $res["type"]."!!".$res["itemId"];
-		$listWSObjects["$valforsort"] = $res;
-	}
-	ksort($listWSObjects);
-	return $listWSObjects;*/
-	return parent::list_category_objects($ws_id, $offset, $maxRecords);
+		/*$query = "select * from `tiki_objects` t0, `tiki_category_objects` t1 
+				   where t1.`categId`=? and t1.`catObjectId`=t0.`objectId`";
+		$bindvars = array($ws_id);
+		$result = $this->query($query,$bindvars, $maxRecords, $offset);
+		while ($res = $result->fetchRow())
+		{
+			$valforsort = $res["type"]."!!".$res["itemId"];
+			$listWSObjects["$valforsort"] = $res;
+		}
+		ksort($listWSObjects);
+		return $listWSObjects;*/
+		return parent::list_category_objects($ws_id, $offset, $maxRecords);
     }
 
     /** Get the stored perms for a object for a specific user
@@ -766,19 +781,19 @@ class wslib extends CategLib
      */
     public function get_object_perms_for_user ($objId, $objectType, $user)
     {
-	$objectId = md5($objectType . strtolower($objId));
-	$query = "select distinct t3.`permName` from `users_objectpermissions` t3, `users_usergroups` t2, `users_users` t1
-				   where t1.`login` = ? 
-				   and (t1.`userId` = t2.`userId`) 
-				   and (t2.`groupName` = t3.`groupName`) 
-				   and t3.`objectId`=? 
-				   and t3.`objectType`=?";
-	$bindvars = array($user, $objectId, $objectType);
-	$result = $this->query($query,$bindvars);
-	while ($res = $result->fetchRow())
-		$objectPermsUser[] = $res["permName"];
+		$objectId = md5($objectType . strtolower($objId));
+		$query = "select distinct t3.`permName` from `users_objectpermissions` t3, `users_usergroups` t2, `users_users` t1
+					   where t1.`login` = ? 
+					   and (t1.`userId` = t2.`userId`) 
+					   and (t2.`groupName` = t3.`groupName`) 
+					   and t3.`objectId`=? 
+					   and t3.`objectType`=?";
+		$bindvars = array($user, $objectId, $objectType);
+		$result = $this->query($query,$bindvars);
+		while ($res = $result->fetchRow())
+			$objectPermsUser[] = $res["permName"];
 
-	return $objectPermsUser;
+		return $objectPermsUser;
     }
 	
     /** List the objects stored in a workspace for a specific user
@@ -791,27 +806,27 @@ class wslib extends CategLib
      */
     public function list_ws_objects_for_user ($ws_id, $user, $maxRecords = -1, $offset = -1)
     {
-	require_once('lib/userslib.php');
-	global $userlib; global $objectlib;
-		
-	$listWSObjects = $this->list_ws_objects($ws_id, $maxRecords, $offset);
-		
-	foreach ($listWSObjects as $object)
-	{
-		$objectType = $object["type"];
-		$objId = $object["itemId"];
-		$viewPerm = parent::get_needed_perm($objectType, "view");
-		
-		$objectPermsUser = $this->get_object_perms_for_user ($objId, $objectType, $user);
-		if (in_array($viewPerm,$objectPermsUser))
-			$object["userCanView"] = "y";
-		else
-			$object["userCanView"] = "n";
-				
-		$listWSObjectsUser[] = $object;		
-	} 
+		require_once('lib/userslib.php');
+		global $userlib; global $objectlib;
+			
+		$listWSObjects = $this->list_ws_objects($ws_id, $maxRecords, $offset);
+			
+		foreach ($listWSObjects as $object)
+		{
+			$objectType = $object["type"];
+			$objId = $object["itemId"];
+			$viewPerm = parent::get_needed_perm($objectType, "view");
+			
+			$objectPermsUser = $this->get_object_perms_for_user ($objId, $objectType, $user);
+			if (in_array($viewPerm,$objectPermsUser))
+				$object["userCanView"] = "y";
+			else
+				$object["userCanView"] = "n";
+					
+			$listWSObjectsUser[] = $object;		
+		} 
 
-	return $listWSObjectsUser;
+		return $listWSObjectsUser;
     }
 	
     /** List the objects stored in a workspace for a specific user
@@ -826,11 +841,11 @@ class wslib extends CategLib
      	/*$query = "select `categId` from `tiki_categories` where `parentId`= ?";
      	$bindvars = array($ws_id);
      	$result = $this->query($query,$bindvars);
-	while ($res = $result->fetchRow())
+		while ($res = $result->fetchRow())
 		$wsChilds[] = $res["categId"];
 
-	return $wsChilds;*/
-	return parent::get_child_categories($ws_id);
+		return $wsChilds;*/
+		return parent::get_child_categories($ws_id);
      }	
      
       /** Add a user in a group
@@ -840,10 +855,10 @@ class wslib extends CategLib
      * @return -
      */	
      public function add_user_to_ws_group ($user, $groupName)
-     {
+    {
      	global $userlib; require_once 'lib/userslib.php';
      	$userlib->assign_user_to_group($user, $groupName);
-     }
+    }
      
       /** Count the number of WS stored in Tiki or the number of WS that a user have access
      *
@@ -851,7 +866,7 @@ class wslib extends CategLib
      * @return $cant the number of WS stored in Tiki or the number of WS that a user have access
      */	
      public function count_ws ($userName = null)
-     {
+    {
      	if ($userName)
      	{
      		$query_cant = "select count(distinct t3.`objectId`) from `users_objectpermissions` t3, `users_usergroups` t2, `users_users` t1
@@ -866,8 +881,8 @@ class wslib extends CategLib
      		$query_cant = "select count(*) from `tiki_categories` where `rootCategId` = ? ";
      		$bindvals = array($this->ws_container);
      	}
-	return $this->getOne($query_cant,$bindvals);
-     }
+		return $this->getOne($query_cant,$bindvals);
+    }
      
      /** Count the number of objects stored in a WS
      *
@@ -875,12 +890,12 @@ class wslib extends CategLib
      * @return $cant the number of objects stored in the WS
      */	
      public function count_objects_in_ws ($ws_id)
-     {
+    {
      	$query_cant = "select count(*) from `tiki_category_objects` where `categId` = ?";
      	$bindvals = array($ws_id);
      	
      	return $this->getOne($query_cant,$bindvals);
-     }
+    }
      
      /** Count the number of groups that have access in a WS
      *
@@ -888,62 +903,64 @@ class wslib extends CategLib
      * @return $cant the number of objects stored in the WS
      */	
      public function count_groups_in_ws ($ws_id)
-     {
+    {
      	$hashWS = md5($this->objectType . strtolower($ws_id));
 
-	$query_cant = "select count(*) from `users_objectpermissions` where 
-	    `objectId`=? and `objectType`=? and `permName`=?";
-	$bindvals = array($hashWS, $this->objectType, $this->viewPerm);
+		$query_cant = "select count(*) from `users_objectpermissions` where 
+					   `objectId`=? and `objectType`=? and `permName`=?";
+		$bindvals = array($hashWS, $this->objectType, $this->viewPerm);
      	
      	return $this->getOne($query_cant,$bindvals);
-     }
+    }
      
      /** Return the admin permissions available for a group in a WS
-     *
-     * @param $ws_id The id of the ws
+     
      * @return $cant the number of objects stored in the WS
      * TODO: Use perms take2
      */	
      public function get_ws_adminperms ()
-     {
+    {
      	$query = "SELECT * FROM `users_permissions` where `type`=? and `level`='admin'";
      	$bindvals = array($this->objectType);
      	$result = $this->query($query,$bindvals);
      	
      	while ($res = $result->fetchRow())
 		$wsPerms[] = $res;
-	return $wsPerms;
-     }
+		return $wsPerms;
+    }
 
      /** Allows set options in a determined perspective of the WS
-      * Incomplete!!!
+      *
+	  * @param $ws_id The id of the ws
+	  * @param $pref The preference that is going to be added
+	  * @param $value The value for the preference
       * @return true
       */
-     public function set_ws_perspective_options($wsId, $wsName, $pref, $value)
-     {
-	 global $perspectivelib; if (!$perspectivelib) require_once 'lib/perspectivelib.php';
+     public function set_ws_perspective_options($wsId, $pref, $value)
+	{
+		 global $perspectivelib; if (!$perspectivelib) require_once 'lib/perspectivelib.php';
 
-	 //Get the ID of the perspective with get_ws_associed_perspective_id function
-
-	 //Replace preferences in the perspective
-     }
+		 $pspId = $this->get_ws_associated_perspective_id($wsId);
+		 $perspectivelib->replace_preferences( $pspId, array( "$pref" => $value ) );
+    }
 
      /** Get the ID of a determined ws perspective 
-      * Incomplete!!
-      * @return The ID of the perspective if found
-      */
-     public function get_ws_associed_perspective_id($wsName, $wsId)
-     {
-	 global $perspectivelib; if (!$perspectivelib) require_once 'lib/perspectivelib.php';
-
-	 $list = $perspectivelib->get_perspectives_with_given_name($wsName);
-
-	 //Searching for the matching ws
-	 foreach ($list as $perspective)
-	 {
-	     var_dump($pespective);
-	 }
-     }
+	 *
+     * @param $ws_id The id of the ws
+     * @return The ID of the perspective if found
+     */
+     public function get_ws_associated_perspective_id($wsId)
+    {
+		global $perspectivelib; if (!$perspectivelib) require_once 'lib/perspectivelib.php';
+		
+		$wsValue = $this->get_ws_perspective_value ($wsId);
+		return $perspectivelib->get_perspectives_with_given_name($wsValue);
+    }
+	
+	private function get_ws_perspective_value ($wsId)
+	{
+		return "ws::".$wsId;
+	}
 }
 
 $wslib = new wslib();
