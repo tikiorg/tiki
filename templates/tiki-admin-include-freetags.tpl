@@ -5,7 +5,7 @@
 		{tabset name="admin_freetags"}
 			{tab name="{tr}General Settings{/tr}"}
 				<fieldset>
-					<legend>{tr}Freetags{/tr}{if $prefs.feature_help eq 'y'} {help url="Freetags+Config"}{/if}</legend>
+					<legend>{tr}Freetags{/tr}{if $prefs.feature_help eq 'y'} {help url="Tags"}{/if}</legend>
 					<input type="hidden" name="freetagsfeatures" />
 					<div class="adminoptionbox">
 						<div class="adminoption">
@@ -76,17 +76,9 @@
 						</div>
 
 							<div class="adminoptionbox">
-								<div class="adminoption">
-									<input type="checkbox" id="freetags_multilingual" name="freetags_multilingual" {if $prefs.freetags_multilingual eq 'y'}checked="checked"{/if} />
-								</div>
-								<div class="adminoptionlabel">
-									<label for="freetags_multilingual">{tr}Multilingual freetags{/tr}</label>
-									{if $prefs.feature_multilingual ne 'y'}
-										<br />
-										{icon _id=information} {tr}Multiligual disabled{/tr}. <a href=" tiki-admin.php?page=i18n" title="i18n">{tr}Enable now{/tr}</a>.
-									{/if}
-								</div>
+								{preference name=freetags_multilingual}
 							</div>
+
 							<div class="adminoptionbox">
 								<input type="hidden" name="morelikethisoptions" />
 								<div class="adminoptionlabel">

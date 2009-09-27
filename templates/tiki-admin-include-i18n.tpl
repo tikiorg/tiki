@@ -54,6 +54,7 @@
 	{preference name=feature_multilingual_one_page}
 	{preference name=quantify_changes}
 	{preference name=feature_multilingual_structures}
+	{preference name=freetags_multilingual}
 </div>
 
 {preference name=lang_use_db}
