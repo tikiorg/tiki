@@ -164,7 +164,11 @@ function wikiplugin_img_info() {
 		global $imagesize;
         $imagesize = getimagesize($tempfile, $otherinfo); #get image params from the tempfile
 		global $iptc;
-		$iptc = iptcparse($otherinfo['APP13']);
+		if (!empty($otherinfo['APP13'])) {
+			$iptc = iptcparse($otherinfo['APP13']);
+		} else {
+			$iptc = '';
+		}
         unlink($tempfile); // this removes the tempfile
 	}
  
@@ -738,6 +742,7 @@ function wikiplugin_img_info() {
 			//Make the div surrounding the image 2 pixels bigger than the image
 			$boxwidth = $width + 2;
 			$boxheight = $height + 2;
+			$alignbox = '';
 			if (!empty($imgdata['align'])) {
 				if ($imgdata['align'] == 'center') {
 					$alignbox = $center;
