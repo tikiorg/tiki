@@ -78,6 +78,10 @@ body {
 	background: transparent;
 }
 
+#tiki-center-shadow {
+	width: 720px;
+}
+
 #c1c2 #wrapper #col1 #tiki-center {
 	margin: 12px 0 20px 0;
 	padding: 10px 1em 1em;
@@ -85,6 +89,10 @@ body {
 }
 
 * html #tiki-center {font-size: 1em}
+
+#col1 {
+	margin-top: 0 !important;
+}
 
 #c1c2 #col2 {
 	width: 230px;
@@ -243,7 +251,7 @@ input[type=password] {}
 textarea,
 fieldset {}
 	
-textarea.wikiedit {font-size: 110%}
+textarea.wikiedit {}
 	
 select {
 	background: /*selectbackground*/;
@@ -300,9 +308,8 @@ hr {
 /***** Site Header & Identity *****/
 
 #header-shadow {
-	display: table; 
-	margin: 0 auto; 
 	width: 950px;
+	margin: auto;
 }
 
 #header {
@@ -734,9 +741,54 @@ td.even {
 
 /***** Wiki *****/
 
-.wikitopline {
+.navbar {
+	height: 20px;
+	margin-left: -20px;
+	margin-top: 30px;
 	width: 723px;
 	background: url(moz4/topbar.png) no-repeat;
+}
+
+body.tiki_wiki_page #description {
+	display: none;
+}
+
+div.wikitopline {
+	background:#fafafa url(moz4/bodybox-top.png) no-repeat scroll center top;
+	float: right;
+	margin: 0 25px 0 12px;
+	padding: 0 !important;
+	position: relative;
+	width: 240px;
+	z-index: 10;
+}
+
+div.wikitopline-inner {
+	background: url(moz4/bodybox-bot.png) no-repeat scroll center bottom;
+	color: #4b4742;
+	padding: 12px;
+	width: 216px;
+}
+
+div.action-title {
+	border-bottom: 1px solid #E3E2DF;
+	font-size: 1.4em;
+	margin-bottom: 5px;
+	padding-bottom: 5px;
+}
+
+ul.wikiactions {
+	list-style-image: none;
+	list-style-position: outside;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+ul.wikiactions li {
+	line-height: 1.7em;
+	width: 12em;
+	font-size: .95em;
 }
 
 h1.pagetitle,
@@ -778,6 +830,9 @@ h1.pagetitle a.crumblink {
 	line-height: 1.5em;
 }
 
+.wikitext h3 {
+	font-size: 22px;
+}
 	
 div.code,
 .codelisting {

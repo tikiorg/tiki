@@ -1,6 +1,8 @@
 
-/* And design defaults: */
-@import "moz4.css";
+/*	Tiki 4 SUMO implementation. 
+	Stylesheet for feature intro pages.
+	This is a theme option for the moz4 theme.
+*/
 
 html,
 body {
@@ -8,5 +10,10 @@ body {
 }
 
 .wikitext {
-	padding-top: 38px;
+/*	padding-top: 38px;*/
+}
+
+h1.pagetitle,
+div.wikitopline {
+	display: none;
 }
