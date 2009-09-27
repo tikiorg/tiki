@@ -162,7 +162,6 @@
 			<div class="adminoptionboxchild">
 				{preference name=log_sql_perf_min}
 			</div>
-			{preference name=log_tpl}
 		</fieldset>
 
 		<fieldset>
