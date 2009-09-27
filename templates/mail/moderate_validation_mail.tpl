@@ -15,13 +15,12 @@
 {tr}Assign to a group:{/tr} http://{$mail_site}/tiki/tiki-assignuser.php?assign_user={$mail_user|escape:'url'}
 
 
-{tr}Best regards,/tr}
+{tr}Best regards{/tr}
 
 {if isset($item)}
 {tr}User Tracker{/tr}
 {foreach item=field_value from=$item.field_values}
-	{$field_value.name}: {include file="tracker_item_field_value.tpl" list_mode='csv' showlinks='n'}	 
+	{$field_value.name}: {include file="tracker_item_field_value.tpl" list_mode='csv' showlinks='n'}
 {/foreach}
 {/if}
 
-            
