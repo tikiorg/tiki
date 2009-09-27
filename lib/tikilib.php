@@ -5023,16 +5023,17 @@ class TikiLib extends TikiDb_Bridge {
 
 				// While we're not at the end of the string, and we still haven't found both closers
 				while( $i < $last_data ) {
-					//print "<pre>Data char: $data[$i], $curlies, $parens\n.</pre>\n";
-					if( $data[$i] == "{" ) {
+					$char = substr($data, $i, 1);
+					//print "<pre>Data char: $i, $char, $curlies, $parens\n.</pre>\n";
+					if( $char == "{" ) {
 						$curlies++;
-					} elseif( $data[$i] == "(" ) {
+					} elseif( $char == "(" ) {
 						$parens++;
-					} elseif( $data[$i] == "}" ) {
+					} elseif( $char == "}" ) {
 						$curlies--;
 						if( $plugins['type'] == 'short' )
 							$lastParens = $i;
-					} elseif( $data[$i] == ")" ) {
+					} elseif( $char == ")" ) {
 						$parens--;
 						if( $plugins['type'] == 'long' )
 							$lastParens = $i;
@@ -5068,7 +5069,6 @@ class TikiLib extends TikiDb_Bridge {
 			 print_r( $plugins );
 			 print "</pre>";
 		 */
-
 	}
 
 	function plugin_split_args( $params_string ) {
@@ -5200,12 +5200,13 @@ class TikiLib extends TikiDb_Bridge {
 							break;
 						}
 						$pos_middle = $pos_end+strlen($plugin_end);
-						if ($data{$pos_middle} == '}') $count--;
-						else if ($data{$pos_middle} == '(') $count++;
+						$char = substr($data, $pos_middle, 1);
+						if ($char == '}') $count--;
+						else if ($char == '(') $count++;
 					}
 					$plugin_end .= '}'; // where plugin data ends
 				}
-	
+
 				/*
 					 print "<pre>pos's2: :$pos, $pos_middle, $pos_end:</pre>";
 					 print "<pre>plugin_end: :".htmlspecialchars( $plugin_end ) .":</pre>";
@@ -5217,7 +5218,7 @@ class TikiLib extends TikiDb_Bridge {
 				}
 				$plugin_data_len = $pos_end - $pos - strlen($plugins[0]);
 				$plugin_data = substr($data, $pos + strlen($plugin_start), $plugin_data_len);
-	
+
 				/*
 					 print "<pre>data: :".htmlspecialchars( $plugin_data ) .":</pre>";
 					 print "<pre>end: :".htmlspecialchars( $plugin_end ) .":</pre>";
