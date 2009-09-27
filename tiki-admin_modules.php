@@ -243,9 +243,10 @@ if (isset($_REQUEST["assign"])) {
 	if (isset($_REQUEST["assign_rows"])) {
 		$module_rows = $_REQUEST["assign_rows"];
 		$smarty->assign_by_ref('assign_rows', $_REQUEST["assign_rows"]);
-	} elseif (isset($_REQUEST["assign_params"]["rows"]))
+	} elseif (isset($_REQUEST["assign_params"]["rows"])) {
 		$module_rows = $_REQUEST["assign_params"]["rows"];
-	else
+		unset($_REQUEST["assign_params"]["rows"]); // hack, since rows goes in its own DB field
+	} else
 		$module_rows = 10;
     $smarty->assign_by_ref('assign_type', $_REQUEST["assign_type"]);
     $module_groups = $_REQUEST["groups"];
