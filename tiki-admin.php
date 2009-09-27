@@ -219,12 +219,12 @@ if (isset($_REQUEST["page"])) {
 		$helpUrl = "Meta+Tags";
 		$description = "Meta Tags settings"; //get_strings tra("Meta Tags settings")
 		include_once ('tiki-admin_include_metatags.php');
-	} else if ($adminpPage == 'performance') {
+	} else if ($adminPage == 'performance') {
     	$admintitle = 'Performance'; //get_strings tra("Performance")
 		$description = 'Speed & Performance';
 		$helpUrl = "Performance";
 		include_once ('tiki-admin_include_performance.php');
-	} else if ($adminpPage == 'security') {
+	} else if ($adminPage == 'security') {
     	$admintitle = 'Security'; //get_strings tra("Security")
 		$description = 'Security';
 		$helpUrl = "Security";
@@ -339,7 +339,7 @@ if (isset($_REQUEST["page"])) {
 		$description = 'Search engine friendly url';
 		$helpUrl = "Rewrite+Rules";
 		include_once ('tiki-admin_include_sefurl.php');
-	} else if ($adminpPage == 'workspaces') {
+	} else if ($adminPage == 'workspaces') {
 		$admintitle = 'Workspaces';
 		$description = 'Workspaces in Tiki';
 		$helpUrl = "Workspaces";
