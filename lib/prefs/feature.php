@@ -623,5 +623,10 @@ function prefs_feature_list() {
 			'help' => 'User+Preferences',
 			'type' => 'flag',
 		),
+		'feature_babelfish' => array(
+			'name' => tra('Translation URLs'),
+			'description' => tra('Show clickable URLs to translate the page to another language using Babel Fish website.'),
+			'type' => 'flag',
+		),
 	);
 }

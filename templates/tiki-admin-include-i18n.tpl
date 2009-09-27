@@ -69,16 +69,10 @@
 
 {tab name="{tr}Babelfish links{/tr}"}
 {*------------------------------- Babelfish ----------------------------- *}
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" name="feature_babelfish" id="feature_babelfish"
-			{if $prefs.feature_babelfish eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="feature_babelfish">Translation URLs</label></div>
-</div>
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" name="feature_babelfish_logo" id="feature_babelfish_logo"
-			{if $prefs.feature_babelfish_logo eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="feature_babelfish_logo">Translation logos</label></div>
-</div>
+
+{preference name=feature_babelfish}
+{preference name=babelfish_logo}
+
 {/tab}
 {tab name="{tr}Customized String Translation{/tr}"}
 {*----------------------------------- Custom translation --------------------*}
