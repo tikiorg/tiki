@@ -57,7 +57,7 @@ class CategLib extends ObjectLib {
 		$exclude = $this->exclude_categs ($prefs['ws_container'], $find, $showWS);
 		if (!empty($exclude)) $bindvals[] = $prefs['ws_container'];
 
-		if ($listOnlyWS)
+		if (listOnlyWS)
 		{
 		    $query = "select * from `tiki_categories` where `rootCategId`=?";
 		    $query_cant = "select count(*) from `tiki_categories` where `rootCategId`=?";
@@ -107,7 +107,7 @@ class CategLib extends ObjectLib {
 	//With this you can exclude certain types of categories (i.e ws)
 	function exclude_categs ($excludeCategId, $find, $showWS = false)
 	{
-	    if (!empty($excludeCategId))
+	    if ($excludeCategId)
 	    {
 	    	if ($showWS)
 			{
@@ -129,10 +129,10 @@ class CategLib extends ObjectLib {
 	    return $exclude;
 	}
 
-	function get_category_path_string($categId, $showWS = false) {
+	function get_category_path_string($categId) {
 		global $cachelib; include_once('lib/cache/cachelib.php');
 		if (!$cachelib->isCached('allcategs')) {
-			$categs = $this->build_cache($showWS);
+			$categs = $this->build_cache();
 		} else {
 			$categs = unserialize($cachelib->getCached('allcategs'));
 		}
@@ -858,14 +858,8 @@ class CategLib extends ObjectLib {
 	function build_cache($showWS = false) {
 		global $cachelib; include_once('lib/cache/cachelib.php');
 		$ret = array();
-		global $prefs; if(!$prefs) require_once 'lib/setup/prefs.php';
-		var_dump($exclude = $this->exclude_categs ($prefs['ws_container'], "", $showWS));
-		$query = "select * from `tiki_categories` $exclude order by `name`";
-		if (!empty($prefs['ws_container']))
-			$bindvals = array($prefs['ws_container']);
-		else
-			$bindvals = array();
-		$result = $this->query($query,$bindvals);
+		$query = "select * from `tiki_categories` order by `name`";
+		$result = $this->query($query,array());
 		while ($res = $result->fetchRow()) {
 			$id = $res["categId"];
 			$catpath = $this->get_category_path($id);
@@ -890,10 +884,10 @@ class CategLib extends ObjectLib {
 	}
 
 	// Same as get_all_categories + it also get info about count of objects
-	function get_all_categories_ext($showWS = false) {
+	function get_all_categories_ext() {
 		global $cachelib; include_once('lib/cache/cachelib.php');
 		if (!$cachelib->isCached("allcategs")) {
-			$ret = $this->build_cache($showWS);
+			$ret = $this->build_cache();
 		} else {
 			$ret = unserialize($cachelib->getCached("allcategs"));
 		}
