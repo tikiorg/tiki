@@ -34,7 +34,7 @@
     <tr class="form"><td><label>{tr}Use a directory to store images{/tr}:</label></td><td><input type="radio" name="gal_use_db" value="n" {if $prefs.gal_use_db eq 'n'}checked="checked"{/if}/> <label>{tr}Directory path{/tr}:</label><br /><input type="text" name="gal_use_dir" value="{$prefs.gal_use_dir|escape}" size="50" /><br />
        ({tr}Note: if you change this directory, you have to move the contents to the new directory. You can also use the 'Mover' below.{/tr})</td></tr>
     <tr class="form"><td><label>{tr}Library to use for processing images{/tr}:</label></td><td><input type="radio" name="gal_use_lib" value="gd" {if $prefs.gal_use_lib ne 'imagick'}checked="checked"{/if}/>GD: {$gdlib}</td></tr>
-    <tr class="form"><td></td><td><input type="radio" name="gal_use_lib" value="imagick" {if $prefs.gal_use_lib eq 'imagick'}checked="checked"{/if}/>Imagick: {$imagicklib}</td></tr>
+    <tr class="form"><td></td><td><input type="radio" name="gal_use_lib" value="imagick" {if $prefs.gal_use_lib eq 'imagick'}checked="checked"{/if}/>Imagick 0: {$imagicklib}</td></tr>
     <tr class="form"><td><label>{tr}Uploaded image names must match regex{/tr}:</label></td><td><input type="text" name="gal_match_regex" value="{$prefs.gal_match_regex|escape}"/></td></tr>
     <tr class="form"><td><label>{tr}Uploaded image names cannot match regex{/tr}:</label></td><td><input type="text" name="gal_nmatch_regex" value="{$prefs.gal_nmatch_regex|escape}"/></td></tr>
 		<tr><td colspan="2"><b>{tr}Directory Batch Loading{/tr}</b><br />
