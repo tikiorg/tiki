@@ -10,7 +10,6 @@
 # http://doc.tikiwiki.org/Rewrite+Rules
 #
 # This prevents reading of files with certain extensions.
-#
 <FilesMatch "\.(bak|inc|lib|sh|tpl|sql)$">
 	order deny,allow
 	deny from all
