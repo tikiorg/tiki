@@ -91,7 +91,6 @@
 
 		<fieldset>
 			<legend>{tr}Miscellaneous{/tr}</legend>
-			{preference name=smarty_security}
 			{preference name=feature_pear_date}
 		</fieldset>
 
@@ -164,17 +163,6 @@
 			</div>
 		</fieldset>
 
-		<fieldset>
-			<legend>{tr}CSRF Security{/tr} {if $prefs.feature_help eq 'y'} {help url="Security"}{/if}</legend>
-			<div class="adminoptionbox">
-				{tr}Use these options to protect against cross-site request forgeries (CSRF){/tr}.
-			</div>
-			{preference name=feature_ticketlib}
-			{preference name=feature_ticketlib2}
-			<div class="adminoptionbox">
-				{tr}See <a href="tiki-admin_security.php" title="Security"><strong>Admin &gt; Security Admin</strong></a> for additional security settings{/tr}.
-			</div>
-		</fieldset>
 	{/tab}
 
 	{tab name="{tr}General Settings{/tr}"}
@@ -215,22 +203,6 @@
 				</div>
 			</div>
 
-		</fieldset>
-
-		<fieldset>
-			<legend>{tr}Performance{/tr}</legend>
-			{preference name=cachepages}
-			{preference name=cacheimages}
-			{preference name=feature_obzip}
-			<div class="adminoptionboxchild">
-				{if $gzip_handler ne 'none'}
-					<div class="highlight" style="margin-left:30px;">
-						{tr}Output compression is active.{/tr}
-						<br />
-						{tr}Compression is handled by{/tr}: {$gzip_handler}.
-					</div>
-				{/if}
-			</div>
 		</fieldset>
 
 		<fieldset>
