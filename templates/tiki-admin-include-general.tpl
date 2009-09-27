@@ -90,11 +90,6 @@
 		</fieldset>
 
 		<fieldset>
-			<legend>{tr}Miscellaneous{/tr}</legend>
-			{preference name=feature_pear_date}
-		</fieldset>
-
-		<fieldset>
 			<legend>{tr}Mail{/tr}</legend>
 			{preference name=default_mail_charset}
 			{preference name=mail_crlf}
@@ -271,6 +266,9 @@
 	{/tab}
 
 	{tab name="{tr}Date and Time Formats{/tr}"}
+	
+		{preference name=feature_pear_date}
+	
 		<div class="adminoptionbox">
 			<div class="adminoptionlabel">
 				<label for="general-timezone">{tr}Default timezone{/tr}:</label>
