@@ -8,22 +8,15 @@
 	</div>
 	{include file=prefs/shared-dependencies.tpl}
 	{jq}
-	{literal}
-	(function(){
-	{/literal}
-	var id = '#{$p.id|escape}';
-	var block = '{$p.preference|escape}_childcontainer';
-	{literal}
-	if( ! $jq(id).attr('checked') ) {
-		$jq('#' + block).hide();
+if( ! $jq('#{{$p.id|escape}}').attr('checked') ) {
+	$jq('#{{$p.preference|escape}}_childcontainer').hide();
+}
+$jq('#{{$p.id|escape}}').change( function() {
+	if( $jq('#{{$p.id|escape}}').attr('checked') ) {
+		show('{{$p.preference|escape}}_childcontainer');
+	} else {
+		hide('{{$p.preference|escape}}_childcontainer');
 	}
-	$jq(id).change( function() {
-		if( $jq(id).attr('checked') ) {
-			show(block);
-		} else {
-			hide(block);
-		}
-	} );
-	})();
-	{/literal}{/jq}
+} );
+{/jq}
 </div>
