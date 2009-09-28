@@ -171,7 +171,7 @@ if( ! isset( $comments_objectId ) ) {
 
 $feedbacks = array();
 $errors = array();
-if ( $_REQUEST['comments_objectId'] == $comments_objectId
+if ( isset($_REQUEST['comments_objectId']) && $_REQUEST['comments_objectId'] == $comments_objectId
 	&& (isset($_REQUEST['comments_postComment']) || isset($_REQUEST['comments_postComment_anonymous']) )) {
 	if (isset($forum_mode) && $forum_mode == 'y') {
 		$forum_info = $commentslib->get_forum($_REQUEST['forumId']);

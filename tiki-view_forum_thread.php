@@ -212,7 +212,7 @@ $cat_objid = $_REQUEST["forumId"];
 include_once ('tiki-section_options.php');
 //$end_time = microtime(true);
 //print "TIME5: ".($end_time - $start_time)."\n";
-if ($user && $tiki_p_notepad == 'y' && $prefs['feature_notepad'] == 'y' && isset($_REQUEST['savenotepad'])) {
+if ($user && $prefs['feature_notepad'] == 'y' && isset($_REQUEST['savenotepad']) && $tiki_p_notepad == 'y') {
 	check_ticket('view-forum');
 	$info = $commentslib->get_comment($_REQUEST['savenotepad'], null, $forum_info);
 	$tikilib->replace_note($user, 0, $info['title'], $info['data']);
