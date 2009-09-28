@@ -57,7 +57,7 @@ class CategLib extends ObjectLib {
 		$exclude = $this->exclude_categs ($prefs['ws_container'], $find, $showWS);
 		if (!empty($exclude)) $bindvals[] = $prefs['ws_container'];
 
-		if (listOnlyWS)
+		if ($listOnlyWS)
 		{
 		    $query = "select * from `tiki_categories` where `rootCategId`=?";
 		    $query_cant = "select count(*) from `tiki_categories` where `rootCategId`=?";
