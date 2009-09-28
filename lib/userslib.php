@@ -2498,7 +2498,7 @@ function get_included_groups($group, $recur=true) {
 		$query = "insert into `users_groups` (`groupName`, `groupDesc`, `groupHome`,`groupDefCat`,`groupTheme`,`usersTrackerId`,`groupTrackerId`, `registrationUsersFieldIds`, `userChoice`, `usersFieldId`, `groupFieldId`,`isExternal`, `expireAfter`) values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		$this->query($query, array($group, $desc, $home, $defcat, $theme, (int)$utracker, (int)$gtracker, $rufields, $userChoice, (int)$ufield, (int)$gfield,$isexternal, $expireAfter) );
 
-		global $cachelib;
+		global $cachelib; require_once('lib/cache/cachelib.php');
 		$cachelib->invalidate('grouplist');
 		$cachelib->invalidate('groupIdlist');
 
