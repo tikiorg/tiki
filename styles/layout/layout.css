@@ -1609,6 +1609,15 @@ div#ajaxLoading {
 	color: #000;
 }
 
+/* ColorBox */
+#cboxTitle {
+	background-color: #fff;
+}
+#cboxTitle div {
+	overflow: auto;
+	margin: 3px 100px 0;
+}
+
 /* Cluetip - JQuery tooltips
    =cluetipClass: 'default' */
 
