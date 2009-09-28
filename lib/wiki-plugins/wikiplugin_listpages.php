@@ -151,7 +151,7 @@ function wikiplugin_listpages($data, $params) {
 		$max = -1;
 	}
 	if (!isset($sort)) {
-		$sort = 'pageName_desc';
+		$sort = 'pageName_asc';
 	}
 	if (!isset($find)) {
 		$find = '';
