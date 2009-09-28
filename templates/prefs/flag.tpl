@@ -7,4 +7,23 @@
 		{include file=prefs/shared-flags.tpl}
 	</div>
 	{include file=prefs/shared-dependencies.tpl}
+	{jq}
+	{literal}
+	(function(){
+	{/literal}
+	var id = '#{$p.id|escape}';
+	var block = '#{$p.preference|escape}_childcontainer';
+	{literal}
+	if( ! $(id).attr('checked') ) {
+		$(block).hide();
+	}
+	$(id).change( function() {
+		if( $(id).attr('checked') ) {
+			$(block).show();
+		} else {
+			$(block).hide();
+		}
+	} );
+	})();
+	{/literal}{/jq}
 </div>

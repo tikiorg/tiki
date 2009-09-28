@@ -5,14 +5,8 @@
   {literal}
 	function updateList( active )
 	{
-  		if( active )
+		if( ! active )
 		{
-			show('available_languages');
-		}
-		else
-		{
-			hide('available_languages');
-			
 			var optionList = document.getElementById( 'available_languages_select' ).options;
 			for( i in optionList )
 				optionList[i].selected = false;
@@ -35,14 +29,14 @@
 
 <div class="adminoptionbox">
 	{preference name=feature_multilingual}
-<div class="adminoptionboxchild" id="usemultilingual" style="display:{if $prefs.feature_multilingual eq 'y'}block{else}none{/if};">	
+<div class="adminoptionboxchild" id="feature_multilingual_childcontainer">	
 
 	{preference name=feature_detect_language}
 	{preference name=feature_best_language}
 	{preference name=change_language}
 	{preference name=restrict_language}
 	
-	<div class="adminoptionboxchild" id="available_languages" {if count($prefs.available_languages) == 0}style="display:none;"{else}style="display:block;"{/if}>
+	<div class="adminoptionboxchild" id="restrict_language_childcontainer">
 		{preference name=available_languages}
 		{preference name=language_inclusion_threshold}
 	</div>
