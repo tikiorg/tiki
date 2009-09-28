@@ -12,16 +12,16 @@
 	(function(){
 	{/literal}
 	var id = '#{$p.id|escape}';
-	var block = '#{$p.preference|escape}_childcontainer';
+	var block = '{$p.preference|escape}_childcontainer';
 	{literal}
-	if( ! $(id).attr('checked') ) {
-		$(block).hide();
+	if( ! $jq(id).attr('checked') ) {
+		$jq('#' + block).hide();
 	}
-	$(id).change( function() {
-		if( $(id).attr('checked') ) {
-			$(block).show();
+	$jq(id).change( function() {
+		if( $jq(id).attr('checked') ) {
+			show(block);
 		} else {
-			$(block).hide();
+			hide(block);
 		}
 	} );
 	})();
