@@ -280,8 +280,8 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),
 		'feature_quick_object_perms' => array(
-			'name' => tra('QuickPerms'),
-			'description' => tra('Quickperms'),
+			'name' => tra('Quick Permission Assignment'),
+			'description' => tra('Quickperms allow to define classes of privileges and grant them to roles on objects.'),
 			'help' => 'Quickperms',
 			'type' => 'flag',
 		),
