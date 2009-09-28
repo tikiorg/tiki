@@ -175,10 +175,12 @@ function smarty_function_treetable($params, &$smarty) {
 		$html .= '&nbsp;' . smarty_function_icon(
 			array('_id' => 'folder',
 				'title' => tra('Toggle sections'),
-				'onclick' => '$jq(".expander").click();
+				'onclick' => '
 if (this.src.indexOf("ofolder.png") > -1) {
+	$jq(".expanded .expander").click();
 	this.src = this.src.replace("ofolder", "folder");
 } else {
+	$jq(".collapsed .expander").click();
 	this.src = this.src.replace("folder", "ofolder");
 }'), $smarty);
 	}
