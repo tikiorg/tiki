@@ -1,9 +1,16 @@
+{* $Id$ *}
+
+<div class="navbar">
+	{button href="tiki-admingroups.php" _text="{tr}Admin Groups{/tr}"}
+	{button href="tiki-adminusers.php" _text="{tr}Admin Users{/tr}"}
+</div>
+
 <form action="tiki-admin.php?page=community" method="post">
 <div class="input_submit_container clear" style="text-align: right;">
 	<input type="submit" value="{tr}Change preferences{/tr}" />
 </div>
 
-{tabset name="admin_comuunity"}
+{tabset name="admin_community"}
 	{tab name="{tr}General Settings{/tr}"}
 <input type="hidden" name="userfeatures" />
 <fieldset><legend>{tr}Community{/tr}{if $prefs.feature_help eq 'y'} {help url="Community"}{/if}</legend>
