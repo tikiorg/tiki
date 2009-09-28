@@ -86,9 +86,7 @@
 		<fieldset>
 			<legend>{tr}Administration{/tr}</legend>
 			<div class="admin featurelist">
-				{preference name=feature_stats}
 				{preference name=feature_action_calendar}
-				{preference name=feature_referer_stats}
 				{preference name=feature_comm}
 			</div>
 		</fieldset>

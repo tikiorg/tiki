@@ -147,10 +147,16 @@
 		</fieldset>
 
 		<fieldset>
-			<legend>{tr}Miscellaneous{/tr}</legend>
+			<legend>{tr}Stats{/tr}</legend>
+				{preference name=feature_stats}
+				{preference name=feature_referer_stats}
 				{preference name=count_admin_pvs}
-				{preference name=tmpDir}
+		</fieldset>
+		
+		<fieldset>
+			<legend>{tr}Miscellaneous{/tr}</legend>
 
+				{preference name=tmpDir}
 				{preference name=feature_help}
 				<div class="adminoptionboxchild">
 					{preference name=helpurl}
