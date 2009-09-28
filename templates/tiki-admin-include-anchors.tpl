@@ -126,11 +126,11 @@
 {self_link page="intertiki" _class="icon"}{icon _id="pics/large/intertiki.png" alt="{tr}InterTiki{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 {/if}
 
-{if $prefs.feature_semantic neq 'n'}
+{if $prefs.feature_semantic eq 'y'}
 {self_link page="semantic" _class="icon"}{icon _id="pics/large/semantic.png" alt="{tr}Semantic links{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 {/if}
 
-{if $prefs.feature_webservices neq 'n'}
+{if $prefs.feature_webservices eq 'y'}
 {self_link page="webservices" _class="icon"}{icon _id="pics/large/webservices.png" alt="{tr}Webservices{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 {/if}
 

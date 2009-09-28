@@ -383,6 +383,9 @@ name="w_displayed_default" {if $prefs.w_displayed_default eq 'y'} checked="check
 	<div class="adminoptionlabel"><label for="feature_backlinks">{tr}Backlinks{/tr}</label>{if $prefs.feature_help eq 'y'} {help url="Backlinks"}{/if} <a class="link" href="tiki-assignpermission.php?type=wiki&amp;group=Anonymous" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a></div>
 </div>
 
+			{preference name=feature_semantic}
+
+
 <div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" id="feature_likePages" name="feature_likePages" {if $prefs.feature_likePages eq 'y'}checked="checked" {/if}/></div>
 	<div class="adminoptionlabel"><label for="feature_likePages">{tr}Similar{/tr} ({tr}like pages{/tr})</label></div>

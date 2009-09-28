@@ -415,10 +415,10 @@ function get_default_prefs() {
 
 		// webservices
 		'webservice_consume_defaultcache' => 300, // 5 min
-		'feature_webservices' => 'y',
+		'feature_webservices' => 'n',
 
 		// semantic links
-		'feature_semantic' => 'y',
+		'feature_semantic' => 'n',
 
 		// wysiwyg
 		'feature_wysiwyg' => 'n',

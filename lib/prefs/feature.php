@@ -654,6 +654,21 @@ function prefs_feature_list() {
 			'name' => tra('External link icon'),
 			'type' => 'flag',
 		),
+		'feature_semantic' => array(
+			'name' => tra('Semantic links'),
+			'description' => tra('Going beyond Backlinks, allows to define some semantic relationships between wiki pages'),
+			'help' => 'Semantic',
+			'type' => 'flag',
+			'dependencies' => array(
+				'feature_backlinks',
+			),
+		),
+		'feature_webservices' => array(
+			'name' => tra('Web Services'),
+			'description' => tra('Can consume webservices in JSON or YAML'),
+			'help' => 'WebServices',
+			'type' => 'flag',
+		),
 	);
 }
 

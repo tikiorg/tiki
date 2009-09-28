@@ -85,8 +85,6 @@
 
 	{self_link page="intertiki" _class="admbox" _style="background-image: url('pics/large/intertiki48x48.png')" _selected="'`$prefs.feature_intertiki`' != 'y'" _selected_class="admbox off"}<img src="pics/trans.png" alt="{tr}InterTiki{/tr}" title="{tr}InterTiki{/tr}{if $prefs.feature_intertiki ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}InterTiki{/tr}</span>{/self_link}
 
-	{* TODO: these features (semantic & webservices) seem not to have feature prefs - eg $prefs.feature_semantic so are on by default for now *}
-
 	{self_link page="semantic" _class="admbox" _style="background-image: url('pics/large/semantic48x48.png')" _selected="'`$prefs.feature_semantic`' != 'y'" _selected_class="admbox off"}<img src="pics/trans.png" alt="{tr}Semantic links{/tr}" title="{tr}Semantic links{/tr}{if $prefs.feature_semantic ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Semantic links{/tr}</span>{/self_link}
 
 	{self_link page="webservices" _class="admbox" _style="background-image: url('pics/large/webservices48x48.png')" _selected="'`$prefs.feature_webservices`' != 'y'" _selected_class="admbox off"}<img src="pics/trans.png" alt="{tr}Webservices{/tr}" title="{tr}Webservices{/tr}{if $prefs.feature_webservices ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Webservices{/tr}</span>{/self_link}
