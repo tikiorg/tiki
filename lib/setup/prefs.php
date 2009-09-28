@@ -1420,6 +1420,8 @@ function get_default_prefs() {
 		// Workspaces
 		'feature_workspaces' => 'n',
 		'ws_container' => null,
+
+		'terminology_profile_installed' => 'n',
 	);
 
 	// spellcheck

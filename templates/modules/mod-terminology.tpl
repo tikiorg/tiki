@@ -1,3 +1,4 @@
+{if $prefs.terminology_profile_installed eq 'y'}
 {tikimodule title="{tr}Terminology{/tr}" name="terminology flip=$module_params.flip decorations=$module_params.decorations}
   <div align="left">
     {if $terminology_profile_was_installed == 'n'}
@@ -45,3 +46,4 @@
      
   </div>
 {/tikimodule}
+{/if}
