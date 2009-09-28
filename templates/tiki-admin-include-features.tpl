@@ -70,29 +70,32 @@
 				{preference name=feature_comments_locking}
 				{preference name=feature_comments_post_as_anonymous}				
 			</div>
-	</fieldset>
-{/tab}
+		</fieldset>
 
 
 {* ---------- User interface enhancement ------------ *}
-{tab name="{tr}User Interface{/tr}"}
+		<fieldset>
+			<legend>{tr}User Interface{/tr}</legend>
 			<div class="admin featurelist">
 				{preference name=feature_jscalendar}
 				{preference name=feature_fullscreen}
 				{preference name=feature_shadowbox}
 				{preference name=feature_quick_object_perms}
 			</div>
-{/tab}
+		</fieldset>
 			
 
 {* ---------- Administration features ------------ *}
-{tab name="{tr}Administration{/tr}"}
+		<fieldset>
+			<legend>{tr}Administration{/tr}</legend>
 			<div class="admin featurelist">
 				{preference name=feature_stats}
 				{preference name=feature_action_calendar}
 				{preference name=feature_referer_stats}
 				{preference name=feature_comm}
 			</div>
+		</fieldset>
+			
 {/tab}
 			
 {* --- User Features --- *}

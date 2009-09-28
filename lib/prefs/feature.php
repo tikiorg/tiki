@@ -264,6 +264,7 @@ function prefs_feature_list() {
 			'name' => tra('Ouput Should be HTMLPurified'),
 			'description' => tra('This enable HTPMPurifier on outputs to filter remaining security problems like XSS.'),
 			'help' => 'http://doc.tikiwiki.org/HTMLPurifier',
+			'warning' => tra('Experimental. This feature is still under development.'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
