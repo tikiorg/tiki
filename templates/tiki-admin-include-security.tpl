@@ -11,18 +11,8 @@
 		<fieldset>
 			<legend>{tr}Security{/tr}</legend>
 			{preference name=smarty_security}
-			{preference name=feature_obzip}
-			<div class="adminoptionboxchild">
-				{if $gzip_handler ne 'none'}
-					<div class="highlight" style="margin-left:30px;">
-						{tr}Output compression is active.{/tr}
-						<br />
-						{tr}Compression is handled by{/tr}: {$gzip_handler}.
-					</div>
-				{/if}
-			</div>
-		</fieldset>
-
+			{preference name=feature_purifier}
+			{preference name=feature_htmlpurifier_output}
 		<fieldset>
 			<legend>{tr}CSRF Security{/tr} {if $prefs.feature_help eq 'y'} {help url="Security"}{/if}</legend>
 			<div class="adminoptionbox">

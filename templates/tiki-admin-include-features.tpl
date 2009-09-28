@@ -66,7 +66,6 @@
 				{preference name=feature_html_pages}
 				{preference name=feature_contact}
 				{preference name=feature_minichat}
-				{preference name=feature_purifier}
 				{preference name=feature_comments_moderation}
 				{preference name=feature_comments_locking}
 				{preference name=feature_comments_post_as_anonymous}				
@@ -151,7 +150,6 @@
 						{preference name=feature_sheet}
 						{preference name=feature_wysiwyg}
 						{preference name=feature_ajax_autosave}
-						{preference name=feature_htmlpurifier_output}
 						{preference name=feature_multimedia}
 				</fieldset>
 
