@@ -268,7 +268,11 @@
 				</div>
 			</div>
 
-
+				{preference name=feature_custom_home}
+				{preference name=feature_redirect_on_error}
+				{preference name=feature_phplayers}
+				{preference name=feature_cssmenus}
+				{preference name=feature_featuredLinks}
 
 
 	{/tab}

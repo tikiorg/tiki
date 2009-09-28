@@ -50,7 +50,6 @@
 				{preference name=feature_surveys}
 				{preference name=feature_directory}
 				{preference name=feature_quizzes}
-				{preference name=feature_featuredLinks}
 				{preference name=feature_copyright}
 				{preference name=feature_shoutbox}
 				{preference name=feature_maps}
@@ -72,9 +71,7 @@
 {tab name="{tr}User Interface{/tr}"}
 			<div class="admin featurelist">
 				{preference name=feature_jscalendar}
-				{preference name=feature_phplayers}
 				{preference name=feature_fullscreen}
-				{preference name=feature_cssmenus}
 				{preference name=feature_shadowbox}
 				{preference name=feature_quick_object_perms}
 			</div>
@@ -87,9 +84,7 @@
 				{preference name=feature_stats}
 				{preference name=feature_action_calendar}
 				{preference name=feature_referer_stats}
-				{preference name=feature_redirect_on_error}
 				{preference name=feature_comm}
-				{preference name=feature_custom_home}
 			</div>
 {/tab}
 			
