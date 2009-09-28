@@ -3412,6 +3412,7 @@ class TikiLib extends TikiDb_Bridge {
 		return $cant;
 	}
 
+	// Returns a string-indexed array with all the hosts/servers active in the last 5 minutes. Keys are hostnames. Values represent the number of registered users which logged in or were active in the last 5 minutes on the host.
 	function count_cluster_sessions() {
 		$this->update_session();
 		$query = "select `tikihost`, count(`tikihost`) as cant from `tiki_sessions` group by `tikihost`";
@@ -4686,6 +4687,7 @@ class TikiLib extends TikiDb_Bridge {
 		if( ! $is_html ) {
 			$data = str_replace( '<x>', '', $data );
 		}
+		$name = trim($name); // to avoid pb with trailing space http://dev.mysql.com/doc/refman/5.1/en/char.html
 
 		if (!$user) $user = 'anonymous';
 		if (empty($wysiwyg)) $wysiwyg = $prefs['wysiwyg_default'];

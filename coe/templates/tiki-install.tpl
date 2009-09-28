@@ -61,7 +61,7 @@
 <h1>{tr}Review the System Requirements{/tr}</h1>
 <div style="float:left;width:60px"><img src="img/webmail/compose.gif" alt="{tr}Review{/tr}" /></div>
 <div class="clearfix">
-	<p>{tr}Before installing Tiki, <a href="http://doc.tikiwiki.org/Requirements+and+Setup" target="_blank">review the documentation</a> and confirm that your system meets the minimum requirements.{/tr}</p>
+	<p>{tr}Before installing Tiki, <a href="http://doc.tikiwiki.org/Requirements" target="_blank">review the documentation</a> and confirm that your system meets the minimum requirements.{/tr}</p>
 	<p>{tr}This installer will perform some basic checks automatically.{/tr}</p>
 	<br />
 	<h2>{tr}Memory{/tr}</h2>
@@ -219,12 +219,6 @@
 			<br /><em>{tr}Enter the name of the database that Tiki will use.{/tr}</em> 
 			<div style="margin-left:1em;display:none;" id="name_help">
 				<p>{tr}The database must already exist. You can create the database using mysqladmin, PHPMyAdmin, cPanel, or ask your hosting provider.  Normally Tiki tables won't conflict with other product names.{/tr}</p>
-				<p>{tr}For Oracle:{/tr}
-				<ul>
-					<li>{tr}Enter your TNS Name here and leave Host empty.{/tr}<br />
-					{tr}or{/tr}</li>
-					<li>{tr}Override tnsnames.ora and put your SID here and enter your hostname:port in the Host field.{/tr}</li>
-				</ul></p>
 			</div>
 			</div>
 		</div>

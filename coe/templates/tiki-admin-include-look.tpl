@@ -121,6 +121,8 @@
 {/if}
 	</div>
 </div>
+			{preference name=log_tpl}
+
 
 	{/tab}
 

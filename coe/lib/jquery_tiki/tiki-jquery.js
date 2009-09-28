@@ -251,6 +251,43 @@ $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 			iframe: true,
 			width: "95%"
 		});
+		/* shadowbox params compatibility functions called below (TODO: please combine in one if you know how) */
+		getrelgallery = function () {
+			re = /(shadowbox\[([^\]]+)\])/i
+			ret = $jq(this).attr("rel").match(re);
+			return "'"+ret[2]+"'"
+		}
+		getrelheight = function () {
+			re = /(height=([^;\"]+))/i
+			ret = $jq(this).attr("rel").match(re);
+			return ret[2]
+		}
+		getreltitle = function () {
+			re = /(title=([^;\"]+))/i
+			ret = $jq(this).attr("rel").match(re);
+			return ret[2]
+		}
+		getrelwidth = function () {
+			re = /(width=([^;\"]+))/i
+			ret = $jq(this).attr("rel").match(re);
+			return ret[2]
+		}
+		// rel containg shadowbox[foo] to group objects in "galleries" (shadowbox compatible)
+		$jq('a[rel*="shadowbox\["]').colorbox({
+			rel: getrelgallery
+		});
+		// rel containg height param (shadowbox compatible)
+		$jq("a[rel*='shadowbox'][rel*='height']").colorbox({
+			height: getrelheight
+		});
+		// rel containg title param (shadowbox compatible)
+		$jq("a[rel*='shadowbox'][rel*='title']").colorbox({
+			title: getreltitle
+		});
+		// rel containg width param (shadowbox compatible)
+		$jq("a[rel*='shadowbox'][rel*='width']").colorbox({
+			width: getrelwidth
+		});
 	}
 	
 });		// end $jq(document).ready
@@ -268,6 +305,106 @@ function parseAutoJSON(data) {
 		}
 	});
 }
+
+/* Find caret position in textarea */
+
+function textarea_cursor_offset(input) {
+  if (document.selection) {
+  
+  	var r = document.selection.createRange();
+  	
+  	var i;
+  	
+  	if (input.nodeName == 'TEXTAREA') {
+  		var x = r.offsetLeft - r.boundingLeft;
+  		var y = r.offsetTop - r.boundingTop;
+  	} else {
+  		var x = r.offsetLeft;
+  		var y = r.offsetTop;
+  	}
+  	
+  	return {
+  		left: x,
+  		top: y
+  	};
+  	
+  } else if (typeof input.setSelectionRange != 'undefined') {
+
+	var elementName = $jq(input).attr('id') + '_tcodiv'
+  	var n, i;
+
+	n = document.getElementById(elementName);
+  	if (!n) {
+		n = document.createElement('div');
+		$jq(n).attr('id', elementName).css('wrap', 'hard').css('whiteSpace', 'pre').css('position', 'absolute').css('z-index', -1).css('overflow', 'auto');
+		
+		if (input.parentNode.position != 'absolute' && input.parentNode.position != 'relative') {
+			input.parentNode.position = 'relative';
+		}
+		
+		
+//		var s = document.defaultView.getComputedStyle(input,null);
+//		
+//		for(i in s) {
+//			if( i.indexOf('font') > -1 || i.indexOf('padding') > -1 || i.indexOf('margin') > -1 || i.indexOf('line') > -1 || i.indexOf('letter') > -1) {
+//				if (s[i]) {
+//					//n.style[i] = s[i];
+//					$jq(n).css(i, s[i]);
+//				}
+//			}
+//		}
+			
+		if ($jq(input).css('font')) { $jq(n).css('font', $jq(input).css('font')); }
+		if ($jq(input).css('font-size')) { $jq(n).css('font-size', $jq(input).css('font-size')); }
+		if ($jq(input).css('font-family')) { $jq(n).css('font-family', $jq(input).css('font-family')); }
+		if ($jq(input).css('line-height')) { $jq(n).css('line-height', $jq(input).css('line-height')); }
+		if ($jq(input).css('letter-spacing')) { $jq(n).css('letter-spacing', $jq(input).css('letter-spacing')); }
+		if ($jq(input).css('padding-left')) { $jq(n).css('padding-left', $jq(input).css('padding-left')); }
+		if ($jq(input).css('padding-top')) { $jq(n).css('padding-top', $jq(input).css('padding-top')); }
+		if ($jq(input).css('padding-right')) { $jq(n).css('padding-right', $jq(input).css('padding-right')); }
+		if ($jq(input).css('padding-bottom')) { $jq(n).css('padding-bottom', $jq(input).css('padding-bottom')); }
+		if ($jq(input).css('margin-left')) { $jq(n).css('margin-left', $jq(input).css('margin-left')); }
+		if ($jq(input).css('margin-top')) { $jq(n).css('margin-top', $jq(input).css('margin-top')); }
+		if ($jq(input).css('margin-right')) { $jq(n).css('margin-right', $jq(input).css('margin-right')); }
+		if ($jq(input).css('margin-bottom')) { $jq(n).css('margin-bottom', $jq(input).css('margin-bottom')); }
+		
+		//$jq(n).width($jq(input).width()).height($jq(input).height());
+		//var p = $jq(input).offsetParent().offset();
+		//$jq(n).css('left', p.left).css('top', p.top);
+			
+		n.style.width = input.offsetWidth+'px';
+		n.style.height = input.offsetHeight+'px';
+		n.style.left = input.offsetLeft+'px';
+		n.style.top = input.offsetTop+'px';
+		//n.style.overflow = 'auto';
+		
+		
+		input.parentNode.appendChild(n);
+		n = document.getElementById(elementName);
+	}
+	
+	n.innerHTML = input.value;
+	
+	n.scrollLeft = input.scrollLeft;
+	n.scrollTop = input.scrollTop;
+	//$jq(n).scrollLeft($jq(input).scrollLeft()).scrollTop($jq(input).scrollTop());
+		
+	var r = document.createRange();
+    var e = document.createElement('span');
+
+    r.setStart(n.firstChild, input.selectionStart);
+    r.setEnd(n.firstChild, input.selectionStart);
+    r.surroundContents(e);
+
+    var obj = { 
+		left : e.offsetLeft + n.offsetLeft,
+		top : e.offsetTop + n.offsetTop
+    };
+
+    return obj; 
+  }
+}
+
 
 
 

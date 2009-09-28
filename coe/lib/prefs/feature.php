@@ -605,5 +605,28 @@ function prefs_feature_list() {
 			'description' => tra('List all languages as a language option in the page language drop list to see all languages at once.'),
 			'type' => 'flag',
 		),
+		'feature_obzip' => array(
+			'name' => tra('GZip output'),
+			'description' => tra('GZip output'),
+			'help' => 'Compression',
+			'type' => 'flag',
+		),
+		'feature_help' => array(
+			'name' => tra('Help System'),
+			'description' => tra('Help System'),
+			'help' => 'Documentation',
+			'type' => 'flag',
+		),
+		'feature_display_my_to_others' => array(
+			'name' => tra("Show user's contribution on the user information page"),
+			'description' => tra("Show user's contribution on the user information page"),
+			'help' => 'User+Preferences',
+			'type' => 'flag',
+		),
+		'feature_babelfish' => array(
+			'name' => tra('Translation URLs'),
+			'description' => tra('Show clickable URLs to translate the page to another language using Babel Fish website.'),
+			'type' => 'flag',
+		),
 	);
 }

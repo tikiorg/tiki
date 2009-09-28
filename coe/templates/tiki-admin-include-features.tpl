@@ -122,7 +122,6 @@
 {* ---------- Administration features ------------ *}
 {tab name="{tr}Administration{/tr}"}
 			<div class="admin featurelist">
-				{preference name=feature_banning}
 				{preference name=feature_stats}
 				{preference name=feature_action_calendar}
 				{preference name=feature_referer_stats}
@@ -160,7 +159,6 @@
 				{preference name=feature_xmlrpc}
 				{preference name=feature_debug_console}
 				{preference name=feature_tikitests}
-				{preference name=feature_use_minified_scripts}
 			</div>
 {/tab}
 {/tabset}

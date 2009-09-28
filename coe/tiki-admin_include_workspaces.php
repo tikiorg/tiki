@@ -8,7 +8,7 @@ $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 global $userlib; require_once 'lib/userslib.php';
 global $wslib; require_once 'lib/workspaces/wslib.php';
 
-$wslib->init_ws();
+var_dump ($wslib->init_ws());
 
 //var_dump($groups = $userlib->get_groups());
 $smarty->assign('groups', $userlib->get_groups());

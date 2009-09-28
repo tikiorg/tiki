@@ -18,6 +18,10 @@
 
 {self_link page="metatags" _class="icon"}{icon _id="pics/large/metatags.png" alt="{tr}Meta Tags{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 
+{self_link page="performance" _class="icon"}{icon _id="img/mytiki/admin.gif" alt="{tr}Performance{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
+
+{self_link page="security" _class="security"}{icon _id="pics/large/gnome-lockscreen48x48.png" alt="{tr}Security{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
+
 {self_link page="rss" _class="icon"}{icon _id="pics/large/gnome-globe.png" alt="{tr}RSS{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 
 {self_link page="community" _class="icon"}{icon _id="pics/large/users.png" alt="{tr}Community{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}

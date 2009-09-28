@@ -308,7 +308,8 @@ $lang=Array(
 // "Tracker item" => "Tracker item",
 // "Simple" => "Simple",
 // "Advanced" => "Advanced",
-// "_HOMEPAGE_CONTENT_" => "_HOMEPAGE_CONTENT_",
+"_HOMEPAGE_CONTENT_" => "! Vítejte v Tiki !
+Pokud jste tu poprvé, přihlašte se nahoře vpravo jako __admin__ s heslem __admin__.",
 // "<!-- jq smarty plugin inactive: feature_jquery off -->" => "<!-- jq smarty plugin inactive: feature_jquery off -->",
 // "Fast Next" => "Fast Next",
 // "Fast Prev" => "Fast Prev",

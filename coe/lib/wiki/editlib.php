@@ -68,7 +68,7 @@ class EditLib {
 	}
 	
 	function parseToWysiwyg(&$inData) {
-		global $tikilib, $prefs;
+		global $tikilib, $prefs, $tikiroot;
 		// Parsing page data as first time seeing wiki page in wysiwyg editor
 		$parsed = preg_replace('/(!!*)[\+\-]/m','$1', $inData);		// remove show/hide headings
 		if ($prefs['wysiwyg_htmltowiki'] == 'y') {

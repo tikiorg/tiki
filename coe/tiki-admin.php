@@ -10,7 +10,7 @@ include_once ('lib/admin/adminlib.php');
 $tikifeedback = array();
 $auto_query_args = array(
 	'page'
-);
+    );
 if ($tiki_p_admin != 'y') {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
@@ -33,13 +33,12 @@ function simple_set_toggle($feature) {
 			// not yet set at all or not set to y
 			$tikilib->set_preference($feature, 'y');
 			add_feedback( $feature, tr('%0 enabled', $feature), 1, 1 );
-			switch ($feature) {
+		}
+		switch ($feature) {
 			    case 'feature_workspaces':
-				global $wslib; include_once ('lib/workspaces/wslib.php');
+				global $wslib; require_once ('lib/workspaces/wslib.php');
 				$wslib->init_ws();
 				break;
-			}
-				
 		}
 	} else {
 		if ((!isset($prefs[$feature]) || $prefs[$feature] != 'n')) {
@@ -220,6 +219,16 @@ if (isset($_REQUEST["page"])) {
 		$helpUrl = "Meta+Tags";
 		$description = "Meta Tags settings"; //get_strings tra("Meta Tags settings")
 		include_once ('tiki-admin_include_metatags.php');
+	} else if ($adminPage == 'performance') {
+    	$admintitle = 'Performance'; //get_strings tra("Performance")
+		$description = 'Speed & Performance';
+		$helpUrl = "Performance";
+		include_once ('tiki-admin_include_performance.php');
+	} else if ($adminPage == 'security') {
+    	$admintitle = 'Security'; //get_strings tra("Security")
+		$description = 'Security';
+		$helpUrl = "Security";
+		include_once ('tiki-admin_include_security.php');
 	} else if ($adminPage == "search") {
 		$admintitle = "Search"; //get_strings tra("Search")
 		$helpUrl = "Search";
@@ -330,8 +339,8 @@ if (isset($_REQUEST["page"])) {
 		$description = 'Search engine friendly url';
 		$helpUrl = "Rewrite+Rules";
 		include_once ('tiki-admin_include_sefurl.php');
-	} else if ($adminpPage == 'workspaces') {
-	    	$admintitle = 'Workspaces';
+	} else if ($adminPage == 'workspaces') {
+		$admintitle = 'Workspaces';
 		$description = 'Workspaces in Tiki';
 		$helpUrl = "Workspaces";
 		include_once ('tiki-admin_include_workspaces.php');

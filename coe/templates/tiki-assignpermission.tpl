@@ -79,7 +79,7 @@
 			<tr>
 				<th>&nbsp;</th>
 				<th>{tr}Name{/tr}</th>
-				<th {if $advanced_features ne 'y'}style="display:none;"{else}style="display:block;"{/if}>{tr}level{/tr}</th>
+				{if $advanced_features eq 'y'}<th>{tr}level{/tr}</th>{/if}
 				<th>{tr}Type{/tr}</th>
 				<th>{tr}Desc{/tr}</th>
 			</tr>
@@ -100,9 +100,11 @@
 						{if $inherited_from_anon[user].hasPerm eq 'y' or $inherited_from_reg[user].hasPerm eq 'y' or $has_inherited_one_perm eq 'y' or $perms[user].from_admin eq 'y'}disabled="disabled" {/if}/>
 					</td>
 					<td class="{cycle advance=false}">{$perms[user].permName}</td>
-					<td class="{cycle advance=false}" {if $advanced_features ne 'y'}style="display:none;"{else}style="display:block;"{/if}>
+					{if $advanced_features eq 'y'}
+						<td class="{cycle advance=false}">
 						<select name="level[{$perms[user].permName}]">{html_options output=$levels values=$levels selected=$perms[user].level}</select>
-					</td>
+						</td>
+					{/if}
 					<td class="{cycle advance=false}">{tr}{$perms[user].type}{/tr}</td>
 					<td class="{cycle}">
 						{if $perms[user].from_admin eq 'y'}

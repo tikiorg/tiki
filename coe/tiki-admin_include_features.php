@@ -13,6 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 if (isset($_REQUEST["features"])) {
 	$features_toggles = array(
 		"feature_events", //2009-04-29 marclaporte: can we remove this?
+		"feature_workspaces", //2009-09-23 axold: temporarily solution until I readapt this
 	);
 	$pref_byref_values = array(
 		"user_flip_modules"

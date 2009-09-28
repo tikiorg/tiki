@@ -146,6 +146,48 @@ function FCKeditor_OnComplete( editorInstance ) {
 			."\n".'<input type="hidden" name="cols" value="'.$params['cols'].'"/>'
 			."\n".'<input type="hidden" name="wysiwyg" value="n" />';
 
+		if (0 && $prefs['feature_jquery_autocomplete'] == 'y') {
+			$headerlib->add_jq_onready("
+\$jq('#$textarea_id').bind('keypress.page_autocomplete', function(event) {
+	if (typeof lastKeyPressCode != 'undefined' && event.charCode == 40 && event.keyCode == lastKeyPressCode) { // ((
+		// create input for autocomplete
+		if (\$jq('#$textarea_id" . "_ac').length == 0) {
+			input = document.createElement('input');
+			\$jq(input).attr('type', 'text').attr('id', '$textarea_id" . "_ac').css('position', 'absolute') //.css('border', 'none')
+				.autocomplete('tiki-listpages.php?listonly',
+						{extraParams: {'httpaccept': 'text/javascript'},
+						 dataType: 'json',
+						 parse: parseAutoJSON,
+						 formatItem: function(row) { return row; }
+						})
+				.bind('keyup.page_autocomplete_ac', function ( event ) {
+					if (event.keyCode == 9 || event.keyCode == 13) {
+						var pname = \$jq(this).val();
+						\$jq(this).hide();
+						\$jq('#$textarea_id').focus();
+						insertAt('$textarea_id', pname + '))');
+						return false;
+					}
+				}).blur( function (event) {
+					//\$jq(this).hide();
+					\$jq('#$textarea_id').focus();
+				});
+			\$jq('#$textarea_id').parent().append(input);
+		}
+		var off = textarea_cursor_offset(\$jq('#$textarea_id')[0]);
+		\$jq('#$textarea_id" . "_ac').val('')
+			.css('left', off.left + 0).css('top', off.top - 0).css('z-index', 99)
+			.show().focus();
+	} else {
+		// track last key pressed
+		lastKeyPressCode = event.keyCode;
+	}
+});
+
+
+");
+		}
+
 	}	// wiki or wysiwyg
 
 

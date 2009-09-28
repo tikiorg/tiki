@@ -27,6 +27,10 @@
 
 	{self_link page="metatags" _class="admbox" _style="background-image: url('pics/large/metatags48x48.png')" _title="{tr}Meta Tags{/tr}"}<span>{tr}Meta Tags{/tr}</span>{/self_link}
 
+	{self_link page="performance" _class="admbox" _style="background-image: url('img/mytiki/admin.gif')" _title="{tr}Performance{/tr}"}<span>{tr}Performance{/tr}</span>{/self_link}
+
+	{self_link page="security" _class="admbox" _style="background-image: url('pics/large/gnome-lockscreen48x48.png')" _title="{tr}Security{/tr}"}<span>{tr}Security{/tr}</span>{/self_link}
+	
 	{self_link page="rss" _class="admbox" _style="background-image: url('pics/large/gnome-globe48x48.png')" _title="{tr}RSS{/tr}"}<span>{tr}RSS{/tr}</span>{/self_link}
 
 	{self_link page="community" _class="admbox" _style="background-image: url('pics/large/users48x48.png')" _title="{tr}Community{/tr}"}<span>{tr}Community{/tr}</span>{/self_link}

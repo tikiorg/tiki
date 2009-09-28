@@ -66,6 +66,21 @@ if ( !empty($_REQUEST['save_tool']) && !empty($_REQUEST['tool_name'])) {	// inpu
 $current = $tikilib->get_preference( 'toolbar_' . $section . ($comments ? '_comments' : '') );
 if (empty($current)) {
 	$current = $tikilib->get_preference( 'toolbar_global' . ($comments ? '_comments' : '') );
+	$smarty->assign('not_global', false);
+} else {
+	$smarty->assign('not_global', true);
+}
+$smarty->assign('not_default', false);
+if ($section == 'global') {
+	global $cachelib;
+	if( isset($cachelib) && $cachelib->isCached("tiki_default_preferences_cache") ) {
+		$defprefs = unserialize( $cachelib->getCached("tiki_default_preferences_cache") );
+		if ( $defprefs !== false ) {
+			if ($defprefs['toolbar_global' . ($comments ? '_comments' : '')] != $current) {
+				$smarty->assign('not_default', true);
+			}
+		}
+	}
 }
 
 if ( !empty($_REQUEST['delete_tool']) && !empty($_REQUEST['tool_name'])) {	// input from the tool edit form
@@ -176,6 +191,7 @@ var item;
 		}
 	},
 	receive: function(event, ui) {
+		\$jq(ui.item).css('float', '');
 		if (\$jq(ui.item).text() == '-') {
 			\$jq(this).children().remove('.qt--');				// remove all seps
 			\$jq(this).prepend(\$jq(ui.item).clone());			// put one back at the top
@@ -184,8 +200,26 @@ var item;
 			\$jq(ui.item).dblclick(function() { showToolEditForm(ui.item); });
 			\$jq(ui.item).trigger('dblclick');
 		}
+		sortList(this);
+	},
+	stop: function (event, ui) {
+		sortList(this);
 	}
 });
+sortList = function (list) {
+	var arr = \$jq(list).children().get();
+	arr.sort( function(a, b) {
+		var labelA = \$jq(a).text().toUpperCase();
+		var labelB = \$jq(b).text().toUpperCase();
+		if (labelA < labelB) { return -1 }
+		if (labelA > labelB) { return 1 }
+		return 0;
+	});
+	\$jq(list).empty();
+	for (item in arr) {
+		\$jq(list).append(arr[item]);
+	}
+}
 \$jq('#full-list-c').sortable({	// custom tools list
 	connectWith: '.lists'
 }).children().each(function() {	// add double click action
@@ -289,26 +323,19 @@ saveRows = function() {
 	\$jq('#qt-form-field').val(ser.replace(',,', ','));
 }
 
-\$jq('#qt_filter_div_w input').click( function () {	// non-plugins	
-	\$jq('#full-list-w').children().each( function() {	
-		if (((\$jq('#qt_filter_div_w .qt-wiki-filter').attr('checked') && \$jq(this).hasClass('qt-wiki')) ||
-			 (\$jq('#qt_filter_div_w .qt-wys-filter').attr('checked') && \$jq(this).hasClass('qt-wys')))) {
-			\$jq(this).show();	
-		} else {
-			\$jq(this).hide();	
-		}
-	});
-});
-\$jq('#qt_filter_div_p input').click( function () {	// non-plugins	
-	\$jq('#full-list-p').children().each( function() {
-				
-		if (((\$jq('#qt_filter_div_p .qt-wiki-filter').attr('checked') && \$jq(this).hasClass('qt-wiki')) ||
-			 (\$jq('#qt_filter_div_p .qt-wys-filter').attr('checked') && \$jq(this).hasClass('qt-wys')))) {
-			\$jq(this).show();	
-		} else {
-			\$jq(this).hide();	
-		}
-	});
+// view mode filter
+
+\$jq('#view_mode').change( function () {
+	if (\$jq(this).val() == 'both') {
+		\$jq('.qt-wiki').show();
+		\$jq('.qt-wys').show();
+	} else if (\$jq(this).val() == 'wiki') {
+		\$jq('.qt-wys').hide();
+		\$jq('.qt-wiki').show();
+	} else if (\$jq(this).val() == 'wysiwyg') {
+		\$jq('.qt-wiki').hide();
+		\$jq('.qt-wys').show();
+	}
 });
 
 JS
@@ -321,6 +348,10 @@ if (!in_array('-', $display_w)) {
 }
 $display_p = array_diff($qt_p_list,$usedqt);
 $display_c = array_diff($customqt,$usedqt);
+
+sort($display_c);
+sort($display_p);
+sort($display_w);
 
 $headerlib->add_cssfile('css/admin.css');
 

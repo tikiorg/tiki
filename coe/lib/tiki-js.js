@@ -1211,7 +1211,7 @@ function build_plugin_form( type, index, pageName, pluginArgs, bodyContent )
       continue;
 
     var row = table.insertRow( rowNumber++ );
-    build_plugin_form_row(row, param, meta.params[param].name, meta.params[param].required, pluginArgs[param], meta.params[param].description)	
+    build_plugin_form_row(row, param, meta.params[param].name, meta.params[param].required, pluginArgs[param], meta.params[param].description, meta.params[param].options ? meta.params[param].options : null);
 
     delete potentiallyExtraPluginArgs[param];
   }
@@ -1260,7 +1260,7 @@ function build_plugin_form( type, index, pageName, pluginArgs, bodyContent )
 }
 
 
-function build_plugin_form_row(row, name, label_name, requiredOrSpecial, value, description)
+function build_plugin_form_row(row, name, label_name, requiredOrSpecial, value, description, options)
 {
 
     var label = row.insertCell( 0 );
@@ -1275,12 +1275,26 @@ function build_plugin_form_row(row, name, label_name, requiredOrSpecial, value, 
 	      label.style.fontStyle = 'italic';
     }
 
-    var input = document.createElement( 'input' );
-    input.type = 'text';
-    input.name = 'params['+name+']'; 
-    if( value )
-      input.value = value;
-
+    var input;
+	if (options) {
+		input = document.createElement('select');
+		input.name = 'params[' + name + ']';
+		for (var o in options) {
+			var opt = document.createElement('option');
+			opt.value = options[o].value;
+			opt.text = options[o].text;
+			if (value && opt.value == value) {
+				opt.selected = true;
+			}
+			input.appendChild(opt);
+		}
+	} else {
+		input = document.createElement('input');
+		input.type = 'text';
+		input.name = 'params[' + name + ']';
+		if (value) 
+			input.value = value;
+	}
     var desc = document.createElement( 'div' );
     desc.style.fontSize = 'x-small';
     desc.innerHTML = description; 

@@ -24,18 +24,32 @@ function wikiplugin_img_info() {
 			),
 			'src' => array(
 				'required' => false,
-				'name' => tra('Image Source'),
+				'name' => tra('Image source'),
 				'description' => tra('Full URL to the image to display. "id", "fileId", "attId" or "src" required.'),
 			),
 			'thumb' => array(
 				'required' => false,
 				'name' => tra('Thumbnail'),
 				'description' => tra('Makes the image a thumbnail. Will link to the full size image unless "link" is set. Parameter options indicate how the full image will be displayed: "shadowbox", "mouseover", "mousesticky", "popup", "browse" and "browsepopup" (only works with image gallery) and "plain". '),
+				'options' => array(
+					array('text' => tra('None'), 'value' => ''), 
+					array('text' => tra('Shadowbox'), 'value' => 'shadowbox', 'description' => tra('Full size image will open in a shadowbox when thumbnail is clicked.')), 
+					array('text' => tra('Mouse Over'), 'value' => 'mouseover', 'description' => tra('Full size image will pop up while cursor is over the thumbnail (and disappear when not).')), 
+					array('text' => tra('Mouse Over (Sticky)'), 'value' => 'mousesticky', 'description' => tra('Full size image will pop up once cursor passes over thumbnail and will remain up unless cursor passes over full size popup.')), 
+					array('text' => tra('Popup'), 'value' => 'popup', 'description' => tra('Full size image will open in a separate winow or tab (depending on browser settings) when thumbnail is clicked.')), 
+					array('text' => tra('Browse'), 'value' => 'browse', 'description' => tra('Image gallery browse window for the image will open when the thumbnail is clicked if the image is in a Tiki image gallery')), 
+					array('text' => tra('Browse Popup'), 'value' => 'browsepopup', 'description' => tra('Same as "browse" except that the page opens in a new window or tab.')), 
+					array('text' => tra('Plain'), 'value' => 'plain', 'description' => tra('Full size image appears on a new blank page when thumbnail is clicked.')), 
+				),
 			),
 			'button' => array(
 				'required' => false,
 				'name' => tra('Enlarge button'),
 				'description' => tra('Button for enlarging image. Set to "y" for it to appear. If thumb is set, then same method as thumb will be used to enlarge, except if mouseover or mousesticky is used. If thumb is not set or set to mouseover or mousesticky, then choice of "shadowbox", "popup", "browse" and "browsepopup" (for image gallery), and "plain".'),
+				'options' => array(
+					array('text' => tra('None'), 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+				),
 			),
 			'link' => array(
 				'required' => false,
@@ -44,12 +58,12 @@ function wikiplugin_img_info() {
 			),
 			'rel' => array(
 				'required' => false,
-				'name' => tra('Link Relation'),
+				'name' => tra('Link relation'),
 				'description' => tra('"rel" attribute to add to the link. Overrides any shadowbox settings from the thumb or button parameters'),
 			),
 			'usemap' => array(
 				'required' => false,
-				'name' => tra('Image Map'),
+				'name' => tra('Image map'),
 				'description' => tra('Name of the image map to use for the image.'),
 			),
 			'height' => array(
@@ -67,10 +81,32 @@ function wikiplugin_img_info() {
 				'name' => tra('Maximum image size'),
 				'description' => tra('Maximum height or width in pixels (largest dimension is scaled). Overrides height and width settings.'),
 			),
+			'imalign' => array(
+				'required' => false,
+				'name' => tra('Align image'),
+				'description' => tra('Enter right, left or center to align the image itself. If the image is inside a box (because stylebox, desc or button has been set), then you should align the box using the align parameter.'),
+				'options' => array(
+					array('text' => tra('None'), 'value' => ''), 
+					array('text' => tra('Right'), 'value' => 'right'), 
+					array('text' => tra('Left'), 'value' => 'left'), 
+					array('text' => tra('Center'), 'value' => 'center'), 
+				),
+			),
 			'styleimage' => array(
 				'required' => false,
 				'name' => tra('Image style'),
 				'description' => tra('Enter "border" to place a dark gray border around the image. Otherwise enter CSS styling syntax for other style effects.'),
+			),
+			'align' => array(
+				'required' => false,
+				'name' => tra('Align image block'),
+				'description' => tra('Enter right, left or center to align the box containing the image.'),
+				'options' => array(
+					array('text' => tra('None'), 'value' => ''), 
+					array('text' => tra('Right'), 'value' => 'right'), 
+					array('text' => tra('Left'), 'value' => 'left'), 
+					array('text' => tra('Center'), 'value' => 'center'), 
+				),
 			),
 			'stylebox' => array(
 				'required' => false,
@@ -86,10 +122,16 @@ function wikiplugin_img_info() {
 				'required' => false,
 				'name' => tra('Alignment'),
 				'description' => tra('Whether to block items from flowing next to image from the top or bottom. (top,bottom,both,none)'),
+				'options' => array(
+					array('text' => tra('None'), 'value' => ''), 
+					array('text' => tra('Top'), 'value' => 'top'), 
+					array('text' => tra('Bottom'), 'value' => 'bottom'), 
+					array('text' => tra('Both'), 'value' => 'both'), 
+				),
 			),
 			'class' => array(
 				'required' => false,
-				'name' => tra('CSS Class'),
+				'name' => tra('CSS class'),
 				'description' => tra('CSS class to apply to the image'."'".'s img tag. (Usually used in configuration rather than on individual images.)'),
 			),
 			'desc' => array(
@@ -107,16 +149,6 @@ function wikiplugin_img_info() {
 				'name' => tra('Image alt text'),
 				'description' => tra('Alternate text to display if impossible to load the image.'),
 			),
-			'align' => array(
-				'required' => false,
-				'name' => tra('Align image block'),
-				'description' => tra('Enter right, left or center to align the box containing the image.'),
-			),
-			'imalign' => array(
-				'required' => false,
-				'name' => tra('Align image'),
-				'description' => tra('Enter right, left or center to align the image itself. If the image is inside a box (because stylebox, desc or button has been set), then you should align the box using the align parameter.'),
-			),
 		),
 	);
 }
@@ -132,7 +164,11 @@ function wikiplugin_img_info() {
 		global $imagesize;
         $imagesize = getimagesize($tempfile, $otherinfo); #get image params from the tempfile
 		global $iptc;
-		$iptc = iptcparse($otherinfo['APP13']);
+		if (!empty($otherinfo['APP13'])) {
+			$iptc = iptcparse($otherinfo['APP13']);
+		} else {
+			$iptc = '';
+		}
         unlink($tempfile); // this removes the tempfile
 	}
  
@@ -155,7 +191,9 @@ function wikiplugin_img_info() {
 	$imgdata['height'] = '';
 	$imgdata['width'] = '';
 	$imgdata['max'] = '';
+	$imgdata['imalign'] = '';
 	$imgdata['styleimage'] = '';
+	$imgdata['align'] = '';	
 	$imgdata['stylebox'] = '';
 	$imgdata['styledesc'] = '';
 	$imgdata['block'] = '';
@@ -163,8 +201,6 @@ function wikiplugin_img_info() {
 	$imgdata['desc'] = '';
 	$imgdata['title'] = '';
 	$imgdata['alt'] = '';
-	$imgdata['align'] = '';	
-	$imgdata['imalign'] = '';
 	
 	$imgdata = array_merge( $imgdata, $params );
 
@@ -266,7 +302,7 @@ function wikiplugin_img_info() {
 	} else {
 	////////////////////////////////////////////// Default parameter and variable settings.//////////////////////////////////////////////	
 		// Set styling defaults
-		$thumbdef = 100;                          //Thumbnail height max when none is set
+		$thumbdef = 84;                          //Thumbnail height max when none is set
 		$descdef = 'font-size:12px; line-height:1.5em;';		//default text style for description
 		$descheightdef = 'height:15px';           //To set room for enlarge button under image if there is no description
 		$borderdef = 'border:1px solid darkgray;';   //default border when styleimage set to border
@@ -298,7 +334,8 @@ function wikiplugin_img_info() {
 		$imagegalpath = 'show_image.php?id=';
 		$filegalpath = 'tiki-download_file.php?fileId=';
 		$attachpath = 'tiki-download_wiki_attachment.php?attId=';
-		
+		$repl = '';
+
 	/////////////////////////////////////////////// Label images and set id variable based on location////////////////////////////
 		// Set id's if user set path in src instead of id for images in file galleries, image galleries and attachments 
 		//This is so we can get db info
@@ -445,8 +482,8 @@ function wikiplugin_img_info() {
 			//Set variables for height, width and iptc data from image data
 			$fwidth = $imagesize[0];
 			$fheight = $imagesize[1];
-			$idesc = trim($iptc['2#120'][0]);		//description from image iptc
-			$ititle = trim($iptc['2#005'][0]);		//title from image iptc
+			$idesc = isset($iptc['2#120'][0]) ? trim($iptc['2#120'][0]) : '';		//description from image iptc
+			$ititle = isset($iptc['2#005'][0]) ? trim($iptc['2#005'][0]) : '';		//title from image iptc
 			
 
 		// URL of original image
@@ -587,6 +624,7 @@ function wikiplugin_img_info() {
 	////////////////////////////////////////// Create the HTML link ////////////////////////////////////////////////////////////////////////
 		// Set link to user setting or to image itself if thumb is set
 		if (!empty($imgdata['link']) || !empty($imgdata['thumb'])) {
+			$mouseover = '';
 			if (!empty($imgdata['link'])) {
 				$link = $imgdata['link'];
 			} elseif ((($imgdata['thumb'] == 'browse') || ($imgdata['thumb'] == 'browsepopup')) && !empty($imgdata['id'])) {
@@ -619,6 +657,8 @@ function wikiplugin_img_info() {
 				$linkrel = ' rel="'.$imgdata['rel'].'"';
 			} elseif ($imgdata['thumb'] == 'shadowbox') {
 				$linkrel = ' rel="shadowbox; type=img"';
+			} else {
+				$linkrel = '';
 			}
 			// title
 			if ( !empty($imgtitle) ) {
@@ -627,7 +667,7 @@ function wikiplugin_img_info() {
 				$linktitle = '';
 			}
 			//Final link string
-			$replimg = $script . "\r\t" . '<a href="' . $link . '" class="internal"' . $linkrel . $imgtarget . $linktitle . $mouseover . $sticky . '>' . $replimg . '</a>';
+			$replimg = '<a href="' . $link . '" class="internal"' . $linkrel . $imgtarget . $linktitle . $mouseover . '>' . $replimg . '</a>';
 		}
 		
 		//Add link string to rest of string
@@ -702,6 +742,7 @@ function wikiplugin_img_info() {
 			//Make the div surrounding the image 2 pixels bigger than the image
 			$boxwidth = $width + 2;
 			$boxheight = $height + 2;
+			$alignbox = '';
 			if (!empty($imgdata['align'])) {
 				if ($imgdata['align'] == 'center') {
 					$alignbox = $center;
@@ -754,10 +795,10 @@ function wikiplugin_img_info() {
 			} 
 		} 
 		// Mobile
-		if($_REQUEST['mode'] == 'mobile') {
+		if(isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile') {
 			$repl = '{img src=' . $imgdata['src'] . "\"}\n<p>" . $imgdata['desc'] . '</p>'; 
 		}
-		return $repl;
+		return '~np~'.$repl.'~/np~';
 	}
 }
 ?>

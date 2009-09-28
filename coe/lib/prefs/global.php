@@ -51,5 +51,32 @@ function prefs_global_list() {
 			'type' => 'list',
 			'options' => $map,
 		),
+		'cachepages' => array(
+			'name' => tra('Cache external pages'),
+			'description' => tra('Cache external pages'),
+			'type' => 'flag',
+		),
+		'cacheimages' => array(
+			'name' => tra('Cache external images'),
+			'description' => tra('Cache external images'),
+			'type' => 'flag',
+		),
+		'tmpDir' => array(
+			'name' => tra('Temporary directory'),
+			'description' => tra('Temporary directory'),
+			'type' => 'text',
+			'size' => 30,
+			'default' => TikiSetup::tempdir(),
+		),
+		'helpurl' => array(
+			'name' => tra('Help URL'),
+			'description' => tra('The default help system may not be complete. You can help with the TikiWiki documentation.'),
+			'help' => 'Welcome+Authors',
+			'type' => 'text',
+			'size' => '50',
+			'dependencies' => array(
+				'feature_help',
+			),
+		),
 	);
 }

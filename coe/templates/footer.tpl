@@ -15,10 +15,9 @@
 		{* Include debugging console.*}
 		{debugger}
 	{/if}
-	
+
 	{if $prefs.feature_phplayers eq 'y' and isset($phplayers_LayersMenu)}
 		{$phplayers_LayersMenu->printHeader()}
 		{$phplayers_LayersMenu->printFooter()}
 	{/if}
 {/if}
-

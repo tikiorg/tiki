@@ -4,18 +4,30 @@
 <div>
 {else}
 <div id="comments">
-<div
 {if $pagemd5}
 	{assign var=cookie_key value="show_comzone$pagemd5"}
-	id="comzone{$pagemd5}"
 {else}
 	{assign var=cookie_key value="show_comzone"}
+{/if}
+{*Debug:<br />
+comments_show: {$comments_show}<br />
+show_comzone: {$show_comzone}<br />
+prefs.wiki_comments_displayed_default: {$prefs.wiki_comments_displayed_default}<br />
+prefs.show_comzone: {$prefs.show_comzone}<br />
+cookie_key: {$cookie_key}<br />
+smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$cookie_key}<br />*}
+<div
+{if $pagemd5}
+	id="comzone{$pagemd5}"
+{else}
 	id="comzone"
 {/if}
-{if (isset($smarty.session.tiki_cookie_jar.$cookie_key) and $smarty.session.tiki_cookie_jar.$cookie_key eq 'y') or (!isset($smarty.session.tiki_cookie_jar.$cookie_key) and $prefs.wiki_comments_displayed_default eq 'y') or (isset($prefs.show_comzone) and $prefs.show_comzone eq 'y') or $show_comzone eq 'y' or $show_comments or $edit_reply eq '1'}
-	style="display:block;"
+{if (isset($smarty.session.tiki_cookie_jar.$cookie_key) and $smarty.session.tiki_cookie_jar.$cookie_key neq 'y')} {* cookie gets stored here with JS only *}
+	style="display: none;"
+{elseif ((!isset($smarty.session.tiki_cookie_jar.$cookie_key) and $prefs.wiki_comments_displayed_default neq 'y' and $show_comzone neq 'y' and $comments_show neq 'y'))}
+	style="display: none;"
 {else}
-	style="display:none;"
+	style="display: block;"
 {/if}
 >
 {/if}

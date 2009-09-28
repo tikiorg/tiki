@@ -141,6 +141,8 @@ function wikiplugin_tracker_name($fieldId, $name, $field_errors) {
 }
 function wikiplugin_tracker($data, $params) {
 	global $tikilib, $userlib, $dbTiki, $user, $group, $page, $tiki_p_admin_trackers, $smarty, $prefs, $trklib;
+	static $iTRACKER = 0;
+	++$iTRACKER;
 	include_once('lib/trackers/trackerlib.php');
 	
 	//var_dump($_REQUEST);
@@ -264,7 +266,7 @@ function wikiplugin_tracker($data, $params) {
 	$back = '';
 	$js = '';
 
-	$thisIsThePlugin = isset($_REQUEST['trackit']) && $_REQUEST['trackit'] == $trackerId && ((isset($_REQUEST['fields']) && isset($params['fields']) && $_REQUEST['fields'] == $params['fields']) || (!isset($_REQUEST['fields']) && !isset($params['fields'])));
+	$thisIsThePlugin = isset($_REQUEST['iTRACKER']) && $_REQUEST['iTRACKER'] == $iTRACKER;
 
 	if (!isset($_REQUEST["ok"]) || $_REQUEST["ok"]  == "n" || !$thisIsThePlugin || isset($_REQUEST['tr_preview'])) {
 	
@@ -360,13 +362,11 @@ function wikiplugin_tracker($data, $params) {
 						$flds['data'][$cpt]['value'] = $_REQUEST['track'][$fl['fieldId']];
 					} else {
 						$flds['data'][$cpt]['value'] = '';
-						if ($fl['type'] == 'c' && (empty($fields_plugin) || in_array($fl['fieldId'], $fields_plugin))) {
+						if ($fl['type'] == 'c') {
 							$_REQUEST['track'][$fl['fieldId']] = 'n';
-						} elseif ($fl['type'] == 'R' && $fl['isMandatory'] == 'y' && !isset($_REQUEST['track'][$fl['fieldId']])) {
+						} elseif ($fl['type'] == 'R' && $fl['isMandatory'] == 'y') {
 							// if none radio is selected, there will be no value and no error if mandatory
-							if (empty($fields_plugin) || in_array($fl['fieldId'], $fields_plugin)) {
-								$_REQUEST['track'][$fl['fieldId']] = '';
-							}
+							$_REQUEST['track'][$fl['fieldId']] = '';
 						}
 					}
 					if (!empty($_REQUEST['other_track'][$fl['fieldId']])) {
@@ -505,10 +505,8 @@ function wikiplugin_tracker($data, $params) {
 					}
 					if (empty($url)) {
 						if (!empty($page)) {
-							$url = "tiki-index.php?page=".urlencode($page)."&ok=y&trackit=$trackerId";
-							if (!empty($params['fields']))
-								$url .= "&fields=".urlencode($params['fields']);
-							$url .= "#wikiplugin_tracker$trackerId";
+							$url = "tiki-index.php?page=".urlencode($page)."&ok=y&iTRACKER=$iTRACKER";
+							$url .= "#wikiplugin_tracker$iTRACKER";
 							header("Location: $url");
 							die;
 						} else {
@@ -671,11 +669,8 @@ function wikiplugin_tracker($data, $params) {
 				$back .= '~np~';
 			$smarty->assign_by_ref('tiki_p_admin_trackers', $perms['tiki_p_admin_trackers']);
 			$back.= '<form enctype="multipart/form-data" method="post"'.(isset($target)?' target="'.$target.'"':'').'><input type="hidden" name="trackit" value="'.$trackerId.'" />';
-			if (isset($fields))
-				$back .= '<input type="hidden" name="fields" value="'.$params['fields'].'" />';//if plugin inserted twice with the same trackerId
-			if (!empty($_REQUEST['page']))
-				$back.= '<input type="hidden" name="page" value="'.$_REQUEST["page"].'" />';
-			$back.= '<input type="hidden" name="refresh" value="1" />';
+			$back .= '<input type="hidden" name="iTRACKER" value="'.$iTRACKER.'" />';
+			$back .= '<input type="hidden" name="refresh" value="1" />';
 			if (isset($_REQUEST['page']))
 				$back.= '<input type="hidden" name="page" value="'.$_REQUEST["page"].'" />';
 			 // for registration
@@ -913,7 +908,7 @@ function wikiplugin_tracker($data, $params) {
 	else {
 		if (isset($_REQUEST['trackit']) and $_REQUEST['trackit'] == $trackerId)
 			$smarty->assign('wikiplugin_tracker', $trackerId);//used in vote plugin
-		$id = ' id="wikiplugin_tracker'.$trackerId.'"';
+		$id = ' id="wikiplugin_tracker'.$iTRACKER.'"';
 		if ($showtitle == 'y') {
 			$back.= '<div class="titlebar"'.$id.'>'.$tracker["name"].'</div>';
 			$id = '';
