@@ -316,6 +316,7 @@ foreach($groups['data'] as $row) {
 $smarty->assign('permGroups', implode(',', $permGroups));
 $smarty->assign('permGroupCols', $groupIndices);
 $smarty->assign('groupNames', implode(',', $groupNames));
+//$smarty->assign('groupInheritance', $groupInheritance);
 
 
 // Get the big list of permissions
@@ -421,45 +422,46 @@ $smarty->assign_by_ref('perms', $perms);
 
 $js = '';
 
-for( $i = 0; $i < count($groupNames); $i++) {
-
-	$groupName = $groupNames[$i];
-	$beneficiaries = '';
-	for( $j = 0; $j < count($groupInheritance); $j++) {
-		if (is_array($groupInheritance[$j]) && in_array($groupName, $groupInheritance[$j])) {
-			$beneficiaries .= !empty($beneficiaries) ? ',' : '';
-			$beneficiaries .= 'input[name="perm['.$groupNames[$j].'][]"]';
-		}
-	}
-	
-	$js .= <<< JS
-\$jq('input[name="perm[$groupName][]"]').each( function() { 		// each one of this group
-
-	if (\$jq(this).attr('checked')) {
-		\$jq('input[value="'+\$jq(this).val()+'"]').					// other checkboxes of same value (perm)
-			filter('$beneficiaries').									// which inherit from this
-			attr('checked',\$jq(this).attr('checked')).					// check and disable
-			attr('disabled',\$jq(this).attr('checked') ? 'disabled' : '');
-	}
-		
-	\$jq(this).click( function() {									// bind click event
-	
-		if (\$jq(this).attr('checked')) {
-			\$jq('input[value="'+\$jq(this).val()+'"]').			// same...
-				filter('$beneficiaries').
-				attr('checked','checked').							// check?
-				attr('disabled','disabled');						// disable
-		} else {
-			\$jq('input[value="'+\$jq(this).val()+'"]').			// same...
-				filter('$beneficiaries').
-				attr('checked','').									// check?
-				attr('disabled','');								// disable
-}
-	});
-});
-
-JS;
-}	// end of for $groupNames loop
+//for( $i = 0; $i < count($groupNames); $i++) {
+//
+//	$groupName = addslashes($groupNames[$i]);
+//	$beneficiaries = '';
+//	for( $j = 0; $j < count($groupInheritance); $j++) {
+//		if (is_array($groupInheritance[$j]) && in_array($groupName, $groupInheritance[$j])) {
+//			$beneficiaries .= !empty($beneficiaries) ? ',' : '';
+//			$beneficiaries .='input[name="perm['. addslashes($groupNames[$j]).'][]"]';
+//		}
+//	}
+//
+//	
+//	$js .= <<< JS
+//\$jq('input[name="perm[$groupName][]"]').each( function() { 		// each one of this group
+//
+//	if (\$jq(this).attr('checked')) {
+//		\$jq('input[value="'+\$jq(this).val()+'"]').					// other checkboxes of same value (perm)
+//			filter('$beneficiaries').									// which inherit from this
+//			attr('checked',\$jq(this).attr('checked')).					// check and disable
+//			attr('disabled',\$jq(this).attr('checked') ? 'disabled' : '');
+//	}
+//		
+//	\$jq(this).click( function() {									// bind click event
+//	
+//		if (\$jq(this).attr('checked')) {
+//			\$jq('input[value="'+\$jq(this).val()+'"]').			// same...
+//				filter('$beneficiaries').
+//				attr('checked','checked').							// check?
+//				attr('disabled','disabled');						// disable
+//		} else {
+//			\$jq('input[value="'+\$jq(this).val()+'"]').			// same...
+//				filter('$beneficiaries').
+//				attr('checked','').									// check?
+//				attr('disabled','');								// disable
+//}
+//	});
+//});
+//
+//JS;
+//}	// end of for $groupNames loop
 
 $maxGroupsToShow = 6;	// maybe a pref one day?
 if (count($groupNames) >= $maxGroupsToShow) {
