@@ -33,6 +33,6 @@ function smarty_function_select_all($params, &$smarty) {
 		. '<input name="switcher'.$id.'" id="clickall'.$id.'" type="checkbox" onclick="' . $onclick . '"'
 		. ( empty($params['label']) ? ' title="' . tra('Select All') . '"' : '' )
 		.'/>' . "\n"
-		. ( ! empty($params['label']) ? '<label for="clickall">' . $params['label'] . "</label>\n" : '' )
+		. ( ! empty($params['label']) ? '<label for="clickall'.$id.'">' . $params['label'] . "</label>\n" : '' )
 		. "</div>\n";
 }
