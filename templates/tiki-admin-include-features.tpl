@@ -80,46 +80,6 @@
 			</div>
 {/tab}
 			
-{* ---------- Experimental features ------------ *}
-{tab name="{tr}Experimental{/tr}"}
-			<div class="admin featurelist">
-				<fieldset>
-					<legend class="heading">{icon _id="accept"}<span>{tr}Seem ok{/tr}</span></legend>
-					<span class="description">{tr}Features that may change or might be re-worked in the future{/tr}</span>
-						{preference name=feature_ajax}
-						{preference name=feature_mobile}
-						{preference name=feature_morcego}
-						{preference name=feature_webmail}
-				</fieldset>
-
-				<fieldset>
-					<legend class="heading">{icon _id="error"}<span>{tr}Need polish{/tr}</span></legend>
-					<span class="description">{tr}Features that need admin help and user patience to work well{/tr}</span>
-						{preference name=feature_intertiki}
-						{preference name=feature_mailin}
-						{preference name=feature_wiki_mindmap}
-						{preference name=feature_print_indexed}
-						{preference name=feature_sefurl}
-						{preference name=feature_sheet}
-						{preference name=feature_wysiwyg}
-						{preference name=feature_ajax_autosave}
-						{preference name=feature_htmlpurifier_output}
-						{preference name=feature_multimedia}
-				</fieldset>
-
-				<fieldset>
-					<legend class="heading">{icon _id="exclamation"}<span>{tr}Malfunctioning{/tr}</span></legend>
-					<span class="description">{tr}These features have critical faults - not recommended{/tr}</span>
-						{preference name=feature_workspaces}
-				</fieldset>
-
-				<fieldset>
-					<legend class="heading">{icon _id="information_gray"}<span>{tr}Neglected{/tr}</span></legend>
-					<span class="description">{tr}Old features no longer maintained{/tr}</span>
-						{preference name=feature_friends}
-				</fieldset>
-			</div>
-{/tab}
 
 {* ---------- Administration features ------------ *}
 {tab name="{tr}Administration{/tr}"}
@@ -164,6 +124,48 @@
 			</div>
 {/tab}
 {/tabset}
+
+{* ---------- Experimental features ------------ *}
+{tab name="{tr}Experimental{/tr}"}
+			<div class="admin featurelist">
+				<fieldset>
+					<legend class="heading">{icon _id="accept"}<span>{tr}Seem ok{/tr}</span></legend>
+					<span class="description">{tr}Features that may change or might be re-worked in the future{/tr}</span>
+						{preference name=feature_ajax}
+						{preference name=feature_mobile}
+						{preference name=feature_morcego}
+						{preference name=feature_webmail}
+				</fieldset>
+
+				<fieldset>
+					<legend class="heading">{icon _id="error"}<span>{tr}Need polish{/tr}</span></legend>
+					<span class="description">{tr}Features that need admin help and user patience to work well{/tr}</span>
+						{preference name=feature_intertiki}
+						{preference name=feature_mailin}
+						{preference name=feature_wiki_mindmap}
+						{preference name=feature_print_indexed}
+						{preference name=feature_sefurl}
+						{preference name=feature_sheet}
+						{preference name=feature_wysiwyg}
+						{preference name=feature_ajax_autosave}
+						{preference name=feature_htmlpurifier_output}
+						{preference name=feature_multimedia}
+				</fieldset>
+
+				<fieldset>
+					<legend class="heading">{icon _id="exclamation"}<span>{tr}Malfunctioning{/tr}</span></legend>
+					<span class="description">{tr}These features have critical faults - not recommended{/tr}</span>
+						{preference name=feature_workspaces}
+				</fieldset>
+
+				<fieldset>
+					<legend class="heading">{icon _id="information_gray"}<span>{tr}Neglected{/tr}</span></legend>
+					<span class="description">{tr}Old features no longer maintained{/tr}</span>
+						{preference name=feature_friends}
+				</fieldset>
+			</div>
+{/tab}
+
 
 	<div class="input_submit_container" style="margin-top: 5px; text-align: center">
 		<input type="submit" name="features" value="{tr}Apply{/tr}" />
