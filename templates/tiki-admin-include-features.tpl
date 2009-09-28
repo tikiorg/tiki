@@ -22,7 +22,6 @@
 			<div class="admin clearfix featurelist">
 				{preference name=feature_wiki}
 				{preference name=feature_blogs}
-				{preference name=feature_galleries}
 				{preference name=feature_file_galleries}
 				{preference name=feature_articles}
 				{preference name=feature_forums}
@@ -53,7 +52,6 @@
 			<legend>{tr}Additional{/tr}</legend>
 
 			<div class="admin featurelist">
-				{preference name=feature_faqs}
 				{preference name=feature_surveys}
 				{preference name=feature_directory}
 				{preference name=feature_quizzes}
@@ -63,7 +61,6 @@
 				{preference name=feature_gmap}
 				{preference name=feature_live_support}
 				{preference name=feature_tell_a_friend}
-				{preference name=feature_html_pages}
 				{preference name=feature_contact}
 				{preference name=feature_minichat}
 				{preference name=feature_comments_moderation}
@@ -134,6 +131,14 @@
 {tab name="{tr}Experimental{/tr}"}
 			<div class="admin featurelist">
 				<fieldset>
+					<legend class="heading">{icon _id="accept"}<span>{tr}Phased out{/tr}</span></legend>
+					<span class="description">{tr}These features generally work but will probably be phased out in the future, because they are superseded by other features or because of evolution in Web technology{/tr}</span>
+						{preference name=feature_html_pages}
+						{preference name=feature_galleries}
+						{preference name=feature_faqs}
+				</fieldset>
+
+				<fieldset>
 					<legend class="heading">{icon _id="accept"}<span>{tr}Seem ok{/tr}</span></legend>
 					<span class="description">{tr}Features that may change or might be re-worked in the future{/tr}</span>
 						{preference name=feature_ajax}
@@ -153,7 +158,6 @@
 						{preference name=feature_sheet}
 						{preference name=feature_wysiwyg}
 						{preference name=feature_ajax_autosave}
-						{preference name=feature_multimedia}
 				</fieldset>
 
 				<fieldset>
@@ -166,6 +170,7 @@
 					<legend class="heading">{icon _id="information_gray"}<span>{tr}Neglected{/tr}</span></legend>
 					<span class="description">{tr}Old features no longer maintained{/tr}</span>
 						{preference name=feature_friends}
+						{preference name=feature_multimedia}
 				</fieldset>
 			</div>
 {/tab}
