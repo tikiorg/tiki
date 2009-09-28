@@ -118,6 +118,9 @@ class TransitionLib
 
 	private function expandGuards( $transition ) {
 		$transition['guards'] = json_decode( $transition['guards'], true );
+		if( ! $transition['guards'] ) {
+			$transition['guards'] = array();
+		}
 
 		return $transition;
 	}

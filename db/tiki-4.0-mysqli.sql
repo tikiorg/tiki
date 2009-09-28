@@ -3435,7 +3435,7 @@ CREATE TABLE `tiki_transitions` (
 	`type` varchar(20) NOT NULL,
 	`from` varchar(255) NOT NULL,
 	`to` varchar(255) NOT NULL,
-	`guards` text NOT NULL DEFAULT '[]',
+	`guards` text,
 	PRIMARY KEY(`transitionId`),
 	KEY `transition_lookup` (`type`, `from`)
 ) ENGINE=MyISAM;
