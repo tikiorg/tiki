@@ -20,11 +20,6 @@
 </div>
 
 <div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="feature_smileys" name="feature_smileys" {if $prefs.feature_smileys eq 'y'}checked="checked" {/if}/> </div>
-	<div class="adminoptionlabel"><label for="feature_smileys">{tr}Smileys{/tr} </label>{if $prefs.feature_help eq 'y'} {help url="Smiley"}{/if}</div>
-</div>
-
-<div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" id="feature_wiki_ext_icon" name="feature_wiki_ext_icon" {if $prefs.feature_wiki_ext_icon eq 'y'}checked="checked"{/if}/></div>
 	<div class="adminoptionlabel"><label for="feature_wiki_ext_icon">{tr}External link icon{/tr}</label>
 		<br /><em>{tr}External links will be identified with{/tr}: </em><img border="0" class="externallink" src="img/icons/external_link.gif" alt=" (external link)" />.
@@ -38,25 +33,16 @@
 	</div>
 </div>
 
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" name="feature_filegals_manager" id="feature_filegals_manager" {if $prefs.feature_filegals_manager eq 'y'}checked="checked" {/if}/> </div>
-	<div class="adminoptionlabel"><label for="feature_filegals_manager">{tr}Use File Galleries to store pictures {/tr}.</label></div>
-</div>
+{preference name=feature_filegals_manager}
+{preference name=feature_dynamic_content}
 
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="feature_dynamic_content" name="feature_dynamic_content" {if $prefs.feature_dynamic_content eq 'y'}checked="checked" {/if}/> </div>
-	<div class="adminoptionlabel"><label for="feature_dynamic_content">{tr}Dynamic Content System{/tr} </label>{if $prefs.feature_help eq 'y'} {help url="Dynamic+Content"}{/if}</div>
-</div>
-
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" name="feature_comments_post_as_anonymous" id="feature_comments_post_as_anonymous"{if $prefs.feature_comments_post_as_anonymous eq 'y'} checked="checked" {/if}/> </div>
-	<div class="adminoptionlabel"><label for="feature_comments_post_as_anonymous">{tr}Allow to post comments as Anonymous{/tr} </label>{if $prefs.feature_help eq 'y'} {help url="Post+Comments+as+Anonymous"}{/if}</div>
-</div>
 </fieldset>
 
 <fieldset><legend>{tr}Wiki syntax{/tr}{if $prefs.feature_help eq 'y'} {help url="Wiki+Syntax"}{/if}</legend>
 
-<div class="adminoptionbox">
+{preference name=feature_smileys}
+
+	<div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" id="feature_wiki_paragraph_formatting" name="feature_wiki_paragraph_formatting" {if $prefs.feature_wiki_paragraph_formatting eq 'y'}checked="checked" {/if}onclick="flip('usewikiparaformat');" /></div>
 	<div class="adminoptionlabel"><label for="feature_wiki_paragraph_formatting">{tr}Wiki paragraph formatting{/tr}</label></div>
 <div class="adminoptionboxchild" id="usewikiparaformat" style="display:{if $prefs.feature_wiki_paragraph_formatting eq 'y'}block{else}none{/if};">

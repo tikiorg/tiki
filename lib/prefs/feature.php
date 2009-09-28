@@ -222,6 +222,12 @@ function prefs_feature_list() {
 			'help' => 'Comments',
 			'type' => 'flag',
 		),
+		'feature_comments_post_as_anonymous' => array(
+			'name' => tra('Allow to post comments as Anonymous'),
+			'description' => tra('Permit anonymous visitors to add a comment without needing to create an account'),
+			'help' => 'Comments',
+			'type' => 'flag',
+		),
 		'feature_wiki_description' => array(
 			'name' => tra('Display page description'),
 			'description' => tra('Display the page description below the heading when viewing the page.'),
@@ -628,5 +634,23 @@ function prefs_feature_list() {
 			'description' => tra('Show clickable URLs to translate the page to another language using Babel Fish website.'),
 			'type' => 'flag',
 		),
+		'feature_smileys' => array(
+			'name' => tra('Smileys'),
+			'description' => tra('Also known as emoticons'),
+			'help' => 'Smileys',
+			'type' => 'flag',
+		),
+		'feature_dynamic_content' => array(
+			'name' => tra('Dynamic Content System'),
+			'description' => tra('Bloc of content which can be reused and programmed (timed)'),
+			'help' => 'Dynamic+Content',
+			'type' => 'flag',
+		),
+		'feature_filegals_manager' => array(
+			'name' => tra('Use File Galleries to store pictures'),
+			'type' => 'flag',
+		),
 	);
 }
+
+

@@ -60,11 +60,13 @@
 				{preference name=feature_html_pages}
 				{preference name=feature_contact}
 				{preference name=feature_minichat}
+				{preference name=feature_purifier}
 				{preference name=feature_comments_moderation}
 				{preference name=feature_comments_locking}
-				{preference name=feature_purifier}
+				{preference name=feature_comments_post_as_anonymous}				
 			</div>
 {/tab}
+
 
 {* ---------- User interface enhancement ------------ *}
 {tab name="{tr}User Interface{/tr}"}
