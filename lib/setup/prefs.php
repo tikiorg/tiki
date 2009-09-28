@@ -38,6 +38,8 @@ function get_default_prefs() {
 
 		'feature_print_indexed' => 'n',  //Still needs to be in admin panel somwhere
 
+		'groups_are_emulated' => 'n',
+
 		// wiki
 		'feature_wiki' => 'y',
 		'default_wiki_diff_style' => 'sidediff',
