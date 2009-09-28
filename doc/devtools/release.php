@@ -851,7 +851,8 @@ function display_howto() {
    HOWTO release Tiki
 --------------------------
 
-0/ When branching for 4.x, call it branches/4.x to be clearer than branches/3.0, because branches/4.x is indeed 4.1, 4.2, etc.
+0/ When branching for 4.x, call it branches/4 or branches/4.x (to be discussed) to be clearer than 
+   branches/3.0, because branches/4.x is indeed 4.1, 4.2, etc.
 
 1/ Preliminary manual tasks
    - run the tiki installer and correct anything obviously wrong
@@ -891,8 +892,8 @@ function display_howto() {
    http://sourceforge.net/apps/trac/sourceforge/wiki/Release%20files%20for%20download
 
 7/ Announce the good news on devel mailing-list
-   and ask the TAG (TikiWiki Admin Group) through the admin mailing-list
-   to launch the announce-speading process (Freshmeat, SourceForge and tikiwiki.org (manually for now).
+   and ask the Communications Team to launch the announce-spreading process as described on
+   http://tikiwiki.org/Communications+Team+Release
 
 post/
    Update appropriate http://tikiwiki.org/stable.version file with new release version
