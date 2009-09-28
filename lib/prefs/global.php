@@ -78,5 +78,9 @@ function prefs_global_list() {
 				'feature_help',
 			),
 		),
+		'popupLinks' => array(
+			'name' => tra('Open external links in new window'),
+			'type' => 'flag',
+		),
 	);
 }

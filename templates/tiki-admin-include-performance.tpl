@@ -11,8 +11,6 @@
 		<fieldset>
 			<legend>{tr}Performance{/tr}</legend>
 			{preference name=feature_use_minified_scripts}
-			{preference name=cachepages}
-			{preference name=cacheimages}
 			{preference name=feature_obzip}
 			<div class="adminoptionboxchild">
 				{if $gzip_handler ne 'none'}

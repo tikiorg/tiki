@@ -11,8 +11,6 @@
 		<fieldset>
 			<legend>{tr}Security{/tr}</legend>
 			{preference name=smarty_security}
-			{preference name=cachepages}
-			{preference name=cacheimages}
 			{preference name=feature_obzip}
 			<div class="adminoptionboxchild">
 				{if $gzip_handler ne 'none'}

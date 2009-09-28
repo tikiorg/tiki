@@ -19,20 +19,6 @@
 	<div class="adminoptionlabel"><label for="feature_wiki_protect_email">{tr}Protect email against spam{/tr}.</label></div>
 </div>
 
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="feature_wiki_ext_icon" name="feature_wiki_ext_icon" {if $prefs.feature_wiki_ext_icon eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="feature_wiki_ext_icon">{tr}External link icon{/tr}</label>
-		<br /><em>{tr}External links will be identified with{/tr}: </em><img border="0" class="externallink" src="img/icons/external_link.gif" alt=" (external link)" />.
-	</div>
-</div>
-
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" name="popupLinks" id="general-ext_links" {if $prefs.popupLinks eq 'y'}checked="checked" {/if}/></div>
-	<div class="adminoptionlabel"><label for="general-ext_links">{tr}Open external links in new window{/tr}.</label>
-	<br /><em>{tr}External links will be identified with{/tr}: </em><img border="0" class="externallink" src="img/icons/external_link.gif" alt=" (external link)" />.
-	</div>
-</div>
-
 {preference name=feature_filegals_manager}
 {preference name=feature_dynamic_content}
 
@@ -116,6 +102,19 @@
 	<div class="adminoptionlabel"><label for="default_rows_textarea_forumthread">{tr}Forum reply{/tr}: </label><input type="text" name="default_rows_textarea_forumthread" id="default_rows_textarea_forumthread" value="{$prefs.default_rows_textarea_forumthread}" size="4" />{tr}rows{/tr}</div>
 </div>
 </fieldset>
+
+<fieldset><legend>{tr}External links and images{/tr}</legend>
+
+			{preference name=cachepages}
+			{preference name=cacheimages}
+			{preference name=feature_wiki_ext_icon}
+			{preference name=popupLinks}
+			<em>{tr}External links will be identified with{/tr}: </em><img border="0" class="externallink" src="img/icons/external_link.gif" alt=" (external link)" />.
+	
+			
+			
+</fieldset>
+
 		{/tab}
 
 		{tab name="{tr}Plugins{/tr}"}

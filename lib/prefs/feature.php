@@ -650,7 +650,10 @@ function prefs_feature_list() {
 			'name' => tra('Use File Galleries to store pictures'),
 			'type' => 'flag',
 		),
+		'feature_wiki_ext_icon' => array(
+			'name' => tra('External link icon'),
+			'type' => 'flag',
+		),
 	);
 }
-
 
