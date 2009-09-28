@@ -124,23 +124,6 @@
 				{preference name=proxy_port}
 			</div>
 
-			<div class="adminoptionbox">
-				<div class="adminoption">
-					<input id="permission_denied_login_box" type="checkbox" name="permission_denied_login_box"{if $prefs.permission_denied_login_box eq 'y'} checked="checked"{/if} onclick="flip('urlonerror');" />
-				</div>
-				<div class="adminoptionlabel">
-					<label for="permission_denied_login_box">{tr}On permission denied, display login module (for Anonymous){/tr}.</label>
-				</div>
-				<div class="adminoptionlabel" id="urlonerror" style="display:{if $prefs.permission_denied_login_box eq 'y'}none{else}block{/if};">
-					{tr}or{/tr}<br />
-					<div class="adminoptionlabel">
-						<label for="permission_denied_url">{tr}Send to URL{/tr}</label>:
-						<br />
-						<input type="text" name="permission_denied_url" id="permission_denied_url" value="{$prefs.permission_denied_url|escape}" size="50" />
-					</div>
-				</div>
-			</div>
-
 		</fieldset>
 
 		<fieldset>
@@ -268,6 +251,26 @@
 		</fieldset>
 
 	
+			<div class="adminoptionbox">
+				<div class="adminoption">
+					<input id="permission_denied_login_box" type="checkbox" name="permission_denied_login_box"{if $prefs.permission_denied_login_box eq 'y'} checked="checked"{/if} onclick="flip('urlonerror');" />
+				</div>
+				<div class="adminoptionlabel">
+					<label for="permission_denied_login_box">{tr}On permission denied, display login module (for Anonymous){/tr}.</label>
+				</div>
+				<div class="adminoptionlabel" id="urlonerror" style="display:{if $prefs.permission_denied_login_box eq 'y'}none{else}block{/if};">
+					{tr}or{/tr}<br />
+					<div class="adminoptionlabel">
+						<label for="permission_denied_url">{tr}Send to URL{/tr}</label>:
+						<br />
+						<input type="text" name="permission_denied_url" id="permission_denied_url" value="{$prefs.permission_denied_url|escape}" size="50" />
+					</div>
+				</div>
+			</div>
+
+
+
+
 	{/tab}
 	
 	
