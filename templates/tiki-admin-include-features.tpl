@@ -14,7 +14,11 @@
  * sections and add a configuration icon to the sections list
  *}
 {* ---------- Main features ------------ *}
-{tab name="{tr}Main{/tr}"}
+{tab name="{tr}Global features{/tr}"}
+
+		<fieldset>
+			<legend>{tr}Main feature{/tr}</legend>
+
 			<div class="admin clearfix featurelist">
 				{preference name=feature_wiki}
 				{preference name=feature_blogs}
@@ -28,10 +32,12 @@
 				{preference name=feature_newsletters}
 				{preference name=feature_banners}
 			</div>
-{/tab}
-	
-{* ---------- Global features ------------ *}
-{tab name="{tr}Site Global{/tr}"}
+
+		</fieldset>
+
+		<fieldset>
+			<legend>{tr}Site Global{/tr}</legend>
+
 			<div class="admin featurelist">
 				{preference name=feature_categories}
 				{preference name=feature_score}
@@ -41,10 +47,11 @@
 				{preference name=feature_contribution}
 				{preference name=feature_multilingual}
 			</div>
-{/tab}
+		</fieldset>
 
-{* ---------- Additional features ------------ *}
-{tab name="{tr}Additional{/tr}"}
+		<fieldset>
+			<legend>{tr}Additional{/tr}</legend>
+
 			<div class="admin featurelist">
 				{preference name=feature_faqs}
 				{preference name=feature_surveys}
@@ -64,6 +71,7 @@
 				{preference name=feature_comments_locking}
 				{preference name=feature_comments_post_as_anonymous}				
 			</div>
+	</fieldset>
 {/tab}
 
 
@@ -119,7 +127,6 @@
 				{preference name=feature_webservices}
 			</div>
 {/tab}
-{/tabset}
 
 {* ---------- Experimental features ------------ *}
 {tab name="{tr}Experimental{/tr}"}
@@ -161,6 +168,7 @@
 				</fieldset>
 			</div>
 {/tab}
+{/tabset}
 
 
 	<div class="input_submit_container" style="margin-top: 5px; text-align: center">
