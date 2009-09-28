@@ -45,7 +45,7 @@ class PerspectiveLib
 			$db->query( 'DELETE from tiki_perspective_preferences WHERE perspectiveId = ?', array( $perspectiveId ) );
 		}
 		
-		$return true;
+		return true;
 	}
 
 	// Replaces all preferences from $perspectiveId with those in the provided string-indexed array (in format "pref_name" => "pref_value").
