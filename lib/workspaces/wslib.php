@@ -645,7 +645,7 @@ class wslib extends CategLib
 		while ($res = $result->fetchRow())
 			$groupWS[] = $res["objectId"];
 			
-		$listWS = list_all_ws_ext();
+		$listWS = $this->list_all_ws_ext();
 		$listGroupWS = array();
 		
 		foreach ($listWS as $ws)
@@ -653,32 +653,8 @@ class wslib extends CategLib
 			$hashWS = md5($this->objectType . strtolower($ws["categId"]));
 			if (in_array($hashWS,$groupWS))
 				$listGroupWS[] = $ws;
-		}		
-		/*
-			
-		while ($res = $listWS->fetchRow()) 
-		{
-			$ws_id = $res["categId"];
-			$hashWS = md5($this->objectType . strtolower($ws_id));
-
-			if (in_array($hashWS,$groupWS))
-			{
-				$wspath = $this->get_category_path($res["categId"]);
-			$tepath = array();	
-			foreach ($wspath as $ws) {
-				$tepath[] = $ws['name'];
-			}
-			$wspath = implode("::",$tepath);
-			$wspathforsort = implode("!!",$tepath);
-			$res["wspath"] = $wspath;
-			$res["deep"] = count($tepath);
-			
-			$listGroupWS["$wspathforsort"] = $res;
-			}
 		}
 		
-		ksort($listGroupWS);
-		*/
 		return $listGroupWS;
     }
 
@@ -707,64 +683,29 @@ class wslib extends CategLib
      public function list_ws_that_user_have_access ($user, $maxRecords = -1, $offset = -1)
     {
 		global $userlib; require_once('lib/userslib.php');
-		global $cachelib; require_once('lib/cache/cachelib.php');
-		
-		if (!$cachelib->isCached("wsOf$user"))
-		{
-			$ws = array();		
-			
-			$query = "select distinct t3.`objectId` from `users_objectpermissions` t3, `users_usergroups` t2, `users_users` t1
-					   where t1.`login` = ? 
-					   and (t1.`userId` = t2.`userId`) 
-					   and (t2.`groupName` = t3.`groupName`) 
-					   and t3.`permName` = ?";
-			$result = $this->query($query,array($user, $this->viewPerm), $maxRecords, $offset);
-			while ($res = $result->fetchRow())
-				$userWSHashes[] = $res["objectId"];
-			
-			$listWS = list_all_ws_ext();
-			$listGroupWS = array();
-			
-			foreach ($listWS as $ws)
-			{
-				$hashWS = md5($this->objectType . strtolower($ws["categId"]));
-				if (in_array($hashWS,$groupWS))
-					$listUserWS[] = $ws;
-			}	
-			/*$idws = $this->ws_container;
-			$query = "select * from `tiki_categories` where `rootCategId`= $idws";
-			$bindvars = array();
-			$listWS = $this->query($query,$bindvars);
-				
-			while ($res = $listWS->fetchRow()) 
-			{
-				$ws_id = $res["categId"];
-				$hashWS = md5($this->objectType . strtolower($ws_id));
-				if (in_array($hashWS,$userWSHashes))
-				{
-					$wspath = $this->get_category_path($res["categId"]);
-				$tepath = array();	
-				foreach ($wspath as $ws)
-				{
-					$tepath[] = $ws['name'];
-				}
-				$wspath = implode("::",$tepath);
-				$wspathforsort = implode("!!",$tepath);
-				$res["wspath"] = $wspath;
-				$res["deep"] = count($tepath);
-				$res["ws_id"] = $ws_id;
-					
-				$listUserWS["$wspathforsort"] = $res;
-				}
-			}
 
-			ksort($listUserWS);*/
-			
-			$cachelib->cacheItem("wsOf$user",serialize($listUserWS));
-			return $listUserWS;
-		}
-		else
-			return unserialize($cachelib->getCached("wsOf$user"));
+		$ws = array();		
+		
+		$query = "select distinct t3.`objectId` from `users_objectpermissions` t3, `users_usergroups` t2, `users_users` t1
+				   where t1.`login` = ? 
+				   and (t1.`userId` = t2.`userId`) 
+				   and (t2.`groupName` = t3.`groupName`) 
+				   and t3.`permName` = ?";
+		$result = $this->query($query,array($user, $this->viewPerm), $maxRecords, $offset);
+		while ($res = $result->fetchRow())
+			$userWSHashes[] = $res["objectId"];
+		
+		$listWS = $this->list_all_ws_ext();
+		$listGroupWS = array();
+		
+		foreach ($listWS as $ws)
+		{
+			$hashWS = md5($this->objectType . strtolower($ws["categId"]));
+			if (in_array($hashWS,$userWSHashes))
+				$listUserWS[] = $ws;
+		}	
+
+		return $listUserWS;
     }
 	
     /** List the objects stored in a workspace
@@ -777,17 +718,6 @@ class wslib extends CategLib
      */
     public function list_ws_objects ($ws_id, $maxRecords = -1, $offset = -1)
     {
-		/*$query = "select * from `tiki_objects` t0, `tiki_category_objects` t1 
-				   where t1.`categId`=? and t1.`catObjectId`=t0.`objectId`";
-		$bindvars = array($ws_id);
-		$result = $this->query($query,$bindvars, $maxRecords, $offset);
-		while ($res = $result->fetchRow())
-		{
-			$valforsort = $res["type"]."!!".$res["itemId"];
-			$listWSObjects["$valforsort"] = $res;
-		}
-		ksort($listWSObjects);
-		return $listWSObjects;*/
 		return parent::list_category_objects($ws_id, $offset, $maxRecords);
     }
 
