@@ -48,7 +48,6 @@ if (isset($_REQUEST["looksetup"])) {
 		"feature_topbar_debug",
 		"sitemycode_publish",
 		"feature_bot_logo",
-		'feature_menusfolderstyle',
 		'direct_pagination',
 		"nextprev_pagination",
 		"pagination_firstlast",

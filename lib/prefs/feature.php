@@ -636,6 +636,11 @@ function prefs_feature_list() {
 			'description' => tra('Show clickable URLs to translate the page to another language using Babel Fish website.'),
 			'type' => 'flag',
 		),
+		'feature_babelfish_logo' => array(
+			'name' => tra('Translation icons'),
+			'description' => tra('Show clickable icons to translate the page to another language using Babelfish website.'),
+			'type' => 'flag',
+		),
 		'feature_smileys' => array(
 			'name' => tra('Smileys'),
 			'description' => tra('Also known as emoticons'),
