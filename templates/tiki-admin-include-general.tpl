@@ -112,21 +112,6 @@
 	{/tab}
 
 	{tab name="{tr}General Settings{/tr}"}
-		<fieldset>
-			<legend>{tr}Site Access{/tr}</legend>
-
-			{preference name=site_closed}
-			<div class="adminoptionboxchild">
-				{preference name=site_closed_msg}
-			</div>
-
-			{preference name=use_load_threshold}
-			<div class="adminoptionboxchild">
-				{preference name=load_threshold}
-				{preference name=site_busy_msg}
-			</div>
-
-		</fieldset>
 
 		<fieldset>
 			<legend>{tr}Server{/tr}</legend>
@@ -183,6 +168,19 @@
 
 	{tab name="{tr}Navigation{/tr}"}
 
+
+		<fieldset>
+			<legend>{tr}Menus{/tr}</legend>
+			<div class="adminoptionbox">
+				{preference name=feature_phplayers}
+				{preference name=feature_cssmenus}
+				{preference name=feature_featuredLinks}
+				{preference name=feature_menusfolderstyle}
+				{preference name=menus_items_icons}
+			</div>
+		</fieldset>	
+	
+	
 		<fieldset>
 			<legend>{tr}Home Page{/tr}</legend>
 			<div class="adminoptionbox">
@@ -269,19 +267,24 @@
 
 			</div>
 		</fieldset>			
-	
+
 		<fieldset>
-			<legend>{tr}Menus{/tr}</legend>
-			<div class="adminoptionbox">
-				{preference name=feature_phplayers}
-				{preference name=feature_cssmenus}
-				{preference name=feature_featuredLinks}
-				{preference name=feature_menusfolderstyle}
-				{preference name=menus_items_icons}
+			<legend>{tr}Site Access{/tr}</legend>
+
+			{preference name=site_closed}
+			<div class="adminoptionboxchild">
+				{preference name=site_closed_msg}
 			</div>
-		</fieldset>	
-	{/tab}
+
+			{preference name=use_load_threshold}
+			<div class="adminoptionboxchild">
+				{preference name=load_threshold}
+				{preference name=site_busy_msg}
+			</div>
+
+		</fieldset>
 	
+	{/tab}
 	
 	{tab name="{tr}Date and Time Formats{/tr}"}
 	
