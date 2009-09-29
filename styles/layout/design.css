@@ -33,11 +33,22 @@ input[type=submit] {
 	padding: 1px 4px;
 	margin-right: 1px;
 }
-	
-.highlight {
+
+.highlight,
+span.button.highlight a {
 	background: #FC0;
 	color: #000;
 }
+
+span.button.highlight {
+	padding: 0;
+	background: inherit;
+}
+/*
+span.button.highlight a {
+	background: #FC0;
+	color: #000; 
+}*/
 
 input[type=checkbox],
 input[type=radio] {

@@ -37,10 +37,18 @@ input[type=submit] {
 	margin-right: 1px;
 }
 
-/* highlight on "button" links, e.g. if there are some comments it highlights the "button" link in #page-bar under the content of the wiki pages */
-.highlight {
+/* highlight on interface text to draw attention; also
+highlight on "button" links, e.g. if there are some comments it highlights the "button" link in #page-bar under the content of the wiki pages */
+.highlight,
+span.button.highlight a {
 	background: #FC0;
 	color: #000;
+}
+
+/* Since button background is actually applied to the link within the button, apply button highlight to same bg area as normal button state . */
+span.button.highlight {
+	padding: 0;
+	background: inherit;
 }
 
 input[type=checkbox],
