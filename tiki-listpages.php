@@ -255,6 +255,17 @@ if (!empty($multiprint_pages)) {
 	include_once ('tiki-section_options.php');
 	// disallow robots to index page:
 	$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
+
+	// Exact match and single result, go to page directly
+	if( count( $listpages['data'] ) == 1 ) {
+		$result = reset( $listpages['data'] );
+		if( strtolower( $find ) == strtolower( $result['pageName'] ) ) {
+			require_once 'lib/wiki/wikilib.php';
+			header( 'Location: ' . $wikilib->sefurl( $result['pageName'] ) );
+			exit;
+		}
+	}
+
 	if ($access->is_serializable_request()) {
 		if (isset($_REQUEST['listonly']) && ($prefs['feature_jquery'] == 'y' && $prefs['feature_jquery_autocomplete'] == 'y')) {
 			$pages = array();
