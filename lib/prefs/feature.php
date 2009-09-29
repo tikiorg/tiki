@@ -378,10 +378,11 @@ function prefs_feature_list() {
 		),
 		'feature_friends' => array(
 			'name' => tra('Friendship Network'),
-			'description' => tra('Friendship Network'),
+			'description' => tra('Users can identify other users as their friends'),
+			'warning' => tra('Neglected feature'),
 			'help' => 'Friendship',
 			'type' => 'flag',
-		),
+		),	
 		'feature_banning' => array(
 			'name' => tra('Banning system'),
 			'description' => tra('Banning system'),
@@ -697,6 +698,8 @@ function prefs_feature_list() {
 		),	
 	);
 }
+
+
 
 
 

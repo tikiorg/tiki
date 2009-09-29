@@ -333,13 +333,16 @@
 </fieldset>
 	{/tab}
 
-	{tab name="{tr}Users Listing{/tr}"}
+	{tab name="{tr}Friendship Network{/tr}"}
+
+						{preference name=feature_friends}
+	
+{if $prefs.feature_friends eq 'y'}
 <div class="adminoptionbox">
 	<div class="adminoptionlabel">{tr}Select which items to display when listing users{/tr}.
-{if $prefs.feature_friends ne 'y'}<br />{icon _id=information} {tr}Feature is disabled{/tr}. <a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}.</a>{/if}
 	</div>
 </div>
-{if $prefs.feature_friends eq 'y'}
+
 <div class="adminoptionbox">
 	<div class="adminoptionlabel"><label for="user_list_order">{tr}Sort order{/tr}:</label>
 	<select name="user_list_order" id="user_list_order">
