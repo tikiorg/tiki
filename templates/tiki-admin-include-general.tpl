@@ -178,19 +178,6 @@
 
 		</fieldset>
 		
-		<fieldset>
-			<legend>{tr}Separators{/tr}</legend>
-
-			{preference name=site_crumb_seper}
-			<div class="adminoptionboxchild">
-				<em>{tr}Examples{/tr}: &nbsp; &raquo; &nbsp; / &nbsp; &gt; &nbsp; : &nbsp; -> &nbsp; &#8594;</em>
-			</div>
-
-			{preference name=site_nav_seper}
-			<div class="adminoptionboxchild">
-				<em>{tr}Examples{/tr}: &nbsp; | &nbsp; / &nbsp; &brvbar; &nbsp; :</em>
-			</div>
-		</fieldset>
 	{/tab}
 
 	{tab name="{tr}Navigation{/tr}"}
