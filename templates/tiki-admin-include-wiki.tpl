@@ -473,11 +473,6 @@ name="w_displayed_default" {if $prefs.w_displayed_default eq 'y'} checked="check
 </div>
 
 <div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="feature_wiki_1like_redirection" name="feature_wiki_1like_redirection" {if $prefs.feature_wiki_1like_redirection eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="feature_wiki_1like_redirection">{tr}When viewing a page, if it doesn't exist automatically redirect to a similarly  named page{/tr}.</label></div>
-</div>
-
-<div class="adminoptionbox">
 <fieldset><legend>{tr}Wiki watch{/tr}{if $prefs.feature_help eq 'y'} {help url="Watch"}{/if}</legend>
 {if $prefs.feature_user_watches ne 'y'}
 <div class="adminoptionbox">{icon _id=information} {tr}Feature disabled{/tr}. <a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}</a>.</div>

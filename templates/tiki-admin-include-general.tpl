@@ -245,6 +245,11 @@
 			<div class="adminoptionbox">
 				{preference name=feature_redirect_on_error}
 
+<div class="adminoptionbox">
+	<div class="adminoption"><input type="checkbox" id="feature_wiki_1like_redirection" name="feature_wiki_1like_redirection" {if $prefs.feature_wiki_1like_redirection eq 'y'}checked="checked"{/if}/></div>
+	<div class="adminoptionlabel"><label for="feature_wiki_1like_redirection">{tr}When viewing a page, if it doesn't exist automatically redirect to a similarly  named page{/tr}.</label></div>
+</div>				
+				
 			<div class="adminoptionbox">
 				<div class="adminoption">
 					<input id="permission_denied_login_box" type="checkbox" name="permission_denied_login_box"{if $prefs.permission_denied_login_box eq 'y'} checked="checked"{/if} onclick="flip('urlonerror');" />
