@@ -148,7 +148,7 @@ if( $prefs['feature_quick_object_perms'] == 'y' ) {
 
 
 // Process the form to assign a new permission to this object
-elseif (isset($_REQUEST['assign'])) {
+if (isset($_REQUEST['assign'])) {
 	check_ticket('object-perms');
 	foreach($_REQUEST['perm'] as $group => $perms) {
 		foreach($perms as $perm) {
