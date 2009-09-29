@@ -53,6 +53,7 @@ class CategLib extends ObjectLib {
 		    $bindvals=array();
 		    $mid = "";
 		}
+		
 		global $prefs; if(!$prefs) require_once 'lib/setup/prefs.php';
 		$exclude = $this->exclude_categs ($prefs['ws_container'], $find, $showWS);
 		if (!empty($exclude)) $bindvals[] = $prefs['ws_container'];
@@ -65,6 +66,7 @@ class CategLib extends ObjectLib {
 		    $query = "select * from `tiki_categories` $mid $exclude order by ".$this->convertSortMode($sort_mode);
 		    $query_cant = "select count(*) from `tiki_categories` $mid $exclude";
 		}
+		
 		$result = $this->query($query,$bindvals,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvals);
 		$ret = array();
@@ -119,9 +121,9 @@ class CategLib extends ObjectLib {
 			else
 			{
 				if ($find)
-						$exclude = "and not `categId` = ? and `rootCategId` is NULL";
+						$exclude = "and `rootCategId` is NULL and `categId` != ?";
 				else
-						$exclude = "where not `categId` = ? and `rootCategId` is NULL";
+						$exclude = "where `rootCategId` is NULL and `categId` != ?";
 			}
 	    }
 	    else
@@ -895,14 +897,15 @@ class CategLib extends ObjectLib {
 	}
 
 	// Same as get_all_categories + it also get info about count of objects
-	function get_all_categories_ext($showWS=false) {
+	function get_all_categories_ext($showWS = false) {
+
 		global $cachelib; include_once('lib/cache/cachelib.php');
 		if ($showWS)
 		{
 			if (!$cachelib->isCached("allws")) {
 				$ret = $this->build_cache($showWS);
 			} else {
-				$ret = unserialize($cachelib->getCached("allcategs"));
+				$ret = unserialize($cachelib->getCached("allws"));
 			} 
 		}			
 		else

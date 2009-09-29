@@ -45,7 +45,6 @@ class wslib extends CategLib
     public function __construct()
     {
 		global $prefs;
-
 		$this->ws_container = (int) $prefs['ws_container'];
 		$this->objectType = 'ws';
 		$this->viewPerm = 'tiki_p_ws_view';
@@ -85,11 +84,12 @@ class wslib extends CategLib
      * @param $additionalPerms Associative array for giving more perms than the default perm 'tiki_p_ws_view'
      * @return The ID of the WS
      */
-    public function create_ws ($name, $groups, $parentWS = null, $description = '')
+    public function create_ws ($name, $groups, $parentWS = 0, $description = '')
     {
-		global $perspectivelib; if (!$perspectivelib) require_once 'lib/perspectivelib.php';  
+		global $perspectivelib; require_once 'lib/perspectivelib.php';
 		
-		if (!$parentWS)	$parentWS = 0;
+		if (empty($parentWS))
+			$parentWS = 0;
 			
 		$ws_id = parent::add_category($parentWS, $name, $description, $this->ws_container);
 		
@@ -109,14 +109,14 @@ class wslib extends CategLib
 			else
 				$this->add_ws_group ($ws_id, $name, $groupName, $groupDescription, $additionalPerms);
 		}
-
+		/*
 		//We create the perspective for the WS
 		$wsValue = $this->get_ws_perspective_value ($ws_id);
 		$pspId = $perspectivelib->replace_perspective(null, $wsValue);
 		//I set this for the ws identificacion, because we can have two ws with the same name and for psp
 		//this could be a problem in order to get the psp from the db
 		$perspectivelib->replace_preferences($pspId, array('wsId' => $ws_id, 'wsName' => $name)); 
-			
+		*/	
 		return $ws_id;
     }
 
@@ -160,10 +160,10 @@ class wslib extends CategLib
      */
     public function update_ws_data ($ws_id, $wsParentId, $wsName, $wsDesc)
     {
-		global $perspectivelib; if (!$perspectivelib) require_once 'lib/perspectivelib.php';
+		global $perspectivelib; require_once 'lib/perspectivelib.php';
 		 
 		parent::update_category($ws_id, $wsName, $wsDesc, $wsParentId);
-		$pspId = $perspectivelib->get_ws_associated_perspective_id($wsId);
+		$pspId = $this->get_ws_associated_perspective_id($wsId);
 		$perspectivelib->replace_preferences( $pspId, array('wsName' => $wsName) );
 		 
 		//$query = "update `tiki_categories` set `name`=?, `description`=? where `categId` = ?";
@@ -180,7 +180,7 @@ class wslib extends CategLib
      */
     public function remove_ws ($ws_id)
     {	
-		global $perspectivelib; if (!$perspectivelib) require_once 'lib/perspectivelib.php';
+		global $perspectivelib; require_once 'lib/perspectivelib.php';
 		
 		// Remove the WS groups
 		$listWSGroups = $this->list_groups_that_can_access_in_ws ($ws_id);
@@ -195,8 +195,7 @@ class wslib extends CategLib
 		//Remove the perspective associated to the ws
 		$pspId = $perspectivelib->get_ws_associated_perspective_id($wsId);
 		$perspectivelib->remove_perspective($pspid);
-		
-			
+					
 		// Remove perms assigned to the WS
 		$hashWS = md5($this->objectType . strtolower($ws_id));
 		$query = "delete from `users_objectpermissions` where `objectType` = ? and `objectId` = ?";
@@ -765,7 +764,7 @@ class wslib extends CategLib
 			return $listUserWS;
 		}
 		else
-			return ();
+			return unserialize($cachelib->getCached("wsOf$user"));
     }
 	
     /** List the objects stored in a workspace
@@ -958,7 +957,7 @@ class wslib extends CategLib
       */
      public function set_ws_perspective_options($wsId, $pref, $value)
 	{
-		 global $perspectivelib; if (!$perspectivelib) require_once 'lib/perspectivelib.php';
+		 global $perspectivelib; require_once 'lib/perspectivelib.php';
 
 		 $pspId = $this->get_ws_associated_perspective_id($wsId);
 		 $perspectivelib->replace_preferences( $pspId, array( "$pref" => $value ) );
@@ -971,7 +970,7 @@ class wslib extends CategLib
      */
      public function get_ws_associated_perspective_id($wsId)
     {
-		global $perspectivelib; if (!$perspectivelib) require_once 'lib/perspectivelib.php';
+		global $perspectivelib; require_once 'lib/perspectivelib.php';
 		
 		$wsValue = $this->get_ws_perspective_value ($wsId);
 		return $perspectivelib->get_perspectives_with_given_name($wsValue);
