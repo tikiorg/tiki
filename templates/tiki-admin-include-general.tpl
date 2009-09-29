@@ -239,7 +239,11 @@
 
 		</fieldset>
 
-	
+		<fieldset>
+			<legend>{tr}Redirects{/tr}</legend>
+			<div class="adminoptionbox">
+				{preference name=feature_redirect_on_error}
+
 			<div class="adminoptionbox">
 				<div class="adminoption">
 					<input id="permission_denied_login_box" type="checkbox" name="permission_denied_login_box"{if $prefs.permission_denied_login_box eq 'y'} checked="checked"{/if} onclick="flip('urlonerror');" />
@@ -257,12 +261,12 @@
 				</div>
 			</div>
 
-				{preference name=feature_custom_home}
-				{preference name=feature_redirect_on_error}
-
+			</div>
+		</fieldset>			
+	
 		<fieldset>
 			<legend>{tr}Menus{/tr}</legend>
-			<div class="admin featurelist">
+			<div class="adminoptionbox">
 				{preference name=feature_phplayers}
 				{preference name=feature_cssmenus}
 				{preference name=feature_featuredLinks}

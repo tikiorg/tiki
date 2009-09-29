@@ -129,6 +129,7 @@
 					<span class="description">{tr}Old features no longer maintained{/tr}</span>
 						{preference name=feature_friends}
 						{preference name=feature_multimedia}
+						{preference name=feature_custom_home}
 				</fieldset>
 			</div>
 {/tab}
