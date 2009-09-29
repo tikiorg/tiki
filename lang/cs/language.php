@@ -5913,7 +5913,7 @@ Pokud jste tu poprvé, přihlašte se nahoře vpravo jako __admin__ s heslem __a
 "Last `\$module_rows` Images" => "Poslední(ch) `\$module_rows` obrázek(y/ů)",
 "Last Images" => "Poslední obrázky",
 "Last `\$module_rows` modified events" => "Poslední(ch) `\$module_rows` změněná(é/ých) událost(i/í)",
-"Last modifed events" => "Poslední(ch) modifed events",
+"Last modified events" => "Poslední(ch) modifed events",
 "Last `\$module_rows` changes" => "Poslední(ch) `\$module_rows` změn(a/y)",
 "Last changes" => "Poslední úpravy",
 "Last `\$module_rows` Modified Items" => "Poslední(ch) `\$module_rows` změněná(é/ých) položka(ky/ek)",
