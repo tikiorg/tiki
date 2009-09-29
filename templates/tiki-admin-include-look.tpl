@@ -329,6 +329,8 @@
 	</div>
 </div>
 {* --- Site Breadcrumbs --- *}
+				{preference name=feature_breadcrumbs}
+
 <div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" name="feature_breadcrumbs" id="feature_breadcrumbs" {if $prefs.feature_breadcrumbs eq 'y'} checked="checked"{/if} onclick="flip('usebreadcrumbs');" /></div>
 	<div class="adminoptionlabel"><label for="feature_breadcrumbs">{tr}Breadcrumbs{/tr}</label>

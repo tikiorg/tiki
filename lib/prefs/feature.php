@@ -678,6 +678,13 @@ function prefs_feature_list() {
 			'name' => tra('Allow users to define icons for menus entries'),
 			'type' => 'flag',
 		),
+		'feature_breadcrumbs' => array(
+			'name' => tra('Breadcrumbs'),
+			'description' => tra('Uses Google Translate to translate the content of wiki pages to other languages.'),
+			'help' => 'Breadcrumbs',
+			'warning' => tra('Neglected feature'),
+			'type' => 'flag',
+		),	
 	);
 }
 
