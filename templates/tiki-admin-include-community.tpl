@@ -11,6 +11,31 @@
 </div>
 
 {tabset name="admin_community"}
+
+{* --- User Features --- *}
+{tab name="{tr}User features{/tr}"}
+			<div class="admin featurelist">
+				{preference name=feature_mytiki}
+				{preference name=feature_minical}
+				{preference name=feature_userPreferences}
+				{preference name=feature_notepad}
+				{preference name=feature_user_bookmarks}
+				{preference name=feature_contacts}
+				{preference name=feature_user_watches}
+				{preference name=feature_group_watches}
+				{preference name=feature_daily_report_watches}
+				{preference name=feature_user_watches_translations}
+				{preference name=feature_usermenu}
+				{preference name=feature_tasks}
+				{preference name=feature_messages}
+				{preference name=feature_userfiles}
+				{preference name=feature_userlevels}
+				{preference name=feature_groupalert}
+			</div>
+{/tab}
+
+
+
 	{tab name="{tr}General Settings{/tr}"}
 	
 			{preference name=user_show_realnames}
