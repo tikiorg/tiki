@@ -32,8 +32,6 @@
  	{preference name=wiki_topline_position}
  	{preference name=page_bar_position}
  
-	{preference name=wiki_cache}
-	{preference name=feature_wiki_icache}
 </fieldset>
 
 <fieldset><legend>{tr}Edit{/tr}</legend>

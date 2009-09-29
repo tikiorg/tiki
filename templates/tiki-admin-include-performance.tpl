@@ -24,6 +24,12 @@
 		</fieldset>
 		
 		<fieldset>
+			<legend>{tr}Wiki{/tr}</legend>
+			{preference name=wiki_cache}
+			{preference name=feature_wiki_icache}
+		</fieldset>
+
+		<fieldset>
 			<legend>{tr}Search{/tr}</legend>
 			{remarksbox type="tip" title="{tr}Tip{/tr}"}
 				{tr}Many search options impact performance. Please see <a href="tiki-admin.php?page=search">Search admin panel</a>.{/tr}
