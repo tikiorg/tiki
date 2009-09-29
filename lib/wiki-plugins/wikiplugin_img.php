@@ -175,7 +175,7 @@ function wikiplugin_img_info() {
  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
  
  function wikiplugin_img( $data, $params, $offset, $parseOptions='' ) {
-	global $tikidomain, $prefs, $section, $smarty;
+	 global $tikidomain, $prefs, $section, $smarty, $tikiroot;
 
 	$imgdata = array();
 	
