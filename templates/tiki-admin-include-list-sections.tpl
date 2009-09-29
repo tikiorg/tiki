@@ -15,6 +15,8 @@
 
 	{self_link page="login" _class="admbox" _style="background-image: url('pics/large/stock_quit48x48.png')" _title="{tr}Login{/tr}"}<span>{tr}Login{/tr}</span>{/self_link}
 
+	{self_link page="community" _class="admbox" _style="background-image: url('pics/large/users48x48.png')" _title="{tr}Community{/tr}"}<span>{tr}Community{/tr}</span>{/self_link}
+
 	{self_link page="profiles" _class="admbox" _style="background-image: url('pics/large/profiles48x48.png')" _title="{tr}Profiles{/tr}"}<span>{tr}Profiles{/tr}</span>{/self_link}
 
 	{self_link page="look" _class="admbox" _style="background-image: url('pics/large/gnome-settings-background48x48.png')" _title="{tr}Look &amp; Feel{/tr}"}<span>{tr}Look &amp; Feel{/tr}</span>{/self_link}
@@ -33,15 +35,13 @@
 	
 	{self_link page="rss" _class="admbox" _style="background-image: url('pics/large/gnome-globe48x48.png')" _title="{tr}RSS{/tr}"}<span>{tr}RSS{/tr}</span>{/self_link}
 
-	{self_link page="community" _class="admbox" _style="background-image: url('pics/large/users48x48.png')" _title="{tr}Community{/tr}"}<span>{tr}Community{/tr}</span>{/self_link}
-
 	{self_link page="wiki" _class="admbox" _style="background-image: url('pics/large/wikipages48x48.png')" _selected="'`$prefs.feature_wiki`' != 'y'" _selected_class="admbox off"}<img src="pics/trans.png" alt="{tr}Wiki{/tr}" title="{tr}Wiki{/tr}{if $prefs.feature_wiki ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Wiki{/tr}</span>{/self_link}
+
+	{self_link page="fgal" _class="admbox" _style="background-image: url('pics/large/file-manager48x48.png')" _selected="'`$prefs.feature_file_galleries`' != 'y'" _selected_class="admbox off"}<img src="pics/trans.png" alt="{tr}File Galleries{/tr}" title="{tr}File Galleries{/tr}{if $prefs.feature_file_galleries ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}File Galleries{/tr}</span>{/self_link}
 
 	{self_link page="blogs" _class="admbox" _style="background-image: url('pics/large/blogs48x48.png')" _selected="'`$prefs.feature_blogs`' != 'y'" _selected_class="admbox off"}<img src="pics/trans.png" alt="{tr}Blogs{/tr}" title="{tr}Blogs{/tr}{if $prefs.feature_blogs ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Blogs{/tr}</span>{/self_link}
 	
 	{self_link page="gal" _class="admbox" _style="background-image: url('pics/large/stock_select-color48x48.png')" _selected="'`$prefs.feature_galleries`' != 'y'" _selected_class="admbox off"}<img src="pics/trans.png" alt="{tr}Image Galleries{/tr}" title="{tr}Image Galleries{/tr}{if $prefs.feature_galleries ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Image Galleries{/tr}</span>{/self_link}
-
-	{self_link page="fgal" _class="admbox" _style="background-image: url('pics/large/file-manager48x48.png')" _selected="'`$prefs.feature_file_galleries`' != 'y'" _selected_class="admbox off"}<img src="pics/trans.png" alt="{tr}File Galleries{/tr}" title="{tr}File Galleries{/tr}{if $prefs.feature_file_galleries ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}File Galleries{/tr}</span>{/self_link}
 
 	{self_link page="cms" _class="admbox" _style="background-image: url('pics/large/stock_bold48x48.png')" _selected="'`$prefs.feature_articles`' != 'y'" _selected_class="admbox off"}<img src="pics/trans.png" alt="{tr}Articles{/tr}" title="{tr}Articles{/tr}{if $prefs.feature_articles ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Articles{/tr}</span>{/self_link}
 
