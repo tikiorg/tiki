@@ -233,6 +233,7 @@ function wikiplugin_tracker($data, $params) {
 
 	if (empty($_SERVER['SCRIPT_NAME']) || !strstr($_SERVER['SCRIPT_NAME'],'tiki-register.php')) {
 		if (!empty($itemId) && $tracker['writerCanModify'] == 'y' && isset($usertracker) && $usertracker) { // user tracker he can modify
+		} elseif (!empty($itemId) && $tracker['writerCanModify'] == 'y' && $user && (($itemUser = $trklib->get_item_creator($trackerId, $itemId)) == $user || ($tracker['userCanTakeOwnership'] == 'y' && empty($itemUser)))) {
 		} elseif (!empty($itemId) && isset($grouptracker) && $grouptracker) {
 		} else {
 			$perms = $tikilib->get_perm_object($trackerId, 'tracker', $tracker, false);

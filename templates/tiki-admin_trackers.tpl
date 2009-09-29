@@ -266,6 +266,7 @@
 					<input type="checkbox" name="writerCanModify" {if $writerCanModify eq 'y'}checked="checked"{/if} />
 					<br />
 					<i>{tr}The tracker needs a user field with the option 1{/tr}</i>
+					<br />{tr}User can take ownership of item created by anonymous{/tr}<input type="checkbox" name="userCanTakeOwnership" {if $userCanTakeOwnership eq 'y'}checked="checked"{/if} />
 				</td>
 			</tr>
 

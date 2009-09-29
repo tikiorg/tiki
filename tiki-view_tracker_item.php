@@ -298,8 +298,11 @@ if (!isset($tracker_info["writerGroupCanModify"]) or (isset($gtid) and ($_REQUES
 	$tracker_info["writerGroupCanModify"] = 'n';
 }
 $tikilib->get_perm_object($_REQUEST['trackerId'], 'tracker', $tracker_info);
-if (!empty($_REQUEST['itemId'])) {
-	$trklib->get_special_group_tracker_perm($tracker_info, true);
+if (!empty($_REQUEST['itemId']) && !$special && $tiki_p_view_trackers != 'y') {
+	$g = $trklib-> get_item_group_creator($_REQUEST['trackerId'], $_REQUEST['itemId']);
+	if (in_array($g, $tikilib->get_user_groups($user))) {
+		$trklib->get_special_group_tracker_perm($tracker_info, true);
+	}
 }
 if ($tiki_p_view_trackers != 'y' and $tracker_info["writerCanModify"] != 'y' and $tracker_info["writerGroupCanModify"] != 'y' && !$special) {
 	$smarty->assign('errortype', 401);
@@ -371,7 +374,11 @@ foreach($xfields["data"] as $i => $array) {
 					if (isset($tracker_info["writerCanModify"]) and $tracker_info["writerCanModify"] == 'y') {
 						$tracker_info["authorfield"] = $fid;
 					}
-					unset($ins_fields["data"][$i]["fieldId"]);
+					if ($tracker_info['userCanTakeOwnership'] == 'y' && empty($ins_fields['data'][$i]['value'])) {
+						$ins_fields['data'][$i]['value'] = $user; // the user appropiate the item
+					} else {
+						unset($ins_fields["data"][$i]["fieldId"]);
+					}
 				} else {
 					$ins_fields["data"][$i]["value"] = '';
 				}
@@ -549,7 +556,7 @@ foreach($xfields["data"] as $i => $array) {
 }
 if (isset($tracker_info["authorfield"])) {
 	$tracker_info['authorindiv'] = $trklib->get_item_value($_REQUEST["trackerId"], $_REQUEST["itemId"], $tracker_info["authorfield"]);
-	if ($tracker_info['authorindiv'] == $user or $tracker_info['authorindiv'] == '') {
+	if (($user && $tracker_info['authorindiv'] == $user) or ($user && $tracker_info['userCanTakeOwnership'] == 'y' && empty($tracker_info['authorindiv']))) {
 		$tiki_p_modify_tracker_items = 'y';
 		$smarty->assign("tiki_p_modify_tracker_items", "y");
 		$tiki_p_modify_tracker_items_pending = 'y';
