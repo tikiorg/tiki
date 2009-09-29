@@ -243,7 +243,7 @@
 			{if $group ne ''}
 				<tr class="formcolor">
 					<td>
-						{tr}Assign group <em>management</em> persmissions{/tr}:
+						{tr}Assign group <em>management</em> permissions{/tr}:
 					</td>
 					<td>
 						{icon href="tiki-objectpermissions.php?objectType=group&objectId=$groupname&objectName=$groupname&permType=group" _text="{tr}Assign Permissions{/tr}" _id="key"}
