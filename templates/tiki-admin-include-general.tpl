@@ -258,11 +258,17 @@
 
 				{preference name=feature_custom_home}
 				{preference name=feature_redirect_on_error}
+
+		<fieldset>
+			<legend>{tr}Menus{/tr}</legend>
+			<div class="admin featurelist">
 				{preference name=feature_phplayers}
 				{preference name=feature_cssmenus}
 				{preference name=feature_featuredLinks}
-
-
+				{preference name=feature_menusfolderstyle}
+				{preference name=feature_menus_items_icons}
+			</div>
+		</fieldset>	
 	{/tab}
 	
 	

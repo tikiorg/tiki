@@ -670,6 +670,16 @@ function prefs_feature_list() {
 			'help' => 'WebServices',
 			'type' => 'flag',
 		),
+		'feature_menusfolderstyle' => array(
+			'name' => tra('Display menus as folders'),
+			'type' => 'flag',
+		),
+		'menus_items_icons' => array(
+			'name' => tra('Allow users to define icons for menus entries'),
+			'type' => 'flag',
+		),
 	);
 }
+
+
 

@@ -741,10 +741,6 @@
 	<div class="adminoptionlabel"><label for="general-feature_tabs">{tr}Use Tabs{/tr}</label></div>
 </div>
 <div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" name="feature_menusfolderstyle" id="general-menu_folders" {if $prefs.feature_menusfolderstyle eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="general-menu_folders">{tr}Display menus as folders{/tr}</label></div>
-</div>
-<div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" name="layout_section" id="general-layout_section" {if $prefs.layout_section eq 'y'}checked="checked"{/if}/></div>
 	<div class="adminoptionlabel"><label for="general-layout_section">{tr}Layout per section{/tr}</label>
 	{if $prefs.layout_section eq 'y'}<br />{button _text="{tr}Admin layout per section{/tr}" href="tiki-admin_layout.php"}{/if}
@@ -769,10 +765,6 @@
 	</div>
 </div>
 
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" name="menus_items_icons" id="menus_items_icons" {if $prefs.menus_items_icons eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="menus_items_icons">{tr}Allow users to define icons for menus entries{/tr}</label>.</div>
-</div>
 
 <div class="adminoptionbox">
 <fieldset><legend>{tr}Favicon{/tr}</legend>
