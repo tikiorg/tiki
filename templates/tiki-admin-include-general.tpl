@@ -126,14 +126,21 @@
 				{preference name=site_busy_msg}
 			</div>
 
+		</fieldset>
+
+		<fieldset>
+			<legend>{tr}Server{/tr}</legend>
+
+			{preference name=tmpDir}
+			
 			{preference name=use_proxy}
 			<div class="adminoptionboxchild">
 				{preference name=proxy_host}
 				{preference name=proxy_port}
-			</div>
+			</div>			
 
-		</fieldset>
-
+		</fieldset>		
+		
 		<fieldset>
 			<legend>{tr}Session{/tr}</legend>
 			{remarksbox type="note" title="{tr}Advanced configuration warning{/tr}"}
@@ -164,7 +171,6 @@
 		<fieldset>
 			<legend>{tr}Miscellaneous{/tr}</legend>
 
-				{preference name=tmpDir}
 				{preference name=feature_help}
 				<div class="adminoptionboxchild">
 					{preference name=helpurl}
