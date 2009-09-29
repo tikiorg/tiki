@@ -674,7 +674,7 @@ function prefs_feature_list() {
 			'name' => tra('Display menus as folders'),
 			'type' => 'flag',
 		),
-		'menus_items_icons' => array(
+		'feature_menus_items_icons' => array(
 			'name' => tra('Allow users to define icons for menus entries'),
 			'type' => 'flag',
 		),
