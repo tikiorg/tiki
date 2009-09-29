@@ -370,6 +370,14 @@ function prefs_feature_list() {
 			'help' => 'Lost+Edit+Protection',
 			'type' => 'flag',
 		),
+		'feature_wiki_save_draft' => array(
+			'name' => tra('Save draft'),
+			'warning' => tra('Requires AJAX (experimental)'),
+			'dependencies' => array(
+				'feature_ajax',
+			),
+			'type' => 'flag',
+		),	
 		'feature_workspaces' => array(
 			'name' => tra('Workspaces'),
 			'description' => tra('Workspace'),
@@ -699,8 +707,5 @@ function prefs_feature_list() {
 		),	
 	);
 }
-
-
-
 
 
