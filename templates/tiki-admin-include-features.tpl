@@ -115,7 +115,8 @@
 						{preference name=feature_sheet}
 						{preference name=feature_wysiwyg}
 						{preference name=feature_ajax_autosave}
-				</fieldset>
+						{preference name=feature_wiki_save_draft}
+						</fieldset>
 
 				<fieldset>
 					<legend class="heading">{icon _id="exclamation"}<span>{tr}Malfunctioning{/tr}</span></legend>

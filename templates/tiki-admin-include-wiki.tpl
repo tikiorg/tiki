@@ -71,12 +71,7 @@
 	<div class="adminoptionlabel"><label for="feature_wiki_undo">{tr}Undo{/tr}</label></div>
 </div>
 
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="feature_wiki_save_draft" name="feature_wiki_save_draft" {if $prefs.feature_wiki_save_draft eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="feature_wiki_save_draft">{tr}Save draft{/tr}</label>
-	<br /><em>{tr}Requires AJAX{/tr} ({tr}experimental{/tr}).</em>
-	</div>
-</div>
+{preference name=feature_wiki_save_draft}
 
 <div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" id="feature_wiki_footnotes" name="feature_wiki_footnotes" {if $prefs.feature_wiki_footnotes eq 'y'}checked="checked" {/if}/></div>
