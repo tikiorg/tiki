@@ -157,6 +157,7 @@
 
 		<fieldset>
 			<legend>{tr}Contact{/tr}</legend>
+			{preference name=feature_contact}
 			{preference name=contact_anon}
 			{preference name=contact_user}
 		</fieldset>
