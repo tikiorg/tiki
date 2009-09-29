@@ -43,15 +43,15 @@ class XmlLib extends TikiLib {
 		if (!empty($config)) {
 			$this->config = array_merge($this->config, $config);
 		}
-		$this->xml .= '<?xml version="1.0" encoding="UTF-8"?>';
+		$this->xml .= '<?xml version="1.0" encoding="UTF-8"?>'."\n";
 		if (count($pages) >= 1) {
-			$this->xml .= '<pages>';
+			$this->xml .= "<pages>\n";
 			foreach ($pages as $page) {
 				if (!$this->export_page($page)) {
 					return false;
 				}
 			}
-			$this->xml .= '</pages>';
+			$this->xml .= "</pages>\n";
 		}
 		if (!empty($structure)) {
 			global $structlib; include_once('lib/structures/structlib.php');
@@ -60,9 +60,9 @@ class XmlLib extends TikiLib {
 			foreach ($pages as $page) {
 				while (count($stack) && $stack[count($stack) - 1] != $page['parent_id']) {
 					array_pop($stack);
-					$this->xml .= '</structure>';
+					$this->xml .= "</structure>\n";
 				}
-				$this->xml .= '<structure>';
+				$this->xml .= "<structure>\n";
 				$stack[] = $page['page_ref_id'];
 				if (!$this->export_page($page['pageName'])) {
 					return false;
@@ -70,7 +70,7 @@ class XmlLib extends TikiLib {
 			}
 			while (count($stack)) {
 				array_pop($stack);
-				$this->xml .= '</structure>';
+				$this->xml .= "</structure>\n";
 			}
 		}
 
