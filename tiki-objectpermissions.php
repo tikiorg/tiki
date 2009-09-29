@@ -72,7 +72,7 @@ if (isset($_REQUEST["referer"])) {
 	$smarty->assign('referer', $_REQUEST["referer"]);
 } else {
 	$smarty->assign('referer', '');
-	}
+}
 $_REQUEST["objectId"] = urldecode($_REQUEST["objectId"]);
 $_REQUEST["objectType"] = urldecode($_REQUEST["objectType"]);
 $_REQUEST["permType"] = !empty($_REQUEST['permType']) ? urldecode($_REQUEST["permType"]) : 'all';
@@ -80,112 +80,71 @@ $smarty->assign('objectName', $_REQUEST["objectName"]);
 $smarty->assign('objectId', $_REQUEST["objectId"]);
 $smarty->assign('objectType', $_REQUEST["objectType"]);
 $smarty->assign('permType', $_REQUEST["permType"]);
-if ($_REQUEST['objectType'] == 'wiki' || $_REQUEST['objectType'] == 'wiki page') {
+
+if( $_REQUEST['objectType'] == 'wiki' ) {
+	$_REQUEST['objectType'] = 'wiki page';
+}
+
+require_once 'lib/core/lib/Perms/Applier.php';
+require_once 'lib/core/lib/Perms/Reflection/Factory.php';
+
+$objectFactory = Perms_Reflection_Factory::getDefaultFactory();
+$currentObject = $objectFactory->get( $_REQUEST['objectType'], $_REQUEST['objectId'] );
+
+$permissionApplier = new Perms_Applier;
+$permissionApplier->addObject( $currentObject );
+
+if ($_REQUEST['objectType'] == 'wiki page') {
 	global $structlib;
 	include_once ('lib/structures/structlib.php');
 	$pageInfoTree = $structlib->s_get_structure_pages($structlib->get_struct_ref_id($_REQUEST['objectId']));
 	if (count($pageInfoTree) > 1) {
 		$smarty->assign('inStructure', 'y');
 	}
-}
 
-//Quickperms
-$databaseperms = $userlib->get_permissions(0, -1, 'permName_asc', '', $_REQUEST["permType"], '', true);
-foreach($databaseperms['data'] as $perm) {
-	if ($perm['level']=='basic')
-		$quickperms_['basic'][$perm['permName']] = $perm['permName'];
-	elseif ($perm['level']=='registered')
-		$quickperms_['registered'][$perm['permName']] = $perm['permName'];
-	elseif ($perm['level']=='editors')
-		$quickperms_['editors'][$perm['permName']] = $perm['permName'];
-	elseif ($perm['level']=='admin')
-		$quickperms_['admin'][$perm['permName']] = $perm['permName'];
-}
-
-if(!isset($quickperms_['basic']))
-	$quickperms_['basic'] = array();
-if(!isset($quickperms_['registered']))
-	$quickperms_['registered'] = array();
-if(!isset($quickperms_['editors']))
-	$quickperms_['editors'] = array();
-if(!isset($quickperms_['admin']))
-$quickperms_['admin'] = array();
-
-$perms = array();
-$perms['basic']['name'] = "basic";
-$perms['basic']['data'] = array_merge($quickperms_['basic']);
-$perms['registered']['name'] = "registered";
-$perms['registered']['data'] = array_merge($quickperms_['basic'], $quickperms_['registered']);
-$perms['editors']['name'] = "editors";
-$perms['editors']['data'] = array_merge($quickperms_['basic'], $quickperms_['registered'], $quickperms_['editors']);
-$perms['admin']['name'] = "admin";
-$perms['admin']['data'] = array_merge($quickperms_['basic'], $quickperms_['registered'], $quickperms_['editors'], $quickperms_['admin']);
-$perms['none']['name'] = "none";
-$perms['none']['data'] = array();
-
-//Test to map permissions of ile galleries into read write admin admin levels.
-if($_REQUEST["permType"]=="file galleries") {
-	unset($perms);
-	$quickperms_temp['tiki_p_admin_file_galleries'] = 'tiki_p_admin_file_galleries';
-	$quickperms_temp['tiki_p_assign_perm_file_gallery'] = 'tiki_p_assign_perm_file_gallery';
-	$quickperms_temp['tiki_p_batch_upload_files'] = 'tiki_p_batch_upload_files';
-	$quickperms_temp['tiki_p_batch_upload_file_dir'] = 'tiki_p_batch_upload_file_dir';
-	$quickperms_temp['tiki_p_create_file_galleries'] = 'tiki_p_create_file_galleries';
-	$quickperms_temp['tiki_p_download_files'] = 'tiki_p_download_files';
-	$quickperms_temp['tiki_p_edit_gallery_file'] = 'tiki_p_edit_gallery_file';
-	$quickperms_temp['tiki_p_list_file_galleries'] = 'tiki_p_list_file_galleries';
-	$quickperms_temp['tiki_p_upload_files'] = 'tiki_p_upload_files';
-	$quickperms_temp['tiki_p_view_fgal_explorer'] = 'tiki_p_view_fgal_explorer';
-	$quickperms_temp['tiki_p_view_fgal_path'] = 'tiki_p_view_fgal_path';
-	$quickperms_temp['tiki_p_view_file_gallery'] = 'tiki_p_view_file_gallery';
-	$perms['admin']['name'] = "admin";
-	$perms['admin']['data'] = $quickperms_temp;
-	
-	unset($quickperms_temp['tiki_p_admin_file_galleries']);
-	unset($quickperms_temp['tiki_p_assign_perm_file_gallery']);
-	$perms['write']['name'] = "write";
-	$perms['write']['data'] = $quickperms_temp;
-	
-	unset($quickperms_temp['tiki_p_batch_upload_files']);
-	unset($quickperms_temp['tiki_p_batch_upload_file_dir']);
-	unset($quickperms_temp['tiki_p_create_file_galleries']);
-	unset($quickperms_temp['tiki_p_edit_gallery_file']);
-	unset($quickperms_temp['tiki_p_upload_files']);
-	$perms['read']['name'] = "read";
-	$perms['read']['data'] = $quickperms_temp;
-	
-	$perms['none']['name'] = "none";
-	$perms['none']['data'] = array();
-}
-
-$smarty->assign('quickperms', $perms);
-
-if (isset($_REQUEST['assign']) && isset($_REQUEST['quick_perms'])) {
-	check_ticket('object-perms');
-	
-	$groups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
-	
-	foreach($groups['data'] as $group) {
-		if(isset($_REQUEST["perm_".$group['groupName']])) {
-			$group = $group['groupName'];
-			$permission = $_REQUEST["perm_".$group];
-			
-			if ($permission != "userdefined") {
-				//Remove all permissions of a group
-				
-				foreach($perms['admin']['data'] as $perm) {
-					remove_perm($group, $_REQUEST["objectId"], $_REQUEST["objectType"], $perm);
-				}
-				
-				//Add chosen quickperm bundle to the objcet/group
-				foreach($perms["$permission"]['data'] as $perm) {
-					assign_perm($group, $_REQUEST["objectId"], $_REQUEST["objectType"], $perm);				
-				}
-			}
+	// If assign to structure is requested, add subelements to the applier
+	if (!empty($_REQUEST['assignstructure']) && $_REQUEST['assignstructure'] == 'on' && !empty($pageInfoTree)) {
+		foreach( $pageInfoTree as $subPage ) {
+			$sub = $objectFactory->get( $_REQUEST['objectType'], $subPage['pageName'] );
+			$permissionApplier->addObject( $sub );
 		}
 	}
 }
-//Quickperm END
+
+//Quickperms {{{
+//Test to map permissions of ile galleries into read write admin admin levels.
+if( $prefs['feature_quick_object_perms'] == 'y' ) {
+	require_once 'lib/core/lib/Perms/Reflection/Quick.php';
+
+	$perms = quickperms_get_data();
+	$smarty->assign('quickperms', $perms);
+	$quickperms = new Perms_Reflection_Quick;
+
+	foreach( $perms as $type => $data ) {
+		$quickperms->configure( $type, $data['data'] );
+	}
+
+	if (isset($_REQUEST['assign']) && isset($_REQUEST['quick_perms'])) {
+		check_ticket('object-perms');
+	
+		$groups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
+	
+		$userInput = array();
+		foreach($groups['data'] as $group) {
+			if(isset($_REQUEST["perm_".$group['groupName']])) {
+				$group = $group['groupName'];
+				$permission = $_REQUEST["perm_".$group];
+
+				$userInput[$group] = $permission;
+			}
+		}
+
+		$current = $currentObject->getDirectPermissions();
+		$newPermissions = $quickperms->getPermissions( $current, $userInput );
+		$permissionApplier->apply( $newPermissions );
+	}
+}
+//Quickperm END }}}
 
 
 // Process the form to assign a new permission to this object
@@ -201,37 +160,9 @@ elseif (isset($_REQUEST['assign'])) {
 			}
 		}
 	}
-	if (!empty($_REQUEST['assignstructure']) && $_REQUEST['assignstructure'] == 'on' && !empty($pageInfoTree)) {
-		foreach($pageInfoTree as $subPage) {
-			foreach($_REQUEST['perm'] as $group => $perms) {
-				foreach($perms as $perm) {
-					assign_perm($group, $subPage["pageName"], 'wiki page', $perm);
-				}
-			}
-		}
-	} else {
-		// set new perms
-		foreach($_REQUEST['perm'] as $group => $perms) {
-			foreach($perms as $perm) {
-				assign_perm($group, $_REQUEST["objectId"], $_REQUEST["objectType"], $perm);
-			}
-		}
-		// remove unchecked ones
-		foreach($_REQUEST['old_perm'] as $group => $perms) {
-			foreach($perms as $perm) {
-				$stillChecked = false;
-				foreach ($_REQUEST['perm'][$group] as $new_perm) {
-					if ($new_perm == $perm) {	// still checked
-						$stillChecked = true;
-						continue;
-					}
-				}
-				if (!$stillChecked) {
-					remove_perm($group, $_REQUEST["objectId"], $_REQUEST["objectType"], $perm);
-				}
-			}
-		}
-	}
+	
+	$newPermissions = get_assign_permissions();
+	$permissionApplier->apply( $newPermissions );
 	$smarty->assign('groupName', $_REQUEST["group"]);
 }
 // Process the form to remove a permission from the page
@@ -255,40 +186,34 @@ if (isset($_REQUEST['delsel_x']) && isset($_REQUEST['checked'])) {
 		}
 	}
 }
+
+// Prepare display
+
+$currentObject = $objectFactory->get( $_REQUEST['objectType'], $_REQUEST['objectId'] );
+$displayedPermissions = $currentObject->getDirectPermissions();
+
 // Now we have to get the individual page permissions if any
 if ($_REQUEST['objectType'] == 'global') {
 	$page_perms = array();
 } else {
 	$page_perms = $userlib->get_object_permissions($_REQUEST["objectId"], $_REQUEST["objectType"]);
 }
-//Quickperm
-foreach($page_perms as $perm) {
-	$current_permissions[$perm['groupName']][] = $perm['permName'];
-}
-//Quickperm END
 
 // Get a list of groups
 $groups = $userlib->get_groups(0, -1, 'id_asc', '', '', 'n');
 
 //Quickperm
-foreach($groups['data'] as $key=>$group) {
-	foreach($perms as $perm) {
-		if (!empty($current_permissions[$group['groupName']]) && is_array($current_permissions[$group['groupName']])) {
-			//Check if Group has admin perm.
-			$diff1 = array_diff($current_permissions[$group['groupName']], $perms[$perm['name']]['data']);
-			$diff2 = array_diff($perms[$perm['name']]['data'], $current_permissions[$group['groupName']]);
-			if (empty($diff1) AND empty($diff2)) {
-				$groups['data'][$key]['groupSumm'] = $perm['name'];
-				break;
-			}
-		} else {
-			$groups['data'][$key]['groupSumm'] = "none";
-			break;
-		}
+if( $prefs['feature_quick_object_perms'] == 'y' ) {
+	$groupNames = array();
+	foreach($groups['data'] as $key=>$group) {
+		$groupNames[] = $group['groupName'];
 	}
-	//If Group has NO perm.
-	if (empty($groups['data'][$key]['groupSumm']))
-		$groups['data'][$key]['groupSumm'] = "userdefined";
+
+	$map = $quickperms->getAppliedPermissions( $displayedPermissions, $groupNames );
+		
+	foreach($groups['data'] as $key=>$group) {
+		$groups['data'][$key]['groupSumm'] = $map[ $group['groupName'] ];
+	}
 }
 //Quickperm END
 
@@ -506,4 +431,116 @@ function remove_perm($group, $objectId, $objectType, $perm) {
 	}
 }
 
+function get_assign_permissions() {
+	$set = new Perms_Reflection_PermissionSet;
+
+	if( isset( $_REQUEST['perm'] ) ) {
+		foreach( $_REQUEST['perm'] as $group => $perms ) {
+			foreach( $perms as $perm ) {
+				$set->add( $group, $perm );
+			}
+		}
+	}
+
+	return $set;
+}
+
+function quickperms_get_data() {
+	if($_REQUEST["permType"]=="file galleries") {
+		return quickperms_get_filegal();
+	} else {
+		return quickperms_get_generic();
+	}
+}
+
+function quickperms_get_filegal() {
+	return array(
+		'admin' => array(
+			'name' => 'admin',
+			'data' => array(
+				'tiki_p_admin_file_galleries' => 'tiki_p_admin_file_galleries',
+				'tiki_p_assign_perm_file_gallery' => 'tiki_p_assign_perm_file_gallery',
+				'tiki_p_batch_upload_files' => 'tiki_p_batch_upload_files',
+				'tiki_p_batch_upload_file_dir' => 'tiki_p_batch_upload_file_dir',
+				'tiki_p_create_file_galleries' => 'tiki_p_create_file_galleries',
+				'tiki_p_download_files' => 'tiki_p_download_files',
+				'tiki_p_edit_gallery_file' => 'tiki_p_edit_gallery_file',
+				'tiki_p_list_file_galleries' => 'tiki_p_list_file_galleries',
+				'tiki_p_upload_files' => 'tiki_p_upload_files',
+				'tiki_p_view_fgal_explorer' => 'tiki_p_view_fgal_explorer',
+				'tiki_p_view_fgal_path' => 'tiki_p_view_fgal_path',
+				'tiki_p_view_file_gallery' => 'tiki_p_view_file_gallery',
+			),
+		),
+		'write' => array(
+			'name' => 'write',
+			'data' => array(
+				'tiki_p_batch_upload_files' => 'tiki_p_batch_upload_files',
+				'tiki_p_batch_upload_file_dir' => 'tiki_p_batch_upload_file_dir',
+				'tiki_p_create_file_galleries' => 'tiki_p_create_file_galleries',
+				'tiki_p_download_files' => 'tiki_p_download_files',
+				'tiki_p_edit_gallery_file' => 'tiki_p_edit_gallery_file',
+				'tiki_p_list_file_galleries' => 'tiki_p_list_file_galleries',
+				'tiki_p_upload_files' => 'tiki_p_upload_files',
+				'tiki_p_view_fgal_explorer' => 'tiki_p_view_fgal_explorer',
+				'tiki_p_view_fgal_path' => 'tiki_p_view_fgal_path',
+				'tiki_p_view_file_gallery' => 'tiki_p_view_file_gallery',
+			),
+		),
+		'read' => array(
+			'name' => 'read',
+			'data' => array(
+				'tiki_p_download_files' => 'tiki_p_download_files',
+				'tiki_p_list_file_galleries' => 'tiki_p_list_file_galleries',
+				'tiki_p_view_fgal_explorer' => 'tiki_p_view_fgal_explorer',
+				'tiki_p_view_fgal_path' => 'tiki_p_view_fgal_path',
+				'tiki_p_view_file_gallery' => 'tiki_p_view_file_gallery',
+			),
+		),
+		'none' => array(
+			'name' => 'none',
+			'data' => array(
+			),
+		),
+	);
+}
+
+function quickperms_get_generic() {
+	global $userlib;
+
+	$databaseperms = $userlib->get_permissions(0, -1, 'permName_asc', '', $_REQUEST["permType"], '', true);
+	foreach($databaseperms['data'] as $perm) {
+		if ($perm['level']=='basic')
+			$quickperms_['basic'][$perm['permName']] = $perm['permName'];
+		elseif ($perm['level']=='registered')
+			$quickperms_['registered'][$perm['permName']] = $perm['permName'];
+		elseif ($perm['level']=='editors')
+			$quickperms_['editors'][$perm['permName']] = $perm['permName'];
+		elseif ($perm['level']=='admin')
+			$quickperms_['admin'][$perm['permName']] = $perm['permName'];
+	}
+
+	if(!isset($quickperms_['basic']))
+		$quickperms_['basic'] = array();
+	if(!isset($quickperms_['registered']))
+		$quickperms_['registered'] = array();
+	if(!isset($quickperms_['editors']))
+		$quickperms_['editors'] = array();
+	if(!isset($quickperms_['admin']))
+	$quickperms_['admin'] = array();
+
+	$perms = array();
+	$perms['basic']['name'] = "basic";
+	$perms['basic']['data'] = array_merge($quickperms_['basic']);
+	$perms['registered']['name'] = "registered";
+	$perms['registered']['data'] = array_merge($quickperms_['basic'], $quickperms_['registered']);
+	$perms['editors']['name'] = "editors";
+	$perms['editors']['data'] = array_merge($quickperms_['basic'], $quickperms_['registered'], $quickperms_['editors']);
+	$perms['admin']['name'] = "admin";
+	$perms['admin']['data'] = array_merge($quickperms_['basic'], $quickperms_['registered'], $quickperms_['editors'], $quickperms_['admin']);
+	$perms['none']['name'] = "none";
+	$perms['none']['data'] = array();
+
+	return $perms;
+}
 
