@@ -16,5 +16,5 @@ function smarty_modifier_username($user, $login_fallback = true, $check_user_sho
 		if ( $return == '' ) $return = $login_fallback ? $user : 'Anonymous';
 	} else $return = $user;
 
-	return $return;
+	return htmlspecialchars($return);
 }
