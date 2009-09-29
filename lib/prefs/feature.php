@@ -685,6 +685,16 @@ function prefs_feature_list() {
 			'warning' => tra('Neglected feature'),
 			'type' => 'flag',
 		),	
+		'feature_antibot' => array(
+			'name' => tra('Anonymous editors must enter anti-bot code (CAPTCHA)'),
+			'help' => 'Spam+protection',
+			'type' => 'flag',
+		),	
+		'feature_wiki_protect_email' => array(
+			'name' => tra('Protect email against spam'),
+			'help' => 'Spam+protection',
+			'type' => 'flag',
+		),	
 	);
 }
 

@@ -101,6 +101,14 @@
 			</div>
 		</fieldset>
 
+		<fieldset>
+			<legend>{tr}Spam protection{/tr}</legend>
+				{preference name=feature_antibot}
+				{preference name=feature_wiki_protect_email}
+		</fieldset>		
+		
+		
+		
 	{/tab}
 
 	{tab name="{tr}General Settings{/tr}"}

@@ -45,6 +45,7 @@
 				{preference name=feature_actionlog}
 				{preference name=feature_contribution}
 				{preference name=feature_multilingual}
+				{preference name=feature_fullscreen}
 			</div>
 		</fieldset>
 
@@ -66,31 +67,11 @@
 				{preference name=feature_comments_moderation}
 				{preference name=feature_comments_locking}
 				{preference name=feature_comments_post_as_anonymous}				
-			</div>
-		</fieldset>
-
-
-{* ---------- User interface enhancement ------------ *}
-		<fieldset>
-			<legend>{tr}User Interface{/tr}</legend>
-			<div class="admin featurelist">
-				{preference name=feature_jscalendar}
-				{preference name=feature_fullscreen}
-				{preference name=feature_shadowbox}
-				{preference name=feature_quick_object_perms}
-			</div>
-		</fieldset>
-			
-
-{* ---------- Administration features ------------ *}
-		<fieldset>
-			<legend>{tr}Administration{/tr}</legend>
-			<div class="admin featurelist">
 				{preference name=feature_action_calendar}
 				{preference name=feature_comm}
 			</div>
 		</fieldset>
-			
+
 {/tab}
 			
 {* --- User Features --- *}
@@ -143,6 +124,7 @@
 						{preference name=feature_mobile}
 						{preference name=feature_morcego}
 						{preference name=feature_webmail}
+						{preference name=feature_quick_object_perms}
 				</fieldset>
 
 				<fieldset>

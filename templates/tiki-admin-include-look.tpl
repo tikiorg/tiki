@@ -733,6 +733,21 @@
 </div>
 			</fieldset>
 		</div>
+
+		<fieldset>
+			<legend>{tr}Other{/tr}</legend>
+			<div class="admin featurelist">
+				{preference name=feature_shadowbox}
+				{preference name=feature_jscalendar}
+			</div>
+		</fieldset>		
+
+
+
+
+
+
+
 	{/tab}
 
 	{tab name="{tr}Miscellaneous{/tr}"}
