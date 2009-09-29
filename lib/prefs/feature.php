@@ -675,10 +675,6 @@ function prefs_feature_list() {
 			'name' => tra('Display menus as folders'),
 			'type' => 'flag',
 		),
-		'feature_menus_items_icons' => array(
-			'name' => tra('Allow users to define icons for menus entries'),
-			'type' => 'flag',
-		),
 		'feature_breadcrumbs' => array(
 			'name' => tra('Breadcrumbs'),
 			'description' => tra('Uses Google Translate to translate the content of wiki pages to other languages.'),

@@ -271,7 +271,7 @@
 				{preference name=feature_cssmenus}
 				{preference name=feature_featuredLinks}
 				{preference name=feature_menusfolderstyle}
-				{preference name=feature_menus_items_icons}
+				{preference name=menus_items_icons}
 			</div>
 		</fieldset>	
 	{/tab}
