@@ -3,7 +3,7 @@
 
 {title admpage="calendar"}
 	{if $displayedcals|@count eq 1}
-		{tr}Calendar{/tr}: {assign var=x value=$displayedcals[0]}{$infocals[$x].name}
+		{tr}Calendar{/tr}: {assign var=x value=$displayedcals[0]}{$infocals[$x].name|escape}
 	{else}
 		{tr}Calendar{/tr}
 	{/if}
@@ -56,7 +56,7 @@
 					{if $thiscal.$k}
 						{assign var=thiscustombgcolor value=$infocals.$k.custombgcolor}
 						{assign var=thiscustomfgcolor value=$infocals.$k.customfgcolor}
-						{assign var=thisinfocalsname value=$infocals.$k.name}
+						{assign var=thisinfocalsname value=$infocals.$k.name|escape}
 						{button href="#" _style="background-color:#$thiscustombgcolor;color:#$thiscustomfgcolor;border:1px solid #$thiscustomfgcolor;" _onclick="toggle('filtercal');" _text="$thisinfocalsname"}
 					{/if}
 				{/foreach}
