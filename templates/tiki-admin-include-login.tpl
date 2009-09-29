@@ -86,12 +86,14 @@
 											{/foreach}
 										</select>
 									</div>
+
+									<div class="adminoptionbox">
+										<div class="adminoptionlabel"><label for="url_after_validation">{tr}Url a user is redirected after account validation{/tr}:</label> <input type="text" id="url_after_validation" name="url_after_validation" value="{$prefs.url_after_validation|escape}" /><br /><em>{tr}Default:{/tr} tiki-information.php?msg={tr}Account validated successfully.{/tr}</em></div>
+									</div>
+
 								</div>
 							</div>
 
-							<div class="adminoptionbox">
-								 <div class="adminoptionlabel"><label for="url_after_validation">{tr}Url a user is redirected after account validation{/tr}:</label> <input type="text" id="url_after_validation" name="url_after_validation" value="{$prefs.url_after_validation|escape}" /><br /><em>{tr}Default:{/tr} tiki-information.php?msg={tr}Account validated successfully.{/tr}</em></div>
-							</div>
 			
 							<div class="adminoptionbox">
 								<div class="adminoption"><input id="userTracker" type="checkbox" name="userTracker" {if $prefs.userTracker eq 'y'}checked="checked"{/if} {if $prefs.feature_trackers ne 'y'}disabled="disabled" {/if}/></div>
