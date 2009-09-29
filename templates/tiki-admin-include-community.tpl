@@ -225,8 +225,11 @@
 </fieldset>
 
 {* *** User Messages *** *}
+
 <fieldset><legend>{tr}User messages{/tr}{if $prefs.feature_help eq 'y'} {help url="Inter-User+Messages"}{/if}</legend>
-{if $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y'}
+
+{preference name=feature_messages}
+
 <div class="adminoptionbox">
 	<div class="adminoptionlabel"><label for="users_prefs_mess_maxRecords">{tr}Messages per page{/tr}:</label> 
 	<select name="users_prefs_mess_maxRecords" id="users_prefs_mess_maxRecords">
@@ -276,11 +279,6 @@
     </select>
 	</div>
 </div>
-{else}
-<div class="adminoptionbox">
-	<div class="adminoptionlabel">{icon _id=information} {tr}Feature is disabled{/tr}. <a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}.</a></div>
-</div>
-{/if}
 </fieldset>
 {* *** My Tiki *** *}
 <fieldset><legend>{tr}My Tiki{/tr}</legend>
