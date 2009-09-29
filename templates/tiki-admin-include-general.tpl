@@ -355,7 +355,10 @@
 	{/tab}
 
 	{tab name="{tr}Change admin password{/tr}"}
+		<div style="padding:1em;" align="left">
 		<p>{tr}Change the <strong>Admin</strong> password{/tr}.</p>
+		</div>
+		
 		<div style="float:right;width:150px;margin-left:.5em">
 			<div id="mypassword_text"></div>
 			<div id="mypassword_bar" style="font-size: .5em; height: 2px; width: 0px;"></div>
@@ -387,9 +390,12 @@
 			</div>
 		</div>
 
-		<div style="padding:1em;" align="center">
+		<div style="padding:1em;" align="left">
 			<input type="submit" name="newadminpass" value="{tr}Change password{/tr}" />
 		</div>
+
+<br/><br/><br/><br/><br/><br/><br/><br/>
+
 	{/tab}
 {/tabset}
 
