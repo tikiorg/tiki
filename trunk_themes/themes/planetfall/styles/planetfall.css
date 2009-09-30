@@ -887,8 +887,7 @@ form.admin .tabs {
 	padding: 0 !important}
 
 /***** Wiki *****/
-h1.pagetitle a,
-h1.pagetitle a:visited {
+h1.pagetitle {
 	background: url(planetfall/title_background.png) no-repeat 0 4px;
 	vertical-align: top; 
 	padding-left: 15px;
@@ -897,9 +896,16 @@ h1.pagetitle a:visited {
 	font-weight: bold;
 	color: #ccc;
 	text-align: left;
-	text-indent: 15px;
+	/*text-indent: 15px;*/
 	width: 100%;
 	height: 24px}
+	
+h1.pagetitle a,
+h1.pagetitle a:visited {
+	color: #ccc;
+	text-decoration: none;
+	font-size: 1.2em;
+}
 
 h1 a.pagetitle:hover {text-decoration: none}
 
@@ -971,8 +977,6 @@ div#page-bar {
 	margin-left: 5px;
 	margin-top: 5px}
 	
-#page-bar span {float: left}
-
 ul.floatleft {
 	display: block;
 	list-style: 0;
@@ -982,14 +986,10 @@ ul.floatleft {
 	margin-top: 0}
 
 ul.floatleft li {
-	float: left;
 	padding: 4px 2px}
 
 .editdate ul.floatleft {margin-top: 8px}
 
-span.button2,
-div.button2,
-.button3 {margin: 5px 3px 3px 0}
 
 .linkbut {font-size: 1em}
 .linkbut:hover {}
@@ -1192,8 +1192,8 @@ div.articletopline {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: .9em}
 
-div.articletitle {
-	background: url(planetfall/title_background.png) no-repeat;
+div.articletitle h2 {
+	background: url(planetfall/title_background.png) no-repeat 0 1px;
 	vertical-align: middle;
 	font-size: 1.2em;
 	font-weight: bold;
@@ -1204,8 +1204,8 @@ div.articletitle {
 	text-transform: uppercase;
 	padding-bottom: 6px;
 	padding-top: 4px}
-
-div.articletitle h2 {}
+/*
+div.articletitle h2 {}*/
 
 span.titleb {
 	font-size: .9em;
