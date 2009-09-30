@@ -193,7 +193,7 @@ class wslib extends CategLib
 			$this->remove_object_from_ws ($ws_id,$object["objectId"],$object["itemId"],$object["type"]);
 
 		//Remove the perspective associated to the ws
-		$pspId = $perspectivelib->get_ws_associated_perspective_id($wsId);
+		$pspId = $perspectivelib->get_perspectives_with_given_name($wsId);
 		$perspectivelib->remove_perspective($pspid);
 					
 		// Remove perms assigned to the WS
@@ -718,7 +718,7 @@ class wslib extends CategLib
      */
     public function list_ws_objects ($ws_id, $maxRecords = -1, $offset = -1)
     {
-		return parent::list_category_objects($ws_id, $offset, $maxRecords);
+		return parent::list_category_objects($ws_id, $offset, $maxRecords, $sort_mode = 'categId_asc');
     }
 
     /** Get the stored perms for a object for a specific user
