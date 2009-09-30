@@ -375,7 +375,7 @@
 					</td>
 				</tr>
 				<tr class="formcolor">
-					<td><label for="pass2">{tr}Repeat Password{/tr}:</lael></td>
+					<td><label for="pass2">{tr}Repeat Password{/tr}:</label></td>
 					<td><input type="password" name="pass2" id="pass2" /></td>
 				</tr>
 				{if $userinfo.login neq 'admin'}

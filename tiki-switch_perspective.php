@@ -11,7 +11,7 @@ $_SESSION['need_reload_prefs'] = true;
 
 if( isset($_REQUEST['perspective']) ) {
 	$perspective = $_REQUEST['perspective'];
-	if( $perspectivelib->perspective_exists( $perspective ) ) {
+	if( $a = $perspectivelib->perspective_exists( $perspective ) ) {
 		$_SESSION['current_perspective'] = $perspective;
 	}
 }
