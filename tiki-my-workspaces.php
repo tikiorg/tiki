@@ -21,8 +21,6 @@ if (!empty($_REQUEST['viewWS']))
 
     $id = $wslib->get_ws_associated_perspective_id($_REQUEST['viewWS']);
 
-    var_dump($id);
-
     $smarty->assign('switchPsp', $id);
 }
 else 
