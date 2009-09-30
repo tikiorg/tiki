@@ -158,6 +158,97 @@ class Perms_ApplierTest extends TikiTestCase
 		$applier->addObject( $target2 );
 		$applier->apply( $newSet );
 	}
+
+	function testRestrictChangedPermissions() {
+		$before = new Perms_Reflection_PermissionSet;
+		$before->add( 'Admin', 'admin' );
+		$before->add( 'Registered', 'edit' );
+		$before->add( 'Registered', 'view' );
+
+		$target = $this->getMock( 'Perms_Reflection_Container' );
+		$target->expects( $this->once() )
+			->method( 'getDirectPermissions' )
+			->will( $this->returnValue( $before ) );
+		$target->expects( $this->once() )
+			->method( 'getParentPermissions' )
+			->will( $this->returnValue( new Perms_Reflection_PermissionSet ) );
+		$target->expects( $this->once() )
+			->method( 'add' )
+			->with( $this->equalTo('Registered'), $this->equalTo('view_history') );
+
+		$newSet = new Perms_Reflection_PermissionSet;
+		$newSet->add( 'Registered', 'edit' );
+		$newSet->add( 'Registered', 'view' );
+		$newSet->add( 'Registered', 'view_history' );
+		$newSet->add( 'Registered', 'admin' );
+
+		$applier = new Perms_Applier;
+		$applier->addObject( $target );
+		$applier->restrictPermissions( array( 'view', 'view_history', 'edit' ) );
+		$applier->apply( $newSet );
+	}
+
+	function testNoRevertToParentWithRestrictions() {
+		$current = new Perms_Reflection_PermissionSet;
+		$current->add( 'Anonymous', 'view' );
+
+		$parent = new Perms_Reflection_PermissionSet;
+		$parent->add( 'Anonymous', 'view' );
+		$parent->add( 'Registered', 'edit' );
+		$parent->add( 'Admins', 'admin' );
+
+		$newSet = new Perms_Reflection_PermissionSet;
+		$newSet->add( 'Anonymous', 'view' );
+		$newSet->add( 'Registered', 'edit' );
+		$newSet->add( 'Admins', 'admin' );
+
+		$target = $this->getMock( 'Perms_Reflection_Container' );
+		$target->expects( $this->once() )
+			->method( 'getDirectPermissions' )
+			->will( $this->returnValue( $current ) );
+		$target->expects( $this->once() )
+			->method( 'getParentPermissions' )
+			->will( $this->returnValue( $parent ) );
+		$target->expects( $this->once() )
+			->method( 'add' )
+			->with( $this->equalTo( 'Registered' ), $this->equalTo( 'edit' ) );
+
+		$applier = new Perms_Applier;
+		$applier->addObject( $target );
+		$applier->restrictPermissions( array( 'view', 'edit' ) );
+		$applier->apply( $newSet );
+	}
+
+	function testRevertIfWithinBounds() {
+		$current = new Perms_Reflection_PermissionSet;
+		$current->add( 'Anonymous', 'view' );
+
+		$parent = new Perms_Reflection_PermissionSet;
+		$parent->add( 'Anonymous', 'view' );
+		$parent->add( 'Registered', 'edit' );
+		$parent->add( 'Admins', 'admin' );
+
+		$newSet = new Perms_Reflection_PermissionSet;
+		$newSet->add( 'Anonymous', 'view' );
+		$newSet->add( 'Registered', 'edit' );
+		$newSet->add( 'Admins', 'admin' );
+
+		$target = $this->getMock( 'Perms_Reflection_Container' );
+		$target->expects( $this->once() )
+			->method( 'getDirectPermissions' )
+			->will( $this->returnValue( $current ) );
+		$target->expects( $this->once() )
+			->method( 'getParentPermissions' )
+			->will( $this->returnValue( $parent ) );
+		$target->expects( $this->once() )
+			->method( 'remove' )
+			->with( $this->equalTo( 'Anonymous' ), $this->equalTo( 'view' ) );
+
+		$applier = new Perms_Applier;
+		$applier->addObject( $target );
+		$applier->restrictPermissions( array( 'view', 'edit', 'admin' ) );
+		$applier->apply( $newSet );
+	}
 }
 
 ?>
