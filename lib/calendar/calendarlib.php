@@ -508,7 +508,7 @@ class CalendarLib extends TikiLib {
 			    if (!in_array($k, $realcolumns)) continue;
 			    $l[]="`$k`";
 			    $z[]='?';
-			    $r[]=$v;
+			    $r[]=($k=='priority')?(string)$v:$v;
 			}
 
 			$query = 'INSERT INTO `tiki_calendar_items` ('.implode(',', $l).') VALUES ('.implode(',', $z).')';
