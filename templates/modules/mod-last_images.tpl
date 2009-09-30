@@ -8,8 +8,7 @@
 	{if $content eq "thumbnails"}
 		<span class="module">
        <a class="linkmodule" href="tiki-browse_image.php?imageId={$modLastImages[ix].imageId}">
-       {* doing regex to prevent xss *}
-       <img src="show_image.php?id={$modLastImages[ix].imageId}&amp;thumb=1" title="{$modLastImages[ix].name|regex_replace:"/\"/":"'"}" alt="{$modLastImages[ix].description|regex_replace:"/\"/":"'"}" />
+       <img src="show_image.php?id={$modLastImages[ix].imageId}&amp;thumb=1" title="{$modLastImages[ix].name|escape}" alt="{$modLastImages[ix].description|escape}" />
        </a>
 		</span>
 		{if strstr($smarty.server.PHP_SELF, 'tiki-editpage.php')}
