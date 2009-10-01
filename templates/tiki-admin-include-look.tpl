@@ -16,7 +16,7 @@
 							{/section}
 		</select>
 	{if $prefs.feature_help eq 'y'}
-	{help url="http://themes.tikiwiki.org" desc="{tr}Themes{/tr}"}
+	{help url="Themes" desc="{tr}Themes{/tr}"}
 	{/if}
 							{if $prefs.javascript_enabled eq 'n' or $prefs.feature_jquery eq 'n'}
 								<input type="submit" name="changestyle" value="{tr}Go{/tr}" />
