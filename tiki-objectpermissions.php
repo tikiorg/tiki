@@ -94,6 +94,10 @@ $currentObject = $objectFactory->get( $_REQUEST['objectType'], $_REQUEST['object
 $permissionApplier = new Perms_Applier;
 $permissionApplier->addObject( $currentObject );
 
+if( $restrictions = perms_get_restrictions() ) {
+	$permissionApplier->setRestrictions( $restrictions );
+}
+
 if ($_REQUEST['objectType'] == 'wiki page') {
 	global $structlib;
 	include_once ('lib/structures/structlib.php');
@@ -235,51 +239,20 @@ if (isset($_REQUEST['show_disabled_features']) && $_REQUEST['show_disabled_featu
 $smarty->assign('show_disabled_features', $show_disabled_features);
 
 // get "master" list of all perms
-$masterPerms = $userlib->get_permissions(0, -1, 'permName_asc', '', $_REQUEST["permType"], $groupNames, !$show_disabled_features);
-$masterPerms = $masterPerms['data'];
-foreach ($masterPerms as &$perm) {
+$candidates = $userlib->get_permissions(0, -1, 'permName_asc', '', $_REQUEST["permType"], '', !$show_disabled_features);
+
+$masterPerms = array();
+foreach ($candidates['data'] as $perm) {
 	$perm['label'] = $perm['permDesc'] . ' (' . $perm['permName'] . ')';
-}
 
-// filter out non-admin's unavailable perms
-if ($tiki_p_admin_objects != 'y') {
-	$userPerms = array();
-	foreach($masterPerms as $perm) {
-		if ($userlib->user_has_permission($user, $perm['permName'])) {
-			$userPerms[] = $perm;
-		}
+	for( $i = 0; $i < count($groupNames); $i++) {
+		$p = $displayedPermissions->has( $groupNames[$i], $perm['permName'] ) ? 'y' : 'n';
+		$perm[$groupNames[$i] . '_hasPerm'] = $p;
+		$perm[$groupIndices[$i]] = $p;
 	}
-	$masterPerms = $userPerms;
-}
 
-
-// object perms override globals (TODO - indicate globals somehow on the object perms list)
-if ($_REQUEST["objectType"] != 'global') {
-	foreach ($masterPerms as &$perm) {
-		for( $i = 0; $i < count($groupNames); $i++) {
-			if ($perm[$groupNames[$i] . '_hasPerm'] == 'y') {
-				$perm[$groupNames[$i] . '_hasPerm'] = 'n';
-				$perm[$groupIndices[$i]] = 'n';
-			}
-		}
-	}
-}
-
-// blend the perms from object (displayedPermissions) onto the big perm list
-
-foreach( $displayedPermissions->getPermissionArray() as $groupName => $groupPerms) {
-	foreach ($groupPerms as $displayPerm) {
-		foreach ($masterPerms as &$perm) {
-			if ($perm['permName'] == $displayPerm) {
-				break;
-			}
-		}
-		for( $i = 0; $i < count($groupNames); $i++) {
-			if ($groupName == $groupNames[$i]) {
-				$perm[$groupName . '_hasPerm'] = 'y';
-				$perm[$groupIndices[$i]] = 'y';
-			}
-		}
+	if ( $restrictions === false || in_array( $perm['permName'], $restrictions ) ) {
+		$masterPerms[] = $perm;
 	}
 }
 
@@ -338,6 +311,7 @@ if (count($groupNames) >= $maxGroupsToShow) {
 	}
 } else {
 	$hideGroups = '';
+
 }
 $js .= "\$jq('#treetable_1').columnManager(".
 	"{ listTargetID:'column_switches', onClass: 'advon', offClass: 'advoff', saveState: true, ".
@@ -493,5 +467,28 @@ function quickperms_get_generic() {
 	$perms['none']['data'] = array();
 
 	return $perms;
+}
+
+function perms_get_restrictions() {
+	$perms = Perms::get();
+
+	if( $perms->admin_objects ) {
+		return false;
+	}
+
+	$masterPerms = $userlib->get_permissions(0, -1, 'permName_asc', '', $_REQUEST["permType"] );
+	$masterPerms = $masterPerms['data'];
+
+	$allowed = array();
+	// filter out non-admin's unavailable perms
+	foreach($masterPerms as $perm) {
+		$name = $perm['permName'];
+
+		if( $perms->$name ) {
+			$allowed[] = $name;
+		}
+	}
+
+	return $allowed;
 }
 
