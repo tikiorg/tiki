@@ -386,6 +386,7 @@ div#sitelogo {
 #siteloginbar {
 	position: static;
 	float: right;
+	padding-right: 10px;
 	height: 24px;
 	line-height: 24px;
 	padding-left: 60px;
