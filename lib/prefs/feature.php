@@ -42,7 +42,7 @@ function prefs_feature_list() {
 		'feature_file_galleries' => array(
 			'name' => tra('File Gallery'),
 			'description' => tra('Computer files, videos or software for downloading. With check-in & check-out (lock)'),
-			'help' => 'File Gallery',
+			'help' => 'File+Gallery',
 			'type' => 'flag',
 		),
 		'feature_articles' => array(
@@ -436,7 +436,7 @@ function prefs_feature_list() {
 		'feature_mytiki' => array(
 			'name' => tra("Display 'MyTiki' in the application menu"),
 			'description' => tra("Display 'MyTiki' in the application menu"),
-			'help' => '',
+			'help' => 'MyTiki',
 			'type' => 'flag',
 		),
 		'feature_minical' => array(
@@ -594,7 +594,6 @@ function prefs_feature_list() {
 		),
 		'feature_sync_language' => array(
 			'name' => tra('Changing the page language also changes the site language'),
-			'description' => tra(''),
 			'type' => 'flag',
 		),
 		'feature_translation' => array(
