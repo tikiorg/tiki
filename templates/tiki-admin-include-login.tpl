@@ -173,12 +173,6 @@
 						</div>
 	
 						<div class="adminoptionbox">
-							<div class="adminoptionlabel"><label for="cookie_name">{tr}Cookie name{/tr}:</label> 
-								<input type="text" id="cookie_name" name="cookie_name" value="{$prefs.cookie_name|escape}" size="50" />
-							</div>
-						</div>
-
-						<div class="adminoptionbox">
 							<div class="adminoptionlabel"><label for="rememberme">{tr}Remember me{/tr}:</label> 
 								<select name="rememberme" id="rememberme" onchange="hidedisabled('remembermeoptions',this.value);">
 									<option value="disabled" {if $prefs.rememberme eq 'disabled'}selected="selected"{/if}>{tr}Disabled{/tr}</option>
@@ -218,7 +212,14 @@
 									</select>
 								</div>
 							</div>
+						</div>
 	
+						<fieldset><legend>{tr}Cookie{/tr}</legend>
+							<div class="adminoptionbox">
+								<div class="adminoptionlabel"><label for="cookie_name">{tr}Cookie name{/tr}:</label> 
+									<input type="text" id="cookie_name" name="cookie_name" value="{$prefs.cookie_name|escape}" size="50" />
+								</div>
+							</div>
 							<div class="adminoptionbox">
 								<div class="adminoptionlabel"><label for="cookie_domain">{tr}Domain{/tr}:</label> 
 									<input type="text" id="cookie_domain" name="cookie_domain" value="{$prefs.cookie_domain|escape}" size="50" />
@@ -229,7 +230,7 @@
 									<input type="text" id="cookie_path" name="cookie_path" value="{$prefs.cookie_path|escape}" size="50" />
 								</div>
 							</div>
-						</div>
+						</fieldset>
 					</div>
 
 					{preference name=feature_banning}
