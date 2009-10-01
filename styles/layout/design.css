@@ -603,8 +603,8 @@ div.imagetitle {
 
 .opaque {
 	border: 1px solid;
-	background: inherit;
-	color: inherit;
+	background-color: #fff;
+	color: #000;
 }
 
 .opaque .box-title {
