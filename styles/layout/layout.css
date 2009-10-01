@@ -677,11 +677,15 @@ span.moduleflip,
 
 .box-data ol,
 .box-data ul {
-	list-style-position: inside;
-	padding-left: 1em;
+	padding-left: 2em;
 	padding-right: .6em;
+	overflow: hidden;
 	margin-top: 0;
 	margin-bottom: 0;
+}
+
+.box-data ul {
+	padding-left: 1.3em;
 }
 
 .modcontrols {
