@@ -120,7 +120,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td><label for="description>{tr}File description:{/tr}</label></td>
+				<td><label for="description">{tr}File description:{/tr}</label></td>
 				<td>
 					<textarea style="width:100%" rows="2" cols="40" id="description" name="description[]">{if isset($fileInfo) and $fileInfo.description}{$fileInfo.description}{/if}</textarea>
 				{if $gal_info.type eq "podcast" or $gal_info.type eq "vidcast"}<br /><em>{tr}Required for podcasts{/tr}.</em>{/if}
