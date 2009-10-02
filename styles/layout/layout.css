@@ -649,7 +649,7 @@ h3.box-title {
 }
 
 span.moduleflip,
-.wikitext .box-title span img.flipmodimage {
+.box-title span img.flipmodimage {
 	display: none !important;
 	/*float: right;
 	position: relative;*/
@@ -659,7 +659,7 @@ span.moduleflip,
 }
 
 .box:hover span.moduleflip,
-.wikitext .box:hover .box-title span img.flipmodimage {
+.box:hover .box-title span img.flipmodimage {
 	display: block !important;
 }
 
