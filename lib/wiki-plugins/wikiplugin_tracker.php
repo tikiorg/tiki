@@ -287,7 +287,7 @@ function wikiplugin_tracker($data, $params) {
 				}
 				$ret = array();
 				foreach($flds['data'] as $field) {
-					if ($field['type'] == 'u' || $field['type'] == 'g' || in_array($field['fieldId'], $outf)) {
+					if ($field['type'] == 'q' || $field['type'] == 'u' || $field['type'] == 'g' || in_array($field['fieldId'], $outf)) {
 						$ret[] = $field;
 					}
 				}
