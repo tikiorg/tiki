@@ -289,6 +289,7 @@ $all_modules_info = array_combine(
 	$all_modules, 
 	array_map( array( $modlib, 'get_module_info' ), $all_modules ) 
 ) ;
+asort($all_modules_info);
 $smarty->assign( 'all_modules_info', $all_modules_info);
 $orders = array();
 for ($i = 1;$i < 50;$i++) {
