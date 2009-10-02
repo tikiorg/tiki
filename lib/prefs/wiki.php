@@ -87,7 +87,12 @@ function prefs_wiki_list() {
 				7200 => '2 ' . tra('hours'),
 			),
 		),
+		'wiki_feature_copyrights' => array(
+			'name' => tra('Wiki'),
+			'type' => 'flag',
+			'dependencies' => array(
+				'feature_wiki',
+			),
+		),
 	);
 }
-
-?>

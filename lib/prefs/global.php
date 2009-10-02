@@ -82,5 +82,15 @@ function prefs_global_list() {
 			'name' => tra('Open external links in new window'),
 			'type' => 'flag',
 		),
+		'wikiLicensePage' => array(
+			'name' => tra('License page'),
+			'type' => 'text',
+			'size' => '30',
+		),
+		'wikiSubmitNotice' => array(
+			'name' => tra('Submit notice'),
+			'type' => 'text',
+			'size' => '30',
+		),
 	);
 }
