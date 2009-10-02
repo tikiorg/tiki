@@ -10,7 +10,7 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) != FALSE) {
 	header('location: index.php');
 	exit;
 }
-global $parsemode_setup;
+global $parsemode_setup, $tiki_p_admin, $tiki_p_use_HTML;
 $parsemode_setup = 'y';
 $is_html = false;
 if ($prefs['feature_wysiwyg'] == 'y') {
