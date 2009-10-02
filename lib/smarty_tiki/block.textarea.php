@@ -126,7 +126,7 @@ function FCKeditor_OnComplete( editorInstance ) {
 				$textarea_attributes .= ' '.$k.'="'.$v.'"';
 			}
 		}
-		if (!$textarea_id) { $textarea_id = $params['id']; }
+		if (empty($textarea_id)) { $textarea_id = $params['id']; }
 		if ( $textarea_attributes != '' ) {
 			$smarty->assign('textarea_attributes', $textarea_attributes);
 		}
