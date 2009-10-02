@@ -1,4 +1,4 @@
-<div class='opaque' style="position:absolute;left:50%;margin-left:-30px;width:200px">
+<div class='opaque' style="width:200px">
 {if $calendar_type eq "tiki_actions"}
 	<div class='box-title'><a href="{$item_url}">{$cellhead}</a>
 	{if $infocals.$cellcalendarId.custompriorities eq 'y' and $cellprio}
