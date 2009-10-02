@@ -303,6 +303,13 @@ $js = '';
 //JS;
 //}	// end of for $groupNames loop
 
+// if the number of groups has changed delete the old cookie tracking column hiding
+if (isset($_COOKIE['columnManagerCtreetable_1'])) {
+	if (strlen($_COOKIE['columnManagerCtreetable_1']) != count($groupNames)) {
+		setcookie ('columnManagerCtreetable_1', '', time() - 3600);
+	}
+}
+
 $maxGroupsToShow = 6;	// maybe a pref one day?
 if (count($groupNames) >= $maxGroupsToShow) {
 	$hideGroups = implode(',',array_keys(array_fill($maxGroupsToShow+1, count($groupNames)-$maxGroupsToShow, 1)));
