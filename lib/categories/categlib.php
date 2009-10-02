@@ -1162,7 +1162,8 @@ class CategLib extends ObjectLib {
 		return $out;
 	}
 	
-	//Moved from tikilib.php
+	// Returns an array representing the last $maxRecords objects in the category with the given $categId of the given type, ordered by decreasing creation date. By default, objects of all types are returned.
+	// Each array member is a string-indexed array with fields catObjectId, categId, type, name and href.
     function last_category_objects($categId, $maxRecords, $type="") {
 		$mid = "and `categId`=?";
 		$bindvars = array((int)$categId);
