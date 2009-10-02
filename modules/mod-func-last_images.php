@@ -12,6 +12,11 @@ function module_last_images_info() {
 		'description' => tra('List the specified number of images, starting from the most recently added.'),
 		'prefs' => array("feature_galleries"),
 		'params' => array(
+			'galleryId' => array(
+				'name' => tra('Gallery identifier'),
+				'description' => tra('If set to an image gallery identifier, restricts the images to those in the identified gallery.') . " " . tra('Example value: 13.') . " " . tra('Not set by default.'),
+				'filter' => 'int'
+			),
 			'content' => array(
 				'name' => tra('Link content'),
 				'description' => tra('Display the links as image names or thumbnails.') . " " . tra('Possible values: "names" or "thumbnails". Default value: "names"')
