@@ -704,7 +704,9 @@ function prefs_feature_list() {
 			'help' => 'Spam+protection',
 			'type' => 'flag',
 		),	
+		'feature_sitead' => array(
+			'name' => tra('Activate'),
+			'type' => 'flag',
+		),	
 	);
 }
-
-

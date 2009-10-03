@@ -11,13 +11,6 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 }
 if (isset($_REQUEST["adssetup"])) {
 	ask_ticket('admin-inc-ads');
-	$pref_toggles = array(
-		"feature_sitead",
-		"sitead_publish"
-	);
-	foreach($pref_toggles as $toggle) {
-		simple_set_toggle($toggle);
-	}
 	$pref_simple_values = array(
 		"sitead"
 	);
