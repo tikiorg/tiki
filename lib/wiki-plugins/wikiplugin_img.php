@@ -222,8 +222,10 @@ function wikiplugin_img_info() {
 	}
 	
 ///////////////////////////////////// If only old img parameters used, use old code and get out of program quickly ///////////////////
-	if (!empty($imgdata['src']) && empty($imgdata['thumb']) && empty($imgdata['button']) && empty($imgdata['max']) && empty($imgdata['styleimage']) && empty($imgdata['stylebox']) && empty($imgdata['styledesc']) && empty($imgdata['block']) && ($imgdata['desc'] != 'desc') && ($imgdata['desc'] != 'idesc') && ($imgdata['desc'] != 'name') && ($imgdata['desc'] != 'ititle')) {
-		
+//	if (!empty($imgdata['src']) && empty($imgdata['thumb']) && empty($imgdata['button']) && empty($imgdata['max']) && empty($imgdata['styleimage']) && empty($imgdata['stylebox']) && empty($imgdata['styledesc']) && empty($imgdata['block']) && ($imgdata['desc'] != 'desc') && ($imgdata['desc'] != 'idesc') && ($imgdata['desc'] != 'name') && ($imgdata['desc'] != 'ititle')) {
+	if (!empty($imgdata['src']) && (strpos($imgdata['src'], '|') == FALSE  ) && (strpos($imgdata['src'], ',') == FALSE  ) && empty($imgdata['thumb']) 
+		&& empty($imgdata['button']) && empty($imgdata['max']) && empty($imgdata['styleimage']) && empty($imgdata['stylebox']) && empty($imgdata['styledesc']) 
+		&& empty($imgdata['block']) && ($imgdata['desc'] != 'desc') && ($imgdata['desc'] != 'idesc') && ($imgdata['desc'] != 'name') && ($imgdata['desc'] != 'ititle')) {	
 		if ($tikidomain && !preg_match('|^https?:|', $imgdata['src'])) {
 			$imgdata['src'] = preg_replace("~img/wiki_up/~","img/wiki_up/$tikidomain/",$imgdata['src']);
 		}
@@ -358,7 +360,10 @@ function wikiplugin_img_info() {
 		} elseif (!empty($imgdata['attId'])) {
 			$sourcetype = 'attach';
 			$id = 'attId';
-		}	
+		} else {
+			$sourcetype = 'url';
+			$id = 'src';
+		}			
 		
 	//////////////////////////////////////// Process lists of images ////////////////////////////////////////////////////////
 		//Process "|" or "," separated images
