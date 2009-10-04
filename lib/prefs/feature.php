@@ -720,5 +720,9 @@ function prefs_feature_list() {
 			'name' => tra('Comments'),
 			'type' => 'flag',
 		),	
+		'feature_faq_comments' => array(
+			'name' => tra('Comments'),
+			'type' => 'flag',
+		),	
 	);
 }
