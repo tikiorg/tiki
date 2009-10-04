@@ -742,5 +742,10 @@ function prefs_feature_list() {
 			'name' => tra('Display blog title in the sefurl'),
 			'type' => 'flag',
 		),	
+		'feature_modulecontrols' => array(
+			'name' => tra('Show module controls'),
+			'help' => 'Module+Control',
+			'type' => 'flag',
+		),	
 	);
 }

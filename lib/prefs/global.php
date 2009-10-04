@@ -110,5 +110,13 @@ function prefs_global_list() {
 				'360' => tra('[0 360]'),
 			),
 		),
+		'modallgroups' => array(
+			'name' => tra('Display modules to all groups always'),
+			'type' => 'flag',
+		),
+		'modseparateanon' => array(
+			'name' => tra('Hide anonymous-only modules from registered users'),
+			'type' => 'flag',
+		),
 	);
 }
