@@ -1,7 +1,7 @@
 {* $Id$ *}
 <script type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 
-{title help="trackers"}{tr}Tracker Item:{/tr} {$tracker_info.name}{/title}
+{title help="trackers"}{tr}Tracker Item:{/tr} {$tracker_info.name|escape}{/title}
 
 {* --------- navigation ------ *}
 <div class="navbar">
@@ -57,7 +57,7 @@
 <div class="simplebox highlight">
 {tr}Following mandatory fields are missing{/tr}&nbsp;:<br/>
 	{section name=ix loop=$err_mandatory}
-{$err_mandatory[ix].name}{if !$smarty.section.ix.last},&nbsp;{/if}
+{$err_mandatory[ix].name|escape}{if !$smarty.section.ix.last},&nbsp;{/if}
 	{/section}
 </div><br />
 {/if}
@@ -65,7 +65,7 @@
 <div class="simplebox highlight">
 {tr}Following fields are incorrect{/tr}&nbsp;:<br/>
 	{section name=ix loop=$err_value}
-{$err_value[ix].name}{if !$smarty.section.ix.last},&nbsp;{/if}
+{$err_value[ix].name|escape}{if !$smarty.section.ix.last},&nbsp;{/if}
 	{/section}
 </div><br />
 {/if}
@@ -90,7 +90,7 @@
   {if ($cur_field.isHidden ne 'y' or $tiki_p_admin_trackers eq 'y') and !($tracker_info.doNotShowEmptyField eq 'y' and empty($cur_field.value) and empty($cur_field.cat) and $cur_field.type ne 's' and $cur_field.type ne 'h') and ($cur_field.type ne 'p' or $cur_field.options_array[0] ne 'password') and (empty($cur_field.visibleBy) or in_array($default_group, $cur_field.visibleBy) or $tiki_p_admin_trackers eq 'y')}
 	{if $cur_field.type eq 'h'}
 		</table>
-		<h2>{$cur_field.name}</h2>
+		<h2>{$cur_field.name|escape}</h2>
 		<table class="normal">
 	{elseif $cur_field.type ne 'x'}
 		{if $stick ne 'y'}
@@ -98,7 +98,7 @@
 		{else}
 			<td class="formlabel right" >
 		{/if}
-		{$cur_field.name}
+		{$cur_field.name|escape}
 		{if ($cur_field.type eq 'l' and $cur_field.options_array[4] eq '1') and $cur_field.tracker_options.oneUserItem ne 'y'}
 		  {assign var="fieldopts" value="|"|explode:$cur_field.options_array[2]}
 			<br />
@@ -291,7 +291,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {if $cur_field.isMandatory ne 'y'}<option value="">{tr}None{/tr}</option>{/if}
 {foreach key=id item=one from=$users}
 {if ( ! isset($cur_field.itemChoices) || $cur_field.itemChoices|@count eq 0 || in_array($one, $cur_field.itemChoices) ) }
-<option value="{$one|escape}" {if ($cur_field.options_array[0] eq '2' and $one eq $user) or ($cur_field.options_array[0] ne '2' and $cur_field.value eq $one) or ($cur_field.isMandatory eq 'y' and empty($cur_field.value) and $one eq $user)}selected="selected"{/if}>{$one|username|escape}</option>
+<option value="{$one|escape}" {if ($cur_field.options_array[0] eq '2' and $one eq $user) or ($cur_field.options_array[0] ne '2' and $cur_field.value eq $one) or ($cur_field.isMandatory eq 'y' and empty($cur_field.value) and $one eq $user)}selected="selected"{/if}>{$one|username}</option>
 {/if}
 {/foreach}
 </select>

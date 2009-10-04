@@ -6,7 +6,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-function smarty_modifier_username($user, $login_fallback = true, $check_user_show_realnames = true) {
+function smarty_modifier_username($user, $login_fallback = true, $check_user_show_realnames = true, $html_encoding = true) {
 	global $userlib, $prefs;
 
 	if ( $prefs['user_show_realnames'] == 'y' || ! $check_user_show_realnames ) {
@@ -16,5 +16,6 @@ function smarty_modifier_username($user, $login_fallback = true, $check_user_sho
 		if ( $return == '' ) $return = $login_fallback ? $user : 'Anonymous';
 	} else $return = $user;
 
-	return htmlspecialchars($return);
+	if ($html_encoding) $return = htmlspecialchars($return);
+	return $return;
 }

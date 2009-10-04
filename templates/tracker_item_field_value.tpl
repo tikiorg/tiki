@@ -103,7 +103,7 @@
 {elseif $field_value.type eq  't' or $field_value.type eq 'n' or $field_value.type eq 'd' or $field_value.type eq 'D' or $field_value.type eq 'R' or $field_value.type eq 'u' or $field_value.type eq 'g' or $field_value.type eq 'I' or $field_value.type eq 'q' or $field_value.type eq 'w' or ($field_value.type eq 'C' and $field_value.computedtype ne 'f')}
 	{if $list_mode eq 'y'}
 		{if $field_value.type eq 'u' }
-			{$field_value.value|username|truncate:255:"..."|escape|default:"&nbsp;"}
+			{$field_value.value|username:true:true:false|truncate:255:"..."|escape|default:"&nbsp;"}
 		{elseif !empty($field_value.value) || $is_link eq 'y'}			
 			{$field_value.value|truncate:255:"..."|escape|default:"&nbsp;"}
 		{/if}		
@@ -111,7 +111,7 @@
 		{$field_value.value}
 	{else}
 		{if $field_value.type eq 'u' }
-			{$field_value.value|username|escape}
+			{$field_value.value|username}
 		{else}
 			{$field_value.value|escape}
 		{/if}		

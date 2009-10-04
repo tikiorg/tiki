@@ -4,7 +4,7 @@
 {popup_init src="lib/overlib.js"}
 {/if}
 
-{title url="tiki-view_tracker.php?trackerId=$trackerId" adm="trackers"}{tr}Tracker:{/tr} {$tracker_info.name}{/title}
+{title url="tiki-view_tracker.php?trackerId=$trackerId" adm="trackers"}{tr}Tracker:{/tr} {$tracker_info.name|escape}{/title}
 
 <div class="navbar">
 	 {if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
@@ -118,7 +118,7 @@
 {foreach from=$fields key=ix item=field_value}
 {if ( $field_value.type eq 's' and ($field_value.name eq "Rating" or $field_value.name eq tra("Rating")) and $field_value.isTblVisible eq 'y' ) || ( $field_value.isTblVisible eq 'y' and $field_value.type ne 'x' and $field_value.type ne 'h' and ($field_value.isHidden eq 'n' or $field_value.isHidden eq 'p' or $tiki_p_admin_trackers eq 'y') ) and ($field_value.type ne 'p' or $field_value.options_array[0] ne 'password') and (empty($field_value.visibleBy) or in_array($default_group, $field_value.visibleBy) or $tiki_p_admin_trackers eq 'y') }
 	<th class="auto">
-		{self_link _sort_arg='sort_mode' _sort_field='f_'|cat:$field_value.fieldId}{$field_value.name|truncate:255:"..."|default:"&nbsp;"}{/self_link}
+		{self_link _sort_arg='sort_mode' _sort_field='f_'|cat:$field_value.fieldId}{$field_value.name|truncate:255:"..."|escape|default:"&nbsp;"}{/self_link}
 	</th>
 	{if $field_value.type eq 's' and ($field_value.name eq "Rating" or $field_value.name eq tra("Rating"))}
 		{assign var=rateFieldId value=$field_value.fieldId}
@@ -275,15 +275,15 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {if $field_value.type ne 'x' and $field_value.type ne 'l' and $field_value.type ne 'q' and (($field_value.type ne 'u' and $field_value.type ne 'g' and $field_value.type ne 'I') or !$field_value.options_array[0] or $tiki_p_admin_trackers eq 'y') and (empty($field_value.visibleBy) or in_array($default_group, $field_value.visibleBy) or $tiki_p_admin_trackers eq 'y')and (empty($field_value.editableBy) or in_array($default_group, $field_value.editableBy) or $tiki_p_admin_trackers eq 'y') and ($field_value.type ne 'A' or $tiki_p_attach_trackers eq 'y') and $field_value.type ne 'N'}
 {if $field_value.type eq 'h'}
 </table>
-<h2>{$field_value.name}</h2>
+<h2>{$field_value.name|escape}</h2>
 <table class="normal">
 {else}
 {if ($field_value.type eq 'c' or $field_value.type eq 't' or $field_value.type eq 'n') and $field_value.options_array[0] eq '1'}
-<tr class="formcolor"><td class="formlabel" >{$field_value.name}{if $field_value.isMandatory eq 'y'} *{/if}</td><td class="formcontent">
+<tr class="formcolor"><td class="formlabel" >{$field_value.name|escape}{if $field_value.isMandatory eq 'y'} *{/if}</td><td class="formcontent">
 {elseif $stick eq 'y'}
-<td class="formlabel right">{$field_value.name}{if $field_value.isMandatory eq 'y'} *{/if}</td><td >
+<td class="formlabel right">{$field_value.name|escape}{if $field_value.isMandatory eq 'y'} *{/if}</td><td >
 {else}
-<tr class="formcolor"><td class="formlabel" >{$field_value.name}{if $field_value.isMandatory eq 'y'} *{/if}
+<tr class="formcolor"><td class="formlabel" >{$field_value.name|escape}{if $field_value.isMandatory eq 'y'} *{/if}
 </td><td colspan="3" class="formcontent" >
 {/if}
 {/if}
@@ -306,9 +306,9 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {foreach key=id item=one from=$users}
 {if ( ! isset($field_value.itemChoices) || $field_value.itemChoices|@count eq 0 || in_array($one, $field_value.itemChoices) )}
 {if $field_value.value}
-<option value="{$one|escape}"{if $one eq $field_value.value} selected="selected"{/if}>{$one|username|escape}</option>
+<option value="{$one|escape}"{if $one eq $field_value.value} selected="selected"{/if}>{$one|username}</option>
 {else}
-<option value="{$one|escape}"{if $one eq $user and $field_value.options_array[0] ne '2'} selected="selected"{/if}>{$one|username|escape}</option>
+<option value="{$one|escape}"{if $one eq $user and $field_value.options_array[0] ne '2'} selected="selected"{/if}>{$one|username}</option>
 {/if}
 {/if}
 {/foreach}

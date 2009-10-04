@@ -183,7 +183,7 @@
 			</td><td width="80%">
 				<select id="user" name="user[]">
 				{section name=ix loop=$users}
-					<option value="{$users[ix].login|escape}"{if (isset($fileInfo) and $fileInfo.user eq $users[ix].login) or (!isset($fileInfo) and $user == $users[ix].login)}  selected="selected"{/if}>{$users[ix].login|username|escape}</option>
+					<option value="{$users[ix].login|escape}"{if (isset($fileInfo) and $fileInfo.user eq $users[ix].login) or (!isset($fileInfo) and $user == $users[ix].login)}  selected="selected"{/if}>{$users[ix].login|username}</option>
 				{/section}
 				</select>
 			</td></tr>

@@ -40,7 +40,7 @@
 					<a class="tablename" href="tiki-admin_trackers.php?trackerId={$channels[user].trackerId}" title="{tr}Edit{/tr}">{$channels[user].trackerId}</a>
 				</td>
 				<td>
-					<a class="tablename" href="tiki-admin_trackers.php?trackerId={$channels[user].trackerId}" title="{tr}Edit{/tr}">{$channels[user].name}</a>
+					<a class="tablename" href="tiki-admin_trackers.php?trackerId={$channels[user].trackerId}" title="{tr}Edit{/tr}">{$channels[user].name|escape}</a>
 				</td>
 				{if $channels[user].descriptionIsParsed eq 'y' }
 					<td>{wiki}{$channels[user].description}{/wiki}</td>

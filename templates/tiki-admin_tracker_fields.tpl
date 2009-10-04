@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-{title help="Adding+fields+to+a+tracker" url="tiki-admin_tracker_fields.php?trackerId=$trackerId"}{tr}Admin Tracker:{/tr} {$tracker_info.name}{/title}
+{title help="Adding+fields+to+a+tracker" url="tiki-admin_tracker_fields.php?trackerId=$trackerId"}{tr}Admin Tracker:{/tr} {$tracker_info.name|escape}{/title}
 
 <div  class="navbar">
 	{button href="tiki-list_trackers.php" _text="{tr}List Trackers{/tr}"}
@@ -58,7 +58,7 @@
 {/if}</td>
 <td>{if $tracker_info.useRatings ne 'y' or $channels[user].name ne "Rating"}
 {self_link cookietab='2' _anchor="anchor2" fieldId=$channels[user].fieldId _title='{tr}Edit{/tr}'}{$channels[user].fieldId}{/self_link}{else}{$channels[user].fieldId}{/if}</td>
-<td>{$channels[user].name}</td>
+<td>{$channels[user].name|escape}</td>
 <td>{assign var=x value=$channels[user].type}{$field_types[$x].label}</td>
 <td>{$channels[user].options|truncate:42:"..."|escape}</td>
 <td>{$channels[user].position}</td>
@@ -72,7 +72,7 @@
 {if !empty($channels[user].visibleBy)}<br />{icon _id=magnifier width=10 height=10}{foreach from=$channels[user].visibleBy item=g}{$g|escape} {/foreach}{/if}
 {if !empty($channels[user].editableBy)}<br />{icon _id=page_edit width=10 height=10}{foreach from=$channels[user].editableBy item=g}{$g|escape} {/foreach}{/if}
 </td>
-<td>{$channels[user].description|truncate:14:"..."}</td>
+<td>{$channels[user].description|truncate:14|escape}</td>
 <td>{if $tracker_info.useRatings ne 'y' or $channels[user].name ne "Rating"}
 <a class="link" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}{if $max and $max ne $prefs.maxRecords}&amp;max={$max}{/if}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].fieldId}" title="{tr}Remove{/tr}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a> 
 <a class="link" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}&amp;fieldId={$channels[user].fieldId}&amp;up=1{if $offset > 1}&amp;offset={$offset}{/if}{if $max and $max ne $prefs.maxRecords}&amp;max={$max}{/if}">{icon _id='resultset_down'}</a>
@@ -136,7 +136,7 @@
 {sortlinks case=false}
 {foreach key=choice_k item=choice_i from=$fi.itemChoicesList}
 {$choice_k}
-<option value="{$choice_k|escape}"{if !empty($itemChoices) and in_array($choice_k, $itemChoices)} selected="selected"{/if}>{if $type eq 'u'}{$choice_i|username|escape}{else}{tr}{$choice_i}{/tr}{/if}</option>
+<option value="{$choice_k|escape}"{if !empty($itemChoices) and in_array($choice_k, $itemChoices)} selected="selected"{/if}>{if $type eq 'u'}{$choice_i|username}{else}{tr}{$choice_i}{/tr}{/if}</option>
 {/foreach}
 {/sortlinks}
 </select>
@@ -216,7 +216,7 @@
 {if $export_all eq 'y'}
 fieldId = {$channels[user].fieldId}
 {/if}
-name = {$channels[user].name}
+name = {$channels[user].name|escape}
 position = {$channels[user].position}
 type = {$channels[user].type}
 options = {$channels[user].options}

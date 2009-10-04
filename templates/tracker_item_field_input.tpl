@@ -36,15 +36,15 @@
 		{foreach key=id item=one from=$field_value.list}
 			{if ( ! isset($field_value.itemChoices) || $field_value.itemChoices|@count eq 0 || in_array($one, $field_value.itemChoices) )}
 				{if $field_value.options_array[0] ne '2'}
-					<option value="{$one|escape}"{if $one eq $field_value.value} selected="selected"{/if}>{$one|username|escape}</option>
+					<option value="{$one|escape}"{if $one eq $field_value.value} selected="selected"{/if}>{$one|username}</option>
 				{else}
-					<option value="{$one|escape}"{if $one eq $user} selected="selected"{/if}>{$one|username|escape}</option>
+					<option value="{$one|escape}"{if $one eq $user} selected="selected"{/if}>{$one|username}</option>
 				{/if}
 			{/if}
 		{/foreach}
 		</select>
 	{else}
-		{$user|username|escape}
+		{$user|username}
 	{/if}
 
 {* -------------------- IP selector -------------------- *}
