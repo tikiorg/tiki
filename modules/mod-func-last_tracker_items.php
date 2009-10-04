@@ -5,7 +5,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header('location: index.php');
   exit;
 }
-// name is the name of the tracker field to be displayed (should be descriptive)
 
 function module_last_tracker_items_info() {
 	return array(
