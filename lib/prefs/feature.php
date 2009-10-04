@@ -708,5 +708,17 @@ function prefs_feature_list() {
 			'name' => tra('Activate'),
 			'type' => 'flag',
 		),	
+		'feature_poll_anonymous' => array(
+			'name' => tra('Anonymous voting'),
+			'type' => 'flag',
+		),	
+		'feature_poll_revote' => array(
+			'name' => tra('Allow re-voting'),
+			'type' => 'flag',
+		),	
+		'feature_poll_comments' => array(
+			'name' => tra('Comments'),
+			'type' => 'flag',
+		),	
 	);
 }

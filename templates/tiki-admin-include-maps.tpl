@@ -6,7 +6,7 @@
 		<legend>{tr}Settings{/tr}</legend>
 		<div class="adminoptionbox">
 			{if $map_error neq ''}
-				{remarksbox type=warning title="Warning"}{$map_error}{/remarksbox}
+				{remarksbox type=warning title="{tr}Warning{/tr}"}{$map_error}{/remarksbox}
 			{/if}
 			{preference name=map_path}
 			{preference name=default_map}
