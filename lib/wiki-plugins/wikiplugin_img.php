@@ -222,7 +222,6 @@ function wikiplugin_img_info() {
 	}
 	
 ///////////////////////////////////// If only old img parameters used, use old code and get out of program quickly ///////////////////
-//	if (!empty($imgdata['src']) && empty($imgdata['thumb']) && empty($imgdata['button']) && empty($imgdata['max']) && empty($imgdata['styleimage']) && empty($imgdata['stylebox']) && empty($imgdata['styledesc']) && empty($imgdata['block']) && ($imgdata['desc'] != 'desc') && ($imgdata['desc'] != 'idesc') && ($imgdata['desc'] != 'name') && ($imgdata['desc'] != 'ititle')) {
 	if (!empty($imgdata['src']) && (strpos($imgdata['src'], '|') == FALSE  ) && (strpos($imgdata['src'], ',') == FALSE  ) && empty($imgdata['thumb']) 
 		&& empty($imgdata['button']) && empty($imgdata['max']) && empty($imgdata['styleimage']) && empty($imgdata['stylebox']) && empty($imgdata['styledesc']) 
 		&& empty($imgdata['block']) && ($imgdata['desc'] != 'desc') && ($imgdata['desc'] != 'idesc') && ($imgdata['desc'] != 'name') && ($imgdata['desc'] != 'ititle')) {	
@@ -300,7 +299,7 @@ function wikiplugin_img_info() {
 			$repl = '<span class="img">' . $repl . "</span>";
 		}
 		return $repl;
-	//end of old IMG code//
+	///////////end of old IMG code////////////////////
 	} else {
 	////////////////////////////////////////////// Default parameter and variable settings.//////////////////////////////////////////////	
 		// Set styling defaults
@@ -645,7 +644,13 @@ function wikiplugin_img_info() {
 				$mouseover = ' ' . smarty_function_popup($popup_params, $smarty);
 				
 			} else {
-				$link = $browse_full_image;
+				//If a thumb was specified for an image gallery image, strip off thumb string so the link is to the full image
+				$thumbstring = '&thumb=1';
+				if (strpos($browse_full_image, $thumbstring) > 0) {
+					$link = substr($browse_full_image,0,(strlen($browse_full_image)-8));
+				} else {
+					$link = $browse_full_image;
+				}
 			}	
 			// Set other link-related attributes				
 			// target
