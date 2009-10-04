@@ -894,7 +894,7 @@ function get_default_prefs() {
 		'map_comments' => 'MapsComments',
 		'gdaltindex' => '',
 		'ogr2ogr' => '',
-		'mapzone' => '',
+		'mapzone' => '180',
 
 		// gmap
 		'feature_gmap' => 'n',
