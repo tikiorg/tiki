@@ -320,7 +320,7 @@ class TrackerLib extends TikiLib {
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
-			$res["parsed"] = nl2br($res["data"]);
+			$res["parsed"] = nl2br(htmlspecialchars($res["data"]));
 
 			$ret[] = $res;
 		}
