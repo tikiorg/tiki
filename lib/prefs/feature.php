@@ -724,5 +724,23 @@ function prefs_feature_list() {
 			'name' => tra('Comments'),
 			'type' => 'flag',
 		),	
+		'feature_sefurl' => array(
+			'name' => tra('Search engine friendly url'),
+			'help' => 'Rewrite+Rules',
+			'type' => 'flag',
+		),	
+		'feature_sefurl_filter' => array(
+			'name' => tra('Search engine friendly url Postfilter'),
+			'help' => 'Rewrite+Rules',
+			'type' => 'flag',
+		),	
+		'feature_sefurl_title_article' => array(
+			'name' => tra('Display article title in the sefurl'),
+			'type' => 'flag',
+		),	
+		'feature_sefurl_title_blog' => array(
+			'name' => tra('Display blog title in the sefurl'),
+			'type' => 'flag',
+		),	
 	);
 }
