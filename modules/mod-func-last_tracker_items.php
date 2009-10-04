@@ -31,7 +31,7 @@ function module_last_tracker_items_info() {
 			),
 			'sort_mode' => array(
 				'name' => tra('Sort'),
-				'description' => tra('Specifies how the items should be sorted.') . " " . tra('Possible values include ') . 'created and created_desc (equivalent), created_asc, status, lastModif, createdBy and lastModifBy. ' . tra('Default value:') . " created_desc",
+				'description' => tra('Specifies how the items should be sorted.') . " " . tra('Possible values include created and created_desc (equivalent), created_asc, status, lastModif, createdBy and lastModifBy. Unless "_asc" is specified, the sort is descending. "created" sorts on item creation date. "lastModif" sorts on the last modification date of items. "lastModif_desc" sorts in descending order of last modification date.')  . ' ' . tra('Default value:') . " created_desc",
 				'filter' => 'striptags'
 			),
 			'status' => array(
@@ -81,4 +81,6 @@ function module_last_tracker_items( $mod_reference, $module_params ) {
 		$smarty->assign('module_error', tra('You do not have permission to view this tracker.'));
 	}
 	$smarty->assign('tpl_module_title', tra("Last Items"));
+	if (!strcasecmp($module_params['sort_mode'], 'lastModif_desc'))
+		$smarty->assign('tpl_module_title', tra("Last Modified Items"));
 }
