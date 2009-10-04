@@ -17,7 +17,9 @@
 	
 			<div class="adminoptionbox">
 				{preference name=feature_version_checks}
-				{preference name=tiki_version_check_frequency}
+				<div  id="feature_version_checks_childcontainer">
+					{preference name=tiki_version_check_frequency}
+				</div>
 				{button href="tiki-admin.php?page=general&amp;forcecheck=1" _text="{tr}Check for updates now{/tr}."}
 			</div>
 		</fieldset>
@@ -96,7 +98,7 @@
 
 			{preference name=log_mail}
 			{preference name=log_sql}
-			<div class="adminoptionboxchild">
+			<div class="adminoptionboxchild" id="log_sql_childcontainer">
 				{preference name=log_sql_perf_min}
 			</div>
 		</fieldset>
@@ -119,7 +121,7 @@
 			{preference name=tmpDir}
 			
 			{preference name=use_proxy}
-			<div class="adminoptionboxchild">
+			<div class="adminoptionboxchild" id="use_proxy_childcontainer">
 				{preference name=proxy_host}
 				{preference name=proxy_port}
 			</div>			
@@ -158,7 +160,7 @@
 			<legend>{tr}Miscellaneous{/tr}</legend>
 
 				{preference name=feature_help}
-				<div class="adminoptionboxchild">
+				<div class="adminoptionboxchild" id="feature_help_childcontainer">
 					{preference name=helpurl}
 				</div>
 
@@ -167,7 +169,6 @@
 	{/tab}
 
 	{tab name="{tr}Navigation{/tr}"}
-
 
 		<fieldset>
 			<legend>{tr}Menus{/tr}</legend>
@@ -180,12 +181,13 @@
 			</div>
 		</fieldset>	
 	
-	
 		<fieldset>
 			<legend>{tr}Home Page{/tr}</legend>
 			<div class="adminoptionbox">
 				{preference name=useGroupHome}
-				{preference name=limitedGoGroupHome}
+				<div id="useGroupHome_childcontainer">
+					{preference name=limitedGoGroupHome}
+				</div>
 			</div>
 			<div class="adminoptionbox">
 				<div id="tiki_home_page" style="display:{if $prefs.useUrlIndex eq 'y'}none{else}block{/if};">{tr}Use TikiWiki feature as homepage{/tr}:
@@ -272,12 +274,12 @@
 			<legend>{tr}Site Access{/tr}</legend>
 
 			{preference name=site_closed}
-			<div class="adminoptionboxchild">
+			<div class="adminoptionboxchild" id="site_closed_childcontainer">
 				{preference name=site_closed_msg}
 			</div>
 
 			{preference name=use_load_threshold}
-			<div class="adminoptionboxchild">
+			<div class="adminoptionboxchild" id="use_load_threshold_childcontainer">
 				{preference name=load_threshold}
 				{preference name=site_busy_msg}
 			</div>
