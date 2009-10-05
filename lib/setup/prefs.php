@@ -1196,6 +1196,19 @@ function get_default_prefs() {
 		'direct_pagination_max_middle_links' => 2,
 		'direct_pagination_max_ending_links' => 0,
 
+		// kaltura
+		'feature_kaltura' => 'n',
+		'wikiplugin_kaltura' => 'y',
+		'default_kaltura_editor' => 'kse',
+		'partnerId' => '',
+		'secret' => '',
+		'adminSecret' => '',		
+		'kdpUIConf' => '48411',
+		'kdpWidget' => '',
+		'kcwUIConf' => '36200',
+		'kseUIConf' => '36300',
+		'kaeUIConf' => '1000865',
+
 		// unsorted features
 		'anonCanEdit' => 'n',
 		'cacheimages' => 'n',

@@ -116,6 +116,7 @@
 						{preference name=feature_wysiwyg}
 						{preference name=feature_ajax_autosave}
 						{preference name=feature_wiki_save_draft}
+						{preference name=feature_kaltura}
 						</fieldset>
 
 				<fieldset>
