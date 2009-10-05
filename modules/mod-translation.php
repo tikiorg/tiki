@@ -33,7 +33,7 @@ if( $prefs['feature_translation'] == 'y' && ! empty( $page ) && is_string($page)
 	global $multilinguallib;
 	include_once('lib/multilingual/multilinguallib.php');
 
-	$langs = $multilinguallib->preferedLangs();
+	$langs = $multilinguallib->preferredLangs();
 	if( isset( $GLOBALS['pageLang'] ) )
 		$pageLang = $GLOBALS['pageLang'];
 	else

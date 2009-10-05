@@ -116,7 +116,7 @@ else
 		$smarty->assign( 'setlang', $_REQUEST['setlang'] );
 }
 
-$languages = $multilinguallib->preferedLangs();
+$languages = $multilinguallib->preferredLangs();
 $used_languages = array();
 foreach ($languages as $l)
 	$used_languages[$l] = true;

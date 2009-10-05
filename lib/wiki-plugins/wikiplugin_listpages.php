@@ -131,7 +131,7 @@ function wikiplugin_listpages($data, $params) {
 		global $multilinguallib;
 		require_once 'lib/multilingual/multilinguallib.php';
 		if ($translations == 'user') {
-			$translations = $multilinguallib->preferedLangs();
+			$translations = $multilinguallib->preferredLangs();
 		} else {
 			$translations = explode( '|', $translations );
 		}
