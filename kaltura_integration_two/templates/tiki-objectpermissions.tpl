@@ -56,6 +56,21 @@
 		</div>
 		
 		<h3>{tr}Permissions{/tr}</h3>
+
+		{if $permissions_displayed eq 'parent'}
+			{remarksbox type="note" title="{tr}Note{/tr}"}
+				{tr}There are no specific permissions.{/tr}
+				<br/>
+				{tr}Currently inherited permissions displayed.{/tr}
+			{/remarksbox}
+		{/if}
+
+		{if $objectType eq 'category'}
+			<p>
+				<input type="checkbox" id="propagate" name="propagate_category" value="1"/>
+				<label for="propagate">{tr}Copy permissions to child categories{/tr}</label>
+			</p>
+		{/if}
 		
 		{if isset($groupsHidden)}
 			{remarksbox type="tip" title="{tr}Note{/tr}"}

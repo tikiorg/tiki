@@ -27,7 +27,7 @@
 				if (src.indexOf("wiki_plugin_edit_view") > -1) {
 					$jq(".editplugin, .icon_edit_section").show();
 					$jq("#wiki_plugin_edit_view img").attr("src", src.replace("wiki_plugin_edit_view", "wiki_plugin_edit_hide"));
-					setCookie("wiki_plugin_edit_view", true);
+					setCookieBrowser("wiki_plugin_edit_view", true);
 				} else {
 					$jq(".editplugin, .icon_edit_section").hide();
 					$jq("#wiki_plugin_edit_view img").attr("src", src.replace("wiki_plugin_edit_hide", "wiki_plugin_edit_view"));

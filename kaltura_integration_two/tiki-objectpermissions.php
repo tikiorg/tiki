@@ -115,6 +115,16 @@ if ($_REQUEST['objectType'] == 'wiki page') {
 	}
 }
 
+if( $_REQUEST['objectType'] == 'category' && isset($_REQUEST['propagate_category']) ) {
+	global $categlib; require_once 'lib/categories/categlib.php';
+	$descendants = $categlib->get_category_descendants( $_REQUEST['objectId'] );
+
+	foreach( $descendants as $child ) {
+		$o = $objectFactory->get( $_REQUEST['objectType'], $child );
+		$permissionApplier->addObject( $o );
+	}
+}
+
 // Process the form to assign a new permission to this object
 if (isset($_REQUEST['assign']) && !isset($_REQUEST['quick_perms'])) {
 	check_ticket('object-perms');
@@ -137,8 +147,7 @@ if (isset($_REQUEST['assign']) && !isset($_REQUEST['quick_perms'])) {
 // Prepare display
 // Get the individual object permissions if any
 
-$currentObject = $objectFactory->get( $_REQUEST['objectType'], $_REQUEST['objectId'] );
-$displayedPermissions = $currentObject->getDirectPermissions();
+$displayedPermissions = get_displayed_permissions();
 
 // Get a list of groups
 $groups = $userlib->get_groups(0, -1, 'id_asc', '', '', 'n');
@@ -497,5 +506,24 @@ function perms_get_restrictions() {
 	}
 
 	return $allowed;
+}
+
+function get_displayed_permissions() {
+	global $objectFactory, $smarty;
+
+	$currentObject = $objectFactory->get( $_REQUEST['objectType'], $_REQUEST['objectId'] );
+	$displayedPermissions = $currentObject->getDirectPermissions();
+
+	$comparator = new Perms_Reflection_PermissionComparator( $displayedPermissions, new Perms_Reflection_PermissionSet );
+
+	$smarty->assign('permissions_displayed', 'direct');
+	if( $comparator->equal() ) {
+		if( $parent = $currentObject->getParentPermissions() ) {
+			$smarty->assign('permissions_displayed', 'parent');
+			$displayedPermissions = $parent;
+		}
+	}
+
+	return $displayedPermissions;
 }
 
