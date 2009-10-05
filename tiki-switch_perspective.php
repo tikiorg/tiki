@@ -11,7 +11,16 @@ $_SESSION['need_reload_prefs'] = true;
 
 if( isset($_REQUEST['perspective']) ) {
 	$perspective = $_REQUEST['perspective'];
-	if( $a = $perspectivelib->perspective_exists( $perspective ) ) {
+	if( $perspectivelib->perspective_exists( $perspective ) ) {
+		foreach( $perspectivelib->get_domain_map() as $domain => $persp ) {
+			if( $persp == $perspective ) {
+				$targetUrl = 'http://' . $domain;
+
+				header( 'Location: ' . $targetUrl );
+				exit;
+			}
+		}
+
 		$_SESSION['current_perspective'] = $perspective;
 	}
 }

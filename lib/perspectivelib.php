@@ -5,18 +5,35 @@ class PerspectiveLib
 	function get_current_perspective( $prefs ) {
 		if( isset( $_SESSION['current_perspective'] ) ) {
 			return $_SESSION['current_perspective'];
-		} elseif( $prefs['multidomain_active'] == 'y' ) {
-			$currentDomain = $_SERVER['HTTP_HOST'];
+		}
 
-			foreach( explode( "\n", $prefs['multidomain_config'] ) as $config ) {
-				list( $domain, $perspective ) = explode( ',', $config );
-
-				if( $domain == $currentDomain ) {
-					$_SESSION['current_perspective'] = trim($perspective);
-					return $perspective;
-				}
+		$currentDomain = $_SERVER['HTTP_HOST'];
+		foreach( $this->get_domain_map( $prefs ) as $domain => $perspective ) {
+			if( $domain == $currentDomain ) {
+				$_SESSION['current_perspective'] = trim($perspective);
+				return $perspective;
 			}
 		}
+	}
+
+	function get_domain_map( $prefs = null ) {
+		if( ! $prefs ) {
+			global $prefs;
+		}
+
+		if( $prefs['multidomain_active'] != 'y' ) {
+			return array();
+		}
+
+		$out = array();
+
+		foreach( explode( "\n", $prefs['multidomain_config'] ) as $config ) {
+			list( $domain, $perspective ) = explode( ',', $config );
+
+			$out[$domain] = trim($perspective);
+		}
+
+		return $out;
 	}
 
 	// Returns a string-indexed array containing the preferences for the given perspective as "pref_name" => "pref_value".
