@@ -268,7 +268,7 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 	<div class="clearfix post_preview">
 		{if $forum_mode neq 'y'}<b>{tr}Preview{/tr}</b>{/if}
 		<div class="post"><div class="inner"><span class="corners-top"><span></span></span><div class="postbody">
-			<div class="postbody-title"><div class="title">{$comments_preview_title}</div></div>
+			<div class="postbody-title"><div class="title">{$comments_preview_title|escape}</div></div>
 			<div class="content">
 				<div class="author"><span class="author_info"><span class="author_post_info">
 				{tr}by{/tr} <span class="author_post_info_by">{$user|userlink}</span>

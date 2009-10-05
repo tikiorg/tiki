@@ -12,7 +12,7 @@
 		<div class="adminoptionlabel"><label for="home_forum">{tr}Home Forum (main forum){/tr}</label>
 			<select name="home_forum" id="home_forum">
 			{section name=ix loop=$forums}
-				<option value="{$forums[ix].forumId|escape}" {if $forums[ix].forumId eq $prefs.home_forum}selected="selected"{/if}>{$forums[ix].name|truncate:20:"...":true}</option>
+				<option value="{$forums[ix].forumId|escape}" {if $forums[ix].forumId eq $prefs.home_forum}selected="selected"{/if}>{$forums[ix].name|truncate:20:"...":true|escape}</option>
 			{sectionelse}
 				<option value="">{tr}None{/tr}</option>
 			{/section}
