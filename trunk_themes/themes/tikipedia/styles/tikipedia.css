@@ -35,8 +35,6 @@ body {
 	min-height: 30px;
 }
 
-* html #header {height: 30px}
-
 #c1c2 {
 	text-align: left;
 	font-size: 1em;
@@ -211,10 +209,6 @@ legend {
 	color: #000;
 }
 
-* html .wikitopline select {
-	font-size: .9em;
-}
-
 table.admin input[type=text] {
 	font-size: 110% !important;
 }
@@ -244,20 +238,6 @@ span.button input,
 	text-transform: lowercase;
 }
 
-* html input[type=submit],
-* html input[type=reset] {
-	padding: 0 4px;
-	background: #fff;
-	font-size: 11px;
-	border: 1px solid #aaa;}
-	
-* html span.button a:link,
-* html span.button a:visited {
-	background: #fff;
-	font-size: 11px;
-	border: 1px solid #aaa;
-}
-	
 .button a:hover,
 .button2 a:hover,
 button:hover,
@@ -504,10 +484,6 @@ a .sf-sub-indicator {
 	margin: 0;
 } 
 
-* html .horbaritem a {
-	font-size: .8em;
-}
-
 .mdksubmenu {
 	background: #fff;
 }
@@ -711,13 +687,8 @@ h3.box-title {
 	width: 10px;
 }
 
-* html .moduleflip,
 .box:hover .moduleflip {
 	display: block !important;
-}
-
-* html img.flipmodimage {
-	border: 0;
 }
 
 .flipmodimage:hover {
@@ -1290,11 +1261,6 @@ div.articletitle {
 	padding: 6px;
 }
 	
-* html div.articletitle {
-	background: #fff;
-	border-bottom: 0;
-}
- 
 div.articletitle h2 {
 	font-size: 1.5em;
 	font-weight: bold;
@@ -1372,10 +1338,6 @@ div.bloginfo {
 	text-transform: 0;
 }
 
-* html .bloginfo table {
-	font-size: 11px;
-}
-
 .postinfo {
 	font-size: 1.2em;
 }
@@ -1414,10 +1376,6 @@ body.tiki_blogs .postbody-title {
 	margin-bottom: 6px;
 }
 
-* html .postbody table {
-	font-size: 11px;
-}
-
 /***** Forums *****/
 
 table.commentinfo {
@@ -1434,10 +1392,6 @@ table.commentinfo {
 	background: #fff;
 }
 	
-* html .post .postbody {
-	font-size: 11px;
-}
-
 body.tiki_wiki_page .post {
 	padding: 0;
 }
@@ -1603,9 +1557,6 @@ table.galtable {
 	background: none;
 }
 
-* html body table.galtable {
-	width: 97%;
-}
 
 body.tiki_galleries table.findtable {
 	display: inline;
@@ -1982,10 +1933,6 @@ Caltrack a:visited {
 	float: right;
 }
 
-* html .addevent {
-	padding: 0;
-}
-
 .calodd,
 .caleven {
 	border: 1px solid #a9a9a9;
@@ -1995,24 +1942,12 @@ Caltrack a:visited {
 	background: #dcdcdc;
 }
 
-* html .calodd {
-	padding: 0;
-}
-
 .caleven {
 	background: #ececec;
 }
 
-* html .caleven {
-	padding: 0;
-}
-
 .caldark {
 	background: #a9a9a9;
-}
-
-* html .caldark {
-	padding: 0;
 }
 
 .caldark .calfocus {
