@@ -2,7 +2,7 @@
 
 <br/>
 <fieldset class="admin">
-<legend>{tr}Kaltura Parnter Settings{/tr}</legend>
+<legend>{tr}Kaltura Partner Settings{/tr}</legend>
 <div class="adminoptionlabel">
 <label for="partnerId">{tr}Partner Id{/tr}: </label><input type="text" name="partnerId" id="partnerId" value="{$partnerId|escape}" /></div>
 <div class="adminoptionlabel">
