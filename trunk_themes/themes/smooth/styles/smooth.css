@@ -30,10 +30,7 @@ html>body {font-size: .85em !important}
 	background: transparent;
 	color:  #666}
 
-#header {
-	min-height: 160px;
-	position: relative;
-	background: #ea5ada url(smooth/header.png) 0 100% repeat-x}
+#header {}
 
 #middle {
 	padding-top: 20px;
@@ -176,7 +173,15 @@ small {font-size: .9em}
 label {margin: 0 2px}
 
 /***** Site Header & Identity *****/
-#header-top {position: static}
+#siteheader {
+	position: relative;
+	background: #ea5ada url(smooth/header.png) 0 100% repeat-x;
+	min-height: 120px;
+}
+
+#header-top {
+	position: static;
+}
 
 div#sioptions {
 	/*margin: 0;
@@ -213,10 +218,11 @@ input[id="sl-login-pass"] {
 	background:#7FE63C url(smooth/img05.gif) repeat-x 0 0;
 	color: #E58C24}
 
-#sitetitles {
+#sitetitles.floatleft {
 	position: absolute;
 	left: 40px;
 	bottom: 1.5em;
+	height: 5.0em;
 	color: #000}
 
 #sitetitle {
@@ -234,8 +240,12 @@ input[id="sl-login-pass"] {
 
 #tiki-top {
 	position: absolute;
-	bottom: 4px;
-	left: 33%}
+	bottom: 0;
+	left: 33%;
+	width: 65%;
+	/*margin-left: 33%;*/
+	height: 46px;
+}
 
 #tiki-top table {margin-right: 40px}
 
@@ -253,9 +263,13 @@ input[name="search"]*/ {
 
 select[name="where"] option {padding: 0}
 
+#topbar_custom_code {
+	background: #fffbfe url(smooth/middle.png) repeat-x;
+}
+
 /****** Menus, Links ******/
 /** CSS (suckerfish) menus **/
-/*#header .cssmenu_horiz ul {text-align: left}*/
+
 /* default link padding */
 .cssmenu_horiz a,
 .cssmenu_vert a {
