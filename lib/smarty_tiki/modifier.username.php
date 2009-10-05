@@ -13,7 +13,7 @@ function smarty_modifier_username($user, $login_fallback = true, $check_user_sho
 		$details = $userlib->get_user_details($user);
 		$return = $details['info']['realName'];
 		unset($details);
-		if ( $return == '' ) $return = $login_fallback ? $user : 'Anonymous';
+		if ( $return == '' ) $return = $login_fallback ? $user : tra('Anonymous');
 	} else $return = $user;
 
 	if ($html_encoding) $return = htmlspecialchars($return);
