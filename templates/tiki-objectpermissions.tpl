@@ -56,6 +56,13 @@
 		</div>
 		
 		<h3>{tr}Permissions{/tr}</h3>
+
+		{if $objectType eq 'category'}
+			<p>
+				<input type="checkbox" id="propagate" name="propagate_category" value="1"/>
+				<label for="propagate">{tr}Copy permissions to child categories{/tr}</label>
+			</p>
+		{/if}
 		
 		{if isset($groupsHidden)}
 			{remarksbox type="tip" title="{tr}Note{/tr}"}

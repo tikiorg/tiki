@@ -115,6 +115,16 @@ if ($_REQUEST['objectType'] == 'wiki page') {
 	}
 }
 
+if( $_REQUEST['objectType'] == 'category' && isset($_REQUEST['propagate_category']) ) {
+	global $categlib; require_once 'lib/categories/categlib.php';
+	$descendants = $categlib->get_category_descendants( $_REQUEST['objectId'] );
+
+	foreach( $descendants as $child ) {
+		$o = $objectFactory->get( $_REQUEST['objectType'], $child );
+		$permissionApplier->addObject( $o );
+	}
+}
+
 // Process the form to assign a new permission to this object
 if (isset($_REQUEST['assign']) && !isset($_REQUEST['quick_perms'])) {
 	check_ticket('object-perms');
