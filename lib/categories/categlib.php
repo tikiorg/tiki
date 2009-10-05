@@ -199,6 +199,7 @@ class CategLib extends ObjectLib {
 		$categoryName=$this->get_category_name($categId);
 		$categoryPath=$this->get_category_path_string_with_root($categId);
 		$description=$this->get_category_description($categId);
+		$rootCategId=$this->get_category_rootCategId($categId);
 
 		$query = "delete from `tiki_categories` where `categId`=?";
 		$result = $this->query($query,array((int) $categId));
@@ -231,9 +232,17 @@ class CategLib extends ObjectLib {
 			// Recursively remove the subcategory
 			$this->remove_category($res["categId"]);
 		}
-		$cachelib->invalidate('allcategs');
+		
+		if (empty($rootCategId)) {
+			$cachelib->invalidate('allcategs');
+		}
+		else {
+			$cachelib->invalidate('allws');
+		}
+		
 		$cachelib->empty_type_cache('fgals_perms');
 		$cachelib->invalidate("allcategs$categId");
+
 	
 		$values= array("categoryId"=>$categId, "categoryName"=>$categoryName, "categoryPath"=>$categoryPath,
 			"description"=>$description, "parentId" => $parentId, "parentName" => $this->get_category_name($parentId),
@@ -254,10 +263,16 @@ class CategLib extends ObjectLib {
 		$oldDescription=$oldCategory['description'];
 		$oldParentId=$oldCategory['parentId'];
 		$oldParentName=$this->get_category_name($oldParentId);
+		$rootCategId=$this->get_category_rootCategId($categId);
 
 		$query = "update `tiki_categories` set `name`=?, `parentId`=?, `description`=? where `categId`=?";
 		$result = $this->query($query,array($name,(int) $parentId,$description,(int) $categId));
-		$cachelib->invalidate('allcategs');
+		if (empty($rootCategId)) {
+			$cachelib->invalidate('allcategs');
+		}
+		else {
+			$cachelib->invalidate('allws');
+		}
 		$cachelib->empty_type_cache('fgals_perms');
 		$cachelib->invalidate('childcategs'.$parentId);
 
@@ -275,7 +290,12 @@ class CategLib extends ObjectLib {
 		$result = $this->query($query,array($name,$description,(int) $parentId, 0, $rootCategId));
 		$query = "select `categId` from `tiki_categories` where `name`=? and `parentId`=?";
 		$id = $this->getOne($query,array($name,(int) $parentId));
-		$cachelib->invalidate('allcategs');
+		if (empty($rootCategId)) {
+			$cachelib->invalidate('allcategs');
+		}
+		else {
+			$cachelib->invalidate('allws');
+		}
 		$cachelib->empty_type_cache('fgals_perms');
 		$cachelib->invalidate('childcategs'.$parentId);
 		$values= array("categoryId"=>$id, "categoryName"=>$name, "categoryPath"=> $this->get_category_path_string_with_root($id),
@@ -1358,6 +1378,14 @@ class CategLib extends ObjectLib {
 	 */	
 	function get_category_parent($categId) {
 		$query = "select `parentId` from `tiki_categories` where `categId`=?";
+		return $this->getOne($query,array((int) $categId));
+	}
+	
+	/**
+	* Returns the rootCategId of the category (useful to see whether a category is a WS or a common category)
+	*/
+	function get_category_rootCategId ($categId) {
+		$query = "select `rootCategId` from `tiki_categories` where `categId`=?";
 		return $this->getOne($query,array((int) $categId));
 	}
 

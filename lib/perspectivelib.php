@@ -41,7 +41,7 @@ class PerspectiveLib
 		
 		if ( $perspectiveId )
 		{
-			$db->query( 'DELETE from tiki_perspectives WHERE WHERE perspectiveId = ?', array( $perspectiveId ) );
+			$db->query( 'DELETE from tiki_perspectives WHERE perspectiveId = ?', array( $perspectiveId ) );
 			$db->query( 'DELETE from tiki_perspective_preferences WHERE perspectiveId = ?', array( $perspectiveId ) );
 		}
 	}

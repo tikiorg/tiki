@@ -109,14 +109,13 @@ class wslib extends CategLib
 			else
 				$this->add_ws_group ($ws_id, $name, $groupName, $groupDescription, $additionalPerms);
 		}
-		/*
 		//We create the perspective for the WS
 		$wsValue = $this->get_ws_perspective_value ($ws_id);
 		$pspId = $perspectivelib->replace_perspective(null, $wsValue);
 		//I set this for the ws identificacion, because we can have two ws with the same name and for psp
 		//this could be a problem in order to get the psp from the db
-		$perspectivelib->replace_preferences($pspId, array('wsId' => $ws_id, 'wsName' => $name)); 
-		*/	
+		$perspectivelib->replace_preferences($pspId, array('wsId' => $ws_id, 'wsName' => $name, 'wsHomepage' => '')); 
+		
 		return $ws_id;
     }
 
@@ -193,8 +192,8 @@ class wslib extends CategLib
 			$this->remove_object_from_ws ($ws_id,$object["objectId"],$object["itemId"],$object["type"]);
 
 		//Remove the perspective associated to the ws
-		$pspId = $perspectivelib->get_perspectives_with_given_name($wsId);
-		$perspectivelib->remove_perspective($pspid);
+		$pspId = $this->get_ws_associated_perspective_id($ws_id);
+		$perspectivelib->remove_perspective($pspId);
 					
 		// Remove perms assigned to the WS
 		$hashWS = md5($this->objectType . strtolower($ws_id));
@@ -643,7 +642,7 @@ class wslib extends CategLib
 		$result = $this->query($query,$bindvars,$maxRecords,$offset, $this->viewPerm);
 
 		while ($res = $result->fetchRow())
-			$groupWS[] = $res["objectId"];
+			$groupWSHashes[] = $res["objectId"];
 			
 		$listWS = $this->list_all_ws_ext();
 		$listGroupWS = array();
@@ -651,7 +650,7 @@ class wslib extends CategLib
 		foreach ($listWS as $ws)
 		{
 			$hashWS = md5($this->objectType . strtolower($ws["categId"]));
-			if (in_array($hashWS,$groupWS))
+			if (in_array($hashWS,$groupWSHashes))
 				$listGroupWS[] = $ws;
 		}
 		
@@ -696,7 +695,7 @@ class wslib extends CategLib
 			$userWSHashes[] = $res["objectId"];
 		
 		$listWS = $this->list_all_ws_ext();
-		$listGroupWS = array();
+		$listUserWS = array();
 		
 		foreach ($listWS as $ws)
 		{
@@ -906,6 +905,11 @@ class wslib extends CategLib
 		return $perspectivelib->get_perspectives_with_given_name($wsValue);
     }
 	
+	 /** Get the name stored in tiki_perspectives 
+	 *
+     * @param $ws_id The id of the ws
+     * @return The name stored in perspectives
+     */
 	private function get_ws_perspective_value ($wsId)
 	{
 		return "ws::".$wsId;

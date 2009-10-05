@@ -32,7 +32,7 @@
 		{foreach from=$listWS item=data}
 			<tr class="{cycle}">
 				<td><input type="checkbox" name="checked[]" value="{$data.name}" /></td>
-				<td><a href ="tiki-manage-workspaces.php?editWS={$data.href_edit}" title="View {$data.name}">{$data.name}</a></td>
+				<td><a href ="tiki-manage-workspaces.php?editWS={$data.categId}" title="View {$data.name}">{$data.name}</a></td>
 				<td>{$data.description}</td>
 				<td>{$data.categpath}</td>
 				<td>
