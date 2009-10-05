@@ -16,7 +16,9 @@ fieldset {
 	padding: 0.3em;
 }
 
-span.button, button {
+button,
+span.button,
+span.button.highlight {
 	margin: 1px 2px;
 	padding: 2px;
 }
@@ -29,7 +31,9 @@ span.button input,
 }
 
 input[type=reset],
-input[type=submit] {
+input[type=submit],
+input[type=reset]:hover,
+input[type=submit]:hover {
 	padding: 1px 4px;
 	margin-right: 1px;
 }
@@ -41,14 +45,8 @@ span.button.highlight a {
 }
 
 span.button.highlight {
-	padding: 0;
 	background: inherit;
 }
-/*
-span.button.highlight a {
-	background: #FC0;
-	color: #000; 
-}*/
 
 input[type=checkbox],
 input[type=radio] {
