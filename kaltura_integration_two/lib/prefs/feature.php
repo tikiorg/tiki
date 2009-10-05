@@ -42,7 +42,7 @@ function prefs_feature_list() {
 		'feature_file_galleries' => array(
 			'name' => tra('File Gallery'),
 			'description' => tra('Computer files, videos or software for downloading. With check-in & check-out (lock)'),
-			'help' => 'File Gallery',
+			'help' => 'File+Gallery',
 			'type' => 'flag',
 		),
 		'feature_articles' => array(
@@ -222,6 +222,12 @@ function prefs_feature_list() {
 			'help' => 'Comments',
 			'type' => 'flag',
 		),
+		'feature_comments_post_as_anonymous' => array(
+			'name' => tra('Allow to post comments as Anonymous'),
+			'description' => tra('Permit anonymous visitors to add a comment without needing to create an account'),
+			'help' => 'Comments',
+			'type' => 'flag',
+		),
 		'feature_wiki_description' => array(
 			'name' => tra('Display page description'),
 			'description' => tra('Display the page description below the heading when viewing the page.'),
@@ -258,6 +264,7 @@ function prefs_feature_list() {
 			'name' => tra('Ouput Should be HTMLPurified'),
 			'description' => tra('This enable HTPMPurifier on outputs to filter remaining security problems like XSS.'),
 			'help' => 'http://doc.tikiwiki.org/HTMLPurifier',
+			'warning' => tra('Experimental. This feature is still under development.'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
@@ -280,8 +287,8 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),
 		'feature_quick_object_perms' => array(
-			'name' => tra('QuickPerms'),
-			'description' => tra('Quickperms'),
+			'name' => tra('Quick Permission Assignment'),
+			'description' => tra('Quickperms allow to define classes of privileges and grant them to roles on objects.'),
 			'help' => 'Quickperms',
 			'type' => 'flag',
 		),
@@ -363,6 +370,14 @@ function prefs_feature_list() {
 			'help' => 'Lost+Edit+Protection',
 			'type' => 'flag',
 		),
+		'feature_wiki_save_draft' => array(
+			'name' => tra('Save draft'),
+			'warning' => tra('Requires AJAX (experimental)'),
+			'dependencies' => array(
+				'feature_ajax',
+			),
+			'type' => 'flag',
+		),	
 		'feature_workspaces' => array(
 			'name' => tra('Workspaces'),
 			'description' => tra('Workspace'),
@@ -378,10 +393,11 @@ function prefs_feature_list() {
 
 		'feature_friends' => array(
 			'name' => tra('Friendship Network'),
-			'description' => tra('Friendship Network'),
+			'description' => tra('Users can identify other users as their friends'),
+			'warning' => tra('Neglected feature'),
 			'help' => 'Friendship',
 			'type' => 'flag',
-		),
+		),	
 		'feature_banning' => array(
 			'name' => tra('Banning system'),
 			'description' => tra('Banning system'),
@@ -427,7 +443,7 @@ function prefs_feature_list() {
 		'feature_mytiki' => array(
 			'name' => tra("Display 'MyTiki' in the application menu"),
 			'description' => tra("Display 'MyTiki' in the application menu"),
-			'help' => '',
+			'help' => 'MyTiki',
 			'type' => 'flag',
 		),
 		'feature_minical' => array(
@@ -544,12 +560,6 @@ function prefs_feature_list() {
 			'help' => 'TikiTests',
 			'type' => 'flag',
 		),
-		'feature_workflow' => array(
-			'name' => tra('Workflow engine'),
-			'description' => tra('Workflow engine'),
-			'help' => 'Workflow',
-			'type' => 'flag',
-		),
 		'feature_use_minified_scripts' => array(
 			'name' => tra('Use Minified Scripts'),
 			'description' => tra('Use Minified Scripts'),
@@ -561,5 +571,188 @@ function prefs_feature_list() {
 			'description' => tra('TikiWiki will check for updates when you access the main Administration page'),
 			'type' => 'flag',
 		),
+		'feature_pear_date' => array(
+			'name' => tra('Use PEAR::Date library'),
+			'description' => tra('Use PEAR::Date library'),
+			'type' => 'flag',
+		),
+		'feature_ticketlib' => array(
+			'name' => tra('Require confirmation if possible CSRF detected'),
+			'description' => tra('Require confirmation if possible CSRF detected'),
+			'type' => 'flag',
+		),
+		'feature_ticketlib2' => array(
+			'name' => tra('Protect against CSRF with a ticket'),
+			'description' => tra('Protect against CSRF with a ticket'),
+			'type' => 'flag',
+		),
+		'feature_detect_language' => array(
+			'name' => tra('Detect browser language'),
+			'description' => tra('Lookup the user\'s preferred language through browser preferences.'),
+			'type' => 'flag',
+		),
+		'feature_best_language' => array(
+			'name' => tra('Show pages in user\'s preferred language'),
+			'description' => tra('When accessing a page which has an equivalent in the user\'s preferred language, favor the translated page.'),
+			'type' => 'flag',
+			'dependencies' => array(
+				'feature_userPreferences',
+			),
+		),
+		'feature_sync_language' => array(
+			'name' => tra('Changing the page language also changes the site language'),
+			'type' => 'flag',
+		),
+		'feature_translation' => array(
+			'name' => tra('Translation assistant'),
+			'description' => tra('Track translation operations between pages.'),
+			'help' => 'Translating+Tiki+content',
+			'type' => 'flag',
+		),
+		'feature_urgent_translation' => array(
+			'name' => tra('Urgent translation notifications'),
+			'description' => tra('Allow to flag changes as urgent, leading translations to be marked with a notice visible to all users.'),
+			'type' => 'flag',
+		),
+		'feature_multilingual_structures' => array(
+			'name' => tra('Multilingual structures'),
+			'description' => tra('Structures to lookup equivalent pages in other languages. May cause performance problems on larger structures.'),
+			'type' => 'flag',
+			'dependencies' => array(
+				'feature_wiki_structure',
+			),
+		),
+		'feature_multilingual_one_page' => array(
+			'name' => tra('Display all languages in a single page'),
+			'description' => tra('List all languages as a language option in the page language drop list to see all languages at once.'),
+			'type' => 'flag',
+		),
+		'feature_obzip' => array(
+			'name' => tra('GZip output'),
+			'description' => tra('GZip output'),
+			'help' => 'Compression',
+			'type' => 'flag',
+		),
+		'feature_help' => array(
+			'name' => tra('Help System'),
+			'description' => tra('Help System'),
+			'help' => 'Documentation',
+			'type' => 'flag',
+		),
+		'feature_display_my_to_others' => array(
+			'name' => tra("Show user's contribution on the user information page"),
+			'description' => tra("Show user's contribution on the user information page"),
+			'help' => 'User+Preferences',
+			'type' => 'flag',
+		),
+		'feature_babelfish' => array(
+			'name' => tra('Translation URLs'),
+			'description' => tra('Show clickable URLs to translate the page to another language using Babel Fish website.'),
+			'type' => 'flag',
+		),
+		'feature_babelfish_logo' => array(
+			'name' => tra('Translation icons'),
+			'description' => tra('Show clickable icons to translate the page to another language using Babelfish website.'),
+			'type' => 'flag',
+		),
+		'feature_smileys' => array(
+			'name' => tra('Smileys'),
+			'description' => tra('Also known as emoticons'),
+			'help' => 'Smileys',
+			'type' => 'flag',
+		),
+		'feature_dynamic_content' => array(
+			'name' => tra('Dynamic Content System'),
+			'description' => tra('Bloc of content which can be reused and programmed (timed)'),
+			'help' => 'Dynamic+Content',
+			'type' => 'flag',
+		),
+		'feature_filegals_manager' => array(
+			'name' => tra('Use File Galleries to store pictures'),
+			'type' => 'flag',
+		),
+		'feature_wiki_ext_icon' => array(
+			'name' => tra('External link icon'),
+			'type' => 'flag',
+		),
+		'feature_semantic' => array(
+			'name' => tra('Semantic links'),
+			'description' => tra('Going beyond Backlinks, allows to define some semantic relationships between wiki pages'),
+			'help' => 'Semantic',
+			'type' => 'flag',
+			'dependencies' => array(
+				'feature_backlinks',
+			),
+		),
+		'feature_webservices' => array(
+			'name' => tra('Web Services'),
+			'description' => tra('Can consume webservices in JSON or YAML'),
+			'help' => 'WebServices',
+			'type' => 'flag',
+		),
+		'feature_menusfolderstyle' => array(
+			'name' => tra('Display menus as folders'),
+			'type' => 'flag',
+		),
+		'feature_breadcrumbs' => array(
+			'name' => tra('Breadcrumbs'),
+			'description' => tra('Uses Google Translate to translate the content of wiki pages to other languages.'),
+			'help' => 'Breadcrumbs',
+			'warning' => tra('Neglected feature'),
+			'type' => 'flag',
+		),	
+		'feature_antibot' => array(
+			'name' => tra('Anonymous editors must enter anti-bot code (CAPTCHA)'),
+			'help' => 'Spam+protection',
+			'type' => 'flag',
+		),	
+		'feature_wiki_protect_email' => array(
+			'name' => tra('Protect email against spam'),
+			'help' => 'Spam+protection',
+			'type' => 'flag',
+		),	
+		'feature_sitead' => array(
+			'name' => tra('Activate'),
+			'type' => 'flag',
+		),	
+		'feature_poll_anonymous' => array(
+			'name' => tra('Anonymous voting'),
+			'type' => 'flag',
+		),	
+		'feature_poll_revote' => array(
+			'name' => tra('Allow re-voting'),
+			'type' => 'flag',
+		),	
+		'feature_poll_comments' => array(
+			'name' => tra('Comments'),
+			'type' => 'flag',
+		),	
+		'feature_faq_comments' => array(
+			'name' => tra('Comments'),
+			'type' => 'flag',
+		),	
+		'feature_sefurl' => array(
+			'name' => tra('Search engine friendly url'),
+			'help' => 'Rewrite+Rules',
+			'type' => 'flag',
+		),	
+		'feature_sefurl_filter' => array(
+			'name' => tra('Search engine friendly url Postfilter'),
+			'help' => 'Rewrite+Rules',
+			'type' => 'flag',
+		),	
+		'feature_sefurl_title_article' => array(
+			'name' => tra('Display article title in the sefurl'),
+			'type' => 'flag',
+		),	
+		'feature_sefurl_title_blog' => array(
+			'name' => tra('Display blog title in the sefurl'),
+			'type' => 'flag',
+		),	
+		'feature_modulecontrols' => array(
+			'name' => tra('Show module controls'),
+			'help' => 'Module+Control',
+			'type' => 'flag',
+		),	
 	);
 }

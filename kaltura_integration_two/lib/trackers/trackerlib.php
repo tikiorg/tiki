@@ -320,7 +320,7 @@ class TrackerLib extends TikiLib {
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
-			$res["parsed"] = nl2br($res["data"]);
+			$res["parsed"] = nl2br(htmlspecialchars($res["data"]));
 
 			$ret[] = $res;
 		}
@@ -838,11 +838,14 @@ class TrackerLib extends TikiLib {
 
 		$query2 = 'SELECT ttf.`fieldId`, `value`, `isPublic`'
 			.' FROM `tiki_tracker_item_fields` ttif INNER JOIN `tiki_tracker_fields` ttf ON ttif.`fieldId` = ttf.`fieldId`'
-			." WHERE (`lang` = ? or `lang` is null or `lang` = '') AND `itemId` = ?"
-			.' ORDER BY `position` ASC, `lang` DESC';
-		$result2 = $this->query($query2, $bindvars);
+			." WHERE (`lang` = ? or `lang` is null or `lang` = '') AND `itemId` = ?";
+		if (!empty($listfields)) {
+			$query2 .= " AND " . $this->in('ttif`.`fieldId', array_keys($listfields), $bindvars);
+		}
+		$query2 .= ' ORDER BY `position` ASC, `lang` DESC';
+		$result2 = $this->fetchAll($query2, $bindvars);
 
-		while ( $res1 = $result2->fetchRow() ) {
+		foreach( $result2 as $res1 ) {
 			$fil[$res1['fieldId']] = $res1['value'];
 		}
 
@@ -1165,8 +1168,13 @@ class TrackerLib extends TikiLib {
 								$smarty->display("error.tpl");
 								die;
 							}
-							fwrite($fw, $ins_fields['data'][$i]['value']);
+							if (fwrite($fw, $ins_fields['data'][$i]['value']) === false) {
+								$smarty->assign('msg', tra('Cannot write to this file:'). $fhash);
+								$smarty->display("error.tpl");
+								die;
+							}								
 							fclose($fw);
+							$ins_fields['data'][$i]['value'] = '';
 						} else {
 							$fhash = 0;
 						}
@@ -3016,8 +3024,19 @@ class TrackerLib extends TikiLib {
 		return $ret;
 	}
 	/* look if a tracker has only one item per user and if an item has already being created for the user  or the IP*/
-	function get_user_item($trackerId, $trackerOptions,$userparam=null) {
-		global $user, $IP;
+	function get_user_item(&$trackerId, $trackerOptions, $userparam=null, $user= null) {
+		global $IP, $prefs;
+		if (empty($user)) {
+			$user = $GLOBALS['user'];
+		}
+		if (empty($trackerId) && $prefs['userTracker'] == 'y') {
+			$utid = $userlib->get_tracker_usergroup($user);
+			if (!empty($utid['usersTrackerId'])) {
+				$trackerId = $utid['usersTrackerId'];
+				$itemId = $this->get_item_id($trackerId, $utid['usersFieldId'], $user);
+			}
+			return $itemId;
+		}
 		if (empty($trackerOptions['oneUserItem']) || $trackerOptions['oneUserItem'] != 'y') {
 			return 0;
 		}
@@ -3307,6 +3326,25 @@ class TrackerLib extends TikiLib {
 		}
 		return $value;
 	}
+	/* get the fields from the pretty tracker template 
+	* return a list of fieldIds */
+	function get_pretty_fieldIds($resource, $type='wiki') {
+		global $tikilib, $smarty;
+		if ($type == 'wiki') {
+			$wiki_info = $tikilib->get_page_info($resource);
+			if (!empty($wiki_info)) {
+				$f = $wiki_info['data'];
+			}
+		} else {
+			$f = $smarty->get_filename($tpl);
+		}
+		if (!empty($f)) {
+			preg_match_all('/\$f_([0-9]+)/', $f, $matches);
+			return $matches[1];
+		}
+		return array();
+	}
+
 }
 
 global $dbTiki, $tikilib, $prefs;

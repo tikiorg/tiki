@@ -49,7 +49,7 @@
 {literal}
 function validate_translation_request() {
    var success = true;
-   var language_of_translation = document.getElementById("language_list").value;
+   var language_of_translation = $jq("#language_list").val();
   
    if (language_of_translation == "unspecified") {
 {/literal}
@@ -57,6 +57,17 @@ function validate_translation_request() {
 {literal}   
       alert(message);
       success = false;
+   } else {
+      var page_list = $jq("#existing-page-src");
+	  var page_name = $jq('#translation_name').val();
+      var matching_options = $jq('#existing-page-src option[value="' + page_name + '"]').attr( 'selected', true );
+
+	  if( matching_options.length > 0 ) {
+          var message = {tr}"The page already exists. It was selected in the list below."{/tr};
+          alert( message );
+	  	
+          success = false;
+	  }
    }
    return success;
 }
@@ -77,7 +88,7 @@ function validate_translation_request() {
 {if $articles}
 	<select name="srcId">{section name=ix loop=$articles}{if !empty($articles[ix].lang) and $langpage ne $articles[ix].lang}<option value="{$articles[ix].articleId|escape}" {if $articles[ix].articleId == $srcId}checked="checked"{/if}>{$articles[ix].title|truncate:80:"(...)":true}</option>{/if}{/section}</select>
 {else}
-	<select name="srcName">{section name=ix loop=$pages}<option value="{$pages[ix].pageName|escape}" {if $pages[ix].pageName == $srcId}checked="checked"{/if}>{$pages[ix].pageName|truncate:80:"(...)":true} ({$pages[ix].lang|escape})</option>{/section}</select>
+	<select name="srcName" id="existing-page-src">{section name=ix loop=$pages}<option value="{$pages[ix].pageName|escape}" {if $pages[ix].pageName == $srcId}checked="checked"{/if}>{$pages[ix].pageName|truncate:80:"(...)":true} ({$pages[ix].lang|escape})</option>{/section}</select>
 {/if}
 &nbsp;
 <input type="submit" class="wikiaction" name="set" value="{tr}Go{/tr}"/>

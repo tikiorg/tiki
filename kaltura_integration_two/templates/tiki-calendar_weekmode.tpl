@@ -49,7 +49,7 @@
 			{/if}
 		    ><img src="pics/icons/more_info.gif" alt="{tr}Details{/tr}" /></a>
 		  </span>
-	  	  <abbr class="dtstart" title="{if $event.result.allday eq '1'}{tr}All Day{/tr}{else}{$event.startTimeStamp|isodate}{/if}" {if $event.status eq '2'}style="text-decoration:line-through"{/if}>{$event.name}</abbr>
+	  	  <abbr class="dtstart" title="{if $event.result.allday eq '1'}{tr}All Day{/tr}{else}{$event.startTimeStamp|isodate}{/if}" {if $event.status eq '2'}style="text-decoration:line-through"{/if}>{$event.name|escape}</abbr>
 	  </div>
 		{/if}
 			{/section}

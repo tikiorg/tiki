@@ -1,23 +1,23 @@
 {* $Id$ *}
 
-{if !isset($tpl_module_title)}
-{if $nonums eq 'y'}
-{eval var="{tr}Last `$module_rows` actions{/tr}" assign="tpl_module_title"}
-{else}
-{eval var="{tr}Last actions{/tr}" assign="tpl_module_title"}
-{/if}
-{/if}
 {tikimodule error=$module_params.error title=$tpl_module_title name="last_actions" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 {if $nonums != 'y'}<ol>{else}<ul>{/if}
     {section name=ix loop=$modLastActions}
       <li>
-	  <a class="linkmodule" href="tiki-index.php{if $modLastActions[ix].pageName ne ''}?page={$modLastActions[ix].pageName}{/if}" title="{$modLastActions[ix].lastModif|tiki_short_datetime}, {tr}by{/tr} {if $modLastActions[ix].user ne ''}{$modLastActions[ix].user}{else}?{/if}{if (strlen($modLastActions[ix].action) > $maxlen) && ($maxlen > 0)}, {$modLastActions[ix].action}{/if}">
+		{capture name=label}{if $showuser eq 'y'}{$modLastActions[ix].user|username}: {/if}{$modLastActions[ix].action} {$modLastActions[ix].objectType} {$modLastActions[ix].object|escape}{if $showdate eq 'y'} {tr}at{/tr} {$modLastActions[ix].lastModif|tiki_short_datetime}{/if}{/capture}
+	  {if $modLastActions[ix].object ne ''}<a class="linkmodule" href="tiki-index.php?page={$modLastActions[ix].object|escape:"url"}" title="
+		{if (strlen($smarty.capture.label) > $maxlen) && ($maxlen > 0)}
+			{$modLastActions[ix].user|username}: {$modLastActions[ix].action} {$modLastActions[ix].objectType} {$modLastActions[ix].object|escape} {tr}at{/tr} {$modLastActions[ix].lastModif|tiki_short_datetime}
+		{else}
+			{if $showdate eq 'n'}{$modLastActions[ix].lastModif|tiki_short_datetime}{/if}{if $showuser eq 'n'}{if $showdate eq 'n'}, {tr}by{/tr} {/if}{$modLastActions[ix].user|username}{/if}
+		{/if}
+		">{/if}
         {if $maxlen > 0}{* 0 is default value for maxlen eq to 'no truncate' *}
-         {$modLastActions[ix].action|truncate:$maxlen:"...":true}
+         {$smarty.capture.label|truncate:$maxlen:"...":true}
         {else}
-         {$modLastActions[ix].action}
+         {$smarty.capture.label}
         {/if}
-       </a>
+       {if $modLastActions[ix].object ne ''}</a>{/if}
       </li>
     {/section}
 	{if $nonums != 'y'}</ol>{else}</ul>{/if}

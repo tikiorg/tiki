@@ -84,9 +84,6 @@ if (isset($_REQUEST['users_defaults'])) {
 	if ($prefs['feature_trackers'] == 'y') {
 		simple_set_toggle("users_prefs_mytiki_items");
 	}
-	if ($prefs['feature_workflow'] == 'y' && $tiki_p_use_workflow == 'y') {
-		simple_set_toggle("users_prefs_mytiki_items");
-	}
 }
 // Users Defaults
 $mailCharsets = array(

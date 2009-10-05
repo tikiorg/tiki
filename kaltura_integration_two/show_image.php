@@ -42,7 +42,7 @@ if (!$id) {
 }
 
 $galleryId = $imagegallib->get_gallery_from_image($id);
-$galperms = Perns::get( array( 'type' => 'image gallery', 'object' => $galleryId ) );
+$galperms = Perms::get( array( 'type' => 'image gallery', 'object' => $galleryId ) );
 
 if ( ! $galperms->view_image_gallery ) {
     header("HTTP/1.0 404 Not Found");

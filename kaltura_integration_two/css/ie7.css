@@ -12,6 +12,10 @@
 	margin-left: 1em;
 }
 
+#col2 .cssmenu_vert {
+	margin-left: 0;
+}
+
 .wikiactions .icons,
 .wikiactions form {/*display: inline*/}
 

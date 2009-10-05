@@ -394,7 +394,7 @@ class StructLib extends TikiLib {
 		if( !$multilinguallib )
 			include_once('lib/multilingual/multilinguallib.php');
 
-		$this->displayLanguageOrder = $multilinguallib->preferedLangs();
+		$this->displayLanguageOrder = $multilinguallib->preferredLangs();
 	}
 
 	function build_language_order_clause( &$args, $pageTable = 'tp', $structTable = 'ts' )

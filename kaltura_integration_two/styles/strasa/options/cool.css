@@ -399,8 +399,6 @@ a.linkmenu, .rsslink, .linkmenu:visited, .rsslink:visited {}
 div.option a:hover,
 div.option a:active {}
 
-a.linkmodule { display:block; }
-
 a.linkmodule:hover {
 	color: #000000;
 }

@@ -89,12 +89,12 @@
 	{if $comment.title neq ''}
 	<div class="title">
 	{if $first eq 'y'}
-		<h2>{$comment.title}</h2>
+		<h2>{$comment.title|escape}</h2>
 	{else}
 		{if $comments_reply_threadId == $comment.threadId}
 		{icon _id='flag_blue'}<span class="highlight">
 		{/if}
-		<a class="link" href="{$comments_complete_father}comments_parentId={$comment.threadId}&amp;comments_per_page=1&amp;thread_style={$thread_style}">{$comment.title}</a>
+		<a class="link" href="{$comments_complete_father}comments_parentId={$comment.threadId}&amp;comments_per_page=1&amp;thread_style={$thread_style}">{$comment.title|escape}</a>
 		{if $comments_reply_threadId == $comment.threadId}
 		</span>
 		{/if}

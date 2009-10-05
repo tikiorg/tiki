@@ -22,8 +22,8 @@ class CategLib extends ObjectLib {
 		"tepath" is an array representing the path to the category in the category tree, ordered from the ancestor to the category. Each element is the name of the represented category.
 		"children" is the number of categories the category has as children.
 		"objects" is the number of objects directly in the category. */
-	function list_categs($categId=0) {
-		$back = $this->get_all_categories_ext();
+	function list_categs($categId=0, $showWS=false) {
+		$back = $this->get_all_categories_ext($showWS);
 
 		if ($categId > 0) {
 			$path = '';
@@ -42,7 +42,7 @@ class CategLib extends ObjectLib {
 		}
 	}
 	
-	function list_all_categories($offset, $maxRecords, $sort_mode = 'name_asc', $find, $type, $objid, $showWS = false) {
+	function list_all_categories($offset, $maxRecords, $sort_mode = 'name_asc', $find, $type, $objid, $showWS = false, $listOnlyWS = false) {
 		$cats = $this->get_object_categories($type, $objid);
 
 		if ($find) {
@@ -50,15 +50,23 @@ class CategLib extends ObjectLib {
 			$bindvals=array($findesc,$findesc);
 			$mid = " where (`name` like ? or `description` like ?)";
 		} else {
-      $bindvals=array();
-			$mid = "";
+		    $bindvals=array();
+		    $mid = "";
 		}
+		
 		global $prefs; if(!$prefs) require_once 'lib/setup/prefs.php';
 		$exclude = $this->exclude_categs ($prefs['ws_container'], $find, $showWS);
 		if (!empty($exclude)) $bindvals[] = $prefs['ws_container'];
 
-		$query = "select * from `tiki_categories` $mid $exclude order by ".$this->convertSortMode($sort_mode);
-		$query_cant = "select count(*) from `tiki_categories` $mid $exclude";
+		if ($listOnlyWS)
+		{
+		    $query = "select * from `tiki_categories` where `rootCategId`=?";
+		    $query_cant = "select count(*) from `tiki_categories` where `rootCategId`=?";
+		} else {
+		    $query = "select * from `tiki_categories` $mid $exclude order by ".$this->convertSortMode($sort_mode);
+		    $query_cant = "select count(*) from `tiki_categories` $mid $exclude";
+		}
+		
 		$result = $this->query($query,$bindvals,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvals);
 		$ret = array();
@@ -98,6 +106,7 @@ class CategLib extends ObjectLib {
 		return $retval;
 	}
 	
+	//With this you can exclude certain types of categories (i.e ws)
 	function exclude_categs ($excludeCategId, $find, $showWS = false)
 	{
 	    if ($excludeCategId)
@@ -112,9 +121,9 @@ class CategLib extends ObjectLib {
 			else
 			{
 				if ($find)
-						$exclude = "and not `categId` = ? and `rootCategId` is NULL";
+						$exclude = "and `rootCategId` is NULL and `categId` != ?";
 				else
-						$exclude = "where not `categId` = ? and `rootCategId` is NULL";
+						$exclude = "where `rootCategId` is NULL and `categId` != ?";
 			}
 	    }
 	    else
@@ -190,6 +199,7 @@ class CategLib extends ObjectLib {
 		$categoryName=$this->get_category_name($categId);
 		$categoryPath=$this->get_category_path_string_with_root($categId);
 		$description=$this->get_category_description($categId);
+		$rootCategId=$this->get_category_rootCategId($categId);
 
 		$query = "delete from `tiki_categories` where `categId`=?";
 		$result = $this->query($query,array((int) $categId));
@@ -222,9 +232,17 @@ class CategLib extends ObjectLib {
 			// Recursively remove the subcategory
 			$this->remove_category($res["categId"]);
 		}
-		$cachelib->invalidate('allcategs');
+		
+		if (empty($rootCategId)) {
+			$cachelib->invalidate('allcategs');
+		}
+		else {
+			$cachelib->invalidate('allws');
+		}
+		
 		$cachelib->empty_type_cache('fgals_perms');
 		$cachelib->invalidate("allcategs$categId");
+
 	
 		$values= array("categoryId"=>$categId, "categoryName"=>$categoryName, "categoryPath"=>$categoryPath,
 			"description"=>$description, "parentId" => $parentId, "parentName" => $this->get_category_name($parentId),
@@ -245,10 +263,16 @@ class CategLib extends ObjectLib {
 		$oldDescription=$oldCategory['description'];
 		$oldParentId=$oldCategory['parentId'];
 		$oldParentName=$this->get_category_name($oldParentId);
+		$rootCategId=$this->get_category_rootCategId($categId);
 
 		$query = "update `tiki_categories` set `name`=?, `parentId`=?, `description`=? where `categId`=?";
 		$result = $this->query($query,array($name,(int) $parentId,$description,(int) $categId));
-		$cachelib->invalidate('allcategs');
+		if (empty($rootCategId)) {
+			$cachelib->invalidate('allcategs');
+		}
+		else {
+			$cachelib->invalidate('allws');
+		}
 		$cachelib->empty_type_cache('fgals_perms');
 		$cachelib->invalidate('childcategs'.$parentId);
 
@@ -260,13 +284,18 @@ class CategLib extends ObjectLib {
 		$this->notify($values);		
 	}
 
-	function add_category($parentId, $name, $description) {
+	function add_category($parentId, $name, $description, $rootCategId = null) {
 		global $cachelib; include_once('lib/cache/cachelib.php');
-		$query = "insert into `tiki_categories`(`name`,`description`,`parentId`,`hits`) values(?,?,?,?)";
-		$result = $this->query($query,array($name,$description,(int) $parentId,0));
+		$query = "insert into `tiki_categories`(`name`,`description`,`parentId`,`hits`, `rootCategId`) values(?,?,?,?,?)";
+		$result = $this->query($query,array($name,$description,(int) $parentId, 0, $rootCategId));
 		$query = "select `categId` from `tiki_categories` where `name`=? and `parentId`=?";
 		$id = $this->getOne($query,array($name,(int) $parentId));
-		$cachelib->invalidate('allcategs');
+		if (empty($rootCategId)) {
+			$cachelib->invalidate('allcategs');
+		}
+		else {
+			$cachelib->invalidate('allws');
+		}
 		$cachelib->empty_type_cache('fgals_perms');
 		$cachelib->invalidate('childcategs'.$parentId);
 		$values= array("categoryId"=>$id, "categoryName"=>$name, "categoryPath"=> $this->get_category_path_string_with_root($id),
@@ -505,102 +534,6 @@ class CategLib extends ObjectLib {
 			$ret[] = $res["categId"];
 		}
 		return $this->get_jailed( $ret );
-	}
-	
-	// get the permissions assigned to the parent categories of an object
-	function get_object_categories_perms($user, $type, $itemId) {		
-		$is_categorized = $this->is_categorized("$type",$itemId);
-		if ($is_categorized) {
-			global $cachelib; include_once('lib/cache/cachelib.php');
-			global $userlib, $tiki_p_admin, $prefs;
-			
-			$parents = $this->get_object_categories("$type", $itemId);
-			$return_perms = array(); // initialize array for storing perms to be returned
-
-			if (!$cachelib->isCached("category_permission_names")) {
-				$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'category');
-				$cachelib->cacheItem("category_permission_names",serialize($perms));
-			} else {
-				$perms = unserialize($cachelib->getCached("category_permission_names"));
-			}
-
-			$permission_names = array();
-			foreach ($perms["data"] as $perm) {
-				$permission_names[] = $perm["permName"];
-			}
-
-			//admins get it all
-			if ($tiki_p_admin == 'y') {
-				foreach ($permission_names as $perm) {
-					$return_perms["$perm"] = 'y';
-				}
-				return $return_perms;
-			}
-
-			//find out which permissions we're allowed or denied (or both, in the case of multiple categories)
-			$allowed_permissions = array();
-			$denied_permissions = array();
-			foreach ($parents as $categId) {
-				if ($userlib->object_has_one_permission($categId, 'category')) {
-					$user_perms = $userlib->get_object_permissions_for_user($categId, 'category', $user);
-					foreach ($permission_names as $perm) {
-						if (in_array($perm, $user_perms)) {
-							$allowed_permissions[] = $perm;
-						} else {
-							$denied_permissions[] = $perm;
-						}
-					}
-				} else {
-					$categpath = $this->get_category_path($categId);
-					foreach ($categpath as $cat) {
-						if ($userlib->object_has_one_permission($cat['categId'], 'category')) {
-							$user_perms = $userlib->get_object_permissions_for_user($categId, 'category', $user);
-							foreach ($permission_names as $perm) {
-								if (in_array($perm, $user_perms)) {
-									$allowed_permissions[] = $perm;
-								} else {
-									$denied_permissions[] = $perm;
-								}
-							}
-						}
-					}
-				}
-			}
-			$allowed_permissions = array_unique($allowed_permissions);
-			$denied_permissions = array_unique($denied_permissions);
-			//if this is yes, the user has to have the permission in every category to be granted permission
-			if ($prefs['feature_category_reinforce'] == "y") {
-				foreach ($allowed_permissions as $allowed_permission) {
-					if (!in_array($allowed_permission, $denied_permissions)) {
-						$return_perms["$allowed_permission"] =  'y';
-					} else {
-						$return_perms["$allowed_permission"] =  'n';
-					}
-				}
-			} else {
-				//otherwise, they just need the permission once
-				foreach ($allowed_permissions as $allowed_permission) {
-					$return_perms["$allowed_permission"] =  'y';
-				}
-			}
-
-			/* if no special perm on cat  so general perm: (to see the categ panel as anonymous */ 
-			if (!$allowed_permissions && !$denied_permissions) {
-				foreach ($permission_names as $perm) {
-					$return_perms[$perm] = $GLOBALS[$perm];
-				}
-			} else {
-				//set the rest to no
-				foreach ($permission_names as $perm) {
-					if (!in_array($perm, $allowed_permissions)) {
-						$return_perms["$perm"] =  'n';
-					}
-				}
-			}
-			return $return_perms;
-		} else {
-			return FALSE;
-		}
 	}
 
 	// Get all the objects in a category
@@ -851,7 +784,7 @@ class CategLib extends ObjectLib {
 			$catObjectId = $this->add_categorized_object('forum', $forumId, $info["description"], $info["name"], $href);
 		}
 
-		var_dump( $this->categorize($catObjectId, $categId) );
+		$this->categorize($catObjectId, $categId);
 		return $catObjectId;
 	}
 
@@ -923,7 +856,7 @@ class CategLib extends ObjectLib {
 		return $ret;
 	}
 
-	function get_all_categories() {
+	function get_all_categories($showWS = false) {
 		global $cachelib; include_once('lib/cache/cachelib.php');
 	/*
 		// inhibited because allcateg_ext is cached now
@@ -935,7 +868,7 @@ class CategLib extends ObjectLib {
 			$ret[] = $res;
 		}
 	*/
-		return $this->get_all_categories_ext();
+		return $this->get_all_categories_ext($showWS);
 	}
 
 	/* Returns an array of categories and caches it in cache item "allcategs".
@@ -944,11 +877,19 @@ class CategLib extends ObjectLib {
 		"tepath" is an array representing the path to the category in the category tree, ordered from the ancestor to the category. Each element is the name of the represented category.
 		"children" is the number of categories the category has as children.
 		"objects" is the number of objects directly in the category. */
-	function build_cache() {
+	function build_cache($showWS = false) {
 		global $cachelib; include_once('lib/cache/cachelib.php');
 		$ret = array();
-		$query = "select * from `tiki_categories` order by `name`";
-		$result = $this->query($query,array());
+		
+		global $prefs; if(!$prefs) require_once 'lib/setup/prefs.php';
+		$exclude = $this->exclude_categs ($prefs['ws_container'], "", $showWS);
+		$query = "select * from `tiki_categories` $exclude order by `name`";
+		if (!empty($prefs['ws_container']))
+			$bindvals = array($prefs['ws_container']);
+		else
+			$bindvals = array();
+		$result = $this->query($query,$bindvals);
+
 		while ($res = $result->fetchRow()) {
 			$id = $res["categId"];
 			$catpath = $this->get_category_path($id);
@@ -968,17 +909,32 @@ class CategLib extends ObjectLib {
 		}
 		ksort($ret);
 		$ret = array_values($ret);
-		$cachelib->cacheItem("allcategs",serialize($ret));
+		if ($showWS)
+			$cachelib->cacheItem("allws",serialize($ret));
+		else
+			$cachelib->cacheItem("allcategs",serialize($ret));
 		return $ret;
 	}
 
 	// Same as get_all_categories + it also get info about count of objects
-	function get_all_categories_ext() {
+	function get_all_categories_ext($showWS = false) {
+
 		global $cachelib; include_once('lib/cache/cachelib.php');
-		if (!$cachelib->isCached("allcategs")) {
-			$ret = $this->build_cache();
-		} else {
-			$ret = unserialize($cachelib->getCached("allcategs"));
+		if ($showWS)
+		{
+			if (!$cachelib->isCached("allws")) {
+				$ret = $this->build_cache($showWS);
+			} else {
+				$ret = unserialize($cachelib->getCached("allws"));
+			} 
+		}			
+		else
+		{
+			if (!$cachelib->isCached("allcategs")) {
+				$ret = $this->build_cache($showWS);
+			} else {
+				$ret = unserialize($cachelib->getCached("allcategs"));
+			}
 		}
 
 		if( $jail = $this->get_jail() ) {
@@ -995,8 +951,8 @@ class CategLib extends ObjectLib {
 		return $ret;
 	}
 
-	function get_all_categories_respect_perms($user, $perm) {
-		$result = $this->get_all_categories_ext();
+	function get_all_categories_respect_perms($user, $perm, $showWS = false) {
+		$result = $this->get_all_categories_ext($showWS);
 		return Perms::filter( array( 'type' => 'category' ), 'object', $result, array( 'object' => 'categId' ), $perm );
 	}
 
@@ -1226,7 +1182,8 @@ class CategLib extends ObjectLib {
 		return $out;
 	}
 	
-	//Moved from tikilib.php
+	// Returns an array representing the last $maxRecords objects in the category with the given $categId of the given type, ordered by decreasing creation date. By default, objects of all types are returned.
+	// Each array member is a string-indexed array with fields catObjectId, categId, type, name and href.
     function last_category_objects($categId, $maxRecords, $type="") {
 		$mid = "and `categId`=?";
 		$bindvars = array((int)$categId);
@@ -1421,6 +1378,14 @@ class CategLib extends ObjectLib {
 	 */	
 	function get_category_parent($categId) {
 		$query = "select `parentId` from `tiki_categories` where `categId`=?";
+		return $this->getOne($query,array((int) $categId));
+	}
+	
+	/**
+	* Returns the rootCategId of the category (useful to see whether a category is a WS or a common category)
+	*/
+	function get_category_rootCategId ($categId) {
+		$query = "select `rootCategId` from `tiki_categories` where `categId`=?";
 		return $this->getOne($query,array((int) $categId));
 	}
 

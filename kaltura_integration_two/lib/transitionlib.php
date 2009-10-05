@@ -1,5 +1,7 @@
 <?php
 
+require_once 'Transition.php';
+
 class TransitionLib
 {
 	private $transitionType;
@@ -13,6 +15,17 @@ class TransitionLib
 
 		$transitions = $this->getTransitionsFromStates( $states );
 		$transitions = Perms::filter( array( 'type' => 'transition' ), 'object', $transitions, array( 'object' => 'transitionId' ), 'trigger_transition' );
+
+		foreach( $transitions as & $tr ) {
+			$object = new Transition( $tr['from'], $tr['to'] );
+			$object->setStates( $states );
+			foreach( $tr['guards'] as $guard ) {
+				call_user_func_array( array( $object, 'addGuard' ), $guard );
+			}
+
+			$tr['enabled'] = $object->isReady();
+			$tr['explain'] = $object->explain();
+		}
 
 		return $transitions;
 	}
@@ -44,10 +57,15 @@ class TransitionLib
 
 		// Verify that the states are consistent
 		$states = $this->getCurrentStates( $object, $type );
-		if( ! in_array( $transition['from'], $states ) ) {
-			return false;
+
+		$tr = new Transition( $transition['from'], $transition['to'] );
+		$tr->setStates( $states );
+
+		foreach( $transition['guards'] as $guard ) {
+			call_user_func_array( array( $tr, 'addGuard' ), $guard );
 		}
-		if( in_array( $transition['to'], $states ) ) {
+
+		if( ! $tr->isReady() ) {
 			return false;
 		}
 
@@ -61,10 +79,10 @@ class TransitionLib
 
 	// Database interaction
 
-	function addTransition( $from, $to, $name, $preserve = false ) {
+	function addTransition( $from, $to, $name, $preserve = false, array $guards = array() ) {
 		$db = TikiDb::get();
 
-		$db->query( "INSERT INTO `tiki_transitions` ( `type`, `from`, `to`, `name`, `preserve` ) VALUES( ?, ?, ?, ?, ? )", array( $this->transitionType, $from, $to, $name, (int) $preserve ) );
+		$db->query( "INSERT INTO `tiki_transitions` ( `type`, `from`, `to`, `name`, `preserve`, `guards` ) VALUES( ?, ?, ?, ?, ?, ? )", array( $this->transitionType, $from, $to, $name, (int) $preserve, json_encode( $guards ) ) );
 
 		return $db->getOne( 'SELECT MAX(`transitionId`) FROM `tiki_transitions`' );
 	}
@@ -81,18 +99,30 @@ class TransitionLib
 		}
 
 		$bindvars = array( $this->transitionType );
-		$query = "SELECT `transitionId`, `preserve`, `name`, `from`, `to` FROM `tiki_transitions` WHERE `type` = ? AND " . $db->in( 'from', $states, $bindvars ) . ' AND NOT (' . $db->in( 'to', $states, $bindvars ) . ')';
+		$query = "SELECT `transitionId`, `preserve`, `name`, `from`, `to`, `guards` FROM `tiki_transitions` WHERE `type` = ? AND " . $db->in( 'from', $states, $bindvars ) . ' AND NOT (' . $db->in( 'to', $states, $bindvars ) . ')';
 
-		return $db->fetchAll( $query, $bindvars );
+		$result = $db->fetchAll( $query, $bindvars );
+
+		return array_map( array( $this, 'expandGuards' ), $result );
 	}
 
 	private function getTransition( $transitionId ) {
 		$db = TikiDb::get();
 
 		$bindvars = array( $this->transitionType, $transitionId );
-		$query = "SELECT `transitionId`, `preserve`, `name`, `from`, `to` FROM `tiki_transitions` WHERE `type` = ? AND `transitionId` = ?";
+		$query = "SELECT `transitionId`, `preserve`, `name`, `from`, `to`, `guards` FROM `tiki_transitions` WHERE `type` = ? AND `transitionId` = ?";
+		$result = $db->fetchAll( $query, $bindvars );
 
-		return reset( $db->fetchAll( $query, $bindvars ) );
+		return $this->expandGuards( reset( $result ) );
+	}
+
+	private function expandGuards( $transition ) {
+		$transition['guards'] = json_decode( $transition['guards'], true );
+		if( ! $transition['guards'] ) {
+			$transition['guards'] = array();
+		}
+
+		return $transition;
 	}
 
 	// The following functions vary depending on the transition type

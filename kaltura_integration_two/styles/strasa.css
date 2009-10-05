@@ -81,6 +81,10 @@ body.wikitext {
 	color: #000;
 }
 
+body.wikitext {
+	height: 100%;	/* for FCKEditor */
+}
+
 select {
 	margin: 0 2px;
 }
@@ -200,8 +204,8 @@ label {
 }
 
 #header {
-	min-height: 121px;
-	position: relative;
+/*	min-height: 121px;
+	position: relative;*/
 }
 
 #middle {
@@ -340,16 +344,17 @@ div#tiki-main {
 /* Site Header & Identity */
 #header-top {
 	color: #fff;
-	position: static;
+	background: #214d68 url(strasa/headerbg.jpg) repeat-x 0 100%;
+/*	position: static;*/
 }
 
 #siteheader {
 	background: #fff;
+	position: relative;
 }
 
 #customcode,
 #customcodewith_ad {
-	background: #214d68 url(strasa/headerbg.jpg) repeat-x 0 100%;
 	width: auto;
 }
 
@@ -358,13 +363,11 @@ div#tiki-main {
 }
 
 div#sioptions {
-	background: #214d68 url(strasa/headerbg.jpg) repeat-x 0 100%;
 	padding: 0 58px;
 }
 
 #sioptionscentered {
 	text-align: center;
-	background: #214d68 url(strasa/headerbg.jpg) repeat-x 0 100%;
 }
 
 div#sitelogo {
@@ -380,14 +383,25 @@ div#sitelogo {
 	padding-left: 100px;
 }
 
-#siteloginbar {
+/*#siteloginbar {
 	position: static;
 	float: right;
+	padding-right: 10px;
 	height: 24px;
 	line-height: 24px;
 	padding-left: 60px;
 	color: #fff;
 	background: #fff url(strasa/login.jpg) 0 0 no-repeat;
+}*/
+#siteloginbar {
+background:#FFFFFF url(strasa/login.jpg) no-repeat scroll 369px 0;
+color:#FFFFFF;
+height:24px;
+line-height:20px;
+padding-left:60px;
+padding-right:10px;
+position:relative;
+right:0;
 }
 
 #siteloginbar a,
@@ -490,8 +504,8 @@ div.logged-in {
 }
 
 #tiki-top {
-	text-align: right;
-	margin-right: 40px;
+	white-space: nowrap;
+	text-align: left;
 }
 
 #tiki-top a,
@@ -508,9 +522,10 @@ div.logged-in {
 	float: none;
 	position: absolute;
 	right: 10px;
-	top: 65px;
+	top: 30px;
 	color: #fff;
 	font-size: 93%;
+	z-index: 10;
 }
 
 #topbar_custom_code {
@@ -766,9 +781,9 @@ a.phplmselected:hover {
 
 #tiki-top .cssmenu_horiz {
 	position: absolute;
-	z-index: 10;
 	top: 10px;
 	right: 100px;
+	z-index: 10;
 	white-space: nowrap;
 	text-align: left;
 }
@@ -2084,5 +2099,12 @@ a.admbox.off:focus,
 a.admbox.off:active {
 	border: 1px solid #a9a9a9;
 }
-
+/*For modules with rssitems*/
+li.rssitem{
+	margin:10px 0 10px 0;
+}
+/*For blogposts within module*/
+li.blog_post{
+	margin:10px 0 10px 0;
+}
 /* end of file */

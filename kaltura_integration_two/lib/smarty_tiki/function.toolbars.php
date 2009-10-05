@@ -21,12 +21,22 @@ function smarty_function_toolbars($params, &$smarty)
 		$comments = false;
 	}
 	
+	// some tool filters to help roll out textarea & toolbars to more sections quickly (for 4.0)
+
+	$hidden = array();
+	if ($params['section'] != 'wiki page') {
+		$hidden[] = 'fullscreen';
+	}
+	if (!in_array($params['section'], array('wiki page', 'blogs'))) {
+		$hidden[] = 'switcheditor';
+	}
+	
 	if( ! isset( $params['area_name'] ) ) {
-		$params['area_name'] = 'wikiedit';
+		$params['area_name'] = 'edit';
 	}
 
 	include_once( 'lib/toolbars/toolbarslib.php' );
-	$list = ToolbarsList::fromPreference( $params['section'] . ($comments ? '_comments' : '') );
+	$list = ToolbarsList::fromPreference( $params['section'] . ($comments ? '_comments' : ''), $hidden );
 	return $list->getWikiHtml( $params['area_name'] );
 }
 

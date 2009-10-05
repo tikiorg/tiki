@@ -1441,7 +1441,7 @@ class TikiLib extends TikiDb_Bridge {
 				$ret = array_merge($ret, $included);
 			}
 			$ret[] = "Registered";
-			$ret[] = "Anonymous";
+//			$ret[] = "Anonymous";
 			if (isset($_SESSION["groups_are_emulated"]) && $_SESSION["groups_are_emulated"]=="y"){
 				$ret = array_intersect($ret,unserialize($_SESSION['groups_emulated']));
 			}
@@ -1882,6 +1882,9 @@ class TikiLib extends TikiDb_Bridge {
 			if (preg_match('|^\(\((.+?)\)\)$|', $res['url'], $matches)) {
 				$res['url'] = 'tiki-index.php?page='.$matches[1];
 				$res['sefurl'] = $wikilib->sefurl($matches[1]);
+				if (!$this->user_has_perm_on_object($user, $matches[1], 'wiki page', 'tiki_p_view')) {
+					continue;
+				}
 			}
 			if (!$full) {
 				$display = true;
@@ -3409,6 +3412,7 @@ class TikiLib extends TikiDb_Bridge {
 		return $cant;
 	}
 
+	// Returns a string-indexed array with all the hosts/servers active in the last 5 minutes. Keys are hostnames. Values represent the number of registered users which logged in or were active in the last 5 minutes on the host.
 	function count_cluster_sessions() {
 		$this->update_session();
 		$query = "select `tikihost`, count(`tikihost`) as cant from `tiki_sessions` group by `tikihost`";
@@ -4683,6 +4687,7 @@ class TikiLib extends TikiDb_Bridge {
 		if( ! $is_html ) {
 			$data = str_replace( '<x>', '', $data );
 		}
+		$name = trim($name); // to avoid pb with trailing space http://dev.mysql.com/doc/refman/5.1/en/char.html
 
 		if (!$user) $user = 'anonymous';
 		if (empty($wysiwyg)) $wysiwyg = $prefs['wysiwyg_default'];
@@ -5018,16 +5023,17 @@ class TikiLib extends TikiDb_Bridge {
 
 				// While we're not at the end of the string, and we still haven't found both closers
 				while( $i < $last_data ) {
-					//print "<pre>Data char: $data[$i], $curlies, $parens\n.</pre>\n";
-					if( $data[$i] == "{" ) {
+					$char = substr($data, $i, 1);
+					//print "<pre>Data char: $i, $char, $curlies, $parens\n.</pre>\n";
+					if( $char == "{" ) {
 						$curlies++;
-					} elseif( $data[$i] == "(" ) {
+					} elseif( $char == "(" ) {
 						$parens++;
-					} elseif( $data[$i] == "}" ) {
+					} elseif( $char == "}" ) {
 						$curlies--;
 						if( $plugins['type'] == 'short' )
 							$lastParens = $i;
-					} elseif( $data[$i] == ")" ) {
+					} elseif( $char == ")" ) {
 						$parens--;
 						if( $plugins['type'] == 'long' )
 							$lastParens = $i;
@@ -5063,7 +5069,6 @@ class TikiLib extends TikiDb_Bridge {
 			 print_r( $plugins );
 			 print "</pre>";
 		 */
-
 	}
 
 	function plugin_split_args( $params_string ) {
@@ -5195,12 +5200,13 @@ class TikiLib extends TikiDb_Bridge {
 							break;
 						}
 						$pos_middle = $pos_end+strlen($plugin_end);
-						if ($data{$pos_middle} == '}') $count--;
-						else if ($data{$pos_middle} == '(') $count++;
+						$char = substr($data, $pos_middle, 1);
+						if ($char == '}') $count--;
+						else if ($char == '(') $count++;
 					}
 					$plugin_end .= '}'; // where plugin data ends
 				}
-	
+
 				/*
 					 print "<pre>pos's2: :$pos, $pos_middle, $pos_end:</pre>";
 					 print "<pre>plugin_end: :".htmlspecialchars( $plugin_end ) .":</pre>";
@@ -5212,7 +5218,7 @@ class TikiLib extends TikiDb_Bridge {
 				}
 				$plugin_data_len = $pos_end - $pos - strlen($plugins[0]);
 				$plugin_data = substr($data, $pos + strlen($plugin_start), $plugin_data_len);
-	
+
 				/*
 					 print "<pre>data: :".htmlspecialchars( $plugin_data ) .":</pre>";
 					 print "<pre>end: :".htmlspecialchars( $plugin_end ) .":</pre>";
@@ -5354,7 +5360,7 @@ class TikiLib extends TikiDb_Bridge {
 	} );
 	" );
 								}
-								$ret = $ret.'~np~<a id="' .$id. '" href="javascript:void(1)" class="editplugin">'.smarty_function_icon(array('_id'=>'shape_square_edit', 'alt'=>tra('Edit Plugin').':'.$plugin_name), $smarty)."</a>~/np~";
+								$ret = $ret.'~np~<a id="' .$id. '" href="javascript:void(1)" class="editplugin">'.smarty_function_icon(array('_id'=>'wiki_plugin_edit', 'alt'=>tra('Edit Plugin').':'.$plugin_name), $smarty)."</a>~/np~";
 							}
 	
 						} else {
@@ -6179,7 +6185,7 @@ class TikiLib extends TikiDb_Bridge {
 
 		// Strike-deleted text --text-- (but not in the context <!--[if IE]><--!> or <!--//--<!CDATA[//><!--
 		if (!$simple_wiki) {
-			$data = preg_replace("#(?<!<!|//)--(.+?)--#", "<del>$1</del>", $data);
+			$data = preg_replace("#(?<!<!|//)--([^\s].+?)--#", "<del>$1</del>", $data);
 		}
 
 		// Handle comment sections
@@ -7356,18 +7362,10 @@ class TikiLib extends TikiDb_Bridge {
 	/** Update a wiki page
 		@param array $hash- lock_it,contributions, contributors
 	 **/
-	function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip, $edit_description = '', $edit_minor = 0, $lang='', $is_html=false, $hash=null, $saveLastModif=null, $wysiwyg='', $wiki_authors_style) {
+	function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip, $edit_description = '', $edit_minor = 0, $lang='', $is_html=null, $hash=null, $saveLastModif=null, $wysiwyg='', $wiki_authors_style) {
 		global $smarty, $prefs, $dbTiki, $histlib, $quantifylib;
 		include_once ("lib/wiki/histlib.php");
 		include_once ("lib/commentslib.php");
-
-		if( $wysiwyg == 'y' ) {
-			$is_html = 1;
-		}
-
-		if( ! $is_html ) {
-			$edit_data = str_replace( '&lt;x&gt;', '', $edit_data );
-		}
 
 		$commentslib = new Comments($dbTiki);
 
@@ -7407,8 +7405,24 @@ class TikiLib extends TikiDb_Bridge {
 			$quantifylib->recordChangeSize( $info['page_id'], $version, $info['data'], $edit_data );
 		}
 
-		$html=$is_html?1:0;
-		if ($html&& $prefs['feature_purifier'] != 'n') {
+		if ($is_html === null) {
+			$html = $info['is_html'];
+		} else {
+			$html = $is_html ? 1 : 0;
+		}
+		if ($wysiwyg == '') {
+			$wysiwyg = $info['wysiwyg'];
+		}
+		
+		if( $wysiwyg == 'y' && $html != 1 ) {	// correct for html only wysiwyg
+			$html = 1;
+		}
+
+		if( $html == 0 ) {
+			$edit_data = str_replace( '&lt;x&gt;', '', $edit_data );
+		}
+
+		if ($html == 1 && $prefs['feature_purifier'] != 'n') {
 			require_once('lib/htmlpurifier_tiki/HTMLPurifier.tiki.php');
 			$edit_data = HTMLPurifier($edit_data);
 		}

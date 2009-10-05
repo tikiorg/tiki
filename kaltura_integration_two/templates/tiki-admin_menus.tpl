@@ -22,7 +22,7 @@
 <tr>
 <td class="{cycle advance=false}">{$channels[user].menuId}</td>
 <td class="{cycle advance=false}">
-{self_link menuId=$channels[user].menuId cookietab="2" _title="{tr}Edit{/tr}"} {$channels[user].name}{/self_link}
+{if $tiki_p_edit_menu_option eq 'y'}	<a class="link" href="tiki-admin_menu_options.php?menuId={$channels[user].menuId}" title="{tr}Configure/Options{/tr}">{$channels[user].name}</a>{/if}
 <br />{$channels[user].description}</td>
 <td class="{cycle advance=false}" style="text-align:center">{$channels[user].type}</td>
 <td class="{cycle advance=false}" style="text-align:right;">{$channels[user].options}&nbsp;</td>
@@ -97,7 +97,7 @@
 </tr>
 </table>
 {remarksbox type="tip" title="{tr}Tip{/tr}"}
-	{tr}To use menus in a <a href="tiki-admin_modules.php">module</a>, <a href="tiki-admin.php?page=siteid">Site identity</a> or a template, use {literal}{menu id=x}{/literal}, where x is the ID of the menu.{/tr}
+	{tr}To use menus in a <a href="tiki-admin_modules.php">module</a>, <a href="tiki-admin.php?page=look">Look and Feel</a> or a template, use {literal}{menu id=x}{/literal}, where x is the ID of the menu.{/tr}
 	<hr />
 	{if $prefs.feature_phplayers eq 'y'}
 	{tr}To use <a target="tikihelp" href="http://phplayersmenu.sourceforge.net/">phplayersmenu</a>, you can use one of the three following syntaxes:{/tr}

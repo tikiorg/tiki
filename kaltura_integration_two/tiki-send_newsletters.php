@@ -90,7 +90,7 @@ if (isset($_REQUEST["remove"])) {
 	}
 }
 // wysiwyg decision
-include 'tiki-parsemode_setup.php';
+include 'lib/setup/editmode.php';
 
 if (isset($_REQUEST["templateId"]) && $_REQUEST["templateId"] > 0 && (!isset($_REQUEST['previousTemplateId']) || $_REQUEST['previousTemplateId'] != $_REQUEST['templateId'])) {
 	$template_data = $tikilib->get_template($_REQUEST["templateId"]);

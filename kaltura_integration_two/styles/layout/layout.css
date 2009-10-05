@@ -53,11 +53,20 @@ select[multiple] {
 
 label {
 	cursor: pointer;
+	vertical-align: middle;
+}
+
+em {
+	vertical-align: middle;
 }
 
 form {
 	margin: 0;
 	padding: 0;
+}
+
+input, legend {
+	vertical-align: middle;
 }
 
 hr {
@@ -517,6 +526,7 @@ a.icon,
 img.icon {
 	border: 0 !important;
 	background: transparent;
+	vertical-align: middle;
 }
 
 .iconmenutext {
@@ -639,7 +649,7 @@ h3.box-title {
 }
 
 span.moduleflip,
-.wikitext .box-title span img.flipmodimage {
+.box-title span img.flipmodimage {
 	display: none !important;
 	/*float: right;
 	position: relative;*/
@@ -649,7 +659,7 @@ span.moduleflip,
 }
 
 .box:hover span.moduleflip,
-.wikitext .box:hover .box-title span img.flipmodimage {
+.box:hover .box-title span img.flipmodimage {
 	display: block !important;
 }
 
@@ -667,11 +677,15 @@ span.moduleflip,
 
 .box-data ol,
 .box-data ul {
-	list-style-position: inside;
-	padding-left: 1em;
+	padding-left: 2em;
 	padding-right: .6em;
+	overflow: hidden;
 	margin-top: 0;
 	margin-bottom: 0;
+}
+
+.box-data ul {
+	padding-left: 1.3em;
 }
 
 .modcontrols {
@@ -776,13 +790,13 @@ tr.diffheader {
 }
 
 .tabinactive {
-	border-bottom: none/* !important*/;
-	position: relative/* !important*/;
-	top: -3px/* !important*/;
+	border-bottom: none;
+	position: relative;
+	top: -3px;
 }
 	
 [class].tabinactive {
-	top: -2px !important;
+	top: -2px;
 }
 
 .tabcontent {
@@ -1218,7 +1232,7 @@ span.commentstitle {
 }
 
 textarea#editpost2 {
-	width: 100%;
+	width: 98%;
 }
 
 .subcomment {
@@ -1597,6 +1611,15 @@ div#ajaxLoading {
 #shadowbox_content {
 	background: #f5f5f5;
 	color: #000;
+}
+
+/* ColorBox */
+#cboxTitle {
+	background-color: #fff;
+}
+#cboxTitle div {
+	overflow: auto;
+	margin: 3px 100px 0;
 }
 
 /* Cluetip - JQuery tooltips

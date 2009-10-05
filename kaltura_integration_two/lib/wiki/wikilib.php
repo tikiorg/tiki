@@ -123,9 +123,10 @@ class WikiLib extends TikiLib {
 	function wiki_rename_page($oldName, $newName) {
 		global $prefs, $tikilib;
 		// if page already exists, stop here
+		$newName = trim($newName);
 		if ($this->page_exists($newName)) {
 			// if it is a case change of same page: allow it, else stop here
-			if (strcasecmp($oldName, $newName) <> 0) return false;
+			if (strcasecmp(trim($oldName), $newName) <> 0 ) return false;
 		}
 
 		$tmpName = "TmP".$newName."TmP";

@@ -68,9 +68,6 @@ rm -rf lib/bablotron.php
 echo "Removing Languages except default..."
 find lang/* -type d | grep -v "/$LANG_DEF" | grep -v CVS | xargs -- rm -rf
 
-echo "Removing Galaxia..."
-rm -rf lib/Galaxia
-
 echo "Removing iCal..."
 rm -rf lib/calendar/iCal
 

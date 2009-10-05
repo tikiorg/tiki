@@ -18,18 +18,17 @@ fieldset {
 	padding: 0.3em;
 }
 
-span.button {
+/* margin and padding for span surrounding the "button" links, same definition for button form element */
+span.button, button {
 	margin: 1px 2px;
 	padding: 2px;
 }
 
 span.button a,
 span.button a:visited,
-button,
 span.button input,
 .calbuttonBox a {
 	padding: 1px 4px;
-	margin-right: 1px;
 }
 
 input[type=reset],
@@ -37,11 +36,19 @@ input[type=submit] {
 	padding: 1px 4px;
 	margin-right: 1px;
 }
-	
-span.highlight {
-	background: aqua;
-	padding: 0 !important;
-	margin: 0;
+
+/* highlight on interface text to draw attention; also
+highlight on "button" links, e.g. if there are some comments it highlights the "button" link in #page-bar under the content of the wiki pages */
+.highlight,
+span.button.highlight a {
+	background: #FC0;
+	color: #000;
+}
+
+/* Since button background is actually applied to the link within the button, apply button highlight to same bg area as normal button state . */
+span.button.highlight {
+	padding: 0;
+	background: inherit;
 }
 
 input[type=checkbox],
@@ -597,8 +604,8 @@ div.imagetitle {
 
 .opaque {
 	border: 1px solid;
-	background: inherit;
-	color: inherit;
+	background-color: #fff;
+	color: #000;
 }
 
 .opaque .box-title {

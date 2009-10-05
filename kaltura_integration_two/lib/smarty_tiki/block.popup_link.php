@@ -38,12 +38,17 @@ function smarty_block_popup_link($params, $content, &$smarty, $repeat) {
 JS
 			);
 		}
-		$href = '';
-		if ($prefs['feature_jquery'] == 'y') {
-			$href = " href=\"javascript:void(0)\"";
-		} else {
-			$href = " href=\"javascript:alert('" . tr('You need JQuery enabled for this feature') . "')\"";
+		
+		$href = ' href="javascript:void(0)"';
+		
+		if (isset($params['class'])) {
+			if ($params['class'] == 'button') {
+				$html = '<a id="' . $linkId . '"' . $href . '>' . $content . '</a>';
+				$html = '<span class="button">'.$html.'</span>';
+			} else {
+				$html = '<a id="' . $linkId . '"' . $href . '" class="' . $class . '">' . $content . '</a>';
+			}
 		}
-		return '<a id="' . $linkId . '"' . $href . '>' . $content . '</a>';
+		return $html;
 	}
 }

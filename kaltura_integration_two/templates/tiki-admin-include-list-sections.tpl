@@ -15,6 +15,8 @@
 
 	{self_link page="login" _class="admbox" _style="background-image: url('pics/large/stock_quit48x48.png')" _title="{tr}Login{/tr}"}<span>{tr}Login{/tr}</span>{/self_link}
 
+	{self_link page="community" _class="admbox" _style="background-image: url('pics/large/users48x48.png')" _title="{tr}Community{/tr}"}<span>{tr}Community{/tr}</span>{/self_link}
+
 	{self_link page="profiles" _class="admbox" _style="background-image: url('pics/large/profiles48x48.png')" _title="{tr}Profiles{/tr}"}<span>{tr}Profiles{/tr}</span>{/self_link}
 
 	{self_link page="look" _class="admbox" _style="background-image: url('pics/large/gnome-settings-background48x48.png')" _title="{tr}Look &amp; Feel{/tr}"}<span>{tr}Look &amp; Feel{/tr}</span>{/self_link}
@@ -27,17 +29,19 @@
 
 	{self_link page="metatags" _class="admbox" _style="background-image: url('pics/large/metatags48x48.png')" _title="{tr}Meta Tags{/tr}"}<span>{tr}Meta Tags{/tr}</span>{/self_link}
 
+	{self_link page="performance" _class="admbox" _style="background-image: url('img/mytiki/admin.gif')" _title="{tr}Performance{/tr}"}<span>{tr}Performance{/tr}</span>{/self_link}
+
+	{self_link page="security" _class="admbox" _style="background-image: url('pics/large/gnome-lockscreen48x48.png')" _title="{tr}Security{/tr}"}<span>{tr}Security{/tr}</span>{/self_link}
+	
 	{self_link page="rss" _class="admbox" _style="background-image: url('pics/large/gnome-globe48x48.png')" _title="{tr}RSS{/tr}"}<span>{tr}RSS{/tr}</span>{/self_link}
 
-	{self_link page="community" _class="admbox" _style="background-image: url('pics/large/users48x48.png')" _title="{tr}Community{/tr}"}<span>{tr}Community{/tr}</span>{/self_link}
-
 	{self_link page="wiki" _class="admbox" _style="background-image: url('pics/large/wikipages48x48.png')" _selected="'`$prefs.feature_wiki`' != 'y'" _selected_class="admbox off"}<img src="pics/trans.png" alt="{tr}Wiki{/tr}" title="{tr}Wiki{/tr}{if $prefs.feature_wiki ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Wiki{/tr}</span>{/self_link}
+
+	{self_link page="fgal" _class="admbox" _style="background-image: url('pics/large/file-manager48x48.png')" _selected="'`$prefs.feature_file_galleries`' != 'y'" _selected_class="admbox off"}<img src="pics/trans.png" alt="{tr}File Galleries{/tr}" title="{tr}File Galleries{/tr}{if $prefs.feature_file_galleries ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}File Galleries{/tr}</span>{/self_link}
 
 	{self_link page="blogs" _class="admbox" _style="background-image: url('pics/large/blogs48x48.png')" _selected="'`$prefs.feature_blogs`' != 'y'" _selected_class="admbox off"}<img src="pics/trans.png" alt="{tr}Blogs{/tr}" title="{tr}Blogs{/tr}{if $prefs.feature_blogs ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Blogs{/tr}</span>{/self_link}
 	
 	{self_link page="gal" _class="admbox" _style="background-image: url('pics/large/stock_select-color48x48.png')" _selected="'`$prefs.feature_galleries`' != 'y'" _selected_class="admbox off"}<img src="pics/trans.png" alt="{tr}Image Galleries{/tr}" title="{tr}Image Galleries{/tr}{if $prefs.feature_galleries ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Image Galleries{/tr}</span>{/self_link}
-
-	{self_link page="fgal" _class="admbox" _style="background-image: url('pics/large/file-manager48x48.png')" _selected="'`$prefs.feature_file_galleries`' != 'y'" _selected_class="admbox off"}<img src="pics/trans.png" alt="{tr}File Galleries{/tr}" title="{tr}File Galleries{/tr}{if $prefs.feature_file_galleries ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}File Galleries{/tr}</span>{/self_link}
 
 	{self_link page="cms" _class="admbox" _style="background-image: url('pics/large/stock_bold48x48.png')" _selected="'`$prefs.feature_articles`' != 'y'" _selected_class="admbox off"}<img src="pics/trans.png" alt="{tr}Articles{/tr}" title="{tr}Articles{/tr}{if $prefs.feature_articles ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Articles{/tr}</span>{/self_link}
 
@@ -80,8 +84,6 @@
 	{self_link page="ads" _class="admbox" _style="background-image: url('pics/large/ads48x48.png')" _selected="'`$prefs.feature_banners`' != 'y'" _selected_class="admbox off"}<img src="pics/trans.png" alt="{tr}Site Ads and Banners{/tr}" title="{tr}Site Ads and Banners{/tr}{if $prefs.feature_banners ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Site Ads and Banners{/tr}</span>{/self_link}
 
 	{self_link page="intertiki" _class="admbox" _style="background-image: url('pics/large/intertiki48x48.png')" _selected="'`$prefs.feature_intertiki`' != 'y'" _selected_class="admbox off"}<img src="pics/trans.png" alt="{tr}InterTiki{/tr}" title="{tr}InterTiki{/tr}{if $prefs.feature_intertiki ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}InterTiki{/tr}</span>{/self_link}
-
-	{* TODO: these features (semantic & webservices) seem not to have feature prefs - eg $prefs.feature_semantic so are on by default for now *}
 
 	{self_link page="semantic" _class="admbox" _style="background-image: url('pics/large/semantic48x48.png')" _selected="'`$prefs.feature_semantic`' != 'y'" _selected_class="admbox off"}<img src="pics/trans.png" alt="{tr}Semantic links{/tr}" title="{tr}Semantic links{/tr}{if $prefs.feature_semantic ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Semantic links{/tr}</span>{/self_link}
 

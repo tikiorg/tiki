@@ -32,6 +32,7 @@
 {if $db_requires_update}
 	{remarksbox type="warning" title="{tr}Database Version Problem{/tr}"}
 	{tr}Your database requires an update to match the current TikiWiki version. Please proceed to <a href="tiki-install.php">the installer</a>. Using Tiki with an incorrect database version usually provoke errors.{/tr}
+	{tr}If you have shell (SSH) access, you can also use the following, on the command line, from the root of your Tiki installation:{/tr} php installer/shell.php
 	{/remarksbox}
 {/if}
 {*{tr}{$description}{/tr}*}
@@ -41,9 +42,9 @@ Add a value in first check when you create a new admin page. *}
 {if in_array($adminpage, array("features", "general", "login", "wiki",
 "gal", "fgal", "cms", "polls", "search", "blogs", "forums", "faqs",
 "trackers", "webmail", "rss", "directory", "userfiles", "maps",
-"metatags", "wikiatt","score", "community", "messages",
-"calendar","intertiki","kaltura","freetags","gmap",
-"i18n","wysiwyg","copyright","category", "module", "look", "textarea",
+"metatags", "performance", "security", "wikiatt", "score", "community", "messages",
+"calendar", "intertiki", "kaltura", "freetags", "gmap",
+"i18n", "wysiwyg", "copyright", "category", "module", "look", "textarea",
 "multimedia", "ads", "profiles", "semantic", "plugins", "webservices",
 'sefurl', 'workspaces'))}
   {assign var="include" value=$smarty.get.page}
@@ -106,7 +107,6 @@ Add a value in first check when you create a new admin page. *}
 		<a href="tiki-admin_shoutbox_words.php">{tr}Shoutbox Words{/tr}</a> 
 	{/if}
 	{if $prefs.feature_live_support eq 'y'} <a href="tiki-live_support_admin.php">{tr}Live Support{/tr}</a> {/if}
-	{if $prefs.feature_workflow eq 'y'} <a href="tiki-g-admin_processes.php">{tr}Workflow{/tr}</a> {/if}
 	{* TODO: to be fixed {if $prefs.feature_debug_console eq 'y'} <a href="javascript:toggle("debugconsole")">{tr}(debug){/tr}</a> 
 	{/if} *}
 	{if $prefs.feature_contact eq 'y'} <a href="tiki-contact.php">{tr}Contact us{/tr}</a> {/if}

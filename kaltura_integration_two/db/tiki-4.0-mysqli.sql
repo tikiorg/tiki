@@ -2,121 +2,6 @@
 -- Database : tikiwiki
 -- --------------------------------------------------------
 
-DROP TABLE IF EXISTS `galaxia_activities`;
-CREATE TABLE `galaxia_activities` (
-  `activityId` int(14) NOT NULL auto_increment,
-  `name` varchar(80) default NULL,
-  `normalized_name` varchar(80) default NULL,
-  `pId` int(14) NOT NULL default '0',
-  `type` enum('start','end','split','switch','join','activity','standalone') default NULL,
-  `isAutoRouted` char(1) default NULL,
-  `flowNum` int(10) default NULL,
-  `isInteractive` char(1) default NULL,
-  `lastModif` int(14) default NULL,
-  `description` text,
-  `expirationTime` int(6) unsigned NOT NULL default '0',
-  PRIMARY KEY (`activityId`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-
-DROP TABLE IF EXISTS `galaxia_activity_roles`;
-CREATE TABLE `galaxia_activity_roles` (
-  `activityId` int(14) NOT NULL default '0',
-  `roleId` int(14) NOT NULL default '0',
-  PRIMARY KEY (`activityId`,`roleId`)
-) ENGINE=MyISAM;
-
-DROP TABLE IF EXISTS `galaxia_instance_activities`;
-CREATE TABLE `galaxia_instance_activities` (
-  `instanceId` int(14) NOT NULL default '0',
-  `activityId` int(14) NOT NULL default '0',
-  `started` int(14) NOT NULL default '0',
-  `ended` int(14) NOT NULL default '0',
-  `user` varchar(200) default '',
-  `status` enum('running','completed') default NULL,
-  PRIMARY KEY (`instanceId`,`activityId`)
-) ENGINE=MyISAM;
-
-DROP TABLE IF EXISTS `galaxia_instance_comments`;
-CREATE TABLE `galaxia_instance_comments` (
-  `cId` int(14) NOT NULL auto_increment,
-  `instanceId` int(14) NOT NULL default '0',
-  `user` varchar(200) default '',
-  `activityId` int(14) default NULL,
-  `hash` varchar(34) default NULL,
-  `title` varchar(250) default NULL,
-  `comment` text,
-  `activity` varchar(80) default NULL,
-  `timestamp` int(14) default NULL,
-  PRIMARY KEY (`cId`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-
-DROP TABLE IF EXISTS `galaxia_instances`;
-CREATE TABLE `galaxia_instances` (
-  `instanceId` int(14) NOT NULL auto_increment,
-  `pId` int(14) NOT NULL default '0',
-  `started` int(14) default NULL,
-  `name` varchar(200) NOT NULL default 'No Name',
-  `owner` varchar(200) default NULL,
-  `nextActivity` int(14) default NULL,
-  `nextUser` varchar(200) default NULL,
-  `ended` int(14) default NULL,
-  `status` enum('active','exception','aborted','completed') default NULL,
-  `properties` longblob,
-  PRIMARY KEY (`instanceId`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-
-DROP TABLE IF EXISTS `galaxia_processes`;
-CREATE TABLE `galaxia_processes` (
-  `pId` int(14) NOT NULL auto_increment,
-  `name` varchar(80) default NULL,
-  `isValid` char(1) default NULL,
-  `isActive` char(1) default NULL,
-  `version` varchar(12) default NULL,
-  `description` text,
-  `lastModif` int(14) default NULL,
-  `normalized_name` varchar(80) default NULL,
-  PRIMARY KEY (`pId`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-
-DROP TABLE IF EXISTS `galaxia_roles`;
-CREATE TABLE `galaxia_roles` (
-  `roleId` int(14) NOT NULL auto_increment,
-  `pId` int(14) NOT NULL default '0',
-  `lastModif` int(14) default NULL,
-  `name` varchar(80) default NULL,
-  `description` text,
-  PRIMARY KEY (`roleId`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-
-DROP TABLE IF EXISTS `galaxia_transitions`;
-CREATE TABLE `galaxia_transitions` (
-  `pId` int(14) NOT NULL default '0',
-  `actFromId` int(14) NOT NULL default '0',
-  `actToId` int(14) NOT NULL default '0',
-  PRIMARY KEY (`actFromId`,`actToId`)
-) ENGINE=MyISAM;
-
-DROP TABLE IF EXISTS `galaxia_user_roles`;
-CREATE TABLE `galaxia_user_roles` (
-  `pId` int(14) NOT NULL default '0',
-  `roleId` int(14) NOT NULL auto_increment,
-  `user` varchar(200) NOT NULL default '',
-  PRIMARY KEY (`roleId`, `user`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-
-DROP TABLE IF EXISTS `galaxia_workitems`;
-CREATE TABLE `galaxia_workitems` (
-  `itemId` int(14) NOT NULL auto_increment,
-  `instanceId` int(14) NOT NULL default '0',
-  `orderId` int(14) NOT NULL default '0',
-  `activityId` int(14) NOT NULL default '0',
-  `properties` longblob,
-  `started` int(14) default NULL,
-  `ended` int(14) default NULL,
-  `user` varchar(200) default '',
-  PRIMARY KEY (`itemId`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-
 DROP TABLE IF EXISTS `messu_messages`;
 CREATE TABLE `messu_messages` (
   `msgId` int(14) NOT NULL auto_increment,
@@ -541,6 +426,7 @@ CREATE TABLE `tiki_categories` (
   `description` varchar(250) default NULL,
   `parentId` int(12) default NULL,
   `hits` int(8) default NULL,
+  `rootCategId` int(12) default NULL,
   PRIMARY KEY (`categId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
@@ -1242,7 +1128,6 @@ INSERT INTO tiki_live_support_modules(name) VALUES('forums');
 INSERT INTO tiki_live_support_modules(name) VALUES('image galleries');
 INSERT INTO tiki_live_support_modules(name) VALUES('file galleries');
 INSERT INTO tiki_live_support_modules(name) VALUES('directory');
-INSERT INTO tiki_live_support_modules(name) VALUES('workflow');
 
 DROP TABLE IF EXISTS `tiki_live_support_operators`;
 CREATE TABLE `tiki_live_support_operators` (
@@ -1372,14 +1257,6 @@ INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `s
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','User Menu','tiki-usermenu.php',100,'feature_mytiki,feature_usermenu','tiki_p_usermenu','Registered',0);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Mini Calendar','tiki-minical.php',105,'feature_mytiki,feature_minical','tiki_p_minical','Registered',0);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','My Watches','tiki-user_watches.php',110,'feature_mytiki,feature_user_watches','','Registered',0);
-INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'s','Workflow','tiki-g-user_processes.php',150,'feature_workflow','tiki_p_use_workflow','',0);
-INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Admin Processes','tiki-g-admin_processes.php',155,'feature_workflow','tiki_p_admin_workflow','',0);
-INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Monitor Processes','tiki-g-monitor_processes.php',160,'feature_workflow','tiki_p_admin_workflow','',0);
-INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Monitor Activities','tiki-g-monitor_activities.php',165,'feature_workflow','tiki_p_admin_workflow','',0);
-INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Monitor Instances','tiki-g-monitor_instances.php',170,'feature_workflow','tiki_p_admin_workflow','',0);
-INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','User Processes','tiki-g-user_processes.php',175,'feature_workflow','tiki_p_use_workflow','',0);
-INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','User activities','tiki-g-user_activities.php',180,'feature_workflow','tiki_p_use_workflow','',0);
-INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','User instances','tiki-g-user_instances.php',185,'feature_workflow','tiki_p_use_workflow','',0);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'s','Community','tiki-list_users.php',187,'feature_friends','tiki_p_list_users','',0);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','User List','tiki-list_users.php',188,'feature_friends','tiki_p_list_users','',0);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Friendship Network','tiki-friends.php',189,'feature_friends','','Registered',0);
@@ -1464,6 +1341,10 @@ INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `s
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'s','Newsletters','tiki-newsletters.php',900,'feature_newsletters','tiki_p_list_newsletters','',0);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Send Newsletters','tiki-send_newsletters.php',905,'feature_newsletters','tiki_p_send_newsletters','',0);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Admin Newsletters','tiki-admin_newsletters.php',910,'feature_newsletters','tiki_p_admin_newsletters','',0);
+INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'s','Workspaces','tiki-workspaces-index.php',920,'feature_workspaces','tiki_p_ws_view','',0);
+INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Workspaces Home','tiki-workspaces-index.php',925,'feature_workspaces','tiki_p_ws_view','',0);
+INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','My Workspaces','tiki-my-workspaces.php',930,'feature_workspaces','tiki_p_ws_view','',0);
+INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Manage Workspaces','tiki-manage-workspaces.php',935,'feature_workspaces','tiki_p_admin_ws.php','',0);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin','',0);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_categories','',0);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_banners','',0);
@@ -2897,11 +2778,6 @@ INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin
 INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_wiki_view_source', 'Can view source of wiki pages', 'basic', 'wiki', NULL, 'feature_source');
 INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_wiki_vote_ratings', 'Can participate to rating of wiki pages', 'registered', 'wiki', NULL, 'feature_wiki_ratings');
 INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_wiki_view_similar', 'Can view similar wiki pages', 'registered', 'wiki', NULL, 'feature_wiki');
-INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_admin_workflow', 'Can admin workflow processes', 'admin', 'workflow', 'y', 'feature_workflow');
-INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_abort_instance', 'Can abort a process instance', 'editors', 'workflow', NULL, 'feature_workflow');
-INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_exception_instance', 'Can declare an instance as exception', 'registered', 'workflow', NULL, 'feature_workflow');
-INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_send_instance', 'Can send instances after completion', 'registered', 'workflow', NULL, 'feature_workflow');
-INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_use_workflow', 'Can execute workflow activities', 'registered', 'workflow', NULL, 'feature_workflow');
 INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_admin_received_articles', 'Can admin received articles', 'editors', 'comm', NULL, 'feature_comm');
 INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_admin_received_pages', 'Can admin received pages', 'editors', 'comm', NULL, 'feature_comm');
 INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_send_articles', 'Can send articles to other sites', 'editors', 'comm', NULL, 'feature_comm');
@@ -2972,6 +2848,13 @@ INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin
 INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_group_join', 'Can join or leave the group', 'admin', 'group', NULL, NULL);
 
 INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_trigger_transition', 'Can trigger the transition between two states', 'admin', 'transition', NULL, 'feature_group_transition,feature_category_transition');
+INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('tiki_p_ws_admin', 'Can admin all ws', 'globaladmin', 'ws', 'y');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_ws_addws', 'Can add ws', 'globaladmin', 'ws');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_ws_removews', 'Can remove ws', 'globaladmin', 'ws');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_ws_adminws', 'Can admin a single ws', 'admin', 'ws');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_ws_adminresources', 'Can admin resources into single ws', 'admin', 'ws');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_ws_admingroups', 'Can admin groups in a single ws', 'admin', 'ws');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_ws_view', 'Can view a single ws', 'registered', 'ws');
 
 
 
@@ -3506,6 +3389,7 @@ DROP TABLE IF EXISTS `tiki_plugin_security`;
 CREATE TABLE `tiki_plugin_security` (
   `fingerprint` VARCHAR(200) NOT NULL PRIMARY KEY,
   `status` VARCHAR(10) NOT NULL,
+  `added_by` VARCHAR(200) NULL,
   `approval_by` VARCHAR(200) NULL,
   `last_update` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `last_objectType` VARCHAR(20) NOT NULL,
@@ -3559,6 +3443,7 @@ CREATE TABLE `tiki_transitions` (
 	`type` varchar(20) NOT NULL,
 	`from` varchar(255) NOT NULL,
 	`to` varchar(255) NOT NULL,
+	`guards` text,
 	PRIMARY KEY(`transitionId`),
 	KEY `transition_lookup` (`type`, `from`)
 ) ENGINE=MyISAM;

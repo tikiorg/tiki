@@ -18,7 +18,7 @@
 <body class="tiki_wiki">
 	<div id="siteheader">
 			<div id="sitelogo" style="text-align: center; padding-left: 70px;">
-				<img style="border: medium none ;" alt="Site Logo" src="img/tiki/tiki3.png" />
+				<img style="border: medium none ;" alt="Site Logo" src="img/tiki/tikisitelogo.png" />
 			</div>
 	</div>
 
@@ -35,7 +35,9 @@
 				</strong>
 
 				{if $requires_update}
-					<p>{tr}Database is not currently up to date! Visit <a href="tiki-install.php">Tiki Installer</a> to resolve this issue.{/tr}</p>
+					<p>{tr}Database is not currently up to date! Visit <a href="tiki-install.php">Tiki Installer</a> to resolve this issue.{/tr}
+					{tr}If you have shell (SSH) access, you can also use the following, on the command line, from the root of your Tiki installation:{/tr} php installer/shell.php
+					</p>
 				{/if}
 
 				{if $base_query}

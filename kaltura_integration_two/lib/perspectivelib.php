@@ -33,6 +33,18 @@ class PerspectiveLib
 			return $max;
 		}
 	}
+	
+	//Removes a perspective. 
+	function remove_perspective ( $perspectiveId )
+	{
+		$db = TikiDb::get();
+		
+		if ( $perspectiveId )
+		{
+			$db->query( 'DELETE from tiki_perspectives WHERE perspectiveId = ?', array( $perspectiveId ) );
+			$db->query( 'DELETE from tiki_perspective_preferences WHERE perspectiveId = ?', array( $perspectiveId ) );
+		}
+	}
 
 	// Replaces all preferences from $perspectiveId with those in the provided string-indexed array (in format "pref_name" => "pref_value").
 	function replace_preferences( $perspectiveId, $preferences ) {
@@ -72,6 +84,17 @@ class PerspectiveLib
 
 		$list = Perms::filter( array( 'type' => 'perspective' ), 'object', $list, array( 'object' => 'perspectiveId' ), 'perspective_view' );
 		return $list;
+	}
+
+	//Returns a list of perspectives with the given name, filtered by perms
+	function get_perspectives_with_given_name ( $name ) {
+	    $db = TikiDb::get();
+
+	    $list = $db->getOne( "SELECT perspectiveId FROM tiki_perspectives WHERE name = ?", array ( $name ) );
+
+	    //$list = Perms::filter( array ( 'type' => 'perspective'), 'object', $list, array( 'object' => 'perspectiveId' ), 'perspective_view' );
+
+	    return $list;
 	}
 }
 

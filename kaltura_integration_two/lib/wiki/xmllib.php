@@ -6,7 +6,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 define('WIKI_XML', 'wiki.xml');
-define('PAGE_TXT', 'page.txt');
 
 class XmlLib extends TikiLib {
 	var $errors = array();
@@ -44,15 +43,15 @@ class XmlLib extends TikiLib {
 		if (!empty($config)) {
 			$this->config = array_merge($this->config, $config);
 		}
-		$this->xml .= '<?xml version="1.0" encoding="UTF-8"?>';
+		$this->xml .= '<?xml version="1.0" encoding="UTF-8"?>'."\n";
 		if (count($pages) >= 1) {
-			$this->xml .= '<pages>';
+			$this->xml .= "<pages>\n";
 			foreach ($pages as $page) {
 				if (!$this->export_page($page)) {
 					return false;
 				}
 			}
-			$this->xml .= '</pages>';
+			$this->xml .= "</pages>\n";
 		}
 		if (!empty($structure)) {
 			global $structlib; include_once('lib/structures/structlib.php');
@@ -61,9 +60,9 @@ class XmlLib extends TikiLib {
 			foreach ($pages as $page) {
 				while (count($stack) && $stack[count($stack) - 1] != $page['parent_id']) {
 					array_pop($stack);
-					$this->xml .= '</structure>';
+					$this->xml .= "</structure>\n";
 				}
-				$this->xml .= '<structure>';
+				$this->xml .= "<structure>\n";
 				$stack[] = $page['page_ref_id'];
 				if (!$this->export_page($page['pageName'])) {
 					return false;
@@ -71,7 +70,7 @@ class XmlLib extends TikiLib {
 			}
 			while (count($stack)) {
 				array_pop($stack);
-				$this->xml .= '</structure>';
+				$this->xml .= "</structure>\n";
 			}
 		}
 
@@ -98,7 +97,7 @@ class XmlLib extends TikiLib {
 			return false;
 		}
 		$dir = $page;
-		$info['zip'] = "$dir/".PAGE_TXT;
+		$info['zip'] = "$dir/".$page;
 		$smarty->assign_by_ref('info', $info);
 
 		if (!$this->zip->addFromString($info['zip'], $info['data'])) {
@@ -113,20 +112,27 @@ class XmlLib extends TikiLib {
 				$smarty->assign_by_ref('comments', $comments['data']);
 			}
 		}
-		if ($prefs['feature_wiki_pictures'] == 'y' && $this->config['images'] && preg_match_all('/\{img[^\}]+src=["\']?([^\'" }]+)["\']*/', $info['data'], $matches)) {
+		$images = array();
+		if ($prefs['feature_wiki_pictures'] == 'y' && $this->config['images'] && preg_match_all('/\{img\s*\(?([^\}]+)\)?\s*\}/i', $info['data'], $matches)) {
 			global $tikiroot;
-			$images = array();
 			foreach ($matches[1] as $match) {
-				if (preg_match('|img/wiki_up/(.*)|', $match, $m)) {
-					$image = array('filename' => $m[1], 'where' => 'wiki', 'zip'=>"$dir/images/wiki/".$m[1], 'wiki'=>$match);
-					if (!$this->zip->addFile($match, $image['zip'])) {
+				$args = $tikilib->plugin_split_args($match);
+				if (empty($args['src'])) {
+				} elseif (preg_match('|img/wiki_up/(.*)|', $args['src'], $m)) {
+					$image = array('filename' => $m[1], 'where' => 'wiki', 'zip'=>"$dir/images/wiki/".$m[1], 'wiki'=>$args['src']);
+					if (!$this->zip->addFile($args['src'], $image['zip'])) {
 						$this->errors[] = 'Can not add the image';
 						$this->errorsArgs[] = $m[1];
 						return false;
 					}
-				} elseif (preg_match('|show_image.php\?(.*)|', $match, $m)) {
+				} elseif (preg_match('|show_image.php\?(.*)|', $args['src'], $m)) {
 					global $imagegallib; include_once('lib/imagegals/imagegallib.php');
-					$img = $this->httprequest($_SERVER['HTTP_HOST'].$tikiroot.$match);
+					if (($i = strpos($args['src'], 'tiki-download_file.php')) > 0) {
+						$path = $_SERVER['HTTP_HOST'].$tikiroot.substr($args['src'], $i);
+					} else {
+						$path = $_SERVER['HTTP_HOST'].$tikiroot.$args['src'];
+					}
+					$img = $this->httprequest($path);
 					$this->parse_str($m[1], $p);
 					if (isset($p['name']) && isset($p['galleryId']))
 						$id = $imagegallib->get_imageid_byname($p['name'], $p['galleryId']);
@@ -134,16 +140,21 @@ class XmlLib extends TikiLib {
 						$id = $imagegallib->get_imageid_byname($p['name']);
 					elseif (isset($p['id']))
 						$id = $p['id'];
-					$image = array('where' => 'gal', 'zip' => "$dir/images/gal/".$id, 'wiki'=>$match);
+					$image = array('where' => 'gal', 'zip' => "$dir/images/gal/".$id, 'wiki'=>$args['src']);
 					if (!$this->zip->addFromString($image['zip'], $img)) {
 						$this->errors[] = 'Can not add the image';
 						$this->errorsArgs[] = $m[1];
 						return false;
 						}
-				} elseif (preg_match('|tiki-download_file.php\?(.*)|', $match, $m)) {
-					$img = $this->httprequest($_SERVER['HTTP_HOST'].$tikiroot.$match);
+				} elseif (preg_match('|tiki-download_file.php\?(.*)|', $args['src'], $m)) {
+					if (($i = strpos($args['src'], 'tiki-download_file.php')) > 0) {
+						$path = $_SERVER['HTTP_HOST'].$tikiroot.substr($args['src'], $i);
+					} else {
+						$path = $_SERVER['HTTP_HOST'].$tikiroot.$args['src'];
+					}
+					$img = $this->httprequest($path);
 					$this->parse_str($m[1], $p);
-					$image = array('where' => 'fgal', 'zip'=>"$dir/images/fgal/".$p['fileId'], 'wiki'=>$match);
+					$image = array('where' => 'fgal', 'zip'=>"$dir/images/fgal/".$p['fileId'], 'wiki'=>$args['src']);
 					if (!$this->zip->addFromString($image['zip'], $img)) {
 						$this->errors[] = 'Can not add the image';
 						$this->errorsArgs[] = $m[1];
@@ -152,8 +163,8 @@ class XmlLib extends TikiLib {
 				} /* else no idea where the img comes from - suppose there are outside tw */
 				$images[] = $image;
 			}
-			$smarty->assign_by_ref('images', $images);
 		}
+		$smarty->assign_by_ref('images', $images);
 		if ($prefs['feature_wiki_attachments'] == 'y' && $this->config['attachments']) {
 			global $wikilib; include_once('lib/wiki/wikilib.php');
 			$attachments = $wikilib->list_wiki_attachments($page, 0, -1);

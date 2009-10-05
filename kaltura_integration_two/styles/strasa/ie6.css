@@ -6,32 +6,26 @@ body {
 	font-size: 72%;
 }
 
-#siteloginbar {
-	position: absolute;
-	top: 97px;
+#tiki-top .cssmenu_horiz a,
+#tiki-top .cssmenu_horiz a:visited {
+	border-color: #204a60;
 }
+
 #siteloginbar {
 	text-align: right;
 	width: 100%;
 	padding: 0;
-	background: #fff url(loginlong.jpg) 0 0 no-repeat;
+	background: #fff url(loginlong.jpg) 0 0 no-repeat !important; 
 }
 
-#header {
-	height: 121px;
-}
-#header {
-	background: #fff;
-}
-.logged-in {
-	color: #5ae0ff !important;
-	background: none !important;
+#siteloginbar form {
+	padding-right: 10px !important;
 }
 
-.logged-in a,
-.logged-in a:visited {
-	color: #5ae0ff !important;
+#siteloginbar label {
+	color: #fff;
 }
+
 #tiki-top {
 	font-size: 11px;
 }
@@ -65,7 +59,14 @@ div#tikihelp {
 
 #col2 .box,
 #col3 .box {
-	width: 181px;
+	width: 181px !important;
+}
+
+#col2 ul.cssmenu_vert,
+#col2 ul.cssmenu_vert li {
+	width: 165px !important;
+	padding: 0 !important;
+	margin: 0 !important;
 }
 
 h3.box-title {

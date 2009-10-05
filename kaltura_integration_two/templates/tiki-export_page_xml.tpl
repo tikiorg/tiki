@@ -8,7 +8,6 @@
 <is_html>{$info.is_html}</is_html>
 <wysiwyg>{$info.wysiwyg}</wysiwyg>
 {*<data><![CDATA[{$info.data}]]></data>*}
-
 {if $config.comments and !empty($comments)}
 <comments>
 {foreach from=$comments item=comment}
@@ -16,7 +15,6 @@
 {/foreach}
 </comments>
 {/if}
-
 {if $config.images and !empty($images)}
 <images>
 {foreach from=$images item=img}
@@ -30,7 +28,6 @@
 {/foreach}
 </images>
 {/if}
-
 {if $config.attachments and !empty($attachments)}
 <attachments>
 {foreach from=$attachments item=att}
@@ -43,7 +40,6 @@
 {/foreach}
 </attachments>
 {/if}
-
 {if $config.history and !empty($history)}
 <history>
 {foreach from=$history item=hist}
@@ -55,5 +51,4 @@
 {/foreach}
 </history>
 {/if}
-
 </page>

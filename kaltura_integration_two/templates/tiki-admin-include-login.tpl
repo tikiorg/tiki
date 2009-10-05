@@ -86,12 +86,14 @@
 											{/foreach}
 										</select>
 									</div>
+
+									<div class="adminoptionbox">
+										<div class="adminoptionlabel"><label for="url_after_validation">{tr}Url a user is redirected after account validation{/tr}:</label> <input type="text" id="url_after_validation" name="url_after_validation" value="{$prefs.url_after_validation|escape}" /><br /><em>{tr}Default:{/tr} tiki-information.php?msg={tr}Account validated successfully.{/tr}</em></div>
+									</div>
+
 								</div>
 							</div>
 
-							<div class="adminoptionbox">
-								 <div class="adminoptionlabel"><label for="url_after_validation">{tr}Url a user is redirected after account validation{/tr}:</label> <input type="text" id="url_after_validation" name="url_after_validation" value="{$prefs.url_after_validation|escape}" /><br /><em>{tr}Default:{/tr} tiki-information.php?msg={tr}Account validated successfully.{/tr}</em></div>
-							</div>
 			
 							<div class="adminoptionbox">
 								<div class="adminoption"><input id="userTracker" type="checkbox" name="userTracker" {if $prefs.userTracker eq 'y'}checked="checked"{/if} {if $prefs.feature_trackers ne 'y'}disabled="disabled" {/if}/></div>
@@ -210,7 +212,9 @@
 									</select>
 								</div>
 							</div>
+						</div>
 	
+						<fieldset><legend>{tr}Cookie{/tr}</legend>
 							<div class="adminoptionbox">
 								<div class="adminoptionlabel"><label for="cookie_name">{tr}Cookie name{/tr}:</label> 
 									<input type="text" id="cookie_name" name="cookie_name" value="{$prefs.cookie_name|escape}" size="50" />
@@ -226,8 +230,11 @@
 									<input type="text" id="cookie_path" name="cookie_path" value="{$prefs.cookie_path|escape}" size="50" />
 								</div>
 							</div>
-						</div>
+						</fieldset>
 					</div>
+
+					{preference name=feature_banning}
+
 				</fieldset>
 	
 				<fieldset><legend>{tr}Username{/tr}</legend>

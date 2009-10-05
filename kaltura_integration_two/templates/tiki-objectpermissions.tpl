@@ -16,12 +16,12 @@
 		{/if}
 	<form method="post" action="{$smarty.server.PHP_SELF}?{query}">
 		{if empty($filegals_manager)}
-			{if !empty($page_perms)}
+			{if $page_perms_flag}
 				{remarksbox type="warning" title="{tr}Warning{/tr}"}
 					{tr}These permissions override any global permissions or category permissions affecting this object.{/tr}<br />
 					{if $tiki_p_admin eq 'y'}{tr}To edit global permissions{/tr} {self_link objectType='global' permType=$permType}{tr}click here{/tr}{/self_link}.{/if}
 				{/remarksbox}
-			{elseif !empty($categ_perms)}
+			{elseif $categ_perms_flag}
 				{remarksbox type="warning" title="{tr}Warning{/tr}"}
 					{tr}No permissions yet applied to this object but category permissions affect this object.{/tr}<br />
 					{if $tiki_p_admin eq 'y'}{tr}To edit category permissions{/tr} {self_link _script='tiki-admin_categories.php'}{tr}click here{/tr}{/self_link}.{/if}
@@ -63,13 +63,13 @@
 			{/remarksbox}
 		{/if}
 
-		{popup_link block="column_switches_div"}{tr}Show/hide Group List{/tr}{/popup_link}
+		{popup_link block="column_switches_div" class="button"}{tr}Show/hide Group List{/tr}{/popup_link}
 		
 		<div id="column_switches_div" style="display: none">
 			<h3>{tr}Show/hide columns{/tr}</h3>
 			<ul id="column_switches" class="column_switcher"><li></li></ul>
 		</div>
-		{treetable _data=$perms _checkbox=$permGroups _checkboxTitles=$groupNames _checkboxColumnIndex=$permGroupCols _columns='"label"="Permission"' _sortColumn='type'}
+		{treetable _data=$perms _checkbox=$permGroups _checkboxTitles=$groupNames _checkboxColumnIndex=$permGroupCols _columns='"label"="Permission"' _sortColumn='type' _openall='y'}
 
 		<div class="input_submit_container" style="text-align: center">
 			<input type="submit" name="assign" value="{tr}Assign{/tr}" />

@@ -1,1 +1,1 @@
-{tr}Tiki email notification{/tr}
+{tr}Email notification{/tr}

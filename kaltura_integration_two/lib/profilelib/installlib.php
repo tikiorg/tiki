@@ -2053,12 +2053,19 @@ class Tiki_Profile_InstallHandler_Transition extends Tiki_Profile_InstallHandler
 
 		$defaults = array(
 			'preserve' => 'n',
+			'guards' => array(),
 		);
 
 		$data = array_merge(
 			$defaults,
 			$this->obj->getData()
 		);
+
+		foreach( $data['guards'] as & $guard ) {
+			if( is_string( $guard[2] ) ) {
+				$guard[2] = reset( Horde_Yaml::load( "- " . $guard[2] ) );
+			}
+		}
 
 		$data = Tiki_Profile::convertYesNo( $data );
 
@@ -2069,6 +2076,8 @@ class Tiki_Profile_InstallHandler_Transition extends Tiki_Profile_InstallHandler
 	{
 		$data = $this->getData();
 		if( ! isset( $data['type'], $data['name'], $data['from'], $data['to'] ) )
+			return false;
+		if( ! is_array( $data['guards'] ) )
 			return false;
 
 		return true;
@@ -2083,7 +2092,7 @@ class Tiki_Profile_InstallHandler_Transition extends Tiki_Profile_InstallHandler
 		$this->replaceReferences( $data );
 
 		$transitionlib = new TransitionLib( $data['type'] );
-		$id = $transitionlib->addTransition( $data['from'], $data['to'], $data['name'], $data['preserve'] == 'y' );
+		$id = $transitionlib->addTransition( $data['from'], $data['to'], $data['name'], $data['preserve'] == 'y', $data['guards'] );
 
 		return $id;
 	}
@@ -2225,9 +2234,7 @@ class Tiki_Profile_InstallHandler_Workspaces extends Tiki_Profile_InstallHandler
 	    $id = $wslib->create_ws($data['name'], null, $data['parent'], $data['description']);
 
 	    //With this I can obtain what objects was installed by the profile before the install of the ws profile
-	    var_dump($profile_id = Tiki_Profile::withPrefix( '' ));
 	    global $tikilib; if (!$tikilib) require_once 'lib/tikilib.php';
-	    var_dump($result = $tikilib->query( "SELECT value FROM tiki_profile_symbols WHERE profile like '%{$profile_id}%'" ));
 
 	    foreach ($data['groups'] as $group)
 	    {
@@ -2243,7 +2250,6 @@ class Tiki_Profile_InstallHandler_Workspaces extends Tiki_Profile_InstallHandler
 		{
 		    foreach ($group['items'] as $item)
 		    {
-			var_dump ($item);
 		    }
 		}
 	    }

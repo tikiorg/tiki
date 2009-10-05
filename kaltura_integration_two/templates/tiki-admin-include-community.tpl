@@ -1,10 +1,64 @@
+{* $Id$ *}
+
+<div class="navbar">
+	{button href="tiki-admingroups.php" _text="{tr}Admin Groups{/tr}"}
+	{button href="tiki-adminusers.php" _text="{tr}Admin Users{/tr}"}
+</div>
+
 <form action="tiki-admin.php?page=community" method="post">
 <div class="input_submit_container clear" style="text-align: right;">
 	<input type="submit" value="{tr}Change preferences{/tr}" />
 </div>
 
-{tabset name="admin_comuunity"}
+{tabset name="admin_community"}
+
+{* --- User Features --- *}
+{tab name="{tr}User features{/tr}"}
+			<div class="admin featurelist">
+				{preference name=feature_mytiki}
+				{preference name=feature_minical}
+				{preference name=feature_userPreferences}
+				{preference name=feature_notepad}
+				{preference name=feature_user_bookmarks}
+				{preference name=feature_contacts}
+				{preference name=feature_user_watches}
+				{preference name=feature_group_watches}
+				{preference name=feature_daily_report_watches}
+				{preference name=feature_user_watches_translations}
+				{preference name=feature_usermenu}
+				{preference name=feature_tasks}
+				{preference name=feature_messages}
+				{preference name=feature_userfiles}
+				{preference name=feature_userlevels}
+				{preference name=feature_groupalert}
+			</div>
+{/tab}
+
+
+
 	{tab name="{tr}General Settings{/tr}"}
+	
+			{preference name=user_show_realnames}
+
+			<div class="adminoptionbox">
+				<div class="adminoptionlabel">
+					<label for="highlight_group">{tr}Highlight group{/tr}:</label>
+					<select name="highlight_group" id="highlight_group">
+						<option value="0">{tr}None{/tr}</option>
+						{foreach key=g item=gr from=$listgroups}
+							<option value="{$gr.groupName|escape}" {if $gr.groupName eq $prefs.highlight_group} selected="selected"{/if}>{$gr.groupName|truncate:"52":" ..."}</option>
+						{/foreach}
+					</select>
+					{if $prefs.feature_help eq 'y'} {help url="Groups"}{/if}
+				</div>
+			</div>
+
+			{preference name=feature_display_my_to_others}
+			
+			{preference name=user_tracker_infos}
+			<em>{tr}Use the format: trackerId, fieldId1, fieldId2, ...{/tr}</em>
+	
+	
 <input type="hidden" name="userfeatures" />
 <fieldset><legend>{tr}Community{/tr}{if $prefs.feature_help eq 'y'} {help url="Community"}{/if}</legend>
 <div class="adminoptionbox">
@@ -171,8 +225,11 @@
 </fieldset>
 
 {* *** User Messages *** *}
+
 <fieldset><legend>{tr}User messages{/tr}{if $prefs.feature_help eq 'y'} {help url="Inter-User+Messages"}{/if}</legend>
-{if $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y'}
+
+{preference name=feature_messages}
+
 <div class="adminoptionbox">
 	<div class="adminoptionlabel"><label for="users_prefs_mess_maxRecords">{tr}Messages per page{/tr}:</label> 
 	<select name="users_prefs_mess_maxRecords" id="users_prefs_mess_maxRecords">
@@ -222,11 +279,6 @@
     </select>
 	</div>
 </div>
-{else}
-<div class="adminoptionbox">
-	<div class="adminoptionlabel">{icon _id=information} {tr}Feature is disabled{/tr}. <a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}.</a></div>
-</div>
-{/if}
 </fieldset>
 {* *** My Tiki *** *}
 <fieldset><legend>{tr}My Tiki{/tr}</legend>
@@ -276,24 +328,19 @@
 	<div class="adminoptionlabel"><label for="users_prefs_mytiki_items">{tr}My items{/tr}</label></div>
 </div>
 {/if}
-{if $prefs.feature_workflow eq 'y'}
-  {if $tiki_p_use_workflow eq 'y'}
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="users_prefs_mytiki_workflow" name="users_prefs_mytiki_workflow" {if $prefs.users_prefs_mytiki_workflow eq 'y'}checked="checked"{/if} /></div>
-	<div class="adminoptionlabel"><label for="users_prefs_mytiki_workflow">{tr}My workflow{/tr}</label></div>
-</div>
-  {/if}
-{/if}
 </fieldset>
 	{/tab}
 
-	{tab name="{tr}Users Listing{/tr}"}
+	{tab name="{tr}Friendship Network{/tr}"}
+
+						{preference name=feature_friends}
+	
+{if $prefs.feature_friends eq 'y'}
 <div class="adminoptionbox">
 	<div class="adminoptionlabel">{tr}Select which items to display when listing users{/tr}.
-{if $prefs.feature_friends ne 'y'}<br />{icon _id=information} {tr}Feature is disabled{/tr}. <a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}.</a>{/if}
 	</div>
 </div>
-{if $prefs.feature_friends eq 'y'}
+
 <div class="adminoptionbox">
 	<div class="adminoptionlabel"><label for="user_list_order">{tr}Sort order{/tr}:</label>
 	<select name="user_list_order" id="user_list_order">

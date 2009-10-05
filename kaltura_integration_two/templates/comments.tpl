@@ -4,18 +4,30 @@
 <div>
 {else}
 <div id="comments">
-<div
 {if $pagemd5}
 	{assign var=cookie_key value="show_comzone$pagemd5"}
-	id="comzone{$pagemd5}"
 {else}
 	{assign var=cookie_key value="show_comzone"}
+{/if}
+{*Debug:<br />
+comments_show: {$comments_show}<br />
+show_comzone: {$show_comzone}<br />
+prefs.wiki_comments_displayed_default: {$prefs.wiki_comments_displayed_default}<br />
+prefs.show_comzone: {$prefs.show_comzone}<br />
+cookie_key: {$cookie_key}<br />
+smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$cookie_key}<br />*}
+<div
+{if $pagemd5}
+	id="comzone{$pagemd5}"
+{else}
 	id="comzone"
 {/if}
-{if (isset($smarty.session.tiki_cookie_jar.$cookie_key) and $smarty.session.tiki_cookie_jar.$cookie_key eq 'y') or (!isset($smarty.session.tiki_cookie_jar.$cookie_key) and $prefs.wiki_comments_displayed_default eq 'y') or (isset($prefs.show_comzone) and $prefs.show_comzone eq 'y') or $show_comzone eq 'y' or $show_comments or $edit_reply eq '1'}
-	style="display:block;"
+{if (isset($smarty.session.tiki_cookie_jar.$cookie_key) and $smarty.session.tiki_cookie_jar.$cookie_key neq 'y')} {* cookie gets stored here with JS only *}
+	style="display: none;"
+{elseif ((!isset($smarty.session.tiki_cookie_jar.$cookie_key) and $prefs.wiki_comments_displayed_default neq 'y' and $show_comzone neq 'y' and $comments_show neq 'y'))}
+	style="display: none;"
 {else}
-	style="display:none;"
+	style="display: block;"
 {/if}
 >
 {/if}
@@ -54,6 +66,7 @@
 	<input type="hidden" name="comments_parentId" value="{$comments_parentId|escape}" />    
 	<input type="hidden" name="comments_grandParentId" value="{$comments_grandParentId|escape}" />    
 	<input type="hidden" name="comments_reply_threadId" value="{$comments_reply_threadId|escape}" />    
+	<input type="hidden" name="comments_objectId" value="{$comments_objectId|escape}" />
 	<input type="hidden" name="comments_offset" value="0" />
 	{if $smarty.request.topics_offset}<input type="hidden" name="topics_offset" value="{$smarty.request.topics_offset|escape}" />{/if}
 	{if $smarty.request.topics_find}<input type="hidden" name="topics_find" value="{$smarty.request.topics_find|escape}" />{/if}
@@ -79,7 +92,7 @@
 					<select name="moveto">
 					{section name=ix loop=$topics}
 						{if $topics[ix].threadId ne $comments_parentId}
-						<option value="{$topics[ix].threadId|escape}">{$topics[ix].title}</option>
+						<option value="{$topics[ix].threadId|escape}">{$topics[ix].title|truncate:100}</option>
 						{/if}
 					{/section}
 					</select>
@@ -255,7 +268,7 @@
 	<div class="clearfix post_preview">
 		{if $forum_mode neq 'y'}<b>{tr}Preview{/tr}</b>{/if}
 		<div class="post"><div class="inner"><span class="corners-top"><span></span></span><div class="postbody">
-			<div class="postbody-title"><div class="title">{$comments_preview_title}</div></div>
+			<div class="postbody-title"><div class="title">{$comments_preview_title|escape}</div></div>
 			<div class="content">
 				<div class="author"><span class="author_info"><span class="author_post_info">
 				{tr}by{/tr} <span class="author_post_info_by">{$user|userlink}</span>
@@ -275,6 +288,7 @@
 	<input type="hidden" name="comments_threadId" value="{$comments_threadId|escape}" />
 	<input type="hidden" name="comments_threshold" value="{$comments_threshold|escape}" />
 	<input type="hidden" name="thread_sort_mode" value="{$thread_sort_mode|escape}" />
+	<input type="hidden" name="comments_objectId" value="{$comments_objectId|escape}" />
 
 	{* Traverse request variables that were set to this page adding them as hidden data *}
 	{section name=i loop=$comments_request_data}

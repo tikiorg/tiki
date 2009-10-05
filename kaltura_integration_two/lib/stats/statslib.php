@@ -248,6 +248,9 @@ class StatsLib extends TikiLib {
 		$month = TikiLib::date_format("%m", $now);
 		$year = TikiLib::date_format("%Y", $now);
 		switch ($when){
+		case 'lasthour':
+			$begin = $now - 60*60;
+			break;
 		case 'day':
 			$begin = TikiLib::make_time(0, 0, 0, $month, $day, $year);
 			break;

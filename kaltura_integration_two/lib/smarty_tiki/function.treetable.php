@@ -52,6 +52,7 @@
  * 
  * _emptyDataMessage = {treetable}: '.tra('No rows found')	: message if there are no rows
  * 
+ * _openall					: show folder button to open all areas (y/n default=n)
  */
 
 //this script may only be included - so its better to die if called directly.
@@ -72,6 +73,7 @@ function smarty_function_treetable($params, &$smarty) {
 	
 	$_checkbox = empty($_checkbox) ? '' : $_checkbox;
 	$_checkboxTitles = empty($_checkboxTitles) ? '' : $_checkboxTitles;
+	$_openall = isset($_openall) ? $_openall : 'n';
 	
 	if (is_string($_checkbox) && strpos($_checkbox, ',') !== false) {
 		$_checkbox = split(',', trim($_checkbox));
@@ -160,12 +162,27 @@ function smarty_function_treetable($params, &$smarty) {
 	}
 	
 	if ($_listFilter == 'y' && count($_data) > $_filterMinRows) {
-		include_once('lib/smarty_tiki/function.listfilter.php');
+		require_once($smarty->_get_plugin_filepath('function', 'listfilter'));
 		$html .= smarty_function_listfilter(
 			array('id' => $id.'_filter',
 				  'selectors' => "#$id tbody tr:not(.parent)",
 				  'parentSelector' => "#$id tbody .parent",
 				  'exclude' => ".subHeader"),  $smarty);
+	}
+
+	if ($_openall == 'y') {
+		require_once($smarty->_get_plugin_filepath('function', 'icon'));
+		$html .= '&nbsp;' . smarty_function_icon(
+			array('_id' => 'folder',
+				'title' => tra('Toggle sections'),
+				'onclick' => '
+if (this.src.indexOf("ofolder.png") > -1) {
+	$jq(".expanded .expander").click();
+	this.src = this.src.replace("ofolder", "folder");
+} else {
+	$jq(".collapsed .expander").click();
+	this.src = this.src.replace("folder", "ofolder");
+}'), $smarty);
 	}
 	
 	// start writing the table

@@ -115,10 +115,11 @@ $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 			var options = new Object();
 			for (param in params) {
 				var val = "";
-				if (params[param].indexOf("=") > -1) {
-					var arr = param.split("=");
-					pam = arr[0].toLowerCase();
-					val = arr[1];
+				var i = params[param].indexOf("=");
+				if (i > -1) {
+					var arr = params[param].split("=", 2);
+					pam = params[param].substring(0, i).toLowerCase();
+					val = params[param].substring(i+1);
 				} else {
 					pam = params[param].toLowerCase();
 				}
@@ -128,6 +129,10 @@ $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 						break;
 					case "fullhtml":
 						options.cluetipClass = 'fullhtml';
+						break;
+					case "background":
+						options.cluetipClass = 'fullhtml';
+						tip = '<div style="background-image: url(' + val + '); height:' + options.height + 'px">' + tip + '</div>';
 						break;
 					case "onclick":
 						options.activation = 'click';
@@ -151,6 +156,7 @@ $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 			options.closeText = 'x';
 			options.closePosition = 'title';
 			options.mouseOutClose = true;
+			options.positionBy = 'mouse';
 			
 			// attach new tip
 			//tip = tip.substring(strStart, strEnd);		// trim quotes
@@ -184,7 +190,7 @@ $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 			
 			// options.sticky = true; useful for css work
 			$jq(element).cluetip(options);
-			
+
 			if (options.activation == "click") {
 				$jq(element).trigger('click');
 			} else {
@@ -215,6 +221,9 @@ $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 	
 	// colorbox setup (shadowbox replacement)
 	if (jqueryTiki.colorbox) {
+		$jq().bind('cbox_complete', function(){	
+			$jq("#cboxTitle").wrapInner("<div></div>");
+		});
 		// for every link containing 'shadowbox'
 		$jq("a[rel*='shadowbox']").colorbox({
 			transition:"elastic",
@@ -246,6 +255,43 @@ $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 			iframe: true,
 			width: "95%"
 		});
+		/* shadowbox params compatibility functions called below (TODO: please combine in one if you know how) */
+		getrelgallery = function () {
+			re = /(shadowbox\[([^\]]+)\])/i
+			ret = $jq(this).attr("rel").match(re);
+			return "'"+ret[2]+"'"
+		}
+		getrelheight = function () {
+			re = /(height=([^;\"]+))/i
+			ret = $jq(this).attr("rel").match(re);
+			return ret[2]
+		}
+		getreltitle = function () {
+			re = /(title=([^;\"]+))/i
+			ret = $jq(this).attr("rel").match(re);
+			return ret[2]
+		}
+		getrelwidth = function () {
+			re = /(width=([^;\"]+))/i
+			ret = $jq(this).attr("rel").match(re);
+			return ret[2]
+		}
+		// rel containg shadowbox[foo] to group objects in "galleries" (shadowbox compatible)
+		$jq('a[rel*="shadowbox\["]').colorbox({
+			rel: getrelgallery
+		});
+		// rel containg height param (shadowbox compatible)
+		$jq("a[rel*='shadowbox'][rel*='height']").colorbox({
+			height: getrelheight
+		});
+		// rel containg title param (shadowbox compatible)
+		$jq("a[rel*='shadowbox'][rel*='title']").colorbox({
+			title: getreltitle
+		});
+		// rel containg width param (shadowbox compatible)
+		$jq("a[rel*='shadowbox'][rel*='width']").colorbox({
+			width: getrelwidth
+		});
 	}
 	
 });		// end $jq(document).ready
@@ -263,6 +309,88 @@ function parseAutoJSON(data) {
 		}
 	});
 }
+
+/* Find caret position in textarea */
+
+function textarea_cursor_offset(input) {
+  if (document.selection) {
+
+	// TODO - untested for IE
+  	var r = document.selection.createRange();
+  	var i;
+  	
+  	if (input.nodeName == 'TEXTAREA') {
+  		var x = r.offsetLeft - r.boundingLeft;
+  		var y = r.offsetTop - r.boundingTop;
+  	} else {
+  		var x = r.offsetLeft;
+  		var y = r.offsetTop;
+  	}
+  	
+  	return {
+  		left: x,
+  		top: y
+  	};
+  	
+  } else if (typeof input.setSelectionRange != 'undefined') {
+
+	var elementName = $jq(input).attr('id') + '_tcodiv'
+  	var newDiv, i;
+
+	newDiv = document.getElementById(elementName);
+  	if (!newDiv) {
+		newDiv = document.createElement('div');
+		$jq(newDiv).attr('id', elementName).css('wrap', 'hard').css('whiteSpace', 'pre').css('position', 'absolute').css('z-index', -1);
+		
+		if (input.parentNode.position != 'absolute' && input.parentNode.position != 'relative') {
+			input.parentNode.position = 'relative';
+		}
+				
+		var selectors = new Array('font', 'font-size', 'font-family', 'line-height', 'letter-spacing',
+								'padding-left', 'padding-top', 'padding-right', 'padding-bottom',
+								'margin-left', 'margin-top', 'margin-right', 'margin-bottom',
+								'text-align', 'vertical-align', 'overflow',
+								'border-top-width', 'border-right-width', 'border-bottom-width', 'border-left-width',
+								'border-top-style', 'border-right-style', 'border-bottom-style', 'border-left-style',
+								'border-top-color', 'border-right-color', 'border-bottom-color', 'border-left-color'
+								);
+		
+		for (d in selectors){
+			var s = selectors[d];
+			if ($jq(input).css(s)) { $jq(newDiv).css(s, $jq(input).css(s)); }
+		};
+		
+		$jq(newDiv).width( $jq(input).width() ).height( $jq(input).height() );
+		var p = $jq(input).offset();
+		var q = $jq(input).offsetParent().offset();
+		$jq(newDiv).css('left', p.left).css('top', p.top);
+			
+		document.body.appendChild(newDiv);
+		newDiv = document.getElementById(elementName);
+	}
+	
+	newDiv.innerHTML = input.value;
+	
+	newDiv.scrollLeft = input.scrollLeft;
+	newDiv.scrollTop = input.scrollTop;
+	//$jq(newDiv).scrollLeft($jq(input).scrollLeft()).scrollTop($jq(input).scrollTop());
+		
+	var r = document.createRange();
+    var e = document.createElement('span');
+
+    r.setStart(newDiv.firstChild, input.selectionStart);
+    r.setEnd(newDiv.firstChild, input.selectionStart);
+    r.surroundContents(e);
+
+    var obj = { 
+		left : e.offsetLeft + newDiv.offsetLeft,
+		top : e.offsetTop + newDiv.offsetTop
+    };
+
+    return obj; 
+  }
+}
+
 
 
 

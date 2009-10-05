@@ -91,14 +91,14 @@
 	year{/tr}.</em></div>
 </div>
 </div>
-</fieldset>
-{/tab}
-
-{tab name="{tr}Group calendars{/tr}"}
 <div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" id="calendar_sticky_popup" name="calendar_sticky_popup" {if $prefs.calendar_sticky_popup eq 'y'}checked="checked" {/if}/></div>
 	<div class="adminoptionlabel"><label for="calendar_sticky_popup">{tr}Sticky popup{/tr}</label></div>
 </div>
+</fieldset>
+{/tab}
+
+{tab name="{tr}Group calendars{/tr}"}
 <div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" id="calendar_view_tab" name="calendar_view_tab" {if $prefs.calendar_view_tab eq 'y'}checked="checked" {/if}/></div>
 	<div class="adminoptionlabel"><label for="calendar_view_tab">{tr}Item view tab{/tr}</label></div>

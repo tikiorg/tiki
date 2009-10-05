@@ -93,6 +93,12 @@ textarea {
 	line-height: 20px;
 }
 
+/* "button" links wrappers */
+span.button {
+	padding-left: 0;
+	padding-right: 0;
+}
+
 /* Links in buttons */
 span.button a,
 span.button a:visited,
@@ -958,12 +964,6 @@ body.tiki_wiki_page #comments {
 	padding: 1em;
 }
 
-h1.pagetitle {
-	background: url(coelesce/tiki-centerbg.jpg) repeat-x;
-	line-height: 36px;
-	color: #2d2d2d;
-}
-
 h1.pagetitle a,
 h1.pagetitle a:visited,
 h1.pagetitle a:hover,
@@ -1024,32 +1024,26 @@ div#description,
 
 .wikitext h1 {
 	margin: 5px 0 15px 0;
-	padding-left: 0;
 }
 
 .wikitext h2 {
 	margin: 5px 0 10px 0;
-	padding-left: 10px;
 }
 
 .wikitext h3 {
 	margin: 5px 0 5px 0;
-	padding-left: 15px;
 }
 
 .wikitext h4 {
 	margin: 5px 0 5px 0;
-	padding-left: 20px;
 }
 
 .wikitext h5 {
 	margin: 5px 0 5px 0;
-	padding-left: 25px;
 }
 
 .wikitext h6 {
 	margin: 5px 0 5px 0;
-	padding-left: 30px;
 }
 
 table.wikitable {
@@ -1061,6 +1055,13 @@ td.wikicell {
 	padding: 3px;
 	border: 1px solid #a9a9a9;
 	border-collapse: collapse;
+}
+
+h1.pagetitle {
+	background: url(coelesce/tiki-centerbg.jpg) repeat-x;
+	line-height: 36px;
+	color: #2d2d2d;
+	padding-left: 2px;
 }
 
 div.split {

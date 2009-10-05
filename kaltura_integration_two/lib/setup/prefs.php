@@ -38,6 +38,8 @@ function get_default_prefs() {
 
 		'feature_print_indexed' => 'n',  //Still needs to be in admin panel somwhere
 
+		'groups_are_emulated' => 'n',
+
 		// wiki
 		'feature_wiki' => 'y',
 		'default_wiki_diff_style' => 'sidediff',
@@ -85,7 +87,7 @@ function get_default_prefs() {
 		'feature_wiki_tables' => 'new',
 		'feature_wiki_templates' => 'n',
 		'feature_wiki_undo' => 'n',
-		'feature_wiki_userpage' => 'y',
+		'feature_wiki_userpage' => 'n',
 		'feature_wiki_userpage_prefix' => 'User:',
 		'feature_wiki_usrlock' => 'n',
 		'feature_wiki_feedback_polls' => array(),
@@ -219,8 +221,7 @@ function get_default_prefs() {
 		'wikiplugin_html' => 'n',
 		'wikiplugin_iframe' => 'n',
 		'wikiplugin_img' => 'y',
-		'wikiplugin_image' => 'n',    // Experimental, may supercede img in 4.0
-		'wikiplugin_imgnew' => 'y',
+		'wikiplugin_image' => 'n',    // Experimental, intended to be phased out with new img
 		'wikiplugin_include' => 'y',
 		'wikiplugin_invite' => 'y',
 		'wikiplugin_jabber' => 'n',
@@ -285,6 +286,7 @@ function get_default_prefs() {
 		'wikiplugin_tr' => 'n',
 		'wikiplugin_usercount' => 'n',
 		'wikiplugin_userlist' => 'n',
+		'wikiplugin_userpref' => 'n',
 		'wikiplugin_versions' => 'n',
 		'wikiplugin_vote' => 'y',
 		'wikiplugin_wantedpages' => 'n',
@@ -406,6 +408,7 @@ function get_default_prefs() {
 		'wikiplugininline_tr' => 'n',
 		'wikiplugininline_usercount' => 'n',
 		'wikiplugininline_userlist' => 'n',
+		'wikiplugininline_userpref' => 'n',
 		'wikiplugininline_versions' => 'n',
 		'wikiplugininline_vote' => 'n',
 		'wikiplugininline_wantedpages' => 'n',
@@ -414,10 +417,10 @@ function get_default_prefs() {
 
 		// webservices
 		'webservice_consume_defaultcache' => 300, // 5 min
-		'feature_webservices' => 'y',
+		'feature_webservices' => 'n',
 
 		// semantic links
-		'feature_semantic' => 'y',
+		'feature_semantic' => 'n',
 
 		// wysiwyg
 		'feature_wysiwyg' => 'n',
@@ -427,13 +430,6 @@ function get_default_prefs() {
 		'wysiwyg_wiki_parsed' => 'y',
 		'wysiwyg_wiki_semi_parsed' => 'n',
 		'wysiwyg_toolbar_skin' => 'default',
-		'wysiwyg_toolbar' =>"FitWindow,Templates,-,Cut,Copy,Paste,PasteText,PasteWord,Print,SpellCheck
-Undo,Redo,-,Find,Replace,SelectAll,RemoveFormat,-,Table,Rule,Smiley,SpecialChar,PageBreak,ShowBlocks
-/
-JustifyLeft,JustifyCenter,JustifyRight,JustifyFull,-,OrderedList,UnorderedList,Outdent,Indent,Blockquote
-Bold,Italic,Underline,StrikeThrough,-,Subscript,Superscript,-,tikilink,Link,Unlink,Anchor,-,tikiimage,Flash
-/
-Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 
 		// wiki3d
 		'wiki_feature_3d' => 'n',
@@ -711,7 +707,6 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'users_prefs_mytiki_msgs' => 'y',
 		'users_prefs_mytiki_pages' => 'y',
 		'users_prefs_mytiki_tasks' => 'y',
-		'users_prefs_mytiki_workflow' => 'y',
 		'users_prefs_mytiki_forum_topics' => 'y',
 		'users_prefs_mytiki_forum_replies' => 'y',
 		'users_prefs_realName' => '',
@@ -899,7 +894,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'map_comments' => 'MapsComments',
 		'gdaltindex' => '',
 		'ogr2ogr' => '',
-		'mapzone' => '',
+		'mapzone' => '180',
 
 		// gmap
 		'feature_gmap' => 'n',
@@ -1042,6 +1037,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'quantify_changes' => 'n',
 		'feature_sync_language' => 'n',
 		'show_available_translations' =>'y',
+		'language_inclusion_threshold' => 0,
 
 		// html header
 		'metatag_keywords' => '',
@@ -1078,7 +1074,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'sitelogo_bgstyle' => '',
 		'sitelogo_align' => 'left',
 		'sitelogo_title' => 'Tikiwiki powered site',
-		'sitelogo_src' => 'img/tiki/tiki3.png',
+		'sitelogo_src' => 'img/tiki/tikisitelogo.png',
 		'sitelogo_alt' => 'Site Logo',
 		'feature_siteloc' => 'y',
 		'feature_sitenav' => 'n',
@@ -1165,7 +1161,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_multimedia' => 'n',
 
 		// textarea
-		'feature_smileys' => 'n',
+		'feature_smileys' => 'y',
 		'popupLinks' => 'y',
 		'feature_autolinks' => 'y',
 		'default_rows_textarea_wiki' => '20',
@@ -1173,16 +1169,23 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'default_rows_textarea_forum' => '20',
 		'default_rows_textarea_forumthread' => '10',
 		'section_comments_parse' => 'y',		// parse wiki markup on comments in all sections
-	
+
+		// toolbars
+		// comma delimited items, / delimited rows and | denotes items right justified in toolbar (in reverse order)
+		// full list in lib/toolbars/toolbarslib.php Toolbar::getList()
+		// cannot contain spaces, commas, forward-slash or pipe chars
 		'toolbar_global' => '
-			bold, italic, strike, - , color, bgcolor, - ,
-			- , wikiplugin_img, tikiimage , tikilink, link, unlink, -, undo, redo, 
-			- , find, replace,-,  removeformat, specialchar
+			bold, italic, strike, - , color, - ,
+			wikiplugin_img, tikiimage , tikilink, link, unlink, -, undo, redo, - ,
+			find, replace,-,  removeformat, specialchar, smiley | help, switcheditor
 			/
 			templates, -, style, -,  h1, h2, h3, left, center, -, list, numlist, wikiplugin_flash, wikiplugin_html, outdent, indent, 
-			- , table, -, source, showblocks, -, -, -, fullscreen, enlarge, reduce, -, -, -, help
+			- , table, -, source, showblocks | fullscreen, enlarge, reduce
 		',
-	
+		'toolbar_global_comments' => '
+			bold, italic, strike , - , link, smiley | help
+		',
+
 		// pagination
 		'direct_pagination' => 'y',
 		'nextprev_pagination' => 'y',
@@ -1279,7 +1282,6 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_user_watches_translations' => 'n',
 		'feature_daily_report_watches' => 'n',
 		'feature_quick_object_perms' => 'n',
-		'feature_workflow' => 'n',
 		'feature_xmlrpc' => 'n',
 		'helpurl' => "http://doc.tikiwiki.org/",
 		'layout_section' => 'n',
@@ -1435,6 +1437,8 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		// Workspaces
 		'feature_workspaces' => 'n',
 		'ws_container' => null,
+
+		'terminology_profile_installed' => 'n',
 	);
 
 	// spellcheck

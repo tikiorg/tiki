@@ -15,6 +15,7 @@ function wikiplugin_trackerlist_info() {
 		'prefs' => array( 'feature_trackers', 'wikiplugin_trackerlist' ),
 		'body' => tra('Notice'),
 		'icon' => 'pics/icons/database_table.png',
+		'filter' => 'text',
 		'params' => array(
 			'trackerId' => array(
 				'required' => true,
@@ -304,6 +305,12 @@ function wikiplugin_trackerlist($data, $params) {
 			if ($sort == 'y') {
 				$allfields = $trklib->sort_fields($allfields, $listfields);
 			}
+		} elseif (!empty($wiki) || !empty($tpl)) {
+				if (!empty($wiki)) {
+					$listfields = $trklib->get_pretty_fieldIds($wiki, 'wiki');
+				} else {
+					$listfields = $trklib->get_pretty_fieldIds($tpl, 'tpl');
+				}
 		} else {
 			foreach($allfields['data'] as $f) {
 				$listfields[] = $f['fieldId'];

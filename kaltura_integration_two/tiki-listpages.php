@@ -255,6 +255,17 @@ if (!empty($multiprint_pages)) {
 	include_once ('tiki-section_options.php');
 	// disallow robots to index page:
 	$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
+
+	// Exact match and single result, go to page directly
+	if( count( $listpages['data'] ) == 1 ) {
+		$result = reset( $listpages['data'] );
+		if( strtolower( $find ) == strtolower( $result['pageName'] ) ) {
+			require_once 'lib/wiki/wikilib.php';
+			header( 'Location: ' . $wikilib->sefurl( $result['pageName'] ) );
+			exit;
+		}
+	}
+
 	if ($access->is_serializable_request()) {
 		if (isset($_REQUEST['listonly']) && ($prefs['feature_jquery'] == 'y' && $prefs['feature_jquery_autocomplete'] == 'y')) {
 			$pages = array();
@@ -284,6 +295,10 @@ function setLangFilter($filter) {
 	$lang = $multilinguallib->currentSearchLanguage(false);
 	if (isset($_REQUEST['listonly']) && $prefs['feature_jquery_autocomplete'] == 'y' && strlen($lang) > 2) {
 		$lang = substr($lang, 0, 2);		// for autocomplete - use only language filter, not culture as well
+	}
+	// Without this condition, default listing is empty and language filter shows any language
+	if ($lang == 'en-us') {
+		$lang = 'en';
 	}
 	$filter['lang'] = $lang;
 	$smarty->assign_by_ref('find_lang', $lang);

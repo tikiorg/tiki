@@ -14,7 +14,6 @@ if( isset( $_SERVER['REQUEST_METHOD'] ) ) die;
 // Add the imported libraries located in lib/
 $thirdpartyLibs = array(
 	'\./lib/pear.*',
-	'\./lib/Galaxia.*',
 	'\./lib/phplayers.*',
 	'\./lib/smarty.*',
 	'\./lib/adodb.*',

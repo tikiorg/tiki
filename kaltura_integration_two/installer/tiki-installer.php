@@ -162,9 +162,6 @@ function create_dirs($domain=''){
 		'styles',
 		'whelp');
 
-  if (file_exists('lib/Galaxia'))
-    array_push($dirs, 'lib/Galaxia/processes');
-
 	$ret = "";
   foreach ($dirs as $dir) {
 		$dir = $dir.'/'.$domain;
@@ -552,7 +549,6 @@ if (function_exists('mysqli_connect'))	$dbservers['mysqli'] = tra('MySQL Improve
 if (function_exists('mysql_connect'))	$dbservers['mysql'] = tra('MySQL classic (mysql)');
 if (function_exists('pg_connect'))		$dbservers['pgsql'] = tra('PostgreSQL');
 if (function_exists('sqlite_open'))		$dbservers['sqlite'] = tra('SQLLite');
-if (function_exists('mssql_connect'))	$dbservers['mssql'] = tra('MSSQL');
 $smarty->assign_by_ref('dbservers', $dbservers);
 
 $errors = '';
@@ -911,26 +907,7 @@ if ( $_REQUEST['general_settings'] == 'y' ) {
 include "lib/headerlib.php";
 $headerlib->add_cssfile('styles/strasa.css');
 $headerlib->add_cssfile('styles/strasa/options/cool.css');
-$headerlib->add_css('
-html {
-	background-color: #fff;
-}
-#centercolumn {
-	padding: 4em 10em;
-}
-#sitelogo h1, #tiki-clean {
-	margin: 0;
-	padding: 0;
-	color: #000;
-}
-.box-data ol, .box-data ul {
-	margin: 0;
-	padding: 0 0 0 2em;
-}
-.box-data ol strong {
-	color: #024;
-}
-');
+
 $smarty->assign_by_ref('headerlib',$headerlib);
 
 $smarty->assign('install_step', $install_step);

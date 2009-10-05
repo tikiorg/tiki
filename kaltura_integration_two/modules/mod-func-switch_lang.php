@@ -33,7 +33,9 @@ function module_switch_lang( $mod_reference, $module_params ) {
 	//Create a list of languages
 	$languages = array();
 	$languages = $tikilib->list_languages(false, 'y');
-	if (isset($module_params["mode"]) && ($module_params["mode"] == 'flags' || $module_params["mode"] == 'words')) {
+	$mode = isset($module_params["mode"]) ? $module_params["mode"] : "droplist";
+	$smarty->assign('mode', $mode);
+	if ($mode == 'flags' || $mode == 'words') {
 		include('lang/flagmapping.php');
 		global $pageRenderer;
 		//$trads = $multilinguallib->getTranslations('wiki page', $page_id, $page, $prefs['language']);

@@ -1,4 +1,4 @@
-<h1>{$title}</h1>
+<h1>{$title|escape}</h1>
 {if $description neq ""}
   <div class="description">{$description|escape}</div>
 {/if}

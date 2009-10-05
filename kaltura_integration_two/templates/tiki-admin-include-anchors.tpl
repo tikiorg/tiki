@@ -6,6 +6,8 @@
 
 {self_link page="login" _class="icon"}{icon _id="pics/large/stock_quit.png" alt="{tr}Login{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 
+{self_link page="community" _class="icon"}{icon _id="pics/large/users.png" alt="{tr}Community{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
+
 {self_link page="profiles" _class="icon"}{icon _id="pics/large/profiles.png" alt="{tr}Profiles{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 
 {self_link page="look" _class="icon"}{icon _id="pics/large/gnome-settings-background.png" alt="{tr}Look &amp; Feel{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
@@ -18,12 +20,18 @@
 
 {self_link page="metatags" _class="icon"}{icon _id="pics/large/metatags.png" alt="{tr}Meta Tags{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 
-{self_link page="rss" _class="icon"}{icon _id="pics/large/gnome-globe.png" alt="{tr}RSS{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
+{self_link page="performance" _class="icon"}{icon _id="img/mytiki/admin.gif" alt="{tr}Performance{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 
-{self_link page="community" _class="icon"}{icon _id="pics/large/users.png" alt="{tr}Community{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
+{self_link page="security" _class="security"}{icon _id="pics/large/gnome-lockscreen48x48.png" alt="{tr}Security{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
+
+{self_link page="rss" _class="icon"}{icon _id="pics/large/gnome-globe.png" alt="{tr}RSS{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 
 {if $prefs.feature_wiki eq 'y'}
 {self_link page="wiki" _class="icon"}{icon _id="pics/large/wikipages.png" alt="{tr}Wiki{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
+{/if}
+
+{if $prefs.feature_file_galleries eq 'y'}
+{self_link page="fgal" _class="icon"}{icon _id="pics/large/file-manager.png" alt="{tr}File Galleries{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 {/if}
 
 {if $prefs.feature_blogs eq 'y'}
@@ -32,10 +40,6 @@
 
 {if $prefs.feature_galleries eq 'y'}
 {self_link page="gal" _class="icon"}{icon _id="pics/large/stock_select-color.png" alt="{tr}Image Galleries{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
-{/if}
-
-{if $prefs.feature_file_galleries eq 'y'}
-{self_link page="fgal" _class="icon"}{icon _id="pics/large/file-manager.png" alt="{tr}File Galleries{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 {/if}
 
 {if $prefs.feature_articles eq 'y'}
@@ -127,11 +131,11 @@
 {self_link page="intertiki" _class="icon"}{icon _id="pics/large/intertiki.png" alt="{tr}InterTiki{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 {/if}
 
-{if $prefs.feature_semantic neq 'n'}
+{if $prefs.feature_semantic eq 'y'}
 {self_link page="semantic" _class="icon"}{icon _id="pics/large/semantic.png" alt="{tr}Semantic links{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 {/if}
 
-{if $prefs.feature_webservices neq 'n'}
+{if $prefs.feature_webservices eq 'y'}
 {self_link page="webservices" _class="icon"}{icon _id="pics/large/webservices.png" alt="{tr}Webservices{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 {/if}
 

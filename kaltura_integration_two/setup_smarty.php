@@ -93,6 +93,7 @@ class Smarty_Tikiwiki extends Smarty {
 					$_smarty_tpl_file = 'tiki_full.tpl';
 					$tpl = $_REQUEST['zoom'].'.tpl';
 					$prefs['feature_fullscreen'] = 'n';
+					$this->assign('zoom_mode', 'y');
 				}
 			}
 

@@ -193,6 +193,9 @@
 							{if $users[user].waiting eq 'u'}
 								<a class="link" href="tiki-confirm_user_email.php?user={$users[user].user|escape:url}&amp;pass={$users[user].provpass|md5|escape:url}" title="{tr}Confirm user email{/tr}: {$users[user].user}">{icon _id='email_go' alt="{tr}Confirm user email{/tr}: `$users[user].user`"}</a>
 							{/if}
+							{if $prefs.email_due > 0 and $users[user].waiting ne 'u' and $users[user].waiting ne 'a'}
+								<a class="link" href="tiki-adminusers.php?user={$users[user].user|escape:url}&amp;action=email_due" title="{tr}Invalid email{/tr}">{icon _id='email_cross' alt="{tr}Invalid email{/tr}"}</a>
+							{/if}
 						{/if}
 					</td>
 				</tr>
@@ -372,7 +375,7 @@
 					</td>
 				</tr>
 				<tr class="formcolor">
-					<td><label for="pass2">{tr}Repeat Password{/tr}:</lael></td>
+					<td><label for="pass2">{tr}Repeat Password{/tr}:</label></td>
 					<td><input type="password" name="pass2" id="pass2" /></td>
 				</tr>
 				{if $userinfo.login neq 'admin'}

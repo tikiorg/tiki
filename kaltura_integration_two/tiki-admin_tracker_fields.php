@@ -6,20 +6,36 @@
 // $Id: /cvsroot/tikiwiki/tiki/tiki-admin_tracker_fields.php,v 1.47.2.3 2007-11-23 12:57:18 nyloth Exp $
 require_once ('tiki-setup.php');
 include_once ('lib/trackers/trackerlib.php');
+
 if ($prefs['feature_trackers'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_trackers");
-	$smarty->display("error.tpl");
+	$smarty->assign('msg', tra('This feature is disabled') . ': feature_trackers');
+	$smarty->display('error.tpl');
 	die;
 }
-// To admin tracker fields the user must have permission to admin trackers
-if ($tiki_p_admin_trackers != 'y') {
+
+if (!isset($_REQUEST['trackerId'])) {
+	$smarty->assign('msg', tra('No tracker indicated'));
+	$smarty->display('error.tpl');
+	die;
+}
+if ($tracker_info = $trklib->get_tracker($_REQUEST['trackerId'])) {
+	if ($t = $trklib->get_tracker_options($_REQUEST['trackerId'])) {
+		$tracker_info = array_merge($tracker_info, $t);
+	}
+} else {
+	$smarty->assign('msg', tra('Incorrect param'));
+	$smarty->display('error.tpl');				
+	die;
+}
+
+$admin_perm = $tiki_p_admin_trackers;
+if ($tiki_p_admin_trackers != 'y' && !empty($_REQUEST['trackerId'])) {
+	$perms = $tikilib->get_perm_object($_REQUEST['trackerId'], 'tracker', $info);
+	$admin_perm = $perms['tiki_p_admin_trackers'];
+}
+if ($admin_perm != 'y') {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You don't have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
-if (!isset($_REQUEST["trackerId"])) {
-	$smarty->assign('msg', tra("No tracker indicated"));
 	$smarty->display("error.tpl");
 	die;
 }
@@ -31,8 +47,6 @@ $auto_query_args = array(
 	'max'
 );
 $smarty->assign('trackerId', $_REQUEST["trackerId"]);
-$tracker_info = $trklib->get_tracker($_REQUEST["trackerId"]);
-if ($t = $trklib->get_tracker_options($_REQUEST['trackerId'])) $tracker_info = array_merge($tracker_info, $t);
 $smarty->assign('tracker_info', $tracker_info);
 $field_types = $trklib->field_types();
 $smarty->assign('field_types', $field_types);

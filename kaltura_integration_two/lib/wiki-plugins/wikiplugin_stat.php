@@ -19,6 +19,11 @@ function wikiplugin_stat_info() {
 				'name' => tra('Parent Id'),
 				'description' => tra('Parent Id'),
 			),
+			'lasthour' => array(
+				'required' => false,
+				'name' => tra('Added last hour'),
+				'description' => 'a|v '.tra('separated by :'). tra('Added last hour')
+			),
 			'lastday' => array(
 				'required' => false,
 				'name' => tra('Added last 24 hours'),

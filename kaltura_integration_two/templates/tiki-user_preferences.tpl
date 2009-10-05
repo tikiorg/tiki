@@ -476,17 +476,6 @@
       </tr>
     {/if}
 
-    {if $prefs.feature_workflow eq 'y'}
-      {if $tiki_p_use_workflow eq 'y'}
-        <tr>
-          <td class="{cycle advance=false}">{tr}My workflow{/tr}</td>
-          <td class="{cycle}">
-            <input type="checkbox" name="mytiki_workflow" {if $user_prefs.mytiki_workflow eq 'y'}checked="checked"{/if} />
-          </td>
-        </tr>
-      {/if}
-    {/if}
-
     {if $prefs.feature_articles eq 'y'}
       <tr>
         <td class="{cycle advance=false}">{tr}My Articles{/tr}</td>

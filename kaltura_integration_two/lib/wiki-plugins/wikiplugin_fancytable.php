@@ -8,16 +8,16 @@
 //
 // Usage:
 //   - The data (and the head paramter) is given one row per line, with columns
-//   separated by | or ~|~.
+//   separated by |. (~|~ was used as a separator before 4.0 and is also accepted)
 //   - In any cell, indicate number of columns to span with forward slashes at the beginning, number of rows to span with backslashes.	
 //
 // Example:
-// {FANCYTABLE( head=" header column 1 ~|~ header column 2 ~|~ header column 3", headclass=xx )}
-// row 1 column 1 ~|~ row 1 column 2 ~|~ row 1 column 3
-// row 2 column 1 ~|~ row 2 column 2 ~|~ row 2 column 3
+// {FANCYTABLE( head=" header column 1 | header column 2 | header column 3", headclass=xx )}
+// row 1 column 1 | row 1 column 2 | row 1 column 3
+// row 2 column 1 | row 2 column 2 | row 2 column 3
 // {FANCYTABLE}
 function wikiplugin_fancytable_help() {
-	return tra("Displays the data using the Tikiwiki odd/even table style").":<br />~np~{FANCYTABLE(head=>,headclass=>)}".tra("cells")."{FANCYTABLE}~/np~ - ''".tra("heads and cells separated by ~|~")."''";
+	return tra("Displays the data using the Tikiwiki odd/even table style").":<br />~np~{FANCYTABLE(head=>,headclass=>)}".tra("cells")."{FANCYTABLE}~/np~ - ''".tra("heads and cells separated by |")."''";
 }
 
 function wikiplugin_fancytable_info() {
@@ -26,7 +26,7 @@ function wikiplugin_fancytable_info() {
 		'documentation' => 'PluginFancyTable',
 		'description' => tra("Displays the data using the Tikiwiki odd/even table style"),
 		'prefs' => array('wikiplugin_fancytable'),
-		'body' => tra('One row per line, cells separated by | or ~|~.'),
+		'body' => tra('One row per line, cells separated by |.'),
 		'params' => array(
 			'head' => array(
 				'required' => false,
@@ -74,17 +74,21 @@ function wikiplugin_fancytable($data, $params) {
 		$row = '';
 
 		foreach ($parts as $column) {
-			$tdhdrmid = '';
-			if (preg_match_all("/^[\/]+/", $column, $matches)) {
-				$tdhdrmid = ' colspan="' . strlen($matches[0][0]) . '">';
+			$colspan = '';
+			$rowspan = '';
+			/*Match \ or / characters in whichever order at the beginning of the cell
+			$matches[0][0] will show the entire match. Since there are 3 strings being matched in the preg_match_all, $matches[1][0] will show the character
+			matched for the first string (\), $matches[2][0] the second character (/), and $matches[3][0] the third character (\) */
+			if (preg_match_all("/^(\\\\)*(\/)*(\\\\)*/", $column, $matches)) {
 				$column = substr($column, strlen($matches[0][0]));
-			} elseif (preg_match_all("/^[\\\\]+/", $column, $matches)) {
-				$tdhdrmid = ' rowspan="' . strlen($matches[0][0]) . '">';
-				$column = substr($column, strlen($matches[0][0]));
-			} else {
-				$tdhdrmid = '>';
+				if ($matches[2][0]) {
+					$colspan = ' colspan="' . substr_count($matches[0][0], $matches[2][0]) . '"';
+				}
+				if ($matches[1][0] || $matches[3][0]) {
+					$rowspan = ' rowspan="' . (substr_count($matches[0][0], $matches[1][0]) + substr_count($matches[0][0], $matches[3][0])) . '"';
+				}
 			}
-			$row .= $tdhdr . $tdhdrmid . $column . $tdend;
+			$row .= $tdhdr . $colspan . $rowspan . '>' . $column . $tdend;
 		}
 
 		$wret .= $trbeg . $row . $trend;
@@ -117,21 +121,24 @@ function wikiplugin_fancytable($data, $params) {
 			$row = '';
 
 			foreach ($parts as $column) {
-				$tdmid = '';
-				if (preg_match_all("/^[\/]+/", $column, $matches)) {
-					$tdmid = ' colspan="' . strlen($matches[0][0]) . '">';
+				$colspan = '';
+				$rowspan = '';
+				/*Match \ or / characters in whichever order at the beginning of the cell
+				$matches[0][0] will show the entire match. Since there are 3 strings being matched in the preg_match_all, $matches[1][0] will show the character
+				matched for the first string (\), $matches[2][0] the second character (/), and $matches[3][0] the third character (\) */
+				if (preg_match_all("/^(\\\\)*(\/)*(\\\\)*/", $column, $matches)) {
 					$column = substr($column, strlen($matches[0][0]));
-				} elseif (preg_match_all("/^[\\\\]+/", $column, $matches)) {
-					$tdmid = ' rowspan="' . strlen($matches[0][0]) . '">';
-					$column = substr($column, strlen($matches[0][0]));
-				} else {
-					$tdmid = '>';
-				}
-				
+					if ($matches[2][0]) {
+						$colspan = ' colspan="' . substr_count($matches[0][0], $matches[2][0]) . '"';
+					}
+					if ($matches[1][0] || $matches[3][0]) {
+						$rowspan = ' rowspan="' . (substr_count($matches[0][0], $matches[1][0]) + substr_count($matches[0][0], $matches[3][0])) . '"';
+					}
+				} 				
 				if (strcmp(trim($column), '~blank~') == 0) {
 					$row .= $tdbeg . '&nbsp;' . $tdend;
 				} else {
-					$row .= $tdbeg . $tdmid . $column . $tdend;
+					$row .= $tdbeg . $colspan . $rowspan . '>' . $column .$tdend;
 				}
 			}
 

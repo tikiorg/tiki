@@ -40,7 +40,7 @@
 					<a class="tablename" href="tiki-admin_trackers.php?trackerId={$channels[user].trackerId}" title="{tr}Edit{/tr}">{$channels[user].trackerId}</a>
 				</td>
 				<td>
-					<a class="tablename" href="tiki-admin_trackers.php?trackerId={$channels[user].trackerId}" title="{tr}Edit{/tr}">{$channels[user].name}</a>
+					<a class="tablename" href="tiki-admin_trackers.php?trackerId={$channels[user].trackerId}" title="{tr}Edit{/tr}">{$channels[user].name|escape}</a>
 				</td>
 				{if $channels[user].descriptionIsParsed eq 'y' }
 					<td>{wiki}{$channels[user].description}{/wiki}</td>
@@ -266,6 +266,7 @@
 					<input type="checkbox" name="writerCanModify" {if $writerCanModify eq 'y'}checked="checked"{/if} />
 					<br />
 					<i>{tr}The tracker needs a user field with the option 1{/tr}</i>
+					<br />{tr}User can take ownership of item created by anonymous{/tr}<input type="checkbox" name="userCanTakeOwnership" {if $userCanTakeOwnership eq 'y'}checked="checked"{/if} />
 				</td>
 			</tr>
 

@@ -27,7 +27,7 @@ if (isset($_REQUEST["remove"])) {
 	check_ticket('notepad-write');
 	$notepadlib->remove_note($user, $_REQUEST['remove']);
 }
-include 'tiki-parsemode_setup.php';
+include 'lib/setup/editmode.php';
 if ($_REQUEST["noteId"]) {
 	$info = $notepadlib->get_note($user, $_REQUEST["noteId"]);
 	if ($info['parse_mode'] == 'raw') {

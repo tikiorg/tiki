@@ -9,10 +9,6 @@
 
 DIRS="backups db dump img/wiki img/wiki_up img/trackers modules/cache temp temp/cache templates_c templates styles maps whelp mods files tiki_tests/tests"
 
-if [ -d 'lib/Galaxia' ]; then
-	DIRS=$DIRS" lib/Galaxia/processes"
-fi
-
 AUSER=nobody
 AGROUP=nobody
 VIRTUALS=""
@@ -38,6 +34,34 @@ else
 	fi
 fi
 
+usage() {
+	cat <<EOF
+usage: $0 [<switches>] open|fix
+-h           show help
+-u user      owner of files (default: $AUSER)
+-g group     group of files (default: $AGROUP)
+-v virtuals  list of virtuals (for multitiki, exemple: "www1 www2")
+-n           not interactive mode
+EOF
+}
+
+OPT_AUSER=
+OPT_AGROUP=
+OPT_VIRTUALS=
+OPT_NOTINTERACTIVE=
+
+while getopts "hu:g:v:n" OPTION; do
+	case $OPTION in
+		h) usage ; exit 0 ;;
+		u) OPT_AUSER=$OPTARG ;;
+		g) OPT_AGROUP=$OPTARG ;;
+		v) OPT_VIRTUALS=$OPTARG ;;
+		n) OPT_NOTINTERACTIVE=1 ;;
+		?) usage ; exit 1 ;;
+	esac
+done
+shift $(($OPTIND - 1))
+
 if [ -z $1 ]; then
 	COMMAND=fix
 else
@@ -46,13 +70,18 @@ fi
 
 if [ "$COMMAND" = 'fix' ]; then
 	if [ "$USER" = 'root' ]; then
-		echo -n "User [$AUSER]: "
-		read REPLY 
-		if [ -n "$REPLY" ]; then
-			AUSER=$REPLY
+		if [ -n "$OPT_AUSER" ]; then
+			AUSER=$OPT_AUSER
+		elif [ -z "$OPT_NOTINTERACTIVE" ]; then
+			echo -n "User [$AUSER]: "
+			read REPLY 
+			if [ -n "$REPLY" ]; then
+				AUSER=$REPLY
+			fi
 		fi
 	else
-		echo "You are not root or you are on a shared hosting account. You can now:
+		if [ -z "$OPT_NOTINTERACTIVE" ]; then
+			echo "You are not root or you are on a shared hosting account. You can now:
 
 1- ctrl-c to break now.
 
@@ -62,22 +91,32 @@ or
 but it (the script) will still fix what it can according to the permissions
 of your user. This script will now ask you some questions. If you don't know
 what to answer, just press enter to each question (to use default value)"
-
-		read WAIT
-		AUSER=$USER
+			
+			read WAIT
+			AUSER=$USER
+		fi
 	fi
 
-	echo -n "Group [$AGROUP]: "
-	read REPLY
-	if [ -n "$REPLY" ]; then
-		AGROUP=$REPLY
+	if [ -n "$OPT_AGROUP" ]; then
+		AGROUP=$OPT_AGROUP
+	elif [ -z "$OPT_NOTINTERACTIVE" ]; then
+		echo -n "Group [$AGROUP]: "
+		read REPLY
+		if [ -n "$REPLY" ]; then
+			AGROUP=$REPLY
+		fi
 	fi
 
 	touch db/virtuals.inc
-	echo -n "Multi ["$(< db/virtuals.inc)"]: "
-	read VIRTUALS
-
-	[ ! -n "$VIRTUALS" ] && VIRTUALS=$(< db/virtuals.inc)
+	if [ -n "$OPT_VIRTUALS" ]; then
+		VIRTUALS=$OPT_VIRTUALS
+	elif [ -n "$OPT_NOTINTERACTIVE" ]; then
+		VIRTUALS=$(cat db/virtuals.inc)
+	else
+		echo -n "Multi ["$(cat db/virtuals.inc)"]: "
+		read VIRTUALS
+		[ -z "$VIRTUALS" ] && VIRTUALS=$(cat db/virtuals.inc)
+	fi
 
 	if [ -n "$VIRTUALS" ]; then
 		for vdir in $VIRTUALS; do
@@ -132,33 +171,22 @@ what to answer, just press enter to each question (to use default value)"
 
 elif [ "$COMMAND" = 'open' ]; then
 	if [ "$USER" = 'root' ]; then
-		echo -n "User [$AUSER]: "
-		read REPLY
-		if [ -n "$REPLY" ]; then
-			AUSER=$REPLY
-		fi		
-		echo -n "Open global perms ..."
+		if [ -n "$OPT_AUSER" ]; then
+			AUSER=$OPT_AUSER
+		elif [ -z "$OPT_NOTINTERACTIVE" ]; then
+			echo -n "User [$AUSER]: "
+			read REPLY 
+			if [ -n "$REPLY" ]; then
+				AUSER=$REPLY
+			fi
+		fi
 		chown -R $AUSER .
-		echo " done"
 	else
-		echo "You are not root or you are on a shared hosting account. You can now:
-
-1- ctrl-c to break now.
-
-or
-
-2- If you press enter to continue, you will probably get some error messages
-but it (the script) will still fix what it can according to the permissions
-of your user. This script will now ask you some questions. If you don't know
-what to answer, just press enter to each question (to use default value)"
-
-		read WAIT
-		echo -n "Open global perms ..."
-#		find . -type d -exec chmod 777 {} \;
-#		find . -type f -exec chmod 666 {} \;
-		chmod -R a=rwX .
-		echo " done"
+		echo "You are not root or you are on a shared hosting account. We will not try to change the file owners."
 	fi
+
+	chmod -R a=rwX .
+	echo " done"
 else
 	echo "Type 'fix' or 'open' as command argument."
 fi

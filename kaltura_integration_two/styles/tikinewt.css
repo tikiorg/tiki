@@ -947,10 +947,6 @@ a.forumnameread {
 	color: #000;
 }
 
-.findtitle, .findsubmit {
-	float: left;
-}
-
 tr.odd {
 	border: 1px solid #8cacbb;
 	color: black;
