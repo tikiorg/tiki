@@ -61,6 +61,7 @@ class wslib extends CategLib
 	    global $prefs, $tikilib;
 	    $id = parent::add_category(0, '', 'Workspaces Container');
 	    $tikilib->set_preference('ws_container', $id);
+	    $tikilib->set_preference('feature_perspective', 'y');
 	    $this->ws_container = (int) $prefs['ws_container'];
 	    return $id;
 	}
@@ -109,13 +110,14 @@ class wslib extends CategLib
 			else
 				$this->add_ws_group ($ws_id, $name, $groupName, $groupDescription, $additionalPerms);
 		}
+		
 		//We create the perspective for the WS
 		$wsValue = $this->get_ws_perspective_value ($ws_id);
 		$pspId = $perspectivelib->replace_perspective(null, $wsValue);
 		//I set this for the ws identificacion, because we can have two ws with the same name and for psp
 		//this could be a problem in order to get the psp from the db
-		$perspectivelib->replace_preferences($pspId, array('wsId' => $ws_id, 'wsName' => $name, 'wsHomepage' => '')); 
-		
+		$perspectivelib->replace_preferences($pspId, array('wsId' => $ws_id, 'wsName' => $name, 'sitemycode' => '<div style="align: left; padding-left: 15px;">You are currently in '.$name.' workspace. <a class="link" href="tiki-switch_perspective.php">{tr}Reset Tiki to its normal status!{/tr}</a></div>')); 
+			
 		return $ws_id;
     }
 
