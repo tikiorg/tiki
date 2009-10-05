@@ -2,6 +2,23 @@
 
 class PerspectiveLib
 {
+	function get_current_perspective( $prefs ) {
+		if( isset( $_SESSION['current_perspective'] ) ) {
+			return $_SESSION['current_perspective'];
+		} elseif( $prefs['multidomain_active'] == 'y' ) {
+			$currentDomain = $_SERVER['HTTP_HOST'];
+
+			foreach( explode( "\n", $prefs['multidomain_config'] ) as $config ) {
+				list( $domain, $perspective ) = explode( ',', $config );
+
+				if( $domain == $currentDomain ) {
+					$_SESSION['current_perspective'] = trim($perspective);
+					return $perspective;
+				}
+			}
+		}
+	}
+
 	// Returns a string-indexed array containing the preferences for the given perspective as "pref_name" => "pref_value".
 	function get_preferences( $perspectiveId ) {
 		$result = TikiDb::get()->query( "SELECT pref, value FROM tiki_perspective_preferences WHERE perspectiveId = ?", array( $perspectiveId ) );

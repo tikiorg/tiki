@@ -1426,6 +1426,11 @@ function get_default_prefs() {
 		'ws_container' => null,
 
 		'terminology_profile_installed' => 'n',
+
+
+		// Multidomain
+		'multidomain_active' => 'n',
+		'multidomain_config' => '',
 	);
 
 	// spellcheck
@@ -1490,7 +1495,8 @@ if (isset($_SESSION['s_prefs'])) {
 		$_SESSION['need_reload_prefs'] = true;
 	}
 
-} else $_SESSION['need_reload_prefs'] = true;
+} else ; $_SESSION['need_reload_prefs'] = true;
+
 
 $defaults = get_default_prefs();
 // Set default prefs only if needed
@@ -1510,9 +1516,9 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 
 	// Disabled by default so it has to be modified
 	if( $modified['feature_perspective'] == 'y' ) {
-		if( isset( $_SESSION['current_perspective'] ) ) {
-			require_once 'lib/perspectivelib.php';
-			$changes = $perspectivelib->get_preferences( $_SESSION['current_perspective'] );
+		require_once 'lib/perspectivelib.php';
+		if( $persp = $perspectivelib->get_current_perspective( $modified ) ) {
+			$changes = $perspectivelib->get_preferences( $persp );
 			$modified = array_merge( $modified, $changes );
 		}
 	}
