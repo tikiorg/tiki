@@ -168,6 +168,12 @@ class PreferencesLib
 		return $data[$name];
 	}
 
+	private function _getTextareaValue( $info, $data ) {
+		$name = $info['preference'];
+
+		return $data[$name];
+	}
+
 	private function _getListValue( $info, $data ) {
 		$name = $info['preference'];
 		$value = $data[$name];

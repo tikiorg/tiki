@@ -14,7 +14,9 @@
 	
 <div id="articlesrss" class="adminoptionboxchild" style="display:{if ($prefs.rss_articles eq 'y') and ($prefs.feature_articles eq 'y')}block{else}none{/if};">
 <div class="adminoptionbox">
-	{tr}Title{/tr}: <input type="text" name="title_rss_articles" size="20" maxlength="255" style="width:95%" value='{$prefs.title_rss_articles|escape}' /><br />{tr}Description{/tr}: <textarea name="desc_rss_articles" style="width:95%" cols="20" rows="2">{$prefs.desc_rss_articles|escape}</textarea><br />{tr}Maximum number of items to display{/tr}:<input type="text" name="max_rss_articles" size="5" value="{$prefs.max_rss_articles|escape}" />
+	{tr}Title{/tr}: <input type="text" name="title_rss_articles" size="20" maxlength="255" style="width:95%" value='{$prefs.title_rss_articles|escape}' />
+	{preference name="desc_rss_articles" label="{tr}Description{/tr}"}
+	<br />{tr}Maximum number of items to display{/tr}:<input type="text" name="max_rss_articles" size="5" value="{$prefs.max_rss_articles|escape}" />
 <br />{tr}Show Author{/tr}: <input type="checkbox" name="showAuthor_rss_articles" {if $prefs.showAuthor_rss_articles eq 'y'} checked="checked"{/if}/>
 <br />{tr}Homepage URL{/tr}:<br /><input type="text" name="index_rss_articles" size="20" style="width: 95%" value="{$prefs.index_rss_articles|escape}" />
 </div>
