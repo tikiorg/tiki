@@ -20,7 +20,9 @@ body {
 	font-size: .7em;
 	font-family: 'Lucida Grande', Verdana, Arial, Sans-Serif;
 	background: #E7E7E7;
-	color: #333}
+	color: #333;
+	text-align: center;
+}
 
 html>body {font-size: 62.5% !important}
 
@@ -157,16 +159,6 @@ span.button input,
 	border: 1px solid;
 	border-color: #c1d3db #8cacbb #8cacbb #c1d3db}
 	
-* html input[type=reset],
-* html input[type=submit] {
-	font-family: Verdana, Helvetica, Geneva, Arial, sans-serif;
-	font-size: 10px;
-	font-weight: bold;
-	color: #2277DD;
-	background: #fff;
-	border: 1px solid;
-	border-color: #c1d3db #8cacbb #8cacbb #c1d3db}
-	
 .button a:hover,
 button:hover,
 input[type=reset]:hover,
@@ -178,8 +170,6 @@ input[type=submit]:hover,
 	color: #000}
 	
 #page-bar .button {line-height: 22px}
-* html .wikitopline select {font-size: .9em}
-* html .findtable input {font-size: 1em}
 form.admin input[name="features"] {margin-bottom: 3px !important}
 
 select {color: #112233}
@@ -409,7 +399,6 @@ a .sf-sub-indicator {
 	color: #eee !important;
 	text-decoration: none} 
 
-* html .horbaritem a {font-size: .8em}
 .mdksubmenu {
 	background: #fff;
 	border: 1px solid #8cacbb}
@@ -684,8 +673,6 @@ td.bloglistheading {
 	text-align: center;
 	padding: 3px 2px}
 	
-* html th {font-size: 11px}
- 
 a.tablename,
 a.galname,
 a.imagename,
@@ -969,10 +956,7 @@ Maybe need to find updated code for this. */
    overflow: auto;
  	width: /*100%*/500px} /* FF3 doesn't handle this combination. /
 /*
-* html .codelisting {
-	overflow-y: auto;
-	overflow-x: hidden}
-*/
+
 
 .codecaption {
 	margin: 0;
@@ -1401,9 +1385,6 @@ table.galtable {
 	border: 1px solid #8cacbb;
 	width: 100%}
 
-* html body table.galtable {width: 97%}
-html>body .galtable {}
-
 td.oddthumb {
 	background: #E7E9EA;
 	border: 1px solid #8cacbb;
@@ -1815,14 +1796,10 @@ td.middle {vertical-align: middle}
 .days {color: black}
 #caltable .weeks {color: black}
 .addevent {padding: 0 5px; float: right}
-* html .addevent {padding: 0}
 .calodd, .caleven {border: 1px solid #eee; border-collapse: collapse}
 .calodd {background: white}
-* html .calodd {padding: 0}
 .caleven {background: #eee}
-* html .caleven {padding: 0}
 .caldark {background: #e7e7e7}
-* html .caldark {padding: 0}
 .caldark .calfocus {background: inherit}
 .daterow {}
 .daterow:hover {}

@@ -27,6 +27,7 @@
 {/if}
 {if $prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
 	<br style="clear:both; height: 1px" />
+	{include file='tiki-top_bar_custom_code.tpl'}
 		<table width="100%" cellpadding="0" cellspacing="0" id="main">
 			<tr id="cols">
 				<td rowspan="3" id="leftmargin">&nbsp;</td>
