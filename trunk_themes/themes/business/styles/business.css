@@ -283,48 +283,56 @@ hr {
 /****** Menus, Links ******/
 /** CSS (suckerfish) menus **/
 
-.cssmenu a,
+/* default and topbar dropdown typography (colors) and padding */
 .cssmenu_horiz a,
-.cssmenu_vert li ul li a {
-	color: #fff;
-	background: url(business/nav.gif) repeat-x;
-	font-weight: bold;
+.cssmenu_vert a,
+#tiki-top .cssmenu_horiz li ul li a,
+#tiki-top .cssmenu_horiz li:hover ul li a {
+	color: #0082e0;
+	background: #fff;
+	font-weight: normal;
 	text-decoration: none;
+	padding: .5em 1em;
 }
 
-.cssmenu_horiz li ul li:hover,
-.cssmenu_vert li:hover {
-	background: #003371 url(business/header.png) repeat-x;
-	color: #003371;
-	text-decoration: none;
+.cssmenu_horiz a:hover,
+.cssmenu_vert a:hover,
+#tiki-top .cssmenu_horiz li ul li a:hover {
+	text-decoration: underline;
+	color: #0082e0;
 }
-/*
-.cssmenu ul,
-.cssmenu_vert li ul,
-.cssmenu_horiz li ul,
-#tiki-top ul.cssmenu_horiz li ul {
-	border: 1px #666666 solid;
-}*/
+
+/* default backgrounds */
+.cssmenu_horiz li,
+.cssmenu_vert li,
+#tiki-top .cssmenu_horiz li:hover ul li,
+#tiki-top .cssmenu_horiz li:hover ul li a {
+	background: #fff;
+}
+
+.cssmenu_horiz ul li a {
+	border-right: 0;
+}
 
 #tiki-top > .cssmenu_horiz {
 	margin-left: 48px;
-	padding-top: 2px;
 }
 
-#tiki-top ul.cssmenu_horiz li.menuLevel0 a {
+#tiki-top .cssmenu_horiz li a {
 	text-decoration: none;
 	color: #fff;
 	font-size: 10px;
 	font-weight: bold;
-	padding: 13px 12px;
+	background: url(business/nav.gif) repeat-x;
+	padding: 15px 12px;
 	border-left: 1px solid #3676c4;
 	border-right: 1px solid #1957aa;
 	text-transform: uppercase;
 }
 
-#tiki-top ul.cssmenu_horiz li.menuLevel0:hover a {
+#tiki-top .cssmenu_horiz li:hover a {
 	color: #fff;
-	background: url(business/nav_h.gif);
+	background: url(business/nav_h.gif) repeat-x;
 	text-decoration: none;
 }
 
@@ -332,49 +340,53 @@ hr {
 	padding-right: 20px !important;
 }
 
-#tiki-top ul.cssmenu_horiz li.menuLevel1,
-#tiki-top ul.cssmenu_horiz li.menuLevel1 a {
-		background: #3676c4 !important;
+#tiki-top .cssmenu_horiz li ul li a {
+	border-left: 0;
+	border-right: 0;
 }
 
-#tiki-top ul.cssmenu_horiz span.sf-sub-indicator {
-	top: 1.8em;
+/* top compensation for tiki-top padding */
+#tiki-top .cssmenu_horiz li ul,
+#tiki-top .cssmenu_horiz li.sfHover ul {
+	top: 42px;
 }
 
-#tiki-top ul.cssmenu_horiz li ul span.sf-sub-indicator {
-	top: 1.3em;
+#tiki-top .cssmenu_horiz li ul ul,
+#tiki-top .cssmenu_horiz li.sfHover ul ul,
+.cssmenu_vert li ul ul {
+	top: -1px;
 }
 
-#tiki-top ul.cssmenu_horiz li.menuLevel1 a {
-	padding-top: 6px;
-	padding-bottom: 6px;
+/* left column width */
+#col2 .cssmenu_vert,
+#col2 .cssmenu_vert li {
+	width: 170px;
 }
 
-#tiki-top ul.cssmenu_horiz li.menuLevel1 a:hover {
-	background: #3676c4 url(business/nav_h.gif) repeat-x 0 0 !important;
+/* offset from left column (matches above) */
+#col2 .cssmenu_vert li:hover ul,
+#col2 .cssmenu_vert li.sfHover ul {
+	left: 170px;
 }
 
-/*
-#tiki-top .cssmenu_horiz li.menuLevel1 a {
-	background: #fff !important;
-	text-decoration: none;
+/* return ul ul ... to default */
+#col2 .cssmenu_vert li:hover ul,
+#col2 .cssmenu_vert li.sfHover ul,
+#col2 .cssmenu_vert li:hover ul li,
+#col2 .cssmenu_vert li.sfHover ul li {
+	width: 10em;
 }
 
-#tiki-top .cssmenu_horiz li.menuLevel1:hover a {
-	background: !important;
-}
-*/
-.cssmenu_vert li a .sf-sub-indicator {
-	background: url(business/arrows-467aa7.png) no-repeat;
+/* return ul ul ... to default */
+#col2 .cssmenu_vert li li:hover ul,
+#col2 .cssmenu_vert li li.sfHover ul {
+	left: 10em;
 }
 
-.cssmenu_vert li ul li a .sf-sub-indicator {
-	background: url(business/arrows-ffffff.png) no-repeat;
-}
-
+/*dropdown background and border */
 .cssmenu_vert li ul li,
 .cssmenu_horiz li ul li {
-	border: 1px solid #194a88;
+	border: 1px solid #3676c4;
 	border-top: 0;
 	margin-bottom: -1px;
 }
@@ -386,17 +398,22 @@ hr {
 
 .cssmenu_vert li ul li:first-child,
 .cssmenu_horiz li ul li:first-child {
-	border-top: 1px solid #194a88;
+	border-top: 1px solid #3676c4;
 }
 
-.box-data .cssmenu_vert li:hover {
-	background: none;
+/* theme-specific arrows and arrow top padding */
+#tiki-top .cssmenu_horiz span.sf-sub-indicator {
+	top: 1.8em;
 }
 
-.box-data .cssmenu_vert ul a:hover {
-	color: ;
-	background: ;
-	text-decoration: none;
+#tiki-top .cssmenu_horiz li ul li .sf-sub-indicator {
+	top: .5em;
+	background: url(business/arrows-467aa7.png) no-repeat;
+}
+
+.cssmenu_vert li a .sf-sub-indicator {
+	top: .7em;
+	background: url(business/arrows-467aa7.png) no-repeat;
 }
 
 /** PHP Layers Menus **/
