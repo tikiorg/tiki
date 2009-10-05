@@ -5,10 +5,25 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
-global $smarty, $prefs;
-if ($prefs['feature_minichat'] != 'y') {
-	$module_params['error'] = tra('This feature is disabled').': feature_minichat';
-} else {
+
+function module_minichat_info() {
+	return array(
+		'name' => tra('Minichat'),
+		'description' => tra('Small live chat box'),
+		'prefs' => array("feature_minichat"),
+		'params' => array(
+			'channels' => array(
+				'name' => tra('Channels'),
+				'description' => tra('List of chat channels. Channel names are separated by a comma (",").') . ' ' . tra('Example value:') . ' english,french. ' . tra('By default, a single channel named "default" exists.'),
+				'filter' => 'striptags'
+			)
+		),
+		'common_params' => array('rows')
+	);
+}
+
+function module_minichat( $mod_reference, $module_params ) {
+	global $smarty, $prefs;
 	if (isset($module_params["channels"])) {
 		$channels=explode(',', $module_params["channels"]);
 	} else
@@ -28,5 +43,4 @@ if ($prefs['feature_minichat'] != 'y') {
 	}
 
 	$smarty->assign('jscode', $jscode);
-	$smarty->assign('module_rows', $module_rows);
 }
