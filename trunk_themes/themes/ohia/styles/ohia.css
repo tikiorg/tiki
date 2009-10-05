@@ -3,14 +3,6 @@
  * Gary Cunningham-Lee (chibaguy), released under the GNU LGPL license.
  * This theme uses the *litecss source-ordered layout solution by luci (http://sourceforge.net/projects/litecss).
  * For more information, please visit http://themes.tikiwiki.org or http://zukakakina.com.
- 
-	ohia.css is comprised of these sections:
-	XHTML elements, Siteheader & Identity; Menus, Links;
-	Misc. Center Col.; Misc. Global; Boxes; Tables, Tabs;
-	Wiki (inc. plugins, etc.); Articles; Blogs; Forums;
-	Galleries; Trackers; Categories, Tags; Polls; FAQs;
-	Quizzes;	Shoutbox; Directory; Messages; TikiSheets;
-	Calendar; Admin; and Ajax, jquery, etc.
 */
  
 /* Import layout foundation CSS file. */
@@ -31,7 +23,6 @@ body {
 	background: #d10000 url(ohia/body.png) repeat-x}
 
 html>body {font-size: 72% !important}
-* html body {font-size: 11px !important}
 
  /***** Layout (overrides layout.css;
 		also styling of page layout divs)  *****/
@@ -46,8 +37,6 @@ html>body {font-size: 72% !important}
 	min-height: 122px;
 	position: relative}
 	
-* html body #header {height: 122px}
-
 #middle {background: #222}
 
 .fullscreen #col1 {
@@ -86,8 +75,6 @@ html>body {font-size: 72% !important}
 	color: #f4f4f4;
 	position: relative}
 	
-* html body #footer {height: 90px}
-
 #footer a:link,
 #footer a:visited {
 	color: #f4f4f4;
@@ -141,8 +128,6 @@ body.wikitext {
 	color: #cfcfcf;
 	border: 1px solid #4c4c4c}
 
-* html .wikitopline select {font-size: .9em}
-
 #col2 input[type=text],
 #col2 input[type=password],
 #col3 input[type=text],
@@ -167,14 +152,6 @@ span.button input,
 	border-right: 1px solid #474747;
 	border-bottom: 1px solid #474747}
 	
-* html input[type=reset],
-* html input[type=submit] {
-	padding: 1px 4px;
-	margin: 2px;
-	font-size: 11px;
-	border: 1px solid #5f5f5f;
-	border-right: 1px solid #474747;
-	border-bottom: 1px solid #474747}
 
 .button a:hover,
 button:hover,
@@ -190,7 +167,6 @@ button:active,
 input[type=submit]:active,
 .button input:active {background: #5e0000} 
 
-* html .findtable input {font-size: 1em}
 form.admin input[name="features"] {margin-bottom: 3px !important}
 select[name="theme"] {width: 145px}
 small {font-size: .9em}
@@ -239,16 +215,11 @@ div#sitead {margin: auto}
 	margin-top: 20px;
 	margin-bottom: 2px}
 	
-* html #sitetitle {
-	font-size: 26px;
-	height: 34px}
-	
 #sitesubtitle {
 	display: block;
 	margin-top: 3px;
 	padding-top: 6px}
 	
-* html #sitetitle {margin-top: 10px}
 #tiki-top {text-align: left}
 
 #tiki-top ul.cssmenu_horiz {
@@ -256,7 +227,6 @@ div#sitead {margin: auto}
 	background: #030511;
 	padding: 3px}
 
-* html #tiki-top {font-size: 11px}
 #tiki-top a {}
 #tiki-top table {width: auto}
 
@@ -350,8 +320,6 @@ a .sf-sub-indicator {
 	background: #313131;
 	color: #eee !important;
 	text-decoration: none} 
-
-* html .horbaritem a {font-size: .8em}
 
 .mdksubmenu {
 	background: #313131;
@@ -450,15 +418,12 @@ h3.box-title {
 	
 .box-title a:hover {text-decoration: underline}
 
-* html h3.box-title {position: static}
-
 .box:hover img.flipmodimage {
 	border: 1px solid transparent;
 	right: 3px;
 	top: 3px;
 	background: #5e0000}
 
-* html img.flipmodimage {border: 0}
 img.flipmodimage:hover {border: 1px solid #990000 !important}
 
 #col2 h3.box-title {}
@@ -512,7 +477,6 @@ table.normal th,
 table.sortable th {border-left: 1px solid #5e0000}
 
 td {vertical-align: top}
-* html td {	font-size: 11px; color: #f4f4f4}
 
 .formcolor td,
 .editblogform td {padding: 3px}
@@ -687,44 +651,6 @@ div#page-bar {
 	margin-top: 0;
 	float: 0}
 
-#page-bar span {float: left}
-
-ul.floatleft {
-	display: block;
-	list-style: 0;
-	padding: 0;
-	text-align: left;
-	height: 20px;
-	margin-top: 0}
-
-ul.floatleft li {
-	float: left;
-	padding: 4px 2px}
-
-.editdate ul.floatleft {margin-top: 8px}
-
-span.button2,
-div.button2,
-.button3 {margin-right: 5px}
-
-/* First of these from han.css - Check ?? */
-.navbar .linkbut:hover,
-div.button2 a:hover, .button3 a:hover {}
-
-/* From han.css - Check ?? */
-#page-bar p span.button2 {} 
-#page-bar table a.linkbut {}
-
-.linkbut {}
-.linkbut:hover {}
-div.cache {}
-div.cachedpage {}
-.wikicache, .wikicache:visited {}
-.wikicache:hover {}
-.wiki {}
-.wikinew {}
-
-.wiki-edithelp {display: 0}
 
 #wikihelp-tab table,
 #wikihelp-tab table td {
@@ -733,16 +659,6 @@ div.cachedpage {}
 
 #wikihelp-tab table td {padding: 2px}
 div#textarea-toolbar {background: white}
-textarea.wikiedit {font-size: 1.3em}
-p.editdate {}
-div.wiki-edithelp {}
-img.externallink {}
-
-/* Needed esp. for light-on-dark theme */
-div.quicktag {}
-div.quicktag img,
-#wikihelp-tab td img {}
-div#helptool {}
 
 /* Wiki plugins */
 
@@ -811,31 +727,13 @@ ul.toc {
 
 ul.toc * {border: 0}
 
-/* Wiki diff styles */
-.diff td {border: 1px solid #696969}
-.diff div {border-top: 1px solid #696969}
-.diffheader {background: #696969; font-weight: bold}
-.diffadded {background: #CCFFCC}
-.diffdeleted {background: #FFCCCC}
-.diffinldel {background: #FFCCCC; text-decoration: line-through}
-.diffbody {background: #F2F4F5}
-.diffchar {color: red}
-
-
 /***** Articles ****/
-div.article {margin-bottom: 40px}
-
-div.articletopline {
-	font-size: 90%;
-	font-style: italic}
 
 div.articletitle {
 	margin-top: 6px;
 	margin-bottom:	15px;
 	text-align:	left}
 	
-div.articletitle br {display: 0}
- 
 div.articletitle h2 {
 	display: block;
 	font-size: 1.8em;
@@ -850,25 +748,6 @@ div.articleheading {margin-top: 6px}
 div.articleheadingtext {
 	color: #f4f4f4}
 
-img.topicimage,
-img.articleimagenofloat,
-img.articleimage {
-	padding: 2px 0;
-	margin-bottom:10px}
-
-img.articleimagefloat {
-	margin-right: 4px;
-	float: left;
-	padding: 2px 0;
-	margin-bottom:10px}
-
-img.articleimage {
-	margin-right: 4px;
-	float: left;
-	clear: right;
-	padding:2px 0;
-	margin-bottom:10px}
-
 div.articletrailer {
 	text-align: right}
 
@@ -876,8 +755,6 @@ div.articletrailer .wikitopline {
 	float: right;
 	color: #f4f4f4}
 
-.trailer {}
-.trailer:hover {}
 div.articlebody {margin-top: .5em}
 
 div.articlesource {
@@ -922,9 +799,6 @@ div.blogtools {
 .blogtools table {width: 100%}
 #middle .blogtools input[type=text] {width: 160px}
 
-.blogpost {}
-
-/*.postinfo div a img,*/
 a.blogt,
 a.blog:visited {
 	border: 0;
@@ -944,10 +818,8 @@ a.blogt:hover {
 	text-decoration: none;
 	border-bottom: 0}
 
-div.postinfo a.linkmodule {}
 .postinfo div {margin-top: 30%}
 
-.small {} /* Check ?? (from fluidindex */
 
 div.posthead {
 	text-align: left;
@@ -966,17 +838,13 @@ div.postbody {
 	line-height: 1.2em;
 	margin-bottom: 1em}
 
-* html .postbody table {font-size: 11px}
-
 div.postfooter {
 	clear: both;
 	float: right;
 	margin-bottom: 2em}
 
-
 /***** Forums *****/
 body.tiki_forums table.normal {margin: auto}
-
 
 .post .postbody {
 	clear: both;
@@ -998,8 +866,6 @@ body.tiki_forums table.normal {margin: auto}
 	border-top: 0;
 	background: #313131 !important}
 	
-#col1 .post .postbody .content p {}
-
 .post .postbody-title {
 	display: block;
 	padding-bottom: .8em;
@@ -1033,7 +899,6 @@ body.tiki_forums table.normal {margin: auto}
 .post .author_info .icons .actions {margin-right: 10px}
 .post .author_post_info_on {font-style: italic}
 
-/* How do the following two differ? */
 .post .author_info {
 	float: right;
 	background: #030511;
@@ -1118,27 +983,7 @@ body.tiki_forums table.normal {margin: auto}
 
 .nb_replies {white-space: nowrap}
 .post_preview, .top_post {margin-bottom: 15px}
-/*.post .postbody .signature {float: left}*/
 
-/* Comments */
-#comzone {
-	display: 0;
-	margin: 5px 0;
-	padding: 0}
- 
-#comzoneopen {
-	display: block;
-	margin: 5px 0;
-	padding: 0}
- 
-span.commentstitle {
-	font-weight: bold;
-	font-size: 1.2em}
-	
-textarea#editpost2 {width: 100%}
-
-/* Find */
-.subcomment {margin-left: 10px}
 
 /* Help box*/
 div.commentsedithelp {
@@ -1154,10 +999,8 @@ table.galtable {
 	border: 1px solid #696969;
 	width: 100%}
 
-* html body table.galtable {width: 97%}
 body.tiki_galleries table.findtable {display: inline}
 
-/* Check this one ?? */
 div.browsegallery {
 	text-align: center;
 	width: 100%}
@@ -1168,10 +1011,6 @@ td.eventhumb {border-collapse: collapse}
 td.eventhumb img {
 	margin-left: 6px;
 	margin-right: 6px}
-
-/* Check next 2 ?? */
-div.thumbnails {}
-div#browse_image {width: 100%}
 
 img.athumb {
 	border: 0;
@@ -1184,8 +1023,6 @@ div.imagetitle {
 	font-weight: bold;
 	font-size: 200%}
 
-div.gallerylink {}
-div#browse_image {} /* Check - from fluidindex ?? */
 div.showimage {
 	text-align: center;
 	margin: 5px 0;
@@ -1217,55 +1054,6 @@ div.imgaldescr {margin: 10px}
 /***** Categories, Tags *****/
 
 /***** Tags (freetags) *****/
-a.freetag:hover /* override freetags.css */ {
-	background: #5e0000;
-	color: #eee;
-	border: 1px solid #990000}
-
-a.freetag_1 {
-	text-decoration: none;
-	font-size: .8em}
-
-a.freetag_2 {
-	text-decoration: none;
-	font-size: .9em}
-	
-a.freetag_3 {
-	text-decoration: none;
-	font-size: 1em}
-
-a.freetag_4 {
-	text-decoration: none;
-	font-size: 1.2em}
-
-a.freetag_5 {
-	text-decoration: none;
-	font-size: 1.4em}
-
-a.freetag_6 {
-	text-decoration: none;
-	font-size: 1.6em}
-
-a.freetag_7 {
-	text-decoration: none;
-	font-size: 1.8em}
-
-div.freetagObjectOdd {
-	margin: 2px;
-	/*background: #F7F9FA;*/
-	position: relative}
-
-div.freetagObjectEven {
-	margin: 2px;
-	/*background: #E7E9EA;*/
-	position: relative}
-
-div.freetagObjectName a {text-decoration: none}
-
-div.freetagObjectType {
-	position: absolute;
-	top: 0;
-	right: 0}
 	
 /*****  Polls  *****/
 
@@ -1285,17 +1073,11 @@ div.shoutboxmodmsg {
 	padding-top: 5px;
 	padding-bottom: 1px}
 
-textarea.tshoutbox {width: 162px}
-.wiki-table {}
-.wiki-tr-a td {border: 0}
-.wiki-tr-b td {border: 0}
-
 /***** Directory *****/
 div.dircategs {
 	border: 1px solid #696969;
 	padding: 5px}
 
-.dirlink {}
 .dirsublink {font-size: .95em}
 
 div.dirlistsites {
@@ -1306,10 +1088,9 @@ div.dirsite {
 	margin-bottom: 10px;
 	padding: 4px}
 
-span.dirsitedesc {}
 span.dirsitetrail {font-size: 95%}
 span.dirsitecats {font-size: 95%}
-.dirsitelink {}
+
 
 div.dirrelated {
 	margin-top: 10px;
@@ -1360,7 +1141,6 @@ table.default tfoot td {
 table.default td {
 	border: solid 1px #a9a9a9;
 	background: black}
-
 
 /***** Calendar *****/
 
@@ -1491,10 +1271,6 @@ table.default td {
 .day,
 .day:visited {}
 
-.today {}
-.nav {}
-.changedate {}
-.date {}
 .calnavigation {border: 1px solid #4c4c4c}
 .calnavigation a:hover {background: url(ohia/body.png)}
 .calinput {background: #000}
@@ -1518,18 +1294,14 @@ table.default td {
 	padding: 0 5px;
 	float: right}
 
-* html .addevent {padding: 0}
 .calodd, .caleven {border: 1px solid #000}
 .calodd {background: #030511}
-* html .calodd {padding: 0}
 .caleven {background: #313131}
-* html .caleven {padding: 0}
 
 .caldark {
 	background: #000;
 	border: 1px dotted #5e0000}
 
-* html .caldark {padding: 0}
 .caldark .calfocus {background: #000}
 
 /***** Admin *****/
@@ -1552,64 +1324,8 @@ a.admbox.off:active {border: 1px solid #a9a9a9}
 
 /***** Ajax, jquery. etc. *****/
 /***** Ajax *****/
-div#ajaxLoading {
-	display: 0;
-	position: absolute;
-	top: 50px;
-	right: 50%;
-	padding: 3px;
-	font-family: Verdana;
-	font-size: 90%;
-	text-align: center;
-	background: transparent url(../lib/shadowbox/images/loading-light.gif) no-repeat 50% 100%;
-	height: 43px;
-	width: 50px}
-
-#shadowbox_title {
-	height: auto !important;
-	padding: 0;
-	overflow: visible}
-
-#shadowbox_title_inner{
-	height: auto !important;
-	font-size: 1em !important;
-	line-height: 1em !important;
-	white-space: normal !important;
-	padding: 5px 0 4px 8px}
-
-div#tab-block-1 h5 {
-	width: 150px;
-	float: left;
-	margin: 0}
-
-.tab-wrapper {
-	border: 1px solid #313131;
-	padding: 0}
-
-.tab-menu  {
-	clear: both;
-	line-height: 17px;
-	list-style-image: 0;
-	list-style-position: outside;
-	list-style-type: 0;
-	padding: 2px 0;
-	margin-bottom: 6px;
-	margin-top: 2px;
-	width: 100%}
-
-.tab-menu li {
-	display: inline;
-	margin: 0 2px;
-	width: 200px;
-	padding-right: 1.5em}
-
-.tab-menu li img {vertical-align: middle}
 /***** New (unsorted) *****/
 
 /***** End New (unsorted) *****/
 
 /* End of File */
-
-
-
-
