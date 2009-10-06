@@ -26,7 +26,7 @@ function smarty_block_ajax_href($params, $content, &$smarty, $repeat) {
 	if ( !empty($params['_onclick']) ) {
 		$onclick = $params['_onclick'];
 		if (substr($onclick, -1) != ';') {
-			$onclick += ';';
+			$onclick .= ';';
 		}
 	} else {
 		$onclick = '';
