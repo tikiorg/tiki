@@ -20,8 +20,7 @@ function module_groups_emulation_info() {
 function module_groups_emulation( $mod_reference, $module_params ) {
 	global $smarty, $user, $tiki_p_admin, $userlib;
 	
-	if (isset($_SESSION['groups_are_emulated']))
-		$smarty->assign('groups_are_emulated', $_SESSION['groups_are_emulated']);
+	$smarty->assign('groups_are_emulated', isset($_SESSION['groups_are_emulated']) ? $_SESSION['groups_are_emulated'] : 'n');
 	if (isset($_SESSION['groups_emulated']))
 		$smarty->assign('groups_emulated', unserialize($_SESSION['groups_emulated']));
 	
