@@ -116,7 +116,7 @@ class wslib extends CategLib
 		$pspId = $perspectivelib->replace_perspective(null, $wsValue);
 		//I set this for the ws identificacion, because we can have two ws with the same name and for psp
 		//this could be a problem in order to get the psp from the db
-		$perspectivelib->replace_preferences($pspId, array('wsId' => $ws_id, 'wsName' => $name, 'sitemycode' => '<div style="align: left; padding-left: 15px;">You are currently in '.$name.' workspace. <a class="link" href="tiki-switch_perspective.php">{tr}Reset Tiki to its normal status!{/tr}</a></div>')); 
+		$perspectivelib->replace_preferences($pspId, array('wsId' => $ws_id, 'wsName' => $name, 'wsHomepage' => '', 'wsStyle' => '', 'sitemycode' => '<div style="align: left; padding-left: 15px;">You are currently in '.$name.' workspace. <a class="link" href="tiki-switch_perspective.php">{tr}Reset Tiki to its normal status!{/tr}</a></div>')); 
 			
 		return $ws_id;
     }
