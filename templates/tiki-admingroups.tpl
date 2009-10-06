@@ -51,10 +51,10 @@
 				<td>
 					<a class="link" href="tiki-admingroups.php?group={$users[user].groupName|escape:"url"}{if $prefs.feature_tabs ne 'y'}#2{/if}" title="{tr}Edit{/tr}">{$users[user].groupName}</a>
 				</td>
-				<td>{tr}{$users[user].groupDesc|nl2br}{/tr}</td>
+				<td>{tr}{$users[user].groupDesc|escape|nl2br}{/tr}</td>
 				<td>
 					{section name=ix loop=$users[user].included}
-						{$users[user].included[ix]}<br />
+						{$users[user].included[ix]|escape}<br />
 					{/section}
 				</td>
 				<td>{tr}{$users[user].userChoice}{/tr}</td>
@@ -88,7 +88,7 @@
 	<form action="tiki-admingroups.php" method="post">
 		<table class="normal">
 			<tr class="formcolor">
-				<td><label for="groups_group">{tr}Group{/tr}:</label></td>
+				<td><label for="groups_group">{tr}Group:{/tr}</label></td>
 				<td>
 					{if $groupname neq 'Anonymous' and $groupname neq 'Registered' and $groupname neq 'Admins'}
 						<input type="text" name="name" id="groups_group" value="{$groupname|escape}" />
@@ -98,14 +98,14 @@
 				</td>
 			</tr>
 			<tr class="formcolor">
-				<td><label for="groups_desc">{tr}Description{/tr}:</label></td>
+				<td><label for="groups_desc">{tr}Description:{/tr}</label></td>
 				<td>
-					<textarea rows="5" cols="20" name="desc" id="groups_desc" style="width:95%">{$groupdesc}</textarea>
+					<textarea rows="5" cols="20" name="desc" id="groups_desc" style="width:95%">{$groupdesc|escape}</textarea>
 				</td>
 			</tr>
 			<tr class="formcolor">
 				<td>
-					<label for="groups_inc">{tr}Include{/tr}:</label>
+					<label for="groups_inc">{tr}Include:{/tr}</label>
 					<br />
 					<i>{tr}Only directly included{/tr}</i>
 				</td>
@@ -119,7 +119,7 @@
 					<select name="include_groups[]" id="groups_inc" multiple="multiple" size="4">
 						{if !empty($groupname)}<option value="">{tr}None{/tr}</option>{/if}
 						{foreach key=gr item=yn from=$inc}
-							<option value="{$gr|escape}" {if $yn eq 'y'} selected="selected"{/if}>{$gr|truncate:"52":" ..."}</option>
+							<option value="{$gr|escape}" {if $yn eq 'y'} selected="selected"{/if}>{$gr|truncate:"52"|escape}</option>
 						{/foreach}
 					</select>
 					<br />&quot;{$groupname|default:"Group"}&quot; {tr}will have all the permissions of the included groups{/tr}.
@@ -129,7 +129,7 @@
 			{if $prefs.useGroupHome eq 'y'}
 				<tr class="formcolor">
 					<td>
-						<label for="groups_home">{tr}Group Homepage{/tr}:</label>
+						<label for="groups_home">{tr}Group Homepage:{/tr}</label>
 					</td>
 					<td>
 						<input type="text" size="40" name="home" id="groups_home" value="{$grouphome|escape}" {if $prefs.useGroupHome ne 'y'}disabled="disabled" {/if}/>
@@ -142,13 +142,13 @@
 			{if $prefs.feature_categories eq 'y'}
 				<tr class="formcolor">
 					<td>
-						<label for="groups_defcat">{tr}Default category assigned to uncategorized objects edited by a user with this default group{/tr}:</label>
+						<label for="groups_defcat">{tr}Default category assigned to uncategorized objects edited by a user with this default group:{/tr}</label>
 					</td>
 					<td>
 						<select name="defcat" id="groups_defcat" size="4">
 							<option value="" {if ($groupdefcat eq "") or ($groupdefcat eq 0)} selected="selected"{/if}>{tr}none{/tr}</option>
 							{section name=ix loop=$categories}
-								<option value="{$categories[ix].categId|escape}" {if $categories[ix].categId eq $groupdefcat}selected="selected"{/if}>{$categories[ix].categpath}</option>
+								<option value="{$categories[ix].categId|escape}" {if $categories[ix].categId eq $groupdefcat}selected="selected"{/if}>{$categories[ix].categpath|escape}</option>
 							{/section}
 						</select>
 					</td>
@@ -156,7 +156,7 @@
 			{/if}
 			{if $prefs.useGroupTheme eq 'y'}
 				<tr class="formcolor">
-					<td><label for="groups_theme">{tr}Group Theme{/tr}:</label></td>
+					<td><label for="groups_theme">{tr}Group Theme:{/tr}</label></td>
 					<td>
 						<select name="theme" id="groups_theme" multiple="multiple" size="4">
 							<option value="" {if $grouptheme eq ""} selected="selected"{/if}>{tr}none{/tr} ({tr}Use site default{/tr})</option>
@@ -243,7 +243,7 @@
 			{if $group ne ''}
 				<tr class="formcolor">
 					<td>
-						{tr}Assign group <em>management</em> permissions{/tr}:
+						{tr}Assign group <em>management</em> permissions:{/tr}
 					</td>
 					<td>
 						{icon href="tiki-objectpermissions.php?objectType=group&objectId=$groupname&objectName=$groupname&permType=group" _text="{tr}Assign Permissions{/tr}" _id="key"}
@@ -287,13 +287,13 @@
 	{tab name='{tr}Members{/tr}'}
 	{* ----------------------- tab with memberlist --------------------------------------- *}
 		<a name="3" ></a>
-		<h2>{tr}Members List{/tr}: {$groupname}</h2>
+		<h2>{tr}Members List:{/tr} {$groupname|escape}</h2>
 		<table class="normal">
 			<tr>
 				{cycle name=table values=',,,,</tr><tr>' print=false advance=false}
 				{section name=ix loop=$memberslist}
 					<td class="formcolor auto">
-						<a href="tiki-adminusers.php?user={$memberslist[ix]|escape:"url"}&action=removegroup&group={$groupname}{if $prefs.feature_tabs ne 'y'}#2{/if}" class="link" title="{tr}Remove from Group{/tr}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
+						<a href="tiki-adminusers.php?user={$memberslist[ix]|escape:"url"}&action=removegroup&group={$groupname|escape:url}{if $prefs.feature_tabs ne 'y'}#2{/if}" class="link" title="{tr}Remove from Group{/tr}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
 						<a href="tiki-adminusers.php?user={$memberslist[ix]|escape:"url"}{if $prefs.feature_tabs ne 'y'}#2{/if}" class="link" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
 						{$memberslist[ix]|userlink}
 					</td>
@@ -301,7 +301,7 @@
 				{/section}
 			</tr>
 		</table>
-		<div class="box">{$smarty.section.ix.total} {tr}users in group{/tr} {$groupname}</div>
+		<div class="box">{$smarty.section.ix.total} {tr}users in group{/tr} {$groupname|escape}</div>
 		<form method="post" action="tiki-admingroups.php">
 			<p>
 				<input type="hidden" name="group" value="{$groupname|escape}"/>
@@ -361,7 +361,7 @@
 			</table>
 
 			<h2>{tr}Batch upload (CSV file){/tr}</h2>
-			<h3>{tr}Assign users to group:{/tr} {$groupname} </h3>
+			<h3>{tr}Assign users to group:{/tr} {$groupname|escape} </h3>
 			{remarksbox type="tip" title="{tr}Tip{/tr}"}
 				{tr}Each user in the file must already exist.{/tr}<br />{tr}To create users or/and assign them to groups, got to <a href="tiki-adminusers.php">admin->users</a>{/tr}
 			{/remarksbox}
