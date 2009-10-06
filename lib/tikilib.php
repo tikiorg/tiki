@@ -5924,7 +5924,7 @@ class TikiLib extends TikiDb_Bridge {
 		$replacements[] = "\\1<a $attrib href=\"http://www.\\2.\\3\\4\">www.\\2.\\3\\4$ext_icon</a>";
 		$patterns[] = "#([\n ])([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)*[\w]+)#i";
 		if ($prefs['feature_wiki_protect_email'] == 'y')
-			$replacements[] = "\\1<script language=\"Javascript\" type=\"text/javascript\">protectEmail('\\2', '\\3', '@');</script><noscript>\\2 ".tra("at","",true)." \\3</noscript>";
+			$replacements[] = "\\1<script language=\"Javascript\" type=\"text/javascript\">document.write(protectEmail('\\2', '\\3', '@'));</script><noscript>\\2 ".tra("at","",true)." \\3</noscript>";
 		else
 			$replacements[] = "\\1<a class='wiki' href=\"mailto:\\2@\\3\">\\2@\\3</a>";
 		$patterns[] = "#([\n ])magnet\:\?([^,< \n\r]+)#i";
