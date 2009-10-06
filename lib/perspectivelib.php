@@ -90,6 +90,13 @@ class PerspectiveLib
 			$this->set_preference( $perspectiveId, $pref, $value );
 		}
 	}
+	
+	// Replaces a specific preference
+	function replace_preference ( $preference, $value, $newValue ) {
+		$db = TikiDb::get();
+		$db->query( 'UPDATE tiki_perspective_preferences SET value = ? WHERE pref = ? and value = ?',
+			array( $newValue, $preference, $value ) );
+	}
 
 	// Sets $preference's value for $perspectiveId to $value.
 	function set_preference( $perspectiveId, $preference, $value ) {

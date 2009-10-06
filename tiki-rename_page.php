@@ -64,6 +64,9 @@ if (isset($_REQUEST["rename"])) {
 			}
 		}
 	}
+	global $perspectivelib; require_once 'lib/perspectivelib.php';
+	$perspectivelib->replace_preference ('wsHomepage', $page, $newName ) ;
+
 	header('location: tiki-index.php?page=' . urlencode($newName));
 }
 ask_ticket('rename-page');
