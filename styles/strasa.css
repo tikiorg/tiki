@@ -383,7 +383,7 @@ div#sitelogo {
 	padding-left: 100px;
 }
 
-/*#siteloginbar {
+#siteloginbar {
 	position: static;
 	float: right;
 	padding-right: 10px;
@@ -392,16 +392,6 @@ div#sitelogo {
 	padding-left: 60px;
 	color: #fff;
 	background: #fff url(strasa/login.jpg) 0 0 no-repeat;
-}*/
-#siteloginbar {
-background:#FFFFFF url(strasa/login.jpg) no-repeat scroll 369px 0;
-color:#FFFFFF;
-height:24px;
-line-height:20px;
-padding-left:60px;
-padding-right:10px;
-position:relative;
-right:0;
 }
 
 #siteloginbar a,
@@ -2099,12 +2089,5 @@ a.admbox.off:focus,
 a.admbox.off:active {
 	border: 1px solid #a9a9a9;
 }
-/*For modules with rssitems*/
-li.rssitem{
-	margin:10px 0 10px 0;
-}
-/*For blogposts within module*/
-li.blog_post{
-	margin:10px 0 10px 0;
-}
+
 /* end of file */
