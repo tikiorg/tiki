@@ -46,11 +46,6 @@
 {self_link page="cms" _class="icon"}{icon _id="pics/large/stock_bold.png" alt="{tr}Articles{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 {/if}
 
-{if $prefs.feature_kaltura eq 'y'}
-{self_link page="kaltura" _class="icon"}{icon _id="pics/large/kaltura48x48.png" alt="{tr}Kaltura{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
-{* TODO resize icon *}
-{/if}
-
 {if $prefs.feature_forums eq 'y'}
 {self_link page="forums" _class="icon"}{icon _id="pics/large/stock_index.png" alt="{tr}Forums{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 {/if}
@@ -146,6 +141,11 @@
 {if $prefs.feature_workspaces neq 'n'}
 {self_link page="workspaces" _class="icon"}{icon
 _id="pics/large/workspaces.png" alt="{tr}Workspaces{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
+{/if}
+
+{if $prefs.feature_kaltura eq 'y'}
+{self_link page="kaltura" _class="icon"}{icon _id="pics/large/kaltura48x48.png" alt="{tr}Kaltura{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
+{* TODO resize icon *}
 {/if}
 
 {if $prefs.feature_jquery and $prefs.feature_jquery_reflection}{jq}$jq('img.reflect').reflect({});{/jq}{/if}{* for ajax *}
