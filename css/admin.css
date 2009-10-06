@@ -210,6 +210,7 @@ div.adminanchors a {float: left}
 	border: solid thin gray;
 	margin: 0;
 	padding: 2px 4px 0;
+	white-space: nowrap;
 }
 
 .toolbars-admin .rows .row-right {
