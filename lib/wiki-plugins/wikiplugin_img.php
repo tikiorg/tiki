@@ -572,7 +572,7 @@ function wikiplugin_img_info() {
 				}
 				if ($imgdata['styleimage'] == 'border') {
 					$border = $borderdef;
-				} else if (strpos($imgdata['styleimage'],'hidden') < 0 && strpos($imgdata['styleimage'],'position') < 0) {	// quick filter for dangerous styles
+				} else if (strpos($imgdata['styleimage'],'hidden') === false && strpos($imgdata['styleimage'],'position') === false) {	// quick filter for dangerous styles
 					$style = $imgdata['styleimage'];
 				}
 			}
