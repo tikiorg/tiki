@@ -58,7 +58,7 @@
 		<div class="clearfix postbody-title">
 			<div class="title"> {* because used in forums, but I don't know purpose *}
 				{if $use_title eq 'y'}
-					<h2>{$listpages[ix].title|escape}</h2>
+					<h2><a class="link" href="{$listpages[ix].postId|sefurl:blogpost}">{$listpages[ix].title|escape}</a></h2>
 				{else}
 					<h2>{$listpages[ix].created|tiki_short_datetime}</h2>
 				{/if}
