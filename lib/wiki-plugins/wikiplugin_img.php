@@ -155,6 +155,7 @@ function wikiplugin_img_info() {
 
 ///////////////////////////////////////////////////Function for getting image data from raw file (no filename)////////////////////////////////
  ///Creates a temporary file name and path for a raw image stored in a tiki database since getimagesize needs one to work
+if (!function_exists('getimagesize_raw')) {
 	function getimagesize_raw($data){
         $cwd = getcwd(); #get current working directory
         $tempfile = tempnam("$cwd/tmp", "temp_image_");#create tempfile and return the path/name (make sure you have created tmp directory under $cwd
@@ -171,7 +172,7 @@ function wikiplugin_img_info() {
 		}
         unlink($tempfile); // this removes the tempfile
 	}
- 
+}
  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
  
  function wikiplugin_img( $data, $params, $offset, $parseOptions='' ) {
@@ -811,4 +812,3 @@ function wikiplugin_img_info() {
 		return '~np~'.$repl.'~/np~';
 	}
 }
-?>
