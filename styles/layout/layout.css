@@ -1580,13 +1580,20 @@ div#ajaxLoading {
 	top: 50px;
 	right: 50%;
 	padding: 3px;
-	font-family: Verdana;
-	font-size: 90%;
+	color: #333;
 	text-align: center;
-	background: transparent url(../../img/spinner.gif) no-repeat 50% 100%;
+	vertical-align: top;
+	background: transparent url(../../img/loading-light.gif) no-repeat 50% 100%;
 	height: 43px;
 	width: 50px;
 	padding-top: 32px;
+}
+
+div#ajaxLoadingBG {
+	z-index: 9999;
+	display: none;
+	position: absolute;
+	background: transparent url(../../img/overlay-light.png);
 }
 
 #shadowbox_title {

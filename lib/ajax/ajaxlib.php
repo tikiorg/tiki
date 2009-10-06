@@ -257,10 +257,6 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
 		}
 	}
 
-	$objResponse->script("hide('ajaxLoading');");
-	if ($prefs['feature_shadowbox'] == 'y') {
-		//$objResponse->script("Shadowbox.init({ skipSetup: true }); Shadowbox.setup();");
-	}
 	$objResponse->script("var xajax.config.requestURI =\"".$ajaxlib->sRequestURI."\";\n");
 	if (sizeof($js_script)) {
 		foreach($js_script as $s) {
