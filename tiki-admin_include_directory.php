@@ -11,11 +11,5 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 }
 if (isset($_REQUEST["directory"])) {
 	check_ticket('admin-inc-directory');
-	simple_set_toggle('directory_validate_urls');
-	simple_set_toggle('directory_cool_sites');
-	simple_set_toggle('directory_country_flag');
-	simple_set_value('directory_columns');
-	simple_set_value('directory_links_per_page');
-	simple_set_value('directory_open_links');
 }
 ask_ticket('admin-inc-directory');
