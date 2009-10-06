@@ -32,6 +32,8 @@
 		{if $prefs.feature_sitead eq 'y' && ($prefs.sitead_publish eq 'y' or $tiki_p_admin eq 'y')}{eval var=$prefs.sitead}{/if}
 	</div>
 	{/if}
+	{include file='tiki-site_header_login.tpl'}
+	{include file='tiki-sitesearchbar.tpl'}
 		<table width="100%" cellpadding="0" cellspacing="0" id="main">
 			<tr id="cols">
 				<td rowspan="3" id="leftmargin">&nbsp;</td>
@@ -43,6 +45,7 @@
 							{include file="tiki-site_header.tpl"}
 						</div>
 					</div>
+					{include file='tiki-top_bar_custom_code.tpl'}
 				</td>
 				<td rowspan="3" id="rightmargin">&nbsp;</td>
 			</tr>
