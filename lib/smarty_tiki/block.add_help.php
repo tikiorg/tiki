@@ -33,6 +33,7 @@ function smarty_block_add_help($params, $content, &$smarty, &$repeat) {
 		require_once $smarty->_get_plugin_filepath('block', 'self_link');
 		$self_link_params['alt'] = $params['title'];
 		$self_link_params['_icon'] = 'help';
+		$self_link_params['_ajax'] = 'n';
 		$self_link_params['_onclick'] = "javascript:show('help_sections');show('".$section['id']."');return false";
 		return smarty_block_self_link($self_link_params,"",$smarty);
 	} else {
