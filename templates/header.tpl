@@ -23,7 +23,7 @@
 {/if}
 
 {* --- tikiwiki block --- *}
-		<script type="text/javascript" src="lib/tiki-js.js"></script>
+		<script type="text/javascript" src="lib/tiki-js{if $prefs.feature_use_minified_scripts == 'y'}.min{/if}.js"></script>
 {include file='bidi.tpl'}
 		<title>
 {if isset($trail)}			{breadcrumbs type="fulltrail" loc="head" crumbs=$trail}
