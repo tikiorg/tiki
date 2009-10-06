@@ -923,6 +923,11 @@ img.flipmodimage:hover {
 .box-data {
 	padding: 0 5px 10px 10px;
 }
+
+/* module last blog posts */
+.box-last_blog_posts .box-data li {
+	margin: 10px 0;
+}
 	
 /** Other boxes **/
 div.cbox {
