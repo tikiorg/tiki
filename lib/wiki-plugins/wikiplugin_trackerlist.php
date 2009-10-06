@@ -270,7 +270,7 @@ function wikiplugin_trackerlist($data, $params) {
 		}
 
 		if ($tiki_p_admin_trackers != 'y') {
-			if ($perms['tiki_p_view_trackers'] != 'y' && !$user) {
+			if ($tiki_p_view_trackers != 'y' && !$user) {
 				return;
 			}
 			$userCreatorFieldId = $trklib->get_field_id_from_type($trackerId, 'u', '1%');
