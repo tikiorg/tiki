@@ -174,15 +174,32 @@ function smarty_function_treetable($params, &$smarty) {
 		require_once($smarty->_get_plugin_filepath('function', 'icon'));
 		$html .= '&nbsp;' . smarty_function_icon(
 			array('_id' => 'folder',
-				'title' => tra('Toggle sections'),
-				'onclick' => '
-if (this.src.indexOf("ofolder.png") > -1) {
-	$jq(".expanded .expander").click();
-	this.src = this.src.replace("ofolder", "folder");
-} else {
-	$jq(".collapsed .expander").click();
-	this.src = this.src.replace("folder", "ofolder");
-}'), $smarty);
+				'id' => $id.'_openall',
+				'title' => tra('Toggle sections')),	$smarty);
+		
+		$headerlib->add_jq_onready('
+$jq("#'.$id.'_openall").click( function () {
+	if (this.src.indexOf("ofolder.png") > -1) {
+		
+		$jq(".expanded .expander").eachAsync({
+			delay: 20,
+			bulk: 0,
+			loop: function () {
+				$jq(this).click();
+			}
+		});
+		this.src = this.src.replace("ofolder", "folder");
+	} else {
+		$jq(".collapsed .expander").eachAsync({
+			delay: 20,
+			bulk: 0,
+			loop: function () {
+				$jq(this).click();
+			}
+		});
+		this.src = this.src.replace("folder", "ofolder");
+	}
+});');
 	}
 	
 	// start writing the table

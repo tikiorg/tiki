@@ -271,46 +271,63 @@ $js = '';
 
 // TODO - move this to the tpl - too much JS for most browsers to handle comfortably
 
-//for( $i = 0; $i < count($groupNames); $i++) {
-//
-//	$groupName = addslashes($groupNames[$i]);
-//	$beneficiaries = '';
-//	for( $j = 0; $j < count($groupInheritance); $j++) {
-//		if (is_array($groupInheritance[$j]) && in_array($groupName, $groupInheritance[$j])) {
-//			$beneficiaries .= !empty($beneficiaries) ? ',' : '';
-//			$beneficiaries .='input[name="perm['. addslashes($groupNames[$j]).'][]"]';
-//		}
-//	}
-//
-//	
-//	$js .= <<< JS
-//\$jq('input[name="perm[$groupName][]"]').each( function() { 		// each one of this group
-//
-//	if (\$jq(this).attr('checked')) {
-//		\$jq('input[value="'+\$jq(this).val()+'"]').					// other checkboxes of same value (perm)
-//			filter('$beneficiaries').									// which inherit from this
-//			attr('checked',\$jq(this).attr('checked')).					// check and disable
-//			attr('disabled',\$jq(this).attr('checked') ? 'disabled' : '');
-//	}
-//		
-//	\$jq(this).click( function() {									// bind click event
-//	
-//		if (\$jq(this).attr('checked')) {
-//			\$jq('input[value="'+\$jq(this).val()+'"]').			// same...
-//				filter('$beneficiaries').
-//				attr('checked','checked').							// check?
-//				attr('disabled','disabled');						// disable
-//		} else {
-//			\$jq('input[value="'+\$jq(this).val()+'"]').			// same...
-//				filter('$beneficiaries').
-//				attr('checked','').									// check?
-//				attr('disabled','');								// disable
-//}
-//	});
-//});
-//
-//JS;
-//}	// end of for $groupNames loop
+for( $i = 0; $i < count($groupNames); $i++) {
+
+	$groupName = addslashes($groupNames[$i]);
+	$beneficiaries = '';
+	for( $j = 0; $j < count($groupInheritance); $j++) {
+		if (is_array($groupInheritance[$j]) && in_array($groupName, $groupInheritance[$j])) {
+			$beneficiaries .= !empty($beneficiaries) ? ',' : '';
+			$beneficiaries .='input[name="perm['. addslashes($groupNames[$j]).'][]"]';
+		}
+	}
+
+	
+	$js .= <<< JS
+\$jq('#perms_busy').show();
+\$jq('input[name="perm[$groupName][]"]').eachAsync({
+			delay: 10,
+			bulk: 0,
+JS;
+	if ($i == count($groupNames)-1) {
+		$js .= <<< JS
+
+			end: function () {
+				\$jq('#perms_busy').hide();
+			},
+JS;
+	}
+	$js .= <<< JS
+
+			loop: function() { 		// each one of this group
+
+	if (\$jq(this).attr('checked')) {
+		\$jq('input[value="'+\$jq(this).val()+'"]').					// other checkboxes of same value (perm)
+			filter('$beneficiaries').									// which inherit from this
+			attr('checked',\$jq(this).attr('checked')).					// check and disable
+			attr('disabled',\$jq(this).attr('checked') ? 'disabled' : '');
+	}
+		
+	\$jq(this).click( function() {									// bind click event
+	
+		if (\$jq(this).attr('checked')) {
+			\$jq('input[value="'+\$jq(this).val()+'"]').			// same...
+				filter('$beneficiaries').
+				attr('checked','checked').							// check?
+				attr('disabled','disabled');						// disable
+		} else {
+			\$jq('input[value="'+\$jq(this).val()+'"]').			// same...
+				filter('$beneficiaries').
+				attr('checked','').									// check?
+				attr('disabled','');								// disable
+}
+	});
+			}
+});
+
+JS;
+}	// end of for $groupNames loop
+
 
 // if the number of groups has changed delete the old cookie tracking column hiding
 if (isset($_COOKIE['columnManagerCtreetable_1'])) {

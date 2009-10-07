@@ -30,17 +30,18 @@
 				{remarksbox type="note" title="{tr}Note{/tr}"}
 					{tr}Currently editing Global permissions.{/tr}
 				{/remarksbox}
-			{else}
+			{elseif $permissions_displayed eq 'parent'}
 				{remarksbox type="note" title="{tr}Note{/tr}"}
 					{tr}No permissions yet applied to this object. Global permissions apply.{/tr}<br />
 					{if $tiki_p_admin eq 'y'}{tr}To edit global permissions{/tr} {self_link objectType='global' permType=$permType}{tr}click here{/tr}{/self_link}.{/if}
+					<br /><br />
+					{tr}Currently inherited permissions displayed.{/tr}
 				{/remarksbox}
 			{/if}
 		{/if}
 	
 	<hr />
-
-		<h2>{if $objectType eq 'global'}{tr}Assign global permissions{/tr}{else}{tr}Assign permissions to this object{/tr}{/if}</h2>
+		<h2>{if $objectType eq 'global'}{tr}Assign global permissions{/tr}{else}{tr}Assign permissions to this object{/tr}{/if} {icon _id="img/loading-light.gif" id="perms_busy" style="vertical-align:top; display:none;"}</h2>
 
 		<input type="hidden" name="referer" value="{$referer|escape}" />
 		<input type="hidden" name="objectName" value="{$objectName|escape}" />
@@ -56,14 +57,6 @@
 		</div>
 		
 		<h3>{tr}Permissions{/tr}</h3>
-
-		{if $permissions_displayed eq 'parent'}
-			{remarksbox type="note" title="{tr}Note{/tr}"}
-				{tr}There are no specific permissions.{/tr}
-				<br/>
-				{tr}Currently inherited permissions displayed.{/tr}
-			{/remarksbox}
-		{/if}
 
 		{if $objectType eq 'category'}
 			<p>

@@ -87,6 +87,7 @@ $jq(document).ready(function(){
 {/if}
 {* small libs on by default *}
 <script type="text/javascript" src="lib/jquery/jquery.cookie.js"></script>
+<script type="text/javascript" src="lib/jquery/jquery.async.js"></script>
 <script type="text/javascript" src="lib/jquery/jquery.columnmanager/jquery.columnmanager{$minified}.js"></script>
 <script type="text/javascript" src="lib/jquery/treeTable/src/javascripts/jquery.treeTable{$minified}.js"></script>
 <link rel="stylesheet" href="lib/jquery/treeTable/src/stylesheets/jquery.treeTable.css" type="text/css" /> 
