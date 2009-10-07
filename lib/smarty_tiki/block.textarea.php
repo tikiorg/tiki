@@ -220,15 +220,15 @@ function editTimerTick() {
 }
 
 function confirmExit() {
-	if (needToConfirm && typeof fckEditorInstances != 'undefined' && fckEditorInstances.length > 0) {
+	if (window.needToConfirm && typeof fckEditorInstances != 'undefined' && fckEditorInstances.length > 0) {
 		for(ed in fckEditorInstances) {
 			if (fckEditorInstances[ed].IsDirty()) {
-				editorDirty = true;
+				window.editorDirty = true;
 				break;
 			}
 		}
 	}
-	if (needToConfirm && editorDirty) {
+	if (window.needToConfirm && window.editorDirty) {
 		return '".tra('You are about to leave this page. Changes since your last save will be lost. Are you sure you want to exit this page?')."';
 	}
 }
@@ -240,17 +240,18 @@ window.onbeforeunload = confirmExit;
 	\$jq(\$jq('#$as_id').attr('form')).find('input, textarea, select').change( function () { if (!editorDirty) { editorDirty = true; } });
 });
 
-var needToConfirm = true;
-var editorDirty = ".(isset($_REQUEST["preview"]) ? 'true' : 'false').";
+window.needToConfirm = true;
+window.editorDirty = ".(isset($_REQUEST["preview"]) ? 'true' : 'false').";
 var editTimeoutSeconds = ".ini_get('session.gc_maxlifetime').";
 var editTimeElapsedSoFar = 0;
 var editTimeoutIntervalId;
 var editTimerWarnings = 0;
 // end edit timeout warnings
 ";
-	$headerlib->add_js($js);
-	$headerlib->add_js('function switchEditor(mode, form) {
-	needToConfirm=false;
+	if ($prefs['feature_wysiwyg'] && $prefs['wysiwyg_optional']) {
+		$js .= '
+function switchEditor(mode, form) {
+	window.needToConfirm=false;
 	var w;
 	if (mode=="wysiwyg") {
 		$jq(form).find("input[name=mode_wysiwyg]").val("y");
@@ -260,7 +261,10 @@ var editTimerWarnings = 0;
 		$jq(form).find("input[name=wysiwyg]").val("n");
 	}
 	form.submit();
-}');
+}';
+	}
+	
+	$headerlib->add_js($js);
 
 	return $auto_save_warning.$html;
 }
