@@ -182,7 +182,7 @@ class HeaderLib {
                         $back .= "<![endif]-->\n";
 
                         
-        $back .= $this->output_js();	// TODO move to end of page
+        $back .= $this->output_js_files();	// TODO move some files to end of page?
         
 		if (count($this->rssfeeds)) {
 			foreach ($this->rssfeeds as $x=>$rssf) {
@@ -197,12 +197,10 @@ class HeaderLib {
 		return $back;
 	}
 	
-	function output_js() {
+	function output_js_files() {
 		global $prefs;
 		
 		ksort($this->jsfiles);
-		ksort($this->js);
-		ksort($this->jq_onready);
 		
 		$back = "\n";
 		
@@ -215,7 +213,17 @@ class HeaderLib {
 			}
 			$back.= "\n";
 		}
-
+		return $back;
+	}
+	
+	function output_js() {	// called in footer.tpl - JS output at end of file now (pre 4.0)
+		global $prefs;
+		
+		ksort($this->js);
+		ksort($this->jq_onready);
+		
+		$back = "\n";
+		
 		if (count($this->js)) {
 			$b = '';
 			foreach ($this->js as $x=>$js) {
