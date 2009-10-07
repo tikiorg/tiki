@@ -1495,6 +1495,13 @@ div.quicktag img,
 #wikihelp-tab td img {}
 div#helptool {}
 
+/* Edit form */
+
+#editpageform td {
+	background: #E0DFE3 none repeat scroll 0 0;
+	border: 1px solid #9D9DA1;
+}
+
 /* Wiki plugins */
 
 /* Code plugin  */
