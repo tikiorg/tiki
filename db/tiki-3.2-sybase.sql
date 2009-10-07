@@ -5920,7 +5920,8 @@ CREATE TABLE "tiki_quicktags" (
   "taginsert" text default '',
   "tagicon" varchar(255) default NULL NULL,
   "tagcategory" varchar(255) default NULL NULL,
-  PRIMARY KEY (tagId)
+  PRIMARY KEY (tagId),
+  UNIQUE KEY `no_repeats` (`taglabel`(50),`taginsert`(50),`tagicon`(100),`tagcategory`(50))
 ) ENGINE=MyISAM  
 go
 
@@ -7130,7 +7131,7 @@ CREATE TABLE `tiki_pages_translation_bits` (
   `version` numeric(8,0) NOT NULL,
   `source_translation_bit` numeric(10,0) NULL,
   `original_translation_bit` numeric(10,0) NULL,
-  `flags` SET('critical') NULL DEFAULT '',
+  `flags` SET('critical') DEFAULT NULL NULL,
   PRIMARY KEY (`translation_bit_id`),
   KEY(`page_id`),
   KEY(`original_translation_bit`),
@@ -7291,7 +7292,7 @@ CREATE TABLE "tiki_groupalert" (
   "objectType" varchar( 20 ) default '' NOT NULL,
   "objectId"  varchar(10) default '' NOT NULL,
   "displayEachuser"  char( 1 ) default NULL NULL ,
-  PRIMARY KEY ( objectType,objectId )
+  PRIMARY KEY ( `groupName`, `objectType`, `objectId` )
 ) ENGINE=MyISAM 
 go
 

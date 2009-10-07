@@ -4727,7 +4727,8 @@ CREATE TABLE "tiki_quicktags" (
   "taginsert" clob,
   "tagicon" varchar(255) default NULL,
   "tagcategory" varchar(255) default NULL,
-  PRIMARY KEY (tagId)
+  PRIMARY KEY (tagId),
+  UNIQUE KEY `no_repeats` (`taglabel`(50),`taginsert`(50),`tagicon`(100),`tagcategory`(50))
 ) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_quicktags_trig" BEFORE INSERT ON "tiki_quicktags" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
@@ -5438,7 +5439,7 @@ CREATE TABLE `tiki_pages_translation_bits` (
   `version` number(8) NOT NULL,
   `source_translation_bit` number(10) NULL,
   `original_translation_bit` number(10) NULL,
-  `flags` SET('critical') NULL DEFAULT '',
+  `flags` SET('critical') DEFAULT NULL,
   PRIMARY KEY (`translation_bit_id`),
   KEY(`page_id`),
   KEY(`original_translation_bit`),
@@ -5560,7 +5561,7 @@ CREATE TABLE "tiki_groupalert" (
   "objectType" varchar( 20 ) default '' NOT NULL,
   "objectId"  varchar(10) default '' NOT NULL,
   "displayEachuser"  char( 1 ) default NULL ,
-  PRIMARY KEY ( objectType,objectId )
+  PRIMARY KEY ( `groupName`, `objectType`, `objectId` )
 ) ENGINE=MyISAM ;
 
 
