@@ -368,6 +368,10 @@ function sendFileGalleryEmailNotification($event, $galleryId, $galleryName, $nam
                 include_once('lib/webmail/tikimaillib.php');
                 $mail = new TikiMail();
                 $smarty->assign('galleryName', $galleryName);
+				$smarty->assign('galleryId', $galleryId);
+				$smarty->assign('fname', $name);
+				$smarty->assign('filename', $filename);
+				$smarty->assign('fdescription', $description);
                 $smarty->assign('mail_date', $tikilib->now);
                 $smarty->assign('author', $user);
                 $foo = parse_url($_SERVER["REQUEST_URI"]);
