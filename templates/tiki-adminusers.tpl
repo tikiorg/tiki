@@ -124,10 +124,11 @@
 			</tr>
 			{cycle print=false values="even,odd"}
 			{section name=user loop=$users}
+				{capture assign=username}{$users[user].user|escape}{/capture}
 				<tr class="{cycle}">
 					<td class="thin">
 						{if $users[user].user ne 'admin'}
-							<input type="checkbox" name="checked[]" value="{$users[user].user}" {if $users[user].checked eq 'y'}checked="checked" {/if}/>
+							<input type="checkbox" name="checked[]" value="{$users[user].user|escape}" {if $users[user].checked eq 'y'}checked="checked" {/if}/>
 						{/if}
 					</td>
 
@@ -153,7 +154,7 @@
 					</td>
 
 					<td class="thin">
-						<a class="link" href="tiki-assignuser.php?assign_user={$users[user].user|escape:url}" title="{tr}Assign to group{/tr}">{icon _id='group_key' alt="{tr}Assign{/tr} `$users[user].user` {tr}to groups{/tr} "}</a>
+						<a class="link" href="tiki-assignuser.php?assign_user={$users[user].user|escape:url}" title="{tr}Assign to group{/tr}">{icon _id='group_key' alt="{tr}Assign{/tr} `$username` {tr}to groups{/tr} "}</a>
 					</td>
 
 					<td>
@@ -161,12 +162,12 @@
 							<div style="white-space:nowrap">
 								{if $grs != "Anonymous" and ($tiki_p_admin eq 'y' || in_array($grs, $all_groups))}
 									{if $what ne 'included' and $grs != "Registered"}
-										{self_link _class='link' user=$users[user].user action='removegroup' group=$grs _icon='cross' _title="{tr}Remove{/tr} `$users[user].user` {tr}from{/tr} $grs"}{/self_link}
+										{self_link _class='link' user=$users[user].user action='removegroup' group=$grs _icon='cross' _title="{tr}Remove{/tr} `$username` {tr}from{/tr} $grs"}{/self_link}
 									{else}
 										{icon _id='bullet_white'}
 									{/if}
 									{if $what eq 'included'}<i>{/if}
-									<a class="link" {$link_style} href="tiki-admingroups.php?group={$grs|escape:"url"}" title={if $what eq 'included'}"{tr}Edit Included Group{/tr}"{else}"{tr}Edit Group:{/tr} {$grs}"{/if}>{$grs}</a>
+									<a class="link" {$link_style} href="tiki-admingroups.php?group={$grs|escape:"url"}" title={if $what eq 'included'}"{tr}Edit Included Group{/tr}"{else}"{tr}Edit Group:{/tr} {$grs|escape}"{/if}>{$grs|escape}</a>
 									{if $what eq 'included'}</i>{/if}
 									{if $grs eq $users[user].default_group}<small>({tr}default{/tr})</small>{/if}
 									{if !$smarty.foreach.gr.last}<br />{/if}
@@ -177,21 +178,21 @@
 
 					<td>
 						{if $prefs.feature_userPreferences eq 'y' || $user eq 'admin'}
-							{self_link _class="link" user=`$users[user].userId` _icon="page_edit" _title="{tr}Edit Account Settings:{/tr} `$users[user].user`"}{/self_link}
-							<a class="link" href="tiki-user_preferences.php?userId={$users[user].userId}" title="{tr}Change user preferences:{/tr} {$users[user].user}">{icon _id='wrench' alt="{tr}Change user preferences:{/tr} `$users[user].user`"}</a>
+							{self_link _class="link" user=`$users[user].userId` _icon="page_edit" _title="{tr}Edit Account Settings:{/tr} `$username`"}{/self_link}
+							<a class="link" href="tiki-user_preferences.php?userId={$users[user].userId}" title="{tr}Change user preferences:{/tr} {$username}">{icon _id='wrench' alt="{tr}Change user preferences:{/tr} `$username`"}</a>
 						{/if}
 
 						{if $tiki_p_admin eq 'y' or $users[user].user eq $user or $users[user].user_information neq 'private'}
-							<a class="link" href="tiki-user_information.php?userId={$users[user].userId}" title="{tr}User Information:{/tr} {$users[user].user}">{icon _id='help' alt="{tr}User Information:{/tr} `$users[user].user`"}</a>
+							<a class="link" href="tiki-user_information.php?userId={$users[user].userId}" title="{tr}User Information:{/tr} {$username}">{icon _id='help' alt="{tr}User Information:{/tr} `$username`"}</a>
 						{/if}
 	
 						{if $users[user].user ne 'admin'}
 							<a class="link" href="{$smarty.server.PHP_SELF}?{query action=delete user=$users[user].user}" title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
 							{if $users[user].valid && $users[user].waiting eq 'a'}
-								<a class="link" href="tiki-login_validate.php?user={$users[user].user|escape:url}&amp;pass={$users[user].valid|escape:url}" title="{tr}Validate user:{/tr} {$users[user].user|username}">{icon _id='accept' alt="{tr}Validate user:{/tr} `$users[user].user`"}</a>
+								<a class="link" href="tiki-login_validate.php?user={$users[user].user|escape:url}&amp;pass={$users[user].valid|escape:url}" title="{tr}Validate user:{/tr} {$users[user].user|username}">{icon _id='accept' alt="{tr}Validate user:{/tr} `$username`"}</a>
 							{/if}
 							{if $users[user].waiting eq 'u'}
-								<a class="link" href="tiki-confirm_user_email.php?user={$users[user].user|escape:url}&amp;pass={$users[user].provpass|md5|escape:url}" title="{tr}Confirm user email:{/tr} {$users[user].user|username}">{icon _id='email_go' alt="{tr}Confirm user email:{/tr} `$users[user].user`"}</a>
+								<a class="link" href="tiki-confirm_user_email.php?user={$users[user].user|escape:url}&amp;pass={$users[user].provpass|md5|escape:url}" title="{tr}Confirm user email:{/tr} {$users[user].user|username}">{icon _id='email_go' alt="{tr}Confirm user email:{/tr} `$username`"}</a>
 							{/if}
 							{if $prefs.email_due > 0 and $users[user].waiting ne 'u' and $users[user].waiting ne 'a'}
 								<a class="link" href="tiki-adminusers.php?user={$users[user].user|escape:url}&amp;action=email_due" title="{tr}Invalid email{/tr}">{icon _id='email_cross' alt="{tr}Invalid email{/tr}"}</a>
@@ -284,14 +285,14 @@
 {* ---------------------- tab with form -------------------- *}
 <a name="2" ></a>
 {if $userinfo.userId}
-	{assign var=add_edit_user_tablabel value="{tr}Edit user{/tr} <i>`$userinfo.login`</i>"}
+	{capture assign=add_edit_user_tablabel}{tr}Edit user{/tr} <i>{$userinfo.login|escape}</i>{/capture}
 {else}
 	{assign var=add_edit_user_tablabel value='{tr}Add a New User{/tr}'}
 {/if}
 
 {tab name=$add_edit_user_tablabel}
 	{if $userinfo.userId}
-		<h2>{tr}Edit user:{/tr} {$userinfo.login}</h2>
+		<h2>{tr}Edit user:{/tr} {$userinfo.login|escape}</h2>
 		{if $userinfo.login ne 'admin'}
 			{assign var=thisloginescaped value=$userinfo.login|escape:'url'}
 			{button href="tiki-assignuser.php?assign_user=$thisloginescaped" _text="{tr}Assign user to Groups{/tr}"}
@@ -304,11 +305,11 @@
 			<tr class="formcolor">
 				<td><label for="name">
 					{if $prefs.login_is_email eq 'y'}
-						{tr}Email{/tr}
+						{tr}Email:{/tr}
 					{else}
-						{tr}User{/tr}
+						{tr}User:{/tr}
 					{/if}
-					:</label>
+					</label>
 				</td>
 				<td>
 					{if $userinfo.login neq 'admin'}

@@ -49,7 +49,7 @@
 					<a class="link" href="tiki-admingroups.php?group={$users[user].groupName|escape:"url"}" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
 				</td>
 				<td>
-					<a class="link" href="tiki-admingroups.php?group={$users[user].groupName|escape:"url"}{if $prefs.feature_tabs ne 'y'}#2{/if}" title="{tr}Edit{/tr}">{$users[user].groupName}</a>
+					<a class="link" href="tiki-admingroups.php?group={$users[user].groupName|escape:"url"}{if $prefs.feature_tabs ne 'y'}#2{/if}" title="{tr}Edit{/tr}">{$users[user].groupName|escape}</a>
 				</td>
 				<td>{tr}{$users[user].groupDesc|escape|nl2br}{/tr}</td>
 				<td>
@@ -74,7 +74,7 @@
 {/tab}
 
 {if $groupname}
-	{assign var=tabaddeditgroup_admgrp value="{tr}Edit group{/tr} <i>`$groupname`</i>"}
+	{capture assign=tabaddeditgroup_admgrp}{tr}Edit group{/tr} <i>{$groupname|escape}</i>{/capture}
 {else}
 	{assign var=tabaddeditgroup_admgrp value='{tr}Add a New Group{/tr}'}
 {/if}
@@ -122,7 +122,7 @@
 							<option value="{$gr|escape}" {if $yn eq 'y'} selected="selected"{/if}>{$gr|truncate:"52"|escape}</option>
 						{/foreach}
 					</select>
-					<br />&quot;{$groupname|default:"Group"}&quot; {tr}will have all the permissions of the included groups{/tr}.
+					<br />&quot;{$groupname|default:"Group"|escape}&quot; {tr}will have all the permissions of the included groups{/tr}.
 					{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple groups.{/tr}{/remarksbox}
 				</td>
 			</tr>

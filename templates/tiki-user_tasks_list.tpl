@@ -87,7 +87,7 @@
 {/if}
 	</td>
 	<td class="prio{$tasklist[task_i].priority}">
-<a {if $tasklist[task_i].status eq 'c'}style="text-decoration:line-through;"{/if} class="link" href="tiki-user_tasks.php?taskId={$tasklist[task_i].taskId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;tiki_view_mode=view&amp;find={$find}">{$tasklist[task_i].title}</a></td>
+<a {if $tasklist[task_i].status eq 'c'}style="text-decoration:line-through;"{/if} class="link" href="tiki-user_tasks.php?taskId={$tasklist[task_i].taskId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;tiki_view_mode=view&amp;find={$find}">{$tasklist[task_i].title|escape}</a></td>
 <td {if $tasklist[task_i].status eq 'c'}style="text-decoration:line-through;"{/if} class="prio{$tasklist[task_i].priority}"><div class="mini">{$tasklist[task_i].start|date_format:"{tr}%m/%d/%Y [%H:%M]{/tr}"}</div></td>
 <td {if $tasklist[task_i].status eq 'c'}style="text-decoration:line-through;"{/if} class="prio{$tasklist[task_i].priority}"><div class="mini">{$tasklist[task_i].end|date_format:"{tr}%m/%d/%Y [%H:%M]{/tr}"}</div></td>
 <td style="text-align:right;{if $tasklist[task_i].status eq 'c'}text-decoration:line-through;{/if}" class="prio{$tasklist[task_i].priority}">{$tasklist[task_i].priority}</td>
