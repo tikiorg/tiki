@@ -24,14 +24,14 @@
  * 				or a string like: '"permName"="Permission Name", "permDesc"="Description", etc'
  * 				if undefined it tries to guess (?)
  * 
- * _valueColumnIndex = 0	:	index of the col in the _data array above to use as the unique index
+ * _valueColumnIndex = 0	:	index (or name) of the col in the _data array above to use as the unique index
  * 
  * _sortColumn = ''			:	column to organise tree by (actually row key = e.g. 'type')
  * 
  * _checkbox = ''			: 	name of checkbox (auto-incrementing) - no checkboxes if not set
  * 								if comma delimited list (or array) then makes multiple checkboxes
  * 
- * _checkboxColumnIndex = 0	:	index of the col in the _data array above to use as the checkbox value
+ * _checkboxColumnIndex = 0	:	index (or name) of the col in the _data array above to use as the checkbox value
  * 								comma delimeted list (or array - of ints) for multiple checkboxes as set above
  * 								if set needs to match number of checkboxes defines in _checkbox (or if not set uses 0,1,2 etc)
  * 

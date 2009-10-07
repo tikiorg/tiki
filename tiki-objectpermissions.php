@@ -210,7 +210,6 @@ $permGroups = array();
 $groupNames = array();
 $groupIndices = array();
 $groupInheritance = array();
-$groupIndex = 6;	// yuk! - this gives the treetable the row index in it's data for each checkbox
 foreach($groups['data'] as $row) {
 	$groupNames[] = $row['groupName'];
 	$permGroups[] = 'perm['.$row['groupName'].']';
@@ -221,7 +220,7 @@ foreach($groups['data'] as $row) {
 		$groupInheritance[] = '';
 		$inh = '';
 	}
-	$groupIndices[] = $groupIndex;
+	$groupIndices[] = $row['groupName'] . '_hasPerm';
 	
 // More TODO - merge all this into a single array - but that means considerable changes to treetable (soon)
 //	$checkboxInfo[] = array('name' => $row['groupName'],
@@ -229,8 +228,6 @@ foreach($groups['data'] as $row) {
 //						 'index' => $groupIndex,
 //						 'inheritance' => $inh);
 
-	$groupIndex++;
-	
 }
 
 $smarty->assign('permGroups', implode(',', $permGroups));
