@@ -2,7 +2,7 @@
 {if $prefs.feature_use_minified_scripts == 'y'}{assign var=minified value='.min'}{assign var=minidir value='minified'}{else}{assign var=minified value=''}{assign var=minidir value=''}{/if}
 <!--  start jquery-tiki -->
 <script type="text/javascript" src="lib/jquery/jquery{$minified}.js"></script>
-<script type="text/javascript" src="lib/jquery_tiki/tiki-jquery.js"></script>{* add {$minified} later *}
+<script type="text/javascript" src="lib/jquery_tiki/tiki-jquery.js"></script>{* add {$minified} later if $minify_scripts_on_the_fly *}
 <!-- Includes for Colorbox script -->
 
 {if $prefs.feature_use_minified_scripts == 'y'}

@@ -23,7 +23,11 @@ if ($prefs['javascript_enabled'] != 'y') {
 }
 
 if ($prefs['feature_jquery_ui'] != 'y') {
-	$headerlib->add_jsfile('lib/jquery/jquery-ui/ui/minified/jquery-ui.min.js');
+	if ($prefs['feature_use_minified_scripts'] == 'y') {
+		$headerlib->add_jsfile('lib/jquery/jquery-ui/ui/minified/jquery-ui.min.js');
+	} else {
+		$headerlib->add_jsfile('lib/jquery/jquery-ui/ui/jquery-ui.js');
+	}
 	$headerlib->add_cssfile('lib/jquery/jquery-ui/themes/'.$prefs['feature_jquery_ui_theme'].'/jquery-ui.css');
 }
 
@@ -160,7 +164,7 @@ $headerlib->add_js( "var toolbarsadmin_rowStr = '" . substr(implode(",#row-",ran
 var toolbarsadmin_fullStr = '#full-list-w,#full-list-p,#full-list-c';
 var toolbarsadmin_delete_text = '" . tra('Are you sure you want to delete this custom tool?') . "'\n");
 
-$headerlib->add_jsfile('lib/toolbars/tiki-admin_toolbars' . ($prefs['feature_use_minified_scripts'] == 'y' ? '.min' : '') . '.js');
+$headerlib->add_jsfile('lib/toolbars/tiki-admin_toolbars' . (!empty($minify_scripts_on_the_fly) && $prefs['feature_use_minified_scripts'] == 'y' ? '.min' : '') . '.js');
 
 $display_w = array_diff($qt_w_list,$usedqt);
 if (!in_array('-', $display_w)) {
