@@ -99,6 +99,11 @@
 </div>
 
 <div class="adminoptionbox">
+	<div class="adminoption"><input type="checkbox" id="wiki_edit_icons_toggle" name="wiki_edit_icons_toggle" {if $prefs.wiki_edit_icons_toggle eq 'y'}checked="checked"{/if}/></div>
+	<div class="adminoptionlabel"><label for="wiki_edit_icons_toggle">{tr}Toggle display of section and plugin edit icons{/tr}</label></div>
+</div>
+
+<div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" id="wiki_edit_minor" name="wiki_edit_minor" {if $prefs.wiki_edit_minor eq 'y'}checked="checked"{/if}/></div>
 	<div class="adminoptionlabel"><label for="wiki_edit_minor">{tr}Allow minor edits{/tr}.</label>
 	{remarksbox type=note title=Note}{tr}Minor edits do not flag new content for translation and do not send watch notifications.{/tr}.<br />

@@ -81,6 +81,7 @@ if (isset($_REQUEST['wikilistprefs'])) {
 		'wiki_list_categories',
 		'wiki_list_categories_path',
 		'wiki_list_id',
+		'wiki_edit_icons_toggle',
 	);
 	foreach($pref_toggles as $toggle) {
 		simple_set_toggle($toggle);

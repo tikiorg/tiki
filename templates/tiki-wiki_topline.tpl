@@ -20,7 +20,7 @@
 				<a href="tiki-print.php?{query display="pdf"}" title="{tr}PDF{/tr}">{icon _id='page_white_acrobat' alt="{tr}PDF{/tr}"}</a>
 	{/if}
 	{if $editable and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox') and $beingEdited ne 'y' and $machine_translate_to_lang == '' or $canEditStaging eq 'y' }
-		{if $prefs.wiki_edit_plugin eq 'y' or $prefs.wiki_edit_section eq 'y'}
+		{if $prefs.wiki_edit_icons_toggle eq 'y' and ($prefs.wiki_edit_plugin eq 'y' or $prefs.wiki_edit_section eq 'y')}
 			{jq}
 			$jq("#wiki_plugin_edit_view").click( function () {
 				var src = $jq("#wiki_plugin_edit_view img").attr("src");
