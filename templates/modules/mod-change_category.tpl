@@ -7,6 +7,15 @@ note : lists the objects from a given category not a recursive tree
 
 {if $prefs.feature_categories eq 'y' and isset($page) and $showmodule}
 	{tikimodule error=$module_params.error title=$tpl_module_title name="change_category" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
+		{if !empty($module_params.imgUrlNotIn) and !empty($module_params.imgUrlIn)}
+			{foreach key=k item=i from=$modcatlist}
+				{if $modcatlist[$k].incat eq 'n'}
+					{self_link modcatid=$modcatid modcatchange=$k _title='{tr}Assign into category{/tr}'}<img src="{$module_params.imgUrlNotIn}" />{/self_link}
+				{else}
+					{self_link remove=$k _title='{tr}Unassign category{/tr}'}<img src="{$module_params.imgUrlIn}" />{/self_link}
+				{/if}
+			{/foreach}
+		{else}
 
 		{if $detailed eq 'y'}
 			{cycle values="odd,even" print=false}
@@ -60,6 +69,8 @@ note : lists the objects from a given category not a recursive tree
 					{/if}
 				</form>
 			</div>
+		{/if}
+
 		{/if}
 
 	{/tikimodule}

@@ -54,7 +54,15 @@ function module_change_category_info() {
 			'group' => array(
 				'name' => 'Group filter',
 				'description' => 'Very particular filter option. If set to "y", only categories with a name matching one of the user\'s groups are shown, and descendants of these matching categories.' . " " . tra('Example values: y, n.') . " " . tra('Default value: n.'),
-			)
+			),
+			'imgUrlNotIn' => array(
+				'name' => tra('Image Url not in the category'),
+				'description' => tra('Url of the image to display if not in the only category.'),
+			),
+			'imgUrlIn' => array(
+				'name' => tra('Image Url in the category'),
+				'description' => tra('Url of the image to display if in the only category.'),
+			),
 		),
 	);
 }
@@ -131,6 +139,7 @@ function module_change_category( $mod_reference, $module_params ) {
 		$assignedCategs = array();
 		if (isset($_REQUEST['remove']) && in_array($_REQUEST['remove'], $categsid) && (!isset($module_params['del']) || $module_params['del'] != 'n')) {
 			$unassignedCategs[] = (int)$_REQUEST['remove'];
+			unset($_REQUEST['remove']);
 		} elseif (isset($_REQUEST["modcatid"]) and $_REQUEST["modcatid"] == $id) {
 			$newCategs = is_array($_REQUEST['modcatchange']) ? $_REQUEST['modcatchange'] : array($_REQUEST['modcatchange']);
 			foreach($newCategs as &$newCateg)
@@ -146,10 +155,9 @@ function module_change_category( $mod_reference, $module_params ) {
 		if (!empty($assignedCategs) || !empty($unassignedCategs)) {
 			$assignedCategs = Perms::filter( array( 'type' => 'category' ), 'object', $assignedCategs, array( 'object' => 'category' ), 'add_object' );
 			$categlib->categorize_page($cat_objid, $assignedCategs);
-			if ($catObjectId = $categlib->is_categorized($cat_type, $cat_objid))
+			if ($catObjectId = $categlib->is_categorized($cat_type, $cat_objid)) {
 				$categlib->remove_object_from_categories($catObjectId, Perms::filter( array( 'type' => 'category' ), 'object', $unassignedCategs, array( 'object' => 'category' ), 'remove_object' ));
-			header('Location: '.$_SERVER['REQUEST_URI']);
-			die;
+			}
 		}
 
 		$incategs = $categlib->get_object_categories($cat_type, $cat_objid);
@@ -170,6 +178,10 @@ function module_change_category( $mod_reference, $module_params ) {
 				$modcatlist[$categId]['incat'] = 'n';
 				$remainCateg = true;
 			}
+		}
+		if (count($modcatlist) != 1) {
+			unset($module_params['imgUrlNotIn']);
+			unset($module_params['imgUrlIn']);
 		}
 	
 		$smarty->assign_by_ref('remainCateg', $remainCateg);
