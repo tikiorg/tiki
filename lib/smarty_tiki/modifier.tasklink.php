@@ -15,25 +15,25 @@ include_once('lib/tasks/tasklib.php');
 	if ($prefs['feature_community_mouseover'] == 'y'){
 		$description = "";
 	
-		$my_length = strlen($info[description]);
+		$my_length = strlen($info['description']);
 		$my_pos=0;	
 		$my_count=0;	
 		$append = '';
 		if ( $my_length > 0 ){
 		   do {
 			$my_count++;
-        	$my_pos = strpos($info[description],"\n",($my_pos+1));
+        	$my_pos = strpos($info['description'],"\n",($my_pos+1));
 		   }while(($my_count <= 15) && ($my_pos!=''));
 		}
 		if (($my_length >= 1300) || ($my_count >= 16)){
 			if($my_count < 15) {
 				$my_pos = 1300;
 			}
-			$description .= substr($info[description],0,min(1300,$my_pos+1));
+			$description .= substr($info['description'],0,min(1300,$my_pos+1));
 			$append .= "<br /><center><span class=\'highlight\'>".tra("Text cut here")."</span></center>";
 		}
 		else {
-			$description = $info[description];
+			$description = $info['description'];
 		}
 			$description =str_replace("\"","\'",str_replace("'","\\'",str_replace("\n","", (str_replace("\r\n", "<br />",$tikilib->parse_data($description)))))).$append;
 
@@ -55,9 +55,9 @@ include_once('lib/tasks/tasklib.php');
 		$mouseover = " onmouseover=\"return overlib('<table><tr><td>".$fillin."</td></tr></table>',HAUTO,VAUTO,CAPTION,'<div align=\'center\'>&nbsp; ".tra("Task").":&nbsp;&nbsp;".htmlspecialchars($info['title'])."</div>');\" onmouseout=\"nd()\""; 
 	}
 	$content = "<a class='".$class_name."'".$mouseover." href='tiki-user_tasks.php?taskId=".$taskId."&amp;tiki_view_mode=view&amp;offset=".$offset."&amp;sort_mode=".$sort_mode."' ";
- 	if ($info[status] == 'c'){
+ 	if ($info['status'] == 'c'){
 		$content .= "style=\"text-decoration:line-through;\"";
 	}
-	$content .= ">".$info['title']."</a>";
+	$content .= ">".htmlspecialchars($info['title'])."</a>";
     return $content;
 }
