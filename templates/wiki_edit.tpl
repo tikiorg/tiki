@@ -49,13 +49,13 @@
 </div>
 
 {if $zoom_mode eq 'y'}
-<div style="width:99%; text-align:right;">
+<div style="width:99%; text-align:right;" id="textarea-actions">
 {include file='wiki_edit_actions.tpl'}
 </div>
 
 <script type='text/javascript'>
 <!--//--><![CDATA[//><!--
-document.getElementById('{$textarea_id|default:editwiki}').style.height = ( getWindowHeight() - document.getElementById('textarea-toolbar').offsetHeight - 10 ) + 'px';
+document.getElementById('{$textarea_id|default:editwiki}').style.height = ( getWindowHeight() - document.getElementById('textarea-toolbar').offsetHeight - document.getElementById('textarea-actions').offsetHeight - 10 ) + 'px';
 document.getElementById('tiki-center').style.padding = '0px';
 document.body.style.backgroundColor = '#c1c1c1';
 //--><!]]>
