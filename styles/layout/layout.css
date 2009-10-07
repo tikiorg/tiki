@@ -1712,5 +1712,5 @@ ul.column_switcher {
 .column_switcher li:hover {
 	background-color: #ccc;
 }
-
+.thumbnailcontener { border: solid 1px lightgrey; margin: 1px; padding: 2px; text-align: center;}
 /* End of File */
