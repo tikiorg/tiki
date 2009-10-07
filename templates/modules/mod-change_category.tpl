@@ -10,9 +10,11 @@ note : lists the objects from a given category not a recursive tree
 		{if !empty($module_params.imgUrlNotIn) and !empty($module_params.imgUrlIn)}
 			{foreach key=k item=i from=$modcatlist}
 				{if $modcatlist[$k].incat eq 'n'}
-					{self_link modcatid=$modcatid modcatchange=$k _title='{tr}Assign into category{/tr}'}<img src="{$module_params.imgUrlNotIn}" />{/self_link}
+					{capture name='title'}{tr}Assign into category:{/tr} {tr}{$modcatlist[$k].name}{/tr}{/capture}
+					{self_link modcatid=$modcatid modcatchange=$k _title=$smarty.capture.title}<img src="{$module_params.imgUrlNotIn}" />{/self_link}
 				{else}
-					{self_link remove=$k _title='{tr}Unassign category{/tr}'}<img src="{$module_params.imgUrlIn}" />{/self_link}
+					{capture name='title'}{tr}Unassign category:{/tr} {tr}{$modcatlist[$k].name}{/tr}{/capture}
+					{self_link remove=$k _title=$smarty.capture.title}<img src="{$module_params.imgUrlIn}" />{/self_link}
 				{/if}
 			{/foreach}
 		{else}
