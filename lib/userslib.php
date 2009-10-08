@@ -1788,6 +1788,7 @@ function get_included_groups($group, $recur=true) {
 		if (!$lastRes) {
 			$groups = $this->get_user_groups($user);
 			$query = 'select `groupName`, `usersTrackerId`, `usersFieldId` from `users_groups` where `groupName` in ( '.implode(' , ',array_fill(0,count($groups),'?')).' ) and `groupName` != ? and `usersTrackerId` > 0';
+			$groups[] = 'Anonymous';
 			$result = $this->query($query, $groups);
 			while ($res = $result->fetchRow()) {
 				$lastRes = $res;
