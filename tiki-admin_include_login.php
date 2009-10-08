@@ -20,6 +20,7 @@ if (isset($_REQUEST["loginprefs"])) {
 	simple_set_toggle('groupTracker');
 	simple_set_toggle('allowRegister');
 	simple_set_toggle('validateRegistration');
+	simple_set_value('validator_emails');
 	simple_set_toggle('webserverauth');
 	simple_set_toggle('useRegisterPasscode');
 	simple_set_value('registerPasscode');

@@ -2878,7 +2878,8 @@ function get_included_groups($group, $recur=true) {
 			}
 			$mail_data = $smarty->fetch('mail/moderate_validation_mail.tpl');
 			$mail_subject = $smarty->fetch('mail/moderate_validation_mail_subject.tpl');
-			if ($prefs['sender_email'] == NULL or !$prefs['sender_email']) {
+			$emails = !empty($prefs['validator_emails'])?split(',', $prefs['validator_emails']): (!empty($prefs['sender_email'])? array($prefs['sender_email']): '');
+			if (empty($emails)) {
 				if ($prefs['feature_messages'] != 'y') {
 					$smarty->assign('msg', tra("The registration mail can't be sent because there is no server email address set, and this feature is disabled").": feature_messages");
 					return false;
@@ -2890,7 +2891,7 @@ function get_included_groups($group, $recur=true) {
 				$mail = new TikiMail();
 				$mail->setText($mail_data);
 				$mail->setSubject($mail_subject);
-				if (!$mail->send(array($prefs['sender_email']))) {
+				if (!$mail->send($emails)) {
 					$smarty->assign('msg', tra("The registration mail can't be sent. Contact the administrator"));
 					return false;
 				} elseif (empty($again)) {

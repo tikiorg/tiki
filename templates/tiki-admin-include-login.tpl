@@ -46,9 +46,12 @@
 							</div>
 			
 							<div class="adminoptionbox">
-								<div class="adminoption"><input type="checkbox" id="validateRegistration" name="validateRegistration" {if $prefs.validateRegistration eq 'y'}checked="checked"{/if} /></div>
+								<div class="adminoption"><input type="checkbox" id="validateRegistration" name="validateRegistration" {if $prefs.validateRegistration eq 'y'}checked="checked"{/if}  onclick="flip('validateRegistrationOptions');"/></div>
 								<div class="adminoptionlabel"><label for="validateRegistration">{tr}Require validation by Admin{/tr}.</label>
 									{if empty($prefs.sender_email)}<br /><span class="highlight">{tr}You need to set <a href="tiki-admin.php?page=general&amp;cookietab=2">Sender Email</a>{/tr}</span>{/if}
+								</div>
+								<div id="validateRegistrationOptions" style="clear:both;display:{if $prefs.validateRegistration eq 'y'}block{else}none{/if};margin-left:2.5em;">
+									 <label>{tr}Validator emails (separated by comma) if different than the sender email{/tr}:<input type="text" name="validator_emails" value="{$prefs.validator_emails|escape}" id="validator_emails" /></label>
 								</div>
 							</div>
 			
