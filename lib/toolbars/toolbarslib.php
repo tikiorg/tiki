@@ -515,18 +515,18 @@ class ToolbarInline extends Toolbar
 			$wysiwyg = 'Anchor';
 			$syntax = '{ANAME()}text{ANAME}';
 			break;
-		case 'color':
-			$label = tra('Text Color');
-			$icon = tra('pics/icons/palette.png');
-			$wysiwyg = 'TextColor';
-			$syntax = '~~red:text~~';
-			break;
-		case 'bgcolor':
-			$label = tra('Background Color');
-			$icon = tra('pics/icons/palette.png');
-			$wysiwyg = 'BGColor';
-			$syntax = '~~white,black:text~~';
-			break;
+//		case 'color':
+//			$label = tra('Text Color');
+//			$icon = tra('pics/icons/palette.png');
+//			$wysiwyg = 'TextColor';
+//			$syntax = '~~red:text~~';
+//			break;
+//		case 'bgcolor':
+//			$label = tra('Background Color');
+//			$icon = tra('pics/icons/palette.png');
+//			$wysiwyg = 'BGColor';
+//			$syntax = '~~white,black:text~~';
+//			break;
 		default:
 			return;
 		}
@@ -712,6 +712,47 @@ class ToolbarPicker extends Toolbar
 				$list["(:$smiley:)"] = '<img src="img/smiles/icon_' .$smiley . '.gif" alt="' . $tra . '" title="' . $tra . '" border="0" width="15" height="15" />';
 			}
 			break;
+		case 'color':
+			$wysiwyg = 'TextColor';
+			$label = tra('Foreground color');
+			$icon = tra('pics/icons/palette.png');
+			$rawList = array();
+			
+			$hex = array("0", "3", "6", "9", "c", "f");
+			for ($r = 0; $r < count($hex); $r++){ // red
+				for ($g = 0; $g < count($hex); $g++){ // green
+					for ($b = 0; $b < count($hex); $b++){ // blue
+						$color = $hex[$r].$hex[$g].$hex[$b];
+						$rawList[] = $color;
+					}
+				}
+			}
+			$list = array();
+			foreach( $rawList as $color) {
+				$list["~~#$color:text~~"] = "<div style='display:block; background-color: #$color; width: 17px; height:16px' title='$color' />&nbsp;</div>";
+			}
+			break;
+
+		case 'bgcolor':
+			$label = tra('Background Color');
+			$icon = tra('pics/icons/palette_bg.png');
+			$wysiwyg = 'BGColor';
+
+			$hex = array("0", "3", "6", "9", "c", "f");
+			for ($r = 0; $r < count($hex); $r++){ // red
+				for ($g = 0; $g < count($hex); $g++){ // green
+					for ($b = 0; $b < count($hex); $b++){ // blue
+						$color = $hex[$r].$hex[$g].$hex[$b];
+						$rawList[] = $color;
+					}
+				}
+			}
+			$list = array();
+			foreach( $rawList as $color) {
+				$list["~~black,#$color:text~~"] = "<div style='display:block; background-color: #$color; width: 17px; height:16px' title='$color' />&nbsp;</div>";
+			}
+			break;
+
 		default:
 			return;
 		}
@@ -760,10 +801,10 @@ class ToolbarPicker extends Toolbar
 
 		if( ! $pickerAdded ) {
 			$headerlib->add_js( <<<JS
-var pickerData = [];
+window.pickerData = [];
 var pickerDiv;
 
-function displayPicker( closeTo, list, areaname ) {
+displayPicker = function( closeTo, list, areaname ) {
 	if (pickerDiv) {
 		\$jq('div.toolbars-picker').remove();	// simple toggle
 		pickerDiv = false;
@@ -772,13 +813,9 @@ function displayPicker( closeTo, list, areaname ) {
 	pickerDiv = document.createElement('div');
 	document.body.appendChild( pickerDiv );
 
-	var coord;
-	if (typeof closeTo.getCoordinates == 'function') {	// moo
-		coord = closeTo.getCoordinates();
-	} else if (\$jq) {									// jq
-		coord = \$jq(closeTo).offset();
-		coord.bottom = coord.top + \$jq(closeTo).height();
-	}
+	var coord = \$jq(closeTo).offset();
+	coord.bottom = coord.top + \$jq(closeTo).height();
+
 	pickerDiv.className = 'toolbars-picker';
 	pickerDiv.style.left = coord.left + 'px';
 	pickerDiv.style.top = (coord.bottom + 8) + 'px';
@@ -793,8 +830,8 @@ function displayPicker( closeTo, list, areaname ) {
 		}
 	};
 
-	for( var i in pickerData[list] ) {
-		var char = pickerData[list][i];
+	for( var i in window.pickerData[list] ) {
+		var char = window.pickerData[list][i];
 		var link = document.createElement( 'a' );
 
 		pickerDiv.appendChild( link );
@@ -811,7 +848,7 @@ JS
 	function getWikiHtml( $areaName ) // {{{
 	{
 		global $headerlib;
-		$headerlib->add_js( "pickerData.push( " . json_encode($this->list) . " );", 1 );
+		$headerlib->add_js( "window.pickerData[$this->index] = " . json_encode($this->list) . ";", 1 + $this->index );
 		
 		return $this->getSelfLink($this->getSyntax($areaName),
 							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-picker');
