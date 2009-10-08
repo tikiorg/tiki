@@ -1441,7 +1441,7 @@ class TikiLib extends TikiDb_Bridge {
 				$ret = array_merge($ret, $included);
 			}
 			$ret[] = "Registered";
-//			$ret[] = "Anonymous";
+			$ret[] = "Anonymous";
 			if (isset($_SESSION["groups_are_emulated"]) && $_SESSION["groups_are_emulated"]=="y"){
 				$ret = array_intersect($ret,unserialize($_SESSION['groups_emulated']));
 			}
