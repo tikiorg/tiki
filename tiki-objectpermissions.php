@@ -369,12 +369,10 @@ if (isset($_COOKIE['columnManagerCtreetable_1'])) {
 	}
 }
 
-$maxGroupsToShow = 6;	// maybe a pref one day?
-if (count($groupNames) >= $maxGroupsToShow) {
+$maxGroupsToShow = 5;	// maybe a pref one day?
+if (!isset($_COOKIE['columnManagerCtreetable_1']) && count($groupNames) > $maxGroupsToShow) {
 	$hideGroups = implode(',',array_keys(array_fill($maxGroupsToShow+1, count($groupNames)-$maxGroupsToShow, 1)));
-	if (!isset($_COOKIE['columnManagerCtreetable_1'])) {
-		$smarty->assign('groupsHidden', 'y');
-	}
+	$smarty->assign('groupsHidden', 'y');
 } else {
 	$hideGroups = '';
 
