@@ -135,6 +135,7 @@ abstract class TikiDb
 				$query .= $qe[$i];
 			break;
 
+			case "pgsql":
 			case "postgres7":
 			case "postgres8":
 			case "sybase":
@@ -181,7 +182,8 @@ abstract class TikiDb
 		$sort_mode = preg_replace('/[^A-Za-z_,.]/', '', $sort_mode);
 
 		if ($sort_mode == 'random') {
-			$map = array("postgres7" => "RANDOM()",
+			$map = array(	"pgsql" => "RANDOM()",
+					"postgres7" => "RANDOM()",
 					"postgres8" => "RANDOM()",
 					"mysql3" => "RAND()",
 					"mysql" => "RAND()",
@@ -211,7 +213,8 @@ abstract class TikiDb
 			}
 
 			switch ($this->getServerType()) {
-				case "postgres7":
+					case "pgsql":
+					case "postgres7":
 					case "postgres8":
 					case "oci8":
 					case "sybase":
@@ -247,6 +250,7 @@ abstract class TikiDb
 	{
 		switch ($this->getServerType()) {
 		case "oci8":
+		case "pgsql":
 		case "postgres7":
 		case "postgres8":
 		case "sqlite":
