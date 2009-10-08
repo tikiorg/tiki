@@ -214,8 +214,8 @@ foreach($groups['data'] as $row) {
 	$groupNames[] = $row['groupName'];
 	$permGroups[] = 'perm['.$row['groupName'].']';
 	if ($row['groupName'] != 'Anonymous' && $row['groupName'] != 'Admins') {
-		$groupInheritance[] = array_merge(array('Anonymous'), $userlib->get_included_groups($row['groupName']));
-		$inh = array_merge(array('Anonymous'), $userlib->get_included_groups($row['groupName']));
+		$groupInheritance[] = $userlib->get_included_groups($row['groupName']);
+		$inh = $userlib->get_included_groups($row['groupName']);
 	} else {
 		$groupInheritance[] = '';
 		$inh = '';

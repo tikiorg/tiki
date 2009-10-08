@@ -1441,7 +1441,11 @@ class TikiLib extends TikiDb_Bridge {
 				$ret = array_merge($ret, $included);
 			}
 			$ret[] = "Registered";
-			$ret[] = "Anonymous";
+
+// The line below seems to govern whether Anonymous is 'included' in the Registered group
+// removing this for 4.0 but leaving commented code here for future reference - jonnyb
+//			$ret[] = "Anonymous";
+
 			if (isset($_SESSION["groups_are_emulated"]) && $_SESSION["groups_are_emulated"]=="y"){
 				$ret = array_intersect($ret,unserialize($_SESSION['groups_emulated']));
 			}
