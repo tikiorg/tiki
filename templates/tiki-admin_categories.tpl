@@ -16,7 +16,7 @@
 		<a href="tiki-admin_categories.php?parentId=0" class="categpath">{tr}Top{/tr}</a>
 		{section name=x loop=$path}
 			&nbsp;::&nbsp;
-			<a class="categpath" href="tiki-admin_categories.php?parentId={$path[x].categId}">{$path[x].name}</a>
+			<a class="categpath" href="tiki-admin_categories.php?parentId={$path[x].categId}">{$path[x].name|escape}</a>
 		{/section}
 		<br />
 		{tr}Current Category ID:{/tr} {$parentId}
@@ -83,7 +83,7 @@
 						<select name="parentId">
 							<option value="0">{tr}Top{/tr}</option>
 							{section name=ix loop=$catree}
-								<option value="{$catree[ix].categId|escape}" {if $catree[ix].categId eq $parentId}selected="selected"{/if}>{$catree[ix].categpath}</option>
+								<option value="{$catree[ix].categId|escape}" {if $catree[ix].categId eq $parentId}selected="selected"{/if}>{$catree[ix].categpath|escape}</option>
 							{/section}
 						</select>
 					</td>
@@ -128,7 +128,7 @@
 <a name="objects"></a>
 	<div class="cbox">
 		<div class="cbox-title">
-			{tr}Objects in category{/tr} <b>{$categ_name}</b>
+			{tr}Objects in category{/tr} <b>{$categ_name|escape}</b>
 		</div>
 		<div class="cbox-data">
 			{if $objects}
@@ -163,7 +163,7 @@
 							<a class="link" href="tiki-admin_categories.php?parentId={$parentId}&amp;removeObject={$objects[ix].catObjectId}&amp;fromCateg={$parentId}" title="{tr}Remove from this Category{/tr}">{icon _id='link_delete' alt="{tr}Remove from this Category{/tr}"}</a>
 						</td>
 						<td class="even">
-							<a class="link" href="{$objects[ix].href}" title="{$objects[ix].name}">{$objects[ix].name|truncate:80:"(...)":true}</a>
+							<a class="link" href="{$objects[ix].href}" title="{$objects[ix].name}">{$objects[ix].name|truncate:80:"(...)":true|escape}</a>
 						</td>
 						<td class="even">{tr}{$objects[ix].type}{/tr}</td>
 					</tr>
@@ -181,7 +181,7 @@
 	{if $parentId != 0}
 		<div class="cbox">
 			<div class="cbox-title">
-				{tr}Add objects to category{/tr} <b>{$categ_name}</b>
+				{tr}Add objects to category{/tr} <b>{$categ_name|escape}</b>
 			</div>
 			<div class="cbox-data">
 				<table class="findtable">
@@ -204,11 +204,11 @@
 					<table>
 						{if $prefs.feature_wiki eq 'y'}
 							<tr>
-								<td class="form">{tr}page{/tr}:</td>
+								<td class="form">{tr}page:{/tr}</td>
 								<td class="form">
 									<select name="pageName[]" multiple="multiple" size="5">
 										{section name=ix loop=$pages}
-											<option value="{$pages[ix].pageName|escape}">{$pages[ix].pageName|truncate:80:"(...)":true}</option>
+											<option value="{$pages[ix].pageName|escape}">{$pages[ix].pageName|truncate:80:"(...)":true|escape}</option>
 										{/section}
 									</select>
 								</td>
@@ -220,11 +220,11 @@
 						
 						{if $prefs.feature_articles eq 'y'}
 							<tr>
-								<td class="form">{tr}Article{/tr}:</td>
+								<td class="form">{tr}Article:{/tr}</td>
 								<td class="form">
 									<select name="articleId">
 										{section name=ix loop=$articles}
-											<option value="{$articles[ix].articleId|escape}">{$articles[ix].title|truncate:80:"(...)":true}</option>
+											<option value="{$articles[ix].articleId|escape}">{$articles[ix].title|truncate:80:"(...)":true|escape}</option>
 										{/section}
 									</select>
 								</td>
@@ -234,11 +234,11 @@
 						
 						{if $prefs.feature_blogs eq 'y'}
 							<tr>
-								<td class="form">{tr}Blog{/tr}:</td>
+								<td class="form">{tr}Blog:{/tr}</td>
 								<td class="form">
 									<select name="blogId">
 										{section name=ix loop=$blogs}
-											<option value="{$blogs[ix].blogId|escape}">{$blogs[ix].title|truncate:80:"(...)":true}</option>
+											<option value="{$blogs[ix].blogId|escape}">{$blogs[ix].title|truncate:80:"(...)":true|escape}</option>
 										{/section}
 									</select>
 								</td>
@@ -246,13 +246,13 @@
 							</tr>
 						{/if}
 						
-						{if $prefs.feature_directories eq 'y'}
+						{if $prefs.feature_directory eq 'y'}
 							<tr>
-								<td class="form">{tr}Directory{/tr}:</td>
+								<td class="form">{tr}Directory:{/tr}</td>
 								<td class="form">
 									<select name="directoryId">
 										{section name=ix loop=$directories}
-											<option value="{$directories[ix].categId|escape}">{$directories[ix].name|truncate:40:"(...)":true}</option>
+											<option value="{$directories[ix].categId|escape}">{$directories[ix].name|truncate:40:"(...)":true|escape}</option>
 										{/section}
 									</select>
 								</td>
@@ -262,11 +262,11 @@
 
 						{if $prefs.feature_galleries eq 'y'}
 							<tr>
-								<td class="form">{tr}image gal{/tr}:</td>
+								<td class="form">{tr}image gal:{/tr}</td>
 								<td class="form">
 									<select name="galleryId">
 										{section name=ix loop=$galleries}
-											<option value="{$galleries[ix].galleryId|escape}">{$galleries[ix].name|truncate:80:"(...)":true}</option>
+											<option value="{$galleries[ix].galleryId|escape}">{$galleries[ix].name|truncate:80:"(...)":true|escape}</option>
 										{/section}
 									</select>
 								</td>
@@ -276,11 +276,11 @@
 				
 						{if $prefs.feature_file_galleries eq 'y'}
 							<tr>
-								<td class="form">{tr}file gal{/tr}:</td>
+								<td class="form">{tr}file gal:{/tr}</td>
 								<td class="form">
 									<select name="file_galleryId">
 										{section name=ix loop=$file_galleries}
-											<option value="{$file_galleries[ix].id|escape}">{$file_galleries[ix].name|truncate:80:"(...)":true}</option>
+											<option value="{$file_galleries[ix].id|escape}">{$file_galleries[ix].name|truncate:80:"(...)":true|escape}</option>
 										{/section}
 									</select>
 								</td>
@@ -290,11 +290,11 @@
 				
 						{if $prefs.feature_forums eq 'y'}
 							<tr>
-								<td class="form">{tr}Forum{/tr}:</td>
+								<td class="form">{tr}Forum:{/tr}</td>
 								<td class="form">
 									<select name="forumId">
 										{section name=ix loop=$forums}
-											<option value="{$forums[ix].forumId|escape}">{$forums[ix].name|truncate:80:"(...)":true}</option>
+											<option value="{$forums[ix].forumId|escape}">{$forums[ix].name|truncate:80:"(...)":true|escape}</option>
 										{/section}
 									</select>
 								</td>
@@ -304,11 +304,11 @@
 				
 						{if $prefs.feature_polls eq 'y'}
 							<tr>
-								<td class="form">{tr}Poll{/tr}:</td>
+								<td class="form">{tr}Poll:{/tr}</td>
 								<td class="form">
 									<select name="pollId">
 										{section name=ix loop=$polls}
-											<option value="{$polls[ix].pollId|escape}">{$polls[ix].title|truncate:80:"(...)":true}</option>
+											<option value="{$polls[ix].pollId|escape}">{$polls[ix].title|truncate:80:"(...)":true|escape}</option>
 										{/section}
 									</select>
 								</td>
@@ -318,11 +318,11 @@
 						
 						{if $prefs.feature_faqs eq 'y'}
 							<tr>
-								<td class="form">{tr}FAQ{/tr}:</td>
+								<td class="form">{tr}FAQ:{/tr}</td>
 								<td class="form">
 									<select name="faqId">
 										{section name=ix loop=$faqs}
-											<option value="{$faqs[ix].faqId|escape}">{$faqs[ix].title|truncate:80:"(...)":true}</option>
+											<option value="{$faqs[ix].faqId|escape}">{$faqs[ix].title|truncate:80:"(...)":true|escape}</option>
 										{/section}
 									</select>
 								</td>
@@ -332,11 +332,11 @@
 				
 						{if $prefs.feature_trackers eq 'y'}
 							<tr>
-								<td class="form">{tr}Tracker{/tr}:</td>
+								<td class="form">{tr}Tracker:{/tr}</td>
 								<td class="form">
 									<select name="trackerId">
 										{section name=ix loop=$trackers}
-											<option value="{$trackers[ix].trackerId|escape}">{$trackers[ix].name|truncate:80:"(...)":true}</option>
+											<option value="{$trackers[ix].trackerId|escape}">{$trackers[ix].name|truncate:80:"(...)":true|escape}</option>
 										{/section}
 									</select>
 								</td>
@@ -346,11 +346,11 @@
 						
 						{if $prefs.feature_quizzes eq 'y'}
 							<tr>
-								<td class="form">{tr}quiz{/tr}:</td>
+								<td class="form">{tr}quiz:{/tr}</td>
 								<td class="form">
 									<select name="quizId">
 										{section name=ix loop=$quizzes}
-											<option value="{$quizzes[ix].quizId|escape}">{$quizzes[ix].name|truncate:80:"(...)":true}</option>
+											<option value="{$quizzes[ix].quizId|escape}">{$quizzes[ix].name|truncate:80:"(...)":true|escape}</option>
 										{/section}
 									</select>
 								</td>
