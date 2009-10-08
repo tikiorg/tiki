@@ -56,12 +56,12 @@ function module_change_category_info() {
 				'description' => 'Very particular filter option. If set to "y", only categories with a name matching one of the user\'s groups are shown, and descendants of these matching categories.' . " " . tra('Example values: y, n.') . " " . tra('Default value: n.'),
 			),
 			'imgUrlNotIn' => array(
-				'name' => tra('Image Url not in the category'),
-				'description' => tra('Url of the image to display if not in the only category.'),
+				'name' => tra('Image URL not in category'),
+				'description' => tra('Very particular parameter. If both this and "Image URL in the category" are set and the root category contains a single child category, the module only displays an image with this URL if the object is not in the category.') . ' ' . tra('Example value:') . ' http://www.organization.org/img/redcross.png.',
 			),
 			'imgUrlIn' => array(
-				'name' => tra('Image Url in the category'),
-				'description' => tra('Url of the image to display if in the only category.'),
+				'name' => tra('Image URL in category'),
+				'description' => tra('Very particular parameter. If both this and "Image URL not in the category" are set and the root category contains a single child category, the module only displays an image with this URL if the object is in the category.') . ' ' . tra('Example value:') . ' http://www.organization.org/img/bigplus.png.',
 			),
 		),
 	);
@@ -158,6 +158,8 @@ function module_change_category( $mod_reference, $module_params ) {
 			if ($catObjectId = $categlib->is_categorized($cat_type, $cat_objid)) {
 				$categlib->remove_object_from_categories($catObjectId, Perms::filter( array( 'type' => 'category' ), 'object', $unassignedCategs, array( 'object' => 'category' ), 'remove_object' ));
 			}
+			header('Location: '.$_SERVER['REQUEST_URI']);
+			die;
 		}
 
 		$incategs = $categlib->get_object_categories($cat_type, $cat_objid);
@@ -187,9 +189,9 @@ function module_change_category( $mod_reference, $module_params ) {
 		$smarty->assign_by_ref('remainCateg', $remainCateg);
 		$smarty->assign('showmodule',!$shy);
 		if (empty($cat_parent))
-			$smarty->assign('tpl_module_title',sprintf(tra('Categorize %s'),$_REQUEST['page']));
+			$smarty->assign('tpl_module_title',sprintf(tra('Categorize %s'), htmlspecialchars($_REQUEST['page'])));
 		else
-			$smarty->assign('tpl_module_title',sprintf(tra('Categorize %s in %s'),$_REQUEST['page'],$cat_parent));
+			$smarty->assign('tpl_module_title',sprintf(tra('Categorize %s in %s'), htmlspecialchars($_REQUEST['page']), htmlspecialchars($cat_parent)));
 		$smarty->assign('modcatlist',$modcatlist);
 		$smarty->assign('modcatid',$id);
 	}

@@ -1,19 +1,14 @@
-{* 
-$Id$ 
-parameters : id=1
-id is the categId of the parent categ to list
-note : lists the objects from a given category not a recursive tree
-*}
+{* $Id$ *}
 
-{if $prefs.feature_categories eq 'y' and isset($page) and $showmodule}
+{if isset($page) and $showmodule}
 	{tikimodule error=$module_params.error title=$tpl_module_title name="change_category" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 		{if !empty($module_params.imgUrlNotIn) and !empty($module_params.imgUrlIn)}
-			{foreach key=k item=i from=$modcatlist}
+			{foreach key=k item=i from=$modcatlist}{* Smarty hack to access $modcatlist's first key. This should only access one element. *}
 				{if $modcatlist[$k].incat eq 'n'}
-					{capture name='title'}{tr}Assign into category:{/tr} {tr}{$modcatlist[$k].name}{/tr}{/capture}
+					{capture name='title'}{tr}Assign into category:{/tr} {tr}{$modcatlist[$k].name|escape}{/tr}{/capture}
 					{self_link modcatid=$modcatid modcatchange=$k _title=$smarty.capture.title}<img src="{$module_params.imgUrlNotIn}" />{/self_link}
 				{else}
-					{capture name='title'}{tr}Unassign category:{/tr} {tr}{$modcatlist[$k].name}{/tr}{/capture}
+					{capture name='title'}{tr}Unassign category:{/tr} {tr}{$modcatlist[$k].name|escape}{/tr}{/capture}
 					{self_link remove=$k _title=$smarty.capture.title}<img src="{$module_params.imgUrlIn}" />{/self_link}
 				{/if}
 			{/foreach}
