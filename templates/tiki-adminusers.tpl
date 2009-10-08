@@ -21,7 +21,11 @@
 {/if}
 
 {if $tikifeedback}
-	{remarksbox type="feedback" title="{tr}Feedback{/tr}"}{section name=n loop=$tikifeedback}{{tr}$tikifeedback[n].mes{/tr}}<br />{/section}{/remarksbox}
+	{remarksbox type="feedback" title="{tr}Feedback{/tr}"}
+	{section name=n loop=$tikifeedback}
+	{tr}{$tikifeedback[n].mes|escape}{/tr}
+	<br />
+	{/section}{/remarksbox}
 {/if}
 
 {if $added != "" or $discarded != "" or $discardlist != ''}
