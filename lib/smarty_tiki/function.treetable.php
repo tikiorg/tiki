@@ -28,6 +28,9 @@
  * 
  * _sortColumn = ''			:	column to organise tree by (actually row key = e.g. 'type')
  * 
+ * _sortColumnDelimiter = '':	if set (e.g. to ',') sorting will be nested accoding to this delimiter
+ * 								e.g. if the _sortColumn value is 'gran-parent,parent,child' the 'child' section will be nested 3 levels deep
+ * 
  * _checkbox = ''			: 	name of checkbox (auto-incrementing) - no checkboxes if not set
  * 								if comma delimited list (or array) then makes multiple checkboxes
  * 
@@ -87,8 +90,12 @@ function smarty_function_treetable($params, &$smarty) {
 		}
 	}
 	if (!empty($_checkboxTitles)) {
-		if (is_string($_checkboxTitles) && strpos($_checkboxTitles, ',') !== false) {
-			$_checkboxTitles = split(',', trim($_checkboxTitles));
+		if (is_string($_checkboxTitles)) {
+			if (strpos($_checkboxTitles, ',') !== false) {
+				$_checkboxTitles = split(',', trim($_checkboxTitles));
+			} else {
+				$_checkboxTitles = array(trim($_checkboxTitles));
+			}
 		}
 		if (count($_checkbox) != count($_checkboxTitles)) {
 			return tra('{treetable}: Number of items in _checkboxTitles doesn not match items in _checkbox');
@@ -232,30 +239,54 @@ $jq("#'.$id.'_openall").click( function () {
 	foreach ($_data as &$row) {
 		// set up tree hierarchy
 		if ($_sortColumn) {
-			$treeType = htmlentities($row[$_sortColumn]);
-			$treeTypeId = preg_replace('/\s+/', '_', $treeType);
-			$childRowClass = ' child-of-'.$id.'_'.$treeTypeId;
-			
-			if (!in_array($treeTypeId, $treeSectionsAdded)) {
-				$html .= '<tr id="'.$id.'_'.$treeTypeId.'"><td colspan="'.(count($_columns) + count($_checkbox)).'">';
-				$html .= $treeType.'</td></tr>'.$nl;
-				$treeSectionsAdded[] = $treeTypeId;
-				
-				// write a sub-header
-				$html .= '<tr class="subHeader'.$childRowClass.'">';
-				if (!empty($_checkbox)) {
-					for ($i = 0; $i < count($_checkbox); $i++) {
-						$html .= '<td class="checkBoxHeader">';
-						$html .= empty($_checkboxTitles) ? '' : $_checkboxTitles[$i];
-						$html .= '</td>';
+			$treeType = htmlentities(trim($row[$_sortColumn]));
+			$treeTypeId = '';
+			$childRowClass = '';
+			if (!empty($_sortColumnDelimiter)) {	// nested
+				$parts = array_reverse(explode($_sortColumnDelimiter, $treeType));
+				for ($i = 0; $i < count($parts); $i++) {
+					$part = preg_replace('/\s+/', '_', $parts[$i]);
+					if (in_array($part, $treeSectionsAdded) && $i > 0) {
+						$treeParentId = preg_replace('/\s+/', '_', $parts[$i]);
+						$childRowClass = ' child-of-'.$id.'_'.$treeParentId;
+						$treeTypeId = preg_replace('/\s+/', '_', $parts[$i - 1]);
+						$treeType = $parts[$i - 1];
+						break;
 					}
 				}
-				foreach ($_columns as $column => $columnName) {
-					$html .= '<td>';
-					$html .= htmlentities($columnName);
-					$html .= '</td>';
+				if (empty($treeTypeId)) {
+					$treeTypeId = preg_replace('/\s+/', '_', $part);
 				}
-				$html .= '</tr>'.$nl;
+				$treeSectionsAdded[] = $treeTypeId;
+				$rowId = ' id="'.$id.'_'.$treeTypeId.'"';
+				
+				//$childRowClass = ' child-of-'.$id.'_'.$treeTypeId;
+			} else {
+				$treeTypeId = preg_replace('/\s+/', '_', $treeType);
+				$childRowClass = ' child-of-'.$id.'_'.$treeTypeId;
+				$rowId = '';
+				
+				if (!empty($treeType) && !in_array($treeTypeId, $treeSectionsAdded)) {
+					$html .= '<tr id="'.$id.'_'.$treeTypeId.'"><td colspan="'.(count($_columns) + count($_checkbox)).'">';
+					$html .= $treeType.'</td></tr>'.$nl;
+					$treeSectionsAdded[] = $treeTypeId;
+					
+					// write a sub-header
+					$html .= '<tr class="subHeader'.$childRowClass.'">';
+					if (!empty($_checkbox)) {
+						for ($i = 0; $i < count($_checkbox); $i++) {
+							$html .= '<td class="checkBoxHeader">';
+							$html .= empty($_checkboxTitles) ? '' : $_checkboxTitles[$i];
+							$html .= '</td>';
+						}
+					}
+					foreach ($_columns as $column => $columnName) {
+						$html .= '<td>';
+						$html .= htmlentities($columnName);
+						$html .= '</td>';
+					}
+					$html .= '</tr>'.$nl;
+				}
 			}
 		} else {
 			$rowId = '';
@@ -271,7 +302,7 @@ $jq("#'.$id.'_openall").click( function () {
 			$rowClass = $childRowClass;
 		}
 		
-		$html .= '<tr class="'.$rowClass.'">';
+		$html .= '<tr class="'.$rowClass.'"'.$rowId.'>';
 		// add the checkbox
 		if (!empty($_checkbox)) {
 			for ($i = 0; $i < count($_checkbox); $i++) {
@@ -298,10 +329,11 @@ $jq("#'.$id.'_openall").click( function () {
 	$html .= '</tbody></table>'.$nl;
 	
 	// add jq code to initial treeetable
+	$expanable = empty($_sortColumnDelimiter) ? 'true' : 'false';	// when nested, clickableNodeNames is really annoying
 	if (count($treeSectionsAdded) < $_collapseMaxSections) {
-		$headerlib->add_jq_onready('$jq("#'.$id.'").treeTable({clickableNodeNames:true,initialState: "expanded"});');
+		$headerlib->add_jq_onready('$jq("#'.$id.'").treeTable({clickableNodeNames:'.$expanable.',initialState: "expanded"});');
 	} else {
-		$headerlib->add_jq_onready('$jq("#'.$id.'").treeTable({clickableNodeNames:true,initialState: "collapsed"});');
+		$headerlib->add_jq_onready('$jq("#'.$id.'").treeTable({clickableNodeNames:'.$expanable.',initialState: "collapsed"});');
 	}
 	// TODO refilter when .parent is opened - seems to prevent the click propagating
 //		$headerlib->add_jq_onready('$jq("tr.parent").click(function(event) {
