@@ -73,7 +73,7 @@ class WikiLib extends TikiLib {
 			}
 			return $ret;
 		}
-		$query = "select DISTINCT `user` from `tiki_history` where `pageName`=? order by `version` desc";
+		$query = "select DISTINCT `user`,`version` from `tiki_history` where `pageName`=? order by `version` desc";
 		$result = $this->query($query,array($page));
 		$cache_page_contributors = array();
 		$cache_page_contributors['contributors'] = array();
