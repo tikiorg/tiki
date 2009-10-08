@@ -25,8 +25,8 @@ if ( isset($_REQUEST["emulategroups"]) ){
 				$groups_emulated[]=$value;
 				$included = $tikilib->get_included_groups($value);
 				$groups_emulated = array_merge($groups_emulated, $included);
-				// If one is member of a group different from Anonymous then one
-				// automatically has the rights of group "Registered"
+				// If one is member of a group different from Anonymous or Registered
+				// then one automatically has the rights of group "Registered"
 				if( $value != "Registered" && $value != "Anonymous" ) $dont_forget_registered = 1;
 			}
 			if( $dont_forget_registered == 1 && isset($user) ) {
@@ -34,14 +34,10 @@ if ( isset($_REQUEST["emulategroups"]) ){
 				$included = $tikilib->get_included_groups("Registered");
 				$groups_emulated = array_merge($groups_emulated, $included);
 			}
-			$groups_emulated[]="Anonymous";
-			// In case someone sees a point in including groups in "Anonymous"
-			$included = $tikilib->get_included_groups("Anonymous");
-			$groups_emulated = array_merge($groups_emulated, $included);
 			$groups_emulated = array_unique($groups_emulated);
 		}else{
 			// Let's say clicking with nothing selected is the same as reset
-			// Saying it's the same as Anonymous has the disadvantage of probably
+			// Saying it's the same as Anonymous would have the disadvantage of probably
 			// hiding the module, so the user would need to logout
 			$_SESSION["groups_are_emulated"]="n";
 			$groups_emulated = array();
