@@ -36,10 +36,6 @@ function module_groups_emulation( $mod_reference, $module_params ) {
 	
 	// Extract list of groups of user, including included groups
 	$userGroups = $userlib->get_user_groups_inclusion($user);
-	// If group Anonymous was absent, still add it so it is displayed as a reminder that its perms apply
-	if( isset($userGroups['Anonymous']) && !$userGroups['Anonymous'] ) {
-		$userGroups["Anonymous"] = "included";
-	}
 	$chooseGroups = $userGroups;
 	$chooseGroups["Anonymous"] = "included";
 	if(isset($user)) {
