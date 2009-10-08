@@ -1623,7 +1623,7 @@ INSERT INTO "," ("menuId","type","name","url","position","section","perm","group
 
 INSERT INTO "," ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'o','My Workspaces','tiki-my-workspaces.php',925,'feature_workspaces','tiki_p_ws_view','',0);
 
---INSERT INTO "," ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'o','Leave this Workspace','tiki-switch_workspaces.php',930,'feature_workspaces','tiki_p_ws_view','',0);
+-- INSERT INTO "," ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'o','Leave this Workspace','tiki-switch_workspaces.php',930,'feature_workspaces','tiki_p_ws_view','',0);
 
 INSERT INTO "," ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'o','Manage Workspaces','tiki-manage-workspaces.php',935,'feature_workspaces','tiki_p_admin_ws.php','',0);
 
