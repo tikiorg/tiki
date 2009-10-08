@@ -19,7 +19,7 @@ class Perms_ResolverFactory_GlobalFactory implements Perms_ResolverFactory
 		$perms = array();
 		$db = TikiDb::get();
 
-		$result = $db->fetchAll( 'SELECT groupName, permName FROM users_grouppermissions' );
+		$result = $db->fetchAll( 'SELECT `groupName`,`permName` FROM users_grouppermissions' );
 		foreach( $result as $row ) {
 			$group = $row['groupName'];
 			$perm = $this->sanitize( $row['permName'] );
