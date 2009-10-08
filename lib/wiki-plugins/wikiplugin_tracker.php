@@ -211,7 +211,8 @@ function wikiplugin_tracker($data, $params) {
 	if (!isset($showmandatory)) {
 		$showmandatory = 'y';
 	}
-		$smarty->assign('showmandatory', $showmandatory); 
+	$smarty->assign('showmandatory', $showmandatory); 
+	if (!empty($wiki)) $wiki = trim($wiki);
 
 	if (isset($values)) {
 		if (!is_array($values)) {
