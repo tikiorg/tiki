@@ -16,19 +16,19 @@
 		{/if}
 	<form method="post" action="{$smarty.server.PHP_SELF}?{query}">
 		{if empty($filegals_manager)}
-			{if $page_perms_flag}
+			{if $objectType eq 'global'}
+				{remarksbox type="note" title="{tr}Note{/tr}"}
+					{tr}Currently editing Global permissions.{/tr}
+				{/remarksbox}
+			{elseif $permissions_displayed eq 'direct'}
 				{remarksbox type="warning" title="{tr}Warning{/tr}"}
 					{tr}These permissions override any global permissions or category permissions affecting this object.{/tr}<br />
-					{if $tiki_p_admin eq 'y'}{tr}To edit global permissions{/tr} {self_link objectType='global' permType=$permType}{tr}click here{/tr}{/self_link}.{/if}
+					{if $tiki_p_admin eq 'y'}{tr}To edit global permissions{/tr} {self_link objectType='global' objectId='' objectName='' permType=$permType}{tr}click here{/tr}{/self_link}.{/if}
 				{/remarksbox}
 			{elseif $categ_perms_flag}
 				{remarksbox type="warning" title="{tr}Warning{/tr}"}
 					{tr}No permissions yet applied to this object but category permissions affect this object.{/tr}<br />
 					{if $tiki_p_admin eq 'y'}{tr}To edit category permissions{/tr} {self_link _script='tiki-admin_categories.php'}{tr}click here{/tr}{/self_link}.{/if}
-				{/remarksbox}
-			{elseif $objectType eq 'global'}
-				{remarksbox type="note" title="{tr}Note{/tr}"}
-					{tr}Currently editing Global permissions.{/tr}
 				{/remarksbox}
 			{elseif $permissions_displayed eq 'parent'}
 				{remarksbox type="note" title="{tr}Note{/tr}"}
@@ -77,7 +77,7 @@
 			<h3>{tr}Show/hide columns{/tr}</h3>
 			<ul id="column_switches" class="column_switcher"><li></li></ul>
 		</div>
-		{treetable _data=$perms _checkbox=$permGroups _checkboxTitles=$groupNames _checkboxColumnIndex=$permGroupCols _valueColumnIndex="permName" _columns='"label"="Permission"' _sortColumn='type' _openall='y'}
+		{treetable _data=$perms _checkbox=$permGroups _checkboxTitles=$groupNames _checkboxColumnIndex=$permGroupCols _valueColumnIndex="permName" _columns='"label"="{tr}Permission{/tr}"' _sortColumn='type' _openall='y'}
 
 		<div class="input_submit_container" style="text-align: center">
 			<input type="submit" name="assign" value="{tr}Assign{/tr}" />
@@ -88,6 +88,23 @@
 	</form>
 	{/tab}
 
+	{tab name='{tr}Select groups{/tr}'}
+		<form method="post" action="{$smarty.server.PHP_SELF}?{query}">
+			{if isset($groupsFiltered)}
+				{remarksbox type="warning" title="{tr}Warning{/tr}"}
+					{tr}Some of your groups have been automatically hidden.<br /> Select the groups below to assign permissions for.{/tr}
+				{/remarksbox}
+			{/if}
+			<h2>{tr}Groups{/tr}</h2>
+			
+			{treetable _data=$groups _checkbox="group_filter" _checkboxTitles="Select" _checkboxColumnIndex="in_group_filter" _valueColumnIndex="id" _columns='"groupName"="{tr}Group name{/tr}","groupDesc"="{tr}Description{/tr}"' _sortColumn='parents' _collapseMaxSections=20 _sortColumnDelimiter=','}
+			
+			<div class="input_submit_container" style="text-align: center">
+				<input type="submit" name="group_select" value="{tr}Select{/tr}" />
+			</div>
+		</form>
+	{/tab}
+	
 	{* Quickperms *}
 
 	{if $prefs.feature_quick_object_perms eq 'y'}
@@ -110,7 +127,7 @@
 
 
 		<table width="100%">
-			<tr class="{cycle advance=true}">
+			<tr>
 				<th>Groups</th>
 			{foreach item=permgroup from=$quickperms}
 				<th>{$permgroup.name}</th>
@@ -119,7 +136,7 @@
 			</tr>
 			{cycle print=false values="even,odd"}
 			{section name=grp loop=$groups}
-			<tr>
+			<tr class="{cycle}">
 				<td>
 				{$groups[grp].groupName|escape}
 				</td>

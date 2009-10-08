@@ -125,6 +125,33 @@ if( $_REQUEST['objectType'] == 'category' && isset($_REQUEST['propagate_category
 	}
 }
 
+// apply group filter change
+if (isset($_REQUEST['group_select'])) {
+	if (!isset($_REQUEST['group_filter'])) {
+		$_REQUEST['group_filter'] = array();
+	}
+	$tikilib->set_user_preference($user, 'objectperm_admin_groups', serialize($_REQUEST['group_filter']));
+	$cookietab = '1';
+}
+
+$group_filter = unserialize($tikilib->get_user_preference($user, 'objectperm_admin_groups'));
+
+// Get a list of groups
+$groups = $userlib->get_groups(0, -1, 'id_asc', '', '', 'n');
+$smarty->assign_by_ref('groups', $groups["data"]);
+
+$OBJECTPERM_ADMIN_MAX_GROUPS = 5;
+
+if ($group_filter === false && count($groups["data"]) > $OBJECTPERM_ADMIN_MAX_GROUPS) {	//	filter out if too many groups
+	foreach($groups["data"] as $g) {
+		if (count($group_filter) < $OBJECTPERM_ADMIN_MAX_GROUPS) {
+			$group_filter[] = $g['id'];
+		}
+	}
+	$cookietab = '2';
+	$smarty->assign('groupsFiltered', 'y');
+}
+
 // Process the form to assign a new permission to this object
 if (isset($_REQUEST['assign']) && !isset($_REQUEST['quick_perms'])) {
 	check_ticket('object-perms');
@@ -148,10 +175,6 @@ if (isset($_REQUEST['assign']) && !isset($_REQUEST['quick_perms'])) {
 // Get the individual object permissions if any
 
 $displayedPermissions = get_displayed_permissions();
-
-// Get a list of groups
-$groups = $userlib->get_groups(0, -1, 'id_asc', '', '', 'n');
-$smarty->assign_by_ref('groups', $groups["data"]);
 
 
 //Quickperms {{{
@@ -210,18 +233,31 @@ $permGroups = array();
 $groupNames = array();
 $groupIndices = array();
 $groupInheritance = array();
-foreach($groups['data'] as $row) {
-	$groupNames[] = $row['groupName'];
-	$permGroups[] = 'perm['.$row['groupName'].']';
-	if ($row['groupName'] != 'Anonymous' && $row['groupName'] != 'Admins') {
-		$groupInheritance[] = $userlib->get_included_groups($row['groupName']);
-		$inh = $userlib->get_included_groups($row['groupName']);
-	} else {
-		$groupInheritance[] = '';
-		$inh = '';
-	}
-	$groupIndices[] = $row['groupName'] . '_hasPerm';
+foreach($groups['data'] as &$row) {
+	if (in_array($row['id'], $group_filter)) {
+		$groupNames[] = $row['groupName'];
+		$permGroups[] = 'perm['.$row['groupName'].']';
+		if ($row['groupName'] != 'Anonymous' && $row['groupName'] != 'Admins') {
+			$groupInheritance[] = $userlib->get_included_groups($row['groupName']);
+			$inh = $userlib->get_included_groups($row['groupName']);
+		} else {
+			$groupInheritance[] = '';
+			$inh = '';
+		}
 	
+		$groupIndices[] = $row['groupName'] . '_hasPerm';
+		
+		$row['in_group_filter'] = 'y';
+	} else {
+		$row['in_group_filter'] = 'n';
+	}
+
+	// info for nested group treetable
+	$parents = array_merge(array($row['groupName']), $userlib->get_included_groups($row['groupName']));
+	$parents = preg_replace('/[\s,]+/', '_', $parents);
+	$parents = implode(",", array_reverse($parents));
+	$row['parents'] = $parents;
+
 // More TODO - merge all this into a single array - but that means considerable changes to treetable (soon)
 //	$checkboxInfo[] = array('name' => $row['groupName'],
 //						 'key' => 'perm['.$row['groupName'].']',
@@ -305,7 +341,7 @@ JS;
 			attr('disabled',\$jq(this).attr('checked') ? 'disabled' : '');
 	}
 		
-	\$jq(this).click( function() {									// bind click event
+	\$jq(this).change( function() {									// bind click event
 	
 		if (\$jq(this).attr('checked')) {
 			\$jq('input[value="'+\$jq(this).val()+'"]').			// same...
@@ -350,6 +386,8 @@ $js .= "\$jq('#treetable_1').columnManager(".
 $headerlib->add_jq_onready($js);
 
 ask_ticket('object-perms');
+setcookie('tab', $cookietab);
+$smarty->assign('cookietab', $cookietab);
 
 // setup smarty remarks flags
 
@@ -368,31 +406,28 @@ if (isset($_REQUEST['filegals_manager']) && $_REQUEST['filegals_manager'] != '')
 	$smarty->display("tiki.tpl");
 }
 
-function assign_perm($group, $objectId, $objectType, $perm) {
-	global $userlib;
-	if ($objectType == 'global') {
-		$userlib->assign_permission_to_group($perm, $group);
-	} else {
-		$userlib->assign_object_permission($group, $objectId, $objectType, $perm);				
-	}
-}
-
-function remove_perm($group, $objectId, $objectType, $perm) {
-	global $userlib;
-	if ($objectType == 'global') {
-		$userlib->remove_permission_from_group($perm, $group);
-	} else {
-		$userlib->remove_object_permission($group, $objectId, $objectType, $perm);
-	}
-}
 
 function get_assign_permissions() {
+	global $objectFactory, $group_filter, $groups;
+
 	$set = new Perms_Reflection_PermissionSet;
 
 	if( isset( $_REQUEST['perm'] ) ) {
 		foreach( $_REQUEST['perm'] as $group => $gperms ) {
 			foreach( $gperms as $perm ) {
 				$set->add( $group, $perm );
+			}
+		}
+	}
+	// add in any non-displayed groups' perms
+	$currentObject = $objectFactory->get( $_REQUEST['objectType'], $_REQUEST['objectId'] );
+	$currentPermissions = $currentObject->getDirectPermissions();
+	$currentSet = $currentPermissions->getPermissionArray();
+
+	foreach( $groups['data'] as $group) {
+		if (!in_array($group['id'], $group_filter)) {
+			foreach( $currentSet[$group['groupName']] as $perm ) {
+				$set->add( $group['groupName'], $perm );
 			}
 		}
 	}
