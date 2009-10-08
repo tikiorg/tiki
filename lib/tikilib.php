@@ -4443,7 +4443,7 @@ class TikiLib extends TikiDb_Bridge {
 	}
 
 	function set_lastUpdatePrefs() {
-		$query = "update `tiki_preferences` set `value`=`value`+1 where `name`=?";
+		$query = "update `tiki_preferences` set `value`=value+1 where `name`=?";
 		$this->query($query, array('lastUpdatePrefs'));
 	}
 
@@ -4478,7 +4478,15 @@ class TikiLib extends TikiDb_Bridge {
 
 		$cond_query = '';
 		if (empty($query_cond)) {
-			$query_cond = '1';
+			switch($this->getServerType()) {
+				case 'pgsql':
+				case 'postgres7':
+				case 'postgres8':
+					$query_cond = '';
+					break;			
+				default:
+					$query_cond = '1';
+			}
 		}
 		$result = null;
 		if ( is_null($bindvars) ) $bindvars = array();
