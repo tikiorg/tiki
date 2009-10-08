@@ -1,7 +1,7 @@
 {* $Id: $ *}
 
 {remarksbox type="info" title="{tr}Welcome{/tr}"}
-{tr}You have succesfully enabled  Workspaces in TikiWiki. <br /><br />
+<a href="tiki-manage-workspaces.php">{tr}Manage workspaces{/tr}</a><br /><br />
 This feature is <strong>under development</strong>. If you want to get more info go to the {/tr} <a class="rbox-link" href="http://dev.tikiwiki.org/Workspaces">{tr}Workspaces wiki page{/tr}</a>.
 <hr />
 {tr}Things you can currently do: <br />
