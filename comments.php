@@ -415,6 +415,11 @@ if (isset($_REQUEST["post_reply"]) && isset($_REQUEST["comments_reply_threadId"]
 $threadId_if_reply = $_REQUEST["comments_reply_threadId"];
 else
 $threadId_if_reply = 0;
+if (empty($thread_sort_mode) && !empty($_REQUEST['thread_sort_mode'])) {
+	$thread_sort_mode = $_REQUEST['thread_sort_mode'];
+} else {
+	$thread_sort_mode = 'commentDate_asc';
+}
 
 $comments_coms = $commentslib->get_comments($comments_objectId, $_REQUEST["comments_parentId"],
 		$comments_offset, $comments_per_page, $thread_sort_mode, $_REQUEST["comments_commentFind"],
