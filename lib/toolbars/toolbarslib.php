@@ -991,7 +991,7 @@ displayDialog = function( closeTo, list, areaname ) {
 			tit = item;
 		}
 	}
-	\$jq(dialogDiv).dialog({ bgiframe:true, autoOpen: false, title: tit }).dialog('option', 'buttons', btnsObj).dialog('open');
+	\$jq(dialogDiv).dialog({ bgiframe:true, autoOpen: false, width: 320 }).dialog('option', 'title', tit).dialog('option', 'buttons', btnsObj).dialog('open');
 	
 	return false;
 }
