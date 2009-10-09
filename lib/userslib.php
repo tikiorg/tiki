@@ -1928,6 +1928,25 @@ function get_included_groups($group, $recur=true) {
 		);
 	}
 
+	function get_permission_types() {
+		global $prefs;
+
+		$query = "select distinct `type` from `users_permissions`";
+		$result = $this->query($query);
+		$cant = 0;
+		$ret = array();
+
+		while ($res = $result->fetchRow()) {
+			$cant++;
+			$ret[] = $res;
+		}
+
+		return array(
+			'data' => $ret,
+			'cant' => $cant,
+		);
+	}
+
 	function get_group_permissions($group) {
     		global $cachelib;
 		if ( ! $cachelib->isCached("groupperms_$group") ) {
