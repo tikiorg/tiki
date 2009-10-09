@@ -266,6 +266,15 @@ abstract class TikiDb
 	function cast( $var,$type ) // {{{
 	{
 		switch ($this->getServerType()) {
+		case "pgsql":
+		case "postgres7":
+		case "postgres8":
+			switch ($type) {
+				case "int":
+					return "$var::INT4";
+				default:
+					return($var);
+			}
 		case "sybase":
 			switch ($type) {
 			case "int":

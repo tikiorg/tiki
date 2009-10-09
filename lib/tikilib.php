@@ -4443,7 +4443,7 @@ class TikiLib extends TikiDb_Bridge {
 	}
 
 	function set_lastUpdatePrefs() {
-		$query = "update `tiki_preferences` set `value`=value+1 where `name`=?";
+		$query = "update `tiki_preferences` set `value`=".$this->cast('value','int')."+1 where `name`=?";
 		$this->query($query, array('lastUpdatePrefs'));
 	}
 
