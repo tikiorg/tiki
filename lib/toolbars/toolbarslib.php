@@ -962,7 +962,7 @@ insertAt(areaname, s); $jq(this).dialog("close");
 		global $headerlib;
 
 		if( ! $dialogAdded ) {
-			include_jquery_ui();
+			$headerlib->include_jquery_ui();
 			$headerlib->add_js( <<<JS
 window.dialogData = [];
 var dialogDiv;
@@ -1421,24 +1421,5 @@ class ToolbarsList
 		}
 		return false;
 	} // }}}
-}
-
-function include_jquery_ui() {
-	global $prefs, $headerlib;
-	
-	if ($prefs['feature_jquery_ui'] != 'y') {
-		if ($prefs['feature_use_minified_scripts'] == 'y') {	// could reduce to only using dialog (needs core, draggable & resizable)
-			$headerlib->add_jsfile('lib/jquery/jquery-ui/ui/minified/jquery-ui.min.js');
-		} else {
-			$headerlib->add_jsfile('lib/jquery/jquery-ui/ui/jquery-ui.js');
-		}
-		$headerlib->add_cssfile('lib/jquery/jquery-ui/themes/'.$prefs['feature_jquery_ui_theme'].'/jquery-ui.css');
-	}
-	// include json parser (not included by default yet - Tiki 4.0 oct 09)
-	if (0 && $prefs['feature_use_minified_scripts'] == 'y') {	// could reduce to only using dialog (needs core, draggable & resizable)
-		$headerlib->add_jsfile('lib/jquery/json2.min.js');
-	} else {
-		$headerlib->add_jsfile('lib/jquery/json2.js');
-	}
 }
 
