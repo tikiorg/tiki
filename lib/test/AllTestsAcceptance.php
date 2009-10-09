@@ -16,9 +16,11 @@ error_reporting( E_ALL );
  * but loading Tiki libraries involves a lot of black magic, so it's best 
  * to do it once and do it centrally
  */
+
+/* AD (2009-10-06): NOTE: Causes the tests to not work altogether. Comment it out for now.
 ini_set( 'include_path', ini_get('include_path') . PATH_SEPARATOR . '.' . PATH_SEPARATOR . '../' . PATH_SEPARATOR . '../../..' );
 loadTikiLibraries();
-
+*/
 
 require_once('AcceptanceTests/AllTests.php');
 

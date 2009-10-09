@@ -11,14 +11,18 @@ $auto_query_args = array('initial', 'maxRecords', 'sort_mode', 'find', 'lang', '
 if ($prefs['feature_multilingual'] == 'y' && isset($_REQUEST['lang']) && isset($_REQUEST['create_new_pages_using_template_name'])) {
 	global $multilinguallib;
 	include_once ('lib/multilingual/multilinguallib.php');
+	$multilinguallib->storeCurrentSearchLanguageInSession($_REQUEST['lang']);
 	$template_id_for_new_pages = $multilinguallib->getTemplateIDInLanguage('wiki', $_REQUEST['create_new_pages_using_template_name'], $_REQUEST['lang']);
 	$smarty->assign('template_id', $template_id_for_new_pages);
 }
+
 if (isset($_REQUEST['hits_link_to_all_languages']) && $_REQUEST['hits_link_to_all_languages'] == 'On') {
-	$smarty->assign('all_langs', 'y');
+    $all_langs = 'y';
 } else {
-	$smarty->assign('all_langs', '');
+	$all_langs = '';
 }
+$smarty->assign('all_langs', $all_langs);
+
 $smarty->assign('headtitle', tra('Pages'));
 $access->check_feature(array('feature_wiki', 'feature_listPages'));
 $access->check_permission('tiki_p_view');
@@ -261,7 +265,7 @@ if (!empty($multiprint_pages)) {
 		$result = reset( $listpages['data'] );
 		if( strtolower( $find ) == strtolower( $result['pageName'] ) ) {
 			require_once 'lib/wiki/wikilib.php';
-			header( 'Location: ' . $wikilib->sefurl( $result['pageName'] ) );
+			header( 'Location: ' . $wikilib->sefurl( $result['pageName'], '', $all_langs ) );
 			exit;
 		}
 	}

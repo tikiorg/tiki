@@ -187,8 +187,6 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
 		  	
     }
     
-     
-    
    
     /**************************************
      * Helper methods

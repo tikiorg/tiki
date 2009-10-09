@@ -749,7 +749,6 @@ class MultilingualLib extends TikiLib {
 	   if (isset($_REQUEST['lang'])) { //lang='' means all languages
 		   return $_REQUEST['lang'];
 	   }
-//          print "-- tiki-listpages.whichLangToFilterOn: looking in session array<br>\n";
        if (array_key_exists('find_page_last_done_in_lang', $_SESSION)) {
           $lang = $_SESSION['find_page_last_done_in_lang'];
        } 
@@ -767,9 +766,7 @@ class MultilingualLib extends TikiLib {
           } else {
               $lang = $userPreferredLangs[0];
           }
-//          print "-- multilinguallib.currentSearchLanguage: \$userPreferredLangs="; var_dump($userPreferredLangs); print "<br>\n";
        }
-//       print "-- multilinguallib.currentSearchLanguage: returning \$lang='$lang'<br>\n"; 
        $this->storeCurrentSearchLanguageInSession($lang);
 
        return $lang;   

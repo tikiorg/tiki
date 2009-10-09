@@ -301,7 +301,21 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 				<label for="comments-title">{tr}Title{/tr} <span class="attention">({tr}required{/tr})</span> </label>
 			</td>
 			<td class="formcolor">
-				<input type="text" size="50" name="comments_title" id="comments-title" value="{$comment_title|escape}" />
+			{* 
+			   Alain Désilets: This used to have a size="50" attribute, but I deleted it
+			   because in the Collaborative_Multilingual_Terminology, we may need to view 
+			   two different languages of the same page side by side. And the text length of
+			   50 was causing the language displayed on the right side to be squished into a 
+			   very narrow column, if comments were opened on the left side language
+			   but not on the right side language.
+			   
+			   Unfortunately, without a size specification, the comments box looks 
+			   a bit weird when we only view one language at a time.
+			   
+			   But I don't know how else to deal with this issue.
+			 *}
+				<input type="text" name="comments_title" id="comments-title" value="{$comment_title|escape}" /> 
+
 			</td>
 		</tr>
 
@@ -343,7 +357,7 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 				<label for="editpost2">{if $forum_mode eq 'y'}{tr}Reply{/tr}{else}{tr}Comment{/tr} <span class="attention">({tr}required{/tr})</span>{/if}</label>
 			</td>
 			<td class="formcolor">
-				<textarea id="editpost2" name="comments_data" rows="{$rows}" cols="{$cols}">{if $prefs.feature_forum_replyempty ne 'y' || $edit_reply > 0 || $comment_preview eq 'y'}{$comment_data|escape}{/if}</textarea>
+				<textarea id="editpost2" name="comments_data" rows="{$rows}">{if $prefs.feature_forum_replyempty ne 'y' || $edit_reply > 0 || $comment_preview eq 'y'}{$comment_data|escape}{/if}</textarea> 
 				<input type="hidden" name="rows" value="{$rows}" />
 				<input type="hidden" name="cols" value="{$cols}" />
 			</td>
