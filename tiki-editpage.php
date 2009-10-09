@@ -523,7 +523,6 @@ if ($prefs['feature_wiki_footnotes'] == 'y') {
 if (isset($_REQUEST["templateId"]) && $_REQUEST["templateId"] > 0 && !isset($_REQUEST['preview']) && !isset($_REQUEST['save'])) {
 	$template_data = $tikilib->get_template($_REQUEST["templateId"]);
 	$_REQUEST["edit"] = $template_data["content"]."\n".$_REQUEST["edit"];
-	$_REQUEST["preview"] = 1;
 	$smarty->assign("templateId", $_REQUEST["templateId"]);
 }
 
