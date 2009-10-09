@@ -20,7 +20,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 //Rest of Imports
-include_once 'lib/categories/categlib.php';
+global $categlib; include_once 'lib/categories/categlib.php';
 
 /**
  * wslib - The Workspaces Library for TikiWiki
