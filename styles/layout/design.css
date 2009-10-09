@@ -293,9 +293,7 @@ div.help_sections {
 }
 
 div.help_section {
-	margin: 5px;
-	padding: 5px;
-	background: #fff;
+	background: #eee;
 	color: #000;
 }
 	

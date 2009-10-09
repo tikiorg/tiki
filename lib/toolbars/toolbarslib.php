@@ -1087,7 +1087,7 @@ class ToolbarHelptool extends Toolbar
 			$plugins = $wikilib->list_plugins(true);
 		}
 		$smarty->assign_by_ref('plugins', $plugins);
-		return $smarty->fetch("tiki-edit_help.tpl");
+		return $smarty->fetch("tiki-edit_help.tpl") . $smarty->fetch("tiki-edit_help_plugins.tpl");
 		
 	} // }}}
 

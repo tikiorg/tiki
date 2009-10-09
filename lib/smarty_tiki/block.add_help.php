@@ -30,11 +30,14 @@ function smarty_block_add_help($params, $content, &$smarty, &$repeat) {
 	$help_sections[$params['id']] = $section;
 
 	if (!isset($params['show']) or $params['show'] == 'y') {
+		global $headerlib;
+		$headerlib->include_jquery_ui();
 		require_once $smarty->_get_plugin_filepath('block', 'self_link');
 		$self_link_params['alt'] = $params['title'];
 		$self_link_params['_icon'] = 'help';
 		$self_link_params['_ajax'] = 'n';
-		$self_link_params['_onclick'] = "javascript:show('help_sections');show('".$section['id']."');return false";
+		//$self_link_params['_onclick'] = "javascript:show('help_sections');show('".$section['id']."');return false";
+		$self_link_params['_onclick'] = '$jq(\'#help_sections\').dialog({ width: 460, height: 500, title: \''.$section['title'].'\' }).dialog(\'open\');return false;';
 		return smarty_block_self_link($self_link_params,"",$smarty);
 	} else {
 		return ;

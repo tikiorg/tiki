@@ -584,38 +584,28 @@ a.qt-plugin div {
 
 /* New Help section */
 div#tikihelp {
-	position: fixed;
-	right: 0;
-	top: 0;
-	height: auto;
-	max-width: 50%;
-	padding: 0;
-	margin: 0;
-	border: none;
-	background: transparent;
-	z-index: 820;
+	position: absolute;
 	height: 100%;
-}
-
-.help_title {
-	float: left;
-}
-
-.help_close_icon,
-.help_fullscreen_icon {
-	float: right;
-	vertical-align: middle;
-}
-
-div.help_section_select {
-	width: 100%;
-	padding: 2px;
 }
 
 div.help_sections {
 	width: 360px;
 	overflow: auto;
-	height: 100%;
+	height: 500px;
+}
+
+div.help_section {
+	/*overflow: hidden !important;*/
+	height: auto;
+}
+
+div.help_sections h3 {
+	padding-left: 24px;
+	line-height: 3ex;
+}
+
+div.help_sections > div {
+	font-size: .9em;
 }
 
 #site_report {
