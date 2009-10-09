@@ -1388,7 +1388,7 @@ function get_default_prefs() {
 		'jquery_effect_tabs_speed' => 'fast',
 
 		'feature_jquery_ui' => 'n',				// include UI lib for more effects
-		'feature_jquery_ui_theme' => 'ui-darkness',	// theme for UI lib (see http://jqueryui.com/themeroller/ for list & demos)
+		'feature_jquery_ui_theme' => 'smoothness',	// theme for UI lib (see http://jqueryui.com/themeroller/ for list & demos - previously ui-darkness)
 		'feature_jquery_tooltips' => 'y',		// use JQuery tooltips and override Overlib
 		'feature_jquery_autocomplete' => 'y',	// autocomplete on pages in QuickEdit (more coming soon)
 		'feature_jquery_superfish' => 'y',		// Effects on CSS (Suckerfish) menus
