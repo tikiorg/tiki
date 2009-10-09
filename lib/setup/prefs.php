@@ -720,6 +720,7 @@ function get_default_prefs() {
 		'users_prefs_mailCharset' => 'utf-8',
 		'users_prefs_mailCurrentAccount' => '0',
 		'validateRegistration' => 'n',
+		'validator_emails' => '',
 		'url_after_validation' => '',
 
 		// user messages
@@ -835,6 +836,7 @@ function get_default_prefs() {
 		'calendar_start_year' => '+0',
 		'calendar_end_year' => '+3',
 		'calendar_list_begins_focus' => 'n',
+		'feature_cal_manual_time' => '',
 
 		// dates
 		'server_timezone' => isset($tikidate) ? $tikidate->getTimezoneId() : 'UTC',
