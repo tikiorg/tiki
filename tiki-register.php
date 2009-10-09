@@ -228,5 +228,7 @@ if ($prefs['feature_ajax'] == 'y') {
 	$ajaxlib->processRequests(); // I don't really want a "process" function here, but if I don't call it here, it will not registerfunctions....
 	
 }
-$smarty->assign('mid', 'tiki-register.tpl');
-$smarty->display("tiki.tpl");
+if (empty($module) || !$module) {
+	$smarty->assign('mid', 'tiki-register.tpl');
+	$smarty->display('tiki.tpl');
+}
