@@ -151,17 +151,19 @@ if ($group != 'Anonymous') {
 	// Get the list of permissions for anony
 	$ifa = $userlib->get_permissions(0, -1, $sort_mode, $find,$_REQUEST["type"],'Anonymous');
 	$smarty->assign_by_ref('inherited_from_anon', $ifa['data']);
-	if ($group != 'Registered') {
-		$ifr = $userlib->get_permissions(0, -1, $sort_mode, $find,$_REQUEST["type"],'Registered');
-		$smarty->assign_by_ref('inherited_from_reg', $ifr['data']);
-		$incgroups = $userlib->get_included_groups($group);
-		foreach($incgroups as $ig) {
-			$ixr = $userlib->get_permissions(0, -1, $sort_mode, $find,$_REQUEST["type"],$ig);
-			$back[$ig] = $ixr['data'];
-		}
-		$smarty->assign_by_ref('inherited_groups_perms',$back);
-	}
 }
+
+if ($group != 'Registered' && $group != 'Anonymous') {
+	$ifr = $userlib->get_permissions(0, -1, $sort_mode, $find,$_REQUEST["type"],'Registered');
+	$smarty->assign_by_ref('inherited_from_reg', $ifr['data']);
+}
+
+$incgroups = $userlib->get_included_groups($group);
+foreach($incgroups as $ig) {
+	$ixr = $userlib->get_permissions(0, -1, $sort_mode, $find,$_REQUEST["type"],$ig);
+	$back[$ig] = $ixr['data'];
+}
+$smarty->assign_by_ref('inherited_groups_perms',$back);
 
 // Get users (list of users)
 $smarty->assign_by_ref('perms', $perms["data"]);
