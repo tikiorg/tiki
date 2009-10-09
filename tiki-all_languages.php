@@ -32,6 +32,20 @@ $pages[] = $requested;
 $unordered = array();
 $excluded = array();
 
+$page = $_REQUEST['page'];
+
+// If the page doesn't exist then display an error
+if(empty($requested)) {
+	$likepages = $wikilib->get_like_pages($page);
+	// if we have exactly one match, redirect to it 
+	if($prefs['feature_wiki_1like_redirection'] == 'y' && count($likepages) == 1  && !$isUserPage) {
+		$access->redirect( 'tiki-all_languages.php?page='.urlencode($likepages[0]) );
+	}
+	$smarty->assign_by_ref('likepages', $likepages);
+	$smarty->assign('create', $isUserPage? 'n': 'y');
+	$access->display_error( $page, tra('Page cannot be found'), '404' );
+}
+
 $preferred_langs = $multilinguallib->preferredLangs();
 
 
