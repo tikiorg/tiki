@@ -83,7 +83,7 @@ Perms::set( $perms );
 
 $globalperms = Perms::get();
 
-if ($user && (($user == 'admin' && $_SESSION["groups_are_emulated"] != "y") || $globalperms->admin ) ) {
+if ($user && (($user == 'admin' && isset($_SESSION["groups_are_emulated"]) && $_SESSION["groups_are_emulated"] != "y") || $globalperms->admin ) ) {
 	// Admins have all rights and thus, bypass permission checks
 	require_once 'lib/core/lib/Perms/ResolverFactory/StaticFactory.php';
 	require_once 'lib/core/lib/Perms/Resolver/Default.php';
