@@ -27,7 +27,7 @@ $auto_query_args = array(
 	'permType',
 	'objectId',
 	'filegals_manager',
-	'show_disabled_features',
+	//'show_disabled_features',	// this seems to cause issues - the $_GET version overrides the $_POST one...
 );
 $perm = 'tiki_p_assign_perm_' . str_replace(' ', '_', $_REQUEST['objectType']);
 if ($_REQUEST['objectType'] == 'wiki page') {
@@ -124,6 +124,17 @@ if( $_REQUEST['objectType'] == 'category' && isset($_REQUEST['propagate_category
 		$permissionApplier->addObject( $o );
 	}
 }
+
+// apply feature filter change
+if (isset($_REQUEST['feature_select'])) {
+	if (!isset($_REQUEST['feature_filter'])) {
+		$_REQUEST['feature_filter'] = array();
+	}
+	$tikilib->set_user_preference($user, 'objectperm_admin_features', serialize($_REQUEST['feature_filter']));
+	$cookietab = '1';
+}
+
+$feature_filter = unserialize($tikilib->get_user_preference($user, 'objectperm_admin_features'));
 
 // apply group filter change
 if (isset($_REQUEST['group_select'])) {
@@ -237,13 +248,8 @@ foreach($groups['data'] as &$row) {
 	if (in_array($row['id'], $group_filter)) {
 		$groupNames[] = $row['groupName'];
 		$permGroups[] = 'perm['.$row['groupName'].']';
-		if ($row['groupName'] != 'Anonymous' && $row['groupName'] != 'Admins') {
-			$groupInheritance[] = $userlib->get_included_groups($row['groupName']);
-			$inh = $userlib->get_included_groups($row['groupName']);
-		} else {
-			$groupInheritance[] = '';
-			$inh = '';
-		}
+		$groupInheritance[] = $userlib->get_included_groups($row['groupName']);
+		$inh = $userlib->get_included_groups($row['groupName']);
 	
 		$groupIndices[] = $row['groupName'] . '_hasPerm';
 		
@@ -274,18 +280,28 @@ $smarty->assign('groupNames', implode(',', $groupNames));
 
 // Get the big list of permissions
 if (isset($_REQUEST['show_disabled_features']) && $_REQUEST['show_disabled_features'] == 'on') {
-	$show_disabled_features = true;
+	$show_disabled_features = 'y';
 } else {
-	$show_disabled_features = false;
+	$show_disabled_features = 'n';
 }
 $smarty->assign('show_disabled_features', $show_disabled_features);
 
 // get "master" list of all perms
-$candidates = $userlib->get_permissions(0, -1, 'permName_asc', '', $_REQUEST["permType"], '', !$show_disabled_features);
+$candidates = $userlib->get_permissions(0, -1, 'permName_asc', '', $_REQUEST["permType"], '', $show_disabled_features != 'y' ? true : false);
 
+// list of all features
+$ftemp = $userlib->get_permission_types();
+$features = array();
+foreach($ftemp['data'] as $f) {
+	$features[] = array('featureName' => $f['type'], 'in_feature_filter' => $feature_filter === false || in_array($f['type'], $feature_filter) ? 'y' : 'n');
+}
+$features_enabled = array();
+
+// build $masterPerms list and used (enabled) features
 $masterPerms = array();
+
 foreach ($candidates['data'] as $perm) {
-	$perm['label'] = $perm['permDesc'] . ' (' . $perm['permName'] . ')';
+	$perm['label'] = tra($perm['permDesc']) . ' <em>(' . $perm['permName'] . ')</em>' . '<span style="display:none;">' . tra($perm['level'] . '</span>');
 
 	for( $i = 0; $i < count($groupNames); $i++) {
 		$p = $displayedPermissions->has( $groupNames[$i], $perm['permName'] ) ? 'y' : 'n';
@@ -293,17 +309,38 @@ foreach ($candidates['data'] as $perm) {
 		$perm[$groupIndices[$i]] = $p;
 	}
 
-	if ( $restrictions === false || in_array( $perm['permName'], $restrictions ) ) {
+	if (($feature_filter === false || in_array( $perm['type'], $feature_filter)) && ($restrictions === false || in_array( $perm['permName'], $restrictions ))) {
 		$masterPerms[] = $perm;
+	}
+	if ($show_disabled_features != 'y' && !in_array($perm['type'], $features_enabled)) {
+		// perms can be dependant on multiple features
+		if (isset($perm['feature_check'])) {
+			foreach(explode(',', $perm['feature_check']) as $fchk) {
+				if ($prefs[$fchk] == 'y') {
+					$features_enabled[] = $perm['type'];
+					break;
+				}
+			}
+		} else {	// if no feature check you can't turn them off (?)
+			$features_enabled[] = $perm['type'];
+		}
 	}
 }
 
+if ($show_disabled_features != 'y') {
+	$features_filtered = array();
+	foreach($features as $f) {
+		if (in_array($f['featureName'], $features_enabled) && !in_array($f, $features_filtered) ) {
+			$features_filtered[] = $f;
+		}
+	}
+	$features = $features_filtered;
+}
 $smarty->assign_by_ref('perms', $masterPerms);
+$smarty->assign_by_ref('features', $features);
 
+// Create JS to set up checkboxs (showing group inheritance)
 $js = '';
-
-// TODO - move this to the tpl - too much JS for most browsers to handle comfortably
-
 for( $i = 0; $i < count($groupNames); $i++) {
 
 	$groupName = addslashes($groupNames[$i]);
@@ -388,9 +425,6 @@ setcookie('tab', $cookietab);
 $smarty->assign('cookietab', $cookietab);
 
 // setup smarty remarks flags
-
-// TODO assign this remarks flag var object has perms
-$smarty->assign('page_perms_flag', false);
 
 // TODO assign this remarks flag var if category (parent) perms differ from object's 
 $smarty->assign('categ_perms_flag', false);

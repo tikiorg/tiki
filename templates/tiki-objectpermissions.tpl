@@ -25,7 +25,7 @@
 					{tr}These permissions override any global permissions or category permissions affecting this object.{/tr}<br />
 					{if $tiki_p_admin eq 'y'}{tr}To edit global permissions{/tr} {self_link objectType='global' objectId='' objectName='' permType=$permType}{tr}click here{/tr}{/self_link}.{/if}
 				{/remarksbox}
-			{elseif $categ_perms_flag}
+			{elseif $categ_perms_flag}{* TODO *}
 				{remarksbox type="warning" title="{tr}Warning{/tr}"}
 					{tr}No permissions yet applied to this object but category permissions affect this object.{/tr}<br />
 					{if $tiki_p_admin eq 'y'}{tr}To edit category permissions{/tr} {self_link _script='tiki-admin_categories.php'}{tr}click here{/tr}{/self_link}.{/if}
@@ -50,7 +50,7 @@
 		<input type="hidden" name="permType" value="{$permType|escape}" />
 		
 		<label for="show_disabled_features">{tr}Show permissions for disabled features{/tr}</label>
-		<input type="checkbox" name="show_disabled_features" id="show_disabled_features" {if isset($show_disabled_features) and $show_disabled_features}checked="checked"{/if} onchange="this.form.submit();" />
+		<input type="checkbox" name="show_disabled_features" id="show_disabled_features" {if isset($show_disabled_features) and $show_disabled_features eq 'y'}checked="checked"{/if} onchange="this.form.submit();" />
 
 		<div class="input_submit_container" style="text-align: center">
 			<input type="submit" name="assign" value="{tr}Assign{/tr}" />
@@ -77,7 +77,7 @@
 			<h3>{tr}Show/hide columns{/tr}</h3>
 			<ul id="column_switches" class="column_switcher"><li></li></ul>
 		</div>
-		{treetable _data=$perms _checkbox=$permGroups _checkboxTitles=$groupNames _checkboxColumnIndex=$permGroupCols _valueColumnIndex="permName" _columns='"label"="{tr}Permission{/tr}"' _sortColumn='type' _openall='y'}
+		{treetable _data=$perms _checkbox=$permGroups _checkboxTitles=$groupNames _checkboxColumnIndex=$permGroupCols _valueColumnIndex="permName" _columns='"label"="{tr}Permission{/tr}"' _sortColumn='type' _openall='y' _columnsContainHtml='y'}
 
 		<div class="input_submit_container" style="text-align: center">
 			<input type="submit" name="assign" value="{tr}Assign{/tr}" />
@@ -95,12 +95,34 @@
 					{tr}Some of your groups have been automatically hidden.<br /> Select the groups below to assign permissions for.{/tr}
 				{/remarksbox}
 			{/if}
+
 			<h2>{tr}Groups{/tr}</h2>
 			
-			{treetable _data=$groups _checkbox="group_filter" _checkboxTitles="Select" _checkboxColumnIndex="in_group_filter" _valueColumnIndex="id" _columns='"groupName"="{tr}Group name{/tr}","groupDesc"="{tr}Description{/tr}"' _sortColumn='parents' _collapseMaxSections=20 _sortColumnDelimiter=','}
+			{treetable _data=$groups _checkbox="group_filter" _checkboxTitles="{tr}Select all{/tr}" _checkboxColumnIndex="in_group_filter" _valueColumnIndex="id" _columns='"groupName"="{tr}Group name{/tr}","groupDesc"="{tr}Description{/tr}"' _sortColumn='parents' _collapseMaxSections=20 _sortColumnDelimiter=','}
 			
 			<div class="input_submit_container" style="text-align: center">
 				<input type="submit" name="group_select" value="{tr}Select{/tr}" />
+			</div>
+		</form>
+	{/tab}
+	
+	{tab name='{tr}Select features{/tr}'}
+		<form method="post" action="{$smarty.server.PHP_SELF}?{query}">
+			{if isset($featuresFiltered)}
+				{remarksbox type="warning" title="{tr}Warning{/tr}"}
+					{tr}Some of your features have been automatically hidden.<br /> Select the features below to assign permissions for.{/tr}
+				{/remarksbox}
+			{/if}
+
+			<label for="show_disabled_features2">{tr}Show permissions for disabled features{/tr}</label>
+			<input type="checkbox" name="show_disabled_features" id="show_disabled_features2" {if isset($show_disabled_features) and $show_disabled_features eq 'y'}checked="checked"{/if} onchange="this.form.submit();" />
+
+			<h2>{tr}Features{/tr}</h2>
+			
+			{treetable _data=$features _checkbox="feature_filter" _checkboxTitles="{tr}Select all{/tr}" _checkboxColumnIndex="in_feature_filter" _valueColumnIndex="featureName" _columns='"featureName"="{tr}Feature name{/tr}"' _sortColumn="featureName" _sortColumnDelimiter='*' _collapseMaxSections=20 _listFilter='n'}
+			
+			<div class="input_submit_container" style="text-align: center">
+				<input type="submit" name="feature_select" value="{tr}Select{/tr}" />
 			</div>
 		</form>
 	{/tab}
