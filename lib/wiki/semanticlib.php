@@ -103,12 +103,12 @@ class SemanticLib
 
 		// Multiple tokens can be fetched at the same time
 		foreach( $token as $name ) {
-			$tokenConds[] = 'reltype LIKE ?';
+			$tokenConds[] = '`reltype` LIKE ?';
 			$bindvars[] = "%$name%";
 		}
 
 
-		$mid = array( 'reltype IS NOT NULL' );
+		$mid = array( '`reltype` IS NOT NULL' );
 		$mid[] = '( ' . implode( ' OR ', $tokenConds ) . ' )';
 
 		// Filter on source and destination
@@ -116,7 +116,7 @@ class SemanticLib
 			if( ! in_array( $field, array( 'fromPage', 'toPage' ) ) )
 				continue;
 
-			$mid[] = "$field = ?";
+			$mid[] = "`$field` = ?";
 			$bindvars[] = $value;
 		}
 
@@ -264,7 +264,7 @@ class SemanticLib
 		global $tikilib, $wikilib;
 		$relations = array();
 
-		$result = $tikilib->query( "SELECT `toPage`, reltype FROM tiki_links WHERE `fromPage` = ? AND reltype IS NOT NULL", array($page) );
+		$result = $tikilib->query( "SELECT `toPage`, `reltype` FROM tiki_links WHERE `fromPage` = ? AND reltype IS NOT NULL", array($page) );
 		while( $row = $result->fetchRow() ) {
 			foreach( explode( ',', $row['reltype'] ) as $reltype ) {
 				if( false === $label = $this->getToken( $reltype, 'label' ) )
@@ -280,7 +280,7 @@ class SemanticLib
 			}
 		}
 
-		$result = $tikilib->query( "SELECT `fromPage`, reltype FROM tiki_links WHERE `toPage` = ? AND reltype IS NOT NULL", array($page) );
+		$result = $tikilib->query( "SELECT `fromPage`, `reltype` FROM tiki_links WHERE `toPage` = ? AND `reltype` IS NOT NULL", array($page) );
 		while( $row = $result->fetchRow() ) {
 			foreach( explode( ',', $row['reltype'] ) as $reltype ) {
 				if( false === $label = $this->getInvert( $reltype, 'label' ) )
@@ -310,7 +310,7 @@ class SemanticLib
 		if (!$exact_match) {
 			$query = "%$query%";
 		}
-		$result = $tikilib->query( "SELECT `fromPage`, `toPage`, reltype FROM tiki_links WHERE `toPage` LIKE ? AND reltype IS NOT NULL", array($query) );
+		$result = $tikilib->query( "SELECT `fromPage`, `toPage`, `reltype` FROM `tiki_links` WHERE `toPage` LIKE ? AND `reltype` IS NOT NULL", array($query) );
 
 		$aliases = array();
 		while( $row = $result->fetchRow() ) {
