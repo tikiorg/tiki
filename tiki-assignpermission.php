@@ -147,11 +147,12 @@ foreach ($perms['data'] as $perm) {
 	}
 }
 
-if ($group != 'Anonymous') {
+// If Anonymous is not always included in other groups unless explicitly specified as in 4.0, then the following should not execute, but commented remain here for reference as per other comment by jonnyb in tikilib.php get_user_groups()
+//if ($group != 'Anonymous') {
 	// Get the list of permissions for anony
-	$ifa = $userlib->get_permissions(0, -1, $sort_mode, $find,$_REQUEST["type"],'Anonymous');
-	$smarty->assign_by_ref('inherited_from_anon', $ifa['data']);
-}
+	//$ifa = $userlib->get_permissions(0, -1, $sort_mode, $find,$_REQUEST["type"],'Anonymous');
+	//$smarty->assign_by_ref('inherited_from_anon', $ifa['data']);
+//}
 
 if ($group != 'Registered' && $group != 'Anonymous') {
 	$ifr = $userlib->get_permissions(0, -1, $sort_mode, $find,$_REQUEST["type"],'Registered');
