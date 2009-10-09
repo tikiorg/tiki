@@ -53,6 +53,8 @@
  * 											can be a string for same class on each row
  * 											or empty string for not
  * 
+ * _columnsContainHtml = 'n':	Column data gets html encoded (by default)
+ * 
  * _emptyDataMessage = {treetable}: '.tra('No rows found')	: message if there are no rows
  * 
  * _openall					: show folder button to open all areas (y/n default=n)
@@ -108,6 +110,8 @@ function smarty_function_treetable($params, &$smarty) {
 			$_checkbox = array($_checkbox);
 			$_checkboxColumnIndex = array($_checkboxColumnIndex);
 	}
+	
+	$_columnsContainHtml = isset($_columnsContainHtml) ? $_columnsContainHtml : 'n';
 	
 	$html = '';
 	$nl = "\n";
@@ -321,7 +325,11 @@ $jq("#'.$id.'_openall").click( function () {
 		
 		foreach ($_columns as $column => $columnName) {
 			$html .= '<td>';
-			$html .= htmlentities($row[$column]);
+			if ($_columnsContainHtml != 'y') {
+				$html .= htmlentities($row[$column]);
+			} else {
+				$html .= $row[$column];
+			}
 			$html .= '</td>'.$nl;
 		}
 		$html .= '</tr>'.$nl;					
