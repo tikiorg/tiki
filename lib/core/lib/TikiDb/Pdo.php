@@ -54,7 +54,7 @@ class TikiDb_Pdo extends TikiDb {
 		$this->convertQueryTablePrefixes( $query );
 
 		if( $offset != -1 && $numrows != -1 )
-			$query .= " LIMIT $offset,$numrows";
+			$query .= " LIMIT $numrows OFFSET $offset";
 		elseif( $numrows != -1 )
 			$query .= " LIMIT $numrows";
 
