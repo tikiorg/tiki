@@ -1531,7 +1531,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$modified = $tikilib->get_db_preferences();
 
 	// Disabled by default so it has to be modified
-	if( $modified['feature_perspective'] == 'y' ) {
+	if( isset($modified['feature_perspective']) && $modified['feature_perspective'] == 'y' ) {
 		require_once 'lib/perspectivelib.php';
 		if( $persp = $perspectivelib->get_current_perspective( $modified ) ) {
 			$changes = $perspectivelib->get_preferences( $persp );
