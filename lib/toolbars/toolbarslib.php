@@ -37,6 +37,8 @@ abstract class Toolbar
 			return $tag;
 		elseif( $tag = ToolbarPicker::fromName( $tagName ) )
 			return $tag;
+		elseif( $tag = ToolbarDialog::fromName( $tagName ) )
+			return $tag;
 		elseif( $tagName == 'fullscreen' )
 			return new ToolbarFullscreen;
 		elseif( $tagName == 'enlarge' )
@@ -503,30 +505,12 @@ class ToolbarInline extends Toolbar
 			$wysiwyg = 'tikilink';
 			$syntax = '((text))';
 			break;
-		case 'link':
-			$label = tra('Link');
-			$icon = tra('pics/icons/world_link.png');
-			$wysiwyg = 'Link';
-			$syntax = '[http://example.com|text]';
-			break;
 		case 'anchor':
 			$label = tra('Anchor');
 			$icon = tra('pics/icons/anchor.png');
 			$wysiwyg = 'Anchor';
 			$syntax = '{ANAME()}text{ANAME}';
 			break;
-//		case 'color':
-//			$label = tra('Text Color');
-//			$icon = tra('pics/icons/palette.png');
-//			$wysiwyg = 'TextColor';
-//			$syntax = '~~red:text~~';
-//			break;
-//		case 'bgcolor':
-//			$label = tra('Background Color');
-//			$icon = tra('pics/icons/palette.png');
-//			$wysiwyg = 'BGColor';
-//			$syntax = '~~white,black:text~~';
-//			break;
 		default:
 			return;
 		}
@@ -849,6 +833,140 @@ JS
 	{
 		global $headerlib;
 		$headerlib->add_js( "window.pickerData[$this->index] = " . json_encode($this->list) . ";", 1 + $this->index );
+		
+		return $this->getSelfLink($this->getSyntax($areaName),
+							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-picker');
+	} // }}}
+}
+
+class ToolbarDialog extends Toolbar
+{
+	private $list;
+	private $index;
+	
+	public static function fromName( $tagName ) // {{{
+	{
+		$prefs = array();
+
+		switch( $tagName ) {
+		case 'link':
+			$wysiwyg = 'Link';
+			$label = tra('Link');
+			$icon = tra('pics/icons/world_link.png');
+			$list = array('<label for="tbLinkDesc">Link description:</label>',
+						'External Link',
+						'<input type="text" id="tbLinkDesc" class="ui-widget-content ui-corner-all" />',
+						'<label for="tbLinkType">Link type:</label>',
+						'<select id="tbLinkType" class="ui-widget-content"><option value="">Relative</option><option value="http://">http</option></select>',
+						'<label for="tbLinkURL">URL:</label>',
+						'<input type="text" id="tbLinkURL" class="ui-widget-content ui-corner-all" />',
+						'<label for="tbLinkRel">Relation:</label>',
+						'<input type="text" id="tbLinkRel" class="ui-widget-content ui-corner-all" />',
+						'<label for="tbLinkNoCache">No cache:</label>',
+						'<input type="checkbox" id="tbLinkNoCache" class="ui-widget-content ui-corner-all" />',
+						'{ "Cancel": function() { $jq(this).dialog("close"); },'.
+						'"Insert": function() {
+var s = "[" + $jq("#tbLinkType").val() + $jq("#tbLinkURL").val();
+if ($jq("#tbLinkDesc").val()) { s += "|" + $jq("#tbLinkDesc").val(); }
+if ($jq("#tbLinkRel").val()) { s += "|" + $jq("#tbLinkRel").val(); }
+if ($jq("#tbLinkNoCache").attr("checked")) { s += "|nocache"; }
+s += "]";
+insertAt(areaname, s); $jq(this).dialog("close");
+}}'
+					);
+			break;
+
+		default:
+			return;
+		}
+
+		$tag = new self;
+		$tag->setWysiwygToken( $wysiwyg )
+			->setLabel( $label )
+				->setIcon( !empty($icon) ? $icon : 'pics/icons/shading.png' )
+					->setList( $list )
+						->setType('Dialog');
+		
+		foreach( $prefs as $pref ) {
+			$tag->addRequiredPreference( $pref );
+		}
+
+		global $toolbarDialogIndex;
+		++$toolbarDialogIndex;
+		$tag->index = $toolbarDialogIndex;
+		
+		ToolbarDialog::setupJs();
+
+		return $tag;
+	} // }}}
+
+	function setList( $list ) // {{{
+	{
+		$this->list = $list;
+		
+		return $this;
+	} // }}}
+
+	protected function setSyntax( $syntax ) // {{{
+	{
+		$this->syntax = $syntax;
+
+		return $this;
+	} // }}}
+	
+	public function getSyntax( $areaName = '$areaName' ) {
+		return 'displayDialog( this, ' . $this->index . ', \'' . $areaName . '\')';
+	}
+	
+	static private function setupJs() {
+		
+		static $dialogAdded = false;
+		global $headerlib;
+
+		if( ! $dialogAdded ) {
+			include_jquery_ui();
+			$headerlib->add_js( <<<JS
+window.dialogData = [];
+var dialogDiv;
+
+displayDialog = function( closeTo, list, areaname ) {
+	var i, item, el, btnsObj, tit = "";
+	if (!dialogDiv) {
+		dialogDiv = document.createElement('div');
+		document.body.appendChild( dialogDiv );
+	}
+	\$jq(dialogDiv).empty();
+	
+	for( i in window.dialogData[list] ) {
+		item = window.dialogData[list][i];
+		if (item.indexOf("<") == 0) {	// form element
+			el = \$jq(item);
+			\$jq(dialogDiv).append( el );
+		} else if (item.indexOf("{") == 0) {
+			try {
+				//btnsObj = JSON.parse(item);	// safer, but need json2.js lib
+				btnsObj = eval("("+item+")");
+			} catch (e) {
+				alert(e.message);
+			}
+		} else {
+			tit = item;
+		}
+	}
+	\$jq(dialogDiv).dialog({ bgiframe:true, autoOpen: false, title: tit }).dialog('option', 'buttons', btnsObj).dialog('open');
+	
+	return false;
+}
+
+JS
+, 0 );
+		}
+	}
+
+	function getWikiHtml( $areaName ) // {{{
+	{
+		global $headerlib;
+		$headerlib->add_js( "window.dialogData[$this->index] = " . json_encode($this->list) . ";", 1 + $this->index );
 		
 		return $this->getSelfLink($this->getSyntax($areaName),
 							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-picker');
@@ -1265,5 +1383,24 @@ class ToolbarsList
 		}
 		return false;
 	} // }}}
+}
+
+function include_jquery_ui() {
+	global $prefs, $headerlib;
+	
+	if ($prefs['feature_jquery_ui'] != 'y') {
+		if ($prefs['feature_use_minified_scripts'] == 'y') {	// could reduce to only using dialog (needs core, draggable & resizable)
+			$headerlib->add_jsfile('lib/jquery/jquery-ui/ui/minified/jquery-ui.min.js');
+		} else {
+			$headerlib->add_jsfile('lib/jquery/jquery-ui/ui/jquery-ui.js');
+		}
+		$headerlib->add_cssfile('lib/jquery/jquery-ui/themes/'.$prefs['feature_jquery_ui_theme'].'/jquery-ui.css');
+	}
+	// include json parser (not included by default yet - Tiki 4.0 oct 09)
+	if (0 && $prefs['feature_use_minified_scripts'] == 'y') {	// could reduce to only using dialog (needs core, draggable & resizable)
+		$headerlib->add_jsfile('lib/jquery/json2.min.js');
+	} else {
+		$headerlib->add_jsfile('lib/jquery/json2.js');
+	}
 }
 

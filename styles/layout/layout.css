@@ -1713,4 +1713,11 @@ ul.column_switcher {
 	background-color: #ccc;
 }
 .thumbnailcontener { border: solid 1px lightgrey; margin: 1px; padding: 2px; text-align: center;}
+
+/* jquery-ui doalogs help */
+
+.ui-dialog label {
+	display: block;
+}
+
 /* End of File */

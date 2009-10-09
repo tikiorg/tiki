@@ -2949,6 +2949,12 @@ ul.column_switcher {
 	background-color: #ccc;
 }
 
+/* jquery-ui doalogs help */
+
+.ui-dialog label {
+	display: block;
+}
+
 /***** End New (unsorted) *****/
 
 /* End of File */
