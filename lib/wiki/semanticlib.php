@@ -121,7 +121,7 @@ class SemanticLib
 		}
 
 		$mid = implode( ' AND ', $mid );
-		$result = $tikilib->query( $q= "SELECT fromPage, toPage, reltype FROM tiki_links WHERE $mid ORDER BY fromPage, toPage",
+		$result = $tikilib->query( $q= "SELECT `fromPage`, `toPage`, reltype FROM tiki_links WHERE $mid ORDER BY `fromPage`, `toPage`",
 			$bindvars );
 		
 		$links = array();
@@ -195,7 +195,7 @@ class SemanticLib
 		$pagesDone = array();
 		foreach( $links as $link )
 		{
-			// Updatte tiki_links
+			// Update tiki_links
 			$link['reltype'] = array_diff( $link['reltype'], array($oldName) );
 			if( ! empty( $newName ) )
 				$link['reltype'] = array_merge( $link['reltype'], array($newName) );
@@ -264,7 +264,7 @@ class SemanticLib
 		global $tikilib, $wikilib;
 		$relations = array();
 
-		$result = $tikilib->query( "SELECT toPage, reltype FROM tiki_links WHERE fromPage = ? AND reltype IS NOT NULL", array($page) );
+		$result = $tikilib->query( "SELECT `toPage`, reltype FROM tiki_links WHERE `fromPage` = ? AND reltype IS NOT NULL", array($page) );
 		while( $row = $result->fetchRow() ) {
 			foreach( explode( ',', $row['reltype'] ) as $reltype ) {
 				if( false === $label = $this->getToken( $reltype, 'label' ) )
@@ -280,7 +280,7 @@ class SemanticLib
 			}
 		}
 
-		$result = $tikilib->query( "SELECT fromPage, reltype FROM tiki_links WHERE toPage = ? AND reltype IS NOT NULL", array($page) );
+		$result = $tikilib->query( "SELECT `fromPage`, reltype FROM tiki_links WHERE `toPage` = ? AND reltype IS NOT NULL", array($page) );
 		while( $row = $result->fetchRow() ) {
 			foreach( explode( ',', $row['reltype'] ) as $reltype ) {
 				if( false === $label = $this->getInvert( $reltype, 'label' ) )
@@ -310,7 +310,7 @@ class SemanticLib
 		if (!$exact_match) {
 			$query = "%$query%";
 		}
-		$result = $tikilib->query( "SELECT fromPage, toPage, reltype FROM tiki_links WHERE toPage LIKE ? AND reltype IS NOT NULL", array($query) );
+		$result = $tikilib->query( "SELECT `fromPage`, `toPage`, reltype FROM tiki_links WHERE `toPage` LIKE ? AND reltype IS NOT NULL", array($query) );
 
 		$aliases = array();
 		while( $row = $result->fetchRow() ) {
