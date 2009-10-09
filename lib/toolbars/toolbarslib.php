@@ -559,12 +559,6 @@ class ToolbarBlock extends ToolbarInline // Will change in the future
 			$wysiwyg = 'JustifyCenter';
 			$syntax = "::text::";
 			break;
-		case 'table':
-			$label = tra('Table');
-			$icon = tra('pics/icons/table.png');
-			$wysiwyg = 'Table';
-			$syntax = '||r1c1|r1c2\nr2c1|r2c2||';
-			break;
 		case 'rule':
 			$label = tra('Horizontal Bar');
 			$icon = tra('pics/icons/page.png');
@@ -851,10 +845,10 @@ class ToolbarDialog extends Toolbar
 		switch( $tagName ) {
 		case 'link':
 			$wysiwyg = 'Link';
-			$label = tra('Link');
+			$label = tra('External Link');
 			$icon = tra('pics/icons/world_link.png');
-			$list = array('<label for="tbLinkDesc">Link description:</label>',
-						'External Link',
+			$list = array('External Link',
+						'<label for="tbLinkDesc">Link description:</label>',
 						'<input type="text" id="tbLinkDesc" class="ui-widget-content ui-corner-all" />',
 						'<label for="tbLinkType">Link type:</label>',
 						'<select id="tbLinkType" class="ui-widget-content"><option value="">Relative</option><option value="http://">http</option></select>',
@@ -871,6 +865,50 @@ if ($jq("#tbLinkDesc").val()) { s += "|" + $jq("#tbLinkDesc").val(); }
 if ($jq("#tbLinkRel").val()) { s += "|" + $jq("#tbLinkRel").val(); }
 if ($jq("#tbLinkNoCache").attr("checked")) { s += "|nocache"; }
 s += "]";
+insertAt(areaname, s); $jq(this).dialog("close");
+}}'
+					);
+			break;
+
+		case 'table':
+			$icon = tra('pics/icons/table.png');
+			$wysiwyg = 'Table';
+			$label = tra('Table Builder');
+			$list = array('Table Builder',
+						'<label>Table builder:</label>',
+						'<input type="text" id="tbTableR1C1" class="ui-widget-content ui-corner-all" size="10" value="row 1,col 1" />',
+						'<input type="text" id="tbTableR1C2" class="ui-widget-content ui-corner-all" size="10" value="row 1,col 2" />',
+						'<input type="text" id="tbTableR1C3" class="ui-widget-content ui-corner-all" size="10" value="row 1,col 3" />',
+						'<input type="text" id="tbTableR2C1" class="ui-widget-content ui-corner-all" size="10" value="row 2,col 1" />',
+						'<input type="text" id="tbTableR2C2" class="ui-widget-content ui-corner-all" size="10" value="row 2,col 2" />',
+						'<input type="text" id="tbTableR2C3" class="ui-widget-content ui-corner-all" size="10" value="row 2,col 3" />',
+						'<input type="text" id="tbTableR3C1" class="ui-widget-content ui-corner-all" size="10" value="row 3,col 1" />',
+						'<input type="text" id="tbTableR3C2" class="ui-widget-content ui-corner-all" size="10" value="row 3,col 2" />',
+						'<input type="text" id="tbTableR3C3" class="ui-widget-content ui-corner-all" size="10" value="row 3,col 3" />',
+						'{ "Cancel": function() { $jq(this).dialog("close"); },'.
+						'"Insert": function() {
+var s = "||", rows=3, cols=3, c, r, rows2=1, cols2=1;
+for (r = 1; r <= rows; r++) {
+	for (c = 1; c <= cols; c++) {
+		if ($jq("#tbTableR" + r + "C" + c).val()) {
+			if (r > rows2) {
+				rows2 = r;
+			}
+			if (c > cols2) {
+				cols2 = c;
+			}
+			console.log("r=%s, c=%s", rows2, cols2, r, c);
+		}
+	}
+}
+for (r = 1; r <= rows2; r++) {
+	for (c = 1; c <= cols2; c++) {
+		s += $jq("#tbTableR" + r + "C" + c).val();
+		if (c < cols2) { s += "|"; }
+	}
+	if (r < rows2) {  s += "\n"; }
+}
+s += "||";
 insertAt(areaname, s); $jq(this).dialog("close");
 }}'
 					);
