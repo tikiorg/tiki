@@ -487,12 +487,6 @@ class ToolbarInline extends Toolbar
 			$wysiwyg = 'StrikeThrough';
 			$syntax = '--text--';
 			break;
-		case 'tikilink':
-			$label = tra('Wiki Link');
-			$icon = tra('pics/icons/page_link.png');
-			$wysiwyg = 'tikilink';
-			$syntax = '((text))';
-			break;
 		case 'anchor':
 			$label = tra('Anchor');
 			$icon = tra('pics/icons/anchor.png');
@@ -831,6 +825,41 @@ class ToolbarDialog extends Toolbar
 		$prefs = array();
 
 		switch( $tagName ) {
+		case 'tikilink':
+			$label = tra('Wiki Link');
+			$icon = tra('pics/icons/page_link.png');
+			$wysiwyg = 'tikilink';
+			$list = array('Wiki Link',
+						'<label for="tbWLinkDesc">Link description:</label>',
+						'<input type="text" id="tbWLinkDesc" class="ui-widget-content ui-corner-all" />',
+						'<label for="tbWLinkURL">Page name:</label>',
+						'<input type="text" id="tbWLinkPage" class="ui-widget-content ui-corner-all" />',
+						'<label for="tbWLinkRel">Anchor:</label>',
+						'<input type="text" id="tbWLinkAnchor" class="ui-widget-content ui-corner-all" />',
+						'<label for="tbWLinkRel">Semantic relation:</label>',
+						'<input type="text" id="tbWLinkRel" class="ui-widget-content ui-corner-all" />',
+						'{"open": function () {
+$jq("#tbWLinkPage")
+	.autocomplete("tiki-listpages.php?listonly",
+		{extraParams: {"httpaccept": "text/javascript"},
+		 dataType: "json",
+		 parse: parseAutoJSON,
+		 formatItem: function(row) { return row; }
+		});},
+						"buttons": { "Cancel": function() { $jq(this).dialog("close"); },'.
+						'"Insert": function() {
+var s = "(";
+if ($jq("#tbWLinkRel").val()) { s += $jq("#tbWLinkRel").val(); }
+s += "(" + $jq("#tbWLinkPage").val();
+if ($jq("#tbWLinkAnchor").val()) { s += "|" + $jq("#tbWLinkAnchor").val(); }
+if ($jq("#tbWLinkDesc").val()) { s += "|" + $jq("#tbWLinkDesc").val(); }
+if ($jq("#tbWLinkNoCache").attr("checked")) { s += "|nocache"; }
+s += "))";
+insertAt(areaname, s); $jq(this).dialog("close");
+}}}'
+					);
+
+			break;
 		case 'link':
 			$wysiwyg = 'Link';
 			$label = tra('External Link');
@@ -1052,9 +1081,8 @@ displayDialog = function( closeTo, list, areaname ) {
 			tit = item;
 		}
 	}
-	if (!obj) {
-		obj = {};
-	}
+	if (!obj) { obj = {}; }
+	if (!obj.width) { obj.width = 210; }
 	obj.bgiframe = true;
 	obj.autoOpen - false;
 	\$jq(dialogDiv).dialog('destroy').dialog(obj).dialog('option', 'title', tit).dialog('open');
