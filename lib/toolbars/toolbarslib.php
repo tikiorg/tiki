@@ -72,8 +72,6 @@ abstract class Toolbar
 			'bold',
 			'italic',
 			'strike',
-			'sub',
-			'sup',
 			'tikilink',
 			'link',
 			'anchor',
