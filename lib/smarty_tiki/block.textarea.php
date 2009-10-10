@@ -237,7 +237,11 @@ window.onbeforeunload = confirmExit;
 \$jq('document').ready( function() {
 	editTimeoutIntervalId = setInterval(editTimerTick, 1000);
 	// attach dirty function to all relevant inputs etc
-	\$jq(\$jq('#$as_id').attr('form')).find('input, textarea, select').change( function () { if (!editorDirty) { editorDirty = true; } });
+	if ('$as_id' == 'um_data') {	// modules admin exception
+		\$jq('#$as_id').change( function () { if (!editorDirty) { editorDirty = true; } });
+	} else {
+		\$jq(\$jq('#$as_id').attr('form')).find('input, textarea, select').change( function () { if (!editorDirty) { editorDirty = true; } });
+	}
 });
 
 window.needToConfirm = true;
