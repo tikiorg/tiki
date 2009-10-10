@@ -101,6 +101,7 @@
 						{preference name=feature_mobile}
 						{preference name=feature_morcego}
 						{preference name=feature_webmail}
+						{preference name=feature_perspective}
 						{preference name=feature_quick_object_perms}
 				</fieldset>
 

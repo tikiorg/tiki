@@ -127,6 +127,18 @@
 			</div>			
 
 		</fieldset>		
+
+		<fieldset>
+			<legend>{tr}MultiDomain{/tr}</legend>
+			
+			{preference name=multidomain_active}
+			<div class="adminoptionboxchild" id="multidomain_active_childcontainer">
+				{preference name=multidomain_config}
+			</div>			
+
+		</fieldset>			
+
+
 		
 		<fieldset>
 			<legend>{tr}Session{/tr}</legend>

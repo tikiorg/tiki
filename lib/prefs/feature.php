@@ -753,5 +753,11 @@ function prefs_feature_list() {
 			'help' => 'Module+Control',
 			'type' => 'flag',
 		),	
+		'feature_perspective' => array(
+			'name' => tra('Perspectives'),
+			'description' => tra('Permits to override preferences.'),
+			'help' => 'Perspectives',
+			'type' => 'flag',
+		),
 	);
 }
