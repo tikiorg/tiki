@@ -119,16 +119,17 @@ input[type=password] {
 	cursor: text;
 }
 
+input.button,
 button,
-.button,
 .button input,
+.button,
+input.wikiaction,
 .calbuttonbox {
 	background: #4e4e4e url(darkroom/button.png) top left repeat-x;
 	color: #b2b2b2;
 	font-weight: bold;
 	border: 1px solid transparent;
 	border-top: 1px solid #818181;
-	padding: 0 4px;
 	vertical-align: middle;
 	cursor: pointer;
 	white-space: nowrap;
@@ -154,27 +155,27 @@ input[type=reset] {
 	font-weight: bold;
 	border: 1px solid transparent;
 	border-top: 1px solid #818181;
-	padding: 0 4px;
 	vertical-align: middle;
 	cursor: pointer;
 }
 
+input.button:hover,
 button:hover,
-.button:hover,
 input[type=submit]:hover,
-input[type=reset]:hover,
 .button input:hover,
-.calbuttonbox:hover {
+.button:hover,
+.calbuttonbox a:hover {
 	border: 1px solid #b2b2b2;
 }
 
 .button a:hover {
 	text-decoration: none;
+	padding: 0 4px;
 }
 
 span.button {
 	font-size: 0.8em;
-	padding: 0;
+/*	padding: 0;*/
 }
 
 input[type=file] {
