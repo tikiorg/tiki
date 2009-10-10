@@ -844,9 +844,9 @@ class ToolbarDialog extends Toolbar
 						'<input type="text" id="tbLinkURL" class="ui-widget-content ui-corner-all" />',
 						'<label for="tbLinkRel">Relation:</label>',
 						'<input type="text" id="tbLinkRel" class="ui-widget-content ui-corner-all" />',
-						'<label for="tbLinkNoCache">No cache:</label>',
+						'<br /><label for="tbLinkNoCache" style="display:inline;">No cache:</label>',
 						'<input type="checkbox" id="tbLinkNoCache" class="ui-widget-content ui-corner-all" />',
-						'{ "Cancel": function() { $jq(this).dialog("close"); },'.
+						'{"buttons": { "Cancel": function() { $jq(this).dialog("close"); },'.
 						'"Insert": function() {
 var s = "[" + $jq("#tbLinkType").val() + $jq("#tbLinkURL").val();
 if ($jq("#tbLinkDesc").val()) { s += "|" + $jq("#tbLinkDesc").val(); }
@@ -854,7 +854,7 @@ if ($jq("#tbLinkRel").val()) { s += "|" + $jq("#tbLinkRel").val(); }
 if ($jq("#tbLinkNoCache").attr("checked")) { s += "|nocache"; }
 s += "]";
 insertAt(areaname, s); $jq(this).dialog("close");
-}}'
+}}}'
 					);
 			break;
 
@@ -872,7 +872,7 @@ insertAt(areaname, s); $jq(this).dialog("close");
 						'<input type="text" id="tbTableR3C1" class="ui-widget-content ui-corner-all" size="10" value="row 3,col 1" />',
 						'<input type="text" id="tbTableR3C2" class="ui-widget-content ui-corner-all" size="10" value="row 3,col 2" />',
 						'<input type="text" id="tbTableR3C3" class="ui-widget-content ui-corner-all" size="10" value="row 3,col 3" />',
-						'{ "Cancel": function() { $jq(this).dialog("close"); },'.
+						'{"width": 320, "buttons": { "Cancel": function() { $jq(this).dialog("close"); },'.
 						'"Insert": function() {
 var s = "||", rows=3, cols=3, c, r, rows2=1, cols2=1;
 for (r = 1; r <= rows; r++) {
@@ -897,7 +897,7 @@ for (r = 1; r <= rows2; r++) {
 }
 s += "||";
 insertAt(areaname, s); $jq(this).dialog("close");
-}}'
+}}}'
 					);
 			break;
 
@@ -910,7 +910,7 @@ insertAt(areaname, s); $jq(this).dialog("close");
 						'<input type="text" id="tbFindSearch" class="ui-widget-content ui-corner-all" />',
 						'<label for="tbLinkNoCache" style="display:inline;">Case Insensitivity:</label>',
 						'<input type="checkbox" id="tbFindCase" checked="checked" class="ui-widget-content ui-corner-all" />',
-						'{ "Close": function() { $jq(this).dialog("close"); },'.
+						'{"buttons": { "Close": function() { $jq(this).dialog("close"); },'.
 						'"Find": function() {
 	var s, opt, ta, str, re, p = 0, m;
 	s = $jq("#tbFindSearch").removeClass("ui-state-error").val();
@@ -936,7 +936,7 @@ insertAt(areaname, s); $jq(this).dialog("close");
 	} else {
 		$jq("#tbFindSearch").addClass("ui-state-error");
 	}
-}}'
+}}}'
 					);
 
 			break;
@@ -956,7 +956,7 @@ insertAt(areaname, s); $jq(this).dialog("close");
 						'<input type="checkbox" id="tbReplaceCase" checked="checked" class="ui-widget-content ui-corner-all" />',
 						'<br /><label for="tbLinkNoCache" style="display:inline;">Replace All:</label>',
 						'<input type="checkbox" id="tbReplaceAll" checked="checked" class="ui-widget-content ui-corner-all" />',
-						'{ "Close": function() { $jq(this).dialog("close"); },'.
+						'{"buttons": { "Close": function() { $jq(this).dialog("close"); },'.
 						'"Replace": function() {
 	var s = $jq("#tbReplaceSearch").val();
 	var r = $jq("#tbReplaceReplace").val();
@@ -970,7 +970,7 @@ insertAt(areaname, s); $jq(this).dialog("close");
 	var str = $jq("textarea[name=\'" + areaname + "\']").val();
 	var re = new RegExp(s,opt);
 	$jq("textarea[name=\'" + areaname + "\']").val(str.replace(re,r));
-}}'
+}}}'
 					);
 
 			break;
@@ -1029,7 +1029,7 @@ window.dialogData = [];
 var dialogDiv;
 
 displayDialog = function( closeTo, list, areaname ) {
-	var i, item, el, btnsObj, tit = "";
+	var i, item, el, obj, tit = "";
 	if (!dialogDiv) {
 		dialogDiv = document.createElement('div');
 		document.body.appendChild( dialogDiv );
@@ -1043,16 +1043,21 @@ displayDialog = function( closeTo, list, areaname ) {
 			\$jq(dialogDiv).append( el );
 		} else if (item.indexOf("{") == 0) {
 			try {
-				//btnsObj = JSON.parse(item);	// safer, but need json2.js lib
-				btnsObj = eval("("+item+")");
+				//obj = JSON.parse(item);	// safer, but need json2.js lib
+				obj = eval("("+item+")");
 			} catch (e) {
-				alert(e.message);
+				alert(e.name + ' - ' + e.message);
 			}
 		} else {
 			tit = item;
 		}
 	}
-	\$jq(dialogDiv).dialog({ bgiframe:true, autoOpen: false, width: 320 }).dialog('option', 'title', tit).dialog('option', 'buttons', btnsObj).dialog('open');
+	if (!obj) {
+		obj = {};
+	}
+	obj.bgiframe = true;
+	obj.autoOpen - false;
+	\$jq(dialogDiv).dialog('destroy').dialog(obj).dialog('option', 'title', tit).dialog('open');
 	
 	return false;
 }
