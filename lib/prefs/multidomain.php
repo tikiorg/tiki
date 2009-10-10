@@ -7,7 +7,7 @@ function prefs_multidomain_list() {
 			'description' => tra('Allows to map domain names to perspectives and simulate multiple domains hosted on the same instance.'),
 			'type' => 'flag',
 			'dependencies' => array(
-				'feature_perspectives',
+				'feature_perspective',
 			),
 		),
 		'multidomain_config' => array(
