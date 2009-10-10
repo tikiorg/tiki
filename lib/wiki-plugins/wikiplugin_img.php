@@ -7,6 +7,11 @@ function wikiplugin_img_info() {
 		'prefs' => array( 'wikiplugin_img'),
 		'icon' => 'pics/icons/picture.png',
 		'params' => array(
+			'src' => array(
+				'required' => false,
+				'name' => tra('Image source'),
+				'description' => tra('Full URL to the image to display. "id", "fileId", "attId" or "src" required.'),
+			),
 			'id' => array(
 				'required' => false,
 				'name' => tra('Image ID'),
@@ -21,11 +26,6 @@ function wikiplugin_img_info() {
 				'required' => false,
 				'name' => tra('Attachment ID'),
 				'description' => tra('Numeric ID of an image attached to a wiki page (or comma-separated list). "id", "fileId", "attId" or "src" required.'),
-			),
-			'src' => array(
-				'required' => false,
-				'name' => tra('Image source'),
-				'description' => tra('Full URL to the image to display. "id", "fileId", "attId" or "src" required.'),
 			),
 			'thumb' => array(
 				'required' => false,
