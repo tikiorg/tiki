@@ -414,10 +414,6 @@ class ToolbarFckOnly extends Toolbar
 			return new self( 'Undo' );
 		case 'redo':
 			return new self( 'Redo' );
-		case 'find':
-			return new self( 'Find' );
-		case 'replace':
-			return new self( 'Replace' );
 		case 'selectall':
 			return new self( 'SelectAll' );
 		case 'removeformat':
@@ -867,7 +863,6 @@ insertAt(areaname, s); $jq(this).dialog("close");
 			$wysiwyg = 'Table';
 			$label = tra('Table Builder');
 			$list = array('Table Builder',
-						'<label>Table builder:</label>',
 						'<input type="text" id="tbTableR1C1" class="ui-widget-content ui-corner-all" size="10" value="row 1,col 1" />',
 						'<input type="text" id="tbTableR1C2" class="ui-widget-content ui-corner-all" size="10" value="row 1,col 2" />',
 						'<input type="text" id="tbTableR1C3" class="ui-widget-content ui-corner-all" size="10" value="row 1,col 3" />',
@@ -904,6 +899,80 @@ s += "||";
 insertAt(areaname, s); $jq(this).dialog("close");
 }}'
 					);
+			break;
+
+		case 'find':
+			$icon = tra('pics/icons/find.png');
+			$wysiwyg = 'Find';
+			$label = tra('Find Text');
+			$list = array('Find Text',
+						'<label>Search:</label>',
+						'<input type="text" id="tbFindSearch" class="ui-widget-content ui-corner-all" />',
+						'<label for="tbLinkNoCache" style="display:inline;">Case Insensitivity:</label>',
+						'<input type="checkbox" id="tbFindCase" checked="checked" class="ui-widget-content ui-corner-all" />',
+						'{ "Close": function() { $jq(this).dialog("close"); },'.
+						'"Find": function() {
+	var s, opt, ta, str, re, p = 0, m;
+	s = $jq("#tbFindSearch").removeClass("ui-state-error").val();
+	opt = "";
+	if ($jq("#tbFindCase").attr("checked")) {
+		opt += "i";
+	}
+	ta = $jq("textarea[name=\'" + areaname + "\']");
+	str = ta.val();
+	re = new RegExp(s,opt);
+	p = getCaretPos(ta[0]);
+	if (p && p < str.length) {
+		m = re.exec(str.substring(p));
+	} else {
+		p = 0;
+	}
+	if (!m) {
+		m = re.exec(str);
+		p = 0;
+	}
+	if (m) {
+		setSelectionRange(ta[0], m.index + p, m.index + s.length + p);
+	} else {
+		$jq("#tbFindSearch").addClass("ui-state-error");
+	}
+}}'
+					);
+
+			break;
+
+		case 'replace':
+			$icon = tra('pics/icons/text_replace.png');
+			$wysiwyg = 'Replace';
+			$label = tra('Text Replace');
+			$prefs[] = 'feature_wiki_replace';
+			
+			$list = array('Text Replace',
+						'<label>Search:</label>',
+						'<input type="text" id="tbReplaceSearch" class="ui-widget-content ui-corner-all" />',
+						'<label>Replace:</label>',
+						'<input type="text" id="tbReplaceReplace" class="ui-widget-content ui-corner-all clearfix" />',
+						'<label for="tbLinkNoCache" style="display:inline;">Case Insensitivity:</label>',
+						'<input type="checkbox" id="tbReplaceCase" checked="checked" class="ui-widget-content ui-corner-all" />',
+						'<br /><label for="tbLinkNoCache" style="display:inline;">Replace All:</label>',
+						'<input type="checkbox" id="tbReplaceAll" checked="checked" class="ui-widget-content ui-corner-all" />',
+						'{ "Close": function() { $jq(this).dialog("close"); },'.
+						'"Replace": function() {
+	var s = $jq("#tbReplaceSearch").val();
+	var r = $jq("#tbReplaceReplace").val();
+	var opt = "";
+	if ($jq("#tbReplaceAll").attr("checked")) {
+		opt += "g";
+	}
+	if ($jq("#tbReplaceCase").attr("checked")) {
+		opt += "i";
+	}
+	var str = $jq("textarea[name=\'" + areaname + "\']").val();
+	var re = new RegExp(s,opt);
+	$jq("textarea[name=\'" + areaname + "\']").val(str.replace(re,r));
+}}'
+					);
+
 			break;
 
 		default:
