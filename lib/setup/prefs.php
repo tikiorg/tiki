@@ -1202,6 +1202,7 @@ function get_default_prefs() {
 		// kaltura
 		'feature_kaltura' => 'n',
 		'wikiplugin_kaltura' => 'y',
+		'wikiplugininline_kaltura' => 'n',
 		'default_kaltura_editor' => 'kse',
 		'partnerId' => '',
 		'secret' => '',
