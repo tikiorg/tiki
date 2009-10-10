@@ -1,4 +1,4 @@
-<?php // -*- coding:utf-8 -*-
+﻿<?php // -*- coding:utf-8 -*-
 // Parameters:
 
 // lang=xx    : only translates language 'xx',
@@ -434,7 +434,7 @@ $lang=Array(
 // "More info about \$other_user" => "More info about \$other_user",
 // "(idle for \$idletime seconds)" => "(idle for \$idletime seconds)",
 // "Use this tree to copy the structure" => "Use this tree to copy the structure",
-// "Table of contents" => "Table of contents",
+"Table of contents" => "Innehållsförteckning",
 // "You have to make %d choice(s) for the question" => "You have to make %d choice(s) for the question",
 // "You have to make at least %d choice(s) for the question" => "You have to make at least %d choice(s) for the question",
 // "You have to make less than %d choice(s) for the question" => "You have to make less than %d choice(s) for the question",
