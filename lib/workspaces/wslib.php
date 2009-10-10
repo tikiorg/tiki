@@ -87,13 +87,17 @@ class wslib extends CategLib
      */
     public function create_ws ($name, $groups, $parentWS = 0, $description = '')
     {
-		global $perspectivelib; require_once 'lib/perspectivelib.php';
+		global $perspectivelib, $userlib; require_once 'lib/perspectivelib.php';
 		
 		if (empty($parentWS))
 			$parentWS = 0;
 			
 		$ws_id = parent::add_category($parentWS, $name, $description, $this->ws_container);
-		
+
+		//We create the perspective for the WS
+		$wsValue = $this->get_ws_perspective_value ($ws_id);
+		$pspId = $perspectivelib->replace_perspective(null, tr('Workspace %0', $name));
+
 		foreach ($groups as $group)
 		{
 			$groupName = $group["groupName"];
@@ -109,14 +113,20 @@ class wslib extends CategLib
 			}
 			else
 				$this->add_ws_group ($ws_id, $name, $groupName, $groupDescription, $additionalPerms);
+
+			$userlib->assign_object_permission( $groupName, $pspId, 'perspective', 'tiki_p_perspective_view' );
 		}
 		
-		//We create the perspective for the WS
-		$wsValue = $this->get_ws_perspective_value ($ws_id);
-		$pspId = $perspectivelib->replace_perspective(null, $wsValue);
 		//I set this for the ws identificacion, because we can have two ws with the same name and for psp
 		//this could be a problem in order to get the psp from the db
-		$perspectivelib->replace_preferences($pspId, array('wsId' => $ws_id, 'wsName' => $name, 'wsHomepage' => '', 'wsStyle' => '', 'sitemycode' => '<div style="align: left; padding-left: 15px;">You are currently in '.$name.' workspace. <a class="link" href="tiki-switch_perspective.php">{tr}Reset Tiki to its normal status!{/tr}</a></div>')); 
+		$perspectivelib->replace_preferences($pspId, array(
+			'wsId' => $ws_id, 
+			'wsName' => $name, 
+			'wsHomepage' => '', 
+			'wsStyle' => '', 
+			'sitemycode' => '<div style="align: left; padding-left: 15px;">' . tr('You are currently in workspace %0.', $name) . '<a class="link" href="tiki-switch_perspective.php">' . tra('Reset Tiki to its normal status!') . '</a></div>',
+			'category_jail' => $ws_id,
+		)); 
 			
 		return $ws_id;
     }
