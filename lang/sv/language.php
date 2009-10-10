@@ -1,4 +1,4 @@
-<?php // -*- coding:utf-8 -*-
+﻿<?php // -*- coding:utf-8 -*-
 // Parameters:
 
 // lang=xx    : only tranlates language 'xx',
@@ -1414,7 +1414,7 @@ $lang=Array(
 // "More info about \$other_user" => "More info about \$other_user",
 // "(idle for \$idletime seconds)" => "(idle for \$idletime seconds)",
 // "Use this tree to copy the structure" => "Use this tree to copy the structure",
-// "Table of contents" => "Table of contents",
+"Table of contents" => "Innehållsförteckning",
 // "unknown error" => "unknown error",
 // "cannot be found" => "cannot be found",
 // "An error occured in a database query!" => "An error occured in a database query!",
