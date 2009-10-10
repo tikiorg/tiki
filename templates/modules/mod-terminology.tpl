@@ -24,7 +24,7 @@
 	<div class="box-footer">
 	</div>
 
-    <a href="tiki-index.php?page=User+Guide+(Collaborative+Terminology+profile)">{tr}Help{/tr}</a>
+    <a href="tiki-index.php?page=User Guide-- Collaborative Terminology profile">{tr}Help{/tr}</a>
     &nbsp; &nbsp; <a href="tiki-index.php?page=Admin+Guide+(Collaborative+Terminology+Profile)">{tr}Admin{/tr}</a>
   </div>
 {/tikimodule}
