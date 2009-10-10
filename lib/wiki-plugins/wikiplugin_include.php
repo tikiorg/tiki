@@ -49,6 +49,7 @@ function wikiplugin_include_info() {
 				'required' => true,
 				'name' => tra('Page Name'),
 				'description' => tra('Wiki page name to include.'),
+				'filter' => 'pagename'
 			),
 			'start' => array(
 				'required' => false,
