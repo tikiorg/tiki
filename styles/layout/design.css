@@ -25,6 +25,7 @@ span.button.highlight {
 
 span.button a,
 span.button a:visited,
+span.button a:hover,
 span.button input,
 .calbuttonBox a {
 	padding: 1px 4px;
