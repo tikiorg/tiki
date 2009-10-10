@@ -7,6 +7,11 @@
 
 function smarty_function_toolbars($params, &$smarty)
 {
+	global $prefs;
+	
+	if ($prefs['javascript_enabled'] != 'y') {
+		return '';
+	}
 	if( ! isset( $params['section'] ) ) {
 		global $section;
 		if( ! empty($section) )
