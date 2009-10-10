@@ -420,16 +420,18 @@ if (!function_exists('getimagesize_raw')) {
 					break;
 			}		
 			//Give error messages if it doesn't exist or isn't an image
-			if( ! $dbinfo ) {
-				return '^' . tra('File not found.') . '^';
-			} elseif( substr($dbinfo['filetype'], 0, 5) != 'image' ) {
-				return '^' . tra('File is not an image.') . '^';
-			} else {
-			require_once('lib/images/images.php');
-				if (!class_exists('Image')) {
-				return '^' . tra('Server does not support image manipulation.') . '^';
-				}
-			}	
+			if (empty($imgdata['src'])) {
+				if( ! $dbinfo ) {
+					return '^' . tra('File not found.') . '^';
+				} elseif( substr($dbinfo['filetype'], 0, 5) != 'image' ) {
+					return '^' . tra('File is not an image.') . '^';
+				} else {
+				require_once('lib/images/images.php');
+					if (!class_exists('Image')) {
+					return '^' . tra('Server does not support image manipulation.') . '^';
+					}
+				}	
+			}
 			//Now that we know it exists, finish getting info for image gallery files since the path and blob are in two different tables
 			if ($sourcetype == 'imagegal') {
 				global $imagegallib; 
