@@ -266,8 +266,13 @@ span.toolbar-list {
 	display: inline-block;
 }
 
+.toolbars-picker a:link {
+	color: #000;
+}
+
 .toolbars-picker a:hover {
 	background-color: #ccc;
+	color: #000;
 }
 
 /* New Help section */
