@@ -72,6 +72,8 @@ abstract class Toolbar
 			'bold',
 			'italic',
 			'strike',
+			'sub',
+			'sup',
 			'tikilink',
 			'link',
 			'anchor',
@@ -446,6 +448,10 @@ class ToolbarFckOnly extends Toolbar
 			return new self( 'Source' );
 		case 'autosave':
 			return new self( 'ajaxAutoSave', 'lib/fckeditor_tiki/plugins/ajaxAutoSave/images/ajaxAutoSaveDirty.gif' );
+		case 'sub':
+			return new self( 'Subscript' );
+		case 'sup':
+			return new self( 'Superscript' );
 		}
 	} // }}}
 
@@ -484,18 +490,6 @@ class ToolbarInline extends Toolbar
 			$icon = tra('pics/icons/text_strikethrough.png');
 			$wysiwyg = 'StrikeThrough';
 			$syntax = '--text--';
-			break;
-		case 'sub':
-			$label = tra('Subscript');
-			$icon = tra('pics/icons/text_subscript.png');
-			$wysiwyg = 'Subscript';
-			$syntax = '{SUB()}text{SUB}';
-			break;
-		case 'sup':
-			$label = tra('Superscript');
-			$icon = tra('pics/icons/text_superscript.png');
-			$wysiwyg = 'Superscript';
-			$syntax = '{SUP()}text{SUP}';
 			break;
 		case 'tikilink':
 			$label = tra('Wiki Link');
