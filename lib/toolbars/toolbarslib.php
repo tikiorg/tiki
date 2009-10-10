@@ -1102,7 +1102,8 @@ class ToolbarFileGallery extends Toolbar
 		$this->setLabel( tra('Choose or upload images') )
 			->setIcon( tra('pics/icons/pictures.png') )
 				->setWysiwygToken( 'tikiimage' )
-					->setType('FileGallery');
+					->setType('FileGallery')
+						->addRequiredPreference('feature_filegals_manager');
 	} // }}}
 
 	function getWikiHtml( $areaName ) // {{{
