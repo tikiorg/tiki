@@ -18,7 +18,6 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 require_once( 'tiki-filter-base.php' );
 
 // Define and load Smarty components
-define('SMARTY_DIR', "lib/smarty/libs/");
 require_once ( 'lib/smarty/libs/Smarty.class.php');
 require_once ('installer/installlib.php');
 
