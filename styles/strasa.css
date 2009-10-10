@@ -1014,20 +1014,12 @@ table.admin {
 	padding: 3px;
 }
 
-tr.odd td {
-	background: #f0f0f0;
-}
-
-tr.even td {
-	background: #dcdcdc;
-}
-
-td.odd {
+.odd {
 	background: #f0f0f0;
 	color: #000;
 }
 
-td.even {
+.even {
 	background: #dcdcdc;
 	color: #000;
 }

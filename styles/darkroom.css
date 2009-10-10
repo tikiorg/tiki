@@ -905,6 +905,15 @@ div.simplebox {
 	padding: 4px;
 }
 
+.odd {
+	color: #fff;
+	background: #292929;
+}
+.even {
+	color: #fff;
+	background: #232323;
+}
+
 /***** Tables, Tabs and Lists ****/
 /** Tables **/
 table {
@@ -936,6 +945,7 @@ td.form,
 .editfgalform td,
 .comform td,
 .forumform td {
+	color: #fff;
 	background: #292929;
 	padding: 3px;
 }
@@ -959,12 +969,14 @@ tr.even {
 
 tr.odd td,
 td.odd {
+	color: #fff;
 	background: #292929;
 	border-right: 1px solid #696969;
 }
 
 tr.even td,
 td.even {
+	color: #fff;
 	background: #232323;
 	border-right: 1px solid #696969;
 }

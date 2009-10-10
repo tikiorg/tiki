@@ -314,6 +314,10 @@ div.help_section {
 	font-size: smaller;
 }
 
+/* default look for editplugin icon links */
+.editplugin {
+	/*background: #fff; color: #000;*/
+}
 .plugin-desc {
 	padding: 5px;
 }
@@ -394,6 +398,16 @@ div.help_section {
 	padding: 3px;
 }
 
+.odd {
+	background: #f0f0f0;
+	color: #000;
+}
+
+.even {
+	background: #fff;
+	color: #000;
+}
+
 /***** Tables, Tabs ****/
 /** Tables **/
 
@@ -405,8 +419,8 @@ table.admin {
 td.normal,
 .normal td,
 .wikitable td,
-td.odd,
-td.even,
+.odd,
+.even,
 td.form,
 .formcolor td,
 .editblogform td {
