@@ -225,6 +225,8 @@ if (!function_exists('getimagesize_raw')) {
 	if (strstr($imgdata['src'],'javascript:')) {
 		$imgdata['src']  = '';
 	}
+
+	include_once('tiki-sefurl.php');
 	
 ///////////////////////////////////// If only old img parameters used, use old code and get out of program quickly ///////////////////
 	if (!empty($imgdata['src']) && (strpos($imgdata['src'], '|') == FALSE  ) && (strpos($imgdata['src'], ',') == FALSE  ) && empty($imgdata['thumb']) 
@@ -258,6 +260,9 @@ if (!function_exists('getimagesize_raw')) {
 			if ( (int)$imgdata['width'] > 0 && ctype_digit($imgdata['width']) ) $imgdata['src'] .= '&amp;x='.$imgdata['width'];
 			if ( (int)$imgdata['height'] > 0 && ctype_digit($imgdata['height']) ) $imgdata['src'] .= '&amp;y='.$imgdata['height'];
 		}
+		
+		$imgdata["src"] = filter_out_sefurl(htmlentities($imgdata["src"]), $smarty);
+		
 		if ( $imgdata['width'] ) $imgdata_dim .= ' width="' . $imgdata['width'] . '"';
 		if ( $imgdata['height'] ) $imgdata_dim .= ' height="' . $imgdata['height'] . '"';
 
@@ -565,7 +570,8 @@ if (!function_exists('getimagesize_raw')) {
 		
 	////////////////////////////////////////// Create the HTML img tag ///////////////////////////////////////////////////////////////////
 		//Start tag with src and dimensions
-		$replimg = "\r\t" . '<img src="' . $imgdata['src']. $thumbstring . '"';
+		$imgdata["src"] = filter_out_sefurl(htmlentities($imgdata["src"]. $thumbstring), $smarty);
+		$replimg = "\r\t" . '<img src="' . $imgdata['src'] . '"';
 		$replimg .= $imgdata_dim;
 		
 		//Create style attribute allowing for shortcut inputs 
@@ -697,6 +703,9 @@ if (!function_exists('getimagesize_raw')) {
 			} else {
 				$linktitle = '';
 			}
+			
+			$link = filter_out_sefurl(htmlentities($link), $smarty);
+
 			//Final link string
 			$replimg = '<a href="' . $link . '" class="internal"' . $linkrel . $imgtarget . $linktitle . $mouseover . '>' . $replimg . '</a>';
 		}
