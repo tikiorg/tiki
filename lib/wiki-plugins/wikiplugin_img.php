@@ -229,7 +229,7 @@ if (!function_exists('getimagesize_raw')) {
 ///////////////////////////////////// If only old img parameters used, use old code and get out of program quickly ///////////////////
 	if (!empty($imgdata['src']) && (strpos($imgdata['src'], '|') == FALSE  ) && (strpos($imgdata['src'], ',') == FALSE  ) && empty($imgdata['thumb']) 
 		&& empty($imgdata['button']) && empty($imgdata['max']) && empty($imgdata['styleimage']) && empty($imgdata['stylebox']) && empty($imgdata['styledesc']) 
-		&& empty($imgdata['block']) && ($imgdata['desc'] != 'desc') && ($imgdata['desc'] != 'idesc') && ($imgdata['desc'] != 'name') && ($imgdata['desc'] != 'ititle')) {	
+		&& empty($imgdata['block']) && ($imgdata['desc'] != 'desc') && ($imgdata['desc'] != 'idesc') && ($imgdata['desc'] != 'name') && ($imgdata['desc'] != 'ititle') && ($imgdata['rel'] != 'box')) {	
 		if ($tikidomain && !preg_match('|^https?:|', $imgdata['src'])) {
 			$imgdata['src'] = preg_replace("~img/wiki_up/~","img/wiki_up/$tikidomain/",$imgdata['src']);
 		}
@@ -498,8 +498,15 @@ if (!function_exists('getimagesize_raw')) {
 			$ititle = isset($iptc['2#005'][0]) ? trim($iptc['2#005'][0]) : '';		//title from image iptc
 			
 
-		// URL of original image
-		$browse_full_image = $imgdata['src']; 
+		// URL of original full size image
+		$pos = strpos($imgdata['src'], '&thumb');
+		if ($pos > 0) {
+			//Strip off any thumbnail parameter
+			$len = strlen($imgdata['src']);
+			$browse_full_image = substr_replace($imgdata['src'], '', $pos, $len-($len-$pos));
+		} else {
+			$browse_full_image = $imgdata['src']; 
+		}
 		
 	/////////////////////////////////////Add image dimensions to src string////////////////////////////////////////////////////////////////
 		// Adjust for max setting, keeping aspect ratio
@@ -542,16 +549,19 @@ if (!function_exists('getimagesize_raw')) {
 					$width = floor($height * $fwidth / $fheight);	
 				}
 			}
-		//Otherwise html dimensions are the same as original
-		} elseif  (empty($height) && empty($width)) {
-			$height = $fheight;
-			$width = $fwidth;
 		}
 		
 		//Set final height and width dimension string
-		$imgdata_dim = ' height="' . $height . '"';
-		$imgdata_dim .= ' width="' . $width . '"';
-
+		if (!empty($height)) {
+			$imgdata_dim = ' height="' . $height . '"';
+		} else {
+			$imgdata_dim = '';
+		}
+		if (!empty($width)) {
+			$imgdata_dim .= ' width="' . $width . '"';
+		} else {
+			$imgdata_dim = '';
+		}
 		
 	////////////////////////////////////////// Create the HTML img tag ///////////////////////////////////////////////////////////////////
 		//Start tag with src and dimensions
@@ -641,8 +651,7 @@ if (!function_exists('getimagesize_raw')) {
 				$link = $imgdata['link'];
 			} elseif ((($imgdata['thumb'] == 'browse') || ($imgdata['thumb'] == 'browsepopup')) && !empty($imgdata['id'])) {
 				$link = 'tiki-browse_image.php?imageId=' . $imgdata['id'];
-			} elseif (($imgdata['thumb'] == 'mouseover') || ($imgdata['thumb'] == 'mousesticky')) {
-				$javaset = 'true';
+			} elseif ($javaset == 'true') {
 				$link = 'javascript:void(0)';
 				$popup_params = array( 'text'=>$data, 'width'=>$fwidth, 'height'=>$fheight, 'background'=>$browse_full_image);
 				if ($imgdata['thumb'] == 'mousesticky') {
@@ -652,11 +661,7 @@ if (!function_exists('getimagesize_raw')) {
 				$mouseover = ' ' . smarty_function_popup($popup_params, $smarty);
 			} else {
 				if ($sourcetype == 'filegal' && $imgdata['thumb'] != 'download') {
-					if (strpos($browse_full_image, '&thumbnail') > 0) {
-						$link = substr_replace($browse_full_image, '&display', strpos($browse_full_image, '&thumbnail'), 10);
-					} else {
-						$link = $browse_full_image . '&display';
-					}
+					$link = $browse_full_image . '&display';
 				} else {
 					$link = $browse_full_image;
 				}
