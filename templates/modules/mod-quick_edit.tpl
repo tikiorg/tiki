@@ -10,13 +10,7 @@
 </form>
 {if $prefs.javascript_enabled eq 'y' and $prefs.feature_jquery_autocomplete eq 'y'}
 {jq}
-$jq("#{{$qefield}}")
-	.autocomplete('tiki-listpages.php?listonly',
-		{extraParams: {'httpaccept': 'text/javascript'},
-		 dataType: "json",
-		 parse: parseAutoJSON,
-		 formatItem: function(row) { return row; }
-		});
+	$jq("#{{$qefield}}").tiki("autocomplete", "pagename");
 {/jq}
 {/if}
 {/tikimodule}

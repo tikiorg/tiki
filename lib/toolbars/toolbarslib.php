@@ -838,14 +838,7 @@ class ToolbarDialog extends Toolbar
 						'<input type="text" id="tbWLinkAnchor" class="ui-widget-content ui-corner-all" />',
 						'<label for="tbWLinkRel">Semantic relation:</label>',
 						'<input type="text" id="tbWLinkRel" class="ui-widget-content ui-corner-all" />',
-						'{"open": function () {
-$jq("#tbWLinkPage")
-	.autocomplete("tiki-listpages.php?listonly",
-		{extraParams: {"httpaccept": "text/javascript"},
-		 dataType: "json",
-		 parse: parseAutoJSON,
-		 formatItem: function(row) { return row; }
-		});},
+						'{"open": function () { $jq("#tbWLinkPage").tiki("autocomplete", "pagename");},
 						"buttons": { "Cancel": function() { $jq(this).dialog("close"); },'.
 						'"Insert": function() {
 var s = "(";
