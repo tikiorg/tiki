@@ -31,7 +31,7 @@
 				<div class="left">
 				<p>{tr}The following error message was returned:{/tr}</p>
 				<strong>
-					{$msg|escape}
+					<pre>{$msg|escape|nl2br}</pre>
 				</strong>
 
 				{if $requires_update}
