@@ -8,7 +8,7 @@
 {/if}
 
 {if $templateId > 0}
-	<h2>{tr}Edit this template:{/tr} {$info.name}</h2>
+	<h2>{tr}Edit this template:{/tr} {$info.name|escape}</h2>
 	<a href="tiki-admin_content_templates.php">{tr}Create new template{/tr}</a>
 {else}
 	<h2>{tr}Create new template{/tr}</h2>
@@ -127,7 +127,7 @@
 	{cycle values="odd,even" print=false advance=false}
 	{section name=user loop=$channels}
 		<tr>
-			<td class="{cycle advance=false}">{$channels[user].name}</td>
+			<td class="{cycle advance=false}">{$channels[user].name|escape}</td>
 			<td class="{cycle advance=false}">{$channels[user].created|tiki_short_datetime}</td>
 			<td class="{cycle advance=false}">
 				{if count($channels[user].sections) == 0}{tr}Visible in no sections{/tr}{/if}
