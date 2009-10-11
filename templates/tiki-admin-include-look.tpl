@@ -447,9 +447,10 @@
 </fieldset>
 </div>
 
+{/tab}
 
-<div class="adminoptionbox">
-<fieldset><legend>{tr}Pagination links{/tr}</legend>
+	{tab name="{tr}Pagination links{/tr}"}
+
 
 <div class="adminoptionbox">	  
 	<div class="adminoptionlabel"><label for="general-max_records">{tr}Maximum number of records in listings{/tr}:</label> <input size="5" type="text" name="maxRecords" id="general-max_records" value="{$prefs.maxRecords|escape}" /></div>
@@ -492,8 +493,6 @@
 	<div class="adminoptionlabel"><label for="pagination_icons">{tr}Use Icons{/tr}</label></div>
 </div>						
 
-</fieldset>
-</div>
 
 {/tab}
 		
