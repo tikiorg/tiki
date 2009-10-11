@@ -138,8 +138,10 @@ function module_change_category( $mod_reference, $module_params ) {
 		$unassignedCategs = array();
 		$assignedCategs = array();
 		if (isset($_REQUEST['remove']) && in_array($_REQUEST['remove'], $categsid) && (!isset($module_params['del']) || $module_params['del'] != 'n')) {
-			$unassignedCategs[] = (int)$_REQUEST['remove'];
-			unset($_REQUEST['remove']);
+			$oldCategs = $categlib->get_object_categories($cat_type, $cat_objid);
+			if (in_array($_REQUEST['remove'], $oldCategs)) {
+				$unassignedCategs[] = (int)$_REQUEST['remove'];
+			}
 		} elseif (isset($_REQUEST["modcatid"]) and $_REQUEST["modcatid"] == $id) {
 			$newCategs = is_array($_REQUEST['modcatchange']) ? $_REQUEST['modcatchange'] : array($_REQUEST['modcatchange']);
 			foreach($newCategs as &$newCateg)
