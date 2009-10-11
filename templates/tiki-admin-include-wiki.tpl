@@ -126,10 +126,7 @@
 	</div>
 </div>
 
-<div class="adminoptionbox">
-	<div class='adminoption'><input type="checkbox" id="feature_wiki_replace" name="feature_wiki_replace" {if $prefs.feature_wiki_replace eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="feature_wiki_replace">{tr}Regex search and replace{/tr}</label>{if $prefs.feature_help eq 'y'} {help url="regex+search+and+replace"}{/if}</div>
-</div>
+
 <div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" id="feature_actionlog_bytes" name="feature_actionlog_bytes" {if $prefs.feature_actionlog_bytes eq 'y'}checked="checked" {/if}/></div>
 	<div class="adminoptionlabel"><label for="feature_actionlog_bytes">{tr}Log bytes changes (+/-) in action logs{/tr}.</label>

@@ -12,6 +12,7 @@
 
 {preference name=feature_filegals_manager}
 {preference name=feature_dynamic_content}
+{preference name=feature_wiki_replace}
 
 </fieldset>
 

@@ -759,5 +759,11 @@ function prefs_feature_list() {
 			'help' => 'Perspectives',
 			'type' => 'flag',
 		),
+		'feature_wiki_replace' => array(
+			'name' => tra('Search and replace'),
+			'description' => tra('Permits find and replace of content in the edit box'),
+			'help' => 'Regex+search+and+replace',
+			'type' => 'flag',
+		),
 	);
 }
