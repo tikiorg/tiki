@@ -122,7 +122,7 @@ class MultilingualLib extends TikiLib {
 	 */
 	function getTranslations($type, $objId, $objName='', $objLang='', $long=false) {
 		if ($type == 'wiki page') {
-			$query = "select t2.`objId`, t2.`lang`, p.`pageName`as `objName` from `tiki_translated_objects` as t1, `tiki_translated_objects` as t2 LEFT JOIN `tiki_pages` p ON p.`page_id`=t2.`objId` where t1.`traId`=t2.`traId` and t2.`objId`!= t1.`objId` and t1.`type`=? and  t1.`objId`=?";
+			$query = "select t2.`objId`, t2.`lang`, p.`pageName`as `objName` from `tiki_translated_objects` as t1, `tiki_translated_objects` as t2 LEFT JOIN `tiki_pages` p ON p.`page_id`= " . $this->cast('t2.`objId`','int') . " where t1.`traId`=t2.`traId` and t2.`objId`!= t1.`objId` and t1.`type`=? and  t1.`objId`=?";
 		}
 		elseif ($long) {
 			$query = "select t2.`objId`, t2.`lang`, a.`title` as `objName` from `tiki_translated_objects` as t1, `tiki_translated_objects` as t2, `tiki_articles` as a where t1.`traId`=t2.`traId` and t2.`objId`!= t1.`objId` and t1.`type`=? and  t1.`objId`=? and a.`articleId`=t2.`objId`";
@@ -504,16 +504,16 @@ class MultilingualLib extends TikiLib {
 				bits.translation_bit_id, bits.page_id
 			FROM
 				tiki_translated_objects a
-				INNER JOIN tiki_translated_objects b ON a.traId = b.traId AND a.objId <> b.objId
-				INNER JOIN tiki_pages_translation_bits bits ON b.objId = bits.page_id
+				INNER JOIN tiki_translated_objects b ON a.`traId` = b.`traId` AND a.`objId` <> b.`objId`
+				INNER JOIN tiki_pages_translation_bits bits ON " . $this->cast('b.`objId`','int') . " = bits.page_id
 				LEFT JOIN tiki_pages_translation_bits self
-					ON bits.translation_bit_id = self.original_translation_bit AND self.page_id = ?
+					ON bits.`translation_bit_id` = self.`original_translation_bit` AND self.`page_id` = ?
 			WHERE
-				a.type = 'wiki page'
-				AND b.type = 'wiki page'
-				AND a.objId = ?
-				AND bits.original_translation_bit IS NULL
-				AND self.original_translation_bit IS NULL
+				a.`type` = 'wiki page'
+				AND b.`type` = 'wiki page'
+				AND a.`objId` = ?
+				AND bits.`original_translation_bit` IS NULL
+				AND self.`original_translation_bit` IS NULL
 				AND $conditions
 		", array( $objId, $objId ) );
 
@@ -536,7 +536,7 @@ class MultilingualLib extends TikiLib {
 
 		$result = $this->query( "
 			SELECT
-				pageName page,
+				`pageName` page,
 				lang,
 				" . $this->subqueryObtainUpdateVersion( 'pages.page_id', '?' ) . " last_update,
 				pages.version current_version
