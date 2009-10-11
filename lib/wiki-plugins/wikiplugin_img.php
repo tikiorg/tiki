@@ -685,7 +685,7 @@ if (!function_exists('getimagesize_raw')) {
 			// rel
 			if (!empty($imgdata['rel'])) {
 				if ($imgdata['rel'] == 'box') {
-					$linkrel = " rel=\"box[gallery];type=img;width=$fwidth;height=$fheight;";
+					$linkrel = " rel=\"box;width=$fwidth;height=$fheight;";
 					if (!empty($desconly)) {
 						$linkrel .= "title=$desconly\"";
 					} else {
