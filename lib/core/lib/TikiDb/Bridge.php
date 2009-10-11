@@ -25,7 +25,7 @@ class TikiDb_Bridge extends TikiDb
 
 	function queryError( $query, &$error, $values = null, $numrows = -1, $offset = -1 ) // {{{
 	{
-		return self::get()->query( $query, $error, $values, $numrows, $offset );
+		return self::get()->queryError( $query, $error, $values, $numrows, $offset );
 	} // }}}
 
 	function getOne( $query, $values = null, $reporterrors = true, $offset = 0 ) // {{{
