@@ -1,7 +1,8 @@
 <?php
 require_once 'lib/setup/twversion.class.php';
+require_once('lib/core/lib/TikiDb/Bridge.php');
 
-class Installer
+class Installer extends TikiDb_Bridge
 {
 	var $patches = array();
 	var $scripts = array();
@@ -168,23 +169,24 @@ class Installer
 						$do_exec=true;
 					}
 					if($do_exec)
-						$result = $this->query($statement);
+						if (preg_match('/^\s*(?!-- )/m', $statement)) // If statement is not commented
+							$this->query($statement);
 					break;
 				default:
-					$result = $this->query($statement);
+					if (preg_match('/^\s*(?!-- )/m', $statement)) // If statement is not commented
+						$this->query($statement);
 					break;
 				}
 			}
 		}
 
-		$this->query("update `tiki_preferences` set `value`=`value`+1 where `name`='lastUpdatePrefs'");
+		$this->query("update `tiki_preferences` set `value`= " . $this->cast('value','int') . " +1 where `name`='lastUpdatePrefs'");
 	} // }}}
 
-	function query( $query, $values = array() ) // {{{
+	function query( $query = null, $values = array(), $numrows = -1, $offset = -1, $reporterrors = true ) // {{{
 	{
 		$error = '';
-		$db = TikiDb::get();
-		$result = $db->queryError( $query, $error, $values );
+		$result = $this->queryError( $query, $error, $values );
 
 		if( $result ) {
 			$this->success[] = $query;
