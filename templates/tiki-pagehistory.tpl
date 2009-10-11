@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-{title admpage="wiki"}{tr}History{/tr}: {$page}{/title}
+{title admpage="wiki"}{tr}History:{/tr} {$page|escape}{/title}
 
 <div class="navbar">
 	{assign var=thispage value=$page|escape:url}
@@ -8,7 +8,7 @@
 </div>
 
 {if $preview}
-  <h2>{tr}Preview of version{/tr}: {$preview}
+  <h2>{tr}Preview of version:{/tr} {$preview}
     {if $info.version eq $preview}<small><small>{tr}(current){/tr}</small></small>{/if}
   </h2>
   {if $info.version ne $preview and $tiki_p_rollback eq 'y'}
@@ -20,7 +20,7 @@
 {/if}
 
 {if $source}
-<h2>{tr}Source of version{/tr}: {$source}
+<h2>{tr}Source of version:{/tr} {$source}
 {if $info.version eq $source}<small><small>{tr}(current){/tr}</small></small>{/if}
 </h2>
 {if $info.version ne $source and $tiki_p_rollback eq 'y'}
@@ -81,18 +81,18 @@
 {if $tiki_p_wiki_view_author ne 'n'}<td class="odd">{$info.user|userlink}</td>{/if}
 {if $prefs.feature_wiki_history_ip ne 'n'}<td class="odd">{$info.ip}</td>{/if}
 <td class="odd">
-	{if $info.comment}{$info.comment}{else}&nbsp;{/if}
+	{if $info.comment}{$info.comment|escape}{else}&nbsp;{/if}
 	{if $translation_sources[$info.version]}
 		{foreach item=source from=$translation_sources[$info.version]}
 		<div>
-			{tr}Updated from{/tr}: <a href="tiki-index.php?page={$source.page|escape}">{$source.page}</a> at version {$source.version}
+			{tr}Updated from:{/tr} <a href="tiki-index.php?page={$source.page|escape}">{$source.page}</a> at version {$source.version}
 		</div>
 		{/foreach}
 	{/if}
 	{if $translation_targets[$info.version]}
 		{foreach item=target from=$translation_targets[$info.version]}
 		<div>
-			{tr}Used to update{/tr}: <a href="tiki-index.php?page={$target.page|escape}">{$target.page}</a> to version {$target.version}
+			{tr}Used to update:{/tr} <a href="tiki-index.php?page={$target.page|escape}">{$target.page}</a> to version {$target.version}
 		</div>
 		{/foreach}
 	{/if}
@@ -120,18 +120,18 @@
 {if $tiki_p_wiki_view_author ne 'n'}<td class="{cycle advance=false}">{$element.user|userlink}</td>{/if}
 {if $prefs.feature_wiki_history_ip ne 'n'}<td class="{cycle advance=false}">{$element.ip}</td>{/if}
 <td class="{cycle advance=false}">
-	{if $element.comment}{$element.comment}{else}&nbsp;{/if}
+	{if $element.comment}{$element.comment|escape}{else}&nbsp;{/if}
 	{if $translation_sources[$element.version]}
 		{foreach item=source from=$translation_sources[$element.version]}
 		<div>
-			{tr}Updated from{/tr}: <a href="tiki-index.php?page={$source.page|escape}">{$source.page}</a> at version {$source.version}
+			{tr}Updated from:{/tr} <a href="tiki-index.php?page={$source.page|escape}">{$source.page}</a> at version {$source.version}
 		</div>
 		{/foreach}
 	{/if}
 	{if $translation_targets[$element.version]}
 		{foreach item=target from=$translation_targets[$element.version]}
 		<div>
-			{tr}Used to update{/tr}: <a href="tiki-index.php?page={$target.page|escape}">{$target.page}</a> to version {$target.version}
+			{tr}Used to update:{/tr} <a href="tiki-index.php?page={$target.page|escape}">{$target.page}</a> to version {$target.version}
 		</div>
 		{/foreach}
 	{/if}
