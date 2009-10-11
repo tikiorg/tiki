@@ -349,6 +349,8 @@ CREATE TABLE tiki_calendar_categories (
 ) ENGINE=MyISAM ;
 
 
+DROP TABLE IF EXISTS 'tiki_calendar_items';
+
 DROP TABLE IF EXISTS 'tiki_calendar_recurrence';
 
 CREATE TABLE tiki_calendar_recurrence (
@@ -382,8 +384,6 @@ CREATE TABLE tiki_calendar_recurrence (
   KEY calendarId (calendarId)
 ) ENGINE=MyISAM ;
 
-
-DROP TABLE IF EXISTS 'tiki_calendar_items';
 
 CREATE TABLE tiki_calendar_items (
   calitemId INTEGER,

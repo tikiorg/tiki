@@ -346,6 +346,8 @@ CREATE TABLE "tiki_calendar_categories" (
 ) ;
 
 
+DROP TABLE IF EXISTS "tiki_calendar_items";
+
 DROP TABLE IF EXISTS "tiki_calendar_recurrence";
 
 CREATE TABLE "tiki_calendar_recurrence" (
@@ -379,8 +381,6 @@ CREATE TABLE "tiki_calendar_recurrence" (
 ) ;
 CREATE INDEX "tiki_calendar_recurrence_tiki_calendar_recurrence_calendarId" ON "tiki_calendar_recurrence" ("calendarId");
 
-
-DROP TABLE IF EXISTS "tiki_calendar_items";
 
 CREATE TABLE "tiki_calendar_items" (
   "calitemId" bigserial,
