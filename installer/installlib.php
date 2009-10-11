@@ -125,15 +125,9 @@ class Installer extends TikiDb_Bridge
 	{
 		global $db_tiki;
 
-		if ( !is_file($file) || !$fp = fopen($file, "r") ) {
+		if ( !is_file($file) || !$command = file_get_contents($file) ) {
 			print('Fatal: Cannot open '.$file);
 			exit(1);
-		}
-
-		$command = "";
-		
-		while(!feof($fp)) {
-			$command.= fread($fp,4096);
 		}
 
 		fclose($fp);
