@@ -30,22 +30,22 @@ function wikiplugin_img_info() {
 			'thumb' => array(
 				'required' => false,
 				'name' => tra('Thumbnail'),
-				'description' => tra('Makes the image a thumbnail. Will link to the full size image unless "link" is set. Parameter options indicate how the full image will be displayed: "shadowbox", "mouseover", "mousesticky", "popup", "browse" and "browsepopup" (only works with image gallery) and "plain". '),
+				'description' => tra('Makes the image a thumbnail when set to "y". Will link to the full size image unless "link" is set. Other parameter options indicate how the full image will be displayed: "mouseover", "mousesticky", "popup", "browse" and "browsepopup" (only works with image gallery) and "download" (only works with file gallery). '),
 				'options' => array(
 					array('text' => tra('None'), 'value' => ''), 
-					array('text' => tra('Shadowbox'), 'value' => 'shadowbox', 'description' => tra('Full size image will open in a shadowbox when thumbnail is clicked.')), 
+					array('text' => tra('Yes'), 'value' => 'y', 'description' => tra('Full size image appears when thumbnail is clicked.')),
 					array('text' => tra('Mouse Over'), 'value' => 'mouseover', 'description' => tra('Full size image will pop up while cursor is over the thumbnail (and disappear when not).')), 
 					array('text' => tra('Mouse Over (Sticky)'), 'value' => 'mousesticky', 'description' => tra('Full size image will pop up once cursor passes over thumbnail and will remain up unless cursor passes over full size popup.')), 
 					array('text' => tra('Popup'), 'value' => 'popup', 'description' => tra('Full size image will open in a separate winow or tab (depending on browser settings) when thumbnail is clicked.')), 
 					array('text' => tra('Browse'), 'value' => 'browse', 'description' => tra('Image gallery browse window for the image will open when the thumbnail is clicked if the image is in a Tiki image gallery')), 
 					array('text' => tra('Browse Popup'), 'value' => 'browsepopup', 'description' => tra('Same as "browse" except that the page opens in a new window or tab.')), 
-					array('text' => tra('Plain'), 'value' => 'plain', 'description' => tra('Full size image appears on a new blank page when thumbnail is clicked.')), 
+					array('text' => tra('Download'), 'value' => 'download', 'description' => tra('Download dialog box will appear for file gallery images when thumbnail is clicked.')),
 				),
 			),
 			'button' => array(
 				'required' => false,
 				'name' => tra('Enlarge button'),
-				'description' => tra('Button for enlarging image. Set to "y" for it to appear. If thumb is set, then same method as thumb will be used to enlarge, except if mouseover or mousesticky is used. If thumb is not set or set to mouseover or mousesticky, then choice of "shadowbox", "popup", "browse" and "browsepopup" (for image gallery), and "plain".'),
+				'description' => tra('Button for enlarging image. Set to "y" for it to appear. If thumb is set, then same method as thumb will be used to enlarge, except if mouseover or mousesticky is used. If thumb is not set or set to mouseover or mousesticky, then choice of "download", "popup", "browse" and "browsepopup" (for image gallery), and "plain".'),
 				'options' => array(
 					array('text' => tra('None'), 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 'y'), 
@@ -58,8 +58,12 @@ function wikiplugin_img_info() {
 			),
 			'rel' => array(
 				'required' => false,
-				'name' => tra('Link relation'),
-				'description' => tra('"rel" attribute to add to the link. Overrides any shadowbox settings from the thumb or button parameters'),
+				'name' => tra('Link relation. Enter "box" for colorbox effect (like shadowbox and lightbox) or appropriate syntax.'),
+				'description' => tra('"rel" attribute to add to the link.'),
+				'options' => array(
+					array('text' => tra('None'), 'value' => ''), 
+					array('text' => tra('Box'), 'value' => 'box', 'description' => tra('Causes image to popup using colorbox, shadowbox or lightbox.')), 
+				),
 			),
 			'usemap' => array(
 				'required' => false,
@@ -313,14 +317,6 @@ if (!function_exists('getimagesize_raw')) {
 		$enlargedef = 'float:right; padding-top:.1cm;';	//styling for the enlarge button div
 		$captiondef = 'padding-top:2px';									//styling for the caption div
 		
-		// Set shadowbox view as default for enlarge
-		if ( $imgdata['thumb'] == 'y' ) {
-			$imgdata['thumb'] = 'shadowbox';
-		}		
-		if ( $imgdata['button'] == 'y' ) {
-			$imgdata['button'] = 'shadowbox';
-		}	
-		
 		//Variable for identifying if javascript mouseover is set
 		if (($imgdata['thumb'] == 'mouseover') || ($imgdata['thumb'] == 'mousesticky')) {
 			$javaset = 'true';
@@ -451,16 +447,25 @@ if (!function_exists('getimagesize_raw')) {
 		
 		//Set src (for html) and base path (for getimagesize)
 		$absolute_links = (!empty($parseOptions['absolute_links'])) ? $parseOptions['absolute_links'] : false;
+		$thumbstring = '';
 		if (empty($imgdata['src'])) {
 			switch ($sourcetype) {
 				case 'imagegal':
 					$imgdata['src'] = $imagegalpath . $imgdata['id'];
+					if (!empty($imgdata['thumb'])) {
+						$thumbstring = '&thumb=1';
+					}
 					break;
-				case 'filegal':
+				case 'filegal':				
 					$imgdata['src'] = $filegalpath . $imgdata['fileId']; 
+					if (!empty($imgdata['thumb'])) {
+						$thumbstring = '&thumbnail';
+					}
 					break;
 				case 'attach':
 					$imgdata['src'] = $attachpath . $imgdata['attId']; 
+					if (!empty($imgdata['thumb'])) {
+					}
 					break;
 				}
 		} elseif ( (!empty($imgdata['src'])) && $absolute_links && ! preg_match('|^[a-zA-Z]+:\/\/|', $imgdata['src']) ) {
@@ -550,7 +555,7 @@ if (!function_exists('getimagesize_raw')) {
 		
 	////////////////////////////////////////// Create the HTML img tag ///////////////////////////////////////////////////////////////////
 		//Start tag with src and dimensions
-		$replimg = "\r\t" . '<img src="' . $imgdata['src']. '"';
+		$replimg = "\r\t" . '<img src="' . $imgdata['src']. $thumbstring . '"';
 		$replimg .= $imgdata_dim;
 		
 		//Create style attribute allowing for shortcut inputs 
@@ -645,21 +650,22 @@ if (!function_exists('getimagesize_raw')) {
 				}
 				require_once $smarty->_get_plugin_filepath('function', 'popup');
 				$mouseover = ' ' . smarty_function_popup($popup_params, $smarty);
-				
 			} else {
-				//If a thumb was specified for an image gallery image, strip off thumb string so the link is to the full image
-				$thumbstring = '&thumb=1';
-				if (strpos($browse_full_image, $thumbstring) > 0) {
-					$link = substr($browse_full_image,0,(strlen($browse_full_image)-8));
+				if ($sourcetype == 'filegal' && $imgdata['thumb'] != 'download') {
+					if (strpos($browse_full_image, '&thumbnail') > 0) {
+						$link = substr_replace($browse_full_image, '&display', strpos($browse_full_image, '&thumbnail'), 10);
+					} else {
+						$link = $browse_full_image . '&display';
+					}
 				} else {
 					$link = $browse_full_image;
 				}
-			}	
+			}
 			// Set other link-related attributes				
 			// target
 			$imgtarget= '';
 			if (($prefs['popupLinks'] == 'y' && (preg_match('#^([a-z0-9]+?)://#i', $link) || preg_match('#^www\.([a-z0-9\-]+)\.#i',$link))) || ($imgdata['thumb'] == 'popup') || ($imgdata['thumb'] == 'browsepopup')) {
-				if (!empty($javaset) || ($imgdata['thumb'] == 'shadowbox')) {
+				if (!empty($javaset) || ($imgdata['rel'] == 'box')) {
 					$imgtarget= '';
 				} else {
 					$imgtarget = ' target="_blank"';
@@ -667,9 +673,16 @@ if (!function_exists('getimagesize_raw')) {
 			}
 			// rel
 			if (!empty($imgdata['rel'])) {
+				if ($imgdata['rel'] == 'box') {
+					$linkrel = " rel=\"box[gallery];type=img;width=$fwidth;height=$fheight;";
+					if (!empty($desconly)) {
+						$linkrel .= "title=$desconly\"";
+					} else {
+						$linkrel .= '"';
+					}
+				} else {
 				$linkrel = ' rel="'.$imgdata['rel'].'"';
-			} elseif ($imgdata['thumb'] == 'shadowbox') {
-				$linkrel = ' rel="shadowbox; type=img"';
+				}
 			} else {
 				$linkrel = '';
 			}
@@ -717,12 +730,8 @@ if (!function_exists('getimagesize_raw')) {
 					$link_button = $link;
 				}
 				//Set button rel
-				if (empty($linkrel) && (empty($imgdata['thumb']) || !empty($javaset))) {	
-					if ($imgdata['button'] == 'shadowbox') {
-						$linkrel_button = ' rel="shadowbox; type=img"';
-					} else {
+				if (empty($linkrel) || !empty($javaset)) {
 						$linkrel_button = '';
-					}
 				} else {
 					$linkrel_button = $linkrel;
 				}
