@@ -37,7 +37,7 @@ if (!@$dbTiki->Connect($host_tiki, $user_tiki, $pass_tiki, $dbs_tiki)) {
 	exit;
 }
 
-if (!@$dbTiki->Execute('select `login` from `users_users` limit 1')) {
+if (!@$dbTiki->Execute('select login from users_users limit 1')) {
 	$title=tra('Tiki was unable to retrieve login data from the database !');
 	$content =	"		<p>".tra("The following error message was returned:")."</p>\n" .
 				"		<strong>\n";
