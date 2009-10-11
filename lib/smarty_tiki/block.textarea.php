@@ -146,53 +146,6 @@ function FCKeditor_OnComplete( editorInstance ) {
 			."\n".'<input type="hidden" name="cols" value="'.$params['cols'].'"/>'
 			."\n".'<input type="hidden" name="wysiwyg" value="n" />';
 
-		if ($prefs['feature_jquery_autocomplete'] == 'y') {
-			$headerlib->add_jq_onready("
-if (\$jq.browser.mozilla) {	// only working on Firefox so far...
-\$jq('#$textarea_id').bind('keypress.page_autocomplete', function(event) {
-	if (typeof lastKeyPressCode != 'undefined' && event.charCode == 40 && event.keyCode == lastKeyPressCode) { // ((
-		// create input for autocomplete
-		var txtArea = \$jq('#$textarea_id')[0];
-		var caretPos = getCaretPos(txtArea);
-		if (\$jq('#$textarea_id" . "_ac').length == 0) {
-			input = document.createElement('input');
-			\$jq(input).attr('type', 'text').attr('id', '$textarea_id" . "_ac')
-				.css('position', 'absolute').css('z-index', 9999).hide()
-				.autocomplete('tiki-listpages.php?listonly',
-						{extraParams: {'httpaccept': 'text/javascript'},
-						 dataType: 'json',
-						 parse: parseAutoJSON,
-						 formatItem: function(row) { return row; }
-						})
-				.bind('keyup.page_autocomplete', function ( event ) {
-					if (event.keyCode == 9 || event.keyCode == 13) {
-						var pname = \$jq(this).val();
-						\$jq(this).hide();
-						\$jq('#$textarea_id').focus();
-						setCaretToPos(txtArea, caretPos + 1);
-						insertAt('$textarea_id', pname + '))');
-					} else if (event.keyCode == 27 || (\$jq(this).val() == '' && event.keyCode == 8)) { // escape or backspace
-						\$jq(this).hide();
-						\$jq('#$textarea_id').focus();
-					}
-				}).blur( function (event) {
-					//\$jq(this).hide();
-					\$jq('#$textarea_id').focus();
-				});
-			document.body.appendChild(input);
-		}
-		var off = textarea_cursor_offset(txtArea);
-		\$jq('#$textarea_id" . "_ac').val('').css('left', off.left + 11).css('top', off.top - 11).show().focus();
-	} else {
-		// track last key pressed
-		lastKeyPressCode = event.keyCode;
-	}
-});
-}
-
-");
-		}
-
 	}	// wiki or wysiwyg
 
 
