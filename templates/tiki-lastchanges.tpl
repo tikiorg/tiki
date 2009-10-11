@@ -57,7 +57,7 @@
 {if $prefs.feature_wiki_history_ip ne 'n'}
 <td>{$lastchanges[changes].ip}</td>
 {/if}
-<td>{$lastchanges[changes].comment}</td>
+<td>{$lastchanges[changes].comment|escape}</td>
 <td>
 {if $tiki_p_wiki_view_history eq 'y'} 
 {if $lastchanges[changes].version}
