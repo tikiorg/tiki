@@ -48,7 +48,7 @@ class BookmarkLib extends TikiLib {
 	}
 
 	function remove_url($urlId, $user) {
-		$query = "delete from `tiki_user_bookmarks_urls` where `urlId`=? and user=?";
+		$query = "delete from `tiki_user_bookmarks_urls` where `urlId`=? and `user`=?";
 
 		$result = $this->query($query,array($urlId,$user));
 		return true;
