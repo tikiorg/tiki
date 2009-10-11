@@ -46,80 +46,16 @@ if (!empty($_REQUEST['lang'])) {
 }
 include_once('lib/init/tra.php');
 
-function list_tables($dbTiki)
+function has_tiki_db()
 {
-	static $list = array();
-	if( $list ) {
-		return $list;
-	}
-
-	$result = $dbTiki->Execute( "show tables" );
-
-	if (!$result) {
-		return $list;
-	}
-
-	while( $row = $result->fetchRow() ) {
-		$list[] = reset( $row );
-	}
-
-	return $list;
+	global $installer;
+	return $installer->tableExists('users_users');
 }
 
-function has_tiki_db($dbTiki)
+function has_tiki_db_20()
 {
-	return in_array('users_users', list_tables($dbTiki));
-}
-
-function has_tiki_db_20( $dbTiki )
-{
-	return in_array( 'tiki_pages_translation_bits', list_tables( $dbTiki ) );
-}
-
-function process_sql_file($file,$db_tiki) {
-	global $dbTiki;
-	if ( ! is_object($dbTiki) ) return false;
-
-	global $succcommands;
-	global $failedcommands;
-	global $smarty;
-	if(!isset($succcommands)) {
-	  $succcommands=array();
-	  $failedcommands=array();
-	}
-
-	$command = '';
-	if ( !is_file("db/$file") || !$fp = fopen("db/$file", "r") ) {
-		print('Fatal: Cannot open db/'.$file);
-		exit(1);
-	}
-
-	while(!feof($fp)) {
-		$command .= fread($fp,4096);
-	}
-
-	switch ($db_tiki) {
-		case 'mssql': $statements = split("(\r|\n)go(\r|\n)", $command); break;
-		default: $statements = preg_split("#(;\s*\n)|(;\s*\r\n)#", $command); break;
-	}
-	$prestmt = '';
-	$do_exec = true;
-	foreach ($statements as $statement) {
-		if (trim($statement)) {
-			$result = $dbTiki->Execute($statement);
-			if (!$result) {
-				$failedcommands[] = "Command: ".$statement."\nMessage: ".$dbTiki->ErrorMsg()."\n\n";
-				//trigger_error("DB error:  " . $dbTiki->ErrorMsg(). " in query:<br /><pre>" . $command . "<pre/><br />", E_USER_WARNING);
-			} else {
-				$succcommands[] = $statement;
-			}
-		}
-	}
-	$dbTiki->Execute("update `tiki_preferences` set `value`=`value`+1 where `name`='lastUpdatePrefs'");
-	unset($_SESSION['s_prefs']);
-
-	$smarty->assign_by_ref('succcommands', $succcommands);
-	$smarty->assign_by_ref('failedcommands', $failedcommands);
+	global $installer;
+	return $installer->tableExists('tiki_pages_translation_bits');
 }
 
 function write_local_php($dbb_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tiki, $dbversion_tiki="4.0") {
@@ -629,6 +565,8 @@ if (!file_exists($local)) {
 			$tikifeedback[] = array('num'=>1, 'mes'=>$dbTiki->ErrorMsg());
 		} else {
 			$dbcon = true;
+			$installer = new Installer;
+			$installer->setServerType($db_tiki);
 			if (!isset($_REQUEST['reset'])) {
 				$smarty->assign('dbcon', 'y');
 				$smarty->assign('resetdb', 'n');
@@ -689,13 +627,13 @@ if (
 }
 
 if ($dbcon) {
-	$has_tiki_db = has_tiki_db($dbTiki);
+	$has_tiki_db = has_tiki_db();
 	$smarty->assign('tikidb_created', $has_tiki_db);
 	if ($install_step == '6' && $has_tiki_db) {
 		update_preferences($dbTiki, $prefs);
 		$smarty->assign('admin_email', get_admin_email($dbTiki));
 	}
-	$smarty->assign('tikidb_is20',  has_tiki_db_20($dbTiki));
+	$smarty->assign('tikidb_is20',  has_tiki_db_20());
 }
 
 if (isset($_REQUEST['restart'])) {
@@ -732,7 +670,6 @@ if (
 	$smarty->assign('logged', 'y');
 
 	if ( isset($_REQUEST['scratch']) ) {
-		$installer = new Installer;
 		$installer->cleanInstall();
 		$smarty->assign('installer', $installer);
 		$smarty->assign('dbdone', 'y');
@@ -765,7 +702,6 @@ if (
 	}
 
 	if (isset($_REQUEST['update'])) {
-		$installer = new Installer;
 		$installer->update();
 		$smarty->assign('installer', $installer);
 		$smarty->assign('dbdone', 'y');

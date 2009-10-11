@@ -54,6 +54,7 @@ if (file_exists('db/local.php')) {
 	include_once 'lib/adodb/adodb.inc.php';
 	$dbTiki = ADONewConnection($db_tiki);
 	$db = new TikiDb_Adodb($dbTiki);
+	$db->setServerType($db_tiki);
 	$db->setErrorHandler(new InstallerDatabaseErrorHandler);
 	TikiDb::set($db);
 
