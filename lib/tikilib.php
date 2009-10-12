@@ -319,7 +319,7 @@ class TikiLib extends TikiDb_Bridge {
 	}
 
 	function get_groups_watching( $type, $object, $event ) {
-		$result = $this->query( 'SELECT `group` FROM tiki_group_watches WHERE object = ? AND type = ? AND event = ?',
+		$result = $this->query( 'SELECT `group` FROM `tiki_group_watches` WHERE `object` = ? AND `type` = ? AND `event` = ?',
 			array( $object, $type, $event ) );
 
 		$groups = array();
@@ -391,12 +391,12 @@ class TikiLib extends TikiDb_Bridge {
 			left join `tiki_user_preferences` tup2 on (tup2.`user`=tuw.`user` and tup2.`prefName`='mailCharset')
 			where $mid
 			UNION DISTINCT
-			select tgw.watchId, uu.login, tgw.event, tgw.object, tgw.title, tgw.type, tgw.url, uu.email,
-				tup1.value as language, tup2.value as mailCharset
+			select tgw.`watchId`, uu.`login`, tgw.`event`, tgw.`object`, tgw.`title`, tgw.`type`, tgw.`url`, uu.`email`,
+				tup1.`value` as language, tup2.`value` as mailCharset
 			from
-				tiki_group_watches tgw
-				inner join users_usergroups ug on tgw.`group` = ug.`groupName`
-				inner join users_users uu on ug.userId = uu.userId and uu.email is not null and uu.email <> ''
+				`tiki_group_watches` tgw
+				inner join `users_usergroups` ug on tgw.`group` = ug.`groupName`
+				inner join `users_users` uu on ug.`userId` = uu.`userId` and uu.`email` is not null and uu.`email` <> ''
 				left join `tiki_user_preferences` tup1 on (tup1.`user`=uu.`login` and tup1.`prefName`='language') 
 				left join `tiki_user_preferences` tup2 on (tup2.`user`=uu.`login` and tup2.`prefName`='mailCharset')
 				where $mid
@@ -746,7 +746,7 @@ class TikiLib extends TikiDb_Bridge {
 		}
 
 		if ($n > 0) {
-		  $query = 'select * from `tiki_quizzes` where quizId in (' . implode(',', $retids) . ') order by ' . $this->convertSortMode($sort_mode);
+		  $query = 'select * from `tiki_quizzes` where `quizId` in (' . implode(',', $retids) . ') order by ' . $this->convertSortMode($sort_mode);
 		  $result = $this->query($query);
 		  while ( $res = $result->fetchRow() ) {
 				$res['questions'] = $this->getOne('select count(*) from `tiki_quiz_questions` where `quizId`=?', array( (int) $res['quizId'] ));
@@ -1035,7 +1035,7 @@ class TikiLib extends TikiDb_Bridge {
 		}
 		// Perform check to make sure score does not go below 0 with negative scores
 		if( $prefs['fgal_prevent_negative_score'] == 'y' && strpos( $event_type, 'fgallery' ) === 0 ) {
-			$result = $this->query( "select userId from users_users where score + ? >= 0 and login = ?",
+			$result = $this->query( "select `userId` from `users_users` where `score` + ? >= 0 and `login` = ?",
 					array( $score, $user ) );
 			if( ! $row = $result->fetchRow( $result ) )
 				return false;
@@ -1682,7 +1682,7 @@ class TikiLib extends TikiDb_Bridge {
 		  $mid = '';
 		}
 
-		$query = 'select threadId, forumId from `tiki_comments`,`tiki_forums`'
+		$query = 'select `threadId`, `forumId` from `tiki_comments`,`tiki_forums`'
 			  . " where `object`=`forumId` and `objectType`=? and `parentId`=? $mid order by " . $this->convertSortMode($sort_mode);
 		$result = $this->query($query, $bindvars);
 		$res = $ret = $retids = array();
@@ -2312,7 +2312,7 @@ class TikiLib extends TikiDb_Bridge {
 				function galsize($id, &$db) {
 					$return = 0;
 
-					$result = $db->query('SELECT `fileId`,`filesize` FROM tiki_files WHERE `galleryId`=?', array($id));
+					$result = $db->query('SELECT `fileId`,`filesize` FROM `tiki_files` WHERE `galleryId`=?', array($id));
 					while ( $res = $result->fetchRow() ) {
 						$return += $res['filesize'];
 					}
@@ -2427,7 +2427,7 @@ class TikiLib extends TikiDb_Bridge {
 			if( $prefs['fgal_limit_hits_per_file'] == 'y' ) {
 				$limit = $filegallib->get_download_limit( $id );
 				if( $limit > 0 ) {
-					$result = $this->query( "select fileId from tiki_files where fileId = ? and hits < ?",
+					$result = $this->query( "select `fileId` from `tiki_files` where `fileId` = ? and `hits` < ?",
 							array( $id, $limit ) );
 
 					if( ! $result->fetchRow() )
@@ -4030,13 +4030,13 @@ class TikiLib extends TikiDb_Bridge {
 					$join_tables .= " inner join `tiki_structures` as ts on (ts.`page_id` = tp.`page_id` and ts.`parent_id` = 0) ";
 					$select .= ',ts.`page_alias`';
 				} elseif ($type == 'langOrphan') {
-					$join_tables .= " left join tiki_translated_objects tro on (tro.type = 'wiki page' AND tro.objId = tp.page_id) ";
-					$tmp_mid[] = "( (tro.traId IS NULL AND tp.lang != ?) OR tro.traId NOT IN(SELECT traId FROM tiki_translated_objects WHERE lang = ?))";
+					$join_tables .= " left join `tiki_translated_objects` tro on (tro.`type` = 'wiki page' AND tro.`objId` = tp.`page_id`) ";
+					$tmp_mid[] = "( (tro.`traId` IS NULL AND tp.`lang` != ?) OR tro.`traId` NOT IN(SELECT `traId` FROM `tiki_translated_objects` WHERE `lang` = ?))";
 					$bindvars[] = $val;
 					$bindvars[] = $val;
 				} elseif ($type == 'structure_orphans') {
 					$join_tables .= " left join `tiki_structures` as tss on (tss.`page_id` = tp.`page_id`) ";
-					$tmp_mid[] = "(tss.page_ref_id is null)";
+					$tmp_mid[] = "(tss.`page_ref_id` is null)";
 				}
 			}
 			if (!empty($tmp_mid)) {
@@ -4064,7 +4064,7 @@ class TikiLib extends TikiDb_Bridge {
 		if ( $only_orphan_pages ) {
 			$join_tables .= ' left join `tiki_links` as tl on tp.`pageName` = tl.`toPage` left join `tiki_structures` as ts on tp.`page_id` = ts.`page_id`';
 			$mid .= ( $mid == '' ) ? ' where ' : ' and ';
-			$mid .= 'tl.`toPage` IS NULL and `ts`.page_id IS NULL';
+			$mid .= 'tl.`toPage` IS NULL and ts.`page_id` IS NULL';
 		}
 
 		if (!empty($join_bindvars)) {
@@ -5624,7 +5624,7 @@ class TikiLib extends TikiDb_Bridge {
 	function plugin_fingerprint_check( $fp ) {
 		global $user;
 		$limit = date( 'Y-m-d H:i:s', time() - 15*24*3600 );
-		$result = $this->query( "SELECT status, IF(status='pending' AND last_update < ?, 'old', '') flag FROM tiki_plugin_security WHERE fingerprint = ?",
+		$result = $this->query( "SELECT `status`, IF(`status`='pending' AND `last_update` < ?, 'old', '') flag FROM `tiki_plugin_security` WHERE `fingerprint` = ?",
 			array( $limit, $fp ) );
 
 		$needUpdate = false;
@@ -5655,8 +5655,8 @@ class TikiLib extends TikiDb_Bridge {
 			if (!$user) {
 				$user = tra('Anonymous');
 			}
-			$this->query( "DELETE FROM tiki_plugin_security WHERE fingerprint = ?", array( $fp ) );
-			$this->query( "INSERT INTO tiki_plugin_security (fingerprint, status, added_by, last_objectType, last_objectId) VALUES(?, ?, ?, ?, ?)",
+			$this->query( "DELETE FROM `tiki_plugin_security` WHERE `fingerprint` = ?", array( $fp ) );
+			$this->query( "INSERT INTO `tiki_plugin_security` (`fingerprint`, `status`, `added_by`, `last_objectType`, `last_objectId`) VALUES(?, ?, ?, ?, ?)",
 				array( $fp, 'pending', $user, $objectType, $objectId ) );
 		}
 
@@ -5673,17 +5673,17 @@ class TikiLib extends TikiDb_Bridge {
 			$objectId = '';
 		}
 
-		$this->query( "DELETE FROM tiki_plugin_security WHERE fingerprint = ?", array( $fp ) );
-		$this->query( "INSERT INTO tiki_plugin_security (fingerprint, status, approval_by, last_objectType, last_objectId) VALUES(?, ?, ?, ?, ?)",
+		$this->query( "DELETE FROM `tiki_plugin_security` WHERE `fingerprint` = ?", array( $fp ) );
+		$this->query( "INSERT INTO `tiki_plugin_security` (`fingerprint`, `status`, `approval_by`, `last_objectType`, `last_objectId`) VALUES(?, ?, ?, ?, ?)",
 				array( $fp, $type, $user, $objectType, $objectId ) );
 	}
 
 	function plugin_clear_fingerprint( $fp ) {
-		$this->query( "DELETE FROM tiki_plugin_security WHERE fingerprint = ?", array( $fp ) );
+		$this->query( "DELETE FROM `tiki_plugin_security` WHERE `fingerprint` = ?", array( $fp ) );
 	}
 
 	function list_plugins_pending_approval() {
-		$result = $this->query("SELECT fingerprint, added_by, last_update, last_objectType, last_objectId FROM tiki_plugin_security WHERE status = 'pending' ORDER BY last_update DESC");
+		$result = $this->query("SELECT `fingerprint`, `added_by`, `last_update`, `last_objectType`, `last_objectId` FROM `tiki_plugin_security` WHERE `status` = 'pending' ORDER BY `last_update` DESC");
 
 		$list = array();
 		while( $row = $result->fetchRow() )
@@ -5694,12 +5694,12 @@ class TikiLib extends TikiDb_Bridge {
 
 	function approve_all_pending_plugins() {
 	// Update all pending plugins to accept
-	$this->query("UPDATE tiki_plugin_security SET status='accept', approval_by='admin' WHERE status='pending'");  
+	$this->query("UPDATE `tiki_plugin_security` SET `status`='accept', `approval_by`='admin' WHERE `status`='pending'");  
 	}
 
 	function approve_selected_pending_plugings($fp) {
 	// Update selected pending plugins to accept
-	$this->query("UPDATE tiki_plugin_security SET status='accept', approval_by='admin' WHERE fingerprint = ?", array( $fp ));  
+	$this->query("UPDATE `tiki_plugin_security` SET `status`='accept', `approval_by`='admin' WHERE `fingerprint` = ?", array( $fp ));  
 	}
 
 	function plugin_fingerprint( $name, $meta, $data, $args ) {
@@ -7523,7 +7523,7 @@ class TikiLib extends TikiDb_Bridge {
 
 			if ($prefs['feature_multilingual'] == 'y' && $lang ) {
 				// Need to update the translated objects table when an object's language changes.
-				$this->query( "UPDATE tiki_translated_objects SET lang = ? WHERE objId = ? AND type = 'wiki page'",
+				$this->query( "UPDATE `tiki_translated_objects` SET `lang` = ? WHERE `objId` = ? AND `type` = 'wiki page'",
 						array( $lang, $info['page_id'] ) );
 			}
 
@@ -7567,7 +7567,7 @@ class TikiLib extends TikiDb_Bridge {
 
 		$query = "delete from `tiki_history` where `pageName`=? and `version`=?";
 		$result = $this->query($query, array($pageName,(int) $version));
-		$query = "insert into `tiki_history`(pageName, version, lastModif, user, ip, comment, data,description) values(?,?,?, ?,?,?, ?,?)";
+		$query = "insert into `tiki_history`(`pageName`, `version`, `lastModif`, `user`, `ip`, `comment`, `data`,`description`) values(?,?,?, ?,?,?, ?,?)";
 		$result = $this->query($query, array($pageName,(int) $version, (int) $lastModif, $edit_user, $edit_ip, $edit_comment, $edit_data, $description)
 				);
 
