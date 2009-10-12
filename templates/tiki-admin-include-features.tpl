@@ -87,7 +87,18 @@
 {tab name="{tr}Experimental{/tr}"}
 			<div class="admin featurelist">
 				<fieldset>
-					<legend class="heading">{icon _id="accept"}<span>{tr}Phased out{/tr}</span></legend>
+					<legend class="heading">{icon _id="accept"}<span>{tr}New{/tr}</span></legend>
+					<span class="description">{tr}These features are relatively new. You should expect growing pains and possibly lacking documentation, as you would of a version 1.0 application{/tr}</span>
+						{preference name=feature_perspective}
+						{preference name=feature_quick_object_perms}
+						{preference name=feature_kaltura}
+						{preference name=feature_wiki_mindmap}
+						{preference name=feature_print_indexed}
+				</fieldset>
+
+			<div class="admin featurelist">
+				<fieldset>
+					<legend class="heading">{icon _id="error"}<span>{tr}Phased out{/tr}</span></legend>
 					<span class="description">{tr}These features generally work but will probably be phased out in the future, because they are superseded by other features or because of evolution in Web technology{/tr}</span>
 						{preference name=feature_html_pages}
 						{preference name=feature_galleries}
@@ -101,8 +112,6 @@
 						{preference name=feature_mobile}
 						{preference name=feature_morcego}
 						{preference name=feature_webmail}
-						{preference name=feature_perspective}
-						{preference name=feature_quick_object_perms}
 				</fieldset>
 
 				<fieldset>
@@ -110,15 +119,14 @@
 					<span class="description">{tr}Features that need admin help and user patience to work well{/tr}</span>
 						{preference name=feature_intertiki}
 						{preference name=feature_mailin}
-						{preference name=feature_wiki_mindmap}
-						{preference name=feature_print_indexed}
 						{preference name=feature_sefurl}
 						{preference name=feature_sheet}
 						{preference name=feature_wysiwyg}
+						{preference name=feature_friends}
 						{preference name=feature_ajax_autosave}
 						{preference name=feature_wiki_save_draft}
-						{preference name=feature_kaltura}
-						</fieldset>
+
+				</fieldset>
 
 				<fieldset>
 					<legend class="heading">{icon _id="exclamation"}<span>{tr}Malfunctioning{/tr}</span></legend>
@@ -129,7 +137,6 @@
 				<fieldset>
 					<legend class="heading">{icon _id="information_gray"}<span>{tr}Neglected{/tr}</span></legend>
 					<span class="description">{tr}Old features no longer maintained{/tr}</span>
-						{preference name=feature_friends}
 						{preference name=feature_multimedia}
 						{preference name=feature_custom_home}
 				</fieldset>
