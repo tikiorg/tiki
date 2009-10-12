@@ -78,8 +78,7 @@ if (isset($_REQUEST['send'])) {
 				if ($tikilib->get_user_preference($a_user, 'allowMsgs', 'y')) {
 					$users[] = $a_user;
 				} else {
-					// TODO: needs translation as soon as there is a solution for strings with embedded variables
-					$message.= "User ". htmlspecialchars($a_user) . " can not receive messages<br />";
+					$message.= sprintf(tra("User %s can not receive messages", htmlspecialchars($a_user))). "<br />" ;
 				}
 			} else {
 				$message.= tra("Invalid user") . "$a_user<br />";
