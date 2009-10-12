@@ -213,15 +213,16 @@ abstract class TikiDb
 			}
 
 			switch ($this->getServerType()) {
-					case "pgsql":
-					case "postgres7":
-					case "postgres8":
-					case "oci8":
-					case "sybase":
-					case "mssql":
+				case "pgsql":
+				case "postgres7":
+				case "postgres8":
+				case "oci8":
+				case "sybase":
+				case "mssql":
 					$sort = preg_replace('/_asc$/', '" asc', $sort);
-				$sort = preg_replace('/_desc$/', '" desc', $sort);
-				$sort = '"' . $sort;
+					$sort = preg_replace('/_desc$/', '" desc', $sort);
+					$sort = str_replace('.', '"."', $sort);
+					$sort = '"' . $sort;
 				break;
 
 				case "sqlite":
