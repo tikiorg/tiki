@@ -1174,6 +1174,34 @@ div.simplebox {
 	padding: 3px;
 }
 
+/* For wikitext or custom code areas, editors can add, for example, a div class="halffloat"
+and put two modules or other divs between its tags;, each of these will use just under half of the width of the 
+wikitext or custom content area. Similarly for three or four modules (or divs) across the page. */
+.halffloat div.box,
+.wikitext .halffloat div.box {
+	float: left;
+	clear: none;
+	width: 48%;
+	margin-right: 2%;
+ 
+}
+
+.thirdfloat div.box,
+.wikitext .thirdfloat div.box {
+	float: left;
+	clear: none;
+	width: 31%;
+	margin-right: 2%
+}
+
+.quarterfloat div.box,
+.wikitext .quarterfloat div.box {
+	float: left;
+	clear: none; 
+	width: 22%;
+	margin-right: 2%;
+}
+
 /***** Tables, Tabs ****/
 /** Tables **/
 table {

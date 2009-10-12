@@ -724,6 +724,31 @@ span.moduleflip,
 	z-index: 0;
 }
 
+.halffloat div.box,
+.wikitext .halffloat div.box {
+	float: left;
+	clear: none;
+	width: 48%;
+	margin-right: 2%;
+ 
+}
+
+.thirdfloat div.box,
+.wikitext .thirdfloat div.box {
+	float: left;
+	clear: none;
+	width: 31%;
+	margin-right: 2%
+}
+
+.quarterfloat div.box,
+.wikitext .quarterfloat div.box {
+	float: left;
+	clear: none; 
+	width: 22%;
+	margin-right: 2%;
+}
+
 /***** Tables, Tabs ****/
 /** Tables **/
 
