@@ -804,6 +804,12 @@ a.phplmselected:hover {
 	color: #fff;
 }
 
+#tiki-top .cssmenu_horiz li ul li a,
+#tiki-top .cssmenu_horiz li ul li a:visited,
+#tiki-top .cssmenu_horiz li ul li a:hover {
+	text-align: left
+}
+
 #tiki-top .cssmenu_horiz li ul li a:hover {
 	background: none;	
 	border: 0;
