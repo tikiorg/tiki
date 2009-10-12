@@ -2014,7 +2014,7 @@ class Comments extends TikiLib {
 	if ( empty($objectId) ) return false;
 	$object = explode( ":", $objectId, 2);
 	if ( count($object) < 2 ) return false;
-	return $this->getOne('SELECT `comments_locked` FROM `tiki_objects` WHERE `Type`=? AND `itemId`=?', array( $object[0], $object[1] )) == 'y';
+	return $this->getOne('SELECT `comments_locked` FROM `tiki_objects` WHERE `type`=? AND `itemId`=?', array( $object[0], $object[1] )) == 'y';
     }
 
     function update_comment_links($data, $objectType, $threadId) {
