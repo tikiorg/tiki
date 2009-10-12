@@ -805,15 +805,15 @@ a.phplmselected:hover {
 }
 
 #tiki-top .cssmenu_horiz li ul li a,
+#tiki-top .cssmenu_horiz li ul li a:link,
 #tiki-top .cssmenu_horiz li ul li a:visited,
 #tiki-top .cssmenu_horiz li ul li a:hover {
-	text-align: left
-	padding: 3px 0 3px 6px;
+	text-align: left;
+	border: 0;
 }
 
 #tiki-top .cssmenu_horiz li ul li a:hover {
 	background: none;	
-	border: 0;
 }
 
 #tiki-top .cssmenu_horiz li ul li,
