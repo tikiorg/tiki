@@ -132,10 +132,11 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 			{/if}
 			</div>
 		{/if}
+
+		{if $comments_cant > 10}
 		<div class="actions">
 			<span class="action">
 
-				{if $comments_cant > 10}
 				<label for="comments-maxcomm">{tr}Messages{/tr}:</label>
 				<select name="comments_per_page" id="comments-maxcomm">
 					<option value="10" {if $comments_per_page eq 10 }selected="selected"{/if}>10</option>
@@ -143,8 +144,7 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 					<option value="30" {if $comments_per_page eq 30 }selected="selected"{/if}>30</option>
 					<option value="999999" {if $comments_per_page eq 999999 }selected="selected"{/if}>{tr}All{/tr}</option>
 				</select>
-				{/if}
-
+				
 				{if $forum_mode neq 'y' or $forum_info.is_flat neq 'y' }
 				<label for="comments-style">{tr}Style{/tr}:</label>
 				<select name="thread_style" id="comments-style">
@@ -184,6 +184,8 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 
 			</span>
 		</div>
+		{/if}
+		
 	</div>
 	{/if}
 
