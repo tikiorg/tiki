@@ -60,12 +60,18 @@
 				{preference name=feature_live_support}
 				{preference name=feature_tell_a_friend}
 				{preference name=feature_minichat}
+			</div>
+		</fieldset>
+
+		<fieldset>
+			<legend>{tr}Comments{/tr}</legend>
+
+			<div class="admin featurelist">
 				{preference name=feature_comments_moderation}
 				{preference name=feature_comments_locking}
 				{preference name=feature_comments_post_as_anonymous}				
 			</div>
-		</fieldset>
-
+		</fieldset>		
 {/tab}
 			
 {tab name="{tr}Programmer{/tr}"}
