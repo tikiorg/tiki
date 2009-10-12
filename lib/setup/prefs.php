@@ -1183,7 +1183,7 @@ function get_default_prefs() {
 			find, replace,-,  removeformat, specialchar, smiley | help, switcheditor
 			/
 			templates, -, style, -,  h1, h2, h3, left, center, -, list, numlist, wikiplugin_flash, wikiplugin_html, outdent, indent, 
-			- , table, -, source, showblocks | fullscreen, enlarge, reduce
+			- , table, -, wikiplugin_code, source, showblocks | fullscreen, enlarge, reduce
 		',
 		'toolbar_global_comments' => '
 			bold, italic, strike , - , link, smiley | help
