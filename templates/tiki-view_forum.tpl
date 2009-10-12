@@ -3,7 +3,7 @@
 {title help="forums" admpage="forums"}{$forum_info.name|escape}{/title}
 
 {if $forum_info.show_description eq 'y'}
-	<div class="description">{$forum_info.description|nl2br}</div>
+	<div class="description">{$forum_info.description|escape|nl2br}</div>
 {/if}
 
 <div class="navbar">
@@ -118,7 +118,7 @@
 					<tr>
 						<td>
 							<div class="commentheader">
-								<span class="commentstitle">{$comments_preview_title}</span>
+								<span class="commentstitle">{$comments_preview_title|escape}</span>
 								<br />
 								{tr}by{/tr} {$user|userlink}
 							</div>

@@ -98,7 +98,7 @@
 {if $prefs.forum_list_desc eq 'y'}
 	<br />
 	<div class="subcomment">
-		{$channels[user].description|truncate:$prefs.forum_list_description_len:"...":true|nl2br}
+		{$channels[user].description|truncate:$prefs.forum_list_description_len:"...":true|escape|nl2br}
 	</div>
 {/if}
 </td>
