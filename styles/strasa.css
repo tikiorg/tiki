@@ -681,10 +681,10 @@ a.phplmselected:hover {
 /** CSS (suckerfish) menus **/
 
 /* default link padding */
-.cssmenu_horiz a,
+/*.cssmenu_horiz a,
 .cssmenu_vert a {
 	padding: .75em 1em;
-}
+}*/
 
 /* typography, colors */
 
@@ -808,6 +808,7 @@ a.phplmselected:hover {
 #tiki-top .cssmenu_horiz li ul li a:visited,
 #tiki-top .cssmenu_horiz li ul li a:hover {
 	text-align: left
+	padding: 3px 0 3px 6px;
 }
 
 #tiki-top .cssmenu_horiz li ul li a:hover {
