@@ -79,7 +79,7 @@ if (isset($_REQUEST['send'])) {
 					$users[] = $a_user;
 				} else {
 					// TODO: needs translation as soon as there is a solution for strings with embedded variables
-					$message.= "User $a_user can not receive messages<br />";
+					$message.= "User ". htmlspecialchars($a_user) . " can not receive messages<br />";
 				}
 			} else {
 				$message.= tra("Invalid user") . "$a_user<br />";
@@ -89,7 +89,10 @@ if (isset($_REQUEST['send'])) {
 	$users = array_unique($users);
 	// Validation: either to, cc or bcc must have a valid user
 	if (count($users) > 0) {
-		$message.= tra("Message sent to") . ': ' . implode(',', $users) . "<br />";
+		$users_formatted = array();
+		foreach ($users as $rawuser)
+			$users_formatted[] = htmlspecialchars($rawuser);
+		$message.= tra("Message sent to") . ': ' . implode(',', $users_formatted) . "<br />";
 	} else {
 		$message = tra('ERROR: No valid users to send the message');
 		$smarty->assign('message', $message);

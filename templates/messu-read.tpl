@@ -40,7 +40,7 @@
     <input type="hidden" name="priority" value="{$priority|escape}" />
     <input type="hidden" name="flagval" value="{$flagval|escape}" />
     <input type="hidden" name="to" value="{$msg.user_from|escape}" />
-    <input type="hidden" name="subject" value="{tr}Re:{/tr} {$msg.subject}" />
+    <input type="hidden" name="subject" value="{tr}Re:{/tr} {$msg.subject|escape}" />
     <input type="hidden" name="body" value="{$msg.body|quoted:$quote_format:$msg.user_from|escape}" />
     <input type="hidden" name="replyto_hash" value="{$msg.hash}" />
     <input type="submit" name="reply" value="{tr}Reply{/tr}" />
@@ -56,7 +56,7 @@
     <input type="hidden" name="priority" value="{$priority|escape}" />
     <input type="hidden" name="flagval" value="{$flagval|escape}" />
     <input type="hidden" name="to" value="{$msg.user_from|escape};{$msg.user_cc};{$msg.user_to}" />
-    <input type="hidden" name="subject" value="{tr}Re:{/tr} {$msg.subject}" />
+    <input type="hidden" name="subject" value="{tr}Re:{/tr} {$msg.subject|escape}" />
     <input type="hidden" name="body" value="{$msg.body|quoted:$quote_format:$msg.user_from|escape}" />
     <input type="hidden" name="replyto_hash" value="{$msg.hash}" />
     <input type="submit" name="replyall" value="{tr}replyall{/tr}" />
@@ -71,11 +71,11 @@
   </div>
   <div class="messureadhead">
   <table>
-    <tr><td style="font-weight:bold;">{tr}From{/tr}:</td><td>{$msg.user_from}</td></tr>
-    <tr><td style="font-weight:bold;">{tr}To{/tr}:</td><td>{$msg.user_to}</td></tr>
-    <tr><td style="font-weight:bold;">{tr}Cc{/tr}:</td><td>{$msg.user_cc}</td></tr>
-    <tr><td style="font-weight:bold;">{tr}Subject{/tr}:</td><td>{$msg.subject}</td></tr>
-    <tr><td style="font-weight:bold;">{tr}Date{/tr}:</td><td>{$msg.date|tiki_short_datetime}</td></tr><!--date_format:"%a %b %Y [%H:%I]"-->
+    <tr><td style="font-weight:bold;">{tr}From:{/tr}</td><td>{$msg.user_from|username}</td></tr>
+    <tr><td style="font-weight:bold;">{tr}To:{/tr}</td><td>{$msg.user_to|escape}</td></tr>
+    <tr><td style="font-weight:bold;">{tr}Cc:{/tr}</td><td>{$msg.user_cc|escape}</td></tr>
+    <tr><td style="font-weight:bold;">{tr}Subject:{/tr}</td><td>{$msg.subject|escape}</td></tr>
+    <tr><td style="font-weight:bold;">{tr}Date:{/tr}</td><td>{$msg.date|tiki_short_datetime}</td></tr><!--date_format:"%a %b %Y [%H:%I]"-->
   </table>
   </div>
   <div class="messureadbody">

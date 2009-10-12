@@ -98,13 +98,13 @@ if (isset($_REQUEST['send'])) {
 					if (($messulib->count_messages($a_user) < $prefs['messu_mailbox_size']) || ($prefs['messu_mailbox_size'] == 0)) {
 						$users[] = $a_user;
 					} else {
-						$message.= sprintf(tra("User %s can not receive messages, mailbox is full") , $a_user) . "<br />";
+						$message.= sprintf(tra("User %s can not receive messages, mailbox is full") ,htmlspecialchars($a_user)) . "<br />";
 					}
 				} else {
-					$message.= sprintf(tra("User %s can not receive messages") , $a_user) . "<br />";
+					$message.= sprintf(tra("User %s can not receive messages") , htmlspecialchars($a_user)) . "<br />";
 				}
 			} else {
-				$message.= sprintf(tra("Invalid user: %s") , $a_user) . "<br />";
+				$message.= sprintf(tra("Invalid user: %s") , htmlspecialchars($a_user)) . "<br />";
 			}
 		}
 	}
@@ -118,13 +118,13 @@ if (isset($_REQUEST['send'])) {
 					if (($messulib->count_messages($a_user) < $prefs['messu_mailbox_size']) || ($prefs['messu_mailbox_size'] == 0)) {
 						$users[] = $a_user;
 					} else {
-						$message.= sprintf(tra("User %s can not receive messages, mailbox is full") , $a_user) . "<br />";
+						$message.= sprintf(tra("User %s can not receive messages, mailbox is full") , htmlspecialchars($a_user)) . "<br />";
 					}
 				} else {
-					$message.= sprintf(tra("User %s can not receive messages") , $a_user) . "<br />";
+					$message.= sprintf(tra("User %s can not receive messages") , htmlspecialchars($a_user)) . "<br />";
 				}
 			} else {
-				$message.= sprintf(tra("Invalid user: %s") , $a_user) . "<br />";
+				$message.= sprintf(tra("Invalid user: %s") , htmlspecialchars($a_user)) . "<br />";
 			}
 		}
 	}
@@ -138,20 +138,23 @@ if (isset($_REQUEST['send'])) {
 					if (($messulib->count_messages($a_user) < $prefs['messu_mailbox_size']) || ($prefs['messu_mailbox_size'] == 0)) {
 						$users[] = $a_user;
 					} else {
-						$message.= sprintf(tra("User %s can not receive messages, mailbox is full") , $a_user) . "<br />";
+						$message.= sprintf(tra("User %s can not receive messages, mailbox is full") , htmlspecialchars($a_user)) . "<br />";
 					}
 				} else {
-					$message.= sprintf(tra("User %s can not receive messages") , $a_user) . "<br />";
+					$message.= sprintf(tra("User %s can not receive messages") , htmlspecialchars($a_user)) . "<br />";
 				}
 			} else {
-				$message.= sprintf(tra("Invalid user: %s") , $a_user) . "<br />";
+				$message.= sprintf(tra("Invalid user: %s") , htmlspecialchars($a_user)) . "<br />";
 			}
 		}
 	}
 	$users = array_unique($users);
 	// Validation: either to, cc or bcc must have a valid user
 	if (count($users) > 0) {
-		$message.= tra("Message will be sent to: ") . implode(',', $users) . "<br />";
+		$users_formatted = array();
+		foreach ($users as $rawuser)
+			$users_formatted[] = htmlspecialchars($rawuser);
+		$message.= tra("Message will be sent to: ") . implode(',', $users_formatted) . "<br />";
 	} else {
 		$message.= tra('ERROR: No valid users to send the message');
 		$smarty->assign('message', $message);
