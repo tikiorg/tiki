@@ -20,7 +20,7 @@
 
 {if $tikifeedback}
   <div class="simplebox highlight">
-    {section name=n loop=$tikifeedback}{$tikifeedback[n].mes}{/section}
+    {section name=n loop=$tikifeedback}<div>{$tikifeedback[n].mes}</div>{/section}
   </div>
 {/if}
 {tabset name="mytiki_user_preference"}
@@ -34,7 +34,7 @@
   {cycle values="odd,even" print=false}
   <table class="normal">
     <tr>
-      <td class="{cycle advance=false}">{tr}User{/tr}:</td>
+      <td class="{cycle advance=false}">{tr}User:{/tr}</td>
       <td class="{cycle}">
         {$userinfo.login|escape}
         {if $prefs.login_is_email eq 'y' and $userinfo.login neq 'admin'} 
@@ -45,7 +45,7 @@
   
     <tr>
       <td class="{cycle advance=false}">
-        {tr}Real Name{/tr}:
+        {tr}Real Name:{/tr}
       </td>
       <td class="{cycle}">
         {if $prefs.auth_ldap_nameattr eq '' || $prefs.auth_method ne 'ldap'}
@@ -55,7 +55,7 @@
     </tr>
 
 	{if $prefs.feature_community_gender eq 'y'}
-      <tr><td class="{cycle advance=false}">{tr}Gender{/tr}:</td>
+      <tr><td class="{cycle advance=false}">{tr}Gender:{/tr}</td>
         <td class="{cycle}">
           <input type="radio" name="gender" value="Male" {if $user_prefs.gender eq 'Male'}checked="checked"{/if}/> {tr}Male{/tr}
           <input type="radio" name="gender" value="Female" {if $user_prefs.gender eq 'Female'}checked="checked"{/if}/> {tr}Female{/tr}
@@ -65,7 +65,7 @@
 	{/if}
 
     <tr>
-      <td class="{cycle advance=false}">{tr}Country{/tr}:</td>
+      <td class="{cycle advance=false}">{tr}Country:{/tr}</td>
       <td class="{cycle}">
         {if isset($user_prefs.country) && $user_prefs.country != "None" && $user_prefs.country != "Other"}
           {$userinfo.login|countryflag}
@@ -85,7 +85,7 @@
   
     {if $prefs.feature_maps eq 'y' or $prefs.feature_gmap eq 'y'}
       <tr>
-        <td class="{cycle advance=false}">{tr}Longitude (WGS84/decimal degrees){/tr}:</td>
+        <td class="{cycle advance=false}">{tr}Longitude (WGS84/decimal degrees):{/tr}</td>
         <td class="{cycle}">
           <input type="text" name="lon" value="{$user_prefs.lon|escape}" />
 	  {if $prefs.feature_gmap eq 'y'}
@@ -94,7 +94,7 @@
         </td>
       </tr>
       <tr>
-        <td class="{cycle advance=false}">{tr}Latitude (WGS84/decimal degrees){/tr}:</td>
+        <td class="{cycle advance=false}">{tr}Latitude (WGS84/decimal degrees):{/tr}</td>
         <td class="{cycle}">
           <input type="text" name="lat" value="{$user_prefs.lat|escape}" />
         </td>
@@ -102,7 +102,7 @@
     {/if}
 
     <tr>
-      <td class="{cycle advance=false}">{tr}Avatar{/tr}:</td>
+      <td class="{cycle advance=false}">{tr}Avatar:{/tr}</td>
       <td class="{cycle}">
         {$avatar} 
         <a href="tiki-pick_avatar.php{if $userwatch ne $user}?view_user={$userwatch}{/if}" class="link">{tr}Pick user Avatar{/tr}</a>
@@ -118,7 +118,7 @@
   
     {if $prefs.feature_wiki eq 'y' and $prefs.feature_wiki_userpage eq 'y'}
       <tr>
-        <td class="{cycle advance=false}">{tr}Your personal Wiki Page{/tr}:</td>
+        <td class="{cycle advance=false}">{tr}Your personal Wiki Page:{/tr}</td>
         <td class="{cycle}">
           {if $userPageExists eq 'y'}
             <a class="link" href="tiki-index.php?page={$prefs.feature_wiki_userpage_prefix}{$userinfo.login}" title="{tr}View{/tr}">{$prefs.feature_wiki_userpage_prefix}{$userinfo.login|escape}</a> 
@@ -132,7 +132,7 @@
   
     {if $prefs.userTracker eq 'y' && $usertrackerId}
       <tr>
-        <td class="{cycle advance=false}">{tr}Your personal tracker information{/tr}:</td>
+        <td class="{cycle advance=false}">{tr}Your personal tracker information:{/tr}</td>
         <td class="{cycle}">
 	  <a class="link" href="tiki-view_tracker_item.php?view=+user">{tr}View extra information{/tr}</a>
     {/if}
@@ -154,7 +154,7 @@
     </tr>
   
     <tr>
-      <td class="{cycle advance=false}">{tr}Last login{/tr}:</td>
+      <td class="{cycle advance=false}">{tr}Last login:{/tr}</td>
       <td class="{cycle}">{$userinfo.lastLogin|tiki_short_datetime}</td>
     </tr>
   
@@ -185,7 +185,7 @@
     </tr>
     {if $prefs.change_theme eq 'y' && empty($group_style)}
       <tr>
-        <td class="{cycle advance=false}">{tr}Theme{/tr}:</td>
+        <td class="{cycle advance=false}">{tr}Theme:{/tr}</td>
         <td class="{cycle}">
           <select name="mystyle">
             <option value="" style="font-style:italic;border-bottom:1px dashed #666;">{tr}Site default{/tr}</option>
@@ -205,10 +205,10 @@
   
     {if $prefs.change_language eq 'y'}
       <tr>
-        <td  class="{cycle advance=false}">{tr}Language{/tr}:</td>
+        <td  class="{cycle advance=false}">{tr}Language:{/tr}</td>
         <td class="{cycle}">
           <br/>
-          {tr}Your preferred language{/tr}:
+          {tr}Your preferred language:{/tr}
           <select name="language">
             {section name=ix loop=$languages}
               {if count($prefs.available_languages) == 0 || in_array($languages[ix].value, $prefs.available_languages)}
@@ -230,7 +230,7 @@
 		  <br/>&nbsp;
 		  <div id="read-lang-div" style="display: none">
 		  {/if}
-			{tr}Other languages you can read (select on the left to add to the list on the right){/tr}:
+			{tr}Other languages you can read (select on the left to add to the list on the right):{/tr}
 			<br/>
 			<select name="_blank" onchange="document.getElementById('read-language-input').value+=' '+this.options[this.selectedIndex].value+' '">
 			  <option value="">{tr}Select language...{/tr}</option>
@@ -250,7 +250,7 @@
     {/if}
   
     <tr>
-      <td class="{cycle advance=false}">{tr}Number of visited pages to remember{/tr}:</td>
+      <td class="{cycle advance=false}">{tr}Number of visited pages to remember:{/tr}</td>
       <td class="{cycle}">
         <select name="userbreadCrumb">
           <option value="1" {if $user_prefs.userbreadCrumb eq 1}selected="selected"{/if}>1</option>
@@ -263,7 +263,7 @@
       </td>
     </tr>
     <tr>
-      <td class="{cycle advance=false}">{tr}Displayed time zone{/tr}:</td>
+      <td class="{cycle advance=false}">{tr}Displayed time zone:{/tr}</td>
       <td class="{cycle}">
         <select name="display_timezone" id="display_timezone">
 	  <option value="" style="font-style:italic;">{tr}Detect user timezone if browser allows, otherwise site default{/tr}</option>
@@ -278,7 +278,7 @@
     </tr>
   
     <tr>
-      <td class="{cycle advance=false}">{tr}User information{/tr}:</td>
+      <td class="{cycle advance=false}">{tr}User information:{/tr}</td>
       <td class="{cycle}">
         <select name="user_information">
           <option value='private' {if $user_prefs.user_information eq 'private'}selected="selected"{/if}>{tr}Private{/tr}</option>
@@ -289,7 +289,7 @@
   
     {if $prefs.feature_wiki eq 'y'}
       <tr>
-        <td class="{cycle advance=false}">{tr}Use double-click to edit pages{/tr}:</td>
+        <td class="{cycle advance=false}">{tr}Use double-click to edit pages:{/tr}</td>
         <td class="{cycle}">
           <input type="checkbox" name="user_dbl" {if $user_prefs.user_dbl eq 'y'}checked="checked"{/if} />
         </td>
@@ -350,7 +350,7 @@
       </tr>
 
       <tr>
-        <td class="{cycle advance=false}">{tr}Send me an email for messages with priority equal or greater than{/tr}:</td>
+        <td class="{cycle advance=false}">{tr}Send me an email for messages with priority equal or greater than:{/tr}</td>
         <td class="{cycle}">
           <select name="minPrio">
             <option value="1" {if $user_prefs.minPrio eq 1}selected="selected"{/if}>1 -{tr}Lowest{/tr}-</option>
@@ -523,7 +523,7 @@
         <input type="hidden" name="email" value="{$userinfo.email|escape}" />
       {else}
         <tr>
-          <td class="{cycle advance=false}">{tr}Email address{/tr}:</td>
+          <td class="{cycle advance=false}">{tr}Email address:{/tr}</td>
           <td class="{cycle}"><input type="text" name="email" value="{$userinfo.email|escape}" /></td>
         </tr>
       {/if}
@@ -531,19 +531,19 @@
       {if $prefs.auth_method neq 'cas' || ($prefs.cas_skip_admin eq 'y' && $user eq 'admin')}
         {if $prefs.change_password neq 'n'}
           <tr>
-            <td class="{cycle advance=false}">{tr}New password{/tr}:</td>
+            <td class="{cycle advance=false}">{tr}New password:{/tr}</td>
             <td class="{cycle}"><input type="password" name="pass1" /></td>
           </tr>
   
           <tr>
-            <td class="{cycle advance=false}">{tr}Confirm new password{/tr}:</td>
+            <td class="{cycle advance=false}">{tr}Confirm new password:{/tr}</td>
             <td class="{cycle}"><input type="password" name="pass2" /></td>
           </tr>
         {/if}
       
         {if $tiki_p_admin ne 'y' or $userwatch eq $user}
           <tr>
-            <td class="{cycle advance=false}">{tr}Current password (required){/tr}:</td>
+            <td class="{cycle advance=false}">{tr}Current password (required):{/tr}</td>
             <td class="{cycle}"><input type="password" name="pass" /></td>
           </tr>
         {/if}
