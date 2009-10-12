@@ -278,7 +278,7 @@
 			<div id="message" class="simplebox">
 		{if $sent}
 			{$message}
-		{/if}
+		{else}
 				<h2 class="center">{tr}Send me a message !{/tr}</h2>
 				<form method="post" action="tiki-user_information.php" name="f">
 					<input type="hidden" name="to" value="{$userwatch|escape}" />
@@ -311,6 +311,7 @@
 					</div>
 
 				</form>
+		{/if}
 			</div>
 	{/tab}{/if}
 {/tabset}
