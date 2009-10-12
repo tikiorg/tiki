@@ -136,7 +136,6 @@ if (isset($_REQUEST["wikifeatures"])) {
 		'feature_create_webhelp',
 		'page_n_times_in_a_structure',
 		'feature_wiki_userpage',
-		'feature_wiki_1like_redirection',
 		'feature_wiki_show_hide_before',
 		'feature_wiki_allowhtml',
 		'feature_wiki_import_page',
