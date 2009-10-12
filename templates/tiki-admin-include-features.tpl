@@ -66,7 +66,6 @@
 				{preference name=feature_comments_moderation}
 				{preference name=feature_comments_locking}
 				{preference name=feature_comments_post_as_anonymous}				
-				{preference name=feature_action_calendar}
 				{preference name=feature_comm}
 			</div>
 		</fieldset>

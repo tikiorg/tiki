@@ -95,6 +95,10 @@
 	<div class="adminoption"><input type="checkbox" id="calendar_sticky_popup" name="calendar_sticky_popup" {if $prefs.calendar_sticky_popup eq 'y'}checked="checked" {/if}/></div>
 	<div class="adminoptionlabel"><label for="calendar_sticky_popup">{tr}Sticky popup{/tr}</label></div>
 </div>
+
+				{preference name=feature_action_calendar}
+
+
 </fieldset>
 {/tab}
 
