@@ -331,12 +331,8 @@
 {* --- Site Breadcrumbs --- *}
 				{preference name=feature_breadcrumbs}
 
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" name="feature_breadcrumbs" id="feature_breadcrumbs" {if $prefs.feature_breadcrumbs eq 'y'} checked="checked"{/if} onclick="flip('usebreadcrumbs');" /></div>
-	<div class="adminoptionlabel"><label for="feature_breadcrumbs">{tr}Breadcrumbs{/tr}</label>
-
-<div class="adminoptionboxchild" id="usebreadcrumbs" style="display:{if $prefs.feature_breadcrumbs eq 'y'}block{else}none{/if};">
-
+<div class="adminoptionboxchild" id="feature_breadcrumbs_childcontainer">
+				
 <div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" name="feature_siteloclabel" id="feature_siteloclabel"{if $prefs.feature_siteloclabel eq 'y'} checked="checked"{/if} /></div>
 	<div class="adminoptionlabel"><label for="feature_siteloclabel">{tr}Prefix breadcrumbs with &quot;Location : &quot;{/tr} .</label></div>
@@ -372,8 +368,6 @@
 
 </div>
 	
-	</div>
-</div>
 
 <div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" name="feature_bot_logo" id="feature_bot_logo"{if $prefs.feature_bot_logo eq 'y'} checked="checked"{/if} onclick="flip('usesitefooter');" /></div>
