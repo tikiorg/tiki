@@ -48,7 +48,7 @@
 						<input type="checkbox" name="note[{$channels[user].noteId}]" />
 					</td>
 					<td class="{cycle advance=false}">
-						<a class="link" href="tiki-notepad_read.php?noteId={$channels[user].noteId}">{$channels[user].name}</a>
+						<a class="link" href="tiki-notepad_read.php?noteId={$channels[user].noteId}">{$channels[user].name|escape}</a>
 					</td>
 					<td class="{cycle advance=false}">{$channels[user].parse_mode}</td>
 					<td class="{cycle advance=false}">{$channels[user].created|tiki_short_datetime}</td>
