@@ -305,7 +305,7 @@ abstract class TikiDb
 
 	function ifNull( $field, $ifNull ) // {{{
 	{
-		return " IFNULL($field, $ifNull) "; // if MySQL
+		return " COALESCE($field, $ifNull) ";
 	} // }}}
 
 	function in( $field, $values, &$bindvars ) // {{{
