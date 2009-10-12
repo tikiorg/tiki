@@ -66,7 +66,6 @@
 				{preference name=feature_comments_moderation}
 				{preference name=feature_comments_locking}
 				{preference name=feature_comments_post_as_anonymous}				
-				{preference name=feature_comm}
 			</div>
 		</fieldset>
 
@@ -111,6 +110,7 @@
 						{preference name=feature_mobile}
 						{preference name=feature_morcego}
 						{preference name=feature_webmail}
+						{preference name=feature_comm}
 				</fieldset>
 
 				<fieldset>
