@@ -926,18 +926,56 @@ insertAt(areaname, s, false, false, true); $jq(this).dialog("close");
 			$wysiwyg = 'Table';
 			$label = tra('Table Builder');
 			$list = array('Table Builder',
-						'<input type="text" id="tbTableR1C1" class="ui-widget-content ui-corner-all" size="10" value="row 1,col 1" />',
-						'<input type="text" id="tbTableR1C2" class="ui-widget-content ui-corner-all" size="10" value="row 1,col 2" />',
-						'<input type="text" id="tbTableR1C3" class="ui-widget-content ui-corner-all" size="10" value="row 1,col 3" />',
-						'<input type="text" id="tbTableR2C1" class="ui-widget-content ui-corner-all" size="10" value="row 2,col 1" />',
-						'<input type="text" id="tbTableR2C2" class="ui-widget-content ui-corner-all" size="10" value="row 2,col 2" />',
-						'<input type="text" id="tbTableR2C3" class="ui-widget-content ui-corner-all" size="10" value="row 2,col 3" />',
-						'<input type="text" id="tbTableR3C1" class="ui-widget-content ui-corner-all" size="10" value="row 3,col 1" />',
-						'<input type="text" id="tbTableR3C2" class="ui-widget-content ui-corner-all" size="10" value="row 3,col 2" />',
-						'<input type="text" id="tbTableR3C3" class="ui-widget-content ui-corner-all" size="10" value="row 3,col 3" />',
-						'{"width": 320, "buttons": { "Cancel": function() { $jq(this).dialog("close"); },'.
+//						'<input type="text" id="tbTableR1C1" class="ui-widget-content ui-corner-all" size="10" value="row 1,col 1" />',
+//						'<input type="text" id="tbTableR1C2" class="ui-widget-content ui-corner-all" size="10" value="row 1,col 2" />',
+//						'<input type="text" id="tbTableR1C3" class="ui-widget-content ui-corner-all" size="10" value="row 1,col 3" />',
+//						'<input type="text" id="tbTableR2C1" class="ui-widget-content ui-corner-all" size="10" value="row 2,col 1" />',
+//						'<input type="text" id="tbTableR2C2" class="ui-widget-content ui-corner-all" size="10" value="row 2,col 2" />',
+//						'<input type="text" id="tbTableR2C3" class="ui-widget-content ui-corner-all" size="10" value="row 2,col 3" />',
+//						'<input type="text" id="tbTableR3C1" class="ui-widget-content ui-corner-all" size="10" value="row 3,col 1" />',
+//						'<input type="text" id="tbTableR3C2" class="ui-widget-content ui-corner-all" size="10" value="row 3,col 2" />',
+//						'<input type="text" id="tbTableR3C3" class="ui-widget-content ui-corner-all" size="10" value="row 3,col 3" />',
+						'{"open": function () {
+var s = getSelection($jq("textarea[name=\'" + areaname + "\']")[0]);
+var m = /\|\|([\s\S]*?)\|\|/mg.exec(s);
+var vals = [], rows=3, cols=3, c, r, i;
+if (m) {
+	m = m[1];
+	m = m.split("\n");
+	rows = 0;
+	cols = 1;
+	for(i = 0; i < m.length; i++) {
+		var a = m[i].split("|");
+		vals[vals.length] = a;
+		if (a.length > cols) { cols = a.length; }
+		if (a.length) { rows++; }
+	}
+}
+for (r = 1; r <= rows; r++) {
+	for (c = 1; c <= cols; c++) {
+		var v = "";
+		if (vals.length) {
+			if (vals[r-1] && vals[r-1][c-1]) {
+				v = vals[r-1][c-1];
+			} else {
+				v = " ";
+			}
+		} else {
+			v = "row " + r + ",col " + c + "";
+		}
+		var el = $jq("<input type=\"text\" id=\"tbTableR" + r + "C" + c + "\" class=\"ui-widget-content ui-corner-all\" size=\"10\" value=\"" + v + "\" style=\"width:100px\" />");
+		$jq(this).append(el);
+	}
+	$jq(this).append($jq("<br />"));
+}
+this.rows = rows; this.cols = cols;
+$jq(this).dialog("option", "width", (cols) * 100 + 50);
+						},
+						"width": 320, "buttons": { "Cancel": function() { $jq(this).dialog("close"); },'.
 						'"Insert": function() {
-var s = "||", rows=3, cols=3, c, r, rows2=1, cols2=1;
+var s = "||", rows, cols, c, r, rows2=1, cols2=1;
+rows = this.rows ? this.rows : 3;
+cols = this.cols ? this.cols : 3;
 for (r = 1; r <= rows; r++) {
 	for (c = 1; c <= cols; c++) {
 		if ($jq("#tbTableR" + r + "C" + c).val()) {
@@ -959,7 +997,7 @@ for (r = 1; r <= rows2; r++) {
 	if (r < rows2) {  s += "\n"; }
 }
 s += "||";
-insertAt(areaname, s); $jq(this).dialog("close");
+insertAt(areaname, s, false, false, true); $jq(this).dialog("close");
 }}}'
 					);
 			break;
