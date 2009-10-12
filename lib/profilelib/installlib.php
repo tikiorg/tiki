@@ -193,7 +193,7 @@ class Tiki_Profile_Installer
 				$this->doInstall( $p );
 			
 			if (count($this->getFeedback()) == count($profiles)) {
-				$this->setFeedback(tra('Nothing was installed, check profile for errors'));
+				$this->setFeedback(tra('Nothing was changed, please check profile for errors'));
 			}
 			$cachelib->empty_full_cache();
 			return true;
@@ -249,13 +249,13 @@ class Tiki_Profile_Installer
 	{
 		global $tikilib, $prefs;
 		
-		$this->setFeedback(tra('Installing').': '.$profile->profile);
+		$this->setFeedback(tra('Applying profile').': '.$profile->profile);
 
 		$this->installed[$profile->getProfileKey()] = $profile;
 
 		foreach( $profile->getObjects() as $object ) {
 			$this->getInstallHandler( $object )->install();
-			$this->setFeedback(tra('Installed').': '.$object->getDescription());
+			$this->setFeedback(tra('Added (or modified)').': '.$object->getDescription());
 		}
 		$preferences = $profile->getPreferences();
 		$profile->replaceReferences( $preferences, $this->userData );
