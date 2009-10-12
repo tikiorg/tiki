@@ -1019,7 +1019,7 @@ class Comments extends TikiLib {
 			// Get data of the last post of this forum
 			if ( $res['comments'] > 0 ) {
 				$result2 = $this->query(
-						'select * from `tiki_comments` where `object`= ? and `objectType` = ? order by commentDate desc',
+						'select * from `tiki_comments` where `object`= ? and `objectType` = ? order by `commentDate` desc',
 						array($res['forumId'], 'forum'));
 
 
@@ -1163,7 +1163,7 @@ class Comments extends TikiLib {
 
 	$lastPost = $this->getOne("select max(`commentDate`) from
 		`tiki_comments`,`tiki_forums` where `object` = ".$this->cast("`forumId`","string").
-		"and `objectType` = 'forum' and
+		" and `objectType` = 'forum' and
 		`forumId` = ?", array( (int) $forumId ) );
 	$query = "update `tiki_forums` set `lastPost`=? where
 	    `forumId`=? ";
@@ -1704,7 +1704,7 @@ class Comments extends TikiLib {
 		and tc2.`parentId` = ?
 		$mid 
 		and (tc1.`in_reply_to` = ?
-		or (tc2.`in_reply_to` = '' or tc2.`in_reply_to` is null or tc2.`message_id` is null or tc2.`parentid` = 0))
+		or (tc2.`in_reply_to` = '' or tc2.`in_reply_to` is null or tc2.`message_id` is null or tc2.`parentId` = 0))
 		$time_cond order by tc1.".$this->convertSortMode($sort_mode).",tc1.`threadId`";
 		$bind_mid_cant = $bind_mid;
 		$bind_mid = array_merge(array($parentId,$parentId), $bind_mid, array($parent_message_id));
@@ -2246,7 +2246,7 @@ class Comments extends TikiLib {
 	$hash = md5($title . $data);
 	$threadId = $this->getOne("select `threadId` from
 		`tiki_comments` where `hash`=?
-		order by threadid asc", array( $hash ) );
+		order by `threadId` asc", array( $hash ) );
 	return $threadId;
     }
 
