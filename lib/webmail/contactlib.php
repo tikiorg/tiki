@@ -31,7 +31,7 @@ class ContactLib extends TikiLib {
 			array_push($bindvars, $findesc, $findesc, $findesc, $findesc);
 		}
 
-		$query = "select c.* from `tiki_webmail_contacts` as c left join `tiki_webmail_contacts_groups` as a on a.`contactId`=c.`contactId` $mid group by contactId order by c.".$this->convertSortMode($sort_mode);
+		$query = "select c.* from `tiki_webmail_contacts` as c left join `tiki_webmail_contacts_groups` as a on a.`contactId`=c.`contactId` $mid group by `contactId` order by c.".$this->convertSortMode($sort_mode);
 		//$query = "select * from `tiki_webmail_contacts` $mid order by ".$this->convertSortMode($sort_mode);
 
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
