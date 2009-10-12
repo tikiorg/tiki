@@ -44,7 +44,7 @@
 {if $prefs.blog_list_title eq 'y' or $prefs.blog_list_description eq 'y'}
 	<td class="{cycle advance=false}">
 		{if ($tiki_p_admin eq 'y') or ($listpages[changes].individual eq 'n') or ($listpages[changes].individual_tiki_p_read_blog eq 'y' ) }
-			<a class="blogname" href="{$listpages[changes].blogId|sefurl:blog}" title="{$listpages[changes].title}">
+			<a class="blogname" href="{$listpages[changes].blogId|sefurl:blog}" title="{$listpages[changes].title|escape}">
 		{/if}
 		{if $listpages[changes].title}
 			{$listpages[changes].title|truncate:$prefs.blog_list_title_len:"...":true|escape}
