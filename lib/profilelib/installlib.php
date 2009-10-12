@@ -1170,7 +1170,7 @@ class Tiki_Profile_InstallHandler_Menu extends Tiki_Profile_InstallHandler // {{
 			$type = 'e';
 
 		$menulib->replace_menu( 0, $data['name'], $data['description'], $type, $data['icon'] );
-		$result = $tikilib->query( "SELECT MAX(menuId) FROM tiki_menus" );
+		$result = $tikilib->query( "SELECT MAX(`menuId`) FROM tiki_menus" );
 		$menuId = reset( $result->fetchRow() );
 
 		foreach( $data['items'] as $item )
