@@ -275,6 +275,7 @@ if (($tiki_p_vote_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n')
 }
 
 // Comments Moderation
+global $tiki_p_admin_comments;
 if ( (!isset($forum_mode) || $forum_mode == 'n') && $tiki_p_admin_comments == 'y' && isset($_REQUEST["comments_threadId"]) && !empty($_REQUEST['comments_approve']) ) {
 
 	if ( $_REQUEST['comments_approve'] == 'y' ) {
