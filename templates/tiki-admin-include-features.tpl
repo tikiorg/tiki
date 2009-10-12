@@ -21,8 +21,8 @@
 
 			<div class="admin clearfix featurelist">
 				{preference name=feature_wiki}
-				{preference name=feature_blogs}
 				{preference name=feature_file_galleries}
+				{preference name=feature_blogs}
 				{preference name=feature_articles}
 				{preference name=feature_forums}
 				{preference name=feature_trackers}
@@ -42,8 +42,6 @@
 				{preference name=feature_score}
 				{preference name=feature_freetags}
 				{preference name=feature_search}
-				{preference name=feature_actionlog}
-				{preference name=feature_contribution}
 				{preference name=feature_multilingual}
 				{preference name=feature_fullscreen}
 			</div>
@@ -56,7 +54,6 @@
 				{preference name=feature_surveys}
 				{preference name=feature_directory}
 				{preference name=feature_quizzes}
-				{preference name=feature_copyright}
 				{preference name=feature_shoutbox}
 				{preference name=feature_maps}
 				{preference name=feature_gmap}
@@ -77,7 +74,6 @@
 				{preference name=feature_xmlrpc}
 				{preference name=feature_debug_console}
 				{preference name=feature_tikitests}
-				{preference name=feature_webservices}
 			</div>
 {/tab}
 
@@ -86,12 +82,15 @@
 			<div class="admin featurelist">
 				<fieldset>
 					<legend class="heading">{icon _id="accept"}<span>{tr}New{/tr}</span></legend>
-					<span class="description">{tr}These features are relatively new. You should expect growing pains and possibly lacking documentation, as you would of a version 1.0 application{/tr}</span>
+					<span class="description">{tr}These features are relatively new, or recently underwent major renovations. You should expect growing pains and possibly a lack of up to date documentation, as you would of a version 1.0 application{/tr}</span>
 						{preference name=feature_perspective}
 						{preference name=feature_quick_object_perms}
 						{preference name=feature_kaltura}
 						{preference name=feature_wiki_mindmap}
 						{preference name=feature_print_indexed}
+						{preference name=feature_webservices}
+						{preference name=feature_webmail}
+						{preference name=feature_sefurl}
 				</fieldset>
 
 				<fieldset>
@@ -103,27 +102,28 @@
 				</fieldset>
 
 				<fieldset>
-					<legend class="heading">{icon _id="accept"}<span>{tr}Seem ok{/tr}</span></legend>
-					<span class="description">{tr}Features that may change or might be re-worked in the future{/tr}</span>
-						{preference name=feature_ajax}
+					<legend class="heading">{icon _id="accept"}<span>{tr}Seem ok but...{/tr}</span></legend>
+					<span class="description">{tr}These features are not reported to be broken, but they are not actively developed and/or widely used.{/tr}</span>
 						{preference name=feature_mobile}
 						{preference name=feature_morcego}
-						{preference name=feature_webmail}
 						{preference name=feature_comm}
+						{preference name=feature_mailin}
+						{preference name=feature_friends}
+						{preference name=feature_custom_home}
+						{preference name=feature_copyright}
+						{preference name=feature_actionlog}
+						{preference name=feature_contribution}
 				</fieldset>
 
 				<fieldset>
 					<legend class="heading">{icon _id="error"}<span>{tr}Need polish{/tr}</span></legend>
-					<span class="description">{tr}Features that need admin help and user patience to work well{/tr}</span>
+					<span class="description">{tr}These features are generally known to have issues, and/or need admin help and/or user patience to work{/tr}</span>
+						{preference name=feature_ajax}
 						{preference name=feature_intertiki}
-						{preference name=feature_mailin}
-						{preference name=feature_sefurl}
 						{preference name=feature_sheet}
 						{preference name=feature_wysiwyg}
-						{preference name=feature_friends}
 						{preference name=feature_ajax_autosave}
 						{preference name=feature_wiki_save_draft}
-
 				</fieldset>
 
 				<fieldset>
@@ -134,9 +134,8 @@
 
 				<fieldset>
 					<legend class="heading">{icon _id="information_gray"}<span>{tr}Neglected{/tr}</span></legend>
-					<span class="description">{tr}Old features no longer maintained{/tr}</span>
+					<span class="description">{tr}Old features no longer maintained/relevant and will be removed.{/tr}</span>
 						{preference name=feature_multimedia}
-						{preference name=feature_custom_home}
 				</fieldset>
 			</div>
 {/tab}
