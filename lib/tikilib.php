@@ -395,7 +395,7 @@ class TikiLib extends TikiDb_Bridge {
 				tup1.value as language, tup2.value as mailCharset
 			from
 				tiki_group_watches tgw
-				inner join users_usergroups ug on tgw.`group` = ug.groupName
+				inner join users_usergroups ug on tgw.`group` = ug.`groupName`
 				inner join users_users uu on ug.userId = uu.userId and uu.email is not null and uu.email <> ''
 				left join `tiki_user_preferences` tup1 on (tup1.`user`=uu.`login` and tup1.`prefName`='language') 
 				left join `tiki_user_preferences` tup2 on (tup2.`user`=uu.`login` and tup2.`prefName`='mailCharset')
