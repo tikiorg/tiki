@@ -456,7 +456,7 @@ class ToolbarFckOnly extends Toolbar
 		return null;
 	} // }}}
 	
-	function getLabel( $areaName ) // {{{
+	function getLabel() // {{{
 	{
 		return $this->wysiwyg;
 	} // }}}
