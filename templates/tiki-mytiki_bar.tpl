@@ -12,7 +12,7 @@
 
 {if $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y'}
 	{if $unread}
-		{button _icon="img/mytiki/messages.gif" _text="{tr}Messages{/tr}($unread)" href="messu-mailbox.php" _menu_text="y}
+		{button _icon="img/mytiki/messages.gif" _text="{tr}Messages{/tr} ($unread)" href="messu-mailbox.php" _menu_text="y}
 	{else}
 		{button _icon="img/mytiki/messages.gif" _text="{tr}Messages{/tr}" href="messu-mailbox.php" _menu_text="y}
 	{/if}
