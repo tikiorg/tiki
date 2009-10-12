@@ -94,7 +94,6 @@
 						{preference name=feature_print_indexed}
 				</fieldset>
 
-			<div class="admin featurelist">
 				<fieldset>
 					<legend class="heading">{icon _id="error"}<span>{tr}Phased out{/tr}</span></legend>
 					<span class="description">{tr}These features generally work but will probably be phased out in the future, because they are superseded by other features or because of evolution in Web technology{/tr}</span>
