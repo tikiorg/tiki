@@ -4039,7 +4039,7 @@ Pokud jste tu poprvé, přihlašte se nahoře vpravo jako __admin__ s heslem __a
 // "Other languages you can read (select on the left to add to the list on the right)" => "Other languages you can read (select on the left to add to the list on the right)",
 // "Select language.." => "Select language..",
 // "Displays users' info tooltip on mouseover for every user who allows his information to be public" => "Displays users' info tooltip on mouseover for every user who allows his information to be public",
-// "Note author when reading his mail" => "Note author when reading his mail",
+// "Notify sender when reading his mail" => "Notify sender when reading his mail",
 // "My user items" => "My user items",
 // "My level" => "My level",
 // "Task list" => "Task list",

@@ -343,7 +343,7 @@
       {/if}
 
       <tr>
-        <td class="{cycle advance=false}">{tr}Note author when reading his mail{/tr}</td>
+        <td class="{cycle advance=false}">{tr}Notify sender when reading his mail{/tr}</td>
         <td class="{cycle}">
           <input type="checkbox" name="mess_sendReadStatus" {if $user_prefs.mess_sendReadStatus eq 'y'}checked="checked"{/if}/>
         </td>
