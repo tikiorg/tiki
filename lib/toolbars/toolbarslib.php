@@ -831,14 +831,31 @@ class ToolbarDialog extends Toolbar
 			$wysiwyg = 'tikilink';
 			$list = array('Wiki Link',
 						'<label for="tbWLinkDesc">Link description:</label>',
-						'<input type="text" id="tbWLinkDesc" class="ui-widget-content ui-corner-all" />',
+						'<input type="text" id="tbWLinkDesc" class="ui-widget-content ui-corner-all" style="width: 100%" />',
 						'<label for="tbWLinkURL">Page name:</label>',
-						'<input type="text" id="tbWLinkPage" class="ui-widget-content ui-corner-all" />',
+						'<input type="text" id="tbWLinkPage" class="ui-widget-content ui-corner-all" style="width: 100%" />',
 						'<label for="tbWLinkRel">Anchor:</label>',
-						'<input type="text" id="tbWLinkAnchor" class="ui-widget-content ui-corner-all" />',
+						'<input type="text" id="tbWLinkAnchor" class="ui-widget-content ui-corner-all" style="width: 100%" />',
 						'<label for="tbWLinkRel">Semantic relation:</label>',
-						'<input type="text" id="tbWLinkRel" class="ui-widget-content ui-corner-all" />',
-						'{"open": function () { $jq("#tbWLinkPage").tiki("autocomplete", "pagename");},
+						'<input type="text" id="tbWLinkRel" class="ui-widget-content ui-corner-all" style="width: 100%" />',
+						'{"open": function () {
+$jq("#tbWLinkPage").tiki("autocomplete", "pagename");
+var s = getSelection($jq("textarea[name=\'" + areaname + "\']")[0]);
+var m = /\((.*)\(([^\|]*)\|?([^\|]*)\|?([^\|]*)\|?\)\)/g.exec(s);
+console.log(m);
+if (m && m.length > 4) {
+	$jq("#tbWLinkRel").val(m[1]);
+	$jq("#tbWLinkPage").val(m[2]);
+	if (m[4]) {
+		$jq("#tbWLinkAnchor").val(m[3]);
+		$jq("#tbWLinkDesc").val(m[4]);
+	} else {
+		$jq("#tbWLinkDesc").val(m[3]);
+	}
+} else {
+	$jq("#tbWLinkDesc").val(s);
+}
+						},
 						"buttons": { "Cancel": function() { $jq(this).dialog("close"); },'.
 						'"Insert": function() {
 var s = "(";
@@ -846,9 +863,8 @@ if ($jq("#tbWLinkRel").val()) { s += $jq("#tbWLinkRel").val(); }
 s += "(" + $jq("#tbWLinkPage").val();
 if ($jq("#tbWLinkAnchor").val()) { s += "|" + $jq("#tbWLinkAnchor").val(); }
 if ($jq("#tbWLinkDesc").val()) { s += "|" + $jq("#tbWLinkDesc").val(); }
-if ($jq("#tbWLinkNoCache").attr("checked")) { s += "|nocache"; }
 s += "))";
-insertAt(areaname, s); $jq(this).dialog("close");
+insertAt(areaname, s, false, false, true); $jq(this).dialog("close");
 }}}'
 					);
 
@@ -859,23 +875,48 @@ insertAt(areaname, s); $jq(this).dialog("close");
 			$icon = tra('pics/icons/world_link.png');
 			$list = array('External Link',
 						'<label for="tbLinkDesc">Link description:</label>',
-						'<input type="text" id="tbLinkDesc" class="ui-widget-content ui-corner-all" />',
+						'<input type="text" id="tbLinkDesc" class="ui-widget-content ui-corner-all" style="width: 100%" />',
 						'<label for="tbLinkType">Link type:</label>',
 						'<select id="tbLinkType" class="ui-widget-content"><option value="">Relative</option><option value="http://">http</option></select>',
 						'<label for="tbLinkURL">URL:</label>',
-						'<input type="text" id="tbLinkURL" class="ui-widget-content ui-corner-all" />',
+						'<input type="text" id="tbLinkURL" class="ui-widget-content ui-corner-all" style="width: 100%" />',
 						'<label for="tbLinkRel">Relation:</label>',
-						'<input type="text" id="tbLinkRel" class="ui-widget-content ui-corner-all" />',
+						'<input type="text" id="tbLinkRel" class="ui-widget-content ui-corner-all" style="width: 100%" />',
 						'<br /><label for="tbLinkNoCache" style="display:inline;">No cache:</label>',
 						'<input type="checkbox" id="tbLinkNoCache" class="ui-widget-content ui-corner-all" />',
-						'{"buttons": { "Cancel": function() { $jq(this).dialog("close"); },'.
+						'{"open": function () {
+$jq("#tbWLinkPage").tiki("autocomplete", "pagename");
+var s = getSelection($jq("textarea[name=\'" + areaname + "\']")[0]);
+var m = /\[([^\|]*)\|?([^\|]*)\|?([^\|]*)\]/g.exec(s);
+console.log(m);
+if (m && m.length > 3) {
+	if (m[1].indexOf("http://") > -1) {
+		$jq("#tbLinkType").val("http://");
+		m[1] = m[1].substring(7);
+	}
+	$jq("#tbLinkURL").val(m[1]);
+	$jq("#tbLinkDesc").val(m[2]);
+	if (m[3]) {
+		if (m[3] == "nocache") {
+			$jq("#tbLinkNoCache").attr("checked", "checked");
+		} else {
+			$jq("#tbLinkRel").val(m[3]);
+		}			
+	} else {
+		$jq("#tbWLinkDesc").val(m[3]);
+	}
+} else {
+	$jq("#tbLinkDesc").val(s);
+}
+						},
+						"buttons": { "Cancel": function() { $jq(this).dialog("close"); },'.
 						'"Insert": function() {
 var s = "[" + $jq("#tbLinkType").val() + $jq("#tbLinkURL").val();
 if ($jq("#tbLinkDesc").val()) { s += "|" + $jq("#tbLinkDesc").val(); }
 if ($jq("#tbLinkRel").val()) { s += "|" + $jq("#tbLinkRel").val(); }
 if ($jq("#tbLinkNoCache").attr("checked")) { s += "|nocache"; }
 s += "]";
-insertAt(areaname, s); $jq(this).dialog("close");
+insertAt(areaname, s, false, false, true); $jq(this).dialog("close");
 }}}'
 					);
 			break;
@@ -932,8 +973,12 @@ insertAt(areaname, s); $jq(this).dialog("close");
 						'<input type="text" id="tbFindSearch" class="ui-widget-content ui-corner-all" />',
 						'<label for="tbLinkNoCache" style="display:inline;">Case Insensitivity:</label>',
 						'<input type="checkbox" id="tbFindCase" checked="checked" class="ui-widget-content ui-corner-all" />',
-						'{"buttons": { "Close": function() { $jq(this).dialog("close"); },'.
-						'"Find": function() {
+						'{"open": function() {
+	var s = getSelection($jq("textarea[name=\'" + areaname + "\']")[0]);
+	$jq("#tbFindSearch").val(s);
+						  },'.
+						 '"buttons": { "Close": function() { $jq(this).dialog("close"); },'.
+						  '"Find": function() {
 	var s, opt, ta, str, re, p = 0, m;
 	s = $jq("#tbFindSearch").removeClass("ui-state-error").val();
 	opt = "";
@@ -978,7 +1023,11 @@ insertAt(areaname, s); $jq(this).dialog("close");
 						'<input type="checkbox" id="tbReplaceCase" checked="checked" class="ui-widget-content ui-corner-all" />',
 						'<br /><label for="tbLinkNoCache" style="display:inline;">Replace All:</label>',
 						'<input type="checkbox" id="tbReplaceAll" checked="checked" class="ui-widget-content ui-corner-all" />',
-						'{"buttons": { "Close": function() { $jq(this).dialog("close"); },'.
+						'{"open": function() {
+	var s = getSelection($jq("textarea[name=\'" + areaname + "\']")[0]);
+	$jq("#tbReplaceSearch").val(s);
+						  },'.
+						 '"buttons": { "Close": function() { $jq(this).dialog("close"); },'.
 						'"Replace": function() {
 	var s = $jq("#tbReplaceSearch").val();
 	var r = $jq("#tbReplaceReplace").val();
