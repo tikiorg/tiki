@@ -273,6 +273,8 @@ abstract class TikiDb
 			switch ($type) {
 				case "int":
 					return "$var::INT4";
+				case "string":
+					return "$var::VARCHAR";
 				default:
 					return($var);
 			}
