@@ -100,12 +100,13 @@
 				</fieldset>
 
 				<fieldset>
-					<legend class="heading">{icon _id="error"}<span>{tr}Phased out{/tr}</span></legend>
+					<legend class="heading">{icon _id="information_gray"}<span>{tr}Will be phased out{/tr}</span></legend>
 					<span class="description">{tr}These features generally work but will probably be phased out in the future, because they are superseded by other features or because of evolution in Web technology{/tr}</span>
 						{preference name=feature_html_pages}
 						{preference name=feature_galleries}
 						{preference name=feature_faqs}
-				</fieldset>
+						{preference name=feature_multimedia}
+						</fieldset>
 
 				<fieldset>
 					<legend class="heading">{icon _id="accept"}<span>{tr}Seem ok but...{/tr}</span></legend>
@@ -138,11 +139,6 @@
 						{preference name=feature_workspaces}
 				</fieldset>
 
-				<fieldset>
-					<legend class="heading">{icon _id="information_gray"}<span>{tr}Neglected{/tr}</span></legend>
-					<span class="description">{tr}Old features no longer maintained/relevant and will be removed.{/tr}</span>
-						{preference name=feature_multimedia}
-				</fieldset>
 			</div>
 {/tab}
 {/tabset}
