@@ -5,8 +5,6 @@
 	<input type="submit" name="calprefs" value="{tr}Change settings{/tr}" />
 </div>
 
-{tabset name="admin_calendar"}
-{tab name="{tr}General settings{/tr}"}
  <fieldset><legend>{tr}General settings{/tr}{if $prefs.feature_help eq 'y'} {help url="Calendar+Admin"}{/if}</legend>
 <div class="adminoptionbox">
 	<div class="adminoptionlabel">{tr}Default calendars to display{/tr}:
@@ -99,18 +97,18 @@
 				{preference name=feature_action_calendar}
 
 
-</fieldset>
-{/tab}
 
-{tab name="{tr}Group calendars{/tr}"}
 <div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" id="calendar_view_tab" name="calendar_view_tab" {if $prefs.calendar_view_tab eq 'y'}checked="checked" {/if}/></div>
 	<div class="adminoptionlabel"><label for="calendar_view_tab">{tr}Item view tab{/tr}</label></div>
 </div>
-{/tab}
-{/tabset}
+
+</fieldset>
+
+
 <div class="input_submit_container clear" style="text-align: center;">
 	<input type="submit" name="calprefs" value="{tr}Change settings{/tr}" />
 </div>
+
 </form>
 
