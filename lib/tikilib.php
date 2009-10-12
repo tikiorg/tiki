@@ -586,7 +586,7 @@ class TikiLib extends TikiDb_Bridge {
 		if ( ! isset($this->online_users_cache) ) {
 			$this->update_session();
 			$this->online_users_cache=array();
-			$query = "select s.`user`, p.`value` as 'realName', `timestamp`, `tikihost` from `tiki_sessions` s left join `tiki_user_preferences` p on s.`user`<>? and s.`user` = p.`user` and p.`prefName` = 'realName' where s.`user` is not null;";
+			$query = "select s.`user`, p.`value` as `realName`, `timestamp`, `tikihost` from `tiki_sessions` s left join `tiki_user_preferences` p on s.`user`<>? and s.`user` = p.`user` and p.`prefName` = 'realName' where s.`user` is not null;";
 			$result = $this->query($query,array(''));
 			$ret = array();
 			while ($res = $result->fetchRow()) {
