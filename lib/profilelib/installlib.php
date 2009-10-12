@@ -98,7 +98,7 @@ class Tiki_Profile_Installer
 	{
 		global $tikilib;
 
-		$result = $tikilib->query( "SELECT DISTINCT domain, profile FROM tiki_profile_symbols" );
+		$result = $tikilib->query( "SELECT DISTINCT `domain`, `profile` FROM `tiki_profile_symbols`" );
 		if ( $result ) while( $row = $result->fetchRow() )
 			$this->installed[Tiki_Profile::getProfileKeyFor( $row['domain'], $row['profile'] )] = true;
 	} // }}}
@@ -1170,7 +1170,7 @@ class Tiki_Profile_InstallHandler_Menu extends Tiki_Profile_InstallHandler // {{
 			$type = 'e';
 
 		$menulib->replace_menu( 0, $data['name'], $data['description'], $type, $data['icon'] );
-		$result = $tikilib->query( "SELECT MAX(`menuId`) FROM tiki_menus" );
+		$result = $tikilib->query( "SELECT MAX(`menuId`) FROM `tiki_menus`" );
 		$menuId = reset( $result->fetchRow() );
 
 		foreach( $data['items'] as $item )
@@ -1301,7 +1301,7 @@ class Tiki_Profile_InstallHandler_BlogPost extends Tiki_Profile_InstallHandler /
 			global $bloglib, $tikilib;
 			if( ! $bloglib ) require_once 'lib/blogs/bloglib.php';
 
-			$result = $tikilib->query( "SELECT user FROM tiki_blogs WHERE blogId = ?", array( $data['blog'] ) );
+			$result = $tikilib->query( "SELECT `user` FROM `tiki_blogs` WHERE `blogId` = ?", array( $data['blog'] ) );
 
 			if( $row = $result->fetchRow() ) {
 				$data['user'] = $row['user'];
@@ -1515,7 +1515,7 @@ class Tiki_Profile_InstallHandler_Rss extends Tiki_Profile_InstallHandler // {{{
 
 		if( $rsslib->replace_rss_module( 0, $data['name'], $data['description'], $data['url'], $data['refresh'], $data['show_title'], $data['show_publication_date'] ) ) {
 
-			$id = (int) $rsslib->getOne("SELECT MAX(rssId) FROM tiki_rss_modules");
+			$id = (int) $rsslib->getOne("SELECT MAX(`rssId`) FROM `tiki_rss_modules`");
 			return $id;
 		}
 	}
