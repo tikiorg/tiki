@@ -22,13 +22,12 @@ if ($tiki_p_notepad != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
-if (!isset($_REQUEST["noteId"])) $_REQUEST["noteId"] = 0;
 if (isset($_REQUEST["remove"])) {
 	check_ticket('notepad-write');
 	$notepadlib->remove_note($user, $_REQUEST['remove']);
 }
 include 'lib/setup/editmode.php';
-if ($_REQUEST["noteId"]) {
+if (isset($_REQUEST["noteId"])) {
 	$info = $notepadlib->get_note($user, $_REQUEST["noteId"]);
 	if ($info['parse_mode'] == 'raw') {
 		$info['parsed'] = nl2br(htmlspecialchars($info['data']));
@@ -42,8 +41,8 @@ if ($_REQUEST["noteId"]) {
 }
 if (isset($_REQUEST['save'])) {
 	check_ticket('notepad-write');
-	$_REQUEST["noteId"] = $notepadlib->replace_note($user, $_REQUEST["noteId"], $_REQUEST["name"], $_REQUEST["data"], $_REQUEST["parse_mode"]);
-	header('location: tiki-notepad_read.php?noteId=' . $_REQUEST["noteId"]);
+	$noteId = $notepadlib->replace_note($user, isset($_REQUEST["noteId"]) ? $_REQUEST["noteId"] : 0, $_REQUEST["name"], $_REQUEST["data"], $_REQUEST["parse_mode"]);
+	header('location: tiki-notepad_read.php?noteId=' . $noteId);
 	die;
 }
 $smarty->assign('noteId', $_REQUEST["noteId"]);
