@@ -1,30 +1,34 @@
-{* $Id$ *}
-<!DOCTYPE html 
+{* $Id$ *}<!DOCTYPE html 
 	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{if !empty($pageLang)}{$pageLang}{else}{$prefs.language}{/if}" lang="{if !empty($pageLang)}{$pageLang}{else}{$prefs.language}{/if}">
 	<head>
-{include file="header.tpl"}
+{include file='header.tpl'}
 	</head>
 	<body{if isset($section) and $section eq 'wiki page' and $prefs.user_dbl eq 'y' and $dblclickedit eq 'y' and $tiki_p_edit eq 'y'} ondblclick="location.href='tiki-editpage.php?page={$page|escape:"url"}';"{/if} onload="{if $prefs.feature_tabs eq 'y'}tikitabs({if $cookietab neq ''}{$cookietab}{else}1{/if},50);{/if}{if $msgError} javascript:location.hash='msgError'{/if}"{if $section or $smarty.session.fullscreen eq 'y'} class="{if $section}tiki_{$section|replace:' ':'_'}{/if}{if $smarty.session.fullscreen eq 'y'} fullscreen{/if}"{/if}>
 		<ul class="jumplinks" style="position:absolute;top:-9000px;left:-9000px;z-index:9;">
 			<li><a href="#tiki-center">{tr}Jump to Content{/tr}</a></li>
 		</ul>
-{if $prefs.feature_community_mouseover eq 'y'}{popup_init src="lib/overlib.js"}{/if}
+
+{if $prefs.feature_community_mouseover eq 'y'}		{popup_init src="lib/overlib.js"}{/if}
+
 {if $prefs.feature_fullscreen eq 'y' and $filegals_manager eq '' and $print_page ne 'y'}
-	{if $smarty.session.fullscreen eq 'y'}
-		<a href="{$smarty.server.SCRIPT_NAME}{if $fsquery}?{$fsquery|escape:"url":"UTF-8"}&amp;{else}?{/if}fullscreen=n" class="menulink" id="fullscreenbutton">{icon _id=application_put alt="{tr}Cancel Fullscreen{/tr}"}</a>
+	{if $smarty.session.fullscreen eq 'n'}
+		{self_link fullscreen="y" _class="fullscreenbutton" _ajax='n' _icon=application_get _title="{tr}Fullscreen{/tr}"}{/self_link}
 	{else}
-		<a href="{$smarty.server.SCRIPT_NAME}{if $fsquery}?{$fsquery|escape:"url":"UTF-8"}&amp;{else}?{/if}fullscreen=y" class="menulink" id="fullscreenbutton">{icon _id=application_get alt="{tr}Fullscreen{/tr}"}</a>
+		{self_link fullscreen="n" _class="fullscreenbutton" _ajax='n' _icon=application_put _title="{tr}Cancel Fullscreen{/tr}"}{/self_link}
 	{/if}
 {/if}
+
 {* TikiTest ToolBar *}
 {if $prefs.feature_tikitests eq 'y' and $tikitest_state neq 0}
-	{include file="tiki-tests_topbar.tpl"}
+	{include file='tiki-tests_topbar.tpl'}
 {/if}
+
 {if $prefs.feature_ajax eq 'y'}
-	{include file="tiki-ajax_header.tpl"}
+	{include file='tiki-ajax_header.tpl'}
 {/if}
+
 {if $prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
 	{* optional ad (banner) in Twist moved from tiki-site_header.tpl to here to display above table, header div. *}
 	{if $prefs.feature_sitead eq 'y' and $print_page ne 'y'}
@@ -80,6 +84,9 @@
 						<div class="tellafriend"><a href="tiki-tell_a_friend.php?url={$smarty.server.REQUEST_URI|escape:'url'}">{tr}Email this page{/tr}</a></div>
 					{/if}
 					<div id="tiki-center">
+						{if $prefs.feature_custom_center_column_header}{* Content comes from Look and Feel admin  *}
+							{eval var=$prefs.feature_custom_center_column_header}
+						{/if}
 						{$mid_data}
 						{show_help}
 					</div>
@@ -103,7 +110,7 @@
 				<td colspan="3{* change to 5 if the 2 border tds are used *}" id="footer" colspan="3"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
 					<div class="wrapper"> 
 		  				<div class="content">
-    						{include file="tiki-bot_bar.tpl"}
+    						{include file='tiki-bot_bar.tpl'}
 						</div>
 					</div>
 				</td>
@@ -111,7 +118,7 @@
 		{/if}
 	</table>
 {/if}
-{include file="footer.tpl"}
+{include file='footer.tpl'}
 
 {if $prefs.feature_endbody_code}{*this code must be added just before </body>: needed by google analytics *}
 	{eval var=$prefs.feature_endbody_code}
