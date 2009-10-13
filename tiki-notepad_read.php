@@ -40,26 +40,47 @@ if (isset($_REQUEST["remove"])) {
 	}
 }
 $info = $notepadlib->get_note($user, $_REQUEST["noteId"]);
-if ($tiki_p_edit == 'y') {
-	if (isset($_REQUEST['wikify'])) {
-		check_ticket('notepad-read');
-		if (empty($_REQUEST['wiki_name'])) {
-			$smarty->assign('msg', tra("No name indicated for wiki page"));
-			$smarty->display("error.tpl");
-			die;
-		}
-		if ($tikilib->page_exists($_REQUEST['wiki_name']) && !isset($_REQUEST['over'])) {
+if (!$info) {
+	$smarty->assign('msg', tra("Note not found"));
+	$smarty->display("error.tpl");
+	die;
+}
+
+if (isset($_REQUEST['wikify']) || isset($_REQUEST['over'])) {
+	check_ticket('notepad-read');
+	if (empty($_REQUEST['wiki_name'])) {
+		$smarty->assign('msg', tra("No name indicated for wiki page"));
+		$smarty->display("error.tpl");
+		die;
+	}
+	if ($tikilib->page_exists($_REQUEST['wiki_name'])) {
+		if (isset($_REQUEST['over'])) {
+			$pageperms = $tikilib->get_perm_object($_REQUEST['wiki_name'], 'wiki page', '', false);
+			if ($pageperms["tiki_p_edit"] == 'y') {
+				$tikilib->update_page($_REQUEST['wiki_name'], $info['data'], tra('created from notepad'), $user, '127.0.1.1', $info['name']);
+			} else {
+				$smarty->assign('errortype', 401);
+				$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
+				$smarty->display("error.tpl");
+				die;
+			}
+		} else {
 			$smarty->assign('msg', tra("Page already exists"));
 			$smarty->display("error.tpl");
 			die;
 		}
-		if ($tikilib->page_exists($_REQUEST['wiki_name'])) {
-			$tikilib->update_page($_REQUEST['wiki_name'], $info['data'], tra('created from notepad'), $user, '127.0.1.1', $info['name']);
-		} else {
+	} else {
+		if ($tiki_p_edit == 'y') {
 			$tikilib->create_page($_REQUEST['wiki_name'], 0, $info['data'], $tikilib->now, tra('created from notepad'), $user, $ip = '0.0.0.0', $info['name']);
+		} else {
+			$smarty->assign('errortype', 401);
+			$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
+			$smarty->display("error.tpl");
+			die;
 		}
 	}
 }
+
 if ($tikilib->page_exists($info['name'])) {
 	$smarty->assign("wiki_exists", "y");
 } else {

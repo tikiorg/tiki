@@ -33,7 +33,7 @@
   <td>
     <form action="tiki-notepad_read.php" method="post">
       <input type="hidden" name="noteId" value="{$noteId|escape}" />
-      <input type="submit" name="wikify" value="{if $wiki_exists eq 'n'}{tr}Wiki Create{/tr}{else}{tr}Wiki Overwrite{/tr}{/if}"/>
+      <input type="submit" name="{if $wiki_exists eq 'n'}wikify{else}over{/if}" value="{if $wiki_exists eq 'n'}{tr}Wiki Create{/tr}{else}{tr}Wiki Overwrite{/tr}{/if}"/>
       <input size="40" type="text" name="wiki_name" value="{$info.name|escape}" />
     </form>
   </td>
