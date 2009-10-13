@@ -43,7 +43,13 @@ function wikiplugin_userlist_info() {
 				'required' => false,
 				'name' => tra('Link'),
 				'description' => 'userpage|userinfo|userpref',
-			),			
+			),
+			'realname' => array(
+				'required' => false,
+				'filter' => 'alpha',
+				'name' => tra('Real Name'),
+				'description' => tra('Display the user\'s real name instead of login name.'),
+			),
 		),
 	);
 }
@@ -109,7 +115,16 @@ function wikiplugin_userlist($data, $params) {
 				}
 			}
 		}
-        $ret[] = $res.$row['login'].($res?'</a>':'');
+		$displayName = $row['login'];
+		if( $params['realname'] ) {
+			$realName = $tikilib->get_user_preference( $row['login'], 'realName' );
+			
+			if( $realName ) {
+				$displayName = $realName;
+			}
+		}
+
+        $ret[] = $res.$displayName.($res?'</a>':'');
     }
     return $pre.implode ( $sep, $ret ).$post;
 }
