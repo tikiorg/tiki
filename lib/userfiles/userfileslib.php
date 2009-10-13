@@ -13,7 +13,7 @@ class UserFilesLib extends TikiLib {
 			return 0;
 		}
 
-		$part1 = $this->getOne("select sum(`filesize`) from `tiki_userfiles` where `user`=?",array($user));
+		$part1 = $this->getOne("select sum(" . $this->cast('filesize','int') . ") from `tiki_userfiles` where `user`=?",array($user));
 		$part2 = $this->getOne("select sum(`size`) from `tiki_user_notes` where `user`=?",array($user));
 		return $part1 + $part2;
 	}
