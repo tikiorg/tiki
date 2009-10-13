@@ -1065,12 +1065,11 @@ function get_default_prefs() {
 		'site_nav_seper' => '|',
 		'feature_sitemycode' => 'y',
 		'sitemycode' => '{if $user eq "admin"}
-<div style="align: left; padding-left: 15px;">
-<a class="link" href="tiki-admin.php?page=look&amp;cookietab=2">
-{tr}Modify the look &amp; feel (logo, theme, etc.){/tr}
-</a>
-</div>
-{/if}', // must be max. 250 chars now unless it'll change in tiki_prefs db table field value from VARCHAR(250) to BLOB by default
+<div id="quickadmin" style="text-align: left; padding-left: 12px;"><small>{tr}Quick Admin{/tr}</small>:
+{icon _id=database_refresh title="{tr}Clear all Tiki caches{/tr}" href="tiki-admin_system.php?do=all"}
+{icon _id=wrench title="{tr}Modify the look &amp; feel (logo, theme, etc.){/tr}" href="tiki-admin.php?page=look&amp;cookietab=2"}
+</div>  
+{/if}',
 		'sitemycode_publish' => 'n',
 		'feature_sitelogo' => 'y',
 		'sitelogo_bgcolor' => 'transparent',
