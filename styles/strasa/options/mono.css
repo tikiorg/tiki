@@ -64,6 +64,12 @@ span.button input,
 	background: #565656;
 	border-color: #878787 #343434 #343434 #878787;
 }
+* html input[type=reset],
+* html input[type=submit] {
+	color: #fff;
+	background: #565656;
+	border-color: #878787 #343434 #343434 #878787;
+}
 
 .button a:hover,
 button:hover,

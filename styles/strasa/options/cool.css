@@ -56,9 +56,7 @@ button,
 input[type=reset],
 input[type=submit],
 span.button input,
-.calbuttonoff,
-.buttonon,
-.calbuttonon {
+.calbuttonbox {
 	color: #4c4c4c;
 	font-weight: bold;
 	border: 1px solid #acacac;
@@ -75,7 +73,8 @@ span.button input,
 button:hover,
 input[type=reset]:hover,
 input[type=submit]:hover,
-.button input:hover {
+.button input:hover,
+.calbuttonbox:hover {
 	background: #f5f5f5 url(cool/headerbg.jpg) repeat-x 0 100%;
 	background-position: 105%;
 	color: #757575}
@@ -84,7 +83,9 @@ input[type=submit]:hover,
 button:active,
 input[type=reset]:active,
 input[type=submit]:active,
-.button input:active {
+.button input:active,
+span.highlight a:link,
+span.highlight a:visited  {
 	border-color: #223845 #41cbe7 #41cbe7 #223845;
 }
 
