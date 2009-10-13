@@ -842,7 +842,6 @@ class ToolbarDialog extends Toolbar
 $jq("#tbWLinkPage").tiki("autocomplete", "pagename");
 var s = getSelection($jq("textarea[name=\'" + areaname + "\']")[0]);
 var m = /\((.*)\(([^\|]*)\|?([^\|]*)\|?([^\|]*)\|?\)\)/g.exec(s);
-console.log(m);
 if (m && m.length > 4) {
 	$jq("#tbWLinkRel").val(m[1]);
 	$jq("#tbWLinkPage").val(m[2]);
@@ -888,7 +887,6 @@ insertAt(areaname, s, false, false, true); $jq(this).dialog("close");
 $jq("#tbWLinkPage").tiki("autocomplete", "pagename");
 var s = getSelection($jq("textarea[name=\'" + areaname + "\']")[0]);
 var m = /\[([^\|]*)\|?([^\|]*)\|?([^\|]*)\]/g.exec(s);
-console.log(m);
 if (m && m.length > 3) {
 	if (m[1].indexOf("http://") > -1) {
 		$jq("#tbLinkType").val("http://");
@@ -966,10 +964,39 @@ for (r = 1; r <= rows; r++) {
 		var el = $jq("<input type=\"text\" id=\"tbTableR" + r + "C" + c + "\" class=\"ui-widget-content ui-corner-all\" size=\"10\" value=\"" + v + "\" style=\"width:100px\" />");
 		$jq(this).append(el);
 	}
+	if (r == 1) {
+		el = $jq("<img src=\"pics/icons/add.png\" />");
+		$jq(this).append(el);
+		el.click(function () {
+			var pr = $jq(this).parent();
+			$jq(pr).attr("cols", $jq(pr).attr("cols")+1);
+			for (r = 1; r <= $jq(pr).attr("rows"); r++) {
+				v = "row " + r + ",col " + $jq(pr).attr("cols") + "";
+				var el = $jq("<input type=\"text\" id=\"tbTableR" + r + "C" + $jq(pr).attr("cols") + "\" class=\"ui-widget-content ui-corner-all\" size=\"10\" value=\"" + v + "\" style=\"width:100px\" />");
+				$jq("#tbTableR" + r + "C" + ($jq(pr).attr("cols")-1)).after(el);
+			}
+			$jq(pr).dialog("option", "width", ($jq(pr).attr("cols")+1) * $jq("#tbTableR1C1").width() + 10);
+		});
+	}
 	$jq(this).append($jq("<br />"));
 }
+el = $jq("<img src=\"pics/icons/add.png\" />");
+$jq(this).append(el);
+el.click(function () {
+	var pr = $jq(this).parent();
+	$jq(pr).attr("rows", $jq(pr).attr("rows")+1);
+	for (c = 1; c <= $jq(pr).attr("cols"); c++) {
+		v = "row " + $jq(pr).attr("rows") + ",col " + c + "";
+		var el = $jq("<input type=\"text\" id=\"tbTableR" + $jq(pr).attr("rows") + "C" + c + "\" class=\"ui-widget-content ui-corner-all\" size=\"10\" value=\"" + v + "\" style=\"width:100px\" />");
+		$jq(this).before(el);
+	}
+	$jq(this).before("<br />");
+$jq(pr).dialog("option", "height", ($jq(pr).attr("rows")+1) * 1.2 * $jq("#tbTableR1C1").height() + 130);
+});
+
 this.rows = rows; this.cols = cols;
-$jq(this).dialog("option", "width", (cols) * 100 + 50);
+$jq(this).dialog("option", "width", (cols+1) * $jq("#tbTableR1C1").width() + 10);
+$jq(this).dialog("option", "position", "center");
 						},
 						"width": 320, "buttons": { "Cancel": function() { $jq(this).dialog("close"); },'.
 						'"Insert": function() {
@@ -985,7 +1012,6 @@ for (r = 1; r <= rows; r++) {
 			if (c > cols2) {
 				cols2 = c;
 			}
-			console.log("r=%s, c=%s", rows2, cols2, r, c);
 		}
 	}
 }
