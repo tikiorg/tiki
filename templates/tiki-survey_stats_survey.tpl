@@ -1,4 +1,4 @@
-{title}{tr}Stats for survey:{/tr}{$survey_info.name}{/title}
+{title}{tr}Stats for survey:{/tr} {$survey_info.name|escape}{/title}
 
 <div class="navbar">
 	{self_link print='y'}{icon _id='printer' align='right' hspace='1' alt='{tr}Print{/tr}'}{/self_link}
@@ -15,7 +15,7 @@
 {section name=ix loop=$channels}
   <table class="normal">
   <tr>
-    <th colspan="4">{$channels[ix].question}</th>
+    <th colspan="4">{$channels[ix].question|escape|nl2br}</th>
   </tr>
   {if $channels[ix].type eq 'r'}
     <tr>
@@ -48,7 +48,7 @@
             <br />{fileinfo _id=$channels[ix].qoptions[jx].qoption _field='description'}
           </div>
         {else}
-          {$channels[ix].qoptions[jx].qoption}
+          {$channels[ix].qoptions[jx].qoption|escape}
         {/if}
       </td>
       <td class="odd">{$channels[ix].qoptions[jx].votes}</td>
