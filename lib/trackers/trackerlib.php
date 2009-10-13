@@ -106,7 +106,7 @@ class TrackerLib extends TikiLib {
 	}
 
 	function get_item_nb_attachments($itemId) {
-		$query = "select sum(hits) as hits, count(*) as attachments from `tiki_tracker_item_attachments` where `itemId`=?";
+		$query = "select sum(`hits`) as hits, count(*) as attachments from `tiki_tracker_item_attachments` where `itemId`=?";
 		$result = $this->query($query, array($itemId));
 		if ($res = $result->fetchRow())
 			return $res;
@@ -1269,7 +1269,7 @@ class TrackerLib extends TikiLib {
 					if (isset($ins_fields["data"][$i]['options_array'][3]) && $ins_fields["data"][$i]['options_array'][3] == 'itemId') {
 						$value = $itemId?$itemId: $new_itemId;
 					} elseif ($itemId == false) {
-						$value = $this->getOne("select max(cast(value as UNSIGNED)) from `tiki_tracker_item_fields` where `fieldId`=?",array((int)$fieldId));
+						$value = $this->getOne("select max(cast(`value` as UNSIGNED)) from `tiki_tracker_item_fields` where `fieldId`=?",array((int)$fieldId));
 						if ($value == NULL) {
 							$value = isset($ins_fields["data"][$i]['options_array'][0]) ? $ins_fields["data"][$i]['options_array'][0] : 1;
 						} else {
@@ -2291,7 +2291,7 @@ class TrackerLib extends TikiLib {
 
 	function replace_rating($trackerId,$itemId,$fieldId,$user,$new_rate) {
 		$val = $this->getOne("select `value` from `tiki_tracker_item_fields` where `itemId`=? and `fieldId`=?", array((int)$itemId,(int)$fieldId));
-		if ($val === NULL) {
+		if ($val === NULL || $val === false) {
 			$query = "insert into `tiki_tracker_item_fields`(`value`,`itemId`,`fieldId`) values (?,?,?)";
 			$newval = $new_rate;
 			//echo "$newval";die;
