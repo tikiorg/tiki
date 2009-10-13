@@ -35,7 +35,7 @@
 		<tr class="{cycle}">
 			<td>{$channels[user].surveyId}</td>
 			<td>
-				<b>{$channels[user].name}</b>
+				<b>{$channels[user].name|escape}</b>
 				<div class="subcomment">
 					{wiki}{$channels[user].description|escape}{/wiki}
 				</div>
