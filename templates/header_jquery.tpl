@@ -68,7 +68,8 @@ $jq(document).ready(function(){
 <link rel="stylesheet" href="lib/jquery/jquery-autocomplete/jquery.autocomplete.css" type="text/css" /> 
 {/if}
 {if $prefs.feature_jquery_superfish eq 'y'}
-<script type="text/javascript" src="lib/jquery/superfish/js/superfish.js"></script> 
+<script type="text/javascript" src="lib/jquery/superfish/js/superfish.js"></script>
+<script type="text/javascript" src="lib/jquery/superfish/js/supersubs.js"></script> 
 {/if}
 {if $prefs.feature_jquery_reflection eq 'y'}
 <script type="text/javascript" src="lib/jquery/reflection-jquery/js/reflection.js"></script> 
