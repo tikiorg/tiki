@@ -816,8 +816,6 @@ foreach ($languages as $ksel => $sel) {
     }
   }
   writeFile_and_User ($fw, '"'.$endMarker.'"=>"'.$endMarker.'");'."\n");
-  if ( $verbose ) formatted_print("?>\n");  
-  fwrite ($fw, '?>'."\n");  
   fclose ($fw);
 
   if ($spelling) {
