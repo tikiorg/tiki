@@ -924,26 +924,47 @@ insertAt(areaname, s, false, false, true); $jq(this).dialog("close");
 			$wysiwyg = 'Table';
 			$label = tra('Table Builder');
 			$list = array('Table Builder',
-//						'<input type="text" id="tbTableR1C1" class="ui-widget-content ui-corner-all" size="10" value="row 1,col 1" />',
-//						'<input type="text" id="tbTableR1C2" class="ui-widget-content ui-corner-all" size="10" value="row 1,col 2" />',
-//						'<input type="text" id="tbTableR1C3" class="ui-widget-content ui-corner-all" size="10" value="row 1,col 3" />',
-//						'<input type="text" id="tbTableR2C1" class="ui-widget-content ui-corner-all" size="10" value="row 2,col 1" />',
-//						'<input type="text" id="tbTableR2C2" class="ui-widget-content ui-corner-all" size="10" value="row 2,col 2" />',
-//						'<input type="text" id="tbTableR2C3" class="ui-widget-content ui-corner-all" size="10" value="row 2,col 3" />',
-//						'<input type="text" id="tbTableR3C1" class="ui-widget-content ui-corner-all" size="10" value="row 3,col 1" />',
-//						'<input type="text" id="tbTableR3C2" class="ui-widget-content ui-corner-all" size="10" value="row 3,col 2" />',
-//						'<input type="text" id="tbTableR3C3" class="ui-widget-content ui-corner-all" size="10" value="row 3,col 3" />',
 						'{"open": function () {
 var s = getSelection($jq("textarea[name=\'" + areaname + "\']")[0]);
 var m = /\|\|([\s\S]*?)\|\|/mg.exec(s);
-var vals = [], rows=3, cols=3, c, r, i;
+var vals = [], rows=3, cols=3, c, r, i, j;
 if (m) {
 	m = m[1];
 	m = m.split("\n");
 	rows = 0;
 	cols = 1;
 	for(i = 0; i < m.length; i++) {
-		var a = m[i].split("|");
+		var a2 = m[i].split("|");
+		var a = [];
+		for (j = 0; j < a2.length; j++) {	// links can have | chars in
+			if (a2[j].indexOf("[") > -1 && a2[j].indexOf("[[") == -1 && a2[j].indexOf("]") == -1 ) {	// external link
+				a[a.length] = a2[j];
+				j++;
+				var k = true;
+				while ( j < a2.length && k ) {
+					a[a.length-1] += "|" + a2[j];
+					if (a2[j].indexOf("]") > -1) {	// closed
+						k = false;
+					} else {
+						j++;
+					}
+				}
+			} else if (a2[j].search(/\(\S*\(/) > -1 && a2[j].indexOf("))") == -1) {
+				a[a.length] = a2[j];
+				j++;
+				var k = true;
+				while ( j < a2.length && k ) {
+					a[a.length-1] += "|" + a2[j];
+					if (a2[j].indexOf("))") > -1) {	// closed
+						k = false;
+					} else {
+						j++;
+					}
+				}
+			} else {
+				a[a.length] = a2[j];
+			}
+		}
 		vals[vals.length] = a;
 		if (a.length > cols) { cols = a.length; }
 		if (a.length) { rows++; }
