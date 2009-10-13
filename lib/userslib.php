@@ -2521,7 +2521,7 @@ function get_included_groups($group, $recur=true) {
 		$cachelib->invalidate('grouplist');
 		$cachelib->invalidate('groupIdlist');
 
-		$query = "select `id` from `users_groups` where groupName=?";
+		$query = "select `id` from `users_groups` where `groupName`=?";
 		return $this->getOne($query, array($group));
 	}
 
