@@ -335,7 +335,7 @@
 			</small>
 			{icon _id='help' title=$smarty.capture.stat}
 		{/if}
-		{if $tiki_p_tracker_vote_ratings eq 'y' and  isset($item.my_rate)}
+		{if $tiki_p_tracker_vote_ratings eq 'y' and  isset($item.my_rate) and in_array($item.my_rate, $field_value.options_array)}
 			<a href="{$smarty.server.PHP_SELF}{if $query_string}?{$query_string}{else}?{/if}trackerId={$item.trackerId}&amp;itemId={$item.itemId}&amp;ins_{$field_value.fieldId}=NULL{if $page}&amp;page={$page|escape:url}{/if}" title="{tr}Clik to delete your vote{/tr}">x</a>
 		{/if}
 		<span>
