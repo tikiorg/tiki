@@ -3038,9 +3038,6 @@ class TrackerLib extends TikiLib {
 			}
 			return $itemId;
 		}
-		if (empty($trackerOptions['oneUserItem']) || $trackerOptions['oneUserItem'] != 'y') {
-			return 0;
-		}
 
 		$userreal=$userparam!=null?$userparam:$user;
 		if (!empty($userreal)) {
