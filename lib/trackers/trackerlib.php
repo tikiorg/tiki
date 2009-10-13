@@ -783,7 +783,8 @@ class TrackerLib extends TikiLib {
 			}
 		} else {
 			list($csort_mode, $corder) = split('_', $sort_mode);
-			if ($csort_mode == 'itemId')
+			$csort_mode = "`" . $csort_mode . "`";
+			if ($csort_mode == '`itemId`')
 				$csort_mode = 'tti.`itemId`';
 			$sort_tables = '';
 			$cat_tables = '';

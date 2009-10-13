@@ -2180,7 +2180,7 @@ class TikiLib extends TikiDb_Bridge {
 				'tf.`is_reference`' => "'' as `is_reference`",
 				'tf.`hash`' => "'' as `hash`",
 				'tf.`search_data`' => 'tfg.`name` as `search_data`',
-				'tf.`lastModif` as `lastmodif`' => 'tfg.`lastmodif` as `lastmodif`',
+				'tf.`lastModif` as `lastModif`' => 'tfg.`lastModif` as `lastModif`',
 				'tf.`lastModifUser` as `last_user`' => "'' as `last_user`",
 				'tf.`lockedby`' => "'' as `lockedby`",
 				'tf.`comment`' => "'' as `comment`",
