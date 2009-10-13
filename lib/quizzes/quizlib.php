@@ -178,7 +178,7 @@ class QuizLib extends TikiLib {
 	function list_quiz_stats($quizId, $offset, $maxRecords, $sort_mode, $find) {
 		$this->compute_quiz_stats();
 
-		$query = "select passingperct from `tiki_quizzes` where quizId = ?";
+		$query = "select passingperct from `tiki_quizzes` where `quizId` = ?";
 		$passingperct = $this->getOne($query,array((int)$quizId));
 
 		if ($find) {
