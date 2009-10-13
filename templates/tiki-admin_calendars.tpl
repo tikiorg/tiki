@@ -204,7 +204,7 @@
 <tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 <br />
-{if $calendarId}{$name} : {/if}
+{if $calendarId}{$name|escape} : {/if}
 {tr}Delete events older than:{/tr} <input type="text" name="days" value="0"/> {tr}days{/tr} <input type="submit" name="clean" value="{tr}Delete{/tr}" />
 </form>
 {/tab}

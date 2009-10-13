@@ -23,7 +23,7 @@
 {section name=user loop=$channels}
 {if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_view_survey_stats eq 'y') or ($channels[user].individual_tiki_p_view_survey_stats eq 'y')}
 <tr>
-<td class="{cycle advance=false}"><a class="tablename" href="tiki-survey_stats_survey.php?surveyId={$channels[user].surveyId}">{$channels[user].name}</a></td>
+<td class="{cycle advance=false}"><a class="tablename" href="tiki-survey_stats_survey.php?surveyId={$channels[user].surveyId}">{$channels[user].name|escape}</a></td>
 <td class="{cycle advance=false}">{$channels[user].taken}</td>
 <td class="{cycle advance=false}">{$channels[user].created|tiki_short_datetime}</td>
 <td class="{cycle advance=false}">{$channels[user].lastTaken|tiki_short_datetime}</td>

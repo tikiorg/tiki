@@ -18,7 +18,7 @@
 </div>
 {/if}
 {if $rssId > 0}
-<h2>{tr}Edit this RSS Module:{/tr} {$name}</h2>
+<h2>{tr}Edit this RSS Module:{/tr} {$name|escape}</h2>
 <a href="tiki-admin_rssmodules.php">{tr}Create new RSS Module{/tr}</a>
 {else}
 <h2>{tr}Create new RSS Module{/tr}</h2>
@@ -26,10 +26,10 @@
 <form action="tiki-admin_rssmodules.php" method="post">
 <input type="hidden" name="rssId" value="{$rssId|escape}" />
 <table class="normal">
-<tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" name="name" value="{$name|escape}" /></td></tr>
-<tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><textarea name="description" rows="4" cols="40" style="width:95%">{$description|escape}</textarea></td></tr>
-<tr><td class="formcolor">{tr}URL{/tr}:</td><td class="formcolor"><input size="47" type="text" name="url" value="{$url|escape}" /></td></tr>
-<tr><td class="formcolor">{tr}Refresh rate{/tr}:</td>
+<tr><td class="formcolor">{tr}Name:{/tr}</td><td class="formcolor"><input type="text" name="name" value="{$name|escape}" /></td></tr>
+<tr><td class="formcolor">{tr}Description:{/tr}</td><td class="formcolor"><textarea name="description" rows="4" cols="40" style="width:95%">{$description|escape}</textarea></td></tr>
+<tr><td class="formcolor">{tr}URL:{/tr}</td><td class="formcolor"><input size="47" type="text" name="url" value="{$url|escape}" /></td></tr>
+<tr><td class="formcolor">{tr}Refresh rate:{/tr}</td>
 <td class="formcolor">
 <select name="refresh">
 <option value="1" {if $refresh eq 60}selected="selected"{/if}>{60|duration}</option>
@@ -47,8 +47,8 @@
 <option value="1440" {if $refresh eq 86400}selected="selected"{/if}>{86400|duration}</option>
 </select>
 </td></tr>
-<tr><td class="formcolor">{tr}show feed title{/tr}:</td><td class="formcolor"><input type="checkbox" name="showTitle" {if $showTitle eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="formcolor">{tr}show publish date{/tr}:</td><td class="formcolor"><input type="checkbox" name="showPubDate" {if $showPubDate eq 'y'}checked="checked"{/if} /></td></tr>
+<tr><td class="formcolor">{tr}show feed title:{/tr}</td><td class="formcolor"><input type="checkbox" name="showTitle" {if $showTitle eq 'y'}checked="checked"{/if} /></td></tr>
+<tr><td class="formcolor">{tr}show publish date:{/tr}</td><td class="formcolor"><input type="checkbox" name="showPubDate" {if $showPubDate eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
@@ -70,7 +70,7 @@
 {section name=user loop=$channels}
 <tr>
 <td class="{cycle advance=false}">{$channels[user].rssId}</td>
-<td class="{cycle advance=false}"><strong>{$channels[user].name}</strong><br />{$channels[user].description}<br /><a class="link" href="{$channels[user].url}">URL: {$channels[user].url|truncate:50:"...":true}</a><br />
+<td class="{cycle advance=false}"><strong>{$channels[user].name|escape}</strong><br />{$channels[user].description|escape|nl2br}<br /><a class="link" href="{$channels[user].url}">URL: {$channels[user].url|truncate:50:"...":true}</a><br />
 Size: {$channels[user].size} kb<br />
 </td>
 <td class="{cycle advance=false}">{if $channels[user].lastUpdated eq '1000000'}{tr}Never{/tr}{else}{$channels[user].lastUpdated|tiki_short_datetime}{/if}<br />

@@ -1,4 +1,4 @@
-{title url="tiki-admin_survey_questions.php?surveyId=$surveyId"}{tr}Edit survey questions:{/tr} {$survey_info.name}{/title}
+{title url="tiki-admin_survey_questions.php?surveyId=$surveyId"}{tr}Edit survey questions:{/tr} {$survey_info.name|escape}{/title}
 
 <div class="navbar">
 	{button href="tiki-admin_survey_questions.php?surveyId=$surveyId" _text="{tr}Add a New Question{/tr}"}
@@ -63,7 +63,7 @@
 <tr>
 <td class="{cycle advance=false}">{$channels[user].questionId}</td>
 <td class="{cycle advance=false}">{$channels[user].position}</td>
-<td class="{cycle advance=false}">{$channels[user].question}</td>
+<td class="{cycle advance=false}">{$channels[user].question|escape|nl2br}</td>
 <td class="{cycle advance=false}">{$channels[user].type}</td>
 <td class="{cycle advance=false}">{$channels[user].options}</td>
 <td class="{cycle advance=false}">

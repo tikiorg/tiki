@@ -1,5 +1,5 @@
 {* $Id$ *}
-{title help="Menus" url="tiki-admin_menu_options.php?menuId=$menuId"}{tr}Admin Menu:{/tr} {$editable_menu_info.name}{/title}
+{title help="Menus" url="tiki-admin_menu_options.php?menuId=$menuId"}{tr}Admin Menu:{/tr} {$editable_menu_info.name|escape}{/title}
 
 <div class="navbar">
 	{button href="tiki-admin_menus.php" _text="{tr}List menus{/tr}"}
@@ -35,38 +35,38 @@
 							{if !empty($nbRecords)}<input type="hidden" name="nbRecords" value="{$nbRecords|escape}" />{/if}
 							<table>
 								<tr class="formcolor">
-									<td>{tr}Name{/tr}:</td>
+									<td>{tr}Name:{/tr}</td>
 									<td colspan="3">
 										<input id="menu_name" type="text" name="name" value="{$name|escape}" size="34" />
 									</td>
 								</tr>
 								<tr class="formcolor">
-									<td>{tr}URL{/tr}:</td>
+									<td>{tr}URL:{/tr}</td>
 									<td colspan="3">
 										<input id="menu_url" type="text" name="url" value="{$url|escape}" size="34" />
 										<br /><em>{tr}For wiki page, use ((PageName)).{/tr}</em>
 									</td>
 								</tr>
 								<tr class="formcolor">
-									<td>{tr}Sections{/tr}:</td>
+									<td>{tr}Sections:{/tr}</td>
 									<td colspan="3">
 										<input id="menu_section" type="text" name="section" value="{$section|escape}" size="34" /><br />
 										<em>{tr}Separate multiple sections with a comma ( , ) for an AND or a vertical bar ( | ) for an OR.{/tr}</em>
 									</td>
 								</tr>
 								<tr class="formcolor">
-									<td>{tr}Permissions{/tr}:</td>
+									<td>{tr}Permissions:{/tr}</td>
 									<td colspan="3">
 										<input id="menu_perm" type="text" name="perm" value="{$perm|escape}" size="34" /><br />
 										<em>{tr}Separate multiple permissions with a comma ( , ) for an AND or a vertical bar ( | ) for an OR.{/tr}</em>
 									</td>
 								</tr>
 								<tr class="formcolor">
-									<td>{tr}Group{/tr}:</td>
+									<td>{tr}Group:{/tr}</td>
 									<td colspan="3">
 										<select id="menu_groupname" name="groupname[]" size="4" multiple>
 											<option value="">&nbsp;</option>
-											{foreach key=k item=i from=$option_groups}<option value="{$k}" {$i}>{$k}</option>{/foreach}
+											{foreach key=k item=i from=$option_groups}<option value="{$k|escape}" {$i}>{$k|escape}</option>{/foreach}
 										</select>
 										{if $option_groups|@count ge '2'}
 										{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple groups.{/tr}<br />{tr}Selecting 2 groups means that the option will be seen if the user belongs to the 2 groups. If you want the 2 groups to see the option, create 2 options with one group each.{/tr}<br />{tr}If the url is ((PageName)), you do not need to put the groups, the option will be displayed only if the page can be displayed.{/tr}{/remarksbox}
@@ -75,7 +75,7 @@
 								</tr>
 {if $prefs.feature_userlevels eq 'y'}
 								<tr class="formcolor">
-									<td>{tr}Level{/tr}:</td>
+									<td>{tr}Level:{/tr}</td>
 									<td colspan="3">
 										<select name="level">
 											<option value="0"{if $level eq 0} selected="selected"{/if}>{tr}All{/tr}</option>
@@ -85,7 +85,7 @@
 								</tr>
 {/if}
 								<tr class="formcolor">
-									<td>{tr}Type{/tr}:</td>
+									<td>{tr}Type:{/tr}</td>
 									<td>
 										<select name="type">
 											<option value="o" {if $type eq 'o'}selected="selected"{/if}>{tr}option{/tr}</option>
@@ -97,7 +97,7 @@
 											<option value="-" {if $type eq '-'}selected="selected"{/if}>{tr}separator{/tr}</option>
 										</select>
 									</td>
-									<td>{tr}Position{/tr}:</td>
+									<td>{tr}Position:{/tr}</td>
 									<td>
 										<input type="text" name="position" value="{$position|escape}" size="6" />
 									</td>
@@ -117,7 +117,7 @@
 					<td valign="top" class="even" id="weburls" style="display:none;">
 						<table>
 							<tr>
-								<td>{tr}Home{/tr}: </td>
+								<td>{tr}Home:{/tr} </td>
 								<td>
 									<select name="wikilinks" onchange="setMenuCon(options[selectedIndex].value);return true;">
 										<option value=",,,">{tr}Choose{/tr} ...</option>
@@ -129,7 +129,7 @@
 								</td>
 							</tr>
 							<tr>
-								<td>{tr}General{/tr}: </td>
+								<td>{tr}General:{/tr} </td>
 								<td>
 									<select name="wikilinks" onchange="setMenuCon(options[selectedIndex].value);return true;">
 										<option value=",,,">{tr}Choose{/tr} ...</option>
@@ -141,7 +141,7 @@
 							</tr>
 							{if $prefs.feature_wiki eq 'y'}
 								<tr>
-									<td>{tr}Wiki{/tr}: </td>
+									<td>{tr}Wiki:{/tr} </td>
 									<td>
 										<select name="wikilinks" onchange="setMenuCon(options[selectedIndex].value);return true;">
 											<option value=",,,">{tr}Choose{/tr} ...</option>
@@ -157,7 +157,7 @@
 							
 							{if $prefs.feature_galleries eq 'y'}
 								<tr>
-									<td>{tr}Images{/tr}: </td>
+									<td>{tr}Images:{/tr} </td>
 									<td>
 										<select name="wikilinks" onchange="setMenuCon(options[selectedIndex].value);return true;">
 											<option value=",,,">{tr}Choose{/tr} ...</option>
@@ -172,7 +172,7 @@
 							
 							{if $prefs.feature_articles eq 'y'}
 								<tr>
-									<td>{tr}Articles{/tr}: </td>
+									<td>{tr}Articles:{/tr} </td>
 									<td>
 										<select name="wikilinks" onchange="setMenuCon(options[selectedIndex].value);return true;">
 											<option value=",,,">{tr}Choose{/tr} ...</option>
@@ -188,7 +188,7 @@
 							
 							{if $prefs.feature_blogs eq 'y'}
 								<tr>
-									<td>{tr}Blogs{/tr}: </td>
+									<td>{tr}Blogs:{/tr} </td>
 									<td>
 										<select name="wikilinks" onchange="setMenuCon(options[selectedIndex].value);return true;">
 											<option value=",,,">{tr}Choose{/tr} ...</option>
@@ -203,7 +203,7 @@
 								
 							{if $prefs.feature_file_galleries eq 'y'}
 								<tr>
-									<td>{tr}Files{/tr}: </td>
+									<td>{tr}Files:{/tr} </td>
 									<td>
 										<select name="wikilinks" onchange="setMenuCon(options[selectedIndex].value);return true;">
 											<option value=",,,">{tr}Choose{/tr} ...</option>
@@ -217,7 +217,7 @@
 
 							{if $prefs.feature_forums eq 'y'}
 								<tr>
-									<td>{tr}Forums{/tr}: </td>
+									<td>{tr}Forums:{/tr} </td>
 									<td>
 										<select name="wikilinks" onchange="setMenuCon(options[selectedIndex].value);return true;">
 											<option value=",,,">{tr}Choose{/tr} ...</option>
@@ -231,7 +231,7 @@
 								
 							{if $prefs.feature_faqs eq 'y'}
 								<tr>
-									<td>{tr}FAQs{/tr}: </td>
+									<td>{tr}FAQs:{/tr} </td>
 									<td>
 										<select name="wikilinks" onchange="setMenuCon(options[selectedIndex].value);return true;">
 											<option value=",,,">{tr}Choose{/tr} ...</option>
@@ -244,7 +244,7 @@
 
 							{if $prefs.feature_quizzes eq 'y'}
 								<tr>
-									<td>{tr}Quizzes{/tr}: </td>
+									<td>{tr}Quizzes:{/tr} </td>
 									<td>
 										<select name="wikilinks" onchange="setMenuCon(options[selectedIndex].value);return true;">
 											<option value=",,,">{tr}Choose{/tr} ...</option>
@@ -264,7 +264,7 @@
 		<td valign="top">
 			<h2>{tr}Preview menu{/tr}</h2>
 			<div class="box">
-				<div class="box-title">{$editable_menu_info.name}</div>
+				<div class="box-title">{$editable_menu_info.name|escape}</div>
 				<div class="box-data">
 					{include file='tiki-user_menu.tpl' menu_channels=$allchannels}
 				</div>
@@ -310,14 +310,14 @@
 				<td class="{cycle advance=false}">{$channels[user].optionId}</td>
 				<td class="{cycle advance=false}">{$channels[user].position}</td>
 				<td class="{cycle advance=false}">
-					<a href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;optionId={$channels[user].optionId}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}" title="{tr}Edit{/tr}">{$channels[user].name}</a>
+					<a href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;optionId={$channels[user].optionId}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}" title="{tr}Edit{/tr}">{$channels[user].name|escape}</a>
 					<div style="margin-left:10px;">
 						{if $channels[user].url}
-							{tr}URL{/tr}: <a href="{$channels[user].url|escape}" class="link" target="_new" title="{$channels[user].canonic}">{$channels[user].canonic|truncate:40:' ...'}</a>
+							{tr}URL:{/tr} <a href="{$channels[user].url|escape}" class="link" target="_new" title="{$channels[user].canonic}">{$channels[user].canonic|truncate:40:' ...'}</a>
 						{/if}
-						{if $channels[user].section}<br />{tr}Sections{/tr}: {$channels[user].section}{/if}
-						{if $channels[user].perm}<br />{tr}Permissions{/tr}: {$channels[user].perm}{/if}
-						{if $channels[user].groupname}<br />{tr}Groups{/tr}: {$channels[user].groupname}{/if}
+						{if $channels[user].section}<br />{tr}Sections:{/tr} {$channels[user].section}{/if}
+						{if $channels[user].perm}<br />{tr}Permissions:{/tr} {$channels[user].perm}{/if}
+						{if $channels[user].groupname}<br />{tr}Groups:{/tr} {$channels[user].groupname|escape}{/if}
 					</div>
 				</td>
 				<td class="{cycle advance=false}">{$channels[user].type_description}</td>
@@ -370,6 +370,6 @@
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}To add new options to the menu set the optionId field to 0. To remove an option set the remove field to 'y'.{/tr}{/remarksbox}
 <form action="tiki-admin_menu_options.php" method="post" enctype="multipart/form-data">
 	<input type="hidden" name="menuId" value="{$menuId}" />
-	{tr}File{/tr}: <input name="csvfile" type="file" />
+	{tr}File:{/tr} <input name="csvfile" type="file" />
 	<input type="submit" name="import" value="{tr}Import{/tr}" />
 </form>

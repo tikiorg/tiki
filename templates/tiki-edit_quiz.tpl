@@ -43,7 +43,7 @@
 			<td>
 				{$channels[user].name|escape}
 				<div class="subcomment">
-					{$channels[user].description}
+					{$channels[user].description|escape|nl2br}
 				</div>
 			</td>
 			<td style="text-align: center;">{$channels[user].canRepeat}</td>

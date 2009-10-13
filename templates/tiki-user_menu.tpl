@@ -75,7 +75,7 @@
 
 {* ----------------------------- option *}
 {elseif $chdata.type eq 'o'}
-<div class="option{$sep}{if isset($chdata.selected) and $chdata.selected} selected{/if}"><a href="{if $prefs.feature_sefurl eq 'y' and !empty($chdata.sefurl)}{$chdata.sefurl}{else}{$chdata.url}{/if}" class="linkmenu">{if $prefs.menus_items_icons eq 'y' and $menu_info.use_items_icons eq 'y' and ($opensec eq 0 or $chdata.icon neq '')}{icon _id=$chdata.icon alt='' _defaultdir='pics/large'} {/if}<span class="menuText">{if $translate eq 'n'}{$chdata.name|escape}{else}{tr}{$chdata.name}{/tr}{/if}</span></a></div>
+<div class="option{$sep}{if isset($chdata.selected) and $chdata.selected} selected{/if}"><a href="{if $prefs.feature_sefurl eq 'y' and !empty($chdata.sefurl)}{$chdata.sefurl}{else}{$chdata.url}{/if}" class="linkmenu">{if $prefs.menus_items_icons eq 'y' and $menu_info.use_items_icons eq 'y' and ($opensec eq 0 or $chdata.icon neq '')}{icon _id=$chdata.icon alt='' _defaultdir='pics/large'} {/if}<span class="menuText">{if $translate eq 'n'}{$chdata.name|escape}{else}{capture}{tr}{$chdata.name}{/tr}{/capture}{$smarty.capture.default|escape}{/if}</span></a></div>
 {if $sep eq 'line'}{assign var=sep value=''}{/if}
 
 {* ----------------------------- separator *}
