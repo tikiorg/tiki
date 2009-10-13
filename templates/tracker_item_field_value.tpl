@@ -293,7 +293,9 @@
 				{tr}Number of votes{/tr}: 0
 			{else}
 				{tr}Number of votes{/tr}: {$field_value.numvotes|default:"0"}, {tr}Average{/tr}: {$field_value.voteavg|default:"0"},
-				{if $item.my_rate}{tr}Your rating{/tr}: {$item.my_rate}{else}{tr}You did not vote yet{/tr}{/if}
+				{if $tiki_p_tracker_vote_ratings eq 'y'}
+					{if $item.my_rate}{tr}Your rating{/tr}: {$item.my_rate}{else}{tr}You did not vote yet{/tr}{/if}
+				{/if}
 			{/if}
 		{/capture}
 		{capture name=myvote}
@@ -311,14 +313,18 @@
 					{/if}
 				</b>
 			{else}
-				{capture name=thisvote}{tr}Click to vote for this value:{/tr} {$field_value.options_array[i]}{/capture}
-				<a href="{$smarty.server.PHP_SELF}?trackerId={$item.trackerId}&amp;itemId={$item.itemId}&amp;ins_{$field_value.fieldId}={$field_value.options_array[i]}{if $page}&amp;page={$page|escape:url}{/if}">
-					{if $field_value.voteavg >= $field_value.options_array[i]}
-						{icon _id='star' alt=$field_value.options_array[i] title=$smarty.capture.thisvote}
-					{else}
-						{icon _id='star_grey' alt=$field_value.options_array[i] title=$smarty.capture.thisvote}
-					{/if}
-				</a>
+				{if $tiki_p_tracker_vote_ratings eq 'y'}
+					{capture name=thisvote}{tr}Click to vote for this value:{/tr} {$field_value.options_array[i]}{/capture}
+					<a href="{$smarty.server.PHP_SELF}?trackerId={$item.trackerId}&amp;itemId={$item.itemId}&amp;ins_{$field_value.fieldId}={$field_value.options_array[i]}{if $page}&amp;page={$page|escape:url}{/if}">
+				{/if}
+				{if $field_value.voteavg >= $field_value.options_array[i]}
+					{icon _id='star' alt=$field_value.options_array[i] title=$smarty.capture.thisvote}
+				{else}
+					{icon _id='star_grey' alt=$field_value.options_array[i] title=$smarty.capture.thisvote}
+				{/if}
+				{if $tiki_p_tracker_vote_ratings eq 'y'}
+					</a>
+				{/if}	
 			{/if}
 			{assign var='previousvote' value=$field_value.options_array[i]}
 		{/section}
