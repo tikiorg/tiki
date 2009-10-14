@@ -192,7 +192,7 @@
 			<div style="margin-left:1em">
 			<select name="db" id="db">
 {foreach key=dsn item=dbname from=$dbservers}
-				<option value="{$dsn}">{$dbname}</option>
+				<option value="{$dsn}"{if isset($smarty.request.db) and $smarty.request.db eq $dsn} selected="selected"{/if}>{$dbname}</option>
 {/foreach}
 			</select> <a href="javascript:void(0)" onclick="flip('db_help');" title="{tr}Help{/tr}"><img src="pics/icons/help.png" alt="{tr}Help{/tr}" /></a>
 			<div style="display:none" id="db_help">
@@ -207,7 +207,7 @@
 			<input type="text" name="host" id="host" value="{if isset($smarty.request.host)}{$smarty.request.host|escape:"html"}{else}localhost{/if}" size="40" /> <a href="javascript:void(0)" onclick="flip('host_help');" title="{tr}Help{/tr}"><img src="pics/icons/help.png" alt="{tr}Help{/tr}" /></a>
 			<br /><em>{tr}Enter the host name or IP for your database.{/tr}</em>
 			<div style="display:none;" id="host_help">
-				<p>{tr}Use <strong>localhost</strong> if the database is running on the same machine as Tiki.{/tr} {tr}For SQLite, enter the path and filename to your database file.{/tr}</p>
+				<p>{tr}Use <strong>localhost</strong> if the database is running on the same machine as Tiki.{/tr}</p>
 			</div>
 			</div>
 		</div>
