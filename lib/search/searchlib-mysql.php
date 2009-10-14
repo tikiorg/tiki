@@ -288,7 +288,7 @@ class SearchLib extends TikiLib {
 		);
 	}
 
-	function find_wikis($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate) {
+	function find_wikis($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate = 0) {
 		global $tikilib, $prefs;
 		$rv = array();
 		$search_wikis_comments = array(
