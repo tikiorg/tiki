@@ -430,7 +430,7 @@
 <div class="adminoptionbox">
 	<div class="adminoptionlabel"><label for="feature_site_report_email">{tr}Webmaster Email{/tr}:</label> <input type="text" name="feature_site_report_email" id="feature_site_report_email" value="{$prefs.feature_site_report_email}" />
 	<br /><em>{tr}Leave <strong>blank</strong> to use the default sender email{/tr}</em>.
-	{if empty($prefs.sender_email)} <span class="highlight">{tr}You need to set <a href="tiki-admin.php?page=general&amp;cookietab=1">Sender Email</a>{/tr}</span>{/if}
+	{if empty($prefs.sender_email)} <span class="highlight">{tr}You need to set <a href="tiki-admin.php?page=general">Sender Email</a>{/tr}</span>{/if}
 	</div>
 </div>
 <div class="adminoptionbox">
