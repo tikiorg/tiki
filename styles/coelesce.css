@@ -845,6 +845,7 @@ table.normal,
 table.admin {
 	border: 0;
 	background: #fff;
+	color: #2d2d2d;
 }
 
 .odd {
