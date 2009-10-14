@@ -822,6 +822,7 @@ class ToolbarDialog extends Toolbar
 	
 	public static function fromName( $tagName ) // {{{
 	{
+		global $prefs;
 		$tool_prefs = array();
 
 		switch( $tagName ) {
@@ -836,14 +837,14 @@ class ToolbarDialog extends Toolbar
 						'<input type="text" id="tbWLinkPage" class="ui-widget-content ui-corner-all" style="width: 100%" />',
 						'<label for="tbWLinkRel">Anchor:</label>',
 						'<input type="text" id="tbWLinkAnchor" class="ui-widget-content ui-corner-all" style="width: 100%" />',
-						'<label for="tbWLinkRel">Semantic relation:</label>',
-						'<input type="text" id="tbWLinkRel" class="ui-widget-content ui-corner-all" style="width: 100%" />',
+						$prefs['feature_semantic'] == 'y' ? '<label for="tbWLinkRel">Semantic relation:</label>' : '',
+						$prefs['feature_semantic'] == 'y' ? '<input type="text" id="tbWLinkRel" class="ui-widget-content ui-corner-all" style="width: 100%" />' : '',
 						'{"open": function () {
 $jq("#tbWLinkPage").tiki("autocomplete", "pagename");
 var s = getSelection($jq("textarea[name=\'" + areaname + "\']")[0]);
 var m = /\((.*)\(([^\|]*)\|?([^\|]*)\|?([^\|]*)\|?\)\)/g.exec(s);
 if (m && m.length > 4) {
-	$jq("#tbWLinkRel").val(m[1]);
+	if ($jq("#tbWLinkRel")) { $jq("#tbWLinkRel").val(m[1]); }
 	$jq("#tbWLinkPage").val(m[2]);
 	if (m[4]) {
 		$jq("#tbWLinkAnchor").val(m[3]);
@@ -858,7 +859,7 @@ if (m && m.length > 4) {
 						"buttons": { "Cancel": function() { $jq(this).dialog("close"); },'.
 						'"Insert": function() {
 var s = "(";
-if ($jq("#tbWLinkRel").val()) { s += $jq("#tbWLinkRel").val(); }
+if ($jq("#tbWLinkRel") && $jq("#tbWLinkRel").val()) { s += $jq("#tbWLinkRel").val(); }
 s += "(" + $jq("#tbWLinkPage").val();
 if ($jq("#tbWLinkAnchor").val()) { s += "|" + $jq("#tbWLinkAnchor").val(); }
 if ($jq("#tbWLinkDesc").val()) { s += "|" + $jq("#tbWLinkDesc").val(); }
@@ -872,7 +873,6 @@ insertAt(areaname, s, false, false, true); $jq(this).dialog("close");
 			$wysiwyg = 'Link';
 			$label = tra('External Link');
 			$icon = tra('pics/icons/world_link.png');
-			global $prefs;
 			$list = array('External Link',
 						'<label for="tbLinkDesc">Link description:</label>',
 						'<input type="text" id="tbLinkDesc" class="ui-widget-content ui-corner-all" style="width: 100%" />',
