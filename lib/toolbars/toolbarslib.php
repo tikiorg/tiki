@@ -1368,7 +1368,7 @@ class ToolbarSwitchEditor extends Toolbar
 
 	function isAccessible() // {{{
 	{
-		return parent::isAccessible() && ! isset($_REQUEST['zoom']);
+		return parent::isAccessible() && ! isset($_REQUEST['zoom']) && ! isset($_REQUEST['hdr']);	// no switch editor if zoom of section edit
 	} // }}}
 	
 /*	function getLabel() // {{{
