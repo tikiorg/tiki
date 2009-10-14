@@ -488,7 +488,7 @@ function get_default_prefs() {
 		'fgal_list_description' => 'o',
 		'fgal_list_size' => 'y',
 		'fgal_list_created' => 'o',
-		'fgal_list_lastmodif' => 'y',
+		'fgal_list_lastModif' => 'y',
 		'fgal_list_creator' => 'o',
 		'fgal_list_author' => 'o',
 		'fgal_list_last_user' => 'o',
