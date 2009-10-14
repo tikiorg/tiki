@@ -34,6 +34,7 @@
 					<option value="wiki">{tr}Wiki only{/tr}</option>
 					<option value="wysiwyg">{tr}WYSIWYG only{/tr}</option>
 				</select>
+				{if $prefs.feature_wysiwyg neq 'y'}{jq}$jq("#view_mode").val("wiki").change().attr("disabled","disabled");{/jq}{/if}
 			</div>
 			<div class="adminoptionbox">
 				<input name="load" type="submit" value="{tr}Load{/tr}"/>
