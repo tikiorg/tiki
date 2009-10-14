@@ -8,5 +8,3 @@ function prefs_menus_list() {
 		),
 	);
 }
-
-?>

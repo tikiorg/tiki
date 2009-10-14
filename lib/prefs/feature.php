@@ -765,5 +765,31 @@ function prefs_feature_list() {
 			'help' => 'Regex+search+and+replace',
 			'type' => 'flag',
 		),
+		'feature_submissions' => array(
+			'name' => tra('Submissions'),
+			'help' => 'Articles',
+			'type' => 'flag',
+		),
+		'feature_cms_rankings' => array(
+			'name' => tra('Rankings'),
+			'type' => 'flag',
+		),
+		'feature_article_comments' => array(
+			'name' => tra('Comments'),
+			'type' => 'flag',
+		),
+		'feature_cms_templates' => array(
+			'name' => tra('Content templates'),
+			'type' => 'flag',
+			'help' => 'Content+Template',
+		),
+		'feature_cms_print' => array(
+			'name' => tra('Print'),
+			'type' => 'flag',
+		),
+		'feature_cms_emails' => array(
+			'name' => tra('Specify notification emails when creating articles'),
+			'type' => 'flag',
+		),
 	);
 }
