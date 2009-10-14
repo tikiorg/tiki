@@ -1,4 +1,4 @@
-{debug}{if empty($sort_arg)}{assign var='sort_arg' value='sort_mode'}{/if}
+{if empty($sort_arg)}{assign var='sort_arg' value='sort_mode'}{/if}
 <table class="normal">
   <tr>
   {if $gal_info.show_checked ne 'n' and ($tiki_p_admin_file_galleries eq 'y' or $tiki_p_upload_files eq 'y')}
@@ -216,7 +216,7 @@
         {if $propname eq 'name' and $propval eq '' and $gal_info.show_name eq 'n'}
           {* show the filename if only name should be displayed but is empty *}
           {assign var=propval value=$files[changes].filename}
-          {assign var=propval value="<a class='fgalname namealias' $link>$propval</a>"}
+          {capture assign=propval}<a class='fgalname namealias' {$link}>{$propval}|escape</a>"{/capture}
         {else}
           {assign var=propval value="<a class='fgalname' $link>$propval</a>"}
         {/if}
