@@ -484,7 +484,6 @@ $dbservers = array();
 if (function_exists('mysqli_connect'))	$dbservers['mysqli'] = tra('MySQL Improved (mysqli). Requires MySQL 4.1+');
 if (function_exists('mysql_connect'))	$dbservers['mysql'] = tra('MySQL classic (mysql)');
 if (function_exists('pg_connect'))		$dbservers['pgsql'] = tra('PostgreSQL');
-if (function_exists('sqlite_open'))		$dbservers['sqlite'] = tra('SQLite');
 $smarty->assign_by_ref('dbservers', $dbservers);
 
 $errors = '';

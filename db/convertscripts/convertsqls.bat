@@ -39,23 +39,19 @@ if %TIKISERVER% == "" (
 	echo Local run of php ...
 	php -f mysql_to_pgsql.php > pgsql.sql.tmp
 	echo pgsql scripts converted
-	php -f mysql_to_sqlite.php > sqlite.sql.tmp
-	echo sqlite scripts converted
 ) else (
 	rem convert remotely and download
 	echo Running remote scripts and downloading script files ...
 	wget -O pgsql.sql.tmp "http://%TIKISERVER%/db/convertscripts/mysql_to_pgsql.php?version=%VERSION%" 
-	wget -O sqlite.sql.tmp "http://%TIKISERVER%/db/convertscripts/mysql_to_sqlite.php?version=%VERSION%"
 )
 
 rem remove temporary output files (we don't need the output from conversion scripts)
 rm -f *.sql.tmp
 rem remove old converted scripts
-rm -f ../tiki-%VERSION%-pgsql.sql ../tiki-%VERSION%-sqlite.sql
+rm -f ../tiki-%VERSION%-pgsql.sql
 
 rem move the newly converted/created scripts
 mv %VERSION%.to_pgsql.sql ../tiki-%VERSION%-pgsql.sql
-mv %VERSION%.to_sqlite.sql ../tiki-%VERSION%-sqlite.sql
 
 echo moved the converted scripts
 
