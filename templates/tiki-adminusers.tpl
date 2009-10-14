@@ -384,7 +384,7 @@
 					<td><label for="pass2">{tr}Repeat Password:{/tr}</label></td>
 					<td><input type="password" name="pass2" id="pass2" /></td>
 				</tr>
-				{if $userinfo.login neq 'admin'}
+				{if $userinfo.login neq 'admin' and empty($userinfo.userId)}
 					<tr class="formcolor">
 						<td>&nbsp;</td>
 						<td>
