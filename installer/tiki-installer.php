@@ -546,7 +546,6 @@ if (!file_exists($local)) {
 		// if no db is specified, use the first db that this php installation can handle
 		$db_tiki = reset($dbservers);
 		write_local_php($db_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tiki);
-// 		var_dump($cookie_name);$_SESSION[$cookie_name] = 'admin';
 	}
 
 	$ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
@@ -623,7 +622,6 @@ if (
 			$dbcon = true;
 			$smarty->assign('dbcon', 'y');
 			write_local_php($_REQUEST['db'], $_REQUEST['host'], $_REQUEST['user'], $_REQUEST['pass'], $_REQUEST['name']);
-// 			var_dump($cookie_name);$_SESSION[$cookie_name] = 'admin';
 			include $local;
 			$installer = new Installer;
 			$installer->setServerType($db_tiki);
@@ -702,8 +700,6 @@ if (
 			}
 			$installer->install( $profile );
 		}
-		
-// 		var_dump($cookie_name);$_SESSION[$cookie_name] = 'admin';
 	}
 
 	if (isset($_REQUEST['update'])) {
