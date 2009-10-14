@@ -439,10 +439,6 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 	{else}
 		{assign var=tips_title value="{tr}Posting comments{/tr}"}
 	{/if}
-	{remarksbox type="tip" title=$tips_title}
-		{tr}Use{/tr} [http://www.foo.com] {tr}or{/tr} [http://www.foo.com|{tr}Description{/tr}] {tr}for links{/tr}.<br />
-		{tr}HTML tags are not allowed inside posts{/tr}.<br />
-	{/remarksbox}
 
 	{if $forum_mode eq 'y'}
     </div>
