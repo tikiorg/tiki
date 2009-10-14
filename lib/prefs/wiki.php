@@ -94,5 +94,12 @@ function prefs_wiki_list() {
 				'feature_wiki',
 			),
 		),
+		'wiki_edit_plugin' => array(
+			'name' => tra('Enable edit plugin icons'),
+			'description' => tra('Permits editing of a plugin, via a popup form, without needing to edit the whole page.'),
+			'type' => 'flag',
+			'hint' => 'Requires javascript',
+		),
 	);
 }
+

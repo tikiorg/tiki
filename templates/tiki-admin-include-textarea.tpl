@@ -119,10 +119,9 @@
 
 		<fieldset class="admin">
 		<legend>{tr}Edit plugin icons{/tr}</legend>
-		<div class="adminoptionbox">
-			<div class="adminoption"><input type="checkbox" id="wiki_edit_plugin" name="wiki_edit_plugin" {if $prefs.wiki_edit_plugin eq 'y'}checked="checked"{/if}/></div> 
-				<div class="adminoptionlabel"><label for="wiki_edit_plugin">{tr}Enable edit plugin icons{/tr} {tr}(experimental - not comprehensively tested and requires javascript){/tr}</label></div>
-		</div>
+
+			{preference name=wiki_edit_plugin}
+
 		</fieldset>
 		<fieldset class="admin">
                 <legend>{tr}Plugins{/tr}</legend>
