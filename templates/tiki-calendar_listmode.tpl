@@ -1,4 +1,3 @@
-{* $header$ *}
 <table cellpadding="0" cellspacing="0" border="0" class="normal" width="100%">
 <tr>
 <th style="width:20%"><a href="{$myurl}?sort_mode={if $sort_mode eq 'start_desc'}start_asc{else}start_desc{/if}">{tr}Start{/tr}</a></th>

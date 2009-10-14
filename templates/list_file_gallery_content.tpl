@@ -216,7 +216,7 @@
         {if $propname eq 'name' and $propval eq '' and $gal_info.show_name eq 'n'}
           {* show the filename if only name should be displayed but is empty *}
           {assign var=propval value=$files[changes].filename}
-          {capture assign=propval}<a class='fgalname namealias' {$link}>{$propval}|escape</a>"{/capture}
+          {assign var=propval value="<a class='fgalname namealias' $link>$propval</a>"}
         {else}
           {assign var=propval value="<a class='fgalname' $link>$propval</a>"}
         {/if}
@@ -247,7 +247,7 @@
   
       {if $propname eq 'name' and ( $gal_info.show_name eq 'a' or $gal_info.show_name eq 'f' ) }
         <td class="{cycle advance=false}">
-          {if $link neq ''}<a class='fgalname' {$link}>{/if}{$files[changes].filename}{if $link neq ''}</a>{/if}
+          {if $link neq ''}<a class='fgalname' {$link}>{/if}{$files[changes].filename|escape}{if $link neq ''}</a>{/if}
         </td>
       {/if}
       {if $other_columns_selected neq '' and $propname eq $other_columns_selected}

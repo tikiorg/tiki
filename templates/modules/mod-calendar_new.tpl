@@ -4,7 +4,7 @@
 {if $viewlist eq 'list'}
 	{include file='tiki-calendar_listmode.tpl'}
 {else}
-	<div style="text-align:center; font-size:110%" class="cal_title">
+<div style="text-align:center; font-size:110%" class="cal_title">
 <div style="width:100%; white-space: nowrap">{strip}
 {if $viewmode eq "day"}
 {self_link _class="next" todate=$daybefore _title="{tr}Day{/tr}" _alt="{tr}Day{/tr}" _icon=resultset_previous"}{/self_link}
