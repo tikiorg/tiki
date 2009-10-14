@@ -1052,6 +1052,8 @@ CREATE TABLE "tiki_group_inclusion" (
   PRIMARY KEY ("groupName","includeGroup")
 );
 
+INSERT INTO  "tiki_group_inclusion" ("groupName" ,"includeGroup") VALUES ('Registered','Anonymous');
+
 
 DROP TABLE IF EXISTS "tiki_group_watches";
 
