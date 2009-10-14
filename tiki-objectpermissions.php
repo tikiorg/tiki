@@ -244,8 +244,9 @@ $permGroups = array();
 $groupNames = array();
 $groupIndices = array();
 $groupInheritance = array();
+echo 'eee';print_r($group_filter);
 foreach($groups['data'] as &$row) {
-	if (in_array($row['id'], $group_filter)) {
+	if ($group_filter !== false && in_array($row['id'], $group_filter)) {
 		$groupNames[] = $row['groupName'];
 		$permGroups[] = 'perm['.$row['groupName'].']';
 		$groupInheritance[] = $userlib->get_included_groups($row['groupName']);
