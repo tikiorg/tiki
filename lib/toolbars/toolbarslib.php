@@ -835,8 +835,8 @@ class ToolbarDialog extends Toolbar
 						'<input type="text" id="tbWLinkDesc" class="ui-widget-content ui-corner-all" style="width: 100%" />',
 						'<label for="tbWLinkURL">Page name:</label>',
 						'<input type="text" id="tbWLinkPage" class="ui-widget-content ui-corner-all" style="width: 100%" />',
-						'<label for="tbWLinkRel">Anchor:</label>',
-						'<input type="text" id="tbWLinkAnchor" class="ui-widget-content ui-corner-all" style="width: 100%" />',
+						$prefs['wikiplugin_alink'] == 'y' ? '<label for="tbWLinkRel">Anchor:</label>' : '',
+						$prefs['wikiplugin_alink'] == 'y' ? '<input type="text" id="tbWLinkAnchor" class="ui-widget-content ui-corner-all" style="width: 100%" />' : '',
 						$prefs['feature_semantic'] == 'y' ? '<label for="tbWLinkRel">Semantic relation:</label>' : '',
 						$prefs['feature_semantic'] == 'y' ? '<input type="text" id="tbWLinkRel" class="ui-widget-content ui-corner-all" style="width: 100%" />' : '',
 						'{"open": function () {
@@ -847,13 +847,14 @@ if (m && m.length > 4) {
 	if ($jq("#tbWLinkRel")) { $jq("#tbWLinkRel").val(m[1]); }
 	$jq("#tbWLinkPage").val(m[2]);
 	if (m[4]) {
-		$jq("#tbWLinkAnchor").val(m[3]);
+		if ($jq("#tbWLinkAnchor")) { $jq("#tbWLinkAnchor").val(m[3]); }
 		$jq("#tbWLinkDesc").val(m[4]);
 	} else {
 		$jq("#tbWLinkDesc").val(m[3]);
 	}
 } else {
 	$jq("#tbWLinkDesc").val(s);
+	if ($jq("#tbWLinkAnchor")) { $jq("#tbWLinkAnchor").val("#"); }
 }
 						},
 						"buttons": { "Cancel": function() { $jq(this).dialog("close"); },'.
@@ -861,7 +862,7 @@ if (m && m.length > 4) {
 var s = "(";
 if ($jq("#tbWLinkRel") && $jq("#tbWLinkRel").val()) { s += $jq("#tbWLinkRel").val(); }
 s += "(" + $jq("#tbWLinkPage").val();
-if ($jq("#tbWLinkAnchor").val()) { s += "|" + $jq("#tbWLinkAnchor").val(); }
+if ($jq("#tbWLinkAnchor") && $jq("#tbWLinkAnchor").val()) { s += "|" + $jq("#tbWLinkAnchor").val(); }
 if ($jq("#tbWLinkDesc").val()) { s += "|" + $jq("#tbWLinkDesc").val(); }
 s += "))";
 insertAt(areaname, s, false, false, true); $jq(this).dialog("close");
@@ -1018,7 +1019,7 @@ $jq(pr).dialog("option", "height", ($jq(pr).attr("rows")+1) * 1.2 * $jq("#tbTabl
 });
 
 this.rows = rows; this.cols = cols;
-$jq(this).dialog("option", "width", (cols+1) * $jq("#tbTableR1C1").width() + 50);
+$jq(this).dialog("option", "width", (cols+1) * 120 + 50);
 $jq(this).dialog("option", "position", "center");
 						},
 						"width": 320, "buttons": { "Cancel": function() { $jq(this).dialog("close"); },'.
