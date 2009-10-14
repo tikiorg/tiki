@@ -165,7 +165,7 @@ class PreferencesLib
 	private function _getTextValue( $info, $data ) {
 		$name = $info['preference'];
 
-		if( $info['filter'] && $filter = TikiFilter::get( $info['filter'] ) ) {
+		if( isset($info['filter']) && $filter = TikiFilter::get( $info['filter'] ) ) {
 			return $filter->filter( $data[$name] );
 		} else {
 			return $data[$name];
@@ -175,7 +175,7 @@ class PreferencesLib
 	private function _getTextareaValue( $info, $data ) {
 		$name = $info['preference'];
 
-		if( $info['filter'] && $filter = TikiFilter::get( $info['filter'] ) ) {
+		if( isset($info['filter']) && $filter = TikiFilter::get( $info['filter'] ) ) {
 			return $filter->filter( $data[$name] );
 		} else {
 			return $data[$name];
