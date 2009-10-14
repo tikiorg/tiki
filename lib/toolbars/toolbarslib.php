@@ -822,7 +822,7 @@ class ToolbarDialog extends Toolbar
 	
 	public static function fromName( $tagName ) // {{{
 	{
-		$prefs = array();
+		$tool_prefs = array();
 
 		switch( $tagName ) {
 		case 'tikilink':
@@ -872,30 +872,25 @@ insertAt(areaname, s, false, false, true); $jq(this).dialog("close");
 			$wysiwyg = 'Link';
 			$label = tra('External Link');
 			$icon = tra('pics/icons/world_link.png');
+			global $prefs;
 			$list = array('External Link',
 						'<label for="tbLinkDesc">Link description:</label>',
 						'<input type="text" id="tbLinkDesc" class="ui-widget-content ui-corner-all" style="width: 100%" />',
-						'<label for="tbLinkType">Link type:</label>',
-						'<select id="tbLinkType" class="ui-widget-content"><option value="">Relative</option><option value="http://">http</option></select>',
 						'<label for="tbLinkURL">URL:</label>',
 						'<input type="text" id="tbLinkURL" class="ui-widget-content ui-corner-all" style="width: 100%" />',
 						'<label for="tbLinkRel">Relation:</label>',
 						'<input type="text" id="tbLinkRel" class="ui-widget-content ui-corner-all" style="width: 100%" />',
-						'<br /><label for="tbLinkNoCache" style="display:inline;">No cache:</label>',
-						'<input type="checkbox" id="tbLinkNoCache" class="ui-widget-content ui-corner-all" />',
-						'{"open": function () {
+						$prefs['cachepages'] == 'y' ? '<br /><label for="tbLinkNoCache" style="display:inline;">No cache:</label>' : '',
+						$prefs['cachepages'] == 'y' ? '<input type="checkbox" id="tbLinkNoCache" class="ui-widget-content ui-corner-all" />' : '',
+						'{"width": 300, "open": function () {
 $jq("#tbWLinkPage").tiki("autocomplete", "pagename");
 var s = getSelection($jq("textarea[name=\'" + areaname + "\']")[0]);
 var m = /\[([^\|]*)\|?([^\|]*)\|?([^\|]*)\]/g.exec(s);
 if (m && m.length > 3) {
-	if (m[1].indexOf("http://") > -1) {
-		$jq("#tbLinkType").val("http://");
-		m[1] = m[1].substring(7);
-	}
 	$jq("#tbLinkURL").val(m[1]);
 	$jq("#tbLinkDesc").val(m[2]);
 	if (m[3]) {
-		if (m[3] == "nocache") {
+		if ($jq("#tbLinkNoCache") && m[3] == "nocache") {
 			$jq("#tbLinkNoCache").attr("checked", "checked");
 		} else {
 			$jq("#tbLinkRel").val(m[3]);
@@ -904,15 +899,22 @@ if (m && m.length > 3) {
 		$jq("#tbWLinkDesc").val(m[3]);
 	}
 } else {
-	$jq("#tbLinkDesc").val(s);
+	if (s.match(/(http|https|ftp)([^ ]+)/ig) == s) {	// v simple URL match
+		$jq("#tbLinkURL").val(s);
+	} else {
+		$jq("#tbLinkDesc").val(s);
+	}
+}
+if (!$jq("#tbLinkURL").val()) {
+	$jq("#tbLinkURL").val("http://");
 }
 						},
 						"buttons": { "Cancel": function() { $jq(this).dialog("close"); },'.
 						'"Insert": function() {
-var s = "[" + $jq("#tbLinkType").val() + $jq("#tbLinkURL").val();
+var s = "[" + $jq("#tbLinkURL").val();
 if ($jq("#tbLinkDesc").val()) { s += "|" + $jq("#tbLinkDesc").val(); }
 if ($jq("#tbLinkRel").val()) { s += "|" + $jq("#tbLinkRel").val(); }
-if ($jq("#tbLinkNoCache").attr("checked")) { s += "|nocache"; }
+if ($jq("#tbLinkNoCache") && $jq("#tbLinkNoCache").attr("checked")) { s += "|nocache"; }
 s += "]";
 insertAt(areaname, s, false, false, true); $jq(this).dialog("close");
 }}}'
@@ -1097,7 +1099,7 @@ insertAt(areaname, s, false, false, true); $jq(this).dialog("close");
 			$icon = tra('pics/icons/text_replace.png');
 			$wysiwyg = 'Replace';
 			$label = tra('Text Replace');
-			$prefs[] = 'feature_wiki_replace';
+			$tool_prefs[] = 'feature_wiki_replace';
 			
 			$list = array('Text Replace',
 						'<label>Search:</label>',
@@ -1142,7 +1144,7 @@ insertAt(areaname, s, false, false, true); $jq(this).dialog("close");
 					->setList( $list )
 						->setType('Dialog');
 		
-		foreach( $prefs as $pref ) {
+		foreach( $tool_prefs as $pref ) {
 			$tag->addRequiredPreference( $pref );
 		}
 
