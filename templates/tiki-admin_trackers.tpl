@@ -222,7 +222,7 @@
 			<tr class="formcolor">
 				<td>{tr}Send copies of all activity in this tracker to this e-mail address{/tr}</td>
 				<td>
-					<input type="text" size="80" name="outboundEmail" value="{$outboundEmail|escape}" />
+					<input type="text" size="60" name="outboundEmail" value="{$outboundEmail|escape}" />
 					<br />
 					<i>{tr}You can add several email addresses by separating them with commas.{/tr}</i>
 				</td>
