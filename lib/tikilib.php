@@ -7725,7 +7725,7 @@ class TikiLib extends TikiDb_Bridge {
 		return $this->date_format('%Y%m%dT%H%M%S', $timestamp, $user);
 	}
 
-	function list_languages($path = false, $short=null, $all=false) {
+	static function list_languages($path = false, $short=null, $all=false) {
 		$languages = array();
 
 		if (!$path)
@@ -7900,7 +7900,7 @@ class TikiLib extends TikiDb_Bridge {
 	// with 'value' being the language code and 'name' being the name of
 	// the language.
 	// if $short is 'y' returns only the localized language names array
-	function format_language_list($languages, $short=null, $all=false) {
+	static function format_language_list($languages, $short=null, $all=false) {
 		// The list of available languages so far with both English and
 		// translated names.
 		global $langmapping, $prefs;
