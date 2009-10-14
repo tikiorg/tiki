@@ -546,7 +546,7 @@ if (!file_exists($local)) {
 		// if no db is specified, use the first db that this php installation can handle
 		$db_tiki = reset($dbservers);
 		write_local_php($db_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tiki);
-		$_SESSION[$cookie_name] = 'admin';
+// 		var_dump($cookie_name);$_SESSION[$cookie_name] = 'admin';
 	}
 
 	$ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
@@ -623,7 +623,10 @@ if (
 			$dbcon = true;
 			$smarty->assign('dbcon', 'y');
 			write_local_php($_REQUEST['db'], $_REQUEST['host'], $_REQUEST['user'], $_REQUEST['pass'], $_REQUEST['name']);
-			$_SESSION[$cookie_name] = 'admin';
+// 			var_dump($cookie_name);$_SESSION[$cookie_name] = 'admin';
+			include $local;
+			$installer = new Installer;
+			$installer->setServerType($db_tiki);
 		}
 	}
 }
@@ -700,7 +703,7 @@ if (
 			$installer->install( $profile );
 		}
 		
-		$_SESSION[$cookie_name] = 'admin';
+// 		var_dump($cookie_name);$_SESSION[$cookie_name] = 'admin';
 	}
 
 	if (isset($_REQUEST['update'])) {
@@ -850,7 +853,7 @@ $smarty->assign_by_ref('headerlib',$headerlib);
 $smarty->assign('install_step', $install_step);
 $smarty->assign('install_type', $install_type);
 $smarty->assign_by_ref('prefs', $prefs);
-$smarty->assign('detected_https',$_SERVER["HTTPS"]);
+$smarty->assign('detected_https',isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == 'on');
 
 if (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 6') !== false) {
 	$smarty->assign('ie6', true);
