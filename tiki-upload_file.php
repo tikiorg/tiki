@@ -18,7 +18,6 @@ include_once ('lib/filegals/filegallib.php');
 if ($prefs['feature_groupalert'] == 'y') {
 	include_once ('lib/groupalert/groupalertlib.php');
 }
-include ('lib/filegals/max_upload_size.php');
 @ini_set('max_execution_time', 0); //will not work in safe_mode is on
 $auto_query_args = array('galleryId', 'fileId', 'filegals_manager');
 function print_progress($msg) {
@@ -143,6 +142,8 @@ if (!empty($_REQUEST['galleryId'][0])) {
 	$smarty->assign_by_ref('gal_info', $gal_info);
 	$podCastGallery = $filegallib->isPodCastGallery((int)$_REQUEST["galleryId"][0], $gal_info);
 }
+include ('lib/filegals/max_upload_size.php');
+
 // Process an upload here
 if (isset($_REQUEST["upload"])) {
 	check_ticket('upload-file');
