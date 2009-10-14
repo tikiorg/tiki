@@ -43,7 +43,6 @@ class TikiLib extends TikiDb_Bridge {
 	}
 
 
-	/*shared*/
 	function httprequest($url, $reqmethod = "GET") {
 		global $prefs;
 		// test url :
@@ -77,7 +76,7 @@ class TikiLib extends TikiDb_Bridge {
 			$aSettingsRequest["proxy_port"]=$prefs['proxy_port'];
 		}
 		include_once ('lib/pear/HTTP/Request.php');
-		$req = &new HTTP_Request($url, $aSettingsRequest);
+		$req = new HTTP_Request($url, $aSettingsRequest);
 		$data="";
 		// (cdx) return false when can't connect
 		// I prefer throw a PEAR_Error. You decide ;)
