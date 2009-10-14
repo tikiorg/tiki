@@ -979,12 +979,12 @@ for (r = 1; r <= rows; r++) {
 			if (vals[r-1] && vals[r-1][c-1]) {
 				v = vals[r-1][c-1];
 			} else {
-				v = " ";
+				v = "   ";
 			}
 		} else {
-			v = "row " + r + ",col " + c + "";
+			v = "   ";	//row " + r + ",col " + c + "";
 		}
-		var el = $jq("<input type=\"text\" id=\"tbTableR" + r + "C" + c + "\" class=\"ui-widget-content ui-corner-all\" size=\"10\" value=\"" + v + "\" style=\"width:100px\" />");
+		var el = $jq("<input type=\"text\" id=\"tbTableR" + r + "C" + c + "\" class=\"ui-widget-content ui-corner-all\" size=\"10\" value=\"" + v + "\" style=\"width:" + (90/cols) + "%\" />");
 		$jq(this).append(el);
 	}
 	if (r == 1) {
@@ -994,11 +994,11 @@ for (r = 1; r <= rows; r++) {
 			var pr = $jq(this).parent();
 			$jq(pr).attr("cols", $jq(pr).attr("cols")+1);
 			for (r = 1; r <= $jq(pr).attr("rows"); r++) {
-				v = "row " + r + ",col " + $jq(pr).attr("cols") + "";
-				var el = $jq("<input type=\"text\" id=\"tbTableR" + r + "C" + $jq(pr).attr("cols") + "\" class=\"ui-widget-content ui-corner-all\" size=\"10\" value=\"" + v + "\" style=\"width:100px\" />");
+				v = "   ";	//"row " + r + ",col " + $jq(pr).attr("cols") + "";
+				var el = $jq("<input type=\"text\" id=\"tbTableR" + r + "C" + $jq(pr).attr("cols") + "\" class=\"ui-widget-content ui-corner-all\" size=\"10\" value=\"" + v + "\" style=\"width:" + (90/$jq(pr).attr("cols")) + "%\" />");
 				$jq("#tbTableR" + r + "C" + ($jq(pr).attr("cols")-1)).after(el);
 			}
-			$jq(pr).dialog("option", "width", ($jq(pr).attr("cols")+1) * $jq("#tbTableR1C1").width() + 10);
+			$jq(pr).find("input").width(90/$jq(pr).attr("cols") + "%");
 		});
 	}
 	$jq(this).append($jq("<br />"));
@@ -1009,8 +1009,8 @@ el.click(function () {
 	var pr = $jq(this).parent();
 	$jq(pr).attr("rows", $jq(pr).attr("rows")+1);
 	for (c = 1; c <= $jq(pr).attr("cols"); c++) {
-		v = "row " + $jq(pr).attr("rows") + ",col " + c + "";
-		var el = $jq("<input type=\"text\" id=\"tbTableR" + $jq(pr).attr("rows") + "C" + c + "\" class=\"ui-widget-content ui-corner-all\" size=\"10\" value=\"" + v + "\" style=\"width:100px\" />");
+		v = "   ";	//"row " + $jq(pr).attr("rows") + ",col " + c + "";
+		var el = $jq("<input type=\"text\" id=\"tbTableR" + $jq(pr).attr("rows") + "C" + c + "\" class=\"ui-widget-content ui-corner-all\" size=\"10\" value=\"" + v + "\" style=\"width:" + (90/$jq(pr).attr("cols")) + "%\" />");
 		$jq(this).before(el);
 	}
 	$jq(this).before("<br />");
@@ -1018,7 +1018,7 @@ $jq(pr).dialog("option", "height", ($jq(pr).attr("rows")+1) * 1.2 * $jq("#tbTabl
 });
 
 this.rows = rows; this.cols = cols;
-$jq(this).dialog("option", "width", (cols+1) * $jq("#tbTableR1C1").width() + 10);
+$jq(this).dialog("option", "width", (cols+1) * $jq("#tbTableR1C1").width() + 50);
 $jq(this).dialog("option", "position", "center");
 						},
 						"width": 320, "buttons": { "Cancel": function() { $jq(this).dialog("close"); },'.
