@@ -80,6 +80,7 @@
 				</td>
 			</tr>
 		</table>
+		{jq}$jq("#find").tiki("autocomplete", "username"){/jq}
 
 		<div id="search" {if $filterGroup or $filterEmail}style="display:block;"{else}style="display:none;"{/if}>
 			<table class="findtable">
