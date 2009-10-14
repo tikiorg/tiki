@@ -55,7 +55,7 @@ $info = $tikilib->get_page_info($page);
 // wysiwyg decision
 include 'lib/setup/editmode.php';
 
-$auto_query_args = array('wysiwyg','page_id','page', 'lang');
+$auto_query_args = array('wysiwyg','page_id','page', 'lang', 'hdr');
 
 
 $smarty->assign_by_ref('page', $_REQUEST["page"]);
