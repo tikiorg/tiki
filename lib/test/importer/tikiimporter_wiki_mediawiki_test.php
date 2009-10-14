@@ -5,6 +5,7 @@ ini_set('include_path', ini_get('include_path') . PATH_SEPARATOR . $textWikiPath
 
 require_once(dirname(__FILE__) . '/tikiimporter_testcase.php');
 require_once(dirname(__FILE__) . '/../../importer/tikiimporter_wiki_mediawiki.php');
+require_once(dirname(__FILE__) . '/../../tikilib.php');
 
 class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase 
 {
