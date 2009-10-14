@@ -29,7 +29,7 @@ if ($output["data"]=="EMPTY") {
 	$desc = (!empty($desc_rss_file_galleries)) ? $desc_rss_file_galleries : tra("Last files uploaded to the file galleries.");
 	$id = "fileId";
 	$descId = "description";
-	$dateId = "lastmodif";
+	$dateId = "lastModif";
 	$authorId = "lastModifUser";
 	$titleId = "filename";
 	$readrepl = "tiki-download_file.php?$id=%s";

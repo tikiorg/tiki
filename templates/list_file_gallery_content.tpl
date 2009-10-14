@@ -1,4 +1,4 @@
-{if empty($sort_arg)}{assign var='sort_arg' value='sort_mode'}{/if}
+{debug}{if empty($sort_arg)}{assign var='sort_arg' value='sort_mode'}{/if}
 <table class="normal">
   <tr>
   {if $gal_info.show_checked ne 'n' and ($tiki_p_admin_file_galleries eq 'y' or $tiki_p_upload_files eq 'y')}
@@ -134,7 +134,7 @@
           {assign var=propval value=$files[changes].$propname}
   
           {* Format property values *}
-          {if $propname eq 'created' or $propname eq 'lastmodif'}
+          {if $propname eq 'created' or $propname eq 'lastModif'}
             {assign var=propval value=$propval|tiki_long_date}
           {elseif $propname eq 'last_user' or $propname eq 'author' or $propname eq 'creator'}
             {assign var=propval value=$propval|username}
@@ -220,7 +220,7 @@
         {else}
           {assign var=propval value="<a class='fgalname' $link>$propval</a>"}
         {/if}
-      {elseif $propname eq 'created' or $propname eq 'lastmodif'}
+      {elseif $propname eq 'created' or $propname eq 'lastModif'}
         {assign var=propval value=$propval|tiki_short_date}
       {elseif $propname eq 'last_user' or $propname eq 'author' or $propname eq 'creator'}
         {assign var=propval value=$propval|userlink}
