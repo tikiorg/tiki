@@ -465,8 +465,7 @@ $smarty->assign('mid', 'tiki-install.tpl');
 $smarty->assign('style', 'thenews.css');
 $smarty->assign('virt', isset($virt) ? $virt : null );
 $smarty->assign('multi', isset($multi) ? $multi : null );
-if ($language != 'en')
-	$smarty->assign('lang', $language);
+$smarty->assign('lang', $language);
 
 // Try to set a longer execution time for the installer
 @ini_set('max_execution_time', '0');
@@ -526,7 +525,6 @@ include_once ('lib/adodb/adodb.inc.php');
 include('lib/tikilib.php');
 
 // Get list of available languages
-$languages = array();
 $languages = TikiLib::list_languages(false, null, true);
 $smarty->assign_by_ref("languages", $languages);
 
