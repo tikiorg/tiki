@@ -37,7 +37,7 @@
 	<p>{tr}You should only modify default header.tpl and other important files via text code editor, through console, or SSH, or FTP edit commands. And only if you know what you are doing ! ;-){/tr}</p>
 
 	<p>{tr}Maybe You just want to modify the top of your Tiki site?{/tr}<br />
-	{tr}Please consider using the Look &amp; Feel preferences custom code areas or modify tiki-top_bar.tpl which you can do safely via the web-based interface.{/tr}</p>
+	{tr}Please consider using the Look & Feel preferences custom code areas or modify tiki-top_bar.tpl which you can do safely via the web-based interface.{/tr}</p>
     {/remarksbox}
 
 <form action="tiki-edit_templates.php" method="post">

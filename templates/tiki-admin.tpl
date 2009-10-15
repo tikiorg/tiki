@@ -135,7 +135,7 @@ Add a value in first check when you create a new admin page. *}
 	{if $prefs.feature_featuredLinks eq 'y'}<a href="tiki-admin_links.php">{tr}Links{/tr}</a>{/if}
 	<hr />
 
-	{tr}Look &amp; feel{/tr} ({tr}themes{/tr}):<br />
+	{tr}Look & feel{/tr} ({tr}themes{/tr}):<br />
 	{if $prefs.feature_theme_control eq 'y'} <a href="tiki-theme_control.php">{tr}Theme Control{/tr}</a> {/if}
 	{if $prefs.feature_edit_templates eq 'y'} <a href="tiki-edit_templates.php">{tr}Edit Templates{/tr}</a> {/if}
 	{if $prefs.feature_editcss eq 'y'} <a href="tiki-edit_css.php">{tr}Edit CSS{/tr}</a> {/if}

@@ -30,7 +30,7 @@
 			{preference name=sender_email}
 
 			<div class="adminoptionbox">
-				{tr}Go to <a href="tiki-admin.php?page=look" title=""><strong>Look &amp; Feel</strong></a> section for additional site related customization preferences{/tr}.
+				{tr}Go to <a href="tiki-admin.php?page=look" title=""><strong>Look & Feel</strong></a> section for additional site related customization preferences{/tr}.
 			</div>
 		</fieldset>
 

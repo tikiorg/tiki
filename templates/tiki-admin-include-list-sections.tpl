@@ -19,7 +19,7 @@
 
 	{self_link page="profiles" _class="admbox" _style="background-image: url('pics/large/profiles48x48.png')" _title="{tr}Profiles{/tr}"}<span>{tr}Profiles{/tr}</span>{/self_link}
 
-	{self_link page="look" _class="admbox" _style="background-image: url('pics/large/gnome-settings-background48x48.png')" _title="{tr}Look &amp; Feel{/tr}"}<span>{tr}Look &amp; Feel{/tr}</span>{/self_link}
+	{self_link page="look" _class="admbox" _style="background-image: url('pics/large/gnome-settings-background48x48.png')" _title="{tr}Look & Feel{/tr}"}<span>{tr}Look & Feel{/tr}</span>{/self_link}
 
 	{self_link page="i18n" _class="admbox" _style="background-image: url('pics/large/i18n48x48.png')" _title="{tr}i18n{/tr}"}<span>{tr}i18n{/tr}</span>{/self_link}
 
