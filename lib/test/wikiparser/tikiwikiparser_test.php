@@ -17,19 +17,48 @@ class TikiWikiParser_Test extends PHPUnit_Framework_TestCase
           array('', ''),
           array('foo', "foo<br />\n"),
           array('---', "<hr />\n"),
+          array('%%%', "<br /><br />\n"), // Line break
+          
 //          array("''foo''", '<i>foo</i>' . "<br />\n"),
+
           array('__foo__', "<strong>foo</strong><br />" . "\n"),   // bold
+          array('__ foo __', "<strong> foo </strong><br />" . "\n"),   // bold
+
           array('===foo===', '<span style="text-decoration:underline;">foo</span>' . "<br />" . "\n"), // underline
+          array('=== foo ===', '<span style="text-decoration:underline;"> foo </span>' . "<br />" . "\n"), // underline
+
           array('-=foo=-', '<div class="titlebar">foo</div>' . "\n"),  // title bar
+          array('-= foo =-', '<div class="titlebar"> foo </div>' . "\n"),  // title bar
+
           array('^foo^', '<div class="simplebox">foo</div><br />' . "\n"),  // box
+          array('^ foo ^', '<div class="simplebox"> foo </div><br />' . "\n"),  // box
+
           array('::foo::', '<div style="text-align: center;">foo</div><br />' . "\n"),  // center align
+          array(':: foo ::', '<div style="text-align: center;"> foo </div><br />' . "\n"),  // center align
+
           array('!foo', '<h1 class="showhide_heading" id="foo">foo</h1>' . "\n"),  // heading 1
+          array('! foo', '<h1 class="showhide_heading" id="foo"> foo</h1>' . "\n"),  // heading 1
+
           array('!!foo', '<h2 class="showhide_heading" id="foo">foo</h2>' . "\n"),  // heading 2
+          array('!! foo', '<h2 class="showhide_heading" id="foo"> foo</h2>' . "\n"),  // heading 2
+
           array('--foo--', "<del>foo</del><br />\n"),  // strike out
           array('-- foo --', "-- foo --<br />\n"),  // not parsed
+
           array('[foo]', '<a class="wiki"  href="foo" rel="">foo</a><br />' . "\n"), // link
           array('[foo|bar]', '<a class="wiki"  href="foo" rel="">bar</a><br />' . "\n"), // link
-
+          
+					array('[[foo', '[foo<br />' . "\n"), // Square brackets
+					
+					array('-+foo+- ', '<code>foo</code><br />'. "\n"), // Monospace font
+					array('-+ foo +- ', '<code> foo </code><br />'. "\n"), // Monospace font
+					
+					array('{r2l}foo', "<div dir='rtl'>foo<br />\n</div>"), // Right to left
+					array('{l2r}foo', "<div dir='ltr'>foo<br />\n</div>"), // Left to right
+					array('{rm}foo', "&rlm;foo<br />\n"),
+					array('~amp~foo', "&amp;foo<br />\n"), // Special character &amp;
+					array('~hs~foo', "&nbsp;foo<br />\n"), // Hard space 
+					
           array("* foo\n* bar\n", "<ul><li> foo\n</li><li> bar\n</li></ul>\n\n"), // Bulleted list
           array("* foo1\n** foo11\n**foo12\n* bar1\n", "<ul><li> foo1\n<ul><li> foo11\n</li><li>foo12\n</li></ul></li><li> bar1\n</li></ul>\n\n"), // Nested Bulleted list
           array("* foo\n+ Continuation1\n+Continuation2\n* bar\n", "<ul><li> foo\n<br /> Continuation1\n<br />Continuation2\n</li><li> bar\n</li></ul>\n\n"), // Bulleted list with continuation
