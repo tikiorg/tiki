@@ -19,5 +19,3 @@ if( ! $last )
 $eS = escapeshellarg( $source );
 $eT = escapeshellarg( $trunk );
 passthru( "svn diff $eT@$last $eS" );
-
-?>
