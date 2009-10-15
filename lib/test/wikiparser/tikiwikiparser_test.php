@@ -26,6 +26,7 @@ class TikiWikiParser_Test extends PHPUnit_Framework_TestCase
           array('!foo', '<h1 class="showhide_heading" id="foo">foo</h1>' . "\n"),  // heading 1
           array('!!foo', '<h2 class="showhide_heading" id="foo">foo</h2>' . "\n"),  // heading 2
           array('--foo--', "<del>foo</del><br />\n"),  // strike out
+          array('-- foo --', "-- foo --<br />\n"),  // not parsed
           array('[foo]', '<a class="wiki"  href="foo" rel="">foo</a><br />' . "\n"), // link
           array('[foo|bar]', '<a class="wiki"  href="foo" rel="">bar</a><br />' . "\n"), // link
 
