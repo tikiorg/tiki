@@ -65,7 +65,7 @@
 {*------------------------------- Babelfish ----------------------------- *}
 
 {preference name=feature_babelfish}
-{preference name=babelfish_logo}
+{preference name=feature_babelfish_logo}
 
 {/tab}
 {tab name="{tr}Customized String Translation{/tr}"}
