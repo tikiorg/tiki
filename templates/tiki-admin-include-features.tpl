@@ -30,21 +30,11 @@
 				{preference name=feature_calendar}
 				{preference name=feature_newsletters}
 				{preference name=feature_banners}
-			</div>
-
-		</fieldset>
-
-		<fieldset>
-			<legend>{tr}Site Global{/tr}</legend>
-
-			<div class="admin featurelist">
 				{preference name=feature_categories}
-				{preference name=feature_score}
 				{preference name=feature_freetags}
 				{preference name=feature_search}
-				{preference name=feature_multilingual}
-				{preference name=feature_fullscreen}
 			</div>
+
 		</fieldset>
 
 		<fieldset>
@@ -60,6 +50,8 @@
 				{preference name=feature_live_support}
 				{preference name=feature_tell_a_friend}
 				{preference name=feature_minichat}
+				{preference name=feature_score}
+				{preference name=feature_fullscreen}
 			</div>
 		</fieldset>
 
