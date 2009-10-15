@@ -37,7 +37,7 @@
 {/if}
 {*{tr}{$description}{/tr}*}
 </div>
-{* The rest determines which page to include using "page" GET parameter. Default : list-sections
+{* Determines which page to include using "page" GET parameter. Default : list-sections
 Add a value in first check when you create a new admin page. *}
 {if in_array($adminpage, array("features", "general", "login", "wiki",
 "gal", "fgal", "cms", "polls", "search", "blogs", "forums", "faqs",
@@ -145,7 +145,7 @@ Add a value in first check when you create a new admin page. *}
 	{tr}Text area features{/tr} ({tr}features you can use in all text areas, like wiki pages, blogs, articles, forums, etc{/tr}):<br />
 	<a href="tiki-admin_cookies.php">{tr}Cookies{/tr}</a> 
 	{if $prefs.feature_hotwords eq 'y'} <a href="tiki-admin_hotwords.php">{tr}Hotwords{/tr}</a> {/if}
-	<a href="tiki-list_cache.php">{tr}Cache{/tr}</a> 
+	<a href="tiki-list_cache.php">{tr}External Pages Cache{/tr}</a> 
 	<a href="tiki-admin_toolbars.php">{tr}Toolbars{/tr}</a> 
 	<a href="tiki-admin_content_templates.php">{tr}Content Templates{/tr}</a> 
 	<a href="tiki-admin_dsn.php">{tr}DSN{/tr}</a> 
