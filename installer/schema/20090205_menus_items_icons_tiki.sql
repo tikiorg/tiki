@@ -21,4 +21,4 @@ UPDATE tiki_menu_options SET icon = '' WHERE name = 'Surveys';
 UPDATE tiki_menu_options SET icon = '' WHERE name = 'TikiSheet';
 UPDATE tiki_menu_options SET icon = '' WHERE name = 'Workflow';
 UPDATE tiki_menu_options SET icon = '' WHERE name = 'Charts';
-UPDATE tiki_menus SET use_items_icons='y' WHERE menuId=42;
+UPDATE tiki_menus SET use_items_icons='y' WHERE `menuId`=42;
