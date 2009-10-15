@@ -3709,7 +3709,7 @@ CREATE INDEX "users_users_users_users_openid_url" ON "users_users" ("openid_url"
 -- Administrator account
 INSERT INTO "users_users" ("email","login","password","hash") VALUES ('','admin','admin',md5('adminadmin'));
 
-UPDATE "users_users" SET "currentLogin"="lastLogin","registrationDate"="lastLogin";
+UPDATE "users_users" SET \"currentLogin\"=\"lastLogin\" \"registrationDate\"=\"lastLogin\";
 
 INSERT INTO "tiki_user_preferences" ("user","prefName","value") VALUES ('admin','realName','System Administrator');
 
