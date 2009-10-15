@@ -195,9 +195,9 @@ if (isset($_REQUEST["page"])) {
 		$description = "Webmail";
 		include_once ('tiki-admin_include_webmail.php');
 	} else if ($adminPage == "rss") {
-		$admintitle = "RSS feeds"; //get_strings tra("RSS feeds")
-		$helpUrl = "RSS";
-		$description = "RSS settings"; //get_strings tra("RSS settings")
+		$admintitle = "Feeds"; //get_strings tra("Feeds")
+		$helpUrl = "Feeds User";
+		$description = "Feeds settings"; //get_strings tra("Feeds settings")
 		include_once ('tiki-admin_include_rss.php');
 	} else if ($adminPage == "directory") {
 		$admintitle = "Directory"; //get_strings tra("Directory")

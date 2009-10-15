@@ -1,7 +1,7 @@
-{title help="RSS+Modules""}{tr}Admin RSS Modules{/tr}{/title}
+{title help="Feeds+User"}{tr}Admin External Feeds{/tr}{/title}
 
-{remarksbox type="tip" title="{tr}Tips{/tr}"}{tr}This page is to configure settings of RSS feeds read/imported by Tiki. To generate/export RSS feeds, look for "RSS feeds" on the admin panel, or{/tr} <a class="rbox-link" href="tiki-admin.php?page=rss">{tr}Click Here{/tr}</a>.
-<hr>{tr}To use RSS feeds in a text area (Wiki page, etc), a <a class="rbox-link" href="tiki-admin_modules.php">module</a> or a template, use {literal}{rss id=x}{/literal}, where x is the ID of the RSS feed.{/tr}{/remarksbox}
+{remarksbox type="tip" title="{tr}Tips{/tr}"}{tr}This page is to configure settings of external feeds read/imported by Tiki. To generate/export feeds, look for "Feeds" on the admin panel, or{/tr} <a class="rbox-link" href="tiki-admin.php?page=rss">{tr}Click Here{/tr}</a>.
+<hr>{tr}To use feeds in a text area (Wiki page, etc), a <a class="rbox-link" href="tiki-admin_modules.php">module</a> or a template, use {literal}{rss id=x}{/literal}, where x is the ID of the feed.{/tr}{/remarksbox}
 
 {if $preview eq 'y'}
 <div class="simplebox">
@@ -18,10 +18,10 @@
 </div>
 {/if}
 {if $rssId > 0}
-<h2>{tr}Edit this RSS Module:{/tr} {$name|escape}</h2>
-<a href="tiki-admin_rssmodules.php">{tr}Create new RSS Module{/tr}</a>
+<h2>{tr}Edit this feed:{/tr} {$name|escape}</h2>
+<a href="tiki-admin_rssmodules.php">{tr}Create new external feed{/tr}</a>
 {else}
-<h2>{tr}Create new RSS Module{/tr}</h2>
+<h2>{tr}Create new external feed{/tr}</h2>
 {/if}
 <form action="tiki-admin_rssmodules.php" method="post">
 <input type="hidden" name="rssId" value="{$rssId|escape}" />
@@ -52,7 +52,7 @@
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
-<h2>{tr}RSS channels{/tr}</h2>
+<h2>{tr}External feeds{/tr}</h2>
 <div align="center">
 {if $channels or ($find ne '')}
   {include file='find.tpl'}
