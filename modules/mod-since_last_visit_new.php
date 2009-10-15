@@ -151,7 +151,7 @@ function since_last_visit_new($user, $params = null) {
 		$count = 0;
 		while ($res = $result->fetchRow()) {
 			if ($userlib->user_has_perm_on_object($user,$res['pageName'], 'wiki page', 'tiki_p_view')) {
-				$ret["items"]["pages"]["list"][$count]["href"]  = "tiki-index.php?page=" . urlencode($res["pageName"]);
+				$ret["items"]["pages"]["list"][$count]["href"]  = filter_out_sefurl('tiki-index.php?page=' . urlencode($res['pageName']), $smarty);;
 				$ret["items"]["pages"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["lastModif"]) ." ". tra("by") ." ". $res["user"];
 				$ret["items"]["pages"]["list"][$count]["label"] = $res["pageName"]; 
 				$count++;
