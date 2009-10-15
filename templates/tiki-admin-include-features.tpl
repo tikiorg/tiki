@@ -72,6 +72,7 @@
 				{preference name=feature_xmlrpc}
 				{preference name=feature_debug_console}
 				{preference name=feature_tikitests}
+				{preference name=log_tpl}
 			</div>
 {/tab}
 
