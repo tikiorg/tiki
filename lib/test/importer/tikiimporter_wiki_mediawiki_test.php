@@ -1,7 +1,7 @@
 <?php
 
 $textWikiPath = dirname(__FILE__) . '/../../pear/';
-ini_set('include_path', ini_get('include_path') . PATH_SEPARATOR . $textWikiPath);
+ini_set('include_path', ini_get('include_path') . PATH_SEPARATOR . $textWikiPath . PATH_SEPARATOR . dirname(__FILE__) . '/../../../');
 
 require_once(dirname(__FILE__) . '/tikiimporter_testcase.php');
 require_once(dirname(__FILE__) . '/../../importer/tikiimporter_wiki_mediawiki.php');
