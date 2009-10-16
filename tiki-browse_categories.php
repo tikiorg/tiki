@@ -19,6 +19,9 @@ if ($tiki_p_view_category != 'y') {
 	$smarty->display('error.tpl');
 	die;
 }
+
+$auto_query_args = array('deep', 'sort_mode', 'offset', 'find', 'type', 'parentId');
+
 // Check for parent category or set to 0 if not present
 if (!isset($_REQUEST["parentId"])) {
 	$_REQUEST["parentId"] = 0;
