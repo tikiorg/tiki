@@ -71,7 +71,7 @@
 					{if $tiki_p_read_article eq 'y'}
 						<a class="artname" href="{$listpages[changes].articleId|sefurl:article}" title="{$listpages[changes].title|escape}">
 					{/if}
-					{$listpages[changes].title|truncate:$prefs.art_list_title_len:"...":true}
+					{$listpages[changes].title|truncate:$prefs.art_list_title_len:"...":true|escape}
 					{if $listpages[changes].type eq 'Review'}(r){/if}
 					{if $tiki_p_read_article eq 'y'}
 						</a>
@@ -79,10 +79,10 @@
 				</td>
 			{/if}
 			{if $prefs.art_list_type eq 'y'}	
-				<td class="{cycle advance=false}">{tr}{$listpages[changes].type}{/tr}</td>
+				<td class="{cycle advance=false}">{tr}{$listpages[changes].type|escape}{/tr}</td>
 			{/if}
 			{if $prefs.art_list_topic eq 'y'}	
-				<td class="{cycle advance=false}">{$listpages[changes].topicName}</td>
+				<td class="{cycle advance=false}">{$listpages[changes].topicName|escape}</td>
 			{/if}
 			{if $prefs.art_list_date eq 'y'}
 				<td class="{cycle advance=false}">{$listpages[changes].publishDate|tiki_short_datetime}</td>
@@ -97,7 +97,7 @@
 				<td class="{cycle advance=false}">{tr}{$listpages[changes].lang}{/tr}</td>
 			{/if}
 			{if $prefs.art_list_author eq 'y'}	
-				<td class="{cycle advance=false}">{$listpages[changes].authorName}</td>
+				<td class="{cycle advance=false}">{$listpages[changes].authorName|escape}</td>
 			{/if}
 			{if $prefs.art_list_rating eq 'y'}
 				<td style="text-align:right;" class="{cycle advance=false}">{$listpages[changes].rating}</td>

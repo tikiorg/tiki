@@ -52,7 +52,7 @@
 			<option value='' {if $find_type eq ''}selected="selected"{/if}>{tr}any type{/tr}</option>
 			{section name=t loop=$types}
 				<option value="{$types[t].type|escape}" {if $find_type eq $types[t].type}selected="selected"{/if}>
-					{tr}{$types[t].type}{/tr}
+					{capture}{tr}{$types[t].type}{/tr}{/capture}{$smarty.capture.default|escape}
 				</option>
 			{/section}
 		</select>
@@ -65,7 +65,7 @@
 			<option value='' {if $find_topic eq ''}selected="selected"{/if}>{tr}all topic{/tr}</option>
 			{section name=ix loop=$topics}
 				<option value="{$topics[ix].topicId|escape}" {if $find_topic eq $topics[ix].topicId}selected="selected"{/if}>
-					{tr}{$topics[ix].name}{/tr}
+					{capture}{tr}{$topics[ix].name}{/tr}{/capture}{$smarty.capture.default|escape}
 				</option>
 			{/section}
 		</select>
@@ -105,7 +105,7 @@
 			<option value='' {if $find_categId eq ''}selected="selected"{/if}>{tr}any category{/tr}</option>
 			{section name=ix loop=$categories}
 				<option value="{$categories[ix].categId|escape}" {if $find_categId eq $categories[ix].categId}selected="selected"{/if}>
-					{tr}{$categories[ix].categpath}{/tr}
+					{capture}{tr}{$categories[ix].categpath}{/tr}{/capture}{$smarty.capture.default|escape}
 				</option>
 			{/section}
 		</select>
