@@ -350,12 +350,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 				$fields["data"][$i]["value"] = '';
 			}
 			if ($fields["data"][$i]["type"] == 'r') { // item link
-				if ($tiki_p_admin_trackers == 'y') {
-					$stt = 'poc';
-				} else {
-					$stt = 'o';
-				}
-				$fields["data"][$i]["list"] = array_unique($trklib->get_all_items($fields["data"][$i]["options_array"][0], $fields["data"][$i]["options_array"][1], $stt));
+				$fields["data"][$i]["list"] = array_unique($trklib->get_all_items($fields["data"][$i]["options_array"][0], $fields["data"][$i]["options_array"][1], 'poc', false));
 				if (isset($fields["data"][$i]["options_array"][3])) $fields["data"][$i]["listdisplay"] = array_unique($trklib->concat_all_items_from_fieldslist($fields["data"][$i]["options_array"][0], $fields["data"][$i]["options_array"][3]));
 			} elseif (($fields["data"][$i]["type"] == 'M') && ($fields["data"][$i]["options_array"][0] >= '3')) {
 				if (isset($_FILES["$ins_id"]) && is_uploaded_file($_FILES["$ins_id"]['tmp_name'])) {
@@ -630,7 +625,7 @@ if (isset($_REQUEST["trackerId"])) $trackerId = $_REQUEST["trackerId"];
 if (isset($tracker_info['useRatings']) and $tracker_info['useRatings'] == 'y' and $user and $tiki_p_tracker_vote_ratings == 'y' and !empty($_REQUEST['trackerId']) and !empty($ratedItemId) and isset($newItemRate) and ($newItemRate == 'NULL' || in_array($newItemRate, split(',', $tracker_info['ratingOptions'])))) {
 	$trklib->replace_rating($_REQUEST['trackerId'], $ratedItemId, $newItemRateField, $user, $newItemRate);
 }
-$items = $trklib->list_items($_REQUEST["trackerId"], $offset, $maxRecords, $sort_mode, $listfields, $filterfield, $filtervalue, $_REQUEST["status"], $initial, $exactvalue);
+$items = $trklib->list_items($_REQUEST["trackerId"], $offset, $maxRecords, $sort_mode, $listfields, $filterfield, $filtervalue, $_REQUEST["status"], $initial, $exactvalue,'', $xfields);
 $urlquery['status'] = $_REQUEST['status'];
 $urlquery['initial'] = $initial;
 $urlquery['trackerId'] = $_REQUEST["trackerId"];

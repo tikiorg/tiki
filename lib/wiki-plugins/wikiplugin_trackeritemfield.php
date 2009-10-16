@@ -101,17 +101,24 @@ function wikiplugin_trackeritemfield($data, $params) {
 			return tra('Incorrect param').': trackerId';
 		}
 
-		$memoItemId = $itemId;
 		if (!empty($status) && !$trklib->valid_status($status)) {
 			return tra('Incorrect param').': status';
 		}
 
 		$info = $trklib->get_item_info($itemId);
+		if (!$memoUserTracker) {
+			$perm = ($info['status'] == 'c')? 'view_trackers_closed':(($info['status'] == 'p')?'view_trackers_pending':'view_trackers');
+			$perms = Perms::get(array('type'=>'tracker', 'object'=>$trackerId));
+			if (!$perms->$perm) {
+				return false;
+			}
+			$perms = Perms::get(array('type'=>'trackeritem', 'object'=>$itemId));
+			if (!$perms->$perm) {
+				return false;
+			}
+		}
 		$memoStatus = $info['status'];
-		//$perm = (isset($status) && $status == 'c')? 'tiki_p_view_trackers_closed':((isset($status) && $status == 'p')?'tiki_p_view_trackers_pending':'tiki_p_view_trackers');
-		//if ((!empty($fieldId)|| isset($fields)) && !$memoUserTracker && $tiki_p_admin_trackers != 'y' && !$userlib->user_has_perm_on_object($user, $trackerId, 'tracker', $perm) && empty($is_user_tracker)) {
-		//	return false;
-		//}
+		$memoItemId = $itemId;
 		$memoTrackerId = $trackerId;
 	}
 	if (!isset($data)) {

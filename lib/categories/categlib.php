@@ -400,6 +400,7 @@ class CategLib extends ObjectLib {
 			 'image' => 'tiki_p_view_image_gallery',
 			 'calendar' => 'tiki_p_view_calendar',
 			 'file' => 'tiki_p_download_files',
+			 'trackeritem' => 'tiki_p_view_trackers',
 			 
 			 // newsletters can't be categorized, although there's some code in tiki-admin_newsletters.php
 			 // 'newsletter' => ?,

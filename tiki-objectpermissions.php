@@ -179,7 +179,9 @@ if (isset($_REQUEST['assign']) && !isset($_REQUEST['quick_perms'])) {
 	
 	$newPermissions = get_assign_permissions();
 	$permissionApplier->apply( $newPermissions );
-	$smarty->assign('groupName', $_REQUEST["group"]);
+	if (isset($_REQUEST['group'])) {
+		$smarty->assign('groupName', $_REQUEST['group']);
+	}
 }
 
 // Prepare display
