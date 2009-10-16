@@ -80,7 +80,7 @@
 
         {elseif $tiki_p_download_files eq 'y'}
           {if $gal_info.type eq 'podcast' or $gal_info.type eq 'vidcast'}
-            href="{$download_path}{$files[changes].path}"
+            href="{$prefs.fgal_podcast_dir}{$files[changes].path}"
           {else}
             href="{if $prefs.javascript_enabled eq 'y'}{$files[changes].id|sefurl:preview}{else}{$files[changes].id|sefurl:display}{/if}"
           {/if}
