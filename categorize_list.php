@@ -26,7 +26,7 @@ if ($prefs['feature_categories'] == 'y' && isset($cat_type) && isset($cat_objid)
 	}
 
 	if( ! isset( $cat_object_exists ) ) {
-		$cat_object_exists = false;
+		$cat_object_exists = (bool) $cat_objid;
 	}
 
 	if( $cat_object_exists ) {
