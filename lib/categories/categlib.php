@@ -612,6 +612,8 @@ class CategLib extends ObjectLib {
 			return $this->categorize_poll( $identifier, $categId );
 		case 'calendar':
 			return $this->categorize_calendar( $identifier, $categId );
+		case 'trackeritem':
+			return $this->categorize_trackeritem($identifier, $categId);
 		}
 	}
 
@@ -643,11 +645,26 @@ class CategLib extends ObjectLib {
 		$catObjectId = $this->is_categorized('tracker', $trackerId);
 
 		if (!$catObjectId) {
-			// The page is not cateorized
-			$info = $this->get_tracker($trackerId);
+			global $trklib; include_once('lib/trackers/trackerlib.php');
+			$info = $trklib->get_tracker($trackerId);
 
 			$href = 'tiki-view_tracker.php?trackerId=' . $trackerId;
 			$catObjectId = $this->add_categorized_object('tracker', $trackerId, substr($info["description"], 0, 200),$info["name"] , $href);
+		}
+
+		$this->categorize($catObjectId, $categId);
+		return $catObjectId;
+	}
+
+	function categorize_trackeritem($itemId, $categId) {
+		$catObjectId = $this->is_categorized('trackeritem', $itemId);
+
+		if (!$catObjectId) {
+			global $trklib; include_once('lib/trackers/trackerlib.php');
+			$info = $trklib->get_tracker_item($itemId);
+			$href = "tiki-view_tracker_item.php?itemId=$itemId&trackerId=".$info['trackerId'];
+			$name = $trklib->get_isMain_value($info['trackerId'], $itemId);
+			$catObjectId = $this->add_categorized_object('trackeritem', $trackeritem, '',$name , $href);
 		}
 
 		$this->categorize($catObjectId, $categId);
