@@ -59,73 +59,73 @@
 		</tr>
 		{cycle print=false values="even,odd"}
 		{section name=user loop=$types}
-			<input type="hidden" name="type_array[{$types[user].type}]" />
+			<input type="hidden" name="type_array[{$types[user].type|escape}]" />
 			<tr>
 				<td class="{cycle advance=false}">
-					<a class="link" href="tiki-view_articles.php?type={$types[user].type}">{tr}{$types[user].type}{/tr}</a>
+					<a class="link" href="tiki-view_articles.php?type={$types[user].type|escape:url}">{tr}{$types[user].type|escape}{/tr}</a>
 				</td>
 				{*get_strings {tr}Article{/tr}{tr}Review{/tr}{tr}Event{/tr}{tr}Classified{/tr} *}
 				<td class="{cycle advance=false}">{$types[user].article_cnt}</td>
 				<td class="{cycle advance=false}">
-					<input type="checkbox" name="use_ratings[{$types[user].type}]" {if $types[user].use_ratings eq 'y'}checked="checked"{/if} />
+					<input type="checkbox" name="use_ratings[{$types[user].type|escape}]" {if $types[user].use_ratings eq 'y'}checked="checked"{/if} />
 				</td>
 				<td class="{cycle advance=false}">
-					<input type="checkbox" name="show_pre_publ[{$types[user].type}]" {if $types[user].show_pre_publ eq 'y'}checked="checked"{/if} />
+					<input type="checkbox" name="show_pre_publ[{$types[user].type|escape}]" {if $types[user].show_pre_publ eq 'y'}checked="checked"{/if} />
 				</td>
 				<td class="{cycle advance=false}">
-					<input type="checkbox" name="show_post_expire[{$types[user].type}]" {if $types[user].show_post_expire eq 'y'}checked="checked"{/if} />
+					<input type="checkbox" name="show_post_expire[{$types[user].type|escape}]" {if $types[user].show_post_expire eq 'y'}checked="checked"{/if} />
 				</td>
 				<td class="{cycle advance=false}">
-					<input type="checkbox" name="heading_only[{$types[user].type}]" {if $types[user].heading_only eq 'y'}checked="checked"{/if} />
+					<input type="checkbox" name="heading_only[{$types[user].type|escape}]" {if $types[user].heading_only eq 'y'}checked="checked"{/if} />
 				</td>
 				<td class="{cycle advance=false}">
-					<input type="checkbox" name="allow_comments[{$types[user].type}]" {if $types[user].allow_comments eq 'y'}checked="checked"{/if} />
+					<input type="checkbox" name="allow_comments[{$types[user].type|escape}]" {if $types[user].allow_comments eq 'y'}checked="checked"{/if} />
 				</td>
 				<td class="{cycle advance=false}">
-					<input type="checkbox" name="comment_can_rate_article[{$types[user].type}]" {if $types[user].comment_can_rate_article eq 'y'}checked="checked"{/if} />
+					<input type="checkbox" name="comment_can_rate_article[{$types[user].type|escape}]" {if $types[user].comment_can_rate_article eq 'y'}checked="checked"{/if} />
 				</td>
 				<td class="{cycle advance=false}">
-					<input type="checkbox" name="show_image[{$types[user].type}]" {if $types[user].show_image eq 'y'}checked="checked"{/if} />
+					<input type="checkbox" name="show_image[{$types[user].type|escape}]" {if $types[user].show_image eq 'y'}checked="checked"{/if} />
 				</td>
 				<td class="{cycle advance=false}">
-					<input type="checkbox" name="show_avatar[{$types[user].type}]" {if $types[user].show_avatar eq 'y'}checked="checked"{/if} />
+					<input type="checkbox" name="show_avatar[{$types[user].type|escape}]" {if $types[user].show_avatar eq 'y'}checked="checked"{/if} />
 				</td>
 				<td class="{cycle advance=false}">
-					<input type="checkbox" name="show_author[{$types[user].type}]" {if $types[user].show_author eq 'y'}checked="checked"{/if} />
+					<input type="checkbox" name="show_author[{$types[user].type|escape}]" {if $types[user].show_author eq 'y'}checked="checked"{/if} />
 				</td>
 				<td class="{cycle advance=false}">
-					<input type="checkbox" name="show_pubdate[{$types[user].type}]" {if $types[user].show_pubdate eq 'y'}checked="checked"{/if} />
+					<input type="checkbox" name="show_pubdate[{$types[user].type|escape}]" {if $types[user].show_pubdate eq 'y'}checked="checked"{/if} />
 				</td>
 				<td class="{cycle advance=false}">
-					<input type="checkbox" name="show_expdate[{$types[user].type}]" {if $types[user].show_expdate eq 'y'}checked="checked"{/if} />
+					<input type="checkbox" name="show_expdate[{$types[user].type|escape}]" {if $types[user].show_expdate eq 'y'}checked="checked"{/if} />
 				</td>
 				<td class="{cycle advance=false}">
-					<input type="checkbox" name="show_reads[{$types[user].type}]" {if $types[user].show_reads eq 'y'}checked="checked"{/if} />
+					<input type="checkbox" name="show_reads[{$types[user].type|escape}]" {if $types[user].show_reads eq 'y'}checked="checked"{/if} />
 				</td>
 				<td class="{cycle advance=false}">
-					<input type="checkbox" name="show_size[{$types[user].type}]" {if $types[user].show_size eq 'y'}checked="checked"{/if} />
+					<input type="checkbox" name="show_size[{$types[user].type|escape}]" {if $types[user].show_size eq 'y'}checked="checked"{/if} />
 				</td>
 				<td class="{cycle advance=false}">
-					<input type="checkbox" name="show_topline[{$types[user].type}]" {if $types[user].show_topline eq 'y'}checked="checked"{/if} />
+					<input type="checkbox" name="show_topline[{$types[user].type|escape}]" {if $types[user].show_topline eq 'y'}checked="checked"{/if} />
 				</td>
 				<td class="{cycle advance=false}">
-					<input type="checkbox" name="show_subtitle[{$types[user].type}]" {if $types[user].show_subtitle eq 'y'}checked="checked"{/if} />
+					<input type="checkbox" name="show_subtitle[{$types[user].type|escape}]" {if $types[user].show_subtitle eq 'y'}checked="checked"{/if} />
 				</td>
 				<td class="{cycle advance=false}">
-					<input type="checkbox" name="show_linkto[{$types[user].type}]" {if $types[user].show_linkto eq 'y'}checked="checked"{/if} />
+					<input type="checkbox" name="show_linkto[{$types[user].type|escape}]" {if $types[user].show_linkto eq 'y'}checked="checked"{/if} />
 				</td>
 				<td class="{cycle advance=false}">
-					<input type="checkbox" name="show_image_caption[{$types[user].type}]" {if $types[user].show_image_caption eq 'y'}checked="checked"{/if} />
+					<input type="checkbox" name="show_image_caption[{$types[user].type|escape}]" {if $types[user].show_image_caption eq 'y'}checked="checked"{/if} />
 				</td>
 				<td class="{cycle advance=false}">
-					<input type="checkbox" name="show_lang[{$types[user].type}]" {if $types[user].show_lang eq 'y'}checked="checked"{/if} />
+					<input type="checkbox" name="show_lang[{$types[user].type|escape}]" {if $types[user].show_lang eq 'y'}checked="checked"{/if} />
 				</td>
 				<td class="{cycle advance=false}">
-					<input type="checkbox" name="creator_edit[{$types[user].type}]" {if $types[user].creator_edit eq 'y'}checked="checked"{/if} />
+					<input type="checkbox" name="creator_edit[{$types[user].type|escape}]" {if $types[user].creator_edit eq 'y'}checked="checked"{/if} />
 				</td>
 				<td class="{cycle}">
 					{if $types[user].article_cnt eq 0}
-						<a class="link" href="tiki-article_types.php?remove_type={$types[user].type}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
+						<a class="link" href="tiki-article_types.php?remove_type={$types[user].type|escape:url}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
 					{else}
 						&nbsp;
 					{/if}

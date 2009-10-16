@@ -10,18 +10,18 @@
 
 <div class="article">
 	{if $show_topline eq 'y' and $topline}
-		<div class="articletopline">{$topline}</div>
+		<div class="articletopline">{$topline|escape}</div>
 	{/if}
 	<div class="articletitle">
 		<h2>
-			{$arttitle}
+			{$arttitle|escape}
 		</h2>
 		{if $show_subtitle eq 'y' and $subtitle}
-			<div class="articlesubtitle">{$subtitle}</div>
+			<div class="articlesubtitle">{$subtitle|escape}</div>
 		{/if}
 		
 		<span class="titleb">
-			{if $show_author eq 'y' && $authorName}{tr}By:{/tr} {$authorName} {/if}
+			{if $show_author eq 'y' && $authorName}{tr}By:{/tr} {$authorName|escape} {/if}
 			{if $show_pubdate eq 'y' && $publishDate}{tr}on:{/tr} {$publishDate|tiki_short_datetime} {/if}
 			{if $show_reads eq 'y'}({$reads} {tr}Reads{/tr}){/if}
 		</span>
@@ -30,7 +30,7 @@
 
 	{if $use_ratings eq 'y'}
 		<div class="articleheading">
-			{tr}Rating{/tr}: 
+			{tr}Rating:{/tr} 
 			{repeat count=$rating}
 				{icon _id='star' alt="{tr}star{/tr}"}
 			{/repeat}
@@ -116,7 +116,7 @@
 
 				<a href="{$articleId|sefurl:article:with_next}page={$prev_page}">{icon _id='resultset_previous' alt='{tr}Previous page{/tr}'}</a>
 
-				<small>{tr}page{/tr}:{$pagenum}/{$pages}</small>
+				<small>{tr}page:{/tr}{$pagenum}/{$pages}</small>
 
 				<a href="{$articleId|sefurl:article:with_next}page={$next_page}">{icon _id='resultset_next' alt='{tr}Next page{/tr}'}</a>
 
@@ -127,7 +127,7 @@
 
 	{if $show_linkto eq 'y' and $linkto}
 		<div class="articlesource">
-			{tr}Source{/tr}: <a href="{$linkto}"{if $prefs.popupLinks eq 'y'} target="_blank"{/if}>{$linkto}</a>
+			{tr}Source:{/tr} <a href="{$linkto}"{if $prefs.popupLinks eq 'y'} target="_blank"{/if}>{$linkto}</a>
 		</div>
 	{/if}
 

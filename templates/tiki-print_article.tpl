@@ -11,8 +11,8 @@
 
 <div id="tiki-clean">
 	<div class="articletitle">
-		<h2>{$title}</h2>
-		<span class="titleb">{tr}By:{/tr}{$authorName} {tr}on:{/tr}{$publishDate|tiki_short_datetime} ({$reads} {tr}Reads{/tr})</span>
+		<h2>{$title|escape}</h2>
+		<span class="titleb">{tr}By:{/tr} {$authorName|escape} {tr}on:{/tr} {$publishDate|tiki_short_datetime} ({$reads} {tr}Reads{/tr})</span>
 		<br />
 	</div>
 	

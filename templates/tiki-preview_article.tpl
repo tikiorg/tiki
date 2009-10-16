@@ -1,14 +1,14 @@
-<h2>{tr}Preview{/tr}: {$page}</h2>
+<h2>{tr}Preview:{/tr}{$page|escape}</h2>
 
 <div class="article">
 	<div class="articletitle">
-		<h2>{$title}</h2>
-		<span class="titleb">{tr}By:{/tr} {$authorName} {tr}on:{/tr} {$publishDate|tiki_short_datetime} ({$reads} {tr}Reads{/tr})</span>
+		<h2>{$title|escape}</h2>
+		<span class="titleb">{tr}By:{/tr} {$authorName|escape} {tr}on:{/tr} {$publishDate|tiki_short_datetime} ({$reads} {tr}Reads{/tr})</span>
 	</div>
 
 	{if $type eq 'Review'}
 		<div class="articleheading">
-			{tr}Rating{/tr}: 
+			{tr}Rating:{/tr} 
 			{repeat count=$rating}
 				<img src="img/icons/blue.gif" alt=''/>
 			{/repeat}

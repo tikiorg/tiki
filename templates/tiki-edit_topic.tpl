@@ -13,7 +13,7 @@
 <tr><td class="formcolor">{tr}Topic Name{/tr}</td>
     <td class="formcolor">
       <input type="hidden" name="topicid" value="{$topic_info.topicId}" />
-      <input type="text" name="name" value="{$topic_info.name}" />
+      <input type="text" name="name" value="{$topic_info.name|escape}" />
     </td>
 </tr>
 <tr><td class="formcolor">{tr}Upload Image{/tr}</td>

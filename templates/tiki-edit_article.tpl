@@ -8,7 +8,7 @@
 
 {title help="Articles"}
 	{if $articleId}
-		{tr}Edit:{/tr} {$title}
+		{tr}Edit:{/tr} {$title|escape}
 	{else}
 		{tr}Edit article{/tr}
 	{/if}
@@ -94,7 +94,7 @@
 			<td>
 				<select name="topicId">
 					{section name=t loop=$topics}
-						<option value="{$topics[t].topicId|escape}" {if $topicId eq $topics[t].topicId}selected="selected"{/if}>{$topics[t].name}</option>
+						<option value="{$topics[t].topicId|escape}" {if $topicId eq $topics[t].topicId}selected="selected"{/if}>{$topics[t].name|escape}</option>
 					{/section}
 					<option value="" {if $topicId eq 0}selected="selected"{/if}>{tr}None{/tr}</option>
 				</select>
@@ -108,7 +108,7 @@
 			<td>
 				<select id='articletype' name='type' onchange='javascript:chgArtType();'>
 					{foreach from=$types key=typei item=prop}
-						<option value="{$typei|escape}" {if $type eq $typei}selected="selected"{/if}>{tr}{$typei}{/tr}</option>
+						<option value="{$typei|escape}" {if $type eq $typei}selected="selected"{/if}>{tr}{$typei|escape}{/tr}</option>
 					{/foreach}
 				</select>
 				{if $tiki_p_admin_cms eq 'y'}
@@ -244,7 +244,7 @@
 		{if $prefs.cms_spellcheck eq 'y'}
 			<tr class="formcolor">
 				<td>
-					{tr}Spellcheck{/tr}: </td>
+					{tr}Spellcheck:{/tr} </td>
 				<td>
 					<input type="checkbox" name="spellcheck" {if $spellcheck eq 'y'}checked="checked"{/if}/>
 				</td>
