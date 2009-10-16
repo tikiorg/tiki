@@ -637,7 +637,14 @@ if ($prefs['feature_user_watches'] == 'y') {
 
 if ($prefs['fgal_show_explorer'] == 'y' || $prefs['fgal_show_path'] == 'y' || isset($_REQUEST['movesel'])) {
 	$all_galleries = $filegallib->getFileGalleriesData();
-	$smarty->assign_by_ref('all_galleries', $all_galleries['data']);
+	$gals = array();
+	foreach ($all_galleries['data'] as $gal) {
+		if ($gal['id'] != $galleryId) {
+			$gals[] = array('label' => $gal['parentName'] . ' > ' . $gal['name'], 'id' => $gal['id']);
+		}
+	}
+	sort($gals);
+	$smarty->assign_by_ref('all_galleries', $gals);
 
 	if ( ! empty($all_galleries) && is_array($all_galleries) && $all_galleries['cant'] > 0) {
 		$phplayersTreeData = $filegallib->getFilegalsTreePhplayers( $galleryId );
