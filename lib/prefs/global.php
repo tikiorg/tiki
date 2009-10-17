@@ -124,5 +124,10 @@ function prefs_global_list() {
 			'size' => '5',
 			'filter' => 'digits',
 		),
+		'sitead' => array(
+			'name' => tra('Content'),
+			'type' => 'textarea',
+			'size' => '5',
+		),
 	);
 }

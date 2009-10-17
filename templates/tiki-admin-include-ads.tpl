@@ -10,15 +10,9 @@
 	<input type="hidden" name="adssetup" />
 	<fieldset>
 		<legend>{tr}Site Ads and Banners{/tr}{if $prefs.feature_help eq 'y'} {help url="Banners"}{/if}</legend>
-		<div class="adminoptionbox">
-			<div class="adminoptionlabel">
-				<label for="sitead">{tr}Content{/tr}:</label>
-				<br />
-				<textarea name="sitead" rows="6" style="width: 90%" id="sitead">{$prefs.sitead|escape}</textarea>
-				<br />
-				<em>{tr}Example{/tr}: {literal}{banner zone='{/literal}{tr}Test{/tr}{literal}'}{/literal}.</em>
-			</div>
-		</div>
+
+		{preference name=sitead}
+		<em>{tr}Example{/tr}: {literal}{banner zone='{/literal}{tr}Test{/tr}{literal}'}{/literal}.</em>
 
 		{preference name=feature_sitead}
 		<div class="adminoptionbox" id="feature_sitead_childcontainer">
