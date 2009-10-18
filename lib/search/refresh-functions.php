@@ -193,6 +193,8 @@ function refresh_index_oldest() {
 
 function &search_index($data) {
 
+	$preg_utf8_support=preg_match('/\p{Lu}/u', "A" );
+
 	// Be sure we will parse UTF-8 data
 	if ( function_exists('mb_check_encoding')
 		&& function_exists('iconv')
@@ -203,8 +205,8 @@ function &search_index($data) {
 	}
 
 	// Clean the UTF-8 string using HTML Purifier
-@	require_once('lib/htmlpurifier/HTMLPurifier.auto.php');
-@	require_once('lib/htmlpurifier/HTMLPurifier/Encoder.php');
+@	include_once('lib/htmlpurifier/HTMLPurifier.auto.php');
+@	include_once('lib/htmlpurifier/HTMLPurifier/Encoder.php');
 	if ( class_exists('HTMLPurifier_Encoder') ) {
 		$data = HTMLPurifier_Encoder::cleanUTF8($data);
 	}
@@ -225,7 +227,11 @@ function &search_index($data) {
 	$data = function_exists('mb_convert_case') ? mb_convert_case($data, MB_CASE_LOWER, 'UTF-8') : strtolower($data);
 
 	// Convert punctuations to spaces
-	$data = preg_replace('/[\pP\pZ\pS]/u', ' ', $data);
+	if ($preg_utf8_support) {
+		$data = preg_replace('/[\pP\pZ\pS]/u', ' ', $data);
+	} else {
+		$data = preg_replace('/[\s\.,!\?\(\)\[\]\{\}\/\\\]/', ' ', $data);
+	}
 
 	if ( $data != '' ) {
 		// Split into words (do NOT use the split function that doesn't correctly handle some characters !)
@@ -233,7 +239,7 @@ function &search_index($data) {
 
 		foreach ( $sstrings as $value ) {
 			// Keep only alpha-num words
-			if ( preg_match('/^[\pL\pN]+$/u', $value) ) {
+			if ( preg_match('/^[\pL\pN]+$/u', $value) || !$preg_utf8_support ) {
 				if ( isset($words[$value]) ) {
 					$words[$value]++; // count words
 				} else {

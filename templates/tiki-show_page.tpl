@@ -125,7 +125,7 @@
 
 		</div>
   		<div style="float: left;">
-{if $tiki_p_edit_structures eq 'y' and $tiki_p_edit_structures eq 'y' and $struct_editable eq 'y'}
+{if $struct_editable eq 'y'}
     <form action="tiki-editpage.php" method="post">
       <input type="hidden" name="current_page_id" value="{$page_info.page_ref_id}" />
       <input type="text" name="page" />

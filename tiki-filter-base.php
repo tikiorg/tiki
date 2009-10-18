@@ -73,5 +73,6 @@ if ( substr($tikipath,-1,1) != '/' ) $tikipath .= '/';
 require_once('lib/init/initlib.php');
 TikiInit::prependIncludePath($tikipath.'lib/pear');
 TikiInit::appendIncludePath($tikipath.'lib/core/lib');
+TikiInit::appendIncludePath($tikipath);
 require_once('lib/core/lib/DeclFilter.php');
 require_once('lib/core/lib/JitFilter.php');

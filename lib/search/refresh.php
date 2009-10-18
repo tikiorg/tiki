@@ -18,9 +18,10 @@ function refresh_search_index() {
   list($usec, $sec) = explode(" ",microtime());
   srand (ceil($sec+100*$usec));
   if($prefs['search_refresh_rate'] > 0 && rand(1,$prefs['search_refresh_rate'])==1) {
-    // print "<pre>refreshing</pre>\n";
+ //    print "<pre>refreshing</pre>\n";
 
-    require_once(dirname(__FILE__).'/refresh-functions.php');
+
+    // require_once('lib/search/refresh-functions.php');
     // get a random location
     $locs=array();
     if ($prefs['feature_wiki'] == 'y') $locs[]="random_refresh_index_wiki";

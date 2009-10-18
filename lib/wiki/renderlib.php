@@ -134,7 +134,7 @@ class WikiRenderer
 				$structs_with_perm[] = $t_structs;
 			}
 		}    	
-		if ($tikilib->user_has_perm_on_object($this->user,$navigation_info['home']['pageName'],'wiki page','tiki_p_edit','tiki_p_edit_categorized'))
+		if ($tikilib->user_has_perm_on_object($this->user,$navigation_info['home']['pageName'],'wiki page','tiki_p_edit','tiki_p_edit_structures'))
 			$this->smartyassign('struct_editable', 'y');
 		else
 			$this->smartyassign('struct_editable', 'n');	

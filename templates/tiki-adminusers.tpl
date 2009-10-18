@@ -344,14 +344,14 @@
 				No need to specify user password or to ask him to change it, if :
 				--> Tiki is using the Tiki + PEAR Auth systems
 				--> AND Tiki won't create the user in the Tiki auth system
-				--> AND Tiki won't create the user in the PEAR Auth system 
+				--> AND Tiki won't create the user in the ldap 
 			*}
-			{if $prefs.auth_method eq 'auth' and ( $prefs.auth_create_user_tiki eq 'n' or $prefs.auth_skip_admin eq 'y' ) and $prefs.auth_create_user_auth eq 'n' and $userinfo.login neq 'admin'}
+			{if $prefs.auth_method eq 'ldap' and ( $prefs.ldap_create_user_tiki eq 'n' or $prefs.ldap_skip_admin eq 'y' ) and $prefs.ldap_create_user_ldap eq 'n' and $userinfo.login neq 'admin' and $auth_ldap_permit_tiki_users eq 'n'}
 				<tr class="formcolor">
 					<td colspan="2">
 						<b>{tr}No password is required{/tr}</b>
 						<br />
-						<i>{tr}Tikiwiki is configured to delegate the password managment to LDAP through PEAR Auth.{/tr}</i>
+						<i>{tr}Tikiwiki is configured to delegate the password managment to LDAP.{/tr}</i>
 					</td>
 				</tr>
 			{elseif empty($userinfo) || $tiki_p_admin_users eq 'y' || $userinfo.login eq $user}
@@ -370,7 +370,7 @@
 						{if $prefs.pass_chr_num eq 'y'}
 							<em>{tr}Password must contain both letters and numbers{/tr}</em>.
 						{/if}
-						{if ! ( $prefs.auth_method eq 'auth' and ( $prefs.auth_create_user_tiki eq 'n' or $prefs.auth_skip_admin eq 'y' ) and $prefs.auth_create_user_auth eq 'n' ) }
+						{if ! ( $prefs.auth_method eq 'ldap' and ( $prefs.ldap_create_user_tiki eq 'n' or $prefs.ldap_skip_admin eq 'y' ) and $prefs.ldap_create_user_ldap eq 'n' ) }
 							<p>
 								<div>
 									{button href="#" _onclick="genPass('genepass','pass1','pass2');runPassword(document.RegForm.genpass.value, 'mypassword');" _text="{tr}Generate a password{/tr}"}

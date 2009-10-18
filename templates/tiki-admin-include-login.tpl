@@ -323,7 +323,7 @@
 
 					<div class="adminoptionbox">
 						<div class="adminoption"><input type="checkbox" id="ldap_create_user_tiki" name="ldap_create_user_tiki" {if $prefs.ldap_create_user_tiki eq 'y'}checked="checked"{/if} /></div>
-						<div class="adminoptionlabel"><label for="auth_create_user_tiki">{tr}Create user if not in Tiki{/tr}.</label></div>
+						<div class="adminoptionlabel"><label for="ldap_create_user_tiki">{tr}Create user if not in Tiki{/tr}.</label></div>
 					</div>
 
 					<div class="adminoptionbox">
