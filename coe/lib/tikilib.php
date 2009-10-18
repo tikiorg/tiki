@@ -6003,8 +6003,7 @@ JQ
 		if ( $preparsed === null ) $preparsed = array('data'=>array(),'key'=>array());
 		if ( $noparsed === null ) $noparsed = array('data'=>array(),'key'=>array());
 
-		global $page_regex, $slidemode, $prefs, $ownurl_father, $tiki_p_admin_drawings, $tiki_p_edit_drawings, $tiki_p_edit_dynvar, $tiki_p_upload_picture, $page, $page_ref_id, $rsslib, $dbTiki, $structlib, $user, $tikidomain, $tikiroot;
-		global $wikilib; include_once('lib/wiki/wikilib.php');
+		global $prefs, $page, $page_regex;
 
 		// Handle parsing options
 		if ( $options == null ) $options = array();
@@ -6789,7 +6788,8 @@ JQ
 	}
 
 	function get_wiki_link_replacement( $pageLink, $extra = array() ) {
-		global $prefs, $wikilib, $semanticlib;
+		global $prefs, $semanticlib;
+		global $wikilib; include_once('lib/wiki/wikilib.php');
 		
 		$displayLink = $pageLink;
 
