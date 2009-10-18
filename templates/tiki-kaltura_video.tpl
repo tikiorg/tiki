@@ -1,150 +1,108 @@
 {title help="Kaltura" admpage="kaltura"}
-	{if $mode eq 'edit'}{tr}Change Details:{/tr}{$videoInfo.name}
+	{if $mode eq 'edit'}{tr}Change Details:{/tr}{$videoInfo->name}
 	{elseif $mode eq 'remix' || $mode eq 'dupl'}{tr}Remix{/tr}
-	{elseif $mode eq 'view'}{tr}View:{/tr}{$videoInfo.name}
-	{else}{tr}Upload File{/tr}{/if}{/title}
+	{elseif $mode eq 'view'}{tr}View:{/tr}{$videoInfo->name}
+	{else}{/if}{/title}
 {if $editor eq ''}
 {assign var=editor value=$prefs.default_kaltura_editor}
 {/if}
-
 <div class="navbar">
 	{if $tiki_p_remix_videos eq 'y' or $tiki_p_admin_video_galleries eq 'y' or $tiki_p_admin eq 'y'}
 	{button _text="{tr}List Entries{/tr}" href="tiki-list_kaltura_entries.php" }
 	{/if}
-	{if $mode ne '' and $mode ne 'new_entries'}
+	{if $mode ne ''}
 	{if $mode ne 'edit' and ($tiki_p_edit_videos eq 'y' or $tiki_p_admin_video_galleries eq 'y' or $tiki_p_admin eq 'y')}
-	{button _text="{tr}Change Details{/tr}" href="tiki-kaltura_video.php?videoId=$videoId&action=edit" }
+		{if $entryType eq "media"}
+			{button _text="{tr}Change Details{/tr}" href="tiki-kaltura_video.php?mediaId=$videoId&action=edit" }
+		{else}
+			{button _text="{tr}Change Details{/tr}" href="tiki-kaltura_video.php?mixId=$videoId&action=edit" }		
+		{/if}
 	{/if}
 	{if $mode ne 'remix' and ($tiki_p_remix_videos eq 'y' or $tiki_p_admin_video_galleries eq 'y' or $tiki_p_admin eq 'y')}
-	{button _text="{tr}Remix{/tr}" href="tiki-kaltura_video.php?videoId=$videoId&action=remix" }
+		{if $entryType eq "media"}
+			{button _text="{tr}Remix{/tr}" href="tiki-kaltura_video.php?mediaId=$videoId&action=remix" }
+		{else}
+			{button _text="{tr}Remix{/tr}" href="tiki-kaltura_video.php?mixId=$videoId&action=remix" }		
+		{/if}
 	{/if}
 	{if $mode eq 'remix' and $editor eq 'kse'}
-	{button _text="{tr}Advance Editor{/tr}" href="tiki-kaltura_video.php?videoId=$videoId&action=remix&editor=kae" }
+	{button _text="{tr}Advance Editor{/tr}" href="tiki-kaltura_video.php?mixId=$videoId&action=remix&editor=kae" }
 	{/if}
 	{if $mode eq 'remix' and $editor eq 'kae'}
-	{button _text="{tr}Simple Editor{/tr}" href="tiki-kaltura_video.php?videoId=$videoId&action=remix&editor=kse" }
+	{button _text="{tr}Simple Editor{/tr}" href="tiki-kaltura_video.php?mixId=$videoId&action=remix&editor=kse" }
 	{/if}
 	{/if}
 </div>
 
 <hr class="clear"/>
-
 	{capture name=upload_file assign=edit_info}
 		<div class="fgal_file">
 		<div class="fgal_file_c2">
 		<table width="100%">
 		<tr>
-			<td width="50%">
-			<object name="kaltura_player" id="kaltura_player" type="application/x-shockwave-flash" height="365" width="400" data="http://www.kaltura.com/index.php/kwidget/wid/{$prefs.kdpWidget}/uiconf_id/{$prefs.kdpUIConf}/entry_id/{$videoInfo.id}">
+			<td width="50%" align="center">
+			<object name="kaltura_player" id="kaltura_player" type="application/x-shockwave-flash" height="365" width="700" data="http://www.kaltura.com/index.php/kwidget/wid/{$prefs.kdpWidget}/uiconf_id/{$prefs.kdpUIConf}/entry_id/{$videoInfo->id}">
 			<param name="allowScriptAccess" value="always" />
 			<param name="allowNetworking" value="all" />
 			<param name="allowFullScreen" value="true" />
-			<param name="movie" value="http://www.kaltura.com/index.php/kwidget/wid/{$prefs.kdpWidget}/uiconf_id/{$prefs.kdpUIConf}/entry_id/{$videoInfo.id}"/>
-			<param name="flashVars" value="entry_id={$videoInfo.id}"/>
+			<param name="movie" value="http://www.kaltura.com/index.php/kwidget/wid/{$prefs.kdpWidget}/uiconf_id/{$prefs.kdpUIConf}/entry_id/{$videoInfo->id}"/>
+			<param name="flashVars" value="entry_id={$videoInfo->id}"/>
 			<param name="wmode" value="opaque"/>
 			</object>			
 			</td>
-			<td>
-				<table width="100%">
+		</tr>
+		</table>
+     <table width="100%" class="normal">
 				<tr>
-					<td>{tr}Video Title:{/tr}</td>
-					<td>
+					<td class="even">{tr}Video Title{/tr}</td>
+					<td class="even">
 						{if $mode eq 'edit'}
-						<input style="width:100%" type="text" name="name" {if $videoInfo.name}value="{$videoInfo.name}"{/if} size="40" />
+						<input style="width:100%" type="text" name="name" {if $videoInfo->name}value="{$videoInfo->name}"{/if} size="40" />
 						{else}
-						{$videoInfo.name}
+						{$videoInfo->name}
 						{/if}
 					</td>
 				</tr>
 				<tr>
-					<td>{tr}Description:{/tr}</td>
-					<td>
+					<td class="odd">{tr}Description{/tr}</td>
+					<td class="odd">
 						{if $mode eq 'edit'}
-						<textarea style="width:100%" rows="2" cols="40" name="description">{if $videoInfo.description}{$videoInfo.description}{/if}</textarea>
+						<textarea style="width:100%" rows="2" cols="40" name="description">{if $videoInfo->description}{$videoInfo->description}{/if}</textarea>
 						{else}
-						{$videoInfo.description}
+						{$videoInfo->description}
 						{/if}
 					</td>
 				</tr>
 				<tr>
-					<td>{tr}Tags:{/tr}</td>
-					<td>
+					<td class="even">{tr}Tags{/tr}</td>
+					<td class="even">
 						{if $mode eq 'edit'}
-						<input style="width:100%" type="text" name="tags" {if $videoInfo.tags}value="{$videoInfo.tags}"{/if} size="40" />
+						<input style="width:100%" type="text" name="tags" {if $videoInfo->tags}value="{$videoInfo->tags}"{/if} size="40" />
 						{else}
-						{$videoInfo.tags}
+						{$videoInfo->tags}
 						{/if}
 					</td>
 				</tr>
 				
 				{if $mode eq 'view'}
-				<td>{tr}Duration:{/tr}</td>
-					<td>
-						{$videoInfo.duration}'s
-					</td>
+				<tr>
+				<td class="odd">{tr}Duration{/tr}</td>
+				<td class="odd">{$videoInfo->duration}s</td>
 				</tr>
-				<td>{tr}Views:{/tr}</td>
-					<td>
-						{$videoInfo.views}
-					</td>
+				<tr>
+				<td class="even">{tr}Views{/tr}</td>
+				<td class="even">{$videoInfo->views}</td>
 				</tr>
-				<td>{tr}Plays:{/tr}</td>
-					<td>
-						{$videoInfo.plays}
-					</td>
+				<tr>
+				<td class="odd">{tr}Plays{/tr}</td>
+				<td class="odd">{$videoInfo->plays}</td>
 				</tr>
 				{/if}
-						<input type="hidden" name="videoId" value="{$videoInfo.id}"/>
-				</table>
-			</td>
-		</tr>
-		</table>
+						<input type="hidden" name="{$entryType}Id" value="{$videoInfo->id}"/>
+	</table>
+
 		</div>
 		</div>
-	{/capture}
-	
-	{capture name=upload_file assign=new_entries}
-		<div class="fgal_file">
-		<div class="fgal_file_c2">
-		{section name=idx loop=$entries}
-		<table width="100%">
-		<tr><td width="50%"><img src="{$entries[idx].thumbnailUrl}"></img></td><td>
-		<table width="100%">
-		<tr>
-			<td>{tr}Video Title:{/tr}</td>
-			<td>
-				{$entries[idx].name}
-			</td>
-		</tr>
-		<tr>
-			<td>{tr}Description:{/tr}</td>
-			<td>
-				{$entries[idx].description}
-			</td>
-		</tr>
-		<tr>
-			<td>{tr}Tags:{/tr}</td>
-			<td>
-				{$entries[idx].tags}
-			</td>
-		</tr>
-		<tr>
-		</table>
-		</td></tr>
-		{/section}
-		<br>
-		</table>
-		</div>
-		</div>
-	{/capture}
-	
-	{capture name=upload_video assign=kcw}
-		<object id="kaltura_contribution_wizard" type="application/x-shockwave-flash" allowScriptAccess="always" allowNetworking="all" height="360" width="680" data="http://www.kaltura.com/kcw/ui_conf_id/{$prefs.kcwUIConf}">
-			<param name="allowScriptAccess" value="always" />
-			<param name="allowNetworking" value="all" />
-			<param name="movie" value="http://www.kaltura.com/kcw/ui_conf_id/{$prefs.kcwUIConf}"/>
-    		<param name="flashVars" value="{$cwflashVars}" />
-		</object>
 	{/capture}
 	
 	{capture name=remix_video assign=edit_remix}
@@ -162,6 +120,7 @@
 	<div id="form">
 	<form  action='tiki-kaltura_video.php' enctype='multipart/form-data' method='post' style='margin:0px; padding:0px'>
 	{$edit_info}
+	<input type="hidden" name="action" value="edit">
 	<input name="update" type="submit" value="{tr}Save{/tr}"/>
 	</form>
 	</div>
@@ -173,36 +132,13 @@
 	<div>
 	{$edit_remix}
 	</div>
-	{elseif $mode eq 'new_entries'}
-	<div id="new_entries">
-	{$new_entries}
-	</div>
 	{else}
-	<div>
-		{$kcw}
-		<form name='kcw' id='kcw' action='tiki-kaltura_video.php' method='post' enctype='multipart/form-data' method='post' style='margin:0px; padding:0px'>
-		<input type="hidden" name="kcw" value="true"/>
-		<div id="kcw_entries">
-		</div>
-		</form>
-	</div>
+
 	{/if}
 	</div>
-	
+
 <script type="text/javascript">
-	
 {literal}
-		function afterAddEntry (entries) {	
-		var tmp='';
-			
-			for( var i = 0; i < entries.length; i++)
-			{
-				tmp += '<input type="hidden" name="entryId[]" value="'+entries[i].entryId+'"/>';
-				
-			}
-		document.getElementById('kcw_entries').innerHTML = tmp;
-		document.kcw.submit();
-		}
         
         function CloseClick(isModified) {
 			window.location="./tiki-list_kaltura_entries.php";
@@ -216,6 +152,6 @@
 			window.location="./tiki-list_kaltura_entries.php";
 		}
 {/literal}
-		</script>
+</script>
 
 

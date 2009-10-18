@@ -18,26 +18,121 @@ if ($tiki_p_list_videos != 'y' && $tiki_p_admin_kaltura != 'y' && $tiki_p_admin 
 	die;
 }
 
-include_once ("lib/videogals/videogallib.php");
+include_once ("lib/videogals/KalturaClient_v3.php");
 
 global $user;
 
-// Initialize kaltura session
-$kaltura_conf = kaltura_init_config();
-$kuser = new KalturaSessionUser();
-$kuser->userId = $user;
-$kaltura_client = new KalturaClient($kaltura_conf);
-$kres =$kaltura_client->startSession($kuser, $kaltura_conf->secret,false,"");
-$kaltura_client->setKS($kres["result"]["ks"]);
+$mediaTypeAsString['2'] = "Image";
+$mediaTypeAsString['1'] = "Video";
+$mediaTypeAsString['5'] = "Audio";
 
-if(!isset($kres["result"]["ks"])) {
+$secret = $prefs['secret'];
+$admin_secret = $prefs['adminSecret'];
+$partner_id = $prefs['partnerId'];
+$SESSION_ADMIN = 2;
+$SESSION_USER = 0;
+
+$kconf = new KalturaConfiguration($partner_id);
+$kclient = new KalturaClient($kconf);
+$ksession = $kclient->session->start($secret,$user,$SESSION_USER,$partner_id);
+// Initialize kaltura session
+
+if(!isset($ksession)) {
 	$smarty->assign('msg', tra("Could not establish Kaltura session. Try again"));
 	$smarty->display('error.tpl');
 	die;
 }
+$kclient->setKs($ksession);
 
-// Create kaltura filter for search
-$filter = new KalturaEntryFilter();
+if(isset($_REQUEST['action'])){
+
+$videoId = array();
+
+if(!empty($_REQUEST['mixId'])){	
+	if(is_array($_REQUEST['mixId'])){
+		$videoId = $_REQUEST['mixId'];
+	}else{
+		$videoId[0] = $_REQUEST['mixId'];
+	}
+	$kentryType = "mix";
+}
+
+if(!empty($_REQUEST['mediaId'])){	
+	if(is_array($_REQUEST['mediaId'])){
+		$videoId = $_REQUEST['mediaId'];
+	}else{
+		$videoId[0] = $_REQUEST['mediaId'];
+	}
+	$kentryType = "media";
+}
+$entryType = $_REQUEST['list'];
+
+switch($_REQUEST['action']){
+	
+	case 'Create Remix':
+		
+		if( $tiki_p_remix_videos != 'y' && $tiki_p_admin_kaltura != 'y' && $tiki_p_admin != 'y' ){
+			$smarty->assign('errortype', 401);
+			$smarty->assign('msg', tra("Permission denied: You cannot remix videos"));
+			$smarty->display('error.tpl');
+			die;
+		}else{		
+			if($kentryType == "media"){
+				$kentry = $kclient->media->get($videoId[0]);
+				$kmixEntry = new KalturaMixEntry();
+				$kmixEntry->name = "Remix of ".$kentry->name;
+				$kmixEntry->editorType = 1;
+				$kmixEntry = $kclient->mixing->add($kmixEntry);		
+				for($i=0;$i<count($videoId);$i++){
+					$kmixEntry = $kclient->mixing->appendMediaEntry($kmixEntry->id,$videoId[0]);
+				}
+			}
+			
+		}
+		header ('Location: tiki-kaltura_video.php?action=remix&mixId='.$kmixEntry->id);
+		die;
+		break;
+		
+	case 'Delete':
+
+		if($tiki_p_delete_videos != 'y' && $tiki_p_admin_kaltura != 'y' && $tiki_p_admin != 'y' ){
+			$smarty->assign('errortype', 401);
+			$smarty->assign('msg', tra("Permission denied: You cannot delete kaltura video"));
+			$smarty->display('error.tpl');
+			die;
+		} else {
+			$area = 'delkalturaentry';
+			if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+				key_check($area);
+				if($kentryType == "media"){
+					for($i=0; $i < count($videoId); $i++) {
+						$kclient->media->delete($videoId[$i]);
+					}
+				header ('Location: tiki-list_kaltura_entries.php?list=media');
+				die;
+				}
+				if($kentryType == "mix"){
+					for($i=0; $i < count($videoId); $i++) {
+						$kclient->mixing->delete($videoId[$i]);
+					}					
+				header ('Location: tiki-list_kaltura_entries.php?list=mix');
+				die;
+				}	
+					
+		    } else {
+				key_get($area);
+			}
+
+		}		
+	break;
+	case 'Create Playlist':
+		echo "playlist";
+	break;
+	case 'default':	
+}
+		
+}
+
 $sort_mode = '';
 if($_REQUEST['sort_mode']){
 	$sort_mode = $_REQUEST['sort_mode'];
@@ -47,18 +142,16 @@ if($_REQUEST['sort_mode']){
 $smarty->assign_by_ref('sort_mode',$sort_mode);
 $sort_mode = preg_replace('/desc_/','-',$sort_mode);
 $sort_mode = preg_replace('/asc_/','+',$sort_mode);
-$filter->orderBy = $sort_mode;
+
 
 if (isset($_REQUEST["find"])) {
 	$find = $_REQUEST["find"];
 } else {
 	$find = '';
 }
-
-$filter->multiLikeOrTagsOrName = $find;
 $smarty->assign('find', $find);
 
-$page_size = 15;
+$page_size = 5;
 if($_REQUEST['maxRecords']){
 	$page_size = $_REQUEST['maxRecords'];
 }	
@@ -71,46 +164,96 @@ if($_REQUEST['offset']){
 	$page = 1;
 }
 
-// Get user's kaltura entries		
-$res = $kaltura_client->listMyEntries($kuser,$filter,true,$page_size,$page,null);
+if($_REQUEST['list'] == "mix" or !isset($_REQUEST['list'])){
+	
+$kpager = new KalturaFilterPager();
+$kpager->pageIndex = $page;
+$kpager->pageSize = $page_size;
 
-if(!isset($res['result']['entries'])){
-	$smarty->assign('msg', tra("No results found"));
+$kfilter = new KalturaMixEntryFilter();
+$kfilter->userIdEqual = $user;
+$kfilter->orderBy = $sort_mode;
+$kfilter->multiLikeOrTagsOrName = $find;
+
+if($_REQUEST['view'] != "browse"){
+// Get user's kaltura mix entries		
+$kmixlist = $kclient->mixing->listAction($kfilter,$kpager);
+
+if( $kmixlist->totalCount == 0){
+	$smarty->assign('msg', tra("No mix entries found"));
 	$smarty->display('error.tpl');
 	die;
 }
-
-$entries['cant'] = $res['result']['count'];
-$entries['data'] = $res['result']['entries'];
-
-//Prepare kaltura entries data..
-for($i =0 ; $i < count($res['result']['entries']);$i++) {
-	$entries['data'][$i]['mediaTypeAsString'] = $mediaType[(int)$res['result']['entries'][$i]['mediaType']];
-
-	$entries['data'][$i]['created'] = date('d M Y h:i A',strtotime($res['result']['entries'][$i]['createdAt']));
-	$entries['data'][$i]['modified'] = date('d M Y h:i A',strtotime($res['result']['entries'][$i]['modifiedAt']));
-
-	$modifiedBy = $entries['data'][$i]['puserId'];
-	if($entries['data'][$i]['mediaType'] == '6'){	
-		$domdoc = new DOMDocument;
- 		$domdoc->loadXML($entries['data'][$i]['dataContent']); 
- 		$xpath = new DOMXpath($domdoc);
- 		$elements = $xpath->query("/xml/MetaData/PuserId");
- 		foreach ($elements as $element) {
-    			$nodes = $element->childNodes;
-    			foreach ($nodes as $node) {
-      				$modifiedBy = $node->nodeValue;
-    			}
-		}
+for($i =0 ; $i < $kmixlist->totalCount;$i++) {
+	$kmixlist->objects[$i]->createdAt = date('d M Y h:i A',$kmixlist->objects[$i]->createdAt);
+	$domdoc = new DOMDocument;
+ 	$domdoc->loadXML($kmixlist->objects[$i]->dataContent); 
+ 	$xpath = new DOMXpath($domdoc);
+ 	$elements = $xpath->query("/xml/MetaData/PuserId");
+ 	foreach ($elements as $element) {
+    	$nodes = $element->childNodes;
+    	foreach ($nodes as $node) {
+    		$modifiedBy[$i] = $node->nodeValue;
+    	}
 	}
-	$entries['data'][$i]['modifiedBy'] = $modifiedBy;
+
+ 	$elements = $xpath->query("/xml/MetaData/UpdatedAt");
+ 	foreach ($elements as $element) {
+    	$nodes = $element->childNodes;
+    	foreach ($nodes as $node) {
+    		$modifiedAt[$i] = date('d M Y h:i A',$node->nodeValue);
+    	}
+	}
 }
 
-$smarty->assign_by_ref('entries',$entries['data']);
-$smarty->assign_by_ref('cant',$entries['cant']);
-$smarty->assign_by_ref('offset',$offset);
-$smarty->assign_by_ref('maxRecords',$res['result']['page_size']);
+}else{
+	$kmixlist = $kclient->mixing->listAction($kfilter);
+}
+$smarty->assign_by_ref('klist',$kmixlist->objects);
+$smarty->assign_by_ref('cant',$kmixlist->totalCount);
+$smarty->assign('entryType','mix');
+$smarty->assign_by_ref('view', $_REQUEST['view']);
+$smarty->assign_by_ref('modifiedAt',$modifiedAt);
+$smarty->assign_by_ref('modifiedBy',$modifiedBy);
 
+}
+
+if($_REQUEST['list'] == "media"){
+	
+$kfilter = new KalturaMediaEntryFilter();
+$kfilter->userIdEqual = $user;
+$kfilter->orderBy = $sort_mode;
+$kfilter->multiLikeOrTagsOrName = $find;
+
+$kpager = new KalturaFilterPager();
+$kpager->pageIndex = $page;
+$kpager->pageSize = $page_size;
+// Get user's kaltura media entries
+if($_REQUEST['view'] != "browse"){
+
+$kmedialist = $kclient->media->listAction($kfilter,$kpager);
+if( $kmedialist->totalCount == 0){
+	$smarty->assign('msg', tra("No media entries found"));
+	$smarty->display('error.tpl');
+	die;
+}
+for($i =0 ; $i < $kmedialist->totalCount;$i++) {
+	$kmedialist->objects[$i]->createdAt = date('d M Y h:i A',$kmedialist->objects[$i]->createdAt);
+	$kmedialist->objects[$i]->mediaType = $mediaTypeAsString[$kmedialist->objects[$i]->mediaType];
+}
+}else{
+
+$kmedialist = $kclient->media->listAction($kfilter);
+
+}
+$smarty->assign_by_ref('klist',$kmedialist->objects);
+$smarty->assign_by_ref('cant',$kmedialist->totalCount);
+$smarty->assign('entryType','media');
+$smarty->assign_by_ref('view', $_REQUEST['view']);
+}
+
+$smarty->assign_by_ref('offset',$offset);
+$smarty->assign_by_ref('maxRecords',$page_size);
 // Display the template
 	$smarty->assign('mid', 'tiki-list_kaltura_entries.tpl');
 	$smarty->display("tiki.tpl");
