@@ -42,6 +42,10 @@ if ($tiki_p_view != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
+
+$wiki_authors_style = ( $prefs['wiki_authors_style_by_page'] == 'y' && $this->info['wiki_authors_style'] != '' ) ? $info['wiki_authors_style'] : $prefs['wiki_authors_style'];
+$smarty->assign_by_ref('wiki_authors_style', $wiki_authors_style);
+
 // Now increment page hits since we are visiting this page
 if ($prefs['count_admin_pvs'] == 'y' || $user != 'admin') {
 	$tikilib->add_hit($page);
