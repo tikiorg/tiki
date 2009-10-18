@@ -2475,7 +2475,7 @@ class TikiLib extends TikiDb_Bridge {
 				'show_description' => $prefs['fgal_list_description'],
 				'show_size' => $prefs['fgal_list_size'],
 				'show_created' => $prefs['fgal_list_created'],
-				'show_modified' => $prefs['fgal_list_lastmodif'],
+				'show_modified' => $prefs['fgal_list_lastModif'],
 				'show_creator' => $prefs['fgal_list_creator'],
 				'show_author' => $prefs['fgal_list_author'],
 				'show_last_user' => $prefs['fgal_list_last_user'],
