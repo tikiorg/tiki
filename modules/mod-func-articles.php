@@ -21,6 +21,11 @@ function module_articles_info() {
 				'description' => tra('If set to "y", article creation times are shown.') . " " . tr('Default: "n".'),
 				'filter' => 'word'
 			),
+			'img' => array(
+				'name' => tra('Image width'),
+				'description' => tra('If set, displays an image for each article if one applies, with the given width (in pixels). The article\'s own image is used, with a fallback to the article\'s topic image.') . " " . tr('Not set by default.'),
+				'filter' => 'word'
+			),
 			'categId' => array(
 				'name' => tra('Category filter'),
 				'description' => tra('If set to a category identifier, only lists the articles in the specified category.') . " " . tra('Example value: 13.') . " " . tr('Not set by default.'),
@@ -38,6 +43,10 @@ function module_articles_info() {
 				'name' => tra('Types filter'),
 				'description' => tra('If set to a list of article type names separated by plus signs, only lists the articles of the specified types. If the string is preceded by an exclamation mark ("!"), the effect is reversed, i.e. articles of the specified article types are not listed.') . " " . tra('Example values: Event, !Event, Event+Review, !Event+Classified+Article.') . " " . tr('Not set by default.')
 			),
+			'langfilter' => array(
+				'name' => tra('Language filter'),
+				'description' => tra('If set to a language code, only lists the articles in the specified language.') . " " . tra('Example values:') . ' en, fr.' . " " . tr('Not set by default.')
+			),
 			'sort' => array(
 				'name' => tra('Sort'),
 				'description' => tra('Specifies how the articles should be sorted.') . " " . tra('Possible values include created and created_asc (equivalent), created_desc, author, rating, topicId, lang and title. Unless "_desc" is specified, the sort is ascending. "created" sorts on article creation date.')  . ' ' . tra('Default value:') . " publishDate_desc",
@@ -52,6 +61,10 @@ function module_articles_info() {
 				'name' => tra('More'),
 				'description' => tra('If set to "y", displays a button labelled "More" that links to a paginated view of the selected articles.') . " " . tr('Default: "n".'),
 				'filter' => 'word'
+			),
+			'absurl' => array(
+				'name' => tra('Absolute URL'),
+				'description' => tra('If set to "y", some of the links use an absolute URL instead of a relative one. This can avoid broken links if the module is to be sent in a newsletter, for example.') . " " . tr('Default: "n".')
 			)
 		),
 		'common_params' => array('nonums', 'rows')
@@ -66,7 +79,7 @@ function module_articles( $mod_reference, $module_params ) {
 		'topic' => 'topicName',
 		'categId' => 'categId',
 		'type' => 'type',
-		'lang' => 'lang',
+		'langfilter' => 'lang',
 		'start' => null,
 		'sort' => null
 	);
@@ -78,11 +91,12 @@ function module_articles( $mod_reference, $module_params ) {
 	if ( $start == '' ) $start = 0;
 	if ( $sort == '' ) $sort = 'publishDate_desc';
 	
-	$ranking = $tikilib->list_articles($start, $mod_reference['rows'], $sort, '', '', '', $user, $type, $topicId, 'y', $topic, $categId, '', '', $lang);
+	$ranking = $tikilib->list_articles($start, $mod_reference['rows'], $sort, '', '', '', $user, $type, $topicId, 'y', $topic, $categId, '', '', $langfilter);
 	
 	$smarty->assign_by_ref('urlParams', $urlParams);
 	$smarty->assign('modArticles', $ranking["data"]);
 	$smarty->assign('more', isset($module_params['more']) ? $module_params['more'] : 'n');
+	$smarty->assign('absurl', isset($module_params["absurl"]) ? $module_params["absurl"] : 'n');
 	$smarty->assign('showcreated', isset($module_params['showcreated']) ? $module_params['showcreated'] : 'n');
 	$smarty->assign('showpubl', isset($module_params['showpubl']) ? $module_params['showpubl'] : 'n');
 }

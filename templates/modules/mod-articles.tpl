@@ -4,7 +4,12 @@
 	{if $nonums != 'y'}<ol>{else}<ul>{/if}
 		{section name=ix loop=$modArticles}
 			<li>
-				<a class="linkmodule" href="{$modArticles[ix].articleId|sefurl:article}" title="{$modArticles[ix].created|tiki_short_date}, {tr}by{/tr} {$modArticles[ix].author|escape}">
+				{if isset($module_params.img)}
+					<div class="image">
+						<img alt="" src="article_image.php?{if $modLastArticles[ix].hasImage eq 'y'}id={$modLastArticles[ix].articleId}{elseif $modLastArticles[ix].topicId}image_type=topic&amp;id={$modLastArticles[ix].topicId}{/if}" width="{$module_params.img}" />
+					</div>
+				{/if}
+				<a class="linkmodule" href="{if $absurl == 'y'}{$base_url}{/if}{$modArticles[ix].articleId|sefurl:article}" title="{$modArticles[ix].created|tiki_short_date}, {tr}by{/tr} {$modArticles[ix].author|escape}">
 					{$modArticles[ix].title|escape}{if $showcreated eq 'y'} <span class="date">({$modArticles[ix].created|tiki_short_date})</span>{/if}{if $showpubl eq 'y'} <span class="date">({$modArticles[ix].publishDate|tiki_short_date})</span>{/if}
 				</a>
 			</li>
