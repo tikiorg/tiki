@@ -246,7 +246,7 @@ $permGroups = array();
 $groupNames = array();
 $groupIndices = array();
 $groupInheritance = array();
-echo 'eee';print_r($group_filter);
+
 foreach($groups['data'] as &$row) {
 	if ($group_filter !== false && in_array($row['id'], $group_filter)) {
 		$groupNames[] = $row['groupName'];
