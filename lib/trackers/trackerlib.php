@@ -901,7 +901,7 @@ class TrackerLib extends TikiLib {
 			.' FROM `tiki_tracker_item_fields` ttif INNER JOIN `tiki_tracker_fields` ttf ON ttif.`fieldId` = ttf.`fieldId`'
 			." WHERE (`lang` = ? or `lang` is null or `lang` = '') AND `itemId` = ?";
 		if (!empty($listfields)) {
-			$query2 .= " AND " . $this->in('ttif`.`fieldId', array_keys($listfields), $bindvars);
+			$query2 .= " AND " . $this->in('ttif.fieldId', array_keys($listfields), $bindvars);
 		}
 		$query2 .= ' ORDER BY `position` ASC, `lang` DESC';
 		$result2 = $this->fetchAll($query2, $bindvars);
