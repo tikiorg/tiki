@@ -1285,8 +1285,8 @@ class CategLib extends ObjectLib {
 			$bind = array_merge($bind, $categId);
 		} else {
 			$fromSql .= ", `tiki_category_objects` tco$callno ";
-			$whereSql .= " AND co.$callno`objectId`=tco.$callno`catObjectId` ";
-			$whereSql .= " AND tco.$callno`categId`= ? ";
+			$whereSql .= " AND co$callno.`objectId`=tco$callno.`catObjectId` ";
+			$whereSql .= " AND tco$callno.`categId`= ? ";
 			$bind[] = $categId;
 		}
 		if (is_array($bindVars))
