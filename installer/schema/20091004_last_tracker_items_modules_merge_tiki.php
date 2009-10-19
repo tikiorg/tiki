@@ -8,7 +8,7 @@ function upgrade_20091004_last_tracker_items_modules_merge_tiki( $installer )
 		if (strpos($params, "sort_mode=") === false) {
 			if ($params) $params .= "&";
 			$params .= "sort_mode=lastModif_desc";
-			$installer->query( "update tiki_modules set params='" . $params . "', name='last_tracker_items' where moduleId=" . $row['moduleId'] . "; " );
 		}
+		$installer->query( "update tiki_modules set params='" . $params . "', name='last_tracker_items' where moduleId=" . $row['moduleId'] . "; " );
 	}
 }
