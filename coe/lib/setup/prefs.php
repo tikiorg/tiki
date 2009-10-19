@@ -251,6 +251,8 @@ function get_default_prefs() {
 		'wikiplugin_redirect' => 'n',
 		'wikiplugin_regex' => 'n',
 		'wikiplugin_remarksbox' => 'y',
+		'wikiplugin_rm' => 'y',
+		'wikiplugin_lm' => 'y',
 		'wikiplugin_rss' => 'y',
 		'wikiplugin_sf' => 'n',
 		'wikiplugin_share' => 'n',

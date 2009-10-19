@@ -6106,8 +6106,6 @@ JQ
 		$patterns = $replace = array();
 		$patterns[] = "/\{l2r\}/"; $replace[] = "<div dir='ltr'>";
 		$patterns[] = "/\{r2l\}/"; $replace[] = "<div dir='rtl'>";
-		$patterns[] = "/\{lm\}/"; $replace[] = "&lrm;";
-		$patterns[] = "/\{rm\}/"; $replace[] = "&rlm;";
 		// linebreaks using %%%
 		$patterns[] = "/%%%/"; $replace[] = "<br />";
 
