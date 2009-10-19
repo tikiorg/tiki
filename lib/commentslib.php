@@ -1299,10 +1299,10 @@ class Comments extends TikiLib {
     } elseif ($type == 'replies') {
     	$mid .= " AND a.`parentId`>0";
     }
-	$query = "select a.`threadId`, a.`object`, a.`title`, a.`parentId`, a.`commentDate` $parentinfo from `tiki_comments` a $mid ORDER BY a.`commentDate` desc";
+	$query = "select a.`threadId`, a.`object`, a.`title`, a.`parentId`, a.`commentDate` $parentinfo, a.`userName` from `tiki_comments` a $mid ORDER BY a.`commentDate` desc";
 	
 	$result = $this->fetchAll($query,array($user),$max);
-	$ret = Perms::filter( array( 'type' => 'forum' ), 'object', $data, array( 'object' => 'forumId', 'creator' => 'userName' ), 'forum_read' );
+	$ret = Perms::filter( array( 'type' => 'forum' ), 'object', $result, array( 'object' => 'object', 'creator' => 'userName' ), 'forum_read' );
 	
 	return $ret;
     }
