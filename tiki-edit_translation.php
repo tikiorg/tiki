@@ -57,9 +57,9 @@ if ((!isset($_REQUEST['type']) || $_REQUEST['type'] == 'wiki page' || $_REQUEST[
 	# it meant someone else was translating it and that they should not
 	# touch it.
 	#
-		echo "<pre>tiki-edit_translation: before inserting incomplete translation message</pre>\n";
-
-	$smarty->assign('translate_message', tra("Translation of this page is incomplete.", $langpage));
+	if ($prefs['feature_translation_incomplete_notice'] == 'y') {
+		$smarty->assign('translate_message', "^".tra("Translation of this page is incomplete.", $langpage)."^\n\n");
+	}
 }
 else if ($_REQUEST['id']) {
 	if (!isset($_REQUEST['type'])) {
@@ -269,6 +269,9 @@ foreach( $rawLangs as $langInfo )
 	if( ! in_array( $langInfo['value'], $usedLang ) )
 		$languages[] = $langInfo;
 $smarty->assign_by_ref('languages', $languages);
+if (count($languages) == 1) {
+   $smarty->assign('only_one_language_left', 'y');
+}
 
 ask_ticket('edit-translation');
 

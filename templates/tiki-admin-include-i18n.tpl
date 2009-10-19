@@ -45,6 +45,7 @@
 	{preference name=feature_sync_language}
 	{preference name=feature_translation}
 	{preference name=feature_urgent_translation}
+	{preference name=feature_translation_incomplete_notice}
 	{preference name=feature_multilingual_one_page}
 	{preference name=quantify_changes}
 	{preference name=feature_multilingual_structures}

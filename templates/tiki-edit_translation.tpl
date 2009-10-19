@@ -33,15 +33,13 @@
 		   <option value="unspecified">{tr}Unspecified{/tr}</option>
 			{section name=ix loop=$languages}
 			{if in_array($languages[ix].value, $prefs.available_languages) or $prefs.available_languages|@count eq 0 or !is_array($prefs.available_languages)}
-			<option value="{$languages[ix].value|escape}">{$languages[ix].name}</option>
+			<option value="{$languages[ix].value|escape}"{if $only_one_language_left eq "y"} SELECTED{/if}>{$languages[ix].name}</option>
 			{/if}
 			{/section}
 		</select>
 	<br />{tr}Name of newly translated page{/tr}: <input type="text" size="40" name="page" id="translation_name"/><input type="hidden" name="translationOf" value="{$name|escape}"/>
 	<input type="submit" value="{tr}Create translation{/tr}"/></p>
-	<textarea name="edit" style="display:none">^{$translate_message}^
-
-{$pagedata|escape:'htmlall':'UTF-8'}</textarea>
+	<textarea name="edit" style="display:none">{$translate_message}{$pagedata|escape:'htmlall':'UTF-8'}</textarea>
 </form>
 
 <script type='text/javascript'>
