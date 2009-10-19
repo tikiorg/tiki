@@ -246,10 +246,10 @@ for($i =0 ; $i < $kmedialist->totalCount;$i++) {
 	$page_size = 25;
 	$kpager = new KalturaFilterPager();
 	$kpager->pageIndex = ($offset/$page_size)+1;
-	$kpager->pageSize = $kpager;
+	$kpager->pageSize = $page_size;
 
 	$kmedialist = $kclient->media->listAction($kfilter,$kpager);
-
+	
 }
 $smarty->assign_by_ref('klist',$kmedialist->objects);
 $smarty->assign_by_ref('cant',$kmedialist->totalCount);
