@@ -3097,25 +3097,20 @@ class TikiLib extends TikiDb_Bridge {
 		// topic=>[!]a+b+c+d+...
 		if ($topic) {
 			$invert = "";
-			$connect = " or ";
 			// parameter list negated?
 			if (substr($topic,0,1)=="!") {
 				$topic = substr($topic,1);
 				$invert = "!";
-				$connect = " and ";
 			}
-			$add = "";
 			$rest = split("\+", $topic);
-			foreach ($rest as $topic) {
-				if ($add == "") {
-					if ($mid) { $mid .= " and "; } else { $mid = " where "; }
-				} else {
-					$add .= $connect;
-				}
-				$add .= " `tiki_articles`.`topicName`$invert=? ";
-				$bindvars[] = $topic;
+			if ($mid) { $mid .= " and "; } else { $mid = " where "; }
+			$add = $this->in("tiki_articles.topicName", $rest, $bindvars);
+			if ($add <> "") {
+				$add = ($invert ? " NOT" : "") . " ( ".$add." ) ";
+				if ($invert)
+					$add = "COALESCE(" . $add . ", TRUE)";
+				$mid .= $add;
 			}
-			if ($add <> "") { $mid .= " ( ".$add." ) "; }
 		}
 		if (($visible_only) && ($visible_only <> 'n')) {
 			if ( $date_max <= 0 ) {
