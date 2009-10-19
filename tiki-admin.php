@@ -82,8 +82,10 @@ function simple_set_int($feature) {
 	global $_REQUEST, $tikilib, $prefs;
 	if (isset($_REQUEST[$feature]) && is_numeric($_REQUEST[$feature])) {
 		$old = $prefs[$feature];
-		$tikilib->set_preference($feature, $_REQUEST[$feature]);
-		add_feedback( $feature, tr('%0 set', $feature), 2 );
+		if ($old != $_REQUEST[$feature]) {
+			$tikilib->set_preference($feature, $_REQUEST[$feature]);
+			add_feedback( $feature, tr('%0 set', $feature), 2 );
+		}
 	}
 }
 function byref_set_value($feature, $pref = "") {
