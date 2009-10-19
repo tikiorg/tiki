@@ -284,7 +284,12 @@
 			</div>
 
 			</div>
-		</fieldset>			
+		</fieldset>
+
+		<fieldset>
+			<legend>{tr}User{/tr}</legend>
+			{preference name='urlOnUsername'}
+		</fieldset>		
 
 		<fieldset>
 			<legend>{tr}Site Access{/tr}</legend>

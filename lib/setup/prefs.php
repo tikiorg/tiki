@@ -722,6 +722,7 @@ function get_default_prefs() {
 		'validateRegistration' => 'n',
 		'validator_emails' => '',
 		'url_after_validation' => '',
+		'urlOnUsername' => '',
 
 		// user messages
 		'feature_messages' => 'n',

@@ -129,5 +129,10 @@ function prefs_global_list() {
 			'type' => 'textarea',
 			'size' => '5',
 		),
+		'urlOnUsername' => array(
+			'name' => tra('Url to go when clicking on a username.'),
+			'type' => 'text',
+			'description' => tra('Url to go when clicking on a username.').' '.tra('Default: ').'tiki-user_information.php?userId=',
+		),
 	);
 }

@@ -173,19 +173,20 @@ function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set',
 		}
 
 
+		$url = empty($prefs['urlOnUsername'])? 'tiki-user_information.php?userId='.urlencode($info['userId']): $prefs['urlOnUsername'];
 		if (is_numeric($idletime) && empty($mouseover)) {
-			$ret = "<a class='$class' target='_top' href='tiki-user_information.php?userId=".urlencode($info['userId'])."' title='".tra("More info about $other_user")." ".tra('(idle for $idletime seconds)')."'>$ou</a>$friend$star";
+			$ret = "<a class='$class' target='_top' href='{$url}' title='".tra('More info about $other_user')." ".tra('(idle for $idletime seconds)')."'>$ou</a>$friend$star";
 			$cachelib->cacheItem($cacheItem, $ret);
 			return $ret;
 		} else {
 			if ($prefs['feature_jquery'] == 'y' && $prefs['feature_jquery_tooltips'] == 'y') {
 				if ($show_mouseover) {
-					$ret = "<a class='$class titletips' title=\"$mouseover\" href='tiki-user_information.php?userId=".urlencode($info['userId'])."' >$ou</a>$friend$star";
+					$ret = "<a class='$class titletips' title=\"$mouseover\" href='{$url}' >$ou</a>$friend$star";
 				} else {
-					$ret = "<a class='$class' href='tiki-user_information.php?userId=".urlencode($info['userId'])."' >$ou</a>$friend$star";
+					$ret = "<a class='$class' href='{$url}' >$ou</a>$friend$star";
 									}
 			} else {
-				$ret = "<a class='$class' $mouseover target='_top' href='tiki-user_information.php?userId=".urlencode($info['userId'])."' >$ou</a>$friend$star";
+				$ret = "<a class='$class' $mouseover target='_top' href='{$url}' >$ou</a>$friend$star";
 			}
 			$cachelib->cacheItem($cacheItem, $ret);
 			return $ret;
