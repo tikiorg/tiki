@@ -16,6 +16,7 @@
 	{tr}Find{/tr}
 	<input type="text" name="find" value="{$find|escape}" />
 	</label>
+	<input type="hidden" name="list" value="{$entryType}">
 	<label class="findsubmit">
 	<input type="submit" name="search" value="{tr}Go{/tr}" />
 	</label>
@@ -50,6 +51,6 @@
 	{include file="tiki-list_kaltura_browse_entries.tpl"}
 	{/if}
 {/if}
-{if $view ne 'browse'}
+
 {pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
-{/if}
+

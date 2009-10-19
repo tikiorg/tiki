@@ -125,10 +125,11 @@ switch($_REQUEST['action']){
 
 		}		
 	break;
-	case 'Create Playlist':
-		echo "playlist";
-	break;
-	case 'default':	
+	
+	case 'default':
+		$smarty->assign('msg', tra("Invalid action"));
+		$smarty->display('error.tpl');
+		die;
 }
 		
 }
@@ -151,7 +152,7 @@ if (isset($_REQUEST["find"])) {
 }
 $smarty->assign('find', $find);
 
-$page_size = 5;
+$page_size = 10;
 if($_REQUEST['maxRecords']){
 	$page_size = $_REQUEST['maxRecords'];
 }	
@@ -173,17 +174,12 @@ $kpager->pageSize = $page_size;
 $kfilter = new KalturaMixEntryFilter();
 $kfilter->userIdEqual = $user;
 $kfilter->orderBy = $sort_mode;
-$kfilter->multiLikeOrTagsOrName = $find;
+$kfilter->nameMultiLikeOr = $find;
 
 if($_REQUEST['view'] != "browse"){
-// Get user's kaltura mix entries		
+// Get user's kaltura mix entries	
 $kmixlist = $kclient->mixing->listAction($kfilter,$kpager);
 
-if( $kmixlist->totalCount == 0){
-	$smarty->assign('msg', tra("No mix entries found"));
-	$smarty->display('error.tpl');
-	die;
-}
 for($i =0 ; $i < $kmixlist->totalCount;$i++) {
 	$kmixlist->objects[$i]->createdAt = date('d M Y h:i A',$kmixlist->objects[$i]->createdAt);
 	$domdoc = new DOMDocument;
@@ -207,7 +203,13 @@ for($i =0 ; $i < $kmixlist->totalCount;$i++) {
 }
 
 }else{
-	$kmixlist = $kclient->mixing->listAction($kfilter);
+	$offset = $_REQUEST['offset'];
+	$page_size = 25;
+	$kpager = new KalturaFilterPager();
+	$kpager->pageIndex = ($offset/$page_size)+1;
+	$kpager->pageSize = $page_size;
+
+	$kmixlist = $kclient->mixing->listAction($kfilter,$kpager);
 }
 $smarty->assign_by_ref('klist',$kmixlist->objects);
 $smarty->assign_by_ref('cant',$kmixlist->totalCount);
@@ -223,27 +225,30 @@ if($_REQUEST['list'] == "media"){
 $kfilter = new KalturaMediaEntryFilter();
 $kfilter->userIdEqual = $user;
 $kfilter->orderBy = $sort_mode;
-$kfilter->multiLikeOrTagsOrName = $find;
+$kfilter->nameMultiLikeOr = $find;
 
 $kpager = new KalturaFilterPager();
 $kpager->pageIndex = $page;
 $kpager->pageSize = $page_size;
+
 // Get user's kaltura media entries
 if($_REQUEST['view'] != "browse"){
 
 $kmedialist = $kclient->media->listAction($kfilter,$kpager);
-if( $kmedialist->totalCount == 0){
-	$smarty->assign('msg', tra("No media entries found"));
-	$smarty->display('error.tpl');
-	die;
-}
+
 for($i =0 ; $i < $kmedialist->totalCount;$i++) {
 	$kmedialist->objects[$i]->createdAt = date('d M Y h:i A',$kmedialist->objects[$i]->createdAt);
 	$kmedialist->objects[$i]->mediaType = $mediaTypeAsString[$kmedialist->objects[$i]->mediaType];
 }
 }else{
 
-$kmedialist = $kclient->media->listAction($kfilter);
+	$offset = $_REQUEST['offset'];
+	$page_size = 25;
+	$kpager = new KalturaFilterPager();
+	$kpager->pageIndex = ($offset/$page_size)+1;
+	$kpager->pageSize = $kpager;
+
+	$kmedialist = $kclient->media->listAction($kfilter,$kpager);
 
 }
 $smarty->assign_by_ref('klist',$kmedialist->objects);

@@ -1,6 +1,7 @@
 <form action="tiki-admin.php?page=kaltura" method="post">
 
 <br/>
+{remarksbox type="info" title="{tr}Kaltura Registration{/tr}" }{tr}If you don't have a Kaltura Partner Id, {/tr}<a href="http://corp.kaltura.com/about/signup">{tr}click here{/tr}</a> {tr}to register.{/tr}{/remarksbox}
 <fieldset class="admin">
 <legend>{tr}Kaltura Partner Settings{/tr}</legend>
 <div class="adminoptionlabel">

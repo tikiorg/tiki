@@ -22,7 +22,7 @@
 </style>
 <script language="javascript">
 	function loadMedia(entryId) {
-		$('#mykdp').get(0).insertMedia("entry-",entryId,'true');
+		$('#mykdp').get(0).insertMedia("-1",entryId,'true');
 	}
 </script>
 
