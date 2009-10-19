@@ -53,7 +53,7 @@ function smarty_modifier_sefurl($source, $type='wiki', $with_next = '', $all_lan
 	}
 	if ($prefs['feature_sefurl'] == 'y') {
 		include_once('tiki-sefurl.php');
-		return filter_out_sefurl($href, $smarty, $type);
+		return filter_out_sefurl($href, $smarty, $type, '', $with_next);
 	} else {
 		return $href;
 	}
