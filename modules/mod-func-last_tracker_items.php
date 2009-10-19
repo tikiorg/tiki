@@ -30,7 +30,7 @@ function module_last_tracker_items_info() {
 			),
 			'sort_mode' => array(
 				'name' => tra('Sort'),
-				'description' => tra('Specifies how the items should be sorted.') . " " . tra('Possible values include created and created_desc (equivalent), created_asc, status, lastModif, createdBy and lastModifBy. Unless "_asc" is specified, the sort is descending. "created" sorts on item creation date. "lastModif" sorts on the last modification date of items. "lastModif_desc" sorts in descending order of last modification date.')  . ' ' . tra('Default value:') . " created_desc",
+				'description' => tra('Specifies how the items should be sorted.') . " " . tra('Possible values include created and created_asc (equivalent), created_desc, status, lastModif, createdBy and lastModifBy. Unless "_desc" is specified, the sort is ascending. "created" sorts on item creation date. "lastModif" sorts on the last modification date of items. "lastModif_desc" sorts in descending order of last modification date.')  . ' ' . tra('Default value:') . " created_desc",
 				'filter' => 'striptags'
 			),
 			'status' => array(
