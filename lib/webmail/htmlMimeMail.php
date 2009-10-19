@@ -696,7 +696,9 @@ class htmlMimeMail {
 			$to = $this->_encodeHeader(implode(', ', $recipients), $this->build_params['head_charset']);
 
 			if (!empty($this->return_path)) {
-				$result = mail($to, $subject, $this->output, implode(CRLF, $headers), '-f' . $this->return_path);
+				// Set the sender for sendmail and use only the email address when the syntax of return_path is like 'Name <email>'
+				$additional_parameters = '-f' . preg_replace('/^.*<(.*?)>.*$/', '$1', $this->return_path);
+				$result = mail($to, $subject, $this->output, implode(CRLF, $headers), $additional_parameters);
 			} else {
 				$result = mail($to, $subject, $this->output, implode(CRLF, $headers));
 			}
