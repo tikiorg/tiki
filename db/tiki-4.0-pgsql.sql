@@ -1759,7 +1759,7 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42, 'o', 'List Entries', 'tiki-list_kaltura_entries.php', 952, 'feature_kaltura', 'tiki_p_admin | tiki_p_admin_kaltura | tiki_p_list_videos', '', 0);
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42, 'o', 'Upload Media', 'tiki-kaltura_upload.php', 954, 'feature_kaltura', 'tiki_p_admin | tiki_p_admin_kaltura | tiki_p_upload_videos', '', 0);
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42, 'o', 'Upload Media', 'tiki-kaltura_video.php', 954, 'feature_kaltura', 'tiki_p_admin | tiki_p_admin_kaltura | tiki_p_upload_videos', '', 0);
 
 
 
@@ -3243,9 +3243,9 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin","f
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin","feature_check") VALUES ('tiki_p_edit_languages', 'Can edit translations and create new languages', 'editors', 'tiki', NULL, NULL);
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin","feature_check") VALUES ('tiki_p_edit_menu', 'Can edit menu', 'admin', 'menus', NULL, NULL);
+INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin","feature_check") VALUES ('tiki_p_edit_menu', 'Can edit menu', 'admin', 'tiki', NULL, NULL);
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin","feature_check") VALUES ('tiki_p_edit_menu_option', 'Can edit menu option', 'admin', 'menus', NULL, NULL);
+INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin","feature_check") VALUES ('tiki_p_edit_menu_option', 'Can edit menu option', 'admin', 'tiki', NULL, NULL);
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin","feature_check") VALUES ('tiki_p_edit_templates', 'Can edit site templates', 'admin', 'tiki', NULL, NULL);
 
@@ -3367,7 +3367,7 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin","f
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin","feature_check") VALUES ('tiki_p_view_poll_voters', 'Can view poll voters', 'basic', 'polls', NULL, 'feature_polls');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin","feature_check") VALUES ('tiki_p_admin_toolbars', 'Can admin toolbars', 'admin', 'toolbars', 'y', NULL);
+INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin","feature_check") VALUES ('tiki_p_admin_toolbars', 'Can admin toolbars', 'admin', 'tiki', 'y', NULL);
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin","feature_check") VALUES ('tiki_p_admin_quizzes', 'Can admin quizzes', 'editors', 'quizzes', 'y', 'feature_quizzes');
 
@@ -3549,7 +3549,7 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin","f
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin","feature_check") VALUES ('tiki_p_view_html_pages', 'Can view HTML pages', 'basic', 'html pages', NULL, 'feature_html_pages');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin","feature_check") VALUES ('tiki_p_list_users', 'Can list registered users', 'registered', 'community', NULL, 'feature_friends');
+INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin","feature_check") VALUES ('tiki_p_list_users', 'Can list registered users', 'registered', 'user', NULL, 'feature_friends');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin","feature_check") VALUES ('tiki_p_live_support_admin', 'Admin live support system', 'admin', 'support', 'y', 'feature_live_support');
 
@@ -3585,7 +3585,7 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin","f
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin","feature_check") VALUES ('tiki_p_view_backlink', 'View page backlinks', 'basic', 'wiki', NULL, 'feature_wiki');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin","feature_check") VALUES ('tiki_p_admin_notifications', 'Can admin mail notifications', 'editors', 'mail notifications', NULL, NULL);
+INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin","feature_check") VALUES ('tiki_p_admin_notifications', 'Can admin mail notifications', 'editors', 'tiki', NULL, NULL);
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin","feature_check") VALUES ('tiki_p_invite', 'Can invite user in groups', 'editors', 'tiki', NULL, NULL);
 
