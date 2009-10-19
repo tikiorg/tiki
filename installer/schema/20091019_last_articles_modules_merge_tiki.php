@@ -6,6 +6,7 @@ function upgrade_20091019_last_articles_modules_merge_tiki( $installer )
 	while( $row = $result->fetchRow() ) {
 		$params = $row['params'];
 		$params = str_ireplace('showImg', 'img', $params);
+		$params = str_ireplace('lang=', 'langfilter=', $params);
 		$params = str_ireplace('showDate', 'showpubl', $params);
 		$installer->query( "update tiki_modules set params='" . $params . "', name='articles' where moduleId=" . $row['moduleId'] . "; " );
 	}
