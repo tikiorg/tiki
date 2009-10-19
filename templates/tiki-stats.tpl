@@ -347,7 +347,7 @@
 		{cycle values="odd,even" print=false advance=false}
 		{section name=i loop=$best_objects_stats}
 			<tr>
-				<td class="{cycle advance=false}">{$best_objects_stats[i]->object}</td>
+				<td class="{cycle advance=false}">{$best_objects_stats[i]->object|escape}</td>
 				<td class="{cycle advance=false}">{tr}{$best_objects_stats[i]->type}{/tr}</td>
 				<td class="{cycle}">{$best_objects_stats[i]->hits}</td>
 			</tr>
@@ -366,7 +366,7 @@
 		{cycle values="odd,even" print=false advance=false}
 		{section name=i loop=$best_objects_stats_lastweek}
 			<tr>
-				<td class="{cycle advance=false}">{$best_objects_stats_lastweek[i]->object}</td>
+				<td class="{cycle advance=false}">{$best_objects_stats_lastweek[i]->object|escape}</td>
 				<td class="{cycle advance=false}">{tr}{$best_objects_stats_lastweek[i]->type}{/tr}</td>
 				<td class="{cycle}">{$best_objects_stats_lastweek[i]->hits}</td>
 			</tr>
