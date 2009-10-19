@@ -737,6 +737,12 @@ class MultilingualLib extends TikiLib {
 		}
 		return $flags;
 	}
+	
+	function getLangOfPage($pageName) {
+		$pageInfo = $this->get_page_info($pageName);
+		$lang = $pageInfo['lang'];
+		return $lang;
+	}
 
     function currentSearchLanguage($searchingOnSecondLanguage) {
        /*

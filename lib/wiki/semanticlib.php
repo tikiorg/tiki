@@ -303,7 +303,7 @@ class SemanticLib
 		return $relations;
 	} // }}}
 
-	function getAliasContaining( $query, $exact_match = false ) // {{{
+	function getAliasContaining( $query, $exact_match = false, $in_lang = NULL ) // {{{
 	{
 		global $tikilib;
 		$orig_query = $query;
@@ -320,10 +320,28 @@ class SemanticLib
 				unset( $row['reltype'] );
 				$aliases[] = $row;
 			}
-		}
-
+		}		
+		$aliases = $this->onlyKeepAliasesFromPageInLanguage($in_lang, $aliases);
 		return $aliases;
 	} // }}}
+	
+	function onlyKeepAliasesFromPageInLanguage($language, $aliases) {
+		global $multilinguallib;
+		if (!$language) {
+			return $aliases;
+		}
+		
+		$aliasesInCorrectLanguage = array();
+		foreach ($aliases as $index => $aliasInfo) {
+			$aliasLang = $multilinguallib->getLangOfPage($aliasInfo['fromPage']);
+			if ($aliasLang === $language) {
+				$aliasesInCorrectLanguage[] = $aliasInfo;
+			} else {
+			}			
+		}
+//		echo "<pre>-- onlyKeepAliasesFromPageInLanguage: exiting</pre>\n";
+		return $aliasesInCorrectLanguage;
+	}
 }
 
 global $semanticlib;

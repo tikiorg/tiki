@@ -309,11 +309,15 @@ function setLangFilter($filter) {
 	return $filter;
 }
 function possibly_look_for_page_aliases($query) {
-	global $prefs, $smarty, $semanticlib;
+	global $prefs, $smarty, $semanticlib, $_REQUEST;
+	$lang = NULL;
+	if (isset($_REQUEST['lang'])) {
+		$lang = $_REQUEST['lang'];
+	}
 	if ($prefs['feature_wiki_pagealias'] == 'y' && $query) {
 		global $semanticlib;
 		require_once 'lib/wiki/semanticlib.php';
-		$aliases = $semanticlib->getAliasContaining($query);
+		$aliases = $semanticlib->getAliasContaining($query, false, $lang);
 		$smarty->assign('aliases', $aliases);
 	} else {
 		$smarty->assign('aliases', null);

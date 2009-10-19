@@ -613,6 +613,12 @@ function prefs_feature_list() {
 			'description' => tra('Allow to flag changes as urgent, leading translations to be marked with a notice visible to all users.'),
 			'type' => 'flag',
 		),
+		'feature_translation_incomplete_notice' => array(
+			'name' => tra('Translation incomplete notice'),
+			'description' => tra('When a page is translated to a new language, a notice will be automatically be inserted into the page to indicate that the translation is not yet complete.'),
+			'type' => 'flag',
+		),
+
 		'feature_multilingual_structures' => array(
 			'name' => tra('Multilingual structures'),
 			'description' => tra('Structures to lookup equivalent pages in other languages. May cause performance problems on larger structures.'),
