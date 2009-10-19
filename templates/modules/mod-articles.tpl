@@ -1,6 +1,22 @@
 {* $Id$ *}
 
 {tikimodule error=$module_params.error title=$tpl_module_title name="articles" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
+	{if $show_rating_selector eq 'y'}
+		<form action="tiki-view_articles.php" style="padding: 5px;">
+			<select name="min_rating">
+				{section name=rt_val start=0 loop=11 step=1}
+					<option {if $smarty.section.rt_val.index eq $min_rating}selected{/if}>{$smarty.section.rt_val.index}</option>
+				{/section}
+			</select>
+			{tr}to{/tr}
+			<select name="max_rating">
+				{section name=rt_val start=10 loop=11 step=-1}
+					<option {if $smarty.section.rt_val.index eq $max_rating}selected{/if}>{$smarty.section.rt_val.index}</option>
+				{/section}
+			</select>
+			<input type="submit" value="{tr}Go{/tr}" />
+		</form>
+	{/if}
 	{if $nonums != 'y'}<ol>{else}<ul>{/if}
 		{section name=ix loop=$modArticles}
 			<li>

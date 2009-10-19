@@ -21,10 +21,15 @@ function module_articles_info() {
 				'description' => tra('If set to "y", article creation times are shown.') . " " . tr('Default: "n".'),
 				'filter' => 'word'
 			),
+			'show_rating_selector' => array(
+				'name' => tra('Show rating selector'),
+				'description' => tra('If set to "y", offers the user to filter articles based on a minimum and a maximum rating.') . " " . tr('Default: "n".'),
+				'filter' => 'word'
+			),
 			'img' => array(
 				'name' => tra('Image width'),
 				'description' => tra('If set, displays an image for each article if one applies, with the given width (in pixels). The article\'s own image is used, with a fallback to the article\'s topic image.') . " " . tr('Not set by default.'),
-				'filter' => 'word'
+				'filter' => 'int'
 			),
 			'categId' => array(
 				'name' => tra('Category filter'),
@@ -90,8 +95,13 @@ function module_articles( $mod_reference, $module_params ) {
 	}
 	if ( $start == '' ) $start = 0;
 	if ( $sort == '' ) $sort = 'publishDate_desc';
+
+	$min_rating = isset($_REQUEST['min_rating']) ? $_REQUEST['min_rating'] : 0;
+	$max_rating = isset($_REQUEST['max_rating']) ? $_REQUEST['max_rating'] : 10;
+	$smarty->assign('min_rating', $min_rating);
+	$smarty->assign('max_rating', $max_rating);
 	
-	$ranking = $tikilib->list_articles($start, $mod_reference['rows'], $sort, '', '', '', $user, $type, $topicId, 'y', $topic, $categId, '', '', $langfilter);
+	$ranking = $tikilib->list_articles($start, $mod_reference['rows'], $sort, '', '', '', $user, $type, $topicId, 'y', $topic, $categId, '', '', $langfilter, $min_rating, $max_rating);
 	
 	$smarty->assign_by_ref('urlParams', $urlParams);
 	$smarty->assign('modArticles', $ranking["data"]);
@@ -99,4 +109,5 @@ function module_articles( $mod_reference, $module_params ) {
 	$smarty->assign('absurl', isset($module_params["absurl"]) ? $module_params["absurl"] : 'n');
 	$smarty->assign('showcreated', isset($module_params['showcreated']) ? $module_params['showcreated'] : 'n');
 	$smarty->assign('showpubl', isset($module_params['showpubl']) ? $module_params['showpubl'] : 'n');
+	$smarty->assign('show_rating_selector', isset($module_params['show_rating_selector']) ? $module_params['show_rating_selector'] : 'n');
 }
