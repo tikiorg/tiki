@@ -474,7 +474,9 @@ function sendCategoryEmailNotification($values) {
 
 				$nots_send = array(); 
                 foreach ($nots as $not) {
-               			if ($nots_send[$not['user']]) break;               			
+					if (!empty($nots_send[$not['user']])) {
+						break;               			
+					}
                			$nots_send[$not['user']] = true;
                         $mail->setUser($not['user']);
                         if ($action == 'category created') {                                                        
