@@ -796,5 +796,29 @@ function prefs_feature_list() {
 			'name' => tra('Specify notification emails when creating articles'),
 			'type' => 'flag',
 		),
+		'feature_categorypath' => array(
+			'name' => tra('Category path'),
+			'type' => 'flag',
+		),
+		'feature_categoryobjects' => array(
+			'name' => tra('Show category objects'),
+			'type' => 'flag',
+		),
+		'feature_category_use_phplayers' => array(
+			'name' => tra('Use PHPLayers for category browser'),
+			'type' => 'flag',
+			'dependencies' => array(
+				'feature_phplayers',
+			),
+		),
+		'feature_search_show_forbidden_cat' => array(
+			'name' => tra('Ignore category viewing restrictions'),
+			'type' => 'flag',
+			'help' => 'WYSIWYCA+Search',
+		),
+		'feature_category_reinforce' => array(
+			'name' => tra("Permission to all (not just any) of an object's categories is required for access"),
+			'type' => 'flag',
+		),
 	);
 }
