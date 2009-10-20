@@ -200,7 +200,7 @@
 
           {elseif $tiki_p_download_files eq 'y'}
             {if $gal_info.type eq 'podcast' or $gal_info.type eq 'vidcast'}
-              href="{$download_path}{$files[changes].path}" title="{tr}Download{/tr}"
+              href="{$prefs.fgal_podcast_dir}{$files[changes].path}" title="{tr}Download{/tr}"
             {else}
               href="tiki-download_file.php?fileId={$files[changes].id}" title="{tr}Download{/tr}"
             {/if}
