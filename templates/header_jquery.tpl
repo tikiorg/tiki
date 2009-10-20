@@ -11,17 +11,6 @@
 	<script type="text/javascript" src="lib/jquery/colorbox/jquery.colorbox.js" charset="utf-8"></script>
 {/if}
 <link type="text/css" media="screen" rel="stylesheet" href="lib/jquery/colorbox/styles/colorbox.css" />
-<script type="text/javascript">
-<!--//--><![CDATA[//><!--
-{literal}
-$jq(document).ready(function(){
-	$jq("a[rel*='shadowbox']").colorbox({
-		current: "{{/literal}current{literal}} / {{/literal}total{literal}}"
-	});		
-});
-{/literal}
-//--><!]]>
-</script>
 
 {* fade out remark boxes on a click to save user space *}
 <script type="text/javascript">
@@ -112,6 +101,7 @@ jqueryTiki.replection = {if $prefs.feature_jquery_reflection eq 'y'}true{else}fa
 jqueryTiki.tablesorter = {if $prefs.feature_jquery_tablesorter eq 'y'}true{else}false{/if};
 jqueryTiki.cycle = {if $prefs.feature_jquery_cycle eq 'y'}true{else}false{/if};
 jqueryTiki.colorbox = {if $prefs.feature_shadowbox eq 'y'}true{else}false{/if};
+jqueryTiki.cboxCurrent = "{/literal}{tr}Image{/tr}{literal} {{/literal}current{literal}} / {{/literal}total{literal}}";
 
 jqueryTiki.effect = "{$prefs.jquery_effect}";				// Default effect
 jqueryTiki.effect_direction = "{$prefs.jquery_effect_direction}";	// 'horizontal' | 'vertical' etc
