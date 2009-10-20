@@ -96,7 +96,7 @@ $permissionApplier = new Perms_Applier;
 $permissionApplier->addObject( $currentObject );
 
 if( $restrictions = perms_get_restrictions() ) {
-	$permissionApplier->setRestrictions( $restrictions );
+	$permissionApplier->restrictPermissions( $restrictions );
 }
 
 if ($_REQUEST['objectType'] == 'wiki page') {
