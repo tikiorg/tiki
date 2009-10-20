@@ -21,7 +21,7 @@
 		{/if}
 
 		{if $tiki_p_admin_directory_cats eq 'y'}
-			{button href="tiki-directory_admin_categories.php" _text="{tr}Add a Category{/tr}"}
+			{button href="tiki-directory_admin_categories.php" _text="{tr}Add a Directory Category{/tr}"}
 		{/if}
 	{/if}
 </div>
