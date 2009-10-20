@@ -1395,7 +1395,7 @@ function get_default_prefs() {
 		'feature_jquery_reflection' => 'y',		// reflection effects on images
 		'feature_jquery_sheet' => 'n',			// spreadsheet TODO: implement
 		'feature_jquery_tablesorter' => 'n',	// sortable tables ([will] override existing)
-		'feature_jquery_cycle' => 'y',			// slideshow lib
+		'feature_jquery_cycle' => 'n',			// slideshow lib
 
 		// SefUrl
 		'feature_sefurl' => 'n',

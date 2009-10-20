@@ -525,24 +525,12 @@
 	{if $prefs.feature_help eq 'y'} {help url="JQuery#Reflection" desc="{tr}JQuery Reflection (reflection effect on images){/tr}"}{/if}
 	</div>
 </div>
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="feature_jquery_cycle" name="feature_jquery_cycle" {if $prefs.feature_jquery_cycle eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="feature_jquery_cycle">{tr}Cycle{/tr} ({tr}slideshow{/tr})</label>
-	{if $prefs.feature_help eq 'y'} {help url="JQuery#Cycle" desc="{tr}JQuery Cycle (slideshow){/tr}"}{/if}</div>
-</div>
 
 <div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" id="feature_jquery_ui" name="feature_jquery_ui" {if $prefs.feature_jquery_ui eq 'y'}checked="checked"{/if}/></div>
 	<div class="adminoptionlabel"><label for="feature_jquery_ui">{tr}JQuery UI{/tr}</label>
 	{if $prefs.feature_help eq 'y'} {help url="JQuery#UI" desc="{tr}JQuery UI: More JQuery functionality{/tr}"}{/if}</div>
 </div>
-
-
-<div class="adminoptionbox">
-	<div class="adminoptionlabel">{icon _id=information} <em>{tr}For future use{/tr}:</em>
-
-<div class="adminoptionboxchild">	
-
 <div class="adminoptionbox">
 	<div class="adminoptionlabel"><label for="feature_jquery_ui_theme">{tr}JQuery UI Theme{/tr}: </label>
 	<select name="feature_jquery_ui_theme" id="feature_jquery_ui_theme">
@@ -565,6 +553,18 @@
 					            <option value="vader" {if $prefs.feature_jquery_ui_theme eq 'vader'}selected="selected"{/if}>vader</option>
 	</select>
 	{if $prefs.feature_help eq 'y'} {help url="JQuery#UI" desc="{tr}JQuery UI Theme: Themes for look and feel of JQuery UI widgets{/tr}"}{/if}</div>
+</div>
+
+
+<div class="adminoptionbox">
+	<div class="adminoptionlabel">{icon _id=information} <em>{tr}For future use{/tr}:</em>
+
+<div class="adminoptionboxchild">	
+
+<div class="adminoptionbox">
+	<div class="adminoption"><input type="checkbox" id="feature_jquery_cycle" name="feature_jquery_cycle" {if $prefs.feature_jquery_cycle eq 'y'}checked="checked"{/if}/></div>
+	<div class="adminoptionlabel"><label for="feature_jquery_cycle">{tr}Cycle{/tr} ({tr}slideshow{/tr})</label>
+	{if $prefs.feature_help eq 'y'} {help url="JQuery#Cycle" desc="{tr}JQuery Cycle (slideshow){/tr}"}{/if}</div>
 </div>
 <div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" id="feature_jquery_sheet" name="feature_jquery_sheet" {if $prefs.feature_jquery_sheet eq 'y'}checked="checked"{/if}/></div>
