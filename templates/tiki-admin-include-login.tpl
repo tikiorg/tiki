@@ -229,7 +229,9 @@ name="eponymousGroups" {if $prefs.eponymousGroups eq 'y'}checked="checked"{/if}/
 </select>
 	</div>
 </div>
+</div>
 
+<fieldset><legend>{tr}Cookie{/tr}</legend>
 <div class="adminoptionbox">
 	<div class="adminoptionlabel"><label for="cookie_name">{tr}Cookie name{/tr}:</label> 
 	<input type="text" id="cookie_name" name="cookie_name" value="{$prefs.cookie_name|escape}" size="50" />
@@ -245,7 +247,8 @@ name="eponymousGroups" {if $prefs.eponymousGroups eq 'y'}checked="checked"{/if}/
 	<input type="text" id="cookie_path" name="cookie_path" value="{$prefs.cookie_path|escape}" size="50" />
 	</div>
 </div>
-</div>
+</fieldset>
+
 </fieldset>
 
 
