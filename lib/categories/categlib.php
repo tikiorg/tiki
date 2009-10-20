@@ -409,8 +409,9 @@ class CategLib extends ObjectLib {
 	}
 
 	function list_category_objects($categId, $offset, $maxRecords, $sort_mode='pageName_asc', $type='', $find='', $deep=false, $and=false) {
-	global $trklib;require_once('lib/trackers/trackerlib.php');
-	global $userlib;
+		global $userlib, $prefs;
+		if ($prefs['feature_sefurl'] == 'y') {include_once('tiki-sefurl.php');}
+		if ($prefs['feature_trackers'] == 'y') {global $trklib;require_once('lib/trackers/trackerlib.php');}
 	    
 	    // Build the condition to restrict which categories objects must be in to be returned.
 	    $join = '';
@@ -498,6 +499,10 @@ class CategLib extends ObjectLib {
 					$filed=$trklib->get_field_id($trackerId,"description");
 					$res['description']=$trklib->get_item_value($trackerId,$res['itemId'],$filed);
 					$res['type']=$this->getOne("select `name` from `tiki_trackers` where `trackerId`=?",array((int) $trackerId));
+				}
+				if ($prefs['feature_sefurl'] == 'y') {
+					$type = $res['type'] == 'wiki page'? 'wiki': $res['type'];
+					$res['sefurl'] = filter_out_sefurl($res['href'], $smarty, $type);
 				}
 				$ret[] = $res;
 				$objs[] = $res['catObjectId'].'-'.$res['categId'];

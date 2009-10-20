@@ -182,7 +182,7 @@
 					{section name=ix loop=$objects}
 						<tr class="{cycle}" >
 							<td>
-								<a href="{$objects[ix].href}" class="catname">{$objects[ix].name|escape|default:'&nbsp;'}</a>
+								<a href={if empty($objects[ix].sefurl)}"{$objects[ix].href}"{else}"{$objects[ix].sefurl}"{/if} class="catname">{$objects[ix].name|escape|default:'&nbsp;'}</a>
 								<div class="subcomment">{$objects[ix].description}</div>
 							</td>
 							<td>
