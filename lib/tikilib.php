@@ -6461,7 +6461,7 @@ class TikiLib extends TikiDB {
 		if (!$simple_wiki) {
 			// Replace colors ~~foreground[,background]:text~~
 			// must be done before []as the description may contain color change
-			$data = preg_replace("/\~\~([^\:\,]+)(,([^\:]+))?:(.*)\~\~/u", "<span style=\"color:$1; background:$3\">$4</span>", $data);
+			$data = preg_replace("/\~\~([^\:\,]+)(,([^\:]+))?:(.*)\~\~/U", "<span style=\"color:$1; background:$3\">$4</span>", $data);
 		}
 		// This section matches [...].
 		// Added handling for [[foo] sections.  -rlpowell
@@ -8368,7 +8368,10 @@ class TikiLib extends TikiDB {
 			$data = $this->parse_data($data, array('is_html' => $is_html));
 			$data = strip_tags($data);
 		}
-		return substr($data, 0, $length);
+		if (function_exists('mb_substr')) 
+			return mb_substr($data, 0, $length);
+		else
+			return substr($data, 0, $length);
 	}
 
 	function htmldecode($string, $quote_style = ENT_COMPAT, $translation_table = HTML_ENTITIES) {
