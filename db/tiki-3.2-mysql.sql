@@ -3223,6 +3223,7 @@ CREATE TABLE tiki_quicktags (
   tagicon varchar(255) default NULL,
   tagcategory varchar(255) default NULL,
   PRIMARY KEY (tagId),
+  UNIQUE KEY `no_repeats` (`taglabel`(50),`taginsert`(50),`tagicon`(100),`tagcategory`(50)),
   KEY tagcategory (tagcategory),
   KEY taglabel (taglabel)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
@@ -3633,7 +3634,7 @@ CREATE TABLE `tiki_pages_translation_bits` (
   `version` int(8) NOT NULL,
   `source_translation_bit` int(10) NULL,
   `original_translation_bit` int(10) NULL,
-  `flags` SET('critical') NULL DEFAULT '',
+  `flags` SET('critical') DEFAULT NULL,
   PRIMARY KEY (`translation_bit_id`),
   KEY(`page_id`),
   KEY(`original_translation_bit`),
@@ -3737,7 +3738,7 @@ CREATE TABLE tiki_groupalert (
 	objectType varchar( 20 ) NOT NULL default '',
 	objectId  varchar(10) NOT NULL default '',
 	displayEachuser  char( 1 ) default NULL ,
-	PRIMARY KEY ( objectType,objectId )
+	PRIMARY KEY ( `groupName`, `objectType`, `objectId` )
 ) ENGINE=MyISAM ;
 
 DROP TABLE IF EXISTS `tiki_sent_newsletters_files`;
