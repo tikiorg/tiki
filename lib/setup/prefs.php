@@ -255,6 +255,7 @@ function get_default_prefs() {
 		'wikiplugin_regex' => 'n',
 		'wikiplugin_remarksbox' => 'y',
 		'wikiplugin_rss' => 'y',
+		'wikiplugin_screencast' => 'n',
 		'wikiplugin_sf' => 'n',
 		'wikiplugin_share' => 'n',
 		'wikiplugin_sharethis' => 'n',
@@ -377,6 +378,7 @@ function get_default_prefs() {
 		'wikiplugininline_regex' => 'n',
 		'wikiplugininline_remarksbox' => 'n',
 		'wikiplugininline_rss' => 'n',
+		'wikiplugininline_screencast' => 'n',
 		'wikiplugininline_sf' => 'n',
 		'wikiplugininline_share' => 'n',
 		'wikiplugininline_sharethis' => 'n',
@@ -1403,6 +1405,15 @@ function get_default_prefs() {
 		'feature_sefurl_paths' => array(),
 		'feature_sefurl_title_article' =>'n',
 		'feature_sefurl_title_blog' =>'n',
+
+		// screencasts
+		'feature_wiki_screencasts' => 'n',
+		'feature_wiki_screencasts_base' => '',
+		'feature_wiki_screencasts_httpbase' => '',
+		'feature_wiki_screencasts_upload_type' => 'local',
+		'feature_wiki_screencasts_user' => '',
+		'feature_wiki_screencasts_pass' => '',
+		'feature_wiki_screencasts_max_size' =>  10485760,
 
 		// TikiTests
 		'feature_tikitests' => 'n',

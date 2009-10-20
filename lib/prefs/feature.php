@@ -820,5 +820,48 @@ function prefs_feature_list() {
 			'name' => tra("Permission to all (not just any) of an object's categories is required for access"),
 			'type' => 'flag',
 		),
+		'feature_wiki_screencasts' => array(
+			'name' => tra('Screencasts'),
+			'description' => tra('Allow to upload screencasts from wiki edit. Screencasts can be uploaded locally or on a WebDAV share.'),
+			'type' => 'flag',
+		),
+		'feature_wiki_screencasts_base' => array(
+			'name' => tra('Screencasts upload location'),
+			'description' => tra('Local path or webdav path to the file upload location.'),
+			'type' => 'text',
+			'filter' => 'url',
+		),
+		'feature_wiki_screencasts_httpbase' => array(
+			'name' => tra('Screencasts HTTP prefix'),
+			'description' => tra('Prefix to use for the files when generating a link to it.'),
+			'type' => 'text',
+			'filter' => 'url',
+		),
+		'feature_wiki_screencasts_upload_type' => array(
+			'name' => tra('Screencast upload type'),
+			'description' => tra('Mode used to upload files. WebDav is used to upload to remote servers.'),
+			'type' => 'list',
+			'options' => array(
+				'local' => tra('Local'),
+				'webdav' => tra('Webdav'),
+			),
+		),
+		'feature_wiki_screencasts_user' => array(
+			'name' => tra('Screencasts authentication user'),
+			'description' => tra('When using webdav to upload files, used as the username of the authentication credentials.'),
+			'type' => 'text',
+		),
+		'feature_wiki_screencasts_pass' => array(
+			'name' => tra('Screencasts authentication password'),
+			'description' => tra('When using webdav to upload files, used as the password of the authentication credentials.'),
+			'type' => 'text',
+		),
+		'feature_wiki_screencasts_max_size' => array(
+			'name' => tra('Screencasts max file size'),
+			'hint' => tra('Value provided in bytes'),
+			'description' => tra('Maximum file size used for screencasts.'),
+			'type' => 'text',
+			'filter' => 'digits',
+		),
 	);
 }

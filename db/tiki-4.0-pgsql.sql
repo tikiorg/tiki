@@ -3653,6 +3653,8 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin","f
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin","feature_check") VALUES ('tiki_p_view_videos', 'Can view kaltura entry', 'basic', 'kaltura', NULL, 'feature_kaltura');
 
+INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin","feature_check") VALUES ('tiki_p_upload_screencast', 'Can upload screencasts to wiki pages', 'basic', 'registered', NULL, 'feature_wiki_screencasts');
+
 
 
 DROP TABLE IF EXISTS "users_usergroups";
