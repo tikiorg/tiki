@@ -456,6 +456,10 @@ class CategLib extends ObjectLib {
 			$bindWhere[]=$findesc;
 			$where .= " AND (`name` LIKE ? OR `description` LIKE ?)";
 		} 
+		if (!empty($type)) {
+			$where .= ' AND `type` =? ';
+			$bindWhere[] = $type;
+		}
 
 		global $user;
 		$permMap = $this->map_object_type_to_permission();

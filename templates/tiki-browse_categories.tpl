@@ -63,7 +63,7 @@
 			<a {if $type eq 'tracker'} id="highlight"{/if} href="tiki-browse_categories.php?find={$find|escape}&amp;deep={$deep}&amp;type=tracker&amp;parentId={$parentId}&amp;sort_mode={$sort_mode}">{tr}Trackers{/tr}</a>
 		</span>
 		<span class="button">
-			<a {if $type eq 'trackerItem'} id="highlight"{/if} href="tiki-browse_categories.php?find={$find|escape}&amp;deep={$deep}&amp;type=trackerItem&amp;parentId={$parentId}&amp;sort_mode={$sort_mode}">{tr}Trackers Items{/tr}</a>
+			<a {if $type eq 'trackeritem'} id="highlight"{/if} href="tiki-browse_categories.php?find={$find|escape}&amp;deep={$deep}&amp;type=trackeritem&amp;parentId={$parentId}&amp;sort_mode={$sort_mode}">{tr}Trackers Items{/tr}</a>
 		</span>
 	{/if}
 
