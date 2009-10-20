@@ -502,7 +502,9 @@ class CategLib extends ObjectLib {
 					$res['name']=$trklib->get_isMain_value($trackerId,$res['itemId']);
 					$filed=$trklib->get_field_id($trackerId,"description");
 					$res['description']=$trklib->get_item_value($trackerId,$res['itemId'],$filed);
-					$res['type']=$this->getOne("select `name` from `tiki_trackers` where `trackerId`=?",array((int) $trackerId));
+					if (empty($res['description'])) {
+						$res['description']=$this->getOne("select `name` from `tiki_trackers` where `trackerId`=?",array((int) $trackerId));
+					}
 				}
 				if ($prefs['feature_sefurl'] == 'y') {
 					$type = $res['type'] == 'wiki page'? 'wiki': $res['type'];
@@ -520,7 +522,6 @@ class CategLib extends ObjectLib {
 
 		$retval["data"] = $ret;
 		$retval["cant"] = $cant;
-
 		return $retval;
 	}
 

@@ -186,9 +186,7 @@
 								<div class="subcomment">{$objects[ix].description}</div>
 							</td>
 							<td>
-								<strong>
-									{tr}{$objects[ix].type|replace:"wiki page":"Wiki"|replace:"article":"Article"|regex_replace:"/tracker [0-9]*/":"tracker item"}{/tr}
-								</strong>
+								{tr}{$objects[ix].type|replace:"wiki page":"wiki"|replace:"trackeritem":"tracker item"}{/tr}
 							</td>
 							{if $deep eq 'on'}
 								<td>
