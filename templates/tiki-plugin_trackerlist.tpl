@@ -148,12 +148,9 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" alt="{tr}List
 {set var=f_`$items[user].field_values[ix].fieldId` value=''}
 {/if}
 {/section}
-{if $showcreated eq 'y'}
-	{set var=f_created value=$items[user].created}
-{/if}
-{if $showlastmodif eq 'y'}
-	{set var=f_lastmodif value=$items[user].lastmodif}
-{/if}
+{set var=f_created value=$items[user].created}
+{set var=f_lastmodif value=$items[user].lastmodif}
+{set var=f_itemId value=$items[user].itemId}
 {* ------------------------------------ *}
 {include file="$tpl" item=$items[user]}
 {/if}
