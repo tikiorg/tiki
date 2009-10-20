@@ -18,10 +18,10 @@ function wikiplugin_rcontent_info() {
 
 function wikiplugin_rcontent( $data, $params) {
 
-	global $tikilib;
+	global $dcslib; include_once('lib/dcs/dcslib.php');
 
 	if( $params['id'] )
-		return $tikilib->get_random_content((int) $params['id']);
+		return $dcslib->get_random_content((int) $params['id']);
 }
 
 ?>
