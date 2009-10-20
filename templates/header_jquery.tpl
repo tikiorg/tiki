@@ -3,14 +3,6 @@
 <!--  start jquery-tiki -->
 <script type="text/javascript" src="lib/jquery/jquery{$minified}.js"></script>
 <script type="text/javascript" src="lib/jquery_tiki/tiki-jquery.js"></script>{* add {$minified} later if $minify_scripts_on_the_fly *}
-<!-- Includes for Colorbox script -->
-
-{if $prefs.feature_use_minified_scripts == 'y'}
-	<script type="text/javascript" src="lib/jquery/colorbox/jquery.colorbox-min.js" charset="utf-8"></script>
-{else}
-	<script type="text/javascript" src="lib/jquery/colorbox/jquery.colorbox.js" charset="utf-8"></script>
-{/if}
-<link type="text/css" media="screen" rel="stylesheet" href="lib/jquery/colorbox/styles/colorbox.css" />
 
 {* fade out remark boxes on a click to save user space *}
 <script type="text/javascript">
@@ -74,6 +66,15 @@
 {/if}
 {if $prefs.feature_jquery_cycle eq 'y'}
 <script type="text/javascript" src="lib/jquery/malsup-cycle/jquery.cycle.all{$minified}.js"></script>
+{/if}
+{if $prefs.feature_shadowbox eq "y"}
+	<!-- Includes for Colorbox script -->
+	{if $prefs.feature_use_minified_scripts == 'y'}
+		<script type="text/javascript" src="lib/jquery/colorbox/jquery.colorbox-min.js" charset="utf-8"></script>
+	{else}
+		<script type="text/javascript" src="lib/jquery/colorbox/jquery.colorbox.js" charset="utf-8"></script>
+	{/if}
+	<link type="text/css" media="screen" rel="stylesheet" href="lib/jquery/colorbox/styles/colorbox.css" />
 {/if}
 {* small libs on by default *}
 <script type="text/javascript" src="lib/jquery/jquery.cookie.js"></script>
