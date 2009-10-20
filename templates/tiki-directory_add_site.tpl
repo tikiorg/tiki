@@ -63,7 +63,7 @@
 					</td>
 			  </tr>
 			  <tr>
-			    <td class="formcolor"><label for="siteCats">{tr}Categories:{/tr}</label></td>
+			    <td class="formcolor"><label for="siteCats">{tr}Directory Categories:{/tr}</label></td>
 			    <td class="formcolor">
 				    <select id="siteCats" name="siteCats[]" multiple="multiple" size="4">
 					    {section name=ix loop=$categs}
@@ -71,7 +71,7 @@
 					    {/section}
 				    </select>
 						{if $categs|@count ge '2'}
-							{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple categories.{/tr}{/remarksbox}
+							{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple directory categories.{/tr}{/remarksbox}
 						{/if}
 					</td>
 				</tr>

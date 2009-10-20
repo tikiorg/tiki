@@ -1,4 +1,4 @@
-{title help="Directory" url="tiki-directory_admin_related.php?parent=$parent"}{tr}Admin related categories{/tr}{/title}
+{title help="Directory" url="tiki-directory_admin_related.php?parent=$parent"}{tr}Admin related directory categories{/tr}{/title}
 
 {* Display the title using parent *}
 {include file=tiki-directory_admin_bar.tpl}
@@ -20,7 +20,7 @@
 <input type="hidden" name="parent" value="{$parent|escape}" />
 <table class="normal">
   <tr>
-    <td class="formcolor">{tr}Category{/tr}:</td>
+    <td class="formcolor">{tr}Directory Category{/tr}:</td>
     <td class="formcolor">
     <select name="categId">
     {section name=ix loop=$categs}
@@ -48,7 +48,7 @@
 <input type="hidden" name="oldcategId" value="{$items[user].relatedTo|escape}" />
 <table class="normal">
   <tr>
-    <th>{tr}Category{/tr}</th>
+    <th>{tr}Directory Category{/tr}</th>
     <th>{tr}Action{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
