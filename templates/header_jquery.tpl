@@ -23,7 +23,7 @@
 //--><!]]>
 </script>
 
-{if $prefs.feature_jquery_ui eq 'y' or $prefs.feature_jquery_tooltips eq 'y' or $prefs.feature_jquery_autocomplete eq 'y' or $prefs.feature_jquery_superfish eq 'y' or $prefs.feature_jquery_reflection eq 'y' or $prefs.feature_jquery_cycle eq 'y'}
+{if $prefs.feature_jquery_ui eq 'y' or $prefs.feature_jquery_tooltips eq 'y' or $prefs.feature_jquery_autocomplete eq 'y' or $prefs.feature_jquery_superfish eq 'y' or $prefs.feature_jquery_reflection eq 'y' or $prefs.feature_jquery_cycle eq 'y' or $prefs.feature_shadowbox eq 'y'}
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--
 // Save $ if it's used for moo {* note: add plugins between this block and the Restore $ *}
