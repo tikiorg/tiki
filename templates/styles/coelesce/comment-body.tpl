@@ -26,5 +26,5 @@
 	{/if}
 	<br />
 	{/section}
-{*</div>*}
+</div>
 {/if}
