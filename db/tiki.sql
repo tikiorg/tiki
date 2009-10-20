@@ -656,10 +656,12 @@ CREATE TABLE `tiki_faq_questions` (
   `position` int(4) default NULL,
   `question` text,
   `answer` text,
+  `created` int(14) default NULL,
   PRIMARY KEY (`questionId`),
   KEY `faqId` (`faqId`),
   KEY `question` (question(255)),
   KEY `answer` (answer(255)),
+  KEY `created` (`created`),
   FULLTEXT KEY `ft` (question,answer)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
