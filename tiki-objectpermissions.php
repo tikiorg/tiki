@@ -5,6 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id: /cvsroot/tikiwiki/tiki/tiki-objectpermissions.php,v 1.25.2.2 2008-03-11 15:17:54 nyloth Exp $
 include_once ("tiki-setup.php");
+error_reporting(E_ALL);
 if (!empty($_REQUEST['objectType']) && $_REQUEST['objectType'] != 'global') {
 	if (!isset($_REQUEST['objectName']) || empty($_REQUEST['objectId'])) {
 		$smarty->assign('msg', tra("Not enough information to display this page"));
@@ -570,6 +571,7 @@ function quickperms_get_generic() {
 }
 
 function perms_get_restrictions() {
+	global $userlib;
 	$perms = Perms::get();
 
 	if( $perms->admin_objects ) {
