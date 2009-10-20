@@ -1322,10 +1322,6 @@ table.admin div#content1 div.tabcontent div.cbox {background: transparent}
 
 body.tiki_wiki_page #comments {padding: 1em }
 
-h1.pagetitle {
-	background: url(coelesce/tiki-centerbg.jpg) repeat-x;
-	line-height: 36px;
-	color: #2d2d2d}
 
 h1.pagetitle a,
 h1.pagetitle a:visited,
@@ -1349,7 +1345,7 @@ h1 a:hover {
 	color: #2d2d2d}
 
 body.tiki_wiki_page .wikitopline {}
-	
+
 .wikitopline .content br {display: none}
 .wikiinfo {}
 
@@ -1380,7 +1376,7 @@ div#description,
 
 #backlinks { display: inline }
 .wikitext {}
- 
+
 .titlebar {
 	padding: 0.1em;
 	background: #C3D3E5;
@@ -1389,7 +1385,7 @@ div#description,
 	text-align: center;
 	margin: 10px 0}
 
-.wikitext ul li {} 
+.wikitext ul li {}
 .wikitext ul li ul li {}
 .wikitext ol {}
 
@@ -1401,43 +1397,44 @@ div#description,
 
 .wikitext h1 {
 	margin: 5px 0 15px 0;
-	padding-left: 0px;
 }
 
 .wikitext h2 {
 	margin: 5px 0 10px 0;
-	padding-left: 10px;
 }
 
 .wikitext h3 {
 	margin: 5px 0 5px 0;
-	padding-left: 15px;
 }
 
 .wikitext h4 {
 	margin: 5px 0 5px 0;
-	padding-left: 20px;
 }
 
 .wikitext h5 {
 	margin: 5px 0 5px 0;
-	padding-left: 25px;
 }
 
 .wikitext h6 {
 	margin: 5px 0 5px 0;
-	padding-left: 30px;
 }
 
 table.wikitable {
 	border: 1px solid #A9A9A9;
 	border-collapse: collapse}
- 
+
 td.wikicell {
 	padding: 3px;
 	border: 1px solid #a9a9a9;
 	border-collapse: collapse}
-	
+
+h1.pagetitle {
+	background: url(coelesce/tiki-centerbg.jpg) repeat-x;
+	line-height: 36px;
+	color: #2d2d2d;
+	padding-left: 2px;
+}
+
 /* editable wiki section */
 div.split {
 	border: 1px dashed #696969;
