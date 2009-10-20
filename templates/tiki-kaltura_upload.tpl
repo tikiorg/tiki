@@ -8,7 +8,7 @@
 <script type="text/javascript" src="lib/swfobject/swfobject.js"></script>
 <br>
 {if $count > 0}
-{remarksbox type="info" title="{tr}Upload Successful{/tr}" }{tr}You can successfully added {$count} new entry/entries{/tr}{/remarksbox}
+{remarksbox type="info" title="{tr}Upload Successful{/tr}" }{tr}You have successfully added {$count} new entry/entries{/tr}{/remarksbox}
 {/if}
 <br>		
 <div id="kcwFlashObject"></div>
