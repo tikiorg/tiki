@@ -2698,7 +2698,7 @@ div.messureadbody {
 	overflow: auto;
 	background: #F3FCFE;
 	padding: 10px;
-	z-index: 10;
+	z-index: 200;
 	border: solid 2px #696969}
 
 .icon_edit_section {float: right}
