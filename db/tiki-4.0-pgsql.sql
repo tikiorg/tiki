@@ -741,11 +741,13 @@ CREATE TABLE "tiki_faq_questions" (
   "position" smallint default NULL,
   "question" text,
   "answer" text,
+  "created" bigint default NULL,
   PRIMARY KEY ("questionId")
 ) ;
 CREATE INDEX "tiki_faq_questions_tiki_faq_questions_faqId" ON "tiki_faq_questions" ("faqId");
 CREATE INDEX "tiki_faq_questions_tiki_faq_questions_question" ON "tiki_faq_questions" ("question");
 CREATE INDEX "tiki_faq_questions_tiki_faq_questions_answer" ON "tiki_faq_questions" ("answer");
+CREATE INDEX "tiki_faq_questions_tiki_faq_questions_created" ON "tiki_faq_questions" ("created");
 
 
 DROP TABLE IF EXISTS "tiki_faqs";
