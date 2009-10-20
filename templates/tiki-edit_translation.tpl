@@ -45,6 +45,12 @@
 <script type='text/javascript'>
 <!--
 {literal}
+// Make the translation name have the focus.
+window.onload = function()
+{
+document.getElementById("translation_name").focus();
+}
+
 function validate_translation_request() {
    var success = true;
    var language_of_translation = $jq("#language_list").val();
