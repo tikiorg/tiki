@@ -26,7 +26,7 @@
 		{/if}
 	{/if}
 	{if $mode eq 'remix' and $editor eq 'kse'}
-	{button _text="{tr}Advance Editor{/tr}" href="tiki-kaltura_video.php?mixId=$videoId&action=remix&editor=kae" }
+	{button _text="{tr}Advanced Editor{/tr}" href="tiki-kaltura_video.php?mixId=$videoId&action=remix&editor=kae" }
 	{/if}
 	{if $mode eq 'remix' and $editor eq 'kae'}
 	{button _text="{tr}Simple Editor{/tr}" href="tiki-kaltura_video.php?mixId=$videoId&action=remix&editor=kse" }
