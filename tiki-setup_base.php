@@ -58,7 +58,8 @@ $needed_prefs = array(
 	'sessions_silent' => 'disabled',
 	'language' => 'en',
 	'feature_pear_date' => 'y',
-	'lastUpdatePrefs' => -1
+	'lastUpdatePrefs' => -1,
+	'error_reporting_level' => 0 // needed by initlib
 );
 
 $tikilib->get_preferences($needed_prefs, true, true);
