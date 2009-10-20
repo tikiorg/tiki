@@ -1260,11 +1260,11 @@ class TrackerLib extends TikiLib {
 			if ( $ins_fields["data"][$i]["type"] == 'a' && isset($ins_fields["data"][$i]["options_array"][3]) && ($ins_fields["data"][$i]['options_array'][3]) ) {
 				if (function_exists('mb_substr') && function_exists('mb_strlen')) {
 					if ( mb_strlen($ins_fields["data"][$i]['value']) > $ins_fields["data"][$i]['options_array'][3] ) {
-						$ins_fields['data'][$i]['value'] = mb_substr($ins_fields["data"][$i]['value'],0,$ins_fields["data"][$i]['options_array'][3])." (...)";
+						$ins_fields['data'][$i]['value'] = mb_substr($ins_fields["data"][$i]['value'],0,$ins_fields["data"][$i]['options_array'][3]);
 					}
 				} else {
 					if ( strlen($ins_fields["data"][$i]['value']) > $ins_fields["data"][$i]['options_array'][3] ) {
-						$ins_fields['data'][$i]['value'] = substr($ins_fields["data"][$i]['value'],0,$ins_fields["data"][$i]['options_array'][3])." (...)";
+						$ins_fields['data'][$i]['value'] = substr($ins_fields["data"][$i]['value'],0,$ins_fields["data"][$i]['options_array'][3]);
 					}
 				}
 			}
@@ -2017,7 +2017,7 @@ class TrackerLib extends TikiLib {
 				break;
 				case 'a':
 					if (isset($f['options_array'][5]) &&  $f['options_array'][5] > 0) {
-						if (count(preg_split('/\s+/', $f['value'])) > $f['options_array'][5]) {
+						if (count(preg_split('/\s+/', trim($f['value']))) > $f['options_array'][5]) {
 							$erroneous_values[] = $f;
 						}
 					}

@@ -234,14 +234,27 @@
     		{toolbars qtnum=$field_value.fieldId area_name="area_"|cat:$field_value.fieldId}
 		{/if}
 		{if $field_value.options_array[2] == 1}
-				<input type="text" name="{$field_value.ins_id}"{if $field_value.options_array[1] > 0} size="{$field_value.options_array[1]}"{/if}{if $field_value.options_array[3]>0} maxlength="{$field_value.options_array[3]}"{/if} value="{$field_value.value|escape}"{if $field_value.options_array[5]} onKeyUp="wordCount({$field_value.options_array[5]}, this, 'cpt_{$field_value.fieldId}', '{tr}Word Limit Exceeded{/tr}')"{/if} />
+				<input type="text" name="{$field_value.ins_id}"{if $field_value.options_array[1] > 0} size="{$field_value.options_array[1]}"{/if}{if $field_value.options_array[3]>0} maxlength="{$field_value.options_array[3]}"{/if} value="{$field_value.value|escape}"{if $field_value.options_array[5]} onKeyUp="wordCount({$field_value.options_array[5]}, this, 'cpt_{$field_value.fieldId}', '{tr}Word Limit Exceeded{/tr}')"{/if} {if $field_value.options_array[3]} onKeyUp="charCount({$field_value.options_array[3]}, this, 'cpt_{$field_value.fieldId}', '{tr}Character Limit Exceeded{/tr}')"{/if} />
 		{else}
-			<textarea id="area_{$field_value.fieldId}" name="{$field_value.ins_id}" cols="{if $field_value.options_array[1] >= 1}{$field_value.options_array[1]}{else}50{/if}" rows="{if $field_value.options_array[2] >= 1}{$field_value.options_array[2]}{else}4{/if}"{if $field_value.options_array[5]} onKeyUp="wordCount({$field_value.options_array[5]}, this, 'cpt_{$field_value.fieldId}', '{tr}Word Limit Exceeded{/tr}')"{/if}>
+			<textarea id="area_{$field_value.fieldId}" name="{$field_value.ins_id}" cols="{if $field_value.options_array[1] >= 1}{$field_value.options_array[1]}{else}50{/if}" rows="{if $field_value.options_array[2] >= 1}{$field_value.options_array[2]}{else}4{/if}"{if $field_value.options_array[5]} onKeyUp="wordCount({$field_value.options_array[5]}, this, 'cpt_{$field_value.fieldId}', '{tr}Word Limit Exceeded{/tr}')"{/if}  {if $field_value.options_array[3]} onKeyUp="charCount({$field_value.options_array[3]}, this, 'cpt_{$field_value.fieldId}', '{tr}Character Limit Exceeded{/tr}')"{/if} >
 				{$field_value.value}
 			</textarea>
 		{/if}
+		{if $field_value.options_array[3]}
+			<div class="charCount">
+				{if $prefs.javascript_enabled eq 'y'}
+				 	 {tr}Character Count:{/tr} <input type="text" id="cpt_{$field_value.fieldId}" size="4" readOnly=true{if !empty($field_value.value)} value="{$field_value.value|count_characters}"{/if} />
+				{/if}
+				{if $field_value.options_array[3] > 0} {tr}Max:{/tr} {$field_value.options_array[3]}{/if}
+			</div>
+		{/if}
 		{if $field_value.options_array[5]}
-			<div class="wordCount">{tr}Word Count:{/tr} <input type="text" id="cpt_{$field_value.fieldId}" size="4" readOnly=true{if !empty($field_value.value)} value="{$field_value.value|count_words}"{/if} />{if $field_value.options_array[5] > 0} {tr}Max:{/tr} {$field_value.options_array[5]}{/if}</div>
+			<div class="wordCount">
+				{if $prefs.javascript_enabled eq 'y'}
+					 {tr}Word Count:{/tr} <input type="text" id="cpt_{$field_value.fieldId}" size="4" readOnly=true{if !empty($field_value.value)} value="{$field_value.value|count_words}"{/if} />
+				{/if}
+				{if $field_value.options_array[5] > 0} {tr}Max:{/tr} {$field_value.options_array[5]}{/if}
+			</div>
 		{/if}
 	{else}
 		<table>
