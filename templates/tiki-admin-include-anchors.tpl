@@ -148,5 +148,5 @@ _id="pics/large/workspaces.png" alt="{tr}Workspaces{/tr}" class="reflect" style=
 {* TODO resize icon *}
 {/if}
 
-{if $prefs.feature_jquery and $prefs.feature_jquery_reflection}{jq}$jq('img.reflect').reflect({});{/jq}{/if}{* for ajax *}
+{if $prefs.javascript_enabled eq 'y' and $prefs.feature_jquery_reflection eq 'y'}{jq}$jq('img.reflect').reflect({});{/jq}{/if}{* for ajax *}
 <br class="clear" />
