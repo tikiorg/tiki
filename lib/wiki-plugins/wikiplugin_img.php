@@ -58,12 +58,8 @@ function wikiplugin_img_info() {
 			),
 			'rel' => array(
 				'required' => false,
-				'name' => tra('Link relation. Enter "box" for colorbox effect (like shadowbox and lightbox) or appropriate syntax.'),
-				'description' => tra('"rel" attribute to add to the link.'),
-				'options' => array(
-					array('text' => tra('None'), 'value' => ''), 
-					array('text' => tra('Box'), 'value' => 'box', 'description' => tra('Causes image to popup using colorbox, shadowbox or lightbox.')), 
-				),
+				'name' => tra('Link relation'),
+				'description' => tra('"rel" attribute to add to the link. Enter "box" for colorbox effect (like shadowbox and lightbox) or appropriate syntax.'),
 			),
 			'usemap' => array(
 				'required' => false,
@@ -685,14 +681,17 @@ if (!function_exists('getimagesize_raw')) {
 			// rel
 			if (!empty($imgdata['rel'])) {
 				if ($imgdata['rel'] == 'box') {
-					$linkrel = " rel=\"box;width=$fwidth;height=$fheight;";
-					if (!empty($desconly)) {
-						$linkrel .= "title=$desconly\"";
-					} else {
-						$linkrel .= '"';
+					$linkrel = ' rel="box';
+					if (!empty($fwidth) && !empty($fheight)) {
+						$linkrel .= ";width=$fwidth;height=$fheight";
 					}
+					if (!empty($desconly)) {
+						$linkrel .= ";title=$desconly";
+					}
+					$linkrel .= '"';
+					
 				} else {
-				$linkrel = ' rel="'.$imgdata['rel'].'"';
+					$linkrel = ' rel="'.$imgdata['rel'].'"';
 				}
 			} else {
 				$linkrel = '';
