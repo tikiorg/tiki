@@ -7651,9 +7651,8 @@ class TikiLib extends TikiDb_Bridge {
 		return $short_datetime_format;
 	}
 
-	function date_format2($format, $timestamp = false, $_user = false, $input_format = DATE_FORMAT_UNIXTIME) {
-		global $tikilib;
-		return $tikilib->date_format($format, $timestamp, $_user, $input_format, false);
+	static function date_format2($format, $timestamp = false, $_user = false, $input_format = DATE_FORMAT_UNIXTIME) {
+		return TikiLib::date_format($format, $timestamp, $_user, $input_format, false);
 	}
 
 	static function date_format($format, $timestamp = false, $_user = false, $input_format = DATE_FORMAT_UNIXTIME, $is_strftime_format = true) {
