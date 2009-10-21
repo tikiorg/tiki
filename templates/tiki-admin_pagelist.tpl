@@ -1,4 +1,5 @@
-<h1><a class="pagetitle" href="tiki-admin_pagelist.php">{tr}Admin page lists{/tr}</a></h1>
+{title}{tr}Admin page lists{/tr}{/title}
+
 {if $lists}
 <div class='tabcontent'>
 	<h2><a href='tiki-admin_pagelist.php'>{tr}Current lists{/tr}</a></h2> 
