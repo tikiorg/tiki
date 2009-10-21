@@ -32,6 +32,6 @@
      </li>
     {/section}
 	{if $nonums != 'y'}</ol>{else}</ul>{/if}
-	<a class="linkmodule" style="margin-left: 20px" href="tiki-lastchanges.php">...{tr}more{/tr}</a>
+	<a class="linkmodule" style="margin-left: 20px" href="{$url}">...{tr}more{/tr}</a>
 	{/tikimodule}
 {/if}
