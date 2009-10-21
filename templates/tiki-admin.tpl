@@ -122,6 +122,7 @@ Add a value in first check when you create a new admin page. *}
 	<a href="tiki-mods.php">{tr}Mods{/tr}</a>
 	{if $prefs.feature_banning eq 'y'}<a href="tiki-admin_banning.php">{tr}Banning{/tr}</a> {/if}
 	{if $prefs.lang_use_db eq 'y'}<a href="tiki-edit_languages.php">{tr}Edit Languages{/tr}</a> {/if}
+	{if $prefs.feature_pagelist eq 'y'}<a href="tiki-admin_pagelist.php">{tr}Page List{/tr}</a>{/if}
 	<hr />
 
 	{tr}Transversal features{/tr} ({tr}which apply to more than one section{/tr}):<br />

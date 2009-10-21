@@ -4482,5 +4482,24 @@ CREATE TABLE "tiki_transitions" (
 CREATE INDEX "tiki_transitions_transition_lookup" ON "tiki_transitions" ("type","from");
 
 
+CREATE TABLE IF NOT EXISTS "tiki_page_lists" (
+  "list_type_id" integer NOT NULL,
+  "priority" integer NOT NULL,
+  "page_name" varchar(160) NOT NULL,
+  "score" float default NULL,
+  PRIMARY KEY  ("list_type_id","page_name")
+) DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE IF NOT EXISTS "tiki_page_list_types" (
+  "id" serial,
+  "name" varchar(40) NOT NULL,
+  "title" varchar(160) default NULL,
+  "description" varchar(200) default NULL,
+  PRIMARY KEY  ("name"),
+  UNIQUE ("id")
+) DEFAULT CHARSET=latin1 ;
+
+
 ;
 

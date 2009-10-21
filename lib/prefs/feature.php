@@ -870,5 +870,10 @@ function prefs_feature_list() {
 			'type' => 'text',
 			'filter' => 'digits',
 		),
+		'feature_pagelist' => array(
+			'name' => tra('Page List'),
+			'description' => tra('The pagelist feature allows to maintain lists of pages and their associated score and priority.'),
+			'type' => 'flag',
+		),
 	);
 }

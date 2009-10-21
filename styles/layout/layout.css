@@ -1863,4 +1863,86 @@ ul.column_switcher {
 	padding-top: 20px;
 	color: #0489B7;
 }
+
+.pagelist-wrapper {
+  width: 100%;
+}
+
+.pagelist-table {
+  font-size: .9em;
+  width: 100%;
+  font-weight: bold;
+  display: inline-table;
+}
+
+.pagelist-title {
+  background: none !important;
+  margin-top: 0px !important; 
+}
+
+.pagelist-table tr {
+  padding: 2px;
+}
+
+.pagelist-table td {
+  padding: 5px;
+}
+.pagelist-table .odd {
+  background: #F0F0F0 none repeat scroll 0 0;
+}
+
+.pagelist-status {
+  width: 25%; 
+}
+
+.pagelist-needs-review,.pagelist-draft,.pagelist-needs-updating {
+  background: #ffff81;
+  border: 1px solid #FFFFFF; 
+}
+
+.pagelist-translated {
+  background: #00f382;
+  border: 1px solid #FFFFFF; 
+}
+
+.pagelist-needs-translation,.pagelist-unknown {
+  background: #ffacac;
+  border: 1px solid #FFFFFF; 
+}
+
+.pagelist-page {
+  width: 62%;
+}
+
+.listprogress-progress {
+  height:19px;
+  position:relative;
+  width:253px;
+  border: 2px ridge #CCCCCC;
+  display: inline-table;
+}
+
+.listprogress-progress span {
+  background:transparent url(img/listprogress-bar.png) no-repeat scroll 0 0;
+  display:block;
+  height:21px;
+  overflow:hidden;
+  position:absolute;
+  width:253px;
+}
+
+.listprogress-progress em {
+  background:transparent url(img/listprogress-slider.png) repeat-x scroll 0 0;
+  display:block;
+  height:19px;
+  position:absolute;
+  top:-1;
+  width:253px;
+}
+
+.listprogress-status {
+  margin: 0 10px;
+  position: absolute;
+  font-weight: bold;
+}
 /* End of File */
