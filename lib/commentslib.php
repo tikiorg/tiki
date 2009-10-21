@@ -1581,9 +1581,9 @@ class Comments extends TikiLib {
     }
 
     function parse_comment_data($data) {
-	global $prefs, $tikilib;
+	global $prefs, $tikilib, $section;
 
-	if ($prefs['feature_forum_parse'] == 'y' || $prefs['section_comments_parse'] == 'y') {
+	if (($prefs['feature_forum_parse'] == 'y' && $section == 'forums') || $prefs['section_comments_parse'] == 'y') {
 	    return $this->parse_data($data);
 	}
 
