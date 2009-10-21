@@ -68,7 +68,7 @@ if (isset($_REQUEST["rename"])) {
 	$perspectivelib->replace_preference ('wsHomepage', $page, $newName ) ;
 	if ($prefs['feature_sefurl'] == 'y') {
 		include_once('tiki-sefurl.php');
-		header('location: '. filter_out_sefurl("tiki-index.php?page=$newName", $smarty, 'wiki'));
+		header('location: '. urlencode(filter_out_sefurl("tiki-index.php?page=$newName", $smarty, 'wiki')));
 	} else {
 		header('location: tiki-index.php?page=' . urlencode($newName));
 	}
