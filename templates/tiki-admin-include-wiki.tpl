@@ -735,6 +735,15 @@ name="w_displayed_default" {if $prefs.w_displayed_default eq 'y'} checked="check
 </fieldset>  
 </div>
 		{/tab}
+		{tab name="{tr}Screencasts{/tr}"}
+			{preference name=feature_wiki_screencasts}
+			{preference name=feature_wiki_screencasts_upload_type label="{tr}Upload Type{/tr}"}
+			{preference name=feature_wiki_screencasts_max_size label="{tr}Maximum size{/tr}"}
+			{preference name=feature_wiki_screencasts_base label="{tr}Data location{/tr}"}
+			{preference name=feature_wiki_screencasts_httpbase label="{tr}HTTP Prefix{/tr}"}
+			{preference name=feature_wiki_screencasts_user label="{tr}WebDav username{/tr}"}
+			{preference name=feature_wiki_screencasts_pass label="{tr}WebDav password{/tr}"}
+		{/tab}
 	{/tabset}
 <div class="heading input_submit_container" style="text-align: center">
 	<input type="submit" name="wikisetprefs" value="{tr}Change preferences{/tr}" />
