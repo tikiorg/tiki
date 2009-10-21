@@ -54,31 +54,6 @@
 	</ul>
 {/if}
 
-{if count($templates)}
-	<br />
-	<h2>{tr}Templates compiler{/tr}</h2>
-	<table class="sortable" id="templatecompiler" width="100%">
-		<thead>
-		<tr>
-			<th>{tr}Language{/tr}</th>
-			<th>{tr}Pages{/tr}/{tr}Size{/tr}</th>
-			<th>{tr}Action{/tr}</th>
-		</tr>
-		</thead>
-		<tbody>
-			{cycle values="even,odd" print=false}
-			{foreach key=key item=item from=$templates}
-				<tr class="form">
-					<td class="{cycle advance=false}"><b>{$key}</b></td>
-					<td class="{cycle advance=false}">({$item.cant} {tr}Files{/tr} / {$item.total|kbsize|default:'0 Kb'})</td>
-					<td class="{cycle}"><a href="tiki-admin_system.php?compiletemplates={$key}" class="link">{tr}Compile{/tr}</a></td>
-				</tr>
-			{/foreach}
-		</tbody>
-	</table>
-{/if}
-<br />
-
 {if $tiki_p_admin eq 'y'}
 	{remarksbox type="warning" title="{tr}Advanced feature{/tr}"}
 		{tr}Fix UTF-8 Errors in Tables{/tr} <a href="javascript:flip('fixutf8')">: {tr}Show{/tr}/{tr}Hide{/tr}</a>
