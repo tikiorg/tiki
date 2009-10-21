@@ -30,16 +30,6 @@ if (isset($_REQUEST["textareasetup"]) && (!isset($_COOKIE['tab']) || $_COOKIE['t
 	foreach($pref_toggles as $toggle) {
 		simple_set_toggle($toggle);
 	}
-	foreach($plugins as $key => $info) {
-		$key_inline = 'wikiplugininline_' . $key;
-		$key = 'wikiplugin_' . $key;
-		if (in_array($key, $info['prefs'])) {
-			simple_set_toggle($key);
-			if (!isset($info['inline']) || !$info['inline']) {
-				simple_set_toggle($key_inline);
-			}
-		}
-	}
 	$pref_simple_values = array(
 		"default_rows_textarea_wiki",
 		"default_rows_textarea_comment",
