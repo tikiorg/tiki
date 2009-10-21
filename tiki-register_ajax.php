@@ -9,6 +9,7 @@ require_once ('lib/ajax/ajaxlib.php');
 function AJAXCheckUserName($name) {
 	global $userlib;
 	$objResponse = new xajaxResponse();
+$objResponse->addAlert('---');
 	if (empty($name)) {
 		$objResponse->addAssign("checkfield", "innerHTML", tra("empty"));
 	} else if ($userlib->user_exists($name)) {

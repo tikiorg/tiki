@@ -55,7 +55,7 @@
 					<td class="formcolor">
 						<input type="text" name="name" id="name"{if $prefs.feature_ajax eq 'y'} onkeyup="return check_name()"{/if} />
 	{if $prefs.feature_ajax eq'y'}
-						<div id="checkfield" style="float:left"></div>{/if}
+						<div id="checkfield" style="float:left" onkeyup='check_name()'></div>{/if}
 	{if $prefs.login_is_email eq 'y'}
 						<em>{tr}Use your email as login{/tr}</em>.
 	{else}
