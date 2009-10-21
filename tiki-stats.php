@@ -28,11 +28,6 @@ if (isset($_REQUEST['startDate_Year']) || isset($_REQUEST['endDate_Year'])) {
 	$end_date = $tikilib->make_time(23, 59, 59, date("m"), date("d"), date("Y"));
 	$smarty->assign( 'startDate', $start_date );
 }
-print_r('--------------');
-print_r($start_date);
-print_r("|||");
-print_r($end_date);
-print_r('--------------');
 
 if (!isset($_REQUEST["days"])) $_REQUEST["days"] = 7;
 $smarty->assign('pv_chart', 'n');
