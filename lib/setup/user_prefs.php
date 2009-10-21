@@ -31,7 +31,7 @@ if ( $user ) {
 	$group =& $_SESSION['u_info']['group'];
 	$smarty->assign_by_ref('group', $group);
 	$smarty->assign_by_ref('user', $user);
-	$smarty->assign('default_group', $group);
+	$smarty->assign_by_ref('default_group', $group);
 
 	// Get all user prefs in one query
 	$tikilib->get_user_preferences($user);
