@@ -192,7 +192,7 @@
 <select id="groupforAlert" name="groupforAlert">
 <option value="">&nbsp;</option>
 {foreach key=k item=i from=$groupforAlertList}
-<option value="{$k}" {$i}>{$k}</option>
+<option value="{$k|escape}" {$i}>{$k|escape}</option>
 {/foreach}
 </select></td>
 </tr>
