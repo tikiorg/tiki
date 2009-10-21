@@ -14,6 +14,7 @@
 			{button href="tiki-admingroups.php?add=1" _text="{tr}Add new group{/tr}"}
 		{/if}
 	{/if}
+	{button href="tiki-objectpermissions.php" _text="{tr}Manage permissions{/tr}"}
 </div>
 
 {tabset name='tabs_admingroups'}
