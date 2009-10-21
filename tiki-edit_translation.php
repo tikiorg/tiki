@@ -58,7 +58,7 @@ if ((!isset($_REQUEST['type']) || $_REQUEST['type'] == 'wiki page' || $_REQUEST[
 	# touch it.
 	#
 	if ($prefs['feature_translation_incomplete_notice'] == 'y') {
-		$smarty->assign('translate_message', "^".tra("Translation of this page is incomplete.", $langpage)."^\n\n");
+		$smarty->assign('translate_message', "^".tra("Translation of this page is incomplete.")."^\n\n");
 	}
 }
 else if ($_REQUEST['id']) {
