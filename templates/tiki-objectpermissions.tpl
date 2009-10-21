@@ -49,42 +49,43 @@
 		<input type="hidden" name="objectId" value="{$objectId|escape}" />
 		<input type="hidden" name="permType" value="{$permType|escape}" />
 		
-		<label for="show_disabled_features">{tr}Show permissions for disabled features{/tr}</label>
-		<input type="checkbox" name="show_disabled_features" id="show_disabled_features" {if isset($show_disabled_features) and $show_disabled_features eq 'y'}checked="checked"{/if} onchange="this.form.submit();" />
-
 		<div class="input_submit_container" style="text-align: center">
 			<input type="submit" name="assign" value="{tr}Assign{/tr}" />
+			{if $permissions_displayed eq 'direct'}
+				<input type="submit" name="remove" value="{tr}Remove{/tr}"/>
+			{/if}
 		</div>
+		
+		{if $objectType eq 'category'}
+			<p>
+				<input type="checkbox" id="propagate_category" name="propagate_category" value="1"/>
+				<label for="propagate_category">{tr}Assign or remove permissions on <em>all</em> child categories{/tr}</label>
+			</p>
+			{jq}$jq("input[name='assign'],input[name='remove']").click(function(){
+if ($jq("#propagate_category").attr("checked")) {
+	return confirm("{tr}Are you sure you want to effect all child categories?\nThere is no undo.{/tr}");
+} }); {/jq}
+		{/if}
+		
+		{if ($objectType eq 'wiki' or $objectType eq 'wiki page') and !empty($inStructure)}
+			<input name="assignstructure" id="assignstructure" type="checkbox" />
+			<label for="assignstructure">{tr}Assign or remove permissions on all pages of the sub-structure{/tr}</label>
+			{jq}$jq("input[name='assign'],input[name='remove']").click(function(){
+if ($jq("#assignstructure").attr("checked")) {
+	return confirm("{tr}Are you sure you want to effect all pages in this sub-structure?\nThere is no undo.{/tr}");
+} }); {/jq}
+		{/if}
 		
 		<h3>{tr}Permissions{/tr}</h3>
 
-		{if $objectType eq 'category'}
-			<p>
-				<input type="checkbox" id="propagate" name="propagate_category" value="1"/>
-				<label for="propagate">{tr}Copy permissions to child categories{/tr}</label>
-			</p>
-		{/if}
-		
-		{if isset($groupsHidden)}
-			{remarksbox type="tip" title="{tr}Note{/tr}"}
-				{tr}Some of your groups have been automatically hidden. Click 'Show/hide columns' to select the group columns to display{/tr}
-			{/remarksbox}
-		{/if}
-
-		{popup_link block="column_switches_div" class="button"}{tr}Show/hide Group List{/tr}{/popup_link}
-		
-		<div id="column_switches_div" style="display: none">
-			<h3>{tr}Show/hide columns{/tr}</h3>
-			<ul id="column_switches" class="column_switcher"><li></li></ul>
-		</div>
 		{treetable _data=$perms _checkbox=$permGroups _checkboxTitles=$groupNames _checkboxColumnIndex=$permGroupCols _valueColumnIndex="permName" _columns='"label"="{tr}Permission{/tr}"' _sortColumn='type' _openall='y' _columnsContainHtml='y'}
 
 		<div class="input_submit_container" style="text-align: center">
 			<input type="submit" name="assign" value="{tr}Assign{/tr}" />
+			{if $permissions_displayed eq 'direct'}
+				<input type="submit" name="remove" value="{tr}Remove{/tr}"/>
+			{/if}
 		</div>
-		{if ($objectType eq 'wiki' or $objectType eq 'wiki page') and !empty($inStructure)}
-			{tr}and also to all pages of the sub-structure:{/tr} <input name="assignstructure" type="checkbox" />
-		{/if}
 	</form>
 	{/tab}
 

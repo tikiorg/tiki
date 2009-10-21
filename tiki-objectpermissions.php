@@ -185,6 +185,14 @@ if (isset($_REQUEST['assign']) && !isset($_REQUEST['quick_perms'])) {
 	}
 }
 
+if (isset($_REQUEST['remove'])) {
+	check_ticket('object-perms');
+	
+	$newPermissions = new Perms_Reflection_PermissionSet;
+	$permissionApplier->apply( $newPermissions );
+
+}
+
 // Prepare display
 // Get the individual object permissions if any
 
@@ -401,26 +409,6 @@ JS;
 
 JS;
 }	// end of for $groupNames loop
-
-
-// if the number of groups has changed delete the old cookie tracking column hiding
-if (isset($_COOKIE['columnManagerCtreetable_1'])) {
-	if (strlen($_COOKIE['columnManagerCtreetable_1']) != count($groupNames)) {
-		setcookie ('columnManagerCtreetable_1', '', time() - 3600);
-	}
-}
-
-$maxGroupsToShow = 5;	// maybe a pref one day?
-if (!isset($_COOKIE['columnManagerCtreetable_1']) && count($groupNames) > $maxGroupsToShow) {
-	$hideGroups = implode(',',array_keys(array_fill($maxGroupsToShow+1, count($groupNames)-$maxGroupsToShow, 1)));
-	$smarty->assign('groupsHidden', 'y');
-} else {
-	$hideGroups = '';
-
-}
-$js .= "\$jq('#treetable_1').columnManager(".
-	"{ listTargetID:'column_switches', onClass: 'advon', offClass: 'advoff', saveState: true, ".
-	"hideInList: [".(count($groupNames) + 1)."], colsHidden: [".$hideGroups."]});\n";
 
 $headerlib->add_jq_onready($js);
 
