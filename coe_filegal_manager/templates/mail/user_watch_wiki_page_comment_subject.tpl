@@ -1,0 +1,1 @@
+{tr}Wiki page %s was commented on by{/tr} {if $mail_user}{$mail_user}{else}{tr}an anonymous user{/tr}{/if}
