@@ -8221,10 +8221,11 @@ function get_wiki_section($data, $hdr) {
 	$start = 0;
 	$end = strlen($data);
 	$lines = explode("\n", $data);
+	$count_lines = count($lines);
 	$header = 0;
 	$pp_level = 0;
 	$np_level = 0;
-	for ($i = 0; $i < count($lines); ++$i) {
+	for ($i = 0; $i < $count_lines; ++$i) {
 		$pp_level += preg_match ('/~pp~/',$lines[$i]);
 		$pp_level -= preg_match ('/~\/pp~/',$lines[$i]);
 		$np_level += preg_match ('/~np~/',$lines[$i]);
@@ -8236,7 +8237,7 @@ function get_wiki_section($data, $hdr) {
 				if ($header == $hdr) { // we are on it - now find the next header at same or lower level
 					$level = $this->how_many_at_start($lines[$i], '!');
 					$end = strlen($lines[$i]) + 1;
-					for (++$i; $i < count($lines); ++$i) {
+					for (++$i; $i < $count_lines; ++$i) {
 						if (substr($lines[$i], 0, 1) == '!' && $level >= $this->how_many_at_start($lines[$i], '!')) {
 							return (array($start, $end));
 						}
