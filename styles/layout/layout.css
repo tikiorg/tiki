@@ -724,6 +724,11 @@ span.moduleflip,
 	z-index: 0;
 }
 
+.rbox-close {
+	float: right;
+	cursor: pointer;
+}
+
 .halffloat div.box,
 .wikitext .halffloat div.box {
 	float: left;
