@@ -5,7 +5,7 @@
 	{if $nonums == 'y'}<ol>{else}<ul>{/if}
 	{foreach key=maa_key item=maa_value from=$modArticleArchives}
 		<li>
-			<a class="linkmodule" href="tiki-view_articles.php?date_min={$maa_value.start_month}&date_max={$maa_value.end_month}" title="">{$maa_key}{if $arch_count eq 'y'} [{$maa_value.item_count}]{/if}</a>
+			<a class="linkmodule" href="tiki-view_articles.php?date_min={$maa_value.start_month}&amp;date_max={$maa_value.end_month}" title="">{$maa_key}{if $arch_count eq 'y'} [{$maa_value.item_count}]{/if}</a>
 		</li>
 	{/foreach}
 
