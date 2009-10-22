@@ -645,9 +645,11 @@ class ToolbarPicker extends Toolbar
 {
 	private $list;
 	private $index;
+	private $name;
 	
 	public static function fromName( $tagName ) // {{{
 	{
+		global $headerlib;
 		$prefs = array();
 
 		switch( $tagName ) {
@@ -689,8 +691,9 @@ class ToolbarPicker extends Toolbar
 			}
 			$list = array();
 			foreach( $rawList as $color) {
-				$list["~~#$color:text~~"] = "<div style='display:block; background-color: #$color; width: 17px; height:16px' title='$color' />&nbsp;</div>";
+				$list["~~#$color:text~~"] = "<div style='background-color: #$color' title='$color' />&nbsp;</div>";
 			}
+			$headerlib->add_css('.toolbars-picker div {width: 17px; height:16px}');
 			break;
 
 		case 'bgcolor':
@@ -709,8 +712,9 @@ class ToolbarPicker extends Toolbar
 			}
 			$list = array();
 			foreach( $rawList as $color) {
-				$list["~~black,#$color:text~~"] = "<div style='display:block; background-color: #$color; width: 17px; height:16px' title='$color' />&nbsp;</div>";
+				$list["~~black,#$color:text~~"] = "<div style='background-color: #$color' title='$color' />&nbsp;</div>";
 			}
+			$headerlib->add_css('.toolbars-picker div {width: 17px; height:16px}');
 			break;
 
 		default:
@@ -722,7 +726,8 @@ class ToolbarPicker extends Toolbar
 			->setLabel( $label )
 				->setIcon( !empty($icon) ? $icon : 'pics/icons/shading.png' )
 					->setList( $list )
-						->setType('Picker');
+						->setType('Picker')
+							->setName($tagName);
 		
 		foreach( $prefs as $pref ) {
 			$tag->addRequiredPreference( $pref );
@@ -734,6 +739,13 @@ class ToolbarPicker extends Toolbar
 		ToolbarPicker::setupJs();
 
 		return $tag;
+	} // }}}
+
+	function setName( $name ) // {{{
+	{
+		$this->name = $name;
+		
+		return $this;
 	} // }}}
 
 	function setList( $list ) // {{{
@@ -751,7 +763,7 @@ class ToolbarPicker extends Toolbar
 	} // }}}
 	
 	public function getSyntax( $areaName = '$areaName' ) {
-		return 'displayPicker( this, ' . $this->index . ', \'' . $areaName . '\')';
+		return 'displayPicker( this, \'' . $this->name . '\', \'' . $areaName . '\')';	// is enclosed in double quotes later
 	}
 	
 	static private function setupJs() {
@@ -808,7 +820,7 @@ JS
 	function getWikiHtml( $areaName ) // {{{
 	{
 		global $headerlib;
-		$headerlib->add_js( "window.pickerData[$this->index] = " . json_encode($this->list) . ";", 1 + $this->index );
+		$headerlib->add_js( "window.pickerData['$this->name'] = " . json_encode($this->list) . ";" );
 		
 		return $this->getSelfLink($this->getSyntax($areaName),
 							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-picker');
@@ -841,7 +853,7 @@ class ToolbarDialog extends Toolbar
 						$prefs['feature_semantic'] == 'y' ? '<input type="text" id="tbWLinkRel" class="ui-widget-content ui-corner-all" style="width: 100%" />' : '',
 						'{"open": function () {
 $jq("#tbWLinkPage").tiki("autocomplete", "pagename");
-var s = getSelection($jq("textarea[name=\'" + areaname + "\']")[0]);
+var s = getSelection($jq(getElementById(areaname))[0]);
 var m = /\((.*)\(([^\|]*)\|?([^\|]*)\|?([^\|]*)\|?\)\)/g.exec(s);
 if (m && m.length > 4) {
 	if ($jq("#tbWLinkRel")) { $jq("#tbWLinkRel").val(m[1]); }
