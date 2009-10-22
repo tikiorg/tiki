@@ -690,6 +690,7 @@ class CalendarLib extends TikiLib {
 		$ret = array();
 			
 		while ($res = $result->fetchRow()) {
+			$res['parsed'] = $this->parse_data($res['description']);
 			$ret[] = $res;
 		}
 	
