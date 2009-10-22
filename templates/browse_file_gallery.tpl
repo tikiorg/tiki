@@ -185,6 +185,10 @@
     </div> {* thumbnailcontener *}
   {/if}
 
+<script type="text/javascript">
+	adjustThumbnails()	
+</script>
+
   {sectionelse}
     <div>
       <b>{tr}No records found{/tr}</b>

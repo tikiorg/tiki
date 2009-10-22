@@ -54,9 +54,9 @@
   {/if}
   {if $view eq 'browse'}
     {if $show_details eq 'y'}
-      {self_link show_details='n'}{icon _id='no_information' align='right' onload='adjustThumbnails()'}{/self_link}
+      {self_link show_details='n'}{icon _id='no_information' align='right'}{/self_link}
     {else}
-      {self_link show_details='y'}{icon _id='information' align='right' onload='adjustThumbnails()'}{/self_link}
+      {self_link show_details='y'}{icon _id='information' align='right'}{/self_link}
     {/if}
   {/if}
 
