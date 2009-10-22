@@ -875,5 +875,20 @@ function prefs_feature_list() {
 			'description' => tra('The pagelist feature allows to maintain lists of pages and their associated score and priority.'),
 			'type' => 'flag',
 		),
+		'feature_listPages' => array(
+			'name' => tra('List pages'),
+			'type' => 'flag',
+			'hint' => 'tiki-listpages.php',
+		),
+		'feature_lastChanges' => array(
+			'name' => tra('Last changes'),
+			'type' => 'flag',
+			'hint' => 'tiki-lastchanges.php',
+		),
+		'feature_listorphanPages' => array(
+			'name' => tra('Orphan pages'),
+			'type' => 'flag',
+			'hint' => 'tiki-orphan_pages.php',
+		),
 	);
 }
