@@ -58,7 +58,7 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),
 		'feature_newsletters' => array(
-			'name' => tra('Newletters'),
+			'name' => tra('Newsletters'),
 			'description' => tra('Content mailed to registered users.'),
 			'help' => 'Newsletters',
 			'type' => 'flag',
