@@ -831,9 +831,9 @@ class ToolbarDialog extends Toolbar
 			$icon = tra('pics/icons/page_link.png');
 			$wysiwyg = 'tikilink';
 			$list = array('Wiki Link',
-						'<label for="tbWLinkDesc">Link description:</label>',
+						'<label for="tbWLinkDesc">Show this text</label>',
 						'<input type="text" id="tbWLinkDesc" class="ui-widget-content ui-corner-all" style="width: 100%" />',
-						'<label for="tbWLinkURL">Page name:</label>',
+						'<label for="tbWLinkURL">Link to this page</label>',
 						'<input type="text" id="tbWLinkPage" class="ui-widget-content ui-corner-all" style="width: 100%" />',
 						$prefs['wikiplugin_alink'] == 'y' ? '<label for="tbWLinkRel">Anchor:</label>' : '',
 						$prefs['wikiplugin_alink'] == 'y' ? '<input type="text" id="tbWLinkAnchor" class="ui-widget-content ui-corner-all" style="width: 100%" />' : '',
@@ -875,9 +875,9 @@ insertAt(areaname, s, false, false, true); $jq(this).dialog("close");
 			$label = tra('External Link');
 			$icon = tra('pics/icons/world_link.png');
 			$list = array('External Link',
-						'<label for="tbLinkDesc">Link description:</label>',
+						'<label for="tbLinkDesc">Show this text</label>',
 						'<input type="text" id="tbLinkDesc" class="ui-widget-content ui-corner-all" style="width: 100%" />',
-						'<label for="tbLinkURL">URL:</label>',
+						'<label for="tbLinkURL">link to this URL</label>',
 						'<input type="text" id="tbLinkURL" class="ui-widget-content ui-corner-all" style="width: 100%" />',
 						'<label for="tbLinkRel">Relation:</label>',
 						'<input type="text" id="tbLinkRel" class="ui-widget-content ui-corner-all" style="width: 100%" />',
