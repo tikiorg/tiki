@@ -6232,7 +6232,7 @@ Pokud jste tu poprvé, přihlašte se nahoře vpravo jako __admin__ s heslem __a
 "Multilingual structures" => "V&iacute;cejazyčn&eacute; struktury",
 "Use database for translation" => "Použít databázi pro překlady",
 "Edit or ex/import Languages" => "Upravit nebo exportovat/importovat jazyky",
-"Record untranslated" => "Zaznamenávat nepřeložené",
+"Record untranslated strings" => "Zaznamenávat nepřeložené",
 "Admin Groups" => "Nastav skupiny",
 "Admin Users" => "Nastav uživatele",
 "Authentication method" => "Metoda autentifikace",
