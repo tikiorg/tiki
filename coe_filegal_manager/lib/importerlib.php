@@ -58,7 +58,7 @@ class Importer extends Comments {
 		$hash = array();	// If part of a thread, this is the new parent threadId.
 
 		// Select the table for the main forum information.
-		if ($dbT ype == 'TikiWiki') {
+		if ($dbType == 'TikiWiki') {
 				$table = 'comments';
 				$ftable = $dbPrefix . $table;
 				$ftable2 = $dbPrefix . 'forums';

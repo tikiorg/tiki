@@ -181,15 +181,19 @@ class StatsLib extends TikiLib {
 		return $this->query($query, array($object, $type, (int)$dayzero), -1, -1, false);
 	}
 	
-	function best_overall_object_stats($max=20,$days=0) {
+	function best_overall_object_stats($max=20, $days=0, $startDate=0, $endDate=0 ) {
 		$stats = array();
 		$bindvars = array();
 		if ($days!=0) {
 			$mid="WHERE `day` >= ?";
 			$bindvars[] = $this->make_time(0, 0, 0, $this->date_format("%m"), $this->date_format("%d")-$days, $this->date_format("%Y"));
 		} else {
-			$mid="";
+			$mid="WHERE `day` <> 'NULL' ";
 		}
+		
+		if ($startDate) $mid .= " and `day` > '".$startDate."' ";
+		if ($endDate) $mid .= " and `day` < '".$endDate."' ";
+
 		$query="SELECT `object`, `type`, sum(`hits`) AS `hits` FROM `tiki_stats` ".$mid." GROUP BY `object`,`type` ORDER BY `hits` DESC";
 		$result = $this->query($query,$bindvars,$max,0);
 		$i=0;
@@ -207,7 +211,7 @@ class StatsLib extends TikiLib {
 		return $stats;
 	}
 	
-	function object_hits($object,$type,$days=0) {
+	function object_hits($object, $type, $days=0, $startDate=0, $endDate=0 ) {
 		$bindvars = array($object,$type);
 		if ($days!=0) {
 			$mid="AND `day` >= ? ";
@@ -215,6 +219,10 @@ class StatsLib extends TikiLib {
 		} else {
 			$mid="";
 		}
+
+		if ($startDate) $mid .= " and `day` > '".$startDate."' ";
+		if ($endDate) $mid .= " and `day` < '".$endDate."' ";
+
 		$query_cant="SELECT sum(`hits`) AS `hits` FROM `tiki_stats` WHERE `object`=? AND `type`=? ".$mid." GROUP BY `object`,`type`";
 		$cant = $this->getOne($query_cant,$bindvars);
 		return $cant;

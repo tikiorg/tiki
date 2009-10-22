@@ -1,4 +1,4 @@
-{title help="i18n" admpage="i18n"}{tr}Translate:{/tr}&nbsp;{$name}{if isset($languageName)}&nbsp;({$languageName}, {$langpage}){/if}{/title}
+{title help="i18n" admpage="i18n"}{tr}Translate:{/tr}&nbsp;{$name|escape}{if isset($languageName)}&nbsp;({$languageName}, {$langpage|escape}){/if}{/title}
 
 <div class="navbar">
 	{if $type eq 'wiki page'}
@@ -28,7 +28,7 @@
 
 {if $langpage}
 <form method="post" action="tiki-editpage.php" onsubmit="return validate_translation_request(this)">
-	<p>{tr}Language of newly translated page{/tr}:
+	<p>{tr}Language of newly translated page:{/tr}
 		<select name="lang" id="language_list" size="1">
 		   <option value="unspecified">{tr}Unspecified{/tr}</option>
 			{section name=ix loop=$languages}
@@ -37,7 +37,7 @@
 			{/if}
 			{/section}
 		</select>
-	<br />{tr}Name of newly translated page{/tr}: <input type="text" size="40" name="page" id="translation_name"/><input type="hidden" name="translationOf" value="{$name|escape}"/>
+	<br />{tr}Name of newly translated page:{/tr} <input type="text" size="40" name="page" id="translation_name"/><input type="hidden" name="translationOf" value="{$name|escape}"/>
 	<input type="submit" value="{tr}Create translation{/tr}"/></p>
 	<textarea name="edit" style="display:none">{$translate_message}{$pagedata|escape:'htmlall':'UTF-8'}</textarea>
 </form>
@@ -87,12 +87,12 @@ function validate_translation_request() {
 <input type="hidden" name="id" value="{$id}" />
 <input type="hidden" name="type" value="{$type|escape}" />
 <input type="hidden" name="page" value="{$name|escape}" />
-<p>{tr}Add existing page as a translation of this page{/tr}:<br />
+<p>{tr}Add existing page as a translation of this page:{/tr}<br />
 
 {if $articles}
-	<select name="srcId">{section name=ix loop=$articles}{if !empty($articles[ix].lang) and $langpage ne $articles[ix].lang}<option value="{$articles[ix].articleId|escape}" {if $articles[ix].articleId == $srcId}checked="checked"{/if}>{$articles[ix].title|truncate:80:"(...)":true}</option>{/if}{/section}</select>
+	<select name="srcId">{section name=ix loop=$articles}{if !empty($articles[ix].lang) and $langpage ne $articles[ix].lang}<option value="{$articles[ix].articleId|escape}" {if $articles[ix].articleId == $srcId}checked="checked"{/if}>{$articles[ix].title|truncate:80:"(...)":true|escape}</option>{/if}{/section}</select>
 {else}
-	<select name="srcName" id="existing-page-src">{section name=ix loop=$pages}<option value="{$pages[ix].pageName|escape}" {if $pages[ix].pageName == $srcId}checked="checked"{/if}>{$pages[ix].pageName|truncate:80:"(...)":true} ({$pages[ix].lang|escape})</option>{/section}</select>
+	<select name="srcName" id="existing-page-src">{section name=ix loop=$pages}<option value="{$pages[ix].pageName|escape}" {if $pages[ix].pageName == $srcId}checked="checked"{/if}>{$pages[ix].pageName|truncate:80:"(...)":true|escape} ({$pages[ix].lang|escape})</option>{/section}</select>
 {/if}
 &nbsp;
 <input type="submit" class="wikiaction" name="set" value="{tr}Go{/tr}"/>

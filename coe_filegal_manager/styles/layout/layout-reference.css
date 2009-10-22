@@ -1155,6 +1155,11 @@ div.minichatchan {
 	padding: 0 3px 3px 3px;
 }
 
+.rbox-close {
+	float: right;
+	cursor: pointer;
+}
+
 .comment .rbox-title,
 .comment .rbox-data {}
 

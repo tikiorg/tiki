@@ -239,7 +239,8 @@ while ($file = readdir($h)) {
 closedir($h);
 $smarty->assign_by_ref("slide_styles", $slide_styles);
 if (isset($_REQUEST["looksetup"])) {
-    for ($i = 0;$i < count($tikifeedback);$i++) {
+		$count_feedback = count($tikifeedback);
+    for ($i = 0; $i < $count_feedback; $i++) {
         if (substr($tikifeedback[$i]['name'], 0, 10) == 'site_style') { // if site_style or site_style_option
             // If the theme has changed, reload the page to use the new theme
             $location = 'location: tiki-admin.php?page=look';

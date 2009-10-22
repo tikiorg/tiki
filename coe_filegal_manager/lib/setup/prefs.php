@@ -172,6 +172,7 @@ function get_default_prefs() {
 		'wiki_edit_plugin' => 'y',
 		'wiki_validate_plugin' => 'y',
 		'wiki_edit_minor' => 'n',
+		'feature_pagelist' => 'n',
 
 		'wikiplugin_agentinfo' => 'n',
 		'wikiplugin_alink' => 'n',
@@ -231,6 +232,7 @@ function get_default_prefs() {
 		'wikiplugin_lang' => 'y',
 		'wikiplugin_lastmod' => 'n',
 		'wikiplugin_listpages' => 'n',
+		'wikiplugin_listprogress' => 'n',
 		'wikiplugin_lsdir' => 'n',
 		'wikiplugin_map' => 'y',
 		'wikiplugin_mcalendar' => 'n',
@@ -243,6 +245,7 @@ function get_default_prefs() {
 		'wikiplugin_mwtable' => 'n',
 		'wikiplugin_myspace' => 'n',
 		'wikiplugin_objecthits' => 'n',
+		'wikiplugin_pagelist' => 'n',
 		'wikiplugin_picture' => 'n',  // Old syntax for images
 		'wikiplugin_pluginmanager' => 'n',
 		'wikiplugin_poll' => 'y',
@@ -354,6 +357,7 @@ function get_default_prefs() {
 		'wikiplugininline_lang' => 'n',
 		'wikiplugininline_lastmod' => 'n',
 		'wikiplugininline_listpages' => 'n',
+		'wikiplugininline_listprogress' => 'n',
 		'wikiplugininline_lsdir' => 'n',
 		'wikiplugininline_map' => 'n',
 		'wikiplugininline_mcalendar' => 'n',
@@ -366,6 +370,7 @@ function get_default_prefs() {
 		'wikiplugininline_mwtable' => 'n',
 		'wikiplugininline_myspace' => 'n',
 		'wikiplugininline_objecthits' => 'n',
+		'wikiplugininline_pagelist' => 'n',
 		'wikiplugininline_picture' => 'n',  // Old syntax for images
 		'wikiplugininline_pluginmanager' => 'n',
 		'wikiplugininline_poll' => 'n',

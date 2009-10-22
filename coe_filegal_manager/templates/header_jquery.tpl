@@ -4,25 +4,6 @@
 <script type="text/javascript" src="lib/jquery/jquery{$minified}.js"></script>
 <script type="text/javascript" src="lib/jquery_tiki/tiki-jquery.js"></script>{* add {$minified} later if $minify_scripts_on_the_fly *}
 
-{* fade out remark boxes on a click to save user space *}
-<script type="text/javascript">
-<!--//--><![CDATA[//><!--
-{literal}
-	$jq(document.body).ready(function() {
-		$jq("div.rbox").css("position","relative");
-		$jq("div.rbox").append('{/literal}{icon _id='cross' alt='{tr}Close{/tr}' title='{tr}Click to fade this out{/tr}' style='position: absolute; top: 0; right: 0'}{literal}');
-		$jq("div.rbox img.icon").hover(function() {
-			$jq(this).css("cursor","crosshair");
-			$jq(this).attr("title","{/literal}{tr}Click to fade this out{/tr}{literal}");
-			$jq(this).click(function() {
-				$jq(this).parent().fadeOut(1000);
-			});
-		});
-	});
-{/literal}
-//--><!]]>
-</script>
-
 {if $prefs.feature_jquery_ui eq 'y' or $prefs.feature_jquery_tooltips eq 'y' or $prefs.feature_jquery_autocomplete eq 'y' or $prefs.feature_jquery_superfish eq 'y' or $prefs.feature_jquery_reflection eq 'y' or $prefs.feature_jquery_cycle eq 'y' or $prefs.feature_shadowbox eq 'y'}
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--

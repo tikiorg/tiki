@@ -1,6 +1,6 @@
 <?php
-// CVS: $Id$
-//this script may only be included - so its better to die if called directly.
+// $Id$
+// this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 	header("location: index.php");
 	exit;
@@ -9,7 +9,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 require_once('lib/init/tra.php');
 if ( ! defined('DATE_FORMAT_UNIXTIME') ) define('DATE_FORMAT_UNIXTIME', 5);
 
-//performance collecting:
+// performance collecting:
 //require_once ('lib/tikidblib-debug.php');
 
 // This class is included by all the Tiki php scripts, so it's important
@@ -7651,9 +7651,8 @@ class TikiLib extends TikiDb_Bridge {
 		return $short_datetime_format;
 	}
 
-	function date_format2($format, $timestamp = false, $_user = false, $input_format = DATE_FORMAT_UNIXTIME) {
-		global $tikilib;
-		return $tikilib->date_format($format, $timestamp, $_user, $input_format, false);
+	static function date_format2($format, $timestamp = false, $_user = false, $input_format = DATE_FORMAT_UNIXTIME) {
+		return TikiLib::date_format($format, $timestamp, $_user, $input_format, false);
 	}
 
 	static function date_format($format, $timestamp = false, $_user = false, $input_format = DATE_FORMAT_UNIXTIME, $is_strftime_format = true) {
@@ -8073,9 +8072,10 @@ class TikiLib extends TikiDb_Bridge {
 		 approximative)  */
 	function strlen_quoted($data) {
 		global $prefs;
-		$data = preg_replace('/{QUOTE\([^\)]*\)}.*{QUOTE}/Ui', '', $data);
 		if ($prefs['feature_use_quoteplugin'] != 'y') {
 			$data = preg_replace('/^>.*\\n?/m', '', $data);
+		} else {
+			$data = preg_replace('/{QUOTE\([^\)]*\)}.*{QUOTE}/Ui', '', $data);
 		}
 		return strlen($data);
 	}
@@ -8221,10 +8221,11 @@ function get_wiki_section($data, $hdr) {
 	$start = 0;
 	$end = strlen($data);
 	$lines = explode("\n", $data);
+	$count_lines = count($lines);
 	$header = 0;
 	$pp_level = 0;
 	$np_level = 0;
-	for ($i = 0; $i < count($lines); ++$i) {
+	for ($i = 0; $i < $count_lines; ++$i) {
 		$pp_level += preg_match ('/~pp~/',$lines[$i]);
 		$pp_level -= preg_match ('/~\/pp~/',$lines[$i]);
 		$np_level += preg_match ('/~np~/',$lines[$i]);
@@ -8236,7 +8237,7 @@ function get_wiki_section($data, $hdr) {
 				if ($header == $hdr) { // we are on it - now find the next header at same or lower level
 					$level = $this->how_many_at_start($lines[$i], '!');
 					$end = strlen($lines[$i]) + 1;
-					for (++$i; $i < count($lines); ++$i) {
+					for (++$i; $i < $count_lines; ++$i) {
 						if (substr($lines[$i], 0, 1) == '!' && $level >= $this->how_many_at_start($lines[$i], '!')) {
 							return (array($start, $end));
 						}

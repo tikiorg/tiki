@@ -830,12 +830,11 @@ a.phplmselected:hover {
 }
 
 #tiki-top .cssmenu_horiz li ul {
-	top: 2em;
+	margin-top: -7px;
 }
 
-#tiki-top .cssmenu_horiz li ul ul,
-.cssmenu_vert li ul ul {
-	top: -0.1em;
+#tiki-top .cssmenu_horiz li ul ul {
+	margin-top: -1px;
 }
 
 #tiki-top .cssmenu_horiz li a .sf-sub-indicator {

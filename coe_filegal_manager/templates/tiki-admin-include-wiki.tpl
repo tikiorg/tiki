@@ -599,20 +599,11 @@ name="w_displayed_default" {if $prefs.w_displayed_default eq 'y'} checked="check
 
 		{tab name="{tr}Page Listings{/tr}"}
 <input type="hidden" name="wikilistprefs" />	  
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="feature_listPages" name="feature_listPages" {if $prefs.feature_listPages eq 'y'}checked="checked" {/if}/></div>
-	<div class="adminoptionlabel"><label for="feature_listPages">{tr}List pages{/tr} </label></div>
-</div>	  
-	  
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="feature_lastChanges" name="feature_lastChanges" {if $prefs.feature_lastChanges eq 'y'}checked="checked" {/if}/></div>
-	<div class="adminoptionlabel"><label for="feature_lastChanges">{tr}Last changes{/tr} </label></div>
-</div>	  
 
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id='feature_listorphanPages' name="feature_listorphanPages" {if $prefs.feature_listorphanPages eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="feature_listorphanPages">{tr}Orphan pages{/tr} </label></div>
-</div>
+	{preference name=feature_listPages}
+	{preference name=feature_lastChanges}
+	{preference name=feature_listorphanPages}
+
 <div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" id='feature_listorphanStructure' name="feature_listorphanStructure" {if $prefs.feature_listorphanStructure eq 'y'}checked="checked"{/if}/></div>
 	<div class="adminoptionlabel"><label for="feature_listorphanStructure">{tr}Pages not in structure{/tr} </label></div>
@@ -734,6 +725,15 @@ name="w_displayed_default" {if $prefs.w_displayed_default eq 'y'} checked="check
 
 </fieldset>  
 </div>
+		{/tab}
+		{tab name="{tr}Screencasts{/tr}"}
+			{preference name=feature_wiki_screencasts}
+			{preference name=feature_wiki_screencasts_upload_type label="{tr}Upload Type{/tr}"}
+			{preference name=feature_wiki_screencasts_max_size label="{tr}Maximum size{/tr}"}
+			{preference name=feature_wiki_screencasts_base label="{tr}Data location{/tr}"}
+			{preference name=feature_wiki_screencasts_httpbase label="{tr}HTTP Prefix{/tr}"}
+			{preference name=feature_wiki_screencasts_user label="{tr}WebDav username{/tr}"}
+			{preference name=feature_wiki_screencasts_pass label="{tr}WebDav password{/tr}"}
 		{/tab}
 	{/tabset}
 <div class="heading input_submit_container" style="text-align: center">

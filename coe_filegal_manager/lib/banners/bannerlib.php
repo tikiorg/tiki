@@ -8,6 +8,33 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 class BannerLib extends TikiLib {
 
+	function select_banner_id($zone) {
+		$map = array(0=>'sun', 1=>'mon', 2=>'tue', 3=>'wed', 4=>'thu', 5=>'fri', 6=>'sat');
+		$dw = $map[$this->date_format("%w")];
+
+		$hour = $this->date_format("%H"). $this->date_format("%M");
+
+		$query = "select bannerId from `tiki_banners` where $dw = ? and  `hourFrom`<=? and `hourTo`>=? and
+		( ((`useDates` = ?) and (`fromDate`<=? and `toDate`>=?)) or (`useDates` = ?) ) and
+		(`impressions`<`maxImpressions`  or `maxImpressions`=?) and (`clicks`<`maxClicks` or `maxClicks`=? or `maxClicks` is NULL) and `zone`=? order by ".$this->convert_sortmode('random');
+		$bindvars=array('y',$hour,$hour,'y',(int) $this->now,(int) $this->now,'n',-1,-1,$zone);
+
+		$result = $this->query($query,$bindvars,1,0);
+		if (!($res = $result->fetchRow())) {
+			return false;
+		}
+		$id = $res["bannerId"];
+		
+		// Increment banner impressions here
+		if ($id) {
+			$query = "update `tiki_banners` set `impressions` = `impressions` + 1 where `bannerId` = ?";
+			$result = $this->query($query,array($id));
+		}
+	
+		return $id;
+	}
+
+
 	function select_banner($zone, $target='_blank') {
 		global $prefs;
 
@@ -17,37 +44,9 @@ class BannerLib extends TikiLib {
 		// weekdays
 		// zone
 		// maxImpressions and impressions
-		# TODO localize
-		$map = array(0=>'sun', 1=>'mon', 2=>'tue', 3=>'wed', 4=>'thu', 5=>'fri', 6=>'sat');
-		$dw = $map[$this->date_format("%w")];
 
-		$hour = $this->date_format("%H"). $this->date_format("%M");
-		$cookieName = "banner_$zone";
-		$mid = '';
-		$views = array();
-		$bindvars = array('y', $hour, $hour, 'y', (int) $this->now, (int) $this->now, 'n', -1, -1, $zone);
-		if (isset($_COOKIE[$cookieName])) {
-			$views = unserialize($_COOKIE[$cookieName]);
-			$mid = 'and (`bannerId` not in ('.implode(',',array_fill(0, count($views),'?')).') or ';
-			foreach ($views as $bId=>$bView) {
-				$bindvars[] = $bId;
-			}
-			foreach ($views as $bId=>$bView) {
-				$mids[] = '(`bannerId` = ? and `maxUserImpressions` > ?)';
-				$bindvars[] = $bId;
-				$bindvars[] = $bView;
-			}
-			$mid .= implode('or', $mids).')';
-		}
-
-		$query = "select * from `tiki_banners` where `$dw` = ? and  `hourFrom`<=? and `hourTo`>=? and
-		( ((`useDates` = ?) and (`fromDate`<=? and `toDate`>=?)) or (`useDates` = ?) ) and
-		(`impressions`<`maxImpressions`  or `maxImpressions`=?) and (`clicks`<`maxClicks` or `maxClicks`=? or `maxClicks` is NULL) and `zone`=? order by ".$this->convertSortMode('random');
-		$result = $this->query($query,$bindvars,1,0);
-		if (!($res = $result->fetchRow())) {
-			return false;
-		}
-		$id = $res["bannerId"];
+		$id = $this->select_banner_id( $zone );
+		$res = $this->get_banner( $id );
 
 		$raw = '';
 		switch ($res["which"]) {
@@ -93,8 +92,6 @@ class BannerLib extends TikiLib {
 		}
 
 		// Increment banner impressions here
-		$id = $res["bannerId"];
-
 		if ($id) {
 			$query = "update `tiki_banners` set `impressions` = `impressions` + 1 where `bannerId` = ?";
 
@@ -288,3 +285,5 @@ class BannerLib extends TikiLib {
 	}
 }
 $bannerlib = new BannerLib;
+
+?>

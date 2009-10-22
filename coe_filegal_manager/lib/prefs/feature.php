@@ -58,7 +58,7 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),
 		'feature_newsletters' => array(
-			'name' => tra('Newletters'),
+			'name' => tra('Newsletters'),
 			'description' => tra('Content mailed to registered users.'),
 			'help' => 'Newsletters',
 			'type' => 'flag',
@@ -828,14 +828,18 @@ function prefs_feature_list() {
 		'feature_wiki_screencasts_base' => array(
 			'name' => tra('Screencasts upload location'),
 			'description' => tra('Local path or webdav path to the file upload location.'),
+			'hint' => tra('Trailing slash required'),
 			'type' => 'text',
 			'filter' => 'url',
+			'size' => 50,
 		),
 		'feature_wiki_screencasts_httpbase' => array(
 			'name' => tra('Screencasts HTTP prefix'),
 			'description' => tra('Prefix to use for the files when generating a link to it.'),
+			'hint' => tra('Trailing slash required'),
 			'type' => 'text',
 			'filter' => 'url',
+			'size' => 50,
 		),
 		'feature_wiki_screencasts_upload_type' => array(
 			'name' => tra('Screencast upload type'),
@@ -850,18 +854,41 @@ function prefs_feature_list() {
 			'name' => tra('Screencasts authentication user'),
 			'description' => tra('When using webdav to upload files, used as the username of the authentication credentials.'),
 			'type' => 'text',
+			'size' => 20,
 		),
 		'feature_wiki_screencasts_pass' => array(
 			'name' => tra('Screencasts authentication password'),
 			'description' => tra('When using webdav to upload files, used as the password of the authentication credentials.'),
 			'type' => 'text',
+			'size' => 20,
 		),
 		'feature_wiki_screencasts_max_size' => array(
 			'name' => tra('Screencasts max file size'),
-			'hint' => tra('Value provided in bytes'),
 			'description' => tra('Maximum file size used for screencasts.'),
+			'hint' => tra('Value provided in bytes'),
+			'size' => 12,
 			'type' => 'text',
 			'filter' => 'digits',
+		),
+		'feature_pagelist' => array(
+			'name' => tra('Page List'),
+			'description' => tra('The pagelist feature allows to maintain lists of pages and their associated score and priority.'),
+			'type' => 'flag',
+		),
+		'feature_listPages' => array(
+			'name' => tra('List pages'),
+			'type' => 'flag',
+			'hint' => 'tiki-listpages.php',
+		),
+		'feature_lastChanges' => array(
+			'name' => tra('Last changes'),
+			'type' => 'flag',
+			'hint' => 'tiki-lastchanges.php',
+		),
+		'feature_listorphanPages' => array(
+			'name' => tra('Orphan pages'),
+			'type' => 'flag',
+			'hint' => 'tiki-orphan_pages.php',
 		),
 	);
 }

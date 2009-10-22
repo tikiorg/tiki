@@ -3463,3 +3463,20 @@ CREATE TABLE `tiki_transitions` (
 	KEY `transition_lookup` (`type`, `from`)
 ) ENGINE=MyISAM;
 
+CREATE TABLE IF NOT EXISTS `tiki_page_lists` (
+  `list_type_id` int(8) unsigned NOT NULL,
+  `priority` int(8) unsigned NOT NULL,
+  `page_name` varchar(160) NOT NULL,
+  `score` float default NULL,
+  PRIMARY KEY  (`list_type_id`,`page_name`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+CREATE TABLE IF NOT EXISTS `tiki_page_list_types` (
+  `id` int(8) unsigned NOT NULL auto_increment,
+  `name` varchar(40) NOT NULL,
+  `title` varchar(160) default NULL,
+  `description` varchar(200) default NULL,
+  PRIMARY KEY  (`name`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+

@@ -1,4 +1,4 @@
-{title}{tr}Rename page:{/tr}&nbsp;{$page}{/title}
+{title}{tr}Rename page:{/tr}&nbsp;{$page|escape}{/title}
 
 <div class="navbar">
 	{assign var=thispage value=$page|escape:url}
@@ -9,7 +9,7 @@
   <input type="hidden"  name="page" value="{$page|escape}" />
   <table class="normal">
     <tr>
-      <td class='formcolor'><label for='newpage'>{tr}New name{/tr}:</label></td>
+      <td class='formcolor'><label for='newpage'>{tr}New name:{/tr}</label></td>
       <td class='formcolor'>
         <input type='text' id='newpage' name='newpage' size='40' value='{$page|escape}'/>
         <input type="submit" name="rename" value='{tr}Rename{/tr}' />

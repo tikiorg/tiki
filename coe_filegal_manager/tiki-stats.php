@@ -17,6 +17,18 @@ if ($tiki_p_view_stats != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
+
+if (isset($_REQUEST['startDate_Year']) || isset($_REQUEST['endDate_Year'])) {
+	$start_date = $tikilib->make_time(23, 59, 59, $_REQUEST['startDate_Month'], $_REQUEST['startDate_Day'], $_REQUEST['startDate_Year']);
+	$end_date = $tikilib->make_time(23, 59, 59, $_REQUEST['endDate_Month'], $_REQUEST['endDate_Day'], $_REQUEST['endDate_Year']);
+	$smarty->assign( 'startDate', $start_date);
+	$smarty->assign( 'endDate', $end_date);
+} else {
+	$start_date = $tikilib->make_time(23, 59, 59, 9, 01, 2008);
+	$end_date = $tikilib->make_time(23, 59, 59, date("m"), date("d"), date("Y"));
+	$smarty->assign( 'startDate', $start_date );
+}
+
 if (!isset($_REQUEST["days"])) $_REQUEST["days"] = 7;
 $smarty->assign('pv_chart', 'n');
 if (isset($_REQUEST["pv_chart"])) {
@@ -89,6 +101,10 @@ $best_objects_stats = $statslib->best_overall_object_stats(20);
 $smarty->assign_by_ref('best_objects_stats', $best_objects_stats);
 $best_objects_stats_lastweek = $statslib->best_overall_object_stats(20, 7);
 $smarty->assign_by_ref('best_objects_stats_lastweek', $best_objects_stats_lastweek);
+if ($end_date) {
+$best_objects_stats_between = $statslib->best_overall_object_stats(20, 0, $start_date, $end_date);
+$smarty->assign_by_ref('best_objects_stats_between', $best_objects_stats_between);
+}
 ask_ticket('stats');
 // Display the template
 $smarty->assign('mid', 'tiki-stats.tpl');

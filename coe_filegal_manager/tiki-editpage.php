@@ -713,7 +713,7 @@ if (($prefs['feature_wiki_screencasts'] == 'y') && (isset($tiki_p_upload_screenc
 							continue;
 					}
 
-					if ( is_uploaded_file($_FILES['flash_screencast']['tmp_name'][$i]) ) { 
+					if ( is_uploaded_file($_FILES['ogg_screencast']['tmp_name'][$i]) ) { 
 						if ( preg_match("/\.(ogg)$/", $_FILES['ogg_screencast']['name'][$i], $ext) ) {
 							if ( !$screencastlib->add($_FILES['ogg_screencast']['tmp_name'][$i], $hashedFileName . "-" . $i . "." .  $ext[1])) {
 								$screencastErrors[] = tra("An unexpected error occurred while uploading your Ogg screencast!");

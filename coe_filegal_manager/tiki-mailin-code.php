@@ -27,7 +27,9 @@ function mailin_check_attachments(&$output, &$out, $page, $user) {
 	global $wikilib;
 	$cnt = 0;
 	if (!isset($output["parts"])) return;
-	for ($it = 0; $it < count($output["parts"]); $it++) {
+
+	$count_outputparts = count($output['parts']);
+	for ($it = 0; $it < $count_outputparts; $it++) {
 		if (isset($output["parts"][$it]["d_parameters"]["filename"])) {
 			$attachmentPart = $output["parts"][$it];
 			$fileName = $attachmentPart["d_parameters"]["filename"];

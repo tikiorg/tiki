@@ -98,7 +98,6 @@ if (isset($_REQUEST["wikifeatures"])) {
 		$backlinksChange = true;
 	}
 	$pref_toggles = array(
-		'feature_lastChanges',
 		'feature_wiki_comments',
 		'feature_wiki_pictures',
 		'wiki_spellcheck',
@@ -119,8 +118,6 @@ if (isset($_REQUEST["wikifeatures"])) {
 		'feature_wiki_templates',
 		'feature_wiki_multiprint',
 		// 'feature_wiki_pdf',
-		'feature_listPages',
-		'feature_listorphanPages',
 		'feature_listorphanStructure',
 		'feature_history',
 		'feature_source',
