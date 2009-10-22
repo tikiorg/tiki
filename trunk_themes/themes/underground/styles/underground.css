@@ -229,6 +229,7 @@ h1#logo,
 #sitetitles {
 	width: 50%;
 	position: relative;
+	display: inline;
 }
 
 #sitetitle {
@@ -421,11 +422,11 @@ input.wikiaction {
 
 /* ul ul top compensation for padding */
 #tiki-top .cssmenu_horiz ul {
-	top: 2.1em;
+	margin-top: -4px;
 }
 
 #tiki-top .cssmenu_horiz ul ul {
-	top: 0em;
+	margin-top: 0;
 }
 
 /* special arrows */
