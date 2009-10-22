@@ -885,7 +885,7 @@ insertAt(areaname, s, false, false, true); $jq(this).dialog("close");
 						$prefs['cachepages'] == 'y' ? '<input type="checkbox" id="tbLinkNoCache" class="ui-widget-content ui-corner-all" />' : '',
 						'{"width": 300, "open": function () {
 $jq("#tbWLinkPage").tiki("autocomplete", "pagename");
-var s = getSelection($jq("textarea[name=\'" + areaname + "\']")[0]);
+var s = getSelection($jq(getElementById(areaname))[0]);
 var m = /\[([^\|]*)\|?([^\|]*)\|?([^\|]*)\]/g.exec(s);
 if (m && m.length > 3) {
 	$jq("#tbLinkURL").val(m[1]);
@@ -928,7 +928,7 @@ insertAt(areaname, s, false, false, true); $jq(this).dialog("close");
 			$label = tra('Table Builder');
 			$list = array('Table Builder',
 						'{"open": function () {
-var s = getSelection($jq("textarea[name=\'" + areaname + "\']")[0]);
+var s = getSelection($jq(getElementById(areaname))[0]);
 var m = /\|\|([\s\S]*?)\|\|/mg.exec(s);
 var vals = [], rows=3, cols=3, c, r, i, j;
 if (m) {
@@ -1062,7 +1062,7 @@ insertAt(areaname, s, false, false, true); $jq(this).dialog("close");
 						'<label for="tbLinkNoCache" style="display:inline;">Case Insensitivity:</label>',
 						'<input type="checkbox" id="tbFindCase" checked="checked" class="ui-widget-content ui-corner-all" />',
 						'{"open": function() {
-	var s = getSelection($jq("textarea[name=\'" + areaname + "\']")[0]);
+	var s = getSelection($jq(getElementById(areaname))[0]);
 	$jq("#tbFindSearch").val(s);
 						  },'.
 						 '"buttons": { "Close": function() { $jq(this).dialog("close"); },'.
@@ -1073,7 +1073,7 @@ insertAt(areaname, s, false, false, true); $jq(this).dialog("close");
 	if ($jq("#tbFindCase").attr("checked")) {
 		opt += "i";
 	}
-	ta = $jq("textarea[name=\'" + areaname + "\']");
+	ta = $jq(getElementById(areaname));
 	str = ta.val();
 	re = new RegExp(s,opt);
 	p = getCaretPos(ta[0]);
@@ -1112,7 +1112,7 @@ insertAt(areaname, s, false, false, true); $jq(this).dialog("close");
 						'<br /><label for="tbLinkNoCache" style="display:inline;">Replace All:</label>',
 						'<input type="checkbox" id="tbReplaceAll" checked="checked" class="ui-widget-content ui-corner-all" />',
 						'{"open": function() {
-	var s = getSelection($jq("textarea[name=\'" + areaname + "\']")[0]);
+	var s = getSelection($jq(getElementById(areaname))[0]);
 	$jq("#tbReplaceSearch").val(s);
 						  },'.
 						 '"buttons": { "Close": function() { $jq(this).dialog("close"); },'.
@@ -1126,9 +1126,9 @@ insertAt(areaname, s, false, false, true); $jq(this).dialog("close");
 	if ($jq("#tbReplaceCase").attr("checked")) {
 		opt += "i";
 	}
-	var str = $jq("textarea[name=\'" + areaname + "\']").val();
+	var str = $jq(getElementById(areaname)).val();
 	var re = new RegExp(s,opt);
-	$jq("textarea[name=\'" + areaname + "\']").val(str.replace(re,r));
+	$jq(getElementById(areaname)).val(str.replace(re,r));
 }}}'
 					);
 
