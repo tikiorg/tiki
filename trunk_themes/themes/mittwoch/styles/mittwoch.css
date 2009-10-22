@@ -445,10 +445,10 @@ div#sitelocbar {
 
 #tiki-top .cssmenu_horiz li ul {
 	line-height: 1;
-	top: 50px;}
+	margin-top: 22px;}
 	
 #tiki-top .cssmenu_horiz li ul li ul {
-	top: 0px;
+	margin-top: -1px;
 }
 
 #tiki-top .cssmenu_horiz li ul li,
@@ -525,12 +525,6 @@ div#sitelocbar {
 	top: 1.5em;	
 }
 
-/* ul needs widening too, for shadow */
-#tiki-top .cssmenu_horiz li ul,
-#tiki-top .cssmenu_horiz li ul li {
-	width: 11em !important;
-}
-
 #tiki-top .cssmenu_horiz li ul li .sf-sub-indicator,
 .cssmenu_vert li .sf-sub-indicator {
 	background-image: url(mittwoch/arrows-bada38.png);
@@ -541,14 +535,6 @@ div#sitelocbar {
 #tiki-top .cssmenu_horiz li ul li .sf-sub-indicator {
 	right: 2em;
 }
-
-#tiki-top .cssmenu_horiz li li:hover ul,
-#tiki-top .cssmenu_horiz li li.sfHover ul {
-	left: 11em;
-	top: -1px;
-}
-
-
 
 /** PHP Layers Menus **/
 .horbar {
