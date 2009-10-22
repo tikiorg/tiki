@@ -72,7 +72,7 @@
 	</p>
 	<h2>{tr}Preview{/tr}</h2>
 	<h3>{tr}Subject{/tr}</h3>
-	<div class="simplebox wikitext">{$subject}</div>
+	<div class="simplebox wikitext">{$subject|escape}</div>
 
 	<h3>{tr}HTML version{/tr}</h3>
 	<div class="simplebox wikitext">{$dataparsed}</div>
@@ -95,7 +95,7 @@
 	{if $preview eq 'y'}
 		<h2>{tr}Preview{/tr}</h2>
 		<h3>{tr}Subject{/tr}</h3>
-		<div class="simplebox wikitext">{$info.subject}</div>
+		<div class="simplebox wikitext">{$info.subject|escape}</div>
 
 		<h3>{tr}HTML version{/tr}</h3>
 		<div class="simplebox wikitext">{$info.dataparsed}</div>
@@ -132,18 +132,18 @@
 			{/if}
 			<table class="normal" id="newstable">
 				<tr class="formcolor">
-					<td class="formcolor">{tr}Subject{/tr}:</td>
+					<td class="formcolor">{tr}Subject:{/tr}</td>
 					<td class="formcolor">
 						<input type="text" maxlength="250" size="80" name="subject" value="{$info.subject|escape}" />
 					</td>
 				</tr>
 				<tr class="formcolor">
-					<td class="formcolor">{tr}Newsletter{/tr}:</td>
+					<td class="formcolor">{tr}Newsletter:{/tr}</td>
 					<td class="formcolor">
 						<select name="nlId" onchange="checkNewsletterTxtArea();">
 							{section loop=$newsletters name=ix}
 								<option value="{$newsletters[ix].nlId|escape}" {if $newsletters[ix].nlId eq $nlId}selected="selected"{/if}>
-									{$newsletters[ix].name}
+									{$newsletters[ix].name|escape}
 								</option>
 							{/section}
 						</select>
@@ -159,7 +159,7 @@
 								<option value="0">{tr}none{/tr}</option>
 								{section name=ix loop=$templates}
 									<option value="{$templates[ix].templateId|escape}" {if $templateId eq $templates[ix].templateId}selected="selected"{/if}>
-										{$templates[ix].name}
+										{$templates[ix].name|escape}
 									</option>
 								{/section}
 							</select>
@@ -184,7 +184,7 @@
 				<tr class="formcolor">
 					{if $wysiwyg ne 'y' or $prefs.javascript_enabled ne 'y'}
 					<td class="formcolor">
-						{tr}Data HTML{/tr}:
+						{tr}Data HTML:{/tr}
 					</td>
 					<td class="formcolor">
 						{toolbars area_name='data'}
@@ -192,7 +192,7 @@
 						<input type="hidden" name="rows" value="{$rows}"/>
 						<input type="hidden" name="cols" value="{$cols}"/>
 						<br />
-						{tr}Must be wiki parsed{/tr}: <input type="checkbox" name="wikiparse" {if empty($info.wikiparse) or $info.wikiparse eq 'y'} checked="checked"{/if} />
+						{tr}Must be wiki parsed:{/tr} <input type="checkbox" name="wikiparse" {if empty($info.wikiparse) or $info.wikiparse eq 'y'} checked="checked"{/if} />
 					</td>
 					{else}
 						<td class="formcolor" colspan="2">
@@ -205,7 +205,7 @@
 
 				<tr class="formcolor">
 					<td class="formcolor" id="txtcol1">
-						{tr}Data Txt{/tr}:
+						{tr}Data Txt:{/tr}
 						<br /><br />
 						{include file='textareasize.tpl' area_name='editwikitxt' formId='editpageform'}
 					</td>
