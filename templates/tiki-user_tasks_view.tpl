@@ -85,7 +85,7 @@
   </tr>
 </table>
 
-    {tr}Created by:{/tr} {$info.creator|escape|userlink} {tr}for:{/tr} {$info.user|escape|userlink}. 
+    {tr}Created by:{/tr} {$info.creator|userlink} {tr}for:{/tr} {$info.user|userlink}. 
 {if ($info.task_version > 0 ) and ($info.creator ne $info.user)}
 {tr}Last modified by{/tr}: {$info.lasteditor|escape|userlink} on {$info.changes|date_format:"%d.%m.%Y -- %H:%M"}
 {/if}

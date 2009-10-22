@@ -257,7 +257,7 @@
 	{section name=user loop=$channels}
 		<tr>
 			<td class="{cycle advance=false}">
-				{if $channels[user].isUser == "y"}{$channels[user].email|escape|userlink}{else}{$channels[user].email|escape}{/if}
+				{if $channels[user].isUser == "y"}{$channels[user].email|userlink}{else}{$channels[user].email|escape}{/if}
 			</td>
 			<td class="{cycle advance=false}">
 				{if $channels[user].valid == "n"}
