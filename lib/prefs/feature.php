@@ -890,5 +890,48 @@ function prefs_feature_list() {
 			'type' => 'flag',
 			'hint' => 'tiki-orphan_pages.php',
 		),
+		'feature_search_fulltext' => array(
+			'name' => tra('Database search'),
+			'type' => 'flag',
+			'help' => 'Search',
+		),
+		'feature_referer_highlight' => array(
+			'name' => tra('Referer Search Highlighting'),
+			'type' => 'flag',
+			'help' => 'Referer+Search+Highlighting',
+		),
+		'feature_search_stats' => array(
+			'name' => tra('Search stats'),
+			'type' => 'flag',
+			'help' => 'Search+Stats',
+		),
+		'feature_search_show_forbidden_obj' => array(
+			'name' => tra('Ignore individual object permissions'),
+			'type' => 'flag',
+		),
+		'feature_search_show_object_filter' => array(
+			'name' => tra('Object filter'),
+			'type' => 'flag',
+		),
+		'feature_search_show_search_box' => array(
+			'name' => tra('Search box'),
+			'type' => 'flag',
+		),
+		'feature_search_show_visit_count' => array(
+			'name' => tra('Visits'),
+			'type' => 'flag',
+		),
+		'feature_search_show_pertinence' => array(
+			'name' => tra('Pertinence'),
+			'type' => 'flag',
+		),
+		'feature_search_show_object_type' => array(
+			'name' => tra('Object type'),
+			'type' => 'flag',
+		),
+		'feature_search_show_last_modification' => array(
+			'name' => tra('Last modified date'),
+			'type' => 'flag',
+		),
 	);
 }
