@@ -97,7 +97,7 @@
           <div class="thumbimage">
             <div class="thumbimagesub" style="width:{$thumbnail_size}px;">{assign var=key_type value=$files[changes].type|truncate:9:'':true}
               <a {$link}{if $prefs.feature_shadowbox eq 'y' && $filegals_manager eq ''} rel="shadowbox[gallery];type={if $key_type eq 'image/png' or $key_type eq 'image/jpe' or $key_type eq 'image/gif'}img{else}iframe{/if}"{/if}{if $over_infos neq ''} {popup fullhtml="1" text=$over_infos|escape:"javascript"|escape:"html"}{else} title="{if $files[changes].name neq ''}{$files[changes].name|escape}{/if}{if $files[changes].description neq ''} ({$files[changes].description|escape}){/if}"{/if}>
-				<img src="{$files[changes].id|sefurl:thumbnail}" />
+				<img src="{$files[changes].id|sefurl:thumbnail}" alt="" />
               </a>
             </div>
           </div>
@@ -175,7 +175,7 @@
 
       {if $gal_info.show_action neq 'n'}
         {if ( $prefs.use_context_menu_icon eq 'y' or $prefs.use_context_menu_text eq 'y' ) and $prefs.javascript_enabled eq 'y'}
-          <a class="fgalname" title="{tr}Actions{/tr}" href="#" {popup trigger="onClick" sticky=1 mouseoff=1 fullhtml="1" text=$smarty.capture.over_actions|escape:"javascript"|escape:"html"}>{icon _id='wrench' alt='{tr}Actions{/tr}'}</a>
+          <a class="fgalname" title="{tr}Actions{/tr}" href="#" {popup trigger="onclick" sticky=1 mouseoff=1 fullhtml="1" text=$smarty.capture.over_actions|escape:"javascript"|escape:"html"}>{icon _id='wrench' alt='{tr}Actions{/tr}'}</a>
         {else}
           {include file='fgal_context_menu.tpl'}
         {/if}
