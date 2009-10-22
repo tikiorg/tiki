@@ -378,12 +378,12 @@
 
 <br class="clear" />
 <form method="post" action="tiki-stats.php">
-	<h2 id="best_objects_stats_between">{tr}Most viewed objects between{/tr}
+	<h2 id="best_objects_stats_between">{tr}Most viewed objects in period{/tr}</h2>
 	{html_select_date time=$startDate prefix="startDate_" end_year="-10" day_value_format="%02d" field_order=$prefs.display_field_order}
-	 - {tr}to{/tr} - {html_select_date time=$endDate prefix="endDate_" end_year="-10" day_value_format="%02d" field_order=$prefs.display_field_order}
+	 &rarr; {html_select_date time=$endDate prefix="endDate_" end_year="-10" day_value_format="%02d" field_order=$prefs.display_field_order}
 	<input type="submit" name="modify" value="{tr}Filter{/tr}"/>
-	 </h2>
 </form>
+<br />
 {if $best_objects_stats_between}
 	<table class="normal">
 		<tr>
