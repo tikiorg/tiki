@@ -1,6 +1,6 @@
 <?php
-// CVS: $Id$
-//this script may only be included - so its better to die if called directly.
+// $Id$
+// this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 	header("location: index.php");
 	exit;
@@ -9,7 +9,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 require_once('lib/init/tra.php');
 if ( ! defined('DATE_FORMAT_UNIXTIME') ) define('DATE_FORMAT_UNIXTIME', 5);
 
-//performance collecting:
+// performance collecting:
 //require_once ('lib/tikidblib-debug.php');
 
 // This class is included by all the Tiki php scripts, so it's important
@@ -8072,9 +8072,10 @@ class TikiLib extends TikiDb_Bridge {
 		 approximative)  */
 	function strlen_quoted($data) {
 		global $prefs;
-		$data = preg_replace('/{QUOTE\([^\)]*\)}.*{QUOTE}/Ui', '', $data);
 		if ($prefs['feature_use_quoteplugin'] != 'y') {
 			$data = preg_replace('/^>.*\\n?/m', '', $data);
+		} else {
+			$data = preg_replace('/{QUOTE\([^\)]*\)}.*{QUOTE}/Ui', '', $data);
 		}
 		return strlen($data);
 	}
