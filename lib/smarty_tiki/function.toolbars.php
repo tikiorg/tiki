@@ -32,7 +32,7 @@ function smarty_function_toolbars($params, &$smarty)
 	if ($params['section'] != 'wiki page') {
 		$hidden[] = 'fullscreen';
 	}
-	if (!in_array($params['section'], array('wiki page', 'blogs'))) {
+	if (!in_array($params['section'], array('wiki page', 'blogs', 'newsletters'))) {
 		$hidden[] = 'switcheditor';
 	}
 	

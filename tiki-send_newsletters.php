@@ -49,9 +49,9 @@ if ($_REQUEST["nlId"]) {
 		$info["subject"] = '';
 		$info["editionId"] = 0;
 		$info["files"] = array();
-		$info['wysiwyg'] = false;
+		$info['wysiwyg'] = 'n';
 	}
-	$smarty->assign('info', $info);
+	$smarty->assign_by_ref('info', $info);
 } else {
 	//No newsletter selected -> Check if the textarea for the first has to be displayed
 	$smarty->assign('allowTxt', $newsletters['data'][0]['allowTxt']);
@@ -89,8 +89,28 @@ if (isset($_REQUEST["remove"])) {
 		key_get($area);
 	}
 }
+
 // wysiwyg decision
-include 'lib/setup/editmode.php';
+include_once ('lib/wiki/editlib.php');
+
+// Handles switching editor modes
+if (isset($_REQUEST['mode_normal']) && $_REQUEST['mode_normal']=='y') {
+	if ($_REQUEST['wikiparse'] == 'on') {
+		// Parsing page data as first time seeing html page in normal editor
+		$smarty->assign('msg', "Parsing html to wiki");
+		$info["data"] = $editlib->parseToWiki($_REQUEST["data"]);
+	} else {
+		$info["data"] = $_REQUEST["data"];
+	}
+	
+} elseif (isset($_REQUEST['mode_wysiwyg']) && $_REQUEST['mode_wysiwyg']=='y') {
+	// Parsing page data as first time seeing wiki page in wysiwyg editor
+	$smarty->assign('msg', "Parsing wiki to html");
+	$info["data"] = $editlib->parseToWysiwyg($_REQUEST["data"]);
+}
+
+
+
 
 if (isset($_REQUEST["templateId"]) && $_REQUEST["templateId"] > 0 && (!isset($_REQUEST['previousTemplateId']) || $_REQUEST['previousTemplateId'] != $_REQUEST['templateId'])) {
 	$template_data = $tikilib->get_template($_REQUEST["templateId"]);
@@ -404,7 +424,7 @@ $tpls = $nllib->list_tpls();
 if (count($tpls) > 0) {
 	$smarty->assign_by_ref('tpls', $tpls);
 }
-include_once ("textareasize.php");
+//include_once ("textareasize.php");
 include_once ('tiki-section_options.php');
 setcookie('tab', $_REQUEST['cookietab']);
 $smarty->assign('cookietab', $_REQUEST['cookietab']);
