@@ -350,7 +350,7 @@
 									<select name="galleries" id='list_galleries'>
 										<option value="{literal}{{/literal}gallery id=-1{literal}}{/literal}">{tr}All galleries{/tr}</option>
 										{section name=ix loop=$galleries}
-											<option value="{literal}{{/literal}gallery id={$galleries[ix].galleryId}{literal}}{/literal}">{$galleries[ix].name}</option>
+											<option value="{literal}{{/literal}gallery id={$galleries[ix].galleryId}{literal}}{/literal}">{$galleries[ix].name|escape}</option>
 										{/section}
 									</select>
 								</td>
@@ -385,7 +385,7 @@
 						{if $rsss}
 							<tr>
 								<td class="form">
-									<label for="list_rsss">{tr}RSS Modules:{/tr}</label>
+									<label for="list_rsss">{tr}External feeds:{/tr}</label>
 								</td>
 								<td>
 									<select name="rsss" id='list_rsss'>
