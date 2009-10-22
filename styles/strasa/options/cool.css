@@ -192,6 +192,9 @@ div#sioptions,
 }
 
 /* tiki-top_bar.tpl - menu and search */
+*:first-child+html #tiki-top {
+	background-color: #f5f5f5;
+}
 
 #tiki-top a,
 #tiki-top a:visited {

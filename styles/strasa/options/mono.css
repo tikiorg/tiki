@@ -156,12 +156,10 @@ ul.jumplinks a:active {
 }
 
 /* Site Header & Identity */
+#header-top {
+	color: #fff;
+	background: #444 url(mono/headerbg.jpg) repeat-x 0 100%;
 
-div#sioptions,
-#sioptionscentered,
-#customcode,
-#customcodewith_ad {
-	background: #444444 url(mono/headerbg.jpg) repeat-x 0 100%;
 }
 
 #siteloginbar {
@@ -189,6 +187,9 @@ div#sioptions,
 }
 
 /* tiki-top_bar.tpl - menu and search */
+*:first-child+html #tiki-top {
+	background-color: #444;
+}
 
 #tiki-top a,
 #tiki-top a:visited {
