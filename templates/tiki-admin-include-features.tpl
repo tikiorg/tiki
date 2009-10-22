@@ -76,8 +76,8 @@
 			</div>
 {/tab}
 
-{* ---------- Experimental features ------------ *}
-{tab name="{tr}Experimental{/tr}"}
+{* ---------- New features ------------ *}
+{tab name="{tr}New{/tr}"}
 			<div class="admin featurelist">
 				<fieldset>
 					<legend class="heading">{icon _id="accept"}<span>{tr}New{/tr}</span></legend>
@@ -92,6 +92,15 @@
 						{preference name=feature_sefurl}
 						{preference name=feature_pagelist}
 				</fieldset>
+			</div>
+
+
+{/tab}
+
+
+{* ---------- Experimental features ------------ *}
+{tab name="{tr}Experimental{/tr}"}
+			<div class="admin featurelist">
 
 				<fieldset>
 					<legend class="heading">{icon _id="information_gray"}<span>{tr}Will be phased out{/tr}</span></legend>
@@ -100,7 +109,7 @@
 						{preference name=feature_galleries}
 						{preference name=feature_faqs}
 						{preference name=feature_multimedia}
-						</fieldset>
+				</fieldset>
 
 				<fieldset>
 					<legend class="heading">{icon _id="accept"}<span>{tr}Seem ok but...{/tr}</span></legend>
