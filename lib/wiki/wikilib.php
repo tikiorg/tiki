@@ -410,14 +410,21 @@ class WikiLib extends TikiLib {
 
 	function wiki_attach_file($page, $name, $type, $size, $data, $comment, $user, $fhash) {
 		$comment = strip_tags($comment);
+		$now = $this->now;
 		$query = "insert into `tiki_wiki_attachments`(`page`,`filename`,`filesize`,`filetype`,`data`,`created`,`hits`,`user`,`comment`,`path`) values(?,?,?,?,?,?,0,?,?,?)";
 		//$this->blob_encode($data);
-		$result = $this->query($query,array("$page","$name", (int) $size,"$type","$data", (int) $this->now,"$user","$comment","$fhash"));
+		$result = $this->query($query,array($page, $name, (int)$size, $type, $data, (int)$now, $user, $comment, $fhash));
 
 		global $prefs;
-	        if ($prefs['feature_score'] == 'y') {
-        	    $this->score_event($user, 'wiki_attach_file');
-	        }
+		if ($prefs['feature_score'] == 'y') {
+			$this->score_event($user, 'wiki_attach_file');
+		}
+		if ($prefs['feature_user_watches'] = 'y') {
+			include_once('lib/notifications/notificationemaillib.php');
+			$query = 'select `attId` from `tiki_wiki_attachments` where `page`=? and `filename`=? and `created`=? and `user`=?';
+			$attId = $this->getOne($query, array($page, $name, $now, $user));
+			sendWikiEmailNotification('wiki_file_attached', $page, $user, $comment, '', $name, '','', false, '', 0,$attId);
+		}
 	}
 	function get_wiki_attach_file($page, $name, $type, $size) {
 		$query = 'select * from `tiki_wiki_attachments` where `page`=? and `filename`=? and `filetype`=? and `filesize`=?';

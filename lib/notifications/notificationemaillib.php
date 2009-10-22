@@ -158,13 +158,18 @@ function testEmailInList($nots, $email) {
 
 /** \brief send the email notifications dealing with wiki page  changes to
   * admin notification addresses + watching users addresses (except editor is configured)
-  * \$event: 'wiki_page_created'|'wiki_page_changed'
+  * \$event: 'wiki_page_created'|'wiki_page_changed'|wiki_page_deleted |wiki_file_attached
   */
-function sendWikiEmailNotification($event, $pageName, $edit_user, $edit_comment, $oldver, $edit_data, $machine, $diff='', $minor=false, $contributions='', $structure_parent_id=0) {
+function sendWikiEmailNotification($wikiEvent, $pageName, $edit_user, $edit_comment, $oldver, $edit_data, $machine='', $diff='', $minor=false, $contributions='', $structure_parent_id=0, $attId=0) {
 	global $tikilib, $prefs, $smarty, $userlib;
 	global $notificationlib; include_once('lib/notifications/notificationlib.php');
 	$nots = array();
 	$defaultLanguage = $prefs['site_language'];
+	if ($wikiEvent == 'wiki_file_attached') {
+		$event = 'wiki_page_changed';
+	} else {
+		$event = $wikiEvent;
+	}
 
 	if ($prefs['feature_user_watches'] == 'y') {
 		$nots = $tikilib->get_event_watches($event, $pageName);
@@ -223,7 +228,7 @@ function sendWikiEmailNotification($event, $pageName, $edit_user, $edit_comment,
 	global $reportslib;
 	
 	if ($prefs['feature_user_watches'] == 'y' && $prefs['feature_daily_report_watches'] == 'y') {
-		$reportslib->makeReportCache($nots, array("event"=>$event, "pageName"=>$pageName, "object"=>$pageName, "editUser"=>$edit_user, "editComment"=>$edit_comment, "oldVer"=>$oldver));
+		$reportslib->makeReportCache($nots, array("event"=>$wikiEvent, "pageName"=>$pageName, "object"=>$pageName, "editUser"=>$edit_user, "editComment"=>$edit_comment, "oldVer"=>$oldver));
 	}
 
 	if (count($nots)) {
@@ -238,6 +243,7 @@ function sendWikiEmailNotification($event, $pageName, $edit_user, $edit_comment,
 	    $smarty->assign('mail_oldver', $oldver);
 	    $smarty->assign('mail_newver', $newver);
 	    $smarty->assign('mail_data', $edit_data);
+		$smarty->assign('mail_attId', $attId);
 	    $foo = parse_url($_SERVER["REQUEST_URI"]);
 	    $machine = $tikilib->httpPrefix(). dirname( $foo["path"] );
 	    $smarty->assign('mail_machine', $machine);
@@ -253,8 +259,10 @@ function sendWikiEmailNotification($event, $pageName, $edit_user, $edit_comment,
 	    $smarty->assign_by_ref('mail_diffdata', $diff);
 	    if ($event == 'wiki_page_created') {
 			$smarty->assign('mail_action', 'new');
-	    } else if ($event == 'wiki_page_deleted') {
+	    } elseif ($event == 'wiki_page_deleted') {
 	    	$smarty->assign('mail_action', 'delete');
+		} elseif ($wikiEvent == 'wiki_file_attached') {
+			$smarty->assign('mail_action', 'attach');
 	    } else {
 	    	$smarty->assign('mail_action', 'edit');
 	    }
@@ -265,6 +273,7 @@ function sendWikiEmailNotification($event, $pageName, $edit_user, $edit_comment,
 
 			$mail_subject = $smarty->fetchLang($not['language'], "mail/user_watch_wiki_page_changed_subject.tpl");
 			$mail_data = $smarty->fetchLang($not['language'], "mail/user_watch_wiki_page_changed.tpl");
+			print_r($not);
 
 			tiki_send_admin_mail(
 				$not['email'],
