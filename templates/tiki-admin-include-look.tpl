@@ -224,10 +224,19 @@
 	<div class="adminoptionlabel"><label for="sitelogo_src">{tr}Logo source (image path){/tr}:</label> <input type="text" name="sitelogo_src" id="sitelogo_src" value="{$prefs.sitelogo_src}" size="60" style="width: 90%" /></div>
 </div>
 <div class="adminoptionbox">
-	<div class="adminoptionlabel"><label for="sitelogo_bgcolor">{tr}Logo background color{/tr}:</label> <input type="text" name="sitelogo_bgcolor" id="sitelogo_bgcolor" value="{$prefs.sitelogo_bgcolor}" size="15" maxlength="15" /></div>
+	<div class="adminoptionlabel"><label for="sitelogo_bgcolor">{tr}Logo background color{/tr}:</label> <input type="text" name="sitelogo_bgcolor" id="sitelogo_bgcolor" value="{$prefs.sitelogo_bgcolor}" size="15" maxlength="15" />
+<br />
+		<div style="font-size: smaller; margin-left: 20px">
+			<em>{tr}Examples{/tr}:</em> 1) silver 2) #fff
+		</div>
+	</div>
 </div>
 <div class="adminoptionbox">
-	<div class="adminoptionlabel"><label for="sitelogo_bgstyle">{tr}Logo background style{/tr}:</label> <input type="text" name="sitelogo_bgstyle" id="sitelogo_bgstyle" value="{$prefs.sitelogo_bgstyle}" /><br /><em>{tr}Example{/tr}:</em> silver url(myStyle/img.gif) repeat</div>
+	<div class="adminoptionlabel"><label for="sitelogo_bgstyle">{tr}Logo background style{/tr}:</label> <input type="text" name="sitelogo_bgstyle" id="sitelogo_bgstyle" value="{$prefs.sitelogo_bgstyle}" />
+		<div style="font-size: smaller; margin-left: 20px">
+			<em>{tr}Examples{/tr}:</em><br />1) silver url(myStyle/img.gif) repeat<br />2) padding: 30px 10px; background: #fff
+		</div>
+	</div>
 </div>
 <div class="adminoptionbox">
 	<div class="adminoptionlabel"><label for="sitelogo_align">{tr}Logo alignment{/tr}:</label> 
@@ -303,7 +312,7 @@
 {* --- Custom Center Column Header --- *}
 <div class="adminoptionbox">
 	<div class="adminoptionlabel"><label for="feature_custom_center_column_header">{tr}Custom Center Column Header{/tr}</label>:<br /><textarea id="feature_custom_center_column_header" name="feature_custom_center_column_header" rows="6" cols="40" style="width: 90%">{$prefs.feature_custom_center_column_header|escape}</textarea><br />
-	<em>{tr}Example{/tr}:</em> {literal}&#123;if $page eq 'Travel'&#125; &#123;banner zone=5&#125;&#123;/if&#125;{/literal}
+	<small><em>{tr}Example{/tr}:</em> {literal}&#123;if $page eq 'Travel'&#125; &#123;banner zone=5&#125;&#123;/if&#125;{/literal}</small>
 	</div>
 </div>
 <div class="adminoptionbox">
@@ -376,7 +385,7 @@
 <div class="adminoptionboxchild" id="usesitefooter" style="display:{if $prefs.feature_bot_logo eq 'y'}block{else}none{/if};">	
 
 <div class="adminoptionbox">
-	<div class="adminoptionlabel"><label>Content:<br /><textarea id="bot_logo_code" name="bot_logo_code" rows="6" cols="40" style="width: 90%">{$prefs.bot_logo_code|escape}</textarea></label><br /><em>{tr}Example{/tr}</em>:&lt;div style="text-align: center"&gt;&lt;small&gt;Powered by Tikiwiki&lt;/small&gt;&lt;/div&gt;</div>
+	<div class="adminoptionlabel"><label>Content:<br /><textarea id="bot_logo_code" name="bot_logo_code" rows="6" cols="40" style="width: 90%">{$prefs.bot_logo_code|escape}</textarea></label><br /><small><em>{tr}Example{/tr}</em>:&lt;div style="text-align: center"&gt;&lt;small&gt;Powered by Tikiwiki&lt;/small&gt;&lt;/div&gt;</small></div>
 </div>
 
 </div>

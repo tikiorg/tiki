@@ -22,8 +22,8 @@
 				{if $prefs.feature_banners eq 'y' && $prefs.feature_sitead eq 'y' && ($prefs.sitead_publish eq 'y' or $tiki_p_admin eq 'y')}
 					<div id="sitead" class="floatright">{eval var=$prefs.sitead}</div>
 				{/if}
-				<div id="sitelogo" class="floatleft" {if $prefs.sitelogo_bgcolor ne ''}style="background-color: {$prefs.sitelogo_bgcolor};"{/if}>
-					{if $prefs.sitelogo_src}<a href="./" title="{tr}{$prefs.sitelogo_title}{/tr}"><img src="{$prefs.sitelogo_src}" alt="{tr}{$prefs.sitelogo_alt}{/tr}" style="border: none" /></a>{/if}
+				<div id="sitelogo" class="floatleft"{if $prefs.sitelogo_bgcolor or $prefs.sitelogo_bgstyle ne ''} style="background-color: {$prefs.sitelogo_bgcolor}; {$prefs.sitelogo_bgstyle};"{/if}>
+					{if $prefs.sitelogo_src}<a href="./" title="{tr}{$prefs.sitelogo_title}{/tr}"><img src="{$prefs.sitelogo_src}" alt="{tr}{$prefs.sitelogo_alt}{/tr}" /></a>{/if}
 				</div>
 				{if $prefs.sitetitle or $prefs.sitesubtitle}
 					<div id="sitetitles" class="floatleft">
@@ -42,8 +42,8 @@
 						<div id="sitesubtitle">{tr}{$prefs.sitesubtitle}{/tr}</div>
 					</div>
 				{/if}
-				<div id="sitelogo" class="floatright"{if $prefs.sitelogo_bgcolor ne ''} style="background-color: {$prefs.sitelogo_bgcolor};" {/if}>
-					{if $prefs.sitelogo_src}<a href="./" title="{tr}{$prefs.sitelogo_title}{/tr}"><img src="{$prefs.sitelogo_src}" alt="{tr}{$prefs.sitelogo_alt}{/tr}" style="border: none" /></a>{/if}
+				<div id="sitelogo" class="floatright"{if $prefs.sitelogo_bgcolor or $prefs.sitelogo_bgstyle ne ''} style="background-color: {$prefs.sitelogo_bgcolor}; {$prefs.sitelogo_bgstyle};"{/if}>
+					{if $prefs.sitelogo_src}<a href="./" title="{tr}{$prefs.sitelogo_title}{/tr}"><img src="{$prefs.sitelogo_src}" alt="{tr}{$prefs.sitelogo_alt}{/tr}" /></a>{/if}
 				</div>
 			{/if}
 		</div>
@@ -58,8 +58,8 @@
 			{if $prefs.feature_banners eq 'y' && $prefs.feature_sitead eq 'y' && ($prefs.sitead_publish eq 'y' or $tiki_p_admin eq 'y')}
 				<div id="sitead" class="floatleft" {*style="width: 300px"*}>{eval var=$prefs.sitead}</div>
 			{/if}
-			<div id="sitelogo"{if $prefs.sitelogo_bgcolor ne ''} style="background-color: {$prefs.sitelogo_bgcolor};" {/if}>
-				{if $prefs.sitelogo_src}<a href="./" title="{tr}{$prefs.sitelogo_title}{/tr}"><img src="{$prefs.sitelogo_src}" alt="{tr}{$prefs.sitelogo_alt}{/tr}" style="border: none" /></a>{/if}
+			<div id="sitelogo"{if $prefs.sitelogo_bgcolor or $prefs.sitelogo_bgstyle ne ''} style="background-color: {$prefs.sitelogo_bgcolor}; {$prefs.sitelogo_bgstyle};"{/if}>
+				{if $prefs.sitelogo_src}<a href="./" title="{tr}{$prefs.sitelogo_title}{/tr}"><img src="{$prefs.sitelogo_src}" alt="{tr}{$prefs.sitelogo_alt}{/tr}" /></a>{/if}
 			</div>
 			{if $prefs.sitetitle or $prefs.sitesubtitle}
 				<div id="sitetitles">
