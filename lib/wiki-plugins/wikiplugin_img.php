@@ -162,9 +162,8 @@ if (!function_exists('getimagesize_raw')) {
         $temphandle = fopen($tempfile, "w");#open for writing
         fwrite($temphandle, $data); #write image to tempfile
         fclose($temphandle);
-		global $imagesize;
+		global $imagesize, $otherinfo, $iptc;
         $imagesize = getimagesize($tempfile, $otherinfo); #get image params from the tempfile
-		global $iptc;
 		if (!empty($otherinfo['APP13'])) {
 			$iptc = iptcparse($otherinfo['APP13']);
 		} else {
@@ -309,7 +308,14 @@ if (!function_exists('getimagesize_raw')) {
 	} else {
 	////////////////////////////////////////////// Default parameter and variable settings.//////////////////////////////////////////////	
 		// Set styling defaults
-		$thumbdef = 84;                          //Thumbnail height max when none is set
+		$thumbdef = 84;                         //Thumbnail height max when none is set
+		if (!empty($imgdata['fileId'])) {
+			global $detected_lib;
+			include_once('lib/images/images.php');
+			$dummy = new Image();
+			$thumbdef = $dummy->thumb_max_size;	// filegals thumbnails size is hard-coded in lib/images/abstract.php
+		}
+
 		$descdef = 'font-size:12px; line-height:1.5em;';		//default text style for description
 		$descheightdef = 'height:15px';           //To set room for enlarge button under image if there is no description
 		$borderdef = 'border:1px solid darkgray;';   //default border when styleimage set to border
@@ -480,8 +486,10 @@ if (!function_exists('getimagesize_raw')) {
 		
 		//Now get height, width, iptc data from actual image
 		//First get the data. Images in db handled differently than those in directories or path
+		global $imagesize, $iptc, $otherinfo;
+		$otherinfo = array();
+		
 		if (!empty($dbinfo['data'])) {
-			global $imagesize, $iptc;
 			getimagesize_raw($dbinfo['data']);  //images in databases, calls function in this program
 		} else {
 			if (!empty($dbinfo['path'])) {
@@ -489,7 +497,7 @@ if (!function_exists('getimagesize_raw')) {
 			} else {
 				$imagesize = getimagesize($imgdata['src'], $otherinfo);  //wiki_up and external images
 			}
-			$iptc = iptcparse($otherinfo['APP13']);
+			if (isset($otherinfo['APP13'])) { $iptc = iptcparse($otherinfo['APP13']); }
 		}
 				
 			//Set variables for height, width and iptc data from image data
