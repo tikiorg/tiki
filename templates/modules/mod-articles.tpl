@@ -7,7 +7,7 @@
     {section name=ix loop=$modArticles}
        <li>
         <a class="linkmodule" href="{$modArticles[ix].articleId|sefurl:article}" title="{$modArticles[ix].created|tiki_short_date}, {tr}by{/tr} {$modArticles[ix].author|escape}">
-          {$modArticles[ix].title}{if $module_params.showcreated eq 'y'} <span class="date">({$modArticles[ix].created|tiki_short_date})</span>{/if}
+          {$modArticles[ix].title}{if $module_params.showcreated eq 'y'} <span class="date">({$modArticles[ix].created|tiki_short_date})</span>{/if}{if $module_params.showpubl eq 'y'} <span class="date">({$modArticles[ix].publishDate|tiki_short_date})</span>{/if}
         </a>
         </li>
     {/section}
