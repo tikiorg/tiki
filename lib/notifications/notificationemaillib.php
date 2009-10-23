@@ -104,7 +104,7 @@ function sendForumEmailNotification($event, $object, $forum_info, $title, $data,
 		$nots[] = $not;
 	}
 
-	include_once('lib/reportslib.php');
+	global $reportslib;
 
 	if ($prefs['feature_user_watches'] == 'y' && $prefs['feature_daily_report_watches'] == 'y') {
 		$reportslib->makeReportCache($nots, array("event"=>$event, "forumId"=>$forum_info['forumId'], "forumName"=>$forum_info['name'], "topicId"=>$threadId, "threadId"=>$postId, "threadName"=>$topicName, "user"=>$author));
@@ -277,7 +277,6 @@ function sendWikiEmailNotification($wikiEvent, $pageName, $edit_user, $edit_comm
 
 			$mail_subject = $smarty->fetchLang($not['language'], "mail/user_watch_wiki_page_changed_subject.tpl");
 			$mail_data = $smarty->fetchLang($not['language'], "mail/user_watch_wiki_page_changed.tpl");
-			print_r($not);
 
 			tiki_send_admin_mail(
 				$not['email'],
