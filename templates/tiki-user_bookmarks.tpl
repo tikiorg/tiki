@@ -81,7 +81,7 @@
   </td>
   <td >
     {* form to add a url *}
-    <h3>{if $urlname}{tr}Edit{/tr}{else}{tr}Add{/tr}{/if} {tr}a URL{/tr}</h3>
+    <h3>{if $urlname}{tr}Edit{/tr}{else}{tr}Add{/tr}{/if} {tr}a bookmark{/tr}</h3>
 {if $urlname}
     <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;editurl=0">{tr}New{/tr}</a>
 {/if}
