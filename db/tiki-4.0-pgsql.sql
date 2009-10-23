@@ -2776,7 +2776,7 @@ DROP TABLE IF EXISTS "tiki_user_bookmarks_urls";
 
 CREATE TABLE "tiki_user_bookmarks_urls" (
   "urlId" bigserial,
-  "name" varchar(30) default NULL,
+  "name" varchar(200) default NULL,
   "url" varchar(250) default NULL,
   "data" bytea,
   "lastUpdated" bigint default NULL,
@@ -4429,7 +4429,7 @@ CREATE TABLE "tiki_user_reports" (
   "interval" varchar(20) NOT NULL,
   "view" varchar(8) NOT NULL,
   "type" varchar(5) NOT NULL,
-  "time_to_send" timestamp(3) NOT NULL,
+  "time_to_send" timestamp(3) NULL default 0,
   "always_email" smallint NOT NULL,
   "last_report" timestamp(3) NOT NULL,
   PRIMARY KEY ("id")

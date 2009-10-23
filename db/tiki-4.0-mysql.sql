@@ -2295,7 +2295,7 @@ CREATE TABLE `tiki_user_bookmarks_folders` (
 DROP TABLE IF EXISTS `tiki_user_bookmarks_urls`;
 CREATE TABLE `tiki_user_bookmarks_urls` (
   `urlId` int(12) NOT NULL auto_increment,
-  `name` varchar(30) default NULL,
+  `name` varchar(200) default NULL,
   `url` varchar(250) default NULL,
   `data` longblob,
   `lastUpdated` int(14) default NULL,
@@ -3419,7 +3419,7 @@ CREATE TABLE `tiki_user_reports` (
   `interval` varchar(20) NOT NULL,
   `view` varchar(8) NOT NULL,
   `type` varchar(5) NOT NULL,
-  `time_to_send` datetime NOT NULL,
+  `time_to_send` datetime NULL default 0,
   `always_email` tinyint(1) NOT NULL,
   `last_report` datetime NOT NULL,
   PRIMARY KEY (`id`)
