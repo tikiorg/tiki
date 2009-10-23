@@ -965,6 +965,10 @@ div.tocnav {
 	list-style-image: url(../../img/icons/footprint.gif);
 }
 
+ul.toc * {
+	list-style: none;
+}
+
 /***** Articles ****/
 div.article {
 	margin-bottom: 40px;
