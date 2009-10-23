@@ -497,7 +497,7 @@ p.editdate {
 }
 
 /* wikiplugin remarksbox */
-.rbox-data ul {
+.wikitext .rbox-data ul {
 	list-style-type: disc;
 	margin-left: 15px;
 	padding-left: 15px;	
