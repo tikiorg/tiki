@@ -231,7 +231,7 @@
 	{/if}
 	{if $field_value.isMultilingual ne 'y'}
 		{if $field_value.options_array[0] eq 1}
-    		{toolbars qtnum=$field_value.fieldId area_name="area_"|cat:$field_value.fieldId}
+    		{toolbars qtnum=$field_value.fieldId area_name="area_"|cat:$field_value.fieldId section="trackers"}
 		{/if}
 		{if $field_value.options_array[2] == 1}
 				<input type="text" name="{$field_value.ins_id}"{if $field_value.options_array[1] > 0} size="{$field_value.options_array[1]}"{/if}{if $field_value.options_array[3]>0} maxlength="{$field_value.options_array[3]}"{/if} value="{$field_value.value|escape}"{if $field_value.options_array[5]} onKeyUp="wordCount({$field_value.options_array[5]}, this, 'cpt_{$field_value.fieldId}', '{tr}Word Limit Exceeded{/tr}')"{/if} {if $field_value.options_array[3]} onKeyUp="charCount({$field_value.options_array[3]}, this, 'cpt_{$field_value.fieldId}', '{tr}Character Limit Exceeded{/tr}')"{/if} />
