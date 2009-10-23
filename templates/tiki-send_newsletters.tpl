@@ -222,15 +222,15 @@
 				<tr class="formcolor">
 					<td class="formcolor">&nbsp;</td>
 					<td class="formcolor">
-						<input type="submit" name="preview" value="{tr}Preview{/tr}" />
+						<input type="submit" name="preview" value="{tr}Preview{/tr}" class="wikiaction tips" title="{tr}Send Newsletters{/tr}|{tr}Preview your changes.{/tr}" onclick="needToConfirm=false" />
 						&nbsp;
-						<input type="submit" name="save_only" value="{tr}Save as Draft{/tr}" />
+						<input type="submit" name="save_only" value="{tr}Save as Draft{/tr}" class="wikiaction tips" title="{tr}Send Newsletters{/tr}|{tr}Save your changes.{/tr}" onclick="needToConfirm=false" />
 					</td>
 				</tr>
 
 				<tr>
 					<td class="formcolor">&nbsp;</td>
-					<td class="formcolor">&nbsp;<input type="submit" name="save" value="{tr}Send Newsletter{/tr}" /></td>
+					<td class="formcolor">&nbsp;<input type="submit" name="save" value="{tr}Send Newsletter{/tr}" class="wikiaction tips" title="{tr}Send Newsletters{/tr}|{tr}Save any changes and send to all subscribers.{/tr}" onclick="needToConfirm=false" /></td>
 				</tr>
 			</table>
 		</form>

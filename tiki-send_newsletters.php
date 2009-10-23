@@ -178,7 +178,7 @@ if (isset($_REQUEST["preview"])) {
 	}
 	if (isset($_REQUEST['wikiparse']) && $_REQUEST['wikiparse'] == 'on') $info['wikiparse'] = 'y';
 	else $info['wikiparse'] = 'n';
-	if (isset($_REQUEST["datatxt"])) {
+	if (!empty($_REQUEST["datatxt"])) {
 		$info["datatxt"] = $_REQUEST["datatxt"];
 		//For the hidden input
 		$smarty->assign('datatxt', $_REQUEST["datatxt"]);
@@ -241,14 +241,14 @@ if (isset($_REQUEST["save"])) {
 	}
 }
 $smarty->assign('emited', 'n');
-if (!empty($_REQUEST['datatxt'])) $txt = $_REQUEST['datatxt'];
+if (!empty($_REQUEST['datatxt'])) { $txt = $_REQUEST['datatxt']; }
 if (empty($txt) && !empty($_REQUEST["data"])) {
 	//No txt message is explicitely provided -> Create one with the html Version & remove Wiki tags
 	$txt = strip_tags(str_replace(array("\r\n", "&nbsp;"), array("\n", " "), $_REQUEST["data"]));
 	$txt = preg_replace('/^!!!(.*?)$/m', "\n$1\n", $txt);
 	$txt = preg_replace('/^!!(.*?)$/m', "\n$1\n", $txt);
 	$txt = preg_replace('/^!(.*?)$/m', "\n$1\n", $txt);
-	$smarty->assign('txt', $txt);
+	$info["datatxt"] = $txt;
 }
 if (isset($_REQUEST["send"])) {
 	include_once ('lib/webmail/tikimaillib.php');
@@ -424,7 +424,7 @@ $tpls = $nllib->list_tpls();
 if (count($tpls) > 0) {
 	$smarty->assign_by_ref('tpls', $tpls);
 }
-//include_once ("textareasize.php");
+include_once ("textareasize.php");
 include_once ('tiki-section_options.php');
 setcookie('tab', $_REQUEST['cookietab']);
 $smarty->assign('cookietab', $_REQUEST['cookietab']);
