@@ -394,7 +394,7 @@ div.help_section {
 	padding: 0 3px 3px 3px;
 }
 
-.rbox-data ul li.even, .rbox-data ul li.odd {
+.rbox-data ul {
 	list-style-type: none;
 	margin-left: 0;
 	padding-left: 0;
@@ -494,6 +494,13 @@ p.editdate {
 
 [class].wikitext .fancylist li p {
 	margin-left: -3px;
+}
+
+/* wikiplugin remarksbox */
+.rbox-data ul {
+	list-style-type: disc;
+	margin-left: 15px;
+	padding-left: 15px;	
 }
 
 /* wikiplugin tracker */
