@@ -51,7 +51,7 @@
 		
 		<div class="input_submit_container" style="text-align: center">
 			<input type="submit" name="assign" value="{tr}Assign{/tr}" />
-			{if $permissions_displayed eq 'direct'}
+			{if $permissions_displayed eq 'direct' and $objectType neq 'global'}
 				<input type="submit" name="remove" value="{tr}Remove{/tr}"/>
 			{/if}
 		</div>
