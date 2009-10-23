@@ -1580,7 +1580,10 @@ ul.toc {
 	margin-left: 0px;
 	}
 
-ul.toc * {border: none}
+ul.toc * {
+	border: none;
+	list-style: none;
+	}
 
 /* Wiki diff styles */
 .diff td {border: 1px solid #696969}
