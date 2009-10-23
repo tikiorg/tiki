@@ -394,6 +394,12 @@ div.help_section {
 	padding: 0 3px 3px 3px;
 }
 
+.rbox-data ul li.even, .rbox-data ul li.odd {
+	list-style-type: none;
+	margin-left: 0;
+	padding-left: 0;
+}
+
 .simplebox {
 	padding: 3px;
 }
