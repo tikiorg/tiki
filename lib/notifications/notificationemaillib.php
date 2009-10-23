@@ -228,7 +228,11 @@ function sendWikiEmailNotification($wikiEvent, $pageName, $edit_user, $edit_comm
 	global $reportslib;
 	
 	if ($prefs['feature_user_watches'] == 'y' && $prefs['feature_daily_report_watches'] == 'y') {
-		$reportslib->makeReportCache($nots, array("event"=>$wikiEvent, "pageName"=>$pageName, "object"=>$pageName, "editUser"=>$edit_user, "editComment"=>$edit_comment, "oldVer"=>$oldver));
+		if ($wikiEvent == 'wiki_file_attached') {
+			$reportslib->makeReportCache($nots, array("event"=>$wikiEvent, "pageName"=>$pageName, 'attId'=>$attId, "editUser"=>$edit_user, "editComment"=>$edit_comment, 'filename'=>$edit_data));
+		} else {
+			$reportslib->makeReportCache($nots, array("event"=>$wikiEvent, "pageName"=>$pageName, "object"=>$pageName, "editUser"=>$edit_user, "editComment"=>$edit_comment, "oldVer"=>$oldver));
+		}
 	}
 
 	if (count($nots)) {
