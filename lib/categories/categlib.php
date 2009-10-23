@@ -342,6 +342,9 @@ class CategLib extends ObjectLib {
 	}
 
 	function categorize($catObjectId, $categId) {
+		if (empty($categId)) {
+			return;
+		}
 		$query = "delete from `tiki_category_objects` where `catObjectId`=? and `categId`=?";
 		$result = $this->query($query,array((int) $catObjectId,(int) $categId),-1,-1,false);
 	        
@@ -1518,7 +1521,7 @@ class CategLib extends ObjectLib {
 		
 		if (empty($categories)) {
 			$forcedcat = $userlib->get_user_group_default_category($user);
-			if ( !is_null($forcedcat) ) {
+			if ( !empty($forcedcat) ) {
 				$categories[] = $forcedcat;
 			}
 		}
