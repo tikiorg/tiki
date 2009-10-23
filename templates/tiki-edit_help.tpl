@@ -1,6 +1,7 @@
 {* $Id$ *}
-{** \brief Show wiki syntax help *}
-{* TODO: Add links to add samples to edit form *}
+{* \brief Show wiki syntax help 
+ * included by tiki-show_help.tpl via smarty_block_add_help()
+ * TODO: Add links to add samples to edit form *}
 
 {add_help show='y' title="{tr}Wiki Help{/tr}" id="wiki_help"}
 
@@ -15,6 +16,9 @@
 	<a href="{$prefs.helpurl}Wiki+Syntax" target="tikihelp" class="tikihelp" title="{tr}Wiki Syntax{/tr}: {tr}The syntax system used for creating pages in TikiWiki{/tr}">
 		{tr}Wiki Syntax{/tr} {icon _id='help' style="vertical-align:middle"}
 	</a>
+</p>
+<p>	
+	{tr}Also available here:{/tr} <a onclick="$jq('#help_sections').accordion( 'activate' , 1 )[0].scrollTop=0;return false;">{tr}Plugins help{/tr}  {icon _id='plugin'}</a>
 </p>
 {/if}
  

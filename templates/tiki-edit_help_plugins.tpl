@@ -1,5 +1,6 @@
 {* $Id: $ *}
-{** \brief Show plugins help *}
+{* \brief Show plugins help 
+ * included by tiki-show_help.tpl via smarty_block_add_help() *}
 
 {add_help show='n' id="plugin_help"}
 
@@ -15,8 +16,8 @@
 <a href="tiki-admin.php?page=textarea" target="tikihelp" class="tikihelp">Activate/deactivate plugins</a>
 {/if}
 
-<br />
-<table width="95%" class="normal">
+{listfilter selectors='#plugins_help_table tr'} 
+<table id="plugins_help_table" width="95%" class="normal">
 	<tr><th>{tr}Description{/tr}</th></tr>
   {cycle values="even,odd" print=false}
   {section name=i loop=$plugins}    {* To modify the template of below: tiki-plugin_help.tpl *}

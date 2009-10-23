@@ -36,8 +36,25 @@ function smarty_block_add_help($params, $content, &$smarty, &$repeat) {
 		$self_link_params['alt'] = $params['title'];
 		$self_link_params['_icon'] = 'help';
 		$self_link_params['_ajax'] = 'n';
-		//$self_link_params['_onclick'] = "javascript:show('help_sections');show('".$section['id']."');return false";
-		$self_link_params['_onclick'] = '$jq(\'#help_sections\').dialog({ width: 460, height: 500, title: \''.$section['title'].'\' }).dialog(\'open\');return false;';
+		
+		$headerlib->add_js('
+function openEditHelp() {
+	var opts, edithelp_pos = getCookie("edithelp_position");
+	opts = { width: 460, height: 500, title: "' . $section['title'] . '", autoOpen: false, beforeclose: function(event, ui) {
+		var off = $jq(this).offset();
+   		setCookie("edithelp_position", parseInt(off.left) + "," + parseInt(off.top,10) + "," + $jq(this).width() + "," + $jq(this).height());
+	}}
+	if (edithelp_pos) {edithelp_pos = edithelp_pos.split(",");}
+	if (edithelp_pos && edithelp_pos.length) {
+		opts["position"] = [parseInt(edithelp_pos[0]), parseInt(edithelp_pos[1])];
+		opts["width"] = parseInt(edithelp_pos[2]);
+		opts["height"] = parseInt(edithelp_pos[3]);
+	}
+	$jq("#help_sections").dialog("destroy").dialog(opts).dialog("open");
+	
+};');
+		$self_link_params['_onclick'] = 'openEditHelp();return false;';
+ 
 		return smarty_block_self_link($self_link_params,"",$smarty);
 	} else {
 		return ;
