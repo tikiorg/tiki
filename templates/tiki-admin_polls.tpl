@@ -55,7 +55,7 @@
 </form>
 {/tab}
 
-{tab name='{tr}Polls{/tr}'}
+{tab name="{tr}Polls{/tr}"}
 {if $channels or ($find ne '')}
   {include file='find.tpl'}
 {/if}
@@ -101,7 +101,7 @@
 {/tab}
 
 
-{tab name='{tr}Add poll to pages{/tr}'}
+{tab name="{tr}Add poll to pages{/tr}"}
 <form action="tiki-admin_polls.php" method="post">
 <table class="normal">
 <tr><td class="formcolor">

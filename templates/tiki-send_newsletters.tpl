@@ -118,7 +118,7 @@
 
 {tabset name='tabs_send_newsletters'}
 
-	{tab name='{tr}Edit{/tr}'}
+	{tab name="{tr}Edit{/tr}"}
 	{* --- tab with editor --- *}
 		<h2>{tr}Prepare a newsletter to be sent{/tr}</h2>
 		<form action="tiki-send_newsletters.php" method="post" id='editpageform' enctype='multipart/form-data'>

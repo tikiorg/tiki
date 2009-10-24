@@ -61,7 +61,7 @@
 {tabset name='tabs_adminuers'}
 
 {* ---------------------- tab with list -------------------- *}
-{tab name='{tr}Users{/tr}'}
+{tab name="{tr}Users{/tr}"}
 	<h2>{tr}Users{/tr}</h2>
 
 	<form method="get" action="tiki-adminusers.php">
@@ -463,7 +463,7 @@
 {/tab}
 
 {* ---------------------- tab with upload -------------------- *}
-{tab name='{tr}Import/Export{/tr}'}
+{tab name="{tr}Import/Export{/tr}"}
 	<h2>{tr}Batch upload (CSV file):{/tr}</h2>
 
 	<form action="tiki-adminusers.php" method="post" enctype="multipart/form-data">

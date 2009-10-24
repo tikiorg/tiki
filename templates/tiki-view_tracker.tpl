@@ -89,7 +89,7 @@
 {tabset name='tabs_view_tracker'}
 
 {if $tiki_p_view_trackers eq 'y' or (($tracker_info.writerCanModify eq 'y' or $tracker_info.writerGroupCanModify eq 'y') and $user)}
-{tab name='{tr}Tracker Items{/tr}'}
+{tab name="{tr}Tracker Items{/tr}"}
 {* -------------------------------------------------- tab with list --- *}
 
 {if (($tracker_info.showStatus eq 'y' and $tracker_info.showStatusAdminOnly ne 'y') or $tiki_p_admin_trackers eq 'y') or $show_filters eq 'y'}
@@ -247,7 +247,7 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
 {/if}
 
 {if $tiki_p_create_tracker_items eq 'y'}
-{tab name='{tr}Insert New Item{/tr}'}
+{tab name="{tr}Insert New Item{/tr}"}
 {* --------------------------------------------------------------------------------- tab with edit --- *}
 <form enctype="multipart/form-data" action="tiki-view_tracker.php" method="post">
 <input type="hidden" name="trackerId" value="{$trackerId|escape}" />
@@ -514,7 +514,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {/if}
 
 {if $tiki_p_export_tracker eq 'y'}
-	{tab name='{tr}Export Tracker Items{/tr}'}
+	{tab name="{tr}Export Tracker Items{/tr}"}
 	{* -------------------------------------------------- tab with export --- *}
 		{include file='tiki-export_tracker.tpl'}
 	{/tab}

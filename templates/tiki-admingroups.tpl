@@ -19,7 +19,7 @@
 
 {tabset name='tabs_admingroups'}
 
-{tab name='{tr}List{/tr}'}
+{tab name="{tr}List{/tr}"}
 	{* ----------------------- tab with list --------------------------------------- *}
 	<h2>{tr}List of existing groups{/tr}</h2>
 
@@ -285,7 +285,7 @@
 
 
 {if $groupname}
-	{tab name='{tr}Members{/tr}'}
+	{tab name="{tr}Members{/tr}"}
 	{* ----------------------- tab with memberlist --------------------------------------- *}
 		<a name="3" ></a>
 		<h2>{tr}Members List:{/tr} {$groupname|escape}</h2>
@@ -320,7 +320,7 @@
 {/if}
 
 {if $groupname}
-	{tab name='{tr}Add a New Group{/tr}'}
+	{tab name="{tr}Add a New Group{/tr}"}
 		{* ----------------------- tab with import/export --------------------------------------- *}
 		<a name="4" ></a>
 		<form method="post" action="tiki-admingroups.php" enctype="multipart/form-data">

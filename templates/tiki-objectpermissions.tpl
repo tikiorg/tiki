@@ -9,7 +9,7 @@
 
 {tabset name='tabs_objectpermissions'}
 
-	{tab name='{tr}Assign Permissions{/tr}'}
+	{tab name="{tr}Assign Permissions{/tr}"}
 
 		{if $prefs.feature_tabs neq 'y'}
 	<h2>{tr}Edit Permissions{/tr}</h2>
@@ -89,7 +89,7 @@ if ($jq("#assignstructure").attr("checked")) {
 	</form>
 	{/tab}
 
-	{tab name='{tr}Select groups{/tr}'}
+	{tab name="{tr}Select groups{/tr}"}
 		<form method="post" action="{$smarty.server.PHP_SELF}?{query}">
 			{if isset($groupsFiltered)}
 				{remarksbox type="warning" title="{tr}Warning{/tr}"}
@@ -107,7 +107,7 @@ if ($jq("#assignstructure").attr("checked")) {
 		</form>
 	{/tab}
 	
-	{tab name='{tr}Select features{/tr}'}
+	{tab name="{tr}Select features{/tr}"}
 		<form method="post" action="{$smarty.server.PHP_SELF}?{query}">
 			{if isset($featuresFiltered)}
 				{remarksbox type="warning" title="{tr}Warning{/tr}"}
@@ -134,7 +134,7 @@ if ($jq("#assignstructure").attr("checked")) {
 	<form name="allperms" method="post" action="{$smarty.server.PHP_SELF}?{query}">
 		<input type="hidden" name="quick_perms" value="true"/>
 
-		{tab name='{tr}Quick Permissions{/tr}'}
+		{tab name="{tr}Quick Permissions{/tr}"}
 
 			{if $prefs.feature_tabs neq 'y'}
 		<h2>{tr}Quick Permissions{/tr}</h2>

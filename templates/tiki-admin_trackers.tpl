@@ -13,7 +13,7 @@
 {tabset name='tabs_admtrackers'}
 
 {* --- tab with list --- *}
-{tab name='{tr}Trackers{/tr}'}
+{tab name="{tr}Trackers{/tr}"}
 <a name="view"></a>
 	<h2>{tr}Trackers{/tr}</h2>
 	{if ($channels) or ($find)}
@@ -501,7 +501,7 @@
 {/tab}
 
 {if $trackerId}
-{tab name='{tr}Import/Export{/tr}'}
+{tab name="{tr}Import/Export{/tr}"}
 {* --- tab with raw form --- *}
 <h2>{tr}Import/export trackers{/tr}</h2>
 
@@ -584,7 +584,7 @@ categories = {$catsdump}
 {/tab}
 {/if}
 
-{tab name='{tr}Duplicate Tracker{/tr}'}
+{tab name="{tr}Duplicate Tracker{/tr}"}
 {* --- tab with raw form --- *}
 	<h2>{tr}Duplicate Tracker{/tr}</h2>
 

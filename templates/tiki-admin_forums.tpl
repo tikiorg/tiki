@@ -18,7 +18,7 @@
 
 {tabset}
 
-{tab name='{tr}Forums{/tr}'}
+{tab name="{tr}Forums{/tr}"}
 
 {if $channels or ($find ne '')}
 	{include file='find.tpl'}
@@ -112,7 +112,7 @@
 {pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
 {/tab}
 
-{tab name='{tr}Create/Edit Forums{/tr}'}
+{tab name="{tr}Create/Edit Forums{/tr}"}
 
 {if $dup_mode != 'y'}
 	{if $forumId > 0}

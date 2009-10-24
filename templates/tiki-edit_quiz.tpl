@@ -13,7 +13,7 @@
 
 {tabset}
 
-{tab name='{tr}Quizzes{/tr}'}
+{tab name="{tr}Quizzes{/tr}"}
 
 {include file='find.tpl'}
 
@@ -72,7 +72,7 @@
 
 {/tab}
 
-{tab name='{tr}Create/edit quizzes{/tr}'}
+{tab name="{tr}Create/edit quizzes{/tr}"}
 
 {if $individual eq 'y'}
 	<a class="link" href="tiki-objectpermissions.php?objectName={$name|escape:"url"}&amp;objectType=quiz&amp;permType=quizzes&amp;objectId={$quizId}">{tr}There are individual permissions set for this quiz{/tr}</a>

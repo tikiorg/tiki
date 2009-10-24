@@ -126,7 +126,7 @@
 		<tr class="formcolor">
 			<td colspan="2">
 				{tabset name='tabs_editpage'}
-					{tab name='{tr}Edit page{/tr}'}
+					{tab name="{tr}Edit page{/tr}"}
 						{textarea}{$pagedata}{/textarea}
 						{if $page|lower neq 'sandbox'}
 							<fieldset>
@@ -140,7 +140,7 @@
 						{/if}
 					{/tab}
 					{if $prefs.feature_categories eq 'y' and $tiki_p_modify_object_categories eq 'y'}
-						{tab name='{tr}Categories{/tr}'}
+						{tab name="{tr}Categories{/tr}"}
 							{if $categIds}
 								{section name=o loop=$categIds}
 									<input type="hidden" name="cat_categories[]" value="{$categIds[o]}" />
@@ -158,7 +158,7 @@
 							{/if}
 						{/tab}
 					{/if}
-					{tab name='{tr}Tools{/tr}'}
+					{tab name="{tr}Tools{/tr}"}
 						{if $prefs.feature_wiki_templates eq 'y' and $tiki_p_use_content_templates eq 'y'}
 							<fieldset>
 								<legend>{tr}Apply template{/tr}:</legend>
@@ -334,7 +334,7 @@ function searchrep() {
 							{/if}
 						{/if}
 					{/tab}
-					{tab name='{tr}Properties{/tr}'}
+					{tab name="{tr}Properties{/tr}"}
 						{if $page|lower neq 'sandbox'}
 							{if $prefs.wiki_feature_copyrights  eq 'y'}
 								<fieldset>

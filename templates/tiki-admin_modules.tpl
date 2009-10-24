@@ -24,7 +24,7 @@
 
 {tabset name='tabs_adminmodules'}
 
-{tab name='{tr}Assign/Edit modules{/tr}'}
+{tab name="{tr}Assign/Edit modules{/tr}"}
 	{if $prefs.feature_tabs neq 'y'}
 		<legend class="heading">
 			<span>
@@ -251,7 +251,7 @@
 	</form>
 {/tab}
 
-{tab name='{tr}User Modules{/tr}'}
+{tab name="{tr}User Modules{/tr}"}
 	{if $prefs.feature_tabs neq 'y'}
 		<legend class="heading">
 			<a href="#usertheme" name="usertheme"><span>{tr}User Modules{/tr}</span></a>

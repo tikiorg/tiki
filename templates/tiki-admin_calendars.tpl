@@ -14,7 +14,7 @@
 
 {tabset name='tabs_admin_calendars'}
 
-{tab name='{tr}List of Calendars{/tr}'}
+{tab name="{tr}List of Calendars{/tr}"}
 {* --- tab with list --- *}
 
 <h2>{tr}List of Calendars{/tr}</h2>
@@ -71,7 +71,7 @@
 {/if}
 {/tab}
 
-{tab name='{tr}Create / Edit Calendar{/tr}'}
+{tab name="{tr}Create / Edit Calendar{/tr}"}
 {* --- tab with form --- *}
 
 <h2>{tr}Create/Edit Calendars{/tr}</h2>

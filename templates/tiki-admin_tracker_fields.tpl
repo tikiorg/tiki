@@ -15,7 +15,7 @@
 {tabset}
 <!-- {$plug} -->
 <a name="list"></a>
-{tab name='{tr}Tracker fields{/tr}'}
+{tab name="{tr}Tracker fields{/tr}"}
 
 <table class="findtable">
 <tr><td>{tr}Find{/tr}</td>
@@ -188,7 +188,7 @@
 {/tab}
 
 
-{tab name='{tr}Import/Export Trackers Fields{/tr}'}
+{tab name="{tr}Import/Export Trackers Fields{/tr}"}
 
 <form action="tiki-admin_tracker_fields.php" method="post">
 {if $find}<input type="hidden" name="find" value="{$find|escape}" />{/if}

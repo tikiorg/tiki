@@ -1,7 +1,7 @@
 {title help="FAQs" admpage="faqs"}{tr}FAQs{/tr}{/title}
 
 {tabset name='tabs_list_faqs'}
-{tab name='{tr}Available FAQs{/tr}'}
+{tab name="{tr}Available FAQs{/tr}"}
 
 {if $channels or ($find ne '')}
   {include file='find.tpl'}
@@ -58,7 +58,7 @@
 {/tab}
 
 {if $tiki_p_admin_faqs eq 'y'}
-{tab name={tr}Edit/Create{/tr}}
+{tab name="{tr}Edit/Create{/tr}"}
   {if $faqId > 0}
 		<h2>{tr}Edit this FAQ:{/tr} {$title}</h2>
 		<div class="navbar">
