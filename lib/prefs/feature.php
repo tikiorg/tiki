@@ -933,5 +933,29 @@ function prefs_feature_list() {
 			'name' => tra('Last modified date'),
 			'type' => 'flag',
 		),
+		'feature_blog_rankings' => array(
+			'name' => 'Rankings',
+			'type' => 'flag',
+		),
+		'feature_blog_heading' => array(
+			'name' => 'Custom blog headings',
+			'type' => 'flag',
+		),
+		'feature_blog_comments' => array(
+			'name' => 'Blog-level',
+			'type' => 'flag',
+		),
+		'feature_blogposts_comments' => array(
+			'name' => 'Post-level',
+			'type' => 'flag',
+		),
+		'feature_trackbackpings' => array(
+			'name' => tra('Blog-level'),
+			'type' => 'flag',
+		),
+		'feature_blogposts_pings' => array(
+			'name' => 'Post-level',
+			'type' => 'flag',
+		),
 	);
 }
