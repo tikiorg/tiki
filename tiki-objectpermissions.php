@@ -208,7 +208,7 @@ if (!empty($_SESSION['perms_clipboard'])) {
 	$smarty->assign('perms_clipboard_source', $perms_clipboard['type'] . (empty($perms_clipboard['object']) ? '' : ' : ') . $perms_clipboard['object']);
 
 	if (isset($_REQUEST['paste'])) {
-		//unset($_SESSION['perms_clipboard']);
+		unset($_SESSION['perms_clipboard']);
 		
 		$set = new Perms_Reflection_PermissionSet;
 	
@@ -220,6 +220,7 @@ if (!empty($_SESSION['perms_clipboard'])) {
 			}
 		}
 		$permissionApplier->apply( $set );
+		$smarty->assign('perms_clipboard_source', '');
 	}
 
 }
