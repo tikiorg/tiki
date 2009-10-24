@@ -27,7 +27,9 @@ class Perms_Reflection_Global implements Perms_Reflection_Container
 
 	function remove( $group, $permission ) {
 		global $userlib;
-		$userlib->remove_permission_from_group( $permission, $group );
+		if ($group != 'Admins' || $permission != 'tiki_p_admin') {
+			$userlib->remove_permission_from_group( $permission, $group );
+		}
 	}
 
 	function getDirectPermissions() {
