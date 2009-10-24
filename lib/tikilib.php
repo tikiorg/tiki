@@ -8221,11 +8221,10 @@ function get_wiki_section($data, $hdr) {
 	$start = 0;
 	$end = strlen($data);
 	$lines = explode("\n", $data);
-	$count_lines = count($lines);
 	$header = 0;
 	$pp_level = 0;
 	$np_level = 0;
-	for ($i = 0; $i < $count_lines; ++$i) {
+	for ($i = 0, $count_lines = count($lines); $i < $count_lines; ++$i) {
 		$pp_level += preg_match ('/~pp~/',$lines[$i]);
 		$pp_level -= preg_match ('/~\/pp~/',$lines[$i]);
 		$np_level += preg_match ('/~np~/',$lines[$i]);

@@ -154,8 +154,8 @@ if ($_REQUEST['locSection'] == 'read') {
 		
 		$bodies = $webmaillib->get_mail_content($user, $current['accountId'], $_REQUEST['msgid'], true);
 
-		$count_bodies = count($bodies);
-		for ($i = 0; $i < $count_bodies; $i++) {
+		
+		for ($i = 0, $count_bodies = count($bodies); $i < $count_bodies; $i++) {
 			if ($bodies[$i]['contentType'] == 'text/html') {
 				
 				$bod = $bodies[$i]['body'];

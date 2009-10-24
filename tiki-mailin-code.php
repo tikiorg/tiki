@@ -28,8 +28,8 @@ function mailin_check_attachments(&$output, &$out, $page, $user) {
 	$cnt = 0;
 	if (!isset($output["parts"])) return;
 
-	$count_outputparts = count($output['parts']);
-	for ($it = 0; $it < $count_outputparts; $it++) {
+	
+	for ($it = 0, $count_outputparts = count($output['parts']); $it < $count_outputparts; $it++) {
 		if (isset($output["parts"][$it]["d_parameters"]["filename"])) {
 			$attachmentPart = $output["parts"][$it];
 			$fileName = $attachmentPart["d_parameters"]["filename"];

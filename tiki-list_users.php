@@ -48,8 +48,8 @@ $smarty->assign_by_ref('cant_pages', $listusers["cant"]);
 //get the distance
 $listdistance = array();
 $listuserscountry = array();
-$count_listusers = count($listusers['data']);
-for ($i = 0; $i < $count_listusers; $i++) {
+
+for ($i = 0, $count_listusers = count($listusers['data']); $i < $count_listusers; $i++) {
 	if ($prefs['feature_community_list_distance'] == "y") {
 		$userlogin = $listusers["data"][$i]["login"];
 		$distance = $userprefslib->get_userdistance($userlogin, $user);
@@ -62,8 +62,8 @@ for ($i = 0; $i < $count_listusers; $i++) {
 	if ($prefs['feature_community_list_country'] == "y") {
 		$userprefs = $listusers["data"][$i]["preferences"];
 		$country = "None";
-		$count_userprefs = count($userprefs);
-		for ($j = 0; $j < $count_userprefs; $j++) {
+		
+		for ($j = 0, $count_userprefs = count($userprefs); $j < $count_userprefs; $j++) {
 			if ($userprefs[$j]["prefName"] == "country") $country = $userprefs[$j]["value"];
 			if ($userprefs[$j]["prefName"] == "realName") $listusers["data"][$i]["realName"] = $userprefs[$j]["value"];
 		}

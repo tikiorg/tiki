@@ -25,8 +25,8 @@ $sort_mode = 'f_' . $arrayFieldlist[0] . '_asc';
 header('Cache-Control: no-cache');
 Perms::bulk( array( 'type' => 'tracker' ), 'object', $arrayTrackerId );
 
-$count_arrayTrackerId = count($arrayTrackerId);
-for ($index = 0; $index < $count_arrayTrackerId; $index++) {
+
+for ($index = 0, $count_arrayTrackerId = count($arrayTrackerId); $index < $count_arrayTrackerId; $index++) {
 	$tikilib->get_perm_object( $arrayTrackerId[$index], 'tracker' );
 
 	if ($arrayMandatory[$index] == 'y') {

@@ -119,8 +119,8 @@ if (isset($_REQUEST["addbatch"]) && isset($_FILES['batch_subscription']) && $tik
 		$smarty->display("error.tpl");
 		die;
 	}
-	$sizeof_emails = sizeof($emails);
-	for ($i = 0; $i < $sizeof_emails; $i++) {
+	
+	for ($i = 0, $sizeof_emails = sizeof($emails); $i < $sizeof_emails; $i++) {
 		$email = trim($emails[$i]);
 		if (empty($email)) continue;
 		if ($nllib->newsletter_subscribe($_REQUEST["nlId"], $email, 'n', '', 'y')) {
