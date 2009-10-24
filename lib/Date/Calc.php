@@ -1357,7 +1357,7 @@ class Date_Calc
 
         $output = "";
 
-        for($strpos = 0; $strpos < strlen($format); $strpos++) {
+        for($strpos = 0, $strl_format = strlen($format); $strpos < $strl_format; $strpos++) {
             $char = substr($format,$strpos,1);
             if($char == "%") {
                 $nextchar = substr($format,$strpos + 1,1);

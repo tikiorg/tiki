@@ -532,14 +532,14 @@ function wikiplugin_trackerlist($data, $params) {
 				if (!empty($filtervalue)) {
 					$fvs = $filtervalue;
 					unset($filtervalue);
-					for ($i = 0; $i < count($filterfield); ++$i) {
+					for ($i = 0, $count_ff = count($filterfield); $i < $count_ff; ++$i) {
 						$filtervalue[] = isset($fvs[$i])? $fvs[$i]:'';
 					}
 				}
 				if (!empty($exactvalue)) {
 					$evs = $exactvalue;
 					unset($exactvalue);
-					for ($i = 0; $i < count($filterfield); ++$i) {
+					for ($i = 0, $count_ff2 = count($filterfield); $i < $count_ff2; ++$i) {
 						$exactvalue[] = isset($evs[$i])?$evs[$i]:'';
 					}
 				}
@@ -605,7 +605,7 @@ function wikiplugin_trackerlist($data, $params) {
 			}
 		}
 
-		for ($i = 0; $i < count($allfields["data"]); $i++) {
+		for ($i = 0, $count_allf = count($allfields['data']); $i < $count_allf; $i++) {
 			if ((in_array($allfields["data"][$i]['fieldId'],$listfields) or in_array($allfields["data"][$i]['fieldId'],$popupfields))and $allfields["data"][$i]['isPublic'] == 'y') {
 				$passfields["{$allfields["data"][$i]['fieldId']}"] = $allfields["data"][$i];
 			}

@@ -141,7 +141,7 @@ class WikiRenderer
 		// To show position    
 		if (count($structure_path) > 1) {
 			$cur_pos = '';
-			for ($i = 1; $i < count($structure_path); $i++) {
+			for ($i = 1, $count_str_path = count($structure_path); $i < $count_str_path; $i++) {
 				$cur_pos .= $structure_path[$i]["pos"] . "." ;
 			}
 			$cur_pos = substr($cur_pos, 0, strlen($cur_pos)-1);      

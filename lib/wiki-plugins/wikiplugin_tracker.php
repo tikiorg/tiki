@@ -535,8 +535,8 @@ function wikiplugin_tracker($data, $params) {
 				}
 				if (isset($fields)) {
 					$fl = split(':', $fields);
-					for ($j = 0; $j < count($fl); $j++) {
-						for ($i = 0; $i < count($flds['data']); $i++) {
+					for ($j = 0, $count_fl = count($fl); $j < $count_fl; $j++) {
+						for ($i = 0, $count_flds = count($flds['data']); $i < $count_flds; $i++) {
 							if ($flds['data'][$i]['fieldId'] == $fl[$j]) { 
 								$flds['data'][$i]['value'] = $values[$j];
 							}	
@@ -576,7 +576,7 @@ function wikiplugin_tracker($data, $params) {
 				} else {
 					unset($fl);
 				}
-				for($i = 0; $i < count($flds['data']); $i++) {
+				for ($i = 0, $count_flds2 = count($flds['data']); $i < $count_flds2; $i++) {
 					if (isset($fl) && ($j = array_search($flds['data'][$i]['fieldId'], $fl)) !== false) {
 						$flds['data'][$i]['value'] = $_REQUEST['values'][$j];
 					} else {
