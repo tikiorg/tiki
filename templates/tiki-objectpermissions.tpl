@@ -17,7 +17,7 @@
 	<form method="post" action="{$smarty.server.PHP_SELF}?{query}">
 		{if empty($filegals_manager)}
 			{if $objectType eq 'global'}
-				{remarksbox type="note" title="{tr}Note{/tr}"}
+				{remarksbox type="warning" title="{tr}Note{/tr}"}
 					{tr}Currently editing Global permissions.{/tr}
 				{/remarksbox}
 			{elseif $permissions_displayed eq 'direct'}
@@ -48,12 +48,15 @@
 		<input type="hidden" name="objectType" value="{$objectType|escape}" />
 		<input type="hidden" name="objectId" value="{$objectId|escape}" />
 		<input type="hidden" name="permType" value="{$permType|escape}" />
+		<input type="hidden" name="show_disabled_features" value="{$show_disabled_features}" />
 		
 		<div class="input_submit_container" style="text-align: center">
 			<input type="submit" name="assign" value="{tr}Assign{/tr}" />
 			{if $permissions_displayed eq 'direct' and $objectType neq 'global'}
-				<input type="submit" name="remove" value="{tr}Remove{/tr}"/>
+				<input type="submit" name="remove" value="{tr}Remove{/tr}" />
 			{/if}
+			<input type="submit" name="copy" value="{tr}Copy{/tr}" class="tips" title="{tr}Permissions Clipboard{/tr}|{tr}Copy the permissions set here{/tr}" />
+			{if !empty($perms_clipboard_source)}<input type="submit" name="paste" value="{tr}Paste{/tr}" class="tips" title="{tr}Permissions Clipboard{/tr}|{tr}Paste copied permissions from {/tr}<em>{$perms_clipboard_source}</em>" />{/if}
 		</div>
 		
 		{if $objectType eq 'category'}
@@ -82,7 +85,7 @@ if ($jq("#assignstructure").attr("checked")) {
 
 		<div class="input_submit_container" style="text-align: center">
 			<input type="submit" name="assign" value="{tr}Assign{/tr}" />
-			{if $permissions_displayed eq 'direct'}
+			{if $permissions_displayed eq 'direct' and $objectType neq 'global'}
 				<input type="submit" name="remove" value="{tr}Remove{/tr}"/>
 			{/if}
 		</div>
@@ -180,6 +183,7 @@ if ($jq("#assignstructure").attr("checked")) {
 		<input type="hidden" name="objectType" value="{$objectType|escape}" />
 		<input type="hidden" name="objectId" value="{$objectId|escape}" />
 		<input type="hidden" name="permType" value="{$permType|escape}" />
+		<input type="hidden" name="show_disabled_features" value="{$show_disabled_features}" />
 		<div class="input_submit_container" style="text-align: center">
 			<input type="submit" name="assign" value="{tr}Assign{/tr}" />
 		</div>

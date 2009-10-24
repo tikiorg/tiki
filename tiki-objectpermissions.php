@@ -80,7 +80,7 @@ $_REQUEST["permType"] = !empty($_REQUEST['permType']) ? urldecode($_REQUEST["per
 $smarty->assign('objectName', $_REQUEST["objectName"]);
 $smarty->assign('objectId', $_REQUEST["objectId"]);
 $smarty->assign('objectType', $_REQUEST["objectType"]);
-$smarty->assign('permType', $_REQUEST["permType"]);
+$smarty->assign_by_ref('permType', $_REQUEST["permType"]);
 
 if( $_REQUEST['objectType'] == 'wiki' ) {
 	$_REQUEST['objectType'] = 'wiki page';
@@ -197,6 +197,34 @@ if (isset($_REQUEST['remove'])) {
 
 }
 
+if (isset($_REQUEST['copy'])) {
+	$newPermissions = get_assign_permissions();
+	$to_copy = array('perms' => $newPermissions->getPermissionArray(), 'object' => $_REQUEST['objectId'], 'type' => $_REQUEST['objectType']);
+	$_SESSION['perms_clipboard'] = serialize($to_copy);
+}
+
+if (!empty($_SESSION['perms_clipboard'])) {
+	$perms_clipboard = unserialize($_SESSION['perms_clipboard']);
+	$smarty->assign('perms_clipboard_source', $perms_clipboard['type'] . (empty($perms_clipboard['object']) ? '' : ' : ') . $perms_clipboard['object']);
+
+	if (isset($_REQUEST['paste'])) {
+		//unset($_SESSION['perms_clipboard']);
+		
+		$set = new Perms_Reflection_PermissionSet;
+	
+		if( isset( $perms_clipboard['perms'] ) ) {
+			foreach( $perms_clipboard['perms'] as $group => $gperms ) {
+				foreach( $gperms as $perm ) {
+					$set->add( $group, $perm );
+				}
+			}
+		}
+		$permissionApplier->apply( $set );
+	}
+
+}
+
+
 // Prepare display
 // Get the individual object permissions if any
 
@@ -295,7 +323,7 @@ $smarty->assign('groupNames', implode(',', $groupNames));
 
 
 // Get the big list of permissions
-if (isset($_REQUEST['show_disabled_features']) && $_REQUEST['show_disabled_features'] == 'on') {
+if (isset($_REQUEST['show_disabled_features']) && ($_REQUEST['show_disabled_features'] == 'on' || $_REQUEST['show_disabled_features'] == 'y')) {
 	$show_disabled_features = 'y';
 } else {
 	$show_disabled_features = 'n';
