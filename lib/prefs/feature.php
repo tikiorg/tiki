@@ -977,5 +977,53 @@ function prefs_feature_list() {
 			'type' => 'flag',
 			'help' => 'File+Gallery+Config',
 		),
+		'feature_forum_rankings' => array(
+			'name' => tra('Rankings'),
+			'type' => 'flag',
+		),
+		'feature_forum_parse' => array(
+			'name' => tra('Accept wiki syntax'),
+			'type' => 'flag',
+			'help' => 'Wiki+Syntax',
+		),
+		'feature_forum_topics_archiving' => array(
+			'name' => tra('Topic archiving'),
+			'type' => 'flag',
+		),
+		'feature_forum_quickjump' => array(
+			'name' => tra('Quick jumps'),
+			'type' => 'flag',
+		),
+		'feature_forum_replyempty' => array(
+			'name' => tra('Replies are empty'),
+			'type' => 'flag',
+		),
+		'feature_forums_allow_thread_titles' => array(
+			'name' => tra('First post of a thread can have an empty body'),
+			'type' => 'flag',
+		),
+		'feature_forums_name_search' => array(
+			'name' => tra('Forum name search'),
+			'type' => 'flag',
+		),
+		'feature_forums_search' => array(
+			'name' => tra('Forum content search'),
+			'type' => 'flag',
+		),
+		'feature_forum_content_search' => array(
+			'name' => tra('Topic content search'),
+			'type' => 'flag',
+			'dependencies' => array(
+				'feature_search',
+			),
+		),
+		'feature_forum_local_tiki_search' => array(
+			'name' => tra('Use Tiki (database-independent) search.'),
+			'type' => 'flag',
+		),
+		'feature_forum_local_search' => array(
+			'name' => tra('Use database (full-text) search.'),
+			'type' => 'flag',
+		),
 	);
 }
