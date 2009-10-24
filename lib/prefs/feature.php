@@ -957,5 +957,25 @@ function prefs_feature_list() {
 			'name' => 'Post-level',
 			'type' => 'flag',
 		),
+		'feature_file_galleries_rankings' =>array(
+			'name' => tra('Rankings'),
+			'type' => 'flag',
+			'help' => 'File+Gallery+Config',
+		),
+		'feature_file_galleries_comments' =>array(
+			'name' => tra('Comments'),
+			'type' => 'flag',
+			'help' => 'File+Gallery+Config',
+		),
+		'feature_file_galleries_author' => array(
+			'name' => tra("Require file author's name for anonymous uploads"),
+			'type' => 'flag',
+			'help' => 'File+Gallery+Config',
+		),
+		'feature_file_galleries_batch' => array(
+			'name' => tra('Batch uploading'),
+			'type' => 'flag',
+			'help' => 'File+Gallery+Config',
+		),
 	);
 }

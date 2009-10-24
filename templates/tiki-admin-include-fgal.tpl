@@ -46,94 +46,50 @@
 </div>
 </div>
 
-<div class="adminoptionbox">
-	<div class="adminoptionlabel"><label for="fgal_podcast_dir">{tr}Podcast directory{/tr}: </label><input id="fgal_podcast_dir" type="text" name="fgal_podcast_dir" value="{$prefs.fgal_podcast_dir|escape}" size="50" /><br /><em>{tr}The server must be able to read/write the directory.{/tr} {tr}Required for podcasts.{/tr}</em></div>
-</div>
+	{preference name='fgal_podcast_dir'}
+	<br /><em>{tr}The server must be able to read/write the directory.{/tr} {tr}Required for podcasts.{/tr}</em>
 
 <input type="hidden" name="filegalfeatures" />
 
-<fieldset><legend>{tr}Features{/tr}{if $prefs.feature_help eq 'y'} {help url="File+Gallery+Config"}{/if}</legend>
+<fieldset>
+	<legend>{tr}Features{/tr}{if $prefs.feature_help eq 'y'} {help url="File+Gallery+Config"}{/if}</legend>
 
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="feature_file_galleries_rankings" name="feature_file_galleries_rankings" {if $prefs.feature_file_galleries_rankings eq 'y'}checked="checked" {/if}/></div>
-	<div class="adminoptionlabel"><label for="feature_file_galleries_rankings">{tr}Rankings{/tr}</label></div>
-</div>
+	{preference name='feature_file_galleries_rankings'}
 
-<div class="adminoptionbox">
-<input type="hidden" name="filegalcomprefs" />
-	<div class="adminoption"><input type="checkbox" id="feature_file_galleries_comments" name="feature_file_galleries_comments"{if $prefs.feature_file_galleries_comments eq 'y'} checked="checked"{/if} onclick="flip('usecomments');" /></div>
-	<div class="adminoptionlabel"><label for="feature_file_galleries_comments">{tr}Comments{/tr}</label></div>
-<div class="adminoptionboxchild" id="usecomments" style="display:{if $prefs.feature_file_galleries_comments eq 'y'}block{else}none{/if};">
-<div class="adminoptionbox">
-	<div class="adminoptionlabel"><label for="file_galleries_comments_per_page">{tr}Default number per page{/tr}: </label><input size="5" type="text" name="file_galleries_comments_per_page" id="file_galleries_comments_per_page" value="{$prefs.file_galleries_comments_per_page|escape}" /></div>
-</div>
-<div class="adminoptionbox">
-	<div class="adminoptionlabel"><label for="file_galleries_comments_default_ordering">{tr}Default Ordering{/tr}: </label>
-	<select name="file_galleries_comments_default_ordering" id="file_galleries_comments_default_ordering">
-              <option value="commentDate_desc" {if $prefs.file_galleries_comments_default_ordering eq 'commentDate_desc'}selected="selected"{/if}>{tr}Newest first{/tr}</option>
-							<option value="commentDate_asc" {if $prefs.file_galleries_comments_default_ordering eq 'commentDate_asc'}selected="selected"{/if}>{tr}Oldest first{/tr}</option>
-              <option value="points_desc" {if $prefs.file_galleries_comments_default_ordering eq 'points_desc'}selected="selected"{/if}>{tr}Points{/tr}</option>
-    </select>
-	</div>
-</div>
-</div>
-</div>
+	<input type="hidden" name="filegalcomprefs" />
 
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="fgal_limit_hits_per_file" name="fgal_limit_hits_per_file"
-              {if $prefs.fgal_limit_hits_per_file eq 'y'}checked="checked" {/if}/></div>
-	<div class="adminoptionlabel"><label for="fgal_limit_hits_per_file">{tr}Allow download limit per file{/tr}.</label></div>
-</div>
-
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="fgal_prevent_negative_score" name="fgal_prevent_negative_score"
-              {if $prefs.fgal_prevent_negative_score eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="fgal_prevent_negative_score">{tr}Prevent download if score becomes negative{/tr}.</label>
-	{if $prefs.feature_score ne 'y'}<br />{icon _id=information}{tr}Score is disabled{/tr}. <a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}</a>.{/if}
-	</div>
-</div>
-
-<div class="adminoptionbox">
-	<div class="adminoptionlabel"><label for="fgal_allow_duplicates">{tr}Allow same file to be uploaded more than once{/tr}:</label>
-	<select name="fgal_allow_duplicates" id="fgal_allow_duplicates">
-              <option value="n" {if $prefs.fgal_allow_duplicates eq 'n'}selected="selected"{/if}>{tr}Never{/tr}</option>
-              <option value="y" {if $prefs.fgal_allow_duplicates eq 'y'}selected="selected"{/if}>{tr}Yes, even in the same gallery{/tr}</option>
-              <option value="different_galleries" {if $prefs.fgal_allow_duplicates eq 'different_galleries'}selected="selected"{/if}>{tr}Only in different galleries{/tr}</option>
-            </select>
-	
-	</div>
-</div>
-
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="feature_file_galleries_batch" name="feature_file_galleries_batch" {if $prefs.feature_file_galleries_batch eq 'y'}checked="checked"{/if} onclick="flip('usebatchload');" /></div>
-	<div class="adminoptionlabel"><label for="feature_file_galleries_batch">{tr}Batch uploading{/tr}</label></div>
-
-<div class="adminoptionboxchild" id="usebatchload" style="display:{if $prefs.feature_file_galleries_batch eq 'y'}block{else}none{/if};">
-{tr}If you enable Directory Batch Loading, you need to setup a web-readable directory (outside of your web space is better). Then setup a way to upload files in that dir, either by scp, ftp, or other protocols{/tr}
-	<div class="adminoptionlabel"><label for="fgal_batch_dir">{tr}Path{/tr}: </label><input type="text" id="fgal_batch_dir" name="fgal_batch_dir" value="{$prefs.fgal_batch_dir|escape}" size="50" />
-	<br /><em>{tr}The server must be able to read the directory.{/tr} {tr}The directory can be outside the web space.{/tr}</em>
+	{preference name='feature_file_galleries_comments'}
+	<div class="adminoptionboxchild" id="feature_file_galleries_comments_childcontainer">
+		 {preference name='file_galleries_comments_per_page'}
+		 {preference name='file_galleries_comments_default_ordering'}
 	</div>
 
-</div>
-</div>
+	{preference name='fgal_limit_hits_per_file'}
 
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="feature_file_galleries_author" name="feature_file_galleries_author"
-              {if $prefs.feature_file_galleries_author eq 'y'}checked="checked"{/if} /></div>
-	<div class="adminoptionlabel"><label for="feature_file_galleries_author">{tr}Require file author's name for anonymous uploads{/tr}.</label></div>
-</div>
+	{preference name='fgal_prevent_negative_score'}
+	<div class="adminoptionboxchild" id="fgal_prevent_negative_score_childcontainer">
+		{if $prefs.feature_score ne 'y'}<br />{icon _id=information}{tr}Score is disabled{/tr}. <a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}</a>.{/if}
+	</div>
+
+	{preference name='fgal_allow_duplicates'}
+
+	{preference name='feature_file_galleries_batch'}
+	<div class="adminoptionboxchild" id="feature_file_galleries_batch_childcontainer">
+		{tr}If you enable Directory Batch Loading, you need to setup a web-readable directory (outside of your web space is better). Then setup a way to upload files in that dir, either by scp, ftp, or other protocols{/tr}
+		{preference name='fgal_batch_dir'}
+		<br /><em>{tr}The server must be able to read the directory.{/tr} {tr}The directory can be outside the web space.{/tr}</em>
+	</div>
+
+		{preference name='feature_file_galleries_author'}
 
 </fieldset>
 
-<fieldset><legend>{tr}Upload Regex{/tr}{if $prefs.feature_help eq 'y'} {help url="File+Gallery+Config#Filename_must_match:"}{/if}</legend>
-<div class="adminoptionbox">
-	<div class="adminoptionlabel"><label for="fgal_match_regex">{tr}Must match{/tr}:</label> <input type="text" name="fgal_match_regex" id="fgal_match_regex" value="{$prefs.fgal_match_regex|escape}"/></div>
-</div>
-<div class="adminoptionbox">
-	<div class="adminoptionlabel"><label for="fgal_nmatch_regex">{tr}Cannot match{/tr}:</label> <input type="text" name="fgal_nmatch_regex" id="fgal_nmatch_regex" value="{$prefs.fgal_nmatch_regex|escape}" /></div>
-</div>
-
+<fieldset>
+	<legend>{tr}Upload Regex{/tr}{if $prefs.feature_help eq 'y'} {help url="File+Gallery+Config#Filename_must_match:"}{/if}</legend>
+	{preference name='fgal_match_regex'}
+	{preference name='fgal_nmatch_regex'}
 </fieldset>
+
 	{/tab}
 
 	{tab name="{tr}Gallery Listings{/tr}"}
