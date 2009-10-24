@@ -53,7 +53,7 @@
 					<option value="Human Translations" disabled="disabled" style="color:black;font-weight:bold">Human Translations</option>
 					{/if}
 					{section name=i loop=$trads}
-					<option value="{$trads[i].objName}">{$trads[i].langName}</option>
+					<option value="{$trads[i].objName|escape}">{$trads[i].langName}</option>
 					{/section}
 					{if $prefs.feature_machine_translation eq 'y'}
 					<option value="Machine Translations" disabled="disabled" style="color:black;font-weight:bold">Machine Translations</option>

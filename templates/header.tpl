@@ -56,7 +56,7 @@
 
 {* --- universaleditbutton.org --- *}
 {if ($editable and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox')) or $tiki_p_admin_wiki eq 'y' or $canEditStaging eq 'y'}
-		<link rel="alternate" type="application/x-wiki" title="{tr}Edit this page!{/tr}" href="tiki-editpage.php?page={$page}" />
+		<link rel="alternate" type="application/x-wiki" title="{tr}Edit this page!{/tr}" href="tiki-editpage.php?page={$page|escape:url}" />
 {/if}
 
 {* --- Firefox RSS icons --- *}
