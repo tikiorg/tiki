@@ -1,5 +1,7 @@
-/* Strasa theme for TikiWiki CMS/Groupware, design by Patrick Allard,
-   released under LGPL license. For more information, visit http://themes.tikiwiki.org. */
+/* Strasa theme for Tiki 4.x, original design by Patrick Allard,
+   released under LGPL license. For more information, visit http://themes.tikiwiki.org
+   $Id$
+*/
 
 /* import *lite as the base: */
 @import "lite/lite.css"; 
@@ -34,8 +36,9 @@ a:hover {
 	color: #000000;
 }
 
-h1, h2, h3, h4, h5 {
+h1, h2, h3, h4, h5, h6 {
 	font-family: Helvetica, sans-serif;
+	margin-bottom: .5em;
 }
 
 h1 {
@@ -43,24 +46,31 @@ h1 {
 }
 
 h2 {
-	font-size: 1.4em;
+	font-size: 1.8em;
 }
 
 h3 {
-	font-size: 1.3em;
+	font-size: 1.6em;
 }
 
 h4 {
-	font-size: 1.2em;
+	font-size: 1.4em;
 }
 
 h5 {
-	font-size: 1.1em;
+	font-size: 1.2em;
 }
 
 h6 {
 	font-size: 1.05em;
 }
+
+.wikitext h1 {color: #000000}
+.wikitext h2 {color: #303030}
+.wikitext h3 {color: #3F3F3F; font-style: italic}
+.wikitext h4 {color: #606060}
+.wikitext h5 {color: #6F6F6F; font-style: italic}
+.wikitext h6 {color: #909090}
 
 hr {
 	background: #aaa;
@@ -902,7 +912,7 @@ div.adminanchors {
 /** Modules **/
 #col2 .box {
 	background: #cce5ff;
-	border-bottom: 2px ridge #bed8f1;
+	border-bottom: dashed 1px #fff;
 }
 
 #col3 .box {
@@ -915,8 +925,9 @@ h3.box-title {
 }
 
 #col2 .box-title {
+	color: #fff;
 	margin-top: 0;
-	margin-bottom: 0;
+	margin-bottom: .3em;
 }
 
 img.flipmodimage:hover {
