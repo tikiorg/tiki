@@ -197,7 +197,8 @@ function wikiplugin_trackerlist_info() {
 				'required' => false,
 				'name' => tra('Item ID separated with :'),
 				'description' => tra('List of items Ids'),
-				'filter' => 'alpha'
+				'filter' => 'digits',
+				'separator' => ':',
 			),
 			'url' => array(
 				'required' => false,
