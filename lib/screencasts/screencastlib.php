@@ -33,7 +33,7 @@ class ScreencastLib {
 	 * @return bool
 	 */
 	function add($file, $newfile, $isStream=false) {
-		if ( !$isStream && $this->handler->useStream !== false )
+		if ( !$isStream && $this->handler && $this->handler->useStream !== false )
 			$file = file_get_contents($file);
 			
 		if ( !$file ) return false;
@@ -48,7 +48,11 @@ class ScreencastLib {
 	 * @return array
 	 */
 	function find($string, $showBase=false) {			
-		return $this->handler->find($string, $showBase);	
+		if( $this->handler ) {
+			return $this->handler->find($string, $showBase);	
+		} else {
+			return array();
+		}
 	}
 		
 }
