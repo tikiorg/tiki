@@ -81,6 +81,9 @@ $perms->setCheckSequence( $sequence );
 $perms->setResolverFactories( $factories );
 Perms::set( $perms );
 
+global $globalPermRules;
+$globalPermRules = $perms;
+
 $globalperms = Perms::get();
 
 if ($user && (($user == 'admin' && isset($_SESSION["groups_are_emulated"]) && $_SESSION["groups_are_emulated"] != "y") || $globalperms->admin ) ) {

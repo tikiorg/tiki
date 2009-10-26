@@ -4146,12 +4146,18 @@ class TikiLib extends TikiDb_Bridge {
 	// - category permission
 	// if O.K. this function shall replace similar constructs in list_pages and other functions above.
 	// $categperm is the category permission that should grant $perm. if none, pass 0
-	function user_has_perm_on_object($user,$object,$objtype,$perm,$categperm='tiki_p_view_categorized') {
-		global $userlib;
-		$groups = $userlib->get_user_groups( $user );
+	function user_has_perm_on_object($toCheck,$object,$objtype,$perm,$categperm='tiki_p_view_categorized') {
+		global $userlib, $globalPermRules, $user;
+		$groups = $userlib->get_user_groups( $toCheck );
 
-		$accessor = Perms::get( array( 'type' => $objtype, 'object' => $object ) );
-		$accessor->setGroups( $groups );
+		$context = array( 'type' => $objtype, 'object' => $object );
+
+		if( $toCheck == $user ) {
+			$accessor = Perms::get( $context );
+		} else {
+			$accessor = $globalPermRules->getAccessor( $context );
+			$accessor->setGroups( $groups );
+		}
 
 		return $accessor->$perm;
 	}
