@@ -68,11 +68,15 @@ class NotificationLib extends TikiLib {
 		$result = $this->query($query,array($user,$newMail,$oldMail));
 	}
 	function get_mail_events($event, $object) {
-		$query = "select `email` from `tiki_user_watches` where `event`=? and (`object`=? or `object`='*')";
-		$result = $this->query($query, array($event,$object) );
+		global $tikilib;
+		$query = 'select * from `tiki_user_watches` where `event`=? and (`object`=? or `object`=?)';
+		$result = $this->query($query, array($event, $object, '*') );
 		$ret = array();
+		$map = CategLib::map_object_type_to_permission();
 		while ($res = $result->fetchRow()) {
-			$ret[] = $res["email"];
+			if (empty($res['user']) || $tikilib->user_has_perm_on_object($res['user'], $object, $res['type'], $map[$res['type']])) {
+				$ret[] = $res['email'];
+			}
 		}
 		return $ret;
 	}

@@ -32,6 +32,9 @@ if ($prefs['feature_articles'] == 'y') {
 	$add_options['article_edited'] = tra('A user edits an article');
 	$add_options['article_deleted'] = tra('A user deletes an article');
 }
+if ($prefs['feature_wiki'] == 'y') {
+	$add_options['wiki_page_changes'] = tra('Any wiki page is changed');
+}
 if ($prefs['feature_user_watches_translations'] == 'y') $add_options['wiki_page_in_lang_created'] = tra('A new page is created in a language');
 $smarty->assign('add_options', $add_options);
 if (isset($_POST['langwatch'])) {
@@ -78,6 +81,12 @@ if (isset($_REQUEST["add"])) {
 				$watch_type = 'wiki page';
 				$watch_label = tra('Language watch') . ": {$lang['name']}";
 				$watch_url = "tiki-user_watches.php";
+				break;
+			case 'wiki_page_changes':
+				$watch_object = "*";
+				$watch_type = 'wiki page';
+				$watch_label = tra('Any wiki page is changed');
+				$watch_url = 'tiki-lastchanges.php';
 				break;
 		}
 		if (isset($watch_object)) {
