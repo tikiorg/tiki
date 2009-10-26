@@ -79,6 +79,10 @@ if (isset($_REQUEST["remind"])) {
 		$mail = new TikiMail($name);
 		$mail->setSubject(sprintf($mail_data, $_SERVER["SERVER_NAME"]));
 		$mail->setText($smarty->fetchLang($languageEmail, 'mail/password_reminder.tpl'));
+
+		// grab remote IP through forwarded-for header when served by cache
+		$mail->setHeader( 'X-Password-Reset-From', $tikilib->get_ip_address() );
+
 		if (!$mail->send(array($_REQUEST['email']))) {
 			$smarty->assign('msg', tra("The mail can't be sent. Contact the administrator"));
 			$smarty->display("error.tpl");
@@ -88,7 +92,7 @@ if (isset($_REQUEST["remind"])) {
 		$smarty->assign('showmsg', 'y');
 		$smarty->assign('showfrm', 'n');
 		if ($prefs['feature_clear_passwords'] == 'y') {
-			$tmp = tra("A password and your IP address reminder email has been sent ");
+			$tmp = tra("A password reminder email has been sent ");
 		} else {
 			$tmp = tra("An email with a link to reset your password has been sent ");
 		}
