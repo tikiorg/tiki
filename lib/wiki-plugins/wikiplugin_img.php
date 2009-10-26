@@ -693,9 +693,9 @@ if (!function_exists('getimagesize_raw')) {
 					if (!empty($fwidth) && !empty($fheight)) {
 						$linkrel .= ";width=$fwidth;height=$fheight";
 					}
-					if (!empty($desconly)) {
+					/*if (!empty($desconly)) {
 						$linkrel .= ";title=$desconly";
-					}
+					}*/
 					$linkrel .= '"';
 					
 				} else {
