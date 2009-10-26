@@ -451,6 +451,7 @@ if (!empty($multi)) {
 } else {
 	$local = 'db/local.php';
 }
+
 $tikidomain = $multi;
 include 'lib/cache/cachelib.php';
 $cachelib->empty_full_cache();
@@ -535,6 +536,8 @@ if (!file_exists($local)) {
 } else {
 	// include the file to get the variables
 	include $local;
+	// In case of replication, ignore it during installer.
+	unset( $shadow_dbs, $shadow_user, $shadow_pass, $shadow_host );
 	if ($dbversion_tiki == '1.10') {
 		$dbversion_tiki = '2.0';
 	}
@@ -620,6 +623,8 @@ if (
 			$smarty->assign('dbcon', 'y');
 			write_local_php($_REQUEST['db'], $_REQUEST['host'], $_REQUEST['user'], $_REQUEST['pass'], $_REQUEST['name']);
 			include $local;
+			// In case of replication, ignore it during installer.
+			unset( $shadow_dbs, $shadow_user, $shadow_pass, $shadow_host );
 			$installer = new Installer;
 			$installer->setServerType($db_tiki);
 		}

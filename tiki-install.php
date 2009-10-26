@@ -51,6 +51,10 @@ class InstallerDatabaseErrorHandler implements TikiDb_ErrorHandler
 // Were database details defined before? If so, load them
 if (file_exists('db/local.php')) {
 	include 'db/local.php';
+
+	// In case of replication, ignore it during installer.
+	unset( $shadow_dbs, $shadow_user, $shadow_pass, $shadow_host );
+
 	include_once 'lib/adodb/adodb.inc.php';
 	$dbTiki = ADONewConnection($db_tiki);
 	$db = new TikiDb_Adodb($dbTiki);
