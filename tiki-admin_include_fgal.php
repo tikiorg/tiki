@@ -15,12 +15,6 @@ if (isset($_REQUEST["filegalset"])) {
 }
 if (isset($_REQUEST["filegalfeatures"])) {
 	check_ticket('admin-inc-fgal');
-	simple_set_toggle("feature_file_galleries_rankings");
-	simple_set_toggle("feature_file_galleries_batch");
-	simple_set_toggle("fgal_limit_hits_per_file");
-	simple_set_toggle("fgal_prevent_negative_score");
-	simple_set_value("fgal_match_regex");
-	simple_set_value("fgal_nmatch_regex");
 	// Check for last character being a / or a \
 	if (substr($_REQUEST["fgal_use_dir"], -1) != "\\" && substr($_REQUEST["fgal_use_dir"], -1) != "/" && $_REQUEST["fgal_use_dir"] != "") {
 		$_REQUEST["fgal_use_dir"].= "/";
@@ -36,9 +30,6 @@ if (isset($_REQUEST["filegalfeatures"])) {
 	simple_set_value("fgal_use_dir");
 	simple_set_value("fgal_podcast_dir");
 	simple_set_value("fgal_batch_dir");
-	simple_set_value("fgal_allow_duplicates");
-	simple_set_toggle("feature_file_galleries_comments");
-	simple_set_toggle("feature_file_galleries_author");
 }
 if (isset($_REQUEST["filegallistprefs"])) {
 	check_ticket('admin-inc-fgal');
@@ -64,11 +55,7 @@ if (isset($_REQUEST["filegallistprefs"])) {
 	simple_set_toggle('fgal_show_slideshow');
 	simple_set_value('fgal_default_view');
 }
-if (isset($_REQUEST["filegalcomprefs"])) {
-	check_ticket('admin-inc-fgal');
-	simple_set_value("file_galleries_comments_per_page");
-	simple_set_value("file_galleries_comments_default_ordering");
-}
+
 if (isset($_REQUEST["filegalhandlers"])) {
 	check_ticket('admin-inc-fgal');
 	$mimes = $_REQUEST["mimes"];
