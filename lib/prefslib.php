@@ -13,7 +13,13 @@ class PreferencesLib
 
 			global $prefs;
 			$info['preference'] = $name;
-			$info['value'] = $prefs[$name];
+			if( isset( $info['serialize'] ) ) {
+				$fnc = $info['serialize'];
+				$info['value'] = $fnc( $prefs[$name] );
+			} else {
+				$info['value'] = $prefs[$name];
+			}
+			$info['raw'] = $prefs[$name];
 			$info['id'] = 'pref-' . ++$id;
 			if( isset( $info['help'] ) && $prefs['feature_help'] == 'y' ) {
 				
@@ -176,9 +182,17 @@ class PreferencesLib
 		$name = $info['preference'];
 
 		if( isset($info['filter']) && $filter = TikiFilter::get( $info['filter'] ) ) {
-			return $filter->filter( $data[$name] );
+			$value = $filter->filter( $data[$name] );
 		} else {
-			return $data[$name];
+			$value = $data[$name];
+		}
+
+		if( isset( $info['unserialize'] ) ) {
+			$fnc = $info['unserialize'];
+
+			return $fnc( $value );
+		} else {
+			return $value;
 		}
 	}
 

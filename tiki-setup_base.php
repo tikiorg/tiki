@@ -44,13 +44,46 @@ include_once ('lib/init/tra.php');
 $tikilib = new TikiLib;
 // Get tiki-setup_base needed preferences in one query
 $prefs = array();
-$needed_prefs = array('session_lifetime' => '0', 'session_db' => 'n', 'sessions_silent' => 'disabled', 'language' => 'en', 'feature_pear_date' => 'y', 'lastUpdatePrefs' => - 1, 'feature_fullscreen' => 'n', 'error_reporting_level' => 0, 'smarty_notice_reporting' => 'n'
-// needed by initlib
+$needed_prefs = array(
+	'session_lifetime' => '0',
+	'session_db' => 'n',
+	'sessions_silent' => 'disabled',
+	'language' => 'en',
+	'feature_pear_date' => 'y',
+	'lastUpdatePrefs' => - 1,
+	'feature_fullscreen' => 'n',
+	'error_reporting_level' => 0,
+	'smarty_notice_reporting' => 'n',
+	'memcache_enabled' => 'n',
+	'memcache_expiration' => 3600,
+	'memcache_prefix' => 'tiki_',
+	'memcache_flags' => MEMCACHE_COMPRESSED,
+	'memcache_servers' => false,
 );
 $tikilib->get_preferences($needed_prefs, true, true);
 if ($prefs['lastUpdatePrefs'] == - 1) {
 	$tikilib->query('insert into `tiki_preferences`(`name`,`value`) values(?,?)', array('lastUpdatePrefs', 1));
 }
+
+if( $prefs['memcache_enabled'] == 'y' ) {
+	require_once('lib/cache/memcachelib.php');
+	if( is_array( $prefs['memcache_servers'] ) ) {
+		$servers = $prefs['memcache_servers'];
+	} else {
+		$servers = unserialize( $prefs['memcache_servers'] );
+	}
+
+	$memcachelib = new MemcacheLib( $prefs['memcache_servers'], array(
+		'enabled' => true,
+		'expiration' => (int) $prefs['memcache_expiration'],
+		'key_prefix' => $prefs['memcache_prefix'],
+		'flags' => $prefs['memcache_flags'],
+		'cache_forum_output' => $prefs['memcache_forum_output'] == 'y',
+		'cache_wiki_output' => $prefs['memcache_wiki_output'] == 'y',
+		'cache_wiki_data' => $prefs['memcache_wiki_data'] == 'y',
+	) );
+}
+
 require_once ('lib/tikidate.php');
 $tikidate = new TikiDate();
 // set session lifetime

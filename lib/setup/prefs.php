@@ -1430,6 +1430,16 @@ function get_default_prefs() {
 		// Minichat
 		'feature_minichat' => 'n',
 
+		// Memcache
+		'memcache_enabled' => 'n',
+		'memcache_flags' => MEMCACHE_COMPRESSED,
+		'memcache_servers' => false,
+		'memcache_expiration' => 3600,
+		'memcache_prefix' => 'tiki_',
+		'memcache_wiki_data' => 'y',
+		'memcache_wiki_output' => 'y',
+		'memcache_forum_output' => 'y',
+
 		// Pear::Date
 		'feature_pear_date' => 'y',
 
