@@ -59,9 +59,6 @@ $needed_prefs = array(
 	'memcache_prefix' => 'tiki_',
 	'memcache_flags' => MEMCACHE_COMPRESSED,
 	'memcache_servers' => false,
-	'memcache_wiki_data' => 'y',
-	'memcache_wiki_output' => 'y',
-	'memcache_forum_output' => 'y',
 );
 $tikilib->get_preferences($needed_prefs, true, true);
 if ($prefs['lastUpdatePrefs'] == - 1) {
@@ -81,9 +78,6 @@ if( $prefs['memcache_enabled'] == 'y' ) {
 		'expiration' => (int) $prefs['memcache_expiration'],
 		'key_prefix' => $prefs['memcache_prefix'],
 		'flags' => $prefs['memcache_flags'],
-		'cache_forum_output' => $prefs['memcache_forum_output'] == 'y',
-		'cache_wiki_output' => $prefs['memcache_wiki_output'] == 'y',
-		'cache_wiki_data' => $prefs['memcache_wiki_data'] == 'y',
 	) );
 }
 

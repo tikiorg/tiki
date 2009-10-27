@@ -12,54 +12,19 @@ if ($prefs['feature_forums'] != 'y') {
 	die;
 }
 
-$use_memcache = ( 
-    (!$user) && 
-    (isset($memcachelib)) &&
-    ($_SERVER['REQUEST_METHOD'] == 'GET') &&
-    $memcachelib->isEnabled() && 
-    $memcachelib->getOption('cache_forum_output') !== FALSE 
-);
-
-function buildOutputCacheKey() {
-    global $memcachelib;
-    $key = $memcachelib->buildKey(array_merge(
-        $_GET,
-        array(
-            'role'              => 'forum-page-output',
-            'locale'            => @$_REQUEST['locale'],
-            'forumId'           => @$_REQUEST['forumId'],
-            'comments_parentId' => @$_REQUEST['comments_parentId']
-        )
-    ));
-    return $key;
-}
-
-if ($use_memcache) {
-   
-    $cache_key = buildOutputCacheKey();
-    
-    list($cached_output, $meta_time) = $memcachelib->getMulti(array(
-        $cache_key,
-        array( 
-            'role'              =>'forum-page-output-meta-time',
-            'forumId'           => @$_REQUEST['forumId'],
-            'comments_parentId' => @$_REQUEST['comments_parentId']
-        )
-    ));
-
-    if ($cached_output && $meta_time && $meta_time > $cached_output['timestamp']) {
-        $cached_output = NULL;
-    }
-
-    if ($cached_output) {
-        echo $cached_output['output']; 
-        echo "\n<!-- memcache ".htmlspecialchars($cache_key)."-->";
-        exit;
-    } else {
-        $cached_output = array();
-        ob_start();
-    }
-}
+require_once 'lib/cache/pagecache.php';
+$pageCache = Tiki_PageCache::create()
+	->disableForRegistered()
+	->onlyForGet()
+	->requiresPreference( 'memcache_forum_output' )
+	->addArray( $_GET )
+	->addValue( 'role', 'forum-page-output' )
+	->addKeys( $_REQUEST, array( 'locale', 'forumId', 'comments_parentId' ) )
+	->checkMeta( 'forum-page-output-meta-time', array(
+		'forumId'           => @$_REQUEST['forumId'],
+		'comments_parentId' => @$_REQUEST['comments_parentId']
+	) )
+	->applyCache();
 
 if ($prefs['feature_categories'] == 'y') {
 	global $categlib;
@@ -221,14 +186,7 @@ if ($tiki_p_forums_report == 'y' && isset($_REQUEST['report'])) {
 	check_ticket('view-forum');
 	$commentslib->report_post($_REQUEST['forumId'], $_REQUEST['comments_parentId'], $_REQUEST['report'], $user, '');
 
-	global $memcachelib;
-	if ($memcachelib->isEnabled() && $memcachelib->getOption('cache_forum_output') !== FALSE) {
-		$memcachelib->set(array(
-			'role'              =>'forum-page-output-meta-time',
-			'forumId'           => @$_REQUEST['forumId'],
-			'comments_parentId' => @$_REQUEST['comments_parentId']
-		), time());
-	}   
+	$pageCache->invalidate();
 
 	$url = "tiki-view_forum_thread.php?forumId=" . $_REQUEST['forumId'] . "&comments_parentId=" . $_REQUEST['comments_parentId'] . "&post_reported=y";
 	header('location: ' . $url);
@@ -400,14 +358,5 @@ if (isset($_REQUEST['display'])) {
 	$smarty->assign('display', '');
 	$smarty->assign('mid', 'tiki-view_forum_thread.tpl');
 	$smarty->display('tiki.tpl');
-}
-
-if ($use_memcache) {
-    $cached_output += array(
-        'timestamp' => time(),
-        'output'    => ob_get_contents()
-    );
-    $memcachelib->set(buildOutputCacheKey(), $cached_output);
-    ob_end_flush();
 }
 
