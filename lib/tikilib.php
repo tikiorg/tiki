@@ -7364,6 +7364,12 @@ class TikiLib extends TikiDb_Bridge {
 		unset( $this->cache_page_info[urlencode($page)] );
 		$query = "update `tiki_pages` set `cache_timestamp`=? where `pageName`=?";
 		$this->query($query, array(0,$page) );
+
+		require_once 'lib/cache/pagecache.php';
+		$pageCache = Tiki_PageCache::create()
+			->checkMeta( 'wiki-page-output-meta-timestamp', array(
+				'page' => $page ) )
+			->invalidate();
 	}
 
 	/** Update a wiki page
