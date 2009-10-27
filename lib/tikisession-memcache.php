@@ -3,6 +3,7 @@
 class MemcacheSession {
 
 	private $enabled = false;
+	private $lib;
 
 	/**
 	 * Set up the session cache, hijacking handlers from ADODB_Session 
@@ -23,6 +24,8 @@ class MemcacheSession {
 		global $memcachelib;
 		$this->enabled = isset( $memcachelib ) &&
 			$memcachelib->isEnabled();
+
+		$this->lib = $memcachelib;
 	}
 
 	/**
@@ -32,9 +35,8 @@ class MemcacheSession {
 	 * @return string Memcache key
 	 */
 	function _buildCacheKey( $session_key ) {
-		global $memcachelib;
-		return isset( $memcachelib ) ?
-			$memcachelib->buildKey(array(
+		return $this->lib ?
+			$this->lib->buildKey(array(
 				'role'        => 'session-cache',
 				'session_key' => $session_key
 			))
@@ -54,30 +56,26 @@ class MemcacheSession {
 	}
 
 	function read( $key ) {
-		global $memcachelib;
-
 		$cache_key = $this->_buildCacheKey( $key );
 
 		if( $this->enabled ) {
-			return $memcachelib->get( $cache_key );
+			return $this->lib->get( $cache_key );
 		}
 	}
 
 	function write( $key, $val ){
-		global $memcachelib, $prefs; 
+		global $prefs; 
 
 		if( $this->enabled ) {
-			$memcachelib->set( $this->_buildCacheKey($key), $val, 60 * $prefs['session_lifetime'] );
+			$this->lib->set( $this->_buildCacheKey($key), $val, 60 * $prefs['session_lifetime'] );
 		}
 
 		return $this->enabled;
 	}
 
 	function destroy( $key ) {
-		global $memcachelib; 
-
 		if( $this->enabled ) {
-			$memcachelib->delete( $this->_buildCacheKey($key) );
+			$this->lib->delete( $this->_buildCacheKey($key) );
 		}
 
 		return $this->enabled;
