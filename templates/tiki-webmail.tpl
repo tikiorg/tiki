@@ -185,7 +185,7 @@
 				<th>{tr}Active{/tr}</th>
 				<th>{tr}Account{/tr}</th>
 				<th>{tr}Active{/tr}</th>
-				<th>{tr}POP server{/tr}</th>
+				<th>{tr}Server{/tr}</th>
 				<th>{tr}Username{/tr}</th>
 				<th>{tr}Action{/tr}</th>
 			</tr>
@@ -204,7 +204,7 @@
 						{if $active neq 'y'}
 							{self_link current=$accounts[ix].accountId}{$accounts[ix].account class='link' _title='{tr}Activate{/tr}'}{/self_link}{* TODO make_title work? *}
 						{else}
-							<strong>{$accounts[ix].account}</strong>
+							<strong>{$accounts[ix].account|escape}</strong>
 						{/if}
 					</td>
 					<td class="{cycle advance=false}">
@@ -243,7 +243,7 @@
 					<th>{tr}Active{/tr}</th>
 					<th>{tr}Account{/tr}</th>
 					<th>{tr}Active{/tr}</th>
-					<th>{tr}POP server{/tr}</th>
+					<th>{tr}Server{/tr}</th>
 					<th>{tr}Username{/tr}</th>
 					<th>{tr}Action{/tr}</th>
 				</tr>
@@ -262,7 +262,7 @@
 							{if $active neq 'y'}
 								{self_link current=$pubAccounts[ixp].accountId}{$pubAccounts[ixp].account class='link' _title='{tr}Activate{/tr}'}{/self_link}{* TODO make self_link _title work when no icon? *}
 							{else}
-								<strong>{$pubAccounts[ixp].account}</strong>
+								<strong>{$pubAccounts[ixp].account|escape}</strong>
 							{/if}
 						</td>
 						<td class="{cycle advance=false}">{if $pubAccounts[ixp].current ne 'y' or $pubAccounts[ix].user ne $user}{tr}Yes{/tr}{else}{tr}No{/tr}{/if}</td>
