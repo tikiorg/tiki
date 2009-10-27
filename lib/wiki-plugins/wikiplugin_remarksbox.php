@@ -51,6 +51,11 @@ function wikiplugin_remarksbox_info() {
 				'name' => tra('Icon'),
 				'description' => tra('Icon ID.'),
 			),
+			'close' => array(
+				'required' => false,
+				'name' => tra('Close'),
+				'description' => tra('y|n Show close button (default y)'),
+			),
 		),
 	);
 }
