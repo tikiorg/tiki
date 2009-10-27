@@ -10,7 +10,7 @@
 		<td>
 			{if $params.show_bar eq 'y'}
 				{if !empty($stat.percent)}
-					<img src="img/leftbar.gif" alt="&lt;" /><img alt="-" src="img/mainbar.gif" height="14" width="{$stat.percent}" /><img src="img/rightbar.gif" alt="&gt;" />
+					{quotabar length=$stat.percent}
 				{/if}
 			{else}
 				%{$stat.percent|string_format:"%.2f"}
