@@ -3396,7 +3396,7 @@ class TikiLib extends TikiDb_Bridge {
 		$this->query($query, $bindvars, -1, -1, false);
 		$query = "insert into `tiki_sessions`(`sessionId`,`timestamp`,`user`,`tikihost`) values(?,?,?,?)";
 		$result = $this->query($query, array($this->sessionId, (int)$this->now, $user,$_SERVER['HTTP_HOST']), -1, -1, false );
-		if ($prefs['session_db'] == 'y') {
+		if ($prefs['session_storage'] == 'db') {
 			// clean up adodb sessions as well in case adodb session garbage collection not working
 			$query = "delete from `sessions` where `expiry`<?";
 			$this->query($query, array($oldy));

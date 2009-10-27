@@ -2,10 +2,14 @@
 
 function prefs_session_list() {
 	return array (
-		'session_db' => array(
-			'name' => tra('Store session in database'),
-			'description' => tra('Store session in database'),
-			'type' => 'flag',
+		'session_storage' => array(
+			'name' => tra('Session storage location'),
+			'description' => tra('Select where the session information should be stored.'),
+			'type' => 'list',
+			'options' => array(
+				'default' => tra('Default (from php.ini)'),
+				'db' => tra('Database'),
+			),
 		),
 		'session_lifetime' => array(
 			'name' => tra('Session lifetime'),

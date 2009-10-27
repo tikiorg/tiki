@@ -46,7 +46,7 @@ $tikilib = new TikiLib;
 $prefs = array();
 $needed_prefs = array(
 	'session_lifetime' => '0',
-	'session_db' => 'n',
+	'session_storage' => 'default',
 	'sessions_silent' => 'disabled',
 	'language' => 'en',
 	'feature_pear_date' => 'y',
@@ -88,7 +88,7 @@ if ($prefs['session_lifetime'] > 0) {
 	ini_set('session.gc_maxlifetime', $prefs['session_lifetime'] * 60);
 }
 // is session data  stored in DB or in filesystem?
-if ($prefs['session_db'] == 'y') {
+if ($prefs['session_storage'] == 'db') {
 	if ($api_tiki == 'adodb') {
 		require_once ('lib/tikisession-adodb.php');
 	} elseif ($api_tiki == 'pdo') {

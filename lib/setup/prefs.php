@@ -1305,7 +1305,7 @@ function get_default_prefs() {
 		'ip_can_be_checked' => 'n',
 		'sender_email' => '',
 		'feature_site_report_email' => '',
-		'session_db' => 'n',
+		'session_storage' => 'default',
 		'session_lifetime' => 0,
 		'shoutbox_autolink' => 'n',
 		'show_comzone' => 'n',
