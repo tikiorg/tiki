@@ -55,6 +55,11 @@ $info = $tikilib->get_page_info($page);
 // wysiwyg decision
 include 'lib/setup/editmode.php';
 
+require_once 'lib/cache/pagecache.php';
+$pageCache = Tiki_PageCache::create()
+	->checkMeta( 'wiki-page-output-meta-timestamp', array(
+		'page' => $page,
+	) );
 $auto_query_args = array('wysiwyg','page_id','page', 'lang', 'hdr');
 
 
@@ -303,6 +308,7 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 						}
 
 						$tikilib->update_page($pagename, $part["body"], tra('page imported'), $author, $authorid, $description, 0, $pageLang, false, $hash);
+						$pageCache->invalidate();
 					} else {
 						$tikilib->create_page($pagename, $hits, $part["body"], $lastmodified, tra('created from import'), $author, $authorid, $description, $pageLang, false, $hash);
 						// Check if a WS is active
@@ -998,6 +1004,7 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
 			$edit = preg_replace('/<p>!(.*)<\/p>/u', "!$1\n", $edit);
 		}
 		$tikilib->update_page($_REQUEST["page"],$edit,$_REQUEST["comment"],$user,$tikilib->get_ip_address(),$description,$minor,$pageLang, $is_html, $hash, null, $_REQUEST['wysiwyg'], $wiki_authors_style);
+		$pageCache->invalidate();
 		$info_new = $tikilib->get_page_info($page);
 
 		// Handle translation bits
