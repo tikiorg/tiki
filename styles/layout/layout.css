@@ -707,12 +707,28 @@ span.moduleflip,
 	overflow: hidden;
 }
 
+.rbox {
+	margin: 1em .3em 2em .3em;
+}
+	
+.rbox-title,
+.rbox-data {
+	padding: .3em .6em;
+	border: 1px solid;
+	background-color: #eee;
+	color: #000;
+}
+
 .rbox-title {
 	display: inline-block;
 	width: auto;
 	z-index: 1;
 	position: relative;
 	bottom: -1px;
+	border-bottom-color: #eee;
+	padding-top: .1em;
+	padding-bottom: .1em;
+	font-weight: bold;
 }
 	
 .rbox img {

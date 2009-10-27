@@ -373,31 +373,46 @@ div.help_section {
 	padding: 0 3px 3px 3px;
 }
 
+/* remarks boxes */
+
 .rbox {
 	margin: 1em .3em 2em .3em;
 }
-
+	
 .rbox-title,
 .rbox-data {
-	padding: 1px 3px;
+	padding: .3em .6em;
+	border: 1px solid #000;
+	background-color: #eee;
+	color: #000;
 }
 
 .rbox-title {
-	padding: 3px;
+	border-bottom-color: #eee;
+	padding-top: .1em;
+	padding-bottom: .1em;
+	font-weight: bold;
 }
 	
-.rbox img {
-	padding-right: 3px;
-}
-	
-.rbox-data {
-	padding: 0 3px 3px 3px;
-}
+.comment .rbox-title,
+.comment .rbox-data {}
 
-.rbox-data ul {
-	list-style-type: none;
-	margin-left: 0;
-	padding-left: 0;
+.note .rbox-title,
+.note .rbox-data {}
+
+.tip .rbox-title,
+.tip .rbox-data {}
+
+.warning .rbox-title {
+	background-color: #000;
+	color: #fff;
+	border-color: #f00;
+	border-bottom-color: #000;
+}
+.warning .rbox-data {
+	background-color: #000;
+	color: #fff;
+	border-color: #f00;
 }
 
 .simplebox {
