@@ -216,6 +216,12 @@ if ($prefs['wikiapproval_delete_staging'] == 'y') {
 
 // OK, done
 
+require_once 'lib/cache/pagecache.php';
+$pageCache = Tiki_PageCache::create()
+	->checkMeta( 'wiki-page-output-meta-timestamp', array(
+		'page' => $page ) )
+	->invalidate();
+
 include_once ('tiki-section_options.php');
 
 // disallow robots to index page:
