@@ -451,9 +451,6 @@ $smarty->assign('cookietab', $cookietab);
 
 // setup smarty remarks flags
 
-// TODO assign this remarks flag var if category (parent) perms differ from object's 
-$smarty->assign('categ_perms_flag', false);
-
 // Display the template
 $smarty->assign('mid', 'tiki-objectpermissions.tpl');
 if (isset($_REQUEST['filegals_manager']) && $_REQUEST['filegals_manager'] != '') {
@@ -625,10 +622,15 @@ function get_displayed_permissions() {
 
 	$smarty->assign('permissions_displayed', 'direct');
 	if( $comparator->equal() ) {
-		if( $parent = $currentObject->getParentPermissions() ) {
+		$globPerms = $objectFactory->get( 'global', null )->getDirectPermissions();	// global perms
+		$parent = $currentObject->getParentPermissions();							// inherited perms (could be category ones)
+		$comparator = new Perms_Reflection_PermissionComparator( $globPerms, $parent );
+		if( $comparator->equal() ) {												// parent == globals
 			$smarty->assign('permissions_displayed', 'parent');
-			$displayedPermissions = $parent;
+		} else {																	// parent not globals, so must be category
+			$smarty->assign('permissions_displayed', 'category');
 		}
+		$displayedPermissions = $parent;
 	}
 
 	return $displayedPermissions;

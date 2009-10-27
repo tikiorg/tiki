@@ -22,17 +22,17 @@
 				{/remarksbox}
 			{elseif $permissions_displayed eq 'direct'}
 				{remarksbox type="warning" title="{tr}Warning{/tr}"}
-					{tr}These permissions override any global permissions or category permissions affecting this object.{/tr}<br />
+					{tr}This object's direct permissions override any global permissions or category permissions affecting this object.{/tr}<br />
 					{if $tiki_p_admin eq 'y'}{tr}To edit global permissions{/tr} {self_link objectType='global' objectId='' objectName='' permType=$permType}{tr}click here{/tr}{/self_link}.{/if}
 				{/remarksbox}
-			{elseif $categ_perms_flag}{* TODO *}
+			{elseif  $permissions_displayed eq 'category'}
 				{remarksbox type="warning" title="{tr}Warning{/tr}"}
-					{tr}No permissions yet applied to this object but category permissions affect this object.{/tr}<br />
+					{tr}No permissions yet applied to this object but category permissions affect this object and are displayed below.{/tr}<br />
 					{if $tiki_p_admin eq 'y'}{tr}To edit category permissions{/tr} {self_link _script='tiki-admin_categories.php'}{tr}click here{/tr}{/self_link}.{/if}
 				{/remarksbox}
 			{elseif $permissions_displayed eq 'parent'}
 				{remarksbox type="note" title="{tr}Note{/tr}"}
-					{tr}No permissions yet applied to this object. Global permissions apply.{/tr}<br />
+					{tr}No direct permissions yet applied to this object. Global permissions apply.{/tr}<br />
 					{if $tiki_p_admin eq 'y'}{tr}To edit global permissions{/tr} {self_link objectType='global' permType=$permType}{tr}click here{/tr}{/self_link}.{/if}
 					<br /><br />
 					{tr}Currently inherited permissions displayed.{/tr}
