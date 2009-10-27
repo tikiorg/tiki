@@ -888,13 +888,14 @@ class FileGalLib extends TikiLib {
 
 		$galleryPath = array();
 		$expanded = array('1');
-		$this->_buildTreePhplayers($tree['data'], $allGalleries['data'], $currentGalleryId, $galleryPath, $expanded, $script, $rootGalleryId);
+		$fgal_mgr_param = !empty($_REQUEST['filegals_manager']) ? '&amp;filegals_manager=' . urlencode($_REQUEST['filegals_manager']) : '';
+		$this->_buildTreePhplayers($tree['data'], $allGalleries['data'], $currentGalleryId, $galleryPath, $expanded, $script, $rootGalleryId, $fgal_mgr_param);
 		array_unshift($galleryPath, array($rootGalleryId, $tree['name']));
 
 		$galleryPathHtml = '';
 		foreach ( $galleryPath as $dir_id ) {
 			if ( $galleryPathHtml != '' ) $galleryPathHtml .= ' &nbsp;&gt;&nbsp;';
-			$galleryPathHtml .= '<a href="' . $script . '?galleryId=' . $dir_id[0] . ((isset($_REQUEST['filegals_manager']) && $_REQUEST['filegals_manager'] != '') ? '&amp;filegals_manager=' . urlencode($_REQUEST['filegals_manager']) : '') . '">' . $dir_id[1] . '</a>';
+			$galleryPathHtml .= '<a href="' . $script . '?galleryId=' . $dir_id[0] . $fgal_mgr_param . '">' . $dir_id[1] . '</a>';
 		}
 
 		return array(
@@ -905,7 +906,7 @@ class FileGalLib extends TikiLib {
 		);
 	}
 
-	function _buildTreePhplayers( &$tree, &$galleries, &$gallery_id, &$gallery_path, &$expanded, $link = "", $cur_id = -1 ) {
+	function _buildTreePhplayers( &$tree, &$galleries, &$gallery_id, &$gallery_path, &$expanded, $link = "", $cur_id = -1, $queryString = '' ) {
 		static $total = 1;
 		static $nb_galleries = 0;
 
@@ -919,9 +920,9 @@ class FileGalLib extends TikiLib {
 				$tree[$i] = & $galleries[$gk];
 				$tree[$i]['link_var'] = 'galleryId';
 				$tree[$i]['link_id'] = $gv['id'];
-				$tree[$i]['link'] = $link."?".$tree[$i]['link_var']."=".$tree[$i]['link_id'];
+				$tree[$i]['link'] = $link."?".$tree[$i]['link_var']."=".$tree[$i]['link_id'] . $queryString;
 				$tree[$i]['pos'] = $total++;
-				$this->_buildTreePhplayers($tree[$i]['data'], $galleries, $gallery_id, $gallery_path, $expanded, $link, $gv['id']);
+				$this->_buildTreePhplayers($tree[$i]['data'], $galleries, $gallery_id, $gallery_path, $expanded, $link, $gv['id'], $queryString);
 				if (!$path_found && $gv['id'] == $gallery_id) {
 					if ($_REQUEST['galleryId'] == $gv['id']) $tree[$i]['current'] = 1;
 					array_unshift($gallery_path, array($gallery_id, $gv['name']));
