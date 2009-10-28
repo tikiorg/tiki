@@ -194,6 +194,7 @@ class FileGalLib extends TikiLib {
 		if (!isset($fgal_info['show_modified']))  $fgal_info['show_modified'] = 'n';
 		if (!isset($fgal_info['show_creator']))  $fgal_info['show_creator'] = 'n';
 		if (!isset($fgal_info['show_author']))  $fgal_info['show_author'] = 'n';
+		if (!isset($fgal_info['quota']))  $fgal_info['quota'] = 0;
 
 		// if the user is admin or the user is the same user and the gallery exists
 		// then replace if not then create the gallary if the name is unused.
@@ -212,7 +213,7 @@ class FileGalLib extends TikiLib {
 			`user`=?, `lockable`=?, `show_lockedby`=?, `archives`=?, `sort_mode`=?,
 			`show_modified`=?, `show_creator`=?, `show_author`=?, `subgal_conf`=?,
 			`show_last_user`=?, `show_comment`=?, `show_files`=?, `show_explorer`=?,
-			`show_path`=?, `show_slideshow`=?, `default_view`=? where `galleryId`=?";
+			`show_path`=?, `show_slideshow`=?, `default_view`=?, `quota`=? where `galleryId`=?";
 
 			$bindvars=array(trim($fgal_info['name']), (int) $fgal_info['maxRows'],
 			$fgal_info['description'], (int) $this->now, $fgal_info['public'],
@@ -228,7 +229,7 @@ class FileGalLib extends TikiLib {
 			$fgal_info['show_last_user'], $fgal_info['show_comment'],
 			$fgal_info['show_files'], $fgal_info['show_explorer'],
 			$fgal_info['show_path'], $fgal_info['show_slideshow'],
-			$fgal_info['default_view'], (int)$fgal_info['galleryId']);
+			$fgal_info['default_view'], $fgal_info['quota'], (int)$fgal_info['galleryId']);
 
 			$result = $this->query($query,$bindvars);
 
@@ -246,8 +247,8 @@ class FileGalLib extends TikiLib {
 			`show_hits`, `max_desc`, `type`, `parentId`, `lockable`, `show_lockedby`,
 			`archives`, `sort_mode`, `show_modified`, `show_creator`, `show_author`,
 			`subgal_conf`, `show_last_user`, `show_comment`, `show_files`,
-			`show_explorer`, `show_path`, `show_slideshow`, `default_view`)
-			values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			`show_explorer`, `show_path`, `show_slideshow`, `default_view`, `quota`)
+			values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 			$bindvars=array($fgal_info['name'], $fgal_info['description'], (int)
 			$this->now, $fgal_info['user'], (int) $this->now, (int)
@@ -262,7 +263,7 @@ class FileGalLib extends TikiLib {
 			$fgal_info['subgal_conf'], $fgal_info['show_last_user'],
 			$fgal_info['show_comment'], $fgal_info['show_files'],
 			$fgal_info['show_explorer'], $fgal_info['show_path'],
-			$fgal_info['show_slideshow'], $fgal_info['default_view']);
+			$fgal_info['show_slideshow'], $fgal_info['default_view'], $fgal_info['quota']);
 
 			$result = $this->query($query,$bindvars);
 			$galleryId = $this->getOne("select max(`galleryId`) from
@@ -303,7 +304,7 @@ class FileGalLib extends TikiLib {
 	}
 
 	function process_batch_file_upload($galleryId, $file, $user, $description) {
-		global $prefs;
+		global $prefs, $smarty;
 
 		include_once ('lib/pclzip/pclzip.lib.php');
 		include_once ('lib/mime/mimelib.php');
@@ -321,23 +322,40 @@ class FileGalLib extends TikiLib {
 			$savedir=$prefs['fgal_use_dir'];
 		}
 
+		// check filters
+		$upl = 1;
+		$errors = array();
 		while (($file = readdir($h)) !== false) {
 			if ($file != '.' && $file != '..' && is_file($extract_dir.'/'.$file)) {
-				$files[] = $file;
-
-				// check filters
-				$upl = 1;
 
 				if (!empty($prefs['fgal_match_regex'])) {
-					if (!preg_match('/'.$prefs['fgal_match_regex'].'/', $file, $reqs))
+					if (!preg_match('/'.$prefs['fgal_match_regex'].'/', $file, $reqs)) {
+						$errors[] = tra('Invalid filename (using filters for filenames)') . ': ' . $file;
 						$upl = 0;
+					}
 				}
 
 				if (!empty($prefs['fgal_nmatch_regex'])) {
-					if (preg_match('/'.$prefs['fgal_nmatch_regex'].'/', $file, $reqs))
+					if (preg_match('/'.$prefs['fgal_nmatch_regex'].'/', $file, $reqs)) {
+						$errors[] = tra('Invalid filename (using filters for filenames)') . ': ' . $file;
 						$upl = 0;
+					}
 				}
 
+				if ($this->checkQuota(filesize($extract_dir.$file), $galleryId, $error)) {
+					$errors[] = $error;
+					$upl = 0;
+				}
+			}
+		}
+		if (!$upl) {
+			$smarty->assign('msg', implode('<br />', $errors));
+			$smarty->display('error.tpl');
+			die;
+		}
+		
+		while (($file = readdir($h)) !== false) {
+			if ($file != '.' && $file != '..' && is_file($extract_dir.'/'.$file)) {
 				if (!($fp = fopen($extract_dir.$file, "rb"))) {
 					$smarty->assign('msg', tra('Cannot open this file:'). "temp/$file");
 					$smarty->display("error.tpl");
@@ -798,7 +816,6 @@ class FileGalLib extends TikiLib {
 			}
 		}
 	}
-
 	// Get a tree or a list of a gallery children ids, optionnally under a specific parentId
 	// To avoid a query to the database for each node, this function retrieves all gallery ids and recursively build the tree using this info
 	function getGalleryChildrenIds( &$subtree, $parentId = -1, $format = 'tree' ) {
@@ -934,5 +951,112 @@ class FileGalLib extends TikiLib {
 			}
 		}
 	}
+	// get the size in k used in a fgal and its children
+	function getUsedSize($galleryId=0) {
+		$query = 'select sum(`filesize`) from `tiki_files`';
+		$bindvars = array();
+		if (!empty($galleryId)) {
+			$this->getGalleryIds( $bindvars, $galleryId, 'list' );
+			$query .= 'where `galleryId` in ('.implode(',', array_fill(0, count($bindvars), '?')).')';
+		}
+		$size = $this->getOne($query, $bindvars);
+		return $size;
+	}
+	// get the min quota in M of a fgal and its parents
+	function getQuota($galleryId=0) {
+		global $prefs;
+		if (empty($galleryId) || $prefs['fgal_quota_per_fgal'] == 'n') {
+			return $prefs['fgal_quota'];
+		}
+		$list = $this->getGalleryParentsColumns($galleryId, array('galleryId', 'quota'));
+		$quota = $prefs['fgal_quota'];
+		foreach($list as $fgal) {
+			if (empty($fgal['quota'])) {
+				continue;
+			}
+			$quota = min($quota, $fgal['quota']);
+		}
+		return $quota;
+	}
+	// get the max quota in M of the children of a fgal
+	function getMaxQuotaDescendants($galleryId=0) {
+		if (empty($galleryId)) {
+			return 0;
+		}
+		$this->getGalleryChildrenIds($subtree, $galleryId, 'list');
+		if (is_array($subtree)) {
+			$query = 'select max(`quota`) from `tiki_file_galleries` where `galleryId` in ('.implode(',', array_fill(0, count($subtree), '?')).')';
+			return $this->getOne($query, $subtree);
+		} else {
+			return 0;
+		}
+	}
+	// check quota is smaller than parent quotas and bigger than children quotas
+	// return -1: too small, 0: ok, +1: too big
+	function checkQuotaSetting($quota, $galleryId=0, $parentId=0) {
+		if (empty($quota)) {
+			return 0;
+		}
+		$limit = $this->getQuota($parentId);
+		if (!empty($limit) && $quota > $limit) {
+			return 1;// too big
+		}
+		if (!empty($galleryId)) {
+			$limit = $this->getMaxQuotaDescendants($galleryId);
+			if (!empty($limit) && $quota < $limit) {
+				return -1;//too small
+			}
+		}
+		return 0;
+	}
+	// get specific columns for a gallery and its parents
+	function getGalleryParentsColumns($galleryId, $columns) {
+		foreach ($columns as $col) {// artificial size column unitl it is in the database
+			if ($col != 'size') {
+				$cols[] = $col;
+			}
+		}
+		if (!in_array('galleryId', $cols)) $cols[] = 'galleryId';
+		if (!in_array('parentId', $cols)) $cols[] = 'parentId';
+		$query = 'select `'.implode($cols, '`, `').'` from `tiki_file_galleries`';
+		$all = $this->fetchAll($query);
+		$list = array();
+		$this->_getGalleryParentsColumns($all, $list, $galleryId, $columns);
+		return $list;	
+	}
+	function _getGalleryParentsColumns($all, &$list, $galleryId, $columns=array()) {
+		foreach ($all as $fgal) {
+			if ($fgal['galleryId'] == $galleryId) {
+				if (in_array('size', $columns)) { // to be optimized
+					$fgal['size'] = $this->getUsedSize($galleryId);
+				}
+				$list[] = $fgal;
+				$this->_getGalleryParentsColumns($all, $list, $fgal['parentId'], $columns);
+				return;
+			}
+		}
+	}
+	// check a size in K can be added to a gallery
+	function checkQuota($size, $galleryId, &$error) {
+		global $prefs;
+		if (!empty($prefs['fgal_quota'])) {
+			$use = $this->getUsedSize();
+			if ($use + $size > $prefs['fgal_quota']*1024*1024) {
+				$error = tra('The global quota has been reached');
+				return false;
+			}
+		}
+		if ($prefs['fgal_quota_per_fgal'] == 'y') {
+			$list = $this->getGalleryParentsColumns($galleryId, array('galleryId', 'quota', 'size', 'name'));
+			//echo '<pre>';print_r($list);echo '</pre>';
+			foreach ($list as $fgal) {
+				if (!empty($fgal['quota']) && $fgal['size'] + $size > $fgal['quota']*1024*1024) {
+					$error = tra('The quota has been reached in:').' '.$fgal['name'];
+					return false;
+				}
+			}
+		}
+		return true;			
+	} 
 }
 $filegallib = new FileGalLib;

@@ -2306,28 +2306,6 @@ class TikiLib extends TikiDb_Bridge {
 		}
 		$result = $this->fetchAll($query, $bindvars);
 
-		if ( $with_subgals_size ) {
-			if (!function_exists('galsize')) {
-				function galsize($id, &$db) {
-					$return = 0;
-
-					$result = $db->query('SELECT `fileId`,`filesize` FROM `tiki_files` WHERE `galleryId`=?', array($id));
-					while ( $res = $result->fetchRow() ) {
-						$return += $res['filesize'];
-					}
-					unset($result);
-
-					$result = $db->query('SELECT `galleryId` FROM `tiki_file_galleries` WHERE `parentId`=?', array($id));
-					while ( $res = $result->fetchRow() ) {
-						$return += galsize($res['galleryId'], $db);
-					}
-					unset($result);
-
-					return $return;
-				}
-			}
-		}
-
 		$ret = array();
 		$gal_size_order = array();
 		$cant = 0;
@@ -2363,7 +2341,7 @@ class TikiLib extends TikiDb_Bridge {
 			if ( $need_everything || $maxRecords == -1 || $cant < $maxRecords ) {
 				$ret[$cant] = $res;
 				if ( $with_subgals_size && $res['isgal'] == 1 ) {
-					$ret[$cant]['size'] = (string)galsize($res['id'], $this);
+					$ret[$cant]['size'] = (string)$filegallib->getUsedSize($res['id']);
 					$ret[$cant]['filesize'] = $ret[$cant]['size']; /// Obsolete
 					if ( $keep_subgals_together ) {
 						$gal_size_order[$cant] = $ret[$cant]['size'];
@@ -2495,7 +2473,8 @@ class TikiLib extends TikiDb_Bridge {
 				'visible' => 'y',
 				'archives' => -1,
 				'type' => 'default',
-				'description' => ''
+				'description' => '',
+				'quota' => $prefs['fgal_quota_default'],
 			);
 		}
 

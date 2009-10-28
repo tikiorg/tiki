@@ -30,6 +30,10 @@ if (isset($_REQUEST["filegalfeatures"])) {
 	simple_set_value("fgal_use_dir");
 	simple_set_value("fgal_podcast_dir");
 	simple_set_value("fgal_batch_dir");
+	if (!empty($_REQUEST['fgal_quota']) && !empty($_REQUEST['fgal_quota_default']) && $_REQUEST['fgal_quota_default'] > $_REQUEST['fgal_quota']) {
+		$_REQUEST['fgal_quota_default'] = $_REQUEST['fgal_quota'];
+	}
+	simple_set_value('fgal_quota_default');
 }
 if (isset($_REQUEST["filegallistprefs"])) {
 	check_ticket('admin-inc-fgal');
@@ -39,7 +43,7 @@ if (isset($_REQUEST["filegallistprefs"])) {
 	simple_set_value('fgal_list_description');
 	simple_set_value('fgal_list_size');
 	simple_set_value('fgal_list_created');
-	simple_set_value('fgal_list_lastmodif');
+	simple_set_value('fgal_list_lastModif');
 	simple_set_value('fgal_list_creator');
 	simple_set_value('fgal_list_author');
 	simple_set_value('fgal_list_last_user');
@@ -56,13 +60,19 @@ if (isset($_REQUEST["filegallistprefs"])) {
 	simple_set_value('fgal_default_view');
 }
 
+$usedSize = $filegallib->getUsedSize();
+$smarty->assign_by_ref('usedSize', $usedSize);
 if (isset($_REQUEST["filegalhandlers"])) {
 	check_ticket('admin-inc-fgal');
-	$mimes = $_REQUEST["mimes"];
-	foreach($mimes as $mime => $cmd) {
-		$mime = trim($mime);
-		if (empty($cmd)) $filegallib->delete_file_handler($mime);
-		else $filegallib->change_file_handler($mime, $cmd);
+	if (!empty($_REQUEST['mimes'])) {
+		$mimes = $_REQUEST['mimes'];
+		foreach($mimes as $mime => $cmd) {
+			$mime = trim($mime);
+			if (empty($cmd))
+				$filegallib->delete_file_handler($mime);
+			else
+				$filegallib->change_file_handler($mime, $cmd);
+		}
 	}
 	if (!empty($_REQUEST['newMime']) && !empty($_REQUEST['newCmd'])) {
 		$filegallib->change_file_handler($_REQUEST['newMime'], $_REQUEST['newCmd']);

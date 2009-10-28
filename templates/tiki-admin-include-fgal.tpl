@@ -32,6 +32,12 @@
 	</div>
 </div>
 
+{*
+	{preference name='fgal_use_db'}
+	<div class="adminoptionboxchild" id="fgal_use_db_childcontainer_1">
+		 {preference name='fgal_use_dir'}
+	</div>
+*}
 
 <div class="adminoptionbox">
 	<div class="adminoptionlabel"><input type="radio" id="fgal_use_db1" name="fgal_use_db" value="y"
@@ -47,7 +53,6 @@
 </div>
 
 	{preference name='fgal_podcast_dir'}
-	<br /><em>{tr}The server must be able to read/write the directory.{/tr} {tr}Required for podcasts.{/tr}</em>
 
 <input type="hidden" name="filegalfeatures" />
 
@@ -55,8 +60,6 @@
 	<legend>{tr}Features{/tr}{if $prefs.feature_help eq 'y'} {help url="File+Gallery+Config"}{/if}</legend>
 
 	{preference name='feature_file_galleries_rankings'}
-
-	<input type="hidden" name="filegalcomprefs" />
 
 	{preference name='feature_file_galleries_comments'}
 	<div class="adminoptionboxchild" id="feature_file_galleries_comments_childcontainer">
@@ -75,13 +78,25 @@
 
 	{preference name='feature_file_galleries_batch'}
 	<div class="adminoptionboxchild" id="feature_file_galleries_batch_childcontainer">
-		{tr}If you enable Directory Batch Loading, you need to setup a web-readable directory (outside of your web space is better). Then setup a way to upload files in that dir, either by scp, ftp, or other protocols{/tr}
 		{preference name='fgal_batch_dir'}
-		<br /><em>{tr}The server must be able to read the directory.{/tr} {tr}The directory can be outside the web space.{/tr}</em>
 	</div>
 
-		{preference name='feature_file_galleries_author'}
+	{preference name='feature_file_galleries_author'}
+</fieldset>
 
+<fieldset>
+	<legend>{tr}Quota{/tr}{if $prefs.feature_help eq 'y'} {help url="File+Gallery+Config#Quota"}{/if}</legend>
+	{preference name='fgal_quota'}{tr}Used:{/tr} {$usedSize|kbsize}
+	<div class="adminoptionboxchild" id="fgal_quota_childcontainer">
+		{if !empty($prefs.fgal_quota)}
+			{capture name='use'}{math equation="round((100*x)/(1024*1024*y))" x=$usedSize y=$prefs.fgal_quota}{/capture}
+			{quotabar length='100' value='$smarty.capture.use'}
+		{/if}
+	</div>
+	{preference name='fgal_quota_per_fgal'}
+	<div class="adminoptionboxchild" id="fgal_quota_per_fgal_childcontainer">
+		 {preference name='fgal_quota_default'}
+	</div>
 </fieldset>
 
 <fieldset>
@@ -110,6 +125,7 @@
 </div>	
 	</div>
 </div>
+	{preference name='fgal_quota_show'}
 
 <div class="adminoptionbox">
 	<div class="adminoptionlabel">{tr}Select which items to display when listing galleries: {/tr}:</div>
