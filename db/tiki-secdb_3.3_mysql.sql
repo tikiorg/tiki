@@ -13,10 +13,10 @@ INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) V
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./copyrights.php', '71807e02198f0b153dff6c0d7967e28a', '3.3', 0);
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./db/case_patch.php', '758fe7e1b2d65e5e201ac82cf0dfc032', '3.3', 0);
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./db/convertscripts/index.php', 'b84d0e93b84ee54b3ec2c01a3edb9ec8', '3.3', 0);
-INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./db/convertscripts/mysql3tooci8.php', '19a61909c6b397792b8608da27986e04', '3.3', 0);
-INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./db/convertscripts/mysql3topgsql72.php', 'd676d48b5fc50a34cff75978275a1b1a', '3.3', 0);
-INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./db/convertscripts/mysql3tosqlite.php', '9a3ac25efa2f79c1091431715db8a08c', '3.3', 0);
-INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./db/convertscripts/mysql3tosybase.php', 'b2c957c8b8cb288fbce682148243d7e2', '3.3', 0);
+INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./db/convertscripts/mysql3tooci8.php', 'ac13686001dba6de1b8bf52109365d37', '3.3', 0);
+INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./db/convertscripts/mysql3topgsql72.php', 'cac90ca5fffcf9dfbf713b2e7c42c2ed', '3.3', 0);
+INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./db/convertscripts/mysql3tosqlite.php', 'ac7ed369c287471a3b111cb53f57f09f', '3.3', 0);
+INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./db/convertscripts/mysql3tosybase.php', '3941f65fe6d1d8da38507241c141e3aa', '3.3', 0);
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./db/index.php', 'fab2588a046522a85149b2d5b8e2e2c0', '3.3', 0);
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./db/oracle/index.php', 'ff3e4a668ea84b79decd9f7dc641c46d', '3.3', 0);
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./db/profiles/index.php', 'b84d0e93b84ee54b3ec2c01a3edb9ec8', '3.3', 0);
