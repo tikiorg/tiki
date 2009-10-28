@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-{title help=Webmail admpage=webmail}{tr}Webmail{/tr}{/title}
+{title help="Webmail" admpage="webmail"}{tr}Webmail{/tr}{/title}
 
 {include file='tiki-mytiki_bar.tpl'}
 <br /><br />
@@ -202,7 +202,7 @@
 					</td>
 					<td class="{cycle advance=false}">
 						{if $active neq 'y'}
-							{self_link current=$accounts[ix].accountId}{$accounts[ix].account class='link' _title='{tr}Activate{/tr}'}{/self_link}{* TODO make_title work? *}
+							{self_link current=$accounts[ix].accountId _title='{tr}Activate{/tr}'}{$accounts[ix].account}{/self_link}
 						{else}
 							<strong>{$accounts[ix].account|escape}</strong>
 						{/if}
@@ -260,7 +260,7 @@
 						</td>
 						<td class="{cycle advance=false}">
 							{if $active neq 'y'}
-								{self_link current=$pubAccounts[ixp].accountId}{$pubAccounts[ixp].account class='link' _title='{tr}Activate{/tr}'}{/self_link}{* TODO make self_link _title work when no icon? *}
+								{self_link current=$pubAccounts[ixp].accountId _title='{tr}Activate{/tr}'}{$pubAccounts[ixp].account}{/self_link}
 							{else}
 								<strong>{$pubAccounts[ixp].account|escape}</strong>
 							{/if}
