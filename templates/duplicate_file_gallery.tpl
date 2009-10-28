@@ -9,7 +9,7 @@
       <td>
         <select id="galleryId" name="galleryId"{if $all_galleries|@count eq '0'} disabled="disabled"{/if}>
         {section name=ix loop=$all_galleries}
-          <option value="{$all_galleries[ix].id}">{$all_galleries[ix].name}</option>
+          <option value="{$all_galleries[ix].id}">{$all_galleries[ix].label|escape}</option>
         {sectionelse}
           <option value="">{tr}None{/tr}</option>
         {/section}
