@@ -177,6 +177,7 @@ if ( $isPre ) {
 		}
 
 		if ( ! $tagAlreadyExists ) {
+			update_working_copy('.');
 			$revision = (int) get_info( ROOT )->entry->commit['revision'];
 			if ( important_step("Tag release using branch '$branch' at revision $revision") ) {
 				`svn copy $fb -r$revision $ft -m "[REL] Tagging release"`;
