@@ -18,6 +18,360 @@ When possible, it's also nice to indicate what feature is concerned by the chang
 Before 2.0, there was only [MOD] for both [ENH] and [MOD]:
 
 ----------------------------------------------------------------------
+Version 3.3
+<http://tikiwiki.org/ReleaseNotes33>
+------------------
+
+----------------------------------------------
+r22708 | nyloth | 2009-10-28 20:04:29 +0100 (mer. 28 oct. 2009) | 8 lines
+
+[QT] Quality Team Backport
+
+r22649 | jonnybradley | 2009-10-26 16:36:51 +0100 (lun. 26 oct. 2009) | 4 lines
+[bp/r22516][FIX] Use iconv function if recode (recode_string) not found.
+Default to not re-encoding if that's not found either (instead of exporting the error message).
+Also check browser for whether to encode as ISO-8859-15 (non-Windows apps generally prefer UTF-8)
+
+
+----------------------------------------------
+r22707 | nyloth | 2009-10-28 20:02:20 +0100 (mer. 28 oct. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r22086 | nyloth | 2009-10-07 16:24:06 +0200 (mer. 07 oct. 2009) | 2 lines
+[partial bp/r21577][FIX] wiki fullscreen edit: fix the height of the textarea to avoid multiple scrollbars (textarea scrollbar + browser window scrollbar) - not done exactly the same way as in trunk, which uses jquery.
+
+
+----------------------------------------------
+r22699 | nyloth | 2009-10-28 17:01:23 +0100 (mer. 28 oct. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r22664 | sylvieg | 2009-10-27 13:35:58 +0100 (mar. 27 oct. 2009) | 1 line
+wrong path - no idea which commit - just scanning error log of proposed
+
+
+----------------------------------------------
+r22698 | nyloth | 2009-10-28 16:56:32 +0100 (mer. 28 oct. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r22663 | sylvieg | 2009-10-27 13:32:11 +0100 (mar. 27 oct. 2009) | 1 line
+missing file
+
+
+----------------------------------------------
+r22697 | nyloth | 2009-10-28 16:52:06 +0100 (mer. 28 oct. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r22533 | sylvieg | 2009-10-21 20:02:32 +0200 (mer. 21 oct. 2009) | 1 line
+[bp/ r 22531 2252]: avoid to overwrite ['u_info']['group'] and {} by .php using the variable 
+
+
+----------------------------------------------
+r22696 | nyloth | 2009-10-28 16:50:17 +0100 (mer. 28 oct. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r22523 | sylvieg | 2009-10-21 18:17:40 +0200 (mer. 21 oct. 2009) | 1 line
+[br /r 21992 partial] fix param url
+
+
+----------------------------------------------
+r22695 | nyloth | 2009-10-28 16:48:45 +0100 (mer. 28 oct. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r22630 | pkdille | 2009-10-24 06:45:56 +0200 (sam. 24 oct. 2009) | 1 line
+[partial bp/r22629][FIX]admin blogs: Recovering a pref (feature_blog_mandatory_category) which was lost in r17625
+
+
+----------------------------------------------
+r22694 | nyloth | 2009-10-28 16:45:22 +0100 (mer. 28 oct. 2009) | 7 lines
+
+[QT] Quality Team Backport
+
+r22287 | chealer | 2009-10-13 09:21:26 +0200 (mar. 13 oct. 2009) | 3 lines
+[FIX] wiki page overwrite from note
+[SEC] perm check ignoring object level
+
+
+----------------------------------------------
+r22693 | nyloth | 2009-10-28 16:41:52 +0100 (mer. 28 oct. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r22614 | pkdille | 2009-10-23 17:34:50 +0200 (ven. 23 oct. 2009) | 1 line
+[partial bp/r22613][FIX] wiki table of content: no bullets or style for the lists in the toc context
+
+
+----------------------------------------------
+r22627 | nyloth | 2009-10-23 22:23:00 +0200 (ven. 23 oct. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r22452 | eromneg | 2009-10-20 15:26:04 +0200 (mar. 20 oct. 2009) | 2 lines
+[FIX] podcast directory reference re: bug report #2377 and trunk commit #22378
+
+
+----------------------------------------------
+r22626 | nyloth | 2009-10-23 22:21:14 +0200 (ven. 23 oct. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r22455 | eromneg | 2009-10-20 15:50:56 +0200 (mar. 20 oct. 2009) | 1 line
+[MOD]Allow the use of a new parameter (showpubl=>y/n) to show the publishDate - to be used as an alternative to showcreated=>y/n: trunk commit #22372
+
+
+----------------------------------------------
+r22625 | nyloth | 2009-10-23 22:17:57 +0200 (ven. 23 oct. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r22485 | Jyhem | 2009-10-20 18:30:41 +0200 (mar. 20 oct. 2009) | 1 line
+[FIX] parentId=-1 needs to be allowed otherwise only admin can create a new root file gallery (trunk #22484)
+
+
+----------------------------------------------
+r22480 | nyloth | 2009-10-20 16:50:10 +0200 (mar. 20 oct. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r22448 | sylvieg | 2009-10-20 14:33:32 +0200 (mar. 20 oct. 2009) | 1 line
+[FIX] 22447 needs change to translation too
+
+
+----------------------------------------------
+r22479 | nyloth | 2009-10-20 16:48:15 +0200 (mar. 20 oct. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r22447 | eromneg | 2009-10-20 13:09:52 +0200 (mar. 20 oct. 2009) | 1 line
+[MOD] minor text/label changes to avoid confusion between directory categories and permission categories: trunk commit 19365
+
+
+----------------------------------------------
+r22478 | nyloth | 2009-10-20 16:45:15 +0200 (mar. 20 oct. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r22444 | luciash | 2009-10-20 01:10:14 +0200 (mar. 20 oct. 2009) | 1 line
+[FIX] strasa: plugin helper displayed correctly above tabs when editing tracker items textareas (not in trunk because of the change to jQuery UI)
+
+
+----------------------------------------------
+r22477 | nyloth | 2009-10-20 16:44:08 +0200 (mar. 20 oct. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r22422 | sylvieg | 2009-10-19 17:40:37 +0200 (lun. 19 oct. 2009) | 1 line
+[bp/r 22421][FIX] wrong lib
+
+
+----------------------------------------------
+r22476 | nyloth | 2009-10-20 16:42:20 +0200 (mar. 20 oct. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r22420 | nyloth | 2009-10-19 17:13:15 +0200 (lun. 19 oct. 2009) | 2 lines
+[bp/r22418][FIX] webmail and newsletters: fix the 'Sender' of emails when the sender_email pref has a syntax like 'Name <email@example.com>' instead of just an email - which was not supported when passed to PHP mail function as the '-f' additional param (through the return_path value). It was using 'Name@ServerDomain' as the Sender and was also sending an unwanted copy to email@example.com
+
+
+----------------------------------------------
+r22475 | nyloth | 2009-10-20 16:40:44 +0200 (mar. 20 oct. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r22419 | nyloth | 2009-10-19 17:09:50 +0200 (lun. 19 oct. 2009) | 2 lines
+[bp/r22416][FIX] wiki: make colors syntax working when used on multiple lines
+
+
+----------------------------------------------
+r22474 | nyloth | 2009-10-20 16:39:28 +0200 (mar. 20 oct. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r21965 | sylvieg | 2009-10-03 13:49:59 +0200 (sam. 03 oct. 2009) | 1 line
+[bp/r 21895] [FIX] Patch 20090416_plugin_security_tiki was not propagated in tiki.sql
+
+
+----------------------------------------------
+r22473 | nyloth | 2009-10-20 16:37:22 +0200 (mar. 20 oct. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r22085 | nyloth | 2009-10-07 16:15:27 +0200 (mer. 07 oct. 2009) | 2 lines
+[bp/r22083][FIX] coelesce: same font size for text inside PRE tags than wiki text around + better top margins for titles + remove native margins of PRE and P when inside a simplebox, since simplebox already has margins
+
+
+----------------------------------------------
+r22467 | nyloth | 2009-10-20 16:14:44 +0200 (mar. 20 oct. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r22050 | pkdille | 2009-10-06 18:17:23 +0200 (mar. 06 oct. 2009) | 1 line
+[bp/r22049][FIX] forum: fix the html structure when posting in the forum with an attached file (with coelesce)
+
+
+----------------------------------------------
+r22466 | nyloth | 2009-10-20 16:13:40 +0200 (mar. 20 oct. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r21967 | sylvieg | 2009-10-03 13:59:34 +0200 (sam. 03 oct. 2009) | 1 line
+[bp/ r 21964] [MOD]TRACKER: f_itemId gives itemId in pretty tracker + set f_created and f_lastmodif always
+
+
+----------------------------------------------
+r22465 | nyloth | 2009-10-20 16:11:40 +0200 (mar. 20 oct. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r21929 | nyloth | 2009-10-01 14:26:35 +0200 (jeu. 01 oct. 2009) | 2 lines
+[bp/r19007][FIX] xhtml code: missing quotes at image thumbnail src attribute
+
+
+----------------------------------------------
+r22464 | nyloth | 2009-10-20 16:10:20 +0200 (mar. 20 oct. 2009) | 7 lines
+
+[QT] Quality Team Backport
+
+r21933 | nyloth | 2009-10-01 15:03:11 +0200 (jeu. 01 oct. 2009) | 3 lines
+[bp/r19054][FIX] smarty jquery: add jquery as a prefilter, since the content between 'jq' includes brackets which are in conflict with smarty syntax and causing errors on smarty parsing if not pre-filtered
+- This should avoid errors during the smarty syntax check of the release script
+
+
+----------------------------------------------
+r22463 | nyloth | 2009-10-20 16:08:48 +0200 (mar. 20 oct. 2009) | 7 lines
+
+[QT] Quality Team Backport
+
+r21934 | nyloth | 2009-10-01 15:08:34 +0200 (jeu. 01 oct. 2009) | 3 lines
+[bp/r19055][FIX] fgal admin: remove incorrect section param 'id'
+- This should avoid errors during the smarty syntax check of the release script
+
+
+----------------------------------------------
+r22462 | nyloth | 2009-10-20 16:07:20 +0200 (mar. 20 oct. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r21931 | nyloth | 2009-10-01 14:30:52 +0200 (jeu. 01 oct. 2009) | 2 lines
+[bp/r19053][FIX] get 'error_reporting_level' preference value in tiki-setup_base, as other prefs that should be used very early, in order to get php errors and warnings that may happen in the setup stage
+
+
+----------------------------------------------
+r22461 | nyloth | 2009-10-20 16:05:59 +0200 (mar. 20 oct. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r21935 | sylvieg | 2009-10-01 15:18:08 +0200 (jeu. 01 oct. 2009) | 1 line
+[bp/ r 19927][FIX] to be able to have 2 ~~red:~~ on a same ligne + mb_string for the snippet to avoid to cut the word in a multibyte - a couple of page on doc.tw are broken
+
+
+----------------------------------------------
+r22460 | nyloth | 2009-10-20 15:57:10 +0200 (mar. 20 oct. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r21927 | sylvieg | 2009-10-01 14:02:48 +0200 (jeu. 01 oct. 2009) | 1 line
+[bp/ r 21926 21921][FIX]UI: cookie settings do not depend of rememberme
+
+
+----------------------------------------------
+r22459 | nyloth | 2009-10-20 15:55:29 +0200 (mar. 20 oct. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r21915 | sylvieg | 2009-09-30 18:47:30 +0200 (mer. 30 sept. 2009) | 1 line
+[bp /r 19709, 19679] to allow the release script to check smarty syntax
+
+
+----------------------------------------------
+r22457 | nyloth | 2009-10-20 15:53:51 +0200 (mar. 20 oct. 2009) | 1 line
+
+[SVN] remove unwanted svn:mergeinfo property in db directory
+----------------------------------------------
+r22456 | nyloth | 2009-10-20 15:52:42 +0200 (mar. 20 oct. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r21914 | Jyhem | 2009-09-30 17:43:26 +0200 (mer. 30 sept. 2009) | 1 line
+[FIX] Recent unaligned titles did not improve page layout. Back to left-aligned titles (trunk #21913)
+
+
+----------------------------------------------
+r22454 | nyloth | 2009-10-20 15:49:05 +0200 (mar. 20 oct. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r22093 | pkdille | 2009-10-07 21:46:50 +0200 (mer. 07 oct. 2009) | 1 line
+[FIX] database structure homogenization for a fresh 3.x installation and for a 2.x to 3.x upgraded tiki.
+
+
+----------------------------------------------
+r22297 | pkdille | 2009-10-13 13:50:12 +0200 (mar. 13 oct. 2009) | 1 line
+
+[FIX] french language translations: fix one string
+----------------------------------------------
+r22211 | frank_p | 2009-10-11 16:27:45 +0200 (dim. 11 oct. 2009) | 1 line
+
+translate
+----------------------------------------------
+r22192 | marclaporte | 2009-10-11 04:23:37 +0200 (dim. 11 oct. 2009) | 1 line
+
+[FIX] Translation which was obviously not done in context.
+----------------------------------------------
+r22169 | frank_p | 2009-10-10 18:22:22 +0200 (sam. 10 oct. 2009) | 1 line
+
+translate "Table of contents"
+----------------------------------------------
+r22074 | nyloth | 2009-10-07 10:49:03 +0200 (mer. 07 oct. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r22008 | Jyhem | 2009-10-05 14:58:37 +0200 (lun. 05 oct. 2009) | 2 lines
+[ENH] Improve visibility of edit form for coelesce theme
+
+
+----------------------------------------------
+r21994 | nyloth | 2009-10-05 08:54:54 +0200 (lun. 05 oct. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r21961 | luciash | 2009-10-02 23:00:24 +0200 (ven. 02 oct. 2009) | 1 line
+[bp/r21119][FIX] Forgotten type for DIV plugin + [bp/r21121][FIX] Adding a few filters and completing plugin documentation + [bp/r21201][FIX] Enable CSS id to be specified for div + [bp/r21202][FIX] id is defined by HTML + [bp/r21689][MOD] Some additional filters + [bp/r21691][FIX] Partial revert, apparently, people put raw HTML in there (in plugin body data)
+
+
+----------------------------------------------
+r21993 | nyloth | 2009-10-05 08:52:01 +0200 (lun. 05 oct. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r21932 | pkdille | 2009-10-01 14:30:56 +0200 (jeu. 01 oct. 2009) | 1 line
+[bp/r21930][FIX] view forum: don't show the "Move Selected Topics" (which moves a topic from one forum to another one) button if there's only one forum
+
+
+----------------------------------------------
+r21928 | nyloth | 2009-10-01 14:13:29 +0200 (jeu. 01 oct. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r21908 | pkdille | 2009-09-30 15:30:18 +0200 (mer. 30 sept. 2009) | 1 line
+[bp/r21907][FIX] forums quickjump: show only the quickjump dropdown if there are more than one forum available
+
+
+----------------------------------------------
+r21905 | nyloth | 2009-09-30 08:47:48 +0200 (mer. 30 sept. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r21882 | pkdille | 2009-09-29 13:46:17 +0200 (mar. 29 sept. 2009) | 1 line
+[bp/r21880][FIX] tiki_full: give the same css structure when tiki_full template is used (file manager and wiki fullscreen edition textarea. This gives the same fonts in the wiki fullscreen textarea as in "normal" wiki editor screen
+
+
+----------------------------------------------
 Version 3.2
 <http://tikiwiki.org/ReleaseNotes32>
 ------------------
