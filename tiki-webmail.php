@@ -641,7 +641,7 @@ END;
 	$smarty->assign('accountId', empty($_REQUEST['accountId']) ? 0 : $_REQUEST['accountId']);
 
 
-	if ($_REQUEST['accountId']) {
+	if (!empty($_REQUEST['accountId'])) {
 		$info = $webmaillib->get_webmail_account($user, $_REQUEST['accountId']);
 	} else {
 		$info['account'] = '';
