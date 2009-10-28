@@ -7,7 +7,7 @@ function prefs_forum_list() {
 			'type' => 'flag',
 		),
 		'forum_match_regex' => array(
-			'name' => tra('Uploaded filenames must match regex:'),
+			'name' => tra('Uploaded filenames must match regex'),
 			'type' => 'text',
 			'size' => '20',
 		),
