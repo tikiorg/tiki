@@ -309,7 +309,7 @@
 				{else}
 					{tr}Messages{/tr}
 				{/if}
-				{$showstart} to {$showend} {tr}of{/tr} {$total}
+				{$showstart} {tr}to{/tr} {$showend} {tr}of{/tr} {$total}
 				&nbsp;
 				| {if $first}{self_link start=$first}{tr}First{/tr}{/self_link}{else}{tr}First{/tr}{/if}
 				| {if $prevstart}{self_link start=$prevstart}{tr}Prev{/tr}{/self_link}{else}{tr}Prev{/tr}{/if}
