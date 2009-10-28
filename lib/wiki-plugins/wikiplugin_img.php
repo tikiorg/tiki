@@ -310,10 +310,7 @@ if (!function_exists('getimagesize_raw')) {
 		// Set styling defaults
 		$thumbdef = 84;                         //Thumbnail height max when none is set
 		if (!empty($imgdata['fileId'])) {
-			global $detected_lib;
-			include_once('lib/images/images.php');
-			$dummy = new Image();
-			$thumbdef = $dummy->thumb_max_size;	// filegals thumbnails size is hard-coded in lib/images/abstract.php
+			$thumbdef = 120;	// filegals thumbnails size is hard-coded in lib/images/abstract.php
 		}
 
 		$descdef = 'font-size:12px; line-height:1.5em;';		//default text style for description
