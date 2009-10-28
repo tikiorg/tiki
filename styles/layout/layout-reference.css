@@ -1102,25 +1102,6 @@ div.minichatchan {
 }
 
 /** Other boxes **/
-.cbox {
-	overflow: hidden;
-/*	border: 1px solid yellow;
-	background: white;
-	color: black; */
-}
-
-.cbox-title {
-/*	border-bottom: 1px solid yellow; */
-	padding: 3px 3px 0 3px;
-}
-
-.cboxlink {}
-
-.cbox-data {
-	overflow: hidden;
-	padding: 0 3px 3px 3px;
-}
-
 .cbox,
 .cbox-data,
 .rbox-title,
@@ -1128,19 +1109,17 @@ div.minichatchan {
 	overflow: hidden;
 }
 
-/* remarks boxes */
+.cbox-title {}
 
-.rbox {
-	margin: 1em .3em 2em .3em;
-}
-	
+.cboxlink {}
+
+.cbox-data {}
+
+/* remarks boxes */
+.rbox {}
+
 .rbox-title,
-.rbox-data {
-	padding: .3em .6em;
-	border: 1px solid;
-	background-color: #eee;
-	color: #000;
-}
+.rbox-data {}
 
 .rbox-title {
 	display: inline-block;
@@ -1148,10 +1127,6 @@ div.minichatchan {
 	z-index: 1;
 	position: relative;
 	bottom: -1px;
-	border-bottom-color: #eee;
-	padding-top: .1em;
-	padding-bottom: .1em;
-	font-weight: bold;
 }
 	
 .rbox img {
@@ -1181,9 +1156,6 @@ div.minichatchan {
 .warning .rbox-data {}
 
 div.simplebox {
-/*	color: green;
-	background: silver;
-	border: 1px solid green; */
 	padding: 3px;
 }
 
