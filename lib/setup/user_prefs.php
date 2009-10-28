@@ -28,10 +28,10 @@ if ( $user ) {
 	$user_preferences = array(); // Used for cache
 	$user_preferences[$user] =& $_SESSION['u_info']['prefs'];
 
-	$group =& $_SESSION['u_info']['group'];
-	$smarty->assign_by_ref('group', $group);
+	$group = $_SESSION['u_info']['group'];
+	$smarty->assign('group', $group); // do not use by_ref as $group can be changed in the .php
 	$smarty->assign_by_ref('user', $user);
-	$smarty->assign_by_ref('default_group', $group);
+	$smarty->assign('default_group', $group);
 
 	// Get all user prefs in one query
 	$tikilib->get_user_preferences($user);
