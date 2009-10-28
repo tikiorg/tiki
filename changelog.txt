@@ -23,6 +23,14 @@ Version 3.3
 ------------------
 
 ----------------------------------------------
+r22715 | nyloth | 2009-10-28 21:39:26 +0100 (mer. 28 oct. 2009) | 6 lines
+
+[QT] Quality Team Backport
+
+r22674 | sylvieg | 2009-10-27 17:25:29 +0100 (mar. 27 oct. 2009) | 1 line
+[bp / r 22353 22300] [FIX] rollback partial 15091 tiki_p_use_as_template as nothing to do with the wiki template feature - it is depending on tracker and wiki
+
+----------------------------------------------
 r22708 | nyloth | 2009-10-28 20:04:29 +0100 (mer. 28 oct. 2009) | 8 lines
 
 [QT] Quality Team Backport
