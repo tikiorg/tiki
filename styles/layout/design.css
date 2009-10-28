@@ -404,14 +404,14 @@ div.help_section {
 .tip .rbox-data {}
 
 .warning .rbox-title {
-	background: #000;
-	color: #fff;
+	background: #ff4;
+	color: #000;
 	border-color: #f00;
-	border-bottom-color: #000;
+	border-bottom-color: #ff4;
 }
 .warning .rbox-data {
-	background: #000;
-	color: #fff;
+	background: #ff4;
+	color: #000;
 	border-color: #f00;
 }
 
