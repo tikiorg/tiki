@@ -559,28 +559,47 @@ img.icon {
 
 /* New Toolbars */
 
-a.qt-plugin div {
-	/* .iconmenu */
-	margin: 0 .4em 0 0;
-	padding: 2px .4em 0 .2em;
+.textarea-toolbar {
+	width: 99%;
+}
+
+.textarea-toolbar img.icon {
+	vertical-align: middle;
+	margin: 1px 3px;
 }
 
 .helptool-admin {
 	float: right;
 	padding-left: 8px;
 	margin-left: 8px;
+	border-left: medium double #bfbfbf;
+}
+
+a.toolbar {
+	padding: 4px 2px;
+	display: inline-block;
+}
+
+span.toolbar-list {
+	padding: 0 0 0 .5em;
+	line-height: 20px;
+	border-left: medium double #bfbfbf;
 }
 
 .toolbars-picker {
 	position: absolute;
 	width: 300px;
 	z-index: 300;
+	background-color: #fff;
+	color: #000;
 }
 
 .toolbars-picker a {
 	padding: 4px 2px;
 	display: inline-block;
 }
+
+
 
 /* New Help section */
 div#tikihelp {

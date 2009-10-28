@@ -225,36 +225,9 @@ ul.categories li {
 
 /* New Toolbars */
 
-a.toolbar {
-	padding: 0 .5em 0 0;
-}
-
-/* .iconmenu */
-a.qt-plugin div {
-	background: #cd8;
-	border: thin solid #690;
-	color: #030;
-	font-size: 10px;
-}
-
-a.qt-plugin:hover {
-	text-decoration: none;
-}
-
-a.qt-plugin div img { /* div.iconmenu img.icon */
-	margin-bottom: 4px;
-}
-
-span.toolbar-list {
-	padding: 0 0 0 .5em;
-	line-height: 20px;
-	border-left: medium double #bfbfbf;
-}
-
-.helptool-admin {
-	border-left: medium double #bfbfbf;
-	padding-left: 8px;
-	margin-left:8px;
+.textarea-toolbar > div {
+	background-color: #eee;
+	border: #eee outset 1px;
 }
 
 .toolbars-picker {
@@ -263,11 +236,6 @@ span.toolbar-list {
 }
 
 .toolbars-picker a {
-	padding: 4px 2px;
-	display: inline-block;
-}
-
-.toolbars-picker a:link {
 	color: #000;
 }
 
