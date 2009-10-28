@@ -5699,6 +5699,7 @@ DROP TABLE "tiki_plugin_security";
 CREATE TABLE "tiki_plugin_security" (
   "fingerprint" VARCHAR(200) NOT NULL PRIMARY KEY,
   "status" VARCHAR(10) NOT NULL,
+  "added_by" VARCHAR(200) NULL,
   "approval_by" VARCHAR(200) NULL,
   "last_update" TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
   "last_objectType" VARCHAR(20) NOT NULL,
