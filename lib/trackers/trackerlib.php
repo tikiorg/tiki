@@ -1841,6 +1841,7 @@ class TrackerLib extends TikiLib {
 							continue;
 						} elseif ($field['type'] == 'e') {
 							$cats = split('%%%', trim($data[$i]));
+							$catIds = array();
 							if (!empty($cats)) {
 								foreach ($cats as $c) {
 									global $categlib; include_once('lib/categories/categlib.php');
