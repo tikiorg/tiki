@@ -194,7 +194,7 @@ if (getCookie("fgalKeepOpen")) {
 {if $files or ($find ne '')}
   {include file='find.tpl' find_show_num_rows = 'y'}
 {/if}
-{if $prefs.fgal_quota_show eq 'y' && $gal_info['quota']}
+{if $prefs.fgal_quota_show eq 'y' && $gal_info.quota}
 	<div style="float:right">
 		{capture name='use'}{math equation="round((100*x)/(1024*1024*y))" x=$gal_info['usedSize'] y=$gal_info['quota']}{/capture}
 		{quotabar length='100' value='$smarty.capture.use'}
