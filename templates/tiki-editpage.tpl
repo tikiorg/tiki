@@ -203,7 +203,7 @@ function searchrep() {
 							<fieldset>
 								<legend>{tr}Regex search {/tr}:</legend>
 								<input style="width:100;" class="wikiedit" type="text" id="search"/>
-								<label>{tr}Replace to{/tr}:
+								<label>{tr}Replace with{/tr}:
 								<input style="width:100;" class="wikiedit" type="text" id="replace"/></label>
 								<label><input type="checkbox" id="caseinsens" />{tr}Case Insensitivity{/tr}</label>
 								<input type="button" value="{tr}Replace{/tr}" onclick="javascript:searchrep();">

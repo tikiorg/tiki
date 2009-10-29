@@ -10,7 +10,7 @@ function wikiplugin_toc_info()
 		'params' => array(
 			'maxdepth' => array(
 				'name' => tra('Maximum Depth'),
-				'description' => tra('Maximum amount of levels to display. On very large structures, this should be limited.'),
+				'description' => tra('Maximum number of levels to display. On very large structures, this should be limited.'),
 				'required' => false,
 			),
 			'structId' => array(

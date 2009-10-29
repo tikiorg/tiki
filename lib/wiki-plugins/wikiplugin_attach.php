@@ -26,7 +26,7 @@ function wikiplugin_attach_help() {
 	$help .= "<br />";
 	$help .= "image =>" . tra("Says that this file is an image, and should be displayed inline using the img tag");
 	$help .= "<br />";
-	$help .= "inline =>" . tra("Puts the stuff between {ATTACH} tags as the link text instead of the file name or description");
+	$help .= "inline =>" . tra("Makes the text between the {ATTACH} tags the link text instead of the file name or description");
 	$help .= "<br />";
 	$help .= "all => " . tra("Shows all attachments from the whole wiki");
 	$help .= "<br />";
@@ -82,7 +82,7 @@ function wikiplugin_attach_info() {
 			'inline' =>array(
 				'required' => false,
 				'name' => tra('Inline'),
-				'description' => tra("Puts the stuff between {ATTACH} tags as the link text instead of the file name or description"),
+				'description' => tra("Makes the text between the {ATTACH} tags the link text instead of the file name or description"),
 			),
 			'all' => array(
 				'required' => false,

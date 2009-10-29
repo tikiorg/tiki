@@ -59,7 +59,7 @@ function wikiplugin_div_info() {
 			'float' => array(
 				'required' => false,
 				'name' => tra('Float position'),
-				'description' => tra('left|right, for box with width lesser than 100%, make text wrap around the box.'),
+				'description' => tra('left|right, for box with width less than 100%, make text wrap around the box.'),
 				'filter' => 'alpha',
 				'options' => array(
 					array('text' => tra('None'), 'value' => ''), 

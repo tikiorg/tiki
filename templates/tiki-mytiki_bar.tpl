@@ -8,7 +8,7 @@
 	{button _icon="img/mytiki/prefs.gif" _text="{tr}Preferences{/tr}" href="tiki-user_preferences.php" _menu_text="y}
 {/if}
 
-{button _icon="img/mytiki/admin.gif" _text="{tr}My Infos{/tr}" href="tiki-user_information.php" _menu_text="y}
+{button _icon="img/mytiki/admin.gif" _text="{tr}MyInfo{/tr}" href="tiki-user_information.php" _menu_text="y}
 
 {if $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y'}
 	{if $unread}

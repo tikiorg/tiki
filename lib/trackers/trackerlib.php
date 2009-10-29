@@ -2706,7 +2706,7 @@ class TrackerLib extends TikiLib {
 				<dd>if the user does not have a default group set, the first group the user belongs to will be chosen, otherwise Registered group will be used.
 				</dl>'));
 		$type['I'] = array(
-			'label'=>tra('ip selector'),
+			'label'=>tra('IP selector'),
 			'opt'=>true,
 			'help'=>tra('<dl>
 				<dt>Function: Provides a field for entering an IP address.

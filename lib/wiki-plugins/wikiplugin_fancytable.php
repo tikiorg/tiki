@@ -36,7 +36,7 @@ function wikiplugin_fancytable_info() {
 			'headclass' => array(
 				'required' => false,
 				'name' => tra('Heading CSS Class'),
-				'description' => tra('CSS Class to apply on the heading row.'),
+				'description' => tra('CSS class to apply to the heading row.'),
 			),
 		),
 	);

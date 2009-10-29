@@ -261,7 +261,7 @@ if (($tiki_p_vote_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n')
 
 	if (isset($_REQUEST["comments_vote"]) && isset($_REQUEST["comments_threadId"])) {
 		if (!$user && !isset($_COOKIE['PHPSESSID'])) {
-			$smarty->assign_by_ref('msg',tra('Cookies must be allowed to vote'));
+			$smarty->assign_by_ref('msg',tra('For you to vote, cookies must be allowed'));
 			$smarty->display("error.tpl");
 			die;
 		}

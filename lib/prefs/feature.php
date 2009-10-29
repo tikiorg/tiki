@@ -223,7 +223,7 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),
 		'feature_comments_post_as_anonymous' => array(
-			'name' => tra('Allow to post comments as Anonymous'),
+			'name' => tra('Allow posting of comments as Anonymous'),
 			'description' => tra('Permit anonymous visitors to add a comment without needing to create an account'),
 			'help' => 'Comments',
 			'type' => 'flag',

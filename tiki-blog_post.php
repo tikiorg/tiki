@@ -32,7 +32,7 @@ if ($tiki_p_blog_admin == 'y') {
 }
 $smarty->assign_by_ref('blogs', $blogs);
 if (count($blogs) == 0) {
-	$smarty->assign('msg', tra("You can't post in any blog maybe you have to create a blog first"));
+	$smarty->assign('msg', tra("It isn't possible to post in any blog. You may need to create a blog first."));
 	$smarty->display("error.tpl");
 	die;
 } elseif ($blogId == 0 && count($blogs) == 1) {

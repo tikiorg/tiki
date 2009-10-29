@@ -12,14 +12,14 @@
  * 
  */
 function wikiplugin_box_help() {
-	return tra("Insert theme styled box on wiki page").":<br />~np~{BOX(title=>Title, bg=>color, width=>num[%], align=>left|right|center, float=>|left|right),class=class, id=id}".tra("text")."{BOX}~/np~";
+	return tra("Insert theme-styled box on wiki page").":<br />~np~{BOX(title=>Title, bg=>color, width=>num[%], align=>left|right|center, float=>|left|right),class=class, id=id}".tra("text")."{BOX}~/np~";
 }
 
 function wikiplugin_box_info() {
 	return array(
 		'name' => tra('Box'),
 		'documentation' => 'PluginBox',
-		'description' => tra('Insert theme styled box on wiki page'),
+		'description' => tra('Insert theme-styled box on wiki page'),
 		'prefs' => array('wikiplugin_box'),
 		'body' => tra('text'),
 		'params' => array(
@@ -46,7 +46,7 @@ function wikiplugin_box_info() {
 			'float' => array(
 				'required' => false,
 				'name' => tra('Float Position'),
-				'description' => 'left|right' . ', ' . tra('for box with width lesser than 100%, make text wrap around the box.'),
+				'description' => 'left|right' . ', ' . tra('for box with width less than 100%, make text wrap around the box.'),
 			),
 			'class' => array(
 				'required' => false,

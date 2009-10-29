@@ -27,5 +27,5 @@
 </div>
 {/if}
 </form>
-{if !$user && !isset($smarty.cookies.PHPSESSID)}<i>{tr}Cookies must be allowed to vote{/tr}</i>{/if}
+{if !$user && !isset($smarty.cookies.PHPSESSID)}<i>{tr}For you to vote, cookies must be allowed{/tr}</i>{/if}
 
