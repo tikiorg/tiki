@@ -43,8 +43,8 @@ if (isset($_REQUEST['set_default']) && ($user == $userwatch || $tiki_p_admin =='
 } elseif (isset($_REQUEST['for']) && $_REQUEST['for'] == 'user') {
 	if (isset($_REQUEST['point']) and is_array($_REQUEST['point']) && ($user == $userwatch || $tiki_p_admin =='y')) {
 		$p = $_REQUEST['point'];
-		if ($p['x'] > -90 and $p['x'] < 90) { $tikilib->set_user_preference($userwatch, 'lon', $p['x']); }
-		if ($p['y'] > -90 and $p['y'] < 90) { $tikilib->set_user_preference($userwatch, 'lat', $p['y']); }
+		if ($p['x'] > -180 and $p['x'] < 180) { $tikilib->set_user_preference($userwatch, 'lon', $p['x']); }
+		if ($p['y'] > -180 and $p['y'] < 180) { $tikilib->set_user_preference($userwatch, 'lat', $p['y']); }
 		if ($p['z'] >= 0 and $p['z'] < 20) { $tikilib->set_user_preference($userwatch, 'zoom', $p['z']); }
 	}
 	$pointx = $tikilib->get_user_preference($userwatch,'lon','');
@@ -59,7 +59,7 @@ if (isset($_REQUEST['set_default']) && ($user == $userwatch || $tiki_p_admin =='
 			$tikilib->get_perm_object($_REQUEST['trackerId'], 'tracker');
 			if ($tiki_p_modify_tracker_items == 'y') {
 				$p = $_REQUEST['point'];
-				if ( ($p['x'] > -90 and $p['x'] < 90) && ($p['y'] > -90 and $p['y'] < 90) && ($p['z'] >= 0 and $p['z'] < 20)      ){
+				if ( ($p['x'] > -180 and $p['x'] < 180) && ($p['y'] > -180 and $p['y'] < 180) && ($p['z'] >= 0 and $p['z'] < 20)      ){
 					$G_query="UPDATE `tiki_tracker_item_fields` SET `value`=? WHERE `itemId`=? AND `fieldId`=?";
 					$trklib->query($G_query,array($p['x'].','.$p['y'].','.$p['z'], (int)$_REQUEST['itemId'], (int)$_REQUEST['fieldId']));
       				}
