@@ -6,11 +6,10 @@ class  Multilingual_Aligner_SentenceAlignmentsTest extends TikiTestCase
    public function ___test_reminder()  {
       $this->fail("remember to reactivate all tests in SentenceAlignments");
    }
-
-   public function test_nevermind()  {
-      $this->fail("this test is just to verify that we are indeed executing tests from SentencedAlignmetTest");
-   }
-
+   
+   protected function setUp()  {
+      $this->alignments = new Multilingual_Aligner_SentenceAlignments();
+   }     
 
    ////////////////////////////////////////////////////////////////
    // Documentation tests
@@ -27,10 +26,23 @@ class  Multilingual_Aligner_SentenceAlignmentsTest extends TikiTestCase
    //       created as above.
    ////////////////////////////////////////////////////////////////
 
-   protected function setUp()  {
-      $this->alignments = new Multilingual_Aligner_SentenceAlignments();
-   }
-     
+	/*
+	 * In the remainder of these tests, you can assume that 
+	 * $this->alignments alignments contains an instance of
+	 * SentenceAligners built as in the above test.
+	 */ 
+	public function test_This_is_how_you_add_sentences() {
+		$en_sentence = "hello world";
+		$fr_sentence = "bonjour le monde";
+		$this->alignments->addSentencePair($en_sentence, 'en', $fr_sentence, 'fr');
+	}
+	
+	public function test_This_is_how_you_retrieve_a_sentence_in_the_other_language () {
+		$en_sentence = "hello world";
+		$fr_sentence = $this->alignments->getSentenceInOtherLanguage($en_sentence, 'en');
+	}
+
+
     
    ////////////////////////////////////////////////////////////////
    // Internal tests
