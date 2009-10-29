@@ -4130,7 +4130,7 @@ class TikiLib extends TikiDb_Bridge {
 	// $categperm is the category permission that should grant $perm. if none, pass 0
 	function user_has_perm_on_object($user,$object,$objtype,$perm,$categperm='tiki_p_view_categorized') {
 		global $userlib;
-		$groups = $userlib->get_user_groups( $toCheck );
+		$groups = $userlib->get_user_groups( $user );
 
 		$context = array( 'type' => $objtype, 'object' => $object );
 
