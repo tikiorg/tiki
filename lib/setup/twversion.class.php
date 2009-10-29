@@ -177,17 +177,13 @@ class TWVersion {
 			$major = 0;
 			$velements = explode('.', $this->version);
 
-			for ($idx = $this->vidx; $idx < count($this->releases); $idx++) {
+			for ($idx = $this->vidx + 1; $idx < count($this->releases); $idx++) {
 				$relements = explode('.', $this->releases[$idx]);
-				if ($relements[0] > $velements[0]
-						|| $relements[1] > $velements[1]) {
+				if ($relements[0] > $velements[0]) {
 					$major = 1;
-				} else if ($relements[0] == $velements[0]
-						&& $relements[1] == $velements[1]) {
+				} else if ($relements[0] == $velements[0]) {
 					$this->release = $this->releases[$idx];
-					if ($idx != $this->vidx) {
-						$upgrade = 1;
-					}
+					$upgrade = 1;
 				}
 			}
 		}
