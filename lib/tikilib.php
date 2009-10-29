@@ -400,7 +400,6 @@ class TikiLib extends TikiDb_Bridge {
 				left join `tiki_user_preferences` tup2 on (tup2.`user`=uu.`login` and tup2.`prefName`='mailCharset')
 				where $mid
 				";
-
 		$result = $this->query($query,array_merge( $bindvars, $bindvars ));
 
 		if ($result->numRows()) {
@@ -454,9 +453,13 @@ class TikiLib extends TikiDb_Bridge {
 					$res['perm'] = $this->user_has_perm_on_object($res['user'],$object,'image gallery','tiki_p_view_image_gallery');
 					break;
 				case 'category_changed':
-					global $categlib;
+					global $categlib; include_once ('lib/categories/categlib.php');
 					$res['perm']= $categlib->has_view_permission($res['user'],$object);
-					break;				
+					break;
+				case 'fgal_quota_exceeded':
+					global $tiki_p_admin_file_galleries;
+					$res['perm'] = ($tiki_p_admin_file_galleries == 'y');
+					break;
 				default:
 					// for security we deny all others.
 					$res['perm']=FALSE;

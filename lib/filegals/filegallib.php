@@ -1038,23 +1038,46 @@ class FileGalLib extends TikiLib {
 	}
 	// check a size in K can be added to a gallery
 	function checkQuota($size, $galleryId, &$error) {
-		global $prefs;
+		global $prefs, $smarty;
 		if (!empty($prefs['fgal_quota'])) {
 			$use = $this->getUsedSize();
 			if ($use + $size > $prefs['fgal_quota']*1024*1024) {
 				$error = tra('The global quota has been reached');
-				return false;
+				$diff = $use + $size - $prefs['fgal_quota']*1024*1024;
 			}
 		}
-		if ($prefs['fgal_quota_per_fgal'] == 'y') {
+		if (empty($error) && $prefs['fgal_quota_per_fgal'] == 'y') {
 			$list = $this->getGalleryParentsColumns($galleryId, array('galleryId', 'quota', 'size', 'name'));
 			//echo '<pre>';print_r($list);echo '</pre>';
 			foreach ($list as $fgal) {
 				if (!empty($fgal['quota']) && $fgal['size'] + $size > $fgal['quota']*1024*1024) {
 					$error = tra('The quota has been reached in:').' '.$fgal['name'];
-					return false;
+					$smarty->assign('mail_fgal', $fgal);
+					$diff = $fgal['size'] + $size - $fgal['quota']*1024*1024;
+					break;
 				}
 			}
+		}
+		if (!empty($error)) {
+			global $tikilib;
+			$nots = $tikilib->get_event_watches('fgal_quota_exceeded', '*');
+			if (!empty($nots)) {
+				include_once ('lib/webmail/tikimaillib.php');
+				$mail = new TikiMail();
+				$foo = parse_url($_SERVER["REQUEST_URI"]);
+				$machine = $tikilib->httpPrefix() . dirname( $foo["path"] );
+				$machine = preg_replace("!/$!", "", $machine); // just incase
+				$smarty->assign('mail_machine', $machine);
+				$smarty->assign('mail_diff', $diff);
+				foreach ($nots as $not) {
+					$lg = $tikilib->get_user_preference($not['user'], 'language', $prefs['site_language']);
+					$mail->setSubject(tra('File gallery quota exceeded', $lg));
+					$mail->setText($smarty->fetchLang($lg, 'mail/fgal_quota_exceeded.tpl'));
+					$mail->buildMessage();
+					$mail->send(array($not['email']));
+				}
+			}
+			return false;
 		}
 		return true;			
 	} 

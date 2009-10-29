@@ -89,6 +89,12 @@ $watches['php_error'] = array(
 	'url' => '',
 	'object' => '*'
 );
+$watches['fgal_quota_exceeded'] = array(
+	'label' => tra('File gallery quota exceeded') ,
+	'type' => 'file gallery',
+	'url' => '',
+	'object' => '*'
+);
 $save = true;
 $login = $email = '';
 if (isset($_REQUEST["add"])) {
@@ -167,6 +173,7 @@ $smarty->assign_by_ref('find', $find);
 if (!empty($_REQUEST['maxRecords'])) {
 	$maxRecords = $_REQUEST['maxRecords'];
 }
+$smarty->assign_by_ref('watches', $watches);
 $smarty->assign_by_ref('maxRecords', $maxRecords);
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 $channels = $tikilib->list_watches($offset, $maxRecords, $sort_mode, $find);
