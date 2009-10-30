@@ -16,7 +16,7 @@ note : lists the objects from a given category not a recursive tree
 	<tr>
 	<td class="{cycle advance=false}">{if $module_params.path eq 'n'}{$i.name}{else}{$i.categpath}{/if}</td>
 	{if $module_params.del ne 'n'}
-	<td class="{cycle}"><a href="{$smarty.server.REQUEST_URI}{if strstr($smarty.server.REQUEST_URI, '?')}&amp;{else}?{/if}remove={$i.categId}"><img src="pics/icons/cross.png" width="16" height="16" alt="{tr}Delete{/tr}" /></a></td>
+	<td class="{cycle}">{self_link remove=$i.categId}{icon _id=cross alt='{tr}Delete{/tr}'}{/self_link}</td>
 	{/if}
 	</tr>
 	{/if}
@@ -26,7 +26,7 @@ note : lists the objects from a given category not a recursive tree
 
 {if $module_params.detail ne 'y' or ($module_params.add ne 'n' and $remainCateg)}
 <div align="center">
-<form method="post" action="{$smarty.server.REQUEST_URI}" target="_self">
+<form method="post" target="_self">
 <input type="hidden" name="page" value="{$page|escape}" />
 <input type="hidden" name="modcatid" value="{$modcatid}" />
 {if $module_params.multiple eq 'y'}

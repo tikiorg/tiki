@@ -317,7 +317,7 @@
 	{if $user}
 		<br />
 		{if $field_value.user_subscription} {tr}You have ever subscribed{/tr}.{else}{tr}You have not yet subscribed{/tr}.{/if}
-		<form method="POST" action="{$smarty.server.REQUEST_URI}" >
+		<form method="POST">
 		<input type="hidden" name="U_fieldId" value="{$field_value.fieldId}" />
 		<input type="hidden" name="itemId" value="{$itemId}" />
 		<input type="hidden" name="trackerId" value="{$trackerId}" />
