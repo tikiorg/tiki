@@ -105,15 +105,15 @@ switch($_REQUEST['action']){
 			if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 				key_check($area);
 				if($kentryType == "media"){
-					for($i=0; $i < count($videoId); $i++) {
-						$kclient->media->delete($videoId[$i]);
+					foreach( $videoId as $vi ) {
+						$kclient->media->delete($vi);
 					}
 				header ('Location: tiki-list_kaltura_entries.php?list=media');
 				die;
 				}
 				if($kentryType == "mix"){
-					for($i=0; $i < count($videoId); $i++) {
-						$kclient->mixing->delete($videoId[$i]);
+					foreach( $videoId as $vi ) {
+						$kclient->mixing->delete($vi);
 					}					
 				header ('Location: tiki-list_kaltura_entries.php?list=mix');
 				die;
