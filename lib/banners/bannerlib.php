@@ -285,5 +285,3 @@ class BannerLib extends TikiLib {
 	}
 }
 $bannerlib = new BannerLib;
-
-?>

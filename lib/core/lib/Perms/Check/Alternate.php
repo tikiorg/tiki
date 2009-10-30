@@ -23,5 +23,3 @@ class Perms_Check_Alternate implements Perms_Check
 		$this->resolver = $resolver;
 	}
 }
-
-?>

@@ -37,5 +37,3 @@ class Perms_Reflection_PermissionComparator
 		return $out;
 	}
 }
-
-?>

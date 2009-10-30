@@ -54,5 +54,3 @@ class Perms_MixedTest extends TikiTestCase
 		$this->assertEquals( $data, $out );
 	}
 }
-
-?>

@@ -159,4 +159,3 @@ global $prefs;
 $screencastlib = new ScreencastLib($prefs['feature_wiki_screencasts_base'],
 	$prefs['feature_wiki_screencasts_upload_type'],
 	array('http' => $prefs['feature_wiki_screencasts_httpbase'], 'user' => $prefs['feature_wiki_screencasts_user'], 'pass' => $prefs['feature_wiki_screencasts_pass']));
-?>

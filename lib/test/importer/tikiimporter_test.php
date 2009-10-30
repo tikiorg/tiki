@@ -53,5 +53,3 @@ class TikiImporterGranSon extends TikiImporterSecondChild
 {
     static public $importOptions = array(array('name' => 'name'));
 }
-
-?>

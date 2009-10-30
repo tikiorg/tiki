@@ -530,5 +530,3 @@ class File extends PEAR
 }
 
 PEAR::registerShutdownFunc(array('File', '_File'));
-
-?>

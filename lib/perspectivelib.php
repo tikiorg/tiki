@@ -141,5 +141,3 @@ class PerspectiveLib
 
 global $perspectivelib;
 $perspectivelib = new PerspectiveLib;
-
-?>

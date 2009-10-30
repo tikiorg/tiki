@@ -222,5 +222,3 @@ class PreferencesLib
 
 global $prefslib;
 $prefslib = new PreferencesLib;
-
-?>

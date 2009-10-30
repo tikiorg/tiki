@@ -16,5 +16,3 @@ function prefs_smarty_list() {
 		),
 	);
 }
-
-?>

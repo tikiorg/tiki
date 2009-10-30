@@ -10,5 +10,3 @@ function prefs_sender_list() {
 		),
 	);
 }
-
-?>

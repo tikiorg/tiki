@@ -42,5 +42,3 @@ class Perms_Reflection_Factory
 		return $factory;
 	}
 }
-
-?>

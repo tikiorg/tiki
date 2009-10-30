@@ -13,4 +13,3 @@ class TikiWikiParser_AllTests
         return $suite;
     }
 }
-?>

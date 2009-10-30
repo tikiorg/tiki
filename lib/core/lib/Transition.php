@@ -98,5 +98,3 @@ class Transition
 		$this->addBlocker( 'unknown', 1, $list );
 	}
 }
-
-?>

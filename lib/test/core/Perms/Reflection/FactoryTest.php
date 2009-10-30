@@ -52,5 +52,3 @@ class Perms_Reflection_FactoryTest extends TikiTestCase
 		$this->assertEquals( $expect, Perms_Reflection_Factory::getDefaultFactory() );
 	}
 }
-
-?>

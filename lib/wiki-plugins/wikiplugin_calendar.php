@@ -87,5 +87,3 @@ function wikiplugin_calendar($data, $params) {
     return "<div>$out</div>";
 
 }
-
-?>

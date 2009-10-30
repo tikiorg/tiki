@@ -136,5 +136,3 @@ class File_iCal_Alarm extends File_iCal_BaseComponent {
     }
 
 }
-
-?>

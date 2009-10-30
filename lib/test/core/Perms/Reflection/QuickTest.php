@@ -175,5 +175,3 @@ class Perms_Reflection_QuickTest extends TikiTestCase
 		$this->assertEquals( $expect, $quick );
 	}
 }
-
-?>

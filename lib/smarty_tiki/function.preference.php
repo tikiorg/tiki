@@ -17,5 +17,3 @@ function smarty_function_preference( $params, $smarty ) {
 		return tr( 'Preference %0 is not defined.', $params['name'] );
 	}
 }
-
-?>

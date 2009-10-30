@@ -150,5 +150,3 @@ class TikiDb_MasterSlaveDispatch extends TikiDb
 		return $this->lastUsed = $this->slave;
 	}
 }
-
-?>

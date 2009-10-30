@@ -2021,4 +2021,3 @@ class KalturaClient extends KalturaClientBase
 	}
 
 }
-?>

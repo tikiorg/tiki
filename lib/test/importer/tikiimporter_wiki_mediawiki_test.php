@@ -403,5 +403,3 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
         $this->assertNull($this->obj->convertMarkup($mediawikiText));
     }
 }
-
-?>

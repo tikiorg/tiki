@@ -31,5 +31,3 @@ class Perms_Check_AlternateTest extends PHPUnit_Framework_TestCase
 		$this->assertFalse( $check->check( $resolver, array(), 'view', array( 'Registered' ) ) );
 	}
 }
-
-?>

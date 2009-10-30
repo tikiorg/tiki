@@ -38,5 +38,3 @@
 class File_iCal_ExceptionRule {
 
 }
-
-?>

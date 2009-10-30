@@ -61,5 +61,3 @@ function wikiplugin_tabs($data, $params) {
 
 	return "~np~$content~/np~";
 }
-
-?>

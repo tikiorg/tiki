@@ -19,4 +19,3 @@ class Perms_Resolver_Default implements Perms_Resolver
 		return $this->value;
 	}
 }
-

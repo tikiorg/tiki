@@ -50,5 +50,3 @@ class Perms_ResolverFactory_GlobalFactoryTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals( $expect, $factory->getResolver( array() ) );
 	}
 }
-
-?>

@@ -124,5 +124,3 @@ class TikiDb_Bridge extends TikiDb
 		return call_user_func_array( array( self::get(), 'concat' ), $arr );
 	} // }}}
 }
-
-?>

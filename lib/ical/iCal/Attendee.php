@@ -266,6 +266,3 @@ class File_iCal_Attendee {
     }
 
 }
-
-
-?>

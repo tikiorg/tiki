@@ -99,5 +99,3 @@ class File_iCal_ToDo extends File_iCal_BaseComponent_ET {
     }
 
 }
-
-?>

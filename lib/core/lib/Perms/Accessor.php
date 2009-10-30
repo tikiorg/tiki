@@ -115,5 +115,3 @@ class Perms_Accessor implements ArrayAccess
 		return true;
 	}
 }
-
-?>

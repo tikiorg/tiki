@@ -8,5 +8,3 @@ class Perms_Reflection_Category extends Perms_Reflection_Object
 		return $this->factory->get( 'global', null )->getDirectPermissions();
 	}
 }
-
-?>

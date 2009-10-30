@@ -81,6 +81,3 @@ class File_iCal_Event extends File_iCal_BaseComponent_ET {
 
 
 }
-
-
-?>

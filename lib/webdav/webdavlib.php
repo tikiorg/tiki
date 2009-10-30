@@ -163,5 +163,3 @@ class WebDavLib extends HTTP_WebDAV_Client_Stream {
 }
 
 $webdavlib = new WebDavLib();
-
-?>

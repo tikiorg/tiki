@@ -85,5 +85,3 @@ function prefs_memcache_unserialize_servers( $string ) {
 		return false;
 	}
 }
-
-?>

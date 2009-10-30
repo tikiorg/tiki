@@ -282,5 +282,3 @@ class File_iCal_ContentLine {
         return str_replace(array("\\\\", "\\,", "\\\"", "\\\'", "\\;", "\\:"), array("\\", ",", "\"", "'", ";", ":"), $s);
     }
 }
-
-?>

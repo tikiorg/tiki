@@ -57,5 +57,3 @@ class Perms_Reflection_PermissionSetTest extends TikiTestCase
 		$this->assertEquals( $equivalent, $multi );
 	}
 }
-
-?>

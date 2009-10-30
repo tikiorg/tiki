@@ -165,5 +165,3 @@ class File_iCal_TimeZone extends File_iCal_BaseComponent {
 
 
 }
-
-?>

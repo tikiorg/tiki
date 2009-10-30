@@ -88,5 +88,3 @@ class File_iCal_FreeBusy extends File_iCal_BaseComponent_EFJT {
     }
 
 }
-
-?>

@@ -27,4 +27,3 @@ class Perms_Resolver_Static implements Perms_Resolver
 		return false;
 	}
 }
-

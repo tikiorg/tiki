@@ -105,5 +105,3 @@ class Perms_Reflection_PermissionComparatorTest extends TikiTestCase
 		$this->assertEquals( array(), $comparator->getRemovals() );
 	}
 }
-
-?>

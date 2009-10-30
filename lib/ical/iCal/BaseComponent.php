@@ -966,5 +966,3 @@ class File_iCal_BaseComponent_ET extends File_iCal_BaseComponent_EJT {
     }
 
 }
-
-?>

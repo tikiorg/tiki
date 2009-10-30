@@ -71,5 +71,3 @@ class Perms_Reflection_Object implements Perms_Reflection_Container
 		return $categlib->get_object_categories( $this->type, $this->object );
 	}
 }
-
-?>

@@ -39,5 +39,3 @@ class Perms_Reflection_Global implements Perms_Reflection_Container
 	function getParentPermissions() {
 	}
 }
-
-?>
