@@ -809,8 +809,9 @@ if(isset($_REQUEST["preview"])) {
 
 function parse_output(&$obj, &$parts,$i) {
 	if(!empty($obj['parts'])) {
-		for($i=0; $i<count($obj['parts']); $i++)
-			parse_output($obj['parts'][$i], $parts,$i);
+		foreach( $obj['parts'] as $index => $part ) {
+			parse_output($part, $parts,$index);
+		}
 	}elseif( $obj['type'] == 'application/x-tikiwiki' ) {
 		$aux["body"] = $obj['body'];
 		$ccc=$obj['header']["content-type"];
