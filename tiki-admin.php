@@ -379,10 +379,8 @@ if (isset($admintitle)) {
 // VERSION TRACKING
 // If the user elected to force a check.
 if (!empty($_GET['forcecheck'])) {
-	$TWV->pollVersion();
-	$upgrades = $TWV->newVersionAvailable();
-	$smarty->assign('tiki_release', $TWV->release);
-	if ($upgrades[0]) {
+	$smarty->assign('tiki_release', $TWV->getLatestMinorRelease());
+	if (!$TWV->isLatestMinorRelease()) {
 		$prefs['tiki_needs_upgrade'] = 'y';
 	} else {
 		$prefs['tiki_needs_upgrade'] = 'n';
@@ -390,8 +388,8 @@ if (!empty($_GET['forcecheck'])) {
 	}
 	$smarty->assign('tiki_needs_upgrade', $prefs['tiki_needs_upgrade']);
 	// See if a major release is available.
-	if ($upgrades[1]) {
-		add_feedback( null, tr('A new %0 major release branch is available.', $TWV->version ), 3 );
+	if (!$TWV->isLatestMajorVersion()) {
+		add_feedback( null, tr('A new major release branch is available.'), 3 );
 	}
 	// If the versioning feature has been enabled, then store the current
 	// findings in the database as preferences so that each visit to the page
@@ -399,7 +397,7 @@ if (!empty($_GET['forcecheck'])) {
 	// check on every page load.
 	if ($prefs['feature_version_checks'] == 'y') {
 		$tikilib->set_preference('tiki_needs_upgrade', $prefs['tiki_needs_upgrade']);
-		$tikilib->set_preference('tiki_release', $TWV->release);
+		$tikilib->set_preference('tiki_release', $TWV->getLatestMinorRelease());
 	}
 }
 // Versioning feature has been enabled, so if the time is right, do a live
@@ -411,14 +409,12 @@ if ($prefs['feature_version_checks'] == 'y') {
 	// Time for a version check!
 	if ($tikilib->now > ($prefs['tiki_version_last_check'] + $prefs['tiki_version_check_frequency'])) {
 		$tikilib->set_preference('tiki_version_last_check', $tikilib->now);
-		$TWV->pollVersion();
 		$smarty->assign('tiki_version', $TWV->version);
-		$upgrades = $TWV->newVersionAvailable();
-		if ($upgrades[0]) {
+		if (!$TWV->isLatestMinorRelease()) {
 			$prefs['tiki_needs_upgrade'] = 'y';
-			$tikilib->set_preference('tiki_release', $TWV->release);
-			$smarty->assign('tiki_release', $TWV->release);
-			if ($upgrades[1]) {
+			$tikilib->set_preference('tiki_release', $TWV->getLatestMinorRelease());
+			$smarty->assign('tiki_release', $TWV->getLatestMinorRelease());
+			if (!$TWV->isLatestMajorVersion()) {
 				add_feedback( null, tr('A new %0 major release branch is available.', $TWV->branch), 3, 1);
 			}
 		} else {
