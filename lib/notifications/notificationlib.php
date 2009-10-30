@@ -54,15 +54,6 @@ class NotificationLib extends TikiLib {
 		$retval["cant"] = $cant;
 		return $retval;
 	}
-	function add_mail_event($event, $object, $email) {
-		$query = "insert into `tiki_user_watches`(`event`,`object`,`email`) values(?,?,?)";
-		$result = $this->query($query, array($event,$object,$email) );
-	}
-	function remove_mail_event($event, $object, $email) {
-		$query = "delete from `tiki_user_watches` where `event`=? and `object`=? and `email`=?";
-		$result = $this->query($query,array($event,$object,$email));
-	}
-	
 	function update_mail_address($user, $oldMail, $newMail) {
 		$query = "update `tiki_user_watches` set `email`=? where `user`=? and `email`=?";
 		$result = $this->query($query,array($user,$newMail,$oldMail));

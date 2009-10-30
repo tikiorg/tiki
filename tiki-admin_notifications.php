@@ -67,19 +67,19 @@ $watches['article_deleted'] = array(
 );
 $watches['wiki_page_changes'] = array(
 	'label' => tra('Any wiki page is changed') ,
-	'type' => 'wiki',
+	'type' => 'wiki page',
 	'url' => 'tiki-lastchanges.php',
 	'object' => '*'
 );
 $watches['wiki_page_changes_incl_minor'] = array(
 	'label' => tra('Any wiki page is changed, even minor changes') ,
-	'type' => 'wiki',
+	'type' => 'wiki page',
 	'url' => 'tiki-lastchanges.php',
 	'object' => '*'
 );
 $watches['wiki_comment_changes'] = array(
 	'label' => tra('A comment in a wiki page is posted or edited') ,
-	'type' => 'wiki',
+	'type' => 'wiki page',
 	'url' => '',
 	'object' => '*'
 );
