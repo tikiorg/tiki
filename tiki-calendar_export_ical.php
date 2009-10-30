@@ -69,24 +69,24 @@ if (is_array($calendarIds) && (count($calendarIds) > 0) && $_REQUEST["export"]==
 	
 	$cal = $iCal->getSkeletonCalendar();
 	foreach ($events as $day=>$day_data) {
-		for ($i=0; $i < count($day_data); $i++) {
+		foreach( $day_data as $dd) {
 			$ea=array();
-			$ea["Summary"]=$day_data[$i]["result"]["name"];
-			$ea["dateStart"]=$day_data[$i]["result"]["start"];
-			$ea["dateEnd"]=$day_data[$i]["result"]["end"];
-			$ea["Description"]=preg_replace("/\n/","\\n",$day_data[$i]["result"]["description"]);
-			if ($day_data[$i]["result"]["participants"]) {
-				$ea["Attendees"]=$day_data[$i]["result"]["participants"];
+			$ea["Summary"]=$dd["result"]["name"];
+			$ea["dateStart"]=$dd["result"]["start"];
+			$ea["dateEnd"]=$dd["result"]["end"];
+			$ea["Description"]=preg_replace("/\n/","\\n",$dd["result"]["description"]);
+			if ($dd["result"]["participants"]) {
+				$ea["Attendees"]=$dd["result"]["participants"];
 			}
-			$ea["LastModified"]=$day_data[$i]["result"]["lastModif"];
+			$ea["LastModified"]=$dd["result"]["lastModif"];
 			// Second character of duration value must be a 'P' ?? 
-			$ea["Duration"]=($day_data[$i]["result"]["end"] - $day_data[$i]["result"]["start"]);
-			$ea["Contact"]=array($day_data[$i]["result"]["user"]);
-			$ea["organizer"]=array($day_data[$i]["result"]["organizers"]);
-			$ea["URL"]=$day_data[$i]["result"]["url"];
-			$ea["DateStamp"]=$day_data[$i]["result"]["created"];
-			//$ea["RequestStatus"]=$day_data[$i]["result"]["status"];
-			$ea["UID"]="tiki-".$day_data[$i]["result"]["calendarId"]."-".$day_data[$i]["result"]["calitemId"];
+			$ea["Duration"]=($dd["result"]["end"] - $dd["result"]["start"]);
+			$ea["Contact"]=array($dd["result"]["user"]);
+			$ea["organizer"]=array($dd["result"]["organizers"]);
+			$ea["URL"]=$dd["result"]["url"];
+			$ea["DateStamp"]=$dd["result"]["created"];
+			//$ea["RequestStatus"]=$dd["result"]["status"];
+			$ea["UID"]="tiki-".$dd["result"]["calendarId"]."-".$dd["result"]["calitemId"];
 			$c = $iCal->factory("Event",$ea);
 			$cal->addEvent($c);
 		}
