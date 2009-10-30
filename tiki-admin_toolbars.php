@@ -205,5 +205,3 @@ $smarty->assign_by_ref('display_c',$display_c);
 $smarty->assign_by_ref('current',$current);
 $smarty->assign( 'mid', 'tiki-admin_toolbars.tpl' );
 $smarty->display( 'tiki.tpl' );
-
-?>

@@ -168,5 +168,3 @@ if ( !$edit_type || !in_array($edit_type, $edit_types)) {
 
 $smarty->assign('mid', 'tiki-admin_pagelist.tpl');
 $smarty->display('tiki.tpl');
-
-?>

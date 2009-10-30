@@ -127,4 +127,3 @@ $smarty->assign('listPerms', $listPerms);
 	 
 $smarty->assign('mid', 'tiki-manage-workspaces.tpl');
 $smarty->display('tiki.tpl');
-?>

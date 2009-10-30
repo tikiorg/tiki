@@ -48,4 +48,3 @@ else
 
 $smarty->assign('mid', 'tiki-my-workspaces.tpl');
 $smarty->display('tiki.tpl'); 
-?>

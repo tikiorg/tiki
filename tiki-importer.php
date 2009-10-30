@@ -70,5 +70,3 @@ if (isset($_SESSION['tiki_importer_feedback'])) {
 
 $smarty->assign('mid', 'tiki-importer.tpl');
 $smarty->display('tiki.tpl');
-
-?>
