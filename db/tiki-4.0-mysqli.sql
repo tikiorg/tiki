@@ -731,6 +731,7 @@ CREATE TABLE `tiki_file_galleries` (
   `show_path` char(1) default NULL,
   `show_slideshow` char(1) default NULL,
   `default_view` varchar(20) default NULL,
+  `quota` int(8) default 0,
   PRIMARY KEY (`galleryId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
