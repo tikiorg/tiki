@@ -26,5 +26,3 @@ function module_perspective( $mod_reference, $module_params ) {
 		$smarty->assign( 'current_perspective', null );
 	}
 }
-
-?>
