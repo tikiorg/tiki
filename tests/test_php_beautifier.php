@@ -53,12 +53,10 @@ $sql = "SELECT `id`, `name` from `people` "
      . "WHERE `name`='Fred' OR `name`='Susan'";
 
 // class
-class a {
+class a
+{
 	//content
 }
 
 // global - for ease grep
 global $statslib; include_once ('lib/stats/statslib.php');
-
-// closing tag
-?>
