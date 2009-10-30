@@ -1,5 +1,4 @@
 {* $Id$ *}
-{popup_init src="lib/overlib.js"}
 
 {title admpage="calendar"}
 	{if $displayedcals|@count eq 1}

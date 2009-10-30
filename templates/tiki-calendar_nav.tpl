@@ -1,3 +1,4 @@
+{if empty($module_params.viewnavbar) || $module_params.viewnavbar ne 'n'}
 <div class="clearfix tabrow"><div class="tabrowRight"></div><div class="tabrowLeft"></div>
 <div class="viewmode">
 	{if $calendar_type neq "tiki_actions"}
@@ -42,6 +43,7 @@
 {self_link _class="next" todate=$yearafter _title="{tr}Semester{/tr}" _alt="{tr}Semester{/tr}" _icon=resultset_next"}{/self_link}
 {/if}
 </div></div></div><br style="clear:both" />
+{/if}
 
 {if $viewmode ne 'day'}
 <div class="calnavigation">
