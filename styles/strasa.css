@@ -66,9 +66,9 @@ h6 {
 }
 
 .wikitext h1 {color: #000000}
-.wikitext h2 {color: #303030}
-.wikitext h3 {color: #3F3F3F; font-style: italic}
-.wikitext h4 {color: #606060}
+.wikitext h2 {color: #309FC0; line-height: .7em; border-bottom: solid 1px #3090C0; text-transform: uppercase}
+.wikitext h3 {color: #303030; line-height: .8em; font-style: italic}
+.wikitext h4 {border-bottom: dashed 1px #CCF0FF; color: #3F3F3F}
 .wikitext h5 {color: #6F6F6F; font-style: italic}
 .wikitext h6 {color: #909090}
 
