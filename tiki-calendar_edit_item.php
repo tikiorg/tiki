@@ -193,7 +193,7 @@ if (isset($_POST['act'])) {
 	if ((empty($save['calitemId']) and $caladd["$newcalid"]['tiki_p_add_events'] == 'y')
 	or (!empty($save['calitemId']) and $caladd["$newcalid"]['tiki_p_change_events'] == 'y')) {
 		if (empty($save['name'])) $save['name'] = tra("event without name");
-		if (empty($save['priority'])) $save['priority'] = 0;
+		if (empty($save['priority'])) $save['priority'] = 1;
 		if (empty($save['status'])) {
 			if (empty($calendar['defaulteventstatus'])) {
 				$save['status'] = 1; // Confirmed
