@@ -5,7 +5,7 @@
 $force_no_compression = true;
 $skip = false;
 
-if ( isset($_GET['fileId']) && isset($_GET['thumbnail']) && isset($_COOKIE['PHPSESSID']) && count($_GET) == 2 ) {
+if ( isset($_GET['fileId']) && isset($_GET['thumbnail']) && isset($_COOKIE[ session_name() ]) && count($_GET) == 2 ) {
 
 	$tikiroot = dirname($_SERVER['PHP_SELF']);
 	$session_params = session_get_cookie_params();

@@ -1326,6 +1326,8 @@ function get_default_prefs() {
 		'feature_site_report_email' => '',
 		'session_storage' => 'default',
 		'session_lifetime' => 0,
+		'session_silent' => 'n',
+		'session_cookie_name' => session_name(),
 		'shoutbox_autolink' => 'n',
 		'show_comzone' => 'n',
 		'tikiIndex' => 'tiki-index.php',

@@ -20,5 +20,16 @@ function prefs_session_list() {
 			'filter' => 'digits',
 			'size' => '4',
 		),
+		'session_silent' => array(
+			'name' => tra('Silent session'),
+			'description' => tra('Do not automatically start sessions.'),
+			'type' => 'flag',
+		),
+		'session_cookie_name' => array(
+			'name' => tra('Session cookie name'),
+			'description' => tra('Session cookie name used instead of the PHP default configuration.'),
+			'type' => 'text',
+			'size' => 10,
+		),
 	);
 }

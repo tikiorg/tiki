@@ -2019,7 +2019,7 @@ class TikiLib extends TikiDb_Bridge {
 			$ret = true;
 		}
 		if (!$user) {
-			if ($prefs['ip_can_be_checked'] != 'y' && !isset($_COOKIE['PHPSESSID'])) {// cookie has not been activated too bad for him
+			if ($prefs['ip_can_be_checked'] != 'y' && !isset($_COOKIE[ session_name() ])) {// cookie has not been activated too bad for him
 				$ret = true;
 			} elseif (isset($_COOKIE[md5("tiki_wiki_poll_$id")])) {
 				$ret = true;

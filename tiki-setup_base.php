@@ -47,7 +47,8 @@ $prefs = array();
 $needed_prefs = array(
 	'session_lifetime' => '0',
 	'session_storage' => 'default',
-	'sessions_silent' => 'disabled',
+	'session_silent' => 'n',
+	'session_cookie_name' => session_name(),
 	'language' => 'en',
 	'feature_pear_date' => 'y',
 	'lastUpdatePrefs' => - 1,
@@ -98,19 +99,27 @@ if ($prefs['session_storage'] == 'db') {
 	require_once ('lib/tikisession-memcache.php');
 }
 
+if( ! isset( $prefs['session_cookie_name'] ) || empty( $prefs['session_cookie_name'] ) ) {
+	$prefs['session_cookie_name'] = session_name();
+}
+
+session_name( $prefs['session_cookie_name'] );
+
 // Only accept PHP's session ID in URL when the request comes from the tiki server itself
 // This is used by features that need to query the server to retrieve tiki's generated html and images (e.g. pdf export)
-if (isset($_GET['PHPSESSID']) && $_SERVER['REMOTE_ADDR'] == '127.0.0.1') {
-	$_COOKIE['PHPSESSID'] = $_GET['PHPSESSID'];
-	session_id($_GET['PHPSESSID']);
+if (isset($_GET[session_name()]) && $_SERVER['REMOTE_ADDR'] == '127.0.0.1') {
+	$_COOKIE[session_name()] = $_GET[session_name()];
+	session_id($_GET[session_name()]);
 }
-if ($prefs['sessions_silent'] == 'disabled' or !empty($_COOKIE)) {
+
+if ( $prefs['session_silent'] != 'y' or isset( $_COOKIE[session_name()] ) ) {
 	// enabing silent sessions mean a session is only started when a cookie is presented
 	$session_params = session_get_cookie_params();
 	session_set_cookie_params($session_params['lifetime'], $tikiroot);
 	unset($session_params);
 	session_start();
 }
+
 // Moved here from tiki-setup.php because smarty use a copy of session
 if ($prefs['feature_fullscreen'] == 'y') require_once ('lib/setup/fullscreen.php');
 // Smarty needs session since 2.6.25
