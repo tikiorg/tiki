@@ -9,7 +9,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_breadcrumb_info() {
 	return array(
-		'name' => tra('Recently visited pages'),
+		'name' => tra('Last visited pages'),
 		'description' => tra('Displays the last Wiki pages visited by the user.'),
 		'prefs' => array( 'feature_wiki' ),
 		'params' => array(
