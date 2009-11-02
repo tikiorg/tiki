@@ -26,20 +26,26 @@
 		<script type="text/javascript" src="lib/tiki-js{if !empty($minify_scripts_on_the_fly) and $prefs.feature_use_minified_scripts == 'y'}.min{/if}.js"></script>
 {include file='bidi.tpl'}
 		<title>
-{if isset($trail)}			{breadcrumbs type="fulltrail" loc="head" crumbs=$trail}
+{if isset($trail)}
+	{breadcrumbs type=$prefs.site_title_breadcrumb loc="head" crumbs=$trail}
 {else}
-	{$prefs.browsertitle|escape}
-	{if !empty($headtitle)} : {$headtitle}
-	{elseif !empty($page)} : {if $beingStaged eq 'y' and $prefs.wikiapproval_hideprefix == 'y'}{$approvedPageName|escape}{else}{$page|escape}{/if} {* add $description|escape if you want to put the description + update breadcrumb_build replace return $crumbs->title; with return empty($crumbs->description)? $crumbs->title: $crumbs->description; *}
-	{elseif !empty($arttitle)} : {$arttitle|escape}
-	{elseif !empty($title)} : {$title|escape}
-	{elseif !empty($thread_info.title)} : {$thread_info.title|escape}
-	{elseif !empty($post_info.title)} : {$post_info.title|escape}
-	{elseif !empty($forum_info.name)} : {$forum_info.name|escape}
-	{elseif !empty($categ_info.name)} : {$categ_info.name}
-	{elseif !empty($userinfo.login)} : {$userinfo.login|escape}
-	{elseif !empty($tracker_item_main_value)} : {$tracker_item_main_value|escape}
-	{elseif !empty($tracker_info.name)} : {$tracker_info.name|escape}
+	{if $prefs.site_title_location eq 'before'}
+		{$prefs.browsertitle|escape} : 
+	{/if}
+	{if !empty($headtitle)}{$headtitle}
+	{elseif !empty($page)}{if $beingStaged eq 'y' and $prefs.wikiapproval_hideprefix == 'y'}{$approvedPageName|escape}{else}{$page|escape}{/if} {* add $description|escape if you want to put the description + update breadcrumb_build replace return $crumbs->title; with return empty($crumbs->description)? $crumbs->title: $crumbs->description; *}
+	{elseif !empty($arttitle)}{$arttitle|escape}
+	{elseif !empty($title)}{$title|escape}
+	{elseif !empty($thread_info.title)}{$thread_info.title|escape}
+	{elseif !empty($post_info.title)}{$post_info.title|escape}
+	{elseif !empty($forum_info.name)}{$forum_info.name|escape}
+	{elseif !empty($categ_info.name)}{$categ_info.name}
+	{elseif !empty($userinfo.login)}{$userinfo.login|escape}
+	{elseif !empty($tracker_item_main_value)}{$tracker_item_main_value|escape}
+	{elseif !empty($tracker_info.name)}{$tracker_info.name|escape}
+	{/if}
+	{if $prefs.site_title_location eq 'after'}
+		: {$prefs.browsertitle|escape} 
 	{/if}
 {/if}
 		</title>

@@ -27,6 +27,8 @@
 		<fieldset>
 			<legend>{tr}Site Identity{/tr}</legend>
 			{preference name=browsertitle}
+			{preference name=site_title_location}
+			{preference name=site_title_breadcrumb}
 			{preference name=sender_email}
 
 			<div class="adminoptionbox">
