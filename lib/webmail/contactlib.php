@@ -262,6 +262,8 @@ class ContactLib extends TikiLib {
 		
 		if ($public) {	// check for previous public one
 			$c = $this->getOne('SELECT COUNT(*) FROM `tiki_webmail_contacts_fields` WHERE `fieldname`=? AND `flagsPublic`=\'y\'', array($name));
+		} else {
+			$c = 0;
 		}
 		if (!$c) {
 			$pubvar = $public ? 'y' : 'n';
