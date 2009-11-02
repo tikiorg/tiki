@@ -87,9 +87,13 @@ function sendForumEmailNotification($event, $object, $forum_info, $title, $data,
 
 	// Users watching this forum or this post
 	if ($prefs['feature_user_watches'] == 'y' || $prefs['feature_group_watches'] == 'y') {
-		$nots = $tikilib->get_event_watches($event, $event == 'forum_post_topic'? $forum_info['forumId']: $threadId, $forum_info);
-		for ($i = count($nots) - 1; $i >=0; --$i) {
-			$nots[$i]['language'] = $tikilib->get_user_preference($nots[$i]['user'], "language", $defaultLanguage);
+		$nots_raw = $tikilib->get_event_watches($event, $event == 'forum_post_topic'? $forum_info['forumId']: $threadId, $forum_info);
+		$nots = array();
+		foreach( $nots_raw as $n ) {
+			if( $n['user'] != $author ) {
+				$n['language'] = $tikilib->get_user_preference($n['user'], "language", $defaultLanguage);
+				$nots[] = $n;
+			}
 		}
 	}
 
