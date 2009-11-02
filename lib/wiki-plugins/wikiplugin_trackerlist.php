@@ -1,5 +1,5 @@
 <?php
-// $Id: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerlist.php,v 1.40.2.12 2008-03-22 12:13:54 sylvieg Exp $
+// $Id$
 
 function wikiplugin_trackerlist_help() {
 	$help = tra("Displays the output of a tracker content, fields are indicated with numeric ids.").":\n";
@@ -260,6 +260,7 @@ function wikiplugin_trackerlist($data, $params) {
 		return $smarty->fetch("wiki-plugins/error_tracker.tpl");
 	} else {
 
+		$auto_query_args = array('itemId','tr_initial','tr_sort_mode','tr_user');
 		$smarty->assign('trackerId', $trackerId);
 		$tracker_info = $trklib->get_tracker($trackerId);
 		if ($t = $trklib->get_tracker_options($trackerId)) {
@@ -484,11 +485,16 @@ function wikiplugin_trackerlist($data, $params) {
 		}
 		$smarty->assign_by_ref('tr_initial', $tr_initial);
 
-		if ((isset($view) && $view == 'user') || isset($view_user)) {
+		if ((isset($view) && $view == 'user') || isset($view_user) || isset($_REQUEST['tr_user'])) {
 			if ($f = $trklib->get_field_id_from_type($trackerId, 'u', '1%')) {
 				$filterfield[] = $f;
 				$filtervalue[] = '';
-				$exactvalue[] = isset($view)? (empty($user)?'Anonymous':$user): $view_user;
+				if (!isset($_REQUEST['tr_user'])) {
+					$exactvalue[] = isset($view)? (empty($user)?'Anonymous':$user): $view_user;
+				} else {
+					$exactvalue[] = $_REQUEST['tr_user'];
+					$smarty->assign_by_ref('tr_user', $exactvalue);
+				}
 			}
 		}
 		if (isset($view) && $view == 'page' && isset($_REQUEST['page'])) {
