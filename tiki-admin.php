@@ -391,14 +391,8 @@ if (!empty($_GET['forcecheck'])) {
 	if (!$TWV->isLatestMajorVersion()) {
 		add_feedback( null, tr('A new major release branch is available.'), 3 );
 	}
-	// If the versioning feature has been enabled, then store the current
-	// findings in the database as preferences so that each visit to the page
-	//  pulls from the database until the next scheduled check so as not to
-	// check on every page load.
-	if ($prefs['feature_version_checks'] == 'y') {
-		$tikilib->set_preference('tiki_needs_upgrade', $prefs['tiki_needs_upgrade']);
-		$tikilib->set_preference('tiki_release', $TWV->getLatestMinorRelease());
-	}
+	$tikilib->set_preference('tiki_needs_upgrade', $prefs['tiki_needs_upgrade']);
+	$tikilib->set_preference('tiki_release', $TWV->getLatestMinorRelease());
 }
 // Versioning feature has been enabled, so if the time is right, do a live
 // check, otherwise display the stored data.
