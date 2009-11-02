@@ -151,7 +151,7 @@ class HeaderLib {
 		}
 
 		if (count($this->css)) {
-			$back.= "<style type="text/css"><!--\n";
+			$back.= "<style type=\"text/css\"><!--\n";
 			foreach ($this->css as $x=>$css) {
 				$back.= "/* css $x */\n";
 				foreach ($css as $c) {
