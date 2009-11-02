@@ -23,7 +23,6 @@
 {/if}
 
 {* --- tikiwiki block --- *}
-		<script type="text/javascript" src="lib/tiki-js{if !empty($minify_scripts_on_the_fly) and $prefs.feature_use_minified_scripts == 'y'}.min{/if}.js"></script>
 {include file='bidi.tpl'}
 		<title>
 {if isset($trail)}
@@ -95,9 +94,6 @@
 		<link rel="alternate" type="application/rss+xml" title='{$prefs.title_rss_calendar|escape|default:"{tr}RSS Calendars{/tr}"}' href="tiki-calendars_rss.php?ver={$prefs.rssfeed_default_version}" />
 {/if}
 
-{if ($prefs.feature_jquery neq "y" or $prefs.feature_jquery_tablesorter neq "y") and $prefs.javascript_enabled eq "y"}
-	<script type="text/javascript" src="lib/tiki-js-sorttable.js"></script>
-{/if}
 {if $prefs.feature_jquery eq "y"}
 	{include file='header_jquery.tpl'}
 {/if}

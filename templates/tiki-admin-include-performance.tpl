@@ -10,6 +10,7 @@
 
 		<fieldset>
 			<legend>{tr}Performance{/tr}</legend>
+			{preference name=tiki_minify_javascript}
 			{preference name=feature_use_minified_scripts}
 			{preference name=feature_obzip}
 			<div class="adminoptionboxchild">

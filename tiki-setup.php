@@ -121,3 +121,9 @@ $smarty->assign('tiki_version', $TWV->version);
 $smarty->assign('tiki_branch', $TWV->branch);
 $smarty->assign('tiki_star', $TWV->star);
 $smarty->assign('tiki_uses_svn', $TWV->svn);
+
+$headerlib->add_jsfile( 'lib/tiki-js.js' );
+
+if( ( $prefs['feature_jquery'] != 'y' || $prefs['feature_jquery_tablesorter'] != 'y' ) && $prefs['javascript_enabled'] == 'y' ) {
+	$headerlib->add_jsfile( 'lib/tiki-js-sorttable.js' );
+}

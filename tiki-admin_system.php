@@ -19,6 +19,7 @@ include_once ('lib/cache/cachelib.php');
 if (isset($_GET['do'])) {
 	if ($_GET['do'] == 'all') {
 		$cachelib->erase_dir_content("templates_c/$tikidomain");
+		$cachelib->erase_dir_content("temp/public/$tikidomain");
 		$cachelib->erase_dir_content("temp/cache/$tikidomain");
 		$cachelib->erase_dir_content("modules/cache/$tikidomain");
 		$tikilib->set_lastUpdatePrefs();
@@ -29,6 +30,9 @@ if (isset($_GET['do'])) {
 	} elseif ($_GET['do'] == 'temp_cache') {
 		$cachelib->erase_dir_content("temp/cache/$tikidomain");
 		$logslib->add_log('system', 'erased temp/cache content');
+	} elseif ($_GET['do'] == 'temp_public') {
+		$cachelib->erase_dir_content("temp/public/$tikidomain");
+		$logslib->add_log('system', 'erased temp/public content');
 	} elseif ($_GET['do'] == 'modules_cache') {
 		$cachelib->erase_dir_content("modules/cache/$tikidomain");
 		$logslib->add_log('system', 'erased modules/cache content');
@@ -51,6 +55,8 @@ $templates_c = $cachelib->du("templates_c/$tikidomain");
 $smarty->assign('templates_c', $templates_c);
 $tempcache = $cachelib->du("temp/cache/$tikidomain");
 $smarty->assign('tempcache', $tempcache);
+$temppublic = $cachelib->du("temp/public/$tikidomain");
+$smarty->assign('temppublic', $temppublic);
 $modules = $cachelib->du("modules/cache/$tikidomain");
 $smarty->assign('modules', $modules);
 $templates = array();

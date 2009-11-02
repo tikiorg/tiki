@@ -1496,6 +1496,8 @@ function get_default_prefs() {
 		// Multidomain
 		'multidomain_active' => 'n',
 		'multidomain_config' => '',
+
+		'tiki_minify_javascript' => 'y',
 	);
 
 	// spellcheck
