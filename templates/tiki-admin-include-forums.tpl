@@ -38,11 +38,10 @@
 				{preference name=feature_forum_topics_archiving}
 				{preference name=feature_forum_quickjump}
 				{preference name=feature_forum_replyempty}
-				<em>{tr}If disabled, replies will quote the original post{/tr}.</em>
 				{preference name=forum_comments_no_title_prefix}
 				{preference name=feature_forums_allow_thread_titles}
-				<em>{tr}Will be a thread title{/tr}.</em>
 				{preference name=forum_match_regex}
+				{
 			</fieldset>
 
 			<fieldset>
@@ -50,7 +49,6 @@
 				<input type="hidden" name="forumthreadprefs" />
 				{preference name=forum_thread_defaults_by_forum}
 				{preference name=forum_thread_user_settings}
-				<em>{tr}Allows users to override the defaults{/tr}.</em>
 				<div class="adminoptionboxchild" id="forum_thread_user_settings_childcontainer">
 					{preference name=forum_thread_user_settings_keep}
 				</div>
@@ -62,9 +60,7 @@
 			<fieldset>
 				<legend>{tr}Searches{/tr}</legend>
 				{preference name=feature_forums_name_search}
-				<em>{tr}When listing forums{/tr}.</em>
 				{preference name=feature_forums_search}
-				<em>{tr}When listing forums{/tr}.</em>
 				{preference name=feature_forum_content_search}
 				<div class="adminoptionboxchild" id="feature_forum_content_search_childcontainer">
 					{preference name=feature_forum_local_tiki_search}

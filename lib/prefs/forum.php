@@ -18,6 +18,7 @@ function prefs_forum_list() {
 		'forum_thread_user_settings' => array(
 			'name' => tra('Display thread configuration bar'),
 			'type' => 'flag',
+			'hint' => tra('Allows users to override the defaults'),
 		),
 		'forum_thread_user_settings_keep' => array(
 			'name' => tra('Keep settings for all forums during the user session'),

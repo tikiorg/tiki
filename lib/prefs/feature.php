@@ -991,18 +991,22 @@ function prefs_feature_list() {
 		'feature_forum_replyempty' => array(
 			'name' => tra('Replies are empty'),
 			'type' => 'flag',
+			'hint' => tra('If disabled, replies will quote the original post'),
 		),
 		'feature_forums_allow_thread_titles' => array(
 			'name' => tra('First post of a thread can have an empty body'),
 			'type' => 'flag',
+			'hint' => tra('Will be a thread title'),
 		),
 		'feature_forums_name_search' => array(
 			'name' => tra('Forum name search'),
 			'type' => 'flag',
+			'hint' => tra('When listing forums'),
 		),
 		'feature_forums_search' => array(
 			'name' => tra('Forum content search'),
 			'type' => 'flag',
+			'hint' => tra('When listing forums'),
 		),
 		'feature_forum_content_search' => array(
 			'name' => tra('Topic content search'),
