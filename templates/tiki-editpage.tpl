@@ -119,12 +119,18 @@
 			{include file='wiki_edit_actions.tpl'}
 		</div>
 	{/if}
-	
+
 	<table class="normal">
 		
 		
 		<tr class="formcolor">
 			<td colspan="2">
+				{if $page_badchars_display}
+					{remarksbox type=tip title="{tr}Tip{/tr}"}
+						{tr 0=$page_badchars_display|escape}The page name specified contains characters that may render the page hard to access. You may want to consider removing those: <strong>%0</strong>{/tr}
+					{/remarksbox}
+					<p>{tr}Page name{/tr}: <input type="text" name="page" value="{$page|escape}" /></p>
+				{/if}
 				{tabset name='tabs_editpage'}
 					{tab name="{tr}Edit page{/tr}"}
 						{textarea}{$pagedata}{/textarea}

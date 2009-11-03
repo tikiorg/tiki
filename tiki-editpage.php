@@ -1158,6 +1158,21 @@ if ($prefs['feature_categories'] == 'y') {
 	}
 }
 
+$is_staging_article = ($prefs['wikiapproval_staging_category'] > 0) && (in_array($prefs['wikiapproval_staging_category'], $cats));
+$page_badchars_display = ":/?#[]@!$&'()*+,;=";
+$page_badchars = "/[:\/?#\[\]@!$&'()*+,;=]/";
+if ($is_staging_article && (mb_substr($page, 0, 1) == $prefs['wikiapproval_prefix'])) {
+	$page_name = mb_substr($page, 1);
+}
+else {
+	$page_name = $page;
+}
+
+$matches = preg_match($page_badchars, $page_name);
+if ($matches && ! $tikilib->page_exists($page) ) {
+	$smarty->assign('page_badchars_display', $page_badchars_display);
+}
+
 $plugins = $wikilib->list_plugins(true, 'editwiki');
 
 $smarty->assign_by_ref('plugins', $plugins);
