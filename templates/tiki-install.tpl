@@ -192,7 +192,9 @@
 			<div style="margin-left:1em">
 			<select name="db" id="db">
 {foreach key=dsn item=dbname from=$dbservers}
+	{if $dsn|stristr:"mysql"}
 				<option value="{$dsn}"{if isset($smarty.request.db) and $smarty.request.db eq $dsn} selected="selected"{/if}>{$dbname}</option>
+	{/if}
 {/foreach}
 			</select> <a href="javascript:void(0)" onclick="flip('db_help');" title="{tr}Help{/tr}"><img src="pics/icons/help.png" alt="{tr}Help{/tr}" /></a>
 			<div style="display:none" id="db_help">
