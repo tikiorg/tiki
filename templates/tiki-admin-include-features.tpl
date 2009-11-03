@@ -52,6 +52,7 @@
 				{preference name=feature_minichat}
 				{preference name=feature_score}
 				{preference name=feature_fullscreen}
+				{preference name=feature_dynamic_content}
 			</div>
 		</fieldset>
 
