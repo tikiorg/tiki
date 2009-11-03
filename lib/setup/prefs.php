@@ -602,6 +602,7 @@ function get_default_prefs() {
 		'forum_thread_style' => 'commentStyle_plain',
 		'forum_thread_sort_mode' => 'commentDate_asc',
 		'forum_match_regex' => '',
+		'forum_reply_notitle' => 'n',
 
 		// articles
 		'feature_articles' => 'n',

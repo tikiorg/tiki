@@ -38,10 +38,10 @@
 				{preference name=feature_forum_topics_archiving}
 				{preference name=feature_forum_quickjump}
 				{preference name=feature_forum_replyempty}
+				{preference name=forum_reply_notitle}
 				{preference name=forum_comments_no_title_prefix}
 				{preference name=feature_forums_allow_thread_titles}
 				{preference name=forum_match_regex}
-				{
 			</fieldset>
 
 			<fieldset>

@@ -80,5 +80,10 @@ function prefs_forum_list() {
 			'size' => '5',
 			'filter' => 'digits',
 		),
+		'forum_reply_notitle' => array(
+			'name' => tra('Hide titles for forum threads'),
+			'description' => tra('Most titles are left untouched because they are a direct reply to the parent thread. This feature hides the title altogether from the forms and display.'),
+			'type' => 'flag',
+		),
 	);
 }

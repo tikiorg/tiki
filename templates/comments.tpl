@@ -291,6 +291,7 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 	<input type="hidden" name="comments_threshold" value="{$comments_threshold|escape}" />
 	<input type="hidden" name="thread_sort_mode" value="{$thread_sort_mode|escape}" />
 	<input type="hidden" name="comments_objectId" value="{$comments_objectId|escape}" />
+	<input type="hidden" name="comments_title" value="{tr}Untitled{/tr}" />
 
 	{* Traverse request variables that were set to this page adding them as hidden data *}
 	{section name=i loop=$comments_request_data}
@@ -298,28 +299,30 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 	{/section}
 
 	<table class="normal">
-		<tr>
-			<td class="formcolor">
-				<label for="comments-title">{tr}Title{/tr} <span class="attention">({tr}required{/tr})</span> </label>
-			</td>
-			<td class="formcolor">
-			{* 
-			   Alain Désilets: This used to have a size="50" attribute, but I deleted it
-			   because in the Collaborative_Multilingual_Terminology, we may need to view 
-			   two different languages of the same page side by side. And the text length of
-			   50 was causing the language displayed on the right side to be squished into a 
-			   very narrow column, if comments were opened on the left side language
-			   but not on the right side language.
-			   
-			   Unfortunately, without a size specification, the comments box looks 
-			   a bit weird when we only view one language at a time.
-			   
-			   But I don't know how else to deal with this issue.
-			 *}
-				<input type="text" name="comments_title" id="comments-title" value="{$comment_title|escape}" /> 
+		{if $forum_mode != 'y' or $prefs.forum_reply_notitle neq 'y'}
+			<tr>
+				<td class="formcolor">
+					<label for="comments-title">{tr}Title{/tr} <span class="attention">({tr}required{/tr})</span> </label>
+				</td>
+				<td class="formcolor">
+				{* 
+				   Alain Désilets: This used to have a size="50" attribute, but I deleted it
+				   because in the Collaborative_Multilingual_Terminology, we may need to view 
+				   two different languages of the same page side by side. And the text length of
+				   50 was causing the language displayed on the right side to be squished into a 
+				   very narrow column, if comments were opened on the left side language
+				   but not on the right side language.
+				   
+				   Unfortunately, without a size specification, the comments box looks 
+				   a bit weird when we only view one language at a time.
+				   
+				   But I don't know how else to deal with this issue.
+				 *}
+					<input type="text" name="comments_title" id="comments-title" value="{$comment_title|escape}" /> 
 
-			</td>
-		</tr>
+				</td>
+			</tr>
+		{/if}
 
 		{* Start: Xenfasa adding and testing article ratings in comments here. Not fully functional yet *}
 		{if $comment_can_rate_article eq 'y'}
