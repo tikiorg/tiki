@@ -1404,7 +1404,6 @@ function get_default_prefs() {
 		'feature_iepngfix' => 'n',
 		'iepngfix_selectors' => '#sitelogo a img',
 		'iepngfix_elements' => '',
-		'feature_use_minified_scripts' => 'y',		// for debugging
 		'valid_email_regex' => '^[_a-z0-9\+\.\-]+@[_a-z0-9\.\-]+\.[a-z]{2,4}$',
 		
 		// JQuery
@@ -1494,7 +1493,8 @@ function get_default_prefs() {
 		'multidomain_active' => 'n',
 		'multidomain_config' => '',
 
-		'tiki_minify_javascript' => 'y',
+		'feature_use_minified_scripts' => 'y',		// for debugging
+		'tiki_minify_javascript' => 'n',
 	);
 
 	// spellcheck
