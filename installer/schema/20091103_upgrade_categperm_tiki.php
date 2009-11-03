@@ -1,11 +1,5 @@
 <?php
 include_once('tiki-setup.php');
-if (!($tiki_p_admin == 'y' || $tiki_p_admin_users == 'y')) { // temporary patch: tiki_p_admin includes tiki_p_admin_users but if you don't clean the temp/cache each time you sqlupgrade the perms setting is not synchornous with the cache
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
 // $view describes what was supposed to be given by tiki_p_view_categorized
 // $edit describes what was supposed to be given by tiki_p_edit_categorized
 // these lists are probably incomplete
