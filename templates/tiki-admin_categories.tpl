@@ -199,6 +199,7 @@
 						</td>
 					</tr>
 				</table>
+				{pagination_links cant=$maximum step=$maxRecords offset=$offset}{/pagination_links}
 				<form action="tiki-admin_categories.php" method="post">
 					<input type="hidden" name="parentId" value="{$parentId|escape}" />
 					<table>
@@ -360,6 +361,7 @@
 
 					</table>
 				</form>
+				{pagination_links cant=$maximum step=$maxRecords offset=$offset}{/pagination_links}
 			</div>
 		</div>
 {/if}
