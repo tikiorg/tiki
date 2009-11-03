@@ -20,6 +20,7 @@
 	{preference name=wiki_show_version label="{tr}Page version{/tr}"}
 
 	{preference name=wiki_pagename_strip}
+	{preference name=wiki_badchar_prevent}
 
 	{preference name=wiki_authors_style label="{tr}List authors{/tr}"}
 

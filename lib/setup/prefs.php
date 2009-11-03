@@ -173,6 +173,7 @@ function get_default_prefs() {
 		'wiki_validate_plugin' => 'y',
 		'wiki_edit_minor' => 'n',
 		'feature_pagelist' => 'n',
+		'wiki_badchar_prevent' => 'n',
 
 		'wikiplugin_agentinfo' => 'n',
 		'wikiplugin_alink' => 'n',

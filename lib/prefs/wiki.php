@@ -100,6 +100,11 @@ function prefs_wiki_list() {
 			'type' => 'flag',
 			'hint' => 'Requires javascript',
 		),
+		'wiki_badchar_prevent' => array(
+			'name' => tra('Prevent special characters in page names'),
+			'description' => tra('Some characters may prevent the pages from being easily accessible from the URL or through wiki links. This option prevents from creating pages with such characters.'),
+			'type' => 'flag',
+		),
 	);
 }
 
