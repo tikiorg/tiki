@@ -127,6 +127,12 @@ function wikiplugin_trackerlist_info() {
 				'description' => tra('Maximum number of items'),
 				'filter' => 'int'
 			),
+			'showpagination' => array(
+				'required' => false,
+				'name' => tra('Show pagination'),
+				'description' => 'y|n',
+				'filter' => 'alpha'
+			),
 			'filterfield' => array(
 				'required' => false,
 				'name' => tra('Filter Field'),
@@ -382,6 +388,10 @@ function wikiplugin_trackerlist($data, $params) {
 			$showdelete = 'n';
 		}
 		$smarty->assign_by_ref('showdelete', $showdelete);
+		if (!isset($showpagination)) {
+			$showpagination = 'y';
+		}
+		$smarty->assign_by_ref('showpagination', $showpagination);
 
 		if (!isset($status)) {
 			$status = "o";
