@@ -32,25 +32,10 @@
 	</div>
 </div>
 
-{*
 	{preference name='fgal_use_db'}
 	<div class="adminoptionboxchild" id="fgal_use_db_childcontainer_1">
 		 {preference name='fgal_use_dir'}
 	</div>
-*}
-
-<div class="adminoptionbox">
-	<div class="adminoptionlabel"><input type="radio" id="fgal_use_db1" name="fgal_use_db" value="y"
-              {if $prefs.fgal_use_db eq 'y'}checked="checked"{/if} onclick="flip('storeinfile');" /><label for="fgal_use_db1">{tr}Store in database{/tr}.</label></div>
-	<div class="adminoptionlabel"><input type="radio" id="fgal_use_db2" name="fgal_use_db" value="n"
-            {if $prefs.fgal_use_db eq 'n'}checked="checked"{/if} onclick="flip('storeinfile');" /><label for="fgal_use_db2">{tr}Store in directory{/tr}.</label></div>
-
-<div class="adminoptionboxchild" id="storeinfile" style="display:{if $prefs.fgal_use_db eq 'y'}none{else}block{/if};">
-	<div class="adminoptionlabel"><label for="fgal_use_dir">{tr}Path{/tr}:</label> <input type="text" id="fgal_use_dir" name="fgal_use_dir" value="{$prefs.fgal_use_dir|escape}" size="50" />
-	<br /><em>{tr}The server must be able to read/write the directory.{/tr} {tr}The directory can be outside the web space.{/tr}</em>
-	</div>
-</div>
-</div>
 
 	{preference name='fgal_podcast_dir'}
 

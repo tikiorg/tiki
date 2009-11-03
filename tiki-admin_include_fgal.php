@@ -26,7 +26,6 @@ if (isset($_REQUEST["filegalfeatures"])) {
 	if (substr($_REQUEST["fgal_batch_dir"], -1) != "\\" && substr($_REQUEST["fgal_batch_dir"], -1) != "/" && $_REQUEST["fgal_batch_dir"] != "") {
 		$_REQUEST["fgal_batch_dir"].= "/";
 	}
-	simple_set_value("fgal_use_db");
 	simple_set_value("fgal_use_dir");
 	simple_set_value("fgal_podcast_dir");
 	simple_set_value("fgal_batch_dir");
