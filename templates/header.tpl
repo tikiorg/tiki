@@ -3,13 +3,13 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="TikiWiki CMS/Groupware - http://TikiWiki.org" />
 {if !empty($forum_info.name) & $prefs.metatag_threadtitle eq 'y'}		<meta name="keywords" content="{tr}Forum{/tr} {$forum_info.name} {$thread_info.title} {if $prefs.feature_freetags eq 'y'}{foreach from=$freetags.data item=taginfo}{$taginfo.tag} {/foreach}{/if}" />
-{elseif $galleryId ne '' & $prefs.metatag_imagetitle ne 'n'}		<meta name="keywords" content="{tr}Images Galleries{/tr} {$title} {if $prefs.feature_freetags eq 'y'}{foreach from=$freetags.data item=taginfo}{$taginfo.tag} {/foreach}{/if}" />
+{elseif isset($galleryId) && $galleryId ne '' & $prefs.metatag_imagetitle ne 'n'}		<meta name="keywords" content="{tr}Images Galleries{/tr} {$title} {if $prefs.feature_freetags eq 'y'}{foreach from=$freetags.data item=taginfo}{$taginfo.tag} {/foreach}{/if}" />
 {elseif $prefs.metatag_keywords ne ''}		<meta name="keywords" content="{$prefs.metatag_keywords} {if $prefs.feature_freetags eq 'y'}{foreach from=$freetags.data item=taginfo}{$taginfo.tag} {/foreach}{/if}" />
 {/if}
 {if $prefs.metatag_author ne ''}		<meta name="author" content="{$prefs.metatag_author}" />
 {/if}
 {if $prefs.metatag_pagedesc eq 'y' and $description ne ''}		<meta name="description" content="{$description}" />
-{elseif $prefs.metatag_description ne '' or $description eq ''}		<meta name="description" content="{$prefs.metatag_description}" />
+{elseif $prefs.metatag_description ne '' or (isset($description) and $description eq '')}		<meta name="description" content="{$prefs.metatag_description}" />
 {/if}
 {if $prefs.metatag_geoposition ne ''}		<meta name="geo.position" content="{$prefs.metatag_geoposition}" />
 {/if}
@@ -60,7 +60,7 @@
 {/if}
 
 {* --- universaleditbutton.org --- *}
-{if ($editable and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox')) or $tiki_p_admin_wiki eq 'y' or $canEditStaging eq 'y'}
+{if ((isset($editable) and $editable) and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox')) or $tiki_p_admin_wiki eq 'y' or $canEditStaging eq 'y'}
 		<link rel="alternate" type="application/x-wiki" title="{tr}Edit this page!{/tr}" href="tiki-editpage.php?page={$page|escape:url}" />
 {/if}
 
