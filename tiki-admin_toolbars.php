@@ -1,4 +1,9 @@
 <?php
+// (c) Copyright 2002-2009 by authors of the Tiki Wiki/CMS/Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
 $inputConfiguration = array( array(
 	'staticKeyFilters' => array(
@@ -164,7 +169,7 @@ $headerlib->add_js( "var toolbarsadmin_rowStr = '" . substr(implode(",#row-",ran
 var toolbarsadmin_fullStr = '#full-list-w,#full-list-p,#full-list-c';
 var toolbarsadmin_delete_text = '" . tra('Are you sure you want to delete this custom tool?') . "'\n");
 
-$headerlib->add_jsfile('lib/toolbars/tiki-admin_toolbars' . (!empty($minify_scripts_on_the_fly) && $prefs['feature_use_minified_scripts'] == 'y' ? '.min' : '') . '.js');
+$headerlib->add_jsfile('lib/toolbars/tiki-admin_toolbars.js');
 
 $display_w = array_diff($qt_w_list,$usedqt);
 if (!in_array('-', $display_w)) {

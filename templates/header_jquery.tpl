@@ -2,7 +2,7 @@
 {if $prefs.feature_use_minified_scripts == 'y'}{assign var=minified value='.min'}{assign var=minidir value='minified'}{else}{assign var=minified value=''}{assign var=minidir value=''}{/if}
 <!--  start jquery-tiki -->
 <script type="text/javascript" src="lib/jquery/jquery{$minified}.js"></script>
-<script type="text/javascript" src="lib/jquery_tiki/tiki-jquery.js"></script>{* add {$minified} later if $minify_scripts_on_the_fly *}
+<script type="text/javascript" src="lib/jquery_tiki/tiki-jquery.js"></script>
 
 {if $prefs.feature_jquery_ui eq 'y' or $prefs.feature_jquery_tooltips eq 'y' or $prefs.feature_jquery_autocomplete eq 'y' or $prefs.feature_jquery_superfish eq 'y' or $prefs.feature_jquery_reflection eq 'y' or $prefs.feature_jquery_cycle eq 'y' or $prefs.feature_shadowbox eq 'y'}
 {if $prefs.feature_jquery_ui eq 'y'}{* TODO optimise so not including all - maybe - one day *}
