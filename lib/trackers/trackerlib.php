@@ -809,7 +809,7 @@ class TrackerLib extends TikiLib {
 					foreach ($value as $v) {
 						if ($cpt++)
 							$mid .= ' OR ';
-						$mid .= " ttif$i.`value` like ? ";
+						$mid .= " upper(ttif$i.`value`) like upper(?) ";
 						if ( substr($v, 0, 1) == '*' || substr($v, 0, 1) == '%') {
 							$bindvars[] = '%'.substr($v, 1);
 						} elseif ( substr($v, -1, 1) == '*' || substr($v, -1, 1) == '%') {
