@@ -30,5 +30,3 @@ class Transition_AtMostTest extends PHPUnit_Framework_TestCase
 		), $transition->explain() );
 	}
 }
-
-?>

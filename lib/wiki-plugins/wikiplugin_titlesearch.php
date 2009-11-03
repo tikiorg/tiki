@@ -42,7 +42,7 @@ function wikiplugin_titlesearch_help() {
     			'exclude' => array(
     				'required' => false,
     				'name' => tra('Exclude'),
-    				'description' => tra('Pipe separated list of page names to exclude from results.'),
+    				'description' => tra('Pipe-separated list of page names to exclude from results.'),
     			),
     			'noheader' => array(
     				'required' => false,

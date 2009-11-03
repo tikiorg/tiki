@@ -28,5 +28,3 @@ class Perms_ResolverFactory_StaticFactory implements Perms_ResolverFactory
 		return $this->resolver;
 	}
 }
-
-?>

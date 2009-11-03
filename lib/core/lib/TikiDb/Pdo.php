@@ -112,5 +112,3 @@ class TikiDb_Pdo extends TikiDb {
 		return new TikiDb_Pdo_Result($result);
 	} // }}}
 }
-
-?>

@@ -17,5 +17,3 @@ function prefs_wikiplugininline_list() {
 
 	return $prefs;
 }
-
-?>

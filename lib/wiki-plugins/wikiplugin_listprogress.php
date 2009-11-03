@@ -99,5 +99,3 @@ function wikiplugin_listProgress($data, $params) {
 
 	return $html; 
 }
-
-?>

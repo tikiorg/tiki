@@ -112,5 +112,3 @@ class Category_ManipulatorTest extends TikiTestCase
 		$this->assertEquals( array(), $manip->getRemovedCategories() );
 	}
 }
-
-?>

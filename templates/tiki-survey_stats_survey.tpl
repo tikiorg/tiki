@@ -53,7 +53,7 @@
       </td>
       <td class="odd">{$channels[ix].qoptions[jx].votes}</td>
       <td class="odd">{$channels[ix].qoptions[jx].average|string_format:"%.2f"}%</td>
-      <td class="odd"><img src="img/leftbar.gif" alt="&lt;" /><img alt="-" src="img/mainbar.gif" height="14" width="{$channels[ix].qoptions[jx].width}" /><img src="img/rightbar.gif" alt="&gt;" /></td>
+      <td class="odd">{quotabar length=$channels[ix].qoptions[jx].width}</td>
     </tr>
     {/section}
   {/if}

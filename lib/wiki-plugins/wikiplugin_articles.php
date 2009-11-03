@@ -17,13 +17,13 @@ function wikiplugin_articles_info() {
 	return array(
 		'name' => tra('Article List'),
 		'documentation' => 'PluginArticles',
-		'description' => tra('Includes a list of articles within the page.'),
+		'description' => tra('Inserts a list of articles in the page.'),
 		'prefs' => array( 'feature_articles', 'wikiplugin_articles' ),
 		'params' => array(
 			'max' => array(
 				'required' => false,
 				'name' => tra('Articles displayed'),
-				'description' => tra('The amount of articles to display in the list.'),
+				'description' => tra('The number of articles to display in the list.'),
 				'filter' => 'int',
 			),
 			'topic' => array(

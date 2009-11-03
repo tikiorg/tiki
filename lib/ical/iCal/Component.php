@@ -1104,5 +1104,3 @@ class File_iCal_Component_ToDo extends File_iCal_Component
 
     }
 }
-
-?>

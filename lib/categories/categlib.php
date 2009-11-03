@@ -377,6 +377,7 @@ class CategLib extends ObjectLib {
 	// Returns a hash indicating which permission is needed for viewing an object of desired type.
 	function map_object_type_to_permission() {
 	    return array('wiki page' => 'tiki_p_view',
+			 'wiki' => 'tiki_p_view',
 			 'forum' => 'tiki_p_forum_read',
 			 'image gallery' => 'tiki_p_view_image_gallery',
 			 'file gallery' => 'tiki_p_view_file_gallery',

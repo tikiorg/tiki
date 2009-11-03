@@ -223,7 +223,7 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),
 		'feature_comments_post_as_anonymous' => array(
-			'name' => tra('Allow to post comments as Anonymous'),
+			'name' => tra('Allow posting of comments as Anonymous'),
 			'description' => tra('Permit anonymous visitors to add a comment without needing to create an account'),
 			'help' => 'Comments',
 			'type' => 'flag',
@@ -378,12 +378,6 @@ function prefs_feature_list() {
 			),
 			'type' => 'flag',
 		),	
-		'feature_workspaces' => array(
-			'name' => tra('Workspaces'),
-			'description' => tra('Workspace'),
-			'help' => 'Workspace',
-			'type' => 'flag',
-		),
 		'feature_kaltura' => array(
 			'name' => tra('Kaltura'),
 			'description' => tra('Kaltura'),
@@ -955,6 +949,74 @@ function prefs_feature_list() {
 		),
 		'feature_blogposts_pings' => array(
 			'name' => 'Post-level',
+			'type' => 'flag',
+		),
+		'feature_file_galleries_rankings' =>array(
+			'name' => tra('Rankings'),
+			'type' => 'flag',
+			'help' => 'File+Gallery+Config',
+		),
+		'feature_file_galleries_comments' =>array(
+			'name' => tra('Comments'),
+			'type' => 'flag',
+			'help' => 'File+Gallery+Config',
+		),
+		'feature_file_galleries_author' => array(
+			'name' => tra("Require file author's name for anonymous uploads"),
+			'type' => 'flag',
+			'help' => 'File+Gallery+Config',
+		),
+		'feature_file_galleries_batch' => array(
+			'name' => tra('Batch uploading'),
+			'type' => 'flag',
+			'help' => 'File+Gallery+Config',
+		),
+		'feature_forum_rankings' => array(
+			'name' => tra('Rankings'),
+			'type' => 'flag',
+		),
+		'feature_forum_parse' => array(
+			'name' => tra('Accept wiki syntax'),
+			'type' => 'flag',
+			'help' => 'Wiki+Syntax',
+		),
+		'feature_forum_topics_archiving' => array(
+			'name' => tra('Topic archiving'),
+			'type' => 'flag',
+		),
+		'feature_forum_quickjump' => array(
+			'name' => tra('Quick jumps'),
+			'type' => 'flag',
+		),
+		'feature_forum_replyempty' => array(
+			'name' => tra('Replies are empty'),
+			'type' => 'flag',
+		),
+		'feature_forums_allow_thread_titles' => array(
+			'name' => tra('First post of a thread can have an empty body'),
+			'type' => 'flag',
+		),
+		'feature_forums_name_search' => array(
+			'name' => tra('Forum name search'),
+			'type' => 'flag',
+		),
+		'feature_forums_search' => array(
+			'name' => tra('Forum content search'),
+			'type' => 'flag',
+		),
+		'feature_forum_content_search' => array(
+			'name' => tra('Topic content search'),
+			'type' => 'flag',
+			'dependencies' => array(
+				'feature_search',
+			),
+		),
+		'feature_forum_local_tiki_search' => array(
+			'name' => tra('Use Tiki (database-independent) search.'),
+			'type' => 'flag',
+		),
+		'feature_forum_local_search' => array(
+			'name' => tra('Use database (full-text) search.'),
 			'type' => 'flag',
 		),
 	);

@@ -90,5 +90,3 @@ class Perms_ResolverFactory_ObjectFactory implements Perms_ResolverFactory
 		}
 	}
 }
-
-?>

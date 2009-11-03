@@ -207,16 +207,7 @@ class UsersLib extends TikiLib {
 	}
 
 	function group_exists($group) {
-		static $rv = array();
-
-		if (!isset($rv[$group])) {
-			$query = "select count(`groupName`)  from `users_groups` where `groupName` = ?";
-
-			$result = $this->getOne($query, array($group));
-			$rv[$group] = $result;
-		}
-
-		return $rv[$group];
+		return in_array($group, $this->list_all_groups());
 	}
 
 	function user_logout($user) {

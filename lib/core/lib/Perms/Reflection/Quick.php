@@ -87,5 +87,3 @@ class Perms_Reflection_Quick
 		return 'userdefined';
 	}
 }
-
-?>

@@ -3,13 +3,13 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="TikiWiki CMS/Groupware - http://TikiWiki.org" />
 {if !empty($forum_info.name) & $prefs.metatag_threadtitle eq 'y'}		<meta name="keywords" content="{tr}Forum{/tr} {$forum_info.name} {$thread_info.title} {if $prefs.feature_freetags eq 'y'}{foreach from=$freetags.data item=taginfo}{$taginfo.tag} {/foreach}{/if}" />
-{elseif $galleryId ne '' & $prefs.metatag_imagetitle ne 'n'}		<meta name="keywords" content="{tr}Images Galleries{/tr} {$title} {if $prefs.feature_freetags eq 'y'}{foreach from=$freetags.data item=taginfo}{$taginfo.tag} {/foreach}{/if}" />
+{elseif isset($galleryId) && $galleryId ne '' & $prefs.metatag_imagetitle ne 'n'}		<meta name="keywords" content="{tr}Images Galleries{/tr} {$title} {if $prefs.feature_freetags eq 'y'}{foreach from=$freetags.data item=taginfo}{$taginfo.tag} {/foreach}{/if}" />
 {elseif $prefs.metatag_keywords ne ''}		<meta name="keywords" content="{$prefs.metatag_keywords} {if $prefs.feature_freetags eq 'y'}{foreach from=$freetags.data item=taginfo}{$taginfo.tag} {/foreach}{/if}" />
 {/if}
 {if $prefs.metatag_author ne ''}		<meta name="author" content="{$prefs.metatag_author}" />
 {/if}
 {if $prefs.metatag_pagedesc eq 'y' and $description ne ''}		<meta name="description" content="{$description}" />
-{elseif $prefs.metatag_description ne '' or $description eq ''}		<meta name="description" content="{$prefs.metatag_description}" />
+{elseif $prefs.metatag_description ne '' or (isset($description) and $description eq '')}		<meta name="description" content="{$prefs.metatag_description}" />
 {/if}
 {if $prefs.metatag_geoposition ne ''}		<meta name="geo.position" content="{$prefs.metatag_geoposition}" />
 {/if}
@@ -23,23 +23,28 @@
 {/if}
 
 {* --- tikiwiki block --- *}
-		<script type="text/javascript" src="lib/tiki-js{if !empty($minify_scripts_on_the_fly) and $prefs.feature_use_minified_scripts == 'y'}.min{/if}.js"></script>
 {include file='bidi.tpl'}
 		<title>
-{if isset($trail)}			{breadcrumbs type="fulltrail" loc="head" crumbs=$trail}
+{if isset($trail)}
+	{breadcrumbs type=$prefs.site_title_breadcrumb loc="head" crumbs=$trail}
 {else}
-	{$prefs.browsertitle|escape}
-	{if !empty($headtitle)} : {$headtitle}
-	{elseif !empty($page)} : {if $beingStaged eq 'y' and $prefs.wikiapproval_hideprefix == 'y'}{$approvedPageName|escape}{else}{$page|escape}{/if} {* add $description|escape if you want to put the description + update breadcrumb_build replace return $crumbs->title; with return empty($crumbs->description)? $crumbs->title: $crumbs->description; *}
-	{elseif !empty($arttitle)} : {$arttitle|escape}
-	{elseif !empty($title)} : {$title|escape}
-	{elseif !empty($thread_info.title)} : {$thread_info.title|escape}
-	{elseif !empty($post_info.title)} : {$post_info.title|escape}
-	{elseif !empty($forum_info.name)} : {$forum_info.name|escape}
-	{elseif !empty($categ_info.name)} : {$categ_info.name}
-	{elseif !empty($userinfo.login)} : {$userinfo.login|escape}
-	{elseif !empty($tracker_item_main_value)} : {$tracker_item_main_value|escape}
-	{elseif !empty($tracker_info.name)} : {$tracker_info.name|escape}
+	{if $prefs.site_title_location eq 'before'}
+		{$prefs.browsertitle|escape} : 
+	{/if}
+	{if !empty($headtitle)}{$headtitle}
+	{elseif !empty($page)}{if $beingStaged eq 'y' and $prefs.wikiapproval_hideprefix == 'y'}{$approvedPageName|escape}{else}{$page|escape}{/if} {* add $description|escape if you want to put the description + update breadcrumb_build replace return $crumbs->title; with return empty($crumbs->description)? $crumbs->title: $crumbs->description; *}
+	{elseif !empty($arttitle)}{$arttitle|escape}
+	{elseif !empty($title)}{$title|escape}
+	{elseif !empty($thread_info.title)}{$thread_info.title|escape}
+	{elseif !empty($post_info.title)}{$post_info.title|escape}
+	{elseif !empty($forum_info.name)}{$forum_info.name|escape}
+	{elseif !empty($categ_info.name)}{$categ_info.name}
+	{elseif !empty($userinfo.login)}{$userinfo.login|escape}
+	{elseif !empty($tracker_item_main_value)}{$tracker_item_main_value|escape}
+	{elseif !empty($tracker_info.name)}{$tracker_info.name|escape}
+	{/if}
+	{if $prefs.site_title_location eq 'after'}
+		: {$prefs.browsertitle|escape} 
 	{/if}
 {/if}
 		</title>
@@ -55,8 +60,8 @@
 {/if}
 
 {* --- universaleditbutton.org --- *}
-{if ($editable and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox')) or $tiki_p_admin_wiki eq 'y' or $canEditStaging eq 'y'}
-		<link rel="alternate" type="application/x-wiki" title="{tr}Edit this page!{/tr}" href="tiki-editpage.php?page={$page}" />
+{if (isset($editable) and $editable) and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox' or $tiki_p_admin_wiki eq 'y' or $canEditStaging eq 'y')}
+		<link rel="alternate" type="application/x-wiki" title="{tr}Edit this page!{/tr}" href="tiki-editpage.php?page={$page|escape:url}" />
 {/if}
 
 {* --- Firefox RSS icons --- *}
@@ -89,9 +94,6 @@
 		<link rel="alternate" type="application/rss+xml" title='{$prefs.title_rss_calendar|escape|default:"{tr}RSS Calendars{/tr}"}' href="tiki-calendars_rss.php?ver={$prefs.rssfeed_default_version}" />
 {/if}
 
-{if ($prefs.feature_jquery neq "y" or $prefs.feature_jquery_tablesorter neq "y") and $prefs.javascript_enabled eq "y"}
-	<script type="text/javascript" src="lib/tiki-js-sorttable.js"></script>
-{/if}
 {if $prefs.feature_jquery eq "y"}
 	{include file='header_jquery.tpl'}
 {/if}

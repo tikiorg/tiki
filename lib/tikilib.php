@@ -400,7 +400,6 @@ class TikiLib extends TikiDb_Bridge {
 				left join `tiki_user_preferences` tup2 on (tup2.`user`=uu.`login` and tup2.`prefName`='mailCharset')
 				where $mid
 				";
-
 		$result = $this->query($query,array_merge( $bindvars, $bindvars ));
 
 		if ($result->numRows()) {
@@ -454,9 +453,13 @@ class TikiLib extends TikiDb_Bridge {
 					$res['perm'] = $this->user_has_perm_on_object($res['user'],$object,'image gallery','tiki_p_view_image_gallery');
 					break;
 				case 'category_changed':
-					global $categlib;
+					global $categlib; include_once ('lib/categories/categlib.php');
 					$res['perm']= $categlib->has_view_permission($res['user'],$object);
-					break;				
+					break;
+				case 'fgal_quota_exceeded':
+					global $tiki_p_admin_file_galleries;
+					$res['perm'] = ($tiki_p_admin_file_galleries == 'y');
+					break;
 				default:
 					// for security we deny all others.
 					$res['perm']=FALSE;
@@ -2016,7 +2019,7 @@ class TikiLib extends TikiDb_Bridge {
 			$ret = true;
 		}
 		if (!$user) {
-			if ($prefs['ip_can_be_checked'] != 'y' && !isset($_COOKIE['PHPSESSID'])) {// cookie has not been activated too bad for him
+			if ($prefs['ip_can_be_checked'] != 'y' && !isset($_COOKIE[ session_name() ])) {// cookie has not been activated too bad for him
 				$ret = true;
 			} elseif (isset($_COOKIE[md5("tiki_wiki_poll_$id")])) {
 				$ret = true;
@@ -2306,28 +2309,6 @@ class TikiLib extends TikiDb_Bridge {
 		}
 		$result = $this->fetchAll($query, $bindvars);
 
-		if ( $with_subgals_size ) {
-			if (!function_exists('galsize')) {
-				function galsize($id, &$db) {
-					$return = 0;
-
-					$result = $db->query('SELECT `fileId`,`filesize` FROM `tiki_files` WHERE `galleryId`=?', array($id));
-					while ( $res = $result->fetchRow() ) {
-						$return += $res['filesize'];
-					}
-					unset($result);
-
-					$result = $db->query('SELECT `galleryId` FROM `tiki_file_galleries` WHERE `parentId`=?', array($id));
-					while ( $res = $result->fetchRow() ) {
-						$return += galsize($res['galleryId'], $db);
-					}
-					unset($result);
-
-					return $return;
-				}
-			}
-		}
-
 		$ret = array();
 		$gal_size_order = array();
 		$cant = 0;
@@ -2363,7 +2344,7 @@ class TikiLib extends TikiDb_Bridge {
 			if ( $need_everything || $maxRecords == -1 || $cant < $maxRecords ) {
 				$ret[$cant] = $res;
 				if ( $with_subgals_size && $res['isgal'] == 1 ) {
-					$ret[$cant]['size'] = (string)galsize($res['id'], $this);
+					$ret[$cant]['size'] = (string)$filegallib->getUsedSize($res['id']);
 					$ret[$cant]['filesize'] = $ret[$cant]['size']; /// Obsolete
 					if ( $keep_subgals_together ) {
 						$gal_size_order[$cant] = $ret[$cant]['size'];
@@ -2495,7 +2476,8 @@ class TikiLib extends TikiDb_Bridge {
 				'visible' => 'y',
 				'archives' => -1,
 				'type' => 'default',
-				'description' => ''
+				'description' => '',
+				'quota' => $prefs['fgal_quota_default'],
 			);
 		}
 
@@ -3396,7 +3378,7 @@ class TikiLib extends TikiDb_Bridge {
 		$this->query($query, $bindvars, -1, -1, false);
 		$query = "insert into `tiki_sessions`(`sessionId`,`timestamp`,`user`,`tikihost`) values(?,?,?,?)";
 		$result = $this->query($query, array($this->sessionId, (int)$this->now, $user,$_SERVER['HTTP_HOST']), -1, -1, false );
-		if ($prefs['session_db'] == 'y') {
+		if ($prefs['session_storage'] == 'db') {
 			// clean up adodb sessions as well in case adodb session garbage collection not working
 			$query = "delete from `sessions` where `expiry`<?";
 			$this->query($query, array($oldy));
@@ -4150,7 +4132,9 @@ class TikiLib extends TikiDb_Bridge {
 		global $userlib;
 		$groups = $userlib->get_user_groups( $user );
 
-		$accessor = Perms::get( array( 'type' => $objtype, 'object' => $object ) );
+		$context = array( 'type' => $objtype, 'object' => $object );
+
+		$accessor = Perms::get( $context );
 		$accessor->setGroups( $groups );
 
 		return $accessor->$perm;
@@ -5812,7 +5796,7 @@ class TikiLib extends TikiDb_Bridge {
 				}
 			}
 
-			return $this->plugin_execute( $name, $data, $params, $offset, true, $parseOptions );
+			return $this->plugin_execute( $name, $data, $params, $offset, $validationPerformed, $parseOptions );
 		}
 	}
 
@@ -6969,7 +6953,7 @@ class TikiLib extends TikiDb_Bridge {
 								if ($in_paragraph && ( 0 == strcmp("", trim($line)) || substr(trim($line),0,5) == '</div' || substr(trim($line),0,4) == '<div')) {
 									// If still in paragraph, on meeting first blank line or end of div or start of div created by plugins; close a paragraph
 									$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 0, 0);
-								} elseif (!$in_paragraph && (0 != strcmp("", trim($line))) && substr(trim($line),0,4) != '<div') {
+								} elseif (!$in_paragraph && (0 != strcmp("", trim($line))) && substr(trim($line),0,4) != '<div' && !preg_match('/^\xc2\xa7[\dabcdef\xc2\xa7]+\xc2\xa7$/', $line)) {	// and not noparse guid
 									// If not in paragraph, first non-blank line; start a paragraph; if not start of div created by plugins
 									$data .= "<p>";
 									$in_paragraph = 1;
@@ -7358,6 +7342,12 @@ class TikiLib extends TikiDb_Bridge {
 		unset( $this->cache_page_info[urlencode($page)] );
 		$query = "update `tiki_pages` set `cache_timestamp`=? where `pageName`=?";
 		$this->query($query, array(0,$page) );
+
+		require_once 'lib/cache/pagecache.php';
+		$pageCache = Tiki_PageCache::create()
+			->checkMeta( 'wiki-page-output-meta-timestamp', array(
+				'page' => $page ) )
+			->invalidate();
 	}
 
 	/** Update a wiki page

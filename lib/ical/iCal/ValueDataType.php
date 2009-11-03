@@ -729,5 +729,3 @@ class File_iCal_ValueDataType_UTCOffset extends File_iCal_ValueDataType
     }
 
 }
-
-?>

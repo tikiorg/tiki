@@ -96,5 +96,3 @@ if ( $prefs['feature_wiki_screencasts'] == 'y' && (isset($tiki_p_upload_screenca
   echo $xml;
   
 }
-
-?>

@@ -5,7 +5,7 @@ require_once('lib/importer/tikiimporter.php');
 require_once('lib/importer/tikiimporter_wiki.php');
 
 if ($tiki_p_admin_importer != 'y') {
-    $smarty->assign('msg', tra("Permission denied you cannot view this section"));
+    $smarty->assign('msg', tra("Permission denied. You cannot view this section"));
     $smarty->display("error.tpl");
     die;
 }
@@ -70,5 +70,3 @@ if (isset($_SESSION['tiki_importer_feedback'])) {
 
 $smarty->assign('mid', 'tiki-importer.tpl');
 $smarty->display('tiki.tpl');
-
-?>

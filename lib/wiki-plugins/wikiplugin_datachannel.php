@@ -75,5 +75,3 @@ function wikiplugin_datachannel( $data, $params )
 		}
 	}
 }
-
-?>

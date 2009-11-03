@@ -348,10 +348,10 @@ $masterPerms = array();
 foreach ($candidates['data'] as $perm) {
 	$perm['label'] = tra($perm['permDesc']) . ' <em>(' . $perm['permName'] . ')</em>' . '<span style="display:none;">' . tra($perm['level'] . '</span>');
 
-	for( $i = 0; $i < count($groupNames); $i++) {
-		$p = $displayedPermissions->has( $groupNames[$i], $perm['permName'] ) ? 'y' : 'n';
-		$perm[$groupNames[$i] . '_hasPerm'] = $p;
-		$perm[$groupIndices[$i]] = $p;
+	foreach( $groupNames as $index => $groupName ) {
+		$p = $displayedPermissions->has( $groupName, $perm['permName'] ) ? 'y' : 'n';
+		$perm[$groupName . '_hasPerm'] = $p;
+		$perm[$groupIndices[$index]] = $p;
 	}
 
 	if (($feature_filter === false || in_array( $perm['type'], $feature_filter)) && ($restrictions === false || in_array( $perm['permName'], $restrictions ))) {
@@ -386,14 +386,13 @@ $smarty->assign_by_ref('features', $features);
 
 // Create JS to set up checkboxs (showing group inheritance)
 $js = '';
-for( $i = 0; $i < count($groupNames); $i++) {
-
-	$groupName = addslashes($groupNames[$i]);
+foreach( $groupNames as $groupName ) {
+	$groupName = addslashes($groupName);
 	$beneficiaries = '';
-	for( $j = 0; $j < count($groupInheritance); $j++) {
-		if (is_array($groupInheritance[$j]) && in_array($groupName, $groupInheritance[$j])) {
+	foreach( $groupInheritance as $index => $gi ) {
+		if ( is_array($gi) && in_array($groupName, $gi) ) {
 			$beneficiaries .= !empty($beneficiaries) ? ',' : '';
-			$beneficiaries .='input[name="perm['. addslashes($groupNames[$j]).'][]"]';
+			$beneficiaries .='input[name="perm['. addslashes($groupNames[$index]).'][]"]';
 		}
 	}
 
@@ -450,9 +449,6 @@ setcookie('tab', $cookietab);
 $smarty->assign('cookietab', $cookietab);
 
 // setup smarty remarks flags
-
-// TODO assign this remarks flag var if category (parent) perms differ from object's 
-$smarty->assign('categ_perms_flag', false);
 
 // Display the template
 $smarty->assign('mid', 'tiki-objectpermissions.tpl');
@@ -625,10 +621,15 @@ function get_displayed_permissions() {
 
 	$smarty->assign('permissions_displayed', 'direct');
 	if( $comparator->equal() ) {
-		if( $parent = $currentObject->getParentPermissions() ) {
+		$globPerms = $objectFactory->get( 'global', null )->getDirectPermissions();	// global perms
+		$parent = $currentObject->getParentPermissions();							// inherited perms (could be category ones)
+		$comparator = new Perms_Reflection_PermissionComparator( $globPerms, $parent );
+		if( $comparator->equal() ) {												// parent == globals
 			$smarty->assign('permissions_displayed', 'parent');
-			$displayedPermissions = $parent;
+		} else {																	// parent not globals, so must be category
+			$smarty->assign('permissions_displayed', 'category');
 		}
+		$displayedPermissions = $parent;
 	}
 
 	return $displayedPermissions;

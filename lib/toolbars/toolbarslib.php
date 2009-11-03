@@ -1625,7 +1625,7 @@ class ToolbarsList
 						if (!empty($right)) {
 							$right = '<span class="toolbar-list">' . $right . '</span>';
 						}
-						$lineHtml .= "<div class='helptool-admin'>$lineBit $right</div>";
+						$lineHtml = "<div class='helptool-admin'>$lineBit $right</div>" . $lineHtml;
 					} else {
 						$lineHtml = $lineBit;
 					}

@@ -530,5 +530,3 @@ class PageListLib extends MultilingualLib {
 }
 
 $pagelistlib = new PageListLib;
-
-?>

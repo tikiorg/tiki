@@ -44,13 +44,44 @@ include_once ('lib/init/tra.php');
 $tikilib = new TikiLib;
 // Get tiki-setup_base needed preferences in one query
 $prefs = array();
-$needed_prefs = array('session_lifetime' => '0', 'session_db' => 'n', 'sessions_silent' => 'disabled', 'language' => 'en', 'feature_pear_date' => 'y', 'lastUpdatePrefs' => - 1, 'feature_fullscreen' => 'n', 'error_reporting_level' => 0, 'smarty_notice_reporting' => 'n'
-// needed by initlib
+$needed_prefs = array(
+	'session_lifetime' => '0',
+	'session_storage' => 'default',
+	'session_silent' => 'n',
+	'session_cookie_name' => session_name(),
+	'language' => 'en',
+	'feature_pear_date' => 'y',
+	'lastUpdatePrefs' => - 1,
+	'feature_fullscreen' => 'n',
+	'error_reporting_level' => 0,
+	'smarty_notice_reporting' => 'n',
+	'memcache_enabled' => 'n',
+	'memcache_expiration' => 3600,
+	'memcache_prefix' => 'tiki_',
+	'memcache_flags' => MEMCACHE_COMPRESSED,
+	'memcache_servers' => false,
 );
 $tikilib->get_preferences($needed_prefs, true, true);
 if ($prefs['lastUpdatePrefs'] == - 1) {
 	$tikilib->query('insert into `tiki_preferences`(`name`,`value`) values(?,?)', array('lastUpdatePrefs', 1));
 }
+
+if( $prefs['memcache_enabled'] == 'y' ) {
+	require_once('lib/cache/memcachelib.php');
+	if( is_array( $prefs['memcache_servers'] ) ) {
+		$servers = $prefs['memcache_servers'];
+	} else {
+		$servers = unserialize( $prefs['memcache_servers'] );
+	}
+
+	$memcachelib = new MemcacheLib( $servers, array(
+		'enabled' => true,
+		'expiration' => (int) $prefs['memcache_expiration'],
+		'key_prefix' => $prefs['memcache_prefix'],
+		'flags' => $prefs['memcache_flags'],
+	) );
+}
+
 require_once ('lib/tikidate.php');
 $tikidate = new TikiDate();
 // set session lifetime
@@ -58,26 +89,37 @@ if ($prefs['session_lifetime'] > 0) {
 	ini_set('session.gc_maxlifetime', $prefs['session_lifetime'] * 60);
 }
 // is session data  stored in DB or in filesystem?
-if ($prefs['session_db'] == 'y') {
+if ($prefs['session_storage'] == 'db') {
 	if ($api_tiki == 'adodb') {
 		require_once ('lib/tikisession-adodb.php');
 	} elseif ($api_tiki == 'pdo') {
 		require_once ('lib/tikisession-pdo.php');
 	}
+} elseif( $prefs['session_storage'] == 'memcache' && isset( $memcachelib ) && $memcachelib->isEnabled() ) {
+	require_once ('lib/tikisession-memcache.php');
 }
+
+if( ! isset( $prefs['session_cookie_name'] ) || empty( $prefs['session_cookie_name'] ) ) {
+	$prefs['session_cookie_name'] = session_name();
+}
+
+session_name( $prefs['session_cookie_name'] );
+
 // Only accept PHP's session ID in URL when the request comes from the tiki server itself
 // This is used by features that need to query the server to retrieve tiki's generated html and images (e.g. pdf export)
-if (isset($_GET['PHPSESSID']) && $_SERVER['REMOTE_ADDR'] == '127.0.0.1') {
-	$_COOKIE['PHPSESSID'] = $_GET['PHPSESSID'];
-	session_id($_GET['PHPSESSID']);
+if (isset($_GET[session_name()]) && $_SERVER['REMOTE_ADDR'] == '127.0.0.1') {
+	$_COOKIE[session_name()] = $_GET[session_name()];
+	session_id($_GET[session_name()]);
 }
-if ($prefs['sessions_silent'] == 'disabled' or !empty($_COOKIE)) {
+
+if ( $prefs['session_silent'] != 'y' or isset( $_COOKIE[session_name()] ) ) {
 	// enabing silent sessions mean a session is only started when a cookie is presented
 	$session_params = session_get_cookie_params();
 	session_set_cookie_params($session_params['lifetime'], $tikiroot);
 	unset($session_params);
 	session_start();
 }
+
 // Moved here from tiki-setup.php because smarty use a copy of session
 if ($prefs['feature_fullscreen'] == 'y') require_once ('lib/setup/fullscreen.php');
 // Smarty needs session since 2.6.25

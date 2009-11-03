@@ -20,13 +20,14 @@
 {if $fieldId}<input type="hidden" name="fieldId" value="{$fieldId}" />{/if}
 <input type="submit" name="act" value="{tr}Save clicked point{/tr}" /><br /><br />
 <input type="submit" name="reset_default" value="{tr}Reset view to default{/tr}" />
-<input type="submit" name="act" value="{tr}Save current view as default{/tr}" />
+<input type="submit" name="set_default" value="{tr}Save current view as default{/tr}" />
 <input type="submit" name="recenter" value="{tr}Center map to saved point{/tr}" />
 {/if}
 <input type="hidden" name="default[x]" value="{$pointx}" id="defx" />
 <input type="hidden" name="default[y]" value="{$pointy}" id="defy" />
 <input type="hidden" name="default[z]" value="{$pointz}" id="defz" />
 <input type="submit" name="reset_site_default" value="{tr}Reset view to site default{/tr}" />
+<input type="hidden" name="for" value="{$for|escape}" />
 </form>
 
 {if $pointx eq ''}
@@ -95,6 +96,8 @@ function showAddress(address) {literal}{{/literal}
     );
   {literal}}{/literal}
 {literal}}{/literal}
+
+{literal}$jq("input[name=address]").focus(function () { if ($jq(this).val() == "{/literal}{tr}enter address{/tr}{literal}") {$jq(this).val("");}}){/literal}
 
 //--><!]]>
 window.onload=load;

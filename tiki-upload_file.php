@@ -68,8 +68,9 @@ if (empty($_REQUEST['fileId']) && $tiki_p_upload_files != 'y' && $tiki_p_admin_f
 if (isset($_REQUEST['galleryId'][1])) {
 	foreach($_REQUEST['galleryId'] as $i => $gal) {
 		if (!$i) continue;
-		$perms = $tikilib->get_perm_object($_REQUEST['galleryId'][$key], 'file gallery', $gal_info, false);
-		if ($perm['tiki_p_upload_files'] != 'y') {
+		// TODO get the ggod gal_info
+		$perms = $tikilib->get_perm_object($_REQUEST['galleryId'][$i], 'file gallery', $gal_info, false);
+		if ($perms['tiki_p_upload_files'] != 'y') {
 			$smarty->assign('errortype', 401);
 			$smarty->assign('msg', tra("Permission denied"));
 			$smarty->display('error.tpl');
@@ -159,8 +160,12 @@ if (isset($_REQUEST["upload"])) {
 		}
 		$formId = $_REQUEST['formId'];
 		$smarty->assign("FormId", $_REQUEST['formId']);
-		if (empty($_REQUEST['galleryId'][$key])) continue;
-		if (!isset($_REQUEST['comment'][$key])) $_REQUEST['comment'][$key] = '';
+		if (empty($_REQUEST['galleryId'][$key])) {
+			continue;
+		}
+		if (!isset($_REQUEST['comment'][$key])) {
+			$_REQUEST['comment'][$key] = '';
+		}
 		// We process here file uploads
 		if (!empty($_FILES["userfile"]["name"][$key])) {
 			// Were there any problems with the upload?  If so, report here.
@@ -193,6 +198,10 @@ if (isset($_REQUEST["upload"])) {
 					$errors[] = tra('No permission to upload zipped file packages');
 					continue;
 				}
+			}
+			if (!$filegallib->checkQuota($_FILES['userfile']['size'][$key], $_REQUEST['galleryId'][$key], $error)) {
+				$errors[] = $error;
+				continue;
 			}
 			$file_name = $_FILES["userfile"]["name"][$key];
 			$file_tmp_name = $_FILES["userfile"]["tmp_name"][$key];

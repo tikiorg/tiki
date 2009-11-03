@@ -24,7 +24,7 @@ function wikiplugin_listpages_info() {
 			'max' => array(
 				'required' => false,
 				'name' => tra('Result Count'),
-				'description' => tra('Amount of results displayed in the list.'),
+				'description' => tra('Number of results displayed in the list.'),
 			),
 			'initial' => array(
 				'required' => false,

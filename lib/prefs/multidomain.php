@@ -19,5 +19,3 @@ function prefs_multidomain_list() {
 		),
 	);
 }
-
-?>

@@ -6,14 +6,14 @@
 // damian aka damosoft 30 March 2004
 
 function wikiplugin_flash_help() {
-        return tra("Displays a SWF on the wiki page").":<br />~np~{FLASH(movie=\"url_to_flash\",width=>xx,height=>xx,quality=>high)}{FLASH}~/np~";
+        return tra("Displays a Flash (.swf) file in the wiki page").":<br />~np~{FLASH(movie=\"url_to_flash\",width=>xx,height=>xx,quality=>high)}{FLASH}~/np~";
 }
 
 function wikiplugin_flash_info() {
 	return array(
 		'name' => tra('Flash video'),
 		'documentation' => 'PluginFlash',
-		'description' => tra('Displays a SWF on the wiki page'),
+		'description' => tra('Displays a Flash (.swf) file in the wiki page'),
 		'prefs' => array('wikiplugin_flash'),
 		'extraparams' => true,
 		'icon' => 'pics/icons/page_white_flash.png',

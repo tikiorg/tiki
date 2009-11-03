@@ -246,12 +246,12 @@ global $objectlib;
 if ($prefs['feature_categories'] == 'y') {
 	$type = 'image';
 	$arr = array();
-	for ($i = 0; $i <= count($images['data']) - 1; $i++) {
-		$img_id = $images['data'][$i]['imageId'];
+	foreach( $images['data'] as $index => $imgd ) {
+		$img_id = $imgd['imageId'];
 		$arr = $categlib->get_object_categories($type, $img_id);
 		//adding categories to the object
-		for ($k = 0; $k <= count($arr) - 1; $k++) {
-			$images['data'][$i]['categories'][$k] = $categlib->get_category_name($arr[$k]);
+		foreach( $arr as $cat_name ) {
+			$images['data'][$index]['categories'][] = $categlib->get_category_name($cat_name);
 		}
 	}
 }

@@ -26,5 +26,3 @@ class Perms_Check_DirectTest extends TikiTestCase
 		$this->assertFalse( $direct->check( $mock, array(), 'view', array( 'Admins', 'Anonymous' ) ) );
 	}
 }
-
-?>

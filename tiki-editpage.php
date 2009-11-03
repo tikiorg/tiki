@@ -57,7 +57,6 @@ include 'lib/setup/editmode.php';
 
 $auto_query_args = array('wysiwyg','page_id','page', 'lang', 'hdr');
 
-
 $smarty->assign_by_ref('page', $_REQUEST["page"]);
 // Permissions
 $tikilib->get_perm_object($page, 'wiki page', $info, true);
@@ -305,16 +304,6 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 						$tikilib->update_page($pagename, $part["body"], tra('page imported'), $author, $authorid, $description, 0, $pageLang, false, $hash);
 					} else {
 						$tikilib->create_page($pagename, $hits, $part["body"], $lastmodified, tra('created from import'), $author, $authorid, $description, $pageLang, false, $hash);
-						// Check if a WS is active
-						global $perspectivelib; require_once 'lib/perspectivelib.php';
-						global $wslib; require_once 'lib/workspaces/wslib.php';
-						$activeWS = $perspectivelib->get_current_perspective(null);
-						// If there's a WS active and the WS has a homepage, then load the WS homepage
-						if (!empty($activeWS))
-						{
-							$preferences = $perspectivelib->get_preferences($activeWS);
-							$wslib->add_ws_object($preferences['wsId'],$pagename,'wiki page');
-						}
 					}
 
 					// Handle the translation bits after actual creation/update
@@ -810,8 +799,9 @@ if(isset($_REQUEST["preview"])) {
 
 function parse_output(&$obj, &$parts,$i) {
 	if(!empty($obj['parts'])) {
-		for($i=0; $i<count($obj['parts']); $i++)
-			parse_output($obj['parts'][$i], $parts,$i);
+		foreach( $obj['parts'] as $index => $part ) {
+			parse_output($part, $parts,$index);
+		}
 	}elseif( $obj['type'] == 'application/x-tikiwiki' ) {
 		$aux["body"] = $obj['body'];
 		$ccc=$obj['header']["content-type"];
@@ -911,16 +901,7 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
 		   $tikilib->cache_links($cachedlinks);
 		 */
 		$tikilib->create_page($_REQUEST["page"], 0, $edit, $tikilib->now, $_REQUEST["comment"],$user,$tikilib->get_ip_address(),$description, $pageLang, $is_html, $hash, $_REQUEST['wysiwyg'], $wiki_authors_style);
-		// Check if a WS is active
-		global $perspectivelib; require_once 'lib/perspectivelib.php';
-		global $wslib; require_once 'lib/workspaces/wslib.php';
-		$activeWS = $perspectivelib->get_current_perspective(null);
-		// If there's a WS active and the WS has a homepage, then load the WS homepage
-		if (!empty($activeWS))
-		{
-			$preferences = $perspectivelib->get_preferences($activeWS);
-			$wslib->add_ws_object($preferences['wsId'],$_REQUEST["page"],'wiki page');
-		}
+
 		$info_new = $tikilib->get_page_info($page);
 
 		if( $editlib->isNewTranslationMode() && ! empty( $pageLang ) )

@@ -46,7 +46,7 @@ Add a value in first check when you create a new admin page. *}
 "calendar", "intertiki", "kaltura", "freetags", "gmap",
 "i18n", "wysiwyg", "copyright", "category", "module", "look", "textarea",
 "multimedia", "ads", "profiles", "semantic", "plugins", "webservices",
-'sefurl', 'workspaces'))}
+'sefurl'))}
   {assign var="include" value=$smarty.get.page}
 {else}
   {assign var="include" value="list-sections"}
@@ -55,8 +55,8 @@ Add a value in first check when you create a new admin page. *}
   <div class="simplebox adminanchors clearfix" >{include file='tiki-admin-include-anchors.tpl'}</div>
 {/if}
 
-{if $feature_version_checks eq 'y' and $prefs.tiki_needs_upgrade eq 'y'}
-<div class="simplebox highlight">{tr}A new version of Tikiwiki, <b>{$tiki_release}</b>, is available. You are currently running <b>{$tiki_version}</b>. Please visit <a href="http://tikiwiki.org/Download">http://tikiwiki.org/Download</a>.{/tr}</div>
+{if $prefs.tiki_needs_upgrade eq 'y'}
+<div class="simplebox highlight">{tr}A new version of Tikiwiki, <b>{$prefs.tiki_release}</b>, is available. You are currently running <b>{$tiki_version}</b>. Please visit <a href="http://tikiwiki.org/Download">http://tikiwiki.org/Download</a>.{/tr}</div>
 {/if}
 
 {if $tikifeedback}

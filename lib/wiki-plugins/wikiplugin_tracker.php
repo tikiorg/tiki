@@ -67,7 +67,7 @@ function wikiplugin_tracker_info() {
 			'url' => array(
 				'required' => false,
 				'name' => tra('URL'),
-				'description' => tra('Url used for the field links'),
+				'description' => tra('URL used for the field links'),
 				'filter' => 'url'
 			),
 			'target' => array(

@@ -40,5 +40,3 @@ class Transition_AtLeastTest extends PHPUnit_Framework_TestCase
 		), $transition->explain() );
 	}
 }
-
-?>

@@ -864,52 +864,41 @@ ul.categories li{
 	padding: 0;
 }
 
-/* New Toolbars (toolbars) */
+/* New Toolbars */
 
-a.toolbar {
-	padding: 0 .5em 0 0;
+.textarea-toolbar {	/* toolbars outer container */
+	width: 99%;
 }
 
-a.qt-plugin {
+.helptool-admin {	/* right justified section of toolbars */
+	float: right;
+	padding-left: 8px;
+	margin-left: 8px;
+	border-left: medium double #bfbfbf;
 }
 
-a.qt-plugin div {
-	/* .iconmenu */
-	background-color: #CD8;
-	border: thin #690 solid;
-	margin: 0 .4em 0 0;
-	padding: 2px .4em 0 .2em;
-	color: #030;
-	font-size: 10px;
+a.toolbar {			/* each tool button */
+	padding: 4px 2px;
+	display: inline-block;
 }
 
-a.qt-plugin:hover {
-	text-decoration: none;
+.textarea-toolbar img.icon {
+	vertical-align: middle;
+	margin: 1px 3px;
 }
 
-a.qt-plugin div img { /* div.iconmenu img.icon */
-	margin-bottom: 4px;
-}
-
-span.toolbar-list {
+span.toolbar-list {	/* groups of tools */
 	padding: 0 0 0 .5em;
 	line-height: 20px;
 	border-left: medium double #bfbfbf;
 }
 
-.helptool-admin {
-	float: right;
-	border-left: medium double #bfbfbf;
-	padding-left:8px;
-	margin-left:8px;
-}
-
-.toolbars-picker {
+.toolbars-picker {	/* colours, smilies etc */
 	position: absolute;
 	width: 300px;
-	background-color: white;
-	border: thin solid black;
 	z-index: 300;
+	background-color: #fff;
+	color: #000;
 }
 
 .toolbars-picker a {
@@ -917,9 +906,7 @@ span.toolbar-list {
 	display: inline-block;
 }
 
-.toolbars-picker a:hover {
-	background-color: #ccc;
-}
+
 
 /* New Help section */
 div#tikihelp {
@@ -1102,35 +1089,24 @@ div.minichatchan {
 }
 
 /** Other boxes **/
-.cbox {
-	overflow: hidden;
-/*	border: 1px solid yellow;
-	background: white;
-	color: black; */
-}
-
-.cbox-title {
-/*	border-bottom: 1px solid yellow; */
-	padding: 3px 3px 0 3px;
-}
-
-.cboxlink {}
-
-.cbox-data {
-	overflow: hidden;
-	padding: 0 3px 3px 3px;
-}
-
-.rbox {
-	margin: 1em .3em 2em .3em;
-}
-	
+.cbox,
+.cbox-data,
 .rbox-title,
 .rbox-data {
 	overflow: hidden;
-	padding: 1px 3px;
-/*	border: 1px solid yellow;*/
 }
+
+.cbox-title {}
+
+.cboxlink {}
+
+.cbox-data {}
+
+/* remarks boxes */
+.rbox {}
+
+.rbox-title,
+.rbox-data {}
 
 .rbox-title {
 	display: inline-block;
@@ -1138,21 +1114,15 @@ div.minichatchan {
 	z-index: 1;
 	position: relative;
 	bottom: -1px;
-	padding: 3px;
-/*	background: yellow;
-	border: 1px solid yellow;
-	border-bottom: 0; */
 }
 	
 .rbox img {
-	padding-right: 3px;
 	vertical-align: middle;
 }
 	
 .rbox-data {
 	position: relative;
 	z-index: 0;
-	padding: 0 3px 3px 3px;
 }
 
 .rbox-close {
@@ -1160,22 +1130,19 @@ div.minichatchan {
 	cursor: pointer;
 }
 
-.comment .rbox-title,
+.comment .rbox-title {}
 .comment .rbox-data {}
 
 .note .rbox-title {}
 .note .rbox-data {}
 
-.tip .rbox-title,
+.tip .rbox-title {}
 .tip .rbox-data {}
 
 .warning .rbox-title {}
 .warning .rbox-data {}
 
 div.simplebox {
-/*	color: green;
-	background: silver;
-	border: 1px solid green; */
 	padding: 3px;
 }
 

@@ -118,7 +118,7 @@ class Comments extends TikiLib {
 			return 0;
 		}
 		if ($size > $forum_info['att_max_size'] && ! $inbound_mail ) {
-			$errors[] = tra('Cannot upload this file maximum upload size exceeded');
+			$errors[] = tra('Cannot upload this file - maximum upload size exceeded');
 			return 0;
 		}
 		$fhash = '';
@@ -2467,7 +2467,7 @@ class Comments extends TikiLib {
 			$errors[] = tra('You have mistyped the anti-bot verification code; please try again.');
 		}
 		if ($forum_info['controlFlood'] == 'y' && !$this->user_can_post_to_forum($user, $forumId) ) {
-			$errors = sprintf(tra('Please wait %d secondes between posts'). $forum_info['floodInterval']);
+			$errors = sprintf(tra('Please wait %d seconds between posts'). $forum_info['floodInterval']);
 		}
 		if ($tiki_p_admin_forum != 'y' && $forum_info['forum_use_password'] != 'n' && $params['password'] != $forum_info['forum_password']) {
 			$errors[] = tra('Wrong password. Cannot post comment');
@@ -2529,7 +2529,7 @@ class Comments extends TikiLib {
 		if (($tiki_p_forum_autoapp != 'y')
 			&& ($forum_info['approval_type'] == 'queue_all' || (!$user && $forum_info['approval_type'] == 'queue_anon'))) {
 			$threadId = 0;
-			$feedbacks[] = tra('Your message has been queued for approval, the message will be posted after a moderator approves it.');
+			$feedbacks[] = tra('Your message has been queued for approval and will be posted after a moderator approves it.');
 			$qId = $this->replace_queue(0, $forum_info['forumId'], $comments_objectId, $parent_id,
 				$user, $params['comments_title'], $params['comments_data'], $params['comment_topictype'],
 				$params['comment_topicsmiley'], $params['comment_topicsummary'], $params['comments_title'], $in_reply_to, $params['anonymous_name'], $params['freetag_string'], $params['anonymous_email']);

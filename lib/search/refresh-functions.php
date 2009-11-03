@@ -193,7 +193,7 @@ function refresh_index_oldest() {
 
 function &search_index($data) {
 
-	$preg_utf8_support=preg_match('/\p{Lu}/u', "A" );
+	$preg_utf8_support=@preg_match('/\p{Lu}/u', "A" );
 
 	// Be sure we will parse UTF-8 data
 	if ( function_exists('mb_check_encoding')

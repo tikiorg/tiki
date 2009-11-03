@@ -34,8 +34,8 @@ function wikiplugin_img_info() {
 				'options' => array(
 					array('text' => tra('None'), 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 'y', 'description' => tra('Full size image appears when thumbnail is clicked.')),
-					array('text' => tra('Mouse Over'), 'value' => 'mouseover', 'description' => tra('Full size image will pop up while cursor is over the thumbnail (and disappear when not).')), 
-					array('text' => tra('Mouse Over (Sticky)'), 'value' => 'mousesticky', 'description' => tra('Full size image will pop up once cursor passes over thumbnail and will remain up unless cursor passes over full size popup.')), 
+					array('text' => tra('Mouseover'), 'value' => 'mouseover', 'description' => tra('Full size image will pop up while cursor is over the thumbnail (and disappear when not).')), 
+					array('text' => tra('Mouseover (Sticky)'), 'value' => 'mousesticky', 'description' => tra('Full size image will pop up once cursor passes over thumbnail and will remain up unless cursor passes over full size popup.')), 
 					array('text' => tra('Popup'), 'value' => 'popup', 'description' => tra('Full size image will open in a separate winow or tab (depending on browser settings) when thumbnail is clicked.')), 
 					array('text' => tra('Browse'), 'value' => 'browse', 'description' => tra('Image gallery browse window for the image will open when the thumbnail is clicked if the image is in a Tiki image gallery')), 
 					array('text' => tra('Browse Popup'), 'value' => 'browsepopup', 'description' => tra('Same as "browse" except that the page opens in a new window or tab.')), 
@@ -310,10 +310,7 @@ if (!function_exists('getimagesize_raw')) {
 		// Set styling defaults
 		$thumbdef = 84;                         //Thumbnail height max when none is set
 		if (!empty($imgdata['fileId'])) {
-			global $detected_lib;
-			include_once('lib/images/images.php');
-			$dummy = new Image();
-			$thumbdef = $dummy->thumb_max_size;	// filegals thumbnails size is hard-coded in lib/images/abstract.php
+			$thumbdef = 120;	// filegals thumbnails size is hard-coded in lib/images/abstract.php
 		}
 
 		$descdef = 'font-size:12px; line-height:1.5em;';		//default text style for description
@@ -693,9 +690,9 @@ if (!function_exists('getimagesize_raw')) {
 					if (!empty($fwidth) && !empty($fheight)) {
 						$linkrel .= ";width=$fwidth;height=$fheight";
 					}
-					if (!empty($desconly)) {
+					/*if (!empty($desconly)) {
 						$linkrel .= ";title=$desconly";
-					}
+					}*/
 					$linkrel .= '"';
 					
 				} else {

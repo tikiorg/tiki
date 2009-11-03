@@ -590,7 +590,7 @@ class TrackerLib extends TikiLib {
 		}
 		return $needToCheckCategPerms;
 	}
-	   
+
 	function get_all_tracker_items($trackerId){
 		$ret = array();
 		$query = "select distinct(`itemId`) from `tiki_tracker_items` where`trackerId`=?";
@@ -658,7 +658,7 @@ class TrackerLib extends TikiLib {
 				$smarty->assign("$p", 'y');
 			}
 		}
-		if ($tracker_info['writerGroupCanModify'] == 'y') { // old configuration 
+		if ($tracker_info['writerGroupCanModify'] == 'y') { // old configuration
 			$ret['tiki_p_modify_tracker_items'] = 'y';
 			if ($global) {
 				$tiki_p_modify_tracker_items = 'y';
@@ -776,7 +776,7 @@ class TrackerLib extends TikiLib {
 
 					$cat_table .= " INNER JOIN `tiki_objects` tob$ff ON (tob$ff.`itemId` = tti.`itemId`)"
 						." INNER JOIN `tiki_category_objects` tco$ff ON (tob$ff.`objectId` = tco$ff.`catObjectId`)";
-					$mid .= " AND tob$ff.`type` = 'tracker $trackerId' AND tco$ff.`categId` IN ( ";
+					$mid .= " AND tob$ff.`type` = 'trackeritem' AND tco$ff.`categId` IN ( ";
 					$value = empty($fv) ? $ev : $fv;
 					if ( ! is_array($value) && $value != '' )
 						$value = array($value);
@@ -785,7 +785,7 @@ class TrackerLib extends TikiLib {
 						$bindvars[] = $catId;
 						if ($first)
 							$first = false;
-						else 
+						else
 							$mid .= ',';
 						$mid .= '?';
 					}
@@ -1233,7 +1233,7 @@ class TrackerLib extends TikiLib {
 								$smarty->assign('msg', tra('Cannot write to this file:'). $fhash);
 								$smarty->display("error.tpl");
 								die;
-							}								
+							}
 							fclose($fw);
 							$ins_fields['data'][$i]['value'] = '';
 						} else {
@@ -1273,7 +1273,7 @@ class TrackerLib extends TikiLib {
 			if ($ins_fields["data"][$i]["type"] == 'c' && $ins_fields['data'][$i]['value'] == 'on') {
 				$ins_fields['data'][$i]['value'] = 'y';
 			}
-			
+
 			if ($ins_fields['data'][$i]['type'] == 'g' && $ins_fields['data'][$i]['options_array'][0] == 1) {
 				$creatorGroupFieldId = $ins_fields['data'][$i]['fieldId'];
 			}
@@ -1841,6 +1841,7 @@ class TrackerLib extends TikiLib {
 							continue;
 						} elseif ($field['type'] == 'e') {
 							$cats = split('%%%', trim($data[$i]));
+							$catIds = array();
 							if (!empty($cats)) {
 								foreach ($cats as $c) {
 									global $categlib; include_once('lib/categories/categlib.php');
@@ -2302,7 +2303,7 @@ class TrackerLib extends TikiLib {
 		} else {
 			$editableBy = '';
 		}
-		
+
 		if ($fieldId === false && $trackerId && !empty($name)) {	// called from profiles - update not replace
 			$fieldId = $this->getOne("select max(`fieldId`) from `tiki_tracker_fields` where `trackerId`=? and `name`=?",array((int) $trackerId,$name));
 		}
@@ -2706,7 +2707,7 @@ class TrackerLib extends TikiLib {
 				<dd>if the user does not have a default group set, the first group the user belongs to will be chosen, otherwise Registered group will be used.
 				</dl>'));
 		$type['I'] = array(
-			'label'=>tra('ip selector'),
+			'label'=>tra('IP selector'),
 			'opt'=>true,
 			'help'=>tra('<dl>
 				<dt>Function: Provides a field for entering an IP address.
@@ -2791,7 +2792,7 @@ class TrackerLib extends TikiLib {
 			'help'=>tra('<dl>
 				<dt>Function: ?
 				<dt>Usage: <strong>label,post,tiki-index.php,page:fieldname,highlight=test</strong>
-				<dt>Example: 
+				<dt>Example:
 				<dt>Description:
 				<dd><strong>[label]</strong> needs explanation;
 				<dd><strong>[post]</strong> needs explanation;
@@ -3019,7 +3020,7 @@ class TrackerLib extends TikiLib {
 		$query = 'select `fieldId` from `tiki_tracker_fields` where `isMain`=? and `trackerId`=?';
 		return $this->getOne($query, array('y', $trackerId));
 	}
-		
+
 	function categorized_item($trackerId, $itemId, $mainfield, $ins_categs) {
 		global $categlib; include_once('lib/categories/categlib.php');
 		$cat_type = "trackeritem";
@@ -3384,7 +3385,7 @@ class TrackerLib extends TikiLib {
 		}
 		return $value;
 	}
-	/* get the fields from the pretty tracker template 
+	/* get the fields from the pretty tracker template
 	* return a list of fieldIds */
 	function get_pretty_fieldIds($resource, $type='wiki') {
 		global $tikilib, $smarty;

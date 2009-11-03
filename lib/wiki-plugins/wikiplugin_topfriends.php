@@ -1,13 +1,13 @@
 <?php
 function wikiplugin_topfriends_help() {
-	return tra("List top scoring users").":<br />~np~{TOPFRIENDS(limit=>5,public=>y)}{TOPFRIENDS}~/np~";
+	return tra("List top-scoring users").":<br />~np~{TOPFRIENDS(limit=>5,public=>y)}{TOPFRIENDS}~/np~";
 }
 
 function wikiplugin_topfriends_info() {
 	return array(
 		'name' => tra('Top Friends'),
 		'documentation' => 'PluginTopFriends',
-		'description' => tra('List top scoring users.'),
+		'description' => tra('List top-scoring users.'),
 		'prefs' => array( 'feature_friends', 'wikiplugin_topfriends' ),
 		'params' => array(
 			'limit' => array(

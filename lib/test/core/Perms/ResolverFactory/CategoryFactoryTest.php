@@ -239,5 +239,3 @@ class Perms_ResolverFactory_CategoryFactoryTest extends PHPUnit_Framework_TestCa
 		$this->assertEquals( array('HomePage', 'UserPageFoobar', 'HelloWorld'), $out );
 	}
 }
-
-?>

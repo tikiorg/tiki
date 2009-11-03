@@ -41,6 +41,13 @@ function wikiplugin_calendar_info() {
 				'description' => tra('Decide or not to show the list of events at the bottom.'),
 				'filter' => 'alpha',
 			),
+			'viewnavbar' => array(
+				'required' => false,
+				'name' => tra('View the navigation bar'),
+				'description' => tra('Decide or not to show the navigation bar.'),
+				'filter' => 'alpha',
+			),
+
 		),
 	);
 }
@@ -64,11 +71,14 @@ function wikiplugin_calendar($data, $params) {
 		if ( empty($params['viewmode']) ) {
 			$params['viewmode'] = 'month';
 		}
+		if ( empty($params['viewnavbar']) ) {
+			$params['viewnavbar'] = 'n';
+		}
 
     $module_reference = array(
       'moduleId' => null,
       'name' => 'calendar_new',
-      'params' => array( 'calIds' => $params['calIds'],
+      'params' => array( 'calIds' => $params['calIds'], 'viewnavbar'=> $params['viewnavbar'],
 												 'viewlist'=> $params['viewlist'],
 												 'viewmode' => $params['viewmode'] ),
       'position' => null,
@@ -87,5 +97,3 @@ function wikiplugin_calendar($data, $params) {
     return "<div>$out</div>";
 
 }
-
-?>

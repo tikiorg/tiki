@@ -87,9 +87,13 @@ function sendForumEmailNotification($event, $object, $forum_info, $title, $data,
 
 	// Users watching this forum or this post
 	if ($prefs['feature_user_watches'] == 'y' || $prefs['feature_group_watches'] == 'y') {
-		$nots = $tikilib->get_event_watches($event, $event == 'forum_post_topic'? $forum_info['forumId']: $threadId, $forum_info);
-		for ($i = count($nots) - 1; $i >=0; --$i) {
-			$nots[$i]['language'] = $tikilib->get_user_preference($nots[$i]['user'], "language", $defaultLanguage);
+		$nots_raw = $tikilib->get_event_watches($event, $event == 'forum_post_topic'? $forum_info['forumId']: $threadId, $forum_info);
+		$nots = array();
+		foreach( $nots_raw as $n ) {
+			if( $n['user'] != $author ) {
+				$n['language'] = $tikilib->get_user_preference($n['user'], "language", $defaultLanguage);
+				$nots[] = $n;
+			}
 		}
 	}
 
@@ -203,13 +207,12 @@ function sendWikiEmailNotification($wikiEvent, $pageName, $edit_user, $edit_comm
 	// admin notifications
     // If it's a minor change, get only the minor change watches.
 	if( $minor ){
-		$emails = $notificationlib->get_mail_events('wiki_page_changes_incl_minor', 'wikipage' . $pageName); // look for pageName and any page
+		$emails = $notificationlib->get_mail_events('wiki_page_changes_incl_minor', $pageName); // look for pageName and any page
 	} else { // else if it's not minor change, get both watch types.
-		$emails1 = $notificationlib->get_mail_events('wiki_page_changes', 'wikipage' . $pageName); // look for pageName and any page
-		$emails2 = $notificationlib->get_mail_events('wiki_page_changes_incl_minor', 'wikipage' . $pageName); // look for pageName and any page
+		$emails1 = $notificationlib->get_mail_events('wiki_page_changes', $pageName); // look for pageName and any page
+		$emails2 = $notificationlib->get_mail_events('wiki_page_changes_incl_minor', $pageName); // look for pageName and any page
 		$emails = array_merge( $emails1, $emails2 );
 	}
-
 	foreach ($emails as $email) {
 		if ($prefs['wiki_watch_editor'] != "y" && $email == $edit_user)
 		    continue;

@@ -116,9 +116,9 @@ if (isset($_REQUEST["save"])) {
 	//Get the revision number
 	// Get mapfiles from the mapfiles directory
 	$files = $maplib->listMapsWithRev($prefs['map_path']);
-	for ($i = 0; $i < count($files); $i++) {
-		if (substr($files[$i], 0, strlen($_REQUEST["mapfile"])) == $_REQUEST["mapfile"]) {
-			$suffix = substr($files[$i], strlen($_REQUEST["mapfile"]));
+	foreach($files as $file) {
+		if (substr($file, 0, strlen($_REQUEST["mapfile"])) == $_REQUEST["mapfile"]) {
+			$suffix = substr($file, strlen($_REQUEST["mapfile"]));
 			$revision = "." . sprintf("%04d", intval(substr($suffix, 1)) + 1);
 		}
 	}
@@ -201,9 +201,9 @@ $smarty->assign('mode', $mode);
 // Get mapfiles from the mapfiles directory
 $files = $maplib->listMaps($prefs['map_path']);
 $mapstats = array();
-for ($i = 0; $i < count($files); $i++) {
-	$mapstats[] = $statslib->object_hits($files[$i], "map");
-	$mapstats7days[] = $statslib->object_hits($files[$i], "map", 7);
+foreach($files as $file) {
+	$mapstats[] = $statslib->object_hits($file, "map");
+	$mapstats7days[] = $statslib->object_hits($file, "map", 7);
 }
 $smarty->assign('files', $files);
 $smarty->assign('mapstats', $mapstats);

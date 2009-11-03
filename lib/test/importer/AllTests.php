@@ -19,5 +19,3 @@ class TikiImporter_AllTests
         return $suite;
     }
 }
-
-?>

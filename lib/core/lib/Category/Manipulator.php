@@ -85,5 +85,3 @@ class Category_Manipulator
 		$this->prepared = true;
 	}
 }
-
-?>

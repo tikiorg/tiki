@@ -55,5 +55,3 @@ class TikiDb_Adodb extends TikiDb {
 		return $result;
 	} // }}}
 }
-
-?>

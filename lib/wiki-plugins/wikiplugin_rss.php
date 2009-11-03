@@ -24,7 +24,7 @@ function wikiplugin_rss_info() {
 			'max' => array(
 				'required' => false,
 				'name' => tra('Result Count'),
-				'description' => tra('Amount of results displayed.'),
+				'description' => tra('Number of results displayed.'),
 			),
 			'date' => array(
 				'required' => false,

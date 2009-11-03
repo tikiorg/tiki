@@ -69,9 +69,16 @@ if ( $prefs['feature_calendar'] == 'y' ) {
 	include('tiki-calendar_setup.php');
 
 	$tc_infos = $calendarlib->getCalendar($module_params['calIds'], $viewstart, $viewend, $group_by);
+	if ($viewlist == 'list') {
+		foreach ($tc_infos['listevents'] as $i=>$e) {
+			$tc_infos['listevents'][$i]['head'] = '';
+			$tc_infos['listevents'][$i]['group_description'] ='';
+		}
+		$tc_infos['listevents'] = array_unique($tc_infos['listevents']);	
+}
 
 	foreach ( $tc_infos as $tc_key => $tc_val ) {
-        	$smarty->assign($tc_key, $tc_val);
+		$smarty->assign($tc_key, $tc_val);
 	}
 
 	$module_params['name'] = 'calendar';

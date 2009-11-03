@@ -546,6 +546,3 @@ interface IKalturaLogger
 {
 	function log($msg); 
 }
-
-
-?>

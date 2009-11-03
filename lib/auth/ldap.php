@@ -373,6 +373,3 @@ class TikiLdapLib {
 	}
 
 }
-
-
-?>

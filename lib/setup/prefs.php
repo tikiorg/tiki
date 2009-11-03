@@ -509,6 +509,10 @@ function get_default_prefs() {
 		'fgal_default_view' => 'list',
 		'fgal_limit_hits_per_file' => 'n',
 		'fgal_prevent_negative_score' => 'n',
+		'fgal_quota' => 0,
+		'fgal_quota_per_fgal' => 'n',
+		'fgal_quota_default' => 0,
+		'fgal_quota_show' => 'y',
 
 		// imagegals
 		'feature_galleries' => 'n',
@@ -871,6 +875,21 @@ function get_default_prefs() {
 		'rss_calendar' => 'n',
 		'rss_mapfiles' => 'n',
 		'rss_cache_time' => '0', // 0 = disabled (default)
+		'title_rss_forums' => '',
+		'title_rss_forum' => '',
+		'title_rss_directories' => '',
+		'title_rss_articles' => '',
+		'title_rss_blogs' => '',
+		'title_rss_image_galleries' => '',
+		'title_rss_file_galleries' => '',
+		'title_rss_wiki' => '',
+		'title_rss_image_gallery' => '',
+		'title_rss_file_gallery' => '',
+		'title_rss_blog' => '',
+		'title_rss_tracker' => '',
+		'title_rss_trackers' => '',
+		'title_rss_calendar' => '',
+		'title_rss_mapfiles' => '',
 		'max_rss_forums' => 10,
 		'max_rss_forum' => 10,
 		'max_rss_directories' => 10,
@@ -1160,6 +1179,8 @@ function get_default_prefs() {
 
 		// admin
 		'browsertitle' => '',
+		'site_title_location' => 'after',
+		'site_title_breadcrumb' => 'invertfull',
 		'tmpDir' => 'temp',
 
 		// tell a friend
@@ -1305,8 +1326,10 @@ function get_default_prefs() {
 		'ip_can_be_checked' => 'n',
 		'sender_email' => '',
 		'feature_site_report_email' => '',
-		'session_db' => 'n',
+		'session_storage' => 'default',
 		'session_lifetime' => 0,
+		'session_silent' => 'n',
+		'session_cookie_name' => session_name(),
 		'shoutbox_autolink' => 'n',
 		'show_comzone' => 'n',
 		'tikiIndex' => 'tiki-index.php',
@@ -1381,7 +1404,6 @@ function get_default_prefs() {
 		'feature_iepngfix' => 'n',
 		'iepngfix_selectors' => '#sitelogo a img',
 		'iepngfix_elements' => '',
-		'feature_use_minified_scripts' => 'y',		// for debugging
 		'valid_email_regex' => '^[_a-z0-9\+\.\-]+@[_a-z0-9\.\-]+\.[a-z]{2,4}$',
 		
 		// JQuery
@@ -1430,6 +1452,16 @@ function get_default_prefs() {
 		// Minichat
 		'feature_minichat' => 'n',
 
+		// Memcache
+		'memcache_enabled' => 'n',
+		'memcache_flags' => MEMCACHE_COMPRESSED,
+		'memcache_servers' => false,
+		'memcache_expiration' => 3600,
+		'memcache_prefix' => 'tiki_',
+		'memcache_wiki_data' => 'y',
+		'memcache_wiki_output' => 'y',
+		'memcache_forum_output' => 'y',
+
 		// Pear::Date
 		'feature_pear_date' => 'y',
 
@@ -1453,9 +1485,6 @@ function get_default_prefs() {
 		'feature_group_transition' => 'n',
 		'feature_category_transition' => 'n',
 
-		// Workspaces
-		'feature_workspaces' => 'n',
-		'ws_container' => null,
 
 		'terminology_profile_installed' => 'n',
 
@@ -1463,6 +1492,9 @@ function get_default_prefs() {
 		// Multidomain
 		'multidomain_active' => 'n',
 		'multidomain_config' => '',
+
+		'feature_use_minified_scripts' => 'y',		// for debugging
+		'tiki_minify_javascript' => 'n',
 	);
 
 	// spellcheck

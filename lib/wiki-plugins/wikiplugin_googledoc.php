@@ -30,7 +30,7 @@ function wikiplugin_googledoc_info() {
 					'safe' => true,
 					'required' => true,
 					'name' => tra('key'),
-					'description' => tra('Google doc key - for example pXsHENf1bGGY92X1iEeJJI'),
+					'description' => tra('Google doc key - for example: pXsHENf1bGGY92X1iEeJJI'),
 				),
 			'name' => array(
 				'safe' => true,

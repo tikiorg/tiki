@@ -33,5 +33,3 @@ class Perms_Reflection_PermissionSet
 		return $this->set;
 	}
 }
-
-?>

@@ -182,5 +182,3 @@ function wikiplugin_memberlist_remove( $groups, $removes ) {
 		}
 	}
 }
-
-?>

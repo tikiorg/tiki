@@ -11,7 +11,7 @@
 
 		<fieldset>
 			<legend>{tr}Release Check{/tr}</legend>
-			<div class="adminoptionbox">{tr}Tiki version{/tr}: <strong>{$tiki_version}</strong>
+			<div class="adminoptionbox">{tr}Tiki version:{/tr} <strong>{$tiki_version}</strong>
 				{button href="tiki-install.php" _text="{tr}Reset or upgrade your database{/tr}"}
 			</div>
 	
@@ -27,6 +27,8 @@
 		<fieldset>
 			<legend>{tr}Site Identity{/tr}</legend>
 			{preference name=browsertitle}
+			{preference name=site_title_location}
+			{preference name=site_title_breadcrumb}
 			{preference name=sender_email}
 
 			<div class="adminoptionbox">
@@ -145,12 +147,10 @@
 			{remarksbox type="note" title="{tr}Advanced configuration warning{/tr}"}
 				{tr}Note that storing session data in the database is an advanced systems administration option, and is for admins who have comprehensive access and understanding of the database, in order to deal with any unexpected effects.{/tr}
 			{/remarksbox}
-			{if $prefs.session_db ne 'y'}
-				<div style="padding:.5em;" align="left">
-					{icon _id=information style="vertical-align:middle"} {tr}Enabling this feature will immediately log you out when you save this preference.{/tr} {if $prefs.forgotPass ne 'y'}If there is a chance you have forgotten your password, enable "Forget password" feature.<a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}</a>.{/if}
-				</div>
-			{/if}
-			{preference name=session_db}
+			<div style="padding:.5em;" align="left">
+				{icon _id=information style="vertical-align:middle"} {tr}Changing this feature will immediately log you out when you save this preference.{/tr} {if $prefs.forgotPass ne 'y'}If there is a chance you have forgotten your password, enable "Forget password" feature.<a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}</a>.{/if}
+			</div>
+			{preference name=session_storage}
 			{preference name=session_lifetime}
 		</fieldset>
 
@@ -206,7 +206,7 @@
 				</div>
 			</div>
 			<div class="adminoptionbox">
-				<div id="tiki_home_page" style="display:{if $prefs.useUrlIndex eq 'y'}none{else}block{/if};">{tr}Use TikiWiki feature as homepage{/tr}:
+				<div id="tiki_home_page" style="display:{if $prefs.useUrlIndex eq 'y'}none{else}block{/if};">{tr}Use TikiWiki feature as homepage:{/tr}
 					<select name="tikiIndex" id="general-homepage">
 						<option value="tiki-index.php" {if $prefs.site_tikiIndex eq 'tiki-index.php'}selected="selected"{/if}>
 							{tr}Wiki{/tr}
@@ -218,22 +218,22 @@
 						{/if}
 						{if $prefs.home_blog}
 							<option value="{$home_blog_url|escape}" {if $prefs.site_tikiIndex eq $home_blog_url}selected="selected"{/if}>
-								{tr}Blog{/tr}: {$home_blog_name}
+								{tr}Blog:{/tr} {$home_blog_name|escape}
 							</option>
 						{/if}
 						{if $prefs.home_gallery}
 							<option value="{$home_gallery_url|escape}" {if $prefs.site_tikiIndex eq $home_gallery_url}selected="selected"{/if}>
-								{tr}Image Gallery{/tr}: {$home_gal_name}
+								{tr}Image Gallery:{/tr} {$home_gal_name|escape}
 							</option>
 						{/if}
 						{if $prefs.home_file_gallery}
 							<option value="{$home_file_gallery_url|escape}" {if $prefs.site_tikiIndex eq $home_file_gallery_url}selected="selected"{/if}>
-								{tr}File Gallery{/tr}: {$home_fil_name}
+								{tr}File Gallery:{/tr} {$home_fil_name|escape}
 							</option>
 						{/if}
 						{if $prefs.home_forum}
 							<option value="{$home_forum_url|escape}" {if $prefs.site_tikiIndex eq $home_forum_url}selected="selected"{/if}>
-								{tr}Forum{/tr}: {$home_forum_name}
+								{tr}Forum:{/tr} {$home_forum_name|escape}
 							</option>
 						{/if}
 						{if $prefs.feature_custom_home eq 'y'}
@@ -315,7 +315,7 @@
 	
 		<div class="adminoptionbox">
 			<div class="adminoptionlabel">
-				<label for="general-timezone">{tr}Default timezone{/tr}:</label>
+				<label for="general-timezone">{tr}Default timezone:{/tr}</label>
 				<br />
 				<select name="server_timezone" id="general-timezone">
 					{foreach key=tz item=tzinfo from=$timezones}
@@ -337,43 +337,43 @@
 
 		<div class="adminoptionbox">
 			<div class="adminoptionlabel">
-				<label for="general-long_date">{tr}Long date format{/tr}:</label>
+				<label for="general-long_date">{tr}Long date format:{/tr}</label>
 				<br />
 				<input type="text" name="long_date_format" id="general-long_date" value="{$prefs.long_date_format|escape}" size="40" />
 				<br />
-				<em>{tr}Sample{/tr}: {$now|tiki_long_date}</em>
+				<em>{tr}Sample:{/tr} {$now|tiki_long_date}</em>
 			</div>
 		</div>
 		<div class="adminoptionbox">
 			<div class="adminoptionlabel">
-				<label for="general-short_date">{tr}Short date format{/tr}:</label>
+				<label for="general-short_date">{tr}Short date format:{/tr}</label>
 				<br />
 				<input type="text" name="short_date_format" id="general-short_date" value="{$prefs.short_date_format|escape}" size="40" />
 				<br />
-				<em>{tr}Sample{/tr}: {$now|tiki_short_date}</em>
+				<em>{tr}Sample:{/tr} {$now|tiki_short_date}</em>
 			</div>
 		</div>
 		<div class="adminoptionbox">
 			<div class="adminoptionlabel">
-				<label for="general-long_time">{tr}Long time format{/tr}:</label>
+				<label for="general-long_time">{tr}Long time format:{/tr}</label>
 				<br />
 				<input type="text" name="long_time_format" id="general-long_time" value="{$prefs.long_time_format|escape}" size="40" />
 				<br />
-				<em>{tr}Sample{/tr}: {$now|tiki_long_time}</em>
+				<em>{tr}Sample:{/tr} {$now|tiki_long_time}</em>
 			</div>
 		</div>
 		<div class="adminoptionbox">
 			<div class="adminoptionlabel">
-				<label for="general-short_time">{tr}Short time format{/tr}:</label>
+				<label for="general-short_time">{tr}Short time format:{/tr}</label>
 				<br />
 				<input type="text" name="short_time_format" id="general-short_time" value="{$prefs.short_time_format|escape}" size="40" />
 				<br />
-				<em>{tr}Sample{/tr}: {$now|tiki_short_time}</em>
+				<em>{tr}Sample:{/tr} {$now|tiki_short_time}</em>
 			</div>
 		</div>
 		<div class="adminoptionbox">
 			<div class="adminoptionlabel">
-				<label for="general-display_fieldorder">{tr}Fields display order{/tr}:</label>
+				<label for="general-display_fieldorder">{tr}Fields display order:{/tr}</label>
 				<select name="display_field_order" id="general-display_fieldorder">
 					<option value="DMY" {if $prefs.display_field_order=="DMY"}selected="selected"{/if}>{tr}Day{/tr} {tr}Month{/tr} {tr}Year{/tr}</option>
 					<option value="DYM" {if $prefs.display_field_order=="DYM"}selected="selected"{/if}>{tr}Day{/tr} {tr}Year{/tr} {tr}Month{/tr}</option>
@@ -402,7 +402,7 @@
 
 		<div class="adminoptionbox">
 			<div class="adminoptionlabel">
-				<label for="general-new_pass">{tr}New password{/tr}:</label>
+				<label for="general-new_pass">{tr}New password:{/tr}</label>
 				<br />
 				<input type="password" name="adminpass" id="general-new_pass" onkeyup="runPassword(this.value, 'mypassword');" />
 				{if $prefs.min_pass_length > 1}
@@ -420,7 +420,7 @@
 
 		<div class="adminoptionbox">
 			<div class="adminoptionlabel">
-				<label for="general-repeat_pass">{tr}Repeat password{/tr}:</label>
+				<label for="general-repeat_pass">{tr}Repeat password:{/tr}</label>
 				<br />
 				<input type="password" name="again" id="general-repeat_pass" />
 			</div>

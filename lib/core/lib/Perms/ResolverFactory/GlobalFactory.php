@@ -47,5 +47,3 @@ class Perms_ResolverFactory_GlobalFactory implements Perms_ResolverFactory
 		}
 	}
 }
-
-?>

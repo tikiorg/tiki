@@ -203,5 +203,3 @@ function formatStatusForDisplay($status) {
 
 	return $status;
 }
-
-?>

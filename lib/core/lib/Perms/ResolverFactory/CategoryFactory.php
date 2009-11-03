@@ -199,5 +199,3 @@ class Perms_ResolverFactory_CategoryFactory implements Perms_ResolverFactory
 		return $context['type'] . strtolower( $context['object'] );
 	}
 }
-
-?>

@@ -20,5 +20,3 @@ function prefs_error_list() {
 		),
 	);
 }
-
-?>

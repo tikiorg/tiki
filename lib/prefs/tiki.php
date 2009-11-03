@@ -14,5 +14,10 @@ function prefs_tiki_list() {
 				'feature_version_checks',
 			),
 		),
+		'tiki_minify_javascript' => array(
+			'name' => tra('Minify javascript'),
+			'description' => tra('Compress javascript files used in the page into a single file to be distributed statically. Changes to javascript files will require cache to be cleared.'),
+			'type' => 'flag',
+		),
 	);
 }

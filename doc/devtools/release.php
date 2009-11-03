@@ -177,6 +177,7 @@ if ( $isPre ) {
 		}
 
 		if ( ! $tagAlreadyExists ) {
+			update_working_copy('.');
 			$revision = (int) get_info( ROOT )->entry->commit['revision'];
 			if ( important_step("Tag release using branch '$branch' at revision $revision") ) {
 				`svn copy $fb -r$revision $ft -m "[REL] Tagging release"`;
@@ -853,7 +854,8 @@ function display_howto() {
 
 0/ When branching for 4.x, call it branches/4 or branches/4.x (to be discussed) to be clearer than 
    branches/3.0, because branches/4.x is indeed 4.1, 4.2, etc.
-
+   http://dev.tikiwiki.org/SVNTips#Handling_branches
+   
 1/ Preliminary manual tasks
    - run the tiki installer and correct anything obviously wrong
    - the "function update_readme_file" in this script will output to the top-level README:

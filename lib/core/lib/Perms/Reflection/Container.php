@@ -8,5 +8,3 @@ interface Perms_Reflection_Container
 	function getDirectPermissions();
 	function getParentPermissions();
 }
-
-?>

@@ -563,7 +563,7 @@ if ($_REQUEST['locSection'] == 'settings') {
 // set ports for ssl
 \$jq('[name=useSSL]').change(function(v,a) {
 	if (\$jq('[name=useSSL]').attr('checked')) {
-		\$jq('[name=port]').val(\$jq('[name=imap]').val() ? '933' : '995');
+		\$jq('[name=port]').val(\$jq('[name=imap]').val() ? '993' : '995');
 		\$jq('[name=smtpPort]').val('465');
 	} else {
 		\$jq('[name=port]').val(\$jq('[name=imap]').val() ? '143' : '110');
@@ -641,7 +641,7 @@ END;
 	$smarty->assign('accountId', empty($_REQUEST['accountId']) ? 0 : $_REQUEST['accountId']);
 
 
-	if ($_REQUEST['accountId']) {
+	if (!empty($_REQUEST['accountId'])) {
 		$info = $webmaillib->get_webmail_account($user, $_REQUEST['accountId']);
 	} else {
 		$info['account'] = '';

@@ -1,6 +1,6 @@
 <?php
 /* $Id: wikiplugin_module.php,v 1.33 2007-10-12 07:55:48 nyloth Exp $
-Displays a module inlined in page
+Displays a module inline in a wiki page
 
 Parameters
 module name : module=>lambda
@@ -28,14 +28,14 @@ so if you need to use params just add them in MODULE()
  */
 
 function wikiplugin_module_help() {
-	return tra("Displays a module inlined in page").":<br />~np~{MODULE(module=>,float=>left|right|none,decorations=>y|n,flip=>y|n,max=>,np=>0|1,notitle=y|n,args...)}{MODULE}~/np~";
+	return tra("Displays a module inline in a wiki page").":<br />~np~{MODULE(module=>,float=>left|right|none,decorations=>y|n,flip=>y|n,max=>,np=>0|1,notitle=y|n,args...)}{MODULE}~/np~";
 }
 
 function wikiplugin_module_info() {
 	return array(
 		'name' => tra('Insert Module'),
 		'documentation' => 'PluginModule',
-		'description' => tra("Displays a module inlined in page. More parameters can be added, not supported by UI."),
+		'description' => tra("Displays a module inline in a wiki page. More parameters can be added, not supported by UI."),
 		'prefs' => array( 'wikiplugin_module' ),
 		'validate' => 'all',
 		'extraparams' =>true,
@@ -148,7 +148,7 @@ function wikiplugin_module($data, $params) {
 		}
 	} else {
         // Display error message
-		$data = "<div class=\"highlight\">" . tra("Sorry no such module"). "<br /><b>$module</b></div>" . $data;
+		$data = "<div class=\"highlight\">" . tra("Sorry, no such module"). "<br /><b>$module</b></div>" . $data;
 	}
 
 	return $data;

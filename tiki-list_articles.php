@@ -16,7 +16,7 @@ if ($prefs['feature_articles'] != 'y') {
 // Now check permissions to access this page
 if ($tiki_p_read_article != 'y') {
 	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied you cannot view pages"));
+	$smarty->assign('msg', tra("Permission denied. You cannot view pages"));
 	$smarty->display("error.tpl");
 	die;
 }

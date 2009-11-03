@@ -151,7 +151,7 @@ class HeaderLib {
 		}
 
 		if (count($this->css)) {
-			$back.= "<style><!--\n";
+			$back.= "<style type=\"text/css\"><!--\n";
 			foreach ($this->css as $x=>$css) {
 				$back.= "/* css $x */\n";
 				foreach ($css as $c) {
@@ -205,7 +205,13 @@ class HeaderLib {
 		$back = "\n";
 		
 		if (count($this->jsfiles)) {
-			foreach ($this->jsfiles as $x=>$jsf) {
+			if( $prefs['tiki_minify_javascript'] == 'y' ) {
+				$jsfiles = $this->getMinifiedJs();
+			} else {
+				$jsfiles = $this->jsfiles;
+			}
+
+			foreach ($jsfiles as $x=>$jsf) {
 				$back.= "<!-- jsfile $x -->\n";
 				foreach ($jsf as $jf) {
 					$back.= "<script type=\"text/javascript\" src=\"$jf\"></script>\n";
@@ -214,6 +220,36 @@ class HeaderLib {
 			$back.= "\n";
 		}
 		return $back;
+	}
+
+	private function getMinifiedJs() {
+		$hash = md5( serialize( $this->jsfiles ) );
+		$file = "temp/public/minified_$hash.js";
+
+		if( ! file_exists( $file ) ) {
+			$complete = $this->getJavascript();
+
+			require_once 'lib/minify/JSMin.php';
+			$minified = JSMin::minify( $complete );
+
+			file_put_contents( $file, $minified );
+		}
+
+		return array(
+			array( $file ),
+		);
+	}
+
+	private function getJavascript() {
+		$content = '';
+
+		foreach( $this->jsfiles as $x => $files ) {
+			foreach( $files as $f ) {
+				$content .= file_get_contents( $f );
+			}
+		}
+
+		return $content;
 	}
 	
 	function output_js() {	// called in footer.tpl - JS output at end of file now (pre 4.0)

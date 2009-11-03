@@ -25,7 +25,7 @@
 							</td>
 							{if !isset($module_params.del) or $module_params.del eq 'y'}
 								<td class="{cycle}">
-									<a href="{$smarty.server.REQUEST_URI}{if strstr($smarty.server.REQUEST_URI, '?')}&amp;{else}?{/if}remove={$i.categId}"><img src="pics/icons/cross.png" width="16" height="16" alt="{tr}Delete{/tr}" /></a>
+									{self_link remove=$i.categId}{icon _id=cross alt='{tr}Delete{/tr}'}{/self_link}
 								</td>
 							{/if}
 						</tr>
@@ -36,7 +36,7 @@
 
 		{if $detailed eq 'n' or ($add eq 'y' and $remainCateg)}
 			<div align="center">
-				<form method="post" action="{$smarty.server.REQUEST_URI}" target="_self">
+				<form method="post" target="_self">
 					<input type="hidden" name="page" value="{$page|escape}" />
 					<input type="hidden" name="modcatid" value="{$modcatid}" />
 					{if $multiple eq 'y'}

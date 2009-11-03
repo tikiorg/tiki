@@ -59,9 +59,11 @@ if ($db_tiki == 'sybase') {
 	$dbTiki->Execute('set quoted_identifier on');
 }
 
-function close_connection() {
-	global $dbTiki;
-	$dbTiki->Close();
+if( ! function_exists( 'close_connection' ) ) {
+	function close_connection() {
+		global $dbTiki;
+		$dbTiki->Close();
+	}
 }
 
 require_once 'lib/core/lib/TikiDb/Adodb.php';

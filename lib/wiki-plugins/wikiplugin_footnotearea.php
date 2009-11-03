@@ -8,14 +8,14 @@
  * {FOOTNOTEAREA()/}
  */
 function wikiplugin_footnotearea_help() {
-	return tra("Inserts a section for collected footnotes within the wiki page").":<br />~np~{FOOTNOTEAREA()/}~/np~";
+	return tra("Inserts a section for collected footnotes in the wiki page").":<br />~np~{FOOTNOTEAREA()/}~/np~";
 }
 
 function wikiplugin_footnotearea_info() {
 	return array(
 		'name' => tra( 'Footnotearea' ),
 		'documentation' => 'PluginFootnoteArea',
-		'description' => tra( 'Inserts a section for collected footnotes within the wiki page.' ),
+		'description' => tra( 'Inserts a section for collected footnotes in the wiki page.' ),
 		'prefs' => array('wikiplugin_footnotearea'),
 		'params' => array(),
 	);

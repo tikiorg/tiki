@@ -205,6 +205,29 @@ $page = $info['pageName'];
 $pageRenderer = new WikiRenderer( $info, $user);
 $objectperms = $pageRenderer->applyPermissions();
 
+if ($prefs['feature_wiki_comments'] == 'y' and $objectperms->wiki_view_comments ) {
+    $comments_per_page = $prefs['wiki_comments_per_page'];
+    $thread_sort_mode = $prefs['wiki_comments_default_ordering'];
+    $comments_vars=Array('page');
+    $comments_prefix_var='wiki page:';
+    $comments_object_var='page';
+    include_once('comments.php');
+}
+
+require_once 'lib/cache/pagecache.php';
+$pageCache = Tiki_PageCache::create()
+	->disableForRegistered()
+	->onlyForGet()
+	->requiresPreference( 'memcache_wiki_output' )
+	->addValue( 'role', 'wiki-page-output' )
+	->addValue( 'page', $page )
+	->addValue( 'locale', $prefs['language'] )
+	->addKeys( $_REQUEST, array( 'style_mode' ) )
+	->checkMeta( 'wiki-page-output-meta-timestamp', array(
+		'page' => $page,
+	) )
+	->applyCache();
+
 if( $page_ref_id )
 	$pageRenderer->setStructureInfo( $page_info );
 
@@ -333,16 +356,6 @@ if (isset($_SESSION['saved_msg']) && $_SESSION['saved_msg'] == $info['pageName']
 	require_once('lib/smarty_tiki/modifier.userlink.php');
 	$smarty->assign('saved_msg', sprintf( tra('Page saved (version %d).'), $info['version'] ) );
 	unset($_SESSION['saved_msg']);
-}
-
-// Comments engine!
-if ($prefs['feature_wiki_comments'] == 'y' and $objectperms->wiki_view_comments ) {
-    $comments_per_page = $prefs['wiki_comments_per_page'];
-    $thread_sort_mode = $prefs['wiki_comments_default_ordering'];
-    $comments_vars=Array('page');
-    $comments_prefix_var='wiki page:';
-    $comments_object_var='page';
-    include_once('comments.php');
 }
 
 if($prefs['feature_wiki_attachments'] == 'y') {

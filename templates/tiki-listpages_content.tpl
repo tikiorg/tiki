@@ -287,7 +287,7 @@
 			<td class="{cycle advance=false}">
 				{foreach item=categ from=$listpages[changes].categname name=categ}
 					{if !$smarty.foreach.categ.first}<br />{/if}
-					{$categ}
+					{$categ|escape}
 				{/foreach}
 			</td>
 		{/if}
@@ -296,7 +296,7 @@
 			<td class="{cycle advance=false}">
 				{foreach item=categpath from=$listpages[changes].categpath}
 					{if !$smarty.foreach.categpath.first}<br />{/if}
-					{$categpath}
+					{$categpath|escape}
 				{/foreach}
 			</td>
 		{/if}

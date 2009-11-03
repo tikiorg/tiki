@@ -250,5 +250,3 @@ class Perms_ApplierTest extends TikiTestCase
 		$applier->apply( $newSet );
 	}
 }
-
-?>

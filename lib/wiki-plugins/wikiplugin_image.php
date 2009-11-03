@@ -51,7 +51,7 @@ function wikiplugin_image_help() {
 	[ desc="Image description to display on the page." ]
 	[ usemap="Name of the image map to use for the image." ]
 	[ class="CSS class to apply to the image'."'".'s img tag." ]
-	[ style="CSS styling to apply to the plugin. (Usually used in configuration rather than on individual images.)" ]
+	[ style="CSS styling to apply to the plugin (usually used in configuration rather than on individual images)." ]
 	[ border="Border configuration.  Values "on" and "off" control visibility, or else specify CSS styling options." ]
 	[ descoptions="Description configuration.  Values "on" and "off" control visibility, or else specify CSS styling options. (Usually used in configuration rather than on individual images.)" ]
 	)}{IMAGE}~/np~';
@@ -146,7 +146,7 @@ function wikiplugin_image_info() {
 			'style' => array(
 				'required' => false,
 				'name' => tra('CSS Style'),
-				'description' => tra('CSS styling to apply to the plugin. (Usually used in configuration rather than on individual images.)'),
+				'description' => tra('CSS styling to apply to the plugin (usually used in configuration rather than on individual images).'),
 			),
 			'border' => array(
 				'required' => false,

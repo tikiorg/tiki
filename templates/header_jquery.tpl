@@ -5,12 +5,6 @@
 <script type="text/javascript" src="lib/jquery_tiki/tiki-jquery.js"></script>{* add {$minified} later if $minify_scripts_on_the_fly *}
 
 {if $prefs.feature_jquery_ui eq 'y' or $prefs.feature_jquery_tooltips eq 'y' or $prefs.feature_jquery_autocomplete eq 'y' or $prefs.feature_jquery_superfish eq 'y' or $prefs.feature_jquery_reflection eq 'y' or $prefs.feature_jquery_cycle eq 'y' or $prefs.feature_shadowbox eq 'y'}
-<script type="text/javascript">
-<!--//--><![CDATA[//><!--
-// Save $ if it's used for moo {* note: add plugins between this block and the Restore $ *}
-{literal}var $old; if ($) {$old = $;} $ = $jq;{/literal}
-//--><!]]>
-</script>
 {if $prefs.feature_jquery_ui eq 'y'}{* TODO optimise so not including all - maybe - one day *}
 <script type="text/javascript" src="lib/jquery/jquery-ui/ui/{$minidir}/jquery-ui{$minified}.js"></script>
 <link rel="stylesheet" href="lib/jquery/jquery-ui/themes/{$prefs.feature_jquery_ui_theme}/jquery-ui.css" />
@@ -63,12 +57,6 @@
 <script type="text/javascript" src="lib/jquery/jquery.columnmanager/jquery.columnmanager{$minified}.js"></script>
 <script type="text/javascript" src="lib/jquery/treeTable/src/javascripts/jquery.treeTable{$minified}.js"></script>
 <link rel="stylesheet" href="lib/jquery/treeTable/src/stylesheets/jquery.treeTable.css" type="text/css" /> 
-<script type="text/javascript">
-<!--//--><![CDATA[//><!--
-// Restore $
-{literal}$jq = $; if ($old) { $ = $old; $old = $jq.undefined };{/literal}
-//--><!]]>
-</script>
 {/if}{* end if $prefs.feature_jquery_ui eq 'y' or $prefs.feature_jquery_tooltips etc *}
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--

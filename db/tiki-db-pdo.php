@@ -56,8 +56,10 @@ try {
 	exit;
 }
 
-function close_connection() {
-	global $dbTiki;
-	$dbTiki= NULL;
+if( ! function_exists( 'close_connection' ) ) {
+	function close_connection() {
+		global $dbTiki;
+		$dbTiki= NULL;
+	}
 }
 

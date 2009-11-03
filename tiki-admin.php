@@ -34,12 +34,6 @@ function simple_set_toggle($feature) {
 			$tikilib->set_preference($feature, 'y');
 			add_feedback( $feature, tr('%0 enabled', $feature), 1, 1 );
 		}
-		switch ($feature) {
-			    case 'feature_workspaces':
-				global $wslib; require_once ('lib/workspaces/wslib.php');
-				$wslib->init_ws();
-				break;
-		}
 	} else {
 		if ((!isset($prefs[$feature]) || $prefs[$feature] != 'n')) {
 			// not yet set at all or not set to n
@@ -341,11 +335,6 @@ if (isset($_REQUEST["page"])) {
 		$description = 'Search engine friendly url';
 		$helpUrl = "Rewrite+Rules";
 		include_once ('tiki-admin_include_sefurl.php');
-	} else if ($adminPage == 'workspaces') {
-		$admintitle = 'Workspaces';
-		$description = 'Workspaces in Tiki';
-		$helpUrl = "Workspaces";
-		include_once ('tiki-admin_include_workspaces.php');
 	} else if ($adminPage == "kaltura") {
 		$admintitle = "Kaltura";//get_strings tra("Kaltura")
 		$helpUrl = "Kaltura+Config";
@@ -379,10 +368,8 @@ if (isset($admintitle)) {
 // VERSION TRACKING
 // If the user elected to force a check.
 if (!empty($_GET['forcecheck'])) {
-	$TWV->pollVersion();
-	$upgrades = $TWV->newVersionAvailable();
-	$smarty->assign('tiki_release', $TWV->release);
-	if ($upgrades[0]) {
+	$smarty->assign('tiki_release', $TWV->getLatestMinorRelease());
+	if (!$TWV->isLatestMinorRelease()) {
 		$prefs['tiki_needs_upgrade'] = 'y';
 	} else {
 		$prefs['tiki_needs_upgrade'] = 'n';
@@ -390,17 +377,11 @@ if (!empty($_GET['forcecheck'])) {
 	}
 	$smarty->assign('tiki_needs_upgrade', $prefs['tiki_needs_upgrade']);
 	// See if a major release is available.
-	if ($upgrades[1]) {
-		add_feedback( null, tr('A new %0 major release branch is available.', $TWV->version ), 3 );
+	if (!$TWV->isLatestMajorVersion()) {
+		add_feedback( null, tr('A new major release branch is available.'), 3 );
 	}
-	// If the versioning feature has been enabled, then store the current
-	// findings in the database as preferences so that each visit to the page
-	//  pulls from the database until the next scheduled check so as not to
-	// check on every page load.
-	if ($prefs['feature_version_checks'] == 'y') {
-		$tikilib->set_preference('tiki_needs_upgrade', $prefs['tiki_needs_upgrade']);
-		$tikilib->set_preference('tiki_release', $TWV->release);
-	}
+	$tikilib->set_preference('tiki_needs_upgrade', $prefs['tiki_needs_upgrade']);
+	$tikilib->set_preference('tiki_release', $TWV->getLatestMinorRelease());
 }
 // Versioning feature has been enabled, so if the time is right, do a live
 // check, otherwise display the stored data.
@@ -411,14 +392,12 @@ if ($prefs['feature_version_checks'] == 'y') {
 	// Time for a version check!
 	if ($tikilib->now > ($prefs['tiki_version_last_check'] + $prefs['tiki_version_check_frequency'])) {
 		$tikilib->set_preference('tiki_version_last_check', $tikilib->now);
-		$TWV->pollVersion();
 		$smarty->assign('tiki_version', $TWV->version);
-		$upgrades = $TWV->newVersionAvailable();
-		if ($upgrades[0]) {
+		if (!$TWV->isLatestMinorRelease()) {
 			$prefs['tiki_needs_upgrade'] = 'y';
-			$tikilib->set_preference('tiki_release', $TWV->release);
-			$smarty->assign('tiki_release', $TWV->release);
-			if ($upgrades[1]) {
+			$tikilib->set_preference('tiki_release', $TWV->getLatestMinorRelease());
+			$smarty->assign('tiki_release', $TWV->getLatestMinorRelease());
+			if (!$TWV->isLatestMajorVersion()) {
 				add_feedback( null, tr('A new %0 major release branch is available.', $TWV->branch), 3, 1);
 			}
 		} else {

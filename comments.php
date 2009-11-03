@@ -250,6 +250,10 @@ if ( isset($_REQUEST['comments_objectId']) && $_REQUEST['comments_objectId'] == 
 	}
 	$smarty->assign_by_ref('errors', $errors);
 	$smarty->assign_by_ref('feedbacks', $feedbacks);
+
+	if( isset( $pageCache ) ) {
+		$pageCache->invalidate();
+	}
 }
 
 if (($tiki_p_vote_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n')) || ($tiki_p_forum_vote == 'y' && isset($forum_mode) && $forum_mode == 'y')) {
@@ -257,7 +261,7 @@ if (($tiki_p_vote_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n')
 
 	if (isset($_REQUEST["comments_vote"]) && isset($_REQUEST["comments_threadId"])) {
 		if (!$user && !isset($_COOKIE['PHPSESSID'])) {
-			$smarty->assign_by_ref('msg',tra('Cookies must be allowed to vote'));
+			$smarty->assign_by_ref('msg',tra('For you to vote, cookies must be allowed'));
 			$smarty->display("error.tpl");
 			die;
 		}

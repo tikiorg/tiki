@@ -20,5 +20,3 @@ function prefs_wikiplugin_list() {
 
 	return $prefs;
 }
-
-?>

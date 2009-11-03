@@ -19,7 +19,7 @@ if ($prefs['feature_articles'] != 'y') {
 }
 if (($tiki_p_read_article != 'y') && ($tiki_p_articles_read_heading != 'y')) {
 	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied you cannot view this section"));
+	$smarty->assign('msg', tra("Permission denied. You cannot view this section"));
 	$smarty->display("error.tpl");
 	die;
 }

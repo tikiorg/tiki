@@ -185,5 +185,3 @@ class TikiImporter
         flush();
     }
 }
-
-?>

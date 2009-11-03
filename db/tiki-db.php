@@ -94,18 +94,7 @@ if ( $re === false ) {
 
 if ( $dbversion_tiki == '1.10' ) $dbversion_tiki = '2.0';
 
-if (extension_loaded("pdo") and $api_tiki == 'pdo' ) {
-	require_once('db/tiki-db-pdo.php');
-} else {
-	require_once('db/tiki-db-adodb.php');
-}
-
-// Forget db info so that malicious PHP may not get password etc.
-$host_tiki = NULL;
-$user_tiki = NULL;
-$pass_tiki = NULL;
-$dbs_tiki = NULL;
-
+require_once 'lib/core/lib/TikiDb/ErrorHandler.php';
 class TikiDb_LegacyErrorHandler implements TikiDb_ErrorHandler
 {
 	function handle( TikiDb $db, $query, $values, $result ) // {{{
@@ -177,22 +166,44 @@ class TikiDb_LegacyErrorHandler implements TikiDb_ErrorHandler
 	} // }}}
 }
 
-global $db_table_prefix, $common_users_table_prefix;
+$dbInitializer = 'db/tiki-db-adodb.php';
+if (extension_loaded("pdo") and $api_tiki == 'pdo' ) {
+	$dbInitializer = 'db/tiki-db-pdo.php';
+}
 
-$db = TikiDb::get();
-$db->setServerType( $db_tiki );
-$db->setErrorHandler( new TikiDb_LegacyErrorHandler );
+require $dbInitializer;
+init_connection( TikiDb::get() );
 
-if( isset( $db_table_prefix ) )
-	$db->setTablePrefix( $db_table_prefix );
+if( isset( $shadow_host, $shadow_user, $shadow_pass, $shadow_dbs ) ) {
+	global $dbMaster, $dbSlave;
+	// Set-up the replication
+	$dbMaster = TikiDb::get();
 
-if( isset( $common_users_table_prefix ) )
-	$db->setUsersTablePrefix( $common_users_table_prefix );
+	$host_tiki = $shadow_host;
+	$user_tiki = $shadow_user;
+	$pass_tiki = $shadow_pass;
+	$dbs_tiki = $shadow_dbs;
+	require $dbInitializer;
+	$dbSlave = TikiDb::get();
+	init_connection( $dbSlave );
 
+	require_once 'lib/core/lib/TikiDb/MasterSlaveDispatch.php';
+	$db = new TikiDb_MasterSlaveDispatch( $dbMaster, $dbSlave );
+	TikiDb::set( $db );
+}
 
-unset ($host_map);
-unset ($db_tiki);
-unset ($host_tiki);
-unset ($user_tiki);
-unset ($pass_tiki);
-unset ($dbs_tiki);
+unset( $host_map, $db_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tiki, $shadow_user, $shadow_pass, $shadow_host, $shadow_dbs );
+
+function init_connection( $db ) {
+	global $db_table_prefix, $common_users_table_prefix, $db_tiki;
+
+	$db->setServerType( $db_tiki );
+	$db->setErrorHandler( new TikiDb_LegacyErrorHandler );
+
+	if( isset( $db_table_prefix ) )
+		$db->setTablePrefix( $db_table_prefix );
+
+	if( isset( $common_users_table_prefix ) )
+		$db->setUsersTablePrefix( $common_users_table_prefix );
+}
+

@@ -19,14 +19,14 @@
  * 
   */
 function wikiplugin_category_help() {
-	return tra("Insert list of items for the current/given category into wiki page").":<br />~np~{CATEGORY(id=1+2+3, types=article+blog+faq+fgal+forum+igal+newsletter+event+poll+quiz+survey+tracker+wiki+img, sort=[type|created|name|hits|shuffle]_[asc|desc], sub=y|n, split=|n, and=y|n)}{CATEGORY}~/np~";
+	return tra("Insert list of items with the current/given category in the wiki page").":<br />~np~{CATEGORY(id=1+2+3, types=article+blog+faq+fgal+forum+igal+newsletter+event+poll+quiz+survey+tracker+wiki+img, sort=[type|created|name|hits|shuffle]_[asc|desc], sub=y|n, split=|n, and=y|n)}{CATEGORY}~/np~";
 }
 
 function wikiplugin_category_info() {
 	return array(
 		'name' => tra('Category'),
 		'documentation' => 'PluginCategory',
-		'description' => tra("Insert list of items for the current/given category into wiki page"),
+		'description' => tra("Insert list of items with the current/given category in the wiki page"),
 		'prefs' => array( 'feature_categories', 'wikiplugin_category' ),
 		'params' => array(
 			'id' => array(

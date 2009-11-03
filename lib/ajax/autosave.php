@@ -1,24 +1,24 @@
 <?php
-//this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== false) {
+// This script may only be included - so its better to die if called directly.
+if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
   header('location: index.php');
   exit;
 }
 
 global $prefs, $smarty;
-if ($prefs['feature_ajax'] != 'y' || $prefs['feature_ajax_autosave'] != 'y') {
+if ($prefs['feature_ajax'] !== 'y' || $prefs['feature_ajax_autosave'] !== 'y') {
 	return;
 }
 
 $ajaxlib->registerFunction('auto_save');
 $ajaxlib->registerFunction('remove_save');
-if (isset($_REQUEST['noautosave'])) {
-	$smarty->assign('noautosave',$_REQUEST['noautosave']=='y');
+if ( isset($_REQUEST['noautosave']) === true ) {
+	$smarty->assign('noautosave', $_REQUEST['noautosave'] === 'y');
 }
 
 function auto_save_name($id, $referer = '', $only_md5 = false) {
 	global $user;
-	$referer = preg_replace('/(\?|\&)noautosave=y/','', ensureReferrer($referer));
+	$referer = preg_replace('/(\?|\&)noautosave=y/', '', ensureReferrer($referer));
 	return ($only_md5 ? '' : 'temp/cache/auto_save-').md5("$user:$referer:$id");
 }
 function auto_save_log($id, $referer = '', $action = '') {
@@ -55,7 +55,8 @@ function get_autosave($id, $referer = '') {
 	}
 }
 
-function ensureReferrer($referer = '') {	// should be page name, but use URI if not?
+function ensureReferrer($referer = '') {	
+// should be page name, but use URI if not?
 	
 	if (empty($referer)) {
 		global $section;

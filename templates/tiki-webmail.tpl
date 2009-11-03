@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-{title help=Webmail admpage=webmail}{tr}Webmail{/tr}{/title}
+{title help="Webmail" admpage="webmail"}{tr}Webmail{/tr}{/title}
 
 {include file='tiki-mytiki_bar.tpl'}
 <br /><br />
@@ -184,31 +184,27 @@
 			<tr>
 				<th>{tr}Active{/tr}</th>
 				<th>{tr}Account{/tr}</th>
-				<th>{tr}Active{/tr}</th>
-				<th>{tr}POP server{/tr}</th>
+				<th>{tr}Server{/tr}</th>
 				<th>{tr}Username{/tr}</th>
 				<th>{tr}Action{/tr}</th>
 			</tr>
 			{cycle values="odd,even" print=false}
 			{section name=ix loop=$accounts}
-				{assign var=active value=$accounts[ix].current eq 'y' and $accounts[ix].user eq $user or $accounts[ix].accountId eq $mailCurrentAccount}
+				{if $accounts[ix].current eq 'y' and $accounts[ix].user eq $user or $accounts[ix].accountId eq $mailCurrentAccount}{assign var=active value=true}{else}{assign var=active value=false}{/if}
 				<tr>
 					<td class="{cycle advance=false}">
-						{if $active neq 'y'}
+						{if !$active}
 							{self_link _icon='star_grey' current=$accounts[ix].accountId}{tr}Activate{/tr}{/self_link}
 						{else}
 							{icon _id='star' alt="{tr}This is the active account.{/tr}"}
 						{/if}
 					</td>
 					<td class="{cycle advance=false}">
-						{if $active neq 'y'}
-							{self_link current=$accounts[ix].accountId}{$accounts[ix].account class='link' _title='{tr}Activate{/tr}'}{/self_link}{* TODO make_title work? *}
+						{if !$active}
+							{self_link current=$accounts[ix].accountId _title='{tr}Activate{/tr}'}{$accounts[ix].account}{/self_link}
 						{else}
-							<strong>{$accounts[ix].account}</strong>
+							<strong>{$accounts[ix].account|escape}</strong>
 						{/if}
-					</td>
-					<td class="{cycle advance=false}">
-						{if $accounts[ix].current eq 'y'}{tr}Yes{/tr}{else}{tr}No{/tr}{/if}
 					</td>
 					<td class="{cycle advance=false}">
 						{if !empty($accounts[ix].imap)}{tr}IMAP{/tr}: {$accounts[ix].imap} ({$accounts[ix].port})
@@ -222,7 +218,7 @@
 					<td class="{cycle}">
 						{self_link _icon='cross' remove=$accounts[ix].accountId}{tr}Delete{/tr}{/self_link}
 						{self_link _icon='page_edit' accountId=$accounts[ix].accountId}{tr}Edit{/tr}{/self_link}
-						{if $active neq 'y'}
+						{if !$active}
 							{self_link _icon='accept' current=$accounts[ix].accountId}{tr}Activate{/tr}{/self_link}
 						{/if}
 					</td>
@@ -242,30 +238,28 @@
 				<tr>
 					<th>{tr}Active{/tr}</th>
 					<th>{tr}Account{/tr}</th>
-					<th>{tr}Active{/tr}</th>
-					<th>{tr}POP server{/tr}</th>
+					<th>{tr}Server{/tr}</th>
 					<th>{tr}Username{/tr}</th>
 					<th>{tr}Action{/tr}</th>
 				</tr>
 				{cycle values="odd,even" print=false}
 				{section name=ixp loop=$pubAccounts}
-					{assign var=active value=$pubAccounts[ixp].current eq 'y' and $pubAccounts[ix].user eq $user or $pubAccounts[ixp].accountId eq $mailCurrentAccount}
+					{if $pubAccounts[ixp].current eq 'y' and $pubAccounts[ixp].user eq $user or $pubAccounts[ixp].accountId eq $mailCurrentAccount}{assign var=active value=true}{else}{assign var=active value=false}{/if}
 					<tr>
 						<td class="{cycle advance=false}">
-							{if $active neq 'y'}
+							{if !$active}
 								{self_link _icon='star_grey' current=$pubAccounts[ixp].accountId}{tr}Activate{/tr}{/self_link}
 							{else}
 								{icon _id='star' alt="{tr}This is the active account.{/tr}"}
 							{/if}
 						</td>
 						<td class="{cycle advance=false}">
-							{if $active neq 'y'}
-								{self_link current=$pubAccounts[ixp].accountId}{$pubAccounts[ixp].account class='link' _title='{tr}Activate{/tr}'}{/self_link}{* TODO make self_link _title work when no icon? *}
+							{if !$active}
+								{self_link current=$pubAccounts[ixp].accountId _title='{tr}Activate{/tr}'}{$pubAccounts[ixp].account}{/self_link}
 							{else}
-								<strong>{$pubAccounts[ixp].account}</strong>
+								<strong>{$pubAccounts[ixp].account|escape}</strong>
 							{/if}
 						</td>
-						<td class="{cycle advance=false}">{if $pubAccounts[ixp].current ne 'y' or $pubAccounts[ix].user ne $user}{tr}Yes{/tr}{else}{tr}No{/tr}{/if}</td>
 						<td class="{cycle advance=false}">
 							{if !empty($pubAccounts[ixp].imap)}{tr}IMAP{/tr}: {$pubAccounts[ixp].imap} ({$pubAccounts[ixp].port})
 							{elseif !empty($pubAccounts[ixp].mbox)}{tr}Mbox{/tr}: {$pubAccounts[ixp].mbox}
@@ -278,7 +272,7 @@
 								{self_link _icon='cross' remove=$pubAccounts[ixp].accountId}{tr}Delete{/tr}{/self_link}
 								{self_link _icon='page_edit' accountId=$pubAccounts[ixp].accountId}{tr}Edit{/tr}{/self_link}
 							{/if}
-							{if $active neq 'y'}
+							{if !$active}
 								{self_link _icon='accept' current=$pubAccounts[ixp].accountId}{tr}Activate{/tr}{/self_link}
 							{/if}
 						</td>
@@ -315,7 +309,7 @@
 				{else}
 					{tr}Messages{/tr}
 				{/if}
-				{$showstart} to {$showend} {tr}of{/tr} {$total}
+				{$showstart} {tr}to{/tr} {$showend} {tr}of{/tr} {$total}
 				&nbsp;
 				| {if $first}{self_link start=$first}{tr}First{/tr}{/self_link}{else}{tr}First{/tr}{/if}
 				| {if $prevstart}{self_link start=$prevstart}{tr}Prev{/tr}{/self_link}{else}{tr}Prev{/tr}{/if}
@@ -501,14 +495,14 @@
 			{assign var='wmclass' value='webmail_message'}
 		{/if}
 		<div>
-			{button _flip_id=$wmid _text='{tr}Part{/tr}: '|cat:$bodies[ix].contentType _flip_default_open=$wmopen}{/button}
+			{button _flip_id=$wmid _text='{tr}Part{/tr}: '|cat:$bodies[ix].contentType _flip_default_open=$wmopen}
 		</div>
 		<div id="{$wmid}" class="{$wmclass}" {if $wmopen eq 'n'}style="display:none"{/if}>
 {$bodies[ix].body}
 		</div>
 	{/section}
 	<div>
-		{button _flip_id='webmail_message_source_'|cat:$msgid _text='{tr}Source{/tr}: ' _flip_default_open='n'}{/button}
+		{button _flip_id='webmail_message_source_'|cat:$msgid _text='{tr}Source{/tr}: ' _flip_default_open='n'}
 	</div>
 	<div id="webmail_message_source_{$msgid}" class="webmail_message webmail_mono" style="display:none">
 {$allbodies|nl2br}
