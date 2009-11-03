@@ -1508,6 +1508,68 @@ class CategLib extends ObjectLib {
 		}
 		return $result;
 	}
+
+	/**
+	 * Returns an updated version of $cat_categories with the inherited categories overwritten
+	 * @param string $cat_lang category language -- function only syncs for english 'en'
+	 * @param string $cat_type type of category, probably 'wiki page'
+	 * @param string $cat_objid name of the page / objid of category
+	 * @return array $cat_categories updated with inherited categories overwritten
+	 */
+	function overwrite_inherited_object_categories($prefs, $cat_lang, $cat_type, $cat_objid, $cat_categories) {
+		if ($cat_lang != 'en' && $prefs['feature_category_inherit'] == 'y') {
+			$cats_inherit = explode(',', $prefs['category_inherit_array']);
+			$cats_old = $this->get_object_categories($cat_type, $cat_objid);
+			// check if new article
+			if (!empty($cats_old)) {
+				// inherit only these
+				$cats_new_inherit = array_intersect($cats_old, $cats_inherit);
+				// take out the ones to be inherited
+				$cats_new = array_diff($cat_categories, $cats_inherit);
+				// add the old ones
+				$cat_categories = array_merge($cats_new, $cats_new_inherit);
+			}
+		}
+		return $cat_categories;
+	}
+
+	/**
+	 * Syncs all translated articles categories to inherit english article categories
+	 * @param array $prefs global prefs, using to decide which categories should be inherited
+	 * @param string $cat_lang category language -- function only syncs for english 'en'
+	 * @param string $cat_type type of category, probably 'wiki page'
+	 * @param string $pageName name of the page
+     * @param string $pageId id of the page
+	 * @param array $cat_categories the list of categories submitted
+     */
+	function inherit_object_categories_sync($prefs, $cat_lang, $cat_type, $pageName, $pageId, $cat_categories) {
+		if ( //not a staging copy:
+			!($prefs['feature_wikiapproval'] == 'y' && 
+			substr($pageName, 0, strlen($prefs['wikiapproval_prefix'])) == $prefs['wikiapproval_prefix'])
+			&& //english article
+			($cat_lang == 'en' && $prefs['feature_category_inherit'] == 'y')
+		)
+		{
+			global $multilinguallib;
+			include_once('lib/multilingual/multilinguallib.php');
+			$trads = $multilinguallib->getTranslations($cat_type, $pageId, $cat_name, 'en');
+			$cats_inherit = explode(',', $prefs['category_inherit_array']);
+			foreach ($trads as $trad) {
+				if ($trad['lang'] == 'en') continue;
+				$cats_trad = $this->get_object_categories($cat_type, $trad['objName']);
+				// inherit only these
+				$cats_new_inherit = array_intersect($cat_categories, $cats_inherit);
+				// take out the ones to be inherited
+				$cats_trad_new = array_diff($cats_trad, $cats_inherit);
+				// add the ones from the english article
+				$cats_trad_new = array_merge($cats_trad_new, $cats_new_inherit);
+				$cat_trad_href ="tiki-index.php?page=".urlencode($trad['objName']);
+				$cat_trad_desc = '';
+				$this->update_object_categories($cats_trad_new, $trad['objName'], $cat_type, $cat_trad_desc, $trad['objName'], $cat_trad_href);
+			}
+		}
+	}
+
 	function update_object_categories($categories, $objId, $objType, $desc='', $name='', $href='', $managedCategories = null) {
 		global $prefs, $user, $userlib;
 		$old_categories = $this->get_object_categories($objType, $objId);
