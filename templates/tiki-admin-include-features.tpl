@@ -52,6 +52,7 @@
 				{preference name=feature_minichat}
 				{preference name=feature_score}
 				{preference name=feature_fullscreen}
+				{preference name=feature_dynamic_content}
 			</div>
 		</fieldset>
 
@@ -134,6 +135,7 @@
 						{preference name=feature_wysiwyg}
 						{preference name=feature_ajax_autosave}
 						{preference name=feature_wiki_save_draft}
+						{preference name=feature_search_preferences}
 				</fieldset>
 
 			</div>

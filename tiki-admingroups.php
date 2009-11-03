@@ -222,7 +222,10 @@ if (!empty($_REQUEST["group"])) {
 			$smarty->assign('hasOneIncludedGroup', "y");
 		}
 	}
-	$memberslist = $userlib->get_group_users($_REQUEST['group']);
+	if (!isset($_REQUEST['membersOffset'])) $_REQUEST['membersOffset'] = 0;
+	$memberslist = $userlib->get_group_users($_REQUEST['group'], $_REQUEST['membersOffset']);
+	$smarty->assign('membersCount', $userlib->count_users($_REQUEST['group']));
+	$smarty->assign('membersOffset', $_REQUEST['membersOffset']);
 	if ($cookietab == '1') $cookietab = "2";
 } else {
 	$allgroups = $userlib->list_all_groups();

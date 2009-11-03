@@ -1023,5 +1023,9 @@ function prefs_feature_list() {
 			'name' => tra('Use database (full-text) search.'),
 			'type' => 'flag',
 		),
+		'feature_search_preferences' => array(
+			'name' => tra('Admins can search for features in the admin panels'),
+			'type' => 'flag',
+		),
 	);
 }

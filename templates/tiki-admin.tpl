@@ -1,6 +1,8 @@
 {* $Id$ *}
 {popup_init src="lib/overlib.js"}
 {title help="$helpUrl"}{tr}{$admintitle}{/tr}{/title}
+
+{if $prefs.feature_search_preferences eq 'y'}
 <form method="post" action="">
 	{remarksbox type="note" title="{tr}Development Notice{/tr}"}
 		{tr}Unless a significant amount of preferences are documented and use dynamic preferences before the 4.0 release, this search feature will become disabled by default.{/tr}
@@ -21,6 +23,8 @@
 		<hr class="clear"/>
 	</form>
 {/if}
+{/if}
+
 <div id="pageheader">
 {* bother to display this only when breadcrumbs are on *}
 {*

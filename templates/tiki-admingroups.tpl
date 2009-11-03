@@ -302,7 +302,8 @@
 				{/section}
 			</tr>
 		</table>
-		<div class="box">{$smarty.section.ix.total} {tr}users in group{/tr} {$groupname|escape}</div>
+		{pagination_links cant=$membersCount step=$prefs.maxRecords offset=$membersOffset offset_arg='membersOffset'}{/pagination_links}
+		<div class="box">{$membersCount} {tr}users in group{/tr} {$groupname|escape}</div>
 		<form method="post" action="tiki-admingroups.php">
 			<p>
 				<input type="hidden" name="group" value="{$groupname|escape}"/>
