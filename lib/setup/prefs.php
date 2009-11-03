@@ -276,6 +276,7 @@ function get_default_prefs() {
 		'wikiplugin_sup' => 'y',
 		'wikiplugin_survey' => 'y',
 		'wikiplugin_tag' => 'n',
+		'wikiplugin_tabs' => 'y',
 		'wikiplugin_thumb' => 'y',
 		'wikiplugin_titlesearch' => 'n',
 		'wikiplugin_toc' => 'y',
