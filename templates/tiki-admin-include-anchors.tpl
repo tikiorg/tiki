@@ -138,10 +138,6 @@
 {self_link page="sefurl" _class="icon tips" _title="{tr}Sef URL{/tr}|{tr}Search Engine Friendly URLs{/tr}"}{icon _id="pics/large/goto.png" alt="{tr}Sef URL{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 {/if}
 
-{if $prefs.feature_workspaces neq 'n'}
-{self_link page="workspaces" _class="icon tips" _title="{tr}Workspaces{/tr}|{tr}Workspace settings{/tr}"}{icon _id="pics/large/workspaces.png" alt="{tr}Workspaces{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
-{/if}
-
 {if $prefs.feature_kaltura eq 'y'}
 {self_link page="kaltura" _class="icon tips" _title="{tr}Kaltura{/tr}|{tr}Kaltura video configuration{/tr}"}{icon _id="pics/large/kaltura48x48.png" alt="{tr}Kaltura{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 {* TODO resize icon *}

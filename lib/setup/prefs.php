@@ -1486,9 +1486,6 @@ function get_default_prefs() {
 		'feature_group_transition' => 'n',
 		'feature_category_transition' => 'n',
 
-		// Workspaces
-		'feature_workspaces' => 'n',
-		'ws_container' => null,
 
 		'terminology_profile_installed' => 'n',
 

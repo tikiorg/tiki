@@ -136,12 +136,6 @@
 						{preference name=feature_wiki_save_draft}
 				</fieldset>
 
-				<fieldset>
-					<legend class="heading">{icon _id="exclamation"}<span>{tr}Malfunctioning{/tr}</span></legend>
-					<span class="description">{tr}These features have critical faults - not recommended{/tr}</span>
-						{preference name=feature_workspaces}
-				</fieldset>
-
 			</div>
 {/tab}
 {/tabset}

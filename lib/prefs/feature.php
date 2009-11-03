@@ -378,12 +378,6 @@ function prefs_feature_list() {
 			),
 			'type' => 'flag',
 		),	
-		'feature_workspaces' => array(
-			'name' => tra('Workspaces'),
-			'description' => tra('Workspace'),
-			'help' => 'Workspace',
-			'type' => 'flag',
-		),
 		'feature_kaltura' => array(
 			'name' => tra('Kaltura'),
 			'description' => tra('Kaltura'),

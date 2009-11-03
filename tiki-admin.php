@@ -34,12 +34,6 @@ function simple_set_toggle($feature) {
 			$tikilib->set_preference($feature, 'y');
 			add_feedback( $feature, tr('%0 enabled', $feature), 1, 1 );
 		}
-		switch ($feature) {
-			    case 'feature_workspaces':
-				global $wslib; require_once ('lib/workspaces/wslib.php');
-				$wslib->init_ws();
-				break;
-		}
 	} else {
 		if ((!isset($prefs[$feature]) || $prefs[$feature] != 'n')) {
 			// not yet set at all or not set to n
@@ -341,11 +335,6 @@ if (isset($_REQUEST["page"])) {
 		$description = 'Search engine friendly url';
 		$helpUrl = "Rewrite+Rules";
 		include_once ('tiki-admin_include_sefurl.php');
-	} else if ($adminPage == 'workspaces') {
-		$admintitle = 'Workspaces';
-		$description = 'Workspaces in Tiki';
-		$helpUrl = "Workspaces";
-		include_once ('tiki-admin_include_workspaces.php');
 	} else if ($adminPage == "kaltura") {
 		$admintitle = "Kaltura";//get_strings tra("Kaltura")
 		$helpUrl = "Kaltura+Config";
