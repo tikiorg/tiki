@@ -1,5 +1,5 @@
 <?php
-include_once('tiki-setup.php');
+function upgrade_20091103_upgrade_categperm_tiki( $installer) {
 // $view describes what was supposed to be given by tiki_p_view_categorized
 // $edit describes what was supposed to be given by tiki_p_edit_categorized
 // these lists are probably incomplete
@@ -62,20 +62,20 @@ $insert = 'INSERT into `users_objectpermissions` (`groupName`, `permName`, `obje
 $test = 'SELECT COUNT(*) FROM `users_objectpermissions` WHERE `permName` = ? AND `groupName`=? AND `objectType`=? AND `objectId`=?';
 
 // replace the perm tiki_p_view_categorized with the adequate set of perms for the objects
-$result = $tikilib->query($query, array('tiki_p_view_categorized'));
+$result = $installer->query($query, array('tiki_p_view_categorized'));
 while ($res = $result->fetchRow() ) {
 	foreach ($view as $perm) {
-		if (!$tikilib->getOne($test, array($perm, $res['groupName'], $res['objectType'], $res['objectId']))) {
+		if (!$installer->getOne($test, array($perm, $res['groupName'], $res['objectType'], $res['objectId']))) {
 			echo "INSERT into `users_objectpermissions` (`groupName`, `permName`, `objectType`, `objectId`) values ('".$res['groupName']."','$perm','category','".$res['objectId']."');<br />";
 		}
 	}
 }
 
 // replace the perm tiki_p_edit_categorized with the adequate set of perms for the objects 
-$result = $tikilib->query($query, array('tiki_p_edit_categorized'));
+$result = $installer->query($query, array('tiki_p_edit_categorized'));
 while ($res = $result->fetchRow() ) {
 	foreach ($edit as $perm) {
-		if (!$tikilib->getOne($test, array($perm, $res['groupName'], $res['objectType'], $res['objectId']))) {
+		if (!$installer->getOne($test, array($perm, $res['groupName'], $res['objectType'], $res['objectId']))) {
 			echo "INSERT into `users_objectpermissions` (`groupName`, `permName`, `objectType`, `objectId`) values ('".$res['groupName']."','$perm','category','".$res['objectId']."');<br />";
 		}
 	}
@@ -83,13 +83,14 @@ while ($res = $result->fetchRow() ) {
 
 //rename tiki_p_view_categories to tiki_p_view_category
 $query = 'UPDATE  `users_grouppermissions` SET `permName`=? WHERE `permName`=?';
-$tikilib->query($query, array('tiki_p_view_category', 'tiki_p_view_categories'));
+$installer->query($query, array('tiki_p_view_category', 'tiki_p_view_categories'));
 $query = 'UPDATE  `users_objectpermissions` SET `permName`=? WHERE `permName`=?';
-$tikilib->query($query, array('tiki_p_view_category', 'tiki_p_view_categories'));
+$installer->query($query, array('tiki_p_view_category', 'tiki_p_view_categories'));
 $query = 'UPDATE  `tiki_menu_options` SET `perm`=? WHERE `perm`=?';
-$tikilib->query($query, array('tiki_p_view_category', 'tiki_p_view_categories'));
+$installer->query($query, array('tiki_p_view_category', 'tiki_p_view_categories'));
 
 
 // FINALLY: remove tiki_p_view_categorized and tiki_p_edit_categorized
 // Not done yet - before we are sure with have all the mapping
 
+ }
