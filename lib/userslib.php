@@ -1610,9 +1610,10 @@ function get_included_groups($group, $recur=true) {
 		return $ret;
 	}
 
-    function get_group_users($group) {
+    function get_group_users($group, $offset) {
+		global $prefs;
 	$query = "select `login`  from `users_users` uu, `users_usergroups` ug where uu.`userId`=ug.`userId` and `groupName`=?";
-	$result = $this->query($query,array($group));
+	$result = $this->query($query,array($group), $prefs['maxRecords'], $offset);
 	$ret = array();
 	while ($res = $result->fetchRow()) {
 	    $ret[] = $res["login"];
