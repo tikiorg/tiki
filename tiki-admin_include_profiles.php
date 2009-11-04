@@ -37,6 +37,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			if (count($installer->getFeedback()) > 0) {
 				$smarty->assign_by_ref('profilefeedback', $installer->getFeedback());
 			}
+			// need to reload sources as cache is cleared after install
+			$sources = $list->getSources();
 		}
 	} // }}}
 	if (isset($_POST['install'], $_POST['pd'], $_POST['pp'])) { // {{{
@@ -56,6 +58,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			if (count($installer->getFeedback()) > 0) {
 				$smarty->assign_by_ref('profilefeedback', $installer->getFeedback());
 			}
+			// need to reload sources as cache is cleared after install
+			$sources = $list->getSources();
 		}
 	} // }}}
 	if (isset($_POST['test'], $_POST['profile_tester'], $_POST['profile_tester_name'])) { // {{{
