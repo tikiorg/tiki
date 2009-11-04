@@ -288,7 +288,10 @@ div#sioptions {
 }
 
 #sitelogo {
-	padding-top: 20px;
+	padding-top: 0;
+}
+#sitelogo img {
+	padding: 0 10px !important;/* important put here because div#sitelogo img is too forcible in design.css */
 }
 
 div#sitead {
