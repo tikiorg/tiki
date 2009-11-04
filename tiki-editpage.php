@@ -15,7 +15,7 @@ $inputConfiguration = array(
 	) ),
 );
 
-$section = "wiki page";
+$section = "admin wiki page";
 require_once ('tiki-setup.php');
 include_once ('lib/wiki/wikilib.php');
 include_once ('lib/structures/structlib.php');
