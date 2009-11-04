@@ -263,7 +263,7 @@ function prefs_feature_list() {
 		'feature_htmlpurifier_output' => array(
 			'name' => tra('Ouput Should be HTMLPurified'),
 			'description' => tra('This enable HTPMPurifier on outputs to filter remaining security problems like XSS.'),
-			'help' => 'http://doc.tikiwiki.org/HTMLPurifier',
+			'help' => 'Purifier',
 			'warning' => tra('Experimental. This feature is still under development.'),
 			'type' => 'flag',
 			'default' => 'n',
@@ -295,7 +295,7 @@ function prefs_feature_list() {
 		'feature_purifier' => array(
 			'name' => tra('HTML Purifier'),
 			'description' => tra('HTML Purifier'),
-			'help' => 'HTML Purifier',
+			'help' => 'Purifier',
 			'type' => 'flag',
 		),
 		'feature_ajax' => array(
