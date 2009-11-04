@@ -142,7 +142,7 @@
 	{assign var=tabcomment_vtrackit value="{tr}Comments{/tr} (`$commentCount`)"}
 {else}
 	{assign var=tabcomment_vtrackit value="{tr}Comments{/tr}}
-{/if} 
+{/if}
 
 {tab name=$tabcomment_vtrackit}
 
@@ -206,6 +206,7 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>&nbsp;&nbsp;
 <input type="hidden" name="{$fields[ix].id|escape}" value="{$fields[ix].value|escape}" />
 {/if}
 {/section}
+{if $cant}<input type="hidden" name="cant" value="{$cant}" />{/if}
 
 {remarksbox type="note"}{tr}Fields marked with a * are mandatory.{/tr}{/remarksbox}
 <table class="normal">

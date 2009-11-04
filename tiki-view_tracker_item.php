@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2009 by authors of the Tiki Wiki/CMS/Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.141.2.24 2008-02-28 14:57:12 sylvieg Exp $
@@ -261,16 +261,18 @@ if (isset($_REQUEST['reloff'])) {
 			}
 		}
 	}
-	$trymove = $trklib->list_items($_REQUEST['trackerId'], $offset + $tryreloff, 1, $sort_mode, $listfields, $tryfilterfield, $tryfiltervalue, $trystatus, $tryinitial, $tryexactvalue);
-	if (isset($trymove['data'][0]['itemId'])) {
-		// Autodetect itemId if not specified
-		if (!isset($_REQUEST['itemId'])) {
-			$_REQUEST['itemId'] = $trymove['data'][0]['itemId'];
-			unset($item_info);
-		}
-		$cant = $trymove['cant'];
-	} elseif (isset($_REQUEST['cant'])) {
+	if (isset($_REQUEST['cant'])) {
 		$cant = $_REQUEST['cant'];
+	} else {
+		$trymove = $trklib->list_items($_REQUEST['trackerId'], $offset + $tryreloff, 1, $sort_mode, $listfields, $tryfilterfield, $tryfiltervalue, $trystatus, $tryinitial, $tryexactvalue);
+		if (isset($trymove['data'][0]['itemId'])) {
+			// Autodetect itemId if not specified
+			if (!isset($_REQUEST['itemId'])) {
+				$_REQUEST['itemId'] = $trymove['data'][0]['itemId'];
+				unset($item_info);
+			}
+			$cant = $trymove['cant'];
+		}
 	}
 	$smarty->assign('cant', $cant);
 }
@@ -337,7 +339,7 @@ foreach($xfields["data"] as $i => $array) {
 			$ins_fields["data"][$i] = $xfields["data"][$i];
 			$rateFieldId = $fid;
 			//$fields["data"][$i] = $xfields["data"][$i];
-			
+
 		}
 	} elseif ($xfields["data"][$i]['isHidden'] == 'n' or $xfields["data"][$i]['isHidden'] == 'p' or $tiki_p_admin_trackers == 'y' or ($xfields['data'][$i]['isHidden'] == 'c' && !empty($user) && $user == $itemUser)) {
 		$ins_fields["data"][$i] = $xfields["data"][$i];
@@ -472,10 +474,10 @@ foreach($xfields["data"] as $i => $array) {
 			// Get flags here
 			if (isset($ins_fields['data'][$i]['options_array'][1]) && $ins_fields['data'][$i]['options_array'][1] == 1) {
 				$ins_fields["data"][$i]['flags'] = $trklib->get_flags(true, true, false); // Sort in english names order
-				
+
 			} else {
 				$ins_fields["data"][$i]['flags'] = $trklib->get_flags(true, true, true); // Sort in translated names order (default)
-				
+
 			}
 		} else {
 			if (isset($_REQUEST["$ins_id"])) {
