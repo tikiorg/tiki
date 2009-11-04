@@ -28,7 +28,7 @@ $smarty->assign('oldpass', $_REQUEST["oldpass"]);
 if (isset($_REQUEST["change"])) {
 	check_ticket('change-password');
 	// Check that pass and pass2 match, otherwise display error and exit
-	if ($_REQUEST["pass"] != $_REQUEST["pass2"]) {
+	if ($_REQUEST["pass1"] != $_REQUEST["pass2"]) {
 		$smarty->assign('msg', tra("The passwords do not match"));
 		$smarty->assign('errortype', 'no_redirect_login');
 		$smarty->display("error.tpl");
@@ -36,14 +36,14 @@ if (isset($_REQUEST["change"])) {
 	}
 
 	// Check that new password is different from old password, otherwise display error and exit
-	if ($_REQUEST["pass"] == $_REQUEST["oldpass"]) {
+	if ($_REQUEST["pass1"] == $_REQUEST["oldpass"]) {
 		$smarty->assign('msg', tra("You can not use the same password again"));
 		$smarty->assign('errortype', 'no_redirect_login');
 		$smarty->display("error.tpl");
 		die;
 	}
 
-	$polerr = $userlib->check_password_policy($_REQUEST["pass"]);
+	$polerr = $userlib->check_password_policy($_REQUEST["pass1"]);
 	if ( strlen($polerr)>0 ) {
 		$smarty->assign('msg',$polerr);
 		$smarty->assign('errortype', 'no_redirect_login');
@@ -69,7 +69,7 @@ if (isset($_REQUEST["change"])) {
 		die;
 	}
 
-	$userlib->change_user_password($_REQUEST["user"], $_REQUEST["pass"]);
+	$userlib->change_user_password($_REQUEST["user"], $_REQUEST["pass1"]);
 	// Login the user and display Home page
 	$_SESSION["$user_cookie_site"] = $_REQUEST["user"];
 	global $logslib; include_once("lib/logs/logslib.php");
