@@ -1437,16 +1437,6 @@ class ToolbarWikiplugin extends Toolbar
 		return parent::isAccessible() && $tikilib->plugin_enabled( $this->pluginName );
 	} // }}}
 
-/*	probably not need now?
-	private static function getIcon( $name ) // {{{
-	{
-		// This property could be added to the plugin definition
-		switch($name) {
-		default:
-			return 'pics/icons/plugin.png';
-		}
-	} // }}} */
-
 	private static function getToken( $name ) // {{{
 	{
 		switch($name) {
