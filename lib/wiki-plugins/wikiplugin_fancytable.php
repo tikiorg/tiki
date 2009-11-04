@@ -38,28 +38,39 @@ function wikiplugin_fancytable_info() {
 				'name' => tra('Heading CSS Class'),
 				'description' => tra('CSS class to apply to the heading row.'),
 			),
+			'sortable' => array(
+				'required' => false,
+				'name' => tra('Columns can be sorted'),
+				'description' => 'y|n',
+			),
+			'sortList' => array(
+				'required' => false,
+				'name' => tra('Pre-sorted columns'),
+				'description' => 'all | '.tra('An array of instructions for per-column sorting and direction in the format: [columnIndex, sortDirection], ...  where columnIndex is a zero-based index for your columns left-to-right and sortDirection is 0 for Ascending and 1 for Descending. A valid argument that sorts ascending first by column 1 and then column 2 looks like: [0,0],[1,0]'),
+			),
 		),
 	);
 }
 
 function wikiplugin_fancytable($data, $params) {
-	global $tikilib;
+	global $tikilib, $prefs;
+	static $iFancytable = 0;
+	++$iFancytable;
+	extract ($params,EXTR_SKIP);
+	if (empty($sortable)) $sortable = 'n';
 
 	// Start the table
-	$wret = '<table class="normal">';
+	$wret = '<table class="normal'.($sortable=='y'? ' fancysort':'').'" id="fancytable_'.$iFancytable.'">';
 
 	$tdend = '</td>';
 	$trbeg = '<tr>';
 	$trend = '</tr>';
 
-	// Parse the parameters
-	extract ($params,EXTR_SKIP);
-
 	if (isset($headclass)) {
 		if (strpos($headclass,'"')) $headclass = str_replace('"',"'",$class);
-		$tdhdr = "<td class=\"heading $headclass\"";
+		$tdhdr = "<th $headclass\"";
 	} else {
-		$tdhdr = '<td class="heading"';
+		$tdhdr = '<th';
 	}
 
 	if (isset($head)) {
@@ -88,10 +99,10 @@ function wikiplugin_fancytable($data, $params) {
 					$rowspan = ' rowspan="' . (substr_count($matches[0][0], $matches[1][0]) + substr_count($matches[0][0], $matches[3][0])) . '"';
 				}
 			}
-			$row .= $tdhdr . $colspan . $rowspan . '>' . $column . $tdend;
+			$row .= $tdhdr . $colspan . $rowspan . '>' . $column . '</th>';
 		}
 
-		$wret .= $trbeg . $row . $trend;
+		$wret .= '<thead>'.$trbeg . $row . $trend.'</thead><tbody>';
 	}
 
 	// Each line of the data is a row, the first line is the header
@@ -147,7 +158,16 @@ function wikiplugin_fancytable($data, $params) {
 	}
 
 	// End the table
+	if (isset($head)) {
+		$wret .= '</tbody>';
+	}
 	$wret .= '</table>';
-
+	if ($sortable == 'y' && $prefs['javascript_enabled'] == 'y') {
+		if (empty($sortList)) {
+			$wret .= '{JQ(notonready=false)}$jq("#fancytable_'.$iFancytable.'").tablesorter();{JQ}';
+		} else {
+			$wret .= '{JQ(notonready=false)}$jq("#fancytable_'.$iFancytable.'").tablesorter({sortList:['.$sortList.']});{JQ}';
+		}
+	}
 	return $wret;
 }

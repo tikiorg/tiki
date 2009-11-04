@@ -1028,4 +1028,15 @@ table.treeTable .parent td {
 	font-style: italic;
 }
 
+/* jq tablesorter */
+.fancysort th.headerSortUp {
+	background-repeat: no-repeat; background-position: right; background-image: url(../../pics/icons/resultset_up.png) !important;
+}
+.fancysort th.headerSortDown {
+	background-repeat: no-repeat; background-position: right; background-image: url(../../pics/icons/resultset_down.png) !important;
+}
+.fancysort th.header {
+	background-repeat: no-repeat; background-position: right; background-image: url(../../pics/icons/resultset.png);
+}
+
 /* End of file */
