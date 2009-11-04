@@ -109,6 +109,7 @@ class BannerLib extends TikiLib {
 
 		// Increment banner impressions done in select_banner_id()
 		// Now to set view limiting cookie for user
+		$cookieName = "banner_$zone";
 		$views = array();
 		if (isset($_COOKIE[$cookieName])) {
 			$views = unserialize($_COOKIE[$cookieName]);
