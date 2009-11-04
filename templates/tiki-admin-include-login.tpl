@@ -263,33 +263,16 @@
 				</fieldset>
 	
 				<fieldset><legend>{tr}Password{/tr}</legend>
-					<div class="adminoptionbox">
-						<div class="adminoption"><input type="checkbox" id="feature_clear_passwords" name="feature_clear_passwords" {if $prefs.feature_clear_passwords eq 'y'}checked="checked" {/if}onclick="flip('remindpassword');flip('remindpassword2');" /></div>
-						<div class="adminoptionlabel"><label for="feature_clear_passwords">{tr}Store password as plain text{/tr}.</label></div>
-						{if $prefs.feature_clear_passwords eq 'y'}
+					{if $prefs.feature_clear_passwords eq 'y'} {* deprecated *}
+						{preference name='feature_clear_passwords'}
+						<div class="adminoptionboxchild" id='feature_clear_passwords_childcontainer'>
 							{remarksbox type='warning' title='Security risk'}{tr}Store passwords in plain text is activated. You should never set this unless you know what you are doing.{/tr}{/remarksbox}
-						{/if}
-					</div>
-	
-					<div class="adminoptionbox">
-						<div class="adminoption"><input type="checkbox" id="forgotPass" name="forgotPass" {if $prefs.forgotPass ne 'n'}checked="checked"{/if} /></div>
-						<div class="adminoptionlabel"><label for="forgotPass">{tr}Remind/forgot password{/tr}.</label>
-							<div class="adminoptionboxchild">
-								<div id="remindpassword" style="display:{if $prefs.feature_clear_passwords eq 'y'}block{else}none{/if};">{icon _id=information} <em>{tr}If passwords </em>are stored<em> as plain text, the password will be emailed to the user{/tr}.</em></div>
-								<div id="remindpassword2" style="display:{if $prefs.feature_clear_passwords eq 'y'}none{else}block{/if};">{icon _id=information} <em>{tr}If passwords </em>are not<em> plain text, reset instructions will be emailed to the user{/tr}.</em></div>	
-							</div>
 						</div>
-					</div>
+					{/if}
 	
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel"><label for="feature_crypt_passwords">{tr}Encryption method:{/tr}</label> 
-							<select name="feature_crypt_passwords" id="feature_crypt_passwords">
-					      <option value='crypt-md5' {if $prefs.feature_crypt_passwords eq 'crypt-md5'}selected="selected"{/if}>crypt-md5</option>
-					      <option value='crypt-des' {if $prefs.feature_crypt_passwords eq 'crypt-des'}selected="selected"{/if}>crypt-des</option>
-					      <option value='tikihash' {if $prefs.feature_crypt_passwords eq 'tikihash'}selected="selected"{/if}>{tr}tikihash (old){/tr}</option>
-					    </select>
-						</div>
-					</div>
+					{preference name='forgotPass'}
+
+					{preference name='feature_crypt_passwords'}
 	
 					<div class="adminoptionbox">
 						<div class="adminoption"><input type="checkbox" id="change_password" name="change_password" {if $prefs.change_password eq 'y'}checked="checked"{/if} /></div>

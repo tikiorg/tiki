@@ -1019,9 +1019,23 @@ function prefs_feature_list() {
 			'name' => tra('Use database (full-text) search.'),
 			'type' => 'flag',
 		),
+		'feature_clear_passwords' => array(
+			'name' => tra('Store password as plain text'),
+			'type' => 'flag',
+		),
+
 		'feature_search_preferences' => array(
 			'name' => tra('Admins can search for features in the admin panels'),
 			'type' => 'flag',
+		),
+		'feature_crypt_passwords' => array(
+			'name' => tra('Encryption method:'),
+			'type' => 'list',
+			'options' => array(
+				'crypt-md5' => 'crypt-md5',
+				'crypt-des' => 'crypt-des',
+				'tikihash' => tra('tikihash (old)'),
+			),
 		),
 	);
 }
