@@ -21,9 +21,6 @@ $phplayers_headers .= file_get_contents('lib/phplayers/libjs/layersmenu-browser_
 $phplayers_headers .= <<<EOS
 //--><!]]>
 </script>
-<script type="text/javascript" src="lib/phplayers/libjs/layersmenu-library.js"></script>
-<script type="text/javascript" src="lib/phplayers/libjs/layersmenu.js"></script>
-<script type="text/javascript" src="lib/phplayers/libjs/layerstreemenu-cookies.js"></script>
 EOS;
 
 global $LayersMenu, $TreeMenu, $PHPTreeMenu, $PlainMenu;

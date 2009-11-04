@@ -94,11 +94,11 @@
 		<link rel="alternate" type="application/rss+xml" title='{$prefs.title_rss_calendar|escape|default:"{tr}RSS Calendars{/tr}"}' href="tiki-calendars_rss.php?ver={$prefs.rssfeed_default_version}" />
 {/if}
 
+{if $headerlib}		{$headerlib->output_headers()}{/if}
+
 {if $prefs.feature_jquery eq "y"}
 	{include file='header_jquery.tpl'}
 {/if}
-
-{if $headerlib}		{$headerlib->output_headers()}{/if}
 
 {if $prefs.feature_custom_html_head_content}
 	{eval var=$prefs.feature_custom_html_head_content}

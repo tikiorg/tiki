@@ -205,8 +205,17 @@ class HeaderLib {
 		$back = "\n";
 		
 		if (count($this->jsfiles)) {
+
 			if( $prefs['tiki_minify_javascript'] == 'y' ) {
+				$dynamic = array();
+				if( isset( $this->jsfiles['dynamic'] ) ) {
+					$dynamic = $this->jsfiles['dynamic'];
+					unset( $this->jsfiles['dynamic'] );
+				}
+
 				$jsfiles = $this->getMinifiedJs();
+
+				$jsfiles['dynamic'] = $dynamic;
 			} else {
 				$jsfiles = $this->jsfiles;
 			}
@@ -230,7 +239,8 @@ class HeaderLib {
 			$complete = $this->getJavascript();
 
 			require_once 'lib/minify/JSMin.php';
-			$minified = JSMin::minify( $complete );
+			$minified = '/* ' . print_r( $this->jsfiles, true ) . ' */';
+			$minified .= JSMin::minify( $complete );
 
 			file_put_contents( $file, $minified );
 		}
