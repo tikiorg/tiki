@@ -53,7 +53,7 @@
 		<div class="input_submit_container" style="text-align: center">
 			<input type="submit" name="assign" value="{tr}Assign{/tr}" />
 			{if $permissions_displayed eq 'direct' and $objectType neq 'global'}
-				<input type="submit" name="remove" value="{tr}Remove{/tr}" />
+				<input type="submit" name="remove" value="{tr}Reset to Global Perms{/tr}" class="tips" title="{tr}Reset Perms{/tr}|{tr}This will remove all the settings here and permissions will be reset to inherit the global sitewide permissions.{/tr}"/>
 			{/if}
 			<input type="submit" name="copy" value="{tr}Copy{/tr}" class="tips" title="{tr}Permissions Clipboard{/tr}|{tr}Copy the permissions set here{/tr}" />
 			{if !empty($perms_clipboard_source)}<input type="submit" name="paste" value="{tr}Paste{/tr}" class="tips" title="{tr}Permissions Clipboard{/tr}|{tr}Paste copied permissions from {/tr}<em>{$perms_clipboard_source}</em>" />{/if}
@@ -86,7 +86,7 @@ if ($jq("#assignstructure").attr("checked")) {
 		<div class="input_submit_container" style="text-align: center">
 			<input type="submit" name="assign" value="{tr}Assign{/tr}" />
 			{if $permissions_displayed eq 'direct' and $objectType neq 'global'}
-				<input type="submit" name="remove" value="{tr}Remove{/tr}"/>
+				<input type="submit" name="remove" value="{tr}Reset to Global Perms{/tr}" class="tips" title="{tr}Reset Perms{/tr}|{tr}This will remove all the settings here and permissions will be reset to inherit the global sitewide permissions.{/tr}"/>
 			{/if}
 		</div>
 	</form>
