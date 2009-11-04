@@ -28,6 +28,23 @@ class Perms_Reflection_PermissionSet
 		return isset( $this->set[ $group ] )
 			&& in_array( $permission, $this->set[ $group ] );
 	}
+	
+	function remove( $group, $permission) {
+		if( is_array( $permission ) ) {
+			foreach( $permission as $p ) {
+				$this->removeOne( $group, $p );
+			}
+		} else {
+			$this->removeOne( $group, $permission );
+		}
+	}
+
+	private function removeOne( $group, $permission ) {
+		if( $this->has( $group, $permission ) ) {
+			$k = array_search($permission, $this->set[$group]);
+			unset($this->set[$group][$k]);
+		}
+	}
 
 	function getPermissionArray() {
 		return $this->set;
