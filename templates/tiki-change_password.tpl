@@ -28,7 +28,6 @@
 				ret_msg.innerHTML = "<img src='pics/icons/exclamation.png' style='vertical-align:middle' alt='Do not match' /> Passwords don\'t match";
 				return false;
 			}
-//			ret_msg.innerHTML = "<img src='pics/icons/accept.png' style='vertical-align:middle' alt='Match' /> Passwords match";
 			return true;
 		}
 	// -->
