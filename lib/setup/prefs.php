@@ -1152,7 +1152,7 @@ function get_default_prefs() {
 		'use_context_menu_text' => 'y',
 		'feature_site_report' => 'n',
 		'feature_site_send_link' => 'n',
-		'feature_layoutshadows' => 'y',
+		'feature_layoutshadows' => 'n',
 		'main_shadow_start' => '',
 		'main_shadow_end' => '',
 		'header_shadow_start' => '',
