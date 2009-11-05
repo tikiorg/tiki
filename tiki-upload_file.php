@@ -224,8 +224,10 @@ if (isset($_REQUEST["upload"])) {
 				// file can be called directly if name is known,
 				if ($podCastGallery) {
 					$path_parts = pathinfo($_FILES["userfile"]['name'][$key]);
-					if (in_array(strtolower($path_parts["extension"]), array("m4a", "mp3", "mov", "mp4", "m4v", "pdf", "flv"))) {
-						$extension = "." . strtolower($path_parts["extension"]);
+					if (in_array(strtolower($path_parts['extension']), array('m4a', 'mp3', 'mov', 'mp4', 'm4v', 'pdf', 'flv', 'swf'))) {
+						$extension = '.' . strtolower($path_parts['extension']);
+					} else {
+						$errors[] = tra('Incorrect file extension:').$path_parts['extension'];
 					}
 					$savedir = $prefs['fgal_podcast_dir'];
 				} else {
