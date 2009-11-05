@@ -134,5 +134,10 @@ function prefs_global_list() {
 			'type' => 'text',
 			'description' => tra('Url to go when clicking on a username.').' '.tra('Default: ').'tiki-user_information.php?userId=',
 		),
+		'forgotPass' => array(
+			'name' => tra('Remind/forgot password'),
+			'type' => 'flag',
+			'description' => tra('If passwords <em>are not</em> plain text, reset instructions will be emailed to the user.').' '. tra('If passwords <em>are stored</em> as plain text, the password will be emailed to the user'),
+		),
 	);
 }

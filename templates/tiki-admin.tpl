@@ -50,7 +50,7 @@ Add a value in first check when you create a new admin page. *}
 "calendar", "intertiki", "kaltura", "freetags", "gmap",
 "i18n", "wysiwyg", "copyright", "category", "module", "look", "textarea",
 "multimedia", "ads", "profiles", "semantic", "plugins", "webservices",
-'sefurl'))}
+'sefurl', 'connect'))}
   {assign var="include" value=$smarty.get.page}
 {else}
   {assign var="include" value="list-sections"}

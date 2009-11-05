@@ -263,7 +263,7 @@ function prefs_feature_list() {
 		'feature_htmlpurifier_output' => array(
 			'name' => tra('Ouput Should be HTMLPurified'),
 			'description' => tra('This enable HTPMPurifier on outputs to filter remaining security problems like XSS.'),
-			'help' => 'http://doc.tikiwiki.org/HTMLPurifier',
+			'help' => 'Purifier',
 			'warning' => tra('Experimental. This feature is still under development.'),
 			'type' => 'flag',
 			'default' => 'n',
@@ -295,7 +295,7 @@ function prefs_feature_list() {
 		'feature_purifier' => array(
 			'name' => tra('HTML Purifier'),
 			'description' => tra('HTML Purifier'),
-			'help' => 'HTML Purifier',
+			'help' => 'Purifier',
 			'type' => 'flag',
 		),
 		'feature_ajax' => array(
@@ -555,7 +555,7 @@ function prefs_feature_list() {
 		),
 		'feature_use_minified_scripts' => array(
 			'name' => tra('Use Minified Scripts'),
-			'description' => tra('Use Minified Scripts'),
+			'description' => tra('These JavaScript files have been previously minified and are stable. They make pages quicker to load than their non-minified versions.'),
 			'help' => 'MinifiedScripts',
 			'type' => 'flag',
 		),
@@ -1023,9 +1023,30 @@ function prefs_feature_list() {
 			'name' => tra('Use database (full-text) search.'),
 			'type' => 'flag',
 		),
+		'feature_clear_passwords' => array(
+			'name' => tra('Store password as plain text'),
+			'type' => 'flag',
+		),
+
 		'feature_search_preferences' => array(
 			'name' => tra('Admins can search for features in the admin panels'),
 			'type' => 'flag',
+		),
+		'feature_crypt_passwords' => array(
+			'name' => tra('Encryption method:'),
+			'type' => 'list',
+			'options' => array(
+				'crypt-md5' => 'crypt-md5',
+				'crypt-des' => 'crypt-des',
+				'tikihash' => tra('tikihash (old)'),
+			),
+		),
+		'feature_bot_bar_power_by_tw' => array(
+			'name' => tra("Add a Powered by Tiki link on your site's footer"),
+			'type' => 'flag',
+			'dependencies' => array(
+				'feature_bot_bar',
+			),			
 		),
 	);
 }

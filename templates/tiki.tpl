@@ -28,7 +28,7 @@
 {if $prefs.feature_ajax eq 'y'}
 	{include file='tiki-ajax_header.tpl'}
 {/if}
-
+	<div id="fixedwidth"> {* enables fixed-width layouts *}
 		{if $prefs.feature_layoutshadows eq 'y'}<div id="main-shadow">{eval var=$prefs.main_shadow_start}{/if}<div id="main">
 {if ($prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y') }
 			{if $prefs.feature_layoutshadows eq 'y'}<div id="header-shadow">{eval var=$prefs.header_shadow_start}{/if}<div class="clearfix" id="header"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
@@ -121,6 +121,7 @@
 {/if}
 
 		</div>{* -- END of main -- *}{if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.main_shadow_end}</div>{/if}
+	</div> {* -- END of fixedwidth -- *}
 
 {include file='footer.tpl'}
 

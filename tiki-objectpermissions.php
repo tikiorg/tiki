@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-objectpermissions.php,v 1.25.2.2 2008-03-11 15:17:54 nyloth Exp $
+// $Id$
 include_once ("tiki-setup.php");
 error_reporting(E_ALL);
 if (!empty($_REQUEST['objectType']) && $_REQUEST['objectType'] != 'global') {
@@ -385,7 +385,9 @@ $smarty->assign_by_ref('perms', $masterPerms);
 $smarty->assign_by_ref('features', $features);
 
 // Create JS to set up checkboxs (showing group inheritance)
-$js = '';
+$js = '$jq("#perms_busy").show();
+';
+$i = 0;
 foreach( $groupNames as $groupName ) {
 	$groupName = addslashes($groupName);
 	$beneficiaries = '';
@@ -396,9 +398,7 @@ foreach( $groupNames as $groupName ) {
 		}
 	}
 
-	
 	$js .= <<< JS
-\$jq('#perms_busy').show();
 \$jq('input[name="perm[$groupName][]"]').eachAsync({
 			delay: 10,
 			bulk: 0,
@@ -440,6 +440,7 @@ JS;
 });
 
 JS;
+	$i++;
 }	// end of for $groupNames loop
 
 $headerlib->add_jq_onready($js);
@@ -461,31 +462,33 @@ if (isset($_REQUEST['filegals_manager']) && $_REQUEST['filegals_manager'] != '')
 
 
 function get_assign_permissions() {
-	global $objectFactory, $group_filter, $groups;
+	global $objectFactory;
 
-	$set = new Perms_Reflection_PermissionSet;
+	// get existing perms
+	$currentObject = $objectFactory->get( $_REQUEST['objectType'], $_REQUEST['objectId'] );
+	$currentPermissions = $currentObject->getDirectPermissions();
 
+	// set any checked ones
 	if( isset( $_REQUEST['perm'] ) ) {
 		foreach( $_REQUEST['perm'] as $group => $gperms ) {
 			foreach( $gperms as $perm ) {
-				$set->add( $group, $perm );
-			}
-		}
-	}
-	// add in any non-displayed groups' perms
-	$currentObject = $objectFactory->get( $_REQUEST['objectType'], $_REQUEST['objectId'] );
-	$currentPermissions = $currentObject->getDirectPermissions();
-	$currentSet = $currentPermissions->getPermissionArray();
-
-	foreach( $groups['data'] as $group) {
-		if (!in_array($group['id'], $group_filter)) {
-			foreach( $currentSet[$group['groupName']] as $perm ) {
-				$set->add( $group['groupName'], $perm );
+				$currentPermissions->add( $group, $perm );
 			}
 		}
 	}
 
-	return $set;
+	// unset any old_perms not there now
+	if( isset( $_REQUEST['old_perm'] ) ) {
+		foreach( $_REQUEST['old_perm'] as $group => $gperms ) {
+			foreach( $gperms as $perm ) {
+				if (!in_array($perm, $_REQUEST['perm'][$group])) {
+					$currentPermissions->remove( $group, $perm );
+				}
+			}
+		}
+	}
+
+	return $currentPermissions;
 }
 
 function quickperms_get_data() {

@@ -58,7 +58,7 @@ $view[] = 'tiki_p_view_html_pages';
 $view[] = 'tiki_p_view_category';
 
 $query = 'SELECT * FROM `users_objectpermissions` WHERE `permName` = ?';
-$insert = 'INSERT into `users_objectpermissions` (`groupName`, `permName`, `objectType`, `objectId`) values (?,?,?,?)';
+$insert = 'INSERT into `users_objectpermissions` (`permName`, `groupName`, `objectType`, `objectId`) values (?,?,?,?)';
 $test = 'SELECT COUNT(*) FROM `users_objectpermissions` WHERE `permName` = ? AND `groupName`=? AND `objectType`=? AND `objectId`=?';
 
 // replace the perm tiki_p_view_categorized with the adequate set of perms for the objects
@@ -66,7 +66,7 @@ $result = $installer->query($query, array('tiki_p_view_categorized'));
 while ($res = $result->fetchRow() ) {
 	foreach ($view as $perm) {
 		if (!$installer->getOne($test, array($perm, $res['groupName'], $res['objectType'], $res['objectId']))) {
-			echo "INSERT into `users_objectpermissions` (`groupName`, `permName`, `objectType`, `objectId`) values ('".$res['groupName']."','$perm','category','".$res['objectId']."');<br />";
+			$installer->query($insert, array($perm, $res['groupName'], $res['objectType'], $res['objectId']));
 		}
 	}
 }
@@ -76,7 +76,7 @@ $result = $installer->query($query, array('tiki_p_edit_categorized'));
 while ($res = $result->fetchRow() ) {
 	foreach ($edit as $perm) {
 		if (!$installer->getOne($test, array($perm, $res['groupName'], $res['objectType'], $res['objectId']))) {
-			echo "INSERT into `users_objectpermissions` (`groupName`, `permName`, `objectType`, `objectId`) values ('".$res['groupName']."','$perm','category','".$res['objectId']."');<br />";
+			$installer->query($insert, array($perm, $res['groupName'], $res['objectType'], $res['objectId']));
 		}
 	}
 }

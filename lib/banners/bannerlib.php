@@ -13,11 +13,27 @@ class BannerLib extends TikiLib {
 		$dw = $map[$this->date_format("%w")];
 
 		$hour = $this->date_format("%H"). $this->date_format("%M");
-
-		$query = "select bannerId from `tiki_banners` where $dw = ? and  `hourFrom`<=? and `hourTo`>=? and
+		$cookieName = "banner_$zone";
+		$mid = '';
+		$views = array();
+		$bindvars = array('y', $hour, $hour, 'y', (int) $this->now, (int) $this->now, 'n', -1, -1, $zone);
+		if (isset($_COOKIE[$cookieName])) {
+			$views = unserialize($_COOKIE[$cookieName]);
+			$mid = 'and (`bannerId` not in ('.implode(',',array_fill(0, count($views),'?')).') or ';
+			foreach ($views as $bId=>$bView) {
+				$bindvars[] = $bId;
+			}
+			foreach ($views as $bId=>$bView) {
+				$mids[] = '(`bannerId` = ? and `maxUserImpressions` > ?)';
+				$bindvars[] = $bId;
+				$bindvars[] = $bView;
+			}
+			$mid .= implode('or', $mids).')';
+		}
+		
+		$query = "select `bannerId` from `tiki_banners` where `$dw` = ? and  `hourFrom`<=? and `hourTo`>=? and
 		( ((`useDates` = ?) and (`fromDate`<=? and `toDate`>=?)) or (`useDates` = ?) ) and
-		(`impressions`<`maxImpressions`  or `maxImpressions`=?) and (`clicks`<`maxClicks` or `maxClicks`=? or `maxClicks` is NULL) and `zone`=? order by ".$this->convert_sortmode('random');
-		$bindvars=array('y',$hour,$hour,'y',(int) $this->now,(int) $this->now,'n',-1,-1,$zone);
+		(`impressions`<`maxImpressions`  or `maxImpressions`=?) and (`clicks`<`maxClicks` or `maxClicks`=? or `maxClicks` is NULL) and `zone`=? $mid order by ".$this->convertSortMode('random');
 
 		$result = $this->query($query,$bindvars,1,0);
 		if (!($res = $result->fetchRow())) {
@@ -91,12 +107,13 @@ class BannerLib extends TikiLib {
 			break;
 		}
 
-		// Increment banner impressions here
-		if ($id) {
-			$query = "update `tiki_banners` set `impressions` = `impressions` + 1 where `bannerId` = ?";
-
-			$result = $this->query($query,array($id));
-		}
+		// Increment banner impressions done in select_banner_id()
+		// Now to set view limiting cookie for user
+		$cookieName = "banner_$zone";
+		$views = array();
+		if (isset($_COOKIE[$cookieName])) {
+			$views = unserialize($_COOKIE[$cookieName]);
+		} 
 		if ($res['maxUserImpressions'] > 0) {
 			$views[$res['bannerId']] = isset($views[$res['bannerId']]) ? $views[$res['bannerId']]+1: 1;
 			$expire = $res['useDates']? $res['toDate']: $tikilib->now+60*60*24*90; //90 days 

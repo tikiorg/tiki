@@ -10,6 +10,26 @@
 			else
 				document.getElementById('divRegCapson').style.visibility = 'hidden';
 		}
+
+		var submit_counter = 0;
+		function match_pass() {
+			submit_counter += 1;
+			ret_msg = document.getElementById('validate');
+			pass0 = document.getElementById('oldpass').value;
+			pass1 = document.getElementById('pass').value;
+			pass2 = document.getElementById('pass2').value;
+			if (submit_counter > 10) {
+				ret_msg.innerHTML = "<img src='pics/icons/exclamation.png' style='vertical-align:middle' alt='Overflow' /> Too many tries";
+				return false;
+			} else if ((pass2 == '') || (pass1 == '') || (pass2 == '')) {
+				ret_msg.innerHTML = "<img src='pics/icons/exclamation.png' style='vertical-align:middle' alt='Missing' /> Passwords missing";
+				return false;
+			} else if ( pass1 != pass2 ) {
+				ret_msg.innerHTML = "<img src='pics/icons/exclamation.png' style='vertical-align:middle' alt='Do not match' /> Passwords don\'t match";
+				return false;
+			}
+			return true;
+		}
 	// -->
 	</script>
 {/literal}
@@ -58,15 +78,15 @@
 	{/if}
   
   </td>
-</tr>  
+</tr>
 <tr>
   <td class="formcolor"><label for="pass2">{tr}Repeat password:{/tr}</label></td>
   <td class="formcolor"><input type="password" name="pass2" id="pass2" /></td>
-</tr>  
+</tr>
 <tr>
   <td class="formcolor">&nbsp;</td>
-  <td class="formcolor"><input type="submit" name="change" value="{tr}Change{/tr}" /></td>
-</tr>  
+  <td class="formcolor"><input type="submit" name="change" value="{tr}Change{/tr}" onclick="return match_pass();"/><span id="validate"></span></td>
+</tr>
 </table>
 </fieldset>
 </form>

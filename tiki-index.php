@@ -166,7 +166,13 @@ if (!$info) {
 // If the page doesn't exist then display an error
 if(empty($info) && !($user && $prefs['feature_wiki_userpage'] == 'y' && strcasecmp($prefs['feature_wiki_userpage_prefix'].$user, $page) == 0)) {
 	if ($user && $prefs['feature_wiki_userpage'] == 'y' && strcasecmp($prefs['feature_wiki_userpage_prefix'], $page) == 0) {
-		header('Location: tiki-index.php?page='.$prefs['feature_wiki_userpage_prefix'].$user);
+		$url = 'tiki-index.php?page='.$prefs['feature_wiki_userpage_prefix'].$user;
+		if ($prefs['feature_sefurl'] == 'y') {
+			include_once('tiki-sefurl.php');
+			header('location: '. urlencode(filter_out_sefurl($url, $smarty, 'wiki')));
+		} else {
+			header("Location: $url");
+		}
 		die;
 	}
 	if ($prefs['feature_wiki_userpage'] == 'y' && strcasecmp($prefs['feature_wiki_userpage_prefix'], substr($page, 0, strlen($prefs['feature_wiki_userpage_prefix']))) == 0)

@@ -38,6 +38,8 @@ if ($tiki_p_admin != 'y') {
     $smarty->display('error.tpl');
     die;
 }
+$auto_query_args = array();
+
 // Values for the user_module edit/create form
 $smarty->assign('um_name', '');
 $smarty->assign('um_title', '');
