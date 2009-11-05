@@ -340,6 +340,11 @@ if (isset($_REQUEST["page"])) {
 		$helpUrl = "Kaltura+Config";
 		$description = "Kaltura settings";//get_strings tra("Kaltura settings")
 		include_once ('tiki-admin_include_kaltura.php');
+	} else if ($adminPage == "connect") {
+		$admintitle = "Connect";
+		$helpUrl = "Connect";
+		$description = "Connect";
+		include_once ('tiki-admin_include_connect.php');
 	} else {
 		$helpUrl = '';
 	}

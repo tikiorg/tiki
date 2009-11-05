@@ -26,6 +26,8 @@
 
 {self_link page="rss" _class="icon tips" _title="{tr}RSS{/tr}|{tr}RSS feeds{/tr}"}{icon _id="pics/large/gnome-globe.png" alt="{tr}RSS{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 
+{self_link page="connect" _class="icon tips" _title="{tr}Connect{/tr}|{tr}Connect{/tr}"}{icon _id="pics/large/gnome-globe.png" alt="{tr}Connect{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
+
 {if $prefs.feature_wiki eq 'y'}
 {self_link page="wiki" _class="icon tips" _title="{tr}Wiki{/tr}|{tr}Wiki page settings and features{/tr}"}{icon _id="pics/large/wikipages.png" alt="{tr}Wiki{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 {/if}

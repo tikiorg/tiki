@@ -33,8 +33,10 @@
 
 	{self_link page="security" _class="admbox" _style="background-image: url('pics/large/gnome-lockscreen48x48.png')" _title="{tr}Security{/tr}"}<span>{tr}Security{/tr}</span>{/self_link}
 	
-	{self_link page="rss" _class="admbox" _style="background-image: url('pics/large/gnome-globe48x48.png')" _title="{tr}Feeds{/tr}"}<span>{tr}Feeds{/tr}</span>{/self_link}
+	{self_link page="rss" _class="admbox" _style="background-image: url('pics/large/gnome-globe48x48.png')" _title="{tr}RSS feeds{/tr}"}<span>{tr}RSS feeds{/tr}</span>{/self_link}
 
+	{self_link page="connect" _class="admbox" _style="background-image: url('pics/large/gnome-globe48x48.png')" _title="{tr}Connect{/tr}"}<span>{tr}Connect{/tr}</span>{/self_link}
+	
 	{self_link page="wiki" _class="admbox" _style="background-image: url('pics/large/wikipages48x48.png')" _selected="'`$prefs.feature_wiki`' != 'y'" _selected_class="admbox off"}<img src="pics/trans.png" alt="{tr}Wiki{/tr}" title="{tr}Wiki{/tr}{if $prefs.feature_wiki ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Wiki{/tr}</span>{/self_link}
 
 	{self_link page="fgal" _class="admbox" _style="background-image: url('pics/large/file-manager48x48.png')" _selected="'`$prefs.feature_file_galleries`' != 'y'" _selected_class="admbox off"}<img src="pics/trans.png" alt="{tr}File Galleries{/tr}" title="{tr}File Galleries{/tr}{if $prefs.feature_file_galleries ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}File Galleries{/tr}</span>{/self_link}
