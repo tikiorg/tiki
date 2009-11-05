@@ -3,6 +3,7 @@
    released under LGPL license. For more information, visit http://themes.tikiwiki.org. */
 
 /* redefine the widths of *lite for col2 and col3 */
+/* the shadows feature must be enable in admin->look */
 
 /* for IE7 */
 *:first-child+html
@@ -76,3 +77,7 @@ html >
 #col2 .box {
 	border-bottom: solid 0px white;
 }
+
+body { background: url(../body-bgd.png) repeat-x;}
+#main[id] {border:1px solid #2E3035; margin-top: 18px; margin-bottom: 5px;}
+html {background-color:#E7E7E8;}
