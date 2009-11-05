@@ -408,7 +408,6 @@
 	<div class="adminoption"><input class="checkbox" type="checkbox" name="feature_layoutshadows" id="feature_layoutshadows"{if $prefs.feature_layoutshadows eq 'y'} checked="checked"{/if} onclick="flip('shadowlayers');"  /></div>
 	<div class="adminoptionlabel"><label for="feature_layoutshadows">{tr}Shadow layer{/tr}</label>
 	<br /><em>{tr}Additional layers for shadows, rounded corners or other decorative styling{/tr}.</em>
-	<br /><em>{tr}Needed for fixed width styles{/tr}</em>
 
 <div class="adminoptionboxchild" id="shadowlayers" style="display:{if $prefs.feature_layoutshadows eq 'y'}block{else}none{/if};">
 
