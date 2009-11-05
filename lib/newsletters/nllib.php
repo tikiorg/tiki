@@ -98,9 +98,9 @@ class NlLib extends TikiLib {
 	}
 
 	/* get only the email subscribers */
-	function get_subscribers($nlId) {
-		$query = "select `email` from `tiki_newsletter_subscriptions` where `valid`=? and `nlId`=? and isUser !='y'";
-		$result = $this->query($query, array('y',(int)$nlId));
+	function get_subscribers($nlId, $isEmail='y') {
+		$query = "select `email` from `tiki_newsletter_subscriptions` where `valid`=? and `nlId`=? and isUser !=?";
+		$result = $this->query($query, array('y',(int)$nlId, $isEmail) );
 		$ret = array();
 		while ($res = $result->fetchRow()) {
 			$ret[] = $res["email"];
@@ -300,6 +300,7 @@ class NlLib extends TikiLib {
 		} else {
 			$query = "insert into `tiki_newsletter_subscriptions`(`nlId`,`email`,`code`,`valid`,`subscribed`,`isUser`,`included`) values(?,?,?,?,?,?,?)";
 			$result = $this->query($query,array((int)$nlId,$add,$code,'y',(int)$this->now,$isUser,'n'));
+			return true;
 		}
 		/*$this->update_users($nlId);*/
 		return false;
