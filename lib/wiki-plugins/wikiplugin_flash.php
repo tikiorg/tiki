@@ -48,10 +48,13 @@ function wikiplugin_flash_info() {
 }
 
 function wikiplugin_flash($data, $params) {
-	global $tikilib, $prefs;
+	global $tikilib, $prefs, $userlib, $user;
 	if (isset($params['fileId']) && !isset($params['movie'])) {
 		global $filegallib; include_once ('lib/filegals/filegallib.php');
 		$file_info = $filegallib->get_file_info($params['fileId']);
+		if (!$userlib->user_has_perm_on_object($user, $file_info['galleryId'], 'file gallery', 'tiki_p_view_file_gallery')) {
+			return tra('Permission denied');
+		}
 		$params['movie'] = $prefs['fgal_podcast_dir'].$file_info['path'];
 	}
 		
