@@ -196,7 +196,7 @@ if (getCookie("fgalKeepOpen")) {
 {/if}
 {if $prefs.fgal_quota_show eq 'y' && $gal_info.quota}
 	<div style="float:right">
-		{capture name='use'}{math equation="round((100*x)/(1024*1024*y))" x=$gal_info['usedSize'] y=$gal_info['quota']}{/capture}
+		{capture name='use'}{math equation="round((100*x)/(1024*1024*y))" x=$gal_info.usedSize y=$gal_info.quota}{/capture}
 		{quotabar length='100' value='$smarty.capture.use'}
 	</div>
 {/if}
