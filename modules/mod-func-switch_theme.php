@@ -10,7 +10,7 @@ function module_switch_theme_info() {
 	return array(
 		'name' => tra('Switch theme'),
 		'description' => tra('Enables to quickly change the theme.'),
-		'prefs' => array( 'feature_userPreferences', 'change_theme' ),
+		'prefs' => array( 'change_theme' ),
 		'params' => array()
 	);
 }
