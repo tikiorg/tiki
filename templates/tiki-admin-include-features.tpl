@@ -65,6 +65,19 @@
 				{preference name=feature_comments_post_as_anonymous}				
 			</div>
 		</fieldset>		
+
+		<fieldset>
+			<legend>{tr}Watches{/tr}</legend>
+
+			<div class="admin featurelist">
+				{preference name=feature_user_watches}
+				{preference name=feature_group_watches}
+				{preference name=feature_daily_report_watches}
+				{preference name=feature_user_watches_translations}
+				{preference name=feature_groupalert}				
+			</div>
+		</fieldset>		
+		
 {/tab}
 			
 {tab name="{tr}Programmer{/tr}"}

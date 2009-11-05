@@ -50,17 +50,12 @@ else
 ob_start();
 
 ?>
-
-if( ! tiki_plugins )
-	var tiki_plugins = {};
-
+if( typeof tiki_plugins == 'undefined' ) { tiki_plugins = {}; }
 <?php foreach( $plugins as $plugin ):
 	if( ! $info = $tikilib->plugin_info( $plugin ) )
 		continue;
 ?>
-
-tiki_plugins[<?php echo json_encode( $plugin ) ?>] = <?php echo json_encode( $info ) ?>;
-
+tiki_plugins.<?php echo $plugin ?> = <?php echo json_encode( $info ) ?>;
 <?php endforeach;
 
 $content = ob_get_contents();

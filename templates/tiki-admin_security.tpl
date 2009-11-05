@@ -76,7 +76,6 @@
 <div class="form">
 <a href="tiki-admin_security.php?check_files">{tr}Check all tiki files{/tr}</a><br />
 {tr}Note, that this can take a very long time. You should check your max_execution_time setting in php.ini.{/tr}<br />
-{tr}Note: You have to import security data via installation process (<a href="tiki-install.php">tiki-install.php</a>). Import the *secdb* update files in your database.{/tr}
 <br />
 </div>
 {if $filecheck}
