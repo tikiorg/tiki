@@ -130,7 +130,7 @@ class ThemeControlLib extends TikiLib {
 			$findesc = '%' . $find . '%';
 			$mid = " where (`type` like ? and `name` like ?)";
 			$bindvars=array($type,$findesc);
-		} else {
+		} else if (!empty($type)){
 			$mid = " where `type` like ?";
 			$bindvars=array($type);
 		}
