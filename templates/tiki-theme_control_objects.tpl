@@ -26,20 +26,28 @@
 <tr>
   <td class="formcolor">{tr}Object{/tr}</td>
   <td class="formcolor">{tr}Theme{/tr}</td>
+  <td class="formcolor">{tr}Option{/tr}</td>
   <td class="formcolor">&nbsp;</td>
 </tr>
 <tr>
   <td class="formcolor">
     <select name="objdata">
       {section name=ix loop=$objects}
-      <option value="{$objects[ix].objId|escape}|{$objects[ix].objName}">{$objects[ix].objName}</option>
+      <option value="{$objects[ix].objId|escape}|{$objects[ix].objName}" {if $a_object eq $objects[ix].objId|cat:'|'|cat:$objects[ix].objName}selected="selected"{/if}>{$objects[ix].objName}</option>
       {/section}
     </select>
   </td>
   <td class="formcolor">
-    <select name="theme">
+    <select name="theme" onchange="this.form.submit();">
       {section name=ix loop=$styles}
-      <option value="{$styles[ix]|escape}">{$styles[ix]}</option>
+      <option value="{$styles[ix]|escape}" {if $a_style eq $styles[ix]}selected="selected"{/if}>{$styles[ix]}</option>
+      {/section}
+    </select>
+  </td>
+  <td class="formcolor">
+    <select name="theme-option">
+      {section name=ix loop=$style_options}
+      <option value="{$style_options[ix]|escape}">{$style_options[ix]}</option>
       {/section}
     </select>
   </td>

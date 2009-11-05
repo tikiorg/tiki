@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-theme_control_objects.php,v 1.19 2007-10-12 07:55:32 nyloth Exp $
+// $Id$
 require_once ('tiki-setup.php');
 include_once ('lib/themecontrol/tcontrol.php');
 include_once ('lib/categories/categlib.php');
@@ -27,8 +27,12 @@ if ($tiki_p_admin != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
-$list_styles = $tikilib->list_styles();
-$smarty->assign_by_ref('styles', $list_styles);
+
+$auto_query_args = array('find', 'sort_mode', 'offset', 'theme', 'theme-option', 'type', 'objdata');
+$smarty->assign('a_object', isset($_REQUEST['objdata']) ? $_REQUEST['objdata'] : '');
+
+$tcontrollib->setup_theme_menus();
+
 $find_objects = '';
 $objectypes = array('image gallery', 'file gallery', 'forum', 'blog', 'wiki page', 'html page', 'faq', 'quiz', 'article');
 $smarty->assign('objectypes', $objectypes);
@@ -96,7 +100,7 @@ switch ($_REQUEST['type']) {
 		break;
 
 	case 'article':
-		$objects = $tikilib->list_articles(0, -1, 'title_asc', $find_objects, '', '', '', $user);
+		$objects = $tikilib->list_articles(0, -1, 'title_asc', $find_objects, 0, 0, $user);
 		$smarty->assign_by_ref('objects', $objects["data"]);
 		$objects = $objects['data'];
 		correct_array($objects, 'articleId', 'title');
@@ -109,7 +113,7 @@ $smarty->assign_by_ref('objects', $objects);
 if (isset($_REQUEST['assign'])) {
 	check_ticket('tc-objects');
 	list($id, $name) = explode('|', $_REQUEST['objdata']);
-	$tcontrollib->tc_assign_object($id, $_REQUEST['theme'], $_REQUEST['type'], $name);
+	$tcontrollib->tc_assign_object($id, $_REQUEST['theme'], $_REQUEST['type'], $name, isset($_REQUEST['theme-option']) ? $_REQUEST['theme-option'] : '');
 }
 if (isset($_REQUEST["delete"])) {
 	check_ticket('tc-objects');

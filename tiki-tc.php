@@ -19,6 +19,7 @@ if ($prefs['feature_theme_control'] == 'y') {
 	//SECTIONS
 	if (isset($section)) {
 		$tc_theme = $tcontrollib->tc_get_theme_by_section($section);
+		list($tc_theme, $tc_theme_option) = $tcontrollib->parse_theme_option_string($tc_theme);
 	}
 	// CATEGORIES
 	if (isset($cat_type) && isset($cat_objid)) {
@@ -26,14 +27,8 @@ if ($prefs['feature_theme_control'] == 'y') {
 		if (count($tc_categs)) {
 			foreach($tc_categs as $cat) {
 				if ($cat_theme = $tcontrollib->tc_get_theme_by_categ($cat)) {
-					$p = strpos($cat_theme, '/'); // theme option starts after a / char
-					if ($p === false) {
-						$tc_theme = $cat_theme;
-						$tc_theme_option = '';
-					} else {
-						$tc_theme = substr($cat_theme, 0, $p);
-						$tc_theme_option = substr($cat_theme, $p + 1);
-					}
+					list($tc_theme, $tc_theme_option) = $tcontrollib->parse_theme_option_string($cat_theme);
+					
 					$catt = $categlib->get_category($cat);
 					$smarty->assign_by_ref('category', $catt["name"]);
 					break;
@@ -45,7 +40,7 @@ if ($prefs['feature_theme_control'] == 'y') {
 	// if not set, make sure we don't squash whatever $tc_theme may have been
 	if (isset($cat_type) && isset($cat_objid)) {
 		if ($obj_theme = $tcontrollib->tc_get_theme_by_object($cat_type, $cat_objid)) {
-			$tc_theme = $obj_theme;
+			list($tc_theme, $tc_theme_option) = $tcontrollib->parse_theme_option_string($obj_theme);
 		}
 	}
 	if ($tc_theme) {
@@ -57,18 +52,20 @@ if ($prefs['feature_theme_control'] == 'y') {
 			$headerlib->add_cssfile('styles/' . $tc_theme, 51);
 		}
 		$style_base = $tikilib->get_style_base($tc_theme);
+		$site_style_base = $tikilib->get_style_base($prefs['style']);
+		
 		if (empty($tc_theme_option)) { // special handling for 'None' case
 			if ($tikidomain) {
-				$headerlib->drop_cssfile('styles/' . $style_base . '/options/' . $tikidomain . '/' . $prefs['style_option']);
+				$headerlib->drop_cssfile('styles/' . $tikidomain . $site_style_base . '/options/' . $prefs['style_option']);
 			} else {
-				$headerlib->drop_cssfile('styles/' . $style_base . '/options/' . $prefs['style_option']);
+				$headerlib->drop_cssfile('styles/' . $site_style_base . '/options/' . $prefs['style_option']);
 			}
 		} else if ($tc_theme_option) {
-			if ($tikidomain and (is_file("styles/$tikidomain/$style_base/options/$tc_theme_option" || $tc_theme_option == ''))) {
-				$headerlib->drop_cssfile("styles/$tikidomain/" . $prefs['style_option']);
+			if ($tikidomain and (is_file("styles/$tikidomain/$style_base/options/$tc_theme_option"))) {
+				$headerlib->drop_cssfile("styles/$tikidomain/$site_style_base/options/" . $prefs['style_option']);
 				$headerlib->add_cssfile("styles/$tikidomain/$style_base/options/$tc_theme_option", 52);
 			} else {
-				$headerlib->drop_cssfile("styles/$style_base/options/" . $prefs['style_option']);
+				$headerlib->drop_cssfile("styles/$site_style_base/options/" . $prefs['style_option']);
 				$headerlib->add_cssfile("styles/$style_base/options/$tc_theme_option", 52);
 			}
 		}
