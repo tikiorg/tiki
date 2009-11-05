@@ -369,10 +369,8 @@
 	<div class="adminoption"><input type="checkbox" id="feature_bot_bar_rss" name="feature_bot_bar_rss" {if $prefs.feature_bot_bar_rss eq 'y'}checked="checked"{/if} /></div>
 	<div class="adminoptionlabel"><label for="feature_bot_bar_rss">{tr}Bottom bar (RSS){/tr}</label></div>
 </div>
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="feature_bot_bar_power_by_tw" name="feature_bot_bar_power_by_tw" {if $prefs.feature_bot_bar_power_by_tw eq 'y'}checked="checked"{/if} /></div>
-	<div class="adminoptionlabel"><label for="feature_bot_bar_power_by_tw">{tr}Powered by{/tr} TikiWiki</label></div>
-</div>
+
+{preference name=feature_bot_bar_power_by_tw}
 
 </div>
 	

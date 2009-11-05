@@ -1037,5 +1037,9 @@ function prefs_feature_list() {
 				'tikihash' => tra('tikihash (old)'),
 			),
 		),
+		'feature_bot_bar_power_by_tw' => array(
+			'name' => tra("Add a Powered by Tiki link on your site's footer"),
+			'type' => 'flag',
+		),
 	);
 }
