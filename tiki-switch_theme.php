@@ -25,6 +25,9 @@ if (isset($_REQUEST['theme'])) {
 			$prefs['style_option'] = $prefs['site_style_option'];
 			$_SESSION['s_prefs']['style_option'] = $prefs['site_style_option'];
 			unset($_REQUEST['theme-option']);
+			if ($prefs['feature_userPreferences'] == 'y' && $user && empty($group_style)) {
+				$tikilib->set_user_preference($user, 'theme-option', $prefs['site_style_option']);
+			}
 		} else {
 			$prefs['style'] = $new_theme;
 		}
