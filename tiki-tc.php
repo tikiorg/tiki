@@ -14,8 +14,20 @@ if ($prefs['feature_theme_control'] == 'y') {
 	// then search for theme for md5($cat_type.cat_objid)
 	include_once ('lib/themecontrol/tcontrol.php');
 	include_once ('lib/categories/categlib.php');
-	global $tc_theme;
-	$tc_theme = '';
+	global $tc_theme, $tc_theme_option;
+	
+	if (isset($tc_theme)) {
+		$old_tc_theme = $tc_theme;
+		$tc_theme = '';
+	} else {
+		$old_tc_theme = '';
+	}
+	if (isset($tc_theme_option)) {
+		$old_tc_theme_option = $tc_theme_option;
+		$tc_theme_option = '';
+	} else {
+		$old_tc_theme_option = '';
+	}
 	//SECTIONS
 	if (isset($section)) {
 		$tc_theme = $tcontrollib->tc_get_theme_by_section($section);
@@ -44,30 +56,16 @@ if ($prefs['feature_theme_control'] == 'y') {
 		}
 	}
 	if ($tc_theme) {
-		if ($tikidomain and is_file("styles/$tikidomain/$tc_theme")) {
-			$headerlib->drop_cssfile('styles/' . $tikidomain . '/' . $prefs['style']);
-			$headerlib->add_cssfile('styles/' . $tikidomain . '/' . $tc_theme, 51);
-		} else {
-			$headerlib->drop_cssfile('styles/' . $prefs['style']);
-			$headerlib->add_cssfile('styles/' . $tc_theme, 51);
+		if ($old_tc_theme) {
+			$headerlib->drop_cssfile($tikilib->get_style_path('', '', $old_tc_theme));
+			$headerlib->drop_cssfile($tikilib->get_style_path( $old_tc_theme, $old_tc_theme_option, $old_tc_theme_option));
 		}
-		$style_base = $tikilib->get_style_base($tc_theme);
-		$site_style_base = $tikilib->get_style_base($prefs['style']);
-		
-		if (empty($tc_theme_option)) { // special handling for 'None' case
-			if ($tikidomain) {
-				$headerlib->drop_cssfile('styles/' . $tikidomain . $site_style_base . '/options/' . $prefs['style_option']);
-			} else {
-				$headerlib->drop_cssfile('styles/' . $site_style_base . '/options/' . $prefs['style_option']);
-			}
-		} else if ($tc_theme_option) {
-			if ($tikidomain and (is_file("styles/$tikidomain/$style_base/options/$tc_theme_option"))) {
-				$headerlib->drop_cssfile("styles/$tikidomain/$site_style_base/options/" . $prefs['style_option']);
-				$headerlib->add_cssfile("styles/$tikidomain/$style_base/options/$tc_theme_option", 52);
-			} else {
-				$headerlib->drop_cssfile("styles/$site_style_base/options/" . $prefs['style_option']);
-				$headerlib->add_cssfile("styles/$style_base/options/$tc_theme_option", 52);
-			}
+		$headerlib->drop_cssfile($tikilib->get_style_path('', '', $prefs['style']));
+		$headerlib->add_cssfile($tikilib->get_style_path('', '', $tc_theme), 51);
+
+		$headerlib->drop_cssfile($tikilib->get_style_path( $prefs['style'], $prefs['style_option'], $prefs['style_option']));
+		if (!empty($tc_theme_option)) { // special handling for 'None' case
+			$headerlib->add_cssfile($tikilib->get_style_path( $tc_theme, $tc_theme_option, $tc_theme_option), 52);
 		}
 	}
 }
