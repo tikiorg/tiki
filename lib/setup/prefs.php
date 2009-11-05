@@ -1553,6 +1553,8 @@ if (isset($_SESSION['s_prefs'])) {
 	// Reload if there was an update of some prefs
 	if ( empty($_SESSION['s_prefs']['lastReadingPrefs']) || $lastUpdatePrefs > $_SESSION['s_prefs']['lastReadingPrefs'] ) {
 		$_SESSION['need_reload_prefs'] = true;
+	} else {
+		$_SESSION['need_reload_prefs'] = false;
 	}
 
 	// Reload if the virtual host or tikiroot has changed
@@ -1562,8 +1564,9 @@ if (isset($_SESSION['s_prefs'])) {
 		$_SESSION['need_reload_prefs'] = true;
 	}
 
-} else ; $_SESSION['need_reload_prefs'] = true;
-
+} else {
+	$_SESSION['need_reload_prefs'] = true;
+}
 
 $defaults = get_default_prefs();
 // Set default prefs only if needed
