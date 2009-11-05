@@ -1500,6 +1500,10 @@ function get_default_prefs() {
 
 		'feature_use_minified_scripts' => 'y',		// for debugging
 		'tiki_minify_javascript' => 'n',
+
+		// Token Access
+		'auth_token_access' => 'n',
+		'auth_token_access_maxtimeout' => 30,
 	);
 
 	// spellcheck
