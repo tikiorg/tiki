@@ -2010,7 +2010,10 @@ div.questionblock {
 
 /***** Shoutbox *****/
 textarea.tshoutbox{
-	width: 162px;
+	width: 135px;
+}
+.box-shoutbox table td {
+	font-size: .65em;
 }
 
 /***** Directory *****/

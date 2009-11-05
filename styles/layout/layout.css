@@ -1579,6 +1579,11 @@ table.pollresults {
 
 /***** Quizzes *****/
 /***** Shoutbox *****/
+
+.box-shoutbox table td {
+	font-size: .8em;
+}
+
 /***** Directory *****/
 /***** Messages *****/
 
