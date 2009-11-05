@@ -179,6 +179,7 @@ function get_default_prefs() {
 		'wikiplugin_alink' => 'n',
 		'wikiplugin_aname' => 'n',
 		'wikiplugin_annotation' => 'n',
+		'wikiplugin_archivebuilder' => 'n',
 		'wikiplugin_article' => 'y',
 		'wikiplugin_articles' => 'y',
 		'wikiplugin_attach' => 'y',
@@ -305,6 +306,7 @@ function get_default_prefs() {
 		'wikiplugininline_alink' => 'n',
 		'wikiplugininline_aname' => 'n',
 		'wikiplugininline_annotation' => 'n',
+		'wikiplugininline_archivebuilder' => 'n',
 		'wikiplugininline_article' => 'n',
 		'wikiplugininline_articles' => 'n',
 		'wikiplugininline_attach' => 'n',
@@ -1504,6 +1506,11 @@ function get_default_prefs() {
 		// Token Access
 		'auth_token_access' => 'n',
 		'auth_token_access_maxtimeout' => 30,
+
+		// PDF
+		'print_pdf_from_url' => 'none',
+		'print_pdf_webkit_path' => '',
+		'print_pdf_webservice_url' => '',
 	);
 
 	// spellcheck
