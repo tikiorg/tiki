@@ -21,19 +21,15 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  */
 function smarty_function_icon($params, &$smarty) {
 	if ( ! is_array($params) ) $params = array();
-	global $prefs;
+	global $prefs, $tc_theme, $tc_theme_option;
+	
+	$current_style = empty($tc_theme) ? $prefs['style'] : $tc_theme;
+	$current_style_option = empty($tc_theme_option) ? !empty($tc_theme) ? $prefs['style_option'] : '' : $tc_theme_option;
 
-	$serialized_params = serialize($params);
+	$serialized_params = serialize(array_merge($params, array($current_style, $current_style_option)));
 	if ( isset($_SESSION['icons'][$serialized_params]) ) {
-		if ( !empty($_SESSION['icons_theme']) && $_SESSION['icons_theme'] == $prefs['style'] &&
-				!empty($_SESSION['icons_theme_option']) && $_SESSION['icons_theme_option'] == $prefs['style_option']) {
-			return $_SESSION['icons'][$serialized_params];
-		} else {
-			unset($_SESSION['icons']);
-		}
+		return $_SESSION['icons'][$serialized_params];
 	}
-	$_SESSION['icons_theme'] = $prefs['style'];
-	$_SESSION['icons_theme_option'] = $prefs['style_option'];
 
 	$basedirs = array('pics/icons', 'images', 'img/icons', 'pics/icons/mime');
 	$icons_extension = '.png';
