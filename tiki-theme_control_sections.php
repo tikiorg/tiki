@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-theme_control_sections.php,v 1.14 2007-10-12 07:55:32 nyloth Exp $
+// $Id$
 require_once ('tiki-setup.php');
 include_once ('lib/themecontrol/tcontrol.php');
 include_once ('lib/categories/categlib.php');
@@ -18,11 +18,15 @@ if ($tiki_p_admin != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
-$list_styles = $tikilib->list_styles();
-$smarty->assign_by_ref('styles', $list_styles);
+
+$auto_query_args = array('find', 'sort_mode', 'offset', 'theme', 'theme-option', 'section');
+$smarty->assign('a_section', isset($_REQUEST['section']) ? $_REQUEST['section'] : '');
+
+$tcontrollib->setup_theme_menus();
+
 if (isset($_REQUEST['assign'])) {
 	check_ticket('tc-sections');
-	$tcontrollib->tc_assign_section($_REQUEST['section'], $_REQUEST['theme']);
+	$tcontrollib->tc_assign_section($_REQUEST['section'], $_REQUEST['theme'], isset($_REQUEST['theme-option']) ? $_REQUEST['theme-option'] : '');
 }
 if (isset($_REQUEST["delete"])) {
 	check_ticket('tc-sections');

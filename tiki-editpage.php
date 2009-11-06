@@ -1120,6 +1120,13 @@ if ($prefs['feature_multilingual'] == 'y') {
 		$smarty->assign( 'diff_oldver', (int) $_REQUEST['oldver'] );
 		$smarty->assign( 'diff_newver', (int) $_REQUEST['newver'] );
 		$smarty->assign( 'source_page', $_REQUEST['source_page'] );
+		/* 
+		   Use Full Screen mode when translating an update, because 
+		   user needs to see both diffs that have happened in the source language
+		   and the edit form for the  target language. This requires a lot of real-estate
+		 */
+		$_REQUEST['zoom'] = 'wiki_edit';
+		$smarty->assign('update_translation', 'y');
 	}
 }
 $cat_type = 'wiki page';

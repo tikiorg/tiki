@@ -11,31 +11,39 @@ if (isset($_SERVER['HTTP_REFERER'])) {
 } else {
 	$orig_url = $prefs['tikiIndex'];
 }
-if (isset($_GET['theme'])) {
-	$new_theme = $_GET['theme'];
+if (isset($_REQUEST['theme'])) {
+	$new_theme = $_REQUEST['theme'];
 	if (empty($new_theme) || $new_theme != $prefs['style']) { // use default theme option when setting 'site default' or changing main theme
-		$_GET['theme-option'] = '';
+		$_REQUEST['theme-option'] = '';
 	}
 	if ($prefs['change_theme'] == 'y') {
-		if ($prefs['feature_userPreferences'] == 'y' && $user && $group_theme == '') {
+		if ($user && ($prefs['feature_userPreferences'] == 'y' || $tikilib->get_user_preference($user, 'theme') ) && $group_theme == '') {
 			$tikilib->set_user_preference($user, 'theme', $new_theme);
 		}
 		if (empty($new_theme)) {
 			$prefs['style'] = $prefs['site_style'];
+			$prefs['style_option'] = $prefs['site_style_option'];
+			$_SESSION['s_prefs']['style_option'] = $prefs['site_style_option'];
+			unset($_REQUEST['theme-option']);
+			if ($user && ($prefs['feature_userPreferences'] == 'y' || $tikilib->get_user_preference($user, 'theme-option') ) && empty($group_style)) {
+				$tikilib->set_user_preference($user, 'theme-option', $prefs['site_style_option']);
+			}
 		} else {
 			$prefs['style'] = $new_theme;
 		}
 	}
 	$_SESSION['s_prefs']['style'] = $prefs['style'];
 }
-if (isset($_GET['theme-option'])) {
-	$new_theme_option = $_GET['theme-option'];
-	if ($prefs['feature_userPreferences'] == 'y' && $user && $prefs['change_theme'] == 'y' && empty($group_style)) {
-		$tikilib->set_user_preference($user, 'theme-option', $new_theme_option);
-		$prefs['style_option'] = $new_theme_option;
-	} elseif ($prefs['change_theme'] == 'y') {
-		$prefs['style_option'] = $new_theme_option;
-		$_SESSION['s_prefs']['style_option'] = $new_theme_option;
+if (isset($_REQUEST['theme-option'])) {
+	$new_theme_option = $_REQUEST['theme-option'];
+	if ($prefs['change_theme'] == 'y') {
+		if ($user && ($prefs['feature_userPreferences'] == 'y' || $tikilib->get_user_preference($user, 'theme-option') ) && empty($group_style)) {
+			  $tikilib->set_user_preference($user, 'theme-option', $new_theme_option);
+			  $prefs['style_option'] = $new_theme_option;
+		} else {
+			  $prefs['style_option'] = $new_theme_option;
+			  $_SESSION['s_prefs']['style_option'] = $new_theme_option;
+		}
 	}
 }
 header("location: $orig_url");
