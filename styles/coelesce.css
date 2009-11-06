@@ -469,11 +469,6 @@ div.optionline,
 	font-weight: bold;
 }
 
-.linkmenu,
-.linkmenu:visited {
-	display: block;
-}
-
 .linkmenu:hover {
 	color: #82a7c8;
 }
