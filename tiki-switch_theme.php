@@ -17,7 +17,7 @@ if (isset($_REQUEST['theme'])) {
 		$_REQUEST['theme-option'] = '';
 	}
 	if ($prefs['change_theme'] == 'y') {
-		if ($prefs['feature_userPreferences'] == 'y' && $user && $group_theme == '') {
+		if ($user && ($prefs['feature_userPreferences'] == 'y' || $tikilib->get_user_preference($user, 'theme') ) && $group_theme == '') {
 			$tikilib->set_user_preference($user, 'theme', $new_theme);
 		}
 		if (empty($new_theme)) {
@@ -25,7 +25,7 @@ if (isset($_REQUEST['theme'])) {
 			$prefs['style_option'] = $prefs['site_style_option'];
 			$_SESSION['s_prefs']['style_option'] = $prefs['site_style_option'];
 			unset($_REQUEST['theme-option']);
-			if ($prefs['feature_userPreferences'] == 'y' && $user && empty($group_style)) {
+			if ($user && ($prefs['feature_userPreferences'] == 'y' || $tikilib->get_user_preference($user, 'theme-option') ) && empty($group_style)) {
 				$tikilib->set_user_preference($user, 'theme-option', $prefs['site_style_option']);
 			}
 		} else {
@@ -36,12 +36,14 @@ if (isset($_REQUEST['theme'])) {
 }
 if (isset($_REQUEST['theme-option'])) {
 	$new_theme_option = $_REQUEST['theme-option'];
-	if ($prefs['feature_userPreferences'] == 'y' && $user && $prefs['change_theme'] == 'y' && empty($group_style)) {
-		$tikilib->set_user_preference($user, 'theme-option', $new_theme_option);
-		$prefs['style_option'] = $new_theme_option;
-	} elseif ($prefs['change_theme'] == 'y') {
-		$prefs['style_option'] = $new_theme_option;
-		$_SESSION['s_prefs']['style_option'] = $new_theme_option;
+	if ($prefs['change_theme'] == 'y') {
+		if ($user && ($prefs['feature_userPreferences'] == 'y' || $tikilib->get_user_preference($user, 'theme-option') ) && empty($group_style)) {
+			  $tikilib->set_user_preference($user, 'theme-option', $new_theme_option);
+			  $prefs['style_option'] = $new_theme_option;
+		} else {
+			  $prefs['style_option'] = $new_theme_option;
+			  $_SESSION['s_prefs']['style_option'] = $new_theme_option;
+		}
 	}
 }
 header("location: $orig_url");
