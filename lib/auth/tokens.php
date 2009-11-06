@@ -29,13 +29,13 @@ class AuthTokens
 			return null;
 		}
 
-		$registered = json_decode( $data['parameters'], true );
+		$registered = (array) json_decode( $data['parameters'], true );
 		if( ! $this->allPresent( $registered, $parameters )
 			|| ! $this->allPresent( $parameters, $registered ) ) {
 			return null;
 		}
 
-		return json_decode( $data['groups'], true );
+		return (array) json_decode( $data['groups'], true );
 	}
 
 	private function allPresent( $a, $b ) {

@@ -39,9 +39,10 @@ function wikiplugin_archivebuilder( $data, $params ) {
 			$handler = array_shift( $parts );
 
 			if( isset( $handlers[$handler] ) ) {
-				$files = call_user_func_array( $handlers[$handler], $parts );
-				foreach( $files as $name => $content ) {
+				$result = call_user_func_array( $handlers[$handler], $parts );
+				foreach( $result as $name => $content ) {
 					$archive->addFromString( $name, $content );
+					$files[] = $name;
 				}
 			}
 		}
@@ -50,7 +51,9 @@ function wikiplugin_archivebuilder( $data, $params ) {
 		$archive->close();
 
 		header( 'Content-Type: application/zip' );
-		header( "Content-Disposition: attachment;filename={$params['name']}" );
+		header( "Content-Disposition: attachment; filename=\"{$params['name']}\"" );
+		header( 'Content-Transfer-Encoding: binary' );
+		header( 'Content-Length: ' . filesize( $file ) . '; filename="' . $params['name'] . '"' );
 		readfile( $file );
 		unlink( $file );
 		die;
