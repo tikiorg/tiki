@@ -17,6 +17,10 @@ function wikiplugin_archivebuilder_info() {
 }
 
 function wikiplugin_archivebuilder( $data, $params ) {
+	if( ! class_exists( 'ZipArchive' ) ) {
+		return '^' . tra('Missing extension zip.') . '^';
+	}
+
 	$archive = md5( serialize( array( $data, $params ) ) );
 
 	if( isset( $_POST[$archive] ) ) {
