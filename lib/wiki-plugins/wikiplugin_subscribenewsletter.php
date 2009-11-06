@@ -17,7 +17,7 @@ function wikiplugin_subscribenewsletter_info() {
 			'thanks' => array(
 				'required' => false,
 				'name' => tra('Confirmation message after posting form'),
-				'filter' => 'alpha',
+				'filter' => 'wikicontent',
 			),
 		),
 	);
