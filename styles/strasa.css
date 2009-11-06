@@ -396,7 +396,6 @@ div#sitelogo {
 #siteloginbar {
 	position: static;
 	float: right;
-	padding-right: 10px;
 	height: 24px;
 	line-height: 24px;
 	padding-left: 60px;
@@ -428,6 +427,7 @@ div#sitelogo {
 #siteloginbar .pass {
 	display: inline;
 	margin-left: 1em;
+	padding-right: 10px;
 }
 
 #siteloginbar .register {
