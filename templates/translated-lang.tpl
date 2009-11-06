@@ -50,15 +50,15 @@
 				{/if}
 				<select name="page" onchange="quick_switch_language( this )">
 					{if $prefs.feature_machine_translation eq 'y'}
-					<option value="Human Translations" disabled="disabled" style="color:black;font-weight:bold">Human Translations</option>
+					<option value="Human Translations" disabled="disabled" style="color:black;font-weight:bold">{tr}Human Translations{/tr}</option>
 					{/if}
 					{section name=i loop=$trads}
-					<option value="{$trads[i].objName|escape}">{$trads[i].langName}</option>
+					<option value="{$trads[i].objName|escape}">{tr}{$trads[i].langName}{/tr}</option>
 					{/section}
 					{if $prefs.feature_machine_translation eq 'y'}
-					<option value="Machine Translations" disabled="disabled" style="color:black;font-weight:bold">Machine Translations</option>
+					<option value="Machine Translations" disabled="disabled" style="color:black;font-weight:bold">{tr}Machine Translations{/tr}</option>
 					{section name=i loop=$langsCandidatesForMachineTranslation}
-					<option value="{$langsCandidatesForMachineTranslation[i].lang}">{$langsCandidatesForMachineTranslation[i].langName} *</option>
+					<option value="{$langsCandidatesForMachineTranslation[i].lang}">{tr}{$langsCandidatesForMachineTranslation[i].langName}{/tr} *</option>
 					{/section}
 					{/if}
 					{if $prefs.feature_multilingual_one_page eq 'y'}
