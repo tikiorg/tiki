@@ -98,7 +98,7 @@ if ( empty($subrelease) ) {
 }
 
 if ( ! $options['no-readme-update'] && important_step("Update '" . README_FILENAME . "' file") ) {
-	update_readme_file($packageVersion, $version);
+	update_readme_file($secdbVersion, $version);
 	info('>> ' . README_FILENAME . ' file updated.');
 	important_step('Commit updated ' . README_FILENAME . ' file', true, "[REL] Update " . README_FILENAME . " file for $secdbVersion");
 }
