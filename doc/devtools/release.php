@@ -195,6 +195,7 @@ if ( $isPre ) {
 // Helper functions
 
 function write_secdb( $file, $root, $version ) {
+	$file_exists = @file_exists($file);
 	$fp = @fopen($file, 'w+') or error('The SecDB file "' . $file . '" is not writable or can\'t be created.');
 	$queries = array();
 	md5_check_dir( $root, $root, $version, $queries );
@@ -207,7 +208,7 @@ function write_secdb( $file, $root, $version ) {
 
 	fclose( $fp );
 
-	if ( $file_exists = file_exists($file) ) {
+	if ( $file_exists ) {
 		info(">> Existing SecDB file '$file' has been updated.");
 		`svn add $file 2> /dev/null`;
 	} else {
