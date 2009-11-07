@@ -59,7 +59,7 @@ if ( $isPre ) {
 } else {
 	$pre = '';
 }
-$mainversion = $version{0} . '.0';
+$mainversion = $version{0};
 
 include_once('lib/setup/twversion.class.php');
 $check_version = strtolower($version.$subrelease);
@@ -84,14 +84,14 @@ if ( ! $options['no-first-update'] && important_step('Update working copy to the
 }
 
 if ( empty($subrelease) ) {
-	$branch = "branches/$mainversion";
+	$branch = "branches/$mainversion.x";
 	$tag = "tags/$version";
 	$packageVersion = $version;
 	if ( ! empty($pre) )
 		$packageVersion .= ".$pre";
 	$secdbVersion = $version;
 } else {
-	$branch = "branches/$mainversion";
+	$branch = "branches/$mainversion.x";
 	$tag = "tags/$version$subrelease";
 	$packageVersion = "$version.$pre$subrelease";
 	$secdbVersion = "$version$subrelease";
@@ -131,7 +131,7 @@ if ( ! $options['no-changelog-update'] && important_step("Update '" . CHANGELOG_
 
 $nbCommiters = 0;
 if ( ! $options['no-copyright-update'] && important_step("Update '" . COPYRIGHTS_FILENAME . "' file (using final version number '$version')") ) {
-	if ( $ucf = update_copyright_file($mainversion) ) {
+	if ( $ucf = update_copyright_file($mainversion . '.0') ) {
 		info("\r>> Copyrights updated: "
 			. ( $ucf['newContributors'] == 0 ? 'No new contributor, ' : "+{$ucf['newContributors']} contributor(s), " )
 			. ( $ucf['newCommits'] == 0 ? 'No new commit' : "+{$ucf['newCommits']} commit(s)" )
