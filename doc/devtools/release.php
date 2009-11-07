@@ -495,8 +495,8 @@ function important_step($msg, $increment_step = true, $commit_msg = false) {
 		}
 	}
 
-	if ( $commit_msg && $do_step ) {
-	  $revision = commit($commit_msg) && info(">> Commited revision $revision.");
+	if ( $commit_msg && $do_step && ( $revision = commit($commit_msg) ) ) {
+		info(">> Commited revision $revision.");
 	}
 
 	return $do_step;
