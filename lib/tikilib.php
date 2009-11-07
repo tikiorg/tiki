@@ -4050,17 +4050,37 @@ class TikiLib extends TikiDb_Bridge {
 		$query = "select $distinct"
 			.( $onlyCant ? "tp.`pageName`" : "tp.* ".$select )
 			." from `tiki_pages` as tp $join_tables $mid order by ".$this->convertSortMode($sort_mode);
+		$countquery = "select count($distinct tp.`pageName`) from `tiki_pages` as tp $join_tables $mid";
+		$pageCount = $this->getOne($countquery,$bindvars);
 
-		$result = $this->query($query, $bindvars);
 
+		// HOTFIX (svn Rev. 22969 or near there)
+		// Chunk loading. Because we cannot know what pages are visible, we load chunks of pages 
+		// and use Perms::filter to see what remains. Stop, if we have enough.
 		$cant = 0;
 		$n = -1;
 		$ret = array();
 		$raw = array();
-		while ($res = $result->fetchRow()) {
-			$raw[] = $res;
-		}
-		$raw = Perms::filter( array( 'type' => 'wiki page' ), 'object', $raw, array( 'object' => 'pageName', 'creator' => 'creator' ), 'view' );
+
+		$offset_tmp = 0;
+		$haveEnough=FALSE;
+		while (!$haveEnough) {
+			$rawTemp = array();
+			$result = $this->query($query, $bindvars, $maxRecords , $offset_tmp);
+			$offset_tmp+=$maxRecords; // next offset
+	
+			while ($res = $result->fetchRow()) {
+				$rawTemp[] = $res;
+			}
+			if (count($rawTemp) == 0) $haveEnough = TRUE; // end of table
+
+			$rawTemp = Perms::filter( array( 'type' => 'wiki page' ), 'object', $rawTemp, array( 'object' => 'pageName', 'creator' => 'creator' ), 'view' );
+
+			$raw = array_merge($raw, $rawTemp);
+			if( (count($raw) >= $offset + $maxRecords) || $maxRecords == -1 ) $haveEnough = TRUE; // now we have enough records
+		} // prbably this brace has to include the next foreach??? I am unsure.
+		// but if yes, the next lines have to be reviewed.
+
 
 		foreach( $raw as $res ) {
 			if( $initial ) {
@@ -4116,7 +4136,7 @@ class TikiLib extends TikiDb_Bridge {
 
 		$retval = array();
 		$retval['data'] = $ret;
-		$retval['cant'] = $cant;
+		$retval['cant'] = $pageCount; // this is not exact. Workaround.
 		return $retval;
 	}
 
