@@ -7,12 +7,12 @@
 	<title>{tr}System error.{/tr}</title>
 	<link rel="stylesheet" href="styles/strasa.css" type="text/css"/>
 	<style type="text/css" media="screen">
-		html {
+		html {ldelim}
 			background-color: #fff;
-		}
-		#centercolumn {
+		{rdelim}
+		#centercolumn {ldelim}
 			padding: 4em 10em;
-		}
+		{rdelim}
 	</style>
 </head>
 <body class="tiki_wiki">
