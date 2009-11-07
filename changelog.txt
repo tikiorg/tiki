@@ -23,6 +23,22 @@ Version 4.0
 ------------------
 
 ----------------------------------------------
+r22965 | pkdille | 2009-11-07 23:37:51 +0100 (sam., 07 nov. 2009) | 1 line
+
+[FIX] database structure homogenization for a fresh 4.x installation and for a 3.x to 4.x upgraded tiki.
+----------------------------------------------
+r22964 | nyloth | 2009-11-07 23:17:23 +0100 (sam., 07 nov. 2009) | 1 line
+
+[FIX] release script: fix debug-packaging option for build_packages step
+----------------------------------------------
+r22962 | nyloth | 2009-11-07 23:11:11 +0100 (sam., 07 nov. 2009) | 1 line
+
+[FIX] release script: fix message when SecDB file is created.
+----------------------------------------------
+r22961 | nyloth | 2009-11-07 22:55:59 +0100 (sam., 07 nov. 2009) | 1 line
+
+[FIX] database connection error template: fix broken smarty syntax
+----------------------------------------------
 r22957 | nyloth | 2009-11-07 21:25:57 +0100 (sam., 07 nov. 2009) | 1 line
 
 [FIX] release script: fix displayed revision number after commit
