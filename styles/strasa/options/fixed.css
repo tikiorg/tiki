@@ -26,7 +26,6 @@
 	#c1c2
 		#col2 {
 			width: 180px;
-			padding-left: 5px !important;
 		}
 	
 	#col3 {
@@ -67,8 +66,13 @@ html >
 	text-align: left
 }
 
+#c1c2 #col2 {
+	background: url(fixed/box_top.gif) no-repeat 100% 0;
+}
+
 #c1c2 #col2 .content {
 	margin-left: 0px;
+	background: url(fixed/box_bottom.gif) no-repeat 100% 100%;
 }
 #col3 .content {
 	margin-right: 0px;
