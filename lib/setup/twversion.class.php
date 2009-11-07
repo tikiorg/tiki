@@ -23,10 +23,10 @@ class TWVersion {
 		//   stable   : Represents stable releases.
 		//   unstable : Represents candidate and test/development releases.
 		//   head     : Represents next generation development version.
-		$this->branch 	= 'stable';
+		$this->branch 	= 'unstable';
 
 		// Set everything else, including defaults.
-		$this->version 	= '4.0';
+		$this->version 	= '4.0beta1';
 		$this->star	= 'Aldebaran';
 		$this->releases	= array();
 
@@ -105,7 +105,8 @@ class TWVersion {
 				'3.0',
 				'3.1',
 				'3.2',
-				'3.3'
+				'3.3',
+				'4.0beta1',
 				);
 	}
 
