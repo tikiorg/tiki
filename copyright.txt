@@ -1639,7 +1639,7 @@ Nickname: nyloth
 Name: Patrice W.
 First Commit: 2006-11-09
 Last Commit: 2009-11-07
-Number of Commits: 1640
+Number of Commits: 1644
 SF Role: Developer
 
 Nickname: obnoxxx
@@ -1784,7 +1784,7 @@ Number of Commits: 1
 Nickname: pkdille
 First Commit: 2007-03-14
 Last Commit: 2009-11-06
-Number of Commits: 854
+Number of Commits: 855
 SF Role: Developer
 
 Nickname: plillevold
