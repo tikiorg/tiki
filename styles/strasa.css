@@ -848,7 +848,7 @@ a.phplmselected:hover {
 }
 
 #tiki-top .cssmenu_horiz li a .sf-sub-indicator {
-	top: .4em;
+	top: 6px;
 }
 
 .cssmenu_vert li a .sf-sub-indicator {
