@@ -31,10 +31,11 @@ function wikiplugin_html_info() {
 
 function wikiplugin_html($data, $params) {
 	$ret = '';
+	$wiki = '';
 	// extract parameters
 	extract ($params,EXTR_SKIP);
 	// parse the report definition
-	$parse_fix = ($_REQUEST['preview']) && ($_SESSION['s_prefs']['tiki_release']=='2.2');
+	$parse_fix = isset($_REQUEST['preview']) && ($_SESSION['s_prefs']['tiki_release']=='2.2');
 	if($parse_fix) {
 		$html =& $data;
 	} else {
