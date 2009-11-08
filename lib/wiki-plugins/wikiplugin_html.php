@@ -30,6 +30,7 @@ function wikiplugin_html_info() {
 }
 
 function wikiplugin_html($data, $params) {
+	$ret = '';
 	// extract parameters
 	extract ($params,EXTR_SKIP);
 	// parse the report definition
