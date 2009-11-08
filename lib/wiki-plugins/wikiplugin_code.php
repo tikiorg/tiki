@@ -79,11 +79,13 @@ function wikiplugin_code($data, $params) {
 	// If 'color' is specified and GeSHI installed, use syntax highlighting with GeSHi
 	if ( isset($colors) && $colors != 'highlights' && class_exists('GeSHI') ) {
 
-		$geshi = new GeSHi(TikiLib::htmldecode($code), $colors);
+		$geshi =& new GeSHi($code, $colors);
 
 		if ( version_compare(GESHI_VERSION, 1.1) == -1) { // Old API
 			if ( isset($ln) && $ln > 0 ) {
-				$geshi->enable_line_numbers(GESHI_FANCY_LINE_NUMBERS);
+				$geshi->set_code_style('background: #f5f5f5;'); //improves line spacing and fancy numbers
+				$geshi->set_header_type(GESHI_HEADER_PRE_TABLE); //allows user to select code from screen without line numbers for copying and pasting
+				$geshi->enable_line_numbers(GESHI_FANCY_LINE_NUMBERS); //highlights every 5th line number
 				$geshi->start_line_numbers_at($ln);
 			}
 			$geshi->set_link_target('_blank');
@@ -102,7 +104,7 @@ function wikiplugin_code($data, $params) {
 
 	} elseif ( isset($colors) && ( $colors == 'highlights' || $colors == 'php' ) ) {
 
-		$out = highlight_string(TikiLib::htmldecode($code), true);
+		$out = highlight_string($code, true);
 
 		// Convert &nbsp; into spaces and <br /> tags into real line breaks, since it will be displayed in a <pre> tag
 		$out = str_replace('&nbsp;', ' ', $out);
