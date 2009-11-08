@@ -17,6 +17,8 @@
 	</style>
 </head>
 <body class="tiki_wiki">
+<div id="fixedwidth"> {* enables fixed-width layouts *}
+	<div id="main">
 	<div id="siteheader">
 			<div id="sitelogo" style="text-align: center; padding-left: 70px;">
 				<img style="border: medium none ;" alt="Site Logo" src="img/tiki/tikisitelogo.png" />
@@ -87,5 +89,7 @@
 			</p>
 		</div>
 	</div>
+		</div>{* -- END of main -- *}
+	</div> {* -- END of fixedwidth -- *}
 </body>
 </html>

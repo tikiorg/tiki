@@ -1,3 +1,5 @@
+<div id="fixedwidth"> {* enables fixed-width layouts *}
+	<div id="main">
 <div id="siteheader" class="clearfix">
 	<div id="header-top">
 		<div id="sitelogo" style="padding-left:70px"><h1><img style="border:medium none; vertical-align:middle" alt="{tr}TikiWiki CMS/Groupware{/tr}" src="img/tiki/tikisitelogo.{if isset($ie6)}gif{else}png{/if}" />
@@ -573,3 +575,5 @@
 </div>
 <hr />
 <p align="center"><a href="http://tikiwiki.org" target="_blank" title="{tr}Powered by{/tr} {tr}TikiWiki CMS/Groupware Project{/tr} &#169; 2002&#8211;{$smarty.now|date_format:"%Y"} "><img src="img/tiki/tikibutton2.png" alt="{tr}Powered by TikiWiki{/tr}" style="width:80px; height:31px; border:0" /></a></p>
+		</div>{* -- END of main -- *}
+	</div> {* -- END of fixedwidth -- *}
