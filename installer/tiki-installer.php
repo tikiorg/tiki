@@ -844,7 +844,7 @@ if ( $_REQUEST['general_settings'] == 'y' ) {
 
 include "lib/headerlib.php";
 $headerlib->add_cssfile('styles/strasa.css');
-$headerlib->add_cssfile('styles/strasa/options/cool.css');
+$headerlib->add_cssfile('styles/strasa/options/fixed_width.css');
 
 $smarty->assign_by_ref('headerlib',$headerlib);
 

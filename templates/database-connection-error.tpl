@@ -6,6 +6,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<title>{tr}System error.{/tr}</title>
 	<link rel="stylesheet" href="styles/strasa.css" type="text/css"/>
+	<link rel="stylesheet" href="styles/strasa/options/fixed_width.css" type="text/css"/>
 	<style type="text/css" media="screen">
 		html {ldelim}
 			background-color: #fff;
