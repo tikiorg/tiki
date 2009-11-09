@@ -67,12 +67,12 @@ html >
 }
 
 #c1c2 #col2 {
-	background: url(fixed/box_top.gif) no-repeat 100% 0;
+	background: url(fixed_width/box_top.gif) no-repeat 100% 0;
 }
 
 #c1c2 #col2 .content {
 	margin-left: 0px;
-	background: url(fixed/box_bottom.gif) no-repeat 100% 100%;
+	background: url(fixed_width/box_bottom.gif) no-repeat 100% 100%;
 }
 #col3 .content {
 	margin-right: 0px;
@@ -82,6 +82,6 @@ html >
 	border-bottom: solid 0px white;
 }
 
-body { background: #214d68 url(fixed_width/body-bg.png) repeat-x;}
+body { background: #214d68 url(fixed_width/body-bg.png) repeat-x !important}
 #main[id] {border:1px solid #2E3035; margin-top: 18px; margin-bottom: 5px;}
 html {background: #214d68;}
