@@ -505,7 +505,7 @@ class ModLib extends TikiLib {
 		return $info;
 	}
 
-	function createDefaultCacheKey( $module_reference ) {
+	function createDefaultCacheKey( $mod_reference ) {
 		global $prefs;
 		return $mod_reference['moduleId'] . '-' . $mod_reference['name'] . '-'. $prefs['language'] . '-' . serialize($mod_reference['params']);
 	}
