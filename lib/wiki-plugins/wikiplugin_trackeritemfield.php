@@ -110,7 +110,13 @@ function wikiplugin_trackeritemfield($data, $params) {
 			$perm = ($info['status'] == 'c')? 'view_trackers_closed':(($info['status'] == 'p')?'view_trackers_pending':'view_trackers');
 			$perms = Perms::get(array('type'=>'tracker', 'object'=>$trackerId));
 			if (!$perms->$perm) {
-				return false;
+				$g = $trklib-> get_item_group_creator($trackerId, $itemId);
+				if (in_array($g, $tikilib->get_user_groups($user))) {
+					$perms = $trklib->get_special_group_tracker_perm($tracker_info, false);
+					if ($perms["tiki_p.$perm"] != 'y') {
+						return false;
+					}
+				}
 			}
 			$perms = Perms::get(array('type'=>'trackeritem', 'object'=>$itemId));
 			if (!$perms->$perm) {
