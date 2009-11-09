@@ -10,7 +10,7 @@
     <tr>
    	 {* Left side shows diffs that have happened in source language*}
     <td width="50%" height="80%">
-    	<div style=style='height:80%'>
+    	<div style='height:80%'>
 			{include file='pagehistory.tpl'}
 		</div>
 	</td>
