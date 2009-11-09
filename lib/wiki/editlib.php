@@ -21,7 +21,8 @@ class EditLib {
 		$page = $_REQUEST["page"];
 		require_once 'lib/wiki/semanticlib.php';
 		$aliases = $semanticlib->getAliasContaining($page, true);
-		if (count($aliases) > 0) {
+		if (count($aliases) > 0 && 
+		    !($this->page_has_single_alias_pointing_to_itself($page, $aliases))) {
 			$error_title = tra("Cannot create aliased page");
 			$error_msg = tra("You attempted to create the following page:")." ".
 			             "<b>$page</b>.\n<p>\n";
@@ -36,6 +37,17 @@ class EditLib {
 			$access->display_error(page, $error_title, "", true, $error_msg);
 		}	
 	}
+	
+	function page_has_single_alias_pointing_to_itself($page, $page_aliases) {
+		$answer = false;
+		if (count($page_aliases) == 1) {
+			$single_alias = $page_aliases[0];
+			if ($single_alias[toPage] == $page) {
+				$answer = true;
+			}
+		}
+		return $answer;
+	}	
 	
 	// translation functions
 	
