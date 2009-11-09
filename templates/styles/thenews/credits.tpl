@@ -1,1 +1,1 @@
- | {tr}Theme{/tr}: The News
+{tr}Theme{/tr}: The News

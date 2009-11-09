@@ -131,14 +131,20 @@ if (isset($_GET['list'])) { // {{{
 		'category' => '',
 		'profile' => ''
 	) , $_GET);
-	$smarty->assign('category', $params['category']);
+	$smarty->assign('categories', $params['categories']);
 	$smarty->assign('profile', $params['profile']);
 	$smarty->assign('repository', $params['repository']);
 	if ($_GET['preloadlist'] && $params['repository']) $list->refreshCache($params['repository']);
-	$result = $list->getList($params['repository'], $params['category'], $params['profile']);
+	$profiles = $list->getList($params['repository'], $params['categories'], $params['profile']);
+	foreach ($profiles as &$profile) {
+		$profile['categoriesString'] = "";
+		foreach ($profile['categories'] as $category) {
+			$profile['categoriesString'] .= (empty($profile['categoriesString']) ? '' : ', ') . $category;
+		}
+	}
+	$smarty->assign('result', $profiles);
 	$category_list = $list->getCategoryList($params['repository']);
 	$smarty->assign('category_list', $category_list);
-	$smarty->assign('result', $result);
 } // }}}
 $threshhold = time() - 1800;
 $oldSources = array();

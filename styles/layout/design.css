@@ -171,6 +171,12 @@ div#debugconsole {
 	font-size: 1em;
 }
 
+#footer .rsslist {
+	width: 190px;
+	text-align: left;
+	margin: auto;
+}
+
 .findtable {
   text-align: center;
   margin-bottom: 10px;

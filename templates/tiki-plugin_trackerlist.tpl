@@ -39,20 +39,20 @@
 					{elseif $ix.type eq 's' and $ix.name eq "Rating"}
 						{if $tiki_p_admin_trackers eq 'y' or $perms.tiki_p_tracker_view_ratings eq 'y'}
 		<th class="auto field{$ix.fieldId}">
-							{self_link _sort_arg='tr_sort_mode' _sort_field='f_'|cat:$ix.fieldId}{$ix.name|default:"&nbsp;"}{/self_link}</th>
+							{self_link _sort_arg='tr_sort_mode'|cat:$iTRACKERLIST _sort_field='f_'|cat:$ix.fieldId}{$ix.name|default:"&nbsp;"}{/self_link}</th>
 						{/if}
 					{else}
 		<th class="auto field{$ix.fieldId}">
-						{self_link _sort_arg='tr_sort_mode' _sort_field='f_'|cat:$ix.fieldId}{$ix.name|default:"&nbsp;"}{/self_link}
+						{self_link _sort_arg='tr_sort_mode'|cat:$iTRACKERLIST _sort_field='f_'|cat:$ix.fieldId}{$ix.name|default:"&nbsp;"}{/self_link}
 		</th>
 					{/if}
 				{/if}
 			{/foreach}
 			{if $showcreated eq 'y'}
-		<th>{self_link _sort_arg='tr_sort_mode' _sort_field='created'}{tr}Created{/tr}{/self_link}</th>
+		<th>{self_link _sort_arg='tr_sort_mode'|cat:$iTRACKERLIST _sort_field='created'}{tr}Created{/tr}{/self_link}</th>
 			{/if}
 			{if $showlastmodif eq 'y'}
-		<th>{self_link _sort_arg='tr_sort_mode' _sort_field='lastModif'}{tr}LastModif{/tr}{/self_link}</th>
+		<th>{self_link _sort_arg='tr_sort_mode'|cat:$iTRACKERLIST _sort_field='lastModif'}{tr}LastModif{/tr}{/self_link}</th>
 			{/if}
 			{if $tracker_info.useComments eq 'y' and $tracker_info.showComments eq 'y' and $tiki_p_tracker_view_comments ne 'n'}
 		<th style="width:5%">{tr}Coms{/tr}</th>

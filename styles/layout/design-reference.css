@@ -173,6 +173,13 @@ div#debugconsole {
 	font-size: 1em;
 }
 
+/* For correct styling when RSS feed is put in botbar custom code */
+#footer .rsslist {
+	width: 190px;
+	text-align: left;
+	margin: auto;
+}
+
 .findtable {
   text-align: center;
   margin-bottom: 10px;

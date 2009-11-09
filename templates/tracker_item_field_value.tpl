@@ -304,7 +304,7 @@
 		<span class="rating">
 		<span style="white-space:nowrap">
 		{section name=i loop=$field_value.options_array}
-			{if $tiki_p_tracker_vote_ratings eq 'y' and isset($item.my_rate) and $field_value.options_array[i] eq $item.my_rate}
+			{if $tiki_p_tracker_vote_ratings eq 'y' and isset($item.my_rate) and $field_value.options_array[i] === $item.my_rate}
 				<b class="highlight">
 					{if $field_value.voteavg >= $field_value.options_array[i]}
 				   		{icon _id='star' alt=$field_value.options_array[i] title=$smarty.capture.myvote}

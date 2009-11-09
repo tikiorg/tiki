@@ -270,18 +270,19 @@ function showDetails( id, domain, profile ) { // {{{
 <fieldset><legend>{tr}Profiles{/tr}</legend>
 <form method="get" action="tiki-admin.php#profile-results">
 <div class="adminoptionbox">
-<div class="adminoptionlabel">{tr}Filter the list of profiles{/tr}:</div>
+<div class="adminoptionlabel">{tr}Filter the list of profiles:{/tr}</div>
 <div class="adminoptionboxchild">
-	<div class="adminoptionlabel"><label for="profile">{tr}Profile{/tr}: </label><input type="text" name="profile" id="profile" value="{$profile|escape}" /></div>
-	<div class="adminoptionlabel"><label for="category">{tr}Category{/tr}: </label>
-	<select name="category" id="category">
-							<option value="">{tr}All{/tr}</option>
+	<div class="adminoptionlabel"><label for="profile">{tr}Profile:{/tr} </label><input type="text" name="profile" id="profile" value="{$profile|escape}" /></div>
+{if isset($category_list)}
+	<div class="adminoptionlabel"><label for="categories">{tr}Categories:{/tr} </label>
+	<select multiple="multiple" name="categories[]" id="categories">
 							{foreach item=cat from=$category_list}
-					 			<option value="{$cat|escape}"{if $cat eq $category} selected="selected"{/if}>{$cat|escape}</option>
+					 			<option value="{$cat|escape}"{if in_array($cat, $categories)} selected="selected"{/if}>{$cat|escape}</option>
 							{/foreach}
 	</select>
 	</div>
-	<div class="adminoptionlabel"><label for="repository">{tr}Repository{/tr}: </label>
+{/if}
+	<div class="adminoptionlabel"><label for="repository">{tr}Repository:{/tr} </label>
 	<select name="repository" id="repository">
 							<option value="">{tr}All{/tr}</option>
 							{foreach item=source from=$sources}
@@ -298,13 +299,13 @@ function showDetails( id, domain, profile ) { // {{{
 			<tr>
 				<th>{tr}Profile{/tr}</th>
 				<th>{tr}Repository{/tr}</th>
-				<th>{tr}Category{/tr}</th>
+				<th>{tr}Categories{/tr}</th>
 			</tr>
 			{foreach key=k item=profile from=$result}
 				<tr id="profile-{$k}">
 					<td><a href="javascript:showDetails( 'profile-{$k}', '{$profile.domain|escape}', '{$profile.name|escape}' )">{$profile.name|escape}</a>{if $profile.installed} <em>{tr}applied{/tr}</em>{/if}</td>
 					<td>{$profile.domain}</td>
-					<td>{$profile.category}</td>
+					<td>{$profile.categoriesString}</td>
 				</tr>
 			{/foreach}
 			{if $result|@count eq '0'}
@@ -317,7 +318,7 @@ function showDetails( id, domain, profile ) { // {{{
 <fieldset><legend>{tr}Repositories{/tr}</legend>
 <form action="tiki-admin.php?page=profiles" method="post">
 <div class="adminoptionbox">
-	<div class="adminoptionlabel"><label for="profile_sources">{tr}Repository URLs{/tr}:</label></div>
+	<div class="adminoptionlabel"><label for="profile_sources">{tr}Repository URLs:{/tr}</label></div>
 	<div><textarea id="profile_sources" name="profile_sources" rows="5" cols="60" style="width:95%;">{$prefs.profile_sources|escape}</textarea>
 	<br /><em>{tr}Enter multiple repository URLs, one per line{/tr}.</em>
 	</div>
@@ -343,7 +344,7 @@ function showDetails( id, domain, profile ) { // {{{
 			<em><strong>{tr}This will run the profile and make potentially unrecoverable changes in your database!{/tr}</strong></em>
 			<div class="adminoptionbox">
 				<div class="adminoptionlabel">
-					<label for="profile_tester_name">{tr}Test Profile Name{/tr}: </label>
+					<label for="profile_tester_name">{tr}Test Profile Name:{/tr} </label>
 					<input type="text" name="profile_tester_name" id="profile_tester_name" value="Test" />
 				</div>
 				<div>
