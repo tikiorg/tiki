@@ -260,13 +260,16 @@ function wikiplugin_trackerlist($data, $params) {
 	global $smarty, $tikilib, $dbTiki, $userlib, $tiki_p_admin_trackers, $prefs, $_REQUEST, $tiki_p_view_trackers, $user, $page, $tiki_p_tracker_vote_ratings, $tiki_p_tracker_view_ratings, $trklib, $tiki_p_traker_vote_rating, $tiki_p_export_tracker;
 	require_once("lib/trackers/trackerlib.php");
 	global $notificationlib;  include_once('lib/notifications/notificationlib.php');//needed if plugin tracker after plugin trackerlist
+	static $iTRACKERLIST = 0;
+	++$iTRACKERLIST;
+	$smarty->assign('iTRACKERLIST', $iTRACKERLIST);
 	extract ($params,EXTR_SKIP);
 
 	if ($prefs['feature_trackers'] != 'y' || !isset($trackerId) || !($tracker_info = $trklib->get_tracker($trackerId))) {
 		return $smarty->fetch("wiki-plugins/error_tracker.tpl");
 	} else {
 
-		$auto_query_args = array('itemId','tr_initial','tr_sort_mode','tr_user');
+		$auto_query_args = array('itemId','tr_initial',"tr_sort_mode$iTRACKERLIST",'tr_user');
 		$smarty->assign('trackerId', $trackerId);
 		$tracker_info = $trklib->get_tracker($trackerId);
 		if ($t = $trklib->get_tracker_options($trackerId)) {
@@ -446,9 +449,8 @@ function wikiplugin_trackerlist($data, $params) {
 			$smarty->assign_by_ref('checkbox', $check);
 		}	
 
-		if (isset($_REQUEST['tr_sort_mode'])) {
-		  //$query_array['tr_sort_mode'] = $_REQUEST['tr_sort_mode'];
-			$sort_mode = $_REQUEST['tr_sort_mode'];
+		if (isset($_REQUEST["tr_sort_mode$iTRACKERLIST"])) {
+			$sort_mode = $_REQUEST["tr_sort_mode$iTRACKERLIST"];
 		} elseif (!isset($sort_mode)) {
 			if (!empty($tracker_info['defaultOrderKey'])) {
 				if ($tracker_info['defaultOrderKey'] == -1)
@@ -476,20 +478,18 @@ function wikiplugin_trackerlist($data, $params) {
 		}
 
 		if (isset($_REQUEST['tr_offset'])) {
-		  //$query_array['tr_offset'] = $_REQUEST['tr_offset'];
 			$tr_offset = $_REQUEST['tr_offset'];
 		} else {
 			$tr_offset = 0;
-			//$query_array['tr_offset'] = 0;
 		}
 		$smarty->assign_by_ref('tr_offset',$tr_offset);
 
 			
 		$tr_initial = '';
 		if ($showinitials == 'y') {
-			if (isset($_REQUEST["tr_initial"])) {
+			if (isset($_REQUEST['tr_initial'])) {
 			  //$query_array['tr_initial'] = $_REQUEST['tr_initial'];
-				$tr_initial = $_REQUEST["tr_initial"];
+				$tr_initial = $_REQUEST['tr_initial'];
 			}
 			$smarty->assign('initials', split(' ','a b c d e f g h i j k l m n o p q r s t u v w x y z'));
 		}
