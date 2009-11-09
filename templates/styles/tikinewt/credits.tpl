@@ -1,1 +1,1 @@
- | {tr}Theme{/tr}: Tikinewt
+{tr}Theme{/tr}: Tikinewt

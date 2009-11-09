@@ -1,1 +1,1 @@
- | {tr}Theme{/tr}: Darkroom
+{tr}Theme{/tr}: Darkroom

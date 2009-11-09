@@ -1,1 +1,1 @@
-| {tr}Theme{/tr}: Strasa
+{tr}Theme{/tr}: Strasa

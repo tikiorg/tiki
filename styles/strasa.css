@@ -922,10 +922,11 @@ div.adminanchors {
 h3.box-title {
 	padding-top: 4px;
 	padding-left: 10px;
+	font-size: 1.5em;
 }
 
 #col2 .box-title {
-	color: #fff;
+	color: #309fc0;
 	margin-top: 0;
 	margin-bottom: .3em;
 }

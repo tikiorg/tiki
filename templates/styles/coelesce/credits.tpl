@@ -1,1 +1,1 @@
-| {tr}Theme{/tr}: Coelesce
+{tr}Theme{/tr}: Coelesce
