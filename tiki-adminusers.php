@@ -190,7 +190,7 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 				$send_validation_email = true;
 				$apass = addslashes(md5($tikilib->genPass()));
 			}
-			if ($userlib->add_user($_REQUEST["name"], ($send_validation_email ? $apass : $_REQUEST["pass"]) , $_REQUEST["email"], ($send_validation_email ? $_REQUEST["pass"] : '') , $pass_first_login)) {
+			if ($userlib->add_user($_REQUEST["name"], ($send_validation_email ? $apass : $_REQUEST["pass"]) , $_REQUEST["email"], ($send_validation_email ? $_REQUEST["pass"] : '' ), $pass_first_login, NULL, NULL, ($send_validation_email?'u':NULL))) {
 				$tikifeedback[] = array(
 					'num' => 0,
 					'mes' => sprintf(tra("New %s created with %s %s.") , tra("user") , tra("username") , $_REQUEST["name"])
@@ -271,7 +271,7 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 				if ($_REQUEST['submit_mult'] == 'remove_users_with_page') $tikilib->remove_all_versions($prefs['feature_wiki_userpage_prefix'] . $deleteuser);
 				$tikifeedback[] = array(
 					'num' => 0,
-					'mes' => sprintf(tra("%s <b>%s</b> successfully deleted.") , tra("user") , $deleteuser)
+					'mes' => sprintf(tra("%s %s successfully deleted.") , tra("user") , $deleteuser)
 				);
 			}
 		} elseif ($prefs['feature_ticketlib2'] == 'y') {
@@ -310,7 +310,7 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 					$userlib->assign_user_to_group($assign_user, $group);
 					$tikifeedback[] = array(
 						'num' => 0,
-						'mes' => sprintf(tra("%s <b>%s</b> assigned to %s <b>%s</b>.") , tra("user") , $assign_user, tra("group") , $group)
+						'mes' => sprintf(tra("%s %s assigned to %s %s.") , tra("user") , $assign_user, tra("group") , $group)
 					);
 				}
 			}
@@ -327,7 +327,7 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 					$userlib->remove_user_from_group($assign_user, $group);
 					$tikifeedback[] = array(
 						'num' => 0,
-						'mes' => sprintf(tra("%s <b>%s</b> removed from %s <b>%s</b>.") , tra("user") , $assign_user, tra("group") , $group)
+						'mes' => sprintf(tra("%s %s removed from %s %s.") , tra("user") , $assign_user, tra("group") , $group)
 					);
 				}
 			}
@@ -344,7 +344,7 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 				$userlib->set_default_group($assign_user, $group);
 				$tikifeedback[] = array(
 					'num' => 0,
-					'mes' => sprintf(tra("group <b>%s</b> set as the default group of user <b>%s</b>.") , $group, $assign_user)
+					'mes' => sprintf(tra("group %s set as the default group of user %s.") , $group, $assign_user)
 				);
 			}
 		}

@@ -151,7 +151,7 @@ if (isset($_REQUEST['register']) && !empty($_REQUEST['name']) && (isset($_REQUES
 		if ($prefs['validateUsers'] == 'y' || (isset($prefs['validateRegistration']) && $prefs['validateRegistration'] == 'y')) {
 			$apass = addslashes(md5($tikilib->genPass()));
 			$userlib->send_validation_email($_REQUEST['name'], $apass, $_REQUEST['email'], '', '', isset($_REQUEST['chosenGroup']) ? $_REQUEST['chosenGroup'] : '');
-			$userlib->add_user($_REQUEST["name"], $apass, $_REQUEST["email"], $_REQUEST["pass"], false, 'n', $openid_url);
+			$userlib->add_user($_REQUEST["name"], $apass, $_REQUEST["email"], '', false, 'n', $openid_url , $prefs['validateRegistration'] == 'y'?'a':'u');
 			$logslib->add_log('register', 'created account ' . $_REQUEST["name"]);
 			$smarty->assign('showmsg', 'y');
 		} else {
