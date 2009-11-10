@@ -463,7 +463,7 @@ $smarty = new Smarty_Tikiwiki_Installer();
 $smarty->load_filter('pre', 'tr');
 $smarty->load_filter('output', 'trimwhitespace');
 $smarty->assign('mid', 'tiki-install.tpl');
-$smarty->assign('style', 'thenews.css');
+$smarty->assign('style', 'strasa.css');
 $smarty->assign('virt', isset($virt) ? $virt : null );
 $smarty->assign('multi', isset($multi) ? $multi : null );
 $smarty->assign('lang', $language);
