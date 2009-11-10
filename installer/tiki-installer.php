@@ -658,14 +658,7 @@ if ($admin_acc == 'n') {
 $smarty->assign('dbdone', 'n');
 $smarty->assign('logged', $logged);
 
-// Profile selection- and installation steps
-if ( $install_step == '4' || $install_step == '5' ) {
-	require_once 'lib/profilelib/profilelib.php';
-	$remote_profile_test = Tiki_Profile::fromNames('http://profiles.tikiwiki.org', 'Small_Organization_Web_Presence');
-	$has_internet_connection = empty($remote_profile_test) ? 'n' : 'y';
-	$smarty->assign('has_internet_connection', $has_internet_connection);
-}
-
+// Installation steps
 if (
 	isset($dbTiki)
 	&& is_object($dbTiki)
@@ -683,25 +676,9 @@ if (
 		$tikilib = new TikiLib;
 		require_once 'lib/userslib.php';
 		$userlib = new UsersLib;
-		require_once 'lib/profilelib/profilelib.php';
-		require_once 'lib/profilelib/installlib.php';
 		require_once 'lib/setup/compat.php';
 		require_once 'lib/tikidate.php';
 		$tikidate = new TikiDate();
-		
-		$installer = new Tiki_Profile_Installer;
-
-		if ($has_internet_connection == 'y'
-			&& isset($_REQUEST['profile'])
-			&& !empty($_REQUEST['profile'])
-		) {
-			if ( $_REQUEST['profile'] == 'Small_Organization_Web_Presence' ) {
-				$profile = $remote_profile_test;
-			} else {
-				$profile = Tiki_Profile::fromNames( 'http://profiles.tikiwiki.org', $_REQUEST['profile'] );
-			}
-			$installer->install( $profile );
-		}
 	}
 
 	if (isset($_REQUEST['update'])) {
