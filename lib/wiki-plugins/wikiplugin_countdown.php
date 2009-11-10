@@ -57,7 +57,7 @@ function wikiplugin_countdown($data, $params) {
 	$tikidate->setTZbyID($tikilib->get_display_timezone());
 	$tikidate->setDate($then);
 	$tikidate->convertTZByID('UTC');
-	$then = $tikidate->getDate(DATE_FORMAT_UNIXTIME);
+	$then = $tikidate->getTime();
 
 	$difference = $then - $tikilib->now;
 	$num = $difference/86400;
