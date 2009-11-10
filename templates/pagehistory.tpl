@@ -1,6 +1,10 @@
 {if $smarty.request.diff_style}
    {if $translation_mode ne 'y'}
      <h2>{tr}Comparing version {$old.version} with version {$new.version}{/tr}</h2>     
+   {else}
+     <p>
+     {tr}Changes that need to be reproduced are highlighted below.{/tr}
+     </p>
    {/if}
    <table class="normal diff">
    {if $translation_mode eq 'n'}
