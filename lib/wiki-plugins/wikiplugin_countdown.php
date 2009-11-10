@@ -68,6 +68,9 @@ function wikiplugin_countdown($data, $params) {
 	$mins = intval($num3);
 	$num4 = ($num3 - $mins)*60;
 	$secs = intval($num4);
-	$ret = "$days ".tra("days").", $hours ".tra("hours").", $mins ".tra("minutes")." ".tra("and")." $secs ".tra("seconds")." $data";
+	$ret = "$days ".tra("days");
+	if (empty($locatetime) || $locatetime != 'off') {
+		$ret .= ", $hours ".tra("hours").", $mins ".tra("minutes")." ".tra("and")." $secs ".tra("seconds")." $data";
+	}
 	return $ret;
 }
