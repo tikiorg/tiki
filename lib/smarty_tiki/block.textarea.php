@@ -159,14 +159,14 @@ function editTimerTick() {
 	var seconds = editTimeoutSeconds - editTimeElapsedSoFar;
 	
 	if (editTimerWarnings == 0 && seconds <= 60) {
-		alert('".tra('Your edit session will expire in').' 1 '.tra('minute').'.'.
-				tra('You must PREVIEW or SAVE your work now, to avoid losing your edits.')."');
+		alert('".addslashes(tra('Your edit session will expire in')).' 1 '.tra('minute').'.'.
+				addslashes(tra('You must PREVIEW or SAVE your work now, to avoid losing your edits.'))."');
 		editTimerWarnings++;
 	} else if (seconds <= 0) {
 		clearInterval(editTimeoutIntervalId);
 	}
 	
-	window.status = '".tra('Your edit session will expire in:')."' + Math.floor(seconds / 60) + ': ' + ((seconds % 60 < 10) ? '0' : '') + (seconds % 60);
+	window.status = '".addslashes(tra('Your edit session will expire in:'))."' + Math.floor(seconds / 60) + ': ' + ((seconds % 60 < 10) ? '0' : '') + (seconds % 60);
 	if (seconds % 60 == 0 && \$jq('#edittimeout')) {
 		\$jq('#edittimeout').text(Math.floor(seconds / 60));
 	}
