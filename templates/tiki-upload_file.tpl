@@ -1,15 +1,17 @@
 {* $Id$ *}
 
+{if !empty($filegals_manager) and !isset($smarty.request.simpleMode)}
+	{assign var=simpleMode value='y'}
+{else}
+	{assign var=simpleMode value='n'}
+{/if}
+
 {title help="File+Galleries" admpage="fgal"}{if $editFileId}{tr}Edit File:{/tr} {$fileInfo.filename}{else}{tr}Upload File{/tr}{/if}{/title}
 
 {if !empty($galleryId) or (count($galleries) > 0 and $tiki_p_list_file_galleries eq 'y') or count($uploads) > 0}
 <div class="navbar">
 	{if !empty($galleryId)}
-		{if $filegals_manager neq ''}
-			{button galleryId="$galleryId" href="tiki-list_file_gallery.php" _text="{tr}Browse Gallery{/tr}"}
-		{else}
-			{button galleryId="$galleryId" href="tiki-list_file_gallery.php" _text="{tr}Browse Gallery{/tr}"}
-		{/if}
+		{button galleryId="$galleryId" href="tiki-list_file_gallery.php" _text="{tr}Browse Gallery{/tr}"}
 	{/if}
 
 	{if count($galleries) > 0 and $tiki_p_list_file_galleries eq 'y'}
@@ -23,6 +25,7 @@
 	{if count($uploads) > 0}
 		{button href="#upload" _text="{tr}Upload File{/tr}"}
 	{/if}
+	{if $simpleMode eq 'y'}{button simpleMode='n' galleryId=$galleryId href="" _text="{tr}Advanced mode{/tr}"}{/if}
 </div>
 {/if}
 
@@ -32,6 +35,7 @@
 	{section name=ix loop=$errors}
 		{$errors[ix]}<br />
 	{/section}
+	{button href="#upload" _text="{tr}Retry{/tr}"}
 	</div>
 {/if}
 
@@ -113,7 +117,7 @@
 	<div class="fgal_file">
 		<div class="fgal_file_c1">
 		<table width="100%">
-			<tr>
+			{if $simpleMode neq 'y'}<tr>
 				<td><label for="name">{tr}File title:{/tr}</label></td>
 				<td width="80%">
 					<input style="width:100%" type="text" id="name" name="name[]" {if isset($fileInfo) and $fileInfo.name}value="{$fileInfo.name}"{/if} size="40" /> {if $gal_info.type eq "podcast" or $gal_info.type eq "vidcast"} ({tr}required field for podcasts{/tr}){/if}
@@ -125,7 +129,7 @@
 					<textarea style="width:100%" rows="2" cols="40" id="description" name="description[]">{if isset($fileInfo) and $fileInfo.description}{$fileInfo.description}{/if}</textarea>
 				{if $gal_info.type eq "podcast" or $gal_info.type eq "vidcast"}<br /><em>{tr}Required for podcasts{/tr}.</em>{/if}
 				</td>
-			</tr>
+			</tr>{/if}
 			<tr>
 	{* File replacement is only here when the javascript upload action is not
 	available in the file listing.
@@ -141,7 +145,7 @@
 			</tr>
 		</table>
 	</div>
-	<div class="fgal_file_c2">
+	{if $simpleMode neq 'y'}<div class="fgal_file_c2">
 	<table width="100%">
 	{if !$editFileId and $tiki_p_batch_upload_files eq 'y'}
 		<tr><td>
@@ -238,6 +242,9 @@
 {if $prefs.javascript_enabled eq 'y' and !$editFileId}
 	{include file='categorize.tpl' notable='y'}<br/>
 {/if}
+{else}
+	<input type="hidden" name="galleryId" value="{$galleryId}"/>
+{/if}{* end if $simpleMode neq 'y'*}
 {if $prefs.javascript_enabled eq 'y'}
 <input type="hidden" name="upload" />
 {/if}
@@ -248,6 +255,7 @@
 {if $filegals_manager neq ''}
 	<input type="hidden" name="filegals_manager" value="{$filegals_manager}"/>
 {/if}
+<input type="hidden" name="simpleMode" value="{$simpleMode}"/>
 {$upload_str}
 {if $editFileId}
 	{include file='categorize.tpl' notable='y'}<br/>
@@ -266,8 +274,8 @@
 <hr class="clear"/>
 <div id="page_bar">
 {if $prefs.javascript_enabled eq 'y'  and  !$editFileId}
-		<input type="button" onclick="upload('0', 'loader_0')" value="{tr}Upload{/tr}"/>
-		<input type="button" onclick="javascript:add_upload_file('multiple_upload')" value="{tr}Add File{/tr}"/>
+		<input type="button" onclick="upload_files('0', 'loader_0')" value="{tr}Upload{/tr}"/>
+		{if $simpleMode neq 'y'}<input type="button" onclick="javascript:add_upload_file('multiple_upload')" value="{tr}Add File{/tr}"/>{/if}
 {/if}
 </div>
 </div>
@@ -325,7 +333,7 @@
 			}
 		}
 
-		function upload(form, loader){
+		function upload_files(form, loader){
 			//only do this if the form exists
 			n=0;
 			while (document.forms['file_'+n]){
