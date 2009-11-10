@@ -304,7 +304,7 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 			</td>
 			<td class="formcolor">
 			{* 
-			   Alain Désilets: This used to have a size="50" attribute, but I deleted it
+			   Alain Dï¿½silets: This used to have a size="50" attribute, but I deleted it
 			   because in the Collaborative_Multilingual_Terminology, we may need to view 
 			   two different languages of the same page side by side. And the text length of
 			   50 was causing the language displayed on the right side to be squished into a 
@@ -451,7 +451,7 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 
 {if $forum_mode neq 'y'}</div><!-- comzone end -->{/if}
 {*</div>  now this tag causes problems instead of fixing (was added earlier to prevent side columns in *litecss themes from not appearing *}
-{if empty($user)}
+{if empty($user) and $prefs.javascript_enabled eq "y"}
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--
 var js_anonymous_name = getCookie('anonymous_name');
