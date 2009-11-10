@@ -28,6 +28,7 @@ class Tiki_Profile_List
 
 	function refreshCache( $path ) // {{{
 	{
+		global $tikilib;
 		$file = $this->getCacheLocation( $path );
 
 		// Replace existing with blank file
