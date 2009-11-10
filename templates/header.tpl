@@ -96,7 +96,7 @@
 
 {if $headerlib}		{$headerlib->output_headers()}{/if}
 
-{if $prefs.feature_jquery eq "y"}
+{if $prefs.javascript_enabled eq "y" and $prefs.feature_jquery eq "y"}
 	{include file='header_jquery.tpl'}
 {/if}
 
