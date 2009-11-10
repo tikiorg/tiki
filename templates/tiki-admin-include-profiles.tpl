@@ -293,7 +293,7 @@ function showDetails( id, domain, profile ) { // {{{
 <div class="adminoptionlabel">{tr}Filter the list of profiles:{/tr}</div>
 <div class="adminoptionboxchild">
 	<div class="adminoptionlabel"><label for="profile">{tr}Profile:{/tr} </label><input type="text" name="profile" id="profile" value="{$profile|escape}" /></div>
-{if isset($category_list)}
+{if isset($category_list) and count($category_list) gt 0}
 	<div class="adminoptionlabel"><label for="categories">{tr}Categories:{/tr} </label>
 	<select multiple="multiple" name="categories[]" id="categories">
 							{foreach item=cat from=$category_list}
