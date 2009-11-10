@@ -112,8 +112,11 @@ function wikiplugin_trackeritemfield($data, $params) {
 			if (!$perms->$perm) {
 				$g = $trklib-> get_item_group_creator($trackerId, $itemId);
 				if (in_array($g, $tikilib->get_user_groups($user))) {
+					if (empty($tracker_info)) {
+						$tracker_info = $trklib->get_tracker($info['trackerId']);
+					}
 					$perms = $trklib->get_special_group_tracker_perm($tracker_info, false);
-					if ($perms["tiki_p.$perm"] != 'y') {
+					if ($perms["tiki_p_$perm"] != 'y') {
 						return false;
 					}
 				}
