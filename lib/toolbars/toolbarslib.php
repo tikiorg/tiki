@@ -799,6 +799,7 @@ displayPicker = function( closeTo, list, areaname ) {
 			insertAt( areaname, ins );
 			\$jq('div.toolbars-picker').remove();
 			pickerDiv = false;
+			return false;
 		}
 	};
 
