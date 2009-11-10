@@ -29,6 +29,6 @@ function module_menupage( $mod_reference, $module_params ) {
 		$content = $wikilib->get_parse($pagemenu, $dummy);
 		$smarty->assign('tpl_module_title', $pagemenu);
 		$smarty->assign_by_ref('contentmenu',$content);
-		$smarty->assign('page', $pagemenu);
+		$smarty->assign('pagemenu', $pagemenu);
 	}
 }
