@@ -80,8 +80,8 @@ function prefs_fgal_list() {
 		'fgal_use_db' => array(
 			'type' => 'radio',
 			'options' => array(
-				'n' => tra('Store in directory'),
 				'y' => tra('Store in database'),
+				'n' => tra('Store in directory'),
 			),
 		),
 		'fgal_use_dir' => array(
