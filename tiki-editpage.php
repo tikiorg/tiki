@@ -34,7 +34,6 @@ if ($prefs['feature_wiki'] != 'y') {
 	$smarty->display('error.tpl');
 	die;
 }
-$editlib->make_sure_page_to_be_created_is_not_an_alias();
 
 $smarty->assign( 'translation_mode', ($editlib->isNewTranslationMode() || $editlib->isUpdateTranslationMode()) ?'y':'n' );
 
@@ -52,6 +51,9 @@ if ($prefs['feature_wikiapproval'] == 'y' && substr($_REQUEST['page'], 0, strlen
 
 $page = $_REQUEST["page"];
 $info = $tikilib->get_page_info($page);
+
+$editlib->make_sure_page_to_be_created_is_not_an_alias($page, $info);
+
 // wysiwyg decision
 include 'lib/setup/editmode.php';
 
