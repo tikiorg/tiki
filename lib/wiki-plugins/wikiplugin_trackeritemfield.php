@@ -55,7 +55,7 @@ function wikiplugin_trackeritemfield_info() {
 }
 
 function wikiplugin_trackeritemfield($data, $params) {
-	global $userTracker, $group, $user, $userlib, $tiki_p_admin_trackers, $prefs, $smarty;
+	global $userTracker, $group, $user, $userlib, $tiki_p_admin_trackers, $prefs, $smarty, $tikilib;
 	global $trklib; include_once('lib/trackers/trackerlib.php');
 	static $memoItemId = 0;
 	static $memoTrackerId = 0;
