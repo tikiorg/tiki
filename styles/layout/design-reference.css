@@ -82,9 +82,9 @@ input[type=radio] {
 	padding-left: 10px;
 }
 
+/* padding changed to margin to for correct behavior in iepngfix */
 div#sitelogo {
-	margin: auto;
-	padding: 1em;
+	margin: 1em;
 }
 
 #bannertopright {
