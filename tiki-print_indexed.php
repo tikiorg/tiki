@@ -4,13 +4,22 @@
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-$inputConfiguration = array(array('staticKeyFilters' => array('list' => 'alpha',)), array('staticKeyFiltersForArrays' => array('languages' => 'alpha', 'categId' => 'digits',)), array('catchAllUnset' => null),);
 require_once 'tiki-setup.php';
 require_once 'lib/categories/categlib.php';
+
+if ($prefs['feature_print_indexed'] != 'y') {
+	$smarty->assign('msg', tra("This feature is disabled") . ": feature_print_indexed");
+	$smarty->display("error.tpl");
+	die;
+}
+
+$inputConfiguration = array(array('staticKeyFilters' => array('list' => 'alpha',)), array('staticKeyFiltersForArrays' => array('languages' => 'alpha', 'categId' => 'digits',)), array('catchAllUnset' => null),);
+
 if (!isset($_GET['list']) || !in_array($_GET['list'], array('categorylist', 'glossary'))) {
 	$access->display_error('tiki-print_indexed.php', tra('Missing object list type argument'));
 }
-$access->check_feature('feature_print_indexed');
+
+
 // Classes to be extracted at some later point {{{
 class ObjectList
 // {{{
