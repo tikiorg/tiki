@@ -94,7 +94,7 @@ CREATE TABLE `tiki_actionlog_params` (
   `actionId` int(8) NOT NULL,
   `name` varchar(40) NOT NULL,
   `value` text,
-  KEY `actionIDIndex` (`actionId`),
+  KEY `actionId` (`actionId`),
   KEY `nameValue` (`name`, `value`(200))
 ) ENGINE=MyISAM;
 
@@ -732,6 +732,7 @@ CREATE TABLE `tiki_file_galleries` (
   `show_slideshow` char(1) default NULL,
   `default_view` varchar(20) default NULL,
   `quota` int(8) default 0,
+  `size` int(14) default NULL,
   PRIMARY KEY (`galleryId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
@@ -3285,7 +3286,7 @@ CREATE TABLE `tiki_groupalert` (
   `objectType` varchar( 20 ) NOT NULL default '',
   `objectId` varchar(10) NOT NULL default '',
   `displayEachuser` char( 1 ) default NULL ,
-  PRIMARY KEY ( `objectType`, `objectId` )
+  PRIMARY KEY (`groupName`, `objectType`, `objectId` )
 ) ENGINE=MyISAM ;
 
 DROP TABLE IF EXISTS `tiki_sent_newsletters_files`;
