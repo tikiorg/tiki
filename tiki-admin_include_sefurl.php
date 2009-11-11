@@ -11,7 +11,19 @@ if (isset($_REQUEST['save'])) {
 	$_REQUEST['feature_sefurl_paths'] = preg_split('/ *[,\/] */', $_REQUEST['feature_sefurl_paths']);
 	simple_set_value('feature_sefurl_paths');
 }
-if (!file_exists('.htaccess')) {
-	$smarty->assign('warning', tra('If you use apache, you need a .htaccess file to have this feature working'));
+
+$needtowarn = 1;
+$fp = fopen('.htaccess', "r");
+if ($fp) {
+	$fdata = '';
+	while(!feof($fp)) {
+      	 	$fdata .= fread($fp, filesize('.htaccess')); 
+	}
+	fclose ($fp);
+	
+	if (strpos($fdata,'tiki-index.php?page=$1') !== FALSE) {
+		$needtowarn = 0;
+	} 
 }
+$smarty->assign('needtowarn', $needtowarn);
 ask_ticket('admin-inc-sefurl');

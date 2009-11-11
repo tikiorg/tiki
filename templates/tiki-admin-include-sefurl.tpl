@@ -1,15 +1,14 @@
 {* $Id: tiki-user_information.tpl 16912 2009-02-25 03:38:43Z luciash $ *}
-{if $warning}
-	{remarksbox type="warning" title="{tr}Warning{/tr}"}
-		{$warning}
-	{/remarksbox}
-{/if}
-
 <form class="admin" method="post" action="tiki-admin.php?page=sefurl">
 	<div class="heading input_submit_container" style="text-align: right;">
 		<input type="submit" name="save" value="{tr}Change preferences{/tr}" />
 	</div>
 	<fieldset class="admin">
+		{if $needtowarn}
+		{remarksbox type="warning" title="{tr}Warning{/tr}"}	
+		{tr}SEFURL will not work unless Tiki specific directives are deployed to the .htaccess file. You will need to execute htaccess.sh or manually configure the .htaccess file.{/tr}	
+		{/remarksbox}
+		{/if}
 		<legend>{tr}Settings{/tr}</legend>
 		{preference name=feature_sefurl}
 		{preference name=feature_sefurl_filter}
