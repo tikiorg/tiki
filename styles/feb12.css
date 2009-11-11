@@ -287,10 +287,6 @@ div#sioptions {
 	padding-top: 10px;
 }
 
-#sitelogo {
-	padding-top: 20px;
-}
-
 div#sitead {
 	margin-top: 10px;
 }
@@ -329,14 +325,20 @@ div#sitead {
 #sitetitles {
 	color: #052653;
 	font-weight: bold;
+	margin: 1em;
+}
+
+#sitetitle,
+#sitesubtitle {
+	color: #052653;
+	font-weight: bold;
 	margin: 0;
-	padding-top: 10px;
-	padding-left: 20px;
+	padding: 0;
 }
 
 #sitetitle {
 	font-size: 2.2em;
-	padding-bottom: 14px;
+	margin-top: 20px;
 }
 
 #sitetitle a,
@@ -353,7 +355,7 @@ div#sitead {
 
 #sitesubtitle {
 	font-size: 1.3em;
-	padding-bottom: 5px;
+	padding-top: 5px;
 }
 
 /* tiki-top_bar.tpl - menu and search */
