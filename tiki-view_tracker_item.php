@@ -378,8 +378,6 @@ foreach($xfields["data"] as $i => $array) {
 					}
 					if ($tracker_info['userCanTakeOwnership'] == 'y' && empty($ins_fields['data'][$i]['value'])) {
 						$ins_fields['data'][$i]['value'] = $user; // the user appropiate the item
-					} else {
-						unset($ins_fields["data"][$i]["fieldId"]);
 					}
 				} else {
 					$ins_fields["data"][$i]["value"] = '';
