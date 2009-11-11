@@ -1045,7 +1045,7 @@ function get_default_prefs() {
 		'feature_html_pages' => 'n',
 
 		// use filegals for image inclusion
-		'feature_filegals_manager' => 'n',
+		'feature_filegals_manager' => 'y',
 
 		// contact & mail
 		'feature_contact' => 'n',
