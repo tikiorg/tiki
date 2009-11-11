@@ -127,7 +127,7 @@
 			<td colspan="2">
 				{tabset name='tabs_editpage'}
 					{tab name="{tr}Edit page{/tr}"}
-						{textarea}{$pagedata|escape}{/textarea}
+						{textarea}{$pagedata}{/textarea}
 						{if $page|lower neq 'sandbox'}
 							<fieldset>
 								<label for="comment">{tr}Edit Comment{/tr}: {if $prefs.feature_help eq 'y'}{help url='Editing+Wiki+Pages' desc='{tr}Edit comment: Enter some text to describe the changes you are currently making{/tr}'}{/if}</label>
