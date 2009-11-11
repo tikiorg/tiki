@@ -102,5 +102,5 @@ var CHECKBOX_LIST = [{section name=user loop=$items}'msg[{$items[user].msgId}]'{
 <input type="submit" name="mark" value="{tr}Mark{/tr}" />
 </p>{/if}
 </form>
-
-{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
+{if $mess_maxRecords lt $prefs.maxRecords}{assign var=maxRecords value=$mess_maxRecords}{else}{assign var=maxRecords value=$prefs.maxRecords}{/if}
+{pagination_links cant=$cant_pages step=$maxRecords offset=$offset}{/pagination_links}
