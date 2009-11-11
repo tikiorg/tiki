@@ -360,7 +360,6 @@ div#tiki-main {
 
 #siteheader {
 	background: #fff;
-	position: relative;
 }
 
 #customcode,
@@ -374,6 +373,7 @@ div#tiki-main {
 
 div#sioptions {
 	padding: 0 58px;
+	position: relative;
 }
 
 #sioptionscentered {
