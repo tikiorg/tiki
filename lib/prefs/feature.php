@@ -807,6 +807,7 @@ function prefs_feature_list() {
 		),
 		'feature_search_show_forbidden_cat' => array(
 			'name' => tra('Ignore category viewing restrictions'),
+			'hint' => tra('Will improve performance, but may show forbidden results'),
 			'type' => 'flag',
 			'help' => 'WYSIWYCA+Search',
 		),
@@ -886,6 +887,7 @@ function prefs_feature_list() {
 		),
 		'feature_search_fulltext' => array(
 			'name' => tra('Database search'),
+			'hint' => tra('This search uses the MySQL Full-Text feature. The indexation is always updated.'),
 			'type' => 'flag',
 			'help' => 'Search',
 		),
@@ -1048,5 +1050,261 @@ function prefs_feature_list() {
 				'feature_bot_bar',
 			),			
 		),
+		'feature_editcss' => array(
+			'name' => tra('Edit CSS'),
+			'type' => 'flag',
+			'help' => 'Edit+CSS',
+		),
+		'feature_theme_control' => array(
+			'name' => tra('Theme Control'),
+			'type' => 'flag',
+		),
+		'feature_view_tpl' => array(
+			'name' => tra('Tiki Template Viewing'),
+			'type' => 'flag',
+			'help' => 'View+Templates',
+		),
+		'feature_edit_templates' => array(
+			'name' => tra('Edit Templates'),
+			'type' => 'flag',
+			'help' => 'Edit+Templates',
+		),
+		'feature_custom_html_head_content' => array(
+			'name' => tra('Custom HTML <head> Content'),
+			'hint' => tra('Example') . "{if \$page eq 'Slideshow'}{literal}<style type=\"text/css\">.slideshow { height: 232px; width: 232px; }</style>{/literal}{/if}",
+			'type' => 'textarea',
+			'size' => '6',
+		),
+		'feature_sitemycode' => array(
+			'name' => tra('Custom Site Header'),
+			'type' => 'flag',
+		),
+		'feature_sitelogo' => array(
+			'name' => tra('Site Logo and Title'),
+			'type' => 'flag',
+		),
+		'feature_sitesearch' => array(
+			'name' => tra('Search Bar'),
+			'type' => 'flag',
+		),
+		'feature_site_login' => array(
+			'name' => tra('Login Bar'),
+			'type' => 'flag',
+		),
+		'feature_topbar_debug' => array(
+			'name' => tra('Debugger Console'),
+			'type' => 'flag',
+		),
+		'feature_topbar_custom_code' => array(
+			'name' => tra('Custom code'),
+			'type' => 'textarea',
+			'size' => '6',
+		),
+		'feature_topbar_version' => array(
+			'name' => tra('Display current Tiki version'),
+			'type' => 'flag',
+		),
+		'feature_sitemenu' => array(
+			'name' => tra('Site menu bar'),
+			'type' => 'flag',
+		),
+		'feature_topbar_id_menu' => array(
+			'name' => tra('Menu ID'),
+			'type' => 'text',
+			'size' => '5',
+			'dependencies' => array(
+				'feature_phplayers',
+			),
+		),
+		'feature_top_bar' => array(
+			'name' => tra('Top Bar'),
+			'type' => 'flag',
+		),
+		'feature_custom_center_column_header' => array(
+			'name' => tra('Custom Center Column Header'),
+			'hint' => tra('Example') . ' ' . "{if \$page eq 'Travel'}banner zone=5}{/if}",
+			'type' => 'textarea',
+			'size' => '6',
+		),
+		'feature_left_column' => array(
+			'name' => tra('Left column'),
+			'type' => 'list',
+			'help' => 'Users+Flip+Columns',
+			'options' => array(
+				'yes' => tra('Only if module'),
+				'fixed' => tra('Always'),
+				'user' => tra('User Decides'),
+				'n' => tra('Never'),
+			),
+		),
+		'feature_Right_column' => array(
+			'name' => 'Right Column',
+			'type' => 'list',
+			'help' => 'Users+Flip+Columns',
+			'options' => array(
+				'yes' => tra('Only if module'),
+				'fixed' => tra('Always'),
+				'user' => tra('User Decides'),
+				'n' => tra('Never'),
+			),
+		),
+	
+	// Used in templates/tiki-admin-include-look.tpl
+	'feature_siteloc' => array(
+			'name' => tra('Site location bar'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-look.tpl
+	'feature_sitenav' => array(
+			'name' => '',
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-look.tpl
+	'feature_siteloclabel' => array(
+			'name' => tra('Prefix breadcrumbs with &quot;Location : &quot;'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-look.tpl
+	'feature_sitetitle' => array(
+			'name' => tra('Larger font for'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-look.tpl
+	'feature_sitedesc' => array(
+			'name' => tra('Use page description:'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-look.tpl
+	'feature_bot_logo' => array(
+			'name' => tra('Custom Site Footer'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-look.tpl
+	'feature_endbody_code' => array(
+			'name' => tra('Custom End of &lt;body&gt; Code'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-look.tpl
+	'feature_bot_bar' => array(
+			'name' => tra('Bottom bar'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-look.tpl
+	'feature_bot_bar_icons' => array(
+			'name' => tra('Bottom bar icons'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-look.tpl
+	'feature_bot_bar_debug' => array(
+			'name' => tra('Bottom bar debug'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-look.tpl
+	'feature_bot_bar_rss' => array(
+			'name' => tra('Bottom bar (RSS)'),
+			'type' => '',
+			),
+	
+	
+	// Used in templates/tiki-admin-include-look.tpl
+	'feature_site_report' => array(
+			'name' => tra('Webmaster Report'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-look.tpl
+	'feature_site_send_link' => array(
+			'name' => tra('Email this page'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-look.tpl
+	'feature_layoutshadows' => array(
+			'name' => tra('Shadow layer'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-look.tpl
+	'feature_tabs' => array(
+			'name' => tra('Use Tabs'),
+			'type' => '',
+			),
+	
+	
+	// Used in templates/tiki-admin-include-look.tpl
+	'feature_site_report_email' => array(
+			'name' => tra('Webmaster Email'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-look.tpl
+	'feature_iepngfix' => array(
+			'name' => tra('Correct PNG images alpha transparency in IE6 (experimental)'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-look.tpl
+	'feature_jquery_ui' => array(
+			'name' => tra('JQuery UI'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-look.tpl
+	'feature_jquery_ui_theme' => array(
+			'name' => tra('JQuery UI Theme'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-look.tpl
+	'feature_jquery_tooltips' => array(
+			'name' => tra('Tooltips'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-look.tpl
+	'feature_jquery_autocomplete' => array(
+			'name' => tra('Autocomplete'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-look.tpl
+	'feature_jquery_superfish' => array(
+			'name' => tra('Superfish'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-look.tpl
+	'feature_jquery_reflection' => array(
+			'name' => tra('Reflection'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-look.tpl
+	'feature_jquery_sheet' => array(
+			'name' => tra('JQuery Sheet'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-look.tpl
+	'feature_jquery_tablesorter' => array(
+			'name' => tra('JQuery Sortable Tables'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-look.tpl
+	'feature_jquery_cycle' => array(
+			'name' => tra('Cycle'),
+			'type' => '',
+			),
 	);
 }

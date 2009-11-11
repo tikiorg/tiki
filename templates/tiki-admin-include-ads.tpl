@@ -12,8 +12,6 @@
 		<legend>{tr}Site Ads and Banners{/tr}{if $prefs.feature_help eq 'y'} {help url="Banners"}{/if}</legend>
 
 		{preference name=sitead}
-		<em>{tr}Example{/tr}: {literal}{banner zone='{/literal}{tr}Test{/tr}{literal}'}{/literal}.</em>
-
 		{preference name=feature_sitead}
 		<div class="adminoptionbox" id="feature_sitead_childcontainer">
 			{remarksbox type="note" title="{tr}Note{/tr}"}

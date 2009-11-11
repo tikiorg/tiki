@@ -2,6 +2,16 @@
 
 function prefs_art_list() {
 	return array(
+		'art_home_title' => array(
+			'name' => tra('Title of articles home page'),
+			'type' => 'list',
+			'options' => array(
+				'' => '',
+				'topic' => tra('Topic'),
+				'type' => tra('Type'),
+				'articles' => tra('Articles'),
+			),
+		),
 		'art_list_title' => array(
 			'name' => tra('Title'),
 			'type' => 'flag',

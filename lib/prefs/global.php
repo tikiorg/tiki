@@ -126,6 +126,7 @@ function prefs_global_list() {
 		),
 		'sitead' => array(
 			'name' => tra('Content'),
+			'hint' => tra('Example:') . ' ' . "{banner zone='" . tra('Test') . "'}", 
 			'type' => 'textarea',
 			'size' => '5',
 		),
@@ -139,5 +140,44 @@ function prefs_global_list() {
 			'type' => 'flag',
 			'description' => tra('If passwords <em>are not</em> plain text, reset instructions will be emailed to the user.').' '. tra('If passwords <em>are stored</em> as plain text, the password will be emailed to the user'),
 		),
+		'useGroupTheme' => array(
+			'name' => tra('Each group can have its theme'),
+			'type' => 'flag',
+		),
+	'sitemycode' => array(
+		'name' => tra('Content'),
+		'hint' => tra ('Example:') . ' ' .  "{if \$user neq ''}<div align=\"right\" style=\"float: right; font-size: 10px\">{tr}logged as{/tr}: {\$user}</div>{/if}",
+		'type' => 'textarea',
+		'size' => '6',
+	),
+	'sitetitle' => array(
+		'name' => tra('Site title'),
+		'type' => 'text',
+		'size' => '50',
+	),
+	'sitesubtitle' => array(
+		'name' => tra('Subtitle'),
+		'type' => 'text',
+		'size' => '50',
+	),
+
+	// Used in templates/tiki-admin-include-look.tpl
+	'sitenav' => array(
+			'name' => '',
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-look.tpl
+	'maxRecords' => array(
+			'name' => '',
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-look.tpl
+	'style' => array(
+			'name' => '',
+			'type' => '',
+			),
+	
 	);
 }

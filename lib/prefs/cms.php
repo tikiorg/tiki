@@ -6,6 +6,7 @@ function prefs_cms_list() {
 			'name' => tra('Spell checking'),
 			'type' => 'flag',
 			'help' => 'Spellcheck',
+			'hint' => tra('Requires a separate download'),
 		),
 	);
 }

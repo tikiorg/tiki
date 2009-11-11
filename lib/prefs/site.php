@@ -55,5 +55,30 @@ function prefs_site_list() {
 				'desc' => tra('Description'),
 			),
 		),
+
+
+	// Used in templates/tiki-admin-include-look.tpl
+	'site_favicon' => array(
+			'name' => tra('Favicon icon file name:'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-look.tpl
+	'site_favicon_type' => array(
+			'name' => tra('Favicon icon MIME type:'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-look.tpl
+	'site_style' => array(
+			'name' => '',
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-look.tpl
+	'site_style_option' => array(
+			'name' => '',
+			'type' => '',
+			),
 	);
 }

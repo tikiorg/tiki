@@ -12,7 +12,6 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 if (isset($_REQUEST["cmsprefs"])) {
 	check_ticket('admin-inc-cms');
-	simple_set_value('art_home_title');
 }
 if (isset($_REQUEST["articlecomprefs"])) {
 	check_ticket('admin-inc-cms');

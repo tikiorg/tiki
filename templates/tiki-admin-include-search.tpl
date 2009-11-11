@@ -20,7 +20,6 @@
 					{tr}Search type{/tr}{if $prefs.feature_help eq 'y'} {help url="Search+Admin"}{/if}
 				</legend>
 				{preference name=feature_search_fulltext}
-				<em>{tr}This search uses the MySQL Full-Text feature{/tr}. {tr}The indexation is always updated.{/tr}</em>
 
 				<div class="adminoption">
 					<input type="checkbox"{if $prefs.feature_search eq 'y'} checked="checked"{/if} onclick="flip('searchrefresh');flip('autosearchrefresh');"/>
@@ -34,7 +33,6 @@
 					
 					{preference name=search_refresh_index_mode}
 					{preference name=search_refresh_rate}
-					<em>{tr}Use <strong>0</strong> for no refresh{/tr}.</em>
 					{preference name=search_min_wordlength}
 					{preference name=search_max_syllwords}
 					{preference name=search_syll_age}
@@ -68,7 +66,6 @@
 				<legend>{tr}Features{/tr}</legend>
 				{preference name=feature_referer_highlight}
 				{preference name=search_parsed_snippet}
-				<em>{tr}May impact performance{/tr}.</em>
 
 				{preference name=feature_search_stats}
 			</fieldset>
