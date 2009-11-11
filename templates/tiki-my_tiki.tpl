@@ -51,6 +51,7 @@
               </tr>
             {/section}
           </table>
+		  <div style="text-align:right;">{tr}Records:{/tr} {$user_pages|@count}</div>
         </div>
       </div>
     </div>
@@ -82,6 +83,7 @@
               </tr>
             {/section}
           </table>
+		  <div style="text-align:right;">{tr}Records:{/tr} {$user_galleries|@count}</div>
         </div>
       </div>
     </div>
@@ -113,6 +115,7 @@
               </tr>
             {/section}
           </table>
+		  <div style="text-align:right;">{tr}Records:{/tr} {$user_articles|@count}</div>
         </div>
       </div>
     </div>
@@ -142,6 +145,10 @@
               </tr>
             {/section}
           </table>
+		  <div style="text-align:right;">
+		  	   {tr}Records:{/tr} {$user_items|@count}
+			   {if !empty($nb_item_comments)}<br />{tr}Comments:{/tr} {$nb_item_comments}{/if}
+		  </div>
         </div>
       </div>
     </div>
@@ -173,6 +180,7 @@
               </tr>
             {/section}
           </table>
+		  <div style="text-align:right;">{tr}Records:{/tr} {$msgs|@count}</div>
         </div>
       </div>
     </div>
@@ -198,6 +206,7 @@
               </tr>
             {/section}
           </table>
+		  <div style="text-align:right;">{tr}Records:{/tr} {$tasks|@count}</div>
         </div>
       </div>
     </div>
@@ -227,6 +236,7 @@
               </tr>
             {/section}
           </table>
+		  <div style="text-align:right;">{tr}Records:{/tr} {$user_forum_topics|@count}</div>
         </div>
       </div>
     </div>
@@ -256,6 +266,7 @@
               </tr>
             {/section}
           </table>
+		  <div style="text-align:right;">{tr}Records:{/tr} {$user_forum_replies|@count}</div>
         </div>
       </div>
     </div>
@@ -287,6 +298,7 @@
               </tr>
             {/section}
           </table>
+		  <div style="text-align:right;">{tr}Records:{/tr} {$user_blogs|@count}</div>
         </div>
       </div>
     </div>
