@@ -124,6 +124,7 @@ abstract class Toolbar
 			'tikiimage',
 			'switcheditor',
 			'autosave',
+			'nonparsed',
 		), $plugins ));
 	} // }}}
 	
@@ -484,6 +485,12 @@ class ToolbarInline extends Toolbar
 			$icon = tra('pics/icons/text_strikethrough.png');
 			$wysiwyg = 'StrikeThrough';
 			$syntax = '--text--';
+			break;
+		case 'nonparsed':
+			$label = tra('Non-parsed');
+			$icon = tra('pics/icons/noparse.png');
+			$wysiwyg = null;
+			$syntax = '~np~text~/np~';
 			break;
 		default:
 			return;
