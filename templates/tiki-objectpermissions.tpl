@@ -17,7 +17,7 @@
 	<form method="post" action="{$smarty.server.PHP_SELF}?{query}">
 		{if empty($filegals_manager)}
 			{if $objectType eq 'global'}
-				{remarksbox type="warning" title="{tr}Note{/tr}"}
+				{remarksbox type="note" title="{tr}Note{/tr}"}
 					{tr}Currently editing Global permissions.{/tr}
 				{/remarksbox}
 			{elseif $permissions_displayed eq 'direct'}
@@ -95,7 +95,7 @@ if ($jq("#assignstructure").attr("checked")) {
 	{tab name="{tr}Select groups{/tr}"}
 		<form method="post" action="{$smarty.server.PHP_SELF}?{query}">
 			{if isset($groupsFiltered)}
-				{remarksbox type="warning" title="{tr}Warning{/tr}"}
+				{remarksbox type="warning" title="{tr}Note{/tr}"}
 					{tr}Some of your groups have been automatically hidden.<br /> Select the groups below to assign permissions for.{/tr}
 				{/remarksbox}
 			{/if}
