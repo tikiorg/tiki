@@ -9,6 +9,11 @@
 require_once ('tiki-setup.php');
 require_once ('lib/ajax/ajaxlib.php');
 
+if ($prefs['feature_ajax'] != 'y') {
+	$smarty->assign('msg', tra("This feature is disabled") . ": feature_ajax");
+	$smarty->display("error.tpl");
+	die;
+}
 
 function chkRegName($name) {
 	global $smarty, $ajaxlib, $userlib;
