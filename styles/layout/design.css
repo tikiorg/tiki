@@ -390,7 +390,7 @@ div.help_section {
 }
 
 .warning a {
-	color: #333 !important;
+	color: #333;
 	background: #ff4;
 }
 
@@ -443,7 +443,7 @@ td.form {
 /** Tabs **/
 
 .tabactive {
-	border: solid 1px /*#696969*/ !important;
+	border: solid 1px;
 }
 
 /***** Wiki *****/
