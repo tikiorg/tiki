@@ -1,4 +1,12 @@
 <?php
+
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
+  header("location: index.php");
+  exit;
+}
+
+
 require_once 'lib/setup/twversion.class.php';
 require_once('lib/core/lib/TikiDb/Bridge.php');
 

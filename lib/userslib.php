@@ -2188,7 +2188,7 @@ function get_included_groups($group, $recur=true) {
 		$this->query($query, array($who, NULL, NULL, $user));
 	}
 
-    function add_user($user, $pass, $email, $provpass = '', $pass_first_login = false, $valid = NULL, $openid_url = NULL) {
+    function add_user($user, $pass, $email, $provpass = '', $pass_first_login = false, $valid = NULL, $openid_url = NULL, $waiting=NULL) {
 	global $tikilib, $cachelib, $prefs;
 
 	if ($this->user_exists($user) || empty($user) || (!empty($prefs['username_pattern']) && !preg_match($prefs['username_pattern'], $user)) || strtolower($user) == 'anonymous' || strtolower($user) == 'registered') {
@@ -2207,11 +2207,9 @@ function get_included_groups($group, $recur=true) {
 		if (!isset($prefs['validateRegistration']) || $prefs['validateRegistration'] != 'y')  $lastLogin = time();
 	}
 
-	if ($valid == 'n') {
-		$valid = $pass;
+	if ( $prefs['feature_clear_passwords'] == 'n' ) {
+		$pass = '';
 	}
-
-	if ( $prefs['feature_clear_passwords'] == 'n' ) $pass = '';
 
 	if ( $pass_first_login ) {
 		$new_pass_confirm = 0;
@@ -2236,7 +2234,8 @@ function get_included_groups($group, $recur=true) {
 			$valid,
 			$openid_url,
 			$lastLogin,
-			(empty($_GLOBALS['user']) && $prefs['validateRegistration'] == 'y')? 'a': ((empty($_GLOBALS['user']) && $prefs['validateUsers'] == 'y')? 'u': NULL)
+			//(empty($_GLOBALS['user']) && $prefs['validateRegistration'] == 'y')? 'a': ((empty($_GLOBALS['user']) && $prefs['validateUsers'] == 'y')? 'u': NULL)
+			$waiting
 		    ));
 
 	$this->assign_user_to_group($user, 'Registered');

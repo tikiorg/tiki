@@ -28,6 +28,7 @@ class Tiki_Profile_List
 
 	function refreshCache( $path ) // {{{
 	{
+		global $tikilib;
 		$file = $this->getCacheLocation( $path );
 
 		// Replace existing with blank file
@@ -35,7 +36,7 @@ class Tiki_Profile_List
 			unlink($file);
 		touch($file);
 
-		$content = TikiLib::httprequest( $path );
+		$content = $tikilib->httprequest( $path );
 
 		$parts = explode( "\n", $content );
 		$parts = array_map( 'trim', $parts );

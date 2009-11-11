@@ -34,7 +34,6 @@ if ($prefs['feature_wiki'] != 'y') {
 	$smarty->display('error.tpl');
 	die;
 }
-$editlib->make_sure_page_to_be_created_is_not_an_alias();
 
 $smarty->assign( 'translation_mode', ($editlib->isNewTranslationMode() || $editlib->isUpdateTranslationMode()) ?'y':'n' );
 
@@ -52,6 +51,9 @@ if ($prefs['feature_wikiapproval'] == 'y' && substr($_REQUEST['page'], 0, strlen
 
 $page = $_REQUEST["page"];
 $info = $tikilib->get_page_info($page);
+
+$editlib->make_sure_page_to_be_created_is_not_an_alias($page, $info);
+
 // wysiwyg decision
 include 'lib/setup/editmode.php';
 
@@ -1124,8 +1126,13 @@ if ($prefs['feature_multilingual'] == 'y') {
 		   Use Full Screen mode when translating an update, because 
 		   user needs to see both diffs that have happened in the source language
 		   and the edit form for the  target language. This requires a lot of real-estate
+		   
+		   AD (2009-11-09): For now, keep that line commented because the 
+		   side-by-side source and target layout in wiki-edit is a bit 
+		   screwed up. Will reactivate as soon as I get the CSS right for
+		   that.
 		 */
-		$_REQUEST['zoom'] = 'wiki_edit';
+//		$_REQUEST['zoom'] = 'wiki_edit';
 		$smarty->assign('update_translation', 'y');
 	}
 }

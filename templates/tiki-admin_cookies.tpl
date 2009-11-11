@@ -42,7 +42,7 @@
 {section name=user loop=$channels}
 <tr>
 <td class="{cycle advance=false}">{$channels[user].cookieId}</td>
-<td class="{cycle advance=false}">{$channels[user].cookie}</td>
+<td class="{cycle advance=false}">{$channels[user].cookie|escape}</td>
 <td class="{cycle advance=true}">
    &nbsp;&nbsp;
    <a title="{tr}Edit{/tr}" class="link" href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;cookieId={$channels[user].cookieId}">

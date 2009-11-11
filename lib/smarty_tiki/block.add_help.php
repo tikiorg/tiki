@@ -41,8 +41,8 @@ function smarty_block_add_help($params, $content, &$smarty, &$repeat) {
 function openEditHelp() {
 	var opts, edithelp_pos = getCookie("edithelp_position");
 	opts = { width: 460, height: 500, title: "' . $section['title'] . '", autoOpen: false, beforeclose: function(event, ui) {
-		var off = $jq(this).offset();
-   		setCookie("edithelp_position", parseInt(off.left) + "," + parseInt(off.top,10) + "," + $jq(this).width() + "," + $jq(this).height());
+		var off = $jq(this).offsetParent().offset();
+   		setCookie("edithelp_position", parseInt(off.left) + "," + parseInt(off.top) + "," + $jq(this).offsetParent().width() + "," + $jq(this).offsetParent().height());
 	}}
 	if (edithelp_pos) {edithelp_pos = edithelp_pos.split(",");}
 	if (edithelp_pos && edithelp_pos.length) {

@@ -25,13 +25,21 @@ if ( $prefs['javascript_enabled'] != 'y' ) {
 	// Set the cookie to 'y', through javascript (will override the above cookie set to 'n' and sent by PHP / HTTP headers) - duration: approx. 1 year
 	$headerlib->add_js("var jsedate = new Date();\njsedate.setTime(" . ( 1000 * ( $tikilib->now + 365 * 24 * 3600 ) ) . ");\nsetCookieBrowser('javascript_enabled', 'y', null, jsedate);");
 
-	$prefs['feature_tabs'] = 'n';
-	$prefs['feature_jquery'] = 'n';
-	$prefs['feature_shadowbox'] = 'n';
-	$prefs['feature_wysiwyg'] = 'n';
-	$prefs['feature_ajax'] = 'n';
-	
-} else {	// we have JavaScript
+	//   If it's the first visit the cookie cannot have been set,
+	if ( count($_COOKIE) == 0) {
+		// so if there are no cookies at all _assume_ for the first page that javascript_enabled=y
+		$prefs['javascript_enabled'] = 'y';
+	} else {
+		// disable js dependant features
+		$prefs['feature_tabs'] = 'n';
+		$prefs['feature_jquery'] = 'n';
+		$prefs['feature_shadowbox'] = 'n';
+		$prefs['feature_wysiwyg'] = 'n';
+		$prefs['feature_ajax'] = 'n';
+	}
+}
+
+if ($prefs['javascript_enabled'] == 'y') {	// we have JavaScript
 
 	$prefs['feature_jquery'] = 'y';	// just in case
 	

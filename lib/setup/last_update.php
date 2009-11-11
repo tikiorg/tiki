@@ -14,3 +14,8 @@ if ( is_file('.lastup') and is_readable('.lastup') ) {
 	$lastup = file('.lastup');
 	$smarty->assign('lastup', trim($lastup[0]));
 }
+
+if ( is_file('.svnrev') and is_readable('.svnrev') ) {
+	$svnrev = file('.svnrev');
+	$smarty->assign('svnrev', trim($svnrev[0]));
+}

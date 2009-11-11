@@ -622,7 +622,7 @@
 				</table>
 			</form>
 </div>
-{if empty($user)}
+{if empty($user) and $prefs.javascript_enabled eq "y"}
 	<script type="text/javascript">
 		<!--//--><![CDATA[//><!--
 			var js_anonymous_name = getCookie('anonymous_name');

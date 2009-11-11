@@ -2,7 +2,7 @@
 
 {title help="User+Watches"}{tr}User Watches and preferences{/tr}{/title}
 
-<h2>Report Preferences</h2>
+<h2>{tr}Report Preferences{/tr}</h2>
 {if $prefs.feature_daily_report_watches eq 'y'}
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use reports to summarise notifications about objects you are watching.{/tr}{/remarksbox}
@@ -38,7 +38,7 @@
 <p>{tr}Reports are disabled, only standard reporting is available{/tr}</p>
 {/if}
 
-<h2>Sites you are watching</h2>
+<h2>{tr}Sites you are watching{/tr}</h2>
 
   {include file='tiki-mytiki_bar.tpl'}
 

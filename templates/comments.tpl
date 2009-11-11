@@ -454,7 +454,7 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 
 {if $forum_mode neq 'y'}</div><!-- comzone end -->{/if}
 {*</div>  now this tag causes problems instead of fixing (was added earlier to prevent side columns in *litecss themes from not appearing *}
-{if empty($user)}
+{if empty($user) and $prefs.javascript_enabled eq "y"}
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--
 var js_anonymous_name = getCookie('anonymous_name');

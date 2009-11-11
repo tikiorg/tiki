@@ -31,7 +31,11 @@ span.button a:hover {
 }
 
 #sitetitle {
-	padding-top: 20px;
+	margin-bottom: 0;
+}
+
+#sitesubtitle {
+	margin: 10px 0 5px 0;
 }
 
 #tiki-top {

@@ -23,6 +23,9 @@ if (isset($_REQUEST["user"])) {
 		if (!$isvalid) {
 			list($isvalid, $_REQUEST["user"], $error) = $userlib->validate_user($_REQUEST["user"], $_REQUEST["pass"], '', '', true);
 			$_SESSION['last_validation'] = $isvalid ? array('user' => $_REQUEST["user"], 'actpass' => $_REQUEST["pass"]) : null;
+			if ($isvalid) {
+				$userlib->change_user_waiting($_REQUEST['user'], NULL);
+			}
 		}
 	} else {
 		$error = PASSWORD_INCORRECT;

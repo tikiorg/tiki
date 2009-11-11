@@ -97,6 +97,8 @@ RewriteRule ^wiki-([A-Za-z0-9]+)   tiki-index.php?page=$1                   [QSA
 RewriteRule ^page-([A-Za-z0-9]+)   tiki-index.php?page=$1                   [QSA,L]
 RewriteRule ^show:(~?)(.+)$        tiki-slideshow.php?page=$1$2             [QSA,L]
 RewriteRule ^(lib/wiki3d/.+\.jar)$ $1                                       [L]
+
+RewriteRule \.(css|gif|jpg|png|php|html|js|htm|shtml|cgi|sql|phtml|txt|ihtml)   -       [L]
 RewriteRule ^(.+)$                 tiki-index.php?page=$1                   [QSA,L]
 
 # Error pages, handled by Apache (not by TikiWiki)
@@ -106,6 +108,11 @@ RewriteRule ^(.+)$                 tiki-index.php?page=$1                   [QSA
 
 # to active the error display, uncomment
 #php_flag display_errors on
+
+# Rewrite rule to make this Tiki a profiles repository (uncomment to enable)
+# Set the parentId (here set as 1) to the Id of the category containing your profile pages
+# See http://doc.tikiwiki.org/Profiles for more
+#RewriteRule ^profiles$ tiki-browse_categories.php?parentId=1&deep=on&type=plain&maxRecords=1000000  [L]
 
 </IfModule>
 # End of rewrite rules

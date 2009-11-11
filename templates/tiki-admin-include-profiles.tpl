@@ -44,7 +44,7 @@ function showDetails( id, domain, profile ) { // {{{
 	var infoOb = document.getElementById( infoId );
 	if (!infoOb) {
 		infoOb = document.createElement('span');
-		infoOb.innerHTML = " ";
+		infoOb.innerHTML = "";
 		infoOb.style.fontStyle = "italic";
 		infoOb.id = infoId;
 		prev.getElementsByTagName("td")[0].appendChild( infoOb );
@@ -55,7 +55,8 @@ function showDetails( id, domain, profile ) { // {{{
 	req.onreadystatechange = function (aEvt) {
 		
 		if (infoOb) {
-			infoOb.innerHTML = "";
+			infoOb.innerHTML = " ";
+
 		}
 		if (req.readyState == 4) {
 			if(req.status == 200) {
@@ -103,9 +104,13 @@ function showDetails( id, domain, profile ) { // {{{
 					cell.appendChild(form);
 				}
 				else if( data.installable )
-				{
+				{	
+					var pStep = document.createElement('p');
+					pStep.style.fontWeight = 'bold';
+					pStep.innerHTML = "Step 3: Click on Apply Now to install Profile";
+					
 					var form = document.createElement( 'form' );
-					var p = document.createElement('p');
+					var p = document.createElement('p');				
 					var submit = document.createElement('input');
 					var pd = document.createElement('input');
 					var pp = document.createElement('input');
@@ -148,6 +153,7 @@ function showDetails( id, domain, profile ) { // {{{
 					pd.name = 'pd';
 					pd.value = domain;
 					p.appendChild(pd);
+					p.appendChild(pStep);
 					pp.type = 'hidden';
 					pp.name = 'pp';
 					pp.value = profile;
@@ -233,6 +239,109 @@ function showDetails( id, domain, profile ) { // {{{
 </script>
 {remarksbox type="tip" title="{tr}Tip{/tr}"}<a class="rbox-link" href="http://profiles.tikiwiki.org">{tr}TikiWiki Profiles{/tr}</a>{/remarksbox}
 
+<a name='profile-results'></a>
+{if $profilefeedback}
+	{remarksbox type="note" title="{tr}Note{/tr}"}
+		{cycle values="odd,even" print=false}
+		{tr}The following list of changes has been applied:{/tr}
+		<ul>
+		{section name=n loop=$profilefeedback}
+			<li class="{cycle}">
+				<p>{$profilefeedback[n]}</p>
+			</li>
+		{/section}
+		</ul>
+	{/remarksbox}
+{/if}
+<h3>Configure TikiWiki in 3 easy steps using Profiles</h3>
+
+<fieldset><legend>{tr}Profiles{/tr}</legend>
+<form method="get" action="tiki-admin.php#profile-results">
+<div class="adminoptionbox">
+<b>Step 1: Use the Quick or Manual Filter option to see a list of Profiles you can install</b>
+<table class="normal">
+<tr>
+<th width="50%">{tr}Option 1: Quick Filter{/tr}</th>
+
+<th width="50%">{tr}Option 2: Manual Filter{/tr}</th>
+</tr>
+<tr>
+<td>
+<br/>
+	<p>
+	<a href="tiki-admin.php?profile=&categories%5B%5D=4.x&categories%5B%5D=Featured+profiles&repository=http%3a%2f%2fprofiles.tikiwiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#profile-results">Featured Profiles</a>
+	<br />Featured Profiles is a list of applications that are maintained by the TikiWiki community and are a great way to get started.
+	</p>
+	
+	<p>
+	<a href="tiki-admin.php?profile=&categories%5B%5D=4.x&categories%5B%5D=Full+profile+(out+of+the+box+%26+ready+to+go)&repository=http%3a%2f%2fprofiles.tikiwiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#profile-results">Full Profiles</a>
+	<br />Full Profiles are full featured out of the box solutions. 
+	</p>
+	
+	<p>
+	<a href="tiki-admin.php?profile=&categories%5B%5D=4.x&categories%5B%5D=Mini-profile+(can+be+included+in+other)&repository=http%3a%2f%2fprofiles.tikiwiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#profile-results">Mini Profiles</a>
+	<br />Mini Profiles will configure specific features and are a great way to add more functionality to an existing configuration. 
+	</p>
+	
+	<p>
+	<a href="tiki-admin.php?profile=&categories%5B%5D=4.x&categories%5B%5D=Learning+profile+(just+to+show+off+feature)&repository=http%3a%2f%2fprofiles.tikiwiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#profile-results">Learning Profiles</a>
+	<br />Learning Profiles will allow you to quickly evaluate specific features in TikiWiki.
+	</p>
+	
+</td>
+<td>
+<div class="adminoptionlabel">{tr}Filter the list of profiles:{/tr}</div>
+<div class="adminoptionboxchild">
+	<div class="adminoptionlabel"><label for="profile">{tr}Profile:{/tr} </label><input type="text" name="profile" id="profile" value="{$profile|escape}" /></div>
+{if isset($category_list) and count($category_list) gt 0}
+	<div class="adminoptionlabel"><label for="categories">{tr}Categories:{/tr} </label>
+	<select multiple="multiple" name="categories[]" id="categories">
+							{foreach item=cat from=$category_list}
+					 			<option value="{$cat|escape}"{if in_array($cat, $categories)} selected="selected"{/if}>{$cat|escape}</option>
+							{/foreach}
+	</select>
+	</div>
+{/if}
+	<div class="adminoptionlabel"><label for="repository">{tr}Repository:{/tr} </label>
+	<select name="repository" id="repository">
+							<option value="">{tr}All{/tr}</option>
+							{foreach item=source from=$sources}
+								<option value="{$source.url|escape}"{if $repository eq $source.url} selected="selected"{/if}>{$source.short|escape}</option>
+							{/foreach}
+	</select>
+	</div>
+	<input type="hidden" name="page" value="profiles"/>
+</div>
+<div align="center"><input type="submit" name="list" value="{tr}List{/tr}" /></div>
+</td>
+</tr>
+</table>
+</div>
+</form>
+<br />		
+        {if $result|@count neq '0'}
+        <b>Step 2: Click on a Profile to review and see description</b>
+		<table class="normal">
+			<tr>
+				<th>{tr}Profile{/tr}</th>
+				<th>{tr}Repository{/tr}</th>
+				<th>{tr}Categories{/tr}</th>
+			</tr>
+			{foreach key=k item=profile from=$result}
+				<tr id="profile-{$k}">
+					<td><a href="javascript:showDetails( 'profile-{$k}', '{$profile.domain|escape}', '{$profile.name|escape}' )">{$profile.name|escape}</a>{if $profile.installed} <em>{tr}applied{/tr}</em>{/if}</td>
+					<td>{$profile.domain}</td>
+					<td>{$profile.categoriesString}</td>
+				</tr>
+			{/foreach}
+			{if $result|@count eq '0'}
+			<tr><td colspan="3" class="odd">{tr}None{/tr}</td></tr>
+			{/if}
+		</table>
+		{/if}
+
+</fieldset>
+
 <fieldset class="admin">
 <legend>{tr}Status{/tr}</legend>
 <div class="adminoptionbox">
@@ -253,67 +362,7 @@ function showDetails( id, domain, profile ) { // {{{
 </div>
 </fieldset>
 
-<a name='profile-results'></a>
-{if $profilefeedback}
-	{remarksbox type="note" title="{tr}Note{/tr}"}
-		{cycle values="odd,even" print=false}
-		{tr}The following list of changes has been applied:{/tr}
-		<ul>
-		{section name=n loop=$profilefeedback}
-			<li class="{cycle}">
-				<p>{$profilefeedback[n]}</p>
-			</li>
-		{/section}
-		</ul>
-	{/remarksbox}
-{/if}
-<fieldset><legend>{tr}Profiles{/tr}</legend>
-<form method="get" action="tiki-admin.php#profile-results">
-<div class="adminoptionbox">
-<div class="adminoptionlabel">{tr}Filter the list of profiles:{/tr}</div>
-<div class="adminoptionboxchild">
-	<div class="adminoptionlabel"><label for="profile">{tr}Profile:{/tr} </label><input type="text" name="profile" id="profile" value="{$profile|escape}" /></div>
-{if isset($category_list)}
-	<div class="adminoptionlabel"><label for="categories">{tr}Categories:{/tr} </label>
-	<select multiple="multiple" name="categories[]" id="categories">
-							{foreach item=cat from=$category_list}
-					 			<option value="{$cat|escape}"{if in_array($cat, $categories)} selected="selected"{/if}>{$cat|escape}</option>
-							{/foreach}
-	</select>
-	</div>
-{/if}
-	<div class="adminoptionlabel"><label for="repository">{tr}Repository:{/tr} </label>
-	<select name="repository" id="repository">
-							<option value="">{tr}All{/tr}</option>
-							{foreach item=source from=$sources}
-								<option value="{$source.url|escape}"{if $repository eq $source.url} selected="selected"{/if}>{$source.short|escape}</option>
-							{/foreach}
-	</select>
-	</div>
-	<input type="hidden" name="page" value="profiles"/>
-</div>
-<div align="center"><input type="submit" name="list" value="{tr}List{/tr}" /></div>
-</div>
-</form>
-<br />		<table class="normal">
-			<tr>
-				<th>{tr}Profile{/tr}</th>
-				<th>{tr}Repository{/tr}</th>
-				<th>{tr}Categories{/tr}</th>
-			</tr>
-			{foreach key=k item=profile from=$result}
-				<tr id="profile-{$k}">
-					<td><a href="javascript:showDetails( 'profile-{$k}', '{$profile.domain|escape}', '{$profile.name|escape}' )">{$profile.name|escape}</a>{if $profile.installed} <em>{tr}applied{/tr}</em>{/if}</td>
-					<td>{$profile.domain}</td>
-					<td>{$profile.categoriesString}</td>
-				</tr>
-			{/foreach}
-			{if $result|@count eq '0'}
-			<tr><td colspan="3" class="odd">{tr}None{/tr}</td></tr>
-			{/if}
-		</table>
 
-</fieldset>
 
 <fieldset><legend>{tr}Repositories{/tr}</legend>
 <form action="tiki-admin.php?page=profiles" method="post">
