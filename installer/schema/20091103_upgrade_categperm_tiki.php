@@ -31,6 +31,9 @@ $edit[] = 'tiki_p_create_blogs';
 $edit[] = 'tiki_p_blog_post';
 
 $view[] = 'tiki_p_view';
+$view[] = 'tiki_p_wiki_view_attachments';
+$view[] = 'tiki_p_wiki_view_history';
+$view[] = 'tiki_p_wiki_view_comments';
 $edit[] = 'tiki_p_edit';
 $edit[] = 'tiki_p_remove';
 $edit[] = 'tiki_p_wiki_attach_files';
