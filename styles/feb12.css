@@ -1509,18 +1509,18 @@ html>body .galtable {
 	font-size: .95em;
 }
 
-#caltable .calfocuson,
+.caltable .calfocuson,
 .box-data td.fc a.today,
 .box-data td a.today {
 	background: #a8cce2;
 }
 
-#caltable .calfocuson a {
+.caltable .calfocuson a {
 	color: #000;
 }
 
-#caltable .calfocus a,
-#caltable .calfocuson a {
+.caltable .calfocus a,
+.caltable .calfocuson a {
 	text-decoration: none;
 }
 

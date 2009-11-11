@@ -1057,14 +1057,14 @@ div.multiselect {
 	color: #fff;
 }
 
-#caltable .calfocuson,
+.caltable .calfocuson,
 .box-data td.fc a.today,
 .box-data td a.today {
 	background: #D4D0C8;
 	border: solid 1px #696969;
 }
 
-#caltable .calfocuson a {
+.caltable .calfocuson a {
 	color: #000;
 }
 
@@ -1080,7 +1080,7 @@ div.multiselect {
 	color: #e5e5e5;
 }
 
-#caltable .weeks {
+.caltable .weeks {
 	background: #212121;
 	color: #e5e5e5;
 }
