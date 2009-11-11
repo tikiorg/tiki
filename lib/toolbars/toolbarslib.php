@@ -76,7 +76,6 @@ abstract class Toolbar
 			'sup',
 			'tikilink',
 			'link',
-			'anchor',
 			'color',
 			'bgcolor',
 			'center',
@@ -88,7 +87,6 @@ abstract class Toolbar
 			'h2',
 			'h3',
 			'toc',
-			'image',
 			'list',
 			'numlist',
 			'specialchar',
@@ -487,12 +485,6 @@ class ToolbarInline extends Toolbar
 			$wysiwyg = 'StrikeThrough';
 			$syntax = '--text--';
 			break;
-		case 'anchor':
-			$label = tra('Anchor');
-			$icon = tra('pics/icons/anchor.png');
-			$wysiwyg = 'Anchor';
-			$syntax = '{ANAME()}text{ANAME}';
-			break;
 		default:
 			return;
 		}
@@ -549,9 +541,9 @@ class ToolbarBlock extends ToolbarInline // Will change in the future
 			break;
 		case 'pagebreak':
 			$label = tra('Page Break');
-			$icon = tra('pics/icons/page.png');
+			$icon = tra('lib/fckeditor_tiki/fckeditor-icons/Pagebreak.gif');
 			$wysiwyg = 'PageBreak';
-			$syntax = '---';
+			$syntax = '...page...';
 			break;
 		case 'blockquote':
 			$label = tra('Block Quote');
@@ -566,12 +558,6 @@ class ToolbarBlock extends ToolbarInline // Will change in the future
 			$icon = 'pics/icons/text_heading_' . $tagName{1} . '.png';
 			$wysiwyg = null;
 			$syntax = str_repeat('!', $tagName{1}) . 'text';
-			break;
-		case 'image':
-			$label = tra('Image');
-			$icon = tra('pics/icons/picture.png');
-			$wysiwyg = '';
-			$syntax = '{img src= width= height= link= }';
 			break;
 		case 'toc':
 			$label = tra('Table of contents');
@@ -656,7 +642,7 @@ class ToolbarPicker extends Toolbar
 		case 'specialchar':
 			$wysiwyg = 'SpecialChar';
 			$label = tra('Special Characters');
-			$icon = tra('pics/icons/world_edit.png');
+			$icon = tra('lib/fckeditor_tiki/fckeditor-icons/Specialchar.gif');
 			// Line taken from DokuWiki
             $list = explode(' ','À à Á á Â â Ã ã Ä ä Ǎ ǎ Ă ă Å å Ā ā Ą ą Æ æ Ć ć Ç ç Č č Ĉ ĉ Ċ ċ Ð đ ð Ď ď È è É é Ê ê Ë ë Ě ě Ē ē Ė ė Ę ę Ģ ģ Ĝ ĝ Ğ ğ Ġ ġ Ĥ ĥ Ì ì Í í Î î Ï ï Ǐ ǐ Ī ī İ ı Į į Ĵ ĵ Ķ ķ Ĺ ĺ Ļ ļ Ľ ľ Ł ł Ŀ ŀ Ń ń Ñ ñ Ņ ņ Ň ň Ò ò Ó ó Ô ô Õ õ Ö ö Ǒ ǒ Ō ō Ő ő Œ œ Ø ø Ŕ ŕ Ŗ ŗ Ř ř Ś ś Ş ş Š š Ŝ ŝ Ţ ţ Ť ť Ù ù Ú ú Û û Ü ü Ǔ ǔ Ŭ ŭ Ū ū Ů ů ǖ ǘ ǚ ǜ Ų ų Ű ű Ŵ ŵ Ý ý Ÿ ÿ Ŷ ŷ Ź ź Ž ž Ż ż Þ þ ß Ħ ħ ¿ ¡ ¢ £ ¤ ¥ € ¦ § ª ¬ ¯ ° ± ÷ ‰ ¼ ½ ¾ ¹ ² ³ µ ¶ † ‡ · • º ∀ ∂ ∃ Ə ə ∅ ∇ ∈ ∉ ∋ ∏ ∑ ‾ − ∗ √ ∝ ∞ ∠ ∧ ∨ ∩ ∪ ∫ ∴ ∼ ≅ ≈ ≠ ≡ ≤ ≥ ⊂ ⊃ ⊄ ⊆ ⊇ ⊕ ⊗ ⊥ ⋅ ◊ ℘ ℑ ℜ ℵ ♠ ♣ ♥ ♦ 𝛼 𝛽 𝛤 𝛾 𝛥 𝛿 𝜀 𝜁 𝛨 𝜂 𝛩 𝜃 𝜄 𝜅 𝛬 𝜆 𝜇 𝜈 𝛯 𝜉 𝛱 𝜋 𝛳 𝜍 𝛴 𝜎 𝜏 𝜐 𝛷 𝜑 𝜒 𝛹 𝜓 𝛺 𝜔 𝛻 𝜕 ★ ☆ ☎ ☚ ☛ ☜ ☝ ☞ ☟ ☹ ☺ ✔ ✘ × „ “ ” ‚ ‘ ’ « » ‹ › — – … ← ↑ → ↓ ↔ ⇐ ⇑ ⇒ ⇓ ⇔ © ™ ® ′ ″');
 			$list = array_combine( $list, $list );
