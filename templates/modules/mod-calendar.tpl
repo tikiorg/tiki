@@ -24,7 +24,7 @@ if(isset($_REQUEST["year"])) {
  $year = $_REQUEST["year"];
 }
 
-$thedate = TikiLib::make_time(23,59,59,$mon,$day,$year);
+$thedate = $tikilib->make_time(23,59,59,$mon,$day,$year);
 $_SESSION["thedate"] = $thedate;
 
 // Calculate number of days in month
