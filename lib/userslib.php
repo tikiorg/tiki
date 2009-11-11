@@ -2849,11 +2849,15 @@ function get_included_groups($group, $recur=true) {
 		return $ret;
 	}
 	function send_validation_email($name, $apass, $email, $again='', $second='', $chosenGroup='', $mailTemplate = '', $pass = '') {
+		// TODO: CLEANUP duplicates code in callback_tikiwiki_send_email() in registrationlib?
 		global $tikilib, $prefs, $smarty;
 		$foo = parse_url($_SERVER['REQUEST_URI']);
 		$foo1 = str_replace(array('tiki-send_mail', 'tiki-register', 'tiki-remind_password', 'tiki-adminusers'), 'tiki-login_validate', $foo['path']);
+		$foo2 = str_replace(array('tiki-send_mail', 'tiki-register', 'tiki-remind_password', 'tiki-adminusers'), 'tiki-assignuser', $foo['path']);
 		$machine = $tikilib->httpPrefix() . $foo1;
+		$machine_assignuser = $tikilib->httpPrefix() . $foo2;
 		$smarty->assign('mail_machine',$machine);
+		$smarty->assign('mail_machine_assignuser',$machine_assignuser);
 		$smarty->assign('mail_site', $_SERVER['SERVER_NAME']);
 		$smarty->assign('mail_user', $name);
 		$smarty->assign('mail_apass', $apass);
