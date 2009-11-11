@@ -11,6 +11,8 @@ if ($tiki_p_admin != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
+$auto_query_args = array('group');
+
 if (!isset($cookietab)) { $cookietab = '1'; }
 list($trackers, $ag_utracker, $ag_ufield, $ag_gtracker, $ag_gfield, $ag_rufields) = array(array() ,	0, 0, 0, 0, '');
 if (isset($prefs['groupTracker']) and $prefs['groupTracker'] == 'y') {
