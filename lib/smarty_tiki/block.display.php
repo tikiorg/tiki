@@ -61,7 +61,7 @@ function smarty_block_display($params, $content, &$smarty)
 	}
 	/* is it ok ? */
 	if (!$ok) {
-		if (isset($content) && $content[1] != '') {
+		if (isset($content[1])) {
 			return $content[1];
 		} else {
 			return $errmsg;
