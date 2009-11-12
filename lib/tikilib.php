@@ -1278,12 +1278,45 @@ class TikiLib extends TikiDb_Bridge {
 	}
 
 	/*shared*/
-	function get_template($templateId) {
+	function get_template($templateId, $lang = null) {
 		$query = "select * from `tiki_content_templates` where `templateId`=?";
 		$result = $this->query($query,array((int)$templateId));
 		if (!$result->numRows()) return false;
 		$res = $result->fetchRow();
+
+
+		if( $res['template_type'] == 'page' ) {
+			if( substr( $res['content'], 0, 5 ) == 'page:' ) {
+				$res['page_name'] = substr( $res['content'], 5 );
+				$res['content'] = $this->get_template_from_page( $res['page_name'], $lang );
+			}
+		} else {
+			$res['page_name'] = '';
+		}
+
+
 		return $res;
+	}
+
+	private function get_template_from_page( $page, $lang ) {
+		global $prefs;
+		$info = $this->get_page_info( $page );
+
+		if( $prefs['feature_multilingual'] == 'y' ) {
+			global $multilinguallib; require_once 'lib/multilingual/multilinguallib.php';
+
+			if( $lang && $info['lang'] && $lang != $info['lang'] ) {
+				$bestLangPageId = $multilinguallib->selectLangObj( 'wiki page', $info['page_id'], $lang );
+
+				if ($info['page_id'] != $bestLangPageId) {
+					$info = $this->get_page_info_from_id($bestLangPageId);
+				}
+			}
+		}
+
+		if( $info ) {
+			return TikiLib::htmldecode( $info['data'] );
+		}
 	}
 	// templates ////
 

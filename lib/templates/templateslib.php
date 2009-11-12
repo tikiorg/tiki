@@ -40,15 +40,15 @@ class TemplatesLib extends TikiLib {
 		return $retval;
 	}
 
-	function replace_template($templateId, $name, $content) {
-		$bindvars = array($content,$name,(int)$this->now);
+	function replace_template($templateId, $name, $content, $type = 'static') {
+		$bindvars = array($content,$name,(int)$this->now, $type);
 		if ($templateId) {
-			$query = "update `tiki_content_templates` set `content`=?, `name`=?, `created`=? where `templateId`=?";
+			$query = "update `tiki_content_templates` set `content`=?, `name`=?, `created`=?, `template_type`=? where `templateId`=?";
 			$bindvars[] = (int) $templateId;
 		} else {
 			$query = "delete from `tiki_content_templates` where `content`=? and `name`=?";
 			$this->query($query,array($content,$name),-1,-1,false);
-			$query = "insert into `tiki_content_templates`(`content`,`name`,`created`) values(?,?,?)";
+			$query = "insert into `tiki_content_templates`(`content`,`name`,`created`,`template_type`) values(?,?,?,?)";
 		}
 
 		$result = $this->query($query,$bindvars);

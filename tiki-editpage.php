@@ -512,7 +512,8 @@ if ($prefs['feature_wiki_footnotes'] == 'y') {
 	}
 }
 if (isset($_REQUEST["templateId"]) && $_REQUEST["templateId"] > 0 && !isset($_REQUEST['preview']) && !isset($_REQUEST['save'])) {
-	$template_data = $tikilib->get_template($_REQUEST["templateId"]);
+	$templateLang = isset( $_REQUEST['lang'] ) ? $_REQUEST['lang'] : null;
+	$template_data = $tikilib->get_template($_REQUEST["templateId"], $templateLang);
 	$_REQUEST["edit"] = $template_data["content"]."\n".$_REQUEST["edit"];
 	$smarty->assign("templateId", $_REQUEST["templateId"]);
 }

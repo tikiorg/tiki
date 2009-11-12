@@ -51,6 +51,7 @@ if ($_REQUEST["templateId"]) {
 } else {
 	$info = array();
 	$info["name"] = '';
+	$info['template_type'] = 'static';
 	$info["content"] = '';
 	$info["section_cms"] = 'n';
 	$info["section_html"] = 'n';
@@ -58,6 +59,7 @@ if ($_REQUEST["templateId"]) {
 	$info["section_newsletters"] = 'n';
 	$info["section_event"] = 'n';
 }
+
 $smarty->assign('info', $info);
 if (isset($_REQUEST["remove"])) {
 	$area = 'delcontenttemplate';
@@ -110,11 +112,21 @@ if (isset($_REQUEST["preview"])) {
 	}
 	$info["content"] = $_REQUEST["content"];
 	$info["name"] = $_REQUEST["name"];
+	$info['page_name'] = $_REQUEST['page_name'];
+	$info['template_type'] = $_REQUEST['template_type'];
 	$smarty->assign('info', $info);
 }
 if (isset($_REQUEST["save"])) {
 	check_ticket('admin-content-templates');
-	$tid = $templateslib->replace_template($_REQUEST["templateId"], $_REQUEST["name"], $_REQUEST["content"]);
+	$type = $_REQUEST['template_type'];
+
+	if( $type == 'page' ) {
+		$content = 'page:' . $_REQUEST['page_name'];
+	} else {
+		$content = $_REQUEST["content"];
+	}
+
+	$tid = $templateslib->replace_template($_REQUEST["templateId"], $_REQUEST["name"], $content, $type);
 	$smarty->assign("templateId", '0');
 	$info["name"] = '';
 	$info["content"] = '';
