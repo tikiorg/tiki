@@ -9,7 +9,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 function module_action_calendar_info() {
 	return array(
 		'name' => tra('Action calendar'),
-		'description' => 'Displays a calendar of system events, such as wiki page modifications, forum posts and article publications. Days with events show links to the action calendar page.',
+		'description' => tra('Displays a calendar of system events, such as wiki page modifications, forum posts and article publications. Days with events show links to the action calendar page.'),
 		'prefs' => array( 'feature_action_calendar' ),
 		'params' => array(
 			'items' => array(
