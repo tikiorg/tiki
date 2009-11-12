@@ -774,12 +774,23 @@ class TrackerLib extends TikiLib {
 
 				if ( $filter['type'] == 'e' && $prefs['feature_categories'] == 'y' ) { //category
 
-					$cat_table .= " INNER JOIN `tiki_objects` tob$ff ON (tob$ff.`itemId` = tti.`itemId`)"
-						." INNER JOIN `tiki_category_objects` tco$ff ON (tob$ff.`objectId` = tco$ff.`catObjectId`)";
-					$mid .= " AND tob$ff.`type` = 'trackeritem' AND tco$ff.`categId` IN ( ";
 					$value = empty($fv) ? $ev : $fv;
-					if ( ! is_array($value) && $value != '' )
+					if ( ! is_array($value) && $value != '' ) {
 						$value = array($value);
+						$not = '';
+					} elseif (is_array($value) && array_key_exists('not', $value)) {
+						$value = $value['not'];
+						$not = 'not';
+					}
+					if (empty($not)) {
+						$cat_table .= " INNER JOIN `tiki_objects` tob$ff ON (tob$ff.`itemId` = tti.`itemId`)"
+							." INNER JOIN `tiki_category_objects` tco$ff ON (tob$ff.`objectId` = tco$ff.`catObjectId`)";
+						$mid .= " AND tob$ff.`type` = 'trackeritem' AND tco$ff.`categId` IN ( ";
+					} else {
+						$cat_table .= " left JOIN `tiki_objects` tob$ff ON (tob$ff.`itemId` = tti.`itemId`)"
+							." left JOIN `tiki_category_objects` tco$ff ON (tob$ff.`objectId` = tco$ff.`catObjectId`)";
+						$mid .= " AND tob$ff.`type` = 'trackeritem' AND tco$ff.`categId` NOT IN ( ";
+					}
 					$first = true;
 					foreach ( $value as $catId ) {
 						$bindvars[] = $catId;
@@ -790,6 +801,9 @@ class TrackerLib extends TikiLib {
 						$mid .= '?';
 					}
 					$mid .= " ) ";
+					if (!empty($not)) {
+						$mid .= "OR tco$ff.`categId` IS NULL ";
+					}
 
 				} elseif ($ev) {
 					if (is_array($ev)) {

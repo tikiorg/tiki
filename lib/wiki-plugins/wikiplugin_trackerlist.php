@@ -558,14 +558,18 @@ function wikiplugin_trackerlist($data, $params) {
 					unset($exactvalue);
 					for ($i = 0, $count_ff2 = count($filterfield); $i < $count_ff2; ++$i) {
 						if (isset($evs[$i])) {
-							if (preg_match('/categories\(([0-9]+)\)/', $evs[$i], $matches)) {
+							if (preg_match('/(not)?categories\(([0-9]+)\)/', $evs[$i], $matches)) {
 								global $categlib; include_once('lib/categories/categlib.php');
-								$categs = $categlib->list_categs($matches[1]);
-								$l = array($matches[1]);
+								$categs = $categlib->list_categs($matches[2]);
+								$l = array($matches[2]);
 								foreach ($categs as $cat) {
 									$l[] = $cat['categId'];
 								}
-								$exactvalue[] = $l;
+								if (empty($matches[1])) {
+									$exactvalue[] = $l;
+								} else {
+									$exactvalue[] = array('not'=>$l);
+								}
 							} else {
 								$exactvalue[] = $evs[$i];
 							}
