@@ -373,11 +373,6 @@ div.help_section {
 .note .rbox-title,
 .note .rbox-data {}
 
-.note .rbox-data li.even,
-.note .rbox-data li.odd {
-	list-style: none;
-}
-
 .tip .rbox-title,
 .tip .rbox-data {}
 
@@ -917,6 +912,11 @@ div.messureadbody {
 .highlight_word_4 {
 	color: #99ff99;
 	background: #666;
+}
+
+.tiki_admin .note .rbox-data li.even,
+.tiki_admin .note .rbox-data li.odd {
+	list-style: none;
 }
 
 /* admin boxes etc (.admbox) now defined in css/admin.css */
