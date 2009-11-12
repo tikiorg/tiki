@@ -65,7 +65,7 @@ function wikiplugin_image_help() {
 function wikiplugin_image_info() {
 	return array(
 		'name' => tra('Image'),
-		'description' => tra("Display an image.").tra(' (experimental - possible successor to img in 4.0)'),
+		'description' => tra("Display an image.").tra(' (experimental - possible successor to img in 5.0)'),
 		'prefs' => array( 'wikiplugin_image'),
 		'params' => array(
 			'fileId' => array(

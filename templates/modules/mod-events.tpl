@@ -37,7 +37,7 @@ if(isset($_REQUEST["year"])) {
 	$year = $_REQUEST["year"];
 }
 
-$thedate = TikiLib::make_time(23,59,59,intval($mon),intval($day),intval($year));
+$thedate = $tikilib->make_time(23,59,59,intval($mon),intval($day),intval($year));
 $_SESSION["thedate"] = $thedate;
 
 $calids=$calendarlib->list_user_calIds();
@@ -45,11 +45,11 @@ if (isset($module_params["calendarId"])) { $calids = array($module_params["calen
 if ($calids=="") $calids=array(0);
 
 // get all calendar entries for user for the month
-$firstDay =  TikiLib::make_time(0,0,0,intval($mon),1,intval($year));
+$firstDay =  $tikilib->make_time(0,0,0,intval($mon),1,intval($year));
 if ($mon == 12) {
-	$lastDay = TikiLib::make_time(0,0,0,1,1,intval($year)+1) - 1;
+	$lastDay = $tikilib->make_time(0,0,0,1,1,intval($year)+1) - 1;
 } else {
-	$lastDay = TikiLib::make_time(0,0,0,intval($mon)+1,1,intval($year)) - 1; 
+	$lastDay = $tikilib->make_time(0,0,0,intval($mon)+1,1,intval($year)) - 1; 
 }
 $items = $calendarlib->list_items($calids, $user, $firstDay, $lastDay, 0, -1 );
 
@@ -165,11 +165,11 @@ $todaylink=$father."day=".date("d")."&amp;mon=".date("m")."&amp;year=".date("Y")
 				$newval="";
 				unset($tmp);
 				$valtime = intval($val);
-				if (array_key_exists(TikiLib::make_time(0, 0, 0, intval($mon), intval($valtime), intval($year)),$items)) {
-					$tmp = $items[TikiLib::make_time(0, 0, 0, intval($mon), intval($valtime), intval($year))];
+				if (array_key_exists($tikilib->make_time(0, 0, 0, intval($mon), intval($valtime), intval($year)),$items)) {
+					$tmp = $items[$tikilib->make_time(0, 0, 0, intval($mon), intval($valtime), intval($year))];
 				}
 				if (isset($tmp)) if (is_array($tmp)) {
-					unset($items[TikiLib::make_time(0, 0, 0, intval($mon), intval($valtime), intval($year))]);
+					unset($items[$tikilib->make_time(0, 0, 0, intval($mon), intval($valtime), intval($year))]);
 
 
 

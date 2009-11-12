@@ -1278,8 +1278,7 @@ if (($prefs['feature_wiki_templates'] == 'y' && $tiki_p_use_content_templates ==
 	($prefs['feature_wiki_allowhtml'] == 'y' && $tiki_p_use_HTML == 'y' && $wysiwyg != 'y') ||
 	$prefs['feature_wiki_import_html'] == 'y' ||
 	($tiki_p_admin_wiki == 'y' && $prefs['feature_wiki_import_page'] == 'y') ||
-	($wysiwyg != 'y' && ($prefs['feature_wiki_pictures'] == 'y' && $tiki_p_upload_picture == 'y') ||
-						($prefs['feature_wiki_attachments'] == 'y' && ($tiki_p_wiki_attach_files == 'y' && $tiki_p_wiki_admin_attachments == 'y')) ||
+	($wysiwyg != 'y' && ($prefs['feature_wiki_attachments'] == 'y' && ($tiki_p_wiki_attach_files == 'y' && $tiki_p_wiki_admin_attachments == 'y')) ||
 						($prefs['feature_wiki_screencasts'] == 'y' && $tiki_p_upload_screencast == 'y'))) {
 	$smarty->assign('showToolsTab', 'y');
 }
@@ -1288,7 +1287,9 @@ if (strtolower($page) != 'sandbox' &&
 			($prefs['feature_freetags'] == 'y' && $tiki_p_freetags_tag == 'y') ||
 			$prefs['feature_wiki_icache'] == 'y' ||
 			$prefs['feature_contribution'] == 'y' ||
-			$prefs['feature_wiki_structure'] == 'y') ||
+			$prefs['feature_wiki_structure'] == 'y' ||
+			$prefs['wiki_feature_copyrights']  == 'y' ||
+			($tiki_p_admin_wiki == 'y' && $prefs['wiki_authors_style_by_page'] == 'y')) ||
 		($prefs['feature_wiki_description'] == 'y' || $prefs['metatag_pagedesc'] == 'y') ||
 		$prefs['feature_wiki_footnotes'] == 'y' ||
 		($prefs['feature_wiki_ratings'] == 'y' && $tiki_p_wiki_admin_ratings =='y') ||

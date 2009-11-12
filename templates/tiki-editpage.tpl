@@ -147,6 +147,18 @@
 									<input type="checkbox" id="watch" name="watch" value="1"{if $watch_checked eq 'y'} checked="checked"{/if} />
 								{/if}						
 							</fieldset>
+							{if $wysiwyg neq 'y' and $prefs.feature_wiki_pictures eq 'y' and $tiki_p_upload_picture eq 'y' and $prefs.feature_filegals_manager neq 'y'}
+								<fieldset>
+									<legend>{tr}Upload picture{/tr}:</legend>
+									<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
+									<input type="hidden" name="hasAlreadyInserted" value="" />
+									<input type="hidden" name="prefix" value="/img/wiki_up/{if $tikidomain}{$tikidomain}/{/if}" />
+									<input name="picfile1" type="file" onchange="javascript:insertImgFile('editwiki','picfile1','hasAlreadyInserted','img')"/>
+									<div id="new_img_form"></div>
+									<a href="javascript:addImgForm()" onclick="needToConfirm = false;">{tr}Add another image{/tr}</a>
+								</fieldset>
+							{/if}
+				
 						{/if}
 					{/tab}
 					{if $prefs.feature_categories eq 'y' and $tiki_p_modify_object_categories eq 'y' and count($categories) gt 0}
@@ -254,22 +266,6 @@
 							{/if}
 							
 							{if $wysiwyg neq 'y'}
-								{if $prefs.feature_wiki_pictures eq 'y' and $tiki_p_upload_picture eq 'y'}
-									<fieldset>
-										<legend>{tr}Upload picture{/tr}:</legend>
-										{if $prefs.feature_filegals_manager eq 'y' and $prefs.feature_file_galleries == 'y' and $tiki_p_list_file_galleries == 'y'}
-											<input type="submit" class="wikiaction" value="{tr}Add another image{/tr}" onclick="javascript:needToConfirm = false;javascript:openFgalsWindow('{filegal_manager_url area_name=editwiki}');return false;" name="uploadpicture" />
-										{else}
-											<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
-											<input type="hidden" name="hasAlreadyInserted" value="" />
-											<input type="hidden" name="prefix" value="/img/wiki_up/{if $tikidomain}{$tikidomain}/{/if}" />
-											<input name="picfile1" type="file" onchange="javascript:insertImgFile('editwiki','picfile1','hasAlreadyInserted','img')"/>
-											<div id="new_img_form"></div>
-											<a href="javascript:addImgForm()" onclick="needToConfirm = false;">{tr}Add another image{/tr}</a>
-										{/if}
-									</fieldset>
-								{/if}
-							
 								{if $prefs.feature_wiki_attachments == 'y' and ($tiki_p_wiki_attach_files eq 'y' or $tiki_p_wiki_admin_attachments eq 'y')}
 									<fieldset>
 										<legend>{tr}Upload file{/tr}:</legend>
@@ -420,6 +416,23 @@
 											</div>
 									</fieldset>	
 								{/if}
+								{if $prefs.wiki_feature_copyrights  eq 'y'}
+									<fieldset>
+										<legend>{tr}License{/tr}:</legend>
+										<a href="{$prefs.wikiLicensePage|sefurl}">{tr}{$prefs.wikiLicensePage}{/tr}</a>
+										{if $prefs.wikiSubmitNotice neq ""}
+											{remarksbox type="note" title="{tr}Important{/tr}:"}
+												<strong>{tr}{$prefs.wikiSubmitNotice}{/tr}</strong>
+											{/remarksbox}
+										{/if}
+									</fieldset>
+								{/if}
+								{if $tiki_p_admin_wiki eq 'y' && $prefs.wiki_authors_style_by_page eq 'y'}
+									<fieldset>
+										<legend>{tr}Authors' style{/tr}</legend>
+										{include file='wiki_authors_style.tpl' tr_class='formcolor' wiki_authors_style_site='y' style=''}
+									</fieldset>
+								{/if}
 							{/if}{*end if sandbox *}
 							{if $prefs.feature_wiki_description eq 'y' or $prefs.metatag_pagedesc eq 'y'}
 								<fieldset>
@@ -517,23 +530,6 @@
 		{if $page|lower ne 'sandbox'}
 			{if $prefs.feature_antibot eq 'y' && $anon_user eq 'y'}
 				{include file='antibot.tpl' tr_style="formcolor"}
-			{/if}
-			
-			{if $prefs.wiki_feature_copyrights  eq 'y'}
-				<tr class="formcolor">
-					<td>{tr}License{/tr}:</td>
-					<td><a href="{$prefs.wikiLicensePage|sefurl}">{tr}{$prefs.wikiLicensePage}{/tr}</a></td>
-				</tr>
-				{if $prefs.wikiSubmitNotice neq ""}
-					<tr class="formcolor">
-						<td>{tr}Important{/tr}:</td>
-						<td><b>{tr}{$prefs.wikiSubmitNotice}{/tr}</b></td>
-					</tr>
-				{/if}
-			{/if}
-			
-			{if $tiki_p_admin_wiki eq 'y' && $prefs.wiki_authors_style_by_page eq 'y'}
-			  {include file='wiki_authors_style.tpl' tr_class='formcolor' wiki_authors_style_site='y' style='tr'}
 			{/if}
 		{/if}{* sandbox *}
 		

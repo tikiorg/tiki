@@ -1,5 +1,4 @@
 {* $Id$ *}
-{if $do_not_show_login_box ne 'y'}
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--
 {literal}
@@ -14,7 +13,6 @@ function capLock(e){
 {/literal}
 //--><!]]>
 </script>
-{if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Login{/tr}"}{/if}
 {tikimodule error=$module_params.error title=$tpl_module_title name="login_box" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
     {if $user}
       <div>{tr}Logged in as{/tr}: <span style="white-space: nowrap">{$user|userlink}</span></div>
@@ -175,4 +173,3 @@ function capLock(e){
 		</form>
 	{/if}
 {/tikimodule}
-{/if}

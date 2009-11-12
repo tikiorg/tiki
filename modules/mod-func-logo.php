@@ -10,8 +10,7 @@ function module_logo_info() {
 	return array(
 		'name' => tra('Logo'),
 		'description' => tra('Site logo, title and subtitle.'),
-		'prefs' => array(),
-		'params' => array(),
+		'prefs' => array('feature_sitelogo'),
 	);
 }
 
