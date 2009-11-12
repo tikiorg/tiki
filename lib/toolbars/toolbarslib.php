@@ -1368,7 +1368,7 @@ class ToolbarSwitchEditor extends Toolbar
 	{
 		global $smarty;
 		
-		return $this->getSelfLink('switchEditor(\'wysiwyg\', $jq(event.currentTarget).parents(\'form\')[0]);',
+		return $this->getSelfLink('switchEditor(\'wysiwyg\', $jq(this).parents(\'form\')[0]);',
 							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-switcheditor');
 	} // }}}
 
