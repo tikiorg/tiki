@@ -1,5 +1,10 @@
 <?php
 
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  header("location: index.php");
+  exit;
+}
+
 function post_20090416_plugin_security_tiki( $installer )
 {
 	$result = $installer->query( "SELECT value FROM tiki_preferences WHERE name = 'plugin_fingerprints'" );

@@ -1,4 +1,10 @@
 <?php
+
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  header("location: index.php");
+  exit;
+}
+
 function upgrade_20091103_upgrade_categperm_tiki( $installer) {
 // $view describes what was supposed to be given by tiki_p_view_categorized
 // $edit describes what was supposed to be given by tiki_p_edit_categorized
@@ -31,6 +37,9 @@ $edit[] = 'tiki_p_create_blogs';
 $edit[] = 'tiki_p_blog_post';
 
 $view[] = 'tiki_p_view';
+$view[] = 'tiki_p_wiki_view_attachments';
+$view[] = 'tiki_p_wiki_view_history';
+$view[] = 'tiki_p_wiki_view_comments';
 $edit[] = 'tiki_p_edit';
 $edit[] = 'tiki_p_remove';
 $edit[] = 'tiki_p_wiki_attach_files';

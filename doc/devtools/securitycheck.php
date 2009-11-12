@@ -102,7 +102,10 @@ $TWV = new TWVersion();
 if (!$TWV->version)
      die( "Could not find version information.\n" );
 
-list( $major, $minor, $revision ) = explode( '.', $TWV->version );
+$ver = explode( '.', $TWV->version );
+$major = (count($ver) >= 1) ? $ver[0]:'?';
+$minor = (count($ver) >= 2) ? $ver[1]: '?';
+$revision = (count($ver) >= 3) ?  $ver[2]: '?';
 
 function get_content( $filename )
 {
@@ -119,7 +122,7 @@ function get_content( $filename )
 function feature_pattern( &$featureNameIndex ) // {{{
 {
 	global $major, $minor, $revision;
-	$featureName = "((feature_\w+)|wiki_feature_3d|lang_use_db|allowRegister|validateUsers)";
+	$featureName = "((feature_\w+)|wiki_feature_3d|lang_use_db|allowRegister|validateUsers|cachepages)";
 	$q = "[\"']";
 	if( $major == 1 && $minor == 9 )
 	{

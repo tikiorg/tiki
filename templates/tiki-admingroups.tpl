@@ -321,7 +321,7 @@
 {/if}
 
 {if $groupname}
-	{tab name="{tr}Add a New Group{/tr}"}
+	{tab name="{tr}Import/Export{/tr}"}
 		{* ----------------------- tab with import/export --------------------------------------- *}
 		<a name="4" ></a>
 		<form method="post" action="tiki-admingroups.php" enctype="multipart/form-data">

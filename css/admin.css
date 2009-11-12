@@ -239,14 +239,21 @@ div.adminanchors a {float: left}
 
 .toolbars-admin .row li.qt-plugin {
 	width: auto;
-	background-color: #9C0;
-	border: thin #690 solid;
-	margin: 0 .4em 0 0;
-	padding: 2px .4em 0 .2em;
+	background-color: #d4e483;
+	margin: 0 6px 0 0;
+	padding: 2px 0px 2px 3px;
 	color: #030;
 	font-style: normal;
 	font-weight: normal;
 	font-size: 10px;
+}
+
+.toolbars-placeholder {
+	width: 18px;
+	height: 18px;
+	list-style-type: none;
+	background-color: #ff0;
+	float: left;
 }
 
 .qt-wys {

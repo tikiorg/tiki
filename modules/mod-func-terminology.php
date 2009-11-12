@@ -17,9 +17,11 @@ function module_terminology_info() {
 }
 
 function module_terminology( $mod_reference, $module_params ) {
-	global $multilinguallib, $smarty, $prefs;
-	
-	include_once('lib/multilingual/multilinguallib.php');
+	global $smarty, $prefs;
+	if ($prefs['feature_multilingual'] != 'y') {
+		return;
+	}
+	global $multilinguallib; include_once('lib/multilingual/multilinguallib.php');
 	
 	$search_terms_in_lang = $multilinguallib->currentSearchLanguage(true);
 	$smarty->assign('search_terms_in_lang', $search_terms_in_lang);

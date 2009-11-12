@@ -107,7 +107,7 @@ function showDetails( id, domain, profile ) { // {{{
 				{	
 					var pStep = document.createElement('p');
 					pStep.style.fontWeight = 'bold';
-					pStep.innerHTML = "Step 3: Click on Apply Now to install Profile";
+					pStep.innerHTML = "Step 3: Click on Apply Now to apply Profile";
 					
 					var form = document.createElement( 'form' );
 					var p = document.createElement('p');				

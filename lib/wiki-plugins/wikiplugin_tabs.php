@@ -59,5 +59,5 @@ function wikiplugin_tabs($data, $params) {
 
 	$content = $smarty->fetch( 'wiki-plugins/wikiplugin_tabs.tpl' );
 
-	return "~np~$content~/np~";
+	return $content;
 }

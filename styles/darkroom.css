@@ -1878,19 +1878,19 @@ td.calodd, td.caleven {
 	font-size: .95em;
 }
 
-#caltable .calfocuson,
+.caltable .calfocuson,
 .box-data td.fc a.today,
 .box-data td a.today {
 	background: #292929;
 	border: solid 1px #696969;
 }
 
-#caltable .calfocuson a {
+.caltable .calfocuson a {
 	color: #d8d8d8;
 }
 
-#caltable .calfocus a,
-#caltable .calfocuson a {
+.caltable .calfocus a,
+.caltable .calfocuson a {
 	text-decoration: none;
 }
 
@@ -1911,7 +1911,7 @@ td.calodd, td.caleven {
 	color: #d8d8d8;
 }
 
-#caltable .weeks {
+.caltable .weeks {
 	color: #d8d8d8;
 }
 

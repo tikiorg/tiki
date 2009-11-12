@@ -29,6 +29,7 @@ function wikiplugin_aname_info() {
 		'prefs' => array('wikiplugin_aname'),
 		'body' => tra('The name of the anchor.'),
 		'params' => array(),
+		'icon' => 'pics/icons/anchor.png',
 	);
 }
 

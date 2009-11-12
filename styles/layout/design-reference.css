@@ -910,6 +910,12 @@ div.messureadbody {
 	background: #666;
 }
 
+/* Bullet on list items look inappropriate here. */
+.tiki_admin .note .rbox-data li.even,
+.tiki_admin .note .rbox-data li.odd {
+	list-style: none;
+}
+
 /* admin boxes etc (.admbox) now defined in css/admin.css */
 
 td.mods_revision {

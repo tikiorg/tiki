@@ -139,7 +139,7 @@ function FCKeditor_OnComplete( editorInstance ) {
 			$headerlib->add_js("var autoSaveId = '$auto_save_referrer';");	// onready is too late...
 		}
 
-		$smarty->assign_by_ref('pagedata', $content);
+		$smarty->assign_by_ref('pagedata', htmlspecialchars($content));
 		$html .= $smarty->fetch('wiki_edit.tpl');
 
 		$html .= "\n".'<input type="hidden" name="rows" value="'.$params['rows'].'"/>'

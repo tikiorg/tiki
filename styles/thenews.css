@@ -1625,7 +1625,7 @@ caltrack a:visited {
 	font-size: 90%;
 }
 
-#caltable .calfocuson,
+.caltable .calfocuson,
 .box-data td.fc a.today,
 .box-data td a.today {
 	background: #D4D0C8;

@@ -390,7 +390,7 @@ div.help_section {
 }
 
 .warning a {
-	color: #333 !important;
+	color: #333;
 	background: #ffc;
 }
 
@@ -443,7 +443,7 @@ td.form {
 /** Tabs **/
 
 .tabactive {
-	border: solid 1px /*#696969*/ !important;
+	border: solid 1px;
 }
 
 /***** Wiki *****/
@@ -912,6 +912,11 @@ div.messureadbody {
 .highlight_word_4 {
 	color: #99ff99;
 	background: #666;
+}
+
+.tiki_admin .note .rbox-data li.even,
+.tiki_admin .note .rbox-data li.odd {
+	list-style: none;
 }
 
 /* admin boxes etc (.admbox) now defined in css/admin.css */

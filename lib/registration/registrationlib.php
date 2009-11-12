@@ -340,6 +340,7 @@ class RegistrationLib extends TikiLib {
    *  A default Tikiwiki callback that sends the welcome email on user registraion
    *  @access private
    *  @returns true on success, false to halt event proporgation
+   * TODO: CLEANUP duplicates code in userslib.php?
    */
   function callback_tikiwiki_send_email($raisedBy, $data) {
 	global $_REQUEST, $_SESSION, $_SERVER, $prefs, $registrationlib_apass, $email_valid, $smarty, $tikilib, $userlib, $Debug;
@@ -356,9 +357,13 @@ class RegistrationLib extends TikiLib {
 			$apass = $registrationlib_apass;
 			$foo = parse_url($_SERVER["REQUEST_URI"]);
                         $foo1=str_replace("tiki-register","tiki-login_validate",$foo["path"]);
-                        $machine =$tikilib->httpPrefix().$foo1;
+                       	$foo2=str_replace("tiki-register","tiki-assignuser",$foo["path"]); 
 
-                        $smarty->assign('mail_machine',$machine);
+			$machine =$tikilib->httpPrefix().$foo1;
+			$machine_assignuser = $tikilib->httpPrefix().$foo2;
+
+                        $smarty->assign('mail_machine_assignuser',$machine_assignuser);
+			$smarty->assign('mail_machine',$machine);
                         $smarty->assign('mail_site',$mail_site);
                         $smarty->assign('mail_user',$mail_user);
                         $smarty->assign('mail_apass',$apass);

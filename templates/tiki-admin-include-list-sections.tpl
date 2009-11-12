@@ -33,7 +33,7 @@
 
 	{self_link page="security" _class="admbox" _style="background-image: url('pics/large/gnome-lockscreen48x48.png')" _title="{tr}Security{/tr}"}<span>{tr}Security{/tr}</span>{/self_link}
 	
-	{self_link page="rss" _class="admbox" _style="background-image: url('pics/large/gnome-globe48x48.png')" _title="{tr}RSS feeds{/tr}"}<span>{tr}RSS feeds{/tr}</span>{/self_link}
+	{self_link page="rss" _class="admbox" _style="background-image: url('pics/large/gnome-globe48x48.png')" _title="{tr}Feeds{/tr}"}<span>{tr}Feeds{/tr}</span>{/self_link}
 
 	{self_link page="connect" _class="admbox" _style="background-image: url('pics/large/gnome-globe48x48.png')" _title="{tr}Connect{/tr}"}<span>{tr}Connect{/tr}</span>{/self_link}
 	

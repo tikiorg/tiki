@@ -821,6 +821,7 @@ CREATE TABLE "tiki_file_galleries" (
   "show_slideshow" char(1) default NULL,
   "default_view" varchar(20) default NULL,
   "quota" integer default 0,
+  "size" bigint default NULL,
   PRIMARY KEY ("galleryId")
 ) ;
 
@@ -4203,7 +4204,7 @@ CREATE TABLE "tiki_groupalert" (
   "objectType" varchar( 20 ) NOT NULL default '',
   "objectId" varchar(10) NOT NULL default '',
   "displayEachuser" char( 1 ) default NULL ,
-  PRIMARY KEY ("objectType","objectId")
+  PRIMARY KEY ("groupName","objectType","objectId")
 ) ;
 
 

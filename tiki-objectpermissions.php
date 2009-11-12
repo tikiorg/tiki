@@ -156,16 +156,21 @@ $group_filter = unserialize($tikilib->get_user_preference($user, 'objectperm_adm
 $groups = $userlib->get_groups(0, -1, 'id_asc', '', '', 'n');
 $smarty->assign_by_ref('groups', $groups["data"]);
 
-$OBJECTPERM_ADMIN_MAX_GROUPS = 5;
+$OBJECTPERM_ADMIN_MAX_GROUPS = 4;
 
-if ($group_filter === false && count($groups["data"]) > $OBJECTPERM_ADMIN_MAX_GROUPS) {	//	filter out if too many groups
-	foreach($groups["data"] as $g) {
-		if (count($group_filter) < $OBJECTPERM_ADMIN_MAX_GROUPS) {
+if ($group_filter === false) {
+	$c = 0;
+	foreach($groups["data"] as $g) {	//	filter out if too many groups and hide Admins by default
+		if ($c < $OBJECTPERM_ADMIN_MAX_GROUPS && $g['groupName'] != 'Admins') {
 			$group_filter[] = $g['id'];
+			$c++;
 		}
 	}
-	$cookietab = '2';
-	$smarty->assign('groupsFiltered', 'y');
+	if (count($groups["data"]) > $OBJECTPERM_ADMIN_MAX_GROUPS) {
+		$cookietab = '2';
+		$smarty->assign('groupsFiltered', 'y');
+	}
+	$tikilib->set_user_preference($user, 'objectperm_admin_groups', serialize($group_filter));
 }
 
 // Process the form to assign a new permission to this object

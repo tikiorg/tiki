@@ -12,7 +12,7 @@
 {tr}To validate that account, please follow the link:{/tr}
 {$mail_machine}?user={$mail_user|escape:'url'}&pass={$mail_apass}
 
-{tr}Assign to a group:{/tr} http://{$mail_site}/tiki/tiki-assignuser.php?assign_user={$mail_user|escape:'url'}
+{tr}Assign to a group:{/tr} {$mail_machine_assignuser}?assign_user={$mail_user|escape:'url'}
 
 
 {tr}Best regards{/tr}

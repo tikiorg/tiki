@@ -68,6 +68,9 @@ if ($prefs['feature_trackers'] == 'y') {
 		$user_items = $tikilib->get_user_items($userwatch);
 		$smarty->assign_by_ref('user_items', $user_items);
 		$smarty->assign('mytiki_user_items', 'y');
+		global $trklib; include_once('lib/trackers/trackerlib.php');
+		$nb_item_comments = $trklib->nbComments($user);
+		$smarty->assign_by_ref('nb_item_comments', $nb_item_comments);
 	}
 }
 if ($prefs['feature_forums'] == 'y') {
