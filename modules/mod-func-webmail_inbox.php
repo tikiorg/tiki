@@ -44,22 +44,22 @@ function module_webmail_inbox_info() {
 			),
 			'messageFId' => array(
 				'name' => tra('Message Field Id'),
-				'description' => tra('GroupMail: From Field (Id of field in tracker to store email message identifier)'),
+				'description' => tra('GroupMail: Message Field (Id of field in tracker to store email message identifier)'),
 				'filter' => 'int'
 			),
 			'contentFId' => array(
 				'name' => tra('Content Field Id'),
-				'description' => tra('GroupMail: From Field (Id of field in tracker to store email message body content)'),
+				'description' => tra('GroupMail: Content Field (Id of field in tracker to store email message body content)'),
 				'filter' => 'int'
 			),
 			'accountFId' => array(
 				'name' => tra('Account Field Id'),
-				'description' => tra('GroupMail: From Field (Id of field in tracker to store Webmail account name)'),
+				'description' => tra('GroupMail: Account Field (Id of field in tracker to store Webmail account name)'),
 				'filter' => 'int'
 			),
 			'datetimeFId' => array(
 				'name' => tra('DateTime Field Id'),
-				'description' => tra('GroupMail: From Field (Id of field in tracker to store email sent timestamp)'),
+				'description' => tra('GroupMail: Date Time Field (Id of field in tracker to store email sent timestamp)'),
 				'filter' => 'int'
 			),
 			'operatorFId' => array(
