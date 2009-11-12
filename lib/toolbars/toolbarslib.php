@@ -1257,7 +1257,7 @@ class ToolbarFullscreen extends Toolbar
 		if( isset($_REQUEST['zoom']) )
 			$name = 'preview';
 		return '<input type="image" name="'.$name.'" alt="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '" class="toolbar qt-fullscreen" '.
-				'title="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '" value="wiki_edit" onclick="needToConfirm=false;" title="" class="icon" src="' . htmlentities($this->icon, ENT_QUOTES, 'UTF-8') . '"/>';
+				'title="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '" value="wiki_edit" onclick="needToConfirm=false;" src="' . htmlentities($this->icon, ENT_QUOTES, 'UTF-8') . '"/>';
 	} // }}}
 }
 
@@ -1343,7 +1343,7 @@ class ToolbarFileGallery extends Toolbar
 		global $smarty;
 		
 		require_once $smarty->_get_plugin_filepath('function','filegal_manager_url');
-		return $this->getSelfLink('openFgalsWindow(\''.smarty_function_filegal_manager_url(array('area_name'=>$areaName), $smarty).'\');',
+		return $this->getSelfLink('openFgalsWindow(\''.urlencode(smarty_function_filegal_manager_url(array('area_name'=>$areaName), $smarty)).'\');',
 							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-filegal');
 	} // }}}
 
