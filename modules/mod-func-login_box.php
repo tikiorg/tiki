@@ -8,8 +8,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_login_box_info() {
 	return array(
-		'name' => tra('Login Box'),
-		'description' => tra('Login box.'),
+		'name' => tra('Login'),
+		'description' => tra('Login box'),
 		'prefs' => array(),
 		'params' => array(
 			'input_size' => array(
@@ -17,8 +17,7 @@ function module_login_box_info() {
 				'description' => tra('Number of characters for username and password input fields.'),
 				'filter' => 'int'
 			),
-		),
-		'common_params' => array('nonums', 'rows')
+		)
 	);
 }
 
