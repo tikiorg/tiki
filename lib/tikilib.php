@@ -6191,7 +6191,7 @@ class TikiLib extends TikiDb_Bridge {
 
 		// Strike-deleted text --text-- (but not in the context <!--[if IE]><--!> or <!--//--<!CDATA[//><!--
 		if (!$simple_wiki) {
-			$data = preg_replace("#(?<!<!|//)--([^\s].+?)--#", "<del>$1</del>", $data);
+			$data = preg_replace("#(?<!<!|//)--([^\s>].+?)--#", "<del>$1</del>", $data);
 		}
 
 		// Handle comment sections
