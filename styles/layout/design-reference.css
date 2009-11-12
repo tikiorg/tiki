@@ -375,6 +375,12 @@ div.help_section {
 .note .rbox-title {}
 .note .rbox-data {}
 
+/* Bullet on list items look inappropriate here. */
+.note .rbox-data li.even,
+.note .rbox-data li.odd {
+	list-style: none;
+}
+
 .tip .rbox-title,
 .tip .rbox-data {}
 
