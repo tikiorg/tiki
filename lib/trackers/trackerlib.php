@@ -759,8 +759,8 @@ class TrackerLib extends TikiLib {
 			for ( $i = 0 ; $i < $nb_filtered_fields ; $i++ ) {
 				if ( is_array($filterfield) ) { //multiple filter on an exact value or a like value - each value can be simple or an array
 					$ff = $filterfield[$i];
-					$ev = $exactvalue[$i];
-					$fv = $filtervalue[$i];
+					$ev = isset($exactvalue[$i])? $exactvalue[$i]:'';
+					$fv = isset($filtervalue[$i])?$filtervalue[$i]:'' ;
 				}
 				$filter = $this->get_tracker_field($ff);
 
