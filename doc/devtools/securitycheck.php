@@ -69,7 +69,7 @@ The following do actually have features, but the fix check checker
 needs to be changed to accept access->check_permissions() so that also that it loads tikisetup.php
  ./tiki-orphan_pages.php
  ./tiki-plugins.php
-
+./tiki-switch_perspective.php
 
 The following need to be refactored to a lib
  ./tiki-testGD.php
