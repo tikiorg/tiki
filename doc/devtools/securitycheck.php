@@ -56,34 +56,28 @@ FIX LATER
 
 The following are DELIBERATELY PUBLIC.
  ./tiki-change_password.php
- ./tiki-confirm_user_email.php
  ./tiki-cookie-jar.php
  ./tiki-error_simple.php
  ./tiki-information.php
  ./tiki-install.php
- ./tiki-install_disable.php
  ./tiki-jsplugin.php
  ./tiki-live_support_chat_frame.php
  ./tiki-login_scr.php
- ./tiki-register_ajax.php
 
 
 The following do actually have features, but the fix check checker 
 needs to be changed to accept access->check_permissions() so that also that it loads tikisetup.php
- ./tiki-mindmap.php
  ./tiki-orphan_pages.php
  ./tiki-plugins.php
- ./tiki-print_indexed.php
 
 
 The following need to be refactored to a lib
  ./tiki-testGD.php
- ./tiki-special_chars.php
 
+This file is just comments
+ ./about.php
 
-The following needs to be secured in a way other than "die"
- ./tiki-remote_backup.php 
-
+ 
 */
 
 $safePaths = array(
