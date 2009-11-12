@@ -271,7 +271,6 @@ function wikiplugin_tracker($data, $params) {
 	$thisIsThePlugin = isset($_REQUEST['iTRACKER']) && $_REQUEST['iTRACKER'] == $iTRACKER;
 
 	if (!isset($_REQUEST["ok"]) || $_REQUEST["ok"]  == "n" || !$thisIsThePlugin || isset($_REQUEST['tr_preview'])) {
-	
 		$field_errors = array('err_mandatory'=>array(), 'err_value'=>array());
 	
 			global $notificationlib; include_once('lib/notifications/notificationlib.php');
@@ -449,7 +448,7 @@ function wikiplugin_tracker($data, $params) {
 
 				if( count($field_errors['err_mandatory']) == 0  && count($field_errors['err_value']) == 0 && empty($field_errors['err_antibot']) && !isset($_REQUEST['tr_preview'])) {
 					/* ------------------------------------- save the item ---------------------------------- */
-					if (!isset($itemId)) {
+					if (!isset($itemId) && $tracker['oneUserItem'] == 'y') {
 						$itemId = $trklib->get_user_item($trackerId, $tracker);
 					}
 					if (isset($_REQUEST['status'])) {
