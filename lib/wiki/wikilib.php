@@ -745,7 +745,7 @@ class WikiLib extends TikiLib {
 		}	
 		if ($with_help) {
 			global $cachelib, $headerlib;
-			if (empty($_REQUEST['xjxfun'])) { $headerlib->add_jsfile( 'tiki-jsplugin.php' ); }
+			if (empty($_REQUEST['xjxfun'])) { $headerlib->add_jsfile( 'tiki-jsplugin.php', 'dynamic' ); }
 			$cachetag = 'plugindesc' . $this->get_language() . $area_name;
 			if (!$cachelib->isCached( $cachetag ) ) {
 				$list = $this->plugin_get_list();
