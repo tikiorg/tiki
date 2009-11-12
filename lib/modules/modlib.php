@@ -479,6 +479,11 @@ class ModLib extends TikiLib {
 				'description' => tra('Module only available based on the relationship of the user with the wiki page. Either only contributors (y) or only non-contributors (n) will see the module.'),
 				'filter' => 'alpha',
 			),
+			'flip' => array(
+				'name' => tra('Flip'),
+				'description' => tra('Users can shade module.'),
+				'filter' => 'alpha',
+			),
 		) );
 
 		// Parameters common to several modules, but not all

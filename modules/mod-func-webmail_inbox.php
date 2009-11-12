@@ -76,7 +76,6 @@ function module_webmail_inbox_info() {
 		'common_params' => array(
 			'rows',
 			'nonums',
-			'flip',
 		),
 	);
 }
