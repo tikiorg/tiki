@@ -284,11 +284,6 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
 			$objResponse->script($s);
 		}
 	}
-	foreach($headerlib->getJsfiles() as $f) {
-		if (trim($f) != '') {
-			$objResponse->includeScript($f);
-		}
-	}
 	
 	return $objResponse;
 }
