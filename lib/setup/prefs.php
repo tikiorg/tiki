@@ -943,7 +943,7 @@ function get_default_prefs() {
 		'registerPasscode' => isset($tikilib) ? md5($tikilib->genPass()) : md5(mt_rand()),
 		'rememberme' => 'disabled',
 		'remembertime' => 7200,
-		'remembermethod' => '',	// '' = IP based (default) | 'simple' = unique id based
+		'remembermethod' => 'simple',	// '' = IP based (more secure but not reliable) | 'simple' = unique id based (default)
 		'feature_clear_passwords' => 'n',
 		'feature_crypt_passwords' => (CRYPT_MD5 == 1)? 'crypt-md5': 'tikihash',
 		'feature_challenge' => 'n',
