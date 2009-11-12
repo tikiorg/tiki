@@ -98,7 +98,7 @@ function wikiplugin_googledoc_info() {
 
 function wikiplugin_googledoc($data, $params) {
 
-	extract ($params);
+	extract ($params, EXTR_SKIP);
 	
 	if (empty($type)) {
 		return tra('Required parameter "type" missing');
