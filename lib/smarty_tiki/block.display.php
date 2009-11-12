@@ -1,11 +1,17 @@
 <?php
 /**
- * $Id: /cvsroot/tikiwiki/tiki/lib/smarty_tiki/block.display.php,v 1.1 2007-09-06 13:50:20 mose Exp $
+ * $Id$
  *
  * \brief Smarty plugin to display content only to some groups, friends or combination of all per specified user(s)
  * (if user is not specified, current user is used)
  * ex.: {display groups=Anonymous,-Registered,foo}...{/display}
  */
+
+// this script may only be included - so it's better to die if called directly.
+if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== false) {
+  header('location: index.php');
+  die;
+}
 
 function smarty_block_display($params, $content, &$smarty)
 {
@@ -22,7 +28,7 @@ function smarty_block_display($params, $content, &$smarty)
 	if (!empty($params['error'])) {
 		$errmsg = $params['error'];
 	} elseif (empty($params['error']) && isset($friends)) {
-		$errmsg = tra('You are not in group of friends to have this displayed for you');
+		$errmsg = tra('You are not in group of friends to have the content of this block displayed for you');
 	} elseif (empty($params['error']) && isset($groups)) {
 		$errmsg = '';
 	} else {
