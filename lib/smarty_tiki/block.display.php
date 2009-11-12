@@ -4,7 +4,7 @@
  *
  * \brief Smarty plugin to display content only to some groups, friends or combination of all per specified user(s)
  * (if user is not specified, current user is used)
- * ex.: {display groups=Anonymous,-Registered,foo}...{/display}
+ * ex.: {display groups='Anonymous,-Registered,foo' friends=$f_42[ error='You may not see this item']}$f_1...$f_9///else///Become friend with $_42 first{/display}
  */
 
 // this script may only be included - so it's better to die if called directly.
@@ -17,7 +17,11 @@ function smarty_block_display($params, $content, &$smarty)
 {
 	global $prefs, $user, $userlib;
 	
-	$groups = explode(',',$params['groups']);
+	$ok = true;
+	if (!empty($params['groups'])) {
+		$groups = explode(',',$params['groups']);
+		$userGroups = $userlib->get_user_groups($user);
+	}
 	#$users = explode(',',$params['users']); // TODO users param support
 	if (!empty($params['friends']) && $prefs['feature_friends'] == 'y') {
 		$friends = explode(',', $params['friends']);
@@ -34,17 +38,15 @@ function smarty_block_display($params, $content, &$smarty)
 	} else {
 		$errmsg = tra('Smarty block.display.php: Missing error param');
 	}
-	$ok = false;
-	$anon = false; // see the workaround to exclude Registered below
 	
-	$userGroups = $userlib->get_user_groups($user);
+	$anon = false; // see the workaround to exclude Registered below
 
 		foreach ($groups as $gr) {
 			$gr = trim($gr);
 			if ($gr == 'Anonymous') $anon = true;
 			if (substr($gr,0,1) == '-') {
 				$nogr = substr($gr,1);
-				if (in_array($nogr,$userGroups && $nogr != 'Registered') or (in_array($nogr,$userGroups) && $nogr == 'Registered' && $anon == true)) {
+				if ((in_array($nogr,$userGroups) && $nogr != 'Registered') or (in_array($nogr,$userGroups) && $nogr == 'Registered' && $anon == true)) {
 					// workaround to display to Anonymous only if Registered excluded (because Registered includes Anonymous always)
 					$ok = false;
 					$anon = false;
@@ -59,10 +61,12 @@ function smarty_block_display($params, $content, &$smarty)
 	/* now we check friends (if any) */
 	if (!empty($friends)) {
 		foreach ($friends as $friend) {
-		    if ($userlib->verify_friendship($user, $friend)) {
-			    $ok = true;
-			    break;
-		    }
+			if ($userlib->verify_friendship($user, $friend)) {
+				$ok = true;
+				break;
+			} else {
+				$ok = false;
+			}
 		}
 	}
 	/* is it ok ? */
