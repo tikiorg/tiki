@@ -3,8 +3,10 @@
 class PerspectiveLib
 {
 	function get_current_perspective( $prefs ) {
-		if( isset( $_SESSION['current_perspective'] ) ) {
-			return $_SESSION['current_perspective'];
+		if( isset( $_REQUEST['perspectiveId'] ) ) {
+			return (int) $_REQUEST['perspectiveId'];
+		} elseif( isset( $_SESSION['current_perspective'] ) ) {
+			return (int) $_SESSION['current_perspective'];
 		}
 
 		$currentDomain = $_SERVER['HTTP_HOST'];

@@ -1589,7 +1589,7 @@ $defaults = get_default_prefs();
 // Set default prefs only if needed
 if ( ! $_SESSION['need_reload_prefs'] ) {
 	$modified = $_SESSION['s_prefs'];
-} elseif ( isset($tikilib) ) {
+} else {
 
 	// Find which preferences need to be serialized/unserialized, based on the default values (those with arrays as values)
 	if ( ! isset($_SESSION['serialized_prefs']) ) {
@@ -1600,15 +1600,6 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 
 	// Override default prefs with values specified in database
 	$modified = $tikilib->get_db_preferences();
-
-	// Disabled by default so it has to be modified
-	if( isset($modified['feature_perspective']) && $modified['feature_perspective'] == 'y' ) {
-		require_once 'lib/perspectivelib.php';
-		if( $persp = $perspectivelib->get_current_perspective( $modified ) ) {
-			$changes = $perspectivelib->get_preferences( $persp );
-			$modified = array_merge( $modified, $changes );
-		}
-	}
 
 	// Unserialize serialized preferences
 	if ( isset($_SESSION['serialized_prefs']) && is_array($_SESSION['serialized_prefs']) ) {
@@ -1626,6 +1617,15 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 
 	// Assign prefs to the session
 	$_SESSION['s_prefs'] = $modified;
+}
+
+// Disabled by default so it has to be modified
+if( isset($modified['feature_perspective']) && $modified['feature_perspective'] == 'y' ) {
+	require_once 'lib/perspectivelib.php';
+	if( $persp = $perspectivelib->get_current_perspective( $modified ) ) {
+		$changes = $perspectivelib->get_preferences( $persp );
+		$modified = array_merge( $modified, $changes );
+	}
 }
 
 $prefs = empty($modified) ? $defaults : array_merge( $defaults, $modified );

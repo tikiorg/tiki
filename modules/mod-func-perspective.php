@@ -15,14 +15,11 @@ function module_perspective_info() {
 
 function module_perspective( $mod_reference, $module_params ) {
 	global $perspectivelib; require_once 'lib/perspectivelib.php';
-	global $smarty;
+	global $smarty, $prefs;
 	
 	$perspectives = $perspectivelib->list_perspectives();
 	$smarty->assign( 'perspectives', $perspectives );
 
-	if( isset( $_SESSION['current_perspective'] ) ) {
-		$smarty->assign( 'current_perspective', $_SESSION['current_perspective'] );
-	} else {
-		$smarty->assign( 'current_perspective', null );
-	}
+	$smarty->assign( 'current_perspective', $perspectivelib->get_current_perspective( $prefs ) );
 }
+
