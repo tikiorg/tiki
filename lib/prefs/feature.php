@@ -1148,102 +1148,97 @@ function prefs_feature_list() {
 				'n' => tra('Never'),
 			),
 		),
-	
-	// Used in templates/tiki-admin-include-look.tpl
-	'feature_siteloc' => array(
+		'feature_siteloclabel' => array(
+			'name' => tra('Prefix breadcrumbs with "Location : "'),
+			'type' => 'flag',
+		),
+		'feature_siteloc' => array(
 			'name' => tra('Site location bar'),
-			'type' => '',
+			'type' => 'list',
+			'options' => array(
+				'y' => tra('Top of page'),
+				'page' => tra('Top of center column'),
+				'n' => tra('None'),
 			),
+		),
+		'feature_sitetitle' => array(
+			'name' => tra('Larger font for'),
+			'type' => 'list',
+			'options' => array(
+				'y' => tra('Entire location'),
+				'title' => tra('Page name'),
+				'n' => tra('None'),
+			),
+		),
+		'feature_sitedesc' => array(
+			'name' => tra('Use page description'),
+			'type' => 'list',
+			'options' => array(
+				'y' => tra('Top of page'),
+				'page' => tra('Top of center column'),
+				'n' => tra('None'),
+			),
+			'dependencies' => array(
+				'feature_wiki_description',
+			),
+		),
+		'feature_bot_logo' => array(
+			'name' => tra('Custom Site Footer'),
+			'type' => 'flag',
+		),
+		'feature_endbody_code' => array(
+			'name' => tra('Custom End of <body> Code'),
+			'hint' => tra('Example:') . ' ' . "{wiki}{literal}{GOOGLEANALYTICS(account=xxxx) /}{/literal}{/wiki}",
+			'type' => 'textarea',
+			'size' => '6',
+		),
+		'feature_bot_bar' => array(
+			'name' => tra('Bottom bar'),
+			'type' => 'flag',
+		),
+		'feature_bot_bar_icons' => array(
+			'name' => tra('Bottom bar icons'),
+			'type' => 'flag',
+		),
+		'feature_bot_bar_debug' => array(
+			'name' => tra('Bottom bar debug'),
+			'type' => 'flag',
+		),
+		'feature_bot_bar_rss' => array(
+			'name' => tra('Bottom bar (RSS)'),
+			'type' => 'flag',
+		),
+		'feature_site_report' => array(
+			'name' => tra('Webmaster Report'),
+			'type' => 'flag',
+		),
+		'feature_site_report_email' => array(
+			'name' => tra('Webmaster Email'),
+			'hint' => tra('Leave blank to use the default sender email'),
+			'type' => 'text',
+			'size' => '20',
+			'dependencies' => array(
+				'sender_email',
+			),
+		),
+		'feature_site_send_link' => array(
+			'name' => tra('Email this page'),
+			'type' => 'flag',
+		),
+		'feature_layoutshadows' => array(
+			'name' => tra('Shadow layer'),
+			'hint' => tra('Additional layers for shadows, rounded corners or other decorative styling'),
+			'type' => 'flag',
+		),
 	
 	// Used in templates/tiki-admin-include-look.tpl
 	'feature_sitenav' => array(
 			'name' => '',
 			'type' => '',
 			),
-	
-	// Used in templates/tiki-admin-include-look.tpl
-	'feature_siteloclabel' => array(
-			'name' => tra('Prefix breadcrumbs with &quot;Location : &quot;'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-look.tpl
-	'feature_sitetitle' => array(
-			'name' => tra('Larger font for'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-look.tpl
-	'feature_sitedesc' => array(
-			'name' => tra('Use page description:'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-look.tpl
-	'feature_bot_logo' => array(
-			'name' => tra('Custom Site Footer'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-look.tpl
-	'feature_endbody_code' => array(
-			'name' => tra('Custom End of &lt;body&gt; Code'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-look.tpl
-	'feature_bot_bar' => array(
-			'name' => tra('Bottom bar'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-look.tpl
-	'feature_bot_bar_icons' => array(
-			'name' => tra('Bottom bar icons'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-look.tpl
-	'feature_bot_bar_debug' => array(
-			'name' => tra('Bottom bar debug'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-look.tpl
-	'feature_bot_bar_rss' => array(
-			'name' => tra('Bottom bar (RSS)'),
-			'type' => '',
-			),
-	
-	
-	// Used in templates/tiki-admin-include-look.tpl
-	'feature_site_report' => array(
-			'name' => tra('Webmaster Report'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-look.tpl
-	'feature_site_send_link' => array(
-			'name' => tra('Email this page'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-look.tpl
-	'feature_layoutshadows' => array(
-			'name' => tra('Shadow layer'),
-			'type' => '',
-			),
-	
 	// Used in templates/tiki-admin-include-look.tpl
 	'feature_tabs' => array(
 			'name' => tra('Use Tabs'),
-			'type' => '',
-			),
-	
-	
-	// Used in templates/tiki-admin-include-look.tpl
-	'feature_site_report_email' => array(
-			'name' => tra('Webmaster Email'),
 			'type' => '',
 			),
 	

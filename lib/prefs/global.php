@@ -160,15 +160,14 @@ function prefs_global_list() {
 		'type' => 'text',
 		'size' => '50',
 	),
+	'maxRecords' => array(
+		'name' => tra('Maximum number of records in listings'),
+		'type' => 'text',
+		'size' => '3',
+	),
 
 	// Used in templates/tiki-admin-include-look.tpl
 	'sitenav' => array(
-			'name' => '',
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-look.tpl
-	'maxRecords' => array(
 			'name' => '',
 			'type' => '',
 			),

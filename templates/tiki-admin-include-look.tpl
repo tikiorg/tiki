@@ -161,334 +161,76 @@
 		{* --- Site Breadcrumbs --- *}
 		{preference name=feature_breadcrumbs}
 		<div class="adminoptionboxchild" id="feature_breadcrumbs_childcontainer">
-			<div class="adminoptionbox">
-				<div class="adminoption">
-					<input type="checkbox" name="feature_siteloclabel" id="feature_siteloclabel"{if $prefs.feature_siteloclabel eq 'y'} checked="checked"{/if} />
-				</div>
-				<div class="adminoptionlabel">
-					<label for="feature_siteloclabel">{tr}Prefix breadcrumbs with &quot;Location : &quot;{/tr} .</label>
-				</div>
-			</div>
-			<div class="adminoptionbox">
-				<div class="adminoptionlabel">
-					<label for="feature_siteloc">{tr}Site location bar{/tr}:</label>
-					<select name="feature_siteloc" id="feature_siteloc">
-						<option value="y" {if $prefs.feature_siteloc eq 'y'}selected="selected"{/if}>{tr}Top of page{/tr}</option>
-						<option value="page" {if $prefs.feature_siteloc eq 'page'}selected="selected"{/if}>{tr}Top of center column{/tr}</option>
-						<option value="n" {if $prefs.feature_siteloc eq 'n'}selected="selected"{/if}>{tr}None{/tr}</option>
-					</select>
-				</div>
-			</div>
-			<div class="adminoptionbox">
-				<div class="adminoptionlabel">
-					<label for="feature_sitetitle">{tr}Larger font for{/tr}:</label> 
-					<select name="feature_sitetitle" id="feature_sitetitle">
-						<option value="y" {if $prefs.feature_sitetitle eq 'y'}selected="selected"{/if}>{tr}Entire location{/tr}</option>
-						<option value="title" {if $prefs.feature_sitetitle eq 'title'}selected="selected"{/if}>{tr}Page name{/tr}</option>
-						<option value="n" {if $prefs.feature_sitetitle eq 'n'}selected="selected"{/if}>{tr}None{/tr}</option>
-					</select>
-				</div>
-			</div>
-			<div class="adminoptionbox">
-				<div class="adminoptionlabel">
-					<label for="feature_sitedesc">{tr}Use page description:{/tr}</label>
-					<select name="feature_sitedesc" id="feature_sitedesc">
-						<option value="y" {if $prefs.feature_sitedesc eq 'y'}selected="selected"{/if}>{tr}Top of page{/tr}</option>
-						<option value="page" {if $prefs.feature_sitedesc eq 'page'}selected="selected"{/if}>{tr}Top of center column{/tr}</option>
-						<option value="n" {if $prefs.feature_sitedesc eq 'n'}selected="selected"{/if}>{tr}None{/tr}</option>
-					</select>
-					{if $prefs.feature_wiki_description	ne 'y'}
-						<br />
-						{icon _id=information} 
-						<em>{tr}Feature is disabled{/tr}. <a href="tiki-admin.php?page=wiki" title="{tr}Features{/tr}">{tr}Enable now{/tr}.</a></em>
-					{/if}
-				</div>
-			</div>
+			{preference name=feature_siteloclabel}
+			{preference name=feature_siteloc}
+			{preference name=feature_sitetitle}
+			{preference name=feature_sitedesc}
 		</div>
-	
-		<div class="adminoptionbox">
-			<div class="adminoption">
-				<input type="checkbox" name="feature_bot_logo" id="feature_bot_logo"{if $prefs.feature_bot_logo eq 'y'} checked="checked"{/if} onclick="flip('usesitefooter');" />
-			</div>
-			<div class="adminoptionlabel">
-				<label for="feature_bot_logo">{tr}Custom Site Footer{/tr}</label>
-				<div class="adminoptionboxchild" id="usesitefooter" style="display:{if $prefs.feature_bot_logo eq 'y'}block{else}none{/if};">	
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel">
-							<label>
-								Content:
-								<br />
-								<textarea id="bot_logo_code" name="bot_logo_code" rows="6" cols="40" style="width: 90%">{$prefs.bot_logo_code|escape}</textarea>
-							</label>
-							<br />
-							<small>
-								<em>{tr}Example{/tr}</em>
-								:&lt;div style="text-align: center"&gt;&lt;small&gt;Powered by Tikiwiki&lt;/small&gt;&lt;/div&gt;
-							</small>
-						</div>
-					</div>
-				</div>
-			</div>
+		
+		{preference name=feature_bot_logo}
+		<div class="adminoptionboxchild" id="feature_bot_logo_childcontainer">
+			{preference name=bot_logo_code}
 		</div>
 
-		<div class="adminoptionbox">
-			<div class="adminoptionlabel">
-				<label for="feature_endbody_code">{tr}Custom End of &lt;body&gt; Code{/tr}:</label>
-				<br />
-				<textarea id="feature_endbody_code" name="feature_endbody_code" rows="6" cols="40" style="width: 90%">{$prefs.feature_endbody_code|escape}</textarea>
-				<br />
-				<small>
-					<em>{tr}Example{/tr}: </em>
-					{literal}{wiki}&#123;literal&#125;{GOOGLEANALYTICS(account=xxxx) /}&#123;/literal&#125;{/wiki}{/literal}
-				</small>
-			</div>
-		</div>
-
-		<div class="adminoptionbox">
-			<div class="adminoption">
-				<input type="checkbox" id="feature_bot_bar" name="feature_bot_bar" {if $prefs.feature_bot_bar eq 'y'}checked="checked"{/if} onclick="flip('usebottombar');" />
-			</div>
-			<div class="adminoptionlabel">
-				<label for="feature_bot_bar">{tr}Bottom bar{/tr}</label>
-				<div class="adminoptionboxchild" id="usebottombar" style="display:{if $prefs.feature_bot_bar eq 'y'}block{else}none{/if};">
-					<div class="adminoptionbox">
-						<div class="adminoption">
-							<input type="checkbox" id="feature_bot_bar_icons" name="feature_bot_bar_icons"	{if $prefs.feature_bot_bar_icons eq 'y'}checked="checked"{/if}/>
-						</div>
-						<div class="adminoptionlabel">
-							<label for="feature_bot_bar_icons">{tr}Bottom bar icons{/tr}</label>
-						</div>
-					</div>
-					<div class="adminoptionbox">
-						<div class="adminoption">
-							<input type="checkbox" id="feature_bot_bar_debug" name="feature_bot_bar_debug" {if $prefs.feature_bot_bar_debug eq 'y'}checked="checked"{/if}/>
-						</div>
-						<div class="adminoptionlabel">
-							<label for="feature_bot_bar_debug">{tr}Bottom bar debug{/tr}</label>
-						</div>
-					</div>
-					<div class="adminoptionbox">
-						<div class="adminoption">
-							<input type="checkbox" id="feature_bot_bar_rss" name="feature_bot_bar_rss" {if $prefs.feature_bot_bar_rss eq 'y'}checked="checked"{/if} />
-						</div>
-						<div class="adminoptionlabel">
-							<label for="feature_bot_bar_rss">{tr}Bottom bar (RSS){/tr}</label>
-						</div>
-					</div>
-
-					{preference name=feature_bot_bar_power_by_tw}
-				</div>
-			</div>
+		{preference name=feature_endbody_code}
+		
+		{preference name=feature_bot_bar}
+		<div class="adminoptionboxchild" id="feature_bot_bar_childcontainer">
+			{preference name=feature_bot_bar_icons}
+			{preference name=feature_bot_bar_debug}
+			{preference name=feature_bot_bar_rss}
+			{preference name=feature_bot_bar_power_by_tw}
 		</div>
 
 		{* --- Site Report Bar --- *}
 		<div class="adminoptionbox">
 			<fieldset>
 				<legend>{tr}Site Report Bar{/tr}</legend>
-				<div class="adminoptionbox">
-					<div class="adminoption">
-						<input type="checkbox" name="feature_site_report" id="feature_site_report"{if $prefs.feature_site_report eq 'y'} checked="checked"{/if} />
-					</div>
-					<div class="adminoptionlabel">
-						<label for="feature_site_report">{tr}Webmaster Report{/tr}</label>
-					</div>
-				</div>
-				<div class="adminoptionbox">
-					<div class="adminoptionlabel">
-						<label for="feature_site_report_email">{tr}Webmaster Email{/tr}:</label>
-						<input type="text" name="feature_site_report_email" id="feature_site_report_email" value="{$prefs.feature_site_report_email}" />
-						<br />
-						<em>{tr}Leave <strong>blank</strong> to use the default sender email{/tr}</em>.
-						{if empty($prefs.sender_email)}
-							<span class="highlight">{tr}You need to set <a href="tiki-admin.php?page=general">Sender Email</a>{/tr}</span>
-						{/if}
-					</div>
-				</div>
-				<div class="adminoptionbox">
-					<div class="adminoption">
-						<input type="checkbox" name="feature_site_send_link" id="feature_site_send_link"{if $prefs.feature_site_send_link eq 'y'} checked="checked"{/if} />
-					</div>
-					<div class="adminoptionlabel">
-						<label for="feature_site_send_link">{tr}Email this page{/tr}</label>
-					</div>
-				</div>
+				{preference name=feature_site_report}
+				{preference name=feature_site_report_email}
+				{preference name=feature_site_send_link}
 			</fieldset>
 		</div>
 	{/tab}
 
 	{tab name="{tr}Shadow layer{/tr}"}
 		{* --- Shadow layer --- *}
-		<div class="adminoptionbox">
-			<div class="adminoption">
-				<input class="checkbox" type="checkbox" name="feature_layoutshadows" id="feature_layoutshadows"{if $prefs.feature_layoutshadows eq 'y'} checked="checked"{/if} onclick="flip('shadowlayers');"  />
-			</div>
-			<div class="adminoptionlabel">
-				<label for="feature_layoutshadows">{tr}Shadow layer{/tr}</label>
-				<br />
-				<em>{tr}Additional layers for shadows, rounded corners or other decorative styling{/tr}.</em>
-				<div class="adminoptionboxchild" id="shadowlayers" style="display:{if $prefs.feature_layoutshadows eq 'y'}block{else}none{/if};">
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel">
-							<label for="main_shadow_start">{tr}Main shadow start{/tr}:</label>
-							<br />
-							<textarea name="main_shadow_start" id="main_shadow_start" rows="2" cols="40">{$prefs.main_shadow_start|escape}</textarea>
-						</div>
-					</div>
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel">
-							<label for="main_shadow_end">{tr}Main shadow end{/tr}:</label>
-							<br />
-							<textarea name="main_shadow_end" id="main_shadow_end" rows="2" cols="40">{$prefs.main_shadow_end|escape}</textarea>
-						</div>
-					</div>
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel">
-							<label for="header_shadow_start">{tr}Header shadow start{/tr}</label>
-							<br />
-							<textarea name="header_shadow_start" id="header_shadow_start" rows="2" cols="40">{$prefs.header_shadow_start|escape}</textarea>
-						</div>
-					</div>
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel">
-							<label for="header_shadow_end">{tr}Header shadow end{/tr}</label>:
-							<br />
-							<textarea name="header_shadow_end" id="header_shadow_end" rows="2" cols="40">{$prefs.header_shadow_end|escape}</textarea>
-						</div>
-					</div>
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel">
-							<label for="middle_shadow_start">{tr}Middle shadow start{/tr}</label>: 
-							<br />
-							<textarea name="middle_shadow_start" id="middle_shadow_start" rows="2" cols="40">{$prefs.middle_shadow_start|escape}</textarea>
-						</div>
-					</div>
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel">
-							<label for="middle_shadow_end">{tr}Middle shadow end{/tr}</label>: 
-							<br />
-							<textarea name="middle_shadow_end" id="middle_shadow_end" rows="2" cols="40">{$prefs.middle_shadow_end|escape}</textarea>
-						</div>
-					</div>
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel">
-							<label for="center_shadow_start">{tr}Center shadow start{/tr}</label>:
-							<br />
-							<textarea name="center_shadow_start" id="center_shadow_start" rows="2" cols="40">{$prefs.center_shadow_start|escape}</textarea>
-						</div>
-					</div>
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel">
-							<label for="center_shadow_end">{tr}Center shadow end{/tr}</label>:
-							<br />
-							<textarea name="center_shadow_end" id="center_shadow_end" rows="2" cols="40">{$prefs.center_shadow_end|escape}</textarea>
-						</div>
-					</div>
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel">
-								<label for="footer_shadow_start">{tr}Footer shadow start{/tr}</label>:
-							<br />
-							<textarea name="footer_shadow_start" id="footer_shadow_start" rows="2" cols="40">{$prefs.footer_shadow_start|escape}</textarea>
-						</div>
-					</div>
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel">
-							<label for="footer_shadow_end">{tr}Footer shadow end{/tr}</label>:
-							<br />
-							<textarea name="footer_shadow_end" id="footer_shadow_end" rows="2" cols="40">{$prefs.footer_shadow_end|escape}</textarea>
-						</div>
-					</div>
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel">
-							<label for="box_shadow_start">{tr}Module (box) shadow start{/tr}</label>:
-							<br />
-							<textarea name="box_shadow_start" id="box_shadow_start" rows="2" cols="40">{$prefs.box_shadow_start|escape}</textarea>
-						</div>
-					</div>
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel">
-							<label for="box_shadow_end">{tr}Module (box) shadow end{/tr}</label>:
-							<br />
-							<textarea name="box_shadow_end" id="box_shadow_end" rows="2" cols="40">{$prefs.box_shadow_end|escape}</textarea>
-						</div>
-					</div>
-				</div>
-			</div>
+		{preference name=feature_layoutshadows}
+		<div class="adminoptionboxchild" id="feature_layoutshadows_childcontainer">
+			{preference name=main_shadow_start}
+			{preference name=main_shadow_end}
+
+			{preference name=header_shadow_start}
+			{preference name=header_shadow_end}
+
+			{preference name=middle_shadow_start}
+			{preference name=middle_shadow_end}
+
+			{preference name=center_shadow_start}
+			{preference name=center_shadow_end}
+
+			{preference name=footer_shadow_start}
+			{preference name=footer_shadow_end}
+
+			{preference name=box_shadow_start}
+			{preference name=box_shadow_end}
 		</div>
 	{/tab}
 
 	{tab name="{tr}Pagination links{/tr}"}
-		<div class="adminoptionbox">	  
-			<div class="adminoptionlabel">
-				<label for="general-max_records">{tr}Maximum number of records in listings{/tr}:</label>
-				<input size="5" type="text" name="maxRecords" id="general-max_records" value="{$prefs.maxRecords|escape}" />
-			</div>
+
+		{preference name=maxRecords}
+		{preference name=nextprev_pagination}
+		{preference name=direct_pagination}
+		<div class="adminoptionboxchild" id="direct_pagination_childcontainer">
+			{preference name=direct_pagination_max_middle_links}
+			{preference name=direct_pagination_max_ending_links}
 		</div>
-		<div class="adminoptionbox">
-			<div class="adminoption">
-				<input type="checkbox" name="nextprev_pagination" id="nextprev_pagination" {if $prefs.nextprev_pagination eq 'y'}checked="checked"{/if}/>
-			</div>
-			<div class="adminoptionlabel">
-				<label for="nextprev_pagination">{tr}Use relative (next / previous) pagination links{/tr}</label>.
-			</div>
-		</div>
-		<div class="adminoptionbox">
-			<div class="adminoption">
-				<input type="checkbox" name="direct_pagination" id="direct_pagination" {if $prefs.direct_pagination eq 'y'}checked="checked"{/if} onclick="flip('usedirectpagination');" />
-			</div>
-			<div class="adminoptionlabel">
-				<label for="direct_pagination">{tr}Use direct pagination links{/tr}</label>.
-					<div class="adminoptionboxchild" id="usedirectpagination" style="display:{if $prefs.direct_pagination eq 'y'}block{else}none{/if};">
-						<div class="adminoptionbox">
-							<div class="adminoptionlabel">
-								<label>
-									{tr}Max. number of links around the current item:{/tr}
-									<input type="text" name="direct_pagination_max_middle_links" id="direct_pagination_max_middle_links" value="{$prefs.direct_pagination_max_middle_links}" size="4" />
-								</label>
-							</div>
-						</div>
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel">
-							<label>
-								{tr}Max. number of links after the first or before the last item:{/tr}
-								<input type="text" name="direct_pagination_max_ending_links" id="direct_pagination_max_ending_links" value="{$prefs.direct_pagination_max_ending_links}" size="4" />
-							</label>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="adminoptionbox">
-			<div class="adminoption">
-				<input type="checkbox" name="pagination_firstlast" id="pagination_firstlast" {if $prefs.pagination_firstlast eq 'y'}checked="checked"{/if}/>
-			</div>
-			<div class="adminoptionlabel">
-				<label for="pagination_firstlast">{tr}Display 'First' and 'Last' links{/tr}</label>
-			</div>
-		</div>
-		<div class="adminoptionbox">
-			<div class="adminoption">
-				<input type="checkbox" name="pagination_fastmove_links" id="pagination_fastmove_links" {if $prefs.pagination_fastmove_links eq 'y'}checked="checked"{/if}/>
-			</div>
-			<div class="adminoptionlabel">
-				<label for="pagination_fastmove_links">{tr}Display fast move links (by 10 percent of the total number of pages) {/tr}</label>
-			</div>
-		</div>
-		<div class="adminoptionbox">
-			<div class="adminoption">
-				<input type="checkbox" name="pagination_hide_if_one_page" id="pagination_hide_if_one_page" {if $prefs.pagination_hide_if_one_page eq 'y'}checked="checked"{/if}/>
-			</div>
-			<div class="adminoptionlabel">
-				<label for="pagination_hide_if_one_page">{tr}Hide pagination when there is only one page{/tr}</label>
-			</div>
-		</div>
-		<div class="adminoptionbox">
-			<div class="adminoption">
-				<input type="checkbox" name="pagination_icons" id="pagination_icons" {if $prefs.pagination_icons eq 'y'}checked="checked"{/if}/>
-			</div>
-			<div class="adminoptionlabel">
-				<label for="pagination_icons">{tr}Use Icons{/tr}</label>
-			</div>
-		</div>						
+
+		{preference name=pagination_firstlast}
+		{preference name=pagination_fastmove_links}
+		{preference name=pagination_hide_if_one_page}
+		{preference name=pagination_icons}
 	{/tab}
 		
 	{tab name="{tr}UI Effects{/tr}"}
