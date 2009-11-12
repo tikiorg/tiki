@@ -7,7 +7,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 class RankLib extends TikiLib {
-	function wiki_ranking_top_pages($limit, $categ=array()) {
+	function wiki_ranking_top_pages($limit, $categ=array(), $lang=null) {
 		global $user, $prefs;
 		
 		$bindvals = array();
@@ -30,18 +30,36 @@ class RankLib extends TikiLib {
 			$bindvals[] = $prefs['wikiapproval_prefix'] . '%';
 		}
 		
-		$query = "select distinct tp.`pageName`, tp.`hits` from `tiki_pages` tp $mid order by `hits` desc";
+		$query = "select distinct tp.`pageName`, tp.`hits`, tp.`lang`, tp.`page_id` from `tiki_pages` tp $mid order by `hits` desc";
 
 		$result = $this->query($query, $bindvals);
 		$ret = array();
 		$count = 0;
 		while (($res = $result->fetchRow()) && $count < $limit) {
-			if ($this->user_has_perm_on_object($user,$res['pageName'], 'wiki page', 'tiki_p_view')) {
-				$aux['name'] = $res['pageName'];
-				$aux['hits'] = $res['hits'];
-				$aux['href'] = 'tiki-index.php?page=' . urlencode($res['pageName']);
-				$ret[] = $aux;
-				++$count;
+			$perms = Perms::get( array( 'type' => 'wiki page', 'object' => $res['pageName'] ) );
+			if ( $perms->view ) {
+				global $disableBestLang;
+				$disableBestLang = false;
+				if ($res['lang'] > '' && $prefs['feature_best_language'] == 'y') {
+					// find best language equivalent
+					if (isset($_REQUEST['bl']) || isset($_REQUEST['best_lang'])) {
+						global $multilinguallib;
+						include_once('lib/multilingual/multilinguallib.php');
+						$bestLangPageId = $multilinguallib->selectLangObj('wiki page', $res['page_id'], null, 'tiki_p_view');
+						if ($res['page_id'] != $bestLangPageId) {							
+							$res['pageName'] = $this->get_page_name_from_id($bestLangPageId);
+						}
+					}
+				}		
+				if ($prefs['feature_best_language'] != 'y' || !$res['lang'] || !in_array($res['pageName'],$pagesAdded)) {
+					$aux['name'] = $res['pageName'];
+					$aux['hits'] = $res['hits'];
+					$aux['href'] = 'tiki-index.php?page=' . urlencode($res['pageName']);
+					if ($disableBestLang == true) $aux['href'] .= '&amp;bl=n'; 	
+					$ret[] = $aux;
+					$pagesAdded[] = $res['pageName'];
+					++$count;
+				}				
 			}
 		}
 
