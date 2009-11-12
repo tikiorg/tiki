@@ -1,11 +1,11 @@
 <?php
-// $Id: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.141.2.24 2008-02-28 14:57:12 sylvieg Exp $
+// $Id: $
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 	header("location: index.php");
 	exit;
 }
-/*
- * Smarty plugin
+/**
+ * \brief Smarty plugin to use wiki page as a template resource
  * -------------------------------------------------------------
  * File:     resource.wiki.php
  * Type:     resource
@@ -17,7 +17,8 @@ function smarty_resource_wiki_source($page, &$tpl_source, &$smarty) {
 	global $tikilib, $user;
 
 	 if (!$tikilib->user_has_perm_on_object($user, $page, 'wiki page', 'tiki_p_use_as_template')) {
-		$tpl_source= 'Permission denied';
+		$tpl_source= tra('Permission denied: the specified wiki page cannot be used as Smarty template resource').'<br />';
+		// TODO: do not cache ! and return the message only once should be enough...
 		return true;
 	 }
 
