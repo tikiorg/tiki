@@ -101,7 +101,7 @@ function smarty_function_query($params, &$smarty) {
 		// Check for anchor used as script
 	if ( !empty($params['_script'][0]) && $params['_script'][0] == '#' ) {
 			if ( empty($params['_anchor']) ) {
-				$params['_anchor'] = $params['_script'];
+				$params['_anchor'] = substr($params['_script'],1);
 			}
 			unset($params['_script']);
 		}
