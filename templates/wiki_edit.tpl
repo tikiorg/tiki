@@ -16,7 +16,7 @@
 	<textarea id="{$textarea_id|default:editwiki}" class="{$textarea_class|default:wikiedit}" name="{$textarea_name|default:edit}" {$textarea_attributes}>{$pagedata}</textarea>
 </div>
 
-{if $diff_style}
+{if isset($diff_style) and $diff_style}
 	<input type="hidden" name="oldver" value="{$diff_oldver|escape}"/>
 	<input type="hidden" name="newver" value="{$diff_newver|escape}"/>										<input type="hidden" name="source_page" value="{$source_page|escape}"/>
 
