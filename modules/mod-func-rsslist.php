@@ -8,8 +8,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_rsslist_info() {
 	return array(
-		'name' => tra('RSS List'),
-		'description' => tra('RSS Lists.'),
+		'name' => tra('Feeds List'),
+		'description' => tra('List of feeds available on this site.'),
 		'prefs' => array(),
 	);
 }
