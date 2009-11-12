@@ -406,6 +406,23 @@
 											</div>
 									</fieldset>	
 								{/if}
+								{if $prefs.wiki_feature_copyrights  eq 'y'}
+									<fieldset>
+										<legend>{tr}License{/tr}:</legend>
+										<a href="{$prefs.wikiLicensePage|sefurl}">{tr}{$prefs.wikiLicensePage}{/tr}</a>
+										{if $prefs.wikiSubmitNotice neq ""}
+											{remarksbox type="note" title="{tr}Important{/tr}:"}
+												<strong>{tr}{$prefs.wikiSubmitNotice}{/tr}</strong>
+											{/remarksbox}
+										{/if}
+									</fieldset>
+								{/if}
+								{if $tiki_p_admin_wiki eq 'y' && $prefs.wiki_authors_style_by_page eq 'y'}
+									<fieldset>
+										<legend>{tr}Authors' style{/tr}</legend>
+										{include file='wiki_authors_style.tpl' tr_class='formcolor' wiki_authors_style_site='y' style=''}
+									</fieldset>
+								{/if}
 							{/if}{*end if sandbox *}
 							{if $prefs.feature_wiki_description eq 'y' or $prefs.metatag_pagedesc eq 'y'}
 								<fieldset>
@@ -504,24 +521,6 @@
 			{if $prefs.feature_antibot eq 'y' && $anon_user eq 'y'}
 				{include file='antibot.tpl' tr_style="formcolor"}
 			{/if}
-			
-			{if $prefs.wiki_feature_copyrights  eq 'y'}
-				<tr class="formcolor">
-					<td>{tr}License{/tr}:</td>
-					<td><a href="{$prefs.wikiLicensePage|sefurl}">{tr}{$prefs.wikiLicensePage}{/tr}</a></td>
-				</tr>
-				{if $prefs.wikiSubmitNotice neq ""}
-					<tr class="formcolor">
-						<td>{tr}Important{/tr}:</td>
-						<td><b>{tr}{$prefs.wikiSubmitNotice}{/tr}</b></td>
-					</tr>
-				{/if}
-			{/if}
-			
-			{if $tiki_p_admin_wiki eq 'y' && $prefs.wiki_authors_style_by_page eq 'y'}
-			  {include file='wiki_authors_style.tpl' tr_class='formcolor' wiki_authors_style_site='y' style='tr'}
-			{/if}
-			
 		{/if}{* sandbox *}
 		
 		{if $prefs.wiki_actions_bar neq 'top'}

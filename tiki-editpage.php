@@ -1271,7 +1271,9 @@ if (strtolower($page) != 'sandbox' &&
 			($prefs['feature_freetags'] == 'y' && $tiki_p_freetags_tag == 'y') ||
 			$prefs['feature_wiki_icache'] == 'y' ||
 			$prefs['feature_contribution'] == 'y' ||
-			$prefs['feature_wiki_structure'] == 'y') ||
+			$prefs['feature_wiki_structure'] == 'y' ||
+			$prefs['wiki_feature_copyrights']  == 'y' ||
+			($tiki_p_admin_wiki == 'y' && $prefs['wiki_authors_style_by_page'] == 'y')) ||
 		($prefs['feature_wiki_description'] == 'y' || $prefs['metatag_pagedesc'] == 'y') ||
 		$prefs['feature_wiki_footnotes'] == 'y' ||
 		($prefs['feature_wiki_ratings'] == 'y' && $tiki_p_wiki_admin_ratings =='y') ||
