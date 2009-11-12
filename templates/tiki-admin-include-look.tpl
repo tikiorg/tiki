@@ -237,135 +237,26 @@
 		{* --- UI Effects (JQuery) --- *}
 		<div class="adminoptionbox">	
 			<fieldset class="admin">
-				<legend>
-					<a href="#"><span>{tr}JQuery plugins and add-ons{/tr}</span></a>
-				</legend>	
+				<legend>{tr}JQuery plugins and add-ons{/tr}</legend>	
 				{if $prefs.feature_jquery eq 'n'}
 					{remarksbox type="warning" title="{tr}Warning{/tr}"}
 						{tr}Requires jquery feature{/tr}</em>{icon _id="arrow_right" href="tiki-admin.php?page=features"}{/remarksbox}
 				{/if}
 
-				<div class="adminoptionbox">
-					<div class="adminoption">
-						<input type="checkbox" id="feature_jquery_tooltips" name="feature_jquery_tooltips" {if $prefs.feature_jquery_tooltips eq 'y'}checked="checked"{/if}/>
-					</div>
-					<div class="adminoptionlabel">
-						<label for="feature_jquery_tooltips">{tr}Tooltips{/tr}</label>
-						{if $prefs.feature_help eq 'y'} 
-							{help url="JQuery#Tooltips" desc="{tr}JQuery Tooltips: Customisable help tips{/tr}"}
-						{/if}
-					</div>
-				</div>
-				<div class="adminoptionbox">
-					<div class="adminoption">
-						<input type="checkbox" id="feature_jquery_autocomplete" name="feature_jquery_autocomplete" {if $prefs.feature_jquery_autocomplete eq 'y'}checked="checked"{/if}/>
-					</div>
-					<div class="adminoptionlabel">
-						<label for="feature_jquery_autocomplete">{tr}Autocomplete{/tr}</label>
-						{if $prefs.feature_help eq 'y'}
-							{help url="JQuery#Autocomplete" desc="{tr}JQuery Autocomplete{/tr}"}
-						{/if}
-					</div>
-				</div>
-				<div class="adminoptionbox">
-					<div class="adminoption">
-						<input type="checkbox" id="feature_jquery_superfish" name="feature_jquery_superfish" {if $prefs.feature_jquery_superfish eq 'y'}checked="checked"{/if}/>
-					</div>
-					<div class="adminoptionlabel">
-						<label for="feature_jquery_superfish">{tr}Superfish{/tr}</label>
-						{if $prefs.feature_help eq 'y'}
-							{help url="JQuery#Superfish" desc="{tr}JQuery Superfish (effects on CSS menus){/tr}"}
-						{/if}
-					</div>
-				</div>
-				<div class="adminoptionbox">
-					<div class="adminoption">
-						<input type="checkbox" id="feature_jquery_reflection" name="feature_jquery_reflection" {if $prefs.feature_jquery_reflection eq 'y'}checked="checked"{/if}/>
-					</div>
-					<div class="adminoptionlabel">
-						<label for="feature_jquery_reflection">{tr}Reflection{/tr}</label>
-						{if $prefs.feature_help eq 'y'}
-							{help url="JQuery#Reflection" desc="{tr}JQuery Reflection (reflection effect on images){/tr}"}
-						{/if}
-					</div>
-				</div>
-
-				<div class="adminoptionbox">
-					<div class="adminoption">
-						<input type="checkbox" id="feature_jquery_ui" name="feature_jquery_ui" {if $prefs.feature_jquery_ui eq 'y'}checked="checked"{/if}/>
-					</div>
-					<div class="adminoptionlabel">
-						<label for="feature_jquery_ui">{tr}JQuery UI{/tr}</label>
-						{if $prefs.feature_help eq 'y'}
-							{help url="JQuery#UI" desc="{tr}JQuery UI: More JQuery functionality{/tr}"}
-						{/if}
-					</div>
-				</div>
-				<div class="adminoptionbox">
-					<div class="adminoptionlabel">
-						<label for="feature_jquery_ui_theme">{tr}JQuery UI Theme{/tr}: </label>
-						<select name="feature_jquery_ui_theme" id="feature_jquery_ui_theme">
-							<option value="black-tie" {if $prefs.feature_jquery_ui_theme eq 'black-tie'}selected="selected"{/if}>black-tie</option>
-							<option value="blitzer" {if $prefs.feature_jquery_ui_theme eq 'blitzer'}selected="selected"{/if}>blitzer</option>
-							<option value="cupertino" {if $prefs.feature_jquery_ui_theme eq 'cupertino'}selected="selected"{/if}>cupertino</option>
-							<option value="dot-luv" {if $prefs.feature_jquery_ui_theme eq 'dot-luv'}selected="selected"{/if}>dot-luv</option>
-							<option value="excite-bike" {if $prefs.feature_jquery_ui_theme eq 'excite-bike'}selected="selected"{/if}>excite-bike</option>
-							<option value="hot-sneaks" {if $prefs.feature_jquery_ui_theme eq 'hot-sneaks'}selected="selected"{/if}>hot-sneaks</option>
-							<option value="humanity" {if $prefs.feature_jquery_ui_theme eq 'humanity'}selected="selected"{/if}>humanity</option>
-							<option value="mint-choc" {if $prefs.feature_jquery_ui_theme eq 'mint-choc'}selected="selected"{/if}>mint-choc</option>
-							<option value="redmond" {if $prefs.feature_jquery_ui_theme eq 'redmond'}selected="selected"{/if}>redmond</option>
-							<option value="smoothness" {if $prefs.feature_jquery_ui_theme eq 'smoothness'}selected="selected"{/if}>smoothness</option>
-							<option value="south-street" {if $prefs.feature_jquery_ui_theme eq 'south-street'}selected="selected"{/if}>south-street</option>
-							<option value="start" {if $prefs.feature_jquery_ui_theme eq 'start'}selected="selected"{/if}>start</option>
-							<option value="swanky-purse" {if $prefs.feature_jquery_ui_theme eq 'swanky-purse'}selected="selected"{/if}>swanky-purse</option>
-							<option value="trontastic" {if $prefs.feature_jquery_ui_theme eq 'trontastic'}selected="selected"{/if}>trontastic</option>
-							<option value="ui-darkness" {if $prefs.feature_jquery_ui_theme eq 'ui-darkness'}selected="selected"{/if}>ui-darkness</option>
-							<option value="ui-lightness" {if $prefs.feature_jquery_ui_theme eq 'ui-lightness'}selected="selected"{/if}>ui-lightness</option>
-							<option value="vader" {if $prefs.feature_jquery_ui_theme eq 'vader'}selected="selected"{/if}>vader</option>
-						</select>
-						{if $prefs.feature_help eq 'y'}
-							{help url="JQuery#UI" desc="{tr}JQuery UI Theme: Themes for look and feel of JQuery UI widgets{/tr}"}
-						{/if}
-					</div>
-				</div>
+				{preference name=feature_jquery_tooltips}
+				{preference name=feature_jquery_autocomplete}
+				{preference name=feature_jquery_superfish}
+				{preference name=feature_jquery_reflection}
+				{preference name=feature_jquery_ui}
+				{preference name=feature_jquery_ui_theme}
 
 				<div class="adminoptionbox">
 					<div class="adminoptionlabel">
 						{icon _id=information} <em>{tr}For future use{/tr}:</em>
 						<div class="adminoptionboxchild">	
-							<div class="adminoptionbox">
-								<div class="adminoption">
-									<input type="checkbox" id="feature_jquery_cycle" name="feature_jquery_cycle" {if $prefs.feature_jquery_cycle eq 'y'}checked="checked"{/if}/>
-								</div>
-								<div class="adminoptionlabel">
-									<label for="feature_jquery_cycle">{tr}Cycle{/tr} ({tr}slideshow{/tr})</label>
-									{if $prefs.feature_help eq 'y'} 
-										{help url="JQuery#Cycle" desc="{tr}JQuery Cycle (slideshow){/tr}"}
-									{/if}
-								</div>
-							</div>
-							<div class="adminoptionbox">
-								<div class="adminoption">
-									<input type="checkbox" id="feature_jquery_sheet" name="feature_jquery_sheet" {if $prefs.feature_jquery_sheet eq 'y'}checked="checked"{/if}/>
-								</div>
-								<div class="adminoptionlabel">
-									<label for="feature_jquery_sheet">{tr}JQuery Sheet{/tr}</label>
-									{if $prefs.feature_help eq 'y'}
-										{help url="JQuery#Sheet" desc="{tr}JQuery Spreadsheet{/tr}"}
-									{/if}
-								</div>
-							</div>
-							<div class="adminoptionbox">
-								<div class="adminoption">
-									<input type="checkbox" id="feature_jquery_tablesorter" name="feature_jquery_tablesorter" {if $prefs.feature_jquery_tablesorter eq 'y'}checked="checked"{/if}/>
-								</div>
-								<div class="adminoptionlabel">
-									<label for="feature_jquery_tablesorter">{tr}JQuery Sortable Tables{/tr}</label>
-									{if $prefs.feature_help eq 'y'} 
-										{help url="JQuery#TableSorter" desc="{tr}JQuery Sortable Tables{/tr}"}
-									{/if}
-								</div>
-							</div>
+							{preference name=feature_jquery_cycle}
+							{preference name=feature_jquery_sheet}
+							{preference name=feature_jquery_tablesorter}
 						</div>
 					</div>
 				</div>

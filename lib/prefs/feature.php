@@ -1230,6 +1230,70 @@ function prefs_feature_list() {
 			'hint' => tra('Additional layers for shadows, rounded corners or other decorative styling'),
 			'type' => 'flag',
 		),
+		'feature_jquery_tooltips' => array(
+			'name' => tra('Tooltips'),
+			'type' => 'flag',
+			'help' => 'JQuery#Tooltips',
+		),
+		'feature_jquery_autocomplete' => array(
+			'name' => tra('Autocomplete'),
+			'type' => 'flag',
+			'help' => 'JQuery#Autocomplete',
+		),
+		'feature_jquery_superfish' => array(
+			'name' => tra('Superfish'),
+			'type' => 'flag',
+			'help' => 'JQuery#Superfish',
+		),
+		'feature_jquery_reflection' => array(
+			'name' => tra('Reflection'),
+			'type' => 'flag',
+			'help' => 'JQuery#Reflection',
+		),
+		'feature_jquery_ui' => array(
+			'name' => tra('JQuery UI'),
+			'type' => 'flag',
+			'help' => 'JQuery#UI',
+		),
+		'feature_jquery_ui_theme' => array(
+			'name' => tra('JQuery UI Theme'),
+			'help' => 'JQuery#UI',
+			'type' => 'list',
+			'options' => array(
+				'black-tie' => 'black-tie',
+				'blitzer' => 'blitzer',
+				'cupertino' => 'cupertino',
+				'dot-luv' => 'dot-luv',
+				'excite-bike' => 'excite-bike',
+				'hot-sneaks' => 'hot-sneaks',
+				'humanity' => 'humanity',
+				'mint-choc' => 'mint-choc',
+				'redmond' => 'redmond',
+				'smoothness' => 'smoothness',
+				'south-street' => 'south-street',
+				'start' => 'start',
+				'swanky-purse' => 'swanky-purse',
+				'trontastic' => 'trontastic',
+				'ui-darkness' => 'ui-darkness',
+				'ui-lightness' => 'ui-lightness',
+				'vader' => 'vader',
+			), 
+		),
+		'feature_jquery_cycle' => array(
+			'name' => tra('Cycle (slideshow)'),
+			'type' => 'flag',
+			'help' => 'JQuery#Cycle',
+		),
+		'feature_jquery_sheet' => array(
+			'name' => tra('JQuery Sheet'),
+			'type' => 'flag',
+			'help' => 'JQuery#Cycle',
+		),
+		'feature_jquery_tablesorter' => array(
+			'name' => tra('JQuery Sortable Tables'),
+			'type' => 'flag',
+			'help' => 'JQuery#TableSorter',
+		),
 	
 	// Used in templates/tiki-admin-include-look.tpl
 	'feature_sitenav' => array(
@@ -1248,58 +1312,5 @@ function prefs_feature_list() {
 			'type' => '',
 			),
 	
-	// Used in templates/tiki-admin-include-look.tpl
-	'feature_jquery_ui' => array(
-			'name' => tra('JQuery UI'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-look.tpl
-	'feature_jquery_ui_theme' => array(
-			'name' => tra('JQuery UI Theme'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-look.tpl
-	'feature_jquery_tooltips' => array(
-			'name' => tra('Tooltips'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-look.tpl
-	'feature_jquery_autocomplete' => array(
-			'name' => tra('Autocomplete'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-look.tpl
-	'feature_jquery_superfish' => array(
-			'name' => tra('Superfish'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-look.tpl
-	'feature_jquery_reflection' => array(
-			'name' => tra('Reflection'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-look.tpl
-	'feature_jquery_sheet' => array(
-			'name' => tra('JQuery Sheet'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-look.tpl
-	'feature_jquery_tablesorter' => array(
-			'name' => tra('JQuery Sortable Tables'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-look.tpl
-	'feature_jquery_cycle' => array(
-			'name' => tra('Cycle'),
-			'type' => '',
-			),
 	);
 }
