@@ -255,13 +255,13 @@ function showDetails( id, domain, profile ) { // {{{
 {/if}
 
 {tabset name='tabs_admin-profiles'}
-	{tab name="{tr}Install Profiles{/tr}"}
+	{tab name="{tr}Apply Profiles{/tr}"}
 	
 		<h3>Configure TikiWiki in 3 easy steps using Profiles</h3>
 			<fieldset><legend>{tr}Profiles{/tr}</legend>
 			<form method="get" action="tiki-admin.php#profile-results">
 				<div class="adminoptionbox">
-					<b>Step 1: Use the Quick or Manual Filter option to see a list of Profiles you can install</b>
+					<b>Step 1: Use the Quick or Manual Filter option to see a list of Profiles you can apply</b>
 					<table class="normal">
 						<tr>
 							<th width="50%">{tr}Option 1: Quick Filter{/tr}</th>
