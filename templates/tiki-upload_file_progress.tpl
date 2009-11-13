@@ -29,13 +29,13 @@
 			</span>
 			</div>
 			<div style="{if $prefs.javascript_enabled eq 'y'}display:none;{/if}" id="uploadinfos{$fileId}">
-				{tr}You can download this file using{/tr}: <div class="code"><a class="link" href="{$fileId|sefurl:file}">{$fileId|sefurl:file}</a></div>
-				{tr}You can link to the file from a Wiki page using{/tr}: <div class="code">[{$fileId|sefurl:file}|{$name} ({$size|kbsize})]</div>
-				{tr}You can display an image in a Wiki page using{/tr}: <div class="code">&#x7b;img src="{$fileId|sefurl:preview}" link="{$fileId|sefurl:file}" alt="{$name} ({$size|kbsize})"}</div>
+				<div style="font-style: italic; ">{tr} Syntax tips:{/tr}</div>
+				<span style="line-height: 150%">{tr}Link to file from a Wiki page{/tr}:</span><br/>&nbsp;&nbsp;&nbsp;<tt style="color: brown;">[{$fileId|sefurl:file}|{$name}]</tt><br/>
+				<div style="font-style: italic; margin-top: 10px">{tr}For image files:{/tr}</div>
+				<span style="line-height: 150%">{tr}To display in a Wiki page{/tr}:</span><br/>&nbsp;&nbsp;&nbsp;<tt style="color: brown;">&#x7b;img fileId={$fileId}}</tt><br/>
 				{if $prefs.feature_shadowbox eq 'y'}
-					{tr}Or using as a thumbnail with ShadowBox{/tr}: <div class="code">&#x7b;img src="{$fileId|sefurl:thumbnail}" link="{$fileId|sefurl:preview}" rel="shadowbox[gallery];type=img" alt="{$name} ({$size|kbsize})"}</div>
+					<span style="line-height: 200%">{tr}Display thumbnail that enlarges{/tr}: </span><br/>&nbsp;&nbsp;&nbsp;<tt style="color: brown;">&#x7b;img fileId={$fileId} thumb=y rel=box[g]}</tt><br/>
 				{/if}
-				{tr}You can link to the file from an HTML page using{/tr}: <div class="code">&lt;a href="{$fileId|sefurl:file}"&gt;{$name} ({$size|kbsize})&lt;/a&gt;</div>
 			</div>{/if}
 		</td>
 	</tr>
