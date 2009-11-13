@@ -28,7 +28,7 @@ RewriteRule (.*) - [L]
 # Rewrite rule to make this Tiki a profiles repository (uncomment to enable)
 # Set the parentId (here set as 1) to the Id of the category containing your profile pages
 # See http://doc.tikiwiki.org/Profiles for more
-#RewriteRule ^profiles$ tiki-browse_categories.php?parentId=1&deep=on&type=plain&maxRecords=1000000  [L]
+#RewriteRule ^profiles$             tiki-browse_categories.php?find=&deep=on&type=wiki+page&parentId=1&sort_mode=name_asc&plain&maxRecords=1000000 [L]
 
 # Tiki 3.0 requires PHP5. If your host doesn't offer PHP5 by default, it's possible that it can be activated by using (uncommenting) the lines below. Check with your host.
 # AddType application/x-httpd-php5 .php
