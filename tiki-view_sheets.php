@@ -34,7 +34,7 @@ $smarty->assign('chart_enabled', (function_exists('imagepng') || function_exists
 // Init smarty variables to blank values
 //$smarty->assign('theme','');
 $info = $sheetlib->get_sheet_info($_REQUEST["sheetId"]);
-if ($tiki_p_admin == 'y' || $tiki_p_admin_sheet == 'y' || ($user && $user == $info['author']) || $tikilib->user_has_perm_on_object($user, $_REQUEST['sheetId'], 'sheet', 'tiki_p_edit_sheet', 'tiki_p_edit_categorized')) $tiki_p_edit_sheet = 'y';
+if ($tiki_p_admin == 'y' || $tiki_p_admin_sheet == 'y' || ($user && $user == $info['author']) || $tikilib->user_has_perm_on_object($user, $_REQUEST['sheetId'], 'sheet', 'tiki_p_edit_sheet')) $tiki_p_edit_sheet = 'y';
 else $tiki_p_edit_sheet = 'n';
 $smarty->assign('tiki_p_edit_sheet', $tiki_p_edit_sheet);
 $smarty->assign('title', $info['title']);

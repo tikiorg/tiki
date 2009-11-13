@@ -274,7 +274,7 @@ class StructLib extends TikiLib {
       $aux["flag"]  = $res["flag"];
 	  $aux["user"]  = $res["user"];
 		global $user;
-		if ($this->user_has_perm_on_object($user,$res['pageName'],'wiki page','tiki_p_edit', 'tiki_p_edit_categorized')) {	
+		if ($this->user_has_perm_on_object($user,$res['pageName'],'wiki page','tiki_p_edit')) {	
       		$aux['editable'] = 'y';
       		$aux['viewable'] = 'y';
 		} else {
@@ -838,7 +838,7 @@ function list_structures($offset, $maxRecords, $sort_mode, $find='', $exact_matc
 			} else {
 			  $res['webhelp']='n';
 			}
-			if ( $this->user_has_perm_on_object($user,$res['pageName'],'wiki page','tiki_p_edit', 'tiki_p_edit_categorized') ) {
+			if ( $this->user_has_perm_on_object($user,$res['pageName'],'wiki page','tiki_p_edit') ) {
 				$res['editable']='y';
 			} else {
 				$res['editable']='n';

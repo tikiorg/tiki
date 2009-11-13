@@ -117,7 +117,7 @@ $smarty->assign('langpage', $langpage);
 
 if ($type == "wiki page") {
   $tikilib->get_perm_object($name, 'wiki page', $info, true);	
-  if ($prefs['feature_wikiapproval'] == 'y' && $tiki_p_edit != 'y' && $tikilib->page_exists( $prefs['wikiapproval_prefix'] . $name ) && $tikilib->user_has_perm_on_object($user, $prefs['wikiapproval_prefix'] . $name, 'wiki page', 'tiki_p_edit', 'tiki_p_edit_categorized')) {
+  if ($prefs['feature_wikiapproval'] == 'y' && $tiki_p_edit != 'y' && $tikilib->page_exists( $prefs['wikiapproval_prefix'] . $name ) && $tikilib->user_has_perm_on_object($user, $prefs['wikiapproval_prefix'] . $name, 'wiki page', 'tiki_p_edit')) {
 		$allowed_for_staging_only = 'y';
 		$smarty->assign('allowed_for_staging_only', 'y');
   }  
@@ -248,7 +248,7 @@ if ($type == "wiki page") {
 	$smarty->assign_by_ref('pages', $pages["data"]);
 }
 else if ($type == "article") {
-	if ($tiki_p_admin_cms != 'y' && !$tikilib->user_has_perm_on_object($user, $id, 'article', 'tiki_p_edit_article', 'tiki_p_edit_categorized') and ($info['author'] != $user or $info['creator_edit'] != 'y')) {
+	if ($tiki_p_admin_cms != 'y' && !$tikilib->user_has_perm_on_object($user, $id, 'article', 'tiki_p_edit_article') and ($info['author'] != $user or $info['creator_edit'] != 'y')) {
 		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra("Permission denied you cannot edit this article"));
 		$smarty->display("error.tpl");
