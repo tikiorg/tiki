@@ -9,7 +9,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_since_last_visit_new_info() {
 	return array(
-		'name' => tra('Since your last visit...'),
+		'name' => tra('Since last visit'),
 		'description' => tra('Displays to logged in users new or updated objects since a point in time, by default their last login date and time.'),
 		'params' => array(
 			'showuser' => array(
@@ -49,6 +49,7 @@ function module_since_last_visit_new($mod_reference, $params = null) {
 		$details = $userlib->get_user_details($user);
 		$last = $details['lastLogin'];
 		if (!$last) $last = time();
+		$smarty->assign('tpl_module_title', tra('Since your last visit...'));
 	}
 	$ret["lastLogin"] = $last;
 
