@@ -28,6 +28,7 @@
 			<legend>{tr}Wiki{/tr}</legend>
 			{preference name=wiki_cache}
 			{preference name=feature_wiki_icache}
+			{preference name=wiki_ranking_reload_probability}
 		</fieldset>
 
 		<fieldset>

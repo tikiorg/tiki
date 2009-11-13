@@ -72,7 +72,11 @@ class RankLib extends TikiLib {
 
 	function wiki_ranking_top_pagerank($limit, $categ=array()) {
 		global $user, $prefs;
-		$this->pageRank();
+
+		$roll = rand( 1, (int) $prefs['wiki_ranking_reload_probability'] );
+		if( $roll == 1 ) {
+			$this->pageRank();
+		}
 
 		$bindvals = array();
 		$mid = '';

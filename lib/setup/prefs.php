@@ -174,6 +174,7 @@ function get_default_prefs() {
 		'wiki_edit_minor' => 'n',
 		'feature_pagelist' => 'n',
 		'wiki_badchar_prevent' => 'n',
+		'wiki_ranking_reload_probability' => 1000,
 
 		'wikiplugin_agentinfo' => 'n',
 		'wikiplugin_alink' => 'n',
