@@ -53,6 +53,7 @@
 				<em>{tr}Allows users to override the defaults{/tr}.</em>
 				<div class="adminoptionboxchild" id="forum_thread_user_settings_childcontainer">
 					{preference name=forum_thread_user_settings_keep}
+					{preference name=forum_thread_user_settings_threshold}
 				</div>
 				{preference name=forum_comments_per_page}
 				{preference name=forum_thread_style}

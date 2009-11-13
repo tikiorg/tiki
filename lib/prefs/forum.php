@@ -19,6 +19,12 @@ function prefs_forum_list() {
 			'name' => tra('Display thread configuration bar'),
 			'type' => 'flag',
 		),
+		'forum_thread_user_settings_threshold' => array(
+                        'name' => tra('Display thread configuration bar only when number of posts exceed'),
+                        'type' => 'text',
+			'size' => '5',
+			'filter' => 'digit',
+                ),
 		'forum_thread_user_settings_keep' => array(
 			'name' => tra('Keep settings for all forums during the user session'),
 			'type' => 'flag',

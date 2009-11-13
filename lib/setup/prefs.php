@@ -596,6 +596,7 @@ function get_default_prefs() {
 		'feature_forum_local_tiki_search' => 'n',
 		'forum_thread_defaults_by_forum' => 'n',
 		'forum_thread_user_settings' => 'y',
+		'forum_thread_user_settings_threshold' => 10,
 		'forum_thread_user_settings_keep' => 'n',
 		'forum_comments_per_page' => 20,
 		'forum_comments_no_title_prefix' => 'n',
