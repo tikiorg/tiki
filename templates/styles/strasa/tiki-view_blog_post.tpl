@@ -1,5 +1,5 @@
-{title help="Blogs"}{$blog_data.title}{/title}
-<a class="link" href="tiki-list_blogs.php">{tr}Blogs{/tr}</a> {$prefs.site_crumb_seper} <a class="link" href="tiki-view_blog.php?blogId={$post_info.blogId}">{$blog_data.title}</a> {$prefs.site_crumb_seper} {$post_info.title}
+{title help="Blogs"}{$blog_data.title|escape}{/title}
+<a class="link" href="tiki-list_blogs.php">{tr}Blogs{/tr}</a> {$prefs.site_crumb_seper} <a class="link" href="tiki-view_blog.php?blogId={$post_info.blogId}">{$blog_data.title|escape}</a> {$prefs.site_crumb_seper} {$post_info.title|escape}
 
 <div class="post">
 	{if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y'}
@@ -16,7 +16,7 @@
 	<div class="clearfix postbody-title">
 		<div class="title">
 			{if $blog_data.use_title eq 'y'}
-				<h2>{$post_info.title}</h2>
+				<h2>{$post_info.title|escape}</h2>
 			{else}
 				<h2>{$post_info.created|tiki_short_datetime}</h2>
 			{/if}

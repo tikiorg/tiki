@@ -1,5 +1,5 @@
 {* $Id$ *}
-<a class="link" href="tiki-list_blogs.php">{tr}Blogs{/tr}</a> {$prefs.site_crumb_seper} {$title}
+<a class="link" href="tiki-list_blogs.php">{tr}Blogs{/tr}</a> {$prefs.site_crumb_seper} {$title|escape}
 {if strlen($heading) > 0}
 	{eval var=$heading}
 {else}
@@ -39,7 +39,7 @@
 			<div class="title">
 
 	{if $use_title eq 'y'}
-				<h2>{$listpages[ix].title}</h2>
+				<h2>{$listpages[ix].title|escape}</h2>
 	{else}
 				<h2>{$listpages[ix].created|tiki_short_datetime}</h2>
 	{/if}
@@ -99,7 +99,7 @@
 					<div class="actions">{* renamed to match forum footer layout *}
 						<a class="link" href="{$listpages[ix].postId|sefurl:blogpost}">{tr}Permalink{/tr}</a>
 	{if $allow_comments eq 'y' and $prefs.feature_blogposts_comments eq 'y'}
-						<a class="link" href="tiki-view_blog_post.php?find={$find}&amp;blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;postId={$listpages[ix].postId}&amp;show_comments=1">{$listpages[ix].comments}
+						<a class="link" href="tiki-view_blog_post.php?find={$find|escape:url}&amp;blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;postId={$listpages[ix].postId}&amp;show_comments=1">{$listpages[ix].comments}
 						{if $listpages[ix].comments == 1}{tr}comment{/tr}{else}{tr}comments{/tr}{/if}</a>
 	{/if}
 					</div><!-- actions -->
