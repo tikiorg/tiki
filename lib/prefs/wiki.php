@@ -112,6 +112,11 @@ function prefs_wiki_list() {
 			'size' => 7,
 			'filter' => 'digits',
 		),
+		'wiki_encourage_contribution' => array(
+			'name' => tra('Encourage contribution to wiki pages by anonymnous'),
+			'description' => tra('When a page is not editable and the user is anonymous, display the edit links anyway. The visitor will be prompted with a login screen and be encouraged to register.'),
+			'type' => 'flag',
+		),
 	);
 }
 

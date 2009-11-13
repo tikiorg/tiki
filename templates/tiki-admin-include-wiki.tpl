@@ -32,6 +32,7 @@
 	{preference name=wiki_page_navigation_bar}
  	{preference name=wiki_topline_position}
  	{preference name=page_bar_position}
+	{preference name=wiki_encourage_contribution}
  
 </fieldset>
 

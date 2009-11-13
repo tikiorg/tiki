@@ -175,6 +175,7 @@ function get_default_prefs() {
 		'feature_pagelist' => 'n',
 		'wiki_badchar_prevent' => 'n',
 		'wiki_ranking_reload_probability' => 1000,
+		'wiki_encourage_contribution' => 'n',
 
 		'wikiplugin_agentinfo' => 'n',
 		'wikiplugin_alink' => 'n',
