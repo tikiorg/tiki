@@ -37,7 +37,7 @@
 		{$listpages[ix].avatar}
 	{/if}
 			<div class="title">
-				<h2>{$listpages[ix].title|escape}</h2>
+				<h2><a class="link" href="{$listpages[ix].postId|sefurl:blogpost}">{$listpages[ix].title|escape}</a></h2>
 			</div>
 			
 		</div><!-- postbody-title -->
