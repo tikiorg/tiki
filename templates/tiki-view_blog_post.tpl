@@ -25,11 +25,7 @@
 	</div>
 	<div class="clearfix postbody-title">
 		<div class="title">
-			{if $blog_data.use_title eq 'y'}
 				<h2>{$post_info.title|escape}</h2>
-			{else}
-				<h2>{$post_info.created|tiki_short_datetime}</h2>
-			{/if}
 		</div>
 	{if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y'}
 		{if $tags.data|@count >0}
