@@ -1294,23 +1294,13 @@ function prefs_feature_list() {
 			'type' => 'flag',
 			'help' => 'JQuery#TableSorter',
 		),
-	
-	// Used in templates/tiki-admin-include-look.tpl
-	'feature_sitenav' => array(
-			'name' => '',
-			'type' => '',
-			),
-	// Used in templates/tiki-admin-include-look.tpl
-	'feature_tabs' => array(
+		'feature_tabs' => array(
 			'name' => tra('Use Tabs'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-look.tpl
-	'feature_iepngfix' => array(
+			'type' => 'flag',
+		),
+		'feature_iepngfix' => array(
 			'name' => tra('Correct PNG images alpha transparency in IE6 (experimental)'),
-			'type' => '',
-			),
-	
+			'type' => 'flag',
+		),
 	);
 }

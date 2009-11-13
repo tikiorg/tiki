@@ -12,17 +12,13 @@ function prefs_use_list() {
 			'description' => tra('Use proxy'),
 			'type' => 'flag',
 		),
-
-	// Used in templates/tiki-admin-include-look.tpl
-	'use_context_menu_icon' => array(
+		'use_context_menu_icon' => array(
 			'name' => tra('Use context menus for actions (icons)'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-look.tpl
-	'use_context_menu_text' => array(
+			'type' => 'flag',
+		),
+		'use_context_menu_text' => array(
 			'name' => tra('Use context menus for actions (text)'),
-			'type' => '',
-			),
+			'type' => 'flag',
+		),
 	);
 }

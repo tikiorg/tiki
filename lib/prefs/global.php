@@ -149,34 +149,21 @@ function prefs_global_list() {
 		'hint' => tra ('Example:') . ' ' .  "{if \$user neq ''}<div align=\"right\" style=\"float: right; font-size: 10px\">{tr}logged as{/tr}: {\$user}</div>{/if}",
 		'type' => 'textarea',
 		'size' => '6',
-	),
-	'sitetitle' => array(
-		'name' => tra('Site title'),
-		'type' => 'text',
-		'size' => '50',
-	),
-	'sitesubtitle' => array(
-		'name' => tra('Subtitle'),
-		'type' => 'text',
-		'size' => '50',
-	),
-	'maxRecords' => array(
-		'name' => tra('Maximum number of records in listings'),
-		'type' => 'text',
-		'size' => '3',
-	),
-
-	// Used in templates/tiki-admin-include-look.tpl
-	'sitenav' => array(
-			'name' => '',
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-look.tpl
-	'style' => array(
-			'name' => '',
-			'type' => '',
-			),
-	
+		),
+		'sitetitle' => array(
+			'name' => tra('Site title'),
+			'type' => 'text',
+			'size' => '50',
+		),
+		'sitesubtitle' => array(
+			'name' => tra('Subtitle'),
+			'type' => 'text',
+			'size' => '50',
+		),
+		'maxRecords' => array(
+			'name' => tra('Maximum number of records in listings'),
+			'type' => 'text',
+			'size' => '3',
+		),
 	);
 }

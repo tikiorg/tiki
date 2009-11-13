@@ -108,11 +108,8 @@
 		{/tab}
 		
 		{tab name="{tr}General Layout options{/tr}"}
-			{* --- General Layout options --- *}
-			{* --- Customize HTML Head Content --- *}
 			{preference name=feature_custom_html_head_content}
 			
-			{* --- Customize Site Header --- *}
 			{preference name=feature_sitemycode}
 			<div class="adminoptionboxchild" id="feature_sitemycode_childcontainer">
 				{icon _id=information}
@@ -121,7 +118,6 @@
 				{preference name=sitemycode_publish}
 			</div>
 
-		{* --- Customize Site Logo and Site Title--- *}
 		{preference name=feature_sitelogo}
 		<div class="adminoptionboxchild" id="feature_sitelogo_childcontainer">
 			<fieldset>
@@ -142,7 +138,6 @@
 		</div>
 		{preference name=feature_sitesearch}
 		{preference name=feature_site_login}
-		{* --- Top Bar --- *}
 		{preference name=feature_top_bar}
 		<div class="adminoptionboxchild" id="feature_top_bar_childcontainer">
 			{preference name=feature_sitemenu}
@@ -158,7 +153,6 @@
 		{preference name=feature_left_column}
 		{preference name=feature_Right_column}
 		
-		{* --- Site Breadcrumbs --- *}
 		{preference name=feature_breadcrumbs}
 		<div class="adminoptionboxchild" id="feature_breadcrumbs_childcontainer">
 			{preference name=feature_siteloclabel}
@@ -182,7 +176,6 @@
 			{preference name=feature_bot_bar_power_by_tw}
 		</div>
 
-		{* --- Site Report Bar --- *}
 		<div class="adminoptionbox">
 			<fieldset>
 				<legend>{tr}Site Report Bar{/tr}</legend>
@@ -194,7 +187,6 @@
 	{/tab}
 
 	{tab name="{tr}Shadow layer{/tr}"}
-		{* --- Shadow layer --- *}
 		{preference name=feature_layoutshadows}
 		<div class="adminoptionboxchild" id="feature_layoutshadows_childcontainer">
 			{preference name=main_shadow_start}
@@ -234,7 +226,6 @@
 	{/tab}
 		
 	{tab name="{tr}UI Effects{/tr}"}
-		{* --- UI Effects (JQuery) --- *}
 		<div class="adminoptionbox">	
 			<fieldset class="admin">
 				<legend>{tr}JQuery plugins and add-ons{/tr}</legend>	
@@ -264,9 +255,7 @@
 		</div>
 		<div class="adminoptionbox">
 			<fieldset class="admin">
-				<legend>
-					<a><span>{tr}Standard UI effects{/tr}</span></a>
-				</legend>
+				<legend>{tr}Standard UI effects{/tr}</legend>
 				<div class="adminoptionbox">
 					<div class="adminoption"></div>
 						<div class="adminoptionlabel">
@@ -291,37 +280,15 @@
 							{/if}
 						</div>
 					</div>
-					<div class="adminoptionbox">
-						<div class="adminoption"></div>
-						<div class="adminoptionlabel">
-							<label for="jquery_effect_speed">{tr}Speed{/tr} :</label> 
-							<select name="jquery_effect_speed" id="jquery_effect_speed">
-								<option value="fast" {if $prefs.jquery_effect_speed eq 'fast'}selected="selected"{/if}>{tr}Fast{/tr}</option>
-								<option value="normal" {if $prefs.jquery_effect_speed eq 'normal'}selected="selected"{/if}>{tr}Normal{/tr}</option>
-								<option value="slow" {if $prefs.jquery_effect_speed eq 'slow'}selected="selected"{/if}>{tr}Slow{/tr}</option>
-							</select>
-						</div>
-					</div>
-					<div class="adminoptionbox">
-						<div class="adminoption"></div>
-						<div class="adminoptionlabel">
-							<label for="jquery_effect_direction">{tr}Direction{/tr} :</label> 
-							<select name="jquery_effect_direction" id="jquery_effect_direction">
-								<option value="vertical" {if $prefs.jquery_effect_direction eq 'vertical'}selected="selected"{/if}>{tr}Vertical{/tr}</option>
-								<option value="horizontal" {if $prefs.jquery_effect_direction eq 'horizontal'}selected="selected"{/if}>{tr}Horizontal{/tr}</option>
-								<option value="left" {if $prefs.jquery_effect_direction eq 'left'}selected="selected"{/if}>{tr}Left{/tr}</option>
-								<option value="right" {if $prefs.jquery_effect_direction eq '"right"'}selected="selected"{/if}>{tr}Right{/tr}</option>
-								<option value="up" {if $prefs.jquery_effect_direction eq 'up'}selected="selected"{/if}>{tr}Up{/tr}</option>
-								<option value="down" {if $prefs.jquery_effect_direction eq 'down'}selected="selected"{/if}>{tr}Down{/tr}</option>
-							</select>
-						</div>
-					</div>
+					
+					{preference name=jquery_effect_speed}
+					{preference name=jquery_effect_direction}
 				</fieldset>
 			</div>
 			
 			<div class="adminoptionbox">			
 				<fieldset class="admin">
-					<legend><a><span>{tr}Tab UI effects{/tr}</span></a></legend>
+					<legend>{tr}Tab UI effects{/tr}</legend>
 					<div class="adminoptionbox">
 						<div class="adminoption"></div>
 						<div class="adminoptionlabel">
@@ -346,29 +313,8 @@
 							{/if}
 						</div>
 					</div>
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel">
-							<label for="jquery_effect_tabs_speed">{tr}Speed{/tr}</label>: 
-							<select name="jquery_effect_tabs_speed" id="jquery_effect_tabs_speed">
-								<option value="fast" {if $prefs.jquery_effect_tabs_speed eq 'fast'}selected="selected"{/if}>{tr}Fast{/tr}</option>
-								<option value="normal" {if $prefs.jquery_effect_tabs_speed eq 'normal'}selected="selected"{/if}>{tr}Normal{/tr}</option>
-								<option value="slow" {if $prefs.jquery_effect_tabs_speed eq 'slow'}selected="selected"{/if}>{tr}Slow{/tr}</option>
-							</select>
-						</div>
-					</div>
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel">
-							<label for="jquery_effect_tabs_direction">{tr}Direction{/tr}: </label>
-							<select name="jquery_effect_tabs_direction" id="jquery_effect_tabs_direction">
-								<option value="vertical" {if $prefs.jquery_effect_tabs_direction eq 'vertical'}selected="selected"{/if}>{tr}Vertical{/tr}</option>
-								<option value="horizontal" {if $prefs.jquery_tabs_effect_direction eq 'horizontal'}selected="selected"{/if}>{tr}Horizontal{/tr}</option>
-								<option value="left" {if $prefs.jquery_effect_tabs_direction eq 'left'}selected="selected"{/if}>{tr}Left{/tr}</option>
-								<option value="right" {if $prefs.jquery_effect_tabs_direction eq '"right"'}selected="selected"{/if}>{tr}Right{/tr}</option>
-								<option value="up" {if $prefs.jquery_effect_tabs_direction eq 'up'}selected="selected"{/if}>{tr}Up{/tr}</option>
-								<option value="down" {if $prefs.jquery_effect_tabs_direction eq 'down'}selected="selected"{/if}>{tr}Down{/tr}</option>
-							</select>
-						</div>
-					</div>
+					{preference name=jquery_effect_speed}
+					{preference name=jquery_effect_tabs_direction}
 			</fieldset>
 		</div>
 
@@ -382,100 +328,31 @@
 	{/tab}
 
 	{tab name="{tr}Miscellaneous{/tr}"}
-		{* --- Other --- *}
-		<div class="adminoptionbox">
-			<div class="adminoption">	
-				<input type="checkbox" name="feature_tabs" id="general-feature_tabs" {if $prefs.feature_tabs eq 'y'}checked="checked"{/if}/>
-			</div>
-			<div class="adminoptionlabel">
-				<label for="general-feature_tabs">{tr}Use Tabs{/tr}</label>
-			</div>
-		</div>
-		<div class="adminoptionbox">
-			<div class="adminoption">
-				<input type="checkbox" name="layout_section" id="general-layout_section" {if $prefs.layout_section eq 'y'}checked="checked"{/if}/>
-			</div>
-			<div class="adminoptionlabel">
-				<label for="general-layout_section">{tr}Layout per section{/tr}</label>
-				{if $prefs.layout_section eq 'y'}
-					<br />
-					{button _text="{tr}Admin layout per section{/tr}" href="tiki-admin_layout.php"}
-				{/if}
-			</div>
-		</div>
+		{preference name=feature_tabs}
+		{preference name=layout_section}
+		{if $prefs.layout_section eq 'y'}
+			{button _text="{tr}Admin layout per section{/tr}" href="tiki-admin_layout.php"}
+		{/if}
 
-		<div class="adminoptionbox">
-			<div class="adminoption">
-				<input type="checkbox" name="feature_iepngfix" id="feature_iepngfix"{if $prefs.feature_iepngfix eq 'y'} checked="checked"{/if} onclick="flip('iepngfix');" />
-			</div>
-			<div class="adminoptionlabel">
-				<label for="feature_iepngfix">{tr}Correct PNG images alpha transparency in IE6 (experimental){/tr}</label>
-				<div id="iepngfix" class="adminoptionboxchild" style="display:{if $prefs.feature_iepngfix eq 'y'}block{else}none{/if};">
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel">
-							<label class="above" for="iepngfix_selectors">{tr}CSS selectors to be fixed{/tr}:</label>
-							<input id="iepngfix_selectors" type="text" name="iepngfix_selectors" size="32" value="{$prefs.iepngfix_selectors}" />
-							<br />
-							<em>{tr}Separate multiple elements with a comma (&nbsp;,&nbsp;){/tr}.</em>
-						</div>
-					</div>
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel">
-							<label class="above" for="iepngfix_elements">{tr}HTMLDomElements to be fixed{/tr}:</label> 
-							<input id="iepngfix_elements" type="text" name="iepngfix_elements" size="32" value="{$prefs.iepngfix_elements}" />
-							<br />
-							<em>{tr}Separate multiple elements with a comma (&nbsp;,&nbsp;){/tr}.</em>
-						</div>
-					</div>
-				</div>
-			</div>
+		{preference name=feature_iepngfix}
+		<div class="adminoptionboxchild" id="feature_iepngfix_childcontainer">
+			{preference name=iepngfix_selectors}
+			{preference name=iepngfix_elements}
 		</div>
 
 		<div class="adminoptionbox">
 			<fieldset>
 				<legend>{tr}Favicon{/tr}</legend>
-				<div class="adminoptionbox">
-					<div class="adminoptionlabel">
-						<label for="site_favicon">{tr}Favicon icon file name:{/tr}</label> 
-						<input type="text" name="site_favicon" id="site_favicon" value="{$prefs.site_favicon}" size="12" maxlength="32" />
-					</div>
-				</div>
-				<div class="adminoptionbox">
-					<div class="adminoptionlabel">
-						<label for="site_favicon_type">{tr}Favicon icon MIME type:{/tr}</label> 
-						<select name="site_favicon_type" id="site_favicon_type">
-							<option value="image/png" {if $prefs.site_favicon_type eq 'image/png'}selected="selected"{/if}>{tr}image/png{/tr}</option>
-							<option value="image/bmp" {if $prefs.site_favicon_type eq 'image/bmp'}selected="selected"{/if}>{tr}image/bmp{/tr}</option>
-							<option value="image/x-icon" {if $prefs.site_favicon_type eq 'image/x-icon'}selected="selected"{/if}>{tr}image/x-icon{/tr}</option>
-						</select>
-					</div>
-				</div>
+				{preference name=site_favicon}
+				{preference name=site_favicon_type}
 			</fieldset>
 		</div>
 
 		<div class="adminoptionbox">
 			<fieldset class="admin">
-				<legend>
-					<span>{tr}Context Menus{/tr}</span>
-				</legend>
-				<em>{tr}Currently used in File Galleries only{/tr}.</em>
-				<div class="adminoptionbox">
-					<div class="adminoption">
-						<input type="checkbox" id="use_context_menu_icon" name="use_context_menu_icon" {if $prefs.use_context_menu_icon eq 'y'}checked="checked"{/if} />
-					</div>
-					<div class="adminoptionlabel">
-						<label for="use_context_menu_icon">{tr}Use context menus for actions (icons){/tr}</label>
-					</div>
-				</div>
-				
-				<div class="adminoptionbox">
-					<div class="adminoption">
-						<input type="checkbox" id="use_context_menu_text" name="use_context_menu_text" {if $prefs.use_context_menu_text eq 'y'}checked="checked"{/if}/>
-					</div>
-					<div class="adminoptionlabel">
-						<label for="use_context_menu_text">{tr}Use context menus for actions (text){/tr}</label>.
-					</div>
-				</div>
+				<legend>{tr}Context Menus{/tr} (<em>{tr}Currently used in File Galleries only{/tr}.</em>)</legend>
+				{preference name=use_context_menu_icon}
+				{preference name=use_context_menu_text}
 			</fieldset>
 		</div>
 

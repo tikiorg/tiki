@@ -2,18 +2,17 @@
 
 function prefs_iepngfix_list() {
 	return array(
-
-	// Used in templates/tiki-admin-include-look.tpl
-	'iepngfix_selectors' => array(
-			'name' => '',
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-look.tpl
-	'iepngfix_elements' => array(
-			'name' => '',
-			'type' => '',
-			),
-
+		'iepngfix_selectors' => array(
+			'name' => 'CSS selectors to be fixed',
+			'type' => 'text',
+			'size' => '30',
+			'hint' => tra('Separate multiple elements with a comma (,)'),
+		),
+		'iepngfix_elements' => array(
+			'name' => 'HTMLDomElements to be fixed',
+			'type' => 'text',
+			'size' => '30',
+			'hint' => tra('Separate multiple elements with a comma (,)'),
+		),
 	);	
 }
