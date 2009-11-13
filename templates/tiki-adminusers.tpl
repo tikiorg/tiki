@@ -399,7 +399,7 @@
 				<tr class="formcolor">
 					<td><label for="email">{tr}Email:{/tr}</label></td>
 					<td>
-						<input type="text" id="email". name="email" size="30" value="{$userinfo.email|escape}" />
+						<input type="text" id="email" name="email" size="30" value="{$userinfo.email|escape}" />
 					</td>
 				</tr>
 			{/if}
