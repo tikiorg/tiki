@@ -155,10 +155,14 @@ function module_change_category( $mod_reference, $module_params ) {
 		}
 
 		if (!empty($assignedCategs) || !empty($unassignedCategs)) {
-			$assignedCategs = Perms::filter( array( 'type' => 'category' ), 'object', $assignedCategs, array( 'object' => 'category' ), 'add_object' );
-			$categlib->categorize_page($cat_objid, $assignedCategs);
-			if ($catObjectId = $categlib->is_categorized($cat_type, $cat_objid)) {
-				$categlib->remove_object_from_categories($catObjectId, Perms::filter( array( 'type' => 'category' ), 'object', $unassignedCategs, array( 'object' => 'category' ), 'remove_object' ));
+			$objectperms = Perms::get( array( 'type' => $cat_type, 'object' => $cat_objid ) );
+			if ($objectperms->modify_object_categories) {
+				$assignedCategs = Perms::filter( array( 'type' => 'category' ), 'object', $assignedCategs, array( 'object' => 'category' ), 'add_object' );
+
+				$categlib->categorize_page($cat_objid, $assignedCategs);
+				if ($catObjectId = $categlib->is_categorized($cat_type, $cat_objid)) {
+					$categlib->remove_object_from_categories($catObjectId, Perms::filter( array( 'type' => 'category' ), 'object', $unassignedCategs, array( 'object' => 'category' ), 'remove_object' ));
+				}
 			}
 			header('Location: '.$_SERVER['REQUEST_URI']);
 			die;
