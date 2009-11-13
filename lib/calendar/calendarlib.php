@@ -513,7 +513,7 @@ class CalendarLib extends TikiLib {
 			$smarty->assign('mail_data', $data);
 			$smarty->assign('mail_calitemId', $calitemId);
 			$foo = parse_url($_SERVER["REQUEST_URI"]);
-			$machine = $tikilib->httpPrefix() . dirname( $foo["path"] );
+			$machine = $tikilib->httpPrefix( true ) . dirname( $foo["path"] );
 			$machine = preg_replace("!/$!", "", $machine); // just incase
  			$smarty->assign('mail_machine', $machine);
 			$defaultLanguage = $prefs['site_language'];

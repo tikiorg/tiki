@@ -221,12 +221,12 @@ class TrackerLib extends TikiLib {
 			$smarty->assign('mail_attId', $attId);
 			$smarty->assign('mail_data', $filename."\n".$comment."\n".$version."\n".$longdesc);
 			$foo = parse_url($_SERVER["REQUEST_URI"]);
-			$machine = $this->httpPrefix(). $foo["path"];
+			$machine = $this->httpPrefix( true ). $foo["path"];
 			$smarty->assign('mail_machine', $machine);
 			$parts = explode('/', $foo['path']);
 			if (count($parts) > 1)
 				unset ($parts[count($parts) - 1]);
-			$smarty->assign('mail_machine_raw', $this->httpPrefix(). implode('/', $parts));
+			$smarty->assign('mail_machine_raw', $this->httpPrefix( true ). implode('/', $parts));
 			if (!isset($_SERVER["SERVER_NAME"])) {
 				$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
 			}
@@ -275,12 +275,12 @@ class TrackerLib extends TikiLib {
 			$smarty->assign('mail_trackerId', $trackerId);
 			$smarty->assign('mail_trackerName', $trackerName);
 			$foo = parse_url($_SERVER["REQUEST_URI"]);
-			$machine = $this->httpPrefix(). $foo["path"];
+			$machine = $this->httpPrefix( true ). $foo["path"];
 			$smarty->assign('mail_machine', $machine);
 			$parts = explode('/', $foo['path']);
 			if (count($parts) > 1)
 				unset ($parts[count($parts) - 1]);
-			$smarty->assign('mail_machine_raw', $this->httpPrefix(). implode('/', $parts));
+			$smarty->assign('mail_machine_raw', $this->httpPrefix( true ). implode('/', $parts));
 			if (!isset($_SERVER["SERVER_NAME"])) {
 				$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
 			}
@@ -1536,12 +1536,12 @@ class TrackerLib extends TikiLib {
 					$smarty->assign('mail_trackerName', $trackerName);
 					$smarty->assign('server_name', $_SERVER['SERVER_NAME']);
 					$foo = parse_url($_SERVER["REQUEST_URI"]);
-					$machine = $this->httpPrefix(). $foo["path"];
+					$machine = $this->httpPrefix( true ). $foo["path"];
 					$smarty->assign('mail_machine', $machine);
 					$parts = explode('/', $foo['path']);
 					if (count($parts) > 1)
 						unset ($parts[count($parts) - 1]);
-					$smarty->assign('mail_machine_raw', $this->httpPrefix(). implode('/', $parts));
+					$smarty->assign('mail_machine_raw', $this->httpPrefix( true ). implode('/', $parts));
 					$smarty->assign_by_ref('status', $status);
 					foreach ($watchers as $watcher) {
 						if ($itemId) {
@@ -1569,12 +1569,12 @@ class TrackerLib extends TikiLib {
 				} else {
 			    		// Use simple email
 					$foo = parse_url($_SERVER["REQUEST_URI"]);
-					$machine = $this->httpPrefix(). $foo["path"];
+					$machine = $this->httpPrefix( true ). $foo["path"];
 					$parts = explode('/', $foo['path']);
 					if (count($parts) > 1) {
 						unset ($parts[count($parts) - 1]);
 					}
-					$machine = $this->httpPrefix(). implode('/', $parts);
+					$machine = $this->httpPrefix( true ). implode('/', $parts);
 					if (!$itemId) {
 						$itemId = $new_itemId;
 					}
@@ -2074,12 +2074,12 @@ class TrackerLib extends TikiLib {
 			$smarty->assign('mail_trackerName', $trackerName);
 			$smarty->assign('mail_data', '');
 			$foo = parse_url($_SERVER["REQUEST_URI"]);
-			$machine = $this->httpPrefix(). $foo["path"];
+			$machine = $this->httpPrefix( true ). $foo["path"];
 			$smarty->assign('mail_machine', $machine);
 			$parts = explode('/', $foo['path']);
 			if (count($parts) > 1)
 				unset ($parts[count($parts) - 1]);
-			$smarty->assign('mail_machine_raw', $this->httpPrefix(). implode('/', $parts));
+			$smarty->assign('mail_machine_raw', $this->httpPrefix( true ). implode('/', $parts));
 			if (!isset($_SERVER["SERVER_NAME"])) {
 				$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
 			}

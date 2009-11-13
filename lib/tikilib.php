@@ -3775,7 +3775,7 @@ class TikiLib extends TikiDb_Bridge {
 		//  Deal with mail notifications.
 		include_once('lib/notifications/notificationemaillib.php');
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
-		$machine = $this->httpPrefix(). dirname( $foo["path"] );
+		$machine = $this->httpPrefix( true ). dirname( $foo["path"] );
 		$page_info = $this->get_page_info($page);
 		sendWikiEmailNotification('wiki_page_deleted', $page, $user, $comment, 1, $page_info['data'], $machine);
 		
@@ -4812,7 +4812,7 @@ class TikiLib extends TikiDb_Bridge {
 			include_once('lib/notifications/notificationemaillib.php');
 
 			$foo = parse_url($_SERVER["REQUEST_URI"]);
-			$machine = $this->httpPrefix(). dirname( $foo["path"] );
+			$machine = $this->httpPrefix( true ). dirname( $foo["path"] );
 			sendWikiEmailNotification('wiki_page_created', $name, $user, $comment, 1, $data, $machine, '', false, $hash['contributions']);
 			if ($prefs['feature_contribution'] == 'y') {
 				global $contributionlib; include_once('lib/contribution/contributionlib.php');
@@ -7572,7 +7572,7 @@ class TikiLib extends TikiDb_Bridge {
 				global $histlib; include_once ("lib/wiki/histlib.php");
 				$old = $histlib->get_version($pageName, $old_version);
 				$foo = parse_url($_SERVER["REQUEST_URI"]);
-				$machine = $this->httpPrefix(). dirname( $foo["path"] );
+				$machine = $this->httpPrefix( true ). dirname( $foo["path"] );
 				require_once('lib/diff/difflib.php');
 				$diff = diff2($old["data"] , $edit_data, "unidiff");
 				sendWikiEmailNotification('wiki_page_changed', $pageName, $edit_user, $edit_comment, $old_version, $edit_data, $machine, $diff, $edit_minor, $hash['contributions']);
@@ -8030,9 +8030,16 @@ class TikiLib extends TikiDb_Bridge {
 		return $url_scheme;
 	}
 
-	function httpPrefix() {
-		global $url_scheme, $url_host, $url_port;
-		return $url_scheme.'://'.$url_host.(($url_port!='')?":$url_port":'');    
+	function httpPrefix( $isUserSpecific = false ) {
+		global $url_scheme, $url_host, $url_port, $prefs;
+
+		if( $isUserSpecific && $prefs['https_external_links_for_users'] == 'y' ) {
+			$scheme = 'https';
+		} else {
+			$scheme = $url_scheme;
+		}
+
+		return $scheme.'://'.$url_host.(($url_port!='')?":$url_port":'');    
 	}
 
 	function distance($lat1,$lon1,$lat2,$lon2) {

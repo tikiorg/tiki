@@ -41,7 +41,7 @@ class groupAlertLib extends TikiLib {
 		}
 		$project=$tikilib->get_preference ("browsertitle");
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
-		$machine = $tikilib->httpPrefix() . dirname( $foo["path"] );
+		$machine = $tikilib->httpPrefix( true ) . dirname( $foo["path"] );
 		$URL=$machine."/".$URI;
 		foreach ( $ListUserToAlert as $user ){
 		$email=$userlib->get_user_email($user);

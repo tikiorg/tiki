@@ -173,6 +173,7 @@
 							<div class="adminoptionbox">
 								<div class="adminoptionlabel"><label for="https_port">{tr}HTTPS port:{/tr}</label> <input id="https_port" type="text" name="https_port" size="5" value="{$prefs.https_port|escape}" /> </div>
 							</div>
+							{preference name=https_external_links_for_users}
 						</div>
 	
 						<div class="adminoptionbox">

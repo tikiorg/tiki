@@ -359,8 +359,8 @@ class RegistrationLib extends TikiLib {
                         $foo1=str_replace("tiki-register","tiki-login_validate",$foo["path"]);
                        	$foo2=str_replace("tiki-register","tiki-assignuser",$foo["path"]); 
 
-			$machine =$tikilib->httpPrefix().$foo1;
-			$machine_assignuser = $tikilib->httpPrefix().$foo2;
+			$machine =$tikilib->httpPrefix( true ).$foo1;
+			$machine_assignuser = $tikilib->httpPrefix( true ).$foo2;
 
                         $smarty->assign('mail_machine_assignuser',$machine_assignuser);
 			$smarty->assign('mail_machine',$machine);

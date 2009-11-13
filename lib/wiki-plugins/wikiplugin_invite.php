@@ -79,7 +79,7 @@ function wikiplugin_invite( $data, $params) {
 			include_once ('lib/webmail/tikimaillib.php');
 			$mail = new TikiMail();
 			$machine = parse_url($_SERVER['REQUEST_URI']);
-			$machine = $tikilib->httpPrefix().dirname($machine['path']);
+			$machine = $tikilib->httpPrefix( true ).dirname($machine['path']);
 			$smarty->assign_by_ref('machine', $machine);
 			$subject = sprintf($smarty->fetch('mail/mail_invite_subject.tpl'), $_SERVER['SERVER_NAME']);
 			$mail->setSubject($subject);

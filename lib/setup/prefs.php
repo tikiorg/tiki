@@ -1000,6 +1000,7 @@ function get_default_prefs() {
 		'auth_ldap_syncgroupattr' => 'cn',
 		
 		'https_login' => 'allowed',
+		'https_external_links_for_users' => 'n',
 		'feature_show_stay_in_ssl_mode' => 'y',
 		'feature_switch_ssl_mode' => 'n',
 		'https_port' => 443,

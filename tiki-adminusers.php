@@ -374,7 +374,7 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 		$mail->setBcc($_REQUEST['bcc']);
 	}
 	$foo = parse_url($_SERVER["REQUEST_URI"]);
-	$machine = $tikilib->httpPrefix() . dirname($foo["path"]);
+	$machine = $tikilib->httpPrefix( true ) . dirname($foo["path"]);
 	$machine = preg_replace("!/$!", "", $machine); // just incase
 	$smarty->assign_by_ref('mail_machine', $machine);
 	foreach($_REQUEST['checked'] as $mail_user) {

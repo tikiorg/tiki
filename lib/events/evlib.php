@@ -55,7 +55,7 @@ class EvLib extends TikiLib {
 			// URL to confirm the subscription put valid as 'n'
 			$foo = parse_url($_SERVER["REQUEST_URI"]);
 			$foopath = preg_replace('/tiki-admin_event_subscriptions.php/', 'tiki-events.php', $foo["path"]);
-			$url_subscribe = $tikilib->httpPrefix(). $foopath;
+			$url_subscribe = $tikilib->httpPrefix( true ). $foopath;
 			$query = "delete from `tiki_event_subscriptions` where `evId`=? and `email`=?";
 			$result = $this->query($query,array((int)$evId,$email));
 			$query = "insert into `tiki_event_subscriptions`(`evId`,`email`,`code`,`valid`,`subscribed`,`fname`,`lname`,`company`) values(?,?,?,?,?,?,?,?)";
@@ -88,7 +88,7 @@ class EvLib extends TikiLib {
 	function confirm_subscription($code) {
 		global $smarty, $prefs, $userlib, $tikilib;
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
-		$url_subscribe = $tikilib->httpPrefix(). $foo["path"];
+		$url_subscribe = $tikilib->httpPrefix( true ). $foo["path"];
 		$query = "select * from `tiki_event_subscriptions` where `code`=?";
 		$result = $this->query($query,array($code));
 
@@ -122,7 +122,7 @@ class EvLib extends TikiLib {
 	function unsubscribe($code) {
 		global $smarty, $prefs, $userlib, $tikilib;
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
-		$url_subscribe = $tikilib->httpPrefix(). $foo["path"];
+		$url_subscribe = $tikilib->httpPrefix( true ). $foo["path"];
 		$query = "select * from `tiki_event_subscriptions` where `code`=?";
 		$result = $this->query($query,array($code));
 
@@ -297,7 +297,7 @@ class EvLib extends TikiLib {
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
 
 		$foo = str_replace('send_events', 'events', $foo);
-		$url_subscribe = $tikilib->httpPrefix(). $foo["path"];
+		$url_subscribe = $tikilib->httpPrefix( true ). $foo["path"];
 		$code = $this->getOne("select `code` from `tiki_event_subscriptions` where `evId`=? and `email`=?",array((int)$evId,$email));
 		$url_unsub = $url_subscribe . '?unsubscribe=' . $code;
 		$user = $userlib->get_user_by_email($email);

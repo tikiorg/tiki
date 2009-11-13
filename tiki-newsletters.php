@@ -54,7 +54,7 @@ $smarty->assign('nlId', $_REQUEST["nlId"]);
 $smarty->assign('subscribe', 'n');
 $smarty->assign('subscribed', 'n');
 $foo = parse_url($_SERVER["REQUEST_URI"]);
-$smarty->assign('url_subscribe', $tikilib->httpPrefix() . $foo["path"]);
+$smarty->assign('url_subscribe', $tikilib->httpPrefix( true ) . $foo["path"]);
 if (isset($_REQUEST["nlId"])) {
 	$tikilib->get_perm_object($_REQUEST["nlId"], 'newsletter');
 }

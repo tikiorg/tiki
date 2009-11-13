@@ -25,7 +25,7 @@ if (isset($_REQUEST['request_friendship'])) {
 	    $lg = $tikilib->get_user_preference($friend, "language", $prefs['site_language']);
 	    $smarty->assign('msg',sprintf(tra("Friendship request sent to %s"), $friend));
 	    $foo = parse_url($_SERVER["REQUEST_URI"]);
-	    $machine = $tikilib->httpPrefix(). $foo["path"];
+	    $machine = $tikilib->httpPrefix( true ). $foo["path"];
 	    $smarty->assign('server_name',$machine);
 	    $messulib->post_message($friend, $user, $friend, '', 
 				    $smarty->fetchLang($lg,'mail/new_friend_invitation_subject.tpl'),

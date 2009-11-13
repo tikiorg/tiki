@@ -277,7 +277,7 @@ class NlLib extends TikiLib {
 			// URL to confirm the subscription put valid as 'n'
 			$foo = parse_url($_SERVER["REQUEST_URI"]);
 			$foopath = preg_replace('/tiki-admin_newsletter_subscriptions.php/', 'tiki-newsletters.php', $foo["path"]);
-			$url_subscribe = $tikilib->httpPrefix(). $foopath;
+			$url_subscribe = $tikilib->httpPrefix( true ). $foopath;
 			$query = "insert into `tiki_newsletter_subscriptions`(`nlId`,`email`,`code`,`valid`,`subscribed`,`isUser`,`included`) values(?,?,?,?,?,?,?)";
 			$result = $this->query($query,array((int)$nlId,$add,$code,'n',(int)$this->now,$isUser,'n'));
 			// Now send an email to the address with the confirmation instructions
@@ -309,7 +309,7 @@ class NlLib extends TikiLib {
 	function confirm_subscription($code) {
 		global $smarty, $tikilib, $prefs, $userlib;
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
-		$url_subscribe = $tikilib->httpPrefix(). $foo["path"];
+		$url_subscribe = $tikilib->httpPrefix( true ). $foo["path"];
 		$query = "select * from `tiki_newsletter_subscriptions` where `code`=?";
 		$result = $this->query($query,array($code));
 
@@ -349,7 +349,7 @@ class NlLib extends TikiLib {
 	function unsubscribe($code,$mailit=false) {
 		global $smarty, $prefs, $userlib, $tikilib;
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
-		$url_subscribe = $tikilib->httpPrefix(). $foo["path"];
+		$url_subscribe = $tikilib->httpPrefix( true ). $foo["path"];
 		$query = "select * from `tiki_newsletter_subscriptions` where `code`=?";
 		$result = $this->query($query,array($code));
 
@@ -672,11 +672,11 @@ class NlLib extends TikiLib {
 
 	function get_unsub_msg($nlId, $email, $lang, $code='', $user='') {
 		global $smarty, $userlib, $tikilib;
-		$pth = $tikilib->httpPrefix(). substr($_SERVER["REQUEST_URI"],0,strpos($_SERVER["REQUEST_URI"],'tiki-'));
+		$pth = $tikilib->httpPrefix( true ). substr($_SERVER["REQUEST_URI"],0,strpos($_SERVER["REQUEST_URI"],'tiki-'));
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
 		 $smarty->assign('url',$pth);
 		$foo = str_replace('send_newsletters', 'newsletters', $foo);
-		$url_subscribe = $tikilib->httpPrefix(). $foo["path"];
+		$url_subscribe = $tikilib->httpPrefix( true ). $foo["path"];
 		if ($code == '') {
 			$isUser = $user? "y": "n";
 			$code = $this->getOne("select `code` from `tiki_newsletter_subscriptions` where `nlId`=? and `email`=? and `isUser`=?",array((int)$nlId, $email, $isUser));

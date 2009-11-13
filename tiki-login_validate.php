@@ -45,7 +45,7 @@ if ($isvalid) {
 		$userlib->confirm_user($_REQUEST['user']);
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
 		$foo1 = str_replace('tiki-login_validate', 'tiki-login_scr', $foo['path']);
-		$machine = $tikilib->httpPrefix() . $foo1;
+		$machine = $tikilib->httpPrefix( true ) . $foo1;
 		$smarty->assign('mail_machine', $machine);
 		$smarty->assign('mail_site', $_SERVER['SERVER_NAME']);
 		$smarty->assign('mail_user', $_REQUEST['user']);

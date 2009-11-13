@@ -224,16 +224,16 @@ if ( isset($_REQUEST['comments_objectId']) && $_REQUEST['comments_objectId'] == 
 						$smarty->assign('mail_comment', $_REQUEST["comments_data"]);
 						$smarty->assign('mail_hash', $not['hash']);
 						$foo = parse_url($_SERVER["REQUEST_URI"]);
-						$machine = $tikilib->httpPrefix(). dirname( $foo["path"] );
+						$machine = $tikilib->httpPrefix( true ). dirname( $foo["path"] );
 						$smarty->assign('mail_machine', $machine);
 						$parts = explode('/', $foo['path']);
 
 						if (count($parts) > 1)
 							unset ($parts[count($parts) - 1]);
 
-						$smarty->assign('mail_machine_raw', $tikilib->httpPrefix(). implode('/', $parts));
+						$smarty->assign('mail_machine_raw', $tikilib->httpPrefix( true ). implode('/', $parts));
 						// TODO: mail_machine_site may be required for some sef url with rewrite to sub-directory. To refine. (nkoth)  
-						$smarty->assign('mail_machine_site', $tikilib->httpPrefix());
+						$smarty->assign('mail_machine_site', $tikilib->httpPrefix( true ));
 						$mail = new TikiMail();
 					}
 					global $prefs;// TODO: optimise by grouping user by language

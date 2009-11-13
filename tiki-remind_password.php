@@ -66,7 +66,7 @@ if (isset($_REQUEST["remind"])) {
 		$languageEmail = $tikilib->get_user_preference($name, "language", $prefs['site_language']);
 		// Now check if the user should be notified by email
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
-		$machine = $tikilib->httpPrefix() . dirname($foo["path"]);
+		$machine = $tikilib->httpPrefix( true ) . dirname($foo["path"]);
 		$machine = preg_replace("!/$!", "", $machine); // just incase
 		$smarty->assign('mail_machine', $machine);
 		$smarty->assign('mail_site', $_SERVER["SERVER_NAME"]);

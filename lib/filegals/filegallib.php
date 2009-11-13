@@ -688,7 +688,7 @@ class FileGalLib extends TikiLib {
                         //  Deal with mail notifications.
                         include_once('lib/notifications/notificationemaillib.php');
                         $foo = parse_url($_SERVER["REQUEST_URI"]);
-                        $machine = $this->httpPrefix(). dirname( $foo["path"]);
+                        $machine = $this->httpPrefix( true ). dirname( $foo["path"]);
 			$galleryName = $this->getOne("select `name` from `tiki_file_galleries` where `galleryId`=?",array($galleryId));
 
                         sendFileGalleryEmailNotification('file_gallery_changed', $galleryId, $galleryName, $name, $filename, $description, $action, $user, $fileId);
@@ -1065,7 +1065,7 @@ class FileGalLib extends TikiLib {
 				include_once ('lib/webmail/tikimaillib.php');
 				$mail = new TikiMail();
 				$foo = parse_url($_SERVER["REQUEST_URI"]);
-				$machine = $tikilib->httpPrefix() . dirname( $foo["path"] );
+				$machine = $tikilib->httpPrefix( true ) . dirname( $foo["path"] );
 				$machine = preg_replace("!/$!", "", $machine); // just incase
 				$smarty->assign('mail_machine', $machine);
 				$smarty->assign('mail_diff', $diff);

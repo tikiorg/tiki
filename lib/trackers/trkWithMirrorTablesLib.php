@@ -815,12 +815,12 @@ class TrkWithMirrorTablesLib extends TrackerLib {
 				$smarty->assign('mail_trackerId', $trackerId);
 				$smarty->assign('mail_trackerName', $trackerName);
 				$foo = parse_url($_SERVER["REQUEST_URI"]);
-				$machine = $this->httpPrefix(). $foo["path"];
+				$machine = $this->httpPrefix( true ). $foo["path"];
 				$smarty->assign('mail_machine', $machine);
 				$parts = explode('/', $foo['path']);
 				if (count($parts) > 1)
 					unset ($parts[count($parts) - 1]);
-				$smarty->assign('mail_machine_raw', $this->httpPrefix(). implode('/', $parts));
+				$smarty->assign('mail_machine_raw', $this->httpPrefix( true ). implode('/', $parts));
 
 
 				$mail_data = $smarty->fetch('mail/tracker_changed_notification.tpl');

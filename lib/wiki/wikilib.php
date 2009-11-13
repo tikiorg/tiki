@@ -311,12 +311,12 @@ class WikiLib extends TikiLib {
 				$smarty->assign('mail_date', $this->now);
 				$smarty->assign('mail_user', $user);
 				$foo = parse_url($_SERVER["REQUEST_URI"]);
-				$machine = $tikilib->httpPrefix(). $foo["path"];
+				$machine = $tikilib->httpPrefix( true ). $foo["path"];
 				$smarty->assign('mail_machine', $machine);
 				$parts = explode('/', $foo['path']);
 				if (count($parts) > 1)
 					unset ($parts[count($parts) - 1]);
-				$smarty->assign('mail_machine_raw', $tikilib->httpPrefix(). implode('/', $parts));
+				$smarty->assign('mail_machine_raw', $tikilib->httpPrefix( true ). implode('/', $parts));
 				sendEmailNotification($nots, "watch", "user_watch_wiki_page_renamed_subject.tpl", $_SERVER["SERVER_NAME"], "user_watch_wiki_page_renamed.tpl");
 			}
 		}

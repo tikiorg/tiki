@@ -2854,8 +2854,8 @@ function get_included_groups($group, $recur=true) {
 		$foo = parse_url($_SERVER['REQUEST_URI']);
 		$foo1 = str_replace(array('tiki-send_mail', 'tiki-register', 'tiki-remind_password', 'tiki-adminusers'), 'tiki-login_validate', $foo['path']);
 		$foo2 = str_replace(array('tiki-send_mail', 'tiki-register', 'tiki-remind_password', 'tiki-adminusers'), 'tiki-assignuser', $foo['path']);
-		$machine = $tikilib->httpPrefix() . $foo1;
-		$machine_assignuser = $tikilib->httpPrefix() . $foo2;
+		$machine = $tikilib->httpPrefix( true ) . $foo1;
+		$machine_assignuser = $tikilib->httpPrefix( true ) . $foo2;
 		$smarty->assign('mail_machine',$machine);
 		$smarty->assign('mail_machine_assignuser',$machine_assignuser);
 		$smarty->assign('mail_site', $_SERVER['SERVER_NAME']);
@@ -2997,7 +2997,7 @@ function get_included_groups($group, $recur=true) {
 		$mail_data = sprintf($mail_data, $_SERVER['SERVER_NAME']);
 		$mail->setSubject($mail_data);
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
-		$mail_machine = $tikilib->httpPrefix().str_replace('tiki-login.php', 'tiki-confirm_user_email.php', $foo['path']);
+		$mail_machine = $tikilib->httpPrefix( true ).str_replace('tiki-login.php', 'tiki-confirm_user_email.php', $foo['path']);
 		$smarty->assign('mail_machine', $mail_machine);
 		$mail_data = $smarty->fetchLang($languageEmail, "mail/$tpl.tpl");
 		$mail->setText($mail_data);
