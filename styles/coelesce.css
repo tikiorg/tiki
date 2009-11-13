@@ -102,6 +102,11 @@ pre {
 	line-height: 20px;
 }
 
+.categbar{
+	margin: 10px 0;
+	line-height: 20px;
+}
+
 /* "button" links wrappers */
 span.button {
 	padding-left: 0;

@@ -1712,7 +1712,7 @@ table.webmail_message_headers th {
 }
 
 @media print {
-	.tikihelp, .navbar, .tabstoggle, .tabs, #show-errors-button {display:none;}
+	.tikihelp, .navbar, categbar, .tabstoggle, .tabs, #show-errors-button {display:none;}
 }
 
 /* treeTable definitions - used in object-perms so far */

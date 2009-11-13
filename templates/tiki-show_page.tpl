@@ -49,7 +49,7 @@
 {remarksbox type="note" title="{tr}Note{/tr}"}{$saved_msg}{/remarksbox}
 {/if}
 
-<div class="navbar" style="clear: both; text-align: right">
+<div class="categbar" style="clear: both; text-align: right">
     {if $user and $prefs.feature_user_watches eq 'y'}
         {if $category_watched eq 'y'}
             {tr}Watched by categories{/tr}:
