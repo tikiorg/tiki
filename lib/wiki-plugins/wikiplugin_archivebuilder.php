@@ -32,7 +32,7 @@ function wikiplugin_archivebuilder( $data, $params ) {
 		);
 
 		$archive = new ZipArchive;
-		$archive->open( $file = tempnam( 'temp/', 'archive' ), ZipArchive::CREATE | ZipArchive::OVERWRITE );
+		$archive->open( $file = tempnam( 'temp/', 'archive' ) . '.zip', ZipArchive::CREATE | ZipArchive::OVERWRITE );
 
 		foreach( explode( "\n", $data ) as $line ) {
 			$parts = explode( ":", trim( $line ) );
@@ -50,10 +50,18 @@ function wikiplugin_archivebuilder( $data, $params ) {
 		$archive->addFromString( 'manifest.txt', implode( "\n", $files ) );
 		$archive->close();
 
-		header( 'Content-Type: application/zip' );
-		header( "Content-Disposition: attachment; filename=\"{$params['name']}\"" );
-		header( 'Content-Transfer-Encoding: binary' );
-		header( 'Content-Length: ' . filesize( $file ) . '; filename="' . $params['name'] . '"' );
+		// Compression of the stream may corrupt files on windows
+		ob_end_clean();
+		ini_set('zlib.output_compression','Off');
+
+		header("Expires: 0");
+		header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+		header("Cache-Control: private",false);
+		header( 'Content-Length: ' . filesize( $file ) );
+		header('Content-Type: application/zip');
+		header('Content-Disposition: attachment; filename="' . $params['name'] . '";');
+		header('Connection: close');
+		header('Content-Transfer-Encoding: binary'); 
 		readfile( $file );
 		unlink( $file );
 		die;
