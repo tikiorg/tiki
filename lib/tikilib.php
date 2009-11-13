@@ -229,6 +229,9 @@ class TikiLib extends TikiDb_Bridge {
 		if (empty($email)) {
 			global $userlib;
 			$email = $userlib->get_user_email($user);
+			if (empty($email)) {
+				return false;
+			}
 		}
 		$this->remove_user_watch( $user, $event, $object, $type );
 		$query = "insert into `tiki_user_watches`(`user`,`event`,`object`,`email`,`type`,`title`,`url`) ";
