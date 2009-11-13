@@ -603,6 +603,7 @@ function get_default_prefs() {
 		'feature_forum_local_tiki_search' => 'n',
 		'forum_thread_defaults_by_forum' => 'n',
 		'forum_thread_user_settings' => 'y',
+		'forum_thread_user_settings_threshold' => 10,
 		'forum_thread_user_settings_keep' => 'n',
 		'forum_comments_per_page' => 20,
 		'forum_comments_no_title_prefix' => 'n',
@@ -657,6 +658,7 @@ function get_default_prefs() {
 		'userTracker' => 'n',
 		'trk_with_mirror_tables' => 'n',
 		'trackerCreatorGroupName' => ' ',
+		'tracker_jquery_user_selector_threshold' => 50,
 
 		// user
 		'feature_userlevels' => 'n',
@@ -1182,7 +1184,6 @@ function get_default_prefs() {
 
 		// dev
 		'feature_experimental' => 'n',
-		'feature_profile_tester' => 'n',
 
 		// Action logs
 		'feature_actionlog' => 'n',

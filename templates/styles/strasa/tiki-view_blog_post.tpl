@@ -1,5 +1,5 @@
-{title help="Blogs"}{$blog_data.title}{/title}
-<a class="link" href="tiki-list_blogs.php">{tr}Blogs{/tr}</a> {$prefs.site_crumb_seper} <a class="link" href="tiki-view_blog.php?blogId={$post_info.blogId}">{$blog_data.title}</a> {$prefs.site_crumb_seper} {$post_info.title}
+{title help="Blogs"}{$blog_data.title|escape}{/title}
+<a class="link" href="tiki-list_blogs.php">{tr}Blogs{/tr}</a> {$prefs.site_crumb_seper} <a class="link" href="tiki-view_blog.php?blogId={$post_info.blogId}">{$blog_data.title|escape}</a> {$prefs.site_crumb_seper} {$post_info.title|escape}
 
 <div class="post">
 	{if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y'}
@@ -14,12 +14,8 @@
 	{/if}
 	<div class="postbody">
 	<div class="clearfix postbody-title">
-		<div class="title">
-			{if $blog_data.use_title eq 'y'}
-				<h2>{$post_info.title}</h2>
-			{else}
-				<h2>{$post_info.created|tiki_short_datetime}</h2>
-			{/if}
+		<div class="title">		
+				<h2>{$post_info.title|escape}</h2>
 		</div>
 	</div>
 	<div class="content">
@@ -70,7 +66,6 @@
 <div class="postfooter">
 	<div class="status"> {* renamed to match forum footer layout *}
 		<a href='tiki-print_blog_post.php?postId={$postId}'>{icon _id='printer' alt='{tr}Print{/tr}'}</a>
-		<a href='tiki-send_blog_post.php?postId={$postId}'>{icon _id='email' alt='{tr}Email This Post{/tr}'}</a>
 	</div>
 	<div class="actions"> {* renamed to match forum footer layout *}
 <a class="link" href="{$postId|sefurl:blogpost}">{tr}Permalink{/tr}</a>

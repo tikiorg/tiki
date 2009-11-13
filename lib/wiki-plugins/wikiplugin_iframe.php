@@ -90,7 +90,7 @@ function wikiplugin_iframe_info() {
 
 function wikiplugin_iframe($data, $params) {
 
-	extract ($params);
+	extract ($params, EXTR_SKIP);
 	$ret = '<iframe ';
 
 	if (isset($name)) {

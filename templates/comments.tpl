@@ -133,7 +133,7 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 			</div>
 		{/if}
 
-		{if $comments_cant > 10}
+		{if $comments_cant > $prefs["forum_thread_user_settings_threshold"]}
 		<div class="actions">
 			<span class="action">
 

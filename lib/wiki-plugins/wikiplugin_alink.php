@@ -1,6 +1,6 @@
 <?php
 /*
- * Tiki-Wiki ALINK plugin. Go to http://www.TikiMODS.com for more Tikiwiki Plugins.
+ * Tiki ALINK plugin. 
  *
  * DESCRIPTION: Creates a link to an anchor in a wiki page. Use in conjunction with the ANAME plugin, which specifies the location and name of the anchor.
  * 

@@ -247,7 +247,7 @@ class ModLib extends TikiLib {
 		TikiLib::parse_str( $module['params'], $module_params );
 
 		$default_params = array(
-			'decorators' => 'y',
+			'decorations' => 'y',
 			'overflow' => 'n',
 			'nobox' => 'n',
 			'notitle' => 'n',

@@ -848,6 +848,7 @@ a.phplmselected:hover {
 }
 
 #tiki-top .cssmenu_horiz li a .sf-sub-indicator {
+	background: url(strasa/arrows-a2ecff.png) no-repeat -10px -100px;
 	top: 6px;
 }
 

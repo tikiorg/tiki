@@ -133,44 +133,38 @@
   <br /><br />    
   <table class="normal noslideshow">
   <tr>
+    <td class="even">
+    <small>
+	{tr}Include the image in a tiki page using the following syntax{/tr}:<br />
+    {if $resultscale == $defaultscale}
+    <tt style="color: brown;line-height: 200%">{literal}{{/literal}img id={$imageId}{literal}}{/literal}</tt><br />
+    {elseif !$resultscale}
+    <tt style="color: brown;line-height: 200%">{literal}{{/literal}img id={$imageId}&amp;scalesize=0){literal}}{/literal}</tt><br />
+    {else}
+    <tt style="color: brown;line-height: 200%">{literal}{{/literal}img id={$imageId}&amp;scaled&amp;scalesize={$resultscale}{literal}}{/literal}</tt><br />
+    {/if}
+    </small>
+    </td>
+  </tr>
+  <tr>
+    <td class="even">
+    <small>
+    {tr}To include the image in an HTML page{/tr}:<br />
+    {if $resultscale == $defaultscale}
+    <tt style="color: brown;line-height: 200%">&lt;img src="{$url_show}?id={$imageId}" /&gt;</tt><br />
+    {elseif !$resultscale}
+    <tt style="color: brown;line-height: 200%">&lt;img src="{$url_show}?id={$imageId}&amp;scalesize=0" /&gt;</tt><br />
+    {else}
+    <tt style="color: brown;line-height: 200%">&lt;img src="{$url_show}?id={$imageId}&amp;scalesize={$resultscale}" /&gt;</tt?<br />
+    {/if}
+    </small>
+    </td>
+  </tr>
+  <tr>
   	<td class="even">
   	<small>
-    {tr}You can view this image in your browser using{/tr}:<br /><br />
-    <a class="gallink" href="{$url_browse}?imageId={$imageId}">{$url_browse}?imageId={$imageId}</a><br />
-    </small>
-    </td>
-  </tr>
-  <tr>
-    <td class="even">
-    <small>
-    {tr}You can include the image in an HTML page using one of these lines{/tr}:<br /><br />
-    {if $resultscale == $defaultscale}
-    &lt;img src="{$url_show}?id={$imageId}" /&gt;<br />
-    &lt;img src="{$url_show}?name={$name|escape}" /&gt;<br />
-    {elseif !$resultscale}
-    &lt;img src="{$url_show}?id={$imageId}&amp;scalesize=0" /&gt;<br />
-    &lt;img src="{$url_show}?name={$name|escape}&amp;scalesize=0" /&gt;<br />
-    {else}
-    &lt;img src="{$url_show}?id={$imageId}&amp;scalesize={$resultscale}" /&gt;<br />
-    &lt;img src="{$url_show}?name={$name|escape}&amp;scalesize={$resultscale}" /&gt;<br />
-    {/if}
-    </small>
-    </td>
-  </tr>
-  <tr>
-    <td class="even">
-    <small>
-    {tr}You can include the image in a tiki page using one of these lines{/tr}:<br /><br />
-    {if $resultscale == $defaultscale}
-    {literal}{{/literal}IMG (id={$imageId}) /{literal}}{/literal}<br />
-    {literal}{{/literal}IMG (src=show_image.php?name={$name|escape}&amp;galleryId={$galleryId}) /{literal}}{/literal}<br />
-    {elseif !$resultscale}
-    {literal}{{/literal}IMG (src=show_image.php?id={$imageId}&amp;scalesize=0) /{literal}}{/literal}<br />
-    {literal}{{/literal}IMG (src=show_image.php?name={$name|escape}&amp;galleryId={$galleryId}&amp;scalesize=0) /{literal}}{/literal}<br />
-    {else}
-    {literal}{{/literal}IMG (src={$url_show}?id={$imageId}&amp;scaled&amp;scalesize={$resultscale}) /{literal}}{/literal}<br />
-    {literal}{{/literal}IMG (src={$url_show}?name={$name|escape}&amp;galleryId={$galleryId}&amp;scalesize={$resultscale}) /{literal}}{/literal}<br />
-    {/if}
+    {tr}To link to this page from another tiki page{/tr}:<br />
+    <tt style="color: brown;line-height: 200%">{literal}[{/literal}tiki-browse_image.php?imageId={$imageId}{literal}]{/literal}</tt><br />
     </small>
     </td>
   </tr>

@@ -36,8 +36,8 @@ function wikiplugin_banner($data, $params)
 	}
     global $bannerlib;include_once('lib/banners/bannerlib.php');
 
-    extract($params);
-
+	extract ($params, EXTR_SKIP);
+		
     if (empty($zone)) {
         return tra('missing parameter');
     }

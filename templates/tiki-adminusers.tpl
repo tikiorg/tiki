@@ -358,7 +358,7 @@
 				<tr class="formcolor">
 					<td><label for="pass1">{tr}Password:{/tr}</label></td>
 					<td>
-						<input type="password" name="pass" id="pass1" onKeyUp="runPassword(this.value, 'mypassword');" />
+						<input type="password" name="pass" id="pass1" onkeyup="runPassword(this.value, 'mypassword');" />
 						<div style="float:right;width:150px;margin-left:5px;">
 							<div id="mypassword_text"></div>
 							<div id="mypassword_bar" style="font-size: 5px; height: 2px; width: 0px;"></div> 
@@ -399,7 +399,7 @@
 				<tr class="formcolor">
 					<td><label for="email">{tr}Email:{/tr}</label></td>
 					<td>
-						<input type="text" id="email". name="email" size="30" value="{$userinfo.email|escape}" />
+						<input type="text" id="email" name="email" size="30" value="{$userinfo.email|escape}" />
 					</td>
 				</tr>
 			{/if}

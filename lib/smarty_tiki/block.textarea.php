@@ -35,6 +35,10 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	$params['cols'] = isset($params['cols']) ? $params['cols'] : 80;
 	$params['name'] = isset($params['name']) ? $params['name'] : 'edit';
 	$params['id'] = isset($params['id']) ? $params['id'] : 'editwiki';
+	$params['class'] = isset($params['class']) ? $params['class'] : 'wikiedit';
+	
+	// mainly for modules admin - preview is for the module, not the user module so don;t need to confirmExit
+	$params['previewConfirmExit'] = isset($params['previewConfirmExit']) ? $params['previewConfirmExit'] : 'y';
 	
 	if ( isset($params['_zoom']) && $params['_zoom'] == 'n' ) {
 		$feature_template_zoom_orig = $prefs['feature_template_zoom'];
@@ -199,7 +203,7 @@ window.onbeforeunload = confirmExit;
 });
 
 window.needToConfirm = true;
-window.editorDirty = ".(isset($_REQUEST["preview"]) ? 'true' : 'false').";
+window.editorDirty = ".(isset($_REQUEST["preview"]) && $params['previewConfirmExit'] == 'y' ? 'true' : 'false').";
 var editTimeoutSeconds = ".ini_get('session.gc_maxlifetime').";
 var editTimeElapsedSoFar = 0;
 var editTimeoutIntervalId;
