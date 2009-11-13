@@ -47,7 +47,7 @@ function module_since_last_visit_new($mod_reference, $params = null) {
 		$smarty->assign('tpl_module_title', tra('Changes since'));
 	} else {
 		$details = $userlib->get_user_details($user);
-		$last = $details['lastLogin'];
+		$last = $details['info']['lastLogin'];
 		if (!$last) $last = time();
 		$smarty->assign('tpl_module_title', tra('Since your last visit...'));
 	}
