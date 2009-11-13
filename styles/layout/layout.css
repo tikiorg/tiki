@@ -1396,7 +1396,6 @@ div.multiselect ul {
 	list-style-position: outside;
 	list-style-type: none;
 	text-align: left;
-	white-space: nowrap;
 	margin: 0;
 	padding: 0;
 }
