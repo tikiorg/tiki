@@ -143,6 +143,8 @@ if ($prefs['feature_messages'] == 'y' && $tiki_p_messages == 'y') {
 	$unread = $tikilib->user_unread_messages($user);
 	$smarty->assign('unread', $unread);
 }
+$eok = $userlib->get_user_email($user);
+$smarty->assign('email_ok', empty($eok) ? 'n' : 'y');
 ask_ticket('user-watches');
 if ($prefs['feature_ajax'] == "y") {
 	function user_watches_ajax() {

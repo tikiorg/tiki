@@ -2,6 +2,13 @@
 
 {title help="User+Watches"}{tr}User Watches and preferences{/tr}{/title}
 
+{if $email_ok eq 'n'}
+	{remarksbox type="warning" title="{tr}Warning{/tr}"}
+		{tr}You need to set your email to receive email notifications.{/tr}
+		{icon _id="arrow_right" href="tiki-user_preferences.php"}
+	{/remarksbox}
+{/if}
+
 <h2>{tr}Report Preferences{/tr}</h2>
 {if $prefs.feature_daily_report_watches eq 'y'}
 
