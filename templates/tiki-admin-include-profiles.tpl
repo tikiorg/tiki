@@ -393,7 +393,7 @@ function showDetails( id, domain, profile ) { // {{{
 </form>
 </fieldset>
 
-{if $prefs.feature_profile_tester eq 'y'}
+
 	<fieldset><legend>{tr}Profile tester{/tr}</legend>
 		<form action="tiki-admin.php?page=profiles" method="post">
 		{remarksbox type="warning" title="{tr}Warning{/tr}"}
@@ -412,7 +412,7 @@ function showDetails( id, domain, profile ) { // {{{
 		{/remarksbox}
 		</form>
 	</fieldset>
-{/if}
+
 {/tab}
 {/tabset}
 
