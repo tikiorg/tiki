@@ -25,12 +25,14 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  */
 
 function smarty_block_tabset($params, $content, &$smarty, &$repeat) {
-	global $prefs, $smarty_tabset_name, $smarty_tabset;
-	static $i_tabset;
+	global $prefs, $smarty_tabset_name, $smarty_tabset, $smarty_tabset_i_tab, $cookietab, $headerlib;
 
 	if ( $repeat ) {
 		// opening 
 		$smarty_tabset = array();
+		if (!isset($smarty_tabset_i_tab)) {
+			$smarty_tabset_i_tab = 1;
+		}
 		if ( isset($params['name']) and !empty($params['name']) ) {
 			$smarty_tabset_name = $params['name'];
 		} else {
@@ -62,17 +64,18 @@ function smarty_block_tabset($params, $content, &$smarty, &$repeat) {
 		}
 		$ret .= '<div class="tabs">
 			';
-		$max = sizeof($smarty_tabset);
-		if (empty($i_tabset)) {
-			$i_tabset = 1;
-		}
+		$max = $smarty_tabset_i_tab - 1;
+		$ini = $smarty_tabset_i_tab - sizeof($smarty_tabset);
+		$focus = $ini;
 		foreach ($smarty_tabset as $value) {
-			$ret .= '	<span id="tab'.$i_tabset.'" class="tabmark tabinactive"><a href="#content'.$i_tabset.'" onclick="javascript:tikitabs('.$i_tabset.','.$max.'); return false;">'.$value.'</a></span>
+			$ret .= '	<span id="tab'.$focus.'" class="tabmark tabinactive"><a href="#content'.$i_tabset.'" onclick="javascript:tikitabs('.$focus.','.$max.','.$ini.'); return false;">'.$value.'</a></span>
 				';
-			$i_tabset++;
+			++$focus;
 		}
-		//$ret .= '<span class="tabmark tabinactive"><a href="#">'.$notabs.'</a></span></div>'.$content;
 		$ret .= "</div>$content";
+		if ($cookietab < $ini || $cookietab > $max) { // todo:: need to display the first tab
+			//$ret .= "<script type='text/javascript'>show('content$ini');</script>";
+		}
 		return $ret;
 	}
 }
