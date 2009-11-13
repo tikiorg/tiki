@@ -176,7 +176,7 @@
 						<select name="groupstracker">
 							<option value="0">{tr}choose a group tracker ...{/tr}</option>
 							{foreach key=tid item=tit from=$trackers}
-								<option value="{$tid}"{if $tid eq $grouptrackerid} {assign var="ggr" value="$tit"}selected="selected"{/if}>{$tit}</option>
+								<option value="{$tid}"{if $tid eq $grouptrackerid} {assign var="ggr" value="$tit"}selected="selected"{/if}>{$tit|escape}</option>
 							{/foreach}
 						</select>
 						{if $grouptrackerid}
