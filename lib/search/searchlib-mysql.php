@@ -124,6 +124,9 @@ class SearchLib extends TikiLib {
 		    $objKeyCat = $objKey;
 		}
 		    
+/*
+ * Commented out for 4.0 - see below (line 292 onwards) new Perms accessor method (partially finished)
+ * 
 		$chkObjPerm = $prefs['feature_search_show_forbidden_obj'] != 'y' && $tiki_p_admin != 'y' && (!empty($permName) || (!empty($permNameGlobal) && !empty($permNameObj))) && !empty($objType) && !empty($objKeyPerm) && !empty($objKeyGroup);
 
 		if ($chkObjPerm) {
@@ -185,6 +188,7 @@ class SearchLib extends TikiLib {
 			$bindHaving = array();
 		    }
 		}
+*/
 		if (!empty($h['parentJoin']))
 			$sqlJoin .= ' '.$h['parentJoin'];
 		    
@@ -255,6 +259,10 @@ class SearchLib extends TikiLib {
 			}
 		}
 
+		$chkObjPerm = $prefs['feature_search_show_forbidden_obj'] != 'y' && $tiki_p_admin != 'y' && (!empty($permName) || (!empty($permNameGlobal) && !empty($permNameObj))) && !empty($objType) && !empty($objKeyPerm) && !empty($objKeyGroup);
+		$chkCatPerm = $prefs['feature_search_show_forbidden_cat'] != 'y' && $tiki_p_admin != 'y' && !empty($objType) && !empty($objKeyCat) && !empty($objKeyGroup) && $prefs['feature_categories'] == 'y';
+		
+
 		$result = $this->query($sql, $bindVars, $maxRecords, $offset);
 		$ret = array();
 
@@ -274,12 +282,32 @@ class SearchLib extends TikiLib {
 				'type' => $type,
 				'location' => $type,
 			);
+			
 			if (!empty($h['parent'])) {
 				$r['parentName'] = $res['parentName'];
 				$r['location'] .= "::".$res['parentName'];
 				$r['parentHref'] = str_replace('$', '?', $res['parentHref']);
 			}
-			$ret[] = $r;
+
+			/* New perms checks for 4.0 - by jonnyb Friday the 13th, 2009
+			 * Ok on wiki pages and some others - problems with filegals (& probably others) TODO TODO TODO for 4.1 */
+			
+			if ($chkObjPerm || $chkCatPerm) {
+				//if ($type == 'File Gallery') {
+				//	$context = array( 'type' => $objType, 'object' => $res["parentName"] );
+				//} else {
+					$context = array( 'type' => $objType, 'object' => $res["pageName"] );
+				//}
+	
+				$accessor = Perms::get( $context );
+				$accessor->setGroups( $groupList );
+	
+				if ($accessor->$permName) {
+					$ret[] = $r;
+				}
+			} else {
+				$ret[] = $r;
+			}
 		}
 
 		return array(
