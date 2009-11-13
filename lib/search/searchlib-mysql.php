@@ -294,15 +294,25 @@ class SearchLib extends TikiLib {
 			
 			if ($chkObjPerm || $chkCatPerm) {
 				//if ($type == 'File Gallery') {
-				//	$context = array( 'type' => $objType, 'object' => $res["parentName"] );
+				//	$context = array( 'type' => $objType, 'object' => $res['parentName'] );
 				//} else {
-					$context = array( 'type' => $objType, 'object' => $res["pageName"] );
+					$context = array( 'type' => $objType, 'object' => $res['id1'] );
 				//}
 	
 				$accessor = Perms::get( $context );
 				$accessor->setGroups( $groupList );
+				
+				$ok = true;	// should default to ok?
+				
+				if (!empty($permName)) {
+					$ok = $accessor->$permName;
+				} else if (!empty($permNameObj)) {
+					$ok = $accessor->$permNameObj;
+				} else if (!empty($permNameGlobal)) {
+					$ok = $accessor->$permNameGlobal;
+				}
 	
-				if ($accessor->$permName) {
+				if ($ok) {
 					$ret[] = $r;
 				}
 			} else {
