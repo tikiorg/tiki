@@ -70,7 +70,7 @@
 					<a href="tiki-object_watches.php?objectId={$forumId|escape:"url"}&amp;watch_event=forum_post_topic_and_thread&amp;objectType=forum&amp;objectName={$forum_info.name|escape:"url"}&amp;objectHref={'tiki-view_forum.php?forumId='|cat:$forumId|escape:"url"}" class="icon">{icon _id='eye_group' alt='{tr}Group Monitor Topics and Threads of this Forum{/tr}'}</a>
 				{/if}
 
-				<div class="navbar" align="right" >
+				<div class="categbar" align="right" >
 					{if $user and $prefs.feature_user_watches eq 'y'}
 						{if $category_watched eq 'y'}
 							{tr}Watched by categories{/tr}:

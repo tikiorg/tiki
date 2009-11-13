@@ -70,7 +70,7 @@
 
 
 
-	<div class="navbar" align="right">
+	<div class="categbar" align="right">
 		{if $user and $prefs.feature_user_watches eq 'y'}
 			{if $category_watched eq 'y'}
 				{tr}Watched by categories{/tr}:
