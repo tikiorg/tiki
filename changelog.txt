@@ -23,6 +23,539 @@ Version 4.0
 ------------------
 
 ----------------------------------------------
+r23258 | jonnybradley | 2009-11-13 15:13:48 -0500 (Fri, 13 Nov 2009) | 4 lines
+
+[FIX] New perms checking for (mysql) search results.
+Unfinished but better than what was there.
+Ok on wiki pages - filegals & files todo, amongst others.
+Previous code commented out for reference.
+----------------------------------------------
+r23255 | sylvieg | 2009-11-13 14:20:03 -0500 (Fri, 13 Nov 2009) | 1 line
+
+[FIX]categ: comment as obsolete the old categ perms
+----------------------------------------------
+r23254 | sylvieg | 2009-11-13 14:08:09 -0500 (Fri, 13 Nov 2009) | 1 line
+
+[FIX]categ perm: some people found intrusive that an edit_categorized was able to remove a wiki page-> the perm will have to be added manually
+----------------------------------------------
+r23251 | chealer | 2009-11-13 13:12:08 -0500 (Fri, 13 Nov 2009) | 1 line
+
+allow spaces in user module names and rename Application_Menu to Application Menu
+----------------------------------------------
+r23250 | pascalstjean | 2009-11-13 13:08:00 -0500 (Fri, 13 Nov 2009) | 1 line
+
+[NEW] added Javascript_Enabled checker before allowing a user to run profiles.
+----------------------------------------------
+r23248 | marclaporte | 2009-11-13 12:53:03 -0500 (Fri, 13 Nov 2009) | 1 line
+
+[KIL] delete old unreferences files. They look like one-time use. Any useful script should be in doc/devtools/ 
+----------------------------------------------
+r23246 | pascalstjean | 2009-11-13 12:36:16 -0500 (Fri, 13 Nov 2009) | 1 line
+
+[NEW] added friendly warning to users depending on the connection state of profile repositories.
+----------------------------------------------
+r23245 | pascalstjean | 2009-11-13 12:34:51 -0500 (Fri, 13 Nov 2009) | 1 line
+
+[NEW] Added logic to verify which Profile Repositories are connecting and  generate a Smarty state variables (all, some, none)
+----------------------------------------------
+r23243 | jonnybradley | 2009-11-13 12:28:26 -0500 (Fri, 13 Nov 2009) | 2 lines
+
+[KIL] Removing redundant tiki_p_view_categorized and tiki_p_edit_categorized refs.
+
+----------------------------------------------
+r23241 | Jyhem | 2009-11-13 12:20:47 -0500 (Fri, 13 Nov 2009) | 1 line
+
+[FIX] These are not navbars or buttons so they need to be styled with another class called categbar so we can later have different looks
+----------------------------------------------
+r23238 | nkoth | 2009-11-13 11:42:10 -0500 (Fri, 13 Nov 2009) | 2 lines
+
+[FIX] Quick fix to prevent cursor from ending up at the end of textarea after insertion of tags in Fx3.5 due to "selection forgetting problem.
+
+----------------------------------------------
+r23237 | chibaguy | 2009-11-13 11:28:14 -0500 (Fri, 13 Nov 2009) | 1 line
+
+[FIX] Corrected illogical language.
+----------------------------------------------
+r23230 | nkoth | 2009-11-13 09:57:10 -0500 (Fri, 13 Nov 2009) | 2 lines
+
+[FIX] The problem where selection/cursor position is lost when toolbar popup/dialogs are used leading to tag added at end of textarea in Fx3.5
+
+----------------------------------------------
+r23227 | chibaguy | 2009-11-13 04:20:38 -0500 (Fri, 13 Nov 2009) | 1 line
+
+[FIX] Specifying .rbox warning background color and link color is sufficient to ensure contrast. No need for link background color also, which causes a problem when theme specifies link and div background colors. 
+----------------------------------------------
+r23226 | chibaguy | 2009-11-13 04:13:15 -0500 (Fri, 13 Nov 2009) | 1 line
+
+[FIX] Warning box link color property removed (conflicted with new bg color in design.css).
+----------------------------------------------
+r23224 | marclaporte | 2009-11-13 02:43:03 -0500 (Fri, 13 Nov 2009) | 1 line
+
+[KIL] feature_profile_tester preference has been removed as it's now always available in advanced tab in admin-profiles 
+----------------------------------------------
+r23223 | jonnybradley | 2009-11-13 02:15:06 -0500 (Fri, 13 Nov 2009) | 1 line
+
+[FIX] Remove spare spanner on comments toolbar
+----------------------------------------------
+r23222 | nkoth | 2009-11-13 02:12:41 -0500 (Fri, 13 Nov 2009) | 2 lines
+
+[FIX] allow way to show forum thread configuration bar for different number of posts threshold
+
+----------------------------------------------
+r23221 | pascalstjean | 2009-11-13 02:12:31 -0500 (Fri, 13 Nov 2009) | 1 line
+
+[MOD] chanced string (install profile) to (apply profile)
+----------------------------------------------
+r23220 | chibaguy | 2009-11-13 02:06:10 -0500 (Fri, 13 Nov 2009) | 1 line
+
+[FIX][NEW] Higher-contrast suckerfish arrow for topbar menu.
+----------------------------------------------
+r23218 | pascalstjean | 2009-11-13 02:02:38 -0500 (Fri, 13 Nov 2009) | 1 line
+
+[MOD] Made Profile Tester Feature always on under the Profiles Admin (Advanced Tab)
+----------------------------------------------
+r23217 | lindonb | 2009-11-13 01:59:44 -0500 (Fri, 13 Nov 2009) | 1 line
+
+[FIX] Update syntax on help block on image browse page.
+----------------------------------------------
+r23216 | chealer | 2009-11-13 01:50:50 -0500 (Fri, 13 Nov 2009) | 1 line
+
+[FIX] HTML special chars escaping
+----------------------------------------------
+r23215 | pascalstjean | 2009-11-13 01:46:43 -0500 (Fri, 13 Nov 2009) | 1 line
+
+[FIX] Allow Custom blog header function to properly work. Defaults to blog-header TPL if custom header is turned off
+----------------------------------------------
+r23213 | marclaporte | 2009-11-13 01:24:22 -0500 (Fri, 13 Nov 2009) | 1 line
+
+[FIX] Use the .htaccess that was on profiles.tikiwiki.org
+----------------------------------------------
+r23212 | chealer | 2009-11-13 01:12:04 -0500 (Fri, 13 Nov 2009) | 1 line
+
+generalize "RSS" to "Feed"
+----------------------------------------------
+r23211 | marclaporte | 2009-11-13 01:08:11 -0500 (Fri, 13 Nov 2009) | 1 line
+
+[FIX] Move profiles entry in _htaccess so make it work
+----------------------------------------------
+r23210 | chealer | 2009-11-13 00:58:59 -0500 (Fri, 13 Nov 2009) | 1 line
+
+[FIX] last_visitors
+----------------------------------------------
+r23209 | chealer | 2009-11-13 00:57:40 -0500 (Fri, 13 Nov 2009) | 1 line
+
+[FIX] one of these bugs which can only slip at these hours
+----------------------------------------------
+r23207 | jonnybradley | 2009-11-13 00:40:27 -0500 (Fri, 13 Nov 2009) | 1 line
+
+[FIX] Make categories in categorizator wrap to tab width
+----------------------------------------------
+r23206 | nkoth | 2009-11-13 00:35:18 -0500 (Fri, 13 Nov 2009) | 2 lines
+
+[FIX] Wish 2762: Allow brackets to work in parameters of plugins specified in short form, common e.g. the img plugin
+
+----------------------------------------------
+r23205 | pascalstjean | 2009-11-13 00:30:12 -0500 (Fri, 13 Nov 2009) | 1 line
+
+[MOD] Make sure Blog Post title properly appears for Strasa Theme
+----------------------------------------------
+r23204 | pascalstjean | 2009-11-13 00:25:52 -0500 (Fri, 13 Nov 2009) | 1 line
+
+[MOD] Made Blog Post Titles link to individual blog post in Strasa Theme
+----------------------------------------------
+r23203 | pascalstjean | 2009-11-13 00:24:24 -0500 (Fri, 13 Nov 2009) | 1 line
+
+[MOD] make sure Blog Post Title properly appears
+----------------------------------------------
+r23202 | pascalstjean | 2009-11-13 00:08:00 -0500 (Fri, 13 Nov 2009) | 1 line
+
+[MOD] Made sure that the option to enter a Title for a Blog Post properly appears
+----------------------------------------------
+r23201 | marclaporte | 2009-11-13 00:05:54 -0500 (Fri, 13 Nov 2009) | 1 line
+
+[KIL] Remove __send blog post by email__ because 1- it duplicates tell a friend, 2- it's not optional and 3- There is no antispam protection
+----------------------------------------------
+r23200 | jonnybradley | 2009-11-12 23:58:29 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[MOD] Warn about no email on user watch page
+----------------------------------------------
+r23199 | pascalstjean | 2009-11-12 23:41:29 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[MOD] removed use title from Edit Blog. This feature is being removed globally.
+----------------------------------------------
+r23198 | pascalstjean | 2009-11-12 23:20:30 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[MOD] Removed  from Strasa theme. Redundant feature and caused multiple TPL bugs
+----------------------------------------------
+r23197 | pascalstjean | 2009-11-12 23:14:07 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[MOD] Removed  option from Blog posts. Redundant feature and caused multiple TPL bugs
+----------------------------------------------
+r23196 | jonnybradley | 2009-11-12 23:07:13 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[FIX] Don't set user watch of user has no email
+----------------------------------------------
+r23195 | chealer | 2009-11-12 22:10:41 -0500 (Thu, 12 Nov 2009) | 2 lines
+
+[ENH] Change since_last_visit module to new module style (modules-doc).
+since_last_visit is now called "Since last visit (simple)"
+----------------------------------------------
+r23194 | jonnybradley | 2009-11-12 21:59:04 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[MOD] Rename mnu_application_menu to 'Application_Menu' to be (more) in line with new modules style.
+----------------------------------------------
+r23193 | chealer | 2009-11-12 21:50:55 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[KIL] calendar [old] module (too buggy, still using {php} Smarty tags). feel free to complain if you were using it
+----------------------------------------------
+r23192 | chealer | 2009-11-12 21:44:05 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[ENH] Change since_last_visit_new module to new module style (modules-doc).
+----------------------------------------------
+r23190 | chealer | 2009-11-12 21:35:16 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[FIX] blog: HTML special chars escaping (mostly ports of fixes to Strasa)
+----------------------------------------------
+r23189 | jonnybradley | 2009-11-12 21:34:22 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[MOD] Admin Feed icons and (improved) Kaltura logos
+----------------------------------------------
+r23188 | chealer | 2009-11-12 21:26:33 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[FIX] HTML
+----------------------------------------------
+r23187 | nkoth | 2009-11-12 21:22:55 -0500 (Thu, 12 Nov 2009) | 2 lines
+
+[ENH] Set jquery enabled tracker user selector in the hope of solving nasty perf/slow script problem going to edit tab on dev.tw.o
+
+----------------------------------------------
+r23186 | lindonb | 2009-11-12 21:15:58 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[FIX] Updated syntax help in "additional info" that appears after user uploads a file to file gallery.
+----------------------------------------------
+r23185 | pascalstjean | 2009-11-12 21:15:33 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[MOD] removed Blog Level Comments for Strasa Custom TPL
+----------------------------------------------
+r23184 | chealer | 2009-11-12 21:12:55 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[FIX] typo breaking HTML validity
+----------------------------------------------
+r23183 | pascalstjean | 2009-11-12 21:12:12 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[MOD] Removed Blog Level Comments
+----------------------------------------------
+r23182 | chealer | 2009-11-12 21:09:45 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[FIX] XHTML validity
+----------------------------------------------
+r23181 | jonnybradley | 2009-11-12 20:36:38 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[KIL] Unmaintained mod-events removed
+----------------------------------------------
+r23180 | pascalstjean | 2009-11-12 20:21:23 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[MOD] Added tabs to Profile Admin page in order to seperate installation section from advanced features. 
+----------------------------------------------
+r23179 | jonnybradley | 2009-11-12 20:19:34 -0500 (Thu, 12 Nov 2009) | 2 lines
+
+[ENH] Change last_visitors module to new module style (modules-doc).
+(despite the fact the data isn't being collected properly - see wish2623)
+----------------------------------------------
+r23178 | jonnybradley | 2009-11-12 19:58:54 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[ENH] Change usergroup_tracker module to new module style (modules-doc).
+----------------------------------------------
+r23177 | marclaporte | 2009-11-12 19:58:17 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[FIX] making PluginRealNameList experimental
+----------------------------------------------
+r23176 | jonnybradley | 2009-11-12 19:53:39 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[ENH] Change tikitest module to new module style (modules-doc).
+----------------------------------------------
+r23175 | jonnybradley | 2009-11-12 19:39:52 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[ENH] Change the four search modules to new module style (modules-doc).
+----------------------------------------------
+r23174 | marclaporte | 2009-11-12 19:08:43 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[MOD] Restoring PluginRealNameList as discussed with Olaf on mailing list. I will tag as experimental and the goal is to merge with PluginUserList for Tiki5
+----------------------------------------------
+r23173 | jonnybradley | 2009-11-12 19:06:27 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[FIX] Fix simple mode button in AJAX  and hide additional info properly
+----------------------------------------------
+r23172 | lindonb | 2009-11-12 18:58:39 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[FIX] Update syntax in message showing user how to insert image.
+----------------------------------------------
+r23171 | jonnybradley | 2009-11-12 18:57:51 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[FIX] urlencode was wrong for url encoding - using htmlentities instead
+----------------------------------------------
+r23170 | jonnybradley | 2009-11-12 18:50:32 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[FIX] No need to include JS files again in AJAX response (was causing many errors)
+----------------------------------------------
+r23169 | marclaporte | 2009-11-12 18:46:31 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[DOC] update security script documentation 
+----------------------------------------------
+r23168 | marclaporte | 2009-11-12 18:24:43 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[KIL] remove old secdb
+----------------------------------------------
+r23167 | marclaporte | 2009-11-12 18:10:33 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[DOC] All Tiki code should refer to TikiWiki.org
+----------------------------------------------
+r23166 | chealer | 2009-11-12 18:09:34 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[FIX] login screen title, r23134 regression. thanks Marc Laporte
+----------------------------------------------
+r23165 | chealer | 2009-11-12 18:06:11 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[FIX] translate action_calendar's description
+----------------------------------------------
+r23163 | jonnybradley | 2009-11-12 17:58:44 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[MOD] Better description
+----------------------------------------------
+r23162 | jonnybradley | 2009-11-12 17:49:57 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[FIX] Don't warn about leaving modules admin page after previewing module.
+----------------------------------------------
+r23161 | nkoth | 2009-11-12 17:48:38 -0500 (Thu, 12 Nov 2009) | 2 lines
+
+[FIX] links that were just anchors e.g. #form was previously being rendered as ##form and not working (e.g. in attachment/forum reply buttons).
+
+----------------------------------------------
+r23160 | jonnybradley | 2009-11-12 17:47:56 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[ENH] Change rsslist module to new module style (modules-doc).
+----------------------------------------------
+r23159 | jonnybradley | 2009-11-12 17:46:15 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[FIX] notices
+----------------------------------------------
+r23157 | marclaporte | 2009-11-12 17:28:29 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[SEC] Adding extra skip for 3 plugins
+----------------------------------------------
+r23155 | sylvieg | 2009-11-12 17:06:41 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[FIX]TRACKER: rewrite the user itrem only if one item per user
+----------------------------------------------
+r23154 | marclaporte | 2009-11-12 16:40:50 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[KIL] no longer used now that we lock by adding db/lock
+----------------------------------------------
+r23153 | nkoth | 2009-11-12 16:22:11 -0500 (Thu, 12 Nov 2009) | 2 lines
+
+[FIX] better fix: to insert h1 etc (block elements) properly in the last line of textarea
+
+----------------------------------------------
+r23152 | jonnybradley | 2009-11-12 16:08:26 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[FIX] Stop "strange" behaviour when adding a toolbar block element (e.g. center or headings) on the last character when editing.
+----------------------------------------------
+r23151 | nkoth | 2009-11-12 16:01:25 -0500 (Thu, 12 Nov 2009) | 2 lines
+
+[FIX] previous commit: need to set selection start as well if range is positive
+
+----------------------------------------------
+r23150 | nkoth | 2009-11-12 15:57:27 -0500 (Thu, 12 Nov 2009) | 2 lines
+
+[FIX] In IE after inserting stuff in quicktags, to position caret properly
+
+----------------------------------------------
+r23149 | chealer | 2009-11-12 15:31:13 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[FIX] mod-events: static calls to non-static $tikilib->make_time()
+----------------------------------------------
+r23148 | chealer | 2009-11-12 15:29:49 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[FIX] more copy-pasted descriptions
+----------------------------------------------
+r23147 | jonnybradley | 2009-11-12 15:24:49 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[FIX] insertAt for IE (so smilies etc go in the right place in the text area - just needed focus!)
+----------------------------------------------
+r23144 | chealer | 2009-11-12 15:02:35 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[FIX] a copy-pasted parameter description
+----------------------------------------------
+r23143 | jonnybradley | 2009-11-12 15:00:31 -0500 (Thu, 12 Nov 2009) | 3 lines
+
+[FIX] Testing for selectionStart was failing when == 0 (so fixed tests on a couple of others too)
+So plugin etc appears on empty pages
+
+----------------------------------------------
+r23142 | jonnybradley | 2009-11-12 14:41:56 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[FIX] Switch editor tool fixed for IE (and still working in Safari & Fx 3.5)
+----------------------------------------------
+r23140 | jonnybradley | 2009-11-12 13:52:32 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[FIX] XHTML (_text not text)
+----------------------------------------------
+r23139 | jonnybradley | 2009-11-12 13:51:39 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[FIX] XHTML (<table> needs something in it)
+----------------------------------------------
+r23138 | jonnybradley | 2009-11-12 13:51:04 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[FIX] XHTML (duplicated id - probably not needed on hidden field but renamed for safety)
+----------------------------------------------
+r23137 | jonnybradley | 2009-11-12 13:50:26 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[FIX] XHTML (name not valid on div)
+----------------------------------------------
+r23136 | jonnybradley | 2009-11-12 13:49:59 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[FIX] XHTML (duplicated attributes)
+----------------------------------------------
+r23135 | jonnybradley | 2009-11-12 13:49:22 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[MOD] Default to simple remembermethod (becasue it remembers you)
+----------------------------------------------
+r23134 | chealer | 2009-11-12 13:43:45 -0500 (Thu, 12 Nov 2009) | 3 lines
+
+[FIX] Login box: remove unused nonums and rows
+[FIX] login box: undefined do_not_show_login_box
+[FIX] logo: make module title the same as its name
+----------------------------------------------
+r23132 | chealer | 2009-11-12 13:14:38 -0500 (Thu, 12 Nov 2009) | 5 lines
+
+[ENH] Change action_calendar and calendar_new modules to new module style (modules-doc).
+[MOD] remove calIds (using it would break website)
+sylvie: you may want to look at this
+[ENH] calendar plugin: change viewlist and viewwithevents parameters to something making sense. reindent
+[FIX] static calls to non-static $tikilib->make_time()
+----------------------------------------------
+r23131 | marclaporte | 2009-11-12 13:13:29 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[MOD] Bump version number for hopeful succession of img by image
+----------------------------------------------
+r23128 | jonnybradley | 2009-11-12 11:40:00 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[MOD] Moved copyright and authors style to properties tab
+----------------------------------------------
+r23125 | jonnybradley | 2009-11-12 11:11:18 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[MOD] Move  old wiki_up "add image" control from tools tab to edit.
+----------------------------------------------
+r23121 | chealer | 2009-11-12 08:47:17 -0500 (Thu, 12 Nov 2009) | 3 lines
+
+[FIX] strike syntax ("--") would match HTML comment ends to HTML comment starts from invocations of plugins using Smarty, such as wikiplugin_calendar, when log_tpl is enabled, resulting in content between a comment and the next one being commented.
+This solution does not consider "-->" as a strike begin
+thanks Jonny
+----------------------------------------------
+r23120 | luciash | 2009-11-12 07:22:08 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[FIX] Tabs wikiplugin: parse wiki syntax in tabs
+----------------------------------------------
+r23119 | marclaporte | 2009-11-12 07:16:32 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[KIL] Dexter said: I've looked over this file again, and the reason its kept is that it could be used when there are lots of ajax functions, to keep things clean in the tiki-register.php. but currently it isn't used, so it is safe and ok to remove it.
+----------------------------------------------
+r23118 | luciash | 2009-11-12 05:31:57 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[FIX] Smarty display block: better example in comment, fix groups
+----------------------------------------------
+r23117 | luciash | 2009-11-12 03:45:51 -0500 (Thu, 12 Nov 2009) | 1 line
+
+better wording, added include check + Id to svn:keywords
+----------------------------------------------
+r23116 | luciash | 2009-11-12 03:39:23 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[FIX] Smarty display block: do not display default error message for friends if ///else/// is set
+----------------------------------------------
+r23115 | luciash | 2009-11-12 02:43:13 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[ENH] Smarty display block: enhancements to make display block much more useful (especially to filter out displaying of Pretty Trackers items to groups or friends in trackerlist)
+----------------------------------------------
+r23114 | chibaguy | 2009-11-12 02:25:09 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[FIX] Made previous change specific to admin pages.
+----------------------------------------------
+r23113 | chibaguy | 2009-11-12 01:59:10 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[ENH] Bullets on list items look inappropriate and unnecessary, being outside of alternating background colors.
+----------------------------------------------
+r23112 | luciash | 2009-11-12 00:53:39 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[FIX] trackerlist: better error message when tiki_p_use_as_template perm not assigned (TODO: do not cache)
+----------------------------------------------
+r23111 | jonnybradley | 2009-11-12 00:29:51 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[FIX] Add flip param to all modules (and remove from common_params on webmail_inbox)
+----------------------------------------------
+r23110 | jonnybradley | 2009-11-12 00:28:24 -0500 (Thu, 12 Nov 2009) | 1 line
+
+[ENH] Change login_box and logo modules to new module style (modules-doc).
+----------------------------------------------
+r23109 | jonnybradley | 2009-11-11 23:45:09 -0500 (Wed, 11 Nov 2009) | 1 line
+
+[ENH] Change webmail_inbox module to new module style (modules-doc).
+----------------------------------------------
+r23107 | chibaguy | 2009-11-11 22:02:32 -0500 (Wed, 11 Nov 2009) | 1 line
+
+[FIX] CSS id to class change consistent with changes in r23106.
+----------------------------------------------
+r23106 | chealer | 2009-11-11 18:37:40 -0500 (Wed, 11 Nov 2009) | 1 line
+
+[FIX] HTML validity/CSS
+----------------------------------------------
+r23105 | jonnybradley | 2009-11-11 18:17:21 -0500 (Wed, 11 Nov 2009) | 1 line
+
+[FIX] Only escape html chars if not in (or switching to) wysiwyg mode. 2nd attempt at r23072 to allow html entities in wiki markup.
+----------------------------------------------
+r23104 | jonnybradley | 2009-11-11 17:59:42 -0500 (Wed, 11 Nov 2009) | 1 line
+
+[FIX] Hide empty tabs on edit page
+----------------------------------------------
+r23103 | marclaporte | 2009-11-11 17:55:27 -0500 (Wed, 11 Nov 2009) | 1 line
+
+[FIX] prevent directory browsing
+----------------------------------------------
+r23102 | marclaporte | 2009-11-11 17:30:20 -0500 (Wed, 11 Nov 2009) | 1 line
+
+[FIX] make impossible to call directly
+----------------------------------------------
+r23101 | marclaporte | 2009-11-11 17:15:28 -0500 (Wed, 11 Nov 2009) | 1 line
+
+[KIL] Remove test files. If developers write interesting scripts, please add to doc/devtools/
+----------------------------------------------
+r23100 | luciash | 2009-11-11 17:03:56 -0500 (Wed, 11 Nov 2009) | 1 line
+
+[FIX] user messages: prefer user preferences max messages to display pagination (thanks to Shawn Adler for noticing)
+----------------------------------------------
+r23099 | marclaporte | 2009-11-11 17:01:57 -0500 (Wed, 11 Nov 2009) | 1 line
+
+[KIL] Remove useless file
+----------------------------------------------
+r23096 | marclaporte | 2009-11-11 16:42:52 -0500 (Wed, 11 Nov 2009) | 1 line
+
+[SEC] re-order code to have security check first.
+----------------------------------------------
+r23095 | marclaporte | 2009-11-11 16:38:09 -0500 (Wed, 11 Nov 2009) | 1 line
+
+[DOC] dev documentation no longer relevant (was fixed)
+----------------------------------------------
+r23094 | sylvieg | 2009-11-11 16:37:15 -0500 (Wed, 11 Nov 2009) | 1 line
+
+[FIX]tracker: userCanTakeOwnership was a little bit too invasive
+----------------------------------------------
+r23093 | marclaporte | 2009-11-11 16:27:57 -0500 (Wed, 11 Nov 2009) | 1 line
+
+[FIX] profiles are applied, not installed (installing implies adding files).
+----------------------------------------------
+r23092 | jonnybradley | 2009-11-11 16:16:07 -0500 (Wed, 11 Nov 2009) | 1 line
+
+[FIX] More on textarea selection
+----------------------------------------------
 r22965 | pkdille | 2009-11-07 23:37:51 +0100 (sam., 07 nov. 2009) | 1 line
 
 [FIX] database structure homogenization for a fresh 4.x installation and for a 3.x to 4.x upgraded tiki.
