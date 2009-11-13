@@ -287,6 +287,16 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 
 {elseif $cur_field.type eq 'u'}
 {if !$cur_field.options_array[0] or $tiki_p_admin_trackers eq 'y'}
+
+	{if $prefs.javascript_enabled eq 'y' and $prefs.feature_jquery_autocomplete eq 'y' and $users|@count > $prefs["tracker_jquery_user_selector_threshold"] and $cur_field.isMandatory ne 'y'}
+{* this is jquery entry field for performance enhancement - since it allows blank entry it can't be used for mandatory user selection. *}
+<input id="user_selector_{$cur_field.id}" type="text" size="20" name="ins_{$cur_field.id}" value="{$cur_field.value}" />
+{jq}
+$jq("#user_selector_{{$cur_field.id}}").tiki("autocomplete", "username", {mustMatch: true});
+{/jq}
+
+	{else}
+
 <select name="ins_{$cur_field.id}" {if $cur_field.http_request}onchange="selectValues('trackerIdList={$cur_field.http_request[0]}&amp;fieldlist={$cur_field.http_request[3]}&amp;filterfield={$cur_field.http_request[1]}&amp;status={$cur_field.http_request[4]}&amp;mandatory={$cur_field.http_request[6]}&amp;filtervalue='+escape(this.value),'{$cur_field.http_request[5]}')"{/if}>
 {if $cur_field.isMandatory ne 'y'}<option value="">{tr}None{/tr}</option>{/if}
 {foreach key=id item=one from=$users}
@@ -295,6 +305,9 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {/if}
 {/foreach}
 </select>
+
+	{/if}
+
 {elseif $cur_field.options}
 <a href="tiki-user_information.php?user={$cur_field.value|escape:"url"}" class="link">{$cur_field.value}</a>
 {/if}

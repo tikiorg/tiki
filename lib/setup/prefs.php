@@ -649,6 +649,7 @@ function get_default_prefs() {
 		'userTracker' => 'n',
 		'trk_with_mirror_tables' => 'n',
 		'trackerCreatorGroupName' => ' ',
+		'tracker_jquery_user_selector_threshold' => 50,
 
 		// user
 		'feature_userlevels' => 'n',
