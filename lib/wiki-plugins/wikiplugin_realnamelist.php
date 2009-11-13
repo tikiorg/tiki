@@ -19,7 +19,7 @@ function wikiplugin_realnamelist_info() {
 	return array(
 		'name' => tra('User List (showing Real Name)'),
 		'documentation' => 'PluginRealNameList',
-		'description' => tra('Displays a list of registered users showing their Real Names'),
+		'description' => tra("Displays a list of registered users showing their Real Names").tra(' (experimental, should be merged with UserList in Tiki5)'),		
 		'prefs' => array( 'wikiplugin_realnamelist' ),
 		'body' => tra('Login Filter'),
 		'params' => array(
