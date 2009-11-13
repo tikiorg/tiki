@@ -10,7 +10,7 @@ require_once ('tiki-setup.php');
 $prefs['feature_wiki_protect_email'] = 'n'; //not to alter the email
 include_once ('lib/newsletters/nllib.php');
 $auto_query_args = array('sort_mode', 'offset', 'find', 'nlId', 'cookietab');
-$sender_email = $userlib->get_user_email($user);
+
 if ($prefs['feature_newsletters'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled") . ": feature_newsletters");
 	$smarty->display("error.tpl");
@@ -32,7 +32,13 @@ if (!$newsletters['cant']) {
 	$smarty->display("error.tpl");
 	die;
 }
-if (!isset($_REQUEST['cookietab'])) {
+
+if ( empty($_REQUEST["sendingUniqId"]) ) {
+	$sendingUniqId = $tikilib->genRandomString();
+	$smarty->assign('sendingUniqId', $sendingUniqId);
+}
+
+if(!isset($_REQUEST['cookietab'])) {
 	$_REQUEST['cookietab'] = 1;
 }
 $smarty->assign('newsletters', $newsletters["data"]);
@@ -250,11 +256,24 @@ if (empty($txt) && !empty($_REQUEST["data"])) {
 	$txt = preg_replace('/^!(.*?)$/m', "\n$1\n", $txt);
 	$info["datatxt"] = $txt;
 }
-if (isset($_REQUEST["send"])) {
+
+if ( isset($_REQUEST["send"]) && ! empty($_REQUEST["sendingUniqId"]) ) {
 	include_once ('lib/webmail/tikimaillib.php');
 	$editionId = $_REQUEST['editionId'];
 	check_ticket('send-newsletter');
-	set_time_limit(0);
+	@set_time_limit(0);
+
+	if ( ! is_array($_SESSION["sendingUniqIds"]) )
+		$_SESSION["sendingUniqIds"] = array();
+
+	if ( isset( $_SESSION["sendingUniqIds"][ $_REQUEST["sendingUniqId"] ] ) ) {
+		// Avoid sending the same newsletter again if the user reload the page
+		print tra('Error: You can\'t send the same newsletter by refreshing this frame content.');
+		die;
+	} else {
+		$_SESSION["sendingUniqIds"][ $_REQUEST["sendingUniqId"] ] = 1;
+	}
+
 	$mail = new TikiMail();
 	if (stristr($_REQUEST["dataparsed"], "<body") === false) {
 		$html = "<html><body>" . $tikilib->parse_data($_REQUEST["dataparsed"], array('absolute_links' => true)) . "</body></html>";
@@ -271,11 +290,15 @@ if (isset($_REQUEST["send"])) {
 	$sent = array();
 	$unsubmsg = '';
 	$errors = array();
+	$logFileName = $prefs['tmpDir'] . '/newsletter-log-' . $_REQUEST["sendingUniqId"] . '.txt';
+	$logFileHandle = @fopen( $logFileName, 'a' );
+
 	if (isset($_REQUEST['errorEditionId'])) {
 		$users = $nllib->get_edition_errors($_REQUEST['errorEditionId']);
 	} else {
 		$users = $nllib->get_all_subscribers($_REQUEST["nlId"], $nl_info["unsubMsg"]);
 	}
+
 	$nllib->memo_subscribers_edition($editionId, $users);
 	$sender_email = $prefs['sender_email'];
 	if (!isset($info['files']) || $info['files'] === null || count($info['files']) <= 0) $info['files'] = $nllib->get_edition_files($editionId);
@@ -283,7 +306,12 @@ if (isset($_REQUEST["send"])) {
 		$fpath = isset($f['path']) ? $f['path'] : $prefs['tmpDir'] . '/newsletterfile-' . $f['filename'];
 		$mail->addAttachment(file_get_contents($fpath), $f['name'], $f['type']);
 	}
-	foreach($users as $us) {
+
+	$smarty->assign('sectionClass', empty( $section ) ? '' : "tiki_$section " );
+	echo $smarty->fetch('send_newsletter_header.tpl');
+
+	@ini_set('zlib.output_compression', 0);
+	foreach ($users as $us) {
 		$userEmail = $us["login"];
 		$email = $us["email"];
 		if (!preg_match('/([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+/', trim($email))) {
@@ -300,7 +328,6 @@ if (isset($_REQUEST["send"])) {
 		} else {
 			$userEmail = '';
 		}
-		$mail->setFrom($sender_email);
 		if (!empty($_REQUEST['replyto'])) {
 			$mail->setHeader("Reply-To", $_REQUEST['replyto']);
 		}
@@ -318,15 +345,55 @@ if (isset($_REQUEST["send"])) {
 		}
 		$mail->setHtml($msg, $txt . strip_tags($unsubmsg));
 		$mail->buildMessage(array('text_encoding' => '8bit'));
-		if ($mail->send(array($email))) {
+
+		if (@ob_get_level() == 0)
+			@ob_start();
+
+		// Browsers needs a certain amount of data, for each flush, to display something
+		print str_repeat(' ', 4096) . "\n";
+
+		print tra("Sending to") . " '<b>$email</b>': <font color=";
+
+		if ( $mail->send(array($email)) ) {
 			$sent[] = $email;
+			print "'green'>" . tra('OK');
 			$nllib->delete_edition_subscriber($editionId, $us);
+			$logStatus = 'OK';
 		} else {
+			print "'red'>" . tra('Error') . " - {$mail->errors}";
 			$errors[] = array("user" => $userEmail, "email" => $email, "msg" => $mail->errors);
 			$nllib->mark_edition_subscriber($editionId, $us);
+			$logStatus = 'Error';
 		}
+
+		if ( $logFileHandle )
+			@fwrite( $logFileHandle, "$email : $logStatus\n" );
+
+		print "</font><br />\n";
+
+		// Flush output to force the browser to display email addresses as soon as emails are sent
+		// This should avoid CGI and/or proxy and/or browser timeouts when sending to a lot of emails
+		//
+		@ob_flush();
+		@flush();
+		@ob_end_flush();
 	}
-	$smarty->assign('sent', count($sent));
+
+	$nb_sent = count($sent);
+	$nb_errors = count($errors);
+
+	$msg = '<h4>' . sprintf( tra('Newsletter successfully sent to %s users.'), $nb_sent ) . '</h4>';
+	if ( $nb_errors > 0 )
+		$msg .= "\n" . '<font color="red">' . '(' . sprintf( tra('There was %s errors.'), $nb_errors ) . ')' . '</font><br />';
+
+	// If logfile exists and if it is reachable from the web browser, add a download link
+	if ( $logFileHandle && $logFileName[0] != '/' && $logFileName[0] != '.' )
+		$smarty->assign('downloadLink', $logFileName);
+
+	echo str_replace( "'", "\\'", $msg);
+	echo $smarty->fetch('send_newsletter_footer.tpl');
+
+	$smarty->assign('sent', $nb_sent);
 	$smarty->assign('emited', 'y');
 	if (count($errors) > 0) {
 		$smarty->assign_by_ref('errors', $errors);
@@ -341,7 +408,12 @@ if (isset($_REQUEST["send"])) {
 			$info['files'][$k]['path'] = $newpath;
 		}
 	}
+
+	@fclose( $logFileHandle );
+	unset($_SESSION["sendingUniqIds"][ $_REQUEST["sendingUniqId"] ]);
+	exit; // Stop here since we are in an iframe and don't want to use smarty display
 }
+
 if (isset($_REQUEST["save_only"])) {
 	if (!isset($txt) || empty($_REQUEST['datatxt'])) $txt = "";
 	$smarty->assign('nlId', $_REQUEST['nlId']);
