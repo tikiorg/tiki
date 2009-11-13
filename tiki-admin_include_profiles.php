@@ -151,4 +151,20 @@ $oldSources = array();
 foreach($sources as $key => $source) if ($source['lastupdate'] < $threshhold) $oldSources[] = $key;
 $smarty->assign('sources', $sources);
 $smarty->assign('oldSources', $oldSources);
+
+$openSources = 0;
+foreach($sources as $key => $source)
+{
+	if ($source['status'] == 'open')
+		$openSources++;
+}
+
+if($openSources == sizeof($sources))
+	$smarty->assign('openSources', 'all');
+elseif (($openSources > 0) &&($openSources < sizeof($sources)))
+	$smarty->assign('openSources', 'some');
+else
+	$smarty->assign('openSources', 'none');
+	
+
 ask_ticket('admin-inc-profiles');
