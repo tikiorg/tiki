@@ -5036,16 +5036,15 @@ class TikiLib extends TikiDb_Bridge {
 					//print "<pre>Data char: $i, $char, $curlies, $parens\n.</pre>\n";
 					if( $char == "{" ) {
 						$curlies++;
-					} elseif( $char == "(" ) {
+					} elseif( $char == "(" && $plugins['type'] == 'long' ) {
 						$parens++;
 					} elseif( $char == "}" ) {
 						$curlies--;
 						if( $plugins['type'] == 'short' )
 							$lastParens = $i;
-					} elseif( $char == ")" ) {
+					} elseif( $char == ")"  && $plugins['type'] == 'long' ) {
 						$parens--;
-						if( $plugins['type'] == 'long' )
-							$lastParens = $i;
+						$lastParens = $i;
 					}
 
 					// If we found the end of the match...
