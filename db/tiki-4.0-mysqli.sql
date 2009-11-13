@@ -1479,7 +1479,7 @@ CREATE TABLE `tiki_modules` (
   KEY `moduleId` (`moduleId`)
 ) ENGINE=MyISAM;
 
-INSERT INTO tiki_modules (name,position,ord,cache_time,params,groups) VALUES ('mnu_application_menu','l',30,0,'flip=y','a:1:{i:0;s:10:"Registered";}');
+INSERT INTO tiki_modules (name,position,ord,cache_time,params,groups) VALUES ('Application_Menu','l',30,0,'flip=y','a:1:{i:0;s:10:"Registered";}');
 
 DROP TABLE IF EXISTS `tiki_newsletter_subscriptions`;
 CREATE TABLE `tiki_newsletter_subscriptions` (
@@ -2345,7 +2345,7 @@ CREATE TABLE `tiki_user_modules` (
   PRIMARY KEY (`name`)
 ) ENGINE=MyISAM;
 
-INSERT INTO tiki_user_modules (name, title, data, parse) VALUES ('mnu_application_menu', 'Menu', '{menu id=42}', 'n');
+INSERT INTO tiki_user_modules (name, title, data, parse) VALUES ('Application_Menu', 'Menu', '{menu id=42}', 'n');
 
 DROP TABLE IF EXISTS `tiki_user_notes`;
 CREATE TABLE `tiki_user_notes` (
