@@ -8564,36 +8564,12 @@ function detect_browser_language() {
 	return $aproximate_lang;
 }
 
-function validate_email($email,$checkserver='n') {
+function validate_email($email) {
 	global $prefs;
-	$valid_syntax = eregi($prefs['valid_email_regex'], $email);
-	if (!$valid_syntax) {
-		return false;
-	} elseif ($checkserver == 'y') {
-		include_once('Net/DNS.php');
-		$resolver = new Net_DNS_Resolver();
-		$domain = substr(strstr($email,'@'),1);
-		$answer = $resolver->query($domain,'MX');
-		if (!$answer) {
-			return false;
-		} else {
-			foreach ($answer->answer as $server) {
-				$mxserver[$server->preference] = $server->exchange;
-			}
-			krsort($mxserver);
-			foreach ($mxserver as $server) {
-				$test = fsockopen($server,25,$errno,$errstr,15);
-				if ($test) {
-					fclose($test);
-					return true;
-				}
-				fclose($test);
-			}
-			return false;
-		}
-	} else {
-		return true;
-	}
+	require_once 'lib/core/lib/Zend/Validate/EmailAddress.php';
+	$validate = new Zend_Validate_EmailAddress;
+	
+	return $validate->isValid( $email );
 }
 
 /* Editor configuration
