@@ -115,7 +115,10 @@
 <td class="{cycle advance=false}">
 {if isset($channels[user].lastPost)}
 {$channels[user].lastPost|tiki_short_datetime}<br />
-<small><i>{$channels[user].lastPostData.title|escape}</i> {tr}by{/tr} {$channels[user].lastPostData.userName}</small>
+  {if $prefs.forum_reply_notitle neq 'y'}
+    <small><i>{$channels[user].lastPostData.title|escape}</i>
+  {/if}
+  {tr}by{/tr} {$channels[user].lastPostData.userName}</small>
 {/if}
 </td>
 {/if}
