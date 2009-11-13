@@ -376,7 +376,7 @@ div.help_section {
 .tip .rbox-title,
 .tip .rbox-data {}
 
-.warning .rbox-title, .warning span {
+.warning .rbox-title {
 	background: #ff4;
 	color: #000;
 	border-color: #f00;
@@ -391,7 +391,6 @@ div.help_section {
 
 .warning a {
 	color: #333;
-	background: #ff4;
 }
 
 .simplebox {
