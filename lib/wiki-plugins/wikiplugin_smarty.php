@@ -13,6 +13,7 @@ function wikiplugin_smarty_info() {
 		'documentation' => 'PluginSmarty',			
 		'description' => tra('Provides access to the tiki smarty functions like button.'),
 		'prefs' => array('wikiplugin_smarty'),
+		'validate' => 'all',
 		'extraparams' => true,
 		'params' => array(
 			'name' => array(
