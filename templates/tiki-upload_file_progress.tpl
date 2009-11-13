@@ -22,7 +22,7 @@
 		{else}
 			<b>{$name} ({$size|kbsize})</b>
 		{/if}
-			{if !empty($filegals_manager)}<div>
+			{if empty($filegals_manager)}<div>
 			{button href="#" _onclick="javascript:flip('uploadinfos$fileId');flip('close_uploadinfos$fileId','inline');return false;" _text="{tr}Additional Info{/tr}"}
 			<span id="close_uploadinfos{$fileId}" style="display:none">
 				  {button href="#" _onclick="javascript:flip('uploadinfos$fileId');flip('close_uploadinfos$fileId','inline');return false;" _text="({tr}Hide{/tr})"}
