@@ -37,13 +37,7 @@
 		{$listpages[ix].avatar}
 	{/if}
 			<div class="title">
-
-	{if $use_title eq 'y'}
 				<h2>{$listpages[ix].title|escape}</h2>
-	{else}
-				<h2>{$listpages[ix].created|tiki_short_datetime}</h2>
-	{/if}
-
 			</div>
 			
 		</div><!-- postbody-title -->
@@ -61,12 +55,9 @@
 			</div>
 			
 			<div class="author_info">
-	{if $use_title eq 'y'}
 		{tr}By{/tr} {$listpages[ix].user|userlink}
 		{tr}on{/tr} {$listpages[ix].created|tiki_short_datetime}
-	{else}
-		{tr}By{/tr} {$listpages[ix].user}
-	{/if}
+
 			</div>
 		</div><!-- author_actions -->
 
