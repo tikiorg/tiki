@@ -402,6 +402,7 @@ function get_default_prefs() {
 		'wikiplugininline_sup' => 'n',
 		'wikiplugininline_survey' => 'n',
 		'wikiplugininline_tag' => 'n',
+		'wikiplugininline_tabs' => 'n',
 		'wikiplugininline_thumb' => 'n',
 		'wikiplugininline_titlesearch' => 'n',
 		'wikiplugininline_toc' => 'n',
