@@ -23,6 +23,20 @@ Version 4.0
 ------------------
 
 ----------------------------------------------
+r23266 | chealer | 2009-11-13 16:37:15 -0500 (Fri, 13 Nov 2009) | 1 line
+
+[FIX] hotfix "A Friendly Warning" going to Admin Profiles for the first time. should be properly fixed later
+----------------------------------------------
+r23263 | jonnybradley | 2009-11-13 15:59:22 -0500 (Fri, 13 Nov 2009) | 3 lines
+
+[FIX] Perms checking for search results - use id1, not pageName so now works for blogs etc too.
+Also check the other possible perms (object & global).
+Last one nkoth, promise! ;)
+----------------------------------------------
+r23262 | chealer | 2009-11-13 15:47:32 -0500 (Fri, 13 Nov 2009) | 1 line
+
+[SEC] Change category module: honor tiki_p_modify_object_categories. reported by Marc Laporte
+----------------------------------------------
 r23258 | jonnybradley | 2009-11-13 15:13:48 -0500 (Fri, 13 Nov 2009) | 4 lines
 
 [FIX] New perms checking for (mysql) search results.
