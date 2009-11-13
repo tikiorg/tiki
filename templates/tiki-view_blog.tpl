@@ -91,7 +91,6 @@
 		<div class="postfooter">
 			<div class="status"> {* renamed to match forum footer layout *}
 				<a href='tiki-print_blog_post.php?postId={$listpages[ix].postId}'>{icon _id='printer' alt='{tr}Print{/tr}'}</a>
-				<a href='tiki-send_blog_post.php?postId={$listpages[ix].postId}'>{icon _id='email' alt='{tr}Email This Post{/tr}'}</a>
 			</div>
 			<div class="actions"> {* renamed to match forum footer layout *}
 				<a class="link" href="{$listpages[ix].postId|sefurl:blogpost}">{tr}Permalink{/tr}</a>
