@@ -781,9 +781,22 @@ displayPicker = function( closeTo, list, areaname ) {
 	var coord = \$jq(closeTo).offset();
 	coord.bottom = coord.top + \$jq(closeTo).height();
 
+	// quick fix for Firefox 3.5 losing selection on changes to popup
+	textarea = getElementById( areaname);
+	var tempSelectionStart = textarea.selectionStart;
+	var tempSelectionEnd = textarea.selectionEnd;
+		
 	pickerDiv.className = 'toolbars-picker';
 	pickerDiv.style.left = coord.left + 'px';
 	pickerDiv.style.top = (coord.bottom + 8) + 'px';
+
+	// quick fix for Firefox 3.5 losing selection on changes to popup
+	if (textarea.selectionStart != tempSelectionStart) {
+		textarea.selectionStart = tempSelectionStart;
+       	}
+	if (textarea.selectionEnd != tempSelectionEnd) {
+                textarea.selectionEnd = tempSelectionEnd;
+       	}  
 
 	var prepareLink = function( link, ins, disp ) {
 		link.innerHTML = disp;
@@ -1217,11 +1230,25 @@ displayDialog = function( closeTo, list, areaname ) {
 			tit = item;
 		}
 	}
+	
+	// quick fix for Firefox 3.5 losing selection on changes to popup
+	textarea = getElementById( areaname);
+	var tempSelectionStart = textarea.selectionStart;
+        var tempSelectionEnd = textarea.selectionEnd; 
+
 	if (!obj) { obj = {}; }
 	if (!obj.width) { obj.width = 210; }
 	obj.bgiframe = true;
 	obj.autoOpen - false;
 	\$jq(dialogDiv).dialog('destroy').dialog(obj).dialog('option', 'title', tit).dialog('open');
+
+	// quick fix for Firefox 3.5 losing selection on changes to popup
+	if (textarea.selectionStart != tempSelectionStart) {
+                textarea.selectionStart = tempSelectionStart;
+        }
+        if (textarea.selectionEnd != tempSelectionEnd) {
+                textarea.selectionEnd = tempSelectionEnd;
+        }
 	
 	return false;
 }
