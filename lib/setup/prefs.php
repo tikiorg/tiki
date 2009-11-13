@@ -1176,7 +1176,6 @@ function get_default_prefs() {
 
 		// dev
 		'feature_experimental' => 'n',
-		'feature_profile_tester' => 'n',
 
 		// Action logs
 		'feature_actionlog' => 'n',
