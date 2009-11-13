@@ -1625,7 +1625,7 @@ class ToolbarsList
 			$c++;
 		}
 
-		return $right . $html;
+		return $html;
 	} // }}}
 	
 	function contains($name) { // {{{
