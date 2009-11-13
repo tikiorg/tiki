@@ -73,7 +73,7 @@
 {/tab}
 
 {if $trackerId}
-	{assign var='tabeditcreatetrk_admtrk' value="{tr}Edit Tracker{/tr} <i>`$name` (#`$trackerId`)</i>"}
+	{capture assign='tabeditcreatetrk_admtrk'}{tr}Edit Tracker{/tr} <i>{$name|escape} (#{$trackerId})</i>{/capture}
 {else}
 	{assign var='tabeditcreatetrk_admtrk' value='{tr}Create Tracker{/tr}'}
 {/if}
@@ -346,7 +346,7 @@
 				<td>
 					<select name="defaultOrderKey">
 						{section name=x loop=$fields}
-							<option value="{$fields[x].fieldId}"{if $defaultOrderKey eq $fields[x].fieldId} selected="selected"{/if}>{$fields[x].name|truncate:42:" ..."}</option>
+							<option value="{$fields[x].fieldId}"{if $defaultOrderKey eq $fields[x].fieldId} selected="selected"{/if}>{$fields[x].name|truncate:42:" ..."|escape}</option>
 						{/section}
 						<option value="-1"{if $defaultOrderKey eq -1} selected="selected"{/if}>{tr}LastModif{/tr}</option>
 						<option value="-2"{if $defaultOrderKey eq -2} selected="selected"{/if}>{tr}Created{/tr}</option>
