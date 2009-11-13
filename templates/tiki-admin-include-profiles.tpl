@@ -254,120 +254,121 @@ function showDetails( id, domain, profile ) { // {{{
 		</ul>
 	{/remarksbox}
 {/if}
-
 {tabset name='tabs_admin-profiles'}
 	{tab name="{tr}Apply Profiles{/tr}"}
 	
 		<h3>Configure TikiWiki in 3 easy steps using Profiles</h3>
-		{if $openSources != 'none'}
-			{if $openSources == 'some'}
-				{remarksbox type="warning" title="{tr}A Friendly Warning{/tr}"}
-					{tr}Some of your Profiles Repositories are not connecting. This may prevent you from applying certain profiles{/tr}
-				{/remarksbox}
-			{/if}
-				
-			<fieldset><legend>{tr}Profiles{/tr}</legend>
-			<form method="get" action="tiki-admin.php#profile-results">
-				<div class="adminoptionbox">
-					<b>Step 1: Use the Quick or Manual Filter option to see a list of Profiles you can apply</b>
-					<table class="normal">
-						<tr>
-							<th width="50%">{tr}Option 1: Quick Filter{/tr}</th>
-
-							<th width="50%">{tr}Option 2: Manual Filter{/tr}</th>
-						</tr>
-						<tr>
-							<td>
-								<br/>
-								<p>
-									<a href="tiki-admin.php?profile=&categories%5B%5D=4.x&categories%5B%5D=Featured+profiles&repository=http%3a%2f%2fprofiles.tikiwiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2">Featured Profiles</a>
-									<br />Featured Profiles is a list of applications that are maintained by the TikiWiki community and are a great way to get started.
-								</p>
+		{if $prefs.javascript_enabled eq 'y'}
+			{if $openSources != 'none'}
+				{if $openSources == 'some'}
+					{remarksbox type="warning" title="{tr}A Friendly Warning{/tr}"}
+						{tr}Some of your Profiles Repositories are not connecting. This may prevent you from applying certain profiles{/tr}
+					{/remarksbox}
+				{/if}
+					
+				<fieldset><legend>{tr}Profiles{/tr}</legend>
+				<form method="get" action="tiki-admin.php#profile-results">
+					<div class="adminoptionbox">
+						<b>Step 1: Use the Quick or Manual Filter option to see a list of Profiles you can apply</b>
+						<table class="normal">
+							<tr>
+								<th width="50%">{tr}Option 1: Quick Filter{/tr}</th>
 	
-								<p>
-									<a href="tiki-admin.php?profile=&categories%5B%5D=4.x&categories%5B%5D=Full+profile+(out+of+the+box+%26+ready+to+go)&repository=http%3a%2f%2fprofiles.tikiwiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2">Full Profiles</a>
-									<br />Full Profiles are full featured out of the box solutions. 
-								</p>
+								<th width="50%">{tr}Option 2: Manual Filter{/tr}</th>
+							</tr>
+							<tr>
+								<td>
+									<br/>
+									<p>
+										<a href="tiki-admin.php?profile=&categories%5B%5D=4.x&categories%5B%5D=Featured+profiles&repository=http%3a%2f%2fprofiles.tikiwiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2">Featured Profiles</a>
+										<br />Featured Profiles is a list of applications that are maintained by the TikiWiki community and are a great way to get started.
+									</p>
+		
+									<p>
+										<a href="tiki-admin.php?profile=&categories%5B%5D=4.x&categories%5B%5D=Full+profile+(out+of+the+box+%26+ready+to+go)&repository=http%3a%2f%2fprofiles.tikiwiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2">Full Profiles</a>
+										<br />Full Profiles are full featured out of the box solutions. 
+									</p>
+		
+									<p>
+										<a href="tiki-admin.php?profile=&categories%5B%5D=4.x&categories%5B%5D=Mini-profile+(can+be+included+in+other)&repository=http%3a%2f%2fprofiles.tikiwiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2">Mini Profiles</a>
+										<br />Mini Profiles will configure specific features and are a great way to add more functionality to an existing configuration. 
+									</p>
+		
+									<p>
+										<a href="tiki-admin.php?profile=&categories%5B%5D=4.x&categories%5B%5D=Learning+profile+(just+to+show+off+feature)&repository=http%3a%2f%2fprofiles.tikiwiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2">Learning Profiles</a>
+										<br />Learning Profiles will allow you to quickly evaluate specific features in TikiWiki.
+									</p>
+		
+								</td>
+								<td>
+									<div class="adminoptionlabel">{tr}Filter the list of profiles:{/tr}</div>
+									<div class="adminoptionboxchild">
+									<div class="adminoptionlabel"><label for="profile">{tr}Profile:{/tr} </label><input type="text" name="profile" id="profile" value="{$profile|escape}" /></div>
+										{if isset($category_list) and count($category_list) gt 0}
+											<div class="adminoptionlabel"><label for="categories">{tr}Categories:{/tr} </label>
+												<select multiple="multiple" name="categories[]" id="categories">
+												{foreach item=cat from=$category_list}
+													<option value="{$cat|escape}"{if in_array($cat, $categories)} selected="selected"{/if}>{$cat|escape}</option>
+												{/foreach}
+												</select>
+											</div>
+										{/if}
 	
-								<p>
-									<a href="tiki-admin.php?profile=&categories%5B%5D=4.x&categories%5B%5D=Mini-profile+(can+be+included+in+other)&repository=http%3a%2f%2fprofiles.tikiwiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2">Mini Profiles</a>
-									<br />Mini Profiles will configure specific features and are a great way to add more functionality to an existing configuration. 
-								</p>
-	
-								<p>
-									<a href="tiki-admin.php?profile=&categories%5B%5D=4.x&categories%5B%5D=Learning+profile+(just+to+show+off+feature)&repository=http%3a%2f%2fprofiles.tikiwiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2">Learning Profiles</a>
-									<br />Learning Profiles will allow you to quickly evaluate specific features in TikiWiki.
-								</p>
-	
-							</td>
-							<td>
-								<div class="adminoptionlabel">{tr}Filter the list of profiles:{/tr}</div>
-								<div class="adminoptionboxchild">
-								<div class="adminoptionlabel"><label for="profile">{tr}Profile:{/tr} </label><input type="text" name="profile" id="profile" value="{$profile|escape}" /></div>
-									{if isset($category_list) and count($category_list) gt 0}
-										<div class="adminoptionlabel"><label for="categories">{tr}Categories:{/tr} </label>
-											<select multiple="multiple" name="categories[]" id="categories">
-											{foreach item=cat from=$category_list}
-												<option value="{$cat|escape}"{if in_array($cat, $categories)} selected="selected"{/if}>{$cat|escape}</option>
+									<div class="adminoptionlabel"><label for="repository">{tr}Repository:{/tr} </label>
+										<select name="repository" id="repository">
+											<option value="">{tr}All{/tr}</option>
+											{foreach item=source from=$sources}
+												<option value="{$source.url|escape}"{if $repository eq $source.url} selected="selected"{/if}>{$source.short|escape}</option>
 											{/foreach}
-											</select>
-										</div>
-									{/if}
-
-								<div class="adminoptionlabel"><label for="repository">{tr}Repository:{/tr} </label>
-									<select name="repository" id="repository">
-										<option value="">{tr}All{/tr}</option>
-										{foreach item=source from=$sources}
-											<option value="{$source.url|escape}"{if $repository eq $source.url} selected="selected"{/if}>{$source.short|escape}</option>
-										{/foreach}
-									</select>
-								</div>
-								<input type="hidden" name="page" value="profiles"/>
-								</div>
-							<div align="center"><input type="submit" name="list" value="{tr}List{/tr}" /></div>
-						</td>
-					</tr>
-				</table>
-			</div>
-	</form>
-        <a name="step2"></a>
-<br />	
+										</select>
+									</div>
+									<input type="hidden" name="page" value="profiles"/>
+									</div>
+								<div align="center"><input type="submit" name="list" value="{tr}List{/tr}" /></div>
+							</td>
+						</tr>
+					</table>
+				</div>
+		</form>
+	        <a name="step2"></a>
+	<br />	
+		
+	       {if $result|@count neq '0'}
 	
-       {if $result|@count neq '0'}
-
-        <b>Step 2: Click on a Profile to review and see description</b>
-		<table class="normal">
-			<tr>
-				<th>{tr}Profile{/tr}</th>
-				<th>{tr}Repository{/tr}</th>
-				<th>{tr}Categories{/tr}</th>
-			</tr>
-			{foreach key=k item=profile from=$result}
-				<tr id="profile-{$k}">
-					<td><a href="javascript:showDetails( 'profile-{$k}', '{$profile.domain|escape}', '{$profile.name|escape}' )">{$profile.name|escape}</a>{if $profile.installed} <em>{tr}applied{/tr}</em>{/if}</td>
-					<td>{$profile.domain}</td>
-					<td>{$profile.categoriesString}</td>
+	        <b>Step 2: Click on a Profile to review and see description</b>
+			<table class="normal">
+				<tr>
+					<th>{tr}Profile{/tr}</th>
+					<th>{tr}Repository{/tr}</th>
+					<th>{tr}Categories{/tr}</th>
 				</tr>
-			{/foreach}
-			{if $result|@count eq '0'}
-			<tr><td colspan="3" class="odd">{tr}None{/tr}</td></tr>
+				{foreach key=k item=profile from=$result}
+					<tr id="profile-{$k}">
+						<td><a href="javascript:showDetails( 'profile-{$k}', '{$profile.domain|escape}', '{$profile.name|escape}' )">{$profile.name|escape}</a>{if $profile.installed} <em>{tr}applied{/tr}</em>{/if}</td>
+						<td>{$profile.domain}</td>
+						<td>{$profile.categoriesString}</td>
+					</tr>
+				{/foreach}
+				{if $result|@count eq '0'}
+				<tr><td colspan="3" class="odd">{tr}None{/tr}</td></tr>
+				{/if}
+			</table>
 			{/if}
-		</table>
-		{/if}
+	
+	</fieldset>
+	{else}
+		{remarksbox type="warning" title="{tr}A Friendly Warning{/tr}"}
+			{tr}The Profile Repositories are not connecting. Don't worry you didn't do anything wrong :){/tr}
+			<p>
+			{tr}Here are a few steps you can try to fix this issue{/tr}
+			<ul>
+				<li>{tr}Verify that your internet connection is properly working{/tr}</li>
+				<li>{tr}Verify the URL of your profile repository is correctly; only if you manually entered a new one<{/tr}</li>
+				<li>{tr}Profiles.TikiWiki.Org might be temporarily <b>Out of Service</b>. Please try again later{/tr}</li> 
+			</ul>
+		{/remarksbox}
+	{/if}
 
-</fieldset>
-{else}
-	{remarksbox type="warning" title="{tr}A Friendly Warning{/tr}"}
-		{tr}The Profile Repositories are not connecting. Don't worry you didn't do anything wrong :){/tr}
-		<p>
-		{tr}Here are a few steps you can try to fix this issue{/tr}
-		<ul>
-			<li>{tr}Verify that your internet connection is properly working{/tr}</li>
-			<li>{tr}Verify the URL of your profile repository is correctly; only if you manually entered a new one<{/tr}</li>
-			<li>{tr}Profiles.TikiWiki.Org might be temporarily <b>Out of Service</b>. Please try again later{/tr}</li> 
-		</ul>
-	{/remarksbox}
-{/if}
 
 
 <fieldset class="admin">
@@ -389,6 +390,11 @@ function showDetails( id, domain, profile ) { // {{{
 	</table>
 </div>
 </fieldset>
+{else}
+	{remarksbox type="warning" title="{tr}A Friendly Warning{/tr}"}
+		{tr}Javascript must be turned <b>ON</b> in order to apply Profiles. Please enable your javascript and try again.{/tr}
+	{/remarksbox}
+{/if}
 {/tab}
 
 {tab name="{tr}Advanced{/tr}"}
