@@ -383,6 +383,7 @@
 					<option value="YMD" {if $prefs.display_field_order=="YMD"}selected="selected"{/if}>{tr}Year{/tr} {tr}Month{/tr} {tr}Day{/tr}</option>
 				</select>
 			</div>
+			{preference name=tiki_same_day_time_only}
 		</div>
 		<div class="adminoptionbox">	
 			{assign var="fcnlink" value="http://www.php.net/manual/en/function.strftime.php"}

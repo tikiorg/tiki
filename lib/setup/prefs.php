@@ -870,6 +870,7 @@ function get_default_prefs() {
 		'short_date_format' => '%a %d of %b, %Y',
 		'short_time_format' => '%H:%M %Z',
 		'display_field_order' => 'MDY',
+		'tiki_same_day_time_only' => 'y',
 
 		// rss
 		'rss_forums' => 'n',
