@@ -259,7 +259,6 @@ function showDetails( id, domain, profile ) { // {{{
 	
 		<h3>Configure TikiWiki in 3 easy steps using Profiles</h3>
 		{if $prefs.javascript_enabled eq 'y'}
-			{if $openSources != 'none'}
 				{if $openSources == 'some'}
 					{remarksbox type="warning" title="{tr}A Friendly Warning{/tr}"}
 						{tr}Some of your Profiles Repositories are not connecting. This may prevent you from applying certain profiles{/tr}
@@ -356,18 +355,7 @@ function showDetails( id, domain, profile ) { // {{{
 			{/if}
 	
 	</fieldset>
-	{else}
-		{remarksbox type="warning" title="{tr}A Friendly Warning{/tr}"}
-			{tr}The Profile Repositories are not connecting. Don't worry you didn't do anything wrong :){/tr}
-			<p>
-			{tr}Here are a few steps you can try to fix this issue{/tr}
-			<ul>
-				<li>{tr}Verify that your internet connection is properly working{/tr}</li>
-				<li>{tr}Verify the URL of your profile repository is correctly; only if you manually entered a new one<{/tr}</li>
-				<li>{tr}Profiles.TikiWiki.Org might be temporarily <b>Out of Service</b>. Please try again later{/tr}</li> 
-			</ul>
-		{/remarksbox}
-	{/if}
+
 
 
 
