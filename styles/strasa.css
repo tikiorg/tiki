@@ -711,7 +711,7 @@ a.phplmselected:hover {
 	border-top: 1px solid #233039;
 }
 
-.cssmenu_horiz li:hover {
+#tiki-top .cssmenu_horiz li:hover {
 	background: #1b3a50;
 }
 
@@ -744,17 +744,20 @@ a.phplmselected:hover {
 	color: #000000;
 }
 
-/* left column width */
+#col2 .cssmenu_vert {
+	padding-left: 0;
+}
 
+/* left column width */
 #col2 .cssmenu_vert,
 #col2 .cssmenu_vert li {
-	width: 160px;
+	width: 170px;
 }
 
 /* offset from left column (matches above) */
 #col2 .cssmenu_vert li:hover ul,
 #col2 .cssmenu_vert li.sfHover ul {
-	left: 155px;
+	left: 165px;
 }
 
 /* return ul ul ... to default */
@@ -839,27 +842,25 @@ a.phplmselected:hover {
 	border-top: 1px solid #08698f;
 }
 
-#tiki-top .cssmenu_horiz li ul {
+/*#tiki-top */.cssmenu_horiz li ul {
 	margin-top: -7px;
 }
 
-#tiki-top .cssmenu_horiz li ul ul {
+/*#tiki-top */.cssmenu_horiz li ul ul {
 	margin-top: -1px;
 }
 
-#tiki-top .cssmenu_horiz li a .sf-sub-indicator {
+.cssmenu_vert li a .sf-sub-indicator,
+.cssmenu_horiz li ul li a .sf-sub-indicator {
+	background: url(strasa/arrows-467aa7.png);
+	top: .3em;
+}
+
+/*#tiki-top */.cssmenu_horiz li a .sf-sub-indicator {
 	background: url(strasa/arrows-a2ecff.png) no-repeat -10px -100px;
 	top: 6px;
 }
 
-.cssmenu_vert li a .sf-sub-indicator {
-	top: .3em;
-}
-
-
-.cssmenu_vert li a .sf-sub-indicator {
-	background: url(strasa/arrows-467aa7.png);
-}
 
 /** Links in other menus **/
 div.separator {

@@ -322,7 +322,7 @@ a.phplmselected:hover {
 	border-top: 1px solid #233039;
 }
 
-.cssmenu_horiz li:hover {
+#tiki-top .cssmenu_horiz li:hover {
 	background: #212121;
 }
 
@@ -384,6 +384,22 @@ a.phplmselected:hover {
 
 .cssmenu_vert li a .sf-sub-indicator {
 	background: url(mono/arrows-000000.png) no-repeat 0 0;
+}
+
+.cssmenu_horiz li a .sf-sub-indicator {
+	background: url(mono/arrows-000000.png) no-repeat -10px -100px;	
+}
+
+.cssmenu_horiz li ul li a .sf-sub-indicator {
+	background: url(mono/arrows-000000.png) no-repeat 0 0;	
+}
+
+#tiki-top .cssmenu_horiz li a .sf-sub-indicator {
+	background: url(../../../lib/jquery/superfish/images/arrows-ffffff.png) no-repeat -10px -100px;
+}
+
+#tiki-top .cssmenu_horiz li ul li a .sf-sub-indicator {
+	background: url(../../../lib/jquery/superfish/images/arrows-ffffff.png) no-repeat 0 0;
 }
 
 /** Links in other menus **/
@@ -449,6 +465,10 @@ div.help_section {
 #col2 .box {
 	background: #e5e5e5;
 	border-bottom: 1px solid #aaa;
+}
+
+#col2 .box-title {
+	color: #000;
 }
 
 #col3 .box {
