@@ -309,8 +309,7 @@ if (isset($_REQUEST["find_objects"])) {
 }
 
 $maximum = 0;
-$maxRecords = 50;
-$offset = (int) $_GET['offset'];
+$maxRecords = $prefs['maxRecords'];
 
 $smarty->assign('find_objects', $find_objects);
 $smarty->assign_by_ref('sort_mode', $sort_mode);
