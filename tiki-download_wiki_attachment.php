@@ -10,19 +10,21 @@
 $force_no_compression = true;
 require_once ('tiki-setup.php');
 
-if ((isset($_REQUEST['page']) && !$tikilib->user_has_perm_on_object($user, $_REQUEST['page'], 'wiki page', 'tiki_p_wiki_view_attachments') && !$tikilib->user_has_perm_on_object($user, $_REQUEST['page'], 'wiki page', 'tiki_p_wiki_admin_attachments'))
-  || (!isset($_REQUEST['page']) && $tiki_p_wiki_view_attachments != 'y' && $tiki_p_wiki_admin_attachments != 'y')) {
+if (!empty($_REQUEST['attId'])) {
+	$info = $tikilib->get_wiki_attachment($_REQUEST['attId']);
+}
+if (empty($info)) {
+	$smarty->assign('msg', tra('Incorrect param').' attid');
+	$smarty->display('error.tpl');
+	die;
+}
+if (!$tikilib->user_has_perm_on_object($user, $info['page'], 'wiki page', 'tiki_p_view') && !$tikilib->user_has_perm_on_object($user, $info['page'], 'wiki page', 'tiki_p_wiki_view_attachments') && !$tikilib->user_has_perm_on_object($user, $info['page'], 'wiki page', 'tiki_p_wiki_admin_attachments')) {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 	$smarty->display("error.tpl");
 	die;
 }
 
-if (!isset($_REQUEST["attId"])) {
-	die;
-}
-
-$info = $tikilib->get_wiki_attachment($_REQUEST["attId"]);
 $tikilib->add_wiki_attachment_hit($_REQUEST["attId"]);
 
 $type = &$info["filetype"];
