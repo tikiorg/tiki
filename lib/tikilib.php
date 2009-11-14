@@ -1497,8 +1497,8 @@ class TikiLib extends TikiDb_Bridge {
 		if ($objperm['tiki_p_view_faqs'] == 'y') {
 		  if (($maxRecords == -1) || (($n>=$offset) && ($n < ($offset + $maxRecords)))) {
 			$retids[] = $res['faqId'];
+			$n++;
 		  }
-		  $n++;
 		}
 	  }
 
