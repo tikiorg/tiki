@@ -24,7 +24,7 @@
 {tabset name="admin_i18n"}
 	{tab name="{tr}Internationalization{/tr}"}
 
-{preference name=language}
+{preference name=language default=$prefs.site_language}
 {preference name=wiki_page_regex}
 
 <div class="adminoptionbox">
