@@ -68,13 +68,13 @@ function smarty_block_tabset($params, $content, &$smarty, &$repeat) {
 		$ini = $smarty_tabset_i_tab - sizeof($smarty_tabset);
 		$focus = $ini;
 		foreach ($smarty_tabset as $value) {
-			$ret .= '	<span id="tab'.$focus.'" class="tabmark tabinactive"><a href="#content'.$i_tabset.'" onclick="javascript:tikitabs('.$focus.','.$max.','.$ini.'); return false;">'.$value.'</a></span>
+			$ret .= '	<span id="tab'.$focus.'" class="tabmark tabinactive"><a href="#content'.$focus.'" onclick="javascript:tikitabs('.$focus.','.$max.','.$ini.'); return false;">'.$value.'</a></span>
 				';
 			++$focus;
 		}
 		$ret .= "</div>$content";
 		if ($cookietab < $ini || $cookietab > $max) { // todo:: need to display the first tab
-			//$ret .= "<script type='text/javascript'>show('content$ini');</script>";
+			$ret .= "<script type='text/javascript'>tikitabs($ini, $max, $ini);</script>";
 		}
 		return $ret;
 	}
