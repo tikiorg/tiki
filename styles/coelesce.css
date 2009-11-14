@@ -583,7 +583,13 @@ a.phplmselected:hover {
 /** CSS (suckerfish) menus **/
 
 /* typography, colors */
-.cssmenu_vert li {
+.cssmenu_horiz li a {
+	padding: 6px 1em;
+	font-weight: bold;
+	font-size: 12px;
+}
+
+.box-data .cssmenu_vert li {
 	background: #ccdceb !important;
 }
 
@@ -591,20 +597,17 @@ a.phplmselected:hover {
 	color: #5a7ea2;
 }
 
-.cssmenu_horiz li:hover ul li:hover,
-.cssmenu_horiz li.sfhover ul li.sfhover {
+#tiki-top .cssmenu_horiz li:hover ul li:hover,
+#tiki-top .cssmenu_horiz li.sfhover ul li.sfhover {
 	background: #eff8ff;
 	color: #5a7ea2;
 }
 
-.cssmenu_horiz li a:link,
-.cssmenu_horiz li a:visited {
-	padding: 6px 1em;
-	font-weight: bold;
+#tiki-top .cssmenu_horiz li a:link,
+#tiki-top .cssmenu_horiz li a:visited {
 	text-decoration: none;
 	background: inherit;
 	color: #cfe3fb;
-	font-size: 12px;
 }
 
 .cssmenu_vert li a {
@@ -665,7 +668,8 @@ a.phplmselected:hover {
 	background: #ecf5ff;
 }
 
-#tiki-top .cssmenu_horiz ul li a {
+#tiki-top .cssmenu_horiz ul li a:link,
+#tiki-top .cssmenu_horiz ul li a:visited {
 	color: #295c83;
 }
 
@@ -675,12 +679,12 @@ a.phplmselected:hover {
 	background: #ccdceb;
 }
 
-#tiki-top > .cssmenu_horiz > li > a:hover {
+#tiki-top .cssmenu_horiz li a:hover {
 	color: #fff;
 }
 
 #tiki-top .cssmenu_horiz li ul li a:hover {
-	color: #82a7c8
+	color: #82a7c8;
 }
 
 /* left column width */
@@ -707,6 +711,12 @@ a.phplmselected:hover {
 #col2 .cssmenu_vert li li:hover ul,
 #col2 .cssmenu_vert li li.sfHover ul {
 	left: 10em;
+}
+
+/* less padding so move ul ul up */
+.cssmenu_horiz li:hover ul,
+.cssmenu_horiz li.sfHover ul {
+	top: 1.8em;
 }
 
 /* less padding so move ul ul up */
