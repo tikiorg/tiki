@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-<form action="tiki-admin.php?page=look"  id="look" name="look" onreset="return(confirm('{tr}Cancel Edit{/tr}'))"  class="admin" method="post">
+<form action="tiki-admin.php?page=look" id="look" name="look" onreset="return(confirm('{tr}Cancel Edit{/tr}'))" class="admin" method="post">
 	<div class="heading input_submit_container" style="text-align: right">
 		<input type="submit" name="looksetup" value="{tr}Apply{/tr}" />
 		<input type="reset" name="looksetupreset" value="{tr}Reset{/tr}" />
@@ -89,214 +89,213 @@
 				{preference name=sitemycode_publish}
 			</div>
 
-		{preference name=feature_sitelogo}
-		<div class="adminoptionboxchild" id="feature_sitelogo_childcontainer">
-			<fieldset>
-				<legend>{tr}Logo{/tr}</legend>
-				{preference name=sitelogo_src}
-				{preference name=sitelogo_bgcolor}
-				{preference name=sitelogo_bgstyle}
-				{preference name=sitelogo_align}
-				{preference name=sitelogo_title}
-				{preference name=sitelogo_alt}
-			</fieldset>
+			{preference name=feature_sitelogo}
+			<div class="adminoptionboxchild" id="feature_sitelogo_childcontainer">
+				<fieldset>
+					<legend>{tr}Logo{/tr}</legend>
+					{preference name=sitelogo_src}
+					{preference name=sitelogo_bgcolor}
+					{preference name=sitelogo_bgstyle}
+					{preference name=sitelogo_align}
+					{preference name=sitelogo_title}
+					{preference name=sitelogo_alt}
+				</fieldset>
 					
-			<fieldset>
-				<legend>{tr}Title{/tr}</legend>
-				{preference name=sitetitle}
-				{preference name=sitesubtitle}
-			</fieldset>
-		</div>
-		{preference name=feature_sitesearch}
-		{preference name=feature_site_login}
-		{preference name=feature_top_bar}
-		<div class="adminoptionboxchild" id="feature_top_bar_childcontainer">
-			{preference name=feature_sitemenu}
-			<div class="adminoptionboxchild" id="feature_sitemenu_childcontainer">
-				{preference name=feature_topbar_id_menu}
+				<fieldset>
+					<legend>{tr}Title{/tr}</legend>
+					{preference name=sitetitle}
+					{preference name=sitesubtitle}
+				</fieldset>
 			</div>
-			{preference name=feature_topbar_version}
-			{preference name=feature_topbar_debug}
-			{preference name=feature_topbar_custom_code}
-		</div>
+			{preference name=feature_sitesearch}
+			{preference name=feature_site_login}
+			{preference name=feature_top_bar}
+			<div class="adminoptionboxchild" id="feature_top_bar_childcontainer">
+				{preference name=feature_sitemenu}
+				<div class="adminoptionboxchild" id="feature_sitemenu_childcontainer">
+					{preference name=feature_topbar_id_menu}
+				</div>
+				{preference name=feature_topbar_version}
+				{preference name=feature_topbar_debug}
+				{preference name=feature_topbar_custom_code}
+			</div>
 		
-		{preference name=feature_custom_center_column_header}
-		{preference name=feature_left_column}
-		{preference name=feature_Right_column}
+			{preference name=feature_custom_center_column_header}
+			{preference name=feature_left_column}
+			{preference name=feature_Right_column}
 		
-		{preference name=feature_breadcrumbs}
-		<div class="adminoptionboxchild" id="feature_breadcrumbs_childcontainer">
-			{preference name=feature_siteloclabel}
-			{preference name=feature_siteloc}
-			{preference name=feature_sitetitle}
-			{preference name=feature_sitedesc}
-		</div>
+			{preference name=feature_breadcrumbs}
+			<div class="adminoptionboxchild" id="feature_breadcrumbs_childcontainer">
+				{preference name=feature_siteloclabel}
+				{preference name=feature_siteloc}
+				{preference name=feature_sitetitle}
+				{preference name=feature_sitedesc}
+			</div>
 		
-		{preference name=feature_bot_logo}
-		<div class="adminoptionboxchild" id="feature_bot_logo_childcontainer">
-			{preference name=bot_logo_code}
-		</div>
+			{preference name=feature_bot_logo}
+			<div class="adminoptionboxchild" id="feature_bot_logo_childcontainer">
+				{preference name=bot_logo_code}
+			</div>
 
-		{preference name=feature_endbody_code}
+			{preference name=feature_endbody_code}
 		
-		{preference name=feature_bot_bar}
-		<div class="adminoptionboxchild" id="feature_bot_bar_childcontainer">
-			{preference name=feature_bot_bar_icons}
-			{preference name=feature_bot_bar_debug}
-			{preference name=feature_bot_bar_rss}
-			{preference name=feature_bot_bar_power_by_tw}
-		</div>
+			{preference name=feature_bot_bar}
+			<div class="adminoptionboxchild" id="feature_bot_bar_childcontainer">
+				{preference name=feature_bot_bar_icons}
+				{preference name=feature_bot_bar_debug}
+				{preference name=feature_bot_bar_rss}
+				{preference name=feature_bot_bar_power_by_tw}
+			</div>
 
-		<div class="adminoptionbox">
-			<fieldset>
-				<legend>{tr}Site Report Bar{/tr}</legend>
-				{preference name=feature_site_report}
-				{preference name=feature_site_report_email}
-				{preference name=feature_site_send_link}
-			</fieldset>
-		</div>
-	{/tab}
+			<div class="adminoptionbox">
+				<fieldset>
+					<legend>{tr}Site Report Bar{/tr}</legend>
+					{preference name=feature_site_report}
+					{preference name=feature_site_report_email}
+					{preference name=feature_site_send_link}
+				</fieldset>
+			</div>
+		{/tab}
 
-	{tab name="{tr}Shadow layer{/tr}"}
-		{preference name=feature_layoutshadows}
-		<div class="adminoptionboxchild" id="feature_layoutshadows_childcontainer">
-			{preference name=main_shadow_start}
-			{preference name=main_shadow_end}
+		{tab name="{tr}Shadow layer{/tr}"}
+			{preference name=feature_layoutshadows}
+			<div class="adminoptionboxchild" id="feature_layoutshadows_childcontainer">
+				{preference name=main_shadow_start}
+				{preference name=main_shadow_end}
 
-			{preference name=header_shadow_start}
-			{preference name=header_shadow_end}
+				{preference name=header_shadow_start}
+				{preference name=header_shadow_end}
 
-			{preference name=middle_shadow_start}
-			{preference name=middle_shadow_end}
+				{preference name=middle_shadow_start}
+				{preference name=middle_shadow_end}
 
-			{preference name=center_shadow_start}
-			{preference name=center_shadow_end}
+				{preference name=center_shadow_start}
+				{preference name=center_shadow_end}
 
-			{preference name=footer_shadow_start}
-			{preference name=footer_shadow_end}
+				{preference name=footer_shadow_start}
+				{preference name=footer_shadow_end}
 
-			{preference name=box_shadow_start}
-			{preference name=box_shadow_end}
-		</div>
-	{/tab}
+				{preference name=box_shadow_start}
+				{preference name=box_shadow_end}
+			</div>
+		{/tab}
 
-	{tab name="{tr}Pagination links{/tr}"}
+		{tab name="{tr}Pagination links{/tr}"}
+			{preference name=maxRecords}
+			{preference name=nextprev_pagination}
+			{preference name=direct_pagination}
+			<div class="adminoptionboxchild" id="direct_pagination_childcontainer">
+				{preference name=direct_pagination_max_middle_links}
+				{preference name=direct_pagination_max_ending_links}
+			</div>
 
-		{preference name=maxRecords}
-		{preference name=nextprev_pagination}
-		{preference name=direct_pagination}
-		<div class="adminoptionboxchild" id="direct_pagination_childcontainer">
-			{preference name=direct_pagination_max_middle_links}
-			{preference name=direct_pagination_max_ending_links}
-		</div>
-
-		{preference name=pagination_firstlast}
-		{preference name=pagination_fastmove_links}
-		{preference name=pagination_hide_if_one_page}
-		{preference name=pagination_icons}
-	{/tab}
+			{preference name=pagination_firstlast}
+			{preference name=pagination_fastmove_links}
+			{preference name=pagination_hide_if_one_page}
+			{preference name=pagination_icons}
+		{/tab}
 		
-	{tab name="{tr}UI Effects{/tr}"}
-		<div class="adminoptionbox">	
-			<fieldset class="admin">
-				<legend>{tr}JQuery plugins and add-ons{/tr}</legend>	
-				{if $prefs.feature_jquery eq 'n'}
-					{remarksbox type="warning" title="{tr}Warning{/tr}"}
-						{tr}Requires jquery feature{/tr}</em>{icon _id="arrow_right" href="tiki-admin.php?page=features"}{/remarksbox}
-				{/if}
+		{tab name="{tr}UI Effects{/tr}"}
+			<div class="adminoptionbox">	
+				<fieldset class="admin">
+					<legend>{tr}JQuery plugins and add-ons{/tr}</legend>	
+					{if $prefs.feature_jquery eq 'n'}
+						{remarksbox type="warning" title="{tr}Warning{/tr}"}
+							{tr}Requires jquery feature{/tr}</em>{icon _id="arrow_right" href="tiki-admin.php?page=features"}{/remarksbox}
+					{/if}
 
-				{preference name=feature_jquery_tooltips}
-				{preference name=feature_jquery_autocomplete}
-				{preference name=feature_jquery_superfish}
-				{preference name=feature_jquery_reflection}
-				{preference name=feature_jquery_ui}
-				{preference name=feature_jquery_ui_theme}
+					{preference name=feature_jquery_tooltips}
+					{preference name=feature_jquery_autocomplete}
+					{preference name=feature_jquery_superfish}
+					{preference name=feature_jquery_reflection}
+					{preference name=feature_jquery_ui}
+					{preference name=feature_jquery_ui_theme}
 
-				<div class="adminoptionbox">
-					<div class="adminoptionlabel">
-						{icon _id=information} <em>{tr}For future use{/tr}:</em>
-						<div class="adminoptionboxchild">	
-							{preference name=feature_jquery_cycle}
-							{preference name=feature_jquery_sheet}
-							{preference name=feature_jquery_tablesorter}
+					<div class="adminoptionbox">
+						<div class="adminoptionlabel">
+							{icon _id=information} <em>{tr}For future use{/tr}:</em>
+							<div class="adminoptionboxchild">	
+								{preference name=feature_jquery_cycle}
+								{preference name=feature_jquery_sheet}
+								{preference name=feature_jquery_tablesorter}
+							</div>
 						</div>
 					</div>
+				</fieldset>
+			</div>
+
+			<div class="adminoptionbox">
+				<fieldset class="admin">
+					<legend>{tr}Standard UI effects{/tr}</legend>
+					{preference name=jquery_effect}
+					{preference name=jquery_effect_speed}
+					{preference name=jquery_effect_direction}
+				</fieldset>
+			</div>
+			
+				<div class="adminoptionbox">			
+					<fieldset class="admin">
+						<legend>{tr}Tab UI effects{/tr}</legend>
+						{preference name=jquery_effect_tabs}
+						{preference name=jquery_effect_speed}
+						{preference name=jquery_effect_tabs_direction}
+				</fieldset>
+			</div>
+
+			<fieldset>
+				<legend>{tr}Other{/tr}</legend>
+				<div class="admin featurelist">
+					{preference name=feature_shadowbox}
+					{preference name=feature_jscalendar}
+				</div>
+			</fieldset>		
+		{/tab}
+
+		{tab name="{tr}Miscellaneous{/tr}"}
+			{preference name=feature_tabs}
+			{preference name=layout_section}
+			{if $prefs.layout_section eq 'y'}
+				{button _text="{tr}Admin layout per section{/tr}" href="tiki-admin_layout.php"}
+			{/if}
+
+			{preference name=feature_iepngfix}
+			<div class="adminoptionboxchild" id="feature_iepngfix_childcontainer">
+				{preference name=iepngfix_selectors}
+				{preference name=iepngfix_elements}
+			</div>
+
+			<div class="adminoptionbox">
+				<fieldset>
+					<legend>{tr}Favicon{/tr}</legend>
+					{preference name=site_favicon}
+					{preference name=site_favicon_type}
+				</fieldset>
+			</div>
+
+			<div class="adminoptionbox">
+				<fieldset class="admin">
+					<legend>{tr}Context Menus{/tr} (<em>{tr}Currently used in File Galleries only{/tr}.</em>)</legend>
+					{preference name=use_context_menu_icon}
+					{preference name=use_context_menu_text}
+				</fieldset>
+			</div>
+
+			<fieldset>
+				<legend>{tr}Separators{/tr}</legend>
+				{preference name=site_crumb_seper}
+				<div class="adminoptionboxchild">
+					<em>{tr}Examples{/tr}: &nbsp; &raquo; &nbsp; / &nbsp; &gt; &nbsp; : &nbsp; -> &nbsp; &#8594;</em>
+				</div>
+
+				{preference name=site_nav_seper}
+				<div class="adminoptionboxchild">
+					<em>{tr}Examples{/tr}: &nbsp; | &nbsp; / &nbsp; &brvbar; &nbsp; :</em>
 				</div>
 			</fieldset>
-		</div>
+		{/tab}
+	{/tabset}
 
-		<div class="adminoptionbox">
-			<fieldset class="admin">
-				<legend>{tr}Standard UI effects{/tr}</legend>
-				{preference name=jquery_effect}
-				{preference name=jquery_effect_speed}
-				{preference name=jquery_effect_direction}
-			</fieldset>
-		</div>
-			
-			<div class="adminoptionbox">			
-				<fieldset class="admin">
-					<legend>{tr}Tab UI effects{/tr}</legend>
-					{preference name=jquery_effect_tabs}
-					{preference name=jquery_effect_speed}
-					{preference name=jquery_effect_tabs_direction}
-			</fieldset>
-		</div>
-
-		<fieldset>
-			<legend>{tr}Other{/tr}</legend>
-			<div class="admin featurelist">
-				{preference name=feature_shadowbox}
-				{preference name=feature_jscalendar}
-			</div>
-		</fieldset>		
-	{/tab}
-
-	{tab name="{tr}Miscellaneous{/tr}"}
-		{preference name=feature_tabs}
-		{preference name=layout_section}
-		{if $prefs.layout_section eq 'y'}
-			{button _text="{tr}Admin layout per section{/tr}" href="tiki-admin_layout.php"}
-		{/if}
-
-		{preference name=feature_iepngfix}
-		<div class="adminoptionboxchild" id="feature_iepngfix_childcontainer">
-			{preference name=iepngfix_selectors}
-			{preference name=iepngfix_elements}
-		</div>
-
-		<div class="adminoptionbox">
-			<fieldset>
-				<legend>{tr}Favicon{/tr}</legend>
-				{preference name=site_favicon}
-				{preference name=site_favicon_type}
-			</fieldset>
-		</div>
-
-		<div class="adminoptionbox">
-			<fieldset class="admin">
-				<legend>{tr}Context Menus{/tr} (<em>{tr}Currently used in File Galleries only{/tr}.</em>)</legend>
-				{preference name=use_context_menu_icon}
-				{preference name=use_context_menu_text}
-			</fieldset>
-		</div>
-
-		<fieldset>
-			<legend>{tr}Separators{/tr}</legend>
-			{preference name=site_crumb_seper}
-			<div class="adminoptionboxchild">
-				<em>{tr}Examples{/tr}: &nbsp; &raquo; &nbsp; / &nbsp; &gt; &nbsp; : &nbsp; -> &nbsp; &#8594;</em>
-			</div>
-
-			{preference name=site_nav_seper}
-			<div class="adminoptionboxchild">
-				<em>{tr}Examples{/tr}: &nbsp; | &nbsp; / &nbsp; &brvbar; &nbsp; :</em>
-			</div>
-		</fieldset>
-	{/tab}
-{/tabset}
-
-<div class="input_submit_container clear" style="text-align: center">
-	<input type="submit" name="looksetup" value="{tr}Apply{/tr}" />
-</div>
+	<div class="input_submit_container clear" style="text-align: center">
+		<input type="submit" name="looksetup" value="{tr}Apply{/tr}" />
+	</div>
 </form>
