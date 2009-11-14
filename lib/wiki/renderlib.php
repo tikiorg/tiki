@@ -511,7 +511,7 @@ class WikiRenderer
 			$stagingPageName = $prefs['wikiapproval_prefix'] . $this->page;
 			$this->smartyassign('needsStaging', 'y');
 			$this->smartyassign('stagingPageName', $stagingPageName);	
-			if ($tikilib->user_has_perm_on_object($this->user,$stagingPageName,'wiki page','tiki_p_edit','tiki_p_edit_categorized')) {
+			if ($tikilib->user_has_perm_on_object($this->user,$stagingPageName,'wiki page','tiki_p_edit')) {
 				$this->smartyassign('canEditStaging', 'y');
 			} 	
 		} elseif ($prefs['wikiapproval_staging_category'] > 0 && !empty($cats) && in_array($prefs['wikiapproval_staging_category'], $cats) && !$tikilib->page_exists($prefs['wikiapproval_prefix'] . $this->page)) {

@@ -40,8 +40,8 @@ if (count($blogs) == 0) {
 }
 $smarty->assign('blogId', $blogId);
 // Now check permissions to access this page
-if (!($tiki_p_blog_admin == 'y' || (!empty($blogId) && $tiki_p_blog_post == 'y') || (!empty($blogId) && $blog_data['public'] == 'y' && $tikilib->user_has_perm_on_object($user, $blogId, 'blog', 'tiki_p_blog_post', 'tiki_p_edit_categorized')))) {
-	$msg = "tiki_p_blog_admin: $tiki_p_blog_admin -- blogId: $blogId -- tiki_p_blog_post: $tiki_p_blog_post -- blog_data(public): " . $blog_data['public'] . " -- tikilib: " . $tikilib->user_has_perm_on_object($user, $blogId, 'blog', 'tiki_p_blog_post', 'tiki_p_edit_categorized') . " -- user: $user ";
+if (!($tiki_p_blog_admin == 'y' || (!empty($blogId) && $tiki_p_blog_post == 'y') || (!empty($blogId) && $blog_data['public'] == 'y' && $tikilib->user_has_perm_on_object($user, $blogId, 'blog', 'tiki_p_blog_post')))) {
+	$msg = "tiki_p_blog_admin: $tiki_p_blog_admin -- blogId: $blogId -- tiki_p_blog_post: $tiki_p_blog_post -- blog_data(public): " . $blog_data['public'] . " -- tikilib: " . $tikilib->user_has_perm_on_object($user, $blogId, 'blog', 'tiki_p_blog_post') . " -- user: $user ";
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied you cannot post"));
 	$smarty->display("error.tpl");
@@ -77,7 +77,7 @@ if (isset($_REQUEST["postId"]) && $_REQUEST["postId"] > 0) {
 	$data = $bloglib->get_post($_REQUEST["postId"]);
 	// If the blog is public and the user has posting permissions then he can edit
 	// If the user owns the weblog then he can edit
-	if (!$user || ($data["user"] != $user && $user != $blog_data["user"] && !($blog_data['public'] == 'y' && $tikilib->user_has_perm_on_object($user, $_REQUEST['blogId'], 'blog', 'tiki_p_blog_post', 'tiki_p_edit_categorized')))) {
+	if (!$user || ($data["user"] != $user && $user != $blog_data["user"] && !($blog_data['public'] == 'y' && $tikilib->user_has_perm_on_object($user, $_REQUEST['blogId'], 'blog', 'tiki_p_blog_post')))) {
 		if ($tiki_p_blog_admin != 'y' && !$tikilib->user_has_perm_on_object($user, $_REQUEST['blogId'], 'blog', 'tiki_p_blog_admin')) {
 			$smarty->assign('errortype', 401);
 			$smarty->assign('msg', tra("Permission denied you cannot edit this post"));
@@ -197,7 +197,7 @@ if ((isset($_REQUEST["save"]) || isset($_REQUEST['save_exit'])) && !$contributio
 	if ($_REQUEST["postId"] > 0) {
 		$data = $bloglib->get_post($_REQUEST["postId"]);
 		$blog_data = $tikilib->get_blog($data["blogId"]);
-		if (!$user || ($data["user"] != $user && $user != $blog_data["user"] && !($blog_data['public'] == 'y' && $tikilib->user_has_perm_on_object($user, $_REQUEST['blogId'], 'blog', 'tiki_p_blog_post', 'tiki_p_edit_categorized')))) {
+		if (!$user || ($data["user"] != $user && $user != $blog_data["user"] && !($blog_data['public'] == 'y' && $tikilib->user_has_perm_on_object($user, $_REQUEST['blogId'], 'blog', 'tiki_p_blog_post')))) {
 			if ($tiki_p_blog_admin != 'y') {
 				$smarty->assign('errortype', 401);
 				$smarty->assign('msg', tra("Permission denied you cannot edit this post"));

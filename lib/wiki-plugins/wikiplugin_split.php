@@ -175,7 +175,7 @@ function wikiplugin_split($data, $params, $pos) {
 			if ($tiki_p_admin_wiki == 'y' || $tiki_p_admin == 'y')
 				$perm = true;
 			else
-				$perm = $tikilib->user_has_perm_on_object($user, $object, $type, 'tiki_p_edit', 'tiki_p_edit_categorized');
+				$perm = $tikilib->user_has_perm_on_object($user, $object, $type, 'tiki_p_edit');
 		} else { // TODO: other object type
 			$perm = false;
 		}

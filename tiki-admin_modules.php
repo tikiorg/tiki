@@ -142,7 +142,7 @@ if (isset($_REQUEST["um_update"])) {
     $smarty->assign_by_ref('um_title', $_REQUEST["um_title"]);
     $smarty->assign_by_ref('um_data', $_REQUEST["um_data"]);
     $smarty->assign_by_ref('um_parse', $_REQUEST["um_parse"]);
-    $modlib->replace_user_module(preg_replace("/\W/", "_", $_REQUEST["um_name"]) , $_REQUEST["um_title"], $_REQUEST["um_data"], $_REQUEST["um_parse"]);
+    $modlib->replace_user_module($_REQUEST["um_name"], $_REQUEST["um_title"], $_REQUEST["um_data"], $_REQUEST["um_parse"]);
     $logslib->add_log('adminmodules', 'changed user module ' . $_REQUEST["um_name"]);
 }
 if (!isset($_REQUEST["groups"])) {

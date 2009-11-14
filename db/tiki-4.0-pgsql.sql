@@ -1828,7 +1828,7 @@ CREATE INDEX "tiki_modules_tiki_modules_position_ type" ON "tiki_modules" ("posi
 CREATE INDEX "tiki_modules_tiki_modules_moduleId" ON "tiki_modules" ("moduleId");
 
 
-INSERT INTO "tiki_modules" ("name","position","ord","cache_time","params","groups") VALUES ('Application_Menu','l',30,0,'flip=y','a:1:{i:0;s:10:"Registered";}');
+INSERT INTO "tiki_modules" ("name","position","ord","cache_time","params","groups") VALUES ('Application Menu','l',30,0,'flip=y','a:1:{i:0;s:10:"Registered";}');
 
 
 DROP TABLE IF EXISTS "tiki_newsletter_subscriptions";
@@ -2829,7 +2829,7 @@ CREATE TABLE "tiki_user_modules" (
 );
 
 
-INSERT INTO "tiki_user_modules" ("name","title","data","parse") VALUES ('Application_Menu', 'Menu', '{menu id=42}', 'n');
+INSERT INTO "tiki_user_modules" ("name","title","data","parse") VALUES ('Application Menu', 'Menu', '{menu id=42}', 'n');
 
 
 DROP TABLE IF EXISTS "tiki_user_notes";

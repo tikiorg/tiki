@@ -28,7 +28,7 @@ $smarty->assign('sheetId', $_REQUEST["sheetId"]);
 
 $info = $sheetlib->get_sheet_info( $_REQUEST["sheetId"] );
 
-if ($tiki_p_admin != 'y' && $tiki_p_admin_sheet != 'y' && !($user && $info['author'] == $user) && !$tikilib->user_has_perm_on_object($user, $_REQUEST['sheetId'], 'sheet', 'tiki_p_edit_sheet', 'tiki_p_edit_categorized')) {
+if ($tiki_p_admin != 'y' && $tiki_p_admin_sheet != 'y' && !($user && $info['author'] == $user) && !$tikilib->user_has_perm_on_object($user, $_REQUEST['sheetId'], 'sheet', 'tiki_p_edit_sheet')) {
 	$smarty->assign('msg', tra("Access Denied").": feature_sheet");
 
 	$smarty->display("error.tpl");

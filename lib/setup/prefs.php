@@ -411,6 +411,7 @@ function get_default_prefs() {
 		'wikiplugininline_sup' => 'n',
 		'wikiplugininline_survey' => 'n',
 		'wikiplugininline_tag' => 'n',
+		'wikiplugininline_tabs' => 'n',
 		'wikiplugininline_thumb' => 'n',
 		'wikiplugininline_titlesearch' => 'n',
 		'wikiplugininline_toc' => 'n',
@@ -1579,6 +1580,7 @@ if (isset($_SESSION['s_prefs'])) {
 	}
 
 	// Reload if the virtual host or tikiroot has changed
+	if (!isset($_SESSION['lastPrefsSite'])) $lastPrefsSite = '';
 	//   (this is needed when using the same php sessions for more than one tiki)
 	if ( $_SESSION['lastPrefsSite'] != $_SERVER['SERVER_NAME'].'|'.$tikiroot ) {
 		$_SESSION['lastPrefsSite'] = $_SERVER['SERVER_NAME'].'|'.$tikiroot;

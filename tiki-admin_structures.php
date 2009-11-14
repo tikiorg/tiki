@@ -31,7 +31,7 @@ if ($tiki_p_edit_structures == 'y') {
 	if (isset($_REQUEST['rremove'])) {
 		$area = 'delstruct';
 		$structure_info = $structlib->s_get_structure_info($_REQUEST['rremove']);
-		if (!$tikilib->user_has_perm_on_object($user, $structure_info["pageName"], 'wiki page', 'tiki_p_edit', 'tiki_p_edit_categorized')) {
+		if (!$tikilib->user_has_perm_on_object($user, $structure_info["pageName"], 'wiki page', 'tiki_p_edit')) {
 			$smarty->assign('errortype', 401);
 			$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
 			$smarty->display("error.tpl");
@@ -47,7 +47,7 @@ if ($tiki_p_edit_structures == 'y') {
 	if (isset($_REQUEST['rremovex'])) {
 		$area = 'delstructandpages';
 		$structure_info = $structlib->s_get_structure_info($_REQUEST['rremovex']);
-		if (!$tikilib->user_has_perm_on_object($user, $structure_info["pageName"], 'wiki page', 'tiki_p_edit', 'tiki_p_edit_categorized')) {
+		if (!$tikilib->user_has_perm_on_object($user, $structure_info["pageName"], 'wiki page', 'tiki_p_edit')) {
 			$smarty->assign('errortype', 401);
 			$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
 			$smarty->display("error.tpl");
@@ -103,7 +103,7 @@ if ($tiki_p_edit_structures == 'y') {
 	if (isset($_REQUEST['remove'])) {
 		check_ticket('admin-structures');
 		$structure_info = $structlib->s_get_structure_info($_REQUEST['remove']);
-		if (!$tikilib->user_has_perm_on_object($user, $structure_info["pageName"], 'wiki page', 'tiki_p_edit', 'tiki_p_edit_categorized')) {
+		if (!$tikilib->user_has_perm_on_object($user, $structure_info["pageName"], 'wiki page', 'tiki_p_edit')) {
 			$smarty->assign('errortype', 401);
 			$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
 			$smarty->display("error.tpl");

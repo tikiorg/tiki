@@ -781,17 +781,45 @@ displayPicker = function( closeTo, list, areaname ) {
 	var coord = \$jq(closeTo).offset();
 	coord.bottom = coord.top + \$jq(closeTo).height();
 
+	// quick fix for Firefox 3.5 losing selection on changes to popup
+	textarea = getElementById( areaname);
+	var tempSelectionStart = textarea.selectionStart;
+	var tempSelectionEnd = textarea.selectionEnd;
+		
 	pickerDiv.className = 'toolbars-picker';
 	pickerDiv.style.left = coord.left + 'px';
 	pickerDiv.style.top = (coord.bottom + 8) + 'px';
+
+	// quick fix for Firefox 3.5 losing selection on changes to popup
+	if (textarea.selectionStart != tempSelectionStart) {
+		textarea.selectionStart = tempSelectionStart;
+       	}
+	if (textarea.selectionEnd != tempSelectionEnd) {
+                textarea.selectionEnd = tempSelectionEnd;
+       	}  
 
 	var prepareLink = function( link, ins, disp ) {
 		link.innerHTML = disp;
 		link.href = 'javascript:void(0)';
 		link.onclick = function() {
 			insertAt( areaname, ins );
+		
+			// quick fix for Firefox 3.5 losing selection on changes to popup
+                        textarea = getElementById( areaname);
+                        var tempSelectionStart = textarea.selectionStart;
+                        var tempSelectionEnd = textarea.selectionEnd;	
+
 			\$jq('div.toolbars-picker').remove();
 			pickerDiv = false;
+
+			// quick fix for Firefox 3.5 losing selection on changes to popup
+        		if (textarea.selectionStart != tempSelectionStart) {
+            		    textarea.selectionStart = tempSelectionStart;
+     		   	}
+			if (textarea.selectionEnd != tempSelectionEnd) {
+                		textarea.selectionEnd = tempSelectionEnd;
+       			}
+
 			return false;
 		}
 	};
@@ -871,7 +899,23 @@ s += "(" + $jq("#tbWLinkPage").val();
 if ($jq("#tbWLinkAnchor") && $jq("#tbWLinkAnchor").val()) { s += "|" + $jq("#tbWLinkAnchor").val(); }
 if ($jq("#tbWLinkDesc").val()) { s += "|" + $jq("#tbWLinkDesc").val(); }
 s += "))";
-insertAt(areaname, s, false, false, true); $jq(this).dialog("close");
+insertAt(areaname, s, false, false, true); 
+
+// quick fix for Firefox 3.5 losing selection on changes to popup
+textarea = getElementById( areaname);
+var tempSelectionStart = textarea.selectionStart;
+var tempSelectionEnd = textarea.selectionEnd;
+
+$jq(this).dialog("close");
+
+// quick fix for Firefox 3.5 losing selection on changes to popup
+if (textarea.selectionStart != tempSelectionStart) {
+        textarea.selectionStart = tempSelectionStart;
+}
+if (textarea.selectionEnd != tempSelectionEnd) {
+        textarea.selectionEnd = tempSelectionEnd;
+}
+
 }}}'
 					);
 
@@ -923,7 +967,23 @@ if ($jq("#tbLinkDesc").val()) { s += "|" + $jq("#tbLinkDesc").val(); }
 if ($jq("#tbLinkRel").val()) { s += "|" + $jq("#tbLinkRel").val(); }
 if ($jq("#tbLinkNoCache") && $jq("#tbLinkNoCache").attr("checked")) { s += "|nocache"; }
 s += "]";
-insertAt(areaname, s, false, false, true); $jq(this).dialog("close");
+insertAt(areaname, s, false, false, true); 
+
+// quick fix for Firefox 3.5 losing selection on changes to popup
+textarea = getElementById( areaname);
+var tempSelectionStart = textarea.selectionStart;
+var tempSelectionEnd = textarea.selectionEnd;
+
+$jq(this).dialog("close");
+
+// quick fix for Firefox 3.5 losing selection on changes to popup
+if (textarea.selectionStart != tempSelectionStart) {
+        textarea.selectionStart = tempSelectionStart;
+}
+if (textarea.selectionEnd != tempSelectionEnd) {
+        textarea.selectionEnd = tempSelectionEnd;
+}
+
 }}}'
 					);
 			break;
@@ -1053,7 +1113,23 @@ for (r = 1; r <= rows2; r++) {
 	if (r < rows2) {  s += "\n"; }
 }
 s += "||";
-insertAt(areaname, s, false, false, true); $jq(this).dialog("close");
+insertAt(areaname, s, false, false, true);
+
+// quick fix for Firefox 3.5 losing selection on changes to popup
+textarea = getElementById( areaname);
+var tempSelectionStart = textarea.selectionStart;
+var tempSelectionEnd = textarea.selectionEnd;
+
+$jq(this).dialog("close");
+
+// quick fix for Firefox 3.5 losing selection on changes to popup
+if (textarea.selectionStart != tempSelectionStart) {
+        textarea.selectionStart = tempSelectionStart;
+}
+if (textarea.selectionEnd != tempSelectionEnd) {
+        textarea.selectionEnd = tempSelectionEnd;
+}
+
 }}}'
 					);
 			break;
@@ -1217,11 +1293,25 @@ displayDialog = function( closeTo, list, areaname ) {
 			tit = item;
 		}
 	}
+	
+	// quick fix for Firefox 3.5 losing selection on changes to popup
+	textarea = getElementById( areaname);
+	var tempSelectionStart = textarea.selectionStart;
+        var tempSelectionEnd = textarea.selectionEnd; 
+
 	if (!obj) { obj = {}; }
 	if (!obj.width) { obj.width = 210; }
 	obj.bgiframe = true;
 	obj.autoOpen - false;
 	\$jq(dialogDiv).dialog('destroy').dialog(obj).dialog('option', 'title', tit).dialog('open');
+
+	// quick fix for Firefox 3.5 losing selection on changes to popup
+	if (textarea.selectionStart != tempSelectionStart) {
+                textarea.selectionStart = tempSelectionStart;
+        }
+        if (textarea.selectionEnd != tempSelectionEnd) {
+                textarea.selectionEnd = tempSelectionEnd;
+        }
 	
 	return false;
 }

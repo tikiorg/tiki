@@ -7,25 +7,17 @@
 <div><a class="linkmodule" href="tiki-logout.php">{tr}Logout{/tr}</a></div>
 
 {if $prefs.userTracker eq 'y'}
-<div>{tr}User informations{/tr}: </div>
-<div class="">
-{if $prefs.userTracker}
+<div>{tr}User information:{/tr} </div>
+<div>
 &nbsp;&nbsp;<a href="tiki-view_tracker_item.php?view=+user" class="linkmodule">{$user}</a>
-{else}
-{$user}
-{/if}
 </div>
 {/if}
 
 
 {if $prefs.groupTracker eq 'y'}
-<div>{tr}Group informations{/tr}:</div>
+<div>{tr}Group information:{/tr}</div>
 <div class="box-data">
-{if $prefs.groupTracker}
 &nbsp;&nbsp;<a href="tiki-view_tracker_item.php?view=+group" class="linkmodule">{$default_group}</a>
-{else}
-{$default_group}
-{/if}
 </div>
 {/if}
 
@@ -33,6 +25,6 @@
 {/if}
 
 {if $prefs.groupTracker eq 'n' and $prefs.userTracker eq 'n' }
-<a href="tiki-admin.php?page=login" class="linkmodule">{tr}You need to activate user and/or group trackers{/tr}</a>
+<a href="tiki-admin.php?page=login" class="linkmodule">{tr}You need to activate user and/or group trackers.{/tr}</a>
 {/if}
 

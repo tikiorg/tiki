@@ -41,7 +41,6 @@ $view[] = 'tiki_p_wiki_view_attachments';
 $view[] = 'tiki_p_wiki_view_history';
 $view[] = 'tiki_p_wiki_view_comments';
 $edit[] = 'tiki_p_edit';
-$edit[] = 'tiki_p_remove';
 $edit[] = 'tiki_p_wiki_attach_files';
 
 $view[] = 'tiki_p_view_faqs';

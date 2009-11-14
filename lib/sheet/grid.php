@@ -1860,7 +1860,7 @@ class SheetLib extends TikiLib
 			if ($tikilib->user_has_perm_on_object($user, $row['sheetId'], 'sheet', 'tiki_p_view_sheet')) {
 				if ($userlib->object_has_one_permission($row['sheetId'], 'sheet'))
 					$row['individual'] = 'y';
-				$row['tiki_p_edit_sheet'] = ($user && $user == $row['author']) || $tikilib->user_has_perm_on_object($user, $row['sheetId'], 'sheet', 'tiki_p_edit_sheet', 'tiki_p_edit_categorized')?'y': 'n';
+				$row['tiki_p_edit_sheet'] = ($user && $user == $row['author']) || $tikilib->user_has_perm_on_object($user, $row['sheetId'], 'sheet', 'tiki_p_edit_sheet')?'y': 'n';
 				$results['data'][] = $row;
 			}
 		}
