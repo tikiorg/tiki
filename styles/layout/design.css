@@ -389,8 +389,10 @@ div.help_section {
 	border-color: #f00;
 }
 
-.warning a {
-	color: #333;
+.warning a,
+.warning a:link,
+.warning a:visited {
+	color: #b93c2e;
 }
 
 .simplebox {
