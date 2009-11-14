@@ -48,31 +48,11 @@
 			{preference name=change_theme}
 			<div class="adminoptionboxchild" id="change_theme_childcontainer">
 				{tr}Restrict available themes{/tr}
-				<br />
-				{tr}Available styles:{/tr}
-				<select name="available_styles[]" multiple="multiple" size="5">
-					<option value=''>{tr}All{/tr}</option>
-					{section name=ix loop=$styles}
-						<option value="{$styles[ix]|escape}"{if $prefs.available_styles|count gt 0 and in_array($styles[ix], $prefs.available_styles)} selected="selected"{/if}>
-							{$styles[ix]}
-						</option>
-					{/section}
-				</select>
+				{preference name=available_styles}
 			</div>
 
 			{preference name=useGroupTheme}
-			
-			<div class="adminoptionbox">
-				<div class="adminoptionlabel">
-					<label for="general-slideshows">{tr}Slideshow theme{/tr}:</label> 
-					<select name="slide_style" id="general-slideshows">
-						{section name=ix loop=$slide_styles}
-							<option value="{$slide_styles[ix]|escape}"{if $prefs.slide_style eq $slide_styles[ix]} selected="selected"{/if}>{$slide_styles[ix]}</option>
-						{/section}
-					</select>
-				</div>
-			</div>
-
+			{preference name=slide_style}
 			{preference name=feature_editcss}
 			<div class="adminoptionboxchild" id="feature_editcss_childcontainer">
 				{if $tiki_p_create_css eq 'y'}

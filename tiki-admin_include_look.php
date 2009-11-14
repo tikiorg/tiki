@@ -127,7 +127,6 @@ if (isset($_REQUEST["looksetup"])) {
 	$pref_byref_values = array(
 		"feature_left_column",
 		"feature_right_column",
-		"slide_style",
 		"feature_siteloc",
 		"feature_sitetitle",
 		"feature_sitedesc",
@@ -228,16 +227,7 @@ $js
 JS
 	);
 }
-// Get list of available slideshow styles
-$slide_styles = array();
-$h = opendir("styles/slideshows");
-while ($file = readdir($h)) {
-    if (strstr($file, "css")) {
-        $slide_styles[] = $file;
-    }
-}
-closedir($h);
-$smarty->assign_by_ref("slide_styles", $slide_styles);
+
 if (isset($_REQUEST["looksetup"])) {
     for ($i = 0, $count_feedback = count($tikifeedback); $i < $count_feedback; $i++) {
         if (substr($tikifeedback[$i]['name'], 0, 10) == 'site_style') { // if site_style or site_style_option

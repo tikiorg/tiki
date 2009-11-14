@@ -9,6 +9,13 @@ function prefs_available_list() {
 		$map[ $lang['value'] ] = $lang['name'];
 	}
 
+	$all_styles = $tikilib->list_styles();
+	$styles = array('' => tra('All'));
+
+	foreach ($all_styles as $style) {
+		$styles[$style] = substr( $style, 0, strripos($style, '.css'));
+	}
+
 	return array(
 		'available_languages' => array(
 			'name' => tra('Available languages'),
@@ -19,6 +26,14 @@ function prefs_available_list() {
 				'feature_multilingual',
 			),
 			'options' => $map,
+		),
+		'available_styles' => array(
+			'name' => tra('Available styles'),
+			'type' => 'multilist',
+			'options' => $styles,
+			'dependencies' => array(
+				'change_theme',
+			),
 		),
 	);
 }
