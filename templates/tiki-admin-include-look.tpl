@@ -8,21 +8,12 @@
 
 	{tabset name="admin_look"}
 		{tab name="{tr}Theme{/tr}"}
+
+			{preference name=site_style}
 			<div class="adminoptionbox">
-				<div class="adminoptionlabel">
-					<label for="general-theme">{tr}Theme{/tr}:</label>
-					<select name="site_style" id="general-theme">
-						{section name=ix loop=$styles}
-							<option value="{$styles[ix]|escape}"{if $a_style eq $styles[ix]} selected="selected"{/if}>{$styles[ix]}</option>
-						{/section}
-					</select>
-					{if $prefs.feature_help eq 'y'}
-						{help url="Themes" desc="{tr}Themes{/tr}"}
-					{/if}
-					{if $prefs.javascript_enabled eq 'n' or $prefs.feature_jquery eq 'n'}
-						<input type="submit" name="changestyle" value="{tr}Go{/tr}" />
-					{/if}
-				</div>
+				{if $prefs.javascript_enabled eq 'n' or $prefs.feature_jquery eq 'n'}
+					<input type="submit" name="changestyle" value="{tr}Go{/tr}" />
+				{/if}
 			</div>
 
 			<div class="adminoptionbox">
@@ -253,66 +244,20 @@
 				</div>
 			</fieldset>
 		</div>
+
 		<div class="adminoptionbox">
 			<fieldset class="admin">
 				<legend>{tr}Standard UI effects{/tr}</legend>
-				<div class="adminoptionbox">
-					<div class="adminoption"></div>
-						<div class="adminoptionlabel">
-							<label for="jquery_effect">{tr}Effect for modules{/tr}:</label> 
-							<select name="jquery_effect" id="jquery_effect">
-								<option value="none" {if $prefs.jquery_effect_tabs eq 'none'}selected="selected"{/if}>{tr}None{/tr}</option>
-								<option value="" {if $prefs.jquery_effect eq ''}selected="selected"{/if}>{tr}Default{/tr}</option>
-								<option value="slide" {if $prefs.jquery_effect eq 'slide'}selected="selected"{/if}>{tr}Slide{/tr}</option>
-								<option value="fade" {if $prefs.jquery_effect eq 'fade'}selected="selected"{/if}>{tr}Fade{/tr}</option>
-								{if $prefs.feature_jquery_ui eq 'y'}
-									<option value="blind_ui" {if $prefs.jquery_effect eq 'blind_ui'}selected="selected"{/if}>{tr}Blind (UI){/tr}</option>
-									<option value="clip_ui" {if $prefs.jquery_effect eq 'clip_ui'}selected="selected"{/if}>{tr}Clip (UI){/tr}</option>
-									<option value="drop_ui" {if $prefs.jquery_effect eq 'drop_ui'}selected="selected"{/if}>{tr}Drop (UI){/tr}</option>
-									<option value="explode_ui" {if $prefs.jquery_effect eq 'explode_ui'}selected="selected"{/if}>{tr}Explode (UI){/tr}</option>
-									<option value="fold_ui" {if $prefs.jquery_effect eq 'fold_ui'}selected="selected"{/if}>{tr}Fold (UI){/tr}</option>
-									<option value="puff_ui" {if $prefs.jquery_effect eq 'puff_ui'}selected="selected"{/if}>{tr}Puff (UI){/tr}</option>
-									<option value="slide_ui" {if $prefs.jquery_effect eq 'slide_ui'}selected="selected"{/if}>{tr}Slide (UI){/tr}</option>
-								{/if}
-							</select>
-							{if $prefs.feature_help eq 'y'} 
-								{help url="JQuery#Effects" desc="{tr}Main JQuery effect{/tr}"}
-							{/if}
-						</div>
-					</div>
-					
-					{preference name=jquery_effect_speed}
-					{preference name=jquery_effect_direction}
-				</fieldset>
-			</div>
+				{preference name=jquery_effect}
+				{preference name=jquery_effect_speed}
+				{preference name=jquery_effect_direction}
+			</fieldset>
+		</div>
 			
 			<div class="adminoptionbox">			
 				<fieldset class="admin">
 					<legend>{tr}Tab UI effects{/tr}</legend>
-					<div class="adminoptionbox">
-						<div class="adminoption"></div>
-						<div class="adminoptionlabel">
-							<label for="jquery_effect_tabs">{tr}Effect for tabs{/tr}:</label> 
-							<select name="jquery_effect_tabs" id="jquery_effect_tabs">
-								<option value="none" {if $prefs.jquery_effect_tabs eq 'none'}selected="selected"{/if}>{tr}None{/tr}</option>
-								<option value="normal" {if $prefs.jquery_effect_tabs eq 'normal'}selected="selected"{/if}>{tr}Normal{/tr}</option>
-								<option value="slide" {if $prefs.jquery_effect_tabs eq 'slide'}selected="selected"{/if}>{tr}Slide{/tr}</option>
-								<option value="fade" {if $prefs.jquery_effect_tabs eq 'fade'}selected="selected"{/if}>{tr}Fade{/tr}</option>
-								{if $prefs.feature_jquery_ui eq 'y'}
-									<option value="blind_ui" {if $prefs.jquery_effect_tabs eq 'blind_ui'}selected="selected"{/if}>{tr}Blind (UI){/tr}</option>
-									<option value="clip_ui" {if $prefs.jquery_effect_tabs eq 'clip_ui'}selected="selected"{/if}>{tr}Clip (UI){/tr}</option>
-									<option value="drop_ui" {if $prefs.jquery_effect_tabs eq 'drop_ui'}selected="selected"{/if}>{tr}Drop (UI){/tr}</option>
-									<option value="explode_ui" {if $prefs.jquery_effect_tabs eq 'explode_ui'}selected="selected"{/if}>{tr}Explode (UI){/tr}</option>
-									<option value="fold_ui" {if $prefs.jquery_effect_tabs eq 'fold_ui'}selected="selected"{/if}>{tr}Fold (UI){/tr}</option>
-									<option value="puff_ui" {if $prefs.jquery_effect_tabs eq 'puff_ui'}selected="selected"{/if}>{tr}Puff (UI){/tr}</option>
-									<option value="slide_ui" {if $prefs.jquery_effect_tabs eq 'slide_ui'}selected="selected"{/if}>{tr}Slide (UI){/tr}</option>
-								{/if}
-							</select>
-							{if $prefs.feature_help eq 'y'} 
-								{help url="JQuery#Effects" desc="{tr}JQuery effect for tabs{/tr}"}
-							{/if}
-						</div>
-					</div>
+					{preference name=jquery_effect_tabs}
 					{preference name=jquery_effect_speed}
 					{preference name=jquery_effect_tabs_direction}
 			</fieldset>

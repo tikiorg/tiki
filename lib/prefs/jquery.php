@@ -1,7 +1,39 @@
 <?php
 
 function prefs_jquery_list() {
+
+	global $prefs;
+
+	$jquery_effect_options = array(
+		'none'  => tra('None'),
+		''      => tra('Default'),
+		'slide' => tra('Slide'),
+		'fade'  => tra('Fade'),
+	);	
+
+	if ($prefs['feature_jquery_ui'] == 'y') {
+		$jquery_effect_options['blind_ui'] = tra('Blind (UI)');
+		$jquery_effect_options['clip_ui'] = tra('Clip (UI)');
+		$jquery_effect_options['drop_ui'] = tra('Drop (UI)');
+		$jquery_effect_options['explode_ui'] = tra('Explode (UI)');
+		$jquery_effect_options['fold_ui'] = tra('Fold (UI)');
+		$jquery_effect_options['puff_ui'] = tra('Puff (UI)');
+		$jquery_effect_options['slide_ui'] = tra('Slide (UI)');
+	}
+
 	return array(
+		'jquery_effect' => array(
+			'name' => tra('Effect for modules'),
+			'type' => 'list',
+			'options' => $jquery_effect_options,
+			'help' => 'JQuery#Effects',
+		),
+		'jquery_effect_tabs' => array(
+			'name' => tra('Effect for tabs'),
+			'type' => 'list',
+			'options' => $jquery_effect_options,
+			'help' => 'JQuery#Effects',
+		),
 		'jquery_effect_speed' => array(
 			'name' => tra('Speed'),
 			'type' => 'list',
@@ -44,19 +76,5 @@ function prefs_jquery_list() {
 				'down' => tra('Down'),
 			),
 		),
-	
-
-	// Used in templates/tiki-admin-include-look.tpl
-	'jquery_effect' => array(
-			'name' => tra('Effect for modules'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-look.tpl
-	'jquery_effect_tabs' => array(
-			'name' => tra('Effect for tabs'),
-			'type' => '',
-			),
-	
 	);	
 }

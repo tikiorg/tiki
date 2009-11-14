@@ -1,7 +1,22 @@
 <?php
 
 function prefs_site_list() {
+	global $tikilib;
+
+	$all_styles = $tikilib->list_styles();
+	$styles = array();
+
+	foreach ($all_styles as $style) {
+		$styles[$style] = substr( $style, 0, strripos($style, '.css'));
+	}
+
 	return array (
+		'site_style' => array(
+			'name' => tra('Theme'),
+			'type' => 'list',
+			'help' => 'Themes',
+			'options' => $styles,
+		),
 		'site_closed' => array(
 			'name' => tra('Close site (except for those with permission)'),
 			'description' => tra('Close site (except for those with permission)'),
