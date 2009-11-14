@@ -26,6 +26,12 @@ $partner_id = $prefs['partnerId'];
 $SESSION_ADMIN = 2;
 $SESSION_USER = 0;
 
+if (empty($partner_id) || !is_numeric($partner_id) || empty($secret) || empty($admin_secret)) {
+	$smarty->assign('msg', tra("You need to set your Kaltura account details: ") . '<a href="tiki-admin.php?page=kaltura">' . tra('here') . '</a>');
+	$smarty->display('error.tpl');
+	die;
+}
+
 $kconf = new KalturaConfiguration($partner_id);
 $kclient = new KalturaClient($kconf);
 $ksession = $kclient->session->start($secret,$user,$SESSION_USER);
