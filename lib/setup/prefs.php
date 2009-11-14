@@ -1560,6 +1560,7 @@ if (isset($_SESSION['s_prefs'])) {
 	}
 
 	// Reload if the virtual host or tikiroot has changed
+	if (!isset($_SESSION['lastPrefsSite'])) $lastPrefsSite = '';
 	//   (this is needed when using the same php sessions for more than one tiki)
 	if ( $_SESSION['lastPrefsSite'] != $_SERVER['SERVER_NAME'].'|'.$tikiroot ) {
 		$_SESSION['lastPrefsSite'] = $_SERVER['SERVER_NAME'].'|'.$tikiroot;
