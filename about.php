@@ -9,8 +9,7 @@
 \mainpage
 
 
-TikiWiki CMS/Groupware is Free and Open Source Software (FOSS). It is a community-driven project.
-It exists and improves by the participation of people just like YOU.
+TikiWiki CMS/Groupware is Free and Open Source Software (FOSS). It is a community-driven project which exists and improves thanks to the participation of people just like YOU.
 
 
 IMPORTANT LINKS
