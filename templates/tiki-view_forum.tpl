@@ -452,7 +452,7 @@
 					<td class="{cycle advance=false}">{$comments_coms[ix].lastPost|tiki_short_datetime} {* date_format:"%b %d [%H:%M]" *}
 						{if $comments_coms[ix].replies}
 							<br />
-							<small><i>{$comments_coms[ix].lastPostData.title}</i> {tr}by{/tr} {$comments_coms[ix].lastPostData.userName|userlink}</small>
+							<small><i>{$comments_coms[ix].lastPostData.title|escape}</i> {tr}by{/tr} {$comments_coms[ix].lastPostData.userName|userlink}</small>
 						{/if}
 					</td>
 				{/if}
