@@ -147,7 +147,7 @@ function smarty_function_treetable($params, &$smarty) {
 		$_columns = array();
 		foreach($keys as $key) {
 			if (!is_numeric($key)) {
-				$_columns[$key] = htmlentities($key);
+				$_columns[$key] = htmlspecialchars($key);
 			}
 		}
 	} else if (is_string($_columns)) {
@@ -231,7 +231,7 @@ $jq("#'.$id.'_openall").click( function () {
 	
 	foreach ($_columns as $column => $columnName) {
 		$html .= '<th>';
-		$html .= htmlentities($columnName);
+		$html .= htmlspecialchars($columnName);
 		$html .= '</th>';
 	}
 	$html .= '</tr></thead>'.$nl;
@@ -243,7 +243,7 @@ $jq("#'.$id.'_openall").click( function () {
 	foreach ($_data as &$row) {
 		// set up tree hierarchy
 		if ($_sortColumn) {
-			$treeType = htmlentities(trim($row[$_sortColumn]));
+			$treeType = htmlspecialchars(trim($row[$_sortColumn]));
 			$treeTypeId = '';
 			$childRowClass = '';
 			if (!empty($_sortColumnDelimiter)) {	// nested
@@ -286,7 +286,7 @@ $jq("#'.$id.'_openall").click( function () {
 					}
 					foreach ($_columns as $column => $columnName) {
 						$html .= '<td>';
-						$html .= htmlentities($columnName);
+						$html .= htmlspecialchars($columnName);
 						$html .= '</td>';
 					}
 					$html .= '</tr>'.$nl;
@@ -311,8 +311,8 @@ $jq("#'.$id.'_openall").click( function () {
 		if (!empty($_checkbox)) {
 			for ($i = 0; $i < count($_checkbox); $i++) {
 				// get checkbox's "value"
-				$cbxVal = htmlentities($row[$_checkboxColumnIndex[$i]]);
-				$rowVal = htmlentities($row[$_valueColumnIndex]);
+				$cbxVal = htmlspecialchars($row[$_checkboxColumnIndex[$i]]);
+				$rowVal = htmlspecialchars($row[$_valueColumnIndex]);
 				$cbxTit = empty($_checkboxTitles) ? $cbxVal : $_checkboxTitles[$i];
 				$html .= '<td class="checkBoxCell">';
 				$html .= '<input type="checkbox" name="'.$_checkbox[$i].'[]" value="'.$rowVal.'"'.($cbxVal=='y' ? ' checked="checked"' : '').' title="'.$cbxTit.'" />';
@@ -326,7 +326,7 @@ $jq("#'.$id.'_openall").click( function () {
 		foreach ($_columns as $column => $columnName) {
 			$html .= '<td>';
 			if ($_columnsContainHtml != 'y') {
-				$html .= htmlentities($row[$column]);
+				$html .= htmlspecialchars($row[$column]);
 			} else {
 				$html .= $row[$column];
 			}
