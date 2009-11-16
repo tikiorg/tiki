@@ -23,6 +23,103 @@ Version 4.0
 ------------------
 
 ----------------------------------------------
+r23321 | jonnybradley | 2009-11-15 20:48:14 -0500 (Sun, 15 Nov 2009) | 1 line
+
+[FIX] Rollback r23309
+----------------------------------------------
+r23317 | nkoth | 2009-11-15 20:11:05 -0500 (Sun, 15 Nov 2009) | 2 lines
+
+[FIX] add warning that category permissions will not be upgraded to version 4
+
+----------------------------------------------
+r23315 | marclaporte | 2009-11-15 19:27:13 -0500 (Sun, 15 Nov 2009) | 1 line
+
+[FIX] Adding navigation on this very important page
+----------------------------------------------
+r23314 | nkoth | 2009-11-15 19:19:41 -0500 (Sun, 15 Nov 2009) | 2 lines
+
+[FIX] more prevention if possible IE js errors and make sure textarea is defined
+
+----------------------------------------------
+r23313 | nkoth | 2009-11-15 19:12:51 -0500 (Sun, 15 Nov 2009) | 2 lines
+
+[FIX] textarea is needed here 
+
+----------------------------------------------
+r23312 | sylvieg | 2009-11-15 18:59:17 -0500 (Sun, 15 Nov 2009) | 1 line
+
+comment admin validation as it is buggy and blocking release
+----------------------------------------------
+r23311 | nkoth | 2009-11-15 18:51:23 -0500 (Sun, 15 Nov 2009) | 2 lines
+
+[FIX] prevent possible js error in IE due to undefined textarea.selectionStart/End 
+
+----------------------------------------------
+r23310 | sylvieg | 2009-11-15 18:34:06 -0500 (Sun, 15 Nov 2009) | 1 line
+
+discover tiki_p_modify_object_categories
+----------------------------------------------
+r23309 | nkoth | 2009-11-15 17:43:52 -0500 (Sun, 15 Nov 2009) | 2 lines
+
+[FIX] workaround problem in Fx3.5 where insertion of plugins from plugin helper end up inserting at end of text
+
+----------------------------------------------
+r23308 | nkoth | 2009-11-15 17:36:57 -0500 (Sun, 15 Nov 2009) | 2 lines
+
+[FIX] jquery autocomplete user selector should in the case of admin user (where it's possible to change it from the autofill) be autofilled by default with the admin user
+
+----------------------------------------------
+r23307 | chealer | 2009-11-15 17:24:17 -0500 (Sun, 15 Nov 2009) | 1 line
+
+[FIX] treetable: use htmlspecialchars() instead of htmlentities(), which assumes ISO-8859-1-encoded strings (breaks French accented characters)
+----------------------------------------------
+r23306 | chealer | 2009-11-15 17:22:30 -0500 (Sun, 15 Nov 2009) | 2 lines
+
+[FIX] French object permissions: "Droit d'accès" rendering as "Droit d\'accès"
+Smarty tr block embedded in another Smarty tag causing French translation with single quote to create issues inside single-quoted treetable parameter
+----------------------------------------------
+r23305 | jonnybradley | 2009-11-15 17:20:49 -0500 (Sun, 15 Nov 2009) | 1 line
+
+[FIX] Fix toolbars insterAt() bug if autocomplete was off
+----------------------------------------------
+r23304 | sylvieg | 2009-11-15 16:42:18 -0500 (Sun, 15 Nov 2009) | 1 line
+
+syntax: please check your smarty syntax - it is the 3th this week with the same error
+----------------------------------------------
+r23302 | chealer | 2009-11-15 15:51:45 -0500 (Sun, 15 Nov 2009) | 2 lines
+
+[FIX] HTML special chars escaping
+[FIX] colons inside tr blocks
+----------------------------------------------
+r23301 | marclaporte | 2009-11-15 14:08:47 -0500 (Sun, 15 Nov 2009) | 1 line
+
+[FIX] Broken link. While I was there: Better English and clearer message.
+----------------------------------------------
+r23299 | sylvieg | 2009-11-14 18:22:48 -0500 (Sat, 14 Nov 2009) | 1 line
+
+[FIX]sql error
+----------------------------------------------
+r23298 | sylvieg | 2009-11-14 18:15:18 -0500 (Sat, 14 Nov 2009) | 1 line
+
+[MOD]categ: add a view icon as it is not obvious that the view id on the name link
+----------------------------------------------
+r23297 | jonnybradley | 2009-11-14 18:10:59 -0500 (Sat, 14 Nov 2009) | 2 lines
+
+[FIX] Add checks for Kaltura account settings (prevents WSoD on Kaltura pages)
+[KIL] Remove obsolete Kaltura API 2 library files
+----------------------------------------------
+r23294 | luciash | 2009-11-14 12:22:16 -0500 (Sat, 14 Nov 2009) | 1 line
+
+[FIX] darkroom theme: .warning .rbox-title color
+----------------------------------------------
+r23291 | sylvieg | 2009-11-14 09:13:06 -0500 (Sat, 14 Nov 2009) | 1 line
+
+[FIX]language: more fixes for 23285
+----------------------------------------------
+r23289 | sylvieg | 2009-11-14 08:55:49 -0500 (Sat, 14 Nov 2009) | 1 line
+
+[FIX]perms: perms to download a file were not checked if the param page was not set + check also you can view the page + some nicer error messages
+----------------------------------------------
 r23266 | chealer | 2009-11-13 16:37:15 -0500 (Fri, 13 Nov 2009) | 1 line
 
 [FIX] hotfix "A Friendly Warning" going to Admin Profiles for the first time. should be properly fixed later
