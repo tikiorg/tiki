@@ -30,10 +30,45 @@ if ($tiki_p_admin_categories != 'y') {
 	die;
 }
 // Check for parent category or set to 0 if not present
+if (!empty($_REQUEST['parentId']) && !$categlib->get_category($_REQUEST['parentId'])) {
+	$smarty->assign('msg', 'Incorrect param'.' parentId');
+	$smarty->display('error.tpl');
+	die;
+}	
+
 if (!isset($_REQUEST["parentId"])) {
 	$_REQUEST["parentId"] = 0;
 }
 $smarty->assign('parentId', $_REQUEST["parentId"]);
+
+if (!empty($_REQUEST['unassign'])) {
+	check_ticket('admin-categories');
+	$area = 'unassign';
+	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_REQUEST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+		key_check($area);
+		$categlib->unassign_all_objects($_REQUEST['parentId']);
+	} else {
+		key_get($area, 'tiki-admin_categories.php?parentId='.$_REQUEST['parentId'].'&amp;unassign=y');
+	}
+}
+if (!empty($_REQUEST['move_to']) && !empty($_REQUEST['toId'])) {
+	check_ticket('admin-categories');
+	if (!$categlib->get_category($_REQUEST['toId'])) {
+		$smarty->assign('msg', 'Incorrect param'.' toId');
+		$smarty->display('error.tpl');
+		die;
+	}
+	$categlib->move_all_objects($_REQUEST['parentId'], $_REQUEST['toId']);
+}
+if (!empty($_REQUEST['copy_from']) && !empty($_REQUEST['to'])) {
+	check_ticket('admin-categories');
+	if (!$categlib->get_category($_REQUEST['to'])) {
+		$smarty->assign('msg', 'Incorrect param'.' fromId');
+		$smarty->display('error.tpl');
+		die;
+	}
+	$categlib->assign_all_objects($_REQUEST['parentId'], $_REQUEST['to']);
+}
 if (isset($_REQUEST["addpage"]) && $_REQUEST["parentId"] != 0) {
 	check_ticket('admin-categories');
 	// Here we categorize a page

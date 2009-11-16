@@ -179,6 +179,34 @@
 		</div>
 	</div>
 
+	{if $parentId !=0}
+		<div class="cbox">
+			<div class="cbox-title">
+				{tr}Moving objects between categories{/tr}
+			</div>
+			<div class="cbox-data">
+				<form method="get" action="tiki-admin_categories.php" name="move">
+				<input type="hidden" name="parentId" value="{$parentId|escape}" />
+				<input type="submit" name="unassign" value="{tr}Unassign all objects from this category{/tr}" />
+				<br />
+				<select name="toId">
+				{section name=ix loop=$catree}
+					<option value="{$catree[ix].categId|escape}" {if $catree[ix].categId eq $parentId}selected="selected"{/if}>{$catree[ix].categpath|escape}</option>
+				{/section}
+				</select>
+				<input type="submit" name="move_to" value="{tr}Move all the objects from this category to this one{/tr}" />
+				<br />
+				<select name="to">
+				{section name=ix loop=$catree}
+					<option value="{$catree[ix].categId|escape}" {if $catree[ix].categId eq $parentId}selected="selected"{/if}>{$catree[ix].categpath|escape}</option>
+				{/section}
+				</select>
+				<input type="submit" name="copy_from" value="{tr}Assign all objects of this category to this one{/tr}" />
+				</form>
+			</div>
+		</div>
+	{/if}
+
 	{if $parentId != 0}
 		<div class="cbox">
 			<div class="cbox-title">

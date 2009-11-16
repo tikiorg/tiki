@@ -1681,5 +1681,21 @@ class CategLib extends ObjectLib {
 		}
 		return $ret;
 	}
+	// unassign all objects from a category
+	function unassign_all_objects($categId) {
+		$query = 'delete from  `tiki_category_objects` where `categId`=?';
+		$this->query($query, array((int)$categId));
+	}
+	//move all objects from a categ to anotehr one
+	function move_all_objects($from, $to) {
+		$query = 'update `tiki_category_objects` set `categId`=? where `categId`=?';
+		$this->query($query, array((int)$to, (int)$from));
+	}
+	//assign all objects of a categ to another one
+	function assign_all_objects($from, $to) {
+		$query = 'insert `tiki_category_objects` (`catObjectId`, `categId`) select `catObjectId`, \'?\' from `tiki_category_objects` where `categId`=?';
+		echo $query.' '.$to. ' '.$from;
+		$this->query($query, array((int)$to, (int)$from));
+	}
 }
 $categlib = new CategLib;
