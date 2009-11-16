@@ -122,7 +122,7 @@
 		
 			{preference name=feature_custom_center_column_header}
 			{preference name=feature_left_column}
-			{preference name=feature_Right_column}
+			{preference name=feature_right_column}
 		
 			{preference name=feature_breadcrumbs}
 			<div class="adminoptionboxchild" id="feature_breadcrumbs_childcontainer">

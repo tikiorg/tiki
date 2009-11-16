@@ -1137,7 +1137,7 @@ function prefs_feature_list() {
 				'n' => tra('Never'),
 			),
 		),
-		'feature_Right_column' => array(
+		'feature_right_column' => array(
 			'name' => 'Right Column',
 			'type' => 'list',
 			'help' => 'Users+Flip+Columns',
