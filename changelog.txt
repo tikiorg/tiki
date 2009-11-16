@@ -23,6 +23,10 @@ Version 4.0
 ------------------
 
 ----------------------------------------------
+r23325 | chealer | 2009-11-15 21:30:57 -0500 (Sun, 15 Nov 2009) | 1 line
+
+[SEC] remove Javascript alert() leftover debug message when one of the new passwords is empty. found by Jonny Bradley
+----------------------------------------------
 r23321 | jonnybradley | 2009-11-15 20:48:14 -0500 (Sun, 15 Nov 2009) | 1 line
 
 [FIX] Rollback r23309

@@ -22,7 +22,6 @@
 				ret_msg.innerHTML = "<img src='pics/icons/exclamation.png' style='vertical-align:middle' alt='Overflow' /> Too many tries";
 				return false;
 			} else if ((pass0 == '') || (pass1 == '') || (pass2 == '')) {
-			alert(pass0+'|'+pass1+'|'+pass2);
 				ret_msg.innerHTML = "<img src='pics/icons/exclamation.png' style='vertical-align:middle' alt='Missing' /> Passwords missing";
 				return false;
 			} else if ( pass1 != pass2 ) {
