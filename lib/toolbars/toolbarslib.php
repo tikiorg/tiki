@@ -804,11 +804,11 @@ displayPicker = function( closeTo, list, areaname ) {
 		link.href = 'javascript:void(0)';
 		link.onclick = function() {
 			insertAt( areaname, ins );
-		
+	
+			textarea = getElementById( areaname);	
 			// quick fix for Firefox 3.5 losing selection on changes to popup
                         if (typeof textarea.selectionStart != 'undefined') {
-				textarea = getElementById( areaname);
-                        	var tempSelectionStart = textarea.selectionStart;
+				var tempSelectionStart = textarea.selectionStart;
                         	var tempSelectionEnd = textarea.selectionEnd;	
 			}
 
@@ -904,9 +904,9 @@ if ($jq("#tbWLinkDesc").val()) { s += "|" + $jq("#tbWLinkDesc").val(); }
 s += "))";
 insertAt(areaname, s, false, false, true); 
 
+textarea = getElementById( areaname);
 // quick fix for Firefox 3.5 losing selection on changes to popup
 if (typeof textarea.selectionStart != "undefined") {
-	textarea = getElementById( areaname);
 	var tempSelectionStart = textarea.selectionStart;
 	var tempSelectionEnd = textarea.selectionEnd;
 }
@@ -974,11 +974,12 @@ if ($jq("#tbLinkNoCache") && $jq("#tbLinkNoCache").attr("checked")) { s += "|noc
 s += "]";
 insertAt(areaname, s, false, false, true); 
 
-// quick fix for Firefox 3.5 losing selection on changes to popup
 textarea = getElementById( areaname);
-var tempSelectionStart = textarea.selectionStart;
-var tempSelectionEnd = textarea.selectionEnd;
-
+// quick fix for Firefox 3.5 losing selection on changes to popup
+if (typeof textarea.selectionStart != "undefined") {
+	var tempSelectionStart = textarea.selectionStart;
+	var tempSelectionEnd = textarea.selectionEnd;
+}
 $jq(this).dialog("close");
 
 // quick fix for Firefox 3.5 losing selection on changes to popup
@@ -1122,9 +1123,10 @@ insertAt(areaname, s, false, false, true);
 
 // quick fix for Firefox 3.5 losing selection on changes to popup
 textarea = getElementById( areaname);
-var tempSelectionStart = textarea.selectionStart;
-var tempSelectionEnd = textarea.selectionEnd;
-
+if (typeof textarea.selectionStart != "undefined") {
+	var tempSelectionStart = textarea.selectionStart;
+	var tempSelectionEnd = textarea.selectionEnd;
+}
 $jq(this).dialog("close");
 
 // quick fix for Firefox 3.5 losing selection on changes to popup
@@ -1301,8 +1303,10 @@ displayDialog = function( closeTo, list, areaname ) {
 	
 	// quick fix for Firefox 3.5 losing selection on changes to popup
 	textarea = getElementById( areaname);
-	var tempSelectionStart = textarea.selectionStart;
-        var tempSelectionEnd = textarea.selectionEnd; 
+	if (typeof textarea.selectionStart != 'undefined') {
+		var tempSelectionStart = textarea.selectionStart;
+        	var tempSelectionEnd = textarea.selectionEnd; 
+	}
 
 	if (!obj) { obj = {}; }
 	if (!obj.width) { obj.width = 210; }
