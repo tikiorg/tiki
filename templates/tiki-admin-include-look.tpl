@@ -278,8 +278,8 @@
 	</div>
 </div>
 <div class="adminoptionbox">
-	<div class="adminoptionlabel"><label for="feature_Right_column">{tr}Right column{/tr}</label>: 
-		<select name="feature_Right_column" id="feature_Right_column">
+	<div class="adminoptionlabel"><label for="feature_right_column">{tr}Right column{/tr}</label>: 
+		<select name="feature_right_column" id="feature_right_column">
 								<option value="y" {if $prefs.feature_right_column eq 'y'}selected="selected"{/if}>{tr}only if module{/tr}</option>
 								<option value="fixed" {if $prefs.feature_right_column eq 'fixed'}selected="selected"{/if}>{tr}always{/tr}</option>
 								<option value="user" {if $prefs.feature_right_column eq 'user'}selected="selected"{/if}>{tr}user decides{/tr}</option>
