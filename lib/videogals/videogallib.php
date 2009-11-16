@@ -11,7 +11,6 @@ $subp_id = (int)$prefs['partnerId']*100;
 $admin_secret = $prefs['adminSecret'];
 $service_url = "http://www.kaltura.com";
 
-//require_once ( "kaltura_client.php");
 require_once ( "KalturaClient_v3.php");
 
 $mediaType = array("Any","Video","Image","Text","HTML","Audio","Video Remix","SHOW_XML","","Bubbles","XML","Document");

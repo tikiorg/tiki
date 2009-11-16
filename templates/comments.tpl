@@ -92,7 +92,7 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 					<select name="moveto">
 					{section name=ix loop=$topics}
 						{if $topics[ix].threadId ne $comments_parentId}
-						<option value="{$topics[ix].threadId|escape}">{$topics[ix].title|truncate:100}</option>
+						<option value="{$topics[ix].threadId|escape}">{$topics[ix].title|truncate:100|escape}</option>
 						{/if}
 					{/section}
 					</select>
@@ -133,7 +133,7 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 			</div>
 		{/if}
 
-		{if $comments_cant > $prefs["forum_thread_user_settings_threshold"]}
+		{if $comments_cant > $prefs.forum_thread_user_settings_threshold}
 		<div class="actions">
 			<span class="action">
 

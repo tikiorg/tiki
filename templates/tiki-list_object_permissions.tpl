@@ -1,4 +1,9 @@
 {title}{tr}Object Permissions List{/tr}{/title}
+
+<div class="navbar">
+{button href="tiki-objectpermissions.php" _text="{tr}Manage Permissions{/tr}"}
+</div>
+
 {foreach from=$res key=type item=content}
 	<h2>{tr}{$type}{/tr}</h2>
 

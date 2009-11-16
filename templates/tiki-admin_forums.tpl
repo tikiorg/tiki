@@ -116,7 +116,7 @@
 
 {if $dup_mode != 'y'}
 	{if $forumId > 0}
-		<h2>{tr}Edit this Forum:{/tr} {$name}</h2>
+		<h2>{tr}Edit this Forum:{/tr} {$name|escape}</h2>
 	{else}
 		<h2>{tr}Create New Forum{/tr}</h2>
 	{/if}
@@ -129,33 +129,33 @@
 		<input type="hidden" name="forumId" value="{$forumId|escape}" />
 		<table class="normal">
 			<tr>
-				<td class="formcolor">{tr}Name{/tr}:</td>
+				<td class="formcolor">{tr}Name:{/tr}</td>
 				<td class="formcolor">
 					<input type="text" name="name" size="50" value="{$name|escape}" />
 				</td>
 			</tr>
 			<tr>
-				<td class="formcolor">{tr}Description{/tr}:</td>
+				<td class="formcolor">{tr}Description:{/tr}</td>
 				<td class="formcolor">
 					<textarea name="description" rows="4" cols="40">{$description|escape}</textarea>
 				</td>
 			</tr>
 			<tr>
-				<td class="formcolor">{tr}Show description{/tr}:</td>
+				<td class="formcolor">{tr}Show description:{/tr}</td>
 				<td class="formcolor">
 					<input type="checkbox" name="show_description" {if $show_description eq 'y'}checked="checked"{/if} />
 				</td>
 			</tr>
 			<tr>
-				<td class="formcolor">{tr}Prevent flooding{/tr}:</td>
+				<td class="formcolor">{tr}Prevent flooding:{/tr}</td>
 				<td class="formcolor">
 					<input type="checkbox" name="controlFlood" {if $controlFlood eq 'y'}checked="checked"{/if} />
-					{tr}Minimum time between posts{/tr}:
+					{tr}Minimum time between posts:{/tr}
 					{html_options name=floodInterval options=$flood_options selected=$floodInterval}
 				</td>
 			</tr>
 			<tr>
-				<td class="formcolor">{tr}Section{/tr}:</td>
+				<td class="formcolor">{tr}Section:{/tr}</td>
 				<td class="formcolor">
 					<select name="section">
 						<option value="" {if $forumSection eq ""}selected="selected"{/if}>{tr}None{/tr}</option>
@@ -168,7 +168,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="formcolor">{tr}Moderator user{/tr}:</td>
+				<td class="formcolor">{tr}Moderator user:{/tr}</td>
 				<td class="formcolor">
 					<select name="moderator">
 						<option value="" {if $moderator eq ''}selected="selected"{/if}>{tr}None{/tr}</option>
@@ -179,7 +179,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="formcolor">{tr}Moderator group{/tr}:</td>
+				<td class="formcolor">{tr}Moderator group:{/tr}</td>
 				<td class="formcolor">
 					<select name="moderator_group">
 						<option value="" {if $moderator_group eq ''}selected="selected"{/if}>{tr}None{/tr}</option>
@@ -202,7 +202,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="formcolor">{tr}Only allow replies to the first message (flat forum){/tr}:</td>
+				<td class="formcolor">{tr}Only allow replies to the first message (flat forum):{/tr}</td>
 				<td class="formcolor">
 					<input type="checkbox" name="is_flat" {if $is_flat eq 'y'}checked="checked"{/if} />
 				</td>
@@ -212,7 +212,7 @@
 
 			<tr>
 				<td class="formcolor">
-					<input type="checkbox" name="useMail" {if $useMail eq 'y'}checked="checked"{/if} /> {tr}Send this forums posts to this email{/tr}:
+					<input type="checkbox" name="useMail" {if $useMail eq 'y'}checked="checked"{/if} /> {tr}Send this forums posts to this email:{/tr}
 				</td>
 				<td class="formcolor">
 					<input type="text" name="mail" value="{$mail|escape}" />
@@ -220,7 +220,7 @@
 			</tr>
 			<tr>
 				<td class="formcolor">
-					<input type="checkbox" name="usePruneUnreplied" {if $usePruneUnreplied eq 'y'}checked="checked"{/if} /> {tr}Prune unreplied messages after{/tr}:
+					<input type="checkbox" name="usePruneUnreplied" {if $usePruneUnreplied eq 'y'}checked="checked"{/if} /> {tr}Prune unreplied messages after:{/tr}
 				</td>
 				<td class="formcolor">
 					{html_options name=pruneUnrepliedAge options=$pruneUnrepliedAge_options selected=$pruneUnrepliedAge}
@@ -228,7 +228,7 @@
 			</tr>
 			<tr>
 				<td class="formcolor">
-					<input type="checkbox" name="usePruneOld" {if $usePruneOld eq 'y'}checked="checked"{/if} /> {tr}Prune old messages after{/tr}:</td>
+					<input type="checkbox" name="usePruneOld" {if $usePruneOld eq 'y'}checked="checked"{/if} /> {tr}Prune old messages after:{/tr}</td>
 				<td class="formcolor">
 					{html_options name=pruneMaxAge options=$pruneMaxAge_options selected=$pruneMaxAge}
 				</td>
@@ -307,19 +307,19 @@
 				<td class="formcolor">
 					<table>
 						<tr>
-							<td class="formcolor">{tr}POP3 server{/tr}:</td>
+							<td class="formcolor">{tr}POP3 server:{/tr}</td>
 							<td>
 								<input type="text" name="inbound_pop_server" value="{$inbound_pop_server|escape}" />
 							</td>
 						</tr>
 						<tr>
-							<td class="formcolor">{tr}User{/tr}:</td>
+							<td class="formcolor">{tr}User:{/tr}</td>
 							<td>
 								<input type="text" name="inbound_pop_user" value="{$inbound_pop_user|escape}" />
 							</td>
 						</tr>
 						<tr>
-							<td class="formcolor">{tr}Password{/tr}:</td>
+							<td class="formcolor">{tr}Password:{/tr}</td>
 							<td>
 								<input type="password" name="inbound_pop_password" value="{$inbound_pop_password|escape}" />
 							</td>
@@ -395,12 +395,12 @@
 					</tr>
 					<tr>
 						<td class="formcolor">
-							<input type="radio" name="att_store" value="dir" {if $att_store eq 'dir'}checked="checked"{/if} /> {tr}Path{/tr}: <input type="text" name="att_store_dir" value="{$att_store_dir|escape}" size="14" />
+							<input type="radio" name="att_store" value="dir" {if $att_store eq 'dir'}checked="checked"{/if} /> {tr}Path:{/tr} <input type="text" name="att_store_dir" value="{$att_store_dir|escape}" size="14" />
 							</td>
 						</tr>
 						<tr>
 							<td class="formcolor">
-								{tr}Max attachment size (bytes){/tr}: <input type="text" name="att_max_size" value="{$att_max_size|escape}" /><br /><i>{tr}Max:{/tr} {$maxAttachSize|escape} ({$maxAttachSize|kbsize})</i>
+								{tr}Max attachment size (bytes):{/tr} <input type="text" name="att_max_size" value="{$att_max_size|escape}" /><br /><i>{tr}Max:{/tr} {$maxAttachSize|escape} ({$maxAttachSize|kbsize})</i>
 							</td>
 						</tr>
 					</table>
@@ -421,13 +421,13 @@
 
 					<table id="topicconfig" style="display:{if isset($smarty.session.tiki_cookie_jar.show_topicconfig) and $smarty.session.tiki_cookie_jar.show_topicconfig eq 'y'}block{else}none{/if}; border: 0;">
 						<tr>
-							<td>{tr}Default ordering for topics{/tr}:</td>
+							<td>{tr}Default ordering for topics:{/tr}</td>
 							<td>
 								{html_options name=topicOrdering options=$topicOrdering_options selected=$topicOrdering}
 							</td>
 						</tr>
 						<tr>
-							<td class="formcolor">{tr}Topics per page{/tr}:</td>
+							<td class="formcolor">{tr}Topics per page:{/tr}</td>
 							<td class="formcolor">
 								<input type="text" name="topicsPerPage" value="{$topicsPerPage|escape}" />
 							</td>
@@ -451,19 +451,19 @@
 						
 						<table id="threadconfig" style="display:{if isset($smarty.session.tiki_cookie_jar.show_threadconfig) and $smarty.session.tiki_cookie_jar.show_threadconfig eq 'y'}block{else}none{/if}; border: 0;">
 							<tr>
-								<td>{tr}Default ordering for threads{/tr}:</td>
+								<td>{tr}Default ordering for threads:{/tr}</td>
 								<td>
 									{html_options name=threadOrdering options=$threadOrdering_options selected=$threadOrdering}
 								</td>
 							</tr>
 							<tr>
-								<td>{tr}Default style for threads{/tr}:</td>
+								<td>{tr}Default style for threads:{/tr}</td>
 								<td>
 									{html_options name=threadStyle options=$threadStyle_options selected=$threadStyle}
 								</td>
 							</tr>
 							<tr>
-								<td>{tr}Default number of comments per page{/tr}:</td>
+								<td>{tr}Default number of comments per page:{/tr}</td>
 								<td>
 									{html_options name=commentsPerPage options=$commentsPerPage_options selected=$commentsPerPage}
 								</td>

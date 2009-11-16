@@ -97,6 +97,12 @@ $installer->query($query, array('tiki_p_view_category', 'tiki_p_view_categories'
 $query = 'UPDATE  `tiki_menu_options` SET `perm`=? WHERE `perm`=?';
 $installer->query($query, array('tiki_p_view_category', 'tiki_p_view_categories'));
 
+$query = 'UPDATE  `users_grouppermissions` SET `permName`=? WHERE `permName`=?';
+$installer->query($query, array('tiki_p_modify_object_categories', 'tiki_p_edit_categorized'));
+$query = 'UPDATE  `users_objectpermissions` SET `permName`=? WHERE `permName`=?';
+$installer->query($query, array('tiki_p_modify_object_categories', 'tiki_p_edit_categorized'));
+$query = 'UPDATE  `tiki_menu_options` SET `perm`=? WHERE `perm`=?';
+$installer->query($query, array('tiki_p_modify_object_categories', 'tiki_p_edit_categorized'));
 
 // FINALLY: remove tiki_p_view_categorized and tiki_p_edit_categorized
 // Not done yet - before we are sure with have all the mapping

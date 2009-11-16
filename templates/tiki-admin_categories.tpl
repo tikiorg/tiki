@@ -40,6 +40,7 @@
 		{/if}
 		
 		<a class="link" href="tiki-admin_categories.php?parentId={$catree[dx].parentId}&amp;categId={$catree[dx].categId}" title="{tr}Edit{/tr}">{icon _id='page_edit' hspace="5" vspace="1"}</a>
+		<a class="link" href="tiki-admin_categories.php?parentId={$catree[dx].categId}" title="{tr}View{/tr}">{icon _id='magnifier' hspace="5" vspace="1"}</a>
 		<a class="link" href="tiki-admin_categories.php?parentId={$catree[dx].parentId}&amp;removeCat={$catree[dx].categId}" title="{tr}Delete{/tr}">{icon _id='cross' hspace="5" vspace="1"}</a>
 		
 		{if $catree[dx].has_perm eq 'y'}
