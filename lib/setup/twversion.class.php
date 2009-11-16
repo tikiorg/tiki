@@ -23,7 +23,7 @@ class TWVersion {
 		//   stable   : Represents stable releases.
 		//   unstable : Represents candidate and test/development releases.
 		//   head     : Represents next generation development version.
-		$this->branch 	= 'unstable';
+		$this->branch 	= 'stable';
 
 		// Set everything else, including defaults.
 		$this->version 	= '4.0';
