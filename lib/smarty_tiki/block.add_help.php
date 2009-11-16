@@ -42,7 +42,7 @@ function openEditHelp() {
 	var opts, edithelp_pos = getCookie("edithelp_position");
 	opts = { width: 460, height: 500, title: "' . $section['title'] . '", autoOpen: false, beforeclose: function(event, ui) {
 		var off = $jq(this).offsetParent().offset();
-		setCookie("edithelp_position", parseInt(off.left) + "," + parseInt(off.top) + "," + $jq(this).offsetParent().width() + "," + $jq(this).offsetParent().height());	
+   		setCookie("edithelp_position", parseInt(off.left) + "," + parseInt(off.top) + "," + $jq(this).offsetParent().width() + "," + $jq(this).offsetParent().height());
 	}}
 	if (edithelp_pos) {edithelp_pos = edithelp_pos.split(",");}
 	if (edithelp_pos && edithelp_pos.length) {
@@ -50,15 +50,8 @@ function openEditHelp() {
 		opts["width"] = parseInt(edithelp_pos[2]);
 		opts["height"] = parseInt(edithelp_pos[3]);
 	}
-
-	// Quick fix for Firefox 3.5 forgetting selection with plugin help box Dom changes
-	// See jquery_tiki/tiki-jquery.js for the other end of this
-	var textarea = getElementById('. $params["area_name"] . '"editwiki");
-	window.pluginHelpTempSelectionStart = textarea.selectionStart;
-	window.pluginHelpTempSelectionEnd = textarea.selectionEnd;
-
 	$jq("#help_sections").dialog("destroy").dialog(opts).dialog("open");
-
+	
 };');
 		$self_link_params['_onclick'] = 'openEditHelp();return false;';
  

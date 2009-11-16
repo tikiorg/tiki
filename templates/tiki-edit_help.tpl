@@ -3,7 +3,7 @@
  * included by tiki-show_help.tpl via smarty_block_add_help()
  * TODO: Add links to add samples to edit form *}
 
-{add_help show='y' title="{tr}Wiki Help{/tr}" id="wiki_help" area_name=$area_name}
+{add_help show='y' title="{tr}Wiki Help{/tr}" id="wiki_help"}
 
 <h3>{tr}Wiki Syntax{/tr}</h3>
 <div class="help_section">
