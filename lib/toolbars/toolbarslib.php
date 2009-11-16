@@ -781,9 +781,9 @@ displayPicker = function( closeTo, list, areaname ) {
 	var coord = \$jq(closeTo).offset();
 	coord.bottom = coord.top + \$jq(closeTo).height();
 
+	textarea = getElementById( areaname);
 	// quick fix for Firefox 3.5 losing selection on changes to popup
 	if (typeof textarea.selectionStart != 'undefined') {
-		textarea = getElementById( areaname);
 		var tempSelectionStart = textarea.selectionStart;
 		var tempSelectionEnd = textarea.selectionEnd;
 	}		
