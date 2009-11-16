@@ -349,7 +349,7 @@ foreach($xfields["data"] as $i => $array) {
 		} elseif ($fields["data"][$i]["type"] == 'e') {
 			include_once ('lib/categories/categlib.php');
 			$k = $ins_fields["data"][$i]['options_array'][0];
-			$fields["data"][$i]["$k"] = $categlib->get_child_categories($k);
+			$fields["data"][$i]["$k"] = $categlib->get_viewable_child_categories($k);
 			$categId = "ins_cat_$fid";
 			if (isset($_REQUEST[$categId]) and is_array($_REQUEST[$categId])) {
 				$ins_categs = array_merge($ins_categs, $_REQUEST[$categId]);
@@ -712,7 +712,7 @@ if ($_REQUEST["itemId"]) {
 					global $categlib;
 					include_once ('lib/categories/categlib.php');
 					$k = $fields["data"][$i]['options_array'][0];
-					$ins_fields["data"][$i]["$k"] = $categlib->get_child_categories($k);
+					$ins_fields["data"][$i]["$k"] = $categlib->get_viewable_child_categories($k);
 					if (!isset($cat)) {
 						$cat = $categlib->get_object_categories('trackeritem', $_REQUEST['itemId']);
 					}
