@@ -18,7 +18,7 @@ $userlib->delete_user_cookie($user);
 $userlib->user_logout($user);
 $logslib->add_log('login', 'logged out');
 if ($phpcas_enabled == 'y' && $prefs['auth_method'] == 'cas' && $user != 'admin' && $user != '') {
-	require_once ('lib/phpcas/source/CAS/CAS.php');
+	require_once ('lib/phpcas/CAS.php');
 	phpCAS::client($prefs['cas_version'], '' . $prefs['cas_hostname'], (int)$prefs['cas_port'], '' . $prefs['cas_path']);
 	phpCAS::logout();
 }

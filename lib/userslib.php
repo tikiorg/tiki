@@ -709,7 +709,7 @@ class UsersLib extends TikiLib {
 		}
 
 		// import phpCAS lib
-		require_once('lib/phpcas/source/CAS/CAS.php');
+		require_once('lib/phpcas/CAS.php');
 
 		phpCAS::setDebug();
 
