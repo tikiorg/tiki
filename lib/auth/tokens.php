@@ -66,5 +66,3 @@ class AuthTokens
 		return $this->db->getOne( 'SELECT token FROM tiki_auth_tokens WHERE tokenId = ?', array( $max ) );
 	}
 }
-
-?>
