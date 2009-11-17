@@ -273,9 +273,6 @@ class UsersLib extends TikiLib {
 	    return false;
 	}
 
-	if (strlen($pass) < $prefs['min_pass_length']) {
-		return false;
-	}
 	// these will help us keep tabs of what is going on
 	$userTiki = false;
 	$userTikiPresent = false;
@@ -307,6 +304,10 @@ class UsersLib extends TikiLib {
 	$auth_shib = ($prefs['auth_method'] == 'shib');
 	$shib_create_tiki = ($prefs['shib_create_user_tiki'] == 'y');
 	$shib_skip_admin = ($prefs['shib_skip_admin'] == 'y');
+
+	if ( strlen($pass) < $prefs['min_pass_length'] and ($user === 'admin' or (!$auth_cas and !$auth_shib )) ) {
+		return false;
+	}
 
 	// first attempt a login via the standard Tiki system
 	//
@@ -714,9 +715,10 @@ class UsersLib extends TikiLib {
 		phpCAS::setDebug();
 
 		// initialize phpCAS
-		phpCAS::client($prefs['cas_version'], ''.$prefs['cas_hostname'], (int) $prefs['cas_port'], ''.$prefs['cas_path']);
+		phpCAS::client($prefs['cas_version'], ''.$prefs['cas_hostname'], (int) $prefs['cas_port'], ''.$prefs['cas_path'], false);
 
 		// check CAS authentication
+		phpCAS::setNoCasServerValidation();
 		phpCAS::forceAuthentication();
 
 		// at this step, the user has been authenticated by the CAS server
