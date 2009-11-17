@@ -1276,6 +1276,10 @@ class TrackerLib extends TikiLib {
 
 			if ($ins_fields['data'][$i]['type'] == 'g' && $ins_fields['data'][$i]['options_array'][0] == 1) {
 				$creatorGroupFieldId = $ins_fields['data'][$i]['fieldId'];
+				if ($prefs['groupTracker'] == 'y' && isset($tracker_info['autoCreateGroup']) && $tracker_info['autoCreateGroup'] == 'y' && empty($itemId)) {
+					$groupName = $this->groupName($tracker_info, $new_itemId, $groupInc);
+					$ins_fields['data'][$i]['value'] = $groupName;
+				}
 			}
 
 			if ( $ins_fields["data"][$i]["type"] == 'M' && $ins_fields["data"][$i]["options_array"][0] >= '3' && isset($ins_fields["data"][$i]['value'])) {
@@ -1494,6 +1498,32 @@ class TrackerLib extends TikiLib {
 			}
 		}
 
+		if ($prefs['groupTracker'] == 'y' && isset($tracker_info['autoCreateGroup']) && $tracker_info['autoCreateGroup'] == 'y' && empty($itemId)) {
+			if (!empty($creatorGroupFieldId) && !empty($tracker_info['autoAssignGroupItem']) && $tracker_info['autoAssignGroupItem'] == 'y') {
+				if (!empty($tracker_info['autoCopyGroup'])) {
+					global $group;
+					$query = "insert into `tiki_tracker_item_fields`(`itemId`,`fieldId`,`value`) values(?,?,?)";
+					$this->query($query, array($new_itemId, $tracker_info['autoCopyGroup'], $group));
+				}
+				
+			}
+			$desc = $this->get_isMain_value($trackerId, $new_itemId);
+			if (empty($desc))
+				$desc = $tracker_info['description'];
+			if ($userlib->add_group($groupName, $desc, '', 0, $trackerId, '', 'y', 0, '', '', $creatorGroupFieldId)) {
+				if (!empty($tracker_info['autoCreateGroupInc'])) {
+					$userlib->group_inclusion($groupName, $groupInc);
+				}
+			}
+			if ($tracker_info['autoAssignCreatorGroup'] == 'y') {
+				$userlib->assign_user_to_group($user, $groupName);
+			}
+			if ($tracker_info['autoAssignCreatorGroupDefault'] == 'y') {
+				$userlib->set_default_group($user, $groupName);
+				$_SESSION['u_info']['group'] = $groupName;
+			}
+		}
+
 		// Don't send a notification if this operation is part of a bulk import
 		if(!$bulk_import) {
 			$options = $this->get_tracker_options( $trackerId );
@@ -1622,34 +1652,6 @@ class TrackerLib extends TikiLib {
 		$cant_items = $this->getOne("select count(*) from `tiki_tracker_items` where `trackerId`=?",array((int) $trackerId));
 		$query = "update `tiki_trackers` set `items`=?,`lastModif`=?  where `trackerId`=?";
 		$result = $this->query($query,array((int)$cant_items,(int) $this->now,(int) $trackerId));
-
-		if ($prefs['groupTracker'] == 'y' && isset($tracker_info['autoCreateGroup']) && $tracker_info['autoCreateGroup'] == 'y' && empty($itemId)) {
-			$groupName = $this->groupName($tracker_info, $new_itemId, $groupInc);
-			if (!empty($creatorGroupFieldId) && !empty($tracker_info['autoAssignGroupItem']) && $tracker_info['autoAssignGroupItem'] == 'y') {
-				if (!empty($tracker_info['autoCopyGroup'])) {
-					global $group;
-					$query = "insert into `tiki_tracker_item_fields`(`itemId`,`fieldId`,`value`) values(?,?,?)";
-					$this->query($query, array($new_itemId, $tracker_info['autoCopyGroup'], $group));
-				}
-				$query = 'update `tiki_tracker_item_fields` set `value`=? where `itemId`=? and `fieldId`=?';
-				$this->query($query, array($groupName, $new_itemId, $creatorGroupFieldId));
-			}
-			$desc = $this->get_isMain_value($trackerId, $new_itemId);
-			if (empty($desc))
-				$desc = $tracker_info['description'];
-			if ($userlib->add_group($groupName, $desc, '', 0, $trackerId, '', 'y', 0, '', '', $creatorGroupFieldId)) {
-				if (!empty($tracker_info['autoCreateGroupInc'])) {
-					$userlib->group_inclusion($groupName, $groupInc);
-				}
-			}
-			if ($tracker_info['autoAssignCreatorGroup'] == 'y') {
-				$userlib->assign_user_to_group($user, $groupName);
-			}
-			if ($tracker_info['autoAssignCreatorGroupDefault'] == 'y') {
-				$userlib->set_default_group($user, $groupName);
-				$_SESSION['u_info']['group'] = $groupName;
-			}
-		}
 
 		if (!$itemId) $itemId = $new_itemId;
 
