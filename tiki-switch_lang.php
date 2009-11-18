@@ -13,9 +13,15 @@ if ($prefs['feature_multilingual'] != 'y') {
 if (isset($_GET['from'])) $orig_url = $_GET['from'];
 elseif (isset($_SERVER['HTTP_REFERER'])) $orig_url = $_SERVER['HTTP_REFERER'];
 else $orig_url = $prefs['tikiIndex'];
-if ($prefs['feature_sefurl'] == 'y' && !strstr($orig_url, '.php') && !preg_match('/article[0-9]+$/', $orig_url)) {
-	$orig_url = preg_replace('#\/([^\/]+)$#', '/tiki-index.php?page=$1', $orig_url);
+
+if ($prefs['feature_sefurl'] == 'y' && !strstr($orig_url, '.php')) { 
+        if (!preg_match('/article[0-9]+$/', $orig_url)) {
+                $orig_url = preg_replace('#\/([^\/]+)$#', '/tiki-index.php?page=$1', $orig_url);
+        } else {
+                $orig_url = preg_replace('#\/article([0-9]+)$#', '/tiki-read_article.php?articleId=$1', $orig_url);
+        }
 }
+
 if (strstr($orig_url, 'tiki-index.php') || strstr($orig_url, 'tiki-read_article.php')) {
 	global $multilinguallib;
 	include_once ("lib/multilingual/multilinguallib.php");
