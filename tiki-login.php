@@ -357,12 +357,21 @@ if ($isvalid) {
 		// shouldn't occur that often.
 		sleep(5);
 	}
-	if (isset($user) and $prefs['feature_score'] == 'y') $tikilib->score_event($user, 'login');
+
+	if ( isset($user) and $prefs['feature_score'] == 'y' ) {
+		$tikilib->score_event($user, 'login');
+	}
 	// RFC 2616 defines that the 'Location' HTTP headerconsists of an absolute URI
-	if (!eregi('^https?\:', $url)) $url = (ereg('^/', $url) ? $url_scheme . '://' . $url_host . (($url_port != '') ? ":$url_port" : '') : $base_url) . $url;
+	if ( !eregi('^https?\:', $url) ) {
+		$url = (ereg('^/', $url) ? $url_scheme . '://' . $url_host . (($url_port != '') ? ":$url_port" : '') : $base_url) . $url;
+	}
 	// Force HTTP mode if needed
-	if ($stay_in_ssl_mode != 'y' || !$https_mode) $url = str_replace('https://', 'http://', $url);
-	if (defined('SID') && SID != '') $url.= ((strpos($url, '?') === false) ? '?' : '&') . SID;
+	if ( $stay_in_ssl_mode != 'y' || !$https_mode ) {
+		 $url = str_replace('https://', 'http://', $url);
+	}
+	if ( defined('SID') && SID != '') {
+		$url.= ((strpos($url, '?') === false) ? '?' : '&') . SID;
+	}
 	header('Location: ' . $url);
 	exit;
 	

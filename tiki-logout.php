@@ -34,7 +34,7 @@ if ( !eregi('^https?\:', $url) ) {
 if (SID) {
 	$url.= '?' . SID;
 }
-if ( $phpcas_enabled == 'y' && $prefs['auth_method'] == 'cas' && $user != 'admin' && $user != '' ) {
+if ( $prefs['auth_method'] == 'cas' && $user != 'admin' && $user != '' ) {
 	require_once ('lib/phpcas/CAS.php');
 	phpCAS::client($prefs['cas_version'], '' . $prefs['cas_hostname'], (int)$prefs['cas_port'], '' . $prefs['cas_path']);
 	// Logout and come back to the URL as Anonymous

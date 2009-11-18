@@ -1537,6 +1537,7 @@ function get_default_prefs() {
 		$prefs['cas_hostname'] = '';
 		$prefs['cas_port'] = '';
 		$prefs['cas_path'] = '';
+		$prefs['cas_extra_param'] = '';
 	}
 
 	// Special default values

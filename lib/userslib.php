@@ -291,14 +291,9 @@ class UsersLib extends TikiLib {
 	$skip_admin = ($prefs['ldap_skip_admin'] == 'y');
 
 	// read basic cas options
-	global $phpcas_enabled;
-	if ($phpcas_enabled == 'y') {
-		$auth_cas = ($prefs['auth_method'] == 'cas');
-		$cas_create_tiki = ($prefs['cas_create_user_tiki'] == 'y');
-		$cas_skip_admin = ($prefs['cas_skip_admin'] == 'y');
-	} else {
-		$auth_cas = $cas_create_tiki = $cas_skip_admin = false;
-	}
+	$auth_cas = ($prefs['auth_method'] == 'cas');
+	$cas_create_tiki = ($prefs['cas_create_user_tiki'] == 'y');
+	$cas_skip_admin = ($prefs['cas_skip_admin'] == 'y');
 
 	// see if we are to use Shibboleth
 	$auth_shib = ($prefs['auth_method'] == 'shib');
@@ -700,10 +695,8 @@ class UsersLib extends TikiLib {
 
 	// validate the user through CAS
 	function validate_user_cas(&$user) {
-		global $tikilib, $phpcas_enabled, $prefs;
-		if ($phpcas_enabled != 'y') {
-			return SERVER_ERROR;
-		}
+		global $tikilib, $prefs, $base_url;
+
 		// just make sure we're supposed to be here
 		if ($prefs['auth_method'] != 'cas') {
 		    return false;
@@ -717,6 +710,10 @@ class UsersLib extends TikiLib {
 		// initialize phpCAS
 		phpCAS::client($prefs['cas_version'], ''.$prefs['cas_hostname'], (int) $prefs['cas_port'], ''.$prefs['cas_path'], false);
 
+		// Redirect to this URL after authentication
+		if ( !empty($prefs['cas_extra_param']) ) {
+			phpCAS::setFixedServiceURL( $base_url . 'tiki-login.php?cas=y&' . $prefs['cas_extra_param'] );
+		}
 		// check CAS authentication
 		phpCAS::setNoCasServerValidation();
 		phpCAS::forceAuthentication();
@@ -2394,9 +2391,9 @@ function get_included_groups($group, $recur=true) {
     }
 
     function is_due($user) {
-    	global $prefs, $phpcas_enabled;
+    	global $prefs;
     	// if CAS auth is enabled, don't check if password is due since CAS does not use local Tiki passwords
-    	if (($phpcas_enabled == 'y' and $prefs['auth_method'] == 'cas') || $prefs['change_password'] != 'y') {
+    	if ( $prefs['auth_method'] == 'cas' || $prefs['change_password'] != 'y') {
     		return false;
     	}
 		$confirm = $this->getOne("select `pass_confirm`  from `users_users` where " . $this->convertBinary(). " `login`=?", array($user));

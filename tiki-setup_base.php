@@ -124,8 +124,6 @@ if ( $prefs['session_silent'] != 'y' or isset( $_COOKIE[session_name()] ) ) {
 if ($prefs['feature_fullscreen'] == 'y') require_once ('lib/setup/fullscreen.php');
 // Smarty needs session since 2.6.25
 require_once ("setup_smarty.php");
-// Check if phpCAS mods is installed
-$phpcas_enabled = is_file('lib/phpcas/CAS.php') ? 'y' : 'n';
 // Retrieve all preferences
 require_once ('lib/setup/prefs.php');
 // Handle Smarty Security

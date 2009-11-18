@@ -583,41 +583,16 @@
 						</div>
 					{/if}
 
-					{if $phpcas_enabled eq 'y'}
-						{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}You also need to upload the <a target="_blank" href="http://esup-phpcas.sourceforge.net/">phpCAS library</a> separately to lib/phpcas/.{/tr}{/remarksbox}
-
-						<div class="adminoptionbox">
-							<div class="adminoption"><input id="cas_create_user_tiki" type="checkbox" name="cas_create_user_tiki" {if $prefs.cas_create_user_tiki eq 'y'}checked="checked"{/if} /></div>
-							<div class="adminoptionlabel"><label for="cas_create_user_tiki">{tr}Create user if not in Tiki{/tr}.</label></div>
-						</div>
-						<div class="adminoptionbox">
-							<div class="adminoption"><input id="cas_skip_admin" type="checkbox" name="cas_skip_admin" {if $prefs.cas_skip_admin eq 'y'}checked="checked"{/if} /></div>
-							<div class="adminoptionlabel"><label for="cas_skip_admin">{tr}Use Tiki authentication for Admin login{/tr}.</label></div>
-						</div>
-						<div class="adminoptionbox">
-							<div class="adminoptionlabel"><label for="cas_version">{tr}CAS server version:{/tr}</label>
-								<select name="cas_version" id="cas_version">
-									<option value="none" {if $prefs.cas_version neq "1" && $prefs.cas_version neq "2"} selected="selected"{/if}></option>
-									<option value="1.0" {if $prefs.cas_version eq "1.0"} selected="selected"{/if}>{tr}Version 1.0{/tr}</option>
-									<option value="2.0" {if $prefs.cas_version eq "2.0"} selected="selected"{/if}>{tr}Version 2.0{/tr}</option>
-								</select>
-							</div>
-						</div>
+							{preference name='cas_create_user_tiki'}
+							{preference name='cas_skip_admin'}
+							{preference name='cas_version'}
 
 						<fieldset><legend>{tr}CAS Server{/tr}</legend>
-							<div class="adminoptionbox">
-								<div class="adminoptionlabel"><label for="cas_hostname">{tr}Hostname:{/tr}</label> <input type="text" name="cas_hostname" id="cas_hostname" value="{$prefs.cas_hostname|escape}" size="50" /></div>
-							</div>
-							<div class="adminoptionbox">
-								<div class="adminoptionlabel"><label for="cas_port">{tr}Port:{/tr}</label> <input type="text" name="cas_port" id="cas_port" size="5" value="{$prefs.cas_port|escape}" /></div>
-							</div>
-							<div class="adminoptionbox">
-								<div class="adminoptionlabel"><label for="cas_path">{tr}Path:{/tr}</label> <input id="cas_path" type="text" name="cas_path" value="{$prefs.cas_path|escape}" size="50" /></div>
-							</div>
+							{preference name='cas_hostname' label="{tr}CAS Server Name{/tr}"}
+							{preference name='cas_port' label="{tr}CAS Server Port{/tr}"}
+							{preference name='cas_path' label="{tr}CAS Server Path{/tr}"}
+							{preference name='cas_extra_param' label="{tr}CAS Extra Parameter{/tr}"}
 						</fieldset>
-					{else}
-						<p>{icon _id=delete} {tr}You must enable PHP CAS first{/tr}. {help url="Mod+phpcas"}</p>
-					{/if}
 				</fieldset>	 
 			{/tab}
 		{/tabset}

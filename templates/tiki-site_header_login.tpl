@@ -10,15 +10,15 @@
 <div id="siteloginbar">
 	{if $user}
 		{$user|userlink} | <a href="tiki-logout.php" title="{tr}Logout{/tr}">{tr}Logout{/tr}</a>
-	{elseif $prefs.auth_method eq 'cas' && $showloginboxes neq 'y'}
-		<b><a class="linkmodule" href="tiki-login.php?cas=y">{tr}Login through CAS{/tr}</a></b>
+	{elseif $smarty.request.user neq 'admin' && $prefs.auth_method eq 'cas' && $showloginboxes neq 'y'}
+		<b><a href="tiki-login.php?cas=y">{tr}Login through CAS{/tr}</a></b>
 		{if $prefs.cas_skip_admin eq 'y'}
-			<br /><a class="linkmodule" href="tiki-login_scr.php?user=admin">{tr}Login as admin{/tr}</a>
+			&nbsp;|&nbsp;{self_link _template='tiki-site_header_login.tpl' _title="{tr}Login as admin{/tr}" _icon='user_red' _htmlelement='siteloginbar' user='admin'}{tr}Login as admin{/tr}{/self_link}
 		{/if}
-	{elseif $prefs.auth_method eq 'shib' && $showloginboxes neq 'y'}
-		<b><a class="linkmodule" href="tiki-login.php">{tr}Login through Shibboleth{/tr}</a></b>
+	{elseif $smarty.request.user neq 'admin' && $prefs.auth_method eq 'shib' && $showloginboxes neq 'y'}
+		<b><a href="tiki-login.php">{tr}Login through Shibboleth{/tr}</a></b>
 		{if $prefs.shib_skip_admin eq 'y'}
-			<br /><a class="linkmodule" href="tiki-login_scr.php?user=admin">{tr}Login as admin{/tr}</a>
+			&nbsp;|&nbsp;{self_link _template='tiki-site_header_login.tpl' _title="{tr}Login as admin{/tr}" _icon='user_red' _htmlelement='siteloginbar' user='admin'}{tr}Login as admin{/tr}{/self_link}
 		{/if}
 	{else}
 		<form class="forms" name="loginbox" action="tiki-login.php" method="post">
