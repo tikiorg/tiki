@@ -86,10 +86,22 @@ function wikiplugin_archivebuilder_trackeratt( $basepath, $trackerItem ) {
 		$name = $basepath . $file['filename'];
 		$complete = $trklib->get_item_attachment( $file['attId'] );
 
-		$attachments[$name] = $complete['data'];
+		$attachments[$name] = wikiplugin_archivebuilder_tracker_get_attbody( $complete );
 	}
 	
 	return $attachments;
+}
+
+function wikiplugin_archivebuilder_tracker_get_attbody( $info ) {
+	global $prefs;
+
+	if ($info["path"]) {
+		if (file_exists($prefs['t_use_dir'].$info["path"])) {
+			return file_get_contents( $prefs['t_use_dir'] . $info["path"] );
+		}
+	} else {
+		return $info['data'];
+	}
 }
 
 function wikiplugin_archivebuilder_pagetopdf( $file, $pageName ) {
