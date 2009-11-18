@@ -192,6 +192,7 @@ if ( isset($_REQUEST['comments_objectId']) && $_REQUEST['comments_objectId'] == 
 					$_SESSION['feedbacks'] = $feedbacks;
 				}
 				header('location: ' . $url);
+				die;
 		}
 	} else {
 		$threadId =  $commentslib->post_in_object($comments_objectId, $_REQUEST, $feedbacks, $errors);
