@@ -174,9 +174,12 @@ class TikiLdapLib {
 				$this->options['binddn'] = $this->user_dn($user);
 				break;
 			case 'ol': // openldap
-			default:
 				$this->options['binddn'] = 'cn='.$user.','.$prefs['auth_ldap_basedn'];
 				break;
+			default:
+				// Anonymous binding
+				unset($this->options['binddn']);
+				unset($this->options['bindpw']);
 		}
 
 			// attributes to fetch

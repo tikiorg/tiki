@@ -999,7 +999,7 @@ function get_default_prefs() {
 		'auth_ldap_debug' => 'n',
 		'auth_ldap_ssl' => 'n',
 		'auth_ldap_starttls' => 'n',
-		'auth_ldap_type' => 'full',
+		'auth_ldap_type' => 'default',
 		'auth_ldap_syncuserattr' => 'uid',
 		'auth_ldap_syncgroupattr' => 'cn',
 		

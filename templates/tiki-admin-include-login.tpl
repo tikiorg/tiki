@@ -362,8 +362,9 @@
                                         <div class="adminoptionbox">
                                                 <div class="adminoptionlabel"><label for="auth_ldap_type">{tr}LDAP Bind Type:{/tr}</label>
                                                         <select name="auth_ldap_type" id="auth_ldap_type">
-                                                                <option value="full" {if $prefs.auth_ldap_type eq "full"} selected="selected"{/if}>{tr}Default: userattr=username,UserDN,BaseDN{/tr}</option>
-                                                                <option value="ol" {if $prefs.auth_ldap_type eq "ol"} selected="selected"{/if}>{tr}userattr=username,BaseDN{/tr}</option>
+                                                                <option value="default" {if $prefs.auth_ldap_type eq "default"} selected="selected"{/if}>{tr}Default: Anonymous Bind{/tr}</option>
+                                                                <option value="full" {if $prefs.auth_ldap_type eq "full"} selected="selected"{/if}>{tr}Full: userattr=username,UserDN,BaseDN{/tr}</option>
+                                                                <option value="ol" {if $prefs.auth_ldap_type eq "ol"} selected="selected"{/if}>{tr}OpenLDAP: userattr=username,BaseDN{/tr}</option>
                                                                 <option value="ad" {if $prefs.auth_ldap_type eq "ad"} selected="selected"{/if}>{tr}Active Directory (username@domain){/tr}</option>
                                                                 <option value="plain" {if $prefs.auth_ldap_type eq "plain"} selected="selected"{/if}>{tr}Plain Username{/tr}</option>
                                                         </select>
