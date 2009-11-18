@@ -21,11 +21,16 @@ $userlib->delete_user_cookie($user);
 $userlib->user_logout($user);
 $logslib->add_log('login', 'logged out');
 
-if ( ($groupHome = $userlib->get_group_home('Anonymous')) != '' ) {
-	$url = (preg_match('/^(\/|https?:)/', $groupHome)) ? $groupHome : 'tiki-index.php?page=' . $groupHome;
+if ( $prefs['useGroupHome'] == 'y' ) {
+	if ( ($groupHome = $userlib->get_group_home('Anonymous')) != '' ) {
+		$url = (preg_match('/^(\/|https?:)/', $groupHome)) ? $groupHome : 'tiki-index.php?page=' . $groupHome;
+	} else {
+		$url = $prefs['site_tikiIndex'];
+	}
 } else {
-	$url = $prefs['site_tikiIndex'];
+		$url = (isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : $prefs['tikiIndex']);
 }
+
 // RFC 2616 defines that the 'Location' HTTP headerconsists of an absolute URI
 if ( !eregi('^https?\:', $url) ) {
 	$url = (ereg('^/', $url) ? $url_scheme . '://' . $url_host . (($url_port != '') ? ":$url_port" : '') : $base_url) . $url;
