@@ -1533,6 +1533,7 @@ function get_default_prefs() {
 	if ( $phpcas_enabled == 'y' ) {
 		$prefs['cas_create_user_tiki'] = 'n';
 		$prefs['cas_skip_admin'] = 'n';
+		$prefs['cas_show_alternate_login'] = 'y';
 		$prefs['cas_version'] = '1.0';
 		$prefs['cas_hostname'] = '';
 		$prefs['cas_port'] = '';
