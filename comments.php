@@ -210,6 +210,7 @@ if (isset($_REQUEST['comments_postComment']) || isset($_REQUEST['comments_postCo
 					$_SESSION['feedbacks'] = $feedbacks;
 				}
 				header('location: ' . $url);
+				die;
 		}
 	} else {
 		$threadId =  $commentslib->post_in_object($comments_objectId, $_REQUEST, $feedbacks, $errors);
