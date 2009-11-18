@@ -24,15 +24,27 @@ function wikiplugin_colorbox_info() {
 	);
 }
 function wikiplugin_colorbox($data, $params) {
-	global $tikilib, $smarty;
+	global $tikilib, $smarty, $user, $prefs;
 	static $iColorbox;
 	if (!empty($params['fgalId'])) {
+		if ($prefs['feature_file_galleries'] != 'y') {
+			return tra('This feature is disabled') . ': feature_file_galleries';
+		}
+		if (!$tikilib->user_has_perm_on_object($user, $params['fgalId'], 'file gallery', 'tiki_p_view_file_gallery')) {
+			return tra('Permission denied');
+		}
 		if (empty($params['sort_mode'])) $params['sort_mode'] = 'created_desc';
 		$files = $tikilib->get_files(0, -1, $params['sort_mode'], '', $params['fgalId'], false, false, false, true, false, false, false);
 		$smarty->assign('colorboxUrl', 'tiki-download_file.php?fileId=');
 		$smarty->assign('colorboxColumn', 'id');
 		$smarty->assign('colorboxThumb', 'thumbnail');
 	} elseif (!empty($params['galId'])) {
+		if ($prefs['feature_galleries'] != 'y') {
+			return tra('This feature is disabled') . ': feature_galleries';
+		}
+		if (!$tikilib->user_has_perm_on_object($user, $params['galId'], 'gallery', 'tiki_p_view_image_gallery')) {
+			return tra('Permission denied');
+		}
 		global $imagegallib; include_once ('lib/imagegals/imagegallib.php');
 		if (empty($params['sort_mode'])) $params['sort_mode'] = 'created_desc';
 		$files = $imagegallib->get_images(0, -1, $params['sort_mode'], '', $params['galId']);
