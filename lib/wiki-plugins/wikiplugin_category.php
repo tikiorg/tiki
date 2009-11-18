@@ -54,6 +54,11 @@ function wikiplugin_category_info() {
 				'name' => tra('And'),
 				'description' => 'y|n',
 			),
+			'sub' => array(
+				'required' => false,
+				'name' => tra('With sub-categories'),
+				'description' => 'y|n',
+			),
 		),
 	);
 }
