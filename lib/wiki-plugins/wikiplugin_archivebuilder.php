@@ -95,11 +95,18 @@ function wikiplugin_archivebuilder_trackeratt( $basepath, $trackerItem ) {
 function wikiplugin_archivebuilder_pagetopdf( $file, $pageName ) {
 	require_once 'lib/pdflib.php';
 	$generator = new PdfGenerator;
+	$params = array( 'page' => $pageName );
+
+	$args = func_get_args();
+	$args = array_slice( $args, 2 );
+
+	foreach( $args as $arg ) {
+		list( $key, $value ) = explode( '=', $arg, 2 );
+		$params[$key] = $value;
+	}
 
 	return array(
-		$file => $generator->getPdf( 'tiki-print.php', array(
-			'page' => $pageName,
-		) ),
+		$file => $generator->getPdf( 'tiki-print.php', $params ),
 	);
 }
 
