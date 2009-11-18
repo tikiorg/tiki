@@ -887,6 +887,13 @@ class CategLib extends ObjectLib {
 		}
 		return $ret;
 	}
+	function get_viewable_child_categories($categId) {
+		$alls = $this->get_child_categories($categId);
+		if (empty($alls)) {
+			return $alls;
+		}
+		return Perms::filter( array( 'type' => 'category' ), 'object', $alls, array( 'object' => 'categId' ), 'view_category' );
+	}
 
 	function get_all_categories($showWS = false) {
 		global $cachelib; include_once('lib/cache/cachelib.php');

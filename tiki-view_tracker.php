@@ -199,7 +199,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 		$listfields[$fid]['editableBy'] = $xfields['data'][$i]['editableBy'];
 		if ($listfields[$fid]['type'] == 'e' && $prefs['feature_categories'] == 'y') { //category
 			$parentId = $listfields[$fid]['options_array'][0];
-			$listfields[$fid]['categories'] = $categlib->get_child_categories($parentId);
+			$listfields[$fid]['categories'] = $categlib->get_viewable_child_categories($parentId);
 		}
 		if (isset($xfields['data'][$i]['otherField'])) $listfields[$fid]['otherField'] = $xfields['data'][$i]['otherField'];
 	}
@@ -214,7 +214,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 			}
 		} elseif ($fields["data"][$i]["type"] == 'e' && $prefs['feature_categories'] == 'y') { // category
 			$parentId = $fields["data"][$i]['options_array'][0];
-			$fields["data"][$i]['categories'] = $categlib->get_child_categories($parentId);
+			$fields["data"][$i]['categories'] = $categlib->get_viewable_child_categories($parentId);
 			$categId = "ins_cat_$fid";
 			if (isset($_REQUEST[$categId])) {
 				if (is_array($_REQUEST[$categId])) {
@@ -675,7 +675,7 @@ for ($i = 0; $i < count($xfields['data']); $i++) {
 		$listfields[$fid]['editableBy'] = $xfields['data'][$i]['editableBy'];
 		if ($listfields[$fid]['type'] == 'e' && $prefs['feature_categories'] == 'y') { //category
 			$parentId = $listfields[$fid]['options_array'][0];
-			$listfields[$fid]['categories'] = $categlib->get_child_categories($parentId);
+			$listfields[$fid]['categories'] = $categlib->get_viewable_child_categories($parentId);
 		}
 		if (isset($xfields['data'][$i]['otherField'])) $listfields[$fid]['otherField'] = $xfields['data'][$i]['otherField'];
 	}

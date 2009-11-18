@@ -782,7 +782,7 @@ class ImageGalsLib extends TikiLib {
 
 		$description = strip_tags($description);
 		$query = "update `tiki_images` set `name`=?, `description`=?, `lat`=?, `lon`=? where `imageId` = ?";
-		$result = $this->query($query,array($name,$description,$lat,$lon,(int)$id));
+		$result = $this->query($query,array($name,$description,(float)$lat,(float)$lon,(int)$id));
 		if (!empty($file) && !empty($file['name'])) {
 			if (!is_uploaded_file($file['tmp_name']) || !($fp = fopen($file['tmp_name'], "rb")))
 				return false;

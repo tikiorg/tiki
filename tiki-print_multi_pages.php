@@ -46,7 +46,7 @@ if (isset($_REQUEST["print"]) || isset($_REQUEST["display"])) {
 			die;
 		}
 		$page_info = $tikilib->get_page_info($page);
-		$page_info['parsed'] = $tikilib->parse_data($page_info['data'], array('is_html' => $page_info['is_html']));
+		$page_info['parsed'] = $tikilib->parse_data($page_info['data'], array('is_html' => $page_info['is_html'], 'print'=>'y'));
 		$pages[] = $page_info;
 	}
 	foreach($printstructures as $structureId) {

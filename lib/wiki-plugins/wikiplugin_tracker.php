@@ -757,7 +757,7 @@ function wikiplugin_tracker($data, $params) {
 						}
 					} elseif ($f['type'] == 'e') {
 						global $categlib; include_once('lib/categories/categlib.php');
-						$flds['data'][$i]['list'] = $categlib->get_child_categories($f["options_array"][0]);
+						$flds['data'][$i]['list'] = $categlib->get_viewable_child_categories($f["options_array"][0]);
 					} elseif ($f['type'] == 'A') {
 						if (!empty($f['value'])) {
 							$flds['data'][$i]['info'] = $trklib->get_item_attachment($f['value']);

@@ -308,6 +308,9 @@ class XmlLib extends TikiLib {
 
 		if ($prefs['feature_wiki_pictures'] == 'y' && !empty($info['images'])) {
 			foreach ($info['images'] as $image) {
+				if (empty($image['zip'])) {//external link to image
+					continue;
+				}
 				if (!($image['data'] = $this->zip->getFromName($image['zip']))) {
 					$this->errors[] = 'Can not unzip image';
 					$this->errorsArgs[] = $image['zip'];

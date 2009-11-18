@@ -40,7 +40,7 @@ function wikiplugin_article_info() {
 
 function wikiplugin_article($data, $params) {
 	global $tikilib,$user,$userlib;
-	include_once('lib/stats/statslib.php');
+	global $statslib; include_once('lib/stats/statslib.php');
 
 	extract ($params,EXTR_SKIP);
 
