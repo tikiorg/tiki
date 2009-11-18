@@ -33,32 +33,60 @@ function wikiplugin_category_info() {
 				'required' => false,
 				'name' => tra('Category IDs'),
 				'description' => tra('List of category IDs separated by + signs. ex: 1+2+3. Default will use category of the current page.'),
+				'filter' => 'digits'
 			),
 			'types' => array(
 				'required' => false,
 				'name' => tra('Types'),
 				'description' => tra('List of object types to include in the list separated by plus signs. ex: article+blog+faq+fgal+forum+igal+newsletter+event+poll+quiz+survey+tracker+wiki+img'),
+				'filter' => 'alpha'
 			),
 			'sort' => array(
 				'required' => false,
 				'name' => tra('Sort Order'),
 				'description' => tra('fieldName_asc|fieldName_desc, valid fields: type, created, name, hits, shuffle'),
+				'filter' => 'alpha'
 			),
 			'split' => array(
 				'required' => false,
 				'name' => tra('Split'),
 				'description' => 'y|n',
+				'filter' => 'alpha'
 			),
 			'and' => array(
 				'required' => false,
 				'name' => tra('And'),
 				'description' => 'y|n',
+				'filter' => 'alpha'
 			),
 			'sub' => array(
 				'required' => false,
 				'name' => tra('With sub-categories'),
 				'description' => 'y|n',
+				'default' => 'n',
+				'filter' => 'alpha'
 			),
+			'showdescription' => array(
+				'required' => false,
+				'name' => tra('Show description'),
+				'description' => 'y|n',
+				'default' => 'n',
+			),
+			'showname' => array(
+				'required' => false,
+				'name' => tra('Show object name'),
+				'description' => 'y|n',
+				'default' => 'y',
+				'filter' => 'alpha',
+			),
+			'showtype' => array(
+				'required' => false,
+				'name' => tra('Show type'),
+				'description' => 'y|n',
+				'default' => 'y',
+				'filter' => 'alpha',
+			),
+		
 		),
 	);
 }
@@ -105,6 +133,7 @@ function wikiplugin_category($data, $params) {
 	} else {
 		$catids = explode("+", $id);
 	}
+	$smarty->assign('params', $params);
 
 	return "~np~". $categlib->get_categoryobjects($catids,$types,$sort,$split,$sub,$and)."~/np~";
 }
