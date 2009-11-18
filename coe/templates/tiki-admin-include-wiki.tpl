@@ -20,6 +20,7 @@
 	{preference name=wiki_show_version label="{tr}Page version{/tr}"}
 
 	{preference name=wiki_pagename_strip}
+	{preference name=wiki_badchar_prevent}
 
 	{preference name=wiki_authors_style label="{tr}List authors{/tr}"}
 
@@ -31,9 +32,8 @@
 	{preference name=wiki_page_navigation_bar}
  	{preference name=wiki_topline_position}
  	{preference name=page_bar_position}
+	{preference name=wiki_encourage_contribution}
  
-	{preference name=wiki_cache}
-	{preference name=feature_wiki_icache}
 </fieldset>
 
 <fieldset><legend>{tr}Edit{/tr}</legend>
@@ -73,12 +73,7 @@
 	<div class="adminoptionlabel"><label for="feature_wiki_undo">{tr}Undo{/tr}</label></div>
 </div>
 
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="feature_wiki_save_draft" name="feature_wiki_save_draft" {if $prefs.feature_wiki_save_draft eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="feature_wiki_save_draft">{tr}Save draft{/tr}</label>
-	<br /><em>{tr}Requires AJAX{/tr} ({tr}experimental{/tr}).</em>
-	</div>
-</div>
+{preference name=feature_wiki_save_draft}
 
 <div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" id="feature_wiki_footnotes" name="feature_wiki_footnotes" {if $prefs.feature_wiki_footnotes eq 'y'}checked="checked" {/if}/></div>
@@ -106,6 +101,11 @@
 </div>
 
 <div class="adminoptionbox">
+	<div class="adminoption"><input type="checkbox" id="wiki_edit_icons_toggle" name="wiki_edit_icons_toggle" {if $prefs.wiki_edit_icons_toggle eq 'y'}checked="checked"{/if}/></div>
+	<div class="adminoptionlabel"><label for="wiki_edit_icons_toggle">{tr}Toggle display of section and plugin edit icons{/tr}</label></div>
+</div>
+
+<div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" id="wiki_edit_minor" name="wiki_edit_minor" {if $prefs.wiki_edit_minor eq 'y'}checked="checked"{/if}/></div>
 	<div class="adminoptionlabel"><label for="wiki_edit_minor">{tr}Allow minor edits{/tr}.</label>
 	{remarksbox type=note title=Note}{tr}Minor edits do not flag new content for translation and do not send watch notifications.{/tr}.<br />
@@ -120,7 +120,7 @@
 	<option value="-1" {if $prefs.feature_wiki_mandatory_category eq -1 or $prefs.feature_wiki_mandatory_category eq ''}selected="selected"{/if}>{tr}None{/tr}</option>
 	<option value="0" {if $prefs.feature_wiki_mandatory_category eq 0}selected="selected"{/if}>{tr}All{/tr}</option>
 	{section name=ix loop=$catree}
-	<option value="{$catree[ix].categId|escape}" {if $catree[ix].categId eq $prefs.feature_wiki_mandatory_category}selected="selected"{/if}>{if $catree[ix].categpath}{$catree[ix].categpath}{else}{$catree[ix].name}{/if}</option>
+	<option value="{$catree[ix].categId|escape}" {if $catree[ix].categId eq $prefs.feature_wiki_mandatory_category}selected="selected"{/if}>{if $catree[ix].categpath}{$catree[ix].categpath|escape}{else}{$catree[ix].name|escape}{/if}</option>
 	{/section}
 	</select>
 	{if $prefs.feature_categories ne 'y'}<br />{icon _id=information}{tr}Categories are disabled.{/tr} <a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}</a>.{/if}
@@ -128,10 +128,7 @@
 	</div>
 </div>
 
-<div class="adminoptionbox">
-	<div class='adminoption'><input type="checkbox" id="feature_wiki_replace" name="feature_wiki_replace" {if $prefs.feature_wiki_replace eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="feature_wiki_replace">{tr}Regex search and replace{/tr}</label>{if $prefs.feature_help eq 'y'} {help url="regex+search+and+replace"}{/if}</div>
-</div>
+
 <div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" id="feature_actionlog_bytes" name="feature_actionlog_bytes" {if $prefs.feature_actionlog_bytes eq 'y'}checked="checked" {/if}/></div>
 	<div class="adminoptionlabel"><label for="feature_actionlog_bytes">{tr}Log bytes changes (+/-) in action logs{/tr}.</label>
@@ -383,6 +380,9 @@ name="w_displayed_default" {if $prefs.w_displayed_default eq 'y'} checked="check
 	<div class="adminoptionlabel"><label for="feature_backlinks">{tr}Backlinks{/tr}</label>{if $prefs.feature_help eq 'y'} {help url="Backlinks"}{/if} <a class="link" href="tiki-assignpermission.php?type=wiki&amp;group=Anonymous" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a></div>
 </div>
 
+			{preference name=feature_semantic}
+
+
 <div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" id="feature_likePages" name="feature_likePages" {if $prefs.feature_likePages eq 'y'}checked="checked" {/if}/></div>
 	<div class="adminoptionlabel"><label for="feature_likePages">{tr}Similar{/tr} ({tr}like pages{/tr})</label></div>
@@ -467,11 +467,6 @@ name="w_displayed_default" {if $prefs.w_displayed_default eq 'y'} checked="check
 	<div class="adminoption"><input type="checkbox" id="feature_wiki_multiprint" name="feature_wiki_multiprint" {if $prefs.feature_wiki_multiprint eq 'y'}checked="checked"{/if}/></div>
 	<div class="adminoptionlabel"><label for="feature_wiki_multiprint">{tr}MultiPrint{/tr}</label></div>
 </div>
-</div>
-
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="feature_wiki_1like_redirection" name="feature_wiki_1like_redirection" {if $prefs.feature_wiki_1like_redirection eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="feature_wiki_1like_redirection">{tr}When viewing a page, if it doesn't exist automatically redirect to a similarly  named page{/tr}.</label></div>
 </div>
 
 <div class="adminoptionbox">
@@ -606,20 +601,11 @@ name="w_displayed_default" {if $prefs.w_displayed_default eq 'y'} checked="check
 
 		{tab name="{tr}Page Listings{/tr}"}
 <input type="hidden" name="wikilistprefs" />	  
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="feature_listPages" name="feature_listPages" {if $prefs.feature_listPages eq 'y'}checked="checked" {/if}/></div>
-	<div class="adminoptionlabel"><label for="feature_listPages">{tr}List pages{/tr} </label></div>
-</div>	  
-	  
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="feature_lastChanges" name="feature_lastChanges" {if $prefs.feature_lastChanges eq 'y'}checked="checked" {/if}/></div>
-	<div class="adminoptionlabel"><label for="feature_lastChanges">{tr}Last changes{/tr} </label></div>
-</div>	  
 
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id='feature_listorphanPages' name="feature_listorphanPages" {if $prefs.feature_listorphanPages eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="feature_listorphanPages">{tr}Orphan pages{/tr} </label></div>
-</div>
+	{preference name=feature_listPages}
+	{preference name=feature_lastChanges}
+	{preference name=feature_listorphanPages}
+
 <div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" id='feature_listorphanStructure' name="feature_listorphanStructure" {if $prefs.feature_listorphanStructure eq 'y'}checked="checked"{/if}/></div>
 	<div class="adminoptionlabel"><label for="feature_listorphanStructure">{tr}Pages not in structure{/tr} </label></div>
@@ -741,6 +727,15 @@ name="w_displayed_default" {if $prefs.w_displayed_default eq 'y'} checked="check
 
 </fieldset>  
 </div>
+		{/tab}
+		{tab name="{tr}Screencasts{/tr}"}
+			{preference name=feature_wiki_screencasts}
+			{preference name=feature_wiki_screencasts_upload_type label="{tr}Upload Type{/tr}"}
+			{preference name=feature_wiki_screencasts_max_size label="{tr}Maximum size{/tr}"}
+			{preference name=feature_wiki_screencasts_base label="{tr}Data location{/tr}"}
+			{preference name=feature_wiki_screencasts_httpbase label="{tr}HTTP Prefix{/tr}"}
+			{preference name=feature_wiki_screencasts_user label="{tr}WebDav username{/tr}"}
+			{preference name=feature_wiki_screencasts_pass label="{tr}WebDav password{/tr}"}
 		{/tab}
 	{/tabset}
 <div class="heading input_submit_container" style="text-align: center">

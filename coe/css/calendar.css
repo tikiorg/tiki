@@ -385,23 +385,23 @@ a.viewmodeoff img {
 * html a.viewmodeoff img {
 	padding-left : 0;
 }
-#caltable {
+.caltable {
 	border-collapse: collapse;
 	border-bottom: 1px solid #cfd0d0;
 }
-#caltable .days {
+.caltable .days {
 	height: 20px;
 	text-align: center;
 	border : 0;
 	border-bottom : 1px solid #999;
 }
-#caltable .weeks {
+.caltable .weeks {
 	border-right : 1px solid #999;
 	font-size : 8px;
 	color : #666;
 	vertical-align : middle;
 }
-#caltable .odd, #caltable .even {
+.caltable .odd, .caltable .even {
 	margin : 1px !important;
 	border : 0 !important;
 }
@@ -509,8 +509,8 @@ a.viewmodeoff img {
 .status2     { background : #f66; border : 1px solid #000; color : #000; }
 
 select[name=start_Hour], select[name=start_Minute], select[name=end_Hour], select[name=end_Minute] { min-width: 40px; }
-#caltable, #calscreen table.normal { clear: both; border-collapse: collapse; margin-top: 5px; width: 100%; font-size: 11px;}
-#caltable td { padding: 2px; }
+.caltable, #calscreen table.normal { clear: both; border-collapse: collapse; margin-top: 5px; width: 100%; font-size: 11px;}
+.caltable td { padding: 2px; }
 #calscreen td {vertical-align: top;}
 #calscreen td a {text-decoration: none;}
 .days { font-size : 11px; font-weight: bold; color: #555555; }

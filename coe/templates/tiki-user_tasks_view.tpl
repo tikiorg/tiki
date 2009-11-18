@@ -38,18 +38,18 @@
 <tr>
 <td class="prio{$info.priority}" style="border:0;">
 <table class="prio{$info.priority}" style="border:0;">
-  <tr><td  style="font-weight:bold;">{tr}Start{/tr}:</td>
+  <tr><td  style="font-weight:bold;">{tr}Start:{/tr}</td>
         <td>
             {$info.start|date_format:"%d.%m.%Y -- %H:%M"}
         </td>
 	</tr>
 	<tr>
-  		<td style="font-weight:bold;">{tr}End{/tr}:</td>
+  		<td style="font-weight:bold;">{tr}End:{/tr}</td>
         <td >
             <b>{$info.end|date_format:"%d.%m.%Y -- %H:%M"}</b>
         </td>
     </tr>
-    <tr><td  style="font-weight:bold;">{tr}Status{/tr}:</td>
+    <tr><td  style="font-weight:bold;">{tr}Status:{/tr}</td>
         <td >
             {if $info.status eq ''} {tr}Waiting / Not Started{/tr} {/if}
             {if $info.status eq 'o'} {tr}Open / In Process{/tr} {/if}
@@ -59,13 +59,13 @@
         </td>
     </tr>
    <tr>
-        <td style="font-weight:bold;">{tr}Priority{/tr}:</td>
+        <td style="font-weight:bold;">{tr}Priority:{/tr}</td>
         <td >
             { $info.priority }
         </td>
     </tr>
     <tr>
-        <td  style="font-weight:bold;">{tr}Percentage completed{/tr}:</td>
+        <td  style="font-weight:bold;">{tr}Percentage completed:{/tr}</td>
         <td >
               {$info.percentage}%
         </td>
@@ -85,20 +85,20 @@
   </tr>
 </table>
 
-    {tr}Created by{/tr}: {$info.creator|escape|userlink} {tr}for{/tr}: {$info.user|escape|userlink}. 
+    {tr}Created by:{/tr} {$info.creator|userlink} {tr}for:{/tr} {$info.user|userlink}. 
 {if ($info.task_version > 0 ) and ($info.creator ne $info.user)}
-{tr}Last modified by{/tr}: {$info.lasteditor|escape|userlink} on {$info.changes|date_format:"%d.%m.%Y -- %H:%M"}
+{tr}Last modified by:{/tr} {$info.lasteditor|escape|userlink} on {$info.changes|date_format:"%d.%m.%Y -- %H:%M"}
 {/if}
 <br />
 {if $info.public_for_group ne '' }
-{tr}Public for group{/tr}:{ $info.public_for_group }<br />
+{tr}Public for group:{/tr}{ $info.public_for_group|escape }<br />
 {/if}
 {if $info.creator ne $info.user}
-{tr}Accepted by User{/tr}:
+{tr}Accepted by User:{/tr}
             {if $info.accepted_user eq 'y'} {tr}Yes{/tr}
             {else} {if $info.accepted_user eq 'n'} {tr}No / Rejected{/tr}
             {else} {tr}Waiting{/tr}{/if}{/if}<br />
-{tr}Accepted by Creator{/tr}:
+{tr}Accepted by Creator:{/tr}
             {if $info.accepted_creator eq 'y'} {tr}Yes{/tr}
             {else} {if $info.accepted_creator eq 'n'} {tr}No / Rejected{/tr}
             {else} {tr}Waiting{/tr}{/if}{/if}<br />

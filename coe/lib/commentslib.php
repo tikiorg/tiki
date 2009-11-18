@@ -118,7 +118,7 @@ class Comments extends TikiLib {
 			return 0;
 		}
 		if ($size > $forum_info['att_max_size'] && ! $inbound_mail ) {
-			$errors[] = tra('Cannot upload this file maximum upload size exceeded');
+			$errors[] = tra('Cannot upload this file - maximum upload size exceeded');
 			return 0;
 		}
 		$fhash = '';
@@ -713,7 +713,7 @@ class Comments extends TikiLib {
 		and a.`parentId` = ? $time_cond group by a.`threadId`";
 		
 
-	$query .=",a.`object`,a.`objectType`,a.`parentId`,a.`userName`,a.`commentDate`,a.`hits`,a.`type`,a.`points`,a.`votes`,a.`average`,a.`title`,a.`data`,a.`hash`,a.`user_ip`,a.`summary`,a.`smiley`,a.`message_id`,a.`in_reply_to`,a.`comment_rating`,a.`locked` ";
+	$query .=",a.`object`,a.`objectType`,a.`parentId`,a.`userName`,a.`commentDate`,a.`hits`,a.`type`,a.`points`,a.`votes`,a.`average`,a.`title`,a.`data`,a.`hash`,a.`user_ip`,a.`summary`,a.`smiley`,a.`message_id`,a.`in_reply_to`,a.`comment_rating`,a.`locked`,a.`archived` ";
 	$query .="order by `sticky` desc, ".$this->convertSortMode($sort_mode).", `threadId`";
 
 	if( $forumId ) {
@@ -1019,7 +1019,7 @@ class Comments extends TikiLib {
 			// Get data of the last post of this forum
 			if ( $res['comments'] > 0 ) {
 				$result2 = $this->query(
-						'select * from `tiki_comments` where `object`= ? and `objectType` = ? order by commentDate desc',
+						'select * from `tiki_comments` where `object`= ? and `objectType` = ? order by `commentDate` desc',
 						array($res['forumId'], 'forum'));
 
 
@@ -1163,7 +1163,7 @@ class Comments extends TikiLib {
 
 	$lastPost = $this->getOne("select max(`commentDate`) from
 		`tiki_comments`,`tiki_forums` where `object` = ".$this->cast("`forumId`","string").
-		"and `objectType` = 'forum' and
+		" and `objectType` = 'forum' and
 		`forumId` = ?", array( (int) $forumId ) );
 	$query = "update `tiki_forums` set `lastPost`=? where
 	    `forumId`=? ";
@@ -1299,10 +1299,10 @@ class Comments extends TikiLib {
     } elseif ($type == 'replies') {
     	$mid .= " AND a.`parentId`>0";
     }
-	$query = "select a.`threadId`, a.`object`, a.`title`, a.`parentId`, a.`commentDate` $parentinfo from `tiki_comments` a $mid ORDER BY a.`commentDate` desc";
+	$query = "select a.`threadId`, a.`object`, a.`title`, a.`parentId`, a.`commentDate` $parentinfo, a.`userName` from `tiki_comments` a $mid ORDER BY a.`commentDate` desc";
 	
 	$result = $this->fetchAll($query,array($user),$max);
-	$ret = Perms::filter( array( 'type' => 'forum' ), 'object', $data, array( 'object' => 'forumId', 'creator' => 'userName' ), 'forum_read' );
+	$ret = Perms::filter( array( 'type' => 'forum' ), 'object', $result, array( 'object' => 'object', 'creator' => 'userName' ), 'forum_read' );
 	
 	return $ret;
     }
@@ -1581,9 +1581,9 @@ class Comments extends TikiLib {
     }
 
     function parse_comment_data($data) {
-	global $prefs, $tikilib;
+	global $prefs, $tikilib, $section;
 
-	if ($prefs['feature_forum_parse'] == 'y' || $prefs['section_comments_parse'] == 'y') {
+	if (($prefs['feature_forum_parse'] == 'y' && $section == 'forums') || $prefs['section_comments_parse'] == 'y') {
 	    return $this->parse_data($data);
 	}
 
@@ -1704,7 +1704,7 @@ class Comments extends TikiLib {
 		and tc2.`parentId` = ?
 		$mid 
 		and (tc1.`in_reply_to` = ?
-		or (tc2.`in_reply_to` = '' or tc2.`in_reply_to` is null or tc2.`message_id` is null or tc2.`parentid` = 0))
+		or (tc2.`in_reply_to` = '' or tc2.`in_reply_to` is null or tc2.`message_id` is null or tc2.`parentId` = 0))
 		$time_cond order by tc1.".$this->convertSortMode($sort_mode).",tc1.`threadId`";
 		$bind_mid_cant = $bind_mid;
 		$bind_mid = array_merge(array($parentId,$parentId), $bind_mid, array($parent_message_id));
@@ -2014,7 +2014,7 @@ class Comments extends TikiLib {
 	if ( empty($objectId) ) return false;
 	$object = explode( ":", $objectId, 2);
 	if ( count($object) < 2 ) return false;
-	return $this->getOne('SELECT `comments_locked` FROM `tiki_objects` WHERE `Type`=? AND `itemId`=?', array( $object[0], $object[1] )) == 'y';
+	return $this->getOne('SELECT `comments_locked` FROM `tiki_objects` WHERE `type`=? AND `itemId`=?', array( $object[0], $object[1] )) == 'y';
     }
 
     function update_comment_links($data, $objectType, $threadId) {
@@ -2246,7 +2246,7 @@ class Comments extends TikiLib {
 	$hash = md5($title . $data);
 	$threadId = $this->getOne("select `threadId` from
 		`tiki_comments` where `hash`=?
-		order by threadid asc", array( $hash ) );
+		order by `threadId` asc", array( $hash ) );
 	return $threadId;
     }
 
@@ -2467,7 +2467,7 @@ class Comments extends TikiLib {
 			$errors[] = tra('You have mistyped the anti-bot verification code; please try again.');
 		}
 		if ($forum_info['controlFlood'] == 'y' && !$this->user_can_post_to_forum($user, $forumId) ) {
-			$errors = sprintf(tra('Please wait %d secondes between posts'). $forum_info['floodInterval']);
+			$errors = sprintf(tra('Please wait %d seconds between posts'). $forum_info['floodInterval']);
 		}
 		if ($tiki_p_admin_forum != 'y' && $forum_info['forum_use_password'] != 'n' && $params['password'] != $forum_info['forum_password']) {
 			$errors[] = tra('Wrong password. Cannot post comment');
@@ -2529,7 +2529,7 @@ class Comments extends TikiLib {
 		if (($tiki_p_forum_autoapp != 'y')
 			&& ($forum_info['approval_type'] == 'queue_all' || (!$user && $forum_info['approval_type'] == 'queue_anon'))) {
 			$threadId = 0;
-			$feedbacks[] = tra('Your message has been queued for approval, the message will be posted after a moderator approves it.');
+			$feedbacks[] = tra('Your message has been queued for approval and will be posted after a moderator approves it.');
 			$qId = $this->replace_queue(0, $forum_info['forumId'], $comments_objectId, $parent_id,
 				$user, $params['comments_title'], $params['comments_data'], $params['comment_topictype'],
 				$params['comment_topicsmiley'], $params['comment_topicsummary'], $params['comments_title'], $in_reply_to, $params['anonymous_name'], $params['freetag_string'], $params['anonymous_email']);

@@ -36,7 +36,6 @@ if ($prefs['feature_wiki'] != 'y') {
 	$smarty->display('error.tpl');
 	die;
 }
-$editlib->make_sure_page_to_be_created_is_not_an_alias();
 
 $smarty->assign( 'translation_mode', ($editlib->isNewTranslationMode() || $editlib->isUpdateTranslationMode()) ?'y':'n' );
 
@@ -54,11 +53,13 @@ if ($prefs['feature_wikiapproval'] == 'y' && substr($_REQUEST['page'], 0, strlen
 
 $page = $_REQUEST["page"];
 $info = $tikilib->get_page_info($page);
+
+$editlib->make_sure_page_to_be_created_is_not_an_alias($page, $info);
+
 // wysiwyg decision
 include 'lib/setup/editmode.php';
 
-$auto_query_args = array('wysiwyg','page_id','page', 'lang');
-
+$auto_query_args = array('wysiwyg','page_id','page', 'lang', 'hdr');
 
 $smarty->assign_by_ref('page', $_REQUEST["page"]);
 // Permissions
@@ -105,7 +106,7 @@ if (isset($_REQUEST["current_page_id"])) {
 	}
 
 	$structure_info = $structlib->s_get_structure_info($_REQUEST['current_page_id']);
-	if ($tiki_p_edit_structures != 'y' || !$tikilib->user_has_perm_on_object($user,$structure_info["pageName"],'wiki page','tiki_p_edit','tiki_p_edit_categorized')) {
+	if ($tiki_p_edit_structures != 'y' || !$tikilib->user_has_perm_on_object($user,$structure_info["pageName"],'wiki page','tiki_p_edit')) {
 		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
 		$smarty->display("error.tpl");
@@ -513,9 +514,9 @@ if ($prefs['feature_wiki_footnotes'] == 'y') {
 	}
 }
 if (isset($_REQUEST["templateId"]) && $_REQUEST["templateId"] > 0 && !isset($_REQUEST['preview']) && !isset($_REQUEST['save'])) {
-	$template_data = $tikilib->get_template($_REQUEST["templateId"]);
+	$templateLang = isset( $_REQUEST['lang'] ) ? $_REQUEST['lang'] : null;
+	$template_data = $tikilib->get_template($_REQUEST["templateId"], $templateLang);
 	$_REQUEST["edit"] = $template_data["content"]."\n".$_REQUEST["edit"];
-	$_REQUEST["preview"] = 1;
 	$smarty->assign("templateId", $_REQUEST["templateId"]);
 }
 
@@ -659,6 +660,81 @@ if( isset( $_REQUEST['translation_critical'] ) ) {
 	$smarty->assign( 'translation_critical', 0 );
 }
 
+// Screencasts {{{
+if (($prefs['feature_wiki_screencasts'] == 'y') && (isset($tiki_p_upload_screencast)) && ($tiki_p_upload_screencast == 'y')) {
+	if ( !isset($headerlib) || !is_object($headerlib) ) {
+		include_once("lib/headerlib.php");
+	}
+	$headerlib->add_jsfile('lib/wikiplugin_screencast.js');
+
+	require_once("lib/screencasts/screencastlib.php");
+
+	if ( !isset($cachelib) || !is_object($cachelib) )
+		require_once("lib/cache/cachelib");
+
+	// Get a page hash identical to what images are assigned
+	$pageHash = md5( $pageLang . '/' . ( (strpos($page,$prefs['wikiapproval_prefix'])===0) ? substr($page,1) : $page) );
+	$hashedFileName = join('-', array($pageHash, time(), rand(1,1000)));
+
+	$screencastErrors = array();
+
+	if ( isset($_FILES['flash_screencast']) ) {
+		$cachelib->invalidate($pageHash);
+
+		for ( $i = 0; $i <= count($_FILES['flash_screencast']['name']); $i++ ) {
+
+			if ( $_FILES['flash_screencast']['size'][$i] > $prefs['feature_wiki_screencasts_max_size'] ||
+					$_FILES['flash_screencast']['error'][$i] == 1 || $_FILES['flash_screencast']['error'][$i] == 2 ) {
+
+				$screencastErrors[] = tra("The file you selected is too large to upload") . ' (' . htmlentities($_FILES['flash_screencast']['name'][$i], ENT_QUOTES) . ')';
+				continue;
+			}
+
+			if ( is_uploaded_file($_FILES['flash_screencast']['tmp_name'][$i]) ) {
+				if ( preg_match("/\.((swf)|(flv))$/", $_FILES['flash_screencast']['name'][$i], $ext) ) {
+					if ( !$screencastlib->add($_FILES['flash_screencast']['tmp_name'][$i], $hashedFileName . "-" . $i . "." . $ext[1] ) ) {
+						$screencastErrors[] = tra("An unexpected error occurred while uploading your flash screencast!");
+					}
+				} else {
+					$screencastErrors[] = tra("Incorrect file extension was used for your flash screencast, expecting .swf or .flv");     
+				}
+
+				if ( isset($_FILES['ogg_screencast']) && $_FILES['ogg_screencast']['name'][$i]) {
+					if ( $_FILES['ogg_screencast']['size'][$i] >= $prefs['feature_wiki_screencasts_max_size'] ||
+						$_FILES['ogg_screencast']['error'][$i] == 1 || $_FILES['ogg_screencast']['error'][$i] == 2 ) {
+
+						$screencastErrors[] = tra("The file you selected is too large to upload") . ' (' . htmlentities($_FILES['ogg_screencast']['name'][$i], ENT_QUOTES) . ')';
+							continue;
+					}
+
+					if ( is_uploaded_file($_FILES['ogg_screencast']['tmp_name'][$i]) ) { 
+						if ( preg_match("/\.(ogg)$/", $_FILES['ogg_screencast']['name'][$i], $ext) ) {
+							if ( !$screencastlib->add($_FILES['ogg_screencast']['tmp_name'][$i], $hashedFileName . "-" . $i . "." .  $ext[1])) {
+								$screencastErrors[] = tra("An unexpected error occurred while uploading your Ogg screencast!");
+							}
+						} else {
+							$screencastErrors[] = tra("Incorrect file extension was used for your 0gg screencast, expecting .ogg");
+						}
+					}
+				}
+			}
+		}
+	}
+
+	if ( $cachelib->isCached($pageHash) ) {
+		$screencasts_uploaded = unserialize($cachelib->getCached($pageHash));
+	} else {
+		$screencasts_uploaded = $screencastlib->find($pageHash, true);
+		$cachelib->cacheItem($pageHash, serialize($screencasts_uploaded));
+	}
+
+	$smarty->assign('screencasts_uploaded', $screencasts_uploaded);
+
+	if ( count($screencastErrors) > 0 ) {
+		$smarty->assign('screencasts_errors', array_unique($screencastErrors));
+	}
+} // }}}
+
 // Parse (or not) $edit_data into $parsed
 // Handles switching editor modes
 if (isset($_REQUEST['mode_normal']) && $_REQUEST['mode_normal']=='y') {
@@ -732,8 +808,9 @@ if(isset($_REQUEST["preview"])) {
 
 function parse_output(&$obj, &$parts,$i) {
 	if(!empty($obj['parts'])) {
-		for($i=0; $i<count($obj['parts']); $i++)
-			parse_output($obj['parts'][$i], $parts,$i);
+		foreach( $obj['parts'] as $index => $part ) {
+			parse_output($part, $parts,$index);
+		}
 	}elseif( $obj['type'] == 'application/x-tikiwiki' ) {
 		$aux["body"] = $obj['body'];
 		$ccc=$obj['header']["content-type"];
@@ -833,6 +910,7 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
 		   $tikilib->cache_links($cachedlinks);
 		 */
 		$tikilib->create_page($_REQUEST["page"], 0, $edit, $tikilib->now, $_REQUEST["comment"],$user,$tikilib->get_ip_address(),$description, $pageLang, $is_html, $hash, $_REQUEST['wysiwyg'], $wiki_authors_style);
+
 		$info_new = $tikilib->get_page_info($page);
 
 		if( $editlib->isNewTranslationMode() && ! empty( $pageLang ) )
@@ -1051,6 +1129,18 @@ if ($prefs['feature_multilingual'] == 'y') {
 		$smarty->assign( 'diff_oldver', (int) $_REQUEST['oldver'] );
 		$smarty->assign( 'diff_newver', (int) $_REQUEST['newver'] );
 		$smarty->assign( 'source_page', $_REQUEST['source_page'] );
+		/* 
+		   Use Full Screen mode when translating an update, because 
+		   user needs to see both diffs that have happened in the source language
+		   and the edit form for the  target language. This requires a lot of real-estate
+		   
+		   AD (2009-11-09): For now, keep that line commented because the 
+		   side-by-side source and target layout in wiki-edit is a bit 
+		   screwed up. Will reactivate as soon as I get the CSS right for
+		   that.
+		 */
+//		$_REQUEST['zoom'] = 'wiki_edit';
+		$smarty->assign('update_translation', 'y');
 	}
 }
 $cat_type = 'wiki page';
@@ -1087,6 +1177,21 @@ if ($prefs['feature_categories'] == 'y') {
 				$categories[$i]['incat'] = 'y';
 		}
 	}
+}
+
+$is_staging_article = ($prefs['wikiapproval_staging_category'] > 0) && (in_array($prefs['wikiapproval_staging_category'], $cats));
+$page_badchars_display = ":/?#[]@!$&'()*+,;=";
+$page_badchars = "/[:\/?#\[\]@!$&'()*+,;=]/";
+if ($is_staging_article && (mb_substr($page, 0, 1) == $prefs['wikiapproval_prefix'])) {
+	$page_name = mb_substr($page, 1);
+}
+else {
+	$page_name = $page;
+}
+
+$matches = preg_match($page_badchars, $page_name);
+if ($matches && ! $tikilib->page_exists($page) ) {
+	$smarty->assign('page_badchars_display', $page_badchars_display);
 }
 
 $plugins = $wikilib->list_plugins(true, 'editwiki');
@@ -1169,6 +1274,34 @@ if( $prefs['feature_multilingual'] == 'y' ) {
 
 // Get edit session timeout in seconds
 $smarty->assign('edittimeout', ini_get('session.gc_maxlifetime'));
+
+// setup tab showing flags (only avoiding empty tabs for now - regroup better of less than X features later)
+// tools tab
+if (($prefs['feature_wiki_templates'] == 'y' && $tiki_p_use_content_templates == 'y') ||
+	($prefs['feature_wiki_usrlock'] == 'y' && ($tiki_p_lock == 'y' || $tiki_p_admin_wiki == 'y')) ||
+	($prefs['feature_wiki_replace'] == 'y' && $wysiwyg != 'y') ||
+	$prefs['wiki_spellcheck'] == 'y' ||
+	($prefs['feature_wiki_allowhtml'] == 'y' && $tiki_p_use_HTML == 'y' && $wysiwyg != 'y') ||
+	$prefs['feature_wiki_import_html'] == 'y' ||
+	($tiki_p_admin_wiki == 'y' && $prefs['feature_wiki_import_page'] == 'y') ||
+	($wysiwyg != 'y' && ($prefs['feature_wiki_attachments'] == 'y' && ($tiki_p_wiki_attach_files == 'y' && $tiki_p_wiki_admin_attachments == 'y')) ||
+						($prefs['feature_wiki_screencasts'] == 'y' && $tiki_p_upload_screencast == 'y'))) {
+	$smarty->assign('showToolsTab', 'y');
+}
+if (strtolower($page) != 'sandbox' &&
+			($prefs['wiki_feature_copyrights']  == 'y' ||
+			($prefs['feature_freetags'] == 'y' && $tiki_p_freetags_tag == 'y') ||
+			$prefs['feature_wiki_icache'] == 'y' ||
+			$prefs['feature_contribution'] == 'y' ||
+			$prefs['feature_wiki_structure'] == 'y' ||
+			$prefs['wiki_feature_copyrights']  == 'y' ||
+			($tiki_p_admin_wiki == 'y' && $prefs['wiki_authors_style_by_page'] == 'y')) ||
+		($prefs['feature_wiki_description'] == 'y' || $prefs['metatag_pagedesc'] == 'y') ||
+		$prefs['feature_wiki_footnotes'] == 'y' ||
+		($prefs['feature_wiki_ratings'] == 'y' && $tiki_p_wiki_admin_ratings =='y') ||
+		$prefs['feature_multilingual'] == 'y') {
+	$smarty->assign('showPropertiesTab', 'y');
+}
 
 ask_ticket('edit-page');
 // disallow robots to index page:

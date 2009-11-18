@@ -1,6 +1,6 @@
 {tr}Hi{/tr} {$mail_user},
 
-{tr}Someone coming from IP Address{/tr} {$mail_ip} {if $clearpw eq 'y'}{tr}requested a reminder of the password for your account{/tr}{else}{tr}requested password reset for your account{/tr} {/if} ({$mail_site}).
+{tr}Someone{/tr} {if $clearpw eq 'y'}{tr}requested a reminder of the password for your account{/tr}{else}{tr}requested password reset for your account{/tr} {/if} ({$mail_site}).
 
 {if $clearpw eq 'y'}
 	{tr}Since this is your registered email address we inform that the password for this account is{/tr} {$mail_pass}

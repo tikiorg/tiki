@@ -76,6 +76,7 @@ class Cachelib {
 	function empty_full_cache(){
 		global $tikidomain,$logslib;
 		$this->erase_dir_content("templates_c/$tikidomain");
+		$this->erase_dir_content("temp/public/$tikidomain");
 		$this->erase_dir_content("temp/cache/$tikidomain");
 		$this->erase_dir_content("modules/cache/$tikidomain");
 		if (is_object($logslib)) {
@@ -122,10 +123,19 @@ class Cachelib {
   }
 
   function erase_dir_content($path) {
+  	global $tikidomain;
+  	
 	if (!$path or !is_dir($path)) return 0;
 	if ($dir = opendir($path)) {
+		// If using multiple Tikis but flushing cache on default install...
+		if (empty($tikidomain) && is_file('db/virtuals.inc')) {
+			$virtuals = array_map('trim', file('db/virtuals.inc'));
+		} else {
+			$virtuals = false;
+		}
+
 		while (false !== ($file = readdir($dir))) {
-			if (substr($file,0,1) == "." or $file == 'CVS' or $file == '.svn' or $file == "index.php" or $file == "README" ) continue;
+			if (substr($file,0,1) == "." or $file == 'CVS' or $file == '.svn' or $file == "index.php" or $file == "README" or ($virtuals && in_array($file, $virtuals)) ) continue;
 			if (is_dir($path."/".$file)) {
 				$this->erase_dir_content($path."/".$file);
 				rmdir($path."/".$file);

@@ -24,14 +24,17 @@
  * 				or a string like: '"permName"="Permission Name", "permDesc"="Description", etc'
  * 				if undefined it tries to guess (?)
  * 
- * _valueColumnIndex = 0	:	index of the col in the _data array above to use as the unique index
+ * _valueColumnIndex = 0	:	index (or name) of the col in the _data array above to use as the unique index
  * 
  * _sortColumn = ''			:	column to organise tree by (actually row key = e.g. 'type')
+ * 
+ * _sortColumnDelimiter = '':	if set (e.g. to ',') sorting will be nested accoding to this delimiter
+ * 								e.g. if the _sortColumn value is 'gran-parent,parent,child' the 'child' section will be nested 3 levels deep
  * 
  * _checkbox = ''			: 	name of checkbox (auto-incrementing) - no checkboxes if not set
  * 								if comma delimited list (or array) then makes multiple checkboxes
  * 
- * _checkboxColumnIndex = 0	:	index of the col in the _data array above to use as the checkbox value
+ * _checkboxColumnIndex = 0	:	index (or name) of the col in the _data array above to use as the checkbox value
  * 								comma delimeted list (or array - of ints) for multiple checkboxes as set above
  * 								if set needs to match number of checkboxes defines in _checkbox (or if not set uses 0,1,2 etc)
  * 
@@ -50,8 +53,11 @@
  * 											can be a string for same class on each row
  * 											or empty string for not
  * 
+ * _columnsContainHtml = 'n':	Column data gets html encoded (by default)
+ * 
  * _emptyDataMessage = {treetable}: '.tra('No rows found')	: message if there are no rows
  * 
+ * _openall					: show folder button to open all areas (y/n default=n)
  */
 
 //this script may only be included - so its better to die if called directly.
@@ -72,6 +78,7 @@ function smarty_function_treetable($params, &$smarty) {
 	
 	$_checkbox = empty($_checkbox) ? '' : $_checkbox;
 	$_checkboxTitles = empty($_checkboxTitles) ? '' : $_checkboxTitles;
+	$_openall = isset($_openall) ? $_openall : 'n';
 	
 	if (is_string($_checkbox) && strpos($_checkbox, ',') !== false) {
 		$_checkbox = split(',', trim($_checkbox));
@@ -85,8 +92,12 @@ function smarty_function_treetable($params, &$smarty) {
 		}
 	}
 	if (!empty($_checkboxTitles)) {
-		if (is_string($_checkboxTitles) && strpos($_checkboxTitles, ',') !== false) {
-			$_checkboxTitles = split(',', trim($_checkboxTitles));
+		if (is_string($_checkboxTitles)) {
+			if (strpos($_checkboxTitles, ',') !== false) {
+				$_checkboxTitles = split(',', trim($_checkboxTitles));
+			} else {
+				$_checkboxTitles = array(trim($_checkboxTitles));
+			}
 		}
 		if (count($_checkbox) != count($_checkboxTitles)) {
 			return tra('{treetable}: Number of items in _checkboxTitles doesn not match items in _checkbox');
@@ -99,6 +110,8 @@ function smarty_function_treetable($params, &$smarty) {
 			$_checkbox = array($_checkbox);
 			$_checkboxColumnIndex = array($_checkboxColumnIndex);
 	}
+	
+	$_columnsContainHtml = isset($_columnsContainHtml) ? $_columnsContainHtml : 'n';
 	
 	$html = '';
 	$nl = "\n";
@@ -134,7 +147,7 @@ function smarty_function_treetable($params, &$smarty) {
 		$_columns = array();
 		foreach($keys as $key) {
 			if (!is_numeric($key)) {
-				$_columns[$key] = htmlentities($key);
+				$_columns[$key] = htmlspecialchars($key);
 			}
 		}
 	} else if (is_string($_columns)) {
@@ -160,12 +173,44 @@ function smarty_function_treetable($params, &$smarty) {
 	}
 	
 	if ($_listFilter == 'y' && count($_data) > $_filterMinRows) {
-		include_once('lib/smarty_tiki/function.listfilter.php');
+		require_once($smarty->_get_plugin_filepath('function', 'listfilter'));
 		$html .= smarty_function_listfilter(
 			array('id' => $id.'_filter',
 				  'selectors' => "#$id tbody tr:not(.parent)",
 				  'parentSelector' => "#$id tbody .parent",
 				  'exclude' => ".subHeader"),  $smarty);
+	}
+
+	if ($_openall == 'y') {
+		require_once($smarty->_get_plugin_filepath('function', 'icon'));
+		$html .= '&nbsp;' . smarty_function_icon(
+			array('_id' => 'folder',
+				'id' => $id.'_openall',
+				'title' => tra('Toggle sections')),	$smarty);
+		
+		$headerlib->add_jq_onready('
+$jq("#'.$id.'_openall").click( function () {
+	if (this.src.indexOf("ofolder.png") > -1) {
+		
+		$jq(".expanded .expander").eachAsync({
+			delay: 20,
+			bulk: 0,
+			loop: function () {
+				$jq(this).click();
+			}
+		});
+		this.src = this.src.replace("ofolder", "folder");
+	} else {
+		$jq(".collapsed .expander").eachAsync({
+			delay: 20,
+			bulk: 0,
+			loop: function () {
+				$jq(this).click();
+			}
+		});
+		this.src = this.src.replace("folder", "ofolder");
+	}
+});');
 	}
 	
 	// start writing the table
@@ -186,7 +231,7 @@ function smarty_function_treetable($params, &$smarty) {
 	
 	foreach ($_columns as $column => $columnName) {
 		$html .= '<th>';
-		$html .= htmlentities($columnName);
+		$html .= htmlspecialchars($columnName);
 		$html .= '</th>';
 	}
 	$html .= '</tr></thead>'.$nl;
@@ -198,30 +243,54 @@ function smarty_function_treetable($params, &$smarty) {
 	foreach ($_data as &$row) {
 		// set up tree hierarchy
 		if ($_sortColumn) {
-			$treeType = htmlentities($row[$_sortColumn]);
-			$treeTypeId = preg_replace('/\s+/', '_', $treeType);
-			$childRowClass = ' child-of-'.$id.'_'.$treeTypeId;
-			
-			if (!in_array($treeTypeId, $treeSectionsAdded)) {
-				$html .= '<tr id="'.$id.'_'.$treeTypeId.'"><td colspan="'.(count($_columns) + count($_checkbox)).'">';
-				$html .= $treeType.'</td></tr>'.$nl;
-				$treeSectionsAdded[] = $treeTypeId;
-				
-				// write a sub-header
-				$html .= '<tr class="subHeader'.$childRowClass.'">';
-				if (!empty($_checkbox)) {
-					for ($i = 0; $i < count($_checkbox); $i++) {
-						$html .= '<td class="checkBoxHeader">';
-						$html .= empty($_checkboxTitles) ? '' : $_checkboxTitles[$i];
-						$html .= '</td>';
+			$treeType = htmlspecialchars(trim($row[$_sortColumn]));
+			$treeTypeId = '';
+			$childRowClass = '';
+			if (!empty($_sortColumnDelimiter)) {	// nested
+				$parts = array_reverse(explode($_sortColumnDelimiter, $treeType));
+				for ($i = 0; $i < count($parts); $i++) {
+					$part = preg_replace('/\s+/', '_', $parts[$i]);
+					if (in_array($part, $treeSectionsAdded) && $i > 0) {
+						$treeParentId = preg_replace('/\s+/', '_', $parts[$i]);
+						$childRowClass = ' child-of-'.$id.'_'.$treeParentId;
+						$treeTypeId = preg_replace('/\s+/', '_', $parts[$i - 1]);
+						$treeType = $parts[$i - 1];
+						break;
 					}
 				}
-				foreach ($_columns as $column => $columnName) {
-					$html .= '<td>';
-					$html .= htmlentities($columnName);
-					$html .= '</td>';
+				if (empty($treeTypeId)) {
+					$treeTypeId = preg_replace('/\s+/', '_', $part);
 				}
-				$html .= '</tr>'.$nl;
+				$treeSectionsAdded[] = $treeTypeId;
+				$rowId = ' id="'.$id.'_'.$treeTypeId.'"';
+				
+				//$childRowClass = ' child-of-'.$id.'_'.$treeTypeId;
+			} else {
+				$treeTypeId = preg_replace('/\s+/', '_', $treeType);
+				$childRowClass = ' child-of-'.$id.'_'.$treeTypeId;
+				$rowId = '';
+				
+				if (!empty($treeType) && !in_array($treeTypeId, $treeSectionsAdded)) {
+					$html .= '<tr id="'.$id.'_'.$treeTypeId.'"><td colspan="'.(count($_columns) + count($_checkbox)).'">';
+					$html .= $treeType.'</td></tr>'.$nl;
+					$treeSectionsAdded[] = $treeTypeId;
+					
+					// write a sub-header
+					$html .= '<tr class="subHeader'.$childRowClass.'">';
+					if (!empty($_checkbox)) {
+						for ($i = 0; $i < count($_checkbox); $i++) {
+							$html .= '<td class="checkBoxHeader">';
+							$html .= empty($_checkboxTitles) ? '' : $_checkboxTitles[$i];
+							$html .= '</td>';
+						}
+					}
+					foreach ($_columns as $column => $columnName) {
+						$html .= '<td>';
+						$html .= htmlspecialchars($columnName);
+						$html .= '</td>';
+					}
+					$html .= '</tr>'.$nl;
+				}
 			}
 		} else {
 			$rowId = '';
@@ -237,13 +306,13 @@ function smarty_function_treetable($params, &$smarty) {
 			$rowClass = $childRowClass;
 		}
 		
-		$html .= '<tr class="'.$rowClass.'">';
+		$html .= '<tr class="'.$rowClass.'"'.$rowId.'>';
 		// add the checkbox
 		if (!empty($_checkbox)) {
 			for ($i = 0; $i < count($_checkbox); $i++) {
 				// get checkbox's "value"
-				$cbxVal = htmlentities($row[$_checkboxColumnIndex[$i]]);
-				$rowVal = htmlentities($row[$_valueColumnIndex]);
+				$cbxVal = htmlspecialchars($row[$_checkboxColumnIndex[$i]]);
+				$rowVal = htmlspecialchars($row[$_valueColumnIndex]);
 				$cbxTit = empty($_checkboxTitles) ? $cbxVal : $_checkboxTitles[$i];
 				$html .= '<td class="checkBoxCell">';
 				$html .= '<input type="checkbox" name="'.$_checkbox[$i].'[]" value="'.$rowVal.'"'.($cbxVal=='y' ? ' checked="checked"' : '').' title="'.$cbxTit.'" />';
@@ -256,7 +325,11 @@ function smarty_function_treetable($params, &$smarty) {
 		
 		foreach ($_columns as $column => $columnName) {
 			$html .= '<td>';
-			$html .= htmlentities($row[$column]);
+			if ($_columnsContainHtml != 'y') {
+				$html .= htmlspecialchars($row[$column]);
+			} else {
+				$html .= $row[$column];
+			}
 			$html .= '</td>'.$nl;
 		}
 		$html .= '</tr>'.$nl;					
@@ -264,10 +337,11 @@ function smarty_function_treetable($params, &$smarty) {
 	$html .= '</tbody></table>'.$nl;
 	
 	// add jq code to initial treeetable
+	$expanable = empty($_sortColumnDelimiter) ? 'true' : 'false';	// when nested, clickableNodeNames is really annoying
 	if (count($treeSectionsAdded) < $_collapseMaxSections) {
-		$headerlib->add_jq_onready('$jq("#'.$id.'").treeTable({clickableNodeNames:true,initialState: "expanded"});');
+		$headerlib->add_jq_onready('$jq("#'.$id.'").treeTable({clickableNodeNames:'.$expanable.',initialState: "expanded"});');
 	} else {
-		$headerlib->add_jq_onready('$jq("#'.$id.'").treeTable({clickableNodeNames:true,initialState: "collapsed"});');
+		$headerlib->add_jq_onready('$jq("#'.$id.'").treeTable({clickableNodeNames:'.$expanable.',initialState: "collapsed"});');
 	}
 	// TODO refilter when .parent is opened - seems to prevent the click propagating
 //		$headerlib->add_jq_onready('$jq("tr.parent").click(function(event) {

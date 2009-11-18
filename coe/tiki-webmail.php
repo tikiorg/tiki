@@ -153,7 +153,9 @@ if ($_REQUEST['locSection'] == 'read') {
 		}
 		
 		$bodies = $webmaillib->get_mail_content($user, $current['accountId'], $_REQUEST['msgid'], true);
-		for ($i = 0; $i < count($bodies); $i++) {
+
+		
+		for ($i = 0, $count_bodies = count($bodies); $i < $count_bodies; $i++) {
 			if ($bodies[$i]['contentType'] == 'text/html') {
 				
 				$bod = $bodies[$i]['body'];
@@ -561,7 +563,7 @@ if ($_REQUEST['locSection'] == 'settings') {
 // set ports for ssl
 \$jq('[name=useSSL]').change(function(v,a) {
 	if (\$jq('[name=useSSL]').attr('checked')) {
-		\$jq('[name=port]').val(\$jq('[name=imap]').val() ? '933' : '995');
+		\$jq('[name=port]').val(\$jq('[name=imap]').val() ? '993' : '995');
 		\$jq('[name=smtpPort]').val('465');
 	} else {
 		\$jq('[name=port]').val(\$jq('[name=imap]').val() ? '143' : '110');
@@ -639,7 +641,7 @@ END;
 	$smarty->assign('accountId', empty($_REQUEST['accountId']) ? 0 : $_REQUEST['accountId']);
 
 
-	if ($_REQUEST['accountId']) {
+	if (!empty($_REQUEST['accountId'])) {
 		$info = $webmaillib->get_webmail_account($user, $_REQUEST['accountId']);
 	} else {
 		$info['account'] = '';

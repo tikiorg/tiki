@@ -14,5 +14,3 @@ function prefs_page_list() {
 		),
 	);
 }
-
-?>

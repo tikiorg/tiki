@@ -64,7 +64,14 @@ if (isset($_REQUEST["rename"])) {
 			}
 		}
 	}
-	header('location: tiki-index.php?page=' . urlencode($newName));
+	global $perspectivelib; require_once 'lib/perspectivelib.php';
+	$perspectivelib->replace_preference ('wsHomepage', $page, $newName ) ;
+	if ($prefs['feature_sefurl'] == 'y') {
+		include_once('tiki-sefurl.php');
+		header('location: '. urlencode(filter_out_sefurl("tiki-index.php?page=$newName", $smarty, 'wiki')));
+	} else {
+		header('location: tiki-index.php?page=' . urlencode($newName));
+	}
 }
 ask_ticket('rename-page');
 include_once ('tiki-section_options.php');

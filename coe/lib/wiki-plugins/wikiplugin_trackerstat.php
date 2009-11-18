@@ -66,6 +66,10 @@ function wikiplugin_trackerstat($data, $params) {
 	if ($prefs['feature_trackers'] != 'y' || !isset($trackerId) || !($tracker_info = $trklib->get_tracker($trackerId))) {
 		return $smarty->fetch("wiki-plugins/error_tracker.tpl");
 	}
+	$perms = Perms::get(array('type'=>'tracker', 'object'=>$trackerId));
+	if (!$perms->view_trackers) {
+		return tra('Permission denied');
+	}
 
 	if (!isset($status)) {
 		$status = 'o';
@@ -170,7 +174,7 @@ function wikiplugin_trackerstat($data, $params) {
 				$userValues = $trklib->get_filtered_item_values($allFields["data"][$iIp]['fieldId'],  $tikilib->get_ip_address(), $allFields["data"][$i]['fieldId']);
 			}
 			
-			$allValues = $trklib->get_all_items($trackerId, $fieldId, $status);
+			$allValues = $trklib->get_all_items($trackerId, $fieldId, $status, $allFields);
 			$j = -1;
 			foreach ($allValues as $value) {
 				$value = trim($value);

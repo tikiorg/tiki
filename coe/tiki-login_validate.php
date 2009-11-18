@@ -23,6 +23,9 @@ if (isset($_REQUEST["user"])) {
 		if (!$isvalid) {
 			list($isvalid, $_REQUEST["user"], $error) = $userlib->validate_user($_REQUEST["user"], $_REQUEST["pass"], '', '', true);
 			$_SESSION['last_validation'] = $isvalid ? array('user' => $_REQUEST["user"], 'actpass' => $_REQUEST["pass"]) : null;
+			if ($isvalid) {
+				$userlib->change_user_waiting($_REQUEST['user'], NULL);
+			}
 		}
 	} else {
 		$error = PASSWORD_INCORRECT;
@@ -42,7 +45,7 @@ if ($isvalid) {
 		$userlib->confirm_user($_REQUEST['user']);
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
 		$foo1 = str_replace('tiki-login_validate', 'tiki-login_scr', $foo['path']);
-		$machine = $tikilib->httpPrefix() . $foo1;
+		$machine = $tikilib->httpPrefix( true ) . $foo1;
 		$smarty->assign('mail_machine', $machine);
 		$smarty->assign('mail_site', $_SERVER['SERVER_NAME']);
 		$smarty->assign('mail_user', $_REQUEST['user']);

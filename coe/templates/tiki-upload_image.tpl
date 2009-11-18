@@ -60,7 +60,7 @@
 			{tr}You can include the image in an Wiki page using{/tr}:&nbsp;
 			<form>
 				<textarea rows="3" cols="60" style="width: 90%">
-					{literal}{{/literal}img src=show_image.php?id={$imageId}{literal}}{/literal}
+					{literal}{{/literal}img id={$imageId}{literal}}{/literal}
 				</textarea>
 			</form>
 		</div>

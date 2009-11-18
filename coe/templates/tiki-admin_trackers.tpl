@@ -13,7 +13,7 @@
 {tabset name='tabs_admtrackers'}
 
 {* --- tab with list --- *}
-{tab name='{tr}Trackers{/tr}'}
+{tab name="{tr}Trackers{/tr}"}
 <a name="view"></a>
 	<h2>{tr}Trackers{/tr}</h2>
 	{if ($channels) or ($find)}
@@ -40,7 +40,7 @@
 					<a class="tablename" href="tiki-admin_trackers.php?trackerId={$channels[user].trackerId}" title="{tr}Edit{/tr}">{$channels[user].trackerId}</a>
 				</td>
 				<td>
-					<a class="tablename" href="tiki-admin_trackers.php?trackerId={$channels[user].trackerId}" title="{tr}Edit{/tr}">{$channels[user].name}</a>
+					<a class="tablename" href="tiki-admin_trackers.php?trackerId={$channels[user].trackerId}" title="{tr}Edit{/tr}">{$channels[user].name|escape}</a>
 				</td>
 				{if $channels[user].descriptionIsParsed eq 'y' }
 					<td>{wiki}{$channels[user].description}{/wiki}</td>
@@ -73,7 +73,7 @@
 {/tab}
 
 {if $trackerId}
-	{assign var='tabeditcreatetrk_admtrk' value="{tr}Edit Tracker{/tr} <i>`$name` (#`$trackerId`)</i>"}
+	{capture assign='tabeditcreatetrk_admtrk'}{tr}Edit Tracker{/tr} <i>{$name|escape} (#{$trackerId})</i>{/capture}
 {else}
 	{assign var='tabeditcreatetrk_admtrk' value='{tr}Create Tracker{/tr}'}
 {/if}
@@ -222,7 +222,7 @@
 			<tr class="formcolor">
 				<td>{tr}Send copies of all activity in this tracker to this e-mail address{/tr}</td>
 				<td>
-					<input type="text" name="outboundEmail" value="{$outboundEmail|escape}" />
+					<input type="text" size="60" name="outboundEmail" value="{$outboundEmail|escape}" />
 					<br />
 					<i>{tr}You can add several email addresses by separating them with commas.{/tr}</i>
 				</td>
@@ -266,6 +266,7 @@
 					<input type="checkbox" name="writerCanModify" {if $writerCanModify eq 'y'}checked="checked"{/if} />
 					<br />
 					<i>{tr}The tracker needs a user field with the option 1{/tr}</i>
+					<br />{tr}User can take ownership of item created by anonymous{/tr}<input type="checkbox" name="userCanTakeOwnership" {if $userCanTakeOwnership eq 'y'}checked="checked"{/if} />
 				</td>
 			</tr>
 
@@ -345,7 +346,7 @@
 				<td>
 					<select name="defaultOrderKey">
 						{section name=x loop=$fields}
-							<option value="{$fields[x].fieldId}"{if $defaultOrderKey eq $fields[x].fieldId} selected="selected"{/if}>{$fields[x].name|truncate:42:" ..."}</option>
+							<option value="{$fields[x].fieldId}"{if $defaultOrderKey eq $fields[x].fieldId} selected="selected"{/if}>{$fields[x].name|truncate:42:" ..."|escape}</option>
 						{/section}
 						<option value="-1"{if $defaultOrderKey eq -1} selected="selected"{/if}>{tr}LastModif{/tr}</option>
 						<option value="-2"{if $defaultOrderKey eq -2} selected="selected"{/if}>{tr}Created{/tr}</option>
@@ -500,7 +501,7 @@
 {/tab}
 
 {if $trackerId}
-{tab name='{tr}Import/Export{/tr}'}
+{tab name="{tr}Import/Export{/tr}"}
 {* --- tab with raw form --- *}
 <h2>{tr}Import/export trackers{/tr}</h2>
 
@@ -583,7 +584,7 @@ categories = {$catsdump}
 {/tab}
 {/if}
 
-{tab name='{tr}Duplicate Tracker{/tr}'}
+{tab name="{tr}Duplicate Tracker{/tr}"}
 {* --- tab with raw form --- *}
 	<h2>{tr}Duplicate Tracker{/tr}</h2>
 

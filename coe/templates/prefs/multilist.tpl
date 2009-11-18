@@ -6,6 +6,9 @@
 		{/foreach}
 	</select>
 	{include file=prefs/shared-flags.tpl}
+	{if $p.hint}
+		<br/><em>{$p.hint|escape}</em>
+	{/if}
 	{include file=prefs/shared-dependencies.tpl}
 	<br /><em>{tr}Use Ctrl+Click to select multiple options{/tr}.</em>
 </div>

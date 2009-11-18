@@ -1,7 +1,16 @@
 <?php
-require_once 'lib/setup/twversion.class.php';
 
-class Installer
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
+  header("location: index.php");
+  exit;
+}
+
+
+require_once 'lib/setup/twversion.class.php';
+require_once('lib/core/lib/TikiDb/Bridge.php');
+
+class Installer extends TikiDb_Bridge
 {
 	var $patches = array();
 	var $scripts = array();
@@ -124,15 +133,9 @@ class Installer
 	{
 		global $db_tiki;
 
-		if ( !is_file($file) || !$fp = fopen($file, "r") ) {
+		if ( !is_file($file) || !$command = file_get_contents($file) ) {
 			print('Fatal: Cannot open '.$file);
 			exit(1);
-		}
-
-		$command = "";
-		
-		while(!feof($fp)) {
-			$command.= fread($fp,4096);
 		}
 
 		fclose($fp);
@@ -168,23 +171,24 @@ class Installer
 						$do_exec=true;
 					}
 					if($do_exec)
-						$result = $this->query($statement);
+						if (preg_match('/^\s*(?!-- )/m', $statement)) // If statement is not commented
+							$this->query($statement);
 					break;
 				default:
-					$result = $this->query($statement);
+					if (preg_match('/^\s*(?!-- )/m', $statement)) // If statement is not commented
+						$this->query($statement);
 					break;
 				}
 			}
 		}
 
-		$this->query("update `tiki_preferences` set `value`=`value`+1 where `name`='lastUpdatePrefs'");
+		$this->query("update `tiki_preferences` set `value`= " . $this->cast('value','int') . " +1 where `name`='lastUpdatePrefs'");
 	} // }}}
 
-	function query( $query, $values = array() ) // {{{
+	function query( $query = null, $values = array(), $numrows = -1, $offset = -1, $reporterrors = true ) // {{{
 	{
 		$error = '';
-		$db = TikiDb::get();
-		$result = $db->queryError( $query, $error, $values );
+		$result = $this->queryError( $query, $error, $values );
 
 		if( $result ) {
 			$this->success[] = $query;
@@ -241,24 +245,20 @@ class Installer
 	function tableExists( $tableName ) // {{{
 	{
 		global $db_tiki;
-		static $list = null;
-		if( is_null( $list ) )
-		{
-			$list = array();
-			switch ( $db_tiki ) {
-			    case 'sqlite':
-	    			$result = $this->query( "SELECT name FROM sqlite_master WHERE type = 'table'" );
-		    		break;
-		    	    case 'pgsql':
-		    	        $result = $this->query( "SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'" );
-		    	        break;
-			    default:
-			        $result = $this->query( "show tables" );
-			        break;
-			}
-			while( $row = $result->fetchRow() )
-				$list[] = reset( $row );
+		switch ( $db_tiki ) {
+			case 'sqlite':
+				$result = $this->query( "SELECT name FROM sqlite_master WHERE type = 'table'" );
+				break;
+				case 'pgsql':
+					$result = $this->query( "SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'" );
+					break;
+			default:
+				$result = $this->query( "show tables" );
+				break;
 		}
+		$list = array();
+		while( $row = $result->fetchRow() )
+			$list[] = reset( $row );
 
 		return in_array( $tableName, $list );
 	} // }}}

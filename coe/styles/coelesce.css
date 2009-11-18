@@ -88,7 +88,21 @@ textarea {
 	color: #2d2d2d;
 }
 
+pre {
+	font-size: 1.2em;
+}
+
+.simplebox pre, .simplebox p {
+	padding: 0;
+	margin: 0;
+}
+
 .navbar {
+	margin: 10px 0;
+	line-height: 20px;
+}
+
+.categbar{
 	margin: 10px 0;
 	line-height: 20px;
 }
@@ -460,11 +474,6 @@ div.optionline,
 	font-weight: bold;
 }
 
-.linkmenu,
-.linkmenu:visited {
-	display: block;
-}
-
 .linkmenu:hover {
 	color: #82a7c8;
 }
@@ -574,7 +583,13 @@ a.phplmselected:hover {
 /** CSS (suckerfish) menus **/
 
 /* typography, colors */
-.cssmenu_vert li {
+.cssmenu_horiz li a {
+	padding: 6px 1em;
+	font-weight: bold;
+	font-size: 12px;
+}
+
+.box-data .cssmenu_vert li {
 	background: #ccdceb !important;
 }
 
@@ -582,20 +597,17 @@ a.phplmselected:hover {
 	color: #5a7ea2;
 }
 
-.cssmenu_horiz li:hover ul li:hover,
-.cssmenu_horiz li.sfhover ul li.sfhover {
+#tiki-top .cssmenu_horiz li:hover ul li:hover,
+#tiki-top .cssmenu_horiz li.sfhover ul li.sfhover {
 	background: #eff8ff;
 	color: #5a7ea2;
 }
 
-.cssmenu_horiz li a:link,
-.cssmenu_horiz li a:visited {
-	padding: 6px 1em;
-	font-weight: bold;
+#tiki-top .cssmenu_horiz li a:link,
+#tiki-top .cssmenu_horiz li a:visited {
 	text-decoration: none;
 	background: inherit;
 	color: #cfe3fb;
-	font-size: 12px;
 }
 
 .cssmenu_vert li a {
@@ -656,7 +668,8 @@ a.phplmselected:hover {
 	background: #ecf5ff;
 }
 
-#tiki-top .cssmenu_horiz ul li a {
+#tiki-top .cssmenu_horiz ul li a:link,
+#tiki-top .cssmenu_horiz ul li a:visited {
 	color: #295c83;
 }
 
@@ -666,12 +679,12 @@ a.phplmselected:hover {
 	background: #ccdceb;
 }
 
-#tiki-top > .cssmenu_horiz > li > a:hover {
+#tiki-top .cssmenu_horiz li a:hover {
 	color: #fff;
 }
 
 #tiki-top .cssmenu_horiz li ul li a:hover {
-	color: #82a7c8
+	color: #82a7c8;
 }
 
 /* left column width */
@@ -698,6 +711,12 @@ a.phplmselected:hover {
 #col2 .cssmenu_vert li li:hover ul,
 #col2 .cssmenu_vert li li.sfHover ul {
 	left: 10em;
+}
+
+/* less padding so move ul ul up */
+.cssmenu_horiz li:hover ul,
+.cssmenu_horiz li.sfHover ul {
+	top: 1.8em;
 }
 
 /* less padding so move ul ul up */
@@ -836,6 +855,7 @@ table.normal,
 table.admin {
 	border: 0;
 	background: #fff;
+	color: #2d2d2d;
 }
 
 .odd {
@@ -964,12 +984,6 @@ body.tiki_wiki_page #comments {
 	padding: 1em;
 }
 
-h1.pagetitle {
-	background: url(coelesce/tiki-centerbg.jpg) repeat-x;
-	line-height: 36px;
-	color: #2d2d2d;
-}
-
 h1.pagetitle a,
 h1.pagetitle a:visited,
 h1.pagetitle a:hover,
@@ -1029,33 +1043,27 @@ div#description,
 }
 
 .wikitext h1 {
-	margin: 5px 0 15px 0;
-	padding-left: 0;
+	margin: 20px 0 15px 0;
 }
 
 .wikitext h2 {
-	margin: 5px 0 10px 0;
-	padding-left: 10px;
+	margin: 10px 0 10px 0;
 }
 
 .wikitext h3 {
-	margin: 5px 0 5px 0;
-	padding-left: 15px;
+	margin: 10px 0 5px 0;
 }
 
 .wikitext h4 {
-	margin: 5px 0 5px 0;
-	padding-left: 20px;
+	margin: 10px 0 5px 0;
 }
 
 .wikitext h5 {
-	margin: 5px 0 5px 0;
-	padding-left: 25px;
+	margin: 10px 0 5px 0;
 }
 
 .wikitext h6 {
-	margin: 5px 0 5px 0;
-	padding-left: 30px;
+	margin: 10px 0 5px 0;
 }
 
 table.wikitable {
@@ -1067,6 +1075,13 @@ td.wikicell {
 	padding: 3px;
 	border: 1px solid #a9a9a9;
 	border-collapse: collapse;
+}
+
+h1.pagetitle {
+	background: url(coelesce/tiki-centerbg.jpg) repeat-x;
+	line-height: 36px;
+	color: #2d2d2d;
+	padding-left: 2px;
 }
 
 div.split {
@@ -1779,19 +1794,19 @@ div.multiselect {
 	background: red;
 }
 
-#caltable .calfocuson,
+.caltable .calfocuson,
 .box-data td.fc a.today,
 .box-data td a.today {
 	background: #8df378;
 	border: solid 1px #696969;
 }
 
-#caltable .calfocuson a {
+.caltable .calfocuson a {
 	color: #000;
 }
 
-#caltable .calfocus a,
-#caltable .calfocuson a {
+.caltable .calfocus a,
+.caltable .calfocuson a {
 	text-decoration: none;
 }
 
@@ -1815,11 +1830,11 @@ div.multiselect {
 	color: #4a6a90;
 }
 
-#caltable td {
+.caltable td {
 	padding: 0;
 }
 
-#caltable .weeks {
+.caltable .weeks {
 	background: #c3d3e5;
 	color: #4a6a90;
 }

@@ -12,6 +12,16 @@
 <div id="siteloginbar">
 	{if $user}
 		{$user|userlink} | <a href="tiki-logout.php" title="{tr}Logout{/tr}">{tr}Logout{/tr}</a>
+	{elseif $smarty.request.user neq 'admin' && $prefs.auth_method eq 'cas' && $showloginboxes neq 'y'}
+		<b><a href="tiki-login.php?cas=y">{tr}Login SSO{/tr}</a></b>
+		{if $prefs.cas_skip_admin eq 'y' && $prefs.cas_show_alternate_login eq 'y'}
+			&nbsp;|&nbsp;{self_link _template='tiki-site_header.tpl' _title="{tr}Login as admin{/tr}" _icon='user_red' _htmlelement='siteheader' user='admin'}{tr}Login as admin{/tr}{/self_link}
+		{/if}
+ 	{elseif $smarty.request.user neq 'admin' && $prefs.auth_method eq 'shib' && $showloginboxes neq 'y'}
+		<b><a href="tiki-login.php">{tr}Login SSO{/tr}</a></b>
+		{if $prefs.shib_skip_admin eq 'y'}
+			&nbsp;|&nbsp;{self_link _template='tiki-site_header.tpl' _title="{tr}Login as admin{/tr}" _icon='user_red' _htmlelement='siteheader' user='admin'}{tr}Login as admin{/tr}{/self_link}
+		{/if}
 	{else}
 		<form class="forms" name="loginbox" action="tiki-login.php" method="post">
 			<label for="sl-login-user">{if $prefs.login_is_email eq 'y'}{tr}Email{/tr}{else}{tr}User{/tr}{/if}:</label>
@@ -47,7 +57,7 @@
 		</div>	
 		{*if $filegals_manager eq '' and $print_page ne 'y'*}
 			{if $prefs.feature_sitesearch eq 'y' and $prefs.feature_search eq 'y' and $tiki_p_search eq 'y'}
-				<div id="sitesearchbar"{if $prefs.feature_sitemycode neq 'y' and $prefs.feature_sitelogo neq 'y' and $prefs.feature_sitead neq 'y' and $prefs.feature_fullscreen eq 'y' and $filegals_manager eq '' and $print_page ne 'y'}{if $smarty.session.fullscreen neq 'y'}style="margin-right: 80px"{/if}{/if}>
+				<div id="sitesearchbar"{if $prefs.feature_sitemycode neq 'y' and $prefs.feature_banners eq 'y' && $prefs.feature_sitelogo neq 'y' and ($prefs.feature_banners neq 'y' or $prefs.feature_sitead neq 'y') and $prefs.feature_fullscreen eq 'y' and $filegals_manager eq '' and $print_page ne 'y'}{if $smarty.session.fullscreen neq 'y'}style="margin-right: 80px"{/if}{/if}>
 					<div class="wrapper">
 						{if $prefs.feature_search_fulltext eq 'y'}
 							{include file="tiki-searchresults.tpl"

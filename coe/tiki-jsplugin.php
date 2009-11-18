@@ -1,4 +1,5 @@
 <?php
+// $Id$
 /*
  * This is included in the html generated for each wiki page. It is included for each plugin used on a wiki page.
  * The include is of the form <script type="text/javascript" src="tiki-jsplugin.php?plugin=googledoc"></script>
@@ -8,6 +9,8 @@
  * click the little edit icon next to the plug-ins generated html.
  *
  */
+
+header('content-type: application/x-javascript');
 
 $all = !isset( $_GET['plugin'] );
 
@@ -47,17 +50,12 @@ else
 ob_start();
 
 ?>
-
-if( ! tiki_plugins )
-	var tiki_plugins = {};
-
+if( typeof tiki_plugins == 'undefined' ) { tiki_plugins = {}; }
 <?php foreach( $plugins as $plugin ):
 	if( ! $info = $tikilib->plugin_info( $plugin ) )
 		continue;
 ?>
-
-tiki_plugins[<?php echo json_encode( $plugin ) ?>] = <?php echo json_encode( $info ) ?>;
-
+tiki_plugins.<?php echo $plugin ?> = <?php echo json_encode( $info ) ?>;
 <?php endforeach;
 
 $content = ob_get_contents();

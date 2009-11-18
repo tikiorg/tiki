@@ -14,7 +14,7 @@
 
 {tabset name='tabs_admin_calendars'}
 
-{tab name='{tr}List of Calendars{/tr}'}
+{tab name="{tr}List of Calendars{/tr}"}
 {* --- tab with list --- *}
 
 <h2>{tr}List of Calendars{/tr}</h2>
@@ -71,7 +71,7 @@
 {/if}
 {/tab}
 
-{tab name='{tr}Create / Edit Calendar{/tr}'}
+{tab name="{tr}Create / Edit Calendar{/tr}"}
 {* --- tab with form --- *}
 
 <h2>{tr}Create/Edit Calendars{/tr}</h2>
@@ -192,7 +192,7 @@
 <select id="groupforAlert" name="groupforAlert">
 <option value="">&nbsp;</option>
 {foreach key=k item=i from=$groupforAlertList}
-<option value="{$k}" {$i}>{$k}</option>
+<option value="{$k|escape}" {$i}>{$k|escape}</option>
 {/foreach}
 </select></td>
 </tr>
@@ -204,7 +204,7 @@
 <tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 <br />
-{if $calendarId}{$name} : {/if}
+{if $calendarId}{$name|escape} : {/if}
 {tr}Delete events older than:{/tr} <input type="text" name="days" value="0"/> {tr}days{/tr} <input type="submit" name="clean" value="{tr}Delete{/tr}" />
 </form>
 {/tab}

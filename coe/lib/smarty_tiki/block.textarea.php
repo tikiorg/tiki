@@ -35,6 +35,10 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	$params['cols'] = isset($params['cols']) ? $params['cols'] : 80;
 	$params['name'] = isset($params['name']) ? $params['name'] : 'edit';
 	$params['id'] = isset($params['id']) ? $params['id'] : 'editwiki';
+	$params['class'] = isset($params['class']) ? $params['class'] : 'wikiedit';
+	
+	// mainly for modules admin - preview is for the module, not the user module so don;t need to confirmExit
+	$params['previewConfirmExit'] = isset($params['previewConfirmExit']) ? $params['previewConfirmExit'] : 'y';
 	
 	if ( isset($params['_zoom']) && $params['_zoom'] == 'n' ) {
 		$feature_template_zoom_orig = $prefs['feature_template_zoom'];
@@ -126,7 +130,7 @@ function FCKeditor_OnComplete( editorInstance ) {
 				$textarea_attributes .= ' '.$k.'="'.$v.'"';
 			}
 		}
-		if (!$textarea_id) { $textarea_id = $params['id']; }
+		if (empty($textarea_id)) { $textarea_id = $params['id']; }
 		if ( $textarea_attributes != '' ) {
 			$smarty->assign('textarea_attributes', $textarea_attributes);
 		}
@@ -139,54 +143,12 @@ function FCKeditor_OnComplete( editorInstance ) {
 			$headerlib->add_js("var autoSaveId = '$auto_save_referrer';");	// onready is too late...
 		}
 
-		$smarty->assign_by_ref('pagedata', $content);
+		$smarty->assign_by_ref('pagedata', htmlspecialchars($content));
 		$html .= $smarty->fetch('wiki_edit.tpl');
 
 		$html .= "\n".'<input type="hidden" name="rows" value="'.$params['rows'].'"/>'
 			."\n".'<input type="hidden" name="cols" value="'.$params['cols'].'"/>'
 			."\n".'<input type="hidden" name="wysiwyg" value="n" />';
-
-		if (0 && $prefs['feature_jquery_autocomplete'] == 'y') {
-			$headerlib->add_jq_onready("
-\$jq('#$textarea_id').bind('keypress.page_autocomplete', function(event) {
-	if (typeof lastKeyPressCode != 'undefined' && event.charCode == 40 && event.keyCode == lastKeyPressCode) { // ((
-		// create input for autocomplete
-		if (\$jq('#$textarea_id" . "_ac').length == 0) {
-			input = document.createElement('input');
-			\$jq(input).attr('type', 'text').attr('id', '$textarea_id" . "_ac').css('position', 'absolute') //.css('border', 'none')
-				.autocomplete('tiki-listpages.php?listonly',
-						{extraParams: {'httpaccept': 'text/javascript'},
-						 dataType: 'json',
-						 parse: parseAutoJSON,
-						 formatItem: function(row) { return row; }
-						})
-				.bind('keyup.page_autocomplete_ac', function ( event ) {
-					if (event.keyCode == 9 || event.keyCode == 13) {
-						var pname = \$jq(this).val();
-						\$jq(this).hide();
-						\$jq('#$textarea_id').focus();
-						insertAt('$textarea_id', pname + '))');
-						return false;
-					}
-				}).blur( function (event) {
-					//\$jq(this).hide();
-					\$jq('#$textarea_id').focus();
-				});
-			\$jq('#$textarea_id').parent().append(input);
-		}
-		var off = textarea_cursor_offset(\$jq('#$textarea_id')[0]);
-		\$jq('#$textarea_id" . "_ac').val('')
-			.css('left', off.left + 0).css('top', off.top - 0).css('z-index', 99)
-			.show().focus();
-	} else {
-		// track last key pressed
-		lastKeyPressCode = event.keyCode;
-	}
-});
-
-
-");
-		}
 
 	}	// wiki or wysiwyg
 
@@ -200,30 +162,31 @@ function editTimerTick() {
 	
 	var seconds = editTimeoutSeconds - editTimeElapsedSoFar;
 	
-	if (editTimerWarnings == 0 && seconds <= 60) {
-		alert('".tra('Your edit session will expire in').' 1 '.tra('minute').'.'.
-				tra('You must PREVIEW or SAVE your work now, to avoid losing your edits.')."');
+	if (editTimerWarnings == 0 && seconds <= 60 && window.editorDirty) {
+		alert('".addslashes(tra('Your edit session will expire in')).' 1 '.tra('minute').'.'.
+				addslashes(tra('You must PREVIEW or SAVE your work now, to avoid losing your edits.'))."');
 		editTimerWarnings++;
 	} else if (seconds <= 0) {
 		clearInterval(editTimeoutIntervalId);
+		window.status = '".addslashes(tra('Your edit session has expired'))."';
+	} else {
+		window.status = '".addslashes(tra('Your edit session will expire in:'))."' + Math.floor(seconds / 60) + ': ' + ((seconds % 60 < 10) ? '0' : '') + (seconds % 60);
 	}
-	
-	window.status = '".tra('Your edit session will expire in:')."' + Math.floor(seconds / 60) + ': ' + ((seconds % 60 < 10) ? '0' : '') + (seconds % 60);
 	if (seconds % 60 == 0 && \$jq('#edittimeout')) {
 		\$jq('#edittimeout').text(Math.floor(seconds / 60));
 	}
 }
 
 function confirmExit() {
-	if (needToConfirm && typeof fckEditorInstances != 'undefined' && fckEditorInstances.length > 0) {
+	if (window.needToConfirm && typeof fckEditorInstances != 'undefined' && fckEditorInstances.length > 0) {
 		for(ed in fckEditorInstances) {
 			if (fckEditorInstances[ed].IsDirty()) {
-				editorDirty = true;
+				window.editorDirty = true;
 				break;
 			}
 		}
 	}
-	if (needToConfirm && editorDirty) {
+	if (window.needToConfirm && window.editorDirty) {
 		return '".tra('You are about to leave this page. Changes since your last save will be lost. Are you sure you want to exit this page?')."';
 	}
 }
@@ -232,20 +195,25 @@ window.onbeforeunload = confirmExit;
 \$jq('document').ready( function() {
 	editTimeoutIntervalId = setInterval(editTimerTick, 1000);
 	// attach dirty function to all relevant inputs etc
-	\$jq(\$jq('#$as_id').attr('form')).find('input, textarea, select').change( function () { if (!editorDirty) { editorDirty = true; } });
+	if ('$as_id' != 'editwiki') {	// modules admin exception
+		\$jq('#$as_id').change( function () { if (!editorDirty) { editorDirty = true; } });
+	} else {
+		\$jq(\$jq('#$as_id').attr('form')).find('input, textarea, select').change( function () { if (!editorDirty) { editorDirty = true; } });
+	}
 });
 
-var needToConfirm = true;
-var editorDirty = ".(isset($_REQUEST["preview"]) ? 'true' : 'false').";
+window.needToConfirm = true;
+window.editorDirty = ".(isset($_REQUEST["preview"]) && $params['previewConfirmExit'] == 'y' ? 'true' : 'false').";
 var editTimeoutSeconds = ".ini_get('session.gc_maxlifetime').";
 var editTimeElapsedSoFar = 0;
 var editTimeoutIntervalId;
 var editTimerWarnings = 0;
 // end edit timeout warnings
 ";
-	$headerlib->add_js($js);
-	$headerlib->add_js('function switchEditor(mode, form) {
-	needToConfirm=false;
+	if ($prefs['feature_wysiwyg'] && $prefs['wysiwyg_optional']) {
+		$js .= '
+function switchEditor(mode, form) {
+	window.needToConfirm=false;
 	var w;
 	if (mode=="wysiwyg") {
 		$jq(form).find("input[name=mode_wysiwyg]").val("y");
@@ -255,7 +223,10 @@ var editTimerWarnings = 0;
 		$jq(form).find("input[name=wysiwyg]").val("n");
 	}
 	form.submit();
-}');
+}';
+	}
+	
+	$headerlib->add_js($js);
 
 	return $auto_save_warning.$html;
 }

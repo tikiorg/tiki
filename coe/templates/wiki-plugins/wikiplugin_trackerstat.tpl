@@ -13,7 +13,7 @@
 	{if $show_link eq 'y'}</a>{/if}
 </td>
 {if $show_percent eq 'y'}<td class="{cycle advance=false}">%{$val.average|string_format:"%.2f"}</td>{/if}
-{if $show_bar eq 'y'}<td class="{cycle advance=false}"><img src="img/leftbar.gif" alt="&lt;" /><img alt="-" src="img/mainbar.gif" height="14" width="{$val.average}" /><img src="img/rightbar.gif" alt="&gt;" /></td>{/if}
+{if $show_bar eq 'y'}<td class="{cycle advance=false}">{quotabar length=$val.average}</td>{/if}
 <!-- {cycle} -->
 </tr>
 {/foreach}

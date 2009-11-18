@@ -1,5 +1,5 @@
 <?php
-// $Id: /cvsroot/tikiwiki/tiki/lib/searchlib.php,v 1.48.2.6 2008-02-27 15:18:43 nyloth Exp $
+// $Id$
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -124,6 +124,9 @@ class SearchLib extends TikiLib {
 		    $objKeyCat = $objKey;
 		}
 		    
+/*
+ * Commented out for 4.0 - see below (line 292 onwards) new Perms accessor method (partially finished)
+ * 
 		$chkObjPerm = $prefs['feature_search_show_forbidden_obj'] != 'y' && $tiki_p_admin != 'y' && (!empty($permName) || (!empty($permNameGlobal) && !empty($permNameObj))) && !empty($objType) && !empty($objKeyPerm) && !empty($objKeyGroup);
 
 		if ($chkObjPerm) {
@@ -185,6 +188,7 @@ class SearchLib extends TikiLib {
 			$bindHaving = array();
 		    }
 		}
+*/
 		if (!empty($h['parentJoin']))
 			$sqlJoin .= ' '.$h['parentJoin'];
 		    
@@ -255,6 +259,10 @@ class SearchLib extends TikiLib {
 			}
 		}
 
+		$chkObjPerm = $prefs['feature_search_show_forbidden_obj'] != 'y' && $tiki_p_admin != 'y' && (!empty($permName) || (!empty($permNameGlobal) && !empty($permNameObj))) && !empty($objType) && !empty($objKeyPerm) && !empty($objKeyGroup);
+		$chkCatPerm = $prefs['feature_search_show_forbidden_cat'] != 'y' && $tiki_p_admin != 'y' && !empty($objType) && !empty($objKeyCat) && !empty($objKeyGroup) && $prefs['feature_categories'] == 'y';
+		
+
 		$result = $this->query($sql, $bindVars, $maxRecords, $offset);
 		$ret = array();
 
@@ -274,12 +282,42 @@ class SearchLib extends TikiLib {
 				'type' => $type,
 				'location' => $type,
 			);
+			
 			if (!empty($h['parent'])) {
 				$r['parentName'] = $res['parentName'];
 				$r['location'] .= "::".$res['parentName'];
 				$r['parentHref'] = str_replace('$', '?', $res['parentHref']);
 			}
-			$ret[] = $r;
+
+			/* New perms checks for 4.0 - by jonnyb Friday the 13th, 2009
+			 * Ok on wiki pages and some others - problems with filegals (& probably others) TODO TODO TODO for 4.1 */
+			
+			if ($chkObjPerm || $chkCatPerm) {
+				//if ($type == 'File Gallery') {
+				//	$context = array( 'type' => $objType, 'object' => $res['parentName'] );
+				//} else {
+					$context = array( 'type' => $objType, 'object' => $res['id1'] );
+				//}
+	
+				$accessor = Perms::get( $context );
+				$accessor->setGroups( $groupList );
+				
+				$ok = true;	// should default to ok?
+				
+				if (!empty($permName)) {
+					$ok = $accessor->$permName;
+				} else if (!empty($permNameObj)) {
+					$ok = $accessor->$permNameObj;
+				} else if (!empty($permNameGlobal)) {
+					$ok = $accessor->$permNameGlobal;
+				}
+	
+				if ($ok) {
+					$ret[] = $r;
+				}
+			} else {
+				$ret[] = $r;
+			}
 		}
 
 		return array(
@@ -288,7 +326,7 @@ class SearchLib extends TikiLib {
 		);
 	}
 
-	function find_wikis($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate) {
+	function find_wikis($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate = 0) {
 		global $tikilib, $prefs;
 		$rv = array();
 		$search_wikis_comments = array(

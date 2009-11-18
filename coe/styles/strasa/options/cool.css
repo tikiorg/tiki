@@ -56,9 +56,7 @@ button,
 input[type=reset],
 input[type=submit],
 span.button input,
-.calbuttonoff,
-.buttonon,
-.calbuttonon {
+.calbuttonbox {
 	color: #4c4c4c;
 	font-weight: bold;
 	border: 1px solid #acacac;
@@ -75,7 +73,8 @@ span.button input,
 button:hover,
 input[type=reset]:hover,
 input[type=submit]:hover,
-.button input:hover {
+.button input:hover,
+.calbuttonbox:hover {
 	background: #f5f5f5 url(cool/headerbg.jpg) repeat-x 0 100%;
 	background-position: 105%;
 	color: #757575}
@@ -84,7 +83,9 @@ input[type=submit]:hover,
 button:active,
 input[type=reset]:active,
 input[type=submit]:active,
-.button input:active {
+.button input:active,
+span.highlight a:link,
+span.highlight a:visited  {
 	border-color: #223845 #41cbe7 #41cbe7 #223845;
 }
 
@@ -191,6 +192,9 @@ div#sioptions,
 }
 
 /* tiki-top_bar.tpl - menu and search */
+*:first-child+html #tiki-top {
+	background-color: #f5f5f5;
+}
 
 #tiki-top a,
 #tiki-top a:visited {
@@ -398,8 +402,6 @@ a.linkmenu, .rsslink, .linkmenu:visited, .rsslink:visited {}
 
 div.option a:hover,
 div.option a:active {}
-
-a.linkmodule { display:block; }
 
 a.linkmodule:hover {
 	color: #000000;
@@ -1048,14 +1050,14 @@ div.multiselect {
 	color: #fff;
 }
 
-#caltable .calfocuson,
+.caltable .calfocuson,
 .box-data td.fc a.today,
 .box-data td a.today {
 	background: #D4D0C8;
 	border: solid 1px #696969;
 }
 
-#caltable .calfocuson a {
+.caltable .calfocuson a {
 	color: #000;
 }
 
@@ -1071,7 +1073,7 @@ div.multiselect {
 	color: #cce5ff;
 }
 
-#caltable .weeks {
+.caltable .weeks {
 	background: #1b3a50;
 	color: #cce5ff;
 }

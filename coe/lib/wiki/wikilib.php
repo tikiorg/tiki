@@ -59,7 +59,7 @@ class WikiLib extends TikiLib {
      *  Get the contributors for page
      *  the returned array does not contain the user $last (usually the current or last user)
      */
-    function get_contributors($page, $last='') {
+    function get_contributors($page, $last='', $versions=true) {
 		static $cache_page_contributors;
 		if ($cache_page_contributors['page'] == $page) {
 			if (empty($last)) {
@@ -73,7 +73,14 @@ class WikiLib extends TikiLib {
 			}
 			return $ret;
 		}
-		$query = "select DISTINCT `user` from `tiki_history` where `pageName`=? order by `version` desc";
+		if ($versions) {
+			$ustring = ',`version`';
+			$vstring = '`version`,`user`';
+		} else {
+			$ustring = '';
+			$vstring = '`user`';
+		}
+		$query = "select DISTINCT `user`$ustring from `tiki_history` where `pageName`=? order by $vstring desc";
 		$result = $this->query($query,array($page));
 		$cache_page_contributors = array();
 		$cache_page_contributors['contributors'] = array();
@@ -304,12 +311,12 @@ class WikiLib extends TikiLib {
 				$smarty->assign('mail_date', $this->now);
 				$smarty->assign('mail_user', $user);
 				$foo = parse_url($_SERVER["REQUEST_URI"]);
-				$machine = $tikilib->httpPrefix(). $foo["path"];
+				$machine = $tikilib->httpPrefix( true ). $foo["path"];
 				$smarty->assign('mail_machine', $machine);
 				$parts = explode('/', $foo['path']);
 				if (count($parts) > 1)
 					unset ($parts[count($parts) - 1]);
-				$smarty->assign('mail_machine_raw', $tikilib->httpPrefix(). implode('/', $parts));
+				$smarty->assign('mail_machine_raw', $tikilib->httpPrefix( true ). implode('/', $parts));
 				sendEmailNotification($nots, "watch", "user_watch_wiki_page_renamed_subject.tpl", $_SERVER["SERVER_NAME"], "user_watch_wiki_page_renamed.tpl");
 			}
 		}
@@ -405,14 +412,21 @@ class WikiLib extends TikiLib {
 
 	function wiki_attach_file($page, $name, $type, $size, $data, $comment, $user, $fhash) {
 		$comment = strip_tags($comment);
+		$now = $this->now;
 		$query = "insert into `tiki_wiki_attachments`(`page`,`filename`,`filesize`,`filetype`,`data`,`created`,`hits`,`user`,`comment`,`path`) values(?,?,?,?,?,?,0,?,?,?)";
 		//$this->blob_encode($data);
-		$result = $this->query($query,array("$page","$name", (int) $size,"$type","$data", (int) $this->now,"$user","$comment","$fhash"));
+		$result = $this->query($query,array($page, $name, (int)$size, $type, $data, (int)$now, $user, $comment, $fhash));
 
 		global $prefs;
-	        if ($prefs['feature_score'] == 'y') {
-        	    $this->score_event($user, 'wiki_attach_file');
-	        }
+		if ($prefs['feature_score'] == 'y') {
+			$this->score_event($user, 'wiki_attach_file');
+		}
+		if ($prefs['feature_user_watches'] = 'y') {
+			include_once('lib/notifications/notificationemaillib.php');
+			$query = 'select `attId` from `tiki_wiki_attachments` where `page`=? and `filename`=? and `created`=? and `user`=?';
+			$attId = $this->getOne($query, array($page, $name, $now, $user));
+			sendWikiEmailNotification('wiki_file_attached', $page, $user, $comment, '', $name, '','', false, '', 0,$attId);
+		}
 	}
 	function get_wiki_attach_file($page, $name, $type, $size) {
 		$query = 'select * from `tiki_wiki_attachments` where `page`=? and `filename`=? and `filetype`=? and `filesize`=?';
@@ -731,7 +745,7 @@ class WikiLib extends TikiLib {
 		}	
 		if ($with_help) {
 			global $cachelib, $headerlib;
-			$headerlib->add_jsfile( 'tiki-jsplugin.php' );
+			if (empty($_REQUEST['xjxfun'])) { $headerlib->add_jsfile( 'tiki-jsplugin.php', 'dynamic' ); }
 			$cachetag = 'plugindesc' . $this->get_language() . $area_name;
 			if (!$cachelib->isCached( $cachetag ) ) {
 				$list = $this->plugin_get_list();
@@ -817,9 +831,9 @@ class WikiLib extends TikiLib {
 		}
     }
 
-	// get all modified pages for a user (if actionlog is not clean
+	// get all modified pages for a user (if actionlog is not clean)
 	function get_user_all_pages($user, $sort_mode) {
-		$query = "select  distinct(p.`pageName`), p.`user` as lastEditor, p.`creator`, max(a.`lastModif`) as date from `tiki_actionlog` as a, `tiki_pages` as p where a.`object`= p.`pageName` and a.`user`= ? and (a.`action`=? or a.`action`=?) group by p.`pagename` order by ".$this->convertSortMode($sort_mode);
+		$query = "select  p.`pageName`, p.`user` as lastEditor, p.`creator`, max(a.`lastModif`) as date from `tiki_actionlog` as a, `tiki_pages` as p where a.`object`= p.`pageName` and a.`user`= ? and (a.`action`=? or a.`action`=?) group by p.`pageName`, p.`user`, p.`creator` order by ".$this->convertSortMode($sort_mode);
 		$result = $this->query($query, array($user, 'Updated', 'Created'));
 		$ret = array();
 		while ($res = $result->fetchRow()) {
@@ -877,6 +891,20 @@ class WikiLib extends TikiLib {
 		} else {
 			return $href;
 		}
+	}
+
+	function bestlang($url) {
+		global $prefs;
+		if ($prefs['feature_multilingual'] != 'y' || $prefs['feature_best_language'] != 'y') {
+			return $url;
+		}
+		$parsed_url = parse_url($url);
+		if (!empty($parsed_url["query"])) {
+			$ret = $url . "&amp;bl=y";
+		} else {
+			$ret = $url . "?bl=y";
+		}
+		return $ret; 	
 	}
 
 	function url_for_operation_on_a_page($script_name, $page, $with_next) {

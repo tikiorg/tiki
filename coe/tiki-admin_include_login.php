@@ -20,6 +20,7 @@ if (isset($_REQUEST["loginprefs"])) {
 	simple_set_toggle('groupTracker');
 	simple_set_toggle('allowRegister');
 	simple_set_toggle('validateRegistration');
+	simple_set_value('validator_emails');
 	simple_set_toggle('webserverauth');
 	simple_set_toggle('useRegisterPasscode');
 	simple_set_value('registerPasscode');
@@ -37,13 +38,10 @@ if (isset($_REQUEST["loginprefs"])) {
 	simple_set_toggle('pass_chr_num');
 	simple_set_toggle('lowercase_username');
 	simple_set_toggle('feature_challenge');
-	simple_set_toggle('feature_clear_passwords');
-	simple_set_toggle('forgotPass');
 	simple_set_toggle('generate_password');
 	simple_set_value('https_login');
 	simple_set_toggle('feature_show_stay_in_ssl_mode');
 	simple_set_toggle('feature_switch_ssl_mode');
-	simple_set_value('feature_crypt_passwords');
 	simple_set_value('http_port');
 	simple_set_value('https_port');
 	simple_set_value('rememberme');
@@ -115,17 +113,6 @@ if (isset($_REQUEST["auth_pam"])) {
 	simple_set_toggle('pam_skip_admin');
 	simple_set_value('pam_service');
 }
-if ($phpcas_enabled == 'y') {
-	if (isset($_REQUEST['auth_cas'])) {
-		check_ticket('admin-inc-login');
-		simple_set_toggle('cas_create_user_tiki');
-		simple_set_toggle('cas_skip_admin');
-		simple_set_value('cas_version');
-		simple_set_value('cas_hostname');
-		simple_set_value('cas_port');
-		simple_set_value('cas_path');
-	}
-}
 if (isset($_REQUEST['auth_shib'])) {
 	check_ticket('admin-inc-login');
 	simple_set_toggle('shib_create_user_tiki');
@@ -134,7 +121,6 @@ if (isset($_REQUEST['auth_shib'])) {
 	simple_set_toggle('shib_usegroup');
 	simple_set_value('shib_group');
 }
-$smarty->assign("phpcas_enabled", $phpcas_enabled);
 $smarty->assign('gd_lib_found', function_exists('gd_info') ? 'y' : 'n');
 // Get list of available languages
 $languages = array();

@@ -16,6 +16,7 @@
  *  - title		Text as a label. Leave out for no label (or icon)
  *  - highlight	"y|n" default=n
  *  - icon		Override default icons. See function.icon.php for more info
+ *  - close		"y|n" default=y (close button)
  */
 
 //this script may only be included - so its better to die if called directly.
@@ -29,6 +30,8 @@ function smarty_block_remarksbox($params, $content, &$smarty) {
 	extract($params);
 	if (!isset($type))  $type = 'tip';
 	if (!isset($title)) $title = '';
+	if (!isset($close)) $close = 'y';
+	
 	if (isset($highlight) && $highlight == 'y') {
 		$highlightClass = ' highlight';
 	} else {
@@ -52,6 +55,7 @@ function smarty_block_remarksbox($params, $content, &$smarty) {
 	$smarty->assign('remarksbox_type', $type);
 	$smarty->assign('remarksbox_highlight', $highlightClass);
 	$smarty->assign('remarksbox_icon', $icon);
+	$smarty->assign('remarksbox_close', $close);
 	$smarty->assign_by_ref('remarksbox_content', $content);
 	return $smarty->fetch('remarksbox.tpl');
 }

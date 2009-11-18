@@ -1,6 +1,15 @@
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}To configure your trackers, look for "Admin trackers" under "Trackers" on the application menu, or{/tr} <a class="rbox-link" href="tiki-admin_trackers.php">{tr}Click Here{/tr}</a>.{/remarksbox}
 
 <fieldset class="admin">
+    <form action="tiki-admin.php?page=trackers" method="post">
+	{preference name=tracker_jquery_user_selector_threshold}
+   	<div class="heading input_submit_container" style="text-align: right">
+	<input type="submit" name="trkset" value="{tr}Change preferences{/tr}" />
+	</div> 
+    </form>
+</fieldset>
+
+<fieldset class="admin">
   <legend>{tr}Tracker attachment preferences{/tr}</legend>
     <form action="tiki-admin.php?page=trackers" method="post">
       <table class="admin">

@@ -1,13 +1,15 @@
 {* $Id$ *}
 
-<b>{$plugin.name|escape}</b>
+<strong>{$plugin.name|escape}</strong>
 
 {if $prefs.javascript_enabled eq 'y' && $area_name}
-	<a href="javascript:void(0);{if $prefs.feature_shadowbox eq 'y' and $prefs.feature_jquery eq 'y'}javascript:Shadowbox.close();{/if}" onclick="needToConfirm=false;popup_plugin_form('{$area_name}','{$plugin_name|lower|@addslashes}')">{icon _id="plugin_add" text="{tr}Insert{/tr}"}</a>
+	<a href="javascript:void(0);{if $prefs.feature_shadowbox eq 'y' and $prefs.feature_jquery eq 'y'}javascript:void(0);{/if}" onclick="needToConfirm=false;$jq('#help_sections').dialog('close');popup_plugin_form('{$area_name}','{$plugin_name|lower|@addslashes}');return false;">
+		{icon _id=$plugin.icon|default:"plugin_add" _text="{tr}Insert{/tr}"}
+	</a>
 {/if}
 
 {if $prefs.feature_help eq 'y'}
-	{if $plugin.documentation}
+	{if !empty($plugin.documentation)}
 		<a href="{$plugin.documentation|escape}" onclick="needToConfirm=false;" target="tikihelp" class="tikihelp">{icon _id=help}</a>
 	{/if}
 {/if}

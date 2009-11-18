@@ -29,6 +29,7 @@ $inputConfiguration = array(
 
 // Initialization
 $section = 'wiki page';
+$isHomePage = (!isset($_REQUEST['page']));
 require_once('tiki-setup.php');
 require_once('lib/multilingual/multilinguallib.php');
 if( $prefs['feature_wiki_structure'] == 'y' ) {
@@ -62,6 +63,18 @@ if(!isset($_SESSION['thedate'])) {
     $thedate = $_SESSION['thedate'];
 }
 
+// Check if a WS is active
+global $perspectivelib; require_once 'lib/perspectivelib.php';
+$activeWS = $perspectivelib->get_current_perspective(null);
+// If there's a WS active and the WS has a homepage, then load the WS homepage
+if ((!empty($activeWS)) and $isHomePage)
+{
+	$preferences = $perspectivelib->get_preferences($activeWS);
+	if (!empty($preferences['wsHomepage']))
+		$_REQUEST['page'] = $preferences['wsHomepage'];
+}
+
+// If a page have been requested, then show the page.
 if (isset($_REQUEST['page_id'])) {
     $_REQUEST['page'] = $tikilib->get_page_name_from_id($_REQUEST['page_id']);
     //TODO: introduce a get_info_from_id to save a sql request
@@ -71,7 +84,7 @@ $use_best_language = false;
 
 if ((!isset($_REQUEST['page']) || $_REQUEST['page'] == '') and !isset($_REQUEST['page_ref_id'])) {
 	if ($objectperms->view) {
-		$access->display_error( $page, tra('Permission denied you cannot view this page'), '403');
+		$access->display_error( $page, tra('Permission denied you cannot view this page'), '401');
 	} else {
 		$access->display_error( '', tra('No name indicated for wiki page'));
 	}
@@ -153,7 +166,13 @@ if (!$info) {
 // If the page doesn't exist then display an error
 if(empty($info) && !($user && $prefs['feature_wiki_userpage'] == 'y' && strcasecmp($prefs['feature_wiki_userpage_prefix'].$user, $page) == 0)) {
 	if ($user && $prefs['feature_wiki_userpage'] == 'y' && strcasecmp($prefs['feature_wiki_userpage_prefix'], $page) == 0) {
-		header('Location: tiki-index.php?page='.$prefs['feature_wiki_userpage_prefix'].$user);
+		$url = 'tiki-index.php?page='.$prefs['feature_wiki_userpage_prefix'].$user;
+		if ($prefs['feature_sefurl'] == 'y') {
+			include_once('tiki-sefurl.php');
+			header('location: '. urlencode(filter_out_sefurl($url, $smarty, 'wiki')));
+		} else {
+			header("Location: $url");
+		}
 		die;
 	}
 	if ($prefs['feature_wiki_userpage'] == 'y' && strcasecmp($prefs['feature_wiki_userpage_prefix'], substr($page, 0, strlen($prefs['feature_wiki_userpage_prefix']))) == 0)
@@ -192,12 +211,35 @@ $page = $info['pageName'];
 $pageRenderer = new WikiRenderer( $info, $user);
 $objectperms = $pageRenderer->applyPermissions();
 
+if ($prefs['feature_wiki_comments'] == 'y' and $objectperms->wiki_view_comments ) {
+    $comments_per_page = $prefs['wiki_comments_per_page'];
+    $thread_sort_mode = $prefs['wiki_comments_default_ordering'];
+    $comments_vars=Array('page');
+    $comments_prefix_var='wiki page:';
+    $comments_object_var='page';
+    include_once('comments.php');
+}
+
+require_once 'lib/cache/pagecache.php';
+$pageCache = Tiki_PageCache::create()
+	->disableForRegistered()
+	->onlyForGet()
+	->requiresPreference( 'memcache_wiki_output' )
+	->addValue( 'role', 'wiki-page-output' )
+	->addValue( 'page', $page )
+	->addValue( 'locale', $prefs['language'] )
+	->addKeys( $_REQUEST, array( 'style_mode' ) )
+	->checkMeta( 'wiki-page-output-meta-timestamp', array(
+		'page' => $page,
+	) )
+	->applyCache();
+
 if( $page_ref_id )
 	$pageRenderer->setStructureInfo( $page_info );
 
 // Now check permissions to access this page
 if( ! $pageRenderer->canView ) {
-	$access->display_error( $page, tra('Permission denied you cannot view this page'), '403');
+	$access->display_error( $page, tra('Permission denied you cannot view this page'), '401');
 }
 
 // Convert page to structure
@@ -320,16 +362,6 @@ if (isset($_SESSION['saved_msg']) && $_SESSION['saved_msg'] == $info['pageName']
 	require_once('lib/smarty_tiki/modifier.userlink.php');
 	$smarty->assign('saved_msg', sprintf( tra('Page saved (version %d).'), $info['version'] ) );
 	unset($_SESSION['saved_msg']);
-}
-
-// Comments engine!
-if ($prefs['feature_wiki_comments'] == 'y' and $objectperms->wiki_view_comments ) {
-    $comments_per_page = $prefs['wiki_comments_per_page'];
-    $thread_sort_mode = $prefs['wiki_comments_default_ordering'];
-    $comments_vars=Array('page');
-    $comments_prefix_var='wiki page:';
-    $comments_object_var='page';
-    include_once('comments.php');
 }
 
 if($prefs['feature_wiki_attachments'] == 'y') {

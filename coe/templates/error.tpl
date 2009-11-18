@@ -79,14 +79,14 @@ close();
 				{/if}
 
 				{if $page and $create eq 'y' and ($tiki_p_admin eq 'y' or $tiki_p_admin_wiki eq 'y' or $tiki_p_edit eq 'y')}{button href="tiki-editpage.php?page=$page" _text="{tr}Create this page{/tr}"} {tr}(page will be orphaned){/tr}<br /><br />{/if}
-				{if $prefs.javascript_enabled eq 'y'}{button href="#" _onclick="javascript:history.back()" _text="{tr}Go back{/tr}"}<br /><br />{/if}
+				{if $prefs.javascript_enabled eq 'y'}{button _onclick="javascript:history.back()" _text="{tr}Go back{/tr}"}<br /><br />{/if}
 				{button href=$prefs.tikiIndex _text="{tr}Return to home page{/tr}"}
 			</div>
 		</div>
 	{/if}
 {/capture}
 
-{if isset($smarty.request.xajax) && $smarty.request.xajax eq 'loadComponent'}
+{if isset($smarty.request.xjxfun) && $smarty.request.xjxfun eq 'loadComponent'}
 {$mid_data}
 {else}
 {include file='tiki.tpl'}

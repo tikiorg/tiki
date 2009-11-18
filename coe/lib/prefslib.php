@@ -13,7 +13,13 @@ class PreferencesLib
 
 			global $prefs;
 			$info['preference'] = $name;
-			$info['value'] = $prefs[$name];
+			if( isset( $info['serialize'] ) ) {
+				$fnc = $info['serialize'];
+				$info['value'] = $fnc( $prefs[$name] );
+			} else {
+				$info['value'] = $prefs[$name];
+			}
+			$info['raw'] = $prefs[$name];
 			$info['id'] = 'pref-' . ++$id;
 			if( isset( $info['help'] ) && $prefs['feature_help'] == 'y' ) {
 				
@@ -47,7 +53,7 @@ class PreferencesLib
 	}
 
 	function applyChanges( $handled, $data, $limitation = null ) {
-		global $tikilib;
+		global $tikilib, $user_overrider_prefs;
 
 		if( is_array( $limitation ) ) {
 			$handled = array_intersect( $handled, $limitation );
@@ -59,7 +65,7 @@ class PreferencesLib
 			$function = '_get' . ucfirst( $info['type'] ) . 'Value';
 			$value = $this->$function( $info, $data );
 
-			if( $tikilib->get_preference( $pref ) != $value ) {
+			if( in_array($pref, $user_overrider_prefs) || $tikilib->get_preference( $pref ) != $value ) {
 				$tikilib->set_preference( $pref, $value );
 				$changes[$pref] = $value;
 			}
@@ -165,7 +171,29 @@ class PreferencesLib
 	private function _getTextValue( $info, $data ) {
 		$name = $info['preference'];
 
-		return $data[$name];
+		if( isset($info['filter']) && $filter = TikiFilter::get( $info['filter'] ) ) {
+			return $filter->filter( $data[$name] );
+		} else {
+			return $data[$name];
+		}
+	}
+
+	private function _getTextareaValue( $info, $data ) {
+		$name = $info['preference'];
+
+		if( isset($info['filter']) && $filter = TikiFilter::get( $info['filter'] ) ) {
+			$value = $filter->filter( $data[$name] );
+		} else {
+			$value = $data[$name];
+		}
+
+		if( isset( $info['unserialize'] ) ) {
+			$fnc = $info['unserialize'];
+
+			return $fnc( $value );
+		} else {
+			return $value;
+		}
 	}
 
 	private function _getListValue( $info, $data ) {
@@ -190,9 +218,20 @@ class PreferencesLib
 
 		return array_intersect( $value, $options );
 	}
+	private function _getRadioValue( $info, $data ) {
+		$name = $info['preference'];
+		$value = $data[$name];
+
+		$options = $info['options'];
+		$options = array_keys( $options );
+
+		if (in_array($value, $options)) {
+			return $value;
+		} else {
+			return '';
+		}
+	}
 }
 
 global $prefslib;
 $prefslib = new PreferencesLib;
-
-?>

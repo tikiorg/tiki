@@ -22,7 +22,7 @@
 {/if}
 <br /><br />
 <form action="messu-mailbox.php" method="get">
-<label for="mess-mailmessages">{tr}Messages{/tr}:</label>
+<label for="mess-mailmessages">{tr}Messages:{/tr}</label>
 <select name="flags" id="mess-mailmessages">
 <option value="isRead_y" {if $flag eq 'isRead' and $flagval eq 'y'}selected="selected"{/if}>{tr}Read{/tr}</option>
 <option value="isRead_n" {if $flag eq 'isRead' and $flagval eq 'n'}selected="selected"{/if}>{tr}Unread{/tr}</option>
@@ -30,7 +30,7 @@
 <option value="isFlagged_n" {if $flag eq 'isflagged' and $flagval eq 'n'}selected="selected"{/if}>{tr}Unflagged{/tr}</option>
 <option value="" {if $flag eq ''}selected="selected"{/if}>{tr}All{/tr}</option>
 </select>
-<label for="mess-mailprio">{tr}Priority{/tr}:</label>
+<label for="mess-mailprio">{tr}Priority:{/tr}</label>
 <select name="priority" id="mess-mailprio">
 <option value="" {if $priority eq ''}selected="selected"{/if}>{tr}All{/tr}</option>
 <option value="1" {if $priority eq 1}selected="selected"{/if}>{tr}1{/tr}</option>
@@ -39,7 +39,7 @@
 <option value="4" {if $priority eq 4}selected="selected"{/if}>{tr}4{/tr}</option>
 <option value="5" {if $priority eq 5}selected="selected"{/if}>{tr}5{/tr}</option>
 </select>
-<label for="mess-mailcont">{tr}Containing{/tr}:</label>
+<label for="mess-mailcont">{tr}Containing:{/tr}</label>
 <input type="text" name="find" id="mess-mailcont" value="{$find|escape}" />
 <input type="submit" name="filter" value="{tr}Filter{/tr}" />
 </form>
@@ -73,7 +73,7 @@ var CHECKBOX_LIST = [{section name=user loop=$items}'msg[{$items[user].msgId}]'{
     <td class="prio{$items[user].priority}"><input type="checkbox" name="msg[{$items[user].msgId}]" /></td>
     <td class="prio{$items[user].priority}">{if $items[user].isFlagged eq 'y'}{icon _id='flag_blue' alt='{tr}Flagged{/tr}'}{/if}</td>
     <td {if $items[user].isRead eq 'n'}style="font-weight:bold"{/if} class="prio{$items[user].priority}">{$items[user].user_from|userlink}</td>
-    <td {if $items[user].isRead eq 'n'}style="font-weight:bold"{/if} class="prio{$items[user].priority}"><a class="readlink" href="messu-read.php?offset={$offset}&amp;flag={$flag}&amp;priority={$items[user].priority}&amp;flagval={$flagval}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;msgId={$items[user].msgId}">{$items[user].subject}</a></td>
+    <td {if $items[user].isRead eq 'n'}style="font-weight:bold"{/if} class="prio{$items[user].priority}"><a class="readlink" href="messu-read.php?offset={$offset}&amp;flag={$flag}&amp;priority={$items[user].priority}&amp;flagval={$flagval}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;msgId={$items[user].msgId}">{$items[user].subject|escape}</a></td>
     <td {if $items[user].isRead eq 'n'}style="font-weight:bold"{/if} class="prio{$items[user].priority}">{$items[user].date|tiki_short_datetime}</td><!--date_format:"%d %b %Y [%H:%I]"-->
 		<td class="prio{$items[user].priority}">
 		{if $items[user].replyto_hash eq ""}&nbsp;{else}
@@ -89,7 +89,7 @@ var CHECKBOX_LIST = [{section name=user loop=$items}'msg[{$items[user].msgId}]'{
   {/section}
 </table>
 {if $items}
-<p>{tr}Perform action with checked{/tr}:
+<p>{tr}Perform action with checked:{/tr}
 <input type="submit" name="delete" value="{tr}Delete{/tr}" />
 <input type="submit" name="archive" value="{tr}Archive{/tr}" />
 <input type="submit" name="download" value="{tr}Download{/tr}" />
@@ -102,5 +102,5 @@ var CHECKBOX_LIST = [{section name=user loop=$items}'msg[{$items[user].msgId}]'{
 <input type="submit" name="mark" value="{tr}Mark{/tr}" />
 </p>{/if}
 </form>
-
-{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
+{if $mess_maxRecords lt $prefs.maxRecords}{assign var=maxRecords value=$mess_maxRecords}{else}{assign var=maxRecords value=$prefs.maxRecords}{/if}
+{pagination_links cant=$cant_pages step=$maxRecords offset=$offset}{/pagination_links}

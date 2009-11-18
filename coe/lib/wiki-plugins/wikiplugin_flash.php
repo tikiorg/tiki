@@ -6,22 +6,27 @@
 // damian aka damosoft 30 March 2004
 
 function wikiplugin_flash_help() {
-        return tra("Displays a SWF on the wiki page").":<br />~np~{FLASH(movie=\"url_to_flash\",width=>xx,height=>xx,quality=>high)}{FLASH}~/np~";
+        return tra("Displays a Flash (.swf) file in the wiki page").":<br />~np~{FLASH(movie=\"url_to_flash\",width=>xx,height=>xx,quality=>high)}{FLASH}~/np~";
 }
 
 function wikiplugin_flash_info() {
 	return array(
 		'name' => tra('Flash video'),
 		'documentation' => 'PluginFlash',
-		'description' => tra('Displays a SWF on the wiki page'),
+		'description' => tra('Displays a Flash (.swf) file in the wiki page'),
 		'prefs' => array('wikiplugin_flash'),
 		'extraparams' => true,
 		'icon' => 'pics/icons/page_white_flash.png',
 		'params' => array(
 			'movie' => array(
-				'required' => true,
+				'required' => false,
 				'name' => tra('Movie URL'),
-				'description' => tra('Complete URL to the movie to include.'),
+				'description' => tra('Complete URL to the movie to include. e.g. lib/swfobject/test.swf'),
+			),
+			'fileId' => array(
+				'required' => false,
+				'name' => tra('fileId'),
+				'description' => tra('Id of a file from a podcast sgllery - will work only with podcast gallery'),
 			),
 			'width' => array(
 				'required' => false,
@@ -43,7 +48,16 @@ function wikiplugin_flash_info() {
 }
 
 function wikiplugin_flash($data, $params) {
-	global $tikilib;
+	global $tikilib, $prefs, $userlib, $user;
+	if (isset($params['fileId']) && !isset($params['movie'])) {
+		global $filegallib; include_once ('lib/filegals/filegallib.php');
+		$file_info = $filegallib->get_file_info($params['fileId']);
+		if (!$userlib->user_has_perm_on_object($user, $file_info['galleryId'], 'file gallery', 'tiki_p_view_file_gallery')) {
+			return tra('Permission denied');
+		}
+		$params['movie'] = $prefs['fgal_podcast_dir'].$file_info['path'];
+	}
+		
 	$code = $tikilib->embed_flash($params);
 
 	if ( $code === false ) {

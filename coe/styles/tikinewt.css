@@ -229,6 +229,7 @@ div#page-bar table, div#page-bar td, div#page-bar tr {
 }
 
 .navbar,
+.categbar,
 .findtable {
 	margin: 5px 0 10px 0;
 }
@@ -269,6 +270,7 @@ input[type=submit]:hover,
 span.button input:hover,
 .calbuttonbox a:hover {
 	background: #dca;
+	padding: 0 4px;
 }
 
 fieldset {
@@ -1257,11 +1259,6 @@ div.tocnav {
 .tocnav {
 	background: #eee;
 	margin-bottom: 16px;
-}
-
-.tocnav table {
-	width: 100%;
-	background: #fff;
 }
 
 .tocnav a {

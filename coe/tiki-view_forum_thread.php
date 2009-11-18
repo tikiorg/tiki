@@ -11,6 +11,27 @@ if ($prefs['feature_forums'] != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
+
+require_once 'lib/cache/pagecache.php';
+$pageCache = Tiki_PageCache::create()
+	->disableForRegistered()
+	->onlyForGet()
+	->requiresPreference( 'memcache_forum_output' )
+	->addArray( $_GET )
+	->addValue( 'role', 'forum-page-output' )
+	->addKeys( $_REQUEST, array( 'locale', 'forumId', 'comments_parentId' ) )
+	->checkMeta( 'forum-page-output-meta-time', array(
+		'forumId'           => @$_REQUEST['forumId'],
+		'comments_parentId' => @$_REQUEST['comments_parentId']
+	) )
+	->applyCache();
+
+if ($prefs['feature_categories'] == 'y') {
+	global $categlib;
+	if (!is_object($categlib)) {
+		include_once('lib/categories/categlib.php');
+	}
+}
 include_once ("lib/commentslib.php");
 $commentslib = new Comments($dbTiki);
 if (!isset($_REQUEST['comments_parentId'])) {
@@ -164,6 +185,9 @@ if ($tiki_p_admin_forum == 'y') {
 if ($tiki_p_forums_report == 'y' && isset($_REQUEST['report'])) {
 	check_ticket('view-forum');
 	$commentslib->report_post($_REQUEST['forumId'], $_REQUEST['comments_parentId'], $_REQUEST['report'], $user, '');
+
+	$pageCache->invalidate();
+
 	$url = "tiki-view_forum_thread.php?forumId=" . $_REQUEST['forumId'] . "&comments_parentId=" . $_REQUEST['comments_parentId'] . "&post_reported=y";
 	header('location: ' . $url);
 	die;
@@ -212,7 +236,7 @@ $cat_objid = $_REQUEST["forumId"];
 include_once ('tiki-section_options.php');
 //$end_time = microtime(true);
 //print "TIME5: ".($end_time - $start_time)."\n";
-if ($user && $tiki_p_notepad == 'y' && $prefs['feature_notepad'] == 'y' && isset($_REQUEST['savenotepad'])) {
+if ($user && $prefs['feature_notepad'] == 'y' && isset($_REQUEST['savenotepad']) && $tiki_p_notepad == 'y') {
 	check_ticket('view-forum');
 	$info = $commentslib->get_comment($_REQUEST['savenotepad'], null, $forum_info);
 	$tikilib->replace_note($user, 0, $info['title'], $info['data']);
@@ -335,3 +359,4 @@ if (isset($_REQUEST['display'])) {
 	$smarty->assign('mid', 'tiki-view_forum_thread.tpl');
 	$smarty->display('tiki.tpl');
 }
+

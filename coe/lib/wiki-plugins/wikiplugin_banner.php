@@ -30,11 +30,14 @@ function wikiplugin_banner_info() {
 
 function wikiplugin_banner($data, $params)
 {
-    global $tikilib;
+    global $tikilib, $prefs;
+	if ($prefs['feature_banners'] != 'y') {
+		return;
+	}
     global $bannerlib;include_once('lib/banners/bannerlib.php');
 
-    extract($params);
-
+	extract ($params, EXTR_SKIP);
+		
     if (empty($zone)) {
         return tra('missing parameter');
     }

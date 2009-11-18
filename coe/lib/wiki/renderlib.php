@@ -134,14 +134,14 @@ class WikiRenderer
 				$structs_with_perm[] = $t_structs;
 			}
 		}    	
-		if ($tikilib->user_has_perm_on_object($this->user,$navigation_info['home']['pageName'],'wiki page','tiki_p_edit','tiki_p_edit_categorized'))
+		if ($tikilib->user_has_perm_on_object($this->user,$navigation_info['home']['pageName'],'wiki page','tiki_p_edit','tiki_p_edit_structures'))
 			$this->smartyassign('struct_editable', 'y');
 		else
 			$this->smartyassign('struct_editable', 'n');	
 		// To show position    
 		if (count($structure_path) > 1) {
 			$cur_pos = '';
-			for ($i = 1; $i < count($structure_path); $i++) {
+			for ($i = 1, $count_str_path = count($structure_path); $i < $count_str_path; $i++) {
 				$cur_pos .= $structure_path[$i]["pos"] . "." ;
 			}
 			$cur_pos = substr($cur_pos, 0, strlen($cur_pos)-1);      
@@ -159,7 +159,7 @@ class WikiRenderer
 		global $prefs, $wikilib;
 
 		if( $prefs['wiki_authors_style'] != 'classic' ) {
-			$contributors = $wikilib->get_contributors($this->page, $this->info['user']);
+			$contributors = $wikilib->get_contributors($this->page, $this->info['user'], false);
 			$this->smartyassign('contributors',$contributors);
 		}
 	} // }}}
@@ -195,7 +195,7 @@ class WikiRenderer
 		}
 		
 		if ($prefs['feature_machine_translation'] == 'y' && !empty($this->info['lang'])) {
-			$translator = new Multilingual_MachineTranslation_GoogleTranslateWrapper();
+			$translator = new Multilingual_MachineTranslation_GoogleTranslateWrapper($this->info['lang'], $this->info['lang']);
 			$langsCandidatesForMachineTranslation = $translator->getLangsCandidatesForMachineTranslation($this->trads);
 			$this->smartyassign('langsCandidatesForMachineTranslation', $langsCandidatesForMachineTranslation);
 		}
@@ -511,7 +511,7 @@ class WikiRenderer
 			$stagingPageName = $prefs['wikiapproval_prefix'] . $this->page;
 			$this->smartyassign('needsStaging', 'y');
 			$this->smartyassign('stagingPageName', $stagingPageName);	
-			if ($tikilib->user_has_perm_on_object($this->user,$stagingPageName,'wiki page','tiki_p_edit','tiki_p_edit_categorized')) {
+			if ($tikilib->user_has_perm_on_object($this->user,$stagingPageName,'wiki page','tiki_p_edit')) {
 				$this->smartyassign('canEditStaging', 'y');
 			} 	
 		} elseif ($prefs['wikiapproval_staging_category'] > 0 && !empty($cats) && in_array($prefs['wikiapproval_staging_category'], $cats) && !$tikilib->page_exists($prefs['wikiapproval_prefix'] . $this->page)) {

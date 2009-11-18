@@ -9,7 +9,7 @@ function wikiplugin_mouseover_help() {
 
 function wikiplugin_mouseover_info() {
 	return array(
-		'name' => tra('Mouse Over'),
+		'name' => tra('Mouseover'),
 		'documentation' => 'PluginMouseover',
 		'description' => tra('Create a mouseover feature on some text'),
 		'prefs' => array( 'wikiplugin_mouseover' ),
@@ -24,7 +24,7 @@ function wikiplugin_mouseover_info() {
 			'url' => array(
 				'required' => false,
 				'name' => tra('URL'),
-				'description' => tra('Destination link when moused-over text is clicked. Use http:// for external links'),
+				'description' => tra('Destination link when mouseover text is clicked. Use http:// for external links'),
 				'filter' => 'url',
 			),
 			'text' => array(
@@ -36,25 +36,25 @@ function wikiplugin_mouseover_info() {
 			'width' => array(
 				'required' => false,
 				'name' => tra('Width'),
-				'description' => tra('Mouse over box width. Default: 400px'),
+				'description' => tra('Mouseover box width. Default: 400px'),
 				'filter' => 'digits',
 			),
 			'height' => array(
 				'required' => false,
 				'name' => tra('Height'),
-				'description' => tra('Mouse over box height. Default: 200px'),
+				'description' => tra('Mouseover box height. Default: 200px'),
 				'filter' => 'digits',
 			),
 			'offsetx' => array(
 				'required' => false,
 				'name' => tra('Offset X'),
-				'description' => tra('Shifts the overlay to the right by the specified amount of pixels in relation to the cursor. Default: 5px'),
+				'description' => tra('Shifts the overlay to the right by the specified number of pixels relative to the cursor. Default: 5px'),
 				'filter' => 'digits',
 			),
 			'offsety' => array(
 				'required' => false,
 				'name' => tra('Offset Y'),
-				'description' => tra('Shifts the overlay to the bottom by the specified amount of pixels in relation to the cursor. Default: 0px'),
+				'description' => tra('Shifts the overlay lower by the specified number of pixels relative to the cursor. Default: 0px'),
 				'filter' => 'digits',
 			),
 			'parse' => array(

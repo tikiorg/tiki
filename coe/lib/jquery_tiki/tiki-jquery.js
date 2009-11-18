@@ -9,8 +9,8 @@ $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 	switchCheckboxes = function (tform, elements_name, state) {
 	  // checkboxes need to have the same name elements_name
 	  // e.g. <input type="checkbox" name="my_ename[]">, will arrive as Array in php.
-		$jq(tform).contents().find('input[name="' + elements_name + '"]:visible').attr('checked', state);
-	}
+		$jq(tform).contents().find('input[name="' + elements_name + '"]:visible').attr('checked', state).change();
+	};
 
 
 	// override existing show/hide routines here
@@ -70,7 +70,7 @@ $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 	showJQ = function (selector, effect, speed, dir) {
 		if (effect == 'none') {
 			$jq(selector).show();
-		} else if (effect == '' || effect == 'normal') {
+		} else if (effect === '' || effect == 'normal') {
 			$jq(selector).show(speed);
 		} else if (effect == 'slide') {
 			$jq(selector).slideDown(speed);
@@ -86,7 +86,7 @@ $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 	hideJQ = function (selector, effect, speed, dir) {
 		if (effect == 'none') {
 			$jq(selector).hide();
-		} else if (effect == '' || effect == 'normal') {
+		} else if (effect === '' || effect == 'normal') {
 			$jq(selector).hide(speed);
 		} else if (effect == 'slide') {
 			$jq(selector).slideUp(speed);
@@ -110,9 +110,9 @@ $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 		// override overlib
 		convertOverlib = function (element, tip, params) {	// process modified overlib event fn to cluetip from {popup} smarty func
 			
-			if (element.processed) { return; }
+			if (element.processed) { return false; }
 			
-			var options = new Object();
+			var options = {};
 			for (param in params) {
 				var val = "";
 				var i = params[param].indexOf("=");
@@ -156,6 +156,7 @@ $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 			options.closeText = 'x';
 			options.closePosition = 'title';
 			options.mouseOutClose = true;
+			//options.positionBy = 'mouse';	// TODO - add a param for this one if desired
 			
 			// attach new tip
 			//tip = tip.substring(strStart, strEnd);		// trim quotes
@@ -195,11 +196,24 @@ $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 			} else {
 				$jq(element).trigger('mouseover');
 			}
-		}
+			return false;
+		};
 	}	// end cluetip setup
 	
 	// superfish setup (CSS menu effects)
 	if (jqueryTiki.superfish) {
+		$jq('ul.cssmenu_horiz').supersubs({ 
+            minWidth:    11,   // minimum width of sub-menus in em units 
+            maxWidth:    20,   // maximum width of sub-menus in em units 
+            extraWidth:  1     // extra width can ensure lines don't sometimes turn over 
+                               // due to slight rounding differences and font-family 
+		});
+		$jq('ul.cssmenu_vert').supersubs({ 
+            minWidth:    11,   // minimum width of sub-menus in em units 
+            maxWidth:    20,   // maximum width of sub-menus in em units 
+            extraWidth:  1     // extra width can ensure lines don't sometimes turn over 
+                               // due to slight rounding differences and font-family 
+		});
 		$jq('ul.cssmenu_horiz').superfish({
 			animation: {opacity:'show', height:'show'},	// fade-in and slide-down animation
 			speed: 'fast'								// faster animation speed
@@ -218,76 +232,112 @@ $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 		});
 	}
 	
-	// colorbox setup (shadowbox replacement)
+	// ColorBox setup (Shadowbox, actually "<any>box" replacement)
 	if (jqueryTiki.colorbox) {
-		// for every link containing 'shadowbox'
-		$jq("a[rel*='shadowbox']").colorbox({
-			transition:"elastic",
-			height:"95%",
-			overlayClose: true,
-			title: true
+		$jq().bind('cbox_complete', function(){	
+			$jq("#cboxTitle").wrapInner("<div></div>");
 		});
-		// rel containg type=img
-		$jq("a[rel*='shadowbox'][rel*='type=img']").colorbox({
+				
+		// Tiki defaults for ColorBox (to speed it up, matches any link in #col1 only - the main content column):
+		
+		// for every link containing 'shadowbox' or 'colorbox' in rel attribute
+		$jq("#col1 a[rel*='box']").colorbox({
+			transition: "elastic",
+			maxHeight:"95%",
+			maxWidth:"95%",
+			overlayClose: true,
+			title: true,
+			current: jqueryTiki.cboxCurrent
+		});
+		
+		// now, first let suppose that we want to display images in ColorBox by default:
+		
+		// this matches rel containg type=img or no type= specified
+		$jq("#col1 a[rel*='box'][rel*='type=img'], #col1 a[rel*='box'][rel!='type=']").colorbox({
 			photo: true
 		});
-		// rel containg type=flash
-		$jq("a[rel*='shadowbox'][rel*='type=flash']").colorbox({
-			flash: true				
-		});
-		// rel containg slideshow
-		$jq("a[rel*='shadowbox'][rel*='slideshow']").colorbox({
+		// rel containg slideshow (this one must be without #col1)
+		$jq("a[rel*='box'][rel*='slideshow']").colorbox({
+			photo: true,
 			slideshow: true,
+			slideshowSpeed: 3500,
 			preloading: false,
+			width: "100%",
 			height: "100%"
 		});
-		// href starting with http(s)
-		$jq("a[rel*='shadowbox'][href^='http://'], a[rel*='shadowbox'][href^='https://']").colorbox({
+		// this are the defaults matching all *box links which are not obviously links to images...
+		// (if we need to support more, add here... otherwise it is possible to override with type=iframe in rel attribute of a link)
+		$jq("#col1 a[rel*='box']:not([rel*='type=img']):not([href*='display']):not([href*='preview']):not([href*='thumb']):not([rel*='slideshow']):not([href*='image']):not([href$='\.jpg']):not([href$='\.jpeg']):not([href$='\.png']):not([href$='\.gif'])").colorbox({
 			iframe: true,
-			width: "95%"
+			width: "95%",
+			height: "95%"
 		});
-		// href starting with ftp(s)
-		$jq("a[rel*='shadowbox'][href^='ftp://'], a[rel*='shadowbox'][href^='ftps://']").colorbox({
+		// hrefs starting with ftp(s)
+		$jq("#col1 a[rel*='box'][href^='ftp://'], #col1 a[rel*='box'][href^='ftps://']").colorbox({
 			iframe: true,
-			width: "95%"
+			width: "95%",
+			height: "95%"
 		});
-		/* shadowbox params compatibility functions called below (TODO: please combine in one if you know how) */
-		getrelgallery = function () {
-			re = /(shadowbox\[([^\]]+)\])/i
-			ret = $jq(this).attr("rel").match(re);
-			return "'"+ret[2]+"'"
-		}
-		getrelheight = function () {
-			re = /(height=([^;\"]+))/i
-			ret = $jq(this).attr("rel").match(re);
-			return ret[2]
-		}
-		getreltitle = function () {
-			re = /(title=([^;\"]+))/i
-			ret = $jq(this).attr("rel").match(re);
-			return ret[2]
-		}
-		getrelwidth = function () {
-			re = /(width=([^;\"]+))/i
-			ret = $jq(this).attr("rel").match(re);
-			return ret[2]
-		}
-		// rel containg shadowbox[foo] to group objects in "galleries" (shadowbox compatible)
-		$jq('a[rel*="shadowbox\["]').colorbox({
-			rel: getrelgallery
+		// rel containg type=flash
+		$jq("#col1 a[rel*='box'][rel*='type=flash']").colorbox({
+			flash: true,
+			iframe: false
+		});
+		// rel with type=iframe (if someone needs to override anything above)
+		$jq("#col1 a[rel*='box'][rel*='type=iframe']").colorbox({
+			iframe: true
+		});
+		// inline content: hrefs starting with #
+		$jq("#col1 a[rel*='box'][href^='#']").colorbox({
+			inline: true,
+			width: "50%",
+			height: "50%",
+			href: function(){ 
+				return $jq(this).attr('href');
+			}
+		});
+		
+		// titles (for captions):
+		
+		// by default get title from the title attribute of the link
+		$jq("#col1 a[rel*='box'][title]").colorbox({
+			title: function(){ 
+				return $jq(this).attr('title');
+			}
+		});
+		// but prefer the title from title attribute of a wrapped image if any
+		$jq("#col1 a[rel*='box'] img[title]").colorbox({
+			title: function(){ 
+				return $jq(this).attr('title');
+			}
+		});
+		
+		/* Shadowbox params compatibility extracted using regexp functions */
+		
+		// rel containg title param overrides title attribute of the link (shadowbox compatible)
+		$jq("#col1 a[rel*='box'][rel*='title=']").colorbox({
+			title: function () {
+				re = /(title=([^;\"]+))/i;
+				ret = $jq(this).attr("rel").match(re);
+				return ret[2];
+			}
 		});
 		// rel containg height param (shadowbox compatible)
-		$jq("a[rel*='shadowbox'][rel*='height']").colorbox({
-			height: getrelheight
-		});
-		// rel containg title param (shadowbox compatible)
-		$jq("a[rel*='shadowbox'][rel*='title']").colorbox({
-			title: getreltitle
+		$jq("#col1 a[rel*='box'][rel*='height=']").colorbox({
+			height: function () {
+				re = /(height=([^;\"]+))/i;
+				ret = $jq(this).attr("rel").match(re);
+				return ret[2];
+			}
 		});
 		// rel containg width param (shadowbox compatible)
-		$jq("a[rel*='shadowbox'][rel*='width']").colorbox({
-			width: getrelwidth
-		});
+		$jq("#col1 a[rel*='box'][rel*='width=']").colorbox({
+			width: function () {
+				re = /(width=([^;\"]+))/i;
+				ret = $jq(this).attr("rel").match(re);
+				return ret[2];
+			}
+		});		
 	}
 	
 });		// end $jq(document).ready
@@ -302,108 +352,233 @@ function parseAutoJSON(data) {
 			data: row,
 			value: row,
 			result: row
-		}
+		};
 	});
 }
 
-/* Find caret position in textarea */
+/// jquery ui dialog replacements for popup form code
+/// need to keep the old non-jq version in tiki-js.js as jq-ui is optional (Tiki 4.0)
+/// TODO refactor for 4.n
 
-function textarea_cursor_offset(input) {
-  if (document.selection) {
-  
-  	var r = document.selection.createRange();
-  	
-  	var i;
-  	
-  	if (input.nodeName == 'TEXTAREA') {
-  		var x = r.offsetLeft - r.boundingLeft;
-  		var y = r.offsetTop - r.boundingTop;
-  	} else {
-  		var x = r.offsetLeft;
-  		var y = r.offsetTop;
-  	}
-  	
-  	return {
-  		left: x,
-  		top: y
-  	};
-  	
-  } else if (typeof input.setSelectionRange != 'undefined') {
+/* wikiplugin editor */
+function popupPluginForm(area_name, type, index, pageName, pluginArgs, bodyContent, edit_icon){
+    if (!$jq.ui) {
+        return popup_plugin_form(area_name, type, index, pageName, pluginArgs, bodyContent, edit_icon); // ??
+    }
+    var container = $jq('<div class="plugin"></div>');
 
-	var elementName = $jq(input).attr('id') + '_tcodiv'
-  	var n, i;
-
-	n = document.getElementById(elementName);
-  	if (!n) {
-		n = document.createElement('div');
-		$jq(n).attr('id', elementName).css('wrap', 'hard').css('whiteSpace', 'pre').css('position', 'absolute').css('z-index', -1).css('overflow', 'auto');
+    if (!index) {
+        index = 0;
+    }
+    if (!pageName) {
+        pageName = '';
+    }
+	var textarea = getElementById(area_name);	// use weird version of getElementById in tiki-js.js (also gets by name)
+	var replaceText = false;
+	
+    if (!pluginArgs && !bodyContent) {
+	    pluginArgs = {};
+	    bodyContent = "";
 		
-		if (input.parentNode.position != 'absolute' && input.parentNode.position != 'relative') {
-			input.parentNode.position = 'relative';
+		var sel = getSelection( textarea );
+		if (sel.length > 0) {
+			sel = sel.replace(/^\s\s*/, "").replace(/\s\s*$/g, "");	// trim
+			//alert(sel.length);
+			if (sel.length > 0 && sel.substring(0, 1) == "{") { // whole plugin selected
+				var l = type.length;
+				if (sel.substring(1, l + 1).toUpperCase() == type.toUpperCase()) { // same plugin
+					var rx = new RegExp("{" + type + "[\\(]?([\\s\\S^\\)]*?)[\\)]?}([\\s\\S]*){" + type + "}", "mi"); // using \s\S matches all chars including lineends
+					var m = sel.match(rx);
+					if (!m) {
+						rx = new RegExp("{" + type + "[\\(]?([\\s\\S^\\)]*?)[\\)]?}([\\s\\S]*)", "mi"); // no closing tag
+						m = sel.match(rx);
+					}
+					if (m) {
+						var paramStr = m[1];
+						bodyContent = m[2];
+						
+						var pm = paramStr.match(/([^=]*)=\"([^\"]*)\"\s?/gi);
+						if (pm) {
+							for (i in pm) {
+								var ar = pm[i].split("=");
+								if (ar.length) { // add cleaned vals to params object
+									pluginArgs[ar[0].replace(/^[,\s\"\(\)]*/g, "")] = ar[1].replace(/^[,\s\"\(\)]*/g, "").replace(/[,\s\"\(\)]*$/g, "");
+								}
+							}
+						}
+					}
+					replaceText = sel;
+				} else {
+					if (!confirm("You appear to have selected text for a different plugin, do you wish to continue?")) {
+						return false;
+					}
+					bodyContent = sel;
+					replaceText = true;
+				}
+			} else { // not (this) plugin
+				bodyContent = sel;
+				replaceText = true;
+			}
+		} else {	// no selection
+			replaceText = false;
 		}
+    }
+    
+    var form = build_plugin_form(type, index, pageName, pluginArgs, bodyContent);
+    $jq(form).find('tr input[type=submit]').remove();
+    
+    container.append(form);
+    document.body.appendChild(container[0]);
+	
+	var pfc = container.find('table tr').length;	// number of rows (plugin form contents)
+	var t = container.find('textarea:visible').length;
+	if (t) { pfc += t * 3; }
+	if (pfc > 9) { pfc = 9; }
+	if (pfc < 2) { pfc = 2; }
+	pfc = pfc / 10;			// factor to scale dialog height
+	
+	var btns = {};
+	var closeText = "Close";
+	btns[closeText] = function() {
 		
-		
-//		var s = document.defaultView.getComputedStyle(input,null);
-//		
-//		for(i in s) {
-//			if( i.indexOf('font') > -1 || i.indexOf('padding') > -1 || i.indexOf('margin') > -1 || i.indexOf('line') > -1 || i.indexOf('letter') > -1) {
-//				if (s[i]) {
-//					//n.style[i] = s[i];
-//					$jq(n).css(i, s[i]);
-//				}
-//			}
-//		}
-			
-		if ($jq(input).css('font')) { $jq(n).css('font', $jq(input).css('font')); }
-		if ($jq(input).css('font-size')) { $jq(n).css('font-size', $jq(input).css('font-size')); }
-		if ($jq(input).css('font-family')) { $jq(n).css('font-family', $jq(input).css('font-family')); }
-		if ($jq(input).css('line-height')) { $jq(n).css('line-height', $jq(input).css('line-height')); }
-		if ($jq(input).css('letter-spacing')) { $jq(n).css('letter-spacing', $jq(input).css('letter-spacing')); }
-		if ($jq(input).css('padding-left')) { $jq(n).css('padding-left', $jq(input).css('padding-left')); }
-		if ($jq(input).css('padding-top')) { $jq(n).css('padding-top', $jq(input).css('padding-top')); }
-		if ($jq(input).css('padding-right')) { $jq(n).css('padding-right', $jq(input).css('padding-right')); }
-		if ($jq(input).css('padding-bottom')) { $jq(n).css('padding-bottom', $jq(input).css('padding-bottom')); }
-		if ($jq(input).css('margin-left')) { $jq(n).css('margin-left', $jq(input).css('margin-left')); }
-		if ($jq(input).css('margin-top')) { $jq(n).css('margin-top', $jq(input).css('margin-top')); }
-		if ($jq(input).css('margin-right')) { $jq(n).css('margin-right', $jq(input).css('margin-right')); }
-		if ($jq(input).css('margin-bottom')) { $jq(n).css('margin-bottom', $jq(input).css('margin-bottom')); }
-		
-		//$jq(n).width($jq(input).width()).height($jq(input).height());
-		//var p = $jq(input).offsetParent().offset();
-		//$jq(n).css('left', p.left).css('top', p.top);
-			
-		n.style.width = input.offsetWidth+'px';
-		n.style.height = input.offsetHeight+'px';
-		n.style.left = input.offsetLeft+'px';
-		n.style.top = input.offsetTop+'px';
-		//n.style.overflow = 'auto';
-		
-		
-		input.parentNode.appendChild(n);
-		n = document.getElementById(elementName);
+		// quick fix for Firefox 3.5 losing selection on changes to popup
+        	if (typeof textarea.selectionStart != 'undefined') {
+			var tempSelectionStart = textarea.selectionStart;
+        		var tempSelectionEnd = textarea.selectionEnd;
+		}
+
+		$jq(this).dialog("close");
+
+		// quick fix for Firefox 3.5 losing selection on changes to popup
+        	if (typeof textarea.selectionStart != 'undefined' && textarea.selectionStart != tempSelectionStart) {
+                	textarea.selectionStart = tempSelectionStart;
+        	}
+        	if (typeof textarea.selectionEnd != 'undefined' && textarea.selectionEnd != tempSelectionEnd) {
+                	textarea.selectionEnd = tempSelectionEnd;
+	        }
+
+		var ta = getElementById(area_name);
+		if (ta) { ta.focus(); }
+	};
+	
+	btns[replaceText ? "Replace" : edit_icon ? "Submit" : "Insert"] = function() {
+        var meta = tiki_plugins[type];
+        var params = [];
+        var edit = edit_icon;
+        
+        for (i = 0; i < form.elements.length; i++) {
+            element = form.elements[i].name;
+            
+            var matches = element.match(/params\[(.*)\]/);
+            
+            if (matches === null) {
+                // it's not a parameter, skip 
+                continue;
+            }
+            var param = matches[1];
+            
+            var val = form.elements[i].value;
+            
+            if (val !== '') {
+                params.push(param + '="' + val + '"');
+            }
+        }
+        
+        var blob = '{' + type.toUpperCase() + '(' + params.join(',') + ')}' + (typeof form.content != 'undefined' ? form.content.value : '') + '{' + type.toUpperCase() + '}';
+        
+        if (edit) {
+            container.children('form').submit();
+        } else {
+//			getElementById(area_name).focus(); // unsuccesfull attempt to get Fx3.5/win to keep selection info
+            insertAt(area_name, blob, false, false, replaceText);
+        }
+	// quick fix for Firefox 3.5 losing selection on changes to popup
+        if (typeof textarea.selectionStart != 'undefined') {
+		var tempSelectionStart = textarea.selectionStart;
+        	var tempSelectionEnd = textarea.selectionEnd;
 	}
-	
-	n.innerHTML = input.value;
-	
-	n.scrollLeft = input.scrollLeft;
-	n.scrollTop = input.scrollTop;
-	//$jq(n).scrollLeft($jq(input).scrollLeft()).scrollTop($jq(input).scrollTop());
-		
-	var r = document.createRange();
-    var e = document.createElement('span');
 
-    r.setStart(n.firstChild, input.selectionStart);
-    r.setEnd(n.firstChild, input.selectionStart);
-    r.surroundContents(e);
+	$jq(this).dialog("close");
+        
+	// quick fix for Firefox 3.5 losing selection on changes to popup
+        if (typeof textarea.selectionStart != 'undefined' && textarea.selectionStart != tempSelectionStart) {
+                textarea.selectionStart = tempSelectionStart;
+        }
+        if (typeof textarea.selectionEnd != 'undefined' && textarea.selectionEnd != tempSelectionEnd) {
+                textarea.selectionEnd = tempSelectionEnd;
+        } 
 
-    var obj = { 
-		left : e.offsetLeft + n.offsetLeft,
-		top : e.offsetTop + n.offsetTop
+
+	return false;
     };
 
-    return obj; 
-  }
+	// quick fix for Firefox 3.5 losing selection on changes to popup
+	if (typeof textarea.selectionStart != 'undefined') {
+		var tempSelectionStart = textarea.selectionStart;
+		var tempSelectionEnd = textarea.selectionEnd; 
+	}
+	
+	container.dialog('destroy').dialog({
+		width: $jq(window).width() * 0.6,
+		height: $jq(window).height() * pfc,
+		autoOpen: false }).dialog('option', 'buttons', btns).dialog("open");
+   
+	// quick fix for Firefox 3.5 losing selection on changes to popup
+        if (typeof textarea.selectionStart != 'undefined' && textarea.selectionStart != tempSelectionStart) {
+                textarea.selectionStart = tempSelectionStart;
+        }
+        if (typeof textarea.selectionEnd != 'undefined' && textarea.selectionEnd != tempSelectionEnd) {
+                textarea.selectionEnd = tempSelectionEnd;
+        } 
+//	getElementById(area_name).focus(); // unsuccesfull attempt to get Fx3.5/win to keep selection info
 }
+
+// temporary debug helper
+//setInterval(function () {
+//	$jq("#qe-1").val( $jq("#editwiki")[0].selectionStart + "," + $jq("#editwiki")[0].selectionEnd );
+//}, 200);
+
+/* Simple tiki plugin for jQuery
+ * Initially for autocomplete helpers
+ */
+
+$jq.fn.tiki = function(func, type, options) {
+	if (typeof type != 'undefined') { // func and type given
+		options = options || {};
+		var opts = {extraParams: {"httpaccept": "text/javascript"},
+				dataType: "json",
+				parse: parseAutoJSON,
+				formatItem: function(row) { return row; },
+				selectFirst: false
+				};
+		for(opt in options) {
+			opts[opt] = options[opt];
+		}
+
+		switch (func) {
+			case "autocomplete":
+			if (jqueryTiki.autocomplete) {
+				var data = "";
+				switch (type) {
+					case "pagename":
+						data = "tiki-listpages.php?listonly";
+						break;
+					case "groupname":
+						data = "tiki-ajax_services.php?listonly=groups";
+						break;
+					case "username":
+						data = "tiki-ajax_services.php?listonly=users";
+						break;
+				}
+		 		return this.each(function() {
+					$jq(this).autocomplete(data, opts);
+		
+				});
+			}
+			break;
+		}
+	}
+};
 
 
 

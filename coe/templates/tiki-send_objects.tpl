@@ -21,7 +21,7 @@
 			{tr}Filter{/tr}
 		</div>
 		<div class="cbox-data">
-			{tr}Filter{/tr}:<input type="text" name="find" value="{$find|escape}"/><input type="submit" name="filter" value="{tr}Filter{/tr}" /><br />
+			{tr}Filter:{/tr}<input type="text" name="find" value="{$find|escape}"/><input type="submit" name="filter" value="{tr}Filter{/tr}" /><br />
 		</div>
 	</div>
 	
@@ -41,7 +41,7 @@
 				</div>
 				<select name="pageName">
 					{section name=ix loop=$pages}
-						<option value="{$pages[ix].pageName|escape}">{$pages[ix].pageName}</option>
+						<option value="{$pages[ix].pageName|escape}">{$pages[ix].pageName|escape}</option>
 					{/section}
 				</select>
 				<input type="submit" name="addpage" value="{tr}Add Page{/tr}" />
@@ -89,7 +89,7 @@
 				</div>
 				<select name="articleId">
 					{section name=ix loop=$articles}
-						<option value="{$articles[ix].articleId|escape}">{$articles[ix].articleId}:{$articles[ix].title}</option>
+						<option value="{$articles[ix].articleId|escape}">{$articles[ix].articleId}: {$articles[ix].title|escape}</option>
 					{/section}
 				</select>
 				<input type="submit" name="addarticle" value="{tr}Add Article{/tr}" />
@@ -108,7 +108,7 @@
 			<input type="hidden" name="sendarticles" value="{$form_sendarticles|escape}" />
 			<table>
 				<tr>
-					<td class="form">{tr}Site{/tr}:</td>
+					<td class="form">{tr}Site:{/tr}</td>
 					<td class="form">
 						<input type="text" name="site" value="{$site|escape}" />
 						<br />
@@ -116,7 +116,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td class="form">{tr}Path{/tr}:</td>
+					<td class="form">{tr}Path:{/tr}</td>
 					<td class="form">
 						<input type="text" name="path" value="{$path|escape}" />
 						<br />
@@ -124,15 +124,15 @@
 					</td>
 				</tr>
 				<tr>
-					<td class="form">{tr}Username{/tr}:</td>
+					<td class="form">{tr}Username:{/tr}</td>
 					<td class="form"><input type="text" name="username" value="{$username|escape}" /></td>
 				</tr>
 				<tr>
-					<td class="form">{tr}Password{/tr}:</td>
+					<td class="form">{tr}Password:{/tr}</td>
 					<td class="form"><input type="password" name="password" value="{$password|escape}" /></td>
 				</tr>
 				<tr>
-					<td class="form">{tr}Debug{/tr}:</td>
+					<td class="form">{tr}Debug:{/tr}</td>
 					<td class="form"><input type="checkbox" name="dbg"{if $dbg eq 'on'} checked="checked"{/if} /></td>
 				</tr>
 				<tr>

@@ -7,6 +7,11 @@ function wikiplugin_img_info() {
 		'prefs' => array( 'wikiplugin_img'),
 		'icon' => 'pics/icons/picture.png',
 		'params' => array(
+			'src' => array(
+				'required' => false,
+				'name' => tra('Image source'),
+				'description' => tra('Full URL to the image to display. "id", "fileId", "attId" or "src" required.'),
+			),
 			'id' => array(
 				'required' => false,
 				'name' => tra('Image ID'),
@@ -22,30 +27,25 @@ function wikiplugin_img_info() {
 				'name' => tra('Attachment ID'),
 				'description' => tra('Numeric ID of an image attached to a wiki page (or comma-separated list). "id", "fileId", "attId" or "src" required.'),
 			),
-			'src' => array(
-				'required' => false,
-				'name' => tra('Image source'),
-				'description' => tra('Full URL to the image to display. "id", "fileId", "attId" or "src" required.'),
-			),
 			'thumb' => array(
 				'required' => false,
 				'name' => tra('Thumbnail'),
-				'description' => tra('Makes the image a thumbnail. Will link to the full size image unless "link" is set. Parameter options indicate how the full image will be displayed: "shadowbox", "mouseover", "mousesticky", "popup", "browse" and "browsepopup" (only works with image gallery) and "plain". '),
+				'description' => tra('Makes the image a thumbnail when set to "y". Will link to the full size image unless "link" is set. Other parameter options indicate how the full image will be displayed: "mouseover", "mousesticky", "popup", "browse" and "browsepopup" (only works with image gallery) and "download" (only works with file gallery). '),
 				'options' => array(
 					array('text' => tra('None'), 'value' => ''), 
-					array('text' => tra('Shadowbox'), 'value' => 'shadowbox', 'description' => tra('Full size image will open in a shadowbox when thumbnail is clicked.')), 
-					array('text' => tra('Mouse Over'), 'value' => 'mouseover', 'description' => tra('Full size image will pop up while cursor is over the thumbnail (and disappear when not).')), 
-					array('text' => tra('Mouse Over (Sticky)'), 'value' => 'mousesticky', 'description' => tra('Full size image will pop up once cursor passes over thumbnail and will remain up unless cursor passes over full size popup.')), 
+					array('text' => tra('Yes'), 'value' => 'y', 'description' => tra('Full size image appears when thumbnail is clicked.')),
+					array('text' => tra('Mouseover'), 'value' => 'mouseover', 'description' => tra('Full size image will pop up while cursor is over the thumbnail (and disappear when not).')), 
+					array('text' => tra('Mouseover (Sticky)'), 'value' => 'mousesticky', 'description' => tra('Full size image will pop up once cursor passes over thumbnail and will remain up unless cursor passes over full size popup.')), 
 					array('text' => tra('Popup'), 'value' => 'popup', 'description' => tra('Full size image will open in a separate winow or tab (depending on browser settings) when thumbnail is clicked.')), 
 					array('text' => tra('Browse'), 'value' => 'browse', 'description' => tra('Image gallery browse window for the image will open when the thumbnail is clicked if the image is in a Tiki image gallery')), 
 					array('text' => tra('Browse Popup'), 'value' => 'browsepopup', 'description' => tra('Same as "browse" except that the page opens in a new window or tab.')), 
-					array('text' => tra('Plain'), 'value' => 'plain', 'description' => tra('Full size image appears on a new blank page when thumbnail is clicked.')), 
+					array('text' => tra('Download'), 'value' => 'download', 'description' => tra('Download dialog box will appear for file gallery images when thumbnail is clicked.')),
 				),
 			),
 			'button' => array(
 				'required' => false,
 				'name' => tra('Enlarge button'),
-				'description' => tra('Button for enlarging image. Set to "y" for it to appear. If thumb is set, then same method as thumb will be used to enlarge, except if mouseover or mousesticky is used. If thumb is not set or set to mouseover or mousesticky, then choice of "shadowbox", "popup", "browse" and "browsepopup" (for image gallery), and "plain".'),
+				'description' => tra('Button for enlarging image. Set to "y" for it to appear. If thumb is set, then same method as thumb will be used to enlarge, except if mouseover or mousesticky is used. If thumb is not set or set to mouseover or mousesticky, then choice of "download", "popup", "browse" and "browsepopup" (for image gallery), and "plain".'),
 				'options' => array(
 					array('text' => tra('None'), 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 'y'), 
@@ -59,7 +59,7 @@ function wikiplugin_img_info() {
 			'rel' => array(
 				'required' => false,
 				'name' => tra('Link relation'),
-				'description' => tra('"rel" attribute to add to the link. Overrides any shadowbox settings from the thumb or button parameters'),
+				'description' => tra('"rel" attribute to add to the link. Enter "box" for colorbox effect (like shadowbox and lightbox) or appropriate syntax.'),
 			),
 			'usemap' => array(
 				'required' => false,
@@ -155,15 +155,15 @@ function wikiplugin_img_info() {
 
 ///////////////////////////////////////////////////Function for getting image data from raw file (no filename)////////////////////////////////
  ///Creates a temporary file name and path for a raw image stored in a tiki database since getimagesize needs one to work
+if (!function_exists('getimagesize_raw')) {
 	function getimagesize_raw($data){
         $cwd = getcwd(); #get current working directory
         $tempfile = tempnam("$cwd/tmp", "temp_image_");#create tempfile and return the path/name (make sure you have created tmp directory under $cwd
         $temphandle = fopen($tempfile, "w");#open for writing
         fwrite($temphandle, $data); #write image to tempfile
         fclose($temphandle);
-		global $imagesize;
+		global $imagesize, $otherinfo, $iptc;
         $imagesize = getimagesize($tempfile, $otherinfo); #get image params from the tempfile
-		global $iptc;
 		if (!empty($otherinfo['APP13'])) {
 			$iptc = iptcparse($otherinfo['APP13']);
 		} else {
@@ -171,11 +171,11 @@ function wikiplugin_img_info() {
 		}
         unlink($tempfile); // this removes the tempfile
 	}
- 
+}
  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
  
  function wikiplugin_img( $data, $params, $offset, $parseOptions='' ) {
-	global $tikidomain, $prefs, $section, $smarty;
+	 global $tikidomain, $prefs, $section, $smarty, $tikiroot;
 
 	$imgdata = array();
 	
@@ -220,10 +220,13 @@ function wikiplugin_img_info() {
 	if (strstr($imgdata['src'],'javascript:')) {
 		$imgdata['src']  = '';
 	}
+
+	include_once('tiki-sefurl.php');
 	
 ///////////////////////////////////// If only old img parameters used, use old code and get out of program quickly ///////////////////
-	if (!empty($imgdata['src']) && empty($imgdata['thumb']) && empty($imgdata['button']) && empty($imgdata['max']) && empty($imgdata['styleimage']) && empty($imgdata['stylebox']) && empty($imgdata['styledesc']) && empty($imgdata['block']) && ($imgdata['desc'] != 'desc') && ($imgdata['desc'] != 'idesc') && ($imgdata['desc'] != 'name') && ($imgdata['desc'] != 'ititle')) {
-		
+	if (!empty($imgdata['src']) && (strpos($imgdata['src'], '|') == FALSE  ) && (strpos($imgdata['src'], ',') == FALSE  ) && empty($imgdata['thumb']) 
+		&& empty($imgdata['button']) && empty($imgdata['max']) && empty($imgdata['styleimage']) && empty($imgdata['stylebox']) && empty($imgdata['styledesc']) 
+		&& empty($imgdata['block']) && ($imgdata['desc'] != 'desc') && ($imgdata['desc'] != 'idesc') && ($imgdata['desc'] != 'name') && ($imgdata['desc'] != 'ititle') && ($imgdata['rel'] != 'box')) {	
 		if ($tikidomain && !preg_match('|^https?:|', $imgdata['src'])) {
 			$imgdata['src'] = preg_replace("~img/wiki_up/~","img/wiki_up/$tikidomain/",$imgdata['src']);
 		}
@@ -252,6 +255,9 @@ function wikiplugin_img_info() {
 			if ( (int)$imgdata['width'] > 0 && ctype_digit($imgdata['width']) ) $imgdata['src'] .= '&amp;x='.$imgdata['width'];
 			if ( (int)$imgdata['height'] > 0 && ctype_digit($imgdata['height']) ) $imgdata['src'] .= '&amp;y='.$imgdata['height'];
 		}
+		
+		$imgdata["src"] = filter_out_sefurl(htmlentities($imgdata["src"]), $smarty);
+		
 		if ( $imgdata['width'] ) $imgdata_dim .= ' width="' . $imgdata['width'] . '"';
 		if ( $imgdata['height'] ) $imgdata_dim .= ' height="' . $imgdata['height'] . '"';
 
@@ -298,11 +304,15 @@ function wikiplugin_img_info() {
 			$repl = '<span class="img">' . $repl . "</span>";
 		}
 		return $repl;
-	//end of old IMG code//
+	///////////end of old IMG code////////////////////
 	} else {
 	////////////////////////////////////////////// Default parameter and variable settings.//////////////////////////////////////////////	
 		// Set styling defaults
-		$thumbdef = 84;                          //Thumbnail height max when none is set
+		$thumbdef = 84;                         //Thumbnail height max when none is set
+		if (!empty($imgdata['fileId'])) {
+			$thumbdef = 120;	// filegals thumbnails size is hard-coded in lib/images/abstract.php
+		}
+
 		$descdef = 'font-size:12px; line-height:1.5em;';		//default text style for description
 		$descheightdef = 'height:15px';           //To set room for enlarge button under image if there is no description
 		$borderdef = 'border:1px solid darkgray;';   //default border when styleimage set to border
@@ -310,14 +320,6 @@ function wikiplugin_img_info() {
 		$center = 'display:block; margin-left:auto; margin-right:auto;';	//used to center image and box
 		$enlargedef = 'float:right; padding-top:.1cm;';	//styling for the enlarge button div
 		$captiondef = 'padding-top:2px';									//styling for the caption div
-		
-		// Set shadowbox view as default for enlarge
-		if ( $imgdata['thumb'] == 'y' ) {
-			$imgdata['thumb'] = 'shadowbox';
-		}		
-		if ( $imgdata['button'] == 'y' ) {
-			$imgdata['button'] = 'shadowbox';
-		}	
 		
 		//Variable for identifying if javascript mouseover is set
 		if (($imgdata['thumb'] == 'mouseover') || ($imgdata['thumb'] == 'mousesticky')) {
@@ -358,7 +360,10 @@ function wikiplugin_img_info() {
 		} elseif (!empty($imgdata['attId'])) {
 			$sourcetype = 'attach';
 			$id = 'attId';
-		}	
+		} else {
+			$sourcetype = 'url';
+			$id = 'src';
+		}			
 		
 	//////////////////////////////////////// Process lists of images ////////////////////////////////////////////////////////
 		//Process "|" or "," separated images
@@ -415,16 +420,18 @@ function wikiplugin_img_info() {
 					break;
 			}		
 			//Give error messages if it doesn't exist or isn't an image
-			if( ! $dbinfo ) {
-				return '^' . tra('File not found.') . '^';
-			} elseif( substr($dbinfo['filetype'], 0, 5) != 'image' ) {
-				return '^' . tra('File is not an image.') . '^';
-			} else {
-			require_once('lib/images/images.php');
-				if (!class_exists('Image')) {
-				return '^' . tra('Server does not support image manipulation.') . '^';
-				}
-			}	
+			if (empty($imgdata['src'])) {
+				if( ! $dbinfo ) {
+					return '^' . tra('File not found.') . '^';
+				} elseif( substr($dbinfo['filetype'], 0, 5) != 'image' ) {
+					return '^' . tra('File is not an image.') . '^';
+				} else {
+				require_once('lib/images/images.php');
+					if (!class_exists('Image')) {
+					return '^' . tra('Server does not support image manipulation.') . '^';
+					}
+				}	
+			}
 			//Now that we know it exists, finish getting info for image gallery files since the path and blob are in two different tables
 			if ($sourcetype == 'imagegal') {
 				global $imagegallib; 
@@ -444,16 +451,25 @@ function wikiplugin_img_info() {
 		
 		//Set src (for html) and base path (for getimagesize)
 		$absolute_links = (!empty($parseOptions['absolute_links'])) ? $parseOptions['absolute_links'] : false;
+		$thumbstring = '';
 		if (empty($imgdata['src'])) {
 			switch ($sourcetype) {
 				case 'imagegal':
 					$imgdata['src'] = $imagegalpath . $imgdata['id'];
+					if (!empty($imgdata['thumb'])) {
+						$thumbstring = '&thumb=1';
+					}
 					break;
-				case 'filegal':
+				case 'filegal':				
 					$imgdata['src'] = $filegalpath . $imgdata['fileId']; 
+					if (!empty($imgdata['thumb'])) {
+						$thumbstring = '&thumbnail';
+					}
 					break;
 				case 'attach':
 					$imgdata['src'] = $attachpath . $imgdata['attId']; 
+					if (!empty($imgdata['thumb'])) {
+					}
 					break;
 				}
 		} elseif ( (!empty($imgdata['src'])) && $absolute_links && ! preg_match('|^[a-zA-Z]+:\/\/|', $imgdata['src']) ) {
@@ -467,8 +483,10 @@ function wikiplugin_img_info() {
 		
 		//Now get height, width, iptc data from actual image
 		//First get the data. Images in db handled differently than those in directories or path
+		global $imagesize, $iptc, $otherinfo;
+		$otherinfo = array();
+		
 		if (!empty($dbinfo['data'])) {
-			global $imagesize, $iptc;
 			getimagesize_raw($dbinfo['data']);  //images in databases, calls function in this program
 		} else {
 			if (!empty($dbinfo['path'])) {
@@ -476,7 +494,7 @@ function wikiplugin_img_info() {
 			} else {
 				$imagesize = getimagesize($imgdata['src'], $otherinfo);  //wiki_up and external images
 			}
-			$iptc = iptcparse($otherinfo['APP13']);
+			if (isset($otherinfo['APP13'])) { $iptc = iptcparse($otherinfo['APP13']); }
 		}
 				
 			//Set variables for height, width and iptc data from image data
@@ -486,8 +504,15 @@ function wikiplugin_img_info() {
 			$ititle = isset($iptc['2#005'][0]) ? trim($iptc['2#005'][0]) : '';		//title from image iptc
 			
 
-		// URL of original image
-		$browse_full_image = $imgdata['src']; 
+		// URL of original full size image
+		$pos = strpos($imgdata['src'], '&thumb');
+		if ($pos > 0) {
+			//Strip off any thumbnail parameter
+			$len = strlen($imgdata['src']);
+			$browse_full_image = substr_replace($imgdata['src'], '', $pos, $len-($len-$pos));
+		} else {
+			$browse_full_image = $imgdata['src']; 
+		}
 		
 	/////////////////////////////////////Add image dimensions to src string////////////////////////////////////////////////////////////////
 		// Adjust for max setting, keeping aspect ratio
@@ -530,20 +555,24 @@ function wikiplugin_img_info() {
 					$width = floor($height * $fwidth / $fheight);	
 				}
 			}
-		//Otherwise html dimensions are the same as original
-		} elseif  (empty($height) && empty($width)) {
-			$height = $fheight;
-			$width = $fwidth;
 		}
 		
 		//Set final height and width dimension string
-		$imgdata_dim = ' height="' . $height . '"';
-		$imgdata_dim .= ' width="' . $width . '"';
-
+		if (!empty($height)) {
+			$imgdata_dim = ' height="' . $height . '"';
+		} else {
+			$imgdata_dim = '';
+		}
+		if (!empty($width)) {
+			$imgdata_dim .= ' width="' . $width . '"';
+		} else {
+			$imgdata_dim = '';
+		}
 		
 	////////////////////////////////////////// Create the HTML img tag ///////////////////////////////////////////////////////////////////
 		//Start tag with src and dimensions
-		$replimg = "\r\t" . '<img src="' . $imgdata['src']. '"';
+		$imgdata["src"] = filter_out_sefurl(htmlentities($imgdata["src"]. $thumbstring), $smarty);
+		$replimg = "\r\t" . '<img src="' . $imgdata['src'] . '"';
 		$replimg .= $imgdata_dim;
 		
 		//Create style attribute allowing for shortcut inputs 
@@ -568,7 +597,7 @@ function wikiplugin_img_info() {
 				}
 				if ($imgdata['styleimage'] == 'border') {
 					$border = $borderdef;
-				} else if (strpos($imgdata['styleimage'],'hidden') < 0 && strpos($imgdata['styleimage'],'position') < 0) {	// quick filter for dangerous styles
+				} else if (strpos($imgdata['styleimage'],'hidden') === false && strpos($imgdata['styleimage'],'position') === false) {	// quick filter for dangerous styles
 					$style = $imgdata['styleimage'];
 				}
 			}
@@ -629,8 +658,7 @@ function wikiplugin_img_info() {
 				$link = $imgdata['link'];
 			} elseif ((($imgdata['thumb'] == 'browse') || ($imgdata['thumb'] == 'browsepopup')) && !empty($imgdata['id'])) {
 				$link = 'tiki-browse_image.php?imageId=' . $imgdata['id'];
-			} elseif (($imgdata['thumb'] == 'mouseover') || ($imgdata['thumb'] == 'mousesticky')) {
-				$javaset = 'true';
+			} elseif ($javaset == 'true') {
 				$link = 'javascript:void(0)';
 				$popup_params = array( 'text'=>$data, 'width'=>$fwidth, 'height'=>$fheight, 'background'=>$browse_full_image);
 				if ($imgdata['thumb'] == 'mousesticky') {
@@ -638,15 +666,18 @@ function wikiplugin_img_info() {
 				}
 				require_once $smarty->_get_plugin_filepath('function', 'popup');
 				$mouseover = ' ' . smarty_function_popup($popup_params, $smarty);
-				
 			} else {
-				$link = $browse_full_image;
-			}	
+				if ($sourcetype == 'filegal' && $imgdata['thumb'] != 'download') {
+					$link = $browse_full_image . '&display';
+				} else {
+					$link = $browse_full_image;
+				}
+			}
 			// Set other link-related attributes				
 			// target
 			$imgtarget= '';
 			if (($prefs['popupLinks'] == 'y' && (preg_match('#^([a-z0-9]+?)://#i', $link) || preg_match('#^www\.([a-z0-9\-]+)\.#i',$link))) || ($imgdata['thumb'] == 'popup') || ($imgdata['thumb'] == 'browsepopup')) {
-				if (!empty($javaset) || ($imgdata['thumb'] == 'shadowbox')) {
+				if (!empty($javaset) || ($imgdata['rel'] == 'box')) {
 					$imgtarget= '';
 				} else {
 					$imgtarget = ' target="_blank"';
@@ -654,9 +685,19 @@ function wikiplugin_img_info() {
 			}
 			// rel
 			if (!empty($imgdata['rel'])) {
-				$linkrel = ' rel="'.$imgdata['rel'].'"';
-			} elseif ($imgdata['thumb'] == 'shadowbox') {
-				$linkrel = ' rel="shadowbox; type=img"';
+				if ($imgdata['rel'] == 'box') {
+					$linkrel = ' rel="box';
+					if (!empty($fwidth) && !empty($fheight)) {
+						$linkrel .= ";width=$fwidth;height=$fheight";
+					}
+					/*if (!empty($desconly)) {
+						$linkrel .= ";title=$desconly";
+					}*/
+					$linkrel .= '"';
+					
+				} else {
+					$linkrel = ' rel="'.$imgdata['rel'].'"';
+				}
 			} else {
 				$linkrel = '';
 			}
@@ -666,6 +707,9 @@ function wikiplugin_img_info() {
 			} else {
 				$linktitle = '';
 			}
+			
+			$link = filter_out_sefurl(htmlentities($link), $smarty);
+
 			//Final link string
 			$replimg = '<a href="' . $link . '" class="internal"' . $linkrel . $imgtarget . $linktitle . $mouseover . '>' . $replimg . '</a>';
 		}
@@ -704,12 +748,8 @@ function wikiplugin_img_info() {
 					$link_button = $link;
 				}
 				//Set button rel
-				if (empty($linkrel) && (empty($imgdata['thumb']) || !empty($javaset))) {	
-					if ($imgdata['button'] == 'shadowbox') {
-						$linkrel_button = ' rel="shadowbox; type=img"';
-					} else {
+				if (empty($linkrel) || !empty($javaset)) {
 						$linkrel_button = '';
-					}
 				} else {
 					$linkrel_button = $linkrel;
 				}
@@ -801,4 +841,3 @@ function wikiplugin_img_info() {
 		return '~np~'.$repl.'~/np~';
 	}
 }
-?>

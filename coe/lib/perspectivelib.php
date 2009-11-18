@@ -2,6 +2,42 @@
 
 class PerspectiveLib
 {
+	function get_current_perspective( $prefs ) {
+		if( isset( $_REQUEST['perspectiveId'] ) ) {
+			return (int) $_REQUEST['perspectiveId'];
+		} elseif( isset( $_SESSION['current_perspective'] ) ) {
+			return (int) $_SESSION['current_perspective'];
+		}
+
+		$currentDomain = $_SERVER['HTTP_HOST'];
+		foreach( $this->get_domain_map( $prefs ) as $domain => $perspective ) {
+			if( $domain == $currentDomain ) {
+				$_SESSION['current_perspective'] = trim($perspective);
+				return $perspective;
+			}
+		}
+	}
+
+	function get_domain_map( $prefs = null ) {
+		if( ! $prefs ) {
+			global $prefs;
+		}
+
+		if( $prefs['multidomain_active'] != 'y' ) {
+			return array();
+		}
+
+		$out = array();
+
+		foreach( explode( "\n", $prefs['multidomain_config'] ) as $config ) {
+			list( $domain, $perspective ) = explode( ',', $config );
+
+			$out[$domain] = trim($perspective);
+		}
+
+		return $out;
+	}
+
 	// Returns a string-indexed array containing the preferences for the given perspective as "pref_name" => "pref_value".
 	function get_preferences( $perspectiveId ) {
 		$result = TikiDb::get()->query( "SELECT pref, value FROM tiki_perspective_preferences WHERE perspectiveId = ?", array( $perspectiveId ) );
@@ -41,11 +77,9 @@ class PerspectiveLib
 		
 		if ( $perspectiveId )
 		{
-			$db->query( 'DELETE from tiki_perspectives WHERE WHERE perspectiveId = ?', array( $perspectiveId ) );
+			$db->query( 'DELETE from tiki_perspectives WHERE perspectiveId = ?', array( $perspectiveId ) );
 			$db->query( 'DELETE from tiki_perspective_preferences WHERE perspectiveId = ?', array( $perspectiveId ) );
 		}
-		
-		$return true;
 	}
 
 	// Replaces all preferences from $perspectiveId with those in the provided string-indexed array (in format "pref_name" => "pref_value").
@@ -57,6 +91,13 @@ class PerspectiveLib
 		foreach( $preferences as $pref => $value ) {
 			$this->set_preference( $perspectiveId, $pref, $value );
 		}
+	}
+	
+	// Replaces a specific preference
+	function replace_preference ( $preference, $value, $newValue ) {
+		$db = TikiDb::get();
+		$db->query( 'UPDATE tiki_perspective_preferences SET value = ? WHERE pref = ? and value = ?',
+			array( $newValue, $preference, $value ) );
 	}
 
 	// Sets $preference's value for $perspectiveId to $value.
@@ -92,9 +133,9 @@ class PerspectiveLib
 	function get_perspectives_with_given_name ( $name ) {
 	    $db = TikiDb::get();
 
-	    $list = $db->query( "SELECT perspectiveId, name FROM tiki_perspectives WHERE name = ?", array ( $name ) );
+	    $list = $db->getOne( "SELECT perspectiveId FROM tiki_perspectives WHERE name = ?", array ( $name ) );
 
-	    $list = Perms::filter( array ( 'type' => 'perspective'), 'object', $list, array( 'object' => 'perspectiveId' ), 'perspective_view' );
+	    //$list = Perms::filter( array ( 'type' => 'perspective'), 'object', $list, array( 'object' => 'perspectiveId' ), 'perspective_view' );
 
 	    return $list;
 	}
@@ -102,5 +143,3 @@ class PerspectiveLib
 
 global $perspectivelib;
 $perspectivelib = new PerspectiveLib;
-
-?>

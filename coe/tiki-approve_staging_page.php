@@ -11,6 +11,11 @@ require_once ('tiki-setup.php');
 include_once ('lib/wiki/wikilib.php');
 include_once('lib/wiki/histlib.php');
 include_once('lib/categories/categlib.php');
+include_once ('lib/notifications/notificationlib.php');
+include_once ('lib/notifications/notificationemaillib.php');
+if ($prefs['feature_multilingual'] == 'y') {
+	include_once("lib/multilingual/multilinguallib.php");
+}
 
 if ($prefs['feature_wiki'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
@@ -33,7 +38,7 @@ if (!isset($_REQUEST["page"])) {
 	$smarty->display("error.tpl");
 	die;
 } else {
-	$page = $_REQUEST["page"];
+	$page = urldecode($_REQUEST["page"]);
 
 	$smarty->assign_by_ref('page', $page);
 }
@@ -47,7 +52,6 @@ if (substr($page, 0, strlen($prefs['wikiapproval_prefix'])) != $prefs['wikiappro
 
 // first check perms for category set as the approved category (this could be necessary in some setups even though page perms are checked below)
 if ($prefs['wikiapproval_approved_category'] == 0 && $tiki_p_edit != 'y' || $prefs['wikiapproval_approved_category'] > 0 && !$categlib->has_edit_permission($user, $prefs['wikiapproval_approved_category'])) {
-	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied you cannot approve staging pages"));
 
 	$smarty->display("error.tpl");
@@ -58,23 +62,26 @@ if ($prefs['wikiapproval_approved_category'] == 0 && $tiki_p_edit != 'y' || $pre
 $staging_page = $page;
 $page = substr($staging_page, strlen($prefs['wikiapproval_prefix']));
 
-if (!($staging_info = $tikilib->get_page_info($staging_page))) {
-	$smarty->assign('msg', tra('Page cannot be found'));
-	$smarty->display('error.tpl');
+// If either page doesn't exist then display an error
+if (!$tikilib->page_exists($page) || !$tikilib->page_exists($staging_page)) { 
+	$smarty->assign('msg', tra("Either staging or approved page cannot be found"));
+
+	$smarty->display("error.tpl");
 	die;
 }
 
 // Check approved page edit permissions
 $info = $tikilib->get_page_info($page);
-if ($info) {
-	$tikilib->get_perm_object($page, 'wiki page', $info, true);
-}
+$tikilib->get_perm_object($page, 'wiki page', $info, true);
 if ($tiki_p_edit != 'y') {
-	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
 	$smarty->display("error.tpl");
 	die;
 }
+
+// get staging page info
+
+$staging_info = $tikilib->get_page_info($staging_page);
 
 if ( $staging_info['lastModif'] < $info['lastModif'] ) { 
 	$smarty->assign('msg', tra("Approved page was last saved after most recent staging edit"));
@@ -83,55 +90,95 @@ if ( $staging_info['lastModif'] < $info['lastModif'] ) {
 	die;
 }
 
-// update approved page contents
-// multiple commits are needed to make sure contributor list and history are synced
-function change_name_in_attach_plugin($staging_page, $page, $data) {
-	$n = preg_replace('/([\(\)\.\?\+\*\[\]\|\$\^\-\'])/', '\\\$1', $staging_page);
-	$pattern = '/(\{file[^}]+page=\")'.$n.'(\"[^\}]*)/s';
-	$data = preg_replace($pattern,'$1'.$page.'$2', $data);
-	return $data;
+$emails = $notificationlib->get_mail_events('user_review_approval', $staging_info['page_id']);
+if (count($emails)) {
+	// remove duplicates to avoid sending email twice to the same address
+	$emails = array_unique($emails);
+	foreach ($emails as $k => $email) {
+		$emailUser = $userlib->get_user_by_email($email);
+		$emails[$k] = array($email,$emailUser);
+	}
+	$smarty->assign('mail_reviewer', $user);
+	$mail_articleurl =  mb_ereg_replace(' ', '+', $page);
+	if ($_REQUEST['action'] != 'reject') {
+		$lastversion = $histlib->get_page_latest_version($staging_page);
+		$smarty->assign('mail_reviewcomments', $_REQUEST['approve_comment']);
+		sendApprovalEmailNotification($smarty, $tikilib, $userlib, $prefs, $emails, "user_review_approved_notification_subject.tpl", "user_review_approved_notification.tpl", 
+		$_SERVER["SERVER_NAME"], '/tiki-view_forum.php?forumId=3', $page, $mail_articleurl
+		);
+		if ($_REQUEST['outofdate']) {
+			// mark other translations as out of date
+			$flags = array();
+			$flags[] = 'critical';
+			$multilinguallib->createTranslationBit( 'wiki page', $staging_info['page_id'], $lastversion, $flags );
+		}
+		$notificationlib->remove_events_object('user_review_approval', $staging_info['page_id']);
+	}
+	else {
+		$smarty->assign('mail_reviewcomments', $_REQUEST['reject_comment']);
+        $smarty->assign('mail_stagingsource', html_entity_decode($staging_info['data'], ENT_QUOTES));
+		sendApprovalEmailNotification($smarty, $tikilib, $userlib, $prefs, $emails, "user_review_rejected_notification_subject.tpl", "user_review_rejected_notification.tpl", 
+		$_SERVER["SERVER_NAME"], '/tiki-view_forum.php?forumId=3', $page, $mail_articleurl
+		);
+		require_once('lib/diff/difflib.php');
+		// rollback to last approved version and remove older versions
+        // outofsync code copied from tiki-index.php ~ line 854 (r49554)
+        $approvedPageInfo = $histlib->get_page_from_history($page, 0);
+        if ($staging_info['lastModif'] > $approvedPageInfo['lastModif']) {
+            $outofdateversion = $histlib->get_version_by_time($staging_page, $approvedPageInfo['lastModif'], 'after');
+            if ($outofdateversion > 0) {
+                $lastsyncversion = $histlib->get_version_by_time($staging_page, $approvedPageInfo['lastModif']);
+		        rollback_page_to_version($prefs, $histlib, $categlib, $staging_page, $lastsyncversion, false, true);
+                $lastversion = $histlib->get_page_latest_version($staging_page);
+		        $remove_version = $lastsyncversion;
+		        while ($remove_version <= $lastversion) {
+			        $histlib->remove_version($staging_page, $remove_version);
+			        $remove_version++;
+		        }
+            }
+            else {
+                // last sync can't be found, so remove the last edit and rollback copy only
+                $lastversion = $histlib->get_page_latest_version($staging_page);
+                rollback_page_to_version($prefs, $histlib, $categlib, $staging_page, $lastversion, false, true);
+                $histlib->remove_version($staging_page, $lastversion);
+                $lastversion = $histlib->get_page_latest_version($staging_page);
+                $histlib->remove_version($staging_page, $lastversion);
+            }
+        }
+		$notificationlib->remove_events_object('user_review_approval', $staging_info['page_id']);
+        $smarty->assign('staging_page', $staging_page);
+		$smarty->assign('mid', 'tiki-approve_staging_page.tpl');
+		$smarty->display("tiki.tpl");
+		die;
+	}
 }
 
-if ($info) {
-	$begin_version = $histlib->get_version_by_time($staging_page, $info['lastModif'], 'after');
-	$commitversion = $histlib->get_page_latest_version($page) + 1;
- } else {
-	$begin_version = $histlib->get_page_latest_version($staging_page, 'version_asc');
-	$commitversion = 0;
- }
+// update approved page contents
+// multiple commits are needed to make sure contributor list and history are synced
+
+$begin_version = $histlib->get_version_by_time($staging_page, $info['lastModif'], 'after');
+$commitversion = $histlib->get_page_latest_version($page) + 1;
 $lastversion = $histlib->get_page_latest_version($staging_page);
 $finalversion = $lastversion + 1;
 if ($begin_version > 0) {
-		for ($v = $begin_version; $v <= $lastversion; $v++) {
-			$version_info = $histlib->get_version($staging_page, $v);
-			$history = array();
-			if ($version_info) {
-				$version_info['data'] = change_name_in_attach_plugin($staging_page, $page, $version_info['data']);
-				if ($info) {
-					$tikilib->update_page($page, $version_info["data"], $version_info["comment"] . " [" . tra('approved by ').$user . "]", $version_info["user"], $version_info["ip"], $version_info["description"], 0, $staging_info["lang"], $staging_info["is_html"]);
-				} else {
-					$tikilib->create_page($page, 0, $version_info["data"], $version_info['lastModif'], $version_info["comment"] . " [" . tra('approved by ').$user . "]", $version_info["user"], $version_info["ip"], $version_info["description"], $staging_info["lang"], $staging_info["is_html"]);
-					$info = $tikilib->get_page_info($page);
-				}
-				$commitversion++;
-				$history[] = $version_info;
-				if ($prefs['feature_multilingual'] == 'y') {
-					// update translation bits
-					include_once("lib/multilingual/multilinguallib.php");
-					$flags = $multilinguallib->get_page_bit_flags( $staging_info['page_id'], $v );				
-					$multilinguallib->createTranslationBit( 'wiki page', $info['page_id'], $commitversion, $flags );
-				}			
-			} 		
-		}
+	for ($v = $begin_version; $v <= $lastversion; $v++) {
+		$version_info = $histlib->get_version($staging_page, $v);
+		$history = array();
+		if ($version_info) {
+			$tikilib->update_page($page, $version_info["data"], $version_info["comment"] . " [" . tra('approved by ').$user . "]", $version_info["user"], $version_info["ip"], $version_info["description"], false, $staging_info["lang"], $staging_info["is_html"]);
+			$commitversion++;
+			$history[] = $version_info;
+			if ($prefs['feature_multilingual'] == 'y') {
+				// update translation bits
+				$flags = $multilinguallib->get_page_bit_flags( $staging_info['page_id'], $v );				
+				$multilinguallib->createTranslationBit( 'wiki page', $info['page_id'], $commitversion, $flags );
+			}			
+		} 		
 	}
-// finally approve current staging version
-$staging_info['data'] = change_name_in_attach_plugin($staging_page, $page, $staging_info['data']);
-if ($info) {
-	$tikilib->update_page($page, $staging_info["data"], $staging_info["comment"] . " [" . tra('approved by ').$user . "]", $staging_info["user"], $staging_info["ip"], $staging_info["description"], 0, $staging_info["lang"], $staging_info["is_html"]);
-} else {
-	$tikilib->create_page($page, 0,  $staging_info["data"], $staging_info["comment"] . " [" . tra('approved by ').$user . "]", $staging_info["user"], $staging_info["ip"], $staging_info["description"], false, $staging_info["lang"], $staging_info["is_html"]);
-	$info = $tikilib->get_page_info($page);
 }
+// finally approve current staging version
+$tikilib->update_page($page, $staging_info["data"], $staging_info["comment"] . " [" . tra('approved by ').$user . "]", $staging_info["user"], $staging_info["ip"], $staging_info["description"], false, $staging_info["lang"], $staging_info["is_html"]);
+
 $commitversion++;
 if ($prefs['feature_multilingual'] == 'y') {
 	// update translation bits
@@ -178,6 +225,9 @@ if ($prefs['feature_categories'] == 'y') {
 	if ($prefs['wikiapproval_outofsync_category'] > 0 && in_array($prefs['wikiapproval_outofsync_category'], $cats)) {	
 		$cats = array_diff($cats,Array($prefs['wikiapproval_outofsync_category']));	
 	}
+	/* Bug 487598 -  Localized articles should inherit en-us page categories */
+	$categlib->inherit_object_categories_sync($prefs, $staging_info['lang'], $cat_type, $cat_objid, $info['page_id'], $cats);
+	/* END Bug 487598 -  Localized articles should inherit en-us page categories */
 	$categlib->update_object_categories($cats, $cat_objid, $cat_type, $cat_desc, $cat_name, $cat_href);
 	
 	// now to remove out of sync from staging page
@@ -185,6 +235,26 @@ if ($prefs['feature_categories'] == 'y') {
 		$staging_cats = array_diff($staging_cats,Array($prefs['wikiapproval_outofsync_category']));
 		$categlib->update_object_categories($staging_cats, $s_cat_objid, $cat_type, $s_cat_desc, $s_cat_name, $s_cat_href);	
 	}
+	
+	// now to set polls
+	// for Mozilla, wiki pages in the knowledge base has polls of certain questions
+	// TODO: check that poll link to objectId is not broken on saving and reduce no. of queries
+	if ($prefs['feature_polls'] == 'y' && $prefs['wikiapproval_approved_category'] > 0 && in_array($prefs['wikiapproval_approved_category'], $cats)) {
+		
+		global $polllib; if (!is_object($polllib))  include_once('lib/polls/polllib.php');
+		$catObjectId = $categlib->is_categorized($cat_type, $cat_objid);
+		if (!$polllib->has_object_polls($catObjectId)) {
+			$template_id = $polllib->get_templateIdFromQ('kb_solve_or_not');
+			$pollid = $polllib->create_poll($template_id, $page);
+			$template_id = $polllib->get_templateIdFromQ('kb_easy_to_understand');
+			$pollid2 = $polllib->create_poll($template_id, $page);
+			$template_id = $polllib->get_templateIdFromQ('kb_ease_of_solving');
+			$pollid3 = $polllib->create_poll($template_id, $page);
+			$polllib->poll_categorize($catObjectId,$pollid,$page);
+			$polllib->poll_categorize($catObjectId,$pollid2,$page);
+			$polllib->poll_categorize($catObjectId,$pollid3,$page);
+		}
+	}	
 }
 
 // update approved page tags
@@ -198,20 +268,6 @@ if ($prefs['feature_freetags'] == 'y' && ($prefs['wikiapproval_update_freetags']
 	}
 	
 	$freetaglib->update_tags($user, $page, 'wiki page', $taglist);
-}
-
-// update attachments
-if ($prefs['feature_wiki_attachments'] == 'y') {
-	$staging_atts = $wikilib->list_wiki_attachments($staging_page);
-	$smarty->assign_by_ref('staging_atts', $staging_atts['data']);
-	$atts = $wikilib->list_wiki_attachments($page);
-	$smarty->assign_by_ref('atts', $atts['data']);
-	$wikilib->move_attachments($staging_page, $page);
-}
-
-//delete stagging page
-if ($prefs['wikiapproval_delete_staging'] == 'y') {
-	$tikilib->remove_all_versions($staging_page);
 }
 
 // OK, done

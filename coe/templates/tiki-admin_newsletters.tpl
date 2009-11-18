@@ -9,7 +9,7 @@
 
 {tabset}
 
-{tab name='{tr}Newsletters{/tr}'}
+{tab name="{tr}Newsletters{/tr}"}
 
 {if $channels or ($find ne '')}
   {include file='find.tpl'}
@@ -32,8 +32,8 @@
 		<tr>
 			<td class="{cycle advance=false}">{self_link cookietab='2' _anchor='anchor2' nlId=$channels[user].nlId _title='{tr}Edit{/tr}'}{$channels[user].nlId}{/self_link}</td>
 			<td class="{cycle advance=false}">
-				{self_link cookietab='2' _anchor='anchor2' nlId=$channels[user].nlId _title="{tr}Edit{/tr}"}{$channels[user].name}{/self_link}
-				<div class="subcomment">{$channels[user].description}</div>
+				{self_link cookietab='2' _anchor='anchor2' nlId=$channels[user].nlId _title="{tr}Edit{/tr}"}{$channels[user].name|escape}{/self_link}
+				<div class="subcomment">{$channels[user].description|escape|nl2br}</div>
 			</td>
 			<td class="{cycle advance=false}">{$channels[user].author}</td>
 			<td class="{cycle advance=false}">{$channels[user].users} ({$channels[user].confirmed})</td>
@@ -63,7 +63,7 @@
 {pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
 {/tab}
 
-{tab name='{tr}Create/Edit Newsletters{/tr}'}
+{tab name="{tr}Create/Edit Newsletters{/tr}"}
 {if $individual eq 'y'}
 	<a class="link" href="tiki-objectpermissions.php?objectName={$info.name|escape:"url"}&amp;objectType=newsletter&amp;permType=newsletters&amp;objectId={$info.nlId}">{tr}There are individual permissions set for this newsletter{/tr}</a><br /><br />
 {/if}
@@ -73,13 +73,13 @@
 	<input type="hidden" name="author" value="{$user|escape}" />
 	<table class="normal">
 		<tr>
-			<td class="formcolor">{tr}Name{/tr}:</td>
+			<td class="formcolor">{tr}Name:{/tr}</td>
 			<td class="formcolor">
 				<input type="text" name="name" value="{$info.name|escape}" />
 			</td>
 		</tr>
 		<tr>
-			<td class="formcolor">{tr}Description{/tr}:</td>
+			<td class="formcolor">{tr}Description:{/tr}</td>
 			<td class="formcolor">
 				<textarea name="description" rows="4" cols="40">{$info.description|escape}</textarea>
 			</td>

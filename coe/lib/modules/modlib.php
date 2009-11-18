@@ -247,7 +247,7 @@ class ModLib extends TikiLib {
 		TikiLib::parse_str( $module['params'], $module_params );
 
 		$default_params = array(
-			'decorators' => 'y',
+			'decorations' => 'y',
 			'overflow' => 'n',
 			'nobox' => 'n',
 			'notitle' => 'n',
@@ -479,6 +479,11 @@ class ModLib extends TikiLib {
 				'description' => tra('Module only available based on the relationship of the user with the wiki page. Either only contributors (y) or only non-contributors (n) will see the module.'),
 				'filter' => 'alpha',
 			),
+			'flip' => array(
+				'name' => tra('Flip'),
+				'description' => tra('Users can shade module.'),
+				'filter' => 'alpha',
+			),
 		) );
 
 		// Parameters common to several modules, but not all
@@ -505,7 +510,7 @@ class ModLib extends TikiLib {
 		return $info;
 	}
 
-	function createDefaultCacheKey( $module_reference ) {
+	function createDefaultCacheKey( $mod_reference ) {
 		global $prefs;
 		return $mod_reference['moduleId'] . '-' . $mod_reference['name'] . '-'. $prefs['language'] . '-' . serialize($mod_reference['params']);
 	}

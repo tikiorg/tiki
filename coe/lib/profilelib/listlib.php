@@ -28,6 +28,7 @@ class Tiki_Profile_List
 
 	function refreshCache( $path ) // {{{
 	{
+		global $tikilib;
 		$file = $this->getCacheLocation( $path );
 
 		// Replace existing with blank file
@@ -35,7 +36,7 @@ class Tiki_Profile_List
 			unlink($file);
 		touch($file);
 
-		$content = TikiLib::httprequest( $path );
+		$content = $tikilib->httprequest( $path );
 
 		$parts = explode( "\n", $content );
 		$parts = array_map( 'trim', $parts );
@@ -88,7 +89,7 @@ class Tiki_Profile_List
 		return( array_unique( $category_list ) );
 	} // }}}
 							
-	function getList( $source = '', $category = '', $profile = '' ) // {{{
+	function getList( $source = '', $categories = array(), $profilename = '' ) // {{{
 	{
 		$installer = new Tiki_Profile_Installer;
 		$list = array();
@@ -114,20 +115,18 @@ class Tiki_Profile_List
 
 				$key = "{$s['url']}#{$i}";
 
-				if( $category && stripos( $c, $category ) === false )
-					continue;
-				if( $profile && stripos( $i, $profile ) === false )
+				if( $profilename && stripos( $i, $profilename ) === false )
 					continue;
 
 				if( array_key_exists( $key, $list ) )
 				{
-					$list[$key]['category'] .= ", $c";
+					$list[$key]['categories'][] = $c;
 				}
 				else
 				{
 					$list[$key] = array(
 						'domain' => $s['domain'],
-						'category' => $c,
+						'categories' => array($c),
 						'name' => $i,
 						'installed' => $installer->isKeyInstalled( $s['domain'], $i ),
 					);
@@ -135,6 +134,26 @@ class Tiki_Profile_List
 			}
 
 			fclose($fp);
+
+			// Apply category filter
+			foreach ($list as $pkey => $profile) {
+				$in = true; // If there are no required categories, don't filter anything.
+				foreach ($categories as $category) {
+					$in = false; // Start assuming this required category isn't in this profile's categories
+					foreach ($profile['categories'] as $pcategory) {
+						if( $category == $pcategory ) {
+							$in = true;
+							break;
+						}
+					}
+					if (!$in) {
+						break;
+					}
+				}
+				if (!$in) {
+					unset($list[$pkey]);
+				}
+			}
 		}
 
 		return array_values( $list );

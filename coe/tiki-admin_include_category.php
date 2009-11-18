@@ -10,22 +10,4 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 }
 if (isset($_REQUEST["categorysetup"])) {
 	ask_ticket('admin-inc-category');
-	$pref_toggles = array(
-		"feature_categoryobjects",
-		"feature_categorypath",
-		"feature_search_show_forbidden_cat",
-		"feature_category_reinforce",
-		'feature_category_use_phplayers',
-		'categories_used_in_tpl'
-	);
-	foreach($pref_toggles as $toggle) {
-		simple_set_toggle($toggle);
-	}
-	$pref_simple_values = array(
-		"categorypath_excluded"
-	);
-	foreach($pref_simple_values as $svitem) {
-		simple_set_value($svitem);
-	}
 }
-$headerlib->add_cssfile('css/admin.css');

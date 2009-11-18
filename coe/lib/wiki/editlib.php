@@ -16,12 +16,11 @@ class EditLib {
 	
 	// general
 	
-	function make_sure_page_to_be_created_is_not_an_alias() {
-		global $_REQUEST, $semanticlib, $access, $wikilib;
-		$page = $_REQUEST["page"];
+	function make_sure_page_to_be_created_is_not_an_alias($page, $page_info) {
+		global $_REQUEST, $semanticlib, $access, $wikilib, $tikilib;
 		require_once 'lib/wiki/semanticlib.php';
 		$aliases = $semanticlib->getAliasContaining($page, true);
-		if (count($aliases) > 0) {
+		if (!$page_info && count($aliases) > 0) {
 			$error_title = tra("Cannot create aliased page");
 			$error_msg = tra("You attempted to create the following page:")." ".
 			             "<b>$page</b>.\n<p>\n";
@@ -35,7 +34,7 @@ class EditLib {
 			require_once('lib/tikiaccesslib.php');
 			$access->display_error(page, $error_title, "", true, $error_msg);
 		}	
-	}
+	}	
 	
 	// translation functions
 	
@@ -195,7 +194,7 @@ class EditLib {
 							// Generate wiki list item according to current list depth.
 							// (ensure '*/#' starts from begining of line)
 							$temp_max = count($p['listack']);
-							for ($l = ''; strlen($l) < $temp_max; $l .= end($p['listack']));
+							for ($l = '', $strl_l = strlen($l); $strl_l < $temp_max; $l .= end($p['listack']));
 							$src .= "\n$l ";
 							break;
 						case "font":

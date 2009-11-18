@@ -54,9 +54,9 @@
   {/if}
   {if $view eq 'browse'}
     {if $show_details eq 'y'}
-      {self_link show_details='n'}{icon _id='no_information' align='right' onload='adjustThumbnails()'}{/self_link}
+      {self_link show_details='n'}{icon _id='no_information' align='right'}{/self_link}
     {else}
-      {self_link show_details='y'}{icon _id='information' align='right' onload='adjustThumbnails()'}{/self_link}
+      {self_link show_details='y'}{icon _id='information' align='right'}{/self_link}
     {/if}
   {/if}
 
@@ -164,7 +164,7 @@ if (getCookie("fgalKeepOpen")) {
 {/if}
 
 {if $user and $prefs.feature_user_watches eq 'y'}
-<div class="navbar" align="right">
+<div class="categbar" align="right">
   {if $category_watched eq 'y'}
     {tr}Watched by categories{/tr}:
     {section name=i loop=$watching_categories}
@@ -194,6 +194,13 @@ if (getCookie("fgalKeepOpen")) {
 {if $files or ($find ne '')}
   {include file='find.tpl' find_show_num_rows = 'y'}
 {/if}
+{if $prefs.fgal_quota_show eq 'y' && $gal_info.quota}
+	<div style="float:right">
+		{capture name='use'}{math equation="round((100*x)/(1024*1024*y))" x=$gal_info.usedSize y=$gal_info.quota}{/capture}
+		{quotabar length='100' value='$smarty.capture.use'}
+	</div>
+{/if}
+
   {include file='list_file_gallery.tpl'}
 
   {if $galleryId gt 0

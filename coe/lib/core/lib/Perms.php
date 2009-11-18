@@ -101,19 +101,30 @@ class Perms
 	 * a resolver appropriate to the context requested.
 	 */
 	public static function get( array $context = array() ) {
+		if( self::$instance ) {
+			return self::$instance->getAccessor( $context );
+		} else {
+			$accessor = new Perms_Accessor;
+			$accessor->setContext( $context );
+
+			return $accessor;
+		}
+	}
+
+	public function getAccessor( array $context = array() ) {
 		require_once 'lib/core/lib/Perms/Accessor.php';
 		$accessor = new Perms_Accessor;
 		$accessor->setContext( $context );
 
 		if( self::$instance ) {
-			$accessor->setPrefix( self::$instance->prefix );
-			$accessor->setGroups( self::$instance->groups );
+			$accessor->setPrefix( $this->prefix );
+			$accessor->setGroups( $this->groups );
 
-			if( self::$instance->checkSequence ) {
-				$accessor->setCheckSequence( self::$instance->checkSequence );
+			if( $this->checkSequence ) {
+				$accessor->setCheckSequence( $this->checkSequence );
 			}
 
-			if( $resolver = self::$instance->getResolver( $context ) ) {
+			if( $resolver = $this->getResolver( $context ) ) {
 				$accessor->setResolver( $resolver );
 			}
 		}
@@ -209,6 +220,8 @@ class Perms
 	}
 
 	public static function mixedFilter( array $baseContext, $discriminator, $bulkKey, $data, $contextMapMap, $permissionMap ) {
+		//echo '<pre>BASECONTEXT'; print_r($baseContext); echo 'DISCRIMATOR';print_r($discriminator); echo 'BULKEY';print_r($bulkKey); echo 'DATA';print_r($data); echo 'CONTEXTMAPMAP';print_r($contextMapMap); echo 'PERMISSIONMAP';print_r($permissionMap); echo '</pre>';
+
 		$perType = array();
 
 		foreach( $data as $row ) {

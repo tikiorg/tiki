@@ -31,5 +31,3 @@ class Perms_Check_CreatorTest extends TikiTestCase
 		$this->assertTrue( $creator->check( $mock, array( 'creator' => 'foobar' ), 'view', array( 'Registered' ) ) );
 	}
 }
-
-?>

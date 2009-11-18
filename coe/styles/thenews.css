@@ -376,6 +376,12 @@ a.flip:hover {
 	padding: 3px 2px;
 }
 
+#tiki-center div.halffloat div,
+#tiki-center div.thirdfloat div,
+#tiki-center div.quarterfloat div {
+	padding: 0;
+}
+
 /* little margin for all images in #tiki-center */
 #tiki-center img {
 	margin: 1px;
@@ -1619,7 +1625,7 @@ caltrack a:visited {
 	font-size: 90%;
 }
 
-#caltable .calfocuson,
+.caltable .calfocuson,
 .box-data td.fc a.today,
 .box-data td a.today {
 	background: #D4D0C8;

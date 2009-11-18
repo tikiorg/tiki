@@ -837,6 +837,10 @@ function get_objects_with_tag_combo($tagArray, $type='', $thisUser = '', $offset
 	} else {
 	    $query = trim($tag_string);
 	}
+
+	$query = preg_replace('/[<>&;#%!*"]/','',$query);
+	$query = strip_tags(htmlspecialchars($query, ENT_COMPAT));
+
 	$words = preg_split('/(")/', $query,-1,PREG_SPLIT_NO_EMPTY|PREG_SPLIT_DELIM_CAPTURE);
 	$delim = 0;
 	$newwords = array();

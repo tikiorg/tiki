@@ -1,5 +1,4 @@
 {* $Id$ *}
-{if $do_not_show_login_box ne 'y'}
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--
 {literal}
@@ -14,7 +13,7 @@ function capLock(e){
 {/literal}
 //--><!]]>
 </script>
-{if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Login{/tr}"}{/if}
+{if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Login{/tr}"}{/if}{* Left for performance, since tiki-login_scr.php includes this template directly. *}
 {tikimodule error=$module_params.error title=$tpl_module_title name="login_box" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
     {if $user}
       <div>{tr}Logged in as{/tr}: <span style="white-space: nowrap">{$user|userlink}</span></div>
@@ -27,11 +26,12 @@ function capLock(e){
           <legend>{tr}Switch User{/tr}</legend>
           <label for="login-switchuser">{tr}User{/tr}:</label>
           <input type="hidden" name="su" value="1" />
+		  {if $prefs.feature_help eq 'y'}
+			{help url="Switch+User" desc="{tr}Help{/tr}" desc="{tr}Switch User{/tr}:{tr}Enter user name and click 'Switch'.<br> Useful for testing permissions.{/tr}"}
+		  {/if}
           <input type="text" name="username" id="login-switchuser" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" />
-					{if $prefs.feature_help eq 'y'}
-						{help url="Switch+User" desc="{tr}Help{/tr}"}
-					{/if}
           <div style="text-align: center"><button type="submit" name="actsu">{tr}Switch{/tr}</button></div>
+		  {jq}$jq("#login-switchuser").tiki("autocomplete", "username"){/jq}
          </fieldset>
         </form>
       {/if}
@@ -174,4 +174,3 @@ function capLock(e){
 		</form>
 	{/if}
 {/tikimodule}
-{/if}

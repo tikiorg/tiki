@@ -38,6 +38,8 @@ if ($tiki_p_admin != 'y') {
     $smarty->display('error.tpl');
     die;
 }
+$auto_query_args = array();
+
 // Values for the user_module edit/create form
 $smarty->assign('um_name', '');
 $smarty->assign('um_title', '');
@@ -140,7 +142,7 @@ if (isset($_REQUEST["um_update"])) {
     $smarty->assign_by_ref('um_title', $_REQUEST["um_title"]);
     $smarty->assign_by_ref('um_data', $_REQUEST["um_data"]);
     $smarty->assign_by_ref('um_parse', $_REQUEST["um_parse"]);
-    $modlib->replace_user_module(preg_replace("/\W/", "_", $_REQUEST["um_name"]) , $_REQUEST["um_title"], $_REQUEST["um_data"], $_REQUEST["um_parse"]);
+    $modlib->replace_user_module($_REQUEST["um_name"], $_REQUEST["um_title"], $_REQUEST["um_data"], $_REQUEST["um_parse"]);
     $logslib->add_log('adminmodules', 'changed user module ' . $_REQUEST["um_name"]);
 }
 if (!isset($_REQUEST["groups"])) {
@@ -289,6 +291,7 @@ $all_modules_info = array_combine(
 	$all_modules, 
 	array_map( array( $modlib, 'get_module_info' ), $all_modules ) 
 ) ;
+asort($all_modules_info);
 $smarty->assign( 'all_modules_info', $all_modules_info);
 $orders = array();
 for ($i = 1;$i < 50;$i++) {

@@ -25,12 +25,14 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  */
 
 function smarty_block_tabset($params, $content, &$smarty, &$repeat) {
-	global $prefs, $smarty_tabset_name, $smarty_tabset;
-	static $i_tabset;
+	global $prefs, $smarty_tabset_name, $smarty_tabset, $smarty_tabset_i_tab, $cookietab, $headerlib;
 
 	if ( $repeat ) {
 		// opening 
 		$smarty_tabset = array();
+		if (!isset($smarty_tabset_i_tab)) {
+			$smarty_tabset_i_tab = 1;
+		}
 		if ( isset($params['name']) and !empty($params['name']) ) {
 			$smarty_tabset_name = $params['name'];
 		} else {
@@ -47,7 +49,7 @@ function smarty_block_tabset($params, $content, &$smarty, &$repeat) {
 				if (isset($_COOKIE["tabbed_$smarty_tabset_name"]) and $_COOKIE["tabbed_$smarty_tabset_name"] == 'n') {
 					$button_params['_text'] = tra('Tab View');
 				} else {
-					$button_params['_text'] = tra('No Tab');
+					$button_params['_text'] = tra('No Tabs');
 				}
 				$button_params['_auto_args']='*';
 				$button_params['_onclick'] = "setCookie('tabbed_$smarty_tabset_name','".((isset($_COOKIE["tabbed_$smarty_tabset_name"]) && $_COOKIE["tabbed_$smarty_tabset_name"] == 'n') ? 'y' : 'n' )."') ;";
@@ -62,17 +64,18 @@ function smarty_block_tabset($params, $content, &$smarty, &$repeat) {
 		}
 		$ret .= '<div class="tabs">
 			';
-		$max = sizeof($smarty_tabset);
-		if (empty($i_tabset)) {
-			$i_tabset = 1;
-		}
+		$max = $smarty_tabset_i_tab - 1;
+		$ini = $smarty_tabset_i_tab - sizeof($smarty_tabset);
+		$focus = $ini;
 		foreach ($smarty_tabset as $value) {
-			$ret .= '	<span id="tab'.$i_tabset.'" class="tabmark tabinactive"><a href="#content'.$i_tabset.'" onclick="javascript:tikitabs('.$i_tabset.','.$max.'); return false;">'.$value.'</a></span>
+			$ret .= '	<span id="tab'.$focus.'" class="tabmark tabinactive"><a href="#content'.$focus.'" onclick="javascript:tikitabs('.$focus.','.$max.','.$ini.'); return false;">'.$value.'</a></span>
 				';
-			$i_tabset++;
+			++$focus;
 		}
-		//$ret .= '<span class="tabmark tabinactive"><a href="#">'.$notabs.'</a></span></div>'.$content;
 		$ret .= "</div>$content";
+		if ($cookietab < $ini || $cookietab > $max) { // todo:: need to display the first tab
+			$ret .= "<script type='text/javascript'>tikitabs($ini, $max, $ini);</script>";
+		}
 		return $ret;
 	}
 }

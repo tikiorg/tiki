@@ -137,5 +137,3 @@ $page = array('revisions' => array(
               ),
               'name' => 'Redes de ensino'
 );
-
-?>

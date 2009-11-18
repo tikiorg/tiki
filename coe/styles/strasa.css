@@ -1,5 +1,7 @@
-/* Strasa theme for TikiWiki CMS/Groupware, design by Patrick Allard,
-   released under LGPL license. For more information, visit http://themes.tikiwiki.org. */
+/* Strasa theme for Tiki 4.x, original design by Patrick Allard,
+   released under LGPL license. For more information, visit http://themes.tikiwiki.org
+   $Id$
+*/
 
 /* import *lite as the base: */
 @import "lite/lite.css"; 
@@ -34,8 +36,9 @@ a:hover {
 	color: #000000;
 }
 
-h1, h2, h3, h4, h5 {
+h1, h2, h3, h4, h5, h6 {
 	font-family: Helvetica, sans-serif;
+	margin-bottom: .5em;
 }
 
 h1 {
@@ -43,24 +46,31 @@ h1 {
 }
 
 h2 {
-	font-size: 1.4em;
+	font-size: 1.8em;
 }
 
 h3 {
-	font-size: 1.3em;
+	font-size: 1.6em;
 }
 
 h4 {
-	font-size: 1.2em;
+	font-size: 1.4em;
 }
 
 h5 {
-	font-size: 1.1em;
+	font-size: 1.2em;
 }
 
 h6 {
 	font-size: 1.05em;
 }
+
+.wikitext h1 {color: #000000}
+.wikitext h2 {color: #309FC0; line-height: .9; border-bottom: solid 1px #3090C0; text-transform: uppercase}
+.wikitext h3 {color: #303030; line-height: .8em; font-style: italic}
+.wikitext h4 {border-bottom: dashed 1px #CCF0FF; color: #3F3F3F}
+.wikitext h5 {color: #6F6F6F; font-style: italic}
+.wikitext h6 {color: #909090}
 
 hr {
 	background: #aaa;
@@ -350,7 +360,6 @@ div#tiki-main {
 
 #siteheader {
 	background: #fff;
-	position: relative;
 }
 
 #customcode,
@@ -364,6 +373,7 @@ div#tiki-main {
 
 div#sioptions {
 	padding: 0 58px;
+	position: relative;
 }
 
 #sioptionscentered {
@@ -417,6 +427,7 @@ div#sitelogo {
 #siteloginbar .pass {
 	display: inline;
 	margin-left: 1em;
+	padding-right: 10px;
 }
 
 #siteloginbar .register {
@@ -680,10 +691,10 @@ a.phplmselected:hover {
 /** CSS (suckerfish) menus **/
 
 /* default link padding */
-.cssmenu_horiz a,
+/*.cssmenu_horiz a,
 .cssmenu_vert a {
 	padding: .75em 1em;
-}
+}*/
 
 /* typography, colors */
 
@@ -700,7 +711,7 @@ a.phplmselected:hover {
 	border-top: 1px solid #233039;
 }
 
-.cssmenu_horiz li:hover {
+#tiki-top .cssmenu_horiz li:hover {
 	background: #1b3a50;
 }
 
@@ -733,17 +744,20 @@ a.phplmselected:hover {
 	color: #000000;
 }
 
-/* left column width */
+#col2 .cssmenu_vert {
+	padding-left: 0;
+}
 
+/* left column width */
 #col2 .cssmenu_vert,
 #col2 .cssmenu_vert li {
-	width: 160px;
+	width: 170px;
 }
 
 /* offset from left column (matches above) */
 #col2 .cssmenu_vert li:hover ul,
 #col2 .cssmenu_vert li.sfHover ul {
-	left: 155px;
+	left: 165px;
 }
 
 /* return ul ul ... to default */
@@ -803,6 +817,14 @@ a.phplmselected:hover {
 	color: #fff;
 }
 
+#tiki-top .cssmenu_horiz li ul li a,
+#tiki-top .cssmenu_horiz li ul li a:link,
+#tiki-top .cssmenu_horiz li ul li a:visited,
+#tiki-top .cssmenu_horiz li ul li a:hover {
+	text-align: left;
+	border: 0;
+}
+
 #tiki-top .cssmenu_horiz li ul li a:hover {
 	background: none;	
 }
@@ -820,31 +842,25 @@ a.phplmselected:hover {
 	border-top: 1px solid #08698f;
 }
 
-#tiki-top .cssmenu_horiz li ul {
-	top: 2em;
+/*#tiki-top */.cssmenu_horiz li ul {
+	margin-top: -7px;
 }
 
-#tiki-top .cssmenu_horiz li ul ul,
-.cssmenu_vert li ul ul {
-	top: -0.1em;
+/*#tiki-top */.cssmenu_horiz li ul ul {
+	margin-top: -1px;
 }
 
-#tiki-top .cssmenu_horiz li a .sf-sub-indicator {
-	top: .4em;
-}
-
-.cssmenu_vert li a .sf-sub-indicator {
+.cssmenu_vert li a .sf-sub-indicator,
+.cssmenu_horiz li ul li a .sf-sub-indicator {
+	background: url(strasa/arrows-467aa7.png);
 	top: .3em;
 }
 
-
-.cssmenu_horiz > li.menusection > a {
-	padding-right: 2.6em;
+/*#tiki-top */.cssmenu_horiz li a .sf-sub-indicator {
+	background: url(strasa/arrows-a2ecff.png) no-repeat -10px -100px;
+	top: 6px;
 }
 
-.cssmenu_vert li a .sf-sub-indicator {
-	background: url(strasa/arrows-467aa7.png);
-}
 
 /** Links in other menus **/
 div.separator {
@@ -898,7 +914,7 @@ div.adminanchors {
 /** Modules **/
 #col2 .box {
 	background: #cce5ff;
-	border-bottom: 2px ridge #bed8f1;
+	border-bottom: dashed 1px #fff;
 }
 
 #col3 .box {
@@ -908,11 +924,13 @@ div.adminanchors {
 h3.box-title {
 	padding-top: 4px;
 	padding-left: 10px;
+	font-size: 1.5em;
 }
 
 #col2 .box-title {
+	color: #309fc0;
 	margin-top: 0;
-	margin-bottom: 0;
+	margin-bottom: .3em;
 }
 
 img.flipmodimage:hover {
@@ -921,6 +939,11 @@ img.flipmodimage:hover {
 
 .box-data {
 	padding: 0 5px 10px 10px;
+}
+
+/* module last blog posts */
+.box-last_blog_posts .box-data li {
+	margin: 10px 0;
 }
 	
 /** Other boxes **/
@@ -1008,20 +1031,12 @@ table.admin {
 	padding: 3px;
 }
 
-tr.odd td {
-	background: #f0f0f0;
-}
-
-tr.even td {
-	background: #dcdcdc;
-}
-
-td.odd {
+.odd {
 	background: #f0f0f0;
 	color: #000;
 }
 
-td.even {
+.even {
 	background: #dcdcdc;
 	color: #000;
 }
@@ -1920,19 +1935,19 @@ div.multiselect {
 	font-weight: bold;
 }
 
-#caltable .calfocuson,
+.caltable .calfocuson,
 .box-data td.fc a.today,
 .box-data td a.today {
 	background: #D4D0C8;
 	border: solid 1px #696969;
 }
 
-#caltable .calfocuson a {
+.caltable .calfocuson a {
 	color: #000;
 }
 
-#caltable .calfocus a,
-#caltable .calfocuson a {
+.caltable .calfocus a,
+.caltable .calfocuson a {
 	text-decoration: none;
 }
 
@@ -1948,7 +1963,7 @@ div.multiselect {
 	color: #cce5ff;
 }
 
-#caltable .weeks {
+.caltable .weeks {
 	background: #1b3a50;
 	color: #cce5ff;
 }
@@ -1998,7 +2013,10 @@ div.questionblock {
 
 /***** Shoutbox *****/
 textarea.tshoutbox{
-	width: 162px;
+	width: 135px;
+}
+.box-shoutbox table td {
+	font-size: .65em;
 }
 
 /***** Directory *****/

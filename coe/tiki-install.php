@@ -51,9 +51,14 @@ class InstallerDatabaseErrorHandler implements TikiDb_ErrorHandler
 // Were database details defined before? If so, load them
 if (file_exists('db/local.php')) {
 	include 'db/local.php';
+
+	// In case of replication, ignore it during installer.
+	unset( $shadow_dbs, $shadow_user, $shadow_pass, $shadow_host );
+
 	include_once 'lib/adodb/adodb.inc.php';
 	$dbTiki = ADONewConnection($db_tiki);
 	$db = new TikiDb_Adodb($dbTiki);
+	$db->setServerType($db_tiki);
 	$db->setErrorHandler(new InstallerDatabaseErrorHandler);
 	TikiDb::set($db);
 
@@ -102,7 +107,8 @@ function createPage($title, $content){
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<link type="text/css" href="styles/strasa.css" rel="stylesheet" />
+		<link type="text/css" rel="stylesheet" href="styles/strasa.css" />
+		<link type="text/css" rel="stylesheet" href="styles/strasa/options/fixed_width.css" />
 		<style type="text/css" media="screen">
 html {
 	background-color: #fff;

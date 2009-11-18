@@ -1,4 +1,4 @@
-{title help="Newsletters"}{tr}Sent editions{/tr}{if $nl_info}: {$nl_info.name}{/if}{/title}
+{title help="Newsletters"}{tr}Sent editions{/tr}{if $nl_info}: {$nl_info.name|escape}{/if}{/title}
 
 <div class="navbar">
 	{if $tiki_p_list_newsletters eq "y"}
@@ -20,7 +20,7 @@
   <h2>{tr}Sent Edition{/tr}</h2>
 </div>
 <h3>{tr}Subject{/tr}</h3>
-<div class="simplebox wikitext">{$edition.subject}</div>
+<div class="simplebox wikitext">{$edition.subject|escape}</div>
 
 <h3>{tr}HTML version{/tr}</h3>
 <div class="simplebox wikitext">{$edition.dataparsed}</div>

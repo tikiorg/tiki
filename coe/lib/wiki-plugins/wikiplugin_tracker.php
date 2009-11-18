@@ -67,7 +67,7 @@ function wikiplugin_tracker_info() {
 			'url' => array(
 				'required' => false,
 				'name' => tra('URL'),
-				'description' => tra('Url used for the field links'),
+				'description' => tra('URL used for the field links'),
 				'filter' => 'url'
 			),
 			'target' => array(
@@ -211,7 +211,8 @@ function wikiplugin_tracker($data, $params) {
 	if (!isset($showmandatory)) {
 		$showmandatory = 'y';
 	}
-		$smarty->assign('showmandatory', $showmandatory); 
+	$smarty->assign('showmandatory', $showmandatory); 
+	if (!empty($wiki)) $wiki = trim($wiki);
 
 	if (isset($values)) {
 		if (!is_array($values)) {
@@ -233,6 +234,7 @@ function wikiplugin_tracker($data, $params) {
 
 	if (empty($_SERVER['SCRIPT_NAME']) || !strstr($_SERVER['SCRIPT_NAME'],'tiki-register.php')) {
 		if (!empty($itemId) && $tracker['writerCanModify'] == 'y' && isset($usertracker) && $usertracker) { // user tracker he can modify
+		} elseif (!empty($itemId) && $tracker['writerCanModify'] == 'y' && $user && (($itemUser = $trklib->get_item_creator($trackerId, $itemId)) == $user || ($tracker['userCanTakeOwnership'] == 'y' && empty($itemUser)))) {
 		} elseif (!empty($itemId) && isset($grouptracker) && $grouptracker) {
 		} else {
 			$perms = $tikilib->get_perm_object($trackerId, 'tracker', $tracker, false);
@@ -269,7 +271,6 @@ function wikiplugin_tracker($data, $params) {
 	$thisIsThePlugin = isset($_REQUEST['iTRACKER']) && $_REQUEST['iTRACKER'] == $iTRACKER;
 
 	if (!isset($_REQUEST["ok"]) || $_REQUEST["ok"]  == "n" || !$thisIsThePlugin || isset($_REQUEST['tr_preview'])) {
-	
 		$field_errors = array('err_mandatory'=>array(), 'err_value'=>array());
 	
 			global $notificationlib; include_once('lib/notifications/notificationlib.php');
@@ -286,7 +287,7 @@ function wikiplugin_tracker($data, $params) {
 				}
 				$ret = array();
 				foreach($flds['data'] as $field) {
-					if ($field['type'] == 'u' || $field['type'] == 'g' || in_array($field['fieldId'], $outf)) {
+					if ($field['type'] == 'q' || $field['type'] == 'u' || $field['type'] == 'g' || in_array($field['fieldId'], $outf)) {
 						$ret[] = $field;
 					}
 				}
@@ -447,7 +448,7 @@ function wikiplugin_tracker($data, $params) {
 
 				if( count($field_errors['err_mandatory']) == 0  && count($field_errors['err_value']) == 0 && empty($field_errors['err_antibot']) && !isset($_REQUEST['tr_preview'])) {
 					/* ------------------------------------- save the item ---------------------------------- */
-					if (!isset($itemId)) {
+					if (!isset($itemId) && $tracker['oneUserItem'] == 'y') {
 						$itemId = $trklib->get_user_item($trackerId, $tracker);
 					}
 					if (isset($_REQUEST['status'])) {
@@ -533,8 +534,8 @@ function wikiplugin_tracker($data, $params) {
 				}
 				if (isset($fields)) {
 					$fl = split(':', $fields);
-					for ($j = 0; $j < count($fl); $j++) {
-						for ($i = 0; $i < count($flds['data']); $i++) {
+					for ($j = 0, $count_fl = count($fl); $j < $count_fl; $j++) {
+						for ($i = 0, $count_flds = count($flds['data']); $i < $count_flds; $i++) {
 							if ($flds['data'][$i]['fieldId'] == $fl[$j]) { 
 								$flds['data'][$i]['value'] = $values[$j];
 							}	
@@ -574,7 +575,7 @@ function wikiplugin_tracker($data, $params) {
 				} else {
 					unset($fl);
 				}
-				for($i = 0; $i < count($flds['data']); $i++) {
+				for ($i = 0, $count_flds2 = count($flds['data']); $i < $count_flds2; $i++) {
 					if (isset($fl) && ($j = array_search($flds['data'][$i]['fieldId'], $fl)) !== false) {
 						$flds['data'][$i]['value'] = $_REQUEST['values'][$j];
 					} else {
@@ -756,7 +757,7 @@ function wikiplugin_tracker($data, $params) {
 						}
 					} elseif ($f['type'] == 'e') {
 						global $categlib; include_once('lib/categories/categlib.php');
-						$flds['data'][$i]['list'] = $categlib->get_child_categories($f["options_array"][0]);
+						$flds['data'][$i]['list'] = $categlib->get_viewable_child_categories($f["options_array"][0]);
 					} elseif ($f['type'] == 'A') {
 						if (!empty($f['value'])) {
 							$flds['data'][$i]['info'] = $trklib->get_item_attachment($f['value']);

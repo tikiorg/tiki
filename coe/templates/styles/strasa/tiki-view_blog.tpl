@@ -1,17 +1,55 @@
 {* $Id$ *}
-<a class="link" href="tiki-list_blogs.php">{tr}Blogs{/tr}</a> {$prefs.site_crumb_seper} {$title}
-{if strlen($heading) > 0}
+<a class="link" href="tiki-list_blogs.php">{tr}Blogs{/tr}</a> {$prefs.site_crumb_seper} {$title|escape}
+{if strlen($heading) > 0 and $prefs.feature_blog_heading eq 'y'}
 	{eval var=$heading}
 {else}
 	{include file="blog-heading.tpl"}
 {/if}
+<div class="bloginfo" align="right" >
+<span class="blogactions">
+		{if $tiki_p_blog_post eq "y"}
+		{if ($user and $creator eq $user) or $tiki_p_blog_admin eq "y" or $public eq "y"}
+		<a class="bloglink" href="tiki-blog_post.php?blogId={$blogId}">{icon _id='pencil_add' alt='{tr}Post{/tr}'}</a>
+		{/if}
+		{/if}
+		{if $prefs.rss_blog eq "y"}
+		<a class="bloglink" href="tiki-blog_rss.php?blogId={$blogId}">{icon _id='feed' alt='{tr}RSS feed{/tr}'}</a>
+		{/if}
+		{if ($user and $creator eq $user) or $tiki_p_blog_admin eq "y"}
+		<a class="bloglink" href="tiki-edit_blog.php?blogId={$blogId}">{icon _id='page_edit' alt='{tr}Edit blog{/tr}'}</a>
+		{/if}
+		
+		{if $user and $prefs.feature_user_watches eq 'y'}
+		{if $user_watching_blog eq 'n'}
+		<a href="tiki-view_blog.php?blogId={$blogId}&amp;watch_event=blog_post&amp;watch_object={$blogId}&amp;watch_action=add" class="icon">{icon _id='eye' alt='{tr}Monitor this Blog{/tr}'}</a>
+		{else}
+		<a href="tiki-view_blog.php?blogId={$blogId}&amp;watch_event=blog_post&amp;watch_object={$blogId}&amp;watch_action=remove" class="icon">{icon _id='no_eye' alt='{tr}Stop Monitoring this Blog{/tr}'}</a>
+		{/if}
+		{/if}
+		{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
+			<a href="tiki-object_watches.php?objectId={$blogId|escape:"url"}&amp;watch_event=blog_post&amp;objectType=blog&amp;objectName={$title|escape:"url"}&amp;objectHref={'tiki-view_blog.php?blogId='|cat:$blogId|escape:"url"}" class="icon">{icon _id='eye_group' alt='{tr}Group Monitor{/tr}'}</a>
+		{/if}
+
+</span>
+
+{if $user and $prefs.feature_user_watches eq 'y'}
+	{if $category_watched eq 'y'}
+		{tr}Watched by categories{/tr}:
+		{section name=i loop=$watching_categories}
+			<a href="tiki-browse_categories.php?parentId={$watching_categories[i].categId}" 
+class="icon">{$watching_categories[i].name}</a>&nbsp;
+		{/section}
+	{/if}		
+{/if}
+</div>
+<br />
 {if $use_find eq 'y'}
 	<div class="blogtools">
 		<form action="tiki-view_blog.php" method="get">
 			<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 			<input type="hidden" name="blogId" value="{$blogId|escape}" />
 	{tr}Find:{/tr} 
-			<input type="text" name="find" value="{$find|regex_replace:"/\"/":"'"}" /> 
+			<input type="text" name="find" value="{$find|escape}" /> 
 			<input type="submit" name="search" value="{tr}Find{/tr}" />
 		</form>
 	</div>
@@ -37,13 +75,7 @@
 		{$listpages[ix].avatar}
 	{/if}
 			<div class="title">
-
-	{if $use_title eq 'y'}
-				<h2>{$listpages[ix].title}</h2>
-	{else}
-				<h2>{$listpages[ix].created|tiki_short_datetime}</h2>
-	{/if}
-
+				<h2><a class="link" href="{$listpages[ix].postId|sefurl:blogpost}">{$listpages[ix].title|escape}</a></h2>
 			</div>
 			
 		</div><!-- postbody-title -->
@@ -61,12 +93,9 @@
 			</div>
 			
 			<div class="author_info">
-	{if $use_title eq 'y'}
 		{tr}By{/tr} {$listpages[ix].user|userlink}
 		{tr}on{/tr} {$listpages[ix].created|tiki_short_datetime}
-	{else}
-		{tr}By{/tr} {$listpages[ix].user}
-	{/if}
+
 			</div>
 		</div><!-- author_actions -->
 
@@ -94,12 +123,11 @@
 				<div class="postfooter">
 					<div class="status">{* renamed to match forum footer layout *}
 						<a href='tiki-print_blog_post.php?postId={$listpages[ix].postId}'>{icon _id='printer' alt='{tr}Print{/tr}'}</a>
-						<a href='tiki-send_blog_post.php?postId={$listpages[ix].postId}'>{icon _id='email' alt='{tr}Email This Post{/tr}'}</a>
 					</div><!-- status -->
 					<div class="actions">{* renamed to match forum footer layout *}
 						<a class="link" href="{$listpages[ix].postId|sefurl:blogpost}">{tr}Permalink{/tr}</a>
 	{if $allow_comments eq 'y' and $prefs.feature_blogposts_comments eq 'y'}
-						<a class="link" href="tiki-view_blog_post.php?find={$find}&amp;blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;postId={$listpages[ix].postId}&amp;show_comments=1">{$listpages[ix].comments}
+						<a class="link" href="tiki-view_blog_post.php?find={$find|escape:url}&amp;blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;postId={$listpages[ix].postId}&amp;show_comments=1">{$listpages[ix].comments}
 						{if $listpages[ix].comments == 1}{tr}comment{/tr}{else}{tr}comments{/tr}{/if}</a>
 	{/if}
 					</div><!-- actions -->
@@ -113,10 +141,3 @@
 
 {pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
 
-{if $prefs.feature_blog_comments == 'y'	&& (($tiki_p_read_comments  == 'y' && $comments_cant != 0) || $tiki_p_post_comments  == 'y' || $tiki_p_edit_comments  == 'y')}
-	<div id="page-bar">
-		{include file=comments_button.tpl}
-	</div>
-
-	{include file=comments.tpl}
-{/if}

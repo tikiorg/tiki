@@ -14,5 +14,15 @@ function prefs_tiki_list() {
 				'feature_version_checks',
 			),
 		),
+		'tiki_minify_javascript' => array(
+			'name' => tra('Minify javascript'),
+			'description' => tra('Compress javascript files used in the page into a single file to be distributed statically. Changes to javascript files will require cache to be cleared.'),
+			'type' => 'flag',
+		),
+		'tiki_same_day_time_only' => array(
+			'name' => tra('Skip date for same day'),
+			'description' => tra('When displaying short date and time, skip date for today. Only time will be displayed.'),
+			'type' => 'flag',
+		),
 	);
 }

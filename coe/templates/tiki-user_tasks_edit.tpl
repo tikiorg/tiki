@@ -91,15 +91,15 @@
 			{if ($receive_users)} 
 				<select name="task_user" {if ($info.taskId > 0 and !$admin_mode) } disabled="disabled" > <option value="{$info.user}">{$info.user}</option></select><input type="hidden" name="task_user" value="{$info.user}" />{else}>
 				{section name=user_i loop=$receive_users} 
-					<option value="{$receive_users[user_i].login}" 
+					<option value="{$receive_users[user_i].login|escape}" 
 						{if ( $receive_users[user_i].login eq $info.user) } selected="selected" {/if}>
-							{$receive_users[user_i].login}
+							{$receive_users[user_i].login|escape}
 					</option>
 				{/section}
 				</select>
 				{/if}
 			{else}
-			<input  type="text" name="task_user" value="{$info.user|escape}" />
+			<input type="text" name="task_user" value="{$info.user|escape}" />
 			{/if}
 			{if (($info.user ne $info.creator) or ($taskId eq 0)) } 
 				&nbsp;
@@ -181,9 +181,9 @@
 		<select name="public_for_group">
 			<option></option>
 		{section name=groups_i loop=$receive_groups} 
-			<option value="{$receive_groups[groups_i].groupName}" 
+			<option value="{$receive_groups[groups_i].groupName|escape}" 
 				{if ( $receive_groups[groups_i].groupName eq $info.public_for_group) } selected="selected" {/if}>
-					{$receive_groups[groups_i].groupName}
+					{$receive_groups[groups_i].groupName|escape}
 			</option>
 		{/section}
 		</select>

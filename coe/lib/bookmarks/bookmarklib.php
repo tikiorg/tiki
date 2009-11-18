@@ -11,13 +11,13 @@ class BookmarkLib extends TikiLib {
 		$path = '';
 
 		$info = $this->get_folder($folderId, $user);
-		$path = '<a class="link" href=tiki-user_bookmarks.php?parentId="' . $info["folderId"] . '">' . $info["name"] . '</a>';
+		$path = '<a class="link" href=tiki-user_bookmarks.php?parentId="' . $info["folderId"] . '">' . htmlspecialchars($info["name"]) . '</a>';
 
 		while ($info["parentId"] != 0) {
 			$info = $this->get_folder($info["parentId"], $user);
 
 			$path
-				= $path = '<a class="link" href=tiki-user_bookmarks.php?parentId="' . $info["folderId"] . '">' . $info["name"] . '</a>' . '>' . $path;
+				= $path = '<a class="link" href=tiki-user_bookmarks.php?parentId="' . $info["folderId"] . '">' . htmlspecialchars($info["name"]) . '</a>' . '>' . $path;
 		}
 
 		return $path;
@@ -48,7 +48,7 @@ class BookmarkLib extends TikiLib {
 	}
 
 	function remove_url($urlId, $user) {
-		$query = "delete from `tiki_user_bookmarks_urls` where `urlId`=? and user=?";
+		$query = "delete from `tiki_user_bookmarks_urls` where `urlId`=? and `user`=?";
 
 		$result = $this->query($query,array($urlId,$user));
 		return true;

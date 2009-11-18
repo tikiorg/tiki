@@ -25,6 +25,11 @@ RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule (.*) - [L]
 
+# Rewrite rule to make this Tiki a profiles repository (uncomment to enable)
+# Set the parentId (here set as 1) to the Id of the category containing your profile pages
+# See http://doc.tikiwiki.org/Profiles for more
+#RewriteRule ^profiles$             tiki-browse_categories.php?find=&deep=on&type=wiki+page&parentId=1&sort_mode=name_asc&plain&maxRecords=1000000 [L]
+
 # Tiki 3.0 requires PHP5. If your host doesn't offer PHP5 by default, it's possible that it can be activated by using (uncommenting) the lines below. Check with your host.
 # AddType application/x-httpd-php5 .php
 # AddHandler application/x-httpd-php5 .php
@@ -44,7 +49,6 @@ RewriteRule ^cal([0-9]+),([0-9]+),([0-9]+)  tiki-calendar.php?calIds[]=$1&calIds
 RewriteRule ^cal([0-9]+),([0-9]+)  tiki-calendar.php?calIds[]=$1&calIds[]=$2 [QSA,L]
 RewriteRule ^cal([0-9]+)           tiki-calendar.php?calIds[]=$1            [QSA,L]
 RewriteRule ^categories$           tiki-browse_categories.php               [L]
-RewriteRule ^charts$               tiki-list_charts.php                     [L]
 RewriteRule ^chat$                 tiki-chat.php                            [L]
 RewriteRule ^contact$              tiki-contact.php                         [L]
 RewriteRule ^directories$          tiki-directory_browse.php                [L]
@@ -61,48 +65,45 @@ RewriteRule ^quizzes$              tiki-list_quizzes.php                    [L]
 RewriteRule ^stats$                tiki-stats.php                           [L]
 RewriteRule ^surveys$              tiki-list_surveys.php                    [L]
 RewriteRule ^trackers$             tiki-list_trackers.php                   [L]
-RewriteRule ^irc$                  tiki-irc_logs.php                        [L]
 RewriteRule ^mobile$               tiki-mobile.php                          [L]
 RewriteRule ^wml$                  tiki-mobile.php                          [L]
 RewriteRule ^sheets$               tiki-sheets.php                          [L]
-RewriteRule ^workspaces$           tiki-workspaces_admin.php                [L]
 
 # access any object by its numeric identifier
 RewriteRule ^article([0-9]+)\-.*$  article$1
 RewriteRule ^blog([0-9]+)\-.*$     blog$1
 RewriteRule ^blogpost([0-9]+)\-.*$ blogpost$1
-RewriteRule ^article([0-9]+)       tiki-read_article.php?articleId=$1       [QSA,L]
-RewriteRule ^art([0-9]+)           tiki-read_article.php?articleId=$1       [QSA,L]
-RewriteRule ^cat([0-9]+)           tiki-browse_categories.php?parentId=$1   [QSA,L]
-RewriteRule ^blog([0-9]+)          tiki-view_blog.php?blogId=$1             [QSA,L]
-RewriteRule ^blogpost([0-9]+)      tiki-view_blog_post.php?postId=$1        [QSA,L]
-RewriteRule ^browseimage([0-9]+)   tiki-browse_image.php?imageId=$1         [QSA,L]
-RewriteRule ^chart([0-9]+)         tiki-view_chart.php?chartId=$1           [QSA,L]
-RewriteRule ^directory([0-9]+)     tiki-directory_browse.php?parent=$1      [QSA,L]
-RewriteRule ^faq([0-9]+)           tiki-view_faq.php?faqId=$1               [QSA,L]
-RewriteRule ^file([0-9]+)          tiki-list_file_gallery.php?galleryId=$1  [QSA,L]
+RewriteRule ^article([0-9]+)(.*)   tiki-read_article.php?articleId=$1$2     [QSA,L]
+RewriteRule ^art([0-9]+)(.*)       tiki-read_article.php?articleId=$1$2     [QSA,L]
+RewriteRule ^cat([0-9]+)(.*)       tiki-browse_categories.php?parentId=$1$2 [QSA,L]
+RewriteRule ^blog([0-9]+)(.*)      tiki-view_blog.php?blogId=$1$2           [QSA,L]
+RewriteRule ^blogpost([0-9]+)(.*)  tiki-view_blog_post.php?postId=$1$2      [QSA,L]
+RewriteRule ^browseimage([0-9]+)(.*) tiki-browse_image.php?imageId=$1$2     [QSA,L]
+RewriteRule ^directory([0-9]+)(.*) tiki-directory_browse.php?parent=$1$2    [QSA,L]
+RewriteRule ^faq([0-9]+)(.*)       tiki-view_faq.php?faqId=$1$2             [QSA,L]
+RewriteRule ^file([0-9]+)(.*)      tiki-list_file_gallery.php?galleryId=$1$2 [QSA,L]
 RewriteRule ^dl([0-9]+)(.*)        tiki-download_file.php?fileId=$1$2       [QSA,L]
-RewriteRule ^thumbnail([0-9]+)     tiki-download_file.php?fileId=$1&thumbnail [QSA,L]
+RewriteRule ^thumbnail([0-9]+)(.*) tiki-download_file.php?fileId=$1&thumbnail$2 [QSA,L]
 RewriteRule ^display([0-9]+)(.*)   tiki-download_file.php?fileId=$1&display$2 [QSA,L]
 RewriteRule ^preview([0-9]+)(.*)   tiki-download_file.php?fileId=$1&preview$2 [QSA,L]
-RewriteRule ^forum([0-9]+)         tiki-view_forum.php?forumId=$1           [QSA,L]
-RewriteRule ^gallery([0-9]+)       tiki-browse_gallery.php?galleryId=$1     [QSA,L]
-RewriteRule ^image([0-9]+)         show_image.php?id=$1                     [QSA,L]
-RewriteRule ^imagescale([0-9]+)/([0-9]+) show_image.php?id=$1&scalesize=$2  [QSA,L]
-RewriteRule ^newsletter([0-9]+)    tiki-newsletters.php?nlId=$1             [QSA,L]
-RewriteRule ^quiz([0-9]+)          tiki-take_quiz.php?quizId=$1             [QSA,L]
-RewriteRule ^survey([0-9]+)        tiki-take_survey.php?surveyId=$1         [QSA,L]
-RewriteRule ^tracker([0-9]+)       tiki-view_tracker.php?trackerId=$1       [QSA,L]
-RewriteRule ^item([0-9]+)          tiki-view_tracker_item.php?itemId=$1     [QSA,L]
-RewriteRule ^irc([0-9]+)           tiki-irc_logs.php?focus=$1               [QSA,L]
-RewriteRule ^int([0-9]+)           tiki-integrator.php?repID=$1             [QSA,L]
-RewriteRule ^sheet([0-9]+)         tiki-view_sheets.php?sheetId=$1          [QSA,L]
-RewriteRule ^ws([0-9]+)            tiki-workspaces_desktop.php?workspaceId=$1    [QSA,L]
-RewriteRule ^poll([0-9]+)          tiki-poll_form.php?pollId=$1             [QSA,L]
+RewriteRule ^forum([0-9]+)(.*)     tiki-view_forum.php?forumId=$1$2         [QSA,L]
+RewriteRule ^gallery([0-9]+)(.*)   tiki-browse_gallery.php?galleryId=$1$2   [QSA,L]
+RewriteRule ^image([0-9]+)(.*)     show_image.php?id=$1$2                   [QSA,L]
+RewriteRule ^imagescale([0-9]+)/([0-9]+)(.*) show_image.php?id=$1&scalesize=$2$3  [QSA,L]
+RewriteRule ^newsletter([0-9]+)(.*) tiki-newsletters.php?nlId=$1$2          [QSA,L]
+RewriteRule ^quiz([0-9]+)(.*)      tiki-take_quiz.php?quizId=$1$2           [QSA,L]
+RewriteRule ^survey([0-9]+)(.*)    tiki-take_survey.php?surveyId=$1$2       [QSA,L]
+RewriteRule ^tracker([0-9]+)(.*)   tiki-view_tracker.php?trackerId=$1$2     [QSA,L]
+RewriteRule ^item([0-9]+)(.*)      tiki-view_tracker_item.php?itemId=$1$2   [QSA,L]
+RewriteRule ^int([0-9]+)(.*)       tiki-integrator.php?repID=$1$2           [QSA,L]
+RewriteRule ^sheet([0-9]+)(.*)     tiki-view_sheets.php?sheetId=$1$2        [QSA,L]
+RewriteRule ^poll([0-9]+)(.*)      tiki-poll_form.php?pollId=$1$2           [QSA,L]
 RewriteRule ^wiki-([A-Za-z0-9]+)   tiki-index.php?page=$1                   [QSA,L]
 RewriteRule ^page-([A-Za-z0-9]+)   tiki-index.php?page=$1                   [QSA,L]
 RewriteRule ^show:(~?)(.+)$        tiki-slideshow.php?page=$1$2             [QSA,L]
 RewriteRule ^(lib/wiki3d/.+\.jar)$ $1                                       [L]
+
+RewriteRule \.(css|gif|jpg|png|php|html|js|htm|shtml|cgi|sql|phtml|txt|ihtml)   -       [L]
 RewriteRule ^(.+)$                 tiki-index.php?page=$1                   [QSA,L]
 
 # Error pages, handled by Apache (not by TikiWiki)

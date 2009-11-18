@@ -53,7 +53,7 @@ if (strstr($_REQUEST['url'], 'tiki-tell_a_friend.php')) {
 	header('location: tiki-tell_a_friend.php?url=' . $_REQUEST['url']);
 }
 $smarty->assign('url', $_REQUEST['url']);
-$smarty->assign('prefix', $tikilib->httpPrefix());
+$smarty->assign('prefix', $tikilib->httpPrefix( true ));
 include_once ("textareasize.php");
 $errors = array();
 if (isset($_REQUEST['send'])) {

@@ -34,6 +34,7 @@
 					<option value="wiki">{tr}Wiki only{/tr}</option>
 					<option value="wysiwyg">{tr}WYSIWYG only{/tr}</option>
 				</select>
+				{if $prefs.feature_wysiwyg neq 'y'}{jq}$jq("#view_mode").val("wiki").change().attr("disabled","disabled");{/jq}{/if}
 			</div>
 			<div class="adminoptionbox">
 				<input name="load" type="submit" value="{tr}Load{/tr}"/>
@@ -124,7 +125,7 @@
 				</fieldset>
 			</form>
 		</div>
-		<label for="#full-list-c">{tr}Custom Tools:{/tr}</label><br/>
+		<label for="#full-list-c">{tr}Custom Tools:{/tr}</label>{icon _id="add" title="{tr}Add a new custom tool{/tr}" id="toolbar_add_custom"}<br/>
 		<ul id="full-list-c" class="full">
 		{foreach from=$display_c item=tool}
 			<li class="{$qtelement[$tool].class}">{$qtelement[$tool].html}</li>

@@ -31,7 +31,7 @@ class ContactLib extends TikiLib {
 			array_push($bindvars, $findesc, $findesc, $findesc, $findesc);
 		}
 
-		$query = "select c.* from `tiki_webmail_contacts` as c left join `tiki_webmail_contacts_groups` as a on a.`contactId`=c.`contactId` $mid group by contactId order by c.".$this->convertSortMode($sort_mode);
+		$query = "select distinct c.* from `tiki_webmail_contacts` as c left join `tiki_webmail_contacts_groups` as a on a.`contactId`=c.`contactId` $mid order by c.".$this->convertSortMode($sort_mode);
 		//$query = "select * from `tiki_webmail_contacts` $mid order by ".$this->convertSortMode($sort_mode);
 
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
@@ -262,6 +262,8 @@ class ContactLib extends TikiLib {
 		
 		if ($public) {	// check for previous public one
 			$c = $this->getOne('SELECT COUNT(*) FROM `tiki_webmail_contacts_fields` WHERE `fieldname`=? AND `flagsPublic`=\'y\'', array($name));
+		} else {
+			$c = 0;
 		}
 		if (!$c) {
 			$pubvar = $public ? 'y' : 'n';

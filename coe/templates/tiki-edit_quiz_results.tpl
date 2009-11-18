@@ -9,7 +9,7 @@
 </div>
 
 <h2>
-	{tr}Create/edit questions for quiz{/tr}: <a href="tiki-edit_quiz.php?quizId={$quiz_info.quizId}" class="pageTitle">{$quiz_info.name}</a>
+	{tr}Create/edit questions for quiz:{/tr} <a href="tiki-edit_quiz.php?quizId={$quiz_info.quizId}" class="pageTitle">{$quiz_info.name}</a>
 </h2>
 
 <form action="tiki-edit_quiz_results.php" method="post">
@@ -17,14 +17,14 @@
 	<input type="hidden" name="resultId" value="{$resultId|escape}" />
 	<table class="normal">
 		<tr>
-			<td class="formcolor">{tr}From Points{/tr}:</td>
+			<td class="formcolor">{tr}From Points:{/tr}</td>
 			<td class="formcolor">
 				<input type="text" name="fromPoints" value="{$fromPoints|escape}" />
 			</td>
 		</tr>
 		<tr>
 			<td class="formcolor">
-				{tr}To Points{/tr}:
+				{tr}To Points:{/tr}
 			</td>
 			<td class="formcolor">
 				<input type="text" name="toPoints" value="{$toPoints|escape}" />
@@ -32,7 +32,7 @@
 		</tr>
 		<tr>
 			<td class="formcolor">
-				{tr}Answer{/tr}:
+				{tr}Answer:{/tr}
 			</td>
 			<td class="formcolor">
 				<textarea name="answer" rows="10" cols="40">{$answer|escape}</textarea>
@@ -71,7 +71,7 @@
 		<tr>
 			<td class="{cycle advance=false}">{$channels[user].fromPoints}</td>
 			<td class="{cycle advance=false}">{$channels[user].toPoints}</td>
-			<td class="{cycle advance=false}">{$channels[user].answer|truncate:230:"(...)":true}</td>
+			<td class="{cycle advance=false}">{$channels[user].answer|truncate:230:"(...)":true|escape|nl2br}</td>
 			<td class="{cycle}">
 				<a class="link" href="tiki-edit_quiz_results.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;resultId={$channels[user].resultId}">{icon _id='page_edit' alt='{tr}Edit{/tr}'}</a>
 				<a class="link" href="tiki-edit_quiz_results.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].resultId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>

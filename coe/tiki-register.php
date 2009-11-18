@@ -109,7 +109,7 @@ if (isset($_REQUEST['register']) && !empty($_REQUEST['name']) && (isset($_REQUES
 	// Check the mode
 	if ($prefs['useRegisterPasscode'] == 'y') {
 		if ($_REQUEST['passcode'] != $prefs['registerPasscode']) {
-			$smarty->assign('msg', tra("Wrong passcode you need to know the passcode to register in this site"));
+			$smarty->assign('msg', tra("Wrong passcode. You need to know the passcode to register at this site"));
 			$smarty->display("error.tpl");
 			die;
 		}
@@ -151,7 +151,7 @@ if (isset($_REQUEST['register']) && !empty($_REQUEST['name']) && (isset($_REQUES
 		if ($prefs['validateUsers'] == 'y' || (isset($prefs['validateRegistration']) && $prefs['validateRegistration'] == 'y')) {
 			$apass = addslashes(md5($tikilib->genPass()));
 			$userlib->send_validation_email($_REQUEST['name'], $apass, $_REQUEST['email'], '', '', isset($_REQUEST['chosenGroup']) ? $_REQUEST['chosenGroup'] : '');
-			$userlib->add_user($_REQUEST["name"], $apass, $_REQUEST["email"], $_REQUEST["pass"], false, 'n', $openid_url);
+			$userlib->add_user($_REQUEST["name"], $apass, $_REQUEST["email"], '', false, 'n', $openid_url , $prefs['validateRegistration'] == 'y'?'a':'u');
 			$logslib->add_log('register', 'created account ' . $_REQUEST["name"]);
 			$smarty->assign('showmsg', 'y');
 		} else {
@@ -220,13 +220,52 @@ $smarty->assign('min_pass_length', $prefs['min_pass_length']);
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 // xajax
+
+
 if ($prefs['feature_ajax'] == 'y') {
-	require_once ("lib/ajax/ajaxlib.php");
-	$ajaxlib->setRequestURI('tiki-register_ajax.php');
-	$ajaxlib->registerFunction('AJAXCheckUserName');
-	$ajaxlib->registerFunction('AJAXCheckMail');
-	$ajaxlib->processRequests(); // I don't really want a "process" function here, but if I don't call it here, it will not registerfunctions....
-	
+	global $ajaxlib;
+	include_once ('lib/ajax/ajaxlib.php');
+//	include_once ('tiki-regsiter_ajax.php');
+	$ajaxlib->registerFunction('chkRegName');
+	$ajaxlib->registerFunction('chkRegEmail');
+	$ajaxlib->registerTemplate('tiki-register.tpl');
+	$ajaxlib->processRequests();
 }
-$smarty->assign('mid', 'tiki-register.tpl');
-$smarty->display("tiki.tpl");
+
+
+function chkRegName($name) {
+	global $smarty, $ajaxlib, $userlib;
+	$pre_no = " <img src='pics/icons/exclamation.png' style='vertical-align: middle;' alt='Error' /> ";
+	$pre_yes = " <img src='pics/icons/accept.png' style='vertical-align:middle' alt='Correct' /> ";
+	$ajaxlib->registerTemplate('tiki-register.tpl');
+	$objResponse = new xajaxResponse();
+	if ( empty($name) ) {
+		$objResponse->assign('ajax_msg_name', "innerHTML", $pre_no.tra("Missing User Name"));
+	} elseif ( $userlib->user_exists($name) ) {
+		$objResponse->assign('ajax_msg_name', "innerHTML", $pre_no.tra("User Already Exists"));
+	} else {
+		$objResponse->assign('ajax_msg_name', "innerHTML", $pre_yes.tra("Valid User Name"));
+	}
+	return $objResponse;
+}
+
+function chkRegEmail($mail) {
+	global $smarty, $ajaxlib;
+	$pre_no = " <img src='pics/icons/exclamation.png' style='vertical-align: middle;' alt='Error' /> ";
+	$pre_yes = " <img src='pics/icons/accept.png' style='vertical-align:middle' alt='Correct' /> ";
+	$ajaxlib->registerTemplate('tiki-register.tpl');
+	$objResponse = new xajaxResponse();
+	if (empty($mail)) {
+		$objResponse->assign("ajax_msg_mail", "innerHTML", $pre_no.tra("Missing Email"));
+	} elseif (!eregi("^[_a-z0-9\.\-]+@[_a-z0-9\.\-]+\.[a-z]{2,4}$", $mail)) {
+		$objResponse->assign("ajax_msg_mail", "innerHTML", $pre_no.tra('This is not a valid mail adress'));
+	} else {
+		$objResponse->assign("ajax_msg_mail", "innerHTML", $pre_yes.tra("Valid Email"));
+	}
+	return $objResponse;
+}
+
+if (empty($module) || !$module) {
+	$smarty->assign('mid', 'tiki-register.tpl');
+	$smarty->display('tiki.tpl');
+}

@@ -91,7 +91,7 @@
 			{if $channels[user].tiki_p_subscribe_newsletters eq 'y'}
 				<tr class="{cycle}">
 					<td>
-						<a class="tablename" href="tiki-newsletters.php?nlId={$channels[user].nlId}&amp;info=1" title="{tr}Subscribe to Newsletter{/tr}">{$channels[user].name}</a>
+						<a class="tablename" href="tiki-newsletters.php?nlId={$channels[user].nlId}&amp;info=1" title="{tr}Subscribe to Newsletter{/tr}">{$channels[user].name|escape}</a>
 						<div class="subcomment">{$channels[user].description|escape|nl2br}</div>
 					</td>
 					<td>

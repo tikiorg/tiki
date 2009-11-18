@@ -203,6 +203,11 @@ if (isset($_REQUEST["save"])) {
 	} else {
 		$tracker_options["writerCanModify"] = 'n';
 	}
+	if (isset($_REQUEST['userCanTakeOwnership']) && ($_REQUEST['userCanTakeOwnership'] == 'on' or $_REQUEST['userCanTakeOwnership'] == 'y')) {
+		$tracker_options['userCanTakeOwnership'] = 'y';
+	} else {
+		$tracker_options['userCanTakeOwnership'] = 'n';
+	}
 	if (isset($_REQUEST["autoCreateCategories"]) && ($_REQUEST["autoCreateCategories"] == 'on' or $_REQUEST["autoCreateCategories"] == 'y')) {
 		$tracker_options["autoCreateCategories"] = 'y';
 	} else {
@@ -363,6 +368,7 @@ $info["defaultOrderDir"] = 'asc';
 $info["newItemStatus"] = 'o';
 $info["modItemStatus"] = '';
 $info["writerCanModify"] = '';
+$info['userCanTakeOwnership'] = '';
 $info['oneUserItem'] = '';
 $info["writerGroupCanModify"] = '';
 $info["defaultStatus"] = 'o';
@@ -430,6 +436,7 @@ $smarty->assign('defaultOrderDir', $info["defaultOrderDir"]);
 $smarty->assign('newItemStatus', $info["newItemStatus"]);
 $smarty->assign('modItemStatus', $info["modItemStatus"]);
 $smarty->assign('writerCanModify', $info["writerCanModify"]);
+$smarty->assign('userCanTakeOwnership', $info['userCanTakeOwnership']);
 $smarty->assign('oneUserItem', $info["oneUserItem"]);
 $smarty->assign('writerGroupCanModify', $info["writerGroupCanModify"]);
 $smarty->assign('defaultStatus', $info["defaultStatus"]);

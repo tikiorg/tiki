@@ -1,4 +1,4 @@
-{title url="tiki-admin_poll_options.php?pollId=$pollId"}{tr}Admin Polls:{/tr} {$menu_info.title}{/title}
+{title url="tiki-admin_poll_options.php?pollId=$pollId"}{tr}Admin Polls:{/tr} {$menu_info.title|escape}{/title}
 
 <div class="navbar">
 	{button href="tiki-admin_polls.php" _text="{tr}List polls{/tr}"}
@@ -23,8 +23,8 @@
 <input type="hidden" name="pollId" value="{$pollId|escape}" />
 <table>
 <tr>
-<td class="form">{tr}Option{/tr}:</td><td><input type="text" name="title" value="{$title|escape}" size=40/></td>
-<td class="form">{tr}Position{/tr}:</td><td><input type="text" name="position" value="{$position|escape}" size="4" /></td>
+<td class="form">{tr}Option:{/tr}</td><td><input type="text" name="title" value="{$title|escape}" size=40/></td>
+<td class="form">{tr}Position:{/tr}</td><td><input type="text" name="position" value="{$position|escape}" size="4" /></td>
 <td colspan="2"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
@@ -42,7 +42,7 @@
 {section name=user loop=$channels}
 <tr>
 <td class="{cycle advance=false}">{$channels[user].position}</td>
-<td class="{cycle advance=false}">{$channels[user].title}</td>
+<td class="{cycle advance=false}">{$channels[user].title|escape}</td>
 <td class="{cycle advance=false}">{$channels[user].votes}</td>
 <td class="{cycle}">
    <a class="link" href="tiki-admin_poll_options.php?pollId={$pollId}&amp;remove={$channels[user].optionId}" title="{tr}Delete{/tr}">{icon _id=cross alt="{tr}Delete{/tr}"}</a>

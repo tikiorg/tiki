@@ -15,12 +15,12 @@
 		<th colspan="2">{tr}Newsletter{/tr}</th>
 	</tr>
 	<tr>
-		<td class="even" width="30%">{tr}Name{/tr}:</td>
-		<td class="even">{$nl_info.name}</td>
+		<td class="even" width="30%">{tr}Name:{/tr}</td>
+		<td class="even">{$nl_info.name|escape}</td>
 	</tr>
 	<tr>
-		<td class="even">{tr}Description{/tr}:</td>
-		<td class="even">{$nl_info.description}</td>
+		<td class="even">{tr}Description:{/tr}</td>
+		<td class="even">{$nl_info.description|escape|nl2br}</td>
 	</tr>
 </table>
 
@@ -29,7 +29,7 @@
 	<input type="hidden" name="nlId" value="{$nlId|escape}" />
 	<table class="normal">
 		<tr>
-			<td class="formcolor" width="30%">{tr}Email{/tr}:</td>
+			<td class="formcolor" width="30%">{tr}Email:{/tr}</td>
 			<td colspan="2" class="formcolor">
 				<textarea cols="70" rows="6" wrap="soft" name="email"></textarea>
 				<br />
@@ -37,7 +37,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="formcolor">{tr}User{/tr}:</td>
+			<td class="formcolor">{tr}User:{/tr}</td>
 			<td class="formcolor">
 				<select name="subuser">
 					<option value="">---</option>
@@ -64,11 +64,11 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="formcolor">{tr}All users{/tr}:</td>
+			<td class="formcolor">{tr}All users:{/tr}</td>
 			<td class="formcolor"><input type="checkbox" name="addall" /></td>
 		</tr>
 		<tr>
-			<td class="formcolor">{tr}Group users{/tr}:</td>
+			<td class="formcolor">{tr}Group users:{/tr}</td>
 			<td class="formcolor">
 				<select name="group">
 					<option value="">---</option>
@@ -111,7 +111,7 @@
 		<input type="hidden" name="nlId" value="{$nlId|escape}" /> 	 
 		<table class="normal"> 	 
 			<tr>
-				<td class="formcolor" width="30%">{tr}File{/tr}:</td>
+				<td class="formcolor" width="30%">{tr}File:{/tr}</td>
 				<td class="formcolor" colspan="2">
 					<input type="file" name="batch_subscription" />
 					<br />
@@ -146,7 +146,7 @@
 	<input type="hidden" name="nlId" value="{$nlId|escape}" />
 	<table class="normal">
 		<tr>
-			<td class="formcolor" width="30%">{tr}Group{/tr}:</td>
+			<td class="formcolor" width="30%">{tr}Group:{/tr}</td>
 			<td class="formcolor" colspan="2">
 				<select name="group">
 					<option value="">---</option>
@@ -170,7 +170,7 @@
 	<input type="hidden" name="nlId" value="{$nlId|escape}" />
 	<table class="normal">
 		<tr>
-			<td class="formcolor" width="30%">{tr}Newsletter{/tr}:</td>
+			<td class="formcolor" width="30%">{tr}Newsletter:{/tr}</td>
 			<td class="formcolor" colspan="2">
 				<select name="included">
 					<option value="">---</option>
@@ -257,7 +257,7 @@
 	{section name=user loop=$channels}
 		<tr>
 			<td class="{cycle advance=false}">
-				{if $channels[user].isUser == "y"}{$channels[user].email|escape|userlink}{else}{$channels[user].email|escape}{/if}
+				{if $channels[user].isUser == "y"}{$channels[user].email|userlink}{else}{$channels[user].email|escape}{/if}
 			</td>
 			<td class="{cycle advance=false}">
 				{if $channels[user].valid == "n"}

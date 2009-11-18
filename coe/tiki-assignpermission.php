@@ -115,7 +115,9 @@ if (isset($_REQUEST["createlevel"])) {
 if (isset($_REQUEST['update'])) {
 	check_ticket('admin-perms');
 	foreach (array_keys($_REQUEST['permName'])as $per) {
-		$userlib->change_permission_level($per, $_REQUEST['level'][$per]);
+		if (isset( $_REQUEST['level'][$per])) {
+			$userlib->change_permission_level($per, $_REQUEST['level'][$per]);
+		}
 
 		if (isset($_REQUEST['perm'][$per])) {
 			$userlib->assign_permission_to_group($per, $group);
@@ -147,21 +149,24 @@ foreach ($perms['data'] as $perm) {
 	}
 }
 
-if ($group != 'Anonymous') {
+// If Anonymous is not always included in other groups unless explicitly specified as in 4.0, then the following should not execute, but commented remain here for reference as per other comment by jonnyb in tikilib.php get_user_groups()
+//if ($group != 'Anonymous') {
 	// Get the list of permissions for anony
-	$ifa = $userlib->get_permissions(0, -1, $sort_mode, $find,$_REQUEST["type"],'Anonymous');
-	$smarty->assign_by_ref('inherited_from_anon', $ifa['data']);
-	if ($group != 'Registered') {
-		$ifr = $userlib->get_permissions(0, -1, $sort_mode, $find,$_REQUEST["type"],'Registered');
-		$smarty->assign_by_ref('inherited_from_reg', $ifr['data']);
-		$incgroups = $userlib->get_included_groups($group);
-		foreach($incgroups as $ig) {
-			$ixr = $userlib->get_permissions(0, -1, $sort_mode, $find,$_REQUEST["type"],$ig);
-			$back[$ig] = $ixr['data'];
-		}
-		$smarty->assign_by_ref('inherited_groups_perms',$back);
-	}
+	//$ifa = $userlib->get_permissions(0, -1, $sort_mode, $find,$_REQUEST["type"],'Anonymous');
+	//$smarty->assign_by_ref('inherited_from_anon', $ifa['data']);
+//}
+
+if ($group != 'Registered' && $group != 'Anonymous') {
+	$ifr = $userlib->get_permissions(0, -1, $sort_mode, $find,$_REQUEST["type"],'Registered');
+	$smarty->assign_by_ref('inherited_from_reg', $ifr['data']);
 }
+
+$incgroups = $userlib->get_included_groups($group);
+foreach($incgroups as $ig) {
+	$ixr = $userlib->get_permissions(0, -1, $sort_mode, $find,$_REQUEST["type"],$ig);
+	$back[$ig] = $ixr['data'];
+}
+$smarty->assign_by_ref('inherited_groups_perms',$back);
 
 // Get users (list of users)
 $smarty->assign_by_ref('perms', $perms["data"]);

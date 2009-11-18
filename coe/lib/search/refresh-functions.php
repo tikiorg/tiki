@@ -1,5 +1,5 @@
 <?php
-// $Id: /cvsroot/tikiwiki/tiki/lib/search/refresh-functions.php,v 1.29.2.2 2008-03-20 15:33:27 nyloth Exp $
+// $Id$
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -147,16 +147,16 @@ function refresh_index($object_type, $object_id = null) {
 	} elseif ( ( is_integer($object_id) && $object_id != 0 ) || is_string($object_id) ) {
 		// Index one object identified by its id
 		$query_vars[] = $object_id;
-		$query_where .= (($query_where == '') ? ' where ' : ' and ' ).(is_array($f_id) ? $f_id['id1'] : $f_id).' = ?';
+		$query_where .= (($query_where == '') ? ' where `' : ' and `' ).(is_array($f_id) ? $f_id['id1'] : $f_id).'` = ?';
 	}
 
 	if ( !empty($f_id) && !empty($f_content) ) {
 
 		if ( !is_array($f_id) ) $f_id = array($f_id);
 		if ( !is_array($f_content) ) $f_content = array($f_content);
-		foreach ( $f_id as $k_id => $v_id ) $query_fields .= (($query_fields!='')?', ':'').$v_id.(is_string($k_id)?' as '.$k_id:'');
-		foreach ( $f_content as $k_content => $v_content ) $query_fields .= ', '.$v_content.(is_string($k_content)?' as '.$k_content:'');
-		if ( !empty($f_other) ) $query_fields .= ', '.( is_array($f_other) ? implode(', ', $f_other) : $f_other );
+		foreach ( $f_id as $k_id => $v_id ) $query_fields .= (($query_fields!='')?', ':''). '`' . $v_id . '`' .(is_string($k_id)?' as '.$k_id:'');
+		foreach ( $f_content as $k_content => $v_content ) $query_fields .= ', `'.$v_content. '`' . (is_string($k_content)?' as '.$k_content:'');
+		if ( !empty($f_other) ) $query_fields .= ', `'.( is_array($f_other) ? implode('`, `', $f_other) : $f_other ) . '`';
 
 		$result = $tikilib->query('select '.$query_fields.$wiki_html.$query_from.$query_where, $query_vars, $query_limit, $query_offset);
 
@@ -193,6 +193,8 @@ function refresh_index_oldest() {
 
 function &search_index($data) {
 
+	$preg_utf8_support=@preg_match('/\p{Lu}/u', "A" );
+
 	// Be sure we will parse UTF-8 data
 	if ( function_exists('mb_check_encoding')
 		&& function_exists('iconv')
@@ -203,8 +205,8 @@ function &search_index($data) {
 	}
 
 	// Clean the UTF-8 string using HTML Purifier
-@	require_once('lib/htmlpurifier/HTMLPurifier.auto.php');
-@	require_once('lib/htmlpurifier/HTMLPurifier/Encoder.php');
+@	include_once('lib/htmlpurifier/HTMLPurifier.auto.php');
+@	include_once('lib/htmlpurifier/HTMLPurifier/Encoder.php');
 	if ( class_exists('HTMLPurifier_Encoder') ) {
 		$data = HTMLPurifier_Encoder::cleanUTF8($data);
 	}
@@ -225,7 +227,11 @@ function &search_index($data) {
 	$data = function_exists('mb_convert_case') ? mb_convert_case($data, MB_CASE_LOWER, 'UTF-8') : strtolower($data);
 
 	// Convert punctuations to spaces
-	$data = preg_replace('/[\pP\pZ\pS]/u', ' ', $data);
+	if ($preg_utf8_support) {
+		$data = preg_replace('/[\pP\pZ\pS]/u', ' ', $data);
+	} else {
+		$data = preg_replace('/[\s\.,!\?\(\)\[\]\{\}\/\\\]/', ' ', $data);
+	}
 
 	if ( $data != '' ) {
 		// Split into words (do NOT use the split function that doesn't correctly handle some characters !)
@@ -233,7 +239,7 @@ function &search_index($data) {
 
 		foreach ( $sstrings as $value ) {
 			// Keep only alpha-num words
-			if ( preg_match('/^[\pL\pN]+$/u', $value) ) {
+			if ( preg_match('/^[\pL\pN]+$/u', $value) || !$preg_utf8_support ) {
 				if ( isset($words[$value]) ) {
 					$words[$value]++; // count words
 				} else {

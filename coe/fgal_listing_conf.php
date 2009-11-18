@@ -21,7 +21,7 @@ $fgal_listing_conf = array(
 	'description' => array('name' => tra('Description')),
 	'size' => array('name' => tra('Size')),
 	'created' => array('name' => tra('Created').' / '.tra('Uploaded')),
-	'lastmodif' => array('name' => tra('Last Modified'), 'key' => 'show_modified'),
+	'lastModif' => array('name' => tra('Last Modified'), 'key' => 'show_modified'),
 	'creator' => array('name' => tra('Creator')),
 	'author' => array('name' => tra('Author')),
 	'last_user' => array('name' => tra('Last editor')),
@@ -33,7 +33,7 @@ $fgal_listing_conf = array(
 foreach ( $fgal_listing_conf as $k => $v ) {
 
 	if ( $k == 'type' ) $show_k = 'icon';
-	elseif ( $k == 'lastmodif' ) $show_k = 'modified';
+	elseif ( $k == 'lastModif' ) $show_k = 'modified';
 	else $show_k = $k;
 
 	if ( isset($_REQUEST['fgal_list_'.$k]) ) {

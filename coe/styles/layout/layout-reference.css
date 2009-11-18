@@ -864,52 +864,41 @@ ul.categories li{
 	padding: 0;
 }
 
-/* New Toolbars (toolbars) */
+/* New Toolbars */
 
-a.toolbar {
-	padding: 0 .5em 0 0;
+.textarea-toolbar {	/* toolbars outer container */
+	width: 99%;
 }
 
-a.qt-plugin {
+.helptool-admin {	/* right justified section of toolbars */
+	float: right;
+	padding-left: 8px;
+	margin-left: 8px;
+	border-left: medium double #bfbfbf;
 }
 
-a.qt-plugin div {
-	/* .iconmenu */
-	background-color: #CD8;
-	border: thin #690 solid;
-	margin: 0 .4em 0 0;
-	padding: 2px .4em 0 .2em;
-	color: #030;
-	font-size: 10px;
+a.toolbar {			/* each tool button */
+	padding: 4px 2px;
+	display: inline-block;
 }
 
-a.qt-plugin:hover {
-	text-decoration: none;
+.textarea-toolbar img.icon {
+	vertical-align: middle;
+	margin: 1px 3px;
 }
 
-a.qt-plugin div img { /* div.iconmenu img.icon */
-	margin-bottom: 4px;
-}
-
-span.toolbar-list {
+span.toolbar-list {	/* groups of tools */
 	padding: 0 0 0 .5em;
 	line-height: 20px;
 	border-left: medium double #bfbfbf;
 }
 
-.helptool-admin {
-	float: right;
-	border-left: medium double #bfbfbf;
-	padding-left:8px;
-	margin-left:8px;
-}
-
-.toolbars-picker {
+.toolbars-picker {	/* colours, smilies etc */
 	position: absolute;
 	width: 300px;
-	background-color: white;
-	border: thin solid black;
 	z-index: 300;
+	background-color: #fff;
+	color: #000;
 }
 
 .toolbars-picker a {
@@ -917,67 +906,34 @@ span.toolbar-list {
 	display: inline-block;
 }
 
-.toolbars-picker a:hover {
-	background-color: #ccc;
-}
+
 
 /* New Help section */
 div#tikihelp {
-	position: fixed;
-	right: 0;
-	top: 0;
-	height: auto; /* if there was height specified it covered the right column content "invisibly" making part of it unclickable (from strasa) */
-	max-width: 50%;
-	padding: 0;
-	margin: 0;
-	border: none;
-	background: transparent;
-	z-index: 820;
+	position: absolute;
 	height: 100%;
-}
-
-.help_title {
-	float: left;
-}
-
-.help_close_icon,
-.help_fullscreen_icon {
-	float: right;
-	vertical-align: middle;
-}
-
-.help_fullscreen_icon {
-	margin-right: 8px;
-}
-
-.help_close_icon {
-	margin-right: 20px;
-}
-
-div.help_section_select {
-	font-weight : bold;
-	font-size: 120%;
-	background: #e7e9ea;
-	color: #000;
-	width: 100%;
-	padding: 2px;
 }
 
 div.help_sections {
 	width: 360px;
-	padding:  2px;
-	background: #aac9e9;
 	overflow: auto;
-	height: 100%;
+	height: 500px;
 }
 
 div.help_section {
-	margin: 5px;
-	padding: 5px;
-	background: #fff;
-	color: #000;
+	/*overflow: hidden !important;*/
+	height: auto;
 }
-	
+
+div.help_sections h3 {
+	padding-left: 24px;
+	line-height: 3ex;
+}
+
+div.help_sections > div {
+	font-size: .9em;
+}
+
 #site_report {
 	text-align: center;
 }
@@ -1133,35 +1089,24 @@ div.minichatchan {
 }
 
 /** Other boxes **/
-.cbox {
-	overflow: hidden;
-/*	border: 1px solid yellow;
-	background: white;
-	color: black; */
-}
-
-.cbox-title {
-/*	border-bottom: 1px solid yellow; */
-	padding: 3px 3px 0 3px;
-}
-
-.cboxlink {}
-
-.cbox-data {
-	overflow: hidden;
-	padding: 0 3px 3px 3px;
-}
-
-.rbox {
-	margin: 1em .3em 2em .3em;
-}
-	
+.cbox,
+.cbox-data,
 .rbox-title,
 .rbox-data {
 	overflow: hidden;
-	padding: 1px 3px;
-/*	border: 1px solid yellow;*/
 }
+
+.cbox-title {}
+
+.cboxlink {}
+
+.cbox-data {}
+
+/* remarks boxes */
+.rbox {}
+
+.rbox-title,
+.rbox-data {}
 
 .rbox-title {
 	display: inline-block;
@@ -1169,40 +1114,64 @@ div.minichatchan {
 	z-index: 1;
 	position: relative;
 	bottom: -1px;
-	padding: 3px;
-/*	background: yellow;
-	border: 1px solid yellow;
-	border-bottom: 0; */
 }
 	
 .rbox img {
-	padding-right: 3px;
 	vertical-align: middle;
 }
 	
 .rbox-data {
 	position: relative;
 	z-index: 0;
-	padding: 0 3px 3px 3px;
 }
 
-.comment .rbox-title,
+.rbox-close {
+	float: right;
+	cursor: pointer;
+}
+
+.comment .rbox-title {}
 .comment .rbox-data {}
 
 .note .rbox-title {}
 .note .rbox-data {}
 
-.tip .rbox-title,
+.tip .rbox-title {}
 .tip .rbox-data {}
 
 .warning .rbox-title {}
 .warning .rbox-data {}
 
 div.simplebox {
-/*	color: green;
-	background: silver;
-	border: 1px solid green; */
 	padding: 3px;
+}
+
+/* For wikitext or custom code areas, editors can add, for example, a div class="halffloat"
+and put two modules or other divs between its tags;, each of these will use just under half of the width of the 
+wikitext or custom content area. Similarly for three or four modules (or divs) across the page. */
+.halffloat div.box,
+.wikitext .halffloat div.box {
+	float: left;
+	clear: none;
+	width: 48%;
+	margin-right: 2%;
+ 
+}
+
+.thirdfloat div.box,
+.wikitext .thirdfloat div.box {
+	float: left;
+	clear: none;
+	width: 31%;
+	margin-right: 2%
+}
+
+.quarterfloat div.box,
+.wikitext .quarterfloat div.box {
+	float: left;
+	clear: none; 
+	width: 22%;
+	margin-right: 2%;
 }
 
 /***** Tables, Tabs ****/
@@ -2154,6 +2123,7 @@ opaque .box-title,
 
 .opaque .iconmenu {
 	display: block;
+	white-space: nowrap;
 }
 
 /***** Trackers (etc.) *****/
@@ -2225,7 +2195,6 @@ div.multiselect ul {
 	list-style-position: outside;
 	list-style-type: none;
 	text-align: left;
-	white-space: nowrap;
 	margin: 0;
 	padding: 0;
 }
@@ -2946,6 +2915,12 @@ ul.column_switcher {
 }
 .column_switcher li:hover {
 	background-color: #ccc;
+}
+
+/* jquery-ui doalogs help */
+
+.ui-dialog label {
+	display: block;
 }
 
 /***** End New (unsorted) *****/

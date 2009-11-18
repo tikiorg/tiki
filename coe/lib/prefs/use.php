@@ -12,5 +12,13 @@ function prefs_use_list() {
 			'description' => tra('Use proxy'),
 			'type' => 'flag',
 		),
+		'use_context_menu_icon' => array(
+			'name' => tra('Use context menus for actions (icons)'),
+			'type' => 'flag',
+		),
+		'use_context_menu_text' => array(
+			'name' => tra('Use context menus for actions (text)'),
+			'type' => 'flag',
+		),
 	);
 }

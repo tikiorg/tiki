@@ -1,1 +1,1 @@
- | {tr}Theme{/tr}: Feb12
+{tr}Theme{/tr}: Feb12

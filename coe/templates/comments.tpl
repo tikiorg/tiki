@@ -92,7 +92,7 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 					<select name="moveto">
 					{section name=ix loop=$topics}
 						{if $topics[ix].threadId ne $comments_parentId}
-						<option value="{$topics[ix].threadId|escape}">{$topics[ix].title}</option>
+						<option value="{$topics[ix].threadId|escape}">{$topics[ix].title|truncate:100|escape}</option>
 						{/if}
 					{/section}
 					</select>
@@ -132,10 +132,11 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 			{/if}
 			</div>
 		{/if}
+
+		{if $comments_cant > $prefs.forum_thread_user_settings_threshold}
 		<div class="actions">
 			<span class="action">
 
-				{if $comments_cant > 10}
 				<label for="comments-maxcomm">{tr}Messages{/tr}:</label>
 				<select name="comments_per_page" id="comments-maxcomm">
 					<option value="10" {if $comments_per_page eq 10 }selected="selected"{/if}>10</option>
@@ -143,8 +144,7 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 					<option value="30" {if $comments_per_page eq 30 }selected="selected"{/if}>30</option>
 					<option value="999999" {if $comments_per_page eq 999999 }selected="selected"{/if}>{tr}All{/tr}</option>
 				</select>
-				{/if}
-
+				
 				{if $forum_mode neq 'y' or $forum_info.is_flat neq 'y' }
 				<label for="comments-style">{tr}Style{/tr}:</label>
 				<select name="thread_style" id="comments-style">
@@ -184,6 +184,8 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 
 			</span>
 		</div>
+		{/if}
+		
 	</div>
 	{/if}
 
@@ -268,7 +270,7 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 	<div class="clearfix post_preview">
 		{if $forum_mode neq 'y'}<b>{tr}Preview{/tr}</b>{/if}
 		<div class="post"><div class="inner"><span class="corners-top"><span></span></span><div class="postbody">
-			<div class="postbody-title"><div class="title">{$comments_preview_title}</div></div>
+			<div class="postbody-title"><div class="title">{$comments_preview_title|escape}</div></div>
 			<div class="content">
 				<div class="author"><span class="author_info"><span class="author_post_info">
 				{tr}by{/tr} <span class="author_post_info_by">{$user|userlink}</span>
@@ -289,6 +291,7 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 	<input type="hidden" name="comments_threshold" value="{$comments_threshold|escape}" />
 	<input type="hidden" name="thread_sort_mode" value="{$thread_sort_mode|escape}" />
 	<input type="hidden" name="comments_objectId" value="{$comments_objectId|escape}" />
+	<input type="hidden" name="comments_title" value="{tr}Untitled{/tr}" />
 
 	{* Traverse request variables that were set to this page adding them as hidden data *}
 	{section name=i loop=$comments_request_data}
@@ -296,14 +299,30 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 	{/section}
 
 	<table class="normal">
-		<tr>
-			<td class="formcolor">
-				<label for="comments-title">{tr}Title{/tr} <span class="attention">({tr}required{/tr})</span> </label>
-			</td>
-			<td class="formcolor">
-				<input type="text" size="50" name="comments_title" id="comments-title" value="{$comment_title|escape}" />
-			</td>
-		</tr>
+		{if $forum_mode != 'y' or $prefs.forum_reply_notitle neq 'y'}
+			<tr>
+				<td class="formcolor">
+					<label for="comments-title">{tr}Title{/tr} <span class="attention">({tr}required{/tr})</span> </label>
+				</td>
+				<td class="formcolor">
+				{* 
+				   Alain Désilets: This used to have a size="50" attribute, but I deleted it
+				   because in the Collaborative_Multilingual_Terminology, we may need to view 
+				   two different languages of the same page side by side. And the text length of
+				   50 was causing the language displayed on the right side to be squished into a 
+				   very narrow column, if comments were opened on the left side language
+				   but not on the right side language.
+				   
+				   Unfortunately, without a size specification, the comments box looks 
+				   a bit weird when we only view one language at a time.
+				   
+				   But I don't know how else to deal with this issue.
+				 *}
+					<input type="text" name="comments_title" id="comments-title" value="{$comment_title|escape}" /> 
+
+				</td>
+			</tr>
+		{/if}
 
 		{* Start: Xenfasa adding and testing article ratings in comments here. Not fully functional yet *}
 		{if $comment_can_rate_article eq 'y'}
@@ -343,7 +362,7 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 				<label for="editpost2">{if $forum_mode eq 'y'}{tr}Reply{/tr}{else}{tr}Comment{/tr} <span class="attention">({tr}required{/tr})</span>{/if}</label>
 			</td>
 			<td class="formcolor">
-				<textarea id="editpost2" name="comments_data" rows="{$rows}" cols="{$cols}">{if $prefs.feature_forum_replyempty ne 'y' || $edit_reply > 0 || $comment_preview eq 'y'}{$comment_data|escape}{/if}</textarea>
+				<textarea id="editpost2" name="comments_data" rows="{$rows}">{if $prefs.feature_forum_replyempty ne 'y' || $edit_reply > 0 || $comment_preview eq 'y'}{$comment_data|escape}{/if}</textarea> 
 				<input type="hidden" name="rows" value="{$rows}" />
 				<input type="hidden" name="cols" value="{$cols}" />
 			</td>
@@ -389,6 +408,10 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 			</td>
 
 			<td class="formcolor">
+				<input type="submit" name="comments_postComment" value="{tr}Post{/tr}" {if empty($user)}onclick="setCookie('anonymous_name',document.getElementById('anonymous_name').value);"{/if} />
+				{if !empty($user) && $prefs.feature_comments_post_as_anonymous eq 'y'}
+				<input type="submit" name="comments_postComment_anonymous" value="{tr}Post as Anonymous{/tr}" />
+				{/if}
 				<input type="submit" name="comments_previewComment" value="{tr}Preview{/tr}"
 				{if ( isset($can_attach_file) && $can_attach_file eq 'y' ) or empty($user)}{strip}
 					{assign var='file_preview_warning' value='{tr}Please note that the preview does not keep the attached file which you will have to choose before posting.{/tr}'}
@@ -401,10 +424,6 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 					{/if}
 					"
 				{/strip}{/if} />
-				<input type="submit" name="comments_postComment" value="{tr}Post{/tr}" {if empty($user)}onclick="setCookie('anonymous_name',document.getElementById('anonymous_name').value);"{/if} />
-				{if !empty($user) && $prefs.feature_comments_post_as_anonymous eq 'y'}
-				<input type="submit" name="comments_postComment_anonymous" value="{tr}Post as Anonymous{/tr}" />
-				{/if}
 				{if $forum_mode eq 'y'}
 				<input type="button" name="comments_cancelComment" value="{tr}Cancel{/tr}" onclick="hide('{$postclass}');" />
 				{elseif $prefs.feature_comments_moderation eq 'y' and $tiki_p_admin_comments neq 'y'}
@@ -423,10 +442,6 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 	{else}
 		{assign var=tips_title value="{tr}Posting comments{/tr}"}
 	{/if}
-	{remarksbox type="tip" title=$tips_title}
-		{tr}Use{/tr} [http://www.foo.com] {tr}or{/tr} [http://www.foo.com|{tr}Description{/tr}] {tr}for links{/tr}.<br />
-		{tr}HTML tags are not allowed inside posts{/tr}.<br />
-	{/remarksbox}
 
 	{if $forum_mode eq 'y'}
     </div>
@@ -439,7 +454,7 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 
 {if $forum_mode neq 'y'}</div><!-- comzone end -->{/if}
 {*</div>  now this tag causes problems instead of fixing (was added earlier to prevent side columns in *litecss themes from not appearing *}
-{if empty($user)}
+{if empty($user) and $prefs.javascript_enabled eq "y"}
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--
 var js_anonymous_name = getCookie('anonymous_name');

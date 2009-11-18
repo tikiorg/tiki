@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-theme_control.php,v 1.16 2007-10-12 07:55:32 nyloth Exp $
+// $Id$
 require_once ('tiki-setup.php');
 include_once ('lib/themecontrol/tcontrol.php');
 include_once ('lib/categories/categlib.php');
@@ -18,31 +18,19 @@ if ($tiki_p_admin != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
+
+$auto_query_args = array('find', 'sort_mode', 'offset', 'theme', 'theme-option', 'categId');
+
 $categories = $categlib->get_all_categories();
 $smarty->assign('categories', $categories);
-$list_styles = $tikilib->list_styles();
-$smarty->assign_by_ref('styles', $list_styles);
-if (!empty($_REQUEST['theme'])) {
-	$a_style = $_REQUEST['theme'];
-} else {
-	$a_style = $prefs['style'];
-}
-$smarty->assign('a_style', $a_style);
-$loplist = $tikilib->list_style_options($a_style);
-if (!$loplist) {
-	$loplist = Array(tra('None'));
-}
-$smarty->assign_by_ref("style_options", $loplist);
+$smarty->assign('categId', isset($_REQUEST['categId']) ? $_REQUEST['categId'] : 0);
+
+$tcontrollib->setup_theme_menus();
+
 if (isset($_REQUEST['assigcat'])) {
 	if (isset($_REQUEST['categId'])) {
 		check_ticket('theme-control');
-		if (!isset($_REQUEST['theme-option'])) {
-			$option = '';
-		} else {
-			$option = $_REQUEST['theme-option']; // including 'None'
-			
-		}
-		$tcontrollib->tc_assign_category($_REQUEST['categId'], $_REQUEST['theme'], $option);
+		$tcontrollib->tc_assign_category($_REQUEST['categId'], $_REQUEST['theme'], isset($_REQUEST['theme-option']) ? $_REQUEST['theme-option'] : '');
 	} else {
 		$smarty->assign('msg', tra("Please create a category first"));
 		$smarty->display("error.tpl");
@@ -82,3 +70,4 @@ ask_ticket('theme-control');
 // Display the template
 $smarty->assign('mid', 'tiki-theme_control.tpl');
 $smarty->display("tiki.tpl");
+

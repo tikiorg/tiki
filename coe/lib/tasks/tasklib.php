@@ -119,7 +119,7 @@ class TaskLib extends TikiLib {
 			$comma = ', ';
 		}
 		$query .= " ) VALUES ( " . $query_values . ")";
-		$this->query($query,$values);
+		$this->query($query,array_values($values));
 		return $taskId;
 	}
 	
@@ -136,8 +136,10 @@ class TaskLib extends TikiLib {
 			$query .= " AND (`user` = ?  OR `creator` = ?) ";
 		}
 		$result = $this->query($query,$values_select); 
-		$entries = $result->fetchRow(); 
-		
+		$entries = $result->fetchRow();
+		for($index=0; array_key_exists($index, $entries); $index++) // Hack since PDO fetchRow returns 2 indexes per DB field
+			unset($entries[$index]);
+
 		$query  = "INSERT INTO `tiki_user_tasks_history` (";
 		$query_values = ") VALUES (";
 		
@@ -175,7 +177,7 @@ class TaskLib extends TikiLib {
 			}
 			//echo("$query<br />");
 			$query .= $query_values . ")";
-			$this->query($query,$entries);
+			$this->query($query,array_values($entries));
 		}
 		
 		$insert_values = array();
@@ -191,7 +193,7 @@ class TaskLib extends TikiLib {
 		}
 		$insert_values['taskId'] = (int)$taskId;
 		$query .= "WHERE `taskId`=? ";
-		if($count_values > 0 or $count_values_head > 0) $this->query($query,$insert_values);
+		if($count_values > 0 or $count_values_head > 0) $this->query($query,array_values($insert_values));
 		return $taskId;
 	}
 
@@ -242,9 +244,9 @@ class TaskLib extends TikiLib {
 		$result = $this->query($query,array($user));
 		while ($res = $result->fetchRow()) {
 			$query = "DELETE FROM `tiki_user_tasks_history` WHERE `belongs_to` = ?";
-			$this->query($query,$res);
+			$this->query($query,$res['taskId']);
 			$query  = "DELETE FROM `tiki_user_tasks` WHERE `taskId` = ?";
-			$this->query($query,$res);
+			$this->query($query,$res['taskId']);
 		}
 	}
 
@@ -272,7 +274,6 @@ class TaskLib extends TikiLib {
 	* $show_trash		if on true it shows also the as deleted marked tasks	
 	* $show_completed	if on true it shows also the as completed marked tasks	
 	* $use_admin_mode	shows all shard tasks also if the user is not in the group to view the task
-	* changed by sir-b 18th of January  2005
 	**/
     function list_tasks($user, $offset = 0, $maxRecords = -1, $find = null, $sort_mode = 'priority_asc',
 						$show_private = true, $show_submitted = true, $show_received = true, $show_shared = true, 

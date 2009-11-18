@@ -15,8 +15,8 @@ if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== FALSE) {
 require_once 'lib/setup/third_party.php';
 require_once (defined('SMARTY_DIR') ? SMARTY_DIR : 'lib/smarty/libs/') . 'Smarty.class.php';
 
-class Smarty_Tikiwiki extends Smarty {
-	
+class Smarty_Tikiwiki extends Smarty 
+{
 	function Smarty_Tikiwiki($tikidomain = '') {
 		parent::Smarty();
 		if ($tikidomain) { $tikidomain.= '/'; }
@@ -100,6 +100,7 @@ class Smarty_Tikiwiki extends Smarty {
 			// Enable AJAX
 			if ( $prefs['feature_ajax'] == 'y' && $_smarty_display ) {
 				global $ajaxlib; require_once('lib/ajax/ajaxlib.php');
+				$ajaxlib->registerTemplate('tiki-site_header.tpl');
 				$ajaxlib->registerTemplate($tpl);
 			}
 
@@ -120,6 +121,7 @@ class Smarty_Tikiwiki extends Smarty {
 			if ( $prefs['feature_ajax'] == 'y' && $_smarty_display ) {
 				$_POST['xajaxargs'][0] = $_smarty_tpl_file;
 				global $ajaxlib; require_once('lib/ajax/ajaxlib.php');
+				$ajaxlib->registerTemplate('tiki-site_header.tpl');
 				$ajaxlib->registerTemplate($_smarty_tpl_file);
 				$ajaxlib->processRequests();
 			}

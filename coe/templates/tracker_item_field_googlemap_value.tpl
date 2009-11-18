@@ -1,10 +1,10 @@
 {* $Id: tracker_item_field_value.tpl 14576 2008-09-02 01:19:41Z rischconsulting $ *}
 {* idem tracker_item_field with no strip *}
-	{tr}Latitude{/tr} (Y) = {$field_value.y} ; {tr}Longitude{/tr} (X) = {$field_value.x} ; {if $control ne 'n'}Zoom = {$field_value.z}{/if}
 	<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key={$prefs.gmap_key}&amp;sensor=false" type="text/javascript">
 	</script>
-	<div id="map{$field_value.fieldId}_{$item.itemId}" style="width: {$width}px; height: {$height}px;border: 1px solid #000;">
+	<div id="map{$field_value.fieldId}_{$item.itemId}" style="width: {$width}px; height: {$height}px;border: 1px solid #000;overflow:hidden;">
 	</div>
+	<div class="description">{tr}Latitude{/tr} (Y) = {$field_value.y}<br /> {tr}Longitude{/tr} (X) = {$field_value.x} {if $control ne 'n'}<br />Zoom = {$field_value.z}{/if}</div>
 	<script type="text/javascript">
 	<!--//--><![CDATA[//><!--
 	function load_googlemap{$field_value.fieldId}_{$item.itemId}() {literal}{{/literal}

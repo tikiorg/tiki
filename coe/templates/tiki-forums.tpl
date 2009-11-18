@@ -98,7 +98,7 @@
 {if $prefs.forum_list_desc eq 'y'}
 	<br />
 	<div class="subcomment">
-		{$channels[user].description|truncate:$prefs.forum_list_description_len:"...":true|nl2br}
+		{$channels[user].description|truncate:$prefs.forum_list_description_len:"...":true|escape|nl2br}
 	</div>
 {/if}
 </td>
@@ -115,7 +115,10 @@
 <td class="{cycle advance=false}">
 {if isset($channels[user].lastPost)}
 {$channels[user].lastPost|tiki_short_datetime}<br />
-<small><i>{$channels[user].lastPostData.title|escape}</i> {tr}by{/tr} {$channels[user].lastPostData.userName}</small>
+  {if $prefs.forum_reply_notitle neq 'y'}
+    <small><i>{$channels[user].lastPostData.title|escape}</i>
+  {/if}
+  {tr}by{/tr} {$channels[user].lastPostData.userName}</small>
 {/if}
 </td>
 {/if}

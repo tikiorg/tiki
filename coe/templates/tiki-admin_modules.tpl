@@ -24,7 +24,7 @@
 
 {tabset name='tabs_adminmodules'}
 
-{tab name='{tr}Assign/Edit modules{/tr}'}
+{tab name="{tr}Assign/Edit modules{/tr}"}
 	{if $prefs.feature_tabs neq 'y'}
 		<legend class="heading">
 			<span>
@@ -183,7 +183,7 @@
 						<td class="formcolor">
 							<input type="text" id="assign_params[{$name|escape}]" name="assign_params[{$name|escape}]" value="{$param.value|escape}"/>
 							<div class="description">
-								{$param.description|escape}
+								{$param.description}
 							</div>
 						</td>
 					</tr>
@@ -251,7 +251,7 @@
 	</form>
 {/tab}
 
-{tab name='{tr}User Modules{/tr}'}
+{tab name="{tr}User Modules{/tr}"}
 	{if $prefs.feature_tabs neq 'y'}
 		<legend class="heading">
 			<a href="#usertheme" name="usertheme"><span>{tr}User Modules{/tr}</span></a>
@@ -322,14 +322,14 @@
 						{if $polls}
 							<tr>
 								<td class="form">
-									<label for="list_polls">{tr}Available polls{/tr}:</label>
+									<label for="list_polls">{tr}Available polls:{/tr}</label>
 								</td>
 								<td>
 									<select name="polls" id='list_polls'>
 										<option value="{literal}{{/literal}poll{literal}}{/literal}">--{tr}Random active poll{/tr}--</option>
 										<option value="{literal}{{/literal}poll id=current{literal}}{/literal}">--{tr}Random current poll{/tr}--</option>
 										{section name=ix loop=$polls}
-											<option value="{literal}{{/literal}poll id={$polls[ix].pollId}{literal}}{/literal}">{$polls[ix].title}</option>
+											<option value="{literal}{{/literal}poll id={$polls[ix].pollId}{literal}}{/literal}">{$polls[ix].title|escape}</option>
 										{/section}
 									</select>
 								</td>
@@ -344,13 +344,13 @@
 						{if $galleries}
 							<tr>
 								<td class="form">
-									<label for="list_galleries">{tr}Random image from{/tr}:</label>
+									<label for="list_galleries">{tr}Random image from:{/tr}</label>
 								</td>
 								<td>
 									<select name="galleries" id='list_galleries'>
 										<option value="{literal}{{/literal}gallery id=-1{literal}}{/literal}">{tr}All galleries{/tr}</option>
 										{section name=ix loop=$galleries}
-											<option value="{literal}{{/literal}gallery id={$galleries[ix].galleryId}{literal}}{/literal}">{$galleries[ix].name}</option>
+											<option value="{literal}{{/literal}gallery id={$galleries[ix].galleryId}{literal}}{/literal}">{$galleries[ix].name|escape}</option>
 										{/section}
 									</select>
 								</td>
@@ -365,7 +365,7 @@
 						{if $contents}
 							<tr>
 								<td class="form">
-									<label for="list_contents">{tr}Dynamic content blocks{/tr}:</label>
+									<label for="list_contents">{tr}Dynamic content blocks:{/tr}</label>
 								</td>
 								<td>
 									<select name="contents" id='list_contents'>
@@ -385,12 +385,12 @@
 						{if $rsss}
 							<tr>
 								<td class="form">
-									<label for="list_rsss">{tr}RSS Modules{/tr}:</label>
+									<label for="list_rsss">{tr}External feeds:{/tr}</label>
 								</td>
 								<td>
 									<select name="rsss" id='list_rsss'>
 										{section name=ix loop=$rsss}
-											<option value="{literal}{{/literal}rss id={$rsss[ix].rssId}{literal}}{/literal}">{$rsss[ix].name}</option>
+											<option value="{literal}{{/literal}rss id={$rsss[ix].rssId}{literal}}{/literal}">{$rsss[ix].name|escape}</option>
 										{/section}
 									</select>
 								</td>
@@ -406,12 +406,12 @@
 						{if $menus}
 							<tr>
 								<td class="form">
-									<label for="list_menus">{tr}Menus{/tr}:</label>
+									<label for="list_menus">{tr}Menus:{/tr}</label>
 								</td>
 								<td>
 									<select name="menus" id='list_menus'>
 										{section name=ix loop=$menus}
-											<option value="{literal}{{/literal}menu id={$menus[ix].menuId}{literal}}{/literal}">{$menus[ix].name}</option>
+											<option value="{literal}{{/literal}menu id={$menus[ix].menuId}{literal}}{/literal}">{$menus[ix].name|escape}</option>
 										{/section}
 									</select>
 								</td>
@@ -425,7 +425,7 @@
 							{if $prefs.feature_phplayers eq "y"}
 								<tr>
 									<td class="form">
-										<label for="list_phpmenus">{tr}phpLayersMenus{/tr}:</label>
+										<label for="list_phpmenus">{tr}phpLayersMenus:{/tr}</label>
 									</td>
 									<td>
 										<select name="phpmenus" id='list_phpmenus'>
@@ -446,7 +446,7 @@
 						{if $banners}
 							<tr>
 								<td class="form">
-									<label for="list_banners">{tr}Banner zones{/tr}:</label>
+									<label for="list_banners">{tr}Banner zones:{/tr}</label>
 								</td>
 								<td>
 									<select name="banners" id='list_banners'>
@@ -466,12 +466,12 @@
 						{if $wikistructures}
 							<tr>
 								<td class="form">
-									<label for="list_wikistructures">{tr}Wiki{/tr} {tr}Structures{/tr}:</label>
+									<label for="list_wikistructures">{tr}Wiki{/tr} {tr}Structures:{/tr}</label>
 								</td>
 								<td>
 									<select name="structures" id='list_wikistructures'>
 										{section name=ix loop=$wikistructures}
-											<option value="{literal}{{/literal}wikistructure id={$wikistructures[ix].page_ref_id}{literal}}{/literal}">{$wikistructures[ix].pageName}</option>
+											<option value="{literal}{{/literal}wikistructure id={$wikistructures[ix].page_ref_id}{literal}}{/literal}">{$wikistructures[ix].pageName|escape}</option>
 										{/section}
 									</select>
 								</td>
@@ -508,9 +508,9 @@
 			</tr>
 			<tr>
 				<td colspan="2" class="odd">{tr}Data{/tr}<br />
-					{textarea name='um_data' id='um_data' rows="6" cols="80" _toolbars='y' _zoom='n'}{$um_data}{/textarea}
+					{textarea name='um_data' id='um_data' rows="6" cols="80" _toolbars='y' _zoom='n' previewConfirmExit='n'}{$um_data}{/textarea}
 					<br />
-					<input type="submit" name="um_update" value="{if $um_title eq ''}{tr}Create{/tr}{else}{tr}Save{/tr}{/if}" />
+					<input type="submit" name="um_update" value="{if $um_title eq ''}{tr}Create{/tr}{else}{tr}Save{/tr}{/if}" onclick="needToConfirm=false" />
 				</td>
 			</tr>
 		</table>

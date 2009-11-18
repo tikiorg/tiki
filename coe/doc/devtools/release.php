@@ -59,7 +59,7 @@ if ( $isPre ) {
 } else {
 	$pre = '';
 }
-$mainversion = $version{0} . '.0';
+$mainversion = $version{0};
 
 include_once('lib/setup/twversion.class.php');
 $check_version = strtolower($version.$subrelease);
@@ -84,21 +84,21 @@ if ( ! $options['no-first-update'] && important_step('Update working copy to the
 }
 
 if ( empty($subrelease) ) {
-	$branch = "branches/$mainversion";
+	$branch = "branches/$mainversion.x";
 	$tag = "tags/$version";
 	$packageVersion = $version;
 	if ( ! empty($pre) )
 		$packageVersion .= ".$pre";
 	$secdbVersion = $version;
 } else {
-	$branch = "branches/$mainversion";
+	$branch = "branches/$mainversion.x";
 	$tag = "tags/$version$subrelease";
 	$packageVersion = "$version.$pre$subrelease";
 	$secdbVersion = "$version$subrelease";
 }
 
 if ( ! $options['no-readme-update'] && important_step("Update '" . README_FILENAME . "' file") ) {
-	update_readme_file($packageVersion, $version);
+	update_readme_file($secdbVersion, $version);
 	info('>> ' . README_FILENAME . ' file updated.');
 	important_step('Commit updated ' . README_FILENAME . ' file', true, "[REL] Update " . README_FILENAME . " file for $secdbVersion");
 }
@@ -131,7 +131,7 @@ if ( ! $options['no-changelog-update'] && important_step("Update '" . CHANGELOG_
 
 $nbCommiters = 0;
 if ( ! $options['no-copyright-update'] && important_step("Update '" . COPYRIGHTS_FILENAME . "' file (using final version number '$version')") ) {
-	if ( $ucf = update_copyright_file($mainversion) ) {
+	if ( $ucf = update_copyright_file($mainversion . '.0') ) {
 		info("\r>> Copyrights updated: "
 			. ( $ucf['newContributors'] == 0 ? 'No new contributor, ' : "+{$ucf['newContributors']} contributor(s), " )
 			. ( $ucf['newCommits'] == 0 ? 'No new commit' : "+{$ucf['newCommits']} commit(s)" )
@@ -177,6 +177,7 @@ if ( $isPre ) {
 		}
 
 		if ( ! $tagAlreadyExists ) {
+			update_working_copy('.');
 			$revision = (int) get_info( ROOT )->entry->commit['revision'];
 			if ( important_step("Tag release using branch '$branch' at revision $revision") ) {
 				`svn copy $fb -r$revision $ft -m "[REL] Tagging release"`;
@@ -194,6 +195,7 @@ if ( $isPre ) {
 // Helper functions
 
 function write_secdb( $file, $root, $version ) {
+	$file_exists = @file_exists($file);
 	$fp = @fopen($file, 'w+') or error('The SecDB file "' . $file . '" is not writable or can\'t be created.');
 	$queries = array();
 	md5_check_dir( $root, $root, $version, $queries );
@@ -206,7 +208,7 @@ function write_secdb( $file, $root, $version ) {
 
 	fclose( $fp );
 
-	if ( $file_exists = file_exists($file) ) {
+	if ( $file_exists ) {
 		info(">> Existing SecDB file '$file' has been updated.");
 		`svn add $file 2> /dev/null`;
 	} else {
@@ -249,6 +251,8 @@ function md5_check_dir($root, $dir, $version, &$queries) {
 }
 
 function build_packages($releaseVersion, $svnRelativePath) {
+	global $options;
+
 	$script = TOOLS . '/tikirelease.sh';
 	if ($options['debug-packaging']) {
 	   $debugflag = '-x';
@@ -494,8 +498,8 @@ function important_step($msg, $increment_step = true, $commit_msg = false) {
 		}
 	}
 
-	if ( $commit_msg && $do_step ) {
-	  $revision = commit($commit_msg) && info(">> Commited revision $revision.");
+	if ( $commit_msg && $do_step && ( $revision = commit($commit_msg) ) ) {
+		info(">> Commited revision $revision.");
 	}
 
 	return $do_step;
@@ -851,8 +855,10 @@ function display_howto() {
    HOWTO release Tiki
 --------------------------
 
-0/ When branching for 4.x, call it branches/4.x to be clearer than branches/3.0, because branches/4.x is indeed 4.1, 4.2, etc.
-
+0/ When branching for 4.x, call it branches/4 or branches/4.x (to be discussed) to be clearer than 
+   branches/3.0, because branches/4.x is indeed 4.1, 4.2, etc.
+   http://dev.tikiwiki.org/SVNTips#Handling_branches
+   
 1/ Preliminary manual tasks
    - run the tiki installer and correct anything obviously wrong
    - the "function update_readme_file" in this script will output to the top-level README:
@@ -891,8 +897,8 @@ function display_howto() {
    http://sourceforge.net/apps/trac/sourceforge/wiki/Release%20files%20for%20download
 
 7/ Announce the good news on devel mailing-list
-   and ask the TAG (TikiWiki Admin Group) through the admin mailing-list
-   to launch the announce-speading process (Freshmeat, SourceForge and tikiwiki.org (manually for now).
+   and ask the Communications Team to launch the announce-spreading process as described on
+   http://tikiwiki.org/Communications+Team+Release
 
 post/
    Update appropriate http://tikiwiki.org/stable.version file with new release version

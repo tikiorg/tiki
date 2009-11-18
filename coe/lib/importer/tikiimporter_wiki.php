@@ -161,5 +161,3 @@ class TikiImporter_Wiki extends TikiImporter
         return true;
     }
 }
-
-?>

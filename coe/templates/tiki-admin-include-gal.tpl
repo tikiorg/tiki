@@ -14,8 +14,8 @@
 {if count($galleries) eq 0}{tr}No Gallery exists{/tr}{/if}
 {section name=ix loop=$galleries}
 {if $smarty.section.ix.first}<select name="home_gallery">{/if}
-<option value="{$galleries[ix].galleryId|escape}" {if $galleries[ix].galleryId eq $prefs.home_gallery}selected="selected"{/if}>{$galleries[ix].name|truncate:20:"...":true}</option>
-{if $smarty.section.ix.first}</select>{/if}
+<option value="{$galleries[ix].galleryId|escape}" {if $galleries[ix].galleryId eq $prefs.home_gallery}selected="selected"{/if}>{$galleries[ix].name|truncate:20:"...":true|escape}</option>
+{if $smarty.section.ix.last}</select>{/if}
 {/section}
 </td>
 <td><input type="submit" name="galset" value="{tr}OK{/tr}" /></td></tr>

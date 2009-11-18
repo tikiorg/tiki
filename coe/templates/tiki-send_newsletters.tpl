@@ -5,6 +5,7 @@
 
 {if $tiki_p_admin_newsletters eq "y"}
 	<div class="navbar">
+		{button href="tiki-newsletters.php" _text="{tr}List Newsletters{/tr}"}
 		{if $nlId}
 			{button href="tiki-admin_newsletters.php?nlId=$nlId" _text="{tr}Admin Newsletters{/tr}"}
 		{else}
@@ -47,14 +48,16 @@
 {/if}
 
 {if $presend eq 'y'}
+	<div id="confirmArea">
 	{remarksbox type='warning' title="{tr}Please Confirm{/tr}"}
 		<b>{tr}This newsletter will be sent to {$subscribers} email addresses.{/tr}</b>
 		<br />
 		{tr}Reply to:{/tr} {if empty($replyto)}{$prefs.sender_email|escape} ({tr}default{/tr}){else}{$replyto|escape}{/if}
 	{/remarksbox}
 	<p>
-		<form method="post" action="tiki-send_newsletters.php">
+		<form method="post" action="tiki-send_newsletters.php" target="resultIframe" id='confirmForm'>
 			<input type="hidden" name="nlId" value="{$nlId|escape}" />
+			<input type="hidden" name="sendingUniqId" value="{$sendingUniqId|escape}" />
 			<input type="hidden" name="editionId" value="{$info.editionId}"/>
 			<input type="hidden" name="subject" value="{$subject|escape}" />
 			<input type="hidden" name="data" value="{$data|escape}" />
@@ -63,7 +66,7 @@
 			<input type="hidden" name="datatxt" value="{$datatxt|escape}" />
 			<input type="hidden" name="replyto" value="{$replyto|escape}" />
 			<input type="hidden" name="wysiwyg" value="{$wysiwyg|escape}" />
-			<input type="submit" name="send" value="{tr}Send{/tr}" />
+			<input type="submit" name="send" value="{tr}Send{/tr}" onclick="document.getElementById('confirmArea').style.display = 'none'; document.getElementById('sendingArea').style.display = 'block';" />
 			<input type="submit" name="preview" value="{tr}Cancel{/tr}" />
 			{foreach from=$info.files item=newsletterfile key=fileid}
 				<input type='hidden' name='newsletterfile[{$fileid}]' value='{$newsletterfile.id}'/>
@@ -72,7 +75,7 @@
 	</p>
 	<h2>{tr}Preview{/tr}</h2>
 	<h3>{tr}Subject{/tr}</h3>
-	<div class="simplebox wikitext">{$subject}</div>
+	<div class="simplebox wikitext">{$subject|escape}</div>
 
 	<h3>{tr}HTML version{/tr}</h3>
 	<div class="simplebox wikitext">{$dataparsed}</div>
@@ -91,11 +94,19 @@
 			</li>
 		{/foreach}
 	</ul>
+
+	</div>
+
+	<div id="sendingArea" style="display:none">
+		<h3>{tr}Sending Newsletter{/tr} ...</h3>
+		<iframe id="resultIframe" name="resultIframe" frameborder="0" style="width: 600px; height: 400px"></iframe>
+	</div>
+
 {else}
 	{if $preview eq 'y'}
 		<h2>{tr}Preview{/tr}</h2>
 		<h3>{tr}Subject{/tr}</h3>
-		<div class="simplebox wikitext">{$info.subject}</div>
+		<div class="simplebox wikitext">{$info.subject|escape}</div>
 
 		<h3>{tr}HTML version{/tr}</h3>
 		<div class="simplebox wikitext">{$info.dataparsed}</div>
@@ -118,25 +129,25 @@
 
 {tabset name='tabs_send_newsletters'}
 
-	{tab name='{tr}Edit{/tr}'}
+	{tab name="{tr}Edit{/tr}"}
 	{* --- tab with editor --- *}
 		<h2>{tr}Prepare a newsletter to be sent{/tr}</h2>
 		<form action="tiki-send_newsletters.php" method="post" id='editpageform' enctype='multipart/form-data'>
 			<input type="hidden" name="editionId" value="{$info.editionId}"/>
 			<table class="normal" id="newstable">
 				<tr class="formcolor">
-					<td class="formcolor">{tr}Subject{/tr}:</td>
+					<td class="formcolor">{tr}Subject:{/tr}</td>
 					<td class="formcolor">
 						<input type="text" maxlength="250" size="80" name="subject" value="{$info.subject|escape}" />
 					</td>
 				</tr>
 				<tr class="formcolor">
-					<td class="formcolor">{tr}Newsletter{/tr}:</td>
+					<td class="formcolor">{tr}Newsletter:{/tr}</td>
 					<td class="formcolor">
 						<select name="nlId" onchange="checkNewsletterTxtArea();">
 							{section loop=$newsletters name=ix}
 								<option value="{$newsletters[ix].nlId|escape}" {if $newsletters[ix].nlId eq $nlId}selected="selected"{/if}>
-									{$newsletters[ix].name}
+									{$newsletters[ix].name|escape}
 								</option>
 							{/section}
 						</select>
@@ -152,7 +163,7 @@
 								<option value="0">{tr}none{/tr}</option>
 								{section name=ix loop=$templates}
 									<option value="{$templates[ix].templateId|escape}" {if $templateId eq $templates[ix].templateId}selected="selected"{/if}>
-										{$templates[ix].name}
+										{$templates[ix].name|escape}
 									</option>
 								{/section}
 							</select>
@@ -176,21 +187,17 @@
 
 				<tr class="formcolor">
 					<td class="formcolor">
-						{tr}Data HTML{/tr}:
+						{tr}Data HTML:{/tr}
 					</td>
 					<td class="formcolor">
-						{toolbars area_name='data'}
-						<textarea id='editwiki' name="data" rows="{$rows}" cols="{$cols}">{$info.data|escape}</textarea>
-						<input type="hidden" name="rows" value="{$rows}"/>
-						<input type="hidden" name="cols" value="{$cols}"/>
-						<br />
-						{tr}Must be wiki parsed{/tr}: <input type="checkbox" name="wikiparse" {if empty($info.wikiparse) or $info.wikiparse eq 'y'} checked="checked"{/if} />
+						{textarea name='data' id='editwiki'}{$info.data}{/textarea}
+						{tr}Must be wiki parsed:{/tr} <input type="checkbox" name="wikiparse" {if empty($info.wikiparse) or $info.wikiparse eq 'y'} checked="checked"{/if} />
 					</td>
 				</tr>
 
 				<tr class="formcolor">
 					<td class="formcolor" id="txtcol1">
-						{tr}Data Txt{/tr}:
+						{tr}Data Txt:{/tr}
 						<br /><br />
 						{include file='textareasize.tpl' area_name='editwikitxt' formId='editpageform'}
 					</td>
@@ -226,15 +233,15 @@
 				<tr class="formcolor">
 					<td class="formcolor">&nbsp;</td>
 					<td class="formcolor">
-						<input type="submit" name="preview" value="{tr}Preview{/tr}" />
+						<input type="submit" name="preview" value="{tr}Preview{/tr}" class="wikiaction tips" title="{tr}Send Newsletters{/tr}|{tr}Preview your changes.{/tr}" onclick="needToConfirm=false" />
 						&nbsp;
-						<input type="submit" name="save_only" value="{tr}Save as Draft{/tr}" />
+						<input type="submit" name="save_only" value="{tr}Save as Draft{/tr}" class="wikiaction tips" title="{tr}Send Newsletters{/tr}|{tr}Save your changes.{/tr}" onclick="needToConfirm=false" />
 					</td>
 				</tr>
 
 				<tr>
 					<td class="formcolor">&nbsp;</td>
-					<td class="formcolor">&nbsp;<input type="submit" name="save" value="{tr}Send Newsletter{/tr}" /></td>
+					<td class="formcolor">&nbsp;<input type="submit" name="save" value="{tr}Send Newsletter{/tr}" class="wikiaction tips" title="{tr}Send Newsletters{/tr}|{tr}Save any changes and send to all subscribers.{/tr}" onclick="needToConfirm=false" /></td>
 				</tr>
 			</table>
 		</form>

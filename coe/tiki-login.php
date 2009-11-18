@@ -14,7 +14,7 @@ if (isset($_REQUEST['cas']) && $_REQUEST['cas'] == 'y' && $prefs['auth_method'] 
 }
 $smarty->assign('errortype', 'login'); // to avoid any redirection to the login box if error
 // Alert user if cookies are switched off
-if (ini_get('session.use_cookies') == 1 && !isset($_COOKIE['PHPSESSID'])) {
+if (ini_get('session.use_cookies') == 1 && !isset($_COOKIE[ session_name() ]) && $prefs['session_silent'] != 'y') {
 	$smarty->assign('msg', tra('You have to enable cookies to be able to login to this site'));
 	$smarty->display('error.tpl');
 	exit;
@@ -30,6 +30,11 @@ if ($https_mode && $prefs['https_login'] == 'disabled') {
 	header('location: ' . $base_url_http . $prefs['login_url']);
 	exit;
 }
+
+if( $prefs['session_silent'] == 'y' ) {
+	session_start();
+}
+
 // Remember where user is logging in from and send them back later; using session variable for those of us who use WebISO services
 // Note that loginfrom will always be a complete URL (http://...)
 if (!isset($_SESSION['loginfrom'])) {
@@ -352,12 +357,21 @@ if ($isvalid) {
 		// shouldn't occur that often.
 		sleep(5);
 	}
-	if (isset($user) and $prefs['feature_score'] == 'y') $tikilib->score_event($user, 'login');
+
+	if ( isset($user) and $prefs['feature_score'] == 'y' ) {
+		$tikilib->score_event($user, 'login');
+	}
 	// RFC 2616 defines that the 'Location' HTTP headerconsists of an absolute URI
-	if (!eregi('^https?\:', $url)) $url = (ereg('^/', $url) ? $url_scheme . '://' . $url_host . (($url_port != '') ? ":$url_port" : '') : $base_url) . $url;
+	if ( !eregi('^https?\:', $url) ) {
+		$url = (ereg('^/', $url) ? $url_scheme . '://' . $url_host . (($url_port != '') ? ":$url_port" : '') : $base_url) . $url;
+	}
 	// Force HTTP mode if needed
-	if ($stay_in_ssl_mode != 'y' || !$https_mode) $url = str_replace('https://', 'http://', $url);
-	if (SID) $url.= ((strpos('?', $url) === false) ? '?' : '') . SID;
+	if ( $stay_in_ssl_mode != 'y' || !$https_mode ) {
+		 $url = str_replace('https://', 'http://', $url);
+	}
+	if ( defined('SID') && SID != '') {
+		$url.= ((strpos($url, '?') === false) ? '?' : '&') . SID;
+	}
 	header('Location: ' . $url);
 	exit;
 	

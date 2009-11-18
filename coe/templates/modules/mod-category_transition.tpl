@@ -29,14 +29,14 @@
 			</div>
 		{/foreach}
 		{jq}{literal}
-			$('.mouseover:not(.done)')
+			$jq('.mouseover:not(.done)')
 				.addClass('done')
 				.each( function( k, e ) {
-					$(e.href.substr(e.href.lastIndexOf('#'))).hide();
+					$jq(e.href.substr(e.href.lastIndexOf('#'))).hide();
 				} )
 				.click( function( e ) {
 					e.preventDefault();
-					$(this.href.substr(this.href.lastIndexOf('#'))).toggle('fast');
+					$jq(this.href.substr(this.href.lastIndexOf('#'))).toggle('fast');
 				} );
 		{/literal}{/jq}
 		<div><input type="submit" value="{tr}Apply{/tr}"/></div>

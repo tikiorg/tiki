@@ -9,54 +9,18 @@
 	{tabset name="admin_textarea"}
 		{tab name="{tr}General Settings{/tr}"}
 <fieldset><legend>{tr}Features{/tr}{if $prefs.feature_help eq 'y'} {help url="Text+Area"}{/if}</legend>
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="feature_antibot" name="feature_antibot" {if $prefs.feature_antibot eq 'y'}checked="checked" {/if}/></div>
-	<div class="adminoptionlabel"><label for="feature_antibot">{tr}Anonymous editors must enter anti-bot code (CAPTCHA){/tr}. </label>{if $prefs.feature_help eq 'y'} {help url="Spam+Protection"}{/if}</div>
-</div>
 
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="feature_wiki_protect_email" name="feature_wiki_protect_email" {if $prefs.feature_wiki_protect_email eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="feature_wiki_protect_email">{tr}Protect email against spam{/tr}.</label></div>
-</div>
+{preference name=feature_filegals_manager}
+{preference name=feature_dynamic_content}
+{preference name=feature_wiki_replace}
 
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="feature_smileys" name="feature_smileys" {if $prefs.feature_smileys eq 'y'}checked="checked" {/if}/> </div>
-	<div class="adminoptionlabel"><label for="feature_smileys">{tr}Smileys{/tr} </label>{if $prefs.feature_help eq 'y'} {help url="Smiley"}{/if}</div>
-</div>
-
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="feature_wiki_ext_icon" name="feature_wiki_ext_icon" {if $prefs.feature_wiki_ext_icon eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="feature_wiki_ext_icon">{tr}External link icon{/tr}</label>
-		<br /><em>{tr}External links will be identified with{/tr}: </em><img border="0" class="externallink" src="img/icons/external_link.gif" alt=" (external link)" />.
-	</div>
-</div>
-
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" name="popupLinks" id="general-ext_links" {if $prefs.popupLinks eq 'y'}checked="checked" {/if}/></div>
-	<div class="adminoptionlabel"><label for="general-ext_links">{tr}Open external links in new window{/tr}.</label>
-	<br /><em>{tr}External links will be identified with{/tr}: </em><img border="0" class="externallink" src="img/icons/external_link.gif" alt=" (external link)" />.
-	</div>
-</div>
-
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" name="feature_filegals_manager" id="feature_filegals_manager" {if $prefs.feature_filegals_manager eq 'y'}checked="checked" {/if}/> </div>
-	<div class="adminoptionlabel"><label for="feature_filegals_manager">{tr}Use File Galleries to store pictures {/tr}.</label></div>
-</div>
-
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="feature_dynamic_content" name="feature_dynamic_content" {if $prefs.feature_dynamic_content eq 'y'}checked="checked" {/if}/> </div>
-	<div class="adminoptionlabel"><label for="feature_dynamic_content">{tr}Dynamic Content System{/tr} </label>{if $prefs.feature_help eq 'y'} {help url="Dynamic+Content"}{/if}</div>
-</div>
-
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" name="feature_comments_post_as_anonymous" id="feature_comments_post_as_anonymous"{if $prefs.feature_comments_post_as_anonymous eq 'y'} checked="checked" {/if}/> </div>
-	<div class="adminoptionlabel"><label for="feature_comments_post_as_anonymous">{tr}Allow to post comments as Anonymous{/tr} </label>{if $prefs.feature_help eq 'y'} {help url="Post+Comments+as+Anonymous"}{/if}</div>
-</div>
 </fieldset>
 
 <fieldset><legend>{tr}Wiki syntax{/tr}{if $prefs.feature_help eq 'y'} {help url="Wiki+Syntax"}{/if}</legend>
 
-<div class="adminoptionbox">
+{preference name=feature_smileys}
+
+	<div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" id="feature_wiki_paragraph_formatting" name="feature_wiki_paragraph_formatting" {if $prefs.feature_wiki_paragraph_formatting eq 'y'}checked="checked" {/if}onclick="flip('usewikiparaformat');" /></div>
 	<div class="adminoptionlabel"><label for="feature_wiki_paragraph_formatting">{tr}Wiki paragraph formatting{/tr}</label></div>
 <div class="adminoptionboxchild" id="usewikiparaformat" style="display:{if $prefs.feature_wiki_paragraph_formatting eq 'y'}block{else}none{/if};">
@@ -130,6 +94,19 @@
 	<div class="adminoptionlabel"><label for="default_rows_textarea_forumthread">{tr}Forum reply{/tr}: </label><input type="text" name="default_rows_textarea_forumthread" id="default_rows_textarea_forumthread" value="{$prefs.default_rows_textarea_forumthread}" size="4" />{tr}rows{/tr}</div>
 </div>
 </fieldset>
+
+<fieldset><legend>{tr}External links and images{/tr}</legend>
+
+			{preference name=cachepages}
+			{preference name=cacheimages}
+			{preference name=feature_wiki_ext_icon}
+			{preference name=popupLinks}
+			<em>{tr}External links will be identified with{/tr}: </em><img border="0" class="externallink" src="img/icons/external_link.gif" alt=" (external link)" />.
+	
+			
+			
+</fieldset>
+
 		{/tab}
 
 		{tab name="{tr}Plugins{/tr}"}
@@ -142,10 +119,9 @@
 
 		<fieldset class="admin">
 		<legend>{tr}Edit plugin icons{/tr}</legend>
-		<div class="adminoptionbox">
-			<div class="adminoption"><input type="checkbox" id="wiki_edit_plugin" name="wiki_edit_plugin" {if $prefs.wiki_edit_plugin eq 'y'}checked="checked"{/if}/></div> 
-				<div class="adminoptionlabel"><label for="wiki_edit_plugin">{tr}Enable edit plugin icons{/tr} {tr}(experimental - not comprehensively tested and requires javascript){/tr}</label></div>
-		</div>
+
+			{preference name=wiki_edit_plugin}
+
 		</fieldset>
 		<fieldset class="admin">
                 <legend>{tr}Plugins{/tr}</legend>
@@ -159,20 +135,10 @@
 			<strong>{$plugin|escape}</strong>: {$info.description|escape}{assign var=pref value=wikiplugin_$plugin} {if $prefs.feature_help eq 'y'} {help url="Plugin$plugin"}{/if}
 			</div>
 			{if in_array( $pref, $info.prefs)}
-				<div class="adminoptionbox"> 
 				{assign var=pref value=wikiplugin_$plugin}
 				{assign var=pref_inline value=wikiplugininline_$plugin}	
-					<div class="adminoption"><input type="checkbox" id="wikiplugin_{$plugin|escape}" name="wikiplugin_{$plugin|escape}" {if $prefs[$pref] eq 'y'}checked="checked" {/if}/> 
-					</div> 
-					<div class="adminoptionlabel"><label for="wikiplugin_{$plugin|escape}">{tr}Enable{/tr}</label>
-					</div> 
-				</div>	
-				<div class="adminoptionbox">
-				        {if !isset($plugins.$plugin.inline)}<div class="adminoption"><input type="checkbox" id="wikiplugininline_{$plugin|escape}" name="wikiplugininline_{$plugin|escape}" {if $prefs[$pref_inline] eq 'y'}checked="checked" {/if}/>
-                         </div>{/if} 
-					<div class="adminoptionlabel">{if !isset($plugins.$plugin.inline)}<label for="wikiplugininline_{$plugin|escape}">{/if}{if isset($plugins.$plugin.inline)}The edit plugin icon is not supported for this plugin{else}{tr}Disable edit plugin icon (make plugin inline){/tr}{/if}{if !isset($plugins.$plugin.inline)}</label>{/if}
-					</div> 
-				</div>
+				{preference name=$pref label="{tr}Enable{/tr}"}
+				{preference name=$pref_inline label="{tr}Disable edit plugin icon (make plugin inline){/tr}"}
 			{/if} 
 			</fieldset>
 		{/foreach}

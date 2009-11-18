@@ -183,10 +183,11 @@ ul.sf-shadow ul.sf-shadow-off {
 
 div#col2,
 td#leftcolumn,
-div.cssmenubox {
+div.cssmenubox,
+.box-data ul.cssmenu_vert,
+.box-data ul.cssmenu_vert li ul {
 	overflow: visible !important;
 }
-
 
 /*** adding a parent div.sf-navbar to .cssmenu_horiz to create an all-horizontal nav-bar menu ***/
 div.navbar .cssmenu_horiz {

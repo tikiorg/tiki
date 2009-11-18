@@ -8,5 +8,3 @@ $branch = full( $_SERVER['argv'][1] );
 $branch = escapeshellarg( $branch );
 
 `svn switch $branch`;
-
-?>

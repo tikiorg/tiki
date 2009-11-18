@@ -18,9 +18,8 @@ include_once ('lib/filegals/filegallib.php');
 if ($prefs['feature_groupalert'] == 'y') {
 	include_once ('lib/groupalert/groupalertlib.php');
 }
-include ('lib/filegals/max_upload_size.php');
 @ini_set('max_execution_time', 0); //will not work in safe_mode is on
-$auto_query_args = array('galleryId', 'fileId', 'filegals_manager');
+$auto_query_args = array('galleryId', 'fileId', 'filegals_manager', 'view', 'simpleMode');
 function print_progress($msg) {
 	global $prefs;
 	if ($prefs['javascript_enabled'] == 'y') {
@@ -69,8 +68,9 @@ if (empty($_REQUEST['fileId']) && $tiki_p_upload_files != 'y' && $tiki_p_admin_f
 if (isset($_REQUEST['galleryId'][1])) {
 	foreach($_REQUEST['galleryId'] as $i => $gal) {
 		if (!$i) continue;
-		$perms = $tikilib->get_perm_object($_REQUEST['galleryId'][$key], 'file gallery', $gal_info, false);
-		if ($perm['tiki_p_upload_files'] != 'y') {
+		// TODO get the ggod gal_info
+		$perms = $tikilib->get_perm_object($_REQUEST['galleryId'][$i], 'file gallery', $gal_info, false);
+		if ($perms['tiki_p_upload_files'] != 'y') {
 			$smarty->assign('errortype', 401);
 			$smarty->assign('msg', tra("Permission denied"));
 			$smarty->display('error.tpl');
@@ -143,6 +143,8 @@ if (!empty($_REQUEST['galleryId'][0])) {
 	$smarty->assign_by_ref('gal_info', $gal_info);
 	$podCastGallery = $filegallib->isPodCastGallery((int)$_REQUEST["galleryId"][0], $gal_info);
 }
+include ('lib/filegals/max_upload_size.php');
+
 // Process an upload here
 if (isset($_REQUEST["upload"])) {
 	check_ticket('upload-file');
@@ -158,8 +160,12 @@ if (isset($_REQUEST["upload"])) {
 		}
 		$formId = $_REQUEST['formId'];
 		$smarty->assign("FormId", $_REQUEST['formId']);
-		if (empty($_REQUEST['galleryId'][$key])) continue;
-		if (!isset($_REQUEST['comment'][$key])) $_REQUEST['comment'][$key] = '';
+		if (empty($_REQUEST['galleryId'][$key])) {
+			continue;
+		}
+		if (!isset($_REQUEST['comment'][$key])) {
+			$_REQUEST['comment'][$key] = '';
+		}
 		// We process here file uploads
 		if (!empty($_FILES["userfile"]["name"][$key])) {
 			// Were there any problems with the upload?  If so, report here.
@@ -193,6 +199,10 @@ if (isset($_REQUEST["upload"])) {
 					continue;
 				}
 			}
+			if (!$filegallib->checkQuota($_FILES['userfile']['size'][$key], $_REQUEST['galleryId'][$key], $error)) {
+				$errors[] = $error;
+				continue;
+			}
 			$file_name = $_FILES["userfile"]["name"][$key];
 			$file_tmp_name = $_FILES["userfile"]["tmp_name"][$key];
 			$tmp_dest = $prefs['tmpDir'] . "/" . $file_name . ".tmp";
@@ -214,8 +224,10 @@ if (isset($_REQUEST["upload"])) {
 				// file can be called directly if name is known,
 				if ($podCastGallery) {
 					$path_parts = pathinfo($_FILES["userfile"]['name'][$key]);
-					if (in_array(strtolower($path_parts["extension"]), array("m4a", "mp3", "mov", "mp4", "m4v", "pdf", "flv"))) {
-						$extension = "." . strtolower($path_parts["extension"]);
+					if (in_array(strtolower($path_parts['extension']), array('m4a', 'mp3', 'mov', 'mp4', 'm4v', 'pdf', 'flv', 'swf'))) {
+						$extension = '.' . strtolower($path_parts['extension']);
+					} else {
+						$errors[] = tra('Incorrect file extension:').$path_parts['extension'];
 					}
 					$savedir = $prefs['fgal_podcast_dir'];
 				} else {

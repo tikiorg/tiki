@@ -134,8 +134,8 @@ class FaqLib extends TikiLib {
 		} else {
 			$query = 'delete from `tiki_faq_questions` where `faqId`=? and question=?';
 			$result = $this->query($query, array((int) $faqId, $question), -1, -1, false);
-			$query = 'insert into `tiki_faq_questions`(`faqId`,`question`,`answer`) values(?,?,?)';
-			$result = $this->query($query, array((int) $faqId, $question, $answer));
+			$query = 'insert into `tiki_faq_questions`(`faqId`,`question`,`answer`, `created`) values(?,?,?,?)';
+			$result = $this->query($query, array((int) $faqId, $question, $answer, $this->now));
 			$questionId = $this->getOne('select max(questionId) from `tiki_faq_questions` where `faqId`=?', $faqId);
 		}
 
@@ -171,16 +171,19 @@ class FaqLib extends TikiLib {
 		return $faqId;
 	}
 
-	function list_faq_questions($faqId, $offset, $maxRecords, $sort_mode, $find) {
-
-		if ($find) {
-			$findesc = '%' . $find . '%';
-
-			$mid = " where `faqId`=? and (`question` like ? or `answer` like ?)";
-			$bindvars=array((int) $faqId,$findesc,$findesc);
+	function list_faq_questions($faqId=0, $offset=0, $maxRecords=-1, $sort_mode='question_asc', $find='') {
+		if (!empty($faqId)) {
+			$mid = ' where `faqId`=? ';
+			$bindvars=array((int)$faqId);
 		} else {
-			$mid = " where `faqId`=? ";
-			$bindvars=array((int) $faqId);
+			$mid = '';
+			$bindvars = array();
+		}
+		if (!empty($find)) {
+			$findesc = '%' . $find . '%';
+			if (empty($mid)) $mid = ' where ';
+			$mid .= ' and (`question` like ? or `answer` like ?)';
+			$bindvars=array($findesc, $findesc);
 		}
 
 		$query = "select * from `tiki_faq_questions` $mid order by ".$this->convertSortMode($sort_mode);

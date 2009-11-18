@@ -57,7 +57,7 @@ function wikiplugin_countdown($data, $params) {
 	$tikidate->setTZbyID($tikilib->get_display_timezone());
 	$tikidate->setDate($then);
 	$tikidate->convertTZByID('UTC');
-	$then = $tikidate->getDate(DATE_FORMAT_UNIXTIME);
+	$then = $tikidate->getTime();
 
 	$difference = $then - $tikilib->now;
 	$num = $difference/86400;
@@ -68,6 +68,9 @@ function wikiplugin_countdown($data, $params) {
 	$mins = intval($num3);
 	$num4 = ($num3 - $mins)*60;
 	$secs = intval($num4);
-	$ret = "$days ".tra("days").", $hours ".tra("hours").", $mins ".tra("minutes")." ".tra("and")." $secs ".tra("seconds")." $data";
+	$ret = "$days ".tra("days");
+	if (empty($locatetime) || $locatetime != 'off') {
+		$ret .= ", $hours ".tra("hours").", $mins ".tra("minutes")." ".tra("and")." $secs ".tra("seconds")." $data";
+	}
 	return $ret;
 }

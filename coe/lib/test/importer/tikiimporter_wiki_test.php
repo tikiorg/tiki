@@ -156,5 +156,3 @@ class TikiImporter_Wiki_InsertPage_Test extends TikiImporter_TestCase
         $this->assertFalse($this->obj->insertPage($page));
     }
 }
-
-?>

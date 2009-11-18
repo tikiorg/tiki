@@ -42,7 +42,7 @@ function prefs_feature_list() {
 		'feature_file_galleries' => array(
 			'name' => tra('File Gallery'),
 			'description' => tra('Computer files, videos or software for downloading. With check-in & check-out (lock)'),
-			'help' => 'File Gallery',
+			'help' => 'File+Gallery',
 			'type' => 'flag',
 		),
 		'feature_articles' => array(
@@ -58,7 +58,7 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),
 		'feature_newsletters' => array(
-			'name' => tra('Newletters'),
+			'name' => tra('Newsletters'),
 			'description' => tra('Content mailed to registered users.'),
 			'help' => 'Newsletters',
 			'type' => 'flag',
@@ -222,6 +222,12 @@ function prefs_feature_list() {
 			'help' => 'Comments',
 			'type' => 'flag',
 		),
+		'feature_comments_post_as_anonymous' => array(
+			'name' => tra('Allow posting of comments as Anonymous'),
+			'description' => tra('Permit anonymous visitors to add a comment without needing to create an account'),
+			'help' => 'Comments',
+			'type' => 'flag',
+		),
 		'feature_wiki_description' => array(
 			'name' => tra('Display page description'),
 			'description' => tra('Display the page description below the heading when viewing the page.'),
@@ -255,9 +261,10 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),
 		'feature_htmlpurifier_output' => array(
-			'name' => tra('Ouput Should be HTMLPurified'),
+			'name' => tra('Output should be HTMLPurified'),
 			'description' => tra('This enable HTPMPurifier on outputs to filter remaining security problems like XSS.'),
-			'help' => 'http://doc.tikiwiki.org/HTMLPurifier',
+			'help' => 'Purifier',
+			'warning' => tra('Experimental. This feature is still under development.'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
@@ -280,15 +287,15 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),
 		'feature_quick_object_perms' => array(
-			'name' => tra('QuickPerms'),
-			'description' => tra('Quickperms'),
+			'name' => tra('Quick Permission Assignment'),
+			'description' => tra('Quickperms allow to define classes of privileges and grant them to roles on objects.'),
 			'help' => 'Quickperms',
 			'type' => 'flag',
 		),
 		'feature_purifier' => array(
 			'name' => tra('HTML Purifier'),
 			'description' => tra('HTML Purifier'),
-			'help' => 'HTML Purifier',
+			'help' => 'Purifier',
 			'type' => 'flag',
 		),
 		'feature_ajax' => array(
@@ -363,18 +370,27 @@ function prefs_feature_list() {
 			'help' => 'Lost+Edit+Protection',
 			'type' => 'flag',
 		),
-		'feature_workspaces' => array(
-			'name' => tra('Workspaces'),
-			'description' => tra('Workspace'),
-			'help' => 'Workspace',
+		'feature_wiki_save_draft' => array(
+			'name' => tra('Save draft'),
+			'warning' => tra('Requires AJAX (experimental)'),
+			'dependencies' => array(
+				'feature_ajax',
+			),
+			'type' => 'flag',
+		),	
+		'feature_kaltura' => array(
+			'name' => tra('Kaltura'),
+			'description' => tra('Kaltura'),
+			'help' => 'Kaltura',
 			'type' => 'flag',
 		),
 		'feature_friends' => array(
 			'name' => tra('Friendship Network'),
-			'description' => tra('Friendship Network'),
+			'description' => tra('Users can identify other users as their friends'),
+			'warning' => tra('Neglected feature'),
 			'help' => 'Friendship',
 			'type' => 'flag',
-		),
+		),	
 		'feature_banning' => array(
 			'name' => tra('Banning system'),
 			'description' => tra('Banning system'),
@@ -420,7 +436,7 @@ function prefs_feature_list() {
 		'feature_mytiki' => array(
 			'name' => tra("Display 'MyTiki' in the application menu"),
 			'description' => tra("Display 'MyTiki' in the application menu"),
-			'help' => '',
+			'help' => 'MyTiki',
 			'type' => 'flag',
 		),
 		'feature_minical' => array(
@@ -539,7 +555,7 @@ function prefs_feature_list() {
 		),
 		'feature_use_minified_scripts' => array(
 			'name' => tra('Use Minified Scripts'),
-			'description' => tra('Use Minified Scripts'),
+			'description' => tra('These JavaScript files have been previously minified and are stable. They make pages quicker to load than their non-minified versions.'),
 			'help' => 'MinifiedScripts',
 			'type' => 'flag',
 		),
@@ -578,7 +594,6 @@ function prefs_feature_list() {
 		),
 		'feature_sync_language' => array(
 			'name' => tra('Changing the page language also changes the site language'),
-			'description' => tra(''),
 			'type' => 'flag',
 		),
 		'feature_translation' => array(
@@ -590,6 +605,11 @@ function prefs_feature_list() {
 		'feature_urgent_translation' => array(
 			'name' => tra('Urgent translation notifications'),
 			'description' => tra('Allow to flag changes as urgent, leading translations to be marked with a notice visible to all users.'),
+			'type' => 'flag',
+		),
+		'feature_translation_incomplete_notice' => array(
+			'name' => tra('Incomplete translation notice'),
+			'description' => tra('When a page is translated to a new language, a notice will be automatically be inserted into the page to indicate that the translation is not yet complete.'),
 			'type' => 'flag',
 		),
 		'feature_multilingual_structures' => array(
@@ -626,6 +646,660 @@ function prefs_feature_list() {
 		'feature_babelfish' => array(
 			'name' => tra('Translation URLs'),
 			'description' => tra('Show clickable URLs to translate the page to another language using Babel Fish website.'),
+			'type' => 'flag',
+		),
+		'feature_babelfish_logo' => array(
+			'name' => tra('Translation icons'),
+			'description' => tra('Show clickable icons to translate the page to another language using Babelfish website.'),
+			'type' => 'flag',
+		),
+		'feature_smileys' => array(
+			'name' => tra('Smileys'),
+			'description' => tra('Also known as emoticons'),
+			'help' => 'Smileys',
+			'type' => 'flag',
+		),
+		'feature_dynamic_content' => array(
+			'name' => tra('Dynamic Content System'),
+			'description' => tra('Bloc of content which can be reused and programmed (timed)'),
+			'help' => 'Dynamic+Content',
+			'type' => 'flag',
+		),
+		'feature_filegals_manager' => array(
+			'name' => tra('Use File Galleries to store pictures'),
+			'type' => 'flag',
+		),
+		'feature_wiki_ext_icon' => array(
+			'name' => tra('External link icon'),
+			'type' => 'flag',
+		),
+		'feature_semantic' => array(
+			'name' => tra('Semantic links'),
+			'description' => tra('Going beyond Backlinks, allows to define some semantic relationships between wiki pages'),
+			'help' => 'Semantic',
+			'type' => 'flag',
+			'dependencies' => array(
+				'feature_backlinks',
+			),
+		),
+		'feature_webservices' => array(
+			'name' => tra('Web Services'),
+			'description' => tra('Can consume webservices in JSON or YAML'),
+			'help' => 'WebServices',
+			'type' => 'flag',
+		),
+		'feature_menusfolderstyle' => array(
+			'name' => tra('Display menus as folders'),
+			'type' => 'flag',
+		),
+		'feature_breadcrumbs' => array(
+			'name' => tra('Breadcrumbs'),
+			'description' => tra('Uses Google Translate to translate the content of wiki pages to other languages.'),
+			'help' => 'Breadcrumbs',
+			'warning' => tra('Neglected feature'),
+			'type' => 'flag',
+		),	
+		'feature_antibot' => array(
+			'name' => tra('Anonymous editors must enter anti-bot code (CAPTCHA)'),
+			'help' => 'Spam+protection',
+			'type' => 'flag',
+		),	
+		'feature_wiki_protect_email' => array(
+			'name' => tra('Protect email against spam'),
+			'help' => 'Spam+protection',
+			'type' => 'flag',
+		),	
+		'feature_sitead' => array(
+			'name' => tra('Activate'),
+			'type' => 'flag',
+		),	
+		'feature_poll_anonymous' => array(
+			'name' => tra('Anonymous voting'),
+			'type' => 'flag',
+		),	
+		'feature_poll_revote' => array(
+			'name' => tra('Allow re-voting'),
+			'type' => 'flag',
+		),	
+		'feature_poll_comments' => array(
+			'name' => tra('Comments'),
+			'type' => 'flag',
+		),	
+		'feature_faq_comments' => array(
+			'name' => tra('Comments'),
+			'type' => 'flag',
+		),	
+		'feature_sefurl' => array(
+			'name' => tra('Search engine friendly url'),
+			'help' => 'Rewrite+Rules',
+			'type' => 'flag',
+		),	
+		'feature_sefurl_filter' => array(
+			'name' => tra('Search engine friendly url Postfilter'),
+			'help' => 'Rewrite+Rules',
+			'type' => 'flag',
+		),	
+		'feature_sefurl_title_article' => array(
+			'name' => tra('Display article title in the sefurl'),
+			'type' => 'flag',
+		),	
+		'feature_sefurl_title_blog' => array(
+			'name' => tra('Display blog title in the sefurl'),
+			'type' => 'flag',
+		),	
+		'feature_modulecontrols' => array(
+			'name' => tra('Show module controls'),
+			'help' => 'Module+Control',
+			'type' => 'flag',
+		),	
+		'feature_perspective' => array(
+			'name' => tra('Perspectives'),
+			'description' => tra('Permits to override preferences.'),
+			'help' => 'Perspectives',
+			'type' => 'flag',
+		),
+		'feature_wiki_replace' => array(
+			'name' => tra('Search and replace'),
+			'description' => tra('Permits find and replace of content in the edit box'),
+			'help' => 'Regex+search+and+replace',
+			'type' => 'flag',
+		),
+		'feature_submissions' => array(
+			'name' => tra('Submissions'),
+			'help' => 'Articles',
+			'type' => 'flag',
+		),
+		'feature_cms_rankings' => array(
+			'name' => tra('Rankings'),
+			'type' => 'flag',
+		),
+		'feature_article_comments' => array(
+			'name' => tra('Comments'),
+			'type' => 'flag',
+		),
+		'feature_cms_templates' => array(
+			'name' => tra('Content templates'),
+			'type' => 'flag',
+			'help' => 'Content+Template',
+		),
+		'feature_cms_print' => array(
+			'name' => tra('Print'),
+			'type' => 'flag',
+		),
+		'feature_cms_emails' => array(
+			'name' => tra('Specify notification emails when creating articles'),
+			'type' => 'flag',
+		),
+		'feature_categorypath' => array(
+			'name' => tra('Category path'),
+			'type' => 'flag',
+		),
+		'feature_categoryobjects' => array(
+			'name' => tra('Show category objects'),
+			'type' => 'flag',
+		),
+		'feature_category_use_phplayers' => array(
+			'name' => tra('Use PHPLayers for category browser'),
+			'type' => 'flag',
+			'dependencies' => array(
+				'feature_phplayers',
+			),
+		),
+		'feature_search_show_forbidden_cat' => array(
+			'name' => tra('Ignore category viewing restrictions'),
+			'hint' => tra('Will improve performance, but may show forbidden results'),
+			'type' => 'flag',
+			'help' => 'WYSIWYCA+Search',
+		),
+		'feature_category_reinforce' => array(
+			'name' => tra("Permission to all (not just any) of an object's categories is required for access"),
+			'type' => 'flag',
+		),
+		'feature_wiki_screencasts' => array(
+			'name' => tra('Screencasts'),
+			'description' => tra('Allow to upload screencasts from wiki edit. Screencasts can be uploaded locally or on a WebDAV share.'),
+			'type' => 'flag',
+		),
+		'feature_wiki_screencasts_base' => array(
+			'name' => tra('Screencasts upload location'),
+			'description' => tra('Local path or webdav path to the file upload location.'),
+			'hint' => tra('Trailing slash required'),
+			'type' => 'text',
+			'filter' => 'url',
+			'size' => 50,
+		),
+		'feature_wiki_screencasts_httpbase' => array(
+			'name' => tra('Screencasts HTTP prefix'),
+			'description' => tra('Prefix to use for the files when generating a link to it.'),
+			'hint' => tra('Trailing slash required'),
+			'type' => 'text',
+			'filter' => 'url',
+			'size' => 50,
+		),
+		'feature_wiki_screencasts_upload_type' => array(
+			'name' => tra('Screencast upload type'),
+			'description' => tra('Mode used to upload files. WebDav is used to upload to remote servers.'),
+			'type' => 'list',
+			'options' => array(
+				'local' => tra('Local'),
+				'webdav' => tra('Webdav'),
+			),
+		),
+		'feature_wiki_screencasts_user' => array(
+			'name' => tra('Screencasts authentication user'),
+			'description' => tra('When using webdav to upload files, used as the username of the authentication credentials.'),
+			'type' => 'text',
+			'size' => 20,
+		),
+		'feature_wiki_screencasts_pass' => array(
+			'name' => tra('Screencasts authentication password'),
+			'description' => tra('When using webdav to upload files, used as the password of the authentication credentials.'),
+			'type' => 'text',
+			'size' => 20,
+		),
+		'feature_wiki_screencasts_max_size' => array(
+			'name' => tra('Screencasts max file size'),
+			'description' => tra('Maximum file size used for screencasts.'),
+			'hint' => tra('Value provided in bytes'),
+			'size' => 12,
+			'type' => 'text',
+			'filter' => 'digits',
+		),
+		'feature_pagelist' => array(
+			'name' => tra('Page List'),
+			'description' => tra('The pagelist feature allows to maintain lists of pages and their associated score and priority.'),
+			'type' => 'flag',
+		),
+		'feature_listPages' => array(
+			'name' => tra('List pages'),
+			'type' => 'flag',
+			'hint' => 'tiki-listpages.php',
+		),
+		'feature_lastChanges' => array(
+			'name' => tra('Last changes'),
+			'type' => 'flag',
+			'hint' => 'tiki-lastchanges.php',
+		),
+		'feature_listorphanPages' => array(
+			'name' => tra('Orphan pages'),
+			'type' => 'flag',
+			'hint' => 'tiki-orphan_pages.php',
+		),
+		'feature_search_fulltext' => array(
+			'name' => tra('Database search'),
+			'hint' => tra('This search uses the MySQL Full-Text feature. The indexation is always updated.'),
+			'type' => 'flag',
+			'help' => 'Search',
+		),
+		'feature_referer_highlight' => array(
+			'name' => tra('Referer Search Highlighting'),
+			'type' => 'flag',
+			'help' => 'Referer+Search+Highlighting',
+		),
+		'feature_search_stats' => array(
+			'name' => tra('Search stats'),
+			'type' => 'flag',
+			'help' => 'Search+Stats',
+		),
+		'feature_search_show_forbidden_obj' => array(
+			'name' => tra('Ignore individual object permissions'),
+			'type' => 'flag',
+		),
+		'feature_search_show_object_filter' => array(
+			'name' => tra('Object filter'),
+			'type' => 'flag',
+		),
+		'feature_search_show_search_box' => array(
+			'name' => tra('Search box'),
+			'type' => 'flag',
+		),
+		'feature_search_show_visit_count' => array(
+			'name' => tra('Visits'),
+			'type' => 'flag',
+		),
+		'feature_search_show_pertinence' => array(
+			'name' => tra('Pertinence'),
+			'type' => 'flag',
+		),
+		'feature_search_show_object_type' => array(
+			'name' => tra('Object type'),
+			'type' => 'flag',
+		),
+		'feature_search_show_last_modification' => array(
+			'name' => tra('Last modified date'),
+			'type' => 'flag',
+		),
+		'feature_blog_rankings' => array(
+			'name' => 'Rankings',
+			'type' => 'flag',
+		),
+		'feature_blog_heading' => array(
+			'name' => 'Custom blog headings',
+			'type' => 'flag',
+		),
+		'feature_blog_comments' => array(
+			'name' => 'Blog-level',
+			'type' => 'flag',
+		),
+		'feature_blogposts_comments' => array(
+			'name' => 'Post-level',
+			'type' => 'flag',
+		),
+		'feature_trackbackpings' => array(
+			'name' => tra('Blog-level'),
+			'type' => 'flag',
+		),
+		'feature_blogposts_pings' => array(
+			'name' => 'Post-level',
+			'type' => 'flag',
+		),
+		'feature_file_galleries_rankings' =>array(
+			'name' => tra('Rankings'),
+			'type' => 'flag',
+			'help' => 'File+Gallery+Config',
+		),
+		'feature_file_galleries_comments' =>array(
+			'name' => tra('Comments'),
+			'type' => 'flag',
+			'help' => 'File+Gallery+Config',
+		),
+		'feature_file_galleries_author' => array(
+			'name' => tra("Require file author's name for anonymous uploads"),
+			'type' => 'flag',
+			'help' => 'File+Gallery+Config',
+		),
+		'feature_file_galleries_batch' => array(
+			'name' => tra('Batch uploading'),
+			'type' => 'flag',
+			'help' => 'File+Gallery+Config',
+		),
+		'feature_forum_rankings' => array(
+			'name' => tra('Rankings'),
+			'type' => 'flag',
+		),
+		'feature_forum_parse' => array(
+			'name' => tra('Accept wiki syntax'),
+			'type' => 'flag',
+			'help' => 'Wiki+Syntax',
+		),
+		'feature_forum_topics_archiving' => array(
+			'name' => tra('Topic archiving'),
+			'type' => 'flag',
+		),
+		'feature_forum_quickjump' => array(
+			'name' => tra('Quick jumps'),
+			'type' => 'flag',
+		),
+		'feature_forum_replyempty' => array(
+			'name' => tra('Replies are empty'),
+			'type' => 'flag',
+			'hint' => tra('If disabled, replies will quote the original post'),
+		),
+		'feature_forums_allow_thread_titles' => array(
+			'name' => tra('First post of a thread can have an empty body'),
+			'type' => 'flag',
+			'hint' => tra('Will be a thread title'),
+		),
+		'feature_forums_name_search' => array(
+			'name' => tra('Forum name search'),
+			'type' => 'flag',
+			'hint' => tra('When listing forums'),
+		),
+		'feature_forums_search' => array(
+			'name' => tra('Forum content search'),
+			'type' => 'flag',
+			'hint' => tra('When listing forums'),
+		),
+		'feature_forum_content_search' => array(
+			'name' => tra('Topic content search'),
+			'type' => 'flag',
+			'dependencies' => array(
+				'feature_search',
+			),
+		),
+		'feature_forum_local_tiki_search' => array(
+			'name' => tra('Use Tiki (database-independent) search.'),
+			'type' => 'flag',
+		),
+		'feature_forum_local_search' => array(
+			'name' => tra('Use database (full-text) search.'),
+			'type' => 'flag',
+		),
+		'feature_clear_passwords' => array(
+			'name' => tra('Store password as plain text'),
+			'type' => 'flag',
+		),
+
+		'feature_search_preferences' => array(
+			'name' => tra('Admins can search for features in the admin panels'),
+			'type' => 'flag',
+		),
+		'feature_crypt_passwords' => array(
+			'name' => tra('Encryption method:'),
+			'type' => 'list',
+			'options' => array(
+				'crypt-md5' => 'crypt-md5',
+				'crypt-des' => 'crypt-des',
+				'tikihash' => tra('tikihash (old)'),
+			),
+		),
+		'feature_bot_bar_power_by_tw' => array(
+			'name' => tra("Add a Powered by Tiki link on your site's footer"),
+			'type' => 'flag',
+			'dependencies' => array(
+				'feature_bot_bar',
+			),			
+		),
+		'feature_editcss' => array(
+			'name' => tra('Edit CSS'),
+			'type' => 'flag',
+			'help' => 'Edit+CSS',
+		),
+		'feature_theme_control' => array(
+			'name' => tra('Theme Control'),
+			'type' => 'flag',
+		),
+		'feature_view_tpl' => array(
+			'name' => tra('Tiki Template Viewing'),
+			'type' => 'flag',
+			'help' => 'View+Templates',
+		),
+		'feature_edit_templates' => array(
+			'name' => tra('Edit Templates'),
+			'type' => 'flag',
+			'help' => 'Edit+Templates',
+		),
+		'feature_custom_html_head_content' => array(
+			'name' => tra('Custom HTML <head> Content'),
+			'hint' => tra('Example') . "{if \$page eq 'Slideshow'}{literal}<style type=\"text/css\">.slideshow { height: 232px; width: 232px; }</style>{/literal}{/if}",
+			'type' => 'textarea',
+			'size' => '6',
+		),
+		'feature_sitemycode' => array(
+			'name' => tra('Custom Site Header'),
+			'type' => 'flag',
+		),
+		'feature_sitelogo' => array(
+			'name' => tra('Site Logo and Title'),
+			'type' => 'flag',
+		),
+		'feature_sitesearch' => array(
+			'name' => tra('Search Bar'),
+			'type' => 'flag',
+		),
+		'feature_site_login' => array(
+			'name' => tra('Login Bar'),
+			'type' => 'flag',
+		),
+		'feature_topbar_debug' => array(
+			'name' => tra('Debugger Console'),
+			'type' => 'flag',
+		),
+		'feature_topbar_custom_code' => array(
+			'name' => tra('Custom code'),
+			'type' => 'textarea',
+			'size' => '6',
+		),
+		'feature_topbar_version' => array(
+			'name' => tra('Display current Tiki version'),
+			'type' => 'flag',
+		),
+		'feature_sitemenu' => array(
+			'name' => tra('Site menu bar'),
+			'type' => 'flag',
+		),
+		'feature_topbar_id_menu' => array(
+			'name' => tra('Menu ID'),
+			'type' => 'text',
+			'size' => '5',
+			'dependencies' => array(
+				'feature_phplayers',
+			),
+		),
+		'feature_top_bar' => array(
+			'name' => tra('Top Bar'),
+			'type' => 'flag',
+		),
+		'feature_custom_center_column_header' => array(
+			'name' => tra('Custom Center Column Header'),
+			'hint' => tra('Example') . ' ' . "{if \$page eq 'Travel'}banner zone=5}{/if}",
+			'type' => 'textarea',
+			'size' => '6',
+		),
+		'feature_left_column' => array(
+			'name' => tra('Left column'),
+			'type' => 'list',
+			'help' => 'Users+Flip+Columns',
+			'options' => array(
+				'yes' => tra('Only if module'),
+				'fixed' => tra('Always'),
+				'user' => tra('User Decides'),
+				'n' => tra('Never'),
+			),
+		),
+		'feature_right_column' => array(
+			'name' => 'Right Column',
+			'type' => 'list',
+			'help' => 'Users+Flip+Columns',
+			'options' => array(
+				'yes' => tra('Only if module'),
+				'fixed' => tra('Always'),
+				'user' => tra('User Decides'),
+				'n' => tra('Never'),
+			),
+		),
+		'feature_siteloclabel' => array(
+			'name' => tra('Prefix breadcrumbs with "Location : "'),
+			'type' => 'flag',
+		),
+		'feature_siteloc' => array(
+			'name' => tra('Site location bar'),
+			'type' => 'list',
+			'options' => array(
+				'y' => tra('Top of page'),
+				'page' => tra('Top of center column'),
+				'n' => tra('None'),
+			),
+		),
+		'feature_sitetitle' => array(
+			'name' => tra('Larger font for'),
+			'type' => 'list',
+			'options' => array(
+				'y' => tra('Entire location'),
+				'title' => tra('Page name'),
+				'n' => tra('None'),
+			),
+		),
+		'feature_sitedesc' => array(
+			'name' => tra('Use page description'),
+			'type' => 'list',
+			'options' => array(
+				'y' => tra('Top of page'),
+				'page' => tra('Top of center column'),
+				'n' => tra('None'),
+			),
+			'dependencies' => array(
+				'feature_wiki_description',
+			),
+		),
+		'feature_bot_logo' => array(
+			'name' => tra('Custom Site Footer'),
+			'type' => 'flag',
+		),
+		'feature_endbody_code' => array(
+			'name' => tra('Custom End of <body> Code'),
+			'hint' => tra('Example:') . ' ' . "{wiki}{literal}{GOOGLEANALYTICS(account=xxxx) /}{/literal}{/wiki}",
+			'type' => 'textarea',
+			'size' => '6',
+		),
+		'feature_bot_bar' => array(
+			'name' => tra('Bottom bar'),
+			'type' => 'flag',
+		),
+		'feature_bot_bar_icons' => array(
+			'name' => tra('Bottom bar icons'),
+			'type' => 'flag',
+		),
+		'feature_bot_bar_debug' => array(
+			'name' => tra('Bottom bar debug'),
+			'type' => 'flag',
+		),
+		'feature_bot_bar_rss' => array(
+			'name' => tra('Bottom bar (RSS)'),
+			'type' => 'flag',
+		),
+		'feature_site_report' => array(
+			'name' => tra('Webmaster Report'),
+			'type' => 'flag',
+		),
+		'feature_site_report_email' => array(
+			'name' => tra('Webmaster Email'),
+			'hint' => tra('Leave blank to use the default sender email'),
+			'type' => 'text',
+			'size' => '20',
+			'dependencies' => array(
+				'sender_email',
+			),
+		),
+		'feature_site_send_link' => array(
+			'name' => tra('Email this page'),
+			'type' => 'flag',
+		),
+		'feature_layoutshadows' => array(
+			'name' => tra('Shadow layer'),
+			'hint' => tra('Additional layers for shadows, rounded corners or other decorative styling'),
+			'type' => 'flag',
+		),
+		'feature_jquery_tooltips' => array(
+			'name' => tra('Tooltips'),
+			'type' => 'flag',
+			'help' => 'JQuery#Tooltips',
+		),
+		'feature_jquery_autocomplete' => array(
+			'name' => tra('Autocomplete'),
+			'type' => 'flag',
+			'help' => 'JQuery#Autocomplete',
+		),
+		'feature_jquery_superfish' => array(
+			'name' => tra('Superfish'),
+			'type' => 'flag',
+			'help' => 'JQuery#Superfish',
+		),
+		'feature_jquery_reflection' => array(
+			'name' => tra('Reflection'),
+			'type' => 'flag',
+			'help' => 'JQuery#Reflection',
+		),
+		'feature_jquery_ui' => array(
+			'name' => tra('JQuery UI'),
+			'type' => 'flag',
+			'help' => 'JQuery#UI',
+		),
+		'feature_jquery_ui_theme' => array(
+			'name' => tra('JQuery UI Theme'),
+			'help' => 'JQuery#UI',
+			'type' => 'list',
+			'options' => array(
+				'black-tie' => 'black-tie',
+				'blitzer' => 'blitzer',
+				'cupertino' => 'cupertino',
+				'dot-luv' => 'dot-luv',
+				'excite-bike' => 'excite-bike',
+				'hot-sneaks' => 'hot-sneaks',
+				'humanity' => 'humanity',
+				'mint-choc' => 'mint-choc',
+				'redmond' => 'redmond',
+				'smoothness' => 'smoothness',
+				'south-street' => 'south-street',
+				'start' => 'start',
+				'swanky-purse' => 'swanky-purse',
+				'trontastic' => 'trontastic',
+				'ui-darkness' => 'ui-darkness',
+				'ui-lightness' => 'ui-lightness',
+				'vader' => 'vader',
+			), 
+		),
+		'feature_jquery_cycle' => array(
+			'name' => tra('Cycle (slideshow)'),
+			'type' => 'flag',
+			'help' => 'JQuery#Cycle',
+		),
+		'feature_jquery_sheet' => array(
+			'name' => tra('JQuery Sheet'),
+			'type' => 'flag',
+			'help' => 'JQuery#Cycle',
+		),
+		'feature_jquery_tablesorter' => array(
+			'name' => tra('JQuery Sortable Tables'),
+			'type' => 'flag',
+			'help' => 'JQuery#TableSorter',
+		),
+		'feature_tabs' => array(
+			'name' => tra('Use Tabs'),
+			'type' => 'flag',
+		),
+		'feature_iepngfix' => array(
+			'name' => tra('Correct PNG images alpha transparency in IE6 (experimental)'),
 			'type' => 'flag',
 		),
 	);

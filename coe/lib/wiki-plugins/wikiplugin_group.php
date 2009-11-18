@@ -26,16 +26,19 @@ function wikiplugin_group_info() {
 				'required' => false,
 				'name' => tra('Allowed User Friends'),
 				'description' => tra('Pipe separated list of users whose friends are allowed to view the block. ex: admin|johndoe|foo'),
+				'filter' => 'username',
 			),
 			'groups' => array(
 				'required' => false,
 				'name' => tra('Allowed Groups'),
 				'description' => tra('Pipe separated list of groups allowed to view the block. ex: Admins|Developers'),
+				'filter' => 'groupname',
 			),
 			'notgroups' => array(
 				'required' => false,
 				'name' => tra('Denied Groups'),
 				'description' => tra('Pipe separated list of groups denied from viewing the block. ex: Anonymous|Managers'),
+				'filter' => 'groupname',
 			),
 		),
 	);

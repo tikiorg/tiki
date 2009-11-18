@@ -134,7 +134,7 @@
           {assign var=propval value=$files[changes].$propname}
   
           {* Format property values *}
-          {if $propname eq 'created' or $propname eq 'lastmodif'}
+          {if $propname eq 'created' or $propname eq 'lastModif'}
             {assign var=propval value=$propval|tiki_long_date}
           {elseif $propname eq 'last_user' or $propname eq 'author' or $propname eq 'creator'}
             {assign var=propval value=$propval|username}
@@ -200,7 +200,7 @@
 
           {elseif $tiki_p_download_files eq 'y'}
             {if $gal_info.type eq 'podcast' or $gal_info.type eq 'vidcast'}
-              href="{$download_path}{$files[changes].path}" title="{tr}Download{/tr}"
+              href="{$prefs.fgal_podcast_dir}{$files[changes].path}" title="{tr}Download{/tr}"
             {else}
               href="{$files[changes].id|sefurl:file}" title="{tr}Download{/tr}"
             {/if}
@@ -220,7 +220,7 @@
         {else}
           {assign var=propval value="<a class='fgalname' $link>$propval</a>"}
         {/if}
-      {elseif $propname eq 'created' or $propname eq 'lastmodif'}
+      {elseif $propname eq 'created' or $propname eq 'lastModif'}
         {assign var=propval value=$propval|tiki_short_date}
       {elseif $propname eq 'last_user' or $propname eq 'author' or $propname eq 'creator'}
         {assign var=propval value=$propval|userlink}
@@ -247,7 +247,7 @@
   
       {if $propname eq 'name' and ( $gal_info.show_name eq 'a' or $gal_info.show_name eq 'f' ) }
         <td class="{cycle advance=false}">
-          {if $link neq ''}<a class='fgalname' {$link}>{/if}{$files[changes].filename}{if $link neq ''}</a>{/if}
+          {if $link neq ''}<a class='fgalname' {$link}>{/if}{$files[changes].filename|escape}{if $link neq ''}</a>{/if}
         </td>
       {/if}
       {if $other_columns_selected neq '' and $propname eq $other_columns_selected}

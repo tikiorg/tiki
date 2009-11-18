@@ -53,17 +53,14 @@
 				<tr>
 					<td class="formcolor"><label for="name">{if $prefs.login_is_email eq 'y'}{tr}Email{/tr}{else}{tr}Username{/tr}{/if}:</label></td>
 					<td class="formcolor">
-						<input type="text" name="name" id="name"{if $prefs.feature_ajax eq 'y'} onkeyup="return check_name()"{/if} />
-	{if $prefs.feature_ajax eq'y'}
-						<div id="checkfield" style="float:left"></div>{/if}
-	{if $prefs.login_is_email eq 'y'}
+						<input type="text" name="name" id="name" {if $prefs.feature_ajax eq 'y'} onkeyup="return check_name()" onblur="return check_name()"{/if} />
+						{if $prefs.feature_ajax eq 'y'}<span id="ajax_msg_name" style="vertical-align: middle;"></span>{/if}
+						{if $prefs.login_is_email eq 'y'}
 						<em>{tr}Use your email as login{/tr}</em>.
-	{else}
-		{if $prefs.min_username_length > 1}
-						<div class="highlight"><em>{tr}Minimum {$prefs.min_username_length} characters long{/tr}</em></div>{/if}
-		{if $prefs.lowercase_username eq 'y'}
-						<div class="highlight"><em>{tr}Lowercase only{/tr}</em></div>{/if}
-	{/if}
+						{else}
+							{if $prefs.min_username_length > 1}<div class="highlight"><em>{tr}Minimum {$prefs.min_username_length} characters long{/tr}</em></div>{/if}
+							{if $prefs.lowercase_username eq 'y'}<div class="highlight"><em>{tr}Lowercase only{/tr}</em></div>{/if}
+						{/if}
 					</td>
 				</tr>
 
@@ -73,7 +70,7 @@
 					<td class="formcolor">
 						<input type="password" name="passcode" id="passcode" onkeypress="regCapsLock(event)" />
 						<em>{tr}Not your password.{/tr} {tr}To request a passcode, {if $prefs.feature_contact eq 'y'}<a href="tiki-contact.php">{/if}
-	contact the sytem administrator{if $prefs.feature_contact eq 'y'}</a>{/if}{/tr}.</em>
+						contact the sytem administrator{if $prefs.feature_contact eq 'y'}</a>{/if}{/tr}.</em>
 					</td>
 				</tr>
 	{/if}
@@ -81,50 +78,42 @@
 				<tr>
 					<td class="formcolor"><label for="pass1">{tr}Password{/tr}:</label></td>
 					<td class="formcolor">
-						<div style="float:right;width:150px;margin-left:5px;">
-							<div id="mypassword_text"></div>
-							<div id="mypassword_bar" style="font-size: 5px; height: 2px; width: 0px;"></div> 
-						</div>
 						<input id='pass1' type="password" name="pass" onkeypress="regCapsLock(event)" onkeyup="runPassword(this.value, 'mypassword');{if $prefs.feature_ajax eq 'y'}check_pass();{/if}" />
-	{if $prefs.feature_ajax ne 'y'}
-		{if $prefs.min_pass_length > 1}
-								<div class="highlight"><em>{tr}Minimum {$prefs.min_pass_length} characters long{/tr}</em></div>{/if}
-		{if $prefs.pass_chr_num eq 'y'}
-								<div class="highlight"><em>{tr}Password must contain both letters and numbers{/tr}</em></div>{/if}
-	{/if}
+						<span id="mypassword_text"></span>
+						<span id="mypassword_bar" style="font-size: 5px; height: 2px; width: 0px;"></span>
+						{if $prefs.feature_ajax ne 'y'}
+							{if $prefs.min_pass_length > 1}<div class="highlight"><em>{tr}Minimum {$prefs.min_pass_length} characters long{/tr}</em></div>{/if}
+							{if $prefs.pass_chr_num eq 'y'}<div class="highlight"><em>{tr}Password must contain both letters and numbers{/tr}</em></div>{/if}
+						{/if}
 					</td>
 				</tr>
 
 				<tr>
 					<td class="formcolor" style="vertical-align:top"><label for="pass2">{tr}Repeat password{/tr}:</label></td>
 					<td class="formcolor">
-						<input id='pass2' type="password" name="passAgain" onkeypress="regCapsLock(event)" 
-	{if $prefs.feature_ajax eq'y'}onkeyup="check_pass()"{/if}/>
-	{if $prefs.feature_ajax eq'y'}
-						<div style="float:left;margin-left:5px;" id="checkpass"></div>{/if}
-	{if $prefs.generate_password eq 'y'}
-						<p>
-		{if $prefs.feature_ajax eq	'y'}
-			{button href="#" _onclick="genPass('genepass','pass1','pass2');runPassword(document.RegForm.genpass.value, 'mypassword');check_pass();"	_text="{tr}Generate a password:{/tr}"}
-		{else}
-			{button href="#" _onclick="genPass('genepass','pass1','pass2');runPassword(document.RegForm.genpass.value, 'mypassword');"	_text="{tr}Generate a	password:{/tr}"}
-		{/if}
+						<input id='pass2' type="password" name="passAgain" onkeypress="regCapsLock(event)" {if $prefs.feature_ajax eq'y'}onkeyup="check_pass()"{/if}/>
+						{if $prefs.feature_ajax eq'y'}<span id="checkpass"></span>{/if}
+						{if $prefs.generate_password eq 'y'}
+							<p>
+							{if $prefs.feature_ajax eq 'y'}
+								{button href="#" _onclick="genPass('genepass','pass1','pass2');runPassword(document.RegForm.genpass.value, 'mypassword');check_pass();"	_text="{tr}Generate a password:{/tr}"}
+							{else}
+								{button href="#" _onclick="genPass('genepass','pass1','pass2');runPassword(document.RegForm.genpass.value, 'mypassword');"	_text="{tr}Generate a	password:{/tr}"}
+							{/if}
 							<input id='genepass' name="genpass" type="text" />
-							
-						</p>
-	{/if}
+							</p>
+						{/if}
 					</td>
 				</tr>
 
 	{if $prefs.login_is_email ne 'y'}
 				<tr>
 					<td class="formcolor"><label for="email">{tr}Email{/tr}:</label></td>
-					<td class="formcolor"><input type="text" id="email" name="email"
-		{if $prefs.validateUsers eq 'y' and $prefs.feature_ajax eq 'y'}onkeyup="return check_mail()"{/if}/>
-		{if $prefs.feature_ajax eq'y'}
-						<div id="checkmail" style="float:left"></div>{/if}&nbsp;
-		{if $prefs.validateUsers eq 'y' and $prefs.validateEmail ne 'y'}
-						<div class="highlight"><em>{tr}A valid email is mandatory to register{/tr}</em></div>{/if}
+					<td class="formcolor"><input type="text" id="email" name="email" {if $prefs.feature_ajax eq 'y'}onkeyup="return check_mail()" onblur="return check_mail()"{/if}/>
+						{if $prefs.feature_ajax eq 'y'}<span id="ajax_msg_mail" style="vertical-align: middle;"></span>{/if}
+						{if $prefs.validateUsers eq 'y' and $prefs.validateEmail ne 'y'}
+						<div class="highlight"><em>{tr}A valid email is mandatory to register{/tr}</em></div>
+						{/if}
 					</td>
 				</tr>
 	{/if}

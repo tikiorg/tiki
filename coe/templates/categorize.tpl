@@ -8,7 +8,7 @@
   <div id="categorizator">
 {else}
 {if $notable neq 'y'}{button href="#" _flip_id='categorizator' _class='link' _text='{tr}Select Categories{/tr}' _flip_default_open='n'}{/if}
-  <div id="categorizator" name="categorizator" style="display:{if isset($smarty.session.tiki_cookie_jar.show_categorizator) and $smarty.session.tiki_cookie_jar.show_categorizator eq 'y' or $notable eq 'y'}block{else}none{/if};">
+  <div id="categorizator" style="display:{if isset($smarty.session.tiki_cookie_jar.show_categorizator) and $smarty.session.tiki_cookie_jar.show_categorizator eq 'y' or $notable eq 'y'}block{else}none{/if};">
 {/if}
   <div class="multiselect">
   {if count($categories) gt 0}

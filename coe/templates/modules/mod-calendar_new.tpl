@@ -1,43 +1,12 @@
 {* $Id: mod-calendar_new.tpl 12242 2008-03-30 13:22:01Z luciash $ *}
-
-{tikimodule error=$module_params.error title=$module_params.title name=$module_params.name flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
+{if $show_calendar_module eq 'y'}
+{tikimodule error=$module_params.error title=$tpl_module_title name=$name flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 {if $viewlist eq 'list'}
 	{include file='tiki-calendar_listmode.tpl'}
 {else}
-	<div style="text-align:center; font-size:110%" class="cal_title">
-<div style="width:100%; white-space: nowrap">{strip}
-{if $viewmode eq "day"}
-{self_link _class="next" todate=$daybefore _title="{tr}Day{/tr}" _alt="{tr}Day{/tr}" _icon=resultset_previous"}{/self_link}
-{elseif $viewmode eq "week"}
-{self_link _class="next" todate=$weekbefore _title="{tr}Week{/tr}" _alt="{tr}Week{/tr}" _icon=resultset_previous"}{/self_link}
-{elseif $viewmode eq "month"}
-{self_link _class="next" todate=$monthbefore _title="{tr}Month{/tr}" _alt="{tr}Month{/tr}" _icon=resultset_previous"}{/self_link}
-{elseif $viewmode eq "quarter"}
-{self_link _class="next" todate=$quarterbefore _title="{tr}Quarter{/tr}" _alt="{tr}Quarter{/tr}" _icon=resultset_previous"}{/self_link}
-{elseif $viewmode eq "semester"}
-{self_link _class="next" todate=$semesterbefore _title="{tr}Semester{/tr}" _alt="{tr}Semester{/tr}" _icon=resultset_previous"}{/self_link}
-{elseif $viewmode eq "year"}
-{self_link _class="next" todate=$yearbefore _title="{tr}Semester{/tr}" _alt="{tr}Semester{/tr}" _icon=resultset_previous"}{/self_link}
-{/if}
-		<a href="tiki-calendar.php?todate={$focusdate}&amp;viewmode={$viewmode}">{tr}{$focusdate|tiki_date_format:"%B"|ucfirst}{/tr}</a>
-{if $viewmode eq "day"}
-{self_link _class="next" todate=$dayafter _title="{tr}Day{/tr}" _alt="{tr}Day{/tr}" _icon=resultset_next"}{/self_link}
-{elseif $viewmode eq "week"}
-{self_link _class="next" todate=$weekafter _title="{tr}Week{/tr}" _alt="{tr}Week{/tr}" _icon=resultset_next"}{/self_link}
-{elseif $viewmode eq "month"}
-{self_link _class="next" todate=$monthafter _title="{tr}Month{/tr}" _alt="{tr}Month{/tr}" _icon=resultset_next"}{/self_link}
-{elseif $viewmode eq "quarter"}
-{self_link _class="next" todate=$quarterafter _title="{tr}Quarter{/tr}" _alt="{tr}Quarter{/tr}" _icon=resultset_next"}{/self_link}
-{elseif $viewmode eq "semester"}
-{self_link _class="next" todate=$semesterafter _title="{tr}Semester{/tr}" _alt="{tr}Semester{/tr}" _icon=resultset_next"}{/self_link}
-{elseif $viewmode eq "year"}
-{self_link _class="next" todate=$yearafter _title="{tr}Semester{/tr}" _alt="{tr}Semester{/tr}" _icon=resultset_next"}{/self_link}
-{/if}
-{/strip}
-</div>
-</div>
+	{include file='tiki-calendar_nav.tpl'}
 
-	<table cellpadding="0" cellspacing="0" border="0" id="caltable" style="text-align:center;">
+	<table cellpadding="0" cellspacing="0" border="0" class="caltable" style="text-align:center;">
 		<tr>
 			{section name=dn loop=$daysnames}
 				<th class="days" width="14%">{$daysnames[dn][0]|ucfirst}</th>
@@ -83,3 +52,4 @@
 	</table>
 {/if}
 {/tikimodule}
+{/if}

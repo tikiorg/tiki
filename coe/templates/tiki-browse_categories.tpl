@@ -6,7 +6,7 @@
 	<div class="description">{$p_info.description}</div>
 {/if}
 {if $tiki_p_admin_categories eq 'y'}
-	<div class="navbar">
+	<div class="categbar">
 		{if $user and $prefs.feature_user_watches eq 'y'}
 			{if $user_watching_category eq 'n'}
 				<a href="tiki-browse_categories.php?parentId={$parentId|escape:"url"}&amp;watch_event=category_changed&amp;watch_object={$parentId|escape:"url"}&amp;deep={$deep}&amp;watch_action=add" class="icon">{icon _id='eye' align='right' alt='{tr}Watch Only This Category{/tr}'}</a>
@@ -63,7 +63,7 @@
 			<a {if $type eq 'tracker'} id="highlight"{/if} href="tiki-browse_categories.php?find={$find|escape}&amp;deep={$deep}&amp;type=tracker&amp;parentId={$parentId}&amp;sort_mode={$sort_mode}">{tr}Trackers{/tr}</a>
 		</span>
 		<span class="button">
-			<a {if $type eq 'trackerItem'} id="highlight"{/if} href="tiki-browse_categories.php?find={$find|escape}&amp;deep={$deep}&amp;type=trackerItem&amp;parentId={$parentId}&amp;sort_mode={$sort_mode}">{tr}Trackers Items{/tr}</a>
+			<a {if $type eq 'trackeritem'} id="highlight"{/if} href="tiki-browse_categories.php?find={$find|escape}&amp;deep={$deep}&amp;type=trackeritem&amp;parentId={$parentId}&amp;sort_mode={$sort_mode}">{tr}Trackers Items{/tr}</a>
 		</span>
 	{/if}
 
@@ -182,13 +182,11 @@
 					{section name=ix loop=$objects}
 						<tr class="{cycle}" >
 							<td>
-								<a href="{$objects[ix].href}" class="catname">{$objects[ix].name|escape|default:'&nbsp;'}</a>
+								<a href={if empty($objects[ix].sefurl)}"{$objects[ix].href}"{else}"{$objects[ix].sefurl}"{/if} class="catname">{$objects[ix].name|escape|default:'&nbsp;'}</a>
 								<div class="subcomment">{$objects[ix].description}</div>
 							</td>
 							<td>
-								<strong>
-									{tr}{$objects[ix].type|replace:"wiki page":"Wiki"|replace:"article":"Article"|regex_replace:"/tracker [0-9]*/":"tracker item"}{/tr}
-								</strong>
+								{tr}{$objects[ix].type|replace:"wiki page":"wiki"|replace:"trackeritem":"tracker item"}{/tr}
 							</td>
 							{if $deep eq 'on'}
 								<td>

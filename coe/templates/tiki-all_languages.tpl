@@ -6,7 +6,7 @@
 		<tr>
 			{foreach item=body from=$content key=k}
 				{if $k == 0 || $k == 1}
-					<td>{$body}</td>
+					<td width="50%">{$body}</td>
 				{/if}
 			{/foreach}
 		</tr>

@@ -782,7 +782,7 @@ class ImageGalsLib extends TikiLib {
 
 		$description = strip_tags($description);
 		$query = "update `tiki_images` set `name`=?, `description`=?, `lat`=?, `lon`=? where `imageId` = ?";
-		$result = $this->query($query,array($name,$description,$lat,$lon,(int)$id));
+		$result = $this->query($query,array($name,$description,(float)$lat,(float)$lon,(int)$id));
 		if (!empty($file) && !empty($file['name'])) {
 			if (!is_uploaded_file($file['tmp_name']) || !($fp = fopen($file['tmp_name'], "rb")))
 				return false;
@@ -903,7 +903,7 @@ class ImageGalsLib extends TikiLib {
 			$smarty->assign_by_ref('mail_date', date('U'));
 			$smarty->assign_by_ref('author', $user);
 			$foo = parse_url($_SERVER["REQUEST_URI"]);
-			$machine = $tikilib->httpPrefix(). dirname( $foo["path"] );
+			$machine = $tikilib->httpPrefix( true ). dirname( $foo["path"] );
 			$smarty->assign_by_ref('mail_machine', $machine);
 			$smarty->assign_by_ref('fname', $name);
 			$smarty->assign_by_ref('filename', $filename);
@@ -2025,7 +2025,7 @@ $thumbSizeY,$public,0,$visible,$sortorder,$sortdirection,$galleryimage,(int)$par
 						$uri = parse_url($_SERVER["REQUEST_URI"]);
 						$path = str_replace("tiki-editpage", "show_image", $uri["path"]);
 						$path = str_replace("tiki-edit_article", "show_image", $path);
-						$page_data = str_replace($url, $tikilib->httpPrefix(). $path . '?id=' . $imageId, $page_data);
+						$page_data = str_replace($url, $tikilib->httpPrefix( true ). $path . '?id=' . $imageId, $page_data);
 					} // if strlen
 				} // if $fp
 			}

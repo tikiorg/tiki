@@ -1,4 +1,4 @@
-{title help="Inter-User Messages"}{tr}Broadcast message{/tr}{/title}
+{title help='Inter-User Messages' url='messu-broadcast.php'}{tr}Broadcast message{/tr}{/title}
 
 {include file='tiki-mytiki_bar.tpl'}
 {include file='messu-nav.tpl'}
@@ -6,21 +6,36 @@
 
 
 {if $message}
-<div class="simplebox highlight">{if $sent ne '1'}{icon _id=exclamation style="vertical-align:middle" alt="{tr}Error{/tr}"}{else}{icon _id=accept alt="{tr}OK{/tr}" style="vertical-align:middle;"}{/if} {$message}</div><br />
+	<div class="simplebox highlight">
+		{if $preview eq '1'}
+			{icon _id=exclamation style="vertical-align:middle" alt="{tr}Confirmation{/tr}"}
+		{elseif $sent eq '1'}
+			{icon _id=accept alt="{tr}OK{/tr}" style="vertical-align:middle;"}
+		{else}
+		 	 {icon _id=exclamation style="vertical-align:middle" alt="{tr}Error{/tr}"}
+		{/if}
+		{$message}
+		{if $preview eq '1'}
+			<br />
+			{self_link _class='button' send='y'}{tr}Please Confirm{/tr}{/self_link}
+		{/if}
+	</div>
 <br /><br />
 {/if}
-{if $sent ne '1'}
+
+{if $sent ne '1' and $preview ne '1'}
 <form action="messu-broadcast.php" method="post">
 <table class="normal" >
   <tr>
     <td class="formcolor"><label for="broadcast-group">{tr}Group{/tr}:</label></td>
     <td class="formcolor">
-    <select name="group" id="broadcast-group">
+    <select name="groupbr" id="broadcast-group">
+	<option value=""{if $groupbr eq ''} selected="selected"{/if} />
     {if $tiki_p_broadcast_all eq 'y'}
-    <option value="all" selected="selected">{tr}All users{/tr}</option>
+    <option value="all"{if $groupbr eq 'All'} selected="selected"{/if}>{tr}All users{/tr}</option>
     {/if}
 	{section name=ix loop=$groups}
-	{if $groups[ix] ne "Anonymous"}<option value="{$groups[ix]|escape}">{$groups[ix]}</option>{/if}
+	{if $groups[ix] ne "Anonymous"}<option value="{$groups[ix]|escape}"{if $groupbr eq $groups[ix]} selected="selected"{/if}>{$groups[ix]}</option>{/if}
 	{/section}
     </select>
     </td>
@@ -44,9 +59,9 @@
 <br />
 <table class="normal" >
   <tr>
-    <td style="text-align: center;" class="formcolor"><textarea rows="20" cols="80" name="body">{$body|escape}</textarea><br /><input type="submit" name="send" value="{tr}Send{/tr}" /></td>
+    <td style="text-align: center;" class="formcolor"><textarea rows="20" cols="80" name="body">{$body|escape}</textarea><br /><input type="submit" name="preview" value="{tr}Send{/tr}" /></td>
   </tr>
 </table>
 </form>
 {/if}
-<br />
+

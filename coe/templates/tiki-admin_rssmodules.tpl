@@ -1,7 +1,7 @@
-{title help="RSS+Modules""}{tr}Admin RSS Modules{/tr}{/title}
+{title help="Feeds+User"}{tr}Admin External Feeds{/tr}{/title}
 
-{remarksbox type="tip" title="{tr}Tips{/tr}"}{tr}This page is to configure settings of RSS feeds read/imported by Tiki. To generate/export RSS feeds, look for "RSS feeds" on the admin panel, or{/tr} <a class="rbox-link" href="tiki-admin.php?page=rss">{tr}Click Here{/tr}</a>.
-<hr>{tr}To use RSS feeds in a text area (Wiki page, etc), a <a class="rbox-link" href="tiki-admin_modules.php">module</a> or a template, use {literal}{rss id=x}{/literal}, where x is the ID of the RSS feed.{/tr}{/remarksbox}
+{remarksbox type="tip" title="{tr}Tips{/tr}"}{tr}This page is to configure settings of external feeds read/imported by Tiki. To generate/export feeds, look for "Feeds" on the admin panel, or{/tr} <a class="rbox-link" href="tiki-admin.php?page=rss">{tr}Click Here{/tr}</a>.
+<hr>{tr}To use feeds in a text area (Wiki page, etc), a <a class="rbox-link" href="tiki-admin_modules.php">module</a> or a template, use {literal}{rss id=x}{/literal}, where x is the ID of the feed.{/tr}{/remarksbox}
 
 {if $preview eq 'y'}
 <div class="simplebox">
@@ -18,18 +18,18 @@
 </div>
 {/if}
 {if $rssId > 0}
-<h2>{tr}Edit this RSS Module:{/tr} {$name}</h2>
-<a href="tiki-admin_rssmodules.php">{tr}Create new RSS Module{/tr}</a>
+<h2>{tr}Edit this feed:{/tr} {$name|escape}</h2>
+<a href="tiki-admin_rssmodules.php">{tr}Create new external feed{/tr}</a>
 {else}
-<h2>{tr}Create new RSS Module{/tr}</h2>
+<h2>{tr}Create new external feed{/tr}</h2>
 {/if}
 <form action="tiki-admin_rssmodules.php" method="post">
 <input type="hidden" name="rssId" value="{$rssId|escape}" />
 <table class="normal">
-<tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" name="name" value="{$name|escape}" /></td></tr>
-<tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><textarea name="description" rows="4" cols="40" style="width:95%">{$description|escape}</textarea></td></tr>
-<tr><td class="formcolor">{tr}URL{/tr}:</td><td class="formcolor"><input size="47" type="text" name="url" value="{$url|escape}" /></td></tr>
-<tr><td class="formcolor">{tr}Refresh rate{/tr}:</td>
+<tr><td class="formcolor">{tr}Name:{/tr}</td><td class="formcolor"><input type="text" name="name" value="{$name|escape}" /></td></tr>
+<tr><td class="formcolor">{tr}Description:{/tr}</td><td class="formcolor"><textarea name="description" rows="4" cols="40" style="width:95%">{$description|escape}</textarea></td></tr>
+<tr><td class="formcolor">{tr}URL:{/tr}</td><td class="formcolor"><input size="47" type="text" name="url" value="{$url|escape}" /></td></tr>
+<tr><td class="formcolor">{tr}Refresh rate:{/tr}</td>
 <td class="formcolor">
 <select name="refresh">
 <option value="1" {if $refresh eq 60}selected="selected"{/if}>{60|duration}</option>
@@ -47,12 +47,12 @@
 <option value="1440" {if $refresh eq 86400}selected="selected"{/if}>{86400|duration}</option>
 </select>
 </td></tr>
-<tr><td class="formcolor">{tr}show feed title{/tr}:</td><td class="formcolor"><input type="checkbox" name="showTitle" {if $showTitle eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="formcolor">{tr}show publish date{/tr}:</td><td class="formcolor"><input type="checkbox" name="showPubDate" {if $showPubDate eq 'y'}checked="checked"{/if} /></td></tr>
+<tr><td class="formcolor">{tr}show feed title:{/tr}</td><td class="formcolor"><input type="checkbox" name="showTitle" {if $showTitle eq 'y'}checked="checked"{/if} /></td></tr>
+<tr><td class="formcolor">{tr}show publish date:{/tr}</td><td class="formcolor"><input type="checkbox" name="showPubDate" {if $showPubDate eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
-<h2>{tr}RSS channels{/tr}</h2>
+<h2>{tr}External feeds{/tr}</h2>
 <div align="center">
 {if $channels or ($find ne '')}
   {include file='find.tpl'}
@@ -70,7 +70,7 @@
 {section name=user loop=$channels}
 <tr>
 <td class="{cycle advance=false}">{$channels[user].rssId}</td>
-<td class="{cycle advance=false}"><strong>{$channels[user].name}</strong><br />{$channels[user].description}<br /><a class="link" href="{$channels[user].url}">URL: {$channels[user].url|truncate:50:"...":true}</a><br />
+<td class="{cycle advance=false}"><strong>{$channels[user].name|escape}</strong><br />{$channels[user].description|escape|nl2br}<br /><a class="link" href="{$channels[user].url}">URL: {$channels[user].url|truncate:50:"...":true}</a><br />
 Size: {$channels[user].size} kb<br />
 </td>
 <td class="{cycle advance=false}">{if $channels[user].lastUpdated eq '1000000'}{tr}Never{/tr}{else}{$channels[user].lastUpdated|tiki_short_datetime}{/if}<br />

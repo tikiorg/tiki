@@ -25,11 +25,7 @@
 	</div>
 	<div class="clearfix postbody-title">
 		<div class="title">
-			{if $blog_data.use_title eq 'y'}
 				<h2>{$post_info.title|escape}</h2>
-			{else}
-				<h2>{$post_info.created|tiki_short_datetime}</h2>
-			{/if}
 		</div>
 	{if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y'}
 		{if $tags.data|@count >0}
@@ -70,7 +66,6 @@
 <div class="postfooter">
 	<div class="status"> {* renamed to match forum footer layout *}
 		<a href='tiki-print_blog_post.php?postId={$postId}'>{icon _id='printer' alt='{tr}Print{/tr}'}</a>
-		<a href='tiki-send_blog_post.php?postId={$postId}'>{icon _id='email' alt='{tr}Email This Post{/tr}'}</a>
 	</div>
 	<div class="actions"> {* renamed to match forum footer layout *}
 <a class="link" href="{$postId|sefurl:blogpost}">{tr}Permalink{/tr}</a>

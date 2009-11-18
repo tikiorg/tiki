@@ -24,7 +24,7 @@ if (!isset($_REQUEST["urlid"])) {
 }
 // Get a list of last changes to the Wiki database
 $info = $bookmarklib->get_url($_REQUEST["urlid"]);
-$smarty->assign_by_ref('info', $info);
 $info["refresh"] = $info["lastUpdated"];
-$smarty->assign('mid', 'tiki-view_cache.tpl');
+$smarty->assign_by_ref('info', $info);
+$smarty->assign('ggcacheurl', 'http://google.com/search?q=cache:' . urlencode(strstr($info['url'], 'http://')));
 $smarty->display('tiki-view_cache.tpl');

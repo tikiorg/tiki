@@ -6,16 +6,19 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<title>{tr}System error.{/tr}</title>
 	<link rel="stylesheet" href="styles/strasa.css" type="text/css"/>
+	<link rel="stylesheet" href="styles/strasa/options/fixed_width.css" type="text/css"/>
 	<style type="text/css" media="screen">
-		html {
+		html {ldelim}
 			background-color: #fff;
-		}
-		#centercolumn {
+		{rdelim}
+		#centercolumn {ldelim}
 			padding: 4em 10em;
-		}
+		{rdelim}
 	</style>
 </head>
 <body class="tiki_wiki">
+<div id="fixedwidth"> {* enables fixed-width layouts *}
+	<div id="main">
 	<div id="siteheader">
 			<div id="sitelogo" style="text-align: center; padding-left: 70px;">
 				<img style="border: medium none ;" alt="Site Logo" src="img/tiki/tikisitelogo.png" />
@@ -31,7 +34,7 @@
 				<div class="left">
 				<p>{tr}The following error message was returned:{/tr}</p>
 				<strong>
-					{$msg|escape}
+					<pre>{$msg|escape|nl2br}</pre>
 				</strong>
 
 				{if $requires_update}
@@ -86,5 +89,7 @@
 			</p>
 		</div>
 	</div>
+		</div>{* -- END of main -- *}
+	</div> {* -- END of fixedwidth -- *}
 </body>
 </html>

@@ -7,6 +7,7 @@
 {if $prefs.feature_ajax_autosave eq 'y'}<script type='text/javascript' src="lib/ajax/autosave.js"></script>{/if}
 
 <div id="ajaxLoading">{tr}Loading...{/tr}</div>
+<div id="ajaxLoadingBG">&nbsp;</div>
 <div id="ajaxDebug"></div>
 
 {/if}

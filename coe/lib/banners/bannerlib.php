@@ -8,16 +8,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 class BannerLib extends TikiLib {
 
-	function select_banner($zone, $target='_blank') {
-		global $prefs;
-
-		// Things to check
-		// UseDates and dates
-		// Hours
-		// weekdays
-		// zone
-		// maxImpressions and impressions
-		# TODO localize
+	function select_banner_id($zone) {
 		$map = array(0=>'sun', 1=>'mon', 2=>'tue', 3=>'wed', 4=>'thu', 5=>'fri', 6=>'sat');
 		$dw = $map[$this->date_format("%w")];
 
@@ -39,15 +30,39 @@ class BannerLib extends TikiLib {
 			}
 			$mid .= implode('or', $mids).')';
 		}
-
-		$query = "select * from `tiki_banners` where `$dw` = ? and  `hourFrom`<=? and `hourTo`>=? and
+		
+		$query = "select `bannerId` from `tiki_banners` where `$dw` = ? and  `hourFrom`<=? and `hourTo`>=? and
 		( ((`useDates` = ?) and (`fromDate`<=? and `toDate`>=?)) or (`useDates` = ?) ) and
-		(`impressions`<`maxImpressions`  or `maxImpressions`=?) and (`clicks`<`maxClicks` or `maxClicks`=? or `maxClicks` is NULL) and `zone`=? order by ".$this->convertSortMode('random');
+		(`impressions`<`maxImpressions`  or `maxImpressions`=?) and (`clicks`<`maxClicks` or `maxClicks`=? or `maxClicks` is NULL) and `zone`=? $mid order by ".$this->convertSortMode('random');
+
 		$result = $this->query($query,$bindvars,1,0);
 		if (!($res = $result->fetchRow())) {
 			return false;
 		}
 		$id = $res["bannerId"];
+		
+		// Increment banner impressions here
+		if ($id) {
+			$query = "update `tiki_banners` set `impressions` = `impressions` + 1 where `bannerId` = ?";
+			$result = $this->query($query,array($id));
+		}
+	
+		return $id;
+	}
+
+
+	function select_banner($zone, $target='_blank') {
+		global $prefs;
+
+		// Things to check
+		// UseDates and dates
+		// Hours
+		// weekdays
+		// zone
+		// maxImpressions and impressions
+
+		$id = $this->select_banner_id( $zone );
+		$res = $this->get_banner( $id );
 
 		$raw = '';
 		switch ($res["which"]) {
@@ -92,14 +107,13 @@ class BannerLib extends TikiLib {
 			break;
 		}
 
-		// Increment banner impressions here
-		$id = $res["bannerId"];
-
-		if ($id) {
-			$query = "update `tiki_banners` set `impressions` = `impressions` + 1 where `bannerId` = ?";
-
-			$result = $this->query($query,array($id));
-		}
+		// Increment banner impressions done in select_banner_id()
+		// Now to set view limiting cookie for user
+		$cookieName = "banner_$zone";
+		$views = array();
+		if (isset($_COOKIE[$cookieName])) {
+			$views = unserialize($_COOKIE[$cookieName]);
+		} 
 		if ($res['maxUserImpressions'] > 0) {
 			$views[$res['bannerId']] = isset($views[$res['bannerId']]) ? $views[$res['bannerId']]+1: 1;
 			$expire = $res['useDates']? $res['toDate']: $tikilib->now+60*60*24*90; //90 days 

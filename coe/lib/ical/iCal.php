@@ -210,5 +210,3 @@ class File_iCal {
     }
 
 }
-
-?>

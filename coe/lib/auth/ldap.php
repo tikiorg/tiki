@@ -174,9 +174,12 @@ class TikiLdapLib {
 				$this->options['binddn'] = $this->user_dn($user);
 				break;
 			case 'ol': // openldap
-			default:
 				$this->options['binddn'] = 'cn='.$user.','.$prefs['auth_ldap_basedn'];
 				break;
+			default:
+				// Anonymous binding
+				unset($this->options['binddn']);
+				unset($this->options['bindpw']);
 		}
 
 			// attributes to fetch
@@ -263,6 +266,13 @@ class TikiLdapLib {
 	public function get_groups() {
 		if(empty($this->user_attributes)) $this->get_user_attributes();
 
+                // ensure we have a connection to the ldap server
+                 if(!$this->bind()) {
+                        $this->add_log('ldap','Reuse of ldap connection failed: '.$this->ldaplink->getMessage().' at line '.__LINE__.' in '.__FILE__);
+                        return false;
+                }
+
+
 		$filter1=Net_LDAP2_Filter::create('objectClass','equals',$this->options['groupoc']);
 
 		if(!empty($this->options['groupmemberattr'])) {
@@ -308,7 +318,7 @@ class TikiLdapLib {
 			return false;
 		}
 
-		$this->add_log('ldap','Searching for group entries with filter: '.$filter->asString().' at line '.__LINE__.' in '.__FILE__);
+		$this->add_log('ldap','Searching for group entries with filter: '.$filter->asString().' base '.$this->groupbase_dn().'at line '.__LINE__.' in '.__FILE__);
 		$searchoptions=array('scope' => $this->options['scope']);
 		$searchresult = $this->ldaplink->search($this->groupbase_dn(),$filter,$searchoptions);
 
@@ -316,6 +326,7 @@ class TikiLdapLib {
 			$this->add_log('ldap','Search failed: '.$searchresult->getMessage().' at line '.__LINE__.' in '.__FILE__);
 			return false;
 		}
+		$this->add_log('ldap','Found '.$searchresult->count().' entries. Extracting entries now.');
 		
 		while($entry=$searchresult->shiftEntry()) {
 			if (Net_LDAP2::isError($entry)) {
@@ -365,6 +376,3 @@ class TikiLdapLib {
 	}
 
 }
-
-
-?>

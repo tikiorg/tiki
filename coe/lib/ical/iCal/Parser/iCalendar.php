@@ -314,4 +314,3 @@ class File_iCal_iCalendar {
         }
 
 }
-?>

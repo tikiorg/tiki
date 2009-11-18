@@ -22,9 +22,6 @@ if ($prefs['feature_groupalert'] == 'y') {
 if ($prefs['feature_ajax'] == "y") {
 	require_once ('lib/ajax/ajaxlib.php');
 }
-if (isset($_REQUEST['calendarId']) ) {
-	$tikilib->get_perm_object($_REQUEST['calendarId'],'calendar');
-}
 
 $daysnames = array("Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Satursday");
 $monthnames = array("","January","February","March","April","May","June","July","August","September","October","November","December");
@@ -49,22 +46,22 @@ foreach ($rawcals["data"] as $cal_data) {
   $cal_id = $cal_data['calendarId'];
   $calperms = Perms::get( array( 'type' => 'calendar', 'object' => $cal_id ) );
   if ($cal_data["personal"] == "y") {
-    if ($user) {
+    if ($user && $user == $cal_data["user"]) {
       $cal_data["tiki_p_view_calendar"] = 'y';
     	$cal_data["tiki_p_view_events"] = 'y';
       $cal_data["tiki_p_add_events"] = 'y';
       $cal_data["tiki_p_change_events"] = 'y';
     } else {
       $cal_data["tiki_p_view_calendar"] = 'n';
-    	$cal_data["tiki_p_view_events"] = 'y';
+    	$cal_data["tiki_p_view_events"] = 'n';
       $cal_data["tiki_p_add_events"] = 'n';
       $cal_data["tiki_p_change_events"] = 'n';
     }
   } else {
-      $cal_data["tiki_p_view_calendar"] = $calperms->view_calendar;
-      $cal_data["tiki_p_view_events"] = $calperms->view_events;
-      $cal_data["tiki_p_add_events"] = $calperms->add_events;
-      $cal_data["tiki_p_change_events"] = $calperms->change_events;
+      $cal_data["tiki_p_view_calendar"] = $calperms->view_calendar ? "y" : "n";
+      $cal_data["tiki_p_view_events"] = $calperms->view_events ? "y" : "n";
+      $cal_data["tiki_p_add_events"] = $calperms->add_events ? "y" : "n";
+      $cal_data["tiki_p_change_events"] = $calperms->change_events ? "y" : "n";
   }
 	$caladd["$cal_id"] = $cal_data;
 
@@ -100,6 +97,14 @@ if ($prefs['feature_groupalert'] == 'y' && !empty($calID) ) {
 }
 
 $tikilib->get_perm_object( $calID, 'calendar' );
+$calendar = $calendarlib->get_calendar($calID);
+if ($calendar['personal'] == 'y') {
+	$ownCal = ($user && $user == $calendar["user"]) ? 'y' : 'n';
+	$tiki_p_view_calendar = $ownCal;
+	$tiki_p_view_events = $ownCal;
+	$tiki_p_add_events = $ownCal;
+	$tiki_p_change_events = $ownCal;
+}
 
 if( $tiki_p_view_calendar != 'y' ) {
 	$smarty->assign('errortype', 401);
@@ -185,10 +190,10 @@ if (isset($save['start']) && isset($save['end'])) {
 if (isset($_POST['act'])) {
 	if (empty($save['user'])) $save['user'] = $user;
 	$newcalid = $save['calendarId'];
-	if ((empty($save['calitemId']) and $caladd["$newcalid"]['tiki_p_add_events'])
-	or (!empty($save['calitemId']) and $caladd["$newcalid"]['tiki_p_change_events'])) {
+	if ((empty($save['calitemId']) and $caladd["$newcalid"]['tiki_p_add_events'] == 'y')
+	or (!empty($save['calitemId']) and $caladd["$newcalid"]['tiki_p_change_events'] == 'y')) {
 		if (empty($save['name'])) $save['name'] = tra("event without name");
-		if (empty($save['priority'])) $save['priority'] = 0;
+		if (empty($save['priority'])) $save['priority'] = 1;
 		if (empty($save['status'])) {
 			if (empty($calendar['defaulteventstatus'])) {
 				$save['status'] = 1; // Confirmed

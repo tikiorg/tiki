@@ -20,6 +20,9 @@ if ($tiki_p_admin_polls != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
+
+$auto_query_args = array('pollId', 'sort_mode', 'offset', 'find');
+
 if (!isset($_REQUEST["pollId"])) {
 	$_REQUEST["pollId"] = 0;
 }
@@ -90,6 +93,7 @@ if (isset($_REQUEST['addPoll']) && !empty($_REQUEST['poll_template']) && !empty(
 if ($_REQUEST["pollId"]) {
 	$info = $polllib->get_poll($_REQUEST["pollId"]);
 	$options = $polllib->list_poll_options($_REQUEST["pollId"]);
+	$cookietab = 1;
 } else {
 	$info = array();
 	$info["title"] = '';

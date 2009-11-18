@@ -40,6 +40,7 @@ if (isset($_REQUEST["new_prefs"])) {
 		'zend_mail_smtp_pass',
 		'zend_mail_smtp_port',
 		'zend_mail_smtp_security',
+		'urlOnUsername',
 	);
 	foreach($pref_simple_values as $svitem) {
 		simple_set_value($svitem);

@@ -17,18 +17,10 @@ $smarty->assign('plugins', $plugins);
 if (isset($_REQUEST["textareasetup"]) && (!isset($_COOKIE['tab']) || $_COOKIE['tab'] != 3)) { // tab=3 is plugins alias tab (TODO improve)
 	ask_ticket('admin-inc-textarea');
 	$pref_toggles = array(
-		"feature_antibot",
 		"feature_hotwords",
 		"feature_hotwords_nw",
-		"feature_dynamic_content",
-		"feature_filegals_manager",
 		"feature_use_quoteplugin",
-		"feature_comments_post_as_anonymous",
-		"feature_smileys",
-		"popupLinks",
 		"feature_autolinks",
-		"feature_wiki_protect_email",
-		"feature_wiki_ext_icon",
 		"feature_wiki_paragraph_formatting",
 		"feature_wiki_paragraph_formatting_add_br",
 		"feature_wiki_monosp",
@@ -37,16 +29,6 @@ if (isset($_REQUEST["textareasetup"]) && (!isset($_COOKIE['tab']) || $_COOKIE['t
 	);
 	foreach($pref_toggles as $toggle) {
 		simple_set_toggle($toggle);
-	}
-	foreach($plugins as $key => $info) {
-		$key_inline = 'wikiplugininline_' . $key;
-		$key = 'wikiplugin_' . $key;
-		if (in_array($key, $info['prefs'])) {
-			simple_set_toggle($key);
-			if (!isset($info['inline']) || !$info['inline']) {
-				simple_set_toggle($key_inline);
-			}
-		}
 	}
 	$pref_simple_values = array(
 		"default_rows_textarea_wiki",

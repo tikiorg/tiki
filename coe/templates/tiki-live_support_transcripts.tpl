@@ -20,7 +20,7 @@
 		<select name="filter_user">
 			<option value="" {if $filter_user eq ''}selected="selected"{/if}>{tr}All{/tr}</option>
 			{section name=ix loop=$users}
-				<option value="{$users[ix]|escape}" {if $users[ix] eq $filter_user}selected="selected"{/if}>{$users[ix]}</option>
+				<option value="{$users[ix]|escape}" {if $users[ix] eq $filter_user}selected="selected"{/if}>{$users[ix]|escape}</option>
 			{/section}
 		</select>
 	</td>
@@ -28,7 +28,7 @@
 		<select name="filter_operator">
 			<option value="" {if $filter_operator eq ''}selected="selected"{/if}>{tr}All{/tr}</option>
 			{section name=ix loop=$operators}
-				<option value="{$operators[ix]|escape}" {if $operators[ix] eq $filter_operator}selected="selected"{/if}>{$operators[ix]}</option>
+				<option value="{$operators[ix]|escape}" {if $operators[ix] eq $filter_operator}selected="selected"{/if}>{$operators[ix]|escape}</option>
 			{/section}
 		</select>
 	</td>
@@ -48,9 +48,9 @@
 {section name=ix loop=$items}
 <tr>
 <td class="{cycle advance=false}">{$items[ix].chat_started|tiki_short_datetime}</td><!--date_format:"%d %b [%H:%M]"-->
-<td class="{cycle advance=false}">{if $items[ix].tiki_user ne ""}{$items[ix].tiki_user}{else}{$items[ix].user}{/if}</td>
+<td class="{cycle advance=false}">{if $items[ix].tiki_user ne ""}{$items[ix].tiki_user}{else}{$items[ix].user|escape}{/if}</td>
 <td class="{cycle advance=false}">{$items[ix].reason}</td>
-<td class="{cycle advance=false}">{$items[ix].operator}</td>
+<td class="{cycle advance=false}">{$items[ix].operator|escape}</td>
 <td style="text-align:right;" class="{cycle advance=false}"><a class="link" href="tiki-live_support_transcripts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;filter_user={$filter_user}&amp;filter_operator={$filter_operator}&amp;view={$items[ix].reqId}">{$items[ix].msgs}<a>&nbsp;</td>
 </tr>
 {sectionelse}

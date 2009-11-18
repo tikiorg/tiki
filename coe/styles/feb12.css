@@ -129,7 +129,6 @@ span.button input,
 .calbuttonbox {
 	vertical-align: middle;
 	margin: 2px;
-	padding: 0 4px;
 	background: url(feb12/header.jpg) repeat-x 0 -2px;
 	border: 1px solid #5aa5cf;
 	color: #F5F5F5;
@@ -283,13 +282,16 @@ div#tiki-main #tikimidtbl {
 	vertical-align: top;
 }
 
-div#sioptions {
+#sioptions, #sioptionscentered {
 	margin: 0;
-	padding-top: 10px;
+	padding: 10px;
 }
 
 #sitelogo {
-	padding-top: 20px;
+	margin-top: 0;
+}
+#sitelogo img {
+	padding: 0 10px !important;/* important put here because div#sitelogo img is too forcible in design.css */
 }
 
 div#sitead {
@@ -326,18 +328,19 @@ div#sitead {
 	text-align: right;
 }
 
-/* #header text selectors */
+/* Site title and subtitle */
 #sitetitles {
-	color: #052653;
+	text-shadow: 0 0 10px #fff;/* text-shadow; CSS3 valid property, values are <offset x> <offset y> <blur> and <color>; ex: 0 0 10px #fff */
 	font-weight: bold;
+	height: 4em;
 	margin: 0;
-	padding-top: 10px;
-	padding-left: 20px;
+	position: relative;
 }
 
 #sitetitle {
 	font-size: 2.2em;
-	padding-bottom: 14px;
+	position: relative;
+	top: 0.5em;
 }
 
 #sitetitle a,
@@ -353,8 +356,11 @@ div#sitead {
 }
 
 #sitesubtitle {
+	color: #fff;
 	font-size: 1.3em;
-	padding-bottom: 5px;
+	padding-top: 4em;
+	position: relative;
+	margin-top: -3em;
 }
 
 /* tiki-top_bar.tpl - menu and search */
@@ -722,6 +728,7 @@ h3.box-title {
 	display: inline;
 	width: auto;
 	background: #794a93;
+	border-bottom-color: #794a93;
 	color: #f5f5f5;
 	padding: 3px 3px 0 3px;
 }
@@ -734,7 +741,6 @@ h3.box-title {
 
 .rbox a,
 .rbox a:visited {
-	color: #f5f5f5;
 	text-decoration: underline;
 }
 
@@ -1507,18 +1513,18 @@ html>body .galtable {
 	font-size: .95em;
 }
 
-#caltable .calfocuson,
+.caltable .calfocuson,
 .box-data td.fc a.today,
 .box-data td a.today {
 	background: #a8cce2;
 }
 
-#caltable .calfocuson a {
+.caltable .calfocuson a {
 	color: #000;
 }
 
-#caltable .calfocus a,
-#caltable .calfocuson a {
+.caltable .calfocus a,
+.caltable .calfocuson a {
 	text-decoration: none;
 }
 

@@ -21,6 +21,9 @@ function smarty_function_breadcrumbs($params, &$smarty)
     }
     $text_to_display = '';
     switch ($type) {
+		case 'invertfull':
+			$text_to_display = breadcrumb_buildHeadTitle(array_reverse($crumbs));
+            break;
         case 'fulltrail':
 			$text_to_display = breadcrumb_buildHeadTitle($crumbs);
             break;

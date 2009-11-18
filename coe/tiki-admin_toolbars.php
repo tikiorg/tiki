@@ -1,4 +1,9 @@
 <?php
+// (c) Copyright 2002-2009 by authors of the Tiki Wiki/CMS/Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
 $inputConfiguration = array( array(
 	'staticKeyFilters' => array(
@@ -23,7 +28,11 @@ if ($prefs['javascript_enabled'] != 'y') {
 }
 
 if ($prefs['feature_jquery_ui'] != 'y') {
-	$headerlib->add_jsfile('lib/jquery/jquery-ui/ui/minified/jquery-ui.min.js');
+	if ($prefs['feature_use_minified_scripts'] == 'y') {
+		$headerlib->add_jsfile('lib/jquery/jquery-ui/ui/minified/jquery-ui.min.js');
+	} else {
+		$headerlib->add_jsfile('lib/jquery/jquery-ui/ui/jquery-ui.js');
+	}
 	$headerlib->add_cssfile('lib/jquery/jquery-ui/themes/'.$prefs['feature_jquery_ui_theme'].'/jquery-ui.css');
 }
 
@@ -156,191 +165,11 @@ foreach( $qtlist as $name ) {
 	$qtelement[$name] = array( 'name' => $name, 'class' => "toolbar qt-$name $wys $wiki $plug $cust $avail", 'html' => "$icon<span>$label</span>");
 }
 
-$nol = 2;
-$rowStr = substr(implode(",#row-",range(0,$rowCount)),2);
-$fullStr = '#full-list-w,#full-list-p,#full-list-c';
+$headerlib->add_js( "var toolbarsadmin_rowStr = '" . substr(implode(",#row-",range(0,$rowCount)),2) . "'
+var toolbarsadmin_fullStr = '#full-list-w,#full-list-p,#full-list-c';
+var toolbarsadmin_delete_text = '" . tra('Are you sure you want to delete this custom tool?') . "'\n");
 
-$delete_text = tra('Are you sure you want to delete this custom tool?');
-
-$headerlib->add_jq_onready( <<<JS
-
-var list = \$jq('$fullStr');
-var item;
-
-\$jq('$rowStr').sortable({
-	connectWith: '$fullStr, .row',
-	forcePlaceholderSize: true,
-	forceHelperSize: true,
-	receive: function(event, ui) {
-		var x = $jq(ui.item).parent().offset().left + $jq(ui.item).parent().width() - ui.offset.left;
-		//alert(x);
-		if (x < 32) {
-			\$jq(ui.item).css("float", "right");
-		} else {
-			\$jq(ui.item).css("float", "left");
-		}
-	}
-});
-\$jq('$fullStr').sortable({
-	connectWith: '.row, #full-list-c',
-	forcePlaceholderSize: true,
-	forceHelperSize: true,
-	remove: function(event, ui) {	// special handling for separator to allow duplicates
-		if (\$jq(ui.item).text() == '-') {
-			\$jq(this).prepend(\$jq(ui.item).clone());	// leave a copy at the top of the full list
-		}
-	},
-	receive: function(event, ui) {
-		\$jq(ui.item).css('float', '');
-		if (\$jq(ui.item).text() == '-') {
-			\$jq(this).children().remove('.qt--');				// remove all seps
-			\$jq(this).prepend(\$jq(ui.item).clone());			// put one back at the top
-
-		} else if (\$jq(this).attr('id') == 'full-list-c') {	// dropped in custom list
-			\$jq(ui.item).dblclick(function() { showToolEditForm(ui.item); });
-			\$jq(ui.item).trigger('dblclick');
-		}
-		sortList(this);
-	},
-	stop: function (event, ui) {
-		sortList(this);
-	}
-});
-sortList = function (list) {
-	var arr = \$jq(list).children().get();
-	arr.sort( function(a, b) {
-		var labelA = \$jq(a).text().toUpperCase();
-		var labelB = \$jq(b).text().toUpperCase();
-		if (labelA < labelB) { return -1 }
-		if (labelA > labelB) { return 1 }
-		return 0;
-	});
-	\$jq(list).empty();
-	for (item in arr) {
-		\$jq(list).append(arr[item]);
-	}
-}
-\$jq('#full-list-c').sortable({	// custom tools list
-	connectWith: '.lists'
-}).children().each(function() {	// add double click action
-	\$jq(this).dblclick(function() { showToolEditForm(this); });
-});
-\$jq('.qt-custom').dblclick(function() { showToolEditForm(this); });
-
-//\$jq('#toolbar_edit_div #cancel_tool').click(function() {
-//	\$jq('#toolbar_edit_div').hide();
-//});
-//\$jq('#toolbar_edit_div form').submit(function() {
-//});
-
-// show edit form dialogue
-showToolEditForm = function(item) {
-
-	//\$jq('#toolbar_edit_div').show();
-	//\$jq('#toolbar_edit_div').css({ left: \$jq(item).offset().left + 10, top:\$jq(item).offset().top + \$jq(item).height() - 4 });
-	\$jq('#toolbar_edit_div #tool_name').val(\$jq(item).text()); //.attr('disabled','disabled');
-	\$jq('#toolbar_edit_div #tool_label').val(\$jq(item).children('img').attr('title'));
-	\$jq('#toolbar_edit_div #tool_icon').val(\$jq(item).children('img').attr('src'));
-	\$jq('#toolbar_edit_div #tool_token').val(\$jq(item).children('input[name=token]').val());
-	\$jq('#toolbar_edit_div #tool_syntax').val(\$jq(item).children('input[name=syntax]').val());
-	\$jq('#toolbar_edit_div #tool_type').val(\$jq(item).children('input[name=type]').val());
-	if (\$jq(item).children('input[name=type]').val() == 'Wikiplugin') {
-		\$jq('#toolbar_edit_div #tool_plugin').val(\$jq(item).children('input[name=plugin]').val());
-	} else {
-		\$jq('#toolbar_edit_div #tool_plugin').attr('disabled', 'disabled');
-	}
-
-	\$jq('#toolbar_edit_div').dialog('open');
-}
-// handle plugin select on edit dialogue
-\$jq('#toolbar_edit_div #tool_type').change( function () {
-	if (\$jq('#toolbar_edit_div #tool_type').val() == 'Wikiplugin') {
-		\$jq('#toolbar_edit_div #tool_plugin').removeAttr('disabled');
-	} else {
-		\$jq('#toolbar_edit_div #tool_plugin').attr('disabled', 'disabled').val("");
-	}
-});
-
-\$jq("#toolbar_edit_div").dialog({
-	bgiframe: true,
-	autoOpen: false,
-//	height: 300,
-	modal: true,
-	buttons: {
-		Cancel: function() {
-			\$jq(this).dialog('close');
-		},
-		'Save': function() {
-			var bValid = true;
-//			allFields.removeClass('ui-state-error');
-//
-//			bValid = bValid && checkLength(\$jq('#toolbar_edit_div #tool_name'),"name",2,16);
-//			bValid = bValid && checkLength(\$jq('#toolbar_edit_div #tool_label'),"label",1,80);
-			
-			if (bValid) {
-				\$jq("#toolbar_edit_div #save_tool").val('Save');
-				\$jq("#toolbar_edit_div form").submit();
-			}
-			\$jq(this).dialog('close');
-		},
-		Delete: function() {
-			if (confirm("$delete_text")) {
-				\$jq("#toolbar_edit_div #delete_tool").val('Delete');
-				\$jq("#toolbar_edit_div form").submit();
-			}
-			\$jq(this).dialog('close');
-		}
-	},
-	close: function() {
-		//allFields.val('').removeClass('ui-state-error');
-	}
-});
-
-// save toolbars
-saveRows = function() {
-	var lists = [];
-	var ser = \$jq('.row').map(function(){				/* do this on everything of class 'row' */
-		var right_section = false;
-		return \$jq(this).children().map(function(){	/* do this on each child node */
-			var text = "";
-			if (\$jq(this).text() == "help") {
-				var a = 1;
-			}
-			if ( !right_section && \$jq(this).css("float") == "right") {
-				text = "|";
-				right_section = true;
-			}
-			if (\$jq(this).hasClass('qt-plugin')) { text += 'wikiplugin_'; }
-			text += \$jq(this).text();
-			return text;
-		}).get().join(",").replace(",|", "|");								/* put commas inbetween */
-	});
-	if (typeof(ser) == 'object' && ser.length > 1) {
-		ser = \$jq.makeArray(ser).join('/');			// row separators
-	} else {
-		ser = ser[0];
-	}
-	\$jq('#qt-form-field').val(ser.replace(',,', ','));
-}
-
-// view mode filter
-
-\$jq('#view_mode').change( function () {
-	if (\$jq(this).val() == 'both') {
-		\$jq('.qt-wiki').show();
-		\$jq('.qt-wys').show();
-	} else if (\$jq(this).val() == 'wiki') {
-		\$jq('.qt-wys').hide();
-		\$jq('.qt-wiki').show();
-	} else if (\$jq(this).val() == 'wysiwyg') {
-		\$jq('.qt-wiki').hide();
-		\$jq('.qt-wys').show();
-	}
-});
-
-JS
-);
-	
+$headerlib->add_jsfile('lib/toolbars/tiki-admin_toolbars.js');
 
 $display_w = array_diff($qt_w_list,$usedqt);
 if (!in_array('-', $display_w)) {
@@ -381,5 +210,3 @@ $smarty->assign_by_ref('display_c',$display_c);
 $smarty->assign_by_ref('current',$current);
 $smarty->assign( 'mid', 'tiki-admin_toolbars.tpl' );
 $smarty->display( 'tiki.tpl' );
-
-?>

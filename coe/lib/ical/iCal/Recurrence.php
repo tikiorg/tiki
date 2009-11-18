@@ -385,7 +385,3 @@ class File_iCal_Recurrence {
 
 
 }
-
-
-
-?>

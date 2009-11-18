@@ -56,34 +56,28 @@ FIX LATER
 
 The following are DELIBERATELY PUBLIC.
  ./tiki-change_password.php
- ./tiki-confirm_user_email.php
  ./tiki-cookie-jar.php
  ./tiki-error_simple.php
  ./tiki-information.php
  ./tiki-install.php
- ./tiki-install_disable.php
  ./tiki-jsplugin.php
  ./tiki-live_support_chat_frame.php
  ./tiki-login_scr.php
- ./tiki-register_ajax.php
 
 
 The following do actually have features, but the fix check checker 
 needs to be changed to accept access->check_permissions() so that also that it loads tikisetup.php
- ./tiki-mindmap.php
  ./tiki-orphan_pages.php
  ./tiki-plugins.php
- ./tiki-print_indexed.php
-
+./tiki-switch_perspective.php
 
 The following need to be refactored to a lib
  ./tiki-testGD.php
- ./tiki-special_chars.php
 
+This file is just comments
+ ./about.php
 
-The following needs to be secured in a way other than "die"
- ./tiki-remote_backup.php 
-
+ 
 */
 
 $safePaths = array(
@@ -102,7 +96,10 @@ $TWV = new TWVersion();
 if (!$TWV->version)
      die( "Could not find version information.\n" );
 
-list( $major, $minor, $revision ) = explode( '.', $TWV->version );
+$ver = explode( '.', $TWV->version );
+$major = (count($ver) >= 1) ? $ver[0]:'?';
+$minor = (count($ver) >= 2) ? $ver[1]: '?';
+$revision = (count($ver) >= 3) ?  $ver[2]: '?';
 
 function get_content( $filename )
 {
@@ -119,7 +116,7 @@ function get_content( $filename )
 function feature_pattern( &$featureNameIndex ) // {{{
 {
 	global $major, $minor, $revision;
-	$featureName = "((feature_\w+)|wiki_feature_3d|lang_use_db|allowRegister|validateUsers)";
+	$featureName = "((feature_\w+)|wiki_feature_3d|lang_use_db|allowRegister|validateUsers|cachepages)";
 	$q = "[\"']";
 	if( $major == 1 && $minor == 9 )
 	{

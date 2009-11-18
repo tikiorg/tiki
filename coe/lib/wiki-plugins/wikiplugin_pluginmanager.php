@@ -1,7 +1,7 @@
 <?php
 
 function wikiplugin_pluginmanager_help() {
-	return tra("Provides a list of plugins on this wiki.").":<br />~np~{PLUGINMANAGER(info=>version|description|arguments)}{PLUGINMANAGER}~/np~";
+	return tra("Displays a list of plugins available in this wiki.").":<br />~np~{PLUGINMANAGER(info=>version|description|arguments)}{PLUGINMANAGER}~/np~";
 }
 /**
 * Include the library {@link PluginsLib}
@@ -9,7 +9,7 @@ function wikiplugin_pluginmanager_help() {
 require_once "lib/wiki/pluginslib.php";
 /**
 * Plugin Manager
-* Provides a list of plugins on this wiki.
+* Displays a list of plugins available in this wiki.
 *
 * Params:
 * <ul>
@@ -114,7 +114,7 @@ class WikiPluginPluginManager extends PluginsLib {
     	return array(
     		'name' => tra('Plugin Manager'),
     		'documentation' => 'PluginManager',
-    		'description' => tra("Provides a list of plugins on this wiki."),
+    		'description' => tra("Displays a list of plugins available in this wiki."),
     		'prefs' => array( 'wikiplugin_pluginmanager' ),
     		'params' => array(
     			'info' => array(

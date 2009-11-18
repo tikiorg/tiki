@@ -140,7 +140,7 @@ class TikiDate {
 			$this->date = new DateTime($date);
 		}
 	}
-	
+
 	function setLocalTime($day, $month, $year, $hour, $minute, $second, $partsecond ) {
 		$this->date->setDate($year,$month,$day);
 		$this->date->setTime($hour,$minute,$second);

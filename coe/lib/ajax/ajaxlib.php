@@ -224,7 +224,6 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
 		$objResponse->Assign($htmlElementId, "innerHTML", $content);
 
 	} elseif ( $ajaxlib->templateIsRegistered('confirm.tpl') ) {
-		global $area;
 
 		$params = array(
 				'_tag' => 'n',
@@ -243,6 +242,11 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
 		$uri = smarty_modifier_escape(smarty_block_self_link($params, '', $smarty), 'javascript');
 		$objResponse->call("loadComponent('$uri','$template','$htmlElementId',".((int)$max_tikitabs).",'$last_user')");
 
+	} elseif ( $ajaxlib->templateIsRegistered('error.tpl') ) {
+
+		$content = $smarty->fetch('error.tpl');
+		$objResponse->Assign($htmlElementId, "innerHTML", $content);
+
 	} else {
 		$objResponse->alert(sprintf(tra("Template %s not registered"),$template));
 	}
@@ -257,10 +261,6 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
 		}
 	}
 
-	$objResponse->script("hide('ajaxLoading');");
-	if ($prefs['feature_shadowbox'] == 'y') {
-		//$objResponse->script("Shadowbox.init({ skipSetup: true }); Shadowbox.setup();");
-	}
 	$objResponse->script("var xajax.config.requestURI =\"".$ajaxlib->sRequestURI."\";\n");
 	if (sizeof($js_script)) {
 		foreach($js_script as $s) {
@@ -282,11 +282,6 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
 	foreach($headerlib->getJs() as $s) {
 		if (trim($s) != '') {
 			$objResponse->script($s);
-		}
-	}
-	foreach($headerlib->getJsfiles() as $f) {
-		if (trim($f) != '') {
-			$objResponse->includeScript($f);
 		}
 	}
 	

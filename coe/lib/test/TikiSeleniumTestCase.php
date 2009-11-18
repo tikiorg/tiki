@@ -14,6 +14,31 @@ class TikiSeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase {
 		'admin' => 'tiki'
 	);
 	  
+   function __construct($name) {
+       parent::__construct($name);
+       $this->configure();
+   }
+   
+	private function configure() {
+		$test_tiki_root_url = NULL;
+		$config_fpath = './tests_config.php';
+	    $lines = file($config_fpath);
+	    $source = implode('', $lines);
+		echo "-- TikiSeleniumTestCase.configure: After reading config file: \$source='$source'\n";
+		eval($source);
+		echo "-- TikiSeleniumTestCase.configure: After evaluating config file: \$test_site_url='$test_site_url'\n";
+        if ($test_tiki_root_url == NULL) {
+        	exit("Variable \$test_tiki_root_url MUST be defined in test configuration file: '$config_fpath'");
+        } else {
+        	$this->setBrowserUrl($test_tiki_root_url);
+        }	
+       if (!preg_match('/^http\:\/\/local/', $test_tiki_root_url)) {
+        	exit("Error found in test configuration file '$config_fpath'\n".
+        	     "The URL specified by \$test_tiki_root_url should start with http://local, in order to prevent accidentally running tests on a non-local test site.\n".
+        	     "Value was: '$test_tiki_root_url'\n");
+        }
+	}
+	  
     public function openTikiPage($tikiPage) {
        $this->open("http://localhost/tiki-trunk/$tikiPage");
     }

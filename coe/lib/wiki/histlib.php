@@ -262,8 +262,8 @@ class HistLib extends TikiLib {
 		$query = "select distinct ta.`action`, ta.`lastModif`, ta.`user`, ta.`ip`, ta.`object`, thf.`comment`, thf.`version`, thf.`versionlast` from `tiki_actionlog` ta 
 			inner join (select NULL as version, `comment`, `pageName`, `lastModif`, '1' as versionlast from tiki_pages union select `version`, `comment`, `pageName`, `lastModif`, '0' as versionlast from `tiki_history`) as thf on ta.`object`=thf.`pageName` and ta.`lastModif`=thf.`lastModif` and ta.`objectType`='wiki page' " . $categjoin . $where . " order by ta.".$this->convertSortMode($sort_mode);
 
-		$query_cant = "select count(distinct ta.`lastModif`, ta.`object`) from `tiki_actionlog` ta 
-			inner join (select `pageName`, `lastModif` from tiki_pages union select `pageName`, `lastModif` from `tiki_history`) as thf on ta.`object`=thf.`pageName` and ta.`lastModif`=thf.`lastModif` and ta.`objectType`='wiki page' " . $categjoin . $where;
+		$query_cant = "select count(distinct ta.`action`, ta.`lastModif`, ta.`user`, ta.`object`, thf.`versionlast`) from `tiki_actionlog` ta 
+			inner join (select `pageName`, `lastModif`, '1' as versionlast from tiki_pages union select `pageName`, `lastModif`, '0' as versionlast from `tiki_history`) as thf on ta.`object`=thf.`pageName` and ta.`lastModif`=thf.`lastModif` and ta.`objectType`='wiki page' " . $categjoin . $where;
 
 		$result = $this->fetchAll($query,$bindvars,$limit,$offset);
 		$result = Perms::filter( array( 'type' => 'wiki page' ), 'object', $result, array( 'object' => 'object' ), 'view' );

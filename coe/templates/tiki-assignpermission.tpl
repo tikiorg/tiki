@@ -1,7 +1,7 @@
 {* $Id$ *}
 
 {assign var=escgroup value=$group|escape:url}
-{title help="Permission" url="tiki-assignpermission.php?group=$escgroup"}{tr}Assign permissions to group:{/tr} {$group}{/title}
+{title help="Permission" url="tiki-assignpermission.php?group=$escgroup"}{tr}Assign permissions to group:{/tr} {$group|escape}{/title}
 
 <div class="navbar">
 	{if $tiki_p_admin eq 'y'} {* only full admins can manage groups, not tiki_p_admin_users *}
@@ -21,11 +21,11 @@
 <table class="normal" id="groupinformation">
 	<tr>
 		<td class="even">{tr}Name{/tr}:</td>
-		<td class="odd" colspan="2">{$group_info.groupName}</td>
+		<td class="odd" colspan="2">{$group_info.groupName|escape}</td>
 	</tr>
 	<tr>
 		<td class="even">{tr}Desc{/tr}:</td>
-		<td class="odd" colspan="2">{$group_info.groupDesc}</td>
+		<td class="odd" colspan="2">{$group_info.groupDesc|escape}</td>
 	</tr>
 	<tr>
 		<td class="even" style="vertical-align:top;">{tr}Permissions{/tr}:</td>
@@ -62,7 +62,7 @@
 				</select>
 				<select name="group" onchange="permselects.submit()">
 					{section name=v loop=$groups}
-						<option value="{$groups[v].groupName}"{if $group eq $groups[v].groupName} selected="selected"{/if}>{$groups[v].groupName}</option>
+						<option value="{$groups[v].groupName|escape}"{if $group eq $groups[v].groupName|escape} selected="selected"{/if}>{$groups[v].groupName|escape}</option>
 					{/section}
 				</select>
 			</form>

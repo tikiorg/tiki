@@ -406,7 +406,7 @@
 </td><td>
 {if $edit}
   {toolbars area_name="save[description]"}
-  <textarea id='editwiki' class="wikiedit" cols="{$cols}" rows="{$rows}" name="save[description]" style="width:98%">{$calitem.description}</textarea>
+  <textarea id='editwiki' class="wikiedit" cols="{$cols}" rows="{$rows}" name="save[description]" style="width:98%">{$calitem.description|escape}</textarea>
   <input type="hidden" name="rows" value="{$rows}"/>
   <input type="hidden" name="cols" value="{$cols}"/>
 {else}
@@ -555,7 +555,7 @@ onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 	{/if}
 {else}
 {foreach item=org from=$calitem.organizers}
-{$org|escape|userlink}<br />
+{$org|userlink}<br />
 {/foreach}
 {/if}
 </td>
@@ -576,7 +576,7 @@ onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 	{/if}
 {else}
 {foreach item=ppl from=$calitem.participants}
-{$ppl.name|escape|userlink} {if $listroles[$ppl.role]}({$listroles[$ppl.role]}){/if}<br />
+{$ppl.name|userlink} {if $listroles[$ppl.role]}({$listroles[$ppl.role]}){/if}<br />
 {/foreach}
 {/if}
 </td>

@@ -9,7 +9,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function smarty_prefilter_log_tpl($source, &$smarty) {
 	global $prefs;
-	if ($prefs['log_tpl'] != 'y' || $smarty->_current_file == 'evaluated template')
+	if ($prefs['log_tpl'] != 'y' || $smarty->_current_file == 'tiki.tpl' || $smarty->_current_file == 'evaluated template')
 		return $source;
 	return '<!-- TPL: '.$smarty->_current_file.' -->'.$source.'<!-- /TPL: '.$smarty->_current_file.' -->';
 }

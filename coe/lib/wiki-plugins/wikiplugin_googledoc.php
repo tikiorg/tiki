@@ -30,7 +30,7 @@ function wikiplugin_googledoc_info() {
 					'safe' => true,
 					'required' => true,
 					'name' => tra('key'),
-					'description' => tra('Google doc key - for example pXsHENf1bGGY92X1iEeJJI'),
+					'description' => tra('Google doc key - for example: pXsHENf1bGGY92X1iEeJJI'),
 				),
 			'name' => array(
 				'safe' => true,
@@ -98,7 +98,7 @@ function wikiplugin_googledoc_info() {
 
 function wikiplugin_googledoc($data, $params) {
 
-	extract ($params);
+	extract ($params, EXTR_SKIP);
 	
 	if (empty($type)) {
 		return tra('Required parameter "type" missing');

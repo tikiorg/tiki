@@ -171,7 +171,7 @@ if( ! isset( $comments_objectId ) ) {
 
 $feedbacks = array();
 $errors = array();
-if ( $_REQUEST['comments_objectId'] == $comments_objectId
+if ( isset($_REQUEST['comments_objectId']) && $_REQUEST['comments_objectId'] == $comments_objectId
 	&& (isset($_REQUEST['comments_postComment']) || isset($_REQUEST['comments_postComment_anonymous']) )) {
 	if (isset($forum_mode) && $forum_mode == 'y') {
 		$forum_info = $commentslib->get_forum($_REQUEST['forumId']);
@@ -192,6 +192,7 @@ if ( $_REQUEST['comments_objectId'] == $comments_objectId
 					$_SESSION['feedbacks'] = $feedbacks;
 				}
 				header('location: ' . $url);
+				die;
 		}
 	} else {
 		$threadId =  $commentslib->post_in_object($comments_objectId, $_REQUEST, $feedbacks, $errors);
@@ -224,16 +225,16 @@ if ( $_REQUEST['comments_objectId'] == $comments_objectId
 						$smarty->assign('mail_comment', $_REQUEST["comments_data"]);
 						$smarty->assign('mail_hash', $not['hash']);
 						$foo = parse_url($_SERVER["REQUEST_URI"]);
-						$machine = $tikilib->httpPrefix(). dirname( $foo["path"] );
+						$machine = $tikilib->httpPrefix( true ). dirname( $foo["path"] );
 						$smarty->assign('mail_machine', $machine);
 						$parts = explode('/', $foo['path']);
 
 						if (count($parts) > 1)
 							unset ($parts[count($parts) - 1]);
 
-						$smarty->assign('mail_machine_raw', $tikilib->httpPrefix(). implode('/', $parts));
+						$smarty->assign('mail_machine_raw', $tikilib->httpPrefix( true ). implode('/', $parts));
 						// TODO: mail_machine_site may be required for some sef url with rewrite to sub-directory. To refine. (nkoth)  
-						$smarty->assign('mail_machine_site', $tikilib->httpPrefix());
+						$smarty->assign('mail_machine_site', $tikilib->httpPrefix( true ));
 						$mail = new TikiMail();
 					}
 					global $prefs;// TODO: optimise by grouping user by language
@@ -250,6 +251,10 @@ if ( $_REQUEST['comments_objectId'] == $comments_objectId
 	}
 	$smarty->assign_by_ref('errors', $errors);
 	$smarty->assign_by_ref('feedbacks', $feedbacks);
+
+	if( isset( $pageCache ) ) {
+		$pageCache->invalidate();
+	}
 }
 
 if (($tiki_p_vote_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n')) || ($tiki_p_forum_vote == 'y' && isset($forum_mode) && $forum_mode == 'y')) {
@@ -257,7 +262,7 @@ if (($tiki_p_vote_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n')
 
 	if (isset($_REQUEST["comments_vote"]) && isset($_REQUEST["comments_threadId"])) {
 		if (!$user && !isset($_COOKIE['PHPSESSID'])) {
-			$smarty->assign_by_ref('msg',tra('Cookies must be allowed to vote'));
+			$smarty->assign_by_ref('msg',tra('For you to vote, cookies must be allowed'));
 			$smarty->display("error.tpl");
 			die;
 		}
@@ -275,6 +280,7 @@ if (($tiki_p_vote_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n')
 }
 
 // Comments Moderation
+global $tiki_p_admin_comments;
 if ( (!isset($forum_mode) || $forum_mode == 'n') && $tiki_p_admin_comments == 'y' && isset($_REQUEST["comments_threadId"]) && !empty($_REQUEST['comments_approve']) ) {
 
 	if ( $_REQUEST['comments_approve'] == 'y' ) {
@@ -415,6 +421,11 @@ if (isset($_REQUEST["post_reply"]) && isset($_REQUEST["comments_reply_threadId"]
 $threadId_if_reply = $_REQUEST["comments_reply_threadId"];
 else
 $threadId_if_reply = 0;
+if (empty($thread_sort_mode) && !empty($_REQUEST['thread_sort_mode'])) {
+	$thread_sort_mode = $_REQUEST['thread_sort_mode'];
+} else {
+	$thread_sort_mode = 'commentDate_asc';
+}
 
 $comments_coms = $commentslib->get_comments($comments_objectId, $_REQUEST["comments_parentId"],
 		$comments_offset, $comments_per_page, $thread_sort_mode, $_REQUEST["comments_commentFind"],

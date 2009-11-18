@@ -10,6 +10,26 @@
 			else
 				document.getElementById('divRegCapson').style.visibility = 'hidden';
 		}
+
+		var submit_counter = 0;
+		function match_pass() {
+			submit_counter += 1;
+			ret_msg = document.getElementById('validate');
+			pass0 = document.getElementById('oldpass').value;
+			pass1 = document.getElementById('pass1').value;
+			pass2 = document.getElementById('pass2').value;
+			if (submit_counter > 10) {
+				ret_msg.innerHTML = "<img src='pics/icons/exclamation.png' style='vertical-align:middle' alt='Overflow' /> Too many tries";
+				return false;
+			} else if ((pass0 == '') || (pass1 == '') || (pass2 == '')) {
+				ret_msg.innerHTML = "<img src='pics/icons/exclamation.png' style='vertical-align:middle' alt='Missing' /> Passwords missing";
+				return false;
+			} else if ( pass1 != pass2 ) {
+				ret_msg.innerHTML = "<img src='pics/icons/exclamation.png' style='vertical-align:middle' alt='Do not match' /> Passwords don\'t match";
+				return false;
+			}
+			return true;
+		}
 	// -->
 	</script>
 {/literal}
@@ -49,7 +69,7 @@
 							<div id="mypassword_text"></div>
 							<div id="mypassword_bar" style="font-size: 5px; height: 2px; width: 0px;"></div> 
 						</div>
-  <input type="password" name="pass" id="pass" onkeypress="regCapsLock(event)" onkeyup="runPassword(this.value, 'mypassword');{if $prefs.feature_ajax eq 'y'}check_pass();{/if}" />
+  <input type="password" name="pass" id="pass1" onkeypress="regCapsLock(event)" onkeyup="runPassword(this.value, 'mypassword');{if $prefs.feature_ajax eq 'y'}check_pass();{/if}" />
 	{if $prefs.feature_ajax ne 'y'}
 		{if $prefs.min_pass_length > 1}
 								<div class="highlight"><em>{tr}Minimum {$prefs.min_pass_length} characters long{/tr}</em></div>{/if}
@@ -58,15 +78,15 @@
 	{/if}
   
   </td>
-</tr>  
+</tr>
 <tr>
   <td class="formcolor"><label for="pass2">{tr}Repeat password:{/tr}</label></td>
   <td class="formcolor"><input type="password" name="pass2" id="pass2" /></td>
-</tr>  
+</tr>
 <tr>
   <td class="formcolor">&nbsp;</td>
-  <td class="formcolor"><input type="submit" name="change" value="{tr}Change{/tr}" /></td>
-</tr>  
+  <td class="formcolor"><input type="submit" name="change" value="{tr}Change{/tr}" onclick="return match_pass();"/><span id="validate"></span></td>
+</tr>
 </table>
 </fieldset>
 </form>

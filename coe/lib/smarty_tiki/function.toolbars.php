@@ -7,12 +7,18 @@
 
 function smarty_function_toolbars($params, &$smarty)
 {
+	global $prefs;
+	
+	if ($prefs['javascript_enabled'] != 'y') {
+		return '';
+	}
 	if( ! isset( $params['section'] ) ) {
 		global $section;
-		if( ! empty($section) )
+		if( ! empty($section) ) {
 			$params['section'] = $section;
-		else
-			$params['section'] = 'global';
+		} else {
+			return '';	// proper features set $section, contact us (possibly others) don't
+		}
 	}
 
 	if( isset( $params['comments'] ) && $params['comments'] == 'y' ) {
@@ -27,7 +33,7 @@ function smarty_function_toolbars($params, &$smarty)
 	if ($params['section'] != 'wiki page') {
 		$hidden[] = 'fullscreen';
 	}
-	if (!in_array($params['section'], array('wiki page', 'blogs'))) {
+	if (!in_array($params['section'], array('wiki page', 'blogs', 'newsletters'))) {
 		$hidden[] = 'switcheditor';
 	}
 	

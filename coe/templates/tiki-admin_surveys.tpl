@@ -9,7 +9,7 @@
 
 {tabset}
 
-{tab name='{tr}Surveys{/tr}'}
+{tab name="{tr}Surveys{/tr}"}
 
 {if $channels or ($find ne '')}
 	{include file='find.tpl'}
@@ -35,7 +35,7 @@
 		<tr class="{cycle}">
 			<td>{$channels[user].surveyId}</td>
 			<td>
-				<b>{$channels[user].name}</b>
+				<b>{$channels[user].name|escape}</b>
 				<div class="subcomment">
 					{wiki}{$channels[user].description|escape}{/wiki}
 				</div>
@@ -69,7 +69,7 @@
 {pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
 {/tab}
 
-{tab name='{tr}Create/Edit Surveys{/tr}'}
+{tab name="{tr}Create/Edit Surveys{/tr}"}
 {if $info.surveyId > 0}
 	<h2>{tr}Edit this Survey:{/tr} {$info.name}</h2>
 {else}

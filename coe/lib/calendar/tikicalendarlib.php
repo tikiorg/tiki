@@ -17,7 +17,7 @@ class TikiCalendarLib extends CalendarLib {
 		global $user;
 		$ret = array();
 		if ( ! is_array($tikiobj) ) return $ret;
-		$tikiobj =& array_unique($tikiobj);
+		$tikiobj = array_unique($tikiobj);
 		if ( in_array('wiki', $tikiobj) ) {
 			$tikiobj[] = 'wiki page';
 			$tikiobj[] = 'wiki comment';

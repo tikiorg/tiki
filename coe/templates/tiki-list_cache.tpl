@@ -1,7 +1,7 @@
-{title help="Cache"}{tr}Cache{/tr}{/title}
+{title help="Cache"}{tr}External Pages Cache{/tr}{/title}
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}
-	{tr}The cache is used by:{/tr} <a href="tiki-admin.php?page=general">{tr}Use cache for external pages{/tr}</a>
+	{tr}The cache is used by:{/tr} <a href="tiki-admin.php?page=textarea">{tr}Cache external pages{/tr}</a>
 {/remarksbox}
 
 {include file='find.tpl'}

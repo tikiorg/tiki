@@ -50,29 +50,29 @@ $smarty->assign('mapfile', $mapfile);
 $files = $maplib->listMapsWithRev($prefs['map_path']);
 $history = array();
 $j = 0;
-for ($i = 0; $i < count($files); $i++) {
-	if (substr($files[$i], 0, strlen($mapfile)) == $mapfile) {
-		$suffix = substr($files[$i], strlen($mapfile));
+foreach($files as $file) {
+	if (substr($file, 0, strlen($mapfile)) == $mapfile) {
+		$suffix = substr($file, strlen($mapfile));
 		$revision = intval(substr($suffix, 1));
 		if ($revision != 0) {
 			$history[$j]["version"] = $revision;
-			$history[$j]["data"] = nl2br(file_get_contents($prefs['map_path'] . $files[$i]));
+			$history[$j]["data"] = nl2br(file_get_contents($prefs['map_path'] . $file));
 			$j++;
 		}
 	}
 }
 $history[$j]["version"] = $j + 1;
 $history[$j]["data"] = nl2br(file_get_contents($prefs['map_path'] . $mapfile));
-for ($i = 0; $i < count($history); $i++) {
-	if (strpos($history[$i]["data"], "##TIKIMAPS HEADER: END##") != FALSE) {
-		$searchdata = substr($history[$i]["data"], 0, strpos($history[$i]["data"], "##TIKIMAPS HEADER: END##"));
+foreach($history as $index =>$h ) {
+	if (strpos($h["data"], "##TIKIMAPS HEADER: END##") != FALSE) {
+		$searchdata = substr($h["data"], 0, strpos($h["data"], "##TIKIMAPS HEADER: END##"));
 		if (strpos($searchdata, "#IP: ") != FALSE) {
 			$IP = substr($searchdata, strpos($searchdata, "#IP: ") + 4);
-			$history[$i]["ip"] = substr($IP, 0, strpos($IP, "<br"));
+			$history[$index]["ip"] = substr($IP, 0, strpos($IP, "<br"));
 		}
 		if (strpos($searchdata, "#Modified by: ") != FALSE) {
 			$IP = substr($searchdata, strpos($searchdata, "#Modified by: ") + 13);
-			$history[$i]["user"] = substr($IP, 0, strpos($IP, "<br"));
+			$history[$index]["user"] = substr($IP, 0, strpos($IP, "<br"));
 		}
 		if (strpos($searchdata, "#GMT Date: ") != FALSE) {
 			$IP = substr($searchdata, strpos($searchdata, "#GMT Date: ") + 10);

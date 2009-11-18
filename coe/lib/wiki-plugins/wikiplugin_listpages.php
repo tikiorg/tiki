@@ -24,7 +24,7 @@ function wikiplugin_listpages_info() {
 			'max' => array(
 				'required' => false,
 				'name' => tra('Result Count'),
-				'description' => tra('Amount of results displayed in the list.'),
+				'description' => tra('Number of results displayed in the list.'),
 			),
 			'initial' => array(
 				'required' => false,
@@ -131,7 +131,7 @@ function wikiplugin_listpages($data, $params) {
 		global $multilinguallib;
 		require_once 'lib/multilingual/multilinguallib.php';
 		if ($translations == 'user') {
-			$translations = $multilinguallib->preferedLangs();
+			$translations = $multilinguallib->preferredLangs();
 		} else {
 			$translations = explode( '|', $translations );
 		}
@@ -151,7 +151,7 @@ function wikiplugin_listpages($data, $params) {
 		$max = -1;
 	}
 	if (!isset($sort)) {
-		$sort = 'pageName_desc';
+		$sort = 'pageName_asc';
 	}
 	if (!isset($find)) {
 		$find = '';

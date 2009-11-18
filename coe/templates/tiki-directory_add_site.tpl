@@ -81,7 +81,7 @@
           
 				        {section name=ux loop=$countries}
 					        
-          <option value="{$countries[ux]|escape}" {if $info.country eq $countries[ux]}selected="selected"{/if}>{$countries[ux]}</option>
+          <option value="{$countries[ux]|escape}" {if $info.country eq $countries[ux]}selected="selected"{/if}>{tr}{$countries[ux]}{/tr}</option>
           
 				        {/section}
 				      

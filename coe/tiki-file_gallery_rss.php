@@ -15,7 +15,7 @@ if ($prefs['rss_file_gallery'] != 'y') {
 }
 
 if ($tiki_p_admin_file_galleries != 'y' and !$tikilib->user_has_perm_on_object($user,$_REQUEST['galleryId'],'file gallery','tiki_p_view_file_gallery')) {
-        $errmsg=tra("Permission denied you cannot view this section");
+        $errmsg=tra("Permission denied. You cannot view this section");
         require_once ('tiki-rss_error.php');
 }
 

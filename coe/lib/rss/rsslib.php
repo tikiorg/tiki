@@ -495,7 +495,7 @@ class RSSLib extends TikiLib {
 					$links[1][0] = $links2[1][0];
 				}
 		 	} else {
-				preg_match_all("/<link.*?href=\"(.*?)\".*?>/msi", $items[0][$it], $links);
+				preg_match_all("/<link.*?href=[\"'](.*?)[\"'].*?>/msi", $items[0][$it], $links);
 			}
 	 		preg_match_all("/<description[^>]*>(<!\[CDATA\[)?(.*?)(\]\]>)?<\/description>/msi", $items[0][$it], $description);
 			if (count($description[1])<1)

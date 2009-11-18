@@ -27,7 +27,7 @@ div.upspantext {
 form.upform {
 	width: 100px;
 }
-
+/*
 .cssmenu ul li {
 	float: left;
 	width: 100%;
@@ -45,7 +45,7 @@ form.upform {
 .cssmenu {
 	border-bottom: 1px solid #bbb;
 }
-
+*/
 #tiki-center {
 	font-size: 1em;
 }
@@ -85,6 +85,11 @@ img.flipmodimage {
 .box-data ul {
 	margin-left: 1em;
 }
+
+.box-data ul {
+	padding-left: .5em;
+}
+
 table.normal, 
 table.admin {
 	width: 97%;

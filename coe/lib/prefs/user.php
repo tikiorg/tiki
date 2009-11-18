@@ -18,6 +18,21 @@ function prefs_user_list() {
 				'userTracker',
 			),
 		),
+		'user_assigned_modules' => array(
+			'name' => tra('Users can configure modules'),
+			'help' => 'Users+Configure+Modules',
+			'type' => 'flag',
+		),	
+		'user_flip_modules' => array(
+			'name' => tra('Users can shade modules'),
+			'help' => 'Users+Shade+Modules',
+			'type' => 'list',
+			'options' => array(
+				'y' => tra('Always'),
+				'module' => tra('Module decides'),
+				'n' => tra('Never'),
+			),
+		),
 	);
 }
 

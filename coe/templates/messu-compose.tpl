@@ -13,23 +13,23 @@
 {/if}
 
 {if (!$sent) or ((strstr($message, '{tr}ERROR{/tr}')) or (strstr($message, '{tr}Invalid{/tr}')))}
-
+{jq}$jq(".username").tiki("autocomplete", "username");{/jq}
 <form action="messu-compose.php" method="post">
 <table class="normal" >
   <tr>
-    <td class="formcolor"><label for="mess-composeto">{tr}To{/tr}:</label></td><td class="formcolor"><input type="text" name="to" id="mess-composeto" value="{$to|escape}" />
+    <td class="formcolor"><label for="mess-composeto">{tr}To:{/tr}</label></td><td class="formcolor"><input type="text" name="to" id="mess-composeto" value="{$to|escape}" class="username" />
 		<input type="hidden" name="replyto_hash" value="{$replyto_hash}" />
 		<input type="hidden" name="reply" value="{$reply}" />
 </td>
   </tr>
   <tr>
-    <td class="formcolor"><label for="mess-composecc">{tr}CC{/tr}:</label></td><td class="formcolor"><input type="text" name="cc" id="mess-composecc" value="{$cc|escape}" /></td>
+    <td class="formcolor"><label for="mess-composecc">{tr}CC:{/tr}</label></td><td class="formcolor"><input type="text" name="cc" id="mess-composecc" value="{$cc|escape}" class="username" /></td>
   </tr>
   <tr>
-    <td class="formcolor"><label for="mess-composebcc">{tr}BCC{/tr}:</label></td><td class="formcolor"><input type="text" name="bcc" id="mess-composebcc" value="{$bcc|escape}" /> </td>
+    <td class="formcolor"><label for="mess-composebcc">{tr}BCC:{/tr}</label></td><td class="formcolor"><input type="text" name="bcc" id="mess-composebcc" value="{$bcc|escape}" class="username" /> </td>
   </tr>
   <tr>
-    <td class="formcolor"><label for="mess-prio">{tr}Priority{/tr}:</label></td><td class="formcolor">
+    <td class="formcolor"><label for="mess-prio">{tr}Priority:{/tr}</label></td><td class="formcolor">
     <select name="priority" id="mess-prio">
       <option value="1" {if $priority eq 1}selected="selected"{/if}>1 -{tr}Lowest{/tr}-</option>
       <option value="2" {if $priority eq 2}selected="selected"{/if}>2 -{tr}Low{/tr}-</option>
@@ -40,7 +40,7 @@
     </td>
   </tr>
   <tr>
-    <td class="formcolor"><label for="mess-subj">{tr}Subject{/tr}:</label></td><td class="formcolor"><input type="text" name="subject" id="mess-subj" value="{$subject|escape}" size="80" maxlength="255"/></td>
+    <td class="formcolor"><label for="mess-subj">{tr}Subject:{/tr}</label></td><td class="formcolor"><input type="text" name="subject" id="mess-subj" value="{$subject|escape}" size="80" maxlength="255"/></td>
   </tr>
 </table>
 <br />

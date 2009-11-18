@@ -23,7 +23,7 @@ function wikiplugin_bloglist_info() {
 			'Items' => array(
 				'required' => false,
 				'name' => tra('Items'),
-				'description' => tra('Maximum amount of entries to list.'),
+				'description' => tra('Maximum number of entries to list.'),
 			),
 			'author' => array(
 				'required' => false,

@@ -33,10 +33,10 @@ class DCSLib extends TikiLib {
 				.' COALESCE(`tpcn`.`next`,?) AS `next`,'
 				.' GREATEST(0, COALESCE(`tpco`.`old`,0) - 1) AS `old`'
 			.' FROM (`tiki_content` AS `tc`'
-				.' LEFT JOIN ( SELECT `contentId`, count(*) AS `future` FROM `tiki_programmed_content` WHERE `publishDate`>? GROUP BY contentId ) AS `tpcf` ON ( `tc`.`contentId` = `tpcf`.`contentId` )'
-				.' LEFT JOIN ( SELECT `contentId`, max(`publishDate`) AS `actual` FROM `tiki_programmed_content` WHERE `publishDate`<=? GROUP BY contentId ) AS `tpca` ON ( `tc`.`contentId` = `tpca`.`contentId` )'
-				.' LEFT JOIN ( SELECT `contentId`, min(`publishDate`) AS `next` FROM `tiki_programmed_content` WHERE `publishDate`>=? GROUP BY contentId ) AS `tpcn` ON ( `tc`.`contentId` = `tpcn`.`contentId` )'
-				.' LEFT JOIN ( SELECT `contentId`, count(*) AS `old` FROM `tiki_programmed_content` WHERE `publishDate`<? GROUP BY contentId ) AS `tpco` ON ( `tc`.`contentId` = `tpco`.`contentId` )'
+				.' LEFT JOIN ( SELECT `contentId`, count(*) AS `future` FROM `tiki_programmed_content` WHERE `publishDate`>? GROUP BY `contentId` ) AS `tpcf` ON ( `tc`.`contentId` = `tpcf`.`contentId` )'
+				.' LEFT JOIN ( SELECT `contentId`, max(`publishDate`) AS `actual` FROM `tiki_programmed_content` WHERE `publishDate`<=? GROUP BY `contentId` ) AS `tpca` ON ( `tc`.`contentId` = `tpca`.`contentId` )'
+				.' LEFT JOIN ( SELECT `contentId`, min(`publishDate`) AS `next` FROM `tiki_programmed_content` WHERE `publishDate`>=? GROUP BY `contentId` ) AS `tpcn` ON ( `tc`.`contentId` = `tpcn`.`contentId` )'
+				.' LEFT JOIN ( SELECT `contentId`, count(*) AS `old` FROM `tiki_programmed_content` WHERE `publishDate`<? GROUP BY `contentId` ) AS `tpco` ON ( `tc`.`contentId` = `tpco`.`contentId` )'
 				.' LEFT JOIN ( SELECT `contentId`, `data`, `publishDate` FROM `tiki_programmed_content` ) AS `tpcd` ON ( `tc`.`contentId` = `tpcd`.`contentId` AND `tpcd`.`publishDate` = `tpca`.`actual` ))'
 			." $mid ORDER BY ".$this->convertSortMode($sort_mode);
 

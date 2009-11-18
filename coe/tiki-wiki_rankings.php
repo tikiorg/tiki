@@ -31,7 +31,7 @@ if ($prefs['feature_wiki_rankings'] != 'y') {
 
 if ($tiki_p_view != 'y') {
 	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied you cannot view this section"));
+	$smarty->assign('msg', tra("Permission denied. You cannot view this section"));
 
 	$smarty->display("error.tpl");
 	die;
@@ -88,7 +88,7 @@ $smarty->assign_by_ref('limit', $limit);
 // Top Authors
 $rankings = array();
 
-$rk = $ranklib->$which($limit, $categs);
+$rk = $ranklib->$which($limit, $categs, $prefs['language']);
 $rank["data"] = $rk["data"];
 $rank["title"] = $rk["title"];
 $rank["y"] = $rk["y"];

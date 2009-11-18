@@ -28,7 +28,7 @@
 {if $prefs.feature_ajax eq 'y'}
 	{include file='tiki-ajax_header.tpl'}
 {/if}
-
+	<div id="fixedwidth"> {* enables fixed-width layouts *}
 		{if $prefs.feature_layoutshadows eq 'y'}<div id="main-shadow">{eval var=$prefs.main_shadow_start}{/if}<div id="main">
 {if ($prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y') }
 			{if $prefs.feature_layoutshadows eq 'y'}<div id="header-shadow">{eval var=$prefs.header_shadow_start}{/if}<div class="clearfix" id="header"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
@@ -49,12 +49,12 @@
 							<div class="clearfix" id="showhide_columns">
 		{if  $prefs.feature_left_column eq 'fixed' or ($prefs.feature_left_column eq 'user' && $left_modules|@count > 0 && $show_columns.left_modules ne 'n')}
 								<div style="text-align:left;float:left;">
-									<a class="flip" href="#" onclick="toggleCols('col2','left'); return false">{icon _name=oleftcol _id="oleftcol" class="colflip" alt="[{tr}Show/Hide Left Menus{/tr}]"}</a>
+									<a class="flip" href="#" onclick="toggleCols('col2','left'); return false">{icon _name=oleftcol _id="oleftcol" class="colflip" alt="[{tr}Show/Hide Left Column{/tr}]"}</a>
 								</div>
 		{/if}
 		{if  $prefs.feature_right_column eq 'fixed' or ($prefs.feature_right_column eq 'user'&& $right_modules|@count > 0 && $show_columns.right_modules ne 'n')}
 								<div class="clearfix" style="text-align:right;float:right">
-									<a class="flip" href="#" onclick="toggleCols('col3','right'); return false">{icon _name=orightcol _id="orightcol" class="colflip" alt="[{tr}Show/Hide Right Menus{/tr}]"}</a>
+									<a class="flip" href="#" onclick="toggleCols('col3','right'); return false">{icon _name=orightcol _id="orightcol" class="colflip" alt="[{tr}Show/Hide Right Column{/tr}]"}</a>
 								</div>
 		{/if}
 								<br style="clear:both" />
@@ -121,6 +121,7 @@
 {/if}
 
 		</div>{* -- END of main -- *}{if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.main_shadow_end}</div>{/if}
+	</div> {* -- END of fixedwidth -- *}
 
 {include file='footer.tpl'}
 

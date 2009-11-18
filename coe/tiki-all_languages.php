@@ -32,10 +32,24 @@ $pages[] = $requested;
 $unordered = array();
 $excluded = array();
 
-$prefered_langs = $multilinguallib->preferedLangs();
+$page = $_REQUEST['page'];
+
+// If the page doesn't exist then display an error
+if(empty($requested)) {
+	$likepages = $wikilib->get_like_pages($page);
+	// if we have exactly one match, redirect to it 
+	if($prefs['feature_wiki_1like_redirection'] == 'y' && count($likepages) == 1  && !$isUserPage) {
+		$access->redirect( 'tiki-all_languages.php?page='.urlencode($likepages[0]) );
+	}
+	$smarty->assign_by_ref('likepages', $likepages);
+	$smarty->assign('create', $isUserPage? 'n': 'y');
+	$access->display_error( $page, tra('Page cannot be found'), '404' );
+}
+
+$preferred_langs = $multilinguallib->preferredLangs();
 
 
-if (count($prefered_langs) == 1) {
+if (count($preferred_langs) == 1) {
    // If user only has one language, then assume he wants to see all 
    // languages supported by the site (otherwise, why would he have asked
    // for all languages). This has the advantage that users can see multiple
@@ -43,18 +57,18 @@ if (count($prefered_langs) == 1) {
    // or if they haven't logged in. Yet, if they have registered, set language
    // preferences, and logged in, they can limit the displayed languages
    // to only those that they want.  
-   $prefered_langs = $prefs['available_languages'];
-//   print "-- tiki-all_languages: after replacing it by all site languages, \$prefered_langs=";var_dump($prefered_langs);print "<br>\n";
+   $preferred_langs = $prefs['available_languages'];
+//   print "-- tiki-all_languages: after replacing it by all site languages, \$preferred_langs=";var_dump($preferred_langs);print "<br>\n";
 }
 
 // Sort languages according to user's prefences
 foreach( $multilinguallib->getTrads( 'wiki page', $page_id ) as $row )
-	if( $row['objId'] != $page_id && in_array($row['lang'], $prefered_langs) )
+	if( $row['objId'] != $page_id && in_array($row['lang'], $preferred_langs) )
 		$unordered[ $row['lang'] ] = $tikilib->get_page_info_from_id( $row['objId'] );
 	elseif( $row['lang'] != $requested['lang'] )
 		$excluded[] = $row['lang'];
 
-foreach( $prefered_langs as $lang )
+foreach( $preferred_langs as $lang )
 	if( array_key_exists( $lang, $unordered ) )
 		$pages[] = $unordered[$lang];
 

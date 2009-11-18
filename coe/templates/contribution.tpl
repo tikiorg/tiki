@@ -26,5 +26,6 @@
 
 </td></tr>
 {/if}
-
+{else}
+<tr><td>&nbsp;</td></tr>
 {/if}

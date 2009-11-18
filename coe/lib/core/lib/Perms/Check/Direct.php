@@ -7,5 +7,3 @@ class Perms_Check_Direct implements Perms_Check
 		return $resolver->check( $name, $groups );
 	}
 }
-
-?>

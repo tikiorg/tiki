@@ -77,10 +77,10 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper {
 	var $titleTag = "/(<[Hh][\d][^>]*>(<[^>]*>)*)([^<]*)/";
 	
 		
-   	var $escapeUntranslatableStrings = "<span class='notranslate'>$0</span>";
+   	var $escapeUntranslatableStrings = "<span class='notranslate'>\$0</span>";
    	
     var $notranslateTag = "/(<span class='notranslate'>(.*)<\/span>)/U";
-	var $notranslateTagWithSpaces = "/ <span class='notranslate'>(.*)<\/span> |^<span class='notranslate'>(.*)<\/span> | <span class='notranslate'>(.*)<\/span>$|^<span class='notranslate'>(.*)<\/span>$|<span class='notranslate'>(.*)<\/span>/Um";
+	var $notranslateTagWithSpaces = "/ <span class='notranslate'>(.*)<\/span> |^<span class='notranslate'>(.*)<\/span> | <span class='notranslate'>(.*)<\/span>\$|^<span class='notranslate'>(.*)<\/span>\$|<span class='notranslate'>(.*)<\/span>/Um";
    	var $arrayOfUntranslatableStringsAndTheirIDs = array();
    	var $currentID = 169;
    	
@@ -179,6 +179,7 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper {
         $ointegrate = new OIntegrate();
         $oi_result = $ointegrate->performRequest($url);
         $result = $oi_result->data['responseData']['translatedText'];
+        $result = utf8_decode($result);
    		return $result;
    	}
    	

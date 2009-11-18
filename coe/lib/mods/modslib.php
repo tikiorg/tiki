@@ -642,7 +642,7 @@ class ModsLib {
 	function revision_compare($a, $b) {
 		$ra=explode('.', $a);
 		$rb=explode('.', $b);
-		for ($i=0; $i<max(count($ra), count($rb)); $i++) {
+		for ($i=0, $max_counts = max(count($ra), count($rb)); $i<$max_counts; $i++) {
 			$suba=isset($ra[$i]) ? (int)$ra[$i] : 0;
 			$subb=isset($rb[$i]) ? (int)$rb[$i] : 0;
 			if ($suba > $subb) return 1;
@@ -917,7 +917,7 @@ class ModsLib {
 				} else {
 					$smarty->assign('help','');
 				}
-				for ($i=0; $i < count($info->configuration); $i++) {
+				for ($i=0, $count_config = count($info->configuration); $i < $count_config; $i++) {
 					$info->configuration[$i][2] = preg_replace('/\\$([_A-Z]*)/e','$conf[\'_SERVER\'][\'\\1\']',$info->configuration[$i][2]);
 				}
 				$smarty->assign('type',$info->type);
@@ -1016,7 +1016,7 @@ class ModsLib {
 function newer($a,$b) {
 	$aa = split('\.',$a);
 	$bb = split('\.',$b);
-	for($i=0;$i<max(count($aa), count($bb));$i++) {
+	for ($i=0, $max_counts = max(count($aa), count($bb)); $i<$max_counts; $i++) {
 		if (!isset($bb[$i])) { $bb[$i] = '0'; }
 		if (!isset($aa[$i])) { $aa[$i] = '0'; }
 		if ($aa[$i] != $bb[$i]) { return $aa[$i] > $bb[$i]? 1: -1; }

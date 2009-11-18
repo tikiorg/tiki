@@ -52,7 +52,7 @@ Supporting Documentation: <input name="question_upload_{$questions[ix].questionI
 {tr}Result{/tr}:
 <div class="quizanswer">
 {if $result.answer}
-{$result.answer}
+{$result.answer|escape|nl2br}
 {else}
 {tr}Thank you for your submission{/tr}.
 {/if}

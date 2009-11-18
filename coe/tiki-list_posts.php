@@ -22,7 +22,7 @@ die;
 // Now check permissions to access this page
 if($tiki_p_view != 'y') {
 $smarty->assign('errortype', 401);
-$smarty->assign('msg',tra("Permission denied you cannot view pages"));
+$smarty->assign('msg',tra("Permission denied. You cannot view pages"));
 $smarty->display("error.tpl");
 die;
 }

@@ -42,6 +42,7 @@ if ($tiki_p_view != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
+
 // Now increment page hits since we are visiting this page
 if ($prefs['count_admin_pvs'] == 'y' || $user != 'admin') {
 	$tikilib->add_hit($page);

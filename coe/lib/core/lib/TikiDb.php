@@ -135,6 +135,7 @@ abstract class TikiDb
 				$query .= $qe[$i];
 			break;
 
+			case "pgsql":
 			case "postgres7":
 			case "postgres8":
 			case "sybase":
@@ -181,7 +182,8 @@ abstract class TikiDb
 		$sort_mode = preg_replace('/[^A-Za-z_,.]/', '', $sort_mode);
 
 		if ($sort_mode == 'random') {
-			$map = array("postgres7" => "RANDOM()",
+			$map = array(	"pgsql" => "RANDOM()",
+					"postgres7" => "RANDOM()",
 					"postgres8" => "RANDOM()",
 					"mysql3" => "RAND()",
 					"mysql" => "RAND()",
@@ -211,14 +213,16 @@ abstract class TikiDb
 			}
 
 			switch ($this->getServerType()) {
+				case "pgsql":
 				case "postgres7":
-					case "postgres8":
-					case "oci8":
-					case "sybase":
-					case "mssql":
+				case "postgres8":
+				case "oci8":
+				case "sybase":
+				case "mssql":
 					$sort = preg_replace('/_asc$/', '" asc', $sort);
-				$sort = preg_replace('/_desc$/', '" desc', $sort);
-				$sort = '"' . $sort;
+					$sort = preg_replace('/_desc$/', '" desc', $sort);
+					$sort = str_replace('.', '"."', $sort);
+					$sort = '"' . $sort;
 				break;
 
 				case "sqlite":
@@ -247,6 +251,7 @@ abstract class TikiDb
 	{
 		switch ($this->getServerType()) {
 		case "oci8":
+		case "pgsql":
 		case "postgres7":
 		case "postgres8":
 		case "sqlite":
@@ -262,6 +267,17 @@ abstract class TikiDb
 	function cast( $var,$type ) // {{{
 	{
 		switch ($this->getServerType()) {
+		case "pgsql":
+		case "postgres7":
+		case "postgres8":
+			switch ($type) {
+				case "int":
+					return "$var::INT4";
+				case "string":
+					return "$var::VARCHAR";
+				default:
+					return($var);
+			}
 		case "sybase":
 			switch ($type) {
 			case "int":
@@ -291,14 +307,18 @@ abstract class TikiDb
 
 	function ifNull( $field, $ifNull ) // {{{
 	{
-		return " IFNULL($field, $ifNull) "; // if MySQL
+		return " COALESCE($field, $ifNull) ";
 	} // }}}
 
 	function in( $field, $values, &$bindvars ) // {{{
 	{
+		$parts = explode('.', $field);
+		foreach($parts as &$part)
+			$part = '`' . $part . '`';
+		$field = implode('.', $parts);
 		$bindvars = array_merge( $bindvars, $values );
 		$values = rtrim( str_repeat( '?,', count( $values ) ), ',' );
-		return " `$field` IN( $values ) ";
+		return " $field IN( $values ) ";
 	} // }}}
 
 	function concat() // {{{
@@ -311,5 +331,3 @@ abstract class TikiDb
 		else return '';
 	} // }}}
 }
-
-?>

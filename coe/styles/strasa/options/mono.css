@@ -64,6 +64,12 @@ span.button input,
 	background: #565656;
 	border-color: #878787 #343434 #343434 #878787;
 }
+* html input[type=reset],
+* html input[type=submit] {
+	color: #fff;
+	background: #565656;
+	border-color: #878787 #343434 #343434 #878787;
+}
 
 .button a:hover,
 button:hover,
@@ -150,12 +156,10 @@ ul.jumplinks a:active {
 }
 
 /* Site Header & Identity */
+#header-top {
+	color: #fff;
+	background: #444 url(mono/headerbg.jpg) repeat-x 0 100%;
 
-div#sioptions,
-#sioptionscentered,
-#customcode,
-#customcodewith_ad {
-	background: #444444 url(mono/headerbg.jpg) repeat-x 0 100%;
 }
 
 #siteloginbar {
@@ -183,6 +187,9 @@ div#sioptions,
 }
 
 /* tiki-top_bar.tpl - menu and search */
+*:first-child+html #tiki-top {
+	background-color: #444;
+}
 
 #tiki-top a,
 #tiki-top a:visited {
@@ -315,7 +322,7 @@ a.phplmselected:hover {
 	border-top: 1px solid #233039;
 }
 
-.cssmenu_horiz li:hover {
+#tiki-top .cssmenu_horiz li:hover {
 	background: #212121;
 }
 
@@ -377,6 +384,22 @@ a.phplmselected:hover {
 
 .cssmenu_vert li a .sf-sub-indicator {
 	background: url(mono/arrows-000000.png) no-repeat 0 0;
+}
+
+.cssmenu_horiz li a .sf-sub-indicator {
+	background: url(mono/arrows-000000.png) no-repeat -10px -100px;	
+}
+
+.cssmenu_horiz li ul li a .sf-sub-indicator {
+	background: url(mono/arrows-000000.png) no-repeat 0 0;	
+}
+
+#tiki-top .cssmenu_horiz li a .sf-sub-indicator {
+	background: url(../../../lib/jquery/superfish/images/arrows-ffffff.png) no-repeat -10px -100px;
+}
+
+#tiki-top .cssmenu_horiz li ul li a .sf-sub-indicator {
+	background: url(../../../lib/jquery/superfish/images/arrows-ffffff.png) no-repeat 0 0;
 }
 
 /** Links in other menus **/
@@ -442,6 +465,10 @@ div.help_section {
 #col2 .box {
 	background: #e5e5e5;
 	border-bottom: 1px solid #aaa;
+}
+
+#col2 .box-title {
+	color: #000;
 }
 
 #col3 .box {
@@ -1050,14 +1077,14 @@ div.multiselect {
 	color: #fff;
 }
 
-#caltable .calfocuson,
+.caltable .calfocuson,
 .box-data td.fc a.today,
 .box-data td a.today {
 	background: #D4D0C8;
 	border: solid 1px #696969;
 }
 
-#caltable .calfocuson a {
+.caltable .calfocuson a {
 	color: #000;
 }
 
@@ -1073,7 +1100,7 @@ div.multiselect {
 	color: #e5e5e5;
 }
 
-#caltable .weeks {
+.caltable .weeks {
 	background: #212121;
 	color: #e5e5e5;
 }

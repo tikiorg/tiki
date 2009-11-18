@@ -22,8 +22,8 @@
 <tr>
 <td class="{cycle advance=false}">{$channels[user].menuId}</td>
 <td class="{cycle advance=false}">
-{if $tiki_p_edit_menu_option eq 'y'}	<a class="link" href="tiki-admin_menu_options.php?menuId={$channels[user].menuId}" title="{tr}Configure/Options{/tr}">{$channels[user].name}</a>{/if}
-<br />{$channels[user].description}</td>
+{if $tiki_p_edit_menu_option eq 'y'}	<a class="link" href="tiki-admin_menu_options.php?menuId={$channels[user].menuId}" title="{tr}Configure/Options{/tr}">{$channels[user].name|escape}</a>{/if}
+<br />{$channels[user].description|escape|nl2br}</td>
 <td class="{cycle advance=false}" style="text-align:center">{$channels[user].type}</td>
 <td class="{cycle advance=false}" style="text-align:right;">{$channels[user].options}&nbsp;</td>
 <td class="{cycle advance=true}">

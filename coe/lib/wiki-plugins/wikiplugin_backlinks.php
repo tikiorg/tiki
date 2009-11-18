@@ -7,7 +7,7 @@
 require_once "lib/wiki/pluginslib.php";
 /**
 * Backlinks plugin
-* List all pages which link to specific pages (same as tiki-backlinks.php)
+* List all pages that link to specific pages (same as tiki-backlinks.php)
 *
 * Params:
 * <ul>
@@ -25,7 +25,7 @@ require_once "lib/wiki/pluginslib.php";
 * @version $Revision: 1.17 $
 */
 function wikiplugin_backlinks_help() {
-    return tra("List all pages which link to specific pages").":<br />~np~{BACKLINKS(info=>hits|user,exclude=>HomePage|SandBox,include_self=>1,noheader=>0,page=>HomePage)}{BACKLINKS}~/np~";
+    return tra("List all pages that link to specific pages").":<br />~np~{BACKLINKS(info=>hits|user,exclude=>HomePage|SandBox,include_self=>1,noheader=>0,page=>HomePage)}{BACKLINKS}~/np~";
 }
 class WikiPluginBackLinks extends PluginsLib {
     var $expanded_params = array("exclude", "info");

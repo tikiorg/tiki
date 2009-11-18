@@ -126,5 +126,3 @@ class Perms_ResolverFactory_ObjectFactoryTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals( array('HomePage', 'UserPageFoobar', 'HelloWorld'), $out );
 	}
 }
-
-?>

@@ -44,30 +44,30 @@ $confs = $logslib->get_all_actionlog_conf();
 $nbViewedConfs = 0;
 if ($tiki_p_admin == 'y') {
 	if (isset($_REQUEST['save'])) {
-		for ($i = 0; $i < sizeof($confs); ++$i) {
-			if (isset($_REQUEST['v_' . $confs[$i]['code']]) && $_REQUEST['v_' . $confs[$i]['code']] == 'on') { //viewed and reported
-				$logslib->set_actionlog_conf($confs[$i]['action'], $confs[$i]['objectType'], 'v');
-				$confs[$i]['status'] = 'v';
-			} elseif (isset($_REQUEST[$confs[$i]['code']]) && $_REQUEST[$confs[$i]['code']] == 'on') {
-				$logslib->set_actionlog_conf($confs[$i]['action'], $confs[$i]['objectType'], 'y');
-				$confs[$i]['status'] = 'y';
+		foreach($confs as $index => $conf) {
+			if (isset($_REQUEST['v_' . $conf['code']]) && $_REQUEST['v_' . $conf['code']] == 'on') { //viewed and reported
+				$logslib->set_actionlog_conf($conf['action'], $conf['objectType'], 'v');
+				$confs[$index]['status'] = 'v';
+			} elseif (isset($_REQUEST[$conf['code']]) && $_REQUEST[$conf['code']] == 'on') {
+				$logslib->set_actionlog_conf($conf['action'], $conf['objectType'], 'y');
+				$confs[$index]['status'] = 'y';
 			} else {
-				$logslib->set_actionlog_conf($confs[$i]['action'], $confs[$i]['objectType'], 'n');
-				$confs[$i]['status'] = 'n';
+				$logslib->set_actionlog_conf($conf['action'], $conf['objectType'], 'n');
+				$confs[$index]['status'] = 'n';
 			}
 		}
 	}
 } else {
 	if (isset($_REQUEST['save'])) {
 		$_prefs = 'v';
-		for ($i = 0; $i < sizeof($confs); ++$i) {
-			if ($confs[$i]['status'] == 'v' || $confs[$i]['status'] == 'y') { // can only change what is recorded
-				if (isset($_REQUEST['v_' . $confs[$i]['code']]) && $_REQUEST['v_' . $confs[$i]['code']] == 'on') { //viewed
-					$_prefs.= $confs[$i]['id'] . 'v';
-					$confs[$i]['status'] = 'v';
+		foreach($confs as $index => $conf) {
+			if ($conf['status'] == 'v' || $conf['status'] == 'y') { // can only change what is recorded
+				if (isset($_REQUEST['v_' . $conf['code']]) && $_REQUEST['v_' . $conf['code']] == 'on') { //viewed
+					$_prefs.= $conf['id'] . 'v';
+					$confs[$index]['status'] = 'v';
 				} else {
-					$_prefs.= $confs[$i]['id'] . 'y';
-					$confs[$i]['status'] = 'y';
+					$_prefs.= $conf['id'] . 'y';
+					$confs[$index]['status'] = 'y';
 				}
 			}
 		}

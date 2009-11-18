@@ -9,13 +9,13 @@ $access->check_feature('wiki_validate_plugin');
 $access->check_permission('tiki_p_plugin_approve');
 $smarty->assign('headtitle', tra('Plugin Approval'));
 
-if (($_POST['submit_mult'] == 'clear') & is_array($_POST['clear'])) {
+if (isset($_POST['submit_mult']) && ($_POST['submit_mult'] == 'clear') && is_array($_POST['clear'])) {
 	foreach($_POST['clear'] as $fp) {
 		$tikilib->plugin_clear_fingerprint($fp);
 	}
 }
 
-if (($_POST['submit_mult'] == 'approve') & is_array($_POST['clear'])) {
+if (isset($_POST['submit_mult']) && ($_POST['submit_mult'] == 'approve') && is_array($_POST['clear'])) {
 	foreach($_POST['clear'] as $fp) {
 		$tikilib->approve_selected_pending_plugings($fp);
 	}

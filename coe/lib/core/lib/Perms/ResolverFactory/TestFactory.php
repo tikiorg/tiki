@@ -39,4 +39,3 @@ class Perms_ResolverFactory_TestFactory implements Perms_ResolverFactory
 		}
 	}
 }
-

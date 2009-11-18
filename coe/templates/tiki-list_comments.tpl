@@ -46,11 +46,11 @@
 				text=$comments[ix].parsed|escape:"javascript"|escape:"html"}
 		{/if}><span> {* span is used for some themes CSS opacity on some cells content *}
 			{if $headerKey eq 'title'}
-				<a href="{$comments[ix].href}#threadId{$id}" title="{$val}">{$val|truncate:50:"...":true}</a>
+				<a href="{$comments[ix].href}#threadId{$id}" title="{$val}">{$val|truncate:50:"...":true|escape}</a>
 			{elseif $headerKey eq 'objectType'}
 				{tr}{$val|ucwords}{/tr}
 			{elseif $headerKey eq 'object' or $headerKey eq 'data'}
-				{$val|truncate:50:"...":true}
+				{$val|truncate:50:"...":true|escape}
 			{elseif $headerKey eq 'commentDate'}
 				{$val|tiki_short_datetime}
 			{elseif $headerKey eq 'userName'}

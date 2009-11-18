@@ -105,7 +105,7 @@ if (isset($_REQUEST["sremove"])) {
   if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
 		$page = $page_info["pageName"];
-		$delete = $tikilib->user_has_perm_on_object($user, $page_info['pageName'],'wiki page','tiki_p_remove', 'tiki_p_edit_categorized');
+		$delete = $tikilib->user_has_perm_on_object($user, $page_info['pageName'],'wiki page','tiki_p_remove');
 		$structlib->s_remove_page($_REQUEST["sremove"], $delete, empty($_REQUEST['page'])? '': $_REQUEST['page']);
   	$_REQUEST["page_ref_id"] = $page_info["parent_id"];
   } else {

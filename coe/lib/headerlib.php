@@ -151,7 +151,7 @@ class HeaderLib {
 		}
 
 		if (count($this->css)) {
-			$back.= "<style><!--\n";
+			$back.= "<style type=\"text/css\"><!--\n";
 			foreach ($this->css as $x=>$css) {
 				$back.= "/* css $x */\n";
 				foreach ($css as $c) {
@@ -182,7 +182,7 @@ class HeaderLib {
                         $back .= "<![endif]-->\n";
 
                         
-        $back .= $this->output_js();	// TODO move to end of page
+        $back .= $this->output_js_files();	// TODO move some files to end of page?
         
 		if (count($this->rssfeeds)) {
 			foreach ($this->rssfeeds as $x=>$rssf) {
@@ -197,17 +197,30 @@ class HeaderLib {
 		return $back;
 	}
 	
-	function output_js() {
+	function output_js_files() {
 		global $prefs;
 		
 		ksort($this->jsfiles);
-		ksort($this->js);
-		ksort($this->jq_onready);
 		
 		$back = "\n";
 		
 		if (count($this->jsfiles)) {
-			foreach ($this->jsfiles as $x=>$jsf) {
+
+			if( $prefs['tiki_minify_javascript'] == 'y' ) {
+				$dynamic = array();
+				if( isset( $this->jsfiles['dynamic'] ) ) {
+					$dynamic = $this->jsfiles['dynamic'];
+					unset( $this->jsfiles['dynamic'] );
+				}
+
+				$jsfiles = $this->getMinifiedJs();
+
+				$jsfiles['dynamic'] = $dynamic;
+			} else {
+				$jsfiles = $this->jsfiles;
+			}
+
+			foreach ($jsfiles as $x=>$jsf) {
 				$back.= "<!-- jsfile $x -->\n";
 				foreach ($jsf as $jf) {
 					$back.= "<script type=\"text/javascript\" src=\"$jf\"></script>\n";
@@ -215,7 +228,48 @@ class HeaderLib {
 			}
 			$back.= "\n";
 		}
+		return $back;
+	}
 
+	private function getMinifiedJs() {
+		$hash = md5( serialize( $this->jsfiles ) );
+		$file = "temp/public/minified_$hash.js";
+
+		if( ! file_exists( $file ) ) {
+			$complete = $this->getJavascript();
+
+			require_once 'lib/minify/JSMin.php';
+			$minified = '/* ' . print_r( $this->jsfiles, true ) . ' */';
+			$minified .= JSMin::minify( $complete );
+
+			file_put_contents( $file, $minified );
+		}
+
+		return array(
+			array( $file ),
+		);
+	}
+
+	private function getJavascript() {
+		$content = '';
+
+		foreach( $this->jsfiles as $x => $files ) {
+			foreach( $files as $f ) {
+				$content .= file_get_contents( $f );
+			}
+		}
+
+		return $content;
+	}
+	
+	function output_js() {	// called in footer.tpl - JS output at end of file now (pre 4.0)
+		global $prefs;
+		
+		ksort($this->js);
+		ksort($this->jq_onready);
+		
+		$back = "\n";
+		
 		if (count($this->js)) {
 			$b = '';
 			foreach ($this->js as $x=>$js) {
@@ -300,6 +354,26 @@ class HeaderLib {
 	function hasOutput() {
 		return $this->hasDoneOutput;
 	}
+	
+	function include_jquery_ui() {
+		global $prefs, $headerlib;
+		
+		if ($prefs['feature_jquery_ui'] != 'y') {
+			if ($prefs['feature_use_minified_scripts'] == 'y') {	// could reduce to only using dialog (needs core, draggable & resizable)
+				$headerlib->add_jsfile('lib/jquery/jquery-ui/ui/minified/jquery-ui.min.js');
+			} else {
+				$headerlib->add_jsfile('lib/jquery/jquery-ui/ui/jquery-ui.js');
+			}
+			$headerlib->add_cssfile('lib/jquery/jquery-ui/themes/'.$prefs['feature_jquery_ui_theme'].'/jquery-ui.css');
+		}
+//		// include json parser (not included by default yet - Tiki 4.0 oct 09)
+//		if (0 && $prefs['feature_use_minified_scripts'] == 'y') {	// could reduce to only using dialog (needs core, draggable & resizable)
+//			$headerlib->add_jsfile('lib/jquery/json2.min.js');
+//		} else {
+//			$headerlib->add_jsfile('lib/jquery/json2.js');
+//		}
+	}
+
 }
 
 $headerlib = new HeaderLib;

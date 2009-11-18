@@ -67,25 +67,31 @@ $watches['article_deleted'] = array(
 );
 $watches['wiki_page_changes'] = array(
 	'label' => tra('Any wiki page is changed') ,
-	'type' => 'wiki',
+	'type' => 'wiki page',
 	'url' => 'tiki-lastchanges.php',
 	'object' => '*'
 );
 $watches['wiki_page_changes_incl_minor'] = array(
 	'label' => tra('Any wiki page is changed, even minor changes') ,
-	'type' => 'wiki',
+	'type' => 'wiki page',
 	'url' => 'tiki-lastchanges.php',
 	'object' => '*'
 );
 $watches['wiki_comment_changes'] = array(
 	'label' => tra('A comment in a wiki page is posted or edited') ,
-	'type' => 'wiki',
+	'type' => 'wiki page',
 	'url' => '',
 	'object' => '*'
 );
 $watches['php_error'] = array(
 	'label' => tra('PHP error') ,
 	'type' => 'system',
+	'url' => '',
+	'object' => '*'
+);
+$watches['fgal_quota_exceeded'] = array(
+	'label' => tra('File gallery quota exceeded') ,
+	'type' => 'file gallery',
 	'url' => '',
 	'object' => '*'
 );
@@ -167,6 +173,7 @@ $smarty->assign_by_ref('find', $find);
 if (!empty($_REQUEST['maxRecords'])) {
 	$maxRecords = $_REQUEST['maxRecords'];
 }
+$smarty->assign_by_ref('watches', $watches);
 $smarty->assign_by_ref('maxRecords', $maxRecords);
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 $channels = $tikilib->list_watches($offset, $maxRecords, $sort_mode, $find);

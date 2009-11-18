@@ -64,7 +64,7 @@ class QuizLib extends TikiLib {
 
 	function download_answer($answerUploadId) {
 
-		$query = "SELECT filecontent, filetype, filename, filesize FROM tiki_user_answers_uploads WHERE answerUploadId=?";
+		$query = "SELECT `filecontent`, `filetype`, `filename`, `filesize` FROM `tiki_user_answers_uploads` WHERE `answerUploadId`=?";
 
 		$result = $this->query($query,array((int)$answerUploadId));
 		$ret = array();
@@ -115,7 +115,7 @@ class QuizLib extends TikiLib {
 				$opt["optionText"] = $res["optionText"];
 				$opt["points"] = $res["points"];
 
-				$query3 = "select answerUploadId, filename from tiki_user_answers_uploads where userResultId = ? and questionId = ?";
+				$query3 = "select `answerUploadId`, `filename` from `tiki_user_answers_uploads` where `userResultId` = ? and `questionId` = ?";
 				$result3 = $this->query($query3,array((int)$userResultId,(int)$questionId));
 
 				while ($res2 = $result3->fetchRow()) {
@@ -178,7 +178,7 @@ class QuizLib extends TikiLib {
 	function list_quiz_stats($quizId, $offset, $maxRecords, $sort_mode, $find) {
 		$this->compute_quiz_stats();
 
-		$query = "select passingperct from `tiki_quizzes` where quizId = ?";
+		$query = "select `passingperct` from `tiki_quizzes` where `quizId` = ?";
 		$passingperct = $this->getOne($query,array((int)$quizId));
 
 		if ($find) {
@@ -397,7 +397,7 @@ class QuizLib extends TikiLib {
 			$query = "insert into `tiki_quiz_questions`(`question`,`type`,`quizId`,`position`) values(?,?,?,?)";
 			$bindvars=array($question,$type,(int)$quizId,(int) $position);
 			$result = $this->query($query,$bindvars);
-			$queryid = "select max(`questionId`) from `tiki_quiz_questions` where `question` like ? and type=?";
+			$queryid = "select max(`questionId`) from `tiki_quiz_questions` where `question` like ? and `type`=?";
 			$questionId = $this->getOne($queryid,array(substr($question,0,200)."%",$type));
 		}
 		return $questionId;

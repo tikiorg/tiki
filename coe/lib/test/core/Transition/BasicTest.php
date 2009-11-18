@@ -85,5 +85,3 @@ class Transition_BasicTest extends PHPUnit_Framework_TestCase
 		), $transition->explain() );
 	}
 }
-
-?>

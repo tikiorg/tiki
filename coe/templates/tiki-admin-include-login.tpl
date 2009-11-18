@@ -13,7 +13,7 @@
 		{tabset name="admin_login"}
 			{tab name="{tr}General Preferences{/tr}"}
 				<div class="adminoptionbox">
-					<div class="adminoptionlabel"><label for="auth_method">{tr}Authentication method{/tr}:</label>
+					<div class="adminoptionlabel"><label for="auth_method">{tr}Authentication method:{/tr}</label>
 						<select name="auth_method" id="auth_method">
 							<option value="tiki" {if $prefs.auth_method eq 'tiki'} selected="selected"{/if}>{tr}Tiki{/tr}</option>
 							<!--option value="http" {if $prefs.auth_method eq 'http'} selected="selected"{/if}>{tr}Tiki and HTTP Auth{/tr}</option-->
@@ -37,7 +37,7 @@
 							<div class="adminoptionbox">
 								<div class="adminoption"><input type="checkbox" id="validateUsers" name="validateUsers" {if $prefs.validateUsers eq 'y'}checked="checked"{/if} /></div>
 								<div class="adminoptionlabel"><label for="validateUsers">{tr}Validate by email{/tr}.</label>
-									{if empty($prefs.sender_email)}<br /><span class="highlight">{tr}You need to set <a href="tiki-admin.php?page=general&amp;cookietab=2">Sender Email</a>{/tr}</span>{/if}
+									{if empty($prefs.sender_email)}<br /><span class="highlight">{tr}You need to set <a href="tiki-admin.php?page=general">Sender Email</a>{/tr}</span>{/if}
 								</div>
 							</div>
 							<div class="adminoptionbox">
@@ -46,9 +46,12 @@
 							</div>
 			
 							<div class="adminoptionbox">
-								<div class="adminoption"><input type="checkbox" id="validateRegistration" name="validateRegistration" {if $prefs.validateRegistration eq 'y'}checked="checked"{/if} /></div>
+								<div class="adminoption"><input type="checkbox" id="validateRegistration" name="validateRegistration" {if $prefs.validateRegistration eq 'y'}checked="checked"{/if}  onclick="flip('validateRegistrationOptions');"/></div>
 								<div class="adminoptionlabel"><label for="validateRegistration">{tr}Require validation by Admin{/tr}.</label>
-									{if empty($prefs.sender_email)}<br /><span class="highlight">{tr}You need to set <a href="tiki-admin.php?page=general&amp;cookietab=2">Sender Email</a>{/tr}</span>{/if}
+									{if empty($prefs.sender_email)}<br /><span class="highlight">{tr}You need to set <a href="tiki-admin.php?page=general">Sender Email</a>{/tr}</span>{/if}
+								</div>
+								<div id="validateRegistrationOptions" style="clear:both;display:{if $prefs.validateRegistration eq 'y'}block{else}none{/if};margin-left:2.5em;">
+									 <label>{tr}Validator emails (separated by comma) if different than the sender email:{/tr}<input type="text" name="validator_emails" value="{$prefs.validator_emails|escape}" id="validator_emails" /></label>
 								</div>
 							</div>
 			
@@ -56,7 +59,7 @@
 								<div class="adminoption"><input type="checkbox" id="useRegisterPasscode" name="useRegisterPasscode" {if $prefs.useRegisterPasscode eq 'y'}checked="checked"{/if} onclick="flip('usepasscode');" /></div>
 									<div class="adminoptionlabel"><label for="useRegisterPasscode">{tr}Require passcode to register{/tr}.</label>
 										<div id="usepasscode" style="display:{if $prefs.useRegisterPasscode eq 'y'}block{else}none{/if};" class="adminoptionboxchild">
-											<div class="adminoptionlabel">{tr}Passcode{/tr}: <input type="text" name="registerPasscode" value="{$prefs.registerPasscode|escape}" size="20" /><br /><em>{tr}Users must enter this code to register{/tr}.</em></div>
+											<div class="adminoptionlabel">{tr}Passcode:{/tr} <input type="text" name="registerPasscode" value="{$prefs.registerPasscode|escape}" size="20" /><br /><em>{tr}Users must enter this code to register{/tr}.</em></div>
 										</div>
 									</div>
 								</div>
@@ -74,24 +77,26 @@
 								</div>
 			
 								<div class="adminoptionbox">
-									<div class="adminoptionlabel"><label for="registration_choices">{tr}Users can select a group to join at registration{/tr}:</label>
+									<div class="adminoptionlabel"><label for="registration_choices">{tr}Users can select a group to join at registration:{/tr}</label>
 										<br /><em>{tr}By default, new users automatically join the Registered group{/tr}.</em>
 									</div>
 									<div class="adminoptionlabel">
 										<select id="registration_choices" name="registration_choices[]" multiple="multiple" size="5" style="width:95%;">
 											{foreach key=g item=gr from=$listgroups}
 												{if $gr.groupName ne 'Anonymous'} 
-													<option value="{$gr.groupName|escape}" {if $gr.registrationChoice eq 'y'} selected="selected"{/if}>{$gr.groupName|truncate:"52":" ..."}</option>
+													<option value="{$gr.groupName|escape}" {if $gr.registrationChoice eq 'y'} selected="selected"{/if}>{$gr.groupName|truncate:"52"|escape}</option>
 												{/if}
 											{/foreach}
 										</select>
 									</div>
+
+									<div class="adminoptionbox">
+										<div class="adminoptionlabel"><label for="url_after_validation">{tr}Url a user is redirected after account validation:{/tr}</label> <input type="text" id="url_after_validation" name="url_after_validation" value="{$prefs.url_after_validation|escape}" /><br /><em>{tr}Default:{/tr} tiki-information.php?msg={tr}Account validated successfully.{/tr}</em></div>
+									</div>
+
 								</div>
 							</div>
 
-							<div class="adminoptionbox">
-								 <div class="adminoptionlabel"><label for="url_after_validation">{tr}Url a user is redirected after account validation{/tr}:</label> <input type="text" id="url_after_validation" name="url_after_validation" value="{$prefs.url_after_validation|escape}" /><br /><em>{tr}Default:{/tr} tiki-information.php?msg={tr}Account validated successfully.{/tr}</em></div>
-							</div>
 			
 							<div class="adminoptionbox">
 								<div class="adminoption"><input id="userTracker" type="checkbox" name="userTracker" {if $prefs.userTracker eq 'y'}checked="checked"{/if} {if $prefs.feature_trackers ne 'y'}disabled="disabled" {/if}/></div>
@@ -142,7 +147,7 @@
 							</div>
 
 							<div class="adminoptionbox">
-								<div class="adminoptionlabel"><label for="https_login">{tr}Use HTTPS login{/tr}:</label> 
+								<div class="adminoptionlabel"><label for="https_login">{tr}Use HTTPS login:{/tr}</label> 
 									<select name="https_login" id="https_login" onchange="hidedisabled('httpsoptions',this.value);">
 									<option value="disabled"{if $prefs.https_login eq 'disabled'} selected="selected"{/if}>{tr}Disabled{/tr}</option>
 									<option value="allowed"{if $prefs.https_login eq 'allowed'} selected="selected"{/if}>{tr}Allow secure (https) login{/tr}</option>
@@ -163,15 +168,16 @@
 								<div class="adminoptionlabel"><label for="feature_switch_ssl_mode">{tr}Users can switch between secured or standard mode at login{/tr}.</label></div>
 							</div>
 							<div class="adminoptionbox">
-								<div class="adminoptionlabel"><label for="http_port">{tr}HTTP port{/tr}:</label> <input id="http_port" type="text" name="http_port" size="5" value="{$prefs.http_port|escape}" /> </div>
+								<div class="adminoptionlabel"><label for="http_port">{tr}HTTP port:{/tr}</label> <input id="http_port" type="text" name="http_port" size="5" value="{$prefs.http_port|escape}" /> </div>
 							</div>
 							<div class="adminoptionbox">
-								<div class="adminoptionlabel"><label for="https_port">{tr}HTTPS port{/tr}:</label> <input id="https_port" type="text" name="https_port" size="5" value="{$prefs.https_port|escape}" /> </div>
+								<div class="adminoptionlabel"><label for="https_port">{tr}HTTPS port:{/tr}</label> <input id="https_port" type="text" name="https_port" size="5" value="{$prefs.https_port|escape}" /> </div>
 							</div>
+							{preference name=https_external_links_for_users}
 						</div>
 	
 						<div class="adminoptionbox">
-							<div class="adminoptionlabel"><label for="rememberme">{tr}Remember me{/tr}:</label> 
+							<div class="adminoptionlabel"><label for="rememberme">{tr}Remember me:{/tr}</label> 
 								<select name="rememberme" id="rememberme" onchange="hidedisabled('remembermeoptions',this.value);">
 									<option value="disabled" {if $prefs.rememberme eq 'disabled'}selected="selected"{/if}>{tr}Disabled{/tr}</option>
 									<option value="all" {if $prefs.rememberme eq 'all'} selected="selected"{/if}>{tr}User's choice{/tr}</option>
@@ -184,7 +190,7 @@
 						<div id="remembermeoptions" style="clear:both;margin-left:2.5em;display:{if $prefs.rememberme eq 'disabled'}none{else}block{/if}">
 	
 							<div class="adminoptionbox">
-								<div class="adminoptionlabel"><label for="remembermethod">{tr}Method{/tr}:</label> 
+								<div class="adminoptionlabel"><label for="remembermethod">{tr}Method:{/tr}</label> 
 									<select name="remembermethod" id="remembermethod">
 										<option value="" {if $prefs.remembermethod eq ''}selected="selected"{/if}>{tr}Standard{/tr}</option>
 										<option value="simple" {if $prefs.remembermethod eq 'simple'} selected="selected"{/if}>{tr}Simple{/tr}</option>
@@ -194,7 +200,7 @@
 							</div>
 
 							<div class="adminoptionbox">
-								<div class="adminoptionlabel"><label for="remembertime">{tr}Duration{/tr}:</label> 
+								<div class="adminoptionlabel"><label for="remembertime">{tr}Duration:{/tr}</label> 
 									<select name="remembertime" id="remembertime">
 										<option value="300" {if $prefs.remembertime eq 300} selected="selected"{/if}>5 {tr}minutes{/tr}</option>
 										<option value="900" {if $prefs.remembertime eq 900} selected="selected"{/if}>15 {tr}minutes{/tr}</option>
@@ -210,23 +216,25 @@
 									</select>
 								</div>
 							</div>
+						</div>
 	
+						<fieldset><legend>{tr}Cookie{/tr}</legend>
 							<div class="adminoptionbox">
-								<div class="adminoptionlabel"><label for="cookie_name">{tr}Cookie name{/tr}:</label> 
+								<div class="adminoptionlabel"><label for="cookie_name">{tr}Cookie name:{/tr}</label> 
 									<input type="text" id="cookie_name" name="cookie_name" value="{$prefs.cookie_name|escape}" size="50" />
 								</div>
 							</div>
 							<div class="adminoptionbox">
-								<div class="adminoptionlabel"><label for="cookie_domain">{tr}Domain{/tr}:</label> 
+								<div class="adminoptionlabel"><label for="cookie_domain">{tr}Domain:{/tr}</label> 
 									<input type="text" id="cookie_domain" name="cookie_domain" value="{$prefs.cookie_domain|escape}" size="50" />
 								</div>
 							</div>
 							<div class="adminoptionbox">
-								<div class="adminoptionlabel"><label for="cookie_path">{tr}Path{/tr}:</label> 
+								<div class="adminoptionlabel"><label for="cookie_path">{tr}Path:{/tr}</label> 
 									<input type="text" id="cookie_path" name="cookie_path" value="{$prefs.cookie_path|escape}" size="50" />
 								</div>
 							</div>
-						</div>
+						</fieldset>
 					</div>
 
 					{preference name=feature_banning}
@@ -240,10 +248,10 @@
 					</div>
 					<div id="useemailaslogin" style="display:{if $prefs.login_is_email eq 'y'}none{else}block{/if};">
 						<div class="adminoptionbox">
-							<div class="adminoptionlabel"><label for="min_username_length">{tr}Minimum length{/tr}:</label> <input type="text" id="min_username_length" name="min_username_length" value="{$prefs.min_username_length|escape}" size="5" /></div>
+							<div class="adminoptionlabel"><label for="min_username_length">{tr}Minimum length:{/tr}</label> <input type="text" id="min_username_length" name="min_username_length" value="{$prefs.min_username_length|escape}" size="5" /></div>
 						</div>
 						<div class="adminoptionbox">
-							<div class="adminoptionlabel"><label for="max_username_length">{tr}Maximum length{/tr}:</label> <input type="text" id="max_username_length" name="max_username_length" value="{$prefs.max_username_length|escape}" size="5" /></div>
+							<div class="adminoptionlabel"><label for="max_username_length">{tr}Maximum length:{/tr}</label> <input type="text" id="max_username_length" name="max_username_length" value="{$prefs.max_username_length|escape}" size="5" /></div>
 						</div>
 						<div class="adminoptionbox">
 							<div class="adminoption"><input type="checkbox" id="lowercase_username" name="lowercase_username" {if $prefs.lowercase_username eq 'y'}checked="checked"{/if}/></div>
@@ -251,38 +259,21 @@
 						</div>
 					</div>
 					<div class="adminoptionbox">
-						<div class="adminoptionlabel"><label for="username_pattern">{tr}Username pattern{/tr}:</label> <input type="text" name="username_pattern" value="{$prefs.username_pattern|escape}" id="username_pattern" /></div>
+						<div class="adminoptionlabel"><label for="username_pattern">{tr}Username pattern:{/tr}</label> <input type="text" name="username_pattern" value="{$prefs.username_pattern|escape}" id="username_pattern" /></div>
 					</div>
 				</fieldset>
 	
 				<fieldset><legend>{tr}Password{/tr}</legend>
-					<div class="adminoptionbox">
-						<div class="adminoption"><input type="checkbox" id="feature_clear_passwords" name="feature_clear_passwords" {if $prefs.feature_clear_passwords eq 'y'}checked="checked" {/if}onclick="flip('remindpassword');flip('remindpassword2');" /></div>
-						<div class="adminoptionlabel"><label for="feature_clear_passwords">{tr}Store password as plain text{/tr}.</label></div>
-						{if $prefs.feature_clear_passwords eq 'y'}
+					{if $prefs.feature_clear_passwords eq 'y'} {* deprecated *}
+						{preference name='feature_clear_passwords'}
+						<div class="adminoptionboxchild" id='feature_clear_passwords_childcontainer'>
 							{remarksbox type='warning' title='Security risk'}{tr}Store passwords in plain text is activated. You should never set this unless you know what you are doing.{/tr}{/remarksbox}
-						{/if}
-					</div>
-	
-					<div class="adminoptionbox">
-						<div class="adminoption"><input type="checkbox" id="forgotPass" name="forgotPass" {if $prefs.forgotPass ne 'n'}checked="checked"{/if} /></div>
-						<div class="adminoptionlabel"><label for="forgotPass">{tr}Remind/forgot password{/tr}.</label>
-							<div class="adminoptionboxchild">
-								<div id="remindpassword" style="display:{if $prefs.feature_clear_passwords eq 'y'}block{else}none{/if};">{icon _id=information} <em>{tr}If passwords </em>are stored<em> as plain text, the password will be emailed to the user{/tr}.</em></div>
-								<div id="remindpassword2" style="display:{if $prefs.feature_clear_passwords eq 'y'}none{else}block{/if};">{icon _id=information} <em>{tr}If passwords </em>are not<em> plain text, reset instructions will be emailed to the user{/tr}.</em></div>	
-							</div>
 						</div>
-					</div>
+					{/if}
 	
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel"><label for="feature_crypt_passwords">{tr}Encryption method{/tr}:</label> 
-							<select name="feature_crypt_passwords" id="feature_crypt_passwords">
-					      <option value='crypt-md5' {if $prefs.feature_crypt_passwords eq 'crypt-md5'}selected="selected"{/if}>crypt-md5</option>
-					      <option value='crypt-des' {if $prefs.feature_crypt_passwords eq 'crypt-des'}selected="selected"{/if}>crypt-des</option>
-					      <option value='tikihash' {if $prefs.feature_crypt_passwords eq 'tikihash'}selected="selected"{/if}>{tr}tikihash (old){/tr}</option>
-					    </select>
-						</div>
-					</div>
+					{preference name='forgotPass'}
+
+					{preference name='feature_crypt_passwords'}
 	
 					<div class="adminoptionbox">
 						<div class="adminoption"><input type="checkbox" id="change_password" name="change_password" {if $prefs.change_password eq 'y'}checked="checked"{/if} /></div>
@@ -295,7 +286,7 @@
 					</div>
 	
 					<div class="adminoptionbox">
-						<div class="adminoptionlabel"><label for="min_pass_length">{tr}Minimum length{/tr}:</label> <input id="min_pass_length" type="text" name="min_pass_length" value="{$prefs.min_pass_length|escape}" size="5" /></div>
+						<div class="adminoptionlabel"><label for="min_pass_length">{tr}Minimum length:{/tr}</label> <input id="min_pass_length" type="text" name="min_pass_length" value="{$prefs.min_pass_length|escape}" size="5" /></div>
 					</div>
 	
 					<div class="adminoptionbox">
@@ -316,7 +307,7 @@
 
 					<div class="adminoptionbox">
 						<div class="adminoption"><input type="checkbox" id="ldap_create_user_tiki" name="ldap_create_user_tiki" {if $prefs.ldap_create_user_tiki eq 'y'}checked="checked"{/if} /></div>
-						<div class="adminoptionlabel"><label for="auth_create_user_tiki">{tr}Create user if not in Tiki{/tr}.</label></div>
+						<div class="adminoptionlabel"><label for="ldap_create_user_tiki">{tr}Create user if not in Tiki{/tr}.</label></div>
 					</div>
 
 					<div class="adminoptionbox">
@@ -337,42 +328,43 @@
 				<fieldset><legend>{tr}LDAP Bind settings{/tr} {if $prefs.feature_help eq 'y'} {help url="LDAP+Authentication"}{/if}</legend>
 					<!--
 					<div class="adminoptionbox">
-						<div class="adminoptionlabel"><label for="auth_ldap_url">{tr}URL{/tr}:</label>
+						<div class="adminoptionlabel"><label for="auth_ldap_url">{tr}URL:{/tr}</label>
 							<input type="text" id="auth_ldap_url" name="auth_ldap_url" value="{$prefs.auth_ldap_url|escape}" size="50" />
 							<br /><em>{tr}Will override the Host and Port settings{/tr}.</em>
 						</div>
 					</div>
 					-->
 					<div class="adminoptionbox">
-						<div class="adminoptionlabel"><label for="auth_ldap_host">{tr}Host{/tr}:</label>
+						<div class="adminoptionlabel"><label for="auth_ldap_host">{tr}Host:{/tr}</label>
 							<input type="text" id="auth_ldap_host" name="auth_ldap_host" value="{$prefs.auth_ldap_host|escape}" />
 						</div>
 					</div>
 					<div class="adminoptionbox">
-						<div class="adminoptionlabel"><label for="auth_ldap_port">{tr}Port{/tr}:</label>
+						<div class="adminoptionlabel"><label for="auth_ldap_port">{tr}Port:{/tr}</label>
 							<input type="text" name="auth_ldap_port" id="auth_ldap_port" value="{$prefs.auth_ldap_port|escape}" size="5" />
 						</div>
 					</div>
                                         <div class="adminoptionbox">
-                                                <div class="adminoptionlabel"><label for="auth_ldap_debug">{tr}Write LDAP debug Information in Tiki Logs{/tr}:</label>
+                                                <div class="adminoptionlabel"><label for="auth_ldap_debug">{tr}Write LDAP debug Information in Tiki Logs:{/tr}</label>
                                                         <input id="auth_ldap_debug" type="checkbox" name="auth_ldap_debug" {if $prefs.auth_ldap_debug eq 'y'}checked="checked"{/if} />
                                                 </div>
                                         </div>
                                         <div class="adminoptionbox">
-                                                <div class="adminoptionlabel"><label for="auth_ldap_ssl">{tr}Use SSL (ldaps){/tr}:</label>
+                                                <div class="adminoptionlabel"><label for="auth_ldap_ssl">{tr}Use SSL (ldaps):{/tr}</label>
 							<input id="auth_ldap_ssl" type="checkbox" name="auth_ldap_ssl" {if $prefs.auth_ldap_ssl eq 'y'}checked="checked"{/if} />
 						</div>
                                         </div>
 					<div class="adminoptionbox">
-                                                <div class="adminoptionlabel"><label for="auth_ldap_starttls">{tr}Use TLS{/tr}:</label>
+                                                <div class="adminoptionlabel"><label for="auth_ldap_starttls">{tr}Use TLS:{/tr}</label>
                                                 	<input id="auth_ldap_starttls" type="checkbox" name="auth_ldap_starttls" {if $prefs.auth_ldap_starttls eq 'y'}checked="checked"{/if} />
 						</div>
                                         </div>
                                         <div class="adminoptionbox">
-                                                <div class="adminoptionlabel"><label for="auth_ldap_type">{tr}LDAP Bind Type{/tr}:</label>
+                                                <div class="adminoptionlabel"><label for="auth_ldap_type">{tr}LDAP Bind Type:{/tr}</label>
                                                         <select name="auth_ldap_type" id="auth_ldap_type">
-                                                                <option value="full" {if $prefs.auth_ldap_type eq "full"} selected="selected"{/if}>{tr}Default: userattr=username,UserDN,BaseDN{/tr}</option>
-                                                                <option value="ol" {if $prefs.auth_ldap_type eq "ol"} selected="selected"{/if}>{tr}userattr=username,BaseDN{/tr}</option>
+                                                                <option value="default" {if $prefs.auth_ldap_type eq "default"} selected="selected"{/if}>{tr}Default: Anonymous Bind{/tr}</option>
+                                                                <option value="full" {if $prefs.auth_ldap_type eq "full"} selected="selected"{/if}>{tr}Full: userattr=username,UserDN,BaseDN{/tr}</option>
+                                                                <option value="ol" {if $prefs.auth_ldap_type eq "ol"} selected="selected"{/if}>{tr}OpenLDAP: userattr=username,BaseDN{/tr}</option>
                                                                 <option value="ad" {if $prefs.auth_ldap_type eq "ad"} selected="selected"{/if}>{tr}Active Directory (username@domain){/tr}</option>
                                                                 <option value="plain" {if $prefs.auth_ldap_type eq "plain"} selected="selected"{/if}>{tr}Plain Username{/tr}</option>
                                                         </select>
@@ -382,7 +374,7 @@
 
 
 					<div class="adminoptionbox">
-						<div class="adminoptionlabel"><label for="auth_ldap_scope">{tr}Search scope{/tr}:</label>
+						<div class="adminoptionlabel"><label for="auth_ldap_scope">{tr}Search scope:{/tr}</label>
 							<select name="auth_ldap_scope" id="auth_ldap_scope">
 								<option value="sub" {if $prefs.auth_ldap_scope eq "sub"} selected="selected"{/if}>{tr}Subtree{/tr}</option>
 								<option value="one" {if $prefs.auth_ldap_scope eq "one"} selected="selected"{/if}>{tr}One level{/tr}</option>
@@ -391,12 +383,12 @@
 						</div>
 					</div>
 					<div class="adminoptionbox">
-						<div class="adminoptionlabel"><label for="auth_ldap_version">{tr}LDAP version{/tr}:</label>
+						<div class="adminoptionlabel"><label for="auth_ldap_version">{tr}LDAP version:{/tr}</label>
 							<input type="text" id="auth_ldap_version" name="auth_ldap_version" value="{$prefs.auth_ldap_version|escape}" />
 						</div>
 					</div>
 					<div class="adminoptionbox">
-						<div class="adminoptionlabel"><label for="auth_ldap_basedn">{tr}Base DN{/tr}:</label>
+						<div class="adminoptionlabel"><label for="auth_ldap_basedn">{tr}Base DN:{/tr}</label>
 							<input type="text" name="auth_ldap_basedn" id="auth_ldap_basedn" value="{$prefs.auth_ldap_basedn|escape}" />
 						</div>
 					</div>
@@ -404,38 +396,38 @@
 
 					<fieldset><legend>{tr}LDAP User{/tr}</legend>
 						<div class="adminoptionbox">
-							<div class="adminoptionlabel"><label for="auth_ldap_userdn">{tr}User DN{/tr}:</label>
+							<div class="adminoptionlabel"><label for="auth_ldap_userdn">{tr}User DN:{/tr}</label>
 								<input type="text" id="auth_ldap_userdn" name="auth_ldap_userdn" value="{$prefs.auth_ldap_userdn|escape}" />
 							</div>
 						</div>
 						<div class="adminoptionbox">
-							<div class="adminoptionlabel"><label for="auth_ldap_userattr">{tr}User attribute{/tr}:</label>
+							<div class="adminoptionlabel"><label for="auth_ldap_userattr">{tr}User attribute:{/tr}</label>
 								<input type="text" name="auth_ldap_userattr" id="auth_ldap_userattr" value="{$prefs.auth_ldap_userattr|escape}" />
 							</div>
 						</div>
 						<div class="adminoptionbox">
-							<div class="adminoptionlabel"><label for="auth_ldap_useroc">{tr}User OC{/tr}:</label>
+							<div class="adminoptionlabel"><label for="auth_ldap_useroc">{tr}User OC:{/tr}</label>
 								<input type="text" name="auth_ldap_useroc" id="auth_ldap_useroc" value="{$prefs.auth_ldap_useroc|escape}" />
 							</div>
 						</div>
 	                                        <div class="adminoptionbox">
-        	                                        <div class="adminoptionlabel"><label for="auth_ldap_nameattr">{tr}Realname attribute{/tr}:</label>
+        	                                        <div class="adminoptionlabel"><label for="auth_ldap_nameattr">{tr}Realname attribute:{/tr}</label>
                 	                                        <input type="text" id="auth_ldap_nameattr" name="auth_ldap_nameattr" value="{$prefs.auth_ldap_nameattr|escape}" />
                         	                        </div>
                                 	        </div>
                                         	<div class="adminoptionbox">
-                                                	<div class="adminoptionlabel"><label for="auth_ldap_countryattr">{tr}Country attribute{/tr}:</label>
+                                                	<div class="adminoptionlabel"><label for="auth_ldap_countryattr">{tr}Country attribute:{/tr}</label>
                                                         	<input type="text" id="auth_ldap_countryattr" name="auth_ldap_countryattr" value="{$prefs.auth_ldap_countryattr|escape}" />
                       	                          </div>
                         	                </div>
                                 	        <div class="adminoptionbox">
-                                        	        <div class="adminoptionlabel"><label for="auth_ldap_emailattr">{tr}E-mail attribute{/tr}:</label>
+                                        	        <div class="adminoptionlabel"><label for="auth_ldap_emailattr">{tr}E-mail attribute:{/tr}</label>
                                                 	        <input type="text" id="auth_ldap_emailattr" name="auth_ldap_emailattr" value="{$prefs.auth_ldap_emailattr|escape}" />
                                       	          </div>
                                        		 </div>
 <!--
 	                                        <div class="adminoptionbox">
-       	                                         <div class="adminoptionlabel"><label for="auth_ldap_syncuserattr">{tr}Synchronize user attributes to tiki everytime the user logs in{/tr}:</label>
+       	                                         <div class="adminoptionlabel"><label for="auth_ldap_syncuserattr">{tr}Synchronize user attributes to tiki everytime the user logs in:{/tr}</label>
                                                         <input type="checkbox" id="auth_ldap_syncuserattr" name="auth_ldap_syncuserattr" {if $prefs.auth_ldap_syncuserattr eq 'y'}checked="checked"{/if} />
        	                                         </div>
         	                                </div>
@@ -446,29 +438,29 @@
 				<fieldset><legend>{tr}LDAP Group{/tr}</legend>
 <!--
                                                 <div class="adminoptionbox">
-                                                 <div class="adminoptionlabel"><label for="auth_ldap_syncgroupattr">{tr}Synchronize group attributes to tiki everytime the user logs in{/tr}:</label>
+                                                 <div class="adminoptionlabel"><label for="auth_ldap_syncgroupattr">{tr}Synchronize group attributes to tiki everytime the user logs in:{/tr}</label>
                                                         <input type="checkbox" id="auth_ldap_syncgroupattr" name="auth_ldap_syncgroupattr" {if $prefs.auth_ldap_syncgroupattr eq 'y'}checked="checked"{/if} />
 							{tr}Note: this enables the usage of LDAP groups{/tr}
                                                  </div>
                                                 </div>
 -->
 					<div class="adminoptionbox">
-						<div class="adminoptionlabel"><label for="auth_ldap_groupdn">{tr}Group DN{/tr}:</label>
+						<div class="adminoptionlabel"><label for="auth_ldap_groupdn">{tr}Group DN:{/tr}</label>
 							<input type="text" name="auth_ldap_groupdn" id="auth_ldap_groupdn" value="{$prefs.auth_ldap_groupdn|escape}" />
 						</div>
 					</div>
 					<div class="adminoptionbox">
-						<div class="adminoptionlabel"><label for="auth_ldap_groupattr">{tr}Group attribute{/tr}:</label>
+						<div class="adminoptionlabel"><label for="auth_ldap_groupattr">{tr}Group attribute:{/tr}</label>
 							<input type="text" name="auth_ldap_groupattr" id="auth_ldap_groupattr" value="{$prefs.auth_ldap_groupattr|escape}" />
 						</div>
 					</div>
                <div class="adminoptionbox">
-                  <div class="adminoptionlabel"><label for="auth_ldap_groupdescattr">{tr}Group description attribute{/tr}:</label>
+                  <div class="adminoptionlabel"><label for="auth_ldap_groupdescattr">{tr}Group description attribute:{/tr}</label>
                      <input type="text" name="auth_ldap_groupdescattr" id="auth_ldap_groupdescattr" value="{$prefs.auth_ldap_groupdescattr|escape}" />
                   </div>                                
                </div>
 					<div class="adminoptionbox">
-						<div class="adminoptionlabel"><label for="auth_ldap_groupoc">{tr}Group OC{/tr}:</label>
+						<div class="adminoptionlabel"><label for="auth_ldap_groupoc">{tr}Group OC:{/tr}</label>
 							<input id="auth_ldap_groupoc" type="text" name="auth_ldap_groupoc" value="{$prefs.auth_ldap_groupoc|escape}" />
 						</div>
 					</div>
@@ -476,24 +468,24 @@
 
 				<fieldset><legend>{tr}LDAP Group Member - if group membership can be found in group attributes{/tr}</legend>
 					<div class="adminoptionbox">
-						<div class="adminoptionlabel"><label for="auth_ldap_memberattr">{tr}Member attribute{/tr}:</label>
+						<div class="adminoptionlabel"><label for="auth_ldap_memberattr">{tr}Member attribute:{/tr}</label>
 							<input type="text" id="auth_ldap_memberattr" name="auth_ldap_memberattr" value="{$prefs.auth_ldap_memberattr|escape}" />
 						</div>
 					</div>
 					<div class="adminoptionbox">
-						<div class="adminoptionlabel"><label for="auth_ldap_memberisdn">{tr}Member is DN{/tr}:</label>
+						<div class="adminoptionlabel"><label for="auth_ldap_memberisdn">{tr}Member is DN:{/tr}</label>
 							<input type="checkbox" id="auth_ldap_memberisdn" name="auth_ldap_memberisdn" {if $prefs.auth_ldap_memberisdn eq 'y'}checked="checked"{/if} />
 						</div>
 					</div>
 				</fieldset>
 				<fieldset><legend>{tr}LDAP User Group - if group membership can be found in user attributes{/tr}</legend>
                                         <div class="adminoptionbox">
-                                                <div class="adminoptionlabel"><label for="auth_ldap_usergroupattr">{tr}Group attribute{/tr}:</label>
+                                                <div class="adminoptionlabel"><label for="auth_ldap_usergroupattr">{tr}Group attribute:{/tr}</label>
                                                         <input type="text" id="auth_ldap_usergroupattr" name="auth_ldap_usergroupattr" value="{$prefs.auth_ldap_usergroupattr|escape}" />
                                                 </div>
                                         </div>
                                         <div class="adminoptionbox">
-                                                <div class="adminoptionlabel"><label for="auth_ldap_groupgroupattr">{tr}Group attribute in group entry{/tr}:</label>
+                                                <div class="adminoptionlabel"><label for="auth_ldap_groupgroupattr">{tr}Group attribute in group entry:{/tr}</label>
                                                         <input type="text" id="auth_ldap_groupgroupattr" name="auth_ldap_groupgroupattr" value="{$prefs.auth_ldap_groupgroupattr|escape}" />
 							(Leave this empty if the group name is already given in the user attribute)
                                                 </div>
@@ -501,12 +493,12 @@
                                 </fieldset>
 				<fieldset><legend>{tr}LDAP Admin{/tr}</legend>
 					<div class="adminoptionbox">
-						<div class="adminoptionlabel"><label for="auth_ldap_adminuser">{tr}Admin user{/tr}:</label>
+						<div class="adminoptionlabel"><label for="auth_ldap_adminuser">{tr}Admin user:{/tr}</label>
 							<input type="text" id="auth_ldap_adminuser" name="auth_ldap_adminuser" value="{$prefs.auth_ldap_adminuser|escape}" />
 						</div>
 					</div>
 					<div class="adminoptionbox">
-						<div class="adminoptionlabel"><label for="auth_ldap_adminpass">{tr}Admin password{/tr}:</label>
+						<div class="adminoptionlabel"><label for="auth_ldap_adminpass">{tr}Admin password:{/tr}</label>
 							<input type="password" id="auth_ldap_adminpass" name="auth_ldap_adminpass" value="{$prefs.auth_ldap_adminpass|escape}" />
 						</div>
 					</div>
@@ -534,7 +526,7 @@
 					</div>
 
 					<div class="adminoptionbox">
-						<div class="adminoptionlabel"><label for="pam_service">{tr}PAM service{/tr}:</label>
+						<div class="adminoptionlabel"><label for="pam_service">{tr}PAM service:{/tr}</label>
 							<input type="text" id="pam_service" name="pam_service" value="{$prefs.pam_service|escape}" />
 							<br /><em>{tr}Currently unused{/tr}.</em>
 						</div>
@@ -562,7 +554,7 @@
 					</div>
 
 					<div class="adminoptionbox">
-						<div class="adminoptionlabel"><label for="shib_affiliation">{tr}Valid affiliations{/tr}:</label>
+						<div class="adminoptionlabel"><label for="shib_affiliation">{tr}Valid affiliations:{/tr}</label>
 							<input type="text" id="shib_affiliation" name="shib_affiliation" value="{$prefs.shib_affiliation}" size="50" />
 							<br /><em>{tr}Separate multiple affiliations with commas{/tr}.</em>
 						</div>
@@ -574,7 +566,7 @@
 
 						<div id="defaultgroup" style="margin-left:2.5em;display:{if $prefs.shib_usegroup eq 'y'}block{else}none{/if};">
 							<div class="adminoptionbox">
-								<div class="adminoptionlabel"><label for="shib_group">{tr}Default group{/tr}:</label>
+								<div class="adminoptionlabel"><label for="shib_group">{tr}Default group:{/tr}</label>
 									<input type="text" id="shib_group" name="shib_group" value="{$prefs.shib_group}" size="50"/>
 								</div>
 							</div>
@@ -592,41 +584,17 @@
 						</div>
 					{/if}
 
-					{if $phpcas_enabled eq 'y'}
-						{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}You also need to upload the <a target="_blank" href="http://esup-phpcas.sourceforge.net/">phpCAS library</a> separately to lib/phpcas/.{/tr}{/remarksbox}
-
-						<div class="adminoptionbox">
-							<div class="adminoption"><input id="cas_create_user_tiki" type="checkbox" name="cas_create_user_tiki" {if $prefs.cas_create_user_tiki eq 'y'}checked="checked"{/if} /></div>
-							<div class="adminoptionlabel"><label for="cas_create_user_tiki">{tr}Create user if not in Tiki{/tr}.</label></div>
-						</div>
-						<div class="adminoptionbox">
-							<div class="adminoption"><input id="cas_skip_admin" type="checkbox" name="cas_skip_admin" {if $prefs.cas_skip_admin eq 'y'}checked="checked"{/if} /></div>
-							<div class="adminoptionlabel"><label for="cas_skip_admin">{tr}Use Tiki authentication for Admin login{/tr}.</label></div>
-						</div>
-						<div class="adminoptionbox">
-							<div class="adminoptionlabel"><label for="cas_version">{tr}CAS server version{/tr}:</label>
-								<select name="cas_version" id="cas_version">
-									<option value="none" {if $prefs.cas_version neq "1" && $prefs.cas_version neq "2"} selected="selected"{/if}></option>
-									<option value="1.0" {if $prefs.cas_version eq "1.0"} selected="selected"{/if}>{tr}Version 1.0{/tr}</option>
-									<option value="2.0" {if $prefs.cas_version eq "2.0"} selected="selected"{/if}>{tr}Version 2.0{/tr}</option>
-								</select>
-							</div>
-						</div>
+							{preference name='cas_create_user_tiki'}
+							{preference name='cas_skip_admin'}
+							{preference name='cas_show_alternate_login'}
+							{preference name='cas_version'}
 
 						<fieldset><legend>{tr}CAS Server{/tr}</legend>
-							<div class="adminoptionbox">
-								<div class="adminoptionlabel"><label for="cas_hostname">{tr}Hostname{/tr}:</label> <input type="text" name="cas_hostname" id="cas_hostname" value="{$prefs.cas_hostname|escape}" size="50" /></div>
-							</div>
-							<div class="adminoptionbox">
-								<div class="adminoptionlabel"><label for="cas_port">{tr}Port{/tr}:</label> <input type="text" name="cas_port" id="cas_port" size="5" value="{$prefs.cas_port|escape}" /></div>
-							</div>
-							<div class="adminoptionbox">
-								<div class="adminoptionlabel"><label for="cas_path">{tr}Path{/tr}:</label> <input id="cas_path" type="text" name="cas_path" value="{$prefs.cas_path|escape}" size="50" /></div>
-							</div>
+							{preference name='cas_hostname' label="{tr}CAS Server Name{/tr}"}
+							{preference name='cas_port' label="{tr}CAS Server Port{/tr}"}
+							{preference name='cas_path' label="{tr}CAS Server Path{/tr}"}
+							{preference name='cas_extra_param' label="{tr}CAS Extra Parameter{/tr}"}
 						</fieldset>
-					{else}
-						<p>{icon _id=delete} {tr}You must enable PHP CAS first{/tr}. {help url="Mod+phpcas"}</p>
-					{/if}
 				</fieldset>	 
 			{/tab}
 		{/tabset}

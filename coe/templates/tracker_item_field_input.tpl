@@ -35,16 +35,16 @@
 		<option value="">{tr}None{/tr}</option>
 		{foreach key=id item=one from=$field_value.list}
 			{if ( ! isset($field_value.itemChoices) || $field_value.itemChoices|@count eq 0 || in_array($one, $field_value.itemChoices) )}
-				{if $field_value.options_array[0] ne '2'}
-					<option value="{$one|escape}"{if $one eq $field_value.value} selected="selected"{/if}>{$one|username|escape}</option>
+				{if $field_value.options_array[0] ne 1 and $field_value.options_array[0] ne 2}
+					<option value="{$one|escape}"{if $one eq $field_value.value} selected="selected"{/if}>{$one|username}</option>
 				{else}
-					<option value="{$one|escape}"{if $one eq $user} selected="selected"{/if}>{$one|username|escape}</option>
+					<option value="{$one|escape}"{if $one eq $user} selected="selected"{/if}>{$one|username}</option>
 				{/if}
 			{/if}
 		{/foreach}
 		</select>
 	{else}
-		{$user|username|escape}
+		{$user|username}
 	{/if}
 
 {* -------------------- IP selector -------------------- *}
@@ -231,17 +231,30 @@
 	{/if}
 	{if $field_value.isMultilingual ne 'y'}
 		{if $field_value.options_array[0] eq 1}
-    		{toolbars qtnum=$field_value.fieldId area_name="area_"|cat:$field_value.fieldId}
+    		{toolbars qtnum=$field_value.fieldId area_name="area_"|cat:$field_value.fieldId section="trackers"}
 		{/if}
 		{if $field_value.options_array[2] == 1}
-				<input type="text" name="{$field_value.ins_id}"{if $field_value.options_array[1] > 0} size="{$field_value.options_array[1]}"{/if}{if $field_value.options_array[3]>0} maxlength="{$field_value.options_array[3]}"{/if} value="{$field_value.value|escape}"{if $field_value.options_array[5]} onKeyUp="wordCount({$field_value.options_array[5]}, this, 'cpt_{$field_value.fieldId}', '{tr}Word Limit Exceeded{/tr}')"{/if} />
+				<input type="text" name="{$field_value.ins_id}"{if $field_value.options_array[1] > 0} size="{$field_value.options_array[1]}"{/if}{if $field_value.options_array[3]>0} maxlength="{$field_value.options_array[3]}"{/if} value="{$field_value.value|escape}"{if $field_value.options_array[5]} onkeyup="wordCount({$field_value.options_array[5]}, this, 'cpt_{$field_value.fieldId}', '{tr}Word Limit Exceeded{/tr}')"{/if} {if $field_value.options_array[3]} onkeyup="charCount({$field_value.options_array[3]}, this, 'cpt_{$field_value.fieldId}', '{tr}Character Limit Exceeded{/tr}')"{/if} />
 		{else}
-			<textarea id="area_{$field_value.fieldId}" name="{$field_value.ins_id}" cols="{if $field_value.options_array[1] >= 1}{$field_value.options_array[1]}{else}50{/if}" rows="{if $field_value.options_array[2] >= 1}{$field_value.options_array[2]}{else}4{/if}"{if $field_value.options_array[5]} onKeyUp="wordCount({$field_value.options_array[5]}, this, 'cpt_{$field_value.fieldId}', '{tr}Word Limit Exceeded{/tr}')"{/if}>
+			<textarea id="area_{$field_value.fieldId}" name="{$field_value.ins_id}" cols="{if $field_value.options_array[1] >= 1}{$field_value.options_array[1]}{else}50{/if}" rows="{if $field_value.options_array[2] >= 1}{$field_value.options_array[2]}{else}4{/if}"{if $field_value.options_array[5]} onkeyup="wordCount({$field_value.options_array[5]}, this, 'cpt_{$field_value.fieldId}', '{tr}Word Limit Exceeded{/tr}')"{/if}  {if $field_value.options_array[3]} onkeyup="charCount({$field_value.options_array[3]}, this, 'cpt_{$field_value.fieldId}', '{tr}Character Limit Exceeded{/tr}')"{/if} >
 				{$field_value.value}
 			</textarea>
 		{/if}
+		{if $field_value.options_array[3]}
+			<div class="charCount">
+				{if $prefs.javascript_enabled eq 'y'}
+				 	 {tr}Character Count:{/tr} <input type="text" id="cpt_{$field_value.fieldId}" size="4" readOnly=true{if !empty($field_value.value)} value="{$field_value.value|count_characters}"{/if} />
+				{/if}
+				{if $field_value.options_array[3] > 0} {tr}Max:{/tr} {$field_value.options_array[3]}{/if}
+			</div>
+		{/if}
 		{if $field_value.options_array[5]}
-			<div class="wordCount">{tr}Word Count:{/tr} <input type="text" id="cpt_{$field_value.fieldId}" size="4" readOnly=true{if !empty($field_value.value)} value="{$field_value.value|count_words}"{/if} />{if $field_value.options_array[5] > 0} {tr}Max:{/tr} {$field_value.options_array[5]}{/if}</div>
+			<div class="wordCount">
+				{if $prefs.javascript_enabled eq 'y'}
+					 {tr}Word Count:{/tr} <input type="text" id="cpt_{$field_value.fieldId}" size="4" readOnly=true{if !empty($field_value.value)} value="{$field_value.value|count_words}"{/if} />
+				{/if}
+				{if $field_value.options_array[5] > 0} {tr}Max:{/tr} {$field_value.options_array[5]}{/if}
+			</div>
 		{/if}
 	{else}
 		<table>
@@ -252,7 +265,7 @@
 				{if $field_value.options_array[0] eq 1}
         			{toolbars qtnum=$field_value.id area_name=area_`$field_value.id`_`$ling.lang`}
         		{/if}
-				<textarea id="area_{$field_value.fieldId}_{$ling.lang}" name="{$field_value.ins_id}[{$ling.lang}]" cols="{if $field_value.options_array[1] gt 1}{$field_value.options_array[1]}{else}50{/if}" rows="{if $field_value.options_array[2] gt 1}{$field_value.options_array[2]}{else}4{/if}"{if $field_value.options_array[5] > 0} onKeyUp="wordCount({$field_value.options_array[5]}, this, 'cpt_{$field_value.fieldId}_{$ling.lang}', '{tr}Word Limit Exceeded{/tr}')"{/if}>
+				<textarea id="area_{$field_value.fieldId}_{$ling.lang}" name="{$field_value.ins_id}[{$ling.lang}]" cols="{if $field_value.options_array[1] gt 1}{$field_value.options_array[1]}{else}50{/if}" rows="{if $field_value.options_array[2] gt 1}{$field_value.options_array[2]}{else}4{/if}"{if $field_value.options_array[5] > 0} onkeyup="wordCount({$field_value.options_array[5]}, this, 'cpt_{$field_value.fieldId}_{$ling.lang}', '{tr}Word Limit Exceeded{/tr}')"{/if}>
 					{$ling.value|escape}
 				</textarea>
 				{if $field_value.options_array[5]}<div class="wordCount">{tr}Word Count:{/tr} <input type="text" id="cpt_{$field_value.fieldId}_{$ling.lang}" size="4" readOnly=true{if !empty($ling.value)} value="{$ling.value|count_words}"{/if} />{if $field_value.options_array[5] > 0}{tr}Max:{/tr} {$field_value.options_array[5]}{/if}</div>{/if}

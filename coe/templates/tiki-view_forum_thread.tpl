@@ -97,7 +97,7 @@
 	</td>
 
 	<td style="text-align:right;">
-		{if $prefs.feature_forum_quickjump eq 'y'}
+		{if $prefs.feature_forum_quickjump eq 'y' && $all_forums|@count > 1}
 		<form id='quick' method="get" action="tiki-view_forum.php">
 			<small>{tr}Jump to forum{/tr}:</small>
 			<select name="forumId" onchange="javascript:document.getElementById('quick').submit();">

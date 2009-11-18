@@ -1,7 +1,7 @@
 {if $prefs.feature_freetags eq 'y' && $tiki_p_freetags_tag eq 'y'}
 	<tr class="formcolor">
 		<td><label for="tagBox">{tr}Folksonomy Tags{/tr}</label></td>
-		<td{if $cols} colspan="{$cols}"{/if}>
+		<td>
 			<script type="text/javascript">
 				<!--//--><![CDATA[//><!--
 				{literal}
@@ -20,7 +20,7 @@
 				<br />
 				{foreach from=$tag_suggestion item=t}
 					{capture name=tagurl}{if (strstr($t, ' '))}"{$t}"{else}{$t}{/if}{/capture}
-					<a href="javascript:addTag('{$smarty.capture.tagurl|escape:'javascript'|escape}');" onclick="javascript:needToConfirm=false">{$t}</a> 
+					<a href="javascript:addTag('{$smarty.capture.tagurl|escape:'javascript'|escape}');" onclick="javascript:needToConfirm=false">{$t|escape}</a> 
 				{/foreach}
 			</div>
 		</td>

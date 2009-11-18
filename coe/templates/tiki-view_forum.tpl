@@ -3,7 +3,7 @@
 {title help="forums" admpage="forums"}{$forum_info.name|escape}{/title}
 
 {if $forum_info.show_description eq 'y'}
-	<div class="description">{$forum_info.description|nl2br}</div>
+	<div class="description">{$forum_info.description|escape|nl2br}</div>
 {/if}
 
 <div class="navbar">
@@ -70,7 +70,7 @@
 					<a href="tiki-object_watches.php?objectId={$forumId|escape:"url"}&amp;watch_event=forum_post_topic_and_thread&amp;objectType=forum&amp;objectName={$forum_info.name|escape:"url"}&amp;objectHref={'tiki-view_forum.php?forumId='|cat:$forumId|escape:"url"}" class="icon">{icon _id='eye_group' alt='{tr}Group Monitor Topics and Threads of this Forum{/tr}'}</a>
 				{/if}
 
-				<div class="navbar" align="right" >
+				<div class="categbar" align="right" >
 					{if $user and $prefs.feature_user_watches eq 'y'}
 						{if $category_watched eq 'y'}
 							{tr}Watched by categories{/tr}:
@@ -118,7 +118,7 @@
 					<tr>
 						<td>
 							<div class="commentheader">
-								<span class="commentstitle">{$comments_preview_title}</span>
+								<span class="commentstitle">{$comments_preview_title|escape}</span>
 								<br />
 								{tr}by{/tr} {$user|userlink}
 							</div>
@@ -255,8 +255,8 @@
 						{if empty($user)}
 							{tr}Enter your name{/tr}:&nbsp;<input type="text" maxlength="50" size="12" id="anonymous_name" name="anonymous_name" />
 						{/if}
-						<input type="submit" name="comments_previewComment" value="{tr}Preview{/tr}" {if empty($user)}onclick="setCookie('anonymous_name',document.getElementById('anonymous_name').value);"{/if} />
 						<input type="submit" name="comments_postComment" value="{tr}Post{/tr}" {if empty($user)}onclick="setCookie('anonymous_name',document.getElementById('anonymous_name').value);"{/if} />
+						<input type="submit" name="comments_previewComment" value="{tr}Preview{/tr}" {if empty($user)}onclick="setCookie('anonymous_name',document.getElementById('anonymous_name').value);"{/if} />
 						<input type="submit" name="comments_postCancel" value="{tr}Cancel{/tr}" {if $comment_preview neq 'y'}onclick="hide('forumpost');window.location='#header';return false;"{/if} />
 					</td>
 				</tr>
@@ -304,7 +304,9 @@
 			</tr>
 			<tr>	
 				<td class="odd" colspan="3">
-					<input type="image" name="movesel" src="pics/icons/task_submitted.png" alt='{tr}Move{/tr}' title='{tr}Move Selected Topics{/tr}' />
+					{if $all_forums|@count > 1}
+						<input type="image" name="movesel" src="pics/icons/task_submitted.png" alt='{tr}Move{/tr}' title='{tr}Move Selected Topics{/tr}' />
+					{/if}
 					<input type="image" name="unlocksel" src="pics/icons/lock_break.png" alt='{tr}Unlock{/tr}' title='{tr}Unlock Selected Topics{/tr}' />
 					<input type="image" name="locksel" src="pics/icons/lock_add.png" alt='{tr}Lock{/tr}' title='{tr}Lock Selected Topics{/tr}' />
 					<input type="image" name="delsel" src="pics/icons/cross.png" alt='{tr}Delete{/tr}' title='{tr}Delete Selected Topics{/tr}' />
@@ -450,7 +452,7 @@
 					<td class="{cycle advance=false}">{$comments_coms[ix].lastPost|tiki_short_datetime} {* date_format:"%b %d [%H:%M]" *}
 						{if $comments_coms[ix].replies}
 							<br />
-							<small><i>{$comments_coms[ix].lastPostData.title}</i> {tr}by{/tr} {$comments_coms[ix].lastPostData.userName|userlink}</small>
+							<small><i>{$comments_coms[ix].lastPostData.title|escape}</i> {tr}by{/tr} {$comments_coms[ix].lastPostData.userName|userlink}</small>
 						{/if}
 					</td>
 				{/if}
@@ -620,7 +622,7 @@
 				</table>
 			</form>
 </div>
-{if empty($user)}
+{if empty($user) and $prefs.javascript_enabled eq "y"}
 	<script type="text/javascript">
 		<!--//--><![CDATA[//><!--
 			var js_anonymous_name = getCookie('anonymous_name');

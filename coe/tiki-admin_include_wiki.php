@@ -81,6 +81,7 @@ if (isset($_REQUEST['wikilistprefs'])) {
 		'wiki_list_categories',
 		'wiki_list_categories_path',
 		'wiki_list_id',
+		'wiki_edit_icons_toggle',
 	);
 	foreach($pref_toggles as $toggle) {
 		simple_set_toggle($toggle);
@@ -97,7 +98,6 @@ if (isset($_REQUEST["wikifeatures"])) {
 		$backlinksChange = true;
 	}
 	$pref_toggles = array(
-		'feature_lastChanges',
 		'feature_wiki_comments',
 		'feature_wiki_pictures',
 		'wiki_spellcheck',
@@ -118,14 +118,11 @@ if (isset($_REQUEST["wikifeatures"])) {
 		'feature_wiki_templates',
 		'feature_wiki_multiprint',
 		// 'feature_wiki_pdf',
-		'feature_listPages',
-		'feature_listorphanPages',
 		'feature_listorphanStructure',
 		'feature_history',
 		'feature_source',
 		'feature_sandbox',
 		'feature_wiki_print',
-		'feature_wiki_replace',
 		'feature_backlinks',
 		'feature_likePages',
 		'wiki_uses_slides',
@@ -136,7 +133,6 @@ if (isset($_REQUEST["wikifeatures"])) {
 		'feature_create_webhelp',
 		'page_n_times_in_a_structure',
 		'feature_wiki_userpage',
-		'feature_wiki_1like_redirection',
 		'feature_wiki_show_hide_before',
 		'feature_wiki_allowhtml',
 		'feature_wiki_import_page',

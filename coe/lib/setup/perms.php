@@ -50,14 +50,27 @@ foreach( $allperms['data'] as $row ) {
 
 $groupList = $tikilib->get_user_groups( $user );
 
+if( $prefs['auth_token_access'] == 'y' && isset($_REQUEST['TOKEN']) ) {
+	require_once 'lib/auth/tokens.php';
+	$token = $_REQUEST['TOKEN'];
+	unset( $_REQUEST['TOKEN'] );
+
+	$tokenlib = AuthTokens::build( $prefs );
+	if( $groups = $tokenlib->getGroups( $token, $_SERVER['PHP_SELF'], $_REQUEST ) ) {
+	 	$groupList = $groups;
+	}
+}
+
 require_once 'lib/core/lib/Perms.php';
 require_once 'lib/core/lib/Perms/Check/Direct.php';
 require_once 'lib/core/lib/Perms/Check/Indirect.php';
+require_once 'lib/core/lib/Perms/Check/Alternate.php';
 require_once 'lib/core/lib/Perms/ResolverFactory/GlobalFactory.php';
 require_once 'lib/core/lib/Perms/ResolverFactory/CategoryFactory.php';
 require_once 'lib/core/lib/Perms/ResolverFactory/ObjectFactory.php';
 
 $sequence = array(
+	$globalAdminCheck = new Perms_Check_Alternate( 'admin' ),
 	new Perms_Check_Direct,
 	new Perms_Check_Indirect( $map ),
 );
@@ -82,17 +95,7 @@ $perms->setResolverFactories( $factories );
 Perms::set( $perms );
 
 $globalperms = Perms::get();
-
-if ($user && (($user == 'admin' && $_SESSION["groups_are_emulated"] != "y") || $globalperms->admin ) ) {
-	// Admins have all rights and thus, bypass permission checks
-	require_once 'lib/core/lib/Perms/ResolverFactory/StaticFactory.php';
-	require_once 'lib/core/lib/Perms/Resolver/Default.php';
-	$perms->setResolverFactories( array(
-		new Perms_ResolverFactory_StaticFactory( 'admin', new Perms_Resolver_Default( true ) ),
-	) );
-
-	$globalperms = Perms::get();
-}
+$globalAdminCheck->setResolver( $globalperms->getResolver() );
 
 function remove_tiki_p_prefix( $name ) {
 	return substr( $name, 7 );

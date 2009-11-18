@@ -349,6 +349,8 @@ CREATE TABLE tiki_calendar_categories (
 ) ENGINE=MyISAM ;
 
 
+DROP TABLE IF EXISTS 'tiki_calendar_items';
+
 DROP TABLE IF EXISTS 'tiki_calendar_recurrence';
 
 CREATE TABLE tiki_calendar_recurrence (
@@ -382,8 +384,6 @@ CREATE TABLE tiki_calendar_recurrence (
   KEY calendarId (calendarId)
 ) ENGINE=MyISAM ;
 
-
-DROP TABLE IF EXISTS 'tiki_calendar_items';
 
 CREATE TABLE tiki_calendar_items (
   calitemId INTEGER,
@@ -1619,11 +1619,9 @@ INSERT INTO "," ("menuId","type","name","url","position","section","perm","group
 
 INSERT INTO "," ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'o','Admin Newsletters','tiki-admin_newsletters.php',910,'feature_newsletters','tiki_p_admin_newsletters','',0);
 
-INSERT INTO "," ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'s','Workspaces','tiki-workspaces-index.php',920,'feature_workspaces','','',0);
+INSERT INTO "," ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'s','Workspaces','tiki-my-workspaces.php',920,'feature_workspaces','tiki_p_ws_view','',0);
 
-INSERT INTO "," ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'o','Workspaces Home','tiki-workspaces-index.php',925,'feature_workspaces','','',0);
-
-INSERT INTO "," ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'o','My Workspaces','tiki-my-workspaces.php',930,'feature_workspaces','','',0);
+INSERT INTO "," ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'o','My Workspaces','tiki-my-workspaces.php',925,'feature_workspaces','tiki_p_ws_view','',0);
 
 INSERT INTO "," ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'o','Manage Workspaces','tiki-manage-workspaces.php',935,'feature_workspaces','tiki_p_admin_ws.php','',0);
 
@@ -1764,6 +1762,12 @@ INSERT INTO "," ("menuId","type","name","url","position","section","perm","group
 INSERT INTO "," ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'o','Contribution','tiki-admin_contribution.php',1265,'feature_contribution','tiki_p_admin_contribution','',0);
 
 INSERT INTO "," ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'o','Workspaces','tiki-admin.php?page=workspaces',1270,'feature_workspaces','tiki_p_admin','',0);
+
+INSERT INTO "," ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42, 's', 'Kaltura Video', 'tiki-list_kaltura_entries.php', 950, 'feature_kaltura', 'tiki_p_admin | tiki_p_admin_kaltura | tiki_p_list_videos', '', 0);
+
+INSERT INTO "," ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42, 'o', 'List Entries', 'tiki-list_kaltura_entries.php', 952, 'feature_kaltura', 'tiki_p_admin | tiki_p_admin_kaltura | tiki_p_list_videos', '', 0);
+
+INSERT INTO "," ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42, 'o', 'Upload Media', 'tiki-kaltura_upload.php', 954, 'feature_kaltura', 'tiki_p_admin | tiki_p_admin_kaltura | tiki_p_upload_videos', '', 0);
 
 
 
@@ -3461,7 +3465,7 @@ INSERT INTO "," ("permName","permDesc","level","type","admin","feature_check") V
 
 INSERT INTO "," ("permName","permDesc","level","type","admin","feature_check") VALUES ('tiki_p_upload_picture', 'Can upload pictures to wiki pages', 'registered', 'wiki', NULL, 'feature_wiki_pictures');
 
-INSERT INTO "," ("permName","permDesc","level","type","admin","feature_check") VALUES ('tiki_p_use_as_template', 'Can use the page as a tracker template', 'basic', 'wiki', NULL, 'feature_wiki_templates');
+INSERT INTO "," ("permName","permDesc","level","type","admin","feature_check") VALUES ('tiki_p_use_as_template', 'Can use the page as a tracker template', 'basic', 'wiki', NULL, 'feature_wiki');
 
 INSERT INTO "," ("permName","permDesc","level","type","admin","feature_check") VALUES ('tiki_p_view', 'Can view page/pages', 'basic', 'wiki', NULL, 'feature_wiki');
 
@@ -3626,6 +3630,36 @@ INSERT INTO "," ("permName","permDesc","level","type","admin","feature_check") V
 
 INSERT INTO "," ("permName","permDesc","level","type","admin","feature_check") VALUES ('tiki_p_trigger_transition', 'Can trigger the transition between two states', 'admin', 'transition', NULL, 'feature_group_transition,feature_category_transition');
 
+INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_ws_admin', 'Can admin all ws', 'globaladmin', 'ws', 'y');
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_ws_addws', 'Can add ws', 'globaladmin', 'ws');
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_ws_removews', 'Can remove ws', 'globaladmin', 'ws');
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_ws_adminws', 'Can admin a single ws', 'admin', 'ws');
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_ws_adminresources', 'Can admin resources into single ws', 'admin', 'ws');
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_ws_admingroups', 'Can admin groups in a single ws', 'admin', 'ws');
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_ws_view', 'Can view a single ws', 'registered', 'ws');
+
+
+INSERT INTO "," ("permName","permDesc","level","type","admin","feature_check") VALUES ('tiki_p_admin_kaltura', 'Can admin kaltura feature', 'admin', 'kaltura', 'y', 'feature_kaltura');
+
+INSERT INTO "," ("permName","permDesc","level","type","admin","feature_check") VALUES ('tiki_p_upload_videos', 'Can upload video on kaltura server', 'editors', 'kaltura', NULL, 'feature_kaltura');
+
+INSERT INTO "," ("permName","permDesc","level","type","admin","feature_check") VALUES ('tiki_p_edit_videos', 'Can edit information of kaltura entry', 'editors', 'kaltura', NULL, 'feature_kaltura');
+
+INSERT INTO "," ("permName","permDesc","level","type","admin","feature_check") VALUES ('tiki_p_remix_videos', 'Can create kaltura remix video', 'editors', 'kaltura', NULL, 'feature_kaltura');
+
+INSERT INTO "," ("permName","permDesc","level","type","admin","feature_check") VALUES ('tiki_p_delete_videos', 'Can delete kaltura entry', 'editors', 'kaltura', NULL, 'feature_kaltura');
+
+INSERT INTO "," ("permName","permDesc","level","type","admin","feature_check") VALUES ('tiki_p_download_videos', 'Can download kaltura entry', 'registered', 'kaltura', NULL, 'feature_kaltura');
+
+INSERT INTO "," ("permName","permDesc","level","type","admin","feature_check") VALUES ('tiki_p_list_videos', 'Can list kaltura entries', 'basic', 'kaltura', NULL, 'feature_kaltura');
+
+INSERT INTO "," ("permName","permDesc","level","type","admin","feature_check") VALUES ('tiki_p_view_videos', 'Can view kaltura entry', 'basic', 'kaltura', NULL, 'feature_kaltura');
 
 
 
@@ -4382,6 +4416,7 @@ DROP TABLE IF EXISTS 'tiki_plugin_security';
 CREATE TABLE tiki_plugin_security (
   fingerprint VARCHAR(200) NOT NULL PRIMARY KEY,
   status VARCHAR(10) NOT NULL,
+  added_by VARCHAR(200) NULL,
   approval_by VARCHAR(200) NULL,
   last_update TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   last_objectType VARCHAR(20) NOT NULL,
@@ -4445,7 +4480,7 @@ CREATE TABLE tiki_transitions (
 	type varchar(20) NOT NULL,
 	from varchar(255) NOT NULL,
 	to varchar(255) NOT NULL,
-	guards varchar(1024) NOT NULL DEFAULT '[]',
+	guards text,
   PRIMARY KEY(transitionId),
   KEY transition_lookup (type, from)
 ) ENGINE=MyISAM;

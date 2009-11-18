@@ -6,7 +6,7 @@
 //	would produce <STRIKE style="color:#FF0000">toto</STRIKE>
 
 function wikiplugin_tag_help() {
-	return tra("Displays text between an html tag").":<br />~np~{TAG(tag=a_tag, style=a_style)}text{TAG}~/np~";
+	return tra("Displays text between HTML tags").":<br />~np~{TAG(tag=a_tag, style=a_style)}text{TAG}~/np~";
 }
 
 function wikiplugin_tag_info() {
@@ -26,7 +26,7 @@ function wikiplugin_tag_info() {
 			'style' => array(
 				'required' => false,
 				'name' => tra('CSS Style'),
-				'description' => tra('Equivalent of the style attribute on the HTML tag.'),
+				'description' => tra('Equivalent to the style attribute of an HTML tag.'),
 			),
 		),
 	);

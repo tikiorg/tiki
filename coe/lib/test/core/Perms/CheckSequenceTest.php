@@ -54,5 +54,3 @@ class Perms_CheckSequenceTest extends TikiTestCase
 		$this->assertFalse( Perms::get()->view );
 	}
 }
-
-?>

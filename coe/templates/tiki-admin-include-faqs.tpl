@@ -1,4 +1,6 @@
-{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}To add/remove FAQs, look for "Admin FAQs" under "FAQs" on the application menu, or{/tr} <a class="rbox-link" href="tiki-list_faqs.php">{tr}Click Here{/tr}</a>.{/remarksbox}
+{remarksbox type="tip" title="{tr}Tip{/tr}"}
+	{tr}To add/remove FAQs, look for "Admin FAQs" under "FAQs" on the application menu, or{/tr} <a class="rbox-link" href="tiki-list_faqs.php">{tr}Click Here{/tr}</a>.
+{/remarksbox}
 
 <form action="tiki-admin.php?page=faqs" method="post">
 	<div class="heading input_submit_container" style="text-align: right">
@@ -6,31 +8,13 @@
 	</div>
 	<fieldset class="admin">
 		<legend>{tr}Settings{/tr}</legend>
-		<table class="admin">
-			<tr>
-				<td class="form">{tr}Comments{/tr}:</td>
-				<td><input type="checkbox" name="feature_faq_comments" {if $prefs.feature_faq_comments eq 'y'}checked="checked"{/if}/></td>
-			</tr><tr>
-				<td class="form">{tr}Default number of comments per page{/tr}: </td>
-				<td><input size="5" type="text" name="faq_comments_per_page" value="{$prefs.faq_comments_per_page|escape}" /></td>
-			</tr><tr>
-				<td class="form">{tr}Comments default ordering{/tr}</td>
-				<td><select name="faq_comments_default_ordering">
-						<option value="commentDate_desc" {if $prefs.faq_comments_default_ordering eq 'commentDate_desc'}selected="selected"{/if}>{tr}Newest first{/tr}</option>
-						<option value="commentDate_asc" {if $prefs.faq_comments_default_ordering eq 'commentDate_asc'}selected="selected"{/if}>{tr}Oldest first{/tr}</option>
-						<option value="points_desc" {if $prefs.faq_comments_default_ordering eq 'points_desc'}selected="selected"{/if}>{tr}Points{/tr}</option>
-					</select>
-				</td>
-			</tr><tr>
-				<td class="form">{tr}Question and Answer prefix on Answers{/tr}</td>
-				<td><select name="faq_prefix">
-						<option value="none" {if $prefs.faq_prefix eq 'none'}selected="selected"{/if}>{tr}None{/tr}</option>
-						<option value="QA" {if $prefs.faq_prefix eq 'QA'}selected="selected"{/if}>{tr}Q and A{/tr}</option>
-						<option value="question_id" {if $prefs.faq_prefix eq 'question_id'}selected="selected"{/if}>{tr}Question ID{/tr}</option>
-					</select>
-				</td>
-			</tr>
-		</table>
+		{preference name=faq_prefix}
+		
+		{preference name=feature_faq_comments}
+		<div class="adminoptionboxchild" id="feature_faq_comments_childcontainer">
+			{preference name=faq_comments_per_page}
+			{preference name=faq_comments_default_ordering}
+		</div>
 	</fieldset>
 	<div class="heading input_submit_container" style="text-align: center">
 		<input type="submit" name="faqcomprefs" value="{tr}Change settings{/tr}" />

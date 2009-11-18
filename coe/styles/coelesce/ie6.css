@@ -85,6 +85,17 @@ img.flipmodimage {
 	border: none;
 }
 
+#col2 div.cssmenubox .box-data {
+	padding-right: 0 !important;
+}
+
+#col2 ul.cssmenu_vert {
+	padding-left: 0;
+	margin-left: 0;
+	width: 160px;
+}
+
+
 table.normal, 
 table.admin {
 	width: 97%;

@@ -1,9 +1,8 @@
 {* $Id$ *}
-{popup_init src="lib/overlib.js"}
 
 {title admpage="calendar"}
 	{if $displayedcals|@count eq 1}
-		{tr}Calendar{/tr}: {assign var=x value=$displayedcals[0]}{$infocals[$x].name}
+		{tr}Calendar{/tr}: {assign var=x value=$displayedcals[0]}{$infocals[$x].name|escape}
 	{else}
 		{tr}Calendar{/tr}
 	{/if}
@@ -56,7 +55,7 @@
 					{if $thiscal.$k}
 						{assign var=thiscustombgcolor value=$infocals.$k.custombgcolor}
 						{assign var=thiscustomfgcolor value=$infocals.$k.customfgcolor}
-						{assign var=thisinfocalsname value=$infocals.$k.name}
+						{assign var=thisinfocalsname value=$infocals.$k.name|escape}
 						{button href="#" _style="background-color:#$thiscustombgcolor;color:#$thiscustomfgcolor;border:1px solid #$thiscustomfgcolor;" _onclick="toggle('filtercal');" _text="$thisinfocalsname"}
 					{/if}
 				{/foreach}
@@ -77,7 +76,7 @@
 
 
 
-	<div class="navbar" align="right">
+	<div class="categbar" align="right">
 		{if $user and $prefs.feature_user_watches eq 'y'}
 			{if $category_watched eq 'y'}
 				{tr}Watched by categories{/tr}:
@@ -99,7 +98,7 @@
 			{foreach item=k from=$listcals}
 				<div class="calcheckbox">
 					<input type="checkbox" name="calIds[]" value="{$k|escape}" id="groupcal_{$k}" {if $thiscal.$k}checked="checked"{/if} />
-					<label for="groupcal_{$k}" class="calId{$k}">{$infocals.$k.name} (id #{$k})</label>
+					<label for="groupcal_{$k}" class="calId{$k}">{$infocals.$k.name|escape} (id #{$k})</label>
 				</div>
 			{/foreach}
 			<div class="calinput">
@@ -119,7 +118,7 @@
 			{foreach item=k from=$listcals}
 				<div class="calcheckbox">
 					<input type="checkbox" name="calendarIds[]" value="{$k|escape}" id="groupcal_{$k}" {if $thiscal.$k}checked="checked"{/if} />
-					<label for="groupcal_{$k}" class="calId{$k}">{$infocals.$k.name}</label>
+					<label for="groupcal_{$k}" class="calId{$k}">{$infocals.$k.name|escape}</label>
 				</div>
 			{/foreach}
 			<div class="calcheckbox">

@@ -46,11 +46,11 @@
 		<tr>
 			{if $prefs.art_list_title eq 'y'}
 				<td class="{cycle advance=false}">
-					<a class="link" title="{$listpages[changes].title}" href="tiki-edit_submission.php?subId={$listpages[changes].subId}">{$listpages[changes].title|truncate:$prefs.art_list_title_len:"...":true}</a>
+					<a class="link" title="{$listpages[changes].title|escape}" href="tiki-edit_submission.php?subId={$listpages[changes].subId}">{$listpages[changes].title|truncate:$prefs.art_list_title_len:"...":true|escape}</a>
 				</td>
 			{/if}
 			{if $prefs.art_list_topic eq 'y'}
-				<td class="{cycle advance=false}">{$listpages[changes].topicName}</td>
+				<td class="{cycle advance=false}">{$listpages[changes].topicName|escape}</td>
 			{/if}
 			{if $prefs.art_list_date eq 'y'}
 				<td class="{cycle advance=false}">{$listpages[changes].publishDate|tiki_short_datetime}</td>
@@ -62,7 +62,7 @@
 				<td class="{cycle advance=false}">{$listpages[changes].hasImage}/{$listpages[changes].useImage}</td>
 			{/if}
 			{if $prefs.art_list_author eq 'y'}
-				<td class="{cycle advance=false}">{$listpages[changes].author}</td>
+				<td class="{cycle advance=false}">{$listpages[changes].author|escape}</td>
 			{/if}
 			<td class="{cycle}" >
 				{if $tiki_p_edit_submission eq 'y' or ($listpages[changes].author eq $user and $user)}

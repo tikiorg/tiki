@@ -37,6 +37,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			if (count($installer->getFeedback()) > 0) {
 				$smarty->assign_by_ref('profilefeedback', $installer->getFeedback());
 			}
+			// need to reload sources as cache is cleared after install
+			$sources = $list->getSources();
 		}
 	} // }}}
 	if (isset($_POST['install'], $_POST['pd'], $_POST['pp'])) { // {{{
@@ -56,6 +58,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			if (count($installer->getFeedback()) > 0) {
 				$smarty->assign_by_ref('profilefeedback', $installer->getFeedback());
 			}
+			// need to reload sources as cache is cleared after install
+			$sources = $list->getSources();
 		}
 	} // }}}
 	if (isset($_POST['test'], $_POST['profile_tester'], $_POST['profile_tester_name'])) { // {{{
@@ -127,18 +131,40 @@ if (isset($_GET['list'])) { // {{{
 		'category' => '',
 		'profile' => ''
 	) , $_GET);
-	$smarty->assign('category', $params['category']);
+	$smarty->assign('categories', $params['categories']);
 	$smarty->assign('profile', $params['profile']);
 	$smarty->assign('repository', $params['repository']);
 	if ($_GET['preloadlist'] && $params['repository']) $list->refreshCache($params['repository']);
-	$result = $list->getList($params['repository'], $params['category'], $params['profile']);
+	$profiles = $list->getList($params['repository'], $params['categories'], $params['profile']);
+	foreach ($profiles as &$profile) {
+		$profile['categoriesString'] = "";
+		foreach ($profile['categories'] as $category) {
+			$profile['categoriesString'] .= (empty($profile['categoriesString']) ? '' : ', ') . $category;
+		}
+	}
+	$smarty->assign('result', $profiles);
 	$category_list = $list->getCategoryList($params['repository']);
 	$smarty->assign('category_list', $category_list);
-	$smarty->assign('result', $result);
 } // }}}
 $threshhold = time() - 1800;
 $oldSources = array();
 foreach($sources as $key => $source) if ($source['lastupdate'] < $threshhold) $oldSources[] = $key;
 $smarty->assign('sources', $sources);
 $smarty->assign('oldSources', $oldSources);
+
+$openSources = 0;
+foreach($sources as $key => $source)
+{
+	if ($source['status'] == 'open')
+		$openSources++;
+}
+
+if($openSources == sizeof($sources))
+	$smarty->assign('openSources', 'all');
+elseif (($openSources > 0) &&($openSources < sizeof($sources)))
+	$smarty->assign('openSources', 'some');
+else
+	$smarty->assign('openSources', 'none');
+	
+
 ask_ticket('admin-inc-profiles');

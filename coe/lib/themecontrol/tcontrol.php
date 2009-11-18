@@ -11,36 +11,35 @@ class ThemeControlLib extends TikiLib {
 	function tc_assign_category($categId, $theme, $option) {
 		$this->tc_remove_cat($categId);
 
+		$themeoption = $this->get_theme_option_string ($theme, $option);
+
 		$query = "delete from `tiki_theme_control_categs` where `categId`=?";
 		$this->query($query,array($categId),-1,-1,false);
 		$query = "insert into `tiki_theme_control_categs`(`categId`,`theme`) values(?,?)";
-		$themeoption = $theme;
-		if ($option) {
-			if ($option == tra('None')) {
-				$option = '';
-			}
-			$themeoption .= '/'.$option;
-		}
 		$this->query($query,array($categId,$themeoption));
 	}
 
-	function tc_assign_section($section, $theme) {
+	function tc_assign_section($section, $theme, $option = '') {
 		$this->tc_remove_section($section);
+
+		$themeoption = $this->get_theme_option_string ($theme, $option);
 
 		$query = "delete from `tiki_theme_control_sections` where `section`=?";
 		$this->query($query,array($section),-1,-1,false);
 		$query = "insert into `tiki_theme_control_sections`(`section`,`theme`) values(?,?)";
-		$this->query($query,array($section,$theme));
+		$this->query($query,array($section,$themeoption));
 	}
 
-	function tc_assign_object($objId, $theme, $type, $name) {
+	function tc_assign_object($objId, $theme, $type, $name, $option = '') {
+
+		$themeoption = $this->get_theme_option_string ($theme, $option);
 
 		$objId = md5($type . $objId);
 		$this->tc_remove_object($objId);
 		$query = "delete from `tiki_theme_control_objects` where `objId`=?";
 		$this->query($query,array($objId),-1,-1,false);
 		$query = "insert into `tiki_theme_control_objects`(`objId`,`theme`,`type`,`name`) values(?,?,?,?)";
-		$this->query($query,array($objId,$theme,$type,$name));
+		$this->query($query,array($objId,$themeoption,$type,$name));
 	}
 
 	function tc_get_theme_by_categ($categId) {
@@ -131,7 +130,7 @@ class ThemeControlLib extends TikiLib {
 			$findesc = '%' . $find . '%';
 			$mid = " where (`type` like ? and `name` like ?)";
 			$bindvars=array($type,$findesc);
-		} else {
+		} else if (!empty($type)){
 			$mid = " where `type` like ?";
 			$bindvars=array($type);
 		}
@@ -169,5 +168,51 @@ class ThemeControlLib extends TikiLib {
 
 		$this->query($query,array($objId));
 	}
+	
+	// hgelpers for admin forms
+	
+	function setup_theme_menus() {
+		global $prefs, $tikilib, $smarty;
+		
+		$list_styles = $tikilib->list_styles();
+		$smarty->assign_by_ref('styles', $list_styles);
+		if (!empty($_REQUEST['theme'])) {
+			$a_style = $_REQUEST['theme'];
+		} else {
+			$a_style = $prefs['style'];
+		}
+		$smarty->assign('a_style', $a_style);
+		$loplist = $tikilib->list_style_options($a_style);
+		if (!$loplist) {
+			$loplist = Array(tra('None'));
+		}
+		$smarty->assign_by_ref("style_options", $loplist);
+	
+	}
+	
+	function get_theme_option_string ($theme, $option) {
+		$themeoption = $theme;
+		if ($option) {
+			if ($option == tra('None')) {
+				$option = '';
+			}
+			$themeoption .= '/'.$option;
+		}
+		return $themeoption;
+	}
+	
+	function parse_theme_option_string($themeoption) {
+		$p = strpos($themeoption, '/'); // theme option starts after a / char
+		$retval = array();
+		if ($p === false) {
+			$retval[] = $themeoption;
+			$retval[] = '';
+		} else {
+			$retval[] = substr($themeoption, 0, $p);
+			$retval[] = substr($themeoption, $p + 1);
+		}
+		return $retval;
+	}
+	
 }
 $tcontrollib = new ThemeControlLib;

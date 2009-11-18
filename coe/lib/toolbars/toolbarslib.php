@@ -37,6 +37,8 @@ abstract class Toolbar
 			return $tag;
 		elseif( $tag = ToolbarPicker::fromName( $tagName ) )
 			return $tag;
+		elseif( $tag = ToolbarDialog::fromName( $tagName ) )
+			return $tag;
 		elseif( $tagName == 'fullscreen' )
 			return new ToolbarFullscreen;
 		elseif( $tagName == 'enlarge' )
@@ -74,7 +76,6 @@ abstract class Toolbar
 			'sup',
 			'tikilink',
 			'link',
-			'anchor',
 			'color',
 			'bgcolor',
 			'center',
@@ -86,7 +87,6 @@ abstract class Toolbar
 			'h2',
 			'h3',
 			'toc',
-			'image',
 			'list',
 			'numlist',
 			'specialchar',
@@ -124,6 +124,7 @@ abstract class Toolbar
 			'tikiimage',
 			'switcheditor',
 			'autosave',
+			'nonparsed',
 		), $plugins ));
 	} // }}}
 	
@@ -412,10 +413,6 @@ class ToolbarFckOnly extends Toolbar
 			return new self( 'Undo' );
 		case 'redo':
 			return new self( 'Redo' );
-		case 'find':
-			return new self( 'Find' );
-		case 'replace':
-			return new self( 'Replace' );
 		case 'selectall':
 			return new self( 'SelectAll' );
 		case 'removeformat':
@@ -446,6 +443,10 @@ class ToolbarFckOnly extends Toolbar
 			return new self( 'Source' );
 		case 'autosave':
 			return new self( 'ajaxAutoSave', 'lib/fckeditor_tiki/plugins/ajaxAutoSave/images/ajaxAutoSaveDirty.gif' );
+		case 'sub':
+			return new self( 'Subscript' );
+		case 'sup':
+			return new self( 'Superscript' );
 		}
 	} // }}}
 
@@ -454,7 +455,7 @@ class ToolbarFckOnly extends Toolbar
 		return null;
 	} // }}}
 	
-	function getLabel( $areaName ) // {{{
+	function getLabel() // {{{
 	{
 		return $this->wysiwyg;
 	} // }}}
@@ -485,47 +486,11 @@ class ToolbarInline extends Toolbar
 			$wysiwyg = 'StrikeThrough';
 			$syntax = '--text--';
 			break;
-		case 'sub':
-			$label = tra('Subscript');
-			$icon = tra('pics/icons/text_subscript.png');
-			$wysiwyg = 'Subscript';
-			$syntax = '{SUB()}text{SUB}';
-			break;
-		case 'sup':
-			$label = tra('Superscript');
-			$icon = tra('pics/icons/text_superscript.png');
-			$wysiwyg = 'Superscript';
-			$syntax = '{SUP()}text{SUP}';
-			break;
-		case 'tikilink':
-			$label = tra('Wiki Link');
-			$icon = tra('pics/icons/page_link.png');
-			$wysiwyg = 'tikilink';
-			$syntax = '((text))';
-			break;
-		case 'link':
-			$label = tra('Link');
-			$icon = tra('pics/icons/world_link.png');
-			$wysiwyg = 'Link';
-			$syntax = '[http://example.com|text]';
-			break;
-		case 'anchor':
-			$label = tra('Anchor');
-			$icon = tra('pics/icons/anchor.png');
-			$wysiwyg = 'Anchor';
-			$syntax = '{ANAME()}text{ANAME}';
-			break;
-		case 'color':
-			$label = tra('Text Color');
-			$icon = tra('pics/icons/palette.png');
-			$wysiwyg = 'TextColor';
-			$syntax = '~~red:text~~';
-			break;
-		case 'bgcolor':
-			$label = tra('Background Color');
-			$icon = tra('pics/icons/palette.png');
-			$wysiwyg = 'BGColor';
-			$syntax = '~~white,black:text~~';
+		case 'nonparsed':
+			$label = tra('Non-parsed');
+			$icon = tra('pics/icons/noparse.png');
+			$wysiwyg = null;
+			$syntax = '~np~text~/np~';
 			break;
 		default:
 			return;
@@ -575,12 +540,6 @@ class ToolbarBlock extends ToolbarInline // Will change in the future
 			$wysiwyg = 'JustifyCenter';
 			$syntax = "::text::";
 			break;
-		case 'table':
-			$label = tra('Table');
-			$icon = tra('pics/icons/table.png');
-			$wysiwyg = 'Table';
-			$syntax = '||r1c1|r1c2\nr2c1|r2c2||';
-			break;
 		case 'rule':
 			$label = tra('Horizontal Bar');
 			$icon = tra('pics/icons/page.png');
@@ -589,9 +548,9 @@ class ToolbarBlock extends ToolbarInline // Will change in the future
 			break;
 		case 'pagebreak':
 			$label = tra('Page Break');
-			$icon = tra('pics/icons/page.png');
+			$icon = tra('lib/fckeditor_tiki/fckeditor-icons/Pagebreak.gif');
 			$wysiwyg = 'PageBreak';
-			$syntax = '---';
+			$syntax = '...page...';
 			break;
 		case 'blockquote':
 			$label = tra('Block Quote');
@@ -606,12 +565,6 @@ class ToolbarBlock extends ToolbarInline // Will change in the future
 			$icon = 'pics/icons/text_heading_' . $tagName{1} . '.png';
 			$wysiwyg = null;
 			$syntax = str_repeat('!', $tagName{1}) . 'text';
-			break;
-		case 'image':
-			$label = tra('Image');
-			$icon = tra('pics/icons/picture.png');
-			$wysiwyg = '';
-			$syntax = '{img src= width= height= link= }';
 			break;
 		case 'toc':
 			$label = tra('Table of contents');
@@ -685,16 +638,18 @@ class ToolbarPicker extends Toolbar
 {
 	private $list;
 	private $index;
+	private $name;
 	
 	public static function fromName( $tagName ) // {{{
 	{
+		global $headerlib;
 		$prefs = array();
 
 		switch( $tagName ) {
 		case 'specialchar':
 			$wysiwyg = 'SpecialChar';
 			$label = tra('Special Characters');
-			$icon = tra('pics/icons/world_edit.png');
+			$icon = tra('lib/fckeditor_tiki/fckeditor-icons/Specialchar.gif');
 			// Line taken from DokuWiki
             $list = explode(' ','À à Á á Â â Ã ã Ä ä Ǎ ǎ Ă ă Å å Ā ā Ą ą Æ æ Ć ć Ç ç Č č Ĉ ĉ Ċ ċ Ð đ ð Ď ď È è É é Ê ê Ë ë Ě ě Ē ē Ė ė Ę ę Ģ ģ Ĝ ĝ Ğ ğ Ġ ġ Ĥ ĥ Ì ì Í í Î î Ï ï Ǐ ǐ Ī ī İ ı Į į Ĵ ĵ Ķ ķ Ĺ ĺ Ļ ļ Ľ ľ Ł ł Ŀ ŀ Ń ń Ñ ñ Ņ ņ Ň ň Ò ò Ó ó Ô ô Õ õ Ö ö Ǒ ǒ Ō ō Ő ő Œ œ Ø ø Ŕ ŕ Ŗ ŗ Ř ř Ś ś Ş ş Š š Ŝ ŝ Ţ ţ Ť ť Ù ù Ú ú Û û Ü ü Ǔ ǔ Ŭ ŭ Ū ū Ů ů ǖ ǘ ǚ ǜ Ų ų Ű ű Ŵ ŵ Ý ý Ÿ ÿ Ŷ ŷ Ź ź Ž ž Ż ż Þ þ ß Ħ ħ ¿ ¡ ¢ £ ¤ ¥ € ¦ § ª ¬ ¯ ° ± ÷ ‰ ¼ ½ ¾ ¹ ² ³ µ ¶ † ‡ · • º ∀ ∂ ∃ Ə ə ∅ ∇ ∈ ∉ ∋ ∏ ∑ ‾ − ∗ √ ∝ ∞ ∠ ∧ ∨ ∩ ∪ ∫ ∴ ∼ ≅ ≈ ≠ ≡ ≤ ≥ ⊂ ⊃ ⊄ ⊆ ⊇ ⊕ ⊗ ⊥ ⋅ ◊ ℘ ℑ ℜ ℵ ♠ ♣ ♥ ♦ 𝛼 𝛽 𝛤 𝛾 𝛥 𝛿 𝜀 𝜁 𝛨 𝜂 𝛩 𝜃 𝜄 𝜅 𝛬 𝜆 𝜇 𝜈 𝛯 𝜉 𝛱 𝜋 𝛳 𝜍 𝛴 𝜎 𝜏 𝜐 𝛷 𝜑 𝜒 𝛹 𝜓 𝛺 𝜔 𝛻 𝜕 ★ ☆ ☎ ☚ ☛ ☜ ☝ ☞ ☟ ☹ ☺ ✔ ✘ × „ “ ” ‚ ‘ ’ « » ‹ › — – … ← ↑ → ↓ ↔ ⇐ ⇑ ⇒ ⇓ ⇔ © ™ ® ′ ″');
 			$list = array_combine( $list, $list );
@@ -712,6 +667,49 @@ class ToolbarPicker extends Toolbar
 				$list["(:$smiley:)"] = '<img src="img/smiles/icon_' .$smiley . '.gif" alt="' . $tra . '" title="' . $tra . '" border="0" width="15" height="15" />';
 			}
 			break;
+		case 'color':
+			$wysiwyg = 'TextColor';
+			$label = tra('Foreground color');
+			$icon = tra('pics/icons/palette.png');
+			$rawList = array();
+			
+			$hex = array("0", "3", "6", "9", "c", "f");
+			for ($r = 0; $r < count($hex); $r++){ // red
+				for ($g = 0; $g < count($hex); $g++){ // green
+					for ($b = 0; $b < count($hex); $b++){ // blue
+						$color = $hex[$r].$hex[$g].$hex[$b];
+						$rawList[] = $color;
+					}
+				}
+			}
+			$list = array();
+			foreach( $rawList as $color) {
+				$list["~~#$color:text~~"] = "<div style='background-color: #$color' title='$color' />&nbsp;</div>";
+			}
+			$headerlib->add_css('.toolbars-picker div {width: 17px; height:16px}');
+			break;
+
+		case 'bgcolor':
+			$label = tra('Background Color');
+			$icon = tra('pics/icons/palette_bg.png');
+			$wysiwyg = 'BGColor';
+
+			$hex = array("0", "3", "6", "9", "c", "f");
+			for ($r = 0; $r < count($hex); $r++){ // red
+				for ($g = 0; $g < count($hex); $g++){ // green
+					for ($b = 0; $b < count($hex); $b++){ // blue
+						$color = $hex[$r].$hex[$g].$hex[$b];
+						$rawList[] = $color;
+					}
+				}
+			}
+			$list = array();
+			foreach( $rawList as $color) {
+				$list["~~black,#$color:text~~"] = "<div style='background-color: #$color' title='$color' />&nbsp;</div>";
+			}
+			$headerlib->add_css('.toolbars-picker div {width: 17px; height:16px}');
+			break;
+
 		default:
 			return;
 		}
@@ -721,7 +719,8 @@ class ToolbarPicker extends Toolbar
 			->setLabel( $label )
 				->setIcon( !empty($icon) ? $icon : 'pics/icons/shading.png' )
 					->setList( $list )
-						->setType('Picker');
+						->setType('Picker')
+							->setName($tagName);
 		
 		foreach( $prefs as $pref ) {
 			$tag->addRequiredPreference( $pref );
@@ -731,6 +730,519 @@ class ToolbarPicker extends Toolbar
 		++$toolbarPickerIndex;
 		$tag->index = $toolbarPickerIndex;
 		ToolbarPicker::setupJs();
+
+		return $tag;
+	} // }}}
+
+	function setName( $name ) // {{{
+	{
+		$this->name = $name;
+		
+		return $this;
+	} // }}}
+
+	function setList( $list ) // {{{
+	{
+		$this->list = $list;
+		
+		return $this;
+	} // }}}
+
+	protected function setSyntax( $syntax ) // {{{
+	{
+		$this->syntax = $syntax;
+
+		return $this;
+	} // }}}
+	
+	public function getSyntax( $areaName = '$areaName' ) {
+		return 'displayPicker( this, \'' . $this->name . '\', \'' . $areaName . '\')';	// is enclosed in double quotes later
+	}
+	
+	static private function setupJs() {
+		
+		static $pickerAdded = false;
+		global $headerlib;
+
+		if( ! $pickerAdded ) {
+			$headerlib->add_js( <<<JS
+window.pickerData = [];
+var pickerDiv;
+
+displayPicker = function( closeTo, list, areaname ) {
+	if (pickerDiv) {
+		\$jq('div.toolbars-picker').remove();	// simple toggle
+		pickerDiv = false;
+		return;
+	}
+	pickerDiv = document.createElement('div');
+	document.body.appendChild( pickerDiv );
+
+	var coord = \$jq(closeTo).offset();
+	coord.bottom = coord.top + \$jq(closeTo).height();
+
+	textarea = getElementById( areaname);
+	// quick fix for Firefox 3.5 losing selection on changes to popup
+	if (typeof textarea.selectionStart != 'undefined') {
+		var tempSelectionStart = textarea.selectionStart;
+		var tempSelectionEnd = textarea.selectionEnd;
+	}		
+	pickerDiv.className = 'toolbars-picker';
+	pickerDiv.style.left = coord.left + 'px';
+	pickerDiv.style.top = (coord.bottom + 8) + 'px';
+
+	// quick fix for Firefox 3.5 losing selection on changes to popup
+	if (typeof textarea.selectionStart != 'undefined' && textarea.selectionStart != tempSelectionStart) {
+		textarea.selectionStart = tempSelectionStart;
+       	}
+	if (typeof textarea.selectionEnd != 'undefined' && textarea.selectionEnd != tempSelectionEnd) {
+                textarea.selectionEnd = tempSelectionEnd;
+       	}  
+
+	var prepareLink = function( link, ins, disp ) {
+		link.innerHTML = disp;
+		link.href = 'javascript:void(0)';
+		link.onclick = function() {
+			insertAt( areaname, ins );
+	
+			textarea = getElementById( areaname);	
+			// quick fix for Firefox 3.5 losing selection on changes to popup
+                        if (typeof textarea.selectionStart != 'undefined') {
+				var tempSelectionStart = textarea.selectionStart;
+                        	var tempSelectionEnd = textarea.selectionEnd;	
+			}
+
+			\$jq('div.toolbars-picker').remove();
+			pickerDiv = false;
+
+			// quick fix for Firefox 3.5 losing selection on changes to popup
+        		if (typeof textarea.selectionStart != 'undefined' && textarea.selectionStart != tempSelectionStart) {
+            		    textarea.selectionStart = tempSelectionStart;
+     		   	}
+			if (typeof textarea.selectionEnd != 'undefined' && textarea.selectionEnd != tempSelectionEnd) {
+                		textarea.selectionEnd = tempSelectionEnd;
+       			}
+
+			return false;
+		}
+	};
+
+	for( var i in window.pickerData[list] ) {
+		var char = window.pickerData[list][i];
+		var link = document.createElement( 'a' );
+
+		pickerDiv.appendChild( link );
+		pickerDiv.appendChild( document.createTextNode(' ') );
+		prepareLink( link, i, char );
+	}
+}
+
+JS
+, 0 );
+		}
+	}
+
+	function getWikiHtml( $areaName ) // {{{
+	{
+		global $headerlib;
+		$headerlib->add_js( "window.pickerData['$this->name'] = " . json_encode($this->list) . ";" );
+		
+		return $this->getSelfLink($this->getSyntax($areaName),
+							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-picker');
+	} // }}}
+}
+
+class ToolbarDialog extends Toolbar
+{
+	private $list;
+	private $index;
+	
+	public static function fromName( $tagName ) // {{{
+	{
+		global $prefs;
+		$tool_prefs = array();
+
+		switch( $tagName ) {
+		case 'tikilink':
+			$label = tra('Wiki Link');
+			$icon = tra('pics/icons/page_link.png');
+			$wysiwyg = 'tikilink';
+			$list = array('Wiki Link',
+						'<label for="tbWLinkDesc">Show this text</label>',
+						'<input type="text" id="tbWLinkDesc" class="ui-widget-content ui-corner-all" style="width: 100%" />',
+						'<label for="tbWLinkURL">Link to this page</label>',
+						'<input type="text" id="tbWLinkPage" class="ui-widget-content ui-corner-all" style="width: 100%" />',
+						$prefs['wikiplugin_alink'] == 'y' ? '<label for="tbWLinkRel">Anchor:</label>' : '',
+						$prefs['wikiplugin_alink'] == 'y' ? '<input type="text" id="tbWLinkAnchor" class="ui-widget-content ui-corner-all" style="width: 100%" />' : '',
+						$prefs['feature_semantic'] == 'y' ? '<label for="tbWLinkRel">Semantic relation:</label>' : '',
+						$prefs['feature_semantic'] == 'y' ? '<input type="text" id="tbWLinkRel" class="ui-widget-content ui-corner-all" style="width: 100%" />' : '',
+						'{"open": function () {
+$jq("#tbWLinkPage").tiki("autocomplete", "pagename");
+var s = getSelection($jq(getElementById(areaname))[0]);
+var m = /\((.*)\(([^\|]*)\|?([^\|]*)\|?([^\|]*)\|?\)\)/g.exec(s);
+if (m && m.length > 4) {
+	if ($jq("#tbWLinkRel")) { $jq("#tbWLinkRel").val(m[1]); }
+	$jq("#tbWLinkPage").val(m[2]);
+	if (m[4]) {
+		if ($jq("#tbWLinkAnchor")) { $jq("#tbWLinkAnchor").val(m[3]); }
+		$jq("#tbWLinkDesc").val(m[4]);
+	} else {
+		$jq("#tbWLinkDesc").val(m[3]);
+	}
+} else {
+	$jq("#tbWLinkDesc").val(s);
+	if ($jq("#tbWLinkAnchor")) { $jq("#tbWLinkAnchor").val("#"); }
+}
+						},
+						"buttons": { "Cancel": function() { $jq(this).dialog("close"); },'.
+						'"Insert": function() {
+var s = "(";
+if ($jq("#tbWLinkRel") && $jq("#tbWLinkRel").val()) { s += $jq("#tbWLinkRel").val(); }
+s += "(" + $jq("#tbWLinkPage").val();
+if ($jq("#tbWLinkAnchor") && $jq("#tbWLinkAnchor").val()) { s += "|" + $jq("#tbWLinkAnchor").val(); }
+if ($jq("#tbWLinkDesc").val()) { s += "|" + $jq("#tbWLinkDesc").val(); }
+s += "))";
+insertAt(areaname, s, false, false, true); 
+
+textarea = getElementById( areaname);
+// quick fix for Firefox 3.5 losing selection on changes to popup
+if (typeof textarea.selectionStart != "undefined") {
+	var tempSelectionStart = textarea.selectionStart;
+	var tempSelectionEnd = textarea.selectionEnd;
+}
+
+$jq(this).dialog("close");
+
+// quick fix for Firefox 3.5 losing selection on changes to popup
+if (typeof textarea.selectionStart != "undefined" && textarea.selectionStart != tempSelectionStart) {
+        textarea.selectionStart = tempSelectionStart;
+}
+if (typeof textarea.selectionEnd != "undefined" && textarea.selectionEnd != tempSelectionEnd) {
+        textarea.selectionEnd = tempSelectionEnd;
+}
+
+}}}'
+					);
+
+			break;
+		case 'link':
+			$wysiwyg = 'Link';
+			$label = tra('External Link');
+			$icon = tra('pics/icons/world_link.png');
+			$list = array('External Link',
+						'<label for="tbLinkDesc">Show this text</label>',
+						'<input type="text" id="tbLinkDesc" class="ui-widget-content ui-corner-all" style="width: 100%" />',
+						'<label for="tbLinkURL">link to this URL</label>',
+						'<input type="text" id="tbLinkURL" class="ui-widget-content ui-corner-all" style="width: 100%" />',
+						'<label for="tbLinkRel">Relation:</label>',
+						'<input type="text" id="tbLinkRel" class="ui-widget-content ui-corner-all" style="width: 100%" />',
+						$prefs['cachepages'] == 'y' ? '<br /><label for="tbLinkNoCache" style="display:inline;">No cache:</label>' : '',
+						$prefs['cachepages'] == 'y' ? '<input type="checkbox" id="tbLinkNoCache" class="ui-widget-content ui-corner-all" />' : '',
+						'{"width": 300, "open": function () {
+$jq("#tbWLinkPage").tiki("autocomplete", "pagename");
+var s = getSelection($jq(getElementById(areaname))[0]);
+var m = /\[([^\|]*)\|?([^\|]*)\|?([^\|]*)\]/g.exec(s);
+if (m && m.length > 3) {
+	$jq("#tbLinkURL").val(m[1]);
+	$jq("#tbLinkDesc").val(m[2]);
+	if (m[3]) {
+		if ($jq("#tbLinkNoCache") && m[3] == "nocache") {
+			$jq("#tbLinkNoCache").attr("checked", "checked");
+		} else {
+			$jq("#tbLinkRel").val(m[3]);
+		}			
+	} else {
+		$jq("#tbWLinkDesc").val(m[3]);
+	}
+} else {
+	if (s.match(/(http|https|ftp)([^ ]+)/ig) == s) {	// v simple URL match
+		$jq("#tbLinkURL").val(s);
+	} else {
+		$jq("#tbLinkDesc").val(s);
+	}
+}
+if (!$jq("#tbLinkURL").val()) {
+	$jq("#tbLinkURL").val("http://");
+}
+						},
+						"buttons": { "Cancel": function() { $jq(this).dialog("close"); },'.
+						'"Insert": function() {
+var s = "[" + $jq("#tbLinkURL").val();
+if ($jq("#tbLinkDesc").val()) { s += "|" + $jq("#tbLinkDesc").val(); }
+if ($jq("#tbLinkRel").val()) { s += "|" + $jq("#tbLinkRel").val(); }
+if ($jq("#tbLinkNoCache") && $jq("#tbLinkNoCache").attr("checked")) { s += "|nocache"; }
+s += "]";
+insertAt(areaname, s, false, false, true); 
+
+textarea = getElementById( areaname);
+// quick fix for Firefox 3.5 losing selection on changes to popup
+if (typeof textarea.selectionStart != "undefined") {
+	var tempSelectionStart = textarea.selectionStart;
+	var tempSelectionEnd = textarea.selectionEnd;
+}
+$jq(this).dialog("close");
+
+// quick fix for Firefox 3.5 losing selection on changes to popup
+if (textarea.selectionStart != tempSelectionStart) {
+        textarea.selectionStart = tempSelectionStart;
+}
+if (textarea.selectionEnd != tempSelectionEnd) {
+        textarea.selectionEnd = tempSelectionEnd;
+}
+
+}}}'
+					);
+			break;
+
+		case 'table':
+			$icon = tra('pics/icons/table.png');
+			$wysiwyg = 'Table';
+			$label = tra('Table Builder');
+			$list = array('Table Builder',
+						'{"open": function () {
+var s = getSelection($jq(getElementById(areaname))[0]);
+var m = /\|\|([\s\S]*?)\|\|/mg.exec(s);
+var vals = [], rows=3, cols=3, c, r, i, j;
+if (m) {
+	m = m[1];
+	m = m.split("\n");
+	rows = 0;
+	cols = 1;
+	for(i = 0; i < m.length; i++) {
+		var a2 = m[i].split("|");
+		var a = [];
+		for (j = 0; j < a2.length; j++) {	// links can have | chars in
+			if (a2[j].indexOf("[") > -1 && a2[j].indexOf("[[") == -1 && a2[j].indexOf("]") == -1 ) {	// external link
+				a[a.length] = a2[j];
+				j++;
+				var k = true;
+				while ( j < a2.length && k ) {
+					a[a.length-1] += "|" + a2[j];
+					if (a2[j].indexOf("]") > -1) {	// closed
+						k = false;
+					} else {
+						j++;
+					}
+				}
+			} else if (a2[j].search(/\(\S*\(/) > -1 && a2[j].indexOf("))") == -1) {
+				a[a.length] = a2[j];
+				j++;
+				var k = true;
+				while ( j < a2.length && k ) {
+					a[a.length-1] += "|" + a2[j];
+					if (a2[j].indexOf("))") > -1) {	// closed
+						k = false;
+					} else {
+						j++;
+					}
+				}
+			} else {
+				a[a.length] = a2[j];
+			}
+		}
+		vals[vals.length] = a;
+		if (a.length > cols) { cols = a.length; }
+		if (a.length) { rows++; }
+	}
+}
+for (r = 1; r <= rows; r++) {
+	for (c = 1; c <= cols; c++) {
+		var v = "";
+		if (vals.length) {
+			if (vals[r-1] && vals[r-1][c-1]) {
+				v = vals[r-1][c-1];
+			} else {
+				v = "   ";
+			}
+		} else {
+			v = "   ";	//row " + r + ",col " + c + "";
+		}
+		var el = $jq("<input type=\"text\" id=\"tbTableR" + r + "C" + c + "\" class=\"ui-widget-content ui-corner-all\" size=\"10\" value=\"" + v + "\" style=\"width:" + (90/cols) + "%\" />");
+		$jq(this).append(el);
+	}
+	if (r == 1) {
+		el = $jq("<img src=\"pics/icons/add.png\" />");
+		$jq(this).append(el);
+		el.click(function () {
+			var pr = $jq(this).parent();
+			$jq(pr).attr("cols", $jq(pr).attr("cols")+1);
+			for (r = 1; r <= $jq(pr).attr("rows"); r++) {
+				v = "   ";	//"row " + r + ",col " + $jq(pr).attr("cols") + "";
+				var el = $jq("<input type=\"text\" id=\"tbTableR" + r + "C" + $jq(pr).attr("cols") + "\" class=\"ui-widget-content ui-corner-all\" size=\"10\" value=\"" + v + "\" style=\"width:" + (90/$jq(pr).attr("cols")) + "%\" />");
+				$jq("#tbTableR" + r + "C" + ($jq(pr).attr("cols")-1)).after(el);
+			}
+			$jq(pr).find("input").width(90/$jq(pr).attr("cols") + "%");
+		});
+	}
+	$jq(this).append($jq("<br />"));
+}
+el = $jq("<img src=\"pics/icons/add.png\" />");
+$jq(this).append(el);
+el.click(function () {
+	var pr = $jq(this).parent();
+	$jq(pr).attr("rows", $jq(pr).attr("rows")+1);
+	for (c = 1; c <= $jq(pr).attr("cols"); c++) {
+		v = "   ";	//"row " + $jq(pr).attr("rows") + ",col " + c + "";
+		var el = $jq("<input type=\"text\" id=\"tbTableR" + $jq(pr).attr("rows") + "C" + c + "\" class=\"ui-widget-content ui-corner-all\" size=\"10\" value=\"" + v + "\" style=\"width:" + (90/$jq(pr).attr("cols")) + "%\" />");
+		$jq(this).before(el);
+	}
+	$jq(this).before("<br />");
+$jq(pr).dialog("option", "height", ($jq(pr).attr("rows")+1) * 1.2 * $jq("#tbTableR1C1").height() + 130);
+});
+
+this.rows = rows; this.cols = cols;
+$jq(this).dialog("option", "width", (cols+1) * 120 + 50);
+$jq(this).dialog("option", "position", "center");
+						},
+						"width": 320, "buttons": { "Cancel": function() { $jq(this).dialog("close"); },'.
+						'"Insert": function() {
+var s = "||", rows, cols, c, r, rows2=1, cols2=1;
+rows = this.rows ? this.rows : 3;
+cols = this.cols ? this.cols : 3;
+for (r = 1; r <= rows; r++) {
+	for (c = 1; c <= cols; c++) {
+		if ($jq("#tbTableR" + r + "C" + c).val()) {
+			if (r > rows2) {
+				rows2 = r;
+			}
+			if (c > cols2) {
+				cols2 = c;
+			}
+		}
+	}
+}
+for (r = 1; r <= rows2; r++) {
+	for (c = 1; c <= cols2; c++) {
+		s += $jq("#tbTableR" + r + "C" + c).val();
+		if (c < cols2) { s += "|"; }
+	}
+	if (r < rows2) {  s += "\n"; }
+}
+s += "||";
+insertAt(areaname, s, false, false, true);
+
+// quick fix for Firefox 3.5 losing selection on changes to popup
+textarea = getElementById( areaname);
+if (typeof textarea.selectionStart != "undefined") {
+	var tempSelectionStart = textarea.selectionStart;
+	var tempSelectionEnd = textarea.selectionEnd;
+}
+$jq(this).dialog("close");
+
+// quick fix for Firefox 3.5 losing selection on changes to popup
+if (textarea.selectionStart != tempSelectionStart) {
+        textarea.selectionStart = tempSelectionStart;
+}
+if (textarea.selectionEnd != tempSelectionEnd) {
+        textarea.selectionEnd = tempSelectionEnd;
+}
+
+}}}'
+					);
+			break;
+
+		case 'find':
+			$icon = tra('pics/icons/find.png');
+			$wysiwyg = 'Find';
+			$label = tra('Find Text');
+			$list = array('Find Text',
+						'<label>Search:</label>',
+						'<input type="text" id="tbFindSearch" class="ui-widget-content ui-corner-all" />',
+						'<label for="tbLinkNoCache" style="display:inline;">Case Insensitivity:</label>',
+						'<input type="checkbox" id="tbFindCase" checked="checked" class="ui-widget-content ui-corner-all" />',
+						'{"open": function() {
+	var s = getSelection($jq(getElementById(areaname))[0]);
+	$jq("#tbFindSearch").val(s);
+						  },'.
+						 '"buttons": { "Close": function() { $jq(this).dialog("close"); },'.
+						  '"Find": function() {
+	var s, opt, ta, str, re, p = 0, m;
+	s = $jq("#tbFindSearch").removeClass("ui-state-error").val();
+	opt = "";
+	if ($jq("#tbFindCase").attr("checked")) {
+		opt += "i";
+	}
+	ta = $jq(getElementById(areaname));
+	str = ta.val();
+	re = new RegExp(s,opt);
+	p = getCaretPos(ta[0]);
+	if (p && p < str.length) {
+		m = re.exec(str.substring(p));
+	} else {
+		p = 0;
+	}
+	if (!m) {
+		m = re.exec(str);
+		p = 0;
+	}
+	if (m) {
+		setSelectionRange(ta[0], m.index + p, m.index + s.length + p);
+	} else {
+		$jq("#tbFindSearch").addClass("ui-state-error");
+	}
+}}}'
+					);
+
+			break;
+
+		case 'replace':
+			$icon = tra('pics/icons/text_replace.png');
+			$wysiwyg = 'Replace';
+			$label = tra('Text Replace');
+			$tool_prefs[] = 'feature_wiki_replace';
+			
+			$list = array('Text Replace',
+						'<label>Search:</label>',
+						'<input type="text" id="tbReplaceSearch" class="ui-widget-content ui-corner-all" />',
+						'<label>Replace:</label>',
+						'<input type="text" id="tbReplaceReplace" class="ui-widget-content ui-corner-all clearfix" />',
+						'<label for="tbLinkNoCache" style="display:inline;">Case Insensitivity:</label>',
+						'<input type="checkbox" id="tbReplaceCase" checked="checked" class="ui-widget-content ui-corner-all" />',
+						'<br /><label for="tbLinkNoCache" style="display:inline;">Replace All:</label>',
+						'<input type="checkbox" id="tbReplaceAll" checked="checked" class="ui-widget-content ui-corner-all" />',
+						'{"open": function() {
+	var s = getSelection($jq(getElementById(areaname))[0]);
+	$jq("#tbReplaceSearch").val(s);
+						  },'.
+						 '"buttons": { "Close": function() { $jq(this).dialog("close"); },'.
+						'"Replace": function() {
+	var s = $jq("#tbReplaceSearch").val();
+	var r = $jq("#tbReplaceReplace").val();
+	var opt = "";
+	if ($jq("#tbReplaceAll").attr("checked")) {
+		opt += "g";
+	}
+	if ($jq("#tbReplaceCase").attr("checked")) {
+		opt += "i";
+	}
+	var str = $jq(getElementById(areaname)).val();
+	var re = new RegExp(s,opt);
+	$jq(getElementById(areaname)).val(str.replace(re,r));
+}}}'
+					);
+
+			break;
+
+		default:
+			return;
+		}
+
+		$tag = new self;
+		$tag->setWysiwygToken( $wysiwyg )
+			->setLabel( $label )
+				->setIcon( !empty($icon) ? $icon : 'pics/icons/shading.png' )
+					->setList( $list )
+						->setType('Dialog');
+		
+		foreach( $tool_prefs as $pref ) {
+			$tag->addRequiredPreference( $pref );
+		}
+
+		global $toolbarDialogIndex;
+		++$toolbarDialogIndex;
+		$tag->index = $toolbarDialogIndex;
+		
+		ToolbarDialog::setupJs();
 
 		return $tag;
 	} // }}}
@@ -750,57 +1262,67 @@ class ToolbarPicker extends Toolbar
 	} // }}}
 	
 	public function getSyntax( $areaName = '$areaName' ) {
-		return 'displayPicker( this, ' . $this->index . ', \'' . $areaName . '\')';
+		return 'displayDialog( this, ' . $this->index . ', \'' . $areaName . '\')';
 	}
 	
 	static private function setupJs() {
 		
-		static $pickerAdded = false;
+		static $dialogAdded = false;
 		global $headerlib;
 
-		if( ! $pickerAdded ) {
+		if( ! $dialogAdded ) {
+			$headerlib->include_jquery_ui();
 			$headerlib->add_js( <<<JS
-var pickerData = [];
-var pickerDiv;
+window.dialogData = [];
+var dialogDiv;
 
-function displayPicker( closeTo, list, areaname ) {
-	if (pickerDiv) {
-		\$jq('div.toolbars-picker').remove();	// simple toggle
-		pickerDiv = false;
-		return;
+displayDialog = function( closeTo, list, areaname ) {
+	var i, item, el, obj, tit = "";
+	if (!dialogDiv) {
+		dialogDiv = document.createElement('div');
+		document.body.appendChild( dialogDiv );
 	}
-	pickerDiv = document.createElement('div');
-	document.body.appendChild( pickerDiv );
-
-	var coord;
-	if (typeof closeTo.getCoordinates == 'function') {	// moo
-		coord = closeTo.getCoordinates();
-	} else if (\$jq) {									// jq
-		coord = \$jq(closeTo).offset();
-		coord.bottom = coord.top + \$jq(closeTo).height();
-	}
-	pickerDiv.className = 'toolbars-picker';
-	pickerDiv.style.left = coord.left + 'px';
-	pickerDiv.style.top = (coord.bottom + 8) + 'px';
-
-	var prepareLink = function( link, ins, disp ) {
-		link.innerHTML = disp;
-		link.href = 'javascript:void(0)';
-		link.onclick = function() {
-			insertAt( areaname, ins );
-			\$jq('div.toolbars-picker').remove();
-			pickerDiv = false;
+	\$jq(dialogDiv).empty();
+	
+	for( i in window.dialogData[list] ) {
+		item = window.dialogData[list][i];
+		if (item.indexOf("<") == 0) {	// form element
+			el = \$jq(item);
+			\$jq(dialogDiv).append( el );
+		} else if (item.indexOf("{") == 0) {
+			try {
+				//obj = JSON.parse(item);	// safer, but need json2.js lib
+				obj = eval("("+item+")");
+			} catch (e) {
+				alert(e.name + ' - ' + e.message);
+			}
+		} else {
+			tit = item;
 		}
-	};
-
-	for( var i in pickerData[list] ) {
-		var char = pickerData[list][i];
-		var link = document.createElement( 'a' );
-
-		pickerDiv.appendChild( link );
-		pickerDiv.appendChild( document.createTextNode(' ') );
-		prepareLink( link, i, char );
 	}
+	
+	// quick fix for Firefox 3.5 losing selection on changes to popup
+	textarea = getElementById( areaname);
+	if (typeof textarea.selectionStart != 'undefined') {
+		var tempSelectionStart = textarea.selectionStart;
+        	var tempSelectionEnd = textarea.selectionEnd; 
+	}
+
+	if (!obj) { obj = {}; }
+	if (!obj.width) { obj.width = 210; }
+	obj.bgiframe = true;
+	obj.autoOpen - false;
+	\$jq(dialogDiv).dialog('destroy').dialog(obj).dialog('option', 'title', tit).dialog('open');
+
+	// quick fix for Firefox 3.5 losing selection on changes to popup
+	if (textarea.selectionStart != tempSelectionStart) {
+                textarea.selectionStart = tempSelectionStart;
+        }
+        if (textarea.selectionEnd != tempSelectionEnd) {
+                textarea.selectionEnd = tempSelectionEnd;
+        }
+	
+	return false;
 }
 
 JS
@@ -811,7 +1333,7 @@ JS
 	function getWikiHtml( $areaName ) // {{{
 	{
 		global $headerlib;
-		$headerlib->add_js( "pickerData.push( " . json_encode($this->list) . " );", 1 );
+		$headerlib->add_js( "window.dialogData[$this->index] = " . json_encode($this->list) . ";", 1 + $this->index );
 		
 		return $this->getSelfLink($this->getSyntax($areaName),
 							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-picker');
@@ -834,7 +1356,7 @@ class ToolbarFullscreen extends Toolbar
 		if( isset($_REQUEST['zoom']) )
 			$name = 'preview';
 		return '<input type="image" name="'.$name.'" alt="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '" class="toolbar qt-fullscreen" '.
-				'title="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '" value="wiki_edit" onclick="needToConfirm=false;" title="" class="icon" src="' . htmlentities($this->icon, ENT_QUOTES, 'UTF-8') . '"/>';
+				'title="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '" value="wiki_edit" onclick="needToConfirm=false;" src="' . htmlentities($this->icon, ENT_QUOTES, 'UTF-8') . '"/>';
 	} // }}}
 }
 
@@ -894,7 +1416,7 @@ class ToolbarHelptool extends Toolbar
 			$plugins = $wikilib->list_plugins(true);
 		}
 		$smarty->assign_by_ref('plugins', $plugins);
-		return $smarty->fetch("tiki-edit_help.tpl");
+		return $smarty->fetch("tiki-edit_help.tpl") . $smarty->fetch("tiki-edit_help_plugins.tpl");
 		
 	} // }}}
 
@@ -911,7 +1433,8 @@ class ToolbarFileGallery extends Toolbar
 		$this->setLabel( tra('Choose or upload images') )
 			->setIcon( tra('pics/icons/pictures.png') )
 				->setWysiwygToken( 'tikiimage' )
-					->setType('FileGallery');
+					->setType('FileGallery')
+						->addRequiredPreference('feature_filegals_manager');
 	} // }}}
 
 	function getWikiHtml( $areaName ) // {{{
@@ -919,7 +1442,7 @@ class ToolbarFileGallery extends Toolbar
 		global $smarty;
 		
 		require_once $smarty->_get_plugin_filepath('function','filegal_manager_url');
-		return $this->getSelfLink('openFgalsWindow(\''.smarty_function_filegal_manager_url(array('area_name'=>$areaName), $smarty).'\');',
+		return $this->getSelfLink('openFgalsWindow(\''.htmlentities(smarty_function_filegal_manager_url(array('area_name'=>$areaName), $smarty)).'\');',
 							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-filegal');
 	} // }}}
 
@@ -944,13 +1467,13 @@ class ToolbarSwitchEditor extends Toolbar
 	{
 		global $smarty;
 		
-		return $this->getSelfLink('switchEditor(\'wysiwyg\', $jq(event.currentTarget).parents(\'form\')[0]);',
+		return $this->getSelfLink('switchEditor(\'wysiwyg\', $jq(this).parents(\'form\')[0]);',
 							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-switcheditor');
 	} // }}}
 
 	function isAccessible() // {{{
 	{
-		return parent::isAccessible() && ! isset($_REQUEST['zoom']);
+		return parent::isAccessible() && ! isset($_REQUEST['zoom']) && ! isset($_REQUEST['hdr']);	// no switch editor if zoom of section edit
 	} // }}}
 	
 /*	function getLabel() // {{{
@@ -1006,16 +1529,6 @@ class ToolbarWikiplugin extends Toolbar
 		global $tikilib;
 		return parent::isAccessible() && $tikilib->plugin_enabled( $this->pluginName );
 	} // }}}
-
-/*	probably not need now?
-	private static function getIcon( $name ) // {{{
-	{
-		// This property could be added to the plugin definition
-		switch($name) {
-		default:
-			return 'pics/icons/plugin.png';
-		}
-	} // }}} */
 
 	private static function getToken( $name ) // {{{
 	{
@@ -1159,8 +1672,14 @@ class ToolbarsList
 
 	function getWikiHtml( $areaName ) // {{{
 	{
-		global $tiki_p_admin, $tiki_p_admin_toolbars, $smarty, $section;
+		global $tiki_p_admin, $tiki_p_admin_toolbars, $smarty, $section, $prefs, $headerlib;
 		$html = '';
+
+		// $jq.selection() is in jquery.autocomplete.min.js
+		
+		if ($prefs['feature_jquery_autocomplete'] != 'y') {
+			$headerlib->add_jsfile('lib/jquery/jquery-autocomplete/jquery.autocomplete.min.js');
+		}
 
 		$c = 0;
 		foreach( $this->lines as $line ) {
@@ -1195,7 +1714,7 @@ class ToolbarsList
 						if (!empty($right)) {
 							$right = '<span class="toolbar-list">' . $right . '</span>';
 						}
-						$lineHtml .= "<div class='helptool-admin'>$lineBit $right</div>";
+						$lineHtml = "<div class='helptool-admin'>$lineBit $right</div>" . $lineHtml;
 					} else {
 						$lineHtml = $lineBit;
 					}
@@ -1211,7 +1730,7 @@ class ToolbarsList
 			$c++;
 		}
 
-		return $right . $html;
+		return $html;
 	} // }}}
 	
 	function contains($name) { // {{{

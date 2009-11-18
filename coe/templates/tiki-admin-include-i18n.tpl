@@ -5,14 +5,8 @@
   {literal}
 	function updateList( active )
 	{
-  		if( active )
+		if( ! active )
 		{
-			show('available_languages');
-		}
-		else
-		{
-			hide('available_languages');
-			
 			var optionList = document.getElementById( 'available_languages_select' ).options;
 			for( i in optionList )
 				optionList[i].selected = false;
@@ -30,19 +24,19 @@
 {tabset name="admin_i18n"}
 	{tab name="{tr}Internationalization{/tr}"}
 
-{preference name=language}
+{preference name=language default=$prefs.site_language}
 {preference name=wiki_page_regex}
 
 <div class="adminoptionbox">
 	{preference name=feature_multilingual}
-<div class="adminoptionboxchild" id="usemultilingual" style="display:{if $prefs.feature_multilingual eq 'y'}block{else}none{/if};">	
+<div class="adminoptionboxchild" id="feature_multilingual_childcontainer">	
 
 	{preference name=feature_detect_language}
 	{preference name=feature_best_language}
 	{preference name=change_language}
 	{preference name=restrict_language}
 	
-	<div class="adminoptionboxchild" id="available_languages" {if count($prefs.available_languages) == 0}style="display:none;"{else}style="display:block;"{/if}>
+	<div class="adminoptionboxchild" id="restrict_language_childcontainer">
 		{preference name=available_languages}
 		{preference name=language_inclusion_threshold}
 	</div>
@@ -51,6 +45,7 @@
 	{preference name=feature_sync_language}
 	{preference name=feature_translation}
 	{preference name=feature_urgent_translation}
+	{preference name=feature_translation_incomplete_notice}
 	{preference name=feature_multilingual_one_page}
 	{preference name=quantify_changes}
 	{preference name=feature_multilingual_structures}
@@ -71,7 +66,7 @@
 {*------------------------------- Babelfish ----------------------------- *}
 
 {preference name=feature_babelfish}
-{preference name=babelfish_logo}
+{preference name=feature_babelfish_logo}
 
 {/tab}
 {tab name="{tr}Customized String Translation{/tr}"}

@@ -41,7 +41,7 @@
 		<tr>
 			<td class="{cycle advance=false}">{$topics[user].topicId}</td>
 			<td class="{cycle advance=false}">
-				<a class="link" href="tiki-view_articles.php?topic={$topics[user].topicId}">{$topics[user].name}</a>
+				<a class="link" href="tiki-view_articles.php?topic={$topics[user].topicId}">{$topics[user].name|escape}</a>
 			</td>
 			<td class="{cycle advance=false}">
 				{if $topics[user].image_size}

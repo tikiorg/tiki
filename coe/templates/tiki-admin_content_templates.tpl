@@ -8,7 +8,7 @@
 {/if}
 
 {if $templateId > 0}
-	<h2>{tr}Edit this template:{/tr} {$info.name}</h2>
+	<h2>{tr}Edit this template:{/tr} {$info.name|escape}</h2>
 	<a href="tiki-admin_content_templates.php">{tr}Create new template{/tr}</a>
 {else}
 	<h2>{tr}Create new template{/tr}</h2>
@@ -70,8 +70,25 @@
 			</td>
 		</tr>
 
+		<tr>
+			<td class="formcolor">{tr}Template Type{/tr}:</td>
+			<td class="formcolor">
+				<select name="template_type" class="type-selector">
+					<option value="static"{if $info.template_type eq 'static'} selected="selected"{/if}>{tr}Text area{/tr}</option>
+					<option value="page"{if $info.template_type eq 'page'} selected="selected"{/if}>{tr}Wiki Page{/tr}</option>
+				</select>
+			</td>
+		</tr>
+		
+		<tr class="type-cond for-page">
+			<td class="formcolor">{tr}Page Name{/tr}:</td>
+			<td class="formcolor">
+				<input type="text" name="page_name" value="{$info.page_name}"/>
+			</td>
+		</tr>
+
 		{if $wysiwyg eq 'n' or ($wysiwyg ne 'y' and $prefs.wysiwyg_default ne 'y')}
-			<tr>
+			<tr class="type-cond for-static">
 				<td class="formcolor"><label>{tr}Toolbars{/tr}</label></td>
 				<td class="formcolor">
 					{toolbars area_name='editwiki'}
@@ -79,7 +96,7 @@
 			</tr>
 		{/if}
 
-		<tr>
+		<tr class="type-cond for-static">
 			{assign var=area_name value="editwiki"}
 			{if $wysiwyg eq 'n' or ($wysiwyg ne 'y' and $prefs.wysiwyg_default ne 'y')}
 				<td class="formcolor">
@@ -104,6 +121,13 @@
 			</td>
 		</tr>
 	</table>
+	{jq}
+		$jq('.type-selector').change( function( e ) {
+			$jq('.type-cond').hide();
+			var val = $jq('.type-selector').val();
+			$jq('.for-' + val).show();
+		} ).trigger('change');
+	{/jq}
 </form>
 
 <hr />
@@ -127,7 +151,7 @@
 	{cycle values="odd,even" print=false advance=false}
 	{section name=user loop=$channels}
 		<tr>
-			<td class="{cycle advance=false}">{$channels[user].name}</td>
+			<td class="{cycle advance=false}">{$channels[user].name|escape}</td>
 			<td class="{cycle advance=false}">{$channels[user].created|tiki_short_datetime}</td>
 			<td class="{cycle advance=false}">
 				{if count($channels[user].sections) == 0}{tr}Visible in no sections{/tr}{/if}

@@ -5,7 +5,7 @@
 {include file='find.tpl'}
 
 {tabset name='tabs_print_pages'}
-	{tab name='{tr}Structures{/tr}'}
+	{tab name="{tr}Structures{/tr}"}
   {* --- tab with structures -- *}
       {if $printstructures}
         <h2>{tr}Selected Structures{/tr}</h2>
@@ -39,7 +39,7 @@
     </form>
 	{/tab}
 
-{tab name='{tr}Pages{/tr}'}
+{tab name="{tr}Pages{/tr}"}
 {* --- tab with pages -- *}
 <table class="admin">
 	<tr>

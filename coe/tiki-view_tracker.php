@@ -199,7 +199,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 		$listfields[$fid]['editableBy'] = $xfields['data'][$i]['editableBy'];
 		if ($listfields[$fid]['type'] == 'e' && $prefs['feature_categories'] == 'y') { //category
 			$parentId = $listfields[$fid]['options_array'][0];
-			$listfields[$fid]['categories'] = $categlib->get_child_categories($parentId);
+			$listfields[$fid]['categories'] = $categlib->get_viewable_child_categories($parentId);
 		}
 		if (isset($xfields['data'][$i]['otherField'])) $listfields[$fid]['otherField'] = $xfields['data'][$i]['otherField'];
 	}
@@ -214,7 +214,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 			}
 		} elseif ($fields["data"][$i]["type"] == 'e' && $prefs['feature_categories'] == 'y') { // category
 			$parentId = $fields["data"][$i]['options_array'][0];
-			$fields["data"][$i]['categories'] = $categlib->get_child_categories($parentId);
+			$fields["data"][$i]['categories'] = $categlib->get_viewable_child_categories($parentId);
 			$categId = "ins_cat_$fid";
 			if (isset($_REQUEST[$categId])) {
 				if (is_array($_REQUEST[$categId])) {
@@ -350,12 +350,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 				$fields["data"][$i]["value"] = '';
 			}
 			if ($fields["data"][$i]["type"] == 'r') { // item link
-				if ($tiki_p_admin_trackers == 'y') {
-					$stt = 'poc';
-				} else {
-					$stt = 'o';
-				}
-				$fields["data"][$i]["list"] = array_unique($trklib->get_all_items($fields["data"][$i]["options_array"][0], $fields["data"][$i]["options_array"][1], $stt));
+				$fields["data"][$i]["list"] = array_unique($trklib->get_all_items($fields["data"][$i]["options_array"][0], $fields["data"][$i]["options_array"][1], 'poc', false));
 				if (isset($fields["data"][$i]["options_array"][3])) $fields["data"][$i]["listdisplay"] = array_unique($trklib->concat_all_items_from_fieldslist($fields["data"][$i]["options_array"][0], $fields["data"][$i]["options_array"][3]));
 			} elseif (($fields["data"][$i]["type"] == 'M') && ($fields["data"][$i]["options_array"][0] >= '3')) {
 				if (isset($_FILES["$ins_id"]) && is_uploaded_file($_FILES["$ins_id"]['tmp_name'])) {
@@ -519,7 +514,7 @@ if (isset($_REQUEST['import'])) {
 			if (!isset($_REQUEST["status"]) or ($tracker_info["showStatus"] != 'y' and $tiki_p_admin_trackers != 'y')) {
 				$_REQUEST["status"] = '';
 			}
-			if (empty($_REQUEST["itemId"])) { // test if one item per user
+			if (empty($_REQUEST["itemId"]) && $tracker_info['oneUserItem'] == 'y') { // test if one item per user
 				$_REQUEST['itemId'] = $trklib->get_user_item($_REQUEST['trackerId'], $tracker_info);
 			}
 			$itemid = $trklib->replace_item($_REQUEST["trackerId"], $_REQUEST["itemId"], $ins_fields, $_REQUEST['status'], $ins_categs);
@@ -630,7 +625,7 @@ if (isset($_REQUEST["trackerId"])) $trackerId = $_REQUEST["trackerId"];
 if (isset($tracker_info['useRatings']) and $tracker_info['useRatings'] == 'y' and $user and $tiki_p_tracker_vote_ratings == 'y' and !empty($_REQUEST['trackerId']) and !empty($ratedItemId) and isset($newItemRate) and ($newItemRate == 'NULL' || in_array($newItemRate, split(',', $tracker_info['ratingOptions'])))) {
 	$trklib->replace_rating($_REQUEST['trackerId'], $ratedItemId, $newItemRateField, $user, $newItemRate);
 }
-$items = $trklib->list_items($_REQUEST["trackerId"], $offset, $maxRecords, $sort_mode, $listfields, $filterfield, $filtervalue, $_REQUEST["status"], $initial, $exactvalue);
+$items = $trklib->list_items($_REQUEST["trackerId"], $offset, $maxRecords, $sort_mode, $listfields, $filterfield, $filtervalue, $_REQUEST["status"], $initial, $exactvalue,'', $xfields);
 $urlquery['status'] = $_REQUEST['status'];
 $urlquery['initial'] = $initial;
 $urlquery['trackerId'] = $_REQUEST["trackerId"];
@@ -680,7 +675,7 @@ for ($i = 0; $i < count($xfields['data']); $i++) {
 		$listfields[$fid]['editableBy'] = $xfields['data'][$i]['editableBy'];
 		if ($listfields[$fid]['type'] == 'e' && $prefs['feature_categories'] == 'y') { //category
 			$parentId = $listfields[$fid]['options_array'][0];
-			$listfields[$fid]['categories'] = $categlib->get_child_categories($parentId);
+			$listfields[$fid]['categories'] = $categlib->get_viewable_child_categories($parentId);
 		}
 		if (isset($xfields['data'][$i]['otherField'])) $listfields[$fid]['otherField'] = $xfields['data'][$i]['otherField'];
 	}

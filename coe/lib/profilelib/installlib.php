@@ -28,7 +28,6 @@ class Tiki_Profile_Installer
 		'datachannel' => 'Tiki_Profile_InstallHandler_DataChannel',
 		'transition' => 'Tiki_Profile_InstallHandler_Transition',
 		'calendar' => 'Tiki_Profile_InstallHandler_Calendar',
-		'ws' => 'Tiki_Profile_InstallHandler_Workspaces',
 	);
 
 	private static $typeMap = array(
@@ -98,7 +97,7 @@ class Tiki_Profile_Installer
 	{
 		global $tikilib;
 
-		$result = $tikilib->query( "SELECT DISTINCT domain, profile FROM tiki_profile_symbols" );
+		$result = $tikilib->query( "SELECT DISTINCT `domain`, `profile` FROM `tiki_profile_symbols`" );
 		if ( $result ) while( $row = $result->fetchRow() )
 			$this->installed[Tiki_Profile::getProfileKeyFor( $row['domain'], $row['profile'] )] = true;
 	} // }}}
@@ -193,7 +192,7 @@ class Tiki_Profile_Installer
 				$this->doInstall( $p );
 			
 			if (count($this->getFeedback()) == count($profiles)) {
-				$this->setFeedback(tra('Nothing was installed, check profile for errors'));
+				$this->setFeedback(tra('Nothing was changed, please check profile for errors'));
 			}
 			$cachelib->empty_full_cache();
 			return true;
@@ -249,13 +248,13 @@ class Tiki_Profile_Installer
 	{
 		global $tikilib, $prefs;
 		
-		$this->setFeedback(tra('Installing').': '.$profile->profile);
+		$this->setFeedback(tra('Applying profile').': '.$profile->profile);
 
 		$this->installed[$profile->getProfileKey()] = $profile;
 
 		foreach( $profile->getObjects() as $object ) {
 			$this->getInstallHandler( $object )->install();
-			$this->setFeedback(tra('Installed').': '.$object->getDescription());
+			$this->setFeedback(tra('Added (or modified)').': '.$object->getDescription());
 		}
 		$preferences = $profile->getPreferences();
 		$profile->replaceReferences( $preferences, $this->userData );
@@ -1170,7 +1169,7 @@ class Tiki_Profile_InstallHandler_Menu extends Tiki_Profile_InstallHandler // {{
 			$type = 'e';
 
 		$menulib->replace_menu( 0, $data['name'], $data['description'], $type, $data['icon'] );
-		$result = $tikilib->query( "SELECT MAX(menuId) FROM tiki_menus" );
+		$result = $tikilib->query( "SELECT MAX(`menuId`) FROM `tiki_menus`" );
 		$menuId = reset( $result->fetchRow() );
 
 		foreach( $data['items'] as $item )
@@ -1301,7 +1300,7 @@ class Tiki_Profile_InstallHandler_BlogPost extends Tiki_Profile_InstallHandler /
 			global $bloglib, $tikilib;
 			if( ! $bloglib ) require_once 'lib/blogs/bloglib.php';
 
-			$result = $tikilib->query( "SELECT user FROM tiki_blogs WHERE blogId = ?", array( $data['blog'] ) );
+			$result = $tikilib->query( "SELECT `user` FROM `tiki_blogs` WHERE `blogId` = ?", array( $data['blog'] ) );
 
 			if( $row = $result->fetchRow() ) {
 				$data['user'] = $row['user'];
@@ -1515,7 +1514,7 @@ class Tiki_Profile_InstallHandler_Rss extends Tiki_Profile_InstallHandler // {{{
 
 		if( $rsslib->replace_rss_module( 0, $data['name'], $data['description'], $data['url'], $data['refresh'], $data['show_title'], $data['show_publication_date'] ) ) {
 
-			$id = (int) $rsslib->getOne("SELECT MAX(rssId) FROM tiki_rss_modules");
+			$id = (int) $rsslib->getOne("SELECT MAX(`rssId`) FROM `tiki_rss_modules`");
 			return $id;
 		}
 	}
@@ -1899,6 +1898,7 @@ class Tiki_Profile_InstallHandler_Template extends Tiki_Profile_InstallHandler /
 
 		$defaults = array(
 			'sections' => array( 'wiki page' ),
+			'type' => 'static',
 		);
 
 		$data = array_merge(
@@ -1933,7 +1933,7 @@ class Tiki_Profile_InstallHandler_Template extends Tiki_Profile_InstallHandler /
 
 		$this->replaceReferences( $data );
 
-		$templateId = $templateslib->replace_template( null, $data['name'], $data['content'] );
+		$templateId = $templateslib->replace_template( null, $data['name'], $data['content'], $data['type'] );
 		foreach( $data['sections'] as $section ) {
 			$templateslib->add_template_to_section( $templateId, $section );
 		}
@@ -2187,77 +2187,6 @@ class Tiki_Profile_InstallHandler_User extends Tiki_Profile_InstallHandler // {{
 	}
 } // }}}
 
-//Working on it, probably a lot of bugs to solve
-class Tiki_Profile_InstallHandler_Workspaces extends Tiki_Profile_InstallHandler
-{
-
-    function getData()
-    {
-	if ( $this->data ) return $this->data;
-
-	$defaults = array(
-	    'parent' => null,
-	);
-
-	$data = array_merge(
-	    $defaults,
-	    $this->obj->getData()
-	);
-
-	$data['preferences'] = Tiki_Profile::convertLists( $data['preferences'], array(
-	    'enable' => 'y', 
-	    'disable' => 'n'
-	) );
-
-	$data['preferences'] = Tiki_Profile::convertYesNo( $data['preferences'] );
-
-	return $this->data = $data;
-    }
-
-    function canInstall()
-    {
-	$data = $this->getData();
-
-	if ( isset($data["name"]) && isset($data["groups"]) ) return true;
-	else return false;
-    }
-
-    function _install()
-    {
-	$data = $this->getData();
-
-	$this->replaceReferences( $data );
-
-	global $wslib; if (!$wslib) require_once 'lib/workspaces/wslib.php';
-
-	if ($this->canInstall()){
-	    $id = $wslib->create_ws($data['name'], null, $data['parent'], $data['description']);
-
-	    //With this I can obtain what objects was installed by the profile before the install of the ws profile
-	    global $tikilib; if (!$tikilib) require_once 'lib/tikilib.php';
-
-	    foreach ($data['groups'] as $group)
-	    {
-		$wslib->add_ws_group ($id, $data['name'], $group['name'], $group['description'], null);
-		    
-		global $userlib; if (!$userlib) require_once 'lib/userlib.php';
-
-		foreach ($group['members'] as $member)
-		    if ($userlib->user_exists($member))
-			$userlib->assign_user_to_group($member, $group['name']);
-
-		if ( isset($group['items']) )
-		{
-		    foreach ($group['items'] as $item)
-		    {
-		    }
-		}
-	    }
-
-	    return $id;
-	}
-    }
-}
 
 interface Tiki_Profile_Converter
 {

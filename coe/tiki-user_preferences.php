@@ -158,7 +158,7 @@ if ($prefs['feature_userPreferences'] == 'y' && isset($_REQUEST["new_prefs"])) {
 	foreach($customfields as $custpref => $prefvalue) {
 		if (isset($_REQUEST[$customfields[$custpref]['prefName']])) $tikilib->set_user_preference($userwatch, $customfields[$custpref]['prefName'], $_REQUEST[$customfields[$custpref]['prefName']]);
 	}
-	if (isset($_REQUEST["realName"]) && ($prefs['auth_ldap_nameattr'] == '' || $prefs['auth_method'] != 'auth')) $tikilib->set_user_preference($userwatch, 'realName', $_REQUEST["realName"]);
+	if (isset($_REQUEST["realName"]) && ($prefs['auth_ldap_nameattr'] == '' || $prefs['auth_method'] != 'ldap')) $tikilib->set_user_preference($userwatch, 'realName', $_REQUEST["realName"]);
 	if ($prefs['feature_community_gender'] == 'y') {
 		if (isset($_REQUEST["gender"])) $tikilib->set_user_preference($userwatch, 'gender', $_REQUEST["gender"]);
 	}
@@ -253,7 +253,7 @@ if ($prefs['feature_userPreferences'] == 'y' && isset($_REQUEST["new_prefs"])) {
 		$userlib->interSendUserInfo($prefs['interlist'][$prefs['feature_intertiki_mymaster']], $userwatch);
 	}
 }
-if ($prefs['auth_method'] == 'auth' && $user == 'admin' && $prefs['auth_skip_admin'] == 'y') {
+if ($prefs['auth_method'] == 'ldap' && $user == 'admin' && $prefs['ldap_skip_admin'] == 'y') {
 	$change_password = 'y';
 	$smarty->assign('change_password', $change_password);
 }
@@ -277,7 +277,7 @@ if (isset($_REQUEST['chgadmin'])) {
 			die;
 		}
 	}
-	if (!empty($_REQUEST['email']) && $prefs['login_is_email'] != 'y') {
+	if (!empty($_REQUEST['email']) && $prefs['login_is_email'] != 'y' && $_REQUEST['email'] != $userlib->get_user_email($userwatch)) {
 		$userlib->change_user_email($userwatch, $_REQUEST['email'], $pass);
 		$tikifeedback[] = array('num' => 1, 'mes' => sprintf(tra("Email is set to %s"), $_REQUEST['email']));
 		if ($prefs['feature_intertiki'] == 'y' && !empty($prefs['feature_intertiki_mymaster']) && $prefs['feature_intertiki_import_preferences'] == 'y') { //send to the master

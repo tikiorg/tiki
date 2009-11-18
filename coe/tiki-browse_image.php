@@ -56,9 +56,9 @@ $arrscales = $imagegallib->get_gallery_scale_info($galleryId);
 // adjust scale size to existing ones
 if ($scalesize && !$prefs['preset_galleries_info'] == 'y') {
 	$testscale = 0;
-	for ($iscale = 0; $iscale < count($arrscales); $iscale++) {
-		if ($scalesize <= $arrscales[$iscale]['scale']) {
-			$testscale = $arrscales[$iscale]['scale'];
+	foreach( $arrscales as $arrscale ) {
+		if ($scalesize <= $arrscale['scale']) {
+			$testscale = $arrscale['scale'];
 			break;
 		}
 	}
@@ -165,16 +165,16 @@ $resultscale = $scalesize < $maxsize ? $scalesize : 0;
 $scaleinfo['nextscale'] = 0;
 $scaleinfo['prevscale'] = 0;
 $testscale = $resultscale ? $resultscale : $maxsize;
-for ($iscale = 0; $iscale < count($arrscales); $iscale++) {
-	if ($testscale == $arrscales[$iscale]['scale']) {
+foreach($arrscales as $arrscale) {
+	if ($testscale == $arrscale['scale']) {
 		continue;
 	}
-	if ($testscale > $arrscales[$iscale]['scale']) {
-		$scaleinfo['prevscale'] = $arrscales[$iscale]['scale'];
+	if ($testscale > $arrscale['scale']) {
+		$scaleinfo['prevscale'] = $arrscale['scale'];
 		continue;
 	}
-	if ($maxsize > $arrscales[$iscale]['scale']) {
-		$scaleinfo['nextscale'] = $arrscales[$iscale]['scale'];
+	if ($maxsize > $arrscale['scale']) {
+		$scaleinfo['nextscale'] = $arrscale['scale'];
 	}
 	break;
 }

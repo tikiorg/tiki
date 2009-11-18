@@ -119,16 +119,17 @@ input[type=password] {
 	cursor: text;
 }
 
+input.button,
 button,
-.button,
 .button input,
+.button,
+input.wikiaction,
 .calbuttonbox {
 	background: #4e4e4e url(darkroom/button.png) top left repeat-x;
 	color: #b2b2b2;
 	font-weight: bold;
 	border: 1px solid transparent;
 	border-top: 1px solid #818181;
-	padding: 0 4px;
 	vertical-align: middle;
 	cursor: pointer;
 	white-space: nowrap;
@@ -154,27 +155,27 @@ input[type=reset] {
 	font-weight: bold;
 	border: 1px solid transparent;
 	border-top: 1px solid #818181;
-	padding: 0 4px;
 	vertical-align: middle;
 	cursor: pointer;
 }
 
+input.button:hover,
 button:hover,
-.button:hover,
 input[type=submit]:hover,
-input[type=reset]:hover,
 .button input:hover,
-.calbuttonbox:hover {
+.button:hover,
+.calbuttonbox a:hover {
 	border: 1px solid #b2b2b2;
 }
 
 .button a:hover {
 	text-decoration: none;
+	padding: 0 4px;
 }
 
 span.button {
 	font-size: 0.8em;
-	padding: 0;
+/*	padding: 0;*/
 }
 
 input[type=file] {
@@ -889,7 +890,7 @@ img.flipmodimage:hover {
 }
 
 .warning .rbox-title {
-	color: #ffe6db;
+	color: #000;
 }
 
 .tip .rbox-title,
@@ -902,6 +903,15 @@ img.flipmodimage:hover {
 div.simplebox {
 	background: #696969;
 	padding: 4px;
+}
+
+.odd {
+	color: #fff;
+	background: #292929;
+}
+.even {
+	color: #fff;
+	background: #232323;
 }
 
 /***** Tables, Tabs and Lists ****/
@@ -935,6 +945,7 @@ td.form,
 .editfgalform td,
 .comform td,
 .forumform td {
+	color: #fff;
 	background: #292929;
 	padding: 3px;
 }
@@ -958,12 +969,14 @@ tr.even {
 
 tr.odd td,
 td.odd {
+	color: #fff;
 	background: #292929;
 	border-right: 1px solid #696969;
 }
 
 tr.even td,
 td.even {
+	color: #fff;
 	background: #232323;
 	border-right: 1px solid #696969;
 }
@@ -1119,6 +1132,12 @@ div#page-bar {
 }
 
 .navbar {
+	line-height: 150%;
+	margin-bottom: 10px;
+	margin-top: 5px;
+}
+
+.categbar {
 	line-height: 150%;
 	margin-bottom: 10px;
 	margin-top: 5px;
@@ -1865,19 +1884,19 @@ td.calodd, td.caleven {
 	font-size: .95em;
 }
 
-#caltable .calfocuson,
+.caltable .calfocuson,
 .box-data td.fc a.today,
 .box-data td a.today {
 	background: #292929;
 	border: solid 1px #696969;
 }
 
-#caltable .calfocuson a {
+.caltable .calfocuson a {
 	color: #d8d8d8;
 }
 
-#caltable .calfocus a,
-#caltable .calfocuson a {
+.caltable .calfocus a,
+.caltable .calfocuson a {
 	text-decoration: none;
 }
 
@@ -1898,7 +1917,7 @@ td.calodd, td.caleven {
 	color: #d8d8d8;
 }
 
-#caltable .weeks {
+.caltable .weeks {
 	color: #d8d8d8;
 }
 

@@ -129,7 +129,7 @@ class ShoutboxLib extends TikiLib {
                 $cant = $this->getOne($query_cant,$bindvars);
                 $ret = array();
 
-                while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+                while ($res = $result->fetchRow()) {
                         $ret[] = $res;
                 }
 

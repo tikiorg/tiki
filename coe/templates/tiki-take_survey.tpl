@@ -5,15 +5,15 @@
 <form name="aform" formId='editpageform' action="{$form_action|default:'tiki-take_survey.php'}" method="post">
 <input type="hidden" name="surveyId" value="{$surveyId|escape}" />
 <input type="hidden" name="vote" value="yes" />
-  {if !isset($show_name) or $show_name eq 'y'}<h2>{$survey_info.name}</h2>{/if}
+  {if !isset($show_name) or $show_name eq 'y'}<h2>{$survey_info.name|escape}</h2>{/if}
     <div class="description">{wiki}{$survey_info.description|escape}{/wiki}</div>
     {section name=ix loop=$questions}
     <div class="questionblock">
-      <div class="quizquestion">{$questions[ix].question}</div>
+      <div class="quizquestion">{$questions[ix].question|escape|nl2br}</div>
       {if $questions[ix].type eq 'c'}
         <div class="quizoptions">
           {section name=jx loop=$questions[ix].qoptions}
-            <input type="radio" value="{$questions[ix].qoptions[jx].optionId|escape}" name="question_{$questions[ix].questionId}" />{$questions[ix].qoptions[jx].qoption}<br />
+            <input type="radio" value="{$questions[ix].qoptions[jx].optionId|escape}" name="question_{$questions[ix].questionId}" />{$questions[ix].qoptions[jx].qoption|escape}<br />
           {/section}
         </div>  
       {elseif $questions[ix].type eq 't'}

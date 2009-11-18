@@ -1,7 +1,9 @@
+<div id="fixedwidth"> {* enables fixed-width layouts *}
+	<div id="main">
 <div id="siteheader" class="clearfix">
 	<div id="header-top">
 		<div id="sitelogo" style="padding-left:70px"><h1><img style="border:medium none; vertical-align:middle" alt="{tr}TikiWiki CMS/Groupware{/tr}" src="img/tiki/tikisitelogo.{if isset($ie6)}gif{else}png{/if}" />
-			<span style="vertical-align:middle">{tr}Tiki installer{/tr} v{$tiki_version_name} <a title="{tr}Help{/tr}" href="http://doc.tikiwiki.org/Installation" target="help"><img style="border:0" src='pics/icons/help.png' alt="{tr}Help{/tr}" /></a></span></h1>
+			<span style="vertical-align:middle">{tr}Tiki installer{/tr} {$tiki_version_name} <a title="{tr}Help{/tr}" href="http://doc.tikiwiki.org/Installation" target="help"><img style="border:0" src='pics/icons/help.png' alt="{tr}Help{/tr}" /></a></span></h1>
 		</div>
 	</div>
 </div>
@@ -192,7 +194,9 @@
 			<div style="margin-left:1em">
 			<select name="db" id="db">
 {foreach key=dsn item=dbname from=$dbservers}
-				<option value="{$dsn}">{$dbname}</option>
+	{if $dsn|stristr:"mysql"}
+				<option value="{$dsn}"{if isset($smarty.request.db) and $smarty.request.db eq $dsn} selected="selected"{/if}>{$dbname}</option>
+	{/if}
 {/foreach}
 			</select> <a href="javascript:void(0)" onclick="flip('db_help');" title="{tr}Help{/tr}"><img src="pics/icons/help.png" alt="{tr}Help{/tr}" /></a>
 			<div style="display:none" id="db_help">
@@ -207,7 +211,7 @@
 			<input type="text" name="host" id="host" value="{if isset($smarty.request.host)}{$smarty.request.host|escape:"html"}{else}localhost{/if}" size="40" /> <a href="javascript:void(0)" onclick="flip('host_help');" title="{tr}Help{/tr}"><img src="pics/icons/help.png" alt="{tr}Help{/tr}" /></a>
 			<br /><em>{tr}Enter the host name or IP for your database.{/tr}</em>
 			<div style="display:none;" id="host_help">
-				<p>{tr}Use <strong>localhost</strong> if the database is running on the same machine as Tiki.{/tr} {tr}For SQLite, enter the path and filename to your database file.{/tr}</p>
+				<p>{tr}Use <strong>localhost</strong> if the database is running on the same machine as Tiki.{/tr}</p>
 			</div>
 			</div>
 		</div>
@@ -238,7 +242,7 @@
 </div>
 
 {elseif $install_step eq '4'}
-<h1>{if $tikidb_created}{tr}Install &amp; Update Profile{/tr}{else}{tr}Install Profile{/tr}{/if}</h1>
+<h1>{if $tikidb_created}{tr}Install &amp; Upgrade{/tr}{else}{tr}Install{/tr}{/if}</h1>
 {if $max_exec_set_failed eq 'y'}
 {remarksbox type="warning" title="{tr}Warning{/tr}"}
 {tr}Failed to set max_execution_time to 0 for PHP. You may experience problems when creating/upgrading the database on a slow system. This will manitest itself by a blank page.{/tr}
@@ -248,13 +252,13 @@
 <div class="clearfix">
 <p>
 {if $tikidb_created}
-	{tr}Select the installation (or upgrade) profile to use. This profile will populate (or upgrade) the database.{/tr}<br/><br/>
+	{tr}This install will populate (or upgrade) the database.{/tr}<br/><br/>
 	{tr}If you want to upgrade from a previous Tiki release, ensure that you have read and understood the <a href="http://doc.tikiwiki.org/Upgrade" target="_blank">Upgrade instructions</a>.{/tr}
 {else}
-	{tr}Select the installation profile to use. This profile will populate the database.{/tr}
+	{tr}A new install will populate the database.{/tr}
 {/if}
 </p>
-<p>{tr}Profiles can be used to pre-configure your site with specific features and settings.{/tr} {tr}Visit <a href="http://profiles.tikiwiki.org" target="_blank">http://profiles.tikiwiki.org</a> for more information.{/tr}</p> 
+{* <p>{tr}Profiles can be used to pre-configure your site with specific features and settings.{/tr} {tr}Visit <a href="http://profiles.tikiwiki.org" target="_blank">http://profiles.tikiwiki.org</a> for more information.{/tr}</p>  *}
 	  {if $dbdone eq 'n'}
 		  {if $logged eq 'y'}
 		    {* we are logged if no admin account is found or if the admin user is logged in*}
@@ -267,46 +271,30 @@
 	<tr>
 		<td valign="top">
 			<fieldset><legend>{tr}Install{/tr}</legend>
-{if $tikidb_created}
-			<script type="text/javascript">
-			<!--//--><![CDATA[//><!--
-				{literal}
-				function install() {
-					document.getElementById('install-link').style.display='none';
-					document.getElementById('install-table').style.visibility='';
-				}
-				{/literal}
-			//--><!]]>
-			</script>
-			<div id="install-link">
-			
-			<p style="text-align:center"><a class="button" href="javascript:install()">{tr}Reinstall the database{/tr}</a></p>
-			<p style="text-align:center"><img src="pics/icons/sticky.png" alt="{tr}Warning{/tr}" style="vertical-align:middle" /> <strong>{tr}Warning:{/tr}</strong> {tr}This will destroy your current database.{/tr}</p>
-			</div>
-		    <div id="install-table" style="visibility:hidden">
-			{else}
-		    <div id="install-table">
-			{/if}
-			 {if $tikidb_created}<p style="text-align:center"><img src="pics/icons/sticky.png" alt="{tr}Warning{/tr}" style="vertical-align:middle"/> <strong>{tr}Warning:{/tr}</strong> {tr}This will destroy your current database.{/tr}</p>{/if}
-			{if $has_internet_connection eq 'y'}
-			  <p>{tr}Create a new database (clean install) with profile:{/tr}</p>
-			<select name="profile" size="6">
-			<option value="" selected="selected">{tr}Bare-bones default install{/tr}</option>
-			<option value="Personal_Blog_and_Profile">{tr}Personal Blog and Profile{/tr}</option>
-			<option value="Small_Organization_Web_Presence">{tr}Small Organization Web Presence{/tr}</option>
-			<option value="Company_Intranet">{tr}Company Intranet{/tr}</option>
-			<option value="Collaborative_Community">{tr}Collaborative community{/tr}</option>
-			</select>
-			 <p>{tr}See the documentation for <a target="_blank" href="http://profiles.tikiwiki.org/Profiles_in_30_installer" class="link" title="Description of available profiles.">descriptions of the available profiles.{/tr}</a></p>
-			{else}
-			  <p style="text-align:center; color:red">{tr}The installer could not connect to the Profiles repository.{/tr}</p>
-			  <p style="text-align:center">{tr}The default installation profile will be used.{/tr}</p>
-			<input type="hidden" name="profile" value="" />
-			{/if}
-			 <p>&nbsp;</p>
-				<div align="center">
-					<input type="submit" name="scratch" value=" {tr}Install{/tr} " />
+				{if $tikidb_created}
+				<script type="text/javascript">
+				<!--//--><![CDATA[//><!--
+					{literal}
+					function install() {
+						document.getElementById('install-link').style.display='none';
+						document.getElementById('install-table').style.visibility='';
+					}
+					{/literal}
+				//--><!]]>
+				</script>
+				<div id="install-link">
+				
+				<p style="text-align:center"><a class="button" href="javascript:install()">{tr}Reinstall the database{/tr}</a></p>
+				<p style="text-align:center"><img src="pics/icons/sticky.png" alt="{tr}Warning{/tr}" style="vertical-align:middle" /> <strong>{tr}Warning:{/tr}</strong> {tr}This will destroy your current database.{/tr}</p>
 				</div>
+				<div id="install-table" style="visibility:hidden">
+				{else}
+				<div id="install-table">
+				{/if}
+				{if $tikidb_created}<p style="text-align:center"><img src="pics/icons/sticky.png" alt="{tr}Warning{/tr}" style="vertical-align:middle"/> <strong>{tr}Warning:{/tr}</strong> {tr}This will destroy your current database.{/tr}</p>{/if}
+				<p align="center">
+					<input type="submit" name="scratch" value=" {if $tikidb_created}{tr}Reinstall{/tr}{else}{tr}Install{/tr}{/if} " style="margin: 32px;"/>
+				</p>
 
 			</div>
 			</fieldset>
@@ -314,6 +302,9 @@
 			{if $tikidb_created}
 			<td width="50%" valign="top">
 			<fieldset><legend>{tr}Upgrade{/tr}</legend>
+			{remarksbox type="warning" title="{tr}Warning: Category Permissions Will Not Be Upgraded{/tr}"}
+			{tr}Category permissions have been revamped in version 4. If you have been using category permissions, note that they may not work properly after upgrading to version 4, and it will be necessary to reconfigure them.{/tr}
+			{/remarksbox}
 			<p>{tr}Automatically upgrade your existing database to v{/tr}{$tiki_version_name}.</p>
 			<p align="center"><input type="submit" name="update" value=" {tr}Upgrade{/tr} " /></p>
 			</fieldset>
@@ -587,3 +578,5 @@
 </div>
 <hr />
 <p align="center"><a href="http://tikiwiki.org" target="_blank" title="{tr}Powered by{/tr} {tr}TikiWiki CMS/Groupware Project{/tr} &#169; 2002&#8211;{$smarty.now|date_format:"%Y"} "><img src="img/tiki/tikibutton2.png" alt="{tr}Powered by TikiWiki{/tr}" style="width:80px; height:31px; border:0" /></a></p>
+		</div>{* -- END of main -- *}
+	</div> {* -- END of fixedwidth -- *}

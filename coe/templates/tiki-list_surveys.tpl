@@ -24,9 +24,9 @@
 			<tr>
 				<td class="{cycle advance=false}">
 					{if ($tiki_p_admin_surveys eq 'y') or ($channels[user].status eq 'o' and $channels[user].taken_survey eq 'n')}
-						<a class="tablename" href="tiki-take_survey.php?surveyId={$channels[user].surveyId}">{$channels[user].name}</a>
+						<a class="tablename" href="tiki-take_survey.php?surveyId={$channels[user].surveyId}">{$channels[user].name|escape}</a>
 					{else}
-						<a class="link" href="tiki-survey_stats_survey.php?surveyId={$channels[user].surveyId}">{$channels[user].name}</a>
+						<a class="link" href="tiki-survey_stats_survey.php?surveyId={$channels[user].surveyId}">{$channels[user].name|escape}</a>
 					{/if}
 					<div class="subcomment">{wiki}{$channels[user].description|escape}{/wiki}</div>
 				</td>

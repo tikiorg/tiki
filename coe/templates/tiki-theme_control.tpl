@@ -27,7 +27,7 @@
   <td class="formcolor">
     <select name="categId">
       {section name=ix loop=$categories}
-      <option value="{$categories[ix].categId|escape}">{$categories[ix].name} ({$categories[ix].categId})</option>
+      <option value="{$categories[ix].categId|escape}" {if $categId eq $categories[ix].categId}selected="selected"{/if}>{$categories[ix].name} ({$categories[ix].categId})</option>
       {/section}
     </select>
   </td>

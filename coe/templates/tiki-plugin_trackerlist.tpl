@@ -39,20 +39,20 @@
 					{elseif $ix.type eq 's' and $ix.name eq "Rating"}
 						{if $tiki_p_admin_trackers eq 'y' or $perms.tiki_p_tracker_view_ratings eq 'y'}
 		<th class="auto field{$ix.fieldId}">
-							{self_link _sort_arg='tr_sort_mode' _sort_field='f_'|cat:$ix.fieldId}{$ix.name|default:"&nbsp;"}{/self_link}</th>
+							{self_link _sort_arg='tr_sort_mode'|cat:$iTRACKERLIST _sort_field='f_'|cat:$ix.fieldId}{$ix.name|default:"&nbsp;"}{/self_link}</th>
 						{/if}
 					{else}
 		<th class="auto field{$ix.fieldId}">
-						{self_link _sort_arg='tr_sort_mode' _sort_field='f_'|cat:$ix.fieldId}{$ix.name|default:"&nbsp;"}{/self_link}
+						{self_link _sort_arg='tr_sort_mode'|cat:$iTRACKERLIST _sort_field='f_'|cat:$ix.fieldId}{$ix.name|default:"&nbsp;"}{/self_link}
 		</th>
 					{/if}
 				{/if}
 			{/foreach}
 			{if $showcreated eq 'y'}
-		<th>{self_link _sort_arg='tr_sort_mode' _sort_field='created'}{tr}Created{/tr}{/self_link}</th>
+		<th>{self_link _sort_arg='tr_sort_mode'|cat:$iTRACKERLIST _sort_field='created'}{tr}Created{/tr}{/self_link}</th>
 			{/if}
 			{if $showlastmodif eq 'y'}
-		<th>{self_link _sort_arg='tr_sort_mode' _sort_field='lastModif'}{tr}LastModif{/tr}{/self_link}</th>
+		<th>{self_link _sort_arg='tr_sort_mode'|cat:$iTRACKERLIST _sort_field='lastModif'}{tr}LastModif{/tr}{/self_link}</th>
 			{/if}
 			{if $tracker_info.useComments eq 'y' and $tracker_info.showComments eq 'y' and $tiki_p_tracker_view_comments ne 'n'}
 		<th style="width:5%">{tr}Coms{/tr}</th>
@@ -165,12 +165,9 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" alt="{tr}List
 					{set var=f_`$items[user].field_values[ix].fieldId` value=''}
 				{/if}
 			{/section}
-			{if $showcreated eq 'y'}
-				{set var=f_created value=$items[user].created}
-			{/if}
-			{if $showlastmodif eq 'y'}
-				{set var=f_lastmodif value=$items[user].lastModif}
-			{/if}
+			{set var=f_created value=$items[user].created}
+			{set var=f_lastmodif value=$items[user].lastModif}
+			{set var=f_itemId value=$items[user].itemId}
 {* ------------------------------------ *}
 			{include file="$tpl" item=$items[user]}
 		{/if}
@@ -220,7 +217,7 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" alt="{tr}List
 		{/capture}
 		{button href="$moreUrl" _text="{tr}More...{/tr}"}
 	</div>
-	{else}
+	{elseif $showpagination ne 'n'}
 		{pagination_links cant=$count_item step=$max offset=$tr_offset offset_arg=tr_offset}{/pagination_links}
 	{/if}
 	{if $export eq 'y' && ($tiki_p_admin_trackers eq 'y' || $perms.tiki_p_export_tracker eq 'y')}

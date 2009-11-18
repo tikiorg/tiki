@@ -17,5 +17,3 @@ class Perms_Check_Indirect implements Perms_Check
 		}
 	}
 }
-
-?>

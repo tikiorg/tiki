@@ -49,7 +49,7 @@
 {remarksbox type="note" title="{tr}Note{/tr}"}{$saved_msg}{/remarksbox}
 {/if}
 
-<div class="navbar" style="clear: both; text-align: right">
+<div class="categbar" style="clear: both; text-align: right">
     {if $user and $prefs.feature_user_watches eq 'y'}
         {if $category_watched eq 'y'}
             {tr}Watched by categories{/tr}:
@@ -84,7 +84,7 @@
 	{/section}
 {/if}
 
-<div class="wikitext">
+<div id="top" class="wikitext clearfix">
 
 {if !$hide_page_header}
 {if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y' and isset($freetags.data[0]) and $prefs.freetags_show_middle eq 'y'}
@@ -112,9 +112,10 @@
 
 {if $structure eq 'y'}
 <div class="tocnav">
-<table>
-<tr>
-  <td>
+	<div class="clearfix">
+		<div style="float: left; width: 100px">
+  
+    {if $home_info}{if $home_info.page_alias}{assign var=icon_title value=$home_info.page_alias}{else}{assign var=icon_title value=$home_info.pageName}{/if}<a href="{sefurl page=$home_info.pageName structure=$home_info.pageName page_ref_id=$home_info.page_ref_id}">{icon _id='house' alt="{tr}TOC{/tr}" title=$icon_title}</a>{/if}
 
     {if $prev_info and $prev_info.page_ref_id}{if $prev_info.page_alias}{assign var=icon_title value=$prev_info.page_alias}{else}{assign var=icon_title value=$prev_info.pageName}{/if}<a href="{sefurl page=$prev_info.pageName structure=$home_info.pageName page_ref_id=$prev_info.page_ref_id}">{icon _id='resultset_previous' alt="{tr}Previous page{/tr}" title=$icon_title}</a>{else}<img src="img/icons2/8.gif" alt="" height="1" width="8" />{/if}
 
@@ -122,11 +123,9 @@
 
     {if $next_info and $next_info.page_ref_id}{if $next_info.page_alias}{assign var=icon_title value=$next_info.page_alias}{else}{assign var=icon_title value=$next_info.pageName}{/if}<a href="{sefurl page=$next_info.pageName structure=$home_info.pageName page_ref_id=$next_info.page_ref_id}">{icon _id='resultset_next' alt="{tr}Next page{/tr}" title=$icon_title}</a>{else}<img src="img/icons2/8.gif" alt="" height="1" width="8" />{/if}
 
-    {if $home_info}{if $home_info.page_alias}{assign var=icon_title value=$home_info.page_alias}{else}{assign var=icon_title value=$home_info.pageName}{/if}<a href="{sefurl page=$home_info.pageName structure=$home_info.pageName page_ref_id=$home_info.page_ref_id}">{icon _id='house' alt="{tr}TOC{/tr}" title=$icon_title}</a>{/if}
-
-  </td>
-  <td>
-{if $tiki_p_edit_structures eq 'y' and $tiki_p_edit_structures eq 'y' and $struct_editable eq 'y'}
+		</div>
+  		<div style="float: left;">
+{if $struct_editable eq 'y'}
     <form action="tiki-editpage.php" method="post">
       <input type="hidden" name="current_page_id" value="{$page_info.page_ref_id}" />
       <input type="text" name="page" />
@@ -139,12 +138,10 @@
       <input type="submit" name="insert_into_struct" value="{tr}Add Page{/tr}" />
     </form>
 {/if}
-  </td>
-</tr>
-<tr>
-  <td colspan="2">
-  	<a href="tiki-edit_structure.php?page_ref_id={$home_info.page_ref_id}">{icon _id='chart_organisation' alt="{tr}Structure{/tr}"}</a>&nbsp;&nbsp;
-	({$cur_pos})&nbsp;&nbsp;	
+		</div>
+	</div>
+  	<div>
+  	<a href="tiki-edit_structure.php?page_ref_id={$home_info.page_ref_id}">{icon _id='chart_organisation' alt="{tr}Structure{/tr}" title="{tr}Structure{/tr} ($cur_pos)"}</a>&nbsp;&nbsp;
     {section loop=$structure_path name=ix}
       {if $structure_path[ix].parent_id}&nbsp;{$prefs.site_crumb_seper}&nbsp;{/if}
 	  <a href="{sefurl page=$structure_path[ix].pageName structure=$home_info.pageName page_ref_id=$structure_path[ix].page_ref_id}">
@@ -155,9 +152,7 @@
 	  {/if}
 	  </a>
 	{/section}
-  </td>
-</tr>
-</table>
+	</div>
 </div>
 {/if}
 {if $prefs.feature_wiki_ratings eq 'y'}{include file='poll.tpl'}{/if}
@@ -222,7 +217,7 @@ must not overlap the wiki content that could contain floated elements *}
    {$contributors[author]|userlink}
   {/section}.<br />
   {tr 0=$lastModif|tiki_long_datetime 1=$lastUser|userlink}Page last modified on %0 by %1{/tr}. {if $prefs.wiki_show_version eq 'y'}({tr}Version{/tr} {$lastVersion}){/if}
-{elseif isset($wiki_authors_style) && $wiki_authors_style eq 'none'}
+{elseif empty($wiki_authors_style) || $wiki_authors_style eq 'none'}
 {elseif isset($wiki_authors_style) && $wiki_authors_style eq 'lastmodif'}
 	{tr}Page last modified on{/tr} {$lastModif|tiki_long_datetime}
 {else}

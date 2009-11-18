@@ -6,7 +6,13 @@
 
 require_once 'tiki-setup.php';
 require_once 'lib/wiki/wikilib.php';
-$access->check_feature('feature_wiki_mindmap');
+
+if ($prefs['feature_mindmap'] != 'y') {
+	$smarty->assign('msg', tra("This feature is disabled") . ": feature_mindmap");
+	$smarty->display("error.tpl");
+	die;
+}
+
 if (!file_exists('files/visorFreemind.swf')) {
 	$smarty->assign('missing', 'files/visorFreemind.swf');
 	$smarty->assign('mid', 'tiki-mindmap.tpl');

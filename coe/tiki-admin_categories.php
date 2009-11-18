@@ -30,10 +30,45 @@ if ($tiki_p_admin_categories != 'y') {
 	die;
 }
 // Check for parent category or set to 0 if not present
+if (!empty($_REQUEST['parentId']) && !$categlib->get_category($_REQUEST['parentId'])) {
+	$smarty->assign('msg', 'Incorrect param'.' parentId');
+	$smarty->display('error.tpl');
+	die;
+}	
+
 if (!isset($_REQUEST["parentId"])) {
 	$_REQUEST["parentId"] = 0;
 }
 $smarty->assign('parentId', $_REQUEST["parentId"]);
+
+if (!empty($_REQUEST['unassign'])) {
+	check_ticket('admin-categories');
+	$area = 'unassign';
+	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_REQUEST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+		key_check($area);
+		$categlib->unassign_all_objects($_REQUEST['parentId']);
+	} else {
+		key_get($area, 'tiki-admin_categories.php?parentId='.$_REQUEST['parentId'].'&amp;unassign=y');
+	}
+}
+if (!empty($_REQUEST['move_to']) && !empty($_REQUEST['toId'])) {
+	check_ticket('admin-categories');
+	if (!$categlib->get_category($_REQUEST['toId'])) {
+		$smarty->assign('msg', 'Incorrect param'.' toId');
+		$smarty->display('error.tpl');
+		die;
+	}
+	$categlib->move_all_objects($_REQUEST['parentId'], $_REQUEST['toId']);
+}
+if (!empty($_REQUEST['copy_from']) && !empty($_REQUEST['to'])) {
+	check_ticket('admin-categories');
+	if (!$categlib->get_category($_REQUEST['to'])) {
+		$smarty->assign('msg', 'Incorrect param'.' fromId');
+		$smarty->display('error.tpl');
+		die;
+	}
+	$categlib->assign_all_objects($_REQUEST['parentId'], $_REQUEST['to']);
+}
 if (isset($_REQUEST["addpage"]) && $_REQUEST["parentId"] != 0) {
 	check_ticket('admin-categories');
 	// Here we categorize a page
@@ -307,34 +342,66 @@ if (isset($_REQUEST["find_objects"])) {
 } else {
 	$find_objects = '';
 }
+
+$maximum = 0;
+$maxRecords = $prefs['maxRecords'];
+
 $smarty->assign('find_objects', $find_objects);
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 $smarty->assign_by_ref('find', $find);
 $objects = $categlib->list_category_objects($_REQUEST["parentId"], $offset, $maxRecords, $sort_mode, '', $find, false);
 $smarty->assign_by_ref('objects', $objects["data"]);
 $smarty->assign_by_ref('cant_pages', $objects["cant"]);
-$galleries = $tikilib->list_galleries(0, -1, 'name_desc', 'admin', $find_objects);
+$maximum = max( $objects['cant'], $maximum );
+
+$galleries = $tikilib->list_galleries($offset, $maxRecords, 'name_desc', 'admin', $find_objects);
 $smarty->assign_by_ref('galleries', $galleries["data"]);
-$file_galleries = $filegallib->list_file_galleries(0, -1, 'name_desc', 'admin', $find_objects, $prefs['fgal_root_id']);
+$maximum = max( $galleries['cant'], $maximum );
+
+$file_galleries = $filegallib->list_file_galleries($offset, $maxRecords, 'name_desc', 'admin', $find_objects, $prefs['fgal_root_id']);
 $smarty->assign_by_ref('file_galleries', $file_galleries["data"]);
-$forums = $commentslib->list_forums(0, -1, 'name_asc', $find_objects);
+$maximum = max( $file_galleries['cant'], $maximum );
+
+$forums = $commentslib->list_forums($offset, $maxRecords, 'name_asc', $find_objects);
 $smarty->assign_by_ref('forums', $forums["data"]);
-$polls = $polllib->list_polls(0, -1, 'title_asc', $find_objects);
+$maximum = max( $forums['cant'], $maximum );
+
+$polls = $polllib->list_polls($offset, $maxRecords, 'title_asc', $find_objects);
 $smarty->assign_by_ref('polls', $polls["data"]);
-$blogs = $tikilib->list_blogs(0, -1, 'title_asc', $find_objects);
+$maximum = max( $polls['cant'], $maximum );
+
+$blogs = $tikilib->list_blogs($offset, $maxRecords, 'title_asc', $find_objects);
 $smarty->assign_by_ref('blogs', $blogs["data"]);
-$pages = $tikilib->list_pageNames(0, -1, 'pageName_asc', $find_objects);
+$maximum = max( $blogs['cant'], $maximum );
+
+$pages = $tikilib->list_pageNames($offset, $maxRecords, 'pageName_asc', $find_objects);
 $smarty->assign_by_ref('pages', $pages["data"]);
-$faqs = $tikilib->list_faqs(0, -1, 'title_asc', $find_objects);
+$maximum = max( $pages['cant'], $maximum );
+
+$faqs = $tikilib->list_faqs($offset, $maxRecords, 'title_asc', $find_objects);
 $smarty->assign_by_ref('faqs', $faqs["data"]);
-$quizzes = $tikilib->list_quizzes(0, -1, 'name_asc', $find_objects);
+$maximum = max( $faqs['cant'], $maximum );
+
+$quizzes = $tikilib->list_quizzes($offset, $maxRecords, 'name_asc', $find_objects);
 $smarty->assign_by_ref('quizzes', $quizzes["data"]);
-$trackers = $trklib->list_trackers(0, -1, 'name_asc', $find_objects);
+$maximum = max( $quizzes['cant'], $maximum );
+
+$trackers = $trklib->list_trackers($offset, $maxRecords, 'name_asc', $find_objects);
 $smarty->assign_by_ref('trackers', $trackers["data"]);
-$articles = $tikilib->list_articles(0, -1, 'title_asc', $find_objects, '', '', $user, '', '', 'n');
+$maximum = max( $trackers['cant'], $maximum );
+
+$articles = $tikilib->list_articles($offset, $maxRecords, 'title_asc', $find_objects, '', '', $user, '', '', 'n');
 $smarty->assign_by_ref('articles', $articles["data"]);
-$directories = $dirlib->dir_list_all_categories(0, -1, 'name_asc', $find_objects);
+$maximum = max( $articles['cant'], $maximum );
+
+$directories = $dirlib->dir_list_all_categories($offset, $maxRecords, 'name_asc', $find_objects);
 $smarty->assign_by_ref('directories', $directories["data"]);
+$maximum = max( $directories['cant'], $maximum );
+
+$smarty->assign( 'maxRecords', $maxRecords );
+$smarty->assign( 'offset', $offset );
+$smarty->assign( 'maximum', $maximum );
+
 ask_ticket('admin-categories');
 if (!empty($errors)) $smarty->assign_by_ref('errors', $errors);
 // disallow robots to index page:

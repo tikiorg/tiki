@@ -207,16 +207,7 @@ class UsersLib extends TikiLib {
 	}
 
 	function group_exists($group) {
-		static $rv = array();
-
-		if (!isset($rv[$group])) {
-			$query = "select count(`groupName`)  from `users_groups` where `groupName` = ?";
-
-			$result = $this->getOne($query, array($group));
-			$rv[$group] = $result;
-		}
-
-		return $rv[$group];
+		return in_array($group, $this->list_all_groups());
 	}
 
 	function user_logout($user) {
@@ -282,9 +273,6 @@ class UsersLib extends TikiLib {
 	    return false;
 	}
 
-	if (strlen($pass) < $prefs['min_pass_length']) {
-		return false;
-	}
 	// these will help us keep tabs of what is going on
 	$userTiki = false;
 	$userTikiPresent = false;
@@ -303,19 +291,18 @@ class UsersLib extends TikiLib {
 	$skip_admin = ($prefs['ldap_skip_admin'] == 'y');
 
 	// read basic cas options
-	global $phpcas_enabled;
-	if ($phpcas_enabled == 'y') {
-		$auth_cas = ($prefs['auth_method'] == 'cas');
-		$cas_create_tiki = ($prefs['cas_create_user_tiki'] == 'y');
-		$cas_skip_admin = ($prefs['cas_skip_admin'] == 'y');
-	} else {
-		$auth_cas = $cas_create_tiki = $cas_skip_admin = false;
-	}
+	$auth_cas = ($prefs['auth_method'] == 'cas');
+	$cas_create_tiki = ($prefs['cas_create_user_tiki'] == 'y');
+	$cas_skip_admin = ($prefs['cas_skip_admin'] == 'y');
 
 	// see if we are to use Shibboleth
 	$auth_shib = ($prefs['auth_method'] == 'shib');
 	$shib_create_tiki = ($prefs['shib_create_user_tiki'] == 'y');
 	$shib_skip_admin = ($prefs['shib_skip_admin'] == 'y');
+
+	if ( strlen($pass) < $prefs['min_pass_length'] and ($user === 'admin' or (!$auth_cas and !$auth_shib )) ) {
+		return false;
+	}
 
 	// first attempt a login via the standard Tiki system
 	//
@@ -708,24 +695,27 @@ class UsersLib extends TikiLib {
 
 	// validate the user through CAS
 	function validate_user_cas(&$user) {
-		global $tikilib, $phpcas_enabled, $prefs;
-		if ($phpcas_enabled != 'y') {
-			return SERVER_ERROR;
-		}
+		global $tikilib, $prefs, $base_url;
+
 		// just make sure we're supposed to be here
 		if ($prefs['auth_method'] != 'cas') {
 		    return false;
 		}
 
 		// import phpCAS lib
-		require_once('lib/phpcas/source/CAS/CAS.php');
+		require_once('lib/phpcas/CAS.php');
 
 		phpCAS::setDebug();
 
 		// initialize phpCAS
-		phpCAS::client($prefs['cas_version'], ''.$prefs['cas_hostname'], (int) $prefs['cas_port'], ''.$prefs['cas_path']);
+		phpCAS::client($prefs['cas_version'], ''.$prefs['cas_hostname'], (int) $prefs['cas_port'], ''.$prefs['cas_path'], false);
 
+		// Redirect to this URL after authentication
+		if ( !empty($prefs['cas_extra_param']) ) {
+			phpCAS::setFixedServiceURL( $base_url . 'tiki-login.php?cas=y&' . $prefs['cas_extra_param'] );
+		}
 		// check CAS authentication
+		phpCAS::setNoCasServerValidation();
 		phpCAS::forceAuthentication();
 
 		// at this step, the user has been authenticated by the CAS server
@@ -1619,9 +1609,10 @@ function get_included_groups($group, $recur=true) {
 		return $ret;
 	}
 
-    function get_group_users($group) {
+    function get_group_users($group, $offset) {
+		global $prefs;
 	$query = "select `login`  from `users_users` uu, `users_usergroups` ug where uu.`userId`=ug.`userId` and `groupName`=?";
-	$result = $this->query($query,array($group));
+	$result = $this->query($query,array($group), $prefs['maxRecords'], $offset);
 	$ret = array();
 	while ($res = $result->fetchRow()) {
 	    $ret[] = $res["login"];
@@ -1928,6 +1919,25 @@ function get_included_groups($group, $recur=true) {
 		);
 	}
 
+	function get_permission_types() {
+		global $prefs;
+
+		$query = "select distinct `type` from `users_permissions`";
+		$result = $this->query($query);
+		$cant = 0;
+		$ret = array();
+
+		while ($res = $result->fetchRow()) {
+			$cant++;
+			$ret[] = $res;
+		}
+
+		return array(
+			'data' => $ret,
+			'cant' => $cant,
+		);
+	}
+
 	function get_group_permissions($group) {
     		global $cachelib;
 		if ( ! $cachelib->isCached("groupperms_$group") ) {
@@ -2177,7 +2187,7 @@ function get_included_groups($group, $recur=true) {
 		$this->query($query, array($who, NULL, NULL, $user));
 	}
 
-    function add_user($user, $pass, $email, $provpass = '', $pass_first_login = false, $valid = NULL, $openid_url = NULL) {
+    function add_user($user, $pass, $email, $provpass = '', $pass_first_login = false, $valid = NULL, $openid_url = NULL, $waiting=NULL) {
 	global $tikilib, $cachelib, $prefs;
 
 	if ($this->user_exists($user) || empty($user) || (!empty($prefs['username_pattern']) && !preg_match($prefs['username_pattern'], $user)) || strtolower($user) == 'anonymous' || strtolower($user) == 'registered') {
@@ -2196,11 +2206,9 @@ function get_included_groups($group, $recur=true) {
 		if (!isset($prefs['validateRegistration']) || $prefs['validateRegistration'] != 'y')  $lastLogin = time();
 	}
 
-	if ($valid == 'n') {
-		$valid = $pass;
+	if ( $prefs['feature_clear_passwords'] == 'n' ) {
+		$pass = '';
 	}
-
-	if ( $prefs['feature_clear_passwords'] == 'n' ) $pass = '';
 
 	if ( $pass_first_login ) {
 		$new_pass_confirm = 0;
@@ -2225,7 +2233,8 @@ function get_included_groups($group, $recur=true) {
 			$valid,
 			$openid_url,
 			$lastLogin,
-			(empty($_GLOBALS['user']) && $prefs['validateRegistration'] == 'y')? 'a': ((empty($_GLOBALS['user']) && $prefs['validateUsers'] == 'y')? 'u': NULL)
+			//(empty($_GLOBALS['user']) && $prefs['validateRegistration'] == 'y')? 'a': ((empty($_GLOBALS['user']) && $prefs['validateUsers'] == 'y')? 'u': NULL)
+			$waiting
 		    ));
 
 	$this->assign_user_to_group($user, 'Registered');
@@ -2382,9 +2391,9 @@ function get_included_groups($group, $recur=true) {
     }
 
     function is_due($user) {
-    	global $prefs, $phpcas_enabled;
+    	global $prefs;
     	// if CAS auth is enabled, don't check if password is due since CAS does not use local Tiki passwords
-    	if (($phpcas_enabled == 'y' and $prefs['auth_method'] == 'cas') || $prefs['change_password'] != 'y') {
+    	if ( $prefs['auth_method'] == 'cas' || $prefs['change_password'] != 'y') {
     		return false;
     	}
 		$confirm = $this->getOne("select `pass_confirm`  from `users_users` where " . $this->convertBinary(). " `login`=?", array($user));
@@ -2498,11 +2507,11 @@ function get_included_groups($group, $recur=true) {
 		$query = "insert into `users_groups` (`groupName`, `groupDesc`, `groupHome`,`groupDefCat`,`groupTheme`,`usersTrackerId`,`groupTrackerId`, `registrationUsersFieldIds`, `userChoice`, `usersFieldId`, `groupFieldId`,`isExternal`, `expireAfter`) values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		$this->query($query, array($group, $desc, $home, $defcat, $theme, (int)$utracker, (int)$gtracker, $rufields, $userChoice, (int)$ufield, (int)$gfield,$isexternal, $expireAfter) );
 
-		global $cachelib;
+		global $cachelib; require_once('lib/cache/cachelib.php');
 		$cachelib->invalidate('grouplist');
 		$cachelib->invalidate('groupIdlist');
 
-		$query = "select `id` from `users_groups` where groupName=?";
+		$query = "select `id` from `users_groups` where `groupName`=?";
 		return $this->getOne($query, array($group));
 	}
 
@@ -2839,11 +2848,15 @@ function get_included_groups($group, $recur=true) {
 		return $ret;
 	}
 	function send_validation_email($name, $apass, $email, $again='', $second='', $chosenGroup='', $mailTemplate = '', $pass = '') {
+		// TODO: CLEANUP duplicates code in callback_tikiwiki_send_email() in registrationlib?
 		global $tikilib, $prefs, $smarty;
 		$foo = parse_url($_SERVER['REQUEST_URI']);
 		$foo1 = str_replace(array('tiki-send_mail', 'tiki-register', 'tiki-remind_password', 'tiki-adminusers'), 'tiki-login_validate', $foo['path']);
-		$machine = $tikilib->httpPrefix() . $foo1;
+		$foo2 = str_replace(array('tiki-send_mail', 'tiki-register', 'tiki-remind_password', 'tiki-adminusers'), 'tiki-assignuser', $foo['path']);
+		$machine = $tikilib->httpPrefix( true ) . $foo1;
+		$machine_assignuser = $tikilib->httpPrefix( true ) . $foo2;
 		$smarty->assign('mail_machine',$machine);
+		$smarty->assign('mail_machine_assignuser',$machine_assignuser);
 		$smarty->assign('mail_site', $_SERVER['SERVER_NAME']);
 		$smarty->assign('mail_user', $name);
 		$smarty->assign('mail_apass', $apass);
@@ -2878,7 +2891,8 @@ function get_included_groups($group, $recur=true) {
 			}
 			$mail_data = $smarty->fetch('mail/moderate_validation_mail.tpl');
 			$mail_subject = $smarty->fetch('mail/moderate_validation_mail_subject.tpl');
-			if ($prefs['sender_email'] == NULL or !$prefs['sender_email']) {
+			$emails = !empty($prefs['validator_emails'])?split(',', $prefs['validator_emails']): (!empty($prefs['sender_email'])? array($prefs['sender_email']): '');
+			if (empty($emails)) {
 				if ($prefs['feature_messages'] != 'y') {
 					$smarty->assign('msg', tra("The registration mail can't be sent because there is no server email address set, and this feature is disabled").": feature_messages");
 					return false;
@@ -2890,7 +2904,7 @@ function get_included_groups($group, $recur=true) {
 				$mail = new TikiMail();
 				$mail->setText($mail_data);
 				$mail->setSubject($mail_subject);
-				if (!$mail->send(array($prefs['sender_email']))) {
+				if (!$mail->send($emails)) {
 					$smarty->assign('msg', tra("The registration mail can't be sent. Contact the administrator"));
 					return false;
 				} elseif (empty($again)) {
@@ -2982,7 +2996,7 @@ function get_included_groups($group, $recur=true) {
 		$mail_data = sprintf($mail_data, $_SERVER['SERVER_NAME']);
 		$mail->setSubject($mail_data);
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
-		$mail_machine = $tikilib->httpPrefix().str_replace('tiki-login.php', 'tiki-confirm_user_email.php', $foo['path']);
+		$mail_machine = $tikilib->httpPrefix( true ).str_replace('tiki-login.php', 'tiki-confirm_user_email.php', $foo['path']);
 		$smarty->assign('mail_machine', $mail_machine);
 		$mail_data = $smarty->fetchLang($languageEmail, "mail/$tpl.tpl");
 		$mail->setText($mail_data);

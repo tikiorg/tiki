@@ -1,6 +1,8 @@
 {* $Id$ *}
 {popup_init src="lib/overlib.js"}
 {title help="$helpUrl"}{tr}{$admintitle}{/tr}{/title}
+
+{if $prefs.feature_search_preferences eq 'y'}
 <form method="post" action="">
 	{remarksbox type="note" title="{tr}Development Notice{/tr}"}
 		{tr}Unless a significant amount of preferences are documented and use dynamic preferences before the 4.0 release, this search feature will become disabled by default.{/tr}
@@ -21,6 +23,8 @@
 		<hr class="clear"/>
 	</form>
 {/if}
+{/if}
+
 <div id="pageheader">
 {* bother to display this only when breadcrumbs are on *}
 {*
@@ -37,16 +41,16 @@
 {/if}
 {*{tr}{$description}{/tr}*}
 </div>
-{* The rest determines which page to include using "page" GET parameter. Default : list-sections
+{* Determines which page to include using "page" GET parameter. Default : list-sections
 Add a value in first check when you create a new admin page. *}
 {if in_array($adminpage, array("features", "general", "login", "wiki",
 "gal", "fgal", "cms", "polls", "search", "blogs", "forums", "faqs",
 "trackers", "webmail", "rss", "directory", "userfiles", "maps",
 "metatags", "performance", "security", "wikiatt", "score", "community", "messages",
-"calendar", "intertiki", "freetags", "gmap",
+"calendar", "intertiki", "kaltura", "freetags", "gmap",
 "i18n", "wysiwyg", "copyright", "category", "module", "look", "textarea",
 "multimedia", "ads", "profiles", "semantic", "plugins", "webservices",
-'sefurl', 'workspaces'))}
+'sefurl', 'connect'))}
   {assign var="include" value=$smarty.get.page}
 {else}
   {assign var="include" value="list-sections"}
@@ -55,8 +59,8 @@ Add a value in first check when you create a new admin page. *}
   <div class="simplebox adminanchors clearfix" >{include file='tiki-admin-include-anchors.tpl'}</div>
 {/if}
 
-{if $feature_version_checks eq 'y' and $prefs.tiki_needs_upgrade eq 'y'}
-<div class="simplebox highlight">{tr}A new version of Tikiwiki, <b>{$tiki_release}</b>, is available. You are currently running <b>{$tiki_version}</b>. Please visit <a href="http://tikiwiki.org/Download">http://tikiwiki.org/Download</a>.{/tr}</div>
+{if $prefs.tiki_needs_upgrade eq 'y'}
+<div class="simplebox highlight">{tr}A new version of Tikiwiki, <b>{$prefs.tiki_release}</b>, is available. You are currently running <b>{$tiki_version}</b>. Please visit <a href="http://tikiwiki.org/Download">http://tikiwiki.org/Download</a>.{/tr}</div>
 {/if}
 
 {if $tikifeedback}
@@ -122,6 +126,7 @@ Add a value in first check when you create a new admin page. *}
 	<a href="tiki-mods.php">{tr}Mods{/tr}</a>
 	{if $prefs.feature_banning eq 'y'}<a href="tiki-admin_banning.php">{tr}Banning{/tr}</a> {/if}
 	{if $prefs.lang_use_db eq 'y'}<a href="tiki-edit_languages.php">{tr}Edit Languages{/tr}</a> {/if}
+	{if $prefs.feature_pagelist eq 'y'}<a href="tiki-admin_pagelist.php">{tr}Page List{/tr}</a>{/if}
 	<hr />
 
 	{tr}Transversal features{/tr} ({tr}which apply to more than one section{/tr}):<br />
@@ -135,7 +140,7 @@ Add a value in first check when you create a new admin page. *}
 	{if $prefs.feature_featuredLinks eq 'y'}<a href="tiki-admin_links.php">{tr}Links{/tr}</a>{/if}
 	<hr />
 
-	{tr}Look &amp; feel{/tr} ({tr}themes{/tr}):<br />
+	{tr}Look & feel{/tr} ({tr}themes{/tr}):<br />
 	{if $prefs.feature_theme_control eq 'y'} <a href="tiki-theme_control.php">{tr}Theme Control{/tr}</a> {/if}
 	{if $prefs.feature_edit_templates eq 'y'} <a href="tiki-edit_templates.php">{tr}Edit Templates{/tr}</a> {/if}
 	{if $prefs.feature_editcss eq 'y'} <a href="tiki-edit_css.php">{tr}Edit CSS{/tr}</a> {/if}
@@ -145,7 +150,7 @@ Add a value in first check when you create a new admin page. *}
 	{tr}Text area features{/tr} ({tr}features you can use in all text areas, like wiki pages, blogs, articles, forums, etc{/tr}):<br />
 	<a href="tiki-admin_cookies.php">{tr}Cookies{/tr}</a> 
 	{if $prefs.feature_hotwords eq 'y'} <a href="tiki-admin_hotwords.php">{tr}Hotwords{/tr}</a> {/if}
-	<a href="tiki-list_cache.php">{tr}Cache{/tr}</a> 
+	<a href="tiki-list_cache.php">{tr}External Pages Cache{/tr}</a> 
 	<a href="tiki-admin_toolbars.php">{tr}Toolbars{/tr}</a> 
 	<a href="tiki-admin_content_templates.php">{tr}Content Templates{/tr}</a> 
 	<a href="tiki-admin_dsn.php">{tr}DSN{/tr}</a> 
