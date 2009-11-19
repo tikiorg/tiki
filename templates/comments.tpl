@@ -267,7 +267,10 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 	</div>
 
 	{if $comment_preview eq 'y'}
-	<div class="clearfix post_preview">
+	<div class="clearfix post_preview" id="preview_comment">
+		{jq}
+			$jq(window).attr('location','#preview_comment');
+		{/jq}
 		{if $forum_mode neq 'y'}<b>{tr}Preview{/tr}</b>{/if}
 		<div class="post"><div class="inner"><span class="corners-top"><span></span></span><div class="postbody">
 			<div class="postbody-title"><div class="title">{$comments_preview_title|escape}</div></div>
