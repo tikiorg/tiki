@@ -15,6 +15,11 @@ class UserPrefsLib extends TikiLib {
 		if ($prefs['feature_intertiki'] == 'y' && !empty($prefs['feature_intertiki_mymaster']) && $prefs['feature_intertiki_import_preferences'] == 'y') { //send to the master
 			$userlib->interSendUserInfo($prefs['interlist'][$prefs['feature_intertiki_mymaster']], $user);
 		}
+
+		$image = 'temp/public/avatar_' . $user . '.*';
+		foreach( glob( $image ) as $file ) {
+			unlink($file);
+		}
 	}
 
 	function get_user_avatar_img($user) {

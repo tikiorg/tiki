@@ -23,3 +23,11 @@ $type = $info["avatarFileType"];
 $content = $info["avatarData"];
 header("Content-type: $type");
 echo "$content";
+
+if( $prefs['users_serve_avatar_static'] == 'y' ) {
+	require 'lib/mime/mimeextensions.php';
+	$ext = $mimeextensions[$type];
+	$image = "temp/public/avatar_{$_REQUEST['user']}.$ext";
+
+	file_put_contents( $image, $info['avatarData'] );
+}

@@ -1098,7 +1098,7 @@ class TikiLib extends TikiDb_Bridge {
 	//shared
 	// \todo remove all hardcoded html in get_user_avatar()
 	function get_user_avatar($user, $float = "") {
-		global $userlib;
+		global $userlib, $prefs;
 
 		if (empty($user))
 			return '';
@@ -1135,6 +1135,15 @@ class TikiLib extends TikiDb_Bridge {
 				break;
 			case 'u':
 				$path = "tiki-show_user_avatar.php?user=$user";
+
+				if( $prefs['users_serve_avatar_static'] == 'y' ) {
+					$files = glob( "temp/public/avatar_$user.*" );
+
+					if( count( $files ) ) {
+						$path = $files[0];
+					}
+				}
+
 				$ret = "<img border='0' src='$path' " . $style . " alt='$user' />";
 				break;
 		}

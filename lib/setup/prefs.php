@@ -717,6 +717,7 @@ function get_default_prefs() {
 		'username_pattern' => '/^[ \'-_a-zA-Z0-9@\.]*$/',
 		'max_username_length' => '50',
 		'min_username_length' => '1',
+		'users_serve_avatar_static' => 'y',
 		'users_prefs_allowMsgs' => 'y',
 		'users_prefs_country' => '',
 		'users_prefs_diff_versions' => 'n',
