@@ -664,6 +664,7 @@
 				{if $prefs.feature_help eq 'y'} {help url="Slideshow"}{/if}
 			</div>
 		</div>
+{preference name='feature_wiki_1like_redirection'}
 
 		<div class="adminoptionbox">
 			<div class="adminoption">

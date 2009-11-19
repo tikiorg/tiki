@@ -1302,5 +1302,10 @@ function prefs_feature_list() {
 			'name' => tra('Correct PNG images alpha transparency in IE6 (experimental)'),
 			'type' => 'flag',
 		),
+		'feature_wiki_1like_redirection' => array(
+			'name' => tra("If a requested page doesn't exist, redirect to a similarly named page"),
+			'type' => 'flag',
+		),
+
 	);
 }

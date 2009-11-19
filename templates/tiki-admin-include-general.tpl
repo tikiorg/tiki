@@ -261,10 +261,7 @@
 			<div class="adminoptionbox">
 				{preference name=feature_redirect_on_error}
 
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="feature_wiki_1like_redirection" name="feature_wiki_1like_redirection" {if $prefs.feature_wiki_1like_redirection eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="feature_wiki_1like_redirection">{tr}If a requested page doesn't exist, redirect to a similarly named page{/tr}.</label></div>
-</div>				
+{preference name='feature_wiki_1like_redirection'}
 				
 			<div class="adminoptionbox">
 				<div class="adminoption">
