@@ -20,6 +20,18 @@ function wikiplugin_colorbox_info() {
 				'description' => tra('Image gallery ID'),
 				'filter' => 'digits'
 			),
+			'thumb' => array(
+				'required' => false,
+				'name' => tra('Thumb'),
+				'description' => tra('The image in the page is displayed or not in mode thumb:'). 'y|n',
+				'filter' => 'alpha'
+			),
+			'sort_mode' => array(
+				'required' => false,
+				'name' => tra('Sort Mode'),
+				'description' => tra('Sort Mode'),
+				'filter' => 'word'
+			),
 		),
 	);
 }
@@ -37,7 +49,9 @@ function wikiplugin_colorbox($data, $params) {
 		$files = $tikilib->get_files(0, -1, $params['sort_mode'], '', $params['fgalId'], false, false, false, true, false, false, false);
 		$smarty->assign('colorboxUrl', 'tiki-download_file.php?fileId=');
 		$smarty->assign('colorboxColumn', 'id');
-		$smarty->assign('colorboxThumb', 'thumbnail');
+		if ($params['thumb'] != 'n') {
+			$smarty->assign('colorboxThumb', 'thumbnail');
+		}
 	} elseif (!empty($params['galId'])) {
 		if ($prefs['feature_galleries'] != 'y') {
 			return tra('This feature is disabled') . ': feature_galleries';
@@ -50,7 +64,9 @@ function wikiplugin_colorbox($data, $params) {
 		$files = $imagegallib->get_images(0, -1, $params['sort_mode'], '', $params['galId']);
 		$smarty->assign('colorboxUrl', 'show_image.php?id=');
 		$smarty->assign('colorboxColumn', 'imageId');
-		$smarty->assign('colorboxThumb', 'thumb');
+		if ($params['thumb'] != 'n') {
+			$smarty->assign('colorboxThumb', 'thumb');
+		}
 	} else {
 		return tra('Incorrect param');
 	}
