@@ -156,6 +156,8 @@
 name="wiki_comments_displayed_default" {if $prefs.wiki_comments_displayed_default eq 'y'}checked="checked" {/if} /></div>
 	<div class="adminoptionlabel"><label for="wiki_comments_displayed_default">{tr}Display by default{/tr}.</label></div>
 	</div>
+
+	{preference name=wiki_comments_notitle}
 	
 	<div class="adminoptionbox">
 	<div class="adminoptionlabel"><label for="wiki_comments_per_page">{tr}Default number per page{/tr}:</label> <input size="5" type="text" id="wiki_comments_per_page" name="wiki_comments_per_page" value="{$prefs.wiki_comments_per_page|escape}" /></div>

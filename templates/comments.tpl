@@ -291,7 +291,7 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 	<input type="hidden" name="comments_threshold" value="{$comments_threshold|escape}" />
 	<input type="hidden" name="thread_sort_mode" value="{$thread_sort_mode|escape}" />
 	<input type="hidden" name="comments_objectId" value="{$comments_objectId|escape}" />
-	<input type="hidden" name="comments_title" value="{tr}Untitled{/tr}" />
+	<input type="hidden" name="comments_title" value="{if $page}{$page|escape}{else}{tr}Untitled{/tr}{/if}" />
 
 	{* Traverse request variables that were set to this page adding them as hidden data *}
 	{section name=i loop=$comments_request_data}
@@ -299,7 +299,7 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 	{/section}
 
 	<table class="normal">
-		{if $forum_mode != 'y' or $prefs.forum_reply_notitle neq 'y'}
+		{if ( $forum_mode != 'y' and $prefs.wiki_comments_notitle neq 'y' ) or $prefs.forum_reply_notitle neq 'y'}
 			<tr>
 				<td class="formcolor">
 					<label for="comments-title">{tr}Title{/tr} <span class="attention">({tr}required{/tr})</span> </label>
