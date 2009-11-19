@@ -365,8 +365,15 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 				<textarea id="editpost2" name="comments_data" rows="{$rows}">{if $prefs.feature_forum_replyempty ne 'y' || $edit_reply > 0 || $comment_preview eq 'y'}{$comment_data|escape}{/if}</textarea> 
 				<input type="hidden" name="rows" value="{$rows}" />
 				<input type="hidden" name="cols" value="{$cols}" />
+
+				{if $forum_mode eq 'y' and $user and $prefs.feature_user_watches eq 'y'}
+					<div id="watch_thread_on_reply">
+						<input id="watch_thread" type="checkbox" name="watch" value="y"{if $user_watching_topic eq 'y' or $smarty.request.watch eq 'y'} checked="checked"{/if}> <label for="watch_thread">{tr}Send me an e-mail when someone replies{/tr}</label>
+					</div>
+				{/if}
 			</td>
 		</tr>
+
 
 		{if $forum_mode == "y" and (($forum_info.att eq 'att_all') or ($forum_info.att eq 'att_admin' and ($tiki_p_admin_forum eq 'y'  or $forum_info.moderator == $user)) or ($forum_info.att eq 'att_perm' and $tiki_p_forum_attach eq 'y'))}
 		{assign var='can_attach_file' value='y'}

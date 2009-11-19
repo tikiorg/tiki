@@ -191,6 +191,16 @@ if ( isset($_REQUEST['comments_objectId']) && $_REQUEST['comments_objectId'] == 
 				if (!empty($feedbacks)) {
 					$_SESSION['feedbacks'] = $feedbacks;
 				}
+
+				//Watches
+				if ( isset($forum_mode) && $forum_mode == 'y' && $prefs['feature_user_watches'] == 'y') {
+					if ( isset($_REQUEST['watch']) && $_REQUEST['watch'] == 'y') {
+						$tikilib->add_user_watch($user, 'forum_post_thread', $_REQUEST['comments_parentId'], 'forum topic', $forum_info['name'] . ':' . $thread_info['title'], "tiki-view_forum_thread.php?forumId=" . $_REQUEST['forumId'] . "&amp;comments_parentId=" . $_REQUEST['comments_parentId']);
+					} else {
+						$tikilib->remove_user_watch($user, 'forum_post_thread', $_REQUEST['comments_parentId'], 'forum topic');
+					}
+				}
+
 				header('location: ' . $url);
 				die;
 		}
