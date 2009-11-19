@@ -318,6 +318,7 @@
 				</td>
 				<td class="even" style="vertical-align:top">
 					<h3>{tr}Objects that can be included{/tr}</h3>
+					{pagination_links cant=$maximum step=$maxRecords offset=$offset }{/pagination_links}
 					<table>
 						{if $polls}
 							<tr>
@@ -484,6 +485,7 @@
 							</tr>
 						{/if}
 					</table>
+					{pagination_links cant=$maximum step=$maxRecords offset=$offset }{/pagination_links}
 					{remarksbox type="tip" title="{tr}Tip{/tr}"}
 						{if $prefs.feature_phplayers eq "y"}
 						{tr}To use <a target="tikihelp" href="http://phplayersmenu.sourceforge.net/">phplayersmenu</a>, you can use one of the three following syntaxes:{/tr}

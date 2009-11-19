@@ -310,21 +310,49 @@ for ($i = 0;$i < $temp_max;$i++) {
         $allgroups[$i]["selected"] = 'n';
     }
 }
+
 $smarty->assign("groups", $allgroups);
-$galleries = $tikilib->list_galleries(0, -1, 'lastModif_desc', $user, '');
+
+if (!isset($_REQUEST["offset"])) {
+	$offset = 0;
+} else {
+	$offset = $_REQUEST["offset"];
+}
+$maximum = 0;
+$maxRecords = $prefs['maxRecords'];
+
+$galleries = $tikilib->list_galleries($offset, $maxRecords, 'lastModif_desc', $user, '');
 $smarty->assign('galleries', $galleries["data"]);
-$polls = $polllib->list_active_polls(0, -1, 'publishDate_desc', '');
+$maximum = max( $maximum, $galleries['cant'] );
+
+$polls = $polllib->list_active_polls($offset, $maxRecords, 'publishDate_desc', '');
 $smarty->assign('polls', $polls["data"]);
-$contents = $dcslib->list_content(0, -1, 'contentId_desc', '');
+$maximum = max( $maximum, $polls['cant'] );
+
+$contents = $dcslib->list_content($offset, $maxRecords, 'contentId_desc', '');
 $smarty->assign('contents', $contents["data"]);
-$rsss = $rsslib->list_rss_modules(0, -1, 'name_desc', '');
+$maximum = max( $maximum, $contents['cant'] );
+
+$rsss = $rsslib->list_rss_modules($offset, $maxRecords, 'name_desc', '');
 $smarty->assign('rsss', $rsss["data"]);
-$menus = $menulib->list_menus(0, -1, 'menuId_desc', '');
+$maximum = max( $maximum, $rsss['cant'] );
+
+$menus = $menulib->list_menus($offset, $maxRecords, 'menuId_desc', '');
 $smarty->assign('menus', $menus["data"]);
+$maximum = max( $maximum, $menus['cant'] );
+
 $banners = $bannerlib->list_zones();
 $smarty->assign('banners', $banners["data"]);
+$maximum = max( $maximum, $banners['cant'] );
+
 $wikistructures = $structlib->list_structures('0', '100', 'pageName_asc', '');
 $smarty->assign('wikistructures', $wikistructures["data"]);
+$maximum = max( $maximum, $wikistructures['cant'] );
+
+$smarty->assign( 'maxRecords', $maxRecords );
+$smarty->assign( 'offset', $offset );
+$smarty->assign( 'maximum', $maximum );
+
 $left = $tikilib->get_assigned_modules('l');
 $right = $tikilib->get_assigned_modules('r');
 $smarty->assign_by_ref('left', $left);
