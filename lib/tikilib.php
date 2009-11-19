@@ -1103,9 +1103,14 @@ class TikiLib extends TikiDb_Bridge {
 		if (empty($user))
 			return '';
 
-		$query = "select `login`,`avatarType`,`avatarLibName` from `users_users` where `login`=?";
-		$result = $this->query($query,array($user));
-		$res = $result->fetchRow();
+		if( is_array( $user ) ) {
+			$res = $user;
+			$user = $user['login'];
+		} else {
+			$query = "select `login`,`avatarType`,`avatarLibName` from `users_users` where `login`=?";
+			$result = $this->query($query,array($user));
+			$res = $result->fetchRow();
+		}
 
 		if (!$res) {
 			return '';
@@ -1129,7 +1134,8 @@ class TikiLib extends TikiDb_Bridge {
 				$ret = "<img border='0' width='45' height='45' src='" . $libname . "' " . $style . " alt='$user' />";
 				break;
 			case 'u':
-				$ret = "<img border='0' src='tiki-show_user_avatar.php?user=$user' " . $style . " alt='$user' />";
+				$path = "tiki-show_user_avatar.php?user=$user";
+				$ret = "<img border='0' src='$path' " . $style . " alt='$user' />";
 				break;
 		}
 		return $ret;

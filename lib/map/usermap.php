@@ -66,19 +66,8 @@ class MapsLib extends TikiLib {
 			unset($lon);
 			
 			// get the avatar
-			$image = '';
-	    $style = "style='float:left;margin-right:5px;'";
-			switch ($res["avatarType"]) {
-	    case 'n':
-				$image = '';
-				break;
-	    case 'l':
-				$image = "<img border='0' width='45' height='45' src='" . $res["avatarLibName"] . "' " . $style . " alt='$login' />";
-				break;
-	    case 'u':
-				$image = "<img border='0' width='45' height='45' src='tiki-show_user_avatar.php?user=$login' " . $style . " alt='$login' />";
-				break;
-			}		
+			$image = $tikilib->get_user_avatar( $res );
+			$style = "style='float:left;margin-right:5px;'";
 			$gender=tra("unknown");
 			$country=tra("Other");
 			while ($login==substr($res["login"],0,20) && $res) {

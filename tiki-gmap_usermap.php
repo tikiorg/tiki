@@ -17,15 +17,7 @@ while ($res = $result->fetchRow()) {
 		$res['lon'] = number_format($res['lon'],5);
 		$res['lat'] = number_format($res['lat'],5);
 		// echo $res['login']." ".$res['lon'].' '.$res['lat']."<br />\n";
-    $image = '';
-    switch ($res["avatarType"]) {
-      case 'l':
-        $image = '<img border="0" width="45" height="45" src="' . $res["avatarLibName"] . '" ' . $style . ' alt="'.$res['login'].'" />';
-        break;
-      case 'u':
-        $image = '<img border="0" width="45" height="45" src="tiki-show_user_avatar.php?user='.$res['login'].'" ' . $style . ' alt="'.$res['login'].'" />';
-        break;
-    }
+		$image = $tikilib->get_user_avatar( $res );
 		$out[] = array($res['lat'],$res['lon'],addslashes($image).'Login:'.$res['login'].'<br />Lat: '.$res['lon'].'&deg;<br /> Long: '.$res['lat'].'&deg;');
 	}
 }
