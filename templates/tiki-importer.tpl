@@ -1,4 +1,4 @@
-{title help="Tiki Importer"}TikiWiki importer{/title}
+{title help="Tiki+Importer"}TikiWiki importer{/title}
 
 <br />
 
