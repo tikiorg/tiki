@@ -114,19 +114,46 @@ class PollLibShared extends TikiLib {
 		}
 	}
 
-	function get_rating($cat_type,$cat_objid) {
-		$catObjectId = $this->getOne("select `objectId` from `tiki_objects` where `type`=? and `itemId`=?",array($cat_type,$cat_objid));
-    if ($catObjectId and $catObjectId > 0) {
-      $result = $this->query("select * from `tiki_poll_objects` where `catObjectId`=?",array((int)$catObjectId));
-      $res = $result->fetchRow();
-      $poll['info'] = $this->get_poll($res['pollId']);
-			$poll['options'] = $this->list_poll_options($res['pollId']);
-			$poll['title'] = $res['title'];
-			return $poll;
-		}
-		return false;
-  }
+	function get_ratings( $cat_type, $cat_objid, $user = null ) {
+		global $tikilib, $prefs;
 
+		$out = array();
+
+		$result = $this->fetchAll("select `pollId` from `tiki_poll_objects` INNER JOIN `tiki_objects` ON `tiki_objects`.`objectId` = `tiki_poll_objects`.`catObjectId` WHERE `tiki_objects`.`type`=? and `tiki_objects`.`itemId`=?",array($cat_type,$cat_objid));
+		foreach( $result as $row ) {
+			$poll = array();
+			$poll['info'] = $this->get_poll($row['pollId']);
+
+			if( $cat_type == 'wiki page' ) {
+				$poll['info'] = $this->pollnameclean( $poll['info'], $cat_objid );
+			}
+
+			$poll['options'] = $this->list_poll_options($row['pollId']);
+			$poll['title'] = $poll['info']['title'];
+
+			if( $user ) {
+				$poll['vote'] = $tikilib->get_user_vote( 'poll' . $row['pollId'], $user );
+			} else {
+				$poll['vote'] = false;
+			}
+
+			$out[] = $poll;
+
+			// Unless multiple polls per object is enabled, end after the first
+			if( $prefs['poll_multiple_per_object'] != 'y' ) {
+				break;
+			}
+		}
+
+		return $out;
+	}
+
+	private function pollnameclean($s, $page) {
+		if (isset($s['title'])) 
+			$s['title'] = substr($s['title'], strlen($page)+2); 
+
+		return $s;
+	}	
 	function remove_poll($pollId) {
 		$query = "delete from `tiki_poll_objects` where `pollId`=?";
 		$result = $this->query($query,array((int) $pollId));

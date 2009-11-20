@@ -19,6 +19,7 @@
 		
 		{preference name=poll_list_categories}
 		{preference name=poll_list_objects}
+		{preference name=poll_multiple_per_object}
 		
 	</fieldset>
 	<div class="heading input_submit_container" style="text-align: center">

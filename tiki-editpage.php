@@ -1077,7 +1077,7 @@ if ($prefs['feature_polls'] =='y' and $prefs['feature_wiki_ratings'] == 'y' && $
 	}
 	$polls_templates = $polllib->get_polls('t');
 	$smarty->assign('polls_templates',$polls_templates['data']);
-	$poll_rated = $polllib->get_rating($cat_type,$cat_objid);
+	$poll_rated = reset( $polllib->get_ratings($cat_type,$cat_objid) );
 	if (isset($poll_rated['title'])) {
 		$poll_rated = array_map('pollnameclean',$poll_rated);
 	}

@@ -837,6 +837,7 @@ function get_default_prefs() {
 		'poll_comments_per_page' => 10,
 		'poll_list_categories' => 'n',
 		'poll_list_objects' => 'n',
+		'poll_multiple_per_object' => 'n',
 		'feature_poll_revote' => 'y',
 
 		// surveys

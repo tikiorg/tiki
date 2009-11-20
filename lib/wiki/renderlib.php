@@ -445,23 +445,9 @@ class WikiRenderer
 		if ($prefs['feature_polls'] !='y' || $prefs['feature_wiki_ratings'] != 'y' || $tiki_p_wiki_view_ratings != 'y')
 			return;
 
-		if( ! function_exists( 'pollnameclean' ) ) {
-			function pollnameclean($s, $page) {
-				if (isset($s['title'])) 
-					$s['title'] = substr($s['title'], strlen($page)+2); 
-
-				return $s;
-			}	
-		}
-
 		if (!isset($polllib) || !is_object($polllib)) include("lib/polls/polllib_shared.php");
-		$ratings = $polllib->get_rating('wiki page',$this->page);
-		$ratings['info'] = pollnameclean($ratings['info'], $this->page);
+		$ratings = $polllib->get_ratings('wiki page',$this->page, $this->user );
 		$this->smartyassign('ratings',$ratings);
-		if ($this->user) {
-			$user_vote = $tikilib->get_user_vote('poll'.$ratings['info']['pollId'],$this->user);
-			$this->smartyassign('user_vote',$user_vote);
-		}
 	} // }}}
 
 	private function setupBreadcrumbs() // {{{
