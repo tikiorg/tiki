@@ -55,71 +55,13 @@
 					</div>
 				</div>
 
-				<div class="adminoptionbox">
-					<div class="adminoption">
-						<input type="checkbox" id="feature_wiki_templates" name="feature_wiki_templates" {if $prefs.feature_wiki_templates eq 'y'}checked="checked"{/if}/>
-					</div>
-					<div class="adminoptionlabel">
-						<label for="feature_wiki_templates">{tr}Content templates{/tr}</label>
-						{if $prefs.feature_help eq 'y'} 
-							{help url="Content+Template"}
-						{/if}
-					</div>
-				</div>
-
-				<div class="adminoptionbox">
-					<div class="adminoption">
-						<input type="checkbox" id='feature_warn_on_edit' name="feature_warn_on_edit" {if $prefs.feature_warn_on_edit eq 'y'}checked="checked"{/if}/>
-					</div>
-					<div class="adminoptionlabel">
-						<label for="feature_warn_on_edit">{tr}Warn on edit conflict{/tr}.</label>
-					</div>
-				</div>
-
-				<div class="adminoptionbox">
-					<div class="adminoptionlabel">
-						<label for="warn_on_edit_time">{tr}Edit idle timeout:{/tr}</label>
-						<select name="warn_on_edit_time" id="warn_on_edit_time">
-							<option value="1" {if $prefs.warn_on_edit_time eq 1}selected="selected"{/if}>1</option>
-							<option value="2" {if $prefs.warn_on_edit_time eq 2}selected="selected"{/if}>2</option>
-							<option value="5" {if $prefs.warn_on_edit_time eq 5}selected="selected"{/if}>5</option>
-							<option value="10" {if $prefs.warn_on_edit_time eq 10}selected="selected"{/if}>10</option>
-							<option value="15" {if $prefs.warn_on_edit_time eq 15}selected="selected"{/if}>15</option>
-							<option value="30" {if $prefs.warn_on_edit_time eq 30}selected="selected"{/if}>30</option>
-						</select> 
-						{tr}minutes{/tr}
-					</div>
-				</div>
-
-				<div class="adminoptionbox">
-					<div class="adminoption">
-						<input type="checkbox" id="feature_wiki_undo" name="feature_wiki_undo" {if $prefs.feature_wiki_undo eq 'y'}checked="checked"{/if}/>
-					</div>
-					<div class="adminoptionlabel">
-						<label for="feature_wiki_undo">{tr}Undo{/tr}</label>
-					</div>
-				</div>
-
+				{preference name=feature_wiki_templates}
+				{preference name=feature_warn_on_edit}
+				{preference name=warn_on_edit_time}
+				{preference name=feature_wiki_undo}
 				{preference name=feature_wiki_save_draft}
-
-				<div class="adminoptionbox">
-					<div class="adminoption">
-						<input type="checkbox" id="feature_wiki_footnotes" name="feature_wiki_footnotes" {if $prefs.feature_wiki_footnotes eq 'y'}checked="checked" {/if}/>
-					</div>
-					<div class="adminoptionlabel">
-						<label for="feature_wiki_footnotes">{tr}Footnotes{/tr}</label>
-						<a class="link" href="tiki-assignpermission.php?type=wiki&amp;group=Anonymous" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
-					</div>
-				</div>
-
-				<div class="adminoptionbox">
-					<div class="adminoption">
-						<input type="checkbox" id="feature_wiki_allowhtml" name="feature_wiki_allowhtml" {if $prefs.feature_wiki_allowhtml eq 'y'}checked="checked"{/if}/>
-					</div>
-					<div class="adminoptionlabel">
-						<label for="feature_wiki_allowhtml">{tr}Allow HTML{/tr}</label>
-					</div>
-				</div>
+				{preference name=feature_wiki_footnotes}
+				{preference name=feature_wiki_allowhtml}
 
 				<div class="adminoptionbox">
 					<div class="adminoption">
@@ -437,14 +379,8 @@
 				<a class="link" href="tiki-assignpermission.php?type=wiki&amp;group=Anonymous" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
 			</div>
 			<div class="adminoptionboxchild" id="usehistory" style="display:{if $prefs.feature_history eq 'y'}block{else}none{/if};">
-				<div class="adminoptionbox">
-					<div class="adminoptionlabel">
-						<label for="maxVersions">{tr}Maximum number of versions:{/tr}</label>
-						<input size="5" type="text" name="maxVersions" value="{$prefs.maxVersions|escape}" id="maxVersions" />
-						<br />
-						<em>Use <strong>0</strong> for unlimited versions.</em>
-					</div>
-				</div>
+
+				{preference name=maxVersions}
 				<div class="adminoptionbox">
 					<div class="adminoptionlabel">
 						<label for="keep_versions">{tr}Never delete versions younger than{/tr}:</label>
@@ -459,25 +395,8 @@
 						<label for="feature_wiki_history_ip">{tr}Display IP address{/tr}.</label>
 					</div>
 				</div>
-				<div class="adminoptionbox">
-					<div class="adminoptionlabel">
-						<label for="default_wiki_diff_style">{tr}Default diff style{/tr}:</label>
-						<select name="default_wiki_diff_style" id="default_wiki_diff_style">
-							<option value="old" {if $prefs.default_wiki_diff_style eq 'old'}selected="selected"{/if}>{tr}Only with last version{/tr}</option>
-							<option value="htmldiff" {if $prefs.default_wiki_diff_style == "htmldiff"}selected="selected"{/if}>{tr}HTML diff{/tr}</option>
-							<option value="sidediff" {if $prefs.default_wiki_diff_style == "sidediff"}selected="selected"{/if}>{tr}Side-by-side diff{/tr}</option>
-							<option value="sidediff-char" {if $prefs.default_wiki_diff_style == "sidediff-char"}selected="selected"{/if}>{tr}Side-by-side diff by characters{/tr}</option>
-							<option value="inlinediff" {if $prefs.default_wiki_diff_style == "inlinediff"}selected="selected"{/if}>{tr}Inline diff{/tr}</option>
-							<option value="inlinediff-char" {if $prefs.default_wiki_diff_style == "inlinediff-char"}selected="selected"{/if}>{tr}Inline diff by characters{/tr}</option>
-							<option value="sidediff-full" {if $prefs.default_wiki_diff_style == "sidediff-full"}selected="selected"{/if}>{tr}Full side-by-side diff{/tr}</option>
-							<option value="sidediff-full-char" {if $prefs.default_wiki_diff_style == "sidediff-full-char"}selected="selected"{/if}>{tr}Full side-by-side diff by characters{/tr}</option>
-							<option value="inlinediff-full" {if $prefs.default_wiki_diff_style == "inlinediff-full"}selected="selected"{/if}>{tr}Full inline diff{/tr}</option>
-							<option value="inlinediff-full-char" {if $prefs.default_wiki_diff_style == "inlinediff-full-char"}selected="selected"{/if}>{tr}Full inline diff by characters{/tr}</option>
-							<option value="unidiff" {if $prefs.default_wiki_diff_style == "unidiff"}selected="selected"{/if}>{tr}Unified diff{/tr}</option>
-							<option value="sideview" {if $prefs.default_wiki_diff_style == "sideview"}selected="selected"{/if}>{tr}Side-by-side view{/tr}</option>
-						</select>
-					</div>
-				</div>
+
+				{preference name=default_wiki_diff_style}
 				<div class="adminoptionbox">
 					<div class="adminoption">
 						<input type="checkbox" id="feature_wiki_history_full" name="feature_wiki_history_full" {if $prefs.feature_wiki_history_full eq 'y'}checked="checked" {/if}/>
@@ -626,14 +545,7 @@
 					</div>
 				</div>
 
-				<div class="adminoptionbox">
-					<div class="adminoption">
-						<input type="checkbox" id="page_n_times_in_a_structure" name="page_n_times_in_a_structure" {if $prefs.page_n_times_in_a_structure eq 'y'}checked="checked"{/if}/>
-					</div>
-					<div class="adminoptionlabel">
-						<label for="page_n_times_in_a_structure">{tr}A page can occur multiple times in a structure:{/tr}</label>
-					</div>
-				</div>
+				{preference name=page_n_times_in_a_structure}
 			</div>	
 		</div>
 

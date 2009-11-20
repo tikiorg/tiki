@@ -165,5 +165,11 @@ function prefs_global_list() {
 			'type' => 'text',
 			'size' => '3',
 		),
+		'maxVersions' => array(
+			'name' => tra('Maximum number of versions:'),
+			'type' => 'text',
+			'size' => '5',
+			'hint' => tra('0 for unlimited versions'),
+		),
 	);
 }

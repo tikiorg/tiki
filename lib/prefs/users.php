@@ -9,5 +9,3 @@ function prefs_users_list() {
 		),
 	);
 }
-
-?>

@@ -1306,6 +1306,237 @@ function prefs_feature_list() {
 			'name' => tra("If a requested page doesn't exist, redirect to a similarly named page"),
 			'type' => 'flag',
 		),
-
+		'feature_wiki_templates' => array(
+			'name' => tra('Content templates'),
+			'type' => 'flag',
+			'help' => 'Content+Template',
+		),
+		'feature_warn_on_edit' => array(
+			'name' => tra('Warn on edit conflict'),
+			'type' => 'flag',
+		),
+		'feature_wiki_undo' => array(
+			'name' => tra('Undo'),
+			'type' => 'flag',
+		),
+		'feature_wiki_footnotes' => array(
+			'name' => tra('Footnotes'),
+			'type' => 'flag',
+		),
+		'feature_wiki_allowhtml' => array(
+			'name' => tra('Allow HTML'),
+			'type' => 'flag',
+		),
+	
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'feature_backlinks' => array(
+			'name' => tra('Backlinks'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'feature_dump' => array(
+			'name' => tra('Dumps'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'feature_history' => array(
+			'name' => tra('History'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'feature_likePages' => array(
+			'name' => tra('Similar'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'feature_listorphanStructure' => array(
+			'name' => tra('Pages not in structure'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'feature_sandbox' => array(
+			'name' => tra('Sandbox'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'feature_wiki_attachments' => array(
+			'name' => tra('Attachments'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'feature_wiki_comments' => array(
+			'name' => tra('Comments'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'feature_wiki_discuss' => array(
+			'name' => tra('Discuss pages on forums'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'feature_wiki_export' => array(
+			'name' => tra('Export'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'feature_wiki_structure' => array(
+			'name' => tra('Structures'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'feature_wiki_import_page' => array(
+			'name' => tra('Import pages'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'feature_wiki_import_html' => array(
+			'name' => tra('Import HTML'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'feature_wiki_multiprint' => array(
+			'name' => tra('MultiPrint'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'feature_wiki_make_structure' => array(
+			'name' => tra('Make structure from page'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'feature_wiki_open_as_structure' => array(
+			'name' => tra('Open page as structure'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'feature_wiki_pictures' => array(
+			'name' => tra('Pictures'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'feature_wiki_plurals' => array(
+			'name' => tra('Link plural WikiWords to their singular forms'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'feature_wiki_print' => array(
+			'name' => tra('Print'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'feature_wiki_rankings' => array(
+			'name' => tra('Rankings'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'feature_wiki_ratings' => array(
+			'name' => tra('Rating'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'feature_wiki_show_hide_before' => array(
+			'name' => '',
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'feature_wiki_userpage' => array(
+			'name' => tra("User's page"),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'feature_wiki_userpage_prefix' => array(
+			'name' => tra('UserPage prefix:'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'feature_wiki_usrlock' => array(
+			'name' => tra('Users can lock pages'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'feature_wikiwords' => array(
+			'name' => tra('WikiWords'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'feature_wikiwords_usedash' => array(
+			'name' => tra('Accept dashes and underscores in WikiWords'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'feature_wiki_history_full' => array(
+			'name' => tra('History includes only page data, description, and change comment'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'feature_wiki_categorize_structure' => array(
+			'name' => tra('Categorize structure pages together'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'feature_wikiapproval' => array(
+			'name' => tra('Use wiki page staging and approval'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'feature_actionlog_bytes' => array(
+			'name' => tra('Log bytes changes (+/-) in action logs'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'feature_source' => array(
+			'name' => tra('View source'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'feature_create_webhelp' => array(
+			'name' => tra('Create webhelp from structure:'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'feature_wiki_mandatory_category' => array(
+			'name' => tra('Force and limit categorization to within subtree of:'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'feature_wiki_history_ip' => array(
+			'name' => tra('Display IP address'),
+			'type' => '',
+			),
 	);
 }

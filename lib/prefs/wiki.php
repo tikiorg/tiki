@@ -122,6 +122,343 @@ function prefs_wiki_list() {
 			'description' => tra('Hide the title field on wiki comments and their replies.'),
 			'type' => 'flag',
 		),
+
+
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_comments_default_ordering' => array(
+			'name' => tra('Default ordering'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_comments_displayed_default' => array(
+			'name' => tra('Display by default'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_comments_per_page' => array(
+			'name' => tra('Default number per page'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_creator_admin' => array(
+			'name' => tra('Page creators are admin of their pages'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_forum_id' => array(
+			'name' => tra('Forum for discussion:'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_list_backlinks' => array(
+			'name' => tra('Backlinks'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_list_comment' => array(
+			'name' => tra('Edit comments'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_list_comment_len' => array(
+			'name' => '',
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_list_description' => array(
+			'name' => tra('Description'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_list_description_len' => array(
+			'name' => tra('Description length:'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_list_creator' => array(
+			'name' => tra('Creator'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_list_hits' => array(
+			'name' => tra('Hits'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_list_lastmodif' => array(
+			'name' => tra('Last modification date'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_list_lastver' => array(
+			'name' => tra('Version'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_list_links' => array(
+			'name' => tra('Links'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_list_name' => array(
+			'name' => tra('Name'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_list_name_len' => array(
+			'name' => tra('Name length:'),
+			'type' => 'text',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_list_size' => array(
+			'name' => tra('Size'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_list_status' => array(
+			'name' => tra('Status'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_list_user' => array(
+			'name' => tra('Last modified by'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_list_versions' => array(
+			'name' => tra('Versions'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_list_language' => array(
+			'name' => tra('Language'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_list_categories' => array(
+			'name' => tra('Categories'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_list_categories_path' => array(
+			'name' => tra('Categories path'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_list_id' => array(
+			'name' => tra('Page ID'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_list_sortorder' => array(
+			'name' => tra('Default sort order:'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_list_sortdirection' => array(
+			'name' => tra('Descending'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_uses_slides' => array(
+			'name' => tra('Slideshows'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_watch_author' => array(
+			'name' => tra('Create watch for author on page creation'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_watch_comments' => array(
+			'name' => tra('Enable watches on comments'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_watch_editor' => array(
+			'name' => tra('Enable watch events when I am the editor'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_watch_minor' => array(
+			'name' => tra('Watch minor edits'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_edit_section' => array(
+			'name' => tra('Edit section'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_edit_section_level' => array(
+			'name' => tra('Edit section level:'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_edit_icons_toggle' => array(
+			'name' => tra('Toggle display of section and plugin edit icons'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_edit_minor' => array(
+			'name' => tra('Allow minor edits'),
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_feature_3d' => array(
+			'name' => '',
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_3d_width' => array(
+			'name' => '',
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_3d_height' => array(
+			'name' => '',
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_3d_navigation_depth' => array(
+			'name' => '',
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_3d_feed_animation_interval' => array(
+			'name' => '',
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_3d_existing_page_color' => array(
+			'name' => '',
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_3d_missing_page_color' => array(
+			'name' => '',
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_3d_camera_distance' => array(
+			'name' => '',
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_3d_elastic_constant' => array(
+			'name' => '',
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_3d_eletrostatic_constant' => array(
+			'name' => '',
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_3d_fov' => array(
+			'name' => '',
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_3d_friction_constant' => array(
+			'name' => '',
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_3d_node_charge' => array(
+			'name' => '',
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_3d_node_mass' => array(
+			'name' => '',
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_3d_node_size' => array(
+			'name' => '',
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_3d_spring_size' => array(
+			'name' => '',
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_3d_text_size' => array(
+			'name' => '',
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_3d_adjust_camera' => array(
+			'name' => '',
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_3d_autoload' => array(
+			'name' => '',
+			'type' => '',
+			),
+	
+	// Used in templates/tiki-admin-include-wiki.tpl
+	'wiki_spellcheck' => array(
+			'name' => tra('Spell checking'),
+			'type' => '',
+			),
+	
 	);
 }
-
