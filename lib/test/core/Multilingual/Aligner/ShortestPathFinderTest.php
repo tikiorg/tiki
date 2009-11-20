@@ -20,6 +20,9 @@ class Multilingual_Aligner_ShortestPathFinderTest extends TikiTestCase
    // Note: In remaining tests, assume that $this->pfinder has already
    //       been constructed in a similar way.
    //
+   /**
+    * @group multilingual
+    */ 
    public function test_This_is_how_you_create_a_ShortestPathFinder() {
    
       // First, generate a distance matrix.
@@ -36,6 +39,9 @@ class Multilingual_Aligner_ShortestPathFinderTest extends TikiTestCase
       $path_finder = new Multilingual_Aligner_ShortestPathFinder($distances_matrix, $INFINITY);
    }
    
+   /**
+    * @group multilingual
+    */ 
    public function test_This_is_how_you_find_shortest_path_from_the_origin_to_another_node() {   
       $origin_node_num = 0;
       $destination_node_num = 2;
@@ -45,6 +51,9 @@ class Multilingual_Aligner_ShortestPathFinderTest extends TikiTestCase
       $distance = $this->pfinder->shortestDistanceTo($destination_node_num);
    }    
 
+   /**
+    * @group multilingual
+    */ 
    public function test_node_names_do_not_have_to_be_numbers() {
       $distances_matrix['paris']['lyon'] = 11;
       $distances_matrix['paris']['marseilles'] = 23;
@@ -63,6 +72,9 @@ class Multilingual_Aligner_ShortestPathFinderTest extends TikiTestCase
    //    These tests check the internal workings of the class.
    ////////////////////////////////////////////////////////////////
 
+   /**
+    * @group multilingual
+    */ 
    public function test__nodesInMatrix() {
    
       $distances_matrix = array();
@@ -76,6 +88,9 @@ class Multilingual_Aligner_ShortestPathFinderTest extends TikiTestCase
       $this->assertEquals($exp_nodes, $nodes_list, "Bad list of nodes.");
    }
 
+   /**
+    * @group multilingual
+    */ 
    public function test_path_finder_SMALL_example() {
       $start_node_num = 0;
       $this->pfinder->computeShortestPathes($start_node_num); 
@@ -84,6 +99,9 @@ class Multilingual_Aligner_ShortestPathFinderTest extends TikiTestCase
       $this->assertShortestPathIs(2, array(0, 1, 2), 16, "");
    }
    
+   /**
+    * @group multilingual
+    */ 
    public function test_path_finder_LARGER_example() {
       $start_node_num = 'ottawa';
       $cost_matrix['ottawa']['montreal'] = 50;

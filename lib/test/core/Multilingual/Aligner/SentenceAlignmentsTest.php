@@ -16,6 +16,9 @@ class  Multilingual_Aligner_SentenceAlignmentsTest extends TikiTestCase
    //    These tests illustrate how to use this class.
    ////////////////////////////////////////////////////////////////
     
+   /**
+    * @group multilingual
+    */ 
     public function test_this_is_how_you_create_a_SentenceAlignments() {
        $aligner = new Multilingual_Aligner_SentenceAlignments();
     }
@@ -31,12 +34,18 @@ class  Multilingual_Aligner_SentenceAlignmentsTest extends TikiTestCase
 	 * $this->alignments alignments contains an instance of
 	 * SentenceAligners built as in the above test.
 	 */ 
+   /**
+    * @group multilingual
+    */ 
 	public function test_This_is_how_you_add_sentences() {
 		$en_sentence = "hello world";
 		$fr_sentence = "bonjour le monde";
 		$this->alignments->addSentencePair($en_sentence, 'en', $fr_sentence, 'fr');
 	}
 	
+   /**
+    * @group multilingual
+    */ 
 	public function test_This_is_how_you_retrieve_a_sentence_in_the_other_language () {
 		$en_sentence = "hello world";
 		$fr_sentence = $this->alignments->getSentenceInOtherLanguage($en_sentence, 'en');

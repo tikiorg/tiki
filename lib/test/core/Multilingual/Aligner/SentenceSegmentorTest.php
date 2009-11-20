@@ -8,10 +8,16 @@ class Multilingual_Aligner_SentenceSegmentorTest extends TikiTestCase
    //    These tests illustrate how to use this class.
    ////////////////////////////////////////////////////////////////
 
+   /**
+    * @group multilingual
+    */ 
    public function test_This_is_how_you_create_a_SentenceSegmentor() {
       $segmentor = new Multilingual_Aligner_SentenceSegmentor();
    }
    
+   /**
+    * @group multilingual
+    */ 
    public function test_this_is_how_you_segment_text_into_sentences() {
       $segmentor = new Multilingual_Aligner_SentenceSegmentor();
       $text = "hello. world";
@@ -24,6 +30,9 @@ class Multilingual_Aligner_SentenceSegmentorTest extends TikiTestCase
    ////////////////////////////////////////////////////////////////
 
 
+   /**
+    * @group multilingual
+    */ 
    public function test_segmentation_deals_with_period() {
       $text = "hello brand new. world.";
       $expSentences = array("hello brand new.", " world.");
@@ -31,6 +40,9 @@ class Multilingual_Aligner_SentenceSegmentorTest extends TikiTestCase
                                      "Segmentation did not deal properly with separation with period.");
    }
    
+   /**
+    * @group multilingual
+    */ 
    public function test_segmentation_deals_with_question_mark() {
       $text = "hello? Anybody home?";
       $expSentences = array("hello?", " Anybody home?");
@@ -38,6 +50,9 @@ class Multilingual_Aligner_SentenceSegmentorTest extends TikiTestCase
                                      "Segmentation did not deal properly with separation with question mark.");
    }   
 
+   /**
+    * @group multilingual
+    */ 
    public function test_segmentation_deals_with_several_question_marks() {
       $text = "hello???? Anybody home?";
       $expSentences = array("hello????", " Anybody home?");
@@ -45,6 +60,9 @@ class Multilingual_Aligner_SentenceSegmentorTest extends TikiTestCase
                                      "Segmentation did not deal properly with separation with question mark.");
    }   
    
+   /**
+    * @group multilingual
+    */ 
    public function test_segmentation_deals_with_exclamation_mark() {
       $text = "hello! Anybody home!";
       $expSentences = array("hello!", " Anybody home!");
@@ -53,6 +71,9 @@ class Multilingual_Aligner_SentenceSegmentorTest extends TikiTestCase
    }  
    
 
+   /**
+    * @group multilingual
+    */ 
    public function test_segmentation_deals_with_mix_of_exclamation_and_question_marks() {
       $text = "hello?!? Anybody home!";
       $expSentences = array("hello?!?", " Anybody home!");
@@ -61,6 +82,9 @@ class Multilingual_Aligner_SentenceSegmentorTest extends TikiTestCase
    }  
 
 
+   /**
+    * @group multilingual
+    */ 
    public function test_segmentation_deals_with_empty_string() {
       $text = "";
       $expSentences = array();
@@ -68,6 +92,9 @@ class Multilingual_Aligner_SentenceSegmentorTest extends TikiTestCase
                                      "Segmentation did not deal properly with empty string.");
    }        
    
+   /**
+    * @group multilingual
+    */ 
    public function test_segmentation_deals_with_wiki_paragraph_break() {
       $text = "This sentence ends with a period and a newline.\n".
               "This sentence has no period, but ends with a wiki paragraph break\n\n".
@@ -80,6 +107,9 @@ class Multilingual_Aligner_SentenceSegmentorTest extends TikiTestCase
    
    }
 
+   /**
+    * @group multilingual
+    */ 
    public function test_segmentation_deals_with_bullet_lists() {
       $text = "This sentence precedes a bullet list.\n".
               "* Bullet 1\n".
