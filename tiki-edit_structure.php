@@ -51,7 +51,7 @@ $smarty->assign('structure_name', $structure_info["pageName"]);
 
 if (!$tikilib->user_has_perm_on_object($user,$structure_info["pageName"],'wiki page','tiki_p_view')) {
 	$smarty->assign('errortype', 401);
-	$smarty->assign('msg',tra('Permission denied you cannot view this page'));
+	$smarty->assign('msg',tra('Permission denied. You cannot view this page.'));
 	$smarty->display("error.tpl");
 	die;
 }
