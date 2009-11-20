@@ -191,4 +191,8 @@ if ($prefs['javascript_enabled'] == 'y') {
 		$headerlib->add_jsfile( "lib/phplayers/libjs/layersmenu.js" );
 		$headerlib->add_jsfile( "lib/phplayers/libjs/layerstreemenu-cookies.js" );
 	}
+	
+	if( $prefs['wikiplugin_flash'] == 'y' ) {
+		$headerlib->add_jsfile( 'lib/swfobject/swfobject.js' );
+	}
 }	// end if $prefs['javascript_enabled'] == 'y'
