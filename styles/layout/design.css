@@ -11,6 +11,11 @@ body.fullscreen {
 	background: #fff;
 }
 
+body.wikitext {
+	background: #fff;
+	color: #000;
+}
+
 fieldset {
 	margin-bottom: 2px;
 	padding: 0.3em;
