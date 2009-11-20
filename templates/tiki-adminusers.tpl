@@ -172,7 +172,13 @@
 										{icon _id='bullet_white'}
 									{/if}
 									{if $what eq 'included'}<i>{/if}
-									<a class="link" {$link_style} href="tiki-admingroups.php?group={$grs|escape:"url"}" title={if $what eq 'included'}"{tr}Edit Included Group{/tr}"{else}"{tr}Edit Group:{/tr} {$grs|escape}"{/if}>{$grs|escape}</a>
+									{if $tiki_p_admin eq 'y'}
+										<a class="link" {$link_style} href="tiki-admingroups.php?group={$grs|escape:"url"}" title={if $what eq 'included'}"{tr}Edit Included Group{/tr}"{else}"{tr}Edit Group:{/tr} {$grs|escape}"{/if}>
+									{/if}
+									{$grs|escape}
+									{if $tiki_p_admin eq 'y'}
+										</a>
+									{/if}									
 									{if $what eq 'included'}</i>{/if}
 									{if $grs eq $users[user].default_group}<small>({tr}default{/tr})</small>{/if}
 									{if !$smarty.foreach.gr.last}<br />{/if}
