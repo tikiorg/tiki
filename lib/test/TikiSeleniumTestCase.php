@@ -23,6 +23,9 @@ class TikiSeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase {
 		$test_tiki_root_url = NULL;
 		$config_fpath = './tests_config.php';
 
+		if ( ! file_exists( $config_fpath ) )
+			return false;
+
 		$lines = file($config_fpath);
 		$source = implode('', $lines);
 		echo "-- TikiSeleniumTestCase.configure: After reading config file: \$source='$source'\n";
