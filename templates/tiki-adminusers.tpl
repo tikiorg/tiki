@@ -319,6 +319,7 @@
 				<td>
 					{if $userinfo.login neq 'admin'}
 						<input type="text" id="name" name="name" value="{$userinfo.login|escape}" />
+						{tr}Username cannot contain whitespace{/tr} 
 						<br /> 
 						{if $prefs.login_is_email eq 'y'}
 							<em>{tr}Use the email as username{/tr}.</em>

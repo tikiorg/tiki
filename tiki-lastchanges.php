@@ -21,7 +21,7 @@ if ($prefs['feature_lastChanges'] != 'y') {
 }
 if ($tiki_p_view != 'y') {
 	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied you cannot view this page"));
+	$smarty->assign('msg', tra("Permission denied. You cannot view this page."));
 	$smarty->display("error.tpl");
 	die;
 }

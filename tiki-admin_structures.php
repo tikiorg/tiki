@@ -65,7 +65,7 @@ if ($tiki_p_edit_structures == 'y') {
 		$structure_info = $structlib->s_get_structure_info($_REQUEST['export']);
 		if ($prefs['feature_wiki_export'] != 'y' || $tiki_p_admin_wiki != 'y' || !$tikilib->user_has_perm_on_object($user, $structure_info["pageName"], 'wiki page', 'tiki_p_view')) {
 			$smarty->assign('errortype', 401);
-			$smarty->assign('msg', tra('Permission denied you cannot view this page'));
+			$smarty->assign('msg', tra('Permission denied. You cannot view this page.'));
 			$smarty->display("error.tpl");
 			die;
 		}
@@ -91,7 +91,7 @@ if ($tiki_p_edit_structures == 'y') {
 		$structure_info = $structlib->s_get_structure_info($_REQUEST['export_tree']);
 		if (!$tikilib->user_has_perm_on_object($user, $structure_info["pageName"], 'wiki page', 'tiki_p_view')) {
 			$smarty->assign('errortype', 401);
-			$smarty->assign('msg', tra('Permission denied you cannot view this page'));
+			$smarty->assign('msg', tra('Permission denied. You cannot view this page.'));
 			$smarty->display("error.tpl");
 			die;
 		}

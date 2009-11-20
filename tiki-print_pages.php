@@ -16,7 +16,7 @@ if ($prefs['feature_wiki_multiprint'] != 'y') {
 // Now check permissions if user can view wiki pages
 if ($tiki_p_view != 'y') {
 	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied you cannot view this page"));
+	$smarty->assign('msg', tra("Permission denied. You cannot view this page."));
 	$smarty->display("error.tpl");
 	die;
 }

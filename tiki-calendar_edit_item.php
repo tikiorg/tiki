@@ -108,7 +108,7 @@ if ($calendar['personal'] == 'y') {
 
 if( $tiki_p_view_calendar != 'y' ) {
 	$smarty->assign('errortype', 401);
-	$smarty->assign('msg',tra("Permission denied you cannot view this page"));
+	$smarty->assign('msg',tra("Permission denied. You cannot view this page."));
 	$smarty->display("error.tpl");
 	die;
 }

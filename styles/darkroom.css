@@ -26,6 +26,11 @@ body {
 	font: 74% "Trebuchet MS", "Bitstream Vera Sans", sans-serif;
 }
 
+body.wikitext {
+	color: #d8d8d8;
+	background: #474747;
+}
+
 a,
 a:link,
 a:visited {
