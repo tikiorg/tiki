@@ -26,16 +26,16 @@
 	{tr}All-Day{/tr}
 {else}
   {if ($cellend - $cellstart < 86400)}
-	{$cellstart|tiki_date_format:"%H:%M"} &gt {$cellend|tiki_date_format:"%H:%M"}
+	{$cellstart|tiki_date_format:"%H:%M"} &gt; {$cellend|tiki_date_format:"%H:%M"}
   {else}
-	{$cellstart|tiki_date_format:"%e %B (%H:%M)"} &gt {$cellend|tiki_date_format:"%e %B (%H:%M)"}
+	{$cellstart|tiki_date_format:"%e %B (%H:%M)"} &gt; {$cellend|tiki_date_format:"%e %B (%H:%M)"}
   {/if}
 {/if}
 </strong>
 <br />
 {/if}
 <a href="tiki-calendar_edit_item.php?viewcalitemId={$cellid}" title="{tr}Details{/tr}"{if $cellstatus eq '2'} style="text-decoration:line-through"{/if}>{$cellname|escape}</a><br />
-{if $show_description eq 'y'}<span class="box-data">{$celldescription}</span><br />{/if}
+{if $show_description eq 'y'}<div class="box-data">{$celldescription}</div><br />{/if}
 {if $show_participants eq 'y' and $cellparticipants}
 <span class="box-title">{tr}Organized by:{/tr}</span> {$cellorganizers}<br />
 <span class="box-title">{tr}Participants:{/tr}</span> {$cellparticipants}<br />
@@ -52,5 +52,4 @@
 {if $show_status eq 'y'}
 <div class="statusbox status{$cellstatus}">{if $cellstatus eq 0}{tr}Tentative{/tr}{elseif $cellstatus eq 1}{tr}Confirmed{/tr}{elseif $cellstatus eq 2}{tr}Cancelled{/tr}{/if}</div>
 {/if}
-</div>
 </div>
