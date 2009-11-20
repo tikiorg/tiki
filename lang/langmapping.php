@@ -36,6 +36,7 @@ $langmapping = array(
     'fur' => array(  'Furlan',       tra("Friulian")      ),
     'fy-NL' => array(  'Frisian Netherlands',    tra("Frisian Netherlands")       ),
     'ga-IE' => array(  'Irish',    tra("Irish")       ),
+    'gu-IN' => array(  'Gujarati India',    tra("Gujarati India")       ),
     'gl' => array(  'Galego',    tra("Galician")       ),
     'he' => array(  'עברית',    tra("Hebrew")       ),
     'hi-IN' => array(  'हिन्दी',      tra("Hindi")      ),
