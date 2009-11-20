@@ -6,7 +6,7 @@
 	{/if}
 	{if $prefs.calendar_sticky_popup eq "y"}
 		<span style="right:2px; position:absolute">
-			<a href="javascript:void(0)" onClick="nd();nd();return false;">{icon _id="minus_small" alt="{tr}Close{/tr}" width="11" height="8"}</a>
+			<a href="javascript:void(0)" onClick="nd();return false;">{icon _id="close" alt="{tr}Close{/tr}" width="16" height="16"}</a>
 		</span>
 	{/if}
 	</div>
@@ -17,7 +17,7 @@
 			<a href="tiki-calendar_edit_item.php?calitemId={$cellid}&amp;delete=y">{icon _id="cross" alt="{tr}Delete event{/tr}"}</a>
 		{/if}
 		<a href="tiki-calendar_edit_item.php?viewcalitemId={$cellid}">{icon _id="magnifier" alt="{tr}View event{/tr}"}</a>
-		<a href="javascript:void(0)" onClick="nd();nd();return false;">{icon _id="minus_small" alt="{tr}Close{/tr}" width="11" height="8"}</a>
+		<a href="javascript:void(0)" onClick="nd();return false;">{icon _id="close" alt="{tr}Close{/tr}" width="16" height="16"}</a>
 	</div>
 {/if}
 {if $group_by_item ne 'y'}

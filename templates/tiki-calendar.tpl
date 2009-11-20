@@ -8,7 +8,7 @@
 	{/if}
 {/title}
 
-<div id="calscreen"{if $prefs.calendar_sticky_popup eq 'y'} onclick="nd();"{/if}>
+<div id="calscreen">
 
 	<div class="navbar">
 		{if $displayedcals|@count eq 1 and $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
