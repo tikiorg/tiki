@@ -1617,6 +1617,7 @@ CREATE TABLE `tiki_polls` (
   `voteConsiderationSpan` int(4) default 0,
   PRIMARY KEY (`pollId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
+ALTER TABLE tiki_polls ADD INDEX tiki_poll_lookup ( active , title );
 
 DROP TABLE IF EXISTS `tiki_preferences`;
 CREATE TABLE `tiki_preferences` (

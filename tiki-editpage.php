@@ -1088,7 +1088,7 @@ if ($prefs['feature_polls'] =='y' and $prefs['feature_wiki_ratings'] == 'y' && $
 	if (isset($_REQUEST['poll_template'])) {
 		$smarty->assign('poll_template',$_REQUEST['poll_template']);
 	}
-	$listpolls = $polllib->get_polls('o',"$page: ");
+	$listpolls = $polllib->get_polls('o',0,'',"$page: ");
 	$smarty->assign('listpolls',$listpolls['data']);
 }
 
