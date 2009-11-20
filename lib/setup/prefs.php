@@ -701,7 +701,7 @@ function get_default_prefs() {
 		'available_languages' => array(),
 		'available_styles' => array(),
 		'lowercase_username' => 'n',
-		'username_pattern' => '/^[ \'-_a-zA-Z0-9@\.]*$/',
+		'username_pattern' => '/^[ \'\-_a-zA-Z0-9@\.]*$/',
 		'max_username_length' => '50',
 		'min_username_length' => '1',
 		'users_prefs_allowMsgs' => 'y',

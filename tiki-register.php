@@ -12,6 +12,12 @@ if ($prefs['allowRegister'] != 'y' || ($prefs['feature_intertiki'] == 'y' && !em
 	header("location: index.php");
 	die;
 }
+if (!empty($user)) {
+	$smarty->assign('msg', tra('You are already logged in'));
+	$smarty->display('error.tpl');
+	die;
+}
+	
 $smarty->assign('showmsg', 'n');
 // novalidation is set to yes if a user confirms his email is correct after tiki fails to validate it
 if (!isset($_REQUEST['novalidation'])) {
@@ -53,7 +59,7 @@ if (isset($_REQUEST['register']) && !empty($_REQUEST['name']) && (isset($_REQUES
 		$smarty->display("error.tpl");
 		die;
 	}
-	if ($prefs['rnd_num_reg'] == 'y' && !isset($_SESSION['in_tracker'])) {
+	if (!$user && $prefs['rnd_num_reg'] == 'y' && !isset($_SESSION['in_tracker'])) {
 		if (!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode']) {
 			$smarty->assign('msg', tra("You have mistyped the anti-bot verification code; please try again."));
 			$smarty->display("error.tpl");
@@ -69,11 +75,6 @@ if (isset($_REQUEST['register']) && !empty($_REQUEST['name']) && (isset($_REQUES
 	}
 	if (strlen($_REQUEST["name"]) > 200) {
 		$smarty->assign('msg', tra("Username is too long"));
-		$smarty->display("error.tpl");
-		die;
-	}
-	if (strstr($_REQUEST["name"], ' ')) {
-		$smarty->assign('msg', tra("Username cannot contain whitespace"));
 		$smarty->display("error.tpl");
 		die;
 	}
