@@ -22,6 +22,9 @@ class  AcceptanceTests_TikiLibrariesAccessTest extends TikiTestCase
        	$this->fail("Don't forget to do this");
     }
        
+   /**
+    * @group acceptance
+    */ 
     public function testAccessPreferences() {
     	global $tikilib, $prefs;
     	

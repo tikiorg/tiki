@@ -12,6 +12,9 @@ class  AcceptanceTests_MultilinguallibTest extends TikiSeleniumTestCase
         $this->restoreDBforThisTest();         
     }
 
+   /**
+    * @group acceptance
+    */ 
 	public function test_remember_to_reactivate_all_tests_in_MultilinguallibTest() {
 		global $multilinguallib;
 		print "-- test_remember_to_reactivate_all_tests_in_MultilinguallibTest: upon entry, \$multilinguallib=$multilinguallib\n";
