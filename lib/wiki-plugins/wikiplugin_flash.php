@@ -21,7 +21,7 @@ function wikiplugin_flash_info() {
 			'movie' => array(
 				'required' => false,
 				'name' => tra('Movie URL'),
-				'description' => tra('Complete URL to the movie to include. e.g. lib/swfobject/test.swf'),
+				'description' => tra('Complete URL to the movie to include. e.g. files/test.swf'),
 			),
 			'fileId' => array(
 				'required' => false,
