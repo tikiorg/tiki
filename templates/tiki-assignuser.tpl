@@ -62,7 +62,16 @@
 {if $users[user].groupName != 'Anonymous'}
 <tr>
 <td class="{cycle advance=false}">
-{if $tiki_p_admin eq 'y'}<a class="link" href="tiki-assignpermission.php?group={$users[user].groupName|escape:url}" title="{tr}Assign Perms to this Group{/tr}">{icon _id='key' align="right" alt="{tr}Permissions{/tr}"}</a>{/if}{$users[user].groupName|escape}</td>
+
+{if $tiki_p_admin eq 'y'} {* only full admins can manage groups, not tiki_p_admin_users *}
+	<a class="link" href="tiki-admingroups.php?group={$users[user].groupName|escape:"url"}{if $prefs.feature_tabs ne 'y'}#2{/if}" title="{tr}Edit{/tr}">
+{/if}
+	{$users[user].groupName|escape}
+{if $tiki_p_admin eq 'y'}
+	</a>
+{/if}
+
+</td>
 <td class="{cycle advance=false}">{tr}{$users[user].groupDesc|escape}{/tr}</td>
 <td class="{cycle}">
 {if $users[user].what ne 'real'}
