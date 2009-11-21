@@ -7,8 +7,9 @@
 require_once 'tiki-setup.php';
 require_once 'lib/wiki/wikilib.php';
 
-if ($prefs['feature_mindmap'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_mindmap");
+if ($prefs['feature_wiki_mindmap'] != 'y') {
+	$smarty->assign('msg', tra("This feature is disabled") . ": 
+feature_wiki_mindmap");
 	$smarty->display("error.tpl");
 	die;
 }
