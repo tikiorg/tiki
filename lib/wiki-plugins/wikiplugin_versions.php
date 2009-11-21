@@ -143,7 +143,8 @@ if (!isset($_REQUEST['preview'])){
 		} else {
 			$navbar = '<span class="button'.$high.'"><a href="'. preg_replace("~(\?|&)tikiversion=[^&]*~","",$_SERVER['REQUEST_URI']) .'" class="linkbut">'.$default.'</a></span>'.$navbar;
 		}
-		$data = '<div class="versions"><div class="versionav">'.$navbar.'</div><div class="versioncontent">'.$data."</div>\n</div>";
+		$data = '<div class="versions"><div class="versionav">'.$navbar.'</div><div class="versioncontent">
+'.$data."</div>\n</div>";
 	}
 
 	return $data;
