@@ -122,31 +122,81 @@ function prefs_wiki_list() {
 			'description' => tra('Hide the title field on wiki comments and their replies.'),
 			'type' => 'flag',
 		),
-
-
-	// Used in templates/tiki-admin-include-wiki.tpl
-	'wiki_comments_default_ordering' => array(
-			'name' => tra('Default ordering'),
-			'type' => '',
+		'wiki_spellcheck' => array(
+			'name' => tra('Spell checking'),
+			'type' => 'flag',
+			'help' => 'Spellcheck',
+			'hint' => tra('Requires a separate download'),
+		),
+		'wiki_edit_section' => array(
+			'name' => tra('Edit section'),
+			'type' => 'flag',
+		),
+		'wiki_edit_section_level' => array(
+			'name' => tra('Edit section level'),
+			'type' => 'list',
+			'options' => array(
+				'0' => tra('All'),
+				'1' => tra('1'),
+				'2' => tra('2'),
+				'3' => tra('3'),
+				'4' => tra('4'),
+				'5' => tra('5'),
+				'6' => tra('6'),
 			),
-	
-	// Used in templates/tiki-admin-include-wiki.tpl
-	'wiki_comments_displayed_default' => array(
+		),
+		'wiki_edit_icons_toggle' => array(
+			'name' => tra('Toggle display of section and plugin edit icons'),
+			'type' => 'flag',
+		),
+		'wiki_edit_minor' => array(
+			'name' => tra('Allow minor edits'),
+			'type' => 'flag',
+		),
+		'wiki_comments_displayed_default' => array(
 			'name' => tra('Display by default'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-wiki.tpl
-	'wiki_comments_per_page' => array(
+			'type' => 'flag',
+		),
+		'wiki_comments_per_page' => array(
 			'name' => tra('Default number per page'),
-			'type' => '',
+			'type' => 'text',
+			'size' => '5',
+		),
+		'wiki_comments_default_ordering' => array(
+			'name' => tra('Default ordering'),
+			'type' => 'list',
+			'options' => array(
+				'commentDate_desc' => tra('Newest first'),
+				'commentDate_asc' => tra('Oldest first'),
+				'points_desc' => tra('Points'),
 			),
-	
-	// Used in templates/tiki-admin-include-wiki.tpl
-	'wiki_creator_admin' => array(
+		),
+		'wiki_uses_slides' => array(
+			'name' => tra('Slideshows'),
+			'type' => 'flag',
+			'help' => 'Slideshow',
+		),
+		'wiki_creator_admin' => array(
 			'name' => tra('Page creators are admin of their pages'),
-			'type' => '',
-			),
+			'type' => 'flag',
+		),
+		'wiki_watch_author' => array(
+			'name' => tra('Create watch for author on page creation'),
+			'type' => 'flag',
+		),
+		'wiki_watch_comments' => array(
+			'name' => tra('Enable watches on comments'),
+			'type' => 'flag',
+		),
+		'wiki_watch_editor' => array(
+			'name' => tra('Enable watch events when I am the editor'),
+			'type' => 'flag',
+		),
+		'wiki_watch_minor' => array(
+			'name' => tra('Watch minor edits'),
+			'type' => 'flag',
+		),
+	
 	
 	// Used in templates/tiki-admin-include-wiki.tpl
 	'wiki_forum_id' => array(
@@ -287,60 +337,6 @@ function prefs_wiki_list() {
 			),
 	
 	// Used in templates/tiki-admin-include-wiki.tpl
-	'wiki_uses_slides' => array(
-			'name' => tra('Slideshows'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-wiki.tpl
-	'wiki_watch_author' => array(
-			'name' => tra('Create watch for author on page creation'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-wiki.tpl
-	'wiki_watch_comments' => array(
-			'name' => tra('Enable watches on comments'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-wiki.tpl
-	'wiki_watch_editor' => array(
-			'name' => tra('Enable watch events when I am the editor'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-wiki.tpl
-	'wiki_watch_minor' => array(
-			'name' => tra('Watch minor edits'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-wiki.tpl
-	'wiki_edit_section' => array(
-			'name' => tra('Edit section'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-wiki.tpl
-	'wiki_edit_section_level' => array(
-			'name' => tra('Edit section level:'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-wiki.tpl
-	'wiki_edit_icons_toggle' => array(
-			'name' => tra('Toggle display of section and plugin edit icons'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-wiki.tpl
-	'wiki_edit_minor' => array(
-			'name' => tra('Allow minor edits'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-wiki.tpl
 	'wiki_feature_3d' => array(
 			'name' => '',
 			'type' => '',
@@ -451,12 +447,6 @@ function prefs_wiki_list() {
 	// Used in templates/tiki-admin-include-wiki.tpl
 	'wiki_3d_autoload' => array(
 			'name' => '',
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-wiki.tpl
-	'wiki_spellcheck' => array(
-			'name' => tra('Spell checking'),
 			'type' => '',
 			),
 	

@@ -37,24 +37,8 @@
 
 			<fieldset>
 				<legend>{tr}Edit{/tr}</legend>
-				<div class="adminoptionbox">
-					<div class="adminoption">
-						{if $prefs.lib_spellcheck eq 'y'}
-							<input type="checkbox" name="wiki_spellcheck" id='wiki_spellcheck' {if $prefs.wiki_spellcheck eq 'y'}checked="checked"{/if}/>
-						{else}
-							{tr}Not Installed{/tr}
-						{/if}
-					</div>
-					<div class="adminoptionlabel">
-						<label for="wiki_spellcheck">{tr}Spell checking{/tr}</label>
-						{if $prefs.feature_help eq 'y'}
-							{help url="Spellcheck"}
-						{/if}
-						<br />
-						<em>{tr}Requires a separate download{/tr}.</em>
-					</div>
-				</div>
 
+				{preference name=wiki_spellcheck}
 				{preference name=feature_wiki_templates}
 				{preference name=feature_warn_on_edit}
 				{preference name=warn_on_edit_time}
@@ -63,46 +47,19 @@
 				{preference name=feature_wiki_footnotes}
 				{preference name=feature_wiki_allowhtml}
 
-				<div class="adminoptionbox">
-					<div class="adminoption">
-						<input type="checkbox" id="wiki_edit_section" onclick="flip('useeditsection');" name="wiki_edit_section" {if $prefs.wiki_edit_section eq 'y'}checked="checked" {/if}/>
-					</div>
-					<div class="adminoptionlabel">
-						<label for="wiki_edit_section">{tr}Edit section{/tr}</label>
-						<div class="adminoptionboxchild" id="useeditsection" style="display:{if $prefs.wiki_edit_section eq 'y'}block{else}none{/if};">
-							<div class="adminoptionlabel">
-								<label for="wiki_edit_section_level">{tr}Edit section level:{/tr}</label>
-								<select name="wiki_edit_section_level" id="wiki_edit_section_level">
-									{section name=level start=0 loop=7 step=1}
-										<option value="{$smarty.section.level.index}" {if $smarty.section.level.index eq $prefs.wiki_edit_section_level}selected="selected"{/if}>{if $smarty.section.level.index eq 0}{tr}All{/tr}{else}{$smarty.section.level.index}{/if}</option>
-									{/section}
-								</select>
-							</div>
-						</div>
-					</div>
+				{preference name=wiki_edit_section}
+				<div class="adminoptionboxchild" id="wiki_edit_section_childcontainer">
+					{preference name=wiki_edit_section_level}
 				</div>
 
-				<div class="adminoptionbox">
-					<div class="adminoption">
-						<input type="checkbox" id="wiki_edit_icons_toggle" name="wiki_edit_icons_toggle" {if $prefs.wiki_edit_icons_toggle eq 'y'}checked="checked"{/if}/>
-					</div>
-					<div class="adminoptionlabel">
-						<label for="wiki_edit_icons_toggle">{tr}Toggle display of section and plugin edit icons{/tr}</label>
-					</div>
-				</div>
-
-				<div class="adminoptionbox">
-					<div class="adminoption">
-						<input type="checkbox" id="wiki_edit_minor" name="wiki_edit_minor" {if $prefs.wiki_edit_minor eq 'y'}checked="checked"{/if}/>
-					</div>
-					<div class="adminoptionlabel">
-						<label for="wiki_edit_minor">{tr}Allow minor edits{/tr}.</label>
-						{remarksbox type=note title=Note}{tr}Minor edits do not flag new content for translation and do not send watch notifications.{/tr}.
-							<br />
-							{tr}Only user groups granted the tiki_p_minor permission (and admins) will be able to save minor edits when this is enabled.{/tr}
-							<a class="link" href="tiki-assignpermission.php?type=wiki&amp;group=Registered" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
-						{/remarksbox}
-					</div>
+				{preference name=wiki_edit_icons_toggle}
+				{preference name=wiki_edit_minor}
+				<div class="adminoptionboxchild" id="wiki_edit_minor_childcontainer">
+					{remarksbox type=note title=Note}{tr}Minor edits do not flag new content for translation and do not send watch notifications.{/tr}.
+						<br />
+						{tr}Only user groups granted the tiki_p_minor permission (and admins) will be able to save minor edits when this is enabled.{/tr}
+						<a class="link" href="tiki-assignpermission.php?type=wiki&amp;group=Registered" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
+					{/remarksbox}
 				</div>
 
 				<div class="adminoptionbox">
@@ -123,72 +80,25 @@
 					</div>
 				</div>
 
-				<div class="adminoptionbox">
-					<div class="adminoption">
-						<input type="checkbox" id="feature_actionlog_bytes" name="feature_actionlog_bytes" {if $prefs.feature_actionlog_bytes eq 'y'}checked="checked" {/if}/>
-					</div>
-					<div class="adminoptionlabel">
-						<label for="feature_actionlog_bytes">{tr}Log bytes changes (+/-) in action logs{/tr}.</label>
-						<br />
-						<em>{icon _id=information} {tr}May impact performance{/tr}.</em>
-					</div>
-				</div>
+				{preference name=feature_actionlog_bytes}
 			</fieldset>
 		{/tab}
 
 		{tab name="{tr}Features{/tr}"}
 			<input type="hidden" name="wikifeatures" />    	
-			<div class="adminoptionbox">
-				<div class="adminoption">
-					<input type="checkbox" id="feature_sandbox" name="feature_sandbox" {if $prefs.feature_sandbox eq 'y'}checked="checked" {/if}/>
-				</div>
-				<div class="adminoptionlabel">
-					<label for="feature_sandbox">{tr}Sandbox{/tr}</label>
-				</div>
-			</div>
-
-			<div class="adminoptionbox">
-				<div class="adminoption">
-					<input type="checkbox" id="feature_wiki_comments" name="feature_wiki_comments" {if $prefs.feature_wiki_comments eq 'y'}checked="checked" {/if}onclick="flip('usecomments');" />
-				</div>
-				<div class="adminoptionlabel">
-					<label for="feature_wiki_comments">{tr}Comments{/tr}</label>
-					{if $prefs.feature_help eq 'y'} 
-						{help url="Comments"}
-					{/if} 
-					<a class="link" href="tiki-assignpermission.php?type=wiki&amp;group=Anonymous" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
-				</div>
-				<input type="hidden" name="wikiprefs" />
-			</div>
-			<div class="adminoptionboxchild" id="usecomments" style="display:{if $prefs.feature_wiki_comments eq 'y'}block{else}none{/if};">
-				<div class="adminoptionbox">
-					<div class="adminoption">
-						<input type="checkbox" id="wiki_comments_displayed_default" name="wiki_comments_displayed_default" {if $prefs.wiki_comments_displayed_default eq 'y'}checked="checked" {/if} />
-					</div>
-					<div class="adminoptionlabel">
-						<label for="wiki_comments_displayed_default">{tr}Display by default{/tr}.</label>
-					</div>
-				</div>
-
+			{preference name=feature_sandbox}
+			
+			{preference name=feature_wiki_comments}
+			<a class="link" href="tiki-assignpermission.php?type=wiki&amp;group=Anonymous" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
+			
+			<div class="adminoptionboxchild" id="feature_wiki_comments_childcontainer">
+				{preference name=wiki_comments_displayed_default}
 				{preference name=wiki_comments_notitle}
-				<div class="adminoptionbox">
-					<div class="adminoptionlabel">
-						<label for="wiki_comments_per_page">{tr}Default number per page{/tr}:</label> 
-						<input size="5" type="text" id="wiki_comments_per_page" name="wiki_comments_per_page" value="{$prefs.wiki_comments_per_page|escape}" />
-					</div>
-				</div>
-	
-				<div class="adminoptionbox">
-					<div class="adminoptionlabel">
-						<label for="wiki_comments_default_ordering">{tr}Default ordering{/tr}:</label>
-						<select name="wiki_comments_default_ordering" id="wiki_comments_default_ordering">
-							<option value="commentDate_desc" {if $prefs.wiki_comments_default_ordering eq 'commentDate_desc'}selected="selected"{/if}>{tr}Newest first{/tr}</option>
-							<option value="commentDate_asc" {if $prefs.wiki_comments_default_ordering eq 'commentDate_asc'}selected="selected"{/if}>{tr}Oldest first{/tr}</option>
-							<option value="points_desc" {if $prefs.wiki_comments_default_ordering eq 'points_desc'}selected="selected"{/if}>{tr}Points{/tr}</option>
-						</select>
-					</div>
-				</div>
+				{preference name=wiki_comments_per_page}
+				{preference name=wiki_comments_default_ordering}
+
 			</div>
+
 
 			<div class="adminoptionbox">
 				<div class="adminoption">
@@ -291,344 +201,102 @@
 			</div>	
 		</div>
 
-		<div class="adminoptionbox">
-			<div class="adminoption">
-				<input type="checkbox" id="feature_wiki_pictures" name="feature_wiki_pictures" {if $prefs.feature_wiki_pictures eq 'y'}checked="checked"{/if} onclick="flip('usepictures');" />
-			</div>
-			<div class="adminoptionlabel">
-				<label for="feature_wiki_pictures">{tr}Pictures{/tr}</label>
-				{if $prefs.feature_help eq 'y'} 
-					{help url="Wiki-Syntax Images"}
-				{/if}
-				<a class="link" href="tiki-assignpermission.php?type=wiki&amp;group=Anonymous" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
-			</div>
+		{preference name=feature_wiki_pictures}
+		<div class="adminoptionboxchild" id="feature_wiki_pictures_childcontainer">
+			<a class="link" href="tiki-assignpermission.php?type=wiki&amp;group=Anonymous" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
+			{preference name=feature_filegals_manager}
+			{button href="tiki-admin.php?page=wiki&amp;rmvunusedpic=1" _text="{tr}Remove unused pictures{/tr}"}
+		</div>
 
-			<div class="adminoptionboxchild" id="usepictures" style="display:{if $prefs.feature_wiki_pictures eq 'y'}block{else}none{/if};">
-				<div class="adminoptionbox">
-					<div class="adminoption">
-						<input type="checkbox" name="feature_filegals_manager" id="feature_filegals_manager" {if $prefs.feature_filegals_manager eq 'y'}checked="checked" {/if}/>
-					</div>
-					<div class="adminoptionlabel">
-						<label for="feature_filegals_manager">{tr}Use File Galleries to store pictures {/tr}.</label>
-					</div>
-				</div>
-
-				<div class="adminoptionbox">
-					<div class="adminoptionlabel">
-						<a class="button" href="tiki-admin.php?page=wiki&amp;rmvunusedpic=1">{tr}Remove unused pictures{/tr}</a>
-					</div>
-				</div>
-			</div>
+		{preference name=feature_wiki_export}
+		<div class="adminoptionboxchild" id="feature_wiki_export_childcontainer">
+			<a class="link" href="tiki-assignpermission.php?type=wiki&amp;group=Anonymous" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
+			{button href="tiki-export_wiki_pages.php" _text="{tr}Export Wiki Pages{/tr}"}
 		</div>
     
-		<div class="adminoptionbox">
-			<div class="adminoption">
-				<input type="checkbox" id="feature_wiki_export" name="feature_wiki_export" {if $prefs.feature_wiki_export eq 'y'}checked="checked"{/if} onclick="flip('useexport');" />
-			</div>
-			<div class="adminoptionlabel">
-				<label for="feature_wiki_export">{tr}Export{/tr}</label>
-				<a class="link" href="tiki-assignpermission.php?type=wiki&amp;group=Anonymous" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
-			</div>
-
-			<div class="adminoptionboxchild" id="useexport" style="display:{if $prefs.feature_wiki_export eq 'y'}block{else}none{/if};">
-				<div class="adminoptionbox">
-					<div class="adminoptionlabel">
-						<a class="button" href="tiki-export_wiki_pages.php">{tr}Export Wiki Pages{/tr}</a>
-					</div>
-				</div>
-			</div>
+		{preference name=feature_wikiwords}
+		<div class="adminoptionboxchild" id="feature_wikiwords_childcontainer">
+			{preference name=feature_wikiwords_usedash}
+			{preference name=feature_wiki_plurals}
 		</div>
 
-		<div class="adminoptionbox">
-			<div class="adminoption">
-				<input type="checkbox" id="feature_wikiwords" name="feature_wikiwords" {if $prefs.feature_wikiwords eq 'y'}checked="checked"{/if} onclick="flip('usewikiwords');" />
-			</div>
-			<div class="adminoptionlabel">
-				<label for="feature_wikiwords">{tr}WikiWords{/tr}</label>
-			</div>
-			<div class="adminoptionboxchild" id="usewikiwords" style="display:{if $prefs.feature_wikiwords eq 'y'}block{else}none{/if};">
-				<div class="adminoptionbox">
-					<div class="adminoption">
-						<input type="checkbox" id="feature_wikiwords_usedash" name="feature_wikiwords_usedash" {if $prefs.feature_wikiwords_usedash eq 'y'}checked="checked" {/if}/>
-					</div>
-					<div class="adminoptionlabel">
-						<label for="feature_wikiwords_usedash">{tr}Accept dashes and underscores in WikiWords{/tr}.</label>
-					</div>
-				</div>
-
-				<div class="adminoptionbox">
-					<div class="adminoption">
-						<input type="checkbox" id="feature_wiki_plurals" name="feature_wiki_plurals" {if $prefs.feature_wiki_plurals eq 'y'}checked="checked" {/if}/>
-					</div>
-					<div class="adminoptionlabel">
-						<label for="feature_wiki_plurals">{tr}Link plural WikiWords to their singular forms{/tr}.</label>
-					</div>
-				</div>
-			</div>
-		</div>
-	
-		<div class="adminoptionbox">
-			<div class="adminoption">
-				<input type="checkbox" id="feature_history" name="feature_history" {if $prefs.feature_history eq 'y'}checked="checked" {/if}onclick="flip('usehistory');" />
-			</div>
-			<div class="adminoptionlabel">
-				<label for="feature_history">{tr}History{/tr}</label>
-				{if $prefs.feature_help eq 'y'}
-					{help url="History"}
-				{/if} 
-				<a class="link" href="tiki-assignpermission.php?type=wiki&amp;group=Anonymous" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
-			</div>
-			<div class="adminoptionboxchild" id="usehistory" style="display:{if $prefs.feature_history eq 'y'}block{else}none{/if};">
-
-				{preference name=maxVersions}
-				<div class="adminoptionbox">
-					<div class="adminoptionlabel">
-						<label for="keep_versions">{tr}Never delete versions younger than{/tr}:</label>
-						<input size="5" type="text" name="keep_versions" id='keep_versions' value="{$prefs.keep_versions|escape}" /> {tr}days{/tr}.
-					</div>
-				</div>
-				<div class="adminoptionbox">
-					<div class="adminoption">
-						<input type="checkbox" id="feature_wiki_history_ip" name="feature_wiki_history_ip" {if $prefs.feature_wiki_history_ip eq 'y'}checked="checked" {/if}/>
-					</div>
-					<div class="adminoptionlabel">
-						<label for="feature_wiki_history_ip">{tr}Display IP address{/tr}.</label>
-					</div>
-				</div>
-
-				{preference name=default_wiki_diff_style}
-				<div class="adminoptionbox">
-					<div class="adminoption">
-						<input type="checkbox" id="feature_wiki_history_full" name="feature_wiki_history_full" {if $prefs.feature_wiki_history_full eq 'y'}checked="checked" {/if}/>
-					</div>
-					<div class="adminoptionlabel">
-						<label for="feature_wiki_history_full">{tr}History includes only page data, description, and change comment{/tr}.</label>
-					</div>
-				</div>
-			</div>	
+		{preference name=feature_history}
+		<div class="adminoptionboxchild" id="feature_history_childcontainer">
+			<a class="link" href="tiki-assignpermission.php?type=wiki&amp;group=Anonymous" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
+			{preference name=maxVersions}
+			{preference name=keep_versions}
+			{preference name=feature_wiki_history_ip}
+			{preference name=default_wiki_diff_style}
+			{preference name=feature_wiki_history_full}
 		</div>
 
-		<div class="adminoptionbox">
-			<div class="adminoption">
-				<input type="hidden" name="wikidiscussprefs" />
-				<input type="checkbox" onclick="flip('discussforum');" id="feature_wiki_discuss" name="feature_wiki_discuss" {if $prefs.feature_wiki_discuss eq 'y'}checked="checked"{/if} {if $prefs.feature_forums ne 'y'} disabled="disabled"{/if} />
-			</div>
-			<div class="adminoptionlabel">
-				<label for="feature_wiki_discuss">{tr}Discuss pages on forums{/tr}.</label>
-				{if $prefs.feature_forums ne 'y'}
-					<br />
-					{icon _id=information}{tr}Forums are disabled.{/tr} <a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}</a>.
+		{preference name=feature_wiki_discuss}
+		<div class="adminoptionboxchild" id="feature_wiki_discuss_childcontainer">
+			<div class="adminoptionboxlabel">
+				<label for="wiki_forum_id">{tr}Forum for discussion:{/tr}</label>
+				{if $prefs.feature_forums eq 'y'} 
+					<a class="link" href="tiki-assignpermission.php?level=forum" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
 				{/if}
-			</div>
-			<div class="adminoptionboxchild" id="discussforum" style="display:{if ($prefs.feature_wiki_discuss eq 'y') and ($prefs.feature_forums eq 'y')}block{else}none{/if};">
-				<div class="adminoptionbox">
-					<div class="adminoptionboxlabel">
-						<label for="wiki_forum_id">{tr}Forum for discussion:{/tr}</label>
-						{if $prefs.feature_forums eq 'y'} 
-							<a class="link" href="tiki-assignpermission.php?level=forum" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
-						{/if}
-						<select id="wiki_forum_id" name="wiki_forum_id"{if $prefs.feature_forums ne 'y' or !$all_forums} disabled="disabled"{/if}>
-							{if $all_forums}
-								{section name=ix loop=$all_forums}
-									<option value="{$all_forums[ix].forumId|escape}" {if $all_forums[ix].forumId eq $prefs.wiki_forum_id}selected="selected"{/if}>{$all_forums[ix].name}</option>
-								{/section}
-							{else}    
-								<option value="">{tr}None{/tr}</option>
-							{/if}
-						</select>
-						{if ($prefs.feature_forums eq 'y') and !$all_forums}
-							<div class="adminoptionbox">
-								<a href="tiki-admin_forums.php" title="{tr}Forums{/tr}" class="button">Create a Forum</a>
-							</div>
-						{/if}
-					</div>
-				</div>
-			</div>	
-		</div>
-
-		<div class="adminoptionbox">
-			<div class="adminoption">
-				<input type="checkbox" id="feature_source" name="feature_source" {if $prefs.feature_source eq 'y'}checked="checked" {/if}/>
-			</div>
-			<div class="adminoptionlabel">
-				<label for="feature_source">{tr}View source{/tr}</label> 
-				<a class="link" href="tiki-assignpermission.php?type=wiki&amp;group=Anonymous" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
+				<select id="wiki_forum_id" name="wiki_forum_id"{if $prefs.feature_forums ne 'y' or !$all_forums} disabled="disabled"{/if}>
+					{if $all_forums}
+						{section name=ix loop=$all_forums}
+							<option value="{$all_forums[ix].forumId|escape}" {if $all_forums[ix].forumId eq $prefs.wiki_forum_id}selected="selected"{/if}>{$all_forums[ix].name}</option>
+						{/section}
+					{else}    
+						<option value="">{tr}None{/tr}</option>
+					{/if}
+				</select>
 			</div>
 		</div>
 
-		<div class="adminoptionbox">
-			<div class="adminoption">
-				<input type="checkbox" id="feature_wiki_ratings" name="feature_wiki_ratings" {if $prefs.feature_wiki_ratings eq 'y'}checked="checked" {/if}/>
-			</div>
-			<div class="adminoptionlabel">
-				<label for="feature_wiki_ratings">{tr}Rating{/tr}{if $prefs.feature_help eq 'y'} {help url="Rating"}{/if}</label> 
-				<a class="link" href="tiki-assignpermission.php?type=wiki&amp;group=Anonymous" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
-				{if $prefs.feature_polls ne 'y'}
-					<br />
-					{icon _id=information}{tr}Polls are disabled.{/tr} <a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}</a>.
-				{/if}
-			</div>
+		{preference name=feature_source}
+		<div class="adminoptionboxchild" id="feature_source_childcontainer">
+			<a class="link" href="tiki-assignpermission.php?type=wiki&amp;group=Anonymous" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
 		</div>
-		<div class="adminoptionbox">
-			<div class="adminoption">
-				<input type="checkbox" id="feature_backlinks" name="feature_backlinks" {if $prefs.feature_backlinks eq 'y'}checked="checked"{/if}/>
-			</div>
-			<div class="adminoptionlabel">
-				<label for="feature_backlinks">{tr}Backlinks{/tr}</label>
-				{if $prefs.feature_help eq 'y'} 
-					{help url="Backlinks"}
-				{/if} 
-				<a class="link" href="tiki-assignpermission.php?type=wiki&amp;group=Anonymous" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
-			</div>
+
+		{preference name=feature_wiki_ratings}
+		<div class="adminoptionboxchild" id="feature_wiki_ratings_childcontainer">
+			<a class="link" href="tiki-assignpermission.php?type=wiki&amp;group=Anonymous" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
 		</div>
+
+		{preference name=feature_backlinks}
+		<div class="adminoptionboxchild" id="feature_backlinks_childcontainer">
+			<a class="link" href="tiki-assignpermission.php?type=wiki&amp;group=Anonymous" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
+		</div>
+
 		{preference name=feature_semantic}
-		<div class="adminoptionbox">
-			<div class="adminoption">
-				<input type="checkbox" id="feature_likePages" name="feature_likePages" {if $prefs.feature_likePages eq 'y'}checked="checked" {/if}/>
-			</div>
-			<div class="adminoptionlabel">
-				<label for="feature_likePages">{tr}Similar{/tr} ({tr}like pages{/tr})</label>
-			</div>
+		{preference name=feature_likePages}
+		{preference name=feature_wiki_rankings}
+
+		{preference name=feature_wiki_structure}
+		<div class="adminoptionboxchild" id="feature_wiki_structure_childcontainer">
+			{preference name=feature_wiki_open_as_structure}
+			{preference name=feature_wiki_make_structure}
+			{preference name=feature_wiki_categorize_structure}
+			{preference name=feature_create_webhelp}
+			{preference name=page_n_times_in_a_structure}
 		</div>
 
-		<div class="adminoptionbox">
-			<div class="adminoption">
-				<input type="checkbox" id='feature_wiki_rankings' name="feature_wiki_rankings" {if $prefs.feature_wiki_rankings eq 'y'}checked="checked"{/if}/>
-			</div>
-			<div class="adminoptionlabel">
-				<label for="feature_wiki_rankings">{tr}Rankings{/tr}</label>
-			</div>
+		{preference name=feature_wiki_import_html}
+		{preference name=feature_wiki_import_page}
+		{preference name=wiki_uses_slides}
+		{preference name=feature_wiki_1like_redirection}
+		{preference name=feature_wiki_userpage}
+		<div class="adminoptionboxchild" id="feature_wiki_userpage_childcontainer">
+			{preference name=feature_wiki_userpage_prefix}
 		</div>
 
-		<div class="adminoptionbox">
-			<div class="adminoption">
-				<input type="checkbox" id="feature_wiki_structure" name="feature_wiki_structure" {if $prefs.feature_wiki_structure eq 'y'}checked="checked" {/if}onclick="flip('usestructures');" />
-			</div>
-			<div class="adminoptionlabel">
-				<label for="feature_wiki_structure">{tr}Structures{/tr}</label>
-				{if $prefs.feature_help eq 'y'} {help url="Structure"}{/if}
-			</div>
-			<div id="usestructures" class="adminoptionboxchild" style="display:{if $prefs.feature_wiki_structure eq 'y'}block{else}none{/if};">
-				<div class="adminoptionbox">
-					<div class="adminoption">
-						<input type="checkbox" id="feature_wiki_open_as_structure" name="feature_wiki_open_as_structure" {if $prefs.feature_wiki_open_as_structure eq 'y'}checked="checked"{/if}/>
-					</div>
-					<div class="adminoptionlabel">
-						<label for="feature_wiki_open_as_structure">{tr}Open page as structure{/tr}.</label>
-					</div>
-				</div>
-
-				<div class="adminoptionbox">
-					<div class="adminoption">
-						<input type="checkbox" id="feature_wiki_make_structure" name="feature_wiki_make_structure" {if $prefs.feature_wiki_make_structure eq 'y'}checked="checked"{/if}/>
-					</div>
-					<div class="adminoptionlabel">
-						<label for="feature_wiki_make_structure">{tr}Make structure from page{/tr}.</label>
-					</div>
-				</div>
-
-				<div class="adminoptionbox">
-					<div class="adminoption">
-						<input type="checkbox" id="feature_wiki_categorize_structure" name="feature_wiki_categorize_structure" {if $prefs.feature_wiki_categorize_structure eq 'y'}checked="checked" {/if}/>
-					</div>
-					<div class="adminoptionlabel">
-						<label for="feature_wiki_categorize_structure">{tr}Categorize structure pages together{/tr}.</label>
-					</div>
-				</div>
-
-				<div class="adminoptionbox">
-					<div class="adminoption">
-						<input type="checkbox" id="feature_create_webhelp" name="feature_create_webhelp" {if $prefs.feature_create_webhelp eq 'y'}checked="checked"{/if}/>
-					</div>
-					<div class="adminoptionlabel">
-						<label for="feature_create_webhelp">{tr}Create webhelp from structure:{/tr}</label>
-					</div>
-				</div>
-
-				{preference name=page_n_times_in_a_structure}
-			</div>	
+		{preference name=feature_wiki_usrlock}
+		<div class="adminoptionboxchild" id="feature_wiki_usrlock_childcontainer">
+			<a class="link" href="tiki-assignpermission.php?type=wiki&amp;group=Anonymous" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
 		</div>
 
-		<div class="adminoptionbox">
-			<div class="adminoption">
-				<input type="checkbox" id="feature_wiki_import_html" name="feature_wiki_import_html" {if $prefs.feature_wiki_import_html eq 'y'}checked="checked"{/if}/>
-			</div>
-			<div class="adminoptionlabel">
-				<label for="feature_wiki_import_html">{tr}Import HTML{/tr}</label>
-			</div>
+		{preference name=wiki_creator_admin}
+		{preference name=feature_wiki_print}
+		<div class="adminoptionboxchild" id="feature_wiki_print_childcontainer">
+			{preference name=feature_wiki_multiprint}
 		</div>
 
-		<div class="adminoptionbox">
-			<div class="adminoption">
-				<input type="checkbox" id='feature_wiki_import_page' name="feature_wiki_import_page" {if $prefs.feature_wiki_import_page eq 'y'}checked="checked"{/if}/>
-			</div>
-			<div class="adminoptionlabel">
-				<label for="feature_wiki_import_page">{tr}Import pages{/tr}</label>
-			</div>
-		</div>
-
-		<div class="adminoptionbox">
-			<div class="adminoption">
-				<input type="checkbox" id="wiki_uses_slides" name="wiki_uses_slides" {if $prefs.wiki_uses_slides eq 'y'}checked="checked"{/if}/>
-			</div>
-			<div class="adminoptionlabel">
-				<label for="wiki_uses_slides">{tr}Slideshows{/tr}</label>
-				{if $prefs.feature_help eq 'y'} {help url="Slideshow"}{/if}
-			</div>
-		</div>
-{preference name='feature_wiki_1like_redirection'}
-
-		<div class="adminoptionbox">
-			<div class="adminoption">
-				<input type="checkbox" id="feature_wiki_userpage" name="feature_wiki_userpage" {if $prefs.feature_wiki_userpage eq 'y'}checked="checked" {/if}onclick="flip('useuserpage');" />
-			</div>
-			<div class="adminoptionlabel">
-				<label for="feature_wiki_userpage">{tr}User's page{/tr}</label>
-			</div>
-			<div class="adminoptionboxchild" id="useuserpage" style="display:{if $prefs.feature_wiki_userpage eq 'y'}block{else}none{/if};">
-				<div class="adminoptionlabel">
-					<label for="feature_wiki_userpage_prefix">{tr}UserPage prefix:{/tr}</label>
-					<input type="text" name="feature_wiki_userpage_prefix" id="feature_wiki_userpage_prefix" value="{$prefs.feature_wiki_userpage_prefix|default:'UserPage'}" size="40" />
-				</div>
-			</div>
-		</div>
-
-		<div class="adminoptionbox">
-			<div class="adminoption">
-				<input type="checkbox" id="feature_wiki_usrlock" name="feature_wiki_usrlock" {if $prefs.feature_wiki_usrlock eq 'y'}checked="checked"{/if}/>
-			</div>
-			<div class="adminoptionlabel">
-				<label for="feature_wiki_usrlock">{tr}Users can lock pages{/tr}</label> 
-				<a class="link" href="tiki-assignpermission.php?type=wiki&amp;group=Anonymous" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
-			</div>
-		</div>
-
-		<div class="adminoptionbox">
-			<div class="adminoption">
-				<input type="checkbox" id="wiki_creator_admin" name="wiki_creator_admin" {if $prefs.wiki_creator_admin eq 'y'}checked="checked"{/if}/>
-			</div>
-			<div class="adminoptionlabel">
-				<label for="wiki_creator_admin">{tr}Page creators are admin of their pages{/tr}.</label>
-			</div>
-		</div>
-
-		<div class="adminoptionbox">
-			<div class="adminoption">
-				<input type="checkbox" id="feature_wiki_print" onclick="flip('useprint');" name="feature_wiki_print" {if $prefs.feature_wiki_print eq 'y'}checked="checked"{/if}/>
-			</div>
-			<div class="adminoptionlabel">
-				<label for="feature_wiki_print">{tr}Print{/tr}</label>
-			</div>
-
-			<div class="adminoptionboxchild" id="useprint" style="display:{if $prefs.feature_wiki_print eq 'y'}block{else}none{/if};">
-				<div class="adminoption">
-					<input type="checkbox" id="feature_wiki_multiprint" name="feature_wiki_multiprint" {if $prefs.feature_wiki_multiprint eq 'y'}checked="checked"{/if}/>
-				</div>
-				<div class="adminoptionlabel">
-					<label for="feature_wiki_multiprint">{tr}MultiPrint{/tr}</label>
-				</div>
-			</div>
-		</div>
 
 		<div class="adminoptionbox">
 			<fieldset>
@@ -639,41 +307,10 @@
 					</div>
 				{else}
 					<input type="hidden" name="wikisetwatch" />
-					<div class="adminoptionbox">
-						<div class="adminoption">
-							<input type="checkbox" id="wiki_watch_author" name="wiki_watch_author" {if $prefs.wiki_watch_author eq 'y'}checked="checked"{/if}/>
-						</div>
-						<div class="adminoptionlabel">
-							<label for="wiki_watch_author">{tr}Create watch for author on page creation{/tr}.</label>
-						</div>
-					</div>
-
-					<div class="adminoptionbox">
-						<div class="adminoption">
-							<input type="checkbox" id="wiki_watch_editor" name="wiki_watch_editor" {if $prefs.wiki_watch_editor eq 'y'}checked="checked"{/if}/>
-						</div>
-						<div class="adminoptionlabel">
-							<label for="wiki_watch_editor">{tr}Enable watch events when I am the editor{/tr}.</label>
-						</div>
-					</div>
-
-					<div class="adminoptionbox">
-						<div class="adminoption">
-							<input type="checkbox" id="wiki_watch_comments" name="wiki_watch_comments" {if $prefs.wiki_watch_comments eq 'y'}checked="checked"{/if}/>
-						</div>
-						<div class="adminoptionlabel">
-							<label for="wiki_watch_comments">{tr}Enable watches on comments{/tr}.</label>
-						</div>
-					</div>
-
-					<div class="adminoptionbox">
-						<div class="adminoption">
-							<input type="checkbox" id="wiki_watch_minor" name="wiki_watch_minor" {if $prefs.wiki_watch_minor eq 'y'}checked="checked"{/if}/>
-						</div>
-						<div class="adminoptionlabel">
-							<label for="wiki_watch_minor">{tr}Watch minor edits{/tr}.</label>
-						</div>
-					</div>
+					{preference name=wiki_watch_author}
+					{preference name=wiki_watch_editor}
+					{preference name=wiki_watch_comments}
+					{preference name=wiki_watch_minor}
 				{/if}
 			</fieldset>
 		</div>

@@ -2,11 +2,11 @@
 
 function prefs_keep_list() {
 	return array(
-
-	// Used in templates/tiki-admin-include-wiki.tpl
-	'keep_versions' => array(
+		'keep_versions' => array(
 			'name' => tra('Never delete versions younger than'),
-			'type' => '',
-			),
+			'type' => 'text',
+			'size' => '5',
+			'shorthint' => tra('days'),
+		),
 	);	
 }
