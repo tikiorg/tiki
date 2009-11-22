@@ -14,9 +14,9 @@
 				<script type="text/javascript">
 				<!--//--><![CDATA[//><!--
 				{if $beingStaged == 'y'}
-					page_to_translate = "{$approvedPageName}";
+					var page_to_translate = "{$approvedPageName}";
 				{else}
-					page_to_translate = "{$page}";
+					var page_to_translate = "{$page}";
 				{/if}
 				{literal}
 				function quick_switch_language( element )
@@ -46,7 +46,7 @@
 				</script>
 				<form action="tiki-index.php" method="get">
 				{if $prefs.feature_machine_translation eq 'y'}
-				<input type="hidden" name="machine_translate_to_lang" value="">
+				<input type="hidden" name="machine_translate_to_lang" value="" />
 				{/if}
 				<select name="page" onchange="quick_switch_language( this )">
 					{if $prefs.feature_machine_translation eq 'y'}
