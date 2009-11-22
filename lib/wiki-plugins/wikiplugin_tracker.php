@@ -669,7 +669,7 @@ function wikiplugin_tracker($data, $params) {
 			if (!empty($page))
 				$back .= '~np~';
 			$smarty->assign_by_ref('tiki_p_admin_trackers', $perms['tiki_p_admin_trackers']);
-			$back.= '<form enctype="multipart/form-data" method="post"'.(isset($target)?' target="'.$target.'"':'').'><input type="hidden" name="trackit" value="'.$trackerId.'" />';
+			$back.= '<form enctype="multipart/form-data" method="post"'.(isset($target)?' target="'.$target.'"':'').' action="'. $_SERVER['REQUEST_URI'] .'"><input type="hidden" name="trackit" value="'.$trackerId.'" />';
 			$back .= '<input type="hidden" name="iTRACKER" value="'.$iTRACKER.'" />';
 			$back .= '<input type="hidden" name="refresh" value="1" />';
 			if (isset($_REQUEST['page']))
