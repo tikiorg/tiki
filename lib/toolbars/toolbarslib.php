@@ -828,12 +828,12 @@ displayPicker = function( closeTo, list, areaname ) {
 	};
 
 	for( var i in window.pickerData[list] ) {
-		var char = window.pickerData[list][i];
+		var chr = window.pickerData[list][i];
 		var link = document.createElement( 'a' );
 
 		pickerDiv.appendChild( link );
 		pickerDiv.appendChild( document.createTextNode(' ') );
-		prepareLink( link, i, char );
+		prepareLink( link, i, chr );
 	}
 }
 
