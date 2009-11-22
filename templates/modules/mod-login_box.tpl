@@ -27,7 +27,7 @@ function capLock(e){
           <label for="login-switchuser">{tr}User{/tr}:</label>
           <input type="hidden" name="su" value="1" />
 		  {if $prefs.feature_help eq 'y'}
-			{help url="Switch+User" desc="{tr}Help{/tr}" desc="{tr}Switch User{/tr}:{tr}Enter user name and click 'Switch'.<br> Useful for testing permissions.{/tr}"}
+			{help url="Switch+User" desc="{tr}Help{/tr}" desc="{tr}Switch User{/tr}:{tr}Enter user name and click 'Switch'.<br />Useful for testing permissions.{/tr}"}
 		  {/if}
           <input type="text" name="username" id="login-switchuser" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" />
           <div style="text-align: center"><button type="submit" name="actsu">{tr}Switch{/tr}</button></div>

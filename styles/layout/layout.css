@@ -1044,6 +1044,12 @@ div.article .actions {
 	position: absolute;
 	right: 0;
 	top: 0;
+	text-align: right;
+	white-space: nowrap;
+}
+
+div.article .actions form {
+	display: inline;
 }
 
 /***** Blogs *****/

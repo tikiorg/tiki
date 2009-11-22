@@ -41,12 +41,12 @@ function smarty_block_tikimodule($params, $content, &$smarty) {
 	if (!isset($error))  $error = '';
 	if (!isset($overflow))  $overflow = false;
 	if (!isset($title))     $title = substr(strip_tags($content),0,12). (strlen(strip_tags($content)) > 12 ? "..." : "");
-	if (!isset($name))      $name  = ereg_replace("[^-_a-zA-Z0-9]","",$title);
+	if (!isset($name))      $name  = ereg_replace("[^-_a-zA-Z0-9]","",$title); else $name  = ereg_replace("[^-_a-zA-Z0-9]","",$name);
 	if (!isset($flip) || ($flip != 'y' && $flip != 'yc')) $flip = 'n';
 	if (!isset($nobox))      $nobox = 'n';
 	if (!isset($notitle))      $notitle = 'n';
 	if ($flip == 'yc') {
-		// can be switched but initialy closed
+		// can be switched but initially closed
 		$flip = 'y';
 		$dstate = 'c';
 	}

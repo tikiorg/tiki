@@ -520,8 +520,13 @@ class ToolbarInline extends Toolbar
 
 	function getWikiHtml( $areaName ) // {{{
 	{
-		return $this->getSelfLink('insertAt(\'' . $areaName . '\', \'' . addslashes(htmlentities($this->syntax, ENT_COMPAT, 'UTF-8')) . '\');',
+		if ($this->syntax == '~np~text~/np~') {	// closing ~/np~ tag breaks toolbar when inside nested plugins
+			return $this->getSelfLink('insertAt(\'' . $areaName . '\', \'~np~text~\'+\'/np~\');',
 							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-inline');
+		} else {
+			return $this->getSelfLink('insertAt(\'' . $areaName . '\', \'' . addslashes(htmlentities($this->syntax, ENT_COMPAT, 'UTF-8')) . '\');',
+							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-inline');
+		}
 
 	} // }}}
 	
@@ -828,12 +833,12 @@ displayPicker = function( closeTo, list, areaname ) {
 	};
 
 	for( var i in window.pickerData[list] ) {
-		var char = window.pickerData[list][i];
+		var chr = window.pickerData[list][i];
 		var link = document.createElement( 'a' );
 
 		pickerDiv.appendChild( link );
 		pickerDiv.appendChild( document.createTextNode(' ') );
-		prepareLink( link, i, char );
+		prepareLink( link, i, chr );
 	}
 }
 

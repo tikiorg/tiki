@@ -58,7 +58,7 @@
 	    {* Show user message in style according to 'tooltip' module parameter *}
 	    {assign var=cdate value=$smarty.capture.date}
 	    {if $tooltip == 1}{* TODO: Improve $userlink modifier one day to handle other attibutes better? *}
-          <b>{strip}{$userlink|replace:"\" href=":"<br /><em>{tr}Shout date:{/tr} `$cdate`</em>\" href="}{/strip}</b>:
+          <b>{strip}{$userlink|replace:"\" href=":"&lt;br /&gt;&lt;em&gt;{tr}Shout date:{/tr} `$cdate`&lt;/em&gt;\" href="}{/strip}</b>:
         {else}
           <b>{strip}{$userlink}{/strip}</b>, {$cdate}:
         {/if}

@@ -1676,6 +1676,13 @@ div.article .actions {
 	position: absolute;
 	right: 0;
 	top: 0;
+	text-align: right;
+	white-space: nowrap;
+}
+
+/* To keep language form and actions icons on one line */
+div.article .actions form {
+	display: inline;
 }
 
 div.articlebody {}

@@ -36,10 +36,12 @@ function smarty_function_listfilter($params, &$smarty) {
 		$childPrefix = isset($childPrefix) ? $childPrefix : 'child-of-';
 		$exclude = isset($exclude) ? $exclude : '';
 
+		$input = "<label>";
+		
 		if (!isset($prefix)) {
-			$input = tra("Filter:");
+			$input .= tra("Filter:");
 		} else {
-			$input = tra($prefix);
+			$input .= tra($prefix);
 		}
 		$input .= "&nbsp;<input type='text'";
 		if (!isset($id)) {
@@ -55,7 +57,7 @@ function smarty_function_listfilter($params, &$smarty) {
 		}
 		if (isset($size)) $input .= " size='$size'";
 		if (isset($maxlength)) $input .= " maxlength='$maxlength'";
-		$input .= " />";
+		$input .= " /></label>";
 		
 		if (!isset($selectors)) $selectors = ".$id table tr";
 			

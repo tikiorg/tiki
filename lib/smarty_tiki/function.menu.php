@@ -84,6 +84,7 @@ function smarty_function_menu($params, &$smarty)
 	$smarty->assign('menu_info',$menu_info);
 	$data = $smarty->fetch($tpl);
 	$data = preg_replace('/<ul>\s*<\/ul>/', '', $data);
+	$data = preg_replace('/<ol>\s*<\/ol>/', '', $data);
 	return $data;
 }
 
