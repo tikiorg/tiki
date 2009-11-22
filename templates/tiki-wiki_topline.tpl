@@ -81,7 +81,7 @@
 
 	{if $prefs.feature_backlinks eq 'y' and $backlinks and $tiki_p_view_backlink eq 'y'}
 			<form action="tiki-index.php" method="get" style="display: block; float: left">
-				<select name="page" onchange="page.form.submit()">
+				<select name="page" onchange="this.form.submit()">
 					<option>{tr}Backlinks{/tr}...</option>
 		{section name=back loop=$backlinks}
 					<option value="{$backlinks[back].fromPage}">{$backlinks[back].fromPage}</option>
@@ -92,7 +92,7 @@
 
 	{if $structure == 'y' and count($showstructs) > 1 or $structure eq 'n' and count($showstructs) ne 0 }
 			<form action="tiki-index.php" method="post" style="float: left">
-				<select name="page_ref_id" onchange="page_ref_id.form.submit()">
+				<select name="page_ref_id" onchange="this.form.submit()">
 					<option>{tr}Structures{/tr}...</option>
 		{section name=struct loop=$showstructs}
 					<option value="{$showstructs[struct].req_page_ref_id}" {if $showstructs[struct].pageName eq $structure_path[0].pageName}selected="selected"{/if}>
