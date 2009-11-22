@@ -125,14 +125,10 @@
 							<label for="w_use_db_2">{tr}Store in directory{/tr}.</label>
 						</div>
 						<div class="adminoptionboxchild" id="directorypath" style="display:{if $prefs.w_use_db eq 'n'}block{else}none{/if};">
-							<div class="adminoptionlabel">
-								<label for="w_use_dir">{tr}Path:{/tr}</label>
-								<input type="text" name="w_use_dir" value="{$prefs.w_use_dir}" id="w_use_dir" />
-							</div>
+							{preference name=w_use_dir}
 						</div>
 					</div>
 					{button href="tiki-admin.php?page=wikiatt" _text="{tr}Manage attachments{/tr}"}
-
 				</div>		
 			</div>
 
@@ -398,25 +394,9 @@
 				<div class="adminoptionbox">
 					{tr}Select which items to display when listing pages{/tr}:
 				</div>
-				<div class="adminoptionbox">
-					<div class="adminoptionlabel">
-						<label for="wiki_list_sortorder">{tr}Default sort order:{/tr}</label>
-						<select name="wiki_list_sortorder" id="wiki_list_sortorder">
-							{foreach from=$options_sortorder key=key item=item}
-								<option value="{$item}" {if $prefs.wiki_list_sortorder eq $item} selected="selected"{/if}>{$key}</option>
-							{/foreach}
-						</select>
-					</div>
+				{preference name=wiki_list_sortorder}
 					<div class="adminoptionboxchild">
-						<div class="adminoptionlabel">
-							<input type="radio" id="wiki_list_sortdirection" name="wiki_list_sortdirection" value="desc" {if $prefs.wiki_list_sortdirection eq 'desc'}checked="checked"{/if} />
-							<label for="wiki_list_sortdirection">{tr}Descending{/tr}</label>
-						</div>
-						<div class="adminoptionlabel">
-							<input type="radio" name="wiki_list_sortdirection" id="wiki_list_sortdirection2" value="asc" {if $prefs.wiki_list_sortdirection eq 'asc'}checked="checked"{/if} />
-							<label for="wiki_list_sortdirection2">{tr}Ascending{/tr}</label>
-						</div>
-					</div>
+					{preference name=wiki_list_sortdirection}
 				</div>
 				{preference name=wiki_list_id}
 				

@@ -290,22 +290,31 @@ function prefs_wiki_list() {
 				'feature_categories',
 			),
 		),
+		'wiki_list_sortorder' => array(
+			'name' => tra('Default sort order'),
+			'type' => 'list',
+			'options' => array(
+				'pageName' => tra('Name'),
+				'lastModif' => tra('LastModif'),
+				'created' => tra('Created'),
+				'creator' => tra('Creator'),
+				'hits' => tra('Hits'),
+				'user' => tra('Last editor'),
+				'page_size' => tra('Size'),
+			),
+		),
+		'wiki_list_sortdirection' => array(
+			'type' => 'radio',
+			'options' => array(
+				'desc' => tra('Descending'),
+				'asc' => tra('Ascending'),
+			),
+		),
+	
 	
 	// Used in templates/tiki-admin-include-wiki.tpl
 	'wiki_forum_id' => array(
 			'name' => tra('Forum for discussion'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-wiki.tpl
-	'wiki_list_sortorder' => array(
-			'name' => tra('Default sort order'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-wiki.tpl
-	'wiki_list_sortdirection' => array(
-			'name' => tra('Descending'),
 			'type' => '',
 			),
 	

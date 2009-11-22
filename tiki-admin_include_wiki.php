@@ -220,16 +220,6 @@ if (isset($_REQUEST["wikiapprovalprefs"])) {
 	simple_set_toggle('wikiapproval_delete_staging');
 	simple_set_value('wikiapproval_master_group');
 }
-$options_sortorder = array(
-	tra('Name') => 'pageName',
-	tra('LastModif') => 'lastModif',
-	tra('Created') => 'created',
-	tra('Creator') => 'creator',
-	tra('Hits') => 'hits',
-	tra('Last editor') => 'user',
-	tra('Size') => 'page_size'
-);
-$smarty->assign_by_ref('options_sortorder', $options_sortorder);
 if ($prefs['feature_forums'] == 'y') {
 	$commentslib = new Comments($dbTiki);
 	$all_forums = $commentslib->list_forums(0, -1, 'name_asc', '');

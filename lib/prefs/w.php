@@ -6,18 +6,18 @@ function prefs_w_list() {
 			'name' => 'Display by default',
 			'type' => 'flag',
 		),
+		'w_use_dir' => array(
+			'name' => tra('Path'),
+			'type' => 'text',
+			'size' => '20',
+		),
+	
 
 	// Used in templates/tiki-admin-include-wiki.tpl
 	'w_use_db' => array(
 			'name' => '',
 			'type' => '',
 			),
-	// Used in templates/tiki-admin-include-wiki.tpl
-	'w_use_dir' => array(
-			'name' => tra('Path'),
-			'type' => '',
-			),
-	
 	);	
 	
 }
