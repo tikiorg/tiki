@@ -196,137 +196,110 @@ function prefs_wiki_list() {
 			'name' => tra('Watch minor edits'),
 			'type' => 'flag',
 		),
-	
+		'wiki_list_id' => array(
+			'name' => tra('Page ID'),
+			'type' => 'flag',
+		),
+		'wiki_list_name' => array(
+			'name' => tra('Name'),
+			'type' => 'flag',
+		),
+		'wiki_list_name_len' => array(
+			'name' => tra('Name length'),
+			'type' => 'text',
+			'size' => '3',
+			'filter' => 'digits',
+		),
+		'wiki_list_hits' => array(
+			'name' => tra('Hits'),
+			'type' => 'flag',
+		),
+		'wiki_list_lastmodif' => array(
+			'name' => tra('Last modification date'),
+			'type' => 'flag',
+		),
+		'wiki_list_creator' => array(
+			'name' => tra('Creator'),
+			'type' => 'flag',
+		),
+		'wiki_list_user' => array(
+			'name' => tra('Last modified by'),
+			'type' => 'flag',
+		),
+		'wiki_list_lastver' => array(
+			'name' => tra('Version'),
+			'type' => 'flag',
+		),
+		'wiki_list_comment' => array(
+			'name' => tra('Edit comments'),
+			'type' => 'flag',
+		),
+		'wiki_list_comment_len' => array(
+			'name' => tra('Edit Comment length'),
+			'type' => 'text',
+			'size' => '3',
+		),
+		'wiki_list_description' => array(
+			'name' => tra('Description'),
+			'type' => 'flag',
+		),
+		'wiki_list_description_len' => array(
+			'name' => tra('Description length'),
+			'type' => 'text',
+			'size' => '3',
+			'filter' => 'digits',
+		),
+		'wiki_list_status' => array(
+			'name' => tra('Status'),
+			'type' => 'flag',
+		),
+		'wiki_list_versions' => array(
+			'name' => tra('Versions'),
+			'type' => 'flag',
+		),
+		'wiki_list_links' => array(
+			'name' => tra('Links'),
+			'type' => 'flag',
+		),
+		'wiki_list_backlinks' => array(
+			'name' => tra('Backlinks'),
+			'type' => 'flag',
+		),
+		'wiki_list_size' => array(
+			'name' => tra('Size'),
+			'type' => 'flag',
+		),
+		'wiki_list_language' => array(
+			'name' => tra('Language'),
+			'type' => 'flag',
+			'dependencies' => array(
+				'feature_multilingual',
+			),
+		),
+		'wiki_list_categories' => array(
+			'name' => tra('Categories'),
+			'type' => 'flag',
+			'dependencies' => array(
+				'feature_categories',
+			),
+		),
+		'wiki_list_categories_path' => array(
+			'name' => tra('Categories path'),
+			'type' => 'flag',
+			'dependencies' => array(
+				'feature_categories',
+			),
+		),
 	
 	// Used in templates/tiki-admin-include-wiki.tpl
 	'wiki_forum_id' => array(
-			'name' => tra('Forum for discussion:'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-wiki.tpl
-	'wiki_list_backlinks' => array(
-			'name' => tra('Backlinks'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-wiki.tpl
-	'wiki_list_comment' => array(
-			'name' => tra('Edit comments'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-wiki.tpl
-	'wiki_list_comment_len' => array(
-			'name' => '',
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-wiki.tpl
-	'wiki_list_description' => array(
-			'name' => tra('Description'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-wiki.tpl
-	'wiki_list_description_len' => array(
-			'name' => tra('Description length:'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-wiki.tpl
-	'wiki_list_creator' => array(
-			'name' => tra('Creator'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-wiki.tpl
-	'wiki_list_hits' => array(
-			'name' => tra('Hits'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-wiki.tpl
-	'wiki_list_lastmodif' => array(
-			'name' => tra('Last modification date'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-wiki.tpl
-	'wiki_list_lastver' => array(
-			'name' => tra('Version'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-wiki.tpl
-	'wiki_list_links' => array(
-			'name' => tra('Links'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-wiki.tpl
-	'wiki_list_name' => array(
-			'name' => tra('Name'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-wiki.tpl
-	'wiki_list_name_len' => array(
-			'name' => tra('Name length:'),
-			'type' => 'text',
-			),
-	
-	// Used in templates/tiki-admin-include-wiki.tpl
-	'wiki_list_size' => array(
-			'name' => tra('Size'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-wiki.tpl
-	'wiki_list_status' => array(
-			'name' => tra('Status'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-wiki.tpl
-	'wiki_list_user' => array(
-			'name' => tra('Last modified by'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-wiki.tpl
-	'wiki_list_versions' => array(
-			'name' => tra('Versions'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-wiki.tpl
-	'wiki_list_language' => array(
-			'name' => tra('Language'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-wiki.tpl
-	'wiki_list_categories' => array(
-			'name' => tra('Categories'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-wiki.tpl
-	'wiki_list_categories_path' => array(
-			'name' => tra('Categories path'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-wiki.tpl
-	'wiki_list_id' => array(
-			'name' => tra('Page ID'),
+			'name' => tra('Forum for discussion'),
 			'type' => '',
 			),
 	
 	// Used in templates/tiki-admin-include-wiki.tpl
 	'wiki_list_sortorder' => array(
-			'name' => tra('Default sort order:'),
+			'name' => tra('Default sort order'),
 			'type' => '',
 			),
 	

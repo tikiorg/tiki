@@ -2,6 +2,10 @@
 
 function prefs_w_list() {
 	return array(
+		'w_displayed_default' => array(
+			'name' => 'Display by default',
+			'type' => 'flag',
+		),
 
 	// Used in templates/tiki-admin-include-wiki.tpl
 	'w_use_db' => array(
@@ -10,15 +14,10 @@ function prefs_w_list() {
 			),
 	// Used in templates/tiki-admin-include-wiki.tpl
 	'w_use_dir' => array(
-			'name' => tra('Path:'),
+			'name' => tra('Path'),
 			'type' => '',
 			),
 	
-	// Used in templates/tiki-admin-include-wiki.tpl
-	'w_displayed_default' => array(
-			'name' => '',
-			'type' => '',
-			),
 	);	
 	
 }

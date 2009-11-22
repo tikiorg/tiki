@@ -113,14 +113,7 @@
 				</div>
 				<input type="hidden" name="wikiattprefs" />
 				<div class="adminoptionboxchild" id="useattachments" style="display:{if $prefs.feature_wiki_attachments eq 'y'}block{else}none{/if};">
-					<div class="adminoptionbox">
-						<div class="adminoption">
-							<input type="checkbox" id="w_displayed_default" name="w_displayed_default" {if $prefs.w_displayed_default eq 'y'} checked="checked"{/if} /> 
-						</div>
-						<div class="adminoptionlabel">
-							<label for='w_displayed_default'>{tr}Display by default{/tr}.</label>
-						</div>
-					</div>
+					{preference name=w_displayed_default}
 		
 					<div class="adminoptionbox">
 						<div class="adminoptionlabel">
@@ -138,12 +131,8 @@
 							</div>
 						</div>
 					</div>
+					{button href="tiki-admin.php?page=wikiatt" _text="{tr}Manage attachments{/tr}"}
 
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel">
-							<a class="button" href="tiki-admin.php?page=wikiatt">{tr}Manage attachments{/tr}</a>
-						</div>
-					</div>
 				</div>		
 			</div>
 
@@ -189,15 +178,12 @@
 						</div>
 					</div>
 
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel">
-							<a class="button" href="tiki-admin.php?page=wiki&amp;dump=1">{tr}Generate dump{/tr}</a>
-						</div>
-					</div>
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel"><a class="button" href="dump/{if $tikidomain}{$tikidomain}/{/if}new.tar">{tr}Download last dump{/tr}</a>
-					</div>
-				</div>
+					{button href="tiki-admin.php?page=wiki&amp;dump=1" _text="{tr}Generate dump{/tr}"}
+					{if $tikidomain}
+						{button href="dump/$tikidomain/new.tar" _text="{tr}Download last dump{/tr}"}
+					{else}
+						{button href="dump/new.tar" _text="{tr}Download last dump{/tr}"}
+					{/if}
 			</div>	
 		</div>
 
@@ -297,7 +283,6 @@
 			{preference name=feature_wiki_multiprint}
 		</div>
 
-
 		<div class="adminoptionbox">
 			<fieldset>
 				<legend>{tr}Wiki watch{/tr}{if $prefs.feature_help eq 'y'} {help url="Watch"}{/if}</legend>
@@ -318,30 +303,10 @@
 
 	{tab name="{tr}Staging &amp; Approval{/tr}"}
 		<input type="hidden" name="wikiapprovalprefs" />    
-		<div class="adminoptionbox">
-			<div class="adminoption">
-				<input type="checkbox" id="feature_wikiapproval" onclick="flip('usestaging');" name="feature_wikiapproval" {if $prefs.feature_wikiapproval eq 'y'}checked="checked" {/if}/>
-			</div>
-			<div class="adminoptionlabel">
-				<label for="feature_wikiapproval">{tr}Use wiki page staging and approval{/tr}.{if $prefs.feature_help eq 'y'} {help url="Wiki+Page+Staging+and+Approval"}{/if}</label>
-				<div id="usestaging" style="display:{if $prefs.feature_wikiapproval eq 'y'}block{else}none{/if};">
-					<div class="adminoptionbox">
-						<div class="adminoption">
-							<input type="checkbox" id="wikiapproval_block_editapproved" name="wikiapproval_block_editapproved" {if $prefs.wikiapproval_block_editapproved eq 'y'}checked="checked"{/if}/>
-						</div>
-						<div class="adminoptionlabel">
-							<label for="wikiapproval_block_editapproved">{tr}Force bounce of editing of approved pages to staging{/tr}.</label>
-						</div>
-					</div>
- 
-					<div class="adminoptionbox">
-						<div class="adminoption">
-							<input type="checkbox" id="wikiapproval_delete_staging"  name="wikiapproval_delete_staging" {if $prefs.wikiapproval_delete_staging eq 'y'}checked="checked"{/if}/>
-						</div>
-						<div class="adminoptionlabel">
-							<label for="wikiapproval_delete_staging">{tr}Delete staging pages at approval{/tr}.</label>
-						</div>
-					</div>
+			{preference name=feature_wikiapproval}
+			<div class="adminoptionboxchild" id="feature_wikiapproval_childcontainer">
+				{preference name=wikiapproval_block_editapproved}
+				{preference name=wikiapproval_delete_staging}
 
 					<div class="adminoptionbox">
 						<div class="adminoptionlabel">
@@ -357,20 +322,8 @@
 
 					<fieldset>
 						<legend>{tr}Page name{/tr}</legend>
-						<div class="adminoptionbox">
-							<div class="adminoptionlabel">
-								<label for="wikiapproval_prefix">{tr}Unique page name prefix to indicate staging copy:{/tr}  <input id="wikiapproval_prefix" type="text" name="wikiapproval_prefix" value="{if $prefs.wikiapproval_prefix}{$prefs.wikiapproval_prefix|escape}{else}*{/if}" /></label>
-							</div>
-						</div>	
-
-						<div class="adminoptionboxchild">
-							<div class="adminoption">
-								<input type="checkbox" id="wikiapproval_hideprefix" name="wikiapproval_hideprefix" {if $prefs.wikiapproval_hideprefix eq 'y'}checked="checked"{/if}/>
-							</div>
-							<div class="adminoptionlabel">
-								<label for="wikiapproval_hideprefix">{tr}Hide page name prefix{/tr}.</label>
-							</div>
-						</div>
+						{preference name=wikiapproval_prefix}
+						{preference name=wikiapproval_hideprefix}
 					</fieldset>
 
 					<fieldset>
@@ -414,14 +367,7 @@
 								</select>
 							</div>
 						</div>
-						<div class="adminoptionbox">
-							<div class="adminoption">
-								<input type="checkbox" id="wikiapproval_sync_categories" name="wikiapproval_sync_categories" {if $prefs.wikiapproval_sync_categories eq 'y'}checked="checked"{/if}/>
-							</div>
-							<div class="adminoptionlabel">
-								<label for="wikiapproval_sync_categories">{tr}Categorize approved pages with categories of staging copy on approval{/tr}.</label>
-							</div>
-						</div>
+						{preference name=wikiapproval_sync_categories}
 					</fieldset>
 
 					<fieldset>
@@ -432,27 +378,11 @@
 								{icon _id=information}{tr}Freetags are disabled.{/tr} <a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}</a>.
 							{/if}
 						</div>
-
-						<div class="adminoptionbox">
-							<div class="adminoption">
-								<input type="checkbox" id="wikiapproval_update_freetags" name="wikiapproval_update_freetags" {if $prefs.wikiapproval_update_freetags eq 'y'}checked="checked"{/if}/>
-							</div>
-							<div class="adminoptionlabel">
-								<label for="wikiapproval_update_freetags">{tr}Replace freetags with that of staging pages, on approval{/tr}.</label>
-							</div>
-						</div>
-						<div class="adminoptionbox">
-							<div class="adminoption">
-								<input type="checkbox" id="wikiapproval_combine_freetags" name="wikiapproval_combine_freetags" {if $prefs.wikiapproval_combine_freetags eq 'y'}checked="checked"{/if}/>
-							</div>
-							<div class="adminoptionlabel">
-								<label for="wikiapproval_combine_freetags">{tr}Add new freetags of approved copy (into tags field) when editing staging pages{/tr}.</label>
-							</div>
-						</div>
+						{preference name=wikiapproval_update_freetags}
+						{preference name=wikiapproval_combine_freetags}
 					</fieldset>
-				</div>
 			</div>
-		</div>
+
 	{/tab}
 
 	{tab name="{tr}Page Listings{/tr}"}
@@ -460,15 +390,7 @@
 		{preference name=feature_listPages}
 		{preference name=feature_lastChanges}
 		{preference name=feature_listorphanPages}
-
-		<div class="adminoptionbox">
-			<div class="adminoption">
-				<input type="checkbox" id='feature_listorphanStructure' name="feature_listorphanStructure" {if $prefs.feature_listorphanStructure eq 'y'}checked="checked"{/if}/>
-			</div>
-			<div class="adminoptionlabel">
-				<label for="feature_listorphanStructure">{tr}Pages not in structure{/tr} </label>
-			</div>
-		</div>	 
+		{preference name=feature_listorphanStructure}
 
 		<div class="adminoptionbox">
 			<fieldset>
@@ -496,183 +418,35 @@
 						</div>
 					</div>
 				</div>
-
-				<div class="adminoptionbox">
-					<div class="adminoption">
-						<input type="checkbox" id="wiki_list_id" name="wiki_list_id" {if $prefs.wiki_list_id eq 'y'}checked="checked"{/if} />
-					</div>
-					<div class="adminoptionlabel">
-						<label for="wiki_list_id">{tr}Page ID{/tr} </label>
-					</div>
-				</div>	 
-				<div class="adminoptionbox">
-					<div class="adminoption">
-						<input type="checkbox" id="wiki_list_name" name="wiki_list_name" {if $prefs.wiki_list_name eq 'y'}checked="checked"{/if} onclick="flip('namelength');" />
-					</div>
-					<div class="adminoptionlabel">
-						<label for="wiki_list_name">{tr}Name{/tr} </label>
-					</div>
-					<div class="adminoptionboxchild" id="namelength" style="display:{if $prefs.wiki_list_name eq 'y'}block{else}none{/if};">
-						<div class="adminoptionlabel">
-							{tr}Name length:{/tr} <input type="text" name="wiki_list_name_len" value="{$prefs.wiki_list_name_len}" size="3" />
-						</div>
-					</div>
-				</div>	 
-
-				<div class="adminoptionbox">
-					<div class="adminoption">
-						<input type="checkbox" id="wiki_list_hits" name="wiki_list_hits" {if $prefs.wiki_list_hits eq 'y'}checked="checked"{/if} />
-					</div>
-					<div class="adminoptionlabel">
-						<label for="wiki_list_hits">{tr}Hits{/tr}</label>
-					</div>
+				{preference name=wiki_list_id}
+				
+				{preference name=wiki_list_name}
+				<div class="adminoptionboxchild" id="wiki_list_name_childcontainer">
+					{preference name=wiki_list_name_len}
 				</div>
 
-				<div class="adminoptionbox">
-					<div class="adminoption">
-						<input type="checkbox" id="wiki_list_lastmodif" name="wiki_list_lastmodif" {if $prefs.wiki_list_lastmodif eq 'y'}checked="checked"{/if} />
-					</div>
-					<div class="adminoptionlabel">
-						<label for="wiki_list_lastmodif">{tr}Last modification date{/tr}</label>
-					</div>
+				{preference name=wiki_list_hits}
+				{preference name=wiki_list_lastmodif}
+				{preference name=wiki_list_creator}
+				{preference name=wiki_list_user}
+				{preference name=wiki_list_lastver}
+				{preference name=wiki_list_comment}
+				<div class="adminoptionboxchild" id="wiki_list_comment_childcontainer">
+					{preference name=wiki_list_comment_len}
+				</div>
+				{preference name=wiki_list_description}
+				<div class="adminoptionboxchild" id="wiki_list_description_childcontainer">
+					{preference name=wiki_list_description_len}
 				</div>
 
-				<div class="adminoptionbox">
-					<div class="adminoption">
-						<input type="checkbox" id="wiki_list_creator" name="wiki_list_creator" {if $prefs.wiki_list_creator eq 'y'}checked="checked"{/if} />
-					</div>
-					<div class="adminoptionlabel">
-						<label for="wiki_list_creator">{tr}Creator{/tr}</label>
-					</div>
-				</div>
-
-				<div class="adminoptionbox">
-					<div class="adminoption">
-						<input type="checkbox" id="wiki_list_user" name="wiki_list_user" {if $prefs.wiki_list_user eq 'y'}checked="checked"{/if} />
-					</div>
-					<div class="adminoptionlabel">
-						<label for="wiki_list_user">{tr}Last modified by{/tr}</label>
-					</div>
-				</div>
-
-				<div class="adminoptionbox">
-					<div class="adminoption">
-						<input type="checkbox" id="wiki_list_lastver" name="wiki_list_lastver" {if $prefs.wiki_list_lastver eq 'y'}checked="checked"{/if} />
-					</div>
-					<div class="adminoptionlabel">
-						<label for="wiki_list_lastver">{tr}Version{/tr}</label>
-					</div>
-				</div>
-
-				<div class="adminoptionbox">
-					<div class="adminoption">
-						<input type="checkbox" onclick="flip('commentlength');" id="wiki_list_comment" name="wiki_list_comment" {if $prefs.wiki_list_comment eq 'y'}checked="checked"{/if} />
-					</div>
-					<div class="adminoptionlabel">
-						<label for="wiki_list_comment">{tr}Edit comments{/tr}</label>
-					</div>
-					<div class="adminoptionboxchild" id="commentlength" style="display:{if $prefs.wiki_list_comment eq 'y'}block{else}none{/if}">
-						{tr}Edit Comments length:{/tr}
-						<input type="text" name="wiki_list_comment_len" value="{$prefs.wiki_list_comment_len}" size="3" />
-					</div>
-				</div>
-
-				<div class="adminoptionbox">
-					<div class="adminoption">
-						<input type="checkbox" id="wiki_list_description" name="wiki_list_description" {if $prefs.wiki_list_description eq 'y'}checked="checked" {/if} onclick="flip('descriptionlength');" />
-					</div>
-					<div class="adminoptionlabel">
-						<label for="wiki_list_description">{tr}Description{/tr}</label>
-					</div>
-					<div class="adminoptionboxchild" id="descriptionlength" style="display:{if $prefs.wiki_list_description eq 'y'}block{else}none{/if};">
-						<label for="wiki_list_description_len">{tr}Description length:{/tr} </label>
-						<input type="text" name="wiki_list_description_len" value="{$prefs.wiki_list_description_len}" size="3" id="wiki_list_description_len" />
-					</div>
-				</div>
-
-				<div class="adminoptionbox">
-					<div class="adminoption">
-						<input type="checkbox" id="wiki_list_status" name="wiki_list_status" {if $prefs.wiki_list_status eq 'y'}checked="checked"{/if} />
-					</div>
-					<div class="adminoptionlabel">
-						<label for="wiki_list_status">{tr}Status{/tr}</label>
-					</div>
-				</div>
-
-				<div class="adminoptionbox">
-					<div class="adminoption">
-						<input type="checkbox" id="wiki_list_versions" name="wiki_list_versions" {if $prefs.wiki_list_versions eq 'y'}checked="checked"{/if} />
-					</div>
-					<div class="adminoptionlabel">
-						<label for="wiki_list_versions">{tr}Versions{/tr}</label>
-					</div>
-				</div>
-
-				<div class="adminoptionbox">
-					<div class="adminoption">
-						<input type="checkbox" id="wiki_list_links" name="wiki_list_links" {if $prefs.wiki_list_links eq 'y'}checked="checked"{/if} />
-					</div>
-					<div class="adminoptionlabel">
-						<label for="wiki_list_links">{tr}Links{/tr}</label>
-					</div>
-				</div>
-
-				<div class="adminoptionbox">
-					<div class="adminoption">
-						<input type="checkbox" id="wiki_list_backlinks" name="wiki_list_backlinks" {if $prefs.wiki_list_backlinks eq 'y'}checked="checked"{/if} />
-					</div>
-					<div class="adminoptionlabel">
-						<label for="wiki_list_backlinks">{tr}Backlinks{/tr}</label>
-					</div>
-				</div>
-
-				<div class="adminoptionbox">
-					<div class="adminoption">
-						<input type="checkbox" id="wiki_list_size" name="wiki_list_size" {if $prefs.wiki_list_size eq 'y'}checked="checked"{/if} />
-					</div>
-					<div class="adminoptionlabel">
-						<label for="wiki_list_size">{tr}Size{/tr}</label>
-					</div>
-				</div>
-
-				<div class="adminoptionbox">
-					<div class="adminoption">
-						<input type="checkbox" id="wiki_list_language" name="wiki_list_language" {if $prefs.wiki_list_language eq 'y'}checked="checked"{/if} />
-					</div>
-					<div class="adminoptionlabel">
-						<label for="wiki_list_language">{tr}Language{/tr}</label>
-						{if $prefs.feature_multilingual ne 'y'}
-							<br />
-							{icon _id=information}{tr}Feature is disabled.{/tr} <a href="tiki-admin.php?page=i18n" title="{tr}Features{/tr}">{tr}Enable now{/tr}</a>.
-						{/if}
-					</div>	
-				</div>
-
-				<div class="adminoptionbox">
-					<div class="adminoption">
-						<input type="checkbox" id="wiki_list_categories" name="wiki_list_categories" {if $prefs.wiki_list_categories eq 'y'}checked="checked"{/if} />
-					</div>
-					<div class="adminoptionlabel">
-						<label for="wiki_list_categories">{tr}Categories{/tr}</label>
-						{if $prefs.feature_categories ne 'y'}
-							<br />
-							{icon _id=information}{tr}Categories are disabled.{/tr} <a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}</a>.
-						{/if}
-					</div>
-				</div>
-
-				<div class="adminoptionbox">
-					<div class="adminoption">
-						<input type="checkbox" id="wiki_list_categories_path" name="wiki_list_categories_path" {if $prefs.wiki_list_categories_path eq 'y'}checked="checked"{/if} />
-					</div>
-					<div class="adminoptionlabel">
-						<label for="wiki_list_categories_path">{tr}Categories path{/tr}</label>
-						{if $prefs.feature_categories ne 'y'}
-							<br />
-							{icon _id=information}{tr}Categories are disabled.{/tr} <a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}</a>.
-						{/if}
-					</div>
-				</div>
+				{preference name=wiki_list_status}
+				{preference name=wiki_list_versions}
+				{preference name=wiki_list_links}
+				{preference name=wiki_list_backlinks}
+				{preference name=wiki_list_size}
+				{preference name=wiki_list_language}
+				{preference name=wiki_list_categories}
+				{preference name=wiki_list_categories_path}
 			</fieldset>  
 		</div>
 	{/tab}

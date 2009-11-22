@@ -1458,23 +1458,20 @@ function prefs_feature_list() {
 			'name' => tra('Print'),
 			'type' => 'flag',
 		),
-	
-	
-	
-	
-	
-	
+		'feature_wikiapproval' => array(
+			'name' => tra('Use wiki page staging and approval'),
+			'type' => 'flag',
+			'help' => 'Wiki+Page+Staging+and+Approval',
+		),
+		'feature_listorphanStructure' => array(
+			'name' => tra('Pages not in structure'),
+			'type' => 'flag',
+		),
 	
 	
 	// Used in templates/tiki-admin-include-wiki.tpl
 	'feature_dump' => array(
 			'name' => tra('Dumps'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-wiki.tpl
-	'feature_listorphanStructure' => array(
-			'name' => tra('Pages not in structure'),
 			'type' => '',
 			),
 	
@@ -1487,12 +1484,6 @@ function prefs_feature_list() {
 	// Used in templates/tiki-admin-include-wiki.tpl
 	'feature_wiki_show_hide_before' => array(
 			'name' => '',
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-wiki.tpl
-	'feature_wikiapproval' => array(
-			'name' => tra('Use wiki page staging and approval'),
 			'type' => '',
 			),
 	
