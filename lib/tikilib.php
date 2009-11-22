@@ -4478,7 +4478,7 @@ class TikiLib extends TikiDB {
 				}
 				if ($categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
 					$ret['tiki_p_edit'] = 'y';
-					$ret['tiki_p_remove'] = 'y';
+					$ret['tiki_p_remove'] = 'n';
 					$ret['tiki_p_wiki_attach_files'] = 'y';
 				} else {
 					$ret['tiki_p_edit'] = 'n';
