@@ -9652,7 +9652,7 @@ $lang=Array(
 "Users can subscribe any email address" => "Les utilisateurs peuvent s'abonner avec une adresse électronique différente",
 "Add unsubscribe instructions to each newsletter" => "Ajouter les instructions pour se désabonner dans chaque lettre d'informations envoyée",
 "Validate email addresses" => "Les inscriptions sont validées après réponse à un email",
-"Allow customized text message to be sent with the html version" => "Autoriser des messages personnaliser dans la version HTML",
+"Allow customized text message to be sent with the html version" => "Accompagner la version HTML d'une version personnalisable en format texte",
 "Mail notifications" => "Notification par email",
 "You need to set <a href=\"tiki-admin.php?page=general\">Sender Email</a> before creating email notifications." => "Vous devez configurer <a href=\"tiki-admin.php?page=general\">l'Email de l'émetteur</a> avant de poser des notifications par mail.",
 "Add notification" => "Ajouter une notification",
