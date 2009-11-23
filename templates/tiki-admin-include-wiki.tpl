@@ -314,7 +314,7 @@ name="w_displayed_default" {if $prefs.w_displayed_default eq 'y'} checked="check
 </div>
 <div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" id="feature_wiki_history_full" name="feature_wiki_history_full" {if $prefs.feature_wiki_history_full eq 'y'}checked="checked" {/if}/></div>
-	<div class="adminoptionlabel"><label for="feature_wiki_history_full">{tr}History includes only page data, description, and change comment{/tr}.</label></div>
+	<div class="adminoptionlabel"><label for="feature_wiki_history_full">{tr}History all instead of only page data, description, and change comment{/tr}.</label></div>
 </div>
 
 </div>	
