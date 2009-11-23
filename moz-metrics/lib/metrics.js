@@ -38,9 +38,9 @@ $jq(document).ready(function() {
 		// initiate tabs, creating separate 'add new' tab
         $jq('#tabs').tabs({
 			select: function(event, ui) {
-				var url = $.data(ui.tab, 'load.tabs').toString();
+				var url = $jq.data(ui.tab, 'load.tabs').toString();
 				if (url.indexOf('tiki-admin_metrics.php') > 0) {
-						location.href = $.data(ui.tab, 'load.tabs') + '#editcreatetab';
+						location.href = $jq.data(ui.tab, 'load.tabs') + '#editcreatetab';
 						return false;
 				}
 		    }
