@@ -62,6 +62,18 @@ class TikiDate {
 	 * Default constructor
 	 */
 	function TikiDate() {
+
+		if (function_exists('date_default_timezone_set')) {
+			if (isset($_SERVER['TZ']) && !empty($_SERVER['TZ'])) {
+				$tz = $_SERVER['TZ'];
+			} else if (ini_get('date.timezone')) {
+				$tz = ini_get( 'date.timezone');
+			} else {
+				$tz = 'UTC';
+			}
+			date_default_timezone_set($tz);
+		}
+		
 		$this->date = new DateTime();	// was: DateTime(date("Y-m-d H:i:s Z"))
 										// the Z (timezone) param was causing an error
 										// DateTime constructor defaults to "now" anyway so unnecessary?
