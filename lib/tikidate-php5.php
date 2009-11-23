@@ -63,11 +63,14 @@ class TikiDate {
 	 */
 	function TikiDate() {
 
-		if (function_exists('date_default_timezone_set')) {
-			if (isset($_SERVER['TZ']) && !empty($_SERVER['TZ'])) {
+		if (function_exists('date_default_timezone_set')) {			// function not available < PHP 5.1
+			
+			if (isset($_SERVER['TZ']) && !empty($_SERVER['TZ'])) {	// apache - can be set in .htaccess
 				$tz = $_SERVER['TZ'];
-			} else if (ini_get('date.timezone')) {
+			} else if (ini_get('date.timezone')) {					// set in php.ini
 				$tz = ini_get( 'date.timezone');
+			} else if (getenv('TZ')) {								// system env setting
+				$tz = getenv('TZ');
 			} else {
 				$tz = 'UTC';
 			}
