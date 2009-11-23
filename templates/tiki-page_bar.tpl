@@ -33,7 +33,7 @@
 			{else}
 				{assign var=thisPageClass value=''}
 			{/if}
-			{button href="tiki-editpage.php?page="|cat:$thisPageName|cat:$thisPageRefId _class=$thisPageClass _text="{tr}Edit{/tr}"}
+			{button href="tiki-editpage.php?page="|cat:$thisPageName|cat:$thisPageRefId _class=$thisPageClass _text="{tr}Edit this page{/tr}"}
 		{/if}
 
 		{if $prefs.feature_source eq 'y' and $tiki_p_wiki_view_source eq 'y'}
