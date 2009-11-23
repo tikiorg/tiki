@@ -43,9 +43,6 @@ require_once('tiki-setup.php');
 
 $access->check_feature('feature_metrics_dashboard');
 
-$use_memcache = $memcachelib && $memcachelib->isEnabled()
-                && $memcachelib->getOption('cache_metrics_output');
-
 require_once("lib/metrics/metricslib.php");
 require_once("lib/metrics/input-validation.php");
 $metricslibDW = new MetricsLib($metricsdb, false);
@@ -56,19 +53,11 @@ $date_from = $_REQUEST['date_from'];
 $date_to = $_REQUEST['date_to'];
 $date_field = $_REQUEST['date_field'];
 
-if ($use_memcache) {
-    $cached_output = $memcachelib->get(buildOutputCacheKey($memcachelib, $tab_id));
-
-    if ($cached_output) {
-        // If we have cached output, echo it and quit right away.
-        echo $cached_output['output']; 
-        echo "\n<!-- memcache ".htmlspecialchars($cache_key)."-->";
-        exit;
-    } else {
-        // No cached output, so start buffering output for caching at the end.
-        ob_start();
-    }
-}
+require_once 'lib/cache/pagecache.php';
+$pageCache = Tiki_PageCache::create()
+	->requiresPreference( 'metrics_cache_output' )
+	->addValue( 'tab', $tab_id )
+	->applyCache();
 
 $metrics_notify = '';
 if (empty($date_field)) {
@@ -157,19 +146,4 @@ function getMany($query, $metricslibDW) {
 
 	return $ret;
 }
-function buildOutputCacheKey($memcachelib, $tab_id) {
-    return $memcachelib->buildKey(array(
-        'role'       => 'metrics-tab-output',
-        'tab_id'     => $tab_id
-    ));
-}
 
-
-if ($use_memcache) {
-    $cached_output = array(
-        'timestamp' => time(),
-        'output'    => ob_get_contents()
-    );
-    $memcachelib->set(buildOutputCacheKey($memcachelib, $tab_id), $cached_output, false, strtotime('+1 day midnight'));
-    ob_end_flush();
-}

@@ -1534,6 +1534,7 @@ function get_default_prefs() {
 		'metrics_pastresults_count' => 50,
 		'metrics_metric_name_length' => 255,
 		'metrics_tab_name_length' => 255,
+		'metrics_cache_output' => 'y',
 	);
 
 	// spellcheck

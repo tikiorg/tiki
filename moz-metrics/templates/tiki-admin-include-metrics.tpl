@@ -18,6 +18,7 @@
 			{preference name=metrics_trend_suffix}
 			{preference name=metrics_metric_name_length}
 			{preference name=metrics_tab_name_length}
+			{preference name=metrics_cache_output}
 		</div>
 	</fieldset>
 	<div class="heading input_submit_container" style="text-align: right">

@@ -44,6 +44,15 @@ function prefs_metrics_list() {
 			'size' => 4,
 			'filter' => 'digits',
 		),
+		'metrics_cache_output' => array(
+			'name' => tra('Cache metrics output'),
+			'description' => tra('Most metrics are expensive to generate. Because they tend to evolve slowly, some delay between update and generation can be tolerated. Disabling cache is not recommended.'),
+			'type' => 'flag',
+			'dependencies' => array(
+				'memcache_enabled',
+				'memcache_servers',
+			),
+		),
 	);
 }
 
