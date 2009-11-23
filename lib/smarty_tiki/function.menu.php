@@ -11,14 +11,16 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  * - css = use suckerfish menu
  * - type = vert|horiz
  * - id = menu ID (mandatory)
- * - tr = y|n , n means no option translation (default y)
- * - menu_cookie=y|n (default y)
+ * - translate = y|n , n means no option translation (default y)
+ * - menu_cookie=y|n (default y) n, it will automatically open the submenu the url is in
+ * - sectionLevel: displays from this level only
+ * - toLevel : displays to this level only
  */
 function smarty_function_menu($params, &$smarty)
 {
 	global $tikilib, $user, $headerlib, $prefs;
 	global $menulib; include_once('lib/menubuilder/menulib.php');
-	extract($params);
+	extract($params, EXTR_SKIP);
 
 	if (empty($link_on_section) || $link_on_section == 'y') {
 		$smarty->assign('link_on_section', 'y');
