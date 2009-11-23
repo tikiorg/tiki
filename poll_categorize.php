@@ -23,7 +23,7 @@ if ($prefs['feature_polls'] == 'y') {
 		if (!$catObjectId) {
 			$catObjectId = $categlib->add_categorized_object($cat_type, $cat_objid, $cat_desc, $cat_name, $cat_href);
 		}
-		if ($polllib->has_object_polls($catObjectId)) {
+		if ($polllib->has_object_polls($catObjectId) && $prefs['poll_multiple_per_object'] != 'y') {
 			$polllib->remove_object_poll($cat_type, $cat_objid);
 		}
 		$pollid = $polllib->create_poll($_REQUEST["poll_template"], $cat_objid .': '. $_REQUEST['poll_title']);

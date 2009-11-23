@@ -1068,28 +1068,19 @@ if ($prefs['feature_wiki_templates'] == 'y' && $tiki_p_use_content_templates == 
 	$smarty->assign_by_ref('templates', $templates["data"]);
 }
 if ($prefs['feature_polls'] =='y' and $prefs['feature_wiki_ratings'] == 'y' && $tiki_p_wiki_admin_ratings == 'y') {
-	function pollnameclean($s) { global $page; if (isset($s['title'])) $s['title'] = substr($s['title'],strlen($page)+2); return $s; }
 	if (!isset($polllib) or !is_object($polllib)) include("lib/polls/polllib_shared.php");
 	if (!isset($categlib) or !is_object($categlib)) include("lib/categories/categlib.php");
 	if (isset($_REQUEST['removepoll'])) {
 		$catObjectId = $categlib->is_categorized($cat_type,$cat_objid);
-		$polllib->remove_object_poll($cat_type,$cat_objid);
+		$polllib->remove_object_poll( $cat_type, $cat_objid, $_REQUEST['removepoll'] );
 	}
 	$polls_templates = $polllib->get_polls('t');
 	$smarty->assign('polls_templates',$polls_templates['data']);
-	$poll_rated = reset( $polllib->get_ratings($cat_type,$cat_objid) );
-	if (isset($poll_rated['title'])) {
-		$poll_rated = array_map('pollnameclean',$poll_rated);
-	}
+	$poll_rated = $polllib->get_ratings($cat_type,$cat_objid);
 	$smarty->assign('poll_rated',$poll_rated);
-	if (isset($_REQUEST['poll_title'])) {
-		$smarty->assign('poll_title',$_REQUEST['poll_title']);
-	}
 	if (isset($_REQUEST['poll_template'])) {
 		$smarty->assign('poll_template',$_REQUEST['poll_template']);
 	}
-	$listpolls = $polllib->get_polls('o',0,'',"$page: ");
-	$smarty->assign('listpolls',$listpolls['data']);
 }
 
 if ($prefs['feature_multilingual'] == 'y') {

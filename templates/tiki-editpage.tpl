@@ -455,41 +455,39 @@
 							{if $prefs.feature_wiki_ratings eq 'y' and $tiki_p_wiki_admin_ratings eq 'y'}
 								<fieldset>
 									<legend>{tr}Use rating{/tr}:</legend>
-									{if $poll_rated.info}
-										<input type="hidden" name="poll_title" value="{$poll_rated.info.title|escape}" />
-										<a href="tiki-admin_poll_options.php?pollId={$poll_rated.info.pollId}">{$poll_rated.info.title}</a>
-										{assign var=thispage value=$page|escape:"url"}
-										{assign var=thispoll_rated value=$poll_rated.info.pollId}
-										{button href="?page=$thispage&amp;removepoll=$thispoll_rated" _text="{tr}Disable{/tr}"}
-										{if $tiki_p_admin_poll eq 'y'}
-											{button href="tiki-admin_polls.php" _text="{tr}Admin Polls{/tr}"}
-										{/if}
-									{else}
-										{if count($polls_templates)}
-											{tr}Type{/tr}
-											<select name="poll_template">
-												<option value="0">{tr}none{/tr}</option>
-												{section name=ix loop=$polls_templates}
-													<option value="{$polls_templates[ix].pollId|escape}"{if $polls_templates[ix].pollId eq $poll_template} selected="selected"{/if}>{tr}{$polls_templates[ix].title}{/tr}</option>
-												{/section}
-											</select>
-											{tr}Title{/tr}
-											<input type="text" name="poll_title" value="{$poll_title|escape}" size="22" />
-										{else}
-											{tr}There is no available poll template.{/tr}
-											{if $tiki_p_admin_polls ne 'y'}
-												{tr}You should ask an admin to create them.{/tr}
+
+									{foreach from=$poll_rated item=rating}
+										<div>
+											<a href="tiki-admin_poll_options.php?pollId={$rating.info.pollId}">{$rating.info.title}</a>
+											{assign var=thispage value=$page|escape:"url"}
+											{assign var=thispoll_rated value=$rating.info.pollId}
+											{button href="?page=$thispage&amp;removepoll=$thispoll_rated" _text="{tr}Disable{/tr}"}
+										</div>
+									{/foreach}
+
+									{if $tiki_p_admin_poll eq 'y'}
+										{button href="tiki-admin_polls.php" _text="{tr}Admin Polls{/tr}"}
+									{/if}
+
+									{if $poll_rated|@count <= 1 or $prefs.poll_multiple_per_object eq 'y'}
+										<div>
+											{if count($polls_templates)}
+												{tr}Type{/tr}
+												<select name="poll_template">
+													<option value="0">{tr}none{/tr}</option>
+													{foreach item=template from=$polls_templates}
+														<option value="{$template.pollId|escape}"{if $template.pollId eq $poll_template} selected="selected"{/if}>{tr}{$template.title|escape}{/tr}</option>
+													{/foreach}
+												</select>
+												{tr}Title{/tr}
+												<input type="text" name="poll_title" size="22" />
+											{else}
+												{tr}There is no available poll template.{/tr}
+												{if $tiki_p_admin_polls ne 'y'}
+													{tr}You should ask an admin to create them.{/tr}
+												{/if}
 											{/if}
-										{/if}
-										{if count($listpolls)}
-											{tr}or use{/tr}
-											<select name="olpoll">
-												<option value="">... {tr}an existing poll{/tr}</option>
-												{section name=ix loop=$listpolls}
-													<option value="{$listpolls[ix].pollId|escape}">{tr}{$listpolls[ix].title|default:"<i>... no title ...</i>"}{/tr} ({$listpolls[ix].votes} {tr}votes{/tr})</option>
-												{/section}
-											</select>
-										{/if}
+										</div>
 									{/if}
 								</fieldset>
 							{/if}

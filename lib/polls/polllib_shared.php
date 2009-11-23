@@ -76,7 +76,7 @@ class PollLibShared extends TikiLib {
 		} else {
 			$mid = '';
 		}
-    $query = "select * from `tiki_polls` where `active`=? and `publishDate`>=? and `publishDate`<=? $mid";
+		$query = "select * from `tiki_polls` where `active`=? and `publishDate`>=? and `publishDate`<=? $mid";
 		$query_cant = "select count(*) from `tiki_polls` where `active`=? and `publishDate`>=? and `publishDate`<=? $mid";
 		$result = $this->query($query,$bindvars);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -173,16 +173,24 @@ class PollLibShared extends TikiLib {
 		return $this->getOne("select `objectId` from `tiki_objects` where `type`=? and `itemId`=?",array($cat_type,$cat_objid));
 	}
 
-  function has_object_polls($catObjectId) {
-    $query = "select count(*) from `tiki_poll_objects` where `catObjectId`=?";
-    return $this->getOne($query,array((int)$catObjectId));
-  }
+	function has_object_polls($catObjectId) {
+		$query = "select count(*) from `tiki_poll_objects` where `catObjectId`=?";
+		return $this->getOne($query,array((int)$catObjectId));
+	}
 
-  function remove_object_poll($cat_type,$cat_objid) {
+	function remove_object_poll($cat_type,$cat_objid, $pollId = null) {
 		$catObjectId = $this->get_catObjectId($cat_type,$cat_objid);
-    $this->query("delete from `tiki_poll_objects` where `catObjectId`=?",array((int)$catObjectId));
+		$query = "delete from `tiki_poll_objects` where `catObjectId`=?";
+		$bindvars = array((int)$catObjectId);
+
+		if( $pollId ) {
+			$query .= ' AND `pollId` = ?';
+			$bindvars[] = $pollId;
+		}
+
+		$this->query($query,$bindvars);
 		return true;
-  }
+	}
 
   function create_poll($template_id,$title) {
     $pollid = $this->replace_poll(0,$title,"o",date('U'));
