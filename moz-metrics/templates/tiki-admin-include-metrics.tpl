@@ -6,6 +6,8 @@
 	</div>
 	<fieldset>
 		<legend>{tr}Metrics Dashboard{/tr}</legend>
+	
+		<p><a href="tiki-admin_metrics.php">{tr}Configure metrics{/tr}</a></p>
 
   		{preference name=feature_metrics_dashboard}
 		<div class="adminoptionboxchild" id="feature_metrics_dashboard_childcontainer">

@@ -6,12 +6,10 @@
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 require_once ('tiki-setup.php');
-// PERMISSIONS: NEEDS p_admin
-if ($tiki_p_admin != 'y') {
-	$smarty->assign('msg', tra('You do not have permission to use this feature'));
-	$smarty->display('error.tpl');
-	die;
-}
+
+$access->check_permission( 'tiki_p_admin' );
+$access->check_feature( 'feature_metrics_dashboard' );
+
 require_once("lib/metrics/metricslib.php");
 $metricslib = new MetricsLib($dbTiki);
 $metric_range_all = $metricslib->getMetricsRangeAll();
