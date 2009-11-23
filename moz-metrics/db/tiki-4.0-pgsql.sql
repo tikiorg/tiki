@@ -4506,5 +4506,44 @@ CREATE TABLE "tiki_auth_tokens" (
 CREATE INDEX "tiki_auth_tokens_tiki_auth_tokens_token" ON "tiki_auth_tokens" ("token");
 
 -- --------------------------------------------------------
+
+DROP TABLE IF EXISTS "metrics_assigned";
+
+CREATE TABLE "metrics_assigned" (
+	"assigned_id" bigserial,
+	"metric_id" bigint NOT NULL,
+	"tab_id" bigint NOT NULL,
+	PRIMARY KEY ("assigned_id")
+);
+CREATE INDEX "metrics_assigned_metric_id" ON "metrics_assigned" ("metric_id");
+CREATE INDEX "metrics_assigned_tab_id" ON "metrics_assigned" ("tab_id");
+
+
+DROP TABLE IF EXISTS "metrics_metric";
+
+CREATE TABLE "metrics_metric" (
+	"metric_id" bigserial,
+	"metric_name" varchar(255) NOT NULL,
+	"metric_range" varchar(1) NOT NULL DEFAULT '+' COMMENT 'values: + (daily), @ (monthly&weekly), - (weekly)',
+	"metric_datatype" varchar(1) NOT NULL DEFAULT 'i' COMMENT 'values: i(nteger), %(percentage), f(loat), L(ist)',
+	"metric_lastupdate" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	"metric_query" text,
+	PRIMARY KEY ("metric_id"),
+	UNIQUE ("metric_name")
+);
+
+
+DROP TABLE IF EXISTS "metrics_tab";
+
+CREATE TABLE "metrics_tab" (
+	"tab_id" bigserial,
+	"tab_name" varchar(255) NOT NULL,
+	"tab_order" bigint NOT NULL DEFAULT '0',
+	"tab_content" text NOT NULL,
+	PRIMARY KEY ("tab_id"),
+	UNIQUE ("tab_name")
+);
+
+
 ;
 
