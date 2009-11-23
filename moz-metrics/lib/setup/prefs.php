@@ -1525,6 +1525,15 @@ function get_default_prefs() {
 		'print_pdf_from_url' => 'none',
 		'print_pdf_webkit_path' => '',
 		'print_pdf_webservice_url' => '',
+
+		// Metrics
+		'feature_metrics_dashboard' => 'n',
+		'metrics_trend_prefix' => '(',
+		'metrics_trend_suffix' => '%)',
+		'metrics_trend_novalue' => '(N/A)',
+		'metrics_pastresults_count' => 50,
+		'metrics_metric_name_length' => 255,
+		'metrics_tab_name_length' => 255,
 	);
 
 	// spellcheck

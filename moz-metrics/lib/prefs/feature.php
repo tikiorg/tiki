@@ -1493,5 +1493,10 @@ function prefs_feature_list() {
 			'type' => '',
 			),
 	
+		'feature_metrics_dashboard' => array(
+			'name' => tra('Metrics Dashboard'),
+			'description' => tra('Generate automated statistics from configured database queries.'),
+			'type' => 'flag',
+		),
 	);
 }
