@@ -634,6 +634,9 @@ if (
 if ($dbcon) {
 	$has_tiki_db = has_tiki_db();
 	$smarty->assign('tikidb_created', $has_tiki_db);
+	$oldPerms = $dbTiki->getOne('SELECT COUNT(*) FROM `users_permissions` WHERE `permDesc` = \'Can view categorized items\'');
+	$smarty->assign('tikidb_oldPerms', $oldPerms);
+	
 	if ($install_step == '6' && $has_tiki_db) {
 		update_preferences($dbTiki, $prefs);
 		$smarty->assign('admin_email', get_admin_email($dbTiki));
