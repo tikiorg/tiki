@@ -155,17 +155,15 @@ class MetricsLib extends TikiDb_Bridge {
 	 * @param string $metric_query SQL query string
 	 * @return query result
 	 */
-	function createUpdateMetric($metric_id, $metric_name, 
-		$metric_range, $metric_datatype, 
-			$metric_query) {
-		$values = array($metric_name, $metric_range, $metric_datatype, $metric_query);
+	function createUpdateMetric($metric_id, $metric_name, $metric_range, $metric_datatype, $metric_query, $metric_dsn = 'local') {
+		$values = array($metric_name, $metric_range, $metric_datatype, $metric_query, $metric_dsn);
 		
 		if (empty($metric_id) || (!is_numeric($metric_id))) {
-			$query = "INSERT INTO `metrics_metric` (`metric_id`, `metric_name`, `metric_range`, `metric_datatype`, `metric_lastupdate`, `metric_query`)
-					VALUES (NULL, ?, ?, ?, CURRENT_TIMESTAMP, ?)";
+			$query = "INSERT INTO `metrics_metric` (`metric_id`, `metric_name`, `metric_range`, `metric_datatype`, `metric_lastupdate`, `metric_query`, `metric_dsn`)
+					VALUES (NULL, ?, ?, ?, CURRENT_TIMESTAMP, ?, ?)";
 		}
 		else {
-			$query = "UPDATE `metrics_metric` SET `metric_name` = ?, `metric_range` = ?, `metric_datatype` = ?, `metric_lastupdate` = CURRENT_TIMESTAMP, `metric_query` = ? WHERE `metric_id` = ?";
+			$query = "UPDATE `metrics_metric` SET `metric_name` = ?, `metric_range` = ?, `metric_datatype` = ?, `metric_lastupdate` = CURRENT_TIMESTAMP, `metric_query` = ?, `metric_dsn` = ? WHERE `metric_id` = ?";
 			$values[] = $metric_id;
 		}
 		

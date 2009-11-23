@@ -195,6 +195,17 @@
 			</td>
 		</tr>
 		<tr>
+			<td class="form {cycle advance=false}">{tr}DSN{/tr}</td>
+			<td class="{cycle}">
+				<select name="metric_dsn">
+					<option value="local" {if isset($metric_dsn) && $metric_dsn eq 'local'}selected="selected"{/if}>{tr}Local (Tiki database){/tr}</option>
+					{foreach from=$dsn_list key=datatypeid item=dsn}
+						<option value="{$dsn.name}" {if isset($metric_dsn) && $metric_dsn eq $dsn.name}selected="selected"{/if}>{$dsn.name}</option>
+					{/foreach}
+				</select>
+			</td>
+		</tr>
+		<tr>
 			<td class="form {cycle advance=false}">{tr}Query{/tr}</td>
 			<td class="{cycle}">
 				<textarea id="metric_query" name="metric_query" rows="10">{$metric_query|escape}</textarea>

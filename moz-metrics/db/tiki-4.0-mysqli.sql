@@ -3509,6 +3509,7 @@ CREATE TABLE `metrics_metric` (
 	`metric_datatype` varchar(1) NOT NULL DEFAULT 'i' COMMENT 'values: i(nteger), %(percentage), f(loat), L(ist)',
 	`metric_lastupdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	`metric_query` text,
+	`metric_dsn` VARCHAR(200) NOT NULL DEFAULT 'local',
 	PRIMARY KEY (`metric_id`),
 	UNIQUE KEY `metric_name` (`metric_name`)
 );

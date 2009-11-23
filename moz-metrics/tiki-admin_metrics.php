@@ -10,6 +10,7 @@ require_once ('tiki-setup.php');
 $access->check_permission( 'tiki_p_admin' );
 $access->check_feature( 'feature_metrics_dashboard' );
 
+require_once 'lib/admin/adminlib.php';
 require_once("lib/metrics/metricslib.php");
 $metricslib = new MetricsLib($dbTiki);
 $metric_range_all = $metricslib->getMetricsRangeAll();
@@ -17,6 +18,9 @@ $smarty->assign('metric_range_all', $metric_range_all);
 $metric_datatype_all = $metricslib->getMetricsDatatypeAll();
 $smarty->assign('metric_datatype_all', $metric_datatype_all);
 $headerlib->add_cssfile("styles/mozmetrics.css");
+
+$dsn_list = $adminlib->list_dsn( 0, -1, 'name_asc', '' );
+$smarty->assign( 'dsn_list', $dsn_list['data'] );
 
 /* Edit or delete a metric */
 if (isset($_REQUEST["metric_submit"])) {
@@ -48,10 +52,11 @@ if (isset($_REQUEST["metric_submit"])) {
 	
 	check_ticket('admin-metrics');
 	
-	$smarty->assign_by_ref('metric_name', $_REQUEST["metric_name"]);
-	$smarty->assign_by_ref('metric_range', $_REQUEST["metric_range"]);
-	$smarty->assign_by_ref('metric_datatype', $_REQUEST["metric_datatype"]);
-	$smarty->assign_by_ref('metric_query', $_REQUEST["metric_query"]);
+	$smarty->assign('metric_name', $_REQUEST["metric_name"]);
+	$smarty->assign('metric_range', $_REQUEST["metric_range"]);
+	$smarty->assign('metric_datatype', $_REQUEST["metric_datatype"]);
+	$smarty->assign('metric_query', $_REQUEST["metric_query"]);
+	$smarty->assign('metric_dsn', $_REQUEST["metric_dsn"]);
 	if (empty($_POST['metric_id']) || (!is_numeric($_POST['metric_id']))) {
 		//create
 		$metric_id = NULL;
@@ -62,8 +67,8 @@ if (isset($_REQUEST["metric_submit"])) {
 		$metric_id = $_POST['metric_id'];
 		$logslib->add_log('adminmetrics','updated metric '.$_REQUEST["metric_name"]);
 	}
-	$smarty->assign_by_ref('metric_id', $metric_id);
-	$metricslib->createUpdateMetric($metric_id, $_REQUEST["metric_name"], $_REQUEST["metric_range"], $_REQUEST["metric_datatype"], $_REQUEST["metric_query"]);
+	$smarty->assign('metric_id', $metric_id);
+	$metricslib->createUpdateMetric($metric_id, $_REQUEST["metric_name"], $_REQUEST["metric_range"], $_REQUEST["metric_datatype"], $_REQUEST["metric_query"], $_REQUEST['metric_dsn']);
 }
 
 /* Edit or delete a tab */
@@ -91,9 +96,9 @@ if (isset($_REQUEST["tab_submit"])) {
 	}
 	check_ticket('admin-metrics');
 	
-	$smarty->assign_by_ref('tab_name', $_REQUEST["tab_name"]);
-	$smarty->assign_by_ref('tab_order', $_REQUEST["tab_order"]);
-	$smarty->assign_by_ref('tab_content', $_REQUEST["tab_content"]);
+	$smarty->assign('tab_name', $_REQUEST["tab_name"]);
+	$smarty->assign('tab_order', $_REQUEST["tab_order"]);
+	$smarty->assign('tab_content', $_REQUEST["tab_content"]);
 	if (empty($_POST['tab_id']) || (!is_numeric($_POST['tab_id']))) {
 		//create
 		$tab_id = NULL;
@@ -104,7 +109,7 @@ if (isset($_REQUEST["tab_submit"])) {
 		$tab_id = $_POST['tab_id'];
 		$logslib->add_log('adminmetrics','updated tab '.$_REQUEST["tab_name"]);
 	}
-	$smarty->assign_by_ref('tab_id', $tab_id);
+	$smarty->assign('tab_id', $tab_id);
 	$metricslib->createUpdateTab($tab_id, $_REQUEST["tab_name"], $_REQUEST["tab_order"], $_REQUEST["tab_content"]);
 }
 
@@ -157,11 +162,12 @@ if (isset($_REQUEST["metric_edit"]) || $_POST["metric_id"]) {
 		die;
 	}
 	$metric_info = $metricslib->getMetricById($metric_id);
-	$smarty->assign_by_ref('metric_id', $metric_info["metric_id"]);
-	$smarty->assign_by_ref('metric_name', $metric_info["metric_name"]);
-	$smarty->assign_by_ref('metric_range', $metric_info["metric_range"]);
-	$smarty->assign_by_ref('metric_datatype', $metric_info["metric_datatype"]);
-	$smarty->assign_by_ref('metric_query', $metric_info["metric_query"]);
+	$smarty->assign('metric_id', $metric_info["metric_id"]);
+	$smarty->assign('metric_name', $metric_info["metric_name"]);
+	$smarty->assign('metric_range', $metric_info["metric_range"]);
+	$smarty->assign('metric_datatype', $metric_info["metric_datatype"]);
+	$smarty->assign('metric_dsn', $metric_info["metric_dsn"]);
+	$smarty->assign('metric_query', $metric_info["metric_query"]);
 }
 
 /* Edit a tab */
@@ -177,10 +183,10 @@ if (isset($_REQUEST["tab_edit"]) || $_POST["tab_id"]) {
 		die;
 	}
 	$tab_info = $metricslib->getTabById($tab_id);
-	$smarty->assign_by_ref('tab_id', $tab_info["tab_id"]);
-	$smarty->assign_by_ref('tab_name', $tab_info["tab_name"]);
-	$smarty->assign_by_ref('tab_order', $tab_info["tab_order"]);
-	$smarty->assign_by_ref('tab_content', $tab_info["tab_content"]);
+	$smarty->assign('tab_id', $tab_info["tab_id"]);
+	$smarty->assign('tab_name', $tab_info["tab_name"]);
+	$smarty->assign('tab_order', $tab_info["tab_order"]);
+	$smarty->assign('tab_content', $tab_info["tab_content"]);
 }
 
 /* Clear cache for a tab */
@@ -214,7 +220,7 @@ if (!empty($_REQUEST['assign_metric_new'])) {
 		$smarty->display('error.tpl');
 		die;
 	}
-	$smarty->assign_by_ref('assign_metric', $_REQUEST['assign_metric_new']);
+	$smarty->assign('assign_metric', $_REQUEST['assign_metric_new']);
 }
 
 if (isset($_REQUEST["assign_metric_edit"])) {
@@ -225,9 +231,9 @@ if (isset($_REQUEST["assign_metric_edit"])) {
 		die;
 	}
 	$assign_info = $metricslib->getMetricAssignedById($_REQUEST["assign_metric_edit"]);
-	$smarty->assign_by_ref('assigned_id', $assign_info["assigned_id"]);
-	$smarty->assign_by_ref('assign_metric', $assign_info["metric_id"]);
-	$smarty->assign_by_ref('assign_tab', $assign_info["tab_id"]);
+	$smarty->assign('assigned_id', $assign_info["assigned_id"]);
+	$smarty->assign('assign_metric', $assign_info["metric_id"]);
+	$smarty->assign('assign_tab', $assign_info["tab_id"]);
 }
 if (!empty($_REQUEST['assign_metric_new'])) {
 	check_ticket('admin-metrics');
@@ -236,7 +242,7 @@ if (!empty($_REQUEST['assign_metric_new'])) {
 		$smarty->display('error.tpl');
 		die;
 	}
-	$smarty->assign_by_ref('assign_metric', $_REQUEST['assign_metric_new']);
+	$smarty->assign('assign_metric', $_REQUEST['assign_metric_new']);
 }
 
 if (isset($_REQUEST["assign"])) {
@@ -261,10 +267,10 @@ if (isset($_REQUEST["assign"])) {
 		$assigned_id = $_POST['assigned_id'];
 		$logslib->add_log('adminmodules','reassigned metric '.$_REQUEST["assign_metric"] . ' (assigned_id = ' .$assigned_id .')');
 	}
-	$smarty->assign_by_ref('assigned_id', $assigned_id);
+	$smarty->assign('assigned_id', $assigned_id);
 
-	$smarty->assign_by_ref('assign_metric', $_REQUEST["assign_metric"]);
-	$smarty->assign_by_ref('assign_tab', $_REQUEST["assign_tab"]);
+	$smarty->assign('assign_metric', $_REQUEST["assign_metric"]);
+	$smarty->assign('assign_tab', $_REQUEST["assign_tab"]);
 	$metricslib->createUpdateMetricAssigned($assigned_id, $_REQUEST["assign_metric"], $_REQUEST["assign_tab"]);
 	header ("location: tiki-admin_metrics.php");
 }
