@@ -40,6 +40,9 @@
 require_once('tiki-setup.php');
 require_once("lib/metrics/metricslib.php");
 require_once("lib/metrics/input-validation.php");
+
+$access->check_feature('feature_metrics_dashboard');
+
 $metricslib = new MetricsLib($dbTiki);
 // include JQueryUI and metrics css+js files
 $headerlib->drop_cssfile('styles/mozkb.css');

@@ -41,6 +41,8 @@ define('COLUMN_MAXLEN', 64);
 
 require_once('tiki-setup.php');
 
+$access->check_feature('feature_metrics_dashboard');
+
 $use_memcache = $memcachelib && $memcachelib->isEnabled()
                 && $memcachelib->getOption('cache_metrics_output');
 
