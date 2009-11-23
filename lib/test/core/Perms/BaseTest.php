@@ -3,6 +3,7 @@
 class Perms_BaseTest extends TikiTestCase
 {
 	function testWithoutConfiguration() {
+		Perms::set( new Perms );
 		$accessor = Perms::get();
 
 		$expect = new Perms_Accessor;
