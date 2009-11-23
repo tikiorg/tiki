@@ -51,9 +51,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-require_once('lib/tikidblib.php');
-require_once('lib/init/tra.php');
-
 /**
  * Global variables for datatype and range.
  */
@@ -69,20 +66,7 @@ $AR_RANGE = array(
 		, '-' => tra('Weekly (-)')
 		);
 
-class MetricsLib extends TikiDB {
-	/**
-	 * MetricsLib constructor receiving a PEAR::Db database object.
-	 * @staticvar integer $staticvar this is actually what is returned
-	 * @param string $db a PEAR::Db database object, already set 
-	 * up and connected
-	 */
-    function MetricsLib($db) {
-	if (!$db) {
-	    die ("Invalid db object passed to MetricsLib constructor");
-	}
-	$this->TikiDB($db);
-	$this->now = (int) date('U');
-    }
+class MetricsLib extends TikiDb_Bridge {
     
 	/**
 	 * Get all existing metrics from the SQL table metrics_metric

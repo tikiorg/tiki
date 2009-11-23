@@ -49,7 +49,6 @@ $use_memcache = $memcachelib && $memcachelib->isEnabled()
 require_once("lib/metrics/metricslib.php");
 require_once("lib/metrics/input-validation.php");
 $metricslibDW = new MetricsLib($metricsdb, false);
-$metricslibDW->forceMaster();
 $metricslib = new MetricsLib($dbTiki);
 $tab_id = $_REQUEST['tab_id'];
 $range = $_REQUEST['range'];

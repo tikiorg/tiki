@@ -1,5 +1,3 @@
-{include file="../mozcommon/head.tpl" mini="1"}
-{include file="../mozcommon/header.tpl" nobreadcrumbs=1}
 <div class="page-header">
 	<div class="metrics-range-update">
 		<form method="GET">
@@ -21,7 +19,7 @@
 		</div>
 		</form>
 	</div>
-	<h1 class="pagetitle">{tr}Firefox Metrics Dashboard{/tr}</h1>
+	<h1 class="pagetitle">{tr}Metrics Dashboard{/tr}</h1>
 	<div class="metrics-range">
 		<span class="metrics-range-prefix">{tr}{$metrics_range_prefix}{/tr}</span>
 		<span class="metrics-range">{$metrics_range}</span>
@@ -40,14 +38,11 @@
 	<div id="tabs">
 	<ul>
 		{foreach from=$tabs key=tabid item=tab}
-			<li><a title="tab-{$tabid}" href="/metrics-tab.php?tab_id={$tabid}&date_from={$date_from}&date_to={$date_to}&range={$range}">{$tab.tab_name}</a></li>
+			<li><a title="tab-{$tabid}" href="metrics-tab.php?tab_id={$tabid}&date_from={$date_from}&date_to={$date_to}&range={$range}">{$tab.tab_name}</a></li>
 		{/foreach}
-			<li><a title="tab-add" href="/tiki-admin_metrics.php#editcreatetab">+</a></li>
+			<li><a title="tab-add" href="tiki-admin_metrics.php#editcreatetab">+</a></li>
 	</ul>
 </div>
 
 </div><!-- End demo -->
 
-
-</div>
-{include file="../mozcommon/footer.tpl"}

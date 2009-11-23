@@ -45,12 +45,11 @@ $access->check_feature('feature_metrics_dashboard');
 
 $metricslib = new MetricsLib($dbTiki);
 // include JQueryUI and metrics css+js files
-$headerlib->drop_cssfile('styles/mozkb.css');
-$headerlib->add_cssfile("styles/mozmetrics.css");
-$headerlib->add_cssfile("styles/jquery-ui-1.7.1.custom.css");
-$headerlib->add_jsfile("/js/jquery-ui-1.7.1.custom.min.js");
-$headerlib->add_jsfile("/js/jquery.sparkline.min.js");
-$headerlib->add_jsfile("/js/metrics.js");
+$headerlib->add_cssfile("styles/metrics.css");
+$headerlib->add_jsfile("lib/jquery/jquery.sparkline.min.js");
+$headerlib->add_jsfile("lib/jquery/jquery-ui/ui/ui.core.js");
+$headerlib->add_jsfile("lib/jquery/jquery-ui/ui/ui.tabs.js");
+$headerlib->add_jsfile("lib/metrics.js");
 
 $tabs = $metricslib->getAllTabs();
 
@@ -70,4 +69,5 @@ $smarty->assign('metrics_range_prefix', $converted_range['metrics_range_prefix']
 $smarty->assign('range', $range);
 $smarty->assign('tabs', $tabs);
 $smarty->assign('metrics_range', $metrics_range);
-$smarty->display("tiki-metrics.tpl");
+$smarty->assign('mid','tiki-metrics.tpl');
+$smarty->display("tiki.tpl");
