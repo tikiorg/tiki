@@ -983,7 +983,7 @@ function get_default_prefs() {
 		// some look like duplicates to me (jb aug 09)
 		'ldap_create_user_tiki' => 'n',
 		'ldap_create_user_ldap' => 'n',
-		'ldap_skip_admin' => 'n',
+		'ldap_skip_admin' => 'y',
 		'auth_ldap_permit_tiki_users' => 'n',
 		'auth_ldap_debug' => 'n',
 		'auth_ldap_ssl' => 'n',
