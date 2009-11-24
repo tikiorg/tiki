@@ -113,6 +113,42 @@ class TikiLib extends TikiDb_Bridge {
 		return $this->getOne("select `dsn`  from `tiki_dsn` where `name`='$name'");
 	}
 
+	function get_db_by_name( $name ) {
+		if( $name == 'local' || empty($name) ) {
+			return TikiDb::get();
+		} else {
+			static $connectionMap = array();
+
+			if( ! isset( $connectionMap[$name] ) ) {
+				$connectionMap[$name] = false;
+
+				$dsnsqlplugin = $this->get_dsn_by_name($name);
+
+				$parsedsn = $dsnsqlplugin;
+				$dbdriver = strtok( $parsedsn, ":" );
+				$parsedsn = substr( $parsedsn, strlen($dbdriver) + 3 );
+				$dbuserid = strtok( $parsedsn, ":" );
+				$parsedsn = substr( $parsedsn, strlen($dbuserid) + 1 );
+				$dbpassword = strtok( $parsedsn, "@" );
+				$parsedsn = substr( $parsedsn, strlen($dbpassword) + 1 );
+				$dbhost = strtok( $parsedsn, "/" );
+				$parsedsn = substr( $parsedsn, strlen($dbhost) + 1 );
+				$database = $parsedsn;
+
+				require_once ('lib/adodb/adodb.inc.php');
+				$dbsqlplugin = ADONewConnection($dbdriver);
+
+				if( $dbsqlplugin->NConnect( $dbhost, $dbuserid, $dbpassword, $database ) ) {
+					require_once 'lib/core/lib/TikiDb/Adodb.php';
+
+					$connectionMap[$name] = new TikiDb_AdoDb( $dbsqlplugin );
+				}
+			}
+
+			return $connectionMap[$name];
+		}
+	}
+
 	/* convert data to iso-8601 format */
 	// used for atom export. date() use is okay, as we use server timezone in such case
 	function iso_8601 ($timestamp) {
