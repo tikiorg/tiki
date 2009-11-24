@@ -7,7 +7,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
-$section = 'admin wiki page';
+$section = 'wiki page';
+$section_class = "admin $section";	// This will be body class instead of $section
 require_once('tiki-setup.php');
 require_once('lib/ajax/ajaxlib.php');
 
