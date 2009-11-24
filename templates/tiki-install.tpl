@@ -302,9 +302,11 @@
 			{if $tikidb_created}
 			<td width="50%" valign="top">
 			<fieldset><legend>{tr}Upgrade{/tr}</legend>
-			{remarksbox type="warning" title="{tr}Warning: Category Permissions Will Not Be Upgraded{/tr}"}
-			{tr}Category permissions have been revamped in version 4. If you have been using category permissions, note that they may not work properly after upgrading to version 4, and it will be necessary to reconfigure them.{/tr}
-			{/remarksbox}
+			{if $tikidb_oldPerms gt 0}
+				{remarksbox type="warning" title="{tr}Warning: Category Permissions Will Not Be Upgraded{/tr}" close="n"}
+					{tr}Category permissions have been revamped in version 4. If you have been using category permissions, note that they may not work properly after upgrading to version 4, and it will be necessary to reconfigure them.{/tr}
+				{/remarksbox}
+			{/if}
 			<p>{tr}Automatically upgrade your existing database to v{/tr}{$tiki_version_name}.</p>
 			<p align="center"><input type="submit" name="update" value=" {tr}Upgrade{/tr} " /></p>
 			</fieldset>

@@ -229,7 +229,7 @@ class MenuLib extends TikiLib {
 			$url .= "?page=$homePage";
 		}
 		if ($prefs['feature_sefurl'] == 'y' && !empty($option['sefurl'])) {
-			$pos = strpos($url, '/'. urldecode($option['sefurl'])); // position in $url
+			$pos = strpos($url, '/'. str_replace('&amp;', '&', urldecode($option['sefurl']))); // position in $url
 			$lg = 1 + strlen($option['sefurl']);
 		} else {
 			$pos = strpos(strtolower($url), strtolower($option['url']));

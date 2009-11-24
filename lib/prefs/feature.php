@@ -1372,7 +1372,7 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),
 		'feature_wiki_history_full' => array(
-			'name' => tra('History includes only page data, description, and change comment'),
+			'name' => tra('History all instead of only page data, description, and change comment'),
 			'type' => 'flag',
 		),
 		'feature_wiki_discuss' => array(

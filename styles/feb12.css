@@ -741,7 +741,13 @@ h3.box-title {
 
 .rbox a,
 .rbox a:visited {
+	text-decoration: none;
+	color: #a8cce2;
+}
+
+.rbox a:hover {
 	text-decoration: underline;
+	color: #a8cce2;
 }
 
 .tip .rbox-title,
