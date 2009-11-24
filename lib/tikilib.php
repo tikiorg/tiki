@@ -3862,6 +3862,10 @@ class TikiLib extends TikiDb_Bridge {
 		$this->query($query, array(NULL, $page));
 		$query = 'delete from `tiki_theme_control_objects` where `name`=? and `type`=?';
 		$this->query($query, array($page, 'wiki page'));
+		if ( $prefs['feature_file_galleries'] == 'y') {
+			global $filegallib; require_once 'lib/filegals/filegallib.php';
+			$filegallib->deleteBacklinks(array('type'=> 'wiki page', 'object'=> $page));
+		}
 		$this->remove_object('wiki page', $page);
 
 		$query = "delete from `tiki_user_watches` where `event`=? and `object`=?";
@@ -4885,6 +4889,9 @@ class TikiLib extends TikiDb_Bridge {
 			require_once('lib/search/refresh-functions.php');
 			refresh_index('pages', $name);
 		}
+
+		$this->syncParsedText($data, array('type'=> 'wiki page', 'object'=> $page, 'description'=> $description, 'name'=>$page, 'href'=>"tiki-index.php?page=$page"));
+
 		return true;
 	}
 
@@ -5224,7 +5231,22 @@ class TikiLib extends TikiDb_Bridge {
 
 		return $arguments;
 	}
-
+	// get all the plugins of a text- can be limitted only to some
+	function getPlugins($data, $only=null) {
+		$plugins = array();
+		for (; ;) {
+			$this->plugin_match($data, $plugin);
+			if (empty($plugin)) {
+				break;
+			}
+			if (empty($only) || in_array($plugin[1], $only) || in_array(strtoupper($plugin[1]), $only)) {
+				$plugins[] = $plugin;
+			}
+			$pos = strpos( $data, $plugin[0] );
+			$data = substr_replace($data, '', $pos, strlen($plugin[0]));
+			}
+		return $plugins;
+	}
 	// This recursive function handles pre- and no-parse sections and plugins
 	function parse_first(&$data, &$preparsed, &$noparsed, $options=null, $real_start_diff='0') {
 		global $dbTiki, $smarty, $tiki_p_edit, $prefs, $pluginskiplist;
@@ -7643,6 +7665,14 @@ class TikiLib extends TikiDb_Bridge {
 		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
 			require_once('lib/search/refresh-functions.php');
 			refresh_index('pages', $pageName);
+		}
+		$this->syncParsedText($edit_data, array('type'=>'wiki page', 'object'=>$pageName));
+	}
+	function syncParsedText($text, $context) {
+		global $prefs;
+		if ( $prefs['feature_file_galleries'] == 'y') {
+			global $filegallib; require_once 'lib/filegals/filegallib.php';
+			$filegallib->syncFileBacklinks($text, $context);
 		}
 	}
 

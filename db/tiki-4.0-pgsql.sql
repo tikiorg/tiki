@@ -4478,7 +4478,7 @@ CREATE TABLE IF NOT EXISTS "tiki_page_lists" (
   "page_name" varchar(160) NOT NULL,
   "score" float default NULL,
   PRIMARY KEY  ("list_type_id","page_name")
-) DEFAULT CHARSET=latin1;
+);
 
 
 DROP TABLE IF EXISTS "tiki_page_list_types";
@@ -4490,7 +4490,7 @@ CREATE TABLE IF NOT EXISTS "tiki_page_list_types" (
   "description" varchar(200) default NULL,
   PRIMARY KEY  ("name"),
   UNIQUE ("id")
-) DEFAULT CHARSET=latin1 ;
+) ;
 
 
 DROP TABLE IF EXISTS "tiki_auth_tokens";
@@ -4507,7 +4507,6 @@ CREATE TABLE "tiki_auth_tokens" (
 );
 CREATE INDEX "tiki_auth_tokens_tiki_auth_tokens_token" ON "tiki_auth_tokens" ("token");
 
--- --------------------------------------------------------
 
 DROP TABLE IF EXISTS "metrics_assigned";
 
@@ -4546,6 +4545,17 @@ CREATE TABLE "metrics_tab" (
 	PRIMARY KEY ("tab_id"),
 	UNIQUE ("tab_name")
 );
+
+
+DROP TABLE IF EXISTS "tiki_file_backlinks";
+
+CREATE TABLE "tiki_file_backlinks" (
+	   "fileId" bigint NOT NULL,
+	   "objectId" bigint NOT NULL
+);
+CREATE INDEX "tiki_file_backlinks_tiki_file_backlinks_objectId" ON "tiki_file_backlinks" ("objectId");
+CREATE INDEX "tiki_file_backlinks_tiki_file_backlinks_fileId" ON "tiki_file_backlinks" ("fileId");
+
 
 
 ;

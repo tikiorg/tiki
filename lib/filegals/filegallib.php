@@ -27,6 +27,7 @@ class FileGalLib extends TikiLib {
 			$savedir=$prefs['fgal_use_dir'];
 		}
 
+		$this->deleteBacklinks(null, $fileInfo['fileId']);
 		if ($fileInfo['path']) {
 			unlink ($savedir . $fileInfo['path']);
 		}
@@ -1080,6 +1081,87 @@ class FileGalLib extends TikiLib {
 			return false;
 		}
 		return true;			
-	} 
+	}
+	// update backlinks of an object
+	function replaceBacklinks($context, $fileIds=array()) {
+		global $objectlib; include_once('lib/objectlib.php');
+		$objectId = $objectlib->get_object_id($context['type'], $context['object']);
+		if (empty($objectId)) {
+			$objectId = $objectlib->add_object($context['type'], $context['object'], $context['description'], $context['name'], $context['href']);
+		}
+		$this->_replaceBacklinks($objectId, $fileIds);
+	}
+	function _replaceBacklinks($objectId, $fileIds=array()) {
+		$this->_deleteBacklinks($objectId);
+		$query = 'insert into `tiki_file_backlinks` (`objectId`, `fileId`) values(?,?)';
+		foreach ($fileIds as $fileId) {
+			$this->query($query, array((int)$objectId, (int)$fileId));
+		}
+	}
+	// delete backlinks associated to an object
+	function deleteBacklinks($context, $fileId=null) {
+		if (empty($fileId)) {
+			global $objectlib; include_once('lib/objectlib.php');
+			$objectId = $objectlib->get_object_id($context['type'], $context['object']);
+			if (!empty($objectId)) {
+				$this->_deleteBacklinks($objectId);
+			}
+		} else {
+			$this->_deleteBacklinks(null, $fileId);
+		}
+	}
+	function _deleteBacklinks($objectId, $fileId=null) {
+		if (empty($fileId)) {
+			$query = 'delete from `tiki_file_backlinks` where `objectId`=?';
+			$this->query($query, array((int)$objectId));
+		} else {
+			$query = 'delete from `tiki_file_backlinks` where `fileId`=?';
+			$this->query($query, array((int)$fileId));
+		}
+	}
+	// get the backlinks of an object
+	function getFileBacklinks($fileId) {
+		$query = 'select tob.* from `tiki_file_backlinks` tfb left join `tiki_objects` tob on (tob.`objectId`=tfb.`objectId`) where `fileId`=? ';
+		return $this->fetchAll($query, array((int)$fileId));
+	}
+	// sync the backlinks used by a text of an object
+	function syncFileBacklinks($data, $context) {
+		global $tikilib;
+		$fileIds = array();
+		$plugins = $tikilib->getPlugins($data, array('IMG', 'FILE'));
+		foreach ($plugins as $plugin) {
+			if (!empty($plugin['arguments']['fileId'])) {
+				$fileIds[] = $plugin['arguments']['fileId'];
+			}
+			if (!empty($plugin['arguments']['src']) && $fileId = $this->getLinkFileId($plugin['arguments']['src'])) {
+				$fileIds[] = $fileId;
+			}
+		}
+		if (preg_match_all('/\[(+*)\]/Umi', $data, $matches)) {
+			foreach ($matches as $match) {
+				if ($fileId = $this->getLinkFileId($match[1])) {
+					$fileIds[] = $fileId;
+				}
+			}
+		}
+		if (preg_match_all('/<a[^>]*href=(\'|\")?([^>*])/Umi', $data, $matches)) {
+			foreach ($matches as $match) {
+				if ($fileId = $this->getLinkFileId($match[2])) {
+					$fileIds[] = $fileId;
+				}
+			}
+		}
+		$fileIds = array_unique($fileIds);
+		$this->replaceBacklinks($context, $fileIds);
+		return $fileIds;
+	}
+	function getLinkFileId($url) {
+		if (preg_match('/^tiki-download_file.php\?.*fileId=([0-9]+)/', $url, $matches)) {
+			return $matches[1];
+		}
+		if (preg_match('/^(dl|preview|thumbnail|thumb||display)([0-9]+)/', $url, $matches)) {
+			return $matches[2];
+		}
+	}
 }
 $filegallib = new FileGalLib;

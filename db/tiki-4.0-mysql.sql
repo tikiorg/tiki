@@ -3465,7 +3465,7 @@ CREATE TABLE IF NOT EXISTS `tiki_page_lists` (
   `page_name` varchar(160) NOT NULL,
   `score` float default NULL,
   PRIMARY KEY  (`list_type_id`,`page_name`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_page_list_types`;
 CREATE TABLE IF NOT EXISTS `tiki_page_list_types` (
@@ -3475,7 +3475,7 @@ CREATE TABLE IF NOT EXISTS `tiki_page_list_types` (
   `description` varchar(200) default NULL,
   PRIMARY KEY  (`name`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_auth_tokens`;
 CREATE TABLE `tiki_auth_tokens` (
@@ -3489,7 +3489,6 @@ CREATE TABLE `tiki_auth_tokens` (
 	PRIMARY KEY( `tokenId` ),
 	KEY `tiki_auth_tokens_token` (`token`)
 );
--- --------------------------------------------------------
 
 DROP TABLE IF EXISTS `metrics_assigned`;
 CREATE TABLE `metrics_assigned` (
@@ -3523,4 +3522,13 @@ CREATE TABLE `metrics_tab` (
 	PRIMARY KEY (`tab_id`),
 	UNIQUE KEY `tab_name` (`tab_name`)
 );
+
+DROP TABLE IF EXISTS `tiki_file_backlinks`;
+CREATE TABLE `tiki_file_backlinks` (
+	   `fileId` int(14) NOT NULL,
+	   `objectId` int(12) NOT NULL,
+	   KEY `objectId` (`objectId`),
+	   KEY `fileId` (`fileId`)
+);
+
 

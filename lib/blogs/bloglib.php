@@ -156,6 +156,7 @@ class BlogLib extends TikiLib {
 			$query = "update `tiki_blogs` set `title`=? ,`description`=?,`user`=?,`public`=?,`lastModif`=?,`maxPosts`=?,`heading`=?,`use_title`=?,`use_find`=?,`allow_comments`=?,`show_avatar`=? where `blogId`=?";
 
 			$result = $this->query($query, array($title, $description, $user, $public, $this->now, $maxPosts, $heading, $use_title, $use_find, $allow_comments, $show_avatar, $blogId));
+			$this->syncParsedText($heading, array('type'=>'blog', 'object'=>$blogId));
 		} else {
 			$query = "insert into `tiki_blogs`(`created`,`lastModif`,`title`,`description`,`user`,`public`,`posts`,`maxPosts`,`hits`,`heading`,`use_title`,`use_find`,`allow_comments`,`show_avatar`) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
@@ -166,6 +167,7 @@ class BlogLib extends TikiLib {
 			if ($prefs['feature_score'] == 'y') {
 				$this->score_event($user, 'blog_new');
 			}
+			$this->syncParsedText($heading, array('type'=>'blog', 'object'=>$blogId, 'description'=>$description, 'name'=>$title, 'href'=>"tiki-view_blog.php?blogId=$blogId"));
 		}
 
 		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
@@ -420,6 +422,7 @@ class BlogLib extends TikiLib {
 			require_once('lib/search/refresh-functions.php');
 			refresh_index('blog_posts', $id);
 		}
+		$this->syncParsedText($data, array('type'=>'blog post', 'object'=>$id, 'description'=>substr($edit_data, 0, 200), 'name'=>$title, 'href'=>"tiki-view_blog_post.php?postId=$id"));
 
 		return $id;
 	}
@@ -527,6 +530,7 @@ class BlogLib extends TikiLib {
 			require_once('lib/search/refresh-functions.php');
 			refresh_index('blog_posts', $postId);
 		}
+		$this->syncParsedText($data, array('type'=>'blog post', 'object'=>$postId));
 	}
 
 	/**

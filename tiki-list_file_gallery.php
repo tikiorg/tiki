@@ -197,11 +197,20 @@ if (!empty($_REQUEST['remove'])) {
 			die;
 		}
 	}
+	$backlinks = $filegallib->getFileBacklinks($_REQUEST['remove']);
+	if (!empty($backlinks)) {
+		$prefs['feature_ticketlib2'] = 'y';
+	}
 	$area = 'delfile';
 	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 		key_check($area);
 		$filegallib->remove_file($info, $gal_info);
 	} else {
+		if (!empty($backlinks)) {
+			$smarty->assign_by_ref('backlinks', $backlinks);
+			$smarty->assign('file_backlinks_title', 'WARNING: The file is used in:');//get_strings tra('WARNING: The file is used in:')
+			$smarty->assign('confirm_detail', $smarty->fetch('file_backlinks.tpl'));
+		}
 		key_get($area, tra('Remove file: ') . (!empty($info['name']) ? $info['name'] . ' - ' : '') . $info['filename']);
 	}
 }
