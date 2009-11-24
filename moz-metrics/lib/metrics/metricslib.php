@@ -359,7 +359,7 @@ class MetricsLib extends TikiDb_Bridge {
 		return $res;
 	}
 	
-	function getMetricsData( $tab_info, $converted_range, $date_field = 'date_field' ) {
+	function getMetricsData( $tab_info, $range_type, $converted_range, $date_field = 'date_field' ) {
 		global $prefs, $tikilib;
 
 		$date_from = $converted_range['date_from'];

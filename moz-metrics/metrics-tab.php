@@ -82,7 +82,7 @@ if (!empty($converted_range['msg'])) {
 }
 
 $tab_info = $metricslib->getTabById($tab_id);
-$ret = $metricslib->getMetricsData( $tab_info, $converted_range, $date_field );
+$ret = $metricslib->getMetricsData( $tab_info, $range, $converted_range, $date_field );
 $tab_content = $tab_info['tab_content'];
 $m = $ret['data'];
 $m_id = $ret['ids'];
