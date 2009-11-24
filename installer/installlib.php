@@ -51,14 +51,18 @@ class Installer extends TikiDb_Bridge
 	function update() // {{{
 	{
 		if( ! $this->tableExists( 'tiki_schema' ) ) {
-			// DB not old enough to handle auto update
+			// DB too old to handle auto update
 
-			// If 1.9
-			if( ! $this->tableExists( 'tiki_minichat' ) ) {
-				$this->runFile( dirname(__FILE__) . '/../db/tiki_1.9to2.0.sql' );
+			if( file_exists( dirname(__FILE__) . '/../db/custom_upgrade.sql' ) ) {
+				$this->runFile( dirname(__FILE__) . '/../db/custom_upgrade.sql' );
+			} else {
+				// If 1.9
+				if( ! $this->tableExists( 'tiki_minichat' ) ) {
+					$this->runFile( dirname(__FILE__) . '/../db/tiki_1.9to2.0.sql' );
+				}
+
+				$this->runFile( dirname(__FILE__) . '/../db/tiki_2.0to3.0.sql' );
 			}
-
-			$this->runFile( dirname(__FILE__) . '/../db/tiki_2.0to3.0.sql' );
 		}
 
 		$TWV = new TWVersion;
