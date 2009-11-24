@@ -726,6 +726,42 @@ name="w_displayed_default" {if $prefs.w_displayed_default eq 'y'} checked="check
 </fieldset>  
 </div>
 		{/tab}
+		
+	{if $prefs.feature_morcego eq 'y'}
+		{tab name="{tr}Wiki 3D Browser Configuration{/tr}"}
+			<fieldset>
+				<legend>{tr}General{/tr}</legend>
+				{preference name=wiki_feature_3d}
+				{preference name=wiki_3d_autoload}
+				{preference name=wiki_3d_width}
+				{preference name=wiki_3d_height}
+			</fieldset>
+			<fieldset>
+				<legend>{tr}Graph appearance{/tr}</legend>
+				{preference name=wiki_3d_navigation_depth}
+				{preference name=wiki_3d_node_size}
+				{preference name=wiki_3d_text_size}
+				{preference name=wiki_3d_spring_size}
+				{preference name=wiki_3d_existing_page_color}
+				{preference name=wiki_3d_missing_page_color}
+			</fieldset>
+			<fieldset>
+				<legend>{tr}Camera settings{/tr}</legend>
+				{preference name=wiki_3d_adjust_camera}
+				{preference name=wiki_3d_camera_distance}
+				{preference name=wiki_3d_fov}
+				{preference name=wiki_3d_feed_animation_interval}
+			</fieldset>
+			<fieldset>
+				<legend>{tr}Physics engine{/tr}</legend>
+				{preference name=wiki_3d_friction_constant}
+				{preference name=wiki_3d_elastic_constant}
+				{preference name=wiki_3d_eletrostatic_constant}
+				{preference name=wiki_3d_node_mass}
+				{preference name=wiki_3d_node_charge}
+			</fieldset>
+		{/tab}
+	{/if}
 		{tab name="{tr}Screencasts{/tr}"}
 			{preference name=feature_wiki_screencasts}
 			{preference name=feature_wiki_screencasts_upload_type label="{tr}Upload Type{/tr}"}

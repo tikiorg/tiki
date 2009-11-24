@@ -100,6 +100,112 @@ function prefs_wiki_list() {
 			'type' => 'flag',
 			'hint' => 'Requires javascript',
 		),
+		'wiki_feature_3d' => array(
+			'name' => tra('Enable wiki 3D browser'),
+			'type' => 'flag',
+		),
+		'wiki_3d_autoload' => array(
+			'name' => tra('Load page on navigation'),
+			'type' => 'flag',
+		),
+		'wiki_3d_width' => array(
+			'name' => 'Browser width',
+			'type' => 'text',
+			'size' => '3',
+			'filter' => 'digits',
+		),
+		'wiki_3d_height' => array(
+			'name' => tra('Browser height'),
+			'type' => 'text',
+			'size' => '3',
+			'filter' => 'digits',
+		),
+		'wiki_3d_navigation_depth' => array(
+			'name' => tra('Navigation depth'),
+			'type' => 'text',
+			'size' => '3',
+			'filter' => 'digits',
+		),
+		'wiki_3d_node_size' => array(
+			'name' => tra('Node size'),
+			'type' => 'text',
+			'size' => '3',
+			'filter' => 'digits',
+		),
+		'wiki_3d_text_size' => array(
+			'name' => tra('Text size'),
+			'type' => 'text',
+			'size' => '3',
+			'filter' => 'digits',
+		),
+		'wiki_3d_spring_size' => array(
+			'name' => tra('Spring (connection) size'),
+			'type' => 'text',
+			'size' => '3',
+			'filter' => 'digits',
+		),
+		'wiki_3d_existing_page_color' => array(
+			'name' => tra('Existing page node color'),
+			'type' => 'text',
+			'size' => '8',
+			),
+		'wiki_3d_missing_page_color' => array(
+			'name' => tra('Missing page node color'),
+			'type' => 'text',
+			'size' => '8',
+		),
+		'wiki_3d_adjust_camera' => array(
+			'name' => tra('Camera distance adjusted relative to nearest node'),
+			'type' => 'flag',
+		),
+		'wiki_3d_camera_distance' => array(
+			'name' => tra('Camera distance'),
+			'type' => 'text',
+			'size' => '3',
+			'filter' => 'digits',
+		),
+		'wiki_3d_fov' => array(
+			'name' => tra('Field of view'),
+			'type' => 'text',
+			'size' => '3',
+			'filter' => 'digits',
+		),
+		'wiki_3d_feed_animation_interval' => array(
+			'name' => tra('Feed animation interval (milisecs)'),
+			'type' => 'text',
+			'size' => '3',
+			'filter' => 'digits',
+		),
+		'wiki_3d_friction_constant' => array(
+			'name' => tra('Friction constant'),
+			'type' => 'text',
+			'size' => '4',
+		),
+		'wiki_3d_elastic_constant' => array(
+			'name' => tra('Elastic constant'),
+			'type' => 'text',
+			'size' => '4',
+		),
+		'wiki_3d_eletrostatic_constant' => array(
+			'name' => tra('Eletrostatic constant'),
+			'type' => 'text',
+			'type' => 'text',
+			'size' => '5',
+		),
+		'wiki_3d_node_mass' => array(
+			'name' => tra('Node mass'),
+			'type' => 'text',
+			'type' => 'text',
+			'size' => '3',
+			'filter' => 'digits',
+		),
+		'wiki_3d_node_charge' => array(
+			'name' => tra('Node charge'),
+			'type' => 'text',
+			'type' => 'text',
+			'size' => '3',
+			'filter' => 'digits',
+		),
 	);
 }
 
