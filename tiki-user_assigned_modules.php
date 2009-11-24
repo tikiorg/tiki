@@ -9,23 +9,23 @@ require_once ('tiki-setup.php');
 if ($prefs['feature_ajax'] == "y") {
 	require_once ('lib/ajax/ajaxlib.php');
 }
+$access->check_feature( 'feature_modulecontrols' );
+$access->check_feature( 'user_assigned_modules' );
+
 include_once ('lib/usermodules/usermoduleslib.php');
+if (!$user) {
+	$smarty->assign('msg', tra("You must log in to use this feature"));
+	$smarty->display("error.tpl");
+	die;
+}
+
 if ($tiki_p_configure_modules != 'y') {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 	$smarty->display("error.tpl");
 	die;
 }
-if ($prefs['user_assigned_modules'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": user_assigned_modules");
-	$smarty->display("error.tpl");
-	die;
-}
-if (!$user) {
-	$smarty->assign('msg', tra("You must log in to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+
 if (isset($_REQUEST["recreate"])) {
 	check_ticket('user-modules');
 	$usermoduleslib->create_user_assigned_modules($user);
