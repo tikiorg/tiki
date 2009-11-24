@@ -35,10 +35,10 @@ table.normal td {
 	float: right;
 }
 
-#tabs .title {
+.jqtabs .title {
 	font-size: 25px;
 }
-#tabs {
+.jqtabs {
 	margin: 5px 20px;
 }
 
@@ -80,7 +80,7 @@ a {
 	background: url('img/icons2/arrow-down.gif') no-repeat top left;
 }
 
-#tabs #tab-add {
+.jqtabs #tab-add {
 	color: #b71d2f;
 }
 
@@ -121,5 +121,5 @@ a {
     padding-left: 2em;
 }
 #wrapper ul li {
-    list-style-type: disc !important;
+    list-style-type: none !important;
 }

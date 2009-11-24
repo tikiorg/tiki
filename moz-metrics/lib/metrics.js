@@ -35,60 +35,59 @@
  *
  * ***** END LICENSE BLOCK ***** */
 $jq(document).ready(function() {
-		// initiate tabs, creating separate 'add new' tab
-        $jq('#tabs').tabs({
-			select: function(event, ui) {
-				var url = $jq.data(ui.tab, 'load.tabs').toString();
-				if (url.indexOf('tiki-admin_metrics.php') > 0) {
-						location.href = $jq.data(ui.tab, 'load.tabs') + '#editcreatetab';
-						return false;
-				}
-		    }
+	// initiate tabs, creating separate 'add new' tab
+	$jq('.jqtabs').tabs({
+		select: function(event, ui) {
+			var url = $jq.data(ui.tab, 'load.tabs').toString();
+			if (url.indexOf('tiki-admin_metrics.php') != -1) {
+				location.href = $jq.data(ui.tab, 'load.tabs') + '#editcreatetab';
+				return false;
+			}
+		}
+	});
+	// force redraw on every tabshow, required for proper display of sparklines
+	$jq('.jqtabs').bind('tabsshow', function(event, ui) {
+		$jq('.inlinesparkline').sparkline('html', {width:'200px', height:'30px'});
+		$jq('.toggle-button').html('');
+		$jq('.metricbox').children('.toggle').hide();
+		$jq('.toggle-button').click (function() {
+			$jq(this).attr('class', 'toggle-button-off');
+			$jq(this).parents('.metricbox').children('.toggle').toggle();
+			if ($jq(this).parents('.metricbox').children('.toggle:visible').size()) {
+				$jq(this).attr('class', 'toggle-button toggle-button-off');
+			}
+			else {
+				$jq(this).attr('class', 'toggle-button');
+			}
 		});
-		// force redraw on every tabshow, required for proper display of sparklines
-        $jq('#tabs').bind('tabsshow', function(event, ui) {
-                $jq('.inlinesparkline').sparkline('html', {width:'200px', height:'30px'});
-                $jq('.toggle-button').html('');
-                $jq('.metricbox').children('.toggle').hide();
-                $jq('.toggle-button').click (function() {
-                        $jq(this).attr('class', 'toggle-button-off');
-                        $jq(this).parents('.metricbox').children('.toggle').toggle();
-                        if ($jq(this).parents('.metricbox').children('.toggle:visible').size()) {
-                                $jq(this).attr('class', 'toggle-button toggle-button-off');
-                        }
-                        else {
-                                $jq(this).attr('class', 'toggle-button');
-                        }
-                });
-        });
+	});
 
-		// show and hide the labels for date range fields as the option changes
-        $jq('#metrics-range-select').change(function() {
-                var sel = $jq("select option:selected").attr('value');
-                if (sel == 'lastweek') {
-                        $jq('#range-inputs').hide();
-                } else
-                if (sel == 'weekof') {
-                        $jq('#range-inputs').show();
-                        $jq('#range-inputs .range-custom-text').hide();
-                        $jq('#range-inputs .range-monthof-text').hide();
-                        $jq('#range-date-to').hide();
-                        $jq('#range-inputs .range-weekof-text').show();
-                } else
-                if (sel == 'monthof') {
-                        $jq('#range-inputs').show();
-                        $jq('#range-inputs .range-custom-text').hide();
-                        $jq('#range-inputs .range-weekof-text').hide();
-                        $jq('#range-date-to').hide();
-                        $jq('#range-inputs .range-monthof-text').show();
-                } else {
-                        //custom
-                        $jq('#range-inputs').show();
-                        $jq('#range-inputs .range-weekof-text').hide();
-                        $jq('#range-inputs .range-monthof-text').hide();
-                        $jq('#range-date-to').show();
-                        $jq('#range-inputs .range-custom-text').show();
-                }
-        });
-        $jq('#metrics-range-select').change();
+	// show and hide the labels for date range fields as the option changes
+	$jq('#metrics-range-select').change(function() {
+		var sel = $jq("select option:selected").attr('value');
+		if (sel == 'lastweek') {
+			$jq('#range-inputs').hide();
+		} else
+		if (sel == 'weekof') {
+			$jq('#range-inputs').show();
+			$jq('#range-inputs .range-custom-text').hide();
+			$jq('#range-inputs .range-monthof-text').hide();
+			$jq('#range-date-to').hide();
+			$jq('#range-inputs .range-weekof-text').show();
+		} else if (sel == 'monthof') {
+			$jq('#range-inputs').show();
+			$jq('#range-inputs .range-custom-text').hide();
+			$jq('#range-inputs .range-weekof-text').hide();
+			$jq('#range-date-to').hide();
+			$jq('#range-inputs .range-monthof-text').show();
+		} else {
+			//custom
+			$jq('#range-inputs').show();
+			$jq('#range-inputs .range-weekof-text').hide();
+			$jq('#range-inputs .range-monthof-text').hide();
+			$jq('#range-date-to').show();
+			$jq('#range-inputs .range-custom-text').show();
+		}
+	});
+	$jq('#metrics-range-select').change();
 });

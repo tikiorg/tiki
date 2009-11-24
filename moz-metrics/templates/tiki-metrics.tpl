@@ -35,12 +35,14 @@
 </div>
 <div class="page-content">
 	<!-- loop over tabs -->
-	<div id="tabs">
+	<div class="jqtabs">
 	<ul>
 		{foreach from=$tabs key=tabid item=tab}
 			<li><a title="tab-{$tabid}" href="metrics-tab.php?tab_id={$tabid}&date_from={$date_from}&date_to={$date_to}&range={$range}">{$tab.tab_name}</a></li>
 		{/foreach}
+		{if $tiki_p_admin eq 'y'}
 			<li><a title="tab-add" href="tiki-admin_metrics.php#editcreatetab">+</a></li>
+		{/if}
 	</ul>
 </div>
 

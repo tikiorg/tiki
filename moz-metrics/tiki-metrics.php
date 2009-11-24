@@ -45,6 +45,7 @@ $access->check_feature('feature_metrics_dashboard');
 
 $metricslib = new MetricsLib($dbTiki);
 // include JQueryUI and metrics css+js files
+//$headerlib->add_cssfile("lib/jquery/jquery-ui/themes/{$prefs['feature_jquery_ui_theme']}/ui.tabs.css");
 $headerlib->add_cssfile("styles/metrics.css");
 $headerlib->add_jsfile("lib/jquery/jquery.sparkline.min.js");
 $headerlib->add_jsfile("lib/jquery/jquery-ui/ui/ui.core.js");

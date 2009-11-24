@@ -1497,6 +1497,9 @@ function prefs_feature_list() {
 			'name' => tra('Metrics Dashboard'),
 			'description' => tra('Generate automated statistics from configured database queries.'),
 			'type' => 'flag',
+			'dependencies' => array(
+				'feature_jquery_ui',
+			),
 		),
 	);
 }
