@@ -187,3 +187,8 @@ foreach ( $sections as $sec => $dat ) {
 ksort($sections_enabled);
 $smarty->assign_by_ref('sections_enabled', $sections_enabled);
 if ( ! empty($section) ) $smarty->assign('section', $section);
+if ( ! empty($section_class) ) {
+	$smarty->assign('section_class', $section_class);
+}elseif ( ! empty($section) ) {
+	$smarty->assign('section_class', $section);
+}
