@@ -114,7 +114,7 @@ class TikiLib extends TikiDb_Bridge {
 	}
 
 	function get_db_by_name( $name ) {
-		if( $name == 'local' ) {
+		if( $name == 'local' || empty($name) ) {
 			return TikiDb::get();
 		} else {
 			static $connectionMap = array();

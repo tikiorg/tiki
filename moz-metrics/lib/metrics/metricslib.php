@@ -398,15 +398,17 @@ class MetricsLib extends TikiDb_Bridge {
 				$q = str_replace('$range_groupby$', $range_groupby, $q);
 			}
 			
-			$temp_result = $this->fetchAll( $q );
-			$m[$n]['result'] = $temp_result;
-			$m[$n]['range'] = $metric['metric_range'];
-			$m[$n]['range_id'] = $metric['metric_range_id'];
-			$m[$n]['datatype'] = $metric['metric_datatype'];
-			$m[$n]['datatype_id'] = $metric['metric_datatype_id'];
-			$m_id[$metric_id] = $m[$n];
-			$m[$n]['metric_id'] = $metric_id;
-			$m_id[$metric_id]['metric_name'] = $n;
+			if( $db = $tikilib->get_db_by_name( $metric['metric_dsn'] ) ) {
+				$temp_result = $db->fetchAll( $q );
+				$m[$n]['result'] = $temp_result;
+				$m[$n]['range'] = $metric['metric_range'];
+				$m[$n]['range_id'] = $metric['metric_range_id'];
+				$m[$n]['datatype'] = $metric['metric_datatype'];
+				$m[$n]['datatype_id'] = $metric['metric_datatype_id'];
+				$m_id[$metric_id] = $m[$n];
+				$m[$n]['metric_id'] = $metric_id;
+				$m_id[$metric_id]['metric_name'] = $n;
+			}
 		}
 
 		return array(
