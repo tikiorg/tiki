@@ -53,9 +53,9 @@ $headerlib->add_jsfile("lib/metrics.js");
 
 $tabs = $metricslib->getAllTabs();
 
-$range = $_REQUEST['range'];
-$date_from = $_REQUEST['date_from'];
-$date_to = $_REQUEST['date_to'];
+$range = isset( $_REQUEST['range'] ) ? $_REQUEST['range'] : null;
+$date_from = isset( $_REQUEST['date_from'] ) ? $_REQUEST['date_from'] : null;
+$date_to = isset( $_REQUEST['date_to'] ) ? $_REQUEST['date_to'] : null;
 $converted_range = convert_date_range($range, $date_from, $date_to);
 if (!empty($converted_range['msg'])) {
 	$smarty->assign('msg', $converted_range['msg']);

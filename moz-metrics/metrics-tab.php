@@ -45,8 +45,8 @@ $access->check_feature('feature_metrics_dashboard');
 
 require_once("lib/metrics/metricslib.php");
 require_once("lib/metrics/input-validation.php");
-$metricslibDW = new MetricsLib($metricsdb, false);
-$metricslib = new MetricsLib($dbTiki);
+$metricslib = new MetricsLib;
+
 $tab_id = $_REQUEST['tab_id'];
 $range = $_REQUEST['range'];
 $date_from = $_REQUEST['date_from'];
@@ -70,60 +70,22 @@ else {
 	$date_field = preg_replace('/[`\/\\\<>"\']/','', $date_field);
 	$date_field = substr($date_field, 0, COLUMN_MAXLEN);
 }
+if (!is_numeric($tab_id)) {
+	print tra("ERROR: Invalid tab_id received. Numeric format expected, got $tab_id.");
+	die;
+}
+
 $converted_range = convert_date_range($range, $date_from, $date_to, $date_field);
 if (!empty($converted_range['msg'])) {
 	print tra('ERROR: ') . $converted_range['msg'];
 	die;
 }
-$date_from = $converted_range['date_from'];
-$date_to = $converted_range['date_to'];
-$range_group = $converted_range['range_group'];
-$timeperiod = $converted_range['timeperiod'];
-if (!is_numeric($tab_id)) {
-	print tra("ERROR: Invalid tab_id received. Numeric format expected, got $tab_id.");
-	die;
-}
-//build the date range
-//handle pastresults
-if ($prefs['metrics_pastresults'] == 'y') {
-	$date_from_past = date(DEFAULT_DATE_FORMAT, strtotime("-" . $prefs['metrics_pastresults_count'] . ' '
-			. $timeperiod, strtotime($date_from)));
-}
-$date_range = "(`$date_field` >= '$date_from_past' AND `$date_field` <= '$date_to')";
+
 $tab_info = $metricslib->getTabById($tab_id);
+$ret = $metricslib->getMetricsData( $tab_info, $converted_range, $date_field );
 $tab_content = $tab_info['tab_content'];
-
-//get assigned metrics
-$metrics = $metricslib->getAssignedMetricsByTabId($tab_id);
-
-$m = array();
-$m_id = array();
-//main part of this file, runs the SQL queries for assigned metrics
-foreach ($metrics as $metric_id => $metric) {
-	//skip metrics that shouldn't show up for different ranges
-	if (($range == 'custom') && ($metric['metric_range_id'] == '@'))
-		continue;
-	if (($range == 'custom' || $range == 'monthof') && ($metric['metric_range_id'] == '-'))
-		continue;
-	$n = $metric['metric_name'];
-	$q = $metric['metric_query'];
-	if (strpos($q, '$date_range$')) {
-		$q = str_replace('$date_range$', $date_range, $q);
-		$range_groupby = strpos($q, 'GROUP BY') == FALSE ? 'GROUP BY ' : '';
-		$range_groupby .= $range_group;
-		$q = str_replace('$range_groupby$', $range_groupby, $q);
-	}
-	
-	$temp_result = getMany($q, $metricslibDW);
-	$m[$n]['result'] = $temp_result;
-	$m[$n]['range'] = $metric['metric_range'];
-	$m[$n]['range_id'] = $metric['metric_range_id'];
-	$m[$n]['datatype'] = $metric['metric_datatype'];
-	$m[$n]['datatype_id'] = $metric['metric_datatype_id'];
-	$m_id[$metric_id] = $m[$n];
-	$m[$n]['metric_id'] = $metric_id;
-	$m_id[$metric_id]['metric_name'] = $n;
-}
+$m = $ret['data'];
+$m_id = $ret['ids'];
 
 if (empty($m) || (count($m) > 0)) {
 	$metrics_notify .= $tikilib->parse_data('{content label=MetricsEmpty}', 0);
@@ -136,14 +98,4 @@ $smarty->assign_by_ref('m', $m);
 $smarty->assign_by_ref('m_id', $m_id);
 $smarty->assign_by_ref('mid', $tab_content);
 $smarty->display("metrics-tab.tpl");
-
-function getMany($query, $metricslibDW) {
-	$result = $metricslibDW->query($query,array());
-	$ret = array();
-	while ($res = $result->fetchRow()) {
-		$ret[] = $res;
-	}
-
-	return $ret;
-}
 

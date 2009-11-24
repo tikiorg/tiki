@@ -358,7 +358,62 @@ class MetricsLib extends TikiDb_Bridge {
 		$res['metric_datatype'] = $AR_DATATYPE[$res['metric_datatype']];
 		return $res;
 	}
+	
+	function getMetricsData( $tab_info, $converted_range, $date_field = 'date_field' ) {
+		global $prefs, $tikilib;
 
+		$date_from = $converted_range['date_from'];
+		$date_to = $converted_range['date_to'];
+		$range_group = $converted_range['range_group'];
+		$timeperiod = $converted_range['timeperiod'];
+
+		//build the date range
+		//handle pastresults
+		if ($prefs['metrics_pastresults'] == 'y') {
+			$date_from_past = date(DEFAULT_DATE_FORMAT, strtotime("-" . $prefs['metrics_pastresults_count'] . ' '
+					. $timeperiod, strtotime($date_from)));
+			$date_range = "(`$date_field` >= '$date_from_past' AND `$date_field` <= '$date_to')";
+		} else {
+			$date_range = "(`$date_field` <= '$date_to')";
+		}
+
+		//get assigned metrics
+		$metrics = $this->getAssignedMetricsByTabId( $tab_info['tab_id'] );
+
+		$m = array();
+		$m_id = array();
+		//main part of this file, runs the SQL queries for assigned metrics
+		foreach ($metrics as $metric_id => $metric) {
+			//skip metrics that shouldn't show up for different ranges
+			if (($range_type == 'custom') && ($metric['metric_range_id'] == '@'))
+				continue;
+			if (($range_type == 'custom' || $range_type == 'monthof') && ($metric['metric_range_id'] == '-'))
+				continue;
+			$n = $metric['metric_name'];
+			$q = $metric['metric_query'];
+			if (strpos($q, '$date_range$')) {
+				$q = str_replace('$date_range$', $date_range, $q);
+				$range_groupby = strpos($q, 'GROUP BY') == FALSE ? 'GROUP BY ' : '';
+				$range_groupby .= $range_group;
+				$q = str_replace('$range_groupby$', $range_groupby, $q);
+			}
+			
+			$temp_result = $this->fetchAll( $q );
+			$m[$n]['result'] = $temp_result;
+			$m[$n]['range'] = $metric['metric_range'];
+			$m[$n]['range_id'] = $metric['metric_range_id'];
+			$m[$n]['datatype'] = $metric['metric_datatype'];
+			$m[$n]['datatype_id'] = $metric['metric_datatype_id'];
+			$m_id[$metric_id] = $m[$n];
+			$m[$n]['metric_id'] = $metric_id;
+			$m_id[$metric_id]['metric_name'] = $n;
+		}
+
+		return array(
+			'ids' => $m_id,
+			'data' => $m,
+		);
+	}
 }
 /* Editor configuration
 Local Variables:
