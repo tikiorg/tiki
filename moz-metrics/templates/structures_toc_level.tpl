@@ -1,1 +1,0 @@
-<li class="toclevel"><a href="{sefurl page=$that.pageName structure=$structurePageName page_ref_id=$that.page_ref_id}" class="link">{$that.pageName}</a>{if $showdesc}{$that.description}{/if}</li>{if $that.sub}<ul>{section name=xitem loop=$that.sub}{include file='structures_toc_level.tpl' that=$that.sub[xitem]}{/section}</ul>{/if}
