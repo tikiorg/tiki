@@ -6303,7 +6303,7 @@ class TikiLib extends TikiDb_Bridge {
 		}
 
 		// definitively put out the protected words ))protectedWord((
-		preg_match_all("/\)\)(\S*?)\(\(/", $data, $matches);
+		preg_match_all("/\)\)(\S+?)\(\(/", $data, $matches);
 		$noParseWikiLinksK = array();
 		$noParseWikiLinksT = array();
 		foreach ($matches[0] as $mi=>$match) {
