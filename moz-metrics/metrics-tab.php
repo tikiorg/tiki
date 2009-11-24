@@ -87,12 +87,6 @@ $tab_content = $tab_info['tab_content'];
 $m = $ret['data'];
 $m_id = $ret['ids'];
 
-if (empty($m) || (count($m) > 0)) {
-	$metrics_notify .= $tikilib->parse_data('{content label=MetricsEmpty}', 0);
-	if (strpos($metrics_notify, '{content label=MetricsEmpty}')) $metrics_notify = '';
-	print $metrics_notify;
-}
-
 //assign tab content
 $smarty->assign_by_ref('m', $m);
 $smarty->assign_by_ref('m_id', $m_id);
