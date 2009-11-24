@@ -5519,6 +5519,9 @@ class TikiLib extends TikiDb_Bridge {
 							default: value to use if missing
 							encoding: none|html|url - default to none
 		*/
+		if (empty($name)) {
+			return;
+		}
 
 		$name = strtolower( $name );
 		$data['plugin_name'] = $name;
