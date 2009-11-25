@@ -260,11 +260,13 @@ class NlLib extends TikiLib {
 			$add = $userlib->get_user_email($add);
 			$isUser="n";
 		}
-		$query = "select * from `tiki_newsletter_subscriptions` where `nlId`=? and `email`=? and `isUser`=? and `valid`=?";
-		$result = $this->query($query,array((int)$nlId,$add,$isUser, 'y'));
+		$query = "select * from `tiki_newsletter_subscriptions` where `nlId`=? and `email`=? and `isUser`=?";
+		$result = $this->query($query,array((int)$nlId,$add,$isUser));
 		if ($res = $result->fetchRow()) {
-			return false; /* already subscribed and valid - keep the same valid status */
+			if ($res['valid'] == 'y') {
+				return false; /* already subscribed and valid - keep the same valid status */
 			}
+		}
 		$code = $this->genRandomString($add);
 		$info = $this->get_newsletter($nlId);
 		if ($info["validateAddr"] == 'y' && $validateAddr != 'n') {
@@ -278,8 +280,15 @@ class NlLib extends TikiLib {
 			$foo = parse_url($_SERVER["REQUEST_URI"]);
 			$foopath = preg_replace('/tiki-admin_newsletter_subscriptions.php/', 'tiki-newsletters.php', $foo["path"]);
 			$url_subscribe = $tikilib->httpPrefix(). $foopath;
-			$query = "insert into `tiki_newsletter_subscriptions`(`nlId`,`email`,`code`,`valid`,`subscribed`,`isUser`,`included`) values(?,?,?,?,?,?,?)";
-			$result = $this->query($query,array((int)$nlId,$add,$code,'n',(int)$this->now,$isUser,'n'));
+			if (empty($res)) {
+				$query = "insert into `tiki_newsletter_subscriptions`(`nlId`,`email`,`code`,`valid`,`subscribed`,`isUser`,`included`) values(?,?,?,?,?,?,?)";
+				$bindvars = array((int)$nlId,$add,$code,'n',(int)$this->now,$isUser,'n');
+			} else {
+				// if already sub'ed but not validated then update code and timestamp (a.k.a. `subscribed`) and resend mail
+				$query = "UPDATE `tiki_newsletter_subscriptions` SET `code`=?,`subscribed`=? WHERE `nlId`=? AND `email`=? AND `isUser`=? AND `valid`='n' AND `included`='n'";
+				$bindvars = array($code,(int)$this->now,(int)$nlId,$add,$isUser);
+			}
+			$result = $this->query($query, $bindvars);
 			// Now send an email to the address with the confirmation instructions
 			$smarty->assign('info', $info);
 			$smarty->assign('mail_date', $this->now);
