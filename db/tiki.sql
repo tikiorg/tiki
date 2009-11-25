@@ -1563,6 +1563,7 @@ CREATE TABLE `tiki_pages` (
   `created` int(14),
   `wysiwyg` char(1) default NULL,
   `wiki_authors_style` varchar(20) default '',
+  `comments_enabled` char(1) default NULL,
   PRIMARY KEY (`page_id`),
   UNIQUE KEY `pageName` (`pageName`),
   KEY `data` (`data`(255)),

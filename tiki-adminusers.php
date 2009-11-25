@@ -190,7 +190,7 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 				$send_validation_email = true;
 				$apass = addslashes(md5($tikilib->genPass()));
 			}
-			if ($userlib->add_user($_REQUEST["name"], ($send_validation_email ? $apass : $_REQUEST["pass"]) , $_REQUEST["email"], ($send_validation_email ? $_REQUEST["pass"] : '' ), $pass_first_login, NULL, NULL, ($send_validation_email?'u':NULL))) {
+			if ($userlib->add_user($_REQUEST["name"], $_REQUEST['pass'] , $_REQUEST["email"], '', $pass_first_login, $apass, NULL, ($send_validation_email?'u':NULL))) {
 				$tikifeedback[] = array(
 					'num' => 0,
 					'mes' => sprintf(tra("New %s created with %s %s.") , tra("user") , tra("username") , $_REQUEST["name"])

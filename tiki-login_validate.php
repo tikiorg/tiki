@@ -23,9 +23,6 @@ if (isset($_REQUEST["user"])) {
 		if (!$isvalid) {
 			list($isvalid, $_REQUEST["user"], $error) = $userlib->validate_user($_REQUEST["user"], $_REQUEST["pass"], '', '', true);
 			$_SESSION['last_validation'] = $isvalid ? array('user' => $_REQUEST["user"], 'actpass' => $_REQUEST["pass"]) : null;
-			if ($isvalid) {
-				$userlib->change_user_waiting($_REQUEST['user'], NULL);
-			}
 		}
 	} else {
 		$error = PASSWORD_INCORRECT;
@@ -33,6 +30,7 @@ if (isset($_REQUEST["user"])) {
 } else {
 	$error = USER_NOT_FOUND;
 }
+
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 if ($isvalid) {
@@ -55,12 +53,9 @@ if ($isvalid) {
 		$mail->setText($smarty->fetch('mail/moderate_activation_mail.tpl'));
 		$mail->setSubject($smarty->fetch('mail/moderate_activation_mail_subject.tpl'));
 		$mail->send(array($email));
-		$userlib->change_user_waiting($_REQUEST['user'], NULL);
 		$logslib->add_log('register', 'validated account ' . $_REQUEST['user']);
 	} elseif (empty($user)) {
-		if (!empty($info['provpass'])) {
-			$userlib->confirm_user($_REQUEST['user']);
-		}
+		$userlib->confirm_user($_REQUEST['user']);
 		if ($info['pass_confirm'] == 0) {
 			if (!empty($info['provpass'])) {
 				$_SESSION['last_validation']['pass'] = $info['provpass'];

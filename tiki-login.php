@@ -305,7 +305,9 @@ if ($isvalid) {
 			if (($nb_bad_logins = $userlib->unsuccessful_logins($user)) >= $prefs['unsuccessful_logins']) {
 				$msg = sprintf(tra('More than %d unsuccessful login attempts have been made.'), $prefs['unsuccessful_logins']);
 				$smarty->assign('msg', $msg);
-				if ($userlib->send_confirm_email($user, 'unsuccessful_logins')) $smarty->assign('msg', $msg . ' ' . tra('An email has been sent to you with the instructions to follow.'));
+				if ($userlib->send_confirm_email($user, 'unsuccessful_logins')) {
+					$smarty->assign('msg', $msg . ' ' . tra('An email has been sent to you with the instructions to follow.'));
+				}
 				$smarty->assign('user', '');
 				unset($user);
 				$show_history_back_link = 'y';

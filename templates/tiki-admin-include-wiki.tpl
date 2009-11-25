@@ -96,6 +96,7 @@
 				{preference name=wiki_comments_notitle}
 				{preference name=wiki_comments_per_page}
 				{preference name=wiki_comments_default_ordering}
+			    {preference name=wiki_comments_allow_per_page}
 
 			</div>
 
