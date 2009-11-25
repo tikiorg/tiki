@@ -2168,7 +2168,7 @@ function get_included_groups($group, $recur=true) {
 		global $prefs,$cachelib, $tikilib;
 
 		$query = "update `users_users` set valid=?, `waiting`=? where `login`=?";
-		$result = $this->query($query, array('u', md2($tikilib->genPass(), $user)));
+		$result = $this->query($query, array(md5($tikilib->genPass()), 'u', $user));
 		$cachelib->invalidate('userslist');
 	}
 
