@@ -45,9 +45,15 @@ if ($user == '' and $prefs['contact_anon'] == 'y') {
 		$message = '';
 		// Validation:
 		// must have a subject or body non-empty (or both)
-		if (empty($_REQUEST['subject']) && empty($_REQUEST['body'])) {
-			$smarty->assign('message', tra('ERROR: you must include a subject or a message at least'));
+		if (empty($_REQUEST['subject']) && empty($_REQUEST['body']) || empty($_REQUEST['from'])) {
+			$smarty->assign('message', tra('ERROR: you must include a subject or a message. You must also make sure to have a valid e-mail in the FROM field'));
 			$smarty->assign('priority', $_REQUEST['priority']);
+			
+			if (!empty($_REQUEST['from'])) $smarty->assign_by_ref('from', $_REQUEST['from']);
+			if (!empty($_REQUEST['subject'])) $smarty->assign_by_ref('subject', $_REQUEST['subject']);
+			if (!empty($_REQUEST['body'])) $smarty->assign_by_ref('body', $_REQUEST['body']);
+			if (!empty($_REQUEST['priority'])) $smarty->assign_by_ref('priority', $_REQUEST['priority']);
+			
 			$smarty->display("tiki.tpl");
 			die;
 		}
@@ -55,6 +61,7 @@ if ($user == '' and $prefs['contact_anon'] == 'y') {
 			if((!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
 				$smarty->assign('message',tra("You have mistyped the anti-bot verification code; please try again."));
 				$smarty->assign('errortype', 'no_redirect_login');
+				if (!empty($_REQUEST['from'])) $smarty->assign_by_ref('from', $_REQUEST['from']);
 				if (!empty($_REQUEST['subject'])) $smarty->assign_by_ref('subject', $_REQUEST['subject']);
 				if (!empty($_REQUEST['body'])) $smarty->assign_by_ref('body', $_REQUEST['body']);
 				if (!empty($_REQUEST['priority'])) $smarty->assign_by_ref('priority', $_REQUEST['priority']);
