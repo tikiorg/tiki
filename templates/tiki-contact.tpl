@@ -22,9 +22,7 @@
 					</td>
 				</tr>
 
-				{if $prefs.feature_antibot eq 'y' && $user eq ''}
-					{include file='antibot.tpl' td_style="form"}
-				{/if}
+				
 				{if $user eq ''}
 				<tr>
 					<td class="form">{tr}From{/tr}:</td>
@@ -45,6 +43,9 @@
 						{textarea rows="20" name="body" cols="80" _enlarge="y"}{$body}{/textarea}
 					</td>
 				</tr>
+				{if $prefs.feature_antibot eq 'y' && $user eq ''}
+					{include file='antibot.tpl' td_style="form"}
+				{/if}
 				<tr>
 					<td class="form"></td>
 					<td class="form">
