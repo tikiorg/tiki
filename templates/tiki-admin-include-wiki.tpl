@@ -167,6 +167,7 @@ name="wiki_comments_displayed_default" {if $prefs.wiki_comments_displayed_defaul
     <option value="points_desc" {if $prefs.wiki_comments_default_ordering eq 'points_desc'}selected="selected"{/if}>{tr}Points{/tr}</option>
     </select>
     </div>
+    {preference name=wiki_comments_allow_per_page}
 	</div>
 </div>
 

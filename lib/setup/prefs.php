@@ -111,6 +111,7 @@ function get_default_prefs() {
 		'wiki_comments_default_ordering' => 'points_desc',
 		'wiki_comments_displayed_default' => 'n',
 		'wiki_comments_per_page' => 10,
+		'wiki_comments_allow_per_page' => 'n',
 		'wiki_creator_admin' => 'n',
 		'wiki_feature_copyrights' => 'n',
 		'wiki_forum_id' => '',

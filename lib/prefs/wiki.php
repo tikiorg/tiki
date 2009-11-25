@@ -87,6 +87,16 @@ function prefs_wiki_list() {
 				7200 => '2 ' . tra('hours'),
 			),
 		),
+		'wiki_comments_allow_per_page' => array(
+			'name' => tra('Allow comments per page'),
+			'description' => tra('Enable control for comments on wiki pages individually.'),
+			'type' => 'list',
+			'options' => array(
+				'n' => tra('Disable'),
+				'y' => tra('Enable (default On)'),
+				'o' => tra('Enable (default Off)'),
+			),
+		),
 		'wiki_feature_copyrights' => array(
 			'name' => tra('Wiki'),
 			'type' => 'flag',
