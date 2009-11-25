@@ -40,7 +40,7 @@
 				<tr>
 					<td class="form">{tr}Message{/tr}:</td>
 					<td class="form">
-						{textarea rows="20" name="body" cols="80" _enlarge="y"}{$body}{/textarea}
+						{textarea rows="20" name="body" cols="80" simple='y'}{$body}{/textarea}
 					</td>
 				</tr>
 				{if $prefs.feature_antibot eq 'y' && $user eq ''}

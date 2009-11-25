@@ -30,6 +30,8 @@ if ($prefs['contact_anon'] != 'y' && !$user) {
 	die;
 }
 
+$auto_query_args = array();
+
 $smarty->assign('mid', 'tiki-contact.tpl');
 
 $email = $userlib->get_user_email($prefs['contact_user']);
