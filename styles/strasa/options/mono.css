@@ -489,7 +489,7 @@ div.cbox {
 
 .cbox-title {
 	color: #ebebeb;
-	background: #666;
+	background: #999;
 }
 
 .cbox-title a:link,
@@ -564,6 +564,16 @@ th a:visited,
 td.heading a:link,
 td.heading a:visited {
 	color: #ebebeb;
+}
+
+.tiki_mytiki .cbox-data th {
+	color: #888;
+	background: #eee;
+}
+
+.tiki_mytiki .cbox-data th a:link,
+.tiki_mytiki .cbox-data th a:visited {
+	color: #666;
 }
 
 a.tablename,

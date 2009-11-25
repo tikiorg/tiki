@@ -542,6 +542,16 @@ td.heading a:visited {
 	color: #000;
 }
 
+.tiki_mytiki .cbox-data th {
+	color: #99c1dc;
+	background: #fff;
+}
+
+.tiki_mytiki .cbox-data th a:link,
+.tiki_mytiki .cbox-data th a:visited {
+	color: #619db8;
+}
+
 a.tablename,
 a.galname,
 a.imagename,
