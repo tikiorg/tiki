@@ -930,25 +930,26 @@ class UsersLib extends TikiLib {
 
 	// next verify the password with every hashes methods
 	if ($prefs['feature_challenge'] == 'n' || empty($response)) {
+		if (!empty($res['valid']) && $pass == $res['valid']) // used for validation of user account before activation
+			return array(USER_VALID, $user);
+
+		if ($res['waiting'] == 'u')
+			return array(ACCOUNT_WAITING_USER, $user);
+		if ($res['waiting'] == 'a')
+			return array(ACCOUNT_DISABLED, $user);
+
 	    if ($res['hash'] == md5($user.$pass.trim($res['email']))) // very old method md5(user.pass.email), for compatibility
- 		return array(USER_VALID, $user);
+			return array(USER_VALID, $user);
 
 	    if ($res['hash'] == md5($user.$pass)) // old method md5(user.pass), for compatibility
-		return array(USER_VALID, $user);
+			return array(USER_VALID, $user);
 
 	    if ($res['hash'] == md5($pass)) // normal method md5(pass)
-		return array(USER_VALID, $user);
+			return array(USER_VALID, $user);
 
 	    if ($this->hash_pass($pass, $res['hash']) == $res['hash']) // new method (crypt-md5) and tikihash method (md5(pass))
-		return array(USER_VALID, $user);
+			return array(USER_VALID, $user);
 
-		if ($res['valid'] > '' && $pass == $res['valid']) // used for validation of user account before activation
-		return array(USER_VALID, $user);
-
-		if (!empty($res['valid']) && $res['waiting'] == 'u')
-			return array(ACCOUNT_WAITING_USER, $user);
-		if (!empty($res['valid']))
-			return array(ACCOUNT_DISABLED, $user);
 	    return array(PASSWORD_INCORRECT, $user);
 	} else {
 	    // Use challenge-reponse method
@@ -2159,27 +2160,15 @@ function get_included_groups($group, $recur=true) {
 	function confirm_user($user) {
 		global $prefs,$cachelib;
 
-		$query = "select `provpass`, `login` from `users_users` where `login`=?";
-		$result = $this->query($query, array($user));
-		$res = $result->fetchRow();
-		$hash = $this->hash_pass($res['provpass']);
-		$provpass = $res["provpass"];
+		$query = "update `users_users` set `provpass`=?, valid=?, `email_confirm`=?, `waiting`=? where `login`=?";
+		$result = $this->query($query, array('', NULL, $this->now, NULL, $user));
+		$cachelib->invalidate('userslist');
+	}
+	function invalidate_account($user) {
+		global $prefs,$cachelib, $tikilib;
 
-		if ($prefs['feature_clear_passwords'] == 'n') {
-			$provpass = '';
-		}
-
-		$query = "update `users_users` set `password`=? ,`hash`=? ,`provpass`=?, valid=?, `email_confirm`=?, `waiting`=?, `registrationDate`=? where `login`=?";
-		$result = $this->query($query, array(
-				$provpass,
-				$hash,
-				'',
-				NULL,
-				$this->now,
-				NULL,
-				$this->now,
-				$user
-				));
+		$query = "update `users_users` set valid=?, `waiting`=? where `login`=?";
+		$result = $this->query($query, array('u', md2($tikilib->genPass(), $user));
 		$cachelib->invalidate('userslist');
 	}
 
@@ -2874,7 +2863,7 @@ function get_included_groups($group, $recur=true) {
 				$smarty->assign('msg', tra("The registration mail can't be sent. Contact the administrator"));
 				return false;
 			}
-		} elseif ($prefs['validateRegistration'] == 'y') {
+		} elseif ($prefs['validateRegistration'] == 'y' && empty($pass)) {
 			if (!empty($chosenGroup)) {
 				$smarty->assign_by_ref('chosenGroup', $chosenGroup);
 				if ($prefs['userTracker'] == 'y') {
@@ -2914,7 +2903,7 @@ function get_included_groups($group, $recur=true) {
 					$smarty->assign('msg', tra('The administrator has not yet validated your account. Please wait.'));
 				}
 			}
-		} elseif ($prefs['validateUsers'] == 'y') {
+		} elseif ($prefs['validateUsers'] == 'y' || !empty($pass)) {
 			if ( $mailTemplate == '' ) $mailTemplate = 'user_validation_mail';
 			$smarty->assign('mail_pass', $pass);
 			$mail_data = $smarty->fetch("mail/$mailTemplate.tpl");
