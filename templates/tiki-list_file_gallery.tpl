@@ -67,6 +67,9 @@
   {if $tiki_p_create_file_galleries eq 'y' and $edit_mode ne 'y'}
     {button _text="{tr}Create a File Gallery{/tr}" href="?edit_mode=1&amp;parentId=$galleryId"}
   {/if}
+  {if $tiki_p_create_file_galleries eq 'y' and $dup_mode ne 'y'}
+    {button _text="{tr}Duplicate File Gallery{/tr}" dup_mode=1 galleryId=$galleryId}
+  {/if}
   
   {if $tiki_p_admin_file_galleries eq 'y' or $user eq $gal_info.user}
     {if $edit_mode eq 'y' or $dup_mode eq 'y'}
@@ -105,9 +108,6 @@
   {/if}
   {if $tiki_p_create_file_galleries eq 'y' and $edit_mode ne 'y'}
     {button _text="{tr}Create a File Gallery{/tr}" href="?edit_mode=1&amp;parentId=-1&amp;galleryId=0"}
-  {/if}
-  {if $tiki_p_create_file_galleries eq 'y' and $dup_mode ne 'y'}
-    {button _text="{tr}Duplicate File Gallery{/tr}" href="?dup_mode=1" _auto_args='filegals_manager'}
   {/if}
   {if $tiki_p_upload_files eq 'y'}
   	  {button _text="{tr}Upload File{/tr}" href="tiki-upload_file.php"}

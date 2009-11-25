@@ -5,6 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id: /cvsroot/tikiwiki/tiki/tiki-removepage.php,v 1.19 2007-10-12 07:55:32 nyloth Exp $
 $section = 'wiki page';
+$section_class = "admin $section";	// This will be body class instead of $section
 require_once ('tiki-setup.php');
 include_once ('lib/wiki/histlib.php');
 include_once ('lib/wiki/wikilib.php');

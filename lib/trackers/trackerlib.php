@@ -183,7 +183,7 @@ class TrackerLib extends TikiLib {
 		if ($path) @unlink ($prefs['t_use_dir'] . $path);
 		$query = "delete from `tiki_tracker_item_attachments` where `attId`=?";
 		$result = $this->query($query,array((int) $attId));
-		$query = 'update `tiki_tracker_item_fields` ttif left join `tiki_tracker_fields` ttf using (`fieldId`) set `value`="" where ttif.`value`=? and ttf.`type`=?';
+		$query = 'update `tiki_tracker_item_fields` ttif left join `tiki_tracker_fields` ttf using (`fieldId`) set `value`=\'\' where ttif.`value`=? and ttf.`type`=?';
 		$this->query($query, array((int)$attId, 'A'));
 	}
 

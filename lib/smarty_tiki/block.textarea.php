@@ -11,7 +11,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *
  * special params:
  *    _toolbars: if set to 'y', display toolbars above the textarea
- *    _enlarge: if set to 'y', display the enlarge buttons above the textarea
+ *    previewConfirmExit: if set to 'n' doesn't warn about lost edits after preview
+ *    simple: if set to 'y' does no wysiwyg, auto_save, lost edit warning etc
  *
  * usage: {textarea id='my_area' name='my_area'}{tr}My Text{/tr}{/textarea}
  *
@@ -40,6 +41,8 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	// mainly for modules admin - preview is for the module, not the user module so don;t need to confirmExit
 	$params['previewConfirmExit'] = isset($params['previewConfirmExit']) ? $params['previewConfirmExit'] : 'y';
 	
+	$params['simple'] = isset($params['simple']) ? $params['simple'] : 'n';
+	
 	if ( isset($params['_zoom']) && $params['_zoom'] == 'n' ) {
 		$feature_template_zoom_orig = $prefs['feature_template_zoom'];
 		$prefs['feature_template_zoom'] = 'n';
@@ -59,7 +62,7 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	} else {
 		$as_id = $params['name'];
 	}
-	if ($prefs['feature_ajax'] == 'y' && $prefs['feature_ajax_autosave'] == 'y') {	// retrieve autosaved content
+	if ($prefs['feature_ajax'] == 'y' && $prefs['feature_ajax_autosave'] == 'y' && $params['simple'] == 'n') {	// retrieve autosaved content
 		$auto_save_referrer = ensureReferrer();
 
 		if (empty($_REQUEST['noautosave']) || $_REQUEST['noautosave'] != 'y') {
@@ -68,6 +71,8 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 				
 				if ( strcmp($auto_saved, $content) != 0 ) {
 					$content = $auto_saved;
+					include_once('lib/smarty_tiki/block.self_link.php');
+					include_once('lib/smarty_tiki/block.remarksbox.php');
 					$msg = tra('If you want the saved version instead of this autosaved one').'&nbsp;'.smarty_block_self_link( array( 'noautosave'=>'y', '_ajax'=>'n'), tra('Click Here'), $smarty);
 					$auto_save_warning = smarty_block_remarksbox( array( 'type'=>'warning', 'title'=>tra('AutoSave')), $msg, $smarty)."\n";
 				}
@@ -77,7 +82,7 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 
 
 
-	if ( $params['_wysiwyg'] == 'y' ) {
+	if ( $params['_wysiwyg'] == 'y' && $params['simple'] == 'n') {
 
 		global $url_path;
 		include_once 'lib/tikifck.php';
@@ -138,7 +143,7 @@ function FCKeditor_OnComplete( editorInstance ) {
 			$prefs['feature_template_zoom'] = $feature_template_zoom_orig;
 		}
 		
-		if ($prefs['feature_ajax'] == 'y' && $prefs['feature_ajax_autosave'] == 'y') {
+		if ($prefs['feature_ajax'] == 'y' && $prefs['feature_ajax_autosave'] == 'y' && $params['simple'] == 'n') {
 			$headerlib->add_jq_onready("register_id('$textarea_id'); auto_save();");
 			$headerlib->add_js("var autoSaveId = '$auto_save_referrer';");	// onready is too late...
 		}
@@ -153,9 +158,10 @@ function FCKeditor_OnComplete( editorInstance ) {
 	}	// wiki or wysiwyg
 
 
+	if ($params['simple'] == 'n') {
 // Display edit time out
 
-	$js = "
+		$js = "
 // edit timeout warnings
 function editTimerTick() {
 	editTimeElapsedSoFar++;
@@ -210,8 +216,8 @@ var editTimeoutIntervalId;
 var editTimerWarnings = 0;
 // end edit timeout warnings
 ";
-	if ($prefs['feature_wysiwyg'] && $prefs['wysiwyg_optional']) {
-		$js .= '
+		if ($prefs['feature_wysiwyg'] && $prefs['wysiwyg_optional']) {
+			$js .= '
 function switchEditor(mode, form) {
 	window.needToConfirm=false;
 	var w;
@@ -224,9 +230,10 @@ function switchEditor(mode, form) {
 	}
 	form.submit();
 }';
-	}
+		}
 	
-	$headerlib->add_js($js);
+		$headerlib->add_js($js);
+	}	// end if ($params['simple'] == 'n')
 
 	return $auto_save_warning.$html;
 }

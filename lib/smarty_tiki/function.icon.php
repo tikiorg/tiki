@@ -23,9 +23,13 @@ function smarty_function_icon($params, &$smarty) {
 	if ( ! is_array($params) ) $params = array();
 	global $prefs, $tc_theme, $tc_theme_option;
 	
-	$current_style = empty($tc_theme) ? $prefs['style'] : $tc_theme;
-	$current_style_option = empty($tc_theme_option) ? !empty($tc_theme) ? $prefs['style_option'] : '' : $tc_theme_option;
-
+	if (empty($tc_theme)) {
+		$current_style = $prefs['style'];
+		$current_style_option = $prefs['style_option'];
+	} else {
+		$current_style = $tc_theme;
+		$current_style_option = !empty($tc_theme_option) ? $tc_theme_option : '';
+	}
 	$serialized_params = serialize(array_merge($params, array($current_style, $current_style_option)));
 	if ( isset($_SESSION['icons'][$serialized_params]) ) {
 		return $_SESSION['icons'][$serialized_params];
