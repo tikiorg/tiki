@@ -7,17 +7,17 @@ function prefs_w_list() {
 			'type' => 'flag',
 		),
 		'w_use_dir' => array(
-			'name' => tra('Path'),
+			'name' => tra('Path (if stored in directory)'),
 			'type' => 'text',
 			'size' => '20',
 		),
-	
-
-	// Used in templates/tiki-admin-include-wiki.tpl
-	'w_use_db' => array(
-			'name' => '',
-			'type' => '',
+		'w_use_db' => array(
+			'type' => 'radio',
+			'options' => array(
+				'y' => tra('Store in database'),
+				'n' => tra('Store in directory'),
 			),
+		),
 	);	
 	
 }

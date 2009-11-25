@@ -89,100 +89,70 @@
 			{preference name=feature_sandbox}
 			
 			{preference name=feature_wiki_comments}
-			<a class="link" href="tiki-assignpermission.php?type=wiki&amp;group=Anonymous" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
-			
 			<div class="adminoptionboxchild" id="feature_wiki_comments_childcontainer">
+				<a class="link" href="tiki-assignpermission.php?type=wiki&amp;group=Anonymous" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
 				{preference name=wiki_comments_displayed_default}
 				{preference name=wiki_comments_notitle}
 				{preference name=wiki_comments_per_page}
 				{preference name=wiki_comments_default_ordering}
-			    {preference name=wiki_comments_allow_per_page}
+				{preference name=wiki_comments_allow_per_page}
 
 			</div>
 
-
-			<div class="adminoptionbox">
-				<div class="adminoption">
-					<input type="checkbox" id="feature_wiki_attachments" name="feature_wiki_attachments" {if $prefs.feature_wiki_attachments eq 'y'}checked="checked" {/if}onclick="flip('useattachments');" />
-				</div>
-				<div class="adminoptionlabel">
-					<label for="feature_wiki_attachments">{tr}Attachments{/tr}</label>
-					{if $prefs.feature_help eq 'y'}
-						{help url="Attachments"}
-					{/if} 
-					<a class="link" href="tiki-assignpermission.php?type=wiki&amp;group=Anonymous" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
-				</div>
-				<input type="hidden" name="wikiattprefs" />
-				<div class="adminoptionboxchild" id="useattachments" style="display:{if $prefs.feature_wiki_attachments eq 'y'}block{else}none{/if};">
+			{preference name=feature_wiki_attachments}
+			<div class="adminoptionboxchild" id="feature_wiki_attachments_childcontainer">
+				<a class="link" href="tiki-assignpermission.php?type=wiki&amp;group=Anonymous" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
 					{preference name=w_displayed_default}
-		
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel">
-							<input type="radio" id="w_use_db_1" name="w_use_db" value="y" {if $prefs.w_use_db eq 'y'}checked="checked"{/if} onclick="flip('directorypath');" />
-							<label for="w_use_db_1">{tr}Store in database{/tr}.</label>
-						</div>
-						<div class="adminoptionlabel">
-							<input type="radio" id="w_use_db_2" name="w_use_db" value="n" {if $prefs.w_use_db eq 'n'}checked="checked"{/if} onclick="flip('directorypath');" />
-							<label for="w_use_db_2">{tr}Store in directory{/tr}.</label>
-						</div>
-						<div class="adminoptionboxchild" id="directorypath" style="display:{if $prefs.w_use_db eq 'n'}block{else}none{/if};">
-							{preference name=w_use_dir}
-						</div>
+					{preference name=w_use_db}
+					<div class="adminoptionboxchild">
+						{preference name=w_use_dir}
+						{button href="tiki-admin.php?page=wikiatt" _text="{tr}Manage attachments{/tr}"}
 					</div>
-					{button href="tiki-admin.php?page=wikiatt" _text="{tr}Manage attachments{/tr}"}
-				</div>		
 			</div>
 
-			<div class="adminoptionbox">
-				<div class="adminoption">
-					<input type="checkbox" id="feature_dump" name="feature_dump" {if $prefs.feature_dump eq 'y'}checked="checked"{/if} onclick="flip('usedumps');" />
+			{preference name=feature_dump}
+			<div class="adminoptionboxchild" id="feature_dump_childcontainer">
+				<div class="adminoptionbox">
+					<div class="adminoptionlabel">
+						<label for="tagname">{tr}Tag for current wiki{/tr}:</label>
+						<input maxlength="20" size="20" type="text" name="tagname" id="tagname" />
+						<input type="submit" name="createtag" value="{tr}Create{/tr}" />
+					</div>
 				</div>
-				<div class="adminoptionlabel">
-					<label for="feature_dump">{tr}Dumps{/tr}</label>
+				<div class="adminoptionbox">
+					<div class="adminoptionlabel">
+						<label for="restoretag">{tr}Restore wiki to tag{/tr}:</label>
+						<select name="tagname" id="restoretag"{if $tags|@count eq '0'} disabled="disabled"{/if}>
+							{section name=sel loop=$tags}
+								<option value="{$tags[sel]|escape}">{$tags[sel]}</option>
+							{sectionelse}
+								<option value=''>{tr}None{/tr}</option>
+							{/section}
+						</select>
+						<input type="submit" name="restoretag" value="{tr}Restore{/tr}"{if $tags|@count eq '0'} disabled="disabled"{/if} />
+					</div>
 				</div>
-				<div class="adminoptionboxchild" id="usedumps" style="display:{if $prefs.feature_dump eq 'y'}block{else}none{/if};">
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel">
-							<label for="tagname">{tr}Tag for current wiki{/tr}:</label>
-							<input maxlength="20" size="20" type="text" name="tagname" id="tagname" />
-							<input type="submit" name="createtag" value="{tr}Create{/tr}" />
-						</div>
+				<div class="adminoptionbox">
+					<div class="adminoptionlabel">
+						<label for="removetag">{tr}Remove a tag{/tr}:</label> 
+						<select name="tagname" id="removetag"{if $tags|@count eq '0'} disabled="disabled"{/if}>
+							{section name=sel loop=$tags}
+								<option value="{$tags[sel]|escape}">{$tags[sel]}</option>
+							{sectionelse}
+								<option value=''>{tr}None{/tr}</option>
+							{/section}
+						</select>
+						<input type="submit" name="removetag" value="{tr}Remove{/tr}"{if $tags|@count eq '0'} disabled="disabled"{/if} />
 					</div>
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel">
-							<label for="restoretag">{tr}Restore wiki to tag{/tr}:</label>
-							<select name="tagname" id="restoretag"{if $tags|@count eq '0'} disabled="disabled"{/if}>
-								{section name=sel loop=$tags}
-									<option value="{$tags[sel]|escape}">{$tags[sel]}</option>
-								{sectionelse}
-									<option value=''>{tr}None{/tr}</option>
-								{/section}
-							</select>
-							<input type="submit" name="restoretag" value="{tr}Restore{/tr}"{if $tags|@count eq '0'} disabled="disabled"{/if} />
-						</div>
-					</div>
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel">
-							<label for="removetag">{tr}Remove a tag{/tr}:</label> 
-							<select name="tagname" id="removetag"{if $tags|@count eq '0'} disabled="disabled"{/if}>
-								{section name=sel loop=$tags}
-									<option value="{$tags[sel]|escape}">{$tags[sel]}</option>
-								{sectionelse}
-									<option value=''>{tr}None{/tr}</option>
-								{/section}
-							</select>
-							<input type="submit" name="removetag" value="{tr}Remove{/tr}"{if $tags|@count eq '0'} disabled="disabled"{/if} />
-						</div>
-					</div>
+				</div>
 
-					{button href="tiki-admin.php?page=wiki&amp;dump=1" _text="{tr}Generate dump{/tr}"}
-					{if $tikidomain}
-						{button href="dump/$tikidomain/new.tar" _text="{tr}Download last dump{/tr}"}
-					{else}
-						{button href="dump/new.tar" _text="{tr}Download last dump{/tr}"}
-					{/if}
-			</div>	
-		</div>
+				{button href="tiki-admin.php?page=wiki&amp;dump=1" _text="{tr}Generate dump{/tr}"}
+				{if $tikidomain}
+					{button href="dump/$tikidomain/new.tar" _text="{tr}Download last dump{/tr}"}
+				{else}
+					{button href="dump/new.tar" _text="{tr}Download last dump{/tr}"}
+				{/if}
+			</div>
 
 		{preference name=feature_wiki_pictures}
 		<div class="adminoptionboxchild" id="feature_wiki_pictures_childcontainer">
@@ -396,7 +366,7 @@
 					{tr}Select which items to display when listing pages{/tr}:
 				</div>
 				{preference name=wiki_list_sortorder}
-					<div class="adminoptionboxchild">
+				<div class="adminoptionboxchild">
 					{preference name=wiki_list_sortdirection}
 				</div>
 				{preference name=wiki_list_id}

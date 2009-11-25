@@ -1467,19 +1467,15 @@ function prefs_feature_list() {
 			'name' => tra('Pages not in structure'),
 			'type' => 'flag',
 		),
-	
-	
-	// Used in templates/tiki-admin-include-wiki.tpl
-	'feature_dump' => array(
-			'name' => tra('Dumps'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-wiki.tpl
-	'feature_wiki_attachments' => array(
+		'feature_wiki_attachments' => array(
 			'name' => tra('Attachments'),
-			'type' => '',
-			),
+			'type' => 'flag',
+			'help' => 'Attachments',
+		),
+		'feature_dump' => array(
+			'name' => tra('Dumps'),
+			'type' => 'flag',
+		),
 	
 	// Used in templates/tiki-admin-include-wiki.tpl
 	'feature_wiki_show_hide_before' => array(
