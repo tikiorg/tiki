@@ -17,8 +17,19 @@ function upgrade_20091123_upgrade_categperm_2_tiki( $installer) {
 	// $edit describes what was supposed to be given by tiki_p_edit_categorized
 	// this time use a subset of it to assign tiki_p_modify_object_categories
 
-	global $prefs;
-	update_preferences( $dbTiki, $prefs );
+	global $prefs, $installer;
+	
+	$query = "SELECT `name`, `value` FROM `tiki_preferences` WHERE `name`='feature_categories'";
+	@$result = $installer->query($query);
+
+	if ( $result ) {
+		while ( $res = $result->fetchRow() ) {
+			if ( ! isset($prefs[$res['name']]) ) {
+				$prefs[$res['name']] = $res['value'];
+			}
+		}
+	}
+	
 	
 	if ($prefs['feature_categories'] == 'y') {	// only relevant if categories are enabled
 
