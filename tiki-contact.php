@@ -63,7 +63,7 @@ if ($user == '' and $prefs['contact_anon'] == 'y') {
 			}
 		}
 		$smarty->assign('sent', 1);
-		$messulib->post_message($prefs['contact_user'], 'Anonymous', $_REQUEST['to'],
+		$messulib->post_message($prefs['contact_user'], $_REQUEST['from'], $_REQUEST['to'],
 			'', $_REQUEST['subject'], $_REQUEST['body'], $_REQUEST['priority']);
 		$message = tra('Message sent to'). ': ' . $prefs['contact_user'] . '<br />';
 		$smarty->assign('message', $message);

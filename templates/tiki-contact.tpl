@@ -25,7 +25,14 @@
 				{if $prefs.feature_antibot eq 'y' && $user eq ''}
 					{include file='antibot.tpl' td_style="form"}
 				{/if}
-
+				{if $user eq ''}
+				<tr>
+					<td class="form">{tr}From{/tr}:</td>
+					<td class="form">
+						<input type="text" name="from" value="{$from}" maxlength="255" style="width:25%" />
+					</td>
+				</tr>
+				{/if}
 				<tr>
 					<td class="form">{tr}Subject{/tr}:</td>
 					<td class="form">
