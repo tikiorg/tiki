@@ -104,6 +104,7 @@
 
 			{* don't show comments if feature disabled or not enough rights *}
 			{if $prefs.feature_wiki_comments == 'y'
+				&& $comments_allowed_on_page == 'y'
 				&& $tiki_p_wiki_view_comments == 'y'
 				&& (($tiki_p_read_comments == 'y'
 				&& $comments_cant != 0)

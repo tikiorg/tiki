@@ -227,8 +227,14 @@ if (isset($_REQUEST['lock_it']) && $_REQUEST['lock_it'] =='on') {
 } else {
 	$lock_it = 'n';
 }
+if (isset($_REQUEST['comments_enabled']) && $_REQUEST['comments_enabled'] =='on') {
+	$comments_enabled = 'y';
+} else {
+	$comments_enabled = 'n';
+}
 $hash = array();
 $hash['lock_it'] = $lock_it;
+$hash['comments_enabled'] = $comments_enabled;
 if (!empty($_REQUEST['contributions'])) {
 	$hash['contributions'] = $_REQUEST['contributions'];
 }
@@ -632,6 +638,20 @@ if (empty($_REQUEST['lock_it']) && !empty($info['flag']) && $info['flag'] == 'L'
 	$lock_it = 'y';
 }
 $smarty->assign_by_ref('lock_it', $lock_it);
+if ($prefs['wiki_comments_allow_per_page'] != 'n') {
+	if (!isset($_REQUEST['save']) && !isset($_REQUEST['preview'])) {
+		if (!empty($info) && !empty($info['comments_enabled'])) {
+			$comments_enabled =  $info['comments_enabled'];
+		} else {
+			if ($prefs['wiki_comments_allow_per_page'] == 'y') {
+				$comments_enabled = 'y';
+			} else {
+				$comments_enabled = 'n';
+			}
+		}
+	}
+	$smarty->assign_by_ref('comments_enabled', $comments_enabled);
+}
 if (isset($_REQUEST["lang"])) {
 	if ($prefs['feature_multilingual'] == 'y' && isset($info["lang"]) && $info['lang'] != $_REQUEST["lang"]) {
 		include_once("lib/multilingual/multilinguallib.php");
@@ -1262,6 +1282,7 @@ if (($prefs['feature_wiki_templates'] == 'y' && $tiki_p_use_content_templates ==
 	$prefs['wiki_spellcheck'] == 'y' ||
 	($prefs['feature_wiki_allowhtml'] == 'y' && $tiki_p_use_HTML == 'y' && $wysiwyg != 'y') ||
 	$prefs['feature_wiki_import_html'] == 'y' ||
+	$prefs['wiki_comments_allow_per_page'] != 'n' ||
 	($tiki_p_admin_wiki == 'y' && $prefs['feature_wiki_import_page'] == 'y') ||
 	($wysiwyg != 'y' && ($prefs['feature_wiki_attachments'] == 'y' && ($tiki_p_wiki_attach_files == 'y' && $tiki_p_wiki_admin_attachments == 'y')) ||
 						($prefs['feature_wiki_screencasts'] == 'y' && $tiki_p_upload_screencast == 'y'))) {

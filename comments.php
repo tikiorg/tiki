@@ -513,6 +513,24 @@ if ($prefs['feature_contribution'] == 'y') {
 	$contributionItemId = $_REQUEST["comments_threadId"];
 	include_once('contribution.php');
 }
+// see if comments are allowed on this specific wiki page
+global $section;
+if ($section = 'wiki page') {
+	if ($prefs['wiki_comments_allow_per_page'] != 'n') {
+		global $info;
+		if (!empty($info['comments_enabled'])) {
+			$smarty->assign('comments_allowed_on_page', $info['comments_enabled']);
+		} else {
+			if ($prefs['wiki_comments_allow_per_page'] == 'y') {
+				$smarty->assign('comments_allowed_on_page', 'y');
+			} else {
+				$smarty->assign('comments_allowed_on_page', 'n');
+			}
+		}
+	} else {
+		$smarty->assign('comments_allowed_on_page', 'y');
+	}
+}
 
 
 $smarty->assign('comments_objectId', $comments_objectId);

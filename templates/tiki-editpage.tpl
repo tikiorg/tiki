@@ -192,6 +192,12 @@
 									<input type="checkbox" id="lock_it" name="lock_it" {if $lock_it eq 'y'}checked="checked"{/if}/>
 								</fieldset>
 							{/if}
+							{if $prefs.wiki_comments_allow_per_page neq 'n'}
+								<fieldset>
+									<legend>{tr}Allow comments on this page{/tr}</legend>
+									<input type="checkbox" id="comments_enabled" name="comments_enabled" {if $comments_enabled eq 'y'}checked="checked"{/if}/>
+								</fieldset>
+							{/if}
 				
 							{if $prefs.feature_wiki_replace eq 'y' and $wysiwyg neq 'y'}
 								<script type="text/javascript">

@@ -4741,6 +4741,17 @@ class TikiLib extends TikiDb_Bridge {
 			$bindvars[] = '';
 			$bindvars[] = '';
 		}
+		if ($prefs['wiki_comments_allow_per_page'] != 'n') {
+			if (!empty($hash['comments_enabled']) && $hash['comments_enabled'] == 'y') {
+				$mid .= ', `comments_enabled` ';
+				$midvar .= ',?';
+				$bindvars[] = 'y';
+			} else if (empty($hash['comments_enabled']) || $hash['comments_enabled'] == 'n') {
+				$mid .= ', `comments_enabled` ';
+				$midvar .= ',?';
+				$bindvars[] = 'n';
+			}
+		}
 		if (empty($hash['contributions'])) {
 			$hash['contributions'] = '';
 		}
@@ -4841,7 +4852,7 @@ class TikiLib extends TikiDb_Bridge {
 		if ( $retrieve_datas ) {
 			$query = "SELECT * FROM `tiki_pages` WHERE `pageName`=?";
 		} else {
-			$query = "SELECT `page_id`, `pageName`, `hits`, `description`, `lastModif`, `comment`, `version`, `version_minor`, `user`, `ip`, `flag`, `points`, `votes`, `wiki_cache`, `cache_timestamp`, `pageRank`, `creator`, `page_size`, `lang`, `lockedby`, `is_html`, `created`, `wysiwyg`, `wiki_authors_style` FROM `tiki_pages` WHERE `pageName`=?";
+			$query = "SELECT `page_id`, `pageName`, `hits`, `description`, `lastModif`, `comment`, `version`, `version_minor`, `user`, `ip`, `flag`, `points`, `votes`, `wiki_cache`, `cache_timestamp`, `pageRank`, `creator`, `page_size`, `lang`, `lockedby`, `is_html`, `created`, `wysiwyg`, `wiki_authors_style`, `comments_enabled` FROM `tiki_pages` WHERE `pageName`=?";
 		}
 		$result = $this->query($query, array($pageName));
 
@@ -7461,6 +7472,15 @@ class TikiLib extends TikiDb_Bridge {
 			$mid .= ', `flag`=?, `lockedby`=? ';
 			$bindvars[] = '';
 			$bindvars[] = '';
+		}
+		if ($prefs['wiki_comments_allow_per_page'] != 'n') {
+			if (!empty($hash['comments_enabled']) && $hash['comments_enabled'] == 'y') {
+				$mid .= ', `comments_enabled`=? ';
+				$bindvars[] = 'y';
+			} else if (empty($hash['comments_enabled']) || $hash['comments_enabled'] == 'n') {
+				$mid .= ', `comments_enabled`=? ';
+				$bindvars[] = 'n';
+			}
 		}
 		if (empty($hash['contributions'])) {
 			$hash['contributions'] = '';
