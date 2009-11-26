@@ -48,6 +48,14 @@ if ($nbChoiceGroups) {
 }
 if (isset($_REQUEST['register']) && !empty($_REQUEST['name']) && (isset($_REQUEST['pass']) || isset($_SESSION['openid_url']))) {
 	check_ticket('register');
+	$cookie_name = $prefs['session_cookie_name'];
+
+	if( ini_get('session.use_cookie') && ! isset( $_COOKIE[$cookie_name] ) ) {
+		$smarty->assign('msg',tra("You have to enable cookies to be able to login to this site"));
+		$smarty->display("error.tpl");
+		exit;
+	}
+
 	$smarty->assign('errortype', 'no_redirect_login');
 	if ($novalidation != 'yes' and ($_REQUEST["pass"] <> $_REQUEST["passAgain"]) and !isset($_SESSION['openid_url'])) {
 		$smarty->assign('msg', tra("The passwords don't match"));
