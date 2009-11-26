@@ -17,7 +17,7 @@
 <input type="checkbox" name="show_page" value="y" {if $show_page eq 'y'} checked="checked"{/if}/>{tr}Show Page Differences{/tr}<br/>
 <input type="checkbox" name="show_tidy" value="y" {if $show_tidy eq 'y'} checked="checked"{/if}/>{tr}Show Tidy Errors and Warnings{/tr}<br/>
 <input type="checkbox" name="show_post" value="y" {if $show_post eq 'y'} checked="checked"{/if}/>{tr}Show POST Data{/tr}<br/>
-<input type="checkbox" name="current_session" value="y" {if $current_session eq 'y'} checked="checked"{/if}/>{tr}Use Current Session/Logout{/tr}<br/>
+<input type="checkbox" name="current_session" value="y" {if $current_session eq 'y'} checked="checked"{/if}/>{tr}Use Current Session/Log out{/tr}<br/>
 <input type="hidden" name="filename" value="{$filename}" />
 <center><input type="submit" name="action" value="{tr}Replay{/tr}" /></center>
 </form>

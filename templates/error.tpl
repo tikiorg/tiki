@@ -19,7 +19,7 @@ close();
 		{redirect url=$prefs.permission_denied_url}
 	{else}
 		{if $errortype eq 401 && empty($user) and  $prefs.permission_denied_login_box eq 'y'} {* permission denied *}
-			{assign var='errortitle' value='{tr}Please login{/tr}' }
+			{assign var='errortitle' value='{tr}Please log in{/tr}' }
 		{else}
 			{assign var='errortitle' value='{tr}Error{/tr}' }
 		{/if}
@@ -58,7 +58,7 @@ close();
 						{include file='tiki-login.tpl'}
 					{elseif !isset($user) and $errortype != 'no_redirect_login' and $errortype != 'login'}
 						<div class="simplebox highlight">
-							{tr}You are not logged in.{/tr} <a href="tiki-login_scr.php">{tr}Go to Login Page{/tr}</a>
+							{tr}You are not logged in.{/tr} <a href="tiki-login_scr.php">{tr}Go to Log in Page{/tr}</a>
 						</div>
 						<br /><br />
 					{else}

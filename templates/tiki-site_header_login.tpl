@@ -5,20 +5,20 @@
 	{if $prefs.feature_site_login eq 'y'}
 		{if $user}
 <div id="siteloginbar" class="logged-in">
-	{$user|userlink} | <a href="tiki-logout.php" title="{tr}Logout{/tr}">{tr}Logout{/tr}</a>
+	{$user|userlink} | <a href="tiki-logout.php" title="{tr}Log out{/tr}">{tr}Log out{/tr}</a>
 {else}
 <div id="siteloginbar">
 	{if $user}
-		{$user|userlink} | <a href="tiki-logout.php" title="{tr}Logout{/tr}">{tr}Logout{/tr}</a>
+		{$user|userlink} | <a href="tiki-logout.php" title="{tr}Log out{/tr}">{tr}Log out{/tr}</a>
 	{elseif $smarty.request.user neq 'admin' && $prefs.auth_method eq 'cas' && $showloginboxes neq 'y'}
-		<b><a href="tiki-login.php?cas=y">{tr}Login through CAS{/tr}</a></b>
+		<b><a href="tiki-login.php?cas=y">{tr}Log in through CAS{/tr}</a></b>
 		{if $prefs.cas_skip_admin eq 'y' && $prefs.cas_show_alternate_login eq 'y'}
-			&nbsp;|&nbsp;{self_link _template='tiki-site_header_login.tpl' _title="{tr}Login as admin{/tr}" _icon='user_red' _htmlelement='siteloginbar' user='admin'}{tr}Login as admin{/tr}{/self_link}
+			&nbsp;|&nbsp;{self_link _template='tiki-site_header_login.tpl' _title="{tr}Log in as admin{/tr}" _icon='user_red' _htmlelement='siteloginbar' user='admin'}{tr}Log in as admin{/tr}{/self_link}
 		{/if}
 	{elseif $smarty.request.user neq 'admin' && $prefs.auth_method eq 'shib' && $showloginboxes neq 'y'}
-		<b><a href="tiki-login.php">{tr}Login through Shibboleth{/tr}</a></b>
+		<b><a href="tiki-login.php">{tr}Log in through Shibboleth{/tr}</a></b>
 		{if $prefs.shib_skip_admin eq 'y'}
-			&nbsp;|&nbsp;{self_link _template='tiki-site_header_login.tpl' _title="{tr}Login as admin{/tr}" _icon='user_red' _htmlelement='siteloginbar' user='admin'}{tr}Login as admin{/tr}{/self_link}
+			&nbsp;|&nbsp;{self_link _template='tiki-site_header_login.tpl' _title="{tr}Log in as admin{/tr}" _icon='user_red' _htmlelement='siteloginbar' user='admin'}{tr}Log in as admin{/tr}{/self_link}
 		{/if}
 	{else}
 		<form class="forms" name="loginbox" action="tiki-login.php" method="post">
@@ -26,7 +26,7 @@
 			<input type="text" name="user" id="sl-login-user" />
 			<label for="sl-login-pass">{tr}Password{/tr}:</label>
 			<input type="password" name="pass" id="sl-login-pass" size="10" />
-			<input class="wikiaction" type="submit" name="login" value="{tr}Login{/tr}" />
+			<input class="wikiaction" type="submit" name="login" value="{tr}Log in{/tr}" />
 			<div>
 			{if $prefs.rememberme eq 'always'}<input type="hidden" name="rme" value="on" />
 			{elseif $prefs.rememberme eq 'all'}

@@ -317,7 +317,7 @@
  {else}
 			{* we are not logged then no admin account found and user not logged *}
 			<p><img src="pics/icons/delete.png" alt="{tr}Alert{/tr}" style="vertical-align:middle" />  <span style="font-weight:bold">{tr}This site has an admin account configured.{/tr}</span></p>
-		   <p>{tr}Please login with your admin password to continue.{/tr}</p>
+		   <p>{tr}Please log in with your admin password to continue.{/tr}</p>
 
      <form name="loginbox" action="tiki-install.php" method="post">
 			<input type="hidden" name="login" value="admin" />
@@ -326,7 +326,7 @@
           <table>
           <tr><td class="module">{tr}User:{/tr}</td><td><input value="admin" disabled="disabled" size="20" /></td></tr>
           <tr><td class="module">{tr}Pass:{/tr}</td><td><input type="password" name="pass" size="20" /></td></tr>
-          <tr><td colspan="2"><p align="center"><input type="submit" name="login" value="{tr}Login{/tr}" /></p></td></tr>
+          <tr><td colspan="2"><p align="center"><input type="submit" name="login" value="{tr}Log in{/tr}" /></p></td></tr>
           </table>
       </form>
 
@@ -420,7 +420,7 @@
 		</div>
 	</fieldset>
 <br />
-	<fieldset><legend>{tr}Secure Login{/tr} <a href="http://doc.tikiwiki.org/login+config&amp;bl=y" target="_blank" title="{tr}Help{/tr}"><img src="pics/icons/help.png" alt="{tr}Help{/tr}" /></a></legend>
+	<fieldset><legend>{tr}Secure Log in{/tr} <a href="http://doc.tikiwiki.org/login+config&amp;bl=y" target="_blank" title="{tr}Help{/tr}"><img src="pics/icons/help.png" alt="{tr}Help{/tr}" /></a></legend>
 		<div style="padding:5px; clear:both"><label for="https_login">{tr}HTTPS login:{/tr}</label>
 	<select name="https_login" id="https_login" onchange="hidedisabled('httpsoptions',this.value);">
 		<option value="disabled"{if $prefs.https_login eq 'disabled'} selected="selected"{/if}>{tr}Disabled{/tr}</option>
@@ -464,7 +464,7 @@
 
 {elseif $install_step eq '7'}
 <h1>{tr}Enter Your Tiki{/tr}</h1>
-<div style="float:left; width:60px"><img src="pics/large/stock_quit48x48.png" alt="{tr}Login{/tr}" /></div>
+<div style="float:left; width:60px"><img src="pics/large/stock_quit48x48.png" alt="{tr}Log in{/tr}" /></div>
 <div class="clearfix">
 	<p>{tr}The installation is complete!{/tr} {tr}Your database has been configured and Tiki is ready to run.{/tr} </p>
 	<p>{tr}Tiki is an open source project, <em>you</em> can <a href='http://info.tikiwiki.org/Join+the+Community' target='_blank'>join the community</a> and help <a href='http://info.tikiwiki.org/Develop+Tiki' target='_blank'>develop Tiki</a>.{/tr} </p>

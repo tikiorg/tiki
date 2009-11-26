@@ -13,12 +13,12 @@ function capLock(e){
 {/literal}
 //--><!]]>
 </script>
-{if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Login{/tr}"}{/if}{* Left for performance, since tiki-login_scr.php includes this template directly. *}
+{if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Log in{/tr}"}{/if}{* Left for performance, since tiki-login_scr.php includes this template directly. *}
 {tikimodule error=$module_params.error title=$tpl_module_title name="login_box" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
     {if $user}
       <div>{tr}Logged in as{/tr}: <span style="white-space: nowrap">{$user|userlink}</span></div>
       <div style="text-align: center;">
-				{button href="tiki-logout.php" _text="{tr}Logout{/tr}"}
+				{button href="tiki-logout.php" _text="{tr}Log out{/tr}"}
 			</div>
       {if $tiki_p_admin eq 'y'}
         <form action="{if $prefs.https_login eq 'encouraged' || $prefs.https_login eq 'required' || $prefs.https_login eq 'force_nocheck'}{$base_url_https}{/if}{$prefs.login_url}" method="post"{if $prefs.desactive_login_autocomplete eq 'y'} autocomplete="off"{/if}>
@@ -50,14 +50,14 @@ function capLock(e){
 		</form>
 	  {/if}
       {elseif $prefs.auth_method eq 'cas' && $showloginboxes neq 'y'}
-		<b><a class="linkmodule" href="tiki-login.php?cas=y">{tr}Login through CAS{/tr}</a></b>
+		<b><a class="linkmodule" href="tiki-login.php?cas=y">{tr}Log in through CAS{/tr}</a></b>
 		{if $prefs.cas_skip_admin eq 'y'}
-		<br /><a class="linkmodule" href="tiki-login_scr.php?user=admin">{tr}Login as admin{/tr}</a>
+		<br /><a class="linkmodule" href="tiki-login_scr.php?user=admin">{tr}Log in as admin{/tr}</a>
       {/if}
       {elseif $prefs.auth_method eq 'shib' && $showloginboxes neq 'y'}
-		<b><a class="linkmodule" href="tiki-login.php">{tr}Login through Shibboleth{/tr}</a></b>
+		<b><a class="linkmodule" href="tiki-login.php">{tr}Log in through Shibboleth{/tr}</a></b>
 		{if $prefs.shib_skip_admin eq 'y'}
-		<br /><a class="linkmodule" href="tiki-login_scr.php?user=admin">{tr}Login as admin{/tr}</a>
+		<br /><a class="linkmodule" href="tiki-login_scr.php?user=admin">{tr}Log in as admin{/tr}</a>
       {/if}
     {else}
      <form name="loginbox" action="{if $prefs.https_login eq 'encouraged' || $prefs.https_login eq 'required' || $prefs.https_login eq 'force_nocheck'}{$base_url_https}{/if}{$prefs.login_url}" method="post" {if $prefs.feature_challenge eq 'y'}onsubmit="doChallengeResponse()"{/if}{if $prefs.desactive_login_autocomplete eq 'y'} autocomplete="off"{/if}> 
@@ -92,7 +92,7 @@ function capLock(e){
      {/if}
 	 {if !empty($urllogin)}<input type="hidden" name="url" value="{$urllogin|escape}" />{/if}
         <fieldset>
-          <legend>{tr}Login as{/tr}&hellip;</legend>
+          <legend>{tr}Log in as{/tr}&hellip;</legend>
             <div><label for="login-user">{if $prefs.login_is_email eq 'y'}{tr}Email{/tr}{else}{tr}User{/tr}{/if}:</label><br />
 		{if $loginuser eq ''}
               <input type="text" name="user" id="login-user" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" />
@@ -117,7 +117,7 @@ function capLock(e){
 			  </div>
             {/if}
           {/if}
-          <div style="text-align: center"><input class="button submit" type="submit" name="login" value="{tr}Login{/tr}" /></div>
+          <div style="text-align: center"><input class="button submit" type="submit" name="login" value="{tr}Log in{/tr}" /></div>
        </fieldset>
           
           {if $prefs.forgotPass eq 'y' and $prefs.allowRegister eq 'y' and $prefs.change_password eq 'y'}
@@ -161,7 +161,7 @@ function capLock(e){
 	{if $prefs.auth_method eq 'openid' and !$user}
 		<form method="get" action="tiki-login_openid.php">
 			<fieldset>
-				<legend>{tr}OpenID Login{/tr}</legend>
+				<legend>{tr}OpenID Log in{/tr}</legend>
 				<input class="openid_url" type="text" name="openid_url"/>
 				<input type="submit" value="{tr}Go{/tr}"/>
 				<a class="linkmodule tikihelp" target="_blank" href="http://doc.tikiwiki.org/OpenID">{tr}What is OpenID?{/tr}</a>

@@ -433,7 +433,7 @@
 					</tr>
 				{/if}
 				<tr class="formcolor">
-					<td>{tr}Last Login:{/tr}</td>
+					<td>{tr}Last Log in:{/tr}</td>
 					<td>
 						{if $userinfo.lastLogin}
 							{$userinfo.lastLogin|tiki_long_datetime|default:'Never'}

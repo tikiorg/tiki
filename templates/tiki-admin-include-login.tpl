@@ -27,7 +27,7 @@
 					</div>
 				</div>	
 			
-				<fieldset><legend>{tr}Registration{/tr} &amp; {tr}Login{/tr}</legend>
+				<fieldset><legend>{tr}Registration{/tr} &amp; {tr}Log in{/tr}</legend>
 					<div class="adminoptionbox">
 						<div class="adminoption">
 							<input type="checkbox" id="allowRegister" name="allowRegister" {if $prefs.allowRegister eq 'y'}checked="checked"{/if} onclick="flip('userscanregister');" />

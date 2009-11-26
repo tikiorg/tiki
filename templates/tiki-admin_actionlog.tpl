@@ -317,12 +317,12 @@
 
 		{if $showLogin eq 'y' and $logTimes|@count ne 0}
 			<table class="smallnormal">
-				<caption>{tr}Login{/tr}</caption>
+				<caption>{tr}Log in{/tr}</caption>
 				<tr>
 					{if $selectedUsers|@count gt 1}<th>{tr}User{/tr}</th>{/if}
 					<th>{tr}connection time{/tr}</th>
 					<th>{tr}connection seconds{/tr}</th>
-					<th>{tr}Login{/tr}</th>
+					<th>{tr}Log in{/tr}</th>
 				</tr>
 				{foreach key=auser item=time from=$logTimes}
 					<tr>
