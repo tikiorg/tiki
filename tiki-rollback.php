@@ -51,13 +51,9 @@ $version = $histlib->get_version($page, $version);
 $version["data"] = $tikilib->parse_data($version["data"], array('preview_mode' => true));
 $smarty->assign_by_ref('preview', $version);
 if (isset($_REQUEST["rollback"])) {
-	$area = 'delrollbackpage';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$histlib->use_version($_REQUEST["page"], $_REQUEST["version"]);
-	} else {
-		key_get($area);
-	}
+	require_once('lib/diff/difflib.php');
+	require_once('lib/categories/categlib.php');
+	rollback_page_to_version($_REQUEST['page'], $_REQUEST['version']);
 	header("location: tiki-index.php?page=$page");
 	die;
 }
