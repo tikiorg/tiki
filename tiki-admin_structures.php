@@ -99,6 +99,20 @@ if ($tiki_p_edit_structures == 'y') {
 		$structlib->s_export_structure_tree($_REQUEST['export_tree']);
 		die;
 	}
+	if (isset($_REQUEST['batchaction'])) {
+		check_ticket('admin-structures');
+		foreach($_REQUEST['action'] as $batchid) {
+			$structure_info = $structlib->s_get_structure_info($batchid);
+			if (!$tikilib->user_has_perm_on_object($user, $structure_info['pageName'], 'wiki page', 'tiki_p_edit')) {
+				continue;
+			}
+			if ($_REQUEST['batchaction'] == 'delete') {
+				$structlib->s_remove_page($batchid, false, $structure_info['pageName']);
+			} elseif ($_REQUEST['batchaction'] == 'delete_with_page') {
+				$structlib->s_remove_page($batchid, true, $structure_info['pageName']);
+			}
+		}
+	}
 	$smarty->assign('askremove', 'n');
 	if (isset($_REQUEST['remove'])) {
 		check_ticket('admin-structures');

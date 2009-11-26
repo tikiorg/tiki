@@ -59,14 +59,21 @@
   {include file='find.tpl' find_show_languages='y' find_show_categories='y' find_show_num_rows='y' }
 {/if}
 <br />
+<form>
 <table class="normal">
 <tr>
+  {if $tiki_p_admin eq 'y'}<th width="15">{select_all checkbox_names='action[]'}</th>{/if}
   <th>{tr}Structure ID{/tr}</th>
   <th>{tr}Action{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section loop=$channels name=ix}
 <tr>
+  {if $tiki_p_admin eq 'y'}  
+  <td>
+    <input type="checkbox" name="action[]" value='{$channels[ix].page_ref_id}' style="border:1px;font-size:80%;" />
+  </td>
+  {/if}
   <td class="{cycle advance=false}">
   <a class="tablename" href="tiki-edit_structure.php?page_ref_id={$channels[ix].page_ref_id}" title="{tr}Edit structure{/tr}">
       {$channels[ix].pageName}
@@ -97,6 +104,18 @@
 </tr>
 {/section}
 </table>
+{if $tiki_p_admin eq 'y'}
+<div style="text-align:left">
+{tr}Perform action with checked{/tr}:
+<select name="batchaction">
+<option value="">{tr}...{/tr}</option>
+<option value="delete">{tr}Delete{/tr}</option>
+<option value="delete_with_page">{tr}Delete with the pages{/tr}</option>
+{/if}
+</select>
+<input type="submit" name="act" value="{tr}OK{/tr}" />
+</form>
+</div>
 
 {pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
 {/tab}
