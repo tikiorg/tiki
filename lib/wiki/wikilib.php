@@ -270,6 +270,12 @@ class WikiLib extends TikiLib {
 			$_SESSION["breadCrumb"][$pos] = $newName;
 		}
 
+		// polls
+		if ($prefs['feature_polls'] == 'y') {
+			$query = "update `tiki_polls` tp inner join `tiki_poll_objects` tpo on tp.`pollId` = tpo.`pollId` inner join `tiki_objects` tob on tpo.`catObjectId` = tob.`objectId` set tp.`title`=? where tp.`title`=? and tob.`type` = 'wiki page'";
+			$this->query($query, array( $newName, $oldName ) );
+		}
+					 	  	 
 		// Move custom permissions
 		$oldId = md5('wiki page' . strtolower($oldName));
 		$newId = md5('wiki page' . strtolower($newName));
