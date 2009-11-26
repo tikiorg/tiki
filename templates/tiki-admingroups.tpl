@@ -38,7 +38,7 @@
 			<th>
 				<a href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'groupDesc_desc'}groupDesc_asc{else}groupDesc_desc{/if}">{tr}Description{/tr}</a>
 			</th>
-			<th>{tr}Includes{/tr}</th>
+			<th>{tr}Inherits Permissions from{/tr}</th>
 			<th>{tr}User Choice{/tr}</th>
 			<th>{tr}Permissions{/tr}</th>
 			<th style="width: 20px;">&nbsp;</th>
@@ -106,9 +106,9 @@
 			</tr>
 			<tr class="formcolor">
 				<td>
-					<label for="groups_inc">{tr}Include:{/tr}</label>
+					<label for="groups_inc">{tr}Inherit permissions directly from following groups.{/tr}</label>
 					<br />
-					<i>{tr}Only directly included{/tr}</i>
+					{remarksbox type="tip" title="{tr}Note{/tr}"}{tr}Selected groups only. Use Ctrl+Click to select more than one.{/tr}{/remarksbox}
 				</td>
 				<td>
 					{if $inc|@count > 20 and $hasOneIncludedGroup eq "y"}
@@ -123,10 +123,25 @@
 							<option value="{$gr|escape}" {if $yn eq 'y'} selected="selected"{/if}>{$gr|truncate:"52"|escape}</option>
 						{/foreach}
 					</select>
-					<br />&quot;{$groupname|default:"Group"|escape}&quot; {tr}will have all the permissions of the included groups{/tr}.
-					{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple groups.{/tr}{/remarksbox}
 				</td>
 			</tr>
+
+			<tr class="formcolor">
+				<td>
+					<label for="indirectly_inherited_groups">{tr}Also inheriting permissions from the following groups (indirect inheritance through the groups selected above).{/tr}</label>
+				</td>
+				<td>
+					{if $indirectly_inherited_groups|@count > 0}
+						{*	PROBLEM WITH FOREACH BELOW... *}
+						{foreach key=num item=gr from=$indirectly_inherited_groups}
+							{$gr};
+						{/foreach}
+					{else}
+						{tr}None{/tr}						
+					{/if}
+				</td>
+			</tr>
+
 			{if $prefs.useGroupHome eq 'y'}
 				<tr class="formcolor">
 					<td>

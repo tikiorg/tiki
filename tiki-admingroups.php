@@ -306,6 +306,10 @@ if ($prefs['feature_categories'] == 'y') {
 	$categories = $categlib->get_all_categories_respect_perms($user, 'view_category');
 	$smarty->assign_by_ref('categories', $categories);
 }
+
+if (isset($_REQUEST['group'])) {
+	$smarty->assign('indirectly_inherited_groups', indirectly_inherited_groups($inc));
+}
 $av_themes = $tikilib->list_styles();
 $smarty->assign_by_ref('av_themes', $av_themes);
 $smarty->assign('memberslist', $memberslist);
@@ -332,3 +336,17 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 // Display the template for group administration
 $smarty->assign('mid', 'tiki-admingroups.tpl');
 $smarty->display("tiki.tpl");
+
+function indirectly_inherited_groups($direct_groups) {
+	global $userlib;
+	$indirect_groups = array();
+	foreach ($direct_groups as $a_direct_group => $does_inherit) {
+		if ($does_inherit === 'y') {
+ 			$some_indirect_groups = $userlib->get_included_groups($a_direct_group);
+ 			foreach ($some_indirect_groups as $an_indirect_group) {
+ 				$indirect_groups[] = $an_indirect_group;
+ 			}
+ 		}
+ 	}
+ 	return $indirect_groups;
+}
