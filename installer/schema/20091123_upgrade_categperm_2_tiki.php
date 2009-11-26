@@ -5,6 +5,22 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
+function update_preferences( $dbTiki, &$prefs ) {
+	global $installer;
+	$query = "SELECT `name`, `value` FROM `tiki_preferences`";
+	@$result = $installer->query($query);
+
+	if ( $result ) {
+		while ( $res = $result->fetchRow() ) {
+			if ( ! isset($prefs[$res['name']]) ) {
+				$prefs[$res['name']] = $res['value'];
+			}
+		}
+		return true;
+	}
+
+	return false;
+}
 function upgrade_20091123_upgrade_categperm_2_tiki( $installer) {
 /* second pass at upgrading version 3 category perms to v4 (for 4.1)
  * jonnyb 23 nov 2009
