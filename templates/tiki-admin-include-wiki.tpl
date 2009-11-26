@@ -33,6 +33,7 @@
 				{preference name=wiki_topline_position}
 				{preference name=page_bar_position}
 				{preference name=wiki_encourage_contribution}
+				{preference name=wiki_dynvar_style}
 			</fieldset>
 
 			<fieldset>

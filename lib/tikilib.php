@@ -6646,14 +6646,21 @@ class TikiLib extends TikiDb_Bridge {
 	}
 
 	private function parse_data_dynamic_variables( $data ) {
-		global $tiki_p_edit_dynvar;
+		global $tiki_p_edit_dynvar, $prefs;
+
+		$enclose = '%';
+		if( $prefs['wiki_dynvar_style'] == 'disable' ) {
+			return $data;
+		} elseif( $prefs['wiki_dynvar_style'] == 'double' ) {
+			$enclose = '%%';
+		}
 
 		// Replace dynamic variables
 		// Dynamic variables are similar to dynamic content but they are editable
 		// from the page directly, intended for short data, not long text but text
 		// will work too
 		//     Now won't match HTML-style '%nn' letter codes and some special utf8 situations...
-		if (preg_match_all("/%([^% 0-9A-Z][^% 0-9A-Z][^% ]*)%/",$data,$dvars)) {
+		if (preg_match_all("/$enclose([^% 0-9A-Z][^% 0-9A-Z][^% ]*)$enclose/",$data,$dvars)) {
 			// remove repeated elements
 			$dvars = array_unique($dvars[1]);
 			// Now replace each dynamic variable by a pair composed of the
@@ -6681,9 +6688,9 @@ class TikiLib extends TikiDb_Bridge {
 				$html = $span1.$span2;
 				//It's important to replace only once
 				$dvar_preg = preg_quote( $dvar );
-				$data = preg_replace("+%$dvar_preg%+",$html,$data,1);
+				$data = preg_replace("+$enclose$dvar_preg$enclose+",$html,$data,1);
 				//Further replacements only with the value
-				$data = str_replace("%$dvar%",$value,$data);
+				$data = str_replace("$enclose$dvar$enclose",$value,$data);
 			}
 			//At the end put an update button
 			//<br /><div align="center"><input type="submit" name="dyn_update" value="'.tra('Update variables','',true).'"/></div>

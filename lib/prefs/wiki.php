@@ -137,6 +137,17 @@ function prefs_wiki_list() {
 			'description' => tra('Hide the title field on wiki comments and their replies.'),
 			'type' => 'flag',
 		),
+		'wiki_dynvar_style' => array(
+			'name' => tra('Dynamic variables'),
+			'description' => tra('Global snippets of text that can be included in wiki pages and edited in place.'),
+			'type' => 'list',
+			'help' => 'Dynamic+Variable',
+			'options' => array(
+				'disable' => tra('Disabled'),
+				'single' => tra('Single (%varname%)'),
+				'double' => tra('Double (%%varname%%)'),
+			),
+		),
 		'wiki_spellcheck' => array(
 			'name' => tra('Spell checking'),
 			'type' => 'flag',
