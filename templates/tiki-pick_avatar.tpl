@@ -21,7 +21,7 @@
 <h2>{if $user eq $userwatch}{tr}Your current avatar{/tr}{else}{tr}Avatar{/tr}{/if}</h2>
 {if $avatar}{$avatar}{else}{tr}no avatar{/tr}{/if}
 {if sizeof($avatars) eq 0 and $avatar}
-<a class="link" href="tiki-pick_avatar.php?reset=y" title="{tr}reset{/tr}">{icon _id='cross' alt='{tr}reset{/tr}'}</a>
+<a class="link" href="tiki-pick_avatar.php?reset=y&amp;view_user{$userwatch|escape}" title="{tr}reset{/tr}">{icon _id='cross' alt='{tr}reset{/tr}'}</a>
 {/if}
 
 {if sizeof($avatars) > 0}
