@@ -28,7 +28,7 @@
 
 {if $langpage}
 <form method="post" action="tiki-editpage.php" onsubmit="return validate_translation_request(this)">
-	<p>{tr}Language of newly translated page:{/tr}
+	<p>{tr}Select language to translate to:{/tr}
 		<select name="lang" id="language_list" size="1">
 		   <option value="unspecified">{tr}Unspecified{/tr}</option>
 			{section name=ix loop=$languages}
@@ -37,7 +37,7 @@
 			{/if}
 			{/section}
 		</select>
-	<br />{tr}Name of newly translated page:{/tr} <input type="text" size="40" name="page" id="translation_name"/><input type="hidden" name="translationOf" value="{$name|escape}"/>
+	<br />{tr}Enter the page title:{/tr} <input type="text" size="40" name="page" id="translation_name"/><input type="hidden" name="translationOf" value="{$name|escape}"/>
 	<input type="submit" value="{tr}Create translation{/tr}"/></p>
 	<textarea name="edit" style="display:none">{$translate_message}{$pagedata|escape:'htmlall':'UTF-8'}</textarea>
 </form>
