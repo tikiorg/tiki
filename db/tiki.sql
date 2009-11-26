@@ -638,7 +638,7 @@ DROP TABLE IF EXISTS `tiki_dynamic_variables`;
 CREATE TABLE `tiki_dynamic_variables` (
   `name` varchar(40) NOT NULL,
   `data` text,
-  PRIMARY KEY (`name`)
+  `lang` VARCHAR(16) NULL
 );
 
 DROP TABLE IF EXISTS `tiki_extwiki`;

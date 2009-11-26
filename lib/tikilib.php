@@ -6070,14 +6070,23 @@ class TikiLib extends TikiDb_Bridge {
 
 	//Updates a dynamic variable found in some object
 	/*Shared*/
- function update_dynamic_variable($name,$value) {
-		$query = "delete from `tiki_dynamic_variables` where `name`=?";
-		$this->query($query,array($name),-1,-1,false);
-		$query = "insert into `tiki_dynamic_variables`(`name`,`data`) values(?,?)";
-		$this->query($query,Array($name,$value));
+	function update_dynamic_variable($name,$value, $lang = null) {
+		$bindvals = array();
+
+		$mid = "where `name`=?";
+		$bindvals[] = $name;
+		if ($lang) {
+			$mid .= " and `lang`=?";
+			$bindvals[] = $lang;
+		} else {
+			$mid .= " and `lang` IS NULL";
+		}
+		$query = "delete from `tiki_dynamic_variables` $mid";
+		$this->query( $query, $bindvals );
+		$query = "insert into `tiki_dynamic_variables`(`name`,`data`,`lang`) values(?,?,?)";
+		$this->query($query,array($name,$value,$lang));
 		return true;
 	}
-
 
 	// split string into a list of
 	function split_tag( $string, $cleanup = TRUE ) {
@@ -6368,7 +6377,7 @@ class TikiLib extends TikiDb_Bridge {
 		// linebreaks using %%%
 		$data = str_replace("%%%", "<br />", $data);
 
-		$data = $this->parse_data_dynamic_variables( $data );
+		$data = $this->parse_data_dynamic_variables( $data, $options['language'] );
 
 		if (!$simple_wiki) {
 			// Replace boxes
@@ -6645,7 +6654,7 @@ class TikiLib extends TikiDb_Bridge {
 		return $data;
 	}
 
-	private function parse_data_dynamic_variables( $data ) {
+	private function parse_data_dynamic_variables( $data, $lang = null ) {
 		global $tiki_p_edit_dynvar, $prefs;
 
 		$enclose = '%';
@@ -6666,15 +6675,7 @@ class TikiLib extends TikiDb_Bridge {
 			// Now replace each dynamic variable by a pair composed of the
 			// variable value and a text field to edit the variable. Each
 			foreach($dvars as $dvar) {
-				$query = "select `data` from `tiki_dynamic_variables` where `name`=?";
-				$result = $this->query($query,Array($dvar));
-				if($result->numRows()) {
-					$value = $result->fetchRow();
-					$value = $value["data"];
-				} else {
-					//Default value is NULL
-					$value = "NaV";
-				}
+				$value = $this->get_dynamic_variable( $dvar, $lang );
 				// Now build 2 divs
 				$id = 'dyn_'.$dvar;
 
@@ -6698,6 +6699,25 @@ class TikiLib extends TikiDb_Bridge {
 		}
 
 		return $data;
+	}
+
+	private function get_dynamic_variable( $name, $lang = null ) {
+		$query = "select `data`, `lang` from `tiki_dynamic_variables` where `name`=?";
+		$result = $this->fetchAll( $query, array( $name ) );
+
+		$value = "NaV";
+
+		foreach( $result as $row ) {
+			if( $row['lang'] == $lang ) {
+				// Exact match
+				return $row['data'];
+			} elseif( empty( $row['lang'] ) ) {
+				// Universal match, keep in case no exact match
+				$value = $row['data'];
+			}
+		}
+
+		return $value;
 	}
 
 	private function parse_data_process_maketoc( &$data, $options) {

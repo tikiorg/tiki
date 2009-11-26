@@ -180,6 +180,7 @@ function get_default_prefs() {
 		'wiki_encourage_contribution' => 'n',
 		'wiki_timeout_warning' => 'y',
 		'wiki_dynvar_style' => 'single',
+		'wiki_dynvar_multilingual' => 'n',
 
 		'wikiplugin_agentinfo' => 'n',
 		'wikiplugin_alink' => 'n',

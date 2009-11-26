@@ -148,6 +148,14 @@ function prefs_wiki_list() {
 				'double' => tra('Double (%%varname%%)'),
 			),
 		),
+		'wiki_dynvar_multilingual' => array(
+			'name' => tra('Multilingual dynamic variables'),
+			'description' => tra('Make dynamic variable content language specific.'),
+			'type' => 'flag',
+			'dependencies' => array(
+				'feature_multilingual',
+			),
+		),
 		'wiki_spellcheck' => array(
 			'name' => tra('Spell checking'),
 			'type' => 'flag',
