@@ -46,6 +46,7 @@
 				{preference name=feature_wiki_save_draft}
 				{preference name=feature_wiki_footnotes}
 				{preference name=feature_wiki_allowhtml}
+				{preference name=wiki_timeout_warning}
 
 				{preference name=wiki_edit_section}
 				<div class="adminoptionboxchild" id="wiki_edit_section_childcontainer">

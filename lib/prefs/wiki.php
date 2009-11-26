@@ -127,6 +127,11 @@ function prefs_wiki_list() {
 			'description' => tra('When a page is not editable and the user is anonymous, display the edit links anyway. The visitor will be prompted with a login screen and be encouraged to register.'),
 			'type' => 'flag',
 		),
+		'wiki_timeout_warning' => array(
+			'name' => tra('Warn before page lock timeout'),
+			'description' => tra('Provide a javascript alert before the user\'s lock on a page times out.'),
+			'type' => 'flag',
+		),
 		'wiki_comments_notitle' => array(
 			'name' => tra('Disable titles for wiki comments'),
 			'description' => tra('Hide the title field on wiki comments and their replies.'),
