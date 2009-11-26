@@ -6314,16 +6314,18 @@ class TikiLib extends TikiDb_Bridge {
 		}
 
 		// definitively put out the protected words ))protectedWord((
-		preg_match_all("/\)\)(\S+?)\(\(/", $data, $matches);
-		$noParseWikiLinksK = array();
-		$noParseWikiLinksT = array();
-		foreach ($matches[0] as $mi=>$match) {
-			do {
-				$randNum = chr(0xff).rand(0, 1048576).chr(0xff);
-			} while (strstr($data, $randNum));
-			$data = str_replace($match, $randNum, $data);
-			$noParseWikiLinksK[] = $randNum;
-			$noParseWikiLinksT[] = $matches[1][$mi];
+		if ($prefs['feature_wikiwords'] == 'y' ) {
+			preg_match_all("/\)\)(\S+?)\(\(/", $data, $matches);
+			$noParseWikiLinksK = array();
+			$noParseWikiLinksT = array();
+			foreach ($matches[0] as $mi=>$match) {
+				do {
+					$randNum = chr(0xff).rand(0, 1048576).chr(0xff);
+				} while (strstr($data, $randNum));
+				$data = str_replace($match, $randNum, $data);
+				$noParseWikiLinksK[] = $randNum;
+				$noParseWikiLinksT[] = $matches[1][$mi];
+			}
 		}
 
 		// New syntax for wiki pages ((name|desc)) Where desc can be anything
