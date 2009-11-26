@@ -64,25 +64,7 @@
 						<a class="link" href="tiki-assignpermission.php?type=wiki&amp;group=Registered" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
 					{/remarksbox}
 				</div>
-
-				<div class="adminoptionbox">
-					<div class="adminoptionlabel">
-						<label for="feature_wiki_mandatory_category">{tr}Force and limit categorization to within subtree of:{/tr}</label>
-						<select name="feature_wiki_mandatory_category" id="feature_wiki_mandatory_category">
-							<option value="-1" {if $prefs.feature_wiki_mandatory_category eq -1 or $prefs.feature_wiki_mandatory_category eq ''}selected="selected"{/if}>{tr}None{/tr}</option>
-							<option value="0" {if $prefs.feature_wiki_mandatory_category eq 0}selected="selected"{/if}>{tr}All{/tr}</option>
-							{section name=ix loop=$catree}
-								<option value="{$catree[ix].categId|escape}" {if $catree[ix].categId eq $prefs.feature_wiki_mandatory_category}selected="selected"{/if}>{if $catree[ix].categpath}{$catree[ix].categpath|escape}{else}{$catree[ix].name|escape}{/if}</option>
-							{/section}
-						</select>
-						{if $prefs.feature_categories ne 'y'}
-							<br />
-							{icon _id=information}{tr}Categories are disabled.{/tr} 
-							<a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}</a>.
-						{/if}
-					</div>
-				</div>
-
+				{preference name=feature_wiki_mandatory_category}
 				{preference name=feature_actionlog_bytes}
 			</fieldset>
 		{/tab}
@@ -298,45 +280,9 @@
 
 					<fieldset>
 						<legend>{tr}Category{/tr}</legend>
-						<div class="adminoptionbox">
-							{if $prefs.feature_categories ne 'y'}
-								<br />
-								{icon _id=information}{tr}Categories are disabled.{/tr} <a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}</a>.
-							{/if}
-						</div>
-						<div class="adminoptionbox">
-							<div class="adminoptionlabel">
-								<label for="wikiapproval_staging_category">{tr}Staging{/tr}:</label>
-								<select id="wikiapproval_staging_category" name="wikiapproval_staging_category">
-									<option value="0" {if $prefs.feature_wikiapproval_staging_category eq 0}selected="selected"{/if}>{tr}None{/tr}</option>
-									{section name=ix loop=$catree}	
-										<option value="{$catree[ix].categId|escape}" {if $prefs.wikiapproval_staging_category eq $catree[ix].categId}selected="selected"{/if}>{if $catree[ix].categpath}{$catree[ix].categpath}{else}{$catree[ix].name}{/if}</option>
-									{/section}	
-								</select>
-							</div>
-						</div>
-						<div class="adminoptionbox">
-							<div class="adminoptionlabel">
-								<label for="wikiapproval_approved_category">{tr}Approved{/tr} {tr}(mandatory for feature to work){/tr}:</label>
-								<select name="wikiapproval_approved_category" id="wikiapproval_approved_category">
-									<option value="0" {if $prefs.feature_wikiapproval_approved_category eq 0}selected="selected"{/if}>{tr}None{/tr}</option>
-									{section name=ix loop=$catree}	
-										<option value="{$catree[ix].categId|escape}" {if $prefs.wikiapproval_approved_category eq $catree[ix].categId}selected="selected"{/if}>{if $catree[ix].categpath}{$catree[ix].categpath}{else}{$catree[ix].name}{/if}</option>
-									{/section}	
-								</select>
-							</div>
-						</div>
-						<div class="adminoptionbox">
-							<div class="adminoptionlabel">
-								<label for="wikiapproval_outofsync_category">{tr}Out-of-sync{/tr}:</label>
-								<select name="wikiapproval_outofsync_category" id="wikiapproval_outofsync_category">
-									<option value="0" {if $prefs.feature_wikiapproval_outofsync_category eq 0}selected="selected"{/if}>{tr}None{/tr}</option>
-									{section name=ix loop=$catree}	
-										<option value="{$catree[ix].categId|escape}" {if $prefs.wikiapproval_outofsync_category eq $catree[ix].categId}selected="selected"{/if}>{if $catree[ix].categpath}{$catree[ix].categpath}{else}{$catree[ix].name}{/if}</option>
-									{/section}	
-								</select>
-							</div>
-						</div>
+						{preference name=feature_wikiapproval_staging_category}
+						{preference name=feature_wikiapproval_approved_category}
+						{preference name=feature_wikiapproval_outofsync_category}
 						{preference name=wikiapproval_sync_categories}
 					</fieldset>
 
@@ -456,6 +402,3 @@
 	<input type="submit" name="wikisetprefs" value="{tr}Change preferences{/tr}" />
 </div>
 </form>
-
-
-
