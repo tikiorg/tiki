@@ -70,7 +70,7 @@ class Comments extends TikiLib {
     }
 
     function get_num_reported($forumId) {
-	return $this->getOne("select count(*) from `tiki_forums_reported` where `forumId`=?",array((int) $forumId));
+		return $this->getOne("select count(*) from `tiki_forums_reported` tfr, `tiki_comments` tc where tfr.`threadId` = tc.`threadId` and `forumId`=?",array( (int) $forumId));
     }
 
     function mark_comment($user, $forumId, $threadId) {
