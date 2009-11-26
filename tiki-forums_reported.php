@@ -133,8 +133,6 @@ $smarty->assign_by_ref('items', $items["data"]);
 
 ask_ticket('forum-reported');
 
-include_once ('tiki-section_options.php');
-
 // Display the template
 $smarty->assign('mid', 'tiki-forums_reported.tpl');
 $smarty->display("tiki.tpl");
