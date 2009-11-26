@@ -13,6 +13,9 @@ if (isset($_REQUEST['user'])) {
 if ($prefs['useGroupHome'] != 'y' && !isset($_SESSION['loginfrom'])) {
 	$_SESSION['loginfrom'] = (isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : $prefs['tikiIndex']);
 }
+
+$headerlib->add_js( '$jq(document).ready( function() {$jq("#login-user").focus().select();} );' );
+
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 $smarty->assign('headtitle', tra('Login'));
