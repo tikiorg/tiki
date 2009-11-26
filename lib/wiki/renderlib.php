@@ -297,22 +297,20 @@ class WikiRenderer
 		$this->smartyassign('wiki_authors_style', $wiki_authors_style);
 
 		$this->smartyassign('cached_page','n');
-		$parse_options = array(
-			'is_html' => $this->info['is_html'],
-			'language' => $this->info['lang']
-		);
-
-		if($prefs['wiki_cache']>0 and (is_null($user) or $user == '')) {
-			$this->setPref( 'wiki_cache', $this->info['wiki_cache'] );
-		}
 
 		if ($this->content_to_render == '') {
 			$pdata = $wikilib->get_parse($this->page, $canBeRefreshed);
+
+			if ($canBeRefreshed) {
+				$this->smartyassign('cached_page','y');
+			}
 		} else {
-			$pdata = $wikilib->parse_data($this->content_to_render);
-		}
-		if ($canBeRefreshed) {
-			$this->smartyassign('cached_page','y');
+			$parse_options = array(
+				'is_html' => $this->info['is_html'],
+				'language' => $this->info['lang']
+			);
+
+			$pdata = $wikilib->parse_data($this->content_to_render, $parse_options);
 		}
 
 		$pages = $wikilib->get_number_of_pages($pdata);

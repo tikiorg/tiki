@@ -370,7 +370,11 @@ class WikiLib extends TikiLib {
 			} else {
 				$info = $this->get_page_info($page);
 				if (!empty($info)) {
-					$content = $this->parse_data($info['data'],  array('is_html' => $info['is_html']));
+					$parse_options = array(
+						'is_html' => $info['is_html'],
+						'language' => $info['lang'],
+					);
+					$content = $this->parse_data($info['data'], $parse_options );
 					if (!empty($info['wiki_cache'])) {
 						$this->update_cache($page, $content);
 					}
@@ -379,7 +383,11 @@ class WikiLib extends TikiLib {
 		} else {
 			$info = $this->get_page_info($page);
 			if (!empty($info)) {
-				$content = $this->parse_data($info['data'], array('is_html' => $info['is_html']));
+				$parse_options = array(
+					'is_html' => $info['is_html'],
+					'language' => $info['lang'],
+				);
+				$content = $this->parse_data($info['data'], $parse_options );
 			}
 		}
 		return $content;
