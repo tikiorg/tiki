@@ -6184,7 +6184,7 @@ class TikiLib extends TikiDb_Bridge {
 			}
 		}
 
-		global $page_regex, $slidemode, $prefs, $ownurl_father, $tiki_p_edit_dynvar, $tiki_p_upload_picture, $page, $page_ref_id, $rsslib, $dbTiki, $structlib, $user, $tikidomain, $tikiroot;
+		global $page_regex, $slidemode, $prefs, $ownurl_father, $tiki_p_upload_picture, $page, $page_ref_id, $rsslib, $dbTiki, $structlib, $user, $tikidomain, $tikiroot;
 		global $wikilib; include_once('lib/wiki/wikilib.php');
 
 		// Handle parsing options
@@ -6368,47 +6368,7 @@ class TikiLib extends TikiDb_Bridge {
 		// linebreaks using %%%
 		$data = str_replace("%%%", "<br />", $data);
 
-		// Replace dynamic variables
-		// Dynamic variables are similar to dynamic content but they are editable
-		// from the page directly, intended for short data, not long text but text
-		// will work too
-		//     Now won't match HTML-style '%nn' letter codes and some special utf8 situations...
-		if (preg_match_all("/%([^% 0-9A-Z][^% 0-9A-Z][^% ]*)%/",$data,$dvars)) {
-			// remove repeated elements
-			$dvars = array_unique($dvars[1]);
-			// Now replace each dynamic variable by a pair composed of the
-			// variable value and a text field to edit the variable. Each
-			foreach($dvars as $dvar) {
-				$query = "select `data` from `tiki_dynamic_variables` where `name`=?";
-				$result = $this->query($query,Array($dvar));
-				if($result->numRows()) {
-					$value = $result->fetchRow();
-					$value = $value["data"];
-				} else {
-					//Default value is NULL
-					$value = "NaV";
-				}
-				// Now build 2 divs
-				$id = 'dyn_'.$dvar;
-
-				if(isset($tiki_p_edit_dynvar)&& $tiki_p_edit_dynvar=='y') {
-					$span1 = "<span  style='display:inline;' id='dyn_".$dvar."_display'><a class='dynavar' onclick='javascript:toggle_dynamic_var(\"$dvar\");' title='".tra('Click to edit dynamic variable','',true).": $dvar'>$value</a></span>";
-					$span2 = "<span style='display:none;' id='dyn_".$dvar."_edit'><input type='text' name='dyn_".$dvar."' value='".$value."' />".'<input type="submit" name="_dyn_update" value="'.tra('Update variables','',true).'"/></span>';
-				} else {
-					$span1 = "<span class='dynavar' style='display:inline;' id='dyn_".$dvar."_display'>$value</span>";
-					$span2 = '';
-				}
-				$html = $span1.$span2;
-				//It's important to replace only once
-				$dvar_preg = preg_quote( $dvar );
-				$data = preg_replace("+%$dvar_preg%+",$html,$data,1);
-				//Further replacements only with the value
-				$data = str_replace("%$dvar%",$value,$data);
-			}
-			//At the end put an update button
-			//<br /><div align="center"><input type="submit" name="dyn_update" value="'.tra('Update variables','',true).'"/></div>
-			$data='<form method="post" name="dyn_vars">'."\n".$data.'</form>';
-		}
+		$data = $this->parse_data_dynamic_variables( $data );
 
 		if (!$simple_wiki) {
 			// Replace boxes
@@ -6685,7 +6645,55 @@ class TikiLib extends TikiDb_Bridge {
 		return $data;
 	}
 
-	function parse_data_process_maketoc( &$data, $options) {
+	private function parse_data_dynamic_variables( $data ) {
+		global $tiki_p_edit_dynvar;
+
+		// Replace dynamic variables
+		// Dynamic variables are similar to dynamic content but they are editable
+		// from the page directly, intended for short data, not long text but text
+		// will work too
+		//     Now won't match HTML-style '%nn' letter codes and some special utf8 situations...
+		if (preg_match_all("/%([^% 0-9A-Z][^% 0-9A-Z][^% ]*)%/",$data,$dvars)) {
+			// remove repeated elements
+			$dvars = array_unique($dvars[1]);
+			// Now replace each dynamic variable by a pair composed of the
+			// variable value and a text field to edit the variable. Each
+			foreach($dvars as $dvar) {
+				$query = "select `data` from `tiki_dynamic_variables` where `name`=?";
+				$result = $this->query($query,Array($dvar));
+				if($result->numRows()) {
+					$value = $result->fetchRow();
+					$value = $value["data"];
+				} else {
+					//Default value is NULL
+					$value = "NaV";
+				}
+				// Now build 2 divs
+				$id = 'dyn_'.$dvar;
+
+				if(isset($tiki_p_edit_dynvar)&& $tiki_p_edit_dynvar=='y') {
+					$span1 = "<span  style='display:inline;' id='dyn_".$dvar."_display'><a class='dynavar' onclick='javascript:toggle_dynamic_var(\"$dvar\");' title='".tra('Click to edit dynamic variable','',true).": $dvar'>$value</a></span>";
+					$span2 = "<span style='display:none;' id='dyn_".$dvar."_edit'><input type='text' name='dyn_".$dvar."' value='".$value."' />".'<input type="submit" name="_dyn_update" value="'.tra('Update variables','',true).'"/></span>';
+				} else {
+					$span1 = "<span class='dynavar' style='display:inline;' id='dyn_".$dvar."_display'>$value</span>";
+					$span2 = '';
+				}
+				$html = $span1.$span2;
+				//It's important to replace only once
+				$dvar_preg = preg_quote( $dvar );
+				$data = preg_replace("+%$dvar_preg%+",$html,$data,1);
+				//Further replacements only with the value
+				$data = str_replace("%$dvar%",$value,$data);
+			}
+			//At the end put an update button
+			//<br /><div align="center"><input type="submit" name="dyn_update" value="'.tra('Update variables','',true).'"/></div>
+			$data='<form method="post" name="dyn_vars">'."\n".$data.'</form>';
+		}
+
+		return $data;
+	}
+
+	private function parse_data_process_maketoc( &$data, $options) {
 
 		global $prefs;
 
