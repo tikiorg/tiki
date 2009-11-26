@@ -13,8 +13,9 @@ class Comments extends TikiLib {
     /* Functions for the forums */
     function report_post($forumId, $parentId, $threadId, $user, $reason = '') {
 
-	$query = "delete from `tiki_forums_reported` where `threadId`=?";
-	$bindvars=array($threadId);
+	$query = "delete from `tiki_forums_reported` where `forumId`=? and `parentId`=? and `threadId`=? and `user`=?";
+	$bindvars=array($forumId, $parentId, $threadId, $user);
+
 	$this->query($query,$bindvars,-1,-1,false);
 
 	$query = "insert into `tiki_forums_reported`(`forumId`,
