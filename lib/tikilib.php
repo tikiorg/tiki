@@ -6377,7 +6377,9 @@ class TikiLib extends TikiDb_Bridge {
 		}
 
 		// Reinsert ))Words((
-		$data = str_replace($noParseWikiLinksK, $noParseWikiLinksT, $data);
+		if ($prefs['feature_wikiwords'] == 'y' ) {
+			$data = str_replace($noParseWikiLinksK, $noParseWikiLinksT, $data);
+		}
 
 		// reinsert hash-replaced links into page
 		foreach ($noparsedlinks as $np) {
