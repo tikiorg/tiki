@@ -6,6 +6,10 @@ function prefs_cas_list() {
 				'name' => tra('Create user if not in Tiki'),
 				'type' => 'flag',
 				),
+			'cas_create_user_tiki_ldap' => array(
+				'name' => tra('Use LDAP information when creating user in Tiki'),
+				'type' => 'flag',
+				),
 			'cas_skip_admin' => array(
 				'name' => tra('Use Tiki authentication for Admin login'),
 				'type' => 'flag',
@@ -51,5 +55,12 @@ function prefs_cas_list() {
 					'size' => 100,
 					'filter' => 'striptags',
 					),
-			);
+			'cas_authentication_timeout' => array(
+					'name' => tra('CAS Authentication Verification Timeout'),
+					'description' => tra('Verify authentication with the CAS server every N seconds. Null value means never reverify.'),
+					'type' => 'text',
+					'size' => 10,
+					'filter' => 'digits',
+					),
+		);
 }

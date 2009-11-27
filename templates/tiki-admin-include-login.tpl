@@ -585,6 +585,7 @@
 					{/if}
 
 							{preference name='cas_create_user_tiki'}
+							{preference name='cas_create_user_tiki_ldap'}
 							{preference name='cas_skip_admin'}
 							{preference name='cas_show_alternate_login'}
 							{preference name='cas_version'}
@@ -594,6 +595,7 @@
 							{preference name='cas_port' label="{tr}CAS Server Port{/tr}"}
 							{preference name='cas_path' label="{tr}CAS Server Path{/tr}"}
 							{preference name='cas_extra_param' label="{tr}CAS Extra Parameter{/tr}"}
+							{*{preference name='cas_authentication_timeout'}*}
 						</fieldset>
 				</fieldset>	 
 			{/tab}

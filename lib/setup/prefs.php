@@ -1548,9 +1548,9 @@ function get_default_prefs() {
 		$prefs['cms_spellcheck'] = 'n';
 		$prefs['blog_spellcheck'] = 'n';
 	}
-	global $phpcas_enabled;
-	if ( $phpcas_enabled == 'y' ) {
+
 		$prefs['cas_create_user_tiki'] = 'n';
+		$prefs['cas_create_user_tiki_ldap'] = 'n';
 		$prefs['cas_skip_admin'] = 'n';
 		$prefs['cas_show_alternate_login'] = 'y';
 		$prefs['cas_version'] = '1.0';
@@ -1558,7 +1558,7 @@ function get_default_prefs() {
 		$prefs['cas_port'] = '';
 		$prefs['cas_path'] = '';
 		$prefs['cas_extra_param'] = '';
-	}
+		$prefs['cas_authentication_timeout'] = '0';
 
 	// Special default values
 
