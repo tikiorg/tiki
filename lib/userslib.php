@@ -890,6 +890,12 @@ class UsersLib extends TikiLib {
 				}
 			}
 
+			// Invalidate cache
+			global $cachelib;
+			require_once("lib/cache/cachelib.php");
+			$cacheKey = 'user_details_'.$user;
+			$cachelib->invalidate($cacheKey);
+
 			return($ret);
 		}
 
