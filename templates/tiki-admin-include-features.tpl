@@ -74,6 +74,7 @@
 				{preference name=feature_group_watches}
 				{preference name=feature_daily_report_watches}
 				{preference name=feature_user_watches_translations}
+				{preference name=feature_user_watches_languages}
 				{preference name=feature_groupalert}				
 			</div>
 		</fieldset>		

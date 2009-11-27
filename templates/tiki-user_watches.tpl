@@ -56,28 +56,40 @@
 <form action="tiki-user_watches.php" method="post">
 <table class="normal">
 <tr>
-<td class="formcolor">{tr}Event{/tr}:</td>
-<td class="formcolor">
-<select name="event" id="type_selector">
-	<option>{tr}Select event type{/tr}</option>
-	{foreach key=event item=label from=$add_options}
-		<option value="{$event|escape}">{$label|escape}</option>
-	{/foreach}
-</select>
-</td>
-</tr>
-<tr id="lang_list">
-	<td class="formcolor">{tr}Language{/tr}</td>
+	<td class="formcolor">{tr}Event{/tr}:</td>
 	<td class="formcolor">
-		<select name="langwatch">
-			{section name=ix loop=$languages}
-				<option value="{$languages[ix].value|escape}">
-				  {$languages[ix].name}
-				</option>
-			{/section}
+		<select name="event" id="type_selector">
+			<option>{tr}Select event type{/tr}</option>
+			{foreach key=event item=label from=$add_options}
+				<option value="{$event|escape}">{$label|escape}</option>
+			{/foreach}
 		</select>
 	</td>
 </tr>
+{if $prefs.feature_categories eq 'y'}
+	<tr id="categ_list">
+		<td class="formcolor">{tr}Category{/tr}</td>
+		<td class="formcolor">
+			<select class="categwatch-select" name="categwatch" id="langwatch_categ">
+				{foreach item=c from=$categories}
+					<option value="{$c.categId|escape}">{$c.name|escape}</option>
+				{/foreach}
+			</select>
+		</td>
+	</tr>
+{/if}
+{if $prefs.feature_multilingual eq 'y'}
+	<tr id="lang_list">
+		<td class="formcolor">{tr}Language{/tr}</td>
+		<td class="formcolor">
+			<select name="langwatch">
+				{foreach item=l from=$languages}
+					<option value="{$l.value|escape}">{$l.name|escape}</option>
+				{/foreach}
+			</select>
+		</td>
+	</tr>
+{/if}
 <tr><td class="formcolor">&nbsp;</td>
 <td class="formcolor"><input type="submit" name="add" value="{tr}Add{/tr}" /></td>
 </tr>
@@ -87,10 +99,16 @@
 	$jq('#type_selector').change( function() {
 		var type = $jq(this).val();
 
+		$jq('#lang_list').hide();
+		$jq('#categ_list').hide();
+
 		if( type == 'wiki_page_in_lang_created' ) {
 			$jq('#lang_list').show();
-		} else {
-			$jq('#lang_list').hide();
+		}
+
+		if( type == 'category_changed_in_lang' ) {
+			$jq('#lang_list').show();
+			$jq('#categ_list').show();
 		}
 	} ).trigger('change');
 {/jq}
@@ -126,48 +144,50 @@
 <br />
 <form action="tiki-user_watches.php" method="post">
 <table class="normal">
-<tr>
-{if $watches}
-<th style="text-align:center;"></th>
-{/if}
-<th>{tr}Event{/tr}</th>
-<th>{tr}Object{/tr}</th>
-</tr>
-{cycle values="odd,even" print=false}
-{section name=ix loop=$watches}
-<tr>
-{if $watches}
-<td style="text-align:center;" class="{cycle advance=false}">
-<input type="checkbox" name="watch[{$watches[ix].watchId}]" />
-</td>
-{/if}
-<td class="{cycle advance=false}">
-	{if $watches[ix].event eq 'article_submitted'}
-		{tr}A user submits an article{/tr}
-	{elseif $watches[ix].event eq 'article_edited'}
-		{tr}A user edits an article{/tr}
-	{elseif $watches[ix].event eq 'article_deleted'}
-		{tr}A user deletes an article{/tr}
-	{elseif $watches[ix].event eq 'blog_post'}
-		{tr}A user submits a blog post{/tr}
-	{elseif $watches[ix].event eq 'forum_post_thread'}
-		{tr}A user posts a forum thread{/tr}
-	{elseif $watches[ix].event eq 'forum_post_topic'}
-		{tr}A user posts a forum topic{/tr}
-	{elseif $watches[ix].event eq 'wiki_page_changed'}
-		{tr}A user edited a wiki page{/tr}
-	{elseif $watches[ix].event eq 'wiki_page_in_lang_created'}
-		{tr}A user created a wiki page in a language{/tr}
-	{/if}
-	({$watches[ix].event})
-</td>
-<td class="{cycle}"><a class="link" href="{$watches[ix].url}">{tr}{$watches[ix].type}{/tr}: {$watches[ix].title}</a></td>
-</tr>
-{sectionelse}
-<tr><td class="odd" colspan="2">{tr}No records found.{/tr}</td></tr>
-{/section}
+	<tr>
+		{if $watches}
+			<th style="text-align:center;"></th>
+		{/if}
+		<th>{tr}Event{/tr}</th>
+		<th>{tr}Object{/tr}</th>
+	</tr>
+	{cycle values="odd,even" print=false}
+	{foreach item=w from=$watches}
+		<tr>
+			{if $watches}
+				<td style="text-align:center;" class="{cycle advance=false}">
+					<input type="checkbox" name="watch[{$w.watchId}]" />
+				</td>
+			{/if}
+			<td class="{cycle advance=false}">
+				{if $w.event eq 'article_submitted'}
+					{tr}A user submits an article{/tr}
+				{elseif $w.event eq 'article_edited'}
+					{tr}A user edits an article{/tr}
+				{elseif $w.event eq 'article_deleted'}
+					{tr}A user deletes an article{/tr}
+				{elseif $w.event eq 'blog_post'}
+					{tr}A user submits a blog post{/tr}
+				{elseif $w.event eq 'forum_post_thread'}
+					{tr}A user posts a forum thread{/tr}
+				{elseif $w.event eq 'forum_post_topic'}
+					{tr}A user posts a forum topic{/tr}
+				{elseif $w.event eq 'wiki_page_changed'}
+					{tr}A user edited a wiki page{/tr}
+				{elseif $w.event eq 'wiki_page_in_lang_created'}
+					{tr}A user created a wiki page in a language{/tr}
+				{elseif $w.event eq 'category_changed_in_lang'}
+					{tr}Category change in a language{/tr}
+				{/if}
+				({$w.event})
+			</td>
+			<td class="{cycle}"><a class="link" href="{$w.url}">{tr}{$w.type}{/tr}: {$w.title}</a></td>
+		</tr>
+	{foreachelse}
+		<tr><td class="odd" colspan="2">{tr}No records found.{/tr}</td></tr>
+	{/foreach}
 </table>
 {if $watches}
-{tr}Perform action with checked{/tr}: <input type="submit" name="delete" value=" {tr}Delete{/tr} ">
+	{tr}Perform action with checked{/tr}: <input type="submit" name="delete" value=" {tr}Delete{/tr} ">
 {/if}
 </form>

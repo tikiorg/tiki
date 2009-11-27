@@ -403,6 +403,10 @@ class TikiLib extends TikiDb_Bridge {
 			$page_info = $this->get_page_info( $object );
 			$mid = "`event`='wiki_page_in_lang_created' and `object`=? and `type`='lang'";
 			$bindvars[] = $page_info['lang'];
+		} elseif ( $prefs['feature_user_watches_languages'] == 'y' && $event == 'category_changed' ) {
+			$mid = "`object`=? and ((`event`='category_changed_in_lang' and `type`=? ) or (`event`='category_changed'))";
+			$bindvars[] = $object;
+			$bindvars[] = $info['lang'];
 		} elseif ($event == 'forum_post_topic') {
 			$mid = "(`event`=? or `event`=?) and `object`=?";
 			$bindvars[] = $event;
@@ -518,6 +522,7 @@ class TikiLib extends TikiDb_Bridge {
 				$objectType="";
 				switch($event) {
 				case 'wiki_page_changed': $objectType="wiki page"; break;
+				case 'wiki_page_created': $objectType="wiki page"; break;
 				case 'blog_post': $objectType="blog"; break;
 				case 'map_changed': $objectType="map_changed"; break;
 				case 'forum_post_topic': $objectType="forum"; break;
@@ -548,7 +553,7 @@ class TikiLib extends TikiDb_Bridge {
 					$categs = $categlib->get_object_categories($objectType, $object);
 
 					foreach ($categs as $category) {           		                 
-						$watching_users = $this->get_event_watches('category_changed', $category);
+						$watching_users = $this->get_event_watches('category_changed', $category, $info);
 
 						// Add all users that are not already included
 						foreach ($watching_users as $wu) {
@@ -7710,7 +7715,7 @@ class TikiLib extends TikiDb_Bridge {
 				$machine = $this->httpPrefix( true ). dirname( $foo["path"] );
 				require_once('lib/diff/difflib.php');
 				$diff = diff2($old["data"] , $edit_data, "unidiff");
-				sendWikiEmailNotification('wiki_page_changed', $pageName, $edit_user, $edit_comment, $old_version, $edit_data, $machine, $diff, $edit_minor, $hash['contributions']);
+				sendWikiEmailNotification('wiki_page_changed', $pageName, $edit_user, $edit_comment, $old_version, $edit_data, $machine, $diff, $edit_minor, $hash['contributions'], 0, 0, $lang);
 			}
 
 			$query = "delete from `tiki_page_drafts` where `user`=? and `pageName`=?";

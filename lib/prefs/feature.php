@@ -513,6 +513,11 @@ function prefs_feature_list() {
 			'help' => 'User+Watches',
 			'type' => 'flag',
 		),
+		'feature_user_watches_languages' => array(
+			'name' => tra('User Watches Languages'),
+			'description' => tra('Watch language-specific changes within a category.'),
+			'type' => 'flag',
+		),
 		'feature_usermenu' => array(
 			'name' => tra('User Menu'),
 			'description' => tra('User Menu'),

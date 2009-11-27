@@ -1337,6 +1337,7 @@ function get_default_prefs() {
 		'feature_user_watches' => 'n',
 		'feature_group_watches' => 'n',
 		'feature_user_watches_translations' => 'n',
+		'feature_user_watches_languages' => 'n',
 		'feature_daily_report_watches' => 'n',
 		'feature_quick_object_perms' => 'n',
 		'feature_xmlrpc' => 'n',

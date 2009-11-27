@@ -35,14 +35,40 @@ if ($prefs['feature_articles'] == 'y') {
 if ($prefs['feature_wiki'] == 'y') {
 	$add_options['wiki_page_changes'] = tra('Any wiki page is changed');
 }
-if ($prefs['feature_user_watches_translations'] == 'y') $add_options['wiki_page_in_lang_created'] = tra('A new page is created in a language');
+if ($prefs['feature_user_watches_translations'] == 'y') {
+	$add_options['wiki_page_in_lang_created'] = tra('A new page is created in a language');
+}
+if ($prefs['feature_user_watches_languages'] == 'y') {
+	$add_options['category_changed_in_lang'] = tra('Category change in a language');
+}
+
 $smarty->assign('add_options', $add_options);
 if (isset($_POST['langwatch'])) {
 	foreach($languages as $lang) if ($_POST['langwatch'] == $lang['value']) {
 		$langwatch = $lang;
 		break;
 	}
-} else $langwatch = null;
+} else {
+	$langwatch = null;
+}
+
+if ($prefs['feature_categories']) {
+	include_once ('lib/categories/categlib.php');
+	$categories = $categlib->list_categs();
+} else {
+	$categories = array();
+}
+
+if ( isset($_REQUEST['categwatch']) ) {
+	$selected_categ = null;
+	foreach( $categories as $categ ) {
+		if ( $_REQUEST['categwatch'] == $categ['categId'] ) {
+			$selected_categ = $categ;
+			break;
+		}
+	}
+}
+
 if (isset($_REQUEST['id'])) {
 	$area = 'deluserwatch';
 	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
@@ -52,6 +78,7 @@ if (isset($_REQUEST['id'])) {
 		key_get($area);
 	}
 }
+
 if (isset($_REQUEST["add"])) {
 	if (isset($_REQUEST['event'])) {
 		switch ($_REQUEST['event']) {
@@ -82,6 +109,16 @@ if (isset($_REQUEST["add"])) {
 				$watch_label = tra('Language watch') . ": {$lang['name']}";
 				$watch_url = "tiki-user_watches.php";
 				break;
+
+			case 'category_changed_in_lang':
+				if( $selected_categ && $langwatch ) {
+					$watch_object = $selected_categ['categId'];
+					$watch_type = $langwatch['value'];
+					$watch_label = tr('Category watch: %0, Language: %1', $selected_categ['name'], $langwatch['name'] );
+					$watch_url = "tiki-browse_categories.php?lang={$lang['value']}&parentId={$selected_categ['categId']}";
+				}
+				break;
+
 			case 'wiki_page_changes':
 				$watch_object = "*";
 				$watch_type = 'wiki page';
@@ -121,9 +158,7 @@ $smarty->assign('watches', $watches);
 // this was never needed here, was it ? -- luci
 //include_once ('tiki-mytiki_shared.php');
 if ($prefs['feature_categories']) {
-	include_once ('lib/categories/categlib.php');
 	$watches = $tikilib->get_user_watches($user, 'new_in_category');
-	$categories = $categlib->list_categs();
 	$nb = count($categories);
 	foreach($watches as $watch) {
 		if ($watch['object'] == '*') {
