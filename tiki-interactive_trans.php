@@ -112,6 +112,22 @@ if (isset($_REQUEST['src'])&&isset($_REQUEST['lang'])){
 	die;
 }
 
+// Called by the JQuery ajax request. No response expected.
+if( isset( $_REQUEST['source'], $_REQUEST['trans'] ) && count($_REQUEST['source']) == count($_REQUEST['trans']) ) {
+	$lang = $prefs['language'];
+	if( empty( $lang ) ) {
+		$lang = $prefs['site_language'];
+	}
+
+	foreach( $_REQUEST['trans'] as $k => $translation ) {
+		$source = $_REQUEST['source'][$k];
+
+		update_trans( $source, $translation, $lang );
+	}
+
+	exit;
+}
+
 //Main windows 
 $languages= getLanguages();
 $entries=array();
