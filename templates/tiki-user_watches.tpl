@@ -58,7 +58,7 @@
 <tr>
 <td class="formcolor">{tr}Event{/tr}:</td>
 <td class="formcolor">
-<select name="event" onchange="document.getElementById('lang_list').style.visibility = (this.value == 'wiki_page_in_lang_created') ? '' : 'hidden'">
+<select name="event" id="type_selector">
 	<option>{tr}Select event type{/tr}</option>
 	{foreach key=event item=label from=$add_options}
 		<option value="{$event|escape}">{$label|escape}</option>
@@ -66,7 +66,7 @@
 </select>
 </td>
 </tr>
-<tr id="lang_list" style="visibility: hidden">
+<tr id="lang_list">
 	<td class="formcolor">{tr}Language{/tr}</td>
 	<td class="formcolor">
 		<select name="langwatch">
@@ -83,6 +83,17 @@
 </tr>
 </table>
 </form>
+{jq}
+	$jq('#type_selector').change( function() {
+		var type = $jq(this).val();
+
+		if( type == 'wiki_page_in_lang_created' ) {
+			$jq('#lang_list').show();
+		} else {
+			$jq('#lang_list').hide();
+		}
+	} ).trigger('change');
+{/jq}
 {/if}
 <br />
 <h2>{tr}Watches{/tr}</h2>
