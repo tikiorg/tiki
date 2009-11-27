@@ -2,13 +2,16 @@
 
 function prefs_feature_list() {
 
-	global $prefs, $categlib;
+	global $prefs;
+	
+	$catree = array();
 
 	if ($prefs['feature_categories'] == 'y') {
+		global $categlib;
+
 		include_once ('lib/categories/categlib.php');
 		$all_categs = $categlib->get_all_categories();
 
-		$catree = array();
 		$catree['-1'] = tra('None');
 		$catree['0'] = tra('All');
 
@@ -17,9 +20,6 @@ function prefs_feature_list() {
 			$catree[$categ['categId']] = $categ['categpath'];
 		}
 	}
-
-	$staging_catree = $catree;
-	unset($staging_catree['0']);
 	
 	return array(
 		'feature_wiki' => array(
@@ -1509,37 +1509,10 @@ function prefs_feature_list() {
 				'feature_categories',
 			),
 		),
-		'feature_wikiapproval_staging_category' => array(
-			'name' =>  tra('Staging'),
-			'type' => 'list',
-			'options' => $staging_catree,
-			'dependencies' => array(
-				'feature_categories',
-			),
+		'feature_wiki_show_hide_before' => array(
+			'name' => tra('Display show/hide icon displayed before headings'),
+			'type' => 'flag',
 		),
-		'feature_wikiapproval_approved_category' => array(
-			'name' =>  tra('Approved') . ' ' . tra('(mandatory for feature to work)'),
-			'type' => 'list',
-			'options' => $staging_catree,
-			'dependencies' => array(
-				'feature_categories',
-			),
-		),
-		'feature_wikiapproval_outofsync_category' => array(
-			'name' =>  tra('Out-of-sync'),
-			'type' => 'list',
-			'options' => $staging_catree,
-			'dependencies' => array(
-				'feature_categories',
-			),
-		),
-	
-	// Used in templates/tiki-admin-include-wiki.tpl
-	'feature_wiki_show_hide_before' => array(
-			'name' => '',
-			'type' => '',
-			),
-	
 		'feature_metrics_dashboard' => array(
 			'name' => tra('Metrics Dashboard'),
 			'description' => tra('Generate automated statistics from configured database queries.'),

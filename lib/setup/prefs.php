@@ -160,7 +160,7 @@ function get_default_prefs() {
 		'wikiapproval_prefix' => '*',
 		'wikiapproval_hideprefix' => 'n',
 		'wikiapproval_delete_staging' => 'n',
-		'wikiapproval_master_group' => '',
+		'wikiapproval_master_group' => '-1',
 		'wikiapproval_staging_category' => '0',
 		'wikiapproval_approved_category' => '0',
 		'wikiapproval_outofsync_category' => '0',

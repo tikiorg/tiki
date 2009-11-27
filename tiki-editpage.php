@@ -46,7 +46,7 @@ if (empty($_REQUEST["page"])) {
 	die;
 }
 
-if ($prefs['feature_wikiapproval'] == 'y' && substr($_REQUEST['page'], 0, strlen($prefs['wikiapproval_prefix'])) != $prefs['wikiapproval_prefix'] && !empty($prefs['wikiapproval_master_group']) && !in_array($prefs['wikiapproval_master_group'], $tikilib->get_user_groups($user))) {
+if ($prefs['feature_wikiapproval'] == 'y' && substr($_REQUEST['page'], 0, strlen($prefs['wikiapproval_prefix'])) != $prefs['wikiapproval_prefix'] && ($prefs['wikiapproval_master_group'] != '-1') && !in_array($prefs['wikiapproval_master_group'], $tikilib->get_user_groups($user))) {
 	$_REQUEST['page'] = $prefs['wikiapproval_prefix'] . $_REQUEST['page'];
 }
 

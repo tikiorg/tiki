@@ -1,6 +1,25 @@
 <?php
 
 function prefs_wiki_list() {
+
+	global $prefs;
+	$wiki_forums = array();
+
+	if ($prefs['feature_forums'] == 'y') {
+		include_once ('lib/commentslib.php');
+		$commentslib = new Comments($dbTiki);
+		$all_forums = $commentslib->list_forums(0, -1, 'name_asc', '');
+
+
+		if ($all_forums) {
+			foreach ($all_forums['data'] as $forum) {
+				$wiki_forums[$forum['forumId']] = $forum['name'];
+			}
+		} else {
+			$wiki_forums[''] = tra('None');
+		}
+	}
+
 	return array(
 		'wiki_page_regex' => array(
 			'name' => tra('Wiki link format'),
@@ -450,12 +469,10 @@ function prefs_wiki_list() {
 			'size' => '3',
 			'filter' => 'digits',
 		),
-	
-	
-	// Used in templates/tiki-admin-include-wiki.tpl
-	'wiki_forum_id' => array(
+		'wiki_forum_id' => array(
 			'name' => tra('Forum for discussion'),
-			'type' => '',
-			),
+			'type' => 'list',
+			'options' => $wiki_forums,
+		),
 	);
 }

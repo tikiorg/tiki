@@ -1,6 +1,34 @@
 <?php
 
 function prefs_wikiapproval_list() {
+	global $prefs;
+	
+	$staging_catree = array();
+
+	if ($prefs['feature_categories'] == 'y') {
+		global $categlib;
+
+		include_once ('lib/categories/categlib.php');
+		$all_categs = $categlib->get_all_categories();
+
+		$staging_catree['-1'] = tra('None');
+
+		foreach ($all_categs as $categ)
+		{
+			$staging_catree[$categ['categId']] = $categ['categpath'];
+		}
+	}
+
+	global $userlib;
+	$all_groups = $userlib->list_all_groups();
+
+	$staging_groups = array();
+	$staging_groups['-1'] = tra('None');
+
+	foreach ($all_groups as $group) {
+		$staging_groups[] = $group;
+	}
+	
 	return array(
 		'wikiapproval_block_editapproved' => array(
 			'name' => tra('Force bounce of editing of approved pages to staging'),
@@ -37,33 +65,34 @@ function prefs_wikiapproval_list() {
 				'feature_freetags',
 			), 
 		),
-	
-	
-	
-	// Used in templates/tiki-admin-include-wiki.tpl
-	'wikiapproval_master_group' => array(
+		'wikiapproval_staging_category' => array(
+			'name' =>  tra('Staging'),
+			'type' => 'list',
+			'options' => $staging_catree,
+			'dependencies' => array(
+				'feature_categories',
+			),
+		),
+		'wikiapproval_approved_category' => array(
+			'name' =>  tra('Approved') . ' ' . tra('(mandatory for feature to work)'),
+			'type' => 'list',
+			'options' => $staging_catree,
+			'dependencies' => array(
+				'feature_categories',
+			),
+		),
+		'wikiapproval_outofsync_category' => array(
+			'name' =>  tra('Out-of-sync'),
+			'type' => 'list',
+			'options' => $staging_catree,
+			'dependencies' => array(
+				'feature_categories',
+			),
+		),
+		'wikiapproval_master_group' => array(
 			'name' => tra('If not in the group, edit is always redirected to the staging page edit'),
-			'type' => '',
+			'type' => 'list',
+			'options' => $staging_groups,
 			),
-	
-	// Used in templates/tiki-admin-include-wiki.tpl
-	'wikiapproval_staging_category' => array(
-			'name' => tra('Staging'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-wiki.tpl
-	'wikiapproval_approved_category' => array(
-			'name' => tra('Approved'),
-			'type' => '',
-			),
-	
-	// Used in templates/tiki-admin-include-wiki.tpl
-	'wikiapproval_outofsync_category' => array(
-			'name' => tra('Out-of-sync'),
-			'type' => '',
-			),
-	
 	);	
-	
 }

@@ -28,6 +28,7 @@
 					{preference name=wiki_authors_style_by_page label="{tr}Allow override per page{/tr}"}
 				</div>
 
+				{preference name=feature_wiki_show_hide_before}
 				{preference name=wiki_actions_bar}
 				{preference name=wiki_page_navigation_bar}
 				{preference name=wiki_topline_position}
@@ -170,21 +171,8 @@
 
 		{preference name=feature_wiki_discuss}
 		<div class="adminoptionboxchild" id="feature_wiki_discuss_childcontainer">
-			<div class="adminoptionboxlabel">
-				<label for="wiki_forum_id">{tr}Forum for discussion:{/tr}</label>
-				{if $prefs.feature_forums eq 'y'} 
-					<a class="link" href="tiki-assignpermission.php?level=forum" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
-				{/if}
-				<select id="wiki_forum_id" name="wiki_forum_id"{if $prefs.feature_forums ne 'y' or !$all_forums} disabled="disabled"{/if}>
-					{if $all_forums}
-						{section name=ix loop=$all_forums}
-							<option value="{$all_forums[ix].forumId|escape}" {if $all_forums[ix].forumId eq $prefs.wiki_forum_id}selected="selected"{/if}>{$all_forums[ix].name}</option>
-						{/section}
-					{else}    
-						<option value="">{tr}None{/tr}</option>
-					{/if}
-				</select>
-			</div>
+			{preference name=wiki_forum_id}
+			<a class="link" href="tiki-assignpermission.php?level=forum" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
 		</div>
 
 		{preference name=feature_source}
@@ -259,18 +247,7 @@
 			<div class="adminoptionboxchild" id="feature_wikiapproval_childcontainer">
 				{preference name=wikiapproval_block_editapproved}
 				{preference name=wikiapproval_delete_staging}
-
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel">
-							<label for="wikiapproval_master_group">{tr}If not in the group, edit is always redirected to the staging page edit:{/tr}</label>
-							<select name="wikiapproval_master_group" id="wikiapproval_master_group">
-								<option value=""{if $prefs.wikiapproval_master_group eq ''} selected="selected"{/if}></option>
-								{foreach from=$all_groups item=g}
-									<option value="{$g|escape}"{if $prefs.wikiapproval_master_group eq $g} selected="selected"{/if}>{$g|escape}</option>
-								{/foreach}
-							</select>
-						</div>
-					</div>
+				{preference name=wikiapproval_master_group}
 
 					<fieldset>
 						<legend>{tr}Page name{/tr}</legend>
@@ -280,9 +257,9 @@
 
 					<fieldset>
 						<legend>{tr}Category{/tr}</legend>
-						{preference name=feature_wikiapproval_staging_category}
-						{preference name=feature_wikiapproval_approved_category}
-						{preference name=feature_wikiapproval_outofsync_category}
+						{preference name=wikiapproval_staging_category}
+						{preference name=wikiapproval_approved_category}
+						{preference name=wikiapproval_outofsync_category}
 						{preference name=wikiapproval_sync_categories}
 					</fieldset>
 
@@ -298,7 +275,6 @@
 						{preference name=wikiapproval_combine_freetags}
 					</fieldset>
 			</div>
-
 	{/tab}
 
 	{tab name="{tr}Page Listings{/tr}"}
