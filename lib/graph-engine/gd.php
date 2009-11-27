@@ -6,7 +6,7 @@
  *
  * This file contains the GD graphic renderer.
  */
-require_once('graph-engine/core.php');
+require_once('lib/graph-engine/core.php');
 
 class GD_GRenderer extends GRenderer // {{{1
 {
