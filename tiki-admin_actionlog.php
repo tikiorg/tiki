@@ -679,7 +679,7 @@ if (isset($_REQUEST['graph'])) {
 	$smarty->assign('defaultLegendBgcolor', 'white');
 	global $imagegallib;
 	include_once ('lib/imagegals/imagegallib.php');
-	$galleries = $imagegallib->list_visible_galleries(0, -1, 'name_asc', $user, '');
+	$galleries = $imagegallib->list_galleries(0, -1, 'name_asc', $user, '');
 	$smarty->assign('galleries', $galleries['data']);
 }
 if (!isset($cookietab)) { $cookietab = '1'; }
