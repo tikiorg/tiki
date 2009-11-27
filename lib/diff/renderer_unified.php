@@ -2,7 +2,7 @@
 // $Id: /cvsroot/tikiwiki/tiki/lib/diff/renderer_unified.php,v 1.9 2006-02-01 21:06:13 jdrexler Exp $
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
@@ -16,8 +16,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *
  * @package Text_Diff
  */
-class Text_Diff_Renderer_unified extends Tiki_Text_Diff_Renderer {
-
+class Text_Diff_Renderer_unified extends Tiki_Text_Diff_Renderer
+{
     function Text_Diff_Renderer_unified($context_lines = 4)
     {
         $this->_leading_context_lines = $context_lines;

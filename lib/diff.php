@@ -67,7 +67,7 @@ class _WikiDiffEngine
 	    $n_to--;
 	    $endskip++;
 	  }
-	for ( $skip = 0; $skip < min($n_from, $n_to); $skip++)
+	for ($skip = 0, $min_from_to = min($n_from, $n_to); $skip < $min_from_to; $skip++)
 	    if ($from_lines[$skip] != $to_lines[$skip])
 		break;
 	$n_from -= $skip;
@@ -477,7 +477,7 @@ class _WikiDiffEngine
 /**
  * Class representing a diff between two files.
  */
-class WikiDiff 
+class WikiDiff
 {
   var $edits;
 
@@ -485,7 +485,7 @@ class WikiDiff
    * Compute diff between files (or deserialize serialized WikiDiff.)
    */
   function WikiDiff($from_lines = false, $to_lines = false)
-      {
+  {
 	if ($from_lines && $to_lines)
 	  {
 	    $compute = new _WikiDiffEngine($from_lines, $to_lines);
@@ -519,12 +519,8 @@ class WikiDiff
 	$x = 0;
 	$rev = new WikiDiff;
 
-	for ( reset($this->edits);
-	      $edit = current($this->edits);
-	      next($this->edits) )
-	  {
-	    if (is_array($edit))
-	      { // Was an add, turn it into a delete.
+	for (reset($this->edits), $currentedits = current($this->edits); $edit = $currentedits; next($this->edits)) {
+	    if (is_array($edit)) { // Was an add, turn it into a delete.
 		$nadd = sizeof($edit);
 		USE_ASSERTS && assert ($nadd > 0);
 		$edit = -$nadd;
@@ -646,7 +642,7 @@ class WikiDiff
 	    if (is_array($op) && is_array($newop))
 	      {
 		// Both $op and $newop are adds.
-		for ($i = 0; $i < sizeof($newop); $i++)
+		for ($i = 0, $sizeof_newop = sizeof($newop); $i < $sizeof_newop; $i++)
 		    $op[] = $newop[$i];
 	      }
 	    else if (($op > 0 && $newop > 0) || ($op < 0 && $newop < 0))
@@ -765,10 +761,7 @@ class WikiDiff
   function lcs ()
       {
 	$lcs = 0;
-	for (reset($this->edits);
-	     $edit = current($this->edits);
-	     next($this->edits))
-	  {
+	for (reset($this->edits), $currentedit = current($this->edits); $edit = $currentedit; next($this->edits)) {
 	    if (!is_array($edit) && $edit > 0)
 		$lcs += $edit;
 	  }
@@ -965,17 +958,13 @@ class WikiDiffFormatter
 		       'a' => '#ccffcc',
 		       'd' => '#ffcccc');
 
-	for (reset($hunks); $hunk = current($hunks); next($hunks))
-	  {
+	for (reset($hunks), $currenthunks = current($hunks); $hunk = $currenthunks; next($hunks)) {
 	    if (!empty($hunk['c']))
-		$html .= $this->_emit_lines($hunk['c'],
-		                            $this->context_prefix, '#ffffff');
+		$html .= $this->_emit_lines($hunk['c'], $this->context_prefix, '#ffffff');
 	    if (!empty($hunk['d']))
-		$html .= $this->_emit_lines($hunk['d'],
-		                            $this->deletes_prefix, '#ffcccc');
+		$html .= $this->_emit_lines($hunk['d'], $this->deletes_prefix, '#ffcccc');
 	    if (!empty($hunk['a']))
-		$html .= $this->_emit_lines($hunk['a'],
-		                            $this->adds_prefix, '#ccffcc');
+		$html .= $this->_emit_lines($hunk['a'], $this->adds_prefix, '#ccffcc');
 	  }
 
 	$html .= "</table></td></tr></table></td></tr>\n";

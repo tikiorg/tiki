@@ -2,7 +2,7 @@
 // $Id: /cvsroot/tikiwiki/tiki/lib/diff/renderer_bytes.php,v 1.5 2006-02-01 21:06:13 jdrexler Exp $
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
@@ -11,8 +11,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  * Give back the kb change
  *
  */
-class Text_Diff_Renderer_bytes extends Text_Diff_Renderer {
-
+class Text_Diff_Renderer_bytes extends Text_Diff_Renderer
+{
     function Text_Diff_Renderer_bytes($first = -1)
     {
         $this->_addBytes = 0;

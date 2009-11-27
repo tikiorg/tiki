@@ -11,7 +11,8 @@ require_once("lib/diff/Diff.php");
 require_once("lib/diff/Renderer.php");
 
 /* @brief modif tiki for the renderer lib	*/
-class Tiki_Text_Diff_Renderer extends Text_Diff_Renderer {
+class Tiki_Text_Diff_Renderer extends Text_Diff_Renderer
+{
      function _lines($lines, $prefix = '', $suffix = '')
 //ADD $suffix
     {

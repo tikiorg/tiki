@@ -8,7 +8,8 @@
  *
  * @package Text_Diff
  */
-class Text_Diff_Renderer_character extends Tiki_Text_Diff_Renderer {
+class Text_Diff_Renderer_character extends Tiki_Text_Diff_Renderer
+{
     var $orig;
     var $final;
 

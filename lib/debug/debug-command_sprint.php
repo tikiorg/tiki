@@ -12,7 +12,8 @@ require_once ('lib/debug/debugger-ext.php');
 /**
  * \brief Debugger command to print smarty vars
  */
-class DbgSPrint extends DebuggerCommand {
+class DbgSPrint extends DebuggerCommand
+{
 	/// \b Must have function to announce command name in debugger console
 	function name() {
 		return 'sprint';

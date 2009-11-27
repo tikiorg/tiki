@@ -9,8 +9,8 @@
  *
  * @package Text_Diff
  */
-class Text_Diff_Renderer {
-
+class Text_Diff_Renderer
+{
     /**
      * Number of leading context "lines" to preserve.
      *
