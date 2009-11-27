@@ -235,26 +235,6 @@ if ($prefs['feature_categories'] == 'y') {
 		$staging_cats = array_diff($staging_cats,Array($prefs['wikiapproval_outofsync_category']));
 		$categlib->update_object_categories($staging_cats, $s_cat_objid, $cat_type, $s_cat_desc, $s_cat_name, $s_cat_href);	
 	}
-	
-	// now to set polls
-	// for Mozilla, wiki pages in the knowledge base has polls of certain questions
-	// TODO: check that poll link to objectId is not broken on saving and reduce no. of queries
-	if ($prefs['feature_polls'] == 'y' && $prefs['wikiapproval_approved_category'] > 0 && in_array($prefs['wikiapproval_approved_category'], $cats)) {
-		
-		global $polllib; if (!is_object($polllib))  include_once('lib/polls/polllib.php');
-		$catObjectId = $categlib->is_categorized($cat_type, $cat_objid);
-		if (!$polllib->has_object_polls($catObjectId)) {
-			$template_id = $polllib->get_templateIdFromQ('kb_solve_or_not');
-			$pollid = $polllib->create_poll($template_id, $page);
-			$template_id = $polllib->get_templateIdFromQ('kb_easy_to_understand');
-			$pollid2 = $polllib->create_poll($template_id, $page);
-			$template_id = $polllib->get_templateIdFromQ('kb_ease_of_solving');
-			$pollid3 = $polllib->create_poll($template_id, $page);
-			$polllib->poll_categorize($catObjectId,$pollid,$page);
-			$polllib->poll_categorize($catObjectId,$pollid2,$page);
-			$polllib->poll_categorize($catObjectId,$pollid3,$page);
-		}
-	}	
 }
 
 // update approved page tags
