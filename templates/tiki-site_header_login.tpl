@@ -22,7 +22,7 @@
 		{/if}
 	{else}
 		<form class="forms" name="loginbox" action="tiki-login.php" method="post">
-			<label for="sl-login-user">{if $prefs.login_is_email eq 'y'}{tr}Email{/tr}{else}{tr}User{/tr}{/if}:</label>
+			<label for="sl-login-user">{if $prefs.login_is_email eq 'y'}{tr}Email{/tr}{else}{tr}Username{/tr}{/if}:</label>
 			<input type="text" name="user" id="sl-login-user" />
 			<label for="sl-login-pass">{tr}Password{/tr}:</label>
 			<input type="password" name="pass" id="sl-login-pass" size="10" />

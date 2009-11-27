@@ -24,7 +24,7 @@ function capLock(e){
         <form action="{if $prefs.https_login eq 'encouraged' || $prefs.https_login eq 'required' || $prefs.https_login eq 'force_nocheck'}{$base_url_https}{/if}{$prefs.login_url}" method="post"{if $prefs.desactive_login_autocomplete eq 'y'} autocomplete="off"{/if}>
          <fieldset>
           <legend>{tr}Switch User{/tr}</legend>
-          <label for="login-switchuser">{tr}User{/tr}:</label>
+          <label for="login-switchuser">{tr}Username{/tr}:</label>
           <input type="hidden" name="su" value="1" />
 		  {if $prefs.feature_help eq 'y'}
 			{help url="Switch+User" desc="{tr}Help{/tr}" desc="{tr}Switch User{/tr}:{tr}Enter user name and click 'Switch'.<br />Useful for testing permissions.{/tr}"}
@@ -93,7 +93,7 @@ function capLock(e){
 	 {if !empty($urllogin)}<input type="hidden" name="url" value="{$urllogin|escape}" />{/if}
         <fieldset>
           <legend>{tr}Log in as{/tr}&hellip;</legend>
-            <div><label for="login-user">{if $prefs.login_is_email eq 'y'}{tr}Email{/tr}{else}{tr}User{/tr}{/if}:</label><br />
+            <div><label for="login-user">{if $prefs.login_is_email eq 'y'}{tr}Email{/tr}{else}{tr}Username{/tr}{/if}:</label><br />
 		{if $loginuser eq ''}
               <input type="text" name="user" id="login-user" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" />
 	  <script type="text/javascript">document.getElementById('login-user').focus();</script>
