@@ -41,6 +41,7 @@ $langmapping = array(
     'he' => array(  'עברית',    tra("Hebrew")       ),
     'hi-IN' => array(  'हिन्दी',      tra("Hindi")      ),
     'hr' => array(  'Hrvatski',     tra("Croatian")   ),
+    'id' => array(  'Indonesian',     tra("Indonesian")      ),
     'is' => array(  'íslenska',     tra("Icelandic")      ),
     'it' => array(  'Italiano',     tra("Italian")      ),
     'ja' => array(  '日本語',    tra("Japanese")     ),
