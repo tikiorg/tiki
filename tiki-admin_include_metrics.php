@@ -9,4 +9,3 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 check_ticket('admin-inc-metrics');
 
 ask_ticket('admin-inc-metrics');
-?>
