@@ -894,6 +894,7 @@ class ImageGalsLib extends TikiLib {
 			$nots = $this->get_event_watches($event, $galleryId);
 			
 			if ($prefs['feature_daily_report_watches'] == 'y') {
+				global $reportslib; include_once ('lib/reportslib.php');
 				$reportslib->makeReportCache($nots, array("event"=>$event, "imageId"=>$imageId, "imageName"=>$name, "fileName"=>$filename, "galleryId"=>$galleryId, "galleryName"=>$galleryName, "action"=>$action, "user"=>$user));
 			}
 			
