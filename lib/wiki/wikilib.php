@@ -411,9 +411,9 @@ class WikiLib extends TikiLib {
 	function wiki_attach_file($page, $name, $type, $size, $data, $comment, $user, $fhash) {
 		$comment = strip_tags($comment);
 		$now = $this->now;
-		$query = "insert into `tiki_wiki_attachments`(`page`,`filename`,`filesize`,`filetype`,`data`,`created`,`hits`,`user`,`comment`,`path`) values(?,?,?,?,?,?,0,?,?,?)";
+		$query = "insert into `tiki_wiki_attachments`(`page`,`filename`,`filesize`,`filetype`,`data`,`created`,`hits`,`user`,`comment`,`path`) values(?,?,?,?,?,?,?,?,?,?)";
 		//$this->blob_encode($data);
-		$result = $this->query($query,array($page, $name, (int)$size, $type, $data, (int)$now, $user, $comment, $fhash));
+		$result = $this->query($query,array($page, $name, (int)$size, $type, $data, (int)$now, 0, $user, $comment, $fhash));
 
 		global $prefs;
 		if ($prefs['feature_score'] == 'y') {
@@ -672,6 +672,9 @@ class WikiLib extends TikiLib {
 	function is_editable($page, $user, $info=null) {
 		global $prefs;
 		$perms = Perms::get( array( 'type' => 'wiki page', 'object' => $page ) );
+		if ($perms->admin_wiki) {
+			return true;
+		}
 
 		if ($prefs['feature_wiki_userpage'] == 'y' and strcasecmp(substr($page, 0, strlen($prefs['feature_wiki_userpage_prefix'])), $prefs['feature_wiki_userpage_prefix']) == 0 and strcasecmp($page, $prefs['feature_wiki_userpage_prefix'].$user) != 0)
 			return false;
