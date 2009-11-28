@@ -1,5 +1,6 @@
 {* $Id$ *}
 {strip}
+{if $prefs.feature_site_login eq 'y'}
 {if $user}
 <div id="siteloginbar" class="logged-in">
 	{$user|userlink} | <a href="tiki-logout.php" title="{tr}Logout{/tr}">{tr}Logout{/tr}</a>
@@ -37,4 +38,5 @@
 	{/if}
 {/if}
 </div>
+{/if}
 {/strip}
