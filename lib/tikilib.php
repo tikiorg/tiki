@@ -1840,7 +1840,7 @@ class TikiLib extends TikiDb_Bridge {
 
 	/*shared*/
 	function remove_object($type, $id) {
-		global $categlib, $dbTiki;
+		global $categlib, $dbTiki, $prefs;
 
 		if (!is_object($categlib)) {
 			require_once ("lib/categories/categlib.php");
@@ -1865,6 +1865,11 @@ class TikiLib extends TikiDb_Bridge {
 		$linkhandle = "objectlink:$type:$id";
 		$query = "delete from `tiki_links` where `fromPage` = ?";
 		$result = $this->query($query, array( $linkhandle ) );
+		// remove fgal backlinks
+		if ( $prefs['feature_file_galleries'] == 'y') {
+			global $filegallib; require_once 'lib/filegals/filegallib.php';
+			$filegallib->deleteBacklinks(array('type'=>$type, 'object'=>$id));
+		}
 		// remove object
 		$objectlib->delete_object($type, $id);
 		return true;
@@ -3867,10 +3872,6 @@ class TikiLib extends TikiDb_Bridge {
 		$this->query($query, array(NULL, $page));
 		$query = 'delete from `tiki_theme_control_objects` where `name`=? and `type`=?';
 		$this->query($query, array($page, 'wiki page'));
-		if ( $prefs['feature_file_galleries'] == 'y') {
-			global $filegallib; require_once 'lib/filegals/filegallib.php';
-			$filegallib->deleteBacklinks(array('type'=> 'wiki page', 'object'=> $page));
-		}
 		$this->remove_object('wiki page', $page);
 
 		$query = "delete from `tiki_user_watches` where `event`=? and `object`=?";

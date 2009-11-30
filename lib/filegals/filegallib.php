@@ -1086,10 +1086,13 @@ class FileGalLib extends TikiLib {
 	function replaceBacklinks($context, $fileIds=array()) {
 		global $objectlib; include_once('lib/objectlib.php');
 		$objectId = $objectlib->get_object_id($context['type'], $context['object']);
-		if (empty($objectId)) {
+		if (empty($objectId) && !empty( $fileIds)) {
 			$objectId = $objectlib->add_object($context['type'], $context['object'], $context['description'], $context['name'], $context['href']);
 		}
-		$this->_replaceBacklinks($objectId, $fileIds);
+		if (!empty($objectId)) {
+			$this->_replaceBacklinks($objectId, $fileIds);
+		}
+		//echo 'REPLACEBACKLINK'; print_r($context);print_r($fileIds);echo '<pre>'; debug_print_backtrace(); echo '</pre>';die;
 	}
 	function _replaceBacklinks($objectId, $fileIds=array()) {
 		$this->_deleteBacklinks($objectId);
@@ -1137,7 +1140,7 @@ class FileGalLib extends TikiLib {
 				$fileIds[] = $fileId;
 			}
 		}
-		if (preg_match_all('/\[(+*)\]/Umi', $data, $matches)) {
+		if (preg_match_all('/\[(.+)\]/Umi', $data, $matches)) {
 			foreach ($matches as $match) {
 				if ($fileId = $this->getLinkFileId($match[1])) {
 					$fileIds[] = $fileId;

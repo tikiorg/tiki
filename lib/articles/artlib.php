@@ -51,6 +51,9 @@ class ArtLib extends TikiLib {
 			global $categlib; include_once('lib/categories/categlib.php');
 			$categlib->approve_submission($subId, $articleId);
 		}
+		$query = 'update `tiki_objects` set `href`=?, `type`=? where `href`=?';
+		$this->query($query, array("'tiki-read_article.php?articleId=$articleId", 'article', "tiki-edit_submission.php?subId=$subId"));
+
 	}
 
 	function add_article_hit($articleId) {
@@ -99,7 +102,7 @@ class ArtLib extends TikiLib {
 				$reportslib->makeReportCache($nots, array("event"=>'article_deleted', "articleId"=>$articleId, "articleTitle"=>$article_data['title'], "authorName"=>$article_data['authorName'], "user"=>$user));
 			}
 		    
-		    if (count($nots) || is_array($emails)) {
+		    if (count($nots) || (!empty($emails) && is_array($emails))) {
 			    include_once("lib/notifications/notificationemaillib.php");
 	
 			    $smarty->assign('mail_site', $_SERVER["SERVER_NAME"]);
@@ -125,9 +128,8 @@ class ArtLib extends TikiLib {
 	function remove_submission($subId) {
 		if ($subId) {
 			$query = "delete from `tiki_submissions` where `subId`=?";
-
 			$result = $this->query($query,array((int) $subId));
-
+			$this->remove_object('submission', $subId);
 			return true;
 		}
 	}
@@ -227,6 +229,7 @@ class ArtLib extends TikiLib {
 				sendEmailNotification($emails, "watch", "submission_notification_subject.tpl", $_SERVER["SERVER_NAME"], "submission_notification.tpl");
 			}
 		}
+		$this->syncParsedText($heading.' '.$body, array('type'=>'submission', 'object'=>$id, 'description'=>substr($heading, 0, 200), 'name'=>$title, 'href'=>"tiki-edit_submission.php?subId=$id"));
 
 		return $id;
 	}
@@ -349,6 +352,7 @@ class ArtLib extends TikiLib {
 			require_once('lib/search/refresh-functions.php');
 			refresh_index('articles', $articleId);
 		}
+		$this->syncParsedText($body.' '.$heading, array('type'=>'article', 'object'=>$articleId, 'description'=>substr($heading, 0, 200), 'name'=>$title, 'href'=>"tiki-read_article.php?articleId=$articleId"));
 
 		return $articleId;
     }

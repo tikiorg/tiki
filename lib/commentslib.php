@@ -2098,8 +2098,8 @@ class Comments extends TikiLib
 	if (!$result->numRows() || in_array($threadId, $existingThread))
 	{
 	
+	$object = explode( ":", $objectId, 2);
 	if ($prefs['feature_actionlog'] == 'y') {
-		$object = explode( ":", $objectId, 2);
 		$comment= $this->get_comment($threadId);
 		include_once('lib/diff/difflib.php');
 		$bytes = diff2($comment['data'] , $data, 'bytes');
@@ -2123,7 +2123,14 @@ class Comments extends TikiLib
 		require_once('lib/search/refresh-functions.php');
 		refresh_index('comments', $threadId);
 	}
-
+	if ($object[0] == 'forum') {
+		$type = 'forum post';
+		$href = "tiki-view_forum_thread.php?comments_parentId=$threadId";
+	} else {
+		$type = $object[0].' comment';
+		$href = 'tiki-index.php?page='.$object[1]."#threadId$threadId";
+	}
+	$this->syncParsedText($data, array('type'=>$type, 'object'=>$threadId, 'description'=>'', 'href'=>$href, 'name'=>$title));
 	$this->update_comment_links($data, $object[0], $threadId);
 	} // end hash check
     }
@@ -2285,7 +2292,14 @@ class Comments extends TikiLib
 		require_once('lib/search/refresh-functions.php');
 		refresh_index('comments', $threadId);
 	}
-
+	if ($object[0] == 'forum') {
+		$type = 'forum post';
+		$href = "tiki-view_forum_thread.php?comments_parentId=$threadId";
+	} else {
+		$type = $object[0].' comment';
+		$href = 'tiki-index.php?page='.$object[1]."#threadId$threadId";
+	}
+	$this->syncParsedText($data, array('type'=>$type, 'object'=>$threadId, 'description'=>'', 'href'=>$href, 'name'=>$title));
 	$this->update_comment_links($data, $object[0], $threadId);
 
 	return $threadId;
@@ -2753,7 +2767,7 @@ class Comments extends TikiLib
 
 		} elseif ($tiki_p_edit_comments == 'y' || $this->user_can_edit_post($user, $params['comments_threadId'])) {
 			$threadId = $params['comments_threadId'];
-			$this->update_comment($threadId, $params['comments_title'], '', ($params['comments_data']), 'n', '', '', $comment_objectId, isset($params['contributions'])? $params['contributions']: '');
+			$this->update_comment($threadId, $params['comments_title'], '', ($params['comments_data']), 'n', '', '', $comments_objectId, isset($params['contributions'])? $params['contributions']: '');
 		}
 		if (!empty($errors)) {
 			return 0;
