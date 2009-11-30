@@ -46,4 +46,3 @@ $lang=Array(
 "Translation" => "Translaziun",
 "My Account" => "Mes conto",
 );
-?>

@@ -209,4 +209,3 @@ volunteers?" => "Wisten jo dat de measte ynh&acirc;ld op support.mozilla.com skr
 "next page" => "folgjende side",
 "translate" => "oersette",
 );
-?>
