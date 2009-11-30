@@ -2690,7 +2690,7 @@ class Comments extends TikiLib {
 
 		} elseif ($tiki_p_edit_comments == 'y' || $this->user_can_edit_post($user, $params['comments_threadId'])) {
 			$threadId = $params['comments_threadId'];
-			$this->update_comment($threadId, $params['comments_title'], '', ($params['comments_data']), 'n', '', '', $comment_objectId, isset($params['contributions'])? $params['contributions']: '');
+			$this->update_comment($threadId, $params['comments_title'], '', ($params['comments_data']), 'n', '', '', $comments_objectId, isset($params['contributions'])? $params['contributions']: '');
 		}
 		if (!empty($errors)) {
 			return 0;
