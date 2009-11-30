@@ -12,6 +12,24 @@ if ($prefs['feature_forums'] != 'y') {
 	die;
 }
 
+include_once ("lib/commentslib.php");
+$commentslib = new Comments($dbTiki);
+if (!isset($_REQUEST['comments_parentId'])) {
+	$smarty->assign('msg', tra("No thread indicated"));
+	$smarty->display("error.tpl");
+	die;
+}
+
+if (empty($_REQUEST['forumId'])) {
+	$thread_info = $commentslib->get_comment($_REQUEST['comments_parentId']);
+	if (empty($thread_info['object']) || $thread_info['objectType'] != 'forum') {
+		$smarty->assign('msg', tra('Incorrect thread'));
+		$smarty->display('error.tpl');
+		die;
+	}
+	$_REQUEST['forumId'] = $thread_info['object'];
+}
+
 require_once 'lib/cache/pagecache.php';
 $pageCache = Tiki_PageCache::create()
 	->disableForRegistered()
@@ -26,28 +44,6 @@ $pageCache = Tiki_PageCache::create()
 	) )
 	->applyCache();
 
-if ($prefs['feature_categories'] == 'y') {
-	global $categlib;
-	if (!is_object($categlib)) {
-		include_once('lib/categories/categlib.php');
-	}
-}
-include_once ("lib/commentslib.php");
-$commentslib = new Comments($dbTiki);
-if (!isset($_REQUEST['comments_parentId'])) {
-	$smarty->assign('msg', tra("No thread indicated"));
-	$smarty->display("error.tpl");
-	die;
-}
-if (empty($_REQUEST['forumId'])) {
-	$thread_info = $commentslib->get_comment($_REQUEST['comments_parentId']);
-	if (empty($thread_info['object']) || $thread_info['objectType'] != 'forum') {
-		$smarty->assign('msg', tra('Incorrect thread'));
-		$smarty->display('error.tpl');
-		die;
-	}
-	$_REQUEST['forumId'] = $thread_info['object'];
-}
 if ($prefs['feature_categories'] == 'y') {
 	global $categlib; include_once ('lib/categories/categlib.php');
 }
