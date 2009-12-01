@@ -125,6 +125,13 @@ if ($prefs['home_file_gallery']) {
 } else {
 	$smarty->assign("home_fil_name", '');
 }
+if (isset($_REQUEST['testMail'])) {
+	include_once('lib/webmail/tikimaillib.php');
+	$mail = new TikiMail();
+	$mail->setSubject(tra('Test'));
+	$mail->setText(tra('Test'));
+	$mail->send($_REQUEST['testMail']);
+}
 $listgroups = $userlib->get_groups(0, -1, 'groupName_desc', '', '', 'n');
 $smarty->assign("listgroups", $listgroups['data']);
 ask_ticket('admin-inc-general');

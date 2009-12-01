@@ -86,6 +86,10 @@
 					</select>
 				</div>
 			</div>
+			<div class="adminoptionbox">
+				<label for="testMail">{tr}Email to send a test mail{/tr}</label>
+				<input type="text" name="testMail" id="testMail" />
+			</div>
 		</fieldset>
 
 		<fieldset>
