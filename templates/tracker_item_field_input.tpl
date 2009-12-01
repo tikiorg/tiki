@@ -197,8 +197,11 @@
 
 {* -------------------- page selector  -------------------- *}
 {elseif $field_value.type eq 'k'}
-	<input type="text" name="{$field_value.ins_id}" {if $field_value.options_array[1] gt 0}size="{$field_value.options_array[1]}"{/if} value="{if $field_value.value}{$field_value.value|escape}{else}{$field_value.defaultvalue|escape}{/if}" />
-	
+	{if $field_value.options[0] != 1 || $tiki_p_admin_trackers == 'y'}
+		<input type="text" name="{$field_value.ins_id}" {if $field_value.options_array[1] gt 0}size="{$field_value.options_array[1]}"{/if} value="{if $field_value.value}{$field_value.value|escape}{else}{$field_value.defaultvalue|escape}{/if}" />
+	{else}
+		{$field_value.value|escape}
+	{/if}
 
 {* -------------------- email  -------------------- *}
 {elseif $field_value.type eq 'm'}

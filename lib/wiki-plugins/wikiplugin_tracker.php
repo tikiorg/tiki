@@ -140,7 +140,7 @@ function wikiplugin_tracker_name($fieldId, $name, $field_errors) {
 	return $name;
 }
 function wikiplugin_tracker($data, $params) {
-	global $tikilib, $userlib, $dbTiki, $user, $group, $page, $tiki_p_admin_trackers, $smarty, $prefs, $trklib;
+	global $tikilib, $userlib, $dbTiki, $user, $group, $page, $tiki_p_admin_trackers, $smarty, $prefs, $trklib, $tiki_p_view;
 	static $iTRACKER = 0;
 	++$iTRACKER;
 	include_once('lib/trackers/trackerlib.php');
@@ -287,7 +287,7 @@ function wikiplugin_tracker($data, $params) {
 				}
 				$ret = array();
 				foreach($flds['data'] as $field) {
-					if ($field['type'] == 'q' || $field['type'] == 'u' || $field['type'] == 'g' || in_array($field['fieldId'], $outf)) {
+					if ($field['type'] == 'q' || $field['type'] == 'k' || $field['type'] == 'u' || $field['type'] == 'g' || in_array($field['fieldId'], $outf)) {
 						$ret[] = $field;
 					}
 				}
@@ -318,14 +318,15 @@ function wikiplugin_tracker($data, $params) {
 						}
 					} elseif (($flds['data'][$cpt]['type'] == 'u' || $flds['data'][$cpt]['type'] == 'g' || $flds['data'][$cpt]['type'] == 'I' || $flds['data'][$cpt]['type'] == 'k') && ($flds['data'][$cpt]['options_array'][0] == '1' || $flds['data'][$cpt]['options_array'][0] == '2') && $perms['tiki_p_admin_trackers'] != 'y' && empty($_REQUEST['track'][$fl['fieldId']])) {
 						if (empty($itemId) && ($flds['data'][$cpt]['options_array'][0] == '1' || $flds['data'][$cpt]['options_array'][0] == '2')) {
-							if ($flds['data'][$cpt]['type'] == 'u')
+							if ($flds['data'][$cpt]['type'] == 'u') {
 								$_REQUEST['track'][$fl['fieldId']] = empty($user)?(empty($_REQUEST['name'])? '':$_REQUEST['name']):$user;
-							elseif ($flds['data'][$cpt]['type'] == 'g')
+							} elseif ($flds['data'][$cpt]['type'] == 'g') {
 								$_REQUEST['track'][$fl['fieldId']] = $group;
-							elseif ($flds['data'][$cpt]['type'] == 'I')
+							} elseif ($flds['data'][$cpt]['type'] == 'I') {
 								$_REQUEST['track'][$fl['fieldId']] = $tikilib->get_ip_address();
-							elseif ($flds['data'][$cpt]['type'] == 'k')
-								$_REQUEST['track'][$fl['fieldId']] = isset($_REQUEST['page'])?$_REQUEST['page']: '';
+							}
+						} elseif ($flds['data'][$cpt]['type'] == 'k') {
+								$_REQUEST['track'][$fl['fieldId']] = isset($page)?$page: '';
 						} elseif (!empty($itemId) && $flds['data'][$cpt]['options_array'][0] == '2') {
 							if ($flds['data'][$cpt]['type'] == 'u')
 								$_REQUEST['track'][$fl['fieldId']] = $user;
@@ -747,13 +748,19 @@ function wikiplugin_tracker($data, $params) {
 						if ($perms['tiki_p_admin_trackers'] == 'y' || ($f['options_array'][0] != 1 && $f['options_array'][0] != 2))
 							$flds['data'][$i]['list'] = $userlib->list_all_users();
 						elseif ($f['options_array'][0] == 1)
-							$flds['data'][$i]['value'] == $user;
+							$flds['data'][$i]['value'] = $user;
 					} elseif ($f['type'] == 'g') {
 						if ($perms['tiki_p_admin_trackers'] == 'y' || ($f['options_array'][0] != 1 && $f['options_array'][0] != 2)) {
 							$flds['data'][$i]['list'] = $userlib->list_all_groups();
 						} elseif ($f['options_array'][0] == 1) {
 							global $group;
-							$flds['data'][$i]['value'] == $group;
+							$flds['data'][$i]['value'] = $group;
+						}
+					} elseif ($f['type'] == 'k') {
+						if ($f['options_array'][0] == 1) {
+							if (isset($page)) {
+								$flds['data'][$i]['value'] = $page;
+							}
 						}
 					} elseif ($f['type'] == 'e') {
 						global $categlib; include_once('lib/categories/categlib.php');
