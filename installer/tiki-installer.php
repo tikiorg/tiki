@@ -355,7 +355,7 @@ function get_admin_email( $dbTiki ) {
 
 	return false;
 }
-
+if (!function_exists('update_preferences')) {
 function update_preferences( $dbTiki, &$prefs ) {
 	global $installer;
 	$query = "SELECT `name`, `value` FROM `tiki_preferences`";
@@ -371,6 +371,7 @@ function update_preferences( $dbTiki, &$prefs ) {
 	}
 
 	return false;
+}
 }
 
 function load_sql_scripts() {

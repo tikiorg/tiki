@@ -5,6 +5,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
+if (!function_exists('update_preferences')) {
 function update_preferences( $dbTiki, &$prefs ) {
 	global $installer;
 	$query = "SELECT `name`, `value` FROM `tiki_preferences`";
@@ -20,6 +21,7 @@ function update_preferences( $dbTiki, &$prefs ) {
 	}
 
 	return false;
+}
 }
 function upgrade_20091123_upgrade_categperm_2_tiki( $installer) {
 /* second pass at upgrading version 3 category perms to v4 (for 4.1)
