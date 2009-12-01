@@ -16,9 +16,9 @@
 		{/if}
 		{if $displayedcals|@count eq 1 and $user and $prefs.feature_user_watches eq 'y'}
 			{if $user_watching eq 'y'}
-				<a href="tiki-calendar.php?watch_event=calendar_changed&amp;watch_action=remove" class="icon">{icon _id='no_eye' alt="{tr}Page IS being monitored. Click icon to STOP monitoring.{/tr}" align="right" hspace="1"}</a>
+				<a href="tiki-calendar.php?watch_event=calendar_changed&amp;watch_action=remove" class="icon">{icon _id='no_eye' alt="{tr}Stop Monitoring this Page{/tr}" align="right" hspace="1"}</a>
 			{else}
-				<a href="tiki-calendar.php?watch_event=calendar_changed&amp;watch_action=add" class="icon">{icon _id='eye' alt="{tr}Page is NOT being monitored. Click  icon to START monitoring.{/tr}" align="right" hspace="1"}</a>
+				<a href="tiki-calendar.php?watch_event=calendar_changed&amp;watch_action=add" class="icon">{icon _id='eye' alt="{tr}Monitor this Page{/tr}" align="right" hspace="1"}</a>
 			{/if}
 		{/if}
 
