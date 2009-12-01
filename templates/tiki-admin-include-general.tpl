@@ -5,6 +5,11 @@
 	<div class="heading input_submit_container" style="text-align: right;">
 		<input type="submit" value="{tr}Change preferences{/tr}" />
 	</div>
+	{if !empty($error_msg)}
+		{remarksbox type='warning' title="{tr}Warning{/tr}" icon='error'}
+			{$error_msg}
+		{/remarksbox}	
+	{/if}
 
 {tabset name="admin_general"}
 	{tab name="{tr}General Preferences{/tr}"}

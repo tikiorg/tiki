@@ -130,7 +130,9 @@ if (isset($_REQUEST['testMail'])) {
 	$mail = new TikiMail();
 	$mail->setSubject(tra('Test'));
 	$mail->setText(tra('Test'));
-	$mail->send($_REQUEST['testMail']);
+	if (!$mail->send(array($_REQUEST['testMail']))) {
+		$smarty->assign('error_msg', tra('Unable to send mail'));
+	}
 }
 $listgroups = $userlib->get_groups(0, -1, 'groupName_desc', '', '', 'n');
 $smarty->assign("listgroups", $listgroups['data']);
