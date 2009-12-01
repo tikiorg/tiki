@@ -177,7 +177,7 @@ elseif ($tracker_info['defaultOrderKey'] == -2)
 elseif ($tracker_info['defaultOrderKey'] == -3)
 	$sort_mode = 'itemId';
 elseif (isset($tracker_info['defaultOrderKey'])) {
-	$sort_mode = $tracker_info['defaultOrderKey'];
+	$sort_mode = 'f_'.$tracker_info['defaultOrderKey'];
 } else {
 	$sort_mode = 'itemId';
 }
