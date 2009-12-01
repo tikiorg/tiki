@@ -27,10 +27,10 @@ class TWVersion {
 		//   stable   : Represents officially supported releases.
 		//   unstable : Represents candidate and test/development releases.
 		//   head     : Represents next generation development version.
-		$this->branch 	= 'stable';
+		$this->branch 	= 'unstable';
 
 		// Set everything else, including defaults.
-		$this->version 	= '3.2';
+		$this->version 	= '3.4 SVN';
 		$this->star	= 'Betelgeuse';
 		$this->release 	= $this->version;
 		$this->releases	= array();
@@ -100,7 +100,8 @@ class TWVersion {
 				25=>'3.0rc2',
 				26=>'3.0',
 				27=>'3.1',
-				28=>'3.2'
+				28=>'3.2',
+				29=>'3.3'
 				);
 	}
 
