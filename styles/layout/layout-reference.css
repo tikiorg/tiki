@@ -1151,7 +1151,7 @@ and put two modules or other divs between its tags;, each of these will use just
 wikitext or custom content area. Similarly for three or four modules (or divs) across the page. */
 .halffloat div.box,
 .wikitext .halffloat div.box {
-	float: left;
+	float: left !important;
 	clear: none;
 	width: 48%;
 	margin-right: 2%;
@@ -1160,7 +1160,7 @@ wikitext or custom content area. Similarly for three or four modules (or divs) a
 
 .thirdfloat div.box,
 .wikitext .thirdfloat div.box {
-	float: left;
+	float: left !important;
 	clear: none;
 	width: 31%;
 	margin-right: 2%
@@ -1168,7 +1168,7 @@ wikitext or custom content area. Similarly for three or four modules (or divs) a
 
 .quarterfloat div.box,
 .wikitext .quarterfloat div.box {
-	float: left;
+	float: left !important; 
 	clear: none; 
 	width: 22%;
 	margin-right: 2%;

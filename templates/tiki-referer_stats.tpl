@@ -9,7 +9,7 @@
 <table class="normal">
   <tr>
   <th>
-    <a href="tiki-referer_stats.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'referer_desc'}referer_asc{else}referer_desc{/if}">{tr}Word{/tr}</a>
+    <a href="tiki-referer_stats.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'referer_desc'}referer_asc{else}referer_desc{/if}">{tr}Domain{/tr}</a>
   </th>
   <th>
     <a href="tiki-referer_stats.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}Hits{/tr}</a>
@@ -25,6 +25,7 @@
       <td class="{cycle advance=false}">{$channels[user].hits}</td>
       <td class="{cycle}">{$channels[user].last|tiki_short_datetime}</td>
     </tr>
+  {sectionelse}<tr><td colspan="3">{tr}No records{/tr}</td></tr>	
   {/section}
 </table>
 

@@ -865,6 +865,7 @@ function list_structures($offset, $maxRecords, $sort_mode, $find='', $exact_matc
   //the base.
   function structure_to_webhelp($page_ref_id, $dir, $top) {
   	global $style_base;
+	global $prefs;
     //The first task is to convert the structure into an array with the
     //proper format to produce a WebHelp project.
 	//We have to create something in the form
@@ -936,7 +937,16 @@ function list_structures($offset, $maxRecords, $sort_mode, $find='', $exact_matc
   		$i++;
 	}
 	fclose($fw);
-  }
+
+// write the title page, using:
+// Browser Title, Site Title, Site subtitle
+	$fw = fopen("$base/content.html",'w+');
+	$titlepage = "<h1>". $prefs['browsertitle'] . "</h1><h2>". $prefs['sitetitle'] ."</h2><h3>".  $prefs['sitesubtitle']  ."</h3>";
+	$titlepage = 
+	fwrite($fw, $titlepage);
+	fclose($fw);
+
+	}
   function structure_to_tree($page_ref_id) {
 	$query = 'select * from `tiki_structures` ts,`tiki_pages` tp where tp.`page_id`=ts.`page_id` and `page_ref_id`=?';
 	$result = $this->query($query,array((int)$page_ref_id));

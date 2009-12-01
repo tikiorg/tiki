@@ -1,4 +1,7 @@
 {* $Id$ *}
+{if empty($contributions) and $tiki_p_admin eq 'y'}
+{tr}No records found{/tr}
+{/if}
 {if $prefs.feature_contribution eq 'y' and count($contributions) gt 0}
 <tr>
 <td class="formcolor">

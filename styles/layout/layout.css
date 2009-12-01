@@ -750,7 +750,7 @@ span.moduleflip,
 
 .halffloat div.box,
 .wikitext .halffloat div.box {
-	float: left;
+	float: left !important;
 	clear: none;
 	width: 48%;
 	margin-right: 2%;
@@ -759,7 +759,7 @@ span.moduleflip,
 
 .thirdfloat div.box,
 .wikitext .thirdfloat div.box {
-	float: left;
+	float: left !important;
 	clear: none;
 	width: 31%;
 	margin-right: 2%
@@ -767,7 +767,7 @@ span.moduleflip,
 
 .quarterfloat div.box,
 .wikitext .quarterfloat div.box {
-	float: left;
+	float: left !important; 
 	clear: none; 
 	width: 22%;
 	margin-right: 2%;

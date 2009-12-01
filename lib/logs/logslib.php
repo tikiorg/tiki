@@ -945,7 +945,7 @@ class LogsLib extends TikiLib {
 	function insert_image($galleryId, $graph, $ext, $title, $period) {
 		global $prefs, $user;
 		global $imagegallib; include_once('lib/imagegals/imagegallib.php');
-		$filename = $prefs['tmpDir'].md5(rand().time()).'.'.$ext;
+		$filename = $prefs['tmpDir'].'/'.md5(rand().time()).'.'.$ext;
 		$graph->Stroke($filename);
 		$info = getimagesize($filename);
 		$size = filesize($filename);
