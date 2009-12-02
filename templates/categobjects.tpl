@@ -17,7 +17,11 @@
 	{/if}
         {section name=o loop=$i}
         <li>
-		  	<a href="{$i[o].href}" class="link">
+			{if $prefs.feature_sefurl eq 'y'}
+				<a href="{$i[o].itemId|sefurl:$i[o].type}" class="link">
+			{else}
+				<a href="{$i[o].href}" class="link">
+			{/if}
 			{if $params.showname ne 'n' or empty($i[o].description)}
 				{$i[o].name|escape}</a>
 				{if $params.showdescription eq 'y'} <span class='description'>{/if}
@@ -30,7 +34,6 @@
 					</a>
 				{/if}
 			{/if}
-		  </a>
           </li>
         {/section}
 	{if $params.showtype ne 'n'}
