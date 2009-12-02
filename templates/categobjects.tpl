@@ -2,24 +2,41 @@
 
 <div class="catblock clearfix">
   <div class="cattitle">
-    {tr}Category{/tr}: {foreach name=for key=id item=title from=$titles}
+    <span class="label">{tr}Category{/tr}: </span>{foreach name=for key=id item=title from=$titles}
     <a href="tiki-browse_categories.php?parentId={$id}">{$title|tr_if}</a>
     {if !$smarty.foreach.for.last} &amp; {/if}
     {/foreach}
   </div>
   <div class="catlists">
-    <ul class="catfeatures">
+    <ul class="{if $params.showtype ne 'n'}catfeatures{else}catitems{/if}">
    {foreach key=t item=i from=$listcat}
+   	{if $params.showtype ne 'n'}
       <li>
       {tr}{$t}{/tr}:
       <ul class="catitems">
+	{/if}
         {section name=o loop=$i}
         <li>
-          <a href="{$i[o].href}" class="link">{$i[o].name}</a>
+		  	<a href="{$i[o].href}" class="link">
+			{if $params.showname ne 'n' or empty($i[o].description)}
+				{$i[o].name|escape}</a>
+				{if $params.showdescription eq 'y'} <span class='description'>{/if}
+			{/if}
+			{if $params.showdescription eq 'y'}
+				{$i[o].description|escape}
+				{if $params.showname ne 'n' or empty($i[o].description)}
+					</span>
+				{else}
+					</a>
+				{/if}
+			{/if}
+		  </a>
           </li>
         {/section}
+	{if $params.showtype ne 'n'}
         </ul>
       </li>
+	{/if}
     {/foreach}
   </ul>
   </div>
