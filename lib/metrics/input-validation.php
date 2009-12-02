@@ -129,4 +129,3 @@ function convert_date_range($range, $date_from = '', $date_to = '', $date_field 
 	}
 	return $ret;
 } // end of convert_date_range
-?>

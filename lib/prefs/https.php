@@ -9,5 +9,3 @@ function prefs_https_list() {
 		),
 	);
 }
-
-?>

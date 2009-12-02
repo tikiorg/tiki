@@ -15,7 +15,7 @@ if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== FALSE) {
 require_once 'lib/setup/third_party.php';
 require_once (defined('SMARTY_DIR') ? SMARTY_DIR : 'lib/smarty/libs/') . 'Smarty.class.php';
 
-class Smarty_Tikiwiki extends Smarty 
+class Smarty_Tikiwiki extends Smarty
 {
 	function Smarty_Tikiwiki($tikidomain = '') {
 		parent::Smarty();

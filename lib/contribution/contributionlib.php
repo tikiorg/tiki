@@ -111,10 +111,11 @@ class ContributionLib extends TikiLib
 	}
 	function print_contributions($contributions) {
 		$print = '';
-		for ($i = 0; $i < count($contributions); $i++) {
-			if ($i > 0)
+		foreach($contributions as $contribution) {
+			if ( !empty($print) ) {
 				$print.= ',';
-			$res = $this->get_contribution($contributions[$i]);
+			}
+			$res = $this->get_contribution($contribution);
 			$print .= $res['name'];
 		}
 		return $print;

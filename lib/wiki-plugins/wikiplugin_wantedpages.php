@@ -83,7 +83,8 @@ function wikiplugin_wantedpages_info() {
 	);
 }
 
-class WikiPluginWantedPages extends PluginsLib {
+class WikiPluginWantedPages extends PluginsLib
+{
 
 	function getDefaultArguments() {
 		return array(	'ignore' => '', // originating pages to be ignored

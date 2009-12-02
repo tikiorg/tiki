@@ -1,6 +1,7 @@
 <?php
 
-class Multilingual_Aligner_SentenceSegmentor {
+class Multilingual_Aligner_SentenceSegmentor
+{
 
    public function segment($text) {
    
@@ -30,4 +31,3 @@ class Multilingual_Aligner_SentenceSegmentor {
    }
 
 }
-

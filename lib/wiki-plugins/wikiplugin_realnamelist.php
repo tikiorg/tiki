@@ -146,5 +146,3 @@ function wikiplugin_realnamelist($data, $params) {
 	}
 	return $pre.implode ( $sep, $ret ).$post;
 }
-
-?>

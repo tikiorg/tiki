@@ -6,7 +6,8 @@
  * sentences with their corresponding French sentences.
  */
 
-class Multilingual_Aligner_SentenceAlignments {
+class Multilingual_Aligner_SentenceAlignments
+{
 
 	public function addSentencePair($lng1_sentence, $lng1, $lng2_sentence, $lng2) {
 	}
@@ -16,4 +17,3 @@ class Multilingual_Aligner_SentenceAlignments {
 	}
 
 }
-

@@ -4,7 +4,8 @@
  *
  */
  
-class Multilingual_MachineTranslation_GoogleTranslateWrapperTest extends TikiTestCase {
+class Multilingual_MachineTranslation_GoogleTranslateWrapperTest extends TikiTestCase
+{
 	
 //  protected $backupGlobals = FALSE;
 

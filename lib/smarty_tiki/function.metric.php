@@ -254,5 +254,3 @@ function metric_helper_number_format($numval, $type) {
 			return $numval;
 	}
 }
-
-?>

@@ -1,5 +1,5 @@
 <?php
-/**
+ /**
  * jsmin.php - PHP implementation of Douglas Crockford's JSMin.
  *
  * This is pretty much a direct port of jsmin.c to PHP with just a few
@@ -289,4 +289,5 @@ class JSMin
 
 // -- Exceptions ---------------------------------------------------------------
 class JSMinException extends Exception
-{}
+{
+}

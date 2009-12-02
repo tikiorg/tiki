@@ -417,10 +417,10 @@ class ImageGalsLib extends TikiLib
 		if (!$ziplist)
 			return (false); // Archive invalid
 
-		for ($i = 0; $i < sizeof($ziplist); $i++) {
-			$file = $ziplist["$i"]["filename"];
+		foreach($ziplist as $zipfile) {
+			$file = $zipfile["filename"];
 
-			if (!$ziplist["$i"]["folder"]) {
+			if (!$zipfile["folder"]) {
 				//copied
 				$gal_info = $this->get_gallery($galleryId);
 
@@ -436,7 +436,7 @@ class ImageGalsLib extends TikiLib
 						$upl = 0;
 				}
 				//extract file
-				$archive->extractByIndex($ziplist["$i"]["index"],
+				$archive->extractByIndex($zipfile["index"],
 					$prefs['tmpDir'], dirname($file)); //extract and remove (dangerous) pathname
 				$file = basename($file);
 

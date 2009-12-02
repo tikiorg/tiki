@@ -1,5 +1,5 @@
 <?php
-class KalturaClientBase 
+class KalturaClientBase
 {
 	const KALTURA_API_VERSION = "3.0";
 	const KALTURA_SERVICE_FORMAT_JSON = 1;
@@ -485,7 +485,7 @@ abstract class KalturaObjectBase
 	}
 }
 
-class KalturaException extends Exception 
+class KalturaException extends Exception
 {
 	protected $code;
 	
@@ -542,7 +542,7 @@ class KalturaConfiguration
  * Implement to get Kaltura Client logs
  *
  */
-interface IKalturaLogger 
+interface IKalturaLogger
 {
 	function log($msg); 
 }

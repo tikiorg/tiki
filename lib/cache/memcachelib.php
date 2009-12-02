@@ -111,9 +111,8 @@ class Memcachelib
 
         // Construct a list of values corresponding to the keys passed in.
         $values_out = array();
-        for ($i=0; $i<count($keys_built); $i++) {
-            $values_out[] = (isset($values_in[$keys_built[$i]])) ?
-                $values_in[$keys_built[$i]] : NULL;
+				foreach($keys_built as $kb) {
+            $values_out[] = (isset($values_in[$kb])) ?  $values_in[$kb] : NULL;
         }
 
         return $values_out;

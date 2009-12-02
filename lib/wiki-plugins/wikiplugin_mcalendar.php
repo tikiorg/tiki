@@ -20,7 +20,8 @@
  */
 
 
- class MCalendar {
+class MCalendar
+{
 
    // GMT correlation initiated on August 11, 3114 BC (Gregorian).
    // For another popular GMT correlation initiated on August 13, 3114 BC 

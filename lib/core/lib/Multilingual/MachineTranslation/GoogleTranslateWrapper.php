@@ -4,12 +4,11 @@
  *
  */
  
+require_once 'lib/ointegratelib.php';
+require_once 'Multilingual/Aligner/SentenceSegmentor.php'; 
  
- 
- require_once 'lib/ointegratelib.php';
- require_once 'Multilingual/Aligner/SentenceSegmentor.php'; 
- 
-class Multilingual_MachineTranslation_GoogleTranslateWrapper {
+class Multilingual_MachineTranslation_GoogleTranslateWrapper
+{
 
 //this array should be updated as Google Translate
 //adds more languages

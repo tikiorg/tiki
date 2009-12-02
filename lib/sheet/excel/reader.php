@@ -71,7 +71,8 @@ if (!function_exists('file_get_contents')) {
 
 
 //class Spreadsheet_Excel_Reader extends PEAR {
-class Spreadsheet_Excel_Reader {
+class Spreadsheet_Excel_Reader
+{
 
 	var $boundsheets = array();
 	var $formatRecords = array();

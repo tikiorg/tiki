@@ -2,7 +2,8 @@
 
 require_once 'Multilingual/Aligner/SentenceSegmentor.php';
 
-class Multilingual_Aligner_BilingualAligner {
+class Multilingual_Aligner_BilingualAligner
+{
 
     var $l1_sentences = array();
     var $l2_sentences = array();

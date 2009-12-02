@@ -66,7 +66,8 @@ $AR_RANGE = array(
 		, '-' => tra('Weekly (-)')
 		);
 
-class MetricsLib extends TikiDb_Bridge {
+class MetricsLib extends TikiDb_Bridge
+{
     
 	/**
 	 * Get all existing metrics from the SQL table metrics_metric
