@@ -138,7 +138,11 @@
 					</td>
 
 					<td>
-						<a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;user={$users[user].userId}{if $prefs.feature_tabs ne 'y'}#2{/if}" title="{tr}Edit Account Settings:{/tr} {$users[user].user|username}">{$users[user].user|username}</a>
+						{if $users[user].editable}
+							<a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;user={$users[user].userId}{if $prefs.feature_tabs ne 'y'}#2{/if}" title="{tr}Edit Account Settings:{/tr} {$users[user].user|username}">{$users[user].user|username}</a>
+						{else}
+							{$users[user].user|username}
+						{/if}
 					</td>
 
 					{if $prefs.login_is_email ne 'y'}
@@ -188,16 +192,17 @@
 					</td>
 
 					<td>
-						{if $prefs.feature_userPreferences eq 'y' || $user eq 'admin'}
+						{if $users[user].editable}
 							{self_link _class="link" user=`$users[user].userId` _icon="page_edit" _title="{tr}Edit Account Settings:{/tr} `$username`"}{/self_link}
-							<a class="link" href="tiki-user_preferences.php?userId={$users[user].userId}" title="{tr}Change user preferences:{/tr} {$username}">{icon _id='wrench' alt="{tr}Change user preferences:{/tr} `$username`"}</a>
+							{if $prefs.feature_userPreferences eq 'y' || $user eq 'admin'}
+								<a class="link" href="tiki-user_preferences.php?userId={$users[user].userId}" title="{tr}Change user preferences:{/tr} {$username}">{icon _id='wrench' alt="{tr}Change user preferences:{/tr} `$username`"}</a>
+							{/if}
 						{/if}
-
-						{if $tiki_p_admin eq 'y' or $users[user].user eq $user or $users[user].user_information neq 'private'}
+						{if $users[user].editable or $users[user].user eq $user or $users[user].user_information neq 'private'}
 							<a class="link" href="tiki-user_information.php?userId={$users[user].userId}" title="{tr}User Information:{/tr} {$username}">{icon _id='help' alt="{tr}User Information:{/tr} `$username`"}</a>
 						{/if}
 	
-						{if $users[user].user ne 'admin'}
+						{if $users[user].user ne 'admin' and $users[user].editable}
 							<a class="link" href="{$smarty.server.PHP_SELF}?{query action=delete user=$users[user].user}" title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
 							{if $users[user].valid && $users[user].waiting eq 'a'}
 								<a class="link" href="tiki-login_validate.php?user={$users[user].user|escape:url}&amp;pass={$users[user].valid|escape:url}" title="{tr}Validate user:{/tr} {$users[user].user|username}">{icon _id='accept' alt="{tr}Validate user:{/tr} `$username`"}</a>
@@ -323,7 +328,7 @@
 					</label>
 				</td>
 				<td>
-					{if $userinfo.login neq 'admin'}
+					{if $userinfo.login neq 'admin' and $userinfo.editable}
 						<input type="text" id="name" name="name" value="{$userinfo.login|escape}" />
 						<br /> 
 						{if $prefs.login_is_email eq 'y'}
@@ -360,7 +365,7 @@
 						<i>{tr}Tikiwiki is configured to delegate the password managment to LDAP.{/tr}</i>
 					</td>
 				</tr>
-			{elseif empty($userinfo) || $tiki_p_admin_users eq 'y' || $userinfo.login eq $user}
+			{elseif $userinfo.editable}
 				<tr class="formcolor">
 					<td><label for="pass1">{tr}Password:{/tr}</label></td>
 					<td>
@@ -401,7 +406,7 @@
 				{/if}
 			{/if}
 			
-			{if $prefs.login_is_email neq 'y'}
+			{if $prefs.login_is_email neq 'y' and $userinfo.editable}
 				<tr class="formcolor">
 					<td><label for="email">{tr}Email:{/tr}</label></td>
 					<td>
@@ -409,7 +414,7 @@
 					</td>
 				</tr>
 			{/if}
-			{if $userinfo.login neq 'admin' and ($prefs.validateUsers eq 'y' or $prefs.validateRegistration eq 'y')}
+			{if $userinfo.login neq 'admin' and ($prefs.validateUsers eq 'y' or $prefs.validateRegistration eq 'y') and $userinfo.editable}
 				<tr class="formcolor">
 					<td>&nbsp;</td>
 					<td>
@@ -445,9 +450,11 @@
 				<td>&nbsp;</td>
 				<td>
 					{if $userinfo.userId}
-						<input type="hidden" name="user" value="{$userinfo.userId|escape}" />
-						<input type="hidden" name="edituser" value="1" />
-						<input type="submit" name="submit" value="{tr}Save{/tr}" />
+						{if $userinfo.editable}
+							<input type="hidden" name="user" value="{$userinfo.userId|escape}" />
+							<input type="hidden" name="edituser" value="1" />
+							<input type="submit" name="submit" value="{tr}Save{/tr}" />
+						{/if}
 					{else}
 						<input type="submit" name="newuser" value="{tr}Add{/tr}" />
 					{/if}
