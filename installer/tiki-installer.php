@@ -713,37 +713,45 @@ if (
 		$smarty->assign('dbdone', 'y');
 		$install_type = 'update';
 	}
-
+	
 	// Try to activate Apache htaccess file by renaming _htaccess into .htaccess
 	// Do nothing (but warn the user to do it manually) if:
 	//   - there is no  _htaccess file,
 	//   - there is already an existing .htaccess (that is not necessarily the one that comes from TikiWiki),
 	//   - the rename does not work (e.g. due to filesystem permissions)
 	//
-	if ( file_exists('_htaccess') && ( file_exists('.htaccess') || ! @rename('_htaccess', '.htaccess') ) ) {
+	if ( file_exists('_htaccess') && ( !file_exists('.htaccess') || ! @rename('_htaccess', '.htaccess') ) ) {
 		$smarty->assign('htaccess_error', 'y');
 	}
 }
 
-if( isset( $_GET['lockenter'] ) )
-{
-	touch( 'db/lock' );
-	require('tiki-logout.php');	// logs out then redirects to home page
+if (!isset($install_type) && isset($_REQUEST['install_type'])) {
+	$install_type = $_REQUEST['install_type'];
+}
+
+if ( isset( $_GET['lockenter'] ) || isset( $_GET['nolockenter'] ) ) {
+	if (isset( $_GET['lockenter'])) {
+		touch( 'db/lock' );
+	}
+	global $userlib, $cachelib;
+	include_once 'tiki-setup.php';
+	$cachelib->empty_full_cache();
+	if ($install_type == 'scratch') {
+		$u = 'tiki-change_password.php?user=admin';
+	} else {
+		$u = '';
+	}
+	$userlib->user_logout($user, false, $u);	// logs out then redirects to home page or $u
 	exit;
 }
 
-if( isset( $_GET['nolockenter'] ) )
-{
-	require('tiki-logout.php');	// logs out then redirects to home page
-	exit;
-}
-
-if( isset( $_GET['lockchange'] ) )
-{
-	touch( 'db/lock' );
-	header( 'Location: tiki-change_password.php?user=admin' );
-	exit;
-}
+// unused? (4.x)
+//if( isset( $_GET['lockchange'] ) )
+//{
+//	touch( 'db/lock' );
+//	header( 'Location: tiki-change_password.php?user=admin' );
+//	exit;
+//}
 
 $smarty->assign_by_ref('tikifeedback', $tikifeedback);
 
