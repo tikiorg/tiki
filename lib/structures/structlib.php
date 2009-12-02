@@ -1031,6 +1031,9 @@ function list_structures($offset, $maxRecords, $sort_mode, $find='', $exact_matc
 	  include_once('lib/smarty_tiki/function.sefurl.php');
 	  $options = array();
 	  $cant = 0;
+	  if (empty($channels)) {
+		  return array('cant'=>0, 'data'=>array());
+	  }
 	  foreach ($channels as $channel) {
 		  if (empty($channel['sub'])) {
 			  if (isset($options[$cant-1]['sectionLevel'])) {
