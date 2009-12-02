@@ -11,7 +11,8 @@ if ($prefs['feature_ajax'] == 'y') {
 	require_once("lib/ajax/xajax/xajax_core/xajaxAIO.inc.php");
 	if (!defined ('XAJAX_GET')) define ('XAJAX_GET', 0);
 
-	class TikiAjax extends xajax {
+class TikiAjax extends xajax
+{
 
 		/**
 		 * Array of templates that are allowed to be served
@@ -142,7 +143,8 @@ if ($prefs['feature_ajax'] == 'y') {
 	}
 } else {
 	// dumb TikiAjax class
-	class TikiAjax {
+	class TikiAjax
+{
 		function TikiAjax() {}
 		function __construct() {}
 		function registerFunction() {}
