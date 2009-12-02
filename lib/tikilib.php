@@ -8521,7 +8521,7 @@ function detect_browser_language() {
 	if (is_dir("lang")) {
 		$dh = opendir("lang");
 		while ($lang = readdir($dh)) {
-			if (!strpos($lang,'.') and is_dir("lang/$lang") and file_exists("lang/$lang/language.php")) {
+			if (!strpos($lang,'.') and is_dir("lang/$lang") and file_exists("lang/$lang/language.php") and (empty($prefs['available_languages']) || in_array($lang, $prefs['available_languages']))) {
 				$available[strtolower($lang)] = $lang;
 				$available_aprox[substr(strtolower($lang), 0, 2)] = $lang;
 			}
