@@ -87,9 +87,9 @@
       <input type="submit" name="tran_search_sm" value="{tr}Search{/tr}" /></td></tr>
   {section name=it loop=$untranslated}
   <tr><td class="form">{tr}Original{/tr}:</td>
-      <td><input name="edit_edt_source_{$smarty.section.it.index}" value="{$untranslated[it]}" size=30 maxlength=255 /></td>
+      <td><input name="edit_edt_source_{$smarty.section.it.index}" value="{$untranslated[it]|escape}" size=30 maxlength=255 /></td>
       <td class="form">{tr}Translation{/tr}:</td>
-      <td><input name="edit_edt_tran_{$smarty.section.it.index}" value="{$translation[it]}" size=42 maxlength=255 /></td>
+      <td><input name="edit_edt_tran_{$smarty.section.it.index}" value="{$translation[it]|escape}" size=42 maxlength=255 /></td>
       <td align="center"><input type="submit" name="edt_tran_{$smarty.section.it.index}" value="{tr}Translate{/tr}" /></td>
       <td align="center"><input type="submit" name="del_tran_{$smarty.section.it.index}" value="{tr}Delete{/tr}" /></td>
   {/section}
