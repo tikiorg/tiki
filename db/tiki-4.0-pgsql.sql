@@ -4262,8 +4262,6 @@ INSERT INTO "tiki_sefurl_regex_out" ("left","right","type","feature") VALUES ('t
 
 INSERT INTO "tiki_sefurl_regex_out" ("left","right","type","feature") VALUES ('tiki-view_faq.php\\?faqId=(\\d+)', 'faq$1', 'faq', 'feature_faqs');
 
-INSERT INTO "tiki_sefurl_regex_out" ("left","right","type","feature") VALUES ('tiki-list_file_gallery.php\\?galleryId=(\\d+)', 'file$1', 'file', 'feature_file_galleries');
-
 INSERT INTO "tiki_sefurl_regex_out" ("left","right","type","feature") VALUES ('tiki-download_file.php\\?fileId=(\\d+)', 'dl$1', 'file', 'feature_file_galleries');
 
 INSERT INTO "tiki_sefurl_regex_out" ("left","right","type","feature") VALUES ('tiki-download_file.php\\?fileId=(\\d+)&amp;thumbnail', 'thumbnail$1', 'thumbnail', 'feature_file_galleries');
