@@ -315,6 +315,11 @@ if (isset($_REQUEST["save"])) {
 	} else {
 		$tracker_options['showPopup'] = '';
 	}
+	if (isset($_REQUEST['viewItemPretty'])) {
+		$tracker_options['viewItemPretty'] = $_REQUEST['viewItemPretty'];
+	} else {
+		$tracker_options['viewItemPretty'] = '';
+	}
 	if (isset($_REQUEST['descriptionIsParsed']) && ($_REQUEST['descriptionIsParsed'] == 'on' || $_REQUEST['descriptionIsParsed'] == 'y')) {
 		$tracker_options['descriptionIsParsed'] = 'y';
 	} else {
@@ -346,6 +351,7 @@ $info["showCreatedBy"] = '';
 $info["useExplicitNames"] = '';
 $info['doNotShowEmptyField'] = '';
 $info['showPopup'] = '';
+$info['viewItemPretty'] = '';
 $info["showStatus"] = '';
 $info["showStatusAdminOnly"] = '';
 $info["simpleEmail"] = '';

@@ -493,6 +493,12 @@
 			{/if}
 
 			<tr class="formcolor">
+				<td>{tr}Wiki page to display an item{/tr}</td>
+				<td><input type="text" name="viewItemPretty" value="{$info.viewItemPretty|escape}" />
+				<br /><em>{tr}wiki:pageName for a wiki page or tpl:tplName for a template{/tr}</td>
+			</tr>
+
+			<tr class="formcolor">
 				<td></td>
 				<td><input type="submit" name="save" value="{tr}Save{/tr}" /></td>
 			</tr>

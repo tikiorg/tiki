@@ -149,27 +149,7 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" alt="{tr}List
 
 		{else}{* a pretty tpl *}
 {* ------------------------------------ *}
-			{if !isset($list_mode)}{assign var=list_mode value="n"}{/if}
-			{section name=ix loop=$items[user].field_values}
-				{if $items[user].field_values[ix].isPublic eq 'y' and ($items[user].field_values[ix].isHidden eq 'n' or ($items[user].field_values[ix].isHidden eq 'c' and $items[user].itemUser eq $user) or $items[user].field_values[ix].isHidden eq 'p' or $tiki_p_admin_trackers eq 'y') and $items[user].field_values[ix].type ne 'x' and $items[user].field_values[ix].type ne 'h' and in_array($items[user].field_values[ix].fieldId, $listfields) and ($items[user].field_values[ix].type ne 'p' or $items[user].field_values[ix].options_array[0] ne 'password') and (empty($items[user].field_values[ix].visibleBy) or in_array($default_group, $items[user].field_values[ix].visibleBy) or $tiki_p_admin_trackers eq 'y')}
-					{capture name=value}
-						{if isset($perms)}
-							{include file='tracker_item_field_value.tpl' item=$items[user] field_value=$items[user].field_values[ix] list_mode=$list_mode
-		tiki_p_view_trackers=$perms.tiki_p_view_trackers tiki_p_modify_tracker_items=$perms.tiki_p_modify_tracker_items tiki_p_modify_tracker_items_pending=$perms.tiki_p_modify_tracker_items_pending tiki_p_modify_tracker_items_closed=$perms.tiki_p_modify_tracker_items_closed tiki_p_comment_tracker_items=$perms.tiki_p_comment_tracker_items}
-						{else}
-							{include file='tracker_item_field_value.tpl' item=$items[user] field_value=$items[user].field_values[ix] list_mode=$list_mode}
-						{/if}
-					{/capture}
-					{set var=f_`$items[user].field_values[ix].fieldId` value=$smarty.capture.value}
-				{else}
-					{set var=f_`$items[user].field_values[ix].fieldId` value=''}
-				{/if}
-			{/section}
-			{set var=f_created value=$items[user].created}
-			{set var=f_lastmodif value=$items[user].lastModif}
-			{set var=f_itemId value=$items[user].itemId}
-{* ------------------------------------ *}
-			{include file="$tpl" item=$items[user]}
+   			{include file='tracker_pretty_item.tpl' fields=$items[user].field_values item=$items[user] wiki=$tpl}
 		{/if}
 	{/section}
 

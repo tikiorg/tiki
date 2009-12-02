@@ -74,7 +74,7 @@
 
 {tab name="{tr}View{/tr}"}
 {* --- tab with view ------------------------------------------------------------------------- *}
-
+{if empty($tracker_info.viewItemPretty)}
 <h2>{tr}View Item{/tr}</h2>
 <table class="normal">
 {if $tracker_info.showStatus eq 'y' and ($tracker_info.showStatusAdminOnly ne 'y' or $tiki_p_admin_trackers eq 'y')}
@@ -133,6 +133,10 @@
 	</tr>
 {/if}
 </table>
+
+{else}
+	{include file='tracker_pretty_item.tpl' item=$item_info fields=$ins_fields wiki=$tracker_info.viewItemPretty}
+{/if}
 {/tab}
 
 {* -------------------------------------------------- tab with comments --- *}
