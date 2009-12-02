@@ -18,7 +18,7 @@
         {section name=o loop=$i}
         <li>
 			{if $prefs.feature_sefurl eq 'y'}
-		  		<a href="{$i[o].itemId|sefurl:$i[o].type}" class="link">
+				<a href="{$i[o].itemId|sefurl:$i[o].type}" class="link">
 			{else}
 				<a href="{$i[o].href}" class="link">
 			{/if}
@@ -34,7 +34,6 @@
 					</a>
 				{/if}
 			{/if}
-		  </a>
           </li>
         {/section}
 	{if $params.showtype ne 'n'}
