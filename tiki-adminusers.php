@@ -496,7 +496,7 @@ if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
 				$smarty->display("error.tpl");
 				die;
 			}
-			if ($tiki_p_admin == 'y' || $userinfo['login'] == $user) {
+			if ($tiki_p_admin == 'y' || $tiki_p_admin_users == 'y' || $userinfo['login'] == $user) {
 				$polerr = $userlib->check_password_policy($_POST["pass"]);
 				if (strlen($polerr) > 0) {
 					$smarty->assign('msg', $polerr);
@@ -560,6 +560,7 @@ if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
 	$userinfo['registrationDate'] = '';
 	$userinfo['age'] = '';
 	$userinfo['currentLogin'] = '';
+	$userinfo['editable'] = true;
 	if (!isset($cookietab)) { $cookietab = '1'; }
 	$_REQUEST["user"] = 0;
 }
