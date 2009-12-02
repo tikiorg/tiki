@@ -263,7 +263,11 @@ class XmlLib extends TikiLib {
 			return false;			
 		}
 
-		$tikilib->create_page($info['name'], 0, $info['data'], $this->now, $info['comment'], !empty($this->config['fromUser'])? $this->config['fromUser']: $info['user'], !empty($this->config['fromSite'])?$this->config['fromSite']: $info['ip'], $info['description']);
+		if ($this->page_exists($info['name'])) {
+			$tikilib->update_page($info['name'], $info['data'], 'Updated from import', !empty($this->config['fromUser'])? $this->config['fromUser']: $info['user'], !empty($this->config['fromSite'])?$this->config['fromSite']: $info['ip'], $info['description'], 0, isset($info['lang'])?$info['lang']:'', null, null, isset($info['wysiwyg'])?$info['wysiwyg']:NULL);
+		} else {
+			$tikilib->create_page($info['name'], 0, $info['data'], $this->now, $info['comment'], !empty($this->config['fromUser'])? $this->config['fromUser']: $info['user'], !empty($this->config['fromSite'])?$this->config['fromSite']: $info['ip'], $info['description'], isset($info['lang'])?$info['lang']:'', isset($info['is_html'])?$info['is_html']:false, null, isset($info['wysiwyg'])?$info['wysiwyg']:NULL);
+		}
 
 		if ($prefs['feature_wiki_comments'] == 'y' && $tiki_p_edit_comments == 'y' && !empty($info['comments'])) {
 			foreach ($info['comments'] as $comment) {
@@ -327,14 +331,19 @@ class XmlLib extends TikiLib {
 		}
 
 		if ($prefs['feature_history'] == 'y' && !empty($info['history'])) {
+			$query = 'select max(`version`) from `tiki_history` where `pageName`=?';
+			$maxVersion = $this->getOne($query, array($info['name']));
+			if (!$maxVersion) {
+				$maxVersion = 0;
+			}
 			foreach ($info['history'] as $version) {
 				if (!($version['data'] = $this->zip->getFromName($version['zip']))) {
 					$this->errors[] = 'Can not unzip history';
 					$this->errorsArgs[] = $version['version'];
 					return false;	
-				}			
+				}
 				$query = 'insert into `tiki_history`(`pageName`, `version`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`) values(?,?,?,?,?,?,?,?)';
-				$this->query($query,array($info['name'], $version['version'], $tikilib->now, $version['user'], $version['ip'], $version['comment'], $version['data'], $version['description']));
+				$this->query($query,array($info['name'], $version['version']+$maxVersion, $tikilib->now, $version['user'], $version['ip'], $version['comment'], $version['data'], $version['description']));
 			}
 		}
 		if ($prefs['feature_wiki_structure'] == 'y' && !empty($info['structure'])) {
@@ -342,6 +351,11 @@ class XmlLib extends TikiLib {
 			//TODO alias
 			if ($info['structure'] == 1) {
 				$this->structureStack[$info['structure']] = $structlib->s_create_page(null, null , $info['name'], '');
+				if (empty($this->structureStack[$info['structure']])) {
+					$this->errors[] = 'A structure already exists';
+					$this->errorsArgs[] = $info['name'];
+					return false;
+				}
 			} elseif (!empty($info['structure'])) {
 				$this->structureStack[$info['structure']] = $structlib->s_create_page($this->structureStack[$info['structure'] - 1], isset($this->structureStack[$info['structure']])?$this->structureStack[$info['structure']]:'', $info['name'], '', $this->structureStack[1]);
 			}
