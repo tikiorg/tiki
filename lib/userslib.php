@@ -210,11 +210,20 @@ class UsersLib extends TikiLib {
 		return in_array($group, $this->list_all_groups());
 	}
 
-	function user_logout($user) {
-		global $prefs;
-		$query = 'delete from `tiki_user_preferences` where `prefName`=? and `user`=?';
-		$user = $this->query($query, array('cookie',(string)$user));
-		if ($prefs['feature_intertiki'] == 'y' and $prefs['feature_intertiki_sharedcookie'] == 'y' and !empty($prefs['feature_intertiki_mymaster'])) {
+	/**
+	 * @param string $user : username
+	 * @param bool $remote : logged out remotely (so do not redirect)
+	 * @param string $redir : url to redirect to. Uses home page according to prefs if empty 
+	 * @return void : redirects to suitable homepage or redir param if not remote 
+	 */
+	function user_logout($user, $remote = false, $redir = '') {
+		global $prefs, $logslib, $userlib;
+		
+		$logslib->add_log('login', 'logged out');
+		
+		$this->delete_user_cookie();
+		
+		if ($remote && $prefs['feature_intertiki'] == 'y' and $prefs['feature_intertiki_sharedcookie'] == 'y' and !empty($prefs['feature_intertiki_mymaster'])) {
 			include_once('XML/RPC.php');
 			$remote = $prefs['interlist'][$prefs['feature_intertiki_mymaster']];
 			$remote['path'] = preg_replace("/^\/?/","/",$remote['path']);
@@ -227,7 +236,44 @@ class UsersLib extends TikiLib {
 						 new XML_RPC_Value($user, 'string')
 						 ));
 			$client->send($msg);
+			return;
 		}
+		
+		// more local cleanup originally from tiki-logout.php
+		
+		// go offline in Live Support
+		if ($prefs['feature_live_support'] == 'y') {
+			include_once ('lib/live_support/lslib.php');
+			if ($lslib->get_operator_status($user) != 'offline') {
+				$lslib->set_operator_status($user, 'offline');
+			}
+		}
+		setcookie($user_cookie_site, '', -3600, $cookie_path, $prefs['cookie_domain']);
+
+		if ($phpcas_enabled == 'y' && $prefs['auth_method'] == 'cas' && $user != 'admin' && $user != '') {
+			require_once ('lib/phpcas/source/CAS/CAS.php');
+			phpCAS::client($prefs['cas_version'], '' . $prefs['cas_hostname'], (int)$prefs['cas_port'], '' . $prefs['cas_path']);
+			phpCAS::logout();
+		}
+		session_unregister('user');
+		unset($_SESSION[$user_cookie_site]);
+		session_destroy();
+		
+		/* change group home page or deactivate if no page is set */
+		if (!empty($redir)) {
+			$url = $redir;
+		} else if (($groupHome = $userlib->get_group_home('Anonymous')) != '') {
+			$url = (preg_match('/^(\/|https?:)/', $groupHome)) ? $groupHome : 'tiki-index.php?page=' . $groupHome;
+		} else {
+			$url = $prefs['site_tikiIndex'];
+		}
+		// RFC 2616 defines that the 'Location' HTTP headerconsists of an absolute URI
+		if (!eregi('^https?\:', $url)) {
+			$url = (ereg('^/', $url) ? $url_scheme . '://' . $url_host . (($url_port != '') ? ":$url_port" : '') : $base_url) . $url;
+		}
+		if (SID) $url.= '?' . SID;
+		header('Location: ' . $url);
+		return;
 	}
 
     function genPass() {

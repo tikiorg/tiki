@@ -119,7 +119,7 @@ function logout($params) {
 		$logslib->add_log('intertiki',$msg.' from '.$prefs['known_hosts'][$key]['name'],$login);
 		return new XML_RPC_Response(0, 101, $msg);
 	}
-	$userlib->user_logout($login);
+	$userlib->user_logout($login, true);
 	$userlib->delete_user_cookie($login);
 	if ($prefs['intertiki_logfile']) logit($prefs['intertiki_logfile'],"logout",$login,INTERTIKI_OK,$prefs['known_hosts'][$key]['name']);
 	$logslib->add_log('intertiki','auth revoked from '.$prefs['known_hosts'][$key]['name'],$login);
