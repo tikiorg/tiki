@@ -8507,7 +8507,7 @@ function chkgd2() {
 
 
 function detect_browser_language() {
-
+	global $prefs;
 	// Get supported languages
 	if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE']))
 		$supported = preg_split('/\s*,\s*/', preg_replace('/;q=[0-9.]+/','',$_SERVER['HTTP_ACCEPT_LANGUAGE']));
