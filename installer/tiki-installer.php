@@ -128,7 +128,8 @@ function isWindows() {
 	return $windows;
 }
 
-class Smarty_Tikiwiki_Installer extends Smarty {
+class Smarty_Tikiwiki_Installer extends Smarty
+{
 
 	function Smarty_Tikiwiki_Installer() {
 		parent::Smarty();
