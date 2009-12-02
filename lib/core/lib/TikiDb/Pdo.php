@@ -21,7 +21,8 @@ class TikiDb_Pdo_Result
 	}
 }
 
-class TikiDb_Pdo extends TikiDb {
+class TikiDb_Pdo extends TikiDb 
+{
 	private $db;
 
 	function __construct( $db ) // {{{
