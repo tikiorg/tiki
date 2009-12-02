@@ -11,7 +11,8 @@ if( !defined( 'PLUGINS_DIR' ) ) {
 }
 
 
-class WikiLib extends TikiLib {
+class WikiLib extends TikiLib
+{
 
     //Special parsing for multipage articles
     function get_number_of_pages($data) {

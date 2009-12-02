@@ -8,7 +8,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 if (!defined('weekInSeconds')) define('weekInSeconds', 604800);
 
-class CalendarLib extends TikiLib {
+class CalendarLib extends TikiLib
+{
 	function convertSortMode($sort_mode) {
 		$tmp = explode("_",$sort_mode);
 		if (count($tmp) == 2) {

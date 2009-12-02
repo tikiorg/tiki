@@ -6,7 +6,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-class MiniCalLib extends TikiLib {
+class MiniCalLib extends TikiLib
+{
 	// Returns an array where each member of the array has:
 	// start: unix timestamp of the interval start time
 	// end  : unix timestamp of the interval end time

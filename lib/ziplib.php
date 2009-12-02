@@ -461,7 +461,8 @@ define('ZIP_CENTHEAD_MAGIC', "PK\001\002");
 define('ZIP_LOCHEAD_MAGIC', "PK\003\004");
 define('ZIP_ENDDIR_MAGIC', "PK\005\006");
 
-class ZipWriter {
+class ZipWriter
+{
 	function ZipWriter($comment = "", $zipname = "archive.zip") {
 		$this->comment = $comment;
 
@@ -577,7 +578,8 @@ class ZipWriter {
  *
  * Right now we ignore the file mod date and time, since we don't need it.
  */
-class ZipReader {
+class ZipReader
+{
 	function ZipReader($zipfile) {
 		if (!is_string($zipfile))
 			$this->fp = $zipfile; // File already open

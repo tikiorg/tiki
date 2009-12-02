@@ -6,7 +6,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-class MailinLib extends TikiLib {
+class MailinLib extends TikiLib
+{
 
 	function list_mailin_accounts($offset, $maxRecords, $sort_mode, $find) {
 

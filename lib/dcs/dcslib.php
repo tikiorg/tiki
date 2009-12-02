@@ -6,7 +6,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-class DCSLib extends TikiLib {
+class DCSLib extends TikiLib
+{
 
 	function remove_contents($contentId) {
 		$query = "delete from `tiki_programmed_content` where `contentId`=?";

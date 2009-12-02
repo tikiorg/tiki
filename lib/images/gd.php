@@ -2,7 +2,8 @@
 
 require_once('lib/images/abstract.php');
 
-class Image extends ImageAbstract {
+class Image extends ImageAbstract
+{
 	var $gdinfo;
 	var $gdversion;
 	var $havegd = false;

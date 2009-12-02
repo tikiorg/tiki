@@ -8,7 +8,8 @@
 
 //this script may only be included - so its better to die if called directly.
 
-class TikiSetup extends TikiInit {
+class TikiSetup extends TikiInit
+{
 
     /*!
         Check that everything is set up properly

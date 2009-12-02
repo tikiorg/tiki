@@ -24,7 +24,8 @@ define('USER_NOT_VALIDATED', -8);
 //added for Auth v1.3 support
 define ("AUTH_LOGIN_OK", 0);
 
-class UsersLib extends TikiLib {
+class UsersLib extends TikiLib
+{
 # var $db;  // The PEAR db object used to access the database
 
 	// change this to an email address to receive debug emails from the LDAP code

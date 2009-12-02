@@ -13,7 +13,8 @@ require_once ('lib/tree/tree.php');
 /**
  * \brief Class to render categories browse tree
  */
-class CatBrowseTreeMaker extends TreeMaker {
+class CatBrowseTreeMaker extends TreeMaker
+{
 	/// Collect javascript cookie set code (internaly used after make_tree() method)
 	var $jsscriptblock;
 

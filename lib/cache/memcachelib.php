@@ -13,7 +13,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  * This utility library is not a complete wrapper for PHP memcache functions, 
  * and only provides a minimal set currently in use in SUMO.
  */
-class Memcachelib {
+class Memcachelib
+{
 
     var $memcache;
     var $options;

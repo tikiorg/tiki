@@ -16,7 +16,8 @@ include_once('lib/reportslib.php');
  * @version
  * @license LGPL. See licence.txt for more details
  */
-class BlogLib extends TikiLib {
+class BlogLib extends TikiLib
+{
 
 	/**
 	 * get_number_of_pages Returns the number of pages

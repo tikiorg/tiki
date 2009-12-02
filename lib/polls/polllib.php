@@ -8,7 +8,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 include_once('lib/polls/polllib_shared.php');
 
-class PollLib extends PollLibShared {
+class PollLib extends PollLibShared
+{
 
 	function list_polls($offset, $maxRecords, $sort_mode, $find) {
 

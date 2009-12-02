@@ -8,7 +8,8 @@
 
 //this script may only be included - so its better to die if called directly.
 
-class timer {
+class timer
+{
     function parseMicro($micro) {
         list($micro, $sec) = explode(' ', microtime());
 

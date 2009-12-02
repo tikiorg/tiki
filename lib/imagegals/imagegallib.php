@@ -9,7 +9,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 include_once('lib/reportslib.php');
 
-class ImageGalsLib extends TikiLib {
+class ImageGalsLib extends TikiLib
+{
 	function __construct() {
 		parent::__construct();
 		global $prefs;

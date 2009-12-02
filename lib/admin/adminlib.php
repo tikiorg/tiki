@@ -6,7 +6,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-class AdminLib extends TikiLib {
+class AdminLib extends TikiLib
+{
 
 	function list_dsn($offset, $maxRecords, $sort_mode, $find) {
 		

@@ -45,7 +45,8 @@
  * @link http://code.google.com/p/jsmin-php/
  */
 
-class JSMin {
+class JSMin
+{
   const ORD_LF    = 10;
   const ORD_SPACE = 32;
 
@@ -287,5 +288,5 @@ class JSMin {
 }
 
 // -- Exceptions ---------------------------------------------------------------
-class JSMinException extends Exception {}
-?>
+class JSMinException extends Exception
+{}

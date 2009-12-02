@@ -85,7 +85,8 @@ define("RDF_OBJECT_TYPE_RESOURCE",0);
 define("RDF_OBJECT_TYPE_LITERAL",1);
 define("RDF_OBJECT_TYPE_XML",2);
 
-class Rdf_parser {
+class Rdf_parser
+{
 
 var $rdf_parser;
 

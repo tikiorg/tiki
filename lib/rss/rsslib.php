@@ -16,7 +16,8 @@ $userslib = new Userslib($dbTiki);
 
 global $rss_cache_time;
 
-class RSSLib extends TikiLib {
+class RSSLib extends TikiLib
+{
 
 	// ------------------------------------
 	// functions for rss feeds we syndicate

@@ -7,7 +7,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 // this is an abstract class
-class ObjectLib extends TikiLib {
+class ObjectLib extends TikiLib
+{
 
     function add_object($type, $itemId, $description = '', $name = '', $href = '') {
 

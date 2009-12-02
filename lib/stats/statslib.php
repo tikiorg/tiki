@@ -6,7 +6,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-class StatsLib extends TikiLib {
+class StatsLib extends TikiLib
+{
 	// obsolete, but keeped for compatibility purposes
 	// use Tikilib::list_pages() instead
 	function list_orphan_pages($offset = 0, $maxRecords = -1, $sort_mode = 'pageName_desc', $find = '', $onlyCant=false) {

@@ -28,7 +28,8 @@ require_once ('lib/debug/debugger.php');
  *  data   => user provided data to be placed as node text
  *
  */
-class TreeMaker {
+class TreeMaker
+{
 	/// Unique prefix for cookies generated for this tree
 	var $prefix;
 

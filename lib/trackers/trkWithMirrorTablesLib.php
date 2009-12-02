@@ -55,7 +55,8 @@ table for each tracker:
 	+------+----------+----------+----------+...+----------+
 */
 
-class TrkWithMirrorTablesLib extends TrackerLib {
+class TrkWithMirrorTablesLib extends TrackerLib
+{
 		
 	var $TABLE_PREFIX;
 	var $COL_PREFIX;

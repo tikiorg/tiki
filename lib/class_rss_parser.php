@@ -36,7 +36,8 @@ define("_class_rss_parser_is_included",1);
 
 include_once("class_rdf_parser.php");
 
-class RSS_parser {
+class RSS_parser
+{
   var $channel_handler_name;
   var $item_handler_name;
   var $items_suject='';

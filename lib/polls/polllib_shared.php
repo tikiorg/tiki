@@ -6,7 +6,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 	exit;
 }
 
-class PollLibShared extends TikiLib {
+class PollLibShared extends TikiLib
+{
 
 	function get_poll($pollId) {
 		$query = "select * from `tiki_polls` where `pollId`=?";

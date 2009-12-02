@@ -13,7 +13,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-class QuizLib extends TikiLib {
+class QuizLib extends TikiLib
+{
 
 	// Functions for Quizzes ////
 	function get_user_quiz_result($userResultId) {
@@ -705,7 +706,8 @@ function TextToQuestions($text){
 }
 
 // An abstract class
-class HW_QuizQuestion {
+class HW_QuizQuestion
+{
   var $question;
   function from_text($lines){
     // Set the question according to an array of text lines.
@@ -728,7 +730,8 @@ class HW_QuizQuestion {
 //                    Array('text'=>"Blue", 'correct'=>1),
 //                    Array('text'=>"Green",'correct'=>1));
 //   Any of the answers are correct in this example.
-class HW_QuizQuestionMultipleChoice extends HW_QuizQuestion {
+class HW_QuizQuestionMultipleChoice extends HW_QuizQuestion
+{
   var $choices  = Array();
 
   function HW_QuizQuestionMultipleChoice($lines){
@@ -796,7 +799,8 @@ class HW_QuizQuestionMultipleChoice extends HW_QuizQuestion {
 // e.g.
 //   $question = "Do you wiki?";
 //   $answer   = -1 (unknown), 0 (no), 1 (yes)
-class HW_QuizQuestionYesNo extends HW_QuizQuestion {
+class HW_QuizQuestionYesNo extends HW_QuizQuestion
+{
   var $question;
   var $answer  = -1;
 
@@ -837,7 +841,8 @@ class HW_QuizQuestionYesNo extends HW_QuizQuestion {
   }
 }
 
-class Quiz {
+class Quiz
+{
 	var $id;
 	var $bDeleted;
 	var $timestamp;

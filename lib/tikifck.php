@@ -1,7 +1,8 @@
 <?php
 include_once('lib/fckeditor/fckeditor.php');
 
-class TikiFCK {
+class TikiFCK
+{
   var $InstanceName;
   var $BasePath;
   var $Width;

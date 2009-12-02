@@ -46,7 +46,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 require_once("lib/objectlib.php");
 
-class FreetagLib extends ObjectLib {
+class FreetagLib extends ObjectLib
+{
 
     // The fields below should be tiki preferences
     

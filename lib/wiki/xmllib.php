@@ -7,7 +7,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 define('WIKI_XML', 'wiki.xml');
 
-class XmlLib extends TikiLib {
+class XmlLib extends TikiLib
+{
 	var $errors = array();
 	var $errorsArgs = array();
 	var $xml = '';
@@ -353,7 +354,8 @@ class XmlLib extends TikiLib {
 $xmllib = new XmlLib;
 
 require_once('lib/pear/XML_Parser/Parser.php');
-class page_Parser extends XML_Parser {
+class page_Parser extends XML_Parser
+{
 	var $page;
 	var $currentTag = null;
 	var $context = null;

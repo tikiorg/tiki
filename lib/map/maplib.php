@@ -6,7 +6,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-class MapLib {
+class MapLib
+{
 
 	function listMaps($mappath) {
 		if (!isset($mappath) or !$mappath or !is_dir($mappath)) {

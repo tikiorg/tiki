@@ -21,7 +21,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  * This list is rebuilt if the user asks for a "restore default"
  *
  */
-class UserModulesLib extends TikiLib {
+class UserModulesLib extends TikiLib
+{
 	function unassign_user_module($moduleId, $user) {
 		$query = "delete from `tiki_user_assigned_modules` where `moduleId`=? and `user`=?";
 		$result = $this->query($query,array($moduleId, $user));

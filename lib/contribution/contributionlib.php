@@ -5,7 +5,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-class ContributionLib extends TikiLib {
+class ContributionLib extends TikiLib
+{
 	function add_contribution($name, $description = '') {
 		$query = 'insert into `tiki_contributions`(`name`, `description`) values(?, ?)';
 		$this->query($query, array($name, $description));

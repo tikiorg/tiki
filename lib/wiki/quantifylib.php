@@ -1,7 +1,8 @@
 <?php
 require_once 'lib/diff.php';
 
-class QuantifyLib extends TikiLib {
+class QuantifyLib extends TikiLib
+{
 
 	function recordChangeSize( $pageId, $version, $oldData, $newData )
 	{

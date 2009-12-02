@@ -12,7 +12,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-class MapsLib extends TikiLib {
+class MapsLib extends TikiLib
+{
 
 	function makeusermap() {
 		global $prefs, $tikidomain, $smarty;

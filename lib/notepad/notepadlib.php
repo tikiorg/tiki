@@ -9,7 +9,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 /* Task properties:
    user, taskId, title, description, date, status, priority, completed, percentage
 */
-class NotepadLib extends TikiLib {
+class NotepadLib extends TikiLib
+{
 	function get_note($user, $noteId) {
 		$query = "select * from `tiki_user_notes` where `user`=? and `noteId`=?";
 		$result = $this->query($query,array($user,(int)$noteId));

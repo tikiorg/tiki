@@ -6,7 +6,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-class HistLib extends TikiLib {
+class HistLib extends TikiLib
+{
 
 	/* 
 		*	Removes a specific version of a page

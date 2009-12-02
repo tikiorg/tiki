@@ -4,7 +4,8 @@
    http://www.spiration.co.uk/post/1333/PHP 5 sessions in mysql database with PDO db objects
 */
 
-class Session {
+class Session
+{
 	public $db;
 	// public $maxlifetime = get_cfg_var("session.gc_maxlifetime");
 	public $maxlifetime = 1800; /* 30 mins */

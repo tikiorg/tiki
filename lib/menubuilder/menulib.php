@@ -6,7 +6,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-class MenuLib extends TikiLib {
+class MenuLib extends TikiLib
+{
 
 	function empty_menu_cache($menuId = 0) {
 		global $cachelib; include_once('lib/cache/cachelib.php');

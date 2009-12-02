@@ -2,7 +2,8 @@
 
 require_once('lib/images/abstract.php');
 
-class Image extends ImageAbstract {
+class Image extends ImageAbstract
+{
 
 	function __construct($image, $isfile = false) {
 		if ( $isfile ) {

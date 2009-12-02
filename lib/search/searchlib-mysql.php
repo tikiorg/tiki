@@ -7,7 +7,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-class SearchLib extends TikiLib {
+class SearchLib extends TikiLib
+{
 	function register_search($words) {
 		$words = addslashes($words);
 

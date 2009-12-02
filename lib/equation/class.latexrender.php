@@ -23,7 +23,8 @@
  *
  */
 
-class LatexRender {
+class LatexRender
+{
 
     // ====================================================================================
     // Variable Definitions

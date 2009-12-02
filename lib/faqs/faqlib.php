@@ -9,7 +9,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 /* Task properties:
    user, taskId, title, description, date, status, priority, completed, percentage
 */
-class FaqLib extends TikiLib {
+class FaqLib extends TikiLib
+{
 	function add_suggested_faq_question($faqId, $question, $answer, $user) {
 		$question = strip_tags($question, '<a>');
 

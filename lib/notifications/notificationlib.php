@@ -31,7 +31,8 @@ if (!isset($Debug)) $Debug = false;
  * 
  * @since 1.x
  */
-class NotificationLib extends TikiLib {
+class NotificationLib extends TikiLib
+{
 	function list_mail_events($offset, $maxRecords, $sort_mode, $find) {
 		if ($find) {
 			$findesc = '%' . $find . '%';

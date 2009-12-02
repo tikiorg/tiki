@@ -10,7 +10,7 @@
  
 require_once('PHPUnit/Framework/TestCase.php'); 
  
-abstract class TikiTestCase extends PHPUnit_Framework_TestCase {
+abstract class TikiTestCase extends PHPUnit_Framework_TestCase
+{
  	protected $backupGlobals = FALSE;	
 }
-

@@ -14,7 +14,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 include_once("tikihelplib.php");
 
-class Breadcrumb {
+class Breadcrumb
+{
 	var $title;
 	var $description;
 	var $url;

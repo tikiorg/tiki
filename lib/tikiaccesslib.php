@@ -9,7 +9,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 
-class TikiAccessLib extends TikiLib {
+class TikiAccessLib extends TikiLib
+{
 
 	// check that the user is admin or has admin permissions
 	function check_admin($user,$feature_name="") {

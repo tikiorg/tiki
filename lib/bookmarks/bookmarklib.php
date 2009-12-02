@@ -6,7 +6,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-class BookmarkLib extends TikiLib {
+class BookmarkLib extends TikiLib
+{
 	function get_folder_path($folderId, $user) {
 		$path = '';
 

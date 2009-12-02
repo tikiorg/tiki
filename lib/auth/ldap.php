@@ -10,7 +10,8 @@
 require_once ("Net/LDAP2.php");
 
 
-class TikiLdapLib {
+class TikiLdapLib
+{
 
 	// var to hold a esablished connection
 	protected $ldaplink = NULL;

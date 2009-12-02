@@ -6,7 +6,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-class SearchStatsLib extends TikiLib {
+class SearchStatsLib extends TikiLib
+{
 	function clear_search_stats() {
 		$query = "delete from tiki_search_stats";
 		$result = $this->query($query,array());

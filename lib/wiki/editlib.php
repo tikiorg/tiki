@@ -12,7 +12,8 @@
  * 
  */
 
-class EditLib {
+class EditLib
+{
 	
 	// general
 	

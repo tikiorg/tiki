@@ -10,7 +10,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 /* Task properties:
    user, taskId, title, description, date, status, priority, completed, percentage
 */
-class TaskLib extends TikiLib {
+class TaskLib extends TikiLib
+{
 	
 	function get_task($user, $taskId, $task_version = null, $admin_mode = false) { 
 		if($admin_mode){

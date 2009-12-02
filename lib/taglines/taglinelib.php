@@ -6,7 +6,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-class TagLineLib extends TikiLib {
+class TagLineLib extends TikiLib
+{
 
 	function list_cookies($offset, $maxRecords, $sort_mode, $find) {
 		if ($find) {

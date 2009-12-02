@@ -9,7 +9,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 require_once("lib/multilingual/multilinguallib.php");
 require_once('lib/categories/categlib.php');
 
-class PageListLib extends MultilingualLib {
+class PageListLib extends MultilingualLib
+{
 
   var $orderList = array( 'score_desc', 'score_asc', 'priority_asc', 'priority_desc', 
                       'page_name_asc', 'page_name_desc');

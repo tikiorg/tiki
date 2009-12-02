@@ -23,7 +23,8 @@ require_once( 'lib/db/tiki_registration_fields.php' );
 
 if (!isset($Debug)) $Debug = false;
 
-class RegistrationLib extends TikiLib {
+class RegistrationLib extends TikiLib
+{
 
     // Validate emails...
   function SnowCheckMail($Email,$sender_email,$novalidation,$Debug=false)

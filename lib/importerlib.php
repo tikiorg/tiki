@@ -22,7 +22,8 @@ require_once ('commentslib.php');
  * @uses Comments
  * @license LGPL. Please, see licence.txt for mode details
  */
-class Importer extends Comments {
+class Importer extends Comments
+{
 	// The types of forums are hard-coded into the library and displayed
 	// in the template. As support for more imports grows, add the type to
 	// the below two arrays, in addition to writing the functions to 

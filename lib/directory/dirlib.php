@@ -7,7 +7,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-class DirLib extends TikiLib {
+class DirLib extends TikiLib
+{
 	// Path functions
 	function dir_get_category_path_admin($categId) {
 		global $prefs;

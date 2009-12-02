@@ -70,7 +70,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-class tar {
+class tar
+{
 	// Unprocessed Archive Information
 	var $filename;
 	var $isGzipped;

@@ -17,7 +17,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 /*!
 	\static
 */
-class Babelfish {
+class Babelfish
+{
 	/*!
 		Return the host name of the server
 		

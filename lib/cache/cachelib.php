@@ -12,7 +12,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  * usage is simple and feel free to improve it
  */
 
-class Cachelib {
+class Cachelib
+{
 
   var $folder;
 

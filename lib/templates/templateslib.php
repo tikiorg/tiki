@@ -6,7 +6,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-class TemplatesLib extends TikiLib {
+class TemplatesLib extends TikiLib
+{
 	function list_all_templates($offset, $maxRecords, $sort_mode, $find) {
 		$bindvars = array();
 		if ($find) {

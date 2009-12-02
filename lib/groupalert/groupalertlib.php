@@ -10,7 +10,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-class groupAlertLib extends TikiLib {
+class groupAlertLib extends TikiLib
+{
 
 	function AddGroup ($ObjectType, $ObjectNumber,$GroupName,$displayEachUser) {
 		if ( $displayEachUser == "on" ) $displayEachUser='y';

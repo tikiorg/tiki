@@ -6,7 +6,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-class HtmlPagesLib extends TikiLib {
+class HtmlPagesLib extends TikiLib
+{
 	function remove_html_page($pageName) {
 		$query = "delete from `tiki_html_pages` where ".$this->convertBinary()." `pageName`=?";
 		$result = $this->query($query,array($pageName));

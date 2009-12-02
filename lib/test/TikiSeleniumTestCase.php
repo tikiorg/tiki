@@ -7,7 +7,8 @@ require_once 'PHPUnit/Extensions/SeleniumTestCase.php';
 require_once 'TikiAcceptanceTestDBRestorer.php';
  
  
-class TikiSeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase {
+class TikiSeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase
+{
 	protected $backupGlobals = FALSE;
 	var $current_test_db; 
 	var $user_credentials = array (

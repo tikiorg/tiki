@@ -7,7 +7,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-class ShoutboxLib extends TikiLib {
+class ShoutboxLib extends TikiLib
+{
 	function list_shoutbox($offset, $maxRecords, $sort_mode, $find) {
 		global $prefs;
 		if ($find) {

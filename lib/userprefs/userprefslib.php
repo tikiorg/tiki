@@ -6,7 +6,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-class UserPrefsLib extends TikiLib {
+class UserPrefsLib extends TikiLib
+{
 
 	function set_user_avatar($user, $type, $avatarLibName, $avatarName, $avatarSize, $avatarType, $avatarData) {
 		global $prefs, $userlib;

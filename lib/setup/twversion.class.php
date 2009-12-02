@@ -8,7 +8,8 @@
 
 // Should generally be instantiated from tiki-setup.php
 
-class TWVersion {
+class TWVersion
+{
 	var $branch;		// Development cycle
 	var $version;		// This version
 	private $latestMinorRelease;		// Latest release in the same major version release series

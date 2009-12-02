@@ -6,7 +6,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-class RankLib extends TikiLib {
+class RankLib extends TikiLib
+{
 	function wiki_ranking_top_pages($limit, $categ=array(), $lang=null) {
 		global $user, $prefs;
 		
@@ -15,6 +16,7 @@ class RankLib extends TikiLib {
 		if ($categ) {
 			$mid .= " INNER JOIN (`tiki_objects` as tob, `tiki_category_objects` as tco) ON (tp.`pageName` = tob.`itemId` and tob.`objectId` = tco.`catObjectId`) WHERE tob.`type` = 'wiki page' AND (tco.`categId` = ?";
 			$bindvals[] = $categ[0]; 	
+			//FIXME
 			for ($i = 1; $i < count($categ); $i++) {
 				$mid .= " OR tco.`categId` = " . $categ[$i];
 			}
@@ -82,6 +84,7 @@ class RankLib extends TikiLib {
 		$mid = '';
 		if ($categ) {
 			$mid .= " INNER JOIN (`tiki_objects` as tob, `tiki_category_objects` as tco) ON (tp.`pageName` = tob.`itemId` and tob.`objectId` = tco.`catObjectId`) WHERE tob.`type` = 'wiki page' AND (tco.`categId` = ?";
+		//FIXME
 			$bindvals[] = $categ[0]; 	
 			for ($i = 1; $i < count($categ); $i++) {
 				$mid .= " OR tco.`categId` = " . $categ[$i];
@@ -126,6 +129,7 @@ class RankLib extends TikiLib {
 		$mid = '';
 		if ($categ) {
 			$mid .= " INNER JOIN (`tiki_objects` as tob, `tiki_category_objects` as tco) ON (tp.`pageName` = tob.`itemId` and tob.`objectId` = tco.`catObjectId`) WHERE tob.`type` = 'wiki page' AND (tco.`categId` = ?";
+			//FIXME
 			$bindvals[] = $categ[0]; 	
 			for ($i = 1; $i < count($categ); $i++) {
 				$mid .= " OR tco.`categId` = " . $categ[$i];
@@ -555,6 +559,7 @@ class RankLib extends TikiLib {
 		$mid = '';
 		if ($categ) {
 			$mid .= " INNER JOIN (`tiki_objects` as tob, `tiki_category_objects` as tco) ON (tp.`pageName` = tob.`itemId` and tob.`objectId` = tco.`catObjectId`) WHERE tob.`type` = 'wiki page' AND (tco.`categId` = ?";
+			//FIXME
 			$bindvals[] = $categ[0]; 	
 			for ($i = 1; $i < count($categ); $i++) {
 				$mid .= " OR tco.`categId` = " . $categ[$i];

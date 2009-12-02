@@ -1,6 +1,7 @@
 <?php
 
-class MemcacheSession {
+class MemcacheSession
+{
 
 	private $enabled = false;
 	private $lib;

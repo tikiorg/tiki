@@ -7,7 +7,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 include_once ('lib/webmail/tikimaillib.php');
 
-class EvLib extends TikiLib {
+class EvLib extends TikiLib
+{
 
 	function replace_event($evId, $name, $description, $allowUserSub, $allowAnySub, $unsubMsg, $validateAddr) {
 		if ($evId) {

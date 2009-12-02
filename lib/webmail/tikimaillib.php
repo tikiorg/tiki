@@ -6,7 +6,8 @@ global $access;
 $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 include_once("lib/webmail/htmlMimeMail.php");
 
-class TikiMail extends HtmlMimeMail {
+class TikiMail extends HtmlMimeMail
+{
 		var $charset;
 
 	/* $user = user you send the mail

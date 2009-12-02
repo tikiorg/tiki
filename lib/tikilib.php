@@ -21,7 +21,8 @@ if ( ! defined('DATE_FORMAT_UNIXTIME') ) define('DATE_FORMAT_UNIXTIME', 5);
 
 require_once('lib/core/lib/TikiDb/Bridge.php');
 
-class TikiLib extends TikiDb_Bridge {
+class TikiLib extends TikiDb_Bridge
+{
 	var $buffer;
 	var $flag;
 	var $parser;

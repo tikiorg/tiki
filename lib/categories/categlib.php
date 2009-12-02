@@ -14,7 +14,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 global $objectlib;require_once("lib/objectlib.php");
 
-class CategLib extends ObjectLib {
+class CategLib extends ObjectLib
+{
 
 	/* Returns an array of categories which are descendants of the category with the given $categId. If no category is given, all categories are returned.
 	Each category is similar to a tiki_categories record, but with the following additional fields:

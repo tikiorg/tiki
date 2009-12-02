@@ -30,7 +30,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-class PluginsLib extends TikiLib {
+class PluginsLib extends TikiLib
+{
 	var $_errors;
 	var $_data;
 	var $_params;
@@ -152,7 +153,8 @@ class PluginsLib extends TikiLib {
 /**
 * Class with utilities for Plugins
 */
-class PluginsLibUtil {
+class PluginsLibUtil
+{
 	/**
 	* Create a table with information from pages
 	* @param array key ["data"] from one of the functions that retrieve informaci�n about pages

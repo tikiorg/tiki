@@ -6,7 +6,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-class WebMailLib extends TikiLib {
+class WebMailLib extends TikiLib
+{
 	
 	// current account row from database (tiki_user_mail_accounts)
 	// [accountId, user, account, pop, current, port, username, pass, msgs, smtp, useAuth, smtpPort, flagsPublic, autoRefresh, imap, mbox, maildir, useSSL]

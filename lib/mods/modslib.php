@@ -9,7 +9,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 /*
  * This class describe the main informations of a module
  */
-class TikiMod {
+class TikiMod
+{
 	var $modname;
 	var $name;
 	var $type;
@@ -44,7 +45,8 @@ class TikiMod {
  * This class describe the informations of a module that are available
  * from a 00_list.txt style file
  */
-class TikiModAvailable extends TikiMod {
+class TikiModAvailable extends TikiMod
+{
 	var $repository;      /* string */
 	var $description;     /* array */
 	var $licence;         /* string */
@@ -138,7 +140,8 @@ class TikiModAvailable extends TikiMod {
  * This class contain full information of a module,
  * like there are available in it's .info.txt file
  */
-class TikiModInfo extends TikiModAvailable {
+class TikiModInfo extends TikiModAvailable
+{
 	var $configuration;         /* array */
 	var $configuration_help;    /* array */
 	var $files;                 /* array */
@@ -346,7 +349,8 @@ class TikiModInfo extends TikiModAvailable {
 /*
  * This class represent one dependence for an another package
  */
-class TikiModDepend extends TikiMod {
+class TikiModDepend extends TikiMod
+{
 	var $tests;
 
 	function TikiModDepend($type, $name=FALSE) {
@@ -400,7 +404,8 @@ class TikiModDepend extends TikiMod {
 /*
  * This is the class that manage every modules
  */
-class ModsLib {
+class ModsLib
+{
 
 	var $feedback_listeners;
 	var $types;

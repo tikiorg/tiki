@@ -29,7 +29,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *
  * This class extends the TikiLib class.
  */
-class TrackerLib extends TikiLib {
+class TrackerLib extends TikiLib
+{
 
 	var $trackerinfo_cache;
 

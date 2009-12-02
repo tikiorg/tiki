@@ -5,7 +5,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-class MultilingualLib extends TikiLib {
+class MultilingualLib extends TikiLib
+{
 	/** brief add a translation
 	  */
 	  

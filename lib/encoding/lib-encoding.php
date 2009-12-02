@@ -1,6 +1,7 @@
 <?php
 
-class Encoding {
+class Encoding
+{
 	
     var $_inputSupportedEncodings = array ('ISO-8859-1','ISO-8859-15','UTF-8');
     var $_ouputSupportedEncodings = array ('ISO-8859-1','ISO-8859-15','UTF-8',);

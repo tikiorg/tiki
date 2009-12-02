@@ -7,8 +7,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-class LogsLib extends TikiLib {
-
+class LogsLib extends TikiLib
+{
 
 	function add_log($type,$message,$who='',$ip='',$client='',$time='') {
 		global $user;

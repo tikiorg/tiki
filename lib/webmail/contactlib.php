@@ -12,7 +12,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-class ContactLib extends TikiLib {
+class ContactLib extends TikiLib
+{
 
 	// Contacts
 	function list_contacts($user, $offset=-1, $maxRecords=-1,
