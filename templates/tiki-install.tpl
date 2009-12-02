@@ -383,7 +383,7 @@
 </div>
 {/if}
 
-{if isset($htaccess_error)}
+{if isset($htaccess_error) and $htaccess_error eq 'y'}
 <h3>{tr}.htaccess File{/tr} <a title="{tr}Help{/tr}" href="http://doc.tikiwiki.org/Installation" target="help"><img style="border:0" src='pics/icons/help.png' alt="{tr}Help{/tr}" /></a></h3>
 {tr}We recommend enabling the <strong>.htaccess</strong> file for your Tiki{/tr}. {tr}This will enable you to use SEFURLs (search engine friendly URLs) and help improve site security{/tr}. 
 <p>{tr}To enable this file, simply rename the <strong>_htaccess</strong> file (located in the main directory of your Tiki installation) to <strong>.htaccess</strong>.{/tr}</p>
@@ -393,6 +393,7 @@
 <div align="center">
 <form action="tiki-install.php" method="post">
 	<input type="hidden" name="install_step" value="6" />
+	<input type="hidden" name="install_type" value="{$install_type}" />
 	<input type="submit" value=" {tr}Continue{/tr} " />
 {if $multi}		<input type="hidden" name="multi" value="{$multi}" />{/if}
 {if $lang}		<input type="hidden" name="lang" value="{$lang}" />{/if}
@@ -457,6 +458,7 @@
 {if $multi}		<input type="hidden" name="multi" value="{$multi}" />{/if}
 {if $lang}		<input type="hidden" name="lang" value="{$lang}" />{/if}
 	<input type="hidden" name="install_step" value="7" />
+	<input type="hidden" name="install_type" value="{$install_type}" />
 	<input type="hidden" name="general_settings" value="y" />
 	<input type="submit" value=" {tr}Continue{/tr} " />
 </div>
@@ -485,8 +487,8 @@
 {/if}
 
 {if $tikidb_is20}
-		<span class="button"><a href="tiki-install.php?lockenter">{tr}Enter Tiki and Lock Installer{/tr} ({tr}Recommended{/tr})</a></span>
-		<span class="button"><a href="tiki-install.php?nolockenter">{tr}Enter Tiki Without Locking Installer{/tr}</a></span>
+		<span class="button"><a href="tiki-install.php?lockenter&install_type={$install_type}">{tr}Enter Tiki and Lock Installer{/tr} ({tr}Recommended{/tr})</a></span>
+		<span class="button"><a href="tiki-install.php?nolockenter&install_type={$install_type}">{tr}Enter Tiki Without Locking Installer{/tr}</a></span>
 {/if}
 
 </div>
