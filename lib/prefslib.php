@@ -178,6 +178,16 @@ class PreferencesLib
 		}
 	}
 
+	private function _getPasswordValue( $info, $data ) {
+		$name = $info['preference'];
+
+		if( isset($info['filter']) && $filter = TikiFilter::get( $info['filter'] ) ) {
+			return $filter->filter( $data[$name] );
+		} else {
+			return $data[$name];
+		}
+	}
+
 	private function _getTextareaValue( $info, $data ) {
 		$name = $info['preference'];
 

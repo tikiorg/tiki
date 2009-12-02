@@ -31,14 +31,8 @@ if (isset($_REQUEST["new_prefs"])) {
 	$pref_simple_values = array(
 		"urlIndex",
 		"ip_can_be_checked",
-		"permission_denied_url",
 		"highlight_group",
 		'zend_mail_handler',
-		'zend_mail_smtp_server',
-		'zend_mail_smtp_auth',
-		'zend_mail_smtp_user',
-		'zend_mail_smtp_pass',
-		'zend_mail_smtp_port',
 		'zend_mail_smtp_security',
 		'urlOnUsername',
 	);
@@ -46,15 +40,9 @@ if (isset($_REQUEST["new_prefs"])) {
 		simple_set_value($svitem);
 	}
 	$pref_byref_values = array(
-		"display_field_order",
 		"display_timezone",
 		"server_timezone",
-		"long_date_format",
-		"long_time_format",
-		"short_date_format",
-		"short_time_format",
 		"tikiIndex",
-		"users_prefs_display_timezone"
 	);
 	foreach($pref_byref_values as $britem) {
 		byref_set_value($britem);

@@ -54,10 +54,8 @@
 				</select>
 			</div>
 			<div class="adminoptionboxchild" id="smtp_options" {if $prefs.zend_mail_handler neq 'smtp'} style="display: none;" {/if}>
-				<div class="adminoptionbox">
-					<label for="zend_mail_smtp_server">{tr}SMTP Server{/tr}</label>
-					<input type="text" name="zend_mail_smtp_server" id="zend_mail_smtp_server" value="{$prefs.zend_mail_smtp_server|escape}"/>
-				</div>
+				{preference name=zend_mail_smtp_server}
+
 				<div class="adminoptionbox">
 					<label for="zend_mail_smtp_auth">{tr}Authentication{/tr}</label>
 					<select name="zend_mail_smtp_auth" id="zend_mail_smtp_auth" onchange="if( this.value == '' ) hide('smtp_auth_options'); else show('smtp_auth_options');">
@@ -69,27 +67,13 @@
 				</div>
 				<div class="adminoptionboxchild" id="smtp_auth_options" {if $prefs.zend_mail_smtp_auth eq ''} style="display: none;" {/if}>
 					<p>{tr}These values will be stored in plain text in the database.{/tr}</p>
-					<div class="adminoptionbox">
-						<label for="zend_mail_smtp_user">{tr}Username{/tr}</label>
-						<input type="text" name="zend_mail_smtp_user" id="zend_mail_smtp_user" value="{$prefs.zend_mail_smtp_user|escape}"/>
-					</div>
-					<div class="adminoptionbox">
-						<label for="zend_mail_smtp_pass">{tr}Password{/tr}</label>
-							<input type="password" name="zend_mail_smtp_pass" id="zend_mail_smtp_pass" value="{$prefs.zend_mail_smtp_pass|escape}"/>
-					</div>
+
+					{preference name=zend_mail_smtp_user}
+					{preference name=zend_mail_smtp_pass}
 				</div>
-				<div class="adminoptionbox">
-					<label for="zend_mail_smtp_port">{tr}Port{/tr}</label>
-					<input type="text" name="zend_mail_smtp_port" id="zend_mail_smtp_port" value="{$prefs.zend_mail_smtp_port|escape}"/>
-				</div>
-				<div class="adminoptionbox">
-					<label for="zend_mail_smtp_security">{tr}Security{/tr}</label>
-					<select name="zend_mail_smtp_security" id="zend_mail_smtp_security">
-						<option value="" {if $prefs.zend_mail_smtp_security eq ''}selected="selected"{/if}>{tr}None{/tr}</option>
-						<option value="ssl" {if $prefs.zend_mail_smtp_security eq 'ssl'}selected="selected"{/if}>SSL</option>
-						<option value="tls" {if $prefs.zend_mail_smtp_security eq 'tls'}selected="selected"{/if}>TLS</option>
-					</select>
-				</div>
+
+				{preference name=zend_mail_smtp_port}
+				{preference name=zend_mail_smtp_security}
 			</div>
 			<div class="adminoptionbox">
 				<label for="testMail">{tr}Email to send a test mail{/tr}</label>
@@ -119,34 +103,25 @@
 				{preference name=feature_antibot}
 				{preference name=feature_wiki_protect_email}
 		</fieldset>		
-		
-		
-		
 	{/tab}
 
 	{tab name="{tr}General Settings{/tr}"}
-
 		<fieldset>
 			<legend>{tr}Server{/tr}</legend>
-
 			{preference name=tmpDir}
-			
 			{preference name=use_proxy}
 			<div class="adminoptionboxchild" id="use_proxy_childcontainer">
 				{preference name=proxy_host}
 				{preference name=proxy_port}
 			</div>			
-
 		</fieldset>		
 
 		<fieldset>
 			<legend>{tr}MultiDomain{/tr}</legend>
-			
 			{preference name=multidomain_active}
 			<div class="adminoptionboxchild" id="multidomain_active_childcontainer">
 				{preference name=multidomain_config}
 			</div>			
-
 		</fieldset>			
 
 
@@ -170,7 +145,6 @@
 				<div class="adminoptionboxchild" id="feature_contact_childcontainer">
 					{preference name=contact_anon}
 					{preference name=contact_user}
-
 				</div>
 		</fieldset>
 
@@ -183,18 +157,14 @@
 		
 		<fieldset>
 			<legend>{tr}Miscellaneous{/tr}</legend>
-
 				{preference name=feature_help}
 				<div class="adminoptionboxchild" id="feature_help_childcontainer">
 					{preference name=helpurl}
 				</div>
-
 		</fieldset>
-		
 	{/tab}
 
 	{tab name="{tr}Navigation{/tr}"}
-
 		<fieldset>
 			<legend>{tr}Menus{/tr}</legend>
 			<div class="adminoptionbox">
@@ -269,8 +239,7 @@
 			<legend>{tr}Redirects{/tr}</legend>
 			<div class="adminoptionbox">
 				{preference name=feature_redirect_on_error}
-
-{preference name='feature_wiki_1like_redirection'}
+				{preference name='feature_wiki_1like_redirection'}
 				
 			<div class="adminoptionbox">
 				<div class="adminoption">
@@ -280,12 +249,9 @@
 					<label for="permission_denied_login_box">{tr}On permission denied, display login module (for Anonymous){/tr}.</label>
 				</div>
 				<div class="adminoptionlabel" id="urlonerror" style="display:{if $prefs.permission_denied_login_box eq 'y'}none{else}block{/if};">
-					{tr}or{/tr}<br />
-					<div class="adminoptionlabel">
-						<label for="permission_denied_url">{tr}Send to URL{/tr}</label>:
-						<br />
-						<input type="text" name="permission_denied_url" id="permission_denied_url" value="{$prefs.permission_denied_url|escape}" size="50" />
-					</div>
+					{tr}or{/tr}
+					<br />
+					{preference name=permission_denied_url}
 				</div>
 			</div>
 
@@ -310,13 +276,10 @@
 				{preference name=load_threshold}
 				{preference name=site_busy_msg}
 			</div>
-
 		</fieldset>
-	
 	{/tab}
 	
 	{tab name="{tr}Date and Time Formats{/tr}"}
-	
 		{preference name=feature_pear_date}
 	
 		<div class="adminoptionbox">
@@ -331,66 +294,23 @@
 				</select>
 			</div>
 		</div>
-		<div class="adminoptionbox">
-			<div align="left">
-				<input type="radio" id="users_prefs_display_timezone" name="users_prefs_display_timezone" value="Site" {if $prefs.users_prefs_display_timezone eq 'Site'}checked="checked"{/if}/>
-				<label for="users_prefs_display_timezone">{tr}Use site default to show times{/tr}.</label>
-				<br />
-				<input type="radio" id="users_prefs_display_timezone2" name="users_prefs_display_timezone" value="Local" {if $prefs.users_prefs_display_timezone ne 'Site'}checked="checked"{/if} />
-				<label for="users_prefs_display_timezone2">{tr}Detect user timezone (if browser allows). Otherwise use site default.{/tr}</label>
-			</div>
-		</div>
 
-		<div class="adminoptionbox">
-			<div class="adminoptionlabel">
-				<label for="general-long_date">{tr}Long date format:{/tr}</label>
-				<br />
-				<input type="text" name="long_date_format" id="general-long_date" value="{$prefs.long_date_format|escape}" size="40" />
-				<br />
-				<em>{tr}Sample:{/tr} {$now|tiki_long_date}</em>
-			</div>
-		</div>
-		<div class="adminoptionbox">
-			<div class="adminoptionlabel">
-				<label for="general-short_date">{tr}Short date format:{/tr}</label>
-				<br />
-				<input type="text" name="short_date_format" id="general-short_date" value="{$prefs.short_date_format|escape}" size="40" />
-				<br />
-				<em>{tr}Sample:{/tr} {$now|tiki_short_date}</em>
-			</div>
-		</div>
-		<div class="adminoptionbox">
-			<div class="adminoptionlabel">
-				<label for="general-long_time">{tr}Long time format:{/tr}</label>
-				<br />
-				<input type="text" name="long_time_format" id="general-long_time" value="{$prefs.long_time_format|escape}" size="40" />
-				<br />
-				<em>{tr}Sample:{/tr} {$now|tiki_long_time}</em>
-			</div>
-		</div>
-		<div class="adminoptionbox">
-			<div class="adminoptionlabel">
-				<label for="general-short_time">{tr}Short time format:{/tr}</label>
-				<br />
-				<input type="text" name="short_time_format" id="general-short_time" value="{$prefs.short_time_format|escape}" size="40" />
-				<br />
-				<em>{tr}Sample:{/tr} {$now|tiki_short_time}</em>
-			</div>
-		</div>
-		<div class="adminoptionbox">
-			<div class="adminoptionlabel">
-				<label for="general-display_fieldorder">{tr}Fields display order:{/tr}</label>
-				<select name="display_field_order" id="general-display_fieldorder">
-					<option value="DMY" {if $prefs.display_field_order=="DMY"}selected="selected"{/if}>{tr}Day{/tr} {tr}Month{/tr} {tr}Year{/tr}</option>
-					<option value="DYM" {if $prefs.display_field_order=="DYM"}selected="selected"{/if}>{tr}Day{/tr} {tr}Year{/tr} {tr}Month{/tr}</option>
-					<option value="MDY" {if $prefs.display_field_order=="MDY"}selected="selected"{/if}>{tr}Month{/tr} {tr}Day{/tr} {tr}Year{/tr}</option>
-					<option value="MYD" {if $prefs.display_field_order=="MYD"}selected="selected"{/if}>{tr}Month{/tr} {tr}Year{/tr} {tr}Day{/tr}</option>
-					<option value="YDM" {if $prefs.display_field_order=="YDM"}selected="selected"{/if}>{tr}Year{/tr} {tr}Day{/tr} {tr}Month{/tr}</option>
-					<option value="YMD" {if $prefs.display_field_order=="YMD"}selected="selected"{/if}>{tr}Year{/tr} {tr}Month{/tr} {tr}Day{/tr}</option>
-				</select>
-			</div>
-			{preference name=tiki_same_day_time_only}
-		</div>
+		{preference name=users_prefs_display_timezone}
+		{preference name=long_date_format}
+		<em>{tr}Sample:{/tr} {$now|tiki_long_date}</em>
+
+		{preference name=short_date_format}
+		<em>{tr}Sample:{/tr} {$now|tiki_short_date}</em>
+		
+		{preference name=long_time_format}
+		<em>{tr}Sample:{/tr} {$now|tiki_long_time}</em>
+
+		{preference name=short_time_format}
+		<em>{tr}Sample:{/tr} {$now|tiki_short_time}</em>
+
+		{preference name=display_field_order}
+		{preference name=tiki_same_day_time_only}
+		
 		<div class="adminoptionbox">	
 			{assign var="fcnlink" value="http://www.php.net/manual/en/function.strftime.php"}
 			<a class="link" target="strftime" href="{$fcnlink}">{tr}Date and Time Format Help{/tr}</a>{if $prefs.feature_help eq 'y'} {help url="Date+and+Time"}{/if}
