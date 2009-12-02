@@ -13,9 +13,21 @@ function tr($content) {
 }
 
 function tra($content, $lg='', $no_interactive = false, $args = array()) {
-	$out = tra_impl( $content, $lg, $no_interactive, $args );
+	global $prefs;
 
-	if( empty( $lg ) ) {
+	if ($lg == '') {
+		if( $prefs['language'] ) {
+			$lang = $prefs['language'];
+		} else {
+			$lang = $prefs['site_language'];
+		}
+	} else {
+		$lang = $lg;
+	}
+
+	$out = tra_impl( $content, $lang, $no_interactive, $args );
+
+	if( empty( $lg ) || $lg == $lang ) {
 		record_string( $content, $out );
 	}
 
@@ -28,16 +40,8 @@ function tra_impl($content, $lg='', $no_interactive = false, $args = array()) {
 	if ($content != '') {
 		if ($prefs['lang_use_db'] != 'y') {
 			global $lang, $tikidomain;
-			if ($lg != "") {
-				if (is_file("lang/$lg/language.php")) {
-					$l = $lg;
-				} else {
-					$l = $prefs['language'];
-				}
-			} elseif (!empty($prefs['language']) && is_file('lang/'.$prefs['language'].'/language.php')) {
-				$l = $prefs['language'];
-			} elseif (is_file('lang/'.$prefs['site_language'].'/language.php')) {
-				$l = $prefs['site_language'];
+			if (is_file("lang/$lg/language.php")) {
+				$l = $lg;
 			} else {
 				$l = false;
 			}
@@ -54,7 +58,6 @@ function tra_impl($content, $lg='', $no_interactive = false, $args = array()) {
 				  ${"lang_$l"} = $lang;
 				  unset($lang);
 				}
-				$lang = &${"lang_".$prefs['language']};
 			}
 			if ($l and isset(${"lang_$l"}[$content])) {
 				return tr_replace( ${"lang_$l"}[$content], $args );
@@ -84,18 +87,13 @@ function tra_impl($content, $lg='', $no_interactive = false, $args = array()) {
 			// things that don't work for interactive translation need to be filtered out
 			$query = "select `tran` from `tiki_language` where `source`=? and `lang`=?";
 			// set language to site default if no lang specified or for user
-			if ($lg == '' && !$prefs['language']) {
-				 $lg = $prefs['site_language'];
-			}
-			$result = $tikilib->query($query, array($content,$lg == ""? $prefs['language'] : $lg));
+			$result = $tikilib->query($query, array($content,$lg));
 			$res = $result->fetchRow();
-			if (!$res) {
-				return tr_replace( $content, $args );
-			}
-			if (!isset($res["tran"])) {
+
+			if (!$res || !isset($res["tran"])) {
 				if ($prefs['record_untranslated'] == 'y') {
 					$query = "insert into `tiki_untranslated` (`source`,`lang`) values (?,?)";
-					$tikilib->query($query, array($content,$prefs['language']),-1,-1,false);
+					$tikilib->query($query, array($content,$lg),-1,-1,false);
 				}
 				return tr_replace( $content, $args );
 			}
@@ -123,9 +121,13 @@ function tr_replace( $content, $args ) {
 
 function record_string( $original, $printed ) {
 	global $interactive_collected_strings;
-	if( isset( $_SESSION['interactive_translation_mode'] ) && $_SESSION['interactive_translation_mode'] != 'off' ) {
+	if( interactive_enabled() ) {
 		$interactive_collected_strings[ md5( $original . '___' . $printed ) ] = array( $original, $printed );
 	}
+}
+
+function interactive_enabled() {
+	return isset( $_SESSION['interactive_translation_mode'] ) && $_SESSION['interactive_translation_mode'] != 'off';
 }
 
 function get_collected_strings() {

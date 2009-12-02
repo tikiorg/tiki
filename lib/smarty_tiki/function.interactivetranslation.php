@@ -65,6 +65,9 @@ function smarty_function_interactivetranslation($params, &$smarty) {
 		}
 
 		var text = \$jq(this).text();
+		if( text.length == 0 ) {
+			text = \$jq(this).val();
+		}
 		var applicable = \$jq(data).filter( function( k ) {
 			return text.indexOf( this[1] ) != -1;
 		} );
