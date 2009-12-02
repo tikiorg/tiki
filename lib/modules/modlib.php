@@ -679,6 +679,9 @@ class ModLib extends TikiLib {
 				$expanded[$name] = $parts;
 			}
 		}
+		if (empty($expanded)) {
+			return '';// http_build_query return NULL or '' depending on system
+		}
 
 		return http_build_query( $expanded, '', '&' );
 	}
