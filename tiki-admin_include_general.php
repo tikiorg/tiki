@@ -24,6 +24,7 @@ if (isset($_REQUEST["new_prefs"])) {
 		"anonCanEdit",
 		"useUrlIndex",
 		"permission_denied_login_box",
+		"feature_wiki_1like_redirection",
 	);
 	foreach($pref_toggles as $toggle) {
 		simple_set_toggle($toggle);
