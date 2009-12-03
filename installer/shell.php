@@ -18,7 +18,8 @@ include $local_php;
 // In case of replication, ignore it during installer.
 unset( $shadow_dbs, $shadow_user, $shadow_pass, $shadow_host );
 
-class IgnoreErrorHandler {
+class IgnoreErrorHandler implements TikiDb_ErrorHandler
+{
 	function handle( TikiDb $db, $query, $values, $result ) {
 	}
 }
