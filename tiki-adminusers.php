@@ -152,33 +152,57 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 	// Process the form to add a user here
 	
 } elseif (isset($_REQUEST["newuser"])) {
+        $AddUser= true;;
 	check_ticket('admin-users');
-	// if no user data entered, check if it's a batch upload
-	// Check if the user already exists
+        // if email validation set check if email addr is set   
+	if (isset($_REQUEST['need_email_validation']) &&
+		 empty($_REQUEST['email'])) {
+		$tikifeedback[] = array(
+			'num' => 1,
+			'mes' => tra("Email validation requested but email address not set")
+		);
+               $AddUser=false;
+             }
 	if ($_REQUEST["pass"] != $_REQUEST["pass2"]) {
 		$tikifeedback[] = array(
 			'num' => 1,
 			'mes' => tra("The passwords do not match")
 		);
-	} else {
-		if ($userlib->user_exists($_REQUEST["name"])) {
+               $AddUser=false;
+         } elseif (empty($_REQUEST["pass"])) {
+		$tikifeedback[] = array(
+			'num' => 1,
+			'mes' => tra("Password not set")
+		);
+               $AddUser=false;
+	 }
+                
+	// Check if the user already exists
+	if ($userlib->user_exists($_REQUEST["name"])) {
 			$tikifeedback[] = array(
 				'num' => 1,
 				'mes' => sprintf(tra("User %s already exists") , $_REQUEST["name"])
 			);
-		} elseif ($prefs['login_is_email'] == 'y' && !validate_email($_REQUEST['name'])) {
+               $AddUser=false;
+         }
+	if ($prefs['login_is_email'] == 'y' && !validate_email($_REQUEST['name'])) {
 			$tikifeedback[] = array(
 				'num' => 1,
 				'mes' => tra("Invalid email") . ' ' . $_REQUEST['name']
 			);
-		} elseif (!empty($prefs['username_pattern']) && !preg_match($prefs['username_pattern'], $_REQUEST['name'])) {
+               $AddUser=false;
+		}
+       if (!empty($prefs['username_pattern']) && !preg_match($prefs['username_pattern'], $_REQUEST['name'])) {
 			$tikifeedback[] = array(
 				'num' => 1,
 				'mes' => tra("User login contains invalid characters")
 			);
-		} else {
-			$pass_first_login = (isset($_REQUEST['pass_first_login']) && $_REQUEST['pass_first_login'] == 'on');
-			$polerr = $userlib->check_password_policy($_POST["pass"]);
+               $AddUser=false;
+		} 
+	// end verify newuser info
+	if ($AddUser) {
+		$pass_first_login = (isset($_REQUEST['pass_first_login']) && $_REQUEST['pass_first_login'] == 'on');
+		$polerr = $userlib->check_password_policy($_POST["pass"]);
 			if (strlen($polerr) > 0) {
 				$smarty->assign('msg', $polerr);
 				$smarty->display("error.tpl");
@@ -208,8 +232,7 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 					'mes' => sprintf(tra("Impossible to create new %s with %s %s.") , tra("user") , tra("username") , $_REQUEST["name"])
 				);
 			}
-		}
-	}
+        } 
 	if (isset($tikifeedback[0]['msg'])) {
 		$logslib->add_log('adminusers', '', $tikifeedback[0]['msg']);
 	}
