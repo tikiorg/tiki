@@ -14,11 +14,5 @@ function prefs_display_list() {
 				'YMD' => tra('Year')  . ' ' . tra('Month') . ' ' . tra('Day'),
 			),
 		),
-		// Used in templates/tiki-admin-include-general.tpl
-		'display_timezone' => array(
-			'name' => '',
-			'type' => '',
-		),
-	
 	);
 }

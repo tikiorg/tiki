@@ -3,9 +3,8 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.59.2.7 2008-03-08 21:12:22 sylvieg Exp $
-//this script may only be included - so its better to die if called directly.
-//smarty is not there - we need setup
+// This script may only be included - so its better to die if called directly.
+
 require_once ('tiki-setup.php');
 $access->check_script($_SERVER["SCRIPT_NAME"], basename(__FILE__));
 if (isset($_REQUEST["new_prefs"])) {
@@ -21,7 +20,6 @@ if (isset($_REQUEST["new_prefs"])) {
 	}
 	check_ticket('admin-inc-general');
 	$pref_toggles = array(
-		"anonCanEdit",
 		"useUrlIndex",
 		"permission_denied_login_box",
 	);
@@ -30,17 +28,12 @@ if (isset($_REQUEST["new_prefs"])) {
 	}
 	$pref_simple_values = array(
 		"urlIndex",
-		"ip_can_be_checked",
-		"highlight_group",
 		'zend_mail_handler',
-		'zend_mail_smtp_security',
-		'urlOnUsername',
 	);
 	foreach($pref_simple_values as $svitem) {
 		simple_set_value($svitem);
 	}
 	$pref_byref_values = array(
-		"display_timezone",
 		"server_timezone",
 		"tikiIndex",
 	);
